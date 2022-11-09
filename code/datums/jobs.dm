@@ -9,6 +9,8 @@
 	var/no_late_join = 0
 	var/no_jobban_from_this_job = 0
 	var/allow_traitors = 1
+	///can you roll this job if you rolled antag with a non-traitor-allowed favourite job (e.g.: prevent sec mains from forcing only captain antag rounds)
+	var/allow_antag_fallthrough = TRUE
 	var/allow_spy_theft = 1
 	var/cant_spawn_as_rev = 0 // For the revoltion game mode. See jobprocs.dm for notes etc (Convair880).
 	var/cant_spawn_as_con = 0 // Prevents this job spawning as a conspirator in the conspiracy gamemode.
@@ -101,10 +103,11 @@
 				I.implanted(M)
 
 			if (src.special_spawn_location && !no_special_spawn)
+				var/location = special_spawn_location
 				if (!istype(special_spawn_location, /turf))
-					special_spawn_location = pick_landmark(special_spawn_location)
-				if (special_spawn_location != null)
-					M.set_loc(special_spawn_location)
+					location = pick_landmark(special_spawn_location)
+				if (!isnull(location))
+					M.set_loc(location)
 
 			if (ishuman(M) && src.bio_effects)
 				var/list/picklist = params2list(src.bio_effects)
@@ -152,6 +155,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 	allow_spy_theft = 0
+	allow_antag_fallthrough = FALSE
 
 	slot_card = /obj/item/card/id/gold
 	slot_belt = list(/obj/item/device/pda2/captain)
@@ -199,6 +203,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	wages = PAY_IMPORTANT
 
 	allow_spy_theft = 0
+	allow_antag_fallthrough = FALSE
 	receives_miranda = 1
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
@@ -531,6 +536,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	//allow_traitors = 0
 	receives_badge = 1
 	cant_spawn_as_rev = 1
+	allow_antag_fallthrough = FALSE
 	slot_back = list(/obj/item/storage/backpack/withO2)
 	slot_belt = list(/obj/item/storage/belt/security/shoulder_holster)
 	slot_poc1 = list(/obj/item/device/pda2/forensic)
@@ -772,36 +778,13 @@ ABSTRACT_TYPE(/datum/job/engineering)
 			return
 		M.bioHolder.AddEffect("training_miner")
 
-/datum/job/engineering/mechanic
-	name = "Mechanic"
-	limit = 4
-	wages = PAY_DOCTORATE
-
-	slot_back = list(/obj/item/storage/backpack/engineering)
-	slot_belt = list(/obj/item/storage/belt/utility/prepared)
-	slot_jump = list(/obj/item/clothing/under/rank/mechanic)
-	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_lhan = list(/obj/item/storage/toolbox/electrical/mechanic_spawn)
-	slot_glov = list(/obj/item/clothing/gloves/yellow)
-	slot_poc1 = list(/obj/item/device/pda2/mechanic)
-	slot_ears = list(/obj/item/device/radio/headset/mechanic)
-
-	New()
-		..()
-		src.access = get_access("Mechanic")
-		return
-
 /datum/job/engineering/engineer
 	name = "Engineer"
-#ifdef MAP_OVERRIDE_MANTA
-	limit = 4
-#else
-	limit = 5
-#endif
+	limit = 8
 	wages = PAY_TRADESMAN
 	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_belt = list(/obj/item/storage/belt/utility/prepared)
-	slot_jump = list(/obj/item/clothing/under/rank/engineer)
+	slot_jump = list(/obj/item/clothing/under/rank/mechanic)
 	slot_foot = list(/obj/item/clothing/shoes/orange)
 	slot_lhan = list(/obj/item/storage/toolbox/mechanical/engineer_spawn)
 	slot_glov = list(/obj/item/clothing/gloves/yellow)
@@ -1728,6 +1711,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 #elif defined(MAP_OVERRIDE_OSHAN)
 	limit = 1
 	special_spawn_location = null
+#elif defined(MAP_OVERRIDE_NADIR)
+	limit = 1
+	special_spawn_location = null
 #else
 	limit = 1
 	special_spawn_location = LANDMARK_RADIO_SHOW_HOST
@@ -2043,7 +2029,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	wages = PAY_UNTRAINED
 	limit = 1
 	change_name_on_spawn = 1
-	slot_ears = list(/obj/item/device/radio/headset/command/captain)
+	slot_ears = list(/obj/item/device/radio/headset/ghost_buster)
 	slot_eyes = list(/obj/item/clothing/glasses/regular/ecto/goggles)
 	slot_jump = list(/obj/item/clothing/under/shirt_pants)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
@@ -2348,16 +2334,11 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/old_grenade/stinger/frag,
 							/obj/item/breaching_charge)
 	add_to_manifest = FALSE
+	special_spawn_location = LANDMARK_SYNDICATE
 
 	New()
 		..()
 		src.access = syndicate_spec_ops_access()
-
-#ifdef MAP_OVERRIDE_OSHAN
-	special_spawn_location = null
-#else
-	special_spawn_location = LANDMARK_SYNDICATE
-#endif
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()

@@ -244,7 +244,7 @@
 	//Priority-based target finding
 	var/mob/T
 	var/lastRating = -INFINITY
-	for (var/mob/living/carbon/M in view(7,src))
+	for (var/mob/living/carbon/M in viewers(7,src))
 		//Any reason we do not want to take this target into account AT ALL?
 		if((M == src && !ai_suicidal) || isdead(M) || (M.is_npc && !ai_attacknpc)) continue //Let's not fight ourselves (unless we're real crazy) or a dead person... or NPCs, unless we're allowed to.
 
@@ -260,7 +260,7 @@
 
 		//Why do we NOT want to go after this jerk
 		if(isunconscious(M)) rating-=8 //This one's unconscious
-		for(var/mob/living/carbon/human/H in oview(7,src))
+		for(var/mob/living/carbon/human/H in viewers(7,src))
 			if(H.ai_target == M) rating -= 4 //I'd rather fight my own fight
 		if(M.is_npc) rating -= 5 //I don't want to go after my fellow NPCs unless there is no other option
 		if(M == src) rating -= 14 //I don't want to go after myself
@@ -393,7 +393,7 @@
 							suit:set_loc(carbon_target:loc)
 							suit:dropped(carbon_target)
 							suit:layer = initial(suit:layer)
-				if(prob(75) && distance > 1 && (world.timeofday - ai_attacked) > 100 && ai_validpath() && ((istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot()) || src.bioHolder.HasOneOfTheseEffects("eyebeams", "cryokinesis", "jumpy")) && !A?.sanctuary)
+				if(prob(75) && distance > 1 && (world.timeofday - ai_attacked) > 100 && ai_validpath() && ((istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot(src)) || src.bioHolder.HasOneOfTheseEffects("eyebeams", "cryokinesis", "jumpy")) && !A?.sanctuary)
 					//I can attack someone! =D
 					ai_target_old.Cut()
 					var/datum/bioEffect/power/eyebeams/eyebeams = src.bioHolder.GetEffect("eyebeams")
@@ -415,7 +415,7 @@
 								if(2)
 									src.say(pick("BANG!", "POW!", "Eat lead, [carbon_target.name]!", "Suck it down, [carbon_target.name]!"))
 
-				if((prob(33) || ai_throw) && (distance > 1 || A?.sanctuary) && ai_validpath() && src.equipped() && !(istype(src.equipped(),/obj/item/gun) && src.equipped():canshoot() && !A?.sanctuary))
+				if((prob(33) || ai_throw) && (distance > 1 || A?.sanctuary) && ai_validpath() && src.equipped() && !(istype(src.equipped(),/obj/item/gun) && src.equipped():canshoot(src) && !A?.sanctuary))
 					//I can attack someone! =D
 					ai_target_old.Cut()
 					src.throw_item(ai_target, list("npc_throw"))
@@ -732,7 +732,7 @@
 			var/obj/item/clothing/mask/cigarette/cigarette = src.wear_mask
 			if(!cigarette.on && (istype(G, /obj/item/device/light/zippo) || istype(G, /obj/item/weldingtool) || istype(G, /obj/item/device/igniter)))
 				score += 8
-		score += G.contraband
+		score += G.contraband // this doesn't use get_contraband() because monkeys aren't feds
 		score += rand(-2, 2)
 		if(score > pickup_score)
 			pickup_score = score
@@ -753,10 +753,10 @@
 			src.set_clothing_icon_dirty()
 
 /mob/living/carbon/human/proc/ai_pickupweapon()
-	if(istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot())
+	if(istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot(src))
 		return
 
-	if(istype(src.r_hand,/obj/item/gun/kinetic) && !src.r_hand:canshoot())
+	if(istype(src.r_hand,/obj/item/gun/kinetic) && !src.r_hand:canshoot(src))
 		var/obj/item/gun/kinetic/GN = src.r_hand
 		for(var/obj/item/ammo/bullets/BB in src.contents)
 			src.l_hand = BB
@@ -772,7 +772,7 @@
 	if(src.r_hand?.cant_drop)
 		return
 
-	if(istype(src.r_hand, /obj/item/gun) && !src.r_hand:canshoot())
+	if(istype(src.r_hand, /obj/item/gun) && !src.r_hand:canshoot(src))
 		var/obj/item/gun/GN = src.r_hand
 		src.drop_item()
 		if(src.w_uniform && !src.belt)
@@ -788,7 +788,7 @@
 
 	for(var/obj/item/G in src.contents)
 		if(G.throwing) continue
-		if((istype(G,/obj/item/gun) && G:canshoot()) && src.r_hand != G)
+		if((istype(G,/obj/item/gun) && G:canshoot(src)) && src.r_hand != G)
 			pickup = G
 			src.u_equip(G)
 			break
@@ -797,7 +797,7 @@
 		for (var/obj/item/G in view(1,src))
 			if(G.throwing) continue
 			if(!istype(G.loc, /turf) || G.anchored) continue
-			if((istype(G,/obj/item/gun) && G:canshoot()))
+			if((istype(G,/obj/item/gun) && G:canshoot(src)))
 				pickup = G
 				break
 			else if(!src.r_hand && !pickup && G.force > 3)

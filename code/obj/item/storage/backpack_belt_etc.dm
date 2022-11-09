@@ -412,7 +412,6 @@
 
 	New()
 		..()
-		wear_state = item_state
 		BLOCK_SETUP(BLOCK_ROPE)
 
 /obj/item/storage/fanny/funny
@@ -461,7 +460,6 @@
 
 	New()
 		..()
-		wear_state = item_state
 		BLOCK_SETUP(BLOCK_ROPE)
 		START_TRACKING
 
@@ -906,7 +904,6 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 
 	New()
 		..()
-		src.wear_state = src.item_state
 		setProperty("negate_fluid_speed_penalty", 0.2)
 
 /obj/item/inner_tube/duck
@@ -927,4 +924,3 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 		if (prob(40))
 			src.icon_state = "pool_ring-[pick("duck","giraffe","flamingo")]"
 			src.item_state = src.icon_state
-			src.wear_state = src.item_state

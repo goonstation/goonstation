@@ -84,6 +84,14 @@
 		name = "box of bee stickers"
 		contained_item = /obj/item/sticker/bee
 
+	contraband
+		name = "contraband adjustment sticker box"
+		desc = "Contains stickers which can adjust the effective level of contraband an item is detected as."
+		contained_items_proc = FALSE
+		contained_item = /obj/item/sticker/contraband
+		item_amount = 10
+		max_item_amount = 10
+
 	glow_sticker
 		name = "glow stickers"
 		desc = "A box of stickers that glow when stuck to things."
@@ -161,7 +169,8 @@
 			desc = "Oh my god.. ALL THE STICKERS! ALL IN ONE PLACE? WHAT CAN THIS MEAN!!!"
 
 			set_contained_items()
-				contained_items = concrete_typesof( /obj/item/sticker/ ) - /obj/item/sticker/spy - typesof( /obj/item/sticker/barcode, /obj/item/sticker/glow )
+				// i hate this
+				contained_items = concrete_typesof( /obj/item/sticker/ ) - /obj/item/sticker/spy - typesof( /obj/item/sticker/barcode, /obj/item/sticker/glow )  - /obj/item/sticker/contraband
 
 			robot//this type sticks things by clicking on them with a cooldown
 				name = "box shaped sticker dispenser"
@@ -192,7 +201,8 @@
 				max_item_amount = 10
 
 				set_contained_items()
-					contained_items = concrete_typesof( /obj/item/sticker/ ) - typesof( /obj/item/sticker/barcode, /obj/item/sticker/glow ) - /obj/item/sticker/spy - /obj/item/sticker/ribbon/first_place - /obj/item/sticker/ribbon/second_place - /obj/item/sticker/ribbon/third_place
+					// i hate this even more
+					contained_items = concrete_typesof( /obj/item/sticker/ ) - typesof( /obj/item/sticker/barcode, /obj/item/sticker/glow ) - /obj/item/sticker/spy - /obj/item/sticker/ribbon/first_place - /obj/item/sticker/ribbon/second_place - /obj/item/sticker/ribbon/third_place - /obj/item/sticker/contraband
 
 			glow_sticker
 				name = "glow stickers"

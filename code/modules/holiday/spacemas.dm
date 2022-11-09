@@ -254,11 +254,10 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	name = "snowball"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "snowball"
-	power = 10
+	stun = 10
 	cost = 25
 	dissipation_rate = 2
 	dissipation_delay = 4
-	ks_ratio = 0
 	sname = "stun"
 	shot_sound = 'sound/effects/pop.ogg'
 	shot_number = 1
@@ -458,7 +457,10 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		START_TRACKING
 
 	disposing()
+		#ifdef XMAS
 		STOP_TRACKING
+		#endif
+
 		qdel(src.fire_image)
 		src.fire_image = null
 		..()
@@ -535,6 +537,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		var/mob/living/L = M
 		L.bodytemperature -= rand(1, 10)
 		L.show_text("That was chilly!", "blue")
+		..()
 
 	proc/hit(var/mob/living/M as mob, var/message = 1)
 		if (!M || !isliving(M))

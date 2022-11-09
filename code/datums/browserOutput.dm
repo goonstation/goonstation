@@ -97,7 +97,6 @@ var/global
 				//"browserassets/js/anchorme.js",
 				"browserassets/js/browserOutput.js",
 				"browserassets/css/fonts/fontawesome-webfont.eot",
-				"browserassets/css/fonts/fontawesome-webfont.svg",
 				"browserassets/css/fonts/fontawesome-webfont.ttf",
 				"browserassets/css/fonts/fontawesome-webfont.woff",
 				"browserassets/css/font-awesome.css",
@@ -425,7 +424,7 @@ var/global
 		else if (ismind(target) && target:current)
 			C = target:current:client
 
-		if (C?.chatOutput && !C.chatOutput.loaded && C.chatOutput.messageQueue && islist(C.chatOutput.messageQueue))
+		if (islist(C?.chatOutput?.messageQueue) && !C.chatOutput.loaded)
 			//Client sucks at loading things, put their messages in a queue
 			C.chatOutput.messageQueue += list(list("message" = message, "group" = group))
 		else
@@ -462,9 +461,6 @@ var/global
 //Aliases for boutput
 /proc/out(target = 0, message = "", group = "")
 	boutput(target, message, group)
-/proc/bo(target = 0, message = "", group = "")
-	boutput(target, message, group)
-
 
 /*
 I spent so long on this regex I don't want to get rid of it :(

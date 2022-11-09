@@ -27,7 +27,6 @@
 		src.display_battery = image('icons/obj/meteor_shield.dmi', "")
 		src.display_panel = image('icons/obj/meteor_shield.dmi', "")
 
-		START_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
 		..()
 
 	disposing()
@@ -41,7 +40,7 @@
 		sound_off = null
 		sound_battwarning = null
 
-		STOP_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
+		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
 		..()
 
 	get_desc(dist, mob/user)
@@ -162,14 +161,21 @@
 
 		src.anchored = 1
 		src.active = 1
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, src.range)
 		playsound(src.loc, src.sound_on, 50, 1)
 		build_icon()
 
 	proc/turn_off()
 		src.anchored = 0
 		src.active = 0
+		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
 		playsound(src.loc, src.sound_off, 50, 1)
 		build_icon()
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.PCEL)
+			src.PCEL = null
 
 	active
 		New()

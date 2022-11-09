@@ -106,7 +106,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/critter/aberration = 1,\
 	/obj/critter/cat = 2,\
 	/obj/item/clothing/head/void_crown = 1,\
-	/obj/item/record/random = 4,\
+	/obj/item/record/spacebux = 4,\
 	/obj/critter/domestic_bee/trauma = 20)
 
 /datum/fishing_spot/fryer

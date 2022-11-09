@@ -1333,7 +1333,7 @@
 
 	New()
 		. = ..()
-		RegisterSignal(src, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), .proc/update_hotbox_flag)
+		RegisterSignals(src, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), .proc/update_hotbox_flag)
 
 	proc/update_hotbox_flag(thing, previous_loc, direction)
 		if (!firesource) return

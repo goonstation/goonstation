@@ -139,6 +139,11 @@
 		src.power_change()
 		return
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
 /obj/machinery/computer/card/attack_hand(var/mob/user)
 	if(..())
 		return
@@ -194,7 +199,7 @@
 
 			//Jobs organised into sections
 			var/list/civilianjobs = list("Staff Assistant", "Bartender", "Chef", "Botanist", "Rancher", "Chaplain", "Janitor", "Clown")
-			var/list/maintainencejobs = list("Engineer", "Mechanic", "Miner", "Quartermaster")
+			var/list/maintainencejobs = list("Engineer", "Miner", "Quartermaster")
 			var/list/researchjobs = list("Scientist", "Medical Doctor", "Geneticist", "Roboticist", "Pathologist")
 			var/list/securityjobs = list("Security Officer", "Security Assistant", "Detective")
 			var/list/commandjobs = list("Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Captain")
@@ -379,7 +384,7 @@
 				return
 
 			if (t1 == "Custom Assignment")
-				t1 = input(usr, "Enter a custom job assignment.", "Assignment")
+				t1 = tgui_input_text(usr, "Enter a custom job assignment.", "Assignment")
 				if(!src.modify || !src.authenticated)
 					return
 				t1 = strip_html(t1, 100, 1)
@@ -403,7 +408,7 @@
 		if (src.authenticated)
 			var/t2 = src.modify
 
-			var/t1 = input(usr, "What name?", "ID computer", null)
+			var/t1 = tgui_input_text(usr, "What name?", "ID computer")
 			t1 = strip_html(t1, 100, 1)
 
 			if ((src.authenticated && src.modify == t2 && (in_interact_range(src, usr) || (issilicon(usr) || isAI(usr))) && istype(src.loc, /turf)))

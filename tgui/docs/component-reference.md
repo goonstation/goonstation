@@ -523,10 +523,10 @@ Renders one of the FontAwesome icons of your choice.
 <Icon name="plus" />
 ```
 
-To smoothen the transition from v4 to v5, we have added a v4 semantic to
+To smoothen the transition from v4 to v5 to v6 (🙄), we have added a v4 semantic to
 transform names with `-o` suffixes to FA Regular icons. For example:
-- `square` will get transformed to `fas square`
-- `square-o` will get transformed to `far square`
+- `square` will get transformed to `fa-solid square`
+- `square-o` will get transformed to `fa-regular square`
 
 **Props:**
 

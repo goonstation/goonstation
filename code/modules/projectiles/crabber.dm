@@ -4,11 +4,10 @@
 	icon = 'icons/obj/crabgun.dmi'
 	icon_state = "proj_crab"
 
-	power = 50
+	stun = 50
 	cost = 30
 	dissipation_rate = 1
 	dissipation_delay = 20
-	ks_ratio = 0
 	sname = "claw"
 	shot_sound = 'sound/items/wirecutter.ogg'
 	shot_number = 1

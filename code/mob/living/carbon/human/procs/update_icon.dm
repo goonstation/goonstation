@@ -118,9 +118,9 @@
 		UpdateOverlays(null, "material_suit")
 
 	// ID
-	if (src.wear_id?.wear_state)
+	if (src.wear_id)
 		wear_sanity_check(src.wear_id)
-		var/wear_state = src.wear_id.wear_state
+		var/wear_state = src.wear_id.wear_state || src.wear_id.icon_state
 		var/no_offset = 0
 		if ((islist(id_overrides)) && (wear_state in id_overrides))
 			src.wear_id.wear_image.icon = src.mutantrace.clothing_icon_id
@@ -415,7 +415,7 @@
 			UpdateOverlays(src.back.worn_material_texture_image, "material_back")
 		else
 			UpdateOverlays(null, "material_back")
-		src.back.screen_loc = hud.layouts[hud.layout_style]["back"]
+		src.back.screen_loc =  do_hud_offset_thing(src.back, hud.layouts[hud.layout_style]["back"])
 	else
 		UpdateOverlays(null, "wear_back")
 		UpdateOverlays(null, "material_back")
@@ -560,9 +560,9 @@
 		UpdateOverlays(null, "wear_head_blood")
 		UpdateOverlays(null, "material_head")
 	// Belt
-	if (src.belt?.wear_state)
+	if (src.belt)
 		wear_sanity_check(src.belt)
-		var/wear_state = src.belt.wear_state
+		var/wear_state = src.belt.wear_state || src.belt.item_state || src.belt.icon_state
 		var/no_offset = FALSE
 		//
 		if (islist(belt_overrides) && (wear_state in belt_overrides)) //checks if they are a mutantrace with special belt sprites and then replaces them if they do
@@ -586,7 +586,7 @@
 			UpdateOverlays(src.belt.worn_material_texture_image, "material_belt")
 		else
 			UpdateOverlays(null, "material_belt")
-		src.belt.screen_loc = hud.layouts[hud.layout_style]["belt"]
+		src.belt.screen_loc = do_hud_offset_thing(belt, hud.layouts[hud.layout_style]["belt"])
 	else
 		UpdateOverlays(null, "wear_belt")
 		UpdateOverlays(null, "material_belt")
@@ -597,10 +597,10 @@
 //		src.wear_id.screen_loc = ui_id
 
 	if (src.l_store)
-		src.l_store.screen_loc = hud.layouts[hud.layout_style]["storage1"]
+		src.l_store.screen_loc = do_hud_offset_thing(src.l_store, hud.layouts[hud.layout_style]["storage1"])
 
 	if (src.r_store)
-		src.r_store.screen_loc = hud.layouts[hud.layout_style]["storage2"]
+		src.r_store.screen_loc = do_hud_offset_thing(src.r_store, hud.layouts[hud.layout_style]["storage2"])
 
 	if (src.hasStatus("handcuffed"))
 		src.remove_pulling()

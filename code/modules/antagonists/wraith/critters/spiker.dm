@@ -15,9 +15,9 @@
 	health_brute_vuln = 1
 	health_burn = 50
 	health_burn_vuln = 1
-	var/mob/wraith/master = null
+	var/mob/living/intangible/wraith/master = null
 
-	New(var/turf/T, var/mob/wraith/M = null)
+	New(var/turf/T, var/mob/living/intangible/wraith/M = null)
 		..(T)
 		if(M != null)
 			src.master = M
@@ -49,9 +49,8 @@
 	dissipation_rate = 1
 	dissipation_delay = 7
 	icon_state = ""
-	power = 1
+	damage = 1
 	hit_ground_chance = 0
-	ks_ratio = 1.0
 	shot_sound = 'sound/misc/hastur/tentacle_hit.ogg'
 	var/list/previous_line = list()
 	//This whole line thing might be a bit inneficient and chuggy.
@@ -67,7 +66,7 @@
 
 				M.throw_at(destination, 10, 1)
 
-				playsound(M, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
+				playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 				M.TakeDamageAccountArmor("All", rand(3,4), 0, 0, DAMAGE_CUT)
 				M.force_laydown_standup()
 				M.changeStatus("paralysis", 3 SECONDS)

@@ -116,6 +116,11 @@
 		else
 			..()
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.intcap)
+			src.intcap = null
+
 
 /obj/machinery/interdictor/update_icon()
 	var/ratio = max(0, src.intcap.charge / src.intcap.maxcharge)
@@ -244,9 +249,8 @@
 //assembly zone
 
 //interdictor rod: the doohickey that lets the interdictor do its thing
-//the blueprint to create this should be in engineering along with guide, frame blueprint and mainboards
-//these are the primary factor for scarcity as they require several materials to manufacture
-//blueprint paths: /obj/item/paper/manufacturer_blueprint/interdictor_rod_lambda & /obj/item/paper/manufacturer_blueprint/interdictor_rod_sigma
+//these are a primary factor for scarcity as they require several materials to manufacture, alongside the power cells
+//can be manufactured by installing /obj/item/disk/data/floppy/manudrive/interdictor_parts
 
 /obj/item/interdictor_rod
 	name = "Lambda phase-control rod"
@@ -271,9 +275,7 @@
 		interdist = 7
 
 //interdictor board: power management circuitry and whatnot
-//engineering should start with about three of these,
-//adjacent to the rod/frame blueprint and the interdictor assembly and use guide.
-//mechanics can scan to reproduce
+//included in the assembly kit alongside frame
 
 /obj/item/interdictor_board
 	name = "spatial interdictor mainboard"
@@ -287,12 +289,11 @@
 	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS | CONDUCT
 
-//interdictor frame: main framework for assembling the interdictor (lo and behold)
-//the blueprint to create this should be in engineering along with guide, rod blueprint and mainboards
-//blueprint path is /obj/item/paper/manufacturer_blueprint/interdictor_frame
+//interdictor assembly kit: supplies the core components for assembling the interdictor (lo and behold)
+//can be manufactured by installing /obj/item/disk/data/floppy/manudrive/interdictor_parts
 
-/obj/item/interdictor_frame_kit
-	name = "spatial interdictor frame kit"
+/obj/item/interdictor_kit
+	name = "spatial interdictor assembly kit"
 	desc = "You can hear an awful lot of junk rattling around in this box."
 	icon = 'icons/obj/machines/interdictor.dmi'
 	icon_state = "interdict-kit"
@@ -315,10 +316,15 @@
 
 		if (canbuild)
 			boutput(user, "<span class='notice'>You empty the box of parts onto the floor.</span>")
-			var/obj/O = new /obj/interdictor_frame( get_turf(user) )
-			O.fingerprints = src.fingerprints
-			O.fingerprints_full = src.fingerprints_full
+			var/obj/frame = new /obj/interdictor_frame( get_turf(user) )
+			frame.fingerprints = src.fingerprints
+			frame.fingerprints_full = src.fingerprints_full
+			var/obj/board = new /obj/item/interdictor_board( get_turf(user) )
+			board.fingerprints = src.fingerprints
+			board.fingerprints_full = src.fingerprints_full
 			qdel(src)
+
+//unconstructed interdictor, where the assembly procedure happens
 
 /obj/interdictor_frame
 	name = "spatial interdictor frame"
@@ -347,17 +353,17 @@
 		switch(state)
 			if(0)
 				if (iswrenchingtool(I))
-					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 4 SECONDS), user)
+					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 2 SECONDS), user)
 				else
 					..()
 			if(1)
 				if (istype(I, /obj/item/interdictor_board))
-					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 2 SECONDS), user)
+					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 1 SECOND), user)
 				else
 					..()
 			if(2)
 				if (istype(I, /obj/item/interdictor_rod))
-					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 2 SECONDS), user)
+					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 1 SECOND), user)
 				else
 					..()
 			if(3)
@@ -380,12 +386,12 @@
 					if (I.amount < 4)
 						boutput(user, "<span style=\"color:red\">You don't have enough cable to connect the components (4 required).</span>")
 					else
-						actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 4 SECONDS), user)
+						actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 1 SECOND), user)
 				else
 					..()
 			if(5)
 				if (istype(I, /obj/item/electronics/soldering))
-					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 2 SECONDS), user)
+					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 1 SECOND), user)
 				else
 					..()
 			if(6)

@@ -83,6 +83,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 		else ..()
 
 	surgery(var/obj/item/tool)
+		var/mob/orig_holder = holder
 
 		var/wrong_tool = 0
 
@@ -119,11 +120,12 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 					logTheThing(LOG_COMBAT, tool.the_mob, "removes [constructTarget(holder,"combat")]'s [src.name].")
 					src.remove(0)
 
-			if(!isdead(holder))
-				if(prob(40))
-					holder.emote("scream")
-			holder.TakeDamage("chest",20,0)
-			take_bleeding_damage(holder, null, 15, DAMAGE_CUT)
+			if(orig_holder)
+				if(!isdead(orig_holder))
+					if(prob(40))
+						orig_holder.emote("scream")
+				orig_holder.TakeDamage("chest",20,0)
+				take_bleeding_damage(orig_holder, null, 15, DAMAGE_CUT)
 
 	proc/ropart_take_damage(var/bluntdmg = 0,var/burnsdmg = 0)
 		src.dmg_blunt += bluntdmg
@@ -458,6 +460,11 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 
 		else ..()
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
 /obj/item/parts/robot_parts/chest/standard
 	name = "standard cyborg chest"
 	desc = "The centerpiece of any cyborg. It wouldn't get very far without it."
@@ -556,8 +563,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 /obj/item/parts/robot_parts/arm/left
 	name = "cyborg left arm"
 	slot = "l_arm"
-	icon_state_base = "armL"
-	icon_state = "armL-generic"
+	icon_state_base = "l_arm"
+	icon_state = "l_arm-generic"
 	handlistPart = "armL-generic"
 
 /obj/item/parts/robot_parts/arm/left/standard
@@ -582,7 +589,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 /obj/item/parts/robot_parts/arm/left/sturdy
 	name = "sturdy cyborg left arm"
 	appearanceString = "sturdy"
-	icon_state = "armL-sturdy"
+	icon_state = "l_arm-sturdy"
 	max_health = 100
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
@@ -610,7 +617,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 /obj/item/parts/robot_parts/arm/left/heavy
 	name = "heavy cyborg left arm"
 	appearanceString = "heavy"
-	icon_state = "armL-heavy"
+	icon_state = "l_arm-heavy"
 	max_health = 175
 	weight = 0.4
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
@@ -618,7 +625,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 /obj/item/parts/robot_parts/arm/left/light
 	name = "light cyborg left arm"
 	appearanceString = "light"
-	icon_state = "armL-light"
+	icon_state = "l_arm-light"
 	max_health = 25
 	handlistPart = "armL-light"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_left
@@ -629,8 +636,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	name = "cyborg right arm"
 	icon_state = "r_arm"
 	slot = "r_arm"
-	icon_state_base = "armR"
-	icon_state = "armR-generic"
+	icon_state_base = "r_arm"
+	icon_state = "r_arm-generic"
 	handlistPart = "armR-generic"
 
 
@@ -656,7 +663,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 /obj/item/parts/robot_parts/arm/right/sturdy
 	name = "sturdy cyborg right arm"
 	appearanceString = "sturdy"
-	icon_state = "armR-sturdy"
+	icon_state = "r_arm-sturdy"
 	max_health = 100
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
@@ -684,7 +691,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 /obj/item/parts/robot_parts/arm/right/heavy
 	name = "heavy cyborg right arm"
 	appearanceString = "heavy"
-	icon_state = "armR-heavy"
+	icon_state = "r_arm-heavy"
 	max_health = 175
 	weight = 0.4
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
@@ -692,7 +699,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 /obj/item/parts/robot_parts/arm/right/light
 	name = "light cyborg right arm"
 	appearanceString = "light"
-	icon_state = "armR-light"
+	icon_state = "r_arm-light"
 	max_health = 25
 	handlistPart = "armR-light"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_right
@@ -787,8 +794,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	name = "cyborg left leg"
 	slot = "l_leg"
 	step_image_state = "footprintsL"
-	icon_state_base = "legL"
-	icon_state = "legL-generic"
+	icon_state_base = "l_leg"
+	icon_state = "l_leg-generic"
 	partlistPart = "legL-generic"
 	movement_modifier = /datum/movement_modifier/robotleg_left
 
@@ -798,7 +805,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 /obj/item/parts/robot_parts/leg/left/light
 	name = "light cyborg left leg"
 	appearanceString = "light"
-	icon_state = "legL-light"
+	icon_state = "l_leg-light"
 	partlistPart = "legL-light"
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robotleg_left
@@ -808,7 +815,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	name = "left cyborg tread"
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
-	icon_state = "legL-treads"
+	icon_state = "l_leg-treads"
 	handlistPart = "legL-treads" // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
 	max_health = 100
 	powerdrain = 2.5
@@ -822,8 +829,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	name = "cyborg right leg"
 	slot = "r_leg"
 	step_image_state = "footprintsR"
-	icon_state_base = "legR"
-	icon_state = "legR-generic"
+	icon_state_base = "r_leg"
+	icon_state = "r_leg-generic"
 	partlistPart = "legR-generic"
 	movement_modifier = /datum/movement_modifier/robotleg_right
 
@@ -833,7 +840,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 /obj/item/parts/robot_parts/leg/right/light
 	name = "light cyborg right leg"
 	appearanceString = "light"
-	icon_state = "legR-light"
+	icon_state = "r_leg-light"
 	partlistPart = "legR-light"
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robotleg_right
@@ -843,7 +850,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	name = "right cyborg tread"
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
-	icon_state = "legR-treads"
+	icon_state = "r_leg-treads"
 	handlistPart = "legR-treads"  // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
 	max_health = 100
 	powerdrain = 2.5
@@ -856,7 +863,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	name = "left thruster assembly"
 	desc = "Is it really a good idea to give thrusters to cyborgs..? Probably not."
 	appearanceString = "thruster"
-	icon_state = "legL-thruster"
+	icon_state = "l_leg-thruster"
 	max_health = 100
 	powerdrain = 5
 	step_image_state = null //It's flying so no need for this.
@@ -867,7 +874,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	name = "right thruster assembly"
 	desc = "Is it really a good idea to give thrusters to cyborgs..? Probably not."
 	appearanceString = "thruster"
-	icon_state = "legR-thruster"
+	icon_state = "r_leg-thruster"
 	max_health = 100
 	powerdrain = 5
 	step_image_state = null //It's flying so no need for this.
@@ -1150,8 +1157,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			borg.set_loc(get_turf(src))
 
 			boutput(borg, "<B>You are playing a Robot. The Robot can interact with most electronic objects in its view point.</B>")
-			boutput(borg, "To use something, simply double-click it.")
-			boutput(borg, "Use say \":s to speak to fellow cyborgs and the AI through binary.")
+			boutput(borg, "To use something, simply click it.")
+			boutput(borg, "Use the prefix <B>:s</B> to speak to fellow cyborgs and the AI through binary.")
 
 			if (src.emagged || src.syndicate)
 				if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && borg.mind)

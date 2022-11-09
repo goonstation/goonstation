@@ -276,16 +276,18 @@
 	onAdd(optional) // optional = forced to manifest
 		. = ..()
 		var/mob/M = owner
-		if (istype(M, /mob/wraith))
-			var/mob/wraith/W = M
+		if (istype(M, /mob/living/intangible/wraith))
+			var/mob/living/intangible/wraith/W = M
 			if(optional)
+				M.addOverlayComposition(/datum/overlayComposition/insanity_light)
+				M.updateOverlaysClient(M.client)
 				W.forced_manifest = TRUE
 			else
 				W.haunting = TRUE
 				W.flags &= !UNCRUSHABLE
-			if (!istype_exact(M, /mob/wraith/poltergeist))
+			if (!istype_exact(M, /mob/living/intangible/wraith/poltergeist))
 				M.alpha = 255
-		if (istype_exact(M, /mob/wraith/poltergeist))
+		if (istype_exact(M, /mob/living/intangible/wraith/poltergeist))
 			M.icon_state = "poltergeist-corp"
 			M.update_body()
 		M.set_density(TRUE)
@@ -295,18 +297,20 @@
 
 	onRemove()
 		var/mob/M = owner
-		if (istype(M, /mob/wraith))
-			var/mob/wraith/W = M
+		if (istype(M, /mob/living/intangible/wraith))
+			var/mob/living/intangible/wraith/W = M
 			W.forced_manifest = FALSE
 			W.haunting = FALSE
 			W.flags |= UNCRUSHABLE
-			if (!istype_exact(M, /mob/wraith/poltergeist))
+			if (!istype_exact(M, /mob/living/intangible/wraith/poltergeist))
 				M.alpha = 160
-		if (istype_exact(M, /mob/wraith/poltergeist))
+		if (istype_exact(M, /mob/living/intangible/wraith/poltergeist))
 			M.icon_state = "poltergeist"
 			M.update_body()
 		M.visible_message(pick("<span class='alert'>[M] vanishes!</span>", "<span class='alert'>The [M] dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
 		M.set_density(FALSE)
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, M, INVIS_SPOOKY)
 		M.see_invisible = INVIS_SPOOKY
+		M.removeOverlayComposition(/datum/overlayComposition/insanity_light)
+		M.updateOverlaysClient(M.client)
 		. = ..()
