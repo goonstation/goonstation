@@ -158,4 +158,4 @@ TYPEINFO(/datum/component/radioactive)
 		if(isnull(return_val))
 			return_val = list()
 		return_val += src.radStrength
-		return TRUE;
+		return TRUE
