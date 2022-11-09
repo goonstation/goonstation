@@ -212,6 +212,10 @@ var/list/ai_move_scheduled = list()
 	var/ai_turbo = FALSE
 	/// If this task allows pathing through space
 	var/move_through_space = FALSE
+	/// for weighting the importance of the goal this sequence is in charge of
+	var/weight = 1
+	/// do we need to be AT the target specifically, or is being in 1 tile of it fine?
+	var/can_be_adjacent_to_target = 1
 
 
 	New(parentHolder)
@@ -255,7 +259,7 @@ var/list/ai_move_scheduled = list()
 			for(var/atom/A in targets)
 				var/score = src.score_target(A)
 				if(score > best_score)
-					var/tmp_best_path = get_path_to(holder.owner, A, max_dist*2, 1, null, !move_through_space)
+					var/tmp_best_path = get_path_to(holder.owner, A, max_dist*2, can_be_adjacent_to_target, null, !move_through_space)
 					if(length(tmp_best_path))
 						best_score = score
 						best_path = tmp_best_path

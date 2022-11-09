@@ -9,8 +9,6 @@
 // moving to a selected target, performing a /datum/action on the selected target
 /datum/aiTask/sequence/goalbased/
 	name = "goal parent"
-	var/weight = 1 // for weighting the importance of the goal this sequence is in charge of
-	var/can_be_adjacent_to_target = 1 // do we need to be AT the target specifically, or is being in 1 tile of it fine?
 
 /datum/aiTask/sequence/goalbased/New(parentHolder, transTask)
 	..(parentHolder, transTask)
