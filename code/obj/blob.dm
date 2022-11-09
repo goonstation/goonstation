@@ -274,6 +274,8 @@
 			if(D_SLASHING)
 				damage_mult = 1.5
 				damtype = "brute"
+			if(D_SPECIAL) //I don't think there's any special bullets that should affect blobs
+				return
 
 		src.take_damage(damage,damage_mult,damtype)
 		return
