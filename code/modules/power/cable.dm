@@ -415,3 +415,5 @@
 		logTheThing(LOG_STATION, user, "lays a cable[powered == 1 ? " (powered when connected)" : ""] at [log_loc(src)].")
 
 	return
+
+/obj/cablespawner
