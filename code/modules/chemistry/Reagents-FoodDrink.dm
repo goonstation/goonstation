@@ -869,7 +869,7 @@ datum
 					src.grantPower(M)
 
 			on_add()
-				if(!istype(holder) || !istype(holder.my_atom) || !ishuman(holder.my_atom))
+				if(!ishuman(holder?.my_atom))
 					return
 				var/mob/living/carbon/human/M = holder.my_atom
 				if(M.mutantrace && !src.orig_mutantrace)
