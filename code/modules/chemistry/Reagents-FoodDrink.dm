@@ -873,7 +873,7 @@ datum
 					return
 				var/mob/living/carbon/human/M = holder.my_atom
 				if(M.mutantrace && !src.orig_mutantrace)
-					src.orig_mutantrace = M.mutantrace
+					src.orig_mutantrace = M.mutantrace.type
 
 			on_mob_life_complete(var/mob/living/carbon/human/M)
 				if(M && M.bioHolder && src.orig_mutantrace && src.orig_mutantrace != M.mutantrace)
