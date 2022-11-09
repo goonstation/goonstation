@@ -1,5 +1,9 @@
 
 (t)wed nov 09 22
+(u)Roddy
+(p)11849
+(e)🗺💅💊|A-Mapping, C-QoL, A-Medical
+(+)Minor Donut 2 changes: Beepsky is no longer homeless, notably.
 (u)Amylizzle
 (p)11755
 (e)🆕🎨💨|C-Feature, C-Sprites, A-Atmospherics
