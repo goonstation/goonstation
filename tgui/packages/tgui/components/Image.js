@@ -8,7 +8,6 @@ export const Image = (props) => {
     style={pixelated && { '-ms-interpolation-mode': 'nearest-neighbor' }}
     className={classes(
       "Image",
-      pixelated && "Image--pixelated",
       className
     )} />);
 };
