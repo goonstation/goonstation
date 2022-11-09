@@ -331,6 +331,12 @@
 		else
 			boutput(caster, "<span class=notice>You hole up the pipe and hide inside of it.</span>")
 			the_pipe.bust_open()
+			if (prob(50))
+				var/obj/item/scrap/scrap_item = new /obj/item/scrap(the_pipe.loc)
+				ThrowRandom(scrap_item, 5, 1)
+			if (prob(50))
+				var/obj/item/raw_material/scrap_metal/scrap_item = new /obj/decal/cleanable/machine_debris(the_pipe.loc)
+				ThrowRandom(scrap_item, 5, 1)
 			playsound(src, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 0, 0)
 		var/datum/targetable/brain_slug/slug_burrow/the_ability = caster.abilityHolder.getAbility(/datum/targetable/brain_slug/slug_burrow)
 		the_ability.activate()
@@ -389,18 +395,19 @@
 		else
 			boutput(caster, "<span class='notice'>You hole up the pipe and burst out of it.</span>")
 			the_pipe.bust_open()
+			if (prob(50))
+				var/obj/item/scrap/scrap_item = new /obj/item/scrap(T)
+				ThrowRandom(scrap_item, 5, 1)
+			if (prob(50))
+				var/obj/item/raw_material/scrap_metal/scrap_item = new /obj/decal/cleanable/machine_debris(T)
+				ThrowRandom(scrap_item, 5, 1)
 			playsound(src, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 0, 0)
 		caster.set_loc(T)
-		if(locate(/mob/living) in T)	//At least one person is above us
-			var/list/turf/eligible_turfs = list()
-			for(var/turf/T in orange(the_pipe, 2))
-				if(istype(T, /turf/space) || T.density) continue
-				eligible_turfs += T
-			for (var/mob/living/M in range(0, the_pipe))
-				if (M == caster) continue
-				M.throw_at(pick(eligible_turfs), 2, 1)
-				M.setStatus("stunned", 3 SECONDS)
-				M.visible_message("<span class='alert'>[M] is suddenly thrown away by something coming out of the ground!</span>")
+		for (var/mob/living/M in range(0, the_pipe))
+			if (M == caster) continue
+			ThrowRandom(M, 3, 1)
+			M.setStatus("stunned", 3 SECONDS)
+			M.visible_message("<span class='alert'>[M] is suddenly thrown away by something coming out of the ground!</span>")
 
 		var/datum/targetable/brain_slug/slug_burrow/the_ability = caster.abilityHolder.getAbility(/datum/targetable/brain_slug/slug_burrow)
 		the_ability.deactivate(TRUE)
