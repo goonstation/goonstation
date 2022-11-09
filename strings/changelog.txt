@@ -1,5 +1,9 @@
 
 (t)wed nov 09 22
+(u)LeahTheTech
+(p)11654
+(e)🔄📄🧛|C-Rework, A-UI, A-Gamemodes
+(*)Greatly simplified Flockdrone manual control. Drones now infer orders from the target given.
 (u)Roddy
 (p)11849
 (e)🗺💅💊|A-Mapping, C-QoL, A-Medical
