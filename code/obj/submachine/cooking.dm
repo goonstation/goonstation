@@ -70,7 +70,7 @@
 			else
 				user.visible_message("<span class='notice'>[user] washes [his_or_her(user)] hands.</span>")
 				if (H.sims)
-					H.sims.affectMotive("Hygiene", 2)
+					H.sims.affectMotive("Hygiene", 5)
 				H.blood_DNA = null // Don't want to use it here, though. The sink isn't a shower (Convair880).
 				H.blood_type = null
 				H.set_clothing_icon_dirty()
