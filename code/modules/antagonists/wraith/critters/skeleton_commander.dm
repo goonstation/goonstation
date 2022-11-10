@@ -158,7 +158,7 @@
 	harm(mob/target, var/mob/living/user)
 		if(check_target_immunity( target ))
 			return 0
-		logTheThing("combat", user, target, "stabs [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "stabs [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 9, rand(5,7), can_punch = 0, can_kick = 0)
 		user.attack_effects(target, affecting)
