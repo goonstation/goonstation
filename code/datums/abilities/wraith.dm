@@ -12,7 +12,7 @@
 		.= list()
 		.["Points:"] = round(src.points)
 		.["Gen. rate:"] = round(src.regenRate + src.lastBonus)
-		if(istype(owner, /mob/wraith/wraith_trickster) || istype(owner, /mob/living/critter/wraith/trickster_puppet))
+		if(istype(owner, /mob/living/intangible/wraith/wraith_trickster) || istype(owner, /mob/living/critter/wraith/trickster_puppet))
 			.["Possess:"] = round(src.possession_points)
 
 /atom/movable/screen/ability/topBar/wraith
@@ -1338,6 +1338,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			return TRUE
 		if (istype(holder.owner, /mob/living/intangible/wraith/wraith_trickster))
 			var/mob/living/intangible/wraith/wraith_trickster/W = holder.owner
+			var/datum/abilityHolder/wraith/AH = W.abilityHolder
 			if (AH.possession_points >= W.points_to_possess)
 				if (ishuman(target) && !isdead(target))
 					var/mob/living/carbon/human/H = target
