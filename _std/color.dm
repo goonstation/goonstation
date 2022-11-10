@@ -82,7 +82,7 @@
 
 /// Takes two 20-length lists, turns them into 5x4 matrices, multiplies them together, and returns a 20-length list
 /proc/mult_color_matrix(var/list/Mat1, var/list/Mat2) // always 5x4 please
-	if (!Mat1.len || !Mat2.len || Mat1.len != 20 || Mat2.len != 20)
+	if (length(Mat1) != 20 || length(Mat2) != 20)
 		return COLOR_MATRIX_IDENTITY
 
 	var/list/M1[5][5] // turn the input matrix lists into more matrix-y lists
@@ -307,8 +307,11 @@ proc/get_average_color(icon/I, xPixelInterval = 4, yPixelInterval = 4)
 	src.saturation_matrix = hsv_transform_color_matrix(1, s, 1)
 	src.color = mult_color_matrix(src.color_matrix, src.saturation_matrix)
 
-/client/proc/set_color(matrix=COLOR_MATRIX_IDENTITY)
-	src.color_matrix = matrix
+/client/proc/set_color(matrix=COLOR_MATRIX_IDENTITY, respect_view_tint_settings = FALSE)
+	if (!respect_view_tint_settings)
+		src.color_matrix = matrix
+	else
+		src.color_matrix = src.view_tint ? matrix : null
 	src.color = mult_color_matrix(src.color_matrix, src.saturation_matrix)
 
 /client/proc/animate_color(matrix=COLOR_MATRIX_IDENTITY, time=5, easing=SINE_EASING)

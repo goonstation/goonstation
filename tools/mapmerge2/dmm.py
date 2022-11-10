@@ -83,6 +83,14 @@ class DMM:
             # reassign the grid entries which used the old key
             self.grid[k] = bad_keys.get(v, v)
 
+    def remove_unused_keys(self, modified_keys = None):
+        unused_keys = list(set(modified_keys)) if modified_keys is not None else self.dictionary.keys()
+        for key in self.grid.values():
+            if key in unused_keys:
+                unused_keys.remove(key)
+        for key in unused_keys:
+            del self.dictionary[key]
+
     def _presave_checks(self):
         # last-second handling of bogus keys to help prevent and fix broken maps
         self._ensure_free_keys(0)
@@ -339,7 +347,6 @@ def _parse(map_raw_text):
     comment_trigger = False
 
     in_quote_block = False
-    curly_block = False
     in_key_block = False
     in_data_block = False
     in_varedit_block = False
@@ -431,14 +438,8 @@ def _parse(map_raw_text):
                         curr_datum = curr_datum + char
 
                     elif char == "}":
-                        if curly_block:
-                            curly_block = False
-                        else:
-                            curr_datum = curr_datum + char
-                            in_varedit_block = False
-
-                    elif char == "{":
-                        curly_block = True
+                        curr_datum = curr_datum + char
+                        in_varedit_block = False
 
                     else:
                         curr_datum = curr_datum + char

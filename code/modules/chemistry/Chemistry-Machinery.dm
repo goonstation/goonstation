@@ -399,7 +399,7 @@
 
 		else if (href_list["createpill"])
 			var/default = R.get_master_reagent_name()
-			var/input_name = input(usr, "Name the pill:", "Name", default) as null|text
+			var/input_name = tgui_input_text(usr, "Name the pill:", "Name", default)
 			if(input_name && input_name != default)
 				phrase_log.log_phrase("pill", input_name, no_duplicates=TRUE)
 			var/pillname = copytext(html_encode(input_name), 1, 32)
@@ -421,7 +421,7 @@
 		else if (href_list["multipill"])
 			// get the pill name from the user
 			var/default = R.get_master_reagent_name()
-			var/input_pillname = input(usr, "Name the pill:", "Name", default) as null|text
+			var/input_pillname = tgui_input_text(usr, "Name the pill:", "Name", default)
 			var/pillname = copytext(html_encode(input_pillname), 1, 32)
 			if(input_pillname && input_pillname != default)
 				phrase_log.log_phrase("pill", input_pillname, no_duplicates=TRUE)
@@ -457,7 +457,7 @@
 
 		else if (href_list["createbottle"])
 			var/default = R.get_master_reagent_name()
-			var/input_name = input(usr, "Name the bottle:", "Name", default) as null|text
+			var/input_name = tgui_input_text(usr, "Name the bottle:", "Name", default)
 			if(input_name && input_name != default)
 				phrase_log.log_phrase("bottle", input_name, no_duplicates=TRUE)
 			var/bottlename = copytext(html_encode(input_name), 1, 32)
@@ -473,7 +473,7 @@
 
 		else if (href_list["createcan"])
 			var/default = R.get_master_reagent_name()
-			var/input_name = input(usr, "Name the can:", "Name", default) as null|text
+			var/input_name = tgui_input_text(usr, "Name the can:", "Name", default)
 			if(input_name && input_name != default)
 				phrase_log.log_phrase("bottle", input_name, no_duplicates=TRUE)
 			var/bottlename = copytext(html_encode(input_name), 1, 32)
@@ -499,7 +499,7 @@
 			return
 
 		else if (href_list["createpatch"])
-			var/input_name = input(usr, "Name the patch:", "Name", R.get_master_reagent_name()) as null|text
+			var/input_name = tgui_input_text(usr, "Name the patch:", "Name", R.get_master_reagent_name())
 			var/patchname = copytext(html_encode(input_name), 1, 32)
 			if (isnull(patchname) || !src.beaker || R.total_volume <= CHEM_EPSILON || !R || !length(patchname) || patchname == " " || BOUNDS_DIST(usr, src) > 0)
 				return
@@ -525,7 +525,7 @@
 			return
 
 		else if (href_list["createampoule"])
-			var/input_name = input(usr, "Name the ampoule:", "Name", R.get_master_reagent_name()) as null|text
+			var/input_name = tgui_input_text(usr, "Name the ampoule:", "Name", R.get_master_reagent_name())
 			var/ampoulename = copytext(html_encode(input_name), 1, 32)
 			if(!ampoulename)
 				return
@@ -541,7 +541,7 @@
 
 		else if (href_list["multipatch"])
 			// get the pill name from the user
-			var/input_name = input(usr, "Name the patch:", "Name", R.get_master_reagent_name()) as null|text
+			var/input_name = tgui_input_text(usr, "Name the patch:", "Name", R.get_master_reagent_name())
 			var/patchname = copytext(html_encode(input_name), 1, 32)
 			if (isnull(patchname) || !src.beaker || !R || !length(patchname) || patchname == " " || BOUNDS_DIST(usr, src) > 0)
 				return

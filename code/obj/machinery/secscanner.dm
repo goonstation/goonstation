@@ -55,7 +55,7 @@
 		if( icon_state != "scanner_on" )
 			return
 		src.use_power(15)
-		var/contraband = I.contraband
+		var/contraband = I.get_contraband()
 
 		if (contraband >= 2)
 
@@ -175,7 +175,7 @@
 			if (istype(target, /mob/living/critter/changeling))
 				return 6
 			for( var/obj/item/item in target.contents )
-				threatcount += item.contraband
+				threatcount += item.get_contraband()
 			return threatcount
 
 		var/mob/living/carbon/human/perp = target
@@ -202,6 +202,9 @@
 		var/has_carry_permit = 0
 		var/has_contraband_permit = 0
 
+		if (!has_contraband_permit)
+			threatcount += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_CONTRABAND_OVERRIDE)
+
 		if(perp_id) //Checking for permits
 			if(weapon_access in perp_id.access)
 				has_carry_permit = 1
@@ -211,69 +214,69 @@
 		if (istype(perp.l_hand))
 			if (istype(perp.l_hand, /obj/item/gun/))  // perp is carrying a gun
 				if(!has_carry_permit)
-					threatcount += perp.l_hand.contraband
+					threatcount += perp.l_hand.get_contraband()
 			else // not carrying a gun
 				if(!has_contraband_permit)
-					threatcount += perp.l_hand.contraband
+					threatcount += perp.l_hand.get_contraband()
 
 		if (istype(perp.r_hand))
 			if (istype(perp.r_hand, /obj/item/gun/)) // perp is carrying a gun
 				if(!has_carry_permit)
-					threatcount += perp.r_hand.contraband
+					threatcount += perp.r_hand.get_contraband()
 			else // not carrying a gun, but potential contraband?
 				if(!has_contraband_permit)
-					threatcount += perp.r_hand.contraband
+					threatcount += perp.r_hand.get_contraband()
 
 		if (istype(perp.wear_suit))
 			if (!has_contraband_permit)
-				threatcount += perp.wear_suit.contraband
+				threatcount += perp.wear_suit.get_contraband()
 
 		if (istype(perp.belt))
 			if (istype(perp.belt, /obj/item/gun/))
 				if (!has_carry_permit)
-					threatcount += perp.belt.contraband * 0.5
+					threatcount += perp.belt.get_contraband() * 0.5
 			else
 				if (!has_contraband_permit)
-					threatcount += perp.belt.contraband * 0.5
+					threatcount += perp.belt.get_contraband() * 0.5
 				for( var/obj/item/item in perp.belt.contents )
 					if (istype(item, /obj/item/gun/))
 						if (!has_carry_permit)
-							threatcount += item.contraband * 0.5
+							threatcount += item.get_contraband() * 0.5
 					else
 						if (!has_contraband_permit)
-							threatcount += item.contraband * 0.5
+							threatcount += item.get_contraband() * 0.5
 
 		if (istype(perp.l_store))
 			if (istype(perp.l_store, /obj/item/gun/))
 				if (!has_carry_permit)
-					threatcount += perp.l_store.contraband * 0.5
+					threatcount += perp.l_store.get_contraband() * 0.5
 			else
 				if (!has_contraband_permit)
-					threatcount += perp.l_store.contraband * 0.5
+					threatcount += perp.l_store.get_contraband() * 0.5
 
 		if (istype(perp.r_store))
 			if (istype(perp.r_store, /obj/item/gun/))
 				if (!has_carry_permit)
-					threatcount += perp.r_store.contraband * 0.5
+					threatcount += perp.r_store.get_contraband() * 0.5
 			else
 				if (!has_contraband_permit)
-					threatcount += perp.r_store.contraband * 0.5
+					threatcount += perp.r_store.get_contraband() * 0.5
 
 		if (istype(perp.back))
 			if (istype(perp.back, /obj/item/gun/)) // some weapons can be put on backs
 				if (!has_carry_permit)
-					threatcount += perp.back.contraband * 0.5
+					threatcount += perp.back.get_contraband() * 0.5
 			else // at moment of doing this we don't have other contraband back items, but maybe that'll change
 				if (!has_contraband_permit)
-					threatcount += perp.back.contraband * 0.5
+					threatcount += perp.back.get_contraband() * 0.5
 			if (istype(perp.back, /obj/item/storage/))
 				for( var/obj/item/item in perp.back.contents )
 					if (istype(item, /obj/item/gun/))
 						if (!has_carry_permit)
-							threatcount += item.contraband * 0.5
+							threatcount += item.get_contraband() * 0.5
 					else
 						if (!has_contraband_permit)
-							threatcount += item.contraband * 0.5
+							threatcount += item.get_contraband() * 0.5
 
 		//Agent cards lower threatlevel
 		if((istype(perp.wear_id, /obj/item/card/id/syndicate)))
