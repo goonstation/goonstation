@@ -143,10 +143,6 @@
 		poltergeists = null
 		..()
 
-	Stat()
-		..()
-		stat("Health:", src.health)
-
 	Life(parent)
 		if (..(parent))
 			return 1
@@ -353,7 +349,7 @@
 		if(!isturf(src.loc)) src.set_loc(get_turf(src))
 
 		if (NewLoc)
-			if (isghostrestrictedz(NewLoc.z) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder))
+			if ((isghostrestrictedz(NewLoc.z) || ((NewLoc.z != Z_LEVEL_STATION) && (NewLoc.z != Z_LEVEL_ADVENTURE) && (NewLoc.z != 7))) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder))
 				var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 				if (OS)
 					src.set_loc(OS)
