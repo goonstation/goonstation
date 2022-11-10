@@ -22,6 +22,27 @@
 
 # Syntax
 
+## Commenting
+
+### Purpose
+When possible, we always want people to document their code clearly so that others (or perhaps yourself in the future) can understand and learn why a piece of code was written. 
+
+Unless the code is extremely complex, what one generally wants to comment is the *motivation* behind a certain piece of code, or what it's supposed to fix - rather than what it's actually doing.
+
+### Doc Comments
+Additionally, we have a 'documentation comment' system set up. This is as simple as commenting code like:
+```cs
+/obj/item/clothing/suit
+    /// If TRUE the suit will hide whoever is wearing it's hair
+    var/over_hair = FALSE
+```
+By using this, when you hover over a variable or object, it'll display information in the comment. For example:
+
+![](https://i.imgur.com/IdKpEtf.png)
+
+For more detailed information on this system, see the [DMByExample page](https://spacestation13.github.io/DMByExample/meta/dmdoc.html).
+
+
 ## Defines to use
 
 ### Time Defines
@@ -496,9 +517,17 @@ proc/give_mob_item(mob/person, obj/item/gift)
 mob/verb/get_mob_to_yourself(mob/target as mob)
 ```
 
+*Additional note*: This applies in general to anything
+*used* as a verb, which can be any proc added to an atom
+via `atom.verbs += /proc/x`.
+
+So, be careful when removing `as x` to
+make sure it isn't being used as a verb somewhere else.
+
 # Useful Things
 
 ## VSCode Debugger
+//TODO
 
 ## Debugging Overlays
 
@@ -522,9 +551,10 @@ There exists a project to provide an incredibly more advanced real-time profiler
 
 ![](https://i.imgur.com/1CEwo0g.png)
 
-To operate this, you will need to do two things: download [the tracy 'viewer' application](https://github.com/wolfpld/tracy), and either compile or download the byond-tracy library.
-* The first can be downloaded here: https://github.com/wolfpld/tracy/releases (download the .7z and unzip it, it's portable)
+To operate this, you will need to do three things: download [the tracy 'viewer' application v0.8.x](https://github.com/wolfpld/tracy), and either compile or download the byond-tracy library.
+* The first can be downloaded here: https://github.com/wolfpld/tracy/releases/tag/v0.8.2 (download the .7z and unzip it, it's portable)
 * The second can be trivially compiled from the C source above (and will be more performant), or you could download a version ZeWaka has compiled themselves [here](https://bit.ly/goontracy). The .dll just goes in the root folder of the game.
+* Uncomment `#define TRACY_PROFILER_HOOK` in `_std/__build.dm`
 
 If you're on Linux you need to compile both yourself manually, obviously.
 

@@ -2006,7 +2006,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 		else
 			return ..()
 
-	canshoot()
+	canshoot(mob/user)
 		if (!my_implant)
 			return 0
 		return 1
@@ -2030,7 +2030,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 
 /datum/projectile/implanter
 	name = "implant bullet"
-	power = 5
+	damage = 5
 	shot_sound = 'sound/machines/click.ogg'
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_STAB

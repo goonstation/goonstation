@@ -298,7 +298,7 @@
 
 		else if (istype(AM, /mob/living/critter/wraith/plaguerat/adult) && src.armed)
 			var/mob/living/critter/wraith/plaguerat/P = AM
-			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			icon_state = "mousetrap"
 			src.armed = 0
 			clear_armer()
@@ -308,7 +308,7 @@
 
 		else if (istype(AM, /mob/living/critter/wraith/plaguerat) && src.armed)
 			var/mob/living/critter/wraith/plaguerat/P = AM
-			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			icon_state = "mousetrap"
 			src.armed = 0
 			clear_armer()

@@ -83,6 +83,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 		else ..()
 
 	surgery(var/obj/item/tool)
+		var/mob/orig_holder = holder
 
 		var/wrong_tool = 0
 
@@ -119,11 +120,12 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 					logTheThing(LOG_COMBAT, tool.the_mob, "removes [constructTarget(holder,"combat")]'s [src.name].")
 					src.remove(0)
 
-			if(!isdead(holder))
-				if(prob(40))
-					holder.emote("scream")
-			holder.TakeDamage("chest",20,0)
-			take_bleeding_damage(holder, null, 15, DAMAGE_CUT)
+			if(orig_holder)
+				if(!isdead(orig_holder))
+					if(prob(40))
+						orig_holder.emote("scream")
+				orig_holder.TakeDamage("chest",20,0)
+				take_bleeding_damage(orig_holder, null, 15, DAMAGE_CUT)
 
 	proc/ropart_take_damage(var/bluntdmg = 0,var/burnsdmg = 0)
 		src.dmg_blunt += bluntdmg
@@ -457,6 +459,11 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 			src.wires = 0
 
 		else ..()
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
 
 /obj/item/parts/robot_parts/chest/standard
 	name = "standard cyborg chest"
@@ -1150,8 +1157,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			borg.set_loc(get_turf(src))
 
 			boutput(borg, "<B>You are playing a Robot. The Robot can interact with most electronic objects in its view point.</B>")
-			boutput(borg, "To use something, simply double-click it.")
-			boutput(borg, "Use say \":s to speak to fellow cyborgs and the AI through binary.")
+			boutput(borg, "To use something, simply click it.")
+			boutput(borg, "Use the prefix <B>:s</B> to speak to fellow cyborgs and the AI through binary.")
 
 			if (src.emagged || src.syndicate)
 				if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && borg.mind)

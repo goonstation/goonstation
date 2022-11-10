@@ -56,7 +56,7 @@
 			// Same distance cap as the MULE because I'm really tired of various pathfinding issues. Buddy time and docking stations are often way more than 150 steps away.
 			// It's 200 something steps alone to get from research to the bar on COG2 for instance, and that's pretty much in a straight line.
 			var/list/thePath = get_path_to(src.master, target_turf, max_distance=src.max_dist, simulated_only=istype(master.loc, /turf/simulated), \
-				id=src.master.botcard, skip_first=FALSE, cardinal_only=TRUE)
+				id=src.master.botcard, skip_first=FALSE, cardinal_only=TRUE, do_doorcheck=TRUE)
 			if (!master)
 				return
 
@@ -1929,6 +1929,11 @@
 
 		return 0
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
 //Buddy handcuff bar thing
 /datum/action/bar/icon/buddy_cuff
 	duration = 30 // zippy zipcuffs
@@ -3146,6 +3151,9 @@
 				var/has_carry_permit = 0
 				var/has_contraband_permit = 0
 
+				if (!has_contraband_permit)
+					. += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_CONTRABAND_OVERRIDE)
+
 				if(perp_id) //Checking for targets and permits
 					if(ckey(perp_id.registered) in target_names)
 						return 7
@@ -3157,38 +3165,38 @@
 				if (istype(perp.l_hand))
 					if (istype(perp.l_hand, /obj/item/gun/)) // perp is carrying a gun
 						if(!has_carry_permit)
-							. += perp.l_hand.contraband
+							. += perp.l_hand.get_contraband()
 					else // not carrying a gun, but potential contraband?
 						if(!has_contraband_permit)
-							. += perp.l_hand.contraband
+							. += perp.l_hand.get_contraband()
 
 				if (istype(perp.r_hand))
 					if (istype(perp.r_hand, /obj/item/gun/)) // perp is carrying a gun
 						if(!has_carry_permit)
-							. += perp.r_hand.contraband
+							. += perp.r_hand.get_contraband()
 					else // not carrying a gun, but potential contraband?
 						if(!has_contraband_permit)
-							. += perp.r_hand.contraband
+							. += perp.r_hand.get_contraband()
 
 				if (istype(perp.belt))
 					if (istype(perp.belt, /obj/item/gun/))
 						if (!has_carry_permit)
-							. += perp.belt.contraband * 0.5
+							. += perp.belt.get_contraband() * 0.5
 					else
 						if (!has_contraband_permit)
-							. += perp.belt.contraband * 0.5
+							. += perp.belt.get_contraband() * 0.5
 
 				if (istype(perp.wear_suit))
 					if (!has_contraband_permit)
-						. += perp.wear_suit.contraband
+						. += perp.wear_suit.get_contraband()
 
 				if (istype(perp.back))
 					if (istype(perp.back, /obj/item/gun/)) // some weapons can be put on backs
 						if (!has_carry_permit)
-							. += perp.back.contraband * 0.5
+							. += perp.back.get_contraband() * 0.5
 					else // at moment of doing this we don't have other contraband back items, but maybe that'll change
 						if (!has_contraband_permit)
-							. += perp.back.contraband * 0.5
+							. += perp.back.get_contraband() * 0.5
 
 				if(perp.mutantrace && perp.mutantrace.jerk)
 //					if(istype(perp.mutantrace, /datum/mutantrace/zombie))
@@ -4314,6 +4322,11 @@
 		else
 			spawn(0)
 				..()
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.created_cell)
+			src.created_cell = null
 
 
 //The Docking Station.  Recharge here!

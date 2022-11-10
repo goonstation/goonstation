@@ -38,10 +38,11 @@ var/datum/explosion_controller/explosions
 				next_turf_safe |= E.turf_safe
 				E.explode()
 
-	proc/queue_damage(var/list/new_turfs)
+	proc/queue_damage(var/list/new_turfs, var/list/new_blame)
 		var/c = 0
 		for (var/turf/T as anything in new_turfs)
 			queued_turfs[T] += new_turfs[T]
+			queued_turfs_blame[T] = new_blame[T]
 			if(c++ % 100 == 0)
 				LAGCHECK(LAG_HIGH)
 
@@ -66,13 +67,13 @@ var/datum/explosion_controller/explosions
 			//boutput(world, "P1 [p]")
 			if (p >= 6)
 				for (var/mob/M in T)
-					M.ex_act(1, explosion.last_touched, p)
+					M.ex_act(1, explosion?.last_touched, p)
 			else if (p > 3)
 				for (var/mob/M in T)
-					M.ex_act(2, explosion.last_touched, p)
+					M.ex_act(2, explosion?.last_touched, p)
 			else
 				for (var/mob/M in T)
-					M.ex_act(3, explosion.last_touched, p)
+					M.ex_act(3, explosion?.last_touched, p)
 
 		LAGCHECK(LAG_HIGH)
 
@@ -93,7 +94,7 @@ var/datum/explosion_controller/explosions
 						needrebuild = 1
 				else
 					severity = 3
-				O.ex_act(severity, explosion.last_touched, power)
+				O.ex_act(severity, explosion?.last_touched, power)
 				O.last_explosion = explosion
 
 		LAGCHECK(LAG_HIGH)
@@ -122,7 +123,7 @@ var/datum/explosion_controller/explosions
 					continue // they can break even on severity 3
 				else if(istype(T, /turf/simulated))
 					severity = max(severity, 3)
-			T.ex_act(severity, explosion.last_touched)
+			T.ex_act(severity, explosion?.last_touched)
 #endif
 		LAGCHECK(LAG_HIGH)
 
@@ -153,7 +154,7 @@ var/datum/explosion_controller/explosions
 				next_turf_safe |= E.turf_safe
 
 
-/obj/var/datum/explosion/last_explosion = null
+/obj/var/datum/explosion/last_explosion = 1 //gross hack detected
 
 /obj/disposing()
 	src.last_explosion = null
@@ -277,7 +278,6 @@ var/datum/explosion_controller/explosions
 				C.lying = 1
 				C.set_clothing_icon_dirty()
 
-		explosions.queue_damage(nodes)
-		explosions.queued_turfs_blame += blame
+		explosions.queue_damage(nodes, blame)
 
 #undef RSS_SCALE

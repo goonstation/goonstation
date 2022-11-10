@@ -17,9 +17,7 @@
 	/// The material name (string) that this will default to if a material is not otherwise set
 	var/default_material = "steel"
 	var/health = 100
-	var/list/proj_impacts = list()
-	var/list/forensic_impacts = list()
-	var/image/proj_image = null
+	var/list/forensic_impacts = null
 	var/last_proj_update_time = null
 
 	New()
@@ -30,9 +28,7 @@
 
 		src.AddComponent(/datum/component/bullet_holes, 15, 10)
 
-		//for fluids
-		if (src.active_liquid && src.active_liquid.group)
-			src.active_liquid.group.displace(src.active_liquid)
+		src.selftilenotify() // displace fluid
 
 		#ifdef XMAS
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
@@ -59,13 +55,6 @@
 			if(istype(w))
 				w.tilenotify(src)
 
-	get_desc()
-		if (islist(src.proj_impacts) && length(src.proj_impacts))
-			var/shots_taken = 0
-			for (var/i in src.proj_impacts)
-				shots_taken ++
-			. += "<br>[src] has [shots_taken] hole[s_es(shots_taken)] in it."
-
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
@@ -81,18 +70,6 @@
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m steel wall
 	explosion_resistance = 2
 
-	proc/update_projectile_image(var/update_time)
-		if (src.proj_impacts.len > 10)
-			return
-		if (src.last_proj_update_time && (src.last_proj_update_time + 1) < ticker.round_elapsed_ticks)
-			return
-		if (!src.proj_image)
-			src.proj_image = image('icons/obj/projectiles.dmi', "blank")
-		src.proj_image.overlays = null
-		for (var/image/i in src.proj_impacts)
-			src.proj_image.overlays += i
-		src.UpdateOverlays(src.proj_image, "projectiles")
-
 	proc/xmasify()
 		if(fixed_random(src.x / world.maxx, src.y / world.maxy) <= 0.01)
 			new /obj/decal/wreath(src)
@@ -106,7 +83,7 @@
 /turf/simulated/wall/New()
 	..()
 	if(!ticker && istype(src.loc, /area/station/maintenance) && prob(7))
-		make_cleanable( /obj/decal/cleanable/fungus,src)
+		make_cleanable(/obj/decal/cleanable/fungus, src)
 
 // Made this a proc to avoid duplicate code (Convair880).
 /turf/simulated/wall/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W, var/instantly)
@@ -149,6 +126,9 @@
 	newlight.base_state = parts.installed_base_state
 	newlight.fitting = parts.fitting
 	newlight.status = 1 // LIGHT_EMPTY
+	if (istype(src,/turf/simulated/wall/auto))
+		newlight.nostick = 0
+		newlight.autoposition()
 	newlight.add_fingerprint(user)
 	src.add_fingerprint(user)
 	user.u_equip(parts)

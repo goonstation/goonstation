@@ -67,9 +67,11 @@ var/list/headset_channel_lookup
 		set_secure_frequencies()
 
 /obj/item/device/radio/disposing()
+	src.patch_link = null
+	src.traitorradio  = null
 	src.secure_connections = null
 	src.secure_frequencies = null
-
+	src.speech_bubble = null
 	..()
 
 /obj/item/device/radio/proc/set_frequency(new_frequency)

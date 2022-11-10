@@ -73,7 +73,7 @@ obj/item/rocko
 			view_chance += 2
 			if(src.holder == M)
 				view_chance += 5
-		else if(M.job in list("Engineer", "Mechanic"))
+		else if(M.job in list("Engineer"))
 			view_chance += 1
 			if(src.holder == M)
 				view_chance += 1
@@ -156,7 +156,7 @@ obj/item/rocko
 	get_desc(dist, mob/user)
 		if(ismob(user) &&	user.job == "Chief Engineer")
 			. = "A rock but also [pick(rocko_is)]."
-		else if(ismob(user) && (user.job in list("Engineer", "Mechanic", "Quartermaster", "Captain")))
+		else if(ismob(user) && (user.job in list("Engineer", "Quartermaster", "Captain")))
 			. = "The Chief Engineer loves this rock.  Maybe it's to make up for their lack of a pet."
 		else
 			. = "A rock with a [src.smile ? "smiley" : "frowny"] face painted on it."

@@ -9,7 +9,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/heal_amt = 0
 	var/needfork = 0
 	var/needspoon = 0
-	var/food_color = "#FF0000" //Color for various food items
+	/// Color for various food items
+	var/food_color = null
 	var/custom_food = 1 //Can it be used to make custom food like for pizzas
 	var/festivity = 0
 	var/brew_result = null // what will it make if it's brewable?
@@ -32,29 +33,37 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 				return 1
 		return 0
 
+	proc/get_food_color()
+		if (food_color) // keep manually defined food colors
+			return food_color
+		var/icon/I = istype(src.icon, /icon) ? src.icon : icon(src.icon, src.icon_state)
+		food_color = get_average_color(I)
+		return food_color
+
 	proc/heal(var/mob/living/M)
+		SHOULD_CALL_PARENT(TRUE)
 		var/healing = src.heal_amt
-
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if (H.sims)
-				H.sims.affectMotive("Hunger", heal_amt * 6)
-				H.sims.affectMotive("Bladder", -heal_amt * 0.2)
-
-		if (quality >= 5)
-			boutput(M, "<span class='notice'>That tasted amazing!</span>")
-			healing *= 2
-
-		if (src.reagents && src.reagents.has_reagent("THC"))
-			boutput(M, "<span class='notice'>Wow this tastes really good man!!</span>")
-			healing *= 2
-
 
 		if (quality <= 0.5)
 			boutput(M, "<span class='alert'>Ugh! That tasted horrible!</span>")
 			if (prob(20))
 				M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
 			healing = 0
+
+		if (healing > 0)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (H.sims)
+					H.sims.affectMotive("Hunger", healing * 6)
+					H.sims.affectMotive("Bladder", -healing * 0.2)
+
+			if (quality >= 5)
+				boutput(M, "<span class='notice'>That tasted amazing!</span>")
+				healing *= 2
+
+			if (src.reagents && src.reagents.has_reagent("THC"))
+				boutput(M, "<span class='notice'>Wow this tastes really good man!!</span>")
+				healing *= 2
 
 		if (!isnull(src.unlock_medal_when_eaten))
 			M.unlock_medal(src.unlock_medal_when_eaten, 1)
@@ -779,6 +788,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			var/obj/item/reagent_containers/food/snacks/soup/custom/S = new(L.my_soup, src)
 			S.pixel_x = src.pixel_x
 			S.pixel_y = src.pixel_y
+			for(var/obj/surgery_tray/target_tray in src.loc)
+				target_tray.attach(S)
+				break
+
 			L.my_soup = null
 			L.UpdateOverlays(null, "fluid")
 
@@ -1027,7 +1040,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	initial_volume = 50
 	var/smashed = 0
 	var/shard_amt = 1
-	var/smash_on_throw = FALSE
+	var/splash_on_smash = FALSE
 
 	var/image/fluid_image
 	var/image/image_ice
@@ -1312,12 +1325,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if (!T)
 			qdel(src)
 			return
-		if (src.reagents) // haine fix for cannot execute null.reaction()
+		if(src.reagents && splash_on_smash)
 			var/amt = max(10, src.gulp_size)
 			src.reagents.reaction(A, react_volume = min(amt, src.reagents.total_volume))
 			src.reagents.remove_any(amt)
 			src.reagents.reaction(T)
-
 		T.visible_message("<span class='alert'>[src] shatters!</span>")
 		playsound(T, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
 		for (var/i=src.shard_amt, i > 0, i--)
@@ -1333,11 +1345,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
-		if(src.smash_on_throw)
-			src.smash(A)
+		src.smash(A)
 
 	pixelaction(atom/target, list/params, mob/living/user, reach)
-		if(!istype(target, /obj/table))
+		if(!istype(target, /obj/table) || src.cant_drop)
 			return ..()
 		var/obj/table/target_table = target
 		var/obj/table/source_table = locate() in get_step(user, user.dir)
@@ -1359,7 +1370,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		var/list/turf/path = raytrace(get_turf(source_table), get_turf(target_table))
 		var/turf/last_turf = get_turf(source_table)
 		SPAWN(0)
+			var/max_iterations = 20
 			for(var/turf/T in path)
+				if(max_iterations-- <= 0)
+					break
 				if(src.loc != last_turf)
 					break
 				if(!(locate(/obj/table) in src.loc))
@@ -1451,7 +1465,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	amount_per_transfer_from_this = 50
 	gulp_size = 50
 	initial_volume = 50
-	smash_on_throw = TRUE
+	splash_on_smash = TRUE
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/oldf
 	name = "old fashioned glass"
@@ -1751,6 +1765,26 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		src.fluid_image.color = average.to_rgba()
 		src.UpdateOverlays(src.fluid_image, "fluid")
 
+/obj/item/reagent_containers/food/drinks/pinkmug //for Jan's office
+	name = "pink latte mug"
+	desc = "Whoever owns this drinks a lot of lattes."
+	icon = 'icons/misc/janstuff.dmi'
+	icon_state = "pinkmug_full"
+	initial_volume = 50
+	initial_reagents = list("espresso"=40, "milk"=5, "chocolate"=5)
+
+	on_reagent_change()
+		..()
+		src.UpdateIcon()
+
+		if (src.reagents.total_volume == 0)
+			update_icon()
+			icon_state = "pinkmug_empty"
+		else
+			update_icon()
+			icon_state = "pinkmug_full"
+		return
+
 /obj/item/reagent_containers/food/drinks/carafe
 	name = "coffee carafe"
 	desc = null
@@ -1854,6 +1888,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	initial_volume = 50
 	can_recycle = FALSE
 	initial_reagents = list("coconut_milk"=20)
+
+/obj/item/reagent_containers/food/drinks/pumpkinlatte
+	name = "Spiced Pumpkin"
+	desc = "Oh, a delicious, mysterious pumpkin spice latte!"
+	icon = 'icons/obj/foodNdrink/drinks.dmi'
+	icon_state = "pumpkinlatte"
+	item_state = "drink_glass"
+	g_amt = 30
+	initial_volume = 50
+	can_recycle = FALSE
+	initial_reagents = list("pumpkinspicelatte"=30)
 
 /obj/item/reagent_containers/food/drinks/energyshake
 	name = "Brotein Shake - Dragon Balls flavor"

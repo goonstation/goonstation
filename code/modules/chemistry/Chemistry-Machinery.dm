@@ -368,7 +368,7 @@
 		var/datum/reagents/R = beaker.reagents
 
 		if (href_list["analyze"])
-			var/dat = "<TITLE>CheMaster 3000</TITLE>Chemical infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
+			var/dat = "<TITLE>CheMaster 3000</TITLE>Chemical infos:<BR><BR><b>Name:</b><BR>&emsp;[href_list["name"]]<BR><BR><b>Description:</b><BR>&emsp;[href_list["desc"]]<BR><BR><BR>[href_list["recipe"]]<BR><BR><BR> <A href='?src=\ref[src];main=1'>(Back)</A>"
 			usr.Browse(dat, "window=chem_master;size=575x400;title=CheMaster 3000")
 			return
 		else if (href_list["isolate"])
@@ -399,7 +399,7 @@
 
 		else if (href_list["createpill"])
 			var/default = R.get_master_reagent_name()
-			var/input_name = input(usr, "Name the pill:", "Name", default) as null|text
+			var/input_name = tgui_input_text(usr, "Name the pill:", "Name", default)
 			if(input_name && input_name != default)
 				phrase_log.log_phrase("pill", input_name, no_duplicates=TRUE)
 			var/pillname = copytext(html_encode(input_name), 1, 32)
@@ -421,7 +421,7 @@
 		else if (href_list["multipill"])
 			// get the pill name from the user
 			var/default = R.get_master_reagent_name()
-			var/input_pillname = input(usr, "Name the pill:", "Name", default) as null|text
+			var/input_pillname = tgui_input_text(usr, "Name the pill:", "Name", default)
 			var/pillname = copytext(html_encode(input_pillname), 1, 32)
 			if(input_pillname && input_pillname != default)
 				phrase_log.log_phrase("pill", input_pillname, no_duplicates=TRUE)
@@ -457,7 +457,7 @@
 
 		else if (href_list["createbottle"])
 			var/default = R.get_master_reagent_name()
-			var/input_name = input(usr, "Name the bottle:", "Name", default) as null|text
+			var/input_name = tgui_input_text(usr, "Name the bottle:", "Name", default)
 			if(input_name && input_name != default)
 				phrase_log.log_phrase("bottle", input_name, no_duplicates=TRUE)
 			var/bottlename = copytext(html_encode(input_name), 1, 32)
@@ -473,7 +473,7 @@
 
 		else if (href_list["createcan"])
 			var/default = R.get_master_reagent_name()
-			var/input_name = input(usr, "Name the can:", "Name", default) as null|text
+			var/input_name = tgui_input_text(usr, "Name the can:", "Name", default)
 			if(input_name && input_name != default)
 				phrase_log.log_phrase("bottle", input_name, no_duplicates=TRUE)
 			var/bottlename = copytext(html_encode(input_name), 1, 32)
@@ -499,7 +499,7 @@
 			return
 
 		else if (href_list["createpatch"])
-			var/input_name = input(usr, "Name the patch:", "Name", R.get_master_reagent_name()) as null|text
+			var/input_name = tgui_input_text(usr, "Name the patch:", "Name", R.get_master_reagent_name())
 			var/patchname = copytext(html_encode(input_name), 1, 32)
 			if (isnull(patchname) || !src.beaker || R.total_volume <= CHEM_EPSILON || !R || !length(patchname) || patchname == " " || BOUNDS_DIST(usr, src) > 0)
 				return
@@ -525,7 +525,7 @@
 			return
 
 		else if (href_list["createampoule"])
-			var/input_name = input(usr, "Name the ampoule:", "Name", R.get_master_reagent_name()) as null|text
+			var/input_name = tgui_input_text(usr, "Name the ampoule:", "Name", R.get_master_reagent_name())
 			var/ampoulename = copytext(html_encode(input_name), 1, 32)
 			if(!ampoulename)
 				return
@@ -541,7 +541,7 @@
 
 		else if (href_list["multipatch"])
 			// get the pill name from the user
-			var/input_name = input(usr, "Name the patch:", "Name", R.get_master_reagent_name()) as null|text
+			var/input_name = tgui_input_text(usr, "Name the patch:", "Name", R.get_master_reagent_name())
 			var/patchname = copytext(html_encode(input_name), 1, 32)
 			if (isnull(patchname) || !src.beaker || !R || !length(patchname) || patchname == " " || BOUNDS_DIST(usr, src) > 0)
 				return
@@ -620,7 +620,7 @@
 				dat += "Contained reagents:<BR>"
 				for (var/reagent_id in R.reagent_list)
 					var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
-					dat += "[capitalize(current_reagent.name)] - [current_reagent.volume] Units - <A href='?src=\ref[src];analyze=1;desc=[html_encode(current_reagent.description)];name=[capitalize(current_reagent.name)]'>(Analyze)</A> <A href='?src=\ref[src];isolate=[current_reagent.id]'>(Isolate)</A> <A href='?src=\ref[src];remove=[current_reagent.id]'>(Remove all)</A> <A href='?src=\ref[src];remove5=[current_reagent.id]'>(-5)</A> <A href='?src=\ref[src];remove1=[current_reagent.id]'>(-1)</A><BR>"
+					dat += "[capitalize(current_reagent.name)] - [current_reagent.volume] Units - <A style='color: green' href='?src=\ref[src];analyze=1;desc=[html_encode(current_reagent.description)];name=[capitalize(current_reagent.name)];recipe=[current_reagent.get_recipes_in_text()]'>(Analyze)</A> <A href='?src=\ref[src];isolate=[current_reagent.id]'>(Isolate)</A> <A href='?src=\ref[src];remove=[current_reagent.id]'>(Remove all)</A> <A href='?src=\ref[src];remove5=[current_reagent.id]'>(-5)</A> <A href='?src=\ref[src];remove1=[current_reagent.id]'>(-1)</A><BR>"
 				dat += "<BR><A href='?src=\ref[src];createpill=1'>Create pill (100 units max)</A><BR>"
 				dat += "<A href='?src=\ref[src];multipill=1'>Create multiple pills (5 units min)</A> Bottle: <A href='?src=\ref[src];togglepillbottle=1'>[src.pill_bottle ? "Yes" : "No"]</A><BR>"
 				dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (50 units max)</A><BR>"

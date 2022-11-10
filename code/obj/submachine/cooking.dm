@@ -483,6 +483,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/cereal_honey(src)
 			src.recipes += new /datum/cookingrecipe/b_cupcake(src)
 			src.recipes += new /datum/cookingrecipe/beefood(src)
+			src.recipes += new /datum/cookingrecipe/zongzi(src)
 
 			src.recipes += new /datum/cookingrecipe/baguette(src)
 			src.recipes += new /datum/cookingrecipe/garlicbread_ch(src)
@@ -706,7 +707,6 @@ table#cooktime a#start {
 						else if (bonus == -1)
 							if (F.quality > 0.5)
 								F.quality = 0.5
-							F.heal_amt = 0
 						if (src.emagged)
 							F.from_emagged_oven = 1
 						F.set_loc(src.loc)
@@ -720,10 +720,8 @@ table#cooktime a#start {
 
 					if (bonus == 1)
 						F.quality = 5
-					else if (bonus == -1)
-						F.quality = recipebonus - cook_amt
-						if (istype(F, /obj/item/reagent_containers/food/snacks))
-							F.heal_amt = 0
+					else
+						F.quality = clamp(5 - abs(recipebonus - cook_amt), 0, 5)
 					if (src.emagged && istype(F))
 						F.from_emagged_oven = 1
 					if (derivename)

@@ -5,9 +5,13 @@
 	var/name = ""
 	var/desc = ""
 	var/tooltip_flags = null
-	var/use_tooltip = 1
-	var/close_clicked = 1
+	var/use_tooltip = TRUE
+	var/close_clicked = TRUE
+	///Does the action close when the mob moves
+	var/close_moved = TRUE
 	var/flick_on_click = null
+	var/text = ""
+	var/background_color = null
 
 	/// Is this action even allowed to show up under the given circumstances? TRUE=yes, FALSE=no
 	proc/checkRequirements(atom/target, mob/user)
@@ -1171,90 +1175,6 @@
 			target.addContextAction(/datum/contextAction/testfour)
 			return 0
 */
-
-/datum/contextAction/flockdrone
-	icon = 'icons/ui/context16x16.dmi'
-	icon_background = "flockbg"
-	name = "Control flockdrone"
-	desc = "You shouldn't be reading this, bug."
-	icon_state = "wrench"
-	close_clicked = TRUE
-	/// The flockdrone aiTask subtype we should switch to upon cast
-	var/task_type = null
-
-	//funny copy paste ability targeting code, someone should really generalize this UPSTREAM
-	execute(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-		//typecasting soup time
-		if (!istype(target) || !istype(user))
-			return
-		var/datum/abilityHolder/flockmind/holder = user.abilityHolder
-		if (!istype(holder))
-			return
-		var/datum/targetable/flockmindAbility/droneControl/ability = holder.drone_controller
-		if (ability.targeted && user.targeting_ability == ability)
-			user.targeting_ability = null
-			user.update_cursor()
-			return
-		if (ability.targeted)
-			if (world.time < ability.last_cast)
-				return
-			ability.drone = target
-			ability.task_type = task_type
-			ability.holder.owner.targeting_ability = ability
-			ability.holder.owner.update_cursor()
-		user.closeContextActions()
-
-	checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-		return istype(target) && istype(user) && !user.targeting_ability
-
-	move
-		name = "Move"
-		desc = "Go somwhere."
-		icon_state = "flock_move"
-		task_type = /datum/aiTask/sequence/goalbased/flock/rally
-
-	convert
-		name = "Convert"
-		desc = "Convert this thing"
-		icon_state = "flock_convert"
-		task_type = /datum/aiTask/sequence/goalbased/flock/build/targetable
-
-		checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-			return ..() && target.resources >= FLOCK_CONVERT_COST
-
-	capture
-		name = "Capture"
-		desc = "Capture this enemy"
-		icon_state = "flock_capture"
-		task_type = /datum/aiTask/sequence/goalbased/flock/flockdrone_capture/targetable
-
-		checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-			return ..()
-
-	barricade
-		name = "Barricade"
-		desc = "Build a barricade"
-		icon_state = "flock_barricade"
-		task_type = /datum/aiTask/sequence/goalbased/flock/barricade/targetable
-
-		checkRequirements(mob/living/critter/flock/drone/target, mob/living/intangible/flock/user)
-			return ..() && target.resources >= FLOCK_BARRICADE_COST
-
-	shoot
-		name = "Shoot"
-		desc = "Shoot this enemy"
-		icon_state = "flock_shoot"
-		task_type = /datum/aiTask/timed/targeted/flockdrone_shoot/targetable
-
-	control
-		name = "Control"
-		desc = "Assume direct control of this endpoint"
-		icon_state = "flock_control"
-
-		execute(mob/living/critter/flock/drone/target, mob/living/intangible/flock/user)
-			if(user.flock && target.flock == user.flock)
-				target.take_control(user)
-
 /datum/contextAction/rcd
 	icon = 'icons/ui/context16x16.dmi'
 	close_clicked = TRUE
@@ -1298,3 +1218,25 @@
 		name = "Light tubes"
 		icon_state = "tube"
 		mode = RCD_MODE_LIGHTTUBES
+
+/datum/contextAction/reagent
+	icon_background = "whitebg"
+	icon_state = "note"
+	var/reagent_id = ""
+
+	New(var/reagent_id)
+		..()
+		src.reagent_id = reagent_id || src.reagent_id
+		var/datum/reagent/reagent = reagents_cache[reagent_id]
+		if (!istype(reagent))
+			return
+		src.background_color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
+		src.text = reagent_shorthands[reagent_id] || copytext(capitalize(reagent.name), 1, 3)
+		src.name = capitalize(reagent.name)
+
+/datum/contextAction/reagent/robospray
+	close_moved = FALSE
+	checkRequirements(var/obj/item/robospray/robospray, var/mob/user)
+		return robospray in user
+	execute(var/obj/item/robospray/robospray, var/mob/user)
+		robospray.change_reagent(src.reagent_id, user)

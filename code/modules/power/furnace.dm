@@ -15,6 +15,7 @@
 	mats = 20
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
+	machine_registry_idx = MACHINES_MISC
 
 	process()
 		if(status & BROKEN) return
@@ -52,7 +53,7 @@
 		//At max fuel, the state will be 4, aka all bars, then it will lower / increase as fuel is added
 		if(fuel_state != last_fuel_state) //The fuel state has changed and we need to do an update
 			last_fuel_state = fuel_state
-			for(var/i = 1; i <= 4; i++)
+			for(var/i in 1 to 4)
 				var/okey = "fuel[i]"
 				if(fuel_state >= i) //Add the overlay
 					var/image/I = GetOverlayImage(okey)
@@ -118,7 +119,26 @@
 			if (src.fuel >= src.maxfuel)
 				boutput(user, "<span class='alert'>The furnace is already full!</span>")
 				return
+
+			if (istype(O, /obj/storage/crate/))
+				var/obj/storage/crate/crate = O
+				if (crate.spawn_contents && crate.make_my_stuff()) //Ensure contents have been spawned properly
+					crate.spawn_contents = null
+
+				user.visible_message("<span class='notice'>[user] uses the [src]'s automatic ore loader on [crate]!</span>", "<span class='notice'>You use the [src]'s automatic ore loader on [crate].</span>")
+				for (var/obj/item/I in crate.contents)
+					load_into_furnace(I, 1, user)
+					if (src.fuel >= src.maxfuel)
+						src.fuel = src.maxfuel
+						boutput(user, "<span class='notice'>The furnace is now full!</span>")
+						break
+				playsound(src, 'sound/machines/click.ogg', 50, 1)
+				boutput(user, "<span class='notice'>You finish loading [crate] into [src]!</span>")
+				return
+
 			var/staystill = user.loc
+
+			// else, just stuff
 			for(var/obj/W in oview(1,user))
 				if (!matches(W, O))
 					continue
@@ -130,6 +150,7 @@
 				sleep(0.3 SECONDS)
 				if (user.loc != staystill)
 					break
+			playsound(src, 'sound/machines/click.ogg', 50, 1)
 			boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
 
 		src.updateUsrDialog()
@@ -241,7 +262,8 @@
 			if(!stacked)
 				fuel_name = W.name
 				user.u_equip(W)
-				W.dropped(user)
+				if(!iscritter(W))
+					W.dropped(user)
 			boutput(user, "<span class='notice'>You load [fuel_name] into [src]!</span>")
 
 			if(src.fuel > src.maxfuel)

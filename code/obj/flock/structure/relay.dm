@@ -26,7 +26,7 @@
 	layer = EFFECTS_LAYER_BASE //big spooky thing needs to render over everything
 	plane = PLANE_NOSHADOW_ABOVE
 	var/conversion_radius = 1
-	var/max_conv_radius = 100
+	var/max_conv_radius = 15 // increase back to 100 later if possible. 100 worked fine on local but not as much on live with a lot of people
 	var/list/turfs_to_convert = null
 	var/last_time_sound_played_in_seconds = 0
 	var/sound_length_in_seconds = 27
@@ -41,6 +41,8 @@
 	var/shuttle_departure_delayed = FALSE
 
 /obj/flock_structure/relay/New()
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, 9)
+
 	..()
 	logTheThing(LOG_GAMEMODE, src, "Flock relay is constructed[src.flock ? " by flock [src.flock.name]" : ""] at [log_loc(src)].")
 	src.info_tag.set_tag_offset(64, -4) // to account for 5x5 sprite
@@ -50,7 +52,7 @@
 		if (emergency_shuttle.direction == 1 && emergency_shuttle.location != SHUTTLE_LOC_STATION && emergency_shuttle.location != SHUTTLE_LOC_TRANSIT)
 			emergency_shuttle.recall()
 			command_alert("Emergency shuttle approach aborted due to anomalous radio signal interference. The shuttle has been returned to base as a precaution.")
-			emergency_shuttle.disabled = TRUE
+			emergency_shuttle.disabled = SHUTTLE_CALL_MANUAL_CALL_DISABLED
 		else if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
 			emergency_shuttle.settimeleft(src.charge_time_length + SHUTTLELEAVETIME)
 			src.shuttle_departure_delayed = TRUE
@@ -78,13 +80,14 @@
 		turfs_to_convert["[dist]"] |= T
 
 /obj/flock_structure/relay/disposing()
+	REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
 	var/mob/living/intangible/flock/flockmind/F = src.flock?.flockmind
 	logTheThing(LOG_GAMEMODE, src, "Flock relay[src.flock ? " belonging to flock [src.flock.name]" : ""] is destroyed at [log_loc(src)].")
 	..()
 	if (!src.finished)
 		F?.death(relay_destroyed = TRUE)
 	if (!src.shuttle_departure_delayed)
-		emergency_shuttle.disabled = FALSE
+		emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
 
 /obj/flock_structure/relay/get_desc()
 	var/time_remaining = round(src.charge_time_length - getTimeInSecondsSinceTime(src.time_started))
@@ -138,6 +141,7 @@
 		return
 	logTheThing(LOG_GAMEMODE, src, "Flock relay[src.flock ? " belonging to flock [src.flock.name]" : ""] unleashes the signal, exploding at [log_loc(src)].")
 	src.finished = TRUE
+	src.flock.relay_finished = TRUE
 	processing_items -= src
 	var/turf/location = get_turf(src)
 	overlays += "structure-relay-sparks"
@@ -153,7 +157,7 @@
 		M.flash(3 SECONDS)
 	if (!src.shuttle_departure_delayed)
 		SPAWN(1 SECOND)
-			emergency_shuttle.disabled = FALSE
+			emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
 			emergency_shuttle.incall()
 			emergency_shuttle.can_recall = FALSE
 			emergency_shuttle.settimeleft(60) // cut the time down to keep some sense of urgency

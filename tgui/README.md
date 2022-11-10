@@ -206,6 +206,7 @@ pull and render.
 window elements, like the titlebar, buttons, resize handlers. Calls
 `routes.js` to decide which component to render.
 - `/packages/tgui/styles/main.scss` - CSS entry point.
+**Important:** If you want to add a .scss file for an interface, you must import it here!
 - `/packages/tgui/styles/functions.scss` - Useful SASS functions.
 Stuff like `lighten`, `darken`, `luminance` are defined here.
 - `/packages/tgui/styles/atomic` - Atomic CSS classes.
@@ -226,7 +227,9 @@ See: [Component Reference](docs/component-reference.md).
 
 ## FontAwesome Icon
 
-For a list of all the icons you can use, see the [FontAwesome website](https://fontawesome.com/v5/search?m=free&s=regular%2Csolid)
+For a list of all the icons you can use, see the [FontAwesome website](https://fontawesome.com/v6/search?o=r&m=free&s=solid%2Cregular)
+
+For additional font styles you can use, see the [FontAwesome Docs](https://fontawesome.com/v6/docs/web/style/style-cheatsheet#contentHeader)
 
 ## License
 

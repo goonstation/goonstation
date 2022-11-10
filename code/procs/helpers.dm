@@ -369,6 +369,10 @@ proc/get_angle(atom/a, atom/b)
 	// 	index = findtext(t, ">")
 	. = html_encode(t)
 
+///Cleans up data passed in from network packets for display so it doesn't mess with formatting
+/proc/tidy_net_data(var/t)
+	. = isnum(t) ? t : strip_html(t)
+
 /proc/map_numbers(var/x, var/in_min, var/in_max, var/out_min, var/out_max)
 	. = ((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min)
 
@@ -477,10 +481,10 @@ proc/get_angle(atom/a, atom/b)
 	. = dir2text(angle2dir(degree))
 
 /proc/text_input(var/Message, var/Title, var/Default, var/length=MAX_MESSAGE_LEN)
-	. = sanitize(input(Message, Title, Default) as text, length)
+	. = sanitize(tgui_input_text(usr, Message, Title, Default), length)
 
 /proc/scrubbed_input(var/user, var/Message, var/Title, var/Default, var/length=MAX_MESSAGE_LEN)
-	. = strip_html(input(user, Message, Title, Default) as null|text, length)
+	. = strip_html(tgui_input_text(user, Message, Title, Default), length)
 
 /proc/LinkBlocked(turf/A, turf/B)
 	if(A == null || B == null) return 1
@@ -660,7 +664,7 @@ proc/get_angle(atom/a, atom/b)
 		if(C.client)
 			. += C
 		LAGCHECK(LAG_REALTIME)
-	for(var/mob/wraith/M in mobs)
+	for(var/mob/living/intangible/wraith/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/living/intangible/blob_overmind/M in mobs)
@@ -1141,10 +1145,10 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 // Marquesas: added an extra parameter to fix issue with changeling.
 // Unfortunately, it has to be this extra parameter, otherwise the spawn(0) in the mob say will
 // cause the mob's name to revert from the one it acquired for mimic voice.
-/atom/proc/hear_talk(mob/M as mob, text, real_name)
+/atom/proc/hear_talk(mob/M as mob, text, real_name, lang_id)
 	if (src.open_to_sound)
 		for(var/obj/O in src)
-			O.hear_talk(M,text,real_name)
+			O.hear_talk(M,text,real_name, lang_id)
 
 /**
   * Returns true if given value is a hex value
@@ -1769,6 +1773,18 @@ proc/countJob(rank)
 		return
 	src.letter_overlay(letter, lcolor, text2dir(dir))
 
+/// Returns a list of eligible dead players that COULD choose to respawn or whatever
+/proc/eligible_dead_player_list(var/allow_dead_antags = 0, var/require_client = FALSE)
+	. = list()
+	for (var/datum/mind/M in ticker.minds)
+		if (M.current && M.current.client)
+			var/client/C = M.current.client
+			if (dead_player_list_helper(M.current, allow_dead_antags, require_client) != 1)
+				continue
+			if (C.holder && !C.holder.ghost_respawns && !C.player_mode || !M.show_respawn_prompts)
+				continue
+			. += M
+
 /// Returns a list of eligible dead players to be respawned as an antagonist or whatever (Convair880).
 /// Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
 /proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0,
@@ -1904,7 +1920,7 @@ proc/countJob(rank)
 			if (TO.ghost && istype(TO.ghost, /mob/dead/observer))
 				the_ghost = TO.ghost
 
-		if (!the_ghost || !isobserver(the_ghost) || !isdead(the_ghost))
+		if (!the_ghost || !isobserver(the_ghost) || !isdead(the_ghost) || the_ghost.observe_round)
 			return 0
 
 	if (!allow_dead_antags && (!isnull(G.mind.special_role) || length(G.mind.former_antagonist_roles))) // Dead antagonists have had their chance.
@@ -2246,11 +2262,11 @@ var/global/list/allowed_restricted_z_areas
   * Given user, will proompt user to select skin color from list (or custom) and returns skin tone after blending
   */
 /proc/get_standard_skintone(var/mob/user)
-	var/new_tone = input(user, "Please select skin color.", "Character Generation")  as null|anything in standard_skintones + list("Custom...")
+	var/new_tone = tgui_input_list(user, "Please select skin color.", "Character Generation", standard_skintones + "Custom...")
 	if (new_tone == "Custom...")
-		var/tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Skin tone picker") as null|num
-		if (!isnull(tone))
-			tone = 35 - clamp(tone, 1, 220) // range is 34 to -194
+		var/tone = tgui_input_number(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Skin tone picker", 1, 220, 1)
+		if (tone)
+			tone = 35 - clamp(round(text2num(tone)), 1, 220) // range is 34 to -194
 			//new_tone = rgb(220 + tone, 220 + tone, 220 + tone)
 			new_tone = blend_skintone(tone,tone,tone)
 		else
@@ -2298,21 +2314,17 @@ var/global/list/allowed_restricted_z_areas
 
 	return role
 
-var/regex/nameRegex = regex("\\xFF.","g")
-/proc/strip_special(var/text)
-	return nameRegex.Replace( "[text]", "" )
-
+// DM simultaneously makes cursed shit like this work...
+// yet won't work with just the unicode raws - infinite pain
+var/const/___proper = "\proper"
+var/const/___improper = "\improper"
+var/static/regex/regexTextMacro = regex("[___proper]|[___improper]", "g")
 
 /**
   * Removes the special data inserted via use of \improper etc in strings
   */
 /proc/stripTextMacros(text)
-	if (findtext(text, "\improper"))
-		text = replacetext(text, "\improper", "")
-	if (findtext(text, "\proper"))
-		text = replacetext(text, "\proper", "")
-
-	return text
+	return replacetext(text, regexTextMacro, "")
 
 /**
   * Returns true if given mob/client/mind is an admin
@@ -2380,12 +2392,6 @@ proc/radioGarbleText(var/message, var/per_letter_corruption_chance=40)
   */
 proc/illiterateGarbleText(var/message)
 	. = radioGarbleText(message, 100)
-
-/**
-  * Returns given text replaced by nonsense but its based off of a modifier + flock's garblyness
-  */
-proc/flockBasedGarbleText(var/message, var/modifier, var/datum/flock/f = null)
-	if(f?.snooping) . = radioGarbleText(message, f.snoop_clarity + modifier)
 
 /**
   * Returns the time in seconds since a given timestamp
@@ -2598,3 +2604,17 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 	if (!T)
 		return
 	return T
+
+/// adjusts a screen_loc to account for non-32px-width sprites, so they get centered in a HUD slot
+/proc/do_hud_offset_thing(atom/movable/A, new_screen_loc)
+	var/icon/IC = new/icon(A.icon)
+	var/width = IC.Width()
+	var/regex/locfinder = new(@"^(\w*)([+-]\d)?(:\d+)?(.*)$") //chops up X-axis of a screen_loc
+	if(width != 32 && locfinder.Find("[new_screen_loc]")) //if we're 32-width, just use the loc we're given
+		var/offset = 0
+		if(startswith(locfinder.group[3], ":"))
+			offset = text2num(copytext(locfinder.group[3], 2))
+		offset -= (width-32)/2 // offsets the screen loc of the item by half the difference of the sprite width and the default sprite width (32), to center the sprite in the box
+		return "[locfinder.group[1]][locfinder.group[2]][offset ? ":[offset]":""][locfinder.group[4]]"
+	else
+		return new_screen_loc //regex failed to match, just use what we got
