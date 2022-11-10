@@ -36,6 +36,7 @@
 			return FALSE
 		fowner.reset()
 		fowner.flock.perish(FALSE)
+		fowner.flock.enemies = list()
 		fowner.tutorial = null
 
 	proc/make_maptext(var/atom/target, var/msg)
@@ -100,7 +101,7 @@
 
 /datum/tutorialStep/flock/deploy
 	name = "Realizing"
-	instructions = "If at any point this tutorial glitches up and leaves in a stuck state, use the emergency tutorial stop verb. Choose a suitable area to spawn your rift. Try to choose an out of the way area with plenty of resources and delicious computers to eat."
+	instructions = "If at any point this tutorial glitches up and leaves you in a stuck state, use the emergency tutorial stop verb. <br /> Choose a suitable area to spawn your rift. In the real world you should try to choose an out of the way area with plenty of resources and delicious computers to eat. Here though, just deploy on the marked tile."
 	var/turf/must_deploy = null
 
 	SetUp()
@@ -384,7 +385,7 @@
 					sleep(1.5 SECONDS)
 
 /mob/living/carbon/human/bad_immortal
-	name = "Target dummy"
+	real_name = "Target dummy"
 	Life(datum/controller/process/mobs/parent)
 		. = ..()
 		for (var/obj/item/implant/I in implant) //no infinite item stacks
