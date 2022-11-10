@@ -112,6 +112,13 @@
 	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = src
 		if (health < maxhealth && isweldingtool(W))
+#ifdef MAP_OVERRIDE_NADIR
+			//prevent in-acid welding from extending excursion times indefinitely
+			var/T = get_turf(src)
+			if(istype(T,/turf/space/fluid) || istype(A,/turf/simulated/floor/plating/airless/asteroid))
+				boutput(user, "<span class='alert'>The damaged parts are saturated with fluid. You need to move somewhere drier.</span>")
+				return
+#endif
 			if(!W:try_weld(user, 1))
 				return
 			src.health += 30
@@ -704,10 +711,17 @@
 
 		..()
 
-	process()
+	process(mult)
 		if(sec_system)
 			if(sec_system.active)
 				sec_system.run_component()
+#ifdef MAP_OVERRIDE_NADIR
+		var/T = get_turf(src)
+		if(istype(T,/turf/space/fluid) || istype(T,/turf/simulated/floor/plating/airless/asteroid))
+			var/power = get_move_velocity_magnitude()
+			src.health -= min(0.1 * power, 0.1) * mult
+			checkhealth()
+#endif
 
 	proc/checkhealth()
 		myhud?.update_health()
