@@ -24,8 +24,8 @@
 	hits_wraiths = 1
 
 	on_hit(atom/hit)
-		if(istype(hit, /mob/wraith))
-			var/mob/wraith/W = hit
+		if(istype(hit, /mob/living/intangible/wraith))
+			var/mob/living/intangible/wraith/W = hit
 			W.changeStatus("corporeal", 1.5 SECONDS, TRUE)
 			W.TakeDamage(null, 0, src.power)
 		// kyle TODO: add Spooktober stuff, sucking energy from ghosts or something

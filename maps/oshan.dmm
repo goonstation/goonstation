@@ -34103,7 +34103,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/reinforced,
+/obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/oshan_arrivals)
@@ -34112,7 +34112,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/oshan_arrivals)
 "bKb" = (
-/obj/machinery/door/airlock/pyro/glass/reinforced,
+/obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/oshan_arrivals)
@@ -35822,7 +35822,7 @@
 	icon_state = "1-2"
 	},
 /obj/forcefield/energyshield/perma,
-/obj/machinery/door/airlock/pyro/glass/reinforced,
+/obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/oshan_arrivals)
 "bOV" = (
@@ -35838,7 +35838,7 @@
 	dir = 4
 	},
 /obj/forcefield/energyshield/perma,
-/obj/machinery/door/airlock/pyro/glass/reinforced,
+/obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/oshan_arrivals)
 "bOX" = (
@@ -45733,27 +45733,7 @@
 	},
 /area/station/ranch)
 "jWq" = (
-/obj/rack,
-/obj/item/breaching_charge{
-	pixel_x = 10;
-	pixel_y = 1
-	},
-/obj/item/breaching_charge{
-	pixel_x = 4;
-	pixel_y = -2
-	},
-/obj/item/breaching_charge{
-	pixel_x = -2;
-	pixel_y = -5
-	},
-/obj/item/breaching_hammer{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/breaching_hammer{
-	pixel_x = -1;
-	pixel_y = 1
-	},
+/obj/random_item_spawner/armory_breaching_supplies,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},

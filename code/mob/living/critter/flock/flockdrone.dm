@@ -19,9 +19,6 @@
 	health_burn = 30
 	repair_per_resource = 2
 
-	///Custom contextActions list so we can handle opening them ourselves
-	var/list/datum/contextAction/contexts = list()
-
 	var/damaged = 0 // used for state management for description showing, as well as preventing drones from screaming about being hit
 
 	butcherable = TRUE
@@ -67,14 +64,6 @@
 			emote("beep")
 			say(pick_string("flockmind.txt", "flockdrone_created"), TRUE)
 		src.flock?.drones_made++
-	var/datum/contextLayout/experimentalcircle/layout = new
-	layout.center = TRUE
-	src.contextLayout = layout
-	src.contexts += new /datum/contextAction/flockdrone/control
-	for (var/type as anything in childrentypesof(/datum/contextAction/flockdrone))
-		if (type == /datum/contextAction/flockdrone/control)
-			continue
-		src.contexts += new type
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, FALSE, FALSE)
@@ -218,6 +207,8 @@
 		controller.boutput_relay_mob = null
 		var/datum/abilityHolder/composite/composite = src.abilityHolder
 		composite.removeHolder(/datum/abilityHolder/flockmind)
+		var/datum/abilityHolder/flockmind/AH = src.controller.abilityHolder
+		AH.updateText()
 		if (istype(controller, /mob/living/intangible/flock/flockmind))
 			flock?.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 		else
@@ -265,6 +256,10 @@
 	controller.boutput_relay_mob = null
 	if (give_alert)
 		boutput(controller, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] ended abruptly.\]</b></span>")
+	var/datum/abilityHolder/composite/composite = src.abilityHolder
+	composite.removeHolder(/datum/abilityHolder/flockmind)
+	var/datum/abilityHolder/flockmind/AH = src.controller.abilityHolder
+	AH.updateText()
 	if (istype(controller, /mob/living/intangible/flock/flockmind))
 		flock?.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 	else

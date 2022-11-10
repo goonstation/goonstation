@@ -433,9 +433,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	sname  = "meowitzer"
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "cat1"
-	dissipation_delay = 75
-	dissipation_rate = 300
+	max_range = 75
+	dissipation_rate = 0
 	projectile_speed = 26
+	damage = 10
 	cost = 1
 
 	var/explosive_hits = 1
@@ -459,6 +460,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		return
 
 /datum/projectile/special/meowitzer/inert
+	damage = 0
 	explosive_hits = 0
 
 /datum/projectile/special/spewer
@@ -511,8 +513,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	brightness = 0
 	sname = "punch"
 	shot_sound = 'sound/impact_sounds/Generic_Swing_1.ogg'
-	dissipation_delay = 1
-	dissipation_rate = 35
+	max_range = 1
+	dissipation_rate = 0
 	impact_image_state = null
 
 	on_hit(atom/hit)
@@ -1040,6 +1042,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	icon_state = "extinguish"
 	shot_sound = 'sound/weapons/flamethrower.ogg'
 	stun = 0
+	damage = 0
 	cost = 1
 	damage_type = D_SPECIAL
 	shot_delay = 0.1 SECONDS
@@ -1063,6 +1066,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	proc/emit_chems(atom/hit, obj/projectile/O, angle)
 		if(!O.special_data || !length(O.special_data) || !istype(hit) || !O.reagents)
 			return
+		var/list/special_data = O.special_data
 
 		var/turf/T = get_turf(hit)
 		var/datum/reagents/chemR = O.reagents
@@ -1070,7 +1074,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(chem_amt <= 0)
 			return
 		/// If there's just a little bit left, use the rest of it
-		var/amt_to_emit = (chem_amt <= 0.1) ? chem_amt : (chemR.maximum_volume * O.special_data["chem_pct_app_tile"])
+		var/amt_to_emit = (chem_amt <= 0.1) ? chem_amt : (chemR.maximum_volume * special_data["chem_pct_app_tile"])
 
 		var/datum/reagents/copied = new/datum/reagents(amt_to_emit)
 		copied = chemR.copy_to(copied, amt_to_emit/chemR.total_volume, copy_temperature = 1)
@@ -1079,15 +1083,15 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			T.create_reagents(100)
 		copied.copy_to(T.reagents, 1, copy_temperature = 1)
 		copied.reaction(T, TOUCH, 0, 0)
-		if(O.special_data["IS_LIT"]) // Heat if needed
-			T.reagents?.set_reagent_temp(O.special_data["burn_temp"], TRUE)
+		if(special_data["IS_LIT"]) // Heat if needed
+			T.reagents?.set_reagent_temp(special_data["burn_temp"], TRUE)
 		for(var/atom/A in T.contents) // then all the stuff in the turf
 			if(istype(A, /obj/overlay) || istype(A, /obj/projectile))
 				continue
 			copied.reaction(A, TOUCH, 0, 0)
-		if(O.special_data["IS_LIT"]) // Reduce the temperature per turf crossed
-			O.special_data["burn_temp"] -= O.special_data["burn_temp"] * O.special_data["temp_pct_loss_atom"]
-			O.special_data["burn_temp"] = max(O.special_data["burn_temp"], T0C)
+		if(special_data["IS_LIT"]) // Reduce the temperature per turf crossed
+			special_data["burn_temp"] -= special_data["burn_temp"] * special_data["temp_pct_loss_atom"]
+			special_data["burn_temp"] = max(special_data["burn_temp"], T0C)
 		chemR.remove_any(amt_to_emit)
 
 	post_setup(obj/projectile/P)

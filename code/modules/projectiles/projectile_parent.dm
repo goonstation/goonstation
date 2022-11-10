@@ -109,7 +109,16 @@
 	/// Below stuff but also this is dumb and only used for frost bats and I don't even know why it's used there. TODO remove
 	var/collide_with_other_projectiles = 0 //allow us to pass canpass() function to proj_data as well as receive bullet_act events
 
-
+	disposing()
+		special_data = null
+		proj_data = null
+		targets = null
+		hitlist = null
+		target = null
+		shooter = null
+		data = null
+		mob_shooter = null
+		..()
 
 	proc/rotateDirection(var/angle)
 		var/oldxo = xo
@@ -142,7 +151,7 @@
 					process()
 
 	proc/process()
-		if(hitlist.len)
+		if(length(hitlist))
 			hitlist.len = 0
 		is_processing = 1
 		while (!QDELETED(src))

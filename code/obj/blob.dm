@@ -274,6 +274,8 @@
 			if(D_SLASHING)
 				damage_mult = 1.5
 				damtype = "brute"
+			if(D_SPECIAL)
+				return
 
 		src.take_damage(damage,damage_mult,damtype)
 		return
@@ -584,10 +586,14 @@
 	var/nextAttackMsg = 0
 
 	New()
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, 3)
+
 		. = ..()
 		START_TRACKING
 
 	disposing()
+		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
+
 		. = ..()
 		STOP_TRACKING
 

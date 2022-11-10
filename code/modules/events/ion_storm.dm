@@ -160,6 +160,7 @@
 ABSTRACT_TYPE(/datum/ion_category)
 /datum/ion_category
 	var/amount
+	var/interdict_cost = 250 //how much energy an interdictor needs to invest to keep this from malfunctioning
 	var/list/atom/targets = list()
 
 	proc/valid_instance(var/atom/found)
@@ -178,13 +179,27 @@ ABSTRACT_TYPE(/datum/ion_category)
 		if (!length(targets))
 			build_targets()
 		for (var/i in 1 to amount)
-			var/object = pick(targets)
+			var/atom/object = pick(targets)
+
+			//spatial interdictor: shield general hardware from ionic interference. law racks explicitly omitted due to sensitivity (and gameplay fun)
+			//consumes cell charge per hardware item protected, based on the category's interdict cost
+			var/interdicted = FALSE
+			for_by_tcl(IX, /obj/machinery/interdictor)
+				if (IN_RANGE(IX,object,IX.interdict_range) && IX.expend_interdict(interdict_cost))
+					interdicted = TRUE
+					SPAWN(rand(1,8))
+						playsound(object.loc, "sparks", 60, 1) //absorption noise, as a little bit of "force feedback"
+					break
+			if(interdicted)
+				continue
+
 			//we don't try again if it is null, because it's possible there just are none
 			if (!isnull(object))
 				action(object)
 
 /datum/ion_category/APCs
 	amount = 20
+	interdict_cost = 900
 
 	build_targets()
 		for (var/obj/machinery/power/apc/apc in machine_registry[MACHINES_POWER])
@@ -268,6 +283,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 /datum/ion_category/manufacturers
 	amount = 5
+	interdict_cost = 500
 
 	build_targets()
 		for_by_tcl(man, /obj/machinery/manufacturer)
@@ -280,6 +296,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 /datum/ion_category/venders
 	amount = 5
+	interdict_cost = 600
 
 	build_targets()
 		for_by_tcl(vender, /obj/machinery/vending)

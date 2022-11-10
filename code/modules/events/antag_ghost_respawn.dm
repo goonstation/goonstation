@@ -60,7 +60,7 @@
 					if(lowertext(ant) in map_settings.forbidden_antags)
 						possible_types -= ant
 
-			for(var/mob/wraith/W in ticker.mode.traitors)
+			for(var/mob/living/intangible/wraith/W in ticker.mode.traitors)
 				if(W.deaths < 2)
 					possible_types -= list("Wraith")
 				if(isnull(W.deaths))
@@ -206,7 +206,7 @@
 						send_to = 3
 
 						SPAWN(0)
-							var/newname = input(B, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
+							var/newname = tgui_input_text(B, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change")
 							if (B && newname)
 								phrase_log.log_phrase("name-blob", newname, no_duplicates=TRUE)
 								if (length(newname) >= 26) newname = copytext(newname, 1, 26)
@@ -231,7 +231,7 @@
 						failed = 1
 
 				if ("Wraith")
-					var/mob/wraith/W = M3.make_wraith()
+					var/mob/living/intangible/wraith/W = M3.make_wraith()
 					if (W && istype(W))
 						M3 = W
 						role = ROLE_WRAITH
