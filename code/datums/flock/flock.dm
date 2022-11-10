@@ -898,9 +898,9 @@ var/flock_signal_unleashed = FALSE
 		// get next turf
 		T = locate(ox + x, oy + y, z)
 
-// search for any radio device, starting with hands and then equipment
-// anything else is arbitrarily too deeply hidden and stowed away to get the signal
-// (more practically, they won't hear it)
+/// search for any radio device, starting with hands and then equipment
+/// anything else is arbitrarily too deeply hidden and stowed away to get the signal
+/// (more practically, they won't hear it)
 /proc/find_radio_on(mob/M)
 	if (!istype(M))
 		return
