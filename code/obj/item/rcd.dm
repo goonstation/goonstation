@@ -1084,7 +1084,7 @@ Broken RCD + Effects
 
 				boutput(user, "<span class='combat'>\the [src] shorts out!</span>")
 
-				logTheThing(LOG_COMBAT, user, "manages to vaporize \[[log_loc(A)]] with a halloween RCD.")
+				logTheThing(LOG_COMBAT, user, "manages to vaporize \[[log_loc(A)]] (and themselves) with a halloween RCD.")
 
 				new /obj/effects/void_break(A)
 				if (user)
