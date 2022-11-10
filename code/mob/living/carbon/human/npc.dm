@@ -159,7 +159,7 @@
 	ai_attacked = 0
 
 	if(abilityHolder)
-		if(src.use_ai_toggle && !abilityHolder.getAbility(/datum/targetable/ai_toggle))
+		if(!abilityHolder.getAbility(/datum/targetable/ai_toggle))
 			abilityHolder.addAbility(/datum/targetable/ai_toggle)
 
 /mob/living/carbon/human/proc/ai_stop()
