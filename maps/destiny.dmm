@@ -4614,8 +4614,7 @@
 	name = "East Central Maintenance"
 	})
 "asx" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "mining2qm"
 	},
 /obj/storage/crate,
@@ -5045,8 +5044,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "aun" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "cargo_in"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -6913,8 +6911,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "aCr" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "chapel"
 	},
 /turf/simulated/floor/specialroom/chapel,
@@ -11845,8 +11842,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "aZc" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cargo_in"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -11858,8 +11854,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "aZo" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "mining2qm"
 	},
 /obj/disposalpipe/segment,
@@ -14116,8 +14111,7 @@
 /turf/simulated/floor,
 /area/station/engine/gas)
 "bqx" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "mining2qm"
 	},
 /obj/storage/cart,
@@ -21151,8 +21145,7 @@
 /turf/space,
 /area/station/com_dish/auxdish)
 "dNN" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "disposals";
 	operating = 1
 	},
@@ -21917,7 +21910,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "egw" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "disposals";
 	operating = 1
 	},
@@ -22154,7 +22147,7 @@
 /turf/simulated/floor/yellow,
 /area/station/hallway/secondary/construction)
 "enM" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "disposals";
 	operating = 1
 	},
@@ -23118,7 +23111,7 @@
 	name = "Crew Quarters P04"
 	})
 "eEn" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "disposals";
 	operating = 1
 	},
@@ -23428,8 +23421,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
 "eLi" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "disposals";
 	operating = 1
 	},
@@ -25764,8 +25756,7 @@
 	},
 /area/station/science/chemistry)
 "fMc" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cargo_in"
 	},
 /obj/cable{
@@ -26951,8 +26942,7 @@
 	name = "Genetic Research"
 	})
 "goQ" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "cargo_in"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -27162,8 +27152,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
 "guF" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "cargo_out"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
@@ -27709,7 +27698,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "gKq" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "cargo_out"
 	},
 /obj/plasticflaps,
@@ -27760,8 +27749,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/observatory)
 "gMR" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cargo_in"
 	},
 /obj/plasticflaps,
@@ -28380,7 +28368,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/quartermaster/cargobay)
 "hau" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "cargo_out"
 	},
 /obj/cable{
@@ -28564,7 +28552,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "hdY" = (
-/obj/critter/nicespider,
+/mob/living/critter/spider/nice,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "her" = (
@@ -30418,8 +30406,7 @@
 	},
 /area/station/crew_quarters/bar)
 "ien" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cargo_in"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -32984,7 +32971,7 @@
 /turf/simulated/floor/orangeblack/side/white,
 /area/station/science/teleporter)
 "jCC" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "cargo_out"
 	},
 /obj/plasticflaps,
@@ -33060,8 +33047,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
 "jDP" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "mining2qm"
 	},
 /obj/disposalpipe/segment,
@@ -34940,8 +34926,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "kFr" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "cargo_out"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -36706,27 +36691,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "lzV" = (
-/obj/rack,
-/obj/item/breaching_charge{
-	pixel_x = 10;
-	pixel_y = 1
-	},
-/obj/item/breaching_charge{
-	pixel_x = 4;
-	pixel_y = -2
-	},
-/obj/item/breaching_charge{
-	pixel_x = -2;
-	pixel_y = -5
-	},
-/obj/item/breaching_hammer{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/breaching_hammer{
-	pixel_x = -1;
-	pixel_y = 1
-	},
+/obj/random_item_spawner/armory_breaching_supplies,
 /obj/decal/tile_edge/line/red{
 	dir = 6;
 	icon_state = "line2"
@@ -37016,7 +36981,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/observatory)
 "lKR" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "cargo_out"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -39195,8 +39160,7 @@
 /turf/simulated/floor/greenwhite/other,
 /area/station/medical/cdc)
 "mNB" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "cargo_in"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -41494,8 +41458,7 @@
 /obj/disposaloutlet{
 	dir = 4
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "disposals";
 	operating = 1
 	},
@@ -41690,8 +41653,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/science/lab)
 "oct" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "disposals";
 	operating = 1
 	},
@@ -42629,8 +42591,7 @@
 	},
 /area/station/crewquarters/garbagegarbs)
 "oAc" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "cargo_in"
 	},
 /obj/machinery/light/incandescent{
@@ -42970,8 +42931,7 @@
 	},
 /area/station/science/lobby)
 "oLj" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "mining2qm"
 	},
 /obj/disposalpipe/segment/mail,
@@ -43797,7 +43757,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "phs" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "cargo_out"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -44753,8 +44713,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
 "pHK" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "mining2qm"
 	},
 /obj/plasticflaps,
@@ -46602,7 +46561,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/md)
 "qGx" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "disposals";
 	operating = 1
 	},
@@ -46992,8 +46951,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
 "qOX" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cargo_in"
 	},
 /obj/plasticflaps,
@@ -47641,7 +47599,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/lounge)
 "rjK" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "disposals";
 	operating = 1
 	},
@@ -48028,7 +47986,7 @@
 	single_system = 1;
 	work_time = 50
 	},
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/plating/random,
@@ -50140,7 +50098,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/solar/west)
 "sEW" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "disposals";
 	operating = 1
 	},
@@ -52281,8 +52239,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/science/restroom)
 "tKT" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "reclamation_fork";
 	operating = 1
 	},
@@ -52628,8 +52585,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "tVt" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "mining2qm"
 	},
 /obj/cable{
@@ -52667,8 +52623,7 @@
 	},
 /area/station/medical/medbay/treatment)
 "tVO" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "mining2qm"
 	},
 /obj/machinery/light{
@@ -53358,8 +53313,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/outer/sw)
 "uom" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "disposals";
 	operating = 1
 	},
@@ -55191,8 +55145,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "vck" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "mining2qm"
 	},
 /obj/plasticflaps,
@@ -56007,8 +55960,7 @@
 	dir = 10;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cargo_in"
 	},
 /turf/space,
@@ -56894,8 +56846,7 @@
 	dir = 4;
 	pixel_x = 11
 	},
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cargo_in"
 	},
 /obj/machinery/camera{

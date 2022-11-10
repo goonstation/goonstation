@@ -622,6 +622,12 @@
 	ai_is_valid_target(mob/M)
 		return ..() && !(istype(M, /mob/living/carbon/human/npc/monkey/angry))
 
+/mob/living/carbon/human/npc/monkey/angry/testing
+	ai_attacknpc = TRUE
+
+	ai_is_valid_target(mob/M)
+		return isalive(M)
+
 // sea monkeys
 /mob/living/carbon/human/npc/monkey/sea
 	name = "sea monkey"

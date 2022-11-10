@@ -4292,8 +4292,7 @@
 /turf/simulated/floor,
 /area/buddyfactory)
 "asp" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_x = 4;
@@ -4302,8 +4301,7 @@
 /turf/simulated/floor/caution/corner/nw,
 /area/buddyfactory)
 "asq" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_x = 4;
@@ -4419,8 +4417,7 @@
 /turf/simulated/floor,
 /area/buddyfactory)
 "asH" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_y = 2
@@ -4730,8 +4727,7 @@
 /turf/simulated/floor,
 /area/buddyfactory)
 "atD" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_y = 2
@@ -4739,8 +4735,7 @@
 /turf/simulated/floor/caution/corner/sw,
 /area/buddyfactory)
 "atE" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_x = -4;
@@ -4749,8 +4744,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/buddyfactory)
 "atF" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_x = -4;
@@ -4928,8 +4922,7 @@
 /turf/simulated/floor,
 /area/buddyfactory)
 "auc" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_x = 4;
@@ -4939,8 +4932,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/buddyfactory)
 "aud" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_y = 2
@@ -7606,16 +7598,14 @@
 	},
 /area/abandonedmedicalship)
 "aKr" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aKs" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
@@ -7625,8 +7615,7 @@
 	name = "GLOMAR Salvager"
 	})
 "aKt" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
@@ -7640,8 +7629,7 @@
 	name = "GLOMAR Salvager"
 	})
 "aKu" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
@@ -7655,8 +7643,7 @@
 	name = "GLOMAR Salvager"
 	})
 "aKv" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
@@ -7669,8 +7656,7 @@
 	name = "GLOMAR Salvager"
 	})
 "aKw" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
@@ -7810,8 +7796,7 @@
 	name = "GLOMAR Salvager"
 	})
 "aKT" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "salvage belt - west";
 	operating = 1
 	},
@@ -7825,8 +7810,7 @@
 	name = "GLOMAR Salvager"
 	})
 "aKU" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "salvage belt - west";
 	operating = 1
 	},
@@ -7836,8 +7820,7 @@
 	name = "GLOMAR Salvager"
 	})
 "aKV" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "salvage belt - west";
 	operating = 1
 	},

@@ -940,14 +940,17 @@ var/global/list/mapNames = list(
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
-	valid_nuke_targets = list("the quartermaster's office" = list(/area/station/quartermaster/cargooffice),
+	valid_nuke_targets = list("the quartermaster's office" = list(/area/station/quartermaster/cargooffice,\
+		/area/station/quartermaster/cargobay,\
+		/area/station/quartermaster/storage),
 		"the courtroom" = list(/area/station/crew_quarters/courtroom),
-		"security's central staff room" = list(/area/station/security/main),
 		"the engineering staff room" = list(/area/station/engine/engineering),
 		"the medical bay's central room" = list(/area/station/medical/medbay),
 		"the east crew quarters" = list(/area/station/crew_quarters/quarters_east),
 		"the nerd dungeon" = list(/area/station/crew_quarters/arcade/dungeon),
-		"the chapel" = list(/area/station/chapel/sanctuary))
+		"the chapel" = list(/area/station/chapel/sanctuary),
+		"the radio lab" = list(/area/station/crew_quarters/radio/lab),
+		"the derelict southeast 'Warrens'" = list(/area/station/hallway/secondary/construction))
 
 	job_limits_from_landmarks = TRUE
 	job_limits_override = list(
