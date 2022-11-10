@@ -165,7 +165,6 @@
 	var/loc_maptext_height = 32
 	var/loc_maptext_x = 0
 	var/loc_maptext_y = 0
-
 	New()
 		..()
 		loc.maptext = loc_maptext
@@ -174,6 +173,7 @@
 		loc.maptext_x = loc_maptext_x
 		loc.maptext_y = loc_maptext_y
 		qdel(src)
+
 
 // I'm archiving a slightly improved version of the hell portal which is now gone
 

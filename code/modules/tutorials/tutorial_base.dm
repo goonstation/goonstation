@@ -116,7 +116,7 @@
 			return
 		if (!initial_turf)
 			logTheThing(LOG_DEBUG, usr, "<b>[src.name]</b>: Tutorial failed setup: missing landmark.")
-			throw EXCEPTION("Okay who removed the goddamn [src.name] landmark")
+			CRASH("Okay who removed the goddamn [src.name] landmark")
 		owner.set_loc(initial_turf)
 
 	Finish()

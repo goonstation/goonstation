@@ -27,7 +27,7 @@
 				center = T
 				break
 		if (!center)
-			throw EXCEPTION("Okay who removed the goddamn [LANDMARK_TUTORIAL_FLOCKCONVERSION] landmark")
+			CRASH("Okay who removed the goddamn [LANDMARK_TUTORIAL_FLOCKCONVERSION] landmark")
 		src.fowner = M
 
 	Finish()
@@ -175,6 +175,7 @@
 		if (action == "floorrun")
 			src.finished = TRUE
 			return TRUE
+
 /datum/tutorialStep/flock/release_drone
 	name = "Release control"
 	instructions = "Now use the eject button at the bottom right of your HUD to release control of this drone."
