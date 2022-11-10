@@ -9,6 +9,7 @@ mob/new_player
 	var/adminspawned = 0
 	var/is_respawned_player = 0
 	var/pregameBrowserLoaded = FALSE
+	var/antag_fallthrough = FALSE
 
 #ifdef TWITCH_BOT_ALLOWED
 	var/twitch_bill_spawn = 0
@@ -771,6 +772,10 @@ a.latejoin-card:hover {
 		set hidden = 1
 		set name = ".ready_antag"
 
+		if(!tgui_process)
+			boutput(src, "<span class='alert'>Stuff is still setting up, wait a moment before readying up.</span>")
+			return
+
 		if (src.client.has_login_notice_pending(TRUE))
 			return
 
@@ -787,6 +792,10 @@ a.latejoin-card:hover {
 	verb/declare_ready()
 		set hidden = 1
 		set name = ".ready"
+
+		if(!tgui_process)
+			boutput(src, "<span class='alert'>Stuff is still setting up, wait a moment before readying up.</span>")
+			return
 
 		if (src.client.has_login_notice_pending(TRUE))
 			return

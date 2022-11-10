@@ -1078,7 +1078,8 @@
 	else
 		rendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[name]</span> <span class='message'>[message]</span></span>"
 		flockmindRendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name'>[flock && speaker ? "<a href='?src=\ref[flock.flockmind];origin=\ref[structure_speaking ? structure_speaking.loc : mob_speaking]'>[name]</a>" : "[name]"]</span> <span class='message'>[message]</span></span>"
-		siliconrendered = "<span class='game [class]'><span class='bold'>\[[flock ? flockBasedGarbleText(flock.name, -30, flock) : "--.--"]\] </span><span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[flockBasedGarbleText(name, -20, flock)]</span> <span class='message'>[flockBasedGarbleText(message, 0, flock)]</span></span>"
+		if (flock && flock.total_compute() >= FLOCK_RELAY_COMPUTE_COST / 4 && prob(90))
+			siliconrendered = "<span class='game [class]'><span class='bold'>\[?????\] </span><span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[radioGarbleText(name, FLOCK_RADIO_GARBLE_CHANCE)]</span> <span class='message'>[radioGarbleText(message, FLOCK_RADIO_GARBLE_CHANCE)]</span></span>"
 
 	for (var/client/CC)
 		if (!CC.mob) continue
@@ -1090,7 +1091,7 @@
 
 		if((isflockmob(M)) || (M.client.holder && !M.client.player_mode) || (isobserver(M) && !(istype(M, /mob/dead/target_observer/hivemind_observer))))
 			thisR = rendered
-		if(flock?.snooping && M.client && M.robot_talk_understand)
+		if(M.robot_talk_understand || istype(M, /mob/living/intangible/aieye))
 			thisR = siliconrendered
 		if(istype(M, /mob/living/intangible/flock/flockmind) && !(istype(mob_speaking, /mob/living/intangible/flock/flockmind)) && M:flock == flock)
 			thisR = flockmindRendered

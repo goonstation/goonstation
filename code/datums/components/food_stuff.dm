@@ -20,7 +20,7 @@ TYPEINFO(/datum/component/consume/can_eat_inedible_organs)
 /datum/component/consume/can_eat_inedible_organs/Initialize(var/can_eat_heads)
 	..()
 	src.can_eat_heads = can_eat_heads
-	RegisterSignal(parent, list(COMSIG_MOB_ITEM_CONSUMED_PRE), .proc/is_it_organs)
+	RegisterSignal(parent, COMSIG_MOB_ITEM_CONSUMED_PRE, .proc/is_it_organs)
 
 /datum/component/consume/can_eat_inedible_organs/proc/is_it_organs(var/mob/M, var/mob/user, var/obj/item/I)
 	if (istype(I, /obj/item/skull) || (istype(I, /obj/item/organ/head) && can_eat_heads)) // skulls, heads
@@ -43,7 +43,7 @@ TYPEINFO(/datum/component/consume/organpoints)
 /datum/component/consume/organpoints/Initialize(var/target_abilityholder)
 	..()
 	src.target_abilityholder = target_abilityholder
-	RegisterSignal(parent, list(COMSIG_MOB_ITEM_CONSUMED), .proc/eat_organ_get_points)
+	RegisterSignal(parent, COMSIG_MOB_ITEM_CONSUMED, .proc/eat_organ_get_points)
 
 /datum/component/consume/organpoints/proc/eat_organ_get_points(var/mob/M, var/mob/user, var/obj/item/I)
 	if (!I || !M || !ishuman(M) || !user)
@@ -161,7 +161,7 @@ TYPEINFO(/datum/component/consume/organheal)
 /datum/component/consume/organheal/Initialize(var/mod_mult)
 	..()
 	src.mod_mult = mod_mult
-	RegisterSignal(parent, list(COMSIG_MOB_ITEM_CONSUMED), .proc/eat_organ_get_heal)
+	RegisterSignal(parent, COMSIG_MOB_ITEM_CONSUMED, .proc/eat_organ_get_heal)
 
 /datum/component/consume/organheal/proc/eat_organ_get_heal(var/mob/M, var/mob/user, var/obj/item/I)
 	if (!I || !M || !user)
@@ -273,7 +273,7 @@ TYPEINFO(/datum/component/consume/food_effects)
 		return COMPONENT_INCOMPATIBLE
 	src.food_parent = parent
 	src.status_effects = _status_effects
-	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL), .proc/apply_food_effects)
+	RegisterSignals(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL), .proc/apply_food_effects)
 
 /datum/component/consume/food_effects/InheritComponent(datum/component/consume/food_effects/C, i_am_original, _new_status_effects)
 	if(C?.status_effects)

@@ -299,10 +299,10 @@
 
 				if("cellremove")
 					if(open && cell && !usr.equipped())
-						usr.put_in_hand_or_drop(cell)
 
 						cell.add_fingerprint(usr)
 						cell.UpdateIcon()
+						usr.put_in_hand_or_drop(cell)
 						cell = null
 
 						usr.visible_message("<span class='notice'>[usr] removes the power cell from [src].</span>", "<span class='notice'>You remove the power cell from [src].</span>")
