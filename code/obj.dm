@@ -16,6 +16,7 @@
 	/// If defined, device analyzer scans will yield this typepath (instead of the default, which is just the object's type itself)
 	var/mechanics_type_override = null
 	var/artifact = null
+	var/cannot_be_stored = FALSE
 	var/move_triggered = 0
 	var/object_flags = 0
 

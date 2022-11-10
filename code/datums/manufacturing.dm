@@ -604,9 +604,9 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/chemtank
 	name = "Chemical Barrel"
 	item_paths = list("MET-2")
-	item_amounts = list(5)
+	item_amounts = list(10)
 	item_outputs = list(/obj/item/reagent_containers/food/drinks/chemtank)
-	time = 10 SECONDS
+	time = 80 SECONDS
 	create = 1
 	category = "Machinery"
 

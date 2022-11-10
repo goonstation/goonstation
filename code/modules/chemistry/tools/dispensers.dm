@@ -618,6 +618,7 @@
 	can_chug = FALSE
 	two_handed = TRUE
 	p_class = 2
+	cannot_be_stored = TRUE
 	c_flags = EQUIPPED_WHILE_HELD
 	var/labeled = FALSE
 

@@ -692,6 +692,8 @@
 		for(var/obj/O in T.contents)
 			if(!isitem(O) || O == src || O.anchored)
 				crate_contents--
+			if(O.cannot_be_stored)
+				crate_contents = INFINITY //too big to fit on the locker, it wont close
 		return crate_contents
 
 	proc/can_close()
