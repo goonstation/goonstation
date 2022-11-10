@@ -123,16 +123,16 @@
 				if (AH)
 					AH.harvest_count = the_slug.abilityHolder.points
 				//Then reward abilities if we crossed the threshold
-					if (AH.harvest_count >= 2)
+					if (AH.harvest_count >= 1)
 						if (!AH.getAbility(/datum/targetable/brain_slug/acidic_spit))
 							AH.addAbility(/datum/targetable/brain_slug/acidic_spit)
 					if (AH.harvest_count >= 6)
 						if (!AH.getAbility(/datum/targetable/brain_slug/sling_spit))
 							AH.addAbility(/datum/targetable/brain_slug/sling_spit)
-					if (AH.harvest_count >= 12)
+					if (AH.harvest_count >= 9)
 						if (!AH.getAbility(/datum/targetable/brain_slug/summon_brood))
 							AH.addAbility(/datum/targetable/brain_slug/summon_brood)
-					if (AH.harvest_count >= 20)
+					if (AH.harvest_count >= 15)
 						if (!AH.getAbility(/datum/targetable/brain_slug/pupate))
 							AH.addAbility(/datum/targetable/brain_slug/pupate)
 					//Refund a bit of stability for doing well
