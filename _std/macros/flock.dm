@@ -31,7 +31,6 @@
 #define FLOCK_RELAY_COMPUTE_COST 500 // total compute
 
 #define FLOCKTRACE_COMPUTE_COST 100
-#define FLOCK_RELAY_COMPUTE_COST 500
 
 // achievements
 #define FLOCK_ACHIEVEMENT_CHEAT_STRUCTURES "all_structures"
