@@ -975,6 +975,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "spiced pumpkin"
 	desc = "Autumny!"
 	icon_state = "pumpkinlatte"
+	planttype = /datum/plant/fruit/pumpkin
 	edible = 0
 	food_color = "#CC6600"
 	validforhat = 1
