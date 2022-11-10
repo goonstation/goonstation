@@ -9,7 +9,7 @@
 	cooldown = 600
 
 	execute_ability()
-		logTheThing("combat", usr, null, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
+		logTheThing(LOG_COMBAT, usr, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 		SPAWN(0)
 			the_mob.teleportscroll(1, 0, null)
 
@@ -26,7 +26,7 @@
 	execute_ability()
 		SPAWN(0)
 			usr.visible_message("<span class='alert'><B>[usr] channels souls into all nearby objects!</B></span>")
-			logTheThing("combat", usr, null, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
+			logTheThing(LOG_COMBAT, usr, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 			for(var/obj/item/I in oview(5, usr)) //No longer brings your organs to life, killing you as they desperately try to attack you from the inside!
 				if (I.anchored || I.invisibility) continue
 				new/mob/living/object/ai_controlled(src.loc, src)
@@ -41,7 +41,7 @@
 
 	execute_ability()
 		//Presumably explode a dude
-		logTheThing("combat", usr, null, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
+		logTheThing(LOG_COMBAT, usr, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 		boutput(the_mob, "<span class='alert'>You totally would've exploded a dude. If it was implemented. This power stone is kinda chumpy, huh?</span>")
 		..()
 		return 1
@@ -54,7 +54,7 @@
 	var/casting = 0
 
 	execute_ability()
-		logTheThing("combat", usr, null, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
+		logTheThing(LOG_COMBAT, usr, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 		usr.visible_message("<span class='alert'><B>[usr] flicks his hand and begins to warp time!</B></span>")
 		SPAWN(0)
 			usr.full_heal()
@@ -69,7 +69,7 @@
 	cooldown = 600
 
 	execute_ability()
-		logTheThing("combat", usr, null, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
+		logTheThing(LOG_COMBAT, usr, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 		SPAWN(0)
 			var/distance = 1
 			var/list/affected = list()
@@ -115,22 +115,22 @@
 	cooldown = 600
 
 	execute_ability()
-		logTheThing("combat", usr, null, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
+		logTheThing(LOG_COMBAT, usr, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 		SPAWN(0)
 			boutput(usr,"<span class='alert'><B>You spead the energies of the owl around you.</B></span>")
-			playsound(usr.loc, "sound/voice/animal/hoot.ogg", 100, 1)
+			playsound(usr.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
 			for(var/mob/living/carbon/human/M in range(5, usr))
 				if(M == usr)
 					continue
 				M.flash(60)
 				M.changeStatus("weakened", 5 SECONDS)
-				M.playsound_local(M.loc, "sound/voice/animal/hoot.ogg", 100, 1)
+				M.playsound_local(M.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
 
 				if(prob(1))
 					if(prob(50))
 						M.make_critter(/mob/living/critter/small_animal/bird/owl/large/hooter, M.loc)
 					else
-						playsound(M.loc, "sound/voice/animal/hoot.ogg", 100, 1)
+						playsound(M.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
 						M.gib()
 						new /mob/living/critter/small_animal/bird/owl/large/hooter(M.loc)
 					continue
@@ -166,7 +166,7 @@
 					boutput(M,"<span class='alert'><B>You hear an intense and painful hooting inside your head.</B></span>")
 					var/hooting = 0
 					while(hooting <= rand(8, 12))
-						M.playsound_local(M.loc, "sound/voice/animal/hoot.ogg", 100, 1)
+						M.playsound_local(M.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
 						if(prob(50))
 							random_brute_damage(M, rand(1,5))
 							M.flash(10)
@@ -192,7 +192,7 @@
 	cooldown = 3000
 
 	execute_ability()
-		logTheThing("combat", usr, null, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
+		logTheThing(LOG_COMBAT, usr, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 		SPAWN(0)
 			boutput(usr, "<span class='alert'><B>You spread a feeling of sickness.</B></span>") //Gross
 			for(var/mob/living/carbon/human/M in range(5, usr))
@@ -272,7 +272,7 @@ proc/goldsnap(var/mob/user)
 	sleep(1 SECOND)
 	boutput(user, "<span class='alert'><B>Everything around you turns to gold!</B></span>")
 	message_admins("Gold snap effect from the Brass Gauntlet triggered at [log_loc(user)] by [key_name(user)].")
-	logTheThing("combat", user, null, "used the Brass Gauntlet and triggered the goldsnap at [log_loc(user)]")
+	logTheThing(LOG_COMBAT, user, "used the Brass Gauntlet and triggered the goldsnap at [log_loc(user)]")
 	var/turf/T = get_turf(user)
 	user.set_dir(SOUTH)
 	user.become_statue(getMaterial("gold"))
@@ -292,7 +292,7 @@ proc/badmaterial(var/mob/user, var/obj/item/W, var/obj/item/clothing/B)
 	user.visible_message("<span class='alert'><B>The [B] begins to make an ungodly noise. Maybe that wasn't so safe after all...</B></span>")
 	sleep(10 SECONDS)
 	user.visible_message("<span class='alert'><B>Your body is suddenly and violently ripped apart.</B></span>")
-	logTheThing("combat", user, null, "used the Brass Gauntlet and gibbed themselves due to a bad material at [log_loc(user)]")
+	logTheThing(LOG_COMBAT, user, "used the Brass Gauntlet and gibbed themselves due to a bad material at [log_loc(user)]")
 	user.gib()
 
 proc/timeywimey(var/time)
@@ -316,5 +316,5 @@ proc/timeywimey(var/time)
 		L.set_loc(positions[L])
 		L.changeStatus("stunned", 6 SECONDS)
 		elecflash(L,power = 2)
-		playsound(L.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
+		playsound(L.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
 	return 1

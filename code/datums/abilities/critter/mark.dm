@@ -31,7 +31,7 @@
       if(E.marked_target)
         boutput(E, "<span class='alert'>We have ceased following [E.marked_target] as a result.</span>")
         // no need to null the target, we're about to overwrite it
-      logTheThing("combat", E, M, "marks [constructTarget(M,"combat")] for constant watching as an eyespider [log_loc(E)].")
+      logTheThing(LOG_COMBAT, E, "marks [constructTarget(M,"combat")] for constant watching as an eyespider [log_loc(E)].")
       E.marked_target = M
 
       // TODO: NOT THIS, THERE MUST BE A BETTER WAY

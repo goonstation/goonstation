@@ -1,6 +1,6 @@
 /obj/item/device/radio/intercom/ship
 	name = "Communication Panel"
-	anchored = 1.0
+	anchored = 1
 
 /obj/item/device/radio/intercom/ship/send_hear()
 	if (src.listening)
@@ -14,7 +14,6 @@
 	active = 0
 	name = "Robustco Communication Array"
 	desc = "Enables long-distance communications and interfacing with pod bay door controls."
-	power_used = 10
 	system = "Communications"
 	icon_state = "com"
 	color = "#16CC77"
@@ -26,10 +25,38 @@
 		desc = "Allows a pod to communicate with a Mining Magnet for more convenient mining."
 		power_used = 30
 		color = "#FABF0F"
+		var/obj/machinery/mining_magnet/linked_magnet
+
+		ui_interact(mob/user, datum/tgui/ui)
+			ui = tgui_process.try_update_ui(user, src, ui)
+			if(!ui)
+				ui = new(user, src, "MineralMagnet", src.name)
+				ui.open()
+
+		ui_data(mob/user)
+			. = ..()
+			if(istype(linked_magnet))
+				. = linked_magnet.ui_data(user)
+				.["isLinked"] = TRUE
+			else
+				.["isLinked"] = FALSE
+
+		ui_act(action, params)
+			. = ..()
+			if (.)
+				return
+			if(istype(src.linked_magnet))
+				. = src.linked_magnet.ui_act(action, params)
+
+		ui_status(mob/user, datum/ui_state/state)
+			. = ..()
+			if(istype(src.linked_magnet))
+				. = min(., linked_magnet.ui_status(user))
 
 		External()
 			for(var/obj/machinery/mining_magnet/MM in range(7,src.ship))
-				MM.generate_interface(usr)
+				linked_magnet = MM
+				ui_interact(usr)
 				return null
 			boutput(usr, "<span class='alert'>No magnet found in range of seven meters.</span>")
 			return null
@@ -72,11 +99,14 @@
 		var/broadcast = copytext(html_encode(input(usr, "Please enter what you want to say over the external speaker.", "[src.name]")), 1, MAX_MESSAGE_LEN)
 		if(!broadcast)
 			return
-		logTheThing("diary", usr, null, "(POD) : [broadcast]", "say")
+		logTheThing(LOG_DIARY, usr, "(POD) : [broadcast]", "say")
 		if (ishuman(usr))//istype(usr:wear_mask, /obj/item/clothing/mask/gas/voice))
 			var/mob/living/carbon/human/H = usr
 			if (H.wear_mask && H.wear_mask.vchange && H.wear_id)
 				. = H.wear_id:registered
+			else if (H.vdisfigured)
+				. = "Unknown"
+
 			else
 				. = usr.name
 		else

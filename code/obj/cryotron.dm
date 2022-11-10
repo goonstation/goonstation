@@ -145,7 +145,7 @@
 				for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
 					if (!A.status && A.announces_arrivals)
 						A.announce_departure(L)
-				logTheThing("station", L, null, "entered cryogenic storage at [log_loc(src)].")
+				logTheThing(LOG_STATION, L, "entered cryogenic storage at [log_loc(src)].")
 				return 1
 
 		stored_mobs += L
@@ -171,7 +171,7 @@
 		var/datum/db_record/crew_record = data_core.general.find_record("id", L.datacore_id)
 		if (!isnull(crew_record))
 			crew_record["p_stat"] = "In Cryogenic Storage"
-		logTheThing("station", L, null, "entered cryogenic storage at [log_loc(src)].")
+		logTheThing(LOG_STATION, L, "entered cryogenic storage at [log_loc(src)].")
 		return 1
 
 	proc/enter_prompt(var/mob/living/user as mob)
@@ -254,7 +254,7 @@
 
 					boutput(user, "<b>You must wait at least [time_left_message] until you can leave cryosleep.</b>")
 					return FALSE
-		if (alert(user, "Would you like to leave cryogenic storage?", "Confirmation", "Yes", "No") == "No")
+		if (tgui_alert(user, "Would you like to leave cryogenic storage?", "Confirmation", list("Yes", "No")) != "Yes")
 			return 0
 		if (user.loc != src || !stored_mobs.Find(user))
 			return 0
@@ -311,7 +311,7 @@
 		if (target.client || !target.ckey)
 			boutput(user, "<span class='alert'>You can't force someone into cryosleep if they're still logged in or are an NPC!</span>")
 			return FALSE
-		else if (alert(user, "Would you like to put [target] into cryogenic storage? They will be able to leave it immediately if they log back in.", "Confirmation", "Yes", "No") == "Yes")
+		else if (tgui_alert(user, "Would you like to put [target] into cryogenic storage? They will be able to leave it immediately if they log back in.", "Confirmation", list("Yes", "No")) == "Yes")
 			if (!src.mob_can_enter_storage(target, user))
 				return FALSE
 			else

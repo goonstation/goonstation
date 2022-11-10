@@ -16,7 +16,7 @@
 /datum/biome/icemoon/ice
 	turf_type = /turf/unsimulated/floor/arctic/snow/ice
 
-	fauna_types = list(/obj/critter/spider/ice/queen=1, /obj/critter/spider/ice/nice=5, /obj/critter/spider/ice=20, /obj/critter/brullbar=5)
+	fauna_types = list(/mob/living/critter/spider/ice/queen=1, /mob/living/critter/spider/ice/nice=5, /mob/living/critter/spider/ice=20, /obj/critter/brullbar=5)
 	fauna_density = 0.5
 
 /datum/biome/icemoon/icewall
@@ -125,7 +125,7 @@
 	destroy_asteroid(var/dropOre=0)
 		src.RL_SetOpacity(0)
 		src.ReplaceWith(/turf/unsimulated/floor/arctic/snow/ice)
-		src.opacity = 0
+		src.set_opacity(0)
 		src.levelupdate()
 
 		return src
@@ -177,4 +177,3 @@
 		for(var/atom/A in src.contents)
 			if (istype(A, /obj/overlay) || istype(A, /obj/effects)) continue
 			qdel(A)
-

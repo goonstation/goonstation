@@ -25,7 +25,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "lockdown";
@@ -46,7 +46,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "lockdown";
@@ -64,7 +64,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "lockdown";
@@ -315,7 +315,7 @@
 /turf/simulated/floor/stairs,
 /area/station/bridge)
 "aaV" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "ai_core";
@@ -498,7 +498,7 @@
 /area/station/bridge)
 "abw" = (
 /obj/displaycase{
-	displayed = new /obj/item/captaingun;
+	displayed = new/obj/item/captaingun;
 	pixel_y = 8
 	},
 /obj/table/wood/auto,
@@ -726,7 +726,7 @@
 /turf/simulated/floor/grime,
 /area/diner/backroom)
 "abZ" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 9;
 	icon_state = "pdoor0";
@@ -1471,8 +1471,8 @@
 /area/abandonedmedicalship/robot_trader)
 "aeR" = (
 /obj/stool/bed,
-/obj/item/clothing/under/gimmick/snazza,
-/obj/item/clothing/head/helmet/space/blackstronaut,
+/obj/item/clothing/under/gimmick/donkini,
+/obj/item/clothing/head/helmet/space/donk,
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/grime,
 /area/abandonedmedicalship/robot_trader)
@@ -1545,7 +1545,7 @@
 /turf/simulated/floor/grime,
 /area/abandonedmedicalship/robot_trader)
 "afd" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/grime,
 /area/abandonedmedicalship/robot_trader)
 "afe" = (
@@ -2581,13 +2581,13 @@
 /obj/disposalpipe/segment{
 	name = "factory pipe"
 	},
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "ajn" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/grime,
@@ -2630,14 +2630,14 @@
 /obj/disposalpipe/segment{
 	name = "factory pipe"
 	},
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/grime,
 /area/ghostdrone_factory)
 "ajw" = (
 /obj/machinery/ghostdrone_factory/part3,
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/plating/random,
@@ -2691,13 +2691,13 @@
 	name = "factory pipe"
 	},
 /obj/decal/cleanable/dirt/dirt3,
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/grime,
 /area/ghostdrone_factory)
 "ajH" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/grime,
@@ -2706,7 +2706,7 @@
 /obj/disposalpipe/segment{
 	name = "factory pipe"
 	},
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/plating/random,
@@ -2773,7 +2773,7 @@
 /area/station/engine/monitoring)
 "ajR" = (
 /obj/machinery/ghostdrone_factory/part2,
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/grime,
@@ -2782,7 +2782,7 @@
 /obj/disposalpipe/segment{
 	name = "factory pipe"
 	},
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/grime,
@@ -2826,7 +2826,7 @@
 /obj/disposalpipe/segment{
 	name = "factory pipe"
 	},
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/grime,
@@ -2836,7 +2836,7 @@
 	name = "factory pipe"
 	},
 /obj/decal/cleanable/dirt/dirt5,
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/grime,
@@ -2861,7 +2861,7 @@
 /area/ghostdrone_factory)
 "akf" = (
 /obj/machinery/ghostdrone_factory,
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/grime,
@@ -3463,7 +3463,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "lockdown";
@@ -3481,7 +3481,7 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "alO" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "It's locked up pretty tight.";
 	dir = 4;
 	name = "Syndicate Assault Vessel"
@@ -3497,7 +3497,7 @@
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "alQ" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	name = "Listening Post"
 	},
@@ -4207,7 +4207,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	name = "Syndicate Assault Vessel"
 	},
@@ -4325,7 +4325,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "lockdown";
@@ -4337,7 +4337,7 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "anZ" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	name = "Syndicate Assault Vessel"
 	},
@@ -4345,7 +4345,7 @@
 /turf/simulated/floor/plating/random,
 /area/listeningpost/syndicateassaultvessel)
 "aoa" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 5;
 	icon_state = "pdoor0";
@@ -4511,7 +4511,7 @@
 	icon_state = "scanner_off";
 	pixel_x = 20
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -4745,7 +4745,7 @@
 /turf/space/fluid/manta/nospawn,
 /area/station/com_dish/manta)
 "aoU" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 10;
 	icon_state = "pdoor0";
@@ -5008,7 +5008,7 @@
 	icon_state = "scanner_off";
 	pixel_x = -20
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -5707,7 +5707,7 @@
 /turf/space/fluid/manta,
 /area/shuttle/merchant_shuttle/left_station/cogmap/manta)
 "ark" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "north"
 	},
 /turf/space/fluid/manta/nospawn,
@@ -5719,7 +5719,7 @@
 /turf/space/fluid/manta,
 /area/supply/spawn_point/manta)
 "arn" = (
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 4;
 	pixel_y = 3;
 	switchon = 1
@@ -6547,7 +6547,7 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "atG" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -6564,7 +6564,7 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
 "atH" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "ai_core";
@@ -9801,7 +9801,7 @@
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/ai_upload_foyer)
 "aCh" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 6;
 	icon_state = "pdoor0";
@@ -10090,7 +10090,7 @@
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aDe" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "north"
 	},
 /obj/machinery/door_control{
@@ -11068,7 +11068,7 @@
 /area/station/science/teleporter)
 "aFP" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "scienceteleporter";
@@ -11086,7 +11086,7 @@
 /area/station/hallway/starboardupperhallway)
 "aFR" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "scienceteleporter";
@@ -11240,7 +11240,7 @@
 /area/station/crew_quarters/quarters)
 "aGk" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "scienceteleporter";
@@ -11416,7 +11416,7 @@
 	dir = 9;
 	icon_state = "line4"
 	},
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -12023,7 +12023,7 @@
 	name = "Visitation"
 	},
 /obj/firedoor_spawn,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "Visitation";
@@ -12541,7 +12541,7 @@
 /area/station/crew_quarters/hor)
 "aJy" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -13442,7 +13442,7 @@
 	},
 /area/station/janitor/office)
 "aLW" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -17130,7 +17130,9 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aWW" = (
-/obj/machinery/atmospherics/pipe/simple/junction/east,
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 4
+	},
 /obj/table/reinforced/auto,
 /obj/item/clothing/head/helmet/space/santahat,
 /obj/item/reagent_containers/food/drinks/eggnog,
@@ -17445,16 +17447,6 @@
 	pixel_x = -7;
 	pixel_y = 6
 	},
-/obj/item/device/detective_scanner{
-	pixel_x = 6;
-	pixel_y = -3;
-	rand_pos = 0
-	},
-/obj/item/device/detective_scanner{
-	pixel_x = 6;
-	pixel_y = 11;
-	rand_pos = 0
-	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer)
 "aXP" = (
@@ -17640,7 +17632,9 @@
 	},
 /area/station/crew_quarters/quartersA)
 "aYn" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/north,
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 1
+	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aYo" = (
@@ -17667,7 +17661,9 @@
 /obj/item/storage/box/donkpocket_kit,
 /obj/item/storage/box/ic_cones,
 /obj/item/storage/box/ic_cones,
-/obj/machinery/atmospherics/pipe/simple/junction/east,
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 4
+	},
 /obj/machinery/light/incandescent/cool/very,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
@@ -17697,23 +17693,29 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aYr" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aYs" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aYt" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/northwest,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9
+	},
 /obj/machinery/light/incandescent/cool/very,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aYu" = (
-/obj/storage/secure/closet/security/equipment,
+/obj/machinery/vending/jobclothing/security,
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
@@ -18883,10 +18885,6 @@
 /obj/item/ammo/bullets/smoke,
 /obj/item/ammo/bullets/smoke,
 /obj/item/gun/kinetic/riot40mm,
-/obj/item/device/detective_scanner{
-	pixel_x = 6;
-	pixel_y = 6
-	},
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
@@ -19762,10 +19760,10 @@
 /area/station/crew_quarters/kitchen/therustykrab)
 "bdV" = (
 /obj/plasticflaps,
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "north"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "qm_dock";
 	name = "Cargo Bay In"
 	},
@@ -19783,14 +19781,14 @@
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "bdY" = (
-/obj/forcefield/energyshield/perma/doorlink,
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "north"
 	},
 /obj/machinery/door/poddoor/pyro{
 	id = "qm_dock";
 	name = "Cargo Bay In"
 	},
+/obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/lowerport)
 "bdZ" = (
@@ -21248,7 +21246,9 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "bhv" = (
-/obj/machinery/atmospherics/unary/cryo_cell/north,
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 1
+	},
 /obj/decal/tile_edge/line/blue{
 	dir = 9;
 	icon_state = "line4"
@@ -23596,6 +23596,7 @@
 "bnf" = (
 /obj/machinery/disposal/small/east,
 /obj/disposalpipe/trunk,
+/obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
 "bng" = (
@@ -26617,7 +26618,7 @@
 /turf/simulated/floor/bot,
 /area/station/quartermaster/cargobay)
 "bvq" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "qmdelivery"
 	},
 /turf/simulated/floor,
@@ -26778,7 +26779,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -27163,7 +27164,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/cargobay)
 "bwW" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "qm";
@@ -27172,7 +27173,7 @@
 	opacity = 0
 	},
 /obj/plasticflaps,
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "qmdelivery"
 	},
 /turf/simulated/floor/caution/westeast,
@@ -27401,7 +27402,7 @@
 	},
 /area/station/science/chemistry)
 "bxD" = (
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/table/wood/round/auto,
 /obj/item/paper{
 	desc = "";
@@ -27548,13 +27549,13 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bxW" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "disposals";
 	move_lag = 30;
 	operating = 1
 	},
 /obj/plasticflaps,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "crusher";
 	name = "crusher door"
@@ -27563,7 +27564,7 @@
 /area/station/maintenance/disposal)
 "bxX" = (
 /obj/machinery/crusher,
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "disposals";
 	move_lag = 30;
 	operating = 1
@@ -27818,7 +27819,7 @@
 /area/station/hallway/secondary/construction)
 "byT" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -28117,12 +28118,12 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/disposal)
 "bzC" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "crusher";
 	name = "crusher door"
 	},
 /obj/plasticflaps,
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "disposals";
 	move_lag = 30;
 	operating = 1
@@ -28395,7 +28396,7 @@
 /area/station/science/lobby)
 "bAr" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "scienceteleporter";
@@ -28536,7 +28537,7 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "bAG" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/decal/tile_edge/line/purple{
 	dir = 1;
 	icon_state = "line3"
@@ -28687,7 +28688,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bAY" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "disposals";
 	move_lag = 30;
 	operating = 1
@@ -28695,7 +28696,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bAZ" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "disposals";
 	move_lag = 30;
 	operating = 1
@@ -28866,7 +28867,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bBE" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "qmdelivery"
 	},
 /obj/machinery/camera{
@@ -29315,7 +29316,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bCF" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "disposals";
 	move_lag = 30;
 	operating = 1
@@ -29323,11 +29324,11 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bCG" = (
-/obj/forcefield/energyshield/perma/doorlink,
 /obj/machinery/door/poddoor/pyro{
 	id = "cargobay_out";
 	name = "Cargo Bay Out"
 	},
+/obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/lowerport)
 "bCH" = (
@@ -29739,7 +29740,7 @@
 	},
 /area/station/medical/cdc)
 "bDQ" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	id = "disposals";
 	move_lag = 30;
 	operating = 1
@@ -29747,7 +29748,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bDR" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "disposals";
 	move_lag = 30;
 	operating = 1
@@ -29756,7 +29757,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bDS" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "disposals";
 	move_lag = 30;
 	operating = 1
@@ -29818,13 +29819,13 @@
 /turf/simulated/floor/bot,
 /area/station/quartermaster/cargobay)
 "bEl" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "north"
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bEm" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	id = "south"
 	},
 /turf/simulated/floor,
@@ -30751,7 +30752,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bHJ" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	id = "disposals";
 	move_lag = 30;
 	operating = 1
@@ -30779,10 +30780,10 @@
 /area/station/maintenance/upperstarboard)
 "bHQ" = (
 /obj/plasticflaps,
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	id = "south"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "cargobay_out";
 	name = "Cargo Bay Out"
 	},
@@ -31047,7 +31048,7 @@
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
 "bIU" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "north"
 	},
 /turf/simulated/floor/caution/westeast,
@@ -31363,7 +31364,7 @@
 /area/station/science/restroom)
 "bJL" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -31557,7 +31558,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/artifact_paper_dispenser{
+/obj/item/paper_bin/artifact_paper{
 	pixel_x = 8;
 	pixel_y = 6
 	},
@@ -32844,7 +32845,7 @@
 	icon_state = "line4"
 	},
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/blackwhite/corner{
 	dir = 8
 	},
@@ -33260,7 +33261,7 @@
 	},
 /area/station/ranch)
 "cgW" = (
-/obj/rack,
+/obj/random_item_spawner/armory_breaching_supplies,
 /obj/item/old_grenade/high_explosive{
 	pixel_x = -3;
 	pixel_y = 4
@@ -33272,18 +33273,6 @@
 /obj/item/old_grenade/high_explosive{
 	pixel_x = -3;
 	pixel_y = 4
-	},
-/obj/item/breaching_charge/NT{
-	pixel_x = 5;
-	pixel_y = 1
-	},
-/obj/item/breaching_charge/NT{
-	pixel_x = 5;
-	pixel_y = 1
-	},
-/obj/item/breaching_charge/NT{
-	pixel_x = 5;
-	pixel_y = 1
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -34417,7 +34406,6 @@
 /area/station/engine/inner)
 "ePb" = (
 /obj/storage/crate/bin,
-/obj/item/radio_tape/advertisement/dans_tickets,
 /obj/item/radio_tape/advertisement/grones{
 	pixel_x = 6;
 	pixel_y = 4
@@ -34440,10 +34428,6 @@
 	dir = 8;
 	nostick = 1;
 	pixel_x = -10
-	},
-/obj/item/radio_tape/advertisement/pope_crunch{
-	pixel_x = -6;
-	pixel_y = -6
 	},
 /obj/item/radio_tape/advertisement/cloning_psa{
 	pixel_x = -4;
@@ -35287,7 +35271,7 @@
 /area/station/security/checkpoint/sec_foyer)
 "gvx" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -37071,6 +37055,12 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/backroom)
+"kSX" = (
+/obj/machinery/conveyor/SN{
+	id = "north"
+	},
+/turf/space/fluid/manta/nospawn,
+/area/space)
 "kWs" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/wood/eight{
@@ -38020,7 +38010,9 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/starboard)
 "nqf" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/north,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
+	dir = 1
+	},
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line3"
 	},
@@ -38214,7 +38206,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
 "nOj" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "north"
 	},
 /obj/machinery/camera{
@@ -38615,6 +38607,7 @@
 	pixel_x = -24;
 	pixel_y = 10
 	},
+/obj/machinery/vending/jobclothing/engineering,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
 "oEs" = (
@@ -41353,7 +41346,7 @@
 /turf/simulated/floor/longtile,
 /area/station/bridge)
 "vCh" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "qmdelivery"
 	},
 /obj/machinery/light/incandescent/netural{
@@ -41474,7 +41467,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/construction)
 "vRH" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "disposals";
 	move_lag = 30;
 	operating = 1
@@ -41520,9 +41513,6 @@
 	pixel_y = 20
 	},
 /obj/machinery/phone,
-/obj/item/device/detective_scanner{
-	rand_pos = 0
-	},
 /obj/noticeboard/persistent{
 	name = "Security persistent notice board";
 	persistent_id = "security"
@@ -41950,10 +41940,6 @@
 	tag = ""
 	},
 /obj/machinery/light/incandescent/warm,
-/obj/item/breaching_hammer{
-	pixel_x = -1;
-	pixel_y = 1
-	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "wVU" = (
@@ -42124,7 +42110,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "xvy" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "disposals";
 	move_lag = 30;
 	operating = 1
@@ -42350,7 +42336,9 @@
 /turf/simulated/floor,
 /area/station/engine/inner)
 "xQw" = (
-/obj/machinery/atmospherics/unary/cryo_cell/north,
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 1
+	},
 /obj/decal/tile_edge/line/blue{
 	dir = 5;
 	icon_state = "line4"
@@ -70521,8 +70509,8 @@ bdV
 bIU
 bdY
 ark
-ark
-ark
+kSX
+kSX
 adx
 aaa
 aaa

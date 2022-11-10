@@ -1,52 +1,3 @@
-/*
-/obj/machinery/pipedispenser
-	name = "Pipe Dispenser"
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "autolathe"
-	density = 1
-	anchored = 1.0
-
-/obj/machinery/pipedispenser/attack_hand(user)
-	if(..())
-		return
-
-	var/dat = {"
-<A href='?src=\ref[src];make=0'>Pipe<BR>
-<A href='?src=\ref[src];make=1'>Bent Pipe<BR>
-<A href='?src=\ref[src];make=2'>Heat Exchange Pipe<BR>
-<A href='?src=\ref[src];make=3'>Heat Exchange Bent Pipe<BR>
-<A href='?src=\ref[src];make=4'>Connector<BR>
-<A href='?src=\ref[src];make=5'>Manifold<BR>
-<A href='?src=\ref[src];make=6'>Junction<BR>
-<A href='?src=\ref[src];make=7'>Vent<BR>
-<A href='?src=\ref[src];make=8'>Valve<BR>
-<A href='?src=\ref[src];make=9'>Pipe-Pump<BR>"}
-//<A href='?src=\ref[src];make=10'>Filter Inlet<BR>
-
-
-	user.Browse("<HEAD><TITLE>Pipe Dispenser</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
-	onclose(user, "pipedispenser")
-	return
-
-/obj/machinery/pipedispenser/Topic(href, href_list)
-	if(..())
-		return
-	src.add_dialog(usr)
-	src.add_fingerprint(usr)
-	if(href_list["make"])
-		var/p_type = text2num_safe(href_list["make"])
-		var/obj/item/pipe/P = new /obj/item/pipe(src.loc)
-		P.pipe_type = p_type
-		P.update()
-
-	for(var/mob/M in viewers(1, src))
-		if ((M.client && M.machine == src))
-			src.Attackhand(M)
-	return
-
-/obj/machinery/pipedispenser/New()
-	..()
-*/
 
 /obj/machinery/disposal_pipedispenser
 	name = "Disposal Pipe Dispenser"
@@ -54,7 +5,7 @@
 	icon = 'icons/obj/manufacturer.dmi'
 	icon_state = "pipe-fab"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	mats = 16
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 

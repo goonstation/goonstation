@@ -221,7 +221,7 @@
 			return 1
 
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] shoots finger guns in [target]s direction.</b></span>")
-		playsound(holder.owner.loc, "sound/effects/fingersnap.ogg", 50, 0, -1)
+		playsound(holder.owner.loc, 'sound/effects/fingersnap.ogg', 50, 0, -1)
 
 		if (H.traitHolder.hasTrait("training_chaplain"))
 			boutput(holder.owner, "<span class='alert'>[H] has divine protection from magic.</span>")
@@ -245,7 +245,7 @@
 
 	cast(atom/T)
 		holder.owner.say("So long folks!")
-		playsound(holder.owner.loc, "sound/voice/wizard/BlinkGrim.ogg", 50, 0, -1)
+		playsound(holder.owner.loc, 'sound/voice/wizard/BlinkGrim.ogg', 50, 0, -1)
 		sleep(0.5 SECONDS)
 
 		if(!spawnturf)
@@ -303,7 +303,7 @@
 
 	cast(atom/T)
 		sonic_attack_environmental_effect(usr, 5, list("light"))
-		playsound(holder.owner.loc,"sound/misc/jester_laugh.ogg", 125)
+		playsound(holder.owner.loc, 'sound/misc/jester_laugh.ogg', 125)
 
 //////////////////////////Dumb Floorclown stuff//////////////////////////
 /datum/targetable/gimmick/reveal
@@ -468,11 +468,11 @@
 		var/obj/decal/cleanable/writing/spooky/G = make_cleanable(/obj/decal/cleanable/writing/spooky,T)
 		G.artist = user.key
 
-		logTheThing("station", user, null, "writes on [T] with [src] [log_loc(T)]: [t]")
+		logTheThing(LOG_STATION, user, "writes on [T] with [src] [log_loc(T)]: [t]")
 		G.icon_state = t
 		G.words = t
 		if (islist(params) && params["icon-y"] && params["icon-x"])
-			// playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 0)
+			// playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 0)
 
 			G.pixel_x = text2num(params["icon-x"]) - 16
 			G.pixel_y = text2num(params["icon-y"]) - 16

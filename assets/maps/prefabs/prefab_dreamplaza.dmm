@@ -23,6 +23,16 @@
 	dir = 1
 	},
 /area/prefab/dreamplaza)
+"aA" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/warp_beacon{
+	name = "DreamPlaza Mall Beacon"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
 "aJ" = (
 /obj/machinery/clothingbooth,
 /obj/machinery/light/incandescent/purpleish{
@@ -492,15 +502,6 @@
 /obj/random_item_spawner/junk/one,
 /turf/simulated/floor/neutral,
 /area/prefab/dreamplaza)
-"rf" = (
-/obj/lattice{
-	icon_state = "lattice-dir-b"
-	},
-/obj/warp_beacon{
-	name = "DreamPlaza Mall Beacon"
-	},
-/turf/variableTurf/clear,
-/area/noGenerate)
 "rA" = (
 /obj/decoration/floralarrangement{
 	pixel_x = 4;
@@ -1609,6 +1610,13 @@
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
+"ZM" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
 "ZN" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/purpleblack{
@@ -1927,7 +1935,7 @@ FS
 UK
 UK
 UK
-UK
+aA
 UK
 UK
 UK
@@ -1959,7 +1967,7 @@ UK
 UK
 UK
 UK
-Ww
+ZM
 UK
 UK
 UK
@@ -1990,7 +1998,7 @@ UK
 UK
 UK
 UK
-rf
+fL
 ei
 yS
 UK

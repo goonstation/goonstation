@@ -72,7 +72,7 @@ obj/machinery/atmospherics/binary/pump
 
 			network2?.update = 1
 
-			use_power((target_pressure) * (0.10)) // cogwerks: adjust the multiplier if needed
+			use_power((target_pressure) * (0.1)) // cogwerks: adjust the multiplier if needed
 
 		return 1
 

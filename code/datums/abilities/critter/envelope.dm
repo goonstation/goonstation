@@ -39,9 +39,9 @@
 		..()
 		var/mob/ownerMob = owner
 		if (ownerMob && target && (BOUNDS_DIST(owner, target) == 0) && (!ability || ability.cooldowncheck()))
-			logTheThing("combat", target, ownerMob, "was enveloped by [constructTarget(ownerMob,"combat")] [ismob(ownerMob) ? "(mob) " : ""]at [log_loc(ownerMob)].")
+			logTheThing(LOG_COMBAT, target, "was enveloped by [constructTarget(ownerMob,"combat")] [ismob(ownerMob) ? "(mob) " : ""]at [log_loc(ownerMob)].")
 			owner.visible_message("<span class='combat'><B>[ownerMob]</B> completely envelops [target]!</span>")
-			playsound(ownerMob, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
+			playsound(ownerMob, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1)
 			if(istype(ownerMob))
 				ownerMob.health = ownerMob.max_health
 				if (target == owner)

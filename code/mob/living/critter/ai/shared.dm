@@ -67,7 +67,7 @@
 		if(M && !M.move_target)
 			var/target_turf = get_turf(holder.target)
 			if(can_be_adjacent_to_target)
-				var/list/tempPath = get_path_to(holder.owner, target_turf, 40, 1)
+				var/list/tempPath = get_path_to(holder.owner, target_turf, 40, 1, null, !M.move_through_space)
 				var/length_of_path = length(tempPath)
 				if(length_of_path) // fix runtime Cannot read length(null)
 					M.move_target = tempPath[length_of_path]
@@ -131,13 +131,14 @@
 	var/max_path_dist = 50 //keeping this low by default, but you can override it - see /datum/aiTask/sequence/goalbased/rally for details
 	var/list/found_path = null
 	var/atom/move_target = null
+	var/move_through_space = FALSE
 
 // use the target from our holder
 /datum/aiTask/succeedable/move/proc/get_path()
 	if(!move_target)
 		fails++
 		return
-	src.found_path = get_path_to(holder.owner, move_target, src.max_path_dist, 0)
+	src.found_path = get_path_to(holder.owner, move_target, src.max_path_dist, 0, null, !move_through_space)
 	if(!src.found_path) // no path :C
 		fails++
 
@@ -156,7 +157,7 @@
 
 /datum/aiTask/succeedable/move/succeeded()
 	if(move_target)
-		. = (get_dist(holder.owner, src.move_target) == 0)
+		. = (GET_DIST(holder.owner, src.move_target) == 0)
 		return
 
 /datum/aiTask/succeedable/move/failed()
@@ -196,8 +197,81 @@
 		. = ..()
 		var/mob/living/critter/M = holder.owner
 		if (!M) return
-		holder.enabled = FALSE
+		holder.disable()
 		M.is_hibernating = TRUE
 		M.registered_area = get_area(M)
 		if(M.registered_area)
 			M.registered_area.registered_mob_critters |= M
+
+//AI: Follower
+// You will have to code your own exit conditions and your own code for setting "following"
+/datum/aiTask/timed/targeted/follower
+	name = "follow"
+	minimum_task_ticks = 10000
+	maximum_task_ticks = 10000
+	target_range = 10
+	frustration_threshold = 3
+	var/last_seek = null
+	var/following = null
+
+/datum/aiTask/timed/targeted/follower/proc/precondition()
+	. = 0
+	if(following)
+		if(IN_RANGE(holder.owner, following, target_range))
+			. = 1
+
+/datum/aiTask/timed/targeted/follower/frustration_check()
+	.= 0
+	if (!IN_RANGE(holder.owner, holder.target, target_range))
+		return 1
+
+	if (ismob(holder.target))
+		var/mob/M = holder.target
+		. = !(holder.target && !isdead(M))
+	else
+		. = !(holder.target)
+
+/datum/aiTask/timed/targeted/follower/score_target(atom/target)
+	. = ..()
+
+/datum/aiTask/timed/targeted/follower/evaluate()
+	..()
+	. = precondition() * 4 //FOLLOW_PRIORITY = 4
+
+/datum/aiTask/timed/targeted/follower/on_tick()
+	var/mob/living/critter/owncritter = holder.owner
+	if (HAS_ATOM_PROPERTY(owncritter, PROP_MOB_CANTMOVE))
+		return
+
+	if(length(holder.owner.grabbed_by) > 1)
+		holder.owner.resist()
+
+	if(!holder.target)
+		if (world.time > last_seek + 4 SECONDS)
+			last_seek = world.time
+			var/list/possible = get_targets()
+			if (possible.len)
+				holder.target = pick(possible)
+	if(holder.target && holder.target.z == owncritter.z)
+		var/mob/living/M = holder.target
+		if(!isalive(M))
+			holder.target = null
+			holder.target = get_best_target(get_targets())
+			if(!holder.target)
+				return ..() // try again next tick
+			else
+				M = holder.target
+
+		var/dist = get_dist(owncritter, M)
+		if (dist > 1)
+			holder.move_to(M,1)
+	..()
+
+/datum/aiTask/timed/targeted/follower/get_targets()
+	. = list()
+	. += following
+
+/datum/aiTask/timed/targeted/follower/on_reset()
+	..()
+	holder.target = null
+	holder.stop_move()

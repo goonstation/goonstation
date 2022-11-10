@@ -25,7 +25,7 @@
 				if (prob(33))
 					boutput(owner, "<span class='alert'>The holy ground burns you!</span>")
 				owner.TakeDamage("chest", 0, 5 * mult, 0, DAMAGE_BURN)
-			if (owner.loc && istype(owner.loc, /turf/space))
+			if (owner.loc && istype(owner.loc, /turf/space) || (istype(owner.loc, /obj/dummy/spell_batpoof) && istype(get_turf(owner.loc), /turf/space)))
 				if (prob(33))
 					boutput(owner, "<span class='alert'>The starlight burns you!</span>")
 				owner.TakeDamage("chest", 0, 2 * mult, 0, DAMAGE_BURN)
@@ -41,7 +41,7 @@
 						interdictor_influence = 1
 						break
 				if(!interdictor_influence)
-					owner.changeStatus("radiation", (A.irradiated * 10 * mult) SECONDS)
+					owner.take_radiation_dose((rand() * 0.5 SIEVERTS * A.irradiated * mult))
 
 		if (owner.bioHolder)
 			var/total_stability = owner.bioHolder.genetic_stability

@@ -11,6 +11,7 @@ Contains:
 - Remote signaller/proximity
 - Beaker Assembly
 - Pipebomb Assembly
+- Craftable shotgun shells
 
 */
 
@@ -21,7 +22,7 @@ Contains:
 	icon = 'icons/obj/items/assemblies.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "assembly"
-	var/status = 0.0
+	var/status = 0
 	throwforce = 10
 	w_class = W_CLASS_NORMAL
 	throw_speed = 4
@@ -79,6 +80,8 @@ Contains:
 	return
 
 /obj/item/assembly/time_ignite/receive_signal()
+	if(!src.status)
+		return
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
 	src.part2.ignite()
@@ -159,7 +162,7 @@ Contains:
 			src.part5.set_loc(src)
 			src.c_state(0)
 			boutput(user, "You attach the pipebomb to the timer/igniter assembly.")
-			logTheThing("bombing", user, null, "made Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
+			logTheThing(LOG_BOMBING, user, "made Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
 			message_admins("[key_name(user)] made a Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
@@ -173,7 +176,7 @@ Contains:
 			W.set_loc(src)
 			src.c_state(0)
 			boutput(user, "You attach the pipebomb to the timer/igniter assembly.")
-			logTheThing("bombing", user, null, "made Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
+			logTheThing(LOG_BOMBING, user, "made Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
 			message_admins("[key_name(user)] made a Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
@@ -378,7 +381,7 @@ Contains:
 			src.part5.set_loc(src)
 			src.c_state(0)
 			boutput(user, "You attach the sensor/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Proximity/Igniter/Pipebomb Assembly at [log_loc(src)].")
+			logTheThing(LOG_BOMBING, user, "made Proximity/Igniter/Pipebomb Assembly at [log_loc(src)].")
 			message_admins("[key_name(user)] made a Proximity/Igniter/Pipebomb Assembly at [log_loc(src)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
@@ -392,7 +395,7 @@ Contains:
 			W.set_loc(src)
 			src.c_state(0)
 			boutput(user, "You attach the sensor/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Proximity/Igniter/Beaker Assembly at [log_loc(src)].")
+			logTheThing(LOG_BOMBING, user, "made Proximity/Igniter/Beaker Assembly at [log_loc(src)].")
 			message_admins("[key_name(user)] made a Proximity/Igniter/Beaker Assembly at [log_loc(src)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
@@ -416,6 +419,8 @@ Contains:
 	return
 
 /obj/item/assembly/prox_ignite/receive_signal()
+	if(!src.status)
+		return
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
 	src.part2.ignite()
@@ -554,7 +559,7 @@ Contains:
 			src.part5.set_loc(src)
 			src.c_state()
 			boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
+			logTheThing(LOG_BOMBING, user, "made Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
 			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
@@ -568,7 +573,7 @@ Contains:
 			W.set_loc(src)
 			src.c_state()
 			boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
+			logTheThing(LOG_BOMBING, user, "made Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
 			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
@@ -592,6 +597,8 @@ Contains:
 	return
 
 /obj/item/assembly/rad_ignite/receive_signal()
+	if(!src.status)
+		return
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
 	if (src.part2)
@@ -702,7 +709,7 @@ Contains:
 	icon_state = "radio-horn"
 	var/obj/item/device/radio/signaler/part1 = null
 	var/obj/item/instrument/bikehorn/part2 = null
-	status = 0.0
+	status = 0
 	flags = FPRINT | TABLEPASS | CONDUCT
 
 /obj/item/assembly/radio_horn/New()
@@ -868,3 +875,71 @@ obj/item/assembly/radio_horn/receive_signal()
 		src.part2.sense()
 		return
 	return
+
+
+//////////////////////////////////handmade shotgun shells//////////////////////////////////
+/datum/pipeshotrecipe
+	var/thingsneeded = null
+	var/obj/item/ammo/bullets/result = null
+	var/obj/item/accepteditem = null
+	var/craftname = null
+	var/success = FALSE
+
+	proc/craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
+
+		if (istype(craftingitem, accepteditem))
+			//the checks for if an item is actually allowed are local to the recipie, since they can vary
+			var/consumed = min(src.thingsneeded, craftingitem.amount)
+			thingsneeded -= consumed //ideally we'd do this later but for sake of working with zeros it's up here
+
+			if (thingsneeded > 0)//craft successful, but they'll need more
+				boutput(user, "<span class='notice'>You add [consumed] items to the [frame]. You feel like you'll need [thingsneeded] more [craftname]s to fill all the shells. </span>")
+
+			if (thingsneeded <= 0) //check completion and produce shells as needed
+				var/obj/item/ammo/bullets/shot = new src.result(get_turf(frame))
+				user.put_in_hand_or_drop(shot)
+				qdel(frame)
+
+				//consume material- proc handles deleting
+			craftingitem.change_stack_amount(-consumed)
+/datum/pipeshotrecipe/plasglass
+	thingsneeded = 2
+	result = /obj/item/ammo/bullets/pipeshot/plasglass
+	accepteditem = /obj/item/raw_material/shard
+	craftname = "shard"
+	var/matid = "plasmaglass"
+
+	craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
+		if(matid == craftingitem.material.mat_id)
+			..() //call parent, have them run the typecheck
+
+/datum/pipeshotrecipe/scrap
+	thingsneeded = 1
+	result = /obj/item/ammo/bullets/pipeshot/scrap/
+	accepteditem = /obj/item/raw_material/scrap_metal
+	craftname = "scrap chunk"
+/datum/pipeshotrecipe/glass
+	thingsneeded = 2
+	result = /obj/item/ammo/bullets/pipeshot/glass/
+	accepteditem = /obj/item/raw_material/shard
+	craftname = "shard"
+/obj/item/assembly/pipehulls
+	name = "filled pipe hulls"
+	desc = "Four open pipe shells, with propellant in them. You wonder what you could stuff into them."
+	icon_state = "Pipeshotrow"
+
+	var/datum/pipeshotrecipe/recipe = null
+
+	attackby(obj/item/W, mob/user)
+		if (!recipe) //no recipie? assign one
+			if (istype(W, /obj/item/raw_material/shard))
+				if(W.material.mat_id == "plasmaglass")
+					recipe = new/datum/pipeshotrecipe/plasglass
+				else
+					recipe = new/datum/pipeshotrecipe/glass
+			if (istype(W, /obj/item/raw_material/scrap_metal))
+				recipe = new/datum/pipeshotrecipe/scrap
+		if(recipe) //probably a better way, but it works well enough
+			recipe.craftwith(W, src, user)
+		..()
+

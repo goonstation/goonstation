@@ -157,7 +157,7 @@
 		if (!message || BOUNDS_DIST(src, user) > 0)
 			return
 		phrase_log.log_phrase("plushie", message)
-		logTheThing("say", user, null, "makes [src] say, \"[message]\"")
+		logTheThing(LOG_SAY, user, "makes [src] say, \"[message]\"")
 		user.audible_message("<span class='emote'>[src] says, \"[message]\"</span>")
 		var/mob/living/carbon/human/H = user
 		if (H.sims)
@@ -264,9 +264,11 @@
 	icon_state = "arthur"
 
 /obj/item/toy/plush/small/arthur/attack_self(mob/user as mob)
-	var/menuchoice = alert("What would you like to do with [src]?",,"Awoo","Say")
+	var/menuchoice = tgui_alert(user, "What would you like to do with [src]?", "Use [src]", list("Awoo", "Say"))
+	if (!menuchoice)
+		return
 	if (menuchoice == "Awoo" && !ON_COOLDOWN(src, "playsound", 2 SECONDS))
-		playsound(user, "sound/voice/babynoise.ogg", 50, 1)
+		playsound(user, 'sound/voice/babynoise.ogg', 50, 1)
 		src.audible_message("<span class='emote'>[src] awoos!</span>")
 	else if (menuchoice == "Say")
 		src.say_something(user)
@@ -278,7 +280,9 @@
 	throw_range = 10
 
 /obj/item/toy/plush/small/stress_ball/attack_self(mob/user as mob)
-	var/menuchoice = alert("What would you like to do with [src]?",,"Fidget","Say")
+	var/menuchoice = tgui_alert(user, "What would you like to do with [src]?", "Use [src]", list("Fidget", "Say"))
+	if (!menuchoice)
+		return
 	if (menuchoice == "Fidget")
 		user.visible_message("<span class='emote'>[user] fidgets with [src].</span>")
 		boutput(user, "<span class='notice'>You feel [pick("a bit", "slightly", "a teeny bit", "somewhat", "surprisingly", "")] [pick("better", "more calm", "more composed", "less stressed")].</span>")
@@ -290,9 +294,11 @@
 	icon_state = "deneb"
 
 /obj/item/toy/plush/small/deneb/attack_self(mob/user as mob)
-	var/menuchoice = alert("What would you like to do with [src]?",,"Honk","Say")
+	var/menuchoice = tgui_alert(user, "What would you like to do with [src]?", "Use [src]", list("Honk", "Say"))
+	if (!menuchoice)
+		return
 	if (menuchoice == "Honk" && !ON_COOLDOWN(src, "playsound", 2 SECONDS))
-		playsound(user, "sound/items/rubberduck.ogg", 50, 1)
+		playsound(user, 'sound/items/rubberduck.ogg', 50, 1)
 		src.audible_message("<span class='emote'>[src] honks!</span>")
 	else if (menuchoice == "Say")
 		src.say_something(user)

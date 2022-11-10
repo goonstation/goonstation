@@ -85,7 +85,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				"<span><b>[challenger]</b> slaps [target] in the face with the the [src]!</span>",
 				"<span class='alert'><b>[challenger] slaps you in the face with the [src]! [capitalize(he_or_she(challenger))] has offended your honour!</span>"
 			)
-			logTheThing("combat", challenger, target, "glove-slapped [constructTarget(target,"combat")]")
+			logTheThing(LOG_COMBAT, challenger, "glove-slapped [constructTarget(target,"combat")]")
 		else
 			target.visible_message(
 				"<span class='alert'><b>[challenger]</b> slaps [target] in the face with the [src]!</span>"
@@ -166,7 +166,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 		return data
 
-	proc/special_attack(var/mob/target)
+	proc/special_attack(var/mob/target, var/mob/living/user)
 		boutput(usr, "Your gloves do nothing special")
 		return
 
@@ -193,6 +193,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		var/mob/user = source
 		if(target == user || !istype(user) || user.a_intent == INTENT_HELP || user.a_intent == INTENT_GRAB) return 0
 		if(slot != SLOT_GLOVES || !overridespecial) return 0
+		SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 		specialoverride.pixelaction(target,params,user)
 		user.next_click = world.time + user.combat_click_delay
@@ -208,12 +209,13 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	material_prints = "synthetic silicone rubber fibers"
 	setupProperties()
 		..()
-		setProperty("conductivity", 0.3)
+		setProperty("conductivity", 0.6)
 		setProperty("heatprot", 5)
+		setProperty("chemprot", 15)
 
 /obj/item/clothing/gloves/fingerless
-	desc = "These gloves lack fingers."
-	name = "Fingerless Gloves"
+	desc = "These gloves lack fingers. Good for a space biker look, but not so good for concealing your fingerprints."
+	name = "fingerless gloves"
 	icon_state = "fgloves"
 	item_state = "finger-"
 	hide_prints = 0
@@ -223,8 +225,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("conductivity", 1)
 
 /obj/item/clothing/gloves/black
-	desc = "These gloves are fire-resistant."
-	name = "Black Gloves"
+	desc = "These thick leather gloves are fire-resistant."
+	name = "black gloves"
 	icon_state = "black"
 	item_state = "bgloves"
 	protective_temperature = 1500
@@ -235,7 +237,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("heatprot", 7)
 
 	slasher
-		name = "Padded Gloves"
+		name = "padded gloves"
 		desc = "These gloves are padded and lined with insulating material."
 		cant_self_remove = 1
 		cant_other_remove = 1
@@ -265,16 +267,16 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("conductivity", 1)
 
 /obj/item/clothing/gloves/latex
-	name = "Latex Gloves"
+	name = "latex gloves"
 	icon_state = "latex"
 	item_state = "lgloves"
-	permeability_coefficient = 0.02
-	desc = "Thin gloves that offer minimal protection."
+	desc = "Thin, disposable medical gloves used to help prevent the spread of germs."
 	protective_temperature = 310
 	scramble_prints = 1
 	setupProperties()
 		..()
 		setProperty("conductivity", 0.7)
+		setProperty("chemprot", 15)
 
 /obj/item/clothing/gloves/latex/blue
 	color = "#91d5e9"
@@ -302,46 +304,48 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		onMaterialChanged()
 			..()
 			if(istype(src.material))
-				if(src.material.hasProperty("electrical"))
-					src.setProperty("conductivity", src.material.getProperty("electrical") / 100)
-				else
-					src.setProperty("conductivity", 1)
 
-				if(src.material.hasProperty("thermal"))
-					protective_temperature = (100 - src.material.getProperty("thermal")) ** 1.65
-					setProperty("coldprot", round((100 - src.material.getProperty("thermal")) * 0.1))
-					setProperty("heatprot", round((100 - src.material.getProperty("thermal")) * 0.1))
-				else
-					protective_temperature = 0
-					setProperty("coldprot", 0)
-					setProperty("heatprot", 0)
-			return
+				switch(src.material.getProperty("electrical"))
+					if(0 to 1)
+						src.setProperty("conductivity", 0.15)
+					if(1 to 2)
+						src.setProperty("conductivity", 0.3)
+					if(3 to 4)
+						src.setProperty("conductivity", 0.45)
+					else
+						src.setProperty("conductivity", 1)
+
+				var/thermal_insul = max(0, 5 - src.material.getProperty("thermal"))
+
+				src.setProperty("coldprot", thermal_insul * 2)
+				src.setProperty("heatprot", thermal_insul * 2)
 
 	armored
 		icon_state = "black"
 		item_state = "swat_gl"
+
 		onMaterialChanged()
 			..()
 			if(istype(src.material))
 				var/types = list()
-				if(src.material.getProperty("density") > 10 || src.material.getProperty("hard") > 10)
-					types["blunt"] = 0.5 * ceil((max(src.material.getProperty("density"), src.material.getProperty("hard")) - 10)**0.5)
-				if(src.material.getProperty("density") > 10)
-					types["cut"] = 0.5 * ceil((src.material.getProperty("density") - 10)**0.5)
-				if(src.material.getProperty("hard") > 10)
-					types["stab"] = 0.5 * ceil((src.material.getProperty("density") - 10)**0.5)
-				if(src.material.hasProperty("thermal"))
-					var/thermal = 100 - src.material.getProperty("thermal")
-					if(thermal > 10)
-						types["burn"] = 0.5 * ceil((thermal - 10)**0.5)
+				if(src.material.getProperty("density") > 3 || src.material.getProperty("hard") > 3)
+					types["blunt"] = 0.5 * (max(src.material.getProperty("density"), src.material.getProperty("hard")) - 2)
+				if(src.material.getProperty("density") > 3)
+					types["cut"] = 0.5 * (src.material.getProperty("density") - 2)
+				if(src.material.getProperty("hard") > 3)
+					types["stab"] = 0.5 * (src.material.getProperty("hard") - 2)
+
+				var/thermal = max(0, 5 - src.material.getProperty("thermal"))
+				if(thermal > 0)
+					types["burn"] = thermal
 
 				AddComponent(/datum/component/wearertargeting/unarmedblock/unarmed_bonus_block, list(SLOT_GLOVES), types)
 
 			return
 
 /obj/item/clothing/gloves/swat
-	desc = "A pair of syndicate tactical gloves that are quite fire and electrically-resistant. They also help you block attacks. They do not specifically help you block against blocking though. Just regular attacks."
-	name = "SWAT Gloves"
+	desc = "A pair of Syndicate tactical gloves that are electrically insulated and quite heat-resistant. The high-quality materials help you in blocking attacks."
+	name = "\improper SWAT gloves"
 	icon_state = "swat_syndie"
 	item_state = "swat_syndie"
 	protective_temperature = 1100
@@ -364,18 +368,20 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 /obj/item/clothing/gloves/swat/knight
 	name = "combat gauntlets"
 	desc = "Heavy-duty combat gloves that help you keep hold of your weapon."
+	icon_state = "combatgauntlets"
+	item_state = "swat_syndie"
 
 	setupProperties()
 		..()
 		setProperty("deflection", 40)
 
 /obj/item/clothing/gloves/swat/NT
-	desc = "A pair of Nanotrasen tactical gloves that are quite fire and electrically-resistant. They also help you block attacks. They do not specifically help you block against blocking though. Just regular attacks."
+	desc = "A pair of NanoTrasen tactical gloves that are electrically insulated and quite heat-resistant. The high-quality materials help you in blocking attacks."
 	icon_state = "swat_NT"
 	item_state = "swat_NT"
 
 /obj/item/clothing/gloves/stungloves/
-	name = "Stungloves"
+	name = "stun gloves"
 	desc = "These gloves are electrically charged."
 	icon_state = "stun"
 	item_state = "stun"
@@ -393,7 +399,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 
 /obj/item/clothing/gloves/yellow
-	desc = "These gloves are electrically insulated."
+	desc = "Tough synthrubber work gloves styled in a high-visibility yellow color. They are electrically insulated, and provide full protection against most shocks."
 	name = "insulated gloves"
 	icon_state = "yellow"
 	item_state = "ygloves"
@@ -406,14 +412,14 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("conductivity", 0)
 
 	proc/unsulate()
-		src.desc = "These gloves are not electrically insulated."
+		src.desc = "Flimsy synthrubber work gloves styled in a drab yellow color. They are not electrically insulated, and provide no protection against any shocks."
 		src.name = "unsulated gloves"
 		setProperty("conductivity", 1)
 		src.can_be_charged = 0
 		src.max_uses = 0
 
 /obj/item/clothing/gloves/yellow/unsulated
-	desc = "These gloves are not electrically insulated."
+	desc = "Flimsy synthrubber work gloves styled in a drab yellow color. They are not electrically insulated, and provide no protection against any shocks."
 	name = "unsulated gloves"
 	can_be_charged = 0
 	max_uses = 0
@@ -422,8 +428,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("conductivity", 1)
 
 /obj/item/clothing/gloves/boxing
-	name = "Boxing Gloves"
-	desc = "These gloves are for competitive boxing."
+	name = "boxing gloves"
+	desc = "Big soft gloves used in competitive boxing."
 	icon_state = "boxinggloves"
 	item_state = "bogloves"
 	material_prints = "red leather fibers"
@@ -443,7 +449,9 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 	get_desc()
 		if (src.weighted)
-			. += "These things are pretty heavy!"
+			. += " One of the gloves feels unusually heavy."
+		else
+			. += " Gives your punches a bit more weight, at the cost of precision."
 
 /obj/item/clothing/gloves/boxing/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/horseshoe))
@@ -459,8 +467,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		return ..()
 
 /obj/item/horseshoe //Heavy horseshoe for traitor boxers to put in their gloves
-	name = "Heavy Horseshoe"
-	desc = "An old horseshoe."
+	name = "heavy horseshoe"
+	desc = "An old horseshoe. What would you ever use this for on a space station?"
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "horseshoe"
 	force = 6.5
@@ -473,6 +481,76 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_ROPE)
+
+/obj/item/clothing/gloves/bladed
+	desc = "Transparent gloves make it look like the wearer isn't wearing gloves at all. There's a small gap on the back of each glove."
+	name = "transparent gloves"
+	icon_state = "transparent"
+	item_state = "transparent"
+	material_prints = "transparent high-quality synthetic fibers"
+	var/deployed = FALSE
+
+	nodescripition = TRUE
+
+	special_attack(mob/living/target, mob/living/user)
+		if(check_target_immunity( target ))
+			return 0
+		logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with hand blades at [log_loc(user)].")
+		var/obj/item/affecting = target.get_affecting(user)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 16, 16, 0, 0.8, 0, can_punch = 0, can_kick = 0)
+		user.attack_effects(target, affecting)
+		var/action = pick("stab", "slashe")
+		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their hand blades!</span></b>"
+		msgs.played_sound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+		msgs.damage_type = DAMAGE_CUT
+		msgs.flush(SUPPRESS_LOGS)
+		user.lastattacked = target
+
+	proc/sheathe_blades_toggle(mob/living/user)
+		playsound(src.loc, 'sound/effects/sword_unsheath1.ogg', 50, 1)
+
+		if(deployed)
+			deployed = FALSE
+			hit_type = initial(hit_type)
+			force = initial(force)
+			stamina_damage = initial(stamina_damage)
+			stamina_cost = initial(stamina_cost)
+			stamina_crit_chance = initial(stamina_crit_chance)
+
+			hitsound = initial(hitsound)
+			attack_verbs = initial(attack_verbs)
+			activeweapon = initial(activeweapon)
+			setSpecialOverride(null, src)
+
+			name = initial(name)
+			desc = initial(desc)
+			icon_state = initial(icon_state)
+			item_state = initial(item_state)
+
+			nodescripition = initial(nodescripition)
+
+			user.visible_message("<span class='alert'><B>[user]'s hand blades retract!</B></span>")
+		else
+			deployed = TRUE
+			hit_type = DAMAGE_CUT
+			force = 11
+			stamina_damage = 20
+			stamina_cost = 10
+			stamina_crit_chance = 0
+			activeweapon = TRUE
+			setSpecialOverride(/datum/item_special/double, src)
+
+			attack_verbs = "slashes"
+			hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+
+			name = "bladed gloves"
+			desc = "These transparent gloves have blades protruding from them."
+			icon_state = "bladed"
+			item_state = "gloves_bladed"
+
+			nodescripition = FALSE
+
+			user.visible_message("<span class='alert'><B>Blades spring out of [user]'s hands!</B></span>")
 
 /obj/item/clothing/gloves/powergloves
 	desc = "Now I'm playin' with power!"
@@ -529,7 +607,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 			var/list/dummies = new/list()
 
-			playsound(user, "sound/effects/elec_bigzap.ogg", 40, 1)
+			playsound(user, 'sound/effects/elec_bigzap.ogg', 40, 1)
 
 			SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
@@ -558,12 +636,12 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 				else if(isliving(target_r)) //Probably unsafe.
 					var/mob/living/victim = target_r
-					logTheThing("combat", user, target_r, "zaps [constructTarget(target_r,"combat")] with power gloves")
+					logTheThing(LOG_COMBAT, user, "zaps [constructTarget(target_r,"combat")] with power gloves")
 					switch(user.a_intent)
 						if("harm")
 							src.electrocute(victim, 100, netnum)
 							if(uses)
-								victim.shock(src, 1000 * uses, victim.hand == 1 ? "l_arm": "r_arm", 1)
+								victim.shock(src, 1000 * uses, victim.hand == LEFT_HAND ? "l_arm": "r_arm", 1)
 								uses--
 								charges_used = TRUE
 							break
@@ -643,7 +721,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 //Fun isn't something one considers when coding in ss13, but this did put a smile on my face
 /obj/item/clothing/gloves/brass_gauntlet
-	name = "Brass Gauntlet"
+	name = "brass gauntlet"
 	desc = "A strange gauntlet made of cogs and brass machinery. It has seven slots along the side."
 	icon_state = "brassgauntlet"
 	item_state = "brassgauntlet"
@@ -712,3 +790,14 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 		if(istype(W, /obj/item/plutonium_core/hootonium_core))
 			boutput(user, "<span class='alert'><B>The [src] reacts but the core is too big for the slots.</B></span>")
+
+/obj/item/clothing/gloves/princess
+	name = "party princess gloves"
+	desc = "Glimmer glimmer!"
+	icon_state = "princess"
+	item_state = "princess"
+	material_prints = "silk fibres and glitter"
+
+	setupProperties()
+		..()
+		setProperty("conductivity", 0.75)

@@ -36,7 +36,7 @@
 				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
 
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				src.light(user, "<span class='alert'>Did [user] just light \his [src] with [W]? Holy Shit.</span>")
+				src.light(user, "<span class='alert'>Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit.</span>")
 
 			else if (istype(W, /obj/item/device/igniter))
 				src.light(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; sparks erupt from [src].</span>")
@@ -89,7 +89,7 @@
 		if (!src) return
 		if (burnt) return
 		if (!src.on)
-			logTheThing("combat", user, null, "lights the [src] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "lights the [src] at [log_loc(src)].")
 			src.on = 1
 			src.hit_type = DAMAGE_BURN
 			src.force = 3
@@ -120,7 +120,7 @@
 	desc = "Have fun!"
 	icon = 'icons/obj/items/sparklers.dmi'
 	icon_state = "sparkler_box-close"
-	max_wclass = 1
+	max_wclass = W_CLASS_TINY
 	slots = 5
 	spawn_contents = list(/obj/item/device/light/sparkler,/obj/item/device/light/sparkler,/obj/item/device/light/sparkler,/obj/item/device/light/sparkler,/obj/item/device/light/sparkler)
 	var/open = 0
@@ -132,7 +132,7 @@
 			else
 				src.open = 1
 				src.icon_state = "sparkler_box-open"
-				playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 20, 1, -2)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 20, 1, -2)
 				boutput(user, "<span class='notice'>You snap open the child-protective safety tape on [src].</span>")
 		else
 			..()
@@ -143,7 +143,7 @@
 		else
 			src.open = 1
 			src.icon_state = "sparkler_box-open"
-			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 20, 1, -2)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 20, 1, -2)
 			boutput(user, "<span class='notice'>You snap open the child-protective safety tape on [src].</span>")
 
 	mouse_drop(atom/over_object, src_location, over_location)

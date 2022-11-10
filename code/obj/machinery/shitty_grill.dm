@@ -11,11 +11,12 @@
 	var/cooktime = 0
 	var/grilltemp_target = 250 + T0C // lets get it warm enough to cook
 	var/grilltemp = 35 + T0C
-	var/max_wclass = 3
+	var/max_wclass = W_CLASS_NORMAL
 	var/on = 0
 	var/movable = 1
 	var/datum/light/light
-	var/datum/particleSystem/barrelSmoke/smoke_part
+	var/particles/barrel_embers/part_embers
+	var/particles/barrel_smoke/part_smoke
 
 	New()
 		..()
@@ -29,11 +30,23 @@
 		light.set_brightness(1)
 		light.set_color(0.5, 0.3, 0)
 
+		part_embers = new
+		part_smoke = new
+
+	disposing()
+		qdel(light)
+		light = null
+		part_embers = null
+		part_smoke = null
+		grillitem = null
+		qdel(reagents)
+		reagents = null
+		. = ..()
 
 	attackby(obj/item/W, mob/user)
 		if(movable && istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [anchored ? "unbolts the [src] from" : "secures the [src] to"] the floor.")
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 80, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 80, 1)
 			src.anchored = !src.anchored
 			return
 		if (isghostdrone(user) || isAI(user))
@@ -69,7 +82,7 @@
 				return
 			else
 				boutput(user, "<span class='alert'>Your hubris will not be tolerated.</span>")
-				logTheThing("user", user, null, "was gibbed by [src] ([src.type]) at [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "was gibbed by [src] ([src.type]) at [log_loc(user)].")
 				user.gib()
 				qdel(W)
 				return
@@ -79,9 +92,9 @@
 				boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
 
 			else
-				logTheThing("combat", user, null, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
+				logTheThing(LOG_COMBAT, user, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
 				src.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
-				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
 				if (!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
 
@@ -96,7 +109,7 @@
 				return
 
 			if(ismonkey(G.affecting))
-				logTheThing("combat", user, G.affecting, "shoves [constructTarget(G.affecting,"combat")] onto the [src] at [log_loc(src)].") // For player monkeys (Convair880).
+				logTheThing(LOG_COMBAT, user, "shoves [constructTarget(G.affecting,"combat")] onto the [src] at [log_loc(src)].") // For player monkeys (Convair880).
 				src.visible_message("<span class='alert'><b>[user] shoves [G.affecting] onto the [src]!</b></span>")
 				src.icon_state = "shittygrill_bake"
 				light.enable()
@@ -108,7 +121,7 @@
 				qdel(W)
 				return
 
-			logTheThing("combat", user, G.affecting, "shoves [constructTarget(G.affecting,"combat")]'s face into the [src] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "shoves [constructTarget(G.affecting,"combat")]'s face into the [src] at [log_loc(src)].")
 			src.visible_message("<span class='alert'><b>[user] shoves [G.affecting]'s face onto the [src]!</b></span>")
 			src.reagents.reaction(G.affecting, TOUCH)
 
@@ -171,7 +184,8 @@
 
 	process()
 		if (status & BROKEN)
-			particleMaster.RemoveSystem(/datum/particleSystem/barrelSmoke, src)
+			ClearSpecificParticles("embers")
+			ClearSpecificParticles("smoke")
 			UnsubscribeProcess()
 			return
 
@@ -188,11 +202,11 @@
 				UnsubscribeProcess()
 
 		if (src.grilltemp >= 200 + T0C)
-			if (!smoke_part)
-				smoke_part = particleMaster.SpawnSystem(new /datum/particleSystem/barrelSmoke(src))
+			UpdateParticles(part_embers, "embers")
+			UpdateParticles(part_smoke, "smoke")
 		else
-			particleMaster.RemoveSystem(/datum/particleSystem/barrelSmoke, src)
-			smoke_part = null
+			ClearSpecificParticles("embers")
+			ClearSpecificParticles("smoke")
 
 		if (src.grilltemp >= src.reagents.total_temperature)
 			src.reagents.set_reagent_temp(src.reagents.total_temperature + 5)
@@ -212,7 +226,7 @@
 
 		if (src.cooktime < 60)
 			if (src.cooktime == 30)
-				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 				src.visible_message("<span class='notice'>[src] emits a delicious smell!</span>")
 			else if (src.cooktime == 60) //Welp!
 				src.visible_message("<span class='alert'>[src] emits a buncha smoke!</span>")
@@ -307,14 +321,18 @@
 		shittysteak.reagents.my_atom = shittysteak
 
 		src.grillitem.set_loc(shittysteak)
-
-		src.grillitem = null
-		src.icon_state = "shittygrill_on"
-		for (var/obj/item/I in src) //Things can get dropped somehow sometimes ok
-			I.set_loc(src.loc)
-		src.cooktime = 0
 	//	UnsubscribeProcess()
 		return
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.grillitem)
+			src.grillitem = null
+			src.UpdateIcon()
+			for (var/obj/item/I in src) //Things can get dropped somehow sometimes ok
+				I.set_loc(src.loc)
+			src.cooktime = 0
+			src.icon_state = "shittygrill_on"
 
 	verb/drain()
 		set src in oview(1)

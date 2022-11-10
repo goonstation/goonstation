@@ -112,18 +112,18 @@ var/global/list/hydro_controller_queue = list(
 		if (thing)
 			hydro_controller_queue["species"]["[length(hydro_controller_queue["species"])]"] = list("path" = species_path, "thing" = thing)
 		else
-			logTheThing("debug", null, null, "<b>Hydro Controller:</b> Attempt to find species before controller setup")
+			logTheThing(LOG_DEBUG, null, "<b>Hydro Controller:</b> Attempt to find species before controller setup")
 		return null
 	if (!species_path)
-		logTheThing("debug", null, null, "<b>Hydro Controller:</b> Attempt to find species with null path in controller")
+		logTheThing(LOG_DEBUG, null, "<b>Hydro Controller:</b> Attempt to find species with null path in controller")
 		return null
 	if (!hydro_controls.plant_species.len)
-		logTheThing("debug", null, null, "<b>Hydro Controller:</b> Cant find species due to empty species list in controller")
+		logTheThing(LOG_DEBUG, null, "<b>Hydro Controller:</b> Cant find species due to empty species list in controller")
 		return null
 	for (var/datum/plant/P in hydro_controls.plant_species)
 		if (species_path == P.type)
 			return P
-	logTheThing("debug", null, null, "<b>Hydro Controller:</b> Species \"[species_path]\" not found")
+	logTheThing(LOG_DEBUG, null, "<b>Hydro Controller:</b> Species \"[species_path]\" not found")
 	return null
 
 /proc/HY_get_mutation_from_path(var/mutation_path, var/obj/item/thing)
@@ -131,18 +131,18 @@ var/global/list/hydro_controller_queue = list(
 		if (thing)
 			hydro_controller_queue["mutation"]["[length(hydro_controller_queue["mutation"])]"] = list("path" = mutation_path, "thing" = thing)
 		else
-			logTheThing("debug", null, null, "<b>Hydro Controller:</b> Attempt to find mutation before controller setup")
+			logTheThing(LOG_DEBUG, null, "<b>Hydro Controller:</b> Attempt to find mutation before controller setup")
 		return null
 	if (!mutation_path)
-		logTheThing("debug", null, null, "<b>Hydro Controller:</b> Attempt to find mutation with null path in controller")
+		logTheThing(LOG_DEBUG, null, "<b>Hydro Controller:</b> Attempt to find mutation with null path in controller")
 		return null
 	if (!hydro_controls.mutations.len)
-		logTheThing("debug", null, null, "<b>Hydro Controller:</b> Cant find mutation due to empty mutation list in controller")
+		logTheThing(LOG_DEBUG, null, "<b>Hydro Controller:</b> Cant find mutation due to empty mutation list in controller")
 		return null
 	for (var/datum/plantmutation/M in hydro_controls.mutations)
 		if (mutation_path == M.type)
 			return M
-	logTheThing("debug", null, null, "<b>Hydro Controller:</b> Mutation \"[mutation_path]\" not found")
+	logTheThing(LOG_DEBUG, null, "<b>Hydro Controller:</b> Mutation \"[mutation_path]\" not found")
 	return null
 
 /proc/HY_get_strain_from_path(var/strain_path, var/obj/item/thing)
@@ -150,16 +150,16 @@ var/global/list/hydro_controller_queue = list(
 		if (thing)
 			hydro_controller_queue["strain"]["[length(hydro_controller_queue["strain"])]"] = list("path" = strain_path, "thing" = thing)
 		else
-			logTheThing("debug", null, null, "<b>Hydro Controller:</b> Attempt to find strain before controller setup")
+			logTheThing(LOG_DEBUG, null, "<b>Hydro Controller:</b> Attempt to find strain before controller setup")
 		return null
 	if (!strain_path)
-		logTheThing("debug", null, null, "<b>Hydro Controller:</b> Attempt to find strain with null path in controller")
+		logTheThing(LOG_DEBUG, null, "<b>Hydro Controller:</b> Attempt to find strain with null path in controller")
 		return null
 	if (!hydro_controls.strains.len)
-		logTheThing("debug", null, null, "<b>Hydro Controller:</b> Cant find strain due to empty strain list in controller")
+		logTheThing(LOG_DEBUG, null, "<b>Hydro Controller:</b> Cant find strain due to empty strain list in controller")
 		return null
 	for (var/datum/plant_gene_strain/S in hydro_controls.strains)
 		if (strain_path == S.type)
 			return S
-	logTheThing("debug", null, null, "<b>Hydro Controller:</b> Strain \"[strain_path]\" not found")
+	logTheThing(LOG_DEBUG, null, "<b>Hydro Controller:</b> Strain \"[strain_path]\" not found")
 	return null

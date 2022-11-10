@@ -6,14 +6,14 @@
 	return
 
 /obj/proc/user_can_suicide(var/mob/user as mob)
-	if (!istype(user) || get_dist(user, src) > src.suicide_distance || user.stat || user.restrained() || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned"))
+	if (!istype(user) || GET_DIST(user, src) > src.suicide_distance || user.stat || user.restrained() || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned"))
 		return FALSE
 	return TRUE
 
 /obj/item/var/suicide_in_hand = TRUE // does it have to be held to be used for suicide?
 /obj/item/user_can_suicide(var/mob/user as mob)
 
-	if (!istype(user) || (src.suicide_in_hand && !user.find_in_hand(src)) || get_dist(user, src) > src.suicide_distance || user.stat || user.restrained() || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned"))
+	if (!istype(user) || (src.suicide_in_hand && !user.find_in_hand(src)) || GET_DIST(user, src) > src.suicide_distance || user.stat || user.restrained() || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned"))
 		return FALSE
 	return TRUE
 
@@ -53,9 +53,9 @@
 			boutput(H, "Your cannot bring yourself to commit suicide!")
 			return
 
-	logTheThing("combat", src, null, "commits suicide")
 	src.suiciding = TRUE
 	if (src.do_suicide()) //                           <------ put mob unique behaviour here in an override!!!!
+		logTheThing(LOG_COMBAT, src, "commits suicide")
 		src.unlock_medal("Damned", 1) //You don't get the medal if you tried to wuss out!
 		if (src.suiciding)
 			if (src.suicide_alert)

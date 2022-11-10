@@ -538,7 +538,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/prefab/discount_dans_asteroid)
 "uY" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/airless/plating/scorched,
 /area/prefab/discount_dans_asteroid)
 "vk" = (
@@ -751,7 +751,7 @@
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_open";
+	icon_state = "door_open";
 	name = "broken airlock"
 	},
 /obj/decal/cleanable/oil/streak,

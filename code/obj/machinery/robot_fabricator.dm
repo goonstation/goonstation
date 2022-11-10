@@ -20,7 +20,7 @@
 					if(!O:amount)
 						return
 
-					src.metal_amount += O:height * O:width * O:length * 100000.0
+					src.metal_amount += O:height * O:width * O:length * 100000
 					O:amount--
 					count++
 

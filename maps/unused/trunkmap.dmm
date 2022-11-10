@@ -1147,7 +1147,7 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "add" = (
-/obj/machinery/smelter,
+/obj/machinery/neosmelter,
 /turf/simulated/floor/plating,
 /area/station/mining/refinery)
 "ade" = (
@@ -1194,7 +1194,7 @@
 /turf/simulated/floor/greenwhite,
 /area/station/medical/cdc)
 "adk" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/light,
 /turf/simulated/floor/greenwhite{
@@ -2568,8 +2568,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "QM"
 	},
 /turf/simulated/floor/grime,
@@ -2579,15 +2578,13 @@
 /area/station/quartermaster/office)
 "ahH" = (
 /obj/plasticflaps,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "QM"
 	},
 /turf/simulated/floor/grime,
 /area/station/quartermaster/office)
 "ahI" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "QM"
 	},
 /turf/simulated/floor/grime,
@@ -3591,8 +3588,7 @@
 /turf/simulated/wall,
 /area/russian)
 "akE" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -4216,8 +4212,7 @@
 /turf/space,
 /area/station/quartermaster/storage)
 "amL" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -4585,15 +4580,13 @@
 /area/station/bridge)
 "anX" = (
 /obj/machinery/light/small,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "QMLoad"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/storage)
 "aoa" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "QMLoad"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -5933,14 +5926,14 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "asc" = (
-/obj/storage/secure/closet/brig/automatic/genpop_n{
+/obj/storage/secure/closet/brig_automatic/genpop_n{
 	id = "cell5";
 	name = "Cell 5 Locker"
 	},
 /turf/simulated/floor,
 /area/station/security/main)
 "ase" = (
-/obj/storage/secure/closet/brig/automatic/genpop_n{
+/obj/storage/secure/closet/brig_automatic/genpop_n{
 	id = "cell6";
 	name = "Cell 6 Locker"
 	},
@@ -7313,7 +7306,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "awo" = (
-/obj/storage/secure/closet/brig/automatic/genpop_n{
+/obj/storage/secure/closet/brig_automatic/genpop_n{
 	id = "cell4";
 	name = "Cell 4 Locker"
 	},
@@ -8877,7 +8870,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aBP" = (
-/obj/storage/secure/closet/brig/automatic/genpop_n{
+/obj/storage/secure/closet/brig_automatic/genpop_n{
 	id = "cell3";
 	name = "Cell 3 Locker"
 	},
@@ -9180,7 +9173,10 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aCS" = (
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8;
+	
+	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -9707,7 +9703,10 @@
 /turf/simulated/floor,
 /area/station/atmos/highcap_storage)
 "aEP" = (
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8;
+	
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aEQ" = (
@@ -10199,14 +10198,14 @@
 /turf/simulated/wall/false_wall,
 /area/station/security/main)
 "aGH" = (
-/obj/storage/secure/closet/brig/automatic/genpop_n{
+/obj/storage/secure/closet/brig_automatic/genpop_n{
 	id = "cell2";
 	name = "Cell 2 Locker"
 	},
 /turf/simulated/floor,
 /area/station/security/main)
 "aGI" = (
-/obj/storage/secure/closet/brig/automatic/genpop_n{
+/obj/storage/secure/closet/brig_automatic/genpop_n{
 	id = "cell1";
 	name = "Cell 1 Locker"
 	},
@@ -12077,8 +12076,7 @@
 /area/station/chapel/sanctuary)
 "aNx" = (
 /obj/machinery/door/window/westleft,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "chapel"
 	},
 /turf/simulated/floor/black,
@@ -12736,7 +12734,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille/steel,
 /obj/window/reinforced/west,
@@ -12752,7 +12750,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille/steel,
 /obj/window/reinforced/north,
@@ -12766,7 +12764,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille/steel,
 /obj/window/reinforced/north,
@@ -16938,7 +16936,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "bdS" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -20665,7 +20663,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "boD" = (
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "boE" = (
@@ -21406,7 +21404,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 4;
@@ -21422,7 +21420,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 1;
@@ -21451,7 +21449,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 8;
@@ -24124,8 +24122,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
 "bwE" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -24731,8 +24728,7 @@
 	dir = 4;
 	tag = "icon-tube1 (EAST)"
 	},
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -25148,8 +25144,7 @@
 /turf/space,
 /area/shuttle_sound_spawn)
 "bzL" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -26681,16 +26676,14 @@
 /turf/space,
 /area/supply/spawn_point)
 "bEx" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
 /turf/space,
 /area/space)
 "bEy" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "QMLoad"
 	},
 /obj/machinery/door/poddoor{
@@ -26701,8 +26694,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
 "bEz" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "QMLoad"
 	},
 /turf/simulated/floor/plating,
@@ -26711,8 +26703,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "QMLoad"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -27583,7 +27574,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -27828,7 +27819,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -28140,7 +28131,7 @@
 /turf/simulated/wall,
 /area/station/security/prison)
 "ejp" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light{
 	dir = 1;
 	pixel_x = -1
@@ -28661,7 +28652,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -28933,7 +28924,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage"
 	},
 /obj/machinery/atmospherics/pipe/vent{
@@ -29169,7 +29160,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/security/prison)
 "hxH" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage"
 	},
 /obj/machinery/door/poddoor{
@@ -29381,7 +29372,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/south)
 "igY" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage"
 	},
 /turf/simulated/floor/engine,
@@ -29530,7 +29521,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -29644,7 +29635,7 @@
 /turf/simulated/floor/industrial,
 /area/station/engine/storage)
 "iSA" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage"
 	},
 /obj/machinery/door/poddoor{
@@ -29653,7 +29644,7 @@
 	id = "Disposal Entrance";
 	name = "Crusher Blast Door";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -29670,8 +29661,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
 "iVt" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "garbage"
 	},
 /turf/simulated/floor/plating,
@@ -29689,7 +29679,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -29957,7 +29947,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 4;
@@ -30111,7 +30101,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 4;
@@ -30211,7 +30201,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -30309,7 +30299,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/door/airlock/glass{
 	name = "Commander's Office";
@@ -30385,7 +30375,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -30492,7 +30482,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -30578,7 +30568,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/atmos/highcap_storage)
 "lei" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage"
 	},
 /obj/machinery/crusher,
@@ -30597,7 +30587,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -30947,7 +30937,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -31190,7 +31180,7 @@
 	},
 /area/station/atmos/highcap_storage)
 "mPx" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage"
 	},
 /turf/simulated/floor/plating,
@@ -31344,7 +31334,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/security/hos)
@@ -31489,7 +31479,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage"
 	},
 /turf/simulated/floor/plating,
@@ -32241,7 +32231,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 4;
@@ -32621,11 +32611,7 @@
 	},
 /area/station/atmos/highcap_storage)
 "rlD" = (
-/obj/rack,
-/obj/item/breaching_hammer,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
+/obj/random_item_spawner/armory_breaching_supplies,
 /turf/simulated/floor/caution/west,
 /area/space)
 "rlP" = (
@@ -32851,8 +32837,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "garbage"
 	},
 /turf/simulated/floor/plating,
@@ -32903,7 +32888,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -33014,7 +32999,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -33404,7 +33389,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 1;
@@ -33991,7 +33976,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 4;
@@ -34366,7 +34351,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/door/airlock/security{
 	name = "Secure Transport";
@@ -34571,7 +34556,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 4;
@@ -35173,7 +35158,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/door/airlock/security{
 	aiControlDisabled = 1;

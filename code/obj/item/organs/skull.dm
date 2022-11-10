@@ -17,7 +17,7 @@
 	var/datum/organHolder/holder = null
 	//var/owner_job = null
 	var/value = 1
-	var/op_stage = 0.0
+	var/op_stage = 0
 	var/obj/item/device/key/skull/key = null //May randomly contain a key
 	rand_pos = 1
 	var/made_from = "bone"
@@ -107,7 +107,7 @@
 		if (istool(W, TOOL_SAWING))
 			user.visible_message("<span class='notice'>[user] hollows out [src].</span>")
 			var/obj/item/clothing/mask/skull/smask = new /obj/item/clothing/mask/skull
-			playsound(user.loc, "sound/machines/mixer.ogg", 50, 1)
+			playsound(user.loc, 'sound/machines/mixer.ogg', 50, 1)
 
 			if (src.key)
 				var/obj/item/device/key/skull/SK = src.key
@@ -122,6 +122,13 @@
 			qdel(src)
 			return
 
+		if (istype(W, /obj/item/device/light/candle))
+			user.visible_message("<b>[user]</b> carefully sets up a candle on top of [src].",\
+			"You ritualistically plant a candle on [src]. Welp.")
+			var/obj/item/device/light/spirit_candle/C = new /obj/item/device/light/spirit_candle(src.loc)
+			user.put_in_hand_or_drop(C)
+			qdel(W)
+			qdel(src)
 		else
 			return ..()
 
@@ -176,9 +183,9 @@
 		if (!H.organHolder.get_organ("skull") && H.organHolder.head.scalp_op_stage == 5.0)
 			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
 
-			H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] head!</span>",\
-			user, "<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] head!</span>",\
-			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your head!</span>")
+			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] head!</span>",\
+				"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] head!</span>",\
+				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your head!</span>")
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
@@ -205,6 +212,12 @@
 	name = "peculiar skull"
 	desc = "You feel extremely uncomfortable near this thing."
 	icon_state = "skull_strange"
+	value = 3
+
+/obj/item/skull/menacing // Vampires.
+	name = "menacing skull"
+	desc = "Gives off a threatening aura and also makes a great halloween decoration."
+	icon_state = "skull_menacing"
 	value = 3
 
 /obj/item/skull/crystal // Omnitraitors.

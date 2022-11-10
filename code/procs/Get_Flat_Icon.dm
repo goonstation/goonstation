@@ -1,9 +1,7 @@
-// Creates a single icon from a given /atom or /image.  Only the first argument is required.
+/// Creates a single icon from a given /atom or /image.  Only the first argument is required.
 /proc/getFlatIcon(image/A, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE)
-	//Define... defines.
-	var/icon/flat_template = icon('icons/misc/flatBlank.dmi')
+	var/static/icon/flat_template = icon('icons/misc/flatBlank.dmi')
 
-	#define BLANK icon(flat_template)
 	#define SET_SELF(SETVAR) var/icon/SELF_ICON=icon(icon(curicon, curstate, base_icon_dir),"",SOUTH,no_anim?1:null);if(A.alpha<255)SELF_ICON.Blend(rgb(255,255,255,A.alpha),ICON_MULTIPLY);if(A.color)SELF_ICON.Blend(A.color,ICON_MULTIPLY);;##SETVAR=SELF_ICON;
 
 	#define INDEX_X_LOW 1
@@ -21,7 +19,7 @@
 	#define addY2 add_size[INDEX_Y_HIGH]
 
 	if(!A || A.alpha <= 0)
-		return BLANK
+		return icon(flat_template)
 
 	var/noIcon = FALSE
 	if(start)
@@ -72,8 +70,8 @@
 
 	var/curblend = A.blend_mode || defblend
 
-	if(A.overlays.len || length(A.underlays))
-		var/icon/flat = BLANK
+	if(length(A.overlays) || length(A.underlays))
+		var/icon/flat = icon(flat_template)
 		// Layers will be a sorted list of icons/overlays, based on the order in which they are displayed
 		var/list/layers = list()
 		var/image/copy
@@ -87,8 +85,8 @@
 
 		// Loop through the underlays, then overlays, sorting them into the layers list
 		for(var/process_set in 0 to 1)
-			var/list/process = process_set? A.overlays : A.underlays
-			for(var/i in 1 to process.len)
+			var/list/process = process_set ? A.overlays : A.underlays
+			for(var/i in 1 to length(process))
 				var/image/current = process[i]
 				if(!current)
 					continue
@@ -98,9 +96,9 @@
 				if(current_layer < 0)
 					if(current_layer <= -1000)
 						return flat
-					current_layer = process_set + A.layer + current_layer / 1000
+					current_layer = process_set + A.layer + (current_layer / 1000)
 
-				for(var/p in 1 to layers.len)
+				for(var/p in 1 to length(layers))
 					var/image/cmp = layers[p]
 					if(current_layer < layers[cmp])
 						layers.Insert(p, current)
@@ -129,10 +127,10 @@
 				continue
 			// Find the new dimensions of the flat icon to fit the added overlay
 			add_size = list(
-				min(flatX1, I.pixel_x+1),
-				max(flatX2, I.pixel_x+add.Width()),
-				min(flatY1, I.pixel_y+1),
-				max(flatY2, I.pixel_y+add.Height())
+				min(flatX1, I.pixel_x + 1),
+				max(flatX2, I.pixel_x + add.Width()),
+				min(flatY1, I.pixel_y + 1),
+				max(flatY2, I.pixel_y + add.Height())
 			)
 
 			if(flat_size ~! add_size)
@@ -191,5 +189,4 @@
 	#undef INDEX_Y_LOW
 	#undef INDEX_Y_HIGH
 
-	#undef BLANK
 	#undef SET_SELF

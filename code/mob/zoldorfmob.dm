@@ -91,7 +91,7 @@
 
 		the_zoldorf = list()
 		spawn(0)
-			src << browse(grabResource("html/traitorTips/souldorfTips.htm"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+			src.show_antag_popup("souldorf")
 
 	Login()
 		..()
@@ -169,7 +169,7 @@
 			return 1
 		return ..()
 
-	Move(NewLoc, direct) //just a copy paste from ghost move
+	Move(NewLoc, direct) //just a copy paste from ghost move // YEAH IT SURE FUCKING IS
 		if(!canmove) return
 
 		if (NewLoc && isrestrictedz(src.z) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder))
@@ -197,6 +197,8 @@
 		if((direct & WEST) && src.x > 1)
 			src.x--
 
+		. = ..()
+
 	is_active()
 		return 0
 
@@ -215,7 +217,7 @@
 			if (dd_hasprefix(message, "*"))
 				return src.emote(copytext(message, 2),1)
 
-			logTheThing("diary", src, null, "[src.name] - [src.real_name]: [message]", "say")
+			logTheThing(LOG_DIARY, src, "[src.name] - [src.real_name]: [message]", "say")
 
 			if (src.client && src.client.ismuted())
 				boutput(src, "You are currently muted and may not speak.")
@@ -310,6 +312,13 @@
 		src.set_loc(get_turf(src.loc))
 		pz.remove_simple_light("zoldorf")
 
+	stopObserving()
+		if(src.homebooth)
+			src.set_loc(homebooth)
+		else
+			src.ghostize()
+		src.observing = null
+
 /mob/proc/make_zoldorf(var/obj/machinery/playerzoldorf/pz) //ok this is a little weird, but its the other portion of the booth proc that handles the mob-side things and some of the booth things that need to be set before the original player is deleted
 	if (src.mind || src.client)
 		var/mob/zoldorf/Z = new/mob/zoldorf(get_turf(src))
@@ -375,7 +384,7 @@
 /mob/proc/zoldize()
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a zoldorf.")
-		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a zoldorf.")
+		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a zoldorf.")
 		return make_zoldorf()
 	return null
 

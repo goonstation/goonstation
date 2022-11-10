@@ -11,7 +11,7 @@
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	var/timeBetweenUses = 20//I can see this being fun
-	var/success_sound = "sound/machines/chime.ogg"
+	var/success_sound = 'sound/machines/chime.ogg'
 	var/fail_sound = 'sound/machines/alarm_a.ogg'
 
 	var/weapon_access = access_carrypermit
@@ -28,11 +28,13 @@
 		..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
-	Crossed( atom/movable/O )
-		if(isliving(O) && !isintangible(O))
-			do_scan(O)
-		if (istype(O,/obj/item) && (!emagged))
-			do_scan_item(O)
+	Crossed(atom/movable/AM)
+		if(isliving(AM) && !isintangible(AM))
+			src.do_scan(AM)
+		else if (isobserver(AM) && prob(1))
+			src.do_scan(AM)
+		else if (istype(AM, /obj/item) && (!src.emagged))
+			src.do_scan_item(AM)
 		return ..()
 
 	process()
@@ -53,7 +55,7 @@
 		if( icon_state != "scanner_on" )
 			return
 		src.use_power(15)
-		var/contraband = I.contraband
+		var/contraband = I.get_contraband()
 
 		if (contraband >= 2)
 
@@ -173,7 +175,7 @@
 			if (istype(target, /mob/living/critter/changeling))
 				return 6
 			for( var/obj/item/item in target.contents )
-				threatcount += item.contraband
+				threatcount += item.get_contraband()
 			return threatcount
 
 		var/mob/living/carbon/human/perp = target
@@ -200,6 +202,9 @@
 		var/has_carry_permit = 0
 		var/has_contraband_permit = 0
 
+		if (!has_contraband_permit)
+			threatcount += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_CONTRABAND_OVERRIDE)
+
 		if(perp_id) //Checking for permits
 			if(weapon_access in perp_id.access)
 				has_carry_permit = 1
@@ -209,69 +214,69 @@
 		if (istype(perp.l_hand))
 			if (istype(perp.l_hand, /obj/item/gun/))  // perp is carrying a gun
 				if(!has_carry_permit)
-					threatcount += perp.l_hand.contraband
+					threatcount += perp.l_hand.get_contraband()
 			else // not carrying a gun
 				if(!has_contraband_permit)
-					threatcount += perp.l_hand.contraband
+					threatcount += perp.l_hand.get_contraband()
 
 		if (istype(perp.r_hand))
 			if (istype(perp.r_hand, /obj/item/gun/)) // perp is carrying a gun
 				if(!has_carry_permit)
-					threatcount += perp.r_hand.contraband
+					threatcount += perp.r_hand.get_contraband()
 			else // not carrying a gun, but potential contraband?
 				if(!has_contraband_permit)
-					threatcount += perp.r_hand.contraband
+					threatcount += perp.r_hand.get_contraband()
 
 		if (istype(perp.wear_suit))
 			if (!has_contraband_permit)
-				threatcount += perp.wear_suit.contraband
+				threatcount += perp.wear_suit.get_contraband()
 
 		if (istype(perp.belt))
 			if (istype(perp.belt, /obj/item/gun/))
 				if (!has_carry_permit)
-					threatcount += perp.belt.contraband * 0.5
+					threatcount += perp.belt.get_contraband() * 0.5
 			else
 				if (!has_contraband_permit)
-					threatcount += perp.belt.contraband * 0.5
+					threatcount += perp.belt.get_contraband() * 0.5
 				for( var/obj/item/item in perp.belt.contents )
 					if (istype(item, /obj/item/gun/))
 						if (!has_carry_permit)
-							threatcount += item.contraband * 0.5
+							threatcount += item.get_contraband() * 0.5
 					else
 						if (!has_contraband_permit)
-							threatcount += item.contraband * 0.5
+							threatcount += item.get_contraband() * 0.5
 
 		if (istype(perp.l_store))
 			if (istype(perp.l_store, /obj/item/gun/))
 				if (!has_carry_permit)
-					threatcount += perp.l_store.contraband * 0.5
+					threatcount += perp.l_store.get_contraband() * 0.5
 			else
 				if (!has_contraband_permit)
-					threatcount += perp.l_store.contraband * 0.5
+					threatcount += perp.l_store.get_contraband() * 0.5
 
 		if (istype(perp.r_store))
 			if (istype(perp.r_store, /obj/item/gun/))
 				if (!has_carry_permit)
-					threatcount += perp.r_store.contraband * 0.5
+					threatcount += perp.r_store.get_contraband() * 0.5
 			else
 				if (!has_contraband_permit)
-					threatcount += perp.r_store.contraband * 0.5
+					threatcount += perp.r_store.get_contraband() * 0.5
 
 		if (istype(perp.back))
 			if (istype(perp.back, /obj/item/gun/)) // some weapons can be put on backs
 				if (!has_carry_permit)
-					threatcount += perp.back.contraband * 0.5
+					threatcount += perp.back.get_contraband() * 0.5
 			else // at moment of doing this we don't have other contraband back items, but maybe that'll change
 				if (!has_contraband_permit)
-					threatcount += perp.back.contraband * 0.5
+					threatcount += perp.back.get_contraband() * 0.5
 			if (istype(perp.back, /obj/item/storage/))
 				for( var/obj/item/item in perp.back.contents )
 					if (istype(item, /obj/item/gun/))
 						if (!has_carry_permit)
-							threatcount += item.contraband * 0.5
+							threatcount += item.get_contraband() * 0.5
 					else
 						if (!has_contraband_permit)
-							threatcount += item.contraband * 0.5
+							threatcount += item.get_contraband() * 0.5
 
 		//Agent cards lower threatlevel
 		if((istype(perp.wear_id, /obj/item/card/id/syndicate)))
@@ -282,15 +287,7 @@
 			return threatcount
 
 		if (src.check_records)
-			var/see_face = 1
-			if (istype(perp.wear_mask) && !perp.wear_mask.see_face)
-				see_face = 0
-			else if (istype(perp.head) && !perp.head.see_face)
-				see_face = 0
-			else if (istype(perp.wear_suit) && !perp.wear_suit.see_face)
-				see_face = 0
-
-			var/perpname = see_face ? perp.real_name : perp.name
+			var/perpname = perp.face_visible() ? perp.real_name : perp.name
 
 			for (var/datum/db_record/R as anything in data_core.security.find_records("name", perpname))
 				if(R["criminal"] == "*Arrest*")

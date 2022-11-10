@@ -235,7 +235,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 
 /datum/manufacture/pod_wars/pod/armor_robust
 	name = "Heavy Pod Armor"
-	item_paths = list("MET-3","CON-2", "DEN-3")
+	item_paths = list("MET-3","CON-2", "CRY-2")
 	item_amounts = list(50,30, 10)
 	item_outputs = list(/obj/item/podarmor/armor_heavy)
 	time = 30 SECONDS

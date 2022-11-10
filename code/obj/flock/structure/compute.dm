@@ -1,8 +1,10 @@
 /obj/flock_structure/compute
 	name = "weird lookin' thinking thing"
 	desc = "It almost looks like a terminal of some kind."
+	flock_desc = "A computing node that provides compute power to the Flock."
 	flock_id = "Compute node"
 	health = 60
+	uses_health_icon = FALSE
 	icon_state = "compute"
 	compute = 60
 	var/static/display_count = 9
@@ -14,6 +16,7 @@
 	var/image/screen = image('icons/misc/featherzone.dmi', "compute_screen", EFFECTS_LAYER_BASE)
 	screen.pixel_y = 14
 	src.UpdateOverlays(screen, "screen")
+	src.info_tag.set_info_tag("Compute provided: [src.compute]")
 
 /obj/flock_structure/compute/process()
 	var/id = rand(1, src.display_count)

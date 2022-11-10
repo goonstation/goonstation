@@ -19,10 +19,10 @@
 	desc = "an incredibly fragile glass test tube"
 	icon_state = "vial0"
 	item_state = "vial"
-	throwforce = 3.0
+	throwforce = 3
 	throw_speed = 1
 	throw_range = 8
-	force = 3.0
+	force = 3
 	w_class = W_CLASS_TINY
 	initial_volume = 30
 

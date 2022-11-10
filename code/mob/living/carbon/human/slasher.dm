@@ -248,14 +248,14 @@
 						qdel(O2)
 
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_NO_SELF_HARM, src)
-				playsound(M, "sound/effects/ghost.ogg", 45, 0)
+				playsound(M, 'sound/effects/ghost.ogg', 45, 0)
 				var/mob/dead/observer/O = M.ghostize()
 				if(!O)
 					boutput(src, "<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 101</span>")
 					remove_equipment(M)
 					return
 				if (O.mind)
-					O.Browse(grabResource("html/slasher_possession.html"),"window=slasher_possession;size=600x440;title=Slasher Possession")
+					O.show_antag_popup("slasher_possession", FALSE)
 					boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
 				if(!src.mind || !O.mind)
 					src.visible_message("<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 102</span>")
@@ -285,7 +285,7 @@
 				sleep(5 DECI SECONDS)
 				WG.mind.dnr = FALSE
 				WG.verbs += list(/mob/verb/setdnr)
-				playsound(M, "sound/effects/ghost2.ogg", 50, 0)
+				playsound(M, 'sound/effects/ghost2.ogg', 50, 0)
 				if(!WG || !M)
 					src.visible_message("<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 105</span>")
 					if(M)
@@ -329,7 +329,7 @@
 			var/turf/T = get_turf(src)
 			var/obj/overlay/O1 = new /obj/overlay/darkness_field(T, 2 SECONDS, radius = 3, max_alpha = 160)
 			var/obj/overlay/O2 = new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 2 SECONDS, radius = 3, max_alpha = 160)
-			playsound(src, "sound/machines/ArtifactEld1.ogg", 60, 0)
+			playsound(src, 'sound/machines/ArtifactEld1.ogg', 60, 0)
 			if(src.hasStatus("handcuffed"))
 				src.visible_message("<span class='alert'>[src]'s wrists dissolve into the shadows, making the handcuffs vanish!</span>")
 				src.handcuffs.destroy_handcuffs(src)
@@ -359,7 +359,7 @@
 		soulSteal(mob/living/carbon/human/M, soul_remove = TRUE)
 			var/mob/living/W = src
 			boutput(src, "<span class='alert'>You steal [M]'s soul!</span>")
-			playsound(src, "sound/voice/wraith/wraithpossesobject.ogg", 60, 0)
+			playsound(src, 'sound/voice/wraith/wraithpossesobject.ogg', 60, 0)
 			if(soul_remove)
 				M.mind?.soul = 0
 			M.setStatus("soulstolen", INFINITE_STATUS)
@@ -375,7 +375,7 @@
 			var/image/overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#1a1102"
 			src.UpdateOverlays(overlay_image, "slasher_aura")
-			playsound(src, "sound/effects/ghostlaugh.ogg", 40, 0)
+			playsound(src, 'sound/effects/ghostlaugh.ogg', 40, 0)
 			SPAWN(2 SECONDS)
 				src.UpdateOverlays(null, "slasher_aura")
 				for(var/mob/living/M in oview(4, src))

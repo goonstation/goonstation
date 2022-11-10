@@ -7,6 +7,7 @@
 	max_range = 0
 	cooldown = 10
 	pointCost = 0
+	not_when_in_an_object = FALSE
 	when_stunned = 2
 	not_when_handcuffed = 0
 
@@ -48,7 +49,7 @@
 		M.force_laydown_standup()
 
 
-		logTheThing("combat", M, null, "uses cancel stuns at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses cancel stuns at [log_loc(M)].")
 		return
 
 	cast(mob/target)

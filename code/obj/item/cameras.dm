@@ -95,11 +95,11 @@
 		if (user.find_in_hand(src) && user.mind && user.mind.special_role == ROLE_SPY_THIEF) // No metagming this
 			if (!src.flash_mode)
 				user.show_text("You use the secret switch to set the camera to flash mode.", "blue")
-				playsound(user, "sound/items/pickup_defib.ogg", 100, 1)
+				playsound(user, 'sound/items/pickup_defib.ogg', 100, 1)
 				src.icon_state = "camera_flash"
 			else
 				user.show_text("You use the secret switch to set the camera to take photos.", "blue")
-				playsound(user, "sound/items/putback_defib.ogg", 100, 1)
+				playsound(user, 'sound/items/putback_defib.ogg', 100, 1)
 				src.icon_state = "camera"
 			src.flash_mode = !src.flash_mode
 			src.UpdateIcon()
@@ -143,7 +143,7 @@
 		var/mob/M = target
 		SEND_SIGNAL(src, COMSIG_CELL_USE, 25)
 		var/blind_success = M.apply_flash(30, 8, 0, 0, 0, rand(0, 1), 0, 0, 100, 70, disorient_time = 30)
-		playsound(src, "sound/weapons/flash.ogg", 100, 1)
+		playsound(src, 'sound/weapons/flash.ogg', 100, 1)
 		flick("camera_flash-anim", src)
 		// Log entry.
 		var/blind_msg_target = "!"
@@ -152,7 +152,7 @@
 			blind_msg_target = " but your eyes are protected!"
 			blind_msg_others = " but [his_or_her(M)] eyes are protected!"
 		M.visible_message("<span class='alert'>[user] blinds [M] with the flash[blind_msg_others]</span>", "<span class='alert'>You are blinded by the flash[blind_msg_target]</span>") // Pretend to be a flash
-		logTheThing("combat", user, M, "blinds [constructTarget(M,"combat")] with spy [src] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "blinds [constructTarget(M,"combat")] with spy [src] at [log_loc(user)].")
 	else
 		. = ..()
 
@@ -198,6 +198,9 @@
 	var/written = null
 	var/image/my_writing = null
 	tooltip_flags = REBUILD_DIST
+	burn_point = 220
+	burn_output = 900
+	burn_possible = 2
 
 	New(location, var/image/IM, var/icon/IC, var/nname, var/ndesc)
 		..(location)

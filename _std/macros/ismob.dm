@@ -7,14 +7,14 @@
 /// Returns true if the given x is an observer
 #define isobserver(x) istype(x, /mob/dead)
 /// Returns true if the given x is an observer and an admin
-#define isadminghost(x) x.client && x.client.holder && rank_to_level(x.client.holder.rank) >= LEVEL_MOD && (istype(x, /mob/dead/observer) || istype(x, /mob/dead/target_observer)) // For antag overlays.
+#define isadminghost(x) (x.client && x.client.holder && rank_to_level(x.client.holder.rank) >= LEVEL_MOD && (istype(x, /mob/dead/observer) || istype(x, /mob/dead/target_observer))) // For antag overlays.
 
 /// Returns true if the given x is a mob/living type
 #define isliving(x) istype(x, /mob/living)
 
 #define iscarbon(x) istype(x, /mob/living/carbon)
 #define ismonkey(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/monkey))
-#define isnpc(x) istype(x, /mob/living/carbon/human/npc)
+#define isnpc(x) (istype(x, /mob/living/carbon/human/npc) || (istype(x, /mob/living/carbon/human) && x:is_npc))
 #define isnpcmonkey(x) (istype(x,/mob/living/carbon/human/npc/monkey) && istype(x:mutantrace, /datum/mutantrace/monkey))
 #define ishuman(x) istype(x, /mob/living/carbon/human)
 #define iscow(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/cow))
@@ -24,6 +24,7 @@
 #define iscritter(x) istype(x, /obj/critter)
 #define isintangible(x) istype(x, /mob/living/intangible)
 #define ismobcritter(x) istype(x, /mob/living/critter)
+#define isrobocritter(x) istype(x, /mob/living/critter/robotic)
 
 #define issilicon(x) istype(x, /mob/living/silicon)
 #define isrobot(x) istype(x, /mob/living/silicon/robot)

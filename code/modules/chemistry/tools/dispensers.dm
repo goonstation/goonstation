@@ -11,6 +11,7 @@
 	density = 1
 	anchored = 0
 	flags = FPRINT | FLUID_SUBMERGE
+	object_flags = NO_GHOSTCRITTER
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	p_class = 1.5
 
@@ -19,6 +20,8 @@
 
 	New()
 		..()
+		// TODO enable when I do leaking
+		// src.AddComponent(/datum/component/bullet_holes, 10, 5)
 		src.create_reagents(4000)
 
 
@@ -34,14 +37,14 @@
 
 	ex_act(severity)
 		switch(severity)
-			if (1.0)
+			if (1)
 				smash()
 				return
-			if (2.0)
+			if (2)
 				if (prob(50))
 					smash()
 					return
-			if (3.0)
+			if (3)
 				if (prob(5))
 					smash()
 					return
@@ -57,6 +60,12 @@
 		if (reagents)
 			for (var/i = 0, i < 9, i++) // ugly hack
 				reagents.temperature_reagents(exposed_temperature, exposed_volume)
+
+	attackby(obj/item/W, mob/user)
+		// prevent attacked by messages
+		if(istype(W, /obj/item/reagent_containers/hypospray) || istype(W, /obj/item/reagent_containers/mender))
+			return
+		..(W, user)
 
 	mouse_drop(atom/over_object as obj)
 		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/machinery/hydro_mister) && !istype(over_object, /obj/item/tank/jetpack/backtank))
@@ -166,11 +175,11 @@
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			if(!src.anchored)
 				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				src.anchored = 1
 			else
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				src.anchored = 0
 			return
 
@@ -254,7 +263,7 @@
 
 		if (isscrewingtool(W))
 			if (src.anchored)
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user.show_text("You start unscrewing [src] from the floor.", "blue")
 				if (do_after(user, 3 SECONDS))
 					user.show_text("You unscrew [src] from the floor.", "blue")
@@ -266,7 +275,7 @@
 					user.show_text("What exactly are you gunna secure [src] to?", "red")
 					return
 				else
-					playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 					user.show_text("You start securing [src] to [T].", "blue")
 					if (do_after(user, 3 SECONDS))
 						user.show_text("You secure [src] to [T].", "blue")
@@ -334,7 +343,7 @@
 			return 0
 		user.visible_message("<span class='alert'><b>[user] drinks deeply from [src]. [capitalize(he_or_she(user))] then pulls out a match from somewhere, strikes it and swallows it!</b></span>")
 		src.reagents.remove_any(20)
-		playsound(src.loc, "sound/items/drink.ogg", 50, 1, -6)
+		playsound(src.loc, 'sound/items/drink.ogg', 50, 1, -6)
 		user.TakeDamage("chest", 0, 150)
 		if (isliving(user))
 			var/mob/living/L = user
@@ -402,11 +411,11 @@
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			if(!src.anchored)
 				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				src.anchored = 1
 			else
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				src.anchored = 0
 			return
 		var/load = 1
@@ -418,7 +427,7 @@
 
 		if(load)
 			boutput(user, "<span class='notice'>[src] mulches up [W].</span>")
-			playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 30, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 30, 1)
 			user.u_equip(W)
 			W.dropped(user)
 			qdel( W )
@@ -452,7 +461,7 @@
 					amount = 2
 				else if (istype(P,/obj/item/plant/))
 					amount = 15
-				playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 30, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 30, 1)
 				src.reagents.add_reagent("poo", amount)
 				qdel( P )
 				sleep(0.3 SECONDS)
@@ -467,31 +476,29 @@
 	amount_per_transfer_from_this = 25
 	event_handler_flags = NO_MOUSEDROP_QOL
 
+	// returns whether the inserted item was brewed
 	proc/brew(var/obj/item/W as obj)
-		var/brewable
 		var/list/brew_result
 
 		if(istype(W,/obj/item/reagent_containers/food))
 			var/obj/item/reagent_containers/food/F = W
-			brewable = F.brewable
 			brew_result = F.brew_result
 
 		else if(istype(W, /obj/item/plant))
 			var/obj/item/plant/P = W
-			brewable = P.brewable
 			brew_result = P.brew_result
 
-		if (!brewable || !brew_result)
-			return 0
+		if (!brew_result)
+			return FALSE
 
-		if (islist(brew_result) && length(brew_result))
+		if (islist(brew_result))
 			for (var/i in brew_result)
 				src.reagents.add_reagent(i, 10)
 		else
 			src.reagents.add_reagent(brew_result, 20)
 
 		src.visible_message("<span class='notice'>[src] brews up [W]!</span>")
-		return 1
+		return TRUE
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/reagent_containers/food) || istype(W, /obj/item/plant))

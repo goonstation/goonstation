@@ -39,7 +39,8 @@
 	var/lastdisplayline1 = ""		// the cached last displays
 	var/lastdisplayline2 = ""
 
-	var/frequency = 1435		// radio frequency
+	var/net_id = null
+	var/frequency = FREQ_STATUS_DISPLAY		// radio frequency
 
 	var/display_type = 0		// bitmask of messages types to display: 0=normal  1=supply shuttle  2=reseach stn destruct
 
@@ -60,7 +61,16 @@
 		crt_image.mouse_opacity = 0
 		UpdateOverlays(crt_image, "crt")
 
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		src.AddComponent( \
+			/datum/component/packet_connected/radio, \
+			null, \
+			src.frequency, \
+			src.net_id, \
+			"receive_signal", \
+			FALSE, \
+			"STATDISPLAY", \
+			FALSE \
+		)
 
 		if(glow_in_dark_screen)
 			src.screen_image = image('icons/obj/status_display.dmi', src.icon_state, -1)
@@ -70,6 +80,8 @@
 			screen_image.color = list(0.66,0.66,0.66, 0.66,0.66,0.66, 0.66,0.66,0.66)
 			src.UpdateOverlays(screen_image, "screen_image")
 
+		if(!src.net_id)
+			src.net_id = generate_net_id(src)
 
 	// timed process
 	process()
@@ -178,7 +190,7 @@
 			message2 = null
 			index2 = 0
 		repeat_update = TRUE
-		desc = "[message1] [message2]"
+		desc = "[message1]<br>[message2]" // multiline messages
 		lastdisplayline1 = null
 		lastdisplayline2 = null
 
@@ -234,6 +246,11 @@
 		return ""
 
 	receive_signal(datum/signal/signal)
+		if (!signal || (!signal.data["address_tag"] && !signal.data["address_1"]))
+			return
+
+		if (signal.data["address_tag"] != "STATDISPLAY" && signal.data["address_1"] != src.net_id)
+			return
 
 		switch(signal.data["command"])
 			if("blank")
@@ -245,7 +262,7 @@
 
 			if("message")
 				mode = 2
-				set_message(signal.data["msg1"], signal.data["msg2"])
+				set_message(strip_html(signal.data["msg1"]), strip_html(signal.data["msg2"]))
 
 			if("alert")
 				mode = 3

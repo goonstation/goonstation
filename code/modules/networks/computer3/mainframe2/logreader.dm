@@ -51,7 +51,7 @@
 
 		src.add_dialog(user)
 
-		var/dat = {"<html><head><title>Access Log Reader</title><style>
+		var/list/dat = list({"<html><head><title>Access Log Reader</title><style>
 .conn-box {
 	float: right;
 	width: 12px;
@@ -73,7 +73,7 @@
 	background-color: #888888;
 }
 
-</style></head><body>"}
+</style></head><body>"})
 
 
 		var/readout_class = "conn-error"
@@ -139,7 +139,7 @@
 		else if (refreshing)
 			dat += "<i>Refreshing data, please wait...</i>"
 
-		user.Browse(dat,"window=net_logreader;size=545x302")
+		user.Browse(dat.Join(),"window=net_logreader;size=545x302")
 		onclose(user,"net_logreader")
 		return
 

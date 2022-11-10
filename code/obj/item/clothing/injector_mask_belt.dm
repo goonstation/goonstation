@@ -3,7 +3,8 @@
 - Vapo-Matic mask
 - Associated condition datums
 
-There's A LOT of duplicate code here, which isn't ideal to say the least. Should really be overhauled at some point.
+There's much less duplicate code here than there used to be, it could probably be improved further using components,
+	but I'm not doing that without help on my first pull request in addition to learning TGUI!
 */
 
 /obj/item/injector_belt
@@ -20,8 +21,8 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 	var/active = 0
 	var/obj/item/reagent_containers/glass/container = null
 	var/datum/injector_belt_condition/condition = null
-	var/min_time = 10
-	var/inj_amount = -1
+	var/min_time = 10 SECONDS
+	var/inj_amount = 5
 
 	equipped(var/mob/user, var/slot)
 		..()
@@ -49,17 +50,23 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 		active = 0
 		return
 
-	attack_self(mob/user as mob)
-		src.add_dialog(user)
-		var/dat = ""
-		dat += container ? "Container: <A href='?src=\ref[src];remove_cont=1'>[container.name]</A> - [container.reagents.total_volume] / [container.reagents.maximum_volume] Units<BR><BR>" : "Please attach a beaker<BR><BR>"
-		dat += condition ? "[condition.name] - [condition.desc] <A href='?src=\ref[src];remove_cond=1'>(Remove)</A><BR><BR>" : "<A href='?src=\ref[src];sel_cond=1'>(Select Condition)</A><BR><BR>"
-		dat += "Injection amount: <A href='?src=\ref[src];change_amt=1'>[inj_amount == -1 ? "ALL" : inj_amount]</A><BR><BR>"
-		dat += "Min. time between activations: <A href='?src=\ref[src];change_mintime=1'>[min_time] seconds</A><BR><BR>"
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "AutoInjector", name)
+			ui.open()
 
-		user.Browse("<TITLE>Injector Belt</TITLE>Injector Belt:<BR><BR>[dat]", "window=inj_belt;size=575x250")
-		onclose(user, "inj_belt")
-		return
+	ui_data(mob/user)
+		. = autoinjector_ui_data(src.container?.reagents, src.condition, src.min_time, src.inj_amount)
+
+	ui_act(action, params)
+		. = ..()
+		if(.)
+			return
+		. = autoinjector_ui_act(src, action, params, usr, src.container?.reagents.maximum_volume)
+
+	attack_self(mob/user as mob)
+		ui_interact(user)
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/reagent_containers/glass))
@@ -79,68 +86,27 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 			else
 				user.show_text("You attach the [W] to the [src.name]! Please select a condition and re-equip [src] to initialize injector system.", "blue")
 
-	Topic(href, href_list)
-		..()
-		if(usr != src.loc)
-			return
-		if (href_list["remove_cont"])
-			container.set_loc(get_turf(src))
-			container = null
-
-		if (href_list["remove_cond"])
-			condition = null
-
-		if (href_list["sel_cond"])
-			var/list/cond_types = childrentypesof(/datum/injector_belt_condition)
-			var/list/filtered = new/list()
-
-			for(var/A in cond_types)
-				var/datum/injector_belt_condition/C = new A()
-				filtered += C.name
-				filtered[C.name] = A
-
-			var/selected = input(usr,"Select:","Condition") in filtered
-			var/selected_type = filtered[selected]
-
-			condition = new selected_type()
-			condition.setup(usr)
-
-		if (href_list["change_amt"])
-			var/amt = input(usr,"Select:","Amount", inj_amount) in list("ALL",1,5,10,20,30,40,50,75,100)
-			if(amt == "ALL")
-				inj_amount = -1
-			else
-				inj_amount = amt
-
-		if (href_list["change_mintime"])
-			var/amt = input(usr,"Select:","Min time in seconds", min_time) in list(3,4,5,6,7,8,9,10,20,30,40,50,60,120,180,300)
-			min_time = amt
-
-		updateUsrDialog()
-		attack_self(usr)
+			tgui_process.update_uis(src)
 
 	proc/check()
-		if(!is_equipped()) return
-		if(!active) return
+		if(!src.is_equipped()) return
+		if(!src.active) return
 
-		if(condition && container?.reagents.total_volume)
-			if(condition.check_trigger(owner) && can_trigger)
+		if(src.condition && src.container?.reagents.total_volume)
+			if(src.condition.check_trigger(src.owner) && src.can_trigger)
 
-				can_trigger = 0
-				SPAWN(min_time*10) can_trigger = 1
+				src.can_trigger = 0
+				SPAWN(src.min_time) src.can_trigger = 1
 
-				playsound(src,"sound/items/injectorbelt_active.ogg", 33, 0, -5)
-				boutput(owner, "<span class='notice'>Your Injector belt activates.</span>")
+				playsound(src, 'sound/items/injectorbelt_active.ogg', 33, 0, -5)
+				boutput(src.owner, "<span class='notice'>Your Injector belt activates.</span>")
 
-				container.reagents.reaction(owner, INGEST)
+				src.container.reagents.reaction(src.owner, INGEST)
 				SPAWN(1.5 SECONDS)
-					if(inj_amount == -1)
-						container.reagents.trans_to(owner, container.reagents.total_volume)
-					else
-						container.reagents.trans_to(owner, inj_amount)
+					src.container.reagents.trans_to(src.owner, src.inj_amount)
 
 		SPAWN(2.5 SECONDS)
-			if (src) check()
+			if (src) src.check()
 
 	proc/is_equipped()
 		if(!owner) return 0
@@ -168,8 +134,8 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 	var/active = 0
 	var/obj/item/reagent_containers/glass/container = null
 	var/datum/injector_belt_condition/condition = null
-	var/min_time = 10
-	var/inj_amount = -1
+	var/min_time = 10 SECONDS
+	var/inj_amount = 5
 
 	equipped(var/mob/user, var/slot)
 		..()
@@ -197,17 +163,23 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 		active = 0
 		return
 
-	attack_self(mob/user as mob)
-		src.add_dialog(user)
-		var/dat = ""
-		dat += container ? "Container: <A href='?src=\ref[src];remove_cont=1'>[container.name]</A> - [container.reagents.total_volume] / [container.reagents.maximum_volume] Units<BR><BR>" : "Please attach a beaker<BR><BR>"
-		dat += condition ? "[condition.name] - [condition.desc] <A href='?src=\ref[src];remove_cond=1'>(Remove)</A><BR><BR>" : "<A href='?src=\ref[src];sel_cond=1'>(Select Condition)</A><BR><BR>"
-		dat += "Injection amount: <A href='?src=\ref[src];change_amt=1'>[inj_amount == -1 ? "ALL" : inj_amount]</A><BR><BR>"
-		dat += "Min. time between activations: <A href='?src=\ref[src];change_mintime=1'>[min_time] seconds</A><BR><BR>"
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "AutoInjector", name)
+			ui.open()
 
-		user.Browse("<TITLE>Vapo-Matic</TITLE>Vapo-Matic:<BR><BR>[dat]", "window=inj_belt;size=575x250")
-		onclose(user, "inj_belt")
-		return
+	ui_data(mob/user)
+		. = autoinjector_ui_data(src.container?.reagents, src.condition, src.min_time, src.inj_amount)
+
+	ui_act(action, params)
+		. = ..()
+		if(.)
+			return
+		. = autoinjector_ui_act(src, action, params, usr, src.container?.reagents.maximum_volume)
+
+	attack_self(mob/user as mob)
+		ui_interact(user)
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/reagent_containers/glass))
@@ -226,77 +198,34 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 				user.show_text("You attach the [W] to the [src.name]! The injector system is now operational.", "blue")
 			else
 				user.show_text("You attach the [W] to the [src.name]! Please select a condition and re-equip [src] to initialize injector system.", "blue")
+
+			tgui_process.update_uis(src)
 		else
 			return ..()
 
-	Topic(href, href_list)
-		..()
-
-		if(usr != src.loc)
-			return
-
-		if (href_list["remove_cont"])
-			container.set_loc(get_turf(src))
-			container = null
-
-		if (href_list["remove_cond"])
-			condition = null
-
-		if (href_list["sel_cond"])
-			var/list/cond_types = childrentypesof(/datum/injector_belt_condition)
-			var/list/filtered = new/list()
-
-			for(var/A in cond_types)
-				var/datum/injector_belt_condition/C = new A()
-				filtered += C.name
-				filtered[C.name] = A
-
-			var/selected = input(usr,"Select:","Condition") in filtered
-			var/selected_type = filtered[selected]
-
-			condition = new selected_type()
-			condition.setup(usr)
-
-		if (href_list["change_amt"])
-			var/amt = input(usr,"Select:","Amount", inj_amount) in list("ALL",1,5,10,20,30,40,50,75,100)
-			if(amt == "ALL")
-				inj_amount = -1
-			else
-				inj_amount = amt
-
-		if (href_list["change_mintime"])
-			var/amt = input(usr,"Select:","Min time in seconds", min_time) in list(3,4,5,6,7,8,9,10,20,30,40,50,60,120,180,300)
-			min_time = amt
-
-		updateUsrDialog()
-		attack_self(usr)
-
 	proc/check()
-		if(!is_equipped()) return
-		if(!active) return
+		if(!src.is_equipped()) return
+		if(!src.active) return
 
-		if(condition && container?.reagents.total_volume)
-			if(condition.check_trigger(owner) && can_trigger)
+		if(src.condition && src.container?.reagents.total_volume)
+			if(src.condition.check_trigger(src.owner) && src.can_trigger)
 
-				can_trigger = 0
-				SPAWN(min_time*10) can_trigger = 1
+				src.can_trigger = 0
+				SPAWN(src.min_time) src.can_trigger = 1
 				var/turf/T = get_turf(src)
 				if(T)
-					playsound(T,"sound/items/injectorbelt_active.ogg", 33, 0, -5)
+					playsound(T, 'sound/items/injectorbelt_active.ogg', 33, 0, -5)
 					SPAWN(0.5 SECONDS)
-						playsound(T,"sound/machines/hiss.ogg", 40, 1, -5)
+						playsound(T, 'sound/machines/hiss.ogg', 40, 1, -5)
 
-				boutput(owner, "<span class='notice'>Your [src] activates.</span>")
+				boutput(src.owner, "<span class='notice'>Your [src] activates.</span>")
 
-				container.reagents.reaction(owner, INGEST)
+				src.container.reagents.reaction(src.owner, INGEST)
 				SPAWN(1.5 SECONDS)
-					if(inj_amount == -1)
-						container.reagents.trans_to(owner, container.reagents.total_volume)
-					else
-						container.reagents.trans_to(owner, inj_amount)
+					src.container.reagents.trans_to(src.owner, src.inj_amount)
 
 		SPAWN(2.5 SECONDS)
-			if (src) check()
+			if (src) src.check()
 
 	proc/is_equipped()
 		if(!owner) return 0
@@ -320,94 +249,144 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 	proc/check_trigger(mob/M)
 		return 0
 
-/datum/injector_belt_condition/health
-	name = "Condition: Health"
-	desc = "Triggers when health falls below a certain threshold."
-	var/threshold = 0
+ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
+/datum/injector_belt_condition/with_threshold
+	var/threshold
+	var/minValue
+	var/maxValue
+	var/suffix
 
-	setup(mob/M)
-		var/th = input(M,"Select:","Health",threshold) in list(100,90,75,50,33,25,10,0)
+	proc/update_desc()
+		return
+
+/datum/injector_belt_condition/with_threshold/health
+	name = "Health"
+	threshold = 0
+	suffix = " health"
+	minValue = 0
+	maxValue = 100
+
+	New()
+		..()
+		update_desc()
+
+	setup(mob/M, var/th)
 		threshold = th
-		desc = "Triggers when health falls below [threshold]."
+		update_desc()
 		return 1
 
+	update_desc()
+		..()
+		desc = "Triggers when health falls below [threshold]."
+
 	check_trigger(mob/M)
-		if(M.health < threshold) return 1
+		if(M.health < src.threshold) return 1
 		else return 0
 
-/datum/injector_belt_condition/damage
-	name = "Condition: Damage"
-	desc = "Triggers when a certain damage type exceeds a threshold."
-	var/threshold = 0
+/datum/injector_belt_condition/with_threshold/damage
+	name = "Damage"
+	threshold = 0
 	var/damagetype = "brute"
+	minValue = 5
+	maxValue = 100
 
-	setup(mob/M)
-		var/dt = input(M,"Select:","Damage Type",damagetype) in list("brute","burn","toxin","oxygen")
-		damagetype = dt
-		var/th = input(M,"Select:","Threshold",threshold) in list(5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100)
+	New()
+		..()
+		suffix = " " + damagetype
+		update_desc()
+
+	setup(mob/M, var/th)
 		threshold = th
+		update_desc()
+		return 1
+
+	update_desc()
+		..()
 		desc = "Triggers when [damagetype] damage exceeds [threshold]."
+
+	proc/setupDamageType(mob/M, var/dt)
+		damagetype = dt
+		suffix = " " + damagetype
+		update_desc()
 		return 1
 
 	check_trigger(mob/M)
-		switch(damagetype)
+		switch(src.damagetype)
 			if("brute")
-				if(M.get_brute_damage() > threshold) return 1
+				if(M.get_brute_damage() > src.threshold) return 1
 			if("burn")
-				if(M.get_burn_damage() > threshold) return 1
+				if(M.get_burn_damage() > src.threshold) return 1
 			if("toxin")
-				if(M.get_toxin_damage() > threshold) return 1
+				if(M.get_toxin_damage() > src.threshold) return 1
 			if("oxygen")
-				if(M.get_oxygen_deprivation() > threshold) return 1
+				if(M.get_oxygen_deprivation() > src.threshold) return 1
 		return 0
 
 /datum/injector_belt_condition/tempdiff
-	name = "Condition: Temperature !="
+	name = "Temperature !="
 	desc = "Triggers when temperature reaches abnormal levels."
-	var/threshold = 307
+	var/standard_temp = 307 KELVIN
 
 	setup(mob/M)
 		return 1
 
 	check_trigger(mob/M)
-		if(M.bodytemperature > threshold)
-			if((M.bodytemperature - threshold) > 20) return 1
+		if(M.bodytemperature > standard_temp)
+			if((M.bodytemperature - src.standard_temp) > 20) return 1
 		else
-			if((threshold - M.bodytemperature) > 20) return 1
+			if((src.standard_temp - M.bodytemperature) > 20) return 1
 		return 0
 
-/datum/injector_belt_condition/tempover
-	name = "Condition: Temperature >"
-	desc = "Triggers when temperature rises above a certain threshold."
-	var/threshold = 315
+/datum/injector_belt_condition/with_threshold/tempover
+	name = "Temperature >"
+	threshold = 315 KELVIN
+	suffix = " k"
+	minValue = 315 KELVIN
+	maxValue = 600 KELVIN
 
-	setup(mob/M)
-		var/th = input(M,"Select:","Temperature",threshold) in list(315,375,400,450,500,550,600)
+	New()
+		..()
+		update_desc()
+
+	setup(mob/M, var/th)
 		threshold = th
-		desc = "Triggers when temperature rises above [threshold]."
+		update_desc()
 		return 1
 
+	update_desc()
+		..()
+		desc = "Triggers when temperature rises above [threshold]."
+
 	check_trigger(mob/M)
-		if(M.bodytemperature > threshold) return 1
+		if(M.bodytemperature > src.threshold) return 1
 		else return 0
 
-/datum/injector_belt_condition/tempunder
-	name = "Condition: Temperature <"
-	desc = "Triggers when temperature falls below a certain threshold."
-	var/threshold = 300
+/datum/injector_belt_condition/with_threshold/tempunder
+	name = "Temperature <"
+	threshold = 300 KELVIN
+	suffix = " k"
+	minValue = 25 KELVIN
+	maxValue = 300 KELVIN
 
-	setup(mob/M)
-		var/th = input(M,"Select:","Temperature",threshold) in list(300,250,200,150,100,50,25)
+	New()
+		..()
+		update_desc()
+
+	setup(mob/M, var/th)
 		threshold = th
-		desc = "Triggers when temperature falls below [threshold]."
+		update_desc()
 		return 1
 
+	update_desc()
+		..()
+		desc = "Triggers when temperature falls below [threshold]."
+
 	check_trigger(mob/M)
-		if(M.bodytemperature < threshold) return 1
+		if(M.bodytemperature < src.threshold) return 1
 		else return 0
 
 /datum/injector_belt_condition/incapacitated
-	name = "Condition: Incapacitated"
+	name = "Incapacitated"
 	desc = "Triggers when incapacitated."
 
 	setup(mob/M)
@@ -418,7 +397,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 		else return 0
 
 /datum/injector_belt_condition/life
-	name = "Condition: Death"
+	name = "Death"
 	desc = "Triggers on Death."
 
 	setup(mob/M)
@@ -427,3 +406,153 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 	check_trigger(mob/M)
 		if(isdead(M)) return 1
 		else return 0
+
+/proc/autoinjector_trigger_names(var/setType)
+	var/list/cond_types = concrete_typesof(/datum/injector_belt_condition)
+	. = new/list()
+
+	if (!setType)
+		. += "None"
+
+	for(var/A in cond_types)
+		var/datum/injector_belt_condition/C = A
+		. += initial(C.name)
+		if (setType)
+			.[initial(C.name)] = A
+
+/proc/autoinjector_ui_data(var/datum/reagents/R, var/datum/injector_belt_condition/condition, var/min_time, var/inj_amount)
+	. = list()
+
+	var/list/reagentData = null
+	if (R)
+		reagentData = list(
+			maxVolume = R.maximum_volume,
+			totalVolume = R.total_volume,
+			contents = list(),
+			finalColor = "#000000"
+		)
+
+		var/list/contents = reagentData["contents"]
+		if(istype(R) && length(R.reagent_list) > 0)
+			reagentData["finalColor"] = R.get_average_rgb()
+			for(var/reagent_id in R.reagent_list)
+				var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
+
+				contents.Add(list(list(
+					name = reagents_cache[reagent_id],
+					id = reagent_id,
+					colorR = current_reagent.fluid_r,
+					colorG = current_reagent.fluid_g,
+					colorB = current_reagent.fluid_b,
+					volume = current_reagent.volume
+				)))
+	.["reagentData"] = reagentData
+
+	.["conditions"] = autoinjector_trigger_names(FALSE)
+
+	.["condition"] = null
+	.["conditionTreshold"] = null
+	.["conditionDamage"] = null
+	if (condition)
+		.["condition"] = list(
+			name = condition.name,
+			desc = condition.desc,
+		)
+
+		if (istype(condition, /datum/injector_belt_condition/with_threshold))
+			var/datum/injector_belt_condition/with_threshold/tresholdCondition = condition
+			.["conditionTreshold"]  = list(
+				currentValue = tresholdCondition.threshold,
+				suffix = tresholdCondition.suffix,
+				minValue = tresholdCondition.minValue,
+				maxValue = tresholdCondition.maxValue,
+			)
+
+			if (istype(condition, /datum/injector_belt_condition/with_threshold/damage))
+				var/datum/injector_belt_condition/with_threshold/damage/damageCondition = condition
+				.["conditionDamage"]  = list(
+					damagetype = damageCondition.damagetype
+				)
+
+	.["injectionAmount"] = inj_amount
+	.["minimumTime"] = min_time / (1 SECOND)
+
+/proc/autoinjector_ui_act(obj/source, action, params, mob/user, var/maximum_volume)
+	var/obj/item/injector_belt/current_belt = null
+	var/obj/item/clothing/mask/gas/injector_mask/current_mask = null
+	if (istype(source, /obj/item/injector_belt))
+		current_belt = source
+	else if (istype(source, /obj/item/clothing/mask/gas/injector_mask))
+		current_mask = source
+
+	switch(action)
+		if ("remove_cont")
+			if (current_belt)
+				usr.put_in_hand_or_drop(current_belt.container)
+				current_belt.container = null
+			else if (current_mask)
+				usr.put_in_hand_or_drop(current_mask.container)
+				current_mask.container = null
+			. = TRUE
+
+		if ("remove_cond")
+			if (current_belt)
+				current_belt.condition = null
+			else if (current_mask)
+				current_mask.condition = null
+			. = TRUE
+
+		if ("sel_cond")
+			var/list/filtered = autoinjector_trigger_names(TRUE)
+
+			var/selected = params["condition"]
+			var/selected_type
+			var/datum/injector_belt_condition/selected_condition = null
+			if (selected != "None")
+				selected_type = filtered[selected]
+				selected_condition = new selected_type()
+
+			if (current_belt)
+				current_belt.condition = selected_condition
+			else if (current_mask)
+				current_mask.condition = selected_condition
+
+			if (selected_condition && !istype(selected_condition, /datum/injector_belt_condition/with_threshold))
+				selected_condition.setup(user)
+			. = TRUE
+
+		if ("sel_damage_type")
+			var/datum/injector_belt_condition/with_threshold/damage/currentCondition
+			if (current_belt)
+				currentCondition = current_belt.condition
+			else if (current_mask)
+				currentCondition = current_mask.condition
+
+			currentCondition.setupDamageType(user, params["damagetype"])
+			. = TRUE
+
+		if("changeConditionValue")
+			var/datum/injector_belt_condition/currentCondition
+			if (current_belt)
+				currentCondition = current_belt.condition
+			else if (current_mask)
+				currentCondition = current_mask.condition
+
+			currentCondition.setup(user, params["conditionValue"])
+			. = TRUE
+
+		if("changeAmount")
+			var/clampedVolume = clamp(round(params["amount"]), 1, maximum_volume);
+			if (current_belt)
+				current_belt.inj_amount = clampedVolume
+			else if (current_mask)
+				current_mask.inj_amount = clampedVolume
+			. = TRUE
+
+		if ("changeMintime")
+			var/clampedTime = clamp(round(params["mintime"]) SECONDS, 3 SECONDS, 300 SECONDS)
+			if (current_belt)
+				current_belt.min_time = clampedTime
+			else if (current_mask)
+				current_mask.min_time = clampedTime
+			. = TRUE

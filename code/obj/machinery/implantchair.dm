@@ -27,7 +27,7 @@
 	M.set_loc(src.loc)
 	implantgo(M)
 	src.add_fingerprint(user)
-	playsound(src, "sound/misc/belt_click.ogg", 50, 1)
+	playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
 	M.setStatus("buckled", duration = INFINITE_STATUS)
 	return
 
@@ -41,7 +41,7 @@
 			reset_anchored(M)
 			M.buckled = null
 			src.add_fingerprint(user)
-			playsound(src, "sound/misc/belt_click.ogg", 50, 1)
+			playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
 	return
 
 /obj/machinery/imp/chair/proc/implantgo(mob/M as mob)
@@ -53,7 +53,7 @@
 	M.visible_message("<span class='alert'>[M] has been implanted by the [src].</span>")
 
 
-	logTheThing("combat", usr, M, "has implanted [constructTarget(M,"combat")] with a [src.imp] implant ([src.imp.type]) at [log_loc(M)].")
+	logTheThing(LOG_COMBAT, usr, "has implanted [constructTarget(M,"combat")] with a [src.imp] implant ([src.imp.type]) at [log_loc(M)].")
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.implant.Add(src.imp)

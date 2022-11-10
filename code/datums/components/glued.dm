@@ -52,7 +52,7 @@ TYPEINFO(/datum/component/glued)
 	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/pass_on_attackby)
 	RegisterSignal(parent, COMSIG_MOVABLE_BLOCK_MOVE, .proc/move_blocked_check)
 	RegisterSignal(parent, COMSIG_MOVABLE_SET_LOC, .proc/on_set_loc)
-	RegisterSignal(parent, list(COMSIG_ATOM_EXPLODE, COMSIG_ATOM_EXPLODE_INSIDE), .proc/on_explode)
+	RegisterSignals(parent, list(COMSIG_ATOM_EXPLODE, COMSIG_ATOM_EXPLODE_INSIDE), .proc/on_explode)
 	RegisterSignal(parent, COMSIG_ATOM_HITBY_PROJ, .proc/on_hitby_proj)
 
 /datum/component/glued/proc/delayed_dry_up(glue_duration)
@@ -112,7 +112,7 @@ TYPEINFO(/datum/component/glued)
 
 /datum/component/glued/proc/on_explode(atom/movable/parent, list/explode_args)
 	// explode_args format: list(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360, turf_safe=FALSE)
-	explode_args[3] /= 6 // reduce explosion size by a factor of 6
+	explode_args[3] /= 3 // reduce explosion size by a factor of 3
 	qdel(src)
 
 /datum/component/glued/UnregisterFromParent()

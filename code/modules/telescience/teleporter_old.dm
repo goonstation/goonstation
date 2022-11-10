@@ -2,7 +2,7 @@
 	name = "teleport"
 	icon = 'icons/obj/teleporter.dmi'
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	mats = 10
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
@@ -60,7 +60,8 @@
 				originArea = originTurf.loc
 			if (istype(originArea, /area/centcom) || (istype(originArea, /area/shuttle))) // If the origin area is centcom or a shuttle, fail.
 				return
-			do_teleport(M, linked_computer.locked, 0) //dead-on precision
+			if (!do_teleport(M, linked_computer.locked, 0))
+				logTheThing(LOG_COMBAT, M, "entered teleporter portal ring at [log_loc(src)] and teleported to [log_loc(linked_computer.locked)]")
 		else
 			elecflash(src, power=3)
 
@@ -161,11 +162,11 @@
 /proc/do_teleport(atom/movable/M as mob|obj, atom/destination, precision, var/use_teleblocks = 1, var/sparks = 1)
 	if(istype(M, /obj/effects))
 		qdel(M)
-		return
+		return 1
 
 	var/turf/destturf = get_turf(destination)
 	if (!istype(destturf))
-		return
+		return 1
 
 	var/tx = destturf.x + rand(precision * -1, precision)
 	var/ty = destturf.y + rand(precision * -1, precision)
@@ -181,34 +182,15 @@
 		tmploc = destination.loc
 
 	if(tmploc==null)
-		return
+		return 1
 
 	var/m_blocked = 0
 
 
-	for (var/atom in by_cat[TR_CAT_TELEPORT_JAMMERS])
-		var/atom/A = atom
-		if (get_dist(tmploc,A) <= 5)
-			if (istype(atom, /obj/machinery/telejam))
-				var/obj/machinery/telejam/T = atom
-				if (!T.active)
-					continue
-				var/r = get_dist(T, tmploc)
-				if (r > T.range)
-					continue
-				m_blocked = 1
-				break
-
-		if (get_dist(tmploc,A) <= 4)
-			if (istype(atom, /obj/item/device/flockblocker))
-				var/obj/item/device/flockblocker/F = atom
-				if (!F.active)
-					continue
-				var/r = get_dist(F, tmploc)
-				if (r > F.range)
-					continue
-				m_blocked = 1
-				break
+	for (var/atom/A as anything in by_cat[TR_CAT_TELEPORT_JAMMERS])
+		if (IN_RANGE(tmploc, A, GET_ATOM_PROPERTY(A, PROP_ATOM_TELEPORT_JAMMER)))
+			m_blocked = 1
+			break
 
 	//if((istype(tmploc,/area/wizard_station)) || (istype(tmploc,/area/syndicate_station)))
 	var/area/myArea = get_area(tmploc)
@@ -219,12 +201,12 @@
 			else
 				for(var/mob/thing in M)
 					boutput(thing, "<span class='alert'><b>Teleportation failed!</b></span>")
-			return
+			return 1
 
 	M.set_loc(tmploc)
 	if (sparks)
 		elecflash(M, power=3)
-	return
+	return 0
 
 // /mob/living/carbon/human/list_ejectables() looked pretty similar to what I wanted, but this doesn't have organs that you need to live
 //drop a non-vital organ or a limb //shamelessly stolen from Harry Potter as is this whole ability

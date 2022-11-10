@@ -73,7 +73,7 @@
 	proc/update()
 		if(!target) vanish()
 		if(!(src in view(7, target)) && (world.time - created) > 40) vanish()
-		if(get_dist(src,target) <= 2) vanish()
+		if(GET_DIST(src,target) <= 2) vanish()
 		src.set_dir(get_dir(src, target))
 		SPAWN(0.5 SECONDS) update()
 

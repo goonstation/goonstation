@@ -19,7 +19,7 @@
 			return
 
 		var/turf/T = get_turf(src)
-		T.fluid_react(reagents,reagents.total_volume)
+		T?.fluid_react(reagents,reagents.total_volume)
 		qdel(src)
 
 	attack(mob/M, mob/user, def_zone)
@@ -54,7 +54,7 @@
 				user.visible_message("<span class='alert'>[user] puts [src] in [target].</span>",\
 				"<span class='success'>You dissolve [src] in [target].</span>")
 
-			//logTheThing("combat", user, null, "dissolves a bath bomb [log_reagents(src)] in [target] at [log_loc(user)].")
+			//logTheThing(LOG_COMBAT, user, "dissolves a bath bomb [log_reagents(src)] in [target] at [log_loc(user)].")
 			reagents.trans_to(target, src.reagents.total_volume)
 			user.u_equip(src)
 			user.drop_item(src)
@@ -73,7 +73,7 @@
 			user.visible_message("<span class='alert'>[user] puts [src] in [target].</span>",\
             "<span class='success'>You dissolve [src] in [target].</span>")
 
-			//logTheThing("combat", user, null, "dissolves a bath bomb [log_reagents(src)] in [target] at [log_loc(user)].")
+			//logTheThing(LOG_COMBAT, user, "dissolves a bath bomb [log_reagents(src)] in [target] at [log_loc(user)].")
 			var/turf/T = get_turf(target)
 			T.fluid_react(src.reagents,src.reagents.total_volume)
 			user.u_equip(src)

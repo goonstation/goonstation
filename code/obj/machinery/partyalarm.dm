@@ -7,13 +7,13 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "party"
 	desc = "WOOP WOOP PARTY ALARM WOOP WOOP"
-	var/working = 1.0
-	var/time = 10.0
-	var/timing = 0.0
+	var/working = 1
+	var/time = 10
+	var/timing = 0
 	var/party = 0
 	var/duration = 60//admemes
 	var/list/lights = list()
-	anchored = 1.0
+	anchored = 1
 	mats = 0
 
 /obj/machinery/partyalarm/process()
@@ -39,7 +39,7 @@
 			L.light.set_color(initial(L.light.r), initial(L.light.g), initial(L.light.b))
 	else
 		src.party = 1
-		playsound(user, "sound/musical_instruments/partybutton.ogg", 25, 0)
+		playsound(user, 'sound/musical_instruments/partybutton.ogg', 25, 0)
 		user.visible_message("<span style='color:purple'><B><font size=3>Let's get the party started!</font></B></span>")
 		var/obj/machinery/light_area_manager/M = A.light_manager
 		src.lights = M.lights

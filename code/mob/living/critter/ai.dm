@@ -43,7 +43,6 @@ var/list/ai_move_scheduled = list()
 				owner.abilityHolder.addAbility(/datum/targetable/ai_toggle)
 
 	disposing()
-		..()
 		stop_move()
 		if (owner)
 			if (owner.mob_flags & LIGHTWEIGHT_AI_MOB)
@@ -68,14 +67,14 @@ var/list/ai_move_scheduled = list()
 
 	proc/switch_to(var/datum/aiTask/task)
 		current_task = task
+		if(task?.ai_turbo)
+			owner.mob_flags |= HEAVYWEIGHT_AI_MOB
 		task?.switched_to()
 
 	proc/tick()
-		if(isdead(owner))
-			enabled = 0
+		if(isdead(owner) && enabled)
+			src.disable()
 		if(!enabled)
-			stop_move()
-			walk(owner, 0)
 			return
 		if (!current_task)
 			switch_to(default_task)
@@ -84,6 +83,8 @@ var/list/ai_move_scheduled = list()
 
 			var/datum/aiTask/T = current_task.next_task()
 			if (T)
+				if(current_task.ai_turbo)
+					owner.mob_flags &= ~HEAVYWEIGHT_AI_MOB
 				switch_to(T)
 				T.reset()
 
@@ -108,9 +109,7 @@ var/list/ai_move_scheduled = list()
 			tick()
 
 	proc/die()
-		src.enabled = 0
-		stop_move()
-		switch_to(null)
+		src.disable()
 
 	//store a path and move to it with speed - useful for going fast but using smarter pathfinding
 	proc/move_to_with_path(var/A, var/list/path = null, var/dist = 1)
@@ -157,12 +156,12 @@ var/list/ai_move_scheduled = list()
 
 	proc/move_step()
 		if (src.move_side)
-			if (get_dist(src.owner,get_turf(src.move_target)) > src.move_dist)
+			if (GET_DIST(src.owner,get_turf(src.move_target)) > src.move_dist)
 				var/turn = src.move_reverse?90:-90
 				src.owner.move_dir = turn( get_dir(src.owner,get_turf(src.move_target)),turn )
 				src.owner.process_move()
 		else if (src.move_reverse)
-			if (get_dist(src.owner,get_turf(src.move_target)) < src.move_dist)
+			if (GET_DIST(src.owner,get_turf(src.move_target)) < src.move_dist)
 				var/turn = 180
 				if (prob(50)) //fudge walk away behavior
 					if (prob(50))
@@ -181,11 +180,11 @@ var/list/ai_move_scheduled = list()
 			else
 				next = src.move_target
 
-			if (get_dist(src.owner,get_turf(next)) > src.move_dist)
+			if (GET_DIST(src.owner,get_turf(next)) > src.move_dist)
 				src.owner.move_dir = get_dir(src.owner,get_turf(next))
 				src.owner.process_move()
 		else
-			if (get_dist(src.owner,get_turf(src.move_target)) > src.move_dist)
+			if (GET_DIST(src.owner,get_turf(src.move_target)) > src.move_dist)
 				src.owner.move_dir = get_dir(src.owner,get_turf(src.move_target))
 				src.owner.process_move()
 
@@ -193,10 +192,20 @@ var/list/ai_move_scheduled = list()
 	proc/was_harmed(obj/item/W, mob/M)
 		.=0
 
+	proc/disable()
+		src.enabled = FALSE
+		src.stop_move()
+
+	proc/enable()
+		src.enabled = TRUE
+		src.interrupt()
+
 /datum/aiTask
 	var/name = "task"
 	var/datum/aiHolder/holder = null
 	var/atom/target = null
+	/// if this is set, temporarily give this mob the HEAVYWEIGHT_AI mob flag for the duration of this task
+	var/ai_turbo = FALSE
 
 	New(parentHolder)
 		..()

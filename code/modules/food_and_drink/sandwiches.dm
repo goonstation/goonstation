@@ -209,14 +209,15 @@
 	bites_left = 5
 	heal_amt = 2
 	food_color ="#663300"
-	initial_volume = 20
+	initial_volume = 25
 	initial_reagents = list("cholesterol"=5)
 	food_effects = list("food_hp_up", "food_warm")
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/))
 			src.bites_left += 1
-		else return ..()
+		else
+			return ..()
 
 /obj/item/reagent_containers/food/snacks/burger/buttburger
 	name = "buttburger"
@@ -286,26 +287,13 @@
 	icon_state ="moldyburger"
 	bites_left = 1
 	heal_amt = 1
-	initial_volume = 15
-	initial_reagents = null
 	food_effects = list("food_bad_breath")
 
-	New()
-		..()
-		#ifdef CREATE_PATHOGENS // PATHOLOGY REMOVAL
-		wrap_pathogen(reagents, generate_flu_pathogen(), 7)
-		wrap_pathogen(reagents, generate_cold_pathogen(), 8)
-		#endif
-
 	heal(var/mob/M)
-		#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
-		..()
-		#else
-		boutput(M, "<span class='alert'>Oof, how old was that?.</span>")
+		boutput(M, "<span class='alert'>Oof, how old was that?</span>")
 		if(prob(66))
 			M.reagents.add_reagent("salmonella",15)
 		..()
-		#endif
 
 /obj/item/reagent_containers/food/snacks/burger/plague
 	name = "burgle"
@@ -339,7 +327,6 @@
 	bites_left = 3
 	heal_amt = 1
 	food_color = "#C8C8C8"
-	brewable = 1
 	brew_result = "beepskybeer"
 	initial_reagents = list("cholesterol"=5,"nanites"=20)
 
@@ -350,7 +337,6 @@
 	bites_left = 3
 	heal_amt = 1
 	food_color = "#C8C8C8"
-	brewable = 1
 	brew_result = "beepskybeer"
 	initial_reagents = list("cholesterol"=5,"nanites"=20)
 
@@ -393,7 +379,7 @@
 			gib.streak_cleanable(M.dir)
 			boutput(M, "<span class='alert'>You drip some meat on the floor</span>")
 			M.visible_message("<span class='alert'>[M] drips some meat on the floor!</span>")
-			playsound(M.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			playsound(M.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
 		else
 			..()

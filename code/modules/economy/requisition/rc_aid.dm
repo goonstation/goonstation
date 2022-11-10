@@ -1,13 +1,17 @@
 ABSTRACT_TYPE(/datum/req_contract/aid)
 /**
  * Aid contracts are a class of standard (market-listed) contract.
- * Uniquely among contracts, aid contracts can't be pinned due to their urgency. Requirements and flavor text should convey this urgency.
+ * Uniquely among contracts, aid contracts can't be pinned due to their urgency,
+ * and will leave after a certain number of market cycles instead of at random.
+ * Requirements and flavor text should convey this urgency.
  *
  * These should -usually- be fairly ordinary supplies that a fast-moving Quartermasters' office can scrounge up with relatively little aid.
  * Anything more difficult to respond to in short order, or prepare in advance, should yield significantly more cash.
  */
 /datum/req_contract/aid //in your final hour, astral wolf...
 	req_class = AID_CONTRACT
+	///Number of cycles changes that the contract will survive. Defaults to one, which allows contract to be present in two cycles.
+	var/cycles_remaining = 1
 
 /datum/req_contract/aid/wrecked
 	//name = "Breach Recovery"
@@ -21,6 +25,7 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 
 	New()
 		src.name = pick(namevary)
+		src.cycles_remaining = rand(0,2)
 		src.flavor_desc = "An affiliated [pick(desc_placejob)] [pick(desc_placetype)] has [pick(desc_enhancer1)] a [pick(desc_enhancer2)] [pick(desc_whatborked)]"
 		src.flavor_desc += " and requires repair supplies as soon as possible."
 		src.payout += rand(0,80) * 10
@@ -83,7 +88,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
 /datum/req_contract/aid/triage
 	//name = "Medical Aid"
 	payout = 5000
-	var/list/namevary = list("Medical Aid","Medical Emergency","Triage Support","Aid Request","Critical Condition")
+	var/list/namevary = list("Medical Aid","Medical Emergency","Triage Support","Aid Request","Critical Condition","Vital Support")
 	var/list/desc_helpsite = list("A medical facility","An affiliated station's medical bay","A triage center","A medical outpost","Our nearest station")
 	var/list/desc_tense = list("to assist with","after heavy load due to","to restock after")
 	var/list/desc_crisis = list(
@@ -105,6 +110,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
 
 	New()
 		src.name = pick(namevary)
+		src.cycles_remaining = rand(1,2)
 		src.flavor_desc = "[pick(desc_helpsite)] requires additional supplies [pick(desc_tense)] [pick(desc_crisis)]. [pick(desc_emphasis)]"
 		src.payout += rand(0,60) * 10
 
@@ -189,7 +195,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 /datum/req_contract/aid/geeksquad
 	//name = "Computer Failure"
 	payout = 4800
-	var/list/namevary = list("Systems Failure","Short Circuit","Computer Overload","Electronics Failure","Systems Breakdown")
+	var/list/namevary = list("Systems Failure","Short Circuit","Computer Overload","Electronics Failure","Systems Breakdown","Crucial Repair")
 	var/list/desc_wherebork = list("research","mining","security","cargo transfer","communications","deep-space survey")
 	var/list/desc_whobork = list("vessel","ship","station","outpost")
 	var/list/desc_whybork = list("experienced","lost systems control due to","ceased operation after","suffered a power surge resulting in")
@@ -219,6 +225,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 
 	New()
 		src.name = pick(namevary)
+		src.cycles_remaining = rand(1,3)
 		src.flavor_desc = "An affiliated [pick(desc_wherebork)] [pick(desc_whobork)] has [pick(desc_whybork)] [pick(desc_howmuchbork)] its [pick(desc_sys)]. [pick(desc_emphasis)]"
 		src.payout += rand(0,60) * 10
 
@@ -311,6 +318,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 
 	New()
 		src.name = pick(namevary)
+		src.cycles_remaining = rand(1,2)
 		var/tilter = pick(desc_shortage)
 		src.flavor_desc = "An affiliated [pick(desc_placejob)] [pick(desc_place)] is experiencing"
 		src.flavor_desc += " a severe shortage of [tilter] [pick(desc_after)] [pick(desc_whybork)].[pick(desc_emphasis)]"

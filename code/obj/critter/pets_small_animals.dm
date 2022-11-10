@@ -99,7 +99,7 @@
 	name = "space opossum"
 	desc = "A possum that came from space. Or maybe went to space. Who knows how it got here?"
 	icon_state = "possum"
-	density = 1
+	density = FALSE
 	health = 15
 	aggressive = 1
 	defensive = 1
@@ -126,25 +126,22 @@
 
 	on_revive()
 		..()
+		src.alive = TRUE
 		src.visible_message("<span class='notice'><b>[src]</b> stops playing dead and gets back up!</span>")
-		src.alive = 1
-		src.set_density(1)
 		src.health = initial(src.health)
 		src.icon_state = src.living_state ? src.living_state : initial(src.icon_state)
 		src.target = null
 		src.task = "wandering"
-		return
 
 	CritterDeath()
 		..()
-		SPAWN(rand(200,800))
+		SPAWN(rand(20 SECONDS, 80 SECONDS))
 			if (src && !src.alive)
 				src.on_revive()
-		return
 
 	attackby(obj/item/W, mob/living/user)
 		if (!src.alive)
-			if (istype(W, /obj/item/knife/butcher) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/raw_material/shard) || istype(W, /obj/item/sword) || istype(W, /obj/item/saw) || issnippingtool(W))
+			if (iscuttingtool(W) || issawingtool(W) || issnippingtool(W))
 				src.on_revive()
 				. = ..()
 		else
@@ -271,7 +268,7 @@
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 
 		if(ismob(M))
 			M.changeStatus("stunned", 2 SECONDS)
@@ -414,7 +411,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 			I.dropped(user)
 			qdel(I)
 			src.visible_message("<span class='notice'>[src] happily chows down on [I]!</span>")
-			playsound(src,"sound/items/eatfood.ogg", rand(10,50), 1)
+			playsound(src,'sound/items/eatfood.ogg', rand(10,50), 1)
 			return
 		..()
 
@@ -469,7 +466,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 
 		if(ismob(M))
 			M.changeStatus("stunned", 2 SECONDS)
@@ -593,7 +590,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 
 		if(ismob(M))
 			M.changeStatus("stunned", 4 SECONDS)
@@ -645,7 +642,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			src.visible_message("<span class='combat'><B>[src]</B> stares at [M], channeling its newfound power!</span>")
 			SPAWN(1 SECOND)
 				boutput(M, "<span class='alert'><BIG><B>[voidSpeak("WELP, GUESS YOU SHOULDN'T BELIEVE EVERYTHING YOU READ!")]</B></BIG></span>")
-				logTheThing("combat", M, null, "was deleted by using a void crown on [src] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, M, "was deleted by using a void crown on [src] at [log_loc(src)].")
 				var/mob/dead/observer/O = M.ghostize()
 				if(O)
 					O.set_loc(M.loc)
@@ -656,7 +653,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			//addBan(data)
 
 		if(istype(W, /obj/item/plutonium_core/hootonium_core))//Owls interestingly are capable of absorbing hootonium into their bodies harmlessly. This is the only safe method of removing it.
-			playsound(M.loc, "sound/items/eatfood.ogg", 100, 1)
+			playsound(M.loc, 'sound/items/eatfood.ogg', 100, 1)
 			boutput(M, "<span class='alert'><B>You feed the [src] the [W]. It looks [pick("confused", "annoyed", "worried", "satisfied", "upset", "a tad miffed", "at you and winks")].</B></span>")
 			M.drop_item()
 			W.set_loc(src)
@@ -681,7 +678,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 		random_brute_damage(src.target, 1)//peck peck
 
 		return
@@ -736,18 +733,18 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			if (prob(20))
 				if (!src.muted)
 					src.audible_message("<b>[src]</b> honks!")
-				playsound(src.loc, "sound/voice/animal/goose.ogg", 70, 1)
+				playsound(src.loc, 'sound/voice/animal/goose.ogg', 70, 1)
 		else
 			if (prob(20))
 				flick("[src.icon_state]-flap", src)
-				playsound(src.loc, "sound/voice/animal/cat_hiss.ogg", 50, 1)
+				playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
 
 	seek_target()
 		..()
 		if (src.target)
 			flick("[src.icon_state]-flaploop", src)
 			src.visible_message("<span class='combat'><b>[src]</b> [src.angertext] [src.target]!</span>")
-			playsound(src.loc, "sound/voice/animal/cat_hiss.ogg", 50, 1)
+			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
 
 	CritterAttack(mob/M)
 		flick("[src.icon_state]-flap", src)
@@ -756,7 +753,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 	ChaseAttack(mob/M)
 		flick("[src.icon_state]-flaploop", src)
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 		..()
 
 		if(ismob(M))
@@ -767,7 +764,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		..()
 		if(prob(10))
 			src.audible_message("<b>[src]</b> honks!",2)
-			playsound(src.loc, "sound/voice/animal/goose.ogg", 50, 1)
+			playsound(src.loc, 'sound/voice/animal/goose.ogg', 50, 1)
 
 	patrol_to(var/turf/towhat)
 		.=..()
@@ -964,7 +961,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				walk_to(src, 0)
 				return
 			else if (src.new_treasure.loc == src.treasure_loc)
-				if (get_dist(src, src.treasure_loc) > 4 || src.impatience > 8)
+				if (GET_DIST(src, src.treasure_loc) > 4 || src.impatience > 8)
 					src.new_treasure = null
 					src.treasure_loc = null
 					src.impatience = 0
@@ -975,7 +972,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 					src.impatience ++
 
 			else if (src.new_treasure.loc != src.treasure_loc)
-				if (get_dist(src.new_treasure, src) > 4 || src.impatience > 8 || !isturf(src.new_treasure.loc))
+				if (GET_DIST(src.new_treasure, src) > 4 || src.impatience > 8 || !isturf(src.new_treasure.loc))
 					src.new_treasure = null
 					src.treasure_loc = null
 					src.impatience = 0
@@ -1083,7 +1080,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			animate( src )
 			animate( src, pixel_y = 10, easing = SINE_EASING, time = ((towhat.y-y)>0)?3:1 )
 			animate( pixel_y = opy, easing = SINE_EASING, time = 3 )
-			playsound( get_turf(src), "sound/misc/boing/[rand(1,6)].ogg", 20, 1 )
+			playsound( get_turf(src), "sound/misc/boing/[rand(1,6)].ogg", 10, 1 )
 
 	CritterAttack(mob/M as mob)
 		src.attacking = 1
@@ -1091,7 +1088,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		if (iscarbon(M))
 			if (prob(60)) //Go for the eyes!
 				src.visible_message("<span class='combat'><B>[src]</B> pecks [M] in the eyes!</span>")
-				playsound(src.loc, "sound/impact_sounds/Flesh_Stab_2.ogg", 30, 1)
+				playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_2.ogg', 30, 1)
 				M.take_eye_damage(rand(2,10)) //High variance because the bird might not hit well
 				if (prob(75) && !M.stat)
 					M.emote("scream")
@@ -1119,7 +1116,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 
 		if (prob(3))
 			src.create_feather()
@@ -1129,7 +1126,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			M.changeStatus("weakened", 2 SECONDS)
 
 	attack_ai(mob/user as mob)
-		if (get_dist(user, src) < 2)
+		if (GET_DIST(user, src) < 2)
 			return attack_hand(user)
 		else
 			return ..()
@@ -1188,7 +1185,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 			if (C.amount >= 3000) // coffins
 				FP = /obj/storage/closet/coffin
-				FP_name = "Slutstation"
+				FP_name = "Likkista"
 				C.amount -= 3000
 
 			else if (C.amount >= 1700) // segways
@@ -1322,7 +1319,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 						src.wanderer = initial(src.wanderer)
 						src.being_offered_treasure = 0
 						if (src.alive && !src.sleeping && user && W && user.find_in_hand(W)) // we have to do so many checks for such a short wait
-							if (get_dist(user, T) > 2 || (src.treasure && prob(80)) || prob(50) || (src.loc != T && !step_to(src,T))) // too far, already has a thing and doesn't wanna switch, just doesn't like the thing offered, or we can't get to where we need to be
+							if (GET_DIST(user, T) > 2 || (src.treasure && prob(80)) || prob(50) || (src.loc != T && !step_to(src,T))) // too far, already has a thing and doesn't wanna switch, just doesn't like the thing offered, or we can't get to where we need to be
 								src.visible_message("<span class='combat'>[src] doesn't take [W] from [user]!</span>")
 								return
 							else
@@ -1360,7 +1357,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 	proc/apply_species(var/new_species = null)
 		if (!(istext(new_species) || ispath(new_species)) || !islist(parrot_species)) // farrrrrtttt
-			logTheThing("debug", null, null, "One of haine's stupid parrot things is broken, go whine at her until she fixes it (deets: type = [src.type], new_species = [isnull(new_species) ? "null" : new_species], parrot_species = [islist(parrot_species) ? "list" : "not list"])")
+			logTheThing(LOG_DEBUG, null, "One of haine's stupid parrot things is broken, go whine at her until she fixes it (deets: type = [src.type], new_species = [isnull(new_species) ? "null" : new_species], parrot_species = [islist(parrot_species) ? "list" : "not list"])")
 			return
 
 		var/datum/species_info/parrot/info = ispath(new_species) ? new_species : parrot_species[new_species]
@@ -1571,7 +1568,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	sealed = 1
 	info = {"<small<i>This looks quite tattered and ripped up. You can't read everything around the edges because of all the holes and tears in the paper.</i></small<br><br>
 <b><i>Produkt</i></b> - <i>Pris</i><br>
-<b>Slutstation</b> - 3000<small>SSEK</small><br>
+<b>Likkista</b> - 3000<small>SSEK</small><br>
 <b>Fart</b> - 1700<small>SSEK</small><br>
 <b>Arbetsplatsolycka</b> - 330<small>SSEK</small><br>
 <b>Fyllehund</b> - 320<small>SSEK</small><br>
@@ -1683,7 +1680,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		if (iscarbon(M))
 			if (prob(60)) //Go for the eyes!
 				src.visible_message("<span class='combat'><B>[src]</B> pecks [M] in the eyes!</span>")
-				playsound(src.loc, "sound/impact_sounds/Flesh_Stab_2.ogg", 30, 1)
+				playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_2.ogg', 30, 1)
 				M.take_eye_damage(rand(2,10)) //High variance because the bird might not hit well
 				if (prob(75) && !M.stat)
 					M.emote("scream")
@@ -1700,7 +1697,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 					if (E)
 						src.visible_message("<span class='combat'><B>[src] [pick("tears","yanks","rips")] [M]'s eye out! <i>Holy shit!!</i></B></span>")
 						E = H.drop_organ(chosen_eye)
-						playsound(M, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
+						playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 						E.set_loc(src.loc)
 			if (isliving(M))
 				var/mob/living/H = M
@@ -1724,7 +1721,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 
 		if (ismob(M))
 			M.changeStatus("stunned", 2 SECONDS)
@@ -1805,7 +1802,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		..()
 
 	ChaseAttack(mob/M)
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 		..()
 
 		if(ismob(M))
@@ -1937,7 +1934,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				src.lying = 0
 				src.wanderer = initial(src.wanderer)
 			src.visible_message("<span class='combat'><b>[user]</b> swings at [src], but misses!</span>")
-			playsound(src, "sound/impact_sounds/Generic_Swing_1.ogg", 50, 0)
+			playsound(src, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 0)
 			return
 		else
 			return ..()
@@ -2090,7 +2087,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		..()
 		if(src.target)
 			src.visible_message("<span class='combat'><b>[src]</b> [src.angertext] [src.target]!</span>")
-			playsound(src.loc, "sound/items/Scissor.ogg", 30, 0, -1)
+			playsound(src.loc, 'sound/items/Scissor.ogg', 30, 0, -1)
 
 	CritterAttack(mob/M)
 		if(ismob(M))
@@ -2098,9 +2095,9 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			src.visible_message("<span class='combat'><B>[src]</B> snips [src.target] with its claws!</span>")
 			random_brute_damage(src.target, 2)
 			SPAWN(0)
-				playsound(src.loc, "sound/items/Wirecutter.ogg", 30, 0, -1)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 30, 0, -1)
 				sleep(0.3 SECONDS)
-				playsound(src.loc, "sound/items/Wirecutter.ogg", 30, 0, -1)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 30, 0, -1)
 			SPAWN(rand(1,10))
 				src.attacking = 0
 		return

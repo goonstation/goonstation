@@ -48,7 +48,7 @@
 				H.update_clothing()
 				H.real_name = last_used_name
 				H.abilityHolder.updateButtons()
-				logTheThing("combat", H, null, "leaves lesser form as a changeling, [log_loc(H)].")
+				logTheThing(LOG_COMBAT, H, "leaves lesser form as a changeling, [log_loc(H)].")
 				return 0
 			else if (isabomination(H))
 				boutput(H, "We cannot transform in this form.")
@@ -64,7 +64,7 @@
 				H.handcuffs.drop_handcuffs(H)
 			H.monkeyize()
 			H.abilityHolder.updateButtons()
-			logTheThing("combat", H, null, "enters lesser form as a changeling, [log_loc(H)].")
+			logTheThing(LOG_COMBAT, H, "enters lesser form as a changeling, [log_loc(H)].")
 			return 0
 
 /datum/targetable/changeling/transform
@@ -91,13 +91,13 @@
 			boutput(holder.owner, "<span class='alert'>We need to absorb more DNA to use this ability.</span>")
 			return 1
 
-		var/target_name = tgui_input_list(holder.owner, "Select the target DNA:", "Target DNA", sortList(H.absorbed_dna))
+		var/target_name = tgui_input_list(holder.owner, "Select the target DNA:", "Target DNA", sortList(H.absorbed_dna, /proc/cmp_text_asc))
 		if (!target_name)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner] transforms!</B></span>"))
-		logTheThing("combat", holder.owner, target_name, "transforms into [target_name] as a changeling [log_loc(holder.owner)].")
+		logTheThing(LOG_COMBAT, holder.owner, "transforms into [target_name] as a changeling [log_loc(holder.owner)].")
 		var/mob/living/carbon/human/C = holder.owner
 		var/datum/bioHolder/D = H.absorbed_dna[target_name]
 		C.bioHolder.CopyOther(D)

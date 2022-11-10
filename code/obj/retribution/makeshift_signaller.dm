@@ -99,7 +99,7 @@ var/sword_summoned_before = false
 							tooltip_rebuild = 1
 							is_exploding = true
 							spawn(2 SECONDS)
-								logTheThing("combat", user, null, "has summoned the Syndicate Weapon: Orion Retribution Device. It will become active in about 1 minute.")
+								logTheThing(LOG_COMBAT, user, "has summoned the Syndicate Weapon: Orion Retribution Device. It will become active in about 1 minute.")
 								message_admins("[key_name(user)] has summoned the Syndicate Weapon: Orion Retribution Device. It will become active in about 1 minute.")
 								elecflash(src.loc)
 								qdel(src)
@@ -123,7 +123,7 @@ var/sword_summoned_before = false
 		if (istype(W,/obj/item/factionrep/ntboard) && !is_exploding)	//If a Syndicate Circuit Board is used on this item, turn the former into it's fried version and fill a metadata node.
 			if (metadata < 8)
 				qdel(W)
-				playsound(src.loc, "sound/effects/sparks4.ogg", 100, 0)
+				playsound(src.loc, 'sound/effects/sparks4.ogg', 100, 0)
 				user.put_in_hand_or_drop(new /obj/item/factionrep/ntboardfried)
 				metadata += 1
 				user.show_message("<span class='notice'>You uploaded some metadata from the syndicate circuit board, frying it in the process.</span>", 1)
@@ -144,8 +144,8 @@ var/sword_summoned_before = false
 				return
 			else
 				metadata += rand(2, 7)
-				playsound(src.loc, "sound/misc/flockmind/flockdrone_beep2.ogg", 60, 0)
-				playsound(src.loc, "sound/effects/sparks4.ogg", 100, 0)
+				playsound(src.loc, 'sound/misc/flockmind/flockdrone_beep2.ogg', 60, 0)
+				playsound(src.loc, 'sound/effects/sparks4.ogg', 100, 0)
 				was_emagged = true
 				. = TRUE
 			if(metadata >= 8)
@@ -163,10 +163,10 @@ var/sword_summoned_before = false
 	if (!(istype(dying_drone, /obj/critter/gunbot/drone/buzzdrone/fish) || istype(dying_drone, /obj/critter/gunbot/drone/gunshark)) && T1.z == T2.z)	//Not increasing the filled metadata node amount if the dead drone is an aquatic one, as they drop Syndicate Circuit Boards already.
 		if (metadata < 8)
 			metadata += 1
-			playsound(src.loc, "sound/misc/flockmind/flockdrone_beep3.ogg", metadata * 12, 0)
+			playsound(src.loc, 'sound/misc/flockmind/flockdrone_beep3.ogg', metadata * 12, 0)
 			set_icon_state("metadata_[metadata]")
 		if (metadata >= 8)
-			playsound(src.loc, "sound/misc/flockmind/flockdrone_beep4.ogg", 100, 0)
+			playsound(src.loc, 'sound/misc/flockmind/flockdrone_beep4.ogg', 100, 0)
 			if(!sword_summoned_before)
 				desc = "This device has a menacing aura around it. All 8 nodes of metadata are filled. The signal is ready to be sent."
 			else

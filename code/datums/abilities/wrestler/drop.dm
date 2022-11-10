@@ -26,7 +26,7 @@
 			boutput(M, "<span class='alert'>Why would you want to wrestle yourself?</span>")
 			return 1
 
-		if (get_dist(M, target) > src.max_range)
+		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
@@ -69,7 +69,7 @@
 				M.pixel_y = 0
 				return 0
 
-			if ((falling == 0 && get_dist(M, target) > src.max_range) || (falling == 1 && get_dist(M, target) > (src.max_range + 1))) // We climbed onto stuff.
+			if ((falling == 0 && GET_DIST(M, target) > src.max_range) || (falling == 1 && GET_DIST(M, target) > (src.max_range + 1))) // We climbed onto stuff.
 				M.pixel_y = 0
 				if (falling == 1 && !fake)
 					M.visible_message("<span class='alert'><B>...and dives head-first into the ground, ouch!</b></span>")
@@ -95,7 +95,6 @@
 
 			M.visible_message("<span class='alert'><B>[M] [pick_string("wrestling_belt.txt", "drop")] [target]!</B></span>")
 			playsound(M.loc, "swing_hit", 50, 1)
-			M.emote("scream")
 
 			if (!fake)
 				if (falling == 1)
@@ -111,7 +110,7 @@
 			target.force_laydown_standup()
 
 			M.pixel_y = 0
-			logTheThing("combat", M, target, "uses the [fake ? "fake " : ""]drop wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
+			logTheThing(LOG_COMBAT, M, "uses the [fake ? "fake " : ""]drop wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
 
 		else
 			if (M)

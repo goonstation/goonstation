@@ -1,5 +1,6 @@
 // Condiments
 
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 /obj/item/reagent_containers/food/snacks/condiment
 	name = "condiment"
 	desc = "you shouldnt be able to see this"
@@ -8,6 +9,7 @@
 	heal_amt = 0
 
 	heal(var/mob/M)
+		..()
 		boutput(M, "<span class='alert'>It's just not good enough on its own...</span>")
 
 	afterattack(atom/target, mob/user, flag)
@@ -106,6 +108,14 @@
 	bites_left = 2
 	heal_amt = 3
 
+/obj/item/reagent_containers/food/snacks/condiment/matcha
+	name = "matcha"
+	desc = "A powder created from dried tea leaves."
+	icon_state = "matcha"
+	initial_volume = 10
+	initial_reagents = "matcha"
+	food_color = "#74A12E"
+
 /obj/item/reagent_containers/food/snacks/condiment/chocchips
 	name = "chocolate chips"
 	desc = "Mmm! Little bits of chocolate! Or rabbit droppings. Either or."
@@ -167,25 +177,24 @@
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES))
-				H.tri_message("<span class='alert'><b>[user]</b> uselessly [myVerb]s some [src.stuff] onto [H]'s headgear!</span>",\
-				H, "<span class='alert'>[H == user ? "You uselessly [myVerb]" : "[user] uselessly [myVerb]s"] some [src.stuff] onto your headgear! Okay then.</span>",\
-				user, "<span class='alert'>You uselessly [myVerb] some [src.stuff] onto [user == H ? "your" : "[H]'s"] headgear![user == H ? " Okay then." : null]</span>")
+				H.tri_message(user, "<span class='alert'><b>[user]</b> uselessly [myVerb]s some [src.stuff] onto [H]'s headgear!</span>",\
+					"<span class='alert'>[H == user ? "You uselessly [myVerb]" : "[user] uselessly [myVerb]s"] some [src.stuff] onto your headgear! Okay then.</span>",\
+					"<span class='alert'>You uselessly [myVerb] some [src.stuff] onto [user == H ? "your" : "[H]'s"] headgear![user == H ? " Okay then." : null]</span>")
 				src.shakes ++
 				return
 			else
 				switch (src.stuff)
 					if ("salt")
-						H.tri_message("<span class='alert'><b>[user]</b> [myVerb]s something into [H]'s eyes!</span>",\
-						H, "<span class='alert'>[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some salt into your eyes! <B>FUCK!</B></span>",\
-						user, "<span class='alert'>You [myVerb] some salt into [user == H ? "your" : "[H]'s"] eyes![user == H ? " <B>FUCK!</B>" : null]</span>")
-						H.emote("scream")
+						H.tri_message(user, "<span class='alert'><b>[user]</b> [myVerb]s something into [H]'s eyes!</span>",\
+							"<span class='alert'>[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some salt into your eyes! <B>FUCK!</B></span>",\
+							"<span class='alert'>You [myVerb] some salt into [user == H ? "your" : "[H]'s"] eyes![user == H ? " <B>FUCK!</B>" : null]</span>")
 						random_brute_damage(user, 1)
 						src.shakes ++
 						return
 					if ("pepper")
-						H.tri_message("<span class='alert'><b>[user]</b> [myVerb]s something onto [H]'s nose!</span>",\
-						H, "<span class='alert'>[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some pepper onto your nose! <B>Why?!</B></span>",\
-						user, "<span class='alert'>You [myVerb] some pepper onto [user == H ? "your" : "[H]'s"] nose![user == H ? " <B>Why?!</B>" : null]</span>")
+						H.tri_message(user, "<span class='alert'><b>[user]</b> [myVerb]s something onto [H]'s nose!</span>",\
+							"<span class='alert'>[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some pepper onto your nose! <B>Why?!</B></span>",\
+							"<span class='alert'>You [myVerb] some pepper onto [user == H ? "your" : "[H]'s"] nose![user == H ? " <B>Why?!</B>" : null]</span>")
 						H.emote("sneeze")
 						src.shakes ++
 						for (var/i = 1, i <= 30, i++)
@@ -194,9 +203,9 @@
 									H.emote("sneeze")
 						return
 					else
-						H.tri_message("<span class='alert'><b>[user]</b> [myVerb]s some [src.stuff] at [H]'s head!</span>",\
-						H, "<span class='alert'>[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some [src.stuff] at your head! Fuck!</span>",\
-						user, "<span class='alert'>You [myVerb] some [src.stuff] at [user == H ? "your" : "[H]'s"] head![user == H ? " Fuck!" : null]</span>")
+						H.tri_message(user, "<span class='alert'><b>[user]</b> [myVerb]s some [src.stuff] at [H]'s head!</span>",\
+							"<span class='alert'>[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some [src.stuff] at your head! Fuck!</span>",\
+							"<span class='alert'>You [myVerb] some [src.stuff] at [user == H ? "your" : "[H]'s"] head![user == H ? " Fuck!" : null]</span>")
 						src.shakes ++
 						return
 		else if (istype(M, /mob/living/critter/small_animal/slug) && src.stuff == "salt")

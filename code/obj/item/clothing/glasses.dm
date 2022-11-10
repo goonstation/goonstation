@@ -18,8 +18,8 @@
 	compatible_species = list("human", "cow", "werewolf", "flubber")
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/cloth/handkerchief))
-			user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [src] with [src].</span>")
+		if (istype(W, /obj/item/cloth))
+			user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [src] with [W].</span>")
 			return
 		return ..()
 
@@ -60,7 +60,7 @@
 		..() //if not selecting the head of a human or monkey, just do normal attack.
 
 /obj/item/clothing/glasses/meson
-	name = "Meson Goggles"
+	name = "meson goggles"
 	icon_state = "meson"
 	var/base_state = "meson"
 	item_state = "glasses"
@@ -82,9 +82,9 @@
 	proc/toggle(var/mob/toggler)
 		src.on = !src.on
 		src.item_state = "[src.base_state][src.on ? null : "-off"]"
-		toggler.set_clothing_icon_dirty()
 		set_icon_state("[src.base_state][src.on ? null : "-off"]")
-		playsound(src, "sound/items/mesonactivate.ogg", 30, 1)
+		toggler.update_clothing()
+		playsound(src, 'sound/items/mesonactivate.ogg', 30, 1)
 		if (ishuman(toggler))
 			var/mob/living/carbon/human/H = toggler
 			if (istype(H.glasses, /obj/item/clothing/glasses/meson)) //hamdling of the rest is done in life.dm
@@ -168,7 +168,7 @@
 		if(H.mind)
 			if(H.mind.assigned_role == "Detective" && !src.already_worn)
 				src.already_worn = 1
-				playsound(user, "sound/voice/yeaaahhh.ogg", 100, 0)
+				playsound(user, 'sound/voice/yeaaahhh.ogg', 100, 0)
 				user.visible_message("<span class='alert'><B><font size=3>YEAAAAAAAAAAAAAAAH!</font></B></span>")
 	..()
 	return
@@ -219,6 +219,7 @@
 	color_r = 1
 	color_g = 1
 	color_b = 1
+	contraband = 4 // illegal (stolen) crimefighting vigilante gear
 
 /obj/item/clothing/glasses/thermal
 	name = "optical thermal scanner"
@@ -322,6 +323,7 @@
 	block_eye = "R"
 	var/pinhole = 0
 	var/mob/living/carbon/human/equipper
+	wear_layer = MOB_GLASSES_LAYER2
 
 	setupProperties()
 		..()
@@ -433,13 +435,16 @@
 				if (O.linked_hat != null)
 					O.linked_hat.set_loc(get_turf(O))
 				else
-					new /obj/item/clothing/head/det_hat/gadget(get_turf(O))
+					var/obj/item/clothing/head/det_hat/gadget/gadgethat = new /obj/item/clothing/head/det_hat/gadget(get_turf(O))
+					if (O.is_inspector)
+						gadgethat.make_inspector()
 				boutput(M, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
 				qdel(O)
 				qdel(src)
 			else
 				new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(S))
 				boutput(M, "You stuff the goggles back into the hat. It powers down with a low whirr.")
+				S.drop_item()
 				qdel(S)
 				qdel(src)
 		else
@@ -489,9 +494,12 @@
 		..()
 		if (slot == SLOT_GLASSES)
 			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(user)
+			if (src.health_scan)
+				APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
 
 	unequipped(var/mob/user)
 		if(src.equipped_in_slot == SLOT_GLASSES)
+			REMOVE_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
 			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(user)
 		..()
 
@@ -503,9 +511,12 @@
 			else
 				src.scan_upgrade = 1
 				src.health_scan = 1
+				var/mob/living/carbon/human/human_user = user
+				if (istype(human_user) && human_user.glasses == src)
+					APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
 				src.icon_state = "prodocs-upgraded"
 				boutput(user, "<span class='notice'>Health scan upgrade installed.</span>")
-				playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
+				playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 				user.u_equip(W)
 				qdel(W)
 				return
@@ -630,6 +641,7 @@
 	color_r = 0.5
 	color_g = 1
 	color_b = 0.5
+	wear_layer = MOB_GLASSES_LAYER2
 
 	equipped(mob/user, slot)
 		. = ..()
@@ -650,6 +662,33 @@
 				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 
+	sechud
+		name = "night vision sechud goggles"
+		icon_state = "nightvisionsechud"
+		mats = 12
+		desc = "Goggles with separate built-in image-intensifier tubes to allow vision in the dark. Keep away from bright lights. This version also has built in SecHUD functionality."
+		color_r = 1
+		color_g = 0.5
+		color_b = 0.5
+
+		equipped(var/mob/user, var/slot)
+			..()
+			if (slot == SLOT_GLASSES)
+				get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(user)
+
+		unequipped(var/mob/user)
+			if(src.equipped_in_slot == SLOT_GLASSES)
+				get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(user)
+			..()
+
+		flashblocking //Admin or gimmick spawn option
+			name = "SUPER night vision sechud goggles"
+			mats = 25 //expensive if someone scans them because I can do what I want
+			desc = "Goggles with separate built-in image-intensifier tubes to allow vision in the dark AND SecHUDs AND with darkened lenses? Wowee!"
+
+			setupProperties()
+				..()
+				setProperty("disorient_resist_eye", 100)
 
 
 /obj/item/clothing/glasses/packetvision
@@ -659,7 +698,7 @@
 	icon_state = "glasses"
 	color = "#a0ffa0"
 	color_r = 0.9
-	color_g = 1.0
+	color_g = 1
 	color_b = 0.9
 
 	equipped(var/mob/user, var/slot)

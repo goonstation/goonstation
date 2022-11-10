@@ -66,7 +66,7 @@
 			if(tank_one && tank_two)
 				var/turf/T = get_turf(src)
 				var/butt = istype(tank_one, /obj/item/clothing/head/butt) || istype(tank_two, /obj/item/clothing/head/butt)
-				logTheThing("bombing", user, null, "made a transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
+				logTheThing(LOG_BOMBING, user, "made a transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
 				message_admins("[key_name(user)] made a transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
 
 			UpdateIcon()
@@ -93,7 +93,7 @@
 					extra = "n <font color='red'>active</font>"
 
 
-			logTheThing("bombing", user, null, "made a bomb using a[extra] [item.name] and a transfer valve.")
+			logTheThing(LOG_BOMBING, user, "made a bomb using a[extra] [item.name] and a transfer valve.")
 			message_admins("[key_name(user)] made a bomb using a[extra] [item.name] and a transfer valve.")
 			*/
 			attacher = user
@@ -153,11 +153,11 @@
 			if(href_list["open"])
 				if (valve_open)
 					var/turf/bombturf = get_turf(src)
-					logTheThing("bombing", usr, null, "closed the valve on a tank transfer valve at [log_loc(bombturf)].")
+					logTheThing(LOG_BOMBING, usr, "closed the valve on a tank transfer valve at [log_loc(bombturf)].")
 					message_admins("[key_name(usr)] closed the valve on a tank transfer valve at [log_loc(bombturf)].")
 				else
 					var/turf/bombturf = get_turf(src)
-					logTheThing("bombing", usr, null, "opened the valve on a tank transfer valve at [log_loc(bombturf)].")
+					logTheThing(LOG_BOMBING, usr, "opened the valve on a tank transfer valve at [log_loc(bombturf)].")
 					message_admins("[key_name(usr)] opened the valve on a tank transfer valve at [log_loc(bombturf)].")
 				toggle_valve()
 			if(href_list["rem_device"])
@@ -186,8 +186,6 @@
 	receive_signal(signal)
 		if(toggle)
 			toggle = 0
-			if (ishellbanned(usr))
-				force_dud = 1
 			toggle_valve()
 			SPAWN(5 SECONDS) // To stop a signal being spammed from a proxy sensor constantly going off or whatever
 				toggle = 1
@@ -295,7 +293,7 @@
 				signalled = FALSE
 			if(valve_open && force_dud)
 				message_admins("A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [key_name(src.fingerprintslast)]")
-				logTheThing("bombing", null, null, "A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+				logTheThing(LOG_BOMBING, null, "A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
 				return
 
 			if(valve_open && (istype(tank_one, /obj/item/clothing/head/butt) || istype(tank_two, /obj/item/clothing/head/butt))) //lol
@@ -315,9 +313,9 @@
 				var/power = min(MIXTURE_PRESSURE(T.air_contents) / TANK_RUPTURE_PRESSURE, 2)
 				DEBUG_MESSAGE("Power: [power]")
 
-				if(power < 0.30) //Really weak
+				if(power < 0.3) //Really weak
 					return
-				else if (power < 0.50)
+				else if (power < 0.5)
 					visible_message("<span class='combat'>\The [src] farts [pick_string("descriptors.txt", "mopey")]</span>")
 					playsound(src, 'sound/voice/farts/poo2.ogg', 30, 2, channel=VOLUME_CHANNEL_EMOTE)
 					return
@@ -350,7 +348,7 @@
 				var/turf/bombturf = get_turf(src)
 				var/area/A = get_area(bombturf)
 				if(!A.dont_log_combat)
-					logTheThing("bombing", null, null, "Bomb valve opened in [log_loc(bombturf)]. Last touched by [src.fingerprintslast]")
+					logTheThing(LOG_BOMBING, null, "Bomb valve opened in [log_loc(bombturf)]. Last touched by [src.fingerprintslast]")
 					message_admins("Bomb valve opened in [log_loc(bombturf)]. Last touched by [src.fingerprintslast]")
 
 				var/datum/gas_mixture/temp
@@ -404,8 +402,8 @@
 		SPAWN(2 SECONDS)
 			if (user)
 				user.suiciding = 0
-				if(isalive(user) && src && get_dist(user,src) <= 7)
-					user.visible_message("<span class='alert'>[user] stares at the [src.name], a confused expression on \his face.</span>") //It didn't blow up!
+				if(isalive(user) && src && GET_DIST(user,src) <= 7)
+					user.visible_message("<span class='alert'>[user] stares at the [src.name], a confused expression on [his_or_her(user)] face.</span>") //It didn't blow up!
 		return 1
 
 /obj/item/device/transfer_valve/briefcase

@@ -24,7 +24,7 @@
 			boutput(M, "<span class='alert'>Why would you want to stun yourself?</span>")
 			return 1
 
-		if (get_dist(M, target) > src.max_range)
+		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
@@ -53,7 +53,7 @@
 		if (isliving(target))
 			target:was_harmed(M, special = "vamp")
 
-		logTheThing("combat", M, target, "uses hypnotise on [target ? "[constructTarget(target,"combat")]" : "*UNKNOWN*"] at [log_loc(M)].") // Target might have been gibbed, who knows.
+		logTheThing(LOG_COMBAT, M, "uses hypnotise on [target ? "[constructTarget(target,"combat")]" : "*UNKNOWN*"] at [log_loc(M)].") // Target might have been gibbed, who knows.
 		return 1
 
 
@@ -80,14 +80,14 @@
 
 	onUpdate()
 		..()
-		if(hypno == null || get_dist(M, target) > hypno.max_range || M == null || target == null)
+		if(hypno == null || GET_DIST(M, target) > hypno.max_range || M == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			boutput(M, "<span class='alert'>Your attempt to hypnotize the target was interrupted!</span>")
 			return
 
 	onStart()
 		..()
-		if(hypno == null || get_dist(M, target) > hypno.max_range || M == null || target == null)
+		if(hypno == null || GET_DIST(M, target) > hypno.max_range || M == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			boutput(M, "<span class='alert'>Your attempt to hypnotize the target was interrupted!</span>")
 			return

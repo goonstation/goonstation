@@ -48,6 +48,7 @@
 	stamina_cost = 0
 	stamina_crit_chance = 0
 
+	pixel_point = TRUE
 
 	New()
 		..()
@@ -90,9 +91,9 @@
 			// so you can tell if scrimblo made a cool scene and then dogshit2000 put obscenities on top or whatever.
 			artists[ckey(user.ckey)]++
 
-			playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 40, 1)
+			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 40, 1)
 			user.visible_message("[user] paints over \the [src] with \the [W].", "You paint over \the [src] with \the [W].")
-			logTheThing("station", user, null, "coated [src] in paint: [log_loc(src)]: canvas{\ref[src], -1, -1, [P.paint_color]}")
+			logTheThing(LOG_STATION, user, "coated [src] in paint: [log_loc(src)]: canvas{\ref[src], -1, -1, [P.paint_color]}")
 
 			// send the damn icon and gently nudge the page into refreshing it
 			send_the_damn_icon(user)
@@ -151,7 +152,7 @@
 		// so you can tell if scrimblo made a cool scene and then dogshit2000 put obscenities on top or whatever.
 		artists[ckey(usr.ckey)]++
 		pixel_artists[pixel_id] = usr.ckey
-		logTheThing("station", usr, null, "draws on [src]: [log_loc(src)]: canvas{\ref[src], [x], [y], [dot_color]}")
+		logTheThing(LOG_STATION, usr, "draws on [src]: [log_loc(src)]: canvas{\ref[src], [x], [y], [dot_color]}")
 
 
 
@@ -444,3 +445,26 @@
 // of copyright/license or otherwise.
 // I didn't look at anything about how bee's worked except
 // seeing the ui, sort of.
+
+#ifndef SECRETS_ENABLED
+/obj/decal/exhibit
+	name = "empty exhibit"
+	desc = "An empty exhibit in desperate need of art."
+	layer = OBJ_LAYER
+	plane = PLANE_DEFAULT
+	icon = 'icons/obj/canvas.dmi'
+	icon_state = "28x22_base"
+	/// unqiue id's set in map
+	var/exhibit_id = "ex_0"
+	/// cost to purchase this exhibit space
+	var/spacebux_cost = 0
+
+	lowend
+		spacebux_cost = 5000
+	midrange
+		spacebux_cost = 10000
+	highend
+		spacebux_cost = 25000
+	premium
+		spacebux_cost = 50000
+#endif

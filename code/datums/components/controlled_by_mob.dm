@@ -10,8 +10,10 @@
 		. = ..()
 		return movement_controller
 
-	handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
-		return new/datum/gas_mixture{oxygen = 2; temperature = T20C}()
+	handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
+		var/datum/gas_mixture/GM =  new/datum/gas_mixture{oxygen = 2; temperature = T20C}()
+		GM.oxygen *= mult
+		return GM
 
 TYPEINFO(/datum/component/controlled_by_mob)
 	initialization_args = list(

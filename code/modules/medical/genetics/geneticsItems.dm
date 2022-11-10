@@ -22,7 +22,7 @@
 			user.visible_message("<span class='alert'><b>[user.name] injects [himself_or_herself(user)] with [src]!</b></span>")
 			src.injected(user,user)
 		else
-			logTheThing("combat", user, M, "tries to inject [constructTarget(M,"combat")] with [src.name] at [log_loc(user)]")
+			logTheThing(LOG_COMBAT, user, "tries to inject [constructTarget(M,"combat")] with [src.name] at [log_loc(user)]")
 			actions.start(new/datum/action/bar/icon/genetics_injector(M,src), user)
 
 	proc/injected(var/mob/living/carbon/user,var/mob/living/carbon/target)
@@ -30,7 +30,7 @@
 			return 1
 		if(!istype(target.bioHolder))
 			return 1
-		logTheThing("combat", user, target, "injects [constructTarget(target,"combat")] with [src.name] at [log_loc(user)]")
+		logTheThing(LOG_COMBAT, user, "injects [constructTarget(target,"combat")] with [src.name] at [log_loc(user)]")
 		return 0
 
 	proc/update_appearance()
@@ -132,8 +132,9 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 	flags = FPRINT | TABLEPASS | CONDUCT
+	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
-	hide_attack = 1
+	hide_attack = ATTACK_FULLY_HIDDEN
 	var/obj/item/genetics_injector/dna_injector/payload = null
 
 	attack_self(var/mob/user as mob)
@@ -168,7 +169,7 @@
 			return
 		if (payload)
 			boutput(user, "<span class='alert'>You stab [M], injecting them.</span>")
-			logTheThing("combat", user, M, "stabs [constructTarget(M,"combat")] with the speed injector (<b>Payload:</b> [payload.name]).")
+			logTheThing(LOG_COMBAT, user, "stabs [constructTarget(M,"combat")] with the speed injector (<b>Payload:</b> [payload.name]).")
 			payload.injected(user,M)
 			qdel(payload)
 			payload = null
@@ -216,7 +217,7 @@
 				return
 
 		else
-			logTheThing("combat", user, M, "injects [constructTarget(M,"combat")] with [src.name] at [log_loc(user)]")
+			logTheThing(LOG_COMBAT, user, "injects [constructTarget(M,"combat")] with [src.name] at [log_loc(user)]")
 
 			if(use_mode == SCRAMBLER_MODE_COPY)
 				src.copy_identity(user,M)

@@ -337,6 +337,7 @@ img.emoji {
 .combat {color: #ff0000;}
 .say {}
 .sing {color: #B87AB8;}
+.robotsing {color: #7EBAB5;}
 .blobsay {color: white; background-color: #226622;}
 .bugsay {color: #EA5D17;}
 .deadsay {color: #5c00e6;}
@@ -350,7 +351,8 @@ img.emoji {
 .flocksay {color: #488276;}
 .flocksay a {color: #488276;}
 .flocksay a:visited {color: #488276;}
-.flockmindsay {color: #66ad9e; font-size: 120%;}
+.flocksay.sentient {color:white; background-color:#66ad9e;}
+.flocksay.sentient.flockmind {font-size: 120%;}
 .flocknpc {color: #869995; font-size: 80%;}
 .flocksay.ping {font-style: italic;}
 .ghostdronesay {color: #d81aef;}
@@ -363,6 +365,7 @@ h1.alert, h2.alert {color: #000000;}
 .adminHearing .name[data-ctx] {border-bottom: 1px dotted black;}
 .blobalert {color: #4c00ff; font-size: 1.5em; font-weight: bold;}
 .lawupdate {color: #6464ff}
+.monospace {font-family: monospace;}
 
 .rstandard {color: #008000;}
 .rintercom {color: #006080;}
@@ -480,6 +483,7 @@ body.theme-dark .gfartlooc {color: #92cbdf;}
 body.theme-dark .gfartadmin {color: #c2953c;}
 body.theme-dark .combat {color: #e20000;}
 body.theme-dark .sing {color: #D8BFD8;}
+body.theme-dark .robotsing {color: #E0FFFF;}
 body.theme-dark .blobsay {color: #111; background-color: #4ec44e;}
 body.theme-dark .bugsay {color: #EA5D17;}
 body.theme-dark .deadsay {color: #b27eff;}
@@ -492,7 +496,8 @@ body.theme-dark .martianimperial {color: #e26794;}
 body.theme-dark .flocksay {color: #6fbbac;}
 body.theme-dark .flocksay a {color: #6dc0af;}
 body.theme-dark .flocksay a:visited {color: #6ec2b1;}
-body.theme-dark .flockmindsay {color: #82dbc8;}
+body.theme-dark .flocksay.sentient {color: #111; background-color:#82dbc8;}
+body.theme-dark .flocksay.sentient.flockmind {font-size: 120%;}
 body.theme-dark .flocknpc {color: #afc9c3;}
 body.theme-dark .ghostdronesay {color: #ca4ed8;}
 body.theme-dark .roboticsay {color: #111; background-color: #c4c3c3;}

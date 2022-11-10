@@ -5,17 +5,19 @@
 	targeted = 1
 	cooldown = 100
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	offensive = 1
 	sticky = 1
-	voice_grim = "sound/voice/wizard/BlindGrim.ogg"
-	voice_fem = "sound/voice/wizard/BlindFem.ogg"
-	voice_other = "sound/voice/wizard/BlindLoud.ogg"
+	voice_grim = 'sound/voice/wizard/BlindGrim.ogg'
+	voice_fem = 'sound/voice/wizard/BlindFem.ogg'
+	voice_other = 'sound/voice/wizard/BlindLoud.ogg'
+	maptext_colors = list("#ffffff", "#9c9fa2", "#585c68")
 
 	cast(mob/target)
 		if(!holder)
 			return
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("YSTIGG MITAZIM")
+			holder.owner.say("YSTIGG MITAZIM", FALSE, maptext_style, maptext_colors)
 		..()
 
 		elecflash(target)

@@ -26,7 +26,7 @@
 			boutput(M, "<span class='alert'>Why would you want to wrestle yourself?</span>")
 			return 1
 
-		if (get_dist(M, target) > src.max_range)
+		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 		if(check_target_immunity( target ))
@@ -49,7 +49,7 @@
 					M.set_loc(T)
 
 			M.visible_message("<span class='alert'><b>[M] [pick_string("wrestling_belt.txt", "strike")] [target]!</b></span>")
-			playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+			playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 
 			if (!fake)
 				random_brute_damage(target, 15, 1)
@@ -58,7 +58,7 @@
 				target.force_laydown_standup()
 				target.change_misstep_chance(25)
 
-			logTheThing("combat", M, target, "uses the [fake ? "fake " : ""]strike wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
+			logTheThing(LOG_COMBAT, M, "uses the [fake ? "fake " : ""]strike wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
 
 		else
 			boutput(M, "<span class='alert'>You can't wrestle the target here!</span>")

@@ -176,8 +176,8 @@ var/list/dangerousVerbs = list(\
 			C.verbs += /client/proc/enableDrunkMode
 
 		var/logMessage = (forced ? "was forced out of drunk-mode by [key_name(src)]" : "has disabled drunk-mode for themselves")
-		logTheThing("admin", C, null, logMessage)
-		logTheThing("diary", C, null, logMessage, "admin")
+		logTheThing(LOG_ADMIN, C, logMessage)
+		logTheThing(LOG_DIARY, C, logMessage, "admin")
 		message_admins("[key_name(C)] [logMessage]")
 
 	else
@@ -193,8 +193,8 @@ var/list/dangerousVerbs = list(\
 			C.verbs += /client/proc/disableDrunkMode
 
 		var/logMessage = (forced ? "was forced into drunk-mode by [key_name(src)]" : "has enabled drunk-mode for themselves")
-		logTheThing("admin", C, null, logMessage)
-		logTheThing("diary", C, null, logMessage, "admin")
+		logTheThing(LOG_ADMIN, C, logMessage)
+		logTheThing(LOG_DIARY, C, logMessage, "admin")
 		message_admins("[key_name(C)] [logMessage]")
 
 		if (!is_actually_high)

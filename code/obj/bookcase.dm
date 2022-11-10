@@ -60,7 +60,7 @@
 			boutput(user, "\The [src] is too full!")
 			return
 
-	else if (istype(W, /obj/item/wrench))
+	else if (iswrenchingtool(W))
 		if (length(src.bookshelf_contents) > 0)
 			boutput(user, "You can't take apart \the [src] if there's still books on it.")
 			return
@@ -87,7 +87,7 @@
 		boutput(user, "There's nothing to take off the shelf!")
 
 /obj/bookshelf/proc/deconstruct()
-	playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	var/obj/parts = new /obj/item/furniture_parts/bookshelf
 	parts.set_loc(src.loc)
 	qdel(src)

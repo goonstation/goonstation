@@ -1,0 +1,176 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/grille/catwalk/jen/side{
+	dir = 6
+	},
+/obj/item/device/light/flashlight,
+/obj/cable{
+	icon_state = "1-6"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"c" = (
+/obj/machinery/door/airlock/pyro/external{
+	aiControlDisabled = 1;
+	ai_no_access = 1;
+	name = "Repair Bay"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"d" = (
+/obj/grille/catwalk/jen/side{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"f" = (
+/obj/grille/catwalk/jen/side{
+	dir = 9
+	},
+/obj/item/reagent_containers/glass/oilcan{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"g" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/dmm_suite/clear_area)
+"k" = (
+/obj/grille/catwalk/jen/side{
+	dir = 4
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"l" = (
+/obj/grille/catwalk/jen/side{
+	dir = 5
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"p" = (
+/obj/grille/catwalk/jen/side{
+	dir = 9
+	},
+/obj/cable{
+	icon_state = "2-9"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"s" = (
+/obj/item/screwdriver{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/crowbar/red{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/item/wirecutters{
+	pixel_x = 3;
+	pixel_y = -4
+	},
+/obj/grille/catwalk/jen/side{
+	dir = 6
+	},
+/obj/machinery/light/small/sticky/harsh{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"t" = (
+/obj/decal/cleanable/oil/streak,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"v" = (
+/obj/decal/cleanable/rust/jen,
+/obj/item/cable_coil/cut/small{
+	pixel_x = 14;
+	pixel_y = 10
+	},
+/obj/item/paper{
+	name = "Airlock Maint. Report";
+	info = "<center><h2>NT-Standard Station-Grade Airlock</h2></center><h3>Maintenance Review Report</h3><ul style='list-style-type:disc'><li>One Main Power Wire, Functional</li><li>Three Backup Power Wires, One Replaced</li><li>One Built-In ID Scanner compatible with NT ID Cards, Functional</li><li>One Hardwired Immediate Open Wire Compatible with Remote Signals, Tested and Working</li><li>One Station-Grade Powered Bolt System effective for Lockdowns, Re-Lubricated and Functional</li><li>One Built-In Silicon Interface Device, Replaced and Requires Reconnection</li><li>One Safety Sensor, Functional</li></ul>"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"D" = (
+/obj/grille/catwalk/jen/side{
+	dir = 5
+	},
+/obj/item/device/radio/signaler{
+	pixel_x = 9;
+	pixel_y = -5
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"J" = (
+/obj/grille/catwalk/jen/side{
+	dir = 10
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"M" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/dmm_suite/clear_area)
+"N" = (
+/obj/grille/catwalk/jen/side{
+	dir = 10
+	},
+/obj/machinery/light/small/sticky/harsh{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+p
+d
+J
+"}
+(2,1,1) = {"
+D
+M
+s
+"}
+(3,1,1) = {"
+t
+c
+v
+"}
+(4,1,1) = {"
+f
+g
+N
+"}
+(5,1,1) = {"
+l
+k
+a
+"}

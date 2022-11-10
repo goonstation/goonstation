@@ -20,6 +20,8 @@
 	var/restrain_wearer = 0
 	var/bloodoverlayimage = 0
 	var/team_num
+	/// Used for the toggle_hood component, should be the same as the default icon_state so it can get updated with medal rewards.
+	var/coat_style = null
 
 
 	setupProperties()
@@ -221,15 +223,18 @@
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.005
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 15)
 		setProperty("heatprot", 15)
 		setProperty("viralprot", 50)
+		setProperty("chemprot", 60)
 		setProperty("meleeprot", 2)
 		setProperty("rangedprot", 0.5)
+		setProperty("movespeed", 0.3)
+		setProperty("disorient_resist", 15)
 
 /obj/item/clothing/suit/bio_suit/attackby(obj/item/W, mob/user)
 	var/turf/T = user.loc
@@ -253,28 +258,34 @@
 	desc = "A protective padded suit for emergency response personnel. Offers limited thermal and biological protection."
 	icon_state = "paramedic"
 	item_state = "paramedic"
-
-	permeability_coefficient = 0.1
 	body_parts_covered = TORSO|LEGS|ARMS
-
+	hides_from_examine = C_UNIFORM|C_SHOES
 	protective_temperature = 3000
+#ifdef MAP_OVERRIDE_NADIR
+	c_flags = SPACEWEAR
+	acid_survival_time = 5 MINUTES
+#endif
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 25)
 		setProperty("heatprot", 25)
+		setProperty("chemprot", 30)
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.9)
+		delProperty("movespeed")
+		delProperty("disorient_resist")
 
 /obj/item/clothing/suit/bio_suit/armored
 	name = "armored bio suit"
-	desc = "A suit that protects against biological contamination. Somebody slapped some armor onto the chest."
+	desc = "A suit that protects against biological contamination. Somebody slapped some bulky armor onto the chest."
 	icon_state = "armorbio"
 	item_state = "armorbio"
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
 		setProperty("rangedprot", 1)
+		setProperty("movespeed", 0.45)
 
 /obj/item/clothing/suit/bio_suit/armored/nt
 	name = "\improper NT bio suit"
@@ -285,6 +296,7 @@
 		..()
 		setProperty("meleeprot", 5)
 		setProperty("rangedprot", 1)
+		delProperty("movespeed")
 
 /obj/item/clothing/suit/bio_suit/paramedic/armored
 	name = "armored paramedic suit"
@@ -318,6 +330,7 @@
 	item_state = "hev"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 
 	setupProperties()
 		..()
@@ -336,7 +349,7 @@
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.02
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 
 	New()
 		. = ..()
@@ -344,10 +357,11 @@
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.45)
+		setProperty("movespeed", 0.3)
 		setProperty("radprot", 50)
 		setProperty("coldprot", 15)
 		setProperty("heatprot", 15)
+		setProperty("chemprot", 25)
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
 		setProperty("disorient_resist", 15)
@@ -390,12 +404,31 @@
 		setProperty("rangedprot", 0.7)
 		setProperty("coldprot", 35)
 
+/obj/item/clothing/suit/hopjacket
+	name = "Head of Personnel's jacket"
+	desc = "A tacky green and red jacket for a tacky green bureaucrat."
+	icon_state = "hopjacket"
+	uses_multiple_icon_states = TRUE
+	item_state = "hopjacket"
+	coat_style = "hopjacket"
+	bloodoverlayimage = SUITBLOOD_COAT
+
+	setupProperties()
+		..()
+		setProperty("rangedprot", 0.5)
+
+
+	New()
+		..()
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = TRUE)
+
 /obj/item/clothing/suit/judgerobe
 	name = "judge's robe"
 	desc = "This robe commands authority."
 	icon_state = "judge"
 	item_state = "judge"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM
 
 /obj/item/clothing/suit/chef
 	name = "chef's coat"
@@ -414,7 +447,11 @@
 	icon_state = "sousapron"
 	item_state = "sousapron"
 	body_parts_covered = TORSO
-	permeability_coefficient = 0.70
+
+	setupProperties()
+		..()
+		setProperty("chemprot", 10)
+
 
 /obj/item/clothing/suit/apron/tricolor
 	name = "pizza apron"
@@ -422,7 +459,6 @@
 	icon_state = "triapron"
 	item_state = "triapron"
 	body_parts_covered = TORSO
-	permeability_coefficient = 0.70
 
 /obj/item/clothing/suit/apron/botanist
 	name = "blue apron"
@@ -475,44 +511,19 @@
 	icon_state = "labcoat"
 	uses_multiple_icon_states = 1
 	item_state = "labcoat"
-	var/coat_style = "labcoat"
+	coat_style = "labcoat"
 	body_parts_covered = TORSO|ARMS
-	permeability_coefficient = 0.25
-	var/buttoned = TRUE
 	bloodoverlayimage = SUITBLOOD_COAT
-
-	abilities = list(/obj/ability_button/labcoat_toggle)
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 15)
 		setProperty("heatprot", 15)
+		setProperty("chemprot", 25)
 
 	New()
 		..()
-
-	attack_self()
-		..()
-		if (buttoned)
-			src.unbutton()
-		else
-			src.button()
-
-	proc/button()
-		if (src.coat_style)
-			src.icon_state = src.coat_style
-			usr.set_clothing_icon_dirty()
-		usr.visible_message("[usr] buttons [his_or_her(usr)] [src.name].",\
-		"You button your [src.name].")
-		src.buttoned = TRUE
-
-	proc/unbutton()
-		if (src.coat_style)
-			src.icon_state = "[src.coat_style]_o"
-			usr.set_clothing_icon_dirty()
-		usr.visible_message("[usr] unbuttons [his_or_her(usr)] [src.name].",\
-		"You unbutton your [src.name].")
-		src.buttoned = FALSE
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = TRUE)
 
 
 /obj/item/clothing/suit/labcoat/genetics
@@ -547,9 +558,21 @@
 	coat_style = "MDlabcoat"
 
 	april_fools
+		desc = "A protective laboratory coat with the blue markings of a Medical Doctor."
 		icon_state = "MDlabcoat-alt"
 		item_state = "MDlabcoat-alt"
 		coat_style = "MDlabcoat-alt"
+
+	cool
+		icon_state = "MDlabcoat-cool"
+		coat_style = "MDlabcoat-cool"
+
+/obj/item/clothing/suit/labcoat/medical_director
+	name = "medical director's labcoat"
+	desc = "The Medical Directors personal labcoat, its creation was commisioned and designed by the director themself."
+	icon_state = "MDlonglabcoat"
+	item_state = "MDlonglabcoat"
+	coat_style = "MDlonglabcoat"
 
 /obj/item/clothing/suit/labcoat/pathology
 	name = "pathologist's labcoat"
@@ -589,6 +612,7 @@
 	item_state = "straight_jacket"
 	body_parts_covered = TORSO|LEGS|ARMS
 	restrain_wearer = TRUE
+	hides_from_examine = C_UNIFORM
 
 	setupProperties()
 		..()
@@ -622,6 +646,7 @@
 	throw_speed = 2
 	throw_range = 10
 	c_flags = COVERSEYES | COVERSMOUTH
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_GLASSES|C_EARS
 	body_parts_covered = TORSO|ARMS
 	see_face = FALSE
 	over_hair = TRUE
@@ -678,18 +703,7 @@
 				src.layer = EFFECTS_LAYER_BASE-1
 				return
 			if ("Rip up")
-				boutput(user, "You begin ripping up [src].")
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				else
-					for (var/i=3, i>0, i--)
-						var/obj/item/material_piece/cloth/cottonfabric/CF = new /obj/item/material_piece/cloth/cottonfabric
-						CF.set_loc(get_turf(src))
-					boutput(user, "You rip up [src].")
-					user.u_equip(src)
-					qdel(src)
-					return
+				try_rip_up(user)
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cable_coil))
@@ -717,19 +731,19 @@
 					else
 						for (var/i=3, i>0, i--)
 							new /obj/item/bandage(get_turf(src))
-						playsound(src.loc, "sound/items/Scissor.ogg", 100, 1)
+						playsound(src.loc, 'sound/items/Scissor.ogg', 100, 1)
 						boutput(user, "You cut [src] into bandages.")
 						user.u_equip(src)
 						qdel(src)
 						return
 				if ("Cut cable")
 					src.cut_cape()
-					playsound(src.loc, "sound/items/Scissor.ogg", 100, 1)
+					playsound(src.loc, 'sound/items/Scissor.ogg', 100, 1)
 					boutput(user, "You cut the cable that's tying the bedsheet into a cape.")
 					return
 				if ("Cut eyeholes")
 					src.cut_eyeholes()
-					playsound(src.loc, "sound/items/Scissor.ogg", 100, 1)
+					playsound(src.loc, 'sound/items/Scissor.ogg', 100, 1)
 					boutput(user, "You cut eyeholes in the bedsheet.")
 					return
 		else
@@ -915,28 +929,30 @@
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	icon_state = "fire"
 	item_state = "fire_suit"
-	permeability_coefficient = 0.50
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_SHOES
 	protective_temperature = 4500
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 20)
 		setProperty("heatprot", 45)
+		setProperty("chemprot", 10)
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
-		setProperty("movespeed", 1)
+		setProperty("movespeed", 0.6)
 		setProperty("disorient_resist", 15)
 
 /obj/item/clothing/suit/fire/armored
 	name = "armored firesuit"
-	desc = "A suit that protects against fire and heat. Somebody slapped some armor onto the chest."
+	desc = "A suit that protects against fire and heat. Somebody slapped some bulky armor onto the chest."
 	icon_state = "fire_armor"
 	item_state = "fire_suit"
 	setupProperties()
 		..()
 		setProperty("meleeprot", 6)
 		setProperty("rangedprot", 1)
+		setProperty("movespeed", 1)
 
 /obj/item/clothing/suit/fire/attackby(obj/item/W, mob/user)
 	var/turf/T = user.loc
@@ -954,6 +970,7 @@
 	desc = "A suit that protects against extreme fire and heat."
 	icon_state = "thermal"
 	item_state = "thermal"
+	hides_from_examine = C_UNIFORM|C_SHOES|C_GLOVES
 
 	protective_temperature = 100000
 
@@ -963,7 +980,7 @@
 		setProperty("heatprot", 65)
 		setProperty("meleeprot", 4)
 		setProperty("rangedprot", 0.8)
-		setProperty("movespeed", 2)
+		setProperty("movespeed", 1.5)
 		setProperty("disorient_resist", 25)
 
 // SWEATERS
@@ -1042,9 +1059,9 @@
 	item_state = "s_suit"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_SHOES|C_GLOVES
 	duration_remove = 6 SECONDS
 	duration_put = 6 SECONDS
-	permeability_coefficient = 0.1
 	protective_temperature = 1000
 
 	New()
@@ -1059,10 +1076,11 @@
 		setProperty("coldprot", 50)
 		setProperty("heatprot", 20)
 		setProperty("viralprot", 50)
+		setProperty("chemprot", 30)
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
-
 		setProperty("space_movespeed", 0.6)
+		setProperty("radprot", 10)
 
 /obj/item/clothing/suit/space/emerg
 	name = "emergency suit"
@@ -1072,6 +1090,7 @@
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
 	var/rip = 0
+	acid_survival_time = 3 MINUTES
 
 	setupProperties()
 		..()
@@ -1095,8 +1114,15 @@
 		icon_state = "spacecap-red"
 		item_state = "spacecap-red"
 
+/obj/item/clothing/suit/space/syndicate_worn
+	name = "worn syndicate space suit"
+	icon_state = "syndicate"
+	item_state = "space_suit_syndicate"
+	desc = "A suit that protects against low pressure environments. Issued to syndicate operatives. Looks like this one has seen better days."
+	contraband = 3
+
 /obj/item/clothing/suit/space/syndicate
-	name = "red space suit"
+	name = "syndicate space suit"
 	icon_state = "syndicate"
 	item_state = "space_suit_syndicate"
 	desc = "A suit that protects against low pressure environments. Issued to syndicate operatives."
@@ -1107,6 +1133,7 @@
 	New()
 		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		setProperty("heatprot", 35)
 
 	#ifdef MAP_OVERRIDE_POD_WARS
 	attack_hand(mob/user)
@@ -1122,6 +1149,7 @@
 
 	setupProperties()
 		..()
+		setProperty("chemprot",60)
 		setProperty("space_movespeed", 0)  // syndicate space suits don't suffer from slowdown
 
 	disposing()
@@ -1133,6 +1161,7 @@
 		icon_state = "commissar_greatcoat"
 		desc = "A fear-inspiring, black-leather great coat, typically worn by a Syndicate Nuclear Operative Commander. So scary even the vacuum of space doesn't dare claim the wearer."
 		team_num = TEAM_SYNDICATE
+		hides_from_examine = C_UNIFORM|C_SHOES
 		#ifdef MAP_OVERRIDE_POD_WARS
 		attack_hand(mob/user)
 			if (get_pod_wars_team_num(user) == team_num)
@@ -1161,7 +1190,7 @@
 			..()
 			setProperty("meleeprot", 6)
 			setProperty("rangedprot", 1)
-			setProperty("exploprot", 30)
+			setProperty("exploprot", 40)
 			setProperty("space_movespeed", 0.9)
 			setProperty("disorient_resist", 65)
 
@@ -1173,7 +1202,7 @@
 
 		setupProperties()
 			..()
-			setProperty("exploprot", 20)
+			setProperty("exploprot", 30)
 			setProperty("meleeprot", 4)
 			setProperty("rangedprot", 1.5)
 
@@ -1184,7 +1213,6 @@
 			item_state = "syndie_specialist-medic"
 
 			body_parts_covered = TORSO|LEGS|ARMS
-			permeability_coefficient = 0.01
 
 			setupProperties()
 				..()
@@ -1240,9 +1268,10 @@
 
 /obj/item/clothing/suit/space/ntso
 	name = "NT pressure suit"
-	desc = "A Nanotrasen paramilitary space suit, with an integrated chest rig."
+	desc = "A specialised Nanotrasen space suit, with an integrated chest rig."
 	icon_state = "ntso_specialist"
 	item_state = "ntso_specialist"
+	acid_survival_time = 6 MINUTES
 
 	setupProperties()
 		..()
@@ -1270,51 +1299,27 @@
 	item_state = "spacemat"
 	name = "bespoke space suit"
 	desc = "A custom built suit that protects your fragile body from hard vacuum."
-	var/datum/material/renf=null
-	var/prot = 0 //tired of this being initalized in the setup code so it gets a special place now
 
-	proc/setupReinforcement(var/datum/material/R) // passes the reinforcement variable, sets up protection
-		renf = R
-		if (src.material && renf)
-			if (src.material.hasProperty("thermal"))
-				var/prot = 100 - src.material.getProperty("thermal")
-				setProperty("coldprot", prot)
-				setProperty("heatprot", round(prot/2))
-			else
-				setProperty("coldprot", 30)
-				setProperty("heatprot", 15)
+	onMaterialChanged()
+		. = ..()
+		if (istype(src.material))
+			var/prot = max(0, (5 - src.material.getProperty("thermal")) * 10)
+			setProperty("coldprot", 10+prot)
+			setProperty("heatprot", 2+round(prot/2))
 
-			if (src.material.hasProperty("permeable"))
-				var/permprot = 100 - src.material.getProperty("permeable")
-				setProperty("viralprot", permprot)
-			else
-				setProperty("viralprot", 40)
+			prot =  clamp(((src.material.getProperty("chemical") - 4) * 15), 0, 70) // 30 would be default for metal.
+			setProperty("chemprot", prot)
+		return
 
-			if(src.material.hasProperty("density"))
-				prot = round(src.material.getProperty("density") / 13)// for RANGED
-				setProperty("rangedprot", (0.2 + round(prot/10, 0.1)))
-			else
-				setProperty("rangedprot", 0.4)
 
-			if(renf.hasProperty("density"))
-				prot = round(((renf.getProperty("density") / 20)+2), 0.5)// for MELEE- scaling of protection/density with formula y=(x/20)+2
-				prot = clamp(prot, 2, 6)// it shouldn't be outside these two numbers but just in case
-				setProperty("meleeprot", prot)
+	proc/set_custom_mats(datum/material/fabrMat, datum/material/renfMat)
+		src.setMaterial(fabrMat)
+		name = "[renfMat]-reinforced [fabrMat] bespoke space suit"
+		var/prot = max(0, renfMat.getProperty("density") - 3) / 2
+		setProperty("meleeprot", 3 + prot)
+		setProperty("rangedprot", 0.3 + prot / 5)
+		setProperty("space_movespeed", 0.15 + prot / 5)
 
-				 // for MOVESPEED
-				var/clunk = round((((renf.getProperty("density")/20) /10)+0.3), 0.1) // one-line fuckyou code that scales speed between 0.3 and 0.7
-				clunk = clamp(clunk, 0.3, 0.7) // again, keep it safe
-				setProperty("space_movespeed", clunk)
-
-			else
-				setProperty("meleeprot", 3)
-				setProperty("space_movespeed", 0.6)
-
-	UpdateName()
-		if (src.material && renf)
-			name = "[renf]-reinforced [src.material] bespoke space suit"
-		else if (src.material)
-			name = " [src.material] bespoke space suit"
 // Sealab suits
 
 /obj/item/clothing/suit/space/diving
@@ -1322,6 +1327,7 @@
 	desc = "A diving suit designed to withstand the pressure of working deep undersea."
 	icon_state = "diving_suit"
 	item_state = "diving_suit"
+	acid_survival_time = 8 MINUTES
 
 	setupProperties()
 		..()
@@ -1348,9 +1354,14 @@
 		item_state = "diving_suit-eng"
 
 /obj/item/clothing/suit/space/industrial
+#ifdef MAP_OVERRIDE_NADIR
+	desc = "Armored, immersion-tight suit. Protects from a wide gamut of environmental hazards, including radiation and explosions."
+#else
 	desc = "Very heavy armour for prolonged industrial activity. Protects from radiation and explosions."
+#endif
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
+	acid_survival_time = 8 MINUTES
 
 #ifdef UNDERWATER_MAP
 	name = "industrial diving suit"
@@ -1402,10 +1413,10 @@
 			..()
 
 		specialist
-		name = "specialist heavy operative combat armor"
-		desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
-		icon_state = "syndie_specialist-heavy"
-		item_state = "syndie_specialist-heavy"
+			name = "specialist heavy operative combat armor"
+			desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
+			icon_state = "syndie_specialist-heavy"
+			item_state = "syndie_specialist-heavy"
 
 	ntso
 
@@ -1445,6 +1456,7 @@
 
 		setupProperties()
 			..()
+			setProperty("chemprot",60)
 			setProperty("space_movespeed", 0)  // syndicate space suits don't suffer from slowdown
 
 		commander
@@ -1484,12 +1496,13 @@
 	over_hair = TRUE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.50
+	hides_from_examine = C_UNIFORM
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 20)
 		setProperty("heatprot", 20)
+		setProperty("chemprot", 10)
 
 	cursed
 		cant_drop = TRUE
@@ -1523,8 +1536,12 @@
 	wear_layer = MOB_OVERLAY_BASE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM
 	over_hair = TRUE
-	permeability_coefficient = 0.50
+
+	setupProperties()
+		..()
+		setProperty("chemprot", 10)
 
 /obj/item/clothing/suit/wizrobe
 	name = "blue wizard robe"
@@ -1532,8 +1549,8 @@
 	icon_state = "wizard"
 	item_state = "wizard"
 	magical = TRUE
-	permeability_coefficient = 0.01
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM
 	contraband = 4
 	duration_remove = 10 SECONDS
 
@@ -1541,6 +1558,7 @@
 		..()
 		setProperty("coldprot", 90)
 		setProperty("heatprot", 30)
+		setProperty("chemprot", 40)
 
 /obj/item/clothing/suit/wizrobe/red
 	name = "red wizard robe"
@@ -1664,6 +1682,7 @@
 	icon_state = "witchfinder"
 	item_state = "witchfinder"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM
 
 	setupProperties()
 		..()
@@ -1680,6 +1699,7 @@
 	icon_state = "nursedress"
 	item_state = "nursedress"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM
 
 /obj/item/clothing/suit/chemsuit
 	name = "chemical protection suit"
@@ -1690,7 +1710,11 @@
 	icon_state = "chem_suit"
 	item_state = "chem_suit"
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+
+	setupProperties()
+		..()
+		setProperty("chemprot", 70)
 
 /obj/item/clothing/suit/security_badge
 	name = "Security Badge"
@@ -1743,6 +1767,7 @@
 	icon_state = "snowcoat"
 	item_state = "snowcoat"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_SHOES
 
 	setupProperties()
 		..()
@@ -1760,3 +1785,74 @@
 	icon_state = "jean_jacket"
 	item_state = "jean_jacket"
 	body_parts_covered = TORSO|ARMS
+
+//crate loot
+
+/obj/item/clothing/suit/lined_jacket
+	name = "lined jacket"
+	desc = "A faux-leather jacket with cozy lining."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "lined_jacket"
+	item_state = "lined_jacket"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/rugged_jacket
+	name = "rugged jacket"
+	desc = "A pre-torn jacket for that 'mildly cool' sort of look."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "rugged_jacket"
+	item_state = "rugged_jacket"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/star_cloak
+	name = "starry cloak"
+	desc = "A cloak with an intricate and detailed view of the night sky viewed from space woven into it."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "star_cloak"
+	item_state = "star_cloak"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/cow_jacket
+	name = "cow jacket"
+	desc = "Made of faux-cow."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "cow"
+	item_state = "cow"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/warm_jacket
+	name = "warm jacket"
+	desc = "Warm as in its coloration. It's not actually all that insulative."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "gradient_warm"
+	item_state = "gradient_warm"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/cool_jacket
+	name = "cool jacket"
+	desc = "Cool as in its coloration. It's not actually all that radical."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "gradient_cool"
+	item_state = "gradient_cool"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/billow_cape
+	name = "cape of flowing"
+	desc = "A cape that flutters when worn, even if it's not worn in space-windy conditions."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "billow_cape"
+	item_state = "billow_cape"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/space/replica
+	name = "replica space suit"
+	desc = "A replica of an old space suit. Seems to still work, though."
+	icon_state = "space_replica"
+	item_state = "space_replica"

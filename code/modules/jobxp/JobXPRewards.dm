@@ -54,7 +54,7 @@ mob/verb/checkrewards()
 						if(rewardDatum.claimedNumbers.Find(usr.key) && rewardDatum.claimedNumbers[usr.key] >= rewardDatum.claimPerRound)
 							claimsLeft = 0
 					if(claimsLeft)
-						if(alert("Would you like to claim this reward?",,"Yes","No") == "Yes")
+						if(tgui_alert(usr, "Would you like to claim this reward?", "Claim reward", list("Yes", "No")) == "Yes")
 							if(rewardDatum.claimPerRound > 0)
 								if(rewardDatum.claimedNumbers.Find(usr.key) && rewardDatum.claimedNumbers[usr.key] >= rewardDatum.claimPerRound)
 									return
@@ -257,7 +257,7 @@ mob/verb/checkrewards()
 /datum/jobXpReward/HeadofSecurity/mug
 	name = "Alternate Blue Mug"
 	desc = "It's your favourite coffee mug, but now its text is blue. Wow."
-	required_levels = list("Head of Security"=1)
+	required_levels = list("Head of Security"=0)
 	claimable = 1
 	var/path_to_spawn = /obj/item/reagent_containers/food/drinks/mug/HoS/blue
 
@@ -323,23 +323,6 @@ mob/verb/checkrewards()
 		boutput(C.mob, "<span class='emote'>A pamphlet flutters out.</span>")
 		return
 
-/datum/jobXpReward/head_of_security_LG_old
-	name = "The Antique Lawbringer"
-	desc = "Gain access to a voice activated weapon of the past-future-past by sacrificing your gun of the future-past. I.E. The Lawbringer."
-	required_levels = list("Head of Security"=5)
-	claimable = 1
-	claimPerRound = 1
-
-	activate(var/client/C)
-		var/obj/item/gun/energy/lawbringer/I = C.mob.find_type_in_hand(/obj/item/gun/energy/lawbringer)
-
-		if (I)
-			I.make_antique()
-			boutput(C.mob, "Your Lawbringer becomes a little more antique!")
-		else
-			boutput(C.mob, "You need to be holding your Lawbringer in order to claim this reward.")
-			src.claimedNumbers[usr.key] --
-
 //Captain
 
 /datum/jobXpReward/captainsword
@@ -350,7 +333,7 @@ mob/verb/checkrewards()
 	claimPerRound = 1
 	icon_state = "?"
 	var/sacrifice_path = /obj/item/gun/energy/egun
-	var/reward_path = /obj/item/katana_sheath/captain
+	var/reward_path = /obj/item/swords_sheaths/captain
 	var/sacrifice_name = "E-Gun"
 
 	activate(var/client/C)
@@ -382,7 +365,7 @@ mob/verb/checkrewards()
 			found = 1
 			qdel(K)
 			boutput(C.mob, "Your energy gun morphs into a sword! What the fuck!")
-			var/obj/item/katana_sheath/captain/T = new/obj/item/katana_sheath/captain()
+			var/obj/item/swords_sheaths/captain/T = new/obj/item/swords_sheaths/captain()
 			T.set_loc(get_turf(C.mob))
 			C.mob.put_in_hand(T)
 			return
@@ -402,7 +385,7 @@ mob/verb/checkrewards()
 	claimPerRound = 1
 	icon_state = "?"
 	var/sacrifice_path = /obj/item/gun/kinetic/detectiverevolver
-	var/reward_path = /obj/item/gun/kinetic/colt_saa/detective
+	var/reward_path = /obj/item/gun/kinetic/single_action/colt_saa/detective
 	var/sacrifice_name = ".38 revolver"
 
 	activate(var/client/C)
@@ -425,7 +408,7 @@ mob/verb/checkrewards()
 			src.claimedNumbers[usr.key] --
 			return
 
-		var/obj/item/gun/kinetic/colt_saa/colt = new reward_path()
+		var/obj/item/gun/kinetic/single_action/colt_saa/colt = new reward_path()
 		if (!istype(colt))
 			boutput(C.mob, "Something terribly went wrong. The reward path got screwed up somehow. call 1-800-CODER. But you're a detective! You don't need no stinkin' guns anyway!")
 			src.claimedNumbers[usr.key] --
@@ -544,7 +527,7 @@ mob/verb/checkrewards()
 
 /datum/jobXpReward/clown20
 	name = "Bananna"
-	desc = "Banana, but misspelled!"
+	desc = "Bananna, but misspelled!"
 	required_levels = list("Clown"=20)
 	icon_state = "?"
 	claimable = 1
@@ -559,7 +542,6 @@ mob/verb/checkrewards()
 			banana = new/obj/item/reagent_containers/food/snacks/plant/banana()
 		banana.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(banana)
-		return
 
 /////////////Bartender////////////////
 
@@ -623,6 +605,27 @@ mob/verb/checkrewards()
 		C.mob.put_in_hand(U)
 		boutput(C.mob, "You look down and notice that a whole sushi chef outfit has materialized in your hands! What on earth?")
 		return
+
+/datum/jobXpReward/chefhattall
+    name = "Tall Chef Hat"
+    desc = "Your iconic toque blanche but tall!"
+    required_levels = list("Chef"=2)
+    claimable = 1
+    var/path_to_spawn = /obj/item/clothing/head/chefhattall/
+
+    activate(var/client/C)
+        var/obj/item/clothing/head/chefhat/chefhat = locate(/obj/item/clothing/head/chefhat) in C.mob.contents
+
+        if (istype(chefhat))
+            C.mob.remove_item(chefhat)
+            qdel(chefhat)
+        else
+            boutput(C.mob, "You need to be holding a chef's hat in order to claim this reward")
+            return
+        var/obj/item/I = new path_to_spawn()
+        I.set_loc(get_turf(C.mob))
+        C.mob.put_in_hand_or_drop(I)
+        boutput(C.mob, "Your chef's hat suddenly elongates before your very eyes!")
 
 /////////////Mime////////////////
 

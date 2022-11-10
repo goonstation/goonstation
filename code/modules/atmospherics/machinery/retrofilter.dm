@@ -13,7 +13,7 @@ obj/machinery/atmospherics/retrofilter
 	initialize_directions = SOUTH|NORTH|WEST
 
 	req_access = list(access_engineering_atmos)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
 	var/datum/gas_mixture/air_in
 	var/datum/gas_mixture/air_out1
@@ -28,7 +28,7 @@ obj/machinery/atmospherics/retrofilter
 	var/datum/pipe_network/network_out2
 
 	var/target_pressure = ONE_ATMOSPHERE
-	var/transfer_ratio = 0.80 //Percentage of passing gas to consider for transfer.
+	var/transfer_ratio = 0.8 //Percentage of passing gas to consider for transfer.
 
 	var/filter_mode = 0 //Bitfield determining gases to filter.
 	var/const/MODE_OXYGEN = 1 //Let oxygen through
@@ -384,22 +384,17 @@ obj/machinery/atmospherics/retrofilter
 		return
 
 	network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
-		if(reference == node_out1)
-			if (!isnull(node_out1))
-				network_out1 = new_network
+		if(reference == node_in)
+			network_in = new_network
+
+		else if(reference == node_out1)
+			network_out1 = new_network
 
 		else if(reference == node_out2)
-			//network_out2 = new_network
-			if(!isnull(node_out2))
-				return node_out2.network_expand(new_network, src)
-
-		else if(reference == node_in)
-			//network_in = new_network
-			if (!isnull(node_in))
-				return node_in.network_expand(new_network, src)
+			network_out2 = new_network
 
 		if(new_network.normal_members.Find(src))
-			return 0
+			return FALSE
 
 		new_network.normal_members += src
 

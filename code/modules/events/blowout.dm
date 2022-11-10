@@ -1,16 +1,17 @@
 /datum/random_event/major/blowout
 	name = "Radioactive Blowout"
-	required_elapsed_round_time = 40 MINUTES
 	var/space_color = "#ff4646"
-
+#ifdef RP_MODE
+	required_elapsed_round_time = 40 MINUTES
+#else
+	required_elapsed_round_time = 26.6 MINUTES
+#endif
 	event_effect()
 		..()
 		var/timetoreachsec = rand(1,9)
 		var/timetoreach = rand(30,60)
 		var/actualtime = timetoreach * 10 + timetoreachsec
 
-		for (var/mob/M in mobs)
-			M.flash(3 SECONDS)
 		var/sound/siren = sound('sound/misc/airraid_loop_short.ogg')
 		siren.repeat = TRUE
 		siren.channel = 5
@@ -49,8 +50,6 @@
 			siren.channel = 5
 			siren.volume = 50
 
-			for (var/mob/N in mobs)
-				N.flash(3 SECONDS)
 
 	#ifndef UNDERWATER_MAP
 			for (var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
@@ -73,7 +72,8 @@
 
 			for (var/mob/M in mobs)
 				SPAWN(0)
-					shake_camera(M, 400, 16)
+					if (!inafterlife(M) && !isVRghost(M))
+						shake_camera(M, 400, 6)
 
 			sleep(rand(1.5 MINUTES,2 MINUTES)) // drsingh lowered these by popular request.
 			command_alert("Radiation levels lowering [station_or_ship()]wide. ETA 60 seconds until all areas are safe.", "Anomaly Alert", alert_origin = ALERT_WEATHER)
@@ -96,8 +96,6 @@
 				LAGCHECK(LAG_LOW)
 				S.color = S.space_color
 	#endif
-			for (var/mob/N in mobs)
-				N.flash(3 SECONDS)
 
 			sleep(rand(25 SECONDS,50 SECONDS))
 

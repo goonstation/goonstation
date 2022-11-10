@@ -77,12 +77,12 @@
 			on_wake()
 
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.health -= 200 * explosivevuln
 				if (src.health <= 0)
 					src.CritterDeath()
 				return
-			if(2.0)
+			if(2)
 				src.health -= 75 * explosivevuln
 				if (src.health <= 0)
 					src.CritterDeath()
@@ -170,7 +170,7 @@
 			if ("suffocation")
 				M.take_oxygen_deprivation(damage)
 			if ("radiation")
-				M.changeStatus("radiation", damage SECONDS, 3)
+				M.take_radiation_dose(damage)
 
 	CritterAttack(mob/N)
 		if (!melee)
@@ -322,7 +322,7 @@
 					A.attach(src)
 					abil[i] = A
 				else
-					logTheThing("debug", null, null, "<b>Marquesas/CritterCreator:</b> Cannot deserialize type [T].")
+					logTheThing(LOG_DEBUG, null, "<b>Marquesas/CritterCreator:</b> Cannot deserialize type [T].")
 
 	proc/play_optional_sound(var/sound/sound)
 		if (sound)
@@ -723,7 +723,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			CRASH("Cannot attach event to [CR]: [matchVar] does not exist.")
 		..()
 		if (matchVar && is_percentage)
-			var/mult = threshold / 100.0
+			var/mult = threshold / 100
 			RT = C.vars[matchVar] * mult
 			last_value = C.vars[matchVar]
 		else
@@ -779,7 +779,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			CRASH("Cannot attach event to [CR]: [matchVar] does not exist.")
 		..()
 		if (matchVar && is_percentage)
-			var/mult = threshold / 100.0
+			var/mult = threshold / 100
 			real_threshold = C.vars[matchVar] * mult
 		else if (matchVar)
 			real_threshold = threshold
@@ -808,9 +808,9 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			CRASH("Cannot attach event to [CR]: [matchVar] does not exist.")
 		..()
 		if (matchVar && is_percentage)
-			var/mult = minimum / 100.0
+			var/mult = minimum / 100
 			RM = C.vars[matchVar] * mult
-			mult = maximum / 100.0
+			mult = maximum / 100
 			RX = C.vars[matchVar] * mult
 		else
 			RM = minimum
@@ -935,7 +935,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			event.deserialize(F, "[path].event", sandbox)
 			event.attached = src
 		else
-			logTheThing("debug", "usr", null, "<b>Marquesas/CritterCreator: </b> Failed to deserialize event for ability.")
+			logTheThing(LOG_DEBUG, "usr", "<b>Marquesas/CritterCreator: </b> Failed to deserialize event for ability.")
 
 	proc/attach(var/obj/critter/custom/CR)
 		C = CR
@@ -1038,14 +1038,14 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	use_ability()
 		if (C.target && ismob(C.target))
 			var/mob/M = C.target
-			if (melee && get_dist(C, M) > C.attack_range)
+			if (melee && GET_DIST(C, M) > C.attack_range)
 				return 0
 			C.tokenized_message(critical_text, M)
 			C.play_optional_sound(critical_sound)
 			M.TakeDamageAccountArmor("chest", bonus_damage, 0)
 			return 1
 		else
-			logTheThing("debug", null, null, "<b>Marquesas/CritterCreator: </b> Cannot reagent inject target, target is [C.target].")
+			logTheThing(LOG_DEBUG, null, "<b>Marquesas/CritterCreator: </b> Cannot reagent inject target, target is [C.target].")
 			return 0
 
 	change_configuration(var/datum/critterCreator/configurer, var/which)
@@ -1104,18 +1104,18 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 
 	use_ability()
 		if (!C)
-			logTheThing("debug", null, null, "<b>Marquesas/CritterCreator: </b> Error using ability \ref[src] ([type]). C: \ref[C] [C].")
+			logTheThing(LOG_DEBUG, null, "<b>Marquesas/CritterCreator: </b> Error using ability \ref[src] ([type]). C: \ref[C] [C].")
 			return 0
 		if (C.target && ismob(C.target))
 			var/mob/M = C.target
-			if (melee && get_dist(C, M) > C.attack_range)
+			if (melee && GET_DIST(C, M) > C.attack_range)
 				return 0
 			C.tokenized_message(inject_text, M)
 			C.play_optional_sound(inject_sound)
 			M.reagents.add_reagent(reagent_id, inject_amount)
 			return 1
 		else
-			logTheThing("debug", null, null, "<b>Marquesas/CritterCreator: </b> Cannot reagent inject target, target is [C.target].")
+			logTheThing(LOG_DEBUG, null, "<b>Marquesas/CritterCreator: </b> Cannot reagent inject target, target is [C.target].")
 			return 0
 
 	change_configuration(var/datum/critterCreator/configurer, var/which)
@@ -1657,7 +1657,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	var/static/list/presets = list("Alien" = "alien", "Cat" = "cat1", "Chicken" = "chicken", "Darkness" = "darkness", "Death" = "death", "Floating Eye" = "floateye", "Killer Tomato" = "ktomato" ,\
 "Ice Spider" = "icespider", "Ice Spider Baby" = "babyicespider", "Ice Spider Queen" = "gianticespider", "Lion" = "lion",\
 "Man Eater" = "maneater", "Martian" = "martian", "Martian (psychic)" = "martianP", "Martian (sapper)" = "martianSP", "Martian (soldier)" = "martianS", "Martian (warrior)" = "martianW", "Mouse" = "mouse",\
-"Mutant" = "blobman", "Plasma Spore" = "spore", "Roach" = "roach", "Spider" = "spider", "Town Guard" = "townguard", "TURD" = "TURDS", \
+"Mutant" = "blobman", "Plasma Spore" = "spore", "Roach" = "roach", "Spider" = "spider", "Town Guard" = "townguard", \
 "Weird Thing" = "ancientrobot", "Brullbar" = "brullbar",\
 "Brullbar King" = "brullbarking", "Zombie" = "zombie", "Zombie (science)" = "scizombie", "Zombie (security)" = "seczombie", "cancel" = "cancel")
 	var/static/list/ability_cache = list()

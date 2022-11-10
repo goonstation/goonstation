@@ -8,14 +8,19 @@
 // Fibrenet (functionally a lattice)
 // Barricade (functionally a grille, but flockdrones can pass through it)
 
-////////////////////////////
+//----------------------------
 // TABLE & PARTS
-///////////////////////////
+//----------------------------
+
+TYPEINFO(/obj/table/flock)
+TYPEINFO_NEW(/obj/table/flock)
+	. = ..()
+	smooth_list = typecacheof(/obj/table/flock/auto)
+
 /obj/table/flock
 	name = "humming surface"
 	desc = "A table? An alien supercomputer? Well, it's flat, you can put stuff on it."
 	icon = 'icons/obj/furniture/table_flock.dmi'
-	auto_type = /obj/table/flock/auto
 	parts_type = /obj/item/furniture_parts/table/flock
 	mat_appearances_to_ignore = list("gnesis")
 	mat_changename = FALSE
@@ -23,7 +28,9 @@
 
 /obj/table/flock/New()
 	..()
-	setMaterial(getMaterial("gnesis"))
+	setMaterial(getMaterial("gnesis"), copy = FALSE)
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
+	src.AddComponent(/datum/component/flock_protection, report_attack=FALSE)
 
 /obj/table/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
@@ -31,6 +38,20 @@
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Storage Surface
 		<br><span class='bold'>###=-</span></span>"}
+
+/obj/table/flock/Crossed(atom/movable/mover)
+	. = ..()
+	var/mob/living/critter/flock/drone/drone = mover
+	if(istype(drone) && !drone.floorrunning)
+		animate_flock_passthrough(mover)
+		. = TRUE
+	else if(istype(mover,/mob/living/critter/flock))
+		. = TRUE
+
+/obj/table/flock/Cross(atom/movable/mover)
+	if (istype(mover, /mob/living/critter/flock))
+		return TRUE
+	return ..()
 
 /obj/table/flock/auto
 	auto = TRUE
@@ -46,7 +67,7 @@
 
 /obj/item/furniture_parts/table/flock/New()
 	..()
-	setMaterial(getMaterial("gnesis"))
+	setMaterial(getMaterial("gnesis"), copy = FALSE)
 
 /obj/item/furniture_parts/table/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
@@ -76,7 +97,9 @@
 
 /obj/stool/chair/comfy/flock/New()
 	..()
-	setMaterial(getMaterial("gnesis"))
+	setMaterial(getMaterial("gnesis"), copy = FALSE)
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
+	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE, report_attack=FALSE)
 
 /obj/stool/chair/comfy/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
@@ -101,7 +124,7 @@
 
 /obj/item/furniture_parts/flock_chair/New()
 	..()
-	setMaterial(getMaterial("gnesis"))
+	setMaterial(getMaterial("gnesis"), copy = FALSE)
 
 /obj/item/furniture_parts/flock_chair/special_desc(dist, mob/user)
 	if (!isflockmob(user))
@@ -119,17 +142,19 @@
 /obj/storage/closet/flock
 	name = "flashy capsule"
 	desc = "It looks kinda like a closet. There's no handle, though. Also, it looks like a giant bar of soap."
+	var/flock_id = "Containment capsule"
 	icon_state = "flock"
 	icon_closed = "flock"
 	icon_opened = "flock-open"
-	open_sound = "sound/misc/flockmind/flockdrone_locker_open.ogg"
-	close_sound = "sound/misc/flockmind/flockdrone_locker_close.ogg"
+	open_sound = 'sound/misc/flockmind/flockdrone_locker_open.ogg'
+	close_sound = 'sound/misc/flockmind/flockdrone_locker_close.ogg'
 	mat_appearances_to_ignore = list("steel","gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	var/health_attack = 100
 	var/health_max = 100
-	var/hitsound = "sound/impact_sounds/Generic_Hit_Heavy_1.ogg"
+	var/repair_per_resource = 2.5
+	var/hitsound = 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg'
 
 	take_damage(var/force, var/mob/user as mob)
 		if (!isnum(force) || force <= 0)
@@ -137,17 +162,17 @@
 		src.health_attack = clamp(src.health_attack - force, 0, src.health_max)
 		if (src.health_attack <= 0)
 			var/turf/T = get_turf(src)
-			playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)
+			playsound(T, 'sound/impact_sounds/Glass_Shatter_3.ogg', 25, 1)
 			var/obj/item/raw_material/shard/S = new /obj/item/raw_material/shard
 			S.set_loc(T)
-			S.setMaterial(getMaterial("gnesisglass"))
+			S.setMaterial(getMaterial("gnesisglass"), copy = FALSE)
 			src.dump_contents()
 			make_cleanable( /obj/decal/cleanable/flockdrone_debris, T)
 			qdel(src)
 
 /obj/storage/closet/flock/New()
 	..()
-	setMaterial("gnesis")
+	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE, report_attack=FALSE)
 
@@ -175,12 +200,14 @@
 			if(user.drop_item())
 				W?.set_loc(src.loc)
 
-/obj/storage/closet/flock/proc/repair()
-	src.health_attack = min(src.health_attack + 25, src.health_max)
+/obj/storage/closet/flock/proc/repair(resources_available)
+	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health_attack)
+	src.health_attack += health_given
+	return ceil(health_given / src.repair_per_resource)
 
 /obj/storage/closet/flock/proc/deconstruct()
 	var/turf/T = get_turf(src)
-	playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)
+	playsound(T, 'sound/impact_sounds/Glass_Shatter_3.ogg', 25, 1)
 	var/obj/item/raw_material/shard/S = new /obj/item/raw_material/shard(T)
 	S.setMaterial(getMaterial("gnesisglass"))
 	src.dump_contents()
@@ -203,9 +230,22 @@
 	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Containment Capsule
+		<br><span class='bold'>ID:</span> [src.flock_id]
 		<br><span class='bold'>System Integrity:</span> [round((src.health_attack/src.health_max)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
+
+// flockdrones can always move through
+/obj/storage/closet/flock/Crossed(atom/movable/mover)
+	. = ..()
+	var/mob/living/critter/flock/drone/drone = mover
+	if(!src.open && istype(drone) && !drone.floorrunning)
+		animate_flock_passthrough(mover)
+		. = TRUE
+	else if(istype(mover,/mob/living/critter/flock))
+		. = TRUE
+
+/obj/storage/closet/flock/Cross(atom/movable/mover)
+	return istype(mover,/mob/living/critter/flock)
 
 ///////////////////////////
 // LIGHT FITTING
@@ -214,6 +254,7 @@
 /obj/machinery/light/flock
 	name = "shining cabochon"
 	desc = "It pulses and flares to a strange rhythm."
+	var/flock_id = "Light emitter"
 	icon_state = "flock1"
 	base_state = "flock"
 	brightness = 1.2
@@ -241,14 +282,14 @@
 /obj/machinery/light/flock/proc/deconstruct()
 	var/turf/T = get_turf(src)
 	make_cleanable(/obj/decal/cleanable/flockdrone_debris/fluid, T)
-	playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)
+	playsound(T, 'sound/impact_sounds/Glass_Shatter_3.ogg', 25, 1)
 	qdel(src)
 
-/obj/item/furniture_parts/flock_chair/special_desc(dist, mob/user)
+/obj/machinery/light/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Light Emitter
+		<br><span class='bold'>ID:</span> [src.flock_id]
 		<br><span class='bold'>###=-</span></span>"}
 
 /obj/machinery/light/flock/floor
@@ -261,6 +302,7 @@
 /obj/lattice/flock
 	desc = "Some sort of floating mesh in space, like a bendy lattice. Those wacky flock things."
 	name = "fibrenet"
+	var/flock_id = "Structural foundation"
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "fibrenet"
 	mat_appearances_to_ignore = list("steel","gnesis")
@@ -269,7 +311,7 @@
 
 /obj/lattice/flock/New()
 	..()
-	setMaterial("gnesis")
+	setMaterial(getMaterial("gnesis"), appearance=FALSE, setname=FALSE)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_attack=FALSE)
 
@@ -278,7 +320,7 @@
 		var/obj/item/tile/T = C
 		if (T.amount >= 1)
 			T.build(get_turf(src))
-			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 			T.add_fingerprint(user)
 			qdel(src)
 	if (isweldingtool(C) && C:try_weld(user,0,-1,FALSE,FALSE))
@@ -300,15 +342,20 @@
 /obj/grille/flock
 	desc = "A glowing mesh of metallic fibres."
 	name = "barricade"
+	var/flock_id = "Reinforced barricade"
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "barricade"
 	health = 50
 	health_max = 50
+	var/repair_per_resource = 1
 	shock_when_entered = FALSE
 	auto = FALSE
 	mat_appearances_to_ignore = list("steel","gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	can_be_snipped = FALSE
+	can_be_unscrewed = FALSE
+	can_build_window = FALSE
 
 	update_icon(special_icon_state, override_parent = TRUE) //fix for perspective grilles fucking these up
 		if (ruined)
@@ -331,25 +378,29 @@
 
 /obj/grille/flock/New()
 	..()
-	setMaterial("gnesis")
+	setMaterial(getMaterial("gnesis"), appearance=FALSE, setname=FALSE)
 	src.UpdateIcon()
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection)
 
 // flockdrones can always move through
-/obj/grille/flock/Cross(atom/movable/mover)
+/obj/grille/flock/Crossed(atom/movable/mover)
 	. = ..()
 	var/mob/living/critter/flock/drone/drone = mover
 	if(istype(drone) && !drone.floorrunning)
 		animate_flock_passthrough(mover)
 		. = TRUE
+	else if(istype(mover,/mob/living/critter/flock))
+		. = TRUE
 
+/obj/grille/flock/Cross(atom/movable/mover)
+	return !src.density || istype(mover,/mob/living/critter/flock)
 
 /obj/grille/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Reinforced Barricade
+		<br><span class='bold'>ID:</span> [src.flock_id]
 		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 
@@ -363,9 +414,11 @@
 		return
 	..()
 
-/obj/grille/flock/proc/repair()
-	src.health = min(src.health + 10, src.health_max)
+/obj/grille/flock/proc/repair(resources_available)
+	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health)
+	src.health += health_given
 	if (ruined)
 		src.set_density(TRUE)
 		src.ruined = FALSE
 	src.UpdateIcon()
+	return ceil(health_given / src.repair_per_resource)

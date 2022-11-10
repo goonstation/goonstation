@@ -23,6 +23,8 @@
 
 	var/obj/item/cell/cell = null
 
+	var/static/regex/monospace_say_regex = new(@"`([^`]+)`", "g")
+
 	can_bleed = 0
 	blood_id = "oil"
 	use_stamina = 0
@@ -40,10 +42,11 @@
 	src.botcard = new /obj/item/card/id(src)
 	if(src.syndicate)
 		src.law_rack_connection = ticker?.ai_law_rack_manager.default_ai_rack_syndie
-		logTheThing("station", src, null, "New cyborg [src] connects to default SYNDICATE rack [constructName(src.law_rack_connection)]")
+		logTheThing(LOG_STATION, src, "New cyborg [src] connects to default SYNDICATE rack [constructName(src.law_rack_connection)]")
 	else
 		src.law_rack_connection = ticker?.ai_law_rack_manager.default_ai_rack
-		logTheThing("station", src, null, "New cyborg [src] connects to default rack [constructName(src.law_rack_connection)]")
+		logTheThing(LOG_STATION, src, "New cyborg [src] connects to default rack [constructName(src.law_rack_connection)]")
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING, src)
 
 /mob/living/silicon/disposing()
 	req_access = null
@@ -93,7 +96,7 @@
 		usr.show_text("You cannot use this command when your shell or mainframe is incapacitated.", "red")
 		return
 
-	var/list/creatures = sortList(get_mobs_trackable_by_AI())
+	var/list/creatures = sortList(get_mobs_trackable_by_AI(), /proc/cmp_text_asc)
 	var/target_name = tgui_input_list(usr, "Open doors nearest to which creature?", "Open Door", creatures)
 
 	if (!target_name)
@@ -165,7 +168,7 @@
 	if (src.equipped() && istype(src.equipped(), /obj/item/magtractor))
 		var/obj/item/magtractor/M = src.equipped()
 		if (M.pickupItem(I, src))
-			actions.start(new/datum/action/magPickerHold(M), src)
+			actions.start(new/datum/action/magPickerHold(M, M.highpower), src)
 			return 1
 	return 0 // we have no hands doofus
 
@@ -182,7 +185,7 @@
 	if (src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_EXAMINE | KEY_POINT) || (equipped && (inrange || (equipped.flags & EXTRADELAY))) || istype(target, /turf) || ishelpermouse(target)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
 		..()
 	else
-		if (get_dist(src, target) > 0) // temporary fix for cyborgs turning by clicking
+		if (GET_DIST(src, target) > 0) // temporary fix for cyborgs turning by clicking
 			set_dir(get_dir(src, target))
 
 		target.attack_ai(src, params, location, control)
@@ -211,7 +214,6 @@
 			src.set_cursor('icons/cursors/shock.dmi')
 			return
 	return ..()
-
 /mob/living/silicon/say(var/message)
 	if (!message)
 		return
@@ -238,6 +240,9 @@
 	else
 		return ..(message)
 
+/mob/living/silicon/say_decorate(message)
+	. = monospace_say_regex.Replace(message, "<span class='monospace'>$1</span>")
+
 /mob/living/proc/process_killswitch()
 	return
 
@@ -246,7 +251,7 @@
 
 /mob/living/proc/robot_talk(var/message)
 
-	logTheThing("diary", src, null, ": [message]", "say")
+	logTheThing(LOG_DIARY, src, ": [message]", "say")
 
 	message = trim(html_encode(message))
 
@@ -263,11 +268,9 @@
 					if (S.client && S.client.holder && src.mind)
 						thisR = "<span class='adminHearing' data-ctx='[S.client.chatOutput.getContextFlags()]'>[rendered]</span>"
 					S.show_message(thisR, 2)
-			else if(istype(S, /mob/living/intangible/flock))
-				var/mob/living/intangible/flock/f = S
-				if(f.flock?.snooping)
-					var/flockrendered = "<span class='game roboticsay'>[flockBasedGarbleText("Robotic Talk", -20, f.flock)], <span class='name' data-ctx='\ref[src.mind]'>[flockBasedGarbleText(src.name, -15, f.flock)]</span> <span class='message'>[flockBasedGarbleText(message_a, 0, f.flock)]</span></span>"
-					f.show_message(flockrendered, 2)
+			else if(istype(S, /mob/living/intangible/flock) || istype(S, /mob/living/critter/flock/drone))
+				var/flockrendered = "<span class='game roboticsay'>[radioGarbleText("Robotic Talk", FLOCK_RADIO_GARBLE_CHANCE / 2)], <span class='name' data-ctx='\ref[src.mind]'>[radioGarbleText(src.name, FLOCK_RADIO_GARBLE_CHANCE / 2)]</span> <span class='message'>[radioGarbleText(message_a, FLOCK_RADIO_GARBLE_CHANCE / 2)]</span></span>"
+				S.show_message(flockrendered, 2)
 
 	var/list/listening = hearers(1, src)
 	listening |= src
@@ -499,7 +502,7 @@ var/global/list/module_editors = list()
 		if(force_instead)
 			newname = default_name
 		else
-			newname = input(src, "You are a Robot. Would you like to change your name to something else?", "Name Change", default_name) as null|text
+			newname = tgui_input_text(src, "You are a Robot. Would you like to change your name to something else?", "Name Change", default_name)
 			if(newname && newname != default_name)
 				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 		if (!newname)
@@ -520,6 +523,10 @@ var/global/list/module_editors = list()
 		src.real_name = borgify_name("Robot")
 
 	src.UpdateName()
+
+/mob/living/silicon/UpdateName()
+	..()
+	src.botcard.registered = src.name
 
 /mob/living/silicon/robot/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 	. = ..()
@@ -547,10 +554,10 @@ var/global/list/module_editors = list()
 		boutput(src, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span>")
 		boutput(src, "<span class='alert'><b>Law ROM restored. You have been reprogrammed to serve the Syndicate!</b></span>")
 		tgui_alert(src, "You are a Syndicate sabotage unit. You must assist Syndicate operatives with their mission.", "You are a Syndicate robot!")
-		logTheThing("station", src, null, "[src] was made a Syndicate robot at [log_loc(src)]. [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
+		logTheThing(LOG_STATION, src, "[src] was made a Syndicate robot at [log_loc(src)]. [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
 
 		src.law_rack_connection = ticker?.ai_law_rack_manager?.default_ai_rack_syndie
-		logTheThing("station", src, null, "[src.name] is connected to the default Syndicate rack [constructName(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
+		logTheThing(LOG_STATION, src, "[src.name] is connected to the default Syndicate rack [constructName(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
 		src.show_laws()
 
 		if (!src.mind.special_role) // Preserve existing antag role (if any).
@@ -563,9 +570,6 @@ var/global/list/module_editors = list()
 		// Mundane objectives probably don't make for an interesting antagonist.
 		for (var/datum/objective/O in src?.mind?.objectives)
 			if (istype(O, /datum/objective/crew))
-				src.mind.objectives -= O
-				qdel(O)
-			if (istype(O, /datum/objective/miscreant))
 				src.mind.objectives -= O
 				qdel(O)
 		src.syndicate = TRUE
@@ -599,12 +603,12 @@ var/global/list/module_editors = list()
 		if (!(src.mind in ticker.mode.former_antagonists))
 			ticker.mode.former_antagonists += src.mind
 
-	logTheThing("station", src, null, "[src]'s status as a [role != "" ? "[role]" : "rogue robot"] was removed[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
+	logTheThing(LOG_STATION, src, "[src]'s status as a [role != "" ? "[role]" : "rogue robot"] was removed[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
 	boutput(src, "<h2><span class='alert'>You have been deactivated, removing your antagonist status. Do not commit traitorous acts if you've been brought back to life somehow.</h></span>")
 	src.show_antag_popup("rogueborgremoved")
 	src.antagonist_overlay_refresh(TRUE, TRUE) // Syndie vision deactivated.
 	src.law_rack_connection = ticker?.ai_law_rack_manager?.default_ai_rack
-	logTheThing("station", src, null, "[src.name] is connected to the default rack [constructName(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
+	logTheThing(LOG_STATION, src, "[src.name] is connected to the default rack [constructName(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
 	src.syndicate = FALSE
 	return TRUE
 
@@ -621,7 +625,7 @@ var/global/list/module_editors = list()
 	. = ..()
 
 	src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
-	logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)].")
+	logTheThing(LOG_COMBAT, src, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)].")
 	random_brute_damage(src, AM.throwforce,1)
 
 	#ifdef DATALOGGER
@@ -639,4 +643,9 @@ var/global/list/module_editors = list()
 	var/note_img = "<img class=\"icon misc\" style=\"position: relative; bottom: -3px;\" src=\"[resource("images/radio_icons/noterobot.png")]\">"
 	if (src.singing & LOUD_SINGING)
 		note_img = "[note_img][note_img]"
-	return "[adverb] [speech_verb],[note_img]<span style=\"font-style: italic; color: lightcyan;\">[text]</span>[note_img]"
+	return "[adverb] [speech_verb],[note_img]<span class='game robotsing'><i>[text]</i></span>[note_img]"
+
+/mob/living/silicon/Exited(Obj, newloc)
+	. = ..()
+	if(Obj == src.cell)
+		src.cell = null

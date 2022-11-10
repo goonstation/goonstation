@@ -114,8 +114,6 @@
 
 			var/turf/T = get_edge_target_turf(M, M.dir)
 			if (T && isturf(T))
-				if (!isdead(HH))
-					HH.emote("scream")
 				if (!fake)
 					HH.set_loc(get_turf(M))
 					HH.throw_at(T, 10, 4, bonus_throwforce = 33) // y e e t
@@ -127,7 +125,7 @@
 					HH.throw_at(T, 3, 1)
 
 
-			logTheThing("combat", M, HH, "uses the [fake ? "fake " : ""]throw wrestling move on [constructTarget(HH,"combat")] at [log_loc(M)].")
+			logTheThing(LOG_COMBAT, M, "uses the [fake ? "fake " : ""]throw wrestling move on [constructTarget(HH,"combat")] at [log_loc(M)].")
 
 		if (G && istype(G)) // Target was gibbed before we could throw them, who knows.
 			qdel(G)

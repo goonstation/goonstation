@@ -15,7 +15,7 @@
 	status = REQ_PHYSICAL_ACCESS
 	var/o2tanks = 10
 	var/pltanks = 10
-	anchored = 1.0
+	anchored = 1
 	mats = 24
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
@@ -25,14 +25,14 @@
 
 /obj/machinery/dispenser/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				qdel(src)
 				return
-		if(3.0)
+		if(3)
 			if (prob(25))
 				while(TOTAL_O2_TANKS > 0)
 					pop_o2()

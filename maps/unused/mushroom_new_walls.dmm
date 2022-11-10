@@ -1235,8 +1235,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "afm" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /obj/cable{
@@ -1245,8 +1244,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
 "afn" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /obj/machinery/door/airlock/pyro/external{
@@ -1787,8 +1785,7 @@
 	},
 /area/station/engine/inner)
 "agW" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -4238,8 +4235,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "ard" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /turf/space,
@@ -4255,8 +4251,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "arl" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -4271,8 +4266,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/solar/east)
 "arp" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /obj/machinery/door/airlock/pyro/external{
@@ -5808,8 +5802,7 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "axg" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	operating = 1
 	},
@@ -5823,8 +5816,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
 "axi" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /obj/machinery/light/small{
@@ -6309,8 +6301,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "azg" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	operating = 1
 	},
@@ -6324,8 +6315,7 @@
 /turf/space,
 /area/supply/spawn_point)
 "azj" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /obj/lattice{
@@ -6334,8 +6324,7 @@
 /turf/space,
 /area/space)
 "azk" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /turf/space,
@@ -6814,7 +6803,7 @@
 	dir = 8;
 	tag = "icon-bulb1 (WEST)"
 	},
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor,
 /area/station/storage/autolathe)
 "aBh" = (
@@ -7011,8 +7000,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "aBS" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "garbage";
 	operating = 1
 	},
@@ -7637,7 +7625,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "aEu" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/storage/box/beakerbox,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/specialroom/freezer,
@@ -8196,14 +8184,14 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
 "aHf" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory/part3,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "aHh" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/plating/random,
@@ -8463,7 +8451,7 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "aIv" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory/part2,
@@ -8572,7 +8560,8 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aIM" = (
-/obj/machinery/atmospherics/pipe/simple/junction/east{
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 4;
 	pixel_y = 1
 	},
 /obj/cable{
@@ -8753,7 +8742,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aJt" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "ghostdrone_lower"
 	},
 /turf/simulated/floor/plating/random,
@@ -9057,7 +9046,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "aKv" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "ghostdrone_lower"
 	},
 /obj/machinery/ghostdrone_conveyor_sensor{
@@ -10843,7 +10832,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "aRx" = (
-/obj/storage/secure/closet/brig/automatic/solitary{
+/obj/storage/secure/closet/brig_automatic/solitary{
 	id = "solitary2";
 	name = "Automatic Locker (Cell #2)"
 	},
@@ -16366,7 +16355,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto_gangway)
 "bjJ" = (
-/obj/storage/secure/closet/brig/automatic/solitary{
+/obj/storage/secure/closet/brig_automatic/solitary{
 	id = "solitary3";
 	name = "Automatic Locker (Cell #3)"
 	},
@@ -16378,7 +16367,7 @@
 	},
 /area/station/security/brig)
 "bjM" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bjO" = (
 /obj/landmark{
@@ -16395,7 +16384,7 @@
 	name = "ladder";
 	pixel_y = -9
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bjS" = (
 /obj/wingrille_spawn/auto,
@@ -18216,8 +18205,7 @@
 /turf/space,
 /area/space)
 "bqG" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /obj/machinery/door/poddoor/blast/pyro{
@@ -18887,7 +18875,7 @@
 /turf/simulated/floor,
 /area/station/storage/warehouse)
 "bsS" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/plating/random,
@@ -20116,7 +20104,9 @@
 /area/station/engine/inner)
 "csY" = (
 /obj/window/reinforced/west,
-/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/east,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
+	dir = 4
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
@@ -20296,7 +20286,7 @@
 	dir = 9;
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/engine,
@@ -20499,7 +20489,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "cUl" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/caution/south,
 /area/station/science/chemistry)
@@ -22514,7 +22504,9 @@
 /turf/simulated/floor,
 /area/station/bridge)
 "fGI" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/north,
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 1
+	},
 /obj/machinery/light,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
@@ -23194,8 +23186,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/hallway/primary/west)
 "gzn" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	operating = 1
 	},
@@ -23853,7 +23844,7 @@
 /turf/simulated/floor/white,
 /area/station/turret_protected/AIsat)
 "hsp" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/caution/north{
 	dir = 8
@@ -24557,7 +24548,7 @@
 /obj/machinery/door/poddoor/pyro{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/engine,
@@ -25168,7 +25159,9 @@
 /turf/simulated/floor/green,
 /area/station/hydroponics/lobby)
 "iTR" = (
-/obj/machinery/atmospherics/pipe/manifold/overfloor/south,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 2
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "iUA" = (
@@ -26258,25 +26251,7 @@
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
 "kmh" = (
-/obj/table/reinforced/auto{
-	icon_state = "6"
-	},
-/obj/item/breaching_hammer{
-	pixel_x = -4;
-	pixel_y = 5
-	},
-/obj/item/breaching_charge{
-	pixel_x = 9;
-	pixel_y = 4
-	},
-/obj/item/breaching_charge{
-	pixel_x = 4;
-	pixel_y = 1
-	},
-/obj/item/breaching_charge{
-	pixel_x = 3;
-	pixel_y = -5
-	},
+/obj/random_item_spawner/armory_breaching_supplies,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "kny" = (
@@ -27324,7 +27299,9 @@
 	},
 /area/station/bridge)
 "lKP" = (
-/obj/machinery/atmospherics/pipe/manifold/overfloor/west,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 8
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "lLJ" = (
@@ -28459,7 +28436,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/engine,
@@ -28927,7 +28904,7 @@
 /obj/machinery/door/poddoor/pyro{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Teleporter Pad";
@@ -30294,7 +30271,8 @@
 	},
 /area/station/engine/elect)
 "ppa" = (
-/obj/machinery/atmospherics/pipe/simple/junction/east{
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 4;
 	pixel_y = 1
 	},
 /obj/kitchenspike,
@@ -30939,7 +30917,7 @@
 /area/station/hydroponics/bay)
 "pYc" = (
 /obj/critter/walrus,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "pYE" = (
 /obj/cable{
@@ -31170,7 +31148,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille,
+/obj/grille/steel,
 /obj/structure/woodwall,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -31285,7 +31263,9 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "qtN" = (
-/obj/machinery/atmospherics/pipe/manifold/overfloor/north,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "que" = (
@@ -31351,7 +31331,7 @@
 	},
 /area/station/bridge)
 "qws" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory,
@@ -31814,7 +31794,7 @@
 /obj/fluid_spawner{
 	amount = 1200
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "qUD" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -32861,7 +32841,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
-/obj/machinery/atmospherics/pipe/manifold/overfloor/west,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 8
+	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/proto)
 "sfF" = (
@@ -34146,7 +34128,9 @@
 /area/station/turret_protected/AIsat)
 "ttP" = (
 /obj/lattice,
-/obj/machinery/atmospherics/pipe/manifold/overfloor/west,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 8
+	},
 /obj/machinery/power/stats_meter{
 	name = "Hot Loop Outlet Meter";
 	tag = "Hot Loop Outlet Meter"
@@ -38111,7 +38095,7 @@
 	},
 /area/station/bridge)
 "xVF" = (
-/obj/storage/secure/closet/brig/automatic/solitary{
+/obj/storage/secure/closet/brig_automatic/solitary{
 	id = "solitary1"
 	},
 /turf/simulated/floor/red/side{

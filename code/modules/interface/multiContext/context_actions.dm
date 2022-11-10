@@ -5,9 +5,13 @@
 	var/name = ""
 	var/desc = ""
 	var/tooltip_flags = null
-	var/use_tooltip = 1
-	var/close_clicked = 1
+	var/use_tooltip = TRUE
+	var/close_clicked = TRUE
+	///Does the action close when the mob moves
+	var/close_moved = TRUE
 	var/flick_on_click = null
+	var/text = ""
+	var/background_color = null
 
 	/// Is this action even allowed to show up under the given circumstances? TRUE=yes, FALSE=no
 	proc/checkRequirements(atom/target, mob/user)
@@ -344,6 +348,49 @@
 		user.closeContextActions()
 		return 0
 
+/datum/contextAction/wraith_evolve_button
+	name = "Specialize"
+	desc = "Ascend into a stronger form"
+	icon = 'icons/mob/wraith_ui.dmi'
+	icon_state = "minus"
+	icon_background = ""
+	var/ability_code = 0
+
+	New(code as num)
+		..()
+		src.ability_code = code
+		switch(code)
+			if (1)
+				name = "Plaguebringer"
+				desc = "Become a disease spreading spirit."
+				icon_state = "choose_plague"
+			if (2)
+				name = "Harbinger"
+				desc = "Lead an army of otherwoldly foes."
+				icon_state = "choose_harbinger"
+			if (3)
+				name = "Trickster"
+				desc = "Fool the crew with illusions and let them tear themselves apart."
+				icon_state = "choose_trickster"
+
+	checkRequirements(atom/target, mob/user)
+		. = TRUE
+		if (istype(target, /atom/movable/screen/ability/topBar/wraith))
+			var/atom/movable/screen/ability/topBar/wraith/B = target
+			if (istype(B.owner, /datum/targetable/wraithAbility/specialize))
+				var/datum/targetable/wraithAbility/specialize/A = B.owner
+				if (!A.cooldowncheck())
+					return FALSE
+
+	execute(atom/target, mob/user)
+		if (istype(target, /atom/movable/screen/ability/topBar/wraith))
+			var/atom/movable/screen/ability/topBar/wraith/B = target
+			if (istype(B.owner, /datum/targetable/wraithAbility/specialize))
+				var/datum/targetable/wraithAbility/specialize/A = B.owner
+				A.evolve(ability_code)
+				A.doCooldown()
+		user.closeContextActions()
+		return 0
 
 /datum/contextAction/genebooth_product
 	icon = 'icons/ui/context32x32.dmi'
@@ -431,7 +478,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (iswrenchingtool(I))
 					user.show_text("You wrench [target]'s bolts.", "blue")
-					playsound(target, "sound/items/Ratchet.ogg", 50, 1)
+					playsound(target, 'sound/items/Ratchet.ogg', 50, 1)
 					return ..()
 
 	cut
@@ -443,7 +490,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (iscuttingtool(I) || issnippingtool(I))
 					user.show_text("You cut some vestigial wires from [target].", "blue")
-					playsound(target, "sound/items/Wirecutter.ogg", 50, 1)
+					playsound(target, 'sound/items/Wirecutter.ogg', 50, 1)
 					return ..()
 	weld
 		name = "Weld"
@@ -466,7 +513,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (ispryingtool(I))
 					user.show_text("You pry on [target] without remorse.", "blue")
-					playsound(target, "sound/items/Crowbar.ogg", 50, 1)
+					playsound(target, 'sound/items/Crowbar.ogg', 50, 1)
 					return ..()
 
 	screw
@@ -478,7 +525,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (isscrewingtool(I))
 					user.show_text("You unscrew some of the screws on [target].", "blue")
-					playsound(target, "sound/items/Screwdriver.ogg", 50, 1)
+					playsound(target, 'sound/items/Screwdriver.ogg', 50, 1)
 					return ..()
 
 	pulse
@@ -490,7 +537,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (ispulsingtool(I))
 					user.show_text("You pulse [target]. In a general sense.", "blue")
-					playsound(target, "sound/items/penclick.ogg", 50, 1)
+					playsound(target, 'sound/items/penclick.ogg', 50, 1)
 					return ..()
 
 /datum/contextAction/vehicle
@@ -1128,77 +1175,68 @@
 			target.addContextAction(/datum/contextAction/testfour)
 			return 0
 */
-
-/datum/contextAction/flockdrone
+/datum/contextAction/rcd
 	icon = 'icons/ui/context16x16.dmi'
-	icon_background = "flockbg"
-	name = "Control flockdrone"
-	desc = "You shouldn't be reading this, bug."
-	icon_state = "wrench"
 	close_clicked = TRUE
-	/// The flockdrone aiTask subtype we should switch to upon cast
-	var/task_type = null
+	desc = ""
+	icon_state = "wrench"
+	var/mode = RCD_MODE_FLOORSWALLS
 
-	//funny copy paste ability targeting code, someone should really generalize this UPSTREAM
-	execute(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-		//typecasting soup time
-		if (!istype(target) || !istype(user))
+	execute(var/obj/item/rcd/rcd, var/mob/user)
+		if (!istype(rcd))
 			return
-		var/datum/abilityHolder/flockmind/holder = user.abilityHolder
-		if (!istype(holder))
+		rcd.switch_mode(src.mode, user)
+
+	checkRequirements(var/obj/item/rcd/rcd, var/mob/user)
+		return rcd in user
+
+	floorswalls
+		name = "Floors/walls"
+		icon_state = "wall"
+		mode = RCD_MODE_FLOORSWALLS
+	airlock
+		name = "Airlocks"
+		icon_state = "door"
+		mode = RCD_MODE_AIRLOCK
+
+	deconstruct
+		name = "Deconstruct"
+		icon_state = "close"
+		mode = RCD_MODE_DECONSTRUCT
+
+	windows
+		name = "Windows"
+		icon_state = "window"
+		mode = RCD_MODE_WINDOWS
+
+	lightbulbs
+		name = "Lightbulbs"
+		icon_state = "bulb"
+		mode = RCD_MODE_LIGHTBULBS
+
+	lighttubes
+		name = "Light tubes"
+		icon_state = "tube"
+		mode = RCD_MODE_LIGHTTUBES
+
+/datum/contextAction/reagent
+	icon_background = "whitebg"
+	icon_state = "note"
+	var/reagent_id = ""
+
+	New(var/reagent_id)
+		..()
+		src.reagent_id = reagent_id || src.reagent_id
+		var/datum/reagent/reagent = reagents_cache[reagent_id]
+		if (!istype(reagent))
 			return
-		var/datum/targetable/flockmindAbility/droneControl/ability = holder.drone_controller
-		if (ability.targeted && user.targeting_ability == ability)
-			user.targeting_ability = null
-			user.update_cursor()
-			return
-		if (ability.targeted)
-			if (world.time < ability.last_cast)
-				return
-			ability.drone = target
-			ability.task_type = task_type
-			ability.holder.owner.targeting_ability = ability
-			ability.holder.owner.update_cursor()
-		user.closeContextActions()
+		src.background_color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
+		src.text = reagent_shorthands[reagent_id] || copytext(capitalize(reagent.name), 1, 3)
+		src.name = capitalize(reagent.name)
 
-	checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-		return istype(target) && istype(user) && !user.targeting_ability
-
-	move
-		name = "Move"
-		desc = "Go somwhere."
-		icon_state = "flock_move"
-		task_type = /datum/aiTask/sequence/goalbased/rally
-
-	convert
-		name = "Convert"
-		desc = "Convert this thing"
-		icon_state = "flock_convert"
-		task_type = /datum/aiTask/sequence/goalbased/build/targetable
-
-		checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-			return ..() && target.resources > 20
-
-	capture
-		name = "Capture"
-		desc = "Capture this enemy"
-		icon_state = "flock_capture"
-		task_type = /datum/aiTask/sequence/goalbased/flockdrone_capture/targetable
-
-		checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-			return ..() && target.resources > 20
-
-	barricade
-		name = "Barricade"
-		desc = "Build a barricade"
-		icon_state = "flock_barricade"
-		task_type = /datum/aiTask/sequence/goalbased/barricade/targetable
-
-		checkRequirements(mob/living/critter/flock/drone/target, mob/living/intangible/flock/user)
-			return ..() && target.resources > 25
-
-	shoot
-		name = "Shoot"
-		desc = "Shoot this enemy"
-		icon_state = "flock_shoot"
-		task_type = /datum/aiTask/timed/targeted/flockdrone_shoot/targetable
+/datum/contextAction/reagent/robospray
+	close_moved = FALSE
+	checkRequirements(var/obj/item/robospray/robospray, var/mob/user)
+		return robospray in user
+	execute(var/obj/item/robospray/robospray, var/mob/user)
+		robospray.change_reagent(src.reagent_id, user)

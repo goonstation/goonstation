@@ -54,12 +54,12 @@
 		return
 
 	if(charging)
+		charging.add_fingerprint(user)
+		charging.UpdateIcon()
 		if(iscarbon(user))
 			user.put_in_hand_or_drop(charging)
 		else
 			charging.set_loc(src.loc)
-		charging.add_fingerprint(user)
-		charging.UpdateIcon()
 		src.charging = null
 		user.visible_message("[user] removes the cell from the charger.", "You remove the cell from the charger.")
 		chargelevel = -1
@@ -86,3 +86,9 @@
 	use_power(added / CELLRATE)
 
 	src.UpdateIcon()
+
+
+/obj/machinery/cell_charger/Exited(Obj, newloc)
+	. = ..()
+	if(Obj == src.charging)
+		src.charging = null

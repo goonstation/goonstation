@@ -3,8 +3,9 @@
 	icon = 'icons/obj/atmospherics/atmos.dmi'
 	icon_state = "empty"
 	density = 1
-	var/health = 100.0
+	var/health = 100
 	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
+	object_flags = NO_GHOSTCRITTER | NO_GHOSTCRITTER
 	p_class = 2
 	status = REQ_PHYSICAL_ACCESS
 
@@ -27,11 +28,11 @@
 	var/image/atmos_dmi
 	var/image/bomb_dmi
 
-	onMaterialChanged()
+	New()
 		..()
-		if(istype(src.material))
-			temperature_resistance = 400 + T0C + (((src.material.getProperty("flammable") - 50) * (-1)) * 3)
-		return
+		src.AddComponent(/datum/component/bullet_holes, 5, 0)
+		atmos_dmi = image('icons/obj/atmospherics/atmos.dmi')
+		bomb_dmi = image('icons/obj/canisterbomb.dmi')
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -72,21 +73,16 @@
 	name = "Canister \[Air\]"
 	icon_state = "grey"
 	casecolor = "grey"
-	filled = 2.0
+	filled = 2
 /obj/machinery/portable_atmospherics/canister/air/large
 	name = "High-Volume Canister \[Air\]"
 	icon_state = "greyred"
 	casecolor = "greyred"
-	filled = 5.0
+	filled = 5
 /obj/machinery/portable_atmospherics/canister/empty
 	name = "Canister \[Empty\]"
 	icon_state = "empty"
 	casecolor = "empty"
-
-/obj/machinery/portable_atmospherics/canister/New()
-	..()
-	atmos_dmi = image('icons/obj/atmospherics/atmos.dmi')
-	bomb_dmi = image('icons/obj/canisterbomb.dmi')
 
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if (src.destroyed)
@@ -96,7 +92,7 @@
 		icon_state = "[casecolor]"
 		if (overlay_state)
 			if (src.det && src.det.part_fs.timing && !src.det.safety && !src.det.defused)
-				if (src.det.part_fs.time > 5)
+				if (src.det.part_fs.time > 5 SECONDS)
 					bomb_dmi.icon_state = "overlay_ticking"
 					UpdateOverlays(bomb_dmi, "canbomb")
 				else
@@ -131,6 +127,8 @@
 	if(reagents) reagents.temperature_reagents(exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
 		health -= 5
+		if(src.material?.getProperty("flammable") > 3) //why would you make a canister out of wood/etc
+			health -= 1000 //BURN
 		healthcheck()
 
 /obj/machinery/portable_atmospherics/canister/proc/healthcheck(mob/user)
@@ -141,7 +139,7 @@
 		tgui_process.close_uis(src)
 		if(src.air_contents.check_if_dangerous())
 			message_admins("[src] [alert_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
-		logTheThing("station", null, null, "[src] [log_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
+		logTheThing(LOG_STATION, null, "[src] [log_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
 
 		var/atom/location = src.loc
 		location.assume_air(air_contents)
@@ -151,7 +149,7 @@
 			processing_items.Remove(src.det)
 
 		src.destroyed = 1
-		playsound(src.loc, "sound/effects/spray.ogg", 10, 1, -3)
+		playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
 		src.set_density(0)
 		UpdateIcon()
 
@@ -207,7 +205,7 @@
 		if(12 to 14)
 			if(prob(4))
 				src.visible_message("<span class='alert'>[src] hisses!</span>")
-				playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 		if(14 to 16)
 			if(prob(3) && !rupturing)
 				rupture()
@@ -218,7 +216,7 @@
 	//Canister bomb grumpy sounds
 	if (src.det && src.det.part_fs)
 		if (src.det.part_fs.timing) //If it's counting down
-			if (src.det.part_fs.time > 9)
+			if (src.det.part_fs.time > 9 SECONDS)
 				src.add_simple_light("canister", list(0.94 * 255, 0.94 * 255, 0.3 * 255, 0.6 * 255))
 				if (prob(8)) //originally 5ish
 					switch(rand(1,6))
@@ -226,11 +224,11 @@
 							playsound(src.loc, "sparks", 75, 1, -1)
 							elecflash(src)
 						if (2)
-							playsound(src.loc, "sound/machines/warning-buzzer.ogg", 50, 1)
+							playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 1)
 						if (3)
-							playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
+							playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 						if (4)
-							playsound(src.loc, "sound/machines/bellalert.ogg", 50, 1)
+							playsound(src.loc, 'sound/machines/bellalert.ogg', 50, 1)
 						if (5)
 							for (var/obj/machinery/power/apc/theAPC in get_area(src))
 								theAPC.lighting = 0
@@ -243,14 +241,14 @@
 								theAPC.UpdateIcon()
 								theAPC.update()
 
-			else if (src.det.part_fs.time < 10 && src.det.part_fs.time > 7)  //EXPLOSION IMMINENT
+			else if (src.det.part_fs.time < 10 SECONDS && src.det.part_fs.time > 7 SECONDS)  //EXPLOSION IMMINENT
 				src.add_simple_light("canister", list(1 * 255, 0.03 * 255, 0.03 * 255, 0.6 * 255))
 				src.visible_message("<span class='alert'>[src] flashes and sparks wildly!</span>")
-				playsound(src.loc, "sound/machines/siren_generalquarters.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/siren_generalquarters.ogg', 50, 1)
 				playsound(src.loc, "sparks", 75, 1, -1)
 				elecflash(src,power = 2)
-			else if (src.det.part_fs.time <= 3)
-				playsound(src.loc, "sound/machines/warning-buzzer.ogg", 50, 1)
+			else if (src.det.part_fs.time <= 3 SECONDS)
+				playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 1)
 		else //Someone might have defused it or the bomb failed
 			src.remove_simple_light("canister")
 
@@ -279,19 +277,19 @@
 		rupturing = 1
 		SPAWN(1 SECOND)
 			src.visible_message("<span class='alert'>[src] hisses ominously!</span>")
-			playsound(src.loc, "sound/machines/hiss.ogg", 55, 1)
+			playsound(src.loc, 'sound/machines/hiss.ogg', 55, 1)
 			sleep(5 SECONDS)
-			playsound(src.loc, "sound/machines/hiss.ogg", 60, 1)
+			playsound(src.loc, 'sound/machines/hiss.ogg', 60, 1)
 			sleep(5 SECONDS)
 			src.visible_message("<span class='alert'>[src] hisses loudly!</span>")
-			playsound(src.loc, "sound/machines/hiss.ogg", 65, 1)
+			playsound(src.loc, 'sound/machines/hiss.ogg', 65, 1)
 			sleep(5 SECONDS)
 			src.visible_message("<span class='alert'>[src] bulges!</span>")
-			playsound(src.loc, "sound/machines/hiss.ogg", 65, 1)
+			playsound(src.loc, 'sound/machines/hiss.ogg', 65, 1)
 			sleep(5 SECONDS)
 			src.visible_message("<span class='alert'>[src] cracks!</span>")
-			playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 65, 1)
-			playsound(src.loc, "sound/machines/hiss.ogg", 65, 1)
+			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 65, 1)
+			playsound(src.loc, 'sound/machines/hiss.ogg', 65, 1)
 			sleep(5 SECONDS)
 			if(rupturing && !destroyed) // has anyone drained the tank?
 				playsound(src.loc, "explosion", 70, 1)
@@ -302,7 +300,7 @@
 				var/T = get_turf(src)
 
 				for(var/obj/window/W in range(4, T)) // smash shit
-					if(prob( get_dist(W,T)*6 ))
+					if(prob( GET_DIST(W,T)*6 ))
 						continue
 					W.health = 0
 					W.smash()
@@ -352,7 +350,7 @@
 				src.det = Det
 				src.det.attachedTo = src
 				src.det.builtBy = user
-				logTheThing("bombing", user, null, "builds a canister bomb [log_atmos(src)] at [log_loc(src)].")
+				logTheThing(LOG_BOMBING, user, "builds a canister bomb [log_atmos(src)] at [log_loc(src)].")
 				if(src.air_contents.check_if_dangerous())
 					message_admins("[key_name(user)] builds a canister bomb [alert_atmos(src)] at [log_loc(src)].")
 				tgui_process.update_uis(src)
@@ -378,13 +376,13 @@
 		attack_particle(user,src)
 		hit_twitch(src)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
-		logTheThing("combat", user, null, "attacked [src] [log_atmos(src)] with [W] at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, user, "attacked [src] [log_atmos(src)] with [W] at [log_loc(src)].")
 		src.health -= W.force
 		healthcheck(user)
 	..()
 
 /obj/machinery/portable_atmospherics/canister/attack_ai(var/mob/user as mob)
-	if(!src.connected_port && get_dist(src, user) > 7)
+	if(!src.connected_port && GET_DIST(src, user) > 7)
 		return
 	return src.Attackhand(user)
 
@@ -423,7 +421,7 @@
 				"safetyIsOn" = src.det.safety,
 				"isAnchored" = src.anchored,
 				"isPrimed" = src.det.part_fs.timing ? TRUE : FALSE,
-				"time" = src.det.part_fs.time * 10, // using tenths of a second on the client
+				"time" = src.det.part_fs.time,
 				"trigger" = src.det.trigger ? src.det.trigger.name : null,
 			)
 		)
@@ -463,7 +461,7 @@
 			if(!src.anchored)
 				src.anchored = 1
 				src.visible_message("<B><font color=#B7410E>A loud click is heard from the bottom of the canister, securing itself.</font></B>")
-				playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 				. = TRUE
 		if("safety")
 			src.det.safety = 0
@@ -479,7 +477,7 @@
 			if(!src.det.part_fs.timing)
 				var/new_time = params["newTime"]
 				if(isnum(new_time))
-					src.det.part_fs.set_time(new_time/10)
+					src.det.part_fs.set_time(new_time)
 					. = TRUE
 		if("wire-interact")
 			var/tool = null
@@ -506,10 +504,10 @@
 
 	src.valve_open = !(src.valve_open)
 	if (!src.holding && !src.connected_port)
-		logTheThing("station", usr, null, "[valve_open ? "opened [src] into" : "closed [src] from"] the air [log_atmos(src)] at [log_loc(src)].")
-		playsound(src.loc, "sound/effects/valve_creak.ogg", 50, 1)
+		logTheThing(LOG_STATION, usr, "[valve_open ? "opened [src] into" : "closed [src] from"] the air [log_atmos(src)] at [log_loc(src)].")
+		playsound(src.loc, 'sound/effects/valve_creak.ogg', 50, 1)
 		if (src.valve_open)
-			playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 			if(src.air_contents.check_if_dangerous())
 				message_admins("[key_name(usr)] opened [src] into the air [alert_atmos(src)] at [log_loc(src)]")
 			if (src.det)
@@ -520,7 +518,7 @@
 	if(!src.has_valve)
 		return FALSE
 
-	playsound(src.loc, "sound/effects/valve_creak.ogg", 20, 1)
+	playsound(src.loc, 'sound/effects/valve_creak.ogg', 20, 1)
 	src.release_pressure = clamp(pressure, PORTABLE_ATMOS_MIN_RELEASE_PRESSURE, PORTABLE_ATMOS_MAX_RELEASE_PRESSURE)
 	return TRUE
 
@@ -541,34 +539,34 @@
 				src.visible_message("<b><font color=#B7410E>[user.name] cuts the [src.det.WireNames[which_wire]] on the detonator.</font></b>")
 				switch(src.det.WireFunctions[which_wire])
 					if("detonate")
-						playsound(src.loc, "sound/machines/whistlealert.ogg", 50, 1)
-						playsound(src.loc, "sound/machines/whistlealert.ogg", 50, 1)
+						playsound(src.loc, 'sound/machines/whistlealert.ogg', 50, 1)
+						playsound(src.loc, 'sound/machines/whistlealert.ogg', 50, 1)
 						src.visible_message("<B><font color=#B7410E>The failsafe timer beeps three times before going quiet forever.</font></B>")
 						SPAWN(0)
 							src.det.detonate()
 					if("defuse")
-						playsound(src.loc, "sound/machines/ping.ogg", 50, 1)
+						playsound(src.loc, 'sound/machines/ping.ogg', 50, 1)
 						src.visible_message("<B><font color=#32CD32>The detonator assembly emits a sighing, fading beep. The bomb has been disarmed.</font></B>")
 						src.det.defused = 1
 					if("safety")
 						if (!src.det.safety)
 							src.visible_message("<B><font color=#B7410E>Nothing appears to happen.</font></B>")
 						else
-							playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+							playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 							src.visible_message("<B><font color=#B7410E>An unsettling click signals that the safety disengages.</font></B>")
 							src.det.safety = 0
 							src.det.failsafe_engage()
 					if("losetime")
 						src.det.failsafe_engage()
-						playsound(src.loc, "sound/machines/twobeep.ogg", 50, 1)
-						if (src.det.part_fs.time > 7)
-							src.det.part_fs.time -= 7
+						playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1)
+						if (src.det.part_fs.time > 7 SECONDS)
+							src.det.part_fs.time -= 7 SECONDS
 						else
-							src.det.part_fs.time = 2
-							src.visible_message("<B><font color=#B7410E>The failsafe beeps rapidly for two moments. The external display indicates that the timer has reduced to [src.det.part_fs.time] seconds.</font></B>")
+							src.det.part_fs.time = 2 SECONDS
+							src.visible_message("<B><font color=#B7410E>The failsafe beeps rapidly for two moments. The external display indicates that the timer has reduced to [src.det.part_fs.time SECONDS] seconds.</font></B>")
 					if("mobility")
 						src.det.failsafe_engage()
-						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if (anchored)
 							src.visible_message("<B><font color=#B7410E>A faint click is heard from inside the canister, but the effect is not immediately apparent.</font></B>")
 						else
@@ -580,7 +578,7 @@
 						src.valve_open = 1
 						src.release_pressure = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE
 						src.visible_message("<B><font color=#B7410E>An electric buzz is heard before the release valve flies off the canister.</font></B>")
-						playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
+						playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 						src.det.leaking()
 					else
 						src.det.failsafe_engage()
@@ -604,9 +602,9 @@
 				switch (src.det.WireFunctions[which_wire])
 					if ("detonate")
 						if (src.det.part_fs.timing)
-							playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
-							if (src.det.part_fs.time > 7)
-								src.det.part_fs.time = 7
+							playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
+							if (src.det.part_fs.time > 7 SECONDS)
+								src.det.part_fs.time = 7 SECONDS
 								src.visible_message("<B><font color=#B7410E>The failsafe timer buzzes loudly and sets itself to 7 seconds.</font></B>")
 							else
 								src.visible_message("<B><font color=#B7410E>The failsafe timer buzzes refusingly before going quiet forever.</font></B>")
@@ -614,21 +612,21 @@
 									src.det.detonate()
 						else
 							src.det.failsafe_engage()
-							src.det.part_fs.time = rand(8,14)
-							playsound(src.loc, "sound/machines/pod_alarm.ogg", 50, 1)
-							src.visible_message("<B><font color=#B7410E>The failsafe timer buzzes loudly and activates. You have [src.det.part_fs.time] seconds to act.</font></B>")
+							src.det.part_fs.time = rand(8,14) SECONDS
+							playsound(src.loc, 'sound/machines/pod_alarm.ogg', 50, 1)
+							src.visible_message("<B><font color=#B7410E>The failsafe timer buzzes loudly and activates. You have [src.det.part_fs.time / 10] seconds to act.</font></B>")
 					if ("defuse")
 						src.det.failsafe_engage()
 						if (src.det.grant)
-							src.det.part_fs.time += 5
-							playsound(src.loc, "sound/machines/ping.ogg", 50, 1)
-							src.visible_message("<B><font color=#B7410E>The detonator assembly emits a reassuring noise. You notice that the failsafe timer has increased to [src.det.part_fs.time] seconds.</font></B>")
+							src.det.part_fs.time += 5 SECONDS
+							playsound(src.loc, 'sound/machines/ping.ogg', 50, 1)
+							src.visible_message("<B><font color=#B7410E>The detonator assembly emits a reassuring noise. You notice that the failsafe timer has increased to [src.det.part_fs.time / 10] seconds.</font></B>")
 							src.det.grant = 0
 						else
-							playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 1)
+							playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
 							src.visible_message("<B><font color=#B7410E>The detonator assembly emits a sinister noise, but there are no apparent changes visible externally.</font></B>")
 					if ("safety")
-						playsound(src.loc, "sound/machines/twobeep.ogg", 50, 1)
+						playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1)
 						if (!src.det.safety)
 							src.visible_message("<B><font color=#B7410E>The display flashes with no apparent outside effect.</font></B>")
 						else
@@ -637,16 +635,16 @@
 					if ("losetime")
 						src.det.failsafe_engage()
 						src.det.shocked = 1
-						var/losttime = rand(2,5)
-						src.visible_message("<B><font color=#B7410E>The bomb buzzes oddly, emitting electric sparks. It would be a bad idea to touch any wires for the next [losttime] seconds.</font></B>")
+						var/losttime = rand(2,5) SECONDS
+						src.visible_message("<B><font color=#B7410E>The bomb buzzes oddly, emitting electric sparks. It would be a bad idea to touch any wires for the next [losttime / 10] seconds.</font></B>")
 						playsound(src.loc, "sparks", 75, 1, -1)
 						elecflash(src,power = 2)
-						SPAWN(10 * losttime)
+						SPAWN(losttime)
 							src.det.shocked = 0
 							src.visible_message("<B><font color=#B7410E>The buzzing stops, and the countdown continues.</font></B>")
 					if ("mobility")
 						src.det.failsafe_engage()
-						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if (anchored)
 							anchored = 0
 							src.visible_message("<B><font color=#B7410E>A loud click is heard from the inside the canister, unsecuring itself.</font></B>")
@@ -655,7 +653,7 @@
 							src.visible_message("<B><font color=#B7410E>A loud click is heard from the bottom of the canister, securing itself.</font></B>")
 					if ("leak")
 						src.det.failsafe_engage()
-						playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
+						playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 						if (prob(min(src.det.leaks * 8, 100)))
 							has_valve = 0
 							valve_open = 1

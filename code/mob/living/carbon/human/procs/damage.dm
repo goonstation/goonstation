@@ -7,14 +7,13 @@
 	if(istype(/atom, .))
 		return . //meatshielded
 
+	var/armor_value_bullet = get_ranged_protection()
+
 	var/damage = 0
 	if (P.proj_data)  //ZeWaka: Fix for null.ks_ratio
 		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
+		armor_value_bullet = max(armor_value_bullet*(1-P.proj_data.armor_ignored),1)
 
-	var/armor_value_bullet = 1
-
-	if (!(client && client.hellbanned))
-		armor_value_bullet = get_ranged_protection()
 	var/target_organ = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
 	if (P.proj_data) //Wire: Fix for: Cannot read null.damage_type
 		switch(P.proj_data.damage_type)
@@ -226,7 +225,7 @@
 	src.UpdateDamageIcon()
 
 /mob/living/carbon/human/blob_act(var/power)
-	logTheThing("combat", src, null, "is hit by a blob")
+	logTheThing(LOG_COMBAT, src, "is hit by a blob")
 	if (isdead(src) || src.nodamage)
 		return
 	var/shielded = 0
@@ -398,7 +397,7 @@
 		try
 			E = src.organs[zone]
 		catch
-			logTheThing("debug", null, null, "<b>ORGAN/INDEX_DMG</b> Invalid index: [zone]")
+			logTheThing(LOG_DEBUG, null, "<b>ORGAN/INDEX_DMG</b> Invalid index: [zone]")
 			return 0
 		if (isitem(E))
 			if (E.take_damage(brute, burn, 0/*tox*/, damage_type))

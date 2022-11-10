@@ -53,6 +53,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_attack_messages,
 		/client/proc/toggle_adminwho_alerts,
 		/client/proc/toggle_rp_word_filtering,
+		/client/proc/toggle_uncool_word_filtering,
 		/client/proc/toggle_hear_prayers,
 		/client/proc/cmd_admin_plain_message,
 		/client/proc/cmd_admin_check_vehicle,
@@ -128,6 +129,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_unhandcuff,
 		/client/proc/admin_toggle_lighting,
 		/client/proc/cmd_admin_managebioeffect,
+		/client/proc/toggle_cloning_with_records,
 
 		/client/proc/debug_deletions,
 
@@ -223,6 +225,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_fake_medal,
 		/datum/admins/proc/togglespeechpopups,
 		/datum/admins/proc/togglemonkeyspeakhuman,
+		/datum/admins/proc/toggletraitorsseeeachother,
 		/datum/admins/proc/toggleautoending,
 		/datum/admins/proc/togglelatetraitors,
 		/datum/admins/proc/toggle_pull_slowing,
@@ -233,6 +236,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_force_mixed_blob,
 		/client/proc/toggle_force_mixed_wraith,
 		/client/proc/toggle_spooky_light_plane,
+		/datum/admins/proc/toggle_radio_audio,
 		///proc/possess,
 		/proc/possessmob,
 		/proc/releasemob,
@@ -263,6 +267,7 @@ var/list/admin_verbs = list(
 		/client/proc/idclip,
 		///client/proc/addpathogens,
 		/client/proc/respawn_as_self,
+		/client/proc/respawn_list_players,
 		/client/proc/cmd_give_pet,
 		/client/proc/cmd_give_pets,
 		/client/proc/cmd_give_player_pets,
@@ -449,6 +454,7 @@ var/list/admin_verbs = list(
 		/client/proc/set_pod_wars_score,
 		/client/proc/set_pod_wars_deaths,
 		/client/proc/clear_nukeop_uplink_purchases,
+		/client/proc/upload_uncool_words,
 
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,
@@ -516,12 +522,12 @@ var/list/special_pa_observing_verbs = list(
 		for (var/client/C in clients)
 			C.screen += A
 		message_admins("[key_name(usr)] added [A] to everyone's screen!")
-		logTheThing("admin", usr, null, "added [A] to everyone's screen.")
+		logTheThing(LOG_ADMIN, usr, "added [A] to everyone's screen.")
 	else
 		var/client/C = who[chosen]
 		C.screen += A
 		boutput(usr, "<span class='notice'>Successful.</span>")
-		logTheThing("admin", usr, C.mob, "added [A] to [constructTarget(C.mob,"admin")]'s screen.")
+		logTheThing(LOG_ADMIN, usr, "added [A] to [constructTarget(C.mob,"admin")]'s screen.")
 */
 /client/proc/update_admins(var/rank)
 	if(!src.holder)
@@ -771,8 +777,8 @@ var/list/special_pa_observing_verbs = list(
 		if (src.auto_alt_key)
 			src.set_alt_key(src.auto_alt_key_name)
 
-	logTheThing("admin", src.owner, null, "has turned stealth mode [src.owner:stealth ? "ON using key \"[src.owner:fakekey]\"" : "OFF"]")
-	logTheThing("diary", src.owner, null, "has turned stealth mode [src.owner:stealth ? "ON using key \"[src.owner:fakekey]\"" : "OFF"]", "admin")
+	logTheThing(LOG_ADMIN, src.owner, "has turned stealth mode [src.owner:stealth ? "ON using key \"[src.owner:fakekey]\"" : "OFF"]")
+	logTheThing(LOG_DIARY, src.owner, "has turned stealth mode [src.owner:stealth ? "ON using key \"[src.owner:fakekey]\"" : "OFF"]", "admin")
 	message_admins("[key_name(src.owner)] has turned stealth mode [src.owner:stealth ? "ON using key \"[src.owner:fakekey]\"" : "OFF"]")
 
 	if (src.owner:stealth)
@@ -814,8 +820,8 @@ var/list/special_pa_observing_verbs = list(
 	else
 		src.owner:fakekey = null
 
-	logTheThing("admin", src.owner, null, "has changed their displayed key to [src.owner:alt_key ? "\"[src.owner:fakekey]\"" : "\"[src.owner:key]\""]")
-	logTheThing("diary", src.owner, null, "has changed their displayed key to [src.owner:alt_key ? "\"[src.owner:fakekey]\"" : "\"[src.owner:key]\""]", "admin")
+	logTheThing(LOG_ADMIN, src.owner, "has changed their displayed key to [src.owner:alt_key ? "\"[src.owner:fakekey]\"" : "\"[src.owner:key]\""]")
+	logTheThing(LOG_DIARY, src.owner, "has changed their displayed key to [src.owner:alt_key ? "\"[src.owner:fakekey]\"" : "\"[src.owner:key]\""]", "admin")
 	message_admins("[key_name(src.owner)] has changed their displayed key to [src.owner:alt_key ? "\"[src.owner:fakekey]\"" : "\"[src.owner:key]\""]")
 /*
 	if (src.alt_key)
@@ -838,13 +844,13 @@ var/list/special_pa_observing_verbs = list(
 	if (!oocban_isbanned(target))
 		oocban_fullban(target)
 		message_admins("[key_name(src)] has banned [key_name(target)] from OOC")
-		logTheThing("admin", usr, target, "Banned [constructTarget(target,"admin")] from OOC")
-		logTheThing("diary", usr, target, "Banned [constructTarget(target,"diary")] from OOC", "admin")
+		logTheThing(LOG_ADMIN, usr, "Banned [constructTarget(target,"admin")] from OOC")
+		logTheThing(LOG_DIARY, usr, "Banned [constructTarget(target,"diary")] from OOC", "admin")
 	else
 		oocban_unban(selection)
 		message_admins("[key_name(src)] has unbanned [key_name(target)] from OOC")
-		logTheThing("admin", usr, target, "Unbanned [constructTarget(target,"admin")] from OOC")
-		logTheThing("diary", usr, target, "Unbanned [constructTarget(target,"diary")] from OOC", "admin")
+		logTheThing(LOG_ADMIN, usr, "Unbanned [constructTarget(target,"admin")] from OOC")
+		logTheThing(LOG_DIARY, usr, "Unbanned [constructTarget(target,"diary")] from OOC", "admin")
 
 /client/proc/warn(var/mob/M in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -899,8 +905,8 @@ var/list/fun_images = list()
 		fun_images += fun_image
 		for (var/client/C in clients)
 			fun_image.add_client(C)
-		logTheThing("admin", src, null, "has uploaded icon [I] to all players")
-		logTheThing("diary", src, null, "has uploaded icon [I] to all players", "admin")
+		logTheThing(LOG_ADMIN, src, "has uploaded icon [I] to all players")
+		logTheThing(LOG_DIARY, src, "has uploaded icon [I] to all players", "admin")
 		message_admins("[key_name(src)] has uploaded icon [I] to all players")
 
 /client/proc/show_rules_to_player(mob/M as mob in world)
@@ -915,15 +921,15 @@ var/list/fun_images = list()
 	if(!M.client)
 		alert("[M] is logged out, so you should probably ban them!")
 		return
-	logTheThing("admin", src, M, "forced [constructTarget(M,"admin")] to view the rules")
-	logTheThing("diary", src, M, "forced [constructTarget(M,"diary")] to view the rules", "admin")
+	logTheThing(LOG_ADMIN, src, "forced [constructTarget(M,"admin")] to view the rules")
+	logTheThing(LOG_DIARY, src, "forced [constructTarget(M,"diary")] to view the rules", "admin")
 	message_admins("[key_name(src)] forced [key_name(M)] to view the rules.")
 	switch(crossness)
 		if ("A bit")
-			M << csound("sound/misc/newsting.ogg")
+			M << csound('sound/misc/newsting.ogg')
 			boutput(M, "<span class='alert'><B>Here are the rules, you can read this, you have a good chance of being able to read them too.</B></span>")
 		if ("A lot")
-			M << csound("sound/misc/klaxon.ogg")
+			M << csound('sound/misc/klaxon.ogg')
 			boutput(M, "<span class='alert'><B>WARNING: An admin is likely very cross with you and wants you to read the rules right fucking now!</B></span>")
 
 	// M << browse(rules, "window=rules;size=800x1000")
@@ -954,7 +960,7 @@ var/list/fun_images = list()
 	set popup_menu = 0
 	ADMIN_ONLY
 
-	var/list/respawn_types = list("Heavenly", "Demonically")
+	var/list/respawn_types = list("Heavenly", "Demonically", "Beam")
 	var/selection = tgui_input_list(src.mob, "Select Respawn type.", "Cinematic Respawn", respawn_types)
 	switch(selection)
 		if("Heavenly")
@@ -967,6 +973,9 @@ var/list/fun_images = list()
 			var/mob/living/carbon/human/M = src.mob
 			M.bioHolder.AddEffect("hell_fire", magical = 1)
 			demonic_spawn(M)
+		if("Beam")
+			src.respawn_as_self()
+			spawn_beam(src.mob)
 
 /client/proc/respawn_as(var/client/cli in clients)
 	set name = "Respawn As"
@@ -1059,6 +1068,28 @@ var/list/fun_images = list()
 		for (var/mob/living/M in oviewers(5, get_turf(H)))
 			M.apply_flash(animation_duration = 30, weak = 5, uncloak_prob = 0, stamina_damage = 250)
 
+/client/proc/respawn_list_players()
+	set name = "Respawn List of Players"
+	set desc = "Respawn the provided list of players."
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set popup_menu = FALSE
+	ADMIN_ONLY
+
+	var/list/ckeys = splittext(input(src, "Input list of players", "Ckeys with spaces as delimiters", null) as null|text, " ")
+	if (!length(ckeys))
+		return
+	var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
+	sortList(jobs, /proc/cmp_text_asc)
+	var/datum/job/job = tgui_input_list(usr, "Select job to respawn", "Respawn As", jobs)
+	if (!job)
+		return
+	for (var/CK in ckeys)
+		var/mob/M = ckey_to_mob(CK)
+		if (!M)
+			continue
+		var/mob/new_player/NP = src.respawn_target(M)
+		NP?.AttemptLateSpawn(job, force=TRUE)
+
 /client/proc/cmd_admin_humanize(var/mob/M in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Humanize"
@@ -1104,16 +1135,16 @@ var/list/fun_images = list()
 		if (S.dependent && S.mainframe && isAI(S.mainframe))
 			qdel(S.mainframe) // Delete mainframe if it's an AI-controlled robot.
 
-	logTheThing("admin", src, M, "has made [constructTarget(M,"admin")] a human.")
-	logTheThing("diary", src, M, "has made [constructTarget(M,"diary")] a human.", "admin")
+	logTheThing(LOG_ADMIN, src, "has made [constructTarget(M,"admin")] a human.")
+	logTheThing(LOG_DIARY, src, "has made [constructTarget(M,"diary")] a human.", "admin")
 	message_admins("[key_name(src)] has made [key_name(M)] a human.")
 
 	if (send_to_arrival_shuttle == 1)
 		M.show_text("<h2><font color=red><B>You have been respawned as a human and send to the arrival shuttle. If this is an unexpected development, please inquire about it in adminhelp.</B></font></h2>", "red")
-		return M.humanize(1)
+		return M.humanize(TRUE, FALSE, FALSE)
 	else
 		M.show_text("<h2><font color=red><B>You have been respawned as a human. If this is an unexpected development, please inquire about it in adminhelp.</B></font></h2>", "red")
-		return M.humanize(0)
+		return M.humanize(FALSE, FALSE, FALSE)
 
 /client/proc/cmd_admin_pop_off_all_the_limbs_oh_god()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -1121,8 +1152,8 @@ var/list/fun_images = list()
 	set desc = "Oh christ no don't do this"
 
 	if(alert("Really pop off everyone's limbs?", "JESUS CHRIST", "Yes, I'm a crazy bastard", "No") == "Yes, I'm a crazy bastard")
-		logTheThing("admin", src, null, "popped off all limbs.")
-		logTheThing("diary", src, null, "has popped off all limbs", "admin")
+		logTheThing(LOG_ADMIN, src, "popped off all limbs.")
+		logTheThing(LOG_DIARY, src, "has popped off all limbs", "admin")
 		message_admins("[key_name(src)] has popped off everyone's limbs.")
 
 		for (var/mob/living/M in mobs)
@@ -1299,8 +1330,8 @@ var/list/fun_images = list()
 
 	if (src.holder.level < LEVEL_ADMIN)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
-	logTheThing("admin", src, null, "BLOBSAY: [msg]")
-	logTheThing("diary", src, null, "BLOBSAY: [msg]", "admin")
+	logTheThing(LOG_ADMIN, src, "BLOBSAY: [msg]")
+	logTheThing(LOG_DIARY, src, "BLOBSAY: [msg]", "admin")
 
 	if (!msg)
 		return
@@ -1331,8 +1362,8 @@ var/list/fun_images = list()
 
 	if (src.holder.level < LEVEL_ADMIN)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
-	logTheThing("admin", src, null, "HIVESAY: [msg]")
-	logTheThing("diary", src, null, "HIVESAY: [msg]", "admin")
+	logTheThing(LOG_ADMIN, src, "HIVESAY: [msg]")
+	logTheThing(LOG_DIARY, src, "HIVESAY: [msg]", "admin")
 
 	if (!msg)
 		return
@@ -1369,8 +1400,8 @@ var/list/fun_images = list()
 
 	if (src.holder.level < LEVEL_ADMIN)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
-	logTheThing("admin", src, null, "SILISAY: [msg]")
-	logTheThing("diary", src, null, "SILISAY: [msg]", "admin")
+	logTheThing(LOG_ADMIN, src, "SILISAY: [msg]")
+	logTheThing(LOG_DIARY, src, "SILISAY: [msg]", "admin")
 
 	if (!msg)
 		return
@@ -1400,8 +1431,8 @@ var/list/fun_images = list()
 
 	if (src.holder.level < LEVEL_ADMIN)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
-	logTheThing("admin", src, null, "DRONESAY: [msg]")
-	logTheThing("diary", src, null, "DRONESAY: [msg]", "admin")
+	logTheThing(LOG_ADMIN, src, "DRONESAY: [msg]")
+	logTheThing(LOG_DIARY, src, "DRONESAY: [msg]", "admin")
 
 	if (!msg)
 		return
@@ -1433,8 +1464,8 @@ var/list/fun_images = list()
 
 	if (src.holder.level < LEVEL_ADMIN)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
-	logTheThing("admin", src, null, "MARSAY: [msg]")
-	logTheThing("diary", src, null, "MARSAY: [msg]", "admin")
+	logTheThing(LOG_ADMIN, src, "MARSAY: [msg]")
+	logTheThing(LOG_DIARY, src, "MARSAY: [msg]", "admin")
 
 	if (!msg)
 		return
@@ -1450,12 +1481,12 @@ var/list/fun_images = list()
 
 	if (src.holder.level < LEVEL_ADMIN)
 		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
-	logTheThing("admin", src, null, "FLOCKSAY: [msg]")
-	logTheThing("diary", src, null, "FLOCKSAY: [msg]", "admin")
+	logTheThing(LOG_ADMIN, src, "FLOCKSAY: [msg]")
+	logTheThing(LOG_DIARY, src, "FLOCKSAY: [msg]", "admin")
 
 	if (!msg)
 		return
-	flock_speak(src.mob, msg, null, 1)
+	flock_speak(src.mob, msg, null, speak_as_admin = TRUE)
 
 
 /client/proc/cmd_dectalk()
@@ -1474,8 +1505,8 @@ var/list/fun_images = list()
 	var/audio = dectalk(msg)
 	if (audio && audio["audio"])
 		message_admins("[key_name(src)] has used the dectalk verb with message: [audio["message"]]")
-		logTheThing("admin", src, null, "has used the dectalk verb with message: [audio["message"]]")
-		logTheThing("diary", src, null, "has used the dectalk verb with message: [audio["message"]]", "admin")
+		logTheThing(LOG_ADMIN, src, "has used the dectalk verb with message: [audio["message"]]")
+		logTheThing(LOG_DIARY, src, "has used the dectalk verb with message: [audio["message"]]", "admin")
 
 		for (var/client/C in clients)
 			if (C.ignore_sound_flags & (SOUND_VOX | SOUND_ALL))
@@ -1522,8 +1553,8 @@ var/list/fun_images = list()
 		CritterPet.atkcarbon = 0
 		CritterPet.atksilicon = 0
 
-	logTheThing("admin", usr ? usr : src, M, "gave [constructTarget(M,"admin")] a pet [pet_path]!")
-	logTheThing("diary", usr ? usr : src, M, "gave [constructTarget(M,"diary")] a pet [pet_path]!", "admin")
+	logTheThing(LOG_ADMIN, usr ? usr : src, M, "gave [constructTarget(M,"admin")] a pet [pet_path]!")
+	logTheThing(LOG_DIARY, usr ? usr : src, M, "gave [constructTarget(M,"diary")] a pet [pet_path]!", "admin")
 	message_admins("[key_name(usr ? usr : src)] gave [M] a pet [pet_path]!")
 
 /client/proc/cmd_give_pets(pet_input=null as text)
@@ -1554,8 +1585,8 @@ var/list/fun_images = list()
 
 		LAGCHECK(LAG_LOW)
 
-	logTheThing("admin", usr ? usr : src, null, "gave everyone a pet [pet_path]!")
-	logTheThing("diary", usr ? usr : src, null, "gave everyone a pet [pet_path]!", "admin")
+	logTheThing(LOG_ADMIN, usr ? usr : src, null, "gave everyone a pet [pet_path]!")
+	logTheThing(LOG_DIARY, usr ? usr : src, null, "gave everyone a pet [pet_path]!", "admin")
 	message_admins("[key_name(usr ? usr : src)] gave everyone a pet [pet_path]!")
 
 /client/proc/cmd_give_player_pets(pet_input=null as text)
@@ -1588,8 +1619,8 @@ var/list/fun_images = list()
 
 		LAGCHECK(LAG_LOW)
 
-	logTheThing("admin", usr ? usr : src, null, "gave every player a pet [pet_path]!")
-	logTheThing("diary", usr ? usr : src, null, "gave every player a pet [pet_path]!", "admin")
+	logTheThing(LOG_ADMIN, usr ? usr : src, null, "gave every player a pet [pet_path]!")
+	logTheThing(LOG_DIARY, usr ? usr : src, null, "gave every player a pet [pet_path]!", "admin")
 	message_admins("[key_name(usr ? usr : src)] gave every player a pet [pet_path]!")
 
 /client/proc/cmd_customgrenade()
@@ -1599,9 +1630,7 @@ var/list/fun_images = list()
 	set desc = "Create a custom object spewing grenade"
 	ADMIN_ONLY
 
-	var/new_grenade = tgui_alert(src.mob, "Use the new thing throwing grenade?", "Cool new grenade?", list("Yes", "No"))
-	if(new_grenade == "No")
-		return
+	var/new_grenade = tgui_alert(src.mob, "Use the new thing throwing grenade?", "Cool new grenade?", list("Yes", "No")) == "Yes"
 	var/obj_input = input("Enter path of the object you want the grenade to have or enter a part of the path to search", "Enter Path") as null|text
 	if (!obj_input)
 		return
@@ -1620,8 +1649,8 @@ var/list/fun_images = list()
 		nade.payload = obj_path
 		nade.name = "mysterious grenade"
 		nade.desc = "There could be anything inside this."
-	logTheThing("admin", src, null, "spawned a custom grenade at [usr.loc]")
-	logTheThing("diary", src, null, "spawned a custom grenade at [usr.loc]", "admin")
+	logTheThing(LOG_ADMIN, src, "spawned a custom grenade at [usr.loc]")
+	logTheThing(LOG_DIARY, src, "spawned a custom grenade at [usr.loc]", "admin")
 	message_admins("[key_name(src)] spawned a custom grenade at [usr.loc].")
 
 /client/proc/admin_changes()
@@ -1635,6 +1664,18 @@ var/list/fun_images = list()
 	else
 		var/changelogHtml = grabResource("html/changelog.html")
 		var/data = admin_changelog:html
+		var/fontcssdata = {"
+				<style type="text/css">
+				@font-face {
+					font-family: 'Twemoji';
+					src: url('[resource("css/fonts/Twemoji.eot")]');
+					src: url('[resource("css/fonts/Twemoji.eot")]') format('embedded-opentype'),
+						 url('[resource("css/fonts/Twemoji.ttf")]') format('truetype');
+					text-rendering: optimizeLegibility;
+				}
+				</style>
+		"}
+		changelogHtml = replacetext(changelogHtml, "<!-- CSS INJECT GOES HERE -->", fontcssdata)
 		changelogHtml = replacetext(changelogHtml, "<!-- HTML GOES HERE -->", "[data]")
 		src.Browse(changelogHtml, "window=adminchanges;size=500x650;title=Admin+Changelog;", 1)
 
@@ -1687,8 +1728,8 @@ var/list/fun_images = list()
 	M.remove()
 
 	var/Target = C ? C : M
-	logTheThing("admin", src, Target, "removed [constructTarget(Target,"admin")] from existence!")
-	logTheThing("diary", src, Target, "removed [constructTarget(Target,"diary")] from existence!", "admin")
+	logTheThing(LOG_ADMIN, src, "removed [constructTarget(Target,"admin")] from existence!")
+	logTheThing(LOG_DIARY, src, "removed [constructTarget(Target,"diary")] from existence!", "admin")
 	message_admins("[key_name(src)] removed [key_name(C ? C : M)] from existence!")
 
 /client/proc/cmd_change_map()
@@ -1713,7 +1754,7 @@ var/list/fun_images = list()
 	if (mapSwitcher.next)
 		info += "\nNext round's map will be: [mapSwitcher.next]"
 
-	var/map = input(info, "Switch Map", mapSwitcher.next ? mapSwitcher.next : mapSwitcher.current, mapNames)
+	var/map = input(info, "Switch Map", mapSwitcher.next ? mapSwitcher.next : mapSwitcher.current) as null|anything in mapNames
 	if (!map) return
 
 	if (map == mapSwitcher.current && !mapSwitcher.next)
@@ -1722,11 +1763,11 @@ var/list/fun_images = list()
 	try
 		mapSwitcher.setNextMap(src.key, mapName = map)
 	catch (var/exception/e)
-		logTheThing("debug", null, null, "<b>Map Switcher:</b> [e.name]")
+		logTheThing(LOG_DEBUG, null, "<b>Map Switcher:</b> [e.name]")
 		return alert("Oh no! Something went wrong with the map switcher. Details have been logged to the debug category.")
 
-	logTheThing("admin", usr ? usr : src, null, "set the next round's map to [map]")
-	logTheThing("diary", usr ? usr : src, null, "set the next round's map to [map]", "admin")
+	logTheThing(LOG_ADMIN, usr ? usr : src, null, "set the next round's map to [map]")
+	logTheThing(LOG_DIARY, usr ? usr : src, null, "set the next round's map to [map]", "admin")
 	message_admins("[key_name(usr ? usr : src)] set the next round's map to [map]")
 
 	var/announce = tgui_alert(src.mob, "Map set to [map]. It will apply next round.\n\nAnnounce this to the unwashed masses?", "All done", list("Ok", "Nah"))
@@ -1757,11 +1798,11 @@ var/list/fun_images = list()
 	try
 		mapSwitcher.startMapVote(duration = duration)
 	catch (var/exception/e)
-		logTheThing("debug", null, null, "<b>Map Switcher:</b> [e.name]")
+		logTheThing(LOG_DEBUG, null, "<b>Map Switcher:</b> [e.name]")
 		return alert("Oh no! Something went wrong with the map switcher. Details have been logged to the debug category.")
 
-	logTheThing("admin", usr ? usr : src, null, "triggered a player map vote (duration: [duration])")
-	logTheThing("diary", usr ? usr : src, null, "triggered a player map vote (duration: [duration])", "admin")
+	logTheThing(LOG_ADMIN, usr ? usr : src, null, "triggered a player map vote (duration: [duration])")
+	logTheThing(LOG_DIARY, usr ? usr : src, null, "triggered a player map vote (duration: [duration])", "admin")
 	message_admins("[key_name(usr ? usr : src)] triggered a player map vote (duration: [duration])")
 
 /client/proc/cmd_end_map_vote()
@@ -1782,11 +1823,11 @@ var/list/fun_images = list()
 	try
 		mapSwitcher.endMapVote()
 	catch (var/exception/e)
-		logTheThing("debug", null, null, "<b>Map Switcher:</b> [e.name]")
+		logTheThing(LOG_DEBUG, null, "<b>Map Switcher:</b> [e.name]")
 		return alert("Oh no! Something went wrong with the map switcher. Details have been logged to the debug category.")
 
-	logTheThing("admin", usr ? usr : src, null, "ended the player map vote")
-	logTheThing("diary", usr ? usr : src, null, "ended the player map vote", "admin")
+	logTheThing(LOG_ADMIN, usr ? usr : src, null, "ended the player map vote")
+	logTheThing(LOG_DIARY, usr ? usr : src, null, "ended the player map vote", "admin")
 	message_admins("[key_name(usr ? usr : src)] ended the player map vote")
 
 /client/proc/cmd_cancel_map_vote()
@@ -1811,11 +1852,11 @@ var/list/fun_images = list()
 	try
 		mapSwitcher.cancelMapVote()
 	catch (var/exception/e)
-		logTheThing("debug", null, null, "<b>Map Switcher:</b> [e.name]")
+		logTheThing(LOG_DEBUG, null, "<b>Map Switcher:</b> [e.name]")
 		return alert("Oh no! Something went wrong with the map switcher. Details have been logged to the debug category.")
 
-	logTheThing("admin", usr ? usr : src, null, "cancelled the player map vote prematurely")
-	logTheThing("diary", usr ? usr : src, null, "cancelled the player map vote prematurely", "admin")
+	logTheThing(LOG_ADMIN, usr ? usr : src, null, "cancelled the player map vote prematurely")
+	logTheThing(LOG_DIARY, usr ? usr : src, null, "cancelled the player map vote prematurely", "admin")
 	message_admins("[key_name(usr ? usr : src)] cancelled the player map vote prematurely. Rude.")
 
 /client/proc/cmd_antag_history(var/ckey as text)
@@ -1904,7 +1945,7 @@ var/list/fun_images = list()
 		if(alert("There's already some HTML shown. Do you want to remove or replace it?", "HTML clear?", "Remove", "Replace") == "Remove")
 			pregameHTML = null
 			message_admins("[key_name(src)] cleared the pre-game HTML.")
-			logTheThing("admin", src, null, "cleared the pre-game HTML.")
+			logTheThing(LOG_ADMIN, src, "cleared the pre-game HTML.")
 			for(var/client/C)
 				try
 					C<< browse("", "window=pregameBrowser")
@@ -1927,7 +1968,7 @@ var/list/fun_images = list()
 	if(newHTML)
 		pregameHTML = newHTML
 		message_admins("[key_name(src)] changed the pre-game HTML.")
-		logTheThing("admin", src, null, "changed the pre-game HTML.")
+		logTheThing(LOG_ADMIN, src, "changed the pre-game HTML.")
 		for(var/client/C)
 			if(istype(C.mob, /mob/new_player))
 				C << browse(pregameHTML, "window=pregameBrowser")
@@ -1954,7 +1995,7 @@ var/list/fun_images = list()
 			return
 	microbombs_4_everyone = max(bomb_power, 0)
 	message_admins("[key_name(usr)] [bomb_power > 0 ? "implanted everyone with a microbomb. Power: [bomb_power]" : "turned off microbombs for everyone."]")
-	logTheThing("admin", usr, null, "[bomb_power > 0 ? "implanted everyone with a microbomb. Power: [bomb_power]" : "turned off microbombs for everyone."]")
+	logTheThing(LOG_ADMIN, usr, "[bomb_power > 0 ? "implanted everyone with a microbomb. Power: [bomb_power]" : "turned off microbombs for everyone."]")
 	if (microbombs_4_everyone > 0)
 		var/implanted = 0
 		for (var/mob/living/carbon/human/H in mobs)
@@ -1985,8 +2026,8 @@ var/list/fun_images = list()
 
 	world.save_intra_round_value("nukie_last_reset", world.realtime)
 
-	logTheThing("admin", usr ? usr : src, null, "set nuke ops values to [win_value] wins and [lose_value] loses.")
-	logTheThing("diary", usr ? usr : src, null, "set nuke ops values to [win_value] wins and [lose_value] loses.", "admin")
+	logTheThing(LOG_ADMIN, usr ? usr : src, null, "set nuke ops values to [win_value] wins and [lose_value] loses.")
+	logTheThing(LOG_DIARY, usr ? usr : src, null, "set nuke ops values to [win_value] wins and [lose_value] loses.", "admin")
 	message_admins("[key_name(usr ? usr : src)] set nuke ops values to [win_value] wins and [lose_value] loses.")
 
 /client/proc/set_pod_wars_score()
@@ -2005,8 +2046,8 @@ var/list/fun_images = list()
 
 	world.save_intra_round_value("pod_wars_last_reset", world.realtime)
 
-	logTheThing("admin", usr ? usr : src, null, "set pod war win values to [nt_win_value] Nanotrasen wins and [sy_win_value] Syndicate wins.")
-	logTheThing("diary", usr ? usr : src, null, "set pod war win values to [nt_win_value] Nanotrasen wins and [sy_win_value] Syndicate wins.", "admin")
+	logTheThing(LOG_ADMIN, usr ? usr : src, null, "set pod war win values to [nt_win_value] Nanotrasen wins and [sy_win_value] Syndicate wins.")
+	logTheThing(LOG_DIARY, usr ? usr : src, null, "set pod war win values to [nt_win_value] Nanotrasen wins and [sy_win_value] Syndicate wins.", "admin")
 	message_admins("[key_name(usr ? usr : src)] set pod war win values to [nt_win_value] Nanotrasen wins and [sy_win_value] Syndicate wins.")
 
 /client/proc/set_pod_wars_deaths()
@@ -2025,8 +2066,8 @@ var/list/fun_images = list()
 
 	world.save_intra_round_value("pod_wars_last_reset", world.realtime)
 
-	logTheThing("admin", usr ? usr : src, null, "set pod war death values to [nt_death_value] Nanotrasen deaths and [sy_death_value] Syndicate deaths.")
-	logTheThing("diary", usr ? usr : src, null, "set pod war death values to [nt_death_value] Nanotrasen deaths and [sy_death_value] Syndicate deaths.", "admin")
+	logTheThing(LOG_ADMIN, usr ? usr : src, null, "set pod war death values to [nt_death_value] Nanotrasen deaths and [sy_death_value] Syndicate deaths.")
+	logTheThing(LOG_DIARY, usr ? usr : src, null, "set pod war death values to [nt_death_value] Nanotrasen deaths and [sy_death_value] Syndicate deaths.", "admin")
 	message_admins("[key_name(usr ? usr : src)] set pod war death values to [nt_death_value] Nanotrasen deaths and [sy_death_value] Syndicate deaths.")
 
 /client/proc/clear_nukeop_uplink_purchases()
@@ -2043,8 +2084,8 @@ var/list/fun_images = list()
 	for(var/datum/syndicate_buylist/commander/commander_datum in syndi_buylist_cache)
 		world.save_intra_round_value("NuclearCommander-[commander_datum]-Purchased", 0)
 
-	logTheThing("admin", usr ? usr : src, null, "wiped the Nuclear Operative Commander uplink purchase stats.")
-	logTheThing("diary", usr ? usr : src, null, "wiped the Nuclear Operative Commander uplink purchase stats.", "admin")
+	logTheThing(LOG_ADMIN, usr ? usr : src, null, "wiped the Nuclear Operative Commander uplink purchase stats.")
+	logTheThing(LOG_DIARY, usr ? usr : src, null, "wiped the Nuclear Operative Commander uplink purchase stats.", "admin")
 	message_admins("[key_name(usr ? usr : src)] wiped the Nuclear Operative Commander uplink purchase stats.")
 
 /mob/verb/admin_interact_verb()
@@ -2193,8 +2234,8 @@ var/list/fun_images = list()
 		return 0
 	global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
 	message_admins("Ckey [vpnckey] added to the VPN whitelist by [src.key].")
-	logTheThing("admin", src, null, "Ckey [vpnckey] added to the VPN whitelist.")
-	addPlayerNote(vpnckey, src.ckey, "Ckey [ckey] added to the VPN whitelist.")
+	logTheThing(LOG_ADMIN, src, "Ckey [vpnckey] added to the VPN whitelist.")
+	addPlayerNote(vpnckey, src.ckey, "Ckey [vpnckey] added to the VPN whitelist.")
 	return 1
 
 /client/proc/vpn_whitelist_remove(vpnckey as text)
@@ -2209,7 +2250,7 @@ var/list/fun_images = list()
 		message_admins("Error while removing ckey [vpnckey] from the VPN whitelist: [e.name]")
 		return 0
 	message_admins("Ckey [vpnckey] removed from the VPN whitelist by [src.key].")
-	logTheThing("admin", src, null, "Ckey [vpnckey] removed from the VPN whitelist.")
+	logTheThing(LOG_ADMIN, src, "Ckey [vpnckey] removed from the VPN whitelist.")
 	return 1
 
 /client/proc/cmd_lightsout()
@@ -2252,4 +2293,14 @@ var/list/fun_images = list()
 		toggle = FALSE
 		flock.unAchieve(cheat)
 	boutput(src, "[cheat] turned [toggle ? "on" : "off"] for flock [flockname]")
-	logTheThing("admin", src, flock, "has toggled [cheat] [toggle ? "on" : "off"] for flock [flockname]")
+	logTheThing(LOG_ADMIN, src, "has toggled [cheat] [toggle ? "on" : "off"] for flock [flockname]")
+
+/client/proc/upload_uncool_words()
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "Upload Uncool Words"
+	set desc = "Upload a JSON file for the uncool words list"
+	ADMIN_ONLY
+	DENY_TEMPMIN
+
+	global.phrase_log?.upload_uncool_words()
+	global.phrase_log?.load()

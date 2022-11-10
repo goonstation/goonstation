@@ -37,7 +37,7 @@
 				if (radio_override)
 					headset.icon_override = radio_override
 
-		logTheThing("say", holder.owner, mimic_name, "[mimic_message] (<b>Mimicing ([constructTarget(mimic_name,"say")])</b>)")
+		logTheThing(LOG_SAY, holder.owner, "[mimic_message] (<b>Mimicing ([constructTarget(mimic_name,"say")])</b>)")
 		var/original_name = holder.owner.real_name
 		holder.owner.real_name = copytext(mimic_name, 1, MOB_NAME_MAX_LENGTH)
 		holder.owner.say(mimic_message)

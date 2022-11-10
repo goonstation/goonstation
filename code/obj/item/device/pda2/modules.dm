@@ -10,7 +10,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "pdamod"
 	w_class = W_CLASS_SMALL
-	mats = 4.0
+	mats = 4
 	var/obj/item/device/pda2/host = null
 
 	var/setup_use_menu_badge = 0  //Should we have a line in the main menu?
@@ -292,15 +292,15 @@
 		if(..())
 			return
 		if(href_list["toggle"])
-			src.send_alert()
+			src.send_alert(usr)
 		return
 
-	proc/send_alert()
+	proc/send_alert(mob/user)
 		if (!src.host)
-			boutput(usr, "<span class='alert'>No PDA detected.")
+			boutput(user, "<span class='alert'>No PDA detected.")
 			return
 		if (ON_COOLDOWN(src, "send_alert", 5 MINUTES))
-			boutput(usr, "<span class='alert'>[src] is still on cooldown mode!</span>")
+			boutput(user, "<span class='alert'>[src] is still on cooldown mode!</span>")
 			return
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.host
@@ -311,7 +311,17 @@
 		var/area/A = get_area(src.host)
 		signal.data["message"]  = "<b><span class='alert'>***SECURITY BACKUP REQUESTED*** Location: [A ? A.name : "nowhere"]!"
 		src.host.post_signal(signal)
-		boutput(usr, "<span class='notice'>Alert sent.</span>")
+
+		if(isliving(user))
+			playsound(src, 'sound/items/security_alert.ogg', 60)
+			var/map_text = null
+			map_text = make_chat_maptext(usr, "Emergency alert sent. Please assist this officer.", "font-family: 'Helvetica'; color: #D30000; font-size: 7px;", alpha = 215)
+			for (var/mob/O in hearers(usr))
+				O.show_message(assoc_maptext = map_text)
+			usr.visible_message("<span class='alert'>[usr] presses a red button on the side of their [src.host].</span>",
+			"<span class='notice'>You press the \"Alert\" button on the side of your [src.host].</span>",
+			"<span class='alert'>You see [usr] press a button on the side of their [src.host].</span>")
+
 
 /obj/ability_button/pda_security_alert
 	name = "Send Security Alert"
@@ -320,4 +330,4 @@
 	execute_ability()
 		var/obj/item/device/pda_module/alert/J = the_item
 		if (J.host)
-			J.send_alert()
+			J.send_alert(src.the_mob)

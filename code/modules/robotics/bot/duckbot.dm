@@ -95,7 +95,7 @@
 			src.speak(message, 1, 1)
 			wakka_wakka(TRUE) // Seek loser is TRUE
 			if(prob(70))
-				playsound(src.loc, "sound/misc/amusingduck.ogg", 50, 1) // MUSIC
+				playsound(src.loc, 'sound/misc/amusingduck.ogg', 50, 1) // MUSIC
 		else
 			if(!ON_COOLDOWN(src, DUCKBOT_QUACK_COOLDOWN, src.quack_cooldown) && prob(60))
 				var/message = pick("wacka", "quack","quacky","gaggle")
@@ -109,12 +109,12 @@
 				else
 					wakka_wakka()
 			if(!ON_COOLDOWN(src, DUCKBOT_AMUSEMENT_COOLDOWN, src.amusement_cooldown) && prob(20))
-				playsound(src.loc, "sound/misc/amusingduck.ogg", 50, 0) // MUSIC
+				playsound(src.loc, 'sound/misc/amusingduck.ogg', 50, 0) // MUSIC
 		if(prob (7) && src.eggs >= 1)
 			var/obj/item/a_gift/easter/E = new /obj/item/a_gift/easter(src.loc)
 			E.name = "duck egg"
 			src.eggs--
-			playsound(src.loc, "sound/misc/eggdrop.ogg", 50, 0)
+			playsound(src.loc, 'sound/misc/eggdrop.ogg', 50, 0)
 		if(prob(80))
 			src.egg_process++
 		if(src.egg_process >= 100 && prob(20))
@@ -162,7 +162,7 @@
 		if(user)
 			boutput(user, "<span class='alert'>You short out the horn on [src].</span>")
 		src.audible_message("<span class='alert'><B>[src] quacks loudly!</B></span>", 1)
-		playsound(src.loc, "sound/misc/amusingduck.ogg", 50, 1)
+		playsound(src.loc, 'sound/misc/amusingduck.ogg', 50, 1)
 		src.eggs += rand(3,9)
 		src.emagged = 1
 		src.processing_tier = src.PT_active
@@ -281,7 +281,7 @@
 	src.exploding = 1
 	src.on = 0
 	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
-	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 	new /obj/item/instrument/bikehorn(src.loc)
 	qdel(src)

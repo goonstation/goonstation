@@ -17,7 +17,7 @@
 	invisibility = INVIS_ALWAYS
 
 /area/swap
-	name = ""
+	name = "swap zone"
 	icon_state = "purple"
 	requires_power = 0
 	force_fullbright = 0
@@ -33,19 +33,19 @@
 /proc/swapTheThing()
 	var/atom/source = locate(/obj/swapAreaLowerLeft)
 	if(!source)
-		logTheThing("debug", null, null, "Swap failed, no source")
+		logTheThing(LOG_DEBUG, null, "Swap failed, no source")
 		return 0
 	var/turf/corner = locate(source.x+1,source.y+1,source.z)
 	if(!corner)
-		logTheThing("debug", null, null, "Swap failed, no corner")
+		logTheThing(LOG_DEBUG, null, "Swap failed, no corner")
 		return 0
 	var/loaded = file2text("assets/maps/prefabs/prefab_ksol.dmm")
 	if(corner && loaded)
-		logTheThing("debug", null, null, "Starting SwapLoad (["assets/maps/prefabs/prefab_ksol.dmm"]) at [time2text(world.timeofday)]")
+		logTheThing(LOG_DEBUG, null, "Starting SwapLoad (["assets/maps/prefabs/prefab_ksol.dmm"]) at [time2text(world.timeofday)]")
 		var/dmm_suite/D = new/dmm_suite()
 		var/datum/loadedProperties/props = D.read_map(loaded,corner.x,corner.y,corner.z,"assets/maps/prefabs/prefab_ksol.dmm")
-		logTheThing("debug", null, null, "Finished SwapLoad (["assets/maps/prefabs/prefab_ksol.dmm"]) at [time2text(world.timeofday)]")
-		logTheThing("debug", null, null, "Starting SwapDelete (size : [props.maxX - props.sourceX]x - [props.maxY - props.sourceY]y) at [time2text(world.timeofday)]")
+		logTheThing(LOG_DEBUG, null, "Finished SwapLoad (["assets/maps/prefabs/prefab_ksol.dmm"]) at [time2text(world.timeofday)]")
+		logTheThing(LOG_DEBUG, null, "Starting SwapDelete (size : [props.maxX - props.sourceX]x - [props.maxY - props.sourceY]y) at [time2text(world.timeofday)]")
 		var/count = 0
 		var/list/block = block(locate(props.sourceX, props.sourceY, props.sourceZ),locate(props.maxX, props.maxY, props.sourceZ))
 		for(var/turf/T as anything in block)
@@ -53,7 +53,7 @@
 				if(isobj(Y) && !istype(Y, /obj/overlay/tile_effect))
 					qdel(Y)
 					count++
-		logTheThing("debug", null, null, "Finished SwapDelete (count: [count]) at [time2text(world.timeofday)]")
+		logTheThing(LOG_DEBUG, null, "Finished SwapDelete (count: [count]) at [time2text(world.timeofday)]")
 
 /datum/swapMaster
 	var/busy = 0
@@ -64,19 +64,19 @@
 		if(source == null)
 			source = locate(/obj/swapAreaLowerLeft)
 		if(!source)
-			logTheThing("debug", null, null, "Swap failed, no source")
+			logTheThing(LOG_DEBUG, null, "Swap failed, no source")
 			return 0
 		var/turf/corner = locate(source.x+1,source.y+1,source.z)
 		if(!corner)
-			logTheThing("debug", null, null, "Swap failed, no corner")
+			logTheThing(LOG_DEBUG, null, "Swap failed, no corner")
 			return 0
 		busy = 1
 		var/loaded = grabResource(prefabPath, preventCache = 1)
 		if(corner && loaded)
-			logTheThing("debug", null, null, "Starting SwapLoad ([prefabPath]) at [time2text(world.timeofday)]")
+			logTheThing(LOG_DEBUG, null, "Starting SwapLoad ([prefabPath]) at [time2text(world.timeofday)]")
 			var/dmm_suite/D = new/dmm_suite()
 			D.read_map(loaded,corner.x,corner.y,corner.z,prefabPath)
-			logTheThing("debug", null, null, "Finished SwapLoad ([prefabPath]) at [time2text(world.timeofday)]")
+			logTheThing(LOG_DEBUG, null, "Finished SwapLoad ([prefabPath]) at [time2text(world.timeofday)]")
 			busy = 0
 			return 1
 		else

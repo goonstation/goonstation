@@ -519,7 +519,7 @@ datum
 							.= 0
 				if (volume >= 50)
 					if (I.type == /obj/item/handcuffs)
-						I.setMaterial(getMaterial("silver"))
+						I.setMaterial(getMaterial("silver"), copy = FALSE)
 						holder.remove_reagent(src.id, 50)
 						.= 0
 
@@ -669,7 +669,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.changeStatus("radiation", 3 SECONDS * mult, 1)
+				M.take_radiation_dose(0.05 SIEVERTS * mult, internal=TRUE)
 				..()
 				return
 
@@ -710,7 +710,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1 )
 				if(!M) M = holder.my_atom
-				M.changeStatus("radiation", 3 SECONDS * mult, 1)
+				M.take_radiation_dose(0.075 SIEVERTS * mult, internal=TRUE)
 				..()
 				return
 
@@ -792,24 +792,24 @@ datum
 				return 1//fluid is better. remove this later probably
 
 			reaction_obj(var/obj/item/O, var/volume)
+				. = ..()
 				if(istype(O))
 					if(O.burning && prob(80))
 						O.combust_ended()
 					else if(istype(O, /obj/item/toy/sponge_capsule))
 						var/obj/item/toy/sponge_capsule/S = O
 						S.add_water()
-				return 1
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				..()
-				if(!volume)
-					volume = 10
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
+				. = ..()
+				if(!raw_volume)
+					raw_volume = 10
 				if(method == TOUCH)
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", -1 * volume SECONDS)
-						playsound(L, "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
-				return 1
+						L.changeStatus("burning", -1 * raw_volume SECONDS)
+						playsound(L, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1, pitch = 0.8)
+						. = 0
 
 		water/water_holy
 			name = "holy water"
@@ -819,7 +819,7 @@ datum
 			hygiene_value = 2
 			value = 3 // 1 1 1
 
-			reaction_mob(var/mob/target, var/method=TOUCH, var/volume)
+			reaction_mob(var/mob/target, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				..()
 				var/reacted = 0
 				var/mob/living/M = target
@@ -836,7 +836,7 @@ datum
 						for(var/mob/O in AIviewers(M, null))
 							O.show_message(text("<span class='alert'><b>[] begins to crisp and burn!</b></span>", M), 1)
 						boutput(M, "<span class='alert'>Holy Water! It burns!</span>")
-						var/burndmg = volume * 1.25
+						var/burndmg = raw_volume * 1.25 //the sanctification inflicts the pain, not the water that carries it.
 						burndmg = min(burndmg, 80) //cap burn at 110(80 now >:) so we can't instant-kill vampires. just crit em ok.
 						M.TakeDamage("chest", 0, burndmg, 0, DAMAGE_BURN)
 						M.change_vampire_blood(-burndmg)
@@ -845,7 +845,27 @@ datum
 						if (M.traitHolder?.hasTrait("atheist"))
 							boutput(M, "<span class='notice'>You feel insulted... and wet.</span>")
 						else
-							boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
+							if (ishuman(M))
+								var/mob/living/carbon/human/H = M
+								if(H.bioHolder?.HasEffect("blood_curse") || H.bioHolder?.HasEffect("blind_curse") || H.bioHolder?.HasEffect("weak_curse") || H.bioHolder?.HasEffect("rot_curse") || H.bioHolder?.HasEffect("death_curse"))
+									H.bioHolder.RemoveEffect("blood_curse")
+									H.bioHolder.RemoveEffect("blind_curse")
+									H.bioHolder.RemoveEffect("weak_curse")
+									H.bioHolder.RemoveEffect("rot_curse")
+									H.bioHolder.RemoveEffect("death_curse")
+									H.visible_message("[H] screams as some black smoke exits their body.")
+									H.emote("scream")
+									random_burn_damage(H, 5)
+									var/turf/T = get_turf(H)
+									if (T && isturf(T))
+										var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread/(T)
+										if (S)
+											S.set_up(5, 0, T, null, "#3b3b3b")
+											S.start()
+								else
+									boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
+							else
+								boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
 							M.take_brain_damage(0 - clamp(volume, 0, 10))
 						for (var/datum/ailment_data/disease/V in M.ailments)
 							if(prob(1))

@@ -111,6 +111,12 @@
 			if(islist(cbf[buttId]))
 				runCBF(cbf[buttId])
 
+		if("abortCode")
+			running = 0
+			updatePanel()
+			statusChange(CC_STATUS_IDLE)
+			throwError(CC_ERROR_MANUAL_ABORT)
+
 		if("reportError")
 			var/errorMessage = href_list["message"]
 			CRASH("Error reported from chemicompiler frontend: [errorMessage]")
@@ -534,9 +540,16 @@
 	sx.setAttribute("onfocus", "$(this).blur()")
 	tx.setAttribute("onfocus", "$(this).blur()")
 	ax.setAttribute("onfocus", "$(this).blur()")
+
+	var/datum/tag/button/butt_abort = new
+	butt_abort.setText("abort")
+	butt_abort.setId("butt-abort")
+	butt_abort.addClass("btn btn-danger abort-button")
+
 	row.addChildElement(sxLabel)
 	row.addChildElement(txLabel)
 	row.addChildElement(axLabel)
+	row.addChildElement(butt_abort)
 
 	var/datum/tag/cssinclude/bootstrap = new
 	bootstrap.setHref(resource("css/bootstrap.min.css"))
@@ -608,6 +621,8 @@
 					return "Error: instruction limit reached."
 				if(CC_ERROR_INDEX_INVALID)
 					return "Error: invalid isolation index for source reservoir."
+				if(CC_ERROR_MANUAL_ABORT)
+					return "Error: aborted by user."
 				if(CC_NOTIFICATION_COMPLETE)
 					return "Notification: program complete."
 				if(CC_NOTIFICATION_SAVED)
@@ -672,6 +687,8 @@
 			beepCode(5, 1)
 		if(CC_ERROR_INSTRUCTION_LIMIT)
 			beepCode(2, 1)
+		if(CC_ERROR_MANUAL_ABORT)
+			beepCode(6, 1)
 		if(CC_NOTIFICATION_COMPLETE)
 			beepCode(1)
 		if(CC_NOTIFICATION_SAVED)
@@ -727,6 +744,7 @@
  *  3: No container loaded at source or target
  *  4: Invalid temperature value
  *  5: Code is protected, cannot load
+ * 	6: User aborted code
  * soft:
  *  1: done executing
  *  2: code saved
@@ -789,7 +807,7 @@
 		RS.trans_to(RT, amount, index = index)
 	if (target == 11)
 		// Generate pill
-		if(RS.total_volume >= 1)
+		if(RS.total_volume >= 1 && amount > 0)
 			showMessage("[src.holder] makes an alarming grinding noise!")
 			var/obj/item/reagent_containers/pill/P = new(get_turf(src.holder))
 			RS.trans_to(P, amount, index = index)
@@ -798,7 +816,7 @@
 			showMessage("[src.holder] doesn't have enough reagents to make a pill.")
 	if (target == 12)
 		// Generate vial
-		if(RS.total_volume >= 1)
+		if(RS.total_volume >= 1 && amount > 0)
 			var/obj/item/reagent_containers/glass/vial/plastic/V = new(get_turf(src.holder))
 			RS.trans_to(V, amount, index = index)
 			showMessage("[src.holder] ejects a vial of some unknown substance.")
@@ -826,7 +844,7 @@
 		beepCode(4, 1) // Invalid temperature value
 		return
 
-	// Ok now heat this bitch
+	// Ok now heat this container
 	var/obj/item/reagent_containers/holder = reservoirs[rid]
 	var/datum/reagents/R = holder.reagents
 	var/heating_in_progress = 1

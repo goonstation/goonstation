@@ -17,6 +17,7 @@
 	name = "toupée"
 	desc = "You can't tell the difference, Honest!"
 	icon_state= "wig"
+	wear_layer = MOB_HAIR_LAYER2 //it IS hair afterall
 
 	///Takes a list of style ids to colors and generates a wig from it
 	proc/setup_wig(var/style_list)
@@ -66,13 +67,14 @@
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "scissors"
 	flags = FPRINT | TABLEPASS | CONDUCT
+	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SNIPPING
-	force = 8.0
+	force = 8
 	health = 6
 	w_class = W_CLASS_TINY
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 10000
@@ -111,13 +113,14 @@
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "razorblade"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
-	force = 7.0
+	force = 7
 	health = 6
 	w_class = W_CLASS_TINY
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 10000
@@ -157,7 +160,7 @@
 	//Default Colors
 	var/customization_first_color = "#FFFFFF"
 	var/uses_left
-	var/hair_group = 1
+	var/hair_group = ALL_HAIR
 	var/image/dye_image
 
 	New()
@@ -310,9 +313,9 @@
 					else
 						M.emote("scream", 0)
 						boutput(M, "<span class='alert'>IT BURNS!</span> But the pain fades quickly. Huh.")
-			user.tri_message(result_msg1,\
-												user, result_msg2,\
-												M,result_msg3)
+			user.tri_message(M, result_msg1,\
+												result_msg2,\
+												result_msg3)
 			if (bottle.hair_group == ALL_HAIR)
 				boutput(user, "That was a big dyejob! It used the whole bottle!")
 				src.uses_left = 0
@@ -337,7 +340,7 @@
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "dyedispenser"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	mats = 15
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 
@@ -349,10 +352,10 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					qdel(src)
 					return

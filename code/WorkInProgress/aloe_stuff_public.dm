@@ -96,7 +96,8 @@
 /obj/item/storage/desk_drawer/aloe
 	spawn_contents = list(/obj/item/reagent_containers/patch/LSD,
 						  /obj/item/reagent_containers/patch/lsd_bee,
-						  /obj/item/cloth/handkerchief/nt
+						  /obj/item/cloth/handkerchief/nt,
+						  /obj/item/aiModule/hologram_expansion/elden
 	)
 
 /obj/table/wood/auto/desk/aloe
@@ -108,3 +109,26 @@
 /area/centcom/offices/aloe
 	name = "\proper office of aloe"
 	ckey = "asche"
+
+//button 4 bill
+/obj/machinery/shipalert/bill
+	name = "\improper Emergency Plot Generation Button"
+	desc = "<b style='color:red'>IN CASE OF BOREDOM<br>BREAK GLASS</b>"
+	var/list/eventbank
+
+	New()
+		..()
+		src.eventbank = childrentypesof(/datum/random_event) // yes, this includes broken or unused events. the plot stops for nothing
+
+	toggleActivate(mob/user)
+		if (src.working)
+			boutput(user, "<span class='alert'><b>There's already enough plot! Don't overcomplicate the story!</b></span>")
+		src.working = TRUE
+		var/num_events = rand(1, 5)
+		if (current_state < GAME_STATE_FINISHED && !isadmin(user))
+			num_events = 1
+			boutput(user, "<span class='alert'><b>You just don't have the creativity for all this plot. You add a little, though.</b></span>")
+		for (var/i in 1 to num_events)
+			var/event_type = pick(eventbank)
+			var/datum/random_event/picked_event = new event_type
+			picked_event.event_effect("that stupid fucking button in Bill's office. [user] ([user.key]) pressed it.")

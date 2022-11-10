@@ -4,6 +4,7 @@
 /obj/flock_structure/collector
 	name = "weird lookin' pulsing thing"
 	desc = "Seems to be pulsing."
+	flock_desc = "Provides compute power based on the number of Flock floor tiles it is connected to."
 	flock_id = "Collector"
 	health = 60
 	resourcecost = 200
@@ -18,11 +19,11 @@
 
 	passthrough = TRUE
 
-	usesgroups = TRUE
 	icon_state = "collector"
 
 /obj/flock_structure/collector/New(var/atom/location, var/datum/flock/F=null)
 	..(location, F)
+	src.info_tag.set_info_tag("Compute provided: [src.compute]")
 
 /obj/flock_structure/collector/building_specific_info()
 	return {"<span class='bold'>Connections:</span> Currently Connected to [length(connectedto)] tile[length(connectedto) == 1 ? "" : "s"].
@@ -35,7 +36,12 @@
 		icon_state = "collectoron"
 	else
 		icon_state = "collector"
-	src.compute = (length(connectedto) * 5) //(5 power per tile)
+	var/comp = (length(connectedto) * 5) //(5 power per tile)
+	if (src.compute != comp)
+		src.update_flock_compute("remove", FALSE)
+		src.compute = comp
+		src.update_flock_compute("apply")
+		src.info_tag.set_info_tag("Compute provided: [src.compute]")
 
 /obj/flock_structure/collector/disposing()
 	for(var/turf/simulated/floor/feather/flocktile as anything in connectedto)

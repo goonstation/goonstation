@@ -28,6 +28,13 @@
 			hit_twitch(H)
 			if (brute > 30 && prob(brute - 30) && !disallow_limb_loss)
 				src.sever()
+			else if (burn > 30 && prob(burn) && !disallow_limb_loss)
+				holder.visible_message("<span class='alert'>[holder.name]'s [initial(src.name)] is burnt to ash!</span>")
+				src.remove(FALSE)
+				playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 30)
+				if(prob(20))
+					make_cleanable(/obj/decal/cleanable/ash, get_turf(holder))
+				qdel(src)
 			else if (bone_system && src.bones && brute && prob(brute * 2))
 				src.bones.take_damage(damage_type)
 		health_update_queue |= holder
@@ -159,8 +166,8 @@
 		switch(remove_stage)
 			if(0)
 				tool.the_mob.visible_message("<span class'alert'>[tool.the_mob] attaches [holder.name]'s [src.name] securely with [tool].</span>", "<span class='alert'>You attach [holder.name]'s [src.name] securely with [tool].</span>")
-				logTheThing("combat", tool.the_mob, holder, "staples [constructTarget(holder,"combat")]'s [src.name] back on.")
-				logTheThing("diary", tool.the_mob, holder, "staples [constructTarget(holder,"diary")]'s [src.name] back on.", "combat")
+				logTheThing(LOG_COMBAT, tool.the_mob, "staples [constructTarget(holder,"combat")]'s [src.name] back on.")
+				logTheThing(LOG_DIARY, tool.the_mob, "staples [constructTarget(holder,"diary")]'s [src.name] back on.", "combat")
 			if(1)
 				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] slices through the skin and flesh of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You slice through the skin and flesh of [holder.name]'s [src.name] with [tool].</span>")
 			if(2)
@@ -171,8 +178,8 @@
 						src.remove(0)
 			if(3)
 				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] cuts through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool].</span>", "<span class='alert'>You cut through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool].</span>")
-				logTheThing("combat", tool.the_mob, holder, "removes [constructTarget(holder,"combat")]'s [src.name].")
-				logTheThing("diary", tool.the_mob, holder, "removes [constructTarget(holder,"diary")]'s [src.name]", "combat")
+				logTheThing(LOG_COMBAT, tool.the_mob, "removes [constructTarget(holder,"combat")]'s [src.name].")
+				logTheThing(LOG_DIARY, tool.the_mob, "removes [constructTarget(holder,"diary")]'s [src.name]", "combat")
 				src.remove(0)
 
 
@@ -754,7 +761,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -782,7 +789,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -851,7 +858,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		set_skin_tone()
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
@@ -880,7 +887,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		set_skin_tone()
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
@@ -909,7 +916,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -936,7 +943,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -963,7 +970,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -990,7 +997,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1062,7 +1069,7 @@
 		newlimb.original_fprints = src.original_fprints
 		qdel(src)
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1107,7 +1114,7 @@
 		newlimb.original_fprints = src.original_fprints
 		qdel(src)
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1179,7 +1186,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1207,7 +1214,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1233,7 +1240,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1259,7 +1266,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1285,7 +1292,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1311,7 +1318,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage

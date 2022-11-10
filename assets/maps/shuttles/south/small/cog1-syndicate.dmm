@@ -13,7 +13,7 @@
 /area/shuttle/escape/centcom)
 "dH" = (
 /obj/access_spawn/security,
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	name = "reinforced internal airlock";
 	opacity = 0;
 	req_access_txt = null
@@ -258,7 +258,7 @@
 /area/shuttle/escape/centcom)
 "IR" = (
 /obj/access_spawn/medical,
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	name = "reinforced internal airlock";
 	opacity = 0;
 	req_access_txt = null
@@ -339,7 +339,7 @@
 /area/shuttle/escape/centcom)
 "SE" = (
 /obj/access_spawn/heads,
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	name = "reinforced internal airlock";
 	opacity = 0;
 	req_access_txt = null

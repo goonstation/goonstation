@@ -148,10 +148,6 @@ var/list/dirty_keystates = list()
 		return
 
 	Click(atom/object, location, control, params)
-		if(hellbanned && prob(click_drops)) //Drop some of their clicks
-			if(prob(2)) fake_lagspike()
-			return
-
 		object.RawClick(location, control, params) //Required since atom/Click is effectively broken for some reason, and sometimes you just need it. If you have a better idea let me know.
 
 		var/list/parameters = params2list(params)
@@ -163,7 +159,7 @@ var/list/dirty_keystates = list()
 		if (src.mob.mob_flags & SEE_THRU_CAMERAS)
 			if(isturf(object))
 				var/turf/T = object
-				if (!length(T.cameras))
+				if (!length(T.camera_coverage_emitters))
 					return
 				else
 					if (parameters["right"])
@@ -223,7 +219,7 @@ var/list/dirty_keystates = list()
 				stathover = null
 			else
 				var/turf/t = get_turf(object)
-				if( get_dist(t, get_turf(mob)) < 5 )
+				if( GET_DIST(t, get_turf(mob)) < 5 )
 					src.stathover = t
 					src.stathover_start = get_turf(mob)
 
@@ -292,8 +288,7 @@ var/list/dirty_keystates = list()
 		// stub
 
 	proc/recheck_keys()
-		if (src.client)
-			keys_changed(src.client.key_state, 0xFFFF) //ZeWaka: Fix for null.key_state
+		keys_changed(src.client?.key_state, 0xFFFF) //ZeWaka: Fix for null.key_state
 
 	// returns TRUE if it schedules a move
 	proc/internal_process_move(keys)
@@ -308,10 +303,6 @@ var/list/dirty_keystates = list()
 /proc/process_keystates()
 	for (var/client/C in dirty_keystates)
 		var/new_state = C.key_state
-		if(C.hellbanned && prob(C.move_drops))
-			if(prob(1) && prob(25)) C.fake_lagspike()
-			new_state = C.last_keys // lol
-
 		if (new_state != C.last_keys) // !?
 			var/mob/M = C.mob
 			usr = M

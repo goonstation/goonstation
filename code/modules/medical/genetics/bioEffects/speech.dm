@@ -14,6 +14,7 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 	icon_state = "speech"
+	var/mixingdesk_allowed = TRUE
 
 	proc/OnSpeak(var/message)
 		if (!istext(message))
@@ -803,3 +804,91 @@
 			return ""
 		message = scoobify(message, 1)
 		return message
+
+/datum/bioEffect/speech/thrall
+	name = "Frontal Gyrus Alteration Type-V"
+	desc = "Forces the language center of the subject's brain to emit gurgling, raspy speech."
+	id = "accent_thrall"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 1
+	msgGain = "Your throat gurgles with blood."
+	msgLose = "You feel your throat clear."
+	probability = 0
+	occur_in_genepools = 0
+	scanner_visibility = 0
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	can_reclaim = 0
+	can_scramble = 0
+	curable_by_mutadone = 0
+	acceptable_in_mutini = 1
+
+	OnSpeak(message)
+		if (!istext(message))
+			return ""
+		return thrall_parse(message)
+
+/datum/bioEffect/speech/emoji
+	name = "Frontal Gyrus Alteration Type-😃"
+	desc = "Makes the 💬 center of the 🧑's 🧠 to use pictograms in 🗣."
+	id = "emoji"
+	probability = 1
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 1
+	msgGain = "Y-you feel a bit 🤪."
+	msgLose = "You don't feel like talking in pictograms anymore."
+	reclaim_fail = 10
+	lockProb = 25
+	lockedGaps = 2
+	lockedDiff = 2
+	lockedChars = list("G","C")
+	lockedTries = 3
+	mixingdesk_allowed = FALSE
+	var/static/regex/word_regex = regex("(\[a-zA-Z0-9-\]*)")
+	var/static/list/word_to_emoji = null
+	var/static/list/suffixes = list("", "ing", "s", "ed", "er", "ings")
+
+	OnSpeak(message)
+		if (!istext(message))
+			return ""
+		var/list/words = splittext(message, src.word_regex)
+		var/list/out_words = list()
+		if(isnull(src.word_to_emoji))
+			src.word_to_emoji = json_decode(file2text("strings/word_to_emoji.json"))
+
+		for(var/word in words)
+			var/found = FALSE
+			for(var/suffix in src.suffixes)
+				if(suffix == "" || (length(word) > 3 && endswith(word, suffix)))
+					var/modword = suffix == "" ? word : copytext(word, 1, length(word) - length(suffix))
+					var/list/emojis = src.word_to_emoji[lowertext(modword)]
+					if(length(emojis))
+						out_words += pick(emojis)
+						found = TRUE
+						break
+			if(!found)
+				out_words += word
+
+		return jointext(out_words, "")
+
+
+/datum/bioEffect/speech/emoji/only
+	name = "Frontal Gyrus Alteration Type-🤪"
+	desc = "💬🧑🧠🗣"
+	id = "emojionly"
+	probability = 0.2
+	msgGain = "🧑⬅🗨🤪"
+	msgLose = "You don't feel like talking only in pictograms anymore."
+
+	OnSpeak(message)
+		var/processed = ..(message)
+		var/list/output = list()
+		for(var/i in 1 to length(processed))
+			var/char = text2ascii_char(processed, i)
+			if(char == 0)
+				break
+			else if(char > 127)
+				output += ascii2text(char)
+		return jointext(output, "")
+

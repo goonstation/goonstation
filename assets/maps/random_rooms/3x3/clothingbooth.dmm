@@ -12,6 +12,7 @@
 /obj/item/clothing/head/maid,
 /obj/item/clothing/shoes/dress_shoes,
 /obj/item/clothing/under/gimmick/princess,
+/obj/item/clothing/gloves/princess,
 /obj/item/clothing/mask/horse_mask,
 /obj/item/clothing/suit/jacket/plastic/random_color,
 /obj/random_item_spawner/dressup/one_or_zero,

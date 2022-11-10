@@ -6,7 +6,7 @@
 # to the same file or dir, add them to the end under Multiple Owners
 
 # Adharainspace
-/_std/ @Adharainspace
+# /_std/ @Adharainspace
 
 # Aloe
 /code/mob/dead/ @frawhst
@@ -27,6 +27,9 @@
 # Mordent (mordent-goonstation)
 /code/modules/robotics/ @mordent-goonstation
 
+# Sord
+/maps/donut2.dmm @Sord213
+
 # Sovexe
 /code/modules/antagonists/arcfiend/ @Sovexe
 
@@ -44,6 +47,9 @@
 
 # Virvatuli
 /sound/ @virvatuli-gh
+
+# Walpvrgis
+/icons/misc/critter.dmi @WALPVRGIS
 
 # ZeWaka
 *.md @ZeWaka

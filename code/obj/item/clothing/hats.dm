@@ -91,8 +91,9 @@ proc/filter_trait_hats(var/type)
 	name = "bio hood"
 	icon_state = "bio"
 	item_state = "bio_hood"
-	permeability_coefficient = 0.005
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	hides_from_examine = C_EARS
+
 	desc = "This hood protects you from harmful biological contaminants."
 	seal_hair = 1
 	path_prot = 0
@@ -101,9 +102,11 @@ proc/filter_trait_hats(var/type)
 		..()
 		setProperty("heatprot", 10)
 		setProperty("viralprot", 50)
+		setProperty("chemprot", 30)
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 5)
 		setProperty("disorient_resist_ear", 2)
+		setProperty("movespeed", 0.1)
 
 /obj/item/clothing/head/bio_hood/janitor // adhara stuff
 	name = "bio hood"
@@ -122,14 +125,16 @@ proc/filter_trait_hats(var/type)
 	name = "emergency hood"
 	icon_state = "emerg"
 	item_state = "emerg"
-	permeability_coefficient = 0.25
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Helps protect from vacuum for a short period of time."
+	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 	seal_hair = 1
 	path_prot = 0
+	acid_survival_time = 3 MINUTES
 
 	setupProperties()
 		..()
+		setProperty("chemprot", 15)
 		setProperty("disorient_resist_eye", 9)
 		setProperty("disorient_resist_ear", 5)
 		setProperty("space_movespeed", 0.5)
@@ -137,8 +142,8 @@ proc/filter_trait_hats(var/type)
 /obj/item/clothing/head/rad_hood
 	name = "Class II radiation hood"
 	icon_state = "radiation"
-	permeability_coefficient = 0.02
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	hides_from_examine = C_EARS
 	desc = "Asbestos, right near your face. Perfect!"
 	seal_hair = 1
 
@@ -147,9 +152,10 @@ proc/filter_trait_hats(var/type)
 		setProperty("radprot", 50)
 		setProperty("heatprot", 10)
 		setProperty("meleeprot_head", 1)
+		setProperty("chemprot", 10)
 		setProperty("disorient_resist_eye", 12)
 		setProperty("disorient_resist_ear", 8)
-		setProperty("movespeed", 0.15)
+		setProperty("movespeed", 0.1)
 
 /obj/item/clothing/head/cakehat
 	name = "cakehat"
@@ -277,6 +283,12 @@ proc/filter_trait_hats(var/type)
 		..()
 		setProperty("meleeprot_head", 3)
 
+/obj/item/clothing/head/det_hat/inspector
+	name = "inspector's hat"
+	desc = "Someone who wears this will look very mysterious."
+	icon_state = "inspector"
+	item_state = "ins_hat"
+
 //A robot in disguise, ready to go and spy on everyone for you
 /obj/item/clothing/head/det_hat/folded_scuttlebot
 	blocked_from_petasusaphilic = TRUE
@@ -300,6 +312,7 @@ proc/filter_trait_hats(var/type)
 
 	var/max_cigs = 15
 	var/list/cigs
+	var/inspector = FALSE // If the hat has been turned into an inspector's hat from the medal reward
 
 	New()
 		..()
@@ -409,6 +422,8 @@ proc/filter_trait_hats(var/type)
 	attack_self (mob/user as mob)
 		user.visible_message("<span class='combat'><b>[user] turns [his_or_her(user)] detgadget hat into a spiffy scuttlebot!</b></span>")
 		var/mob/living/critter/robotic/scuttlebot/weak/S = new /mob/living/critter/robotic/scuttlebot/weak(get_turf(src))
+		if (src.inspector == TRUE)
+			S.make_inspector()
 		S.linked_hat = src
 		user.drop_item()
 		src.set_loc(S)
@@ -427,8 +442,12 @@ proc/filter_trait_hats(var/type)
 		n_name = copytext(html_encode(n_name), 1, 32)
 		if (((src.loc == usr || (src.loc && src.loc.loc == usr)) && usr.stat == 0))
 			src.phrase = n_name
-			logTheThing("say", usr, null, "sets the activation phrase on DetGadget hat: [n_name]")
+			logTheThing(LOG_SAY, usr, "sets the activation phrase on DetGadget hat: [n_name]")
 		src.add_fingerprint(usr)
+
+	proc/make_inspector()
+		src.inspector = TRUE
+		src.icon_state = "inspector"
 
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
@@ -513,6 +532,12 @@ proc/filter_trait_hats(var/type)
 	icon_state = "mailcap"
 	item_state = "mailcap"
 
+/obj/item/clothing/head/chefhattall
+    name = "Tall Chef's Hat"
+    desc = "Your toque blanche, now at least 50% taller!"
+    icon_state = "cheftall"
+    item_state = "cheftall"
+
 /obj/item/clothing/head/policecap
 	name = "Police hat"
 	desc = "An old surplus-issue police hat."
@@ -532,14 +557,14 @@ proc/filter_trait_hats(var/type)
 	unequipped(mob/user)
 		..()
 		if(ON_COOLDOWN(src, "plunger_sound", 2 SECONDS)) return
-		playsound(src.loc, "sound/items/plunger_pop.ogg", 100, 1)
+		playsound(src.loc, 'sound/items/plunger_pop.ogg', 100, 1)
 		return
 
 
 	equipped(var/mob/user, var/slot)
 		..()
 		if(ON_COOLDOWN(src, "plunger_sound", 2 SECONDS)) return
-		playsound(src.loc, "sound/items/plunger_pop.ogg", 100, 1)
+		playsound(src.loc, 'sound/items/plunger_pop.ogg', 100, 1)
 
 /obj/item/clothing/head/hosberet
 	name = "HoS Beret"
@@ -666,6 +691,7 @@ proc/filter_trait_hats(var/type)
 /obj/item/clothing/head/longbee
 	name = "Longbee"
 	desc = "A gorgeous creature now on your head!"
+	hides_from_examine = C_EARS
 	icon_state = "longbee"
 	item_state = "longbee"
 
@@ -735,6 +761,7 @@ proc/filter_trait_hats(var/type)
 	item_state = "wizardnec"
 	see_face = 0
 	seal_hair = 1
+	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 
 /obj/item/clothing/head/pinkwizard //no magic properties
 	name = "pink wizard hat"
@@ -787,7 +814,7 @@ proc/filter_trait_hats(var/type)
 	icon_state = "mime_bowler"
 	uses_multiple_icon_states = 1
 	item_state = "that"
-	hitsound = "sound/impact_sounds/Generic_Hit_1.ogg"
+	hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	var/active = 0
 	throw_return = 1
 	throw_speed = 1
@@ -807,7 +834,7 @@ proc/filter_trait_hats(var/type)
 			if (user)
 				user.visible_message("<span class='combat'><b>Blades extend from the brim of [user]'s hat!</b></span>")
 			src.hit_type = DAMAGE_CUT
-			src.hitsound = "sound/impact_sounds/Flesh_Cut_1.ogg"
+			src.hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 			src.force = 10
 			src.icon_state = "oddjob"
 			src.throw_source = null
@@ -815,7 +842,7 @@ proc/filter_trait_hats(var/type)
 			if (user)
 				user.visible_message("<span class='notice'><b>[user]'s hat's blades retract.</b></span>")
 			src.hit_type = DAMAGE_BLUNT
-			src.hitsound = "sound/impact_sounds/Generic_Hit_1.ogg"
+			src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 			src.force = 1
 			src.icon_state = "mime_bowler"
 			src.throw_source = null
@@ -968,7 +995,7 @@ proc/filter_trait_hats(var/type)
 			return
 		if(prob(20))
 			var/turf/T = get_turf(src)
-			T.fluid_react_single("miasma_s", 5, airborne = 1)
+			T?.fluid_react_single("miasma_s", 5, airborne = 1)
 		if(prob(1))
 			host.real_name = "[prob(10)?SPACER_PICK("honorifics")+" ":""][prob(20)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")+" "][prob(80)?SPACER_PICK("nicknames")+" ":""][prob(50)?SPACER_PICK("firstnames"):SPACER_PICK("lastnames")]"
 			host.name = host.real_name
@@ -1002,17 +1029,17 @@ proc/filter_trait_hats(var/type)
 
 	equipped(var/mob/user, var/slot)
 		..()
-		logTheThing("combat", user, null, "equipped [src].")
+		logTheThing(LOG_COMBAT, user, "equipped [src].")
 		if (!src.processing)
 			src.processing++
 			processing_items |= src
 		boutput(user, "<span class='notice'>You better start running! It's kill or be killed now, buddy!</span>")
 		SPAWN(1 SECOND)
-			playsound(src.loc, "sound/vox/time.ogg", 100, 1)
+			playsound(src.loc, 'sound/vox/time.ogg', 100, 1)
 			sleep(1 SECOND)
-			playsound(src.loc, "sound/vox/for.ogg", 100, 1)
+			playsound(src.loc, 'sound/vox/for.ogg', 100, 1)
 			sleep(1 SECOND)
-			playsound(src.loc, "sound/vox/crime.ogg", 100, 1)
+			playsound(src.loc, 'sound/vox/crime.ogg', 100, 1)
 
 		// Guess what? you wear the hat, you go to jail. Easy Peasy.
 		var/datum/db_record/S = data_core.security.find_record("id", user.datacore_id)
@@ -1194,12 +1221,14 @@ proc/filter_trait_hats(var/type)
 	desc = "A thick rubber hood which protects you from almost any harmful chemical substance."
 	icon_state = "chemhood"
 	item_state = "chemhood"
-	permeability_coefficient = 0
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	hides_from_examine = C_EARS
 	seal_hair = 1
+	acid_survival_time = 8 MINUTES
 
 	setupProperties()
 		..()
+		setProperty("chemprot", 40)
 		setProperty("disorient_resist_eye", 6)
 		setProperty("disorient_resist_ear", 5)
 
@@ -1520,6 +1549,14 @@ ABSTRACT_TYPE(/obj/item/clothing/head/barrette)
 		name = "gold barrettes"
 		icon_state = "barrette-gold"
 		item_state = "barrette-gold"
+	black
+		name = "black barrettes"
+		icon_state = "barrette-black"
+		item_state = "barrette-black"
+	silver
+		name = "silver barrettes"
+		icon_state = "barrette-silver"
+		item_state = "barrette-silver"
 
 // HAIRBOWS (jan.antilles loves you)
 
@@ -1859,3 +1896,42 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	desc = "A surgical hat designed to keep the wearers hair from falling into the patient, essentially a fancier hair net."
 	icon_state = "bouffant"
 	item_state = "bouffant"
+
+// Crate Loot
+
+/obj/item/clothing/head/bear
+	name = "bear hat"
+	desc = "A hat in the shape of the mythical Earth-bear."
+	icon_state = "bear"
+	item_state = "bear"
+
+/obj/item/clothing/head/rugged
+	name = "rugged hat"
+	desc = "A cool hat that's come pre-torn. Huh."
+	icon_state = "rugged"
+	item_state = "rugged"
+
+/obj/item/clothing/head/star_tophat
+	name = "starry tophat"
+	desc = "A fancy tophat with a detailed rendition of the night sky sewn in."
+	icon_state = "star_tophat"
+	item_state = "star_tophat"
+
+/obj/item/clothing/head/cow
+	name = "cow"
+	desc = "It looks like a cow and goes on your head. Wow."
+	icon_state = "cow"
+	item_state = "cow"
+
+/obj/item/clothing/head/torch
+	name = "torch hat"
+	desc = "A pretty dangerous looking hat."
+	icon_state = "torch"
+	item_state = "torch"
+
+/obj/item/clothing/head/helmet/space/replica
+	name = "replica space helmet"
+	icon_state = "space_replica"
+	item_state = "space_replica"
+	desc = "A replica of an old space helmet. Looks spaceworthy regardless."
+	hides_from_examine = C_EARS|C_MASK|C_GLASSES

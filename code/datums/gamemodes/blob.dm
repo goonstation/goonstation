@@ -2,7 +2,9 @@
 	name = "blob"
 	config_tag = "blob"
 	shuttle_available = 2
+	shuttle_available_threshold = 12000 // 20 min
 
+	antag_token_support = TRUE
 	var/const/blobs_minimum = 2
 	var/const/blobs_possible = 4
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
@@ -39,7 +41,7 @@
 			break
 		traitors += tplayer
 		token_players.Remove(tplayer)
-		logTheThing("admin", tplayer.current, null, "successfully redeems an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeems an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 		//num_blobs = max(0, num_blobs - 1)
 
@@ -54,7 +56,7 @@
 
 /datum/game_mode/blob/post_setup()
 	..()
-	emergency_shuttle.disabled = 0
+	emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
 	for (var/datum/mind/blob in traitors)
 		if (istype(blob))
 			bestow_objective(blob,/datum/objective/specialist/blob)

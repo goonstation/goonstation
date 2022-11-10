@@ -44,7 +44,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] wraps neon lining around \his neck and tightens it.</b></span>")
+		user.visible_message("<span class='alert'><b>[user] wraps neon lining around [his_or_her(user)] neck and tightens it.</b></span>")
 		user.take_oxygen_deprivation(160)
 		SPAWN(50 SECONDS)
 			if (user && !isdead(user))

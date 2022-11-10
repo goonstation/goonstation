@@ -11,7 +11,7 @@
 	pointCost = 0
 	when_stunned = 0
 	not_when_handcuffed = 0
-	var/cloak_duration = 120
+	var/cloak_duration = 30 SECONDS
 
 	cast(mob/target)
 		if (!holder)
@@ -29,9 +29,9 @@
 
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, src, INVIS_CLOAK)
 			M.UpdateOverlays(image('icons/mob/mob.dmi', "icon_state" = "shield"), "shield")
-			boutput(M, "<span class='notice'><b>Your cloak will remain active for the next [src.cloak_duration / 60] minutes.</b></span>")
+			boutput(M, "<span class='notice'><b>Your cloak will remain active for the next [src.cloak_duration / 600] minutes.</b></span>")
 
-			SPAWN(src.cloak_duration * 10)
+			SPAWN(src.cloak_duration)
 				if (M && ismobcritter(M))
 					REMOVE_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, src)
 					M.UpdateOverlays(null, "shield")
@@ -47,10 +47,10 @@
 				boutput(M, "<span class='alert'>You are already invisible.</span>")
 				return 1
 			else
-				var/datum/bioEffect/power/chameleon/CC = MM.bioHolder.AddEffect("chameleon", 0, src.cloak_duration)
+				var/datum/bioEffect/power/chameleon/CC = MM.bioHolder.AddEffect("chameleon", 0, src.cloak_duration / 10)
 				if (CC && istype(CC))
 					CC.active = 1 // Important!
 					MM.set_body_icon_dirty()
-					boutput(M, "<span class='notice'><b>Your chameleon cloak is available for the next [src.cloak_duration / 60] minutes. Stand still to become invisible.</b></span>")
+					boutput(M, "<span class='notice'><b>Your chameleon cloak is available for the next [src.cloak_duration / 600] minutes.</b></span>")
 
 		return 0

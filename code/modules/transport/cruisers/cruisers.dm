@@ -100,7 +100,6 @@
 	var/area/cruiser/upper_area // upper deck area
 	var/obj/cruiser_camera_dummy/camera //used to control camera position
 
-	var/datum/particleSystem/barrelSmoke/smokeParticles
 	var/list/crew = list()
 
 	var/atmos_fail_count = 5 //counts down when life support is offline. once it his 0, life support fails.
@@ -987,7 +986,7 @@
 	attackby(obj/item/W, mob/user)
 		if (rebooting) return
 		if (istype(W, tool_type) && (broken || health < health_max))
-			playsound(src.loc, "sound/machines/repairing.ogg", 85, 1)
+			playsound(src.loc, 'sound/machines/repairing.ogg', 85, 1)
 			var/health_adj = 1 - (health / health_max) //90% = 0,1, 10% = 0,9
 			var/repair_time_adj = round(repair_time * health_adj)
 			actions.start(new/datum/action/bar/icon/cruiser_repair(src, W, repair_time_adj), user)

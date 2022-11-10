@@ -7,11 +7,8 @@ import { Window } from '../layouts';
 export const Rockbox = (_props, context) => {
   const { act, data } = useBackend(context);
   const {
-    amount,
-    forSale,
-    name,
-    price,
-    stats,
+    default_price,
+    autosell,
   } = data;
   const [takeAmount, setTakeAmount] = useLocalState(context, 'takeAmount', 1);
   return (
@@ -34,6 +31,26 @@ export const Rockbox = (_props, context) => {
                   onChange={(e, value) => setTakeAmount(value)}
                 />
               </Box>
+              <Divider />
+              <Tooltip content="Default price for new ore entries."
+                position="bottom">
+                <Box as="span"> {/* necessary for tooltip to work */}
+                  {"Default Price: "}
+                  <NumberInput
+                    value={default_price}
+                    width={4}
+                    minValue={0}
+                    format={value => value + "⪽"}
+                    onChange={(e, value) => act('set-default-price', { newPrice: value })}
+                  />
+                </Box>
+              </Tooltip>
+              <Button.Checkbox
+                checked={autosell}
+                tooltip="Mark new ore entries for sale automatically."
+                onClick={() => act('toggle-auto-sell')}>
+                Auto-Sell
+              </Button.Checkbox>
             </Section>
           </Stack.Item>
           <Stack.Item grow={1}>
@@ -59,7 +76,7 @@ export const Rockbox = (_props, context) => {
                                     value={currentOre.price}
                                     width={4}
                                     minValue={0}
-                                    format={value => "$" + value}
+                                    format={value => value + "⪽"}
                                     onChange={(e, value) => act('set-ore-price', {
                                       newPrice: value,
                                       ore: currentOre.name,

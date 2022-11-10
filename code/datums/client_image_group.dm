@@ -51,9 +51,12 @@ var/global/list/datum/client_image_group/client_image_groups
 			RegisterSignal(added_mob, COMSIG_MOB_LOGOUT, .proc/remove_images_from_client_of_mob)
 			RegisterSignal(added_mob, COMSIG_PARENT_PRE_DISPOSING, .proc/remove_mob_forced)
 
-	/// Removes a mob from the mob list, removes the images from its client and unregisters signals on it.
-	proc/remove_mob(mob/removed_mob) // same just reverse, and unregisters signals
-		subscribed_mobs_with_subcount[removed_mob] -= 1
+	/// Removes a mob from the mob list, removes the images from its client and unregisters signals on it. Force overrides subcount and removes it no matter what.
+	proc/remove_mob(mob/removed_mob, force = FALSE) // same just reverse, and unregisters signals
+		if (force)
+			subscribed_mobs_with_subcount[removed_mob] = 0
+		else
+			subscribed_mobs_with_subcount[removed_mob] -= 1
 		if (subscribed_mobs_with_subcount[removed_mob] <= 0) // mob no longer subscribed, removing images from client and unregistering signals
 			subscribed_mobs_with_subcount.Remove(removed_mob)
 			removed_mob.client?.images.Remove(images)

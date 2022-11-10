@@ -4,18 +4,19 @@ SPRITES BY WAFFLEOFFLE
 
 TOWELS:
 	* clean drinking glasses
+	* clean plates and bowls
 	* wipe down tables + chairs
 	* wipe people down
 	* clown: can eat and vomit
 
 HANDKERCHIEFS:
-	* clean eyeglasses
 	* wipe people's faces
 	* various emotes into
 	* wave
 	* tiny secret
 
 BOTH:
+	* clean eyeglasses
 	* chem gag rag
 	* wipe heads
 	* TODO: embroider
@@ -78,8 +79,8 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 	animate_smush(M)
 
 /obj/item/cloth/towel/afterattack(atom/target, mob/user as mob)
-	if (istype(target, /obj/item/reagent_containers/food/drinks))
-		if (target.reagents?.total_volume)
+	if (istype(target, /obj/item/reagent_containers/food/drinks) || istype(target, /obj/item/reagent_containers/food/drinks/bowl) || istype(target, /obj/item/plate))
+		if (target.reagents?.total_volume || length(target.contents))
 			boutput(user, "<span class='alert'>[target] needs to be emptied first.</span>")
 			return
 		user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [target] with [src].</span>")
@@ -108,12 +109,13 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 	name = "clown towel"
 	desc = "About the most massively useful thing a clown can have."
 	icon_state = "towel_clown"
+	var/hidden_pocket = null // storage components when!
 
-/obj/item/cloth/towel/clown/attack_self(mob/user)
-	if (!ishuman(user) || user.mind?.assigned_role != "Clown")
+/obj/item/cloth/towel/clown/attack(mob/living/M, mob/user)
+	if (M != user || user.mind?.assigned_role != "Clown")
 		return ..()
 	user.visible_message("<span class='alert'>[user] rolls [src] into a ball and eats it!</span>")
-	playsound(user, "sound/misc/gulp.ogg", 30, 1)
+	playsound(user, 'sound/misc/gulp.ogg', 30, 1)
 	eat_twitch(user)
 	user.drop_item(src)
 	src.set_loc(user)
@@ -121,6 +123,28 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 		user.emote("burp")
 	var/mob/living/carbon/human/H = user
 	H.stomach_process += src
+
+/obj/item/cloth/towel/clown/attackby(obj/item/I, mob/user)
+	if (I.w_class != W_CLASS_TINY || user.mind?.assigned_role != "Clown")
+		return ..()
+	if (!isnull(hidden_pocket))
+		boutput(user, "<span class='alert'>You already have an item stored in the towel!</span>")
+		return
+	animate_storage_rustle(src)
+	playsound(src, "rustle", 50, 1, -5)
+	user.visible_message("<span class='notice'>[user] [pick("surreptitiously", "sneakily", "awkwardly")] stows [I] away in one of [src]'s many hidden pockets.</span>")
+	user.drop_item(I)
+	I.set_loc(src)
+	hidden_pocket = I
+
+/obj/item/cloth/towel/clown/attack_self(mob/user)
+	if (!hidden_pocket)
+		return ..()
+	animate_storage_rustle(src)
+	playsound(src, "rustle", 50, 1, -5)
+	user.visible_message("<span class='notice'>[user] rummages through [src] and retrieves [hidden_pocket] from one of its many hidden pockets!</span>")
+	user.put_in_hand_or_drop(hidden_pocket)
+	hidden_pocket = null
 
 /obj/item/cloth/towel/blue
 	name = "blue towel"

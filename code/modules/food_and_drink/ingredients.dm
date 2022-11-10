@@ -1,5 +1,6 @@
 // Ingredients
 
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 /obj/item/reagent_containers/food/snacks/ingredient
 	name = "ingredient"
 	desc = "you shouldnt be able to see this"
@@ -17,13 +18,14 @@
 	var/blood = 7 //how much blood cleanables we are allowed to spawn
 
 	heal(var/mob/living/M)
+		..()
 		if (prob(33))
 			boutput(M, "<span class='alert'>You briefly think you probably shouldn't be eating raw meat.</span>")
 			M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 		if (src.blood <= 0) return ..()
 
 		if (istype(T))
@@ -41,7 +43,7 @@
 		. = ..(newloc)
 		if(!meatsource)
 			return
-		src.subjectname = meatsource.real_name
+		src.subjectname = meatsource.disfigured ? "Unknown" : meatsource.real_name
 		src.subjectjob = "Stowaway"
 		if (meatsource?.mind?.assigned_role)
 			src.subjectjob = meatsource.mind.assigned_role
@@ -94,7 +96,7 @@
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		if (src.cybermeat == 1)
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			if (istype(T))
 				make_cleanable(/obj/decal/cleanable/oil,T)
 				..()
@@ -122,6 +124,7 @@
 		src.pixel_y += rand(-4,4)
 
 	heal(var/mob/M)
+		..()
 		M.nutrition += 20
 		return
 
@@ -171,7 +174,7 @@
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 		make_cleanable(/obj/decal/cleanable/eggsplat,T)
 		qdel (src)
 
@@ -224,7 +227,6 @@
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'
 	icon_state = "rice-sprig"
 	food_color = "#FFFFAA"
-	brewable = 1
 	brew_result = "ricewine"
 
 /obj/item/reagent_containers/food/snacks/ingredient/rice
@@ -241,7 +243,6 @@
 	custom_food = 1
 	initial_volume = 50
 	initial_reagents = list("sugar"=25)
-	brewable = 1
 	brew_result = "rum"
 
 /obj/item/reagent_containers/food/snacks/ingredient/peanutbutter
@@ -302,7 +303,6 @@
 	doants = 0
 	initial_volume = 50
 	initial_reagents = list("honey"=15)
-	brewable = 1
 	brew_result = "mead"
 	New()
 		..()
@@ -337,6 +337,13 @@
 	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
 	slice_amount = 4
 
+	heal(var/mob/M)
+		if (istype(M, /mob/living/critter/wraith/plaguerat))
+			boutput(M, "<span class='notice'>The delicious taste of cheese sends your mouth to heaven!</span>")
+			M.reagents.add_reagent("saline", 4)
+			M.reagents.add_reagent("methamphetamine", 7)
+		..()
+
 /obj/item/reagent_containers/food/snacks/ingredient/gcheese
 	name = "weird cheese"
 	desc = "Some kind of... gooey, messy, gloopy thing. Similar to cheese, but only in the looser sense of the word."
@@ -351,6 +358,13 @@
 	sliceable = TRUE
 	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/gcheeseslice
 	slice_amount = 4
+
+	heal(var/mob/M)
+		if (istype(M, /mob/living/critter/wraith/plaguerat))
+			boutput(M, "<span class='notice'>This is by far the best thing you ever tasted! You feel buff!</span>")
+			M.reagents.add_reagent("Omnizine", 7)
+			M.reagents.add_reagent("methamphetamine", 12)
+		..()
 
 /obj/item/reagent_containers/food/snacks/ingredient/pancake_batter
 	name = "pancake batter"
@@ -400,39 +414,39 @@
 			if (prob(25))
 				JOB_XP(user, "Chef", 1)
 			if(prob(1))
-				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 			var/obj/item/reagent_containers/food/snacks/ingredient/pizza1/P = new /obj/item/reagent_containers/food/snacks/ingredient/pizza1(src.loc)
 			user.u_equip(src)
 			user.put_in_hand_or_drop(P)
-			qdel(src)
-		else if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
-			boutput(user, "<span class='notice'>You cut the dough into two strips.</span>")
-			if (prob(25))
-				JOB_XP(user, "Chef", 1)
-			if(prob(1))
-				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
-				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
-			for(var/i = 1, i <= 2, i++)
-				new /obj/item/reagent_containers/food/snacks/ingredient/dough_strip(get_turf(src))
 			qdel(src)
 		else if (istype(W, /obj/item/kitchen/utensil/fork))
 			boutput(user, "<span class='notice'>You stab holes in the dough. How vicious.</span>")
 			if (prob(25))
 				JOB_XP(user, "Chef", 1)
 			if(prob(1))
-				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 			var/obj/item/reagent_containers/food/snacks/ingredient/holey_dough/H = new /obj/item/reagent_containers/food/snacks/ingredient/holey_dough(W.loc)
 			user.u_equip(src)
 			user.put_in_hand_or_drop(H)
+			qdel(src)
+		else if (iscuttingtool(W) || issawingtool(W))
+			boutput(user, "<span class='notice'>You cut the dough into two strips.</span>")
+			if (prob(25))
+				JOB_XP(user, "Chef", 1)
+			if(prob(1))
+				playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
+				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
+			for(var/i = 1, i <= 2, i++)
+				new /obj/item/reagent_containers/food/snacks/ingredient/dough_strip(get_turf(src))
 			qdel(src)
 		else if (istype(W, /obj/item/robodefibrillator))
 			boutput(user, "<span class='notice'>You defibrilate the dough, yielding a perfect stack of flapjacks.</span>")
 			if (prob(25))
 				JOB_XP(user, "Chef", 1)
 			if(prob(1))
-				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 			var/obj/item/reagent_containers/food/snacks/pancake/F = new /obj/item/reagent_containers/food/snacks/pancake(src.loc)
 			user.u_equip(src)
@@ -443,7 +457,7 @@
 			if (baton.is_active) //baton is on
 				if (user.a_intent != "harm")
 					if (user.traitHolder.hasTrait("training_security"))
-						playsound(src, "sound/impact_sounds/Energy_Hit_3.ogg", 30, 1, -1) //bit quieter than a baton hit
+						playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 30, 1, -1) //bit quieter than a baton hit
 						user.visible_message("<span class='notice'>[user] [pick("expertly", "deftly", "casually", "smoothly")] baton-fries the dough, yielding a tasty donut.</span>", group = "batonfry")
 						var/obj/item/reagent_containers/food/snacks/donut/result = new /obj/item/reagent_containers/food/snacks/donut(src.loc)
 						user.u_equip(src)
@@ -453,9 +467,8 @@
 						boutput(user, "<span class='alert'>You just aren't experienced enough to baton-fry.</span>")
 				else
 					user.visible_message("<b class='alert'>[user] tries to baton fry the dough, but fries [his_or_her(user)] hand instead!</b>")
-					playsound(src, "sound/impact_sounds/Energy_Hit_3.ogg", 30, 1, -1)
+					playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 30, 1, -1)
 					user.do_disorient(baton.stamina_damage, weakened = baton.stun_normal_weakened * 10, disorient = 80) //cut from batoncode to bypass all the logging stuff
-					user.emote("scream")
 			else
 				boutput(user, "<span class='notice'>You [user.a_intent == "harm" ? "beat" : "prod"] the dough. The dough doesn't react.</span>")
 		else ..()
@@ -471,7 +484,7 @@
 			if (prob(25))
 				JOB_XP(user, "Chef", 1)
 			if(prob(1))
-				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 			var/obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet/P = new /obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet(src.loc)
 			user.u_equip(src)
@@ -510,7 +523,7 @@
 		if (prob(25))
 			JOB_XP(user, "Chef", 1)
 		if(prob(1))
-			playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 			src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 		new /obj/item/reagent_containers/food/snacks/ingredient/dough_circle(get_turf(src))
 		qdel (src)
@@ -535,7 +548,7 @@
 	icon_state = "dough-sweet"
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
+		if (iscuttingtool(W) || issawingtool(W))
 			boutput(user, "<span class='notice'>You cut [src] into smaller pieces...</span>")
 			for(var/i = 1, i <= 4, i++)
 				new /obj/item/reagent_containers/food/snacks/ingredient/dough_cookie(get_turf(src))
@@ -557,11 +570,7 @@
 
 	heal(var/mob/M)
 		if(prob(15))
-			#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
-			wrap_pathogen(M.reagents, generate_indigestion_pathogen(), 15)
-			#else
 			M.reagents.add_reagent("salmonella",15)
-			#endif
 			boutput(M, "<span class='alert'>That tasted a little bit...off.</span>")
 		..()
 
@@ -590,7 +599,7 @@
 			qdel(src)
 		if (prob(25))
 			JOB_XP(user, "Chef", 1)
-		else if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
+		else if (iscuttingtool(W) || issawingtool(W))
 			boutput(user, "<span class='notice'>You cut [src] into smaller pieces...</span>")
 			for(var/i = 1, i <= 3, i++)
 				new /obj/item/reagent_containers/food/snacks/ingredient/tortilla(get_turf(src))
@@ -652,22 +661,7 @@
 	var/toppingstext = null
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W,/obj/item/reagent_containers/food/snacks/mushroom))
-			var/pizzam = new /obj/item/reagent_containers/food/snacks/ingredient/pizzam
-			user.put_in_hand_or_drop(pizzam)
-			qdel (W)
-			qdel (src)
-		else if (istype(W,/obj/item/reagent_containers/food/snacks/meatball))
-			var/pizzab = new /obj/item/reagent_containers/food/snacks/ingredient/pizzab
-			user.put_in_hand_or_drop(pizzab)
-			qdel (W)
-			qdel (src)
-		else if (istype(W,/obj/item/reagent_containers/food/snacks/ingredient/pepperoni))
-			var/pizzap = new /obj/item/reagent_containers/food/snacks/ingredient/pizzap
-			user.put_in_hand_or_drop(pizzap)
-			qdel (W)
-			qdel (src)
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/))
+		if (istype(W, /obj/item/reagent_containers/food/snacks/))
 			var/obj/item/reagent_containers/food/snacks/F = W
 			if(!F.custom_food)
 				return
@@ -810,6 +804,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles)
 	food_color = "#FFFF99"
 
 	heal(var/mob/M)
+		..()
 		boutput(M, "<span class='alert'>Raw potato tastes pretty nasty...</span>") // does it?
 
 
@@ -954,6 +949,13 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	initial_volume = 15
 	initial_reagents = list("cheese"=1)
 
+	heal(var/mob/M)
+		if (istype(M, /mob/living/critter/wraith/plaguerat))
+			boutput(M, "<span class='notice'>This doesnt satisfy your craving for cheese, but its a start.</span>")
+			M.reagents.add_reagent("saline", 4)
+			M.reagents.add_reagent("methamphetamine", 2.5)
+		..()
+
 /obj/item/reagent_containers/food/snacks/ingredient/gcheeseslice
 	name = "slice of weird cheese"
 	desc = "A slice of what you assume was, at one point, cheese."
@@ -964,3 +966,10 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	initial_volume = 15
 	initial_reagents = list("mercury"=1,"LSD"=1,"ethanol"=1,"gcheese"=1)
 	food_effects = list("food_sweaty","food_bad_breath")
+
+	heal(var/mob/M)
+		if (istype(M, /mob/living/critter/wraith/plaguerat))
+			boutput(M, "<span class='notice'>This is incredible, but there isnt enough! MORE!</span>")
+			M.reagents.add_reagent("omnizine", 3)
+			M.reagents.add_reagent("methamphetamine", 3)
+		..()

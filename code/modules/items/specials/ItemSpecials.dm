@@ -636,9 +636,9 @@
 			afterUse(user)
 			if (!hit)
 				if (!ignition)
-					playsound(master, "sound/effects/swoosh.ogg", 50, 0)
+					playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
 				else
-					playsound(master, "sound/effects/flame.ogg", 50, 0)
+					playsound(master, 'sound/effects/flame.ogg', 50, 0)
 		return
 
 	csaber //no stun and less damage than normal csaber hit ( see sword/attack() )
@@ -718,12 +718,13 @@
 			. = ..()
 			var/datum/projectile/special/spawner/P = projectile
 			P.damage_type = D_KINETIC
-			P.power = 5
+			P.damage = 5
+			P.generate_stats()
 			P.typetospawn = /obj/random_item_spawner/organs/bloody/one_to_three
 			P.icon = 'icons/mob/monkey.dmi'
 			P.icon_state = "monkey"
-			P.shot_sound = "sound/voice/screams/monkey_scream.ogg"
-			P.hit_sound = "sound/impact_sounds/Slimy_Splat_1.ogg"
+			P.shot_sound = 'sound/voice/screams/monkey_scream.ogg'
+			P.hit_sound = 'sound/impact_sounds/Slimy_Splat_1.ogg'
 			P.name = "monkey"
 
 /datum/item_special/slam
@@ -1053,6 +1054,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			var/obj/itemspecialeffect/spark/spark = new /obj/itemspecialeffect/spark
 			spark.setup(effect)
 			spark.set_dir(direction)
+			logTheThing(LOG_COMBAT, user, "uses the spark special attack ([src.type]) at [log_loc(user)].")
 
 			var/hit = 0
 			for(var/atom/movable/A in effect)
@@ -1091,10 +1093,13 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			M.bodytemperature += (4 * mult)
 			playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
 
+		logTheThing(LOG_COMBAT, usr, "'s spark special attack hits <b>[hit]</b> at [log_loc(hit)].")
+
 /datum/item_special/spark/baton
 	pixelaction(atom/target, params, mob/user, reach)
 		if(user.a_intent != INTENT_DISARM) return //only want this to deploy on disarm intent
-		if(master && istype(master, /obj/item/baton) && !master:can_stun())
+		if(!istype(master, /obj/item/baton) || get_dist_pixel_squared(user, target, params) <= ITEMSPECIAL_PIXELDIST_SQUARED) return
+		if(!master:can_stun())
 			playsound(master, 'sound/weapons/Gunclick.ogg', 50, 0, 0.1, 2)
 			return
 		..()
@@ -1105,7 +1110,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 /datum/item_special/spark/gloves
 	pixelaction(atom/target, params, mob/user, reach)
 		..()
-		if(master && istype(master, /obj/item/clothing/gloves) && master:uses)
+		if(!istype(master, /obj/item/clothing/gloves) || get_dist_pixel_squared(user, target, params) <= ITEMSPECIAL_PIXELDIST_SQUARED) return
+		if(master:uses)
 			var/obj/item/clothing/gloves/G = master
 			G.uses = max(0, G.uses - 1)
 			if (G.uses < 1)
@@ -1124,8 +1130,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	staminaCost = 0
 	moveDelay = 5
 	moveDelayDuration = 5
-	damageMult = 0.80
-
+	damageMult = 0.8
 	image = "dagger"
 	name = "Slice"
 	desc = "Attack twice in rapid succession."
@@ -1184,7 +1189,6 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	moveDelayDuration = 6
 	damageMult = 1
 	restrainDuration = 3
-
 	image = "barrier"
 	name = "Energy Barrier"
 	desc = "Deploy a temporary barrier that reflects projectiles. The barrier can be easily broken by any attack or a sustained push. "
@@ -1242,10 +1246,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	cooldown = 0
 	moveDelay = 5
 	moveDelayDuration = 2
-
 	damageMult = 0.8
-
-
 	image = "flame"
 	name = "Flame"
 	desc = "Pop out a flame 1 tile away from you in a direction."
@@ -1262,7 +1263,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
-		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+		if(params["left"] && !QDELETED(master) && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
 
@@ -1282,8 +1283,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			if (master)
 				if(istype(master,/obj/item/device/light/zippo) && master:on)
 					var/obj/item/device/light/zippo/Z = master
-					if (Z.reagents.get_reagent_amount("fuel"))
-						Z.reagents.remove_reagent("fuel", 1)
+					if (Z.infinite_fuel || Z.reagents?.get_reagent_amount("fuel"))
+						Z.reagents?.remove_reagent("fuel", 1)
 						flame_succ = 1
 					else
 						flame_succ = 0
@@ -1303,10 +1304,12 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 
 			if (flame_succ)
+				logTheThing(LOG_COMBAT, user, "uses the flame special attack at [log_loc(user)].")
 				turf.hotspot_expose(T0C + 400, 400)
 				for(var/A in turf)
 					if(!isTarget(A))
 						continue
+					logTheThing(LOG_COMBAT, user, "'s flame special attack hits <b>[A]</b> at [log_loc(A)].")
 					if(ismob(A))
 						var/mob/M = A
 						M.changeStatus("burning", flame_succ ? time : tiny_time)
@@ -1327,10 +1330,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	cooldown = 0
 	moveDelay = 5
 	moveDelayDuration = 2
-
 	damageMult = 0.8
-
-
 	image = "pulse"
 	name = "Pulse"
 	desc = "Pulse 1 tile away from you in any direction. The pulse will emit a mild shock that spreads in a random direction."
@@ -1349,19 +1349,20 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			var/direction = get_dir_pixel(user, target, params)
 			var/turf/turf = get_step(master, direction)
 
-
 			var/obj/itemspecialeffect/conc/C = new /obj/itemspecialeffect/conc
 			C.setup(turf)
-			for (var/obj/O in turf.contents)
-				if (istype(O, /obj/blob))
-					boutput(user, "<span class='alert'><b>You try to pulse a spark, but [O] is too wet for it to take!</b></span>")
+			logTheThing(LOG_COMBAT, user, "uses the elecflash (multitool pulse) special attack at [log_loc(user)].")
+			for(var/atom/movable/A in turf.contents)
+				if (istype(A, /obj/blob))
+					boutput(user, "<span class='alert'><b>You try to pulse a spark, but [A] is too wet for it to take!</b></span>")
 					return
-				if (istype(O, /obj/spacevine))
-					var/obj/spacevine/K = O
+				if (istype(A, /obj/spacevine))
+					var/obj/spacevine/K = A
 					if (K.current_stage >= 2)	//if it's med density
-						boutput(user, "<span class='alert'><b>You try to pulse a spark, but [O] is too dense for it to take!</b></span>")
+						boutput(user, "<span class='alert'><b>You try to pulse a spark, but [A] is too dense for it to take!</b></span>")
 						return
-
+				if (ismob(A))
+					logTheThing(LOG_COMBAT, user, "'s elecflash (multitool pulse) special attack hits <b>[A]</b> at [log_loc(A)].")
 			elecflash(turf,0, power=2, exclude_center = 0)
 			afterUse(user)
 		return
@@ -1413,6 +1414,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			E.setup(effect)
 			E.set_dir(direction)
 
+			logTheThing(LOG_COMBAT, user, "uses the spark special attack ([src.type]) at [log_loc(user)].")
 			var/hit = 0
 			for(var/atom/movable/A in effect)
 				if(isTarget(A))
@@ -1451,6 +1453,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				M.TakeDamage("chest", 0, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
 				M.bodytemperature += (4 * mult)
 				playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
+			logTheThing(LOG_COMBAT, usr, "'s spark special attack hits <b>[hit]</b> at [log_loc(hit)].")
 
 /datum/item_special/katana_dash
 	cooldown = 9
@@ -1466,11 +1469,11 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 	var/secondhit_delay = 1
 	var/stamina_damage = 80
-	var/obj/item/katana/K
+	var/obj/item/swords/katana/K
 	var/reversed = 0
 
 	onAdd()
-		if(istype(master, /obj/item/katana))
+		if(istype(master, /obj/item/swords/katana))
 			K = master
 		return
 
@@ -1796,7 +1799,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 					if (tile)
 						hit = 1
 						user.visible_message("<span class='alert'><b>[user] flings a tile from [turf] into the air!</b></span>")
-						logTheThing("combat", user, null, "fling throws a floor tile ([F]) from [turf].")
+						logTheThing(LOG_COMBAT, user, "fling throws a floor tile ([F]) [get_dir(user, target)] from [turf].")
 
 						user.lastattacked = user //apply combat click delay
 						tile.throw_at(target, tile.throw_range, tile.throw_speed, params)
@@ -1949,6 +1952,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		density = 1
 		del_self = 0
 		clash_time = -1
+		explosion_resistance = 10
 
 
 		//mouse_opacity = 1

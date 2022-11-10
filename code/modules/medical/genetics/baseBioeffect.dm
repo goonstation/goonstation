@@ -89,7 +89,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		if(src.holder)
 			src.holder.RemovePoolEffect(src)
 			src.holder.RemoveEffect(src.id)
-		if(!removed)
+		if(!removed && src.owner)
 			src.OnRemove()
 		holder = null
 		owner = null
@@ -103,7 +103,6 @@ ABSTRACT_TYPE(/datum/bioEffect)
 			if(isliving(owner))
 				var/mob/living/L = owner
 				L.UpdateOverlays(overlay_image, id)
-		return
 
 	proc/OnRemove()  //Called when the effect is removed.
 		removed = 1
@@ -111,13 +110,12 @@ ABSTRACT_TYPE(/datum/bioEffect)
 			if(isliving(owner))
 				var/mob/living/L = owner
 				L.UpdateOverlays(null, id)
-		return
 
 	proc/OnMobDraw() //Called when the overlays for the mob are drawn. Children should NOT run when this returns 1
 		return removed
 
 	proc/OnLife(var/mult)    //Called when the life proc of the mob is called. Children should NOT run when this returns 1
-		return removed
+		return removed || QDELETED(owner)
 
 	proc/GetCopy()
 		//Gets a copy of this effect. Used to build local effect pool from global instance list.
@@ -354,7 +352,8 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		if (can_act_check && !can_act(owner, needs_hands))
 			return 999
 		if (last_cast > world.time)
-			boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round((last_cast - world.time) / 10)] seconds.</span>")
+			if(holder)
+				boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round((last_cast - world.time) / 10)] seconds.</span>")
 			return 999
 
 		if (has_misfire)
@@ -387,11 +386,11 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		if (!linked_power)
 			return 1
 		if (ismob(target))
-			logTheThing("combat", owner, target, "used the [linked_power.name] power on [constructTarget(target,"combat")].")
+			logTheThing(LOG_COMBAT, owner, "used the [linked_power.name] power on [constructTarget(target,"combat")].")
 		else if (target)
-			logTheThing("combat", owner, null, "used the [linked_power.name] power on [target].")
+			logTheThing(LOG_COMBAT, owner, "used the [linked_power.name] power on [target].")
 		else
-			logTheThing("combat", owner, null, "used the [linked_power.name] power.")
+			logTheThing(LOG_COMBAT, owner, "used the [linked_power.name] power.")
 		return 0
 
 	proc/cast_misfire(atom/target)
@@ -400,11 +399,11 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		if (!linked_power)
 			return 1
 		if (ismob(target))
-			logTheThing("combat", owner, target, "misfired the [linked_power.name] power on [constructTarget(target,"combat")].")
+			logTheThing(LOG_COMBAT, owner, "misfired the [linked_power.name] power on [constructTarget(target,"combat")].")
 		else if (target)
-			logTheThing("combat", owner, null, "misfired the [linked_power.name] power on [target].")
+			logTheThing(LOG_COMBAT, owner, "misfired the [linked_power.name] power on [target].")
 		else
-			logTheThing("combat", owner, null, "misfired the [linked_power.name] power.")
+			logTheThing(LOG_COMBAT, owner, "misfired the [linked_power.name] power.")
 		return 0
 
 	afterCast()

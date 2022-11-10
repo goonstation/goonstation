@@ -4,8 +4,8 @@
 	icon_state = "igniter1"
 	machine_registry_idx = MACHINES_SPARKERS
 	var/id = null
-	var/on = 1.0
-	anchored = 1.0
+	var/on = 1
+	anchored = 1
 	desc = "A device can be paired with other electronics, or used to heat chemicals directly."
 
 /obj/machinery/igniter/attack_ai(mob/user as mob)
@@ -49,7 +49,6 @@
 	machine_registry_idx = MACHINES_SPARKERS
 	var/id = null
 	var/disable = 0
-	var/last_spark = 0
 	var/base_state = "migniter"
 	var/datum/light/light
 	anchored = 1
@@ -94,13 +93,12 @@
 	if (!(powered()))
 		return
 
-	if ((src.disable) || (src.last_spark && world.time < src.last_spark + 50))
+	if ((src.disable) || ON_COOLDOWN(src,"spark", 5 SECONDS))
 		return
 
 
 	flick("[base_state]-spark", src)
 	elecflash(src)
-	src.last_spark = world.time
 	use_power(1000)
 	var/turf/location = src.loc
 	if (isturf(location))

@@ -15,16 +15,19 @@
 		/obj/item/robot_foodsynthesizer,
 		/obj/item/reagent_containers/food/drinks/bottle/beer/borg,
 		/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+		/obj/item/pen/omni, // Fancy
 		/obj/item/pen/crayon/random/robot,
+		/obj/item/pen/crayon/rainbow,
+		/obj/item/sponge, // To clean up drawings
 		/obj/item/coin_bot,
 		/obj/item/dice/robot,
 		/obj/item/device/light/zippo/borg,
-		/obj/item/pen, // TODO: make more versatile version
 		/obj/item/device/prisoner_scanner,
 		/obj/item/item_box/assorted/stickers/robot,
 		// TODO: security grenade fabricator?!
 		// /obj/item/handcuffs/tape_roll/crappy,
 		/obj/item/c_tube, // TODO: make slightly buffed version?
+		/obj/item/gun/kinetic/foamdartgun/borg,
 		/obj/item/device/detective_scanner,
 		/obj/item/device/audio_log, // TODO: make larger and non-ejectable version?
 		/obj/item/device/camera_viewer,
@@ -35,6 +38,7 @@
 // scientist.
 /datum/robot/module_tool_creator/recursive/module/chemistry
 	definitions = list(
+		/obj/item/hand_labeler,
 		/obj/item/robot_chemaster,
 		// TODO: utility grenade fabricator?
 		/obj/item/reagent_containers/syringe,
@@ -46,13 +50,13 @@
 		/obj/item/reagent_containers/glass/beaker/large,
 		/obj/item/reagent_containers/glass/beaker/large,
 		/obj/item/reagent_containers/glass/beaker/large,
-		/obj/item/extinguisher, // TODO: make large version?
+		/obj/item/extinguisher/large/cyborg,
 	)
 
 // botanist. chef. janitor.
 /datum/robot/module_tool_creator/recursive/module/civilian
 	definitions = list(
-		/obj/item/extinguisher/large,
+		/obj/item/extinguisher/large/cyborg,
 		/obj/item/pen, // TODO: make more versatile version
 		/obj/item/seedplanter,
 		/obj/item/plantanalyzer,
@@ -104,7 +108,7 @@
 		/obj/item/electronics/soldering,
 		/obj/item/room_planner,
 		/obj/item/room_marker,
-		/obj/item/extinguisher,
+		/obj/item/extinguisher/large/cyborg,
 		/obj/item/rcd,
 		/obj/item/deconstructor/borg,
 		/datum/robot/module_tool_creator/item_type/amount/steel_tile,
@@ -118,7 +122,7 @@
 /datum/robot/module_tool_creator/recursive/module/engineering
 	definitions = list(
 		/obj/item/atmosporter,
-		/obj/item/extinguisher, // TODO: make large version
+		/obj/item/extinguisher/large/cyborg,
 		/obj/item/weldingtool,
 		/obj/item/device/t_scanner,
 		/obj/item/electronics/scanner,
@@ -126,6 +130,7 @@
 		/obj/item/rcd,
 		/obj/item/lamp_manufacturer,
 		/obj/item/deconstructor/borg,
+		/obj/item/pinpointer/category/apcs/station,
 		#ifdef MAP_OVERRIDE_OSHAN
 			/obj/item/mining_tool/power_shovel/borg,
 		#endif
@@ -140,26 +145,26 @@
 /datum/robot/module_tool_creator/recursive/module/medical
 	definitions = list(
 		/obj/item/robodefibrillator,
-		/obj/item/scalpel,
-		/obj/item/circular_saw,
-		/obj/item/surgical_spoon,
-		/obj/item/scissors/surgical_scissors,
-		/obj/item/hemostat,
-		/obj/item/suture,
-		/obj/item/staple_gun,
-		/obj/item/reagent_containers/iv_drip/blood,
 		/obj/item/reagent_containers/mender/brute/medbot,
 		/obj/item/reagent_containers/mender/burn/medbot,
 		/obj/item/robospray, // TODO: make large version
 		/obj/item/reagent_containers/hypospray, // TODO: make large version
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/iv_drip/blood,
+		/obj/item/suture,
+		/obj/item/scalpel,
+		/obj/item/circular_saw,
+		/obj/item/surgical_spoon,
+		/obj/item/scissors/surgical_scissors,
+		/obj/item/hemostat,
+		/obj/item/staple_gun,
 		/obj/item/reagent_containers/glass/beaker/large,
 		/obj/item/reagent_containers/glass/beaker/large,
 		/obj/item/reagent_containers/dropper,
 	)
 
-// miner.
+// miner. quartermaster.
 /datum/robot/module_tool_creator/recursive/module/mining
 	definitions = list(
 		// TODO: make versatile satchel (same as civilian module's satchel)
@@ -170,8 +175,9 @@
 		/obj/item/oreprospector,
 		/obj/item/satchel/mining/large,
 		/obj/item/satchel/mining/large,
-		/obj/item/extinguisher, // TODO: make large version
+		/obj/item/extinguisher/large/cyborg,
 		/obj/item/device/gps,
+		/obj/item/device/appraisal,
+		/obj/item/device/matanalyzer,
 		// TODO: make barcode machine
-		// TODO: make internal ore processor
 	)

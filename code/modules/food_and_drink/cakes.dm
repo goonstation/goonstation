@@ -22,6 +22,7 @@
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "yellowcake"
 	w_class = W_CLASS_TINY
+	object_flags = NO_GHOSTCRITTER
 	bites_left = 1
 	heal_amt = 2
 	initial_volume = 5
@@ -104,7 +105,7 @@
 				else
 					generic_number = 2
 				tag = "cake[clayer]-generic[generic_number]"
-				overlay_color = F.food_color
+				overlay_color = F.get_food_color()
 
 			for(var/food_effect in F.food_effects)
 				src.food_effects |= food_effect
@@ -480,7 +481,7 @@
 				return
 			else
 				..()
-		else if(istype(W,/obj/item/kitchen/utensil/spoon) || istool(W,TOOL_SPOONING))
+		else if(isspooningtool(W))
 			if(!src.sliced)
 				return
 			else
@@ -653,8 +654,6 @@
 		..()
 		eater.show_text("It's so hard it breaks one of your teeth AND it tastes disgusting! Why would you ever eat this?","red")
 		random_brute_damage(eater, 3)
-		eater.emote("scream")
-		return
 
 #endif
 

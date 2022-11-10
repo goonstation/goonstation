@@ -1,6 +1,7 @@
+ABSTRACT_TYPE(/obj/machinery/shuttle)
 /obj/machinery/shuttle
 	name = "shuttle"
-	icon = 'icons/turf/shuttle.dmi'
+	icon = 'icons/obj/shuttle.dmi'
 
 	New()
 		..()
@@ -9,7 +10,7 @@
 /obj/machinery/shuttle/engine
 	name = "engine"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	layer = EFFECTS_LAYER_UNDER_1
 
 /obj/machinery/shuttle/engine/heater
@@ -54,14 +55,14 @@
 	if (isscrewingtool(W))
 		if (src.stat1 == 0)
 			boutput(user, "<span class='notice'>Resecuring outer frame.</span>")
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			sleep(2 SECONDS)
 			boutput(user, "<span class='notice'>Outer frame secured.</span>")
 			src.stat1 = 1
 			return
 		if (src.stat1 == 1)
 			boutput(user, "<span class='alert'>Unsecuring outer frame.</span>")
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			sleep(2 SECONDS)
 			boutput(user, "<span class='alert'>Done.</span>")
 			src.stat1 = 0
@@ -78,7 +79,7 @@
 		return
 	else if (iswrenchingtool(W) && src.stat2 == 1)
 		var/obj/item/rods/R = new /obj/item/rods
-		playsound(src.loc, "sound/items/Ratchet.ogg", 100, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		boutput(user, "<span class='alert'>Removing outer hull plating.</span>")
 		sleep(2 SECONDS)
 		boutput(user, "<span class='alert'>Done.</span>")

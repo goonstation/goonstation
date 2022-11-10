@@ -68,13 +68,13 @@
 	// Called when an object is in an explosion
 	// Higher "severity" means the object was further from the centre of the explosion
 	switch(severity)
-		if(1.0)
+		if(1)
 			gib(src.loc)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			health = health -50
-		if(3.0)
+		if(3)
 			health = health -25
 		else
 	if(health <=0)

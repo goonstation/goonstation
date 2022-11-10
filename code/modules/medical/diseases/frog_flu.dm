@@ -32,5 +32,6 @@
 			boutput(affected_mob, "<span class='alert'>You feel your physical form condensing into something small and green... What?</span>")
 			affected_mob.visible_message("<span class='alert'><b>[affected_mob] transforms!</b></span>")
 			affected_mob.unequip_all()
-			logTheThing("combat", affected_mob, null, "is transformed into a critter frog by the [name] reagent at [log_loc(affected_mob)].")
-			affected_mob.make_critter(/mob/living/critter/small_animal/frog, affected_mob)
+			logTheThing(LOG_COMBAT, affected_mob, "is transformed into a critter frog by the [name] reagent at [log_loc(affected_mob)].")
+			var/mob/living/critter/C = affected_mob.make_critter(/mob/living/critter/small_animal/frog, affected_mob)
+			C.butcherable = TRUE //So the brain is recoverable

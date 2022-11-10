@@ -116,20 +116,20 @@
 	mob_flip_inside(var/mob/user)
 		if (src.reagents.total_volume)
 			user.visible_message("<span class='notice'>[src.occupant] splish-splashes around.</span>", "<span class='alert'>You splash around enough to shake the tub!</span>", "<span class='notice'>You hear liquid splash on the ground.</span>")
-			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 			animate_wiggle_then_reset(src, 1, 3)
 			src.reagents.trans_to(src.last_turf, 5)
 		else
 			..()
 
-	handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
+	handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
 		var/mob/M = lifeform_inside_me
 		if (breath_request > 0 && M.lying && src.reagents.total_volume > suffocation_volume) // drowning
 			// mimics `force_mob_to_ingest` in fluid_core.dm
 			// we can skip some checks due to obj handling in breath.dm
 			if (M.get_oxygen_deprivation() > 40)
 				var/react_volume = src.reagents.total_volume > 10 ? (src.reagents.total_volume / 2) : (src.reagents.total_volume)
-				react_volume = min(react_volume, 20)
+				react_volume = min(react_volume, 20) * mult
 				if (M.reagents)
 					react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
 				src.reagents.reaction(M, INGEST, react_volume, 1, src.reagents.reagent_list.len)
@@ -199,7 +199,7 @@
 		target.layer = MOB_LAYER - 0.3
 		src.vis_contents += target
 		if (src.reagents.total_volume)
-			playsound(src.loc, "sound/misc/splash_2.ogg", 70, 3)
+			playsound(src.loc, 'sound/misc/splash_2.ogg', 70, 3)
 
 	proc/eject_occupant(mob/user)
 		if (is_incapacitated(user)) return
@@ -215,27 +215,27 @@
 		src.add_fingerprint(user)
 		if (on)
 			user.visible_message("[user] turns off the bathtub's tap.", "You turn off the bathtub's tap.")
-			playsound(src.loc, "sound/effects/valve_creak.ogg", 30, 2)
+			playsound(src.loc, 'sound/effects/valve_creak.ogg', 30, 2)
 			on = FALSE
 		else
 			if(src.reagents.is_full())
 				boutput(user, "<span class='alert'>The tub is already full!</alert>")
 			else
 				user.visible_message("[user] turns on the bathtub's tap.", "You turn on the bathtub's tap.")
-				playsound(src.loc, "sound/misc/pourdrink.ogg", 60, 4)
+				playsound(src.loc, 'sound/misc/pourdrink.ogg', 60, 4)
 				src.on_reagent_change()
 				on = TRUE
 
 	proc/drain_bathtub(mob/user)
 		src.add_fingerprint(user)
-		if (get_dist(usr, src) <= 1 && !is_incapacitated(usr))
+		if (GET_DIST(usr, src) <= 1 && !is_incapacitated(usr))
 			if (src.reagents.total_volume)
 				user.visible_message("<span class='notice'>[user] reaches into the bath and pulls the plug.", "<span class='notice'>You reach into the bath and pull the plug.</span>")
 				if (ishuman(usr))
 					var/mob/living/carbon/human/H = usr
 					if(!H.gloves)
 						reagents.reaction(H, TOUCH, 5)
-				playsound(src.loc, "sound/misc/drain_glug.ogg", 70, 1)
+				playsound(src.loc, 'sound/misc/drain_glug.ogg', 70, 1)
 				src.reagents.clear_reagents()
 				src.on_reagent_change()
 
@@ -257,7 +257,7 @@
 			src.on_reagent_change()
 			if (src.reagents.is_full())
 				src.visible_message("<span class='notice'>As the [src] finishes filling, the tap shuts off automatically.</span>")
-				playsound(src.loc, "sound/misc/pourdrink2.ogg", 60, 5)
+				playsound(src.loc, 'sound/misc/pourdrink2.ogg', 60, 5)
 				src.on = FALSE
 		if (src.occupant)
 			if(src.occupant.loc != src)
@@ -302,7 +302,7 @@
 		if (Obj == src.occupant)
 			src.visible_message("<span class='notice'>[src.occupant] gets out of the bath.</span>", "<span class='notice'>You get out of the bath.</span>")
 			if (src.reagents.total_volume)
-				playsound(src.loc, "sound/misc/splash_1.ogg", 70, 3)
+				playsound(src.loc, 'sound/misc/splash_1.ogg', 70, 3)
 			var/mob/M = Obj
 			M.set_loc(loc)
 			M.layer = initial(src.occupant.layer)
@@ -324,7 +324,7 @@
 		if(target == user && !user.stat)
 			target.visible_message("[user.name] climbs into the [src].", "You climb into the [src]")
 		else if(target != user && !user.restrained())
-			target.visible_message("<span class='alert'>[user.name] pushes [target.name] into the [src]!</alert>", "<span class='notice'>You push [target.name] into the [src]!</span>")
+			target.visible_message("<span class='alert'>[user.name] pushes [target.name] into the [src]!</alert>", "<span class='alert'>[user.name] pushes you into the [src]!</span>")
 		else
 			return
 

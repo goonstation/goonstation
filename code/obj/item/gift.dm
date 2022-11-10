@@ -6,7 +6,7 @@
 	icon_state = "wrap_paper-r"
 	item_state = "wrap_paper"
 	uses_multiple_icon_states = 1
-	amount = 20.0
+	amount = 20
 	desc = "Used for wrapping gifts. It's got a neat design!"
 	stamina_damage = 0
 	stamina_cost = 0
@@ -118,7 +118,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "gift2-p"
 	item_state = "gift"
-	var/size = 3.0
+	var/size = 3
 	var/obj/item/gift = null
 	w_class = W_CLASS_BULKY
 	stamina_damage = 0

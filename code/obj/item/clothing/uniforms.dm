@@ -10,7 +10,6 @@
 	item_state = "black"
 	body_parts_covered = TORSO|LEGS|ARMS
 	protective_temperature = T0C + 50
-	permeability_coefficient = 0.90
 	flags = FPRINT|TABLEPASS
 	//cogwerks - burn vars
 	burn_point = 400
@@ -26,6 +25,7 @@
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 5)
 		setProperty("meleeprot", 1)
+		setProperty("chemprot", 10)
 
 
 /obj/item/clothing/under/crafted
@@ -432,7 +432,6 @@
 	desc = "It's got a red plus on it, that's a good thing right?"
 	icon_state = "medical"
 	item_state = "medical"
-	permeability_coefficient = 0.50
 
 	april_fools
 		icon_state = "medical-alt"
@@ -443,7 +442,6 @@
 	desc = "Black and white, like ethics."
 	icon_state = "robotics"
 	item_state = "robotics"
-	permeability_coefficient = 0.50
 
 	april_fools
 		icon_state = "robotics-alt"
@@ -454,7 +452,6 @@
 	desc = "A research jumpsuit, supposedly more resistant to biohazards. It had better be!"
 	icon_state = "scientist"
 	item_state = "scientist"
-	permeability_coefficient = 0.50
 
 	april_fools
 		icon_state = "scientist-alt"
@@ -465,7 +462,6 @@
 	desc = "Genetics is very green these days, isn't it?"
 	icon_state = "genetics"
 	item_state = "genetics"
-	permeability_coefficient = 0.50
 
 	april_fools
 		icon_state = "genetics-alt"
@@ -476,7 +472,6 @@
 	desc = "Scientifically proven to block up to 99% of pathogens."
 	icon_state = "pathology"
 	item_state = "pathology"
-	permeability_coefficient = 0.50
 
 	april_fools
 		icon_state = "medical-alt"
@@ -544,7 +539,6 @@
 	desc = "Has a strong earthy smell to it. Hopefully it's merely dirty as opposed to soiled."
 	icon_state = "hydro"
 	item_state = "hydro"
-	permeability_coefficient = 0.50
 
 	april_fools
 		icon_state = "hydro-alt"
@@ -555,7 +549,6 @@
 	desc = "Smells like a barn; hopefully its wearer wasn't raised in one."
 	icon_state = "rancher"
 	item_state = "rancher"
-	permeability_coefficient = 0.50
 
 /obj/item/clothing/under/rank/janitor
 	name = "janitor's jumpsuit"
@@ -740,7 +733,7 @@
 
 /obj/item/clothing/under/misc/turds
 	name = "NT combat uniform"
-	desc = "A Nanotrasen paramilitary jumpsuit."
+	desc = "A Nanotrasen security jumpsuit."
 	icon_state = "turdsuit"
 	item_state = "turdsuit"
 	team_num = TEAM_NANOTRASEN
@@ -1238,18 +1231,7 @@
 				return
 
 			if ("Rip up")
-				boutput(user, "You begin ripping up [src].")
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				else
-					for (var/i=3, i>0, i--)
-						var/obj/item/material_piece/cloth/cottonfabric/CF = new /obj/item/material_piece/cloth/cottonfabric
-						CF.set_loc(get_turf(src))
-					boutput(user, "You rip up [src].")
-					user.u_equip(src)
-					qdel(src)
-					return
+				try_rip_up(user)
 
 	attackby(obj/item/W, mob/user)
 		if (issnippingtool(W))
@@ -1260,7 +1242,7 @@
 			else
 				for (var/i=3, i>0, i--)
 					new /obj/item/bandage(get_turf(src))
-				playsound(src.loc, "sound/items/Scissor.ogg", 100, 1)
+				playsound(src.loc, 'sound/items/Scissor.ogg', 100, 1)
 				boutput(user, "You cut [src] into bandages.")
 				user.u_equip(src)
 				qdel(src)
@@ -1746,3 +1728,29 @@
     desc = "Now comes with a matching belt buckle and leather straps!"
     icon_state = "western"
     item_state = "western"
+
+//Western Saloon Dress
+/obj/item/clothing/under/misc/westerndress
+	name = "Western Saloon Dress"
+	desc = "Featuring a skirt over a skirt!"
+	icon_state = "westerndress"
+	item_state = "westerndress"
+
+//Crate Loot
+/obj/item/clothing/under/misc/tiedye
+    name = "tiedye shirt"
+    desc = "Featuring a pretty inky pattern."
+    icon_state = "tiedye"
+    item_state = "tiedye"
+
+/obj/item/clothing/under/misc/neapolitan
+    name = "neapolitan shirt"
+    desc = "Like the icecream, not made in Naples."
+    icon_state = "neapolitan"
+    item_state = "neapolitan"
+
+/obj/item/clothing/under/misc/mint_chip
+    name = "mint chip shirt"
+    desc = "A shirt imbued with the color scheme of the scientifically best icecream flavor."
+    icon_state = "mint_chip"
+    item_state = "mint_chip"

@@ -6,12 +6,13 @@
 	target_anything = 1
 	cooldown = 250 //10 seconds shorter than the cooldown for fireball in modern code
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	offensive = 1
 	sticky = 1
 	/*
-	voice_grim = "sound/voice/wizard/weneed.ogg"
-	voice_fem = "sound/voice/wizard/someoneto.ogg"
-	voice_other = "sound/voice/wizard/recordthese.ogg"
+	voice_grim = 'sound/voice/wizard/weneed.ogg'
+	voice_fem = 'sound/voice/wizard/someoneto.ogg'
+	voice_other = 'sound/voice/wizard/recordthese.ogg'
 	*/
 	//set spread equal to half of the desired angle of effect in degrees. 90 becomes 180, 180 becomes 360, etc.
 	var/spread = 26.565 //approximately equivalent to half the angle of a dnd 5e cone AoE spell
@@ -25,6 +26,7 @@
 	var/list/proj_types = list()
 	//instance projectile datum for non-random usage, randomise() is called on this
 	var/datum/projectile/artifact/prismatic_projectile/ps_proj = new
+	maptext_colors = list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF", "#FF00FF")
 
 	New()
 		..()
@@ -39,9 +41,9 @@
 	cast(atom/target)
 		if (holder.owner.wizard_spellpower(src) || istype(src, /datum/targetable/spell/prismatic_spray/admin))
 			if(!istype(get_area(holder.owner), /area/sim/gunsim))
-				holder.owner.say("PROJEHK TUL IHNFERNUS") //incantation credit to Grifflez
+				holder.owner.say("PROJEHK TUL IHNFERNUS", FALSE, maptext_style, maptext_colors) //incantation credit to Grifflez
 			//var/mob/living/carbon/human/O = holder.owner
-			logTheThing("combat", holder.owner, target, "casts Prismatic spray at [constructTarget(target,"combat")].")
+			logTheThing(LOG_COMBAT, holder.owner, "casts Prismatic spray at [constructTarget(target,"combat")].")
 			// Put voice stuff here in the future
 			if(src.random == 0)
 				for(var/i=0, i<num_projectiles, i++)
@@ -84,9 +86,9 @@
 	random = 1
 
 /datum/targetable/spell/prismatic_spray/admin/bullet_hell
-	spread = 180.0
+	spread = 180
 	num_projectiles = 120
 
 /datum/targetable/spell/prismatic_spray/bullet_hell
-	spread = 180.0
+	spread = 180
 	num_projectiles = 120

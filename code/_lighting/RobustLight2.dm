@@ -347,7 +347,7 @@ datum/light
 			src.apply_level++
 			if(src.apply_level != 1)
 				//CRASH("Light [src]'s apply level at [src.x], [src.y], [src.z] is [src.apply_level]")
-				logTheThing("debug", src, null, "<b>Light:</b> [src] (at [src.x] [src.y] [src.z]) is at apply level [src.apply_level] after an apply.")
+				logTheThing(LOG_DEBUG, src, "<b>Light:</b> [src] (at [src.x] [src.y] [src.z]) is at apply level [src.apply_level] after an apply.")
 #endif
 			return apply_internal(++RL_Generation, src.premul_r, src.premul_g, src.premul_b)
 
@@ -358,7 +358,7 @@ datum/light
 			src.apply_level--
 			if(src.apply_level != 0)
 				//CRASH("Light [src]'s apply level at [src.x], [src.y], [src.z] is [src.apply_level]")
-				logTheThing("debug", src, null, "<b>Light:</b> [src] (at [src.x] [src.y] [src.z]) is at apply level [src.apply_level] after a strip.")
+				logTheThing(LOG_DEBUG, src, "<b>Light:</b> [src] (at [src.x] [src.y] [src.z]) is at apply level [src.apply_level] after a strip.")
 #endif
 			return apply_internal(generation, -src.premul_r, -src.premul_g, -src.premul_b)
 
@@ -609,14 +609,14 @@ proc
 	RL_Suspend()
 		RL_Suspended = 1
 #ifdef DEBUG_LIGHT_STRIP_APPLY
-		logTheThing("debug", src, null, "<b>Light:</b> Suspended lighting.")
+		logTheThing(LOG_DEBUG, src, "<b>Light:</b> Suspended lighting.")
 #endif
 		//TODO
 
 	RL_Resume()
 		RL_Suspended = 0
 #ifdef DEBUG_LIGHT_STRIP_APPLY
-		logTheThing("debug", src, null, "<b>Light:</b> Unsuspended lighting.")
+		logTheThing(LOG_DEBUG, src, "<b>Light:</b> Unsuspended lighting.")
 #endif
 		// TODO
 		//I'm going to keep to my later statement for this and above: "for fucks sake tobba" -ZeWaka
@@ -671,28 +671,6 @@ turf
 #ifdef DEBUG_LIGHTING_UPDATES
 		var/obj/maptext_junk/RL_counter/counter = null
 #endif
-	disposing()
-		..()
-		RL_Cleanup()
-
-		var/old_lights = src.RL_Lights
-		var/old_opacity = src.opacity
-		SPAWN(0) // ugghhh fuuck
-			if (old_lights)
-				if (!RL_Lights)
-					RL_Lights = old_lights
-				else
-					RL_Lights |= old_lights
-			var/new_opacity = src.opacity
-			src.opacity = old_opacity
-			RL_SetOpacity(new_opacity)
-
-			for (var/turf/T in view(RL_MaxRadius, src))
-				for (var/datum/light/light in T.RL_Lights)
-					if (light.enabled)
-						light.apply_to(src)
-			if (RL_Started)
-				RL_UPDATE_LIGHT(src)
 
 	proc
 		RL_ApplyLight(lx, ly, brightness, height2, r, g, b) // use the RL_APPLY_LIGHT macro instead if at all possible!!!!
@@ -872,7 +850,7 @@ atom
 			if (src.opacity == new_opacity)
 				return
 			if(!RL_Started)
-				src.opacity = new_opacity
+				src.set_opacity(new_opacity)
 				return
 
 			var/list/datum/light/lights = list()
@@ -888,7 +866,7 @@ atom
 			var/turf/L = get_turf(src)
 			if(src.loc == L && L) L.opaque_atom_count += new_opacity ? 1 : -1
 
-			src.opacity = new_opacity
+			src.set_opacity(new_opacity)
 			for (var/datum/light/light as anything in lights)
 				if (light.enabled)
 					affected |= light.apply()

@@ -28,6 +28,7 @@
 	opacity = 0
 	anchored = 1
 	flags = TGUI_INTERACTIVE
+	object_flags = NO_GHOSTCRITTER //cry about it
 	layer = OBJ_LAYER - 0.1	// Match vending machines
 
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
@@ -93,12 +94,12 @@
 		playsound(src.loc, sound_token, 80, 1)
 		boutput(user, "<span class='notice'>You insert the requisition token into [src].</span>")
 		if(log_purchase)
-			logTheThing("debug", user, null, "inserted [token] into [src] at [log_loc(get_turf(src))]")
+			logTheThing(LOG_DEBUG, user, "inserted [token] into [src] at [log_loc(get_turf(src))]")
 
 
 	proc/vended(var/atom/A)
 		if(log_purchase)
-			logTheThing("debug", usr, null, "bought [A] from [src] at [log_loc(get_turf(src))]")
+			logTheThing(LOG_DEBUG, usr, "bought [A] from [src] at [log_loc(get_turf(src))]")
 		.= 0
 
 /obj/submachine/weapon_vendor/security
@@ -119,7 +120,7 @@
 		materiel_stock += new/datum/materiel/utility/donuts
 		materiel_stock += new/datum/materiel/utility/crowdgrenades
 		materiel_stock += new/datum/materiel/utility/detscanner
-		materiel_stock += new/datum/materiel/utility/nightvisiongoggles
+		materiel_stock += new/datum/materiel/utility/nightvisionsechudgoggles
 		materiel_stock += new/datum/materiel/utility/markerrounds
 		materiel_stock += new/datum/materiel/utility/prisonerscanner
 		materiel_stock += new/datum/materiel/ammo/medium
@@ -142,6 +143,7 @@
 	accepted_token(var/token)
 		if (istype(token, /obj/item/requisition_token/security/assistant))
 			src.credits[WEAPON_VENDOR_CATEGORY_ASSISTANT]++
+			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
 		else if (istype(token, /obj/item/requisition_token/security/utility))
 			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
 		else
@@ -197,6 +199,7 @@
 		materiel_stock += new/datum/materiel/utility/comtac
 		materiel_stock += new/datum/materiel/utility/beartraps
 		materiel_stock += new/datum/materiel/utility/miscpouch
+		materiel_stock += new/datum/materiel/utility/sawflies
 
 	accepted_token()
 		src.credits[WEAPON_VENDOR_CATEGORY_SIDEARM]++
@@ -283,12 +286,12 @@
 /datum/materiel/utility/morphineinjectors
 	name = "Morphine Autoinjectors"
 	path = /obj/item/storage/box/morphineinjectors
-	description = "Four Morphine Autoinjectors, capable of ensuring you move at the best possible speed while injured without slowdowns...or used as a makeshift tranquilizer if overdosed."
+	description = "Six Morphine Autoinjectors, capable of ensuring you move at the best possible speed while injured without slowdowns...or used as a makeshift tranquilizer if overdosed."
 
 /datum/materiel/utility/donuts
 	name = "Robust(ed) Donuts"
 	path = /obj/item/storage/lunchbox/robustdonuts
-	description = "Two Robust Donuts and two Robusted Donuts, which are loaded with helpful chemicals that help you resist stuns and heal you!"
+	description = "One Robust Donut and one Robusted Donut, which are loaded with helpful chemicals that help you resist stuns and heal you!"
 
 /datum/materiel/utility/crowdgrenades
 	name = "Crowd Dispersal Grenades"
@@ -300,10 +303,15 @@
 	path = /obj/item/device/detective_scanner
 	description = "A scanner capable of reading fingerprints on objects and looking up the records in real time. A favorite of investigators."
 
-/datum/materiel/utility/nightvisiongoggles
+/datum/materiel/utility/nightvisiongoggles //Leaving old goggles in for any other uses
 	name = "Night Vision Goggles"
 	path = /obj/item/clothing/glasses/nightvision
 	description = "A pair of Night Vision Goggles. Helps you see in the dark, but doesn't give you any protection from flashes or a SecHud."
+
+/datum/materiel/utility/nightvisionsechudgoggles
+	name = "Night Vision SecHUD Goggles"
+	path = /obj/item/clothing/glasses/nightvision/sechud
+	description = "A pair of Night Vision Sechud Goggles. Helps you see in the dark, but doesn't give you any protection from flashes."
 
 /datum/materiel/utility/markerrounds
 	name = "40mm Paint Marker Rounds"
@@ -433,7 +441,7 @@
 /datum/materiel/utility/knife
 	name = "Combat Knife"
 	path = /obj/item/dagger/syndicate/specialist
-	description = "A field-tested 10 inch combat knife, helps you move faster when held."
+	description = "A field-tested 10 inch combat knife, helps you move faster when held & knocks down targets when thrown."
 
 /datum/materiel/utility/rpg_ammo
 	name = "MPRT Rocket Ammunition"
@@ -476,6 +484,11 @@
 	name = "High capacity tactical pouch"
 	path = /obj/item/storage/pouch/highcap
 	description = "A 6-slot pouch for carrying multiple different ammunitions at once"
+
+/datum/materiel/utility/sawflies
+	name = "Sawfly pouch"
+	path = /obj/item/storage/sawfly_pouch
+	description = "A pouch of 3 reusable anti-personnel drones."
 // Requisition tokens
 
 /obj/item/requisition_token
@@ -483,6 +496,7 @@
 	desc = "A Syndicate credit card charged with currency compatible with the Syndicate Weapons Vendor."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "req-token"
+	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 
 

@@ -120,20 +120,28 @@
 
 proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time=2 SECONDS, invisibility=INVIS_NONE, atom/movable/pointer)
 	// note that `target` can also be a turf, but byond sux and I can't declare the var as atom because areas don't have vis_contents
+	if(QDELETED(target)) return
 	var/obj/decal/point/point = new
+	if (!target.pixel_point)
+		pixel_x = target.pixel_x
+		pixel_y = target.pixel_y
+	else
+		pixel_x -= 16 - target.pixel_x
+		pixel_y -= 16 - target.pixel_y
 	point.pixel_x = pixel_x
 	point.pixel_y = pixel_y
 	point.color = color
 	point.invisibility = invisibility
-	target.vis_contents += point
-	if(pointer && GET_DIST(pointer, target) <= 10) // check so that you can't shoot points across the station
+	var/turf/target_turf = get_turf(target)
+	target_turf.vis_contents += point
+	if(pointer && GET_DIST(pointer, target_turf) <= 10) // check so that you can't shoot points across the station
 		var/matrix/M = matrix()
-		M.Translate((pointer.x - target.x)*32 - pixel_x, (pointer.y - target.y)*32 - pixel_y)
+		M.Translate((pointer.x - target_turf.x)*32 - pixel_x, (pointer.y - target_turf.y)*32 - pixel_y)
 		point.transform = M
 		animate(point, transform=null, time=2)
 	SPAWN(time)
-		if(target)
-			target.vis_contents -= point
+		if(target_turf)
+			target_turf.vis_contents -= point
 		qdel(point)
 	return point
 
@@ -147,6 +155,12 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	anchored = 1
 	density = 1
 */
+
+/obj/decal/nav_danger
+	name = "DANGER"
+	desc = "This navigational marker indicates a hazardous zone of space."
+	icon = 'icons/obj/decals/misc.dmi'
+	icon_state = "mule_dropoff"
 
 obj/decal/fakeobjects
 	layer = OBJ_LAYER
@@ -286,6 +300,15 @@ obj/decal/fakeobjects/teleport_pad
 	icon_state = "door0"
 	anchored = 1
 
+/obj/decal/fakeobjects/airlock_broken
+	name = "rusted airlock"
+	desc = "Rust has rendered this airlock useless."
+	icon = 'icons/obj/doors/Door1.dmi';
+	icon_state = "doorl";
+	anchored = 1
+	density = 1
+	opacity = 1
+
 /obj/decal/fakeobjects/lighttube_broken
 	name = "shattered light tube"
 	desc = "Something has broken this light."
@@ -310,8 +333,8 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/fakeobjects/shuttlethruster
 	name = "propulsion unit"
 	desc = "A small impulse drive that moves the shuttle."
-	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "propulsion"
+	icon = 'icons/obj/shuttle.dmi'
+	icon_state = "alt_propulsion"
 	anchored = 1
 	density = 1
 	opacity = 0
@@ -319,7 +342,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/fakeobjects/shuttleweapon
 	name = "weapons unit"
 	desc = "A weapons system for shuttles and similar craft."
-	icon = 'icons/turf/shuttle.dmi'
+	icon = 'icons/obj/shuttle.dmi'
 	icon_state = "shuttle_laser"
 	anchored = 1
 	density = 1
@@ -355,7 +378,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/fakeobjects/shuttleengine
 	name = "engine unit"
 	desc = "A generator unit that uses complex technology."
-	icon = 'icons/turf/shuttle.dmi'
+	icon = 'icons/obj/shuttle.dmi'
 	icon_state = "heater"
 	anchored = 1
 	density = 1
@@ -403,6 +426,15 @@ obj/decal/fakeobjects/teleport_pad
 	anchored = 1
 	density = 1
 
+/obj/decal/fakeobjects/lawrack
+	name = "defunct AI Law Mount Rack"
+	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behaivor of connected AIs. This one looks non-functional."
+	icon = 'icons/obj/large/32x48.dmi'
+	icon_state = "airack_empty"
+	anchored = 1
+	density = 1
+	layer = EFFECTS_LAYER_UNDER_1
+	plane = PLANE_DEFAULT
 
 /obj/decal/bloodtrace
 	name = "blood trace"
@@ -552,7 +584,7 @@ obj/decal/fakeobjects/teleport_pad
 			if (prob(5))
 				M.TakeDamage("head", 5, 0, 0, DAMAGE_BLUNT)
 				M.visible_message("<span class='alert'><b>[M]</b> hits their head on [src]!</span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1)
 
 // These used to be static turfs derived from the standard grey floor tile and thus didn't always blend in very well (Convair880).
 /obj/decal/mule

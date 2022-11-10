@@ -29,19 +29,19 @@
 	death(var/gibbed)
 		..(gibbed, 0)
 		if (!gibbed)
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 			ghostize()
 			qdel(src)
 		else
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/screams/robot_scream.ogg" , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/screams/robot_scream.ogg' , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> screams!"
 		return null
 
@@ -95,6 +95,9 @@
 
 	get_disorient_protection()
 		return max(..(), 80)
+
+	get_disorient_protection_eye()
+		return(50)
 
 	attack_hand(mob/user)
 		user.lastattacked = src
