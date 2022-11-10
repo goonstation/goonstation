@@ -48,7 +48,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		var/datum/material/M = new base.type()
 		M.properties = mergeProperties(base.properties, rightBias = 0)
 		for(var/X in base.vars)
-			if(X == "type" || X == "parent_type" || X == "tag" || X == "vars" || X == "properties" || X == "datum_components" || X == "comp_lookup" || X == "signal_procs" || X == "signal_enabled") continue
+			if(X == "type" || X == "parent_type" || X == "tag" || X == "vars" || X == "properties" || X == "datum_components" || X == "comp_lookup" || X == "signal_procs") continue
 
 			if(X in triggerVars)
 				M.vars[X] = getFusedTriggers(base.vars[X], list(), M) //Pass in an empty list to basically copy the first one.
@@ -141,6 +141,8 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 /// Sets the material of an object. PLEASE USE THIS TO SET MATERIALS UNLESS YOU KNOW WHAT YOU'RE DOING.
 /atom/proc/setMaterial(datum/material/mat1, appearance = TRUE, setname = TRUE, copy = TRUE, use_descriptors = FALSE)
+	if(istext(mat1))
+		CRASH("setMaterial() called with a string instead of a material datum.")
 	if(!mat1 ||!istype(mat1, /datum/material))
 		return
 	if(copy)

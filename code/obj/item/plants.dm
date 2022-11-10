@@ -343,6 +343,32 @@
 	icon_state = "mint"
 	brew_result = "menthol"
 
+/obj/item/plant/herb/nettle
+	name = "nettle leaves"
+	crop_suffix	= " leaves"
+	desc = "Stinging leaves that hurt to touch."
+	icon_state = "nettle"
+
+	attack_hand(mob/user)
+		var/mob/living/carbon/human/H = user
+		if (H.hand)//gets active arm - left arm is 1, right arm is 0
+			if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts) || istype(H.limbs.l_arm,/obj/item/parts/human_parts/arm/left/synth))
+				..()
+				return
+		else
+			if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts) || istype(H.limbs.r_arm,/obj/item/parts/human_parts/arm/right/synth))
+				..()
+				return
+		if(istype(H))
+			if(H.gloves)
+				..()
+				return
+		if(ON_COOLDOWN(src, "itch", 1 SECOND))
+			return
+		boutput(user, "<span class='alert'>Your hands itch from touching [src]!</span>")
+		random_brute_damage(user, 1)
+		H.changeStatus("weakened", 1 SECONDS)
+
 /obj/item/plant/herb/catnip
 	name = "nepeta cataria"
 	crop_suffix	= ""
@@ -518,7 +544,8 @@
 				M.bioHolder.AddEffect("dead_scan", timeleft = 40 SECONDS, do_stability = FALSE, magical = TRUE)
 			else
 				M.reagents?.add_reagent("capulettium", 13)
-		M.bioHolder?.AddEffect("mute", timeleft = 40 SECONDS, do_stability = FALSE, magical = TRUE)
+		//DO NOT add the SECONDS define to this, bioHolders are cursed and don't believe in ticks
+		M.bioHolder?.AddEffect("mute", timeleft = 40, do_stability = FALSE, magical = TRUE)
 
 /obj/item/plant/flower/rose/holorose
 	name = "holo rose"

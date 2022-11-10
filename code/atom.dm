@@ -968,7 +968,8 @@
 	// turf that is not obscuring vision, we were obscuring vision and are not
 	// anymore.
 	if (isturf(src.loc) && ((src.loc.opacity == 0 && src.opacity == 1) || (src.loc.opacity == 0 && oldopacity == 1 && src.opacity == 0)))
-		SEND_SIGNAL(src.loc, COMSIG_TURF_CONTENTS_SET_OPACITY_SMART, oldopacity, src)
+		var/turf/T = src.loc
+		T.contents_set_opacity_smart(oldopacity, src)
 
 // standardized damage procs
 

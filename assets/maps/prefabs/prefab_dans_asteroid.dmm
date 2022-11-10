@@ -538,7 +538,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/prefab/discount_dans_asteroid)
 "uY" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/airless/plating/scorched,
 /area/prefab/discount_dans_asteroid)
 "vk" = (

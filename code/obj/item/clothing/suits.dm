@@ -1090,6 +1090,7 @@
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
 	var/rip = 0
+	acid_survival_time = 3 MINUTES
 
 	setupProperties()
 		..()

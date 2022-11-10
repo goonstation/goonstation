@@ -191,6 +191,7 @@
 		if(istype(I, /obj/item/reagent_containers/glass))
 			if (I.cant_drop)
 				boutput(user, "<span class='alert'>You can't put that in \the [src] while it's attached to you!")
+				return
 			if(src.beaker)
 				user.show_text("A beaker is already loaded into the machine.", "red")
 				return

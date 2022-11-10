@@ -24,7 +24,7 @@ TYPEINFO(/datum/component/arable)
 /datum/component/arable/Initialize()
 	if(!istype(parent, /turf) && !istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, list(COMSIG_ATTACKBY), .proc/plant_seed)
+	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/plant_seed)
 
 /datum/component/arable/proc/plant_seed(atom/A, obj/item/I, mob/user)
 	PRIVATE_PROC(TRUE)

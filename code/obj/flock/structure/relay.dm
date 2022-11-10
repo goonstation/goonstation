@@ -26,7 +26,7 @@
 	layer = EFFECTS_LAYER_BASE //big spooky thing needs to render over everything
 	plane = PLANE_NOSHADOW_ABOVE
 	var/conversion_radius = 1
-	var/max_conv_radius = 100
+	var/max_conv_radius = 15 // increase back to 100 later if possible. 100 worked fine on local but not as much on live with a lot of people
 	var/list/turfs_to_convert = null
 	var/last_time_sound_played_in_seconds = 0
 	var/sound_length_in_seconds = 27
@@ -41,6 +41,8 @@
 	var/shuttle_departure_delayed = FALSE
 
 /obj/flock_structure/relay/New()
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, 9)
+
 	..()
 	logTheThing(LOG_GAMEMODE, src, "Flock relay is constructed[src.flock ? " by flock [src.flock.name]" : ""] at [log_loc(src)].")
 	src.info_tag.set_tag_offset(64, -4) // to account for 5x5 sprite
@@ -78,6 +80,7 @@
 		turfs_to_convert["[dist]"] |= T
 
 /obj/flock_structure/relay/disposing()
+	REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
 	var/mob/living/intangible/flock/flockmind/F = src.flock?.flockmind
 	logTheThing(LOG_GAMEMODE, src, "Flock relay[src.flock ? " belonging to flock [src.flock.name]" : ""] is destroyed at [log_loc(src)].")
 	..()
@@ -138,6 +141,7 @@
 		return
 	logTheThing(LOG_GAMEMODE, src, "Flock relay[src.flock ? " belonging to flock [src.flock.name]" : ""] unleashes the signal, exploding at [log_loc(src)].")
 	src.finished = TRUE
+	src.flock.relay_finished = TRUE
 	processing_items -= src
 	var/turf/location = get_turf(src)
 	overlays += "structure-relay-sparks"

@@ -848,6 +848,12 @@
 			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "bucket" // sprite by BatElite!
 
+		keep_it_or_melt
+			name = "KEEP IT or MELT"
+			desc = "A poster depicting an emergency suit with large text that reads \"KEEP IT or MELT\". A tiny row of text at the bottom reads \"All personnel receive suits rated for three minutes of exposure.\""
+			icon = 'icons/obj/decals/posters.dmi'
+			icon_state = "keep_it_or_melt"
+
 		eiffelposter //for Jan's office
 			desc = "A poster of the Eiffel Tower in Paris, France."
 			name = "Eiffel Poster"
