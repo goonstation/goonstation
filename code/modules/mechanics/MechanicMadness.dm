@@ -880,6 +880,7 @@
 		rebeam()
 
 	rotate()
+		..()
 		if(level == 1)
 			rebeam()
 

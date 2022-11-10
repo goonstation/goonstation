@@ -334,7 +334,7 @@
 
 	Entered(var/atom/movable/AM)
 		. = ..()
-		if (istype(AM,/mob/dead) || istype(AM,/mob/wraith) || istype(AM,/mob/living/intangible) || istype(AM, /obj/lattice) || istype(AM, /obj/cable/reinforced) || istype(AM,/obj/torpedo_targeter) || istype(AM,/obj/overlay) || istype (AM, /obj/arrival_missile) || istype(AM, /obj/sea_ladder_deployed))
+		if (istype(AM,/mob/dead) || istype(AM,/mob/living/intangible) || istype(AM, /obj/lattice) || istype(AM, /obj/cable/reinforced) || istype(AM,/obj/torpedo_targeter) || istype(AM,/obj/overlay) || istype (AM, /obj/arrival_missile) || istype(AM, /obj/sea_ladder_deployed))
 			return
 		if (locate(/obj/lattice) in src)
 			return
@@ -522,7 +522,7 @@
 		return
 
 	Entered(atom/movable/A as mob|obj)
-		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
+		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/living/intangible))
 			return ..()
 		var/turf/T = pick_landmark(LANDMARK_FALL_SEA)
 		if (isturf(T))

@@ -278,6 +278,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\components\no_gravity.dm"
 #include "code\datums\components\obj_projectile_damage.dm"
 #include "code\datums\components\power_cell.dm"
+#include "code\datums\components\proj_door_breach.dm"
 #include "code\datums\components\radioactive.dm"
 #include "code\datums\components\self_destruct.dm"
 #include "code\datums\components\send_to_target_mob.dm"
