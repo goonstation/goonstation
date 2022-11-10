@@ -39,7 +39,7 @@ TYPEINFO(/datum/component/camera_coverage_emitter)
 	if (current_state > GAME_STATE_WORLD_NEW)
 		camera_coverage_controller.update_emitter(src)
 
-	RegisterSignal(parent, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), .proc/on_move)
+	RegisterSignals(parent, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), .proc/on_move)
 
 	// If our parent is not on a turf but on an atom instead, update when their
 	// location is changed. This is necessary due to the many cases of a
@@ -48,7 +48,7 @@ TYPEINFO(/datum/component/camera_coverage_emitter)
 	// slowly be migrated after a solution is made for the camera network that an
 	// /obj/machinery/camera creates.
 	if (!isturf(parent_atom.loc) && isatom(parent_atom.loc))
-		RegisterSignal(parent_atom.loc, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), .proc/on_move)
+		RegisterSignals(parent_atom.loc, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), .proc/on_move)
 
 /datum/component/camera_coverage_emitter/proc/on_move(atom/target, new_loc, previous_loc, direction)
 	src.turf = get_turf(new_loc)

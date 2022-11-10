@@ -71,7 +71,7 @@
 			critter_types = list(/mob/living/critter/spider/baby),
 			drop_tables = list(
 				new /datum/event_item_drop_table(  // several baby spiders crawl out of the corpse like those horror short videos oh no
-					potential_drop_items = list(/obj/critter/spider/baby),
+					potential_drop_items = list(/mob/living/critter/spider/baby),
 					number_of_rolls = 6
 					),
 				new /datum/event_item_drop_table(  // but on the bright side it drops an egg!

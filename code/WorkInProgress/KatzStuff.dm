@@ -25,8 +25,7 @@
 /datum/projectile/bullet/battle_rifle
 	name = "bullet"
 	shot_sound = 'sound/weapons/ak47shot.ogg'
-	power = 50
-	ks_ratio = 1
+	damage = 50
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	impact_image_state = "bhole-small"

@@ -9,6 +9,8 @@
 	var/no_late_join = 0
 	var/no_jobban_from_this_job = 0
 	var/allow_traitors = 1
+	///can you roll this job if you rolled antag with a non-traitor-allowed favourite job (e.g.: prevent sec mains from forcing only captain antag rounds)
+	var/allow_antag_fallthrough = TRUE
 	var/allow_spy_theft = 1
 	var/cant_spawn_as_rev = 0 // For the revoltion game mode. See jobprocs.dm for notes etc (Convair880).
 	var/cant_spawn_as_con = 0 // Prevents this job spawning as a conspirator in the conspiracy gamemode.
@@ -153,6 +155,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 	allow_spy_theft = 0
+	allow_antag_fallthrough = FALSE
 
 	slot_card = /obj/item/card/id/gold
 	slot_belt = list(/obj/item/device/pda2/captain)
@@ -200,6 +203,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	wages = PAY_IMPORTANT
 
 	allow_spy_theft = 0
+	allow_antag_fallthrough = FALSE
 	receives_miranda = 1
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
@@ -532,6 +536,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	//allow_traitors = 0
 	receives_badge = 1
 	cant_spawn_as_rev = 1
+	allow_antag_fallthrough = FALSE
 	slot_back = list(/obj/item/storage/backpack/withO2)
 	slot_belt = list(/obj/item/storage/belt/security/shoulder_holster)
 	slot_poc1 = list(/obj/item/device/pda2/forensic)

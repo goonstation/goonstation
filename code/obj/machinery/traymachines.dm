@@ -375,6 +375,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	icon_state = "crema_switch"
 	anchored = TRUE
 	req_access = list(access_crematorium)
+	plane = PLANE_NOSHADOW_ABOVE
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	var/area/area = null
 	var/otherarea = null

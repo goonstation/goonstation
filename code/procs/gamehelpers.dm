@@ -736,7 +736,7 @@ proc/get_ouija_word_list(var/atom/movable/source = null, var/words_min = 5, var/
 					words |= (M.real_name ? M.real_name : M.name)
 			if (1 to 5)
 				// fake wraith
-				words |= call(/mob/wraith/proc/make_name)()
+				words |= call(/mob/living/intangible/wraith/proc/make_name)()
 			if (6 to 10)
 				// fake blob (heh)
 				var/blobname = phrase_log.random_phrase("name-blob")

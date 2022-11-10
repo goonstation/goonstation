@@ -1361,7 +1361,7 @@
 				break
 
 	attackby(obj/item/W, mob/M)
-		if(istype(W, /obj/item/reagent_containers/food/snacks) && !(M in src.friends))
+		if(istype(W, /obj/item/reagent_containers/food/snacks) && !(M in src.friends) && src.alive)
 			if(prob(25))
 				src.visible_message("<span class='notice'>[src] munches happily on the [W], and seems a little friendlier with [M]!</span>")
 				src.friends += M
