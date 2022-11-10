@@ -96,7 +96,7 @@
 		if (!src.powered || !..() || GET_COOLDOWN(src, "bolt_gen_time") <= 1.5 SECONDS)
 			return FALSE
 		src.accepts_sapper_power = FALSE
-		ON_COOLDOWN(src, "bolt_gen_time", max(0, GET_COOLDOWN(src, "bolt_gen_time") - 3 SECONDS))
+		OVERRIDE_COOLDOWN(src, "bolt_gen_time", max(0, GET_COOLDOWN(src, "bolt_gen_time") - 3 SECONDS))
 		src.info_tag.set_info_tag(src.check_bolt_status())
 		SPAWN(10 SECONDS)
 			src?.accepts_sapper_power = TRUE
