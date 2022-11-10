@@ -1440,6 +1440,41 @@ DEFINE_FLOORS(techfloor/green,
 
 /////////////////////////////////////////
 
+//// some other floors ////
+
+/turf/simulated/floor/marslike
+	name = "imitation martian dirt"
+	desc = "Wow, you almost believed it was real martian dirt for a moment!"
+	icon = 'icons/misc/mars_outpost.dmi'
+	icon_state = "placeholder"
+	step_material = "step_outdoors"
+	step_priority = STEP_PRIORITY_MED
+	mat_appearances_to_ignore = list("steel")
+
+/turf/simulated/floor/marslike/t1
+	icon_state = "t1"
+/turf/simulated/floor/marslike/t2
+	icon_state = "t2"
+/turf/simulated/floor/marslike/t3
+	icon_state = "t4"
+/turf/simulated/floor/marslike/t4
+	icon_state = "t4"
+
+/turf/simulated/floor/stone
+	name = "stone"
+	icon = 'icons/turf/dojo.dmi'
+	icon_state = "stone"
+	mat_appearances_to_ignore = list("steel","rock")
+	mat_changename = 0
+	mat_changedesc = 0
+
+	New()
+		plate_mat = getMaterial("rock")
+		..()
+
+/////////////////////////////////////////
+
+
 /* Outdoors tilesets - Walp */
 
 DEFINE_FLOORS(grasslush,
@@ -1588,7 +1623,13 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 /turf/simulated/floor/Cross(atom/movable/mover)
 	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
 		if (!( locate(/obj/machinery/mass_driver, src) ))
-			return 0
+			var/obj/machinery/vehicle/O = mover
+			if (istype(O?.sec_system, /obj/item/shipcomponent/secondary_system/crash)) //For ships crashing with the SEED
+				var/obj/item/shipcomponent/secondary_system/crash/I = O.sec_system
+				if (I.crashable)
+					mover.Bump(src)
+					return TRUE
+			return FALSE
 	return ..()
 
 /turf/simulated/shuttle/Cross(atom/movable/mover)
@@ -2254,7 +2295,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 			icon_state = "deeps"
 
 			Entered(atom/A as mob|obj)
-				if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
+				if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/living/intangible))
 					return ..()
 
 				var/turf/T = pick_landmark(LANDMARK_FALL_DEEP)

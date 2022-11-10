@@ -891,9 +891,8 @@
 
 		if(open)
 			if(cell && !user.equipped())
-				user.put_in_hand_or_drop(cell)
 				cell.UpdateIcon()
-				cell = null
+				user.put_in_hand_or_drop(cell)
 
 				user.visible_message("<span class='notice'>[user] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
 		else
@@ -1005,6 +1004,11 @@
 		if (mode_toggle) //reactivate in togglemode
 			activate()
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
 /obj/item/clothing/shoes/stomp_boots
 	name = "Stomper Boots"
 	desc = "A pair of specialized boots for stomping the ground really hard." // TODO add techy explanation I guess
@@ -1030,6 +1034,7 @@
 	var/jump_time = 1 SECONDS//! Time the jump takes, in seconds.
 	var/stomp_cooldown = 10 SECONDS
 	var/stomp_damage = 20
+	requires_equip = TRUE
 
 	execute_ability()
 		if(!(the_item in the_mob.get_equipped_items()))

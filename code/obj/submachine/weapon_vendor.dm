@@ -28,6 +28,7 @@
 	opacity = 0
 	anchored = 1
 	flags = TGUI_INTERACTIVE
+	object_flags = NO_GHOSTCRITTER //cry about it
 	layer = OBJ_LAYER - 0.1	// Match vending machines
 
 	var/sound_token = 'sound/machines/capsulebuy.ogg'

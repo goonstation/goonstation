@@ -16,11 +16,6 @@
 	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/sawfly_chase_n_stab, list(holder, src))
 
-/datum/aiTask/prioritizer/sawfly/on_tick()
-	if(isdead(holder.owner))
-		holder.enabled = FALSE
-		walk(holder.owner, 0)
-
 /datum/aiTask/prioritizer/sawfly/on_reset()
 	..()
 	walk(holder.owner, 0)
@@ -94,7 +89,7 @@
 		if (isintangible(C))
 			continue
 		if(C.mind?.special_role)
-			if (istraitor(C) || isnukeop(C) || isspythief(C) || isnukeopgunbot(C)) // frens :)
+			if (issawflybuddy(C)) // frens :)
 				if (!(C.weakref in owncritter.friends))
 					boutput(C, "<span class='alert'> [owncritter]'s IFF system silently flags you as an ally! </span>")
 					owncritter.friends += get_weakref(C)

@@ -743,7 +743,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/RCDammo
 	name = "Compressed Matter Cartridge"
 	item_paths = list("DEN-1")
-	item_amounts = list(40)
+	item_amounts = list(30)
 	item_outputs = list(/obj/item/rcd_ammo)
 	time = 10 SECONDS
 	create = 1
@@ -752,7 +752,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/RCDammomedium
 	name = "Medium Compressed Matter Cartridge"
 	item_paths = list("DEN-2")
-	item_amounts = list(40)
+	item_amounts = list(30)
 	item_outputs = list(/obj/item/rcd_ammo/medium)
 	time = 20 SECONDS
 	create = 1
@@ -760,8 +760,8 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/RCDammolarge
 	name = "Large Compressed Matter Cartridge"
-	item_paths = list("CRY-2")
-	item_amounts = list(40)
+	item_paths = list("uqill")
+	item_amounts = list(20)
 	item_outputs = list(/obj/item/rcd_ammo/big)
 	time = 30 SECONDS
 	create = 1
@@ -818,6 +818,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_amounts = list(3)
 	item_outputs = list(/obj/item/clothing/shoes/white)
 	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/flippers
+	name = "Flippers"
+	item_paths = list("RUB")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/clothing/shoes/flippers)
+	time = 8 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -1997,6 +2006,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/engdivesuit
+	name = "Engineering Diving Suit Set"
+	item_paths = list("FAB-1","MET-1","CRY-1")
+	item_amounts = list(3,3,2)
+	item_outputs = list(/obj/item/clothing/suit/space/diving/engineering,/obj/item/clothing/head/helmet/space/engineer/diving/engineering)
+	time = 15 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/oresatchel
 	name = "Ore Satchel"
 	item_paths = list("FAB-1")
@@ -3015,11 +3033,11 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 /************ INTERDICTOR STUFF ************/
 
-/datum/manufacture/interdictor_frame
-	name = "Interdictor Frame Kit"
-	item_paths = list("MET-2")
-	item_amounts = list(10)
-	item_outputs = list(/obj/item/interdictor_frame_kit)
+/datum/manufacture/interdictor_kit
+	name = "Interdictor Assembly Kit"
+	item_paths = list("MET-2","CON-1")
+	item_amounts = list(10,4)
+	item_outputs = list(/obj/item/interdictor_kit)
 	time = 15 SECONDS
 	create = 1
 	category = "Machinery"
@@ -3027,7 +3045,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/interdictor_rod_lambda
 	name = "Lambda Phase-Control Rod"
 	item_paths = list("MET-2","CON-1","CRY-1","INS-1")
-	item_amounts = list(10,20,10,5)
+	item_amounts = list(2,10,5,2)
 	item_outputs = list(/obj/item/interdictor_rod)
 	time = 20 SECONDS
 	create = 1
@@ -3036,11 +3054,51 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/interdictor_rod_sigma
 	name = "Sigma Phase-Control Rod"
 	item_paths = list("MET-2","CON-2","INS-1","POW-1")
-	item_amounts = list(10,25,10,5)
+	item_amounts = list(2,10,5,2)
 	item_outputs = list(/obj/item/interdictor_rod/sigma)
 	time = 20 SECONDS
 	create = 1
 	category = "Machinery"
+
+/************ NADIR RESONATORS ************/
+
+/datum/manufacture/resonator_type_ax
+	name = "Type-AX Resonator"
+	item_paths = list("MET-2","CON-2","CRY-1","POW-1")
+	item_amounts = list(15,20,20,5)
+	item_outputs = list(/obj/machinery/siphon/resonator)
+	time = 30 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/resonator_type_sm
+	name = "Type-SM Resonator"
+	item_paths = list("MET-2","CON-2","CRY-1","INS-1")
+	item_amounts = list(10,20,10,10)
+	item_outputs = list(/obj/machinery/siphon/resonator/stabilizer)
+	time = 30 SECONDS
+	create = 1
+	category = "Machinery"
+
+/************ NADIR GEAR ************/
+
+/datum/manufacture/nanoloom
+	name = "Nanoloom"
+	item_paths = list("MET-2","CON-1","cobryl","FAB-1")
+	item_amounts = list(4,2,1,3)
+	item_outputs = list(/obj/item/device/nanoloom)
+	time = 15 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/nanoloom_cart
+	name = "Nanoloom Cartridge"
+	item_paths = list("MET-2","cobryl","FAB-1")
+	item_amounts = list(1,1,3)
+	item_outputs = list(/obj/item/nanoloom_cartridge)
+	time = 8 SECONDS
+	create = 1
+	category = "Tool"
 
 //////////////////////UBER-EXTREME SURVIVAL////////////////////////////////
 /datum/manufacture/armor_vest	//

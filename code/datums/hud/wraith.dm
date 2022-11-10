@@ -1,5 +1,5 @@
 /datum/hud/wraith
-	var/mob/wraith/master
+	var/mob/living/intangible/wraith/master
 	var/atom/movable/screen/intent
 	var/atom/movable/screen/health
 

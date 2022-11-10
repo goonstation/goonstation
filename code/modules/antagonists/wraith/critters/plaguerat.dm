@@ -40,7 +40,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	/// venom injected per bite
 	var/bite_transfer_amt = 3
 
-	New(var/turf/T, var/mob/wraith/M = null)
+	New(var/turf/T, var/mob/living/intangible/wraith/M = null)
 		..(T)
 		START_TRACKING
 		SPAWN(0)
@@ -84,7 +84,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 			boutput(user, "As you approach to pet [src], it snaps at you and bites your hand.")
 			random_brute_damage(user, 5)
 			user.emote("scream")
-			playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 70, 1)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				if(H.clothing_protects_from_chems())
@@ -97,7 +97,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/animal/mouse_squeak.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> squeaks!</span>"
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
@@ -133,7 +133,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 					return 1
 			M.reagents.add_reagent(src.venom, src.bite_transfer_amt)
 
-	proc/grow_up(var/mob/wraith/M = null)
+	proc/grow_up(var/mob/living/intangible/wraith/M = null)
 		if (!ispath(src.adultpath))
 			return 0
 		src.unequip_all()

@@ -353,18 +353,6 @@
 	icon_override = "Min"
 	icon_tooltip = "Miner"
 
-/obj/item/device/radio/headset/mechanic
-	name = "mechanic headset"
-	desc = "A headset line only created due to the sheer effectiveness of packet nerd protesting."
-	icon_state = "engine headset"
-	secure_frequencies = list(
-	"e" = R_FREQ_ENGINEERING)
-	secure_classes = list(
-		"e" = RADIOCL_ENGINEERING,
-		)
-	icon_override = "Mec"
-	icon_tooltip = "Mechanic"
-
 /obj/item/device/radio/headset/mail
 	name = "mailman's headset"
 	desc = "In a land of belt hells, the pit fiend is king."
@@ -384,6 +372,29 @@
 	desc = "Anybody using this headset is unlikely to be taken seriously."
 	icon_override = "clown"
 	icon_tooltip = "Clown"
+
+/obj/item/device/radio/headset/ghost_buster
+	name = "\improper Ghost Buster's headset"
+	desc = "So you can hear those who are calling you when there's something strange in their department."
+	icon_state = "multi headset"
+	secure_frequencies = list(
+		"h" = R_FREQ_COMMAND,
+		"g" = R_FREQ_SECURITY,
+		"e" = R_FREQ_ENGINEERING,
+		"r" = R_FREQ_RESEARCH,
+		"m" = R_FREQ_MEDICAL,
+		"c" = R_FREQ_CIVILIAN,
+		)
+	secure_classes = list(
+		"h" = RADIOCL_COMMAND,
+		"g" = RADIOCL_SECURITY,
+		"e" = RADIOCL_ENGINEERING,
+		"r" = RADIOCL_RESEARCH,
+		"m" = RADIOCL_MEDICAL,
+		"c" = RADIOCL_CIVILIAN,
+		)
+	icon_override = "ghost_buster"
+	icon_tooltip = "Ghost Buster"
 
 /obj/item/device/radio/headset/syndicate
 	name = "radio headset"

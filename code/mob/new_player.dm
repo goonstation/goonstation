@@ -9,6 +9,7 @@ mob/new_player
 	var/adminspawned = 0
 	var/is_respawned_player = 0
 	var/pregameBrowserLoaded = FALSE
+	var/antag_fallthrough = FALSE
 
 #ifdef TWITCH_BOT_ALLOWED
 	var/twitch_bill_spawn = 0
@@ -303,13 +304,12 @@ mob/new_player
 				battlemode.living_battlers.Add(character.mind)
 				DEBUG_MESSAGE("Adding a new battler")
 				battlemode.battle_shuttle_spawn(character.mind)
-			else if (istype(JOB, /datum/job))
-				var/datum/job/job = JOB
-				if (job.special_spawn_location)
-					if (!istype(job.special_spawn_location, /turf))
-						job.special_spawn_location = pick_landmark(job.special_spawn_location)
-					if (job.special_spawn_location != null)
-						character.set_loc(job.special_spawn_location)
+			else if (JOB.special_spawn_location)
+				var/location = JOB.special_spawn_location
+				if (!istype(JOB.special_spawn_location, /turf))
+					location = pick_landmark(JOB.special_spawn_location)
+				if (!isnull(location))
+					character.set_loc(location)
 			else if (character.traitHolder && character.traitHolder.hasTrait("immigrant"))
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
 				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
@@ -767,11 +767,14 @@ a.latejoin-card:hover {
 			src.Browse(null, "window=latechoices") //closes late choices window
 			src.Browse(null, "window=playersetup") //closes the player setup window
 			winshow(src, "joinmenu", 0)
-			winshow(src, "playerprefs", 0)
 
 	verb/declare_ready_use_token()
 		set hidden = 1
 		set name = ".ready_antag"
+
+		if(!tgui_process)
+			boutput(src, "<span class='alert'>Stuff is still setting up, wait a moment before readying up.</span>")
+			return
 
 		if (src.client.has_login_notice_pending(TRUE))
 			return
@@ -789,6 +792,10 @@ a.latejoin-card:hover {
 	verb/declare_ready()
 		set hidden = 1
 		set name = ".ready"
+
+		if(!tgui_process)
+			boutput(src, "<span class='alert'>Stuff is still setting up, wait a moment before readying up.</span>")
+			return
 
 		if (src.client.has_login_notice_pending(TRUE))
 			return

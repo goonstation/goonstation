@@ -13,6 +13,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER
+	layer = STORAGE_LAYER
 	var/status = 0
 	var/power_usage = 0
 	var/power_channel = EQUIP

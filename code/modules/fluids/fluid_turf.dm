@@ -8,6 +8,8 @@
 #define SPAWN_PLANTSMANTA 16
 #define SPAWN_TRILOBITE 32
 #define SPAWN_HALLU 64
+#define SPAWN_HOSTILE 128
+#define SPAWN_ACID_DOODADS 256
 
 
 /turf/proc/make_light() //dummyproc so we can inherit
@@ -61,6 +63,8 @@
 	New()
 		..()
 
+		if(global.dont_init_space)
+			return
 		if (randomIcon)
 			switch(rand(1,3))
 				if(1)
@@ -181,6 +185,12 @@
 				//mbc : bleh init() happens BFORRE this, most likely
 				P.initialize()
 
+		if (spawningFlags & SPAWN_ACID_DOODADS)
+			if (prob(8))
+				var/obj/doodad = pick( childrentypesof(/obj/nadir_doodad) )
+				var/obj/nadir_doodad/D = new doodad(src)
+				D.initialize()
+
 		#ifndef UPSCALED_MAP
 		if(spawningFlags & SPAWN_FISH) //can spawn bad fishy
 			if (src.z == 5 && prob(1) && prob(2))
@@ -214,6 +224,14 @@
 				new /mob/living/critter/small_animal/hallucigenia/ai_controlled(src)
 			else if (prob(1) && prob(18))
 				new /obj/overlay/tile_effect/cracks/spawner/pikaia(src)
+
+		if(spawningFlags & SPAWN_HOSTILE) //nothing good comes from acid-washed depths...
+			if (src.z == Z_LEVEL_MINING && prob(0.04))
+				new /obj/critter/gunbot/drone/buzzdrone(src)
+			else if (src.z == Z_LEVEL_MINING && prob(0.02))
+				new /obj/critter/gunbot/drone/cutterdrone(src)
+			else if (src.z == Z_LEVEL_MINING && prob(0.005))
+				new /obj/critter/ancient_thing(src)
 
 		if (spawningFlags & SPAWN_LOOT)
 			if (prob(1) && prob(9))
@@ -316,7 +334,7 @@
 
 	Entered(var/atom/movable/AM)
 		. = ..()
-		if (istype(AM,/mob/dead) || istype(AM,/mob/wraith) || istype(AM,/mob/living/intangible) || istype(AM, /obj/lattice) || istype(AM, /obj/cable/reinforced) || istype(AM,/obj/torpedo_targeter) || istype(AM,/obj/overlay) || istype (AM, /obj/arrival_missile) || istype(AM, /obj/sea_ladder_deployed))
+		if (istype(AM,/mob/dead) || istype(AM,/mob/living/intangible) || istype(AM, /obj/lattice) || istype(AM, /obj/cable/reinforced) || istype(AM,/obj/torpedo_targeter) || istype(AM,/obj/overlay) || istype (AM, /obj/arrival_missile) || istype(AM, /obj/sea_ladder_deployed))
 			return
 		if (locate(/obj/lattice) in src)
 			return
@@ -388,8 +406,11 @@
 	luminosity = 1
 	generateLight = 0
 	allow_hole = 0
+#ifdef MAP_OVERRIDE_NADIR
+	spawningFlags = SPAWN_LOOT | SPAWN_HOSTILE | SPAWN_ACID_DOODADS
+#else
 	spawningFlags = SPAWN_DECOR | SPAWN_PLANTS | SPAWN_FISH | SPAWN_LOOT | SPAWN_HALLU
-
+#endif
 	blow_hole()
 		if(src.z == 5)
 			for(var/turf/space/fluid/T in range(1, locate(src.x, src.y, 1)))
@@ -501,7 +522,7 @@
 		return
 
 	Entered(atom/movable/A as mob|obj)
-		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
+		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/living/intangible))
 			return ..()
 		var/turf/T = pick_landmark(LANDMARK_FALL_SEA)
 		if (isturf(T))
@@ -515,6 +536,18 @@
 			A.set_loc(T)
 			return
 		else ..()
+
+/turf/space/fluid/acid
+	name = "acid sea floor"
+	spawningFlags = SPAWN_ACID_DOODADS
+	generateLight = 0
+	temperature = TRENCH_TEMP
+
+	clear
+		spawningFlags = null
+#ifdef IN_MAP_EDITOR
+		icon_state = "concrete"
+#endif
 
 /obj/machinery/computer/sea_elevator
 	name = "Elevator Control"

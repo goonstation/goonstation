@@ -642,6 +642,8 @@
 		UpdateLaws()
 
 	proc/remove_module_callback(var/slotNum,var/mob/user)
+		if(isnull(src.law_circuits[slotNum]))
+			return FALSE
 		//add circuit to hand
 		logTheThing(LOG_STATION, user, "[constructName(user)] <b>removes</b> law module from rack([constructName(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
 		message_admins("[key_name(user)] removed a law from rack at ([log_loc(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")

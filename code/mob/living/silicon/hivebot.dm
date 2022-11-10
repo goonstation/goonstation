@@ -307,21 +307,25 @@
 
 		if ("flip")
 			if (src.emote_check(voluntary, 50))
-				if (narrator_mode)
-					playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+				if (isobj(src.loc))
+					var/obj/container = src.loc
+					container.mob_flip_inside(src)
 				else
-					playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-				message = "<B>[src]</B> does a flip!"
-				if (prob(50))
-					animate_spin(src, "R", 1, 0)
-				else
-					animate_spin(src, "L", 1, 0)
+					if (narrator_mode)
+						playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					else
+						playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					message = "<B>[src]</B> does a flip!"
+					if (prob(50))
+						animate_spin(src, "R", 1, 0)
+					else
+						animate_spin(src, "L", 1, 0)
 
-				for (var/mob/living/M in view(1, null))
-					if (M == src)
-						continue
-					message = "<B>[src]</B> beep-bops at [M]."
-					break
+					for (var/mob/living/M in viewers(1, null))
+						if (M == src)
+							continue
+						message = "<B>[src]</B> beep-bops at [M]."
+						break
 
 		if ("fart")
 			if (src.emote_check(voluntary))
@@ -1066,6 +1070,11 @@ Frequency:
 	var/obj/item/cell/cell = null
 	var/has_radio = 0
 	var/has_interface = 0
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
 
 /obj/item/shell_frame/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/sheet))

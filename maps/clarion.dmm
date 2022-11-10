@@ -11743,7 +11743,7 @@
 	dir = 8
 	},
 /obj/disposaloutlet,
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "disposals";
 	operating = 1
 	},
@@ -11781,8 +11781,7 @@
 /area/station/chapel/funeral_parlor)
 "axb" = (
 /obj/window/reinforced/north,
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "chapel_belt";
 	name = "cargo belt - west";
 	operating = 1
@@ -11790,8 +11789,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/chapel/funeral_parlor)
 "axc" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "chapel_belt";
 	name = "cargo belt - west";
 	operating = 1
@@ -12100,7 +12098,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "axP" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "disposals";
 	operating = 1
 	},
@@ -12357,7 +12355,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "ayA" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "disposals";
 	operating = 1
 	},
@@ -12517,7 +12515,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "aza" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "disposals";
 	operating = 1
 	},
@@ -12871,7 +12869,7 @@
 /turf/simulated/floor/caution/west,
 /area/station/maintenance/east)
 "azU" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "disposals";
 	operating = 1
 	},
@@ -13164,7 +13162,9 @@
 /obj/landmark/start{
 	name = "Chef"
 	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southeast,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6
+	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "aAK" = (
@@ -13182,7 +13182,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aAL" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "disposals";
 	operating = 1
 	},
@@ -13499,24 +13499,29 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aBz" = (
-/obj/machinery/atmospherics/pipe/simple/junction/north,
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 1
+	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen)
 "aBA" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/northwest,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9
+	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "aBB" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/northeast,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5
+	},
 /obj/reagent_dispensers/beerkeg,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "aBC" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "disposals";
 	operating = 1
 	},
@@ -13524,8 +13529,7 @@
 /turf/simulated/floor/caution/corner/sw,
 /area/station/maintenance/disposal)
 "aBD" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "disposals";
 	operating = 1
 	},
@@ -13543,8 +13547,7 @@
 	},
 /area/station/maintenance/disposal)
 "aBE" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "disposals";
 	operating = 1
 	},
@@ -13554,8 +13557,7 @@
 	},
 /area/station/maintenance/disposal)
 "aBF" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "disposals";
 	operating = 1
 	},
@@ -13999,7 +14001,10 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen)
 "aCH" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southwest,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10;
+
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -14032,7 +14037,9 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southeast,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6
+	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "aCK" = (
@@ -14126,7 +14133,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/northwest,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9
+	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "aCW" = (
@@ -14374,7 +14383,9 @@
 /turf/simulated/floor/airless/solar,
 /area/space)
 "aDI" = (
-/obj/machinery/atmospherics/pipe/simple/junction/west,
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 8
+	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen)
 "aDJ" = (
@@ -14458,7 +14469,9 @@
 /obj/item/reagent_containers/food/drinks/eggnog,
 /obj/item/clothing/head/helmet/space/santahat,
 /obj/item/reagent_containers/food/snacks/yoghurt,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/northeast,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5
+	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "aDU" = (
@@ -15712,7 +15725,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen/north,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aGH" = (
@@ -32652,8 +32667,7 @@
 /area/station/quartermaster/office)
 "bsx" = (
 /obj/disposalpipe/segment/mail,
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -33186,7 +33200,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/storage/secure/crate/eng/interdictor,
+/obj/machinery/vending/jobclothing/engineering,
 /turf/simulated/floor/white,
 /area/station/engine/engineering)
 "btr" = (
@@ -33412,8 +33426,7 @@
 	mail_tag = "cargo";
 	name = "quartermasters mail router"
 	},
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -34053,8 +34066,7 @@
 	},
 /area/station/quartermaster/office)
 "buR" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "cargo_in"
 	},
 /turf/simulated/floor/caution/misc{
@@ -34062,15 +34074,13 @@
 	},
 /area/station/quartermaster/office)
 "buS" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "cargo_in"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
 "buT" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "cargo_in"
 	},
 /obj/decal/cleanable/cobweb{
@@ -34733,8 +34743,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bwc" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cargo_in"
 	},
 /turf/simulated/floor/caution/westeast,
@@ -35331,7 +35340,7 @@
 	},
 /area/station/quartermaster/office)
 "bxm" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "cargo_out"
 	},
 /turf/simulated/floor/caution/misc{
@@ -35354,8 +35363,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cargo_in"
 	},
 /turf/simulated/floor/caution/westeast,
@@ -35887,7 +35895,7 @@
 	},
 /area/station/quartermaster/office)
 "byq" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "cargo_out"
 	},
 /turf/simulated/floor/caution/westeast,
@@ -36263,6 +36271,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0;
 	dir = 8;
@@ -36426,7 +36435,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "bzx" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "cargo_out"
 	},
 /obj/machinery/door/poddoor/blast/single{
@@ -36443,8 +36452,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/office)
 "bzz" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cargo_in"
 	},
 /obj/machinery/door/poddoor/blast/single{
@@ -36778,7 +36786,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "bAu" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "cargo_out"
 	},
 /obj/plasticflaps,
@@ -36832,8 +36840,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cargo_in"
 	},
 /turf/simulated/floor/caution/westeast,
@@ -37391,7 +37398,7 @@
 	name = "QM - Mining Transfer Shutters";
 	pixel_x = 24
 	},
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "cargo_out"
 	},
 /turf/simulated/floor,
@@ -37426,7 +37433,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "cargo_out"
 	},
 /obj/machinery/mass_driver{
@@ -37447,8 +37454,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cargo_in"
 	},
 /turf/simulated/floor/caution/westeast,
@@ -37457,7 +37463,9 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/tank/air_repressurization/south,
+/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+	dir = 2
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -37929,8 +37937,7 @@
 /turf/simulated/floor/caution/misc,
 /area/station/quartermaster/office)
 "bCY" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cargo_in"
 	},
 /obj/machinery/door/poddoor/blast/single{
@@ -38558,8 +38565,7 @@
 	dir = 10;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cargo_in"
 	},
 /turf/space,
@@ -40851,7 +40857,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
 "bJL" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/plating/random,
@@ -40960,7 +40966,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
 "bKc" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory/part3,
@@ -40976,13 +40982,13 @@
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
 "bKe" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "bKf" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory/part2,
@@ -41728,7 +41734,7 @@
 /turf/space,
 /area/space)
 "bLX" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory,
@@ -41764,7 +41770,7 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "bMc" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/plating/random,
@@ -43410,8 +43416,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "dzu" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cargo_in"
 	},
 /turf/space,
@@ -43570,7 +43575,9 @@
 	layer = 3.5;
 	pixel_y = 28
 	},
-/obj/machinery/atmospherics/pipe/tank/air_repressurization/east,
+/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+	dir = 4
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -43936,6 +43943,8 @@
 /obj/machinery/light,
 /obj/storage/closet/wardrobe/orange,
 /obj/item/clothing/head/beret/prisoner,
+/obj/item/clothing/head/beret/random_color,
+/obj/item/clothing/head/beret/random_color,
 /turf/simulated/floor/caution/south,
 /area/station/security/main)
 "eAD" = (
@@ -44070,9 +44079,7 @@
 /turf/space,
 /area/space)
 "eRf" = (
-/obj/storage/closet/wardrobe/red/security_gimmick,
-/obj/item/clothing/head/beret/random_color,
-/obj/item/clothing/head/beret/random_color,
+/obj/machinery/vending/jobclothing/security,
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
@@ -46689,7 +46696,9 @@
 	pixel_x = 10
 	},
 /obj/item/instrument/bikehorn/dramatic,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
 /obj/storage/crate/bloody,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
@@ -46760,7 +46769,9 @@
 /area/station/engine/substation/east)
 "lbN" = (
 /obj/kitchenspike,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
@@ -48357,7 +48368,9 @@
 	pixel_x = 10
 	},
 /obj/machinery/gibber/output_south,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southwest,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10
+	},
 /obj/machinery/firealarm{
 	layer = 3.5;
 	pixel_y = 24
@@ -48731,7 +48744,9 @@
 /obj/item/spraybottle/cleaner,
 /obj/item/kitchen/utensil/knife,
 /obj/item/kitchen/utensil/knife,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southeast,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6
+	},
 /obj/machinery/light_switch/north{
 	pixel_y = 28
 	},
@@ -49390,7 +49405,9 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/portable_atmospherics/canister/air/large,
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -49887,7 +49904,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/vertical,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 1
+	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "tbZ" = (
@@ -49993,31 +50012,7 @@
 	},
 /area/station/hallway/primary/west)
 "tyz" = (
-/obj/rack,
-/obj/item/breaching_charge{
-	pixel_x = 10;
-	pixel_y = 1
-	},
-/obj/item/breaching_charge{
-	pixel_x = 4;
-	pixel_y = -2
-	},
-/obj/item/breaching_charge{
-	pixel_x = -2;
-	pixel_y = -5
-	},
-/obj/item/breaching_hammer{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/breaching_hammer{
-	pixel_x = -1;
-	pixel_y = 1
-	},
-/obj/disposalpipe/segment/food,
-/turf/simulated/floor/redblack{
-	dir = 10
-	},
+/obj/random_item_spawner/armory_breaching_supplies,
 /area/station/ai_monitored/armory)
 "tAi" = (
 /turf/simulated/floor/red/side{
@@ -50744,7 +50739,9 @@
 	name = "autoname  - SS13";
 	pixel_y = 21
 	},
-/obj/machinery/atmospherics/valve/horizontal,
+/obj/machinery/atmospherics/valve{
+	dir = 4
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},

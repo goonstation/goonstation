@@ -22,15 +22,16 @@
 	attack_self(mob/user)
 		if (src.on)
 			src.visible_message("<span class='notice'>[user] blows on [src], its eyes emit a threatening glow!</span>")
-			for(var/mob/wraith/W in orange(4, user))
-				if ((W.last_spirit_candle_time + (W.forced_haunt_duration * 2)) < TIME)
-					W.last_spirit_candle_time = TRUE
+			for(var/mob/living/intangible/wraith/W in orange(4, user))
+				//Small grace period to run away after being manifested if you managed to survive so you dont get chain-manifested
+				if ((W.last_spirit_candle_time + (W.forced_haunt_duration + 6 SECONDS)) < TIME)
+					W.last_spirit_candle_time = TIME
 					W.setStatus("corporeal", W.forced_haunt_duration, TRUE)
 					boutput(W, "<span class='alert'>A malignant spirit pulls you into the physical world! You begin to gather your forces to try and escape to the spirit realm...</span>")
 				else
 					boutput(user, "<span class='notice'>[src] vibrates slightly in your hand. A hostile entity lurks nearby but resisted our attempts to reveal it!</span>")
 			var/turf/T = get_turf(src)
-			playsound(src.loc, "sound/voice/chanting.ogg", 50, 0)
+			playsound(src.loc, 'sound/voice/chanting.ogg', 50, 0)
 			new /obj/overlay/darkness_field(T, 10 SECOND, radius = 5.5, max_alpha = 250)
 			new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 10 SECOND, radius = 5.5, max_alpha = 250)
 			src.put_out(user)
@@ -76,7 +77,7 @@
 			src.put_out()
 			return
 		var/turf/T = get_turf(src)
-		for_by_tcl(W, /mob/wraith)
+		for_by_tcl(W, /mob/living/intangible/wraith)
 			if (IN_RANGE(W, T, WIDE_TILE_WIDTH / 2))
 				W.changeStatus("spirit_candle", 5 SECONDS)
 
