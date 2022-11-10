@@ -1061,60 +1061,57 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 
 	cast(atom/target)
 		if (..())
-			return 1
+			return TRUE
 
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
 			var/mob/living/intangible/wraith/W = holder.owner
 			if (H?.bioHolder.HasEffect("rot_curse") && H?.bioHolder.HasEffect("weak_curse") && H?.bioHolder.HasEffect("blind_curse") && H?.bioHolder.HasEffect("blood_curse"))
 				W.playsound_local(W.loc, 'sound/voice/wraith/wraithhaunt.ogg', 40, 0)
-				boutput(holder.owner, "<span class='alert'>That soul is OURS!!</span>")
-				boutput(H, "<span class='alert'>The voices in your heads are reaching a crescendo!</span>")
-				H.make_jittery(300)
-				SPAWN(4 SECOND)
-					if (!(H?.loc && W?.loc)) return
+				H.bioHolder.AddEffect("death_curse")
+				boutput(W, "<span class='alert'><b>That soul will be OURS!</b></span>")
+				do_curse(H, W)
+				return FALSE
+			else
+				boutput(holder.owner, "That being's soul is not weakened enough. We need to curse it some more.")
+				return TRUE
+
+	proc/do_curse(var/mob/living/carbon/human/H, var/mob/living/intangible/wraith/W)
+		var/cycles = 0
+		var/active = TRUE
+		while (active)
+			if (!H?.bioHolder.GetEffect("death_curse"))
+				boutput(W, "<span class='alert'>Those foolish mortals stopped your deadly curse before it claimed it's victim! You'll damn them all!</span>")
+				active = FALSE
+				return
+			if (!isdead(H))
+				hit_twitch(H)
+				random_brute_damage(H, (cycles / 3))
+				cycles ++
+				if (prob(6))
 					H.changeStatus("stunned", 2 SECONDS)
-					H.emote("scream")
-					boutput(H, "<span class='alert'>You feel netherworldly hands grasping you!</span>")
-					sleep(3 SECOND)
-					if (!(H?.loc && W?.loc)) return
-					random_brute_damage(H, 10)
+					boutput(H, "<span class='alert'><b>You feel netherworldly hands grasping at your soul!</b></span>")
+				if (prob(4))
+					boutput(H, "<span class='alert'>IT'S COMING FOR YOU!</span>")
+					H.remove_stamina( rand(30, 70) )
+				if ((cycles > 10) && prob(15))
+					random_brute_damage(H, 1)
 					playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 70, 1)
 					H.visible_message("<span class='alert'>[H]'s flesh tears open before your very eyes!!</span>")
 					new /obj/decal/cleanable/blood/drip(get_turf(H))
-					sleep(3 SECOND)
-					if (!(H?.loc && W?.loc)) return
-					random_brute_damage(H, 10)
-					playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 70, 1)
-					new /obj/decal/cleanable/blood/drip(get_turf(H))
-					sleep(1 SECOND)
-					if (!(H?.loc && W?.loc)) return
-					random_brute_damage(H, 20)
-					playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 70, 1)
-					new /obj/decal/cleanable/blood/drip(get_turf(H))
-					sleep(2 SECOND)
-					if (!(H?.loc && W?.loc)) return
-					boutput(H, "<span class='alert'>IT'S COMING FOR YOU!</span>")
-					H.remove_stamina( rand(100, 120) )
-					H.changeStatus("stunned", 4 SECONDS)
-					sleep(3 SECOND)
-					if (!(H?.loc && W?.loc)) return
-					var/turf/T = get_turf(H)
-					var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread/(T)
-					if (S)
-						S.set_up(8, 0, T, null, "#000000")
-						S.start()
-					H.gib()
-					boutput(holder.owner, "<span class='alert'>What delicious agony!</span>")
-					T.fluid_react_single("miasma", 60, airborne = 1)
-					holder.points += 100
-					holder.regenRate += 2.0
-					var/datum/abilityHolder/wraith/AH = holder
-					AH.corpsecount++
 			else
-				boutput(holder.owner, "That being's soul is not weakened enough. We need to curse it some more.")
-				return 1
-
+				var/turf/T = get_turf(H)
+				var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread/(T)
+				if (S)
+					S.set_up(8, 0, T, null, "#000000")
+					S.start()
+				T.fluid_react_single("miasma", 60, airborne = 1)
+				var/datum/abilityHolder/wraith/AH = W.abilityHolder
+				H.gib()
+				AH.regenRate += 2.0
+				AH.corpsecount++
+				active = FALSE
+			sleep (1.5 SECONDS)
 
 /datum/targetable/wraithAbility/summon_rot_hulk
 	name = "Create rot hulk"
@@ -1315,7 +1312,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				boutput(holder.owner, "<span class='notice'>This one does not fear what lurks in the dark. Your effort is wasted.</span>")
 				return 0
 			boutput(holder.owner, "<span class='notice'>We curse this being with a creeping feeling of dread.</span>")
-			H.setStatus("creeping_dread", 20 SECONDS)
+			H.setStatus("creeping_dread", 30 SECONDS)
 			holder.owner.playsound_local(holder.owner, "sound/voice/wraith/wraithspook[pick("1","2")].ogg", 60)
 			return 0
 

@@ -1,5 +1,9 @@
 
 (t)wed nov 09 22
+(u)Bartimeus973
+(p)11880
+(e)⚖🔨|C-Balance, A-Player-Actions
+(*)Plaguebringer's curse of death can now be cancelled by holy water or a chaplain's bible beatings, like other curses. Trickster's creeping dread is faster.
 (u)LeahTheTech
 (p)11654
 (e)🔄📄🧛|C-Rework, A-UI, A-Gamemodes
