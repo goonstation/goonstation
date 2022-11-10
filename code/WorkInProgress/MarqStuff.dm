@@ -566,14 +566,13 @@
 
 /datum/projectile/arrow
 	name = "arrow"
-	power = 17
+	damage = 17
 	dissipation_delay = 12
 	dissipation_rate = 5
 	shot_sound = 'sound/effects/bow_fire.ogg'
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_STAB
 	implanted = null
-	ks_ratio = 1
 	impact_image_state = "bhole"
 	icon_state = "arrow"
 
@@ -697,14 +696,16 @@
 		loaded.set_loc(A)
 		current_projectile.implanted = A
 		current_projectile.material = copyMaterial(loaded.head_material)
-		var/default_power = 20
+		var/default_damage = 20
 		if(loaded.head_material)
 			if(loaded.head_material.hasProperty("hard"))
-				current_projectile.power = round(17+loaded.head_material.getProperty("hard") * 3) //pretty close to the 20-50 range
+				current_projectile.damage = round(17+loaded.head_material.getProperty("hard") * 3) //pretty close to the 20-50 range
 			else
-				current_projectile.power = default_power
+				current_projectile.damage = default_damage
 		else
-			current_projectile.power = default_power
+			current_projectile.damage = default_damage
+
+		current_projectile.generate_stats()
 
 		loaded = null
 		return 1

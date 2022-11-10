@@ -78,7 +78,7 @@
 					T.active_liquid.Crossed(owner)
 					boutput(src, "<span class='notice'>You splash into [T.active_liquid].</span>")
 					sound_to_play = 'sound/misc/splash_2.ogg'
-				else if(T.active_liquid)
+				else if(T?.active_liquid)
 					sound_to_play = null
 				if(sound_to_play)
 					playsound(owner.loc, sound_to_play, human_owner ? 40 : 15, 1, 0.3)

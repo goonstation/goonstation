@@ -657,6 +657,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_effects = list("food_sweaty")
 
 	heal(var/mob/M)
+		..()
 		if (prob(15)) boutput(M, "<span class='alert'>You feel depressed.</span>")
 
 /obj/item/reagent_containers/food/snacks/soup/porridge
@@ -2294,10 +2295,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		src.pixel_y = rand(-6, 6)
 
 	heal(var/mob/M)
+		..()
 		boutput(M, "<span class='alert'>Ugh, you really should've cooked that first.</span>")
 		if(prob(25))
 			M.reagents.add_reagent("salmonella",15)
-		..()
 
 /obj/item/reagent_containers/food/snacks/agar_block
 	name = "Agar Block"
@@ -2376,6 +2377,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_color = "#6A532D"
 
 	heal(var/mob/M)
+		..()
 		boutput(M, "<span class='alert'>OH GOD! You bite down and break a few teeth!</span>")
 		random_brute_damage(M, 2)
 
@@ -2475,6 +2477,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			boutput(M, "<span class='notice'>Och aye! That's th' stuff!</span>")
 			..()
 			heal_amt /= 2
+		else
+			..()
 
 /obj/item/reagent_containers/food/snacks/haggis/ass
 	name = "haggass"

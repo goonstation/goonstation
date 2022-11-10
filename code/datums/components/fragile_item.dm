@@ -34,8 +34,8 @@ TYPEINFO(/datum/component/fragile_item)
 	src.type_to_break_into = type_to_break_into
 	src.sound_to_play_on_breaking = sound_to_play_on_breaking
 
-	RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_POST), .proc/on_after_attack)
-	RegisterSignal(parent, list(COMSIG_MOVABLE_THROW_END), .proc/on_after_throw)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_POST, .proc/on_after_attack)
+	RegisterSignal(parent, COMSIG_MOVABLE_THROW_END, .proc/on_after_throw)
 
 /datum/component/fragile_item/proc/on_after_attack(var/obj/item/I, var/mob/M, var/mob/user, var/damage)
 	potentially_break_melee_swinged(I, user)

@@ -111,7 +111,7 @@
 			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
 		src.in_use = 1
-		var/t = input(user, "What do you want to write?", null, null) as null|text
+		var/t = tgui_input_text(user, "What do you want to write?", "Write")
 		if (!t || BOUNDS_DIST(T, user) > 0)
 			src.in_use = 0
 			return
@@ -594,7 +594,7 @@
 		src.in_use = 1
 		. = tgui_input_list(user, "What do you want to write?", "Write something", (isghostdrone(user) || !user.literate) ? src.c_symbol : (list("queue input") + src.c_default + src.c_symbol))
 		if(. == "queue input")
-			var/inp = input(user, "Type letters you want to write.", "Crayon Leter Queue", null)
+			var/inp = tgui_input_text(user, "Type letters you want to write.", "Crayon Letter Queue")
 			inp = uppertext(inp)
 			. = list()
 			for(var/i = 1 to min(length(inp), 100))
@@ -819,7 +819,7 @@
 			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
 		src.in_use = 1
-		var/t = input(user, "What do you want to write?", null, null) as null|text
+		var/t = tgui_input_text(user, "What do you want to write?", "Write")
 		if (!t || BOUNDS_DIST(T, user) > 0)
 			src.in_use = 0
 			return
@@ -900,7 +900,7 @@
 			return
 		tooltip_rebuild = 1
 		var/holder = src.loc
-		var/str = copytext(html_encode(input(user,"Label text?","Set label","") as null|text), 1, 32)
+		var/str = copytext(html_encode(tgui_input_text(user, "Label text?", "Set label")), 1, 32)
 		if(str)
 			phrase_log.log_phrase("label", str, no_duplicates=TRUE)
 		if (src.loc != holder)
@@ -916,7 +916,7 @@
 			return
 		src.label = "[str]"
 		boutput(user, "<span class='notice'>You set the text to '[str]'.</span>")
-		logTheThing(LOG_COMBAT, user, "sets a hand labeler label to \"[str]\".")
+		logTheThing(LOG_STATION, user, "sets a hand labeler label to \"[str]\".")
 
 	proc/RemoveLabel(var/atom/A, var/mob/user, var/no_message = 0)
 		if(!islist(A.name_suffixes))
@@ -952,7 +952,7 @@
 			A.UpdateName()
 		playsound(src, 'sound/items/hand_label.ogg', 40, 1)
 		if (user && !no_message)
-			logTheThing(LOG_COMBAT, user, "labels [constructTarget(A,"combat")] with \"[src.label]\"")
+			logTheThing(LOG_STATION, user, "labels [constructTarget(A,"combat")] with \"[src.label]\"")
 		else if(!no_message)
 			logTheThing(LOG_COMBAT, A, "has a label applied to them, \"[src.label]\"")
 		A.add_fingerprint(user)

@@ -305,6 +305,8 @@
 		if (T.active_liquid)
 			return
 		B = make_cleanable( /obj/decal/cleanable/blood/dynamic/tracks,get_turf(src))
+		if(isnull(src.tracked_blood))
+			return
 		B.set_sample_reagent_custom(src.tracked_blood["sample_reagent"],0)
 
 	var/list/states = src.get_step_image_states()

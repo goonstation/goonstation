@@ -332,7 +332,7 @@
 
 		// -- End mode specific stuff
 
-		logTheThing(LOG_COMBAT, usr, "starts cloning [constructTarget(src.occupant,"combat")] at [log_loc(src)].")
+		logTheThing(LOG_STATION, usr, "starts cloning [constructTarget(src.occupant,"combat")] at [log_loc(src)].")
 
 		if (isobserver(ghost))
 			qdel(ghost) //Don't leave ghosts everywhere!!
@@ -588,7 +588,7 @@
 				boutput(user,"<span class='alert'>The cloning pod emits an angry boop!</span>")
 				return
 			user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
-			logTheThing(LOG_COMBAT, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
+			logTheThing(LOG_STATION, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
 			speed_bonus *= 3
 			meat_used_per_tick *= 4
 			is_speedy = 1
@@ -604,7 +604,7 @@
 				boutput(user,"<span class='alert'>The cloning pod emits a[pick("n angry", " grumpy", "n annoyed", " cheeky")] [pick("boop","bop", "beep", "blorp", "burp")]!</span>")
 				return
 			user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
-			logTheThing(LOG_COMBAT, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
+			logTheThing(LOG_STATION, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
 			meat_used_per_tick *= 0.5
 			is_efficient = 1
 			user.drop_item()
@@ -615,7 +615,7 @@
 			if (operating && attempting)
 				boutput(user,"<span class='alert'>The cloning pod emits a[pick("n angry", " grumpy", "n annoyed", " cheeky")] [pick("boop","bop", "beep", "blorp", "burp")]!</span>")
 				return
-			logTheThing(LOG_COMBAT, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
+			logTheThing(LOG_STATION, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
 			clonehack = 1
 			implant_hacker = user
 			light.enable()

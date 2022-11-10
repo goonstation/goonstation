@@ -626,9 +626,8 @@ obj/item/gnomechompski/elf
 
 /datum/projectile/wonk
 	power = 10
-	cost = 20
+	stun = 20
 	dissipation_rate = 1
-	ks_ratio = 0
 	shot_sound = 'sound/vox/wonk.ogg'
 	sname = "Wonkonize"
 	shot_number = 1

@@ -2655,11 +2655,11 @@
 	icon_state = "blueprint"
 	blueprint = /datum/manufacture/alastor
 
-/obj/item/paper/manufacturer_blueprint/interdictor_frame
-	name = "Interdictor Frame Kit"
+/obj/item/paper/manufacturer_blueprint/interdictor_kit
+	name = "Interdictor Assembly Kit"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "interdictor_blueprint"
-	blueprint = /datum/manufacture/interdictor_frame
+	blueprint = /datum/manufacture/interdictor_kit
 
 /obj/item/paper/manufacturer_blueprint/interdictor_rod_lambda
 	name = "Lambda Phase-Control Rod"

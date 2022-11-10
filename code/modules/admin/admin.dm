@@ -1941,7 +1941,7 @@ var/global/noir = 0
 						while (WO != null)
 					if ("Random")
 						generate_wraith_objectives(mind)
-				var/mob/wraith/Wr = M.wraithize()
+				var/mob/living/intangible/wraith/Wr = M.wraithize()
 				if (!Wr)
 					if (!iswraith(mind.current))
 						boutput(usr, "<span class='alert'>Wraithization failed! Call 1-800-MARQUESAS for help.</span>")
@@ -1984,7 +1984,7 @@ var/global/noir = 0
 						B.antagonist_overlay_refresh(1, 0)
 
 						SPAWN(0)
-							var/newname = input(B, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
+							var/newname = tgui_input_text(B, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change")
 
 							if (newname)
 								if (length(newname) >= 26) newname = copytext(newname, 1, 26)
@@ -4367,6 +4367,8 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=view_logs_pathology_strain'><small>(Find pathogen)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_VEHICLE]_log'>Vehicle Log</A>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_VEHICLE]_log_string'><small>(Search)</small></A><br>
+				<A href='?src=\ref[src];action=view_logs;type=[LOG_CHEMISTRY]_log'>Chemistry Log</A>
+				<A href='?src=\ref[src];action=view_logs;type=[LOG_CHEMISTRY]_log_string'><small>(Search)</small></A>
 				Topic Log <!-- Viewing the entire log will usually just crash the admin's client, so let's not allow that -->
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_TOPIC]_log_string'><small>(Search)</small></A><br>
 				<hr>

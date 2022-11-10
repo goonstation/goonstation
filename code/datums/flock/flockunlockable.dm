@@ -41,7 +41,7 @@ ABSTRACT_TYPE(/datum/unlockable_flock_structure)
 	structType = /obj/flock_structure/relay
 
 	check_unlocked()
-		return ..() || (src.my_flock.total_compute() >= 500 && !src.my_flock.relay_in_progress_or_finished)
+		return ..() || (src.my_flock.total_compute() >= FLOCK_RELAY_COMPUTE_COST && !src.my_flock.relay_in_progress && !src.my_flock.relay_finished)
 
 /datum/unlockable_flock_structure/collector
 	structType = /obj/flock_structure/collector
