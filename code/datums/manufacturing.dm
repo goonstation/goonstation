@@ -602,11 +602,20 @@ ABSTRACT_TYPE(/datum/manufacture)
 	category = "Machinery"
 
 /datum/manufacture/chemtank
+	name = "Chemical Can"
+	item_paths = list("MET-2")
+	item_amounts = list(6)
+	item_outputs = list(/obj/item/reagent_containers/food/drinks/chemicalcan)
+	time = 40 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/chembarrel
 	name = "Chemical Barrel"
 	item_paths = list("MET-2")
 	item_amounts = list(10)
-	item_outputs = list(/obj/item/reagent_containers/food/drinks/chemtank)
-	time = 70 SECONDS
+	item_outputs = list(/obj/reagent_dispensers/chemicalbarrel)
+	time = 60 SECONDS
 	create = 1
 	category = "Machinery"
 

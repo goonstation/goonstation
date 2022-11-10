@@ -388,6 +388,39 @@
 		..()
 		reagents.add_reagent("beer",1000)
 
+/obj/reagent_dispensers/chemicalbarrel
+	name = "chemical barrel"
+	desc = "For storing medical chemicals and less savory things. It can be labeled with a pen."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "chembarrel"
+	amount_per_transfer_from_this = 25
+	p_class = 3
+	flags = FPRINT | FLUID_SUBMERGE | OPENCONTAINER
+	var/labeled = FALSE
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/pen) && !src.labeled)
+			var/t = input(user, "Enter label", "Label", src.name) as null|text
+			if(t && t != src.name)
+				phrase_log.log_phrase("barrel", t, no_duplicates=TRUE)
+			t = copytext(strip_html(t), 1, 24)
+			if (isnull(t) || !length(t) || t == " ")
+				return
+			if (!in_interact_range(src, user) && src.loc != user)
+				return
+
+			src.name = t
+			src.labeled = TRUE
+			src.desc = "For storing medical chemicals and less savory things."
+		else
+			..()
+			return
+
+	bullet_act()
+		src.reagents.temperature_reagents(4000, 400) //exactly how a igniter works, expect to need a couple shots to make whatever is inside
+		src.reagents.temperature_reagents(4000, 400) //catch fire
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 30, 1)
+
 /obj/reagent_dispensers/compostbin
 	name = "compost tank"
 	desc = "A device that mulches up unwanted produce into usable fertiliser."
@@ -602,14 +635,15 @@
 		else
 			src.icon_state = initial(src.icon_state)
 
-/obj/item/reagent_containers/food/drinks/chemtank
-	name = "chemical barrel"
+
+/obj/item/reagent_containers/food/drinks/chemicalcan
+	name = "chemical can"
 	desc = "For storing medical chemicals and less savory things. It can be labeled with a pen."
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "chemtank"
 	item_state = "chemtank"
-	initial_volume = 1000
+	initial_volume = 700
 	w_class = W_CLASS_HUGE
 	incompatible_with_chem_dispensers = 1
 	throw_speed = 1
@@ -632,7 +666,7 @@
 		if (istype(W, /obj/item/pen) && !src.labeled)
 			var/t = input(user, "Enter label", "Label", src.name) as null|text
 			if(t && t != src.name)
-				phrase_log.log_phrase("barrel", t, no_duplicates=TRUE)
+				phrase_log.log_phrase("can", t, no_duplicates=TRUE)
 			t = copytext(strip_html(t), 1, 24)
 			if (isnull(t) || !length(t) || t == " ")
 				return
@@ -653,6 +687,17 @@
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 30, 1)
 		. = ..()
 
-/obj/item/reagent_containers/food/drinks/chemtank/overwrite_impact_sfx(original_sound, hit_atom, thr)
+	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
+			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
+		if(ismob(thrown_by))
+			thrown_by.changeStatus("weakened", 2 SECONDS)
+		..()
+
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		if(ismob(hit_atom))
+			hit_atom.changeStatus("weakened", 2 SECONDS)
+		..()
+
+/obj/item/reagent_containers/food/drinks/chemicalcan/overwrite_impact_sfx(original_sound, hit_atom, thr)
 	. = ..()
 	. = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
