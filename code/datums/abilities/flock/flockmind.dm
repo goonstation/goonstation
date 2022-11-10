@@ -188,7 +188,7 @@
 
 	var/mob/living/intangible/flock/F = holder.owner
 
-	if (!(isliving(target) || iscritter(target) || isvehicle(target)) || isflockmob(target) || isintangible(target)) //TODO: replace this with the macro once #11654 gets merged
+	if (!isflockvalidenemy(target))
 		boutput(F, "<span class='alert'>That isn't a valid target.</span>")
 		return TRUE
 

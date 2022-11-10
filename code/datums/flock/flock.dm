@@ -589,6 +589,9 @@ var/flock_signal_unleashed = FALSE
 	return (enemy_name in src.enemies)
 
 /datum/flock/proc/addIgnore(atom/A)
+	if (isvehicle(A))
+		for (var/mob/occupant in A)
+			src.addIgnore(occupant)
 	if (ismob(A))
 		var/mob/M = A
 		if (M.find_radio())
@@ -597,6 +600,9 @@ var/flock_signal_unleashed = FALSE
 	src.addAnnotation(A, FLOCK_ANNOTATION_IGNORE)
 
 /datum/flock/proc/removeIgnore(atom/A)
+	if (isvehicle(A))
+		for (var/mob/occupant in A)
+			src.removeIgnore(occupant)
 	if (ismob(A))
 		var/mob/M = A
 		if (M.find_radio())
