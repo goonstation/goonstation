@@ -434,11 +434,11 @@
 
 //return 0 to block the mode from being chosen for whatever reason
 /datum/configuration/proc/getSpecialModeCase(mode)
+	if (map_settings && islist(map_settings.forbidden_antags) && length(map_settings.forbidden_antags))
+		if (mode in map_settings.forbidden_antags)
+			return 0
 	switch (mode)
 		if ("blob")
-			if (map_setting == "NADIR")
-				return 0
-
 			if (src.blob_min_players > 0)
 				var/players = 0
 				for (var/mob/new_player/player in mobs)

@@ -125,6 +125,8 @@ var/global/list/mapNames = list(
 		"the robotics lab" = list(/area/station/medical/robotics))
 //		"the public pool" = list(/area/station/crew_quarters/pool))
 
+	var/list/forbidden_modes = list() //List of mode names to prevent from appearing in a map
+
 	var/job_limits_from_landmarks = FALSE /// if TRUE each job with a landmark will get as many slots as many landmarks there are (jobs without a landmark left on default)
 	var/list/job_limits_override = list() /// assoc list of the form `job_type=limit` to override other job settings, works on gimmick jobs too
 
@@ -948,6 +950,8 @@ var/global/list/mapNames = list(
 		"the east crew quarters" = list(/area/station/crew_quarters/quarters_east),
 		"the nerd dungeon" = list(/area/station/crew_quarters/arcade/dungeon),
 		"the chapel" = list(/area/station/chapel/sanctuary))
+
+	forbidden_antags = list("blob")
 
 	job_limits_from_landmarks = TRUE
 	job_limits_override = list(

@@ -53,13 +53,20 @@
 				message_admins("Antagonist Spawn (non-admin) is disabled in this game mode, aborting.")
 				return
 
-			src.antagonist_type = pick(list("Blob", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Flockmind"))
+			var/possible_types = list("Blob", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Flockmind")
+
+			if (map_settings && islist(map_settings.forbidden_antags) && length(map_settings.forbidden_antags))
+				for(var/ant in possible_types)
+					if(lowertext(ant) in map_settings.forbidden_antags)
+						possible_types -= ant
+
 			for(var/mob/wraith/W in ticker.mode.traitors)
 				if(W.deaths < 2)
-					src.antagonist_type -= list("Wraith")
-					src.antagonist_type = pick(list())
+					possible_types -= list("Wraith")
 				if(isnull(W.deaths))
 					continue
+
+			src.antagonist_type = pick(possible_types)
 
 		switch (src.antagonist_type)
 			if ("Blob", "Blob (AI)")
