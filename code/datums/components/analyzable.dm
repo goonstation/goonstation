@@ -19,7 +19,7 @@ TYPEINFO(/datum/component/analyzable)
 	if (O.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED)
 		return COMPONENT_INCOMPATIBLE
 	src.result_type = type_override
-	RegisterSignal(parent, list(COMSIG_ATOM_ANALYZE), .proc/attempt_analysis)
+	RegisterSignal(parent, COMSIG_ATOM_ANALYZE, .proc/attempt_analysis)
 
 /datum/component/analyzable/proc/attempt_analysis(obj/parent_atom, obj/item/I, mob/user)
 	PRIVATE_PROC(TRUE)

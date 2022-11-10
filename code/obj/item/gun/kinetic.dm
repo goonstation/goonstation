@@ -76,9 +76,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	update_icon()
 
 		if (src.ammo)
-			inventory_counter.update_number(src.ammo.amount_left)
+			inventory_counter?.update_number(src.ammo.amount_left)
 		else
-			inventory_counter.update_text("-")
+			inventory_counter?.update_text("-")
 
 		if(src.has_empty_state)
 			if (src.ammo.amount_left < 1 && !findtext(src.icon_state, "-empty")) //sanity check
@@ -87,7 +87,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				src.icon_state = replacetext(src.icon_state, "-empty", "")
 		return 0
 
-	canshoot()
+	canshoot(mob/user)
 		if(src.ammo && src.current_projectile)
 			if(src.ammo:amount_left >= src.current_projectile:cost)
 				return 1
@@ -206,17 +206,15 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	attack(mob/M, mob/user)
 	// Finished Cogwerks' former WIP system (Convair880).
-		if (src.canshoot() && user.a_intent != "help" && user.a_intent != "grab")
+		if (src.canshoot(user) && user.a_intent != "help" && user.a_intent != "grab")
 			if (src.auto_eject)
 				var/turf/T = get_turf(src)
 				if(T)
 					if (src.current_projectile.casing && (src.sanitycheck(1, 0) == 1))
 						var/number_of_casings = max(1, src.current_projectile.shot_number)
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
-						for (var/i = 1, i <= number_of_casings, i++)
-							var/obj/item/casing/C = new src.current_projectile.casing(T)
-							C.forensic_ID = src.forensic_ID
-							C.set_loc(T)
+						for (var/i in 1 to number_of_casings)
+							new src.current_projectile.casing(T, src.forensic_ID)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
@@ -224,17 +222,15 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 
 	shoot(var/target, var/start, var/mob/user)
-		if (src.canshoot() && !isghostdrone(user))
+		if (src.canshoot(user) && !isghostdrone(user))
 			if (src.auto_eject)
 				var/turf/T = get_turf(src)
 				if(T)
 					if (src.current_projectile.casing && (src.sanitycheck(1, 0) == 1))
 						var/number_of_casings = max(1, src.current_projectile.shot_number)
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
-						for (var/i = 1, i <= number_of_casings, i++)
-							var/obj/item/casing/C = new src.current_projectile.casing(T)
-							C.forensic_ID = src.forensic_ID
-							C.set_loc(T)
+						for (var/i in 1 to number_of_casings)
+							new src.current_projectile.casing(T, src.forensic_ID)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
@@ -254,11 +250,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			var/turf/T = get_turf(src)
 			if(T)
 				//DEBUG_MESSAGE("Ejected [src.casings_to_eject] [src.current_projectile.casing] from [src].")
-				var/obj/item/casing/C = null
 				while (src.casings_to_eject > 0)
-					C = new src.current_projectile.casing(T)
-					C.forensic_ID = src.forensic_ID
-					C.set_loc(T)
+					new src.current_projectile.casing(T, src.forensic_ID)
 					src.casings_to_eject--
 		return
 
@@ -289,7 +282,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 			src.has_fire_anim_state = TRUE
 			src.fire_anim_state = src.gen_icon_state(TRUE)
 
-	canshoot()
+	canshoot(mob/user)
 		if (hammer_cocked)
 			return ..()
 		else
@@ -310,7 +303,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		src.hammer_cocked = !src.hammer_cocked
 		src.UpdateIcon()
 
-	proc/gen_icon_state(var/ignore_hammer_state)
+	proc/gen_icon_state(ignore_hammer_state)
 		var/state = "[initial(src.icon_state)]" + (src.gilded ? "-golden" : "")
 		if (!ignore_hammer_state && src.hammer_cocked)
 			state += "-c"
@@ -420,13 +413,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 				playsound(src.loc, "sound/weapons/casings/casing-xl-0[rand(1,6)].ogg", 15, 0.1)
 
 
-
-	New()
-		..()
-		src.pixel_y += rand(-12,12)
-		src.pixel_x += rand(-12,12)
-		src.set_dir(pick(alldirs))
-		return
+/obj/item/casing/New(loc, forensic_ID)
+	. = ..()
+	src.pixel_y += rand(-12,12)
+	src.pixel_x += rand(-12,12)
+	src.set_dir(pick(alldirs))
+	src.forensic_ID = forensic_ID
 
 //no caliber and ALL
 /obj/item/gun/kinetic/vgun
@@ -474,14 +466,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 	shoot(var/target,var/start ,var/mob/user)
 		if(failured)
-			if(canshoot())
+			if(canshoot(user))
 				var/turf/T = get_turf(src)
 				explosion(src, T,-1,-1,1,2)
 				qdel(src)
 			return
 		if(ammo?.amount_left && current_projectile.power)
 			failure_chance = clamp(round(current_projectile.power/2 - 9), 0, 33)
-		if(canshoot() && prob(failure_chance)) // Empty zip guns had a chance of blowing up. Stupid (Convair880).
+		if(canshoot(user) && prob(failure_chance)) // Empty zip guns had a chance of blowing up. Stupid (Convair880).
 			failured = 1
 			if(prob(failure_chance))	// Sometimes the failure is obvious
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
@@ -874,7 +866,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 					user.show_text("[src] is empty!", "red")
 					return
 
-	canshoot()
+	canshoot(mob/user)
 		if(open)
 			return 0
 		else
@@ -939,7 +931,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	max_ammo_capacity = 1
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
-	var/pulled = 0
+	var/pulled = FALSE
 
 	New()
 		ammo = new default_magazine
@@ -950,7 +942,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	attack_self(mob/user as mob)
 		..()
 		if(!pulled)
-			pulled = 1
+			pulled = TRUE
 			playsound(user.loc, 'sound/weapons/gunload_click.ogg', 60, 1)
 			UpdateIcon()
 
@@ -961,29 +953,67 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		else
 			icon_state="foamdartgun"
 
-	canshoot()
+	canshoot(mob/user)
 		if(!pulled)
-			return 0
+			return FALSE
 		else
 			return ..()
 
 	shoot(var/target,var/start ,var/mob/user)
-		if(!pulled)
+		if(!src.canshoot(user))
 			boutput(user, "<span class='notice'>You need to pull back the pully tab thingy first!</span>")
 			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
 			return
 		..()
-		pulled = 0
+		pulled = FALSE
 		UpdateIcon()
 
 	shoot_point_blank(atom/target, var/mob/user, second_shot)
-		if(!pulled)
+		if(!src.canshoot(user))
 			boutput(user, "<span class='notice'>You need to pull back the pully tab thingy first!</span>")
 			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
 			return
 		..()
-		pulled = 0
+		pulled = FALSE
 		UpdateIcon()
+
+/obj/item/gun/kinetic/foamdartgun/borg
+	name = "cybernetic foam dart gun"
+	desc = "A law enforcement weapon that fires foam darts. Synthesizes darts directly from the battery and includes new auto-load technology."
+	icon_state="foamdartgun-pull"
+	inventory_counter_enabled = FALSE
+	allowReverseReload = FALSE
+	var/power_requirement = 100 //! The amount of power deducted from a borg's cell when they fire this.
+
+	New()
+		. = ..()
+		set_current_projectile(new /datum/projectile/bullet/foamdart/biodegradable)
+
+	canshoot(mob/user)
+		// no parent call so we don't care if it's pulled
+		if (issilicon(user))
+			var/mob/living/silicon/S = user
+			return S.cell?.charge >= power_requirement
+		else // guess someone spawned one???
+			return TRUE
+
+	shoot(target, start, mob/user)
+		if (src.canshoot(user))
+			. = ..() // this checks canshoot twice; could be refactored
+		else
+			boutput(user, "<span class='alert'>You're too low on power to synthesize a dart!</span>")
+
+	shoot_point_blank(atom/target, mob/user, second_shot)
+		if (src.canshoot(user))
+			. = ..()
+		else
+			boutput(user, "<span class='alert'>You're too low on power to synthesize a dart!</span>")
+
+	process_ammo(mob/user)
+		if (issilicon(user))
+			var/mob/living/silicon/S = user
+			S.cell?.charge -= src.power_requirement
+		return TRUE
 
 
 /obj/item/gun/kinetic/foamdartrevolver
@@ -1111,10 +1141,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		set_current_projectile(new/datum/projectile/bullet/flintlock)
 		..()
 
-	shoot()
+	shoot(target, start, mob/user)
 		if(ammo?.amount_left && current_projectile.power)
 			failure_chance = clamp(round(current_projectile.power/2), 10, 33)
-		if(canshoot() && prob(failure_chance))
+		if(canshoot(user) && prob(failure_chance))
 			var/turf/T = get_turf(src)
 			boutput(T, "<span class='alert'>[src] blows up!</span>")
 			explosion(src, T,0,1,1,2)
@@ -1151,7 +1181,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	suicide(var/mob/living/carbon/human/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		if (!istype(user) || !src.canshoot())//!hasvar(user,"organHolder")) STOP IT STOP IT HOLY SHIT STOP WHY DO YOU USE HASVAR FOR THIS, ONLY HUMANS HAVE ORGANHOLDERS
+		if (!istype(user) || !src.canshoot(user))//!hasvar(user,"organHolder")) STOP IT STOP IT HOLY SHIT STOP WHY DO YOU USE HASVAR FOR THIS, ONLY HUMANS HAVE ORGANHOLDERS
 			return 0
 
 		src.process_ammo(user)
@@ -1206,7 +1236,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		. = ..()
 		src.icon_state = "shotty" + (gilded ? "-golden" : "") + (racked_slide ? "" : "-empty" )
 
-	canshoot()
+	canshoot(mob/user)
 		return(..() && src.racked_slide)
 
 	shoot(var/target,var/start ,var/mob/user)
@@ -1252,9 +1282,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 				if (src.ammo.amount_left < 8) // Do not eject shells if you're racking a full "clip"
 					var/turf/T = get_turf(src)
 					if (T && src.current_projectile.casing) // Eject shells on rack instead of on shoot()
-						var/obj/item/casing/C = new src.current_projectile.casing(T)
-						C.forensic_ID = src.forensic_ID
-						C.set_loc(T)
+						new src.current_projectile.casing(T, src.forensic_ID)
 
 /obj/item/gun/kinetic/single_action/mts_255
 	name = "\improper MTs-255 Revolver Shotgun"
@@ -1350,7 +1378,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 				two_handed = 1
 				user.update_inhands()
 
-	canshoot()
+	canshoot(mob/user)
 		if (src.icon_state == "slamgun-ready")
 			return ..()
 		else
@@ -1453,6 +1481,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		TO_LOAD.Attackby(nade, user)
 		src.Attackby(TO_LOAD, user)
 
+	breach
+		default_magazine = /obj/item/ammo/bullets/breach_flashbang/single
+		New()
+			..()
+			ammo = new default_magazine
+			set_current_projectile(new/datum/projectile/bullet/breach_flashbang)
 
 //1.58
 // Ported from old, non-gun RPG-7 object class (Convair880).
@@ -2205,7 +2239,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		. = ..()
 		src.icon_state = "coachgun" + (gilded ? "-golden" : "") + (!src.broke_open ? "" : "-empty" )
 
-	canshoot()
+	canshoot(mob/user)
 		if (!src.broke_open)
 			return TRUE
 		..()

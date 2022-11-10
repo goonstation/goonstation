@@ -178,6 +178,9 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	src.player = make_player(key)
 	src.player.client = src
 
+	if(config.rsc)
+		src.preload_rsc = config.rsc
+
 	if (!isnewplayer(src.mob) && !isnull(src.mob)) //playtime logging stuff
 		src.player.log_join_time()
 
@@ -1293,6 +1296,8 @@ var/global/curr_day = null
 	set name ="apply-view-tint"
 
 	view_tint = !view_tint
+	if (src.mob?.respect_view_tint_settings)
+		src.set_color(length(src.mob.active_color_matrix) ? src.mob.active_color_matrix : COLOR_MATRIX_IDENTITY, src.mob.respect_view_tint_settings)
 
 /client/verb/adjust_saturation()
 	set hidden = TRUE

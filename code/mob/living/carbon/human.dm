@@ -157,7 +157,7 @@
 	var/special_hair_override = 0 // only really works if they have any special hair
 
 	random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
-	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r", "nosepick")
+	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r")
 
 	var/icon/flat_icon = null
 
@@ -742,6 +742,11 @@
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
 
 	if (src.mind) // I think this is kinda important (Convair880).
+#ifdef DATALOGGER
+		if (src.mind.ckey)
+			// game_stats.Increment("playerdeaths")
+			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
+#endif
 		src.mind.register_death()
 		if (src.mind.special_role == ROLE_MINDHACK)
 			remove_mindhack_status(src, "mindhack", "death")
@@ -749,11 +754,6 @@
 			remove_mindhack_status(src, "vthrall", "death")
 		else if (src.mind.master)
 			remove_mindhack_status(src, "otherhack", "death")
-#ifdef DATALOGGER
-		if (src.mind.ckey)
-			// game_stats.Increment("playerdeaths")
-			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
-#endif
 
 	logTheThing(LOG_COMBAT, src, "dies [log_health(src)] at [log_loc(src)].")
 	//src.icon_state = "dead"
@@ -1011,12 +1011,12 @@
 /mob/living/carbon/human/proc/throw_mode_off()
 	src.in_throw_mode = 0
 	src.update_cursor()
-	hud.update_throwing()
+	hud?.update_throwing()
 
 /mob/living/carbon/human/proc/throw_mode_on()
 	src.in_throw_mode = 1
 	src.update_cursor()
-	hud.update_throwing()
+	hud?.update_throwing()
 
 /mob/living/carbon/human/throw_item(atom/target, list/params)
 	..()
@@ -3123,7 +3123,7 @@
 		// Make copy of item on ground
 		var/obj/item/outChestItem = src.chest_item
 		outChestItem.set_loc(get_turf(src))
-		src.chest_item.AttackSelf(src)
+		outChestItem.AttackSelf(src)
 		src.chest_item = null
 		return
 	src.chest_item.AttackSelf(src)

@@ -85,7 +85,7 @@
 		return
 */
 
-	canshoot()
+	canshoot(mob/user)
 		if(src.current_projectile)
 			if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, current_projectile.cost) & CELL_SUFFICIENT_CHARGE)
 				return 1
@@ -100,7 +100,7 @@
 					return 1
 			return 0
 		else
-			if(canshoot())
+			if(canshoot(user))
 				SEND_SIGNAL(src, COMSIG_CELL_USE, src.current_projectile.cost)
 				return 1
 			boutput(user, "<span class='alert'>*click* *click*</span>")
@@ -646,7 +646,7 @@
 		return
 
 	shoot(var/target,var/start,var/mob/user)
-		if (canshoot()) // No more attack messages for empty guns (Convair880).
+		if (canshoot(user)) // No more attack messages for empty guns (Convair880).
 			playsound(user, 'sound/weapons/DSBFG.ogg', 75)
 			sleep(0.9 SECONDS)
 		return ..(target, start, user)
@@ -1128,7 +1128,7 @@
 		..()
 
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
-		if (canshoot()) // No more attack messages for empty guns (Convair880).
+		if (canshoot(user)) // No more attack messages for empty guns (Convair880).
 			playsound(user, 'sound/weapons/DSBFG.ogg', 75)
 			sleep(0.1 SECONDS)
 		return ..(target, start, user)
@@ -1555,7 +1555,7 @@
 		return 0
 
 	shoot(var/target,var/start,var/mob/user)
-		if (canshoot())
+		if (canshoot(user))
 			//removing this for now so anyone can shoot it. I PROBABLY will want it back, doing this for some light appeasement to see how it goes.
 			//shock the guy who tries to use this if they aren't the proper owner. (or if the gun is not emagged)
 			// if (!fingerprints_can_shoot(user))
@@ -1850,7 +1850,7 @@
 		return
 
 	shoot(var/target,var/start,var/mob/user) //it's experimental for a reason; use at your own risk!
-		if (canshoot())
+		if (canshoot(user))
 			if (GET_COOLDOWN(src, "raygun_cooldown"))
 				return
 			if (prob(30))

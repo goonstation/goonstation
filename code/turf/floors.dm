@@ -1623,7 +1623,13 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 /turf/simulated/floor/Cross(atom/movable/mover)
 	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
 		if (!( locate(/obj/machinery/mass_driver, src) ))
-			return 0
+			var/obj/machinery/vehicle/O = mover
+			if (istype(O?.sec_system, /obj/item/shipcomponent/secondary_system/crash)) //For ships crashing with the SEED
+				var/obj/item/shipcomponent/secondary_system/crash/I = O.sec_system
+				if (I.crashable)
+					mover.Bump(src)
+					return TRUE
+			return FALSE
 	return ..()
 
 /turf/simulated/shuttle/Cross(atom/movable/mover)
@@ -2289,7 +2295,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 			icon_state = "deeps"
 
 			Entered(atom/A as mob|obj)
-				if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
+				if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/living/intangible))
 					return ..()
 
 				var/turf/T = pick_landmark(LANDMARK_FALL_DEEP)

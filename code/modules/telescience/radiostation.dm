@@ -144,7 +144,7 @@
 		src.accents = list()
 		for(var/bio_type in concrete_typesof(/datum/bioEffect/speech, FALSE))
 			var/datum/bioEffect/speech/effect = new bio_type()
-			if(!effect.acceptable_in_mutini || !effect.occur_in_genepools)
+			if(!effect.acceptable_in_mutini || !effect.occur_in_genepools || !effect.mixingdesk_allowed)
 				continue
 			var/name = effect.id
 			if(length(name) >= 7 && copytext(name, 1, 8) == "accent_")
@@ -275,7 +275,7 @@
 			W.set_loc(src)
 			src.record_inside = W
 			src.has_record = TRUE
-			var/R = copytext(html_encode(input("What is the name of this record?","Record Name", src.record_inside.record_name) as null|text), 1, MAX_MESSAGE_LEN)
+			var/R = copytext(html_encode(tgui_input_text(user, "What is the name of this record?", "Record Name", src.record_inside.record_name)), 1, MAX_MESSAGE_LEN)
 			if(!in_interact_range(src, user))
 				boutput(user, "You're out of range of the [src.name]!")
 				return
@@ -825,6 +825,8 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 			boutput(user, "The tape deck already has a tape inserted!")
 		else if(is_music_playing())
 			boutput(user, "<span class='alert'>Music is already playing, it'd be rude to interrupt!</span>")
+		else if(GET_COOLDOWN(src, "play"))
+			boutput(user, "<span class='alert'>The tape deck is still rewinding!</span>")
 		else
 			src.visible_message("<span class='notice'><b>[user] inserts the compact tape into the tape deck.</b></span>",
 			"You insert the compact tape into the tape deck.")
@@ -837,11 +839,11 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 			var/datum/signal/pdaSignal = get_free_signal()
 			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [src.tape_inside.audio_type] for [src.tape_inside.name_of_thing].", "group" = MGA_RADIO)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
-			EXTEND_COOLDOWN(global, "music", 600 SECONDS)
+			EXTEND_COOLDOWN(src, "play", 600 SECONDS)
 
 /obj/submachine/tape_deck/attack_hand(mob/user)
 	if(has_tape)
-		if(!is_music_playing())
+		if(!is_music_playing() && !GET_COOLDOWN(src, "play"))
 			if(istype(src.tape_inside,/obj/item/radio_tape/advertisement))
 				src.visible_message("<span class='alert'><b>[src.tape_inside]'s copyright preserving self destruct feature activates!</b></span>")
 				qdel(src.tape_inside)

@@ -424,7 +424,7 @@ Code:
 
 		dat += "<h4>DoorMaster 5.1.9 Pod-Door Control System</h4>"
 		dat += "<a href='?src=\ref[src];toggle=1'>Toggle Doors</a><br><br>"
-		dat += "<font size=1><i>Like this program? Send $9.95 to SPACETREND MICROSYSTEMS in Neo Toronto, Ontario for more bargain software!</i></font>"
+		dat += "<font size=1><i>Like this program? Send 9.95[CREDIT_SIGN] to SPACETREND MICROSYSTEMS in Neo Toronto, Ontario for more bargain software!</i></font>"
 
 		return dat
 
@@ -1386,20 +1386,24 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 				var/datum/game_mode/revolution/R = ticker.mode
 				var/list/datum/mind/heads = R.head_revolutionaries
 				var/turf/Turf = get_turf(usr)
+				nearest_head_location = null
 
 				for (var/datum/mind/Mind in heads)
-					if(!istype(Mind?.current, /mob/living/carbon/human))
-						return
+					if(!Mind.current)
+						continue
+					if(!istype(Mind.current, /mob/living/carbon/human))
+						continue
 					var/MindMob = Mind.current
 					var/turf/MindTurf = get_turf(MindMob)
-					if(!isalive(Mind?.current) || MindTurf.z != 1)
-						return
+					if(!isalive(Mind.current) || MindTurf.z != 1)
+						continue
 					if(GET_DIST(Turf, MindTurf) <= GET_DIST(Turf, nearest_head_location))
 						nearest_head_location = MindTurf
 
 				if(nearest_head_location != null)
-					direction = get_dir(Turf, nearest_head_location)
+					direction = dir2text(get_dir(Turf, nearest_head_location))
 					distance = GET_DIST(Turf, nearest_head_location)
+
 
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()
@@ -1443,19 +1447,22 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 				var/datum/game_mode/revolution/R = ticker.mode
 				var/list/datum/mind/heads = R.get_all_heads()
 				var/turf/Turf = get_turf(usr)
+				nearest_head_location = null
 
 				for (var/datum/mind/Mind in heads)
-					if(!istype(Mind?.current, /mob/living/carbon/human))
-						return
+					if(!Mind.current)
+						continue
+					if(!istype(Mind.current, /mob/living/carbon/human))
+						continue
 					var/MindMob = Mind.current
 					var/turf/MindTurf = get_turf(MindMob)
-					if(!isalive(Mind?.current) || MindTurf.z != 1)
-						return
+					if(!isalive(Mind.current) || MindTurf.z != 1)
+						continue
 					if(GET_DIST(Turf, MindTurf) <= GET_DIST(Turf, nearest_head_location))
 						nearest_head_location = MindTurf
 
 				if(nearest_head_location != null)
-					direction = get_dir(Turf, nearest_head_location)
+					direction = dir2text(get_dir(Turf, nearest_head_location))
 					distance = GET_DIST(Turf, nearest_head_location)
 
 		src.master.add_fingerprint(usr)

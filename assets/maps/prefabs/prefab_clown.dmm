@@ -15,7 +15,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "d" = (
-/obj/critter/spider/clown,
+/mob/living/critter/spider/clown,
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
@@ -24,7 +24,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "f" = (
-/obj/critter/spider/clownqueen,
+/mob/living/critter/spider/clownqueen,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "g" = (
@@ -32,7 +32,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "h" = (
-/obj/critter/spider/clown,
+/mob/living/critter/spider/clown,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "i" = (
