@@ -632,7 +632,7 @@ var/flock_signal_unleashed = FALSE
 	if (!T)
 		return
 	if (src.flockmind.tutorial)
-		src.flockmind.tutorial.PerformSilentAction("claim turf", T)
+		src.flockmind.tutorial.PerformSilentAction(FLOCK_ACTION_TURF_CLAIM, T)
 	src.all_owned_tiles |= T
 	src.priority_tiles -= T
 	if (isfeathertile(T))

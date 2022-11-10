@@ -54,3 +54,23 @@
 #define FLOCK_DRONE_WANDER_PAUSE_COUNT 5
 // maximum number of flockdrones allowed
 #define FLOCK_DRONE_LIMIT 75
+
+//TUTORIAL
+#define FLOCK_ACTION_RIFT_SPAWN "spawn rift"
+#define FLOCK_ACTION_RIFT_COMPLETE "rift complete"
+#define FLOCK_ACTION_GATECRASH "gatecrash"
+#define FLOCK_ACTION_DRAGMOVE "click drag move"
+#define FLOCK_ACTION_MARK_ENEMY "designate enemy"
+#define FLOCK_ACTION_TEALPRINT_PLACE "place tealprint"
+#define FLOCK_ACTION_TEALPRINT_COMPLETE "building complete"
+//drones
+#define FLOCK_ACTION_DRONE_CONTROL "control drone"
+#define FLOCK_ACTION_DRONE_RELEASE "release drone"
+#define FLOCK_ACTION_DRONE_SELECT "select drone"
+#define FLOCK_ACTION_DRONE_ORDER "order drone"
+
+#define FLOCK_ACTION_GAIN_RESOURCES "gain resources"
+#define FLOCK_ACTION_START_CONVERSION "start conversion"
+#define FLOCK_ACTION_FLOORRUN "floorrun"
+#define FLOCK_ACTION_CAGE "cage"
+#define FLOCK_ACTION_TURF_CLAIM "claim turf"

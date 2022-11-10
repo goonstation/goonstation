@@ -109,9 +109,9 @@
 		src.must_deploy.UpdateOverlays(src.marker,"marker")
 
 	PerformAction(var/action, var/context)
-		if (action == "spawn rift" && context == must_deploy)
+		if (action == FLOCK_ACTION_RIFT_SPAWN && context == must_deploy)
 			return TRUE
-		else if (action == "rift complete")
+		else if (action == FLOCK_ACTION_RIFT_COMPLETE)
 			src.finished = TRUE
 			return TRUE
 		return FALSE
@@ -124,7 +124,7 @@
 	instructions = "Your flockdrone is stuck in this room, use your Gatecrash ability to force the door open."
 
 	PerformAction(action, context)
-		if (action == "gatecrash")
+		if (action == FLOCK_ACTION_GATECRASH)
 			src.finished = TRUE
 			return TRUE
 
@@ -133,7 +133,7 @@
 	instructions = "Now move your flockdrone through the door by clicking and dragging it."
 
 	PerformAction(action, context)
-		if (action == "click drag move")
+		if (action == FLOCK_ACTION_DRAGMOVE)
 			src.finished = TRUE
 			return TRUE
 
@@ -142,7 +142,7 @@
 	instructions = "Sometimes you may want to take direct control of a single drone, for combat or fine movement control. Click drag yourself over the flockdrone to take control of it."
 
 	PerformAction(action, context)
-		if (action == "control drone")
+		if (action == FLOCK_ACTION_DRONE_CONTROL)
 			src.finished = TRUE
 			return TRUE
 
@@ -152,7 +152,7 @@
 	var/amount = 30
 
 	PerformAction(action, context)
-		if (action == "gain resources" && context >= amount)
+		if (action == FLOCK_ACTION_GAIN_RESOURCES && context >= amount)
 			src.finished = TRUE
 			return TRUE
 
@@ -161,9 +161,9 @@
 	instructions = "Convert the window in front of you to allow you to pass through it. Convert it by clicking on it with your nanite spray (middle) hand."
 
 	PerformAction(var/action, var/context)
-		if (action == "start conversion" && locate(/obj/window) in get_turf(context))
+		if (action == FLOCK_ACTION_START_CONVERSION && locate(/obj/window) in get_turf(context))
 			return TRUE
-		if (action == "claim turf" && locate(/obj/window) in context)
+		if (action == FLOCK_ACTION_TURF_CLAIM && locate(/obj/window) in context)
 			finished = TRUE
 			return TRUE
 
@@ -172,7 +172,7 @@
 	instructions = "While controlling a flockdrone you can press your sprint key to disappear into the floor, becoming untargetable and passing through flock walls and windows. Use it to pass through the window you just converted."
 
 	PerformAction(action, context)
-		if (action == "floorrun")
+		if (action == FLOCK_ACTION_FLOORRUN)
 			src.finished = TRUE
 			return TRUE
 
@@ -201,7 +201,7 @@
 		src.ftutorial.make_maptext(locate(/obj/machinery/computer) in range(10, src.ftutorial.center), msg)
 
 	PerformAction(action, context)
-		if (action == "release drone")
+		if (action == FLOCK_ACTION_DRONE_RELEASE)
 			finished = TRUE
 			return TRUE
 
@@ -219,9 +219,9 @@
 		src.ftutorial.portal_in(T, /mob/living/carbon/human/normal/assistant)
 
 	PerformAction(action, context)
-		if (action == "designate enemy" || action == "start conversion")
+		if (action == FLOCK_ACTION_MARK_ENEMY || action == FLOCK_ACTION_START_CONVERSION)
 			return TRUE
-		if (action == "cage")
+		if (action == FLOCK_ACTION_CAGE)
 			finished = TRUE
 			return TRUE
 
@@ -237,7 +237,7 @@
 		src.location.UpdateOverlays(marker, "marker")
 
 	PerformAction(action, context)
-		if (action == "place tealprint" && context == /obj/flock_structure/sentinel && get_turf(src.ftutorial.fowner) == src.location)
+		if (action == FLOCK_ACTION_TEALPRINT_PLACE && context == /obj/flock_structure/sentinel && get_turf(src.ftutorial.fowner) == src.location)
 			src.finished = TRUE
 			return TRUE
 
@@ -246,9 +246,9 @@
 	instructions = "Nearby drones will slowly automatically deposit their resources into tealprints, but you can override their torpid cognition to order them directly. Click on a drone to select it, then click on the tealprint to target it. The same works to order a drone to convert, attack, cage and so on depending what you click on."
 
 	PerformAction(action, context)
-		if (action == "select drone")
+		if (action == FLOCK_ACTION_DRONE_SELECT)
 			return TRUE
-		if (action == "order drone" && context == /datum/aiTask/sequence/goalbased/flock/deposit/targetable)
+		if (action == FLOCK_ACTION_DRONE_ORDER && context == /datum/aiTask/sequence/goalbased/flock/deposit/targetable)
 			src.finished = TRUE
 			return TRUE
 
@@ -257,11 +257,11 @@
 	var/structure_type = null
 
 	PerformAction(action, context)
-		if (action in list("start conversion", "select drone", "order drone"))
+		if (action in list(FLOCK_ACTION_START_CONVERSION, FLOCK_ACTION_DRONE_SELECT, FLOCK_ACTION_DRONE_ORDER))
 			return TRUE
-		if (action == "place tealprint" && context == src.structure_type && get_turf(src.ftutorial.fowner) == src.location)
+		if (action == FLOCK_ACTION_TEALPRINT_PLACE && context == src.structure_type && get_turf(src.ftutorial.fowner) == src.location)
 			return TRUE
-		if (action == "building complete")
+		if (action == FLOCK_ACTION_TEALPRINT_COMPLETE)
 			var/obj/flock_structure/struct = context
 			struct.process(200) //force a high mult process to immediately charge the structure if it needs it
 			src.finished = TRUE
@@ -291,7 +291,7 @@
 
 	PerformAction(action, context)
 		. = ..()
-		if (action == "building complete")
+		if (action == FLOCK_ACTION_TEALPRINT_COMPLETE)
 			var/obj/flock_structure/interceptor/struct = context
 			OVERRIDE_COOLDOWN(struct, "bolt_gen_time", 0 SECONDS)
 			struct.power_projectile_checkers(TRUE)

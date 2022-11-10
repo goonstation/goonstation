@@ -29,7 +29,7 @@
 		if (src.flock.flockmind.tutorial) //simplify down to a single drone during tutorial
 			flockdronegibs(src.loc, null, list(new /obj/flock_structure/egg/stupid(src.contents, src.flock)))
 			src.flock.flockmind.started = TRUE
-			src.flock.flockmind.tutorial.PerformAction("rift complete")
+			src.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_RIFT_COMPLETE)
 			qdel(src)
 		else
 			src.open()

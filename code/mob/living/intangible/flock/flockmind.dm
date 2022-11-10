@@ -47,7 +47,7 @@
 		src.tutorial = null
 
 /mob/living/intangible/flock/flockmind/select_drone(var/mob/living/critter/flock/drone/drone)
-	if(src.tutorial && !src.tutorial.PerformAction("select drone"))
+	if(src.tutorial && !src.tutorial.PerformAction(FLOCK_ACTION_DRONE_SELECT))
 		return
 	..()
 

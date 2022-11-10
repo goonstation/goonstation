@@ -129,7 +129,7 @@
 	if(controller)
 		boutput(pilot, "<span class='alert'>This drone is already being controlled.</span>")
 		return
-	if (src.flock.flockmind.tutorial && !src.flock.flockmind.tutorial.PerformAction("control drone", src))
+	if (src.flock.flockmind.tutorial && !src.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_DRONE_CONTROL, src))
 		return
 	src.controller = pilot
 	src.wake_from_ai_pause()
@@ -447,7 +447,7 @@
 		return // flock mind/trace is stunned or dead
 	if (flock_controller.flock != src.flock)
 		return // this isn't our drone
-	src.flock.flockmind.tutorial?.PerformSilentAction("click drag move", src)
+	src.flock.flockmind.tutorial?.PerformSilentAction(FLOCK_ACTION_DRAGMOVE, src)
 	src.rally(over_location)
 
 /mob/living/critter/flock/drone/hotkey(var/name)
@@ -578,7 +578,7 @@
 /mob/living/critter/flock/drone/proc/start_floorrunning()
 	if(src.floorrunning)
 		return
-	src.flock.flockmind.tutorial?.PerformSilentAction("floorrun", src)
+	src.flock.flockmind.tutorial?.PerformSilentAction(FLOCK_ACTION_FLOORRUN, src)
 	playsound(src, 'sound/misc/flockmind/flockdrone_floorrun.ogg', 30, 1, extrarange = -10)
 	src.floorrunning = TRUE
 	src.set_density(FALSE)
@@ -635,7 +635,7 @@
 
 /mob/living/critter/flock/drone/proc/add_resources(amount)
 	src.resources += amount
-	src.flock?.flockmind.tutorial?.PerformSilentAction("gain resources", src.resources)
+	src.flock?.flockmind.tutorial?.PerformSilentAction(FLOCK_ACTION_GAIN_RESOURCES, src.resources)
 	src.flock?.resources_gained += amount
 	var/datum/abilityHolder/composite/composite = src.abilityHolder
 	var/datum/abilityHolder/critter/flockdrone/aH = composite.getHolder(/datum/abilityHolder/critter/flockdrone)
@@ -985,7 +985,7 @@
 	if (!istype(user))
 		return
 
-	if (user.flock.flockmind.tutorial && !user.flock.flockmind.tutorial.PerformAction("start conversion", target))
+	if (user.flock.flockmind.tutorial && !user.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_START_CONVERSION, target))
 		return
 	if(ismob(target) || iscritter(target)) //gods how I hate /obj/critter
 		if (!isflockmob(target))

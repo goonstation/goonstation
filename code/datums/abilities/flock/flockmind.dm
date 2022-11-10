@@ -121,7 +121,7 @@
 			if (O.density)
 				boutput(F, "<span class='alert'>That tile is blocked by [O].</span>")
 				return TRUE
-	if (!src.tutorial_check("spawn rift", T))
+	if (!src.tutorial_check(FLOCK_ACTION_RIFT_SPAWN, T))
 		return TRUE
 	logTheThing(LOG_GAMEMODE, holder.get_controlling_mob(), "spawns a rift at [log_loc(src.holder.owner)].")
 	F.spawnEgg()
@@ -179,7 +179,7 @@
 	if (!flock)
 		return TRUE
 
-	if (!src.tutorial_check("designate enemy", M))
+	if (!src.tutorial_check(FLOCK_ACTION_MARK_ENEMY, M))
 		return TRUE
 
 	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "designates [constructTarget(M)] as [flock.isEnemy(M) ? "" : "not "]an enemy at [log_loc(src.holder.owner)].")
@@ -302,7 +302,7 @@
 	for(var/obj/machinery/door/airlock/A in range(10, get_turf(holder.owner)))
 		if(A.canAIControl())
 			targets += A
-	src.tutorial_check("gatecrash", targets, TRUE)
+	src.tutorial_check(FLOCK_ACTION_GATECRASH, targets, TRUE)
 	if(length(targets))
 		playsound(holder.get_controlling_mob(), 'sound/misc/flockmind/flockmind_cast.ogg', 80, 1)
 		boutput(holder.get_controlling_mob(), "<span class='notice'>You force open all the doors around you.</span>")
@@ -462,7 +462,7 @@
 		return TRUE
 	var/datum/unlockable_flock_structure/ufs = friendlyNames[structurewanted]
 	var/obj/flock_structure/structurewantedtype = ufs.structType //this is a mildly cursed abuse of type paths, where you can cast a type path to a typed var to get access to its members
-	if (!src.tutorial_check("place tealprint", structurewantedtype))
+	if (!src.tutorial_check(FLOCK_ACTION_TEALPRINT_PLACE, structurewantedtype))
 		return TRUE
 	if(structurewantedtype)
 		logTheThing(LOG_STATION, holder.owner, "queues a [initial(structurewantedtype.flock_id)] tealprint ([log_loc(T)])")
@@ -577,7 +577,7 @@
 	else if (isitem(target))
 		task_type = /datum/aiTask/sequence/goalbased/flock/harvest/targetable
 
-	if (!src.tutorial_check("order drone", task_type))
+	if (!src.tutorial_check(FLOCK_ACTION_DRONE_ORDER, task_type))
 		return
 
 	var/datum/aiTask/task = drone.ai.get_instance(task_type, list(drone.ai, drone.ai.default_task))
