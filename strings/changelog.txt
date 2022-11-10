@@ -1,5 +1,131 @@
 
+(t)wed nov 09 22
+(u)Bartimeus973
+(p)11880
+(e)⚖🔨|C-Balance, A-Player-Actions
+(*)Plaguebringer's curse of death can now be cancelled by holy water or a chaplain's bible beatings, like other curses. Trickster's creeping dread is faster.
+(u)LeahTheTech
+(p)11654
+(e)🔄📄🧛|C-Rework, A-UI, A-Gamemodes
+(*)Greatly simplified Flockdrone manual control. Drones now infer orders from the target given.
+(u)Roddy
+(p)11849
+(e)🗺💅💊|A-Mapping, C-QoL, A-Medical
+(+)Minor Donut 2 changes: Beepsky is no longer homeless, notably.
+(u)Amylizzle
+(p)11755
+(e)🆕🎨💨|C-Feature, C-Sprites, A-Atmospherics
+(+)Adds nuclear fallout gas. Don't breathe the glowy green stuff.
+(u)Waffleloffle & Azrun
+(p)11804
+(e)🆕🎨🚨|C-Feature, C-Sprites, A-Admin
+(+)Adds Iguanas! Maybe you'll see one in a tree!
+(u)Kubius
+(p)11870
+(e)⚖📦🌠|C-Balance, A-Game-Objects, A-Events
+(+)Spatial interdictors can now protect most devices from ion storms if the affected device is within interdiction range. Law racks are an exception, due to the sensitive nature of involved components.
+(t)tue nov 08 22
+(u)Mora
+(p)11823
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Adds Security clothing vendor to clarion
+(u)Roddy
+(p)11785
+(e)🗺💅💊|A-Mapping, C-QoL, A-Medical
+(*)Updated Wrestlemap's medbay.
+(u)tarmunora
+(e)🆕|C-Feature
+(+)Added new 40mm door-breaching flashbang rounds to the armory.
+(u)Lizzy
+(p)11856
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Made ctrl+click on dragging object stop dragging the object.
+(t)mon nov 07 22
+(u)goonstation-enjoyer
+(p)11862
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)You can now rotate Trip Lasers with a crowbar again.
+(u)Kubius
+(p)11513
+(e)🆕⚖💅📦|C-Feature, C-Balance, C-QoL, A-Game-Objects
+(*)Spatial interdictors are now quicker to assemble, require fewer secondary assembly steps and consume much fewer materials.
+(+)Spatial interdictor mainboards are now part of the kit created at manufacturers, and no longer need to be separately scanned and reproduced.
+(u)Kubius
+(p)11766
+(e)🪲🆕🗺|C-Bug, C-Feature, A-Mapping
+(*)A wrecked vessel has been located southeast of the Nadir Extraction Site. Personnel are advised to approach with caution.
+(u)thegrb93
+(p)11514
+(e)🪲🍝|C-Bug, A-Catering
+(+)Terrible food that gives you food poisoning no longer fills hunger
+(t)sun nov 06 22
+(u)FlameArrow57
+(p)11509
+(e)🆕🏅🧛|C-Feature, A-Medal, A-Gamemodes
+(+)Added medals for Arcfiend and Spy Thief!
+(t)sat nov 05 22
+(u)zjdtmkhzt
+(p)11722
+(e)🆕🎨⚖📦|C-Feature, C-Sprites, C-Balance, A-Game-Objects
+(+)Added a new mechanics component that lets device frames move around. You can read about it in the ingame mechanics book.
+(u)FlameArrow57
+(p)11664
+(e)🆕🏅🧛|C-Feature, A-Medal, A-Gamemodes
+(+)Added a medal for Flock, unlocked by transmitting the Signal!
+(u)Kubius
+(p)11806
+(e)🪲🔄📦|C-Bug, C-Rework, A-Game-Objects
+(+)Station forcefields that aren't solid to objects should now be transparent to clicks.
+(t)fri nov 04 22
+(u)Tarmunora
+(p)262
+(e)🔒⚖🔄|A-Secret, C-Balance, C-Rework
+(+)Changed misc gun balance
+(u)zjdtmkhzt
+(p)11668
+(e)🆕🗺🎨🔎📦💡|C-Feature, A-Mapping, C-Sprites, C-Code-Quality, A-Game-Objects, A-Station-Systems
+(+)Conveyors can now turn corners. Thanks to Arthur Holiday for helping me with the bendy conveyor sprites!
+(t)thu nov 03 22
+(u)Emily
+(+)Fally and Holly Dolly
+(u)tarmunora
+(+)If you have an antag-ineligible role as favourite, you will not roll captain/HoP/detective on antag rounds.
+(u)Bartimeus973
+(p)11723
+(e)🪲|C-Bug
+(+)Wraiths now inherit point regen rate and corpse counts when they evolve.
+(u)DrWolfy
+(p)11350
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Floorbots now have color based on the toolbox used and use only one floor tile to be created.
+(+)Players can now put floor tiles inside toolboxes, as long as the toolbox is not empty.
+(+)Floorbots in the first stage of construction can now be deconstructed with an empty hand. The floor tile will be lost.
+(u)RSG250
+(p)11653
+(e)⚖🌠|C-Balance, A-Events
+(*)Certain Major Random Events are now able to appear earlier in a round in Classic
+(t)wed nov 02 22
+(u)Bartimeus
+(p)11065
+(e)🆕🧛|C-Feature, A-Gamemodes
+(+)A manifested wraith/poltergeist cannot be immediately re-manifested after a spirit candle was used on them anymore.
+(u)pali
+(p)11753
+(e)🆕🏅🚨|C-Feature, A-Medal, A-Admin
+(*)If you manage to make our code error-out you now get a medal, you monster.
+(u)Amylizzle
+(p)11767
+(e)⚖💊|C-Balance, A-Medical
+(*)Too much burn damage to a limb can now incinerate that limb.
+(u)Kubius
+(p)11706
+(e)⚖🧛⚗|C-Balance, A-Gamemodes, A-Chemistry
+(*)Changelings' biology has adapted to the unique variety of acid surrounding Nadir. Be watchful.
 (t)tue nov 01 22
+(u)Lord_Earthfire
+(p)11754
+(e)🪲|C-Bug
+(+)fixes carrot splices having no occuline or carrot juice
 (u)Kubius
 (p)11646
 (e)🗺🎨⚖|A-Mapping, C-Sprites, C-Balance

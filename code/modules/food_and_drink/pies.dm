@@ -224,6 +224,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/snacks/pie)
 
 
 	heal(var/mob/M)
+		..()
 		M.nutrition += 500
 		return
 
@@ -281,7 +282,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/snacks/pie)
 	heal_amt = 4
 	bites_left = 3
 	initial_volume = 30
-	food_effects = list("food_sweaty","food_rad_wick","food_refreshed")
+	food_effects = list("food_sweaty","food_rad_resist","food_refreshed")
 
 /obj/item/reagent_containers/food/snacks/pie/raspberry
 	name = "raspberry pie"

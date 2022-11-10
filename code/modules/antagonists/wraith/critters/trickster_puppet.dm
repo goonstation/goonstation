@@ -13,12 +13,12 @@
 	health_brute_vuln = 1
 	health_burn = 8
 	health_burn_vuln = 1
-	var/mob/wraith/wraith_trickster/master = null
+	var/mob/living/intangible/wraith/wraith_trickster/master = null
 	var/hauntBonus = 0
 	var/last_life_update = 0
 	var/traps_laid = 0
 
-	New(var/turf/T, var/mob/wraith/wraith_trickster/M = null)
+	New(var/turf/T, var/mob/living/intangible/wraith/wraith_trickster/M = null)
 		..(T)
 		if(M != null)
 			src.master = M
@@ -57,6 +57,9 @@
 			if (master.next_area_change < TIME)
 				master.next_area_change = TIME + 15 MINUTES
 				master.get_new_booster_zones()
+
+		if(src.disposed)
+			return
 
 		if(hauntBonus > 0)
 			src.abilityHolder.addBonus(src.hauntBonus * (life_time_passed / life_tick_spacing))

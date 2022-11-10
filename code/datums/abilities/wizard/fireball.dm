@@ -3,7 +3,8 @@
 	icon_state = "fireball"
 	icon = 'icons/obj/wizard.dmi'
 	shot_sound = 'sound/effects/mag_fireballlaunch.ogg'
-
+	damage = 20
+	
 	is_magical = 1
 
 	on_hit(atom/hit, direction, var/obj/projectile/projectile)

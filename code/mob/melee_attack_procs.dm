@@ -1261,7 +1261,7 @@
 			R.ghoulTouch(target, affecting)
 
 //variant, using for werewolf pounce, to send mobs in a random direction and 50% chance to weaken them.
-/proc/wrestler_knockdown(var/mob/H, var/mob/T, /var/variant)
+/proc/wrestler_knockdown(var/mob/H, var/mob/T, var/variant)
 	if (!H || !ismob(H) || !T || !ismob(T))
 		return
 

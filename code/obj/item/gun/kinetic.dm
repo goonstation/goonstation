@@ -213,10 +213,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 					if (src.current_projectile.casing && (src.sanitycheck(1, 0) == 1))
 						var/number_of_casings = max(1, src.current_projectile.shot_number)
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
-						for (var/i = 1, i <= number_of_casings, i++)
-							var/obj/item/casing/C = new src.current_projectile.casing(T)
-							C.forensic_ID = src.forensic_ID
-							C.set_loc(T)
+						for (var/i in 1 to number_of_casings)
+							new src.current_projectile.casing(T, src.forensic_ID)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
@@ -231,10 +229,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 					if (src.current_projectile.casing && (src.sanitycheck(1, 0) == 1))
 						var/number_of_casings = max(1, src.current_projectile.shot_number)
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
-						for (var/i = 1, i <= number_of_casings, i++)
-							var/obj/item/casing/C = new src.current_projectile.casing(T)
-							C.forensic_ID = src.forensic_ID
-							C.set_loc(T)
+						for (var/i in 1 to number_of_casings)
+							new src.current_projectile.casing(T, src.forensic_ID)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
@@ -254,11 +250,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			var/turf/T = get_turf(src)
 			if(T)
 				//DEBUG_MESSAGE("Ejected [src.casings_to_eject] [src.current_projectile.casing] from [src].")
-				var/obj/item/casing/C = null
 				while (src.casings_to_eject > 0)
-					C = new src.current_projectile.casing(T)
-					C.forensic_ID = src.forensic_ID
-					C.set_loc(T)
+					new src.current_projectile.casing(T, src.forensic_ID)
 					src.casings_to_eject--
 		return
 
@@ -310,7 +303,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		src.hammer_cocked = !src.hammer_cocked
 		src.UpdateIcon()
 
-	proc/gen_icon_state(var/ignore_hammer_state)
+	proc/gen_icon_state(ignore_hammer_state)
 		var/state = "[initial(src.icon_state)]" + (src.gilded ? "-golden" : "")
 		if (!ignore_hammer_state && src.hammer_cocked)
 			state += "-c"
@@ -420,13 +413,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 				playsound(src.loc, "sound/weapons/casings/casing-xl-0[rand(1,6)].ogg", 15, 0.1)
 
 
-
-	New()
-		..()
-		src.pixel_y += rand(-12,12)
-		src.pixel_x += rand(-12,12)
-		src.set_dir(pick(alldirs))
-		return
+/obj/item/casing/New(loc, forensic_ID)
+	. = ..()
+	src.pixel_y += rand(-12,12)
+	src.pixel_x += rand(-12,12)
+	src.set_dir(pick(alldirs))
+	src.forensic_ID = forensic_ID
 
 //no caliber and ALL
 /obj/item/gun/kinetic/vgun
@@ -1290,9 +1282,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 				if (src.ammo.amount_left < 8) // Do not eject shells if you're racking a full "clip"
 					var/turf/T = get_turf(src)
 					if (T && src.current_projectile.casing) // Eject shells on rack instead of on shoot()
-						var/obj/item/casing/C = new src.current_projectile.casing(T)
-						C.forensic_ID = src.forensic_ID
-						C.set_loc(T)
+						new src.current_projectile.casing(T, src.forensic_ID)
 
 /obj/item/gun/kinetic/single_action/mts_255
 	name = "\improper MTs-255 Revolver Shotgun"
@@ -1491,6 +1481,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		TO_LOAD.Attackby(nade, user)
 		src.Attackby(TO_LOAD, user)
 
+	breach
+		default_magazine = /obj/item/ammo/bullets/breach_flashbang/single
+		New()
+			..()
+			ammo = new default_magazine
+			set_current_projectile(new/datum/projectile/bullet/breach_flashbang)
 
 //1.58
 // Ported from old, non-gun RPG-7 object class (Convair880).
