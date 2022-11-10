@@ -1941,7 +1941,7 @@ var/global/noir = 0
 						while (WO != null)
 					if ("Random")
 						generate_wraith_objectives(mind)
-				var/mob/wraith/Wr = M.wraithize()
+				var/mob/living/intangible/wraith/Wr = M.wraithize()
 				if (!Wr)
 					if (!iswraith(mind.current))
 						boutput(usr, "<span class='alert'>Wraithization failed! Call 1-800-MARQUESAS for help.</span>")

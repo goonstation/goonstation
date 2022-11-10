@@ -48,11 +48,12 @@ var/global/list/bible_contents = list()
 				//Wraith curses
 				if(prob(75) && ishuman(H))
 					var/mob/living/carbon/human/target = H
-					if(target.bioHolder?.HasEffect("blood_curse") || target.bioHolder?.HasEffect("blind_curse") || target.bioHolder?.HasEffect("weak_curse") || target.bioHolder?.HasEffect("rot_curse"))
+					if(target.bioHolder?.HasEffect("blood_curse") || target.bioHolder?.HasEffect("blind_curse") || target.bioHolder?.HasEffect("weak_curse") || target.bioHolder?.HasEffect("rot_curse") || target.bioHolder?.HasEffect("death_curse"))
 						target.bioHolder.RemoveEffect("blood_curse")
 						target.bioHolder.RemoveEffect("blind_curse")
 						target.bioHolder.RemoveEffect("weak_curse")
 						target.bioHolder.RemoveEffect("rot_curse")
+						target.bioHolder.RemoveEffect("death_curse")
 						target.visible_message("[target] screams as some black smoke exits their body.")
 						target.emote("scream")
 						var/turf/T = get_turf(target)
@@ -102,18 +103,22 @@ var/global/list/bible_contents = list()
 		else if (!isdead(M))
 			var/mob/H = M
 			// ******* Check
-			if ((ishuman(H) && prob(60) && !(M.traitHolder?.hasTrait("atheist"))))
+			var/is_undead = isvampire(M) || iswraith(M) || M.bioHolder.HasEffect("revenant")
+			var/is_atheist = M.traitHolder?.hasTrait("atheist")
+			if (ishuman(H) && prob(60) && !(is_atheist && !is_undead))
 				bless(M, user)
 				M.visible_message("<span class='alert'><B>[user] heals [M] with the power of Christ!</B></span>")
-				boutput(M, "<span class='alert'>May the power of Christ compel you to be healed!</span>")
+				var/deity = is_atheist ? "a god you don't believe in" : "Christ"
+				boutput(M, "<span class='alert'>May the power of [deity] compel you to be healed!</span>")
 				if (narrator_mode)
 					playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
 				else
 					playsound(src.loc, "punch", 25, 1, -1)
-				logTheThing(LOG_COMBAT, user, "biblically healed [constructTarget(M,"combat")]")
+				var/healed = is_undead ? "damaged undead" : "healed"
+				logTheThing(LOG_COMBAT, user, "biblically [healed] [constructTarget(M,"combat")]")
 			else
 				if (ishuman(M) && !istype(M:head, /obj/item/clothing/head/helmet))
-					if (M.traitHolder?.hasTrait("atheist"))
+					if (is_atheist)
 						M.take_brain_damage(5)
 					else
 						M.take_brain_damage(10)

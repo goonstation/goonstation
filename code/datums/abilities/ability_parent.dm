@@ -209,13 +209,6 @@
 		if(owner)
 			owner.attach_hud(hud)
 
-	proc/Stat()
-		if (usesPoints && pointName != "" && rendered)
-			stat(null, " ")
-			stat("[src.pointName]:", src.points)
-			if (src.regenRate || src.lastBonus)
-				stat("Generation Rate:", "[src.regenRate] + [src.lastBonus]")
-
 	proc/StatAbilities()
 		if (!rendered)
 			return
@@ -1213,10 +1206,6 @@
 	generatePoints(var/mult = 1)
 		for (var/datum/abilityHolder/H in holders)
 			H.generatePoints(mult)
-
-	Stat()
-		for (var/datum/abilityHolder/H in holders)
-			H.Stat()
 
 	StatAbilities()
 		for (var/datum/abilityHolder/H in holders)

@@ -57,12 +57,12 @@
 		if (!holder || !holder.owner)
 			return 1
 		if (ispoltergeist(holder.owner))
-			var/mob/wraith/poltergeist/P = holder.owner
+			var/mob/living/intangible/wraith/poltergeist/P = holder.owner
 			if (src.min_req_dist <= P.power_well_dist)
 				boutput(holder.owner, "<span class='alert'>You must be within [min_req_dist] tiles from a well of power to perform this task.</span>")
 				return 1
-		if (istype(holder.owner, /mob/wraith))
-			var/mob/wraith/W = holder.owner
+		if (istype(holder.owner, /mob/living/intangible/wraith))
+			var/mob/living/intangible/wraith/W = holder.owner
 			if (W.forced_manifest == TRUE)
 				boutput(W, "<span class='alert'>You have been forced to manifest! You can't use any abilities for now!</span>")
 				return 1
@@ -78,11 +78,11 @@
 
 	onAttach(datum/abilityHolder/holder)
 		..()
-		if (istype(holder.owner, /mob/wraith/wraith_decay) || istype(holder.owner, /mob/living/critter/wraith/plaguerat))
+		if (istype(holder.owner, /mob/living/intangible/wraith/wraith_decay) || istype(holder.owner, /mob/living/critter/wraith/plaguerat))
 			border_state = "plague_frame"
-		else if (istype(holder.owner, /mob/wraith/wraith_harbinger))
+		else if (istype(holder.owner, /mob/living/intangible/wraith/wraith_harbinger))
 			border_state = "harbinger_frame"
-		else if (istype(holder.owner, /mob/wraith/wraith_trickster) || istype(holder.owner, /mob/living/critter/wraith/trickster_puppet))
+		else if (istype(holder.owner, /mob/living/intangible/wraith/wraith_trickster) || istype(holder.owner, /mob/living/critter/wraith/trickster_puppet))
 			border_state = "trickster_frame"
 
 		var/atom/movable/screen/ability/topBar/B = src.object
@@ -145,7 +145,7 @@
 				return 1
 
 			//check for formaldehyde. if there's more than the wraith's tol amt, we can't absorb right away.
-			var/mob/wraith/W = src.holder.owner
+			var/mob/living/intangible/wraith/W = src.holder.owner
 			if (istype(W))
 				var/amt = H.reagents.get_reagent_amount("formaldehyde")
 				if (amt >= W.formaldehyde_tolerance)
@@ -163,7 +163,7 @@
 		logTheThing("combat", holder.owner, "absorbs the corpse of [key_name(H)] as a wraith.")
 		var/turf/T = get_turf(H)
 		// decay wraith receives bonuses for toxin damaged and decayed bodies, but can't absorb fresh kils without toxin damage
-		if ((istype(holder.owner, /mob/wraith/wraith_decay)))
+		if ((istype(holder.owner, /mob/living/intangible/wraith/wraith_decay)))
 			if ((H.get_toxin_damage() >= 60) || (H.decomp_stage == DECOMP_STAGE_HIGHLY_DECAYED))
 				boutput(holder.owner, "<span class='alert'>[H] is extremely rotten and bloated. It satisfies us greatly</span>")
 				holder.points += 150
@@ -187,7 +187,7 @@
 		holder.regenRate += 2
 		var/datum/abilityHolder/wraith/AH = holder
 		if (istype(AH))
-			var/mob/wraith/W = AH.owner
+			var/mob/living/intangible/wraith/W = AH.owner
 			if (istype(W))
 				W.onAbsorb(H)
 			AH.corpsecount++
@@ -273,7 +273,7 @@
 					break
 
 		if (ishuman(T))
-			var/mob/wraith/W = holder.owner
+			var/mob/living/intangible/wraith/W = holder.owner
 			. = W.makeRevenant(T)		//return 0
 			if(!.)
 				playsound(W.loc, 'sound/voice/wraith/reventer.ogg', 80, 0)
@@ -491,19 +491,19 @@
 			P.demanifest()
 			return 0
 
-		var/mob/wraith/K = src.holder.owner
+		var/mob/living/intangible/wraith/K = src.holder.owner
 		if (!K.forced_manifest && K.hasStatus("corporeal"))
 			boutput(holder.owner, "We fade back into the shadows")
 			cooldown = 0 SECONDS
 			return K.delStatus("corporeal")
 		else
 			boutput(holder.owner, "We show ourselves")
-			var/mob/wraith/W = holder.owner
+			var/mob/living/intangible/wraith/W = holder.owner
 
 			cooldown = 30 SECONDS
 
-			if ((istype(W, /mob/wraith/wraith_trickster)))	//Trickster can appear as a human, living or dead.
-				var/mob/wraith/wraith_trickster/T = holder.owner
+			if ((istype(W, /mob/living/intangible/wraith/wraith_trickster)))	//Trickster can appear as a human, living or dead.
+				var/mob/living/intangible/wraith/wraith_trickster/T = holder.owner
 				if (T.copied_appearance != null)
 					var/mob/living/critter/wraith/trickster_puppet/puppet = new /mob/living/critter/wraith/trickster_puppet(get_turf(T), T)
 					T.mind.transfer_to(puppet)
@@ -764,7 +764,7 @@
 			boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
 			return 1
 
-	proc/make_poltergeist(var/mob/wraith/W, var/turf/T, var/tries = 0)
+	proc/make_poltergeist(var/mob/living/intangible/wraith/W, var/turf/T, var/tries = 0)
 		if (!istype(W))
 			boutput(W, "something went terribly wrong, call 1-800-CODER")
 			return
@@ -794,8 +794,8 @@
 			return
 		var/datum/mind/lucky_dude = pick(candidates)
 
-		//add poltergeist to master's list is done in /mob/wraith/potergeist/New
-		var/mob/wraith/poltergeist/P = new /mob/wraith/poltergeist(T, W, marker)
+		//add poltergeist to master's list is done in /mob/living/intangible/wraith/potergeist/New
+		var/mob/living/intangible/wraith/poltergeist/P = new /mob/living/intangible/wraith/poltergeist(T, W, marker)
 		lucky_dude.special_role = ROLE_POLTERGEIST
 		lucky_dude.dnr = 1
 		lucky_dude.transfer_to(P)
@@ -848,18 +848,18 @@
 			boutput(holder.owner, "<span class='notice'>You do not have enough points to cast this. You need at least [pointCost] points.</span>")
 			return 1
 		else
-			var/mob/wraith/W
+			var/mob/living/intangible/wraith/W
 			switch (effect)
 				if (1)
-					W = new/mob/wraith/wraith_decay(holder.owner)
+					W = new/mob/living/intangible/wraith/wraith_decay(holder.owner)
 					boutput(holder.owner, "<span class='notice'>You use some of your energy to evolve into a plaguebringer! Spread rot and disease all around!</span>")
 					holder.owner.show_antag_popup("plaguebringer")
 				if (2)
-					W = new/mob/wraith/wraith_harbinger(holder.owner)
+					W = new/mob/living/intangible/wraith/wraith_harbinger(holder.owner)
 					boutput(holder.owner, "<span class='notice'>You use some of your energy to evolve into a harbinger! Command your army of minions to bring ruin to the station!</span>")
 					holder.owner.show_antag_popup("harbinger")
 				if (3)
-					W = new/mob/wraith/wraith_trickster(holder.owner)
+					W = new/mob/living/intangible/wraith/wraith_trickster(holder.owner)
 					boutput(holder.owner, "<span class='notice'>You use some of your energy to evolve into a trickster! Decieve the crew and turn them against one another!</span>")
 					holder.owner.show_antag_popup("trickster")
 
@@ -1061,60 +1061,57 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 
 	cast(atom/target)
 		if (..())
-			return 1
+			return TRUE
 
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
-			var/mob/wraith/W = holder.owner
+			var/mob/living/intangible/wraith/W = holder.owner
 			if (H?.bioHolder.HasEffect("rot_curse") && H?.bioHolder.HasEffect("weak_curse") && H?.bioHolder.HasEffect("blind_curse") && H?.bioHolder.HasEffect("blood_curse"))
 				W.playsound_local(W.loc, 'sound/voice/wraith/wraithhaunt.ogg', 40, 0)
-				boutput(holder.owner, "<span class='alert'>That soul is OURS!!</span>")
-				boutput(H, "<span class='alert'>The voices in your heads are reaching a crescendo!</span>")
-				H.make_jittery(300)
-				SPAWN(4 SECOND)
-					if (!(H?.loc && W?.loc)) return
+				H.bioHolder.AddEffect("death_curse")
+				boutput(W, "<span class='alert'><b>That soul will be OURS!</b></span>")
+				do_curse(H, W)
+				return FALSE
+			else
+				boutput(holder.owner, "That being's soul is not weakened enough. We need to curse it some more.")
+				return TRUE
+
+	proc/do_curse(var/mob/living/carbon/human/H, var/mob/living/intangible/wraith/W)
+		var/cycles = 0
+		var/active = TRUE
+		while (active)
+			if (!H?.bioHolder.GetEffect("death_curse"))
+				boutput(W, "<span class='alert'>Those foolish mortals stopped your deadly curse before it claimed it's victim! You'll damn them all!</span>")
+				active = FALSE
+				return
+			if (!isdead(H))
+				hit_twitch(H)
+				random_brute_damage(H, (cycles / 3))
+				cycles ++
+				if (prob(6))
 					H.changeStatus("stunned", 2 SECONDS)
-					H.emote("scream")
-					boutput(H, "<span class='alert'>You feel netherworldly hands grasping you!</span>")
-					sleep(3 SECOND)
-					if (!(H?.loc && W?.loc)) return
-					random_brute_damage(H, 10)
+					boutput(H, "<span class='alert'><b>You feel netherworldly hands grasping at your soul!</b></span>")
+				if (prob(4))
+					boutput(H, "<span class='alert'>IT'S COMING FOR YOU!</span>")
+					H.remove_stamina( rand(30, 70) )
+				if ((cycles > 10) && prob(15))
+					random_brute_damage(H, 1)
 					playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 70, 1)
 					H.visible_message("<span class='alert'>[H]'s flesh tears open before your very eyes!!</span>")
 					new /obj/decal/cleanable/blood/drip(get_turf(H))
-					sleep(3 SECOND)
-					if (!(H?.loc && W?.loc)) return
-					random_brute_damage(H, 10)
-					playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 70, 1)
-					new /obj/decal/cleanable/blood/drip(get_turf(H))
-					sleep(1 SECOND)
-					if (!(H?.loc && W?.loc)) return
-					random_brute_damage(H, 20)
-					playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 70, 1)
-					new /obj/decal/cleanable/blood/drip(get_turf(H))
-					sleep(2 SECOND)
-					if (!(H?.loc && W?.loc)) return
-					boutput(H, "<span class='alert'>IT'S COMING FOR YOU!</span>")
-					H.remove_stamina( rand(100, 120) )
-					H.changeStatus("stunned", 4 SECONDS)
-					sleep(3 SECOND)
-					if (!(H?.loc && W?.loc)) return
-					var/turf/T = get_turf(H)
-					var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread/(T)
-					if (S)
-						S.set_up(8, 0, T, null, "#000000")
-						S.start()
-					H.gib()
-					boutput(holder.owner, "<span class='alert'>What delicious agony!</span>")
-					T.fluid_react_single("miasma", 60, airborne = 1)
-					holder.points += 100
-					holder.regenRate += 2.0
-					var/datum/abilityHolder/wraith/AH = holder
-					AH.corpsecount++
 			else
-				boutput(holder.owner, "That being's soul is not weakened enough. We need to curse it some more.")
-				return 1
-
+				var/turf/T = get_turf(H)
+				var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread/(T)
+				if (S)
+					S.set_up(8, 0, T, null, "#000000")
+					S.start()
+				T.fluid_react_single("miasma", 60, airborne = 1)
+				var/datum/abilityHolder/wraith/AH = W.abilityHolder
+				H.gib()
+				AH.regenRate += 2.0
+				AH.corpsecount++
+				active = FALSE
+			sleep (1.5 SECONDS)
 
 /datum/targetable/wraithAbility/summon_rot_hulk
 	name = "Create rot hulk"
@@ -1197,7 +1194,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		if (!holder)
 			return 1
 
-		var/mob/wraith/W = holder.owner
+		var/mob/living/intangible/wraith/W = holder.owner
 
 		if (!W || !target)
 			return 1
@@ -1315,7 +1312,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				boutput(holder.owner, "<span class='notice'>This one does not fear what lurks in the dark. Your effort is wasted.</span>")
 				return 0
 			boutput(holder.owner, "<span class='notice'>We curse this being with a creeping feeling of dread.</span>")
-			H.setStatus("creeping_dread", 20 SECONDS)
+			H.setStatus("creeping_dread", 30 SECONDS)
 			holder.owner.playsound_local(holder.owner, "sound/voice/wraith/wraithspook[pick("1","2")].ogg", 60)
 			return 0
 
@@ -1336,9 +1333,9 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	cast(mob/target)
 		if (..())
 			return TRUE
-		if (istype(holder.owner, /mob/wraith/wraith_trickster))
-			var/mob/wraith/wraith_trickster/W = holder.owner
-			if (W.possession_points > W.points_to_possess)
+		if (istype(holder.owner, /mob/living/intangible/wraith/wraith_trickster))
+			var/mob/living/intangible/wraith/wraith_trickster/W = holder.owner
+			if (W.possession_points >= W.points_to_possess)
 				if (ishuman(target) && !isdead(target))
 					var/mob/living/carbon/human/H = target
 					if (H.traitHolder.hasTrait("training_chaplain"))
@@ -1537,13 +1534,13 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		if (..())
 			return 1
 
-		if (!istype(holder.owner, /mob/wraith/wraith_trickster) && !istype(holder.owner, /mob/living/critter/wraith/trickster_puppet))
+		if (!istype(holder.owner, /mob/living/intangible/wraith/wraith_trickster) && !istype(holder.owner, /mob/living/critter/wraith/trickster_puppet))
 			boutput(holder.owner, "<span class='notice'>You cannot cast this under your current form.</span>")
 			return 1
 
-		var/mob/wraith/wraith_trickster/W = null
+		var/mob/living/intangible/wraith/wraith_trickster/W = null
 		var/mob/living/critter/wraith/trickster_puppet/P = null
-		if(istype(holder.owner, /mob/wraith/wraith_trickster))
+		if(istype(holder.owner, /mob/living/intangible/wraith/wraith_trickster))
 			W = holder.owner
 			if (!W.haunting)
 				boutput(holder.owner, "<span class='notice'>You must be manifested to place a trap!</span>")
@@ -1619,8 +1616,8 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 
 		var/turf/T = get_turf(holder.owner)
 		if (isturf(T) && istype(T,/turf/simulated/floor))
-			if(istype(holder.owner, /mob/wraith))
-				var/mob/wraith/W = holder.owner
+			if(istype(holder.owner, /mob/living/intangible/wraith))
+				var/mob/living/intangible/wraith/W = holder.owner
 				if (!W.density)
 					boutput(holder.owner, "Your connection to the physical plane is too weak. You must be manifested to do this.")
 					return 1
@@ -1685,8 +1682,8 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		if (..())
 			return 1
 
-		if(istype(holder.owner, /mob/wraith/wraith_trickster))
-			var/mob/wraith/wraith_trickster/W = holder.owner
+		if(istype(holder.owner, /mob/living/intangible/wraith/wraith_trickster))
+			var/mob/living/intangible/wraith/wraith_trickster/W = holder.owner
 			if ((istype(target, /mob/living/carbon/human/)))
 				boutput(holder.owner, "We steal [target]'s appearance for ourselves.")
 				W.copied_appearance = target.appearance
@@ -1726,7 +1723,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
 			return 1
 
-	proc/make_summon(var/mob/wraith/W, var/turf/T, var/tries = 0)
+	proc/make_summon(var/mob/living/intangible/wraith/W, var/turf/T, var/tries = 0)
 		if (!istype(W))
 			boutput(W, "something went terribly wrong, call 1-800-CODER")
 			return
@@ -1756,7 +1753,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			return
 		var/datum/mind/lucky_dude = pick(candidates)
 
-		//add poltergeist to master's list is done in /mob/wraith/potergeist/New
+		//add poltergeist to master's list is done in /mob/living/intangible/wraith/potergeist/New
 		var/mob/living/critter/wraith/nascent/P = new /mob/living/critter/wraith/nascent(T, W)
 		lucky_dude.special_role = ROLE_HARBINGERSUMMON
 		lucky_dude.dnr = 1
@@ -1768,7 +1765,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
 		logTheThing("admin", lucky_dude.current, null, "respawned as a harbinger summon for [src.holder.owner].")
 		boutput(P, "<span class='notice'><b>You have been respawned as a harbinger summon!</b></span>")
-		boutput(P, "[W] is your master! Use your abilities to choose a path! Work with your master to spread chaos!")
+		boutput(P, "<span class='alert'><b>[W] is your master! Use your abilities to choose a path! Work with your master to spread chaos!</b></span>")
 		qdel(marker)
 
 /datum/targetable/wraithAbility/make_plague_rat
@@ -1823,7 +1820,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			return 1
 
 	proc/make_plague_rat(var/mob/W, var/turf/T, var/tries = 0)
-		if (!istype(W, /mob/wraith/wraith_decay) && !istype(W, /mob/living/critter/wraith/plaguerat))
+		if (!istype(W, /mob/living/intangible/wraith/wraith_decay) && !istype(W, /mob/living/critter/wraith/plaguerat))
 			boutput(W, "something went terribly wrong, call 1-800-CODER")
 			return
 
@@ -1884,7 +1881,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		if (!holder)
 			return 1
 
-		var/mob/wraith/W = holder.owner
+		var/mob/living/intangible/wraith/W = holder.owner
 
 		if (!W)
 			return 1

@@ -1070,27 +1070,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/clown)
 "adV" = (
-/obj/rack,
-/obj/item/breaching_charge{
-	pixel_x = 10;
-	pixel_y = 1
-	},
-/obj/item/breaching_charge{
-	pixel_x = 4;
-	pixel_y = -2
-	},
-/obj/item/breaching_charge{
-	pixel_x = -2;
-	pixel_y = -5
-	},
-/obj/item/breaching_hammer{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/breaching_hammer{
-	pixel_x = -1;
-	pixel_y = 1
-	},
+/obj/random_item_spawner/armory_breaching_supplies,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
