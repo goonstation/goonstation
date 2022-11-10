@@ -2233,6 +2233,8 @@
 		/datum/manufacture/artifactforms,
 		/datum/manufacture/fluidcanister,
 		/datum/manufacture/chembarrel,
+		/datum/manufacture/chembarrel/yellow,
+		/datum/manufacture/chembarrel/red,
 		/datum/manufacture/spectrogoggles,
 		/datum/manufacture/reagentscanner,
 		/datum/manufacture/dropper,

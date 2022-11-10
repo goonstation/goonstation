@@ -610,6 +610,11 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Machinery"
 
+	red
+		item_outputs = list(/obj/reagent_dispensers/chemicalbarrel/red)
+	yellow
+		item_outputs = list(/obj/reagent_dispensers/chemicalbarrel/yellow)
+
 /datum/manufacture/shieldgen
 	name = "Energy-Shield Gen."
 	item_paths = list("MET-2","CON-1","CRY-1")

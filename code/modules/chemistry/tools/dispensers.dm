@@ -392,7 +392,7 @@
 	name = "chemical barrel"
 	desc = "For storing medical chemicals and less savory things. It can be labeled with a pen."
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "chembarrel"
+	icon_state = "barrel"
 	amount_per_transfer_from_this = 25
 	p_class = 3
 	flags = FPRINT | FLUID_SUBMERGE | OPENCONTAINER
@@ -420,6 +420,20 @@
 		src.reagents.temperature_reagents(4000, 400) //exactly how a igniter works, expect to need a couple shots to make whatever is inside
 		src.reagents.temperature_reagents(4000, 400) //catch fire
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 30, 1)
+
+	red
+		icon_state = "barrel_red"
+	yellow
+		icon_state = "barrel_yellow"
+	oil
+		icon_state = "barrel_flamable"
+		name = "oil barrel"
+		labeled = TRUE
+		desc = "A barrel for storing large amounts of oil."
+
+		New()
+			..()
+			reagents.add_reagent("oil", 4000)
 
 /obj/reagent_dispensers/compostbin
 	name = "compost tank"
