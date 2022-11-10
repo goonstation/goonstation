@@ -769,6 +769,9 @@
 			hud.add_client(src.client)
 
 /mob/proc/detach_hud(datum/hud/hud)
+	if (!hud) // Can happen if someone dies instantly when entering a z level (i.e. singulo)
+		return
+
 	if (src?.huds) //Wire note: Fix for runtime error: bad list
 		huds -= hud
 
