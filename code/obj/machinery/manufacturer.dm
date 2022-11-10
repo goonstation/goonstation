@@ -2231,7 +2231,6 @@
 		/datum/manufacture/atmos_can,
 		/datum/manufacture/artifactforms,
 		/datum/manufacture/fluidcanister,
-		/datum/manufacture/chemtank,
 		/datum/manufacture/chembarrel,
 		/datum/manufacture/spectrogoggles,
 		/datum/manufacture/reagentscanner,
