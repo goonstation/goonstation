@@ -417,3 +417,22 @@
 	return
 
 /obj/cablespawner
+	// a cable spawner which can spawn multiple cables to connect to other cables around it.
+	level = 1
+	anchored =1
+	var/tmp/netnum = 0
+	name = "power cable spawner"
+	desc = ""
+	icon = 'icons/obj/power_cond.dmi'
+	icon_state = "superstate"
+	var/iconmod = null
+	layer = CABLE_LAYER
+	plane = PLANE_NOSHADOW_BELOW
+	color = "#DD0000"
+	text = ""
+
+	var/insulator_default = "synthrubber"
+	var/condcutor_default = "copper"
+
+	var/datum/material/insulator = null
+	var/datum/material/conductor = null
