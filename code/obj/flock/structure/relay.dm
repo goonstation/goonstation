@@ -24,7 +24,7 @@
 	bound_y = -64
 	hitTwitch = FALSE
 	show_in_tutorial = TRUE
-	tutorial_desc = "Your goal and purpose. Unlocked at 500 compute, you must then defend it while it charges before unleashing the Signal."
+	tutorial_desc = "Your goal and purpose. Unlocked at 500 compute, you must then defend it while it charges before unleashing The Signal."
 	layer = EFFECTS_LAYER_BASE //big spooky thing needs to render over everything
 	plane = PLANE_NOSHADOW_ABOVE
 	var/conversion_radius = 1
