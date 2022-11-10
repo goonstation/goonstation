@@ -419,6 +419,16 @@
 	else
 		return ..()
 
+/mob/living/critter/flock/drone/DblClick(location, control, params)
+	. = ..()
+	var/mob/living/intangible/flock/F = usr
+	if(istype(F) && F.flock && F.flock == src.flock)
+		var/datum/abilityHolder/flockmind/holder = F.abilityHolder
+		if(holder?.drone_controller.drone == src) //if click behaviour has highlighted this drone for control
+			holder.drone_controller.cast(src) //deselect it
+			F.targeting_ability = null
+		src.take_control(usr)
+
 /mob/living/critter/flock/drone/MouseDrop_T(mob/living/target, mob/user)
 	if(!target || !user)
 		return
