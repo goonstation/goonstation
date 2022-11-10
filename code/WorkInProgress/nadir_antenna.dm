@@ -183,7 +183,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 			return
 		var/obj/item/cell/C = AC.cell
 		var/combined_cost
-		if (use_standard_failsafe)
+		if (use_standard_failsafe) //slightly over failsafe values in each case so it doesn't just turn right back on again
 			combined_cost = (0.4 * C.maxcharge) + ARRAY_STARTCOST
 		else
 			combined_cost = (0.1 * C.maxcharge) + ARRAY_STARTCOST
