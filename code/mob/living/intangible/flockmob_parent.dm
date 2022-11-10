@@ -127,6 +127,13 @@
 	// HAAAAA
 	src.visible_message("<span class='alert'>[src] is not a ghost, and is therefore unaffected by [P]!</span>","<span class='notice'>You feel a little [pick("less", "more")] [pick("fuzzy", "spooky", "glowy", "flappy", "bouncy")].</span>")
 
+/mob/living/intangible/flock/proc/select_drone(var/mob/living/critter/flock/drone/drone)
+	var/datum/abilityHolder/flockmind/holder = src.abilityHolder
+	holder.drone_controller.drone = drone
+	drone.AddComponent(/datum/component/flock_ping/selected)
+	src.targeting_ability = holder.drone_controller
+	src.update_cursor()
+
 /mob/living/intangible/flock/click(atom/target, params)
 	if (targeting_ability)
 		..()
@@ -143,11 +150,7 @@
 		return
 
 	if (istype(target, /mob/living/critter/flock/drone))
-		var/datum/abilityHolder/flockmind/holder = src.abilityHolder
-		holder.drone_controller.drone = target
-		target.AddComponent(/datum/component/flock_ping/selected)
-		src.targeting_ability = holder.drone_controller
-		src.update_cursor()
+		src.select_drone(target)
 		return
 
 	//moved from flock_structure_ghost for interfering with ability targeting

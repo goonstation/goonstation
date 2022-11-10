@@ -577,6 +577,9 @@
 	else if (isitem(target))
 		task_type = /datum/aiTask/sequence/goalbased/flock/harvest/targetable
 
+	if (!src.tutorial_check("order drone", task_type))
+		return
+
 	var/datum/aiTask/task = drone.ai.get_instance(task_type, list(drone.ai, drone.ai.default_task))
 	task.target = target
 	drone.ai.priority_tasks += task

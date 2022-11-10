@@ -15,7 +15,9 @@
 		src.AddStep(new /datum/tutorialStep/flock/floorrun)
 		src.AddStep(new /datum/tutorialStep/flock/release_drone)
 		src.AddStep(new /datum/tutorialStep/flock/kill)
-		src.AddStep(new /datum/tutorialStep/flock/build_thing/sentinel)
+		src.AddStep(new /datum/tutorialStep/flock/place_sentinel)
+		src.AddStep(new /datum/tutorialStep/flock/deposit_sentinel)
+		src.AddStep(new /datum/tutorialStep/flock/build_thing/finish_sentinel)
 		src.AddStep(new /datum/tutorialStep/flock/build_thing/interceptor)
 		src.AddStep(new /datum/tutorialStep/flock/turret_demo)
 		src.AddStep(new /datum/tutorialStep/flock/showcase)
@@ -222,12 +224,39 @@
 			finished = TRUE
 			return TRUE
 
+/datum/tutorialStep/flock/place_sentinel
+	name = "Construct Sentinel"
+	//TODO: add instruction about using click controls to order deposit after #11654 is merged
+	instructions = "There may be more humans around, build a Sentinel for protection. Move over the marked turf and use your \"place tealprint\" ability to place one."
+	var/turf/location = null
+
+	SetUp()
+		..()
+		src.location = locate(src.ftutorial.center.x, src.ftutorial.center.y - 3, src.ftutorial.center.z)
+		src.location.UpdateOverlays(marker, "marker")
+
+	PerformAction(action, context)
+		if (action == "place tealprint" && context == /obj/flock_structure/sentinel && get_turf(src.ftutorial.fowner) == src.location)
+			src.finished = TRUE
+			return TRUE
+
+/datum/tutorialStep/flock/deposit_sentinel
+	name = "Direct drones to construct"
+	instructions = "Nearby drones will slowly automatically deposit their resources into tealprints, but you can override their torpid cognition to order them directly. Click on a drone to select it, then click on the tealprint to target it. The same works to order a drone to convert, attack, cage and so on depending what you click on."
+
+	PerformAction(action, context)
+		if (action == "select drone")
+			return TRUE
+		if (action == "order drone" && context == /datum/aiTask/sequence/goalbased/flock/deposit/targetable)
+			src.finished = TRUE
+			return TRUE
+
 /datum/tutorialStep/flock/build_thing
 	var/turf/location = null
 	var/structure_type = null
 
 	PerformAction(action, context)
-		if (action == "start conversion")
+		if (action in list("start conversion", "select drone", "order drone"))
 			return TRUE
 		if (action == "place tealprint" && context == src.structure_type && get_turf(src.ftutorial.fowner) == src.location)
 			return TRUE
@@ -238,16 +267,14 @@
 			src.location.UpdateOverlays(null, "marker")
 			return TRUE
 
-/datum/tutorialStep/flock/build_thing/sentinel
+/datum/tutorialStep/flock/build_thing/finish_sentinel
 	name = "Construct Sentinel"
-	//TODO: add instruction about using click controls to order deposit after #11654 is merged
-	instructions = "There may be more humans around, build a Sentinel for protection. Move over the marked turf and use your \"place tealprint\" ability to place one, then direct your drones to construct it. Sentinels are powerful electric stun turrets, effective at making any humans who come into your lair go horizontal."
+	instructions = "Direct your drones to complete the tealprint. You can see how many resources a drone has by examining it."
 	structure_type = /obj/flock_structure/sentinel
 
 	SetUp()
 		..()
 		src.location = locate(src.ftutorial.center.x, src.ftutorial.center.y - 3, src.ftutorial.center.z)
-		src.location.UpdateOverlays(marker, "marker")
 
 /datum/tutorialStep/flock/build_thing/interceptor
 	name = "Construct Interceptor"
