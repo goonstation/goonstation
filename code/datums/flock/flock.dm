@@ -28,7 +28,7 @@ var/flock_signal_unleashed = FALSE
 	/// associative list of used names (for traces, drones, and bits) to true values
 	var/list/active_names = list()
 	var/list/enemies = list()
-	var/list/ignores = list()
+	var/list/atom/movable/ignores = list()
 	///Associative list of objects to an associative list of their annotation names to images
 	var/list/annotations = list()
 	///Static cache of annotation images
@@ -571,14 +571,18 @@ var/flock_signal_unleashed = FALSE
 	return (enemy_name in src.enemies)
 
 /datum/flock/proc/addIgnore(atom/A)
-	if (ismob(A) && find_radio_on(A))
-		boutput(A, "<i class='flocksay'>A thousand whispers you didn't realise you were hearing suddenly fall silent as you feel like you are no longer being watched.</i>")
+	if (ismob(A))
+		var/mob/M = A
+		if (M.find_radio())
+			boutput(A, "<i class='flocksay'>A thousand whispers you didn't realise you were hearing suddenly fall silent as you feel like you are no longer being watched.</i>")
 	src.ignores |= A
 	src.addAnnotation(A, FLOCK_ANNOTATION_IGNORE)
 
 /datum/flock/proc/removeIgnore(atom/A)
-	if (ismob(A) && find_radio_on(A))
-		boutput(A, "<i class='flocksay'>You hear harsh echoes of the Signal in your mind. The gaze of something you can't see is once again painfully fixed on you.</i>")
+	if (ismob(A))
+		var/mob/M = A
+		if (M.find_radio())
+			boutput(A, "<i class='flocksay'>You hear harsh echoes of the Signal in your mind. The gaze of something you can't see is once again painfully fixed on you.</i>")
 	src.ignores -= A
 	src.removeAnnotation(A, FLOCK_ANNOTATION_IGNORE)
 
@@ -897,15 +901,3 @@ var/flock_signal_unleashed = FALSE
 		y += dy
 		// get next turf
 		T = locate(ox + x, oy + y, z)
-
-/// search for any radio device, starting with hands and then equipment
-/// anything else is arbitrarily too deeply hidden and stowed away to get the signal
-/// (more practically, they won't hear it)
-/proc/find_radio_on(mob/M)
-	if (!istype(M))
-		return
-	if(istype(M.ears, /obj/item/device/radio))
-		return M.ears
-	. = M.find_type_in_hand(/obj/item/device/radio)
-	if(!.)
-		. = M.find_in_equipment(/obj/item/device/radio)

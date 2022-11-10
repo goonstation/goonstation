@@ -365,7 +365,8 @@
 	var/obj/item/device/radio/R
 	var/message
 	if(ismob(target))
-		R = find_radio_on(target)
+		var/mob/mob_target = target
+		R = mob_target.find_radio()
 		if(R)
 			message = html_encode(input("What would you like to transmit to [target.name]?", "Transmission", "") as text)
 			logTheThing(LOG_SAY, usr, "Narrowbeam Transmission to [constructTarget(target,"say")]: [message]")
