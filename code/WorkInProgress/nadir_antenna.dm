@@ -401,7 +401,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 							shippingmarket.sell_artifact(thing2send,art)
 
 						else //how even
-							logTheThing("debug", null, null, "Telepad attempted to send [thing2send], which is not a crate or artifact")
+							logTheThing(LOG_DEBUG, null, "Telepad attempted to send [thing2send], which is not a crate or artifact")
 
 				showswirl(src.loc)
 				use_power(200) //most cost is at the array
