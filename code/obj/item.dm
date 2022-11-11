@@ -1254,6 +1254,9 @@
 	if(user.is_hulk())
 		power *= 1.5
 
+	var/datum/limb/attacking_limb = user?.equipped_limb()
+	power *= !isnull(attacking_limb) ? attacking_limb.attack_strength_modifier : 1
+
 	var/pre_armor_power = power
 	power -= armor_mod
 

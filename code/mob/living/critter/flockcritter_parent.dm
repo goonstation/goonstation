@@ -132,20 +132,9 @@
 			return ..()
 	else if (!reach)
 		return ..()
-	var/attack_force = W.force
-	var/attack_stam_hit = W.stamina_damage
-	W.force = attack_force / 5
-	W.stamina_damage = attack_stam_hit / 5
-	boutput(src, "<span class='alert'>The grip tool slips!</span>")
-	playsound(target, 'sound/effects/swoosh.ogg', 50, FALSE)
 	..()
 	if (!src.lastattacked)
 		src.lastattacked = target // prevents message and sound spam for when targetting unhittable stuff such as floors
-
-	SPAWN (1 MILLI SECOND)
-		if (W)
-			W.force = attack_force
-			W.stamina_damage = attack_stam_hit
 
 //trying out a world where you can't stun flockdrones
 /mob/living/critter/flock/do_disorient(stamina_damage, weakened, stunned, paralysis, disorient, remove_stamina_below_zero, target_type, stack_stuns)

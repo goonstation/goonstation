@@ -12,6 +12,7 @@
 	var/datum/item_special/disarm_special = null //Contains the datum which executes the items special, if it has one, when used beyond melee range.
 	var/datum/item_special/harm_special = null //Contains the datum which executes the items special, if it has one, when used beyond melee range.
 	var/can_pickup_item = TRUE
+	var/attack_strength_modifier = 1 // scale from 0 to 1 on how well this limb can attack/hit things
 
 	New(var/obj/item/parts/holder)
 		..()

@@ -924,6 +924,7 @@
 	var/grab_mob_hit_prob = 30
 	var/dam_low = 4 // 2 is human baseline
 	var/dam_high = 7 // 9 is human baseline
+	attack_strength_modifier = 0.2
 
 	var/list/attack_messages = list(\
 		list("prods", "with a pointy spike"),\
