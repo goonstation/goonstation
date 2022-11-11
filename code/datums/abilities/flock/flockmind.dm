@@ -195,7 +195,7 @@
 	if (!F.flock)
 		return TRUE
 
-	logTheThing(LOG_COMBAT, holder.owner, "designates [constructTarget(target)] to [F.flock.isIgnored(target) ? "" : "not "] be ignored by their flock at [log_loc(src.holder.owner)].")
+	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "designates [constructTarget(target)] to [F.flock.isIgnored(target) ? "" : "not "] be ignored by their flock at [log_loc(src.holder.owner)].")
 
 	if (F.flock.isIgnored(target))
 		F.flock.removeIgnore(target)
