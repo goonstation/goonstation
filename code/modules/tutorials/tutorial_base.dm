@@ -128,6 +128,7 @@
 
 	disposing()
 		qdel(src.region)
+		src.region = null
 		landmarks[LANDMARK_TUTORIAL_START] -= src.initial_turf
 		..()
 
