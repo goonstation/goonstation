@@ -37,7 +37,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 	///While failsafe is active, communications capability is retained but cargo transception is unavailable. Prompts attempt_restart periodically.
 	var/failsafe_active = FALSE
 	///List of items to forcibly send to pads when possible
-	var/list/direct_queue = list()
+	var/list/atom/movable/direct_queue = list()
 
 	New()
 		. = ..()
@@ -59,7 +59,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			else
 				src.attempt_restart()
 		else if(length(direct_queue) && primed && !src.is_transceiving)
-			var/obj/queued_item = pick(direct_queue)
+			var/atom/movable/queued_item = pick(direct_queue)
 			for_by_tcl(transc_pad, /obj/machinery/transception_pad)
 				if(transc_pad.is_transceiving)
 					continue
@@ -360,7 +360,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 				return "ERR_OTHER" //what
 
 	///Attempts to perform a transception operation; receive if it was passed an index for pending inbound cargo or a manual receive, send otherwise
-	proc/attempt_transceive(var/cargo_index = null, var/obj/manual_receive = null)
+	proc/attempt_transceive(var/cargo_index = null, var/atom/movable/manual_receive = null)
 		if(src.is_transceiving)
 			return
 		if(!transception_array)
@@ -372,7 +372,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		if(transception_array.can_transceive(netnum) != TRANSCEIVE_OK)
 			return
 		if(cargo_index || manual_receive)
-			var/obj/inbound_target
+			var/atom/movable/inbound_target
 			if(manual_receive)
 				inbound_target = manual_receive
 			else if(shippingmarket.pending_crates[cargo_index])
