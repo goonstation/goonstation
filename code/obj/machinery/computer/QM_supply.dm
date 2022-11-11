@@ -534,7 +534,10 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 						O.object = P
 						O.orderedby = usr.name
 						var/default_comment = ""
-						O.comment = copytext(html_encode(tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = TRUE)), 1, MAX_MESSAGE_LEN)
+						O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = TRUE, max_length = 32, allowEmpty = TRUE)
+						if (O.comment == null)
+							return {}// The user cancelled the order
+						O.comment = html_encode(O.comment)
 						var/obj/storage/S = O.create(usr)
 						shippingmarket.receive_crate(S)
 						logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
@@ -566,7 +569,12 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 							O.object = P
 							O.orderedby = usr.name
 							var/default_comment = ""
-							O.comment = copytext(html_encode(tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = TRUE)), 1, MAX_MESSAGE_LEN)
+							O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = FALSE, max_length = 32, allowEmpty = TRUE)
+							if (isnull(O.comment))
+								return {} // The user cancelled the order
+							else
+								O.comment = html_encode(O.comment)
+
 							var/obj/storage/S = O.create(usr)
 							shippingmarket.receive_crate(S)
 							logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
