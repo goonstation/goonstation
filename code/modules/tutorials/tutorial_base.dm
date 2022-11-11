@@ -72,14 +72,16 @@
 				qdel(src)
 				return 1
 			var/datum/tutorialStep/T = steps[current_step]
-			if (T.PerformAction(action, context))
+			var/result = T.PerformAction(action, context)
+			if (!result || istext(result)) //if text is returned it's an error message
+				ShowStep()
+				boutput(owner, result || "<span class='alert'><b>You cannot do that currently.</b></span>")
+				return FALSE
+			else
 				SPAWN(0)
 					CheckAdvance()
-				return 1
-			else
-				ShowStep()
-				boutput(owner, "<span class='alert'><b>You cannot do that currently.</b></span>")
-				return 0
+				return TRUE
+
 
 		PerformSilentAction(var/action, var/context)
 			if (!current_step || current_step > steps.len)

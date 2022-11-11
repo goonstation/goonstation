@@ -110,8 +110,11 @@
 		src.must_deploy.UpdateOverlays(src.marker,"marker")
 
 	PerformAction(var/action, var/context)
-		if (action == FLOCK_ACTION_RIFT_SPAWN && context == must_deploy)
-			return TRUE
+		if (action == FLOCK_ACTION_RIFT_SPAWN)
+			if (context == must_deploy)
+				return TRUE
+			else
+				return "<span class='alert'><b>You must deploy on the marked tile.</b></span>"
 		else if (action == FLOCK_ACTION_RIFT_COMPLETE)
 			src.finished = TRUE
 			return TRUE
@@ -162,8 +165,11 @@
 	instructions = "Convert the window in front of you to allow you to pass through it. Convert it by clicking on it with your nanite spray (middle) hand."
 
 	PerformAction(var/action, var/context)
-		if (action == FLOCK_ACTION_START_CONVERSION && locate(/obj/window) in get_turf(context))
-			return TRUE
+		if (action == FLOCK_ACTION_START_CONVERSION)
+			if (locate(/obj/window) in get_turf(context))
+				return TRUE
+			else
+				return "<span class='alert'><b>You must convert a window.</b></span>"
 		if (action == FLOCK_ACTION_TURF_CLAIM && locate(/obj/window) in context)
 			finished = TRUE
 			return TRUE
@@ -206,10 +212,6 @@
 			finished = TRUE
 			return TRUE
 
-/atom/proc/maptext_test()
-	var/image/chat_maptext/text = make_chat_maptext(src, "Vending machine", force = TRUE, time = INFINITY)
-	text.show_to(usr.client)
-
 /datum/tutorialStep/flock/kill
 	name = "Eliminate threat"
 	instructions = "That human has just violated causality to teleport right into your flock! Mark them for elimination using your \"designate enemy\" ability and watch as your drones attack."
@@ -228,7 +230,6 @@
 
 /datum/tutorialStep/flock/place_sentinel
 	name = "Construct Sentinel"
-	//TODO: add instruction about using click controls to order deposit after #11654 is merged
 	instructions = "There may be more humans around, build a Sentinel for protection. Move over the marked turf and use your \"place tealprint\" ability to place one."
 	var/turf/location = null
 
@@ -238,9 +239,12 @@
 		src.location.UpdateOverlays(marker, "marker")
 
 	PerformAction(action, context)
-		if (action == FLOCK_ACTION_TEALPRINT_PLACE && context == /obj/flock_structure/sentinel && get_turf(src.ftutorial.fowner) == src.location)
-			src.finished = TRUE
-			return TRUE
+		if (action == FLOCK_ACTION_TEALPRINT_PLACE && context == /obj/flock_structure/sentinel)
+			if (get_turf(src.ftutorial.fowner) == src.location)
+				src.finished = TRUE
+				return TRUE
+			else
+				return "<span class='alert'><b>You must place the tealprint on the marked tile.</b></span>"
 
 /datum/tutorialStep/flock/deposit_sentinel
 	name = "Direct drones to construct"
@@ -260,8 +264,11 @@
 	PerformAction(action, context)
 		if (action in list(FLOCK_ACTION_START_CONVERSION, FLOCK_ACTION_DRONE_SELECT, FLOCK_ACTION_DRONE_ORDER))
 			return TRUE
-		if (action == FLOCK_ACTION_TEALPRINT_PLACE && context == src.structure_type && get_turf(src.ftutorial.fowner) == src.location)
-			return TRUE
+		if (action == FLOCK_ACTION_TEALPRINT_PLACE && context == src.structure_type)
+			if (get_turf(src.ftutorial.fowner) == src.location)
+				return TRUE
+			else
+				return "<span class='alert'><b>You must place the tealprint on the marked tile.</b></span>"
 		if (action == FLOCK_ACTION_TEALPRINT_COMPLETE)
 			var/obj/flock_structure/struct = context
 			struct.process(200) //force a high mult process to immediately charge the structure if it needs it
