@@ -856,6 +856,15 @@ DEFINE_FLOORS(glassblock,
 DEFINE_FLOORS(glassblock/large,
 	icon_state = "glass_large")
 
+DEFINE_FLOORS(glassblock/transparent01,
+	icon_state = "glass_small_t01")
+
+DEFINE_FLOORS(glassblock/transparent02,
+	icon_state = "glass_small_t02")
+
+DEFINE_FLOORS(glassblock/transparent03,
+	icon_state = "glass_small_t03")
+
 /////////////////////////////////////////
 
 DEFINE_FLOORS(minitiles,
