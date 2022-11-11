@@ -732,7 +732,7 @@ var/flock_signal_unleashed = FALSE
 		M = src.enemies[enemy]["mob"]
 		if (QDELETED(M))
 			src.removeEnemy(M)
-	for(var/atom/ignore in src.ignores)
+	for(var/atom/ignore as anything in src.ignores)
 		if (QDELETED(ignore))
 			src.removeIgnore(ignore)
 

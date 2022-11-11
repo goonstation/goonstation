@@ -177,7 +177,7 @@
 
 
 /datum/targetable/flockmindAbility/designateIgnore
-	name = "Designate ignore"
+	name = "Designate Ignore"
 	desc = "Designate someone to be ignored by your Flock."
 	icon_state = "designate_ignore"
 	cooldown = 0.1 SECONDS
