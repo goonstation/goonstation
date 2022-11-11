@@ -11,9 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     if: github.repository == 'goonstation/goonstation'
     steps:
-      - uses: prince-chrismc/label-merge-conflicts-action@v2
+      - uses: prince-chrismc/label-merge-conflicts-action@v3
         with:
           CONFLICT_LABEL_NAME: "S-Merge-Conflict"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MAX_RETRIES: 12
           WAIT_MS: 8008
+          conflict_comment: ''
