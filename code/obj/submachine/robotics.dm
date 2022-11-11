@@ -293,7 +293,7 @@
 					R.trans_to(P, P.initial_volume)
 				P.medical = all_safe
 				P.on_reagent_change()
-				logTheThing(LOG_COMBAT, user, "created a [patchname] patch containing [log_reagents(P)].")
+				logTheThing(LOG_CHEMISTRY, user, "created a [patchname] patch containing [log_reagents(P)].")
 			if("Create Ampoule")
 				var/datum/reagents/R = B.reagents
 				var/input_name = input(user, "Name the ampoule:", "Name", R.get_master_reagent_name()) as null|text
@@ -307,7 +307,7 @@
 				A = new /obj/item/reagent_containers/ampoule(user.loc)
 				A.name = "ampoule ([ampoulename])"
 				R.trans_to(A, 5)
-				logTheThing(LOG_COMBAT, user, "created a [ampoulename] ampoule containing [log_reagents(A)].")
+				logTheThing(LOG_CHEMISTRY, user, "created a [ampoulename] ampoule containing [log_reagents(A)].")
 
 		working = 0
 
