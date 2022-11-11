@@ -67,7 +67,7 @@
 		if(M && !M.move_target)
 			var/target_turf = get_turf(holder.target)
 			if(can_be_adjacent_to_target)
-				var/list/tempPath = get_path_to(holder.owner, target_turf, 40, 1)
+				var/list/tempPath = get_path_to(holder.owner, target_turf, 40, 1, null, !M.move_through_space)
 				var/length_of_path = length(tempPath)
 				if(length_of_path) // fix runtime Cannot read length(null)
 					M.move_target = tempPath[length_of_path]
@@ -131,13 +131,14 @@
 	var/max_path_dist = 50 //keeping this low by default, but you can override it - see /datum/aiTask/sequence/goalbased/rally for details
 	var/list/found_path = null
 	var/atom/move_target = null
+	var/move_through_space = FALSE
 
 // use the target from our holder
 /datum/aiTask/succeedable/move/proc/get_path()
 	if(!move_target)
 		fails++
 		return
-	src.found_path = get_path_to(holder.owner, move_target, src.max_path_dist, 0)
+	src.found_path = get_path_to(holder.owner, move_target, src.max_path_dist, 0, null, !move_through_space)
 	if(!src.found_path) // no path :C
 		fails++
 

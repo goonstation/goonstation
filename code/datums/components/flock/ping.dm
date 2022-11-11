@@ -2,10 +2,12 @@
 /datum/component/flock_ping
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
-	var/const/duration = 5 SECOND
+	var/duration = 5 SECOND
 	var/end_time = -1
 	var/obj/dummy = null
 	var/outline_color = "#00ff9d"
+	var/outline_thickness = 1
+	var/animate = TRUE
 
 	Initialize()
 		if (!ismovable(parent) && !isturf(parent))
@@ -26,12 +28,16 @@
 		dummy.icon_state = target.icon_state
 		target.render_target = ref(parent)
 		dummy.render_source = target.render_target
-		dummy.add_filter("outline", 1, outline_filter(size=1,color=src.outline_color))
+		dummy.add_filter("outline", 1, outline_filter(size=src.outline_thickness,color=src.outline_color))
 		if (isturf(target))
 			dummy.add_filter("mask", 2, alpha_mask_filter(icon=dummy.icon, flags=MASK_INVERSE))
 		target.vis_contents += dummy
 
-		play_animation()
+		if (src.animate)
+			play_animation()
+
+		if (src.duration == INFINITY)
+			return
 
 		SPAWN(0)
 			while(TIME < src.end_time)
@@ -58,3 +64,8 @@
 ///Used to mark objects blocking the construction of a flock tealprint
 /datum/component/flock_ping/obstruction
 	outline_color = "#910707"
+
+/datum/component/flock_ping/selected
+	animate = FALSE
+	outline_thickness = 3
+	duration = INFINITY

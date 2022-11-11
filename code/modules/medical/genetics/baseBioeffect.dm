@@ -89,7 +89,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		if(src.holder)
 			src.holder.RemovePoolEffect(src)
 			src.holder.RemoveEffect(src.id)
-		if(!removed)
+		if(!removed && src.owner)
 			src.OnRemove()
 		holder = null
 		owner = null

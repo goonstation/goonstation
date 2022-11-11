@@ -121,8 +121,9 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		if(!T || src.disposed) return
 		fireflash(T,1,1)
 		if(istype(H))
-			H.TakeDamage("chest",0,clamp(DNA.potency/2,10,50) + max(DNA.potency/5-20, 0)*(1-H.get_heat_protection()/100),0)//burn damage is half of the potency, soft capped at 50, with a minimum of 10, any extra potency is divided by 5 and added on. The resulting number is then reduced by heat resistance, and applied to the target.
-			H.update_burning(DNA.potency * 0.2)
+			var/p = max(DNA.potency, 0) //no vertical aymptote for you, buster
+			H.TakeDamage("chest", 0, (max(70 * p / (p + 100) + 5, 0)*(1-H.get_heat_protection()/100)), 0)//approaches 75 as potency approaches infinity
+			H.update_burning(p * 0.2)
 			boutput(H,"<span class='alert'>Hot liquid bursts out of [src], scalding you!</span>")
 		src.visible_message("<span class='alert'>[src] violently bursts into flames!</span>")
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
@@ -577,6 +578,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		reagents.add_reagent("cryostylane", 10)
 
 	heal(var/mob/M)
+		..()
 		M:emote("shiver")
 		var/datum/plantgenes/DNA = src.plantgenes
 		M.bodytemperature -= DNA.potency
@@ -599,6 +601,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		reagents.add_reagent("ghostchilijuice",25)
 
 	heal(var/mob/M)
+		..()
 		M:emote("twitch")
 		var/datum/plantgenes/DNA = src.plantgenes
 		boutput(M, "<span class='alert'>Fuck! Your mouth feels like it's on fire!</span>")
@@ -734,6 +737,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_effects = list("food_cold", "food_refreshed")
 
 	heal(var/mob/M)
+		..()
 		M.HealDamage("All", src.heal_amt, src.heal_amt)
 		M.take_toxin_damage(0 - src.heal_amt)
 		M.take_oxygen_deprivation(0 - src.heal_amt)
@@ -1101,6 +1105,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 
 	heal(var/mob/M)
 		boutput(M, "<span class='alert'>Raw potato tastes pretty nasty...</span>")
+		..()
 
 /obj/item/reagent_containers/food/snacks/plant/onion
 	name = "onion"

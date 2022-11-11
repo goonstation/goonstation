@@ -10,10 +10,8 @@
 		if(ishuman( M ))
 			if( user == M )
 				boutput(user, "You feed yourself the [src]. <span class='alert'>Oh god!</span>")
-				logTheThing(LOG_COMBAT, user, "fed themself a [src].")
 			else
 				boutput(user, "You feed [M] the [src]. <span class='alert'>Oh god!</span>")
-				logTheThing(LOG_COMBAT, user, "fed [constructTarget(M,"combat")] a [src].")
 			animate(M, color = "#0F0", time = 300)//TODO: See below.
 			qdel(src)
 			return
@@ -26,8 +24,9 @@
 				new /obj/spacevine/alien/living(A, src.to_spread)
 			else
 				new /obj/spacevine/living(A, src.to_spread)
+
 			boutput(user, "You plant the [src] on the [A].")
-			logTheThing(LOG_COMBAT, user, "plants [src] (kudzu) at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "plants [src] (kudzu) at [log_loc(src)].")
 			message_admins("[key_name(user)] planted kudzu at [log_loc(src)].")
 			user.u_equip(src)
 			qdel(src)
@@ -434,7 +433,7 @@
 
 					H.full_heal()
 					if (!H.ckey && H.last_client && !H.last_client.mob.mind.dnr)
-						if ((!istype(H.last_client.mob,/mob/living) && !istype(H.last_client.mob,/mob/wraith)) || inafterlifebar(H.last_client.mob))
+						if (!istype(H.last_client.mob,/mob/living) || inafterlifebar(H.last_client.mob))
 							H.ckey = H.last_client.ckey
 					if (istype(H.abilityHolder, /datum/abilityHolder/composite))
 						var/datum/abilityHolder/composite/Comp = H.abilityHolder

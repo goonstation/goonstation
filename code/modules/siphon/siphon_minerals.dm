@@ -268,12 +268,13 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 /datum/siphon_mineral/starstone
 	name = "Starstone"
 	tick_req = 1616
+	x_torque = 0
 	shear = 161
 	product = /obj/item/raw_material/starstone
 
 	New()
-		src.tick_req = rand(100,130) * 5
-		src.shear = rand(130,230)
+		src.tick_req = rand(150,220) * 8
+		src.shear = rand(260,360)
 		..()
 
 /datum/siphon_mineral/blob
@@ -302,12 +303,12 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	tick_req = 303
 	shear = 420
 	sens_window = 0
-	product = /obj/item/plant/herb/cannabis/mega/spawnable
+	product = /obj/item/plant/herb/cannabis/spawnable
 
-/datum/siphon_mineral/forbidden //the end comes
+/datum/siphon_mineral/forbidden
 	indexed = FALSE
 	name = "DATA EXPUNGED"
 	tick_req = 666
-	shear = 666 //this is a very hard value to reach
+	shear = 666
 	sens_window = 0
-	product = /obj/item/plutonium_core
+	product = /obj/item/reagent_containers/food/snacks/ectoplasm

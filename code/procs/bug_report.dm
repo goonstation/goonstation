@@ -34,6 +34,7 @@ Reported by: [user_client.key]
 On server: [global.config.server_name]
 Round log date: [global.roundLog_date]
 Reported on: [time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]
+Map: [global.map_setting]
 "}
 	var/success = ircbot.export("issue", list(
 		"title" = title,
