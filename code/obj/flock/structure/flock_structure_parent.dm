@@ -14,7 +14,7 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	mat_changedesc = FALSE
 	mat_appearances_to_ignore = list("gnesis")
 	var/flock_id = "ERROR"
-	//does this structure show up in the list of flock structures shown in the tutorial?
+	/// does this structure show up in the list of flock structures shown in the tutorial?
 	var/show_in_tutorial = FALSE
 	var/tutorial_desc = ""
 	/// when did we get created?
