@@ -530,14 +530,14 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					var/datum/supply_packs/P = O.object
 					shippingmarket.supply_requests -= O
 					if(wagesystem.shipping_budget >= P.cost)
-						wagesystem.shipping_budget -= P.cost
 						O.object = P
 						O.orderedby = usr.name
 						var/default_comment = ""
 						O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = TRUE, max_length = 32, allowEmpty = TRUE)
 						if (O.comment == null)
-							return {}// The user cancelled the order
+							return .("list")// The user cancelled the order
 						O.comment = html_encode(O.comment)
+						wagesystem.shipping_budget -= P.cost
 						var/obj/storage/S = O.create(usr)
 						shippingmarket.receive_crate(S)
 						logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
@@ -565,16 +565,14 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 							return
 
 						if(wagesystem.shipping_budget >= P.cost)
-							wagesystem.shipping_budget -= P.cost
 							O.object = P
 							O.orderedby = usr.name
 							var/default_comment = ""
 							O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = FALSE, max_length = 32, allowEmpty = TRUE)
 							if (isnull(O.comment))
-								return {} // The user cancelled the order
-							else
-								O.comment = html_encode(O.comment)
-
+								return .("list") // The user cancelled the order
+							O.comment = html_encode(O.comment)
+							wagesystem.shipping_budget -= P.cost
 							var/obj/storage/S = O.create(usr)
 							shippingmarket.receive_crate(S)
 							logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
