@@ -39,7 +39,7 @@ var/list/ai_move_scheduled = list()
 			LAZYLISTADDUNIQUE(AR.mobs_not_in_global_mobs_list, M)
 
 		if(owner?.abilityHolder)
-			if(!owner.abilityHolder.getAbility(/datum/targetable/ai_toggle))
+			if(src.owner.use_ai_toggle && !owner.abilityHolder.getAbility(/datum/targetable/ai_toggle))
 				owner.abilityHolder.addAbility(/datum/targetable/ai_toggle)
 
 	disposing()

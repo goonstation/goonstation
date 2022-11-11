@@ -151,7 +151,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		var/amt_prop = inj_amount == -1 ? src.reagents.total_volume : inj_amount
 		user.visible_message("<span class='notice'><B>[user] injects [M] with [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()].</B></span>",\
 		"<span class='notice'>You inject [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()]. [src] now contains [max(0,(src.reagents.total_volume-amt_prop))] units.</span>")
-		logTheThing(LOG_COMBAT, user, "uses a hypospray [log_reagents(src)] to inject [constructTarget(M,"combat")] at [log_loc(user)].")
+		logTheThing(user == M ? LOG_CHEMISTRY : LOG_COMBAT, user, M, "uses a hypospray [log_reagents(src)] to inject [constructTarget(M,"combat")] at [log_loc(user)].")
 
 		src.reagents.trans_to(M, amt_prop)
 
@@ -180,7 +180,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 				boutput(user, "<span class='alert'>[target] is full!</span>")
 				return
 
-			logTheThing(LOG_COMBAT, user, "dumps the contents of [src] [log_reagents(src)] into [target] at [log_loc(user)].")
+			logTheThing(LOG_CHEMISTRY, user, "dumps the contents of [src] [log_reagents(src)] into [target] at [log_loc(user)].")
 			boutput(user, "<span class='notice'>You dump the contents of [src] into [target].</span>")
 			src.reagents.trans_to(target, src.reagents.total_volume)
 
