@@ -151,7 +151,7 @@
 			if (T == F.flock.busy_tiles[name])
 				boutput(holder.get_controlling_mob(), "<span class='alert'>This tile is already scheduled for conversion!</span>")
 				return TRUE
-	if (!src.tutorial_check("designate tile", T))
+	if (!src.tutorial_check(FLOCK_ACTION_MARK_TILE, T))
 		return TRUE
 	F.flock?.togglePriorityTurf(T)
 
@@ -211,7 +211,7 @@
 	if(!holder.pointCheck(FLOCKTRACE_COMPUTE_COST))
 		return TRUE
 
-	if (!src.tutorial_check("partition mind"))
+	if (!src.tutorial_check(FLOCK_ACTION_PARTITION))
 		return TRUE
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
 	waiting = TRUE
@@ -231,7 +231,7 @@
 /datum/targetable/flockmindAbility/healDrone/cast(atom/target)
 	if(..())
 		return TRUE
-	if (!src.tutorial_check("heal", target))
+	if (!src.tutorial_check(FLOCK_ACTION_HEAL, target))
 		return TRUE
 	var/mob/living/intangible/flock/flockowner = holder.owner
 	var/healed = 0
@@ -279,7 +279,7 @@
 	if(F.flock.getComplexDroneCount() == 1)
 		boutput(F, "<span class='alert'>That's your last complex drone. Diffracting it would be suicide.</span>")
 		return TRUE
-	if (!src.tutorial_check("diffract drone", target))
+	if (!src.tutorial_check(FLOCK_ACTION_DIFFRACT, target))
 		return TRUE
 	boutput(F, "<span class='notice'>You diffract the drone.</span>")
 	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts diffract drone on [constructTarget(target)] at [log_loc(src.holder.owner)].")
@@ -333,7 +333,7 @@
 		var/obj/item/device/radio/R = M.ears // wont work on flock as they have no slot for this
 		if(istype(R) && R.listening) // working and toggled on
 			targets += M
-	if (!src.tutorial_check("radio stun", targets))
+	if (!src.tutorial_check(FLOCK_ACTION_RADIO_STUN, targets))
 		return TRUE
 	if(length(targets))
 		playsound(holder.get_controlling_mob(), 'sound/misc/flockmind/flockmind_cast.ogg', 80, 1)
@@ -358,7 +358,7 @@
 /datum/targetable/flockmindAbility/directSay/cast(atom/target)
 	if(..())
 		return TRUE
-	if (!src.tutorial_check("narrowbeam", target))
+	if (!src.tutorial_check(FLOCK_ACTION_NARROWBEAM, target))
 		return TRUE
 	var/obj/item/device/radio/R
 	var/message
@@ -418,7 +418,7 @@
 /datum/targetable/flockmindAbility/controlPanel/cast(atom/target)
 	if(..())
 		return TRUE
-	if (!src.tutorial_check("control panel", target))
+	if (!src.tutorial_check(FLOCK_ACTION_CONTROL_PANEL, target))
 		return TRUE
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
 	F.flock.ui_interact(holder.get_controlling_mob(), F.flock.flockpanel)
@@ -481,7 +481,7 @@
 		return TRUE
 	if (!isturf(target.loc) && !isturf(target))
 		return TRUE
-	src.tutorial_check("ping", target, TRUE) //you can always ping
+	src.tutorial_check(FLOCK_ACTION_PING, target, TRUE) //you can always ping
 	var/mob/living/intangible/flock/F = holder.owner
 	F.flock?.ping(target, holder.owner)
 
@@ -499,7 +499,7 @@
 	if(HAS_ATOM_PROPERTY(target,PROP_ATOM_FLOCK_THING))
 		if (isflockdeconimmune(target)) // ghost structure on click opens tgui window
 			return TRUE
-		if (!src.tutorial_check("deconstruct flag", target))
+		if (!src.tutorial_check(FLOCK_ACTION_MARK_DECONSTRUCT, target))
 			return TRUE
 		var/mob/living/intangible/flock/F = holder.owner
 		F.flock.toggleDeconstructionFlag(target)
