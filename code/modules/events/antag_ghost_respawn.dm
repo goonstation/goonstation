@@ -55,7 +55,7 @@
 
 			var/possible_types = list("Blob", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Flockmind")
 
-			if (map_settings && islist(map_settings.forbidden_antags) && length(map_settings.forbidden_antags))
+			if (length(map_settings?.forbidden_antags))
 				for(var/ant in possible_types)
 					if(lowertext(ant) in map_settings.forbidden_antags)
 						possible_types -= ant
