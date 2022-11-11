@@ -167,7 +167,7 @@ var/global/cloning_with_records = TRUE
 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
 		src.allow_dead_scanning = 1
 		user.drop_item()
-		logTheThing(LOG_COMBAT, src, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
+		logTheThing(LOG_STATION, src, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
 		qdel(W)
 
 	else if (istype(W, /obj/item/cloneModule/minderaser))
@@ -177,7 +177,7 @@ var/global/cloning_with_records = TRUE
 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
 		src.allow_mind_erasure = 1
 		user.drop_item()
-		logTheThing(LOG_COMBAT, src, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
+		logTheThing(LOG_STATION, src, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
 		qdel(W)
 	else if (istype(W, /obj/item/cloneModule/genepowermodule))
 		var/obj/item/cloneModule/genepowermodule/module = W
@@ -190,7 +190,7 @@ var/global/cloning_with_records = TRUE
 		src.BE = module.BE
 		user.drop_item()
 		user.visible_message("[user] installs [module] into [src].", "You install [module] into [src].")
-		logTheThing(LOG_COMBAT, src, "[user] has added clone module ([W] - [module.BE]) to ([src]) at [log_loc(user)].")
+		logTheThing(LOG_STATION, src, "[user] has added clone module ([W] - [module.BE]) to ([src]) at [log_loc(user)].")
 		qdel(module)
 
 

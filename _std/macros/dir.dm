@@ -92,3 +92,8 @@ proc/angle_to_vector(ang)
 	.= list()
 	. += cos(ang)
 	. += sin(ang)
+
+/// Calculates the angle you need to pass to the turn proc to get dir_to from dir_from
+/// turn(dir, turn_needed(dir, dir_to)) = dir_to
+#define turn_needed(dir_from, dir_to) (-(dir_to_angle(dir_to) - dir_to_angle(dir_from)))
+// note that the - is necessary because dir_to_angle returns a clockwise angle, but turn() takes a counter-clockwise angle

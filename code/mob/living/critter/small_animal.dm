@@ -2005,6 +2005,134 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			..()
 
 /* ================================================ */
+/* ------------------- Iguana --------------------- */
+/* ================================================ */
+
+/mob/living/critter/small_animal/iguana
+	name = "space iguana"
+	real_name = "space iguana"
+	desc = "An iguana that came from space. Or maybe went to space. Who knows how it got here?"
+	icon_state = "iguana1"
+	icon_state_dead = "iguana1-dead"
+	hand_count = 2
+	speechverb_say = "hisses"
+	speechverb_exclaim = "wheezes"
+	butcherable = 0
+	health_brute = 15
+	health_burn = 15
+	pet_text = list("gently baps", "pets", "cuddles")
+	density = 1
+	fits_under_table = TRUE
+	var/on_tree
+
+	New()
+		. = ..()
+		START_TRACKING
+		if(prob(20))
+			icon_state = "iguana2"
+			icon_state_dead = "iguana2-dead"
+		AddComponent(/datum/component/waddling, height=4, angle=8)
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "paw"
+		HH.limb_name = "claws"
+
+		HH = hands[2]
+		HH.limb = new /datum/limb/mouth/small
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "mouth"
+		HH.name = "mouth"
+		HH.limb_name = "teeth"
+		HH.can_hold_items = 0
+
+	hand_attack(atom/target, params)
+		if (istype(target, /obj/tree1))
+			var/obj/tree1/T = target
+			var/can_attach = FALSE
+			var/fall_left_or_right
+			var/new_pixel_x
+			var/new_pixel_y
+			if(target.icon == initial(T.icon) && target.icon_state == initial(T.icon_state) && target.y == src.y && !src.rest_mult)
+				if(src.dir & (SOUTH | EAST) )
+					fall_left_or_right = -1
+					switch(T.dir)
+						if(NORTH)
+							new_pixel_x = 31
+							new_pixel_y = 14
+							can_attach = TRUE
+						if(EAST)
+							new_pixel_x = 28
+							new_pixel_y = 12
+							can_attach = TRUE
+						if(WEST)
+							new_pixel_x = 28
+							new_pixel_y = 12
+							can_attach = TRUE
+				else
+					fall_left_or_right = 1
+					switch(T.dir)
+						if(NORTH)
+							new_pixel_x = -6
+							new_pixel_y = 13
+							can_attach = TRUE
+						if(EAST)
+							new_pixel_x = -9
+							new_pixel_y = 13
+							can_attach = TRUE
+						if(WEST)
+							new_pixel_x = -11
+							new_pixel_y = 13
+							can_attach = TRUE
+			if(can_attach)
+				src.setStatus("resting", INFINITE_STATUS)
+				var/matrix/orig_transform = src.transform
+				force_laydown_standup()
+				animate(src, pixel_x = new_pixel_x, pixel_y = new_pixel_y, transform = orig_transform.Turn(fall_left_or_right * 90), time = 2, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+				src.rest_mult = fall_left_or_right
+				src.visible_message("<span class='alert'>[src] slinks onto [target]!</span>")
+				on_tree = TRUE
+				return
+		. = ..()
+
+	force_laydown_standup()
+		if(src.on_tree)
+			on_tree = FALSE
+		. = ..()
+
+	Move()
+		if(src.on_tree && src.rest_mult)
+			delStatus("resting")
+			force_laydown_standup()
+			if(prob(5))
+				src.visible_message("<span class='alert'>[src] falls out of the tree!</span>","<span class='alert'><B>You fall out of the tree!</span>")
+				src.sleeping = 1
+				return
+		..()
+
+	ai_controlled
+		is_npc = 1
+		New()
+			..()
+			src.ai = new /datum/aiHolder/wanderer(src)
+			remove_lifeprocess(/datum/lifeprocess/blindness)
+			remove_lifeprocess(/datum/lifeprocess/viruses)
+
+		death(var/gibbed)
+			qdel(src.ai)
+			src.ai = null
+			reduce_lifeprocess_on_death()
+			..()
+
+/* ================================================ */
 /* -------------------- Seal ---------------------- */
 /* ================================================ */
 
