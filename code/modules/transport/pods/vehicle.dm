@@ -665,7 +665,7 @@
 		src.health -= 50
 		checkhealth()
 
-	Move(turf/NewLoc,Dir=0,step_x=0,step_y=0)
+	Move(turf/NewLoc, Dir=0, step_x=0, step_y=0)
 		// set return value to default
 		if(NewLoc.allows_vehicles || src.ignore_turf_restrictions)
 			.= ..(NewLoc,Dir,step_x,step_y)
