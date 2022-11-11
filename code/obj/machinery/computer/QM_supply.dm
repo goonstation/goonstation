@@ -535,7 +535,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 						O.object = P
 						O.orderedby = usr.name
 						var/default_comment = ""
-						O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = TRUE, max_length = CRATE_COMMENT_MAX_LEN, allowEmpty = TRUE)
+						O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = TRUE, max_length = ORDER_LABEL_MAX_LEN, allowEmpty = TRUE)
 						if (isnull(O.comment))
 							return .("list") // The user cancelled the order
 						O.comment = html_encode(O.comment)
@@ -570,7 +570,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 							O.object = P
 							O.orderedby = usr.name
 							var/default_comment = ""
-							O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = FALSE, max_length = CRATE_COMMENT_MAX_LEN, allowEmpty = TRUE)
+							O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = FALSE, max_length = ORDER_LABEL_MAX_LEN, allowEmpty = TRUE)
 							if (isnull(O.comment))
 								return .("list") // The user cancelled the order
 							O.comment = html_encode(O.comment)
