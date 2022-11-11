@@ -10,7 +10,7 @@
 	item_state = "scrap-metal"
 	desc = "A piece of scrap"
 	var/classtext = ""
-	throwforce = 10.0
+	throwforce = 10
 	m_amt = 1
 	g_amt = 1
 	w_amt = 1
@@ -19,7 +19,7 @@
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_TINY
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT | UNCRUSHABLE
 
 #define MAX_SCRAP	15000	// maximum content amount of a scrap pile
 
@@ -207,7 +207,7 @@
 
 // if other pile of scrap tries to enter the same turf, then add that pile to this one
 
-/obj/item/scrap/CanPass(var/obj/item/scrap/O)
+/obj/item/scrap/Cross(var/obj/item/scrap/O)
 
 	if(istype(O))
 
@@ -226,7 +226,7 @@
 	if(src.is_single_piece())
 		return ..(user)
 	var/obj/item/scrap/S = src.get_single_piece()
-	S.attack_hand(user)
+	S.Attackhand(user)
 	return
 */
 
@@ -244,7 +244,7 @@
 // when dropped, try to make a pile if scrap is already there
 /obj/item/scrap/dropped()
 
-	SPAWN_DBG(0.2 SECONDS)	// delay to allow drop postprocessing (since src may be destroyed)
+	SPAWN(0.2 SECONDS)	// delay to allow drop postprocessing (since src may be destroyed)
 		for(var/obj/item/scrap/S in oview(0,src))	// excludes src itself
 			S.add_scrap(src)
 

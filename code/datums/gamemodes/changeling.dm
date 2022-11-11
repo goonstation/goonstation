@@ -2,12 +2,19 @@
 	name = "changeling"
 	config_tag = "changeling"
 	latejoin_antag_compatible = 1
-	latejoin_antag_roles = list("changeling")
+	latejoin_antag_roles = list(ROLE_CHANGELING)
+	antag_token_support = TRUE
 
 	var/const/changelings_possible = 4
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
+
+#ifdef RP_MODE
+	var/const/pop_divisor = 20
+#else
+	var/const/pop_divisor = 15
+#endif
 
 /datum/game_mode/changeling/announce()
 	boutput(world, "<B>The current game mode is - Changeling!</B>")
@@ -23,9 +30,9 @@
 			num_players++
 
 	var/i = rand(5)
-	var/num_changelings = max(1, min(round((num_players + i) / 15), changelings_possible))
+	var/num_changelings = clamp(round((num_players + i) / pop_divisor), 1, changelings_possible)
 
-	var/list/possible_changelings = get_possible_changelings(num_changelings)
+	var/list/possible_changelings = get_possible_enemies(ROLE_CHANGELING, num_changelings)
 
 	if (!possible_changelings.len)
 		return 0
@@ -36,14 +43,14 @@
 			break
 		src.traitors += tplayer
 		token_players.Remove(tplayer)
-		logTheThing("admin", tplayer.current, null, "successfully redeems an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeems an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 		//num_changelings = max(0, num_changelings - 1)
 
-	var/list/chosen_changelings = antagWeighter.choose(pool = possible_changelings, role = "changeling", amount = num_changelings, recordChosen = 1)
+	var/list/chosen_changelings = antagWeighter.choose(pool = possible_changelings, role = ROLE_CHANGELING, amount = num_changelings, recordChosen = 1)
 	traitors |= chosen_changelings
 	for (var/datum/mind/changeling in traitors)
-		changeling.special_role = "changeling"
+		changeling.special_role = ROLE_CHANGELING
 		possible_changelings.Remove(changeling)
 
 	return 1
@@ -65,32 +72,8 @@
 				boutput(changeling.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 				obj_count++
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
-
-/datum/game_mode/changeling/proc/get_possible_changelings(num_changelings=1)
-	var/list/candidates = list()
-
-	for(var/mob/new_player/player in mobs)
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.client) && (player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_changeling)
-				candidates += player.mind
-
-	if(candidates.len < num_changelings)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_changeling set to yes were ready. We need [num_changelings], so including players who don't want to be changelings in the pool.")
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player)) continue
-
-			if (ishellbanned(player)) continue //No treason for you
-			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
 
 /datum/game_mode/changeling/send_intercept()
 	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"

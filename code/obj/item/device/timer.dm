@@ -2,34 +2,30 @@
 	name = "timer"
 	icon_state = "timer0"
 	item_state = "electronic"
-	var/timing = 0.0
+	var/timing = 0
 	var/time = null
 	var/last_tick = 0
-	var/const/max_time = 600
+	var/const/max_time = 600 SECONDS
 	var/const/min_time = 0
-	var/const/min_detonator_time = 90
+	var/const/min_detonator_time = 90 SECONDS
 	flags = FPRINT | TABLEPASS| CONDUCT
 	w_class = W_CLASS_SMALL
 	m_amt = 100
 	mats = 2
 	desc = "A device that emits a signal when the time reaches 0."
-	module_research = list("devices" = 1, "miniaturization" = 4)
 
 /obj/item/device/timer/proc/time()
 	src.c_state(0)
 
 	if (src.master)
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			var/datum/signal/signal = get_free_signal()
 			signal.source = src
 			signal.data["message"] = "ACTIVATE"
 			src.master.receive_signal(signal)
-			//qdel(signal)
-			return
 	else
 		for(var/mob/O in hearers(null, null))
 			O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
-	return
 
 //*****RM
 
@@ -46,12 +42,13 @@
 
 /obj/item/device/timer/process()
 	if (src.timing)
-		if (!last_tick) last_tick = TIME
-		var/passed_time = round(max(round(TIME - last_tick),10) / 10)
+		if (!src.last_tick)
+			src.last_tick = TIME
+		var/passed_time = TIME - src.last_tick
 
 		if (src.time > 0)
 			src.time -= passed_time
-			if(time<5)
+			if(time < 5 SECONDS)
 				src.c_state(2)
 			else
 				// they might increase the time while it is timing
@@ -59,25 +56,19 @@
 		else
 			time()
 			src.time = 0
-			src.timing = 0
-			last_tick = 0
+			src.timing = FALSE
+			src.last_tick = 0
 
-		last_tick = TIME
-
-		if (!src.master)
-			src.updateDialog()
-		else
-			src.master.updateDialog()
+		src.last_tick = TIME
 
 	else
 		// If it's not timing, reset the icon so it doesn't look like it's still about to go off.
 		src.c_state(0)
 		processing_items.Remove(src)
-		last_tick = 0
+		src.last_tick = 0
+	src.time = max(src.time, 0)
 
-	return
-
-/obj/item/device/timer/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/device/timer/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/device/radio/signaler) )
 		var/obj/item/device/radio/signaler/S = W
 		if(!S.b_stat)
@@ -100,84 +91,63 @@
 		return
 
 /obj/item/device/timer/attack_self(mob/user as mob)
-	..()
-	if (user.stat || user.restrained() || user.lying)
-		return
+	src.ui_interact(user)
 
-	if ((src in user) || (src.master && (src.master in user)) || (get_dist(src, user) <= 1 && istype(src.loc, /turf)) || src.is_detonator_trigger())
-		src.add_dialog(user)
-		var/second = src.time % 60
-		var/minute = (src.time - second) / 60
-		var/detonator_trigger = src.is_detonator_trigger()
-		var/timing_links = (src.timing ? text("<A href='?src=\ref[];time=0'>Timing</A>", src) : text("<A href='?src=\ref[];time=1'>Not Timing</A>", src))
-		var/timing_text = (src.timing ? "Timing - controls locked" : "Not timing - controls unlocked")
-		var/dat = text("<TT><B>Timing Unit</B><br>[] []:[]<br><A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A><br></TT>", detonator_trigger ? timing_text : timing_links, minute, second, src, src, src, src)
-		dat += "<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"
-		user.Browse(dat, "window=timer")
-		onclose(user, "timer")
-	else
-		user.Browse(null, "window=timer")
-		src.remove_dialog(user)
+/obj/item/device/timer/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Timer")
+		ui.open()
 
-	return
+/obj/item/device/timer/ui_data(mob/user)
+	src.process() //ehhhhh
+	. = list(
+		"time" = round(src.time / 10),
+		"timing" = src.timing,
+		"minTime" = round(src.get_min_time() / 10),
+	)
+
+/obj/item/device/timer/ui_static_data(mob/user)
+	return list("name" = src.name)
+
+/obj/item/device/timer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	switch (action)
+		if ("set-time")
+			var/time = text2num_safe(params["value"])
+			src.set_time(round(time))
+			. = TRUE
+		if ("toggle-timing")
+			src.timing = !src.timing
+			if(src.timing)
+				src.c_state(1)
+				processing_items |= src
+
+			if (istype(master, /obj/item/device/transfer_valve))
+				logTheThing(LOG_BOMBING, usr, "[timing ? "initiated" : "defused"] a timer on a transfer valve at [log_loc(src.master)].")
+				message_admins("[key_name(usr)] [timing ? "initiated" : "defused"] a timer on a transfer valve at [log_loc(src.master)].")
+				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
+			else if (istype(src.master, /obj/item/assembly/time_ignite)) //Timer-detonated beaker assemblies
+				var/obj/item/assembly/rad_ignite/RI = src.master
+				logTheThing(LOG_BOMBING, usr, "[timing ? "initiated" : "defused"] a timer on a timer-igniter assembly at [log_loc(src.master)]. Contents: [log_reagents(RI.part3)]")
+				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
+			else if(istype(src.master, /obj/item/assembly/time_bomb))	//Timer-detonated single-tank bombs
+				logTheThing(LOG_BOMBING, usr, "[timing ? "initiated" : "defused"] a timer on a single-tank bomb at [log_loc(src.master)].")
+				message_admins("[key_name(usr)] [timing ? "initiated" : "defused"] a timer on a single-tank bomb at [log_loc(src.master)].")
+				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
+			else if (istype(src.master, /obj/item/mine)) // Land mine.
+				logTheThing(LOG_BOMBING, usr, "[timing ? "initiated" : "defused"] a timer on a [src.master.name] at [log_loc(src.master)].")
+				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
+			. = TRUE
 
 /obj/item/device/timer/proc/is_detonator_trigger()
 	if (src.master)
 		if (istype(src.master, /obj/item/assembly/detonator/) && src.master.master)
 			if (istype(src.master.master, /obj/machinery/portable_atmospherics/canister/) && in_interact_range(src.master.master, usr))
-				return 1
-	return 0
+				return TRUE
+
+///When attached to a detonator we can't be set to detonate immediately
+/obj/item/device/timer/proc/get_min_time()
+	return src.is_detonator_trigger() ? src.min_detonator_time : src.min_time
 
 /obj/item/device/timer/proc/set_time(var/new_time as num)
-	var/min_time = src.is_detonator_trigger() ? src.min_detonator_time : src.min_time
-	src.time = clamp(new_time, min_time, src.max_time)
-
-/obj/item/device/timer/Topic(href, href_list)
-	..()
-	if (usr.stat || usr.restrained() || usr.lying)
-		return
-	var/can_use_detonator = src.is_detonator_trigger() && !src.timing
-	if (can_use_detonator || (src in usr) || (src.master && (src.master in usr)) || in_interact_range(src, usr) && istype(src.loc, /turf))
-		src.add_dialog(usr)
-		if (href_list["time"])
-			src.timing = text2num(href_list["time"])
-			if(timing)
-				src.c_state(1)
-				processing_items |= src
-
-			if (src.master && istype(master, /obj/item/device/transfer_valve))
-				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a timer on a transfer valve at [log_loc(src.master)].")
-				message_admins("[key_name(usr)] [timing ? "initiated" : "defused"] a timer on a transfer valve at [log_loc(src.master)].")
-			else if (src.master && istype(src.master, /obj/item/assembly/time_ignite)) //Timer-detonated beaker assemblies
-				var/obj/item/assembly/rad_ignite/RI = src.master
-				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a timer on a timer-igniter assembly at [log_loc(src.master)]. Contents: [log_reagents(RI.part3)]")
-
-			else if(src.master && istype(src.master, /obj/item/assembly/time_bomb))	//Timer-detonated single-tank bombs
-				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a timer on a single-tank bomb at [log_loc(src.master)].")
-				message_admins("[key_name(usr)] [timing ? "initiated" : "defused"] a timer on a single-tank bomb at [log_loc(src.master)].")
-
-			else if (src.master && istype(src.master, /obj/item/mine)) // Land mine.
-				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a timer on a [src.master.name] at [log_loc(src.master)].")
-
-		if (href_list["tp"])
-			var/tp = text2num(href_list["tp"])
-			src.time += tp
-			src.time = min(max(round(src.time), src.min_time), src.max_time)
-			if (can_use_detonator && src.time < src.min_detonator_time)
-				src.time = src.min_detonator_time
-
-		if (href_list["close"])
-			usr.Browse(null, "window=timer")
-			src.remove_dialog(usr)
-			return
-
-		if (!src.master)
-			src.updateDialog()
-		else
-			src.master.updateDialog()
-
-		src.add_fingerprint(usr)
-	else
-		usr.Browse(null, "window=timer")
-		return
-	return
+	src.time = clamp(new_time, src.get_min_time(), src.max_time)

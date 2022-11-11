@@ -1,13 +1,14 @@
-// handles the game ticker
-datum/controller/process/ticker
+
+/// handles the game ticker, for gamemodes and such
+/datum/controller/process/ticker
 
 	setup()
 		name = "Game"
-		schedule_interval = 5
+		schedule_interval = 0.5 SECONDS
 
 		if (!ticker)
 			ticker = new /datum/controller/gameticker()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				ticker.pregame()
 
 	doWork()

@@ -1,0 +1,1169 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/window/cubicle{
+	dir = 4
+	},
+/obj/window/cubicle{
+	dir = 10
+	},
+/obj/decal/tile_edge/stripe{
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/item/casing/grenade{
+	dir = 1;
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/simulated/floor/racing,
+/area/prefab/shooting_range)
+"af" = (
+/obj/machinery/light/incandescent/cool/very{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/racing,
+/area/prefab/shooting_range)
+"aj" = (
+/obj/machinery/door/airlock/pyro/glass/mining{
+	requires_power = 0
+	},
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"aw" = (
+/obj/decal/tile_edge/stripe{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/table/reinforced,
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"aY" = (
+/obj/item/casing/shotgun/gray,
+/turf/simulated/floor/delivery,
+/area/prefab/shooting_range)
+"bp" = (
+/obj/decoration/bullethole{
+	pixel_x = 3;
+	pixel_y = 7
+	},
+/obj/decoration/bullethole{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/decoration/bullethole{
+	pixel_x = -2;
+	pixel_y = -9
+	},
+/obj/decoration/bullethole{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/turf/simulated/wall/auto/reinforced/jen/dark4,
+/area/prefab/shooting_range)
+"bL" = (
+/obj/rack,
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"bX" = (
+/obj/decoration/bullethole{
+	pixel_x = -2;
+	pixel_y = -9
+	},
+/turf/simulated/floor/racing,
+/area/prefab/shooting_range)
+"cP" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/dojo,
+/area/prefab/shooting_range)
+"dz" = (
+/obj/rack,
+/obj/item/gun/laser_pistol/prototype,
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"dA" = (
+/obj/machinery/light/incandescent/cool/very{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/machinery/door_control{
+	id = "shooting_range";
+	name = "Parking for Ashburn's Armaments";
+	pixel_y = 28
+	},
+/turf/simulated/floor/engine/glow/blue,
+/area/prefab/shooting_range)
+"ey" = (
+/obj/window/cubicle{
+	dir = 4
+	},
+/obj/window/cubicle{
+	dir = 10
+	},
+/obj/decal/tile_edge/stripe{
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/racing,
+/area/prefab/shooting_range)
+"eO" = (
+/obj/stool/chair/red,
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"fq" = (
+/obj/item/casing/shotgun/red{
+	dir = 1
+	},
+/turf/simulated/floor/bot/caution,
+/area/prefab/shooting_range)
+"fD" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating,
+/area/prefab/shooting_range)
+"gM" = (
+/obj/decal/tile_edge/stripe{
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/engine/caution,
+/area/prefab/shooting_range)
+"gV" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/engine/caution,
+/area/prefab/shooting_range)
+"hc" = (
+/obj/item/casing/shotgun,
+/obj/item/casing/cannon{
+	dir = 6;
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/obj/item/casing/small{
+	dir = 9;
+	pixel_x = -9;
+	pixel_y = -4
+	},
+/obj/item/casing/shotgun/blue{
+	dir = 5;
+	pixel_x = 9;
+	pixel_y = 4
+	},
+/obj/item/casing/cannon{
+	dir = 10;
+	pixel_x = 15
+	},
+/turf/simulated/floor/racing,
+/area/prefab/shooting_range)
+"hg" = (
+/obj/decoration/bullethole{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/obj/item/caution/target_sheet{
+	anchored = 1
+	},
+/turf/simulated/floor/racing,
+/area/prefab/shooting_range)
+"hm" = (
+/obj/rack,
+/obj/item/gun/laser_pistol,
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"ic" = (
+/obj/machinery/light/incandescent/cool/very{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"iB" = (
+/obj/item/wrench{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/turf/simulated/floor/dojo,
+/area/prefab/shooting_range)
+"iE" = (
+/obj/cabinet/ammo,
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"iM" = (
+/obj/item/casing/grenade{
+	dir = 6
+	},
+/obj/item/casing/small{
+	dir = 4;
+	pixel_x = -9;
+	pixel_y = -4
+	},
+/obj/item/casing/shotgun/blue{
+	dir = 6;
+	pixel_x = 4
+	},
+/obj/decal/cleanable/eggsplat,
+/obj/item/casing/cannon{
+	dir = 6;
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/turf/simulated/floor/racing,
+/area/prefab/shooting_range)
+"iP" = (
+/obj/item/casing/cannon,
+/turf/simulated/floor/racing,
+/area/prefab/shooting_range)
+"ji" = (
+/obj/decal/tile_edge/stripe{
+	dir = 10;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/engine/caution,
+/area/prefab/shooting_range)
+"jn" = (
+/obj/table/reinforced,
+/obj/item/clothing/glasses/sunglasses/tanning{
+	pixel_y = 12
+	},
+/obj/item/item_box/assorted/stickers,
+/obj/item/storage/secure/ssafe/shooting_range{
+	pixel_y = 32
+	},
+/obj/machinery/light/incandescent/cool/very{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/item/paper/shooting_range_note1{
+	pixel_x = -13;
+	pixel_y = 28
+	},
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"ls" = (
+/obj/random_pod_spawner/random_putt_spawner,
+/turf/simulated/floor/engine/glow/blue,
+/area/prefab/shooting_range)
+"lx" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/engine/glow/blue,
+/area/prefab/shooting_range)
+"lC" = (
+/obj/machinery/light/incandescent/cool/very{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"lP" = (
+/obj/decal/tile_edge/stripe{
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/engine/caution,
+/area/prefab/shooting_range)
+"mE" = (
+/obj/decal/tile_edge/stripe{
+	dir = 9;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/machinery/light/incandescent/cool/very{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/engine/caution,
+/area/prefab/shooting_range)
+"rA" = (
+/obj/decal/tile_edge/stripe{
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"sy" = (
+/obj/decal/tile_edge/stripe{
+	dir = 5;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/engine/caution,
+/area/prefab/shooting_range)
+"te" = (
+/obj/item/sticker/clover{
+	anchored = 1
+	},
+/turf/simulated/wall/auto/reinforced/jen/dark4,
+/area/prefab/shooting_range)
+"tp" = (
+/obj/decoration/bullethole{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/casing/shotgun,
+/obj/item/casing/grenade{
+	dir = 5;
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/casing/grenade{
+	dir = 6
+	},
+/obj/item/casing/small{
+	dir = 5;
+	pixel_x = -9;
+	pixel_y = -4
+	},
+/obj/item/casing/shotgun/blue{
+	dir = 10;
+	pixel_x = -9
+	},
+/obj/item/casing/cannon{
+	dir = 5;
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/obj/item/casing/cannon{
+	dir = 6;
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/obj/item/casing/cannon{
+	dir = 10;
+	pixel_x = 15
+	},
+/turf/simulated/floor/racing,
+/area/prefab/shooting_range)
+"tW" = (
+/obj/item/sticker/horseshoe{
+	anchored = 1
+	},
+/turf/simulated/wall/auto/reinforced/jen/dark4,
+/area/prefab/shooting_range)
+"uN" = (
+/obj/machinery/light/incandescent/cool/very{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/racing,
+/area/prefab/shooting_range)
+"vz" = (
+/obj/decal/fakeobjects/plantpot,
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"vO" = (
+/obj/machinery/light/incandescent/cool/very,
+/turf/simulated/floor/engine/glow/blue,
+/area/prefab/shooting_range)
+"wt" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	requires_power = 0
+	},
+/turf/simulated/floor/engine/caution,
+/area/prefab/shooting_range)
+"wI" = (
+/obj/machinery/light/incandescent/cool/very{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/machinery/weapon_stand/taser_rack/recharger/empty,
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"xl" = (
+/obj/decal/tile_edge/stripe{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/storage/crate/bin,
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"xn" = (
+/obj/decal/cleanable/eggsplat,
+/obj/item/caution/target_sheet{
+	anchored = 1
+	},
+/turf/simulated/floor/racing,
+/area/prefab/shooting_range)
+"xS" = (
+/obj/item/caution/target_sheet{
+	anchored = 1
+	},
+/turf/simulated/floor/racing,
+/area/prefab/shooting_range)
+"zc" = (
+/obj/decoration/bullethole{
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/decoration/bullethole{
+	pixel_x = 3;
+	pixel_y = 7
+	},
+/turf/simulated/wall/auto/reinforced/jen/dark4,
+/area/prefab/shooting_range)
+"ze" = (
+/obj/item/caution/target_sheet,
+/turf/simulated/floor/delivery,
+/area/prefab/shooting_range)
+"zM" = (
+/turf/simulated/floor/damaged5,
+/area/prefab/shooting_range)
+"Ar" = (
+/turf/simulated/floor/delivery,
+/area/prefab/shooting_range)
+"AI" = (
+/obj/item/parts/robot_parts/arm/right/heavy,
+/turf/simulated/floor/dojo,
+/area/prefab/shooting_range)
+"Bq" = (
+/obj/decal/cleanable/machine_debris,
+/turf/simulated/floor/racing,
+/area/prefab/shooting_range)
+"CZ" = (
+/obj/decoration/bullethole{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/decoration/bullethole{
+	pixel_x = -2;
+	pixel_y = -9
+	},
+/obj/decoration/bullethole,
+/obj/decoration/bullethole{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/turf/simulated/wall/auto/reinforced/jen/dark4,
+/area/prefab/shooting_range)
+"Dj" = (
+/obj/table/reinforced,
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"Ek" = (
+/obj/decal/tile_edge/stripe{
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"EB" = (
+/obj/table/reinforced,
+/obj/decal/tile_edge/stripe{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/item/clothing/glasses/sunglasses/tanning,
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"EQ" = (
+/obj/machinery/r_door_control{
+	id = "shooting_range"
+	},
+/turf/simulated/wall/auto/reinforced/jen/dark4,
+/area/prefab/shooting_range)
+"Fe" = (
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"FE" = (
+/obj/displaycase,
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"FZ" = (
+/turf/simulated/floor/damaged2,
+/area/prefab/shooting_range)
+"Hs" = (
+/obj/table/reinforced,
+/obj/machinery/cashreg,
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"JB" = (
+/obj/item_dispenser/prescription_glasses,
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"JH" = (
+/obj/decoration/bullethole{
+	pixel_x = -2;
+	pixel_y = -4
+	},
+/obj/decoration/bullethole{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/decoration/bullethole{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/turf/simulated/wall/auto/reinforced/jen/dark4,
+/area/prefab/shooting_range)
+"JQ" = (
+/obj/table/reinforced,
+/obj/item/gun/kinetic/foamdartgun,
+/obj/decal/tile_edge/stripe{
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/racing,
+/area/prefab/shooting_range)
+"KL" = (
+/obj/decal/fakeobjects/robot,
+/turf/simulated/floor/delivery,
+/area/prefab/shooting_range)
+"Lu" = (
+/obj/item/storage/wall/clothingrack/clothes_shooting_range,
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"Lz" = (
+/obj/item/clothing/under/trash_bag/biohazard,
+/obj/machinery/light/incandescent/cool/very{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/racing,
+/area/prefab/shooting_range)
+"LF" = (
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/cable_coil/black/cut,
+/turf/simulated/floor/dojo,
+/area/prefab/shooting_range)
+"MH" = (
+/obj/window/auto/bulletproof,
+/turf/simulated/floor/plating,
+/area/prefab/shooting_range)
+"MS" = (
+/obj/decal/fakeobjects/robot,
+/turf/simulated/floor/dojo,
+/area/prefab/shooting_range)
+"Nk" = (
+/turf/simulated/floor/bot/caution,
+/area/prefab/shooting_range)
+"Oz" = (
+/obj/machinery/light/incandescent/cool/very{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/storage/crate,
+/obj/item/storage/backpack/red,
+/turf/simulated/floor/damaged2,
+/area/prefab/shooting_range)
+"OO" = (
+/obj/forcefield/energyshield/perma{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
+	id = "shooting_range";
+	name = "Ashburn's Armaments"
+	},
+/turf/simulated/floor/engine/glow/blue,
+/area/prefab/shooting_range)
+"OV" = (
+/obj/decal/fakeobjects/airmonitor_broken{
+	pixel_y = 28
+	},
+/obj/decal/fakeobjects/cargopad,
+/turf/simulated/floor/bot/caution,
+/area/prefab/shooting_range)
+"PM" = (
+/obj/item/casing/cannon,
+/obj/item/casing/small,
+/obj/item/casing/grenade{
+	dir = 5;
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/casing/grenade{
+	dir = 6
+	},
+/obj/item/casing/cannon{
+	dir = 6;
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/obj/item/casing/cannon{
+	dir = 10;
+	pixel_x = 15
+	},
+/turf/simulated/floor/racing,
+/area/prefab/shooting_range)
+"QF" = (
+/obj/item/casing/cannon{
+	dir = 10;
+	pixel_x = 7
+	},
+/turf/simulated/floor/racing,
+/area/prefab/shooting_range)
+"QY" = (
+/obj/item/caution/target_sheet,
+/turf/simulated/floor/dojo,
+/area/prefab/shooting_range)
+"Rs" = (
+/obj/machinery/light/incandescent/cool/very,
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"RS" = (
+/obj/machinery/light/incandescent/cool/very{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/table/reinforced,
+/obj/item/spacecash,
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"RX" = (
+/obj/table/reinforced,
+/obj/item/casing/shotgun/red{
+	dir = 6
+	},
+/obj/decal/tile_edge/stripe{
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/racing,
+/area/prefab/shooting_range)
+"Sb" = (
+/obj/item/casing/grenade{
+	dir = 5;
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/casing/small,
+/obj/item/casing/shotgun/blue{
+	dir = 4;
+	pixel_x = -7
+	},
+/obj/item/casing/grenade{
+	dir = 6
+	},
+/obj/item/casing/cannon{
+	dir = 6;
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/obj/item/casing/cannon{
+	dir = 9;
+	pixel_x = 15;
+	pixel_y = -4
+	},
+/turf/simulated/floor/racing,
+/area/prefab/shooting_range)
+"TL" = (
+/obj/decoration/bullethole{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/obj/item/casing/grenade,
+/obj/machinery/light/incandescent/cool/very{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/racing,
+/area/prefab/shooting_range)
+"UE" = (
+/turf/simulated/floor/engine/glow/blue,
+/area/prefab/shooting_range)
+"Vc" = (
+/turf/simulated/floor/dojo,
+/area/prefab/shooting_range)
+"Vj" = (
+/obj/decal/tile_edge/stripe{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/stool/chair/red,
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"VD" = (
+/obj/machinery/door/airlock/pyro{
+	requires_power = 0
+	},
+/turf/simulated/floor/wood/three,
+/area/prefab/shooting_range)
+"VT" = (
+/obj/decoration/bullethole{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/obj/decoration/bullethole{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/decoration/bullethole{
+	pixel_x = -2;
+	pixel_y = -9
+	},
+/turf/simulated/wall/auto/reinforced/jen/dark4,
+/area/prefab/shooting_range)
+"VY" = (
+/turf/space,
+/area/noGenerate)
+"Xo" = (
+/turf/simulated/wall/auto/reinforced/jen/dark4,
+/area/prefab/shooting_range)
+"XG" = (
+/obj/decal/cleanable/cobweb{
+	pixel_x = -15;
+	pixel_y = 21
+	},
+/obj/decoration/bullethole{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/turf/simulated/floor/racing,
+/area/prefab/shooting_range)
+"Yz" = (
+/turf/simulated/floor/racing,
+/area/prefab/shooting_range)
+
+(1,1,1) = {"
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+"}
+(2,1,1) = {"
+VY
+VY
+VY
+Xo
+Xo
+Xo
+Xo
+Xo
+Xo
+Xo
+Xo
+Xo
+Xo
+Xo
+Xo
+Xo
+Xo
+Xo
+VY
+VY
+VY
+VY
+"}
+(3,1,1) = {"
+VY
+VY
+VY
+zc
+XG
+uN
+xS
+Yz
+TL
+Sb
+JQ
+Nk
+mE
+ji
+te
+aw
+wI
+Xo
+Xo
+VY
+VY
+VY
+"}
+(4,1,1) = {"
+VY
+VY
+VY
+VT
+Bq
+Yz
+Yz
+Yz
+Yz
+iM
+ey
+aY
+gM
+lP
+MH
+Ek
+Fe
+Fe
+Xo
+Xo
+VY
+VY
+"}
+(5,1,1) = {"
+VY
+VY
+VY
+JH
+Yz
+Yz
+hg
+QF
+Yz
+hc
+RX
+fq
+gM
+lP
+Xo
+Vj
+Fe
+Fe
+FE
+Xo
+Xo
+VY
+"}
+(6,1,1) = {"
+VY
+VY
+VY
+CZ
+Yz
+Yz
+Yz
+Yz
+iP
+tp
+aa
+Ar
+gM
+lP
+Xo
+eO
+Fe
+Fe
+Fe
+Fe
+Xo
+VY
+"}
+(7,1,1) = {"
+VY
+VY
+VY
+bp
+bX
+Lz
+xn
+Yz
+af
+PM
+JQ
+Nk
+sy
+gV
+Xo
+Fe
+Fe
+Fe
+Fe
+Fe
+Xo
+VY
+"}
+(8,1,1) = {"
+VY
+Xo
+Xo
+Xo
+Xo
+Xo
+MH
+MH
+Xo
+Xo
+Xo
+Xo
+wt
+MH
+tW
+Fe
+hm
+Fe
+bL
+Fe
+Xo
+VY
+"}
+(9,1,1) = {"
+VY
+Xo
+ze
+QY
+ze
+Xo
+OV
+Fe
+Hs
+Fe
+lC
+EB
+rA
+xl
+Fe
+Fe
+Lu
+Fe
+bL
+Rs
+Xo
+VY
+"}
+(10,1,1) = {"
+VY
+Xo
+MS
+FZ
+Vc
+VD
+Fe
+eO
+Dj
+Fe
+Fe
+Fe
+Fe
+Fe
+Fe
+Fe
+bL
+Fe
+dz
+Fe
+Xo
+VY
+"}
+(11,1,1) = {"
+VY
+Xo
+iB
+AI
+LF
+Xo
+iE
+Fe
+Xo
+JB
+Fe
+Fe
+Fe
+Fe
+Fe
+Fe
+Fe
+Fe
+Fe
+Fe
+Xo
+VY
+"}
+(12,1,1) = {"
+VY
+Xo
+Oz
+zM
+KL
+Xo
+jn
+Fe
+aj
+Fe
+ic
+vz
+Fe
+Fe
+vz
+Fe
+RS
+Dj
+Dj
+Fe
+Xo
+VY
+"}
+(13,1,1) = {"
+VY
+Xo
+Xo
+fD
+Xo
+Xo
+Xo
+Xo
+Xo
+Xo
+Xo
+Xo
+cP
+cP
+Xo
+Xo
+Xo
+Xo
+Xo
+Xo
+Xo
+VY
+"}
+(14,1,1) = {"
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+Xo
+dA
+UE
+lx
+lx
+UE
+vO
+Xo
+VY
+VY
+VY
+VY
+VY
+"}
+(15,1,1) = {"
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+fD
+UE
+UE
+UE
+UE
+ls
+UE
+fD
+VY
+VY
+VY
+VY
+VY
+"}
+(16,1,1) = {"
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+fD
+UE
+UE
+UE
+UE
+UE
+UE
+fD
+VY
+VY
+VY
+VY
+VY
+"}
+(17,1,1) = {"
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+fD
+UE
+UE
+lx
+lx
+UE
+UE
+fD
+VY
+VY
+VY
+VY
+VY
+"}
+(18,1,1) = {"
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+EQ
+OO
+OO
+OO
+OO
+OO
+OO
+EQ
+VY
+VY
+VY
+VY
+VY
+"}
+(19,1,1) = {"
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+VY
+"}

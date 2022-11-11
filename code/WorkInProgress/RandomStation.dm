@@ -32,7 +32,7 @@ var/list/rnd_cons = new/list()
 /obj/room_monsterspawn //Used to mark spawns for monsters.
 	name = "room monster spawn"
 	anchored = 1
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	var/probability = 100 //probability that we actually spawn something here.
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "rdn"
@@ -40,7 +40,7 @@ var/list/rnd_cons = new/list()
 /obj/room_rewardspawn //Used to mark spawns for rewards.
 	name = "room reward spawn"
 	anchored = 1
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	var/probability = 100 //probability that we actually spawn something here.
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "ydn"
@@ -48,7 +48,7 @@ var/list/rnd_cons = new/list()
 /obj/room_props //These need to be placed in the center of the room
 	name = "room props"
 	anchored = 1
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	var/room_range = 1 //Range of the room (see range proc for how the numbers work)
 	var/room_unique = 0 //Is this an unique room that should only be placed once? 0=no, 1=yes
 	var/list/connections = new/list()
@@ -58,7 +58,7 @@ var/list/rnd_cons = new/list()
 /obj/room_connection //These are placed north east south and west from the center at the edge of the room if that tile is not solid
 	name = "room connection" //Or otherwise blocked. These are used to connect rooms to each other.
 	anchored = 1
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	var/open_dir = -1 //These vars are automatically set. Dont need to mess with them.
 	var/obj/room_props/room = null
 
@@ -138,7 +138,7 @@ proc/spawnmonsters()
 					new selected(S.loc)
 					del(S)
 				if("plantsnanimals")
-					var/selected = pick(/obj/critter/bear, /obj/critter/spacebee, /obj/critter/lion, /obj/critter/killertomato, /obj/critter/maneater)
+					var/selected = pick(/obj/critter/bear, /obj/critter/wasp, /obj/critter/lion, /obj/critter/killertomato, /obj/critter/maneater)
 					new selected(S.loc)
 					del(S)
 				if("aliens")

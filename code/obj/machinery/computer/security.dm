@@ -1,6 +1,7 @@
 /obj/machinery/computer/security
 	name = "Security Cameras"
 	icon_state = "security"
+	circuit_type = /obj/item/circuitboard/security
 	var/obj/machinery/camera/current = null
 	var/list/obj/machinery/camera/favorites = list()
 	var/const/favorites_Max = 8
@@ -25,7 +26,7 @@
 		if(window)
 			for (var/client/subscriber in window.subscribers)
 				var/list/viewports = subscriber.getViewportsByType("cameras: Viewport")
-				if(get_dist(src,subscriber.mob) > 1 && length(viewports))
+				if(BOUNDS_DIST(src, subscriber.mob) > 0 && length(viewports))
 					boutput(subscriber,"<span class='alert'>You are too far to see the screen.</span>")
 					subscriber.clearViewportsByType("cameras: Viewport")
 
@@ -81,9 +82,9 @@
 
 		if(!closest)
 			return
-		else if (!closest.camera_status)
+		else if (!closest.camera_status || closest.ai_only)
 			boutput(user, "<span class='alert'>ERROR. Cannot connect to camera.</span>")
-			playsound(src.loc, "sound/machines/buzz-sigh.ogg", 10, 0)
+			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 10, 0)
 			return
 		if (length(clint.getViewportsByType("cameras: Viewport")))
 			move_viewport_to_camera(closest, clint)
@@ -100,12 +101,14 @@
 /obj/machinery/computer/security/wooden_tv
 	name = "Security Cameras"
 	icon_state = "security_det"
+	circuit_type = /obj/item/circuitboard/security_tv
 
 	small
 		name = "Television"
 		desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?"
 		network = "Zeta"
 		icon_state = "security_tv"
+		circuit_type = /obj/item/circuitboard/small_tv
 
 		power_change()
 			return
@@ -126,7 +129,7 @@
 	power_change()
 		return
 
-/obj/machinery/computer/security/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/security/attack_hand(var/mob/user)
 	if (status & (NOPOWER|BROKEN) || !user.client)
 		return
 
@@ -155,7 +158,7 @@
 		if (!istype(C, /obj/machinery/camera))
 			return
 
-		if ((!isAI(usr)) && (get_dist(usr, src) > 1 || (!usr.using_dialog_of(src)) || !usr.sight_check(1) || !( usr.canmove ) || !( C.camera_status )))
+		if ((!isAI(usr)) && (BOUNDS_DIST(usr, src) > 0 || (!usr.using_dialog_of(src)) || !usr.sight_check(1) || !( usr.canmove ) || !( C.camera_status )))
 			usr.set_eye(null)
 			winshow(usr, "camera_console", 0)
 			return
@@ -164,40 +167,6 @@
 			src.current = C
 			usr.set_eye(C)
 			use_power(50)
-
-/obj/machinery/computer/security/attackby(obj/item/I as obj, user as mob)
-	if (isscrewingtool(I))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 2 SECONDS))
-			if (src.status & BROKEN)
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/security/M = new /obj/item/circuitboard/security( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				qdel(src)
-			else
-				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/circuitboard/security/M = new /obj/item/circuitboard/security( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				qdel(src)
-	else
-		src.attack_hand(user)
-	return
 
 proc/getr(col)
 	return hex2num( copytext(col, 2,4))

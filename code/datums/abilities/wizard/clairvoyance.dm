@@ -6,14 +6,16 @@
 	cooldown = 600
 	requires_robes = 1
 	cooldown_staff = 1
-	voice_grim = "sound/voice/wizard/ClairvoyanceGrim.ogg"
-	voice_fem = "sound/voice/wizard/ClairvoyanceFem.ogg"
-	voice_other = "sound/voice/wizard/ClairvoyanceLoud.ogg"
+	voice_grim = 'sound/voice/wizard/ClairvoyanceGrim.ogg'
+	voice_fem = 'sound/voice/wizard/ClairvoyanceFem.ogg'
+	voice_other = 'sound/voice/wizard/ClairvoyanceLoud.ogg'
+	maptext_colors = list("#24639a", "#24bdc6", "#55eec2", "#24bdc6")
 
 	cast()
 		if(!holder)
 			return
-		holder.owner.say("HAIDAN SEEHQ")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("HAIDAN SEEHQ", FALSE, maptext_style, maptext_colors)
 		..()
 
 		var/list/mob/targets = list()
@@ -23,14 +25,14 @@
 		if (!length(targets))
 			return
 		targets = sortNames(targets)
-		var/input = input(holder.owner, "Select target", "Clairvoyance") as null|anything in targets
+		var/input = tgui_input_list(holder.owner, "Select target", "Clairvoyance", targets)
 		var/mob/M = targets[input]
-		if (!M || !holder?.owner)
+		if (isnull(M) || !holder?.owner)
 			return
 
 		var/turf/T = get_turf(M)
 		var/area/A = get_area(M)
-		if (!T)
+		if (isnull(T))
 			boutput(holder.owner, "<span class='alert'>[M] appears to be trapped in some sort of Schrödinger's cat-like existence neither truly residing in nor completely removed from the universe!</span>")
 			return //oh shit they're in null space
 

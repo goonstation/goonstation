@@ -12,4 +12,4 @@
 	ches_mod = "Lab Coat"
 	fx = list(0, 0, 255)
 	painted = 1
-	paint = list(0, 0, 100)
+	paint = "#000064"

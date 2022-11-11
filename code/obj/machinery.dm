@@ -12,7 +12,8 @@
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
-
+	object_flags = NO_GHOSTCRITTER
+	layer = STORAGE_LAYER
 	var/status = 0
 	var/power_usage = 0
 	var/power_channel = EQUIP
@@ -25,13 +26,14 @@
 	var/tmp/machine_registry_idx // List index for misc. machines registry, used in loops where machines of a specific type are needed
 	var/base_tick_spacing = 6 // Machines proc every 1*(2^tier-1) seconds. Or something like that.
 	var/cap_base_tick_spacing = 60
-	var/last_process
+	var/tmp/last_process
 	var/requires_power = TRUE // machine requires power, used in tgui_broken_state
 	// New() and disposing() add and remove machines from the global "machines" list
 	// This list is used to call the process() proc for all machines ~1 per second during a round
 
 /obj/machinery/New()
 	..()
+	START_TRACKING
 
 	if (!isnull(initial(machine_registry_idx))) 	// we can use initial() here to skip a lookup from this instance's vars which we know won't contain this.
 		machine_registry[initial(machine_registry_idx)] += src
@@ -40,7 +42,7 @@
 	src.processing_bucket = machines_counter++ & 31 // this is just modulo 32 but faster due to power-of-two memes
 	SubscribeToProcess()
 	if (current_state > GAME_STATE_WORLD_INIT)
-		SPAWN_DBG(5 DECI SECONDS)
+		SPAWN(5 DECI SECONDS)
 			src.power_change()
 			var/area/A = get_area(src)
 			if (A && src) //fixes a weird runtime wrt qdeling crushers in crusher/New()
@@ -53,6 +55,7 @@
 	A?.machines += src
 
 /obj/machinery/disposing()
+	STOP_TRACKING
 	if (!isnull(initial(machine_registry_idx)))
 		machine_registry[initial(machine_registry_idx)] -= src
 	UnsubscribeProcess()
@@ -156,9 +159,9 @@
 	return 0
 
 /obj/machinery/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
-/obj/machinery/attack_hand(mob/user as mob)
+/obj/machinery/attack_hand(mob/user)
 	. = ..()
 	if(status & (NOPOWER|BROKEN))
 		return 1
@@ -199,14 +202,14 @@
 	// Called when an object is in an explosion
 	// Higher "severity" means the object was further from the centre of the explosion
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				qdel(src)
 				return
-		if(3.0)
+		if(3)
 			if (prob(25))
 				qdel(src)
 				return
@@ -217,6 +220,14 @@
 	// Called when attacked by a blob
 	if(prob(25 * power / 20))
 		qdel(src)
+
+/obj/machinery/was_deconstructed_to_frame(mob/user)
+	. = ..()
+	src.power_change()
+
+/obj/machinery/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	src.power_change()
 
 /obj/machinery/proc/get_power_wire()
 	var/obj/cable/C = null
@@ -235,6 +246,8 @@
 /obj/machinery/proc/powered(var/chan = EQUIP)
 	// returns true if the area has power on given channel (or doesn't require power).
 	// defaults to equipment channel
+	if (istype(src.loc, /obj/item/electronics/frame)) //if in a frame, we are never powered
+		return 0
 	if (machines_may_use_wired_power && power_usage)
 		var/datum/powernet/net = get_direct_powernet()
 		if (net)
@@ -274,6 +287,18 @@
 	if(!A || !isarea(A))
 		return
 
+#ifdef MACHINE_PROCESSING_DEBUG
+	var/list/machines = detailed_machine_power[A]
+	if(!machines)
+		detailed_machine_power[A] = list()
+		machines = detailed_machine_power[A]
+	var/list/machine = machines[src]
+	if(!machine)
+		machines[src] = list()
+		machine = machines[src]
+	machine += -amount
+#endif
+
 	A.use_power(amount, chan)
 
 
@@ -300,7 +325,7 @@
 	pulse2.anchored = 1
 	pulse2.set_dir(pick(cardinal))
 
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		src.flags &= ~EMP_SHORT
 		qdel(pulse2)
 	return
@@ -310,29 +335,11 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "sec_lock"
 	var/obj/item/card/id/scan = null
-	var/a_type = 0.0
+	var/a_type = 0
 	var/obj/machinery/door/d1 = null
 	var/obj/machinery/door/d2 = null
-	anchored = 1.0
+	anchored = 1
 	req_access = list(access_armory)
-
-/obj/machinery/driver_button
-	name = "Mass Driver Button"
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "launcherbtt"
-	desc = "A remote control switch for a Mass Driver."
-	var/id = null
-	var/active = 0
-	anchored = 1.0
-
-/obj/machinery/ignition_switch
-	name = "Ignition Switch"
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "launcherbtt"
-	desc = "A remote control switch for a mounted igniter."
-	var/id = null
-	var/active = 0
-	anchored = 1.0
 
 /obj/machinery/noise_switch
 	name = "Speaker Toggle"

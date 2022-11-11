@@ -5,7 +5,7 @@
 	var/iconmod = null // name of the sprite files in hydro_mutants.dmi
 	var/harvest_override = 0 // If 1, you can harvest it irregardless of the plant's base harvestability
 	var/harvested_proc_override = 0
-	var/special_proc_override = 0
+	var/special_proc_override = FALSE
 	// If 0, just use the base plant's settings
 	// If 1, use the mutation's special_proc instead
 	// If anything else, use both the base and the mutant procs
@@ -22,17 +22,21 @@
 	var/list/PTrange = list(null,null)
 	var/list/ENrange = list(null,null)
 	var/commut = null // is a paticular common mutation required for this? (keeping it to 1 for now)
+	/// Is a particular other mutation required for this? (type not instance)
+	var/datum/plantmutation/required_mutation = null
 	var/chance = 8 // How likely out of 100% is this mutation to appear when conditions are met?
 	var/list/assoc_reagents = list() // Used for extractions, harvesting, etc
 
 	var/lasterr = 0
+
+	var/mutation_sfx = 'sound/effects/plant_mutation.ogg'
 
 	proc/HYPharvested_proc_M(var/obj/machinery/plantpot/POT, var/mob/user)
 		lasterr = 0
 		if (!POT || !user) return 301
 		if (POT.dead || !POT.current) return 302
 		if (lasterr)
-			logTheThing("debug", null, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
+			logTheThing(LOG_DEBUG, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
 			harvested_proc_override = 0
 		return lasterr
 
@@ -41,8 +45,8 @@
 		if (!POT) lasterr = 401
 		if (POT.dead || !POT.current) lasterr = 402
 		if (lasterr)
-			logTheThing("debug", null, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
-			special_proc_override = 0
+			logTheThing(LOG_DEBUG, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
+			special_proc_override = FALSE
 		return lasterr
 
 	proc/HYPattacked_proc_M(var/obj/machinery/plantpot/POT,var/mob/user)
@@ -50,7 +54,7 @@
 		if (!POT) lasterr = 501
 		if (POT.dead || !POT.current) lasterr = 502
 		if (lasterr)
-			logTheThing("debug", null, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
+			logTheThing(LOG_DEBUG, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
 			attacked_proc_override = 0
 		return lasterr
 
@@ -69,25 +73,35 @@
 	crop = /obj/critter/killertomato
 	iconmod = "TomatoKiller"
 
-/datum/plantmutation/tomato/tomacco
-	name = "Tomacco"
-	name_suffix = " Tomacco"
-	crop = /obj/item/reagent_containers/food/snacks/plant/tomato/tomacco
-	iconmod = "TomatoTomacco" //ayy potayto potato tomayto tomacco ya dig
-
 // Corn Mutations
 
 /datum/plantmutation/corn/clear
 	crop = /obj/item/reagent_containers/food/snacks/plant/corn/clear
 	iconmod = "CornClear"
+	name_prefix = "Clear "
 	assoc_reagents = list("ethanol")
+
+/datum/plantmutation/corn/pepper
+	crop = /obj/item/reagent_containers/food/snacks/plant/corn/pepper
+	iconmod = "peppercorn"
+	name_prefix = "Pepper "
+	assoc_reagents = list("pepper")
+
+// Pea Mutations
+
+/datum/plantmutation/peas/ammonia
+	crop = /obj/item/reagent_containers/food/snacks/plant/peas/ammonia
+	iconmod = "GoldenPeas"
+	name_prefix = "Golden "
+	assoc_reagents = list("ammonia")
 
 // Grape Mutations
 
 /datum/plantmutation/grapes/green
-	name_prefix = "green "
+	name_prefix = "Green "
 	crop = /obj/item/reagent_containers/food/snacks/plant/grape/green
 	iconmod = "GrapeGreen"
+	assoc_reagents = list("insulin")
 
 /datum/plantmutation/grapes/fruit
 	name = "Grapefruit"
@@ -100,6 +114,7 @@
 /datum/plantmutation/orange/blood
 	name = "Blood Orange"
 	name_prefix = "Blood "
+	crop = /obj/item/reagent_containers/food/snacks/plant/orange/blood
 	iconmod = "OrangeBlood"
 	assoc_reagents = list("bloodc") // heh
 
@@ -163,17 +178,17 @@
 	iconmod = "MelonBowling"
 	ENrange = list(12,null)
 	chance = 20
-	special_proc_override = 1
+	special_proc_override = TRUE
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
 		if (.) return
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		var/thud_prob = max(0,min(100, DNA.endurance / 2))
+		var/thud_prob = clamp(DNA.endurance / 2, 0, 100)
 
 		if (prob(thud_prob))
-			playsound(POT.loc, "sound/effects/exlow.ogg", 30, 1)
+			playsound(POT, 'sound/effects/exlow.ogg', 30, 1)
 			animate_wiggle_then_reset(POT)
 
 
@@ -181,35 +196,62 @@
 
 /datum/plantmutation/beans/jelly // hehehe
 	name = "Jelly Bean"
-	name_prefix = "jelly"
+	name_prefix = "Jelly"
 	iconmod = "BeanJelly"
 	assoc_reagents = list("VHFCS")
 	crop = /obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor
+
+// Coffee Mutations
+
+/datum/plantmutation/coffee/mocha
+	name = "Mocha Coffee"
+	name_prefix = "Mocha"
+	iconmod = "CoffeeMocha"
+	crop = /obj/item/reagent_containers/food/snacks/plant/coffeeberry/mocha
+	PTrange = list(20,null)
+	assoc_reagents = list("chocolate")
+
+/datum/plantmutation/coffee/latte
+	name = "Latte Coffee"
+	name_prefix = "Latte"
+	iconmod = "CoffeeLatte"
+	crop = /obj/item/reagent_containers/food/snacks/plant/coffeeberry/latte
+	ENrange = list(10,null)
+	assoc_reagents = list("milk")
 
 // Chili Mutations
 
 /datum/plantmutation/chili/chilly
 	name = "Chilly"
-	name_prefix = "chilly "
+	name_prefix = "Chilly "
 	iconmod = "ChiliChilly" // IM SORRY THIS IS ALL IN THE NAME OF A VAGUELY CONSISTENT AND PREDICTABLE NAMING CONVENTION
 	crop = /obj/item/reagent_containers/food/snacks/plant/chili/chilly
 	assoc_reagents = list("cryostylane")
 
 /datum/plantmutation/chili/ghost
 	name = "Fiery Chili"
-	name_prefix = "fiery "
+	name_prefix = "Fiery "
 	iconmod = "ChiliGhost"
 	crop = /obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili
 	PTrange = list(75,null)
 	chance = 10
 	assoc_reagents = list("ghostchilijuice")
 
+// Pumpkin Mutations
+
+/datum/plantmutation/pumpkin/latte
+	name = "Spice Pumpkin"
+	name_prefix = "Spiced "
+	iconmod = "PumpkinLatte"
+	crop = /obj/item/reagent_containers/food/snacks/plant/pumpkinlatte
+	assoc_reagents = list("pumpkinspicelatte")
+
 // Eggplant Mutations
 
 /datum/plantmutation/eggplant/literal
 	name = "Free-Range Eggplant"
 	dont_rename_crop = true
-	name_prefix = "free range "
+	name_prefix = "Free range "
 	iconmod = "EggplantEggs"
 	crop = /obj/item/reagent_containers/food/snacks/ingredient/egg
 
@@ -217,15 +259,34 @@
 
 /datum/plantmutation/wheat/durum
 	name = "Durum Wheat"
-	name_prefix = "durum "
+	name_prefix = "Durum "
 	crop = /obj/item/plant/wheat/durum
 
 /datum/plantmutation/wheat/steelwheat
 	name = "steel wheat"
-	name_prefix = "steel "
+	name_prefix = "Steel "
 	iconmod = "WheatSteel"
 	assoc_reagents = list("iron")
 	crop = /obj/item/plant/wheat/metal
+
+// Rice Mutations
+
+/datum/plantmutation/rice/ricein
+	name = "ricein"
+	name_prefix = "Ricin "
+	iconmod = "Rice"
+	assoc_reagents = list("ricin")
+	PTrange = list(60,null)
+	crop = /obj/item/reagent_containers/food/snacks/ingredient/rice_sprig
+
+// Oat Mutations
+
+/datum/plantmutation/oat/salt
+	name = "Salted Oats"
+	name_prefix = "Salted "
+	iconmod = "OatSalt"
+	assoc_reagents = list("salt")
+	crop = /obj/item/plant/oat/salt
 
 // Synthmeat Mutations
 
@@ -234,7 +295,8 @@
 	iconmod = "SynthButts"
 	dont_rename_crop = true
 	crop = /obj/item/clothing/head/butt/synth
-	special_proc_override = 1
+	special_proc_override = TRUE
+	mutation_sfx = 'sound/voice/farts/fart6.ogg'
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
@@ -242,11 +304,11 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		var/fart_prob = max(0,min(100,DNA.potency))
+		var/fart_prob = clamp(100, 0, DNA.potency)
 
 		if (POT.growth > (P.growtime - DNA.growtime) && prob(fart_prob))
 			POT.visible_message("<span class='alert'><b>[POT]</b> farts!</span>")
-			playsound(POT.loc, "sound/voice/farts/poo2.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(POT, 'sound/voice/farts/poo2.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 			// coder.Life()
 			// whoops undefined proc
 
@@ -263,26 +325,68 @@
 	name = "Synthheart"
 	dont_rename_crop = true
 	iconmod = "SynthHearts"
-	crop = list(/obj/item/organ/heart/synth)
+	crop = /obj/item/organ/heart/synth
 
 /datum/plantmutation/synthmeat/eye
-	name = "Synthorgan"
+	name = "Syntheye"
 	dont_rename_crop = true
 	iconmod = "SynthEyes"
-	crop = list(/obj/item/organ/eye/synth)
-
+	crop = /obj/item/organ/eye/synth
 
 /datum/plantmutation/synthmeat/brain
 	name = "Synthbrain"
 	dont_rename_crop = true
 	iconmod = "SynthBrains"
-	crop = list(/obj/item/organ/brain/synth)
+	crop = /obj/item/organ/brain/synth
 
 /datum/plantmutation/synthmeat/butt/buttbot
 	name = "Synthbuttbot"
 	dont_rename_crop = true
 	iconmod = "SynthButts"
 	crop = /obj/machinery/bot/buttbot
+	mutation_sfx = 'sound/voice/virtual_gassy.ogg'
+
+/datum/plantmutation/synthmeat/lung
+	name = "Synthlung"
+	dont_rename_crop = true
+	iconmod = "SynthLungs"
+	crop = list(/obj/item/organ/lung/synth/left, /obj/item/organ/lung/synth/right)
+
+/datum/plantmutation/synthmeat/appendix
+	name = "Synthappendix"
+	dont_rename_crop = true
+	iconmod = "SynthAppendixes"
+	crop = /obj/item/organ/appendix/synth
+
+/datum/plantmutation/synthmeat/pancreas
+	name = "Synthpancreas"
+	dont_rename_crop = true
+	iconmod = "SynthPancreata"
+	crop = /obj/item/organ/pancreas/synth
+
+/datum/plantmutation/synthmeat/liver
+	name = "Synthliver"
+	dont_rename_crop = true
+	iconmod = "SynthLivers"
+	crop = /obj/item/organ/liver/synth
+
+/datum/plantmutation/synthmeat/kidney
+	name = "Synthkidney"
+	dont_rename_crop = true
+	iconmod = "SynthKidneys"
+	crop = list(/obj/item/organ/kidney/synth/left, /obj/item/organ/kidney/synth/right)
+
+/datum/plantmutation/synthmeat/spleen
+	name = "Synthspleen"
+	dont_rename_crop = true
+	iconmod = "SynthSpleens"
+	crop = /obj/item/organ/spleen/synth
+
+/datum/plantmutation/synthmeat/stomach
+	name = "Synthstomach"
+	dont_rename_crop = true
+	iconmod = "SynthStomachs"
+	crop = list(/obj/item/organ/stomach/synth, /obj/item/organ/intestines/synth)
 
 // Soy Mutations
 
@@ -298,15 +402,18 @@
 	name = "Shivering Contusine"
 	name_prefix = "Shivering "
 	iconmod = "ContusineShivering"
+	crop = /obj/item/plant/herb/contusine/shivering
 	assoc_reagents = list("salbutamol")
 	chance = 20
 
 /datum/plantmutation/contusine/quivering
 	name = "Quivering Contusine"
 	name_prefix = "Quivering "
-	iconmod = "ContusineShivering"
-	assoc_reagents = list("curare")
+	iconmod = "ContusineQuivering"
+	crop = /obj/item/plant/herb/contusine/quivering
+	assoc_reagents = list("histamine")
 	chance = 10
+	mutation_sfx = 'sound/impact_sounds/Bush_Hit.ogg'
 
 // Nureous Mutations
 
@@ -324,7 +431,7 @@
 	name_prefix = "Robust "
 	crop = /obj/item/plant/herb/asomna/robust
 	iconmod = "AsomnaRobust"
-	assoc_reagents = list("methamphetamine")
+	assoc_reagents = list("synaptizine")
 	chance = 10
 
 // Commol Mutations
@@ -333,6 +440,7 @@
 	name = "Burning Commol"
 	name_prefix = "Burning "
 	iconmod = "CommolBurning"
+	crop = /obj/item/plant/herb/commol/burning
 	assoc_reagents = list("phlogiston")
 	chance = 10
 
@@ -351,7 +459,7 @@
 	name_prefix = "Invigorating "
 	iconmod = "IpecacuanhaInvigorating"
 	crop = /obj/item/plant/herb/ipecacuanha/invigorating
-	assoc_reagents = list("synaptizine")
+	assoc_reagents = list("methamphetamine")
 	chance = 10
 
 // Venne Mutations
@@ -369,7 +477,7 @@
 	name_prefix = "Sunrise "
 	iconmod = "VenneCurative"
 	crop = /obj/item/plant/herb/venne/curative
-	assoc_reagents = list("oculine","mannitol","mutadone")
+	assoc_reagents = list("mannitol","mutadone")
 	chance = 5
 
 // Houttuynia Cordata Mutations
@@ -378,7 +486,7 @@
 	name = "Wholetuna Cordata"
 	iconmod = "Wholetuna"
 	crop = /obj/item/fish/random
-	special_proc_override = 1
+	special_proc_override = TRUE
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
@@ -391,13 +499,13 @@
 			// I know that this seems weird, but consider how many plants clutter botany at any given time. Looping through mobs and checking distance is
 			// less of a pain than looping through potentially hundreds of random seeds and crap in view(1) to see if they're mobs.
 			for (var/mob/living/L in mobs)
-				if (get_dist(L.loc,POT.loc) <= 1)
+				if (BOUNDS_DIST(L.loc, get_turf(POT)) == 0)
 					nerds += L
 				else
 					continue
 			if (nerds.len >= 1)
 				POT.visible_message("<span class='alert'><b>[POT.name]</b> slaps [pick(nerds)] with a fish!</span>")
-				playsound(get_turf(POT), pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1, -1)
+				playsound(POT, pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1, -1)
 
 // Cannabis Mutations
 
@@ -486,7 +594,7 @@
 	name = "White Radweed"
 	name_prefix = "White "
 	iconmod = "RadweedWhite"
-	special_proc_override = 1
+	special_proc_override = TRUE
 	assoc_reagents = list("penteticacid")
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
@@ -496,14 +604,14 @@
 		var/datum/plantgenes/DNA = POT.plantgenes
 
 		if (POT.growth > (P.harvtime - DNA.harvtime) && prob(10))
-			var/obj/overlay/B = new /obj/overlay( POT.loc )
+			var/obj/overlay/B = new /obj/overlay( get_turf(POT) )
 			B.icon = 'icons/effects/hydroponics.dmi'
 			B.icon_state = "radpulse"
 			B.name = "radioactive pulse"
 			B.anchored = 1
 			B.set_density(0)
 			B.layer = 5 // TODO what layer should this be on?
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				qdel(B)
 				B=null
 			var/radrange = 1
@@ -522,6 +630,7 @@
 	name_prefix = "Smoldering "
 	iconmod = "RadweedRed"
 	assoc_reagents = list("infernite")
+	mutation_sfx = 'sound/effects/redweedpop.ogg'
 
 // Slurrypod Mutations
 
@@ -552,10 +661,10 @@
 	crop = /obj/item/raw_material/mauxite
 	chance = 10
 
-/datum/plantmutation/rocks/erebite
-	name_prefix = "Erebite "
+/datum/plantmutation/rocks/uqill
+	name_prefix = "Uqill "
 	dont_rename_crop = true
-	crop = /obj/item/raw_material/erebite
+	crop = /obj/item/raw_material/uqill
 	chance = 5
 
 // trees. :effort:
@@ -566,7 +675,9 @@
 	name_prefix = "Money "
 	iconmod = "TreeCash"
 	crop = /obj/item/spacecash
-	chance = 20
+	required_mutation = /datum/plantmutation/tree/paper
+	PTrange = list(30, null)
+	chance = 50
 
 /datum/plantmutation/tree/paper
 	name = "Paper Tree"
@@ -574,14 +685,15 @@
 	name_prefix = "Paper "
 	iconmod = "TreePaper"
 	crop = /obj/item/paper
-	chance = 20
 
 /datum/plantmutation/tree/dog
 	name = "Dogwood Tree"
 	dont_rename_crop = true
 	iconmod = "TreeDogwood"
-	special_proc_override = 1
+	special_proc_override = TRUE
 	attacked_proc_override = 1
+	mutation_sfx = 'sound/voice/animal/dogbark.ogg'
+
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
@@ -591,7 +703,7 @@
 
 		if (POT.growth > (P.growtime + DNA.growtime) && prob(5))
 			POT.visible_message("<span class='combat'><b>[POT.name]</b> [pick("howls","bays","whines","barks","croons")]!</span>")
-			playsound(get_turf(POT), pick("sound/voice/animal/howl1.ogg","sound/voice/animal/howl2.ogg","sound/voice/animal/howl3.ogg","sound/voice/animal/howl4.ogg","sound/voice/animal/howl5.ogg","sound/voice/animal/howl6.ogg"), 30, 1,-1)
+			playsound(POT, pick('sound/voice/animal/howl1.ogg','sound/voice/animal/howl2.ogg','sound/voice/animal/howl3.ogg','sound/voice/animal/howl4.ogg','sound/voice/animal/howl5.ogg','sound/voice/animal/howl6.ogg'), 30, 1,-1)
 
 	HYPattacked_proc_M(var/obj/machinery/plantpot/POT,var/mob/user)
 		..()
@@ -600,7 +712,7 @@
 		var/datum/plantgenes/DNA = POT.plantgenes
 
 		if (POT.growth < (P.growtime + DNA.growtime)) return 0
-		playsound(get_turf(POT), pick("sound/voice/animal/howl1.ogg","sound/voice/animal/howl2.ogg","sound/voice/animal/howl3.ogg","sound/voice/animal/howl4.ogg","sound/voice/animal/howl5.ogg","sound/voice/animal/howl6.ogg"), 30, 1,-1)
+		playsound(POT, pick('sound/voice/animal/howl1.ogg','sound/voice/animal/howl2.ogg','sound/voice/animal/howl3.ogg','sound/voice/animal/howl4.ogg','sound/voice/animal/howl5.ogg','sound/voice/animal/howl6.ogg'), 30, 1,-1)
 		boutput(user, "<span class='alert'>[POT.name] angrily bites you!</span>")
 		random_brute_damage(user, 3)
 		return prob(50) // fights back, but doesn't always succeed
@@ -611,7 +723,6 @@
 	name_prefix = "Rubber "
 	iconmod = "TreeRubber"
 	crop = /obj/item/material_piece/rubber/latex
-	chance = 20
 
 /datum/plantmutation/tree/sassafras
 	name = "Sassafras Tree"
@@ -620,6 +731,13 @@
 	iconmod = "TreeSassafras"
 	assoc_reagents = list("safrole")
 	crop = /obj/item/plant/herb/sassafras
+
+/datum/plantmutation/tree/glowstick
+	name = "Glowstick Tree"
+	dont_rename_crop = true
+	name_prefix = "Glowstick "
+	iconmod = "TreeGlow"
+	crop = /obj/item/device/light/glowstick
 
 //peanuuts
 
@@ -638,3 +756,33 @@
 	crop = /obj/item/plant/herb/tobacco/twobacco
 	assoc_reagents = list("nicotine2")
 	chance = 50
+
+//Dripper mutations
+/datum/plantmutation/dripper/leaker
+	name = "Leaker"
+	iconmod = "Leaker"
+	crop = /obj/item/reagent_containers/food/snacks/plant/purplegoop/orangegoop
+	assoc_reagents = list("oil")
+	chance = 25
+
+//Raspberry Mutations
+
+/datum/plantmutation/raspberry/blackberry
+	name = "Blackberry"
+	iconmod = "Blackberry"
+	dont_rename_crop = true
+	crop = /obj/item/reagent_containers/food/snacks/plant/blackberry
+	assoc_reagents = list("juice_blackberry")
+
+/datum/plantmutation/raspberry/blueraspberry
+	name = "Blue Raspberry"
+	iconmod = "BlueRaspberry"
+	dont_rename_crop = true
+	crop = /obj/item/reagent_containers/food/snacks/plant/blueraspberry
+	assoc_reagents = list("juice_blueraspberry")
+
+/datum/plantmutation/rose/holorose
+	name = "Holo Rose"
+	iconmod = "HoloRose"
+	dont_rename_crop = true
+	crop = /obj/item/plant/flower/rose/holorose

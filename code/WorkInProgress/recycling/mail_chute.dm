@@ -8,8 +8,7 @@
 	var/mail_tag = null
 	//var/destination_tag = null // dropped to parent /obj/machinery/disposal
 	var/list/destinations = list()
-	var/frequency = 1475
-	var/datum/radio_frequency/radio_connection
+	var/frequency = FREQ_MAIL_CHUTE
 	var/last_inquire = 0 //No signal spamming etc
 	var/autoname = 0
 
@@ -17,29 +16,19 @@
 	var/mailgroup = null
 	var/mailgroup2 = null
 	var/net_id = null
-	var/pdafrequency = 1149
-	var/datum/radio_frequency/pda_connection
+	var/pdafrequency = FREQ_PDA
 
 	New()
 		..()
 		if (src.autoname == 1 && !isnull(src.mail_tag))
 			src.name = "mail chute ([src.mail_tag])"
 
-		SPAWN_DBG(10 SECONDS)
-			if (src)
-				if (radio_controller)
-					radio_connection = radio_controller.add_object(src, "[frequency]")
-					pda_connection = radio_controller.add_object(src, "[pdafrequency]")
-					src.post_radio_status()
-				if (!src.net_id)
-					src.net_id = generate_net_id(src)
-
-		return
-
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		radio_controller.remove_object(src, "[pdafrequency]")
-		..()
+		if (!src.net_id)
+			src.net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", pdafrequency)
+		SPAWN(10 SECONDS)
+			src.post_radio_status()
 
 	ui_data(mob/user)
 		. = ..()
@@ -65,25 +54,21 @@
 				destinations = null
 				var/datum/signal/signal = get_free_signal()
 				signal.source = src
-				signal.transmission_method = TRANSMISSION_RADIO
 				signal.data["command"] = "mail_inquire"
 
-				if (radio_connection)
-					radio_connection.post_signal(src, signal)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "main")
 
 	proc/post_radio_status()
 
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src
-		signal.transmission_method = TRANSMISSION_RADIO
 		signal.data["command"] = "mail_reply"
 		signal.data["data"] = src.mail_tag
 
-		radio_connection.post_signal(src, signal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "main")
 		return
 
 	receive_signal(datum/signal/signal)
-
 		if (signal.data["command"] == "mail_reply")
 			if (!src.destinations)
 				src.destinations = new()
@@ -94,7 +79,7 @@
 
 			if (!(destination in src.destinations))
 				src.destinations += destination
-				src.destinations = sortList(src.destinations)
+				sortList(src.destinations, /proc/cmp_text_asc)
 
 		else if (signal.data["command"] == "mail_inquire")
 			src.post_radio_status()
@@ -108,7 +93,7 @@
 		if (istype(src, /obj/machinery/disposal/mail)) flick("mailchute-flush", src)
 		else flick("disposal-flush", src)
 
-		var/obj/disposalholder/H = unpool(/obj/disposalholder)	// virtual holder object which actually
+		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
 																// travels through the pipes.
 
 		H.init(src)	// copy the contents of disposer to holder
@@ -137,7 +122,7 @@
 			var/myarea = get_area(src)
 			message = "Mail delivery alert in [myarea]."
 
-			if (message && (mailgroup || mailgroup2) && pda_connection)
+			if (message && (mailgroup || mailgroup2))
 				var/groups = list()
 				if (mailgroup)
 					groups += mailgroup
@@ -147,7 +132,6 @@
 
 				var/datum/signal/newsignal = get_free_signal()
 				newsignal.source = src
-				newsignal.transmission_method = TRANSMISSION_RADIO
 				newsignal.data["command"] = "text_message"
 				newsignal.data["sender_name"] = "CHUTE-MAILBOT"
 				newsignal.data["message"] = "[message]"
@@ -155,38 +139,10 @@
 				newsignal.data["group"] = groups
 				newsignal.data["sender"] = src.net_id
 
-				pda_connection.post_signal(src, newsignal)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
 
 		..()
 		return
-
-	colosseum
-		flush()
-			flushing = 1
-			if (istype(src, /obj/machinery/disposal/mail)) flick("mailchute-flush", src)
-			else flick("disposal-flush", src)
-
-			var/obj/disposalholder/H = unpool(/obj/disposalholder)	// virtual holder object which actually
-																	// travels through the pipes.
-
-			H.init(src)	// copy the contents of disposer to holder
-
-			sleep(1 SECOND)
-			playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
-			sleep(0.5 SECONDS) // wait for animation to finish
-
-
-			H.start(src) // start the holder processing movement
-			flushing = 0
-			// now reset disposal state
-			flush = 0
-			if(mode == 2)	// if was ready,
-				mode = 1	// switch to charging
-			update()
-			return
-
-		ex_act(severity)
-			return
 
 /obj/machinery/disposal/mail/autoname
 	autoname = 1
@@ -241,12 +197,12 @@
 	mechanics
 		name = "Mechanics"
 		mail_tag = "mechanics"
-		mailgroup = MGO_MECHANIC
+		mailgroup = MGO_ENGINEER
 		message = 1
 	mining
 		name = "Mining"
 		mail_tag = "mining"
-		mailgroup = MGO_MINING
+		mailgroup = MGD_MINING
 		message = 1
 	qm
 		name = "QM"
@@ -527,7 +483,7 @@
 	mechanics
 		name = "Mechanics"
 		mail_tag = "mechanics"
-		mailgroup = MGO_MECHANIC
+		mailgroup = MGO_ENGINEER
 		message = 1
 
 		north
@@ -543,7 +499,7 @@
 	mining
 		name = "Mining"
 		mail_tag = "mining"
-		mailgroup = MGO_MINING
+		mailgroup = MGD_MINING
 		message = 1
 
 		north

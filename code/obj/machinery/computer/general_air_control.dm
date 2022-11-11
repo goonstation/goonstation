@@ -4,22 +4,24 @@
 obj/machinery/computer/general_air_control
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
-
+	circuit_type = /obj/item/circuitboard/air_management
 	name = "Computer"
+	frequency = FREQ_AIR_ALARM_CONTROL
 
-	var/frequency = 1439
 	var/list/sensors = list()
 
 	var/list/sensor_information = list()
-	var/datum/radio_frequency/radio_connection
 
 	light_r =0.6
 	light_g = 1
 	light_b = 0.1
 
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
+	New()
 		..()
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+
+	special_deconstruct(obj/computerframe/frame as obj)
+		frame.circuit.frequency = src.frequency
 
 	attack_hand(mob/user)
 		user.Browse(return_text(),"window=computer")
@@ -30,42 +32,6 @@ obj/machinery/computer/general_air_control
 		..()
 
 		src.updateDialog()
-
-	attackby(obj/item/I as obj, user as mob)
-		if (isscrewingtool(I))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-			if(do_after(user, 2 SECONDS))
-				if (src.status & BROKEN)
-					boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-					var/obj/computerframe/A = new /obj/computerframe( src.loc )
-					if(src.material) A.setMaterial(src.material)
-					var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-					G.set_loc(src.loc)
-					var/obj/item/circuitboard/air_management/M = new /obj/item/circuitboard/air_management( A )
-					for (var/obj/C in src)
-						C.set_loc(src.loc)
-					M.frequency = src.frequency
-					A.circuit = M
-					A.state = 3
-					A.icon_state = "3"
-					A.anchored = 1
-					qdel(src)
-				else
-					boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-					var/obj/computerframe/A = new /obj/computerframe( src.loc )
-					if(src.material) A.setMaterial(src.material)
-					var/obj/item/circuitboard/air_management/M = new /obj/item/circuitboard/air_management( A )
-					for (var/obj/C in src)
-						C.set_loc(src.loc)
-					M.frequency = src.frequency
-					A.circuit = M
-					A.state = 4
-					A.icon_state = "4"
-					A.anchored = 1
-					qdel(src)
-		else
-			src.attack_hand(user)
-		return
 
 	receive_signal(datum/signal/signal)
 		if(!signal || signal.encryption) return
@@ -120,20 +86,11 @@ obj/machinery/computer/general_air_control
 
 		return output
 
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, "[frequency]")
-			frequency = new_frequency
-			radio_connection = radio_controller.add_object(src, "[frequency]")
-
-	initialize()
-		set_frequency(frequency)
-
 	large_tank_control
 		icon = 'icons/obj/computer.dmi'
 		icon_state = "tank"
 		req_access = list(access_engineering_atmos)
-		object_flags = CAN_REPROGRAM_ACCESS
+		object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
 		var/input_tag
 		var/output_tag
@@ -195,8 +152,6 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 
 			if(href_list["in_refresh_status"])
 				input_info = null
-				if(!radio_connection)
-					return 0
 
 				var/datum/signal/signal = get_free_signal()
 				signal.transmission_method = 1 //radio signal
@@ -206,12 +161,10 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				signal.data["status"] = 1
 				signal.data["command"] = "refresh"
 
-				radio_connection.post_signal(src, signal)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 			if(href_list["in_toggle_injector"])
 				input_info = null
-				if(!radio_connection)
-					return 0
 
 				var/datum/signal/signal = get_free_signal()
 				signal.transmission_method = 1 //radio signal
@@ -220,12 +173,10 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				signal.data["tag"] = input_tag
 				signal.data["command"] = "power_toggle"
 
-				radio_connection.post_signal(src, signal)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 			if(href_list["out_refresh_status"])
 				output_info = null
-				if(!radio_connection)
-					return 0
 
 				var/datum/signal/signal = get_free_signal()
 				signal.transmission_method = 1 //radio signal
@@ -235,12 +186,10 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				signal.data["status"] = 1
 				signal.data["command"] = "refresh"
 
-				radio_connection.post_signal(src, signal)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 			if(href_list["out_toggle_power"])
 				output_info = null
-				if(!radio_connection)
-					return 0
 
 				var/datum/signal/signal = get_free_signal()
 				signal.transmission_method = 1 //radio signal
@@ -249,12 +198,10 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				signal.data["tag"] = output_tag
 				signal.data["command"] = "power_toggle"
 
-				radio_connection.post_signal(src, signal)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 			if(href_list["out_set_pressure"])
 				output_info = null
-				if(!radio_connection)
-					return 0
 
 				var/datum/signal/signal = get_free_signal()
 				signal.transmission_method = 1 //radio signal
@@ -264,19 +211,19 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				signal.data["command"] = "set_internal_pressure"
 				signal.data["parameter"] = "[pressure_setting]"
 
-				radio_connection.post_signal(src, signal)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 			if(href_list["adj_pressure"])
-				var/change = text2num(href_list["adj_pressure"])
-				pressure_setting = min(max(0, pressure_setting + change), 50*ONE_ATMOSPHERE)
+				var/change = text2num_safe(href_list["adj_pressure"])
+				pressure_setting = clamp(pressure_setting + change, 0, 50*ONE_ATMOSPHERE)
 
-			SPAWN_DBG(0.7 SECONDS)
+			SPAWN(0.7 SECONDS)
 				attack_hand(usr)
 
 	fuel_injection
 		icon = 'icons/obj/computer.dmi'
 		icon_state = "atmos"
-
+		circuit_type = /obj/item/circuitboard/injector_control
 
 		var/device_tag
 		var/list/device_info
@@ -286,46 +233,11 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 		var/cutoff_temperature = 2000
 		var/on_temperature = 1200
 
-		attackby(obj/item/I as obj, user as mob)
-			if (isscrewingtool(I))
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-				if(do_after(user, 2 SECONDS))
-					if (src.status & BROKEN)
-						boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-						var/obj/computerframe/A = new /obj/computerframe( src.loc )
-						if(src.material) A.setMaterial(src.material)
-						var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-						G.set_loc(src.loc)
-						var/obj/item/circuitboard/injector_control/M = new /obj/item/circuitboard/injector_control( A )
-						for (var/obj/C in src)
-							C.set_loc(src.loc)
-						M.frequency = src.frequency
-						A.circuit = M
-						A.state = 3
-						A.icon_state = "3"
-						A.anchored = 1
-						qdel(src)
-					else
-						boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-						var/obj/computerframe/A = new /obj/computerframe( src.loc )
-						if(src.material) A.setMaterial(src.material)
-						var/obj/item/circuitboard/injector_control/M = new /obj/item/circuitboard/injector_control( A )
-						for (var/obj/C in src)
-							C.set_loc(src.loc)
-						M.frequency = src.frequency
-						A.circuit = M
-						A.state = 4
-						A.icon_state = "4"
-						A.anchored = 1
-						qdel(src)
-			else
-				src.attack_hand(user)
-			return
+		special_deconstruct(obj/computerframe/frame as obj)
+			frame.circuit.frequency = src.frequency
 
 		process()
 			if(automation)
-				if(!radio_connection)
-					return 0
 
 				var/injecting = 0
 				for(var/id_tag in sensor_information)
@@ -348,7 +260,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				else
 					signal.data["command"] = "power_off"
 
-				radio_connection.post_signal(src, signal)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 			..()
 
@@ -390,8 +302,6 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 
 			if(href_list["refresh_status"])
 				device_info = null
-				if(!radio_connection)
-					return 0
 
 				var/datum/signal/signal = get_free_signal()
 				signal.transmission_method = 1 //radio signal
@@ -401,15 +311,13 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				signal.data["status"] = 1
 				signal.data["command"] = "refresh"
 
-				radio_connection.post_signal(src, signal)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 			if(href_list["toggle_automation"])
 				automation = !automation
 
 			if(href_list["toggle_injector"])
 				device_info = null
-				if(!radio_connection)
-					return 0
 
 				var/datum/signal/signal = get_free_signal()
 				signal.transmission_method = 1 //radio signal
@@ -418,11 +326,9 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				signal.data["tag"] = device_tag
 				signal.data["command"] = "power_toggle"
 
-				radio_connection.post_signal(src, signal)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 			if(href_list["injection"])
-				if(!radio_connection)
-					return 0
 
 				var/datum/signal/signal = get_free_signal()
 				signal.transmission_method = 1 //radio signal
@@ -431,12 +337,10 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				signal.data["tag"] = device_tag
 				signal.data["command"] = "inject"
 
-				radio_connection.post_signal(src, signal)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 			if(href_list["change_vol"])
-				if(!radio_connection)
-					return 0
-				var/amount = text2num(href_list["change_vol"])
+				var/amount = text2num_safe(href_list["change_vol"])
 				var/datum/signal/signal = get_free_signal()
 				var/volume_rate = device_info["volume_rate"]
 				signal.transmission_method = 1 //radio
@@ -444,23 +348,21 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				signal.data["tag"] = device_tag
 				signal.data["command"] = "set_volume_rate"
 				signal.data["parameter"] = num2text(volume_rate + amount)
-				radio_connection.post_signal(src, signal)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 /obj/machinery/computer/general_alert
-	var/datum/radio_frequency/radio_connection
-
-	initialize()
-		set_frequency(receive_frequency)
-		radio_controller.add_object(src, "[respond_frequency]")
+	New()
+		..()
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", frequency)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("respond", respond_frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("receive", receive_frequency)
 
 	receive_signal(datum/signal/signal)
 		if(!signal || signal.encryption) return
 
 		//Oh, someone is asking us for data instead of reporting a thing.
 		if((signal.data["command"] == "report_alerts") && signal.data["sender"])
-			var/datum/radio_frequency/frequency = radio_controller.return_frequency("[src.respond_frequency]")
 			var/datum/signal/newsignal = get_free_signal()
-			newsignal.transmission_method = TRANSMISSION_RADIO
 
 			newsignal.data["address_1"] = signal.data["sender"]
 			newsignal.data["command"] = "reply_alerts"
@@ -469,7 +371,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 			if(minor_alarms.len)
 				newsignal.data["minor_list"] = jointext(minor_alarms, ";")
 
-			frequency.post_signal(src, newsignal)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "respond")
 			return
 
 
@@ -485,12 +387,6 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 			priority_alarms += zone
 		else if (severity == "minor")
 			minor_alarms += zone
-
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, "[receive_frequency]")
-			receive_frequency = new_frequency
-			radio_connection = radio_controller.add_object(src, "[receive_frequency]")
 
 
 	attack_hand(mob/user)
@@ -560,15 +456,30 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 /obj/machinery/computer/atmosphere/mixercontrol
 	var/obj/machinery/atmospherics/mixer/mixerid
 	var/mixer_information
-	var/id
 	req_access = list(access_engineering_engine, access_tox_storage)
-	object_flags = CAN_REPROGRAM_ACCESS
-
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
+	circuit_type = /obj/item/circuitboard/air_management
 	var/last_change = 0
 	var/message_delay = 600
 
-	var/frequency = 1439
-	var/datum/radio_frequency/radio_connection
+	frequency = FREQ_AIR_ALARM_CONTROL
+
+	New()
+		..()
+		src.AddComponent( \
+			/datum/component/packet_connected/radio, \
+			null, \
+			frequency, \
+			null, \
+			"receive_signal", \
+			FALSE, \
+			"mixercontrol", \
+			FALSE \
+	)
+
+	special_deconstruct(obj/computerframe/frame as obj)
+		frame.circuit.frequency = src.frequency
+
 	attack_hand(mob/user)
 		if(status & (BROKEN | NOPOWER))
 			return
@@ -581,42 +492,6 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 		if(status & (BROKEN | NOPOWER))
 			return
 		src.updateDialog()
-
-	attackby(obj/item/I as obj, user as mob)
-		if (isscrewingtool(I))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-			if(do_after(user, 2 SECONDS))
-				if (src.status & BROKEN)
-					boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-					var/obj/computerframe/A = new /obj/computerframe( src.loc )
-					if(src.material) A.setMaterial(src.material)
-					var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-					G.set_loc(src.loc)
-					var/obj/item/circuitboard/air_management/M = new /obj/item/circuitboard/air_management( A )
-					for (var/obj/C in src)
-						C.set_loc(src.loc)
-					M.frequency = src.frequency
-					A.circuit = M
-					A.state = 3
-					A.icon_state = "3"
-					A.anchored = 1
-					qdel(src)
-				else
-					boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-					var/obj/computerframe/A = new /obj/computerframe( src.loc )
-					if(src.material) A.setMaterial(src.material)
-					var/obj/item/circuitboard/air_management/M = new /obj/item/circuitboard/air_management( A )
-					for (var/obj/C in src)
-						C.set_loc(src.loc)
-					M.frequency = src.frequency
-					A.circuit = M
-					A.state = 4
-					A.icon_state = "4"
-					A.anchored = 1
-					qdel(src)
-		else
-			src.attack_hand(user)
-		return
 
 	receive_signal(datum/signal/signal)
 		//boutput(world, "[id] actually can recieve a signal!")
@@ -684,8 +559,6 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 	Topic(href, href_list)
 		if (..())
 			return 0
-		if (!radio_connection)
-			return 0
 		if (!src.allowed(usr))
 			boutput(usr, "<span class='alert'>Access denied!</span>")
 			return 0
@@ -717,28 +590,28 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 
 			var/amount = 0
 			if (href_list["pressure_adj"])
-				var/diff = text2num(href_list["pressure_adj"])
-				amount = max(0, min(pressure + diff, MAX_PRESSURE))
+				var/diff = text2num_safe(href_list["pressure_adj"])
+				amount = clamp(pressure + diff, 0, MAX_PRESSURE)
 
 			else if (href_list["pressure_set"])
 				var/change = input(usr,"Target Pressure (0 - [MAX_PRESSURE]):", "Enter target pressure", pressure) as num
-				if ((get_dist(src, usr) > 1 && !issilicon(usr)) || !isliving(usr) || iswraith(usr) || isintangible(usr))
+				if ((BOUNDS_DIST(src, usr) > 0 && !issilicon(usr)) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 					return 0
 				if (is_incapacitated(usr) || usr.restrained())
 					return 0
 				if (!src.allowed(usr))
 					boutput(usr, "<span class='alert'>Access denied!</span>")
 					return 0
-				if (!isnum(change))
+				if (!isnum_safe(change))
 					return 0
 
-				amount = max(0, min(change, MAX_PRESSURE))
+				amount = clamp(change, 0, MAX_PRESSURE)
 
 			signal.data["command"] = "set_pressure"
 			signal.data["parameter"] = num2text(amount)
 
 		if (href_list["ratio"])
-			var/amount = text2num(href_list["ratio"])
+			var/amount = text2num_safe(href_list["ratio"])
 			var/volume_rate = mixer_information["i1trans"]
 
 			signal.data["command"] = "set_ratio"
@@ -747,23 +620,14 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 			if (src.id == "pmix_control")
 				if (((src.last_change + src.message_delay) <= world.time))
 					src.last_change = world.time
-					logTheThing("atmos", usr, null, "has just edited the plasma mixer at [log_loc(src)].")
+					logTheThing(LOG_STATION, usr, "has just edited the plasma mixer at [log_loc(src)].")
 					message_admins("[key_name(usr)] has just edited the plasma mixer at at [log_loc(src)].")
 
 		if (href_list["refresh_status"])
 			signal.data["status"] = 1
 
-		if (radio_connection && signal)
-			radio_connection.post_signal(src, signal)
-
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, "[frequency]")
-			frequency = new_frequency
-			radio_connection = radio_controller.add_object(src, "[frequency]")
-
-	initialize()
-		set_frequency(frequency)
+		if (signal)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 #undef MAX_PRESSURE
 
 #undef _GET_SIGNAL_GAS

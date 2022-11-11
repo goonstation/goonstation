@@ -1,115 +1,2501 @@
-"aa" = (/turf/space,/area/space)
-"ab" = (/turf/unsimulated/wall/adaptive/wizard{icon_state = "wizard_wall_6"},/area/space)
-"ac" = (/turf/unsimulated/wall/adaptive/wizard{icon_state = "wizard_wall_12"},/area/space)
-"ad" = (/turf/unsimulated/wall/adaptive/wizard{icon_state = "wizard_wall_10"},/area/space)
-"ae" = (/turf/unsimulated/wall/adaptive/wizard{icon_state = "wizard_wall_3"},/area/space)
-"af" = (/turf/unsimulated/floor/wizard/plating,/area/space)
-"ag" = (/obj/overlay{anchored = 1; density = 1; icon = 'icons/turf/adventure.dmi'; icon_state = "door_runes_closed"; name = "runes of containment"},/turf/unsimulated/floor/wizard,/area/space)
-"ah" = (/turf/unsimulated/floor/wizard,/area/space)
-"ai" = (/turf/unsimulated/wall/adaptive/wizard{icon_state = "wizard_wall_14"},/area/space)
-"aj" = (/turf/unsimulated/wall/adaptive/wizard{icon_state = "wizard_wall_11"},/area/space)
-"ak" = (/obj/bookcase/directional/full{dir = 10; icon_state = "bookcase_full_wall"; pixel_y = 28; tag = "icon-bookcase_full_wall (SOUTHWEST)"},/turf/unsimulated/floor/wizard,/area/space)
-"al" = (/obj/bookcase/directional/full{pixel_y = 28},/turf/unsimulated/floor/wizard,/area/space)
-"am" = (/obj/bookcase/directional/full{dir = 6; icon_state = "bookcase_full_wall"; pixel_y = 28; tag = "icon-bookcase_full_wall (SOUTHEAST)"},/turf/unsimulated/floor/wizard,/area/space)
-"an" = (/turf/unsimulated/wall/adaptive/wizard{icon_state = "wizard_wall_5"},/area/space)
-"ao" = (/turf/unsimulated/wall/adaptive/wizard{icon_state = "wizard_wall_9"},/area/space)
-"ap" = (/turf/unsimulated/floor/wizard/carpet/edge{tag = "icon-carpet_edge (NORTHWEST)"; icon_state = "carpet_edge"; dir = 9},/area/space)
-"aq" = (/turf/unsimulated/floor/wizard/carpet/edge{tag = "icon-carpet_edge (NORTH)"; icon_state = "carpet_edge"; dir = 1},/area/space)
-"ar" = (/turf/unsimulated/floor/wizard/carpet/edge{tag = "icon-carpet_edge (NORTHEAST)"; icon_state = "carpet_edge"; dir = 5},/area/space)
-"as" = (/turf/unsimulated/wall/adaptive/wizard_window,/area/space)
-"at" = (/turf/unsimulated/wall/adaptive/wizard{base_name = "wizard_wall_"; icon_state = "wizard_wall_4"},/area/space)
-"au" = (/turf/unsimulated/wall/adaptive/wizard{icon_state = "wizard_wall_8"},/area/space)
-"av" = (/turf/unsimulated/wall/adaptive/wizard{icon_state = "wizard_wall_7"},/area/space)
-"aw" = (/turf/unsimulated/floor/wizard/carpet/edge{tag = "icon-carpet_edge (WEST)"; icon_state = "carpet_edge"; dir = 8},/area/space)
-"ax" = (/turf/unsimulated/floor/wizard/carpet,/area/space)
-"ay" = (/turf/unsimulated/floor/wizard/carpet/edge{tag = "icon-carpet_edge (EAST)"; icon_state = "carpet_edge"; dir = 4},/area/space)
-"az" = (/turf/unsimulated/wall/adaptive/wizard_fake{tag = "icon-wizard_false_wall (EAST)"; icon_state = "wizard_false_wall"; dir = 4},/area/space)
-"aA" = (/obj/bookcase/full{icon_state = "bookcase_full_alone_0"; pixel_y = 28},/turf/unsimulated/floor/wizard,/area/space)
-"aB" = (/turf/unsimulated/floor/wizard/carpet/narrow{tag = "icon-carpet_narrow (NORTHEAST)"; icon_state = "carpet_narrow"; dir = 5},/area/space)
-"aC" = (/turf/unsimulated/wall/adaptive/wizard{icon_state = "wizard_wall_4"},/area/space)
-"aD" = (/turf/unsimulated/wall/adaptive/wizard{icon_state = "wizard_wall_1"},/area/space)
-"aE" = (/turf/unsimulated/floor/wizard/stairs{icon_state = "wizard_stairs_left"},/area/space)
-"aF" = (/turf/unsimulated/floor/wizard/stairs{tag = "icon-wizard_stairs_middle"; icon_state = "wizard_stairs_middle"},/area/space)
-"aG" = (/turf/unsimulated/floor/wizard/stairs{tag = "icon-wizard_stairs_right"; icon_state = "wizard_stairs_right"},/area/space)
-"aH" = (/turf/unsimulated/floor/setpieces/bloodfloor/stomach,/area/space)
-"aI" = (/turf/unsimulated/floor/wizard/carpet/narrow,/area/space)
-"aJ" = (/turf/unsimulated/floor/arctic/snow/ice,/area/space)
-"aK" = (/turf/unsimulated/floor/wizard/carpet/inner_corner_onetwo{tag = "icon-carpet_inner_corner_1_2 (NORTHEAST)"; icon_state = "carpet_inner_corner_1_2"; dir = 5},/area/space)
-"aL" = (/obj/bookcase/button{pixel_y = 28},/turf/unsimulated/floor/wizard,/area/space)
-"aM" = (/turf/unsimulated/wall/adaptive/wizard_window{tag = "icon-wizard_window (WEST)"; icon_state = "wizard_window"; dir = 8},/area/space)
-"aN" = (/turf/unsimulated/wall/adaptive/wizard_window{tag = "icon-wizard_window (SOUTHEAST)"; icon_state = "wizard_window"; dir = 6},/area/space)
-"aO" = (/turf/unsimulated/floor/lava,/area/space)
-"aP" = (/turf/unsimulated/floor/void,/area/space)
-"aQ" = (/turf/unsimulated/floor/wizard/stairs{tag = "icon-wizard_stairs_right (NORTH)"; icon_state = "wizard_stairs_right"; dir = 1},/area/space)
-"aR" = (/turf/unsimulated/floor/wizard/stairs{tag = "icon-wizard_stairs_left (NORTH)"; icon_state = "wizard_stairs_left"; dir = 1},/area/space)
-"aS" = (/turf/unsimulated/floor/wizard/carpet/narrow{tag = "icon-carpet_narrow (NORTHWEST)"; icon_state = "carpet_narrow"; dir = 9},/area/space)
-"aT" = (/turf/unsimulated/floor/wizard/carpet/edge{tag = "icon-carpet_edge (SOUTHWEST)"; icon_state = "carpet_edge"; dir = 10},/area/space)
-"aU" = (/turf/unsimulated/floor/wizard/carpet/edge,/area/space)
-"aV" = (/turf/unsimulated/floor/wizard/carpet/edge{tag = "icon-carpet_edge (SOUTHEAST)"; icon_state = "carpet_edge"; dir = 6},/area/space)
-"aW" = (/turf/unsimulated/wall/adaptive/wizard{icon_state = "wizard_wall_2"},/area/space)
-"aX" = (/turf/unsimulated/floor/pool,/area/space)
-"aY" = (/turf/unsimulated/wall/adaptive/wizard{icon_state = "wizard_wall_13"},/area/space)
-"aZ" = (/turf/unsimulated/wall/adaptive/wizard_fake,/area/space)
-"ba" = (/turf/unsimulated/floor/wizard/carpet/narrow{tag = "icon-carpet_narrow (NORTH)"; icon_state = "carpet_narrow"; dir = 1},/area/space)
-"bb" = (/obj/overlay{anchored = 1; density = 1; icon = 'icons/turf/adventure.dmi'; icon_state = "column"; name = "column"},/turf/unsimulated/floor/wizard,/area/space)
-"bc" = (/turf/unsimulated/floor/wizard/carpet/narrow{tag = "icon-carpet_narrow (SOUTHWEST)"; icon_state = "carpet_narrow"; dir = 10},/area/space)
-"bd" = (/turf/unsimulated/floor/wizard/carpet/narrow/crossing{tag = "icon-carpet_narrow_crossing (NORTHEAST)"; icon_state = "carpet_narrow_crossing"; dir = 5},/area/space)
-"be" = (/turf/unsimulated/floor/wizard/carpet/narrow{tag = "icon-carpet_narrow (SOUTHEAST)"; icon_state = "carpet_narrow"; dir = 6},/area/space)
-"bf" = (/turf/unsimulated/floor/wizard/carpet/inner_corner_onetwo{tag = "icon-carpet_inner_corner_1_2 (NORTHWEST)"; icon_state = "carpet_inner_corner_1_2"; dir = 9},/area/space)
-"bg" = (/turf/unsimulated/floor/wizard/showcase,/area/space)
-"bh" = (/turf/unsimulated/floor/wizard/carpet/cross,/area/space)
-"bi" = (/turf/unsimulated/floor/wizard/carpet/inner_corner_onetwo{tag = "icon-carpet_inner_corner_1_2 (SOUTHWEST)"; icon_state = "carpet_inner_corner_1_2"; dir = 10},/area/space)
-"bj" = (/turf/unsimulated/floor/wizard/carpet/inner_corner_onetwo{tag = "icon-carpet_inner_corner_1_2 (SOUTHEAST)"; icon_state = "carpet_inner_corner_1_2"; dir = 6},/area/space)
-"bk" = (/turf/unsimulated/wall/adaptive/wizard_window{tag = "icon-wizard_window (NORTHWEST)"; icon_state = "wizard_window"; dir = 9},/area/space)
-"bl" = (/turf/unsimulated/floor/wizard/stairs{tag = "icon-wizard_stairs (EAST)"; icon_state = "wizard_stairs"; dir = 4},/area/space)
-"bm" = (/turf/unsimulated/wall/adaptive/wizard_window{tag = "icon-wizard_window (SOUTHWEST)"; icon_state = "wizard_window"; dir = 10},/area/space)
-"bn" = (/turf/unsimulated/floor/wizard/stairs{tag = "icon-wizard_stairs_left (WEST)"; icon_state = "wizard_stairs_left"; dir = 8},/area/space)
-"bo" = (/turf/unsimulated/floor/wizard/stairs{tag = "icon-wizard_stairs_right (WEST)"; icon_state = "wizard_stairs_right"; dir = 8},/area/space)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/space,
+/area/space)
+"ab" = (
+/turf/unsimulated/wall/adaptive/wizard{
+	icon_state = "wizard_wall_6"
+	},
+/area/space)
+"ac" = (
+/turf/unsimulated/wall/adaptive/wizard{
+	icon_state = "wizard_wall_12"
+	},
+/area/space)
+"ad" = (
+/turf/unsimulated/wall/adaptive/wizard{
+	icon_state = "wizard_wall_10"
+	},
+/area/space)
+"ae" = (
+/turf/unsimulated/wall/adaptive/wizard{
+	icon_state = "wizard_wall_3"
+	},
+/area/space)
+"af" = (
+/turf/unsimulated/floor/wizard/plating,
+/area/space)
+"ag" = (
+/obj/overlay{
+	anchored = 1;
+	density = 1;
+	icon = 'icons/turf/adventure.dmi';
+	icon_state = "door_runes_closed";
+	name = "runes of containment"
+	},
+/turf/unsimulated/floor/wizard,
+/area/space)
+"ah" = (
+/turf/unsimulated/floor/wizard,
+/area/space)
+"ai" = (
+/turf/unsimulated/wall/adaptive/wizard{
+	icon_state = "wizard_wall_14"
+	},
+/area/space)
+"aj" = (
+/turf/unsimulated/wall/adaptive/wizard{
+	icon_state = "wizard_wall_11"
+	},
+/area/space)
+"ak" = (
+/obj/bookcase/directional/full{
+	dir = 10;
+	icon_state = "bookcase_full_wall";
+	pixel_y = 28;
+	tag = "icon-bookcase_full_wall (SOUTHWEST)"
+	},
+/turf/unsimulated/floor/wizard,
+/area/space)
+"al" = (
+/obj/bookcase/directional/full{
+	pixel_y = 28
+	},
+/turf/unsimulated/floor/wizard,
+/area/space)
+"am" = (
+/obj/bookcase/directional/full{
+	dir = 6;
+	icon_state = "bookcase_full_wall";
+	pixel_y = 28;
+	tag = "icon-bookcase_full_wall (SOUTHEAST)"
+	},
+/turf/unsimulated/floor/wizard,
+/area/space)
+"an" = (
+/turf/unsimulated/wall/adaptive/wizard{
+	icon_state = "wizard_wall_5"
+	},
+/area/space)
+"ao" = (
+/turf/unsimulated/wall/adaptive/wizard{
+	icon_state = "wizard_wall_9"
+	},
+/area/space)
+"ap" = (
+/turf/unsimulated/floor/wizard/carpet/edge{
+	tag = "icon-carpet_edge (NORTHWEST)";
+	icon_state = "carpet_edge";
+	dir = 9
+	},
+/area/space)
+"aq" = (
+/turf/unsimulated/floor/wizard/carpet/edge{
+	tag = "icon-carpet_edge (NORTH)";
+	icon_state = "carpet_edge";
+	dir = 1
+	},
+/area/space)
+"ar" = (
+/turf/unsimulated/floor/wizard/carpet/edge{
+	tag = "icon-carpet_edge (NORTHEAST)";
+	icon_state = "carpet_edge";
+	dir = 5
+	},
+/area/space)
+"as" = (
+/turf/unsimulated/wall/adaptive/wizard_window,
+/area/space)
+"at" = (
+/turf/unsimulated/wall/adaptive/wizard{
+	base_name = "wizard_wall_";
+	icon_state = "wizard_wall_4"
+	},
+/area/space)
+"au" = (
+/turf/unsimulated/wall/adaptive/wizard{
+	icon_state = "wizard_wall_8"
+	},
+/area/space)
+"av" = (
+/turf/unsimulated/wall/adaptive/wizard{
+	icon_state = "wizard_wall_7"
+	},
+/area/space)
+"aw" = (
+/turf/unsimulated/floor/wizard/carpet/edge{
+	tag = "icon-carpet_edge (WEST)";
+	icon_state = "carpet_edge";
+	dir = 8
+	},
+/area/space)
+"ax" = (
+/turf/unsimulated/floor/wizard/carpet,
+/area/space)
+"ay" = (
+/turf/unsimulated/floor/wizard/carpet/edge{
+	tag = "icon-carpet_edge (EAST)";
+	icon_state = "carpet_edge";
+	dir = 4
+	},
+/area/space)
+"az" = (
+/turf/unsimulated/wall/adaptive/wizard_fake{
+	tag = "icon-wizard_false_wall (EAST)";
+	icon_state = "wizard_false_wall";
+	dir = 4
+	},
+/area/space)
+"aA" = (
+/obj/bookcase/full{
+	icon_state = "bookcase_full_alone_0";
+	pixel_y = 28
+	},
+/turf/unsimulated/floor/wizard,
+/area/space)
+"aB" = (
+/turf/unsimulated/floor/wizard/carpet/narrow{
+	tag = "icon-carpet_narrow (NORTHEAST)";
+	icon_state = "carpet_narrow";
+	dir = 5
+	},
+/area/space)
+"aC" = (
+/turf/unsimulated/wall/adaptive/wizard{
+	icon_state = "wizard_wall_4"
+	},
+/area/space)
+"aD" = (
+/turf/unsimulated/wall/adaptive/wizard{
+	icon_state = "wizard_wall_1"
+	},
+/area/space)
+"aE" = (
+/turf/unsimulated/floor/wizard/stairs{
+	icon_state = "wizard_stairs_left"
+	},
+/area/space)
+"aF" = (
+/turf/unsimulated/floor/wizard/stairs{
+	tag = "icon-wizard_stairs_middle";
+	icon_state = "wizard_stairs_middle"
+	},
+/area/space)
+"aG" = (
+/turf/unsimulated/floor/wizard/stairs{
+	tag = "icon-wizard_stairs_right";
+	icon_state = "wizard_stairs_right"
+	},
+/area/space)
+"aH" = (
+/turf/unsimulated/floor/setpieces/bloodfloor/stomach,
+/area/space)
+"aI" = (
+/turf/unsimulated/floor/wizard/carpet/narrow,
+/area/space)
+"aJ" = (
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/space)
+"aK" = (
+/turf/unsimulated/floor/wizard/carpet/inner_corner_onetwo{
+	tag = "icon-carpet_inner_corner_1_2 (NORTHEAST)";
+	icon_state = "carpet_inner_corner_1_2";
+	dir = 5
+	},
+/area/space)
+"aL" = (
+/obj/bookcase/button{
+	pixel_y = 28
+	},
+/turf/unsimulated/floor/wizard,
+/area/space)
+"aM" = (
+/turf/unsimulated/wall/adaptive/wizard_window{
+	tag = "icon-wizard_window (WEST)";
+	icon_state = "wizard_window";
+	dir = 8
+	},
+/area/space)
+"aN" = (
+/turf/unsimulated/wall/adaptive/wizard_window{
+	tag = "icon-wizard_window (SOUTHEAST)";
+	icon_state = "wizard_window";
+	dir = 6
+	},
+/area/space)
+"aO" = (
+/turf/unsimulated/floor/lava,
+/area/space)
+"aP" = (
+/turf/unsimulated/floor/void,
+/area/space)
+"aQ" = (
+/turf/unsimulated/floor/wizard/stairs{
+	tag = "icon-wizard_stairs_right (NORTH)";
+	icon_state = "wizard_stairs_right";
+	dir = 1
+	},
+/area/space)
+"aR" = (
+/turf/unsimulated/floor/wizard/stairs{
+	tag = "icon-wizard_stairs_left (NORTH)";
+	icon_state = "wizard_stairs_left";
+	dir = 1
+	},
+/area/space)
+"aS" = (
+/turf/unsimulated/floor/wizard/carpet/narrow{
+	tag = "icon-carpet_narrow (NORTHWEST)";
+	icon_state = "carpet_narrow";
+	dir = 9
+	},
+/area/space)
+"aT" = (
+/turf/unsimulated/floor/wizard/carpet/edge{
+	tag = "icon-carpet_edge (SOUTHWEST)";
+	icon_state = "carpet_edge";
+	dir = 10
+	},
+/area/space)
+"aU" = (
+/turf/unsimulated/floor/wizard/carpet/edge,
+/area/space)
+"aV" = (
+/turf/unsimulated/floor/wizard/carpet/edge{
+	tag = "icon-carpet_edge (SOUTHEAST)";
+	icon_state = "carpet_edge";
+	dir = 6
+	},
+/area/space)
+"aW" = (
+/turf/unsimulated/wall/adaptive/wizard{
+	icon_state = "wizard_wall_2"
+	},
+/area/space)
+"aX" = (
+/turf/unsimulated/floor/pool,
+/area/space)
+"aY" = (
+/turf/unsimulated/wall/adaptive/wizard{
+	icon_state = "wizard_wall_13"
+	},
+/area/space)
+"aZ" = (
+/turf/unsimulated/wall/adaptive/wizard_fake,
+/area/space)
+"ba" = (
+/turf/unsimulated/floor/wizard/carpet/narrow{
+	tag = "icon-carpet_narrow (NORTH)";
+	icon_state = "carpet_narrow";
+	dir = 1
+	},
+/area/space)
+"bb" = (
+/obj/overlay{
+	anchored = 1;
+	density = 1;
+	icon = 'icons/turf/adventure.dmi';
+	icon_state = "column";
+	name = "column"
+	},
+/turf/unsimulated/floor/wizard,
+/area/space)
+"bc" = (
+/turf/unsimulated/floor/wizard/carpet/narrow{
+	tag = "icon-carpet_narrow (SOUTHWEST)";
+	icon_state = "carpet_narrow";
+	dir = 10
+	},
+/area/space)
+"bd" = (
+/turf/unsimulated/floor/wizard/carpet/narrow/crossing{
+	tag = "icon-carpet_narrow_crossing (NORTHEAST)";
+	icon_state = "carpet_narrow_crossing";
+	dir = 5
+	},
+/area/space)
+"be" = (
+/turf/unsimulated/floor/wizard/carpet/narrow{
+	tag = "icon-carpet_narrow (SOUTHEAST)";
+	icon_state = "carpet_narrow";
+	dir = 6
+	},
+/area/space)
+"bf" = (
+/turf/unsimulated/floor/wizard/carpet/inner_corner_onetwo{
+	tag = "icon-carpet_inner_corner_1_2 (NORTHWEST)";
+	icon_state = "carpet_inner_corner_1_2";
+	dir = 9
+	},
+/area/space)
+"bg" = (
+/turf/unsimulated/floor/wizard/showcase,
+/area/space)
+"bh" = (
+/turf/unsimulated/floor/wizard/carpet/cross,
+/area/space)
+"bi" = (
+/turf/unsimulated/floor/wizard/carpet/inner_corner_onetwo{
+	tag = "icon-carpet_inner_corner_1_2 (SOUTHWEST)";
+	icon_state = "carpet_inner_corner_1_2";
+	dir = 10
+	},
+/area/space)
+"bj" = (
+/turf/unsimulated/floor/wizard/carpet/inner_corner_onetwo{
+	tag = "icon-carpet_inner_corner_1_2 (SOUTHEAST)";
+	icon_state = "carpet_inner_corner_1_2";
+	dir = 6
+	},
+/area/space)
+"bk" = (
+/turf/unsimulated/wall/adaptive/wizard_window{
+	tag = "icon-wizard_window (NORTHWEST)";
+	icon_state = "wizard_window";
+	dir = 9
+	},
+/area/space)
+"bl" = (
+/turf/unsimulated/floor/wizard/stairs{
+	tag = "icon-wizard_stairs (EAST)";
+	icon_state = "wizard_stairs";
+	dir = 4
+	},
+/area/space)
+"bm" = (
+/turf/unsimulated/wall/adaptive/wizard_window{
+	tag = "icon-wizard_window (SOUTHWEST)";
+	icon_state = "wizard_window";
+	dir = 10
+	},
+/area/space)
+"bn" = (
+/turf/unsimulated/floor/wizard/stairs{
+	tag = "icon-wizard_stairs_left (WEST)";
+	icon_state = "wizard_stairs_left";
+	dir = 8
+	},
+/area/space)
+"bo" = (
+/turf/unsimulated/floor/wizard/stairs{
+	tag = "icon-wizard_stairs_right (WEST)";
+	icon_state = "wizard_stairs_right";
+	dir = 8
+	},
+/area/space)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaabacacacacacacacacacadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacadaa
-aaaeafafagahahahahahahaeaaaaaaaaaaaaaaaaaaaaaaaaabacacacacacaiacacacajakalalalalalalamaeaa
-aaaeafafagahahahahahahanacacacacacacacacacacacacaoapaqaqaqarasahahahaeahatauahahatauahaeaa
-aaavacacauahahahahahahahahahahahahahahahahahahahahawaxaxaxayasahahahazahaAaAahahaAaAahaeaa
-aaaeafafagahahahahahahahahahahahahahahahahahahahahawaxaxaxayasahahahaeahatauahahatauahaeaa
-aaaeafafagahahahahahahabacacaiacauahaBahaCacaiacadawaxaxaxayaDaEaFaGaeahaAaAahahaAaAahaeaa
-aaavacacauahahahatacacajahahaeaHagahaIahagaJaeaaaeawaxaxaxaKaqaqaqaraeahatauahahatauahaeaa
-aaaeafafagahahahagafafasahahaeaHagahaIahagaJaeaaaeawaxaxaxaxaxaxaxayaeahaLaAahahaAaAahaeaa
-aaaeafafagahahahagafafasahahavacauahaIahaCacajaaaeawaxaxaxaxaxaxaxayavacacadahahabacacaoaa
-aaavacacauaEaFaGataMaMaNahahaeaOagahaIahagaPaeaaaeawaxaxaxaxaxaxaxayaeaaaaaeaQaRaeaaaaaaaa
-aaaeahahahahahahahahahahahahaeaOagahaSahagaPaeaaaeaTaUaUaUaUaUaUaUaVaeaaaaaeaQaRaeaaaaaaaa
-aaaeahahahahahahahahahahahahavacadaEaFaGaCacajaaanacacacacacacacacacaoaaaaaeaQaRaeaaaaaaaa
-aaaeahahahahaWahahahahahahahaeaaaeahahahagaXaeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeaQaRaeaaaaaaaa
-aaaeahahahahaeahahahahatacacaYacaoahahahagaXaeaaabacacacacacacacacacacacacaoahahanacacadaa
-aaaeahahahahaeahahahahahahahahahahahahahabacaoaaaeahahahahahahahahahahahahahahahahahahaeaa
-aaaeahahahahaeahahahahahahahahahahahahahaeaaaaaaaeahahahahahahahahahahahahahahahahahahaeaa
-aaaeahahahahaeahahahahabacacacacacacaYacaYaiacacaYaZaZacacacaiacaiacacacacacacacauahaCajaa
-aaaeahahahahaeahahahahaeahahahahahahahahahaeaBahahahahahahaBaeaaaeahahahahahahahahahahaeaa
-aaaeahahatacaYacacacacaoahahaBahahahaBahahaebabbapaqaqarbbbaaeaaaeahbbapaqarbbahahahahaeaa
-aaaeahahahahahahahahahahahbcbdbeahbcbdbeahaeaIahawaxaxayahbaaeaaaeahapbfaxaKarahabacacaoaa
-aaaeahahahahahahahahahahahahaSahahahaSahahaeaIbgawaxaxaybgbaaeaaaeahawaxbhaxayahaeaaaaaaaa
-abaYacacacacacacacacacadahahahahahahahahahaeaIahawaxaxayahbaaeaaaeahaTbiaxbjaVahaeaaaaaaaa
-aeaPaPaPaPaPaPaPaPaPaPaeahahaBahahahaBahahaeaIbbawaxaxaybbbaaeaaaeahbbaTaUaVbbahaeaaaaaaaa
-aeaPaPaPbkaMaMaMaMaMaMaoahbcbdbeahbcbdbeahaeaIahawaxaxayahbaaeaaaeahahahahahahahaeaaaaaaaa
-aeaPaPaPasahahahahahahahahahaSahahahaSahahaeaIbgawaxaxaybgbaavacaYacacaiacacacacajaaaaaaaa
-aeaPaPaPasahahahahahahahahahahahahahahahahaeaIahawaxaxayahbaaeafafafafaeahahahahaeaaaaaaaa
-aeaPaPaPasahahbkaMaMaMadahahaBahahahaBahahaeaIbbawaxaxaybbbaaeafafafafaDahahahahaeaaaaaaaa
-aeaPaPaPasahahasaPaPaPaeahbcbdbeahbcbdbeahaeaIahawaxaxayahbaaeafafafafblahahahahaeaaaaaaaa
-aeaPaPaPasahahasaPaPaPaeahahaSahahahaSahahaeaIbgawaxaxaybgbaaeafafafafaWahahahahaeaaaaaaaa
-aeaPaPaPasahahasaPaPaPaeahahahahahahahahahaeaIahawaxaxayahbaavacacacacaoahahahahaeaaaaaaaa
-aeaPaPaPasahahasaPaPaPavacacacacacacacacacajaIbbaTaUaUaVbbbaaeahahahahahahahahahaeaaaaaaaa
-aeaPaPaPasahahasaPaPaPaeaaaaaaaaaaaaaaaaaaaeaSahahahahahahaSaeahahahahahahahahahaeaaaaaaaa
-avacacacaoahahanacacacaYacacacacacacacadaaanacacaiaZaZaiacacaoahahahahahahahahahaeaaaaaaaa
-aeahahahahahahahahahahahahahahahahahahaeaaaaaaaaaeaQaRasahahahahahahahahahahahahaeaaaaaaaa
-aeahahahahahahahahahahahahahahahahahahaeaaaaaaaaaeaQaRbmaMaMaMauahahahahahahahahaeaaaaaaaa
-aeahahahahahahahahahahahahahahahahahahaeaaaaaaaaaeahahbnbnbnbnahahahahahahahahahaeaaaaaaaa
-aeahahahahahahahahahahahahahahahahahahaeaaaaaaaaaeahahboboboboahahahahahahahahahaeaaaaaaaa
-aeahahahahahahahahahahahahahahahahahahaeaaaaaaaaanacacacacacacacacacacacacacacacaoaaaaaaaa
-aeahahahahahahahahahahahahahahahahahahaeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aeahahahahahahahahahahahahahahahahahahaeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aeahahahahahahahahahahahahahahahahahahaeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aeahahahahahahahahahahahahahahahahahahaeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aeahahahahahahahahahahahahahahahahahahaeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-anacacacacacacacacacacacacacacacacacacaoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+av
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+an
+"}
+(2,1,1) = {"
+aa
+ab
+ae
+ae
+av
+ae
+ae
+av
+ae
+ae
+av
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+aY
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+"}
+(3,1,1) = {"
+aa
+ac
+af
+af
+ac
+af
+af
+ac
+af
+af
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+"}
+(4,1,1) = {"
+aa
+ac
+af
+af
+ac
+af
+af
+ac
+af
+af
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+aP
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+"}
+(5,1,1) = {"
+aa
+ac
+ag
+ag
+au
+ag
+ag
+au
+ag
+ag
+au
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+at
+ah
+ah
+ac
+aP
+bk
+as
+as
+as
+as
+as
+as
+as
+as
+ao
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+"}
+(6,1,1) = {"
+aa
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+aE
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+ah
+ah
+ac
+aP
+aM
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+"}
+(7,1,1) = {"
+aa
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+aF
+ah
+ah
+aW
+ae
+ae
+ae
+ae
+ae
+aY
+ah
+ah
+ac
+aP
+aM
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+"}
+(8,1,1) = {"
+aa
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+aG
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+ah
+ah
+ac
+aP
+aM
+ah
+ah
+bk
+as
+as
+as
+as
+as
+an
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+"}
+(9,1,1) = {"
+aa
+ac
+ah
+ah
+ah
+ah
+ah
+at
+ag
+ag
+at
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+ah
+ah
+ac
+aP
+aM
+ah
+ah
+aM
+aP
+aP
+aP
+aP
+aP
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+"}
+(10,1,1) = {"
+aa
+ac
+ah
+ah
+ah
+ah
+ah
+ac
+af
+af
+aM
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+ah
+ah
+ac
+aP
+aM
+ah
+ah
+aM
+aP
+aP
+aP
+aP
+aP
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+"}
+(11,1,1) = {"
+aa
+ac
+ah
+ah
+ah
+ah
+ah
+ac
+af
+af
+aM
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+ah
+ah
+ac
+aP
+aM
+ah
+ah
+aM
+aP
+aP
+aP
+aP
+aP
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+"}
+(12,1,1) = {"
+aa
+ad
+ae
+an
+ah
+ah
+ab
+aj
+as
+as
+aN
+ah
+ah
+ah
+at
+ah
+ah
+ab
+ae
+ao
+ah
+ah
+ad
+ae
+ao
+ah
+ah
+ad
+ae
+ae
+ae
+av
+ae
+aY
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+"}
+(13,1,1) = {"
+aa
+aa
+aa
+ac
+ah
+ah
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+ah
+ah
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+aa
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+"}
+(14,1,1) = {"
+aa
+aa
+aa
+ac
+ah
+ah
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+ah
+ah
+ac
+ah
+ah
+bc
+ah
+ah
+ah
+bc
+ah
+ah
+ah
+bc
+ah
+ah
+ac
+aa
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+"}
+(15,1,1) = {"
+aa
+aa
+aa
+ac
+ah
+ah
+ai
+ae
+ae
+av
+ae
+ae
+av
+ae
+aY
+ah
+ah
+ac
+ah
+aB
+bd
+aS
+ah
+aB
+bd
+aS
+ah
+aB
+bd
+aS
+ah
+ac
+aa
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+"}
+(16,1,1) = {"
+aa
+aa
+aa
+ac
+ah
+ah
+ac
+aH
+aH
+ac
+aO
+aO
+ac
+aa
+ac
+ah
+ah
+ac
+ah
+ah
+be
+ah
+ah
+ah
+be
+ah
+ah
+ah
+be
+ah
+ah
+ac
+aa
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+"}
+(17,1,1) = {"
+aa
+aa
+aa
+ac
+ah
+ah
+au
+ag
+ag
+au
+ag
+ag
+ad
+ae
+ao
+ah
+ah
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+aa
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+"}
+(18,1,1) = {"
+aa
+aa
+aa
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+aE
+ah
+ah
+ah
+ah
+ac
+ah
+ah
+bc
+ah
+ah
+ah
+bc
+ah
+ah
+ah
+bc
+ah
+ah
+ac
+aa
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+"}
+(19,1,1) = {"
+aa
+aa
+aa
+ac
+ah
+ah
+aB
+aI
+aI
+aI
+aI
+aS
+aF
+ah
+ah
+ah
+ah
+aY
+ah
+aB
+bd
+aS
+ah
+aB
+bd
+aS
+ah
+aB
+bd
+aS
+ah
+ac
+aa
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+"}
+(20,1,1) = {"
+aa
+aa
+aa
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+aG
+ah
+ah
+ah
+ah
+ac
+ah
+ah
+be
+ah
+ah
+ah
+be
+ah
+ah
+ah
+be
+ah
+ah
+ac
+aa
+ad
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ao
+"}
+(21,1,1) = {"
+aa
+aa
+aa
+ac
+ah
+ah
+aC
+ag
+ag
+aC
+ag
+ag
+aC
+ag
+ag
+ab
+ae
+aY
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(22,1,1) = {"
+aa
+aa
+aa
+ac
+ah
+ah
+ac
+aJ
+aJ
+ac
+aP
+aP
+ac
+aX
+aX
+ac
+aa
+ai
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+aj
+ae
+an
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(23,1,1) = {"
+aa
+aa
+aa
+ac
+ah
+ah
+ai
+ae
+ae
+aj
+ae
+ae
+aj
+ae
+ae
+ao
+aa
+ac
+aB
+ba
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aS
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(24,1,1) = {"
+aa
+aa
+aa
+ac
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ah
+bb
+ah
+bg
+ah
+bb
+ah
+bg
+ah
+bb
+ah
+bg
+ah
+bb
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(25,1,1) = {"
+aa
+aa
+ab
+ao
+ah
+ah
+ad
+ae
+ae
+ae
+ae
+ae
+an
+aa
+ab
+ae
+ae
+aY
+ah
+ap
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aT
+ah
+ai
+ae
+ae
+ae
+ae
+an
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(26,1,1) = {"
+aa
+aa
+ac
+ap
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aT
+ac
+aa
+ac
+ah
+ah
+aZ
+ah
+aq
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+aU
+ah
+aZ
+aQ
+aQ
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(27,1,1) = {"
+aa
+aa
+ac
+aq
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+aU
+ac
+aa
+ac
+ah
+ah
+aZ
+ah
+aq
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+aU
+ah
+aZ
+aR
+aR
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(28,1,1) = {"
+aa
+aa
+ac
+aq
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+aU
+ac
+aa
+ac
+ah
+ah
+ac
+ah
+ar
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+aV
+ah
+ai
+as
+bm
+bn
+bo
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(29,1,1) = {"
+aa
+aa
+ac
+aq
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+aU
+ac
+aa
+ac
+ah
+ah
+ac
+ah
+bb
+ah
+bg
+ah
+bb
+ah
+bg
+ah
+bb
+ah
+bg
+ah
+bb
+ah
+ac
+ah
+aM
+bn
+bo
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(30,1,1) = {"
+aa
+aa
+ac
+ar
+ay
+ay
+ay
+aK
+ax
+ax
+ax
+aU
+ac
+aa
+ac
+ah
+ah
+ac
+aB
+ba
+ba
+ba
+ba
+ba
+ba
+ba
+ba
+ba
+ba
+ba
+ba
+ba
+aS
+ac
+ah
+aM
+bn
+bo
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(31,1,1) = {"
+aa
+aa
+ai
+as
+as
+as
+aD
+aq
+ax
+ax
+ax
+aU
+ac
+aa
+ac
+ah
+ah
+ai
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+av
+ae
+ae
+ae
+ae
+av
+ae
+ae
+ao
+ah
+aM
+bn
+bo
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(32,1,1) = {"
+aa
+aa
+ac
+ah
+ah
+ah
+aE
+aq
+ax
+ax
+ax
+aU
+ac
+aa
+ac
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+af
+af
+af
+af
+ac
+ah
+ah
+ah
+ah
+au
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(33,1,1) = {"
+aa
+aa
+ac
+ah
+ah
+ah
+aF
+aq
+ax
+ax
+ax
+aU
+ac
+aa
+ac
+ah
+ah
+ai
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+aY
+af
+af
+af
+af
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(34,1,1) = {"
+aa
+aa
+ac
+ah
+ah
+ah
+aG
+ar
+ay
+ay
+ay
+aV
+ac
+aa
+ac
+ah
+ah
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+af
+af
+af
+af
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(35,1,1) = {"
+aa
+ab
+aj
+ae
+az
+ae
+ae
+ae
+ae
+av
+ae
+ae
+ao
+aa
+ac
+ah
+ah
+ac
+ah
+bb
+ap
+aw
+aT
+bb
+ah
+ac
+af
+af
+af
+af
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(36,1,1) = {"
+aa
+ac
+ak
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+ac
+ah
+ah
+ac
+ah
+ap
+bf
+ax
+bi
+aT
+ah
+ai
+ae
+aD
+bl
+aW
+ao
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(37,1,1) = {"
+aa
+ac
+al
+at
+aA
+at
+aA
+at
+aL
+ac
+aa
+aa
+aa
+aa
+ac
+ah
+ah
+ac
+ah
+aq
+ax
+bh
+ax
+aU
+ah
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(38,1,1) = {"
+aa
+ac
+al
+au
+aA
+au
+aA
+au
+aA
+ad
+ae
+ae
+ae
+ae
+ao
+ah
+ah
+ac
+ah
+ar
+aK
+ax
+bj
+aV
+ah
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(39,1,1) = {"
+aa
+ac
+al
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+aQ
+aQ
+aQ
+aQ
+ah
+ah
+ah
+ac
+ah
+bb
+ar
+ay
+aV
+bb
+ah
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(40,1,1) = {"
+aa
+ac
+al
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+aR
+aR
+aR
+aR
+ah
+ah
+ah
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(41,1,1) = {"
+aa
+ac
+al
+at
+aA
+at
+aA
+at
+aA
+ab
+ae
+ae
+ae
+ae
+an
+ah
+ah
+au
+ah
+ah
+ab
+ae
+ae
+ae
+ae
+aj
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ao
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(42,1,1) = {"
+aa
+ac
+al
+au
+aA
+au
+aA
+au
+aA
+ac
+aa
+aa
+aa
+aa
+ac
+ah
+ah
+ah
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(43,1,1) = {"
+aa
+ac
+am
+ah
+ah
+ah
+ah
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+ac
+ah
+ah
+aC
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(44,1,1) = {"
+aa
+ad
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ao
+aa
+aa
+aa
+aa
+ad
+ae
+ae
+aj
+ae
+ae
+ao
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(45,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}

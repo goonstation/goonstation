@@ -1,4 +1,4 @@
-/mob/living/critter/drone
+/mob/living/critter/robotic/drone
 	name = "Drone"
 	real_name = "Drone"
 	var/drone_designation = "SC"
@@ -29,7 +29,7 @@
 		setup_loot_table()
 		name = "[initial(name)] [drone_designation]-[rand(num_max)]"
 
-	Bump(atom/movable/AM)
+	bump(atom/movable/AM)
 		if(smashes_shit)
 			if(isobj(AM))
 				if (istype(AM, /obj/critter) || istype(AM, /obj/machinery/vehicle))
@@ -55,11 +55,12 @@
 		loot_table = list(/obj/item/device/prox_sensor = 25)
 
 	death(var/gibbed)
+		. = ..()
 		if (dying)
 			return
 		dying = 1
 		overlays += image('icons/obj/ship.dmi', "dying-overlay")
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			ghostize()
 			var/turf/L = get_turf(src)
 			for (var/T in loot_table)
@@ -79,7 +80,7 @@
 		switch (act)
 			if ("scream", "alert")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), pick(alert_sounds) , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, pick(alert_sounds) , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> broadcasts an alert!"
 		return null
 
@@ -126,5 +127,5 @@
 		HH.can_range_attack = 1
 
 	setup_healths()
-		add_hh_robot(-50, 50, 1)
-		add_hh_robot_burn(-50, 50, 1)
+		add_hh_robot(50, 1)
+		add_hh_robot_burn(50, 1)

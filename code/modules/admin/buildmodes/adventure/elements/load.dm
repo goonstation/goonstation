@@ -46,6 +46,7 @@
 				// fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck
 				// fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck
 				if (!target)
+					pasting = 0
 					return
 				var/savefile/F = new /savefile("adventure/ADV_LOAD_[user.client.ckey]")
 				// fuck you
@@ -87,7 +88,7 @@
 				boutput(user, "<span class='notice'>Beginning paste. DO NOT TOUCH THE AFFECTED AREA. Or do. Something might go wrong. I don't know. Who cares.</span>")
 				var/datum/sandbox/sandbox = new /datum/sandbox()
 				sandbox.context["version"] = version
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/workgroup_size = 10
 					var/workgroup_curr = 0
 					var/list/PP = list()

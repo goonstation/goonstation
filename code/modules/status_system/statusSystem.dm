@@ -8,10 +8,11 @@ var/global/list/statusGroupLimits = list("Food"=4)
 
 /proc/testStatus()
 	var/inp = input(usr,"Which status?","Test status","airrit") as text
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for(var/datum/statusEffect/status as anything in usr.statusEffects)
 			usr.delStatus(status)
 		usr.changeStatus(inp, 15 MINUTES)
+
 
 /atom/movable/screen/statusEffect
 	name = "Status effect"
@@ -30,8 +31,8 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		src.maptext_y = -12
 		maptext_width = 16
 		maptext_height = 16
-		filters += filter(type="outline", size=0.7,color=rgb(0,0,0))
-		filters += filter(type="drop_shadow", size=1.5, color=rgb(0,0,0))
+		add_filter("outline", 1, outline_filter(size=0.7,color=rgb(0,0,0)))
+		add_filter("drop shadow", 2, drop_shadow_filter(size=1.5, color=rgb(0,0,0)))
 		..()
 
 	proc/init(mob/living/C, datum/statusEffect/S)
@@ -39,11 +40,6 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		ownerStatus = S
 		src.name = S.name
 		overImg.icon_state = S.icon_state
-
-	pooled()
-		src.name = "null"
-		ownerStatus = 0
-		..()
 
 	clicked(list/params)
 		if (ownerStatus)
@@ -135,7 +131,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		setStatus(statusId, (isnull(S.maxDuration) ? (S.duration + duration):(min(S.duration + duration, S.maxDuration))), optional)
 		return S
 	else
-		if(duration > 0)
+		if(isnull(duration) || duration > 0)
 			return setStatus(statusId, (isnull(globalInstance.maxDuration) ? (duration):(min(duration, globalInstance.maxDuration))), optional)
 
 /**
@@ -192,7 +188,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 					localInstance.owner = src
 					if (duration)
 						duration = localInstance.duration + localInstance.modify_change(duration - localInstance.duration)
-						if (!duration) //if we ended up reducing it to 0, just clear it without ever applying
+						if (duration <= 0) //if we ended up reducing it to or past 0, just clear it without ever applying
 							localInstance.owner = null
 							return null
 					localInstance.duration = (isnull(localInstance.maxDuration) ? (duration):(min(duration, localInstance.maxDuration)))
@@ -230,6 +226,10 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		throw EXCEPTION("Unknown status type passed: [statusId]")
 		return null
 
+// Sets the status duration of the passed statusId to the larger of the existing status of that ID and the passed {maxDuration}
+/atom/proc/setStatusMin(statusId, minDuration, optional) //this is probably inefficient
+	src.setStatus(statusId, max(src.getStatusDuration(statusId), minDuration), optional)
+
 /**
 	* Returns duration of status with given {statusId}, or null if not found.
 	*/
@@ -241,6 +241,14 @@ var/global/list/statusGroupLimits = list("Food"=4)
 				. = status.duration
 				break
 
+/**
+ 	* Returns prototype of status effect from the globalStatusPrototypes list with given {statusId}, or null if not found
+	*/
+/atom/proc/getStatusPrototype(statusId)
+	for(var/datum/statusEffect/status as anything in globalStatusPrototypes)
+		var/datum/statusEffect/statuseffect = status
+		if(statuseffect.id == statusId)
+			return statuseffect
 /**
 	* Returns first status with given {statusId} or null if not found.
 	*

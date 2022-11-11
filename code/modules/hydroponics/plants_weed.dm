@@ -67,7 +67,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 		random_brute_damage(user, 10, 1)//see above
 		if (W && prob(50))
 			boutput(user, "<span class='alert'>The lasher grabs and smashes your [W]!</span>")
-			W.dropped()
+			W.dropped(user)
 			qdel(W)
 		return 1
 
@@ -136,14 +136,14 @@ ABSTRACT_TYPE(/datum/plant/weed)
 		var/datum/plantgenes/DNA = POT.plantgenes
 
 		if (POT.growth > (P.harvtime + DNA.harvtime) && prob(10))
-			var/obj/overlay/B = new /obj/overlay( POT.loc )
+			var/obj/overlay/B = new /obj/overlay( get_turf(POT) )
 			B.icon = 'icons/effects/hydroponics.dmi'
 			B.icon_state = "radpulse"
 			B.name = "radioactive pulse"
 			B.anchored = 1
 			B.set_density(0)
 			B.layer = 5 // TODO What layer should this be on?
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				qdel(B)
 				B=null
 			var/radstrength = 5
@@ -157,8 +157,9 @@ ABSTRACT_TYPE(/datum/plant/weed)
 				if (160 to INFINITY)
 					radstrength = 50
 					radrange = 3
-			for (var/mob/living/carbon/M in range(radrange,POT))
-				M.changeStatus("radiation", (radstrength)*10, 3)
+			for (var/mob/living/carbon/M in view(radrange,POT))
+				if(!ON_COOLDOWN(M, "radweed_pulse", 2 SECONDS))
+					M.take_radiation_dose(radstrength/30 SIEVERTS)
 			for (var/obj/machinery/plantpot/C in range(radrange,POT))
 				var/datum/plant/growing = C.current
 				if (POT.health <= P.starthealth / 2) break
@@ -203,11 +204,11 @@ ABSTRACT_TYPE(/datum/plant/weed)
 		if (POT.growth >= (P.harvtime + DNA.harvtime + 50) && prob(10) && !src.exploding)
 			src.exploding = 1
 			POT.visible_message("<span class='alert'><b>[POT]</b> begins to bubble and expand!</span>")
-			playsound(POT.loc, "sound/effects/bubbles.ogg", 50, 1)
+			playsound(POT, 'sound/effects/bubbles.ogg', 50, 1)
 
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				POT.visible_message("<span class='alert'><b>[POT]</b> bursts, sending toxic goop everywhere!</span>")
-				playsound(POT.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(POT, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
 				for (var/mob/living/carbon/human/M in view(3,POT))
 					if(istype(M.wear_suit, /obj/item/clothing/suit/bio_suit) && istype(M.head, /obj/item/clothing/head/bio_hood))

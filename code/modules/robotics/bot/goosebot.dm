@@ -19,8 +19,7 @@
 	return
 
 /obj/machinery/bot/goosebot/proc/wakka_wakka()
-	SPAWN_DBG(0)
-		step_rand(src,1)
+	src.navigate_to(get_step_rand(src), max_dist=6)
 
 /obj/machinery/bot/goosebot/process()
 	. = ..()
@@ -29,14 +28,14 @@
 		quack(message)
 		wakka_wakka()
 		if(prob(50))
-			playsound(src.loc, "sound/misc/thegoose_honk.ogg", 100, 0)
+			playsound(src.loc, 'sound/misc/thegoose_honk.ogg', 100, 0)
 			throw_egg_is_true()
 		else
-			playsound(src.loc, "sound/misc/thegoose_song.ogg", 100, 0)
+			playsound(src.loc, 'sound/misc/thegoose_song.ogg', 100, 0)
 
 
 
-/obj/machinery/bot/goosebot/attack_hand(mob/user as mob, params)
+/obj/machinery/bot/goosebot/attack_hand(mob/user, params)
 	var/dat
 	dat += "<TT><I>YOU CHOICE</I></TT><BR>"
 	dat += "<TT><B>THE GOOSE</B></TT><BR>"
@@ -50,7 +49,7 @@
 	dat += "BUMP THE SHOT WILL TURN A CORNER<BR>"
 	dat += "INSTALL THE EGG<BR>"
 
-	if (user.client.tooltipHolder)
+	if (user.client?.tooltipHolder)
 		user.client.tooltipHolder.showClickTip(src, list(
 			"params" = params,
 			"title" = "THE GOOSE",
@@ -59,7 +58,7 @@
 
 	return
 
-/obj/machinery/bot/goosebot/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/bot/goosebot/attackby(obj/item/W, mob/user)
 	src.visible_message("<span class='combat'>[user] hits [src] with [W]!</span>")
 	src.health -= W.force * 0.5
 	if (src.health <= 0)
@@ -73,7 +72,7 @@
 	src.exploding = 1
 	src.on = 0
 	src.visible_message("<span class='combat'><B>[src] blows apart!</B></span>", 1)
-	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	explosion(src, src.loc , 0, 0, 1, 1)
 	qdel(src)
 	return
@@ -89,8 +88,8 @@
 
 		icon_state = "goosebot-wild"
 		src.visible_message("<span class='combat'><b>[src] fires an egg at [target.name]!</b></span>")
-		playsound(src.loc, "sound/effects/pump.ogg", 50, 1)
-		SPAWN_DBG(1 SECOND)
+		playsound(src.loc, 'sound/effects/pump.ogg', 50, 1)
+		SPAWN(1 SECOND)
 			E.throwforce = 1
 			sleep(4 SECONDS)
 			icon_state = "goosebot"

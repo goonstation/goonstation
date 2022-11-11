@@ -2,12 +2,13 @@
 	name = "floaty gewgaw"
 	desc = "Well, that's a thing."
 	icon_state = "flockbit"
-	density = 0
+	density = FALSE
 	hand_count = 2
-	pays_to_construct = 0 // free buildings!!
-	health_brute = 5 // fragile, handle with care (one smack will destroy them)
+	pays_to_construct = FALSE
+	health_brute = 5
 	health_burn = 5
-	fits_under_table = 1
+	repair_per_resource = 1
+	fits_under_table = TRUE
 	flags = TABLEPASS
 
 /mob/living/critter/flock/bit/New(var/atom/location, var/datum/flock/F=null)
@@ -15,33 +16,46 @@
 
 	src.ai = new /datum/aiHolder/flock/bit(src)
 
-	SPAWN_DBG(1 SECOND) // aaaaaaa
+	SPAWN(1 SECOND)
 		animate_bumble(src)
 		src.zone_sel.change_hud_style('icons/mob/flock_ui.dmi')
 
 	src.name = "[pick_string("flockmind.txt", "flockbit_name_adj")] [pick_string("flockmind.txt", "flockbit_name_noun")]"
-	src.real_name = "[pick(consonants_upper)].[rand(10,99)].[rand(10,99)]"
+	src.real_name = src.flock ? src.flock.pick_name("flockbit") : name
+	src.update_name_tag()
+	src.flock_name_tag = new
+	src.flock_name_tag.set_name(src.real_name)
+	src.vis_contents += src.flock_name_tag
+
+	src.flock?.bits_made++
+
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
+	src.AddComponent(/datum/component/flock_protection)
 
 /mob/living/critter/flock/bit/special_desc(dist, mob/user)
-	if(isflock(user))
-		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+	if (!isflockmob(user))
+		return
+	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> [src.real_name]
 		<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]
-		<br><span class='bold'>System Integrity:</span> [round(src.get_health_percentage()*100)]%
-		<br><span class='bold'>Cognition:</span> PREDEFINED
+		<br><span class='bold'>System Integrity:</span> [max(0, round(src.get_health_percentage() * 100))]%
+		<br><span class='bold'>Cognition:</span> [src.dormant ? "ABSENT" : src.is_npc ? "PREDEFINED" : "AWARE"]
 		<br><span class='bold'>###=-</span></span>"}
-	else
-		return null // give the standard description
+
+/mob/living/critter/flock/bit/Life(datum/controller/process/mobs/parent)
+	if (..(parent))
+		return TRUE
+	if (!src.dormant && src.z != Z_LEVEL_STATION && src.z != Z_LEVEL_NULL)
+		src.dormantize()
 
 /mob/living/critter/flock/bit/MouseDrop_T(mob/living/target, mob/user)
 	if(!target || !user)
 		return
 	if(target == user)
 		if(istype(user, /mob/living/intangible/flock))
-			// whoops
 			boutput(user, "<span class='flocksay'>Insufficient processing power for partition override.</span>")
 		else
-			..() // do ghost observes, i guess
+			..() // ghost observe
 	else
 		..()
 
@@ -53,9 +67,9 @@
 	HH.icon = 'icons/mob/flock_ui.dmi'
 	HH.icon_state = "griptool"
 	HH.limb_name = HH.name
-	HH.can_hold_items = 1
-	HH.can_attack = 1
-	HH.can_range_attack = 0
+	HH.can_hold_items = TRUE
+	HH.can_attack = TRUE
+	HH.can_range_attack = FALSE
 
 	HH = hands[2]
 	HH.limb = new /datum/limb/flockbit_converter
@@ -63,34 +77,44 @@
 	HH.icon = 'icons/mob/flock_ui.dmi'
 	HH.icon_state = "converter"
 	HH.limb_name = HH.name
-	HH.can_hold_items = 0
-	HH.can_attack = 1
-	HH.can_range_attack = 0
+	HH.can_hold_items = FALSE
+	HH.can_attack = TRUE
+	HH.can_range_attack = FALSE
+
+/mob/living/critter/flock/bit/dormantize()
+	src.icon_state = "bit-dormant"
+	animate(src) // doesnt work right now
+	..()
 
 /mob/living/critter/flock/bit/death(var/gibbed)
-	walk(src, 0)
-	src.flock?.removeDrone(src)
-	playsound(get_turf(src), "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)
+	..()
 	flockdronegibs(get_turf(src))
+	if (src.mind || src.client)
+		src.ghostize()
 	qdel(src)
 
-// okay so this might be fun for gimmicks
+/mob/living/critter/flock/bit/disposing()
+	if (src.mind || src.client)
+		src.ghostize()
+	..()
+
+// for gimmicks
 /mob/living/critter/flock/bit/Login()
 	..()
-	src.client?.color = null
-	walk(src, 0)
-	src.is_npc = 0
+	src.client?.set_color()
+	src.ai?.stop_move()
+	src.is_npc = FALSE
 
 /mob/living/critter/flock/bit/specific_emotes(var/act, var/param = null, var/voluntary = 0)
 	switch (act)
 		if ("whistle", "beep", "burp", "scream", "growl", "abeep", "grump", "fart")
 			if (src.emote_check(voluntary, 50))
-				playsound(get_turf(src), "sound/misc/flockmind/flockbit_wisp[pick("1","2","3","4","5","6")].ogg", 60, 1)
+				playsound(src, "sound/misc/flockmind/flockbit_wisp[pick("1","2","3","4","5","6")].ogg", 30, 1, extrarange = -10)
 				return "<b>[src]</b> chimes."
 		if ("flip")
 			if (src.emote_check(voluntary, 50) && !src.shrunk)
-				SPAWN_DBG(1 SECOND)
-					animate_bumble(src) // start the floaty animation again (stolen from bees of course)
+				SPAWN(1 SECOND)
+					animate_bumble(src)
 				return null
 	return null
 
@@ -105,12 +129,12 @@
 		return
 	if (!istype(user))
 		return
-	// CONVERT TURF
+
 	if(!isturf(target))
 		target = get_turf(target)
 
 	if(!istype(target, /turf/simulated) && !istype(target, /turf/space))
 		boutput(user, "<span class='alert'>Something about this structure prevents it from being assimilated.</span>")
 	else
-		playsound(get_turf(src), "sound/misc/flockmind/flockbit_wisp[pick("1","2","3","4","5","6")].ogg")
+		playsound(src, "sound/misc/flockmind/flockbit_wisp[pick("1","2","3","4","5","6")].ogg", 30, extrarange = -10)
 		actions.start(new/datum/action/bar/flock_convert(target, 25), user)

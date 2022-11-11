@@ -1,13 +1,50 @@
-"a" = (/obj/decal/cleanable/blood/splatter,/turf/variableTurf/clear,/area/noGenerate)
-"c" = (/obj/decal/cleanable/blood/gibs,/obj/item/kitchen/utensil/knife,/turf/variableTurf/floor,/area/noGenerate)
-"d" = (/obj/storage/crate/loot,/turf/variableTurf/floor,/area/noGenerate)
-"e" = (/turf/variableTurf/wall,/area/noGenerate)
-"f" = (/obj/table/wood/round,/obj/item/paper/fortune,/turf/variableTurf/floor,/area/noGenerate)
-"g" = (/turf/variableTurf/clear,/area/space)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decal/cleanable/blood/splatter,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"c" = (
+/obj/decal/cleanable/blood/gibs,
+/obj/item/kitchen/utensil/knife,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"d" = (
+/obj/storage/crate/loot,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"e" = (
+/turf/variableTurf/wall,
+/area/noGenerate)
+"f" = (
+/obj/table/wood/round,
+/obj/item/paper/fortune,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"g" = (
+/turf/variableTurf/clear,
+/area/space)
 
 (1,1,1) = {"
-ggee
-gace
-gdfe
-geee
+g
+g
+g
+g
+"}
+(2,1,1) = {"
+g
+a
+d
+e
+"}
+(3,1,1) = {"
+e
+c
+f
+e
+"}
+(4,1,1) = {"
+e
+e
+e
+e
 "}

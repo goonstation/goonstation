@@ -415,7 +415,6 @@ obj/machinery/embedded_controller
 
 		..()
 
-	proc/update_icon()
 	proc/return_text()
 
 	proc/post_signal(datum/signal/signal, comm_line)
@@ -438,33 +437,19 @@ obj/machinery/embedded_controller
 	process()
 		program?.process()
 
-		update_icon()
+		UpdateIcon()
 		src.updateDialog()
 		..()
 
 	radio
 		var/frequency
-		var/datum/radio_frequency/radio_connection
 
-		disposing()
-			radio_controller.remove_object(src,"[frequency]")
+		New()
 			..()
-
-		initialize()
-			set_frequency(frequency)
+			MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 
 		post_signal(datum/signal/signal)
-			signal.transmission_method = TRANSMISSION_RADIO
-			if(radio_connection)
-				return radio_connection.post_signal(src, signal)
-			//else
-				//qdel(signal)
-
-		proc
-			set_frequency(new_frequency)
-				radio_controller.remove_object(src, "[frequency]")
-				frequency = new_frequency
-				radio_connection = radio_controller.add_object(src, "[frequency]")
+			return SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 
 obj/machinery/embedded_controller/radio/access_controller
@@ -474,7 +459,7 @@ obj/machinery/embedded_controller/radio/access_controller
 	name = "Access Console"
 	density = 0
 
-	frequency = 1449
+	frequency = FREQ_AIRLOCK_CONTROL
 
 	// Setup parameters only
 	var/id_tag
@@ -540,7 +525,7 @@ obj/machinery/embedded_controller/radio/airlock_controller
 	name = "Airlock Console"
 	density = 0
 
-	frequency = 1449
+	frequency = FREQ_AIRLOCK_CONTROL
 
 	// Setup parameters only
 	var/id_tag
@@ -622,7 +607,7 @@ obj/machinery/embedded_controller/radio/department_controller
 	name = "Access Console"
 	density = 0
 
-	frequency = 1449
+	frequency = FREQ_AIRLOCK_CONTROL
 
 	// Setup parameters only
 	var/id_tag
@@ -665,9 +650,9 @@ obj/machinery/embedded_controller/radio/department_controller
 			if (update)
 				src.updateDialog()
 
-		update_icon()
+		UpdateIcon()
 
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/device/pda2) && I:ID_card)
 			I = I:ID_card
 		if(istype(I, /obj/item/card/id))

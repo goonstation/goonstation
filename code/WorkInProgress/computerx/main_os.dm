@@ -197,8 +197,8 @@
 			if(coords.len != 2)
 				return
 
-			var/new_x = text2num(coords[1])
-			var/new_y = text2num(coords[2])
+			var/new_x = text2num_safe(coords[1])
+			var/new_y = text2num_safe(coords[2])
 			if(!isnum(new_x) || !isnum(new_y))
 				return
 

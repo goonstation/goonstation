@@ -29,7 +29,7 @@
 	death(gibbed)
 	//	if (controller)
 	//		controller.leave_shell()
-		update_icon()
+		UpdateIcon()
 		set_density(0)
 		..()
 
@@ -39,7 +39,7 @@
 			return
 		..()
 
-	proc/update_icon()
+	UpdateIcon()
 		if (src.stat)
 			src.icon_state = "eyebot-dead"
 		else if (src.controller)
@@ -62,7 +62,7 @@
 		..()
 		if (health < 0 && !isdead(src))
 			setdead(src)
-			death(0)
+			death(FALSE)
 
 	swap_hand(var/switchto = 0)
 		if (!switchto)
@@ -106,9 +106,9 @@
 			return null
 		return active_tools[active_tool]
 
-	Bump(atom/movable/AM as mob|obj, yes)
-		SPAWN_DBG( 0 )
-			if ((!( yes ) || src.now_pushing))
+	bump(atom/movable/AM as mob|obj)
+		SPAWN( 0 )
+			if (src.now_pushing)
 				return
 			..()
 			if (!istype(AM, /atom/movable))

@@ -1,11 +1,12 @@
-// handles health updates
+
+/// handles health updates
 datum/controller/process/healthupdates
 	var/tmp/list/detailed_count
 	var/tmp/tick_counter
 
 	setup()
 		name = "HealthUpdate"
-		schedule_interval = 5
+		schedule_interval = 0.5 SECONDS
 		detailed_count = new
 
 	doWork()

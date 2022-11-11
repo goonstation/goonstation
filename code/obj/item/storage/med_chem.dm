@@ -7,12 +7,12 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	throw_speed = 2
 	throw_range = 8
-	max_wclass = 2
+	max_wclass = W_CLASS_SMALL // medbot.dm modifies attackby() for firstaid, which effectively reduces max_wclass to 1, EXCEPT for non-chemmaster pill bottles
 	var/list/kit_styles = null
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (length(kit_styles))
 				icon_state = pick(kit_styles)
 				item_state = icon_state
@@ -29,15 +29,15 @@
 	/obj/item/device/analyzer/healthanalyzer,\
 	/obj/item/reagent_containers/emergency_injector/epinephrine)
 
-	// Comes with upgraded health scanner.
-	doctor_spawn
-		spawn_contents = list(/obj/item/reagent_containers/mender/brute,\
-		/obj/item/reagent_containers/mender/burn,\
-		/obj/item/reagent_containers/patch/bruise,\
-		/obj/item/reagent_containers/patch/burn,\
+	emergency
+		spawn_contents = list(/obj/item/item_box/medical_patches/mini_styptic,\
+		/obj/item/item_box/medical_patches/mini_silver_sulf,\
+		/obj/item/reagent_containers/pill/menthol,\
 		/obj/item/reagent_containers/pill/salicylic_acid,\
-		/obj/item/device/analyzer/healthanalyzer/borg,\
-		/obj/item/reagent_containers/emergency_injector/epinephrine)
+		/obj/item/device/analyzer/healthanalyzer/upgraded,\
+		/obj/item/reagent_containers/emergency_injector/epinephrine,\
+		/obj/item/reagent_containers/emergency_injector/atropine)
+
 
 	empty
 		spawn_contents = list()
@@ -50,12 +50,11 @@
 	desc = "A medical kit that contains several medical patches and pills for treating brute injuries. Contains one epinephrine syringe for emergency use and a health analyzer."
 	kit_styles = list("brute1", "brute2", "brute3", "brute4")
 	spawn_contents = list(\
-	/obj/item/reagent_containers/mender/brute,\
-	/obj/item/reagent_containers/patch/mini/bruise = 2,\
-	/obj/item/reagent_containers/pill/salicylic_acid,\
+	/obj/item/reagent_containers/patch/bruise = 3,\
 	/obj/item/device/analyzer/healthanalyzer,\
+	/obj/item/reagent_containers/pill/salicylic_acid,\
 	/obj/item/reagent_containers/emergency_injector/epinephrine,\
-	/obj/item/bandage)
+	/obj/item/bandage/medicated)
 
 /obj/item/storage/firstaid/fire
 	name = "fire first aid"
@@ -64,12 +63,11 @@
 	desc = "A medical kit that contains several medical patches and pills for treating burns. Contains one epinephrine syringe for emergency use and a health analyzer."
 	kit_styles = list("burn1", "burn2", "burn3", "burn4")
 	spawn_contents = list(\
-	/obj/item/reagent_containers/mender/burn,\
-	/obj/item/reagent_containers/patch/mini/burn = 2,\
+	/obj/item/reagent_containers/patch/burn = 3,\
 	/obj/item/device/analyzer/healthanalyzer,\
-	/obj/item/reagent_containers/emergency_injector/epinephrine,\
+	/obj/item/reagent_containers/pill/menthol,\
 	/obj/item/reagent_containers/pill/salicylic_acid,\
-	/obj/item/reagent_containers/pill/menthol)
+	/obj/item/reagent_containers/emergency_injector/epinephrine)
 
 /obj/item/storage/firstaid/toxin
 	name = "toxin first aid"
@@ -138,7 +136,7 @@
 	item_state = "docbag1"
 	desc = "A old-fashioned doctor's bag designed to cary medical and surgical supplies."
 	kit_styles = list("docbag1", "docbag2", "docbag3")
-	spawn_contents = list(/obj/item/circular_saw, /obj/item/scalpel, /obj/item/suture, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/iv_drip/blood, /obj/item/medical/medicaldiagnosis/stethoscope)
+	spawn_contents = list(/obj/item/circular_saw, /obj/item/scalpel, /obj/item/scissors/surgical_scissors, /obj/item/suture, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/iv_drip/blood, /obj/item/medical/medicaldiagnosis/stethoscope)
 
 /* -------------------- First Aid Kits - VR -------------------- */
 
@@ -380,7 +378,7 @@
 		if (prob(40))
 			new /obj/item/reagent_containers/glass/bottle/ethanol(src)
 
-		switch (pickweight(list("gloves" = 20, "mask" = 20, "autoinjector" = 10, "both" = 10)))
+		switch (weighted_pick(list("gloves" = 20, "mask" = 20, "autoinjector" = 10, "both" = 10)))
 			if ("gloves")
 				new /obj/item/clothing/gloves/latex(src)
 			if ("mask")

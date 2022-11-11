@@ -102,6 +102,8 @@
 /obj/table/reinforced/auto,
 /obj/item/oreprospector,
 /obj/item/oreprospector,
+/obj/item/sea_ladder,
+/obj/item/sea_ladder,
 /turf/simulated/floor/grime,
 /area/prefab/sea_mining)
 "aw" = (
@@ -156,7 +158,7 @@
 "aI" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
-/obj/item/paper/book/minerals,
+/obj/item/paper/book/from_file/minerals,
 /turf/simulated/floor/caution/north,
 /area/prefab/sea_mining)
 "aJ" = (

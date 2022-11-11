@@ -4,12 +4,12 @@
 	var/list/gibs = new()
 	if(!location)
 		location = usr
-	playsound(location, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
+	if(!location?.z) // we care not for null gibs
+		return
+	playsound(location, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 
 	// NORTH
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
-	if (prob(30))
-		gib.icon_state = "gibup1"
 	gib.streak_cleanable(NORTH)
 	gib.diseases += diseases
 	gib.blood_DNA = blood_DNA
@@ -19,8 +19,6 @@
 
 	// SOUTH
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
-	if (prob(30))
-		gib.icon_state = "gibdown1"
 	gib.streak_cleanable(SOUTH)
 	gib.diseases += diseases
 	gib.blood_DNA = blood_DNA
@@ -75,9 +73,12 @@
 		return
 	if (length(ejectables))
 		for (var/atom/movable/I in ejectables)
-			if(istype(I.loc, /mob))
-				var/mob/M = I.loc
-				M.u_equip(I)
+			if(istype(I.loc, /mob) && isitem(I))
+				var/obj/item/item = I
+				var/mob/M = item.loc
+				M.u_equip(item)
+				item.dropped(M)
+				item.layer = initial(item.layer)
 			I.set_loc(location)
 			ThrowRandom(I, 12, 3)
 
@@ -85,7 +86,10 @@
 	var/obj/decal/cleanable/robot_debris/gib = null
 	var/list/gibs = new()
 
-	playsound(location, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+	if(!location)
+		return
+
+	playsound(location, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 
 	// RUH ROH
 	elecflash(location,power=2)
@@ -93,14 +97,14 @@
 	// NORTH
 	gib = make_cleanable( /obj/decal/cleanable/robot_debris,location)
 	if (prob(25))
-		gib.icon_state = "gibup1"
+		gib.icon_state = "gibup"
 	gib.streak_cleanable(NORTH)
 	gibs.Add(gib)
 
 	// SOUTH
 	gib = make_cleanable( /obj/decal/cleanable/robot_debris,location)
 	if (prob(25))
-		gib.icon_state = "gibdown1"
+		gib.icon_state = "gibdown"
 	gib.streak_cleanable(SOUTH)
 	gibs.Add(gib)
 
@@ -253,3 +257,22 @@
 
 	// CORE SPLAT
 	gib = make_cleanable( /obj/decal/cleanable/flockdrone_debris/fluid,location)
+
+
+/proc/fire_elemental_gibs(atom/location, var/list/diseases, var/list/ejectables, var/blood_DNA, var/blood_type)
+	if(!location) return
+	// WHO LIKES COPY PASTED CODE? I DO I LOVE IT DELICIOUS YUM YUM
+	var/obj/decal/cleanable/ash/gib = null
+	playsound(location, 'sound/effects/mag_fireballlaunch.ogg', 50, 1, pitch = 0.5)
+	// RANDOM
+	gib = make_cleanable(/obj/decal/cleanable/ash, location)
+	gib.streak_cleanable()
+	// RANDOM
+	gib = make_cleanable(/obj/decal/cleanable/ash, location)
+	gib.streak_cleanable()
+
+	handle_ejectables(location, ejectables)
+
+	// CORE SPLAT
+	gib = make_cleanable(/obj/decal/cleanable/ash, location)
+	fireflash(location, 1)

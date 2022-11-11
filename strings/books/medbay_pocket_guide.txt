@@ -1,0 +1,126 @@
+<body><h1>NT MEDICAL DIVISION</h1>
+		<h2>Introductory briefing for aspiring Medical Doctors!</h2>
+		<br>
+		<hr>
+		<h2>INTRODUCTION</h2>
+		<hr>
+		<h3>Medical Doctor</h3>
+
+		As a Medical Doctor, your task is to ensure your fellow personnel's well-being and treat any injuries that may occur as a result of work-related accidents.
+		<br>
+		You answer directly to the Medical Director. You should follow their judgement and advice when it comes to performing your duties.
+		<h3>Your equipment and preparation</h3>
+		<p>
+		Head to your station's Medbay if you are not already stationed there.
+		<br>
+		You should have been provided with a first aid kit, which you are recommended to place inside your backpack for secure storage. Within you should notice:
+		</p><li><b>A health analyzer</b> - used for analyzing patients and examining their injuries.
+		</li><li><b>An epinephrine emergency auto-injector</b> - used for stabilizing critically wounded patients.
+		</li><li><b>Styptic powder patches</b> - used for treating general wounds and bruises.
+		</li><li><b>Silver sulfadiazine patches</b> - used for treating burns.
+		</li><p></p>
+		<p>
+		These are sufficient for basic situations, but it's recommended that you additionally acquire the following items:
+		</p><li><b>A hypospray</b> - used for quick administering of medical chemicals.
+		</li><li><b>ProDoc Healthgoggles</b> - a pair of eyeglasses that allow you to quickly determine patients' medical state.
+		<br>
+		Both should be readily available in your department on the tables and will greatly improve your efficiency.
+		</li><p></p>
+		<p>
+		Finally, to finish your preparations, head towards the nearest medbay-issued NanoMed Plus vendor. In these units you will find most of the previously mentioned equipment
+		and will be your primary method of restocking as you use up your equipment on patients.
+		<br>
+		Dispense the following items:
+		</p><li><b>An epinephrine bottle</b> - use it on your previously acquired hypospray to fill it with the full contents measured at 30 units. Dispose of the bottle after completing the task.
+		</li><li><b>A syringe</b> - used to draw reagents from bottles and then to inject them. Store it in your backpack. (Notice: can be replaced with a spare hypospray device if such is still available)
+		</li><li><b>An anti-toxin bottle</b> - the contents of the bottle will be withdrawn with your previously acquired means of chemical transfer (usually syringe or hypospray) and then administered to poisoned crewmembers.
+		<br>
+		You are recommended to place the health analyzer and the epinephrine-filled hypospray in a easily accessible area on your person, such as your pockets or backpack.
+		<hr>
+		<h2>TREATING YOUR PATIENT</h2>
+		<hr>
+		<h3>First contact</h3>
+		Assuming you are wearing your issued ProDoc Healthgoggles eyewear, you will be able to ascertain the state of your patients at first glance as a shaded heart next to them having a color and fill level
+		that will range from:
+		</li><li>Green and full - healthy
+		</li><li>Yellow and half-full - moderately injured
+		</li><li>Red and nearly empty - heavily injured
+		</li><li>Blinking white and empty - critically injured
+		<br>
+		Based on this, you can tell which patients to focus on first and with what level of urgency. Remember that safety comes first, if the area you and the patient are in is depressurized, on fire or otherwise hazardous,
+		you should move to a new location before proceeding.
+		<br>
+		If your patient isn't in a critical state (flashing white) skip to the next section for information on how to begin treatment.
+		<br>
+		Otherwise, if they are, standard procedure suggests administering epinephrine through either your hypospray filled during preparations section or your first aid kit's emergency auto injector. This should stabilize them and give you time
+		to proceed to the next section on how to begin treatment.
+		<br>
+		<h3>Treatment</h3>
+		Although your goggles inform you of the patient's health state, we do not know their exact injuries. Assuming the patient is stable from having non-critical injuries or from being stabilized with epinephrine,
+		You should now use your health scanner to acquire the full details of the patient's state.
+		<br>
+		<h4>SAMPLE HEALTH ANALYZER SCAN</h4>
+		Analyzing Results for Casey Spark :  <br>
+		Overall Status: 27 % healthy 	<br>
+		Damage Specifics: 9  - 14  - 32  - 20  <br>
+		Key: Suffocation / Toxin / Burns / Brute  <br>
+		Body Temperature: 23.5092˚C (74.3166˚F)  <br>
+		Blood Pressure: 122/82 (NORMAL)  | Blood level: 500 units <br>
+		1 chemical agent found in Casey Spark. <br>
+		epinephrine - 5  <br>
+		<h3>Analysis</h3>
+		Our patient is at 27% health. The Key fields correspond to the matching damage specifics fields. This means that our patient here has:
+		</li><li>9 - Suffocation
+		</li><li>14 - Toxin
+		</li><li>32 - Burns
+		</li><li>20 - Brute
+		<br>
+		It's time to treat each of these injuries!
+		<br>
+		<h3>Healing</h3>
+		<h4>Suffocation</h4>
+		Suffocation will heal on its own as long as the patient is in a pressurized area and can breathe, unless they are in critical condition. In this case, you should have already administered epinephrine, which will
+		attempt to heal and control this type of damage already. If the damage is excessively high, NanoMed vendors contain salbutamol pills dedicated to treating this damage type.
+		<h4>Toxin</h4>
+		Your syringe can be alternatingly used to draw or inject reagents. Use the syringe to draw anti-toxin from the anti-toxin bottle we have prepared during our setup and then inject it into the patient.
+		5 units of anti-toxin (single injection) will be enough for around 18 toxin damage, so in this case we would only need to inject 5.
+		<br>
+		Note: if choosing to use a hypospray, use the anti-toxin bottle on the hypospray to load it and then use the hypospray on the patient to inject the reagent.
+		<h4>Burns</h4>
+		Apply a silver sulfadiazine patch to treat burns. It's that easy! Repeat if damage exceeds the amount healed.
+		<h4>Brute</h4>
+		Apply a styptic powder patch to treat brute damage. Also simple! Repeat if damage exceeds the amount healed.
+		<h3>Final notes</h3>
+		Epinephrine will in most cases take care of suffocation damage for you. The last two types of damage: Brute and Burns will be the most common cases you'll come to face with.
+		As a result, be sure to restock often as you might run out of patches treating these conditions! <br>
+		Also worth noting: In addition to treating toxin damage, charcoal tries to remove other reagents present in the patient. This means that it will also purge any poisons that might have caused the damage in the first place!
+
+		<h2>PATIENT LOST</h2>
+		Not every life can be saved. In the event that the patient dies in your care, you should bring their body to the cloning equipment.
+		The instructions for operating it should be available nearby, otherwise consult fellow personnel for assistance.
+		Alternatively, they can be brought to the robotics department in order to be turned into a cyborg.
+		Consult your fellow crewmembers or the station-issued AI unit for directions if you are not aware of the locations of the mentioned areas.
+		<hr>
+		<h2>SUMMARY</h2>
+		<hr>
+		If a patient is in critical state administer epinephrine, then perform a vitals scan with your health analyzer and treat the respective damages:
+		</li><li>Suffocation - administer epinephrine if you haven't already. If damage is very high, provide a salbutamol pill from a NanoMed vendor.
+		</li><li>Toxin - inject the patient with anti-toxins.
+		</li><li>Burn - apply a Silver Sulfadiazine patch on the patient.
+		</li><li>Brute - apply a Styptic Powder patch on the patient.
+		<br>
+		<hr>
+		<h2>What now?</h2>
+		<hr>
+		<h3>Develop!</h3>
+		Though the contents of this book will be sufficient for most cases, it won't be enough to save every patient and get you through all situations.
+		You probably noticed the NanoMed units contain many different reagents, of which we used only few.
+		Knowing when to use which can be greatly beneficial to your work. Knowledge of them will allow you to develop in areas such as: restoring blood, surgery and purging poisons, to name a few.
+		Worth noting is that your PDA contains a remote program for the portable NanoMed and portable Medbay emergency transport unit, allowing you to continue work in areas far away from Medbay!
+		<br>
+		<h4>Additonal documentation available is at:</h4>
+	<ul>><li><a href="https://wiki.ss13.co/Doctoring" target="Goonstation Wiki: Doctoring">https://wiki.ss13.co/Doctoring</a>
+		<li><a href="https://wiki.ss13.co/Chemicals#Medical_Chems" target="Goonstation Wiki: Medical Chems">https://wiki.ss13.co/Medical_Chems</a> - specifically the "Medical Chems" section.</ul>
+		<br>
+		<hr>
+		<i>Contents of the book written by the S.P.A.R.K. unit which hopes to see you successful in the field!</i></li><p></p></body>

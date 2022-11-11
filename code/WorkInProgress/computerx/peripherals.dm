@@ -56,7 +56,7 @@
 		src.id = "\ref[src]"
 
 	disposing()
-		host?.peripherals.Remove(src)
+		host?.peripherals?.Remove(src)
 		..()
 
 
@@ -126,8 +126,7 @@
 	desc = "A wireless computer card. It has a bit of a limited range."
 	icon_state = "power_mod"
 	func_tag = "RAD_ADAPTER"
-	var/frequency = 1419
-	var/datum/radio_frequency/radio_connection
+	var/frequency = FREQ_FREE
 	var/range = 8 //How far can our signal travel?? HOW FAR
 	var/setup_freq_locked = 0 //If set, frequency cannot be adjusted.
 	var/setup_netmode_norange = 1 //If set, there is no range limit in network mode.
@@ -141,37 +140,29 @@
 		setup_freq_locked = 1
 
 		pda
-			frequency = 1149 //Standard PDA comm frequency.
+			frequency = FREQ_PDA //Standard PDA comm frequency.
 			net_mode = 1
 			func_tag = "NET_ADAPTER"
 
 		status //This one is for status display control.
-			frequency = 1435
+			frequency = FREQ_STATUS_DISPLAY
 			setup_netmode_norange = 0
 
 	New()
 		..()
-		if(radio_controller)
-			initialize()
-
 		src.net_id = format_net_id("\ref[src]")
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("wireless", frequency)
+		get_radio_connection_by_id(src, "wireless").update_all_hearing(TRUE) // I guess
 
-
-	initialize()
-		set_frequency(frequency)
-
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, "[frequency]")
-			frequency = new_frequency
-			radio_connection = radio_controller.add_object(src, "[frequency]")
-
+	proc/set_frequency(new_frequency)
+		frequency = new_frequency
+		get_radio_connection_by_id(src, "wireless").update_frequency(new_frequency)
 
 	receive_command(obj/source, command, datum/computer/file/signal/sfile)
 		if(..())
 			return
 
-		if(!istype(sfile) || !radio_connection)
+		if(!istype(sfile))
 			return
 
 		var/broadcast_range = src.range //No range in network mode!!
@@ -185,7 +176,6 @@
 				if(sfile.data_file) //Gonna transfer so many files.
 					newsignal.data_file = sfile.data_file.copy_file()
 				newsignal.encryption = src.code
-				newsignal.transmission_method = TRANSMISSION_RADIO
 				if(src.net_mode)
 					if(!newsignal.data["address_1"])
 						//Net_mode demands an address_1 value!
@@ -194,7 +184,7 @@
 
 					newsignal.data["sender"] = src.net_id
 
-				src.radio_connection.post_signal(src, newsignal, broadcast_range)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, broadcast_range)
 
 				//src.logstring += "T@[src.frequency]:[src.code];"
 
@@ -217,12 +207,11 @@
 				var/datum/signal/newsignal = get_free_signal()
 				newsignal.data["address_1"] = "ping"
 				newsignal.data["sender"] = src.net_id
-				newsignal.transmission_method = TRANSMISSION_RADIO
-				src.radio_connection.post_signal(src, newsignal, broadcast_range)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, broadcast_range)
 
 			else
 				if(!src.setup_freq_locked)
-					var/new_freq = round(text2num(command))
+					var/new_freq = round(text2num_safe(command))
 					if(new_freq && (new_freq >= 1000 && new_freq <= 1500))
 						src.set_frequency(new_freq)
 
@@ -249,12 +238,11 @@
 					pingsignal.data["address_1"] = signal.data["sender"]
 					pingsignal.data["command"] = "ping_reply"
 					pingsignal.data["data"] = host.name
-					pingsignal.transmission_method = TRANSMISSION_RADIO
 					var/broadcast_range = src.range
 					if(src.setup_netmode_norange)
 						broadcast_range = 0
-					SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
-						src.radio_connection.post_signal(src, pingsignal, broadcast_range)
+					SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
+						SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, broadcast_range)
 
 				return //Just toss out the rest of the signal then I guess
 
@@ -287,7 +275,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(src.host && !src.link) //Wait for the map to load and hook up if installed() hasn't done it.
 				src.check_connection()
 			//Let's blindy attempt to generate a unique network ID!
@@ -371,7 +359,7 @@
 				pingsignal.data["address_1"] = signal.data["sender"]
 				pingsignal.data["command"] = "ping_reply"
 				pingsignal.transmission_method = TRANSMISSION_WIRE
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					src.link.post_signal(src, pingsignal)
 
 			return //Just toss out the rest of the signal then I guess
@@ -467,7 +455,7 @@
 				if(!print_data)
 					src.printing = 0
 					return
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					var/obj/item/paper/P = new /obj/item/paper( src.host.loc )
 					P.info = print_data
 					if(print_title)
@@ -497,7 +485,7 @@
 			if(!print_data)
 				src.printing = 0
 				return
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				var/obj/item/paper/P = new /obj/item/paper( src.host.loc )
 				P.info = print_data
 				if(print_title)
@@ -565,6 +553,7 @@
 			if(2)
 				prize = new /obj/item/device/radio/beacon( prize_location )
 				prize.name = "electronic blink toy game"
+				prize.anchored = FALSE
 				prize.desc = "Blink.  Blink.  Blink."
 			if(3)
 				prize = new /obj/item/device/light/zippo( prize_location )
@@ -663,7 +652,7 @@
 				newrec.fields["access"] = jointext(src.authid.access, ";")
 				newrec.fields["balance"] = src.authid.money
 
-				SPAWN_DBG(0.4 SECONDS)
+				SPAWN(0.4 SECONDS)
 					send_command("card_authed", newrec)
 
 				return newrec
@@ -673,14 +662,14 @@
 					return "nocard"
 				var/new_access = 0
 				if(istype(rec))
-					new_access = text2num(rec.fields["access"])
+					new_access = text2num_safe(rec.fields["access"])
 
 				if(!new_access || (new_access in src.authid.access))
 					var/datum/computer/file/record/newrec = new
 					newrec.fields["registered"] = src.authid.registered
 					newrec.fields["assignment"] = src.authid.assignment
 					newrec.fields["balance"] = src.authid.money
-					SPAWN_DBG(0.4 SECONDS)
+					SPAWN(0.4 SECONDS)
 						send_command("card_authed", newrec)
 
 					return newrec
@@ -690,14 +679,14 @@
 					return "nocard"
 
 				//We need correct PIN numbers you jerks.
-				if(text2num(rec.fields["pin"]) != src.authid.pin)
-					SPAWN_DBG(0.4 SECONDS)
+				if(text2num_safe(rec.fields["pin"]) != src.authid.pin)
+					SPAWN(0.4 SECONDS)
 						send_command("card_bad_pin")
 					return
 
-				var/charge_amount = text2num(rec.fields["amount"])
+				var/charge_amount = text2num_safe(rec.fields["amount"])
 				if(!charge_amount || (charge_amount <= 0) || charge_amount > src.authid.money)
-					SPAWN_DBG(0.4 SECONDS)
+					SPAWN(0.4 SECONDS)
 						send_command("card_bad_charge")
 					return
 
@@ -709,7 +698,7 @@
 				if(!src.authid || !src.can_manage_access || !istype(rec))
 					return "nocard"
 
-				var/new_access = text2num(rec.fields["access"])
+				var/new_access = text2num_safe(rec.fields["access"])
 				if(!new_access || (new_access <= 0))
 					return
 
@@ -720,7 +709,7 @@
 					var/datum/signal/newrec = new
 					newrec.fields["access"] = new_access
 */
-					SPAWN_DBG(0.4 SECONDS)
+					SPAWN(0.4 SECONDS)
 						send_command("card_add")
 
 					return
@@ -729,7 +718,7 @@
 				if(!src.authid || !src.can_manage_access || !istype(rec))
 					return "nocard"
 
-				var/rem_access = text2num(rec.fields["access"])
+				var/rem_access = text2num_safe(rec.fields["access"])
 				if(!rem_access || (rem_access <= 0))
 					return
 
@@ -740,7 +729,7 @@
 					var/datum/signal/newrec = new
 					newrec.fields["access"] = rem_access
 */
-					SPAWN_DBG(0.4 SECONDS)
+					SPAWN(0.4 SECONDS)
 						send_command("card_remove")
 
 					return
@@ -752,7 +741,7 @@
 		if(..())
 			return
 
-		if(issilicon(usr) && get_dist(src, usr) > 1)
+		if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
@@ -784,7 +773,7 @@
 
 		switch(command)
 			if("beep")
-				playsound(src.host.loc, "sound/machines/twobeep.ogg", 50, 1)
+				playsound(src.host.loc, 'sound/machines/twobeep.ogg', 50, 1)
 				for (var/mob/O in hearers(3, src.host.loc))
 					O.show_message(text("[bicon(src.host)] *beep*"))
 
@@ -867,7 +856,7 @@
 		if(..())
 			return
 
-		if(issilicon(usr) && get_dist(src, usr) > 1)
+		if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
@@ -966,7 +955,7 @@
 		if(..())
 			return
 
-		if(issilicon(usr) && get_dist(src, usr) > 1)
+		if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
@@ -1060,7 +1049,7 @@
 		if(..())
 			return 1
 
-		SPAWN_DBG(rand(50,100))
+		SPAWN(rand(50,100))
 			if(host)
 				for(var/mob/M in viewers(host, null))
 					if(M.client)
@@ -1082,7 +1071,7 @@
 						if(M.client)
 							M.show_message(text("<span class='alert'><B>The [src.host.name] catches on fire!</B></span>"), 1)
 						fireflash(src.host.loc, 0)
-						playsound(src.host.loc, "sound/items/Welder2.ogg", 50, 1)
+						playsound(src.host.loc, 'sound/items/Welder2.ogg', 50, 1)
 						src.host.set_broken()
 						qdel(src)
 						return

@@ -1,4 +1,4 @@
-/mob/living/critter/drone/x
+/mob/living/critter/robotic/drone/x
 	drone_designation = "X"
 	desc = "An experimental and extremely dangerous Syndicate railgun drone."
 	icon_state = "drone3"
@@ -20,5 +20,5 @@
 		loot_table[/obj/item/spacecash/buttcoin] = 500
 
 	setup_healths()
-		add_hh_robot(-500, 500, 1)
-		add_hh_robot_burn(-500, 500, 1)
+		add_hh_robot(500, 1)
+		add_hh_robot_burn(500, 1)

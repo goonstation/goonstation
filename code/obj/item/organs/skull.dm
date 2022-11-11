@@ -9,13 +9,15 @@
 	var/preddesc = "A trophy from a less interesting kill." // See assign_gimmick_skull().
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "skull"
+	inhand_image_icon = 'icons/mob/inhand/hand_skulls.dmi'
+	health = 4
 	w_class = W_CLASS_TINY
 	var/mob/donor = null
 	var/donor_name = null
 	var/datum/organHolder/holder = null
 	//var/owner_job = null
 	var/value = 1
-	var/op_stage = 0.0
+	var/op_stage = 0
 	var/obj/item/device/key/skull/key = null //May randomly contain a key
 	rand_pos = 1
 	var/made_from = "bone"
@@ -23,7 +25,7 @@
 
 	New(loc, datum/organHolder/nholder)
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (istype(nholder) && nholder.donor)
 				src.holder = nholder
 				src.donor = nholder.donor
@@ -45,7 +47,7 @@
 		if (ishunter(usr))
 			. += "[src.preddesc]\nThis trophy has a value of [src.value]."
 
-	attack(var/mob/living/carbon/M as mob, var/mob/user as mob)
+	attack(var/mob/living/carbon/M, var/mob/user)
 		/* Override so we can check to see if we want to reinsert a skull into a corpse/body */
 		if (!ismob(M))
 			return ..()
@@ -60,7 +62,7 @@
 		else // failure and attack them with the organ
 			return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/parts/robot_parts/leg))
 			var/obj/machinery/bot/skullbot/B
 
@@ -105,7 +107,7 @@
 		if (istool(W, TOOL_SAWING))
 			user.visible_message("<span class='notice'>[user] hollows out [src].</span>")
 			var/obj/item/clothing/mask/skull/smask = new /obj/item/clothing/mask/skull
-			playsound(user.loc, "sound/machines/mixer.ogg", 50, 1)
+			playsound(user.loc, 'sound/machines/mixer.ogg', 50, 1)
 
 			if (src.key)
 				var/obj/item/device/key/skull/SK = src.key
@@ -120,6 +122,13 @@
 			qdel(src)
 			return
 
+		if (istype(W, /obj/item/device/light/candle))
+			user.visible_message("<b>[user]</b> carefully sets up a candle on top of [src].",\
+			"You ritualistically plant a candle on [src]. Welp.")
+			var/obj/item/device/light/spirit_candle/C = new /obj/item/device/light/spirit_candle(src.loc)
+			user.put_in_hand_or_drop(C)
+			qdel(W)
+			qdel(src)
 		else
 			return ..()
 
@@ -144,6 +153,9 @@
 			return 0
 
 		if (!surgeryCheck(M, user))
+			return 0
+
+		if (!can_act(user))
 			return 0
 
 		var/mob/living/carbon/human/H = M
@@ -171,9 +183,9 @@
 		if (!H.organHolder.get_organ("skull") && H.organHolder.head.scalp_op_stage == 5.0)
 			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
 
-			H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] head!</span>",\
-			user, "<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] head!</span>",\
-			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your head!</span>")
+			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] head!</span>",\
+				"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] head!</span>",\
+				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your head!</span>")
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
@@ -200,6 +212,12 @@
 	name = "peculiar skull"
 	desc = "You feel extremely uncomfortable near this thing."
 	icon_state = "skull_strange"
+	value = 3
+
+/obj/item/skull/menacing // Vampires.
+	name = "menacing skull"
+	desc = "Gives off a threatening aura and also makes a great halloween decoration."
+	icon_state = "skull_menacing"
 	value = 3
 
 /obj/item/skull/crystal // Omnitraitors.

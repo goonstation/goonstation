@@ -15,15 +15,13 @@
 
 	examine()
 		. = ..()
-		if(src.hiddenFrom?.Find(usr.client)) //invislist
-			return
+
 		if(!alive)
 			. += "<span class='alert'><B>the disgusting creature is not moving</B></span>"
 		else if (src.health > 40)
 			. += "<span class='alert'><B>the spindly-legged head looks healthy and strong</B></span>"
 		else
 			. += "<span class='alert'><B>the ugly thing is missing several limbs</B></span>"
-		return
 
 	filter_target(var/mob/living/C)
 		//Don't want a dead mob, don't want a mob with the same mind as the owner
@@ -44,7 +42,7 @@
 			random_brute_damage(H, 10)
 			src.visible_message("<font color='#FF0000'><B>\The [src]</B> crawls down [H.name]'s throat!</font>")
 			src.set_loc(H)
-			H.setStatus("paralysis", max(H.getStatusDuration("paralysis"), 100))
+			H.setStatusMin("paralysis", 10 SECONDS)
 			attacking = 1
 
 			var/datum/ailment_data/parasite/HS = new /datum/ailment_data/parasite
@@ -56,7 +54,7 @@
 			H.ailments += HS
 
 			if(owner)
-				logTheThing("combat", owner.current ? owner.current : owner, H, "'s headspider enters [constructTarget(H,"combat")] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, owner.current ? owner.current : owner, H, "'s headspider enters [constructTarget(H,"combat")] at [log_loc(src)].")
 
 
 			qdel(src)

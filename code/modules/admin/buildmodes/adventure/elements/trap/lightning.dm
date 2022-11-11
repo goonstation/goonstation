@@ -8,7 +8,7 @@
 
 	initialize()
 		..()
-		selection = unpool(/obj/adventurepuzzle/marker)
+		selection = new /obj/adventurepuzzle/marker
 		damage = input("Trap damage? (500+ to gib instantly)", "Trap damage", 20) as num
 		stun = input("Stun time?", "Stun time", 6) as num
 		boutput(usr, "<span class='notice'>Right click to set trap target. Right click active target to clear target. Left click to place trap. Ctrl+click anywhere to finish.</span>")
@@ -18,7 +18,7 @@
 		if (target)
 			target.overlays -= selection
 		if (selection)
-			pool(selection)
+			qdel(selection)
 		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
@@ -52,7 +52,7 @@
 
 /obj/adventurepuzzle/triggerable/targetable/lightningtrap
 	name = "lightning trap"
-	invisibility = 20
+	invisibility = INVIS_ADVENTURE
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "spark"
 	density = 0
@@ -84,30 +84,34 @@
 						attack_amt = 1
 						var/list/affected = DrawLine(target, src, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 						for(var/obj/OB in affected)
-							SPAWN_DBG(0.6 SECONDS)
-								pool(OB)
+							SPAWN(0.6 SECONDS)
+								qdel(OB)
 						for (var/mob/living/M in get_turf(target))
 							if (damage < 500)
 								M.TakeDamage("chest", 0, damage, 0, DAMAGE_BURN)
-								M.changeStatus("stunned", stun * 10)
+								M.changeStatus("stunned", stun SECONDS)
 								boutput(M, "<b><span class='alert'>You feel a powerful shock course through your body!</span></b>")
 							else
+								if(ishuman(M))
+									logTheThing(LOG_COMBAT, M, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
 								M:gib()
 					else
 						for (var/mob/living/M in view(src, range))
 							attack_amt = 1
 							var/list/affected = DrawLine(M, src, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 							for(var/obj/OB in affected)
-								SPAWN_DBG(0.6 SECONDS)
-									pool(OB)
+								SPAWN(0.6 SECONDS)
+									qdel(OB)
 							if (damage < 500)
 								M.TakeDamage("chest", 0, damage, 0, DAMAGE_BURN)
-								M.changeStatus("stunned", stun * 10)
+								M.changeStatus("stunned", stun SECONDS)
 								boutput(M, "<b><span class='alert'>You feel a powerful shock course through your body!</span></b>")
 							else
+								if(ishuman(M))
+									logTheThing(LOG_COMBAT, M, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
 								M:gib()
 					if (attack_amt)
-						playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)
+						playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
 					next_trap = world.time + trap_delay
 			if ("off")
 				is_on = 0

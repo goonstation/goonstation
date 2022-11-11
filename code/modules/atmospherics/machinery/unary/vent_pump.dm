@@ -2,7 +2,7 @@
 	icon = 'icons/obj/atmospherics/vent_pump.dmi'
 	icon_state = "out"
 	name = "Air Vent"
-	desc = "Has a valve and pump attached to it"
+	desc = "A vent used for repressurization. It's probably hooked up to a canister port, somewhere."
 	level = 1
 	plane = PLANE_FLOOR
 	var/on = 1
@@ -83,6 +83,11 @@
 
 			air_contents.volume = 1000
 
+	New()
+		..()
+		if(frequency)
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+
 	update_icon()
 		if(on&&node)
 			if(pump_direction)
@@ -143,48 +148,32 @@
 
 		return 1
 
-	//Radio remote control
+	proc/broadcast_status()
+		if(!id)
+			return 0
 
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, "[frequency]")
-			frequency = new_frequency
-			if(frequency)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
+		var/datum/signal/signal = get_free_signal()
+		signal.transmission_method = 1 //radio signal
+		signal.source = src
 
-		broadcast_status()
-			if(!radio_connection || !id)
-				return 0
+		signal.data["tag"] = id
+		signal.data["device"] = "AVP"
+		signal.data["power"] = on?("on"):("off")
+		signal.data["direction"] = pump_direction?("release"):("siphon")
+		signal.data["checks"] = pressure_checks
+		signal.data["internal"] = internal_pressure_bound
+		signal.data["external"] = external_pressure_bound
 
-			var/datum/signal/signal = get_free_signal()
-			signal.transmission_method = 1 //radio signal
-			signal.source = src
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
-			signal.data["tag"] = id
-			signal.data["device"] = "AVP"
-			signal.data["power"] = on?("on"):("off")
-			signal.data["direction"] = pump_direction?("release"):("siphon")
-			signal.data["checks"] = pressure_checks
-			signal.data["internal"] = internal_pressure_bound
-			signal.data["external"] = external_pressure_bound
-
-			radio_connection.post_signal(src, signal)
-
-			return 1
+		return 1
 
 	var/frequency = 0
 	var/id = null
-	var/datum/radio_frequency/radio_connection
 
 	initialize()
 		..()
-		if(frequency)
-			set_frequency(frequency)
-		update_icon()
-
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		..()
+		UpdateIcon()
 
 	receive_signal(datum/signal/signal)
 		if(signal.data["tag"] && (signal.data["tag"] != id))
@@ -201,7 +190,7 @@
 				on = !on
 
 			if("set_direction")
-				var/number = text2num(signal.data["parameter"])
+				var/number = text2num_safe(signal.data["parameter"])
 				if(number > 0.5)
 					pump_direction = 1
 				else
@@ -220,23 +209,23 @@
 				pump_direction = 1
 
 			if("set_checks")
-				var/number = round(text2num(signal.data["parameter"]),1)
+				var/number = round(text2num_safe(signal.data["parameter"]),1)
 				pressure_checks = number
 
 			if("set_internal_pressure")
-				var/number = text2num(signal.data["parameter"])
-				number = min(max(number, 0), ONE_ATMOSPHERE*50)
+				var/number = text2num_safe(signal.data["parameter"])
+				number = clamp(number, 0, ONE_ATMOSPHERE*50)
 
 				internal_pressure_bound = number
 
 			if("set_external_pressure")
-				var/number = text2num(signal.data["parameter"])
-				number = min(max(number, 0), ONE_ATMOSPHERE*50)
+				var/number = text2num_safe(signal.data["parameter"])
+				number = clamp(number, 0, ONE_ATMOSPHERE*50)
 
 				external_pressure_bound = number
 
 			if("refresh")
-				SPAWN_DBG(0.5 SECONDS) broadcast_status()
+				SPAWN(0.5 SECONDS) broadcast_status()
 
 
 	hide(var/i) //to make the little pipe section invisible, the icon changes.

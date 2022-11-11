@@ -3,16 +3,24 @@
 	var/static/list/flock_adjectives_1 = list("Syrupy", "Tangy", "Schlumpy", "Viscous", "Grumpy")
 	var/static/list/flock_adjectives_2 = list("pulsating", "jiggling", "quivering", "flapping")
 	var/static/list/flock_adjectives_3 = list("</span><span style=\"color: teal; font-family: Fixedsys, monospace;\"><i>teal</i></span><span class='notice'>", "electric", "ferrofluid", "assimilatory")
+TYPEINFO(/datum/component/consume)
+	initialization_args = list()
+
 /datum/component/consume/Initialize()
 	if(!istype(parent, /mob))
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/consume/can_eat_inedible_organs
 	var/can_eat_heads = 0
+
+TYPEINFO(/datum/component/consume/can_eat_inedible_organs)
+	initialization_args = list(
+		ARG_INFO("can_eat_heads", DATA_INPUT_BOOL, "If heads are also valid food", FALSE)
+	)
 /datum/component/consume/can_eat_inedible_organs/Initialize(var/can_eat_heads)
 	..()
 	src.can_eat_heads = can_eat_heads
-	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PRE), .proc/is_it_organs)
+	RegisterSignal(parent, COMSIG_MOB_ITEM_CONSUMED_PRE, .proc/is_it_organs)
 
 /datum/component/consume/can_eat_inedible_organs/proc/is_it_organs(var/mob/M, var/mob/user, var/obj/item/I)
 	if (istype(I, /obj/item/skull) || (istype(I, /obj/item/organ/head) && can_eat_heads)) // skulls, heads
@@ -21,17 +29,21 @@
 		return 0
 
 /datum/component/consume/can_eat_inedible_organs/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ITEM_CONSUMED_PRE)
+	UnregisterSignal(parent, COMSIG_MOB_ITEM_CONSUMED_PRE)
 	. = ..()
 
 /datum/component/consume/organpoints
 	var/target_abilityholder = /datum/abilityHolder/lizard
 	var/static/list/organ2points = list(/obj/item/organ/head=2,/obj/item/skull=0,/obj/item/organ/brain=3,/obj/item/organ/chest=5,/obj/item/organ/heart=2,/obj/item/organ/appendix=0,/obj/item/clothing/head/butt=0)
 
+TYPEINFO(/datum/component/consume/organpoints)
+	initialization_args = list(
+		ARG_INFO("target_abilityholder", DATA_INPUT_REF, "Abilityholder to handle points for")
+	)
 /datum/component/consume/organpoints/Initialize(var/target_abilityholder)
 	..()
 	src.target_abilityholder = target_abilityholder
-	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED), .proc/eat_organ_get_points)
+	RegisterSignal(parent, COMSIG_MOB_ITEM_CONSUMED, .proc/eat_organ_get_points)
 
 /datum/component/consume/organpoints/proc/eat_organ_get_points(var/mob/M, var/mob/user, var/obj/item/I)
 	if (!I || !M || !ishuman(M) || !user)
@@ -69,7 +81,7 @@
 					boutput(L, "<span class='alert'>Ugh. Nothing but bone. Pretty spooky though.</span>")
 					return
 				if (/obj/item/skull/peculiar)
-					playsound(L, "sound/misc/meat_plop.ogg", 100, 1)
+					playsound(L, 'sound/misc/meat_plop.ogg', 100, 1)
 					L.visible_message("<span class='alert'>[M] vomits <i>everywhere</i>.</span>", "<span class='alert'><b>UUAAAUGGHHH...</b> The wizard's skull was cursed.</span>")
 					L.emote("scream")
 					L.changeStatus("paralysis", 10 SECONDS)
@@ -90,20 +102,20 @@
 					L.emote("scream")
 					L.changeStatus("paralysis", 30 SECONDS)
 					boutput(L, "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">YOU HAVE TASTED ALL THAT THE UNIVERSE HAS TO HOLD OF EVIL.</span>")
-					SPAWN_DBG(rand(5 SECONDS, 10 SECONDS))
+					SPAWN(rand(5 SECONDS, 10 SECONDS))
 						L.vomit()
 				if (/obj/item/skull/gold)
 					L.emote("scream")
 					L.changeStatus("weakened", 10 SECONDS)
 					boutput(L, "<span class='alert'>The moment it reaches your stomach, the skull headbutts you right in the solar plexus! Oof...</span>")
-					SPAWN_DBG(rand(1 SECOND, 3 SECONDS))
+					SPAWN(rand(1 SECOND, 3 SECONDS))
 						L.emote(pick("groan", "moan"))
 					return
 				if (/obj/item/skull/odd)
 					add_these_points = 4
 					boutput(L, "<span class='notice'>Delicious, with an oddly familiar aftertaste.</span>")
 					boutput(L, "<span class='notice'>You feel a slight wriggling in your gut.</span>")
-					SPAWN_DBG(rand(3 SECONDS, 10 SECONDS))
+					SPAWN(rand(3 SECONDS, 10 SECONDS))
 						boutput(L, "<span class='notice'>The wriggling passes.</span>")
 						L.emote("fart")
 				if (/obj/item/organ/brain)
@@ -133,7 +145,7 @@
 		L.abilityHolder.addPoints(add_these_points, target_abilityholder)
 
 /datum/component/consume/organpoints/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ITEM_CONSUMED)
+	UnregisterSignal(parent, COMSIG_MOB_ITEM_CONSUMED)
 	. = ..()
 
 
@@ -142,10 +154,14 @@
 	var/base_HPup = 5
 	var/mod_mult = 1
 
+TYPEINFO(/datum/component/consume/organheal)
+	initialization_args = list(
+		ARG_INFO("mod_mult", DATA_INPUT_NUM, "healing multiplier", 1)
+	)
 /datum/component/consume/organheal/Initialize(var/mod_mult)
 	..()
 	src.mod_mult = mod_mult
-	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED), .proc/eat_organ_get_heal)
+	RegisterSignal(parent, COMSIG_MOB_ITEM_CONSUMED, .proc/eat_organ_get_heal)
 
 /datum/component/consume/organheal/proc/eat_organ_get_heal(var/mob/M, var/mob/user, var/obj/item/I)
 	if (!I || !M || !user)
@@ -179,7 +195,7 @@
 				if (/obj/item/skull/strange)
 					boutput(M, "<span class='alert'>Ugh. Nothing but bone. Pretty spooky though.</span>")
 				if (/obj/item/skull/peculiar)
-					playsound(M, "sound/misc/meat_plop.ogg", 100, 1)
+					playsound(M, 'sound/misc/meat_plop.ogg', 100, 1)
 					M.visible_message("<span class='alert'>[M] vomits <i>everywhere</i>.</span>", "<span class='alert'><b>UUAAAUGGHHH...</b> The wizard's skull was cursed.</span>")
 					M.emote("scream")
 					M.changeStatus("paralysis", 10 SECONDS)
@@ -196,20 +212,20 @@
 					M.emote("scream")
 					M.changeStatus("paralysis", 30 SECONDS)
 					boutput(M, "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">YOU HAVE TASTED ALL THAT THE UNIVERSE HAS TO HOLD OF EVIL.</span>")
-					SPAWN_DBG(rand(5 SECONDS, 10 SECONDS))
+					SPAWN(rand(5 SECONDS, 10 SECONDS))
 						M.vomit()
 					return
 				if (/obj/item/skull/gold)
 					M.emote("scream")
 					M.changeStatus("weakened", 10 SECONDS)
 					boutput(M, "<span class='alert'>The moment it reaches your stomach, the skull headbutts you right in the solar plexus! Oof...</span>")
-					SPAWN_DBG(rand(1 SECOND, 3 SECONDS))
+					SPAWN(rand(1 SECOND, 3 SECONDS))
 						M.emote(pick("groan", "moan"))
 				if (/obj/item/skull/odd)
 					heal_this_much = base_HPup * 2
 					boutput(M, "<span class='notice'>Delicious, with an oddly familiar aftertaste.</span>")
 					boutput(M, "<span class='notice'>You feel a slight wriggling in your gut.</span>")
-					SPAWN_DBG(rand(3 SECONDS, 10 SECONDS))
+					SPAWN(rand(3 SECONDS, 10 SECONDS))
 						boutput(M, "<span class='notice'>The wriggling passes.</span>")
 						M.emote("fart")
 				if (/obj/item/organ/brain)
@@ -238,7 +254,7 @@
 
 
 /datum/component/consume/organheal/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ITEM_CONSUMED)
+	UnregisterSignal(parent, COMSIG_MOB_ITEM_CONSUMED)
 	. = ..()
 
 
@@ -247,13 +263,17 @@
 	var/obj/item/food_parent
 	var/list/status_effects = list()
 
+TYPEINFO(/datum/component/consume/food_effects)
+	initialization_args = list(
+		ARG_INFO("status_effects", DATA_INPUT_LIST_BUILD, "List of status effects to apply when eaten")
+	)
 /datum/component/consume/food_effects/Initialize(var/list/_status_effects)
 	..()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 	src.food_parent = parent
 	src.status_effects = _status_effects
-	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL), .proc/apply_food_effects)
+	RegisterSignals(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL), .proc/apply_food_effects)
 
 /datum/component/consume/food_effects/InheritComponent(datum/component/consume/food_effects/C, i_am_original, _new_status_effects)
 	if(C?.status_effects)

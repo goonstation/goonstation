@@ -57,6 +57,7 @@ datum
 					if(volume >= 5)
 						if(!locate(/obj/decal/cleanable/dirt) in T)
 							make_cleanable(/obj/decal/cleanable/dirt,T)
+						T.wet = 0
 
 		chlorine
 			name = "chlorine"
@@ -68,6 +69,8 @@ datum
 			fluid_b = 160
 			transparency = 60
 			penetrates_skin = 1
+			depletion_rate = 0.6
+			touch_modifier = 0.33
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -110,11 +113,12 @@ datum
 			fluid_b = 160
 			transparency = 60
 			penetrates_skin = 1
+			touch_modifier = 0.33
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.take_toxin_damage(1*mult) // buffin this because fluorine is horrible - adding a burn effect
-				M.TakeDamage("chest", 0, 1*mult, 0, DAMAGE_BURN)
+				M.take_toxin_damage(0.75 * mult) // buffin this because fluorine is horrible - adding a burn effect
+				M.TakeDamage("chest", 0, 0.75 * mult, 0, DAMAGE_BURN)
 				..()
 				return
 
@@ -153,15 +157,15 @@ datum
 				if(!M) M = holder.my_atom
 				if (isliving(M))
 					var/mob/living/H = M
-					if(H?.reagents.has_reagent("moonshine"))
-						mult *= 3
 					var/ethanol_amt = holder.get_reagent_amount(src.id)
+					if(H?.reagents.has_reagent("moonshine"))
+						mult *= 7
 					var/liver_damage = 0
 					if (!isalcoholresistant(H) || H?.reagents.has_reagent("moonshine"))
 						if (ethanol_amt >= 15)
 							if(probmult(10)) H.emote(pick("hiccup", "burp", "mumble", "grumble"))
 							H.stuttering += 1
-							if (H.canmove && isturf(H.loc) && probmult(10))
+							if (H.can_drunk_act() && probmult(10))
 								step(H, pick(cardinal))
 							if (prob(20)) H.make_dizzy(rand(3,5) * mult)
 						if (ethanol_amt >= 25)
@@ -174,7 +178,7 @@ datum
 								H.emote(pick("hiccup", "burp"))
 							if (probmult(15))
 								H.stuttering += rand(1,10)
-							if (H.canmove && isturf(H.loc) && probmult(8))
+							if (H.can_drunk_act() && probmult(8))
 								step(H, pick(cardinal))
 						if (ethanol_amt >= 55)
 							liver_damage = 0.4
@@ -183,18 +187,18 @@ datum
 							H.stuttering += 1
 							if (probmult(33))
 								H.change_eye_blurry(10 , 50)
-							if (H.canmove && isturf(H.loc) && probmult(15))
+							if (H.can_drunk_act() && probmult(15))
 								step(H, pick(cardinal))
 							if(prob(4))
 								H.change_misstep_chance(20 * mult)
 							if(probmult(6))
-								H.visible_message("<span class='alert'>[H] pukes all over \himself.</span>")
+								H.visible_message("<span class='alert'>[H] pukes all over [himself_or_herself(H)].</span>")
 								H.vomit()
 							if(prob(15))
 								H.make_dizzy(5 * mult)
 						if (ethanol_amt >= 60)
 							H.change_eye_blurry(10 , 50)
-							if(probmult(6)) H.drowsyness += 5
+							if(probmult(6)) H.changeStatus("drowsy", 15 SECONDS)
 							if(prob(5)) H.take_toxin_damage(rand(1,2) * mult)
 
 					if (ishuman(M))
@@ -202,13 +206,31 @@ datum
 						if (HH.organHolder && HH.organHolder.liver)			//Hax here, lazy. currently only organ is liver. fix when adding others. -kyle
 							if (HH.organHolder.liver.robotic)
 								M.take_toxin_damage(-liver_damage * 3 * mult)
-								HH.organHolder.heal_organ(liver_damage *mult, liver_damage *mult, liver_damage *mult, "liver")
+								if(!HH.organHolder.liver.emagged)
+									HH.organHolder.heal_organ(liver_damage *mult, liver_damage *mult, liver_damage *mult, "liver")
 							else
 								if (ethanol_amt < 40 && HH.organHolder.liver.get_damage() < 10)
 									HH.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
 								else if (ethanol_amt >= 40 && prob(ethanol_amt/2))
 									HH.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
+//inc_alcohol_metabolized()
+//bunch of extra logic for dumb stat tracking. This is copy pasted from proc/how_many_depletions() in Chemistry-Reagents.dm
+#if defined(MAP_OVERRIDE_POD_WARS)
+						var/amt_of_alcohol_metabolized = depletion_rate
+						if (H.traitHolder?.hasTrait("slowmetabolism")) //fuck
+							amt_of_alcohol_metabolized/= 2
+						if (H.organHolder)
+							if (!H.organHolder.liver || H.organHolder.liver.broken)	//if no liver or liver is dead, deplete slower
+								amt_of_alcohol_metabolized /= 2
+							if (H.organHolder.get_working_kidney_amt() == 0)	//same with kidneys
+								amt_of_alcohol_metabolized /= 2
+
+						if (istype(ticker.mode, /datum/game_mode/pod_wars))
+							var/datum/game_mode/pod_wars/mode = ticker.mode
+							mode.stats_manager?.inc_alcohol_metabolized(H, amt_of_alcohol_metabolized * mult)
+#endif
 					..()
+
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				//Maybe add a bit that gives you a stamina buff if OD-ing on ethanol and you have a cyberliver.
@@ -274,12 +296,11 @@ datum
 					if (M.nutrition > 10) // Not good for your stomach either
 						for(var/mob/O in viewers(M, null))
 							O.show_message(text("<span class='alert'>[] vomits on the floor profusely!</span>", M), 1)
-						playsound(M.loc, "sound/effects/splat.ogg", 50, 1)
-						make_cleanable(/obj/decal/cleanable/vomit,M.loc)
+						M.vomit()
 						M.nutrition -= rand(3,5)
 						M.take_toxin_damage(10) // im bad
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 30))
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 30))
+						M.setStatusMin("stunned", 3 SECONDS * mult)
+						M.setStatusMin("weakened", 3 SECONDS * mult)
 
 		lithium
 			name = "lithium"
@@ -331,8 +352,12 @@ datum
 				if(!M) M = holder.my_atom
 				if(prob(70))
 					M.take_brain_damage(1*mult)
+				if (probmult(5) && isliving(M)) //folk treatment for the black plague- drinking mercury
+					var/mob/living/L = M
+					var/datum/ailment_data/disease/plague = L.find_ailment_by_type(/datum/ailment/disease/space_plague)
+					if (istype(plague))
+						L.cure_disease(plague)
 				..()
-				return
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("poison",1)
@@ -395,17 +420,13 @@ datum
 			minimum_reaction_temperature = T0C + 100
 			var/reacted_to_temp = 0 // prevent infinite loop in a fluid
 
-			pooled()
-				..()
-				reacted_to_temp = 0
-
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(!reacted_to_temp)
 					reacted_to_temp = 1
 					if(holder)
 						var/list/covered = holder.covered_turf()
 						for(var/turf/t in covered)
-							SPAWN_DBG(1 DECI SECOND) fireflash(t, min(max(0,((volume/covered.len)/15)),6))
+							SPAWN(1 DECI SECOND) fireflash(t, clamp(((volume/covered.len)/15), 0, 6))
 				if(holder)
 					holder.del_reagent(id)
 
@@ -422,7 +443,7 @@ datum
 				if(method == TOUCH)
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", 300)
+						L.changeStatus("burning", 30 SECONDS)
 				return 1
 
 			reaction_obj(var/obj/O, var/volume)
@@ -489,16 +510,16 @@ datum
 				.= 1
 
 				if (volume >= 20)
-					if (istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || istype(I,/datum/projectile/bullet/revolver_38))
+					if (istype(I, /obj/item/ammo/bullets/bullet_22HP) || istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || istype(I,/datum/projectile/bullet/revolver_38))
 						var/obj/item/ammo/bullets/bullet_holder = I
 						var/datum/projectile/ammo_type = bullet_holder.ammo_type
-						if (ammo_type && !(ammo_type.material && ammo_type.material == "silver"))
+						if (ammo_type && !(ammo_type.material && ammo_type.material.mat_id == "silver"))
 							ammo_type.material = getMaterial("silver")
 							holder.remove_reagent(src.id, 20)
 							.= 0
 				if (volume >= 50)
 					if (I.type == /obj/item/handcuffs)
-						I.setMaterial(getMaterial("silver"))
+						I.setMaterial(getMaterial("silver"), copy = FALSE)
 						holder.remove_reagent(src.id, 50)
 						.= 0
 
@@ -527,23 +548,24 @@ datum
 			pathogen_nutrition = list("sugar")
 			taste = "sweet"
 			stun_resist = 6
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_sugar", 2)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_sugar", 2)
 				..()
 
-			on_remove()
+			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_sugar")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_sugar")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.make_jittery(2 )
-				M.drowsyness = max(M.drowsyness-(5), 0)
+				M.changeStatus("drowsy", -10 SECONDS)
 				if(prob(4))
 					M.reagents.add_reagent("epinephrine", 1.2 * mult) // let's not metabolize into meth anymore
 				//if(prob(2))
@@ -581,7 +603,7 @@ datum
 						boutput(M, "<span class='alert'>You pass out from hyperglycemic shock!</span>")
 						M.emote("collapse")
 						//M.changeStatus("paralysis", ((2 * severity)*15) * mult)
-						M.changeStatus("weakened", ((4 * severity)*15) * mult)
+						M.changeStatus("weakened", ((4 * severity)*1.5 SECONDS) * mult)
 
 					if (prob(8))
 						M.take_toxin_damage(severity * mult)
@@ -647,14 +669,14 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.changeStatus("radiation", 30*mult, 1)
+				M.take_radiation_dose(0.05 SIEVERTS * mult, internal=TRUE)
 				..()
 				return
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
 				var/spawncleanable = 1
-				if(covered.len > 5 && (length(volume/covered) < 1))
+				if(length(covered) > 5 && (volume/length(covered) < 1))
 					spawncleanable = prob((volume/covered.len) * 10)
 
 
@@ -688,7 +710,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1 )
 				if(!M) M = holder.my_atom
-				M.changeStatus("radiation", 30 * mult, 1)
+				M.take_radiation_dose(0.075 SIEVERTS * mult, internal=TRUE)
 				..()
 				return
 
@@ -711,6 +733,7 @@ datum
 			taste = "bland"
 			minimum_reaction_temperature = -INFINITY
 			target_organs = list("left_kidney", "right_kidney")
+			heat_capacity = 400
 #ifdef UNDERWATER_MAP
 			block_slippy = 1
 			description = "A little strange. Not like any water you've seen. But definitely OSHA approved."
@@ -769,24 +792,24 @@ datum
 				return 1//fluid is better. remove this later probably
 
 			reaction_obj(var/obj/item/O, var/volume)
+				. = ..()
 				if(istype(O))
 					if(O.burning && prob(80))
 						O.combust_ended()
 					else if(istype(O, /obj/item/toy/sponge_capsule))
 						var/obj/item/toy/sponge_capsule/S = O
 						S.add_water()
-				return 1
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				..()
-				if(!volume)
-					volume = 10
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
+				. = ..()
+				if(!raw_volume)
+					raw_volume = 10
 				if(method == TOUCH)
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", -10 * volume)
-						playsound(get_turf(L), "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
-				return 1
+						L.changeStatus("burning", -1 * raw_volume SECONDS)
+						playsound(L, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1, pitch = 0.8)
+						. = 0
 
 		water/water_holy
 			name = "holy water"
@@ -796,7 +819,7 @@ datum
 			hygiene_value = 2
 			value = 3 // 1 1 1
 
-			reaction_mob(var/mob/target, var/method=TOUCH, var/volume)
+			reaction_mob(var/mob/target, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				..()
 				var/reacted = 0
 				var/mob/living/M = target
@@ -813,8 +836,8 @@ datum
 						for(var/mob/O in AIviewers(M, null))
 							O.show_message(text("<span class='alert'><b>[] begins to crisp and burn!</b></span>", M), 1)
 						boutput(M, "<span class='alert'>Holy Water! It burns!</span>")
-						var/burndmg = volume * 1.25
-						burndmg = min(burndmg, 110) //cap burn at 110 so we can't instant-kill vampires. just crit em ok.
+						var/burndmg = raw_volume * 1.25 //the sanctification inflicts the pain, not the water that carries it.
+						burndmg = min(burndmg, 80) //cap burn at 110(80 now >:) so we can't instant-kill vampires. just crit em ok.
 						M.TakeDamage("chest", 0, burndmg, 0, DAMAGE_BURN)
 						M.change_vampire_blood(-burndmg)
 						reacted = 1
@@ -822,8 +845,28 @@ datum
 						if (M.traitHolder?.hasTrait("atheist"))
 							boutput(M, "<span class='notice'>You feel insulted... and wet.</span>")
 						else
-							boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
-							M.take_brain_damage(-10)
+							if (ishuman(M))
+								var/mob/living/carbon/human/H = M
+								if(H.bioHolder?.HasEffect("blood_curse") || H.bioHolder?.HasEffect("blind_curse") || H.bioHolder?.HasEffect("weak_curse") || H.bioHolder?.HasEffect("rot_curse") || H.bioHolder?.HasEffect("death_curse"))
+									H.bioHolder.RemoveEffect("blood_curse")
+									H.bioHolder.RemoveEffect("blind_curse")
+									H.bioHolder.RemoveEffect("weak_curse")
+									H.bioHolder.RemoveEffect("rot_curse")
+									H.bioHolder.RemoveEffect("death_curse")
+									H.visible_message("[H] screams as some black smoke exits their body.")
+									H.emote("scream")
+									random_burn_damage(H, 5)
+									var/turf/T = get_turf(H)
+									if (T && isturf(T))
+										var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread/(T)
+										if (S)
+											S.set_up(5, 0, T, null, "#3b3b3b")
+											S.start()
+								else
+									boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
+							else
+								boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
+							M.take_brain_damage(0 - clamp(volume, 0, 10))
 						for (var/datum/ailment_data/disease/V in M.ailments)
 							if(prob(1))
 								M.cure_disease(V)
@@ -831,7 +874,7 @@ datum
 				if(method == TOUCH)
 					var/mob/living/L = target
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", -200)
+						L.changeStatus("burning", -20 SECONDS)
 				return !reacted
 
 		water/tonic
@@ -910,7 +953,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				if (volume >= 5 && !(locate(/obj/item/raw_material/ice) in T))
-					var/obj/item/raw_material/ice/I = unpool(/obj/item/raw_material/ice)
+					var/obj/item/raw_material/ice/I = new /obj/item/raw_material/ice
 					I.set_loc(T)
 				return
 

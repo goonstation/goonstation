@@ -5,19 +5,19 @@ Shield and graivty well generators
 */
 
 /obj/shieldgen
-		name = "shield generator"
-		desc = "Used to seal minor hull breaches."
-		icon = 'icons/obj/objects.dmi'
-		icon_state = "shieldoff"
+	name = "shield generator"
+	desc = "Used to seal minor hull breaches."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "shieldoff"
 
-		density = 1
-		opacity = 0
-		anchored = 0
-		pressure_resistance = 2*ONE_ATMOSPHERE
+	density = 1
+	opacity = 0
+	anchored = 0
+	pressure_resistance = 2*ONE_ATMOSPHERE
 
-		var/active = 0
-		var/health = 100
-		var/malfunction = 0
+	var/active = 0
+	var/health = 100
+	var/malfunction = 0
 
 
 
@@ -42,7 +42,7 @@ Shield and graivty well generators
 		src.active = 1
 		src.icon_state = malfunction ? "shieldonbr":"shieldon"
 
-		SPAWN_DBG(0) src.process()
+		SPAWN(0) src.process()
 
 	shields_down()
 		if(!active) return 0
@@ -62,7 +62,7 @@ Shield and graivty well generators
 			while(prob(10))
 				qdel(pick(deployed_shields))
 
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			src.process()
 	return
 
@@ -85,38 +85,38 @@ Shield and graivty well generators
 	return
 
 /obj/shield/meteorhit(obj/O as obj)
-	playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 50, 1)
+	playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 50, 1)
 	return
 
 /obj/shieldgen/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.health -= 75
 			src.checkhp()
-		if(2.0)
+		if(2)
 			src.health -= 30
 			if (prob(15))
 				src.malfunction = 1
 			src.checkhp()
-		if(3.0)
+		if(3)
 			src.health -= 10
 			src.checkhp()
 	return
 
 /obj/shield/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			if (prob(75))
 				qdel(src)
-		if(2.0)
+		if(2)
 			if (prob(50))
 				qdel(src)
-		if(3.0)
+		if(3)
 			if (prob(25))
 				qdel(src)
 	return
 
-/obj/shieldgen/attack_hand(mob/user as mob)
+/obj/shieldgen/attack_hand(mob/user)
 	if (active)
 		src.visible_message("<font color='blue'>[bicon(src)] [user] deactivated the shield generator.</font>")
 
@@ -128,25 +128,16 @@ Shield and graivty well generators
 		shields_up()
 
 /obj/shield
-		name = "shield"
-		desc = "An energy shield."
-		icon = 'icons/effects/effects.dmi'
-		icon_state = "shieldsparkles"
-		density = 1
-		opacity = 0
-		anchored = 1
-		event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	name = "shield"
+	desc = "An energy shield."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shieldsparkles"
+	density = 1
+	opacity = 0
+	anchored = 1
+	event_handler_flags = USE_FLUID_ENTER
+	gas_impermeable = TRUE
 
-/obj/shieldwall
-		name = "shield"
-		desc = "An energy shield."
-		icon = 'icons/effects/effects.dmi'
-		icon_state = "test"
-		density = 1
-		opacity = 0
-		anchored = 1
-
-/obj/shield
 	New()
 		src.set_dir(pick(1,2,3,4))
 
@@ -158,11 +149,6 @@ Shield and graivty well generators
 		update_nearby_tiles()
 
 		..()
-
-	CanPass(atom/movable/mover, turf/target, height, air_group)
-		if(!height || air_group) return 0
-		else return ..()
-
 	proc/update_nearby_tiles(need_rebuild)
 		var/turf/simulated/source = loc
 		if (istype(source))
@@ -170,20 +156,30 @@ Shield and graivty well generators
 
 		return 1
 
+/obj/shieldwall
+	name = "shield"
+	desc = "An energy shield."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "test"
+	density = 1
+	opacity = 0
+	anchored = 1
+
+
 /obj/gravity_well_generator
-		name = "gravity well generator"
-		desc = "A complex piece of machinery that alters gravity."
-		icon = 'icons/obj/stationobjs.dmi'
-		icon_state = "gravgen-off"
-		mats = 14
+	name = "gravity well generator"
+	desc = "A complex piece of machinery that alters gravity."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "gravgen-off"
+	mats = 14
 
-		density = 1
-		opacity = 0
-		anchored = 0
-		pressure_resistance = 2*ONE_ATMOSPHERE
+	density = 1
+	opacity = 0
+	anchored = 0
+	pressure_resistance = 2*ONE_ATMOSPHERE
 
-		var/active = 0
-		var/strength = 144		//strength is basically G if you know your newton law of gravitation
+	var/active = 0
+	var/strength = 144		//strength is basically G if you know your newton law of gravitation
 
 /obj/gravity_well_generator
 
@@ -194,18 +190,18 @@ Shield and graivty well generators
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				if (prob(75))
 					qdel(src)
-			if(2.0)
+			if(2)
 				if (prob(50))
 					qdel(src)
-			if(3.0)
+			if(3)
 				if (prob(25))
 					qdel(src)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (active)
 			src.visible_message("<font color='blue'>[bicon(src)] [user] deactivated the gravity well.</font>")
 
@@ -231,10 +227,10 @@ Shield and graivty well generators
 
 		for (var/atom/X in orange(range,src))
 			//Skip if they're right beside the thing
-			if (get_dist(src,X) <= 1)
+			if (BOUNDS_DIST(src, X) == 0)
 				continue
 			//Get the distance
-			var/dist = get_dist(src,X)
+			var/dist = GET_DIST(src,X)
 
 			//Adjust probability accordingly
 			if ((istype(X,/obj) || isliving(X)) && prob(100/dist))
@@ -247,6 +243,6 @@ Shield and graivty well generators
 				if (!X:anchored)
 					step_towards(X,src)
 
-		SPAWN_DBG(1.7 SECONDS)
+		SPAWN(1.7 SECONDS)
 			src.Life()
 

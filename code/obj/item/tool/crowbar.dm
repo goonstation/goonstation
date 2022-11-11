@@ -9,16 +9,16 @@
 
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	tool_flags = TOOL_PRYING
+	health = 5
 	w_class = W_CLASS_SMALL
 
-	force = 7.0
-	throwforce = 7.0
+	force = 7
+	throwforce = 7
 	stamina_damage = 35
 	stamina_cost = 12
 	stamina_crit_chance = 10
 
 	m_amt = 50
-	module_research = list("tools" = 4, "metals" = 2)
 	rand_pos = 1
 	custom_suicide = 1
 
@@ -27,7 +27,7 @@
 		src.setItemSpecial(/datum/item_special/tile_fling)
 		BLOCK_SETUP(BLOCK_ROD)
 
-	attack(mob/living/carbon/M as mob, mob/user as mob)
+	attack(mob/living/carbon/M, mob/user)
 		if (!pry_surgery(M, user))
 			return ..()
 
@@ -44,7 +44,7 @@
 
 /obj/item/crowbar/red
 	name = "crowbar"
-	desc = "A tool used as a lever to pry objects. This one appears to have been painted red as an indicator of it's important emergency tool status, or maybe someone forgot to clean the blood off."
+	desc = "A tool used as a lever to pry objects. This one appears to have been painted red as an indicator of its important emergency tool status, or maybe someone forgot to clean the blood off."
 	icon_state = "crowbar-red"
 
 /obj/item/crowbar/yellow

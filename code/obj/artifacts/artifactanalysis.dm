@@ -27,14 +27,15 @@
 		if(A.type_name == src.artifactType)
 			lastAnalysis++
 
-		// check if trigger is one of the correct ones
-		for(var/datum/artifact_trigger/T as anything in A.triggers)
-			if(T.type_name == src.artifactTriggers)
-				lastAnalysis++
-				break
-		// if a trigger would e redundant, let's just say it's cool!
-		if(!length(A.triggers) || A.automatic_activation)
+		// if a trigger would be redundant, let's just say it's cool!
+		if(A.automatic_activation || A.no_activation)
 			lastAnalysis++
+		else
+			// check if trigger is one of the correct ones
+			for(var/datum/artifact_trigger/T as anything in A.triggers)
+				if(T.type_name == src.artifactTriggers)
+					lastAnalysis++
+					break
 
 		// ok, let's make a name
 		// start with obscured name
@@ -58,27 +59,34 @@
 		O.UpdateName()
 
 	attack_hand(mob/user)
-		user.lastattacked = src.attached
-		if(src.attached)
-			src.attached.attack_hand(user)
-			user.lastattacked = src.attached
+		var/obj/attachedobj = src.attached
+		if(istype(attachedobj) && attachedobj.artifact) // touch artifact we are attached to
+			src.attached.Attackhand(user)
+			user.lastattacked = user
+		else // do sticker things
+			..()
 
 	stick_to(atom/A, pox, poy)
 		. = ..()
 		if(isobj(A))
 			checkArtifactVars(A)
+			src.updateTypeLabel(src.artifactType)
 
 	attackby(obj/item/W, mob/living/user)
-		if(istype(W, /obj/item/pen))
+		if(istype(W, /obj/item/pen)) // write on it
 			ui_interact(user)
-		else if((iscuttingtool(W) || issnippingtool(W)) && user.a_intent == INTENT_HELP)
+		else if((iscuttingtool(W) || issnippingtool(W)) && user.a_intent == INTENT_HELP && src.attached) // remove attached paper from artifact
 			boutput(user, "You manage to scrape \the [src] off of \the [src.attached].")
 			src.remove_from_attached()
 			src.add_fingerprint(user)
 			user.put_in_hand_or_drop(src)
-		else if (src.attached)
-			src.attached.attackby(W, user)
-			user.lastattacked = user
+		else
+			var/obj/attachedobj = src.attached
+			if(istype(attachedobj) && attachedobj.artifact) // hit artifact we are attached to
+				src.attached.Attackby(W, user)
+				user.lastattacked = user
+			else // just sticker things
+				..()
 
 	get_desc()
 		. = src.artifactType!=""?"This one seems to be describing a [src.artifactType] type artifact.":""
@@ -110,10 +118,15 @@
 		if (!params["hasPen"])
 			boutput(usr, "You can't write without a pen!")
 			return FALSE
+
+		var/obj/O = null
+		if(isobj(src.loc))
+			O = src.loc
 		switch(action)
 			if("origin")
 				artifactOrigin = params["newOrigin"]
 			if("type")
+				src.updateTypeLabel(params["newType"])
 				artifactType = params["newType"]
 			if("trigger")
 				artifactTriggers = params["newTriggers"]
@@ -122,8 +135,8 @@
 			if("detail")
 				artifactDetails = params["newDetail"]
 		. = TRUE
-		if(isobj(src.loc))
-			src.checkArtifactVars(src.loc)
+		if(O)
+			src.checkArtifactVars(O)
 
 	ui_data(mob/user)
 		var/obj/item/pen/P = user.find_type_in_hand(/obj/item/pen)
@@ -137,11 +150,24 @@
 			"hasPen" = P
 		)
 
-/obj/artifact_paper_dispenser
-	name = "artifact analysis form tray"
-	icon = 'icons/obj/writing.dmi'
-	icon_state = "artifact_form_tray"
-	desc = "A tray full of forms for classifying alien artifacts."
+	remove_from_attached()
+		src.removeTypeLabel()
+		. = ..()
 
-	attack_hand(mob/user)
-		user.put_in_hand_or_drop(new /obj/item/sticker/postit/artifact_paper())
+	/// updates the label that shows what type the artifact supposedly is
+	proc/updateTypeLabel(var/newtype)
+		// nothing to set, so no need!
+		if(newtype == "")
+			return
+		if(isobj(src.attached))
+			var/obj/O = src.attached
+			O.remove_suffixes("\[[src.artifactType]\]")
+			O.name_suffix("\[[newtype]\]")
+			O.UpdateName()
+
+	/// removes the label that shows what type the artifact supposedly is
+	proc/removeTypeLabel()
+		if(isobj(src.attached))
+			var/obj/O = src.attached
+			O.remove_suffixes("\[[src.artifactType]\]")
+			O.UpdateName()

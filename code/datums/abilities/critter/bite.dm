@@ -8,7 +8,13 @@
 	targeted = 1
 	target_anything = 1
 	var/sound_bite = 'sound/voice/animal/werewolf_attack1.ogg'
+	var/sound_volume = 50
 	var/brute_damage = 16
+	var/stun_duration = 2 SECONDS
+	var/verb_other = "bites"
+	var/verb_self = "bite"
+	var/hit_type = DAMAGE_CRUSH
+	var/bleed = 0
 
 	var/datum/projectile/slam/proj = new
 
@@ -20,17 +26,20 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to bite there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to bite there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (get_dist(holder.owner, target) > 1)
-			boutput(holder.owner, __red("That is too far away to bite."))
+		if (BOUNDS_DIST(holder.owner, target) > 0)
+			boutput(holder.owner, "<span class='alert'>That is too far away to bite.</span>")
 			return 1
-		playsound(target, src.sound_bite, 50, 1, -1)
+		playsound(target, src.sound_bite, sound_volume, 1, -1)
 		var/mob/MT = target
 		MT.TakeDamageAccountArmor("All", src.brute_damage, 0, 0, DAMAGE_CRUSH)
-		MT.changeStatus("stunned", 2 SECONDS)
+		MT.changeStatus("stunned", stun_duration)
+		if(bleed)
+			take_bleeding_damage(MT, null, bleed, DAMAGE_CUT, bleed-5, get_turf(MT))
+
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites [MT]!</b></span>", "<span class='combat'>You bite [MT]!</span>")
 		return 0
 
@@ -39,13 +48,45 @@
 	desc = "Bite down on a mob, causing some damage."
 	cooldown = 100
 	sound_bite = 'sound/impact_sounds/Flesh_Crush_1.ogg'
-	brute_damage = 18
+	brute_damage = 36
+	sound_volume = 100
+	verb_other = "savagely bites"
+	verb_self = "savagely bite"
 
-	cast(atom/target)
-		if (..())
-			return 1
-		playsound(target, src.sound_bite, 100, 1, -1)
-		var/mob/MT = target
-		MT.TakeDamageAccountArmor("All", src.brute_damage, 0, 0, DAMAGE_CRUSH)
-		holder.owner.visible_message("<span class='combat'><b>[holder.owner] savagely bites [MT]!</b></span>", "<span class='combat'>You savagely bite [MT]!</span>")
-		return 0
+/datum/targetable/critter/bite/maneater_bite
+	name = "Munch"
+	desc = "Munch down on a mob, dealing brute damage and a short stun."
+	icon_state = "maneater_munch"
+	cooldown = 25 SECONDS
+	sound_bite = 'sound/impact_sounds/Flesh_Crush_1.ogg'
+	sound_volume = 100
+	brute_damage = 20
+	bleed = 25
+	hit_type = DAMAGE_CUT
+	verb_other = "munches on"
+	verb_self = "munch on"
+
+
+/datum/targetable/critter/bite/fermid_bite
+	name = "Chomp"
+	desc = "Chomp down on a target, causing brute damage and bleed."
+	icon_state = "fermid_bite"
+	cooldown = 15 SECONDS
+	sound_bite = 'sound/impact_sounds/Flesh_Crush_1.ogg'
+	sound_volume = 60
+	brute_damage = 10
+	hit_type = DAMAGE_CUT
+	verb_other = "chomps down on"
+	verb_self = "bite"
+	bleed = 15
+	stun_duration = 0
+
+
+/datum/targetable/critter/bite/tomato_bite
+	name = "Chomp"
+	desc = "Chomp down on a target, causing some serious pain."
+	icon_state = "tomato_bite"
+	cooldown = 10 SECONDS
+	sound_bite = 'sound/impact_sounds/Flesh_Crush_1.ogg'
+	bleed = 15
+	brute_damage = 8

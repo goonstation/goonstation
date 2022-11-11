@@ -42,7 +42,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 					src.init_player(player, 0, 1)
 
 		time_left = 15 MINUTES
-		time_next_state = 15 SECONDS
+		time_next_state = 30 SECONDS
 
 		clock_num = list(locate("football_clock1000"), locate("football_clock100"), locate("football_clock10"), locate("football_clock1"))
 		red_num = list(locate("football_red100"), locate("football_red10"), locate("football_red1"))
@@ -60,12 +60,12 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 
 
 	post_setup()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			// yeah this is shit. i do not care
 			var/delta = 0
 			last_tick = ticker.round_elapsed_ticks
 			src.update_game_clock()
-			boutput(world, "Game starts in 15 seconds.")
+			boutput(world, "Game starts in 30 seconds.")
 			while (true)
 				delta = ticker.round_elapsed_ticks - last_tick
 				last_tick = ticker.round_elapsed_ticks
@@ -82,7 +82,11 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 							if (!the_football)
 								the_football = new /obj/item/football/the_big_one()
 							the_football.set_loc(pick(football_spawns["football"]))
-							the_football.invisibility = 0
+							the_football.invisibility = INVIS_NONE
+							SPAWN(1 SECOND)
+								playsound_global(world, 'sound/items/police_whistle2.ogg', 50)
+						else
+							src.wave_timer.update_timer(time_next_state / 10)
 
 					if (FOOTBALL_INGAME)
 						time_left -= delta
@@ -105,9 +109,10 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 					if (FOOTBALL_POSTSCORE)
 						if (time_next_state < 0)
 							src.reset_players(0)
-							src.time_next_state = 10 SECONDS
+							src.clean_field()
+							src.time_next_state = 15 SECONDS
 							src.game_state = FOOTBALL_PREGAME
-							boutput(world, "Next possession in 10 seconds...")
+							boutput(world, "Next possession in 15 seconds...")
 					if (FOOTBALL_POSTGAME)
 						// we just dont do anything
 						return
@@ -146,9 +151,9 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 				M.drop_item(the_football)
 
 			the_football.blowthefuckup(100, delete = 0)
-			the_football.invisibility = 101
-			SPAWN_DBG(3 SECONDS)
-				the_football.invisibility = 0
+			the_football.invisibility = INVIS_ALWAYS
+			SPAWN(3 SECONDS)
+				the_football.invisibility = INVIS_NONE
 				the_football.set_loc(pick(football_spawns["football"]))
 			//qdel(the_football)
 			//the_football = null
@@ -215,7 +220,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 			return
 
 		if (is_new)
-			SHOW_FOOTBALL_TIPS(footballer)
+			footballer.show_antag_popup("football")
 			if (football_players["blue"].len == football_players["red"].len)
 				team = pick("red", "blue")
 			else if (football_players["blue"].len < football_players["red"].len)
@@ -269,8 +274,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 					if (!player.current || isdead(player.current))
 						if (!player.current.client)
 							continue //ZeWaka: fix for null.preferences
-						var/mob/living/carbon/human/newbody = new()
-						player.current.client.preferences.copy_to(newbody, player.current, 1)
+						var/mob/living/carbon/human/newbody = new(null, null, player.current.client.preferences, TRUE)
 
 						if (player) //Mind transfer also handles key transfer.
 							player.transfer_to(newbody)
@@ -302,3 +306,23 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 		newbody.set_loc(pick_landmark(LANDMARK_ASS_ARENA_SPAWN))
 		return
 		*/
+
+	proc/clean_field()
+		for(var/area/football/field/field in world)
+			for (var/obj/item/I in field)
+				if (!istype(I, /obj/item/football/the_big_one))
+					qdel(I)
+					LAGCHECK(LAG_REALTIME)
+			for(var/obj/critter/C in field)
+				qdel(C)
+				LAGCHECK(LAG_REALTIME)
+			for(var/mob/living/M in field)
+				if(M.last_ckey)
+					continue
+				qdel(M)
+				LAGCHECK(LAG_REALTIME)
+		for(var/area/football/football in world)
+			for(var/obj/decal/cleanable/D in football)
+				qdel(D)
+				LAGCHECK(LAG_REALTIME)
+		message_admins("Field cleaning complete.")

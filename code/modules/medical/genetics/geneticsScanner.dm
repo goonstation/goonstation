@@ -1,5 +1,5 @@
 var/list/genescanner_addresses = list()
-var/list/genetek_hair_styles = null
+var/list/genetek_hair_styles = list()
 
 /obj/machinery/genetics_scanner
 	name = "GeneTek scanner"
@@ -11,30 +11,20 @@ var/list/genetek_hair_styles = null
 	var/mob/occupant = null
 	var/datum/character_preview/multiclient/occupant_preview = null
 	var/locked = 0
-	anchored = 1.0
+	anchored = 1
 	soundproofing = 10
 
 	var/net_id = null
-	var/frequency = 1149
-	var/datum/radio_frequency/radio_connection
+	var/frequency = FREQ_PDA
 
 	New()
 		..()
-		SPAWN_DBG(0.8 SECONDS)
-			if(radio_controller)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
-			if(!src.net_id)
-				src.net_id = generate_net_id(src)
-				genescanner_addresses += src.net_id
+		if(!src.net_id)
+			src.net_id = generate_net_id(src)
+			genescanner_addresses += src.net_id
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 
 	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		..()
-
-	disposing()
-		if (radio_controller)
-			radio_controller.remove_object(src, "[frequency]")
-		radio_connection = null
 		if (src.net_id)
 			genescanner_addresses -= src.net_id
 		if(occupant)
@@ -72,27 +62,27 @@ var/list/genetek_hair_styles = null
 		if (!istype(target) || isAI(user))
 			return
 
-		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
+		if (BOUNDS_DIST(src, user) > 0 || BOUNDS_DIST(user, target) > 0)
 			return
 
 		if (target == user)
 			move_mob_inside(target)
 		else if (can_operate(user,target))
 			var/previous_user_intent = user.a_intent
-			user.a_intent = INTENT_GRAB
+			user.set_a_intent(INTENT_GRAB)
 			user.drop_item()
-			target.attack_hand(user)
-			user.a_intent = previous_user_intent
-			SPAWN_DBG(user.combat_click_delay + 2)
+			target.Attackhand(user)
+			user.set_a_intent(previous_user_intent)
+			SPAWN(user.combat_click_delay + 2)
 				if (can_operate(user,target))
 					if (istype(user.equipped(), /obj/item/grab))
-						src.attackby(user.equipped(), user)
+						src.Attackby(user.equipped(), user)
 		return
 
 	proc/can_operate(var/mob/M, var/mob/living/target)
 		if (!isalive(M))
 			return 0
-		if (get_dist(src,M) > 1)
+		if (BOUNDS_DIST(src, M) > 0)
 			return 0
 		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
 			return 0
@@ -117,7 +107,7 @@ var/list/genetek_hair_styles = null
 	proc/move_mob_inside(var/mob/M)
 		if (!can_operate(M,M)) return
 
-		M.pulling = null
+		M.remove_pulling()
 		src.go_in(M)
 
 		for(var/obj/O in src)
@@ -131,13 +121,12 @@ var/list/genetek_hair_styles = null
 		set category = "Local"
 
 		move_mob_inside(usr)
-		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		eject_occupant(user)
 
-	MouseDrop(mob/user as mob)
+	mouse_drop(mob/user as mob)
 		if (can_operate(user))
 			eject_occupant(user)
 		else
@@ -149,11 +138,10 @@ var/list/genetek_hair_styles = null
 		set category = "Local"
 
 		eject_occupant(usr)
-		return
 
 
 	verb/eject_occupant(var/mob/user)
-		if (!isalive(user))
+		if (!isalive(user) || iswraith(user))
 			return
 		if (src.locked)
 			boutput(user, "<span class='alert'><b>The scanner door is locked!</b></span>")
@@ -162,11 +150,8 @@ var/list/genetek_hair_styles = null
 		src.go_out()
 		add_fingerprint(user)
 
-	attackby(var/obj/item/grab/G as obj, user as mob)
-		if ((!( istype(G, /obj/item/grab) ) || !( ismob(G.affecting) )))
-			return
-		if (!isliving(user))
-			boutput(user, "<span class='alert'>You're dead! Quit that!</span>")
+	attackby(var/obj/item/grab/G, user)
+		if (!istype(G))
 			return
 
 		if (src.occupant)
@@ -185,7 +170,7 @@ var/list/genetek_hair_styles = null
 
 		var/mob/M = G.affecting
 		if (L.pulling == M)
-			L.pulling = null
+			L.remove_pulling()
 		src.go_in(M)
 
 		for(var/obj/O in src)
@@ -193,7 +178,6 @@ var/list/genetek_hair_styles = null
 
 		src.add_fingerprint(user)
 		qdel(G)
-		return
 
 	verb/lock()
 		set name = "Scanner Lock"
@@ -209,7 +193,7 @@ var/list/genetek_hair_styles = null
 		return
 
 	proc/togglelock(var/forceunlock = 0)
-		playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		if (src.locked || forceunlock)
 			src.locked = 0
 			usr.visible_message("<b>[usr]</b> unlocks the scanner.")
@@ -223,7 +207,7 @@ var/list/genetek_hair_styles = null
 
 		// Added (Convair880).
 		if (src.occupant)
-			logTheThing("station", usr, src.occupant, "[src.locked ? "locks" : "unlocks"] the [src.name] with [constructTarget(src.occupant,"station")] inside at [log_loc(src)].")
+			logTheThing(LOG_STATION, usr, "[src.locked ? "locks" : "unlocks"] the [src.name] with [constructTarget(src.occupant,"station")] inside at [log_loc(src)].")
 
 		return
 
@@ -244,7 +228,7 @@ var/list/genetek_hair_styles = null
 		if (istype(C))
 			C.ui_interact(M, null)
 
-		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/sleeper_close.ogg', 50, 1)
 		return
 
 	proc/go_out()
@@ -255,7 +239,7 @@ var/list/genetek_hair_styles = null
 			return
 
 		if(!src.occupant.disposed)
-			src.occupant.set_loc(src.loc)
+			src.occupant.set_loc(get_turf(src))
 
 		src.occupant = null
 
@@ -264,13 +248,9 @@ var/list/genetek_hair_styles = null
 
 		src.icon_state = "scanner_0"
 
-		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/sleeper_open.ogg', 50, 1)
 		return
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if (air_group || (height==0))
-			return 1
-		..()
 
 	proc/update_occupant()
 		var/mob/living/carbon/human/H = src.occupant
@@ -281,15 +261,18 @@ var/list/genetek_hair_styles = null
 			qdel(src.occupant_preview)
 			src.occupant_preview = null
 
+	was_deconstructed_to_frame(mob/user)
+		src.go_out()
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/genetics_appearancemenu
 	var/mob/living/carbon/human/target_mob = null
 	var/direction = SOUTH
 
-	var/customization_first = "Short Hair"
-	var/customization_second = "None"
-	var/customization_third = "None"
+	var/datum/customization_style/customization_first = new /datum/customization_style/hair/short/short
+	var/datum/customization_style/customization_second = new /datum/customization_style/none
+	var/datum/customization_style/customization_third = new /datum/customization_style/none
 
 	var/customization_first_color = "#FFFFFF"
 	var/customization_second_color = "#FFFFFF"
@@ -335,11 +318,11 @@ var/list/genetek_hair_styles = null
 				if (params["color3"])
 					src.customization_third_color = sanitize_color(params["color3"], fixColors)
 				if (params["style1"])
-					src.customization_first = sanitize_hairstyle(params["style1"])
+					src.customization_first = find_style_by_name(params["style1"])
 				if (params["style2"])
-					src.customization_second = sanitize_hairstyle(params["style2"])
+					src.customization_second = find_style_by_name(params["style2"])
 				if (params["style3"])
-					src.customization_third = sanitize_hairstyle(params["style3"])
+					src.customization_third = find_style_by_name(params["style3"])
 				if (params["apply"] || params["cancel"])
 					if (params["apply"])
 						src.copy_to_target()
@@ -350,12 +333,11 @@ var/list/genetek_hair_styles = null
 	ui_data(mob/user)
 		src.preview?.add_client(user?.client)
 
-		if (isnull(genetek_hair_styles))
-			genetek_hair_styles = list()
-			for (var/S as anything in customization_styles)
-				genetek_hair_styles += S
-			for (var/S as anything in customization_styles_gimmick)
-				genetek_hair_styles += S
+		if (!genetek_hair_styles.len)
+			var/list/datum/customization_style/customization_types = concrete_typesof(/datum/customization_style)
+			for (var/datum/customization_style/styletype as anything in customization_types)
+				var/datum/customization_style/CS = new styletype
+				genetek_hair_styles += CS.name
 
 		var/fixColors = !!(src.target_mob.mutantrace?.mutant_appearance_flags & FIX_COLORS)
 		var/hasHumanEyes = !src.target_mob.mutantrace || (src.target_mob.mutantrace.mutant_appearance_flags & HAS_HUMAN_EYES)
@@ -374,9 +356,9 @@ var/list/genetek_hair_styles = null
 			"color1" = src.customization_first_color,
 			"color2" = src.customization_second_color,
 			"color3" = src.customization_third_color,
-			"style1" = src.customization_first,
-			"style2" = src.customization_second,
-			"style3" = src.customization_third,
+			"style1" = src.customization_first.name,
+			"style2" = src.customization_second.name,
+			"style3" = src.customization_third.name,
 			"fixColors" = fixColors,
 			"hasEyes" = hasHumanEyes,
 			"hasSkin" = hasHumanSkintone,
@@ -405,14 +387,14 @@ var/list/genetek_hair_styles = null
 			src.customization_third = H.bioHolder.mobAppearance.customization_third
 			src.customization_third_color = H.bioHolder.mobAppearance.customization_third_color
 
-			if(!(customization_styles[src.customization_first] || customization_styles_gimmick[src.customization_first]))
-				src.customization_first = "None"
+			if(!istype(src.customization_first,/datum/customization_style))
+				src.customization_first = new /datum/customization_style/none
 
-			if(!(customization_styles[src.customization_second] || customization_styles_gimmick[src.customization_second]))
-				src.customization_second = "None"
+			if(!istype(src.customization_second,/datum/customization_style))
+				src.customization_second = new /datum/customization_style/none
 
-			if(!(customization_styles[src.customization_third] || customization_styles_gimmick[src.customization_third]))
-				src.customization_third = "None"
+			if(!istype(src.customization_third,/datum/customization_style))
+				src.customization_third = new /datum/customization_style/none
 
 			src.e_color = H.bioHolder.mobAppearance.e_color
 
@@ -444,24 +426,6 @@ var/list/genetek_hair_styles = null
 			target_mob.bioHolder.mobAppearance.customization_third = customization_third
 			target_mob.bioHolder.mobAppearance.customization_third_original = customization_third
 
-			target_mob.cust_one_state = customization_styles[customization_first]
-			if(!target_mob.cust_one_state)
-				target_mob.cust_one_state = customization_styles_gimmick[customization_first]
-				if(!target_mob.cust_one_state)
-					target_mob.cust_one_state = "None"
-
-			target_mob.cust_two_state = customization_styles[customization_second]
-			if(!target_mob.cust_two_state)
-				target_mob.cust_two_state = customization_styles_gimmick[customization_second]
-				if(!target_mob.cust_two_state)
-					target_mob.cust_two_state = "None"
-
-			target_mob.cust_three_state = customization_styles[customization_third]
-			if(!target_mob.cust_three_state)
-				target_mob.cust_three_state = customization_styles_gimmick[customization_third]
-				if(!target_mob.cust_three_state)
-					target_mob.cust_three_state = "None"
-
 			target_mob.update_colorful_parts()
 			target_mob.set_face_icon_dirty()
 			target_mob.set_body_icon_dirty()
@@ -473,24 +437,19 @@ var/list/genetek_hair_styles = null
 				var/list/L = hex_to_rgb_list(color)
 				. = rgb(L[1], L[2], L[3])
 
-		sanitize_hairstyle(style)
-			. = style
-			if (!customization_styles[.] && !customization_styles_gimmick[.])
-				. = "None"
-
 		sanitize_null_values()
 			if (customization_first_color == null)
 				customization_first_color = "#101010"
 			if (customization_first == null)
-				customization_first = "None"
+				customization_first = new /datum/customization_style/none
 			if (customization_second_color == null)
 				customization_second_color = "#101010"
 			if (customization_second == null)
-				customization_second = "None"
+				customization_second = new /datum/customization_style/none
 			if (customization_third_color == null)
 				customization_third_color = "#101010"
 			if (customization_third == null)
-				customization_third = "None"
+				customization_third = new /datum/customization_style/none
 			if (e_color == null)
 				e_color = "#101010"
 			if (s_tone == null || s_tone == "#ffffff")

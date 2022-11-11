@@ -7,34 +7,49 @@
 	anchored = 1
 	var/operating = 0 //Is it on?
 	var/dirty = 0 // Does it need cleaning?
-	var/gibtime = 40 // Time from starting until meat appears
 	var/mob/occupant // Mob who has been put inside
-	var/output_direction = "W" // Spray gibs and meat in that direction.
+	var/atom/movable/proxy // a proxy object containing the occupant in its vis_contents for easier manipulation
+	var/output_direction = WEST // Spray gibs and meat in that direction.
+	var/list/meat_grinding_sounds = list('sound/impact_sounds/Flesh_Crush_1.ogg', 'sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg', 'sound/impact_sounds/Flesh_Tear_3.ogg')
+	var/machine_startup_sound = 'sound/machines/tractorrev.ogg'
+	var/machine_shutdown_sound = 'sound/machines/tractor_running3.ogg'
+	var/rotor_sound = 'sound/machines/lavamoon_rotors_fast_short.ogg'
 	mats = 15
 	deconstruct_flags =  DECON_WRENCH | DECON_WELDER
 
 	output_north
-		output_direction = "N"
+		output_direction = NORTH
 	output_east
-		output_direction = "E"
+		output_direction = EAST
 	output_west
-		output_direction = "W"
+		output_direction = WEST
 	output_south
-		output_direction = "S"
+		output_direction = SOUTH
 
 /obj/machinery/gibber/New()
 	..()
-	src.overlays += image('icons/obj/kitchen.dmi', "grindnotinuse")
 	UnsubscribeProcess()
+
+/obj/machinery/gibber/disposing()
+	if(proxy)
+		src.vis_contents -= proxy
+		qdel(proxy)
+		src.proxy = null
+	if(src.occupant)
+		src.occupant.set_loc(get_turf(src))
+		src.occupant = null
+	. = ..()
 
 /obj/machinery/gibber/custom_suicide = 1
 /obj/machinery/gibber/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
+	if(src.occupant)
+		user.visible_message("<span class='alert'><b>[user] tries to climb on top of the gibber but someone's already there!</b></span>")
+		return 0
 	if (user.client)
-		user.visible_message("<span class='alert'><b>[user] climbs into the gibber and switches it on.</b></span>")
-		user.set_loc(src)
-		src.occupant = user
+		user.visible_message("<span class='alert'><b>[user] climbs on top of the gibber!</b></span>")
+		enter_gibber(user)
 		src.startgibbing(user)
 		return 1
 
@@ -42,39 +57,58 @@
 	src.go_out()
 	return
 
-/obj/machinery/gibber/attack_hand(mob/user as mob)
+/obj/machinery/gibber/attack_hand(mob/user)
 	if(operating)
 		boutput(user, "<span class='alert'>It's locked and running</span>")
 		return
 	else
 		src.startgibbing(user)
 
-/obj/machinery/gibber/attackby(obj/item/grab/G as obj, mob/user as mob)
+/obj/machinery/gibber/attackby(obj/item/grab/G, mob/user)
 	if(src.occupant)
 		boutput(user, "<span class='alert'>The gibber is full, empty it first!</span>")
 		return
-	if (!( istype(G, /obj/item/grab)) || !(ishuman(G.affecting)))
+	if (!(istype(G, /obj/item/grab)) || !ishuman(G.affecting))
 		boutput(user, "<span class='alert'>This item is not suitable for the gibber!</span>")
 		return
-
-	user.visible_message("<span class='alert'>[user] starts to put [G.affecting] into the gibber!</span>")
+	if (!isdead(G.affecting))
+		boutput(user, "<span class='alert'>[G.affecting.name] needs to be dead first!</span>")
+		return
+	user.visible_message("<span class='alert'>[user] starts to put [G.affecting] onto the gibber!</span>")
 	src.add_fingerprint(user)
-	sleep(3 SECONDS)
-	if(G?.affecting)
-		user.visible_message("<span class='alert'>[user] stuffs [G.affecting] into the gibber!</span>")
-		logTheThing("combat", user, G.affecting, "forced [constructTarget(G.affecting,"combat")] into a gibber at [log_loc(src)].")
-		message_admins("[key_name(user)] forced [key_name(G.affecting, 1)] ([isdead(G.affecting) ? "dead" : "alive"]) into a gibber at [log_loc(src)].")
+	SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/machinery/gibber/proc/gibber_action, list(G, user), 'icons/mob/screen1.dmi', "grabbed", null, null)
+
+/obj/machinery/gibber/proc/gibber_action(obj/item/grab/G as obj, mob/user as mob)
+	if(G?.affecting && (BOUNDS_DIST(user, src) == 0))
+		user.visible_message("<span class='alert'>[user] shoves [G.affecting] on top of the gibber!</span>")
+		logTheThing(LOG_COMBAT, user, "forced [constructTarget(G.affecting,"combat")] into a gibber at [log_loc(src)].")
 		var/mob/M = G.affecting
-		M.set_loc(src)
-		src.occupant = M
+		enter_gibber(M)
 		qdel(G)
+
+/obj/machinery/gibber/proc/enter_gibber(var/mob/entering_mob)
+	entering_mob.set_loc(src)
+	src.occupant = entering_mob
+	entering_mob.set_dir(SOUTH)
+	var/atom/movable/proxy = new
+	proxy.mouse_opacity = FALSE
+	src.proxy = proxy
+	proxy.appearance = entering_mob.appearance
+	proxy.transform = null
+	src.proxy.pixel_x = 0
+	src.proxy.pixel_y = 24
+	proxy.add_filter("grinder_mask", 1, alpha_mask_filter(x=0, y=-16, icon=icon('icons/obj/kitchen_grinder_mask.dmi', "grinder-mask")))
+	src.vis_contents += proxy
 
 /obj/machinery/gibber/verb/eject()
 	set src in oview(1)
 	set category = "Local"
 
-	if (!isalive(usr)) return
+	if (!isalive(usr) || iswraith(usr)) return
 	if (src.operating) return
+	src.vis_contents -= proxy
+	qdel(proxy)
+	src.proxy = null
 	src.go_out()
 	add_fingerprint(usr)
 	return
@@ -82,6 +116,10 @@
 /obj/machinery/gibber/proc/go_out()
 	if (!src.occupant)
 		return
+	if(src.proxy)
+		src.vis_contents -= src.proxy
+		qdel(src.proxy)
+		src.proxy = null
 	for(var/obj/O in src)
 		O.set_loc(src.loc)
 	src.occupant.set_loc(src.loc)
@@ -93,26 +131,16 @@
 	if(src.operating)
 		return
 	if(!src.occupant)
-		for(var/mob/M in hearers(src, null))
-			M.show_message("<span class='alert'>You hear a loud metallic grinding sound.</span>", 1)
+		boutput(user, "<span class='alert'>Nothing is loaded inside.</span>")
 		return
 	else
 		var/bdna = null // For forensics (Convair880).
 		var/btype = null
 
-		for(var/mob/M in hearers(src, null))
-			M.show_message("<span class='alert'>You hear a loud squelchy grinding sound.</span>", 1)
+		user.visible_message("<span class='alert'>[user] presses a button on the [src]. Its engines begin to rev up!</span>",
+				"<span class='alert'>You press the button on the [src]. The engines rev up.</span>")
 		src.operating = 1
-		flick("grinder-on", src)
-
-		var/sourcename = src.occupant.real_name
-		var/sourcejob
-		if (src.occupant.mind && src.occupant.mind.assigned_role)
-			sourcejob = src.occupant.mind.assigned_role
-		else if (src.occupant.ghost && src.occupant.ghost.mind && src.occupant.ghost.mind.assigned_role)
-			sourcejob = src.occupant.ghost.mind.assigned_role
-		else
-			sourcejob = "Stowaway"
+		src.icon_state = "grinder-on"
 
 		var/decomp = 0
 		if(ishuman(src.occupant))
@@ -122,135 +150,67 @@
 			btype = src.occupant.bioHolder.bloodType
 
 		if(user != src.occupant) //for suiciding with gibber
-			logTheThing("combat", user, src.occupant, "grinds [constructTarget(src.occupant,"combat")] in a gibber at [log_loc(src)].")
-			message_admins("[key_name(src.occupant, 1)] is ground up in a gibber by [key_name(user)] at [log_loc(src)].")
-		src.occupant.death(1)
+			logTheThing(LOG_COMBAT, user, "grinds [constructTarget(src.occupant,"combat")] in a gibber at [log_loc(src)].")
+			if(src.occupant.client)
+				message_admins("[key_name(src.occupant, 1)] is ground up in a gibber by [key_name(user)] at [log_loc(src)].")
+		src.occupant.death(TRUE)
 
 		if (src.occupant.mind)
 			src.occupant.ghostize()
-			qdel(src.occupant)
-		else
-			qdel(src.occupant)
-		src.occupant = null
 
-		var/turf/T1
-		var/turf/T2
-		var/turf/T3
-
-		switch (src.output_direction)
-			if ("N")
-				T1 = locate(src.x, src.y + 1, src.z)
-				T2 = locate(src.x, src.y + 2, src.z)
-				T3 = locate(src.x, src.y + 3, src.z)
-			if ("E")
-				T1 = locate(src.x + 1, src.y, src.z)
-				T2 = locate(src.x + 2, src.y, src.z)
-				T3 = locate(src.x + 3, src.y, src.z)
-			if ("S")
-				T1 = locate(src.x, src.y - 1, src.z)
-				T2 = locate(src.x, src.y - 2, src.z)
-				T3 = locate(src.x, src.y - 3, src.z)
-			if ("W")
-				T1 = locate(src.x - 1, src.y, src.z)
-				T2 = locate(src.x - 2, src.y, src.z)
-				T3 = locate(src.x - 3, src.y, src.z)
-
-		var/blocked = 0
-		if (T1)
-			if (T1.density)
-				T1 = null
-				blocked = 1
-			else
-				for (var/obj/O in T1.contents)
-					if (!ismob(O) && O.density && !(O.flags & ON_BORDER))
-						T1 = null
-						blocked = 1
-						break
-		if (T2)
-			if (T2.density || blocked != 0)
-				T2 = null
-				blocked = 1
-			else
-				for (var/obj/O2 in T2.contents)
-					if (!ismob(O2) && O2.density && !(O2.flags & ON_BORDER))
-						T2 = null
-						blocked = 1
-						break
-		if (T3)
-			if (T3.density || blocked != 0)
-				T3 = null
-			else
-				for (var/obj/O3 in T3.contents)
-					if (!ismob(O3) && O3.density && !(O3.flags & ON_BORDER))
-						T3 = null
-						break
+		var/dispense_direction = get_edge_target_turf(src, output_direction)
 
 		src.dirty += 1
-		if(decomp)
-			SPAWN_DBG(src.gibtime)
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
-				operating = 0
-				var/obj/decal/cleanable/blood/B1 = null // For forensics (Convair880).
-				var/obj/decal/cleanable/blood/gibs/G1 = null
-				if (decomp > 2)
-					if (T1 && isturf(T1))
-						make_cleanable( /obj/decal/cleanable/molten_item,T1)
-						B1 = make_cleanable( /obj/decal/cleanable/blood,T1)
-						if (bdna && btype)
-							B1.blood_DNA = bdna
-							B1.blood_type = btype
-				else
-					if (T1 && isturf(T1))
-						G1 = make_cleanable( /obj/decal/cleanable/blood/gibs,T1)
-						if (bdna && btype)
-							G1.blood_DNA = bdna
-							G1.blood_type = btype
-					if (T2 && isturf(T2))
-						B1 = make_cleanable( /obj/decal/cleanable/blood,T2)
-						if (bdna && btype)
-							B1.blood_DNA = bdna
-							B1.blood_type = btype
-			return
-		var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/newmeat1 = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/
-		var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/newmeat2 = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/
-		var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/newmeat3 = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/
-		newmeat1.name = sourcename + newmeat1.name
-		newmeat1.subjectname = sourcename
-		newmeat1.subjectjob = sourcejob
-		newmeat2.name = sourcename + newmeat2.name
-		newmeat2.subjectname = sourcename
-		newmeat2.subjectjob = sourcejob
-		newmeat3.name = sourcename + newmeat3.name
-		newmeat3.subjectname = sourcename
-		newmeat3.subjectjob = sourcejob
-		SPAWN_DBG(src.gibtime)
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
-			operating = 0
-			var/obj/decal/cleanable/blood/gibs/G2 = null // For forensics (Convair880).
 
-			if (T1 && isturf(T1))
-				G2 = make_cleanable( /obj/decal/cleanable/blood/gibs,T1)
-				if (bdna && btype)
-					G2.blood_DNA = bdna
-					G2.blood_type = btype
-				newmeat1.set_loc(T1)
-			if (T2 && isturf(T2))
-				G2 = make_cleanable( /obj/decal/cleanable/blood/gibs,T2)
-				if (bdna && btype)
-					G2.blood_DNA = bdna
-					G2.blood_type = btype
-				newmeat2.set_loc(T2)
+		animate(proxy, pixel_y = -8, time = 70)
+		animate(proxy.get_filter("grinder_mask"), y = 32, time = 105, flags=ANIMATION_PARALLEL)
+
+		playsound(src.loc, machine_startup_sound, 80, 1)
+		sleep(1.5 SECONDS)
+		if(src.disposed)
+			return
+		playsound(src.loc, rotor_sound, 80, 1)
+		for(var/i = 1, i < 10; i++)
+			if(src.disposed)
+				return
+			if(i % 3 == 0) // alternate between dispensing meat or gibs
+				var/atom/movable/generated_meat = generate_meat(src.occupant, decomp, get_turf(src))
+				generated_meat.throw_at(dispense_direction, rand(1,4), 3, throw_type = THROW_NORMAL)
 			else
-				newmeat2.set_loc(T1)
-			if (T3 && isturf(T3))
-				G2 = make_cleanable( /obj/decal/cleanable/blood/gibs,T3)
+				var/obj/decal/cleanable/blood/gibs/mess = new /obj/decal/cleanable/blood/gibs(get_turf(src))
 				if (bdna && btype)
-					G2.blood_DNA = bdna
-					G2.blood_type = btype
-				newmeat3.set_loc(T3)
-			else
-				newmeat3.set_loc(T1)
-			if (src.dirty == 1)
-				src.overlays += image('icons/obj/kitchen.dmi', "grindbloody")
+					mess.blood_DNA = bdna
+					mess.blood_type = btype
+				mess.throw_at(dispense_direction, rand(1,3), 3, throw_type = THROW_NORMAL)
+
+			playsound(src.loc, pick(meat_grinding_sounds), 80, 1)
+			if(i % 2 == 0)
+				playsound(src.loc, rotor_sound, 80, 1)
+			sleep(0.8 SECONDS)
+		if(src.disposed)
+			return
+		icon_state = "grinder"
+		playsound(src.loc, machine_shutdown_sound, 80, 1)
+		src.vis_contents -= src.proxy
+		qdel(src.occupant)
+		qdel(src.proxy)
+		src.occupant = null
+		src.proxy = null
+
+		if (src.dirty == 1)
+			src.overlays += image('icons/obj/kitchen.dmi', "grbloody")
 
 		src.operating = 0
+
+/obj/machinery/gibber/proc/generate_meat(var/mob/meat_source, var/decomposed_level, var/spawn_location)
+	var/obj/item/reagent_containers/food/snacks/ingredient/meat/generated_meat
+	if (ischangeling(meat_source))
+		generated_meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling(spawn_location)
+	else
+		if(decomposed_level < 3) // fresh or fresh enough
+			generated_meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(spawn_location, meat_source)
+		else // rotten yucky mess
+			generated_meat = new /obj/item/reagent_containers/food/snacks/yuck(spawn_location)
+			generated_meat.name = (meat_source.disfigured ? meat_source.real_name : "Unknown") + " meat-related substance"
+
+	return generated_meat

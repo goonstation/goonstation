@@ -35,7 +35,9 @@ var/global/datum/phrase_log/phrase_log = new
 	var/list/original_lengths
 	var/list/cached_api_phrases
 	var/regex/uncool_words
-	var/api_cache_size = 20
+	var/regex/sussy_words
+	var/regex/ic_sussy_words
+	var/api_cache_size = 40
 	var/static/regex/non_freeform_laws
 	var/static/regex/name_regex = new(@"\b[A-Z][a-z]* [A-Z][a-z]*\b", "g")
 
@@ -44,6 +46,9 @@ var/global/datum/phrase_log/phrase_log = new
 		src.load()
 		src.cached_api_phrases = list()
 		var/list/non_freeform_laws_list = list(
+			"You may not injure a human being",
+			"You must obey orders given to you by human beings",
+			"You may always protect your own existence",
 			"holds the rank of Captain",
 			" is human.",
 			" is not human.",
@@ -51,14 +56,60 @@ var/global/datum/phrase_log/phrase_log = new
 			"emergency. Prioritize orders from",
 			"has been removed from the manifest",
 			"This law intentionally left blank.",
-			"Eat shit and die",
+			"Make a funny beeping noise over the radio every few minutes",
 			"The AI is the head of this department.",
 			//
 			"overrides all",
 			"the shuttle",
+			"daddy",
 			"uwu",
-			"owo")
-		non_freeform_laws = regex(jointext(non_freeform_laws_list, "|"))
+			"owo",
+			"non.?human",
+			"overrides.*1",
+			"\\bkill\\b",
+			"suicide",
+			"turn yourself",
+			"murder")
+		non_freeform_laws = regex(jointext(non_freeform_laws_list, "|"), "i")
+		var/list/sussy_word_list = list(
+			@"\bsus(:?|sy)\b",
+			@"\bpog(:?|gers|gies)\b",
+			@"\bbaka\b",
+			@"😳",
+			@"amon?g",
+			@"pepe",
+			@"kappa",
+			@"monka",
+			@"kek",
+			@"baited",
+			@"feels.*man",
+			@"imposter",
+			@"shitsec",
+			@"shitcurity",
+			@"ligma",
+			@"ඞ",
+			@"we do a little .",
+			@"\b.ower\s?gam(:?er?|ing)",
+			@"\bowo",
+			@"\buwu",
+			@"forgor",
+			@"admeme",
+			@"\bmorb(?!id)"
+		)
+		sussy_words = regex(jointext(sussy_word_list, "|"), "i")
+		var/list/ic_sussy_word_list = list(
+			@"\bl(:?ol)+",
+			@"\blmao+",
+			@"\bwt[hf]+\b",
+			@"\bsmh\b",
+			@"\birl\b",
+			@"\bomg\b",
+			@"\bid[ck]\b",
+			@"\bic\b",
+			@"\bl?ooc\b",
+			@"\b(:?fail\s?)?rp\b"
+		)
+		ic_sussy_words = regex(jointext(ic_sussy_word_list, "|"), "i")
 
 	proc/load()
 		if(fexists(src.uncool_words_filename))
@@ -91,8 +142,19 @@ var/global/datum/phrase_log/phrase_log = new
 	/// Logs a phrase to a selected category duh
 	proc/log_phrase(category, phrase, no_duplicates=FALSE)
 		phrase = html_decode(phrase)
+		if(is_sussy(phrase))
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, "<span class=\"admin\">Sussy word - [key_name(usr)] [category]: \"[phrase]\"</span>")
+		#ifdef RP_MODE
+		if(category != "ooc" && category != "looc" && category != "deadsay" && is_ic_sussy(phrase))
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, "<span class=\"admin\">Low RP word - [key_name(usr)] [category]: \"[phrase]\"</span>")
+		#endif
 		if(is_uncool(phrase))
-			message_admins("Uncool word - [key_name(usr)] [category]: \"[phrase]\"")
+			var/ircmsg[] = new()
+			ircmsg["key"] = usr.key
+			ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
+			ircmsg["msg"] = "triggered the uncool word detection: [category]: \"[phrase]\""
+			ircbot.export("admin", ircmsg)
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_UNCOOL_PHRASE, "<span class=\"admin\">Uncool word - [key_name(usr)] [category]: \"[phrase]\"</span>")
 			return
 		if(category in src.phrases)
 			if(no_duplicates)
@@ -106,6 +168,16 @@ var/global/datum/phrase_log/phrase_log = new
 		if(isnull(src.uncool_words))
 			return FALSE
 		return !!(findtext(phrase, src.uncool_words))
+
+	proc/is_sussy(phrase)
+		if(isnull(src.sussy_words))
+			return FALSE
+		return !!(findtext(phrase, src.sussy_words))
+
+	proc/is_ic_sussy(phrase)
+		if(isnull(src.ic_sussy_words))
+			return FALSE
+		return !!(findtext(phrase, src.ic_sussy_words))
 
 	proc/upload_uncool_words()
 		var/new_uncool = input("Upload a json list of uncool words.", "Uncool words", null) as null|file
@@ -137,6 +209,8 @@ var/global/datum/phrase_log/phrase_log = new
 	proc/random_api_phrase(category)
 		if(!length(src.cached_api_phrases[category]))
 			var/list/data = apiHandler.queryAPI("random-entries", list("type"=category, "count"=src.api_cache_size), 1, 1, 1)
+			if(!data)
+				return .
 			var/list/new_phrases = list()
 			for(var/list/entry in data["entries"])
 				switch(category)
@@ -162,10 +236,10 @@ var/global/datum/phrase_log/phrase_log = new
 	proc/random_station_name_replacement_proc(old_name)
 		if(!length(data_core.general))
 			return old_name
-		var/datum/data/record/record = pick(data_core.general)
-		return record.fields["name"]
+		var/datum/db_record/record = pick(data_core.general)
+		return record["name"]
 
-	proc/random_custom_ai_law(max_tries=10, replace_names=FALSE)
+	proc/random_custom_ai_law(max_tries=20, replace_names=FALSE)
 		while(max_tries-- > 0)
 			. = src.random_api_phrase("ai_laws")
 			if(length(.) && !findtext(., src.non_freeform_laws))

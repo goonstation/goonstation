@@ -5,7 +5,7 @@
 	var/selection
 
 	initialize()
-		selection = unpool(/obj/adventurepuzzle/marker)
+		selection = new /obj/adventurepuzzle/marker
 		trigger_count = input("How many times should this trigger work? (-1 = infinite)", "Trigger count", 1) as num
 		boutput(usr, "<span class='notice'>Left click to place triggers, right click triggerables to (de)select them for automatic assignment to the triggers. Ctrl+click anywhere to finish.</span>")
 		boutput(usr, "<span class='notice'>NOTE: Select stuff first, then make triggers for extra comfort!</span>")
@@ -17,7 +17,7 @@
 
 	disposing()
 		clear_selections()
-		pool(selection)
+		qdel(selection)
 		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
@@ -50,7 +50,7 @@
 
 /obj/adventurepuzzle/triggerer/trigger
 	name = "invisible trigger"
-	invisibility = 20
+	invisibility = INVIS_ADVENTURE
 	icon_state = "trigger"
 	density = 0
 	opacity = 0
@@ -58,6 +58,7 @@
 	var/trigger_count = 1
 
 	Crossed(atom/movable/O)
+		..()
 		if (isliving(O) && trigger_count)
 			if (trigger_count > 0)
 				trigger_count--

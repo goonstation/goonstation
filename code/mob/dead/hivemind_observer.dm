@@ -2,12 +2,20 @@
 	var/datum/abilityHolder/changeling/hivemind_owner
 	var/can_exit_hivemind_time = 0
 	var/last_attack = 0
+	/// Hivemind pointing uses an image rather than a decal
+	var/static/point_img = null
+
+	New()
+		. = ..()
+		if (!point_img)
+			point_img = image('icons/mob/screen1.dmi', icon_state = "arrow")
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 
 	say_understands(var/other)
 		return 1
 
 	say(var/message)
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trim(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
 
 		if (!message)
 			return
@@ -15,7 +23,7 @@
 		if (dd_hasprefix(message, "*"))
 			return
 
-		logTheThing("diary", src, null, "(HIVEMIND): [message]", "hivesay")
+		logTheThing(LOG_DIARY, src, "(HIVEMIND): [message]", "hivesay")
 
 		if (src.client && src.client.ismuted())
 			boutput(src, "You are currently muted and may not speak.")
@@ -26,19 +34,62 @@
 	stop_observing()
 		set hidden = 1
 
-	//Alias ghostize() to boot() so that the player is correctly kicked out of the changeling.
-	ghostize()
-		boot()
-
 	disposing()
 		observers -= src
 		hivemind_owner?.hivemind -= src
 		..()
 
 	click(atom/target, params)
+		if (src.client.check_key(KEY_POINT))
+			point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
+			return
 		if (try_launch_attack(target))
 			return
 		..()
+
+	update_cursor()
+		..()
+		if (src.client)
+			if (src.client.check_key(KEY_POINT))
+				src.set_cursor('icons/cursors/point.dmi')
+				return
+
+	point_at(atom/target, var/pixel_x, var/pixel_y)
+		if(ON_COOLDOWN(src, "hivemind_member_point", 1 SECOND))
+			return
+		make_hive_point(target, pixel_x, pixel_y, color="#e2a059")
+
+	/// Like make_point, but the point is an image that is only displayed to hivemind members
+	proc/make_hive_point(atom/movable/target, var/pixel_x, var/pixel_y, color="#ffffff", time=2 SECONDS)
+		var/turf/target_turf = get_turf(target)
+		var/image/point = image(point_img, loc = target_turf, layer = EFFECTS_LAYER_1)
+		if (!target.pixel_point)
+			pixel_x = target.pixel_x
+			pixel_y = target.pixel_y
+		else
+			pixel_x -= 16 - target.pixel_x
+			pixel_y -= 16 - target.pixel_y
+		point.pixel_x = pixel_x
+		point.pixel_y = pixel_y
+		point.color = color
+		point.layer = EFFECTS_LAYER_1
+		point.plane = PLANE_HUD
+		var/list/client/viewers = new
+		for (var/mob/member in hivemind_owner.get_current_hivemind())
+			if (!member.client)
+				continue
+			boutput(member, "<span class='game hivesay'><span class='prefix'>HIVEMIND: </span><b>[src]</b> points to [target].</span>")
+			member.client.images += point
+			viewers += member.client
+		var/matrix/M = matrix()
+		M.Translate((hivemind_owner.owner.x - target_turf.x)*32 - pixel_x, (hivemind_owner.owner.y - target_turf.y)*32 - pixel_y)
+		point.transform = M
+		animate(point, transform=null, time=2)
+		SPAWN(time)
+			for (var/client/viewer in viewers)
+				viewer.images -= point
+			qdel(point)
+		return point
 
 	proc/try_launch_attack(atom/shoot_target)
 		.= 0
@@ -47,7 +98,7 @@
 			if (proj) //ZeWaka: Fix for null.launch()
 				proj.launch()
 				last_attack = world.time
-				playsound(get_turf(src), 'sound/weapons/flaregun.ogg', 40, 0.1, 0, 2.6)
+				playsound(src, 'sound/weapons/flaregun.ogg', 30, 0.1, 0, 2.6)
 				.= 1
 
 	proc/boot()
@@ -87,6 +138,7 @@
 				my_ghost.z = 1
 
 		observers -= src
+		my_ghost.show_antag_popup("changeling_leave")
 		qdel(src)
 
 	proc/set_owner(var/datum/abilityHolder/changeling/new_owner)
@@ -124,8 +176,8 @@
 
 	if(world.time >= can_exit_hivemind_time && hivemind_owner && hivemind_owner.master != src)
 		hivemind_owner.hivemind -= src
-		boutput(src, __red("You have parted with the hivemind."))
+		boutput(src, "<span class='alert'>You have parted with the hivemind.</span>")
 		src.boot()
 	else
-		boutput(src, __red("You are not able to part from the hivemind at this time. You will be able to leave in [(can_exit_hivemind_time/10 - world.time/10)] seconds."))
+		boutput(src, "<span class='alert'>You are not able to part from the hivemind at this time. You will be able to leave in [(can_exit_hivemind_time/10 - world.time/10)] seconds.</span>")
 

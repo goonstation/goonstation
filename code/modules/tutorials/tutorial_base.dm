@@ -1,4 +1,4 @@
-/datum/tutorial
+/datum/tutorial_base
 	var/name = "Tutorial"
 	var/mob/owner = null
 	var/list/steps = list()
@@ -72,7 +72,7 @@
 				return 1
 			var/datum/tutorialStep/T = steps[current_step]
 			if (T.PerformAction(action, context))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					CheckAdvance()
 				return 1
 			else
@@ -87,7 +87,7 @@
 				return 1
 			var/datum/tutorialStep/T = steps[current_step]
 			if (T.PerformSilentAction(action, context))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					CheckAdvance()
 				return 1
 			else
@@ -96,7 +96,7 @@
 /datum/tutorialStep
 	var/name = "Tutorial Step"
 	var/instructions = "Do something"
-	var/datum/tutorial/tutorial = null
+	var/datum/tutorial_base/tutorial = null
 
 	proc
 		SetUp()

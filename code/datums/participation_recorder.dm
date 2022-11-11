@@ -38,10 +38,14 @@ var/global/datum/participationRecorder/participationRecorder
 
 		//send our shiiiit
 		else
-			apiHandler.queryAPI("participation/record", list(
+			var/list/payload = list(
 				"ckey" = ckey,
 				"round_mode" = ticker.mode.name
-			))
+			)
+			#ifdef RP_MODE
+			payload["rp_mode"] = true
+			#endif
+			apiHandler.queryAPI("participation/record", payload)
 
 
 	//Set holding on, which enables queuing of participation data for the duration
@@ -63,6 +67,9 @@ var/global/datum/participationRecorder/participationRecorder
 		var/list/payload = list(
 			"round_mode" = ticker.mode.name
 		)
+		#ifdef RP_MODE
+		payload["rp_mode"] = true
+		#endif
 
 		var/count = 0
 		for (var/ckey in src.queue)
@@ -70,10 +77,3 @@ var/global/datum/participationRecorder/participationRecorder
 			count++
 
 		apiHandler.queryAPI("participation/record-multiple", payload)
-
-
-
-world/New()
-	. = ..()
-	participationRecorder = new()
-	//participationRecorder = new(1) //Enable debug

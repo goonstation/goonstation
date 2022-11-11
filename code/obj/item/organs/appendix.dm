@@ -3,16 +3,26 @@
 	organ_name = "appendix"
 	organ_holder_name = "appendix"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 3.0
+	organ_holder_required_op_stage = 3
 	icon_state = "appendix"
 	failure_disease = /datum/ailment/disease/appendicitis
 
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		if (src.get_damage() >= FAIL_DAMAGE && prob(src.get_damage() * 0.2) && !robotic)
+		if (src.get_damage() >= fail_damage && prob(src.get_damage() * 0.2) && !robotic)
 			donor.contract_disease(failure_disease,null,null,1)
 		return 1
+
+/obj/item/organ/appendix/synth
+	name = "synthappendix"
+	organ_name = "synthappendix"
+	icon_state = "plant"
+	desc = "A plant-based alternative to the normal appendix..."
+	synthetic = 1
+	New()
+		..()
+		src.icon_state = pick("plant_appendix", "plant_appendix_bloom")
 
 /obj/item/organ/appendix/cyber
 	name = "cyberappendix"
@@ -29,7 +39,7 @@
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		if (src.get_damage() < FAIL_DAMAGE && prob(percentmult(10, mult)) && donor.health <= donor.max_health)
+		if (src.get_damage() < fail_damage && probmult(10) && donor.health <= donor.max_health)
 			var/reagID = pick("saline", "salbutamol", "salicylic_acid", "charcoal")
 			donor.reagents.add_reagent(reagID, reagID == "salicyclic_acid" ? 2 : 4) //salicyclic has very low depletion, reduce chances of overdose
 			if(donor.health <= donor.max_health * 0.9)
@@ -48,8 +58,7 @@
 				donor.emote(pick("twitch", "groan"))
 
 	breakme()
-		. = ..()
-		if(emagged)
+		if(..() && emagged)
 			donor.emote("collapse")
 			donor.setStatus("weakened", 3 SECONDS)
 

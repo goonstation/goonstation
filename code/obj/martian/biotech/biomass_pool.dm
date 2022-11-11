@@ -66,7 +66,7 @@
     for(var/mob/living/M in victims)
       M.set_loc(location)
 
-/obj/martianBiotech/biomassPool/attackby(obj/item/W as obj, mob/user as mob)
+/obj/martianBiotech/biomassPool/attackby(obj/item/W, mob/user)
   var/obj/item/grab/G = W
   var/meatValue = 0
   var/atom/movable/meat = null
@@ -115,6 +115,7 @@
     victims += M
 
 /obj/martianBiotech/biomassPool/on_reagent_change()
+  ..()
   for(var/reagentId in src.reagents.reagent_list)
     if(reagentId in src.biomassPoolReagents)
       var/datum/reagent/R = src.reagents.reagent_list[reagentId]
@@ -162,7 +163,7 @@
 
   onUpdate()
     ..()
-    if (grab == null || target == null || pool == null || owner == null || get_dist(owner, pool) > 1 || get_dist(owner, target) > 1 || get_dist(target, pool) > 1)
+    if (grab == null || target == null || pool == null || owner == null || BOUNDS_DIST(owner, pool) > 0 || BOUNDS_DIST(owner, target) > 0 || BOUNDS_DIST(target, pool) > 0)
       interrupt(INTERRUPT_ALWAYS)
       return
 
@@ -173,7 +174,7 @@
   onEnd()
     ..()
     owner.visible_message("<span class='alert'><b>[owner] dips [target] into [pool]!</b></span>", "<span class='alert'>You dip [target] in [pool]!</span>")
-    logTheThing("combat", owner, target, "forced [constructTarget(target,"combat")] ([isdead(target) ? "dead" : "alive"]) into \an [pool] at [log_loc(pool)].")
+    logTheThing(LOG_COMBAT, owner, "forced [constructTarget(target,"combat")] ([isdead(target) ? "dead" : "alive"]) into \an [pool] at [log_loc(pool)].")
     if (!isdead(target))
       message_admins("[key_name(owner)] forced [key_name(target, 1)] ([target == 2 ? "dead" : "alive"]) into \an [pool] at [log_loc(pool)].")
     target.set_loc(pool)

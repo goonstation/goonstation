@@ -4,25 +4,23 @@
 	icon_state = "sec_computer"
 	req_access_txt = "2"
 //	var/authenticated = 0.0		if anyone wants to make it so you need to log in in future go ahead.
-	var/id = 1.0
+	id = 1
 
 /obj/machinery/computer/door_control/proc/alarm()
-	if(status & (NOPOWER|BROKEN))
+	if(src.status & (NOPOWER|BROKEN))
 		return
 	for(var/obj/machinery/door/window/brigdoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
 			if(M.density)
-				SPAWN_DBG( 0 )
+				SPAWN( 0 )
 					M.open()
 			else
-				SPAWN_DBG( 0 )
+				SPAWN( 0 )
 					M.close()
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/computer/door_control/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
-/obj/machinery/computer/door_control/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/door_control/attack_hand(var/mob/user)
 	if(..())
 		return
 	var/dat = "<HTML><BODY><TT><B>Brig Computer</B><br><br>"
@@ -54,7 +52,7 @@
 		src.add_dialog(usr)
 		if (href_list["setid"])
 			if(src.allowed(usr))
-				src.id = text2num(href_list["setid"])
+				src.id = text2num_safe(href_list["setid"])
 				src.alarm()
 		if (href_list["openall"])
 			if(src.allowed(usr))

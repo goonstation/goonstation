@@ -13,13 +13,16 @@
 			return
 		halloween_mode = 1
 
+		if(prob(50))
+			repaint_space(TRUE)
+
 		bust_lights()
 
 		//List of major spooky things (only one is spawned)
 		var/list/spooky_major = list(///obj/item/storage/toolbox/memetic, //naw!
 		/obj/item/unkill_shield,
 		// /obj/submachine/mind_switcher,
-		/*/obj/item/camera_test/haunted,*/ // This thing is broken.
+		/*/obj/item/camera/haunted,*/ // This thing is broken.
 		/obj/item/relic,
 		/obj/item/clothing/head/void_crown,
 		// /obj/haunted_television
@@ -30,7 +33,7 @@
 		/obj/critter/zombie/security,
 		/obj/critter/spirit,
 		/obj/critter/blobman,
-		/obj/critter/spider/spacerachnid,
+		/mob/living/critter/spider/spacerachnid,
 		/obj/critter/lion, //Okay, this one isn't very "spooky"
 		/obj/item/clothing/glasses/regular/ecto,
 		/obj/item/device/key/haunted,

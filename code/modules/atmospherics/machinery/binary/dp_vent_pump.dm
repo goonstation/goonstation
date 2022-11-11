@@ -31,6 +31,10 @@
 	//2: Do not pass input_pressure_min
 	//4: Do not pass output_pressure_max
 
+	New()
+		..()
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+
 	update_icon()
 		if(on)
 			if(pump_direction)
@@ -103,48 +107,26 @@
 
 		return 1
 
-	//Radio remote control
+	proc/broadcast_status()
+		var/datum/signal/signal = get_free_signal()
+		signal.transmission_method = 1 //radio signal
+		signal.source = src
 
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, "[frequency]")
-			frequency = new_frequency
-			if(frequency)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
+		signal.data["tag"] = id
+		signal.data["device"] = "ADVP"
+		signal.data["power"] = on?("on"):("off")
+		signal.data["direction"] = pump_direction?("release"):("siphon")
+		signal.data["checks"] = pressure_checks
+		signal.data["input"] = input_pressure_min
+		signal.data["output"] = output_pressure_max
+		signal.data["external"] = external_pressure_bound
 
-		broadcast_status()
-			if(!radio_connection)
-				return 0
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
-			var/datum/signal/signal = get_free_signal()
-			signal.transmission_method = 1 //radio signal
-			signal.source = src
-
-			signal.data["tag"] = id
-			signal.data["device"] = "ADVP"
-			signal.data["power"] = on?("on"):("off")
-			signal.data["direction"] = pump_direction?("release"):("siphon")
-			signal.data["checks"] = pressure_checks
-			signal.data["input"] = input_pressure_min
-			signal.data["output"] = output_pressure_max
-			signal.data["external"] = external_pressure_bound
-
-			radio_connection.post_signal(src, signal)
-
-			return 1
+		return 1
 
 	var/frequency = 0
 	var/id = null
-	var/datum/radio_frequency/radio_connection
-
-	initialize()
-		..()
-		if(frequency)
-			set_frequency(frequency)
-
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		..()
 
 	receive_signal(datum/signal/signal)
 		if(signal.data["tag"] && (signal.data["tag"] != id))
@@ -161,14 +143,14 @@
 				on = !on
 
 			if("set_direction")
-				var/number = text2num(signal.data["parameter"])
+				var/number = text2num_safe(signal.data["parameter"])
 				if(number > 0.5)
 					pump_direction = 1
 				else
 					pump_direction = 0
 
 			if("set_checks")
-				var/number = round(text2num(signal.data["parameter"]),1)
+				var/number = round(text2num_safe(signal.data["parameter"]),1)
 				pressure_checks = number
 
 			if("purge")
@@ -180,23 +162,23 @@
 				pump_direction = 1
 
 			if("set_input_pressure")
-				var/number = text2num(signal.data["parameter"])
-				number = min(max(number, 0), ONE_ATMOSPHERE*50)
+				var/number = text2num_safe(signal.data["parameter"])
+				number = clamp(number, 0, ONE_ATMOSPHERE*50)
 
 				input_pressure_min = number
 
 			if("set_output_pressure")
-				var/number = text2num(signal.data["parameter"])
-				number = min(max(number, 0), ONE_ATMOSPHERE*50)
+				var/number = text2num_safe(signal.data["parameter"])
+				number = clamp(number, 0, ONE_ATMOSPHERE*50)
 
 				output_pressure_max = number
 
 			if("set_external_pressure")
-				var/number = text2num(signal.data["parameter"])
-				number = min(max(number, 0), ONE_ATMOSPHERE*50)
+				var/number = text2num_safe(signal.data["parameter"])
+				number = clamp(number, 0, ONE_ATMOSPHERE*50)
 
 				external_pressure_bound = number
 
 		if(signal.data["tag"])
-			SPAWN_DBG(0.5 SECONDS) broadcast_status()
-		update_icon()
+			SPAWN(0.5 SECONDS) broadcast_status()
+		UpdateIcon()

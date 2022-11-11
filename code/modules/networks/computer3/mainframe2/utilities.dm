@@ -59,7 +59,7 @@
 						P.metadata = list()
 
 					var/is_folder = istype(P, /datum/computer/folder)
-					message += "\[[add_zero("[is_folder ? "--" : P.size]", 2)]] [add_zero( (P.metadata && ("group" in P.metadata) && isnum(text2num(P.metadata["group"])) ? "[P.metadata["group"]]" : "ANY"), 3)][print_file_permissions(P)] [is_folder ? "DIR" : "[copytext(P:extension,1,4)]"]"
+					message += "\[[add_zero("[is_folder ? "--" : P.size]", 2)]] [add_zero( (P.metadata && ("group" in P.metadata) && isnum(text2num_safe(P.metadata["group"])) ? "[P.metadata["group"]]" : "ANY"), 3)][print_file_permissions(P)] [is_folder ? "DIR" : "[copytext(P:extension,1,4)]"]"
 					message += " [add_lspace((!P.metadata || isnull(P.metadata["owner"]) ? "Nobody" : P.metadata["owner"]), 16)] [P.name]|n"
 				else
 					if (dd_hasprefix(P.name, "_"))
@@ -75,7 +75,7 @@
 			if (descriptive && istype(listfolder, /datum/computer/file))
 				var/datum/computer/file/P = listfolder
 				var/message = "\[[add_zero("[P.size]", 2)]] "
-				message += add_zero((P.metadata && P.metadata.Find("group") && isnum(text2num(P.metadata["group"])) ? "[P.metadata["group"]]" : "ANY"), 3)
+				message += add_zero((P.metadata && P.metadata.Find("group") && isnum(text2num_safe(P.metadata["group"])) ? "[P.metadata["group"]]" : "ANY"), 3)
 				message += "[print_file_permissions(P)] [copytext(P.extension,1,4)]"
 				message += " [add_lspace(( (!P.metadata || !P.metadata.Find("owner") || isnull(P.metadata["owner"])) ? "Nobody" : P.metadata["owner"]), 16)] [P.name]|n"
 				message_user(message, "multiline")
@@ -590,7 +590,7 @@
 			mainframe_prog_exit
 			return
 
-		var/newpermissions = text2num(initlist[1])
+		var/newpermissions = text2num_safe(initlist[1])
 		if (!isnum(newpermissions))
 			message_user("Error: Invalid permission value.")
 			mainframe_prog_exit
@@ -683,7 +683,7 @@
 			return
 
 		if (newlist.len == 2)
-			newgroup = text2num(newlist[2])
+			newgroup = text2num_safe(newlist[2])
 			if (isnull(newgroup))
 				message_user("Error: Invalid group ID.")
 				mainframe_prog_exit
@@ -734,6 +734,7 @@
 		if ("[access_dwaine_superuser]" in accessList)
 			if(signal_program(1, list("command"=DWAINE_COMMAND_UGROUP, "group"=0)) == ESIG_SUCCESS)
 				message_user("You are now authorized.")
+				usr.unlock_medal("I'm in", 1)
 			else
 				message_user("Error: Unable to authorize.")
 		else
@@ -1414,4 +1415,4 @@
 	initialize(var/initparams)
 		message_user(read_user_field("curpath"))
 		mainframe_prog_exit
-	
+

@@ -5,7 +5,7 @@
 
 	disposing()
 		for(var/image/chat_maptext/I in src.lines)
-			pool(I)
+			qdel(I)
 		src.lines = null
 		for(var/A in src.vis_locs)
 			if(isliving(A))
@@ -30,26 +30,6 @@
 	appearance_flags = PIXEL_SCALE
 	var/unique_id
 	var/measured_height = 8
-
-	unpooled(var/pooltype)
-		..()
-		// for optimization purposes some of these could probably be left out if necessary because they *shouldn't* ever change
-		src.bumped = initial(src.bumped)
-		src.layer = initial(src.layer)
-		src.plane = initial(src.plane)
-		src.maptext_x = initial(src.maptext_x)
-		src.maptext_y = initial(src.maptext_y)
-		src.maptext_width = initial(src.maptext_width)
-		src.maptext_height = initial(src.maptext_height)
-		src.alpha = initial(src.alpha)
-		src.icon = initial(src.icon)
-		src.appearance_flags = initial(src.appearance_flags)
-		src.measured_height = initial(src.measured_height)
-		src.transform = null
-		for(var/client/C in src.visible_to)
-			C.images -= src
-		src.visible_to = list()
-		src.unique_id = TIME
 
 	disposing()
 		if(istype(src.loc, /obj/chat_maptext_holder))
@@ -84,32 +64,32 @@
 	proc/measure(var/client/who)
 		var/measured = 8
 		// MeasureText sleeps and that fucks up a lot, removing for now
-		return measured * (1 + round(length(src.maptext_width) / 128))
+		src.measured_height = measured * (1 + round(length(src.maptext_width) / 32)) // this is an incredibly fancy way to write * 1
 
-proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255, force = 0)
-	var/image/chat_maptext/text = unpool(/image/chat_maptext)
+proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255, force = 0, time = 40)
+	var/image/chat_maptext/text = new /image/chat_maptext
 	animate(text, maptext_y = 28, time = 0.01) // this shouldn't be necessary but it keeps breaking without it
 	if (!force)
-		msg = copytext(msg, 1, 128) // 4 lines, seems fine to me
+		msg = copytext(msg, 1, 256) // 4 lines, seems fine to me
 		text.maptext = "<span class='pixel c ol' style=\"[style]\">[msg]</span>"
 	else
 		// force whatever it is to be shown. for not chat tings. honk.
 		text.maptext = msg
-	if(istype(target, /atom/movable))
+	if(istype(target, /atom/movable) && target.chat_text)
 		var/atom/movable/L = target
 		text.loc = L.chat_text
 		if(length(L.chat_text.lines) && L.chat_text.lines[length(L.chat_text.lines)].maptext == text.maptext)
 			L.chat_text.lines[length(L.chat_text.lines)].transform *= 1.05
-			pool(text)
+			qdel(text)
 			return null
 		L.chat_text.lines.Add(text)
 	else // hmm?
 		text.loc = target
 	animate(text, alpha = alpha, maptext_y = 34, time = 4, flags = ANIMATION_END_NOW)
 	var/text_id = text.unique_id
-	SPAWN_DBG(4 SECONDS)
+	SPAWN(time)
 		if(text_id == text.unique_id)
 			text.bump_up(invis=1)
 			sleep(0.5 SECONDS)
-			pool(text)
+			qdel(text)
 	return text

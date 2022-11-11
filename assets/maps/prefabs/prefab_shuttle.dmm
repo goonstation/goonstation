@@ -1,113 +1,1025 @@
-"aa" = (/turf/variableTurf/clear,/area/noGenerate)
-"ab" = (/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"ac" = (/obj/decal/cleanable/ash,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"ad" = (/obj/item/raw_material/scrap_metal,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"ae" = (/turf/simulated/shuttle/wall{dir = 8; icon_state = "wall_space"},/area/noGenerate)
-"af" = (/turf/simulated/shuttle/wall,/area/noGenerate)
-"ag" = (/obj/decal/cleanable/blood/splatter,/turf/simulated/shuttle/wall,/area/noGenerate)
-"ah" = (/turf/simulated/shuttle/wall{dir = 1; icon_state = "wall_space"},/area/noGenerate)
-"ai" = (/obj/decal/cleanable/molten_item,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"aj" = (/turf/variableTurf/floor,/area/noGenerate)
-"ak" = (/turf/variableTurf/wall,/area/space)
-"al" = (/obj/machinery/optable,/obj/map/light/white,/obj/decal/cleanable/cobweb,/obj/decal/cleanable/blood/splatter{icon_state = "floor5"},/obj/item/scalpel,/turf/simulated/floor/plating/airless,/area/noGenerate)
-"am" = (/obj/decal/cleanable/dirt,/obj/decal/skeleton{desc = "The head seems to be gone."; icon = 'icons/misc/hstation.dmi'; icon_state = "body2"; name = "corpse"},/obj/decal/cleanable/blood/splatter{icon_state = "floor3"},/obj/decal/cleanable/blood/splatter{icon_state = "floor4"},/turf/simulated/floor/plating/airless{icon_state = "platingdmg1"},/area/noGenerate)
-"an" = (/obj/table/auto,/obj/random_item_spawner/prosthetics,/obj/item/ai_interface,/turf/simulated/floor/plating/airless{icon_state = "platingdmg1"},/area/noGenerate)
-"ao" = (/turf/simulated/wall/asteroid,/area/noGenerate)
-"ap" = (/obj/random_item_spawner/landmine,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"aq" = (/turf/variableTurf/clear,/area/space)
-"ar" = (/obj/decal/cleanable/oil,/obj/decal/cleanable/dirt,/obj/decal/cleanable/greenpuke,/obj/decal/cleanable/blood/splatter,/turf/simulated/floor/airless{icon_state = "damaged2"},/area/noGenerate)
-"as" = (/obj/decal/cleanable/blood/splatter{icon_state = "floor3"},/obj/critter/zombie/scientist,/turf/simulated/floor/airless/scorched,/area/noGenerate)
-"at" = (/turf/simulated/shuttle/wall,/obj/wingrille_spawn/auto,/turf/simulated/floor/plating/airless{icon_state = "platingdmg2"},/area/noGenerate)
-"au" = (/turf/space,/obj/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 9},/turf/simulated/floor/plating/airless{icon_state = "platingdmg2"},/area/noGenerate)
-"av" = (/obj/critter/rockworm,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"aw" = (/obj/decal/fakeobjects/shuttlethruster{icon_state = "alt_propulsion"; dir = 8},/turf/space,/area/noGenerate)
-"ax" = (/obj/decal/fakeobjects/shuttleengine{icon_state = "alt_heater"; dir = 8},/turf/simulated/shuttle/wall,/area/noGenerate)
-"ay" = (/obj/decal/cleanable/dirt,/obj/decal/fakeobjects{name = "motor"; desc = "It appears to be a part of a very old robotic arm."; icon = 'icons/obj/machines/nuclear.dmi'; icon_state = "engineoff"},/turf/simulated/floor/plating/airless{icon_state = "platingdmg1"},/area/noGenerate)
-"az" = (/obj/item/cable_coil/cut,/obj/critter/zombie/radiation,/obj/decal/fakeobjects/pipe/heat{icon_state = "10-b"},/turf/simulated/floor/plating/airless{icon_state = "platingdmg1"},/area/noGenerate)
-"aA" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/floor/airless{icon_state = "damaged2"},/area/noGenerate)
-"aB" = (/turf/simulated/floor/plating/airless,/obj/decal/cleanable/robot_debris,/obj/decal/floatingtiles{icon_state = "floattiles4"; dir = 8},/obj/decal/cleanable/cobweb2,/obj/decal/cleanable/blood/gibs/body,/obj/decal/cleanable/blood/splatter,/turf/simulated/floor/plating/airless{icon_state = "platingdmg2"},/area/noGenerate)
-"aC" = (/obj/decal/cleanable/oil/streak,/obj/decal/cleanable/blood/splatter{icon_state = "gibbl2"},/obj/item/reagent_containers/pill/antirad,/turf/simulated/floor/airless{icon_state = "damaged2"},/area/noGenerate)
-"aD" = (/obj/decal/skeleton{name = "decomposed corpse"; desc = "Eugh, the stench is horrible!"; icon = 'icons/misc/hstation.dmi'; icon_state = "body1"},/obj/decal/cleanable/blood/splatter{icon_state = "floor3"},/turf/simulated/floor/airless{icon_state = "floorgrime"},/area/noGenerate)
-"aE" = (/obj/decal/fakeobjects/lightbulb_broken{dir = 4},/obj/decal/cleanable/blood/splatter{icon_state = "floor2"},/obj/item/reagent_containers/syringe/heparin,/turf/simulated/floor/airless{icon_state = "damaged4"},/area/noGenerate)
-"aF" = (/obj/wingrille_spawn/auto,/turf/simulated/floor/airless/scorched,/area/noGenerate)
-"aG" = (/turf/simulated/shuttle/wall{icon_state = "wall_space"},/area/noGenerate)
-"aH" = (/obj/decal/fakeobjects/apc_broken,/turf/simulated/shuttle/wall,/area/noGenerate)
-"aI" = (/obj/decal/cleanable/blood/splatter,/obj/item/coin,/turf/simulated/floor/airless{icon_state = "floorgrime"},/area/noGenerate)
-"aJ" = (/obj/decal/cleanable/blood/splatter{icon_state = "floor5"},/obj/item/reagent_containers/syringe/proconvertin,/turf/simulated/floor/airless{icon_state = "floorgrime"},/area/noGenerate)
-"aK" = (/obj/item/raw_material/scrap_metal,/turf/variableTurf/wall,/area/space)
-"aL" = (/turf/space,/obj/decal/cleanable/machine_debris,/obj/decal/floatingtiles{icon_state = "floattiles5"},/obj/decal/cleanable/blood/tracks,/obj/item/raw_material/shard/glass,/obj/decal/cleanable/blood/splatter,/obj/item/paper/Cloning,/turf/simulated/floor/plating/airless{icon_state = "platingdmg2"},/area/noGenerate)
-"aM" = (/obj/decal/cleanable/fungus,/turf/simulated/shuttle/wall,/area/noGenerate)
-"aN" = (/obj/table/auto,/obj/random_item_spawner/med_kit,/turf/simulated/floor/plating/airless{icon_state = "platingdmg1"},/area/noGenerate)
-"aO" = (/obj/lattice,/obj/decal/floatingtiles{icon_state = "floattiles2"},/obj/decal/fakeobjects/lighttube_broken{icon_state = "tube-broken"; dir = 1},/obj/item/bloodslide,/turf/space,/area/noGenerate)
-"aP" = (/obj/decal/cleanable/dirt,/obj/critter/zombie/scientist,/turf/simulated/floor/airless{icon_state = "floorgrime"},/area/noGenerate)
-"aQ" = (/obj/item/device/analyzer/atmosanalyzer_upgrade,/turf/simulated/floor/airless{icon_state = "circuit"},/area/noGenerate)
-"aR" = (/obj/decal/cleanable/oil,/turf/simulated/wall/asteroid,/area/noGenerate)
-"aS" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "It is still kinda warm."; icon = 'icons/obj/machines/nuclear.dmi'; icon_state = "neutinj"; name = "busted machine"},/obj/map/light/white,/turf/simulated/floor/airless{icon_state = "damaged3"},/area/noGenerate)
-"aT" = (/obj/item/device/analyzer/atmosanalyzer_upgrade,/obj/decal/skeleton{name = "decomposed corpse"; desc = "Eugh, the stench is horrible!"; icon = 'icons/misc/hstation.dmi'; icon_state = "body3"},/turf/simulated/floor/airless{icon_state = "damaged4"},/area/noGenerate)
-"aU" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/floor/airless{icon_state = "damaged5"},/area/noGenerate)
-"aV" = (/obj/structure/girder/displaced,/turf/simulated/floor/airless{icon_state = "damaged2"},/area/noGenerate)
-"aW" = (/obj/decal/cleanable/vomit,/obj/item/card_box/plain,/obj/machinery/drainage,/turf/simulated/floor/airless{icon_state = "floorgrime"},/area/noGenerate)
-"aX" = (/obj/lattice,/obj/decal/cleanable/generic,/obj/structure/girder/displaced,/obj/item/reagent_containers/pill/menthol,/obj/item/raw_material/rock,/turf/space,/area/noGenerate)
-"aY" = (/obj/lattice,/obj/decal/floatingtiles{icon_state = "floattiles3"},/obj/item/device/prox_sensor,/turf/space,/area/noGenerate)
-"aZ" = (/turf/simulated/floor/plating/airless,/obj/decal/fakeobjects/pipe{icon = 'icons/obj/atmospherics/pipe_vent.dmi'; icon_state = "intact"},/obj/decal/cleanable/blood/gibs/core,/turf/simulated/floor/plating/airless{icon_state = "platingdmg2"},/area/noGenerate)
-"ba" = (/obj/decal/cleanable/machine_debris,/obj/item/pen/red,/turf/simulated/floor/airless/scorched,/area/noGenerate)
-"bb" = (/obj/decal/cleanable/dirt,/obj/critter/zombie/scientist,/obj/item/raw_material/rock,/turf/simulated/floor/plating/airless{icon_state = "platingdmg1"},/area/noGenerate)
-"bc" = (/obj/decal/cleanable/dirt,/obj/map/light/white,/turf/simulated/floor/airless/scorched,/area/noGenerate)
-"bd" = (/obj/item/cable_coil/cut{icon_state = "coil1"},/turf/simulated/floor/airless{icon_state = "circuit"},/area/noGenerate)
-"be" = (/obj/securearea{desc = "Blue, blue."; icon_state = "med"; layer = 9; name = "MEDICAL SHIP"; pixel_x = 0},/turf/simulated/shuttle/wall/cockpit,/area/noGenerate)
-"bf" = (/turf/dmm_suite/clear_turf,/area/noGenerate)
-"bg" = (/obj/decal/cleanable/molten_item,/obj/decal/cleanable/oil/streak,/turf/simulated/floor/airless/scorched,/area/noGenerate)
-"bh" = (/obj/decal/cleanable/blood/splatter,/obj/item/reagent_containers/pill/cyberpunk,/turf/simulated/floor/airless{icon_state = "floorgrime"},/area/noGenerate)
-"bi" = (/obj/lattice,/obj/decal/fakeobjects/pipe{dir = 4},/obj/decal/floatingtiles{icon_state = "floattiles1"; dir = 1},/obj/decal/skeleton{desc = "Eugh, the stench is horrible!"; icon = 'icons/misc/hstation.dmi'; icon_state = "body6"; name = "decomposed corpse"},/obj/item/raw_material/rock,/obj/item/raw_material/rock,/turf/space,/area/noGenerate)
-"bj" = (/obj/lattice,/obj/decal/fakeobjects/pipe{dir = 4},/obj/decal/floatingtiles{icon_state = "floattiles4"; dir = 8},/obj/item/cable_coil/cut,/obj/decal/cleanable/machine_debris,/turf/space,/area/noGenerate)
-"bk" = (/obj/lattice,/obj/decal/floatingtiles{icon_state = "floattiles1"; dir = 8},/obj/item/reagent_containers/pill/antitox,/obj/item/raw_material/rock,/turf/space,/area/noGenerate)
-"bl" = (/obj/decal/fakeobjects/pipe{dir = 4},/obj/decal/cleanable/molten_item,/obj/item/raw_material/rock,/turf/simulated/floor/plating/airless{icon_state = "platingdmg1"},/area/noGenerate)
-"bm" = (/obj/decal/cleanable/machine_debris,/obj/decal/fakeobjects/pipe{dir = 4},/obj/decal/cleanable/oil/streak,/turf/simulated/floor/plating/airless{icon_state = "platingdmg1"},/area/noGenerate)
-"bn" = (/obj/decal/fakeobjects/pipe{icon_state = "intact"; dir = 10},/obj/item/reagent_containers/pill/crank,/turf/simulated/floor/plating/airless{icon_state = "platingdmg1"},/area/noGenerate)
-"bo" = (/obj/item/cable_coil/cut{color = "#DD0000"},/turf/simulated/floor/airless{icon_state = "circuit"},/area/noGenerate)
-"bp" = (/obj/decal/cleanable/blood/splatter{icon_state = "gibbl2"},/obj/decal/fakeobjects/shuttleengine{icon_state = "alt_heater"; dir = 8},/turf/simulated/shuttle/wall,/area/noGenerate)
-"bq" = (/obj/decal/fakeobjects{name = "motor"; desc = "It appears to be a part of a very old robotic arm."; icon = 'icons/obj/machines/nuclear.dmi'; icon_state = "engineoff"},/turf/simulated/floor/plating/airless{icon_state = "platingdmg1"},/area/noGenerate)
-"br" = (/obj/decal/fakeobjects/pipe/heat{icon_state = "9-b"},/obj/item/reagent_containers/patch/synthflesh,/turf/simulated/floor/plating/airless{icon_state = "panelscorched"},/area/noGenerate)
-"bs" = (/obj/decal/cleanable/dirt,/obj/decal/floatingtiles{icon_state = "floattiles3"; dir = 8},/obj/decal/cleanable/cobweb,/turf/simulated/floor/plating/airless{icon_state = "platingdmg3"},/area/noGenerate)
-"bt" = (/obj/lattice,/obj/decal/cleanable/machine_debris,/obj/decal/fakeobjects/pipe{icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi'; icon_state = "manifold"},/turf/space,/area/noGenerate)
-"bu" = (/obj/decal/cleanable/machine_debris,/obj/item/raw_material/shard/glass,/obj/item/raw_material/rock,/turf/simulated/floor/airless{icon_state = "damaged3"},/area/noGenerate)
-"bv" = (/obj/decal/floatingtiles{icon_state = "floattiles1"; dir = 1},/obj/machinery/space_heater,/turf/simulated/floor/plating/airless{icon_state = "platingdmg3"},/area/noGenerate)
-"bw" = (/obj/lattice,/obj/decal/floatingtiles{icon_state = "floattiles4"; dir = 8},/obj/item/raw_material/rock,/obj/item/raw_material/scrap_metal,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"bx" = (/obj/lattice{icon_state = "lattice-dir"; dir = 10},/obj/item/cable_coil/cut{color = "#DD0000"; icon_state = "coil1"},/obj/item/raw_material/rock,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"by" = (/obj/lattice{icon_state = "lattice-dir"; dir = 10},/obj/decal/floatingtiles{icon_state = "floattiles3"},/obj/item/raw_material/shard/glass,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"bz" = (/obj/wingrille_spawn/auto,/turf/simulated/floor/airless{icon_state = "floorgrime"},/area/noGenerate)
-"bA" = (/obj/critter/zombie/scientist,/turf/simulated/floor/airless{icon_state = "damaged3"},/area/noGenerate)
-"bB" = (/obj/decal/cleanable/dirt,/obj/item/reagent_containers/pill/ipecac,/turf/simulated/floor/airless{icon_state = "floorgrime"},/area/noGenerate)
-"bC" = (/obj/item/cable_coil/cut{color = "#DD0000"; icon_state = "coil1"},/turf/simulated/floor/airless{icon_state = "floorgrime"},/area/noGenerate)
-"bD" = (/obj/computerframe{name = "smashed computer"; desc = "It is highly unlikely that this still works."; icon = 'icons/obj/computer.dmi'; icon_state = "datamedb"; dir = 8; anchored = 1},/obj/map/light/white,/turf/simulated/floor/airless/scorched,/area/noGenerate)
-"bE" = (/turf/simulated/shuttle/wall{dir = 4; icon_state = "wall_space"},/area/noGenerate)
-"bF" = (/obj/decal/floatingtiles{icon_state = "floattiles4"; dir = 8},/obj/item/raw_material/shard/glass,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"bG" = (/obj/item/raw_material/rock,/turf/simulated/wall/asteroid,/area/noGenerate)
-"bH" = (/obj/decal/floatingtiles{icon_state = "floattiles3"},/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"bI" = (/obj/decal/cleanable/oil,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"bJ" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"bK" = (/obj/wingrille_spawn/auto,/turf/simulated/floor/plating/airless,/area/noGenerate)
-"bL" = (/obj/item/clothing/under/misc/yoga/communist,/turf/simulated/floor/airless{icon_state = "floorgrime"},/area/noGenerate)
-"bM" = (/obj/decal/cleanable/ash,/obj/item/reagent_containers/syringe/krokodil,/turf/simulated/floor/plating/airless,/area/noGenerate)
-"bN" = (/obj/decal/fakeobjects/lightbulb_broken{dir = 4},/obj/decal/cleanable/ash,/turf/simulated/floor/airless{icon_state = "floorgrime"},/area/noGenerate)
-"bO" = (/turf/simulated/floor/plating/airless,/obj/decal/cleanable/cobweb2,/obj/reagent_dispensers/fueltank,/obj/decal/cleanable/blood/splatter{icon_state = "gibbl2"},/turf/simulated/floor/plating/airless{icon_state = "platingdmg2"},/area/noGenerate)
-"bP" = (/obj/securearea{desc = "Blue, blue."; icon_state = "med"; layer = 9; name = "MEDICAL SHIP"; pixel_x = 0},/obj/decal/cleanable/rust,/turf/simulated/shuttle/wall,/area/noGenerate)
-"bQ" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/floor/plating/airless,/area/noGenerate)
-"bR" = (/turf/simulated/floor/plating/airless{icon_state = "platingdmg1"},/obj/decal/fakeobjects/firelock_broken{desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR."; icon = 'icons/turf/shuttle.dmi'; icon_state = "door0"; name = "rusted hatch"},/obj/decal/cleanable/paper,/turf/simulated/floor/plating/airless{icon_state = "platingdmg2"},/area/noGenerate)
-"bS" = (/obj/item/raw_material/shard/glass,/turf/variableTurf/floor,/area/noGenerate)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ab" = (
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"ac" = (
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"ad" = (
+/obj/item/raw_material/scrap_metal,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"ae" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "wall_space"
+	},
+/area/noGenerate)
+"af" = (
+/turf/simulated/shuttle/wall,
+/area/noGenerate)
+"ag" = (
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/shuttle/wall,
+/area/noGenerate)
+"ah" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "wall_space"
+	},
+/area/noGenerate)
+"ai" = (
+/obj/decal/cleanable/molten_item,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"aj" = (
+/turf/variableTurf/floor,
+/area/noGenerate)
+"ak" = (
+/turf/variableTurf/wall,
+/area/space)
+"al" = (
+/obj/machinery/optable,
+/obj/map/light/white,
+/obj/decal/cleanable/cobweb,
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor5"
+	},
+/obj/item/scalpel,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"am" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/fakeobjects/skeleton{
+	desc = "The head seems to be gone.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body2";
+	name = "corpse"
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor3"
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/noGenerate)
+"an" = (
+/obj/table/auto,
+/obj/random_item_spawner/prosthetics,
+/obj/item/ai_interface,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/noGenerate)
+"ao" = (
+/turf/simulated/wall/auto/asteroid,
+/area/noGenerate)
+"ap" = (
+/obj/random_item_spawner/landmine,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"aq" = (
+/turf/variableTurf/clear,
+/area/space)
+"ar" = (
+/obj/decal/cleanable/oil,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/greenpuke,
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/noGenerate)
+"as" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor3"
+	},
+/obj/critter/zombie/scientist,
+/turf/simulated/floor/airless/scorched,
+/area/noGenerate)
+"at" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/noGenerate)
+"au" = (
+/obj/decal/cleanable/blood/tracks{
+	icon_state = "tracks";
+	dir = 9
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/noGenerate)
+"av" = (
+/obj/critter/rockworm,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"aw" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	icon_state = "alt_propulsion";
+	dir = 8
+	},
+/turf/space,
+/area/noGenerate)
+"ax" = (
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater";
+	dir = 8
+	},
+/turf/simulated/shuttle/wall,
+/area/noGenerate)
+"ay" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/fakeobjects{
+	name = "motor";
+	desc = "It appears to be a part of a very old robotic arm.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff"
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/noGenerate)
+"az" = (
+/obj/item/cable_coil/cut,
+/obj/critter/zombie/radiation,
+/obj/decal/fakeobjects/pipe/heat{
+	icon_state = "10-b"
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/noGenerate)
+"aA" = (
+/obj/machinery/door/unpowered/shuttle,
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/noGenerate)
+"aB" = (
+/obj/decal/cleanable/robot_debris,
+/obj/decal/floatingtiles{
+	icon_state = "floattiles4";
+	dir = 8
+	},
+/obj/decal/cleanable/cobweb2,
+/obj/decal/cleanable/blood/gibs/body,
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/noGenerate)
+"aC" = (
+/obj/decal/cleanable/oil/streak,
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/obj/item/reagent_containers/pill/antirad,
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/noGenerate)
+"aD" = (
+/obj/decal/fakeobjects/skeleton{
+	name = "decomposed corpse";
+	desc = "Eugh, the stench is horrible!";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body1"
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor3"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/noGenerate)
+"aE" = (
+/obj/decal/fakeobjects/lightbulb_broken{
+	dir = 4
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor2"
+	},
+/obj/item/reagent_containers/syringe/heparin,
+/turf/simulated/floor/airless{
+	icon_state = "damaged4"
+	},
+/area/noGenerate)
+"aF" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/airless/scorched,
+/area/noGenerate)
+"aG" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall_space"
+	},
+/area/noGenerate)
+"aH" = (
+/obj/decal/fakeobjects/apc_broken,
+/turf/simulated/shuttle/wall,
+/area/noGenerate)
+"aI" = (
+/obj/decal/cleanable/blood/splatter,
+/obj/item/coin,
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/noGenerate)
+"aJ" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor5"
+	},
+/obj/item/reagent_containers/syringe/proconvertin,
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/noGenerate)
+"aL" = (
+/obj/decal/cleanable/machine_debris,
+/obj/decal/floatingtiles{
+	icon_state = "floattiles5"
+	},
+/obj/decal/cleanable/blood/tracks,
+/obj/item/raw_material/shard/glass,
+/obj/decal/cleanable/blood/splatter,
+/obj/item/paper/Cloning,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/noGenerate)
+"aM" = (
+/obj/decal/cleanable/fungus,
+/turf/simulated/shuttle/wall,
+/area/noGenerate)
+"aN" = (
+/obj/table/auto,
+/obj/random_item_spawner/med_kit,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/noGenerate)
+"aO" = (
+/obj/lattice,
+/obj/decal/floatingtiles{
+	icon_state = "floattiles2"
+	},
+/obj/decal/fakeobjects/lighttube_broken{
+	icon_state = "tube-broken";
+	dir = 1
+	},
+/obj/item/bloodslide,
+/turf/space,
+/area/noGenerate)
+"aP" = (
+/obj/decal/cleanable/dirt,
+/obj/critter/zombie/scientist,
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/noGenerate)
+"aQ" = (
+/obj/item/device/analyzer/atmosanalyzer_upgrade,
+/turf/simulated/floor/airless{
+	icon_state = "circuit"
+	},
+/area/noGenerate)
+"aR" = (
+/obj/decal/cleanable/oil,
+/turf/simulated/wall/auto/asteroid,
+/area/noGenerate)
+"aS" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It is still kinda warm.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "neutinj";
+	name = "busted machine"
+	},
+/obj/map/light/white,
+/turf/simulated/floor/airless{
+	icon_state = "damaged3"
+	},
+/area/noGenerate)
+"aT" = (
+/obj/item/device/analyzer/atmosanalyzer_upgrade,
+/obj/decal/fakeobjects/skeleton{
+	name = "decomposed corpse";
+	desc = "Eugh, the stench is horrible!";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body3"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged4"
+	},
+/area/noGenerate)
+"aU" = (
+/obj/machinery/door/unpowered/shuttle,
+/turf/simulated/floor/airless{
+	icon_state = "damaged5"
+	},
+/area/noGenerate)
+"aV" = (
+/obj/structure/girder/displaced,
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/noGenerate)
+"aW" = (
+/obj/decal/cleanable/vomit,
+/obj/item/card_box/plain,
+/obj/machinery/drainage,
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/noGenerate)
+"aX" = (
+/obj/lattice,
+/obj/decal/cleanable/generic,
+/obj/structure/girder/displaced,
+/obj/item/reagent_containers/pill/menthol,
+/obj/item/raw_material/rock,
+/turf/space,
+/area/noGenerate)
+"aY" = (
+/obj/lattice,
+/obj/decal/floatingtiles{
+	icon_state = "floattiles3"
+	},
+/obj/item/device/prox_sensor,
+/turf/space,
+/area/noGenerate)
+"aZ" = (
+/obj/decal/fakeobjects/pipe{
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "intact"
+	},
+/obj/decal/cleanable/blood/gibs/core,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/noGenerate)
+"ba" = (
+/obj/decal/cleanable/machine_debris,
+/obj/item/pen/red,
+/turf/simulated/floor/airless/scorched,
+/area/noGenerate)
+"bb" = (
+/obj/decal/cleanable/dirt,
+/obj/critter/zombie/scientist,
+/obj/item/raw_material/rock,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/noGenerate)
+"bc" = (
+/obj/decal/cleanable/dirt,
+/obj/map/light/white,
+/turf/simulated/floor/airless/scorched,
+/area/noGenerate)
+"bd" = (
+/obj/item/cable_coil/cut{
+	icon_state = "coil1"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "circuit"
+	},
+/area/noGenerate)
+"be" = (
+/obj/securearea{
+	desc = "Blue, blue.";
+	icon_state = "med";
+	layer = 9;
+	name = "MEDICAL SHIP";
+	pixel_x = 0
+	},
+/turf/simulated/shuttle/wall/cockpit,
+/area/noGenerate)
+"bf" = (
+/turf/dmm_suite/clear_turf,
+/area/noGenerate)
+"bg" = (
+/obj/decal/cleanable/molten_item,
+/obj/decal/cleanable/oil/streak,
+/turf/simulated/floor/airless/scorched,
+/area/noGenerate)
+"bh" = (
+/obj/decal/cleanable/blood/splatter,
+/obj/item/reagent_containers/pill/cyberpunk,
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/noGenerate)
+"bi" = (
+/obj/lattice,
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/decal/floatingtiles{
+	icon_state = "floattiles1";
+	dir = 1
+	},
+/obj/decal/fakeobjects/skeleton{
+	desc = "Eugh, the stench is horrible!";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body6";
+	name = "decomposed corpse"
+	},
+/obj/item/raw_material/rock,
+/obj/item/raw_material/rock,
+/turf/space,
+/area/noGenerate)
+"bj" = (
+/obj/lattice,
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/decal/floatingtiles{
+	icon_state = "floattiles4";
+	dir = 8
+	},
+/obj/item/cable_coil/cut,
+/obj/decal/cleanable/machine_debris,
+/turf/space,
+/area/noGenerate)
+"bk" = (
+/obj/lattice,
+/obj/decal/floatingtiles{
+	icon_state = "floattiles1";
+	dir = 8
+	},
+/obj/item/reagent_containers/pill/antitox,
+/obj/item/raw_material/rock,
+/turf/space,
+/area/noGenerate)
+"bl" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/decal/cleanable/molten_item,
+/obj/item/raw_material/rock,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/noGenerate)
+"bm" = (
+/obj/decal/cleanable/machine_debris,
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/decal/cleanable/oil/streak,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/noGenerate)
+"bn" = (
+/obj/decal/fakeobjects/pipe{
+	icon_state = "intact";
+	dir = 10
+	},
+/obj/item/reagent_containers/pill/crank,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/noGenerate)
+"bo" = (
+/obj/item/cable_coil/cut{
+	color = "#DD0000"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "circuit"
+	},
+/area/noGenerate)
+"bp" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater";
+	dir = 8
+	},
+/turf/simulated/shuttle/wall,
+/area/noGenerate)
+"bq" = (
+/obj/decal/fakeobjects{
+	name = "motor";
+	desc = "It appears to be a part of a very old robotic arm.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff"
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/noGenerate)
+"br" = (
+/obj/decal/fakeobjects/pipe/heat{
+	icon_state = "9-b"
+	},
+/obj/item/reagent_containers/patch/synthflesh,
+/turf/simulated/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/noGenerate)
+"bs" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/floatingtiles{
+	icon_state = "floattiles3";
+	dir = 8
+	},
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/noGenerate)
+"bt" = (
+/obj/lattice,
+/obj/decal/cleanable/machine_debris,
+/obj/decal/fakeobjects/pipe{
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold"
+	},
+/turf/space,
+/area/noGenerate)
+"bu" = (
+/obj/decal/cleanable/machine_debris,
+/obj/item/raw_material/shard/glass,
+/obj/item/raw_material/rock,
+/turf/simulated/floor/airless{
+	icon_state = "damaged3"
+	},
+/area/noGenerate)
+"bv" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles1";
+	dir = 1
+	},
+/obj/machinery/space_heater,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/noGenerate)
+"bw" = (
+/obj/lattice,
+/obj/decal/floatingtiles{
+	icon_state = "floattiles4";
+	dir = 8
+	},
+/obj/item/raw_material/rock,
+/obj/item/raw_material/scrap_metal,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"bx" = (
+/obj/lattice{
+	icon_state = "lattice-dir";
+	dir = 10
+	},
+/obj/item/cable_coil/cut{
+	color = "#DD0000";
+	icon_state = "coil1"
+	},
+/obj/item/raw_material/rock,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"by" = (
+/obj/lattice{
+	icon_state = "lattice-dir";
+	dir = 10
+	},
+/obj/decal/floatingtiles{
+	icon_state = "floattiles3"
+	},
+/obj/item/raw_material/shard/glass,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"bz" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/noGenerate)
+"bA" = (
+/obj/critter/zombie/scientist,
+/turf/simulated/floor/airless{
+	icon_state = "damaged3"
+	},
+/area/noGenerate)
+"bB" = (
+/obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/pill/ipecac,
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/noGenerate)
+"bC" = (
+/obj/item/cable_coil/cut{
+	color = "#DD0000";
+	icon_state = "coil1"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/noGenerate)
+"bD" = (
+/obj/computerframe{
+	name = "smashed computer";
+	desc = "It is highly unlikely that this still works.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "datamedb";
+	dir = 8;
+	anchored = 1
+	},
+/obj/map/light/white,
+/turf/simulated/floor/airless/scorched,
+/area/noGenerate)
+"bE" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "wall_space"
+	},
+/area/noGenerate)
+"bF" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles4";
+	dir = 8
+	},
+/obj/item/raw_material/shard/glass,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"bG" = (
+/obj/item/raw_material/scrap_metal,
+/turf/variableTurf/clear,
+/area/space)
+"bH" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles3"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"bI" = (
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"bJ" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"bK" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"bL" = (
+/obj/item/clothing/under/misc/yoga/communist,
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/noGenerate)
+"bM" = (
+/obj/decal/cleanable/ash,
+/obj/item/reagent_containers/syringe/krokodil,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"bN" = (
+/obj/decal/fakeobjects/lightbulb_broken{
+	dir = 4
+	},
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/noGenerate)
+"bO" = (
+/obj/decal/cleanable/cobweb2,
+/obj/reagent_dispensers/fueltank,
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/noGenerate)
+"bP" = (
+/obj/securearea{
+	desc = "Blue, blue.";
+	icon_state = "med";
+	layer = 9;
+	name = "MEDICAL SHIP";
+	pixel_x = 0
+	},
+/obj/decal/cleanable/rust,
+/turf/simulated/shuttle/wall,
+/area/noGenerate)
+"bQ" = (
+/obj/machinery/door/unpowered/shuttle,
+/turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"bR" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "door0";
+	name = "rusted hatch"
+	},
+/obj/decal/cleanable/paper,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/noGenerate)
+"bS" = (
+/obj/item/raw_material/shard/glass,
+/turf/variableTurf/floor,
+/area/noGenerate)
 
 (1,1,1) = {"
-akakakakaqaqaqaqaqaqaqaqaqaqaqakakakak
-akajacadaaaeafafagahaqaqaqaqakakakakak
-akaiajajajatalamanafahaqaqakakaoapajak
-aqaaaeafafafauarasaBafahaKakakaoaoavak
-aqawaxayazaAaLaCaDaEagafafaFaFafaoaoak
-aqajaGafafafaHaIaJaZbOaMaNaOaPaQafaoak
-aqaRajafaSaTaUaVaWaXaYbRbabbbcbdafbebf
-aqacaeafafafaMbgbhbibjbkblbmbnboafaoak
-aqawbpbqbraAbsbtbubvafbwbxbybzafabaoak
-aqadaGafafafbAbBbCbDafbEbFbGadaobHajak
-aqakbIajbJbKbLbMbNafbEakadaoaoaoaoadak
-aqakakakbSaGbPbQbPbEakakakajaoaoajajak
-aqaqakakakakaqaqaqaqakakakakakakakakak
+ak
+ak
+ak
+aq
+aq
+aq
+aq
+aq
+aq
+aq
+aq
+aq
+aq
+"}
+(2,1,1) = {"
+ak
+aj
+ai
+aa
+aw
+aj
+aR
+ac
+aw
+ad
+ak
+ak
+aq
+"}
+(3,1,1) = {"
+ak
+ac
+aj
+ae
+ax
+aG
+aj
+ae
+bp
+aG
+bI
+ak
+ak
+"}
+(4,1,1) = {"
+ak
+ad
+aj
+af
+ay
+af
+af
+af
+bq
+af
+aj
+ak
+ak
+"}
+(5,1,1) = {"
+aq
+aa
+aj
+af
+az
+af
+aS
+af
+br
+af
+bJ
+bS
+ak
+"}
+(6,1,1) = {"
+aq
+ae
+at
+af
+aA
+af
+aT
+af
+aA
+af
+bK
+aG
+ak
+"}
+(7,1,1) = {"
+aq
+af
+al
+au
+aL
+aH
+aU
+aM
+bs
+bA
+bL
+bP
+aq
+"}
+(8,1,1) = {"
+aq
+af
+am
+ar
+aC
+aI
+aV
+bg
+bt
+bB
+bM
+bQ
+aq
+"}
+(9,1,1) = {"
+aq
+ag
+an
+as
+aD
+aJ
+aW
+bh
+bu
+bC
+bN
+bP
+aq
+"}
+(10,1,1) = {"
+aq
+ah
+af
+aB
+aE
+aZ
+aX
+bi
+bv
+bD
+af
+bE
+aq
+"}
+(11,1,1) = {"
+aq
+aq
+ah
+af
+ag
+bO
+aY
+bj
+af
+af
+bE
+ak
+ak
+"}
+(12,1,1) = {"
+aq
+aq
+aq
+ah
+af
+aM
+bR
+bk
+bw
+bE
+ak
+ak
+ak
+"}
+(13,1,1) = {"
+aq
+aq
+bG
+ak
+af
+aN
+ba
+bl
+bx
+bF
+ad
+ak
+ak
+"}
+(14,1,1) = {"
+aq
+aq
+ak
+ak
+aF
+aO
+bb
+bm
+by
+ao
+ao
+aj
+ak
+"}
+(15,1,1) = {"
+aq
+ak
+ak
+ak
+aF
+aP
+bc
+bn
+bz
+ad
+ao
+ao
+ak
+"}
+(16,1,1) = {"
+ak
+ak
+ao
+ao
+af
+aQ
+bd
+bo
+af
+ao
+ao
+ao
+ak
+"}
+(17,1,1) = {"
+ak
+ak
+ap
+ao
+ao
+af
+af
+af
+ab
+bH
+ao
+aj
+ak
+"}
+(18,1,1) = {"
+ak
+ak
+aj
+av
+ao
+ao
+be
+ao
+ao
+aj
+ad
+aj
+ak
+"}
+(19,1,1) = {"
+ak
+ak
+ak
+ak
+ak
+ak
+bf
+ak
+ak
+ak
+ak
+ak
+ak
 "}

@@ -1,6 +1,7 @@
 /datum/targetable/grinch/instakill
 	name = "Murder"
 	desc = "Induces instant cardiac arrest in a target."
+	icon_state = "grinchmurder"
 	targeted = 1
 	target_anything = 0
 	target_nodamage_check = 1
@@ -21,19 +22,19 @@
 			return 1
 
 		if (M == target)
-			boutput(M, __red("Why would you want to kill yourself?"))
+			boutput(M, "<span class='alert'>Why would you want to kill yourself?</span>")
 			return 1
 
-		if (get_dist(M, target) > src.max_range)
-			boutput(M, __red("[target] is too far away."))
+		if (GET_DIST(M, target) > src.max_range)
+			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
 		if (isdead(target))
-			boutput(M, __red("It would be a waste of time to murder the dead."))
+			boutput(M, "<span class='alert'>It would be a waste of time to murder the dead.</span>")
 			return 1
 
 		if (!iscarbon(target))
-			boutput(M, __red("[target] is immune to the disease."))
+			boutput(M, "<span class='alert'>[target] is immune to the disease.</span>")
 			return 1
 
 		var/mob/living/L = target
@@ -43,5 +44,5 @@
 		L.add_fingerprint(M) // Why not leave some forensic evidence?
 		L.contract_disease(/datum/ailment/malady/flatline, null, null, 1) // path, name, strain, bypass resist
 
-		logTheThing("combat", M, L, "uses the murder ability to induce cardiac arrest on [constructTarget(L,"combat")] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses the murder ability to induce cardiac arrest on [constructTarget(L,"combat")] at [log_loc(M)].")
 		return 0

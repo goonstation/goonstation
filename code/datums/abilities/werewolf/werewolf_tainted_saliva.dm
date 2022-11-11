@@ -21,10 +21,10 @@
 		if (!istype(W))
 			return 1
 		if (M.reagents.total_volume == 0)
-			boutput(M, __blue("<B>You don't have any reagents in your bloodstream!</B>"))
+			boutput(M, "<span class='notice'><B>You don't have any reagents in your bloodstream!</B></span>")
 			return 1
 
-		M.changeStatus("werewolf_saliva",300)
+		M.changeStatus("werewolf_saliva", 30 SECONDS)
 		return 0
 
 /datum/statusEffect/tainted_saliva
@@ -36,6 +36,7 @@
 	unique = 1
 
 	onAdd(var/optional=null)
+		. = ..()
 		var/mob/living/M = owner
 		if (!istype(M)) return
 
@@ -51,6 +52,7 @@
 		return
 
 	onRemove()
+		. = ..()
 		var/mob/living/M = owner
 		if (!istype(M)) return
 
@@ -60,6 +62,6 @@
 		if (!W) return
 
 		W.tainted_saliva_reservoir.clear_reagents()
-		boutput(M, __blue("<B>You no longer will spread saliva when you attack!</B>"))
+		boutput(M, "<span class='notice'><B>You no longer will spread saliva when you attack!</B></span>")
 		M.visible_message("<span class='notice'><B>[M] stops dripping its disgusting saliva!</B></span>")
 		return

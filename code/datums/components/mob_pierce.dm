@@ -1,17 +1,17 @@
-/datum/component/pierce_non_opaque // and non-opaque blobtiles
-	var/pierces_left = 1 //default to 1 wall
+/datum/component/gaseous_projectile
 
-/datum/component/pierce_non_opaque/Initialize(var/num_pierces)
+TYPEINFO(/datum/component/gaseous_projectile)
+	initialization_args = list()
+
+/datum/component/gaseous_projectile/Initialize()
 	if(!istype(parent, /obj/projectile))
 		return COMPONENT_INCOMPATIBLE
-	if(num_pierces)
-		src.pierces_left=num_pierces
-	RegisterSignal(parent, list(COMSIG_PROJ_COLLIDE), .proc/update_pierces)
+	RegisterSignal(parent, COMSIG_OBJ_PROJ_COLLIDE, .proc/update_pierces)
 
-/datum/component/pierce_non_opaque/proc/update_pierces(var/obj/projectile/P, var/atom/hit)
-	if(!hit.opacity)
-		return PROJ_ATOM_PASSTHROUGH
+/datum/component/gaseous_projectile/proc/update_pierces(var/obj/projectile/P, var/atom/hit)
+	var/turf/T = get_turf(hit)
+	return PROJ_ATOM_PASSTHROUGH * !!T?.gas_cross(get_turf(P))
 
-/datum/component/pierce_non_opaque/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_PROJ_COLLIDE)
+/datum/component/gaseous_projectile/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_OBJ_PROJ_COLLIDE)
 	. = ..()

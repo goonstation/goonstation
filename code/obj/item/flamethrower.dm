@@ -14,7 +14,7 @@ A Flamethrower in various states of assembly
 #define FLAMER_MAX_TEMP 1000 KELVIN + T0C
 #define FLAMER_DEFAULT_CHEM_AMT 40
 #define FLAMER_BACKTANK_CHEM_AMT 40
-#define FLAMER_MIN_CHEM_AMT 25
+#define FLAMER_MIN_CHEM_AMT 35
 #define FLAMER_MAX_CHEM_AMT 100
 #define FLAMER_MODE_AUTO 1
 #define FLAMER_MODE_BURST 2
@@ -26,13 +26,13 @@ A Flamethrower in various states of assembly
 /obj/item/gun/flamethrower/
 	name = "flamethrower"
 	icon = 'icons/obj/items/weapons.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "flamethrower_no_oxy_no_fuel"
 	item_state = "flamethrower0"
 	desc = "You are a firestarter!"
 	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_BULKY
@@ -76,12 +76,12 @@ A Flamethrower in various states of assembly
 		AddComponent(/datum/component/holdertargeting/fullauto, src.shoot_delay, src.shoot_delay, 1)
 
 	/// Just check if there's a usable air and fuel tank
-	canshoot()
+	canshoot(mob/user)
 		if(istype(src.gastank) && src.gastank.air_contents && istype(src.fueltank) && src.fueltank.reagents)
 			return TRUE
 
 	log_shoot(mob/user, turf/T, obj/projectile/P)
-		logTheThing("combat", user, null, "fires \a [src] ([lit ? "lit, " : ""][MODE_TO_STRING(mode)]) from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, T))]</I>, reagents: [log_reagents(src.fueltank)] with chamber volume [amt_chem]")
+		logTheThing(LOG_COMBAT, user, "fires \a [src] ([lit ? "lit, " : ""][MODE_TO_STRING(mode)]) from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, T))]</I>, reagents: [log_reagents(src.fueltank)] with chamber volume [amt_chem]")
 
 	/// allow refilling the fuel tank by simply clicking the reagent dispensers
 	afterattack(atom/target, mob/user, flag)
@@ -91,7 +91,7 @@ A Flamethrower in various states of assembly
 				tank.reagents.trans_to(src.fueltank, (src.fueltank.reagents.maximum_volume - (src.fueltank.reagents.total_volume)))
 				inventory_counter.update_percent(src.fueltank.reagents.total_volume, src.fueltank.reagents.maximum_volume)
 				boutput(user, "<span class='notice'>You refill the flamethrower's fuel tank.</span>")
-				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+				playsound(src.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
 				user.lastattacked = target
 			else
 				boutput(user, "<span class='notice'>Load the fuel tank first!</span>")
@@ -119,7 +119,7 @@ A Flamethrower in various states of assembly
 		if(!P.proj_data)
 			return
 
-		if(!canshoot())
+		if(!canshoot(null)) //null because I can't be assed
 			return
 
 		var/list/P_special_data = P.special_data
@@ -147,7 +147,7 @@ A Flamethrower in various states of assembly
 			if(FLAMER_MODE_BACKTANK)
 				rem_ratio = 0.004
 		var/turf/T = get_turf(src)
-		var/datum/gas_mixture/airgas = unpool(/datum/gas_mixture)
+		var/datum/gas_mixture/airgas = new /datum/gas_mixture
 		airgas.volume = 1
 		airgas.merge(gastank_aircontents.remove_ratio(rem_ratio * 0.9))
 		T.assume_air(gastank_aircontents.remove_ratio(rem_ratio * 0.1))
@@ -167,7 +167,7 @@ A Flamethrower in various states of assembly
 				P_special_data["chem_pct_app_tile"] = 0.25
 			if(FLAMER_MODE_SINGLE)
 				P_special_data["speed_mult"] = 1
-				P_special_data["chem_pct_app_tile"] = 0.10
+				P_special_data["chem_pct_app_tile"] = 0.1
 			else //default to backtank??
 				P_special_data["speed_mult"] = 0.6
 				P_special_data["chem_pct_app_tile"] = 0.15
@@ -177,11 +177,11 @@ A Flamethrower in various states of assembly
 /obj/item/gun/flamethrower/assembled
 	name = "flamethrower"
 	icon = 'icons/obj/items/weapons.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	desc = "You are a firestarter!"
 	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_BULKY
@@ -192,7 +192,8 @@ A Flamethrower in various states of assembly
 
 /obj/item/tank/jetpack/backtank
 	name = "fuelpack"
-	icon_state = "syndflametank"
+	icon_state = "syndflametank0"
+	base_icon_state = "syndflametank"
 	desc = "A back mounted fueltank/jetpack system for use with a tactical flamethrower."
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | OPENCONTAINER
 	var/obj/item/gun/flamethrower/backtank/linkedflamer
@@ -201,6 +202,7 @@ A Flamethrower in various states of assembly
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		src.create_reagents(4000)
 		inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 
@@ -211,41 +213,48 @@ A Flamethrower in various states of assembly
 	equipped(mob/user, slot)
 		..()
 		inventory_counter?.show_count()
-	get_desc()
+
+	examine()
 		. = ..()
 		if(linkedflamer && (linkedflamer in src.contents))
-			. += " There is a flamethrower stowed neatly away in a compartment."
+			. += "<br>\A [linkedflamer] is stowed away neatly in a compartment."
 
 	attackby(obj/item/W, mob/user)
+		if (src.loc == user && W != linkedflamer && istype(W, /obj/item/gun/flamethrower/backtank))
+			if (linkedflamer && (linkedflamer in src.contents))
+				boutput(user, "<span class='notice'>There already a flamethrower stowed in your [src.name].</span>")
+			else
+				var/obj/item/gun/flamethrower/backtank/flamer = W
+				if (flamer.fueltank != null)
+					var/obj/item/tank/jetpack/backtank/B = flamer.fueltank
+					B.linkedflamer = null
+				if (linkedflamer != null)
+					linkedflamer.gastank = null
+					linkedflamer.fueltank = null
+				linkedflamer = flamer
+				flamer.gastank = src
+				flamer.fueltank = src
 		if(src.loc == user && linkedflamer && W == linkedflamer)
-			boutput(user, "<span class='notice'>You stow the the [W] into your fuelpack.</span>")
+			boutput(user, "<span class='notice'>You stow [W] into your [src.name].</span>")
 			user.u_equip(W)
 			W.set_loc(src)
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		else
 			..()
 
 	attack_hand(mob/user)
 		if(src.loc == user && linkedflamer && (linkedflamer in src.contents))
-			boutput(user, "<span class='notice'>You retrieve the [linkedflamer] from your fuelpack.</span>")
+			boutput(user, "<span class='notice'>You retrieve [linkedflamer] from your [src.name].</span>")
 			user.put_in_hand_or_drop(linkedflamer)
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		else
 			..()
 
-	move_trigger(var/mob/M, kindof)
+	move_trigger(mob/M, kindof)
 		if (..() && reagents)
 			reagents.move_trigger(M, kindof)
 
-	toggle()
-		src.on = !( src.on )
-		if(src.on)
-			boutput(usr, "<span class='notice'>The fuelpack's integrated jetpack is now on</span>")
-		else
-			boutput(usr, "<span class='notice'>The fuelpack's integrated jetpack is now off</span>")
-		return
-
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		..()
 		if(!isliving(usr))
 			return
@@ -263,7 +272,7 @@ A Flamethrower in various states of assembly
 							usr.put_in_hand(src, 1)
 				return
 
-		if(get_dist(src, usr) > 1)
+		if(BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You need to be closer to empty \the [src] out!</span>")
 			return
 
@@ -281,10 +290,11 @@ A Flamethrower in various states of assembly
 
 	disposing()
 		linkedflamer?.gastank = null
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
 /obj/item/gun/flamethrower/backtank
-	name = "Vega flamethrower"
+	name = "\improper Vega flamethrower"
 	desc = "A military-grade flamethrower, supplied with fuel and propellant from a back-mounted fuelpack. Developed by Almagest Weapons Fabrication."
 	icon_state = "syndthrower_0"
 	item_state = "syndthrower_0"
@@ -300,6 +310,7 @@ A Flamethrower in various states of assembly
 
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		var/obj/item/tank/jetpack/backtank/B = new /obj/item/tank/jetpack/backtank(src.loc)
 		src.gastank = B
 		src.fueltank = B
@@ -312,6 +323,7 @@ A Flamethrower in various states of assembly
 		if(istype(gastank, /obj/item/tank/jetpack/backtank/))
 			var/obj/item/tank/jetpack/backtank/B = gastank
 			B.linkedflamer = null
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 /obj/item/gun/flamethrower/backtank/napalm
 	New()
@@ -363,8 +375,8 @@ A Flamethrower in various states of assembly
 	var/obj/item/rods/rod = null
 	status = null
 	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 3.0
-	throwforce = 5.0
+	force = 3
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
@@ -384,8 +396,8 @@ A Flamethrower in various states of assembly
 	var/obj/item/device/igniter/igniter = null
 	status = null
 	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 3.0
-	throwforce = 5.0
+	force = 3
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
@@ -413,11 +425,12 @@ A Flamethrower in various states of assembly
 
 
 
-/obj/item/assembly/weld_rod/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/weld_rod/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		var/turf/T = src.loc
 		if (ismob(T))
 			T = T.loc
+		user.show_message("<span class='notice'>You remove the rod from the welding tool.</span>", 1)
 		src.welder.set_loc(T)
 		src.rod.set_loc(T)
 		src.welder.master = null
@@ -434,6 +447,7 @@ A Flamethrower in various states of assembly
 		var/obj/item/device/igniter/I = W
 		if (!( I.status ))
 			return
+		user.show_message("<span class='notice'>You put the igniter in place, it still needs to be firmly attached.</span>", 1)
 		var/obj/item/assembly/weld_rod/S = src
 		var/obj/item/assembly/w_r_ignite/R = new /obj/item/assembly/w_r_ignite( user )
 		R.welder = S.welder
@@ -458,13 +472,14 @@ A Flamethrower in various states of assembly
 	src.add_fingerprint(user)
 	return
 
-/obj/item/assembly/w_r_ignite/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/w_r_ignite/attackby(obj/item/W, mob/user)
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
 		var/turf/T = src.loc
 		if (ismob(T))
 			T = T.loc
+		user.show_message("<span class='notice'>You disassemble the [src.name]</span>", 1)
 		src.welder.set_loc(T)
 		src.rod.set_loc(T)
 		src.igniter.set_loc(T)
@@ -536,7 +551,7 @@ A Flamethrower in various states of assembly
 
 	/// dump the thing on the ground
 	var/obj/item/old_thing = (. == "tank") ? src.gastank : src.fueltank
-	playsound(get_turf(src), 'sound/weapons/gunload_light.ogg', 25, 1)
+	playsound(src, 'sound/weapons/gunload_light.ogg', 25, 1)
 	if(ismob(user))
 		user.put_in_hand_or_drop(old_thing)
 	else
@@ -547,20 +562,15 @@ A Flamethrower in various states of assembly
 		src.gastank = F
 	else
 		src.fueltank = F
-	src.inventory_counter.update_percent(src.fueltank.reagents.total_volume, src.fueltank.reagents.maximum_volume)
 
-	var/fuel = "_no_fuel"
-	if(src.fueltank)
-		fuel = "_fuel"
-	src.icon_state = "flamethrower_oxy[fuel]"
-	var/oxy = "_no_oxy"
-	if(src.gastank)
-		oxy = "_oxy"
-	src.icon_state = "flamethrower[oxy]_fuel"
+	if (src.fueltank)
+		src.inventory_counter.update_percent(src.fueltank.reagents.total_volume, src.fueltank.reagents.maximum_volume)
+
+	src.icon_state = "flamethrower[src.gastank ? "_oxy" : "_no_oxy"][src.fueltank ? "_fuel" : "_no_fuel"]"
 
 	src.updateSelfDialog()
-	SPAWN_DBG(0.5 SECONDS)
-		playsound(get_turf(src), "sound/effects/valve_creak.ogg", 40, 1)
+	SPAWN(0.5 SECONDS)
+		playsound(src, 'sound/effects/valve_creak.ogg', 40, 1)
 	return TRUE
 
 /obj/item/gun/flamethrower/assembled/attackby(obj/item/W, mob/user as mob)
@@ -614,14 +624,14 @@ A Flamethrower in various states of assembly
 		src.remove_dialog(user)
 		user.Browse(null, "window=flamethrower")
 		return
-	if(user.stat || user.restrained() || user.lying || src.loc != user)
+	if(user.stat || user.restrained() || user.lying || !(src in user.equipped_list()))
 		return
 	src.add_dialog(user)
 
 	if (href_list["light"])
 		if(!src.gastank || !src.fueltank)	return
 		lit = !(lit)
-		playsound(get_turf(src), "sound/misc/lightswitch.ogg", 20, 1)
+		playsound(src, 'sound/misc/lightswitch.ogg', 20, 1)
 		if(lit)
 			icon_state = "flamethrower_ignite_on"
 			item_state = "flamethrower1"
@@ -650,13 +660,13 @@ A Flamethrower in various states of assembly
 			fuel = "_fuel"
 		icon_state = "flamethrower_no_oxy[fuel]"
 		item_state = "flamethrower0"
-		playsound(get_turf(src), "sound/effects/valve_creak.ogg", 15, 1)
-		var/remove_sound = "sound/items/pickup_[max(min(src.w_class,3),1)].ogg"
+		playsound(src, 'sound/effects/valve_creak.ogg', 15, 1)
+		var/remove_sound = "sound/items/pickup_[clamp(src.w_class, 1, 3)].ogg"
 		if(A?.pickup_sfx)
 			remove_sound = A.pickup_sfx
-		SPAWN_DBG(0.2 SECONDS)
+		SPAWN(0.2 SECONDS)
 			if(src)
-				playsound(get_turf(src), remove_sound, 30, 1)
+				playsound(src, remove_sound, 30, 1)
 
 
 	if (href_list["removefuel"])
@@ -675,17 +685,17 @@ A Flamethrower in various states of assembly
 			oxy = "_oxy"
 		icon_state = "flamethrower[oxy]_no_fuel"
 		item_state = "flamethrower0"
-		var/remove_sound = "sound/items/pickup_[max(min(src.w_class,3),1)].ogg"
+		var/remove_sound = "sound/items/pickup_[clamp(src.w_class, 1, 3)].ogg"
 		if(A?.pickup_sfx)
 			remove_sound = A.pickup_sfx
-		playsound(get_turf(src), remove_sound, 30, 1)
-		SPAWN_DBG(0.5 SECONDS)
+		playsound(src, remove_sound, 30, 1)
+		SPAWN(0.5 SECONDS)
 			if(src)
-				playsound(get_turf(src), "sound/effects/valve_creak.ogg", 15, 1)
+				playsound(src, 'sound/effects/valve_creak.ogg', 15, 1)
 
 	if (href_list["mode"])
-		mode = text2num(href_list["mode"])
-		playsound(get_turf(src), "sound/effects/valve_creak.ogg", 15, 1)
+		mode = text2num_safe(href_list["mode"])
+		playsound(src, 'sound/effects/valve_creak.ogg', 15, 1)
 		src.current_projectile.fullauto_valid = 1
 		src.current_projectile.shot_number = 1
 		switch(src.mode)
@@ -715,17 +725,17 @@ A Flamethrower in various states of assembly
 		if (href_list["temp"] == "reset")
 			src.base_temperature = FLAMER_DEFAULT_TEMP
 		else
-			var/tempnum = text2num(href_list["temp"])
+			var/tempnum = text2num_safe(href_list["temp"])
 			src.base_temperature = clamp(src.base_temperature += tempnum, src.min_temperature, src.max_temperature)
-		playsound(get_turf(src), "sound/misc/lightswitch.ogg", 20, 1)
+		playsound(src, 'sound/misc/lightswitch.ogg', 20, 1)
 
 	if (href_list["c_amt"])
 		if (href_list["c_amt"] == "reset")
 			src.amt_chem = FLAMER_DEFAULT_CHEM_AMT
 		else
-			var/tempnum = text2num(href_list["c_amt"])
+			var/tempnum = text2num_safe(href_list["c_amt"])
 			src.amt_chem = clamp(src.amt_chem += tempnum, FLAMER_MIN_CHEM_AMT, src.amt_chem_max)
-		playsound(get_turf(src), "sound/effects/valve_creak.ogg", 10, 0.2)
+		playsound(src, 'sound/effects/valve_creak.ogg', 10, 0.2)
 
 	inventory_counter?.update_percent(src.fueltank?.reagents?.total_volume, src.fueltank?.reagents?.maximum_volume)
 	src.updateSelfDialog()
@@ -807,7 +817,7 @@ A Flamethrower in various states of assembly
 
 	dat += "<br>Launcher Chamber Volume: [src.amt_chem]<BR>"
 	if(src.adjustable_chem_amt)
-		dat += "| <a href='?src=\ref[src];c_amt=-5'>-5</a> | <a href='?src=\ref[src];c_amt=-1'>-1</a> | <a href='?src=\ref[src];c_amt=reset'>reset (10)</a> | <a href='?src=\ref[src];c_amt=1'>+1</a> | <a href='?src=\ref[src];c_amt=5'>+5</a> |"
+		dat += "| <a href='?src=\ref[src];c_amt=-5'>-5</a> | <a href='?src=\ref[src];c_amt=-1'>-1</a> | <a href='?src=\ref[src];c_amt=reset'>reset (40)</a> | <a href='?src=\ref[src];c_amt=1'>+1</a> | <a href='?src=\ref[src];c_amt=5'>+5</a> |"
 
 	dat += "<BR><br><A HREF='?src=\ref[src];close=1'>Close</A></TT>"
 	user.Browse(dat, "window=flamethrower;size=600x300")

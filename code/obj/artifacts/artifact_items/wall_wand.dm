@@ -3,13 +3,12 @@
 	icon = 'icons/obj/artifacts/artifactsitem.dmi'
 	artifact = 1
 	associated_datum = /datum/artifact/wallwand
-	module_research_no_diminish = 1
 
 	afterattack(atom/target, mob/user , flag)
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
-		if (A.activated)
+		if (A.activated && target.loc != user)
 			user.lastattacked = src
 			var/turf/T = get_turf(target)
 			A.effect_click_tile(src,user,T)
@@ -18,6 +17,7 @@
 /datum/artifact/wallwand
 	associated_object = /obj/item/artifact/forcewall_wand
 	type_name = "Forcefield Wand"
+	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 350
 	validtypes = list("ancient","wizard","eldritch","precursor")
 	react_xray = list(10,60,92,11,"COMPLEX")
@@ -26,8 +26,6 @@
 	var/icon_state = "shieldsparkles"
 	var/sound/wand_sound = 'sound/effects/mag_forcewall.ogg'
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
-	module_research = list("energy" = 10, "weapons" = 3, "miniaturization" = 5, "engineering" = 3, "tools" = 3)
-	module_research_insight = 3
 
 	New()
 		..()
@@ -68,7 +66,7 @@
 		icon_state = wallsprite
 		source = S
 		if (duration > 0)
-			SPAWN_DBG(duration * 10)
+			SPAWN(duration * 10)
 				qdel(src)
 
 	Bumped(AM)

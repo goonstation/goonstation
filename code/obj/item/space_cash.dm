@@ -1,4 +1,3 @@
-
 /obj/item/spacecash
 	name = "1 credit"
 	real_name = "credit"
@@ -8,24 +7,21 @@
 	uses_multiple_icon_states = 1
 	opacity = 0
 	density = 0
-	anchored = 0.0
-	force = 1.0
-	throwforce = 1.0
+	anchored = 0
+	force = 1
+	throwforce = 1
 	throw_speed = 1
 	throw_range = 8
 	w_class = W_CLASS_TINY
 	burn_point = 400
 	burn_possible = 2
 	burn_output = 750
-	health = 10
 	amount = 1
 	max_stack = 1000000
 	stack_type = /obj/item/spacecash // so all cash types can stack iwth each other
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1
-	module_research = list("efficiency" = 1)
-	module_research_type = /obj/item/spacecash
 	inventory_counter_enabled = 1
 	var/default_min_amount = 0
 	var/default_max_amount = 0
@@ -44,18 +40,6 @@
 		var/default_amount = default_min_amount == default_max_amount ? default_min_amount : rand(default_min_amount, default_max_amount)
 		src.amount = max(amt,default_amount)
 		src.update_stack_appearance()
-
-	unpooled()
-		..()
-		var/default_amount = default_min_amount == default_max_amount ? default_min_amount : rand(default_min_amount, default_max_amount)
-		src.amount = max(1, default_amount) //take higher
-		src.update_stack_appearance()
-
-	pooled()
-		if (usr)
-			usr.u_equip(src) //wonder if that will work?
-		amount = 1
-		..()
 
 	update_stack_appearance()
 		src.UpdateName()
@@ -86,7 +70,7 @@
 	failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
 		boutput(user, "<span class='alert'>You need another stack!</span>")
 
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/spacecash) && src.amount < src.max_stack)
 			if (istype(I, /obj/item/spacecash/buttcoin))
 				boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
@@ -97,19 +81,27 @@
 		else
 			..(I, user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
 			var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
-			if (amt && src.loc == user && !user.equipped())
+			if (isnum_safe(amt) && src.loc == user && !user.equipped())
 				if (amt > src.amount || amt < 1)
 					boutput(user, "<span class='alert'>You wish!</span>")
 					return
 				change_stack_amount( 0 - amt )
-				var/obj/item/spacecash/young_money = unpool(/obj/item/spacecash)
+				var/obj/item/spacecash/young_money = new /obj/item/spacecash
 				young_money.setup(user.loc, amt)
-				young_money.attack_hand(user)
+				young_money.Attackhand(user)
 		else
 			..(user)
+
+	onMaterialChanged()
+		. = ..()
+		if(src.amount > 1)
+			src.visible_message("[src] melds together into a single credit. What?")
+			src.desc += " It looks all melted together or something."
+			src.change_stack_amount(-(src.amount-1))
+			update_stack_appearance()
 
 //	attack_self(mob/user as mob)
 //		user.visible_message("fart")
@@ -142,6 +134,10 @@
 	default_min_amount = 1000
 	default_max_amount = 1000
 
+/obj/item/spacecash/hundredthousand
+	default_min_amount = 100000
+	default_max_amount = 100000
+
 /obj/item/spacecash/million
 	default_min_amount = 1000000
 	default_max_amount = 1000000
@@ -173,19 +169,11 @@
 		..()
 		processing_items |= src
 
-	pooled()
-		processing_items -= src
-		..()
-
-	unpooled()
-		..()
-		processing_items |= src
-
 	update_stack_appearance()
 		return
 
 	UpdateName()
-		src.name = "[src.amount] [name_prefix(null, 1)][pick("bit","butt","cosby ","bart", "bat", "bet", "bot")]coin[s_es(src.amount)][name_suffix(null, 1)]"
+		src.name = "[src.amount] [name_prefix(null, 1)][pick("bit","butt","shitty-bill ","bart", "bat", "bet", "bot")]coin[s_es(src.amount)][name_suffix(null, 1)]"
 
 	process()
 		src.amount = rand(1, 1000) / rand(10, 1000)
@@ -197,10 +185,10 @@
 
 		src.UpdateName()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
 			var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
-			if (amt)
+			if (isnum_safe(amt))
 				if (amt > src.amount || amt < 1)
 					boutput(user, "<span class='alert'>You wish!</span>")
 					return
@@ -209,7 +197,7 @@
 		else
 			..()
 
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/spacecash) && src.amount < src.max_stack)
 			boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
 		else
@@ -232,19 +220,6 @@
 		item_state = "moneybag"
 		inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 
-	unpooled()
-		..()
-		amount = rand(1,10000)
-		name = "money bag"
-		desc = "Loadsamoney!"
-		icon = 'icons/obj/items/items.dmi'
-		icon_state = "moneybag"
-		item_state = "moneybag"
-		inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
-
-	pooled()
-		..()
-
 
 
 /obj/item/spacebux // Not space cash. Actual spacebux. Wow.
@@ -258,14 +233,13 @@
 
 	opacity = 0
 	density = 0
-	anchored = 0.0
-	force = 1.0
-	throwforce = 1.0
+	anchored = 0
+	force = 1
+	throwforce = 1
 	throw_speed = 1
 	throw_range = 8
 	w_class = W_CLASS_TINY
 	burn_possible = 0
-	health = 1000
 	amount = 1
 	max_stack = 1000000
 	stack_type = /obj/item/spacebux
@@ -289,19 +263,6 @@
 		tooltip_rebuild = 1
 		src.amount = amt
 		src.update_stack_appearance()
-
-	unpooled()
-		..()
-		src.amount = 0
-		src.spent = 0
-		src.update_stack_appearance()
-
-	pooled()
-		if (usr)
-			usr.u_equip(src) //wonder if that will work?
-		src.amount = 0
-		src.spent = 0
-		..()
 
 	update_stack_appearance()
 		src.UpdateName()
@@ -353,7 +314,7 @@
 	failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
 		boutput(user, "<span class='alert'>You need another stack!</span>")
 
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/spacebux) && src.spent == 0)
 			user.visible_message("<span class='notice'>[user] stacks some spacebux.</span>")
 			stack_item(I)
@@ -368,10 +329,10 @@
 				return 0
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
 			var/amt = round(input("How much spacebux do you want to split from the token?") as null|num)
-			if (amt && src.loc == user && !user.equipped())
+			if (isnum_safe(amt) && src.loc == user && !user.equipped())
 				if (amt > src.amount || amt < 1)
 					boutput(user, "<span class='alert'>You wish!</span>")
 					return
@@ -397,3 +358,15 @@
 	thousand
 		amount = 1000
 
+//not a good spot for this but idc
+/obj/item/stamped_bullion //*not* a material piece - therefore doesn't stack, needs to be refined, etc. etc. etc.
+	name = "stamped bullion"
+	desc = "Oh wow! This stuff's got to be worth a lot of money!"
+	icon = 'icons/obj/materials.dmi'
+	icon_state = "stamped_gold"
+	force = 4
+	throwforce = 6
+
+	New()
+		. = ..()
+		src.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)

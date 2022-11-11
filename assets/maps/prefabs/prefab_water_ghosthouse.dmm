@@ -1,211 +1,1763 @@
-"aa" = (/turf/variableTurf/clear,/area/space)
-"ab" = (/turf/unsimulated/wall/setpieces/leadwall/gray{icon_state = "leadwall_gray"; dir = 9},/area/prefab/ghost_house)
-"ac" = (/turf/unsimulated/wall/setpieces/leadwall/gray{icon_state = "leadwall_gray"; dir = 8},/area/prefab/ghost_house)
-"ad" = (/turf/unsimulated/wall/setpieces/leadwall/gray{icon_state = "leadwall_gray"; dir = 5},/area/prefab/ghost_house)
-"ae" = (/turf/unsimulated/wall/setpieces/leadwall/gray,/area/prefab/ghost_house)
-"af" = (/obj/decal/woodclutter,/turf/simulated/floor/grass,/area/prefab/ghost_house)
-"ag" = (/obj/decal/woodclutter,/obj/item/material_piece/organic/wood,/turf/simulated/floor/grass,/area/prefab/ghost_house)
-"ah" = (/turf/simulated/floor/grass,/area/prefab/ghost_house)
-"ai" = (/obj/decal/tile_edge/flowers,/turf/simulated/floor/grass,/area/prefab/ghost_house)
-"aj" = (/turf/simulated/floor/grey,/area/prefab/ghost_house)
-"ak" = (/obj/machinery/light/small/floor/warm/very,/turf/simulated/floor/grey,/area/prefab/ghost_house)
-"al" = (/obj/structure/woodwall,/turf/simulated/floor/grass,/area/prefab/ghost_house)
-"am" = (/obj/critter/spirit,/turf/simulated/floor/grass,/area/prefab/ghost_house)
-"an" = (/obj/decal/cleanable/cobweb{icon_state = "cobweb"; dir = 8},/turf/simulated/floor/grey,/area/prefab/ghost_house)
-"ao" = (/obj/decal/cleanable/cobweb{icon_state = "cobweb"},/turf/simulated/floor/grey,/area/prefab/ghost_house)
-"ap" = (/obj/decal/tile_edge/flowers,/obj/item/reagent_containers/food/snacks/plant/strawberry,/turf/simulated/floor/grass,/area/prefab/ghost_house)
-"aq" = (/obj/stool/bench/wooden,/turf/simulated/floor/grass,/area/prefab/ghost_house)
-"ar" = (/obj/critter/spider/spacerachnid,/turf/simulated/floor/grey,/area/prefab/ghost_house)
-"as" = (/obj/critter/spider/baby,/obj/decal/cleanable/cobweb2,/turf/simulated/floor/grass,/area/prefab/ghost_house)
-"at" = (/obj/decal/cleanable/cobweb,/turf/simulated/floor/grass,/area/prefab/ghost_house)
-"au" = (/obj/decal/cleanable/cobweb2,/turf/simulated/floor/grass,/area/prefab/ghost_house)
-"av" = (/obj/critter/spider/baby,/turf/simulated/floor/grass,/area/prefab/ghost_house)
-"aw" = (/obj/critter/spider/spacerachnid,/turf/simulated/floor/grass,/area/prefab/ghost_house)
-"ax" = (/obj/ladder{id = "spooky_house"},/turf/simulated/floor/grass,/area/prefab/ghost_house)
-"ay" = (/obj/item/furniture_parts/wood_chair,/turf/simulated/floor/grass,/area/prefab/ghost_house)
-"az" = (/obj/decal/cleanable/cobweb{dir = 1; icon_state = "cobweb"},/turf/simulated/floor/grass,/area/prefab/ghost_house)
-"aA" = (/obj/critter/spider/spacerachnid,/obj/decal/cleanable/cobweb{icon_state = "cobweb"; dir = 4},/turf/simulated/floor/grass,/area/prefab/ghost_house)
-"aB" = (/obj/item/furniture_parts/bench/wooden,/turf/simulated/floor/grass,/area/prefab/ghost_house)
-"aC" = (/obj/critter/spirit,/obj/item/furniture_parts/wood_chair,/turf/simulated/floor/grass,/area/prefab/ghost_house)
-"aD" = (/obj/structure/woodwall,/obj/structure/woodwall,/turf/simulated/floor/grass,/area/prefab/ghost_house)
-"aE" = (/obj/item/furniture_parts/table/wood,/turf/simulated/floor/grass,/area/prefab/ghost_house)
-"aF" = (/obj/decal/cleanable/cobweb,/obj/ladder{desc = "Is this supposed to be here?"; icon_state = "ladder_wall"; id = "spooky_house"; layer = 2.5; pixel_y = 32},/turf/simulated/floor/wood,/area/prefab/ghost_house)
-"aG" = (/turf/simulated/wall/void,/area/prefab/ghost_house)
-"aH" = (/turf/unsimulated/floor/void,/area/prefab/ghost_house)
-"aI" = (/obj/critter/ancient_thing,/turf/unsimulated/floor/void,/area/prefab/ghost_house)
-"aJ" = (/obj/decal/cleanable/cobweb{icon_state = "cobweb"},/turf/simulated/floor/grass,/area/prefab/ghost_house)
-"aK" = (/turf/simulated/floor/wood,/area/prefab/ghost_house)
-"aL" = (/obj/map/light/void,/obj/rack/precursor,/obj/item/clothing/head/void_crown,/turf/unsimulated/floor/void,/area/prefab/ghost_house)
-"aM" = (/obj/machinery/door/unpowered/wood/pyro{tag = "icon-wood1 (NORTH)"; icon_state = "wood1"; dir = 1},/turf/simulated/floor/grey,/area/prefab/ghost_house)
-"aN" = (/turf/unsimulated/wall/setpieces/leadwall/gray{icon_state = "leadwall_gray"; dir = 6},/area/prefab/ghost_house)
-"aO" = (/obj/table/wood/round/auto,/obj/item/paper/book/monster_manual,/obj/decal/cleanable/cobweb,/turf/simulated/floor/wood,/area/prefab/ghost_house)
-"aP" = (/obj/stool/chair/couch{icon_state = "chair_couch-brown"; dir = 8},/obj/machinery/light/incandescent/warm{icon_state = "tube1"; dir = 1},/turf/simulated/floor/wood,/area/prefab/ghost_house)
-"aQ" = (/obj/stool/chair/couch,/turf/simulated/floor/wood,/area/prefab/ghost_house)
-"aR" = (/obj/stool/chair/couch{icon_state = "chair_couch-brown"; dir = 4},/turf/simulated/floor/wood,/area/prefab/ghost_house)
-"aS" = (/obj/decal/cleanable/cobweb,/turf/simulated/floor/wood,/area/prefab/ghost_house)
-"aT" = (/obj/map/light/void,/turf/unsimulated/floor/void,/area/prefab/ghost_house)
-"aU" = (/obj/shrub{icon = 'icons/obj/stationobjs.dmi'; icon_state = "plant"; dir = 1},/turf/simulated/floor/wood,/area/prefab/ghost_house)
-"aV" = (/obj/critter/spirit,/turf/simulated/floor/carpet/red/standard/narrow/west,/area/prefab/ghost_house)
-"aW" = (/turf/simulated/floor/carpet/red/standard/narrow/eastwest,/area/prefab/ghost_house)
-"aX" = (/turf/simulated/floor/carpet/red/standard/narrow/east,/area/prefab/ghost_house)
-"aY" = (/obj/critter/spider/baby,/turf/simulated/floor/wood,/area/prefab/ghost_house)
-"aZ" = (/obj/critter/ancient_repairbot/security,/turf/unsimulated/floor/void,/area/prefab/ghost_house)
-"ba" = (/obj/table/wood/round/auto,/obj/item/paper/book/critter_compendium,/obj/decal/cleanable/cobweb{icon_state = "cobweb"},/turf/simulated/floor/wood,/area/prefab/ghost_house)
-"bb" = (/obj/stool/chair/comfy{icon_state = "chair_comfy"; dir = 4},/turf/simulated/floor/wood,/area/prefab/ghost_house)
-"bc" = (/obj/table/wood/round/auto,/obj/item/game_kit,/turf/simulated/floor/wood,/area/prefab/ghost_house)
-"bd" = (/obj/stool/chair/comfy{icon_state = "chair_comfy"; dir = 8},/turf/simulated/floor/wood,/area/prefab/ghost_house)
-"be" = (/turf/unsimulated/wall/setpieces/leadwall/gray{icon_state = "leadwall_gray"; dir = 4},/area/prefab/ghost_house)
-"bf" = (/obj/machinery/door/unpowered/wood/pyro{tag = "icon-wood1 (NORTH)"; icon_state = "wood1"; dir = 1},/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"bg" = (/turf/unsimulated/wall/setpieces/leadwall/gray{icon_state = "leadwall_gray"; dir = 10},/area/prefab/ghost_house)
-"bh" = (/obj/critter/aberration,/turf/unsimulated/floor/void,/area/prefab/ghost_house)
-"bi" = (/obj/map/light/void,/turf/simulated/floor/wood,/area/prefab/ghost_house)
-"bj" = (/turf/unsimulated/wall/setpieces/leadwindow/gray,/area/prefab/ghost_house)
-"bk" = (/obj/decal/cleanable/cobweb,/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"bl" = (/obj/table/wood/round/auto,/obj/candle_light,/obj/item/reagent_containers/food/snacks/cookie/spooky,/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"bm" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/breadloaf/spooky,/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"bn" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/breadloaf/brain,/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"bo" = (/obj/table/wood/round/auto,/obj/item/storage/box/cutlery,/obj/machinery/light/incandescent/warm/very,/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"bp" = (/obj/decal/cleanable/cobweb2,/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"bq" = (/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"br" = (/turf/simulated/floor/carpet/red/standard/narrow/north,/area/prefab/ghost_house)
-"bs" = (/obj/machinery/light/incandescent/warm,/turf/simulated/floor/wood,/area/prefab/ghost_house)
-"bt" = (/obj/decal/cleanable/cobweb{icon_state = "cobweb"; dir = 8},/turf/unsimulated/floor/void,/area/prefab/ghost_house)
-"bu" = (/obj/machinery/light/incandescent/warm/very,/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"bv" = (/obj/table/wood/round/auto,/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"bw" = (/obj/table/wood/round/auto,/turf/simulated/floor/carpet/red/standard/narrow/northsouth,/area/prefab/ghost_house)
-"bx" = (/obj/extremely_spooky_ghost,/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"by" = (/obj/table/wood/round/auto,/obj/item/decoration/flower_vase,/turf/simulated/floor/carpet/red/standard/narrow/northsouth,/area/prefab/ghost_house)
-"bz" = (/obj/bedsheetbin,/obj/decal/cleanable/cobweb,/turf/simulated/floor/carpet/purple/fancy,/area/prefab/ghost_house)
-"bA" = (/turf/simulated/floor/carpet/purple/fancy,/area/prefab/ghost_house)
-"bB" = (/obj/storage/closet/dresser,/obj/item/clothing/under/color/purple,/obj/item/clothing/under/suit/purple,/obj/item/clothing/head/that/purple,/obj/item/clothing/glasses/thermal/orange,/turf/simulated/floor/carpet/purple/fancy,/area/prefab/ghost_house)
-"bC" = (/obj/storage/closet/dresser,/obj/item/clothing/under/gimmick/wedding_dress,/obj/item/clothing/under/misc/dress,/obj/item/clothing/glasses/regular/ecto,/obj/item/clothing/gloves/ring/gold,/obj/item/clothing/head/veil,/obj/item/clothing/shoes/heels,/turf/simulated/floor/carpet/purple/fancy,/area/prefab/ghost_house)
-"bD" = (/obj/machinery/light/incandescent/warm/very,/turf/simulated/floor/carpet/purple/fancy,/area/prefab/ghost_house)
-"bE" = (/obj/critter/spirit,/turf/simulated/floor/carpet/purple/fancy,/area/prefab/ghost_house)
-"bF" = (/obj/storage/crate/biohazard,/obj/item/staff/crystal,/obj/item/staff,/obj/item/spacecash/thousand,/obj/item/spacecash/thousand,/obj/item/spacecash/thousand,/obj/item/wizard_crystal/sapphire,/obj/item/chem_grenade/cryo,/turf/simulated/floor/carpet/purple/fancy,/area/prefab/ghost_house)
-"bG" = (/turf/simulated/floor/carpet/blue/standard/edge/nw,/area/prefab/ghost_house)
-"bH" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/pickle,/obj/item/reagent_containers/food/drinks/skull_chalice,/turf/simulated/floor/carpet/blue/standard/edge/north,/area/prefab/ghost_house)
-"bI" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/breadslice/pumpkin,/turf/simulated/floor/carpet/blue/standard/edge/north,/area/prefab/ghost_house)
-"bJ" = (/obj/stool/chair/wooden{icon_state = "chair_wooden"; dir = 8},/obj/decal/cleanable/vomit,/turf/simulated/floor/carpet/blue/standard/edge/ne,/area/prefab/ghost_house)
-"bK" = (/obj/decal/cleanable/cobweb{icon_state = "cobweb"; dir = 8},/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"bL" = (/turf/simulated/floor/carpet/red/standard/narrow/northsouth,/area/prefab/ghost_house)
-"bM" = (/obj/machinery/light/incandescent/warm{icon_state = "tube1"; dir = 4},/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"bN" = (/obj/item/ghostboard,/turf/simulated/floor/carpet/purple/standard/edge,/area/prefab/ghost_house)
-"bO" = (/turf/simulated/floor/carpet/purple/standard/innercorner/sw,/area/prefab/ghost_house)
-"bP" = (/obj/item/reagent_containers/food/snacks/ectoplasm,/turf/simulated/floor/carpet/purple/fancy,/area/prefab/ghost_house)
-"bQ" = (/obj/table/wood/round/auto,/obj/machinery/recharger,/turf/simulated/floor/carpet/purple/fancy,/area/prefab/ghost_house)
-"bR" = (/obj/decal/cleanable/cobweb{icon_state = "cobweb"},/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"bS" = (/obj/stool/chair/wooden{icon_state = "chair_wooden"; dir = 4},/turf/simulated/floor/carpet/blue/standard/edge/west,/area/prefab/ghost_house)
-"bT" = (/obj/table/wood/round/auto,/obj/candle_light_2spoopy,/turf/simulated/floor/carpet/blue/standard,/area/prefab/ghost_house)
-"bU" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/soup/superchili,/obj/item/kitchen/utensil/spoon,/turf/simulated/floor/carpet/blue/standard,/area/prefab/ghost_house)
-"bV" = (/obj/machinery/light/incandescent/warm{icon_state = "tube1"; dir = 8},/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"bW" = (/obj/decal/cleanable/cobweb{icon_state = "cobweb"; dir = 4},/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"bX" = (/turf/simulated/floor/carpet/purple/standard/edge/west,/area/prefab/ghost_house)
-"bY" = (/obj/stool/bed{pixel_y = 11},/obj/stool/bed,/obj/item/clothing/suit/bedsheet/royal{pixel_y = 11},/obj/item/clothing/suit/bedsheet/royal,/obj/critter/aberration,/turf/simulated/floor/carpet/purple/fancy,/area/prefab/ghost_house)
-"bZ" = (/obj/machinery/light/incandescent/warm{icon_state = "tube1"; dir = 1},/turf/simulated/floor/carpet/purple/fancy,/area/prefab/ghost_house)
-"ca" = (/turf/simulated/floor/carpet/blue/standard/edge/west,/area/prefab/ghost_house)
-"cb" = (/turf/simulated/floor/carpet/blue/standard,/area/prefab/ghost_house)
-"cc" = (/turf/simulated/floor/carpet/blue/standard/edge/east,/area/prefab/ghost_house)
-"cd" = (/obj/table/wood/round/auto,/obj/item/decoration/ashtray,/obj/item/cigbutt,/obj/item/cigbutt,/turf/simulated/floor/carpet/red/standard/narrow/northsouth,/area/prefab/ghost_house)
-"ce" = (/obj/stool/bed{pixel_y = 11},/obj/stool/bed,/obj/item/clothing/suit/bedsheet/royal{pixel_y = 11},/obj/item/clothing/suit/bedsheet/royal,/obj/decal/skeleton/decomposed_corpse,/turf/simulated/floor/carpet/purple/fancy,/area/prefab/ghost_house)
-"cf" = (/obj/item/reagent_containers/food/drinks/bottle/wine,/turf/simulated/floor/carpet/blue/standard,/area/prefab/ghost_house)
-"cg" = (/obj/machinery/door/unpowered/wood/pyro{dir = 4},/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"ch" = (/obj/machinery/door/unpowered/wood/pyro{icon_state = "wood1"; dir = 8},/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"ci" = (/obj/decal/skeleton/decomposed_corpse,/obj/item/gun/energy/ghost,/turf/simulated/floor/carpet/purple/fancy,/area/prefab/ghost_house)
-"cj" = (/obj/table/wood/round/auto,/obj/machinery/light/lamp,/obj/decal/cleanable/cobweb{dir = 1; icon_state = "cobweb"},/turf/simulated/floor/carpet/purple/fancy,/area/prefab/ghost_house)
-"ck" = (/obj/decal/cleanable/vomit,/turf/simulated/floor/carpet/blue/standard/edge/west,/area/prefab/ghost_house)
-"cl" = (/obj/item/reagent_containers/food/drinks/rum_spaced,/turf/simulated/floor/carpet/blue/standard/edge/west,/area/prefab/ghost_house)
-"cm" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/ectoplasm,/turf/simulated/floor/carpet/blue/standard,/area/prefab/ghost_house)
-"cn" = (/turf/simulated/floor/carpet/red/standard/narrow/south,/area/prefab/ghost_house)
-"co" = (/obj/item/clothing/head/plunger,/obj/decal/cleanable/dirt,/obj/decal/cleanable/cobweb,/turf/simulated/floor/grime,/area/prefab/ghost_house)
-"cp" = (/obj/item/storage/toilet,/turf/simulated/floor/grime,/area/prefab/ghost_house)
-"cq" = (/obj/machinery/light/incandescent/warm{icon_state = "tube1"; dir = 8},/turf/simulated/floor/carpet/purple/standard/edge,/area/prefab/ghost_house)
-"cr" = (/obj/submachine/chef_sink/chem_sink{layer = 3; pixel_y = 8},/turf/simulated/floor/neutral/corner,/area/prefab/ghost_house)
-"cs" = (/obj/table/auto,/obj/item/medical/ointment,/obj/item/medical/ointment,/obj/decal/cleanable/dirt,/turf/simulated/floor/neutral/corner{icon_state = "neutralcorner"; dir = 8},/area/prefab/ghost_house)
-"ct" = (/obj/stool/chair/wooden{icon_state = "chair_wooden"; dir = 8},/obj/machinery/light/incandescent/warm{icon_state = "tube1"; dir = 4},/turf/simulated/floor/carpet/blue/standard/edge/east,/area/prefab/ghost_house)
-"cu" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/mashedbrains,/obj/item/kitchen/utensil/fork,/turf/simulated/floor/carpet/blue/standard,/area/prefab/ghost_house)
-"cv" = (/obj/stool/chair/wooden{icon_state = "chair_wooden"; dir = 8},/turf/simulated/floor/carpet/blue/standard/edge/east,/area/prefab/ghost_house)
-"cw" = (/obj/item/reagent_containers/glass/bottle/bubblebath,/obj/decal/cleanable/dirt,/turf/simulated/floor/grime,/area/prefab/ghost_house)
-"cx" = (/turf/simulated/floor/grime,/area/prefab/ghost_house)
-"cy" = (/turf/simulated/floor/neutral/corner,/area/prefab/ghost_house)
-"cz" = (/turf/simulated/floor/neutral,/area/prefab/ghost_house)
-"cA" = (/obj/table/auto,/obj/item/pen/crayon/lipstick,/obj/decal/cleanable/dirt,/turf/simulated/floor/neutral/side{dir = 8},/area/prefab/ghost_house)
-"cB" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/moon_pie/spooky,/turf/simulated/floor/carpet/blue/standard,/area/prefab/ghost_house)
-"cC" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/snacks/sandwich/spooky_cheese,/turf/simulated/floor/carpet/blue/standard,/area/prefab/ghost_house)
-"cD" = (/obj/decal/cleanable/cobweb,/obj/machinery/light/incandescent/warm{icon_state = "tube1"; dir = 8},/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"cE" = (/obj/storage/closet/dresser,/obj/item/clothing/suit/scarf,/obj/item/clothing/suit/suspenders,/obj/item/clothing/suit/sweater/red,/obj/item/clothing/suit/wizrobe/red,/obj/item/clothing/under/color/darkred,/obj/decal/cleanable/cobweb,/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"cF" = (/obj/storage/closet/dresser,/obj/item/clothing/suit/wintercoat/command,/obj/item/clothing/under/gimmick/butler,/obj/item/clothing/under/rank/bartender/tuxedo,/obj/item/clothing/head/beret/random_color,/obj/item/clothing/head/that,/obj/item/clothing/under/gimmick/dawson,/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"cG" = (/obj/table/auto,/obj/item/clothing/head/powdered_wig,/turf/simulated/floor/grime,/area/prefab/ghost_house)
-"cH" = (/obj/machinery/bathtub{anchored = 1; dir = 4},/turf/simulated/floor/neutral/corner,/area/prefab/ghost_house)
-"cI" = (/turf/simulated/floor/neutral/side{dir = 1},/area/prefab/ghost_house)
-"cJ" = (/obj/table/auto,/obj/decal/cleanable/dirt,/obj/random_item_spawner/hat,/obj/decal/cleanable/cobweb{dir = 1; icon_state = "cobweb"},/turf/simulated/floor/neutral/corner{icon_state = "neutralcorner"; dir = 1},/area/prefab/ghost_house)
-"cK" = (/turf/variableTurf/clear,/area/noGenerate)
-"cL" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/drinks/skull_chalice,/turf/simulated/floor/carpet/blue/standard,/area/prefab/ghost_house)
-"cM" = (/obj/decal/cleanable/vomit,/obj/item/reagent_containers/food/drinks/rum_spaced,/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"cN" = (/turf/simulated/floor/carpet/red/fancy/edge/nw,/area/prefab/ghost_house)
-"cO" = (/turf/simulated/floor/carpet/red/fancy/edge/north,/area/prefab/ghost_house)
-"cP" = (/turf/simulated/floor/carpet/red/fancy/edge/ne,/area/prefab/ghost_house)
-"cQ" = (/obj/machinery/light/incandescent/warm/very,/turf/simulated/floor/carpet/blue/standard/edge/sw,/area/prefab/ghost_house)
-"cR" = (/turf/simulated/floor/carpet/blue/standard/edge,/area/prefab/ghost_house)
-"cS" = (/turf/simulated/floor/carpet/blue/standard/edge/se,/area/prefab/ghost_house)
-"cT" = (/turf/simulated/floor/stairs/wood/wide,/area/prefab/ghost_house)
-"cU" = (/turf/simulated/floor/stairs/wood{icon_state = "wood_stairs"; dir = 6},/area/prefab/ghost_house)
-"cV" = (/turf/simulated/floor/stairs/wood/wide{icon_state = "wood_stairs2"; dir = 6},/area/prefab/ghost_house)
-"cW" = (/obj/table/wood/round/auto,/obj/item/cigpacket/propuffs,/obj/item/matchbook,/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"cX" = (/obj/table/wood/round/auto,/obj/item/cigpacket/menthol,/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"cY" = (/obj/decal/cleanable/dirt,/obj/machinery/light/incandescent/warm{icon_state = "tube1"; dir = 1},/turf/simulated/floor/grime,/area/prefab/ghost_house)
-"cZ" = (/obj/decal/cleanable/cobweb{icon_state = "cobweb"},/obj/machinery/light/incandescent/warm{icon_state = "tube1"; dir = 8},/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"da" = (/obj/item/instrument/large/piano/grand,/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"db" = (/obj/stool/bench/wooden/auto,/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"dc" = (/obj/machinery/door/unpowered/wood/pyro{dir = 4},/turf/simulated/floor/carpet/red/standard/edge/west,/area/prefab/ghost_house)
-"dd" = (/turf/simulated/floor/carpet/red/fancy,/area/prefab/ghost_house)
-"de" = (/obj/machinery/door/unpowered/wood/pyro{icon_state = "wood1"; dir = 8},/turf/simulated/floor/carpet/red/standard/edge/east,/area/prefab/ghost_house)
-"df" = (/obj/rack,/obj/item/clothing/shoes/dress_shoes,/obj/item/clothing/shoes/dress_shoes,/obj/machinery/light/incandescent/warm/very,/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"dg" = (/obj/rack,/obj/item/clothing/shoes/chef,/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"dh" = (/turf/simulated/floor/carpet/red/fancy/edge/west,/area/prefab/ghost_house)
-"di" = (/turf/simulated/floor/carpet/red/decal/innercross,/area/prefab/ghost_house)
-"dj" = (/turf/simulated/floor/carpet/red/fancy/edge/east,/area/prefab/ghost_house)
-"dk" = (/obj/machinery/light/incandescent/warm/very,/turf/simulated/floor/carpet/red/fancy,/area/prefab/ghost_house)
-"dl" = (/turf/simulated/floor/carpet/red/fancy/edge/sw,/area/prefab/ghost_house)
-"dm" = (/turf/simulated/floor/carpet/red/fancy/edge/south,/area/prefab/ghost_house)
-"dn" = (/turf/simulated/floor/carpet/red/fancy/edge/se,/area/prefab/ghost_house)
-"do" = (/turf/unsimulated/wall/setpieces/leadwindow/gray{icon_state = "leadwindow_gray_1"; dir = 4},/area/prefab/ghost_house)
-"dp" = (/obj/item/reagent_containers/food/drinks/drinkingglass/wine,/obj/machinery/light/incandescent/warm{icon_state = "tube1"; dir = 4},/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"dq" = (/obj/table/wood/round/auto,/obj/machinery/light/incandescent/warm{icon_state = "tube1"; dir = 1},/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"dr" = (/obj/machinery/light/incandescent/warm{icon_state = "tube1"; dir = 4},/turf/simulated/floor/stairs/wood/wide{icon_state = "wood_stairs2"; dir = 6},/area/prefab/ghost_house)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/variableTurf/clear,
+/area/space)
+"ab" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 9;
+	icon_state = "leadwall_gray"
+	},
+/area/prefab/ghost_house)
+"ac" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 8;
+	icon_state = "leadwall_gray"
+	},
+/area/prefab/ghost_house)
+"ad" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 5;
+	icon_state = "leadwall_gray"
+	},
+/area/prefab/ghost_house)
+"ae" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray,
+/area/prefab/ghost_house)
+"af" = (
+/obj/decal/woodclutter,
+/turf/simulated/floor/grass,
+/area/prefab/ghost_house)
+"ag" = (
+/obj/decal/woodclutter,
+/obj/item/material_piece/organic/wood,
+/turf/simulated/floor/grass,
+/area/prefab/ghost_house)
+"ah" = (
+/turf/simulated/floor/grass,
+/area/prefab/ghost_house)
+"ai" = (
+/obj/decal/tile_edge/flowers,
+/turf/simulated/floor/grass,
+/area/prefab/ghost_house)
+"aj" = (
+/turf/simulated/floor/grey,
+/area/prefab/ghost_house)
+"ak" = (
+/obj/machinery/light/small/floor/warm/very,
+/turf/simulated/floor/grey,
+/area/prefab/ghost_house)
+"al" = (
+/obj/structure/woodwall,
+/turf/simulated/floor/grass,
+/area/prefab/ghost_house)
+"am" = (
+/obj/critter/spirit,
+/turf/simulated/floor/grass,
+/area/prefab/ghost_house)
+"an" = (
+/obj/decal/cleanable/cobweb{
+	dir = 8;
+	icon_state = "cobweb"
+	},
+/turf/simulated/floor/grey,
+/area/prefab/ghost_house)
+"ao" = (
+/obj/decal/cleanable/cobweb{
+	icon_state = "cobweb"
+	},
+/turf/simulated/floor/grey,
+/area/prefab/ghost_house)
+"ap" = (
+/obj/decal/tile_edge/flowers,
+/obj/item/reagent_containers/food/snacks/plant/strawberry,
+/turf/simulated/floor/grass,
+/area/prefab/ghost_house)
+"aq" = (
+/obj/stool/bench/wooden,
+/turf/simulated/floor/grass,
+/area/prefab/ghost_house)
+"ar" = (
+/mob/living/critter/spider/spacerachnid,
+/turf/simulated/floor/grey,
+/area/prefab/ghost_house)
+"as" = (
+/mob/living/critter/spider/baby,
+/obj/decal/cleanable/cobweb2,
+/turf/simulated/floor/grass,
+/area/prefab/ghost_house)
+"at" = (
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/grass,
+/area/prefab/ghost_house)
+"au" = (
+/obj/decal/cleanable/cobweb2,
+/turf/simulated/floor/grass,
+/area/prefab/ghost_house)
+"av" = (
+/mob/living/critter/spider/baby,
+/turf/simulated/floor/grass,
+/area/prefab/ghost_house)
+"aw" = (
+/mob/living/critter/spider/spacerachnid,
+/turf/simulated/floor/grass,
+/area/prefab/ghost_house)
+"ax" = (
+/obj/ladder{
+	id = "spooky_house"
+	},
+/turf/simulated/floor/grass,
+/area/prefab/ghost_house)
+"ay" = (
+/obj/item/furniture_parts/wood_chair,
+/turf/simulated/floor/grass,
+/area/prefab/ghost_house)
+"az" = (
+/obj/decal/cleanable/cobweb{
+	dir = 1;
+	icon_state = "cobweb"
+	},
+/turf/simulated/floor/grass,
+/area/prefab/ghost_house)
+"aA" = (
+/mob/living/critter/spider/spacerachnid,
+/obj/decal/cleanable/cobweb{
+	dir = 4;
+	icon_state = "cobweb"
+	},
+/turf/simulated/floor/grass,
+/area/prefab/ghost_house)
+"aB" = (
+/obj/item/furniture_parts/bench/wooden,
+/turf/simulated/floor/grass,
+/area/prefab/ghost_house)
+"aC" = (
+/obj/critter/spirit,
+/obj/item/furniture_parts/wood_chair,
+/turf/simulated/floor/grass,
+/area/prefab/ghost_house)
+"aD" = (
+/obj/structure/woodwall,
+/obj/structure/woodwall,
+/turf/simulated/floor/grass,
+/area/prefab/ghost_house)
+"aE" = (
+/obj/item/furniture_parts/table/wood,
+/turf/simulated/floor/grass,
+/area/prefab/ghost_house)
+"aF" = (
+/obj/decal/cleanable/cobweb,
+/obj/ladder{
+	desc = "Is this supposed to be here?";
+	icon_state = "ladder_wall";
+	id = "spooky_house";
+	layer = 2.5;
+	pixel_y = 32
+	},
+/turf/simulated/floor/wood,
+/area/prefab/ghost_house)
+"aG" = (
+/turf/simulated/wall/void,
+/area/prefab/ghost_house)
+"aH" = (
+/turf/unsimulated/floor/void,
+/area/prefab/ghost_house)
+"aI" = (
+/obj/critter/ancient_thing,
+/turf/unsimulated/floor/void,
+/area/prefab/ghost_house)
+"aJ" = (
+/obj/decal/cleanable/cobweb{
+	icon_state = "cobweb"
+	},
+/turf/simulated/floor/grass,
+/area/prefab/ghost_house)
+"aK" = (
+/turf/simulated/floor/wood,
+/area/prefab/ghost_house)
+"aL" = (
+/obj/map/light/void,
+/obj/rack/precursor,
+/obj/item/clothing/head/void_crown,
+/turf/unsimulated/floor/void,
+/area/prefab/ghost_house)
+"aM" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 1;
+	icon_state = "wood1";
+	tag = "icon-wood1 (NORTH)"
+	},
+/turf/simulated/floor/grey,
+/area/prefab/ghost_house)
+"aN" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 6;
+	icon_state = "leadwall_gray"
+	},
+/area/prefab/ghost_house)
+"aO" = (
+/obj/table/wood/round/auto,
+/obj/item/paper/book/from_file/monster_manual,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/wood,
+/area/prefab/ghost_house)
+"aP" = (
+/obj/stool/chair/couch{
+	dir = 8;
+	icon_state = "chair_couch-brown"
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 1;
+	icon_state = "tube1"
+	},
+/turf/simulated/floor/wood,
+/area/prefab/ghost_house)
+"aQ" = (
+/obj/stool/chair/couch,
+/turf/simulated/floor/wood,
+/area/prefab/ghost_house)
+"aR" = (
+/obj/stool/chair/couch{
+	dir = 4;
+	icon_state = "chair_couch-brown"
+	},
+/turf/simulated/floor/wood,
+/area/prefab/ghost_house)
+"aS" = (
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/wood,
+/area/prefab/ghost_house)
+"aT" = (
+/obj/map/light/void,
+/turf/unsimulated/floor/void,
+/area/prefab/ghost_house)
+"aU" = (
+/obj/shrub{
+	dir = 1;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
+/turf/simulated/floor/wood,
+/area/prefab/ghost_house)
+"aV" = (
+/obj/critter/spirit,
+/turf/simulated/floor/carpet/red/standard/narrow/west,
+/area/prefab/ghost_house)
+"aW" = (
+/turf/simulated/floor/carpet/red/standard/narrow/eastwest,
+/area/prefab/ghost_house)
+"aX" = (
+/turf/simulated/floor/carpet/red/standard/narrow/east,
+/area/prefab/ghost_house)
+"aY" = (
+/mob/living/critter/spider/baby,
+/turf/simulated/floor/wood,
+/area/prefab/ghost_house)
+"aZ" = (
+/obj/critter/ancient_repairbot/security,
+/turf/unsimulated/floor/void,
+/area/prefab/ghost_house)
+"ba" = (
+/obj/table/wood/round/auto,
+/obj/item/paper/book/from_file/critter_compendium,
+/obj/decal/cleanable/cobweb{
+	icon_state = "cobweb"
+	},
+/turf/simulated/floor/wood,
+/area/prefab/ghost_house)
+"bb" = (
+/obj/stool/chair/comfy{
+	dir = 4;
+	icon_state = "chair_comfy"
+	},
+/turf/simulated/floor/wood,
+/area/prefab/ghost_house)
+"bc" = (
+/obj/table/wood/round/auto,
+/obj/item/game_kit,
+/turf/simulated/floor/wood,
+/area/prefab/ghost_house)
+"bd" = (
+/obj/stool/chair/comfy{
+	dir = 8;
+	icon_state = "chair_comfy"
+	},
+/turf/simulated/floor/wood,
+/area/prefab/ghost_house)
+"be" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 4;
+	icon_state = "leadwall_gray"
+	},
+/area/prefab/ghost_house)
+"bf" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 1;
+	icon_state = "wood1";
+	tag = "icon-wood1 (NORTH)"
+	},
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"bg" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 10;
+	icon_state = "leadwall_gray"
+	},
+/area/prefab/ghost_house)
+"bh" = (
+/obj/critter/aberration,
+/turf/unsimulated/floor/void,
+/area/prefab/ghost_house)
+"bi" = (
+/obj/map/light/void,
+/turf/simulated/floor/wood,
+/area/prefab/ghost_house)
+"bj" = (
+/turf/unsimulated/wall/setpieces/leadwindow/gray,
+/area/prefab/ghost_house)
+"bk" = (
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"bl" = (
+/obj/table/wood/round/auto,
+/obj/candle_light,
+/obj/item/reagent_containers/food/snacks/cookie/spooky,
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"bm" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/snacks/breadloaf/spooky,
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"bn" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/snacks/breadloaf/brain,
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"bo" = (
+/obj/table/wood/round/auto,
+/obj/item/storage/box/cutlery,
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"bp" = (
+/obj/decal/cleanable/cobweb2,
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"bq" = (
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"br" = (
+/turf/simulated/floor/carpet/red/standard/narrow/north,
+/area/prefab/ghost_house)
+"bs" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/wood,
+/area/prefab/ghost_house)
+"bt" = (
+/obj/decal/cleanable/cobweb{
+	dir = 8;
+	icon_state = "cobweb"
+	},
+/turf/unsimulated/floor/void,
+/area/prefab/ghost_house)
+"bu" = (
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"bv" = (
+/obj/table/wood/round/auto,
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"bw" = (
+/obj/table/wood/round/auto,
+/turf/simulated/floor/carpet/red/standard/narrow/northsouth,
+/area/prefab/ghost_house)
+"bx" = (
+/obj/extremely_spooky_ghost,
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"by" = (
+/obj/table/wood/round/auto,
+/obj/item/decoration/flower_vase,
+/turf/simulated/floor/carpet/red/standard/narrow/northsouth,
+/area/prefab/ghost_house)
+"bz" = (
+/obj/bedsheetbin,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab/ghost_house)
+"bA" = (
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab/ghost_house)
+"bB" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/color/purple,
+/obj/item/clothing/under/suit/purple,
+/obj/item/clothing/head/that/purple,
+/obj/item/clothing/glasses/thermal/orange,
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab/ghost_house)
+"bC" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/gimmick/wedding_dress,
+/obj/item/clothing/under/misc/dress,
+/obj/item/clothing/glasses/regular/ecto,
+/obj/item/clothing/gloves/ring/gold,
+/obj/item/clothing/head/veil,
+/obj/item/clothing/shoes/heels,
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab/ghost_house)
+"bD" = (
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab/ghost_house)
+"bE" = (
+/obj/critter/spirit,
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab/ghost_house)
+"bF" = (
+/obj/storage/crate/biohazard,
+/obj/item/staff/crystal,
+/obj/item/staff,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/wizard_crystal/sapphire,
+/obj/item/chem_grenade/cryo,
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab/ghost_house)
+"bG" = (
+/turf/simulated/floor/carpet/blue/standard/edge/nw,
+/area/prefab/ghost_house)
+"bH" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/snacks/pickle,
+/obj/item/reagent_containers/food/drinks/skull_chalice,
+/turf/simulated/floor/carpet/blue/standard/edge/north,
+/area/prefab/ghost_house)
+"bI" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/snacks/breadslice/pumpkin,
+/turf/simulated/floor/carpet/blue/standard/edge/north,
+/area/prefab/ghost_house)
+"bJ" = (
+/obj/stool/chair/wooden{
+	dir = 8;
+	icon_state = "chair_wooden"
+	},
+/obj/decal/cleanable/vomit,
+/turf/simulated/floor/carpet/blue/standard/edge/ne,
+/area/prefab/ghost_house)
+"bK" = (
+/obj/decal/cleanable/cobweb{
+	dir = 8;
+	icon_state = "cobweb"
+	},
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"bL" = (
+/turf/simulated/floor/carpet/red/standard/narrow/northsouth,
+/area/prefab/ghost_house)
+"bM" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"bN" = (
+/obj/item/ghostboard,
+/turf/simulated/floor/carpet/purple/standard/edge,
+/area/prefab/ghost_house)
+"bO" = (
+/turf/simulated/floor/carpet/purple/standard/innercorner/sw,
+/area/prefab/ghost_house)
+"bP" = (
+/obj/item/reagent_containers/food/snacks/ectoplasm,
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab/ghost_house)
+"bQ" = (
+/obj/table/wood/round/auto,
+/obj/machinery/recharger,
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab/ghost_house)
+"bR" = (
+/obj/decal/cleanable/cobweb{
+	icon_state = "cobweb"
+	},
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"bS" = (
+/obj/stool/chair/wooden{
+	dir = 4;
+	icon_state = "chair_wooden"
+	},
+/turf/simulated/floor/carpet/blue/standard/edge/west,
+/area/prefab/ghost_house)
+"bT" = (
+/obj/table/wood/round/auto,
+/obj/candle_light_2spoopy,
+/turf/simulated/floor/carpet/blue/standard,
+/area/prefab/ghost_house)
+"bU" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/snacks/soup/superchili,
+/obj/item/kitchen/utensil/spoon,
+/turf/simulated/floor/carpet/blue/standard,
+/area/prefab/ghost_house)
+"bV" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 8;
+	icon_state = "tube1"
+	},
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"bW" = (
+/obj/decal/cleanable/cobweb{
+	dir = 4;
+	icon_state = "cobweb"
+	},
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"bX" = (
+/turf/simulated/floor/carpet/purple/standard/edge/west,
+/area/prefab/ghost_house)
+"bY" = (
+/obj/stool/bed{
+	pixel_y = 11
+	},
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/royal{
+	pixel_y = 11
+	},
+/obj/item/clothing/suit/bedsheet/royal,
+/obj/critter/aberration,
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab/ghost_house)
+"bZ" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 1;
+	icon_state = "tube1"
+	},
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab/ghost_house)
+"ca" = (
+/turf/simulated/floor/carpet/blue/standard/edge/west,
+/area/prefab/ghost_house)
+"cb" = (
+/turf/simulated/floor/carpet/blue/standard,
+/area/prefab/ghost_house)
+"cc" = (
+/turf/simulated/floor/carpet/blue/standard/edge/east,
+/area/prefab/ghost_house)
+"cd" = (
+/obj/table/wood/round/auto,
+/obj/item/decoration/ashtray,
+/obj/item/cigbutt,
+/obj/item/cigbutt,
+/turf/simulated/floor/carpet/red/standard/narrow/northsouth,
+/area/prefab/ghost_house)
+"ce" = (
+/obj/stool/bed{
+	pixel_y = 11
+	},
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/royal{
+	pixel_y = 11
+	},
+/obj/item/clothing/suit/bedsheet/royal,
+/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab/ghost_house)
+"cf" = (
+/obj/item/reagent_containers/food/drinks/bottle/wine,
+/turf/simulated/floor/carpet/blue/standard,
+/area/prefab/ghost_house)
+"cg" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 4
+	},
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"ch" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8;
+	icon_state = "wood1"
+	},
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"ci" = (
+/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/item/gun/energy/ghost,
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab/ghost_house)
+"cj" = (
+/obj/table/wood/round/auto,
+/obj/machinery/light/lamp/black,
+/obj/decal/cleanable/cobweb{
+	dir = 1;
+	icon_state = "cobweb"
+	},
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab/ghost_house)
+"ck" = (
+/obj/decal/cleanable/vomit,
+/turf/simulated/floor/carpet/blue/standard/edge/west,
+/area/prefab/ghost_house)
+"cl" = (
+/obj/item/reagent_containers/food/drinks/rum_spaced,
+/turf/simulated/floor/carpet/blue/standard/edge/west,
+/area/prefab/ghost_house)
+"cm" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/snacks/ectoplasm,
+/turf/simulated/floor/carpet/blue/standard,
+/area/prefab/ghost_house)
+"cn" = (
+/turf/simulated/floor/carpet/red/standard/narrow/south,
+/area/prefab/ghost_house)
+"co" = (
+/obj/item/clothing/head/plunger,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/grime,
+/area/prefab/ghost_house)
+"cp" = (
+/obj/item/storage/toilet,
+/turf/simulated/floor/grime,
+/area/prefab/ghost_house)
+"cq" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 8;
+	icon_state = "tube1"
+	},
+/turf/simulated/floor/carpet/purple/standard/edge,
+/area/prefab/ghost_house)
+"cr" = (
+/obj/submachine/chef_sink/chem_sink{
+	layer = 3;
+	pixel_y = 8
+	},
+/turf/simulated/floor/neutral/corner,
+/area/prefab/ghost_house)
+"cs" = (
+/obj/table/auto,
+/obj/item/medical/ointment,
+/obj/item/medical/ointment,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/neutral/corner{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
+/area/prefab/ghost_house)
+"ct" = (
+/obj/stool/chair/wooden{
+	dir = 8;
+	icon_state = "chair_wooden"
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/simulated/floor/carpet/blue/standard/edge/east,
+/area/prefab/ghost_house)
+"cu" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/snacks/mashedbrains,
+/obj/item/kitchen/utensil/fork,
+/turf/simulated/floor/carpet/blue/standard,
+/area/prefab/ghost_house)
+"cv" = (
+/obj/stool/chair/wooden{
+	dir = 8;
+	icon_state = "chair_wooden"
+	},
+/turf/simulated/floor/carpet/blue/standard/edge/east,
+/area/prefab/ghost_house)
+"cw" = (
+/obj/item/reagent_containers/glass/bottle/bubblebath,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/grime,
+/area/prefab/ghost_house)
+"cx" = (
+/turf/simulated/floor/grime,
+/area/prefab/ghost_house)
+"cy" = (
+/turf/simulated/floor/neutral/corner,
+/area/prefab/ghost_house)
+"cz" = (
+/turf/simulated/floor/neutral,
+/area/prefab/ghost_house)
+"cA" = (
+/obj/table/auto,
+/obj/item/pen/crayon/lipstick,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/neutral/side{
+	dir = 8
+	},
+/area/prefab/ghost_house)
+"cB" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/snacks/moon_pie/spooky,
+/turf/simulated/floor/carpet/blue/standard,
+/area/prefab/ghost_house)
+"cC" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/snacks/sandwich/spooky_cheese,
+/turf/simulated/floor/carpet/blue/standard,
+/area/prefab/ghost_house)
+"cD" = (
+/obj/decal/cleanable/cobweb,
+/obj/machinery/light/incandescent/warm{
+	dir = 8;
+	icon_state = "tube1"
+	},
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"cE" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/suit/scarf,
+/obj/item/clothing/suit/suspenders,
+/obj/item/clothing/suit/sweater/red,
+/obj/item/clothing/suit/wizrobe/red,
+/obj/item/clothing/under/color/darkred,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"cF" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/suit/wintercoat/command,
+/obj/item/clothing/under/gimmick/butler,
+/obj/item/clothing/under/rank/bartender/tuxedo,
+/obj/item/clothing/head/beret/random_color,
+/obj/item/clothing/head/that,
+/obj/item/clothing/under/gimmick/dawson,
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"cG" = (
+/obj/table/auto,
+/obj/item/clothing/head/powdered_wig,
+/turf/simulated/floor/grime,
+/area/prefab/ghost_house)
+"cH" = (
+/obj/machinery/bathtub{
+	anchored = 1;
+	dir = 4
+	},
+/turf/simulated/floor/neutral/corner,
+/area/prefab/ghost_house)
+"cI" = (
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/prefab/ghost_house)
+"cJ" = (
+/obj/table/auto,
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/hat,
+/obj/decal/cleanable/cobweb{
+	dir = 1;
+	icon_state = "cobweb"
+	},
+/turf/simulated/floor/neutral/corner{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/prefab/ghost_house)
+"cK" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"cL" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/drinks/skull_chalice,
+/turf/simulated/floor/carpet/blue/standard,
+/area/prefab/ghost_house)
+"cM" = (
+/obj/decal/cleanable/vomit,
+/obj/item/reagent_containers/food/drinks/rum_spaced,
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"cN" = (
+/turf/simulated/floor/carpet/red/fancy/edge/nw,
+/area/prefab/ghost_house)
+"cO" = (
+/turf/simulated/floor/carpet/red/fancy/edge/north,
+/area/prefab/ghost_house)
+"cP" = (
+/turf/simulated/floor/carpet/red/fancy/edge/ne,
+/area/prefab/ghost_house)
+"cQ" = (
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/carpet/blue/standard/edge/sw,
+/area/prefab/ghost_house)
+"cR" = (
+/turf/simulated/floor/carpet/blue/standard/edge,
+/area/prefab/ghost_house)
+"cS" = (
+/turf/simulated/floor/carpet/blue/standard/edge/se,
+/area/prefab/ghost_house)
+"cT" = (
+/turf/simulated/floor/stairs/wood/wide,
+/area/prefab/ghost_house)
+"cU" = (
+/turf/simulated/floor/stairs/wood{
+	dir = 6;
+	icon_state = "wood_stairs"
+	},
+/area/prefab/ghost_house)
+"cV" = (
+/turf/simulated/floor/stairs/wood/wide{
+	dir = 6;
+	icon_state = "wood_stairs2"
+	},
+/area/prefab/ghost_house)
+"cW" = (
+/obj/table/wood/round/auto,
+/obj/item/cigpacket/propuffs,
+/obj/item/matchbook,
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"cX" = (
+/obj/table/wood/round/auto,
+/obj/item/cigpacket/menthol,
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"cY" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/light/incandescent/warm{
+	dir = 1;
+	icon_state = "tube1"
+	},
+/turf/simulated/floor/grime,
+/area/prefab/ghost_house)
+"cZ" = (
+/obj/decal/cleanable/cobweb{
+	icon_state = "cobweb"
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 8;
+	icon_state = "tube1"
+	},
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"da" = (
+/obj/item/instrument/large/piano/grand,
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"db" = (
+/obj/stool/bench/wooden/auto,
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"dc" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/red/standard/edge/west,
+/area/prefab/ghost_house)
+"dd" = (
+/turf/simulated/floor/carpet/red/fancy,
+/area/prefab/ghost_house)
+"de" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8;
+	icon_state = "wood1"
+	},
+/turf/simulated/floor/carpet/red/standard/edge/east,
+/area/prefab/ghost_house)
+"df" = (
+/obj/rack,
+/obj/item/clothing/shoes/dress_shoes,
+/obj/item/clothing/shoes/dress_shoes,
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"dg" = (
+/obj/rack,
+/obj/item/clothing/shoes/chef,
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"dh" = (
+/turf/simulated/floor/carpet/red/fancy/edge/west,
+/area/prefab/ghost_house)
+"di" = (
+/turf/simulated/floor/carpet/red/decal/innercross,
+/area/prefab/ghost_house)
+"dj" = (
+/turf/simulated/floor/carpet/red/fancy/edge/east,
+/area/prefab/ghost_house)
+"dk" = (
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/carpet/red/fancy,
+/area/prefab/ghost_house)
+"dl" = (
+/turf/simulated/floor/carpet/red/fancy/edge/sw,
+/area/prefab/ghost_house)
+"dm" = (
+/turf/simulated/floor/carpet/red/fancy/edge/south,
+/area/prefab/ghost_house)
+"dn" = (
+/turf/simulated/floor/carpet/red/fancy/edge/se,
+/area/prefab/ghost_house)
+"do" = (
+/turf/unsimulated/wall/setpieces/leadwindow/gray{
+	dir = 4;
+	icon_state = "leadwindow_gray_1"
+	},
+/area/prefab/ghost_house)
+"dp" = (
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine,
+/obj/machinery/light/incandescent/warm{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"dq" = (
+/obj/table/wood/round/auto,
+/obj/machinery/light/incandescent/warm{
+	dir = 1;
+	icon_state = "tube1"
+	},
+/obj/item/storage/box/record/notaquario,
+/turf/simulated/floor/wood/two,
+/area/prefab/ghost_house)
+"dr" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/simulated/floor/stairs/wood/wide{
+	dir = 6;
+	icon_state = "wood_stairs2"
+	},
+/area/prefab/ghost_house)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaabacacacacacacacacacacacacacacacacacacacadaa
-aaaeafagahaiahahahajajajakahahalalalalalalaeaa
-aaaeahamahahakanaoajapaqarajajalahasatahalaeaa
-aaaeafahajajajauatakajajajahajalavahawaxalaeaa
-aaaeahahajaiajahahayahaiahahakalazaAamavalaeaa
-aaaeahaiajakajahaBaCahahahahajaDalalalalaDaeaa
-aaaeahahahajapahahaiajajahabacabacacacacacaeaa
-aaaeahaEahajahahahajajajajaeaFaGaHaHaHaHaIaeaa
-aaaeaJaiahajakajajajakajanaeaKaGaHaHaGaHaLaeaa
-aaaeacacacacacacacaMaMaMabaNaKaGaHaHaGaGaGaeaa
-aaaeaOaPaQaRaKaKaKaKaKaKaeaSaKaGaHaHaTaHaHaeaa
-aaaeaUaVaWaWaWaWaXaKaKaKaeaKaYaGaGaHaZaKaKaeaa
-aaaebabbbcbdaKbsaKaKaKaKaeaKaKaKaGaKaHaGaGaeaa
-aaaebebebebebebeadaNbfbgaNaKbhaKbiaKaYaKaKaeaa
-cKbjbkblbmbnbobpaebqbrbMaeaKaKaKaHaKaKaHbtaeaa
-cKbjbVbvbqbqbqbqaebqbwbqabbebebebebebebebeadaa
-aaaebqbqbqbqbqbqaebxbybqaebzbAbAbBbCbZbEbFaeaa
-aaaebqbGbHbIbJbKaebVbLbqaecqbNbObAbPbPbAbQaeaa
-aaaebRbSbTbUctabaebqbybqaebWbqbXbPbAbAbAbYaeaa
-cKbjcDcacbcbccbgaNbqcdbxaeadbqbXbPbAbPbAceaeaa
-cKbjbqcacbcfcccgchbqbLbMbgaNbqbXbDcibAbAcjaeaa
-aaaebqckcbcbcccgchbqbLbqcgchbqabbebebebebeadaa
-aaaebqclcmbTccabadbqcnbqcgchbKaecocpcYcrcsaeaa
-aaaecZbSbTcucvbgaebqbqbqabbebeaNcwcxcyczcAbjcK
-aaaebkbScBcCccdpaebVbqbqaecEcFaecGcHczcIcJaeaa
-cKbjbqbScLbTcvcMaecNcOcPaebVbqbgbebebebfbeaNaa
-cKbjbqcQcRcRcSbqaecTcUcVaebqbqcWcXdqbqbqbqaeaa
-aaaebebebebebebeaecTcUdraebqbqbqbqbqbqbqbqbjcK
-aaaebebebebebeabaecTcUcVaeadbqbqdabqbqdbbqbjcK
-cKdcdddebqdfdgbgaNdhdidjbgaNbqbqdbbqbqdbbqbjcK
-cKdcdkdebqbqbqbxbudldmdnbubqbqbqbqbqbqbqbqaeaa
-aabgbebedodododobebebebebebebedodododobebeaNaa
-aaaaaaaacKcKcKcKaaaaaaaaaaaaaacKcKcKcKaaaaaaaa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+cK
+cK
+aa
+aa
+aa
+cK
+cK
+aa
+aa
+aa
+aa
+cK
+cK
+aa
+aa
+cK
+cK
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+ab
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+bj
+bj
+ae
+ae
+ae
+bj
+bj
+ae
+ae
+ae
+ae
+bj
+bj
+ae
+ae
+dc
+dc
+bg
+aa
+"}
+(3,1,1) = {"
+aa
+ac
+af
+ah
+af
+ah
+ah
+ah
+ah
+aJ
+ac
+aO
+aU
+ba
+be
+bk
+bV
+bq
+bq
+bR
+cD
+bq
+bq
+bq
+cZ
+bk
+bq
+bq
+be
+be
+dd
+dk
+be
+aa
+"}
+(4,1,1) = {"
+aa
+ac
+ag
+am
+ah
+ah
+ai
+ah
+aE
+ai
+ac
+aP
+aV
+bb
+be
+bl
+bv
+bq
+bG
+bS
+ca
+ca
+ck
+cl
+bS
+bS
+bS
+cQ
+be
+be
+de
+de
+be
+aa
+"}
+(5,1,1) = {"
+aa
+ac
+ah
+ah
+aj
+aj
+aj
+ah
+ah
+ah
+ac
+aQ
+aW
+bc
+be
+bm
+bq
+bq
+bH
+bT
+cb
+cb
+cb
+cm
+bT
+cB
+cL
+cR
+be
+be
+bq
+bq
+do
+cK
+"}
+(6,1,1) = {"
+aa
+ac
+ai
+ah
+aj
+ai
+ak
+aj
+aj
+aj
+ac
+aR
+aW
+bd
+be
+bn
+bq
+bq
+bI
+bU
+cb
+cf
+cb
+bT
+cu
+cC
+bT
+cR
+be
+be
+df
+bq
+do
+cK
+"}
+(7,1,1) = {"
+aa
+ac
+ah
+ak
+aj
+aj
+aj
+ap
+ah
+ak
+ac
+aK
+aW
+aK
+be
+bo
+bq
+bq
+bJ
+ct
+cc
+cc
+cc
+cc
+cv
+cc
+cv
+cS
+be
+be
+dg
+bq
+do
+cK
+"}
+(8,1,1) = {"
+aa
+ac
+ah
+an
+au
+ah
+ah
+ah
+ah
+aj
+ac
+aK
+aW
+bs
+be
+bp
+bq
+bq
+bK
+ab
+bg
+cg
+cg
+ab
+bg
+dp
+cM
+bq
+be
+ab
+bg
+bx
+do
+cK
+"}
+(9,1,1) = {"
+aa
+ac
+ah
+ao
+at
+ah
+aB
+ah
+ah
+aj
+ac
+aK
+aX
+aK
+ad
+ae
+ae
+ae
+ae
+ae
+aN
+ch
+ch
+ad
+ae
+ae
+ae
+ae
+ae
+ae
+aN
+bu
+be
+aa
+"}
+(10,1,1) = {"
+aa
+ac
+aj
+aj
+ak
+ay
+aC
+ai
+aj
+aj
+aM
+aK
+aK
+aK
+aN
+bq
+bq
+bx
+bV
+bq
+bq
+bq
+bq
+bq
+bq
+bV
+cN
+cT
+cT
+cT
+dh
+dl
+be
+aa
+"}
+(11,1,1) = {"
+aa
+ac
+aj
+ap
+aj
+ah
+ah
+aj
+aj
+ak
+aM
+aK
+aK
+aK
+bf
+br
+bw
+by
+bL
+by
+cd
+bL
+bL
+cn
+bq
+bq
+cO
+cU
+cU
+cU
+di
+dm
+be
+aa
+"}
+(12,1,1) = {"
+aa
+ac
+aj
+aq
+aj
+ai
+ah
+aj
+aj
+aj
+aM
+aK
+aK
+aK
+bg
+bM
+bq
+bq
+bq
+bq
+bx
+bM
+bq
+bq
+bq
+bq
+cP
+cV
+dr
+cV
+dj
+dn
+be
+aa
+"}
+(13,1,1) = {"
+aa
+ac
+ak
+ar
+aj
+ah
+ah
+ah
+aj
+an
+ab
+ae
+ae
+ae
+aN
+ae
+ab
+ae
+ae
+ae
+ae
+bg
+cg
+cg
+ab
+ae
+ae
+ae
+ae
+ae
+bg
+bu
+be
+aa
+"}
+(14,1,1) = {"
+aa
+ac
+ah
+aj
+ah
+ah
+ah
+ab
+ae
+ae
+aN
+aS
+aK
+aK
+aK
+aK
+be
+bz
+cq
+bW
+ad
+aN
+ch
+ch
+be
+cE
+bV
+bq
+bq
+ad
+aN
+bq
+be
+aa
+"}
+(15,1,1) = {"
+aa
+ac
+ah
+aj
+aj
+ak
+aj
+ac
+aF
+aK
+aK
+aK
+aY
+aK
+bh
+aK
+be
+bA
+bN
+bq
+bq
+bq
+bq
+bK
+be
+cF
+bq
+bq
+bq
+bq
+bq
+bq
+be
+aa
+"}
+(16,1,1) = {"
+aa
+ac
+al
+al
+al
+al
+aD
+ab
+aG
+aG
+aG
+aG
+aG
+aK
+aK
+aK
+be
+bA
+bO
+bX
+bX
+bX
+ab
+ae
+aN
+ae
+bg
+cW
+bq
+bq
+bq
+bq
+do
+cK
+"}
+(17,1,1) = {"
+aa
+ac
+al
+ah
+av
+az
+al
+ac
+aH
+aH
+aH
+aH
+aG
+aG
+bi
+aH
+be
+bB
+bA
+bP
+bP
+bD
+be
+co
+cw
+cG
+be
+cX
+bq
+da
+db
+bq
+do
+cK
+"}
+(18,1,1) = {"
+aa
+ac
+al
+as
+ah
+aA
+al
+ac
+aH
+aH
+aH
+aH
+aH
+aK
+aK
+aK
+be
+bC
+bP
+bA
+bA
+ci
+be
+cp
+cx
+cH
+be
+dq
+bq
+bq
+bq
+bq
+do
+cK
+"}
+(19,1,1) = {"
+aa
+ac
+al
+at
+aw
+am
+al
+ac
+aH
+aG
+aG
+aT
+aZ
+aH
+aY
+aK
+be
+bZ
+bP
+bA
+bP
+bA
+be
+cY
+cy
+cz
+be
+bq
+bq
+bq
+bq
+bq
+do
+cK
+"}
+(20,1,1) = {"
+aa
+ac
+al
+ah
+ax
+av
+al
+ac
+aH
+aH
+aG
+aH
+aK
+aG
+aK
+aH
+be
+bE
+bA
+bA
+bA
+bA
+be
+cr
+cz
+cI
+bf
+bq
+bq
+db
+db
+bq
+be
+aa
+"}
+(21,1,1) = {"
+aa
+ac
+al
+al
+al
+al
+aD
+ac
+aI
+aL
+aG
+aH
+aK
+aG
+aK
+bt
+be
+bF
+bQ
+bY
+ce
+cj
+be
+cs
+cA
+cJ
+be
+bq
+bq
+bq
+bq
+bq
+be
+aa
+"}
+(22,1,1) = {"
+aa
+ad
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ad
+ae
+ae
+ae
+ae
+ae
+ad
+ae
+bj
+ae
+aN
+ae
+bj
+bj
+bj
+ae
+aN
+aa
+"}
+(23,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+cK
+aa
+aa
+aa
+cK
+cK
+cK
+aa
+aa
+aa
 "}

@@ -38,7 +38,7 @@
 	"Martian computer" = /obj/decal/aliencomputer, "Martian crevice" = /obj/crevice, "Martian door" = /obj/machinery/door/unpowered/martian, \
 	"Mushroom" = list(/obj/decal/mushrooms, /obj/decal/mushrooms/type1, /obj/decal/mushrooms/type2, /obj/decal/mushrooms/type3, /obj/decal/mushrooms/type4), \
 	"Oil" = /obj/decal/cleanable/oil, "Orb of Fire" = /obj/item/orb/fire, "Orb of Lightning" = /obj/item/orb/lightning, "Pedestal" = /obj/pedestal, "Reactor core" = /obj/decal/fakeobjects/core, \
-	"Rune marks" = /obj/decal/runemarks, "Showcase cover" = /obj/cover/showcase, "Skeleton" = /obj/decal/skeleton, "Stalagmite" = /obj/decal/stalagmite, "Stalagtite" = /obj/decal/stalagtite, \
+	"Rune marks" = /obj/decal/runemarks, "Showcase cover" = /obj/cover/showcase, "Skeleton" = /obj/decal/fakeobjects/skeleton, "Stalagmite" = /obj/decal/stalagmite, "Stalagtite" = /obj/decal/stalagtite, \
 	"Statue" = /obj/decal/statue, "Statue (monkey)" = list(/obj/decal/statue/monkey1, /obj/decal/statue/monkey2, /obj/decal/statue/monkey3), \
 	"Table (white)" = /obj/table/auto, "Table (wood)" = /obj/table/wood/auto, \
 	"Vomit" = /obj/decal/cleanable/vomit, "Wizard crystal: Amethyst" = /obj/item/wizard_crystal/amethyst, \

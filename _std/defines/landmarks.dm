@@ -16,15 +16,12 @@
 #define LANDMARK_BOXING_RING "boxing ring"
 #define LANDMARK_GPS_WAYPOINT "GPS Waypoint"
 #define LANDMARK_ARTIFACT_SPAWN "artifact spawner"
+#define LANDMARK_RANDOM_ROOM_ARTIFACT_SPAWN "artifact spawner random room"
+#define LANDMARK_RADIO_SHOW_HOST "Radio-Show-Host-Spawn"
 
-// centcom shuttle landmarks
-#define LANDMARK_SHUTTLE_COG1 "shuttle-cog1"
-#define LANDMARK_SHUTTLE_COG2 "shuttle-cog2"
-#define LANDMARK_SHUTTLE_SEALAB "shuttle-sealab"
-#define LANDMARK_SHUTTLE_MANTA "shuttle-manta"
-#define LANDMARK_SHUTTLE_DONUT2 "shuttle-donut2"
-#define LANDMARK_SHUTTLE_DONUT3 "shuttle-donut3"
-#define LANDMARK_SHUTTLE_DESTINY "shuttle-destiny"
+// shuttle landmarks
+#define LANDMARK_SHUTTLE_CENTCOM "shuttle-centcom"
+#define LANDMARK_SHUTTLE_TRANSIT "shuttle-transit"
 
 // nukies
 
@@ -35,6 +32,14 @@
 #define LANDMARK_SYNDICATE_GEAR_CLOSET "Syndicate-Gear-Closet"
 #define LANDMARK_SYNDICATE_BOMB "Syndicate-Bomb"
 #define LANDMARK_SYNDICATE_BREACHING_CHARGES "Breaching-Charges"
+#define LANDMARK_SYNDICATE_ASSAULT_POD_TELE "Syndicate-Assault-Pod-Tele"
+#define LANDMARK_SYNDICATE_ASSAULT_POD_COMP "Syndicate-Assault-Pod-Comp"
+
+// Salvagers
+
+#define LANDMARK_SALVAGER "Salvager-Spawn"
+#define LANDMARK_SALVAGER_BEACON "Salvager-Beacon"
+#define LANDMARK_SALVAGER_TELEPORTER "Salvager-Tele"
 
 // misc and unused
 #define LANDMARK_CHARACTER_PREVIEW_SPAWN "character preview"
@@ -55,6 +60,7 @@
 #define LANDMARK_BIGBOOM "bigboom" // unfinished Manta event
 #define LANDMARK_TUTORIAL_START "tutorial_start_marker"
 #define LANDMARK_CRUISER_ENTRANCE "cruiser_entrance"
+#define LANDMARK_CRUISER_CENTER "cruiser_center"
 // loading screen maptext landmarks
 #define LANDMARK_LOBBY_LEFTSIDE "lobby_leftside"
 #define LANDMARK_LOBBY_STATUS "lobby_status"
@@ -84,6 +90,7 @@
 #define LANDMARK_FALL_SPACEMAS "spacemasfall" // Merry Spacemas!
 
 // misc adventure zone stuff
+#define LANDMARK_SUMMON "summon"
 
 /// allowed turfs for telesci
 #define LANDMARK_TELESCI "telesci"

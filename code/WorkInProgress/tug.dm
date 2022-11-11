@@ -13,7 +13,10 @@
 		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
 
-		if (!istype(C)|| C.anchored || get_dist(user, src) > 1 || get_dist(src,C) > 1 )
+		if (!istype(C)|| C.anchored || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(src, C) > 0 )
+			return
+
+		if (istype(C, /mob/dead/))
 			return
 
 		if (istype(C, /obj/vehicle/tug))
@@ -58,7 +61,7 @@
 		load(C)
 		src.visible_message("<b>[user]</b> loads [C] onto [src].")
 
-	MouseDrop(obj/over_object as obj, src_location, over_location)
+	mouse_drop(obj/over_object as obj, src_location, over_location)
 		..()
 		var/turf/T = get_turf(over_location)
 		var/mob/user = usr
@@ -81,14 +84,14 @@
 	proc/load(var/atom/movable/C)
 		/*if ((wires & wire_loadcheck) && !istype(C,/obj/storage/crate))
 			src.visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
-			playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 0)
+			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 			return		// if not emagged, only allow crates to be loaded // cogwerks - turning this off for now to make the mule more versatile + funny
 			*/
 
 		if (istype(C, /atom/movable/screen) || C.anchored)
 			return
 
-		if (get_dist(C, src) > 1 || load)
+		if (BOUNDS_DIST(C, src) > 0 || load)
 			return
 
 		// if a create, close before loading
@@ -96,7 +99,7 @@
 		if (istype(crate))
 			crate.close()
 		C.set_loc(src.loc)
-		SPAWN_DBG(0.2 SECONDS)
+		SPAWN(0.2 SECONDS)
 			if (C && C.loc == src.loc)
 				C.set_loc(src)
 				load = C
@@ -111,15 +114,7 @@
 		if (!isturf(T))
 			T = get_turf(T)
 
-		load.pixel_y -= 6
-		load.layer = initial(load.layer)
 		load.set_loc(src.loc)
-		if (T)
-			SPAWN_DBG(0.2 SECONDS)
-				if (load)
-					load.set_loc(T)
-					load = null
-		src.UpdateOverlays(null, "load")
 
 		// in case non-load items end up in contents, dump every else too
 		// this seems to happen sometimes due to race conditions
@@ -129,6 +124,14 @@
 			AM.set_loc(src.loc)
 			AM.layer = initial(AM.layer)
 			AM.pixel_y = initial(AM.pixel_y)
+
+	Exited(atom/movable/Obj, newloc)
+		. = ..()
+		if(src.load == Obj)
+			src.load.pixel_y -= 6
+			src.load.layer = initial(src.load.layer)
+			src.load = null
+			src.UpdateOverlays(null, "load")
 
 	Move()
 		var/oldloc = src.loc
@@ -151,6 +154,8 @@
 	layer = MOB_LAYER + 1
 //	sealed_cabin = 0
 	mats = 10
+	health = 80
+	health_max = 80
 	var/obj/tug_cart/cart = null
 	throw_dropped_items_overboard = 1
 	ability_buttons_to_initialize = list(/obj/ability_button/vehicle_speed)
@@ -162,6 +167,8 @@
 		icon_state = "tractor-sec"
 		var/weeoo_in_progress = 0
 		delay = 2
+		health = 120
+		health_max = 120
 
 
 		/*
@@ -179,8 +186,8 @@
 				return
 
 			weeoo_in_progress = 10
-			SPAWN_DBG(0)
-				playsound(src.loc, "sound/machines/siren_police.ogg", 60, 1)
+			SPAWN(0)
+				playsound(src.loc, 'sound/machines/siren_police.ogg', 60, 1)
 				light.enable()
 				src.icon_state = "tractor-sec2"
 				while (weeoo_in_progress--)
@@ -204,38 +211,39 @@
 	eject_rider(var/crashed, var/selfdismount)
 		var/mob/living/rider = src.rider
 		..()
-		rider.pixel_y = 0
-		walk(src, 0)
-		if (rider.client)
-			for(var/obj/ability_button/B in ability_buttons)
-				rider.client.screen -= B
-		if (crashed)
-			if (crashed == 2)
-				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
-			boutput(rider, "<span class='alert'><B>You are flung off of [src]!</B></span>")
-			rider.changeStatus("stunned", 80)
-			rider.changeStatus("weakened", 5 SECONDS)
-			for (var/mob/C in AIviewers(src))
-				if (C == rider)
-					continue
-				C.show_message("<span class='alert'><B>[rider] is flung off of [src]!</B></span>", 1)
-			var/turf/target = get_edge_target_turf(src, src.dir)
-			rider.throw_at(target, 5, 1)
-			rider.buckled = null
+		if(rider)
+			rider.pixel_y = 0
+			walk(src, 0)
+			if (rider.client)
+				for(var/obj/ability_button/B in ability_buttons)
+					rider.client.screen -= B
+			if (crashed)
+				if (crashed == 2)
+					playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+				boutput(rider, "<span class='alert'><B>You are flung off of [src]!</B></span>")
+				rider.changeStatus("stunned", 8 SECONDS)
+				rider.changeStatus("weakened", 5 SECONDS)
+				for (var/mob/C in AIviewers(src))
+					if (C == rider)
+						continue
+					C.show_message("<span class='alert'><B>[rider] is flung off of [src]!</B></span>", 1)
+				var/turf/target = get_edge_target_turf(src, src.dir)
+				rider.throw_at(target, 5, 1)
+				rider.buckled = null
+				rider = null
+				overlays = null
+				return
+			if (selfdismount)
+				boutput(rider, "<span class='notice'>You dismount from [src].</span>")
+				for (var/mob/C in AIviewers(src))
+					if (C == rider)
+						continue
+					C.show_message("<B>[rider]</B> dismounts from [src].", 1)
+			if (rider)
+				rider.buckled = null
 			rider = null
 			overlays = null
 			return
-		if (selfdismount)
-			boutput(rider, "<span class='notice'>You dismount from [src].</span>")
-			for (var/mob/C in AIviewers(src))
-				if (C == rider)
-					continue
-				C.show_message("<B>[rider]</B> dismounts from [src].", 1)
-		if (rider)
-			rider.buckled = null
-		rider = null
-		overlays = null
-		return
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
 		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
@@ -306,19 +314,19 @@
 			eject_rider(0, 1)
 		return
 
-	attack_hand(mob/living/carbon/human/M as mob)
+	attack_hand(mob/living/carbon/human/M)
 		if (!M || !rider)
 			..()
 			return
 		switch (M.a_intent)
 			if ("harm", "disarm")
 				if (prob(60))
-					playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 1, -1)
+					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 					src.visible_message("<span class='alert'><B>[M] has shoved [rider] off of [src]!</B></span>")
 					rider.changeStatus("weakened", 2 SECONDS)
 					eject_rider()
 				else
-					playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 25, 1, -1)
+					playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, -1)
 					src.visible_message("<span class='alert'><B>[M] has attempted to shove [rider] off of [src]!</B></span>")
 		return
 

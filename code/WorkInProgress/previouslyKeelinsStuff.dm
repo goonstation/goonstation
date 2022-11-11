@@ -292,9 +292,7 @@ var/reverse_mode = 0
 		return 1
 	var/list/line = getline(A,B)
 	for (var/turf/T in line)
-		if (T == AT || T == BT)
-			break
-		if (T.density)
+		if (!T.gas_cross(T))
 			return 0
 		var/obj/blob/BL = locate() in T
 		if (istype(BL, /obj/blob/wall) || istype(BL, /obj/blob/firewall) || istype(BL, /obj/blob/reflective))
@@ -306,33 +304,34 @@ var/reverse_mode = 0
 	icon_state = "relic"
 	name = "strange relic"
 	desc = "It feels cold..."
-	var/active = 0
 	var/using = 0
 	var/beingUsed = 0
 
-	New()
-		..()
-		loop()
+	pickup(mob/living/M)
+		SPAWN(1 MINUTE)
+			processing_items.Add(src)
 
-	proc/loop()
-		if (!active)
-			SPAWN_DBG(1 SECOND) loop()
-			return
+	disposing()
+		processing_items.Remove(src)
+		. = ..()
 
+	process()
 		if (prob(1) && prob(50) && ismob(src.loc))
 			var/mob/M = src.loc
 			boutput(M, "<span class='alert'>You feel uneasy ...</span>")
 
 		if (prob(25))
 			for(var/obj/machinery/light/L in range(6, get_turf(src)))
-				if (prob(25)) L.broken()
+				if (prob(25))
+					L.broken()
 
 		if (prob(1) && prob(50) && !using)
 			new/obj/critter/spirit( get_turf(src) )
 
 		if (prob(3) && prob(50))
-			var/obj/o = new/obj/spook( get_turf(src) )
-			SPAWN_DBG(1 MINUTE) qdel(o)
+			var/obj/o = new/obj/item/spook( get_turf(src) )
+			SPAWN(1 MINUTE)
+				qdel(o)
 
 		if (prob(25))
 			for(var/obj/storage/L in range(6, get_turf(src)))
@@ -341,13 +340,10 @@ var/reverse_mode = 0
 
 		if (prob(25))
 			for(var/obj/stool/chair/L in range(6, get_turf(src)))
-				if (prob(15)) L.rotate()
+				if (prob(15))
+					L.rotate()
 
-		SPAWN_DBG(1 SECOND) loop()
-		return
 
-	pickup(var/mob/living/M)
-		SPAWN_DBG(1 MINUTE) active = 1
 
 	attack_self(var/mob/user)
 		if (user != loc)
@@ -371,7 +367,7 @@ var/reverse_mode = 0
 						else
 							user.shock(src, rand(5000, 250000), "chest", 1, 1)
 						/*harmless_smoke_puff(get_turf(src))
-						playsound(user, "sound/effects/ghost2.ogg", 60, 0)
+						playsound(user, 'sound/effects/ghost2.ogg', 60, 0)
 						user.flash(60)
 						var/mob/oldmob = user
 						var/mob/dead/observer/O = new/mob/dead/observer()
@@ -381,7 +377,7 @@ var/reverse_mode = 0
 						var/datum/mind/M = user.mind
 						if (M) //Why would this happen? Why wouldn't it happen?
 							M.transfer_to(O)
-							SPAWN_DBG(1 MINUTE)
+							SPAWN(1 MINUTE)
 								if (M && oldmob)
 									var/mob/newmob = M.current
 									M.transfer_to(oldmob)
@@ -395,28 +391,28 @@ var/reverse_mode = 0
 						using = 1
 						boutput(user, "<span class='alert'>You can feel the power of the relic coursing through you...</span>")
 						user.bioHolder.AddEffect("telekinesis_drag")
-						SPAWN_DBG(2 MINUTES)
+						SPAWN(2 MINUTES)
 							using = 0
 							user.bioHolder.RemoveEffect("telekinesis_drag")
 					if ("Use the relic's power to heal your wounds")
 						var/obj/shield/s = new/obj/shield( get_turf(src) )
 						s.name = "energy"
-						SPAWN_DBG(1.3 SECONDS) qdel(s)
+						SPAWN(1.3 SECONDS) qdel(s)
 						user.changeStatus("stunned", 1 SECOND)
 						user.take_toxin_damage(-INFINITY)
 						user:HealDamage("All", 1000, 1000)
 						if (prob(75))
 							boutput(user, "<span class='alert'>The relic crumbles into nothingness...</span>")
 							qdel(src)
-						SPAWN_DBG(1 MINUTE) using = 0
+						SPAWN(1 MINUTE) using = 0
 					if ("Attempt to absorb the relic's power")
 						if (prob(1))
 							user.bioHolder.AddEffect("telekinesis_drag", 0, 0, 1) //because really
 							user.bioHolder.AddEffect("thermal_resist", 0, 0, 1) //if they're lucky enough to get this
-							user.bioHolder.AddEffect("xray", 0, 0, 1) //they're lucky enough to keep it
+							user.bioHolder.AddEffect("xray", 2, 0, 1) //they're lucky enough to keep it
 							user.bioHolder.AddEffect("hulk", 0, 0, 1) //probably
 							boutput(user, "<span class='alert'>The relic crumbles into nothingness...</span>")
-							src.invisibility = 101
+							src.invisibility = INVIS_ALWAYS
 							var/obj/effects/explosion/E = new/obj/effects/explosion( get_turf(src) )
 							E.fingerprintslast = src.fingerprintslast
 							sleep(0.5 SECONDS)
@@ -441,13 +437,15 @@ var/reverse_mode = 0
 									boutput(user, "<span class='alert'>The relic explodes violently!</span>")
 									var/obj/effects/explosion/E = new/obj/effects/explosion( get_turf(src) )
 									E.fingerprintslast = src.fingerprintslast
+									logTheThing(LOG_COMBAT, user, "was gibbed by [src] ([src.type]) at [log_loc(user)].")
 									user:gib()
 									qdel(src)
 								if (4)
 									boutput(user, "<span class='alert'>The relic's power completely overwhelms you!!</span>")
 									using = 1
 									harmless_smoke_puff( get_turf(src) )
-									playsound(user, "sound/effects/ghost2.ogg", 60, 0)
+									playsound(user, 'sound/effects/ghost2.ogg', 60, 0)
+									logTheThing(LOG_COMBAT, user, "was killed by [src] ([src.type]) at [log_loc(user)].")
 									user.flash(60)
 									var/mob/oldmob = user
 									oldmob.ghostize()
@@ -459,7 +457,7 @@ var/reverse_mode = 0
 /obj/effect_sparker
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "x4"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 
@@ -471,88 +469,42 @@ var/reverse_mode = 0
 		var/area/A = get_area(src)
 		if (A.active)
 			elecflash(src)
-		SPAWN_DBG(rand(10,300))
+		SPAWN(rand(10,300))
 			src.sparks()
 
-/proc/set_on_all()
-	var/type = input(usr, "Typepath:")
-	type = text2path(type)
-	if (!type) return
+///Config datum for LSD fake sounds
+/datum/hallucinated_sound
+	///The sound file to play
+	var/path
+	///Max number of times to play it
+	var/max_count
+	///Min number of times to play it
+	var/min_count
+	///Delay between each play
+	var/delay
+	///Pitch to play it at
+	var/pitch
 
-	var/varname = input(usr, "Varname:")
-	var/thetype = input(usr,"Select variable type:" ,"Type") in list("text","number","mob-reference","obj-reference","turf-reference","icon","random-number","random-color")
-	if (!thetype) return
+	New(path, min_count = 1, max_count = 1, delay = 0, pitch = 1)
+		..()
+		src.path = path
+		src.min_count = min_count
+		src.max_count = max_count
+		src.delay = delay
+		src.pitch = pitch
 
-	var/thevalue = null
-	var/minrnd = null
-	var/maxrnd = null
-	var/is_icon = 0
-	switch(thetype)
-		if ("text")
-			thevalue = input(usr,"Enter variable value:" ,"Value", "value") as text
-		if ("number")
-			thevalue = input(usr,"Enter variable value:" ,"Value", 123) as num
-		if ("mob-reference")
-			thevalue = input(usr,"Enter variable value:" ,"Value") as mob in world
-		if ("obj-reference")
-			thevalue = input(usr,"Enter variable value:" ,"Value") as obj in world
-		if ("turf-reference")
-			thevalue = input(usr,"Enter variable value:" ,"Value") as turf in world
-		if ("icon")
-			thevalue = input(usr,"Select icon:" ,"Value") as icon
-			is_icon = 1
-		if ("random-number")
-			minrnd = input(usr,"Min:" ,"Value", 0) as num
-			maxrnd = input(usr,"Max:" ,"Value", 0) as num
-			thevalue = 1
-		if ("random-color")
-			thevalue = rgb(rand(0,255),rand(0,255),rand(0,255))
-
-	if (thevalue == null && !is_icon) return
-
-	var/oldVal = null
-
-	if (ispath(type, /client))
-		for(var/client/C in clients)
-			if (minrnd != null || maxrnd != null)
-				C.vars[varname] = rand(minrnd,maxrnd)
-			else
-				C.vars[varname] = thevalue
-		return
-
-	for(var/datum/A in world)
-		LAGCHECK(LAG_LOW)
-		if (!istype(A,type)) continue
-		oldVal = A.vars[varname]
-		if (minrnd != null || maxrnd != null)
-			A.vars[varname] = rand(minrnd,maxrnd)
-		else
-			A.vars[varname] = thevalue
-		A.onVarChanged(varname, oldVal, A.vars[varname])
-		if (thetype == "random-color")
-			thevalue = rgb(rand(0,255),rand(0,255),rand(0,255))
-		sleep(0.1 SECONDS)
-/*
-	if (minrnd != null || maxrnd != null)
-		logTheThing("admin", usr, null, "randomized all [type]s [varname] from [minrnd] to [maxrnd].")
-		logTheThing("diary", usr, null, "randomized all [type]s [varname] from [minrnd] to [maxrnd].", "admin")
-		message_admins("[key_name(usr)] randomized all [type]s [varname] from [minrnd] to [maxrnd].")
-	else
-		logTheThing("admin", usr, null, "modified all [type]s [varname] to [thevalue].")
-		logTheThing("diary", usr, null, "modified all [type]s [varname] to [thevalue].", "admin")
-		message_admins("[key_name(usr)] modified all [type]s [varname] to [thevalue].")
-*/
-	return
-
-/proc/testa()
-	fake_attack(usr)
-
-/proc/testb()
-	fake_attack(input(usr) as mob in world)
+	///Play the sound to a mob from a location
+	proc/play(var/mob/mob, var/atom/location)
+		SPAWN(0)
+			for (var/i = 1 to rand(src.min_count, src.max_count))
+				mob.playsound_local(location, src.path, 100, 1, pitch = src.pitch)
+				sleep(src.delay)
 
 /obj/fake_attacker
 	icon = null
 	icon_state = null
+	var/fake_icon = 'icons/misc/critter.dmi'
+	var/fake_icon_state = ""
 	name = ""
 	desc = ""
 	density = 0
@@ -560,7 +512,73 @@ var/reverse_mode = 0
 	opacity = 0
 	var/mob/living/carbon/human/my_target = null
 	var/weapon_name = null
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	///Does this hallucination constantly whack you
+	var/should_attack = TRUE
+	event_handler_flags = USE_FLUID_ENTER
+
+	proc/get_name()
+		return src.fake_icon_state
+
+	pig
+		fake_icon = 'icons/effects/hallucinations.dmi'
+		fake_icon_state = "pig"
+		get_name()
+			return pick("pig", "DAT FUKKEN PIG")
+	spider
+		fake_icon_state = "big_spide"
+		get_name()
+			return pick("giant black widow", "aw look a spider", "OH FUCK A SPIDER")
+	slime
+		fake_icon = 'icons/effects/hallucinations.dmi'
+		fake_icon_state = "slime"
+		get_name()
+			return pick("red slime", "some gooey thing", "ANGRY CRIMSON POO")
+	shambler
+		fake_icon = 'icons/effects/hallucinations.dmi'
+		fake_icon_state = "shambler"
+		get_name()
+			return pick("shambler", "strange creature", "OH GOD WHAT THE FUCK IS THAT THING?")
+	legworm
+		fake_icon_state = "legworm"
+	handspider
+		fake_icon_state = "handspider"
+
+	eyespider
+		fake_icon_state = "eyespider"
+	buttcrab
+		fake_icon_state = "buttcrab"
+		should_attack = FALSE
+	bat
+		fake_icon_state = "bat"
+		get_name()
+			return pick("bat", "batty", "the roundest possible bat", "the giant bat that makes all of the rules")
+	snake
+		fake_icon_state = "rattlesnake"
+		get_name()
+			return pick("snek", "WHY DID IT HAVE TO BE SNAKES?!", "rattlesnake", "OH SHIT A SNAKE")
+
+	scorpion
+		fake_icon_state = "spacescorpion"
+		get_name()
+			return "space scorpion"
+
+	aberration
+		fake_icon_state = "aberration"
+		should_attack = FALSE
+		get_name()
+			return "transposed particle field"
+
+	capybara
+		fake_icon_state = "capybara"
+		should_attack = FALSE
+
+	frog
+		fake_icon_state = "frog"
+		should_attack = FALSE
+
+	disposing()
+		my_target = null
+		. = ..()
 
 /obj/fake_attacker/attackby()
 	step_away(src,my_target,2)
@@ -569,17 +587,24 @@ var/reverse_mode = 0
 	my_target.show_message("<span class='alert'><B>[src] has been attacked by [my_target] </B></span>", 1) //Lazy.
 	return
 
-/obj/fake_attacker/HasEntered(var/mob/M, somenumber)
+/obj/fake_attacker/Crossed(atom/movable/M)
+	..()
 	if (M == my_target)
 		step_away(src,my_target,2)
 		if (prob(30))
 			for(var/mob/O in oviewers(world.view , my_target))
 				boutput(O, "<span class='alert'><B>[my_target] stumbles around.</B></span>")
 
+
 /obj/fake_attacker/New(location, target)
 	..()
-	SPAWN_DBG(30 SECONDS)	qdel(src)
+	SPAWN(30 SECONDS)	qdel(src)
+	src.name = src.get_name()
 	src.my_target = target
+	if (src.fake_icon && src.fake_icon_state)
+		var/image/image = image(icon = src.fake_icon, loc = src, icon_state = src.fake_icon_state)
+		image.override = TRUE
+		target << image
 	step_away(src,my_target,2)
 	process()
 
@@ -587,15 +612,15 @@ var/reverse_mode = 0
 	if (!my_target)
 		qdel(src)
 		return
-	if (get_dist(src,my_target) > 1)
+	if (BOUNDS_DIST(src, my_target) > 0)
 		step_towards(src,my_target)
 	else
-		if (prob(15))
+		if (src.should_attack && prob(70) && !ON_COOLDOWN(src, "fake_attack_cooldown", 1 SECOND))
 			if (weapon_name)
 				if (narrator_mode)
-					my_target << sound('sound/vox/weapon.ogg')
+					my_target.playsound_local(my_target.loc, 'sound/vox/weapon.ogg', 40, 0)
 				else
-					my_target << sound(pick('sound/impact_sounds/Generic_Hit_1.ogg', 'sound/impact_sounds/Generic_Hit_2.ogg', 'sound/impact_sounds/Generic_Hit_3.ogg'))
+					my_target.playsound_local(my_target.loc, "sound/impact_sounds/Generic_Hit_[rand(1, 3)].ogg", 40, 1)
 				my_target.show_message("<span class='alert'><B>[my_target] has been attacked with [weapon_name] by [src.name] </B></span>", 1)
 				if (prob(20)) my_target.change_eye_blurry(3)
 				if (prob(33))
@@ -603,23 +628,24 @@ var/reverse_mode = 0
 						fake_blood(my_target)
 			else
 				if (narrator_mode)
-					my_target << sound('sound/vox/hit.ogg')
+					my_target.playsound_local(my_target.loc, 'sound/vox/hit.ogg', 40, 0)
 				else
-					my_target << pick(sounds_punch)
+					my_target.playsound_local(my_target.loc, pick(sounds_punch), 40, 1)
 				my_target.show_message("<span class='alert'><B>[src.name] has punched [my_target]!</B></span>", 1)
 				if (prob(33))
 					if (!locate(/obj/overlay) in my_target.loc)
 						fake_blood(my_target)
+			attack_twitch(src)
 
-	if (prob(15)) step_away(src,my_target,2)
-	SPAWN_DBG(0.5 SECONDS) .()
+	if (src.should_attack && prob(10)) step_away(src,my_target,2)
+	SPAWN(0.3 SECONDS) .()
 
 /proc/fake_blood(var/mob/target)
 	var/obj/overlay/O = new/obj/overlay(target.loc)
 	O.name = "blood"
 	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
 	target << I
-	SPAWN_DBG(30 SECONDS)
+	SPAWN(30 SECONDS)
 		qdel(O)
 	return
 
@@ -672,8 +698,8 @@ var/reverse_mode = 0
 	while(current != target_turf)
 		if (steps > length) return 0
 		if (!current) return 0
-		if (current.density) return 0 //If we can avoid the more expensive CanPass check, let's
-		if (!current.CanPass(source, target_turf)) return 0
+		if (current.density) return 0 //If we can avoid the more expensive Cross check, let's
+		if (!current.Cross(source)) return 0
 
 		current = get_step_towards(current, target_turf)
 		steps++

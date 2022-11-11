@@ -1,3 +1,4 @@
+// TODO make this mob/living/intangible. the fuck is it doing here?
 /mob/living/seanceghost
 	name = "Seance Ghost"
 	desc = "Ominous hooded figure!"
@@ -9,7 +10,7 @@
 	blinded = 0
 	anchored = 1
 	alpha = 180
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 	var/obj/machinery/playerzoldorf/homebooth
 	var/mob/originalmob
 
@@ -37,7 +38,7 @@
 	click(atom/target)
 		src.examine_verb(target)
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		return 1
 
 	say_understands(var/other)
@@ -84,6 +85,8 @@
 		if((direct & WEST) && src.x > 1)
 			src.x--
 
+		return ..()
+
 	is_active()
 		return 0
 
@@ -101,7 +104,7 @@
 		if (dd_hasprefix(message, "*"))
 			return src.emote(copytext(message, 2),1)
 
-		logTheThing("diary", src, null, "[src.name] - [src.real_name]: [message]", "say")
+		logTheThing(LOG_DIARY, src, "[src.name] - [src.real_name]: [message]", "say")
 
 		if (src.client && src.client.ismuted())
 			boutput(src, "You are currently muted and may not speak.")
@@ -127,6 +130,7 @@
 			src.visible_message("<span><b>[src.name]</b> [message]</span>")
 
 	death(gibbed)
+		. = ..()
 		if(originalmob)
 			if (src.client)
 				src.removeOverlaysClient(src.client)

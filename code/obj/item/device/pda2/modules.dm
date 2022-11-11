@@ -10,7 +10,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "pdamod"
 	w_class = W_CLASS_SMALL
-	mats = 4.0
+	mats = 4
 	var/obj/item/device/pda2/host = null
 
 	var/setup_use_menu_badge = 0  //Should we have a line in the main menu?
@@ -103,13 +103,16 @@
 	var/image/lensflare
 	var/use_simple_light = 0
 	var/use_medium_light = 1
+	var/light_r = 255
+	var/light_g = 255
+	var/light_b = 255
 
 	New()
 		..()
 		if (!use_simple_light && !use_medium_light)
 			light = new /datum/light/line
 			light.set_brightness(lumlevel)
-			light.set_color(1, 1, 1)
+			light.set_color(light_r,light_g,light_b)
 		src.lensflare = image(src.flashlight_icon, src.flashlight_icon_state)
 
 	relay_pickup(mob/user)
@@ -119,19 +122,19 @@
 		else if (on)
 			if (src.host)
 				src.host.remove_sm_light("pda\ref[src]")
-			user.add_sm_light("pda\ref[src]", list(255,255,255,lumlevel * 255), use_medium_light)
+			user.add_sm_light("pda\ref[src]", list(light_r,light_g,light_b,lumlevel * 255), use_medium_light)
 
 
 	relay_drop(mob/user)
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.host)
 				if (src.host.loc != user)
 					if (!use_simple_light && !use_medium_light)
 						light.attach(src.host.loc)
 					else if (on)
 						user.remove_sm_light("pda\ref[src]")
-						src.host.add_sm_light("pda\ref[src]", list(255,255,255,lumlevel * 255), use_medium_light)
+						src.host.add_sm_light("pda\ref[src]", list(light_r,light_g,light_b,lumlevel * 255), use_medium_light)
 
 
 	return_menu_badge()
@@ -143,7 +146,7 @@
 		if (!use_simple_light && !use_medium_light)
 			light.attach(pda)
 		else if (on)
-			pda.add_sm_light("pda\ref[src]", list(255,255,255,lumlevel * 255), use_medium_light)
+			pda.add_sm_light("pda\ref[src]", list(light_r,light_g,light_b,lumlevel * 255), use_medium_light)
 
 	uninstall()
 		if (!use_simple_light && !use_medium_light)
@@ -175,9 +178,9 @@
 			else
 				if (!isturf(src.host.loc))
 					var/atom/A = src.host.loc
-					A.add_sm_light("pda\ref[src]", list(255,255,255,lumlevel * 255), use_medium_light)
+					A.add_sm_light("pda\ref[src]", list(light_r,light_g,light_b,lumlevel * 255), use_medium_light)
 				else
-					src.host.add_sm_light("pda\ref[src]", list(255,255,255,lumlevel * 255), use_medium_light)
+					src.host.add_sm_light("pda\ref[src]", list(light_r,light_g,light_b,lumlevel * 255), use_medium_light)
 
 		else
 			src.host.underlays -= src.lensflare
@@ -202,8 +205,11 @@
 	lumlevel = 0.8
 
 	toggle_light()
+		src.light_r = rand(255)
+		src.light_g = rand(255)
+		src.light_b = rand(255)
+		light?.set_color(light_r,light_g,light_b)
 		..()
-		light.set_color(rand(255), rand(255), rand(255))
 
 
 /obj/item/device/pda_module/flashlight/high_power
@@ -228,11 +234,15 @@
 	desc = "A terahertz-ray emitter and scanner built into a handy PDA module."
 	icon_state = "pdamod_tscanner"
 	setup_use_menu_badge = 1
-	var/on = 0
 	abilities = list(/obj/ability_button/pda_tray_toggle)
+	var/obj/item/device/t_scanner/pda/scanner
+
+	New()
+		..()
+		scanner = new(src)
 
 	return_menu_badge()
-		var/text = "<a href='byond://?src=\ref[src];toggle=1'>[src.on ? "Disable" : "Enable"] T-Scanner</a>"
+		var/text = "<a href='byond://?src=\ref[src];toggle=1'>[src.scanner.on ? "Disable" : "Enable"] T-Scanner</a>"
 		return text
 
 	Topic(href, href_list)
@@ -240,54 +250,22 @@
 			return
 		if(href_list["toggle"])
 			src.toggle_scan()
-		return
 
 	proc/toggle_scan()
-		src.on = !src.on
-		if(src.on) processing_items |= src
+		scanner.set_on(!scanner.on)
 		for (var/obj/ability_button/pda_tray_toggle/B in src.ability_buttons)
-			B.icon_state = "pda[src.on]"
+			B.icon_state = "pda[scanner.on]"
 		if (src.host)
 			src.host.updateSelfDialog()
 
+	disposing()
+		qdel(scanner)
+		scanner = null
+		..()
+
 	uninstall()
 		..()
-		src.on = 0
-		return
-
-	process()
-		if(!src.on || !src.host)
-			processing_items.Remove(src)
-			return
-		var/loc_to_check = src.host.loc
-
-		for(var/turf/T in range(1, loc_to_check) )
-
-			if(!T.intact)
-				continue
-
-			for(var/obj/O in T.contents)
-				if(O.level != 1)
-					continue
-
-				if(O.invisibility == 101)
-					O.invisibility = 0
-					O.alpha = 128
-					SPAWN_DBG(1 SECOND)
-						if(O)
-							var/turf/U = O.loc
-							if(!istype(U))
-								return
-							if(U.intact)
-								O.invisibility = 101
-								O.alpha = 255
-
-			var/mob/living/M = locate() in T
-			if(M?.invisibility == 2)
-				M.invisibility = 0
-				SPAWN_DBG(0.2 SECONDS)
-					if(M)
-						M.invisibility = 2
+		scanner.set_on(FALSE)
 
 /obj/ability_button/pda_tray_toggle
 	name = "Toggle PDA T-Scanner"
@@ -314,19 +292,18 @@
 		if(..())
 			return
 		if(href_list["toggle"])
-			src.send_alert()
+			src.send_alert(usr)
 		return
 
-	proc/send_alert()
+	proc/send_alert(mob/user)
 		if (!src.host)
-			boutput(usr, "<span class='alert'>No PDA detected.")
+			boutput(user, "<span class='alert'>No PDA detected.")
 			return
-		if (ON_COOLDOWN(src, 5 MINUTES, "send_alert"))
-			boutput(usr, "<span class='alert'>[src] is still on cooldown mode!</span>")
+		if (ON_COOLDOWN(src, "send_alert", 5 MINUTES))
+			boutput(user, "<span class='alert'>[src] is still on cooldown mode!</span>")
 			return
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.host
-		signal.transmission_method = TRANSMISSION_RADIO
 		signal.data["address_1"] = "00000000"
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = src.host.owner
@@ -334,7 +311,17 @@
 		var/area/A = get_area(src.host)
 		signal.data["message"]  = "<b><span class='alert'>***SECURITY BACKUP REQUESTED*** Location: [A ? A.name : "nowhere"]!"
 		src.host.post_signal(signal)
-		boutput(usr, "<span class='notice'>Alert sent.</span>")
+
+		if(isliving(user))
+			playsound(src, 'sound/items/security_alert.ogg', 60)
+			var/map_text = null
+			map_text = make_chat_maptext(usr, "Emergency alert sent. Please assist this officer.", "font-family: 'Helvetica'; color: #D30000; font-size: 7px;", alpha = 215)
+			for (var/mob/O in hearers(usr))
+				O.show_message(assoc_maptext = map_text)
+			usr.visible_message("<span class='alert'>[usr] presses a red button on the side of their [src.host].</span>",
+			"<span class='notice'>You press the \"Alert\" button on the side of your [src.host].</span>",
+			"<span class='alert'>You see [usr] press a button on the side of their [src.host].</span>")
+
 
 /obj/ability_button/pda_security_alert
 	name = "Send Security Alert"
@@ -343,4 +330,4 @@
 	execute_ability()
 		var/obj/item/device/pda_module/alert/J = the_item
 		if (J.host)
-			J.send_alert()
+			J.send_alert(src.the_mob)

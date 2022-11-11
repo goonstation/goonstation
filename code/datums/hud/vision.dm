@@ -35,14 +35,14 @@
 				add_screen(flash)
 				flash.alpha = 255
 				animate(flash, alpha = 0, time = duration, easing = SINE_EASING)
-				SPAWN_DBG(duration)
+				SPAWN(duration)
 					remove_screen(flash)
 
 		noise(duration)
 			// hacky and incorrect but I didnt want to introduce another object just for this
 			flash.icon_state = "noise"
 			src.flash(duration)
-			SPAWN_DBG(duration)
+			SPAWN(duration)
 				flash.icon_state = "white"
 
 		set_scan(scanline)
@@ -71,7 +71,7 @@
 				color_mod.plane = PLANE_OVERLAY_EFFECTS-1 //otherwise it doesnt draw. i dont know why.
 
 			animate(color_mod, color = color, time = duration)
-			SPAWN_DBG(duration + 1)
+			SPAWN(duration + 1)
 				if (color == "#000000" || color == "#ffffff")
 					remove_screen(color_mod)
 				else
@@ -89,7 +89,7 @@
 			if(dither.alpha == alpha)
 				return
 			animate(dither, alpha = alpha, time = duration)
-			SPAWN_DBG(duration + 1)
+			SPAWN(duration + 1)
 				if (alpha > 0)
 					add_screen(dither)
 				else

@@ -3,7 +3,7 @@
 	organ_name = "pancreas"
 	organ_holder_name = "pancreas"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 6.0
+	organ_holder_required_op_stage = 6
 	icon_state = "pancreas"
 	body_side = R_ORGAN
 	failure_disease = /datum/ailment/disease/pancreatitis
@@ -32,6 +32,16 @@
 			if (holder.pancreas == src)
 				holder.pancreas = null
 		..()
+
+/obj/item/organ/pancreas/synth
+	name = "synthpancreas"
+	organ_name = "synthpancreas"
+	icon_state = "plant"
+	desc = "A plant-based alternative to the normal pancreas..."
+	synthetic = 1
+	New()
+		..()
+		src.icon_state = pick("plant_pancreas", "plant_pancreas_bloom")
 
 /obj/item/organ/pancreas/cyber
 	name = "cyberpancreas"

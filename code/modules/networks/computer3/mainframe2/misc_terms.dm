@@ -77,8 +77,8 @@
 		if (..())
 			return 1
 
-		if (href_list["dipsw"] && src.panel_open && get_dist(usr, src) < 2)
-			var/switchNum = text2num(href_list["dipsw"])
+		if (href_list["dipsw"] && src.panel_open && GET_DIST(usr, src) < 2)
+			var/switchNum = text2num_safe(href_list["dipsw"])
 			if (switchNum < 1 || switchNum > 8)
 				return 1
 
@@ -100,6 +100,7 @@
 
 		..()
 
+
 /obj/machinery/networked/storage
 	name = "Databank"
 	desc = "A networked data storage device."
@@ -108,7 +109,7 @@
 	icon_state = "tapedrive0"
 	device_tag = "PNET_DATA_BANK"
 	mats = 12
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	var/base_icon_state = "tapedrive"
 	var/bank_id = null //Unique Identifier for this databank.
 	var/locked = 1
@@ -160,7 +161,7 @@
 
 		src.net_id = generate_net_id(src)
 
-		SPAWN_DBG(1 SECONDS)
+		SPAWN(1 SECONDS)
 
 			if(!src.link)
 				var/turf/T = get_turf(src)
@@ -214,7 +215,7 @@
 
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() && !(status & NOPOWER)) //Allow them to remove tapes even if the power's out.
 			return
 
@@ -268,7 +269,7 @@
 				return
 
 			//Ai/cyborgs cannot physically remove a tape from a room away.
-			if(issilicon(usr) && get_dist(src, usr) > 1)
+			if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 				boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 				return
 
@@ -315,7 +316,7 @@
 			src.host_id = null
 			src.old_host_id = null
 			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
 
 			src.updateUsrDialog()
@@ -330,7 +331,7 @@
 		src.add_fingerprint(usr)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, src.setup_tape_type) && setup_accept_tapes) //INSERT SOME TAPES
 			if (src.tape)
 				boutput(user, "<span class='alert'>There is already a [src.setup_tape_tag] in the drive.</span>")
@@ -348,7 +349,7 @@
 			return
 
 		else if (isscrewingtool(W))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			src.locked = !src.locked
 			src.panel_open = !src.locked
 			boutput(user, "You [src.locked ? "secure" : "unscrew"] the cover.")
@@ -375,7 +376,7 @@
 		//Otherwise, if they aren't addressing us, ignore them
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[src.net_number]")
 
 			return
@@ -390,7 +391,7 @@
 //					//WHAT IS THIS, HOW COULD THIS HAPPEN??
 //					src.host_id = null
 //					src.updateUsrDialog()
-//					SPAWN_DBG(0.3 SECONDS)
+//					SPAWN(0.3 SECONDS)
 //						src.post_status(target, "command","term_disconnect")
 //					return
 
@@ -404,7 +405,7 @@
 				if(signal.data["data"] != "noreply")
 					src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 				src.updateUsrDialog()
-				SPAWN_DBG(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
+				SPAWN(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 					src.post_status(target,"command","term_message","data","command=register&data=[src.bank_id]")
 				return
 
@@ -421,7 +422,7 @@
 					sessionid = 0
 
 				if (setup_access_click)
-					playsound(src.loc, "sound/machines/driveclick.ogg", 25, 0, -2)
+					playsound(src.loc, 'sound/machines/driveclick.ogg', 25, 0, -2)
 				switch(data["command"])
 					if("sync")
 						if (!src.tape)
@@ -442,7 +443,7 @@
 							for(var/datum/computer/file/F in tape.root.contents)
 								catrec.fields[F.name] = "[F.extension] - [F.size]"
 
-						SPAWN_DBG(0.2 SECONDS)
+						SPAWN(0.2 SECONDS)
 							src.post_file(target, "data","command=catalog",catrec)
 							//qdel(catrec) //A copy is sent, the original is no longer needed.
 							if (catrec)
@@ -540,8 +541,8 @@
 
 						if(istype(sought))
 							var/newval = data["val"]
-							if (isnum(text2num(newval)))
-								newval = text2num(newval)
+							if (isnum(text2num_safe(newval)))
+								newval = text2num_safe(newval)
 							sought.metadata[data["field"]] = newval
 							src.post_status(target,"command","term_message","data","command=status&status=success&session=[sessionid]")
 							return
@@ -608,7 +609,7 @@
 			icon_state = "[base_icon_state]1"
 			status &= ~NOPOWER
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				icon_state = "[base_icon_state]-p"
 				status |= NOPOWER
 
@@ -686,11 +687,11 @@
 	power_change()
 		if(powered())
 			status &= ~NOPOWER
-			update_icon()
+			UpdateIcon()
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				status |= NOPOWER
-				update_icon()
+				UpdateIcon()
 				if(vrbomb)
 					qdel(vrbomb)
 
@@ -721,11 +722,11 @@
 
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tank))
 			return attack_hand(user)
 		else if (isscrewingtool(W))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			boutput(user, "You [src.locked ? "secure" : "unscrew"] the maintenance panel.")
 			src.panel_open = !src.panel_open
 			src.updateUsrDialog()
@@ -734,14 +735,14 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & (NOPOWER|BROKEN))
 			return
 
 		if(user.lying || user.stat)
 			return 1
 
-		if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !issilicon(user))
+		if ((BOUNDS_DIST(src, user) > 0 || !istype(src.loc, /turf)) && !issilicon(user))
 			return 1
 
 		src.add_dialog(user)
@@ -783,7 +784,7 @@
 		if (href_list["tank"])
 
 			//Ai/cyborgs cannot physically remove a tape from a room away.
-			if(issilicon(usr) && get_dist(src, usr) > 1)
+			if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 				boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 				return
 
@@ -810,7 +811,7 @@
 								I.set_loc(src)
 								src.tank1 = I
 								boutput(usr, "You insert [I].")
-					src.update_icon()
+					src.UpdateIcon()
 				if("2")
 					if(src.tank2)
 						src.tank2.set_loc(src.loc)
@@ -833,7 +834,7 @@
 								I.set_loc(src)
 								src.tank2 = I
 								boutput(usr, "You insert [I].")
-					src.update_icon()
+					src.UpdateIcon()
 
 			src.updateUsrDialog()
 
@@ -865,7 +866,7 @@
 			src.host_id = null
 			src.old_host_id = null
 			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
 
 			src.updateUsrDialog()
@@ -884,7 +885,7 @@
 
 			var/turf/B = pick_landmark(vr_landmark)
 			if(!B)
-				playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
 				src.visible_message("[src] emits a somber ping.")
 				return
 
@@ -911,7 +912,7 @@
 			vrtank2.master = vrbomb
 			vrtank2.set_loc(vrbomb)
 
-			vrbomb.update_icon()
+			vrbomb.UpdateIcon()
 
 			T.timing = 1
 			T.c_state(1)
@@ -924,7 +925,7 @@
 					VT.icon_state = initial(VT.icon_state)
 				for(var/turf/unsimulated/wall/bombvr/VT in to_reset)
 					VT.icon_state = initial(VT.icon_state)
-					VT.opacity = 1
+					VT.set_opacity(1)
 					VT.set_density(1)
 
 			if(results)
@@ -994,25 +995,25 @@
 				src.sync(src.host_id)
 			return
 
-		update_icon()
-			src.overlays = null
-			if(tank1) //Update tank overlays.
-				src.overlays += image(src.icon,"bscanner-tank1")
-			if(tank2)
-				src.overlays += image(src.icon,"bscanner-tank2")
+	update_icon()
+		src.overlays = null
+		if(tank1) //Update tank overlays.
+			src.overlays += image(src.icon,"bscanner-tank1")
+		if(tank2)
+			src.overlays += image(src.icon,"bscanner-tank2")
 
-			if(status & BROKEN)
-				icon_state = "bomb_scannerb"
-				return
-			if(status & NOPOWER)
-				icon_state = "bomb_scanner-p"
-				return
-
-			if(src.tank1 && src.tank2)
-				icon_state = "bomb_scanner1"
-			else
-				icon_state = "bomb_scanner0"
+		if(status & BROKEN)
+			icon_state = "bomb_scannerb"
 			return
+		if(status & NOPOWER)
+			icon_state = "bomb_scanner-p"
+			return
+
+		if(src.tank1 && src.tank2)
+			icon_state = "bomb_scanner1"
+		else
+			icon_state = "bomb_scanner0"
+		return
 
 //Generic disk to hold VR bomb log
 /obj/item/disk/data/bomb_tester
@@ -1029,23 +1030,23 @@
 	desc = "A nuclear charge used as a self-destruct device. Uh oh!"
 	device_tag = "PNET_NUCCHARGE"
 	var/timing = 0
-	var/time = 60
+	var/time = 180
 	power_usage = 120
 
-	var/status_display_freq = "1435"
+	var/status_display_freq = FREQ_STATUS_DISPLAY
 
 
 #define DISARM_CUTOFF 10 //Can't disarm past this point! OH NO!
 
-	mats = 80 //haha this is a bad idea
+	mats = list("POW-3" = 27, "MET-3" = 25, "CON-2" = 13, "CRY-2" = 15) //haha this is a bad idea
 	deconstruct_flags = DECON_NONE
 	is_syndicate = 1 //^ Agreed
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
-			src.net_id = generate_net_id(src)
-
+		src.net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, status_display_freq)
+		SPAWN(0.5 SECONDS)
 			if(!src.link)
 				var/turf/T = get_turf(src)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
@@ -1053,16 +1054,9 @@
 					src.link = test_link
 					src.link.master = src
 
-	disposing()
-		//get freq datunm first
-		//radio_controller.remove_object(src, "[frequency]")
-		..()
-
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || status & NOPOWER)
 			return
-
-		src.add_dialog(user)
 
 		var/dat = "<html><head><title>Nuclear Charge</title></head><body>"
 
@@ -1107,7 +1101,7 @@
 			src.host_id = null
 			src.old_host_id = null
 			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
 
 			src.updateUsrDialog()
@@ -1145,7 +1139,7 @@
 				src.detonate()
 				return
 			if(src.time == DISARM_CUTOFF)
-				world << sound('sound/misc/airraid_loop_short.ogg')
+				playsound_global(world, 'sound/misc/airraid_loop_short.ogg', 90)
 			if(src.time <= DISARM_CUTOFF)
 				src.icon_state = "net_nuke2"
 				boutput(world, "<span class='alert'><b>[src.time] seconds until nuclear charge detonation.</b></span>")
@@ -1170,15 +1164,15 @@
 			else
 				src.icon_state = "net_nuke0"
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				icon_state = "net_nuke-p"
 				status |= NOPOWER
 
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
 			src.panel_open = !src.panel_open
 			src.updateUsrDialog()
@@ -1201,7 +1195,7 @@
 		//Otherwise, if they aren't addressing us, ignore them
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[src.net_number]")
 
 			return
@@ -1216,7 +1210,7 @@
 //					//WHAT IS THIS, HOW COULD THIS HAPPEN??
 //					src.host_id = null
 //					src.updateUsrDialog()
-//					SPAWN_DBG(0.3 SECONDS)
+//					SPAWN(0.3 SECONDS)
 //						src.post_status(target, "command","term_disconnect")
 //					return
 
@@ -1230,7 +1224,7 @@
 				if(signal.data["data"] != "noreply")
 					src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 				src.updateUsrDialog()
-				SPAWN_DBG(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
+				SPAWN(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 					src.post_status(target,"command","term_message","data","command=register&data=nucharge")
 				return
 
@@ -1250,7 +1244,7 @@
 					if("status")
 						var/status_string = "command=n_status"
 						status_string += "&active=[src.timing]&timeleft=[src.time]&session=[sessionid]"
-						SPAWN_DBG(0)
+						SPAWN(0)
 							src.post_status(target,"command","term_message","data",status_string)
 						return
 
@@ -1258,11 +1252,11 @@
 						if(src.timing) //No changing the time when we're already timing!
 							src.post_status(target,"command","term_message","data","command=status&status=failure&session=[sessionid]")
 							return
-						var/thetime = text2num(data["time"])
+						var/thetime = text2num_safe(data["time"])
 						if(isnull(thetime))
 							src.post_status(target,"command","term_message","data","command=status&status=noparam&session=[sessionid]")
 							return
-						thetime = max( min(thetime,440), 30)
+						thetime = clamp(thetime, MIN_NUKE_TIME, MAX_NUKE_TIME)
 						src.time = thetime
 						src.post_status(target,"command","term_message","data","command=status&status=success&session=[sessionid]")
 						return
@@ -1282,8 +1276,12 @@
 							admessage += "<b> ([T.x],[T.y],[T.z])</b>"
 						message_admins(admessage)
 						//World announcement.
-						boutput(world, "<span class='alert'><b>Alert: Self-Destruct Sequence has been engaged.</b></span>")
-						boutput(world, "<span class='alert'><b>Detonation in T-[src.time] seconds!</b></span>")
+						if (src.z == Z_LEVEL_STATION)
+							command_alert("The [station_or_ship()]'s self-destruct sequence has been activated at coordinates (<b>X</b>: [src.x], <b>Y</b>: [src.y], <b>Z</b>: [src.z]), please evacuate the [station_or_ship()] or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated", alert_origin = ALERT_STATION)
+							playsound_global(world, 'sound/machines/engine_alert2.ogg', 40)
+						else
+							command_alert("A nuclear charge at [get_area(src)] has been activated, please stay clear or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Nuclear Charge Activated", alert_origin = ALERT_STATION)
+							playsound_global(world, 'sound/misc/airraid_loop.ogg', 25)
 						return
 					if("deact")
 						if(data["auth"] != netpass_heads)
@@ -1294,7 +1292,7 @@
 							return
 
 						src.timing = 0
-						src.time = max(src.time,30) //so we don't have some jerk letting it tick down to 11 and then saving it for later.
+						src.time = max(src.time,MIN_NUKE_TIME) //so we don't have some jerk letting it tick down to 11 and then saving it for later.
 						src.icon_state = "net_nuke0"
 						src.post_status(target,"command","term_message","data","command=status&status=success&session=[sessionid]")
 						//World announcement.
@@ -1324,7 +1322,7 @@
 		return
 
 	proc/detonate()
-		world << sound('sound/effects/kaboom.ogg')
+		playsound_global(world, 'sound/effects/kaboom.ogg', 70)
 		//explosion(src, src.loc, 10, 20, 30, 35)
 		explosion_new(src, get_turf(src), 10000)
 		//dispose()
@@ -1334,21 +1332,17 @@
 
 
 	proc/post_display_status(var/timeleft)
-
-		var/datum/radio_frequency/frequency = radio_controller.return_frequency(status_display_freq)
-
-		if(!frequency) return
-
 		var/datum/signal/status_signal = get_free_signal()
 		status_signal.source = src
 		status_signal.transmission_method = 1
+		status_signal.data["address_tag"] = "STATDISPLAY"
 		if(timeleft < 0)
 			status_signal.data["command"] = "blank"
 		else
 			status_signal.data["command"] = "destruct"
 			status_signal.data["time"] = "[timeleft]"
 
-		frequency.post_signal(src, status_signal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal)
 
 #undef DISARM_CUTOFF
 
@@ -1360,11 +1354,10 @@
 	density = 1
 	icon_state = "net_radio"
 	device_tag = "PNET_PR6_RADIO"
-	//var/freq = 1219
+	//var/freq = FREQ_BUDDY
 	mats = 8
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	var/list/frequencies = list()
-	var/datum/radio_frequency/radio_connection
 	var/transmission_range = 100 //How far does our signal reach?
 	var/take_radio_input = 1 //Do we echo radio signals addresed to us back to our host?
 	var/can_be_host = 0
@@ -1376,11 +1369,11 @@
 
 		src.net_id = generate_net_id(src)
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 
 			if (radio_controller)
-				frequencies["1411"] = radio_controller.add_object(src, "1411")
-				frequencies["1419"] = radio_controller.add_object(src, "1419")
+				add_frequency(FREQ_AIRLOCK)
+				add_frequency(FREQ_FREE)
 
 			if(!src.link)
 				var/turf/T = get_turf(src)
@@ -1389,12 +1382,10 @@
 					src.link = test_link
 					src.link.master = src
 
-	disposing()
-		radio_controller.remove_object(src, "1411")
-		radio_controller.remove_object(src, "1419")
-		..()
+	proc/add_frequency(newFreq)
+		frequencies["[newFreq]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[newFreq]", newFreq)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -1436,9 +1427,9 @@
 		onclose(user,"net_radio")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
 			src.panel_open = !src.panel_open
 			src.updateUsrDialog()
@@ -1464,7 +1455,7 @@
 			src.host_id = null
 			src.old_host_id = null
 			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
 
 			src.updateUsrDialog()
@@ -1479,7 +1470,7 @@
 			icon_state = "net_radio"
 			status &= ~NOPOWER
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				icon_state = "net_radio0"
 				status |= NOPOWER
 
@@ -1506,11 +1497,12 @@
 
 		return
 
-	receive_signal(datum/signal/signal, transmission_type, theFreq)
+	receive_signal(datum/signal/signal, transmission_type, range, connection_id)
 		if(status & (NOPOWER) || !src.link)
 			return
 		if(!signal || !src.net_id || signal.encryption)
 			return
+		var/theFreq = isnull(connection_id) ? null : text2num_safe(copytext(connection_id, 2))
 
 		var/target = signal.data["sender"] ? signal.data["sender"] : signal.data["netid"]
 		if(!target)
@@ -1519,19 +1511,12 @@
 		//We care very deeply about address_1.
 		if(!cmptext(signal.data["address_1"], src.net_id))
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")))
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					if (signal.transmission_method == TRANSMISSION_RADIO)
-						var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("[theFreq]")
-
-						if(!transmit_connection)
-							return
-
 						var/datum/signal/rsignal = get_free_signal()
 						rsignal.source = src
-						rsignal.transmission_method = TRANSMISSION_RADIO
 						rsignal.data = list("address_1"=target, "command"="ping_reply", "device"=src.device_tag, "netid"=src.net_id, "net"="[net_number]", "sender" = src.net_id)
-
-						transmit_connection.post_signal(src, rsignal, transmission_range)
+						SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, rsignal, null, connection_id)
 					else
 						src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[net_number]")
 				return
@@ -1573,7 +1558,7 @@
 			if (theFreq)
 				workparams += "&_freq=[theFreq]"
 
-			SPAWN_DBG(0.2 SECONDS)
+			SPAWN(0.2 SECONDS)
 				if(working_file)
 					src.post_file(src.host_id,"data",workparams,working_file)
 				else
@@ -1590,7 +1575,7 @@
 //				if(target == src.host_id)
 //					src.host_id = null
 //					src.updateUsrDialog()
-//					SPAWN_DBG(0.3 SECONDS)
+//					SPAWN(0.3 SECONDS)
 //						src.post_status(target, "command","term_disconnect")
 //					return
 
@@ -1604,7 +1589,7 @@
 				if(signal.data["data"] != "noreply")
 					src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 				src.updateUsrDialog()
-				SPAWN_DBG(0.5 SECONDS) //Sign up with the driver (if a mainframe contacted us)
+				SPAWN(0.5 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 					src.post_status(target,"command","term_message","data","command=register[(length(frequencies)) ? "&freqs=[jointext(frequencies,",")]" : ""]")
 				return
 
@@ -1620,19 +1605,19 @@
 				if (data["_command"])
 					switch (lowertext(data["_command"]))
 						if ("add")
-							var/newFreq = "[round(max(1000, min(text2num(data["_freq"]), 1500)))]"
+							var/newFreq = "[round(clamp(text2num_safe(data["_freq"]), 1000, 1500))]"
 							if (newFreq && !(newFreq in frequencies))
-								frequencies[newFreq] = radio_controller.add_object(src, newFreq)
+								add_frequency(newFreq)
 
 						if ("remove")
-							var/newFreq = "[round(max(1000, min(text2num(data["_freq"]), 1500)))]"
+							var/newFreq = "[round(clamp(text2num_safe(data["_freq"]), 1000, 1500))]"
 							if (newFreq && (newFreq in frequencies))
-								radio_controller.remove_object(src, newFreq)
+								qdel(frequencies[newFreq])
 								frequencies -= newFreq
 
 						if ("clear")
 							for (var/x in frequencies)
-								radio_controller.remove_object(src, x)
+								qdel(frequencies[x])
 
 							frequencies.len = 0
 
@@ -1640,26 +1625,24 @@
 							src.post_status(target,"command","term_message","data","command=status&status=failure")
 					return
 
-				var/newFreq = round(max(1000, min(text2num(data["_freq"]), 1500)))
+				var/newFreq = round(clamp(text2num_safe(data["_freq"]), 1000, 1500))
 				data -= "_freq"
 				if (!newFreq || !radio_controller || !length(data))
 					src.post_status(target,"command","term_message","data","command=status&status=failure")
 					return
-				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("[newFreq]")
 
-				if(!transmit_connection)
+				if(!("[newFreq]" in src.frequencies))
 					src.post_status(target,"command","term_message","data","command=status&status=failure")
 					return
 
 				var/datum/signal/rsignal = get_free_signal()
 				rsignal.source = src
-				rsignal.transmission_method = TRANSMISSION_RADIO
 				rsignal.data = data.Copy()
 
 				rsignal.data["sender"] = src.net_id
 
-				SPAWN_DBG(0)
-					transmit_connection.post_signal(src, rsignal, transmission_range)
+				SPAWN(0)
+					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, rsignal, transmission_range, "f[newFreq]")
 					flick("net_radio-blink", src)
 				src.post_status(target,"command","term_message","data","command=status&status=success")
 
@@ -1690,7 +1673,7 @@
 	desc = "A networked printer.  It's designed to print."
 	anchored = 1
 	density = 1
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	icon_state = "printer0"
 	device_tag = "PNET_PRINTDEVC"
 	mats = 6
@@ -1708,11 +1691,13 @@
 #define MAX_PRINTBUFFER_SIZE 10
 
 	New()
+		START_TRACKING
 		..()
+		src.AddComponent(/datum/component/obj_projectile_damage)
 		if(!print_id)
 			src.print_id = "GENERIC"
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
 
 			if(!src.link)
@@ -1722,11 +1707,15 @@
 					src.link = test_link
 					src.link.master = src
 
-			src.update_icon() //Update the icon
+			src.UpdateIcon() //Update the icon
 		return
 
+	disposing()
+		STOP_TRACKING
+		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/paper)) //Load up the printer!
 			if (sheets_remaining >= MAX_SHEETS)
 				boutput(user, "<span class='alert'>The tray is full!</span>")
@@ -1737,7 +1726,7 @@
 				return
 
 			user.drop_item()
-			pool(W)
+			qdel(W)
 			boutput(user, "You load the paper into [src].")
 			if(!src.sheets_remaining && !src.jam)
 				src.clear_alert()
@@ -1760,7 +1749,7 @@
 				boutput(user, "You load [W:amount] sheets into the tray.")
 				src.sheets_remaining += W:amount
 				user.drop_item()
-				pool(W)
+				qdel(W)
 
 			if(!src.jam)
 				src.clear_alert()
@@ -1771,7 +1760,7 @@
 			return
 
 		else if (isscrewingtool(W))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
 			src.panel_open = !src.panel_open
 			src.updateUsrDialog()
@@ -1780,7 +1769,13 @@
 		else
 			return attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	onDestroy()
+		if (src.powered())
+			elecflash(src, power = 2)
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
+		. = ..()
+
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -1824,12 +1819,12 @@
 
 		if (href_list["unjam"])
 			if(src.jam)
-				if(get_dist(src,usr) > 1)
+				if(BOUNDS_DIST(src, usr) > 0)
 					boutput(usr, "You are too far away to unjam it.")
 					return
 				src.jam = 0
 				src.blinking = 0
-				src.update_icon()
+				src.UpdateIcon()
 				src.temp_msg = "PRINTER OK"
 				src.updateUsrDialog()
 				boutput(usr, "<span class='notice'>You clear the jam.</span>")
@@ -1849,7 +1844,7 @@
 			src.host_id = null
 			src.old_host_id = null
 			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
 
 			src.updateUsrDialog()
@@ -1901,7 +1896,7 @@
 
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[net_number]")
 
 			return
@@ -1917,7 +1912,7 @@
 					//WHAT IS THIS, HOW COULD THIS HAPPEN??
 					src.host_id = null
 					src.updateUsrDialog()
-					SPAWN_DBG(0.3 SECONDS)
+					SPAWN(0.3 SECONDS)
 						src.post_status(target, "command","term_disconnect")
 					return
 */
@@ -1931,7 +1926,7 @@
 				if(signal.data["data"] != "noreply")
 					src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 				src.updateUsrDialog()
-				SPAWN_DBG(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
+				SPAWN(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 					src.post_status(target,"command","term_message","data","command=register&data=[src.print_id]")
 				return
 
@@ -2039,8 +2034,8 @@
 			sheets_remaining--
 
 			flick("printer-printing",src)
-			playsound(src.loc, "sound/machines/printer_dotmatrix.ogg", 50, 1)
-			SPAWN_DBG(3.2 SECONDS)
+			playsound(src.loc, 'sound/machines/printer_dotmatrix.ogg', 50, 1)
+			SPAWN(3.2 SECONDS)
 
 				if (istype(print_text, /datum/computer/file/image)) // trying to print a photo! :I
 					var/datum/computer/file/image/IMG = print_text
@@ -2050,7 +2045,7 @@
 					P.name = IMG.img_name
 					P.desc = IMG.img_desc*/
 				else
-					var/obj/item/paper/P = unpool(/obj/item/paper)
+					var/obj/item/paper/P = new /obj/item/paper
 					P.set_loc(src.loc)
 
 
@@ -2102,7 +2097,7 @@
 				src.printing = 0
 				src.print_buffer.len = 0
 
-				src.update_icon()
+				src.UpdateIcon()
 
 				elecflash(src,power = 3)
 				if(src.host_id) //welp, we're broken.
@@ -2115,33 +2110,33 @@
 
 		print_alert()
 			blinking = 1
-			src.update_icon()
-			playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
+			src.UpdateIcon()
+			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
 			src.visible_message("<span class='alert'>[src] pings!</span>")
 			return
 
 		clear_alert()
 			blinking = 0
-			src.update_icon()
+			src.UpdateIcon()
 			return
 
-		update_icon()
-			src.overlays = null
-			if(src.jam) //Update jam overlay.
-				src.overlays += image(src.icon,"printer-jamoverlay")
+	update_icon()
+		src.overlays = null
+		if(src.jam) //Update jam overlay.
+			src.overlays += image(src.icon,"printer-jamoverlay")
 
-			if(status & BROKEN)
-				icon_state = "printerb"
-				return
-			if(status & NOPOWER)
-				icon_state = "printer-p"
-				return
-
-			if(src.blinking)
-				icon_state = "printer-blink"
-			else
-				icon_state = "printer0"
+		if(status & BROKEN)
+			icon_state = "printerb"
 			return
+		if(status & NOPOWER)
+			icon_state = "printer-p"
+			return
+
+		if(src.blinking)
+			icon_state = "printer-blink"
+		else
+			icon_state = "printer0"
+		return
 
 #undef MAX_SHEETS
 #undef SETUP_JAM_IGNITION
@@ -2153,6 +2148,7 @@
 	anchored = 1
 	density = 1
 	icon_state = "scanner0"
+	deconstruct_flags = DECON_DESTRUCT
 	//device_tag = "PNET_SCANDEVC"
 	var/scanning = 0 //Are we scanning RIGHT NOW?
 	var/obj/item/scanned_thing //Ideally, this would be a paper or photo.
@@ -2171,14 +2167,14 @@
 		if (!dd_hasprefix(uppertext(src.bank_id),"SC-"))
 			src.bank_id = "SC-[bank_id]"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & (NOPOWER|BROKEN))
 			return
 
 		if(user.lying || user.stat)
 			return 1
 
-		if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !issilicon(user))
+		if ((BOUNDS_DIST(src, user) > 0 || !istype(src.loc, /turf)) && !issilicon(user))
 			return 1
 
 		src.add_dialog(user)
@@ -2208,7 +2204,7 @@
 		onclose(user,"scanner")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/paper) || istype(W, /obj/item/photo))
 			if (scanned_thing)
 				boutput(user, "<span class='alert'>There is already something in the scanner!</span>")
@@ -2218,7 +2214,7 @@
 			W.set_loc(src)
 			scanned_thing = W
 			power_change()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				scan_document()
 			src.updateUsrDialog()
 
@@ -2232,7 +2228,7 @@
 		src.add_dialog(usr)
 
 		if (href_list["document"])
-			if(issilicon(usr) && get_dist(src, usr) > 1)
+			if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 				boutput(usr, "<span class='alert'>There is no electronic control over the actual document.</span>")
 				return
 
@@ -2266,7 +2262,7 @@
 			status &= ~NOPOWER
 			src.icon_state = "scanner[!isnull(scanned_thing)]"
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				status |= NOPOWER
 				src.icon_state = "scanner[!isnull(scanned_thing)]-p"
 		return
@@ -2318,7 +2314,7 @@
 			if (src.tape.root.add_file( scanned ))
 				scan_buffer = scanned
 				src.sync(src.host_id)
-				playsound(src.loc, "sound/machines/ping.ogg", 50, 0)
+				playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 			else
 				scanned.dispose()
 
@@ -2334,7 +2330,7 @@
 			if (src.tape.root.add_file( scanned ))
 				scan_buffer = scanned
 				src.sync(src.host_id)
-				playsound(src.loc, "sound/machines/ping.ogg", 50, 0)
+				playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 			else
 				scanned.dispose()
 
@@ -2410,7 +2406,7 @@
 		light.set_color(0.20, 0.65, 0.20)
 		light.attach(src)
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
 
 			if(!src.link)
@@ -2420,7 +2416,7 @@
 					src.link = test_link
 					src.link.master = src
 
-			src.update_icon()
+			src.UpdateIcon()
 		return
 /*
 	disposing()
@@ -2439,7 +2435,7 @@
 
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -2499,7 +2495,7 @@
 			src.host_id = null
 			src.old_host_id = null
 			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
 
 			src.updateUsrDialog()
@@ -2521,13 +2517,13 @@
 			active_time--
 			if (!active_time)
 				//src.state = src.online
-				src.update_icon(src.online)
+				src.UpdateIcon(src.online)
 
 		switch (src.state)
 			if (0)
 				if (src.scan_beam)
-					//qdel(src.scan_beam)
-					src.scan_beam.dispose()
+					qdel(src.scan_beam)
+					src.scan_beam = null
 			if (1)
 				if (!src.scan_beam)
 					var/turf/beamTurf = get_step(src, src.dir)
@@ -2550,8 +2546,8 @@
 						if (src.host_id)
 							src.post_status(src.host_id,"command","term_message","data","command=statechange&state=alert")
 
-						src.update_icon(3)
-						playsound(src.loc, "sound/machines/whistlealert.ogg", 50, 1)
+						src.UpdateIcon(3)
+						playsound(src.loc, 'sound/machines/whistlealert.ogg', 50, 1)
 						return
 
 				return
@@ -2571,7 +2567,7 @@
 
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[src.net_number]")
 
 			return
@@ -2586,7 +2582,7 @@
 
 //					src.host_id = null
 //					src.updateUsrDialog()
-//					SPAWN_DBG(0.3 SECONDS)
+//					SPAWN(0.3 SECONDS)
 //						src.post_status(target, "command","term_disconnect")
 //					return
 
@@ -2600,7 +2596,7 @@
 				if(signal.data["data"] != "noreply")
 					src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 				src.updateUsrDialog()
-				SPAWN_DBG(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
+				SPAWN(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 					src.post_status(target,"command","term_message","data","command=register&data=[src.detector_id]")
 				return
 
@@ -2615,12 +2611,12 @@
 				switch(lowertext(data["command"]))
 					if("activate")
 						src.online = 1
-						src.update_icon(max(1, src.state))
+						src.UpdateIcon(max(1, src.state))
 
 					if("deactivate")
 						src.online = 0
 						src.active_time = 0
-						src.update_icon(0)
+						src.UpdateIcon(0)
 
 
 				return
@@ -2646,17 +2642,17 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					src.status |= BROKEN
-					src.update_icon(0)
-			if(3.0)
+					src.UpdateIcon(0)
+			if(3)
 				if (prob(25))
 					src.status |= BROKEN
-					src.update_icon(0)
+					src.UpdateIcon(0)
 			else
 		return
 
@@ -2666,40 +2662,40 @@
 		else
 			status |= NOPOWER
 
-		src.update_icon(src.state)
+		src.UpdateIcon(src.state)
 
-	proc
-		update_icon(var/newState = 1)
-			if (status & (NOPOWER|BROKEN))
-				light.disable()
-				icon_state = "secdetector-p"
-				if (src.scan_beam)
-					//qdel(src.scan_beam)
-					src.scan_beam.dispose()
-				src.state = src.online
-				return
 
-			var/change = (src.state != newState)
-			src.state = newState
-
-			icon_state = "secdetector[src.state]"
-			switch (src.state)
-				if (2 to 3)
-					light.set_brightness(src.state == 2 ? src.active_brightness : src.alert_brightness)
-					light.enable()
-				if (1)
-					light.disable()
-					if (src.host_id && change)
-						SPAWN_DBG(0)
-							src.post_status(src.host_id,"command","term_message","data","command=statechange&state=idle")
-				if (0)
-					light.disable()
-					if (src.host_id && change)
-						SPAWN_DBG(0)
-							src.post_status(src.host_id,"command","term_message","data","command=statechange&state=inactive")
-
+	update_icon(var/newState = 1)
+		if (status & (NOPOWER|BROKEN))
+			light.disable()
+			icon_state = "secdetector-p"
+			if (src.scan_beam)
+				qdel(src.scan_beam)
+				src.scan_beam = null
+			src.state = src.online
 			return
 
+		var/change = (src.state != newState)
+		src.state = newState
+
+		icon_state = "secdetector[src.state]"
+		switch (src.state)
+			if (2 to 3)
+				light.set_brightness(src.state == 2 ? src.active_brightness : src.alert_brightness)
+				light.enable()
+			if (1)
+				light.disable()
+				if (src.host_id && change)
+					SPAWN(0)
+						src.post_status(src.host_id,"command","term_message","data","command=statechange&state=idle")
+			if (0)
+				light.disable()
+				if (src.host_id && change)
+					SPAWN(0)
+						src.post_status(src.host_id,"command","term_message","data","command=statechange&state=inactive")
+
+		return
+	proc
 		beam_crossed() //Called when anything solid crosses the beam, places us into the alert state.
 			if (src.state != 1)
 				return
@@ -2707,10 +2703,10 @@
 			if (src.scan_beam)
 				src.scan_beam.dispose()
 			src.active_time = src.setup_active_time
-			update_icon(2)
+			UpdateIcon(2)
 			if (src.host_id)
 				src.post_status(src.host_id,"command","term_message","data","command=statechange&state=onguard")
-			playsound(src.loc, "sound/machines/whistlebeep.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/whistlebeep.ogg', 50, 1)
 			return
 
 		assess_threat(mob/living/threat as mob) //Default scanners just check for humans without proper access and aliens.
@@ -2737,13 +2733,13 @@
 
 	dir = 2
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	anchored = 1.0
+	anchored = 1
 	flags = TABLEPASS
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	disposing()
 		if (src.next)
-			src.next.dispose()
+			qdel(src.next)
 			src.next = null
 		..()
 
@@ -2751,10 +2747,11 @@
 		src.hit()
 		return
 
-	HasEntered(atom/movable/AM as mob|obj)
-		if (istype(AM, /obj/beam) || istype(AM, /obj/critter/aberration))
+	Crossed(atom/movable/AM as mob|obj)
+		..()
+		if (istype(AM, /obj/beam) || istype(AM, /obj/critter/aberration) || isobserver(AM) || isintangible(AM))
 			return
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			src.hit(AM)
 			return
 		return
@@ -2787,20 +2784,20 @@
 	desc = "A beam of infrared light."
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "ibeam"
-	invisibility = 2
+	invisibility = INVIS_CLOAK
 	dir = 2
 	//var/obj/beam/ir_beam/next = null
 	var/obj/machinery/networked/secdetector/master = null
 	//var/limit = 24
-	anchored = 1.0
+	anchored = 1
 	flags = TABLEPASS
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	New(location, newLimit)
 		..()
 		if (newLimit != null)
 			src.limit = newLimit
-		SPAWN_DBG(0.3 SECONDS)
+		SPAWN(0.3 SECONDS)
 			generate_next()
 		return
 /*
@@ -2817,11 +2814,12 @@
 		..()
 
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(isobserver(AM) || isintangible(AM)) return
 		if (istype(AM, /obj/beam))
 			return
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			src.hit()
 			return
 		return
@@ -2865,7 +2863,7 @@
 	New()
 		..()
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
 
 			if(!src.link)
@@ -2875,7 +2873,7 @@
 					src.link = test_link
 					src.link.master = src
 
-			src.update_icon()
+			src.UpdateIcon()
 		return
 /*
 	disposing()
@@ -2899,11 +2897,11 @@
 		src.telecrystals.len = 0
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/raw_material/telecrystal))
 			return attack_hand(user)
 		else if (isscrewingtool(W))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
 			src.panel_open = !src.panel_open
 			src.updateUsrDialog()
@@ -2912,7 +2910,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -2974,7 +2972,7 @@
 				boutput(usr, "<span class='alert'>The panel is locked.</span>")
 				return
 
-			var/targetSlot = round(text2num(href_list["insert"]))
+			var/targetSlot = round(text2num_safe(href_list["insert"]))
 			if (!targetSlot || (targetSlot < 1) || (targetSlot > telecrystals.len))
 				return
 
@@ -3006,7 +3004,7 @@
 				boutput(usr, "<span class='alert'>The panel is locked.</span>")
 				return
 
-			var/targetCrystal = round(text2num(href_list["eject"]))
+			var/targetCrystal = round(text2num_safe(href_list["eject"]))
 			if (!targetCrystal || (targetCrystal < 1) || (targetCrystal > telecrystals.len))
 				return
 
@@ -3033,7 +3031,7 @@
 			src.host_id = null
 			src.old_host_id = null
 			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
 
 			src.updateUsrDialog()
@@ -3067,7 +3065,7 @@
 
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[src.net_number]")
 
 			return
@@ -3082,7 +3080,7 @@
 
 					src.host_id = null
 					src.updateUsrDialog()
-					SPAWN_DBG(0.3 SECONDS)
+					SPAWN(0.3 SECONDS)
 						src.post_status(target, "command","term_disconnect")
 					return
 */
@@ -3096,7 +3094,7 @@
 				if(signal.data["data"] != "noreply")
 					src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 				src.updateUsrDialog()
-				SPAWN_DBG(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
+				SPAWN(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 					src.post_status(target,"command","term_message","data","command=register&data=[isnull(src.beam) ? "0" : "1"]")
 				return
 
@@ -3145,40 +3143,40 @@
 	power_change()
 		if(powered())
 			status &= ~NOPOWER
-			src.update_icon()
+			src.UpdateIcon()
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				status |= NOPOWER
-				src.update_icon()
+				src.UpdateIcon()
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				//dispose()
 				src.dispose()
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					src.status |= BROKEN
-					src.update_icon()
-			if(3.0)
+					src.UpdateIcon()
+			if(3)
 				if (prob(25))
 					src.status |= BROKEN
-					src.update_icon()
+					src.UpdateIcon()
 			else
 		return
 
-	proc
-		update_icon()
-			if (status & (NOPOWER|BROKEN))
-				src.icon_state = "heptemitter-p"
-				if (src.beam)
-					//qdel(src.beam)
-					src.beam.dispose()
-			else
-				src.icon_state = "heptemitter[src.beam ? "1" : "0"]"
-			return
+	update_icon()
+		if (status & (NOPOWER|BROKEN))
+			src.icon_state = "heptemitter-p"
+			if (src.beam)
+				//qdel(src.beam)
+				src.beam.dispose()
+		else
+			src.icon_state = "heptemitter[src.beam ? "1" : "0"]"
+		return
 
+	proc
 		generate_beam()
 			if ((status & (NOPOWER|BROKEN)) || !crystalCount)
 				return 0
@@ -3198,7 +3196,7 @@
 			else
 				src.beam.update_power(src.crystalCount)
 
-			update_icon()
+			UpdateIcon()
 			src.updateUsrDialog()
 			return 1
 
@@ -3214,7 +3212,7 @@
 	//var/obj/beam/h7_beam/next = null
 	var/obj/machinery/networked/h7_emitter/master = null
 	limit = 48
-	anchored = 1.0
+	anchored = 1
 	flags = TABLEPASS
 	var/datum/light/light
 
@@ -3232,7 +3230,7 @@
 		if (newPower != null)
 			src.power = newPower
 		src.icon_state = "h7beam[min(src.power, 5)]"
-		SPAWN_DBG(0.2 SECONDS)
+		SPAWN(0.2 SECONDS)
 			generate_next()
 		return
 
@@ -3264,10 +3262,10 @@
 		src.hit()
 		return
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		if (istype(AM, /obj/beam) || istype(AM, /obj/critter/aberration))
 			return
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			src.hit(AM)
 			return
 		return
@@ -3311,7 +3309,7 @@
 				if (1 to 3)
 					//telehop + radiation
 					if (iscarbon(hitMob))
-						hitMob.changeStatus("radiation", 1000)
+						hitMob.take_radiation_dose(3 SIEVERTS)
 						hitMob.changeStatus("weakened", 2 SECONDS)
 					telehop(hitMob, src.power, src.power > 2)
 					return
@@ -3319,7 +3317,7 @@
 				if (4)
 					//big telehop + might leave parts behind.
 					if (iscarbon(hitMob))
-						hitMob.changeStatus("radiation", 1000)
+						hitMob.take_radiation_dose(3 SIEVERTS)
 
 						random_brute_damage(hitMob, 25)
 						hitMob.changeStatus("weakened", 2 SECONDS)
@@ -3340,9 +3338,6 @@
 						if (!source)
 							telehop(AM, 5, 1)
 							return
-
-						var/area/sourceArea = get_area(source)
-						sourceArea.Entered(AM, AM.loc)
 
 						AM.set_loc(get_turf(source))
 						return
@@ -3392,6 +3387,7 @@
 	//Don't forget to give devices unique device_tag values of the form "PNET_XXXXXXXXX"
 	device_tag = "PNET_TEST_APPT" //This is the device tag used to interface with the mainframe GTPIO driver.
 	mats = 8
+	deconstruct_flags = DECON_DESTRUCT
 
 	power_usage = 200
 	var/dragload = 0 // can we click-drag a machinery-type artifact into this machine?
@@ -3399,7 +3395,7 @@
 	New()
 		..()
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
 
 			if(!src.link)
@@ -3409,15 +3405,15 @@
 					src.link = test_link
 					src.link.master = src
 
-			src.update_icon()
+			src.UpdateIcon()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/raw_material/telecrystal))
 			return attack_hand(user)
 
 		else if (isscrewingtool(W))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
 			src.panel_open = !src.panel_open
 			src.updateUsrDialog()
@@ -3426,7 +3422,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -3459,7 +3455,7 @@
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!istype(O,/obj/) || O.anchored) return
-		if (get_dist(src,O) > 1 || !isturf(O.loc)) return
+		if (BOUNDS_DIST(src, O) > 0 || !isturf(O.loc)) return
 		if (!in_interact_range(user, O) || !in_interact_range(user, src) || !isalive(user)) return
 		if (src.dragload)
 			if (src.contents.len)
@@ -3467,10 +3463,10 @@
 				return
 			src.visible_message("<b>[user.name]</b> loads [O] into [src.name]!")
 			O.set_loc(src)
-			src.update_icon()
+			src.UpdateIcon()
 		else return
 
-	MouseDrop(obj/over_object as obj, src_location, over_location)
+	mouse_drop(obj/over_object as obj, src_location, over_location)
 		ejectContents(usr, over_object)
 
 	verb/eject()
@@ -3483,14 +3479,14 @@
 
 	proc/ejectContents(var/mob/unloader, var/target_location)
 		if (!istype(target_location, /turf/)) return
-		if (get_dist(src,target_location) > 1) return
+		if (BOUNDS_DIST(src, target_location) > 0) return
 		if (!in_interact_range(unloader, target_location) || !in_interact_range(unloader, src) || !isalive(unloader)) return
 		if (src.active)
 			boutput(unloader, "<span class='alert'>You can't unload it while it's active!</span>")
 			return
 		for (var/atom/movable/O in src.contents) O.set_loc(target_location)
 		src.visible_message("<b>[unloader.name]</b> unloads [src.name]!")
-		src.update_icon()
+		src.UpdateIcon()
 
 	Topic(href, href_list)
 		if(..())
@@ -3513,7 +3509,7 @@
 			src.host_id = null
 			src.old_host_id = null
 			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
 
 			src.updateUsrDialog()
@@ -3529,7 +3525,8 @@
 		if (status & NOPOWER)
 			return 1
 
-		use_power(200)
+		if(active)
+			use_power(power_usage)
 
 		return 0
 
@@ -3546,7 +3543,7 @@
 
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[src.net_number]")
 
 			return
@@ -3562,7 +3559,7 @@
 
 					src.host_id = null
 					src.updateUsrDialog()
-					SPAWN_DBG(0.3 SECONDS)
+					SPAWN(0.3 SECONDS)
 						src.post_status(target, "command","term_disconnect")
 					return
 */
@@ -3576,7 +3573,7 @@
 				if(signal.data["data"] != "noreply")
 					src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 				src.updateUsrDialog()
-				SPAWN_DBG(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
+				SPAWN(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 					src.message_host("command=register&id=[src.setup_test_id]&data=[isnull(src.active) ? "0" : "1"]&capability=[setup_capability_value]")
 				return
 
@@ -3618,37 +3615,37 @@
 	power_change()
 		if(powered())
 			status &= ~NOPOWER
-			src.update_icon()
+			src.UpdateIcon()
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				status |= NOPOWER
-				src.update_icon()
+				src.UpdateIcon()
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				//dispose()
 				src.dispose()
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					src.status |= BROKEN
-					src.update_icon()
-			if(3.0)
+					src.UpdateIcon()
+			if(3)
 				if (prob(25))
 					src.status |= BROKEN
-					src.update_icon()
+					src.UpdateIcon()
 			else
 		return
 
-	proc
-		update_icon()
-			if (status & (NOPOWER|BROKEN))
-				src.icon_state = "[setup_base_icon_state]-p"
-			else
-				src.icon_state = "[setup_base_icon_state][src.active ? "1" : "0"]"
-			return
+	update_icon()
+		if (status & (NOPOWER|BROKEN))
+			src.icon_state = "[setup_base_icon_state]-p"
+		else
+			src.icon_state = "[setup_base_icon_state][src.active ? "1" : "0"]"
+		return
 
+	proc
 		//Generate html interface to appear in interaction window above the host connection controls
 		return_html_interface()
 			return
@@ -3713,7 +3710,7 @@
 					message_host("command=nack")
 					return
 
-				var/newPower = text2num(packetData["value"])
+				var/newPower = text2num_safe(packetData["value"])
 				if (!isnum(newPower) || (newPower < 1) || (newPower > 100))
 					message_host("command=nack")
 					return
@@ -3732,14 +3729,14 @@
 				if (src.contents.len)
 					active = length(src.contents)
 					message_host("command=ack")
-					src.update_icon()
+					src.UpdateIcon()
 				else
 					message_host("command=nack")
 
 			if ("pulse")
-				var/duration = text2num(packetData["duration"])
+				var/duration = text2num_safe(packetData["duration"])
 				if (isnum(duration))
-					duration = round(max(1, min(duration, 255)))
+					duration = round(clamp(duration, 1, 255))
 				else
 					src.active = 0
 					message_host("command=nack")
@@ -3747,12 +3744,12 @@
 
 				src.active = duration
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 
 			if ("deactivate")
 				active = 0
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 
 		return
 
@@ -3766,20 +3763,20 @@
 				if (istype(to_toss))
 					to_toss.set_loc(src.loc)
 					src.visible_message("<b>[src.name]</b> launches [to_toss]!")
-					playsound(src.loc, "sound/effects/syringeproj.ogg", 50, 1)
+					playsound(src.loc, 'sound/effects/syringeproj.ogg', 50, 1)
 					to_toss.throw_at(get_edge_target_turf(src, src.dir), throw_strength, throw_strength/50, bonus_throwforce=throw_strength/4)
 
 				if (!src.active)
 					src.visible_message("<b>[src.name]</b> pings.")
 					src.active = 0
-					playsound(src, "sound/machines/buzz-two.ogg", 50, 1)
-					src.update_icon()
+					playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
+					src.UpdateIcon()
 				return
 
 			src.visible_message("<b>[src.name]</b> pings.")
 			src.active = 0
-			playsound(src, "sound/machines/chime.ogg", 50, 1)
-			src.update_icon()
+			playsound(src, 'sound/machines/chime.ogg', 50, 1)
+			src.UpdateIcon()
 
 		return
 
@@ -3844,7 +3841,7 @@
 					message_host("command=nack")
 					return
 
-				var/standval = text2num(packetData["value"])
+				var/standval = text2num_safe(packetData["value"])
 				if (standval < 0 || standval > 1)
 					message_host("command=nack")
 					return
@@ -3855,19 +3852,19 @@
 						src.set_density(1)
 						src.setup_base_icon_state = "impactstand"
 						flick("impactpad-extend",src)
-						src.update_icon()
-						playsound(src.loc, "sound/effects/pump.ogg", 50, 1)
+						src.UpdateIcon()
+						playsound(src.loc, 'sound/effects/pump.ogg', 50, 1)
 					else
 						src.visible_message("<span class='alert'><b>[src.name]</b> clanks and clatters noisily!</span>")
-						playsound(src.loc, "sound/impact_sounds/Metal_Clang_1.ogg", 50, 1)
+						playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1)
 					message_host("command=ack")
 				else if (standval == 0 && src.density == 1)
 					src.visible_message("<b>[src.name]</b> retracts its stand.")
 					src.set_density(0)
 					src.setup_base_icon_state = "impactpad"
 					flick("impactstand-retract",src)
-					src.update_icon()
-					playsound(src.loc, "sound/effects/pump.ogg", 50, 1)
+					src.UpdateIcon()
+					playsound(src.loc, 'sound/effects/pump.ogg', 50, 1)
 					message_host("command=ack")
 				else
 					message_host("command=ack")
@@ -3958,7 +3955,7 @@
 			src.sensed[1] = "???"
 			src.sensed[2] = "0"
 		src.visible_message("<b>[src.name]</b> registers an impact and chimes.")
-		playsound(src.loc, "sound/machines/chime.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/chime.ogg', 50, 1)
 
 	proc/impactpad_senseforce_shot(var/obj/I, var/datum/projectile/P)
 		if (istype(I.artifact,/datum/artifact/))
@@ -3979,7 +3976,7 @@
 			src.sensed[2] = "0"
 
 		src.visible_message("<b>[src.name]</b> registers an impact and chimes.")
-		playsound(src, "sound/machines/chime.ogg", 50, 1)
+		playsound(src, 'sound/machines/chime.ogg', 50, 1)
 
 /obj/machinery/networked/test_apparatus/electrobox
 	name = "Electrical Testing Apparatus"
@@ -4019,8 +4016,8 @@
 		if (!src.contents.len && src.active)
 			src.active = 0
 			src.visible_message("<b>[src.name]</b> buzzes angrily and stops operating!")
-			playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 1)
-			src.update_icon()
+			playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
+			src.UpdateIcon()
 			return
 
 		if (src.active)
@@ -4031,8 +4028,8 @@
 				src.active = 0
 				src.timer = -1
 				src.visible_message("<b>[src.name]</b> emits a buzz and shuts down.")
-				playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
-				src.update_icon()
+				playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
+				src.UpdateIcon()
 				return
 			src.electrify_contents()
 
@@ -4072,7 +4069,7 @@
 				user.drop_item()
 			I.set_loc(src)
 			user.visible_message("<b>[user]</b> loads [I] into [src.name]!")
-			src.update_icon()
+			src.UpdateIcon()
 			return
 		else
 			boutput(user, "There is no room left for that!")
@@ -4091,7 +4088,7 @@
 					message_host("command=nack")
 					return
 
-				var/pokeval = text2num(packetData["value"])
+				var/pokeval = text2num_safe(packetData["value"])
 				if (lowertext(packetData["field"]) == "voltage")
 					if (pokeval < 1 || pokeval > 100)
 						message_host("command=nack")
@@ -4172,14 +4169,14 @@
 					src.timer = -1
 					src.electrify_contents()
 					message_host("command=ack")
-					src.update_icon()
+					src.UpdateIcon()
 				else
 					message_host("command=nack")
 
 			if ("pulse")
-				var/duration = text2num(packetData["duration"])
+				var/duration = text2num_safe(packetData["duration"])
 				if (isnum(duration) && !src.active)
-					duration = round(max(1, min(duration, 255)))
+					duration = round(clamp(duration, 1, 255))
 				else
 					src.active = 0
 					message_host("command=nack")
@@ -4189,13 +4186,13 @@
 				src.timer = duration
 				src.electrify_contents()
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 
 			if ("deactivate")
 				src.active = 0
 				src.timer = -1
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 		return
 
 /obj/machinery/networked/test_apparatus/xraymachine
@@ -4244,7 +4241,7 @@
 				user.drop_item()
 			I.set_loc(src)
 			user.visible_message("<b>[user]</b> loads [I] into [src.name]!")
-			src.update_icon()
+			src.UpdateIcon()
 			return
 		else
 			boutput(user, "There is no room left for that!")
@@ -4259,7 +4256,7 @@
 				message_host("command=status&data=[src.active ? "1" : "0"]")
 
 			if ("poke")
-				var/pokeval = text2num(packetData["value"])
+				var/pokeval = text2num_safe(packetData["value"])
 				if (lowertext(packetData["field"]) == "radstrength")
 					if (pokeval < 1 || pokeval > 10)
 						message_host("command=nack")
@@ -4294,7 +4291,7 @@
 				if (src.contents.len && !src.active)
 					message_host("command=ack")
 					active = 1
-					src.update_icon()
+					src.UpdateIcon()
 					src.visible_message("<b>[src.name]</b> begins to operate.")
 					if (narrator_mode)
 						playsound(src.loc, 'sound/vox/genetics.ogg', 50, 1)
@@ -4386,11 +4383,11 @@
 							src.sensed[4] = "NO"
 							src.sensed[5] = "NONE"
 
-					SPAWN_DBG(5 SECONDS)
+					SPAWN(5 SECONDS)
 						src.visible_message("<b>[src.name]</b> finishes working and shuts down.")
-						playsound(src, "sound/machines/chime.ogg", 50, 1)
+						playsound(src, 'sound/machines/chime.ogg', 50, 1)
 						active = 0
-						src.update_icon()
+						src.UpdateIcon()
 				else
 					message_host("command=nack")
 		return
@@ -4434,7 +4431,7 @@
 				heat_overlay.icon_state = "heat-1"
 			if (250 to 269)
 				heat_overlay.icon_state = "heat-2"
-			if (249 to -99)
+			if (-INFINITY to 249)
 				heat_overlay.icon_state = "heat-3"
 			else
 				heat_overlay.icon_state = ""
@@ -4489,7 +4486,7 @@
 			if (src.stopattarget && src.temperature == src.temptarget)
 				src.active = 0
 				src.visible_message("<b>[src.name]</b> reaches its target temperature and shuts down.")
-				playsound(src.loc, "sound/machines/chime.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/chime.ogg', 50, 1)
 		else
 			use_power(20)
 			if (src.temperature > 310)
@@ -4497,7 +4494,7 @@
 			else if (src.temperature < 310)
 				src.temperature++
 
-		src.update_icon()
+		src.UpdateIcon()
 
 		return
 
@@ -4514,7 +4511,7 @@
 					message_host("command=nack")
 					return
 
-				var/pokeval = text2num(packetData["value"])
+				var/pokeval = text2num_safe(packetData["value"])
 				if (pokeval < 200 || pokeval > 400)
 					message_host("command=nack")
 					return
@@ -4585,10 +4582,10 @@
 				src.active = 1
 				src.stopattarget = 0
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 
 			if ("pulse")
-				var/duration = text2num(packetData["duration"])
+				var/duration = text2num_safe(packetData["duration"])
 				if (isnum(duration) )
 					if(duration >= 200 && duration <= 400)
 						temptarget = duration
@@ -4599,12 +4596,12 @@
 				src.stopattarget = 1
 				src.active = 1
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 
 			if ("deactivate")
 				src.active = 0
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 		return
 
 /* Finish this later when I can think of how exactly to implement it
@@ -4658,7 +4655,7 @@
 					message_host("command=nack")
 					return
 
-				var/pokeval = text2num(packetData["value"])
+				var/pokeval = text2num_safe(packetData["value"])
 				if (pokeval < 1 || pokeval > 5)
 					message_host("command=nack")
 					return
@@ -4679,11 +4676,11 @@
 					src.active = 1
 					src.duration = -1
 					message_host("command=ack")
-					src.update_icon()
+					src.UpdateIcon()
 				else message_host("command=nack")
 
 			if ("pulse")
-				var/timer = text2num(packetData["duration"])
+				var/timer = text2num_safe(packetData["duration"])
 				if (!src.active)
 					if (isnum(duration)) src.duration = timer
 					else message_host("command=nack")
@@ -4691,13 +4688,13 @@
 
 				src.active = 1
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 
 			if ("deactivate")
 				src.active = 0
 				src.duration = -1
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 		return
 
 /obj/machinery/networked/test_apparatus/laserR
@@ -4727,6 +4724,7 @@
 	setup_device_name = "Gas Sensor"
 	setup_capability_value = "S"
 	active = 1
+	power_usage = 20
 
 	var/setup_tag = null
 			//Pressure, Temperature, gases, trace gases sum
@@ -4814,14 +4812,14 @@
 		..()
 
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 0", "fire0")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", "fire1")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", "fire2")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", "fire3")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", "fire4")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", "fire5")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", "fire6")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", "fire7")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 0", .proc/fire0)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", .proc/fire1)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", .proc/fire2)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", .proc/fire3)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", .proc/fire4)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", .proc/fire5)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", .proc/fire6)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", .proc/fire7)
 
 	return_html_interface()
 		. = {"<b>INPUT STATUS</b>
@@ -4844,7 +4842,7 @@
 			if ("poke")
 				. = lowertext(packetData["field"])
 				if (. == "outputword")
-					var/pokeval = text2num(packetData["value"])
+					var/pokeval = text2num_safe(packetData["value"])
 					if (pokeval < 0 || pokeval > 255)
 						message_host("command=nack")
 						return
@@ -4854,7 +4852,7 @@
 					message_host("command=ack")
 
 				else if (copytext(.,1,7) == "output")
-					. = round( text2num(copytext(.,7)) )
+					. = round( text2num_safe(copytext(.,7)) )
 
 					if (!isnum(.) || . < 0 || . > 7)
 						message_host("command=nack")
@@ -4897,25 +4895,25 @@
 				src.pulses = 0
 				src.active = 1
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 
 			if ("pulse")
-				var/duration = text2num(packetData["duration"])
+				var/duration = text2num_safe(packetData["duration"])
 				if (isnum(duration))
-					src.pulses = max(0, min(round(duration), 255))
+					src.pulses = clamp(round(duration), 0, 255)
 				else
 					message_host("command=nack")
 					return
 
 				src.active = 1
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 
 			if ("deactivate")
 				src.active = 0
 				src.pulses = 0
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 		return
 
 	process()

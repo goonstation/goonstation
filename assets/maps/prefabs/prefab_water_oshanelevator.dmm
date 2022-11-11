@@ -137,6 +137,8 @@
 /obj/table/auto,
 /obj/item/paper/fortune,
 /obj/item/pen,
+/obj/item/sea_ladder,
+/obj/item/sea_ladder,
 /turf/simulated/floor/black/grime,
 /area/shuttle/sea_elevator)
 "C" = (

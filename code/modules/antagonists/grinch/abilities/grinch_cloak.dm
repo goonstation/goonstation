@@ -1,6 +1,7 @@
 /datum/targetable/grinch/grinch_cloak
 	name = "Activate cloak (temp.)"
 	desc = "Activates a cloaking ability for a limited amount of time."
+	icon_state = "grinchcloak"
 	targeted = 0
 	target_anything = 0
 	target_nodamage_check = 0
@@ -10,7 +11,7 @@
 	pointCost = 0
 	when_stunned = 0
 	not_when_handcuffed = 0
-	var/cloak_duration = 120
+	var/cloak_duration = 30 SECONDS
 
 	cast(mob/target)
 		if (!holder)
@@ -22,34 +23,34 @@
 			return 1
 
 		if (ismobcritter(M)) // Placeholder because only humans use bioeffects at the moment.
-			if (M.invisibility != 0)
-				boutput(M, __red("You are already invisible."))
+			if (M.invisibility != INVIS_NONE)
+				boutput(M, "<span class='alert'>You are already invisible.</span>")
 				return 1
 
-			M.invisibility = 2
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, src, INVIS_CLOAK)
 			M.UpdateOverlays(image('icons/mob/mob.dmi', "icon_state" = "shield"), "shield")
-			boutput(M, __blue("<b>Your cloak will remain active for the next [src.cloak_duration / 60] minutes.</b>"))
+			boutput(M, "<span class='notice'><b>Your cloak will remain active for the next [src.cloak_duration / 600] minutes.</b></span>")
 
-			SPAWN_DBG (src.cloak_duration * 10)
+			SPAWN(src.cloak_duration)
 				if (M && ismobcritter(M))
-					M.invisibility = 0
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, src)
 					M.UpdateOverlays(null, "shield")
-					boutput(M, __red("<b>You are no longer invisible.</b>"))
+					boutput(M, "<span class='alert'><b>You are no longer invisible.</b></span>")
 
 		else if (ishuman(M))
 			var/mob/living/carbon/human/MM = M
 			if (!MM.bioHolder)
-				boutput(MM, __red("You can't use this ability in your current form."))
+				boutput(MM, "<span class='alert'>You can't use this ability in your current form.</span>")
 				return 1
 
 			if (MM.bioHolder.HasEffect("chameleon"))
-				boutput(M, __red("You are already invisible."))
+				boutput(M, "<span class='alert'>You are already invisible.</span>")
 				return 1
 			else
-				var/datum/bioEffect/power/chameleon/CC = MM.bioHolder.AddEffect("chameleon", 0, src.cloak_duration)
+				var/datum/bioEffect/power/chameleon/CC = MM.bioHolder.AddEffect("chameleon", 0, src.cloak_duration / 10)
 				if (CC && istype(CC))
 					CC.active = 1 // Important!
 					MM.set_body_icon_dirty()
-					boutput(M, __blue("<b>Your chameleon cloak is available for the next [src.cloak_duration / 60] minutes. Stand still to become invisible.</b>"))
+					boutput(M, "<span class='notice'><b>Your chameleon cloak is available for the next [src.cloak_duration / 600] minutes.</b></span>")
 
 		return 0

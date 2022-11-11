@@ -23,23 +23,35 @@
 
 /datum/movement_modifier/equipment // per-mob instanced thing proxying an equip/unequip updated tally from equipment
 
-/datum/movement_modifier/mech_boots
-	multiplicative_slowdown = 0.50
-
 /datum/movement_modifier/hulkstrong
 	pushpull_multiplier = 0
+
+/datum/movement_modifier/strong
+	health_deficiency_adjustment = -50
 
 /datum/movement_modifier/status_slowed // these are instantiated by the status effect and the slowdown adjusted there
 	additive_slowdown = 10
 
+/datum/movement_modifier/status_salted // these are instantiated by the status effect and the slowdown adjusted there
+	health_deficiency_adjustment = 10
+
+/datum/movement_modifier/drowsy
+	additive_slowdown = 5
+
 /datum/movement_modifier/staggered_or_blocking
 	additive_slowdown = 0.4
+
+/datum/movement_modifier/poisoned
+	additive_slowdown = 3
 
 /datum/movement_modifier/disoriented
 	additive_slowdown = 8
 
 /datum/movement_modifier/hastened
 	additive_slowdown = -0.8
+
+/datum/movement_modifier/death_march
+	additive_slowdown = -0.4
 
 /datum/movement_modifier/janktank
 	health_deficiency_adjustment = -50
@@ -59,7 +71,7 @@
 /datum/movement_modifier/reagent/cocktail_triple
 	multiplicative_slowdown = 0.333
 
-/datum/movement_modifier/reagent/energydrink // also meth
+/datum/movement_modifier/reagent/energydrink // also meth //also mechboots (for now)
 	ask_proc = 1
 
 /datum/movement_modifier/reagent/energydrink/modifiers(mob/user, move_target, running)
@@ -69,15 +81,17 @@
 
 // robot legs
 /datum/movement_modifier/robotleg_right
-	additive_slowdown = -0.20
+	health_deficiency_adjustment = -25
 
 /datum/movement_modifier/robotleg_left
-	additive_slowdown = -0.20
+	health_deficiency_adjustment = -25
 
 /datum/movement_modifier/robottread_right
+	health_deficiency_adjustment = -25
 	additive_slowdown = -0.25
 
 /datum/movement_modifier/robottread_left
+	health_deficiency_adjustment = -25
 	additive_slowdown = -0.25
 
 // robot modifiers
@@ -88,6 +102,9 @@
 /datum/movement_modifier/robot_oil
 	additive_slowdown = -0.5
 
+/datum/movement_modifier/spry
+	additive_slowdown = -0.25
+	health_deficiency_adjustment = -25
 
 /datum/movement_modifier/robot_speed_upgrade
 	ask_proc = 1
@@ -120,6 +137,19 @@
 /datum/movement_modifier/robot_part/thruster_right
 	additive_slowdown = -0.3
 
+// artifact legs
+/datum/movement_modifier/martian_legs/left
+	health_deficiency_adjustment = -35
+	multiplicative_slowdown = 0.95
+	pushpull_multiplier = 0.9
+	mob_pull_multiplier = 0.9
+
+/datum/movement_modifier/martian_legs/right
+	health_deficiency_adjustment = -35
+	multiplicative_slowdown = 0.95
+	pushpull_multiplier = 0.9
+	mob_pull_multiplier = 0.9
+
 // bioeffects
 
 /datum/movement_modifier/spaceham
@@ -144,17 +174,17 @@
 /datum/movement_modifier/revenant
 	maximum_slowdown = 2
 
-/datum/movement_modifier/vamp_zombie
+/datum/movement_modifier/vampiric_thrall
 	ask_proc = 1
 
-/datum/movement_modifier/vamp_zombie/modifiers(mob/user, move_target, running)
+/datum/movement_modifier/vampiric_thrall/modifiers(mob/user, move_target, running)
 	. = list(4,0)
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
-		var/datum/mutantrace/vamp_zombie/vamp_zombie = H.mutantrace
-		if (!istype(vamp_zombie))
+		var/datum/mutantrace/vampiric_thrall/vampiric_thrall = H.mutantrace
+		if (!istype(vampiric_thrall))
 			return
-		switch (vamp_zombie.blood_points)
+		switch (vampiric_thrall.blood_points)
 			if (151 to INFINITY)
 				.[1] = 0.7
 			if (101 to 151)
@@ -165,22 +195,24 @@
 /datum/movement_modifier/wheelchair
 	ask_proc = 1
 
-/datum/movement_modifier/wheelchair/modifiers(mob/living/carbon/human/user, move_target, running)
+/datum/movement_modifier/wheelchair/modifiers(mob/living/user, move_target, running)
 	var/missing_arms = 0
 	var/missing_legs = 0
-	if (user.limbs)
-		if (!user.limbs.l_leg)
+	var/mob/living/carbon/human/H = user
+
+	if (istype(H) && H.limbs)
+		if (!H.limbs.l_leg)
 			missing_legs++
-		if (!user.limbs.r_leg)
+		if (!H.limbs.r_leg)
 			missing_legs++
-		if (!user.limbs.l_arm)
+		if (!H.limbs.l_arm)
 			missing_arms++
-		if (!user.limbs.r_arm)
+		if (!H.limbs.r_arm)
 			missing_arms++
 
 	if (user.lying)
 		missing_legs = 2
-	else if (user.shoes && user.shoes.chained)
+	else if (istype(H) && H.shoes && H.shoes.chained)
 		missing_legs = 2
 
 	if (missing_arms == 2)

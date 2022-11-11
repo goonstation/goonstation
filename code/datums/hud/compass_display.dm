@@ -27,23 +27,17 @@ atom/movable/screen/compass_display
 		src.vis_contents += needle
 
 	proc/process()
-		message_admins("[owner]||[target]")
 		if (!owner || !target) return
 
 		degree = get_angle(owner,target)
-		message_admins("[degree]")
 		if (degree == 0 && get_turf(owner) == get_turf(target))
-			message_admins("1")
 			needle.icon_state = "compass_needle_dot"
 		else
 			needle.icon_state = "compass_needle"
-			message_admins("2")
 		var/matrix/M = matrix()
 		M = M.Turn(degree)
 
 		animate(needle, transform = M, time = 10, loop = 0)
-		message_admins("4")
-
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)

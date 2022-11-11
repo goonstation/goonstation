@@ -16,12 +16,17 @@
  * 	attack_self(var/mob/M)
  * 		M.visible_message("[M] starts fiddling with \the [src].")
  * 		SETUP_GENERIC_ACTIONBAR(M, src, 5 SECONDS, /obj/item/foo/proc/cool_proc, list(M, src), src.icon, src.icon_state,\
- * 		"[M] finishes fiddling with \the [src]")
+ * 		"[M] finishes fiddling with \the [src]", null)
  *
  * 	proc/cool_proc(var/mob/arg_1, var/obj/item/arg_2)
  * 		boutput(world, "[arg_1.name] farted, [arg_2.name]!")
  * ```
  */
-#define SETUP_GENERIC_ACTIONBAR(owner, target, duration, proc_path, proc_args, action_icon, action_icon_state, end_message) \
+#define SETUP_GENERIC_ACTIONBAR(owner, target, duration, proc_path, proc_args, action_icon, action_icon_state, end_message, interrupt_flags) \
 	actions.start(new /datum/action/bar/icon/callback(owner, target, duration, proc_path, proc_args, action_icon, action_icon_state,\
-	end_message), owner)
+	end_message, interrupt_flags), owner)
+
+/// The same thing but only the owner can see it
+#define SETUP_GENERIC_PRIVATE_ACTIONBAR(owner, target, duration, proc_path, proc_args, action_icon, action_icon_state, end_message, interrupt_flags) \
+	actions.start(new /datum/action/bar/private/icon/callback(owner, target, duration, proc_path, proc_args, action_icon, action_icon_state,\
+	end_message, interrupt_flags), owner)

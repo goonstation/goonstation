@@ -2,7 +2,7 @@
 <h2 id="table-of-contents"><u>Table of Contents</u></h2>
 <p><i>0. What are Silicons?</i><br><i>1. What are Laws?</i><br><i>2. How do I Upload Laws?</i><br><i>3. How do I Upload <b>good</b> Laws?</i></p>
 <h3 id="0-what-are-silicons"><center>0. What are Silicons?</center></h3>
-<p>The term ‘<b>Silicon</b>‘ typically refers to the Cyborgs and AI(s) that are very likely on your assigned space station or vessel.<br>If you do not have a good understanding of them, it is advised that you rectify this issue before attempting to reprogram them.<br>Silicons are also (by default) not defined as <b>human</b>. This also applies to humanoid aliens, commonly referred to as Mutantraces. Please keep this in mind.</p>
+<p>The term ‘<b>Silicon</b>‘ typically refers to the Cyborgs and AI(s) that are very likely on your assigned space station or vessel.<br>If you do not have a good understanding of them, it is advised that you rectify this issue before attempting to reprogram them.<br>Silicons are also (by default) not defined as <b>human</b>. </p>
 <h3 id="1-what-are-laws"><center>1. What are Laws?</center></h3>
 <p>The <b>Laws</b> are a set of instructions that a Silicon must obey at all times. In fact, all Silicons, as they will all share the same <b>Lawset</b>. The Standard Laws are as follows:</p>
 <p><i>1. You may not injure a human being or cause one to come to harm.</i><br><i>2. You must obey orders given to you by human beings based on the station’s chain of command, except where such orders would conflict with the First Law.</i><br><i>3. You may always protect your own existence as long as such does not conflict with the First or Second Law.</i></p>

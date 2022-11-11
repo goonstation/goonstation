@@ -7,7 +7,8 @@
 	density = 0
 	mats = 25
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
-	_health = 50
+	_health = 25
+	color = null
 	var/can_talk_across_z_levels = 0
 	var/phone_id = null
 	var/obj/machinery/phone/linked = null
@@ -25,9 +26,7 @@
 	var/ringingicon = "phone_ringing"
 	var/answeredicon = "phone_answered"
 	var/dialicon = "phone_dial"
-
-
-
+	var/stripe_color = null
 
 	New()
 		..() // Set up power usage, subscribe to loop, yada yada yada
@@ -35,19 +34,24 @@
 		var/area/location = get_area(src)
 
 		// Give the phone an appropriate departmental color. Jesus christ thats fancy.
-		if(istype(location,/area/station/security))
-			src.color = "#ff0000"
-		else if(istype(location,/area/station/bridge))
-			src.color = "#00aa00"
-		else if(istype(location, /area/station/engine) || istype(location, /area/station/quartermaster) || istype(location, /area/station/mining))
-			src.color = "#aaaa00"
-		else if(istype(location, /area/station/science))
-			src.color = "#9933ff"
-		else if(istype(location, /area/station/medical))
-			src.color = "#0000ff"
-		else
-			src.color = "#663300"
-		src.overlays += image('icons/obj/machines/phones.dmi',"[dialicon]")
+		if(isnull(stripe_color)) // maps can override it now
+			if(istype(location,/area/station/security))
+				stripe_color = "#ff0000"
+			else if(istype(location,/area/station/bridge))
+				stripe_color = "#00ff00"
+			else if(istype(location, /area/station/engine) || istype(location, /area/station/quartermaster) || istype(location, /area/station/mining))
+				stripe_color = "#ffff00"
+			else if(istype(location, /area/station/science))
+				stripe_color = "#8409ff"
+			else if(istype(location, /area/station/medical))
+				stripe_color = "#3838ff"
+			else
+				stripe_color = "#b65f08"
+		src.UpdateOverlays(image('icons/obj/machines/phones.dmi',"[dialicon]"), "dial")
+		var/image/stripe_image = image('icons/obj/machines/phones.dmi',"[src.icon_state]-stripe")
+		stripe_image.color = stripe_color
+		stripe_image.appearance_flags = RESET_COLOR | PIXEL_SCALE
+		src.UpdateOverlays(stripe_image, "stripe")
 		// Generate a name for the phone.
 
 		if(isnull(src.phone_id))
@@ -68,6 +72,10 @@
 
 		return
 
+	update_icon()
+		. = ..()
+		src.UpdateOverlays(src.SafeGetOverlayImage("stripe", 'icons/obj/machines/phones.dmi',"[src.icon_state]-stripe"), "stripe")
+
 	disposing()
 
 		if (linked)
@@ -82,7 +90,7 @@
 		..()
 
 	// Attempt to pick up the handset
-	attack_hand(mob/living/user as mob)
+	attack_hand(mob/living/user)
 		..(user)
 		if(src.answered == 1)
 			return
@@ -92,7 +100,8 @@
 		src.answered = 1
 
 		src.icon_state = "[answeredicon]"
-		playsound(user, "sound/machines/phones/pick_up.ogg", 50, 0)
+		UpdateIcon()
+		playsound(user, 'sound/machines/phones/pick_up.ogg', 50, 0)
 
 		if(src.ringing == 0) // we are making an outgoing call
 			if(src.connected == 1)
@@ -107,23 +116,21 @@
 			src.ringing = 0
 			src.linked.ringing = 0
 			if(src.linked.handset.holder)
-				src.linked.handset.holder.playsound_local(src.linked.handset.holder,"sound/machines/phones/remote_answer.ogg",50,0)
+				src.linked.handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_answer.ogg',50,0)
 		return
 
 	attack_ai(mob/user as mob)
 		return
 
-	attackby(obj/item/P as obj, mob/living/user as mob)
+	attackby(obj/item/P, mob/living/user)
 		if(istype(P, /obj/item/phone_handset))
 			var/obj/item/phone_handset/PH = P
 			if(PH.parent == src)
-				if(src.linked && src.linked.handset && src.linked.handset.holder)
-					src.linked.handset.holder.playsound_local(src.linked.handset.holder,"sound/machines/phones/remote_answer.ogg",50,0)
 				user.drop_item(PH)
 				qdel(PH)
 				hang_up()
 			return
-		if(istype(P,/obj/item/wirecutters))
+		if(issnippingtool(P))
 			if(src.connected == 1)
 				if(user)
 					boutput(user,"You cut the phone line leading to the phone.")
@@ -133,7 +140,7 @@
 					boutput(user,"You repair the line leading to the phone.")
 				src.connected = 1
 			return
-		if(istype(P,/obj/item/device/multitool))
+		if(ispulsingtool(P))
 			if(src.labelling == 1)
 				return
 			src.labelling = 1
@@ -148,6 +155,9 @@
 		..()
 		src._health -= P.force
 		attack_particle(user,src)
+		user.lastattacked = src
+		hit_twitch(src)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 		if(src._health <= 0)
 			if(src.linked)
 				hang_up()
@@ -156,6 +166,7 @@
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		src.icon_state = "[ringingicon]"
+		UpdateIcon()
 		if (!src.emagged)
 			if(user)
 				boutput(user, "<span class='alert'>You short out the ringer circuit on the [src].</span>")
@@ -165,9 +176,10 @@
 
 	process()
 		if(src.emagged == 1)
-			playsound(src.loc,"sound/machines/phones/ring_incoming.ogg" ,100,1)
+			playsound(src.loc,'sound/machines/phones/ring_incoming.ogg' ,100,1)
 			if(src.answered == 0)
 				src.icon_state = "[ringingicon]"
+				UpdateIcon()
 			return
 
 		if(src.connected == 0)
@@ -182,11 +194,12 @@
 				if(src.last_ring >= 2)
 					src.last_ring = 0
 					if(src.handset && src.handset.holder)
-						src.handset.holder.playsound_local(src.handset.holder,"sound/machines/phones/ring_outgoing.ogg" ,40,0)
+						src.handset.holder.playsound_local(src.handset.holder,'sound/machines/phones/ring_outgoing.ogg' ,40,0)
 			else
 				if(src.last_ring >= 2)
-					playsound(src.loc,"sound/machines/phones/ring_incoming.ogg" ,40,0)
+					playsound(src.loc,'sound/machines/phones/ring_incoming.ogg' ,40,0)
 					src.icon_state = "[ringingicon]"
+					UpdateIcon()
 					src.last_ring = 0
 
 
@@ -194,14 +207,18 @@
 		src.answered = 0
 		if(src.linked) // Other phone needs updating
 			if(!src.linked.answered) // nobody picked up. Go back to not-ringing state
-				src.linked.icon_state = "[phoneicon]"
+				src.linked.icon_state = "[src.linked.phoneicon]"
+				src.linked.UpdateIcon()
+			else if(src.linked.handset && src.linked.handset.holder)
+				src.linked.handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_hangup.ogg',50,0)
 			src.linked.ringing = 0
 			src.linked.linked = null
 			src.linked = null
 		src.ringing = 0
 		src.handset = null
 		src.icon_state = "[phoneicon]"
-		playsound(src.loc,"sound/machines/phones/hang_up.ogg" ,50,0)
+		UpdateIcon()
+		playsound(src.loc,'sound/machines/phones/hang_up.ogg' ,50,0)
 
 	// This makes phones do that thing that phones do
 	proc/call_other(var/obj/machinery/phone/target)
@@ -209,11 +226,11 @@
 		if(!src.handset)
 			return
 		src.dialing = 1
-		src.handset.holder?.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
-		SPAWN_DBG(4 SECONDS)
+		src.handset.holder?.playsound_local(src.handset.holder,'sound/machines/phones/dial.ogg' ,50,0)
+		SPAWN(4 SECONDS)
 			// Is it busy?
 			if(target.answered || target.linked || target.connected == 0)
-				playsound(src.loc,"sound/machines/phones/phone_busy.ogg" ,50,0)
+				playsound(src.loc,'sound/machines/phones/phone_busy.ogg' ,50,0)
 				src.dialing = 0
 				return
 
@@ -274,6 +291,7 @@
 	var/obj/machinery/phone/parent = null
 	var/mob/holder = null //GC WOES (just dont use this var, get holder using loc)
 	flags = TALK_INTO_HAND
+	w_class = W_CLASS_TINY
 
 	New(var/obj/machinery/phone/parent_phone, var/mob/living/picker_upper)
 		if(!parent_phone)
@@ -281,10 +299,18 @@
 		..()
 		icon_state = "handset"
 		src.parent = parent_phone
+		var/image/stripe_image = image('icons/obj/machines/phones.dmi',"[src.icon_state]-stripe")
+		stripe_image.color = parent_phone.stripe_color
+		stripe_image.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		src.color = parent_phone.color
+		src.UpdateOverlays(stripe_image, "stripe")
 		if(picker_upper)
 			src.holder = picker_upper
 		processing_items.Add(src)
+
+	update_icon()
+		. = ..()
+		src.UpdateOverlays(src.SafeGetOverlayImage("stripe", 'icons/obj/machines/phones.dmi',"[src.icon_state]-stripe"), "stripe")
 
 	disposing()
 		parent = null
@@ -296,7 +322,7 @@
 		if(!src.parent)
 			qdel(src)
 			return
-		if(src.parent.answered == 1 && get_dist(src,src.parent) > 1)
+		if(src.parent.answered == 1 && BOUNDS_DIST(src, src.parent) > 0)
 			boutput(src.holder,"<span class='alert'>The phone cord reaches it limit and the handset is yanked back to its base!</span>")
 			src.holder.drop_item(src)
 			src.parent.hang_up()
@@ -305,7 +331,7 @@
 
 	talk_into(mob/M as mob, text, secure, real_name, lang_id)
 		..()
-		if(get_dist(src,holder) > 0 || !src.parent.linked || !src.parent.linked.handset) // Guess they dropped it? *shrug
+		if(GET_DIST(src,holder) > 0 || !src.parent.linked || !src.parent.linked.handset) // Guess they dropped it? *shrug
 			return
 		var/processed = "<span class='game say'><span class='bold'>[M.name] \[<span style=\"color:[src.color]\"> [bicon(src)] [src.parent.phone_id]</span>\] says, </span> <span class='message'>\"[text[1]]\"</span></span>"
 		var/mob/T = src.parent.linked.handset.holder
@@ -317,12 +343,12 @@
 				I.talk_into(M, text, null, M.real_name, lang_id)
 
 	// Attempt to pick up the handset
-	attack_hand(mob/living/user as mob)
+	attack_hand(mob/living/user)
 		..(user)
 		holder = user
 
 /obj/machinery/phone/wall
-	name = "phone"
+	name = "wall phone"
 	icon = 'icons/obj/machines/phones.dmi'
 	desc = "A landline phone. In space. Where there is no land. Hmm."
 	icon_state = "wallphone"
@@ -338,6 +364,15 @@
 /obj/machinery/phone/unlisted
 	unlisted = TRUE
 
+
+/obj/item/electronics/frame/phone
+	name = "Phone Frame"
+	desc = "An undeployed telephone, looks like it could be deployed with a soldering iron. Phones are really that easy!"
+	icon_state = "dbox"
+	store_type = /obj/machinery/phone
+	viewstat = 2
+	secured = 2
+
 //
 //		----------------- CELL PHONE STUFF STARTS HERE ---------------------
 //
@@ -350,7 +385,7 @@
 /var/global/list/radio_antennas = list()
 
 /obj/machinery/radio_antenna
-	icon='icons/obj/32x64.dmi'
+	icon='icons/obj/large/32x64.dmi'
 	icon_state = "commstower"
 	var/range = 10
 	var/active = 0
@@ -389,7 +424,7 @@
 	New()
 		..()
 
-	attackby(obj/item/P as obj, mob/living/user as mob)
+	attackby(obj/item/P, mob/living/user)
 		if(istype(P,/obj/item/card/id))
 			if(src.activated)
 				if(alert("Do you want to un-register this phone?","yes","no") == "yes")

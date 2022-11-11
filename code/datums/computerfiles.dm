@@ -12,6 +12,8 @@
 //permission defines moved to _setup.dm
 
 /datum/computer
+	/// Prevent it from piracy via PDA filehosting? Also prevents term os copy and pasting and moving.
+	var/dont_copy = 0
 	var/name
 	var/size = 4
 	var/tmp/obj/item/disk/data/holder = null
@@ -107,8 +109,6 @@
 
 
 	file
-		/// Prevent it from piracy via PDA filehosting?
-		var/dont_copy = 0
 		name = "File"
 		var/extension = "FILE" //Differentiate between types of files, why not
 

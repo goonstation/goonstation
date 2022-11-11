@@ -8,12 +8,12 @@
 	icon_state = "red"
 	item_state = "toolbox-red"
 	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
-	force = 6.0
-	throwforce = 10.0
+	force = 6
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 7
 	w_class = W_CLASS_BULKY
-	max_wclass = 3
+	max_wclass = W_CLASS_NORMAL
 
 	//cogwerks - burn vars
 	burn_point = 4500
@@ -26,7 +26,7 @@
 	New()
 		..()
 		if (src.type == /obj/item/storage/toolbox)
-			message_admins("BAD: [src] ([src.type]) spawned at [showCoords(src.x, src.y, src.z)]")
+			message_admins("BAD: [src] ([src.type]) spawned at [log_loc(src)]")
 			qdel(src)
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -36,12 +36,33 @@
 			return 0
 		user.visible_message("<span class='alert'><b>[user] slams the toolbox closed on [his_or_her(user)] head repeatedly!</b></span>")
 		user.TakeDamage("head", 150, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
+	attackby(obj/item/W, mob/user, obj/item/storage/T)
+		if (istype(W, /obj/item/tile) && !length(src.contents) && !isrobot(user)) // we are making a floorbot!
+			var/obj/item/toolbox_tiles/B = new /obj/item/toolbox_tiles
+
+			user.put_in_hand_or_drop(B)
+			W.change_stack_amount(-1)
+
+			if(istype(src, /obj/item/storage/toolbox/emergency))
+				B.color_overlay = "floorbot_overlay_red"
+			else if(istype(src, /obj/item/storage/toolbox/electrical))
+				B.color_overlay = "floorbot_overlay_yellow"
+			else if(istype(src, /obj/item/storage/toolbox/artistic))
+				B.color_overlay = "floorbot_overlay_green"
+
+			if(B.color_overlay)
+				B.UpdateOverlays(image(B.icon, icon_state = B.color_overlay), "coloroverlay")
+
+			user.drop_item(src)
+			src.set_loc(B)
+			boutput(user, "You add the tiles into the empty toolbox. They stick oddly out the top.")
+			return
+
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
 			var/obj/item/storage/S = W
 			for (var/obj/item/I in S.get_contents())
@@ -77,9 +98,9 @@
 		spawn_contents = list(/obj/item/device/analyzer/atmospheric/upgraded,\
 		/obj/item/electronics/soldering,\
 		/obj/item/device/t_scanner,\
+		/obj/item/electronics/scanner,\
 		/obj/item/cable_coil,\
 		/obj/item/reagent_containers/food/snacks/sandwich/pb,\
-		/obj/item/reagent_containers/food/snacks/plant/banana,\
 		/obj/item/reagent_containers/food/drinks/milk)
 
 	yellow_tools
@@ -89,6 +110,9 @@
 		/obj/item/crowbar/yellow,\
 		/obj/item/wirecutters/yellow,\
 		/obj/item/device/analyzer/atmospheric)
+
+	empty
+		spawn_contents = list()
 
 /obj/item/storage/toolbox/electrical
 	name = "electrical toolbox"
@@ -157,20 +181,20 @@
 			if (!original_owner)
 				original_owner = H
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!ishuman(usr) || !usr:find_ailment_by_type(/datum/ailment/disability/memetic_madness))
 			boutput(usr, "<span class='alert'>You can't seem to find the latch. Maybe you need to examine it more thoroughly?</span>")
 			return
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.loc == user)
 			if(!ishuman(user) || !user:find_ailment_by_type(/datum/ailment/disability/memetic_madness))
 				boutput(user, "<span class='alert'>You can't seem to find the latch. Maybe you need to examine it more thoroughly?</span>")
 				return
 		return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(!ishuman(user) || !user:find_ailment_by_type(/datum/ailment/disability/memetic_madness))
 			boutput(user, "<span class='alert'>You can't seem to find the latch to open this. Maybe you need to examine it more thoroughly?</span>")
 			return
@@ -204,7 +228,7 @@
 
 		src.hunger = 0
 		src.hunger_message_level = 0
-		playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
+		playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
 		//Neatly sort everything they have into handy little boxes.
 		var/obj/item/storage/box/per_person = new
 		per_person.set_loc(src)
@@ -229,7 +253,7 @@
 
 		M.remove()
 		var/we_need_to_die = (M == original_owner)
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (G)
 				qdel(G)
 			if (we_need_to_die)
@@ -253,7 +277,7 @@
 		servantlinks = null
 
 		src.visible_message("<span class='alert'><b>[src]</b> screams!</span>")
-		playsound(src.loc,"sound/effects/screech.ogg", 100, 1)
+		playsound(src.loc, 'sound/effects/screech.ogg', 50, 1)
 
 		..()
 		return
@@ -301,7 +325,7 @@
 		else
 			asize++
 		acount++
-	src.playsound_local(src.loc,"sound/effects/screech.ogg", 100, 1)
+	src.playsound_local(src.loc,'sound/effects/screech.ogg', 50, 1)
 	shake_camera(src, 20, 16)
 	boutput(src, "<font color=red>[screamstring]</font>")
 	boutput(src, "<i><b><font face = Tempus Sans ITC>His Grace accepts thee, spread His will! All who look close to the Enlightened may share His gifts.</font></b></i>")
@@ -319,7 +343,7 @@
 		..()
 		master = get_disease_from_path(/datum/ailment/disability/memetic_madness)
 
-	stage_act()
+	stage_act(mult)
 		if (!istype(master,/datum/ailment/) || !src.progenitor)
 			affected_mob.ailments -= src
 			qdel(src)
@@ -328,10 +352,10 @@
 		if(stage > master.max_stages)
 			stage = master.max_stages
 
-		if(prob(stage_prob) && stage < master.max_stages)
+		if(probmult(stage_prob) && stage < master.max_stages)
 			stage++
 
-		master.stage_act(affected_mob,src,progenitor)
+		master.stage_act(affected_mob,src,mult,progenitor)
 
 		return
 
@@ -342,20 +366,20 @@
 	max_stages = 4
 	stage_prob = 8
 
-	stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D,var/obj/item/storage/toolbox/memetic/progenitor)
+	stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D,mult,var/obj/item/storage/toolbox/memetic/progenitor)
 		if (..())
 			return
 		if(progenitor in affected_mob.contents)
 			if(affected_mob.get_oxygen_deprivation())
-				affected_mob.take_oxygen_deprivation(-5)
-			affected_mob:HealDamage("All", 12, 12)
+				affected_mob.take_oxygen_deprivation(-5 * mult)
+			affected_mob:HealDamage("All", 12 * mult, 12 * mult)
 			if(affected_mob.get_toxin_damage())
-				affected_mob.take_toxin_damage(-5)
+				affected_mob.take_toxin_damage(-5 * mult)
 			affected_mob.delStatus("stunned")
 			affected_mob.delStatus("weakened")
 			affected_mob.delStatus("paralysis")
-			affected_mob.dizziness = max(0,affected_mob.dizziness-10)
-			affected_mob:drowsyness = max(0,affected_mob:drowsyness-10)
+			affected_mob.dizziness = max(0,affected_mob.dizziness-10 * mult)
+			affected_mob.changeStatus("drowsy", -20 * mult SECONDS)
 			affected_mob:sleeping = 0
 			D.stage = 1
 			switch (progenitor.hunger)
@@ -380,21 +404,21 @@
 					progenitor.consume(affected_mob)
 					return
 
-			progenitor.hunger += min(max((progenitor.force / 10), 1), 10)
+			progenitor.hunger += clamp((progenitor.force / 10), 1, 10) * mult
 
 		else if(D.stage == 4)
-			if(get_dist(get_turf(progenitor),src) <= 7)
+			if(GET_DIST(get_turf(progenitor),src) <= 7)
 				D.stage = 1
 				return
-			if(prob(4))
+			if(probmult(4))
 				boutput(affected_mob, "<span class='alert'>We are too far from His Grace...</span>")
 				affected_mob.take_toxin_damage(5)
-			else if(prob(6))
+			else if(probmult(6))
 				boutput(affected_mob, "<span class='alert'>You feel weak.</span>")
 				random_brute_damage(affected_mob, 5)
 
 			if (ismob(progenitor.loc))
-				progenitor.hunger++
+				progenitor.hunger += 1 * mult
 
 		return
 

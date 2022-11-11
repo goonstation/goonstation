@@ -12,7 +12,7 @@
 	density = 1
 	opacity = 0
 	anchored = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER
 	var/health = 30         // current health of the blob
 	var/health_max = 30     // health cap
 	var/armor = 1           // how much incoming damage gets divided by unless it bypasses armor
@@ -31,9 +31,9 @@
 	var/datum/action/bar/blob_health/healthbar //Hack.
 	var/static/image/poisoned_image
 	var/fire_coefficient = 1
-	var/poison_coefficient = 0.5
-	var/poison_spread_coefficient = 1
-	var/poison_depletion = 1
+	var/poison_coefficient = 1
+	var/poison_spread_coefficient = 0.5
+	var/poison_depletion = 0.75
 	var/heat_divisor = 15
 	var/temp_tolerance = 40
 	mat_changename = 0
@@ -45,7 +45,7 @@
 		START_TRACKING
 		if (!poisoned_image)
 			poisoned_image = image('icons/mob/blob.dmi', "poison")
-		src.update_icon()
+		src.UpdateIcon()
 		update_surrounding_blob_icons(get_turf(src))
 		var/datum/controller/process/blob/B = get_master_blob_controller()
 		B?.blobs += src
@@ -57,17 +57,55 @@
 		healthbar.onStart()
 		healthbar.onUpdate()
 
-		if (istype(src.loc,/turf))
-			if (istype(src.loc.loc,/area))
-				src.loc.loc.Entered(src)
-
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			for (var/mob/living/carbon/human/H in src.loc)
-				if (H.decomp_stage == 4 || check_target_immunity(H))//too decomposed or too cool to be eaten
+				if (H.decomp_stage == DECOMP_STAGE_SKELETONIZED || check_target_immunity(H))//too decomposed or too cool to be eaten
 					continue
+				H.was_harmed(src)
 				src.visible_message("<span class='alert'><b>The blob starts trying to absorb [H.name]!</b></span>")
 				actions.start(new /datum/action/bar/blob_absorb(H, overmind), src)
 				playsound(src.loc, "sound/voice/blob/blobsucc[rand(1, 3)].ogg", 10, 1)
+
+		spawn_animation()
+
+	proc/spawn_animation()
+		var/target_alpha = src.alpha
+		src.alpha = 50
+		var/list/obj/blob/blob_sources = list()
+		for(var/obj/blob/B in src.loc)
+			if(B != src)
+				blob_sources += B
+		if(!length(blob_sources))
+			for(var/dir in ordinal)
+				var/obj/blob/blob = locate(/obj/blob) in get_step(src, dir)
+				if(blob && (locate(/obj/blob) in get_step(src, dir & (NORTH | SOUTH))) && (locate(/obj/blob) in get_step(src, dir & (EAST | WEST))))
+					blob_sources += blob
+		if(!length(blob_sources))
+			for(var/dir in cardinal)
+				var/obj/blob/blob = locate(/obj/blob) in get_step(src, dir)
+				if(blob)
+					blob_sources += blob
+		var/matrix/midmatrix = null
+		var/shiftsize = 18
+		var/x_shift_comp = 0
+		var/y_shift_comp = 0
+		if(length(blob_sources))
+			var/obj/blob/blob_source = pick(blob_sources)
+			var/source_dir = get_dir(src, blob_source)
+			var/xshift = ((source_dir & EAST) ? 1 : 0) + ((source_dir & WEST) ? -1 : 0)
+			var/yshift = ((source_dir & NORTH) ? 1 : 0) + ((source_dir & SOUTH) ? -1 : 0)
+			if(!xshift && !yshift)
+				src.transform = src.transform.Scale(1.5, 1.5)
+			else
+				src.transform = src.transform.Scale(xshift ? 0.1 : 1, yshift ? 0.1 : 1)
+			src.transform = src.transform.Translate(xshift * shiftsize, yshift * shiftsize)
+			midmatrix = matrix(null, xshift * 3 , yshift * 3, MATRIX_TRANSLATE)
+			x_shift_comp = -xshift
+			y_shift_comp = -yshift
+		animate(src, pixel_x=x_shift_comp * 3, pixel_y=y_shift_comp * 3, time=0.4 SECONDS)
+		//animate(src, pixel_x=x_shift_comp * 2, pixel_y=y_shift_comp * 2, easing=JUMP_EASING, time=1.3 SECONDS)
+		animate(transform=midmatrix, alpha=target_alpha, time=1.4 SECONDS, easing=ELASTIC_EASING, flags=ANIMATION_PARALLEL)
+		animate(pixel_x=0, pixel_y=0, transform=null, time=2 SECONDS, easing=JUMP_EASING)
 
 	proc/right_click_action()
 		usr.examine_verb(src)
@@ -81,7 +119,7 @@
 		else
 			..()
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		. = ..()
 		var/obj/projectile/P = mover
 		if (istype(P) && P.proj_data) //Wire note: Fix for Cannot read null.type
@@ -89,6 +127,40 @@
 				return 1
 		if (istype(mover, /obj/decal))
 			return 1
+
+	set_loc(newloc)
+		var/atom/old_loc = loc
+		. = ..()
+		if(!("anim_overlay" in overlay_refs))
+			update_overlays(overmind?.organ_color || src.color)
+		if(isturf(old_loc))
+			update_surrounding_blob_icons(old_loc)
+		UpdateIcon()
+		if(isturf(newloc))
+			update_surrounding_blob_icons(newloc)
+
+	proc/update_overlays(organ_color)
+		if( state_overlay )
+			var/image/blob_image
+			if (special_icon)
+				blob_image = image('icons/mob/blob_organs.dmi')
+			else
+				blob_image = image('icons/mob/blob.dmi')
+			blob_image.appearance_flags |= RESET_COLOR
+			blob_image.plane = PLANE_ABOVE_LIGHTING
+
+			blob_image.color = organ_color
+			blob_image.icon_state = state_overlay
+			UpdateOverlays(blob_image,"overmind")
+		if ( anim_overlay )
+			var/image/blob_anim_image = image('icons/mob/blob_organs.dmi')
+			blob_anim_image.appearance_flags |= RESET_COLOR
+			blob_anim_image.plane = PLANE_ABOVE_LIGHTING
+			blob_anim_image.layer = 100
+
+			blob_anim_image.color = organ_color
+			blob_anim_image.icon_state = anim_overlay
+			UpdateOverlays(blob_anim_image,"anim_overlay")
 
 	proc/setOvermind(var/mob/living/intangible/blob_overmind/O)
 		if (overmind == O)
@@ -102,26 +174,7 @@
 			original_color = color
 			O.blobs |= src
 			onAttach(O)
-			if( state_overlay )
-				var/image/blob_image
-				if (special_icon)
-					blob_image = image('icons/mob/blob_organs.dmi')
-				else
-					blob_image = image('icons/mob/blob.dmi')
-				blob_image.appearance_flags |= RESET_COLOR
-				blob_image.plane = PLANE_SELFILLUM + 1
-
-				blob_image.color = O.organ_color
-				blob_image.icon_state = state_overlay
-				UpdateOverlays(blob_image,"overmind")
-			if ( anim_overlay )
-				var/image/blob_anim_image = image('icons/mob/blob_organs.dmi')
-				blob_anim_image.appearance_flags |= RESET_COLOR
-				blob_anim_image.plane = PLANE_SELFILLUM + 2
-
-				blob_anim_image.color = O.organ_color
-				blob_anim_image.icon_state = anim_overlay
-				UpdateOverlays(blob_anim_image,"anim_overlay")
+			update_overlays(O.organ_color)
 			if ( O.hat && istype(src,/obj/blob/nucleus))
 				O.hat.pixel_y += 5 //hat needs to match position of perspective nucleus
 				UpdateOverlays(O.hat,"hat")
@@ -135,11 +188,18 @@
 		particleMaster.SpawnSystem(new /datum/particleSystem/blobattack(T,overmind.color))
 		if (T?.density)
 			T.blob_act(overmind.attack_power * 20)
+			T.material?.triggerOnBlobHit(T, overmind.attack_power * 20)
+
 		else
 			for (var/mob/M in T.contents)
 				M.blob_act(overmind.attack_power * 20)
+				if(isliving(M))
+					var/mob/living/L = M
+					L.was_harmed(src)
 			for (var/obj/O in T.contents)
 				O.blob_act(overmind.attack_power * 20)
+				O.material?.triggerOnBlobHit(O, overmind.attack_power * 20)
+
 
 	proc/attack_random()
 		var/list/allowed = list()
@@ -164,9 +224,6 @@
 				gen_rate_value = 0
 			overmind.spread_mitigation -= spread_value
 		var/turf/T = get_turf(src)
-		if (istype(src.loc,/turf))
-			if (istype(src.loc.loc,/area))
-				src.loc.loc.Exited(src)
 		healthbar?.onDelete()
 		qdel(healthbar)
 		healthbar = null
@@ -217,6 +274,8 @@
 			if(D_SLASHING)
 				damage_mult = 1.5
 				damtype = "brute"
+			if(D_SPECIAL)
+				return
 
 		src.take_damage(damage,damage_mult,damtype)
 		return
@@ -300,7 +359,7 @@
 		return
 
 	proc/create_chunk(var/turf/T)
-		var/obj/item/material_piece/wad/BC = unpool(/obj/item/material_piece/wad)
+		var/obj/item/material_piece/wad/blob/BC = new
 		BC.set_loc(T)
 		BC.setMaterial(copyMaterial(material))
 		BC.name = "chunk of blob"
@@ -330,9 +389,10 @@
 				amount *= fire_coefficient
 				//search for ectothermids.
 				if (amount)
-					for (var/obj/blob/ectothermid/T in range(3, src))
-						if (T && amount > 0)
-							amount -= T.consume(amount)
+					for_by_tcl(T, /obj/blob/ectothermid)
+						if (IN_RANGE(src, T, T.protect_range) && amount > 0)
+							amount *= T.absorb(min(amount * damage_mult, src.health))
+							break
 			if ("laser")
 				ignore_armor = 1
 			if ("poison","self_poison")
@@ -343,13 +403,14 @@
 				amount *= poison_coefficient
 				//handle poison overlay
 				if (amount && damtype == "poison")
-					src.poison += amount
+					src.poison += amount * damage_mult
 					updatePoisonOverlay()
 					if (!overmind)
-						SPAWN_DBG(1 SECOND)
+						SPAWN(1 SECOND)
 							while (poison)
 								Life()
 								sleep(1 SECOND)
+					return
 			if ("chaos")
 				ignore_armor = 1
 		if (!ignore_armor && armor_value > 0)
@@ -362,7 +423,7 @@
 
 
 		src.health -= amount
-		src.health = max(0,min(src.health_max,src.health))
+		src.health = clamp(src.health, 0, src.health_max)
 
 		if (src.health <= 0)
 			src.onKilled()
@@ -371,7 +432,7 @@
 			playsound(src.loc, "sound/voice/blob/blobspread[rand(1, 2)].ogg", 100, 1)
 			qdel(src)
 		else
-			src.update_icon()
+			src.UpdateIcon()
 			if (healthbar) //ZeWaka: Fix for null.onUpdate
 				healthbar.onUpdate()
 		return
@@ -397,9 +458,6 @@
 				var/amt = poison / length(spread)
 				for (var/obj/blob/B in spread)
 					B.poison += amt
-		for (var/obj/material_deposit/M in src.loc)
-			visible_message("<span class='alert'>[M] crumbles into dust!</span>")
-			qdel(M)
 
 	proc/heal_damage(var/amount)
 		if (!isnum(amount) || amount < 1)
@@ -407,12 +465,13 @@
 		if (src.poison)
 			amount /= 4
 		src.health += amount
-		src.health = max(0,min(src.health_max,src.health))
+		src.health = clamp(src.health, 0, src.health_max)
 		particleMaster.SpawnSystem(new /datum/particleSystem/blobheal(get_turf(src),src.color))
-		src.update_icon()
+		src.UpdateIcon()
 		healthbar.onUpdate()
 
-	proc/update_icon()
+	update_icon()
+
 		if (!src)
 			return
 
@@ -446,7 +505,7 @@
 		src.alpha = max(src.alpha, 32)
 
 	proc/spread(var/turf/T)
-		if (!istype(T) || !T.can_blob_spread_here(null, null, isadmin(overmind)))
+		if (!istype(T) || !T.can_blob_spread_here(null, null, isadmin(overmind) || overmind.admin_override))
 			return
 
 		var/blob_type = /obj/blob/
@@ -467,7 +526,7 @@
 			if (!overmind.tutorial.PerformSilentAction("blob-life", src))
 				return 0
 		if (src.poison)
-			var/damage_taken = min(5, src.poison)
+			var/damage_taken = clamp(src.poison, 1, 10)
 			take_damage(damage_taken, 1, "self_poison")
 			src.poison -= damage_taken * poison_depletion
 			src.poison = max(src.poison, 0)
@@ -491,14 +550,12 @@
 		if (overmind != user)
 			return
 		if (isitem(O))
-			if (get_dist(O, src) > 1)
+			if (BOUNDS_DIST(O, src) > 0)
 				return
 			var/datum/blob_ability/devour_item/D = overmind.get_ability(/datum/blob_ability/devour_item)
 			if (D)
 				D.onUse(O)
 			return
-		if (istype(O, /obj/material_deposit))
-			O.set_loc(src.loc)
 		if (!istype(O, /obj/blob))
 			return
 		if (overmind.tutorial)
@@ -512,67 +569,6 @@
 	proc/onMove(var/obj/blob/B)
 		return
 
-	onMaterialChanged()
-		..()
-		if (material && material.mat_id != "blob")
-			src.name = "[material.name] [initial(src.name)]"
-
-			// ARBITRARY MATH TIME! WOO!
-			var/om_tough = overmind.initial_material.getProperty("density")
-			var/c_tough = material.getProperty("density")
-			var/hm_orig = initial(health_max)
-
-			if (om_tough)
-				var/hm_new = hm_orig * (c_tough / om_tough)
-				var/perc_change = hm_new / health_max
-				health_max = hm_new
-				health *= perc_change
-
-			var/om_mp = overmind.initial_material.getProperty("thermal")
-			var/c_mp = material.getProperty("thermal")
-			var/hd_orig = initial(heat_divisor)
-
-			var/mp_diff = max(0, c_mp - om_mp)
-			heat_divisor = hd_orig + mp_diff / 300
-
-			var/om_flame = overmind.initial_material.getProperty("flammable")
-			var/c_flame = material.getProperty("flammable")
-			var/fc_orig = initial(fire_coefficient)
-
-			if (om_flame)
-				var/t = (100 / om_flame * c_flame) / 100
-				fire_coefficient = (0.25 + (t * 0.75)) * fc_orig
-
-			var/om_perme = overmind.initial_material.getProperty("permeable")
-			var/c_perme = material.getProperty("permeable")
-			var/psc_orig = initial(poison_spread_coefficient)
-
-			if (om_perme)
-				var/t = (100 / om_perme * c_perme) / 100
-				poison_spread_coefficient = (0.5 + (t * 0.5)) * psc_orig
-
-			var/om_corr = overmind.initial_material.getProperty("corrosion")
-			var/c_corr = material.getProperty("corrosion")
-			var/pc_orig = initial(poison_coefficient)
-
-			if (om_corr)
-				var/pc_new = pc_orig * (om_corr / c_corr)
-				poison_coefficient = pc_new
-
-			if (material.alpha > 210)
-				opacity = 1
-			else
-				opacity = initial(opacity)
-
-		else
-			src.name = initial(src.name)
-			var/hm_curr = health_max
-			health_max = initial(health_max)
-			health *= health_max / hm_curr
-			heat_divisor = initial(heat_divisor)
-			fire_coefficient = initial(fire_coefficient)
-			opacity = initial(opacity)
-		original_color = color
 
 /obj/blob/nucleus
 	name = "blob nucleus"
@@ -580,9 +576,9 @@
 	anim_overlay = "nucleus_blink"
 	special_icon = 1
 	desc = "The core of the blob. Destroying all nuclei effectively stops the organism dead in its tracks."
-	armor = 3
-	health_max = 250
-	health = 250
+	armor = 1.5
+	health_max = 500
+	health = 500
 	temp_tolerance = 1200
 	fire_coefficient = 0.5
 	poison_coefficient = 0.5
@@ -590,10 +586,14 @@
 	var/nextAttackMsg = 0
 
 	New()
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, 3)
+
 		. = ..()
 		START_TRACKING
 
 	disposing()
+		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
+
 		. = ..()
 		STOP_TRACKING
 
@@ -641,9 +641,9 @@
 		else
 			out(overmind, "<span class='blobalert'>Your nucleus in [get_area(src)] has been destroyed!</span>")
 			if (prob(50))
-				playsound(src.loc, "sound/voice/blob/blobdeploy.ogg", 100, 1)
+				playsound(src.loc, 'sound/voice/blob/blobdeploy.ogg', 100, 1)
 			else
-				playsound(src.loc, "sound/voice/blob/blobdeath.ogg", 100, 1)
+				playsound(src.loc, 'sound/voice/blob/blobdeath.ogg', 100, 1)
 
 		//destroy blob tiles near the destroyed nucleus
 		for (var/obj/blob/B in orange(1, src))
@@ -663,203 +663,6 @@
 	armor = 0
 	can_absorb = 0
 	movable = 0
-
-/obj/blob/deposit
-	name = "reagent deposit"
-	state_overlay = "deposit-reagent"
-	special_icon = 1
-	desc = "It's a thick walled cell with reagents entrenched within."
-	armor = 1
-	gen_rate_value = 0
-	can_absorb = 0
-	var/static/image/overlay_image = null
-	var/last_color = null
-	var/building = 0
-	movable = 1
-
-	New()
-		..()
-		if (!overlay_image)
-			overlay_image = image('icons/mob/blob.dmi', "deposit-material")
-
-	examine(mob/user)
-		if (disposed)
-			return list()
-		. = ..()
-		if (user == overmind)
-			if (movable)
-				. += "<span class='notice'>Clickdrag this onto any standard (not special) blob tile to move the reagent deposit there.</span>"
-			. += "<span class='notice'>It contains:</span>"
-			for (var/id in src.reagents.reagent_list)
-				var/datum/reagent/R = src.reagents.reagent_list[id]
-				. += "<span class='notice'>- [R.volume] unit[R.volume != 1 ? "s" : null] of [R.name]</span>"
-
-	proc/update_reagent_overlay()
-		if (disposed)
-			return
-		if (src.reagents.total_volume <= 0)
-			UpdateOverlays(overlay_image,name)
-			return
-		var/curr_color = src.reagents.get_average_rgb()
-		if (curr_color != last_color)
-			UpdateOverlays(null,name)
-			overlay_image.color = curr_color
-			last_color = curr_color
-			UpdateOverlays(overlay_image,name)
-
-	proc/build_reclaimer()
-		if (disposed || building)
-			return
-		building = 1
-		var/obj/blob/deposit/reclaimer/B = new(src.loc)
-		B.setOvermind(overmind)
-		B.reagents = src.reagents
-		B.reagents.my_atom = B
-		B.update_reagent_overlay()
-		src.reagents = null
-		B.setMaterial(src.material)
-		src.material = null
-		qdel(src)
-
-	proc/build_replicator()
-		if (disposed || building)
-			return
-		building = 1
-		var/obj/blob/deposit/replicator/B = new(src.loc)
-		B.setOvermind(overmind)
-		B.reagents = src.reagents
-		B.reagents.my_atom = B
-		B.set_master_reagent()
-		B.update_reagent_overlay()
-		src.reagents = null
-		B.setMaterial(src.material)
-		src.material = null
-		qdel(src)
-
-	onKilled()
-		if (disposed)
-			return
-		..()
-		if (src.reagents && src.reagents.total_volume)
-			visible_message("<span class='alert'>[src] bursts open, releasing the deposited reagents in a cloud!</span>")
-			smoke_reaction(reagents, 3, loc)
-
-	onMove(var/obj/blob/B)
-		var/turf/T = B.loc
-		B.set_loc(loc)
-		set_loc(T)
-		update_icon()
-		B.update_icon()
-
-	replicator
-		name = "replicator"
-		state_overlay = "replicator"
-		runOnLife = 1
-		var/points_per_unit = 1
-		var/max_per_tick = 3
-
-		var/master_reagent_id = null
-		var/datum/reagents/converting = null
-		var/datum/action/bar/blob_replicator/progress = new
-
-		New()
-			..()
-			progress.owner = src
-			progress.onStart()
-
-		disposing()
-			..()
-			progress.onDelete()
-			qdel(progress)
-
-		proc/set_master_reagent()
-			if (master_reagent_id)
-				return
-			if (src.reagents && src.reagents.total_volume)
-				master_reagent_id = src.reagents.get_master_reagent()
-				name = "[initial(name)] ([src.reagents.get_master_reagent_name()])"
-				src.reagents.clear_reagents()
-
-		Life()
-			if (converting)
-				var/removed = min(max_per_tick, converting.total_volume)
-				reagents.maximum_volume = reagents.total_volume + removed
-				reagents.add_reagent(master_reagent_id, removed)
-				converting.remove_any(removed)
-				if (converting.total_volume < 1)
-					converting = null
-				update_reagent_overlay()
-				progress.onUpdate()
-
-		MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-			if (O.disposed)
-				return
-			if (overmind.tutorial)
-				if (!overmind.tutorial.PerformAction("mousedrop", list(O, src)))
-					return
-			if (O.type == /obj/blob/deposit)
-				if (src.converting)
-					boutput(user, "<span class='alert'>Something is already loaded into the replicator.</span>")
-					return
-				var/obj/blob/deposit/D = O
-				if (D.overmind != user)
-					return
-				var/obj/blob/B = new(O.loc)
-				B.setOvermind(overmind)
-				converting = O.reagents
-				converting.my_atom = src
-				converting.maximum_volume = converting.total_volume
-				O.reagents = null
-				boutput(user, "<span class='notice'>Reagents transferred to the replicator.</span>")
-				qdel(O)
-				update_reagent_overlay()
-				progress.onUpdate()
-
-		onMove(var/obj/blob/B)
-			if (B.disposed)
-				return
-			if (!isturf(B.loc))
-				return
-			if (!reagents)
-				return
-			if (!reagents.total_volume)
-				return
-			var/obj/blob/deposit/D = new(B.loc)
-			D.setOvermind(overmind)
-			qdel(B)
-			var/trans_amt = src.reagents.total_volume
-			D.reagents = new /datum/reagents(trans_amt)
-			D.reagents.my_atom = D
-			src.reagents.trans_to(D, trans_amt)
-			D.update_reagent_overlay()
-			boutput(usr, "<span class='notice'>Transferred [trans_amt] reagents into a deposit.</span>")
-			update_reagent_overlay()
-
-	reclaimer
-		name = "reclaimer"
-		state_overlay = "reclaimer"
-		runOnLife = 1
-		var/reagents_per_point = 5
-		var/max_per_tick = 3
-		var/may_gain_last = null
-		movable = 0
-
-		Life()
-			if (..())
-				return 1
-			var/can_gain = round(reagents.total_volume / reagents_per_point)
-			if (can_gain <= 0)
-				var/obj/blob/lipid/B = new(loc)
-				B.setOvermind(overmind)
-				qdel(src)
-			var/may_gain = min(max_per_tick, overmind.bio_points_max - overmind.bio_points)
-			may_gain_last = may_gain
-			if (may_gain)
-				particleMaster.SpawnSystem(new /datum/particleSystem/blobheal(get_turf(src),src.color))
-				src.reagents.remove_any(reagents_per_point * may_gain)
-				overmind.bio_points += may_gain
-				reagents.maximum_volume = reagents.total_volume
-				update_reagent_overlay()
 
 /obj/blob/launcher
 	name = "slime launcher"
@@ -895,28 +698,6 @@
 			last_color = curr_color
 			underlays += underlay_image
 
-	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (O.disposed)
-			return
-		if (overmind.tutorial)
-			if (!overmind.tutorial.PerformAction("mousedrop", list(O, src)))
-				return
-		if (O.type == /obj/blob/deposit)
-			if (src.reagents && src.reagents.total_volume)
-				boutput(user, "<span class='alert'>Something is already loaded into the slime launcher.</span>")
-				return
-			var/obj/blob/deposit/D = O
-			if (D.overmind != user)
-				return
-			var/obj/blob/B = new(O.loc)
-			B.setOvermind(overmind)
-			reagents = O.reagents
-			reagents.my_atom = src
-			O.reagents = null
-			boutput(user, "<span class='notice'>Reagents transferred to the slime launcher.</span>")
-			qdel(O)
-			update_reagent_underlay()
-
 	Life()
 		if (..())
 			return 1
@@ -934,13 +715,9 @@
 
 		//turrets can fire on humans, mobcritters and pods
 		for (var/mob/living/M in view(firing_range, src))
-			if ((ishuman(M) || (ismobcritter(M) && !M:ghost_spawned)) && !isdead(M) && !check_target_immunity(M))
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					if (H.mutantrace)
-						targets_secondary += M
-					else
-						targets_primary += M
+			if ((ishuman(M) || (ismobcritter(M) && !M:ghost_spawned) || issilicon(M)) && !isdead(M) && !check_target_immunity(M))
+				if (isnpcmonkey(M))
+					targets_secondary += M
 				else
 					targets_primary += M
 
@@ -988,11 +765,11 @@
 	color_green = 0
 	color_blue = 0
 	color_icon = "#ffffff"
-	power = 20
+	damage = 10
+	stun = 10
 	cost = 0
 	dissipation_rate = 25
 	dissipation_delay = 8
-	ks_ratio = 0.5
 	sname = "slime"
 	shot_sound = 'sound/voice/blob/blobshoot.ogg'
 	shot_number = 0
@@ -1015,7 +792,7 @@
 			if (ishuman(asshole))
 				var/mob/living/carbon/human/literal_asshole = asshole
 				literal_asshole.remove_stamina(45)
-				playsound(hit.loc, "sound/voice/blob/blobhit.ogg", 100, 1)
+				playsound(hit.loc, 'sound/voice/blob/blobhit.ogg', 100, 1)
 
 			if (prob(8))
 				asshole.drop_item()
@@ -1024,11 +801,12 @@
 	name = "mitochondria"
 	state_overlay = "mitochondria"
 	special_icon = 1
-	desc = "It's a giant energy converting cell. It seems to be knitting together nearby holes in the blob."
+	desc = "It's a giant energy converting cell. It seems to be knitting together nearby holes in the blob... and pushing around any toxins."
 	armor = 0
 	gen_rate_value = 0
 	can_absorb = 0
 	runOnLife = 1
+	poison_spread_coefficient = 2
 	var/heal_range = 2
 	var/heal_amount = 4
 
@@ -1039,6 +817,17 @@
 			if (B.health < B.health_max)
 				B.heal_damage(heal_amount)
 
+			if(B.poison && !istype(B, /obj/blob/mitochondria) && !istype(B, /obj/blob/lipid))
+				src.poison += B.poison/2
+				B.poison = 0
+
+		for (var/obj/blob/lipid/B in view(1))
+			if(istype(B, /obj/blob/lipid))
+				if(B.poison < 50)
+					B.poison += src.poison / 2 + 2
+					src.poison /= 2
+					src.poison -= 2
+
 /obj/blob/reflective
 	name = "reflective membrane"
 	state_overlay = "reflective"
@@ -1048,8 +837,9 @@
 	gen_rate_value = 0
 	can_absorb = 0
 	opacity = 1
-	health = 85
-	health_max = 85
+	health = 40
+	health_max = 40
+	gas_impermeable = TRUE
 
 	bullet_act(var/obj/projectile/P)
 		if (P.proj_data.damage_type == D_ENERGY)
@@ -1062,57 +852,65 @@
 	name = "ectothermid"
 	state_overlay = "ectothermid"
 	special_icon = 1
-	desc = "It's a giant energy converting cell. It seems to disperse matter using heat energy."
+	desc = "It's a giant energy converting cell. It seems to store heat energy."
 	armor = 0
 	gen_rate_value = 1
 	can_absorb = 0
 	runOnLife = 1
 	var/protect_range = 3
-	var/damage_per_biopoint = 50
-	var/max_biopoints_per_tick = 40
-	var/damage_credit = 0
-	var/points_used = 0
+	var/temptemp = 0
+	var/absorbed_temp = 0
+	var/removed = 0
+	var/dead = 0
 
-	proc/consume(var/amt)
-		if (amt <= 0)
-			return 0
-		while (amt)
-			if (damage_credit >= amt)
-				damage_credit -= amt
-				return amt
-			else
-				if (points_used < max_biopoints_per_tick)
-					if (!overmind.hasPoints(1))
-						var/turf/T = get_turf(src)
-						set_loc(null)
-						var/obj/blob/B = new /obj/blob(T)
-						B.overmind = overmind
-						overmind.blobs += B
-						B.color = overmind.color
-						qdel(src)
-					damage_credit += damage_per_biopoint
-					points_used++
-					overmind.usePoints(1)
-				else
-					var/ret = damage_credit
-					damage_credit = 0
-					return ret
-		return 0
+	New()
+		. = ..()
+		START_TRACKING
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (temperature > T20C)
-			temperature -= consume(temperature - T20C)
+			temperature = T20C
 		..(air, temperature, volume)
+
+	onAttach(var/mob/living/intangible/blob_overmind/O)
+		..()
+		O.gen_rate_bonus -= 0.5
+		removed = 0.5
+
+	disposing()
+		..()
+		STOP_TRACKING
+		if (overmind)
+			overmind.gen_rate_bonus += removed
+			removed = 0
 
 	Life()
 		if (..())
 			return 1
-		points_used = 0
-		damage_credit = 0
+		absorbed_temp += temptemp * 0.25 + 50
+		temptemp *= 0.75
+		temptemp -= 50
 		for (var/turf/simulated/floor/T in range(protect_range,src))
 			var/datum/gas_mixture/air = T.air
 			if (air.temperature > T20C)
-				air.temperature -= 200
+				air.temperature /= 2
+				air.temperature -= 100
+				if(air.temperature > T20C)
+					absorbed_temp += log(2, air.temperature)
+
+	proc/absorb(amount)
+		if(!dead)
+			temptemp += amount
+			return clamp(0.0005 * (temptemp - 100), 0, 1)
+		else
+			return 1
+
+	onKilled()
+		. = ..()
+		dead = 1
+		if(absorbed_temp > 1000)
+			fireflash_s(get_turf(src), protect_range + 1, absorbed_temp + temptemp, (absorbed_temp + temptemp)/protect_range)
+
 
 /obj/blob/plasmaphyll
 	name = "plasmaphyll"
@@ -1123,6 +921,7 @@
 	gen_rate_value = 1
 	can_absorb = 0
 	runOnLife = 1
+	poison_coefficient = 0.5
 	var/protect_range = 3
 	var/consume_per_tick = 5.5
 	var/plasma_per_point = 2
@@ -1146,9 +945,11 @@
 	name = "lipid"
 	state_overlay = "lipid"
 	special_icon = 1
-	desc = "It's an energy storage cell. It stores biopoints."
+	desc = "It's an energy storage cell. It stores biopoints... and toxins."
 	armor = 0
 	can_absorb = 0
+	fire_coefficient = 1.5
+	poison_coefficient = 0
 
 	onAttach(var/mob/living/intangible/blob_overmind/O)
 		..()
@@ -1161,6 +962,7 @@
 		set_loc(null)
 		var/obj/blob/B = new /obj/blob(T)
 		B.overmind = overmind
+		B.poison = src.poison
 		overmind.blobs += B
 		B.color = overmind.color
 		qdel(src)
@@ -1171,6 +973,7 @@
 	state_overlay = "ribosome"
 	special_icon = 1
 	desc = "It's a protein sequencing cell. It enhances the blob's ability to spread."
+	poison_spread_coefficient = 1
 	armor = 0
 	can_absorb = 0
 	var/added = 0
@@ -1182,6 +985,7 @@
 		added = 0.1
 
 	update_icon()
+
 		return
 
 	disposing()
@@ -1201,6 +1005,7 @@
 	health = 75
 	health_max = 75
 	can_absorb = 0
+	gas_impermeable = TRUE
 	flags = ALWAYS_SOLID_FLUID
 
 	take_damage(var/amount,var/damage_mult = 1,var/damtype,var/mob/user)
@@ -1212,6 +1017,7 @@
 		..(amount, damage_mult, damtype, user)
 
 	update_icon()
+
 		return
 
 /obj/blob/firewall
@@ -1222,6 +1028,9 @@
 	special_icon = 1
 	armor = 1
 	can_absorb = 0
+	gas_impermeable = TRUE
+	health = 40
+	health_max = 40
 
 	take_damage(amount, mult, damtype, mob/user)
 		if (damtype == "burn")
@@ -1230,42 +1039,8 @@
 			return ..(amount/3,mult,damtype,user)
 		else return ..()
 
-	update_icon()
+	update_icon(override_parent)
 		return
-
-/obj/material_deposit
-	name = "material deposit"
-	desc = "A blob-engulfed chunk of materials."
-	var/mob/living/intangible/blob_overmind/overmind = null
-	icon = 'icons/mob/blob.dmi'
-	icon_state = "15"
-	//state_overlay =
-	layer = 4
-
-	New(nloc, mat, blob)
-		..(nloc)
-		src.overmind = blob
-		setMaterial(copyMaterial(mat))
-		pixel_x = rand(-12, 12)
-		pixel_y = rand(-12, 12)
-
-		var/image/ov = image('icons/mob/blob_organs.dmi')
-		ov.appearance_flags |= RESET_COLOR
-		ov.plane = PLANE_SELFILLUM + 1
-		ov.color = overmind.organ_color
-		ov.icon_state = "deposit-material"
-		UpdateOverlays(ov, name)
-
-	onMaterialChanged()
-		pixel_x = rand(-12, 12)
-		pixel_y = rand(-12, 12)
-
-	attackby(var/obj/item/W, var/mob/user)
-		var/obj/blob/B = locate() in src.loc
-		if (!B)
-			qdel(src)
-			return
-		B.attackby(W, user)
 
 /////////////////////////
 /// BLOB RELATED PROCS //
@@ -1364,4 +1139,4 @@
 	if (!istype(T))
 		return
 	for (var/obj/blob/B in orange(1,T))
-		B.update_icon()
+		B.UpdateIcon()

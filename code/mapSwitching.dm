@@ -9,16 +9,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 /datum/mapSwitchHandler
 	var/active = 0 //set to 1 if the datum initializes correctly
 	var/current = null //the human-readable name of the current map
-	var/nextPrior = null //the human-readable name of the previous next map, if that makes any sense at all
 	var/next = null //the human-readable name of the next map, if set
-	var/locked = 0 //set to 1 during a map-switch build on jenkins
-	var/overrideFile = null //basically exists forever after the first usage of the mapSwitcher. used by jenkins to keep state
-
-	//reboot delay handling
-	var/holdingReboot = 0 //1 if a server reboot was called but we were compiling a new map
-	var/rebootRetryDelay = 300 //30 seconds. time to wait between attempting another reboot
-	var/currentRebootAttempt = 0 //how many times have we attempted a reboot
-	var/rebootLimit = 4 //how many times should we attempt a restart before just doing it anyway
 
 	//player vote stuff
 	var/votingAllowed = 1 //is map voting allowed?
@@ -27,10 +18,8 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 	var/autoVoteDelay = 30 SECONDS //how long should we wait after round start to trigger to automatic map vote?
 	var/autoVoteDuration = 7 MINUTES //how long (in byond deciseconds) the automatic map vote should last (1200 = 2 mins)
 	var/voteCurrentDuration = 0 //how long is the current vote set to last?
-	var/queuedVoteCompile = 0 //is a player map vote scheduled for after the current compilation?
 	var/voteChosenMap = "" //the map that the players voted to switch to
 	var/nextMapIsVotedFor = 0 //is the next map a result of player voting?
-	var/nextMapIsVotedForPrior = 0 //we save the voted map state in the event of a failed compile, so we can restore
 	var/voteIndex = 0 //a count of votes
 	var/list/playerPickable = list() //list of maps players are allowed to pick
 	var/list/passiveVotes = list() //list of passive map votes
@@ -39,9 +28,8 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 	New()
 		..()
-
-		src.overrideFile = file("data/map-override")
 		src.setupPickableList()
+
 
 	proc/setupPickableList()
 		//map_setting set by code/map.dm
@@ -55,91 +43,17 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 				if (mapNames[map]["MinPlayersAllowed"])
 					if (total_clients() < mapNames[map]["MinPlayersAllowed"])
 						continue
+				#ifndef UPSCALED_MAP
 				if (mapNames[map]["MaxPlayersAllowed"])
 					if (total_clients() > mapNames[map]["MaxPlayersAllowed"])
 						continue
+				#endif
 
 				src.playerPickable[map] += mapNames[map]
 
 		if (!src.active)
-			logTheThing("debug", null, null, "<b>Map Switcher:</b> Failed to find an entry in mapNames. map_setting: [map_setting]")
+			logTheThing(LOG_DEBUG, null, "<b>Map Switcher:</b> Failed to find an entry in mapNames. map_setting: [map_setting]")
 			return
-
-	proc/setOverrideFile(mapID)
-		if (!mapID) return
-
-		if (fexists(src.overrideFile))
-			fdel(src.overrideFile)
-
-		src.overrideFile << mapID
-
-
-	proc/lock(mapID)
-		src.locked = 1
-		src.setOverrideFile(mapID)
-
-
-	proc/unlock(mapID)
-		//we attempted to compile a custom map, but it failed for some reason
-		if (mapID == "FAILED")
-			src.locked = 0
-			src.next = src.nextPrior ? src.nextPrior : null
-
-			if (src.next)
-				src.setOverrideFile(mapNames[src.next]["id"])
-			else
-				src.setOverrideFile(mapNames[src.current]["id"])
-
-			src.nextPrior = null
-
-			//we tried to switch away from a voted map, but it failed, so restore state
-			if (src.nextMapIsVotedForPrior)
-				src.nextMapIsVotedFor = 1
-				src.nextMapIsVotedForPrior = 0
-
-
-		//the custom map actually compiled whoa
-		else
-			/*
-			handle weird fucked up cases :v
-			1. got...nothing?
-			2. no next map set and the current map ISNT the mapID we were just given
-			3. next map set, but it doesn't match the mapID we were just given
-			*/
-			/*
-			if (!mapID || \
-				(!src.next && mapNames[src.current]["id"] != mapID) || \
-				(src.next && mapNames[src.next]["id"] != mapID))
-				src.locked = 0
-			else
-				src.locked = 0
-				src.nextPrior = null
-			*/
-
-			src.locked = 0
-			src.nextPrior = null
-
-			//we switched away from a voted map and it succeeded, forget all about that vote
-			if (src.nextMapIsVotedForPrior)
-				src.nextMapIsVotedForPrior = 0
-
-
-		//aaaa we were holding up a reboot, go go go!
-		if (src.holdingReboot)
-			if (mapID == "FAILED")
-				out(world, "<span class='bold notice'>Map switch failed, continuing restart. Shed a tear for the map that was never to be.</span>")
-			else
-				out(world, "<span class='bold notice'>Map switch complete, continuing restart</span>")
-
-			Reboot_server()
-		else if (src.queuedVoteCompile)
-			//ok we're not holding up a reboot and there's a queued player vote map, so let's trigger it
-			src.queuedVoteCompile = 0
-			try
-				src.setNextMap("Player Vote", mapName = src.voteChosenMap)
-			catch (var/exception/e)
-				logTheThing("admin", null, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e]")
-				logTheThing("diary", null, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e]", "debug")
 
 
 	proc/setCurrentMap(map)
@@ -156,9 +70,6 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		if (mapName && mapID)
 			throw EXCEPTION("Too many map identifiers given")
 
-		if (src.locked)
-			throw EXCEPTION("Map switcher is locked")
-
 		if (!src.active)
 			throw EXCEPTION("Map switcher is currently inactive")
 
@@ -170,9 +81,8 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		else
 			mapName = getMapNameFromID(mapID)
 
-		//tell jenkins, via goonhub, to compile with a new map
+		//compile with a new map
 		var/list/params = list(
-			"cause" = "[trigger] within Byond",
 			"map" = mapID,
 			"votedFor" = trigger == "Player Vote"
 		)
@@ -184,46 +94,14 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		if (data["error"])
 			throw EXCEPTION("Received error from goonhub API: [data["error"]]")
 
-		if (!data["response"])
-			throw EXCEPTION("Missing response code from jenkins")
-
-		if (data["response"] != "201")
-			throw EXCEPTION("Incorrect response code from jenkins: [data["response"]]")
-
-		//we can assume jenkins is compiling the new map
-		//when it's done, jenkins will tell us so via world/Topic()
-
-		//we switched away from a voted map, make a note of this
-		if (src.nextMapIsVotedFor)
-			src.nextMapIsVotedFor = 0
-			src.nextMapIsVotedForPrior = 1
-
 		//make a note if this is a player voted map
-		if (trigger == "Player Vote")
-			src.nextMapIsVotedFor = 1
-
-		//we already have a map chosen for next round, save it in case this new one fails
-		if (src.next)
-			src.nextPrior = src.next
+		src.nextMapIsVotedFor = trigger == "Player Vote" ? 1 : 0
 
 		//set next only if we're not re-compiling the current map for whatever reason
 		if (src.current != mapName)
 			src.next = mapName
 		else
 			src.next = null
-
-		src.lock(mapID)
-
-
-	//we're stuck waiting for a map compile so we can reboot. try again
-	proc/attemptReboot()
-		src.currentRebootAttempt++
-
-		//that's it! pull the damn plug!
-		if (src.currentRebootAttempt >= src.rebootLimit)
-			src.unlock("FAILED")
-		else
-			Reboot_server(1)
 
 
 	//start a vote to change the map
@@ -255,12 +133,11 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 			msg += " It will end in [duration / 10] seconds."
 		msg += "</span><br><br>"
 		out(world, msg)
-		world << csound("sound/voice/mapvote_[pick("hufflaw","spyguy","readster","bill","cirr","pope","wonk","dions")].ogg")
 
 		//if the vote was triggered with a duration, wait that long and end it
 		if (duration)
 			var/currentVoteIndex = src.voteIndex
-			SPAWN_DBG(duration)
+			SPAWN(duration)
 				//it's possible that a vote was started, cancelled, and then another started again. we don't want this spawn to prematurely end the new one
 				if (currentVoteIndex != src.voteIndex)
 					return
@@ -292,7 +169,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		src.previousVotes["vote[src.voteIndex]"] = reportData
 		src.previousVotes["vote_tally[src.voteIndex]"] = votes
 
-		logTheThing("debug", null, null, "<b>Map Vote Debug:</b> Vote data: [json_encode(votes)]. Report data: [json_encode(reportData)]")
+		logTheThing(LOG_DEBUG, null, "<b>Map Vote Debug:</b> Vote data: [json_encode(votes)]. Report data: [json_encode(reportData)]")
 
 		//reset votes holders
 		src.passiveVotes = new()
@@ -322,24 +199,20 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 		//handle ties
 		if (tiedMaps.len)
-			logTheThing("debug", null, null, "Map tie detected. Choices: [json_encode(tiedMaps)]")
+			logTheThing(LOG_DEBUG, null, "Map tie detected. Choices: [json_encode(tiedMaps)]")
 			src.voteChosenMap = pick(tiedMaps)
 
 		//trigger map switch using voteChosenMap
-		if (src.locked)
-			//welp we're already compiling something, queue this compilation for when it finishes
-			src.queuedVoteCompile = 1
+		if (src.voteChosenMap == src.current)
+			//dont trigger a recompile of the current map for no reason
+			src.nextMapIsVotedFor = 1
 		else
-			if (src.voteChosenMap == src.current)
-				//dont trigger a recompile of the current map for no reason
-				src.nextMapIsVotedFor = 1
-			else
-				try
-					src.setNextMap("Player Vote", mapName = src.voteChosenMap)
-				catch (var/exception/e)
-					logTheThing("admin", null, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e]")
-					logTheThing("diary", null, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e]", "debug")
-					return
+			try
+				src.setNextMap("Player Vote", mapName = src.voteChosenMap)
+			catch (var/exception/e)
+				logTheThing(LOG_ADMIN, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e]")
+				logTheThing(LOG_DIARY, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e]", "debug")
+				return
 
 		//announce winner
 		var/msg = "<br><span style='font-size: 1.25em;' class='internal'>"
@@ -350,8 +223,8 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		out(world, msg)
 
 		//log this
-		logTheThing("admin", null, null, "The players voted for <b>[src.voteChosenMap]</b> as the next map.")
-		logTheThing("diary", null, null, "The players voted for [src.voteChosenMap] as the next map.", "admin")
+		logTheThing(LOG_ADMIN, null, "The players voted for <b>[src.voteChosenMap]</b> as the next map.")
+		logTheThing(LOG_DIARY, null, "The players voted for [src.voteChosenMap] as the next map.", "admin")
 		message_admins("The players voted for <b>[src.voteChosenMap]</b> as the next map. <a href='?src=\ref[src];type=view_mapvote_report;vote=[src.voteIndex]'>(View Voters)</a>")
 
 	//rudely cancel the vote without counting votes/doing anything
@@ -363,12 +236,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 	// Standardized way to ask a user for a map
 	proc/clientSelectMap(client/C,var/pickable)
-		var/info = "Select a map"
-		info += "\nCurrently on: [src.current]"
-		if(pickable)
-			return input(info, "Switch Map", src.next ? src.next : src.current) as null|anything in src.playerPickable
-		else
-			return(input(info, "Switch Map", src.next ? src.next : src.current) as null|anything in mapNames)
+		return tgui_input_list(C, "Select a map. Currently on: [src.current]", "Switch Map", pickable ? src.playerPickable : mapNames, src.next || src.current)
 
 	//show a html report of who voted for what in any given map vote
 	proc/composeVoteReport(vote)
@@ -607,6 +475,8 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 				//chosenMap = "Density"
 			if(istype(I, /obj/item/reagent_containers/food/snacks/donut))
 				chosenMap = "Donut 2"
+			if(istype(I, /obj/item/grab))
+				chosenMap = "Wrestlemap"
 
 		if (mapSwitcher.playersVoting)
 			if(chosenMap)

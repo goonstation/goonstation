@@ -11,7 +11,7 @@
 	lockedDiff = 2
 	lockedChars = list("A","T","C","G")
 	lockedTries = 12
-	stability_loss = 5
+	stability_loss = 0
 	icon_state  = "hemochromia_unknown"
 
 	OnLife(var/mult)
@@ -82,7 +82,7 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 	lockedDiff = 2
 	lockedChars = list("A","T","C","G")
 	lockedTries = 12
-	stability_loss = 5
+	stability_loss = 0
 	icon_state  = "hemochromia_unknown"
 	occur_in_genepools = 0
 	acceptable_in_mutini = 0

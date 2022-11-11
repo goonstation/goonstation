@@ -28,6 +28,16 @@
 			src.mob_inside.remove()
 			src.mob_inside = null
 
+	ex_act(severity)
+		if(severity == 1)
+			var/mob/M = src.mob_inside
+			if(M)
+				src.mob_inside = null
+				M.emote("scream")
+				M.emote("faint")
+			src.visible_message("<span class='alert'><b>[src] shatters into a million tiny pieces!</b></span>")
+			dothepixelthing(src)
+
 /mob/proc/become_statue(var/datum/material/M, var/newDesc = null, survive=FALSE)
 	var/obj/statue/statueperson = new /obj/statue(get_turf(src))
 	src.pixel_x = 0
@@ -35,10 +45,12 @@
 	src.set_loc(statueperson)
 	statueperson.appearance = src.appearance
 	statueperson.real_name = "statue of [src.name]"
-	if(desc)
+	statueperson.name = statueperson.real_name
+	if(newDesc)
 		statueperson.real_desc = newDesc
 	else
 		statueperson.real_desc = src.get_desc()
+	statueperson.desc = statueperson.real_desc
 	statueperson.setMaterial(M)
 	statueperson.set_dir(src.dir)
 	if(!survive)
@@ -54,7 +66,7 @@
 	become_statue(getMaterial("rock"), "Its not too uncommon for our employees to be stoned at work but this is just ridiculous!")
 
 /proc/generate_random_pathogen()
-	var/datum/pathogen/P = unpool(/datum/pathogen)
+	var/datum/pathogen/P = new /datum/pathogen
 	P.setup(1, null, 0)
 	return P
 
@@ -65,7 +77,7 @@
 		R.pathogens[P.pathogen_uid] = P
 
 /proc/ez_pathogen(var/stype)
-	var/datum/pathogen/P = unpool(/datum/pathogen)
+	var/datum/pathogen/P = new /datum/pathogen
 	var/datum/pathogen_cdc/cdc = P.generate_name()
 	cdc.mutations += P.name
 	cdc.mutations[P.name] = P
@@ -75,5 +87,5 @@
 	P.spread = 25
 	P.suppression_threshold = max(1, P.suppression_threshold)
 	P.add_symptom(pathogen_controller.path_to_symptom[stype])
-	logTheThing("pathology", null, null, "Pathogen [P.name] created by quick-pathogen-proc with symptom [stype].")
+	logTheThing(LOG_PATHOLOGY, null, "Pathogen [P.name] created by quick-pathogen-proc with symptom [stype].")
 	return P

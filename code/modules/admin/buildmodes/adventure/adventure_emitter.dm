@@ -29,9 +29,9 @@
 
 	selected()
 		var/kind = input(usr, "What color of light?", "Light color", "#ffffff") as color
-		r = hex2num(copytext(kind, 2, 4)) / 255.0
-		g = hex2num(copytext(kind, 4, 6)) / 255.0
-		b = hex2num(copytext(kind, 6, 8)) / 255.0
+		r = hex2num(copytext(kind, 2, 4)) / 255
+		g = hex2num(copytext(kind, 4, 6)) / 255
+		b = hex2num(copytext(kind, 6, 8)) / 255
 		l = input(usr, "Luminosity?", "Luminosity", 1) as num
 		boutput(usr, "<span class='notice'>Now placing light emitters ([r],[g],[b]:[l]) in single spawn mode. Ctrl+click to toggle light on/off state.</span>")
 

@@ -7,7 +7,8 @@
 // otherwise this will stink up everything forever
 var/global/harddel_count = 0
 
-datum/controller/process/delete_queue
+/// The process controller for queued deletion
+/datum/controller/process/delete_queue
 	var/tmp/delcount = 0
 	var/tmp/gccount = 0
 	var/tmp/deleteChunkSize = MIN_DELETE_CHUNK_SIZE
@@ -31,11 +32,10 @@ datum/controller/process/delete_queue
 		name = "DeleteQueue"
 
 #ifdef HARD_DELETIONS_DISABLED
-		schedule_interval = 10 //ha ha whatever
+		schedule_interval = 1 SECOND //ha ha whatever
 #else
-		schedule_interval = 5
+		schedule_interval = 0.5 SECONDS
 #endif
-
 
 		tick_allowance = 25
 
@@ -66,26 +66,31 @@ datum/controller/process/delete_queue
 				gccount++
 				continue
 
+#ifdef HARD_DELETIONS_DISABLED
+			var/harddel_msg = "Didn't GC: \ref[D]"
+#else
+			var/harddel_msg = "HardDel of"
+#endif
 			if (log_hard_deletions)
 				if (D.type == /image)
 					var/image/I = D
-					logTheThing("debug", text="HardDel of [I.type] -- iconstate [I.icon_state], icon [I.icon]")
+					logTheThing(LOG_DEBUG, text="[harddel_msg] [I.type] -- iconstate [I.icon_state], icon [I.icon]")
 				else if(istype(D, /atom))
 					var/atom/A = D
-					logTheThing("debug", text="HardDel of [D.type] -- name [A.name], iconstate [A.icon_state], icon [A.icon]")
+					logTheThing(LOG_DEBUG, text="[harddel_msg] [D.type] -- name [A.name], iconstate [A.icon_state], icon [A.icon]")
 				else
-					logTheThing("debug", text="HardDel of [D.type]")
+					logTheThing(LOG_DEBUG, text="[harddel_msg] [D.type]")
 #ifdef LOG_HARD_DELETE_REFERENCES
 				if (log_hard_deletions >= 2)
 					for(var/x in find_all_references_to(D))
-						logTheThing("debug", text=x)
+						logTheThing(LOG_DEBUG, text=x)
 #endif
 #ifdef LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO
 				if (log_hard_deletions >= 2)
 					var/list/result = list()
 					ref_visit_list_2(all_references, D, result)
 					for(var/x in result)
-						logTheThing("debug", text=x)
+						logTheThing(LOG_DEBUG, text=x)
 #endif
 #ifdef AUTO_REFERENCE_TRACKING_ON_HARD_DEL
 				if (log_hard_deletions >= 2)
@@ -101,6 +106,9 @@ datum/controller/process/delete_queue
 
 	#ifndef HARD_DELETIONS_DISABLED
 			del(D)
+	#else
+			if(isliving(D))
+				gimmick_ungcd_mob_stuff(D)
 	#endif
 
 #endif
@@ -143,7 +151,7 @@ datum/controller/process/delete_queue
 			// Because we have already logged it into the gc count in qdel.
 			#endif
 
-			// Delete that bitch
+			// Delete that
 
 /*
 			// fuck
@@ -172,18 +180,29 @@ datum/controller/process/delete_queue
 				deleteChunkSize--
 		*/
 
+	proc/gimmick_ungcd_mob_stuff(mob/living/L)
+
+		#ifdef UPSCALED_MAP //this causes a ton of lag. no clue why.
+		return
+		#endif
+
+		L.lying = FALSE
+		L.dir = SOUTH
+		L.invisibility = INVIS_NONE
+		L.update_lying()
+		put_mob_in_centcom_cloner(L, indirect=TRUE)
+
 	tickDetail()
 		#ifdef DELETE_QUEUE_DEBUG
-		if (length(detailed_delete_count))
-			var/stats = "<b>Delete Stats:</b><br>"
-			var/count
-			for (var/thing in detailed_delete_count)
-				count = detailed_delete_count[thing]
-				stats += "[thing] deleted [count] times.<br>"
-			for (var/thing in detailed_delete_gc_count)
-				count = detailed_delete_gc_count[thing]
-				stats += "[thing] gracefully deleted [count] times.<br>"
-			boutput(usr, "<br>[stats]")
+		var/stats = "<b>Delete Stats:</b><br>"
+		var/count
+		for (var/thing in detailed_delete_count)
+			count = detailed_delete_count[thing]
+			stats += "[thing] deleted [count] times.<br>"
+		for (var/thing in detailed_delete_gc_count)
+			count = detailed_delete_gc_count[thing]
+			stats += "[thing] gracefully deleted [count] times.<br>"
+		boutput(usr, "<br>[stats]")
 		#endif
 		boutput(usr, "<b>Current Queue Length:</b> [delete_queue.count()]")
 		boutput(usr, "<b>Total Items Deleted:</b> [delcount] (Explictly) [gccount] (Gracefully GC'd)")

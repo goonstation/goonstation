@@ -27,8 +27,8 @@
 	process_move(keys)
 		if(keys && src.move_dir && !src.leave_popup_open)
 			src.leave_popup_open = TRUE
-			if(alert(src, "Are you sure you want to leave?", "Hop out of the pocket", "Yes", "No") == "Yes")
-				src.stop_observing()
+			if(tgui_alert(src, "Are you sure you want to leave?", "Hop out of the pocket", list("Yes", "No")) == "Yes")
+				qdel(src)
 			src.leave_popup_open = FALSE
 
 	click(atom/target, params) // TODO spam delay
@@ -49,16 +49,16 @@
 		src.ping.loc = target
 
 		src.ping.alpha = 0
-		var/matrix/M = unpool(/matrix)
+		var/matrix/M = new /matrix
 		M.Reset()
 		M.Scale(3/2, 3/2)
 		src.ping.transform = M
 		M.Scale(1/10, 1/10)
 		animate(src.ping, alpha = 255, time = 1 SECOND, easing = SINE_EASING)
 		animate(src.ping, transform = M, time = 1 SECOND, easing = BACK_EASING, flags = ANIMATION_PARALLEL)
-		pool(M)
+		qdel(M)
 
-		SPAWN_DBG(1 SECONDS)
+		SPAWN(1 SECONDS)
 			if(my_id == src.ping_id) // spam clicking and stuff
 				animate(src.ping, alpha = 0, time = 0.3 SECOND, easing = SINE_EASING)
 				animate(src.ping, transform = null, time = 0.3 SECOND, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
@@ -69,7 +69,7 @@
 	examine_verb(atom/A)
 		. = ..()
 		if(istype(A, /obj/machinery/computer3))
-			A.attack_hand(src)
+			A.Attackhand(src)
 
 	say_understands(var/other)
 		return 1
@@ -84,9 +84,9 @@
 			return
 
 		if(src.is_admin)
-			logTheThing("diary", src, null, "(ADMINMOUSE): [message]", "say")
+			logTheThing(LOG_DIARY, src, "(ADMINMOUSE): [message]", "say")
 		else
-			logTheThing("diary", src, null, "(MENTORMOUSE): [message]", "say")
+			logTheThing(LOG_DIARY, src, "(MENTORMOUSE): [message]", "say")
 
 		if (src.client && src.client.ismuted())
 			boutput(src, "You are currently muted and may not speak.")
@@ -121,9 +121,6 @@
 		src.my_mouse.emote(act, voluntary)
 
 	stop_observing()
-		boot()
-
-	ghostize()
 		boot()
 
 	disposing()

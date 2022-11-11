@@ -1,11 +1,10 @@
 /mob/living/critter/fire_elemental
 	name = "fire elemental"
 	real_name = "fire elemental"
-	desc = "Oh god."
+	desc = "You can't tell if this person is on fire, or made of it. Or both."
 	density = 1
 	icon_state = "fire_elemental"
-	icon_state_dead = "fire_elemental-dead"
-	custom_gib_handler = /proc/gibs
+	custom_gib_handler = /proc/fire_elemental_gibs
 	hand_count = 3
 	can_throw = 1
 	can_grab = 1
@@ -17,7 +16,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 1, pitch = 0.5, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 1, pitch = 0.5, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] wails!</span></b>"
 
 		return null
@@ -42,17 +41,18 @@
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.limb_name = "fire essence"
 		HH.can_hold_items = 0
-		HH.can_attack = 0
+		HH.can_attack = 1
 		HH.can_range_attack = 1
 
 	setup_healths()
-		add_hh_flesh(-150, 150, 1.15)
+		add_hh_flesh(150, 1.15)
 		add_health_holder(/datum/healthHolder/brain)
 
 	New()
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/cauterize)
 		abilityHolder.addAbility(/datum/targetable/critter/flamethrower/throwing)
+		abilityHolder.addAbility(/datum/targetable/critter/fireball)
 		abilityHolder.addAbility(/datum/targetable/critter/fire_sprint)
 		var/datum/statusEffect/simplehot/S = src.setStatus("simplehot", INFINITE_STATUS)
 		S.visible = 0
@@ -66,3 +66,11 @@
 
 	get_disorient_protection_eye()
 		return(max(..(), 80))
+
+	death(var/gibbed)
+		playsound(src.loc, 'sound/impact_sounds/burn_sizzle.ogg', 100, 1)
+		..(gibbed, 0)
+		if (!gibbed)
+			make_cleanable(/obj/decal/cleanable/ash,src.loc)
+			ghostize()
+			qdel(src)

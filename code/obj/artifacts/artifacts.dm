@@ -18,7 +18,7 @@
 		if (forceartiorigin) AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 
 	disposing()
@@ -28,7 +28,7 @@
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.lastattacked = src
 		src.ArtifactTouched(user)
 		return
@@ -36,7 +36,7 @@
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
 		if (src.Artifact_attackby(W,user))
 			..()
@@ -55,13 +55,13 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.ArtifactStimulus("force", 200)
 				src.ArtifactStimulus("heat", 500)
-			if(2.0)
+			if(2)
 				src.ArtifactStimulus("force", 75)
 				src.ArtifactStimulus("heat", 450)
-			if(3.0)
+			if(3)
 				src.ArtifactStimulus("force", 25)
 				src.ArtifactStimulus("heat", 380)
 		return
@@ -125,7 +125,7 @@
 			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 
 	disposing()
@@ -152,14 +152,14 @@
 		if (A.activated)
 			A.effect_process(src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.ArtifactTouched(user)
 		return
 
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.Artifact_attackby(W,user))
 			..()
 
@@ -169,13 +169,13 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.ArtifactStimulus("force", 200)
 				src.ArtifactStimulus("heat", 500)
-			if(2.0)
+			if(2)
 				src.ArtifactStimulus("force", 75)
 				src.ArtifactStimulus("heat", 450)
-			if(3.0)
+			if(3)
 				src.ArtifactStimulus("force", 25)
 				src.ArtifactStimulus("heat", 380)
 		return
@@ -230,7 +230,7 @@
 			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 
 	disposing()
@@ -248,7 +248,7 @@
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.Artifact_attackby(W,user))
 			..()
 
@@ -277,11 +277,11 @@
 		var/turf/T = get_turf(src)
 		if (cinematic)
 			T.visible_message("<span class='alert'><b>An artifact suddenly warps into existence!</b></span>")
-			playsound(T,"sound/effects/teleport.ogg",50,1)
-			var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
+			playsound(T, 'sound/effects/teleport.ogg', 50,1)
+			var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 			swirl.set_loc(T)
-			SPAWN_DBG(1.5 SECONDS)
-				pool(swirl)
+			SPAWN(1.5 SECONDS)
+				qdel(swirl)
 		Artifact_Spawn(T,forceartiorigin)
 		qdel(src)
 		return
@@ -291,7 +291,10 @@
 
 	New(var/loc)
 		..()
-		Artifact_Spawn(src.loc, forceartitype = pick(src.types))
+		if(length(types))
+			Artifact_Spawn(src.loc, forceartitype = pick(src.types))
+		else
+			CRASH("No artifact types provided.")
 		qdel(src)
 		return
 

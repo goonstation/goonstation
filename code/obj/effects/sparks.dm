@@ -8,18 +8,17 @@
 /obj/effects/sparks
 	name = "sparks"
 	icon_state = "sparks"
-	var/amount = 6.0
-	anchored = 1.0
+	var/amount = 6
+	anchored = 1
 	mouse_opacity = 0
 
-/obj/effects/sparks/unpooled(var/poolname)
-	..(poolname)
-	SPAWN_DBG(0.5 SECONDS)
+/obj/effects/sparks/New()
+	..()
+	SPAWN(0.5 SECONDS)
 		playsound(src.loc, "sparks", 100, 1)
 		var/turf/T = src.loc
 		if (istype(T, /turf))
 			T.hotspot_expose(1000,100,usr)
-	return
 
 /obj/effects/sparks/disposing()
 	var/turf/T = get_turf(src)
@@ -49,7 +48,7 @@
 		for(var/turf/X in view(1, src.loc))
 			if (istype(X, /turf))
 				X.hotspot_expose(1000,100,usr)
-		SPAWN_DBG(2 SECONDS) qdel(src)
+		SPAWN(2 SECONDS) qdel(src)
 
 /obj/effects/sparks/end
 	icon_state = "sparks_attack"

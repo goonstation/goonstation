@@ -1,21 +1,22 @@
 /obj/item/device/flash
 	name = "flash"
-	desc = "A device that emits an extremely bright light when used. Useful for briefly stunning people or starting a dance party."
+	desc = "A device that emits a complicated strobe when used, causing disorientation. Useful for stunning people or starting a dance party."
 	uses_multiple_icon_states = 1
 	icon_state = "flash"
+	force = 1
 	throwforce = 5
 	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 10
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	click_delay = COMBAT_CLICK_DELAY
+	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT | ATTACK_SELF_DELAY
+	object_flags = NO_GHOSTCRITTER
 	item_state = "electronic"
-	mats = 2
-	module_research = list("energy" = 1, "devices" = 3)
+	mats = list("MET-1" = 3, "CON-1" = 5, "CRY-1" = 5)
 
 	var/status = 1 // Bulb still functional?
 	var/secure = 1 // Access panel still secured?
 	var/use = 0 // Times the flash has been used.
-	var/l_time = 0 // Anti-spam cooldown (in relation to world time).
 	var/emagged = 0 // Booby Trapped?
 
 	var/eye_damage_mod = 0
@@ -34,7 +35,7 @@
 		process_burnout(mob/user)
 			return
 
-		attack(mob/living/M as mob, mob/user as mob)
+		attack(mob/living/M, mob/user)
 			..()
 			var/mob/living/silicon/robot/R = user
 			if (istype(R))
@@ -66,10 +67,30 @@
 		src.desc = "A device that emits an extremely bright light when used. Useful for briefly stunning people or starting a dance party."
 		return 1
 
+	get_desc()
+		. = ..()
+		if (src.status == 0)
+			. += "\nThe bulb has been burnt out"
+		else
+			switch(src.use)
+				if(0 to 4)
+					. += "\nThe bulb is in perfect condition."
+				if(4 to 6)
+					. += "\nThe bulb is in good condition"
+				if(6 to 8)
+					. += "\nThe bulb is in decent condition"
+				if(8 to 10)
+					. += "\nThe bulb is in bad condition"
+				else
+					. += "\nThe bulb is in terrible condition"
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			qdel(src) //cannot un-turboflash
 
 //I split attack and flash_mob into seperate procs so the rev_flash code is cleaner
-/obj/item/device/flash/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/device/flash/attack(mob/living/M, mob/user)
 	if(isghostcritter(user)) return
 	src.flash_mob(M, user)
 
@@ -96,10 +117,10 @@
 			return
 		if (src.cell && istype(src.cell,/obj/item/cell/erebite))
 			user.visible_message("<span class='alert'>[user]'s flash/cell assembly violently explodes!</span>")
-			logTheThing("combat", user, M, "tries to blind [constructTarget(M,"combat")] with [src] (erebite power cell) at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "tries to blind [constructTarget(M,"combat")] with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				if (src) qdel(src)
 			return
 		if (src.cell)
@@ -116,7 +137,7 @@
 
 	// Play animations.
 	if (isrobot(user))
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/atom/movable/overlay/animation = new(user.loc)
 			animation.layer = user.layer + 1
 			animation.icon_state = "blank"
@@ -126,9 +147,8 @@
 			sleep(0.5 SECONDS)
 			qdel(animation)
 
-	playsound(get_turf(src), "sound/weapons/flash.ogg", 100, 1)
+	playsound(src, 'sound/weapons/flash.ogg', 100, 1)
 	flick(src.animation_type, src)
-	src.l_time = world.time
 	if (!src.turboflash)
 		src.use++
 
@@ -163,10 +183,10 @@
 	if (!blind_success)
 		blind_msg_target = " but your eyes are protected!"
 		blind_msg_others = " but [his_or_her(M)] eyes are protected!"
-	M.visible_message("<span class='alert'>[user] blinds [M] with \the [src][blind_msg_others]</span>", "<span class='alert'>You are blinded by \the [src][blind_msg_target]</span>")
-	logTheThing("combat", user, M, "blinds [constructTarget(M,"combat")] with [src] at [log_loc(user)].")
+	M.visible_message("<span class='alert'>[user] blinds [M] with \the [src][blind_msg_others]</span>", "<span class='alert'>[user] blinds you with \the [src][blind_msg_target]</span>")
+	logTheThing(LOG_COMBAT, user, "blinds [constructTarget(M,"combat")] with [src] at [log_loc(user)].")
 	if (src.emagged)
-		logTheThing("combat", user, user, "blinds themself with [src] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "blinds themself with [src] at [log_loc(user)].")
 
 	// Handle bulb wear.
 	if (src.turboflash)
@@ -190,9 +210,6 @@
 	if(isghostcritter(user)) return
 	src.add_fingerprint(user)
 
-	if (src.l_time && world.time < src.l_time + 10)
-		return
-
 	if (user?.bioHolder?.HasEffect("clumsy") && prob(50))
 		user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], but slips and drops it!</span>")
 		user.drop_item()
@@ -212,20 +229,19 @@
 			return
 		if (src.cell && istype(src.cell,/obj/item/cell/erebite))
 			user.visible_message("<span class='alert'>[user]'s flash/cell assembly violently explodes!</span>")
-			logTheThing("combat", user, null, "tries to area-flash with [src] (erebite power cell) at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "tries to area-flash with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				if (src) qdel(src)
 			return
 
 	// Play animations.
-	playsound(get_turf(src), "sound/weapons/flash.ogg", 100, 1)
+	playsound(src, 'sound/weapons/flash.ogg', 100, 1)
 	flick(src.animation_type, src)
-	src.l_time = world.time
 
 	if (isrobot(user))
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/atom/movable/overlay/animation = new(user.loc)
 			animation.layer = user.layer + 1
 			animation.icon_state = "blank"
@@ -236,14 +252,22 @@
 			qdel(animation)
 
 	// Flash target mobs.
-	for (var/mob/living/M in oviewers((3 + src.range_mod), get_turf(src)))
-		if (src.turboflash)
-			M.apply_flash(35, 0, 0, 25)
-		else
-			var/dist = get_dist(get_turf(src),M)
-			dist = min(dist,4)
-			dist = max(dist,1)
-			M.apply_flash(20, weak = 2, uncloak_prob = 100, stamina_damage = (35 / dist), disorient_time = 3)
+	for (var/atom/A in oviewers((3 + src.range_mod), get_turf(src)))
+		var/mob/living/M
+		if (istype(A, /obj/vehicle))
+			var/obj/vehicle/V = A
+			if (V.rider && V.rider_visible)
+				M = V.rider
+		else if (ismob(A))
+			M = A
+		if (M)
+			if (src.turboflash)
+				M.apply_flash(35, 0, 0, 25)
+			else
+				var/dist = GET_DIST(get_turf(src),M)
+				dist = min(dist,4)
+				dist = max(dist,1)
+				M.apply_flash(20, weak = 2, uncloak_prob = 100, stamina_damage = (35 / dist), disorient_time = 3)
 
 
 	// Handle bulb wear.
@@ -264,7 +288,7 @@
 	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 		var/datum/game_mode/revolution/R = ticker.mode
 		if (ishuman(M))
-			//playsound(get_turf(src), "sound/weapons/rev_flash_startup.ogg", 40, 1 , 0, 0.6) //moved to rev flash only
+			//playsound(src, 'sound/weapons/rev_flash_startup.ogg', 40, 1 , 0, 0.6) //moved to rev flash only
 
 			var/mob/living/carbon/human/H = M
 			var/safety = 0
@@ -276,7 +300,7 @@
 				var/list/U = R.get_unconvertables()
 				if (!H.client || !H.mind)
 					user.show_text("[H] is braindead and cannot be converted.", "red")
-				else if (locate(/obj/item/implant/antirev) in H.implant)
+				else if (locate(/obj/item/implant/counterrev) in H.implant)
 					user.show_text("There seems to be something preventing [H] from revolting.", "red")
 					.= 0.5
 					nostun = 1
@@ -296,7 +320,8 @@
 
 
 /obj/item/device/flash/proc/process_burnout(mob/user as mob)
-	if (use > 1 && prob(max(0,(use*1.2) + burn_mod)))
+	tooltip_rebuild = 1
+	if (prob(max(0,((use-5)*10) + burn_mod)))
 		status = 0
 		boutput(user, "<span class='alert'><b>The bulb has burnt out!</b></span>")
 		set_icon_state("flash3")
@@ -305,7 +330,7 @@
 	return
 
 
-/obj/item/device/flash/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/device/flash/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/cell) && !src.secure)
 		boutput(user, "<span class='notice'>You combine [W] and [src]...</span>")
 		var/obj/item/device/flash/turbo/T = new /obj/item/device/flash/turbo(user.loc)
@@ -322,20 +347,6 @@
 	else if (isscrewingtool(W))
 		boutput(user, "<span class='notice'>You [src.secure ? "unscrew" : "secure"] the access panel.</span>")
 		secure = !secure
-	else if (ispulsingtool(W))
-		if (src.status == 0)
-			boutput(user, "<span class='alert'>The bulb has been burnt out.</span>")
-		else
-			if (src.use <= 0)
-				boutput(user, "<span class='notice'>The bulb is in perfect condition.</span>")
-			else if (src.use>0 && src.use<5)
-				boutput(user, "<span class='notice'>The bulb is in good condition.</span>")
-			else if (src.use>5 && src.use<10)
-				boutput(user, "<span class='notice'>The bulb is in decent condition.</span>")
-			else if (src.use>10 && src.use<15)
-				boutput(user, "<span class='notice'>The bulb is in bad condition.</span>")
-			else
-				boutput(user, "<span class='notice'>The bulb is in terrible condition.</span>")
 	else
 		return ..()
 
@@ -375,14 +386,14 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(!src.cell)
 				src.cell = new /obj/item/cell(src)
 				src.cell.maxcharge = max_flash_power
 				src.cell.charge = src.cell.maxcharge
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W)
 			return
 		if (iswrenchingtool(W) && !(src.secure))
@@ -408,6 +419,7 @@
 	name = "revolutionary flash"
 	desc = "A device that emits an extremely bright light when used. Something about this device forces people to revolt, when flashed by a revolution leader."
 	icon_state = "rev_flash"
+	animation_type = "rev_flash2"
 
 	process_burnout(mob/user as mob)
 		return
@@ -415,10 +427,10 @@
 	emp_act()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return
 
-	attack(mob/living/M as mob, mob/user as mob)
+	attack(mob/living/M, mob/user)
 		flash_mob(M, user, 0)
 		flash_mob(M, user, 1)
 
@@ -431,7 +443,7 @@
 					user.show_text("[src] refuses to flash!", "red") //lol
 					return
 		else if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-			playsound(get_turf(src), "sound/weapons/rev_flash_startup.ogg", 60, 1 , 0, 0.6)
+			playsound(src, 'sound/weapons/rev_flash_startup.ogg', 30, 1 , 0, 0.6)
 			var/convert_result = convert(M,user)
 			if (convert_result == 0.5)
 				user.show_text("Hold still to override . . . ", "red")

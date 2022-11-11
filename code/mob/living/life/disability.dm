@@ -5,14 +5,6 @@
 	process(var/datum/gas_mixture/environment)
 		var/mult = get_multiplier()
 
-		// moved drowsy, confusion and such from handle_chemicals because it seems better here
-		if (owner.drowsyness)
-			owner.drowsyness = max(0, owner.drowsyness - mult)
-			owner.change_eye_blurry(2*mult)
-			if (probmult(5))
-				owner.sleeping = 1
-				owner.changeStatus("paralysis", 5 SECONDS)
-
 		if (owner.misstep_chance > 0)
 			switch(owner.misstep_chance)
 				if (50 to INFINITY)
@@ -33,7 +25,7 @@
 				if (prob(33))
 					boutput(owner, "<span class='alert'>The holy ground burns you!</span>")
 				owner.TakeDamage("chest", 0, 5 * mult, 0, DAMAGE_BURN)
-			if (owner.loc && istype(owner.loc, /turf/space))
+			if (owner.loc && istype(owner.loc, /turf/space) || (istype(owner.loc, /obj/dummy/spell_batpoof) && istype(get_turf(owner.loc), /turf/space)))
 				if (prob(33))
 					boutput(owner, "<span class='alert'>The starlight burns you!</span>")
 				owner.TakeDamage("chest", 0, 2 * mult, 0, DAMAGE_BURN)
@@ -41,7 +33,15 @@
 		if (owner.loc && isarea(owner.loc.loc))
 			var/area/A = owner.loc.loc
 			if (A.irradiated)
-				owner.changeStatus("radiation", (A.irradiated * 10 * mult) SECONDS)
+				//spatial interdictor: mitigate effect of radiation
+				//consumes 250 units of charge per person per life tick
+				var/interdictor_influence = 0
+				for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
+					if (IN_RANGE(IX,owner,IX.interdict_range) && IX.expend_interdict(250))
+						interdictor_influence = 1
+						break
+				if(!interdictor_influence)
+					owner.take_radiation_dose((rand() * 0.5 SIEVERTS * A.irradiated * mult))
 
 		if (owner.bioHolder)
 			var/total_stability = owner.bioHolder.genetic_stability
@@ -52,7 +52,7 @@
 			if (total_stability <= 40 && probmult(5))
 				owner.bioHolder.DegradeRandomEffect()
 
-			if (total_stability <= 20 && probmult(10))
-				owner.bioHolder.DegradeRandomEffect()
+			if (total_stability <= 20 && probmult(5))
+				owner.bioHolder.RandomEffect("either", 1)
 
 		..()

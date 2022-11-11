@@ -1,15 +1,22 @@
 /obj/storage/crate
 	name = "crate"
-	desc = "A small, cuboid object with a hinged top and empty interior."
+	desc = "A big metal box that you can put things into. Who knows, it might even have things already in it."
 	is_short = 1
+	#ifdef XMAS
+	icon_state = "xmascrate"
+	icon_opened = "xmascrateopen"
+	icon_closed = "xmascrate"
+	#else
 	icon_state = "crate"
 	icon_closed = "crate"
 	icon_opened = "crateopen"
+	#endif
 	icon_welded = "welded-crate"
 	soundproofing = 3
 	throwforce = 50 //ouch
 	can_flip_bust = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS | NO_MOUSEDROP_QOL
+	object_flags = NO_GHOSTCRITTER
+	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 
 	get_desc()
 		. = ..()
@@ -23,15 +30,24 @@
 		else
 			src.UpdateOverlays(null, "barcode")
 
+	attackby(obj/item/I, mob/user)
+		if(!src.open && istype(I, /obj/item/antitamper))
+			if(src.locked)
+				boutput(user, "<span class='alert'>[src] is already locked and doesn't need [I].</span>")
+				return
+			var/obj/item/antitamper/AT = I
+			AT.attach_to(src, user)
+			return
+		..()
 
-	CanPass(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover)
 		if(istype(mover, /obj/projectile))
 			return 1
 		return ..()
 
-	CheckExit(atom/movable/O as mob|obj, target as turf)
+	Uncross(atom/movable/O, do_bump = TRUE)
 		if(istype(O, /obj/projectile))
-			return 1
+			. = 1
 		return ..()
 
 // Gore delivers new crates - woo!
@@ -41,6 +57,7 @@
 	icon_state = "dd_freezer"
 	icon_opened = "dd_freezeropen"
 	icon_closed = "dd_freezer"
+	weld_image_offset_Y = -1
 
 	beverages
 		name = "Discount Dans beverages crate"
@@ -48,10 +65,10 @@
 		spawn_contents = list(/obj/item/reagent_containers/food/drinks/noodlecup = 2,
 		/obj/item/reagent_containers/food/drinks/peach = 2,
 		/obj/item/reagent_containers/food/drinks/covfefe = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/spooky = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/spooky2 = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/gingerale = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/drowsy = 2)
+		/obj/item/reagent_containers/food/drinks/bottle/soda/spooky = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/soda/spooky2 = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/soda/gingerale = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/soda/drowsy = 2)
 
 	snacks
 		name = "Discount Dans 'edibles' crate"
@@ -71,10 +88,11 @@
 
 /obj/storage/crate/medical
 	name = "medical crate"
-	desc = "A medical crate."
+	desc = "A medical crate. For holding medical things."
 	icon_state = "medicalcrate"
 	icon_opened = "medicalcrateopen"
 	icon_closed = "medicalcrate"
+	weld_image_offset_Y = -2
 
 
 /obj/storage/crate/medical/morgue
@@ -115,10 +133,18 @@
 	icon_state = "freezer"
 	icon_opened = "freezeropen"
 	icon_closed = "freezer"
+	weld_image_offset_Y = -1
+
+/obj/storage/crate/bloody
+	name = "dented crate"
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it."
+	icon_state = "bloodycrate"
+	icon_opened = "bloodycrateopen"
+	icon_closed = "bloodycrate"
 
 /obj/storage/crate/bartending
 	name = "bartending crate"
-	spawn_contents = list(/obj/item/reagent_containers/food/drinks/bottle = 5,
+	spawn_contents = list(/obj/item/reagent_containers/food/drinks/bottle/soda/ = 5,
 	/obj/item/reagent_containers/glass/beaker/large = 2,
 	/obj/item/device/reagentscanner,
 	/obj/item/clothing/glasses/spectro,
@@ -134,6 +160,7 @@
 	icon_state = "biohazardcrate"
 	icon_opened = "biohazardcrateopen"
 	icon_closed = "biohazardcrate"
+	weld_image_offset_Y = -2
 
 	cdc
 		name = "CDC pathogen sample crate"
@@ -164,9 +191,9 @@
 	spawn_contents = list(/obj/item/device/radio/headset/multifreq = 4,
 	/obj/item/device/audio_log = 2,
 	/obj/item/audio_tape = 4,
-	/obj/item/camera_test = 2,
+	/obj/item/camera = 2,
 	/obj/item/device/light/flashlight = 2,
-	/obj/item/paper/book/critter_compendium,
+	/obj/item/paper/book/from_file/critter_compendium,
 	/obj/item/reagent_containers/food/drinks/milk,
 	/obj/item/reagent_containers/food/snacks/sandwich/pb,
 	/obj/item/paper/note_from_mom)
@@ -196,17 +223,17 @@
 	/obj/item/sheet/glass/fullstack,
 	/obj/item/ai_interface,
 	/obj/item/parts/robot_parts/robot_frame,
-	/obj/item/parts/robot_parts/leg/left,
-	/obj/item/parts/robot_parts/leg/right,
-	/obj/item/parts/robot_parts/arm/left,
-	/obj/item/parts/robot_parts/arm/right,
-	/obj/item/parts/robot_parts/chest,
-	/obj/item/parts/robot_parts/head,
+	/obj/item/parts/robot_parts/leg/left/standard,
+	/obj/item/parts/robot_parts/leg/right/standard,
+	/obj/item/parts/robot_parts/arm/left/standard,
+	/obj/item/parts/robot_parts/arm/right/standard,
+	/obj/item/parts/robot_parts/chest/standard,
+	/obj/item/parts/robot_parts/head/standard,
 	/obj/item/cell/supercell = 4,
 	/obj/item/cable_coil = 2)
 
 /obj/storage/crate/clown
-	desc = "A small, cuboid object with a hinged top and empty interior. It looks a little funny."
+	desc = "A big metal box that you can put things into. It looks a little funny."
 	spawn_contents = list(/obj/item/clothing/under/misc/clown/fancy,
 	/obj/item/clothing/under/misc/clown/dress,
 	/obj/item/clothing/under/misc/clown,
@@ -232,8 +259,10 @@
  */
 
 /obj/storage/crate/haunted
-	icon = 'icons/misc/halloween.dmi'
-	icon_state = "crate"
+	icon = 'icons/obj/large_storage.dmi'
+	icon_state = "bloodycrate"
+	icon_opened = "bloodycrateopen"
+	icon_closed = "bloodycrate"
 	var/triggered = 0
 
 	make_my_stuff()
@@ -242,7 +271,7 @@
 				new /obj/critter/spirit( src )
 			return 1
 
-	open()
+	open(entanglelogic, mob/user)
 		..()
 		if(!triggered)
 			triggered = 1
@@ -250,52 +279,48 @@
 			return
 
 /obj/storage/crate/syndicate_surplus
-	var/ready = 0
+	var/nest_amt = 0
+	var/static/list/possible_items = list()
 	grab_stuff_on_spawn = FALSE
-	New()
-		..()
-		SPAWN_DBG(2 SECONDS)
-			if (!ready)
-				spawn_items()
 
-	proc/spawn_items(var/mob/owner)
-		ready = 1
+	proc/spawn_items(mob/owner, obj/item/uplink/owner_uplink)
+		#define NESTED_SCALING_FACTOR 0.8
+		if (istype(src.loc, /obj/storage/crate/syndicate_surplus)) //if someone got lucky and rolled a surplus inside a surplus, scale the inner one (and its contents) down
+			src.nest_amt++
+			src.Scale(NESTED_SCALING_FACTOR**nest_amt, NESTED_SCALING_FACTOR**nest_amt) //scale the crate itself
 		var/telecrystals = 0
-		var/list/possible_items = list()
 
-		if (islist(syndi_buylist_cache))
+		if (islist(syndi_buylist_cache) && !length(possible_items))
 			for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
-				var/blocked = 0
-				if (ticker?.mode && S.blockedmode && islist(S.blockedmode) && length(S.blockedmode))
-					for (var/V in S.blockedmode)
-						if (ispath(V) && istype(ticker.mode, V))
-							blocked = 1
-							break
+				if(!isnull(owner_uplink) && !(S.can_buy & owner_uplink.purchase_flags)) //You can get anything (not usually excluded from surplus crates) from any gamemode if you spawn this without an uplink
+					continue
 
-				if (blocked == 0 && !S.not_in_crates)
+				if (!S.not_in_crates)
 					possible_items += S
 
 		if (islist(possible_items) && length(possible_items))
+			var/list/crate_contents = list()
 			while(telecrystals < 18)
 				var/datum/syndicate_buylist/item_datum = pick(possible_items)
+				crate_contents += item_datum.name
 				if(telecrystals + item_datum.cost > 24) continue
 				var/obj/item/I = new item_datum.item(src)
+				I.Scale(NESTED_SCALING_FACTOR**nest_amt, NESTED_SCALING_FACTOR**nest_amt) //scale the contents if we're nested
 				if (owner)
-					item_datum.run_on_spawn(I, owner, TRUE)
-					if (owner.mind)
-						owner.mind.traitor_crate_items += item_datum
+					item_datum.run_on_spawn(I, owner, TRUE, owner_uplink)
+					var/datum/antagonist/traitor/T = owner.mind?.get_antagonist(ROLE_TRAITOR)
+					if (istype(T))
+						T.surplus_crate_items.Add(item_datum)
 				telecrystals += item_datum.cost
+			var/str_contents = kText.list2text(crate_contents, ", ")
+			logTheThing(LOG_DEBUG, owner, "surplus crate contains: [str_contents] at [log_loc(src)]")
+		#undef NESTED_SCALING_FACTOR
 
-/obj/storage/crate/pizza
-	name = "pizza box"
-	desc = "A pizza box."
-	icon_state = "pizzabox"
-	icon_opened = "pizzabox_open"
-	icon_closed = "pizzabox"
+/obj/storage/crate/syndicate_surplus/spawnable
 
 	New()
 		..()
-		src.setMaterial(getMaterial("cardboard"), appearance = 0, setname = 0)
+		spawn_items() //null owner/uplink, so pulls from all possible items
 
 /obj/storage/crate/bee
 	name = "Bee crate"
@@ -317,6 +342,40 @@
 					carton.ourEgg.blog += blog
 				return 1
 
+//There is also /obj/storage/crate/robotics_supplies_borg that's on destiny & clarion, they only have the one crate
+//This one has just the bring-your-own-brain-and-cell borg parts (but does lovely pixel offsets I stole from cog1, thanks f1!)
+/obj/storage/crate/robotparts
+	make_my_stuff() //since we want offsets we're gonna have to do this manually (mimicking office closets)
+		if(..()) //obj/storage/proc/make_my_stuff returns 1 only the first time it's run, so this is how we only spawn stuff once. It's a bit of a weird system
+			new /obj/item/cable_coil/cut(src)
+
+			var/obj/item/parts/robot_parts/robot_frame/B1 = new /obj/item/parts/robot_parts/robot_frame(src)
+			B1.pixel_y = 3
+
+			new /obj/item/parts/robot_parts/head/standard(src) //Was B2 but no offsets needed
+
+			var/obj/item/parts/robot_parts/chest/standard/B3 = new /obj/item/parts/robot_parts/chest/standard/(src)
+			B3.pixel_y = -5
+
+
+			var/obj/item/parts/robot_parts/arm/left/standard/B4 = new /obj/item/parts/robot_parts/arm/left/standard(src)
+			B4.pixel_y = 0
+			B4.pixel_x = 11
+
+			var/obj/item/parts/robot_parts/arm/right/standard/B5 = new /obj/item/parts/robot_parts/arm/right/standard(src)
+
+			B5.pixel_y = 0
+			B5.pixel_x = -12
+
+			var/obj/item/parts/robot_parts/leg/left/standard/B6 = new /obj/item/parts/robot_parts/leg/left/standard(src)
+			B6.pixel_y = -6
+			B6.pixel_x = 7
+
+			var/obj/item/parts/robot_parts/leg/right/standard/B7 = new /obj/item/parts/robot_parts/leg/right/standard(src)
+			B7.pixel_y = -6
+			B7.pixel_x = -8
+			return TRUE
+
 // New crates woo. (Gannets)
 
 /obj/storage/crate/packing
@@ -325,12 +384,21 @@
 	icon_state = "packingcrate1"
 
 	New()
-		..()
 		var/n = rand(1,12)
+		switch(n)
+			if(1 to 3)
+				weld_image_offset_Y = 7
+			if(4 to 6)
+				icon_welded = "welded-short-horizontal"
+			if(7 to 9)
+				weld_image_offset_Y = 4
+			if(10 to 12)
+				icon_welded = "welded-short-vertical"
 		icon_state = "packingcrate[n]"
 		icon_opened = "packingcrate[n]_open"
 		icon_closed = "packingcrate[n]"
 		src.setMaterial(getMaterial("cardboard"), appearance = 0, setname = 0)
+		..()
 
 /obj/storage/crate/wooden
 	name = "wooden crate"
@@ -338,21 +406,30 @@
 	icon_state = "woodencrate1"
 	New()
 		var/n = rand(1,9)
+		switch(n)
+			if(1 to 3)
+				icon_welded = "welded-short-horizontal"
+			if(4 to 6)
+				weld_image_offset_Y = 5
+			if(7 to 9)
+				weld_image_offset_Y = 3
+
 		icon_state = "woodencrate[n]"
 		icon_opened = "woodencrate[n]_open"
 		icon_closed = "woodencrate[n]"
+		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
 		..()
 
 
 /obj/storage/crate/loot_crate
 	name = "Loot Crate"
-	desc = "A small, cuboid object with a hinged top and loot filled interior."
+	desc = "A big metal box that probably has goodies inside."
 	spawn_contents = list(/obj/random_item_spawner/loot_crate/surplus)
 
 /obj/storage/crate/chest
 	name = "treasure chest"
-	desc = "Glittering gold, trinkets and baubles, paid for in blood."
-	icon = 'icons/obj/32x48.dmi'
+	desc = "Glittering gold, trinkets and baubles. Paid for in blood."
+	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "chest"
 	icon_opened = "chest-open"
 	icon_closed = "chest"
@@ -390,6 +467,7 @@
 	icon_state = "attachecase"
 	icon_opened = "attachecase_open"
 	icon_closed = "attachecase"
+	weld_image_offset_Y = -5
 
 	demo
 		name = "Class Crate - Grenadier"
@@ -404,8 +482,9 @@
 		name = "Class Crate - Heavy Weapons Specialist"
 		desc = "A crate containing a Specialist Operative loadout. This one features a light machine gun, several belts of ammunition and a pouch of grenades."
 		spawn_contents = list(/obj/item/gun/kinetic/light_machine_gun,
-		/obj/item/ammo/bullets/lmg = 3,
+		/obj/item/storage/pouch/lmg,
 		/obj/item/storage/grenade_pouch/high_explosive,
+		/obj/item/storage/fanny/syndie,
 		/obj/item/clothing/suit/space/industrial/syndicate/specialist,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist)
 
@@ -437,11 +516,11 @@
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/gun/kinetic/tranq_pistol,
 		/obj/item/storage/pouch/tranq_pistol_dart,
-		/obj/beacon_deployer/syndicate,
-		/obj/item/genetics_injector/dna_scrambler,
+		/obj/item/pinpointer/disk,
+		/obj/item/dna_scrambler,
 		/obj/item/voice_changer,
 		/obj/item/card/emag,
-		/obj/item/clothing/under/chameleon,
+		/obj/item/storage/backpack/chameleon,
 		/obj/item/device/chameleon,
 		/obj/item/clothing/suit/space/syndicate/specialist,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
@@ -452,6 +531,7 @@
 		spawn_contents = list(/obj/item/gun/kinetic/smg,
 		/obj/item/storage/pouch/bullet_9mm/smg,
 		/obj/item/clothing/glasses/nightvision,
+		/obj/item/pinpointer/disk,
 		/obj/item/cloaking_device,
 		/obj/item/card/emag,
 		/obj/item/lightbreaker,
@@ -466,7 +546,7 @@
 		/obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut,
 		/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector,
 		/obj/item/clothing/glasses/healthgoggles/upgraded,
-		/obj/item/device/analyzer/healthanalyzer/borg,
+		/obj/item/device/analyzer/healthanalyzer/upgraded,
 		/obj/item/storage/medical_pouch,
 		/obj/item/storage/belt/syndicate_medic_belt,
 		/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel,
@@ -476,8 +556,9 @@
 	medic_rework
 		name = "Class Crate - Field Medic"
 		desc = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies."
-		spawn_contents = list(/obj/item/clothing/glasses/healthgoggles/upgraded,
-		/obj/item/device/analyzer/healthanalyzer/borg,
+		spawn_contents = list(/obj/item/gun/kinetic/veritate,
+		/obj/item/storage/pouch/veritate,
+		/obj/item/device/analyzer/healthanalyzer/upgraded,
 		/obj/item/storage/medical_pouch,
 		/obj/item/storage/belt/syndicate_medic_belt,
 		/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel,
@@ -488,13 +569,12 @@
 		name = "Class Crate - Combat Engineer"
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/paper/nast_manual,
-		/obj/item/turret_deployer,
+		/obj/item/turret_deployer/syndicate,
 		/obj/item/wrench/battle,
 		/obj/item/gun/kinetic/spes/engineer,
 		/obj/item/storage/pouch/shotgun/weak,
 		/obj/item/weldingtool/high_cap,
 		/obj/item/storage/belt/utility/prepared,
-		/obj/item/clothing/glasses/meson,
 		/obj/item/clothing/suit/space/syndicate/specialist/engineer,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)
 
@@ -503,7 +583,9 @@
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/gun/flamethrower/backtank/napalm,
 		/obj/item/fireaxe,
+		/obj/item/storage/grenade_pouch/napalm,
 		/obj/item/storage/grenade_pouch/incendiary,
+		/obj/item/storage/fanny/syndie,
 		/obj/item/clothing/suit/space/syndicate/specialist/firebrand,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/firebrand)
 
@@ -513,6 +595,7 @@
 		spawn_contents = list(/obj/item/gun/kinetic/sniper,
 		/obj/item/storage/pouch/sniper,
 		/obj/item/storage/grenade_pouch/smoke,
+		/obj/item/storage/fanny/syndie,
 		/obj/item/clothing/glasses/thermal/traitor,
 		/obj/item/clothing/suit/space/syndicate/specialist/sniper,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/sniper)
@@ -525,6 +608,15 @@
 		/obj/item/clothing/gloves/swat/knight,
 		/obj/item/clothing/suit/space/syndicate/knight,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/knight)
+
+	bard
+		name = "Class Crate - Bard"
+		desc = "A crate containing a Specialist Operative loadout."
+		spawn_contents = list(/obj/item/breaching_hammer/rock_sledge,
+		/obj/item/device/radio/headset/syndicate/bard,
+		/obj/item/storage/fanny/syndie,
+		/obj/item/clothing/suit/space/syndicate/specialist/bard,
+		/obj/item/clothing/head/helmet/space/syndicate/specialist/bard)
 
 	qm //Hi Gannets, I like your crate and wanted to use it for some QM stuff. Come yell at Azungar if this is not ok.
 		name = "Weapons crate"
@@ -637,7 +729,7 @@
 		/obj/item/shipcomponent/sensor/mining)
 
 	clothes
-		spawn_contents = list(/obj/item/clothing/under/gimmick/blackstronaut,
+		spawn_contents = list(/obj/item/clothing/under/gimmick/donk,
 		/obj/item/clothing/shoes/cleats,
 		/obj/item/clothing/mask/balaclava,
 		/obj/item/reagent_containers/glass/beaker/burn)
@@ -679,5 +771,8 @@
 
 	cargonia
 		spawn_contents = list(/obj/item/radio_tape/advertisement/cargonia,
-		/obj/item/clothing/under/rank/cargo,/obj/decal/skeleton)
+		/obj/item/clothing/under/rank/cargo,/obj/decal/fakeobjects/skeleton)
 
+	escape
+		spawn_contents = list(/obj/item/sea_ladder,
+		/obj/item/pipebomb/bomb/engineering = 2)

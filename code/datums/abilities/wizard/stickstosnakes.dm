@@ -9,10 +9,11 @@
 	target_anything = 1
 	target_in_inventory = 1
 	/*
-	voice_grim = "sound/voice/wizard/weneed.ogg"
-	voice_fem = "sound/voice/wizard/someoneto.ogg"
-	voice_other = "sound/voice/wizard/recordthese.ogg"
+	voice_grim = 'sound/voice/wizard/weneed.ogg'
+	voice_fem = 'sound/voice/wizard/someoneto.ogg'
+	voice_other = 'sound/voice/wizard/recordthese.ogg'
 	*/
+	maptext_colors = list("#ee59e3", "#ee59e3", "#b320c3", "#e59e3", "#b320c3", "#ee59e3")
 
 	cast(atom/target)
 		if(!holder)
@@ -22,6 +23,12 @@
 
 		var/atom/movable/stick = null
 		if(istype(target, /obj/item) || istype(target, /obj/railing)) // railings are stick-y enough, so
+			stick = target
+		else if(istype(target, /mob/living/critter/small_animal/snake))
+			var/mob/living/critter/small_animal/snake/snek = target
+			if(snek.double)
+				boutput(holder.owner, "<span class='alert'>Your wizarding skills are not up to the legendary Triplesnake technique.</span>")
+				return 1
 			stick = target
 		else if(istype(target, /mob))
 			var/mob/living/carbon/human/M = target
@@ -36,12 +43,7 @@
 				stick = pick(items)
 		else if(istype(target, /obj/critter/domestic_bee))
 			stick = target
-		else if(istype(target, /obj/critter/snake))
-			var/obj/critter/snake/snek = target
-			if(snek.double)
-				boutput(holder.owner, "<span class='alert'>Your wizarding skills are not up to the legendary Triplesnake technique.</span>")
-				return 1
-			stick = target
+
 		if (ismob(target.loc))
 			var/mob/HH = target.loc
 			HH.u_equip(target)
@@ -61,10 +63,11 @@
 			boutput(holder.owner, "<span class='alert'>It wasn't possible to remove the item from its container, oh no.</span>")
 			return 1 // No cooldown when it fails.
 
-		holder.owner.say("STYX TUSNEKS")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("STYX TUSNEKS", FALSE, maptext_style, maptext_colors)
         //..() uncomment this when we have voice files
 
-		var/obj/critter/snake/snake = new(stick.loc, stick)
+		var/mob/living/critter/small_animal/snake/snake = new(stick.loc, stick)
 
 		if (!has_spellpower)
 			snake.aggressive = 0
@@ -72,4 +75,5 @@
 		snake.start_expiration(2 MINUTES)
 
 		holder.owner.visible_message("<span class='alert'>[holder.owner] turns [stick] into [snake]!</span>")
-		playsound(holder.owner.loc, "sound/effects/mag_golem.ogg", 25, 1, -1)
+		logTheThing(LOG_COMBAT, holder.owner, "casts Sticks to Snakes on [constructTarget(stick,"combat")] turning it into [snake] at [log_loc(snake)].")
+		playsound(holder.owner.loc, 'sound/effects/mag_golem.ogg', 25, 1, -1)

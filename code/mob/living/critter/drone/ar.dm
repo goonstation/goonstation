@@ -1,4 +1,4 @@
-/mob/living/critter/drone/ar
+/mob/living/critter/robotic/drone/ar
 	drone_designation = "AR"
 	desc = "A highly dangerous Syndicate artillery drone."
 	icon_state = "drone5"
@@ -21,5 +21,5 @@
 		loot_table[/obj/item/shipcomponent/secondary_system/crash] = 100
 
 	setup_healths()
-		add_hh_robot(-125, 125, 1)
-		add_hh_robot_burn(-125, 125, 1)
+		add_hh_robot(125, 1)
+		add_hh_robot_burn(125, 1)

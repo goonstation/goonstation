@@ -1,5 +1,6 @@
-// handles machines
-datum/controller/process/machines
+
+/// handles machines processing
+/datum/controller/process/machines
 	var/tmp/list/machines
 	var/tmp/list/pipe_networks
 	var/tmp/list/powernets
@@ -9,7 +10,7 @@ datum/controller/process/machines
 
 	setup()
 		name = "Machine"
-		schedule_interval = 4
+		schedule_interval = MACHINE_PROC_INTERVAL
 
 		Station_VNet = new /datum/v_space/v_space_network()
 
@@ -32,7 +33,7 @@ datum/controller/process/machines
 		if (ticker % 8 == 0)
 			src.atmos_machines = by_cat[TR_CAT_ATMOS_MACHINES]
 			for (var/obj/machinery/machine as anything in atmos_machines)
-				if( !machine || machine.z == 4 && !Z4_ACTIVE ) continue
+				if( !machine || machine.z == 4 && !Z4_ACTIVE || istype(machine.loc, /obj/item/electronics/frame) ) continue
 	#ifdef MACHINE_PROCESSING_DEBUG
 				var/t = world.time
 	#endif
@@ -72,6 +73,10 @@ datum/controller/process/machines
 				PN.reset()
 	#ifdef MACHINE_PROCESSING_DEBUG
 				register_machine_time(PN, world.time - t)
+
+				if(length(detailed_machine_power))
+					detailed_machine_power_prev = detailed_machine_power
+					detailed_machine_power = list()
 	#endif
 				if (!(c++ % 100))
 					scheck()
@@ -84,7 +89,7 @@ datum/controller/process/machines
 			for(var/X in machlist[(src.ticker % (1<<(i-1)))+1])
 				if(!X) continue
 				var/obj/machinery/machine = X
-				if( machine.z == 4 && !Z4_ACTIVE ) continue
+				if( machine.z == 4 && !Z4_ACTIVE || istype(machine.loc, /obj/item/electronics/frame)) continue
 		#ifdef MACHINE_PROCESSING_DEBUG
 				var/t = world.time
 		#endif

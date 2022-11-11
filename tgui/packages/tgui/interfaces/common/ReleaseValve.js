@@ -1,3 +1,10 @@
+/**
+* @file
+* @copyright 2020
+* @author PrimeNumb (https://github.com/primenumb)
+* @license MIT
+*/
+
 import { NumberInput, LabeledList, Button } from '../../components';
 
 export const ReleaseValve = props => {

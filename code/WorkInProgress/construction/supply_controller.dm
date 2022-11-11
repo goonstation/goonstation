@@ -307,11 +307,14 @@
 	replenishment_time = 18000
 	supply_packs = list(/datum/supply_packs/complex/manufacturer_kit)
 
+//Nadir is not intended to have station pods/submarines
+#ifndef MAP_OVERRIDE_NADIR
 /datum/supply_control/pod_kit
 	maximum_stock = 2
 	replenishment_time = 9000
 	supply_packs = list(/datum/supply_packs/complex/pod_kit)
 	workstation_grade = 2
+#endif
 
 /datum/supply_control/ai_kit
 	maximum_stock = 2
@@ -500,8 +503,8 @@
 /obj/supply_pad
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pad0"
-	name = "supply pad"
-	desc = "A pad used to teleport goods between Central Command and a survey outpost. Requires a telecrystal to function."
+	name = "supply telepad"
+	desc = "It's a Nanotrasen 'Waterloo 1.0' cargo teleportation pad used to teleport goods instantly between distant locations. Requires a telecrystal to function."
 	density = 0
 	anchored = 1
 	opacity = 0
@@ -519,7 +522,7 @@
 	proc/used()
 		charge = 0
 		has_crystal--
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while (charge < 100)
 				charge++
 				sleep(0.1 SECONDS)
@@ -532,7 +535,7 @@
 		else
 			. += "<span class='alert'>The pad's telecrystal socket is empty!</span>"
 
-	attackby(var/obj/item/I as obj, user as mob)
+	attackby(var/obj/item/I, user)
 		if (istype(I, /obj/item/raw_material/telecrystal))
 			qdel(I)
 			has_crystal++
@@ -609,7 +612,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			recheck()
 
 	proc/is_sellable(var/obj/O)
@@ -733,7 +736,7 @@
 						showswirl(get_turf(out_target))
 						out_target.used()
 		else if (href_list["mode"])
-			mode = text2num(href_list["mode"])
+			mode = text2num_safe(href_list["mode"])
 		attack_hand(usr)
 
 	attack_hand(var/mob/user)

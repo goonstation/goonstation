@@ -97,7 +97,6 @@ var/global/list/atomTooltips = new()
 				"browserassets/js/animatePopup.js",
 				"browserassets/js/tooltip.js",
 				"browserassets/css/fonts/fontawesome-webfont.eot",
-				"browserassets/css/fonts/fontawesome-webfont.svg",
 				"browserassets/css/fonts/fontawesome-webfont.ttf",
 				"browserassets/css/fonts/fontawesome-webfont.woff",
 				"browserassets/css/font-awesome.css",
@@ -454,7 +453,7 @@ var/global/list/atomTooltips = new()
 	set desc = "Returns the amount of tooltips in existence everywhere"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
-	admin_only
+	ADMIN_ONLY
 
 	var/holderCount = 0
 	var/tooltipCount = 0
@@ -550,8 +549,8 @@ var/global/list/atomTooltips = new()
 			qdel(t)
 
 		atomTooltips.Remove(src)
-
-	..()
+	ClearAllOverlays()
+	. = ..()
 
 
 // DEBUG

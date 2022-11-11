@@ -8,7 +8,7 @@
 	associated_reagent = "pubbie tears"
 	affected_species = list("Human")
 
-/datum/ailment/disease/berserker/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
+/datum/ailment/disease/berserker/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
 	if (affected_mob.reagents.has_reagent("THC"))
@@ -17,23 +17,23 @@
 		return
 	switch(D.stage)
 		if(1)
-			if (prob(5)) affected_mob.emote(pick("twitch", "grumble"))
-			if (prob(5))
+			if (probmult(5)) affected_mob.emote(pick("twitch", "grumble"))
+			if (probmult(5))
 				var/speak = pick("Grr...", "Fuck...", "Fucking...", "Fuck this fucking.. fuck..")
 				affected_mob.say(speak)
 		if(2)
-			if (prob(5)) affected_mob.emote(pick("twitch", "scream"))
-			if (prob(5))
-				var/speak = pick("AAARRGGHHH!!!!", "GRR!!!", "FUCK!! FUUUUUUCK!!!", "FUCKING SHITCOCK!!", "WROOAAAGHHH!!")
+			if (probmult(5)) affected_mob.emote(pick("twitch", "scream"))
+			if (probmult(5))
+				var/speak = pick("AAARRGGHHH!!!!", "GRR!!!", "FUCK!! FUUUUUUCK!!!", "FUCKING SHIT!!", "WROOAAAGHHH!!")
 				affected_mob.say(speak)
-			if (prob(15))
+			if (probmult(15))
 				for(var/mob/O in viewers(affected_mob, null))
 					O.show_message(text("<span class='alert'><B>[] twitches violently!</B></span>", affected_mob), 1)
 				affected_mob.drop_item()
 				affected_mob.hand = !affected_mob.hand
 				affected_mob.drop_item()
 				affected_mob.hand = !affected_mob.hand
-			if (prob(33))
+			if (probmult(33))
 				if (!affected_mob.canmove)
 					for(var/mob/O in viewers(affected_mob, null))
 						O.show_message(text("<span class='alert'><B>[] spasms and twitches!</B></span>", affected_mob), 1)
@@ -49,7 +49,7 @@
 							O.show_message(text("<span class='alert'><B>[] hits [] with their thrashing!</B></span>", affected_mob, M), 1)
 						random_brute_damage(M, damage,1)
 					else
-						playsound(affected_mob.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 25, 1, -1)
+						playsound(affected_mob.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, -1)
 						for(var/mob/O in viewers(affected_mob, null))
 							O.show_message(text("<span class='alert'><B>[] fails to hit [] with their thrashing!</B></span>", affected_mob, M), 1)
 						return

@@ -2,11 +2,12 @@
 	name = "cloaking device"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "shield0"
+	var/base_icon_state = "shield"
 	uses_multiple_icon_states = 1
-	var/active = 0.0
+	var/active = 0
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSHIELD
 	item_state = "electronic"
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 2
 	throw_range = 10
 	w_class = W_CLASS_SMALL
@@ -17,47 +18,63 @@
 	stamina_cost = 0
 	stamina_crit_chance = 15
 	contraband = 6
+	var/image/cloak_overlay
 
-	attack_self(mob/user as mob)
+	New()
+		..()
+		src.icon_state = base_icon_state + "0"
+		src.cloak_overlay = image('icons/mob/mob.dmi', "icon_state" = "shield")
+
+	attack_self(mob/user)
 		src.add_fingerprint(user)
 		if (src.active)
 			user.show_text("The [src.name] is now inactive.", "blue")
 			src.deactivate(user)
 		else
-			switch (src.activate(user))
-				if (0)
-					user.show_text("You can't have more than one active [src.name] on your person.", "red")
-				if (1)
-					user.show_text("The [src.name] is now active.", "blue")
-		return
+			if (src.activate(user))
+				user.show_text("The [src.name] is now active.", "blue")
+			else
+				user.show_text("You can't have more than one active [src.name] on your person.", "red")
 
-	proc/activate(mob/user as mob)
+
+	update_icon()
+		if (src.active)
+			src.icon_state = base_icon_state + "1"
+		else
+			src.icon_state = base_icon_state + "0"
+
+
+	proc/activate(mob/user)
 		// Multiple active devices can lead to weird effects, okay (Convair880).
 		var/list/number_of_devices = list()
 		for (var/obj/item/cloaking_device/C in user)
 			if (C.active)
 				number_of_devices += C
 		if (number_of_devices.len > 0)
-			return 0
+			return FALSE
 
-		src.active = 1
-		src.icon_state = "shield1"
-		if (user && ismob(user))
-			user.update_inhands()
-			user.update_clothing()
-		return 1
+		RegisterSignal(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE, .proc/deactivate)
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_INVISIBILITY, "cloak", INVIS_CLOAK)
+		cloak_overlay.loc = user
+		user.client?.images += cloak_overlay
+		src.active = TRUE
+		src.UpdateIcon()
+		return TRUE
 
-	proc/deactivate(mob/user as mob)
-		src.active = 0
-		src.icon_state = "shield0"
-		if (user && ismob(user))
-			user.update_inhands()
-			user.update_clothing()
+	proc/deactivate(mob/user)
+		UnregisterSignal(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_INVISIBILITY, "cloak")
+		cloak_overlay.loc = null
+		user.client?.images -= cloak_overlay
+		if(src.active && istype(user))
+			user.visible_message("<span class='notice'><b>[user]'s cloak is disrupted!</b></span>")
+		src.active = FALSE
+		src.UpdateIcon()
 
 	// Fix for the backpack exploit. Spawn call is necessary for some reason (Convair880).
 	dropped(var/mob/user)
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (!src) return
 			if (!user)
 				src.deactivate()
@@ -70,18 +87,22 @@
 					if (H.r_store && H.r_store == src)
 						return
 
-			src.deactivate(user)
+			SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 			// Need to update other mob sprite when force-equipping the cloak. Not quite sure how and
 			// what even calls update_clothing() (giving the other mob invisibility and overlay) BEFORE
 			// we set src.active to 0 here. But yeah, don't comment this out or you'll end up with in-
 			// visible dudes equipped with technically inactive cloaking devices.
-			src.deactivate(src.loc)
+			SEND_SIGNAL(src.loc, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 			return
 
 	emp_act()
-		usr.visible_message("<span class='notice'><b>[usr]'s cloak is disrupted!</b></span>")
-		src.deactivate(usr)
-		return
+		if (src.active && ismob(src.loc))
+			src.deactivate(src.loc)
+
+	disposing()
+		if (src.active && ismob(src.loc))
+			src.deactivate(src.loc)
+		..()
 
 	limited
 		name = "limited-use cloaking device"
@@ -95,3 +116,25 @@
 				return
 			charges -= 1
 			..()
+
+	hunter
+		name = "Hunter cloaking device"
+		desc = "A cloaking device. It doesn't seem to be designed by humans."
+		icon_state = "hunter_cloak"
+		base_icon_state = "hunter_cloak"
+		var/hunter_key = "" // The owner of this cloak.
+
+		New()
+			..()
+			if(istype(src.loc, /mob/living))
+				var/mob/M = src.loc
+				src.AddComponent(/datum/component/self_destruct, M)
+				src.AddComponent(/datum/component/send_to_target_mob, src)
+				src.hunter_key = M.mind.key
+				START_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
+				flick("[src.base_icon_state]-tele", src)
+
+		disposing()
+			. = ..()
+			if (hunter_key)
+				STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)

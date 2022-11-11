@@ -1,6 +1,6 @@
 /datum/random_event/minor/gimmick_flood
 	name = "Random Flood"
-	disabled = 1 // disabled for now as we dismantle old Ass Jam stuff, find a reason to enable it later, this would be a good player-triggerable event. -warc
+	disabled = 1 // disabled for now, this would be a good player-triggerable event. -warc
 	weight = 30
 	customization_available = 1
 	var/reagent_type = null
@@ -51,7 +51,7 @@
 			else
 				var/obj/machinery/drainage/drain = pick(by_type[/obj/machinery/drainage])
 				drain.clogged = 60 // about 3 minutes
-				drain.update_icon()
+				drain.UpdateIcon()
 				src.target = get_turf(drain)
 				target.visible_message("<span class='alert'><b>\The [drain] overflows with [reagent.name]!</b></span>")
 
@@ -61,14 +61,14 @@
 		src.target.fluid_react_single(reagent.id, amount)
 
 
-		playsound(target,"sound/effects/teleport.ogg",50,1)
+		playsound(target, 'sound/effects/teleport.ogg', 50,1)
 
-		message_admins("Random flood event triggered on ([showCoords(target.x, target.y, target.z)]) with [amount] [reagent.name].")
+		message_admins("Random flood event triggered on ([log_loc(target)]) with [amount] [reagent.name].")
 
-		var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
+		var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 		swirl.set_loc(target)
-		SPAWN_DBG(1.5 SECONDS)
-			pool(swirl)
+		SPAWN(1.5 SECONDS)
+			qdel(swirl)
 
 		src.target = initial(src.target)
 		src.amount = initial(src.amount)

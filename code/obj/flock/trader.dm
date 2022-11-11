@@ -20,7 +20,12 @@
 ////////////////
 /turf/simulated/shuttle/wall/flock
 	icon = 'icons/misc/featherzone.dmi'
+#ifdef UNDERWATER_MAP
+	color = OCEAN_COLOR
+	icon_state = "shuttle-wall-oshan"
+#else
 	icon_state = "shuttle-wall"
+#endif
 
 /////////////////
 // SHUTTLE FLOORS
@@ -121,15 +126,19 @@
 	var/range = 4
 
 	New()
-		START_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, src.range)
 		..()
 
 	disposing()
-		STOP_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
+		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
 		..()
 
 /obj/item/device/flockblocker/attack_self(mob/user as mob)
 	active = !active
+	if (!src.active)
+		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
+	else
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, src.range)
 	icon_state = "[base_state]-[active ? "on" : "off"]"
 	boutput(user, "<span class='notice'>You fumble with [src] until you [active ? "turn it on. Space suddenly feels more thick." : "turn it off. You feel strangely exposed."]</span>")
 
@@ -229,13 +238,13 @@
 		"\"[gradientText(grad_col_1, grad_col_2, "We will not agree to any other price. Take it or leave it.")]\"")
 
 	// set up environmental things
-	SPAWN_DBG(10 SECONDS)
+	SPAWN(10 SECONDS)
 		for(var/obj/flock_screen/F in orange(5, src))
 			screen = F
-		screen.trader = src
+		screen?.trader = src
 		for(var/obj/flock_reclaimer/R in orange(5, src))
 			reclaimer = R
-		reclaimer.trader = src
+		reclaimer?.trader = src
 		for(var/obj/machinery/door/feather/trader/D in orange(5, src))
 			door = D
 
@@ -246,7 +255,7 @@
 	src.visible_message("<B>[src.name]</B> screeches, \"[gradientText(grad_col_1, grad_col_2, "We will not tolerate this!")]\"")
 	for(var/turf/T in get_area_turfs( get_area(src) ))
 		for(var/mob/living/L in T)
-			if(isflock(L))
+			if(isflockmob(L))
 				continue // don't zap our buddies
 			arcFlash(src, L, 2000000)
 
@@ -256,7 +265,7 @@
 		boutput(M, "<span class='alert'><B>[src.name]</B> becomes angry!</span>")
 	src.desc = "Looks absolutely furious, as far as you can read the expressions of holographic alien heads."
 	src.icon_state = "totem-angry"
-	SPAWN_DBG(rand(1000,3000))
+	SPAWN(rand(1000,3000))
 		src.icon_state = "totem"
 		src.visible_message("<b>[src.name] calms down.</b>")
 		src.desc = "[src] looks a bit annoyed."
@@ -277,7 +286,7 @@
 	is_greeting = 1
 	if(trader in approved_traders)
 		if(screen)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				screen.show_icon("yes")
 			screen.say(pick_string("flockmind.txt", "flocktrader_friendly_greeting"))
 		sleep(1 SECOND)
@@ -285,7 +294,7 @@
 			door.open()
 	else
 		if(screen)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				screen.show_icon("no")
 			screen.say(pick_string("flockmind.txt", "flocktrader_cautious_greeting"))
 	is_greeting = 0
@@ -303,14 +312,14 @@
 		var/existing_trader = (donator in approved_traders)
 		approved_traders |= donator
 		approved_at *= increase_rate
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(screen)
 				if(existing_trader)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						screen.show_icon("present")
 					screen.say(pick_string("flockmind.txt", "flocktrader_target_met_existing_trader"))
 				else
-					SPAWN_DBG(0)
+					SPAWN(0)
 						screen.show_icon("yes")
 					screen.say(pick_string("flockmind.txt", "flocktrader_target_met_new_trader"))
 			sleep(1 SECOND)
@@ -358,7 +367,7 @@
 	anchored = 1
 	var/obj/npc/trader/flock/trader
 
-/obj/flock_reclaimer/attack_hand(mob/user as mob)
+/obj/flock_reclaimer/attack_hand(mob/user)
 	if(!user)
 		return
 	if(!trader)
@@ -367,8 +376,8 @@
 	src.visible_message("<span class='notice'>[user.name] waves their hand over [src.name].</span>")
 	trader.greet(user)
 
-/obj/flock_reclaimer/attackby(obj/item/W as obj, mob/user as mob)
-	if(!W || !user)
+/obj/flock_reclaimer/attackby(obj/item/W, mob/user)
+	if(!W || !user || W.cant_drop)
 		return
 	if(istype(W, /obj/item/grab))
 		boutput(user, "<span class='alert'>You can't fit them into this, sadly.</span>")
@@ -378,7 +387,7 @@
 	user.remove_item(W)
 	qdel(W)
 	sleep(1 SECOND)
-	playsound(src.loc, "sound/impact_sounds/Energy_Hit_2.ogg", 70, 1)
+	playsound(src.loc, 'sound/impact_sounds/Energy_Hit_2.ogg', 70, 1)
 	sleep(0.5 SECONDS)
 	if(trader)
 		trader.donate(user, gained_resources)
@@ -392,6 +401,7 @@
 	win_path = "/obj/window/feather"
 	grille_path = "/obj/grille/flock"
 	full_win = 1
+	no_dirs = TRUE
 
 ////////////////////
 // FLOCKTRADER DOOR

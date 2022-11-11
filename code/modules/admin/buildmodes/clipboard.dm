@@ -5,7 +5,7 @@ Left Mouse Button                      = Paste object<br>
 Right Mouse Button                     = Select object to copy<br>
 ***********************************************************"}
 	icon_state = "buildmode11"
-	var/atom/cloned = null
+	var/tmp/atom/cloned = null
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!cloned)

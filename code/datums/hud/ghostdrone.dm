@@ -1,3 +1,4 @@
+// If you're looking for ghostdrone code itself, check mob\living\silicon\ghostdrone.dm. This is hud.
 /datum/hud/ghostdrone
 	var/atom/movable/screen/hud
 		mod1
@@ -205,7 +206,7 @@
 			if(dy < 0) items_screen++
 			else items_screen--
 			update_equipment()
-	clicked(id)
+	relay_click(id)
 		if (!master)
 			return
 		switch (id)
@@ -248,7 +249,7 @@
 			if ("pulling")
 				if (master.pulling)
 					unpull_particle(master,pulling)
-				master.pulling = null
+				master.remove_pulling()
 				update_pulling()
 			if ("face")
 				master.setFaceDialog()
@@ -387,7 +388,7 @@
 
 			for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.
 				if(!master.statusEffects || !(S in master.statusEffects))
-					pool(statusUiElements[S])
+					qdel(statusUiElements[S])
 					src.statusUiElements.Remove(S)
 					qdel(S)
 
@@ -406,7 +407,7 @@
 						pos_x -= spacing
 					else
 						if(S.visible)
-							var/atom/movable/screen/statusEffect/U = unpool(/atom/movable/screen/statusEffect)
+							var/atom/movable/screen/statusEffect/U = new /atom/movable/screen/statusEffect
 							U.init(master,S)
 							U.icon = icon_hud
 							statusUiElements.Add(S)

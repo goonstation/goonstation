@@ -1,6 +1,6 @@
 /obj/item/device/gps
 	name = "space GPS"
-	desc = "Tells you your coordinates based on the nearest coordinate beacon."
+	desc = "A navigation device that can tell you your position, and the position of other GPS devices. Uses coordinate beacons."
 	icon_state = "gps-off"
 	item_state = "electronic"
 	var/allowtrack = 1 // defaults to on so people know where you are (sort of!)
@@ -14,10 +14,8 @@
 	m_amt = 50
 	g_amt = 100
 	mats = 2
-	module_research = list("science" = 1, "devices" = 1, "miniaturization" = 8)
-	var/frequency = "1453"
+	var/frequency = FREQ_GPS
 	var/net_id
-	var/datum/radio_frequency/radio_control
 
 	proc/get_z_info(var/turf/T)
 		. =  "Landmark: Unknown"
@@ -40,13 +38,19 @@
 			. =  "Landmark: Restricted"
 		else if (T.z == 3)
 			. =  "Landmark: Debris Field"
+		else if (T.z == 5)
+			#ifdef UNDERWATER_MAP
+			. =  "Landmark: Trench"
+			#else
+			. =  "Landmark: Asteroid Field"
+			#endif
 		return
 
 	proc/show_HTML(var/mob/user)
 		if (!user)
 			return
 		src.add_dialog(user)
-		var/HTML = {"<style type="text/css">
+		var/list/HTML = list({"<style type="text/css">
 		.desc {
 			background: #21272C;
 			width: calc(100% - 5px);
@@ -70,14 +74,17 @@
 		.buttons a:hover {
 			background: #6BC7E8;
 		}
-		.gps {
+		.buttons.gps a {
+			display: block;
+			width: calc(100% - 7px);
+  			text-transform: none;
 			border-top: 1px solid #58B4DC;
 			background: #21272C;
 			padding: 3px;
 			margin: 0 0 1px 0;
 			font-size: 11px;
 		}
-		.gps.distress {
+		.buttons.gps.distress a {
 			border-top: 2px solid #BE3737;
 			background: #2C2121;
 		}
@@ -86,7 +93,7 @@
 			margin: 0;
 			font-size: 12px;
 		}
-		</style>"}
+		</style>"})
 		HTML += build_html_gps_form(src, false, src.tracking_target)
 		HTML += "<div><div class='buttons refresh'><A href='byond://?src=\ref[src];refresh=6'>(Refresh)</A></div>"
 		HTML += "<div class='desc'>Each GPS is coined with a unique four digit number followed by a four letter identifier.<br>This GPS is assigned <b>[serial]-[identifier]</b>.</div><hr>"
@@ -106,9 +113,10 @@
 				var/turf/T = get_turf(G.loc)
 				if (!T)
 					continue
-				HTML += "<div class='gps [G.distress ? "distress" : ""]'><span><b>[G.serial]-[G.identifier]</b>"
-				HTML += "<span style='font-size:85%;float: right'>[G.distress ? "<font color=\"red\">(DISTRESS)</font>" : "<font color=666666>(DISTRESS)</font>"]</span>"
-				HTML += "<br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></div>"
+				var/name = "[G.serial]-[G.identifier]"
+				HTML += "<div class='buttons gps [G.distress ? "distress" : ""]'><A href='byond://?src=\ref[src];dest_cords=1;x=[T.x];y=[T.y];z=[T.z];name=[name]'><span><b>[name]</b>"
+				HTML += "<span style='font-size:85%;float:right'>[G.distress ? "<font color=\"red\">(DISTRESS)</font>" : "<font color=666666>(DISTRESS)</font>"]</span><br>"
+				HTML += "Located at: [T.x], [T.y]<span style='float:right'>[src.get_z_info(T)]</span></span></A></div>"
 
 		HTML += "<div class='gps group'><b>Tracking Implants</b></div>"
 		for_by_tcl(imp, /obj/item/implant/tracking)
@@ -117,21 +125,24 @@
 				var/turf/T = get_turf(imp.loc)
 				if (!T)
 					continue
-				HTML += "<div class='gps'><span><b>[imp.loc.name]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></div>"
+				HTML += "<div class='buttons gps'><A href='byond://?src=\ref[src];dest_cords=1;x=[T.x];y=[T.y];z=[T.z];name=[imp.loc.name]'><span><b>[imp.loc.name]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></A></div>"
 		HTML += "<hr>"
 
 		HTML += "<div class='gps group'><b>Beacons</b></div>"
-		for (var/obj/machinery/beacon/B as anything in machine_registry[MACHINES_BEACONS])
-			if (B.enabled == 1)
-				var/turf/T = get_turf(B.loc)
-				HTML += "<div class='gps'><span><b>[B.sname]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></div>"
+		for (var/obj/B in by_type[/obj/warp_beacon])
+			var/turf/T = get_turf(B.loc)
+			HTML += "<div class='buttons gps'><A href='byond://?src=\ref[src];dest_cords=1;x=[T.x];y=[T.y];z=[T.z];name=[B.name]'><span><b>[B.name]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></A></div>"
 		HTML += "<br></div>"
 
-		user.Browse(HTML, "window=gps_[src];title=GPS;size=400x540;override_setting=1")
+		user.Browse(HTML.Join(), "window=gps_[src];title=GPS;size=400x540;override_setting=1")
 		onclose(user, "gps")
 
+	attack_ai(mob/user)
+		. = ..()
+		src.show_HTML(user)
+
 	attack_self(mob/user as mob)
-		if ((user.contents.Find(src) || user.contents.Find(src.master) || get_dist(src, user) <= 1))
+		if ((user.contents.Find(src) || user.contents.Find(src.master) || BOUNDS_DIST(src, user) == 0))
 			src.show_HTML(user)
 		else
 			user.Browse(null, "window=gps_[src]")
@@ -142,7 +153,7 @@
 		..()
 		if (usr.stat || usr.restrained() || usr.lying)
 			return
-		if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_interact_range(src, usr)))
+		if (usr.contents.Find(src) || usr.contents.Find(src.master) || in_interact_range(src, usr) || issilicon(usr) || isAIeye(usr))
 			src.add_dialog(usr)
 			var/turf/T = get_turf(usr)
 			if(href_list["getcords"])
@@ -166,6 +177,7 @@
 				if(!t)
 					return
 				src.identifier = t
+				logTheThing(LOG_STATION, usr, "sets a GPS identification name to [t].")
 			if(href_list["help"])
 				if(!distress)
 					boutput(usr, "<span class='alert'>Sending distress signal.</span>")
@@ -185,12 +197,13 @@
 				active = null
 				icon_state = "gps-off"
 
-
-			if (!src.master)
-				src.updateSelfDialog()
-			else
-				src.master.updateSelfDialog()
-
+			var/obj/item/target = src.master || src
+			target.updateSelfDialog()
+			//we want this to do self dialog updates UNLESS the user is a silicon in which case we do regular updates
+			for (var/client/client in src.clients_operating)
+				var/mob/user = client.mob
+				if (issilicon(user) || isAIeye(user))
+					target.attack_ai(user)
 			src.add_fingerprint(usr)
 		else
 			usr.Browse(null, "window=gps_[src]")
@@ -202,9 +215,8 @@
 		..()
 		serial = rand(4201,7999)
 		START_TRACKING
-		if (radio_controller)
-			src.net_id = generate_net_id(src)
-			radio_control = radio_controller.add_object(src, "[frequency]")
+		src.net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 	get_desc(dist, mob/user)
 		. = "<br>Its serial code is [src.serial]-[identifier]."
@@ -215,8 +227,8 @@
 	proc/obtain_target_from_coords(href_list)
 		if (href_list["dest_cords"])
 			tracking_target = null
-			var/x = text2num(href_list["x"])
-			var/y = text2num(href_list["y"])
+			var/x = text2num_safe(href_list["x"])
+			var/y = text2num_safe(href_list["y"])
 			if (!x || !y)
 				boutput(usr, "<span class='alert'>Bad Topc call, if you see this something has gone wrong. And it's probably YOUR FAULT!</span>")
 				return
@@ -229,7 +241,7 @@
 			//Set located turf to be the tracking_target
 			if (isturf(T))
 				src.tracking_target = T
-				boutput(usr, "<span class='notice'>Now tracking: <b>X</b>: [T.x], <b>Y</b>: [T.y]</span>")
+				boutput(usr, "<span class='notice'>Now tracking: <b>[href_list["name"]]</b> at <b>X</b>: [T.x], <b>Y</b>: [T.y]</span>")
 
 				begin_tracking()
 			else
@@ -243,7 +255,7 @@
 				return
 			active = 1
 			process()
-			boutput(usr, "<span class='notice'>You activate the gps</span>")
+			boutput(usr, "<span class='notice'>You activate the gps.</span>")
 
 	proc/send_distress_signal(distress)
 		var/distressAlert = distress ? "help" : "clear"
@@ -255,7 +267,7 @@
 		reply.data["coords"] = "[T.x],[T.y]"
 		reply.data["location"] = "[src.get_z_info(T)]"
 		reply.data["distress_alert"] = "[distressAlert]"
-		radio_control.post_signal(src, reply)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply)
 
 	process()
 		if(!active || !tracking_target)
@@ -264,17 +276,15 @@
 			return
 
 		src.set_dir(get_dir(src,tracking_target))
-		if (get_dist(src,tracking_target) == 0)
+		if (GET_DIST(src,tracking_target) == 0)
 			icon_state = "gps-direct"
 		else
 			icon_state = "gps"
 
-		SPAWN_DBG(0.5 SECONDS) .()
+		SPAWN(0.5 SECONDS) .()
 
 	disposing()
 		STOP_TRACKING
-		if (radio_controller)
-			radio_controller.remove_object(src, "[src.frequency]")
 		..()
 
 	receive_signal(datum/signal/signal)
@@ -284,11 +294,11 @@
 		var/sender = signal.data["sender"]
 
 		if (lowertext(signal.data["distress_alert"]))
-			var/senderName = signal.data["identifier"]
+			var/senderName = strip_html(signal.data["identifier"])
 			if (!senderName)
 				return
 			if (lowertext(signal.data["distress_alert"] == "help"))
-				src.visible_message("<b>[bicon(src)] [src]</b> beeps, \"NOTICE: Distress signal recieved from GPS [senderName].\".")
+				src.visible_message("<b>[bicon(src)] [src]</b> beeps, \"NOTICE: Distress signal received from GPS [senderName].\".")
 			else if (lowertext(signal.data["distress_alert"] == "clear"))
 				src.visible_message("<b>[bicon(src)] [src]</b> beeps, \"NOTICE: Distress signal cleared by GPS [senderName].\".")
 			return
@@ -320,7 +330,7 @@
 					reply.data["distress"] = "[src.distress]"
 				else
 					return //COMMAND NOT RECOGNIZED
-			radio_control.post_signal(src, reply)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply)
 
 		else if (lowertext(signal.data["address_1"]) == "ping" && src.allowtrack)
 			var/datum/signal/pingsignal = get_free_signal()
@@ -331,35 +341,5 @@
 			pingsignal.data["command"] = "ping_reply"
 			pingsignal.data["data"] = "[src.serial]-[src.identifier]"
 			pingsignal.data["distress"] = "[src.distress]"
-			pingsignal.transmission_method = TRANSMISSION_RADIO
 
-			radio_control.post_signal(src, pingsignal)
-
-// coordinate beacons. pretty useless but whatever you never know
-
-/obj/machinery/beacon
-	name = "coordinate beacon"
-	desc = "A coordinate beacon used for space GPSes."
-	icon = 'icons/obj/ship.dmi'
-	icon_state = "beacon"
-	machine_registry_idx = MACHINES_BEACONS
-	var/sname = "unidentified"
-	var/enabled = 1
-
-	process()
-		if(enabled == 1)
-			use_power(50)
-
-	attack_hand()
-		enabled = !enabled
-		boutput(usr, "<span class='notice'>You switch the beacon [src.enabled ? "on" : "off"].</span>")
-
-	attack_ai(mob/user as mob)
-		var/t = input(user, "Enter new beacon identification name", src.sname) as null|text
-		if (isnull(t))
-			return
-		t = strip_html(replacetext(t, "'",""))
-		t = copytext(t, 1, 45)
-		if (!t)
-			return
-		src.sname = t
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal)

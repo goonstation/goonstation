@@ -12,6 +12,7 @@
 			if (!src.throwing)
 				break
 			if(A == src) continue
+			if(A.GetComponent(/datum/component/glued)) continue
 			if(isliving(A))
 				var/mob/living/L = A
 				if (!L.throws_can_hit_me) continue
@@ -21,11 +22,11 @@
 			// **TODO: Better behaviour for windows
 			// which are dense, but shouldn't always stop movement
 			if(isobj(A))
-				if(!A.CanPass(src, src.loc, 1.5))
+				if(!A.Cross(src))
 					src.throw_impact(A, thr)
 					. = TRUE
 
-/atom/movable/proc/throw_begin(atom/target)
+/atom/movable/proc/throw_begin(atom/target, turf/thrown_from, mob/thrown_by)
 
 // when an atom gets hit by a thrown object, returns the sound to play
 /atom/proc/hitby(atom/movable/AM, datum/thrown_thing/thr=null)
@@ -36,37 +37,56 @@
 		src.pixel_x = text2num(params["icon-x"]) - 16
 		src.pixel_y = text2num(params["icon-y"]) - 16
 
+/atom/movable/proc/overwrite_impact_sfx(original_sound, hit_atom, thr)
+	. = original_sound
+
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrown_thing/thr=null)
+	if(src.disposed)
+		return TRUE
 	var/area/AR = get_area(hit_atom)
 	if(AR?.sanctuary)
-		return
-
+		return TRUE
 	src.material?.triggerOnAttack(src, src, hit_atom)
+	hit_atom.material?.triggerOnHit(hit_atom, src, null, 2)
 	for(var/atom/A in hit_atom)
 		A.material?.triggerOnAttacked(A, src, hit_atom, src)
 
 	if(!hit_atom)
-		return
+		return TRUE
 
-	reagents?.physical_shock(20)
+	src.reagents?.physical_shock(20)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_HIT_THROWN, hit_atom, thr))
+		return
 	if(SEND_SIGNAL(hit_atom, COMSIG_ATOM_HITBY_THROWN, src, thr))
 		return
 	var/impact_sfx = hit_atom.hitby(src, thr)
+	impact_sfx = src.overwrite_impact_sfx(impact_sfx,hit_atom, thr)
 	if(src && impact_sfx)
 		playsound(src, impact_sfx, 40, 1)
 
-/atom/movable/Bump(atom/O)
+/atom/movable/bump(atom/O)
 	if(src.throwing)
-		src.throw_impact(O)
+		var/found_any = FALSE
+		for(var/datum/thrown_thing/thr as anything in global.throwing_controller.throws_of_atom(src))
+			src.throw_impact(O, thr)
+			found_any = TRUE
+			break // I'd like this to process all relevant datums but something is duplicating throws so it actually sometimes causes a ton of lag
+		if(!found_any)
+			src.throw_impact(O)
 		src.throwing = 0
 	..()
 
-/atom/movable/proc/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1,
+/atom/movable/proc/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
 			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
+	SHOULD_CALL_PARENT(TRUE)
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 	if(!throwing_controller) return
 	if(!target) return
 	if(src.anchored && !allow_anchored) return
+	var/turf/targets_turf = get_turf(target)
+	if(!targets_turf)
+		return
+
 	reagents?.physical_shock(14)
 	src.throwing = throw_type
 
@@ -77,19 +97,16 @@
 
 	src.last_throw_x = src.x
 	src.last_throw_y = src.y
-	src.throw_begin(target)
+	src.throw_begin(target, thrown_from, thrown_by)
 
 	src.throwforce += bonus_throwforce
 
 	var/matrix/transform_original = src.transform
-	if (src.throw_spin == 1 && !(throwing & THROW_SLIP))
+	if (src.throw_spin == 1 && !(throwing & THROW_SLIP) && !(throwing & THROW_PEEL_SLIP))
 		animate(src, transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 		animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 		animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 
-	var/turf/targets_turf = get_turf(target)
-	if(!targets_turf)
-		return
 	var/target_true_x = targets_turf.x
 	var/target_true_y = targets_turf.y
 	if(islist(params))
@@ -120,10 +137,16 @@
 		transform_original = transform_original,
 		params = params,
 		thrown_from = thrown_from,
+		thrown_by = thrown_by,
 		return_target = usr, // gross
 		bonus_throwforce = bonus_throwforce,
-		end_throw_callback = end_throw_callback
+		end_throw_callback = end_throw_callback,
+		throw_type = throw_type
 	)
+
+	if(isliving(src) && (throwing & THROW_PEEL_SLIP))
+		var/mob/living/L = src
+		APPLY_ATOM_PROPERTY(L, PROP_MOB_CANTMOVE, "peel_slip_\ref[thr]")
 
 	LAZYLISTADD(throwing_controller.thrown, thr)
 	throwing_controller.start()

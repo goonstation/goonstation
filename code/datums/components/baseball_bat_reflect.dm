@@ -3,6 +3,9 @@
 	signals = list(COMSIG_ATOM_HITBY_THROWN)
 	proctype = .proc/reflect
 
+TYPEINFO(/datum/component/holdertargeting/baseball_bat_reflect)
+	initialization_args = list()
+
 /datum/component/holdertargeting/baseball_bat_reflect/proc/reflect(mob/owner, atom/movable/thing, datum/thrown_thing/thr)
 	var/homerun = prob(1)
 	var/generator/gen = generator("num", -1, 1, NORMAL_RAND)
@@ -37,7 +40,7 @@
 	if(isnull(T))
 		return
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		thing.throw_at( \
 			T,
 			round(12 + gen.Rand() * 4),
@@ -46,9 +49,9 @@
 		)
 
 	if(!ON_COOLDOWN(owner, "baseball-bat-reflect-sound-spam", 1 DECI SECOND))
-		playsound(owner, "sound/items/woodbat.ogg", 50, 1)
+		playsound(owner, 'sound/items/woodbat.ogg', 50, 1)
 		if(homerun)
-			playsound(owner, "sound/items/batcheer.ogg", 50, 1)
+			playsound(owner, 'sound/items/batcheer.ogg', 50, 1)
 			owner.visible_message("<span class='alert'>[owner] hits \the [thing] with \the [src.parent] and scores a HOMERUN! Woah!!!!</span>")
 		else
 			owner.visible_message("<span class='alert'>[owner] hits \the [thing] with \the [src.parent]!</span>")

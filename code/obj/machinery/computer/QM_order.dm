@@ -5,6 +5,7 @@
 	var/temp = null
 	var/obj/item/card/id/scan = null
 	var/console_location = null
+	circuit_type = /obj/item/circuitboard/qmorder
 
 	light_r =1
 	light_g = 0.7
@@ -13,11 +14,7 @@
 	New()
 		..()
 		console_location = get_area(src)
-		return
-
-	disposing()
-		radio_controller.remove_object(src, "1149")
-		..()
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 /obj/machinery/computer/ordercomp/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
@@ -26,14 +23,11 @@
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "qmreq1"
 
-/obj/machinery/computer/ordercomp/attackby(I as obj, user as mob)
-	return src.attack_hand(user)
-
 /obj/machinery/computer/ordercomp/attack_ai(var/mob/user as mob)
 	boutput(user, "<span class='alert'>AI Interfacing with this computer has been disabled.</span>")
 	return
 
-/obj/machinery/computer/ordercomp/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/ordercomp/attack_hand(var/mob/user)
 	if(..())
 		return
 
@@ -49,10 +43,10 @@
 		dat += {"<B>Shipping Budget:</B> [wagesystem.shipping_budget] Credits<BR>
 		<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR><HR>"}
 		if(src.scan != null)
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			if(account)
-				dat += "<B>Credits on Account:</B> [account.fields["current_money"]] Credits<BR><HR>"
+				dat += "<B>Credits on Account:</B> [account["current_money"]] Credits<BR><HR>"
 		dat += {"<A href='?src=\ref[src];viewrequests=1'>View Requests</A><BR>
 		<A href='?src=\ref[src];order=1'>Request Items</A><BR>
 		<A href='?src=\ref[src];buypoints=1'>Purchase Supply Points</A><BR>
@@ -62,14 +56,14 @@
 	onclose(user, "computer_[src]")
 	return
 
-/obj/machinery/computer/ordercomp/attackby(var/obj/item/I as obj, user as mob)
+/obj/machinery/computer/ordercomp/attackby(var/obj/item/I, mob/user)
 	if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 		if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 		boutput(user, "<span class='notice'>You swipe the ID card.</span>")
-		var/datum/data/record/account = null
+		var/datum/db_record/account = null
 		account = FindBankAccountByName(I:registered)
 		if(account)
-			var/enterpin = input(user, "Please enter your PIN number.", "Order Console", 0) as null|num
+			var/enterpin = user.enter_pin("Order Console")
 			if (enterpin == I:pin)
 				boutput(user, "<span class='notice'>Card authorized.</span>")
 				src.scan = I
@@ -79,8 +73,8 @@
 		else
 			boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 			src.scan = null
-	else src.attack_hand(user)
-	return
+	else
+		..()
 
 /obj/machinery/computer/ordercomp/proc/view_requests()
 	. = "<B>Current Requests:</B><BR><BR>"
@@ -97,10 +91,10 @@
 		src.add_dialog(usr)
 
 	if (href_list["order"])
-		var/datum/data/record/account = null
+		var/datum/db_record/account = null
 		if(src.scan) account = FindBankAccountByName(src.scan.registered)
 		if(account)
-			src.temp = "<B>Credits on Account:</B> [account.fields["current_money"]] Credits<BR><HR>"
+			src.temp = "<B>Credits on Account:</B> [account["current_money"]] Credits<BR><HR>"
 		else
 			src.temp = "<B>Shipping Budget:</B> [wagesystem.shipping_budget] Credits<BR><HR>"
 		src.temp += "<B>Please select the Supply Package you would like to request:</B><BR><BR>"
@@ -139,7 +133,7 @@
 		src.temp += "<hr><A href='?src=\ref[src];mainmenu=1'>Main Menu</A><br>"
 
 	else if (href_list["doorder"])
-		var/datum/data/record/account = null
+		var/datum/db_record/account = null
 		if(src.scan) account = FindBankAccountByName(src.scan.registered)
 		var/datum/supply_order/O = new/datum/supply_order ()
 		var/datum/supply_packs/P = locate(href_list["doorder"])
@@ -154,26 +148,23 @@
 
 				return
 			if(account) //buy it with their money
-				if(account.fields["current_money"] < P.cost)
+				if(account["current_money"] < P.cost)
 					boutput(usr, "Insufficient funds in account. Log out to request purchase using supply budget.")
 				else
-					account.fields["current_money"] -= P.cost
+					account["current_money"] -= P.cost
 					O.object = P
 					O.orderedby = usr.name
 					O.console_location = src.console_location
 					var/obj/storage/S = O.create(usr)
 					shippingmarket.receive_crate(S)
-					logTheThing("station", usr, null, "ordered a [P.name] at [log_loc(src)].")
+					logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
 					boutput(usr, "Your order of [P.name] has been processed and will be delivered shortly.")
 					shippingmarket.supply_history += "[O.object.name] ordered by [O.orderedby] for [P.cost] credits from personal account.<BR>"
 
 					// pda alert ////////
-					var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 					var/datum/signal/pdaSignal = get_free_signal()
 					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Notification: [O.object] ordered by [O.orderedby] using personal account at [O.console_location].")
-					pdaSignal.transmission_method = TRANSMISSION_RADIO
-					if(transmit_connection != null)
-						transmit_connection.post_signal(src, pdaSignal)
+					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 					//////////////////
 			else
 				O.object = P
@@ -183,12 +174,9 @@
 				boutput(usr, "Request for [P.name] sent to Supply Console. The Quartermasters will process your request as soon as possible.")
 
 				// pda alert ////////
-				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 				var/datum/signal/pdaSignal = get_free_signal()
 				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_CARGOREQUEST), "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
-				pdaSignal.transmission_method = TRANSMISSION_RADIO
-				if(transmit_connection != null)
-					transmit_connection.post_signal(src, pdaSignal)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 				//////////////////
 		else
 			boutput(usr, "Communications error with central supply console. Please notify a Certified Service Technician.")
@@ -208,10 +196,10 @@
 			if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 				if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 				boutput(usr, "<span class='notice'>You swipe the ID card.</span>")
-				var/datum/data/record/account = null
+				var/datum/db_record/account = null
 				account = FindBankAccountByName(I:registered)
 				if(account)
-					var/enterpin = input(usr, "Please enter your PIN number.", "Order Console", 0) as null|num
+					var/enterpin = usr.enter_pin("Order Console")
 					if (enterpin == I:pin)
 						boutput(usr, "<span class='notice'>Card authorized.</span>")
 						src.scan = I
@@ -228,7 +216,7 @@
 	else if (href_list["buypoints"])
 
 		if (src.scan)
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			if (!account)
 				src.temp = {"<B>ERROR:</B> No bank account associated with this ID card found.<BR>
@@ -236,7 +224,7 @@
 			else
 				src.temp = {"<B>Contribute to Shipping Budget</B><BR>
 							<B>Shipping Budget:</b> [wagesystem.shipping_budget] Credits<BR>
-							<B>Credits in Account:</B> [account.fields["current_money"]] Credits<BR><HR>
+							<B>Credits in Account:</B> [account["current_money"]] Credits<BR><HR>
 							<A href='?src=\ref[src];buy=1'>Make Transaction</A><BR>
 							<A href='?src=\ref[src];mainmenu=1'>Cancel Purchase</A>"}
 		else
@@ -248,23 +236,20 @@
 			if (src.scan.registered in FrozenAccounts)
 				boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
 				return
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			if (!account)
 				src.temp = {"<B>ERROR:</B> No bank account associated with this ID card found.<BR>
 							<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"}
 			var/transaction = input("How much?", "Shipping Budget", null, null)  as null|num
-			if (account.fields["current_money"] >= transaction && (transaction > 0))
-				account.fields["current_money"] -= transaction
+			if (account["current_money"] >= transaction && (transaction > 0) && isnum_safe(transaction))
+				account["current_money"] -= transaction
 				wagesystem.shipping_budget += transaction
 				src.temp = "Transaction successful. Thank you for your patronage.<BR>"
 				////// PDA NOTIFY/////
-				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 				var/datum/signal/pdaSignal = get_free_signal()
 				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Notification: [transaction] credits transfered to shipping budget from [src.scan.registered].")
-				pdaSignal.transmission_method = TRANSMISSION_RADIO
-				if(transmit_connection != null)
-					transmit_connection.post_signal(src, pdaSignal)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 				//////////
 				src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 			else

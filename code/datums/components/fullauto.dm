@@ -15,6 +15,17 @@
 		. = ..()
 		SEND_SIGNAL(usr, COMSIG_FULLAUTO_MOUSEDOWN, src, location, control, params)
 
+	MouseMove(location, control, params)
+		. = ..()
+		SEND_SIGNAL(usr, COMSIG_FULLAUTO_MOUSEMOVE, src, location, control, params)
+
+TYPEINFO(/datum/component/holdertargeting/fullauto)
+	initialization_args = list(
+		ARG_INFO("delaystart", DATA_INPUT_NUM, "Initial delay between shots (in deciseconds)", 1.5),
+		ARG_INFO("delaymin", DATA_INPUT_NUM, "Minimum delay between shots (in deciseconds)", 1.5),
+		ARG_INFO("rampfactor", DATA_INPUT_NUM, "Multiplicitive decrease in delay after each shot, (0, 1]", 1),
+	)
+
 /datum/component/holdertargeting/fullauto
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	mobtype = /mob/living
@@ -43,7 +54,7 @@
 				src.rampfactor = _rampfactor
 
 
-	Initialize(delaystart = 4 DECI SECONDS, delaymin=1 DECI SECOND, rampfactor=0.9)
+	Initialize(delaystart = 1.5 DECI SECONDS, delaymin = 1.5 DECI SECONDS, rampfactor = 1)
 		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/gun))
 			return COMPONENT_INCOMPATIBLE
 		else
@@ -141,7 +152,7 @@
 
 
 /datum/component/holdertargeting/fullauto/proc/begin_shootloop(mob/living/user, object, location, control, params)
-	if(!stopping)
+	if(!stopping && !shooting)
 		src.retarget(user, object, location, control, params)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -154,7 +165,7 @@
 				C.throw_item(target,params)
 				return
 		RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG, .proc/retarget)
-		RegisterSignal(user, COMSIG_MOUSEUP, .proc/end_shootloop)
+		RegisterSignal(user, COMSIG_MOB_MOUSEUP, .proc/end_shootloop)
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/moveRetarget)
 		for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
 			for(var/y in 7 to 9)
@@ -188,7 +199,7 @@
 	shooting = 1
 
 	while(!stopping)
-		if(G.canshoot())
+		if(G.canshoot(L))
 			G.shoot(target ? target : get_step(L, NORTH), get_turf(L), L)
 			G.suppress_fire_msg = 1
 		else
@@ -203,7 +214,7 @@
 	var/obj/item/gun/G = parent
 	G.suppress_fire_msg = initial(G.suppress_fire_msg)
 	UnregisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG)
-	UnregisterSignal(user, COMSIG_MOUSEUP)
+	UnregisterSignal(user, COMSIG_MOB_MOUSEUP)
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	target = null
 	if(aimer)

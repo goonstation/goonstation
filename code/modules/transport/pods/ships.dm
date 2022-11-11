@@ -98,7 +98,7 @@
 	var/image/damaged = null
 	var/busted = 0
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/pod/paintjob))
 			src.paint_pod(W, user)
 		else return ..(W, user)
@@ -163,18 +163,16 @@ obj/machinery/vehicle/miniputt/pilot
 	icon_state = "putt_wizard" //slick
 	health = 200
 	maxhealth = 200
+	init_comms_type = /obj/item/shipcomponent/communications/wizard
 
 	New()
 		..()
 		//Phaser
 		src.m_w_system = new /obj/item/shipcomponent/mainweapon
 		src.m_w_system.ship = src
-		src.com_system = new /obj/item/shipcomponent/communications/wizard(src)
-		src.com_system.ship = src
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
 		src.components += src.m_w_system
-		src.components += src.com_system
 		src.components += src.lock
 
 		myhud.update_systems()
@@ -189,18 +187,20 @@ obj/machinery/vehicle/miniputt/pilot
 	maxhealth = 250
 	armor_score_multiplier = 0.7
 	speed = 0.8
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()
 		..()
-		src.com_system = new /obj/item/shipcomponent/communications/syndicate(src)
-		src.com_system.ship = src
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
-		src.components += src.com_system
 		src.components += src.lock
 		myhud.update_systems()
 		myhud.update_states()
-		return
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 //syndiput spawner
 /obj/syndi_putt_spawner
@@ -225,23 +225,24 @@ obj/machinery/vehicle/miniputt/pilot
 	armor_score_multiplier = 0.7
 	speed = 0.8
 
+	security
+		init_comms_type = /obj/item/shipcomponent/communications/security
+
 ////////soviet putt
 /obj/machinery/vehicle/miniputt/soviputt
 	name = "Strelka-"
 	icon_state = "soviputt"
 	desc = "A little solo vehicle for scouting and exploration work. Seems to be a Russian model."
-	armor_score_multiplier = 1.0
+	armor_score_multiplier = 1
 	health = 225
 	maxhealth = 225
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()
 		..()
 		src.m_w_system = new /obj/item/shipcomponent/mainweapon/russian(src)
 		src.m_w_system.ship = src
-		src.com_system = new /obj/item/shipcomponent/communications/syndicate(src)
-		src.com_system.ship = src
 		src.components += src.m_w_system
-		src.components += src.com_system
 		myhud.update_systems()
 		myhud.update_states()
 		return
@@ -293,6 +294,48 @@ obj/machinery/vehicle/miniputt/pilot
 	maxhealth = 300
 	desc = "????"
 
+//pod wars ones//
+/obj/machinery/vehicle/miniputt/nt_light
+	name = "Pod NTL-"
+	desc = "A nanotrasen-issue light pod."
+	armor_score_multiplier = 1
+	icon_state = "putt_raceBlue"
+	health = 150
+	maxhealth = 150
+	speed = 0.8
+	init_comms_type = /obj/item/shipcomponent/communications/security
+
+/obj/machinery/vehicle/miniputt/nt_robust
+	name = "Pod NTR-"
+	desc = "A nanotrasen-issue robust pod."
+	armor_score_multiplier = 1.5
+	icon_state = "putt_nt_robust"
+	health = 350
+	maxhealth = 350
+	speed = 0.6
+	init_comms_type = /obj/item/shipcomponent/communications/security
+
+/obj/machinery/vehicle/miniputt/sy_light
+	name = "Pod SYL-"
+	desc = "A syndicate-crafted light pod."
+	armor_score_multiplier = 1
+	icon_state = "putt_raceRed_alt"
+	health = 150
+	maxhealth = 150
+	speed = 0.8
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate
+
+/obj/machinery/vehicle/miniputt/sy_robust
+	name = "Pod SYR-"
+	desc = "A syndicate-crafted robust pod."
+	armor_score_multiplier = 1.5
+	icon_state = "putt_sy_robust"
+	health = 350
+	maxhealth = 350
+	speed = 0.6
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate
+//pod wars end//
+
 /*-----------------------------*/
 /* MiniPutt construction stuff */
 /*-----------------------------*/
@@ -315,49 +358,45 @@ obj/machinery/vehicle/miniputt/pilot
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
-/* miniputts can just use the standard pod armor idgaf
-/obj/item/putt/armor_light
-	name = "Light Pod Armor"
-	desc = "Standard exterior plating for MiniPutt ships."
+/*-----------------------------*/
+/* Minisub construction stuff */
+/*-----------------------------*/
+
+/obj/item/sub/boards
+	name = "Minisub Circuitry Kit"
+	desc = "A kit containing various circuit boards for use in a minisub."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
-/obj/item/putt/armor_custom
-	name = "MiniPutt Armor"
-	desc = "Plating for vehicle pods made from a custom compound."
+/obj/item/sub/control
+	name = "Minisub Control System Kit"
+	desc = "A kit containing control interfaces and display screens for a minisub."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
-/obj/item/putt/armor_heavy
-	name = "Heavy MiniPutt Armor"
-	desc = "Reinforced exterior plating for MiniPutt ships."
+/obj/item/sub/engine
+	name = "Minisub Engine Manifold"
+	desc = "A standard engine housing for a minisub."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
-/obj/item/putt/armor_black
-	name = "Strange MiniPutt Armor"
-	desc = "The box is stamped with the Nanotrasen symbol and a lengthy list of classified warnings. Neat."
-	icon = 'icons/obj/electronics.dmi'
-	icon_state = "dbox"
+ABSTRACT_TYPE(/obj/structure/vehicleframe)
 
-/obj/item/putt/armor_red
-	name = "Syndicate MiniPutt Armor"
-	desc = "The box is stamped with the logos of various Syndicate affiliated corporations."
-	icon = 'icons/obj/electronics.dmi'
-	icon_state = "dbox"
+/obj/structure/vehicleframe
+	var/stage = 0
+	var/obj/item/podarmor/armor_type = null
+	var/engine_type = null
+	var/control_type = null
+	var/boards_type = null
+	var/box_type = null
+	var/metal_amt = null
+	var/glass_amt = null
+	var/cable_amt = null
+	var/vehicle_name = null
+	var/vehicle_type = null
+	anchored = 1
+	density = 1
 
-/obj/item/putt/armor_industrial
-	name = "Industrial MiniPutt Armor"
-	desc = "A kit of bulky industrial armor plates for MiniPutt ships."
-	icon = 'icons/obj/electronics.dmi'
-	icon_state = "dbox"
-
-/obj/item/putt/armor_gold
-	name = "Gold MiniPutt Armor"
-	desc = "It's really only gold-plated."
-	icon = 'icons/obj/electronics.dmi'
-	icon_state = "dbox"
-*/
 /obj/item/putt/frame_box
 	name = "MiniPutt Frame Kit"
 	desc = "You can hear an awful lot of junk rattling around in this box."
@@ -366,27 +405,75 @@ obj/machinery/vehicle/miniputt/pilot
 
 	attack_self(mob/user as mob)
 		boutput(user, "<span class='notice'>You dump out the box of parts onto the floor.</span>")
-		var/obj/O = new /obj/structure/puttframe( get_turf(user) )
-		logTheThing("station", user, null, "builds [O] in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
+		var/obj/O = new /obj/structure/vehicleframe/puttframe( get_turf(user) )
+		logTheThing(LOG_STATION, user, "builds [O] in [get_area(user)] ([log_loc(user)])")
 		O.fingerprints = src.fingerprints
-		O.fingerprintshidden = src.fingerprintshidden
+		O.fingerprints_full = src.fingerprints_full
 		qdel(src)
 
-/obj/structure/puttframe
+/obj/item/sub/frame_box
+	name = "Minisib Frame Kit"
+	desc = "You can hear an awful lot of junk rattling around in this box."
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "dbox"
+
+	attack_self(mob/user as mob)
+		boutput(user, "<span class='notice'>You dump out the box of parts onto the floor.</span>")
+		var/obj/O = new /obj/structure/vehicleframe/subframe( get_turf(user) )
+		logTheThing(LOG_STATION, user, "builds [O] in [get_area(user)] ([log_loc(user)])")
+		O.fingerprints = src.fingerprints
+		O.fingerprints_full = src.fingerprints_full
+		qdel(src)
+
+/obj/structure/vehicleframe/puttframe
 	name = "MiniPutt Frame"
 	desc = "A MiniPutt ship under construction."
 	icon = 'icons/obj/ship.dmi'
-	icon_state = "putt_parts"
-	anchored = 1
-	density = 1
-	var/stage = 0
-	var/armor_type = 1
+	icon_state = "parts"
+	engine_type = /obj/item/putt/engine
+	control_type = /obj/item/putt/control
+	boards_type = /obj/item/putt/boards
+	box_type = /obj/item/putt/frame_box
+	metal_amt = 3
+	glass_amt = 3
+	cable_amt = 2
+	vehicle_name = "MiniPutt"
+
+/obj/structure/vehicleframe/subframe
+	name = "Minisub Frame"
+	desc = "A minisub under construction."
+	icon = 'icons/obj/machines/8dirvehicles.dmi'
+	icon_state = "parts"
+	engine_type = /obj/item/sub/engine
+	control_type = /obj/item/sub/control
+	boards_type = /obj/item/sub/boards
+	box_type = /obj/item/sub/frame_box
+	metal_amt = 3
+	glass_amt = 3
+	cable_amt = 2
+	vehicle_name = "Minisub"
+
+/obj/structure/vehicleframe/podframe
+	name = "Pod Frame"
+	desc = "A vehicle pod under construction."
+	icon = 'icons/effects/64x64.dmi'
+	icon_state = "parts"
+	bound_width = 64
+	bound_height = 64
+	engine_type = /obj/item/pod/engine
+	control_type = /obj/item/pod/control
+	boards_type = /obj/item/pod/boards
+	box_type = /obj/item/pod/frame_box
+	metal_amt = 5
+	glass_amt = 5
+	cable_amt = 4
+	vehicle_name = "Pod"
 
 /*-----------------------------*/
 /* Deconstruction              */
 /*-----------------------------*/
 
-/obj/structure/puttframe/verb/deconstruct()
+/obj/structure/vehicleframe/verb/deconstruct()
 	set src in oview(1)
 	set category = "Local"
 
@@ -403,91 +490,67 @@ obj/machinery/vehicle/miniputt/pilot
 			boutput(usr, "<span class='alert'>You were interrupted!</span>")
 			return
 
-	boutput(usr, "<span class='notice'>You deconstructed the MiniPutt frame.</span>")
+	boutput(usr, "<span class='notice'>You deconstructed the [src].</span>")
 	var/obj/O
 	if (stage == 10)
-		O = new /obj/item/putt/control( get_turf(src) )
+		O = new src.control_type( get_turf(src) )
 		O.fingerprints = src.fingerprints
-		O.fingerprintshidden = src.fingerprintshidden
+		O.fingerprints_full = src.fingerprints_full
 		stage -= 2
 	if (stage == 9)
 		stage-- // no parts involved here, this construction step is welding the exterior
 	if (stage == 8)
-		if (armor_type == 1)
-			O = new /obj/item/pod/armor_light( get_turf(src) )
-			O.fingerprints = src.fingerprints
-			O.fingerprintshidden = src.fingerprintshidden
-		else if (armor_type == 2)
-			O = new /obj/item/pod/armor_heavy( get_turf(src) )
-			O.fingerprints = src.fingerprints
-			O.fingerprintshidden = src.fingerprintshidden
-		else if (armor_type == 3)
-			O = new /obj/item/pod/armor_black( get_turf(src) )
-			O.fingerprints = src.fingerprints
-			O.fingerprintshidden = src.fingerprintshidden
-		else if (armor_type == 4)
-			O = new /obj/item/pod/armor_red( get_turf(src) )
-			O.fingerprints = src.fingerprints
-			O.fingerprintshidden = src.fingerprintshidden
-		else if (armor_type == 5)
-			O = new /obj/item/pod/armor_industrial( get_turf(src) )
-			O.fingerprints = src.fingerprints
-			O.fingerprintshidden = src.fingerprintshidden
-		else if (armor_type == 6)
-			O = new /obj/item/pod/armor_gold( get_turf(src) )
-			O.fingerprints = src.fingerprints
-			O.fingerprintshidden = src.fingerprintshidden
-		else if (armor_type == 7)
-			O = new /obj/item/pod/armor_custom( get_turf(src) )
-			O.fingerprints = src.fingerprints
-			O.fingerprintshidden = src.fingerprintshidden
+		O = new src.armor_type( get_turf(src) )
+		O.fingerprints = src.fingerprints
+		O.fingerprints_full = src.fingerprints_full
+		if (istype(O,/obj/item/podarmor/armor_custom))
 			O.setMaterial(src.material)
 			src.removeMaterial()
 		stage--
 	if (stage == 7)
-		O = new /obj/item/putt/engine( get_turf(src) )
+		O = new src.engine_type( get_turf(src) )
 		O.fingerprints = src.fingerprints
-		O.fingerprintshidden = src.fingerprintshidden
+		O.fingerprints_full = src.fingerprints_full
 		stage--
 	if (stage == 6)
 		var/obj/item/sheet/steel/M = new ( get_turf(src) )
-		M.amount = 3
+		M.amount = src.metal_amt
 		M.fingerprints = src.fingerprints
-		M.fingerprintshidden = src.fingerprintshidden
+		M.fingerprints_full = src.fingerprints_full
 		stage--
 	if (stage == 5)
-		O = new /obj/item/putt/boards( get_turf(src) )
+		O = new src.boards_type( get_turf(src) )
 		O.fingerprints = src.fingerprints
-		O.fingerprintshidden = src.fingerprintshidden
+		O.fingerprints_full = src.fingerprints_full
 		stage--
 	if (stage == 4)
 		var/obj/item/cable_coil/cut/C = new ( get_turf(src) )
-		C.amount = 2
+		C.amount = src.cable_amt
 		C.fingerprints = src.fingerprints
-		C.fingerprintshidden = src.fingerprintshidden
+		C.fingerprints_full = src.fingerprints_full
 		// all other steps were tool applications, no more parts to create
 
-	O = new /obj/item/putt/frame_box( get_turf(src) )
-	logTheThing("station", usr, null, "deconstructs [src] in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+	O = new src.box_type( get_turf(src) )
+	logTheThing(LOG_STATION, usr, "deconstructs [src] in [get_area(usr)] ([log_loc(usr)])")
 	O.fingerprints = src.fingerprints
-	O.fingerprintshidden = src.fingerprintshidden
+	O.fingerprints_full = src.fingerprints_full
 	qdel(src)
 
 /*-----------------------------*/
 /* Construction                */
 /*-----------------------------*/
 
-/obj/structure/puttframe/attackby(obj/item/W as obj, mob/living/user as mob)
+/obj/structure/vehicleframe/attackby(obj/item/W, mob/living/user)
 	switch(stage)
 		if(0)
 			if (iswrenchingtool(W))
 				boutput(user, "You begin to secure the frame...")
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You wrench some of the frame parts together.")
-				src.overlays += image('icons/obj/ship.dmi', "[pick("putt_frame1", "putt_frame2")]")
+				src.overlays += image(src.icon, "[pick("frame1", "frame2")]")
 				stage = 1
 			else
 				boutput(user, "If only there was some way to secure all this junk together! You should get a wrench.")
@@ -495,14 +558,14 @@ obj/machinery/vehicle/miniputt/pilot
 		if(1)
 			if (iswrenchingtool(W))
 				boutput(user, "You begin to secure the rest of the frame...")
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You finish wrenching the frame parts together.")
-				src.overlays -= image('icons/obj/ship.dmi', "putt_frame1")
-				src.overlays -= image('icons/obj/ship.dmi', "putt_frame2")
-				icon_state = "putt_frame"
+				src.overlays -= image(src.icon, "frame1")
+				src.overlays -= image(src.icon, "frame2")
+				icon_state = "frame"
 				stage = 2
 			else
 				boutput(user, "You should probably finish putting these parts together. A wrench would do the trick!")
@@ -523,31 +586,31 @@ obj/machinery/vehicle/miniputt/pilot
 		if(3)
 			var/obj/item/cable_coil/C = W
 			if(istype(C))
-				if(C.amount < 2)
-					boutput(user, "<span class='notice'>You need at least two lengths of cable.</span>")
+				if(C.amount < src.cable_amt)
+					boutput(user, "<span class='notice'>You need at least [src.cable_amt] lengths of cable.</span>")
 					return
 				boutput(user, "You begin to install the wiring...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS) || !C.use(2))
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				if (!do_after(user, 3 SECONDS) || !C.use(src.cable_amt))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You add power cables to the MiniPutt frame.")
-				src.overlays += image('icons/obj/ship.dmi', "putt_wires")
+				src.overlays += image(src.icon, "wires")
 				stage = 4
 			else
-				boutput(user, "You're not gonna get very far without power cables. You should get at least two lengths of it.")
+				boutput(user, "You're not gonna get very far without power cables. You should get at least [src.cable_amt] lengths of it.")
 
 		if(4)
-			if(istype(W, /obj/item/putt/boards))
+			if(istype(W, src.boards_type))
 				boutput(user, "You begin to install the circuit boards...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You install the internal circuitry parts.")
 				user.u_equip(W)
 				qdel(W)
-				src.overlays += image('icons/obj/ship.dmi', "putt_circuits")
+				src.overlays += image(src.icon, "circuits")
 				stage = 5
 			else
 				boutput(user, "Maybe those wires should be connecting something together. Some kind of circuitry, perhaps.")
@@ -556,125 +619,59 @@ obj/machinery/vehicle/miniputt/pilot
 			if(istype(W, /obj/item/sheet))
 				var/obj/item/sheet/S = W
 				if (S.material && S.material.material_flags & MATERIAL_METAL)
-					if( S.amount < 3)
-						boutput(user, text("<span class='alert'>You need at least three metal sheets to make internal plating for this pod.</span>"))
+					if( S.amount < src.metal_amt)
+						boutput(user, text("<span class='alert'>You need at least [src.metal_amt] metal sheets to make the internal plating.</span>"))
 						return
 					boutput(user, "You begin to install the internal plating...")
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-					if (!do_after(user, 3 SECONDS) || !S.change_stack_amount(-3))
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					if (!do_after(user, 3 SECONDS) || !S.change_stack_amount(-src.metal_amt))
 						boutput(user, "<span class='alert'>You were interrupted!</span>")
 						return
 					boutput(user, "You construct internal covers over the circuitry systems.")
-					src.overlays += image('icons/obj/ship.dmi', "putt_covers")
+					src.overlays += image(src.icon, "covers")
 					stage = 6
 				else
 					boutput(user, "<span class='alert'>These sheets aren't the right kind of material. You need metal!</span>")
 			else
-				boutput(user, "You shouldn't just leave all those circuits exposed! That's dangerous! You'll need three sheets of metal to cover it all up.")
+				boutput(user, "You shouldn't just leave all those circuits exposed! That's dangerous! You'll need [src.metal_amt] sheets of metal to cover it all up.")
 
 		if(6)
-			if(istype(W, /obj/item/putt/engine))
+			if(istype(W, src.engine_type))
 				boutput(user, "You begin to install the engine...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You install the engine.")
 				user.u_equip(W)
 				qdel(W)
-				src.overlays += image('icons/obj/ship.dmi', "putt_engine")
+				src.overlays += image(src.icon, "thrust")
 				stage = 7
 			else
 				boutput(user, "Having an engine might be nice.")
 
 		if(7)
-			if(istype(W, /obj/item/pod/armor_light))
-				boutput(user, "You begin to install the light armor plating...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			if(istype(W, /obj/item/podarmor))
+				var/obj/item/podarmor/armor = W
+				if(!armor.vehicle_types["[src.type]"])
+					boutput(user, "That type of armor is not compatible with this frame.")
+					return
+				boutput(user, "You begin to install the [W]...")
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You loosely attach the light armor plating.")
 				user.u_equip(W)
 				qdel(W)
-				src.overlays += image('icons/obj/ship.dmi', "pod_skin1")
+				src.overlays += image(src.icon, armor.overlay_state)
 				stage = 8
-				armor_type = 1
-			else if(istype(W, /obj/item/pod/armor_heavy))
-				boutput(user, "You begin to install the heavy armor plating...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				boutput(user, "You loosely attach the heavy armor plating.")
-				user.u_equip(W)
-				qdel(W)
-				src.overlays += image('icons/obj/ship.dmi', "pod_skin2")
-				stage = 8
-				armor_type = 2
-			else if(istype(W, /obj/item/pod/armor_black))
-				boutput(user, "You begin to install the strange armor plating...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				boutput(user, "You loosely attach the strange armor plating.")
-				user.u_equip(W)
-				qdel(W)
-				src.overlays += image('icons/obj/ship.dmi', "pod_skin3")
-				stage = 8
-				armor_type = 3
-			else if(istype(W, /obj/item/pod/armor_red))
-				boutput(user, "You begin to install the syndicate armor plating...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				boutput(user, "You loosely attach the syndicate armor plating.")
-				user.u_equip(W)
-				qdel(W)
-				src.overlays += image('icons/obj/ship.dmi', "pod_skin2")
-				stage = 8
-				armor_type = 4
-			else if(istype(W, /obj/item/pod/armor_industrial))
-				boutput(user, "You begin to install the industrial armor plating...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				boutput(user, "You loosely attach the industrial armor plating.")
-				user.u_equip(W)
-				qdel(W)
-				src.overlays += image('icons/obj/ship.dmi', "pod_skin3")
-				stage = 8
-				armor_type = 5
-			else if(istype(W, /obj/item/pod/armor_gold))
-				boutput(user, "You begin to install the gold armor plating...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				boutput(user, "You loosely attach the gold armor plating.")
-				user.u_equip(W)
-				qdel(W)
-				src.overlays += image('icons/obj/ship.dmi', "pod_skin4")
-				stage = 8
-				armor_type = 6
-			else if(istype(W, /obj/item/pod/armor_custom) && W.material)
-				boutput(user, "You begin to install the custom armor plating...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				boutput(user, "You loosely attach the custom armor plating.")
-				src.overlays += image('icons/obj/ship.dmi', "pod_skin1")
-				src.setMaterial(W.material)
-				user.u_equip(W)
-				qdel(W)
-				stage = 8
-				armor_type = 7
+				armor_type = armor.type
+				src.vehicle_type = armor.vehicle_types["[src.type]"]
+				if(istype(W, /obj/item/podarmor/armor_custom))
+					src.setMaterial(W.material)
 			else
-				boutput(user, "You don't think you're going anywhere without a skin on this pod, do you? Get some armor!")
+				boutput(user, "You don't think you're going anywhere without a skin, do you? Get some armor!")
 
 		if(8)
 			if (isweldingtool(W))
@@ -690,16 +687,16 @@ obj/machinery/vehicle/miniputt/pilot
 				boutput(user, "The outer skin still feels pretty loose. Welding it together would make it nice and airtight.")
 
 		if(9)
-			if(istype(W, /obj/item/putt/control))
+			if(istype(W, src.control_type))
 				boutput(user, "You begin to install the control system...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
-				boutput(user, "You install the control system for the pod.")
+				boutput(user, "You install the control system.")
 				user.u_equip(W)
 				qdel(W)
-				src.overlays += image('icons/obj/ship.dmi',"putt_control")
+				src.overlays += image(src.icon,"control")
 				stage = 10
 			else
 				boutput(user, "It's not gonna get very far without a control system!")
@@ -714,54 +711,25 @@ obj/machinery/vehicle/miniputt/pilot
 					boutput(user, "These sheets won't work. You'll need reinforced glass or crystal.")
 					return
 
-				if (S.amount < 3)
-					boutput(user, text("<span class='alert'>You need at least three reinforced glass sheets to make the cockpit window and outer indicator surfaces for this pod.</span>"))
+				if (S.amount < src.glass_amt)
+					boutput(user, text("<span class='alert'>You need at least [src.glass_amt] reinforced glass sheets to make the cockpit window and outer indicator surfaces.</span>"))
 					return
 				boutput(user, "You begin to install the glass...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS) || !S.change_stack_amount(-3))
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				if (!do_after(user, 3 SECONDS) || !S.change_stack_amount(-src.glass_amt))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "With the cockpit and exterior indicators secured, the control system automatically starts up.")
 
-				if(armor_type == 1)
-					new /obj/machinery/vehicle/miniputt( src.loc )
-					logTheThing("station", user, null, "finishes building a MiniPutt in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
-					qdel(src)
+				var/obj/machinery/vehicle/V = new vehicle_type( src.loc )
+				if (src.armor_type == /obj/item/podarmor/armor_custom)
+					V.name = src.vehicle_name
+					V.setMaterial(src.material)
+				logTheThing(LOG_STATION, user, "finishes building a [V] in [get_area(user)] ([log_loc(user)])")
+				qdel(src)
 
-				else if (armor_type == 2)
-					new /obj/machinery/vehicle/miniputt/nanoputt( src.loc )
-					logTheThing("station", user, null, "finishes building a NanoPutt in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
-					qdel(src)
-
-				else if (armor_type == 3)
-					new /obj/machinery/vehicle/miniputt/black( src.loc )
-					logTheThing("station", user, null, "finishes building a XeniPutt in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
-					qdel(src)
-
-				else if (armor_type == 4)
-					new /obj/machinery/vehicle/miniputt/syndiputt( src.loc )
-					logTheThing("station", user, null, "finishes building a SyndiPutt in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
-					qdel(src)
-
-				else if (armor_type == 5)
-					new /obj/machinery/vehicle/miniputt/indyputt( src.loc )
-					logTheThing("station", user, null, "finishes building an IndyPutt in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
-					qdel(src)
-
-				else if (armor_type == 6)
-					new /obj/machinery/vehicle/miniputt/gold( src.loc )
-					logTheThing("station", user, null, "finishes building a PyriPutt in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
-					qdel(src)
-
-				else if (armor_type == 7)
-					var/obj/machinery/vehicle/miniputt/A = new /obj/machinery/vehicle/miniputt( src.loc )
-					A.name = "MiniPutt"
-					A.setMaterial(src.material)
-					logTheThing("station", user, null, "finishes building a custom armored MiniPutt in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
-					qdel(src)
 			else
-				boutput(user, "You weren't thinking of flying around without a reinforced cockpit, were you? Put some reinforced glass on it! Three sheets will do.")
+				boutput(user, "You weren't thinking of heading out without a reinforced cockpit, were you? Put some reinforced glass on it! Just [src.glass_amt] sheets will do.")
 
 /*-----------------------------*/
 /*                             */
@@ -811,7 +779,7 @@ obj/machinery/vehicle/miniputt/pilot
 			t2 = get_step(t1, NORTH)
 			t3 = get_step(t1, SOUTH)
 
-	if (!t1 || !t2 || !t3 || !t1.CanPass(src, t1) || !t2.CanPass(src, t2) || !t3.CanPass(src, t3))
+	if (!t1 || !t2 || !t3 || !t1.Cross(src) || !t2.Cross(src) || !t3.Cross(src))
 		if (t1) Bump(t1)
 		if (t2) Bump(t2)
 		if (t3) Bump(t3)
@@ -850,12 +818,12 @@ obj/machinery/vehicle/miniputt/pilot
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			src.maxhealth = max(75, src.material.getProperty("density") * 5)
+			src.maxhealth = max(75, src.material.getProperty("density") * 40)
 			src.health = maxhealth
-			src.speed = clamp((src.material.getProperty("electrical")) / 30, 0.75, 1.5)
+			src.speed = 1 - (src.material.getProperty("electrical") - 5) / 15
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/pod/paintjob))
 			src.paint_pod(W, user)
 		else return ..(W, user)
@@ -946,7 +914,7 @@ obj/machinery/vehicle/miniputt/pilot
 					P.pixel_y = V * 5
 	ex_act(severity)
 		if(!maxboom)
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				..()
 				maxboom = 0
 		maxboom = max(severity, maxboom)
@@ -976,13 +944,8 @@ obj/machinery/vehicle/miniputt/pilot
 	maxhealth = 500
 	speed = 0.9
 
-	/*prearmed // this doesn't seem to work yet, dangit
-		New()
-			..()
-			src.sec_system = new /obj/item/shipcomponent/pod_weapon/laser( src )
-			src.sec_system.ship = src
-			src.components += src.sec_system
-			return */
+	security
+		init_comms_type = /obj/item/shipcomponent/communications/security
 
 /obj/machinery/vehicle/pod_smooth/syndicate
 	name = "Pod S-"
@@ -992,6 +955,7 @@ obj/machinery/vehicle/miniputt/pilot
 	health = 500
 	maxhealth = 500
 	speed = 0.9
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	/*prearmed
 		New()
@@ -1003,21 +967,18 @@ obj/machinery/vehicle/miniputt/pilot
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		myhud.update_systems()
 		myhud.update_states()
-		return
-
-	New()
-		..()
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
-		src.com_system = new /obj/item/shipcomponent/communications/syndicate(src)
-		src.com_system.ship = src
 		src.components += src.lock
-		src.components += src.com_system
 		myhud.update_systems()
 		myhud.update_states()
 
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 /obj/machinery/vehicle/pod_smooth/black
 	name = "Pod X-"
 	desc = "????"
@@ -1044,6 +1005,48 @@ obj/machinery/vehicle/miniputt/pilot
 	maxhealth = 550
 	speed = 1.5
 	capacity = 4
+
+//pod wars ones//
+/obj/machinery/vehicle/pod_smooth/nt_light
+	name = "Pod NTL-"
+	desc = "A nanotrasen-issue light pod."
+	armor_score_multiplier = 1
+	icon_state = "pod_raceBlue"
+	health = 250
+	maxhealth = 250
+	speed = 0.9
+	init_comms_type = /obj/item/shipcomponent/communications/
+
+/obj/machinery/vehicle/pod_smooth/nt_robust
+	name = "Pod NTR-"
+	desc = "A nanotrasen-issue robust pod."
+	armor_score_multiplier = 1.5
+	icon_state = "pod_nt_robust"
+	health = 500
+	maxhealth = 500
+	speed = 0.8
+	init_comms_type = /obj/item/shipcomponent/communications/
+
+/obj/machinery/vehicle/pod_smooth/sy_light
+	name = "Pod SYL-"
+	desc = "A syndicate-crafted light pod."
+	armor_score_multiplier = 1
+	icon_state = "pod_raceRed"
+	health = 250
+	maxhealth = 250
+	speed = 0.9
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate
+
+/obj/machinery/vehicle/pod_smooth/sy_robust
+	name = "Pod SYR-"
+	desc = "A syndicate-crafted robust pod."
+	armor_score_multiplier = 1.5
+	icon_state = "pod_sy_robust"
+	health = 500
+	maxhealth = 500
+	speed = 0.8
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate
+//pod wars end//
 
 /obj/machinery/vehicle/pod_smooth/setup_ion_trail()
 	//////Ion Trail Setup
@@ -1140,7 +1143,7 @@ obj/machinery/vehicle/miniputt/pilot
 		src.pilot = M
 		src.ion_trail.start()
 
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		boarding = 0*/
 
 
@@ -1150,7 +1153,7 @@ obj/machinery/vehicle/miniputt/pilot
 		boutput(M, "<span class='alert'><b>You are ejected from [src]!</b></span>")
 		src.eject(M)
 		var/atom/target = get_edge_target_turf(M,pick(alldirs))
-		SPAWN_DBG(0)
+		SPAWN(0)
 		M.throw_at(target, 10, 2)*/
 
 //Returns the correct tile to spawn projectiles on for either side of the ship, given the current direction.
@@ -1190,48 +1193,116 @@ obj/machinery/vehicle/miniputt/pilot
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
-/obj/item/pod/armor_light
+ABSTRACT_TYPE(/obj/item/podarmor)
+/obj/item/podarmor
+	var/overlay_state
+	var/list/vehicle_types
+
+/obj/item/podarmor/armor_light
 	name = "Light Pod Armor"
 	desc = "Standard exterior plating for vehicle pods."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
+	overlay_state = "skin1"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt,
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/light,
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/civilian)
 
-/obj/item/pod/armor_custom
+/obj/item/podarmor/armor_custom
 	name = "Pod Armor"
 	desc = "Plating for vehicle pods made from a custom compound."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
+	overlay_state = "skin1"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt,
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/light,
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/civilian)
 
-/obj/item/pod/armor_heavy
+/obj/item/podarmor/armor_heavy
 	name = "Heavy Pod Armor"
 	desc = "Reinforced exterior plating for vehicle pods."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
+	overlay_state = "skin2"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/nanoputt,
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/heavy,
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/heavy)
 
-/obj/item/pod/armor_black
+/obj/item/podarmor/nt_light
+	name = "Light NT Pod Armor"
+	desc = "Standard exterior plating for vehicle pods."
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "dbox"
+	overlay_state = "pod_skinB"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/nt_light,
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/nt_light)
+
+/obj/item/podarmor/nt_robust
+	name = "Robust NT Pod Armor"
+	desc = "Standard exterior plating for vehicle pods."
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "dbox"
+	overlay_state = "pod_skinBF"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/nt_robust,
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/nt_robust)
+
+/obj/item/podarmor/sy_light
+	name = "Light Syndicate Pod Armor"
+	desc = "Standard exterior plating for vehicle pods."
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "dbox"
+	overlay_state = "pod_skinR"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/sy_light,
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/sy_light)
+
+/obj/item/podarmor/sy_robust
+	name = "Robust Syndicate Pod Armor"
+	desc = "Standard exterior plating for vehicle pods."
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "dbox"
+	overlay_state = "pod_skinRF"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/sy_robust,
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/sy_robust)
+
+
+/obj/item/podarmor/armor_black
 	name = "Strange Pod Armor"
 	desc = "The box is stamped with the Nanotrasen symbol and a lengthy list of classified warnings. Neat."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
+	overlay_state = "skin3"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/black,
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/black,
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/black)
 
-/obj/item/pod/armor_red
+/obj/item/podarmor/armor_red
 	name = "Syndicate Pod Armor"
 	desc = "The box is stamped with the logos of various Syndicate affiliated corporations."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
+	overlay_state = "skin2"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/syndiputt,
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/syndicate,
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/syndisub)
 
-/obj/item/pod/armor_industrial
+/obj/item/podarmor/armor_industrial
 	name = "Industrial Pod Armor"
 	desc = "A kit of bulky industrial armor plates for vehicle pods."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
+	overlay_state = "skin3"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/indyputt,
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/industrial,
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/industrial)
 
-/obj/item/pod/armor_gold
+/obj/item/podarmor/armor_gold
 	name = "Gold Pod Armor"
 	desc = "It's really only gold-plated."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
-
+	overlay_state = "skin4"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/gold,
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/gold)
 /obj/item/pod/frame_box
 	name = "Pod Frame Kit"
 	desc = "You can hear an awful lot of junk rattling around in this box."
@@ -1266,23 +1337,11 @@ obj/machinery/vehicle/miniputt/pilot
 
 		if (canbuild)
 			boutput(user, "<span class='notice'>You dump out the box of parts onto the floor.</span>")
-			var/obj/O = new /obj/structure/podframe( get_turf(user) )
-			logTheThing("station", user, null, "builds [O] in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
+			var/obj/O = new /obj/structure/vehicleframe/podframe( get_turf(user) )
+			logTheThing(LOG_STATION, user, "builds [O] in [get_area(user)] ([log_loc(user)])")
 			O.fingerprints = src.fingerprints
-			O.fingerprintshidden = src.fingerprintshidden
+			O.fingerprints_full = src.fingerprints_full
 			qdel(src)
-
-/obj/structure/podframe
-	name = "Pod Frame"
-	desc = "A vehicle pod under construction."
-	icon = 'icons/effects/64x64.dmi'
-	icon_state = "pod_parts"
-	bound_width = 64
-	bound_height = 64
-	anchored = 1
-	density = 1
-	var/stage = 0
-	var/armor_type = 1
 
 /obj/item/pod/paintjob
 	name = "Pod Paint Job Kit"
@@ -1327,383 +1386,7 @@ obj/machinery/vehicle/miniputt/pilot
 	name = "Pod Paint Job Kit (Owl)"
 	pod_skin = "pod_skinOWL"
 
-//-- POD DECONSTRUCTION
-/obj/structure/podframe/verb/deconstruct()
-	set src in oview(1)
-	set category = "Local"
-
-	if (usr.stat)
-		return
-
-	boutput(usr, "Deconstructing frame...")
-
-	var/timer = 5 * stage + 30
-	while(timer > 0)
-		if(do_after(usr, 1 SECONDS))
-			timer -= 10
-		else
-			boutput(usr, "<span class='alert'>You were interrupted!</span>")
-			return
-
-	boutput(usr, "<span class='notice'>You deconstructed the pod frame.</span>")
-	var/obj/O
-	if (stage == 10)
-		O = new /obj/item/pod/control( get_turf(src) )
-		O.fingerprints = src.fingerprints
-		O.fingerprintshidden = src.fingerprintshidden
-		stage -= 2
-	if (stage == 9)
-		stage-- // no parts involved here, this construction step is welding the exterior
-	if (stage == 8)
-		if (armor_type == 1)
-			O = new /obj/item/pod/armor_light( get_turf(src) )
-			O.fingerprints = src.fingerprints
-			O.fingerprintshidden = src.fingerprintshidden
-		else if (armor_type == 2)
-			O = new /obj/item/pod/armor_heavy( get_turf(src) )
-			O.fingerprints = src.fingerprints
-			O.fingerprintshidden = src.fingerprintshidden
-		else if (armor_type == 3)
-			O = new /obj/item/pod/armor_black( get_turf(src) )
-			O.fingerprints = src.fingerprints
-			O.fingerprintshidden = src.fingerprintshidden
-		else if (armor_type == 4)
-			O = new /obj/item/pod/armor_red( get_turf(src) )
-			O.fingerprints = src.fingerprints
-			O.fingerprintshidden = src.fingerprintshidden
-		else if (armor_type == 5)
-			O = new /obj/item/pod/armor_industrial( get_turf(src) )
-			O.fingerprints = src.fingerprints
-			O.fingerprintshidden = src.fingerprintshidden
-		else if (armor_type == 6)
-			O = new /obj/item/pod/armor_gold( get_turf(src) )
-			O.fingerprints = src.fingerprints
-			O.fingerprintshidden = src.fingerprintshidden
-		else if (armor_type == 7)
-			O = new /obj/item/pod/armor_custom( get_turf(src) )
-			O.fingerprints = src.fingerprints
-			O.fingerprintshidden = src.fingerprintshidden
-			O.setMaterial(src.material)
-			src.removeMaterial()
-		stage--
-	if (stage == 7)
-		O = new /obj/item/pod/engine( get_turf(src) )
-		O.fingerprints = src.fingerprints
-		O.fingerprintshidden = src.fingerprintshidden
-		stage--
-	if (stage == 6)
-		var/obj/item/sheet/steel/M = new ( get_turf(src) )
-		M.amount = 5
-		M.fingerprints = src.fingerprints
-		M.fingerprintshidden = src.fingerprintshidden
-		stage--
-	if (stage == 5)
-		O = new /obj/item/pod/boards( get_turf(src) )
-		O.fingerprints = src.fingerprints
-		O.fingerprintshidden = src.fingerprintshidden
-		stage--
-	if (stage == 4)
-		var/obj/item/cable_coil/cut/C = new ( get_turf(src) )
-		C.amount = 4
-		C.fingerprints = src.fingerprints
-		C.fingerprintshidden = src.fingerprintshidden
-		// all other steps were tool applications, no more parts to create
-
-	O = new /obj/item/pod/frame_box( get_turf(src) )
-	logTheThing("station", usr, null, "deconstructs [src] in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
-	O.fingerprints = src.fingerprints
-	O.fingerprintshidden = src.fingerprintshidden
-	qdel(src)
-
-//-- POD CONSTRUCTION METHOD
-
-/obj/structure/podframe/attackby(obj/item/W as obj, mob/living/user as mob)
-	switch(stage)
-		if (0)
-			if (iswrenchingtool(W))
-				boutput(user, "You begin to secure the frame...")
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				boutput(user, "You wrench some of the frame parts together.")
-				src.overlays += image('icons/effects/64x64.dmi', "pod_frame1")
-				stage = 1
-			else
-				boutput(user, "If only there was some way to secure all this junk together! You should get a wrench.")
-
-		if (1)
-			if (iswrenchingtool(W))
-				boutput(user, "You begin to secure the rest of the frame...")
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				boutput(user, "You finish wrenching the frame parts together.")
-				src.overlays -= image('icons/effects/64x64.dmi', "pod_frame1")
-				icon_state = "pod_frame"
-				stage = 2
-			else
-				boutput(user, "You should probably finish putting these parts together. A wrench would do the trick!")
-
-		if(2)
-			if (isweldingtool(W))
-				if(!W:try_weld(user, 1))
-					return
-				boutput(user, "You begin to weld the joints of the frame...")
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				boutput(user, "You weld the joints of the frame together.")
-				stage = 3
-			else
-				boutput(user, "Even with the bolts secured, the joints of this frame still feel pretty wobbly. Welding it will make it nice and sturdy.")
-
-		if(3)
-			var/obj/item/cable_coil/C = W
-			if(istype(C))
-				if(C.amount < 4)
-					boutput(user, "<span class='notice'>You need at least four lengths of cable.</span>")
-					return
-				boutput(user, "You begin to install the wiring...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS) || !C.use(4))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				boutput(user, "You add power cables to the pod frame.")
-				src.overlays += image('icons/effects/64x64.dmi', "pod_wires")
-				stage = 4
-			else
-				boutput(user, "You're not gonna get very far without power cables. You should get at least four lengths of it.")
-
-		if(4)
-			if(istype(W, /obj/item/pod/boards))
-				boutput(user, "You begin to install the circuit boards...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				boutput(user, "You install the internal circuitry parts.")
-				user.u_equip(W)
-				qdel(W)
-				src.overlays += image('icons/effects/64x64.dmi', "pod_circuits")
-				stage = 5
-			else
-				boutput(user, "Maybe those wires should be connecting something together. Some kind of circuitry, perhaps.")
-
-		if(5)
-			if(istype(W, /obj/item/sheet))
-				var/obj/item/sheet/S = W
-				if (S.material && S.material.material_flags & MATERIAL_METAL)
-					if (S.amount < 5)
-						boutput(user, text("<span class='alert'>You need at least five metal sheets to make internal plating for this pod.</span>"))
-						return
-					boutput(user, "You begin to install the internal plating...")
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-					if (!do_after(user, 3 SECONDS) || !S.change_stack_amount(-5))
-						boutput(user, "<span class='alert'>You were interrupted!</span>")
-						return
-					boutput(user, "You construct internal covers over the circuitry systems.")
-					src.overlays += image('icons/effects/64x64.dmi', "pod_covers")
-					stage = 6
-				else
-					boutput(user, "<span class='alert'>These sheets aren't the right kind of material. You need metal!</span>")
-			else
-				boutput(user, "You shouldn't just leave all those circuits exposed! That's dangerous! You'll need five sheets of metal to cover it all up.")
-
-		if(6)
-			if(istype(W, /obj/item/pod/engine))
-				boutput(user, "You begin to install the engine...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				boutput(user, "You install the engine.")
-				user.u_equip(W)
-				qdel(W)
-				src.overlays += image('icons/effects/64x64.dmi', "pod_engine")
-				stage = 7
-			else
-				boutput(user, "Having an engine might be nice.")
-
-		if(7)
-			if(istype(W, /obj/item/pod/armor_light))
-				boutput(user, "You begin to install the light armor plating...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				boutput(user, "You loosely attach the light armor plating.")
-				user.u_equip(W)
-				qdel(W)
-				src.overlays += image('icons/effects/64x64.dmi', "pod_skin1")
-				stage = 8
-				armor_type = 1
-			else if(istype(W, /obj/item/pod/armor_heavy))
-				boutput(user, "You begin to install the heavy armor plating...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				boutput(user, "You loosely attach the heavy armor plating.")
-				user.u_equip(W)
-				qdel(W)
-				src.overlays += image('icons/effects/64x64.dmi', "pod_skin2")
-				stage = 8
-				armor_type = 2
-			else if(istype(W, /obj/item/pod/armor_black))
-				boutput(user, "You begin to install the strange armor plating...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				boutput(user, "You loosely attach the strange armor plating.")
-				user.u_equip(W)
-				qdel(W)
-				src.overlays += image('icons/effects/64x64.dmi', "pod_skin3")
-				stage = 8
-				armor_type = 3
-			else if(istype(W, /obj/item/pod/armor_red))
-				boutput(user, "You begin to install the syndicate armor plating...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				boutput(user, "You loosely attach the syndicate armor plating.")
-				user.u_equip(W)
-				qdel(W)
-				src.overlays += image('icons/effects/64x64.dmi', "pod_skin2")
-				stage = 8
-				armor_type = 4
-			else if(istype(W, /obj/item/pod/armor_industrial))
-				boutput(user, "You begin to install the industrial armor plating...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				boutput(user, "You loosely attach the industrial armor plating.")
-				user.u_equip(W)
-				qdel(W)
-				src.overlays += image('icons/effects/64x64.dmi', "pod_skin3")
-				stage = 8
-				armor_type = 5
-			else if(istype(W, /obj/item/pod/armor_gold))
-				boutput(user, "You begin to install the gold armor plating...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				boutput(user, "You loosely attach the gold armor plating.")
-				user.u_equip(W)
-				qdel(W)
-				src.overlays += image('icons/effects/64x64.dmi', "pod_skin4")
-				stage = 8
-				armor_type = 6
-			else if(istype(W, /obj/item/pod/armor_custom) && W.material)
-				boutput(user, "You begin to install the custom armor plating...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				boutput(user, "You loosely attach the custom armor plating.")
-				src.overlays += image('icons/effects/64x64.dmi', "pod_skin1")
-				src.setMaterial(W.material)
-				user.u_equip(W)
-				qdel(W)
-				stage = 8
-				armor_type = 7
-			else
-				boutput(user, "You don't think you're going anywhere without a skin on this pod, do you? Get some armor!")
-
-		if(8)
-			if (isweldingtool(W))
-				if(!W:try_weld(user, 1))
-					return
-				boutput(user, "You begin to weld the exterior...")
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				boutput(user, "You weld the seams of the outer skin to make it air-tight.")
-				stage = 9
-			else
-				boutput(user, "The outer skin still feels pretty loose. Welding it together would make it nice and airtight.")
-
-		if(9)
-			if(istype(W, /obj/item/pod/control))
-				boutput(user, "You begin to install the control system...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				boutput(user, "You install the control system for the pod.")
-				user.u_equip(W)
-				qdel(W)
-				src.overlays += image('icons/effects/64x64.dmi',"pod_control")
-				stage = 10
-			else
-				boutput(user, "It's not gonna get very far without a control system!")
-
-		if(10)
-			if(istype(W, /obj/item/sheet))
-				var/obj/item/sheet/S = W
-				if (!S.material)
-					boutput(user, "These sheets won't work. You'll need reinforced glass or crystal.")
-					return
-				if (!(S.material.material_flags & MATERIAL_CRYSTAL) || !S.reinforcement)
-					boutput(user, "These sheets won't work. You'll need reinforced glass or crystal.")
-					return
-
-				if (S.amount < 5)
-					boutput(user, text("<span class='alert'>You need at least five reinforced glass sheets to make the cockpit window and outer indicator surfaces for this pod.</span>"))
-					return
-				boutput(user, "You begin to install the glass...")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS) || !S.change_stack_amount(-5))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				boutput(user, "With the cockpit and exterior indicators secured, the control system automatically starts up.")
-
-				if(armor_type == 1)
-					new /obj/machinery/vehicle/pod_smooth/light( src.loc )
-					logTheThing("station", user, null, "finishes building a lightly armored pod in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
-					qdel(src)
-
-				else if (armor_type == 2)
-					new /obj/machinery/vehicle/pod_smooth/heavy( src.loc )
-					logTheThing("station", user, null, "finishes building a heavily armored pod in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
-					qdel(src)
-
-				else if (armor_type == 3)
-					new /obj/machinery/vehicle/pod_smooth/black( src.loc )
-					logTheThing("station", user, null, "finishes building an NT pod in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
-					qdel(src)
-
-				else if (armor_type == 4)
-					new /obj/machinery/vehicle/pod_smooth/syndicate( src.loc )
-					logTheThing("station", user, null, "finishes building a syndicate pod in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
-					qdel(src)
-
-				else if (armor_type == 5)
-					new /obj/machinery/vehicle/pod_smooth/industrial( src.loc )
-					logTheThing("station", user, null, "finishes building an industrial pod in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
-					qdel(src)
-
-				else if (armor_type == 6)
-					new /obj/machinery/vehicle/pod_smooth/gold( src.loc )
-					logTheThing("station", user, null, "finishes building a gold pod in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
-					qdel(src)
-
-				else if (armor_type == 7)
-					var/obj/machinery/vehicle/pod_smooth/light/A = new /obj/machinery/vehicle/pod_smooth/light( src.loc )
-					A.name = "Pod"
-					A.setMaterial(src.material)
-					logTheThing("station", user, null, "finishes building a custom armored pod in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
-					qdel(src)
-			else
-				boutput(user, "You weren't thinking of flying around without a reinforced cockpit, were you? Put some reinforced glass on it! Five sheets will do.")
-
 ///// Shitty escape pod that flies by itself for a bit then explodes.
-
 /obj/machinery/vehicle/escape_pod
 	name = "Escape Pod E-"
 	desc = "A small one-person pod that scans for the emergency shuttle's engine signature and warps to it mid-transit. These are notorious for lacking any safety checks. <br>It looks sort of rickety..."
@@ -1720,12 +1403,23 @@ obj/machinery/vehicle/miniputt/pilot
 	var/succeeding = 0
 	var/did_warp = 0
 
+	New()
+		. = ..()
+		src.components -= src.engine
+		qdel(src.engine)
+		src.engine = new /obj/item/shipcomponent/engine/escape(src)
+		src.components += src.engine
+		src.engine.ship = src
+		src.engine.activate()
+
 	finish_board_pod(var/mob/boarder)
 		..()
-		if (!src.pilot) return //if they were stopped from entering by other parts of the board proc from ..()
-		SPAWN_DBG(0)
+		if (!src.pilot)
+			return //if they were stopped from entering by other parts of the board proc from ..()
+		SPAWN(0)
 			src.escape()
 
+	#define SHUTTLE_PERCENT_FROM_STATION emergency_shuttle.timeleft() / SHUTTLETRANSITTIME // both in seconds
 	proc/escape()
 		if(!launched)
 			launched = 1
@@ -1736,9 +1430,9 @@ obj/machinery/vehicle/miniputt/pilot
 				D.open()
 				opened_door = 1
 			if(opened_door) sleep(2 SECONDS) //make sure it's fully open
-			playsound(src.loc, "sound/effects/bamf.ogg", 100, 0)
+			playsound(src.loc, 'sound/effects/bamf.ogg', 100, 0)
 			sleep(0.5 SECONDS)
-			playsound(src.loc, "sound/effects/flameswoosh.ogg", 100, 0)
+			playsound(src.loc, 'sound/effects/flameswoosh.ogg', 100, 0)
 			while(!failing)
 				var/loc = src.loc
 				step(src,src.dir)
@@ -1746,31 +1440,27 @@ obj/machinery/vehicle/miniputt/pilot
 					explosion(src, src.loc, 1, 1, 2, 3)
 					break
 				steps_moved++
-				if(prob((steps_moved-7) * 3) && !succeeding)
+				if(prob((steps_moved-7) * 4 * (1 - SHUTTLE_PERCENT_FROM_STATION)) && !succeeding) // failure becomes more likely as the shuttle gets farther
 					fail()
-				if (prob((steps_moved-7) * 4))
+				if (prob((steps_moved-7) * 6 * SHUTTLE_PERCENT_FROM_STATION))
 					succeed()
 				sleep(0.4 SECONDS)
-
-	proc/test()
-		boutput(world,"shuttle loc is [emergency_shuttle.location]")
+	#undef SHUTTLE_PERCENT_FROM_STATION
 
 	proc/succeed()
-		if (succeeding && prob(3))
-			succeeding = 0
 		if (emergency_shuttle.location == SHUTTLE_LOC_TRANSIT & !did_warp) //lol sorry hardcoded a define thing
 			succeeding = 1
 			did_warp = 1
 
 			playsound(src.loc, "warp", 50, 1, 0.1, 0.7)
 
-			var/obj/portal/P = unpool(/obj/portal)
+			var/obj/portal/P = new /obj/portal
 			P.set_loc(get_turf(src))
 			var/turf/T = pick_landmark(LANDMARK_ESCAPE_POD_SUCCESS)
 			src.set_dir(map_settings ? map_settings.escape_dir : SOUTH)
 			P.target = T
 			src.set_loc(T)
-			logTheThing("station", src, null, "creates an escape portal at [log_loc(src)].")
+			logTheThing(LOG_STATION, src, "creates an escape portal at [log_loc(src)].")
 
 
 	proc/fail()
@@ -1815,7 +1505,7 @@ obj/machinery/vehicle/miniputt/pilot
 					var/mob/living/carbon/human/H = pilot
 					for(var/effect in list("sever_left_leg","sever_right_leg","sever_left_arm","sever_right_arm"))
 						if(prob(40))
-							SPAWN_DBG(rand(0,5))
+							SPAWN(rand(0,5))
 								H.bioHolder.AddEffect(effect)
 				src.leave_pod(pilot)
 				src.icon_state = "escape_nowindow"

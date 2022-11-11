@@ -1,136 +1,1142 @@
-"aa" = (/turf/space,/area/space)
-"ab" = (/turf/space,/area/noGenerate)
-"ac" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/mining/miningoutpost)
-"ad" = (/obj/decal/poster/wallsign/poster_discount,/turf/simulated/wall/auto/reinforced/supernorn,/area/mining/miningoutpost)
-"ae" = (/obj/decal/poster/wallsign/poster_sol,/turf/simulated/wall/auto/reinforced/supernorn,/area/mining/miningoutpost)
-"af" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 6},/obj/machinery/light/runway_light/delay5,/turf/space,/area/noGenerate)
-"ag" = (/obj/storage/crate/furnacefuel,/turf/simulated/floor/plating,/area/mining/miningoutpost)
-"ah" = (/obj/table/auto,/obj/machinery/cell_charger,/obj/machinery/light/incandescent/harsh/very,/turf/simulated/floor/plating,/area/mining/miningoutpost)
-"ai" = (/turf/simulated/wall/auto/supernorn,/area/mining/miningoutpost)
-"aj" = (/obj/item/storage/toilet{icon_state = "toilet"; dir = 1},/obj/machinery/light/incandescent/harsh/very,/turf/simulated/floor/sanitary/white,/area/mining/miningoutpost)
-"ak" = (/obj/submachine/chef_sink,/obj/machinery/light/incandescent/harsh/very,/turf/simulated/floor/sanitary/white,/area/mining/miningoutpost)
-"al" = (/obj/stool/bed,/obj/stool/bed{pixel_y = 16},/obj/item/clothing/suit/bedsheet,/obj/item/clothing/suit/bedsheet{pixel_y = 16},/obj/decal/cleanable/dirt,/turf/simulated/floor/carpet/grime,/area/mining/miningoutpost)
-"am" = (/obj/storage/crate,/obj/item/storage/toolbox/mechanical,/obj/machinery/light/incandescent/warm/very,/turf/simulated/floor/carpet/grime,/area/mining/miningoutpost)
-"an" = (/obj/stool/bed,/obj/stool/bed{pixel_y = 16},/obj/item/clothing/suit/bedsheet,/obj/item/clothing/suit/bedsheet{pixel_y = 16},/turf/simulated/floor/carpet/grime,/area/mining/miningoutpost)
-"ao" = (/obj/storage/crate,/obj/machinery/light/incandescent/warm/very,/turf/simulated/floor/carpet/grime,/area/mining/miningoutpost)
-"ap" = (/obj/wingrille_spawn/auto,/turf/simulated/floor/plating,/area/mining/miningoutpost)
-"aq" = (/obj/lattice{icon_state = "lattice-dir"; dir = 6},/turf/space,/area/noGenerate)
-"ar" = (/obj/lattice,/turf/space,/area/noGenerate)
-"as" = (/turf/simulated/floor/sanitary/white,/area/mining/miningoutpost)
-"at" = (/obj/machinery/door/unpowered/wood/stall,/turf/simulated/floor/sanitary/white,/area/mining/miningoutpost)
-"au" = (/obj/table/auto,/obj/bedsheetbin,/turf/simulated/floor/carpet/grime,/area/mining/miningoutpost)
-"av" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/carpet/grime,/area/mining/miningoutpost)
-"aw" = (/turf/simulated/floor/carpet/grime,/area/mining/miningoutpost)
-"ax" = (/obj/machinery/door/airlock/pyro/classic,/turf/simulated/floor/sanitary/white,/area/mining/miningoutpost)
-"ay" = (/obj/machinery/door/airlock/pyro,/turf/simulated/floor/carpet/grime,/area/mining/miningoutpost)
-"az" = (/turf/simulated/floor/plating,/area/mining/miningoutpost)
-"aA" = (/obj/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/cable{d2 = 4; icon_state = "0-4"},/obj/machinery/power/monitor,/turf/simulated/floor/plating,/area/mining/miningoutpost)
-"aB" = (/obj/stool/chair/yellow,/obj/cable{icon_state = "4-8"; d1 = 4; d2 = 8},/obj/machinery/light/incandescent/warm/very,/turf/simulated/floor/specialroom/medbay,/area/mining/miningoutpost)
-"aC" = (/obj/machinery/vending/snack,/turf/simulated/floor/specialroom/medbay,/area/mining/miningoutpost)
-"aD" = (/obj/machinery/vending/cola/blue,/turf/simulated/floor/specialroom/medbay,/area/mining/miningoutpost)
-"aE" = (/turf/simulated/floor/specialroom/medbay,/area/mining/miningoutpost)
-"aF" = (/obj/machinery/vending/medical,/turf/simulated/floor/redwhite{icon_state = "redwhite"; dir = 9},/area/mining/miningoutpost)
-"aG" = (/turf/simulated/floor/redwhite{icon_state = "redwhite"; dir = 1},/area/mining/miningoutpost)
-"aH" = (/obj/machinery/light/incandescent/warm/very,/turf/simulated/floor/specialroom/medbay,/area/mining/miningoutpost)
-"aI" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 10},/obj/machinery/light/runway_light/delay5,/turf/space,/area/noGenerate)
-"aJ" = (/obj/table/reinforced/auto,/obj/item/reagent_containers/food/snacks/breakfast,/obj/item/shaker/salt,/turf/simulated/floor/specialroom/medbay,/area/mining/miningoutpost)
-"aK" = (/obj/table/reinforced/auto,/obj/item/kitchen/utensil/fork,/obj/item/reagent_containers/food/drinks/coffee,/turf/simulated/floor/specialroom/medbay,/area/mining/miningoutpost)
-"aL" = (/obj/table/auto,/obj/item/storage/firstaid/oxygen,/turf/simulated/floor/redwhite{icon_state = "redwhite"; dir = 8},/area/mining/miningoutpost)
-"aM" = (/turf/simulated/floor/white,/area/mining/miningoutpost)
-"aN" = (/obj/machinery/sleep_console{icon_state = "sleeperconsole"; dir = 4},/turf/simulated/floor/red,/area/mining/miningoutpost)
-"aO" = (/obj/machinery/sleeper{icon_state = "sleeper"; dir = 4},/turf/simulated/floor/red,/area/mining/miningoutpost)
-"aP" = (/obj/lattice{tag = "icon-lattice-dir-b (NORTHWEST)"; icon_state = "lattice-dir"; dir = 1},/turf/space,/area/noGenerate)
-"aQ" = (/obj/table/reinforced/auto,/obj/item/reagent_containers/food/snacks/breakfast,/obj/item/shaker/pepper,/turf/simulated/floor/specialroom/medbay,/area/mining/miningoutpost)
-"aR" = (/obj/table/reinforced/auto,/obj/item/kitchen/utensil/fork,/obj/item/reagent_containers/food/drinks/mug/random_color,/turf/simulated/floor/specialroom/medbay,/area/mining/miningoutpost)
-"aS" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/specialroom/medbay,/area/mining/miningoutpost)
-"aT" = (/obj/iv_stand,/obj/item/reagent_containers/iv_drip,/obj/machinery/light/incandescent/cool/very,/turf/simulated/floor/redwhite{icon_state = "redwhite"; dir = 5},/area/mining/miningoutpost)
-"aU" = (/obj/machinery/bot/medbot/no_camera,/turf/simulated/floor/white,/area/mining/miningoutpost)
-"aV" = (/obj/surgery_tray,/turf/simulated/floor/redwhite{icon_state = "redwhite"; dir = 4},/area/mining/miningoutpost)
-"aW" = (/obj/stool/chair/yellow{icon_state = "chair-y"; dir = 1},/turf/simulated/floor/specialroom/medbay,/area/mining/miningoutpost)
-"aX" = (/obj/storage/secure/closet/fridge,/obj/decal/cleanable/dirt,/turf/simulated/floor/specialroom/medbay,/area/mining/miningoutpost)
-"aY" = (/obj/table/auto,/obj/item/plate,/obj/item/reagent_containers/food/snacks/burrito,/obj/item/reagent_containers/food/snacks/condiment/hotsauce,/turf/simulated/floor/specialroom/medbay,/area/mining/miningoutpost)
-"aZ" = (/obj/machinery/vending/coffee,/turf/simulated/floor/specialroom/medbay,/area/mining/miningoutpost)
-"ba" = (/obj/table/auto,/obj/machinery/microwave,/turf/simulated/floor/specialroom/medbay,/area/mining/miningoutpost)
-"bb" = (/obj/table/auto,/obj/item/storage/firstaid/fire,/turf/simulated/floor/redwhite{icon_state = "redwhite"; dir = 8},/area/mining/miningoutpost)
-"bc" = (/obj/machinery/door/airlock/pyro,/turf/simulated/floor/specialroom/medbay,/area/mining/miningoutpost)
-"bd" = (/turf/simulated/floor/redwhite{icon_state = "redwhite"; dir = 10},/area/mining/miningoutpost)
-"be" = (/turf/simulated/floor/redwhite,/area/mining/miningoutpost)
-"bf" = (/obj/lattice{tag = "icon-lattice-dir-b (NORTHWEST)"; icon_state = "lattice-dir-b"; dir = 9},/obj/machinery/light/runway_light/delay5,/turf/space,/area/noGenerate)
-"bg" = (/obj/table/auto,/obj/item/storage/firstaid/brute,/obj/machinery/light/incandescent/cool/very,/turf/simulated/floor/redwhite{icon_state = "redwhite"; dir = 8},/area/mining/miningoutpost)
-"bh" = (/obj/machinery/vending/cigarette,/turf/simulated/floor/specialroom/medbay,/area/mining/miningoutpost)
-"bi" = (/obj/reagent_dispensers/watertank/fountain,/obj/machinery/light/incandescent/warm/very,/turf/simulated/floor/specialroom/medbay,/area/mining/miningoutpost)
-"bj" = (/turf/simulated/floor/airless/neutral,/area/mining/miningoutpost)
-"bk" = (/obj/machinery/portable_reclaimer,/obj/decal/cleanable/dirt,/turf/simulated/floor/airless/neutral,/area/mining/miningoutpost)
-"bl" = (/obj/table/auto,/obj/machinery/recharger,/turf/simulated/floor/arrival{icon_state = "arrival"; dir = 9},/area/mining/miningoutpost)
-"bm" = (/obj/iv_stand,/obj/item/reagent_containers/iv_drip,/obj/machinery/light/incandescent/cool/very,/turf/simulated/floor/redwhite{icon_state = "redwhite"; dir = 6},/area/mining/miningoutpost)
-"bn" = (/obj/wingrille_spawn/auto,/obj/decal/poster/wallsign/medbay,/turf/simulated/floor/plating,/area/mining/miningoutpost)
-"bo" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 5},/obj/machinery/light/runway_light/delay5,/turf/space,/area/noGenerate)
-"bp" = (/obj/machinery/door/airlock/pyro/medical,/turf/simulated/floor/red,/area/mining/miningoutpost)
-"bq" = (/obj/decal/cleanable/cobweb,/obj/storage/secure/closet/engineering/mining,/turf/simulated/floor/orangeblack,/area/mining/miningoutpost)
-"br" = (/turf/simulated/floor/stairs{icon_state = "Stairs_alone"; dir = 8},/area/mining/miningoutpost)
-"bs" = (/turf/simulated/floor/arrival{icon_state = "arrival"; dir = 8},/area/mining/miningoutpost)
-"bt" = (/turf/simulated/floor/arrival{icon_state = "arrival"; dir = 4},/area/mining/miningoutpost)
-"bu" = (/turf/simulated/floor/stairs{icon_state = "Stairs_alone"; dir = 4},/area/mining/miningoutpost)
-"bv" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/airless/grime,/area/mining/miningoutpost)
-"bw" = (/turf/simulated/floor/airless/grime,/area/mining/miningoutpost)
-"bx" = (/obj/storage/closet/emergency,/obj/decal/cleanable/cobweb2,/turf/simulated/floor/airless/grime,/area/mining/miningoutpost)
-"by" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/floor/orangeblack,/area/mining/miningoutpost)
-"bz" = (/obj/decal/cleanable/dirt,/obj/machinery/light/incandescent/netural,/turf/simulated/floor/airless/neutral,/area/mining/miningoutpost)
-"bA" = (/turf/simulated/floor/arrival{icon_state = "arrival"; dir = 6},/area/mining/miningoutpost)
-"bB" = (/obj/decal/tile_edge/stripe/extra_big{icon_state = "xtra_bigstripe-edge"; dir = 1},/turf/simulated/floor/shuttlebay,/area/mining/miningoutpost)
-"bC" = (/obj/decal/tile_edge/stripe/extra_big{icon_state = "xtra_bigstripe-edge"; dir = 1},/obj/decal/cleanable/dirt,/turf/simulated/floor/shuttlebay,/area/mining/miningoutpost)
-"bD" = (/obj/table/auto,/obj/item/tank/oxygen,/obj/item/clothing/mask/breath,/turf/simulated/floor/orangeblack,/area/mining/miningoutpost)
-"bE" = (/obj/rack,/obj/item/clothing/suit/space/emerg,/obj/item/clothing/head/emerg,/obj/decal/cleanable/dirt,/turf/simulated/floor/orangeblack,/area/mining/miningoutpost)
-"bF" = (/obj/machinery/door/airlock/pyro/external,/turf/simulated/floor/bot,/area/mining/miningoutpost)
-"bG" = (/obj/lattice{tag = "icon-lattice-dir-b (NORTHWEST)"; icon_state = "lattice-dir"; dir = 2},/turf/space,/area/noGenerate)
-"bH" = (/turf/simulated/floor/shuttlebay,/area/mining/miningoutpost)
-"bI" = (/turf/simulated/floor/stairs,/area/mining/miningoutpost)
-"bJ" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 5},/turf/space,/area/noGenerate)
-"bK" = (/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose,/turf/simulated/floor/shuttlebay,/area/mining/miningoutpost)
-"bL" = (/obj/decal/poster/wallsign/space,/turf/simulated/wall/auto/reinforced/supernorn,/area/mining/miningoutpost)
-"bM" = (/obj/lattice{tag = "icon-lattice-dir-b (NORTHWEST)"; icon_state = "lattice-dir-b"; dir = 1},/obj/machinery/light/runway_light,/turf/space,/area/noGenerate)
-"bN" = (/obj/lattice{tag = "icon-lattice-dir-b (NORTHWEST)"; icon_state = "lattice-dir-b"; dir = 9},/obj/machinery/light/runway_light,/turf/space,/area/noGenerate)
-"bO" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 5},/obj/machinery/light/runway_light,/turf/space,/area/noGenerate)
-"bP" = (/obj/lattice{tag = "icon-lattice-dir-b (NORTHWEST)"; icon_state = "lattice-dir"; dir = 2},/obj/machinery/light/runway_light/delay2,/turf/space,/area/noGenerate)
-"bQ" = (/obj/lattice{tag = "icon-lattice-dir-b (NORTHWEST)"; icon_state = "lattice-dir"; dir = 2},/obj/machinery/light/runway_light/delay3,/turf/space,/area/noGenerate)
-"bR" = (/obj/lattice{tag = "icon-lattice-dir-b (NORTHWEST)"; icon_state = "lattice-dir-b"; dir = 9},/obj/machinery/light/runway_light/delay4,/turf/space,/area/noGenerate)
-"bS" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 5},/obj/machinery/light/runway_light/delay4,/turf/space,/area/noGenerate)
-"bT" = (/obj/machinery/door/airlock/pyro/external,/turf/simulated/floor/delivery,/area/mining/miningoutpost)
-"bU" = (/obj/storage/secure/closet/engineering/mining,/turf/simulated/floor/orangeblack,/area/mining/miningoutpost)
-"bV" = (/obj/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/power/smes{charge = 100000; chargelevel = 4000; output = 2500},/turf/simulated/floor/plating,/area/mining/miningoutpost)
-"bW" = (/obj/cable{icon_state = "2-4"},/turf/simulated/floor/plating,/area/mining/miningoutpost)
-"bX" = (/obj/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/cable{icon_state = "2-4"; d1 = 2; d2 = 4},/turf/simulated/floor/plating,/area/mining/miningoutpost)
-"bY" = (/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/turf/simulated/floor/plating,/area/mining/miningoutpost)
-"bZ" = (/obj/machinery/power/terminal{icon_state = "term"; dir = 1},/obj/cable{icon_state = "0-2"; d2 = 2},/obj/cable{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/plating,/area/mining/miningoutpost)
-"ca" = (/obj/machinery/power/furnace{active = 1; fuel = 600},/obj/cable,/turf/simulated/floor/plating,/area/mining/miningoutpost)
-"cb" = (/obj/decal/cleanable/dirt,/obj/table/auto,/obj/machinery/light/incandescent/netural,/turf/simulated/floor/arrival{icon_state = "arrival"; dir = 5},/area/mining/miningoutpost)
-"cc" = (/obj/cable,/obj/machinery/power/furnace{active = 1; fuel = 600},/turf/simulated/floor/plating,/area/mining/miningoutpost)
-"cd" = (/obj/machinery/door/airlock/pyro,/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/turf/simulated/floor/plating,/area/mining/miningoutpost)
-"ce" = (/obj/stool/chair/yellow,/obj/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor/specialroom/medbay,/area/mining/miningoutpost)
-"cf" = (/obj/decal/cleanable/dirt,/obj/machinery/light/incandescent/netural,/turf/simulated/floor/arrival{icon_state = "arrival"; dir = 10},/area/mining/miningoutpost)
-"cg" = (/obj/decal/cleanable/dirt,/obj/machinery/power/apc/autoname_north,/obj/cable{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/specialroom/medbay,/area/mining/miningoutpost)
-"ch" = (/obj/decal/tile_edge/stripe/extra_big{icon_state = "xtra_bigstripe-edge"; dir = 1},/obj/machinery/light/incandescent/harsh/very,/turf/simulated/floor/shuttlebay,/area/mining/miningoutpost)
-"ci" = (/obj/machinery/light/incandescent/netural,/turf/simulated/floor/stairs,/area/mining/miningoutpost)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/space,
+/area/space)
+"ab" = (
+/turf/space,
+/area/noGenerate)
+"ac" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/mining/miningoutpost)
+"ad" = (
+/obj/decal/poster/wallsign/poster_discount,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/mining/miningoutpost)
+"ae" = (
+/obj/decal/poster/wallsign/poster_sol,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/mining/miningoutpost)
+"af" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b";
+	dir = 6
+	},
+/obj/machinery/light/runway_light/delay5,
+/turf/space,
+/area/noGenerate)
+"ag" = (
+/obj/storage/crate/furnacefuel,
+/turf/simulated/floor/plating,
+/area/mining/miningoutpost)
+"ah" = (
+/obj/table/auto,
+/obj/machinery/cell_charger,
+/obj/machinery/light/incandescent/harsh/very,
+/turf/simulated/floor/plating,
+/area/mining/miningoutpost)
+"ai" = (
+/turf/simulated/wall/auto/supernorn,
+/area/mining/miningoutpost)
+"aj" = (
+/obj/item/storage/toilet{
+	icon_state = "toilet";
+	dir = 1
+	},
+/obj/machinery/light/incandescent/harsh/very,
+/turf/simulated/floor/sanitary/white,
+/area/mining/miningoutpost)
+"ak" = (
+/obj/submachine/chef_sink,
+/obj/machinery/light/incandescent/harsh/very,
+/turf/simulated/floor/sanitary/white,
+/area/mining/miningoutpost)
+"al" = (
+/obj/stool/bed,
+/obj/stool/bed{
+	pixel_y = 16
+	},
+/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/suit/bedsheet{
+	pixel_y = 16
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/carpet/grime,
+/area/mining/miningoutpost)
+"am" = (
+/obj/storage/crate,
+/obj/item/storage/toolbox/mechanical,
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/carpet/grime,
+/area/mining/miningoutpost)
+"an" = (
+/obj/stool/bed,
+/obj/stool/bed{
+	pixel_y = 16
+	},
+/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/suit/bedsheet{
+	pixel_y = 16
+	},
+/turf/simulated/floor/carpet/grime,
+/area/mining/miningoutpost)
+"ao" = (
+/obj/storage/crate,
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/carpet/grime,
+/area/mining/miningoutpost)
+"ap" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/mining/miningoutpost)
+"aq" = (
+/obj/lattice{
+	icon_state = "lattice-dir";
+	dir = 6
+	},
+/turf/space,
+/area/noGenerate)
+"ar" = (
+/obj/lattice,
+/turf/space,
+/area/noGenerate)
+"as" = (
+/turf/simulated/floor/sanitary/white,
+/area/mining/miningoutpost)
+"at" = (
+/obj/machinery/door/unpowered/wood/stall,
+/turf/simulated/floor/sanitary/white,
+/area/mining/miningoutpost)
+"au" = (
+/obj/table/auto,
+/obj/bedsheetbin,
+/turf/simulated/floor/carpet/grime,
+/area/mining/miningoutpost)
+"av" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/carpet/grime,
+/area/mining/miningoutpost)
+"aw" = (
+/turf/simulated/floor/carpet/grime,
+/area/mining/miningoutpost)
+"ax" = (
+/obj/machinery/door/airlock/pyro/classic,
+/turf/simulated/floor/sanitary/white,
+/area/mining/miningoutpost)
+"ay" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/carpet/grime,
+/area/mining/miningoutpost)
+"az" = (
+/turf/simulated/floor/plating,
+/area/mining/miningoutpost)
+"aA" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/computer/power_monitor,
+/turf/simulated/floor/plating,
+/area/mining/miningoutpost)
+"aB" = (
+/obj/stool/chair/yellow,
+/obj/cable{
+	icon_state = "4-8";
+	d1 = 4;
+	d2 = 8
+	},
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/specialroom/medbay,
+/area/mining/miningoutpost)
+"aC" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/specialroom/medbay,
+/area/mining/miningoutpost)
+"aD" = (
+/obj/machinery/vending/cola/blue,
+/turf/simulated/floor/specialroom/medbay,
+/area/mining/miningoutpost)
+"aE" = (
+/turf/simulated/floor/specialroom/medbay,
+/area/mining/miningoutpost)
+"aF" = (
+/obj/machinery/vending/medical,
+/turf/simulated/floor/redwhite{
+	icon_state = "redwhite";
+	dir = 9
+	},
+/area/mining/miningoutpost)
+"aG" = (
+/turf/simulated/floor/redwhite{
+	icon_state = "redwhite";
+	dir = 1
+	},
+/area/mining/miningoutpost)
+"aH" = (
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/specialroom/medbay,
+/area/mining/miningoutpost)
+"aI" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b";
+	dir = 10
+	},
+/obj/machinery/light/runway_light/delay5,
+/turf/space,
+/area/noGenerate)
+"aJ" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/breakfast,
+/obj/item/shaker/salt,
+/turf/simulated/floor/specialroom/medbay,
+/area/mining/miningoutpost)
+"aK" = (
+/obj/table/reinforced/auto,
+/obj/item/kitchen/utensil/fork,
+/obj/item/reagent_containers/food/drinks/coffee,
+/turf/simulated/floor/specialroom/medbay,
+/area/mining/miningoutpost)
+"aL" = (
+/obj/table/auto,
+/obj/item/storage/firstaid/oxygen,
+/turf/simulated/floor/redwhite{
+	icon_state = "redwhite";
+	dir = 8
+	},
+/area/mining/miningoutpost)
+"aM" = (
+/turf/simulated/floor/white,
+/area/mining/miningoutpost)
+"aN" = (
+/obj/machinery/sleep_console{
+	icon_state = "sleeperconsole";
+	dir = 4
+	},
+/turf/simulated/floor/red,
+/area/mining/miningoutpost)
+"aO" = (
+/obj/machinery/sleeper{
+	icon_state = "sleeper";
+	dir = 4
+	},
+/turf/simulated/floor/red,
+/area/mining/miningoutpost)
+"aP" = (
+/obj/lattice{
+	tag = "icon-lattice-dir-b (NORTHWEST)";
+	icon_state = "lattice-dir";
+	dir = 1
+	},
+/turf/space,
+/area/noGenerate)
+"aQ" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/breakfast,
+/obj/item/shaker/pepper,
+/turf/simulated/floor/specialroom/medbay,
+/area/mining/miningoutpost)
+"aR" = (
+/obj/table/reinforced/auto,
+/obj/item/kitchen/utensil/fork,
+/obj/item/reagent_containers/food/drinks/mug/random_color,
+/turf/simulated/floor/specialroom/medbay,
+/area/mining/miningoutpost)
+"aS" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/specialroom/medbay,
+/area/mining/miningoutpost)
+"aT" = (
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip,
+/obj/machinery/light/incandescent/cool/very,
+/turf/simulated/floor/redwhite{
+	icon_state = "redwhite";
+	dir = 5
+	},
+/area/mining/miningoutpost)
+"aU" = (
+/obj/machinery/bot/medbot/no_camera,
+/turf/simulated/floor/white,
+/area/mining/miningoutpost)
+"aV" = (
+/obj/surgery_tray,
+/turf/simulated/floor/redwhite{
+	icon_state = "redwhite";
+	dir = 4
+	},
+/area/mining/miningoutpost)
+"aW" = (
+/obj/stool/chair/yellow{
+	icon_state = "chair-y";
+	dir = 1
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/mining/miningoutpost)
+"aX" = (
+/obj/storage/secure/closet/fridge,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/specialroom/medbay,
+/area/mining/miningoutpost)
+"aY" = (
+/obj/table/auto,
+/obj/item/plate,
+/obj/item/reagent_containers/food/snacks/burrito,
+/obj/item/reagent_containers/food/snacks/condiment/hotsauce,
+/turf/simulated/floor/specialroom/medbay,
+/area/mining/miningoutpost)
+"aZ" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor/specialroom/medbay,
+/area/mining/miningoutpost)
+"ba" = (
+/obj/table/auto,
+/obj/machinery/microwave,
+/turf/simulated/floor/specialroom/medbay,
+/area/mining/miningoutpost)
+"bb" = (
+/obj/table/auto,
+/obj/item/storage/firstaid/fire,
+/turf/simulated/floor/redwhite{
+	icon_state = "redwhite";
+	dir = 8
+	},
+/area/mining/miningoutpost)
+"bc" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/specialroom/medbay,
+/area/mining/miningoutpost)
+"bd" = (
+/turf/simulated/floor/redwhite{
+	icon_state = "redwhite";
+	dir = 10
+	},
+/area/mining/miningoutpost)
+"be" = (
+/turf/simulated/floor/redwhite,
+/area/mining/miningoutpost)
+"bf" = (
+/obj/lattice{
+	tag = "icon-lattice-dir-b (NORTHWEST)";
+	icon_state = "lattice-dir-b";
+	dir = 9
+	},
+/obj/machinery/light/runway_light/delay5,
+/turf/space,
+/area/noGenerate)
+"bg" = (
+/obj/table/auto,
+/obj/item/storage/firstaid/brute,
+/obj/machinery/light/incandescent/cool/very,
+/turf/simulated/floor/redwhite{
+	icon_state = "redwhite";
+	dir = 8
+	},
+/area/mining/miningoutpost)
+"bh" = (
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor/specialroom/medbay,
+/area/mining/miningoutpost)
+"bi" = (
+/obj/reagent_dispensers/watertank/fountain,
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/specialroom/medbay,
+/area/mining/miningoutpost)
+"bj" = (
+/turf/simulated/floor/airless/neutral,
+/area/mining/miningoutpost)
+"bk" = (
+/obj/machinery/portable_reclaimer,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/neutral,
+/area/mining/miningoutpost)
+"bl" = (
+/obj/table/auto,
+/obj/machinery/recharger,
+/turf/simulated/floor/arrival{
+	icon_state = "arrival";
+	dir = 9
+	},
+/area/mining/miningoutpost)
+"bm" = (
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip,
+/obj/machinery/light/incandescent/cool/very,
+/turf/simulated/floor/redwhite{
+	icon_state = "redwhite";
+	dir = 6
+	},
+/area/mining/miningoutpost)
+"bn" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/poster/wallsign/medbay,
+/turf/simulated/floor/plating,
+/area/mining/miningoutpost)
+"bo" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b";
+	dir = 5
+	},
+/obj/machinery/light/runway_light/delay5,
+/turf/space,
+/area/noGenerate)
+"bp" = (
+/obj/machinery/door/airlock/pyro/medical,
+/turf/simulated/floor/red,
+/area/mining/miningoutpost)
+"bq" = (
+/obj/decal/cleanable/cobweb,
+/obj/storage/secure/closet/engineering/mining,
+/turf/simulated/floor/orangeblack,
+/area/mining/miningoutpost)
+"br" = (
+/turf/simulated/floor/stairs{
+	icon_state = "Stairs_alone";
+	dir = 8
+	},
+/area/mining/miningoutpost)
+"bs" = (
+/turf/simulated/floor/arrival{
+	icon_state = "arrival";
+	dir = 8
+	},
+/area/mining/miningoutpost)
+"bt" = (
+/turf/simulated/floor/arrival{
+	icon_state = "arrival";
+	dir = 4
+	},
+/area/mining/miningoutpost)
+"bu" = (
+/turf/simulated/floor/stairs{
+	icon_state = "Stairs_alone";
+	dir = 4
+	},
+/area/mining/miningoutpost)
+"bv" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/grime,
+/area/mining/miningoutpost)
+"bw" = (
+/turf/simulated/floor/airless/grime,
+/area/mining/miningoutpost)
+"bx" = (
+/obj/storage/closet/emergency,
+/obj/decal/cleanable/cobweb2,
+/turf/simulated/floor/airless/grime,
+/area/mining/miningoutpost)
+"by" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor/orangeblack,
+/area/mining/miningoutpost)
+"bz" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/airless/neutral,
+/area/mining/miningoutpost)
+"bA" = (
+/turf/simulated/floor/arrival{
+	icon_state = "arrival";
+	dir = 6
+	},
+/area/mining/miningoutpost)
+"bB" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "xtra_bigstripe-edge";
+	dir = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/mining/miningoutpost)
+"bC" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "xtra_bigstripe-edge";
+	dir = 1
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/shuttlebay,
+/area/mining/miningoutpost)
+"bD" = (
+/obj/table/auto,
+/obj/item/tank/oxygen,
+/obj/item/clothing/mask/breath,
+/turf/simulated/floor/orangeblack,
+/area/mining/miningoutpost)
+"bE" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/orangeblack,
+/area/mining/miningoutpost)
+"bF" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/bot,
+/area/mining/miningoutpost)
+"bG" = (
+/obj/lattice{
+	tag = "icon-lattice-dir-b (NORTHWEST)";
+	icon_state = "lattice-dir";
+	dir = 2
+	},
+/turf/space,
+/area/noGenerate)
+"bH" = (
+/turf/simulated/floor/shuttlebay,
+/area/mining/miningoutpost)
+"bI" = (
+/turf/simulated/floor/stairs,
+/area/mining/miningoutpost)
+"bJ" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b";
+	dir = 5
+	},
+/turf/space,
+/area/noGenerate)
+"bK" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose,
+/turf/simulated/floor/shuttlebay,
+/area/mining/miningoutpost)
+"bL" = (
+/obj/decal/poster/wallsign/space,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/mining/miningoutpost)
+"bM" = (
+/obj/lattice{
+	tag = "icon-lattice-dir-b (NORTHWEST)";
+	icon_state = "lattice-dir-b";
+	dir = 1
+	},
+/obj/machinery/light/runway_light,
+/turf/space,
+/area/noGenerate)
+"bN" = (
+/obj/lattice{
+	tag = "icon-lattice-dir-b (NORTHWEST)";
+	icon_state = "lattice-dir-b";
+	dir = 9
+	},
+/obj/machinery/light/runway_light,
+/turf/space,
+/area/noGenerate)
+"bO" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b";
+	dir = 5
+	},
+/obj/machinery/light/runway_light,
+/turf/space,
+/area/noGenerate)
+"bP" = (
+/obj/lattice{
+	tag = "icon-lattice-dir-b (NORTHWEST)";
+	icon_state = "lattice-dir";
+	dir = 2
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/noGenerate)
+"bQ" = (
+/obj/lattice{
+	tag = "icon-lattice-dir-b (NORTHWEST)";
+	icon_state = "lattice-dir";
+	dir = 2
+	},
+/obj/machinery/light/runway_light/delay3,
+/turf/space,
+/area/noGenerate)
+"bR" = (
+/obj/lattice{
+	tag = "icon-lattice-dir-b (NORTHWEST)";
+	icon_state = "lattice-dir-b";
+	dir = 9
+	},
+/obj/machinery/light/runway_light/delay4,
+/turf/space,
+/area/noGenerate)
+"bS" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b";
+	dir = 5
+	},
+/obj/machinery/light/runway_light/delay4,
+/turf/space,
+/area/noGenerate)
+"bT" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/delivery,
+/area/mining/miningoutpost)
+"bU" = (
+/obj/storage/secure/closet/engineering/mining,
+/turf/simulated/floor/orangeblack,
+/area/mining/miningoutpost)
+"bV" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/smes{
+	charge = 100000;
+	chargelevel = 4000;
+	output = 2500
+	},
+/turf/simulated/floor/plating,
+/area/mining/miningoutpost)
+"bW" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/mining/miningoutpost)
+"bX" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "2-4";
+	d1 = 2;
+	d2 = 4
+	},
+/turf/simulated/floor/plating,
+/area/mining/miningoutpost)
+"bY" = (
+/obj/cable{
+	icon_state = "1-2";
+	d1 = 1;
+	d2 = 2
+	},
+/turf/simulated/floor/plating,
+/area/mining/miningoutpost)
+"bZ" = (
+/obj/machinery/power/terminal{
+	icon_state = "term";
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/mining/miningoutpost)
+"ca" = (
+/obj/machinery/power/furnace{
+	active = 1;
+	fuel = 600
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/mining/miningoutpost)
+"cb" = (
+/obj/decal/cleanable/dirt,
+/obj/table/auto,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/arrival{
+	icon_state = "arrival";
+	dir = 5
+	},
+/area/mining/miningoutpost)
+"cc" = (
+/obj/cable,
+/obj/machinery/power/furnace{
+	active = 1;
+	fuel = 600
+	},
+/turf/simulated/floor/plating,
+/area/mining/miningoutpost)
+"cd" = (
+/obj/machinery/door/airlock/pyro,
+/obj/cable{
+	icon_state = "1-2";
+	d1 = 1;
+	d2 = 2
+	},
+/turf/simulated/floor/plating,
+/area/mining/miningoutpost)
+"ce" = (
+/obj/stool/chair/yellow,
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/mining/miningoutpost)
+"cf" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/arrival{
+	icon_state = "arrival";
+	dir = 10
+	},
+/area/mining/miningoutpost)
+"cg" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/power/apc/autoname_north/nopoweralert,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/mining/miningoutpost)
+"ch" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "xtra_bigstripe-edge";
+	dir = 1
+	},
+/obj/machinery/light/incandescent/harsh/very,
+/turf/simulated/floor/shuttlebay,
+/area/mining/miningoutpost)
+"ci" = (
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/stairs,
+/area/mining/miningoutpost)
 
 (1,1,1) = {"
-aaabacacacacacacabababababababababababab
-aaabacagahaAbVacacacacacacadacaeacababab
-aaabacazbWbXbZaiajaiakaialamanaoapababab
-aaabacagbYcaccaiasatasaiauavawavapababab
-aaabacaccdaiaiaiaiaiaxaiaiaiayaiacababab
-aaabafacceaBcgaZbhaHaEaiaFaGaGaTacaIabab
-aaabaqapaJaKaEaEaEaEaXaiaLaMaNaOapaPabab
-aaabaqapaQaRaEaEaSaEaYaibgaMaUaVapaPabab
-aaabaqacaWaWaEbiaCaDbaaibbaMaNaOapaPabab
-aaabaqacaiapbcapaiaiaiaibdbebebmacaPabab
-aaabbfapbqbzbjbkaiblcbaibnbpbpbnacboabab
-aaababapbUbjbjbjbrbsbtbubvbwbwbxacababab
-aaababacacbybjbzaicfbAaichbBbCacacababab
-aaabababacacbDbEaibFbFaibHbHbHacabababab
-aaabababbGacapapacbIciacbKbKbKacabababab
-aaabababbGabaqbJbLbTbTbLabababbGabababab
-aaabababbMabbGabbNararbOabababbGabababab
-aaabababababbGababbPbPababababbMabababab
-aaabababababbMababbQbQababababababababab
-aaababababababababbRbSababababababababab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(3,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+af
+aq
+aq
+aq
+aq
+bf
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(4,1,1) = {"
+ac
+ag
+az
+ag
+ac
+ac
+ap
+ap
+ac
+ac
+ap
+ap
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(5,1,1) = {"
+ac
+ah
+bW
+bY
+cd
+ce
+aJ
+aQ
+aW
+ai
+bq
+bU
+ac
+ac
+bG
+bG
+bM
+ab
+ab
+ab
+"}
+(6,1,1) = {"
+ac
+aA
+bX
+ca
+ai
+aB
+aK
+aR
+aW
+ap
+bz
+bj
+by
+ac
+ac
+ab
+ab
+ab
+ab
+ab
+"}
+(7,1,1) = {"
+ac
+bV
+bZ
+cc
+ai
+cg
+aE
+aE
+aE
+bc
+bj
+bj
+bj
+bD
+ap
+aq
+bG
+bG
+bM
+ab
+"}
+(8,1,1) = {"
+ac
+ac
+ai
+ai
+ai
+aZ
+aE
+aE
+bi
+ap
+bk
+bj
+bz
+bE
+ap
+bJ
+ab
+ab
+ab
+ab
+"}
+(9,1,1) = {"
+ab
+ac
+aj
+as
+ai
+bh
+aE
+aS
+aC
+ai
+ai
+br
+ai
+ai
+ac
+bL
+bN
+ab
+ab
+ab
+"}
+(10,1,1) = {"
+ab
+ac
+ai
+at
+ai
+aH
+aE
+aE
+aD
+ai
+bl
+bs
+cf
+bF
+bI
+bT
+ar
+bP
+bQ
+bR
+"}
+(11,1,1) = {"
+ab
+ac
+ak
+as
+ax
+aE
+aX
+aY
+ba
+ai
+cb
+bt
+bA
+bF
+ci
+bT
+ar
+bP
+bQ
+bS
+"}
+(12,1,1) = {"
+ab
+ac
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+bu
+ai
+ai
+ac
+bL
+bO
+ab
+ab
+ab
+"}
+(13,1,1) = {"
+ab
+ac
+al
+au
+ai
+aF
+aL
+bg
+bb
+bd
+bn
+bv
+ch
+bH
+bK
+ab
+ab
+ab
+ab
+ab
+"}
+(14,1,1) = {"
+ab
+ad
+am
+av
+ai
+aG
+aM
+aM
+aM
+be
+bp
+bw
+bB
+bH
+bK
+ab
+ab
+ab
+ab
+ab
+"}
+(15,1,1) = {"
+ab
+ac
+an
+aw
+ay
+aG
+aN
+aU
+aN
+be
+bp
+bw
+bC
+bH
+bK
+ab
+ab
+ab
+ab
+ab
+"}
+(16,1,1) = {"
+ab
+ae
+ao
+av
+ai
+aT
+aO
+aV
+aO
+bm
+bn
+bx
+ac
+ac
+ac
+bG
+bG
+bM
+ab
+ab
+"}
+(17,1,1) = {"
+ab
+ac
+ap
+ap
+ac
+ac
+ap
+ap
+ap
+ac
+ac
+ac
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(18,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+aI
+aP
+aP
+aP
+aP
+bo
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(19,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(20,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 "}

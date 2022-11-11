@@ -3,7 +3,7 @@
 /obj/machinery/bot
 	icon = 'icons/obj/bots/aibots.dmi'
 	layer = MOB_LAYER
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_BOTS
@@ -35,7 +35,7 @@
 	/// The noise that happens whenever the bot speaks
 	var/bot_voice = 'sound/misc/talk/bottalk_1.ogg'
 	/// The bot's speech bubble
-	var/static/image/bot_speech_bubble = image('icons/mob/mob.dmi', "speech")
+	var/static/mutable_appearance/bot_speech_bubble = mutable_appearance('icons/mob/mob.dmi', "speech")
 	var/use_speech_bubble = 1
 	/// Is this bot *dynamic* enough to need a higher processing tier when being watched?
 	/// Set to 0 for bots that don't typically directly interact with people, like ducks and floorbots
@@ -51,17 +51,17 @@
 	/// Middle process rate for bots currently trying to murder someone
 	var/PT_active = PROCESSING_QUARTER
 	var/hash_cooldown = (2 SECONDS)
-	var/next_hash_check = 0
+	var/tmp/next_hash_check = 0
 	/// If we're in the middle of something and don't want our tier to go wonky
 	var/doing_something = 0
 	/// Range that the bot checks for clients
 	var/hash_check_range = 6
 
-	var/frustration = 0
+	var/tmp/frustration = 0
 	/// How slowly the bot moves by default -- higher is slower!
 	var/bot_move_delay = 6
-	var/list/path = null	// list of path turfs
-	var/datum/robot_mover/bot_mover
+	var/tmp/list/path = null	// list of path turfs
+	var/tmp/datum/robot_mover/bot_mover
 	var/moving = 0 // Are we ON THE MOVE??
 	var/stunned = 0 //It can be stunned by tasers. Delicate circuits.
 	var/current_movepath = 0
@@ -72,7 +72,7 @@
 	power_change()
 		return
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))
 			return 0
 		return ..()
@@ -89,21 +89,27 @@
 		if(!src.chat_text)
 			src.chat_text = new
 		src.vis_contents += src.chat_text
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.botcard = new /obj/item/card/id(src)
 			src.botcard.access = get_access(src.access_lookup)
 			src.botnet_id = format_net_id("\ref[src]")
+
+		#ifdef ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP
+		START_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
 
 	disposing()
 		botcard = null
 		qdel(chat_text)
 		chat_text = null
+		qdel(bot_mover)
+		bot_mover = null
 		if(cam)
 			cam.dispose()
 			cam = null
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
 		attack_particle(user,src)
 		hit_twitch(src)
@@ -165,11 +171,11 @@
 		if (src.speech2text && src.chat_text && !just_chat)
 			if(src.use_speech_bubble)
 				UpdateOverlays(bot_speech_bubble, "bot_speech_bubble")
-				SPAWN_DBG(1.5 SECONDS)
+				SPAWN(1.5 SECONDS)
 					UpdateOverlays(null, "bot_speech_bubble")
 			if(!src.bot_speech_color)
 				var/num = hex2num(copytext(md5("[src.name][TIME]"), 1, 7))
-				src.bot_speech_color = hsv2rgb(num % 360, (num / 360) % 10 / 100 + 0.18, num / 360 / 10 % 15 / 100 + 0.85)
+				src.bot_speech_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
 			var/singing_italics = sing ? " font-style: italic;" : ""
 			var/maptext_color
 			if (sing)
@@ -184,9 +190,9 @@
 						I.bump_up(chatbot_text.measured_height)
 
 		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"<span style=\"[src.bot_chat_style]\">[message]\"</span>", just_maptext = just_float, assoc_maptext = chatbot_text)
-		playsound(get_turf(src), src.bot_voice, 40, 1)
+		playsound(src, src.bot_voice, 40, 1)
 		if (src.text2speech)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/audio = dectalk("\[:nk\][message]")
 				if (audio && audio["audio"])
 					for (var/mob/O in hearers(src, null))
@@ -209,16 +215,10 @@
 	if((P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING)) && P.proj_data.ks_ratio > 0)
 		P.initial_power -= 10
 		if(P.initial_power <= 0)
+			src.bullet_act(P) // die() prevents the projectile from calling bullet_act normally
 			P.die()
 	if(!src.density)
-
 		return PROJ_OBJ_HIT_OTHER_OBJS | PROJ_ATOM_PASSTHROUGH
-
-/obj/machinery/bot/Bumped(M as mob|obj) // not sure what this is for, but it was in a bunch of the bots, so it's here just in case its vital
-	var/turf/T = get_turf(src)
-	if(ismovable(M))
-		var/atom/movable/AM = M
-		AM.set_loc(T)
 
 /obj/machinery/bot/proc/DoWhileMoving()
 	return
@@ -235,38 +235,41 @@
 	if(!T) return
 	if(announce_it)
 		visible_message("<b>[src]</b> points at [target]!")
-	var/obj/decal/point/P = new(T)
-	P.pixel_x = target.pixel_x
-	P.pixel_y = target.pixel_y
-	P.color = src.bot_speech_color
-	SPAWN_DBG(2 SECONDS)
-		P.invisibility = 101
-		qdel(P)
+	make_point(T, pixel_x=target.pixel_x, pixel_y=target.pixel_y, color=src.bot_speech_color, pointer=src)
 
 /obj/machinery/bot/emp_act()
 	src.emag_act()
 
 	/// Takes a turf and spits out string of coordinates
-/obj/machinery/bot/proc/turf2coordinates(var/turf/T)
+/obj/machinery/bot/proc/turf2coordinates(var/atom/A)
+	var/turf/T = get_turf(A)
 	if(isturf(T))
 		var/Tx = T.x
 		var/Ty = T.y
 		var/Tz = T.z
 		return jointext(list(Tx, Ty, Tz), ",")
+	else
+		return "some invalid thing, probably"
 
-
-/obj/machinery/bot/proc/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=600)
+/obj/machinery/bot/proc/get_pathable_turf(atom/the_target)
 	var/turf/target_turf = get_turf(the_target)
-	if(!checkTurfPassable(target_turf))
-		var/turf_is_impassable = 1
+	. = 0
+	if(checkTurfPassable(target_turf))
+		return target_turf
+	else
 		for(var/dir_look in alldirs)
 			var/turf/T = get_step(target_turf, dir_look)
 			if(checkTurfPassable(T))
-				target_turf = T
-				turf_is_impassable = 0
-				break
-		if(turf_is_impassable)
-			return
+				return T
+
+/obj/machinery/bot/proc/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=60)
+	var/target_turf = get_pathable_turf(the_target)
+	if((BOUNDS_DIST(the_target, src) == 0))
+		return
+	if(src.bot_mover?.the_target == target_turf && frustration == 0)
+		return 0
+	if(!target_turf)
+		return 0
 
 	src.KillPathAndGiveUp(0)
 	src.bot_mover = new /datum/robot_mover(newmaster = src, _move_delay = move_delay, _target_turf = target_turf, _current_movepath = current_movepath, _adjacent = adjacent, _scanrate = scanrate, _max_dist = max_dist)
@@ -282,7 +285,7 @@
 	var/scanrate = 10
 	var/max_dist = 600
 
-	New(obj/machinery/bot/newmaster, _move_delay = 3, _target_turf, _current_movepath, _adjacent = 0, _scanrate = 10, _max_dist = 600)
+	New(obj/machinery/bot/newmaster, _move_delay = 3, _target_turf, _current_movepath, _adjacent = 0, _scanrate = 10, _max_dist = 80)
 		..()
 		if(istype(newmaster))
 			src.master = newmaster
@@ -311,9 +314,16 @@
 			master.moving = FALSE
 		src.master = null
 		src.the_target = null
+
+		#ifdef ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP
+		STOP_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
+
 		..()
 
 	proc/master_move()
+		if(QDELETED(src))
+			return
 		if(!istype(master))
 			qdel(src)
 			return
@@ -321,12 +331,12 @@
 			master.KillPathAndGiveUp(0)
 			return
 		var/compare_movepath = src.current_movepath
-		master.path = AStar(get_turf(master), src.the_target, /turf/proc/CardinalTurfsAndSpaceWithAccess, /turf/proc/Distance, src.max_dist, master.botcard)
+		master.path = get_path_to(src.master, src.the_target, max_distance=src.max_dist, id=master.botcard, skip_first=FALSE, simulated_only=FALSE, cardinal_only=TRUE, do_doorcheck=TRUE)
 		if(!length(master.path))
 			qdel(src)
 			return
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (!istype(master) || (master && (!length(master.path) || !src.the_target)))
 				qdel(src)
 				return
@@ -336,7 +346,7 @@
 
 			master?.moving = 1
 
-			while(length(master?.path) && src.the_target)
+			while(length(master?.path) && src.the_target && !QDELETED(src))
 				if(compare_movepath != current_movepath) break
 				if(!master) break
 				if(!length(master.path)) break
@@ -348,15 +358,15 @@
 
 				if(length(master?.path) && master.path[1])
 					if(istype(get_turf(master), /turf/space)) // frick it, duckie toys get jetpacks
-						var/obj/effects/ion_trails/I = unpool(/obj/effects/ion_trails)
+						var/obj/effects/ion_trails/I = new /obj/effects/ion_trails
 						I.set_loc(get_turf(master))
 						I.set_dir(master.dir)
 						flick("ion_fade", I)
 						I.icon_state = "blank"
 						I.pixel_x = master.pixel_x
 						I.pixel_y = master.pixel_y
-						SPAWN_DBG( 20 )
-							if (I && !I.disposed) pool(I)
+						SPAWN( 20 )
+							if (I && !I.disposed) qdel(I)
 
 					step_to(master, master?.path[1])
 					if(isnull(master))

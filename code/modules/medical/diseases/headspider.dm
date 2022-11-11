@@ -53,7 +53,7 @@
 
 /datum/ailment/parasite/headspider/proc/move_spider_out(var/mob/living/surgeon, var/mob/living/M)
 	for (var/mob/living/critter/changeling/headspider/HS in M.contents)
-		HS.changeStatus("stunned", 50)
+		HS.changeStatus("stunned", 5 SECONDS)
 		HS.health = 0
 		HS.death()
 		HS.set_loc(M.loc)
@@ -61,7 +61,7 @@
 	JOB_XP(surgeon, "Medical Doctor", 15)
 
 
-/datum/ailment/parasite/headspider/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/parasite/D,var/datum/mind/changeto)
+/datum/ailment/parasite/headspider/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/parasite/D,mult,var/datum/mind/changeto)
 	if (..())
 		return
 
@@ -72,33 +72,34 @@
 
 	switch(D.stage)
 		if(2)
-			if(prob(15))
+			if(probmult(15))
 				if(affected_mob.canmove && isturf(affected_mob.loc))
 					step(affected_mob, pick(cardinal))
-			if(prob(3))
+			if(probmult(3))
 				affected_mob.emote("twitch")
-			if(prob(3))
+			if(probmult(3))
 				affected_mob.emote("twitch_v")
-			if(prob(2))
+			if(probmult(2))
 				boutput(affected_mob, "<span class='alert'>You feel strange.</span>")
 				affected_mob.change_misstep_chance(5)
 		if(3)
-			if(prob(50))
+			if(probmult(50))
 				if(affected_mob.canmove && isturf(affected_mob.loc))
 					step(affected_mob, pick(cardinal))
-			if(prob(5))
+			if(probmult(5))
 				affected_mob.emote("twitch")
-			if(prob(5))
+			if(probmult(5))
 				affected_mob.emote("twitch_v")
-			if(prob(5))
+			if(probmult(5))
 				boutput(affected_mob, "<span class='alert'>You feel very strange.</span>")
 				affected_mob.change_misstep_chance(10)
-			if(prob(2))
+			if(probmult(2))
 				boutput(affected_mob, "<span class='alert'>Your stomach hurts.</span>")
 				affected_mob.emote("groan")
 		if(4)
 			boutput(affected_mob, "<span class='alert'>You feel something pushing at your spine...</span>")
-			if(prob(40))
+			if(probmult(40))
+				//ALL of this is awful why are we passing a fuckingf mind in as an arg why does the headspider disease not have a reference to the HEADSPIDER my GOD
 				if(changeto)
 
 					// Absorb their DNA. Copies identities and DNA points automatically if victim was another changeling. This also inserts them into the hivemind.
@@ -120,15 +121,18 @@
 					changeling.reassign_hivemind_target_mob()
 
 					// Transfer player control.
+
+					var/mob/living/critter/changeling/headspider/HS = changeto.current
+					HS.changeling = null //so the spider doesn't have a ref to our holder as well
 					changeto.transfer_to(affected_mob)
 					changeto.is_changeling = changeling
 					changeto = null
 					affected_mob.change_misstep_chance(-INFINITY)
 					affected_mob.show_text("<h3>We have assumed control of the new host.</h3>", "blue")
-					logTheThing("combat", affected_mob, null, "'s headspider successfully assumes control of new host at [log_loc(affected_mob)].")
+					logTheThing(LOG_COMBAT, affected_mob, "'s headspider successfully assumes control of new host at [log_loc(affected_mob)].")
 
 					D.stealth_asymptomatic = 1 //Retain the disease but don't actually do anything with it
-					SPAWN_DBG(2 MINUTES) //Disease stays for two minutes after a complete infection, then it removes itself.
+					SPAWN(2 MINUTES) //Disease stays for two minutes after a complete infection, then it removes itself.
 						affected_mob.cure_disease_by_path(/datum/ailment/parasite/headspider)
 
 				return

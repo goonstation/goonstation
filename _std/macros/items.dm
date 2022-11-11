@@ -11,6 +11,11 @@
 #define iswrenchingtool(x) (istool(x, TOOL_WRENCHING))
 #define ischoppingtool(x) (istool(x, TOOL_CHOPPING))
 #define isweldingtool(x) (istool(x, TOOL_WELDING))
+#define issawingtool(x) (istool(x, TOOL_SAWING))
+#define isspooningtool(x) (istool(x, TOOL_SPOONING))
 
 /// Returns true if the given x is a grab (obj/item/grab)
 #define isgrab(x) (istype(x, /obj/item/grab/))
+
+/// Returns true if x is equipped or inside & usable in what's equipped (currently only applicable to magtractors)
+#define equipped_or_holding(x,source) (source.equipped() == x || (source.equipped()?.useInnerItem && (x in source.equipped())))

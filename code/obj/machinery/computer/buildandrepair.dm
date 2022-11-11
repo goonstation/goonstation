@@ -7,14 +7,17 @@
 	var/state = 0
 	var/obj/item/circuitboard/circuit = null
 	var/obj/item/cable_coil/my_cable = null
+	material_amt = 0.5
 
 	blob_act(var/power)
 		qdel(src)
 //	weight = 1.0E8
 
+ABSTRACT_TYPE(/obj/item/circuitboard)
 /obj/item/circuitboard
 	density = 0
 	anchored = 0
+	health = 6
 	w_class = W_CLASS_SMALL
 	name = "Circuit board"
 	icon = 'icons/obj/module.dmi'
@@ -27,12 +30,24 @@
 	var/list/records = null
 	mats = 6
 
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
 /obj/item/circuitboard/security
-	name = "Circuit board (Security)"
+	name = "Circuit board (Security Cameras)"
 	computertype = "/obj/machinery/computer/security"
-/obj/item/circuitboard/aiupload
-	name = "Circuit board (AI Upload)"
-	computertype = "/obj/machinery/computer/aiupload"
+/obj/item/circuitboard/security_tv
+	name = "Circuit board (Security Television)"
+	computertype = "/obj/machinery/computer/security/wooden_tv"
+/obj/item/circuitboard/small_tv
+	name = "Circuit board (Television)"
+	computertype = "/obj/machinery/computer/security/wooden_tv/small"
+
 //obj/item/circuitboard/med_data
 //	name = "Circuit board (Medical)"
 //	computertype = "/obj/machinery/computer/med_data"
@@ -104,13 +119,13 @@
 	computertype = "/obj/machinery/computer/turbine_computer"
 /obj/item/circuitboard/solar_control
 	name = "Circuit board (Solar control)"
-	computertype = "/obj/machinery/power/solar_control"
+	computertype = "/obj/machinery/computer/solar_control"
 /obj/item/circuitboard/powermonitor
 	name = "Circuit board (Power Monitoring Computer)"
-	computertype = "/obj/machinery/power/monitor"
+	computertype = "/obj/machinery/computer/power_monitor"
 /obj/item/circuitboard/powermonitor_smes
 	name = "Circuit board (Engine Monitoring Computer)"
-	computertype = "/obj/machinery/power/monitor/smes"
+	computertype = "/obj/machinery/computer/power_monitor/smes"
 /obj/item/circuitboard/olddoor
 	name = "Circuit board (DoorMex)"
 	computertype = "/obj/machinery/computer/pod/old"
@@ -129,54 +144,56 @@
 /obj/item/circuitboard/operating
 	name = "Circuit board (Operating Computer)"
 	computertype = "/obj/machinery/computer/operating"
+/obj/item/circuitboard/qmorder
+	name = "Circuit board (Supply Request Console)"
+	computertype = "/obj/machinery/computer/ordercomp"
+/obj/item/circuitboard/qmsupply
+	name = "Circuit board (Quartermaster's Console)"
+	computertype = "/obj/machinery/computer/supplycomp"
+/obj/item/circuitboard/transception
+	name = "Circuit board (Transception Interlink)"
+	computertype = "/obj/machinery/computer/transception"
 /obj/item/circuitboard/mining_magnet
 	name = "Circuit board (Mining Magnet Computer)"
 	computertype = "/obj/machinery/computer/magnet"
+/obj/item/circuitboard/telescope
+	name = "Circuit board (Quantum Telescope)"
+	computertype = "/obj/machinery/computer/telescope"
+/obj/item/circuitboard/announcement
+	name = "Circuit board (Announcement Computer)"
+	computertype = "/obj/machinery/computer/announcement"
 
 /obj/computerframe/meteorhit(obj/O as obj)
 	qdel(src)
 
-/obj/computerframe/attackby(obj/item/P as obj, mob/user as mob)
+/obj/computerframe/attackby(obj/item/P, mob/user)
+	var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/computerframe/proc/state_actions,\
+	list(P,user), P.icon, P.icon_state, null)
 	switch(state)
 		if (0)
 			if (iswrenchingtool(P))
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-				if (do_after(user, 2 SECONDS))
-					boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
-					src.anchored = 1
-					src.state = 1
+				actions.start(action_bar, user)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			if (isweldingtool(P) && P:try_weld(user,0,-1,0,1))
-				if (do_after(user, 2 SECONDS))
-					boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
-					var/obj/item/sheet/A = new /obj/item/sheet( src.loc )
-					A.amount = 5
-					if (src.material)
-						A.setMaterial(src.material)
-					else
-						var/datum/material/M = getMaterial("steel")
-						A.setMaterial(M)
-					qdel(src)
+				actions.start(action_bar, user)
 		if (1)
 			if (iswrenchingtool(P))
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-				if (do_after(user, 2 SECONDS))
-					boutput(user, "<span class='notice'>You unfasten the frame.</span>")
-					src.anchored = 0
-					src.state = 0
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				actions.start(action_bar, user)
 			if (istype(P, /obj/item/circuitboard) && !circuit)
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
 				src.icon_state = "1"
 				src.circuit = P
 				user.drop_item()
 				P.set_loc(src)
 			if (isscrewingtool(P) && circuit)
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You screw the circuit board into place.</span>")
 				src.state = 2
 				src.icon_state = "2"
 			if (ispryingtool(P) && circuit)
-				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You remove the circuit board.</span>")
 				src.state = 1
 				src.icon_state = "0"
@@ -184,25 +201,20 @@
 				src.circuit = null
 		if (2)
 			if (isscrewingtool(P) && circuit)
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You unfasten the circuit board.</span>")
 				src.state = 1
 				src.icon_state = "1"
 			if (istype(P, /obj/item/cable_coil))
-				if (P:amount >= 5)
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-					if (do_after(user, 2 SECONDS) && P) //Wire: fix for Cannot read null.amount (&& P)
-						//my_cable = P:take(5, src) // Haine: fix for Cannot execute null.set loc()
-						P:use(5)
-						boutput(user, "<span class='notice'>You add cables to the frame.</span>")
-						src.state = 3
-						src.icon_state = "3"
+				if (P.amount >= 5)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					actions.start(action_bar, user)
 				else
 					boutput(user, "<span class='alert'>You need at least five pieces of cable to wire the computer.</span>")
 
 		if (3)
 			if (issnippingtool(P))
-				playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You remove the cables.</span>")
 				src.state = 2
 				src.icon_state = "2"
@@ -210,36 +222,70 @@
 				//my_cable = null
 				var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
 				C.amount = 5
-
+				C.UpdateIcon()
 			if (istype(P, /obj/item/sheet))
 				var/obj/item/sheet/S = P
 				if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
 					if (S.amount >= 2)
-						playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-						if (do_after(user, 2 SECONDS))
-							S.change_stack_amount(-2)
-							boutput(user, "<span class='notice'>You put in the glass panel.</span>")
-							src.state = 4
-							src.icon_state = "4"
+						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+						actions.start(action_bar, user)
 					else
 						boutput(user, "<span class='alert'>You need at least two sheets of glass to install the screen.</span>")
 				else
 					boutput(user, "<span class='alert'>This is the wrong kind of material. You'll need a type of glass or crystal.</span>")
 		if (4)
 			if (ispryingtool(P))
-				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You remove the glass panel.</span>")
 				src.state = 3
 				src.icon_state = "3"
 				var/obj/item/sheet/glass/A = new /obj/item/sheet/glass( src.loc )
 				A.amount = 2
 			if (isscrewingtool(P))
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You connect the monitor.</span>")
-				var/B = new src.circuit.computertype ( src.loc )
-				if (circuit.powernet) B:powernet = circuit.powernet
-				if (circuit.id) B:id = circuit.id
-				if (circuit.records) B:records = circuit.records
-				if (circuit.frequency) B:frequency = circuit.frequency
-				logTheThing("station", user, null, "assembles [B] [log_loc(B)]")
+				var/obj/machinery/computer/B = new src.circuit.computertype ( src.loc )
+				B.set_dir(src.dir)
+				if (circuit.id)
+					B.id = circuit.id
+				if (circuit.records)
+					B.records = circuit.records
+				if (circuit.frequency)
+					B.frequency = circuit.frequency
+				logTheThing(LOG_STATION, user, "assembles [B] [log_loc(B)]")
 				qdel(src)
+
+/obj/computerframe/proc/state_actions(obj/item/P, mob/user)
+	switch(state)
+		if(0)
+			if(user.equipped(P) && iswrenchingtool(P))
+				boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
+				src.anchored = 1
+				src.state = 1
+			if(user.equipped(P) && isweldingtool(P))
+				boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
+				var/obj/item/sheet/A = new /obj/item/sheet( src.loc )
+				A.amount = 5
+				if (src.material)
+					A.setMaterial(src.material)
+				else
+					var/datum/material/M = getMaterial("steel")
+					A.setMaterial(M)
+				qdel(src)
+		if(1)
+			if(user.equipped(P) && iswrenchingtool(P))
+				boutput(user, "<span class='notice'>You unfasten the frame.</span>")
+				src.anchored = 0
+				src.state = 0
+		if(2)
+			if(user.equipped(P) && istype(P, /obj/item/cable_coil))
+				boutput(user, "<span class='notice'>You add cables to the frame.</span>")
+				P.change_stack_amount(-5)
+				src.state = 3
+				src.icon_state = "3"
+		if(3)
+			if(user.equipped(P) && istype(P, /obj/item/sheet))
+				boutput(user, "<span class='notice'>You put in the glass panel.</span>")
+				P.change_stack_amount(-2)
+				src.state = 4
+				src.icon_state = "4"

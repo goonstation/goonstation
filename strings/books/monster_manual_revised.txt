@@ -1,0 +1,79 @@
+<h3> Creature Conspectus, Revised Edition</h3>
+<body>
+<h2>Note for the Game Master</h2>
+<p>This bestiary is written to be flexible. As such, feel free to consider the stats as pure guidelines. If you think a creature is too strong, feel free to lower its stats. Same applies vice versa. Certain details have been omitted, for example the saving throws listed in monster abilities are absent to allow the GM to tweak them at will. Vulnerabilities are also open to interpretation.
+<hr>
+<p>
+
+<b>Killer Tomato</b><br>
+Type : Plant<br>
+Size : Small<br>
+DC To Hit : 5<br>
+Resolve : 1<br>
+Damage per attack : 1 (Bite)<br>
+Vulnerability : Slashing / Blunt<br>
+<br>
+<b>Messy Death</b><br>
+<i>On death, the creature's body will splash its boiling inner fluids in a random direction, dealing one resolve damage.</i><br>
+<br>
+
+<b>Maneater plant</b><br>
+Type : Plant<br>
+Size : Medium<br>
+DC To Hit : 9<br>
+Resolve : 3<br>
+Damage per attack : 2 (Vine Whip / Bite)<br>
+Vulnerability : Fire<br>
+<br>
+<b>False Appearance</b><br>
+<i>While this plant remains motionless, it is indistinguishable from a normal shrub.</i>
+<br>
+<br>
+<b>Space Bear</b><br>
+Type : Beast<br>
+Size : Large<br>
+DC To Hit : 12<br>
+Resolve : 6<br>
+Damage per attack : 3 (Claw Swipe)<br>
+Vulnerability : Slashing<br>
+<br>
+<b>Ferocious Roar</b><br>
+<i>This creature lets out a deafening roar. Every target within close hearing range must roll a Constitution saving throw or be petrified and miss one turn.</i><br>
+<br>
+<b>Brullbar</b><br>
+Type : Beast<br>
+Size : Large<br>
+DC To Hit : 15<br>
+Resolve : 10<br>
+Damage Per Attack : 5 (Claw Swipe)<br>
+Vulnerability : Fire<br>
+<br>
+<b>Ferocious Roar</b><br>
+<i>This creature lets out a deafening roar. Every target within close hearing range must roll a Constitution saving throw or be petrified and miss one turn.</i><br>
+<br>
+<b>Zombie</b><br>
+Type : Undead<br>
+Size : Medium<br>
+DC To Hit : 10<br>
+Resolve : 4<br>
+Damage Per Attack : 1 (Flailing Punch)<br>
+Vulnerability : Holy<br>
+<br>
+<b>Zombie Bite</b><br>
+<i>The zombie lunges straight at you! When an undead latches onto its target, the target must make a Strength saving throw to throw the zombie off. If the target fails, the zombie will bite into them, dealing 1 resolve and healing 1 resolve on the zombie</i><br>
+<br>
+
+<b>Syndicate Agent</b><br>
+Type : Human<br>
+Size : Medium<br>
+DC To Hit : 15<br>
+Resolve : 15<br>
+Damage per attack : 5 (Revolver Fire)<br>
+Vulnerability : Blunt <br>
+<br>
+<b>Microbomb Implant</b><br>
+<i>On death, the creature will explode, damaging anyone in range for 5 resolve.</i>
+<br>
+
+</p>
+</body>

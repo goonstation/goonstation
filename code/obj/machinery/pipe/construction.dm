@@ -24,11 +24,11 @@ Buildable meters
 /obj/item/weapon/pipe/proc/update()
 	var/list/nlist = list("pipe", "bent pipe", "h/e pipe", "bent h/e pipe", "connector", "manifold", "junction", "vent", "valve", "pump", "filter")
 	name = nlist[pipe_type+1] + " fitting"
-	updateicon()
+	UpdateIcon()
 
 //update the icon of the item
 
-/obj/item/weapon/pipe/proc/updateicon()
+/obj/item/weapon/pipe/UpdateIcon()
 
 	var/list/islist = list("straight", "bend", "he-straight", "he-bend", "connector", "manifold", "junction", "vent", "valve", "pump", "filter")
 
@@ -44,8 +44,8 @@ Buildable meters
 
 /obj/item/weapon/pipe/hide(var/i)
 
-	invisibility = i ? 101 : 0		// make hidden pipe items invisible
-	updateicon()
+	invisibility = i ? INVIS_ALWAYS : INVIS_NONE		// make hidden pipe items invisible
+	UpdateIcon()
 
 
 //called when a turf is attacked with a pipe item
@@ -101,7 +101,7 @@ Buildable meters
 
 	return 0
 
-/obj/item/weapon/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/item/weapon/pipe/attackby(var/obj/item/weapon/W, var/mob/user)
 	if(ispryingtool(W))
 		if(!anchored)
 			switch(pipe_type)
@@ -160,7 +160,7 @@ Buildable meters
 				if( (M.p_dir & pipedir) || (M.h_dir & pipedir) )	// matches at least one direction on either type of pipe
 					boutput(user, "There is already a pipe at that location.")
 					return
-		playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 
 		// no conflicts found
 
@@ -401,11 +401,11 @@ Buildable meters
 	flags = TABLEPASS|FPRINT
 	w_class = W_CLASS_BULKY
 
-/obj/item/weapon/pipe_meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/item/weapon/pipe_meter/attackby(var/obj/item/weapon/W, var/mob/user)
 	if (iswrenchingtool(W))
 		if(locate(/obj/machinery/pipes, src.loc))
 			new/obj/machinery/meter( src.loc )
-			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			boutput(user, "You have fastened the meter to the pipe")
 			qdel(src)
 		else
@@ -431,7 +431,7 @@ Buildable meters
 	if(!isturf(user.loc))
 		return
 
-	if(get_dist(F,user) > 1)
+	if(BOUNDS_DIST(F, user) > 0)
 		boutput(user, "You can't place the control on from this distance.")
 		return
 
@@ -475,5 +475,5 @@ Buildable meters
 
 		FC.control = src.control
 		FC.add_fingerprint(user)
-		FC.updateicon()
+		FC.UpdateIcon()
 		qdel(src)

@@ -96,7 +96,7 @@
 			tally -= src.propulsion.speed
 		return tally
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(isweldingtool(W))
 			if (user.a_intent == INTENT_HARM)
 				if (W:try_weld(user,0,-1,0,0))
@@ -113,7 +113,7 @@
 					boutput(user, "<span class='alert'>You need to use wire to fix the cabling first.</span>")
 					return
 				if(W:try_weld(user, 1))
-					src.health = max(1,min(src.health + 10,src.health_max))
+					src.health = clamp(src.health + 10, 1, src.health_max)
 					user.visible_message("<b>[user]</b> uses [W] to repair some of [src]'s damage.")
 					if (src.health == src.health_max)
 						boutput(user, "<span class='notice'><b>[src] looks fully repaired!</b></span>")
@@ -127,9 +127,9 @@
 				boutput(user, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
 				return
 			C.use(1)
-			src.health = max(1,min(src.health + 10,src.health_max))
+			src.health = clamp(src.health + 10, 1, src.health_max)
 			user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if (src.health >= 50)
 				boutput(user, "<span class='notice'>The wiring is fully repaired. Now you need to weld the external plating.</span>")
 
@@ -141,7 +141,7 @@
 		if (!isnum(amount))
 			return
 
-		src.health = max(0,min(src.health - amount,100))
+		src.health = clamp(src.health - amount, 0, 100)
 
 		if (amount > 0)
 			playsound(src.loc, src.sound_damaged, 50, 2)
@@ -170,7 +170,7 @@
 			if (src.active_tool && isitem(src.active_tool))
 				var/obj/item/I = src.active_tool
 				I.dropped(src) // Handle light datums and the like.
-			switchto = max(1,min(switchto,5))
+			switchto = clamp(switchto, 1, 5)
 			active_tool = equipment_slots[switchto]
 			if (isitem(src.active_tool))
 				var/obj/item/I2 = src.active_tool
@@ -184,7 +184,7 @@
 		if (use_delay && world.time < src.next_click)
 			return src.next_click - world.time
 
-		if (get_dist(src, target) > 0)
+		if (GET_DIST(src, target) > 0)
 			set_dir(get_dir(src, target))
 
 		var/reach = can_reach(target, src)
@@ -192,17 +192,17 @@
 			if (use_delay)
 				src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 
-			target.attackby(equipped, src)
+			target.Attackby(equipped, src)
 			if (equipped)
-				equipped.afterattack(target, src, reach)
+				equipped.AfterAttack(target, src, reach)
 
 			if (src.lastattacked == target && use_delay) //If lastattacked was set, this must be a combat action!! Use combat click delay.
 				src.next_click = world.time + (equipped ? max(equipped.click_delay,src.combat_click_delay) : src.combat_click_delay)
 				src.lastattacked = null
 
-	Bump(atom/movable/AM as mob|obj, yes)
-		SPAWN_DBG( 0 )
-			if ((!( yes ) || src.now_pushing))
+	bump(atom/movable/AM as mob|obj)
+		SPAWN( 0 )
+			if (src.now_pushing)
 				return
 			..()
 			if (!istype(AM, /atom/movable))
@@ -338,7 +338,7 @@
 			user.drop_item()
 			item_used.set_loc(src)
 
-		icon_state = "frame-" + max(0,min(change_to,6))
+		icon_state = "frame-" + clamp(change_to, 0, 6)
 		overlays = list()
 		if (part_propulsion?.drone_overlay)
 			overlays += part_propulsion.drone_overlay
@@ -361,7 +361,7 @@
 			if(6)
 				. += "It looks almost finished, all that's left to add is extra optional components.\nWrench it together to activate it, or remove all parts and the power cell to deconstruct it."
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		switch(construct_stage)
 			if(3)
 				user.put_in_hand_or_drop(cable_type)
@@ -382,7 +382,7 @@
 			else
 				boutput(user, "You can't figure out what to do with it. Maybe a closer examination is in order.")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(isweldingtool(W))
 			if(W:try_weld(user, 1))
 				switch(construct_stage)
@@ -443,7 +443,8 @@
 		else if(istype(W, /obj/item/cable_coil) && construct_stage == 2)
 			var/obj/item/cable_coil/C = W
 			src.visible_message("<b>[user]</b> adds [C] to [src].")
-			cable_type = C.take(1, src)
+			cable_type = C.split_stack(1)
+			cable_type.set_loc(src)
 			change_stage(3)
 
 		else if(istype(W, /obj/item/device/radio) && construct_stage == 3)

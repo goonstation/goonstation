@@ -14,7 +14,7 @@
 	list(/mob/living/critter/changeling/eyespider,/mob/living/critter/changeling/buttcrab),\
 	list(/mob/living/critter/small_animal/frog/weak),\
 	list(/mob/living/critter/small_animal/cockroach/robo/weak),\
-	list(/mob/living/critter/bot/cleanbot),)
+	list(/mob/living/critter/robotic/bot/cleanbot, /mob/living/critter/robotic/bot/firebot),)
 
 	admin_call(var/source)
 		if (..())
@@ -59,21 +59,25 @@
 		if (candidates.len)
 			var/list/EV = list()
 
-			EV += landmarks[LANDMARK_PESTSTART]
-			EV += landmarks[LANDMARK_MONKEY]
-			EV += landmarks[LANDMARK_BLOBSTART]
-			EV += landmarks[LANDMARK_KUDZUSTART]
+			if (length(landmarks[LANDMARK_PESTSTART]))
+				EV += landmarks[LANDMARK_PESTSTART]
+			if (length(landmarks[LANDMARK_MONKEY]))
+				EV += landmarks[LANDMARK_MONKEY]
+			if (length(landmarks[LANDMARK_BLOBSTART]))
+				EV += landmarks[LANDMARK_BLOBSTART]
+			if (length(landmarks[LANDMARK_KUDZUSTART]))
+				EV += landmarks[LANDMARK_KUDZUSTART]
 			EV += job_start_locations["Clown"]
 
 			if(!EV.len)
 				EV += landmarks[LANDMARK_LATEJOIN]
 				if (!EV.len)
-					message_admins("Pests event couldn't find a pest landmark!")
+					message_admins("Pests event couldn't find any valid landmarks!")
+					logTheThing(LOG_DEBUG, null, "Failed to find any valid landmarks for a Pests event!")
 					cleanup_event()
 					return
 
 			var/atom/pestlandmark = pick(EV)
-
 			var/list/select = list()
 			if (src.pest_type) //customized
 				select += src.pest_type
@@ -100,7 +104,7 @@
 			pestlandmark.visible_message("A group of pests emerge from their hidey-hole!")
 
 			if (src.num_pests >= 5)
-				command_alert("A large number of pests have been detected onboard.", "Pest invasion")
+				command_alert("A large number of pests have been detected onboard.", "Pest invasion", alert_origin = ALERT_STATION)
 		cleanup_event()
 
 	proc/cleanup_event()

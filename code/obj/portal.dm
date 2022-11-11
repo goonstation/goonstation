@@ -5,10 +5,10 @@
 	density = 1
 	var/failchance = 5
 	var/obj/item/target = null
-	anchored = 1.0
+	anchored = 1
 	var/portal_lums = 2
 	var/datum/light/light
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 /obj/portal/New()
 	..()
@@ -17,48 +17,27 @@
 	light.set_brightness(portal_lums / 6)
 	light.attach(src)
 	light.enable()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		animate_portal_appear(src)
 		playsound(src.loc, "warp", 50, 1, 0.1, 0.7)
 
 /obj/portal/Bumped(mob/M as mob|obj)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		src.teleport(M)
 		return
 	return
 
-/obj/portal/HasEntered(AM as mob|obj)
-	SPAWN_DBG(0)
+/obj/portal/Crossed(atom/movable/AM as mob|obj)
+	..()
+	SPAWN(0)
 		src.teleport(AM)
-		return
-	return
 
-/obj/portal/attack_hand(mob/M as mob)
-	SPAWN_DBG(0)
+/obj/portal/attack_hand(mob/M)
+	SPAWN(0)
 		src.teleport(M)
-		return
-	return
 
 /obj/portal/disposing()
 	target = null
-	..()
-
-/obj/portal/pooled(var/poolname)
-	..()
-	name = initial(name)
-	icon = initial(icon)
-	icon_state = initial(icon_state)
-	density = initial(density)
-	failchance = initial(failchance)
-	anchored = initial(anchored)
-
-/obj/portal/unpooled(var/poolname)
-	portal_lums = initial(portal_lums)
-	light.set_brightness(portal_lums / 3)
-	light.enable()
-	SPAWN_DBG(0)
-		animate_portal_appear(src)
-		playsound(src.loc, "warp", 50, 1, 0.1, 0.7)
 	..()
 
 /obj/portal/proc/teleport(atom/movable/M as mob|obj)
@@ -70,7 +49,7 @@
 		return
 	if (!src.target)
 		return
-	if (istype(M, /mob/dead/aieye))
+	if (isAIeye(M))
 		return
 	if (istype(M, /atom/movable))
 		animate_portal_tele(src)
@@ -88,10 +67,13 @@
 					M.throw_at(destination, 8, 2)
 
 					return
-
+				if(ismob(M))
+					logTheThing(LOG_STATION, M, "entered [src] at [log_loc(src)] and teleported to [src.target] at [log_loc(destination)]")
 				do_teleport(M, destination, 1)
 			else return
 		else
+			if(ismob(M))
+				logTheThing(LOG_STATION, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(src.target)]")
 			do_teleport(M, src.target, 1) ///You will appear adjacent to the beacon
 
 /obj/portal/wormhole
@@ -102,32 +84,37 @@
 	density = 1
 	failchance = 0
 
+	Bumped(mob/M as mob|obj)
+		//spatial interdictor: when something would enter a wormhole, it doesn't
+		//consumes 400 units of charge per wormhole interdicted
+		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
+			if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(400))
+				icon = 'icons/effects/effects.dmi'
+				icon_state = "sparks_attack"
+				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
+				density = 0
+				return
+		..()
+
 /obj/portal/afterlife
 	desc = "Enter this to return to your ghostly form"
 
-	New()
-		..()
-		unpooled()
-
 	Bumped(mob/M as mob|obj)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			M.ghostize()
 			qdel(src)
 			return
 		return
 
-	HasEntered(AM as mob|obj)
-		SPAWN_DBG(0)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
+		SPAWN(0)
 			if(istype(AM,/mob))
 				var/mob/M = AM
 				M.ghostize()
 			qdel(src)
-			return
-		return
 
-	attack_hand(mob/M as mob)
-		SPAWN_DBG(0)
+	attack_hand(mob/M)
+		SPAWN(0)
 			M.ghostize()
 			qdel(src)
-			return
-		return

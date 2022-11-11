@@ -33,7 +33,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "j" = (
-/obj/item/dagger,
+/obj/item/kitchen/utensil/knife,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "k" = (
@@ -58,7 +58,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "o" = (
-/obj/item/material_piece/gold,
+/obj/item/stamped_bullion,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "p" = (

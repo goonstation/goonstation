@@ -5,15 +5,19 @@
 	process()
 		//proc/handle_stuns_lying(datum/controller/process/mobs/parent)
 		var/lying_old = owner.lying
-		var/cant_lie = robot_owner || hivebot_owner || (human_owner && (human_owner.limbs && istype(human_owner.limbs.l_leg, /obj/item/parts/robot_parts/leg/left/treads) && istype(human_owner.limbs.r_leg, /obj/item/parts/robot_parts/leg/right/treads) && !locate(/obj/table, human_owner.loc) && !locate(/obj/machinery/optable, human_owner.loc)))
+		var/cant_lie = (owner.buckled && !istype(owner.buckled, /obj/stool/bed)) || robot_owner || hivebot_owner || istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell)|| (human_owner && (human_owner.limbs && (istype(human_owner.limbs.l_leg, /obj/item/parts/robot_parts/leg/left/treads) || istype(human_owner.limbs.r_leg, /obj/item/parts/robot_parts/leg/right/treads)) && !locate(/obj/table, human_owner.loc) && !locate(/obj/machinery/optable, human_owner.loc)))
 
 		var/list/statusList = owner.getStatusList()
 
-		var/must_lie = statusList["resting"] || (!cant_lie && human_owner && human_owner.limbs && !human_owner.limbs.l_leg && !human_owner.limbs.r_leg) //hasn't got a leg to stand on... haaa
+		var/must_lie = !cant_lie && (statusList["resting"] || istype(owner?.buckled, /obj/stool/bed))
 
 		if (!owner.can_lie)
 			cant_lie = 1
 			must_lie = 0
+
+		if(cant_lie && statusList["resting"])
+			owner.delStatus("resting")
+			statusList -= "resting"
 
 		if (!isdead(owner)) //Alive.
 			var/changeling_fakedeath = 0
@@ -68,8 +72,14 @@
 			owner.set_density(!owner.lying)
 
 			if (owner.lying && !owner.buckled)
-				if (human_owner)
-					playsound(owner.loc, 'sound/misc/body_thud.ogg', 40, 1, 0.3)
-				else
-					playsound(owner.loc, 'sound/misc/body_thud.ogg', 15, 1, 0.3)
+				var/turf/T = get_turf(owner)
+				var/sound_to_play = 'sound/misc/body_thud.ogg'
+				if (T?.active_liquid && T.active_liquid.my_depth_level <= 3)
+					T.active_liquid.Crossed(owner)
+					boutput(src, "<span class='notice'>You splash into [T.active_liquid].</span>")
+					sound_to_play = 'sound/misc/splash_2.ogg'
+				else if(T?.active_liquid)
+					sound_to_play = null
+				if(sound_to_play)
+					playsound(owner.loc, sound_to_play, human_owner ? 40 : 15, 1, 0.3)
 		..()

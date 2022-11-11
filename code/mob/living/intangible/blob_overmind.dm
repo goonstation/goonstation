@@ -12,7 +12,7 @@
 	use_stamina = 0
 	mob_flags = SPEECH_BLOB
 
-	var/datum/tutorial/blob/tutorial
+	var/datum/tutorial_base/blob/tutorial
 	var/attack_power = 1
 	var/bio_points = 0
 	var/bio_points_max = 1
@@ -39,6 +39,8 @@
 	var/upgrade_id = 1
 	var/nucleus_reflectivity = 0
 	var/image/nucleus_overlay
+	var/total_placed = 0
+	var/next_pity_point = 100
 
 	var/datum/blob_ability/shift_power = null
 	var/datum/blob_ability/ctrl_power = null
@@ -63,11 +65,13 @@
 
 	var/last_blob_life_tick = 0 //needed for mult to properly work for blob abilities
 
+	var/admin_override = FALSE //for sudo blobs
+
 	proc/start_tutorial()
 		if (tutorial)
 			return
 		tutorial = new(src)
-		if (tutorial.tutorial_area)
+		if (tutorial.initial_turf)
 			tutorial.Start()
 		else
 			boutput(src, "<span class='alert'>Could not start tutorial! Please try again later or call Wire.</span>")
@@ -80,9 +84,9 @@
 		src.add_ability(/datum/blob_ability/set_color)
 		src.add_ability(/datum/blob_ability/tutorial)
 		src.add_ability(/datum/blob_ability/help)
-		src.invisibility = 10
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-		src.see_invisible = 15
+		src.see_invisible = INVIS_SPOOKY
 		src.see_in_dark = SEE_DARK_FULL
 		my_material = copyMaterial(getMaterial("blob"))
 		my_material.color = "#ffffff"
@@ -96,19 +100,26 @@
 		src.nucleus_overlay.alpha = 0
 		src.nucleus_overlay.appearance_flags = RESET_COLOR
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while (src)
 				if (src.client)
 					update_cooldown_costs()
 				sleep(1 SECOND)
 
-	Move(NewLoc)
+	Move(atom/NewLoc)
 		if (tutorial)
 			if (!tutorial.PerformAction("move", NewLoc))
 				return 0
 		if (isturf(NewLoc))
 			if (istype(NewLoc, /turf/unsimulated/wall))
 				return 0
+		..()
+
+	set_loc(atom/newloc)
+		// Blobs can only move to turfs. Blobs shouldn't be moving off station Z UNLESS they're riding the escape shuttle or the game has ended (so they can spread to centcom)
+		// Letting them move off station Z causes Issues when blobs take the mining shuttle, sea elevator, etc
+		if (isturf(newloc) && newloc.z != Z_LEVEL_STATION && !tutorial && !istype(get_area(newloc), /area/shuttle/escape/transit) && global.current_state < GAME_STATE_FINISHED)
+			return
 		..()
 
 	Life(datum/controller/process/mobs/parent)
@@ -145,10 +156,10 @@
 
 			//maybe other debuffs here in the future
 
-			newBioPoints = clamp((src.bio_points + (base_gen_rate + genBonus - gen_rate_used) * mult), 0, src.bio_points_max) //these are rounded in point displays
+			newBioPoints = clamp((src.bio_points + (base_gen_rate + genBonus - gen_rate_used) * mult), 0, src.bio_points_max + (base_gen_rate + gen_rate_bonus - gen_rate_used) * (mult - 1)) //these are rounded in point displays
 
 		else
-			newBioPoints = clamp((src.bio_points + (base_gen_rate + gen_rate_bonus - gen_rate_used) * mult), 0, src.bio_points_max) //ditto above
+			newBioPoints = clamp((src.bio_points + (base_gen_rate + gen_rate_bonus - gen_rate_used) * mult), 0, src.bio_points_max + (base_gen_rate + gen_rate_bonus - gen_rate_used) * (mult - 1)) //ditto above
 
 		src.bio_points = newBioPoints
 
@@ -165,6 +176,11 @@
 			next_evo_point += initial(next_evo_point)
 			evo_points++
 			boutput(src, "<span class='notice'><b>You have expanded enough to earn one evo point! You will be granted another at size [next_evo_point]. Good luck!</b></span>")
+
+		if (total_placed >= next_pity_point)
+			next_pity_point += initial(next_pity_point)
+			evo_points++
+			boutput(src, "<span class='notice'><b>You have perfomed enough spreads to earn one evo point! You will be granted another after placing [next_pity_point] tiles. Good luck!</b></span>")
 
 		if (blobs.len >= next_extra_nucleus)
 			next_extra_nucleus += initial(next_extra_nucleus)
@@ -185,10 +201,7 @@
 		src.last_blob_life_tick = TIME
 
 	death()
-		//death was called but the player isnt playing this blob anymore
-		//OR they're in the process of transforming (e.g. gibbing)
-		if ((src.client && src.client.mob != src) || src.transforming)
-			return
+		. = ..()
 
 		//if within grace period, respawn
 		if (src.current_try < src.extra_tries_max && world.timeofday <= src.extra_try_timestamp)
@@ -204,7 +217,7 @@
 
 			boutput(src, "<span class='alert'><b>With no nuclei to bind it to your biomass, your consciousness slips away into nothingness...</b></span>")
 			src.ghostize()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				qdel(src)
 
 	Stat()
@@ -221,8 +234,10 @@
 			stat("Generation Rate:", "[base_gen_rate + gen_rate_bonus - gen_rate_used]/[base_gen_rate + gen_rate_bonus] BP")
 
 		stat("Blob Size:", blobs.len)
+		stat("Total spreads:", total_placed)
 		stat("Evo Points:", evo_points)
 		stat("Next Evo Point at size:", next_evo_point)
+		stat("Total spreads needed for additional point:", next_pity_point)
 		stat("Living nuclei:", nuclei.len)
 		stat("Unplaced extra nuclei:", extra_nuclei)
 		stat("Next Extra Nucleus at size:", next_extra_nucleus)
@@ -246,7 +261,7 @@
 			if (plane)
 				plane.alpha = 255
 
-	MouseDrop()
+	mouse_drop()
 		return
 
 	MouseDrop_T()
@@ -287,19 +302,12 @@
 			src.update_buttons()
 			return
 		else
-			if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && restricted_z_allowed(src, T)) || src.tutorial || (src.client && src.client.holder)))
-				if (src.tutorial)
-					if (!tutorial.PerformAction("clickmove", T))
-						return
-				src.set_loc(T)
-				return
-
-			if (T && isghostrestrictedz(T.z) && !restricted_z_allowed(src, T) && !(src.client && src.client.holder))
-				var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-				if (OS)
-					src.set_loc(OS)
-				else
-					src.z = 1
+			if(params["right"])
+				if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && restricted_z_allowed(src, T)) || src.tutorial || (src.client && src.client.holder)))
+					if (src.tutorial)
+						if (!tutorial.PerformAction("clickmove", T))
+							return
+					src.Move(T)
 
 	say_understands() return 1
 	can_use_hands()	return 0
@@ -322,6 +330,8 @@
 		src.gen_rate_used = 0
 		src.evo_points = 0
 		src.next_evo_point = initial(src.next_evo_point)
+		src.next_pity_point = initial(src.next_pity_point)
+		src.total_placed = 0
 		src.spread_upgrade = 0
 		src.spread_mitigation = 0
 		src.viewing_upgrades = 1
@@ -517,7 +527,7 @@
 
 	proc/BlobPointsBezierApproximation(var/t)
 		// t = number of tiles occupied by the blob
-		t = max(0, min(1000, t))
+		t = clamp(t, 0, 1000)
 		var/points
 
 		if (t < 514)
@@ -555,8 +565,7 @@
 				lipids -= Q
 		return bio_points + lipids.len * 4 >= amt
 
-	projCanHit(datum/projectile/P)
-		return 0
+
 
 	proc/setHat( var/obj/item/clothing/head/hat )
 		hat.pixel_y = 10
@@ -658,7 +667,7 @@
 					return
 				var/my_upgrade_id = user.upgrade_id
 				user.upgrading = my_upgrade_id
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					if (user.upgrading <= my_upgrade_id)
 						user.upgrading = 0
 					else

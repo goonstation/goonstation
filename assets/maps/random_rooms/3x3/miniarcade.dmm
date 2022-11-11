@@ -1,0 +1,39 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/carpet/arcade,
+/area/dmm_suite/clear_area)
+"j" = (
+/obj/machinery/computer/tetris,
+/turf/simulated/floor/carpet/arcade,
+/area/dmm_suite/clear_area)
+"s" = (
+/obj/machinery/computer/arcade,
+/turf/simulated/floor/carpet/arcade,
+/area/dmm_suite/clear_area)
+"N" = (
+/obj/machinery/light/small/floor/cool,
+/turf/simulated/floor/carpet/arcade,
+/area/dmm_suite/clear_area)
+"X" = (
+/obj/machinery/sim/vr_bed{
+	name = "VR simulation pod";
+	network = "arcadevr"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+X
+a
+j
+"}
+(2,1,1) = {"
+a
+N
+a
+"}
+(3,1,1) = {"
+X
+a
+s
+"}

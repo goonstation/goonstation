@@ -49,7 +49,7 @@
 			user.u_equip(W)
 			W.set_loc(src)
 			src.P = W
-			src.update_icon()
+			src.UpdateIcon()
 
 		else if (istype(W, /obj/item/cell))
 			if (src.CL)
@@ -66,8 +66,7 @@
 		src.updateUsrDialog()
 		return
 
-	proc/update_icon()
-
+	update_icon()
 		if (src.active)
 			src.UpdateOverlays(spin_sprite, "spin")
 			light.enable()
@@ -116,22 +115,23 @@
 
 			src.P = null
 			src.active = 0
-			src.update_icon()
+			src.UpdateIcon()
 		return
 
 	proc/eject_cell(var/mob/user as mob)
 		if (!src)
 			return
 		if (src.CL)
+			var/obj/item/cell/_CL = src.CL
 			src.CL.set_loc(get_turf(src))
 
 			if (istype(user))
-				user.put_in_hand_or_eject(src.CL) // try to eject it into the users hand, if we can
+				user.put_in_hand_or_eject(_CL) // try to eject it into the users hand, if we can
 
 			src.CL = null
 			if (src.mode == 2) // Generator doesn't need to shut down when in APC mode.
 				src.active = 0
-			src.update_icon()
+			src.UpdateIcon()
 		return
 
 	process()
@@ -141,24 +141,24 @@
 		if (src.active)
 			if (!src.anchored)
 				src.visible_message("<span class='alert'>[src]'s retention bolts fail, triggering an emergency shutdown!</span>")
-				playsound(src.loc, "sound/machines/buzz-two.ogg", 100, 0)
+				playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 				src.active = 0
-				src.update_icon()
+				src.UpdateIcon()
 				src.updateDialog()
 				return
 
 			if (!istype(src.loc, /turf/simulated/floor/))
 				src.visible_message("<span class='alert'>[src]'s retention bolts fail, triggering an emergency shutdown!</span>")
-				playsound(src.loc, "sound/machines/buzz-two.ogg", 100, 0)
+				playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 				src.anchored = 0 // It might have happened, I guess?
 				src.active = 0
-				src.update_icon()
+				src.UpdateIcon()
 				src.updateDialog()
 				return
 
 			if (src.check_tank(src.P) == 0)
 				src.visible_message("<span class='alert'>[src] runs out of fuel and shuts down! [src.P] is ejected!</span>")
-				playsound(src.loc, "sound/machines/buzz-two.ogg", 100, 0)
+				playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 				src.eject_tank(null)
 				src.updateDialog()
 				return
@@ -167,19 +167,19 @@
 				if (1)
 					if (!src.our_APC)
 						src.visible_message("<span class='alert'>[src] doesn't detect a local APC and shuts down!</span>")
-						playsound(src.loc, "sound/machines/buzz-two.ogg", 100, 0)
+						playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 						src.active = 0
 						src.our_APC = null
-						src.update_icon()
+						src.UpdateIcon()
 						src.updateDialog()
 						return
 					if (src.last_APC_check && world.time > src.last_APC_check + 50)
 						if (src.APC_check() != 1)
 							src.visible_message("<span class='alert'>[src] can't charge the local APC and shuts down!</span>")
-							playsound(src.loc, "sound/machines/buzz-two.ogg", 100, 0)
+							playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 							src.active = 0
 							src.our_APC = null
-							src.update_icon()
+							src.UpdateIcon()
 							src.updateDialog()
 							src.last_APC_check = world.time
 							return
@@ -200,10 +200,10 @@
 				if (2)
 					if (!src.CL)
 						src.visible_message("<span class='alert'>[src] doesn't have a cell to charge and shuts down!</span>")
-						playsound(src.loc, "sound/machines/buzz-two.ogg", 100, 0)
+						playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 						src.active = 0
 						src.CL = null
-						src.update_icon()
+						src.UpdateIcon()
 						src.updateDialog()
 						return
 
@@ -213,7 +213,7 @@
 						src.CL.charge = src.CL.maxcharge
 					if (src.CL.charge == src.CL.maxcharge)
 						src.visible_message("<span class='alert'>[src.CL] is fully charged. [src] ejects the cell and shuts down!</span>")
-						playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
+						playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
 						src.eject_cell(null)
 						src.updateDialog()
 						return
@@ -224,11 +224,11 @@
 
 		src.icon_state = "ggen[src.anchored]"
 
-		src.update_icon()
+		src.UpdateIcon()
 		src.updateDialog()
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_fingerprint(user)
 
 		src.add_dialog(user)
@@ -309,16 +309,16 @@
 				if (!istype(src.loc, /turf/simulated/floor/))
 					usr.show_text("You can't secure the generator here.", "red")
 					src.anchored = 0 // It might have happened, I guess?
-					src.update_icon()
+					src.UpdateIcon()
 					return
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if (src.anchored)
 					src.anchored = 0
-					src.update_icon()
+					src.UpdateIcon()
 					src.our_APC = null // It's just gonna cause trouble otherwise.
 				else
 					src.anchored = 1
-					src.update_icon()
+					src.UpdateIcon()
 				src.visible_message("<span class='alert'>[usr] [src.anchored ? "bolts" : "unbolts"] [src] [src.anchored ? "to" : "from"] the floor.</span>")
 			else
 				usr.show_text("Turn the generator off first!", "red")
@@ -356,3 +356,8 @@
 
 		src.updateUsrDialog()
 		return
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.CL)
+			src.CL = null

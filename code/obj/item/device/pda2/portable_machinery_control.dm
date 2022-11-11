@@ -51,7 +51,7 @@
 				return 0 // It's not a Port-a-Sci, okay.
 
 		var/turf/our_loc = get_turf(src.master)
-		if(istype(test_mob, /mob/dead/aieye))
+		if(isAIeye(test_mob))
 			our_loc = get_turf(test_mob)
 		if (our_loc.loc:teleport_blocked == 2) return 0
 
@@ -151,7 +151,6 @@
 
 				. += "Location: [get_area(P2)] (Home: [P2.homeloc ? "[get_area(P2.homeloc)]" : "N/A"])"
 
-				. += "<BR>\[<A href='byond://?src=\ref[src];op=summon'>Summon</A>\] "
 				. += "\[<A href='byond://?src=\ref[src];op=return'>Send to home turf</A>\]<BR>"
 				. += "<HR><A href='byond://?src=\ref[src];op=machinerylist'>Return to list</A>"
 
@@ -187,7 +186,7 @@
 						P3.locked = 1
 
 					if (P3.occupant)
-						logTheThing("station", usr, P3.occupant, "[P3.locked ? "locks" : "unlocks"] [P3.name] with [constructTarget(P3.occupant,"station")] inside at [log_loc(P3)].")
+						logTheThing(LOG_STATION, usr, "[P3.locked ? "locks" : "unlocks"] [P3.name] with [constructTarget(P3.occupant,"station")] inside at [log_loc(P3)].")
 
 					PDA.display_alert("<span style=\"color:blue\">The [src.machinery_name] is now [P3.locked ? "locked" : "unlocked"].</span>")
 
@@ -198,7 +197,7 @@
 				var/turf/our_loc = get_turf(PDA)
 				if (isAIeye(usr))
 					our_loc = get_turf(usr)
-					if (!(our_loc.cameras && length(our_loc.cameras)))
+					if (!(our_loc.camera_coverage_emitters && length(our_loc.camera_coverage_emitters)))
 						boutput(usr, "<span class='alert'>This area is not within your range of influence.</span>")
 						return
 
@@ -236,7 +235,9 @@
 							var/obj/storage/closet/port_a_sci/PS = P4
 							PS.on_teleport()
 
+						flick("[P4.icon_state]-tele", P4)
 						elecflash(P4)
+						logTheThing(LOG_STATION, usr, "teleports [P4] to [log_loc(our_loc)].")
 
 			if ("return")
 				var/obj/P5 = src.active
@@ -282,8 +283,9 @@
 						if (istype(P5, /obj/storage/closet/port_a_sci/))
 							var/obj/storage/closet/port_a_sci/PS2 = P5
 							PS2.on_teleport()
-
+						flick("[P5.icon_state]-tele", P5)
 						elecflash(P5)
+						logTheThing(LOG_STATION, usr, "teleports [P5] to its home turf [log_loc(dest_loc)].")
 
 		PDA.updateSelfDialog()
 		return

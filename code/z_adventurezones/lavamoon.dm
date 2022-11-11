@@ -83,6 +83,12 @@ var/list/iomoon_basement_sounds = list('sound/ambience/industrial/LavaPowerPlant
 var/list/iomoon_ancient_sounds = list('sound/ambience/industrial/AncientPowerPlant_Creaking1.ogg','sound/ambience/industrial/AncientPowerPlant_Creaking2.ogg','sound/ambience/industrial/AncientPowerPlant_Drone2.ogg')
 var/sound/iomoon_alarm_sound = null
 
+/turf/unsimulated/floor/logo_xg
+	name = "XIANG|GIESEL"
+	desc = "A floor sign with the logo for XIANG|GIESEL Advanced Power Systems, GmbH."
+	icon = 'icons/turf/adventure.dmi'
+	icon_state = "logo_xg1"
+
 //Areas
 /area/iomoon
 	name = "Lava Moon Surface"
@@ -91,101 +97,41 @@ var/sound/iomoon_alarm_sound = null
 	requires_power = 0
 	force_fullbright = 0
 	ambient_light = rgb(0.45 * 255, 0.2 * 255, 0.1 * 255)
-
 	sound_group = "iomoon"
+	sound_loop = 'sound/ambience/nature/Lavamoon_FireCrackling.ogg'
+	sound_loop_vol = 60
+	var/list/sfx_to_pick_from = null
 
-	var/radiation_level = 0.5 //Value to set irradiated to during the mini-blowout.
-	var/sound/ambientSound = 'sound/ambience/nature/Lavamoon_FireCrackling.ogg'
-	var/list/fxlist = null
-	var/list/soundSubscribers = null
-	var/use_alarm = 0
+	/// Value to set irradiated to during the mini-blowout.
+	var/radiation_level = 0.5
+	var/use_alarm = FALSE
 
+/area/iomoon/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	sfx_to_pick_from = iomoon_exterior_sounds
 
+	if (use_alarm && !iomoon_alarm_sound)
+		iomoon_alarm_sound = new/sound('sound/machines/lavamoon_alarm1.ogg', FALSE, FALSE, VOLUME_CHANNEL_AMBIENT, 60)
+		iomoon_alarm_sound.priority = 255
+		iomoon_alarm_sound.status = SOUND_UPDATE | SOUND_STREAM
 
-	New()
-		..()
-		fxlist = iomoon_exterior_sounds
-		if (ambientSound)
+/area/iomoon/disposing()
+	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	. = ..()
 
-			SPAWN_DBG(6 SECONDS)
-				var/sound/S = new/sound()
-				S.file = ambientSound
-				S.repeat = 0
-				S.wait = 0
-				S.channel = 123
-				S.volume = 60
-				S.priority = 255
-				S.status = SOUND_UPDATE
-				ambientSound = S
+/area/iomoon/area_process()
+	if(prob(20))
+		src.sound_fx_2 = pick(sfx_to_pick_from)
 
-				soundSubscribers = list()
-				process()
+		var/list/client/client_list = list()
+		for(var/mob/living/carbon/human/H in src)
+			if(H.client)
+				client_list += H.client
+				H.client.playAmbience(src, AMBIENCE_FX_2, 50)
 
-				if (use_alarm && !iomoon_alarm_sound)
-					iomoon_alarm_sound = new/sound()
-					iomoon_alarm_sound.file = 'sound/machines/lavamoon_alarm1.ogg'
-					iomoon_alarm_sound.repeat = 0
-					iomoon_alarm_sound.wait = 0
-					iomoon_alarm_sound.channel = 122
-					iomoon_alarm_sound.volume = 60
-					iomoon_alarm_sound.priority = 255
-					iomoon_alarm_sound.status = SOUND_UPDATE
-
-	Entered(atom/movable/Obj,atom/OldLoc)
-		. = ..()
-		if(ambientSound && ismob(Obj))
-			soundSubscribers |= Obj
-/*
-	Exited(atom/movable/Obj)
-		if(ambientSound && ismob(Obj))
-			if(Obj:client)
-//				ambientSound.status = SOUND_PAUSED | SOUND_UPDATE
-//				Obj << ambientSound
-			if (master && master != src)
-				master.soundSubscribers -= Obj
-			else if (!master || master == src)
-				src.soundSubscribers -= Obj
-*/
-	proc/process()
-		if (!soundSubscribers)
-			return
-
-		var/sound/S = null
-		var/sound_delay = 0
-
-
-		while(current_state < GAME_STATE_FINISHED)
-			sleep(6 SECONDS)
-
-			if(prob(10) && fxlist)
-				S = sound(file=pick(fxlist), volume=50)
-				sound_delay = rand(0, 50)
-			else
-				S = null
-				continue
-
-			for(var/mob/living/H in soundSubscribers)
-				var/area/mobArea = get_area(H)
-				if (!istype(mobArea) || mobArea.type != src.type)
-					soundSubscribers -= H
-					if (H.client)
-						ambientSound.status = SOUND_PAUSED | SOUND_UPDATE
-						ambientSound.volume = 0
-						H << ambientSound
-					continue
-
-				if(H.client)
-					ambientSound.status = SOUND_UPDATE
-					ambientSound.volume = 60
-					H << ambientSound
-					if(S)
-						SPAWN_DBG(sound_delay)
-							H << S
-
-					if (use_alarm && iomoon_blowout_state == 1)
-						H << iomoon_alarm_sound
-
-
+		if (use_alarm && iomoon_blowout_state == 1 && length(client_list))
+			playsound_global(client_list, iomoon_alarm_sound, 50, channel = VOLUME_CHANNEL_AMBIENT)
 
 /area/iomoon/base
 	name = "Power Plant"
@@ -194,23 +140,20 @@ var/sound/iomoon_alarm_sound = null
 	requires_power = 1
 	force_fullbright = 0
 	ambient_light = rgb(0.3 * 255, 0.3 * 255, 0.3 * 255)
-
-	ambientSound = 'sound/ambience/industrial/LavaPowerPlant_Rumbling1.ogg'
+	sound_loop = 'sound/ambience/industrial/LavaPowerPlant_Rumbling1.ogg'
 	use_alarm = 1
-
 	New()
-		..()
-		fxlist = iomoon_powerplant_sounds
+		. = ..()
+		sfx_to_pick_from = iomoon_powerplant_sounds
+
 
 /area/iomoon/base/underground
 	name = "Power Plant Tunnels"
-
-	ambientSound = 'sound/ambience/industrial/LavaPowerPlant_Rumbling2.ogg'
+	sound_loop = 'sound/ambience/industrial/LavaPowerPlant_Rumbling2.ogg'
 
 	New()
-		..()
-		fxlist = iomoon_basement_sounds
-
+		. = ..()
+		sfx_to_pick_from = iomoon_basement_sounds
 
 /area/iomoon/caves
 	name = "Magma Cavern"
@@ -218,12 +161,11 @@ var/sound/iomoon_alarm_sound = null
 	requires_power = 1
 	force_fullbright = 0
 	luminosity = 0
-
 	radiation_level = 0.75
 
 	New()
-		..()
-		fxlist = iomoon_exterior_sounds
+		. = ..()
+		sfx_to_pick_from = iomoon_exterior_sounds
 
 /area/iomoon/robot_ruins
 	name = "Strange Ruins"
@@ -233,20 +175,19 @@ var/sound/iomoon_alarm_sound = null
 	force_fullbright = 0
 	luminosity = 0
 	teleport_blocked = 1
-
 	radiation_level = 0.8
-	ambientSound = 'sound/ambience/industrial/AncientPowerPlant_Drone1.ogg'
+	sound_loop = 'sound/ambience/industrial/AncientPowerPlant_Drone1.ogg'
 
 	New()
-		..()
-		fxlist = iomoon_ancient_sounds
+		. = ..()
+		sfx_to_pick_from = iomoon_ancient_sounds
 
 /area/iomoon/robot_ruins/boss_chamber
 	name = "Central Chamber"
 	icon_state = "blue"
 	radiation_level = 1
+	sound_loop = 'sound/ambience/industrial/AncientPowerPlant_Creaking2.ogg'
 
-	ambientSound = 'sound/ambience/industrial/AncientPowerPlant_Creaking2.ogg'
 
 //Logs
 /obj/item/audio_tape/iomoon_00
@@ -447,7 +388,7 @@ var/sound/iomoon_alarm_sound = null
 		var/datum/computer/file/record/testR = new
 		testR.name = "motd"
 		testR.fields += "Welcome to DWAINE System VI!"
-		testR.fields += "This System Licensed to Xiang-Geisel Advanced Power Systems"
+		testR.fields += "This System Licensed to XIANG|GIESEL Advanced Power Systems"
 		newfolder.add_file( testR )
 
 		newfolder.add_file( new /datum/computer/file/record/dwaine_help(src) )
@@ -497,7 +438,7 @@ var/sound/iomoon_alarm_sound = null
 			"",
 			"Again, we apologize for the wait.  Please bear with us.",
 			"Johann Eisenhauer",
-			"Xiang-Giesel Advanced Power Systems")
+			"XIANG|GIESEL Advanced Power Systems")
 
 	rad_advisory
 		New()
@@ -508,7 +449,7 @@ var/sound/iomoon_alarm_sound = null
 			"GENERIC@XG5",
 			"HIGH",
 			"AUTOMATED ALERT",
-			"This is an automated alert message sent as part of the XIANG-GEISEL",
+			"This is an automated alert message sent as part of the XIANG|GIESEL",
 			"AUTOMATED HAZARD WARNING SYSTEM. This message has been sent due to",
 			"the detection of a critical safety hazard by plant sensors.",
 			"",
@@ -576,7 +517,7 @@ var/sound/iomoon_alarm_sound = null
 			src.task = "thinking"
 			src.attacking = 0
 			return
-		SPAWN_DBG(3.5 SECONDS)
+		SPAWN(3.5 SECONDS)
 			src.attacking = 0
 
 	ChaseAttack(mob/M)
@@ -627,7 +568,7 @@ var/sound/iomoon_alarm_sound = null
 	CritterDeath()
 		if (!src.alive) return
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			elecflash(src,power = 2)
 			qdel(src)
 
@@ -646,7 +587,7 @@ var/sound/iomoon_alarm_sound = null
 
 	CritterAttack(mob/M)
 		src.attacking = 1
-		SPAWN_DBG(3.5 SECONDS)
+		SPAWN(3.5 SECONDS)
 			src.attacking = 0
 
 		var/atom/last = src
@@ -654,7 +595,7 @@ var/sound/iomoon_alarm_sound = null
 
 		var/list/dummies = new/list()
 
-		playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)
+		playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
 
 		if(isturf(M))
 			target_r = new/obj/elec_trg_dummy(M)
@@ -667,10 +608,10 @@ var/sound/iomoon_alarm_sound = null
 			var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 			for(var/obj/O in affected)
-				SPAWN_DBG(0.6 SECONDS) pool(O)
+				SPAWN(0.6 SECONDS) qdel(O)
 
 			if(isliving(target_r)) //Probably unsafe.
-				playsound(target_r:loc, "sound/effects/electric_shock.ogg", 50, 1)
+				playsound(target_r:loc, 'sound/effects/electric_shock.ogg', 50, 1)
 				target_r:shock(src, 15000, "chest", 1, 1)
 				break
 
@@ -739,6 +680,46 @@ var/sound/iomoon_alarm_sound = null
 		..()
 		BLOCK_SETUP(BLOCK_ROPE)
 
+
+/obj/item/paper/xg_tapes
+	name = "XIANG|GIESEL Onboarding Course"
+	desc = "A cover sheet meant to accompany a set of corporate training materials."
+	icon_state = "paper_burned"
+	sizex = 740
+	sizey = 1100
+
+	New()
+		..()
+		pixel_x = rand(-8, 8)
+		pixel_y = rand(-8, 8)
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/xg_tapes.png")]'></body></html>"
+
+/obj/item/radio_tape/adventure/xg
+	name = "XIANG|GIESEL Onboarding Tape 1"
+	desc = "A magnetic tape of recorded audio trainings. Some oaf left it outside of the storage case!"
+	audio = 'sound/radio_station/xg_onboarding1.ogg'
+
+/obj/item/radio_tape/adventure/xg2
+	name = "XIANG|GIESEL Onboarding Tape 2"
+	desc = "A magnetic tape of recorded audio trainings. Some oaf left it outside of the storage case!"
+	audio = 'sound/radio_station/xg_onboarding2.ogg'
+
+/obj/item/radio_tape/adventure/xg3
+	name = "XIANG|GIESEL Onboarding Tape 3"
+	desc = "A magnetic tape of recorded audio trainings. Some oaf left it outside of the storage case!"
+	audio = 'sound/radio_station/xg_onboarding3.ogg'
+
+/obj/item/radio_tape/adventure/xg4
+	name = "XIANG|GIESEL Onboarding Tape 4"
+	desc = "A magnetic tape of recorded audio trainings. Some oaf left it outside of the storage case!"
+	audio = 'sound/radio_station/xg_onboarding4.ogg'
+
+
+
+/obj/storage/crate/classcrate/xg
+	name = "shielded crate"
+	desc = "A hefty case for flux-sensitive materials."
+
 /obj/spawner/ancient_robot_artifact
 	name = "robot artifact spawn"
 	icon = 'icons/misc/mark.dmi'
@@ -746,7 +727,7 @@ var/sound/iomoon_alarm_sound = null
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			var/spawntype = pick(/obj/item/artifact/activator_key, /obj/item/gun/energy/artifact, /obj/item/ammo/power_cell/self_charging/artifact, /obj/item/artifact/forcewall_wand)
 			new spawntype(src.loc, "ancient")
 
@@ -772,6 +753,7 @@ var/sound/iomoon_alarm_sound = null
 			elecflash(user,radius = 2, power = 6)
 
 			H.unkillable = 1
+			H.setStatus("maxhealth-", null, -90)
 			H.gib(1)
 			qdel(src)
 
@@ -794,7 +776,6 @@ var/sound/iomoon_alarm_sound = null
 	icon_state = "radhood"
 	item_state = "radhood"
 
-//obj/closet/iomoon
 /obj/storage/closet/iomoon
 	name = "\improper Thermal Hazard Equipment"
 	desc = "A locker intended to carry protective clothing."
@@ -820,7 +801,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	var/list/iomoon_areas = get_areas(/area/iomoon)
 	if (!iomoon_areas.len)
 		iomoon_blowout_state = -1
-		logTheThing("debug", null, null, "IOMOON: Unable to locate areas for event_iomoon_blowout.")
+		logTheThing(LOG_DEBUG, null, "IOMOON: Unable to locate areas for event_iomoon_blowout.")
 		return
 
 	for (var/area/iomoon/adjustedArea in iomoon_areas)
@@ -829,7 +810,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		for(var/mob/N in adjustedArea)
 			N.flash(3 SECONDS)
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				shake_camera(N, 210, 16)
 	//todo: Alarms.  Not the dumb siren, I mean like the power plant's computer systems freaking the fuck out because oh jesus radiation
 
@@ -859,7 +840,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	var/list/iomoon_areas = get_areas(/area/iomoon)
 	if (!iomoon_areas.len)
 		iomoon_blowout_state = -1
-		logTheThing("debug", null, null, "IOMOON: Unable to locate areas for end_iomoon_blowout. Welp!")
+		logTheThing(LOG_DEBUG, null, "IOMOON: Unable to locate areas for end_iomoon_blowout. Welp!")
 		return
 
 	for (var/area/iomoon/adjustedArea in iomoon_areas)
@@ -894,8 +875,8 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		layer = OBJ_LAYER
 		var/active = 0
 
-		attack_hand(mob/user as mob)
-			if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1 || !user.can_use_hands())
+		attack_hand(mob/user)
+			if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0 || !user.can_use_hands())
 				return
 
 			user.visible_message("<span class='alert'>[user] presses [src].</span>", "<span class='alert'>You press [src].</span>")
@@ -907,7 +888,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			flick("boss_button_activate", src)
 			src.icon_state = "boss_button1"
 
-			playsound(src.loc,"sound/machines/lavamoon_alarm1.ogg", 70,0)
+			playsound(src.loc, 'sound/machines/lavamoon_alarm1.ogg', 70,0)
 			sleep(5 SECONDS)
 			event_iomoon_blowout()
 
@@ -928,14 +909,14 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			user.lastattacked = src
 			user.visible_message("<span class='alert'><b>[user] bonks [src] with [I]!</b></span>","<span class='alert'><b>You hit [src] with [I]!</b></span>")
 			if (iomoon_blowout_state == 0)
-				playsound(src.loc,"sound/machines/lavamoon_alarm1.ogg", 70,0)
+				playsound(src.loc, 'sound/machines/lavamoon_alarm1.ogg', 70,0)
 				event_iomoon_blowout()
 				return
 
 			if (I.hit_type == DAMAGE_BURN)
 				src.health -= I.force * 0.25
 			else
-				src.health -= I.force * 0.50
+				src.health -= I.force * 0.5
 
 
 			if (src.health <= 0 && active != -1)
@@ -953,7 +934,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			active = 1
 			src.set_dir(1)
 			src.visible_message("<span class='alert'>[src] begins to whirr ominously!</span>")
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				if (health <= 0)
 					set_dir(2)
 					return
@@ -1001,7 +982,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 /*
 		//DEBUG
 		default_click()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				activate()
 				sleep(20 SECONDS)
 				//world << zap_somebody(usr)
@@ -1013,7 +994,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			if (!tag)
 				tag = "IOMOON_BOSS"
 
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				//target_marker = image('icons/misc/worlds.dmi', "boss_marker")
 				//target_marker.layer = FLY_LAYER
 
@@ -1036,7 +1017,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			if (I.hit_type == DAMAGE_BURN)
 				src.health -= I.force * 0.25
 			else
-				src.health -= I.force * 0.50
+				src.health -= I.force * 0.5
 
 			user.visible_message("<span class='alert'><b>[user] bonks [src] with [I]!</b></span>","<span class='alert'><b>You hit [src] with [I]!</b></span>")
 			if (src.health <= 0)
@@ -1051,7 +1032,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					rotors.icon_state = "powercore_rotors_fast"
 
 
-		attack_hand(var/mob/user as mob)
+		attack_hand(var/mob/user)
 			if (src.active != 1)
 				return
 
@@ -1112,14 +1093,14 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 				active = 1
 				src.icon_state = "powercore_core_startup"
-				SPAWN_DBG(0.6 SECONDS)
+				SPAWN(0.6 SECONDS)
 					src.icon_state = "powercore_core"
 
 				if (rotors)
 					rotors.icon_state = "powercore_rotors_start"
-					SPAWN_DBG(2.4 SECONDS)
+					SPAWN(2.4 SECONDS)
 						rotors.icon_state = "powercore_rotors"
-					playsound(src.loc, "sound/machines/lavamoon_rotors_starting.ogg",50, 0)
+					playsound(src.loc, 'sound/machines/lavamoon_rotors_starting.ogg', 50, 0)
 					last_noise_time = ticker.round_elapsed_ticks
 					last_noise_length = 80
 
@@ -1128,10 +1109,10 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			process()
 				if (last_noise_time + last_noise_length < ticker.round_elapsed_ticks)
 					if (health <= 10)
-						playsound(src.loc, "sound/machines/lavamoon_rotors_fast.ogg", 50, 0)
+						playsound(src.loc, 'sound/machines/lavamoon_rotors_fast.ogg', 50, 0)
 						last_noise_length = 90
 					else
-						playsound(src.loc, "sound/machines/lavamoon_rotors_slow.ogg", 50, 0)
+						playsound(src.loc, 'sound/machines/lavamoon_rotors_slow.ogg', 50, 0)
 						last_noise_length = 70
 
 					last_noise_time = ticker.round_elapsed_ticks
@@ -1204,14 +1185,14 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					src.zapMarker = null
 
 				end_iomoon_blowout()
-				SPAWN_DBG(0)
-					var/datum/effects/system/spark_spread/E = unpool(/datum/effects/system/spark_spread)
+				SPAWN(0)
+					var/datum/effects/system/spark_spread/E = new /datum/effects/system/spark_spread
 					E.set_up(8,0, src.loc)
 					E.start()
 					src.icon_state = "powercore_core_die"
 					if (rotors)
 						rotors.icon_state = "powercore_rotors_stop"
-						playsound(src.loc, "sound/machines/lavamoon_rotors_stopping.ogg", 50, 1)
+						playsound(src.loc, 'sound/machines/lavamoon_rotors_stopping.ogg', 50, 1)
 					sleep (50)
 					if (rotors)
 						rotors.icon_state = "powercore_rotors_off"
@@ -1231,7 +1212,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					playsound(src.loc, "explosion", 75, 1)
 					sleep(2.5 SECONDS)
 					//qdel(rotors)
-					src.invisibility = 100
+					src.invisibility = INVIS_ALWAYS_ISH
 
 					var/obj/decal/exitMarker = locate("IOMOON_BOSSDEATH_EXIT")
 					if (istype(exitMarker))
@@ -1251,7 +1232,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				if (!zapMarker || zapMarker.loc == src)
 					return -1
 
-				playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)
+				playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
 
 				var/list/lineObjs
 				lineObjs = DrawLine(src, zapMarker, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
@@ -1263,9 +1244,9 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					if (isdead(poorSoul) && prob(25))
 						poorSoul.gib()
 
-				SPAWN_DBG(0.6 SECONDS)
+				SPAWN(0.6 SECONDS)
 					for (var/obj/O in lineObjs)
-						pool(O)
+						qdel(O)
 
 				state = STATE_RECHARGING
 				last_state_time = ticker.round_elapsed_ticks
@@ -1353,27 +1334,38 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		if (!id)
 			id = "generic"
 
+		src.update_id()
+
+	proc/update_id(new_id)
+		if(new_id)
+			src.id = new_id
 		src.tag = "ladder_[id][src.icon_state == "ladder" ? 0 : 1]"
 
-	attack_hand(mob/user as mob)
+	proc/get_other_ladder()
+		RETURN_TYPE(/atom)
+		. = locate("ladder_[id][src.icon_state == "ladder"]")
+
+	attack_hand(mob/user)
 		if (src.broken) return
-		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1)
+		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0)
 			return
+		src.climb(user)
 
-		var/obj/ladder/otherLadder = locate("ladder_[id][src.icon_state == "ladder"]")
-		if (!istype(otherLadder))
-			return
-
-		user.visible_message("", "You climb [src.icon_state == "ladder" ? "down" : "up"] the ladder.")
-		user.set_loc(get_turf(otherLadder))
-
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.broken) return
 		if (istype(W, /obj/item/grab))
 			if (!W:affecting) return
 			user.lastattacked = src
 			src.visible_message("<span class='alert'><b>[user] is trying to shove [W:affecting] [icon_state == "ladder"?"down":"up"] [src]!</b></span>")
 			return attack_hand(W:affecting)
+
+	proc/climb(mob/user as mob)
+		var/obj/ladder/otherLadder = src.get_other_ladder()
+		if (!istype(otherLadder))
+			boutput(user, "You try to climb [src.icon_state == "ladder" ? "down" : "up"] the ladder, but seriously fail! Perhaps there's nowhere to go?")
+			return
+		boutput(user, "You climb [src.icon_state == "ladder" ? "down" : "up"] the ladder.")
+		user.set_loc(get_turf(otherLadder))
 
 //Puzzle elements
 
@@ -1404,7 +1396,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.default_state = src.opened
 			active = 0
 
@@ -1420,10 +1412,10 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			flick("ancientdoor_open",src)
 			src.icon_state = "ancientdoor_opened"
 			set_density(0)
-			opacity = 0
+			set_opacity(0)
 			desc = "One hell of a foreboding door. It's not entirely clear how it opened, as the seams did not exist prior..."
 			src.name = "unsealed door"
-			SPAWN_DBG(1.3 SECONDS)
+			SPAWN(1.3 SECONDS)
 				changing_state = 0
 			return
 
@@ -1437,12 +1429,12 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			active = (opened != default_state)
 
 			set_density(1)
-			opacity = 1
+			set_opacity(1)
 			flick("ancientdoor_close",src)
 			src.icon_state = "ancientwall2"
 			desc = initial(src.desc)
 			src.name = initial(src.name)
-			SPAWN_DBG(1.3 SECONDS)
+			SPAWN(1.3 SECONDS)
 				changing_state = 0
 			return
 
@@ -1497,9 +1489,9 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				current.next.opened = src.opened
 				current = current.next
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (src.opened)
-				src.invisibility = 100
+				src.invisibility = INVIS_ALWAYS_ISH
 				src.set_density(0)
 				light.enable()
 			else
@@ -1520,12 +1512,12 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		changing_state = 1
 		active = (opened != default_state)
 
-		playsound(src.loc, "sound/effects/mag_iceburstimpact.ogg", 25, 1)
+		playsound(src.loc, 'sound/effects/mag_iceburstimpact.ogg', 25, 1)
 
 		set_density(0)
-		invisibility = 100
+		invisibility = INVIS_ALWAYS_ISH
 		light.disable()
-		SPAWN_DBG(1.3 SECONDS)
+		SPAWN(1.3 SECONDS)
 			changing_state = 0
 
 		if (next && next != src)
@@ -1541,16 +1533,20 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		changing_state = -1
 		active = (opened != default_state)
 
-		playsound(src.loc, "sound/effects/mag_iceburstimpact.ogg", 25, 1)
+		playsound(src.loc, 'sound/effects/mag_iceburstimpact.ogg', 25, 1)
+
+		for(var/mob/living/L in get_turf(src))
+			logTheThing(LOG_COMBAT, L, "was gibbed by [src] ([src.type]) at [log_loc(L)].")
+			L.gib()
 
 		set_density(1)
-		invisibility = 0
+		invisibility = INVIS_NONE
 
 		light.enable()
 		if (next && next != src)
 			next.close()
 
-		SPAWN_DBG(1.3 SECONDS)
+		SPAWN(1.3 SECONDS)
 			changing_state = 0
 
 /obj/iomoon_puzzle/floor_pad
@@ -1571,13 +1567,14 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		if (findtext(id, ";"))
 			id = params2list(id)
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for (var/atom/potential_activator in src.loc)
 				if (potential_activator.density)
 					Crossed(potential_activator)
 					break
 
 	Crossed(var/atom/crosser as mob|obj)
+		..()
 		if (!activator || !(activator in src.loc))
 			//if (crosser.density && !isshell(crosser))
 			if (!isitem(crosser) && !isshell(crosser))
@@ -1601,7 +1598,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				return 1
 
 			active = 1
-			playsound(src.loc, "sound/effects/stoneshift.ogg", 25, 1)
+			playsound(src.loc, 'sound/effects/stoneshift.ogg', 25, 1)
 			flick("ancient_floorpanel_activate",src)
 			src.icon_state = "ancient_floorpanel1"
 
@@ -1649,7 +1646,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 			active = 0
 
-			playsound(src.loc, "sound/effects/stoneshift.ogg", 25, 1)
+			playsound(src.loc, 'sound/effects/stoneshift.ogg', 25, 1)
 			flick("ancient_floorpanel_deactivate",src)
 			src.icon_state = "ancient_floorpanel0"
 
@@ -1750,7 +1747,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			if (icon_state == initial(icon_state) && I.keytype == src.locktype)
 				src.icon_state += "-active"
 				user.visible_message("<span class='alert'>[user] plugs [I] into [src]!</span>", "You pop [I] into [src].")
-				playsound(src.loc, "sound/effects/syringeproj.ogg", 50, 1)
+				playsound(src.loc, 'sound/effects/syringeproj.ogg', 50, 1)
 				user.drop_item()
 				I.dispose()
 				src.activate()
@@ -1804,8 +1801,8 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		if (findtext(id, ";"))
 			id = params2list(id)
 
-	attack_hand(mob/user as mob)
-		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1 || !user.can_use_hands())
+	attack_hand(mob/user)
+		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0 || !user.can_use_hands() || !ishuman(user))
 			return
 
 		user.visible_message("<span class='alert'>[user] presses [src].</span>", "<span class='alert'>You press [src].</span>")
@@ -1827,21 +1824,21 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		if (active)
 			return 1
 
-		playsound(src.loc, "sound/effects/syringeproj.ogg", 50, 1)
+		playsound(src.loc, 'sound/effects/syringeproj.ogg', 50, 1)
 		flick("ancient_button_activate",src)
 		src.icon_state = "ancient_button[++active]"
 
 		if (timer)
 			if (timer > 3)
 				src.icon_state = "ancient_button_timer_slow"
-				SPAWN_DBG ((timer - 3) * 10)
+				SPAWN((timer - 3) * 10)
 					src.icon_state = "ancient_button_timer_fast"
 					sleep(3 SECONDS)
 					src.deactivate()
 
 			else
 				src.icon_state = "ancient_button_timer_fast"
-				SPAWN_DBG (timer * 10)
+				SPAWN(timer * 10)
 					src.deactivate()
 
 		if (id)
@@ -1867,7 +1864,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		if (!active || latching)
 			return 1
 
-		playsound(src.loc, "sound/effects/syringeproj.ogg", 50, 1)
+		playsound(src.loc, 'sound/effects/syringeproj.ogg', 50, 1)
 		flick("ancient_button_deactivate", src)
 		src.icon_state = "ancient_button[--active]"
 

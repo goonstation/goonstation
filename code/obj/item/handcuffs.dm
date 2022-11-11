@@ -16,7 +16,7 @@
 	desc = "Adjustable metal rings joined by cable, made to be applied to a person in such a way that they are unable to use their hands. Difficult to remove from oneself."
 	custom_suicide = 1
 
-/obj/item/handcuffs/setMaterial(var/datum/material/mat1, appearance, setname)
+/obj/item/handcuffs/setMaterial(var/datum/material/mat1, var/appearance = 1, var/setname = 1, var/copy = 1, var/use_descriptors = 0)
 	..()
 	if (mat1.mat_id == "silver")
 		name = "silver handcuffs"
@@ -36,15 +36,15 @@
 		return 0
 	user.canmove = 0
 	user.visible_message("<span class='alert'><b>[user] jams one end of [src] into one of [his_or_her(user)] eye sockets, closing the loop through the other!")
-	playsound(get_turf(user), "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
+	playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 	user.emote("scream")
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		user.visible_message("<span class='alert'><b>[user] yanks the other end of [src] as hard as [he_or_she(user)] can, ripping [his_or_her(user)] skull clean out of [his_or_her(user)] head! [pick("Jesus christ!","Holy shit!","What the fuck!?","Oh my god!")]</b></span>")
 		var/obj/skull = user.organHolder.drop_organ("skull")
 		if (skull)
 			skull.set_loc(user.loc)
 		make_cleanable( /obj/decal/cleanable/blood,user.loc)
-		playsound(get_turf(user), "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
+		playsound(user, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 		health_update_queue |= user
 
 /* do not do this thing here:
@@ -54,30 +54,30 @@
 				O.show_message("<span class='alert'>You feel ill from watching that.</span>") // O is grossed out
 				for (var/mob/V in viewers(O, null)) // loop through all the mobs that can see O locally
 					V.show_message("<span class='alert'>[O.name] pukes all over \himself. Thanks, [user.name].</span>", 1) // tell them that O puked
-					playsound(O.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1) // play a sound where O is
+					playsound(O.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1) // play a sound where O is
 					make_cleanable( /obj/decal/cleanable/vomit,O.loc) // make a vomit decal where O
 					// these last two parts are within the for loop so that means that for EVERY MOB THAT SEES THIS, A SOUND AND DECAL ARE MADE
 */
 		for (var/mob/living/carbon/human/O in AIviewers(user, null))
 			if (O != user && prob(33))
-				O.visible_message("<span class='alert'>[O] pukes all over [him_or_her(O)]self. Thanks, [user].</span>",\
+				O.visible_message("<span class='alert'>[O] pukes all over [himself_or_herself(O)]. Thanks, [user].</span>",\
 				"<span class='alert'>You feel ill from watching that. Thanks, [user].</span>")
 				O.vomit()
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (user && skull)
 				var/obj/brain = user.organHolder.drop_organ("brain")
 				if (brain)
 					brain.set_loc(skull.loc)
 					brain.visible_message("<span class='alert'><b>[brain] falls out of the bottom of [skull].</b></span>")
 
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 				user.canmove = 1
 	return 1
 
-/obj/item/handcuffs/attack(mob/M as mob, mob/user as mob)
+/obj/item/handcuffs/attack(mob/M, mob/user)
 	if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))//!user.bioHolder.HasEffect("lost_left_arm") && !user.bioHolder.HasEffect("lost_right_arm"))
 		boutput(user, "<span class='alert'>Uh ... how do those things work?!</span>")
 		if (ishuman(user))
@@ -93,15 +93,18 @@
 			return
 
 		var/handslost = !istype(H.limbs.l_arm,/obj) + !istype(H.limbs.r_arm,/obj)
-		if (handslost)
-			boutput(user, "<span class='alert'>[H.name] [(handslost>1) ? "has no arms" : "only has one arm"], you can't handcuff them!</span>")
-			return
+		switch(handslost)
+			if (1)
+				boutput(user, "<span class='alert'>[H.name] only has one arm, you still try to handcuff [his_or_her(H)]!</span>")
+			if (2)
+				boutput(user, "<span class='alert'>[H.name] has no arms, you can't handcuff them!</span>")
+				return
 
 		if (H.hasStatus("handcuffed"))
 			boutput(user, "<span class='alert'>[H] is already handcuffed</span>")
 			return
 
-		playsound(src.loc, "sound/weapons/handcuffs.ogg", 30, 1, -2)
+		playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 		actions.start(new/datum/action/bar/icon/handcuffSet(H, src), user)
 		return
 
@@ -142,7 +145,7 @@
 
 /obj/item/handcuffs/tape_roll
 	name = "ducktape"
-	desc = "Our new top of the line high-tech handcuffs"
+	desc = "A convenient and illegal source of makeshift handcuffs."
 	icon_state = "ducktape"
 	flags = FPRINT | TABLEPASS | ONBELT
 	m_amt = 200

@@ -3,15 +3,13 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "40mmgatling"
 //How much of a punch this has, tends to be seconds/damage before any resist
-	power = 3
+	damage = 3
 //How much ammo this costs
 	cost = 1
 //How fast the power goes away
 	dissipation_rate = 1
 //How many tiles till it starts to lose power
 	dissipation_delay = 10
-//Kill/Stun ratio
-	ks_ratio = 1.0
 //name of the projectile setting, used when you change a guns setting
 	sname = "40mm"
 //file location for the sound you want it to play
@@ -29,6 +27,7 @@ radioactive - rips apart cells or some shit
 toxic - poisons
 */
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	//With what % do we hit mobs laying down
 	hit_ground_chance = 90
 	//Can we pass windows
@@ -37,7 +36,7 @@ toxic - poisons
 	color_red = 0.8
 	color_green = 0
 	color_blue = 0
-	icon_turf_hit = "bhole-large"
+	impact_image_state = "bhole-large"
 
 
 //Any special things when it hits shit?
@@ -56,4 +55,4 @@ toxic - poisons
 		..()
 		src.pixel_x = rand(-8,8)
 		src.pixel_y = rand(-8,8)
-		SPAWN_DBG(0.5 SECONDS)	qdel(src)
+		SPAWN(0.5 SECONDS)	qdel(src)

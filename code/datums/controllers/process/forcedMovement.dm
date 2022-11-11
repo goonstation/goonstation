@@ -12,29 +12,13 @@ proc/EndSpacePush(var/atom/movable/A)
 	spacePushList -= A
 	A.temp_flags &= ~SPACE_PUSHING
 
-datum/controller/process/fMove
+/// Controls forced movements
+/datum/controller/process/fMove
 	var/list/debugPushList = null //Remove this on release.
-
-	// mbc : replaced with IMMUNE_MANTA_PUSH flag. faster.
-	/*
-	var/list/pushBlacklist = list(
-		/obj/fluid,
-		/obj/fluid_spawner,
-		/obj/effect,
-		/obj/overlay,
-		/obj/particle,
-		/obj/torpedo,
-		/obj/torpedo_targeter,
-		/obj/machinery/vehicle/tank/minisub,
-		/obj/machinery/nuclearbomb,
-		/mob/living/intangible,
-		/mob/dead,
-		/mob/wraith,
-	)*/
 
 	setup()
 		name = "Forced movement"
-		schedule_interval = 5
+		schedule_interval = 0.5 SECONDS
 
 	doWork()
 		//space first :)
@@ -49,7 +33,7 @@ datum/controller/process/fMove
 
 			if (ismob(M))
 				var/mob/tmob = M
-				if(tmob.client && tmob.client.flying)
+				if(tmob.client && tmob.client.flying || (ismob(tmob) && HAS_ATOM_PROPERTY(tmob, PROP_MOB_NOCLIP)))
 					EndSpacePush(M)
 					continue
 
@@ -170,7 +154,7 @@ datum/controller/process/fMove
 
 				if(ismob(M))
 					var/mob/B = M
-					if(B.client && B.client.flying)
+					if(B.client && B.client.flying || (ismob(B) && HAS_ATOM_PROPERTY(B, PROP_MOB_NOCLIP)))
 						continue
 
 					if (ishuman(B))
@@ -184,7 +168,7 @@ datum/controller/process/fMove
 					if (isghostdrone(B) && MagneticTether)
 						continue
 
-					M.setStatus("slowed", 20, 20)
+					M.setStatus("slowed", 2 SECONDS, 20)
 
 				if(!step(M, SOUTH))
 					var/dirMod = pick(1, -1)

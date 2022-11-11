@@ -20,8 +20,8 @@
 	speechverb_ask = "queries"
 
 	setup_healths()
-		add_hh_robot(-100, 100, 1)
-		add_hh_robot_burn(-100, 100, 1)
+		add_hh_robot(100, 1)
+		add_hh_robot_burn(100, 1)
 		add_health_holder(/datum/healthHolder/toxin)
 		add_health_holder(/datum/healthHolder/suffocation)
 		var/datum/healthHolder/Brain = add_health_holder(/datum/healthHolder/brain)
@@ -38,13 +38,13 @@
 
 	death(var/gibbed)
 		if (!gibbed)
-			playsound(src.loc, "sound/effects/splat.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 			gibs(src.loc)
 			ghostize()
 			qdel(src)
 		else
-			playsound(src.loc, "sound/effects/splat.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 			..()
 
@@ -52,7 +52,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/screams/robot_scream.ogg" , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/screams/robot_scream.ogg' , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> screams!"
 		return null
 
@@ -65,6 +65,7 @@
 /mob/living/critter/mechmonstrosity/suffering
 
 	Life(datum/controller/process/mobs/parent)
+		. = ..()
 		var/speech_type = rand(1,50)
 
 		switch(speech_type)
@@ -83,7 +84,7 @@
 		switch (act)
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/killme.ogg", 70, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/killme.ogg', 70, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> begs for mercy!"
 
 /mob/living/critter/mechmonstrosity/medical
@@ -118,7 +119,7 @@
 		HH.can_hold_items = 0
 		HH.can_attack = 1
 
-	Bump(atom/movable/AM)
+	bump(atom/movable/AM)
 		if(smashes_shit)
 			if(isobj(AM))
 				if (istype(AM, /obj/critter) || istype(AM, /obj/machinery/vehicle))
@@ -141,10 +142,11 @@
 		..()
 
 	setup_healths()
-		add_hh_robot(-500, 500, 1)
-		add_hh_robot_burn(-500, 500, 1)
+		add_hh_robot(500, 1)
+		add_hh_robot_burn(500, 1)
 
 	death(var/gibbed)
+		. = ..()
 		src.visible_message("<b>[src]</b> collapses into broken components...")
 		if (src.loc)
 			robogibs(src.loc)
@@ -164,7 +166,7 @@
 		switch (act)
 			if ("laugh")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/mechmonstrositylaugh.ogg" , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/mechmonstrositylaugh.ogg' , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 /datum/targetable/critter/inject
 	name = "Inject Corrupted Nanites"
@@ -185,21 +187,21 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to inject there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to inject there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (get_dist(holder.owner, target) > 1)
-			boutput(holder.owner, __red("That is too far away to inject."))
+		if (BOUNDS_DIST(holder.owner, target) > 0)
+			boutput(holder.owner, "<span class='alert'>That is too far away to inject.</span>")
 			return 1
 		var/mob/MT = target
 		if (!MT.reagents)
-			boutput(holder.owner, __red("That does not hold reagents, apparently."))
+			boutput(holder.owner, "<span class='alert'>That does not hold reagents, apparently.</span>")
 		if (!stealthy)
 			playsound(holder.owner.loc, 'sound/items/hypo.ogg', 70,1)
-			holder.owner.visible_message(__red("<b>[holder.owner] injects [target]!</b>"))
+			holder.owner.visible_message("<span class='alert'><b>[holder.owner] injects [target]!</b></span>")
 		else
-			holder.owner.show_message(__blue("You stealthily inject [target]."))
+			holder.owner.show_message("<span class='notice'>You stealthily inject [target].</span>")
 		MT.reagents.add_reagent(venom_id, inject_amount)
 
 
@@ -222,15 +224,15 @@
 			return 1
 
 		if (M == target)
-			boutput(M, __red("Why would you want to stun yourself?"))
+			boutput(M, "<span class='alert'>Why would you want to stun yourself?</span>")
 			return 1
 
-		if (get_dist(M, target) > src.max_range)
-			boutput(M, __red("[target] is too far away."))
+		if (GET_DIST(M, target) > src.max_range)
+			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
 		if (target.stat == 2)
-			boutput(M, __red("It would be a waste of time to stun the dead."))
+			boutput(M, "<span class='alert'>It would be a waste of time to stun the dead.</span>")
 			return 1
 
 		M.visible_message("<span class='alert'><B>[M] glares angrily at [target]!</B></span>")
@@ -238,7 +240,7 @@
 		boutput(target, "<span class='alert'>You can feel a chill running down your spine as [M] glares at you with hatred burning in their  mechanical eyes.</span>")
 		target.emote("shiver")
 
-		logTheThing("combat", M, target, "uses glare on [constructTarget(target,"combat")] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses glare on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0
 
 /datum/action/bar/icon/mechanimateAbility
@@ -258,13 +260,13 @@
 	onUpdate()
 		..()
 
-		if(get_dist(owner, target) > 1 || target == null || owner == null || target == owner || !mechanimate || !mechanimate.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target == owner || !mechanimate || !mechanimate.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null || target == owner || !mechanimate || !mechanimate.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target == owner || !mechanimate || !mechanimate.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -274,11 +276,11 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(ownerMob && target && IN_RANGE(owner, target, 1) && mechanimate?.cooldowncheck())
-			logTheThing("combat", ownerMob, target, "injects [constructTarget(target,"combat")]. Crawler transformation")
+		if(ownerMob && target && (BOUNDS_DIST(owner, target) == 0) && mechanimate?.cooldowncheck())
+			logTheThing(LOG_COMBAT, ownerMob, "injects [constructTarget(target,"combat")]. Crawler transformation")
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span class='alert'><B>[owner] successfully injected [target]!</B></span>", 1)
-			playsound(get_turf(ownerMob), "sound/items/hypo.ogg", 80, 0)
+			playsound(ownerMob, 'sound/items/hypo.ogg', 80, 0)
 
 			var/obj/critter/mechmonstrositycrawler/FUCK = new /obj/critter/mechmonstrositycrawler(get_turf(target))
 			FUCK.CustomizeMechMon(target.real_name, ismonkey(target))
@@ -314,11 +316,11 @@
 			return 1
 
 		if (M == target)
-			boutput(M, __red("You can't do that to yourself."))
+			boutput(M, "<span class='alert'>You can't do that to yourself.</span>")
 			return 1
 
-		if (get_dist(M, target) > src.max_range)
-			boutput(M, __red("[target] is too far away."))
+		if (GET_DIST(M, target) > src.max_range)
+			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 		holder.owner.say("Transformation protocol engaged. Please stand clear of the recipient.")
 		actions.start(new/datum/action/bar/icon/mechanimateAbility(target, src), holder.owner)
@@ -344,11 +346,11 @@
 			return 1
 
 		if (M == target)
-			boutput(M, __red("Why would you want to dissect yourself?"))
+			boutput(M, "<span class='alert'>Why would you want to dissect yourself?</span>")
 			return 1
 
-		if (get_dist(M, target) > src.max_range)
-			boutput(M, __red("[target] is too far away."))
+		if (GET_DIST(M, target) > src.max_range)
+			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
 		M.visible_message("<span class='alert'><B>With their double saw whirling, [M] swiftly severs all [target]'s limbs!</B></span>")
@@ -359,7 +361,7 @@
 		playsound(M.loc, 'sound/effects/sawhit.ogg', 90,1)
 		boutput(target, "<span class='alert'>All of your limbs were severed by [M]!</span>")
 
-		logTheThing("combat", M, target, "uses dissect on [constructTarget(target,"combat")] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses dissect on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0
 
 /datum/projectile/syringefilled
@@ -368,9 +370,8 @@
 	icon_state = "syringeproj"
 	dissipation_rate = 1
 	dissipation_delay = 7
-	power = 1
+	damage = 1
 	hit_ground_chance = 10
-	ks_ratio = 1.0
 	shot_sound = 'sound/effects/syringeproj.ogg'
 	var/venom_id = "corruptnanites"
 	var/inject_amount = 15
@@ -449,11 +450,7 @@
 
 	New()
 		..()
-		playsound(src.loc, "sound/effects/glitchy1.ogg", 50, 0)
-
-	Move()
-		playsound(src.loc, "sound/machines/glitch4.ogg", 50, 0)
-		. = ..()
+		playsound(src.loc, 'sound/effects/glitchy1.ogg', 50, 0)
 
 	seek_target()
 
@@ -473,7 +470,7 @@
 			src.target = Cc
 			src.oldtarget_name = Cc.name
 			src.visible_message("<span class='combat'><b>[src]</b> crawls towards [Cc.name]!</span>")
-			playsound(src.loc, "sound/effects/glitchy1.ogg", 50, 0)
+			playsound(src.loc, 'sound/effects/glitchy1.ogg', 50, 0)
 			src.task = "chasing"
 			return
 
@@ -502,7 +499,7 @@
 		src.attacking = 1
 		if(!M.stat)
 			M.visible_message("<span class='combat'><B>[src]</B> scratches [src.target] mercilessly!</span>")
-			playsound(src.loc, "sound/impact_sounds/Blade_Small.ogg", 50, 1, -1)
+			playsound(src.loc, 'sound/impact_sounds/Blade_Small.ogg', 50, 1, -1)
 			if(prob(10)) // lowered probability slightly
 				M.visible_message("<span class='combat'><B>[M]</B> staggers!</span>")
 				M.changeStatus("stunned", 2 SECONDS)
@@ -513,7 +510,7 @@
 			playsound(src.loc, "punch", 30, 1, -2)
 			random_brute_damage(M, rand(10,15),1)
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.attacking = 0
 
 	CritterDeath(mob/M)
@@ -521,7 +518,7 @@
 		..()
 		if (rand(100) <= revivalChance)
 			src.revivalChance -= revivalDecrement
-			SPAWN_DBG(rand(400,800))
+			SPAWN(rand(400,800))
 				src.alive = 1
 				src.set_density(1)
 				src.health = initial(src.health)
@@ -565,7 +562,7 @@
 		changeIcon()
 		..()
 
-	Bump(atom/O)
+	bump(atom/O)
 		. = ..()
 		changeIcon(0)
 		return .

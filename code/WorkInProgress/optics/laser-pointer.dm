@@ -23,7 +23,7 @@
 
 	flags = FPRINT | CONDUCT | TABLEPASS
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(ispryingtool(W))
 			turn_off()
 			set_dir(turn(dir, -90))
@@ -39,7 +39,7 @@
 		else
 			turn_off()
 
-		updateicon()
+		UpdateIcon()
 
 	Move(var/atom/newloc,var/newdir)
 		. = ..(newloc,newdir)
@@ -63,5 +63,5 @@
 		turn_off()
 		turn_on()
 
-	proc/updateicon()
+	UpdateIcon()
 		icon_state = "pointer[on]"

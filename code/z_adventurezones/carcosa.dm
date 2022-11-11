@@ -13,7 +13,7 @@ Dirt
 /obj/decal/fakeobjects/carcosa/statue
 	name = "statue"
 	desc = "A statue of some ominous looking, robed, figure. There's barely a scratch on it."
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "statue"
 	anchored = 1
 	density = 1
@@ -28,7 +28,7 @@ Dirt
 /obj/decal/fakeobjects/carcosa/tree
 	name = "tree"
 	desc = "A dead tree."
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "tree1"
 	anchored = 1
 	density = 1
@@ -49,7 +49,7 @@ Dirt
 /obj/decal/fakeobjects/carcosa/brokenwall
 	name = "broken wall"
 	desc = "A broken wall."
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "cwall1"
 	anchored = 1
 	density = 1
@@ -119,7 +119,7 @@ Dirt
 /obj/decal/fakeobjects/carcosa/rubble
 	name = "rubble"
 	desc = "Bits of stone and various other debris."
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "empty"
 	anchored = 1
 	density = 0

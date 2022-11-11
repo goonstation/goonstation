@@ -1,24 +1,27 @@
 /obj/machinery/door/poddoor
 	name = "podlock"
-	icon = 'icons/obj/doors/rapid_pdoor.dmi'
+	icon = 'icons/obj/doors/SL_doors.dmi'
 	icon_state = "pdoor1"
 	icon_base = "pdoor"
-	cant_emag = 1
-	layer = 2.8
+	cant_emag = TRUE
+	layer = (GRILLE_LAYER + 0.01)
 	object_flags = 0
 
 	health = 1800
 	health_max = 1800
 
-	var/id = 1.0
+	var/id = 1
 
-	New()
-		. = ..()
-		START_TRACKING
+/obj/machinery/door/poddoor/New()
+	. = ..()
+	START_TRACKING
 
-	disposing()
-		. = ..()
-		STOP_TRACKING
+/obj/machinery/door/poddoor/disposing()
+	. = ..()
+	STOP_TRACKING
+
+/obj/machinery/door/poddoor/xmasify()
+	return
 
 /obj/machinery/door/poddoor/blast/single
 	doordir = "single"
@@ -29,33 +32,33 @@
 	desc = "This door neatly separates the setup area from the spectator booths."
 	icon = 'icons/effects/VR.dmi'
 
-	New()
-		..()
-		SPAWN_DBG(5 SECONDS)
-			open()
+/obj/machinery/door/poddoor/buff/staging/New()
+	..()
+	SPAWN(5 SECONDS)
+		open()
 
-	Bump()
-		return
+/obj/machinery/door/poddoor/buff/staging/bump()
+	return
 
-	attack_hand()
-		return
+/obj/machinery/door/poddoor/buff/staging/attack_hand()
+	return
 
-	attackby()
-		return
+/obj/machinery/door/poddoor/buff/staging/attackby()
+	return
 
 /obj/machinery/door/poddoor/buff/gauntlet
 	name = "The Gauntlet"
 	desc = "This door guards the passage out of the gauntlet. It will not open while there are live players inside."
 	icon = 'icons/effects/VR.dmi'
 
-	Bump()
-		return
+/obj/machinery/door/poddoor/buff/gauntlet/bump()
+	return
 
-	attack_hand()
-		return
+/obj/machinery/door/poddoor/buff/gauntlet/attack_hand()
+	return
 
-	attackby()
-		return
+/obj/machinery/door/poddoor/buff/gauntlet/attackby()
+	return
 
 /obj/machinery/door/poddoor/pyro
 	icon = 'icons/obj/doors/SL_doors.dmi'
@@ -69,7 +72,7 @@
 	// /obj/machinery/door/poddoor/blast/pyro (poddoor.dm)
 	// /obj/warp_beacon (warp_travel.dm)
 	podbay_autoclose
-		autoclose = 1
+		autoclose = TRUE
 
 		wizard_horizontal
 			name = "external blast door"
@@ -214,6 +217,151 @@
 
 			vertical
 				dir = EAST
+		t1d1_horizontal
+			name = "pod bay (team1door1)"
+			id = "hangar_t1d1"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+
+		t1d2_horizontal
+			name = "pod bay (team1door2)"
+			id = "hangar_t1d2"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+
+		t1d3_horizontal
+			name = "pod bay (team1door3)"
+			id = "hangar_t1d3"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+
+		t1d4_horizontal
+			name = "pod bay (team1door4)"
+			id = "hangar_t1d4"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+
+		t2d1_horizontal
+			name = "pod bay (team2door1)"
+			id = "hangar_t2d1"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+
+		t2d2_horizontal
+			name = "pod bay (team2door2)"
+			id = "hangar_t2d2"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+
+		t2d3_horizontal
+			name = "pod bay (team2door3)"
+			id = "hangar_t2d3"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+
+		t2d4_horizontal
+			name = "pod bay (team2door4)"
+			id = "hangar_t2d4"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+		t1d1_horizontal
+			name = "pod bay (team1door1)"
+			id = "hangar_t1d1"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+
+		t1d2_horizontal
+			name = "pod bay (team1door2)"
+			id = "hangar_t1d2"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+
+		t1d3_horizontal
+			name = "pod bay (team1door3)"
+			id = "hangar_t1d3"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+
+		t1d4_horizontal
+			name = "pod bay (team1door4)"
+			id = "hangar_t1d4"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+
+		t1condoor_horizontal
+			name = "pod bay (team1 construction door)"
+			id = "hangar_t1condoor"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+
+		t2d1_horizontal
+			name = "pod bay (team2door1)"
+			id = "hangar_t2d1"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+
+		t2d2_horizontal
+			name = "pod bay (team2door2)"
+			id = "hangar_t2d2"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+
+		t2d3_horizontal
+			name = "pod bay (team2door3)"
+			id = "hangar_t2d3"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+
+		t2d4_horizontal
+			name = "pod bay (team2door4)"
+			id = "hangar_t2d4"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+
+		t2condoor_horizontal
+			name = "pod bay (team2 construction door)"
+			id = "hangar_t2condoor"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+
+	// meant for use inside station, or if connected to space, not a door
+	shutters
 
 /obj/machinery/door/poddoor/blast/pyro
 	icon = 'icons/obj/doors/SL_doors.dmi'
@@ -226,7 +374,7 @@
 	// /obj/machinery/door/poddoor/pyro (poddoor.dm)
 	// /obj/warp_beacon (warp_travel.dm)
 	podbay_autoclose
-		autoclose = 1
+		autoclose = TRUE
 		icon_state = "bdoormid1"
 		doordir = "mid"
 
@@ -517,61 +665,346 @@
 				dir = EAST
 				icon_state = "bdoorsingle1"
 				doordir = "single"
+		t1d1_horizontal
+			name = "pod bay (team1door1)"
+			id = "hangar_t1d1"
+			dir = NORTH
 
-/obj/machinery/door/poddoor/attackby(obj/item/C as obj, mob/user as mob)
+			vertical
+				dir = EAST
+			single_horizontal
+				dir = NORTH
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+			single_vertical
+				dir = EAST
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+
+		t1d2_horizontal
+			name = "pod bay (team1door2)"
+			id = "hangar_t1d2"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+			single_horizontal
+				dir = NORTH
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+			single_vertical
+				dir = EAST
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+
+		t1d3_horizontal
+			name = "pod bay (team1door3)"
+			id = "hangar_t1d3"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+			single_horizontal
+				dir = NORTH
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+			single_vertical
+				dir = EAST
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+
+		t1d4_horizontal
+			name = "pod bay (team1door4)"
+			id = "hangar_t1d4"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+			single_horizontal
+				dir = NORTH
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+			single_vertical
+				dir = EAST
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+
+		t2d1_horizontal
+			name = "pod bay (team2door1)"
+			id = "hangar_t2d1"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+			single_horizontal
+				dir = NORTH
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+			single_vertical
+				dir = EAST
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+
+		t2d2_horizontal
+			name = "pod bay (team2door2)"
+			id = "hangar_t2d2"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+			single_horizontal
+				dir = NORTH
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+			single_vertical
+				dir = EAST
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+
+		t2d3_horizontal
+			name = "pod bay (team2door3)"
+			id = "hangar_t2d3"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+			single_horizontal
+				dir = NORTH
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+			single_vertical
+				dir = EAST
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+
+		t2d4_horizontal
+			name = "pod bay (team2door4)"
+			id = "hangar_t2d4"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+			single_horizontal
+				dir = NORTH
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+			single_vertical
+				dir = EAST
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+
+		t1d1_horizontal
+			name = "pod bay (team1door1)"
+			id = "hangar_t1d1"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+			single_horizontal
+				dir = NORTH
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+			single_vertical
+				dir = EAST
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+
+		t1d2_horizontal
+			name = "pod bay (team1door2)"
+			id = "hangar_t1d2"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+			single_horizontal
+				dir = NORTH
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+			single_vertical
+				dir = EAST
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+
+		t1d3_horizontal
+			name = "pod bay (team1door3)"
+			id = "hangar_t1d3"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+			single_horizontal
+				dir = NORTH
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+			single_vertical
+				dir = EAST
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+
+		t1d4_horizontal
+			name = "pod bay (team1door4)"
+			id = "hangar_t1d4"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+			single_horizontal
+				dir = NORTH
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+			single_vertical
+				dir = EAST
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+
+		t1condoor_horizontal
+			name = "pod bay (team1 construction door)"
+			id = "hangar_t1condoor"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+			single_horizontal
+				dir = NORTH
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+			single_vertical
+				dir = EAST
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+
+		t2d1_horizontal
+			name = "pod bay (team2door1)"
+			id = "hangar_t2d1"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+			single_horizontal
+				dir = NORTH
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+			single_vertical
+				dir = EAST
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+
+		t2d2_horizontal
+			name = "pod bay (team2door2)"
+			id = "hangar_t2d2"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+			single_horizontal
+				dir = NORTH
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+			single_vertical
+				dir = EAST
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+
+		t2d3_horizontal
+			name = "pod bay (team2door3)"
+			id = "hangar_t2d3"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+			single_horizontal
+				dir = NORTH
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+			single_vertical
+				dir = EAST
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+
+		t2d4_horizontal
+			name = "pod bay (team2door4)"
+			id = "hangar_t2d4"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+			single_horizontal
+				dir = NORTH
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+			single_vertical
+				dir = EAST
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+
+		t2condoor_horizontal
+			name = "pod bay (team2 construction door)"
+			id = "hangar_t2condoor"
+			dir = NORTH
+
+			vertical
+				dir = EAST
+			single_horizontal
+				dir = NORTH
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+			single_vertical
+				dir = EAST
+				icon_state = "bdoorsingle1"
+				doordir = "single"
+
+/obj/machinery/door/poddoor/attackby(obj/item/C, mob/user)
 	src.add_fingerprint(user)
-	if (C && !ispryingtool(C))
-		if (src.density && !src.operating)
-			user.lastattacked = src
-			attack_particle(user,src)
-			playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
-			src.take_damage(C.force)
-	if ((src.density && (status & NOPOWER) && !( src.operating )))
-		SPAWN_DBG( 0 )
-			src.operating = 1
-			flick("[icon_base]c0", src)
-			src.icon_state = "[icon_base]0"
-			sleep(1.5 SECONDS)
-			src.set_density(0)
-			if (ignore_light_or_cam_opacity)
-				src.opacity = 0
-			else
-				src.RL_SetOpacity(0)
-			src.operating = 0
-			update_nearby_tiles()
-			return
-	return
+	if (ispryingtool(C) && src.density && (src.status & NOPOWER) && !( src.operating ))
+		if(!ON_COOLDOWN(src, "prying_sound", 1.5 SECONDS))
+			playsound(src, 'sound/machines/airlock_pry.ogg', 35, 1)
+		src.operating = TRUE
+		flick("[icon_base]c0", src)
+		src.icon_state = "[icon_base]0"
+		sleep(1.5 SECONDS)
+		src.set_density(0)
+		if (ignore_light_or_cam_opacity)
+			src.set_opacity(0)
+		else
+			src.RL_SetOpacity(0)
+		src.operating = FALSE
+		src.update_nearby_tiles()
+	else if (C && src.density && !src.operating)
+		user.lastattacked = src
+		attack_particle(user,src)
+		playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
+		src.take_damage(C.force)
 
-/obj/machinery/door/poddoor/bumpopen(mob/user as mob)
+/obj/machinery/door/poddoor/bumpopen(mob/user)
 	return 0
 
 /obj/machinery/door/poddoor/open()
 	if (src.operating == 1) //doors can still open when emag-disabled
 		return
-	if (!density)
+	if (!src.density)
 		return 0
-	if (linked_forcefield) //mbc : oh gosh why is this not calling door parent
-		linked_forcefield.setactive(1)
+	if (src.linked_forcefield) //mbc : oh gosh why is this not calling door parent
+		src.linked_forcefield.setactive(1)
 
 	if(!src.operating) //in case of emag
 		src.operating = 1
 
-	SPAWN_DBG(-1)
+	SPAWN(-1)
 		flick("[icon_base]c0", src)
 		src.icon_state = "[icon_base]0"
 		sleep(1 SECOND)
 		src.set_density(0)
 		if (ignore_light_or_cam_opacity)
-			src.opacity = 0
+			src.set_opacity(0)
 		else
 			src.RL_SetOpacity(0)
-		update_nearby_tiles()
+		src.update_nearby_tiles()
 
-		if(operating == 1) //emag again
+		if(src.operating == 1) //emag again
 			src.operating = 0
-		if(autoclose)
-			SPAWN_DBG(15 SECONDS)
-				autoclose()
+		if(src.autoclose)
+			SPAWN(15 SECONDS)
+				src.autoclose()
 	return 1
 
 /obj/machinery/door/poddoor/close()
@@ -579,20 +1012,20 @@
 		return
 	if (src.density)
 		return
-	if (linked_forcefield) //mbc : oh gosh why is this not calling door parent
-		linked_forcefield.setactive(0)
+	if (src.linked_forcefield) //mbc : oh gosh why is this not calling door parent
+		src.linked_forcefield.setactive(0)
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		src.operating = 1
 		flick("[icon_base]1", src)
 		src.icon_state = "[icon_base]1"
 		src.set_density(1)
 		if (src.visible)
 			if (ignore_light_or_cam_opacity)
-				src.opacity = 1
+				src.set_opacity(1)
 			else
 				src.RL_SetOpacity(1)
-		update_nearby_tiles()
+		src.update_nearby_tiles()
 
 		sleep(1 SECOND)
 		src.operating = 0
@@ -603,14 +1036,14 @@
 	name = "buff blast door"
 	desc = "This sure is a really strong looking door.  You would think there would be a point where the door is stronger than the walls around it."
 
-	ex_act()
-		return
+/obj/machinery/door/poddoor/buff/ex_act()
+	return
 
-	blob_act(var/power)
-		return
+/obj/machinery/door/poddoor/buff/blob_act(var/power)
+	return
 
-	bullet_act()
-		return
+/obj/machinery/door/poddoor/buff/bullet_act()
+	return
 
 /obj/machinery/door/poddoor/blast
 	name = "blast door"
@@ -631,27 +1064,27 @@
 	if(icon_state == "[icon_base]single1")
 		doordir = "single"
 
-/obj/machinery/door/poddoor/blast/attackby(obj/item/C as obj, mob/user as mob)
+/obj/machinery/door/poddoor/blast/attackby(obj/item/C, mob/user)
 	src.add_fingerprint(user)
 	if (!ispryingtool(C))
 		return
-	if ((src.density && (status & NOPOWER) && !( src.operating )))
-		SPAWN_DBG( 0 )
+	if ((src.density && (src.status & NOPOWER) && !( src.operating )))
+		SPAWN( 0 )
 			src.operating = 1
 			flick("[icon_base][doordir]c0", src)
 			src.icon_state = "[icon_base][doordir]0"
 			sleep(1.5 SECONDS)
 			src.set_density(0)
 			if (ignore_light_or_cam_opacity)
-				src.opacity = 0
+				src.set_opacity(0)
 			else
 				src.RL_SetOpacity(0)
 			src.operating = 0
-			update_nearby_tiles()
+			src.update_nearby_tiles()
 			return
 	return
 
-/obj/machinery/door/poddoor/blast/bumpopen(mob/user as mob)
+/obj/machinery/door/poddoor/blast/bumpopen(mob/user)
 	return 0
 
 /obj/machinery/door/poddoor/blast/open()
@@ -661,44 +1094,44 @@
 		return 0
 	if(!src.operating) //in case of emag
 		src.operating = 1
-	if (linked_forcefield) //mbc : SAVE ME FROM THIS HELL WHERE PARENTS ARENT CALLED
-		linked_forcefield.setactive(1)
+	if (src.linked_forcefield) //mbc : SAVE ME FROM THIS HELL WHERE PARENTS ARENT CALLED
+		src.linked_forcefield.setactive(1)
 
-	SPAWN_DBG(-1)
+	SPAWN(-1)
 		flick("[icon_base][doordir]c0", src)
 		src.icon_state = "[icon_base][doordir]0"
 		sleep(1 SECOND)
 		src.set_density(0)
 		if (ignore_light_or_cam_opacity)
-			src.opacity = 0
+			src.set_opacity(0)
 		else
 			src.RL_SetOpacity(0)
-		update_nearby_tiles()
+		src.update_nearby_tiles()
 
 		if(operating == 1) //emag again
 			src.operating = 0
 		if(autoclose)
-			SPAWN_DBG(15 SECONDS)
+			SPAWN(15 SECONDS)
 				autoclose()
 	return 1
 
 /obj/machinery/door/poddoor/blast/close()
 	if (src.operating || src.density)
 		return
-	if (linked_forcefield) //mbc : SAVE ME FROM THIS HELL WHERE PARENTS ARENT CALLED
-		linked_forcefield.setactive(0)
+	if (src.linked_forcefield) //mbc : SAVE ME FROM THIS HELL WHERE PARENTS ARENT CALLED
+		src.linked_forcefield.setactive(0)
 	src.operating = 1
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		flick("[icon_base][doordir]c1", src)
 		src.icon_state = "[icon_base][doordir]1"
 		src.set_density(1)
 		if (src.visible)
 			if (ignore_light_or_cam_opacity)
-				src.opacity = 1
+				src.set_opacity(1)
 			else
 				src.RL_SetOpacity(1)
-		update_nearby_tiles()
+		src.update_nearby_tiles()
 
 		sleep(1 SECOND)
 		src.operating = 0

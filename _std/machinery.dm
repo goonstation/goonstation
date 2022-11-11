@@ -2,11 +2,10 @@
 //#define MACHINE_PROCESSING_DEBUG
 
 //this file is not in defines or macros because this one is kind of a frankenstein
-#define NETWORK_MACHINE_RESET_DELAY 40 //Time (in 1/10 of a second) before we can be manually reset again (machines).
+/// Time (in 1/10 of a second) before we can be manually reset again (machines).
+#define NETWORK_MACHINE_RESET_DELAY 40
 
-//communications stuff
-#define TRANSMISSION_WIRE	0
-#define TRANSMISSION_RADIO	1
+#define MACHINE_PROC_INTERVAL (0.4 SECONDS)
 
 //lighting stuff
 #define LIGHT_OK 0
@@ -30,14 +29,24 @@
 #define REQ_PHYSICAL_ACCESS (1<<6) //! Can only be interacted with if adjacent and physical
 
 //recharger stuff
-#define CELLRATE 0.002  // multiplier for watts per tick <> cell storage (eg: .002 means if there is a load of 1000 watts, 20 units will be taken from a cell per second)
-#define CHARGELEVEL 0.001 // Cap for how fast cells charge, as a percentage-per-tick (.001 means cellcharge is capped to 1% per second)
+/// multiplier for watts per tick != cell storage (eg: .002 means if there is a load of 1000 watts, 20 units will be taken from a cell per second)
+#define CELLRATE 0.002
+/// Cap for how fast cells charge, as a percentage-per-tick (.001 means cellcharge is capped to 1% per second)
+#define CHARGELEVEL 0.001
 
 //red smashy button stuff
 #define SHIP_ALERT_GOOD 0
 #define SHIP_ALERT_BAD 1
 
+//conveyor belt operating modes
+#define CONVEYOR_FORWARD 1
+#define CONVEYOR_REVERSE -1
+#define CONVEYOR_STOPPED 0
+
 #define DATA_TERMINAL_IS_VALID_MASTER(terminal, master) (master && (get_turf(master) == terminal.loc))
+
+#define PROCESSING_TIER_MULTI(target) (1<<(target.current_processing_tier-1)) //! Scalar to behave as if it were running at full speed
+#define MACHINE_PROCS_PER_SEC (MACHINE_PROC_INTERVAL / (1 SECOND))
 
 #define PROCESSING_FULL      1
 #define PROCESSING_HALF      2
@@ -45,11 +54,7 @@
 #define PROCESSING_EIGHTH    4
 #define PROCESSING_SIXTEENTH 5
 #define PROCESSING_32TH			 6
-// Uncomment and adjust PROCESSING_MAX_IN_USE as needed
-
-//
-//
-
+// adjust PROCESSING_MAX_IN_USE as needed
 #define PROCESSING_MAX_IN_USE PROCESSING_32TH
 
 #define MACHINES_CONVEYORS				1 // Conveyor belts

@@ -30,7 +30,7 @@
 	var/last_found = 0
 	/// Time after injecting someone before they'll try to inject them again. Encourages them to spread the love (and poison). Hitting the bot overrides the cooldown
 	var/last_patient_cooldown = 5 SECONDS
-	var/point_cooldown = 1 SECOND //Don't spam your pointer-finger
+	var/point_cooldown = 10 SECONDS //Don't spam your pointer-finger
 	var/currently_healing = 0
 	var/injection_amount = 10 //How much reagent do we inject at a time?
 	var/heal_threshold = 15 //Start healing when they have this much damage in a category
@@ -92,6 +92,19 @@
 	access_lookup = "Head Surgeon"
 	text2speech = 1
 
+	New()
+		. = ..()
+		START_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
+		. = ..()
+
+/obj/machinery/bot/medbot/hippocrates
+	name = "Hippocrates The Cleric"
+	desc = "A mage practicing in the art of healing magic. He's not very good but he's enthusiastic."
+	skin = "wizard"
+
 /obj/machinery/bot/medbot/head_surgeon/no_camera
 	no_camera = 1
 
@@ -118,6 +131,12 @@
 	treatment_virus = "chickensoup"
 	no_camera = 1
 
+/obj/machinery/bot/medbot/medass
+	name = "MedicalAssistant"
+	desc = "A little medical robot. This one looks very busy."
+	skin = "medicalassistant"
+	no_camera = 1
+
 /obj/item/firstaid_arm_assembly
 	name = "first aid/robot arm assembly"
 	desc = "A first aid kit with a robot arm permanently grafted to it."
@@ -132,12 +151,12 @@
 
 /obj/item/firstaid_arm_assembly/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		if (src.skin)
 			src.overlays += "medskin-[src.skin]"
 			src.overlays += "medibot-arm"
 
-/obj/machinery/bot/medbot/proc/update_icon(var/stun = 0, var/heal = 0)
+/obj/machinery/bot/medbot/update_icon(var/stun = 0, var/heal = 0)
 	UpdateOverlays(null, "medbot_overlays")
 	medbot_overlays.overlays.len = 0
 
@@ -173,15 +192,15 @@
 /obj/machinery/bot/medbot/New()
 	..()
 	add_simple_light("medbot", list(220, 220, 255, 0.5*255))
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		if (src)
-			src.update_icon()
+			src.UpdateIcon()
 	return
 
 /obj/machinery/bot/medbot/attack_ai(mob/user as mob)
 	return toggle_power()
 
-/obj/machinery/bot/medbot/attack_hand(mob/user as mob, params)
+/obj/machinery/bot/medbot/attack_hand(mob/user, params)
 	if (src.terrifying)
 		return
 
@@ -212,7 +231,7 @@
 		dat += "Reagent Source: "
 		dat += "<a href='?src=\ref[src];use_beaker=1'>[src.use_beaker ? "Loaded Beaker (When available)" : "Internal Synthesizer"]</a><br>"
 
-	if (user.client.tooltipHolder)
+	if (user.client?.tooltipHolder)
 		user.client.tooltipHolder.showClickTip(src, list(
 			"params" = params,
 			"title" = "Medibot v1.0 controls",
@@ -231,7 +250,7 @@
 		src.toggle_power()
 
 	else if ((href_list["adj_threshold"]) && (!src.locked))
-		var/adjust_num = text2num(href_list["adj_threshold"])
+		var/adjust_num = text2num_safe(href_list["adj_threshold"])
 		src.heal_threshold += adjust_num
 		if (src.heal_threshold < 5)
 			src.heal_threshold = 5
@@ -239,7 +258,7 @@
 			src.heal_threshold = 75
 
 	else if ((href_list["adj_inject"]) && (!src.locked))
-		var/adjust_num = text2num(href_list["adj_inject"])
+		var/adjust_num = text2num_safe(href_list["adj_inject"])
 		src.injection_amount += adjust_num
 		if (src.injection_amount < 5)
 			src.injection_amount = 5
@@ -268,9 +287,9 @@
 		ON_COOLDOWN(src, "[MEDBOT_LASTPATIENT_COOLDOWN]-[ckey(user?.name)]", src.last_patient_cooldown * 10) // basically ignore the emagger for a long while. Till someone hits it!
 		src.emagged = 1
 		src.on = 1
-		src.update_icon()
+		src.UpdateIcon()
 		src.pick_poison()
-		logTheThing("station", user, null, "emagged a [src] at [log_loc(src)].")
+		logTheThing(LOG_STATION, user, "emagged a [src] at [log_loc(src)].")
 		return 1
 	return 0
 
@@ -282,10 +301,10 @@
 		user.show_text("You repair [src]'s reagent synthesis circuits.", "blue")
 	src.emagged = 0
 	src.KillPathAndGiveUp(1)
-	src.update_icon()
+	src.UpdateIcon()
 	return 1
 
-/obj/machinery/bot/medbot/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/bot/medbot/attackby(obj/item/W, mob/user)
 	//if (istype(W, /obj/item/card/emag)) // this gets to stay here because it is a good story
 		/*
 		I caught a fish once, real little feller, it was.
@@ -353,14 +372,14 @@
 		return
 
 	if (src.stunned)
-		src.update_icon(stun = 1)
+		src.UpdateIcon(/*stun*/ 1)
 		src.stunned--
 
 		src.KillPathAndGiveUp(1)
 
 		if(src.stunned <= 0)
 			src.stunned = 0
-			src.update_icon()
+			src.UpdateIcon()
 		return
 
 	if (src.frustration > 8)
@@ -405,7 +424,7 @@
 		if (src.assess_patient(C))
 			src.patient = C
 			src.doing_something = 1
-			if (ON_COOLDOWN(src, "[MEDBOT_POINT_COOLDOWN]-[ckey(src.patient?.name)]", src.point_cooldown)) //Don't spam these messages!
+			if (!ON_COOLDOWN(src, "[MEDBOT_POINT_COOLDOWN]-[ckey(src.patient?.name)]", src.point_cooldown)) //Don't spam these messages!
 				src.point(src.patient, 1)
 				var/message = pick("Hey, you! Hold on, I'm coming.","Wait! I want to help!","You appear to be injured!","Don't worry, I'm trained for this!")
 				src.speak(message)
@@ -456,7 +475,7 @@
 	else
 		remove_simple_light("medbot")
 	src.KillPathAndGiveUp(1)
-	src.update_icon()
+	src.UpdateIcon()
 	src.updateUsrDialog()
 	return
 
@@ -599,7 +618,7 @@
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "medbot_inject"
 	icon = 'icons/obj/syringe.dmi'
-	icon_state = "0"
+	icon_state = "syringe_15"
 	var/obj/machinery/bot/medbot/master
 	var/list/reagent_id
 	var/did_spooky = 0
@@ -619,7 +638,7 @@
 			return
 
 		if (master.terrifying)
-			if(!IN_RANGE(master, master.patient, 1) && !master.moving)
+			if(!(BOUNDS_DIST(master, master.patient) == 0) && !master.moving)
 				master.navigate_to(get_turf(master.patient), MEDBOT_MOVE_SPEED, 1, 10)
 			if(!src.did_spooky && prob(10))
 				if (prob(20))
@@ -636,7 +655,7 @@
 					'sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
 					playsound(master.loc, glitchsound, 50, 1)
 					// let's grustle a bit
-					SPAWN_DBG(1 DECI SECOND)
+					SPAWN(1 DECI SECOND)
 						master.pixel_x += rand(-2,2)
 						master.pixel_y += rand(-2,2)
 						sleep(0.1 SECONDS)
@@ -659,17 +678,17 @@
 
 		attack_twitch(master)
 		master.currently_healing = 1
-		master.update_icon(stun = 0, heal = 1)
+		master.UpdateIcon(/*stun*/ 0, /*heal*/ 1)
 		master.visible_message("<span class='alert'><B>[master] is trying to inject [master.patient]!</B></span>")
 
 	onInterrupt()
 		. = ..()
 		master.KillPathAndGiveUp()
-		master.update_icon()
+		master.UpdateIcon()
 
 	onEnd()
 		..()
-		if ((get_dist(master, master.patient) <= 1) && (master.on))
+		if ((BOUNDS_DIST(master, master.patient) == 0) && (master.on))
 			if ((reagent_id == "internal_beaker") && (master.reagent_glass) && (master.reagent_glass.reagents.total_volume))
 				master.reagent_glass.reagents.trans_to(master.patient,master.injection_amount) //Inject from beaker instead.
 				master.reagent_glass.reagents.reaction(master.patient, 2, master.injection_amount)
@@ -688,17 +707,17 @@
 				sput_words += reagent_id_to_name(reagent)
 			smoke_reaction(sput, 1, get_turf(master))
 			master.visible_message("<span class='alert'>A shower of [english_list(sput_words)] shoots out of [master]'s hypospray!</span>")
-		playsound(get_turf(master), 'sound/items/hypo.ogg', 80, 0)
+		playsound(master, 'sound/items/hypo.ogg', 80, 0)
 
 		master.KillPathAndGiveUp() // Don't discard the patient just yet, maybe they need more healing!
-		master.update_icon()
+		master.UpdateIcon()
 
 	proc/fail_check()
 		if(!master.on)
 			return TRUE
 		if(!istype(master.patient))
 			return TRUE
-		if(!master.terrifying && !IN_RANGE(master, master.patient, 1))
+		if(!master.terrifying && !(BOUNDS_DIST(master, master.patient) == 0))
 			return TRUE
 
 // copied from transposed scientists
@@ -747,10 +766,10 @@
 
 /obj/machinery/bot/medbot/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.explode()
 			return
-		if(2.0)
+		if(2)
 			src.health -= 15
 			if (src.health <= 0)
 				src.explode()
@@ -784,7 +803,7 @@
 	src.exploding = 1
 	src.on = 0
 	src.audible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
-	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/storage/firstaid(Tsec)
@@ -798,7 +817,7 @@
 		src.reagent_glass = null
 
 	if (prob(50))
-		new /obj/item/parts/robot_parts/arm/left(Tsec)
+		new /obj/item/parts/robot_parts/arm/left/standard(Tsec)
 
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 	qdel(src)
@@ -814,6 +833,7 @@
 			return
 		if ((S.w_class >= W_CLASS_SMALL || istype(S, /obj/item/storage)))
 			if (!istype(S,/obj/item/storage/pill_bottle))
+				boutput(user, "<span class='alert'>[S] won't fit into [src]!</span>")
 				return
 		..()
 		return
@@ -843,7 +863,7 @@
 		qdel(S)
 		qdel(src)
 
-/obj/item/firstaid_arm_assembly/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/firstaid_arm_assembly/attackby(obj/item/W, mob/user)
 	if ((istype(W, /obj/item/device/analyzer/healthanalyzer)) && (!src.build_step))
 		src.build_step++
 		boutput(user, "You add the health sensor to [src]!")

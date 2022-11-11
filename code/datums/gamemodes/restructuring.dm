@@ -13,7 +13,7 @@
 	while (mobs.len == 0)
 		sleep 30
 		mobs = get_mob_list()
-	SPAWN_DBG(12 SECONDS)
+	SPAWN(12 SECONDS)
 		pick_target()
 
 /datum/game_mode/restructuring/proc/pick_target(who)
@@ -67,9 +67,9 @@
 
 /datum/game_mode/restructuring/proc/get_target_desc(mob/target) //return a useful string describing the target
 	var/targetrank = null
-	for(var/datum/data/record/R in data_core.general)
-		if (R.fields["name"] == target.real_name)
-			targetrank = R.fields["rank"]
+	for(var/datum/db_record/R as anything in data_core.general.records)
+		if (R["name"] == target.real_name)
+			targetrank = R["rank"]
 	if(!targetrank)
 		return "[target.name]"
 	return "[target.name] the [targetrank]"

@@ -11,8 +11,8 @@
 	var/steps_moved = 0
 	var/failing = 0
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
-		if (istype(W, /obj/item/crowbar))
+	attackby(obj/item/W, mob/living/user)
+		if (ispryingtool(W))
 			boutput(user, "There's no maintenance panel to open.")
 			return
 		if (isweldingtool(W))
@@ -73,10 +73,11 @@
 	var/override_dir = null
 	var/turf/outputLoc = null
 	var/sound_happy = 'sound/machines/chime.ogg'
+	var/sound_volume = 50
 	var/static/list/fabsounds = list('sound/machines/engine_grump1.ogg','sound/machines/engine_grump2.ogg','sound/machines/engine_grump3.ogg',
 	'sound/machines/computerboot_pc.ogg','sound/machines/glitch3.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/impact_sounds/Metal_Hit_Heavy_1.ogg','sound/machines/romhack1.ogg','sound/machines/romhack3.ogg')
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (active)
 			boutput(user, "<span class='alert'>Manufacture in progress, please wait.</span>")
 			return
@@ -130,7 +131,7 @@
 		var/noiseThreshold = (0.8 * fabTime) - 2 //don't play noises all the way till the end as they carry on a bit
 		var/alphaDelta = round(250 / fabTime) //automatically calculates fade-in rate based on the assembly speed
 		while(progress < fabTime)
-			if (progress < noiseThreshold) playsound(src.loc, pick(src.fabsounds), 50, 1)
+			if (progress < noiseThreshold) playsound(src.loc, pick(src.fabsounds), sound_volume, 1)
 			progress++
 			holo.alpha += alphaDelta
 			sleep(rand(6,8))

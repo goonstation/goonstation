@@ -1,12 +1,13 @@
-// handles items
-datum/controller/process/items
+
+/// handles item/process()
+/datum/controller/process/items
 	var/tmp/list/detailed_count
 	var/tmp/tick_counter
 	var/tmp/list/processing_items
 
 	setup()
 		name = "Item"
-		schedule_interval = 29
+		schedule_interval = 2.9 SECONDS
 		// this probably lags some but it helps give the sign to people that the game
 		// is in fact still doing something, which i feel is important
 		// plus i like watching number go up
@@ -39,10 +40,11 @@ datum/controller/process/items
 
 	doWork()
 		var/c
-		for(var/i in global.processing_items)
-			if (!i || i:pooled || i:qdeled) //if the object was pooled or qdeled we have to remove it from this list... otherwise the lagchecks cause this loop to hold refs and block GC!!!
+		for(var/datum/i in global.processing_items)
+			if (!i || i:disposed || i:qdeled) //if the object was pooled or qdeled we have to remove it from this list... otherwise the lagchecks cause this loop to hold refs and block GC!!!
 				global.processing_items -= i
 				continue
+			SEND_SIGNAL(i, COMSIG_ITEM_PROCESS)
 			i:process()
 			if (!(c++ % 20))
 				scheck()

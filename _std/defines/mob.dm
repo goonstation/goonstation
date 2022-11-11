@@ -2,21 +2,22 @@
 /// For mobs who can hear everything (mainly observer ghossts)
 #define MOB_HEARS_ALL 1
 // God Ecaps
-#define SPEECH_REVERSE 2
-#define SPEECH_BLOB 4		//yes
-#define SEE_THRU_CAMERAS 8	//for ai eye
-#define IS_BONER 16			//for skeletals
-#define UNUSED_32 32
-#define UNUSED_64 64
-#define UNUSED_128 128
-#define UNUSED_256 256
-#define UNUSED_512 512
-#define AT_GUNPOINT 1024 	//quick check for guns holding me at gunpoint
-#define IGNORE_SHIFT_CLICK_MODIFIER 2048 //shift+click doesn't retrigger a SHIFT keypress - use for mobs that sprint on shift and not on mobs that use shfit for bolting doors etc
-#define LIGHTWEIGHT_AI_MOB 4096		//not a part of the normal 'mobs' list so it wont show up in searches for observe admin etc, has its own slowed update rate on Life() etc
-#define USR_DIALOG_UPDATES_RANGE 8192	//updateusrdialog will consider this mob as being able to 'attack_ai' and update its ui at range
-#define UNUSED_16384 16384
-#define SHOULD_HAVE_A_TAIL 32768 //Would we miss our tail if it comes off?
+#define SPEECH_REVERSE (1 << 1)
+#define SPEECH_BLOB (1 << 2)		//yes
+#define SEE_THRU_CAMERAS (1 << 3)	//for ai eye
+#define IS_BONEY (1 << 4)			//for skeletals
+#define UNUSED_32 (1 << 5)
+#define UNUSED_64 (1 << 6)
+#define UNUSED_128 (1 << 7)
+#define UNUSED_256 (1 << 8)
+#define UNUSED_512 (1 << 9)
+#define AT_GUNPOINT (1 << 10) 	//quick check for guns holding me at gunpoint
+#define IGNORE_SHIFT_CLICK_MODIFIER (1 << 11) //shift+click doesn't retrigger a SHIFT keypress - use for mobs that sprint on shift and not on mobs that use shfit for bolting doors etc
+#define LIGHTWEIGHT_AI_MOB (1 << 12)		//not a part of the normal 'mobs' list so it wont show up in searches for observe admin etc, has its own slowed update rate on Life() etc
+#define USR_DIALOG_UPDATES_RANGE (1 << 13)	//updateusrdialog will consider this mob as being able to 'attack_ai' and update its ui at range
+#define UNUSED_16384 (1 << 14)
+#define SHOULD_HAVE_A_TAIL (1 << 15) //Would we miss our tail if it comes off?
+#define HEAVYWEIGHT_AI_MOB (1 << 16) //ai gets ticked every 0.2 seconds instead of the usual 1 seconds - gotta go fast
 
 //mob intent type defines
 #define INTENT_HARM "harm"
@@ -29,6 +30,10 @@
 #define LIMB_RIGHT_ARM 2
 #define LIMB_LEFT_LEG 4
 #define LIMB_RIGHT_LEG 8
+
+//hand values
+#define LEFT_HAND 1
+#define RIGHT_HAND 0
 
 // ---- mob damage ----
 
@@ -59,3 +64,14 @@
 //cooldowns
 #define REST_TOGGLE_COOLDOWN 0.1 SECONDS
 #define EAT_COOLDOWN 0.5 SECONDS
+
+//skipped_mobs_list flags
+#define SKIPPED_MOBS_LIST (1 << 0)
+#define SKIPPED_AI_MOBS_LIST (1 << 1)
+
+// decomp_stage defines
+#define DECOMP_STAGE_NO_ROT 0
+#define DECOMP_STAGE_BLOATED 1
+#define DECOMP_STAGE_DECAYED 2
+#define DECOMP_STAGE_HIGHLY_DECAYED 3
+#define DECOMP_STAGE_SKELETONIZED 4

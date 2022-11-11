@@ -29,6 +29,7 @@
 	var/log_telepathy = 0				// log telepathy events
 	var/log_debug = 0					// log debug events
 	var/log_vehicles = 0					//I feel like this is a better place for listing who entered what, than the admin log.
+	var/log_gamemode = 0				// log gamemode events
 
 	var/allow_admin_jump = 1			// allows admin jumping
 	var/allow_admin_sounds = 1			// allows admin sound playing
@@ -56,7 +57,7 @@
 	var/sql_database = null
 
 	// Player notes
-	var/player_notes_baseurl = "http://playernotes.goonhub.com"
+	var/player_notes_baseurl = "https://playernotes.goonhub.com"
 	var/player_notes_auth = null
 
 	// Server list for cross-bans and other stuff
@@ -68,6 +69,8 @@
 	var/irclog_url = null
 	var/ircbot_api = null
 	var/ircbot_ip = null
+	var/spacebee_api_url = "https://spacebee.goonhub.com"
+	var/spacebee_api_key = null
 
 	//External server configuration (for central bans etc)
 	var/goonhub_api_version = 0
@@ -85,6 +88,7 @@
 	//Environment
 	var/env = "dev"
 	var/cdn = ""
+	var/rsc = null
 	var/disableResourceCache = 0
 
 	//Map switching stuff
@@ -100,7 +104,10 @@
 
 	//Are we limiting connected players to certain ckeys?
 	var/whitelistEnabled = 0
-	var/whitelist_path = "strings/whitelist.txt"
+	var/whitelist_path = "config/whitelist.txt"
+
+	//Which server can ghosts join by clicking on an on-screen link
+	var/server_buddy_id = null
 
 /datum/configuration/New()
 	..()
@@ -171,7 +178,6 @@
 			if ("log_game")
 				config.log_game = 1
 
-
 			if ("log_whisper")
 				config.log_whisper = 1
 
@@ -195,6 +201,9 @@
 
 			if ("log_vehicles")
 				config.log_vehicles = 1
+
+			if ("log_gamemode")
+				config.log_gamemode = 1
 
 			if ("allow_admin_jump")
 				config.allow_admin_jump = 1
@@ -301,6 +310,11 @@
 			if ("ircbot_ip")
 				config.ircbot_ip = trim(value)
 
+			if ("spacebee_api_url")
+				config.spacebee_api_url = trim(value)
+			if ("spacebee_api_key")
+				config.spacebee_api_key = trim(value)
+
 			if ("goonhub_parser_url")
 				config.goonhub_parser_url = trim(value)
 			if ("goonhub_parser_key")
@@ -333,6 +347,8 @@
 				config.env = trim(value)
 			if ("cdn")
 				config.cdn = trim(value)
+			if ("rsc")
+				config.rsc = trim(value)
 			if ("disable_resource_cache")
 				config.disableResourceCache = 1
 
@@ -363,6 +379,9 @@
 
 			if ("whitelist_path")
 				config.whitelist_path = trim(value)
+
+			if ("server_buddy_id")
+				config.server_buddy_id = trim(value)
 
 			else
 				logDiary("Unknown setting in configuration: '[name]'")
@@ -411,18 +430,18 @@
 	return src.pick_mode(mode_name)
 
 /datum/configuration/proc/get_used_mode_names()
-	var/list/names = list()
-
+	. = list()
 	for (var/M in src.modes)
 		if (src.probabilities[M] > 0)
-			names += src.mode_names[M]
-
-	return names
+			. += src.mode_names[M]
 
 //return 0 to block the mode from being chosen for whatever reason
 /datum/configuration/proc/getSpecialModeCase(mode)
 	switch (mode)
 		if ("blob")
+			if (map_setting == "NADIR")
+				return 0
+
 			if (src.blob_min_players > 0)
 				var/players = 0
 				for (var/mob/new_player/player in mobs)

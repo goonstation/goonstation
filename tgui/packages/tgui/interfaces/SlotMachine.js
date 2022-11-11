@@ -4,82 +4,146 @@
  */
 
 import { useBackend } from '../backend';
-import { Box, Button, NoticeBox, Divider, BlockQuote, Icon } from '../components';
+import { BlockQuote, Button, Divider, Icon, NoticeBox, NumberInput, Stack } from '../components';
 import { Window } from '../layouts';
 
-export const SlotMachine = (props, context) => {
+export const SlotMachine = (_props, context) => {
   const { data } = useBackend(context);
-  const { scannedCard, busy } = data;
+  const { busy, scannedCard } = data;
   return (
     <Window
       title="Slot Machine"
       width={375}
-      height={190}>
+      height={220}
+    >
       <Window.Content>
-        { !scannedCard ? (
-          <InsertCard />
-        ) : (
-          <Box>
-            { busy ? (
-              <BusyWindow />
-            ) : (
-              <SlotWindow />
-            )}
-          </Box>
-        )}
+        {
+          !scannedCard
+            ? <InsertCard />
+            : (busy ? <BusyWindow /> : <SlotWindow />)
+        }
       </Window.Content>
     </Window>
   );
 };
 
-const InsertCard = (props, context) => {
+const InsertCard = (_props, context) => {
   const { act } = useBackend(context);
   return (
-    <Box>
+    <>
       <NoticeBox danger>
         You must insert your ID to continue!
       </NoticeBox>
       <Button
         icon="id-card"
-        content={'Insert ID'}
-        onClick={() => act('insert_card')} />
-    </Box>
+        onClick={() => act('insert_card')}
+      >
+        Insert ID
+      </Button>
+    </>
   );
 };
 
-const SlotWindow = (props, context) => {
+const SlotWindow = (_props, context) => {
   const { act, data } = useBackend(context);
-  const { scannedCard, money, plays } = data;
+  const {
+    account_funds,
+    money,
+    plays,
+    scannedCard,
+    wager,
+  } = data;
 
   return (
-    <Box>
+    <>
       <NoticeBox success>
-        <marquee> Twenty credits to play! </marquee>
+        <marquee> Wager some credits! </marquee>
       </NoticeBox>
-      <Box mb="0.5em">
-        <strong>Your card: </strong>
-        <Button
-          icon="eject"
-          content={scannedCard}
-          tooltip="Eject Card"
-          tooltipPosition="bottom-right"
-          onClick={() => act('eject')} />
-      </Box>
-      <Box mb="0.75em">
-        <strong>Credits Remaining:</strong>
-        <Icon name="dollar-sign" /> { money }
-      </Box>
-      <BlockQuote>
-        { plays } attempts have been made today!
-      </BlockQuote>
-      <Divider />
-      <Button
-        icon="dice"
-        content="Play!"
-        tooltip="Pull the lever"
-        tooltipPosition="right"
-        onClick={() => act('play')} />
-    </Box>
+      <Stack vertical>
+        <Stack.Item>
+          <strong>Your card: </strong>
+          <Button
+            icon="eject"
+            content={scannedCard}
+            tooltip="Pull Funds and Eject Card"
+            tooltipPosition="bottom-end"
+            onClick={() => act('eject')}
+          />
+        </Stack.Item>
+        <Stack.Item>
+          <Stack align="center">
+            <Stack.Item>
+              <strong>Account Balance:</strong>
+            </Stack.Item>
+            <Stack.Item>
+              <Icon name="dollar-sign" />
+              {' '}
+              {account_funds}
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                tooltip="Add Funds"
+                tooltipPosition="bottom"
+                onClick={() => act('cashin')}
+              >
+                Cash In
+              </Button>
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                tooltip="Pull Funds"
+                tooltipPosition="bottom"
+                onClick={() => act('cashout')}
+              >
+                Cash Out
+              </Button>
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
+        <Stack.Item>
+          <Stack align="center">
+            <Stack.Item>Amount Wagered:</Stack.Item>
+            <Stack.Item>
+              <NumberInput
+                minValue={20}
+                maxValue={1000}
+                value={wager}
+                format={value => value + "⪽"}
+                onDrag={(_e, value) => act('set_wager', { bet: value })}
+              />
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
+        <Stack.Item>
+          <Stack align="center">
+            <Stack.Item>
+              <strong>Credits Remaining:</strong>
+            </Stack.Item>
+            <Stack.Item>
+              <Icon name="dollar-sign" />
+              {' '}
+              {money}
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
+        <Stack.Item>
+          <BlockQuote>
+            {plays} attempts have been made today!
+          </BlockQuote>
+        </Stack.Item>
+        <Stack.Divider />
+        <Stack.Item>
+          <Button
+            icon="dice"
+            tooltip="Pull the lever"
+            tooltipPosition="right"
+            onClick={() => act('play', { bet: wager })}
+          >
+            Play!
+          </Button>
+        </Stack.Item>
+      </Stack>
+    </>
   );
 };
 

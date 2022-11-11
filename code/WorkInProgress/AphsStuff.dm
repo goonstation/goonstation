@@ -8,13 +8,13 @@
 	desc = "Jane Goodall is crying."
 	density = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
 		src.visible_message("<B>[src]</B> screams!",1)
 		if (narrator_mode)
-			playsound(get_turf(src), 'sound/vox/scream.ogg', 10, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(src, 'sound/vox/scream.ogg', 10, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
 		else
-			playsound(get_turf(src), 'sound/voice/screams/monkey_scream.ogg', 10, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(src, 'sound/voice/screams/monkey_scream.ogg', 10, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
 		..()
 		return
 
@@ -63,26 +63,26 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for(var/obj/machinery/derelict_aiboss/ai/A in get_area(src))
 				src.ai = A
 				break
 			if(!ai) qdel(src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!ai) return
 		if(!ai.on) return
 		if(!ai.ready_for_tapes) return
 		if(src.loaded)
 			src.visible_message("[user] ejects the tape from the databank.",1)
-			playsound(get_turf(src), 'sound/machines/driveclick.ogg', 80,1)
+			playsound(src, 'sound/machines/driveclick.ogg', 80,1)
 			tape.set_loc(user.loc)
 			tape.layer = 3
 			icon_state = "oldai_mem-0"
 			ai.tapes_loaded--
 			src.loaded = 0
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if(!ai) return
 		if (istype(W, /obj/item/aiboss_tape/))
 			if(src.loaded)
@@ -102,12 +102,12 @@
 			ai.ready_for_tapes = 0
 			src.loaded = 1
 			var/tape_no = tape.tape_no
-			playsound(get_turf(src), 'sound/machines/driveclick.ogg', 80,1)
+			playsound(src, 'sound/machines/driveclick.ogg', 80,1)
 			src.visible_message("The databank begins loading the tape.",1)
 			src.icon_state = "oldai_mem-1"
 			sleep(1 SECOND)
 			src.icon_state = "oldai_mem-2"
-			SPAWN_DBG(5 SECONDS) src.icon_state = "oldai_mem-1"
+			SPAWN(5 SECONDS) src.icon_state = "oldai_mem-1"
 			if(ai) ai.load_tape(tape_no)
 		else
 			src.visible_message("[user] prods the databank's tape slot with [W]. Nothing happens.",1)
@@ -151,7 +151,7 @@
 		src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"")
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if(istype(W,/obj/item/paper/brad_punchcard))
 
 			if(src.teaser_enabled) return
@@ -172,7 +172,7 @@
 
 		if(prob(5))
 			speak(messages[1], 0) // spooky!!!
-			playsound(get_turf(src), 'sound/machines/modem.ogg', 80,1)
+			playsound(src, 'sound/machines/modem.ogg', 80,1)
 		return
 
 	power_change()
@@ -195,7 +195,7 @@
 	proc/do_teaser()
 		src.ready_for_tapes = 0
 		for(var/mob/O in hearers(src, null))
-			O << csound("sound/misc/satanellite_failedboot.ogg")
+			O << csound('sound/misc/satanellite_failedboot.ogg')
 		src.change_face("blink")
 		sleep(2 SECONDS)
 		src.change_face("static")
@@ -249,7 +249,7 @@
 		else
 			src.change_face("static")
 			for(var/mob/O in hearers(src, null))
-				O << csound("sound/misc/satanellite_bootsignal.ogg")
+				O << csound('sound/misc/satanellite_bootsignal.ogg')
 			sleep(17 SECONDS)
 			if(!on) return
 			src.ready_for_tapes = 1
@@ -266,10 +266,11 @@
 	proc/change_face(state)
 		src.overlays = null
 		var/image/sheen = image('icons/effects/96x96.dmi', "oldai_light")
-		sheen.plane = PLANE_SELFILLUM + 2
+		sheen.plane = PLANE_ABOVE_LIGHTING
+		sheen.layer = 100
 		if(findtext(state,"face_"))
 			var/image/face_over = image('icons/effects/96x96.dmi', "oldai-faceoverlay")
-			face_over.plane = PLANE_SELFILLUM + 1
+			face_over.plane = PLANE_ABOVE_LIGHTING
 			src.overlays += face_over
 
 		src.face = image('icons/effects/96x96.dmi', "oldai-[state]")
@@ -282,28 +283,28 @@
 	proc/load_tape(tapeno)
 		src.ready_for_tapes = 0
 		if(!on) return
-		playsound(get_turf(src), 'sound/machines/modem.ogg', 80,1)
+		playsound(src, 'sound/machines/modem.ogg', 80,1)
 		sleep(7 SECONDS)
 		switch(tapeno)
 			if(1)
 				src.change_face("static")
 				for(var/mob/O in hearers(src, null))
-					O << csound("sound/misc/satanellite_signal01.ogg")
+					O << csound('sound/misc/satanellite_signal01.ogg')
 				sleep(69 SECONDS)
 			if(2)
 				src.change_face("static")
 				for(var/mob/O in hearers(src, null))
-					O << csound("sound/misc/satanellite_signal02.ogg")
+					O << csound('sound/misc/satanellite_signal02.ogg')
 				sleep(69 SECONDS)
 			if(4)
 				src.change_face("static")
 				for(var/mob/O in hearers(src, null))
-					O << csound("sound/misc/satanellite_signal04.ogg")
+					O << csound('sound/misc/satanellite_signal04.ogg')
 				sleep(69 SECONDS)
 			if(420)
 				src.change_face("static")
 				for(var/mob/O in hearers(src, null))
-					O << csound("sound/misc/satanellite_signal420.ogg")
+					O << csound('sound/misc/satanellite_signal420.ogg')
 				sleep(69 SECONDS)
 		tapes_loaded++
 		src.change_face("dot")
@@ -332,9 +333,8 @@
 	icon_state = "yellow"
 	requires_power = 0
 	luminosity = 1
-	force_fullbright = 1
 
-/obj/machinery/power/solar_control/derelict_ai_sat
+/obj/machinery/computer/solar_control/derelict_ai_sat
 	id = "derelict_ai_sat"
 
 

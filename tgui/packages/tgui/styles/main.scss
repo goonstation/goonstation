@@ -26,7 +26,6 @@
 @include meta.load-css('./components/Flex.scss');
 @include meta.load-css('./components/GeneIcon.scss');
 @include meta.load-css('./components/Icon.scss');
-@include meta.load-css('./components/Image.scss');
 @include meta.load-css('./components/Input.scss');
 @include meta.load-css('./components/Knob.scss');
 @include meta.load-css('./components/LabeledList.scss');
@@ -36,6 +35,7 @@
 @include meta.load-css('./components/ProgressBar.scss');
 @include meta.load-css('./components/RoundGauge.scss');
 @include meta.load-css('./components/Section.scss');
+@include meta.load-css('./components/goonstation/SectionEx.scss');
 @include meta.load-css('./components/Slider.scss');
 @include meta.load-css('./components/Stack.scss');
 @include meta.load-css('./components/Table.scss');
@@ -45,12 +45,16 @@
 @include meta.load-css('./components/TooltipOverflow.scss');
 
 // Interfaces
+@include meta.load-css('./interfaces/common/ListSearch.scss');
 @include meta.load-css('./interfaces/Airlock.scss');
 @include meta.load-css('./interfaces/AlertModal.scss');
+@include meta.load-css('./interfaces/ComUplink.scss');
 @include meta.load-css('./interfaces/ChemDispenser.scss');
+@include meta.load-css('./interfaces/ChemHeater.scss');
 @include meta.load-css('./interfaces/CloningConsole.scss');
 @include meta.load-css('./interfaces/CyborgModuleRewriter.scss');
 @include meta.load-css('./interfaces/GasCanister.scss');
+@include meta.load-css('./interfaces/MusicInstrument.scss');
 @include meta.load-css('./interfaces/ListInput.scss');
 @include meta.load-css('./interfaces/Paper.scss');
 @include meta.load-css('./interfaces/PortableAtmos.scss');

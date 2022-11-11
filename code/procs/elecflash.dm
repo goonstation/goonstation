@@ -3,7 +3,7 @@
 var/global/mutable_appearance/elecflash_ma = null
 
 /proc/elecflash(var/atom/center, var/radius = 0, var/power=1, var/exclude_center = 1)//power 1 to 6
-	if (!center || center.qdeled || center.pooled || center.disposed)
+	if (!center || center.qdeled || center.disposed)
 		return
 
 	var/turf/center_turf = get_turf(center)
@@ -12,9 +12,9 @@ var/global/mutable_appearance/elecflash_ma = null
 		elecflash_ma.name = "electricity"
 		elecflash_ma.icon = 'icons/effects/electile.dmi'
 		elecflash_ma.alpha = 255
-		elecflash_ma.invisibility = 0
+		elecflash_ma.invisibility = INVIS_NONE
 		elecflash_ma.layer = TURF_LAYER
-		elecflash_ma.plane = PLANE_OVERLAY_EFFECTS
+		elecflash_ma.plane = PLANE_ABOVE_LIGHTING
 		elecflash_ma.mouse_opacity = 0
 
 	elecflash_ma.icon_state = "[power][pick("a","b","c")]"
@@ -24,11 +24,11 @@ var/global/mutable_appearance/elecflash_ma = null
 		if (1)
 			sound = "sparks"
 		if (2)
-			sound = "sound/effects/electric_shock_short.ogg"
+			sound = 'sound/effects/electric_shock_short.ogg'
 		if (3,4)
-			sound = "sound/effects/electric_shock.ogg"
+			sound = 'sound/effects/electric_shock.ogg'
 		else
-			sound = "sound/effects/elec_bzzz.ogg"
+			sound = 'sound/effects/elec_bzzz.ogg'
 	var/atom/E = null
 
 	var/list/chain_to = list()
@@ -94,7 +94,7 @@ var/global/mutable_appearance/elecflash_ma = null
 
 	playsound(center_turf, sound, 50, 1)
 
-	SPAWN_DBG(3 SECONDS)
+	SPAWN(3 SECONDS)
 		for(var/atom in elecs)
 			var/atom/A = atom
 			qdel(A)
@@ -107,6 +107,8 @@ var/global/mutable_appearance/elecflash_ma = null
 /atom/proc/electric_expose(var/power = 1)
 
 /mob/living/electric_expose(var/power = 1)
+	if (isintangible(src) || check_target_immunity(src))
+		return
 	if (power > 1) // pretty light damage and stam damage :)
 		if (src.bioHolder.HasEffect("resist_electric"))
 			boutput(src, "<span class='notice'>You feel electricity spark across you harmlessly!</span>")
@@ -115,4 +117,4 @@ var/global/mutable_appearance/elecflash_ma = null
 			src.do_disorient(stamina_damage = 15 + power * 8, weakened = 0, stunned = 0, paralysis = 0, disorient = (power * (0.5 SECONDS)), remove_stamina_below_zero = 0, target_type = DISORIENT_BODY)
 		else
 			src.do_disorient(stamina_damage = 15 + power * 8, weakened = 1 SECONDS + (power * (0.1 SECONDS)), stunned = 0, paralysis = 0, disorient = (power * (0.5 SECONDS)), remove_stamina_below_zero = 0, target_type = DISORIENT_BODY)
-		src.TakeDamage("chest", 0, rand(0,1.00) * power * 0.2, damage_type=DAMAGE_BURN)
+		src.TakeDamage("chest", 0, rand(0,1) * power * 0.2, damage_type=DAMAGE_BURN)

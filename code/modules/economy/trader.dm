@@ -1,7 +1,7 @@
 /proc/most_applicable_trade(var/list/datum/commodity/goods_buy, var/obj/item/sell_item)
 	var/list/goods_buy_types = new /list(0)
 	for(var/datum/commodity/N as anything in goods_buy)
-		if (istype(sell_item, N.comtype))
+		if (N.subtype_valid ? istype(sell_item, N.comtype) : N.comtype == sell_item.type)
 			goods_buy_types[N.comtype] = N
 	return goods_buy_types[maximal_subtype(goods_buy_types)]
 
@@ -13,13 +13,18 @@
 	var/hiketolerance = 20 //How much they will tolerate price hike
 	var/list/droplist = null //What the merchant will drop upon their death
 	var/list/goods_sell = new/list() //What products the trader sells
+	var/illegal = 0 // maybe trading with illegal bots could flag the user's criminal record for smuggling
+	var/goods_illegal = list() // Illegal goods
 	var/list/goods_buy = new/list() //what products the merchant buys
 	var/list/shopping_cart = new/list() //What has been bought
+	var/list/mob/barter_customers = list() // Customer credit
 	var/obj/item/sell = null //Item to sell
 	var/portrait_setup = null
 	var/obj/item/sellitem = null
 	var/item_name = "--------"
 	var/obj/item/card/id/scan = null
+	var/barter = FALSE
+	var/currency = "Credits"
 	//Trader dialogue
 	var/sell_dialogue = null
 	var/buy_dialogue = null
@@ -66,7 +71,7 @@
 		for(var/mob/M in AIviewers(src))
 			boutput(M, "<span class='alert'><B>[src.name]</B> becomes angry!</span>")
 		src.desc = "[src] looks angry."
-		SPAWN_DBG(rand(1000,3000))
+		SPAWN(rand(1000,3000))
 			src.visible_message("<b>[src.name] calms down.</b>")
 			src.desc = "[src] looks a bit annoyed."
 			src.temp = "[src.name] has calmed down.<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
@@ -80,7 +85,7 @@
 		src.add_dialog(user)
 		lastWindowName = windowName
 
-		var/dat = updatemenu()
+		var/dat = updatemenu(user)
 		if(!temp)
 			dat += {"[src.greeting]<HR>
 			<A href='?src=\ref[src];purchase=1'>Purchase Items</A><BR>
@@ -93,25 +98,25 @@
 		onclose(user, windowName)
 		return
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 			if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
-			boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
-			var/datum/data/record/account = null
+			boutput(user, "<span class='notice'>You swipe the ID card in the card reader.</span>")
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(I:registered)
 			if(account)
-				var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
+				var/enterpin = user.enter_pin("Card Reader")
 				if (enterpin == I:pin)
-					boutput(usr, "<span class='notice'>Card authorized.</span>")
+					boutput(user, "<span class='notice'>Card authorized.</span>")
 					src.scan = I
 				else
-					boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
+					boutput(user, "<span class='alert'>Pin number incorrect.</span>")
 					src.scan = null
 			else
-				boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
+				boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 				src.scan = null
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(..())
 			return
 		if(dialogue != null)
@@ -136,12 +141,17 @@
 		///////////////////////////////
 		///////Generate Purchase List//
 		///////////////////////////////
+		var/list/goods_for_purchase = goods_sell.Copy()
+		// Illegal goods for syndicate traitors
+		if (illegal)
+			if(usr.mind && (usr.mind.special_role == ROLE_TRAITOR || usr.mind.special_role == ROLE_SPY_THIEF || usr.mind.special_role == ROLE_NUKEOP ||	usr.mind.special_role == ROLE_SLEEPER_AGENT || usr.mind.special_role == ROLE_HARDMODE_TRAITOR ||	usr.mind.special_role == ROLE_OMNITRAITOR))
+				goods_for_purchase += goods_illegal
 		if (href_list["purchase"])
 			src.temp =buy_dialogue + "<HR><BR>"
-			for(var/datum/commodity/N in goods_sell)
+			for(var/datum/commodity/N in goods_for_purchase)
 				// Have to send the type instead of a reference to the obj because it would get caught by the garbage collector. oh well.
 				src.temp += {"<A href='?src=\ref[src];doorder=\ref[N]'><B><U>[N.comname]</U></B></A><BR>
-				<B>Cost:</B> [N.price] Credits<BR>
+				<B>Cost:</B> [N.price] [currency]<BR>
 				<B>Description:</B> [N.desc]<BR>
 				<A href='?src=\ref[src];haggleb=\ref[N]'><B><U>Haggle</U></B></A><BR><BR>"}
 			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Ok</A>"
@@ -149,19 +159,23 @@
 		///////Handle the buying of a specific item //
 		//////////////////////////////////////////////
 		else if (href_list["doorder"])
-			if(!scan)
-				src.temp = {"You have to scan a card in first.<BR>
-							<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
-				src.updateUsrDialog()
-				return
-			if (src.scan.registered in FrozenAccounts)
-				boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
-				return
-			var/datum/data/record/account = null
-			account = FindBankAccountByName(src.scan.registered)
-			if (account)
+			var/datum/db_record/account = null
+			if(!barter)
+				if(!scan)
+					src.temp = {"You have to scan a card in first.<BR>
+								<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
+					src.updateUsrDialog()
+					return
+				if (src.scan.registered in FrozenAccounts)
+					boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
+					return
+
+				account = FindBankAccountByName(src.scan.registered)
+			if (barter || account)
 				var/quantity = 1
 				quantity = input("How many units do you want to purchase? Maximum: 50", "Trader Purchase", null, null) as num
+				if(!isnum_safe(quantity))
+					return
 				if (quantity < 1)
 					quantity = 0
 					return
@@ -169,14 +183,18 @@
 					quantity = 50
 
 				////////////
-				var/datum/commodity/P = locate(href_list["doorder"]) in goods_sell
+				var/datum/commodity/P = locate(href_list["doorder"]) in goods_for_purchase
 
 				if(P)
+					var/current_funds = src.barter ? barter_customers[usr] : account["current_money"]
 					if(shopping_cart.len + quantity > 50)
 						src.temp = {"Error. Maximum purchase limit of 50 items exceeded.<BR>
 						<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
-					else if(account.fields["current_money"] >= P.price * quantity)
-						account.fields["current_money"] -= P.price * quantity
+					else if(current_funds >= P.price * quantity)
+						if(barter)
+							barter_customers[usr] -= P.price * quantity
+						else
+							account["current_money"] -= P.price * quantity
 						while(quantity-- > 0)
 							shopping_cart += new P.comtype()
 						src.temp = {"[pick(successful_purchase_dialogue)]<BR>
@@ -199,8 +217,8 @@
 		else if (href_list["haggleb"])
 
 			var/askingprice= input(usr, "Please enter your asking price.", "Haggle", 0) as null|num
-			if(askingprice)
-				var/datum/commodity/N = locate(href_list["haggleb"]) in goods_sell
+			if(isnum_safe(askingprice))
+				var/datum/commodity/N = locate(href_list["haggleb"]) in goods_for_purchase
 				if(N)
 					if(patience == N.haggleattempts)
 						src.temp = "[src.name] becomes angry and won't trade anymore."
@@ -222,7 +240,7 @@
 				if(N.hidden)
 					continue
 				else
-					temp+={"<B>[N.comname] for [N.price] Credits:</B> [N.indemand ? N.desc_buy_demand : N.desc_buy]<BR>
+					temp+={"<B>[N.comname] for [N.price] [currency]:</B> [N.indemand ? N.desc_buy_demand : N.desc_buy]<BR>
 							<A href='?src=\ref[src];haggles=[N]'><B><U>Haggle</U></B></A><BR><BR>"}
 			if(src.sellitem)
 				src.item_name = src.sellitem.name
@@ -238,7 +256,7 @@
 		else if (href_list["haggles"])
 
 			var/askingprice= input(usr, "Please enter your asking price.", "Haggle", 0) as null|num
-			if(askingprice)
+			if(isnum_safe(askingprice))
 				var/datum/commodity/N = locate(href_list["haggles"]) in goods_buy
 				if(N)
 					if(patience == N.haggleattempts)
@@ -276,7 +294,7 @@
 				if(N.hidden)
 					continue
 				else
-					temp+="<B>[N.comname] for [N.price] Credits:</B> [N.indemand ? N.desc_buy_demand : N.desc_buy]<BR><BR>"
+					temp+="<B>[N.comname] for [N.price] [currency]:</B> [N.indemand ? N.desc_buy_demand : N.desc_buy]<BR><BR>"
 			if(src.sellitem)
 				src.item_name = src.sellitem.name
 			else
@@ -290,22 +308,24 @@
 		/////////Actually Sell the item //////////
 		//////////////////////////////////////////
 		else if (href_list["selltheitem"])
+			var/datum/db_record/account = null
 			if(!src.sellitem)
 				src.updateUsrDialog()
 				return
 			if (doing_a_thing)
 				src.updateUsrDialog()
 				return
-			if(!src.scan)
-				src.temp = {"You have to scan a card in first.<BR>
-							<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
-				src.updateUsrDialog()
-				return
+			if(!barter)
+				if(!src.scan)
+					src.temp = {"You have to scan a card in first.<BR>
+								<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
+					src.updateUsrDialog()
+					return
+				account = FindBankAccountByName(src.scan.registered)
+
 			var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, src.sellitem)
 			if(tradetype)
-				var/datum/data/record/account = null
-				account = FindBankAccountByName(src.scan.registered)
-				if (!account)
+				if (!barter && !account)
 					src.temp = {" [src] looks slightly agitated when he realizes there is no bank account associated with the ID card.<BR>
 								<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
 					src.add_fingerprint(usr)
@@ -315,9 +335,12 @@
 					doing_a_thing = 1
 					src.temp = pick(src.successful_sale_dialogue) + "<BR>"
 					src.temp += "<BR><A href='?src=\ref[src];sell=1'>OK</A>"
+					if(account)
+						account["current_money"] += sold_item(tradetype, sellitem) * src.sellitem.amount
+					else
+						barter_customers[usr]  += sold_item(tradetype, sellitem) * src.sellitem.amount
 					qdel (src.sellitem)
 					src.sellitem = null
-					account.fields["current_money"] += tradetype.price
 					src.add_fingerprint(usr)
 					src.updateUsrDialog()
 					doing_a_thing = 0
@@ -329,25 +352,8 @@
 		////////Handle Bank account Set-Up ///////
 		//////////////////////////////////
 		else if (href_list["card"])
-			if (src.scan) src.scan = null
-			else
-				var/obj/item/I = usr.equipped()
-				if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
-					if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
-					boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
-					var/datum/data/record/account = null
-					account = FindBankAccountByName(I:registered)
-					if(account)
-						var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
-						if (enterpin == I:pin)
-							boutput(usr, "<span class='notice'>Card authorized.</span>")
-							src.scan = I
-						else
-							boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
-							src.scan = null
-					else
-						boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
-						src.scan = null
+			card_scan()
+
 		////////////////////////////////////////////////////
 		//////View what still needs to be picked up/////////
 		///////////////////////////////////////////////////
@@ -372,26 +378,52 @@
 		src.add_fingerprint(usr)
 		src.updateUsrDialog()
 		return
+
+	proc/card_scan()
+		if (src.scan) src.scan = null
+		else
+			var/obj/item/I = usr.equipped()
+			if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
+				if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
+				boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
+				var/datum/db_record/account = null
+				account = FindBankAccountByName(I:registered)
+				if(account)
+					var/enterpin = usr.enter_pin("Card Reader")
+					if (enterpin == I:pin)
+						boutput(usr, "<span class='notice'>Card authorized.</span>")
+						src.scan = I
+					else
+						boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
+						src.scan = null
+				else
+					boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
+					src.scan = null
+
 	/////////////////////////////////////////////
 	/////Update the menu with the default items
 	////////////////////////////////////////////
-	proc/updatemenu()
-
+	proc/updatemenu(mob/user)
 		var/dat
 		dat = portrait_setup
-		dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
-		if(scan)
-			var/datum/data/record/account = null
-			account = FindBankAccountByName(src.scan.registered)
-			if (account)
-				dat+="<B>Current Funds</B>: [account.fields["current_money"]] Credits<HR>"
-			else
-				dat+="<HR>"
+
+		if(barter)
+			if(!barter_customers[user])
+				barter_customers[user] = 0
+			dat+="<B>Barter value</B>: [barter_customers[user]] [currency]<HR>"
 		else
-			dat+="<HR>"
+			dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
+			if(scan)
+				var/datum/db_record/account = null
+				account = FindBankAccountByName(src.scan.registered)
+				if (account)
+					dat+="<B>Current Funds</B>: [account["current_money"]] [currency]<HR>"
+				else
+					dat+="<HR>"
 		if(temp)
 			dat+=temp
 		return dat
+
 	///////////////////////////////////////
 	///////Spawn the crates full of goods///
 	////////////////////////////////////////
@@ -453,11 +485,11 @@
 			if(askingprice < H.price)
 				if (src.bullshit >= 5)
 					H.price = askingprice
-					src.temp = "<B>Cost:</B> [H.price] Credits<BR>"
+					src.temp = "<B>Cost:</B> [H.price] [currency]<BR>"
 					src.temp += src.errormsgs[3]
 					return
 				else
-					src.temp = "<B>Cost:</B> [H.price] Credits<BR>"
+					src.temp = "<B>Cost:</B> [H.price] [currency]<BR>"
 					src.temp += src.errormsgs[4]
 					return
 		// check if the price increase % of the haggle is more than this trader will tolerate
@@ -465,13 +497,13 @@
 		hikeperc = (hikeperc / H.price) * 100
 		var/negatol = 0 - src.hiketolerance
 		if (buying == 1) // we're buying, so price must be checked for negative
-			if (hikeperc <= negatol)
-				src.temp = "<B>Cost:</B> [H.price] Credits<BR>"
+			if (hikeperc <= negatol || askingprice < H.baseprice / 5)
+				src.temp = "<B>Cost:</B> [H.price] [currency]<BR>"
 				src.temp += src.errormsgs[5]
 				H.haggleattempts++
 				return
 		else
-			if (hikeperc >= src.hiketolerance) // we're selling, so check hike for positive
+			if (hikeperc >= src.hiketolerance || askingprice > H.baseprice * 5) // we're selling, so check hike for positive
 				src.temp = src.errormsgs[5]
 				H.haggleattempts++
 				return
@@ -486,7 +518,7 @@
 			else
 				H.price = round(middleground - rand(0,negotiate))
 
-		src.temp = "<B>New Cost:</B> [H.price] Credits<BR><HR>"
+		src.temp = "<B>New Cost:</B> [H.price] [currency]<BR><HR>"
 		H.haggleattempts++
 		// warn the player if the trader isn't going to take any more haggling
 		if (patience == H.haggleattempts)
@@ -494,27 +526,33 @@
 		else
 			src.temp += pick(src.hagglemsgs)
 
+	///////////////////////////////////////////////
+	////// special handling for selling an item ///
+	///////////////////////////////////////////////
+	proc/sold_item(datum/commodity/C, obj/S)
+		. = C.price
 
 	///////////////////////////////////
 	////// batch selling - cogwerks ///
 	///////////////////////////////////
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
-		if(get_dist(O,user) > 1) return
+		var/datum/db_record/account = null
+		if(BOUNDS_DIST(O, user) > 0) return
 		if(!isliving(user)) return
-		if(!src.scan)
-			boutput(user, "<span class='alert'>You have to scan your ID first!</span>")
-			return
+		if(!barter)
+			if(!src.scan)
+				boutput(user, "<span class='alert'>You have to scan your ID first!</span>")
+				return
+			account = FindBankAccountByName(src.scan.registered)
+			if(!account)
+				boutput(user, "<span class='alert'>[src]There is no account registered with this card!</span>")
+				return
 		if(angry)
 			boutput(user, "<span class='alert'>[src] is angry and won't trade with anyone right now.</span>")
 			return
 		if(!alive)
 			boutput(user, "<span class='alert'>[src] is dead!</span>")
-			return
-		var/datum/data/record/account = null
-		account = FindBankAccountByName(src.scan.registered)
-		if(!account)
-			boutput(user, "<span class='alert'>[src]There is no account registered with this card!</span>")
 			return
 		/*if (isitem(O))
 			user.visible_message("<span class='notice'>[src] rummages through [user]'s goods.</span>")
@@ -523,28 +561,42 @@
 				if (N.comtype == O.type)
 					user.visible_message("<span class='notice'>[src] is willing to buy all of [O].</span>")
 					for(N.comtype in view(1,user))
-						account.fields["current_money"] += N.price
+						account["current_money"] += N.price
 						qdel(N.comtype)
 						sleep(0.2 SECONDS)
 						if (user.loc != staystill) break*/
 		if (istype(O, /obj/storage/crate/))
-			if (O:locked)
-				user.show_text("[src] stares at the locked [O], unamused. Maybe you should make sure the thing's open, first.", "red")
+			var/obj/storage/crate/C = O
+			if (C.locked)
+				user.show_text("[src] stares at the locked [C], unamused. Maybe you should make sure the thing's open, first.", "red")
 				return
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				user.visible_message("<span class='notice'>[src] rummages through [user]'s [O].</span>")
 				playsound(src.loc, "rustle", 60, 1)
 				var/cratevalue = null
-				for (var/obj/sellitem in O.contents)
+				for (var/obj/item/sellitem in O.contents)
 					var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, sellitem)
 					if(tradetype)
-						cratevalue += tradetype.price
+						cratevalue += sold_item(tradetype, sellitem) * sellitem.amount
 						qdel(sellitem)
 				if(cratevalue)
-					boutput(user, "<span class='notice'>[src] takes what they want from [O]. [cratevalue] credits have been transferred to your account.</span>")
-					account.fields["current_money"] += cratevalue
+					boutput(user, "<span class='notice'>[src] takes what they want from [O]. [cratevalue] [currency] have been transferred to your account.</span>")
+					if(account)
+						account["current_money"] += cratevalue
+					else
+						barter_customers[user] += cratevalue
 				else
 					boutput(user, "<span class='notice'>[src] finds nothing of interest in [O].</span>")
+
+// trader except money never comes out. You sell to accrue credit that can then be spent so it is a closed system.
+/obj/npc/trader/barter
+	name="Trader"
+	barter=TRUE
+	attackby(obj/item/I as obj, mob/user as mob)
+		return
+
+	card_scan()
+		return
 
 /////////////////////////////////////////////////////
 ///////////////THE TRADERS ///////////////////////////
@@ -624,8 +676,11 @@
 		/datum/commodity/junk,
 		/datum/commodity/diner,
 		/datum/commodity/bodyparts,
-		/datum/commodity/medical,
-		/datum/commodity/synthmodule)
+		/datum/commodity/medical)
+
+		#ifdef CREATE_PATHOGENS //Don't need this when there's no pathology
+		commercetypes += /datum/commodity/synthmodule
+		#endif
 
 		var/list/selltypes = typesof(pick(commercetypes))
 		var/list/buytypes = typesof(pick(commercetypes))
@@ -693,7 +748,7 @@
 
 		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
 
-		sell_dialogue = "You recieve visions of various indviuals who are looking to purchase something, and get the feeling that <B>[src.name]</B> will act as the middle man."
+		sell_dialogue = "You receive visions of various indviuals who are looking to purchase something, and get the feeling that <B>[src.name]</B> will act as the middle man."
 
 		buy_dialogue = "You hear a voice in your head,<I>\"Please select what you would like to buy\".</I>"
 
@@ -732,7 +787,6 @@
 	picture = "robot.png"
 	trader_area = "/area/turret_protected/robot_trade_outpost"
 	var/productset = 0 // 0 is robots and salvage, 1 is podparts and drugs, 2 is produce. 3 is syndicate junk, 4 is medical stuff
-	var/illegal = 0 // maybe trading with illegal bots could flag the user's criminal record for smuggling
 	angrynope = "Unable to process request."
 	whotext = "I am a trading unit. I have been authorized to engage in trade with you."
 
@@ -787,13 +841,25 @@
 				src.goods_buy += new /datum/commodity/produce/special/glowfruit(src)
 
 			if(3) // syndicate bot
-				src.goods_sell += new /datum/commodity/contraband/command_suit(src)
+				src.illegal = 1
+				var/carlsell = rand(1,10)
+				src.goods_illegal += new /datum/commodity/contraband/command_suit(src)
+				src.goods_illegal += new /datum/commodity/contraband/command_helmet(src)
+				src.goods_illegal += new /datum/commodity/contraband/disguiser(src)
+				if (carlsell <= 3)
+					src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
+				if (carlsell >= 2 && carlsell <= 6)
+					src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
+				if (carlsell >= 5 && carlsell <= 8)
+					src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
+				if (carlsell >= 9)
+					src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
+					src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
+					src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
+				src.goods_illegal += new /datum/commodity/contraband/birdbomb(src)
+				src.goods_illegal += new /datum/commodity/contraband/syndicate_headset(src)
 				src.goods_sell += new /datum/commodity/contraband/swatmask(src)
-				src.goods_sell += new /datum/commodity/contraband/radiojammer(src)
-				src.goods_sell += new /datum/commodity/contraband/stealthstorage(src)
 				src.goods_sell += new /datum/commodity/contraband/spy_sticker_kit(src)
-				src.goods_sell += new /datum/commodity/contraband/disguiser(src)
-				src.goods_sell += new /datum/commodity/contraband/birdbomb(src)
 				src.goods_sell += new /datum/commodity/contraband/flare(src)
 				src.goods_sell += new /datum/commodity/contraband/eguncell_highcap(src)
 				src.goods_sell += new /datum/commodity/podparts/cloak(src)
@@ -801,6 +867,7 @@
 				src.goods_sell += new /datum/commodity/podparts/ballistic(src)
 				src.goods_sell += new /datum/commodity/podparts/artillery(src)
 				src.goods_sell += new /datum/commodity/contraband/artillery_ammo(src)
+				src.goods_sell += new /datum/commodity/contraband/ai_kit_syndie(src)
 #ifdef MAP_OVERRIDE_MANTA
 				src.goods_sell += new /datum/commodity/HEtorpedo(src)
 #endif
@@ -824,13 +891,13 @@
 				src.goods_sell += new /datum/commodity/medical/firstaidC(src)
 				src.goods_sell += new /datum/commodity/medical/injectorPent(src)
 				src.goods_sell += new /datum/commodity/medical/injectorPerf(src)
+				#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 				src.goods_sell += new /datum/commodity/synthmodule/bacteria(src)
 				src.goods_sell += new /datum/commodity/synthmodule/virii(src)
 				src.goods_sell += new /datum/commodity/synthmodule/fungi(src)
 				src.goods_sell += new /datum/commodity/synthmodule/parasite(src)
 				src.goods_sell += new /datum/commodity/synthmodule/gmcell(src)
 				src.goods_sell += new /datum/commodity/synthmodule/vaccine(src)
-				#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 				src.goods_sell += new /datum/commodity/pathogensample(src)
 				#endif
 
@@ -896,6 +963,8 @@
 				src.goods_sell += new /datum/commodity/junk/voltron(src)
 				src.goods_sell += new /datum/commodity/junk/cloner_upgrade(src)
 				src.goods_sell += new /datum/commodity/junk/grinder_upgrade(src)
+				src.goods_sell += new /datum/commodity/junk/speedyclone(src)
+				src.goods_sell += new /datum/commodity/junk/efficientclone(src)
 				src.goods_sell += new /datum/commodity/podparts/goldarmor(src)
 
 				src.goods_buy += new /datum/commodity/salvage/scrap(src)
@@ -1010,7 +1079,7 @@
 
 	// OKAY we're tryin to do something here with the medal for the rescue allright?
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/coin/bombini))
 			for(var/mob/M in AIviewers(src))
 				boutput(M, "<B>[src.name]</B> buzzes excitedly! \"BZZ?? BZZ!!\"")
@@ -1050,15 +1119,28 @@
 		src.goods_sell += new /datum/commodity/costume/utena(src)
 		src.goods_sell += new /datum/commodity/costume/roller_disco(src)
 		src.goods_sell += new /datum/commodity/costume/werewolf(src)
+		src.goods_sell += new /datum/commodity/costume/vampire(src)
 		src.goods_sell += new /datum/commodity/costume/abomination(src)
 		src.goods_sell += new /datum/commodity/costume/hotdog(src)
+		src.goods_sell += new /datum/commodity/costume/purpwitch(src)
+		src.goods_sell += new /datum/commodity/costume/mintwitch(src)
 		src.goods_sell += new /datum/commodity/costume/mime(src)
 		src.goods_sell += new /datum/commodity/costume/mime/alt(src) //suspenders and such
+		src.goods_sell += new /datum/commodity/costume/jester(src)
+		src.goods_sell += new /datum/commodity/backpack/breadpack(src)
+		src.goods_sell += new /datum/commodity/backpack/bearpack(src)
+		src.goods_sell += new /datum/commodity/backpack/turtlebrown(src)
+		src.goods_sell += new /datum/commodity/backpack/turtlegreen(src)
 		src.goods_sell += new /datum/commodity/balloons(src)
 		src.goods_sell += new /datum/commodity/crayons(src)
+		src.goods_sell += new /datum/commodity/sticker/googly_eyes(src)
+		src.goods_sell += new /datum/commodity/sticker/googly_eyes_angry(src)
+		src.goods_sell += new /datum/commodity/toygun(src)
+		src.goods_sell += new /datum/commodity/toygunammo(src)
 		src.goods_sell += new /datum/commodity/junk/circus_board(src)
 		src.goods_sell += new /datum/commodity/junk/pie_launcher(src)
 		src.goods_sell += new /datum/commodity/junk/laughbox(src)
+		src.goods_sell += new /datum/commodity/junk/ai_kit_clown(src)
 
 
 		/////////////////////////////////////////////////////////
@@ -1096,7 +1178,7 @@
 
 		pickupdialoguefailure = "You need to BUY things before you pick them up!"
 
-/obj/npc/trader/exclown/attackby(obj/item/W as obj, mob/living/user as mob)
+/obj/npc/trader/exclown/attackby(obj/item/W, mob/living/user)
 	if (!src.honk && user.mind && user.mind.assigned_role == "Clown" && istype(W, /obj/item/toy/diploma))
 		src.visible_message("<span class='alert'><B>[user]</B> pokes [src] with [W]. [src] nods knowingly.</span>")
 		src.spawncrate(/obj/item/storage/box/banana_grenade_kit)
@@ -1284,7 +1366,7 @@
 		pickupdialoguefailure = "<i>A hand sticking out from a toilet flails around for a bit.</i>"
 
 /obj/npc/trader/twins
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "twins"
 	picture = "twins.png"
 	name = "Carol and Lynn"

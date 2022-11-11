@@ -7,9 +7,10 @@
 	requires_robes = 1
 	cooldown_staff = 1
 	restricted_area_check = 1
-	voice_grim = "sound/voice/wizard/MistFormGrim.ogg"
-	voice_fem = "sound/voice/wizard/MistFormFem.ogg"
-	voice_other = "sound/voice/wizard/MistFormLoud.ogg"
+	voice_grim = 'sound/voice/wizard/MistFormGrim.ogg'
+	voice_fem = 'sound/voice/wizard/MistFormFem.ogg'
+	voice_other = 'sound/voice/wizard/MistFormLoud.ogg'
+	maptext_colors = list("#24639a", "#24bdc6", "#55eec2", "#24bdc6")
 
 	cast()
 		if(!holder)
@@ -17,7 +18,8 @@
 		if (spell_invisibility(holder.owner, 1, 0, 1, 1) != 1) // Dry run. Can we phaseshift?
 			return 1
 
-		holder.owner.say("PHEE CABUE")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("PHEE CABUE", FALSE, maptext_style, maptext_colors)
 		..()
 
 		var/SPtime = 35
@@ -25,7 +27,7 @@
 			SPtime = 50
 		else
 			boutput(holder.owner, "<span class='alert'>Your spell doesn't last as long without a staff to focus it!</span>")
-		playsound(holder.owner.loc, "sound/effects/mag_phase.ogg", 25, 1, -1)
+		playsound(holder.owner.loc, 'sound/effects/mag_phase.ogg', 25, 1, -1)
 		spell_invisibility(holder.owner, SPtime, 0, 1)
 
 // Merged some stuff from wizard and vampire phaseshift for easy of use (Convair880).
@@ -55,13 +57,14 @@
 		return 1 // Return 1 if we got this far in the test run.
 
 	if (stop_burning == 1)
-		var/mob/living/carbon/human/HH = H
-		if (istype(HH) && HH.getStatusDuration("burning"))
-			boutput(HH, "<span class='notice'>The flames sputter out as you phase shift.</span>")
-			HH.delStatus("burning")
+		if (H.getStatusDuration("burning"))
+			boutput(H, "<span class='notice'>The flames sputter out as you phase shift.</span>")
+			H.delStatus("burning")
 
-	SPAWN_DBG(0)
+	SPAWN(0)
+		var/start_loc
 		var/mobloc = get_turf(H.loc)
+		start_loc = H.loc
 		var/obj/dummy/spell_invis/holder = new /obj/dummy/spell_invis( mobloc )
 		var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
 		animation.name = "water"
@@ -73,7 +76,7 @@
 		animation.master = holder
 		flick("liquify",animation)
 		H.set_loc(holder)
-		var/datum/effects/system/steam_spread/steam = unpool(/datum/effects/system/steam_spread)
+		var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
 		steam.set_up(10, 0, mobloc)
 		steam.start()
 		sleep(time)
@@ -88,6 +91,7 @@
 		flick("reappear",animation)
 		sleep(0.5 SECONDS)
 		H.set_loc(mobloc)
+		logTheThing(LOG_COMBAT, H, "used phaseshift to move from [log_loc(start_loc)] to [log_loc(H.loc)].")
 		H.canmove = 1
 		H.restrain_time = 0
 		qdel(animation)
@@ -100,7 +104,7 @@
 	name = "water"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	var/canmove = 1 // can be used to completely stop movement
 	var/movecd = 0 // used in relaymove, so people don't move too quickly
 	density = 0
@@ -131,7 +135,7 @@
 			src.y--
 			src.x--
 	src.movecd = 1
-	SPAWN_DBG(0.2 SECONDS) src.movecd = 0
+	SPAWN(0.2 SECONDS) src.movecd = 0
 
 /obj/dummy/spell_invis/ex_act(blah)
 	return
@@ -150,6 +154,8 @@
 	if (isdead(H))
 		return
 	if (!H.canmove)
+		return
+	if(isrestrictedz(H.loc.z))
 		return
 
 	if (isliving(H))
@@ -195,27 +201,29 @@
 
 	New(loc,ownermob,cloak)
 		..()
-		src.owner = ownermob
-		src.owner.set_loc(src)
+
+		if(ownermob)
+			src.owner = ownermob
+			src.owner.set_loc(src)
+			src.owner.remove_stamina(5)
 
 		use_cloakofdarkness = cloak
 
 		if (isvampire(owner))
 			vampholder = owner.get_ability_holder(/datum/abilityHolder/vampire)
 
-		var/obj/itemspecialeffect/poof/P = unpool(/obj/itemspecialeffect/poof)
+		var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
 		P.setup(src.loc)
-		playsound(src.loc,"sound/effects/poff.ogg", 50, 1, pitch = 1)
+		playsound(src.loc, 'sound/effects/poff.ogg', 50, 1, pitch = 1)
 
 		//overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 		//overlay_image.color = "#333333"
 
-		owner.remove_stamina(5)
 
 		if (use_cloakofdarkness)
 			processing_items |= src
 
-		SPAWN_DBG(-1)
+		SPAWN(-1)
 			var/reduc_count = 0
 			while(src && !src.qdeled && owner && owner.stamina >= STAMINA_SPRINT && owner.client && owner.client.check_key(KEY_RUN))
 				reduc_count++
@@ -258,22 +266,22 @@
 	proc/set_cloaked(var/cloaked = 1)
 		if (use_cloakofdarkness)
 			if (cloaked == 1)
-				src.invisibility = 1
+				src.invisibility = INVIS_INFRA
 				src.alpha = 120
 				//src.UpdateOverlays(overlay_image, "batpoof_cloak")
 			else
-				src.invisibility = 0
+				src.invisibility = INVIS_NONE
 				src.alpha = 250
 				//src.UpdateOverlays(null, "batpoof_cloak")
 
 	proc/dispel(var/forced = 0)
-		if (forced)
+		if (forced && owner)
 			owner.stamina = max(owner.stamina - 40, STAMINA_SPRINT)
 
-		var/obj/itemspecialeffect/poof/P = unpool(/obj/itemspecialeffect/poof)
+		var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
 		P.setup(src.loc, forced)
 
-		playsound(src.loc,"sound/effects/poff.ogg", 50, 1, pitch = 1.3)
+		playsound(src.loc, 'sound/effects/poff.ogg', 50, 1, pitch = 1.3)
 
 		qdel(src)
 
@@ -308,13 +316,12 @@
 				if (vampholder)
 					if (ishuman(atom) && vampholder.can_bite(atom, is_pointblank = 0))
 						vampholder.do_bite(atom, mult = 0.25)
-						playsound(src.loc,"sound/impact_sounds/Flesh_Crush_1.ogg", 35, 1, pitch = 1.3)
+						playsound(src.loc, 'sound/impact_sounds/Flesh_Crush_1.ogg', 35, 1, pitch = 1.3)
 						break
-				if (src.loc:checkingcanpass)
-					if (istype(atom,/obj/machinery/door))
-						var/obj/machinery/door/D = atom
-						//D.bumpopen(owner)
-						D.try_force_open(owner)
+				if (istype(atom,/obj/machinery/door))
+					var/obj/machinery/door/D = atom
+					//D.bumpopen(owner)
+					D.try_force_open(owner)
 				i++
 				if (i > 20)
 					break
@@ -322,6 +329,9 @@
 		actions.interrupt(user, INTERRUPT_MOVE)
 
 		.= delay
+
+	mob_flip_inside(mob/user)
+		animate_spin(src, pick("L", "R"), 1, FALSE)
 
 	ex_act(severity)
 		dispel(1)
@@ -333,14 +343,15 @@
 
 	attackby(obj/item/W, mob/M)
 		dispel(1)
-		if(owner) owner.attackby(W,M)
+		if(owner) owner.Attackby(W,M)
 
 	attack_hand(mob/M)
 		dispel(1)
-		if(owner) owner.attackby(M)
+		if(owner) owner.Attackby(M)
 
 
 	firepoof
+		name = "fireball"
 		icon_state = "fireball"
 		icon = 'icons/obj/wizard.dmi'
 		flags = TABLEPASS
@@ -348,7 +359,7 @@
 
 		New()
 			..()
-			playsound(src.loc, "sound/effects/mag_fireballlaunch.ogg", 15, 1, pitch = 1.8)
+			playsound(src.loc, 'sound/effects/mag_fireballlaunch.ogg', 15, 1, pitch = 1.8)
 
 		relaymove()
 			..()
@@ -356,5 +367,5 @@
 
 
 		dispel()
-			playsound(src.loc, "sound/effects/mag_fireballlaunch.ogg", 15, 1, pitch = 2)
+			playsound(src.loc, 'sound/effects/mag_fireballlaunch.ogg', 15, 1, pitch = 2)
 			..()

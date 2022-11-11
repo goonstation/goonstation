@@ -1,6 +1,6 @@
 /datum/custom_soup
 	var/name
-	var/amount = 3
+	var/bites_left = 3
 	var/heal_amt = 0
 	var/desc = null
 	var/initial_volume = 60
@@ -8,23 +8,30 @@
 	var/list/food_effects = list()
 
 /obj/item/reagent_containers/food/snacks/soup/custom
-	icon = 'icons/obj/soup_pot.dmi'
-	icon_state = "soup_custom"
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "bowl"
 	name = null
 	desc = "Ah, the, uh, wonders of the kitchen stove."
-	amount = null
+	bites_left = null
 	heal_amt = null
 	initial_volume = null
 	initial_reagents = null
 	food_effects = list()
-	var/image/fluid_icon
+	var/image/fluid_image
 
-	New(var/datum/custom_soup/S)
-		if(!S)
+	New(var/datum/custom_soup/S, var/obj/item/reagent_containers/food/drinks/bowl/bowl = null)
+		if(!S || !istype(S))
 			qdel(src)
 			return
+		if (bowl)
+			src.icon = bowl.icon
+			src.icon_state = bowl.icon_state
+			src.dropped_item = bowl.type
+			src.inhand_image_icon = bowl.inhand_image_icon
+			src.item_state = bowl.item_state
+		src.fluid_image = bowl?.fluid_image || image("icon" = 'icons/obj/kitchen.dmi', "icon_state" = "bowl_fluid")
 		src.name = S.name
-		src.amount = S.amount
+		src.bites_left = S.bites_left
 		if(S.desc)
 			src.desc = S.desc
 		src.heal_amt = S.heal_amt
@@ -41,14 +48,13 @@
 				temp -= effect
 
 
-		fluid_icon = image("icon" = 'icons/obj/soup_pot.dmi', "icon_state" = "soup_custom-f")
 
 		..()
 
 		if(reagents.total_volume)
 			var/datum/color/average = reagents.get_average_color()
-			fluid_icon.color = average.to_rgba()
-			src.UpdateOverlays(src.fluid_icon, "fluid")
+			src.fluid_image.color = average.to_rgba()
+			src.UpdateOverlays(src.fluid_image, "fluid")
 		else
 			src.UpdateOverlays(null, "fluid")
 
@@ -65,7 +71,7 @@
 	var/on = 0
 	flags = NOSPLASH
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/soup_pot))
 			if(src.pot)
 				boutput(user,"<span class='alert'><b>There's already a pot on the stove, dummy!</span>")
@@ -82,7 +88,7 @@
 				return
 
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				src.light(user, "<span class='alert'><b>Did [user] just light \his [src] with [W]? Holy Shit.</b></span>")
+				src.light(user, "<span class='alert'><b>Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit.</b></span>")
 				return
 
 			else if (istype(W, /obj/item/device/igniter))
@@ -114,16 +120,16 @@
 				return
 
 			else
-				pot.attackby(W,user)
+				pot.Attackby(W,user)
 				if(!pot.my_soup)
-					W.afterattack(pot,user) // ????
+					W.AfterAttack(pot,user) // ????
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/soup_pot) && in_interact_range(W, user) && in_interact_range(src, user))
-			return src.attackby(W, user)
+		if (istype(W, /obj/item/soup_pot) && in_interact_range(W, user) && in_interact_range(src, user) && !isintangible(user))
+			return src.Attackby(W, user)
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.on)
 			boutput(user,"<span class='alert'><b>Cooking soup takes time, be patient!</b></span>")
 			return
@@ -134,7 +140,8 @@
 			src.pot = null
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		if (!isintangible(user) && in_interact_range(src, user)) //stop AIs teleporting soup
+			return src.Attackhand(user)
 
 	proc/light(var/mob/user, var/message as text)
 		if(pot.my_soup)
@@ -164,7 +171,7 @@
 
 		var/datum/custom_soup/S = new()
 
-		S.amount = pot.total_wclass
+		S.bites_left = pot.total_wclass
 
 		var/soup_name_i = ""
 		var/soup_name_b = ""
@@ -203,9 +210,9 @@
 			if(istype(F))
 				S.food_effects |= F.food_effects
 				S.heal_amt += F.heal_amt/pot.total_wclass
-				S.amount += F.amount/pot.total_wclass
+				S.bites_left += F.bites_left/pot.total_wclass
 			else
-				S.amount += F.w_class/pot.total_wclass/2
+				S.bites_left += F.w_class/pot.total_wclass/2
 				S.heal_amt -= F.w_class/pot.total_wclass/2
 
 			if(I.reagents)
@@ -216,7 +223,7 @@
 						S.initial_reagents += id
 						S.initial_reagents[id] = I.reagents.reagent_list[id].volume/pot.total_wclass
 
-		S.amount = max(1,round(S.amount))
+		S.bites_left = max(1,round(S.bites_left))
 
 		if(biggester)
 			if(biggest)
@@ -295,7 +302,7 @@
 	inhand_image_icon = 'icons/obj/soup_pot.dmi'
 	item_state = "souppot"
 	two_handed = 1
-	var/max_wclass = 3
+	var/max_wclass = W_CLASS_NORMAL
 	var/total_wclass_max = 15
 	var/total_wclass = 0
 	var/max_reagents = 150
@@ -350,6 +357,7 @@
 		. += "."
 
 	on_reagent_change()
+		..()
 		if(my_soup)
 			return
 		if(reagents.total_volume)
@@ -359,7 +367,7 @@
 		else
 			src.UpdateOverlays(null, "fluid")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W) && !istype(W,/obj/item/ladle))
 			if (W.cant_drop) // For borg held items
 				if (!(W.flags & OPENCONTAINER)) // don't warn about a bucket or whatever
@@ -420,10 +428,10 @@
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
-			return src.attackby(W, user)
+			return src.Attackby(W, user)
 		return ..()
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		if (usr.is_in_hands(src))
 			var/turf/T = over_object
 			if (!(usr in range(1, T)))

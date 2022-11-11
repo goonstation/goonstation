@@ -5,9 +5,7 @@
 	required_elapsed_round_time = 40 MINUTES
 	weight = 88
 
-#ifdef RP_MODE
 	disabled = 1
-#endif
 
 	event_effect(var/source,var/turf/T,var/delay,var/duration)
 		..()
@@ -34,7 +32,7 @@
 			return
 
 		message_admins("Syndicate Weapon: Orion Retribution Device spawning in [T.loc]")
-		logTheThing("admin", null, null, "Setting up SWORD event. Source: [source ? "[source]" : "random"]")
+		logTheThing(LOG_ADMIN, null, "Setting up SWORD event. Source: [source ? "[source]" : "random"]")
 
 		if(!sword_summoned_before)
 			new/obj/critter/sword(T)

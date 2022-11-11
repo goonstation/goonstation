@@ -3,21 +3,23 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "disrupt"
 //How much of a punch this has, tends to be seconds/damage before any resist
-	power = 25
+	power = 12.5
+	stun = 12.5
 //How much ammo this costs
 	cost = 20
 //How fast the power goes away
 	dissipation_rate = 5
 //How many tiles till it starts to lose power
 	dissipation_delay = 8
-//Kill/Stun ratio
-	ks_ratio = 0.5
 //name of the projectile setting, used when you change a guns setting
 	sname = "single shot stun"
 //file location for the sound you want it to play
 	shot_sound = 'sound/weapons/LaserOLD.ogg'
+//volume the shot is played at, large pods double the gun and thus the shot sound!
+	shot_volume = 30
 //How many projectiles should be fired, each will cost the full cost
 	shot_number = 1
+	ie_type = "E"
 //What is our damage type
 /*
 kinetic - raw power
@@ -50,19 +52,20 @@ toxic - poisons
 /datum/projectile/disruptor/burst
 	icon_state = "disrupt"
 	shot_sound = 'sound/weapons/rocket.ogg'
+	shot_volume = 30
 	cost = 60
 	shot_number = 3
-	ks_ratio = 0.5
 	damage_type = D_ENERGY
 	sname = "burst stun"
 
 /datum/projectile/disruptor/high
-	power = 60
+	damage = 57
+	stun = 3
 	shot_sound = 'sound/weapons/laserultra.ogg'
+	shot_volume = 30
 	icon_state = "disrupt_lethal"
 	shot_number = 1
 	cost = 30
-	ks_ratio = 0.95 // let's still stun a bit
 	damage_type = D_ENERGY
 	sname = "disruptor"
 

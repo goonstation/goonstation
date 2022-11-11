@@ -29,7 +29,7 @@
 	for(var/mob/M in AIviewers(src))
 		boutput(M, "<span class='alert'><B>[src.name]</B> becomes angry!</span>")
 	src.desc = "[src] looks angry"
-	SPAWN_DBG(rand(1000,3000))
+	SPAWN(rand(1000,3000))
 		src.visible_message("<b>[src.name] calms down.</b>")
 		src.desc = "[src] looks a bit annoyed."
 		src.angry = 0
@@ -68,13 +68,13 @@
 	// Called when an object is in an explosion
 	// Higher "severity" means the object was further from the centre of the explosion
 	switch(severity)
-		if(1.0)
+		if(1)
 			gib(src.loc)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			health = health -50
-		if(3.0)
+		if(3)
 			health = health -25
 		else
 	if(health <=0)
@@ -114,7 +114,7 @@
 	if(health <=0)
 		src.death()
 
-/obj/npc/attackby(obj/item/W as obj, mob/living/user as mob)
+/obj/npc/attackby(obj/item/W, mob/living/user)
 /*	if (!src.alive)
 		..()
 		return

@@ -97,14 +97,14 @@ chui/theme/base
 
 		if (flags & CHUI_FLAG_SIZABLE)
 			rendered += {"
-				<div class='resizeArea top'   rx='0' ry='-1'></div>
-				<div class='resizeArea tr'    rx='1' ry='-1'></div>
-				<div class='resizeArea right' rx='1' ry='0'></div>
-				<div class='resizeArea br'    rx='1' ry='1'></div>
-				<div class='resizeArea bottom'rx='0' ry='1'></div>
-				<div class='resizeArea bl'    rx='-1' ry='1'></div>
-				<div class='resizeArea left'  rx='-1' ry='0'></div>
-				<div class='resizeArea tl'    rx='-1' ry='-1'></div>"}
+				<div class='resizeArea top'    rx='0' ry='-1'></div>
+				<div class='resizeArea tr'     rx='1' ry='-1'></div>
+				<div class='resizeArea right'  rx='1' ry='0'></div>
+				<div class='resizeArea br'     rx='1' ry='1'></div>
+				<div class='resizeArea bottom' rx='0' ry='1'></div>
+				<div class='resizeArea bl'     rx='-1' ry='1'></div>
+				<div class='resizeArea left'   rx='-1' ry='0'></div>
+				<div class='resizeArea tl'     rx='-1' ry='-1'></div>"}
 		rendered += {"<div id="cornerWrap">
 					<div class='borderSlants'></div>
 					<div class='corner bl'></div>
@@ -159,14 +159,14 @@ chui/theme/flock
 
 		if (resizable)
 			rendered += {"
-				<div class='resizeArea top'   rx='0' ry='-1'></div>
-				<div class='resizeArea tr'    rx='1' ry='-1'></div>
-				<div class='resizeArea right' rx='1' ry='0'></div>
-				<div class='resizeArea br'    rx='1' ry='1'></div>
-				<div class='resizeArea bottom'rx='0' ry='1'></div>
-				<div class='resizeArea bl'    rx='-1' ry='1'></div>
-				<div class='resizeArea left'  rx='-1' ry='0'></div>
-				<div class='resizeArea tl'    rx='-1' ry='-1'></div>
+				<div class='resizeArea top'    rx='0' ry='-1'></div>
+				<div class='resizeArea tr'     rx='1' ry='-1'></div>
+				<div class='resizeArea right'  rx='1' ry='0'></div>
+				<div class='resizeArea br'     rx='1' ry='1'></div>
+				<div class='resizeArea bottom' rx='0' ry='1'></div>
+				<div class='resizeArea bl'     rx='-1' ry='1'></div>
+				<div class='resizeArea left'   rx='-1' ry='0'></div>
+				<div class='resizeArea tl'     rx='-1' ry='-1'></div>
 			"}
 		rendered += {"
 				<div id='cornerWrap'>

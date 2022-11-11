@@ -35,6 +35,10 @@
 	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/drug_den)
+"ay" = (
+/obj/decal/poster/wallsign/framed_award/firstbill,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/drug_den)
 "bk" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -145,7 +149,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/drug_den/party)
 "ks" = (
-/obj/machinery/power/apc/autoname_east,
+/obj/machinery/power/apc/autoname_east/nopoweralert,
 /obj/cable,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/wood,
@@ -165,6 +169,29 @@
 /obj/item/reagent_containers/syringe/morphine{
 	pixel_x = -2;
 	pixel_y = -8
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"lJ" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/obj/item/kitchen/rollingpin{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/kitchen/utensil/knife/bread{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/item/paper/book/from_file/cookbook{
+	pixel_x = -5;
+	pixel_y = 6
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/prefab/drug_den)
@@ -367,10 +394,6 @@
 	},
 /turf/space,
 /area/noGenerate)
-"zL" = (
-/obj/decal/poster/wallsign/firstbill,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/prefab/drug_den)
 "Ad" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -606,29 +629,6 @@
 /obj/item/storage/wall/fire,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/drug_den/party)
-"KQ" = (
-/obj/table/reinforced/chemistry/auto{
-	desc = "A black countertop table for storing kitchen-y objects.";
-	name = "kitchen counter"
-	},
-/obj/item/kitchen/rollingpin{
-	pixel_x = -4;
-	pixel_y = 5
-	},
-/obj/item/kitchen/utensil/knife/bread{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/icing{
-	pixel_x = 5;
-	pixel_y = -2
-	},
-/obj/item/paper/book/cookbook{
-	pixel_x = -5;
-	pixel_y = 6
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/prefab/drug_den)
 "Lu" = (
 /obj/table/wood/round/auto,
 /obj/item/paper/neonlining{
@@ -1454,7 +1454,7 @@ mb
 hC
 hC
 hC
-zL
+ay
 NW
 av
 vP
@@ -1552,7 +1552,7 @@ hC
 Uv
 Uv
 fy
-KQ
+lJ
 Yu
 gy
 hC

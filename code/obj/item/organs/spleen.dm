@@ -3,7 +3,7 @@
 	organ_name = "spleen"
 	organ_holder_name = "spleen"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 6.0
+	organ_holder_required_op_stage = 6
 	icon_state = "spleen"
 	body_side = L_ORGAN
 
@@ -31,6 +31,16 @@
 			if (holder.spleen == src)
 				holder.spleen = null
 		..()
+
+/obj/item/organ/spleen/synth
+	name = "synthspleen"
+	organ_name = "synthspleen"
+	icon_state = "plant"
+	desc = "I guess you could say, the person missing this has spleen better days!"
+	synthetic = 1
+	New()
+		..()
+		src.icon_state = pick("plant_spleen", "plant_spleen_bloom")
 
 /obj/item/organ/spleen/cyber
 	name = "cyberspleen"

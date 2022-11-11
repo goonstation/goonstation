@@ -6,7 +6,7 @@
 	shuttle_available_threshold = 12000 // 20 min, default value, probably change this
 
 	//NOTE: if you need to track something, put it here
-	var/list/flockminds = list()
+	var/list/datum/mind/flockminds = list()
 
 /datum/game_mode/flock/announce()
 	boutput(world, "<B>The current game mode is - Flock!</B>")
@@ -22,45 +22,33 @@
 
 	// TODO: Handle token players
 
-	possible_flockminds = get_possible_flockminds()
-	var/list/chosen_flockminds = antagWeighter.choose(pool = possible_flockminds, role = "flockmind", amount = 1, recordChosen = 1)
+	possible_flockminds = get_possible_enemies(ROLE_FLOCKMIND, 1)
+	var/list/chosen_flockminds = antagWeighter.choose(pool = possible_flockminds, role = ROLE_FLOCKMIND, amount = 1, recordChosen = 1)
 	flockminds |= chosen_flockminds
 	for (var/datum/mind/flockmind in flockminds)
 		flockmind.assigned_role = "MODE"
-		flockmind.special_role = "flockmind"
+		flockmind.special_role = ROLE_FLOCKMIND
+		src.traitors += flockmind
+		bestow_objective(flockmind, /datum/objective/specialist/flock)
 		possible_flockminds.Remove(flockmind)
 
-	return 1
+	return TRUE
 
-/datum/game_mode/flock/post_setup()
-	//TODO
-	return 1
-
-/datum/game_mode/flock/check_finished()
-	//TODO
-	. = ..()
+/datum/game_mode/flock/victory_msg()
+	if (flock_signal_unleashed)
+		return "<b style='font-size:20px'>Flock victory!</b><br>The Flock managed to construct a relay and transmit The Signal. One step closer to its mysterious goals."
+	else
+		var/living_flockmind = FALSE
+		for (var/datum/mind/flockmind as anything in src.flockminds)
+			if (isalive(flockmind.current))
+				living_flockmind = TRUE
+				break
+		if (living_flockmind)
+			return "<b style='font-size:20px'>Station victory!</b><br>The crew succeeded in preventing the Flock from transmitting into the void."
+		else
+			return "<b style='font-size:20px'>Station victory!</b><br>The Flock was wiped out, their consciousness ceasing to exist as their last drone was destroyed."
 
 /datum/game_mode/flock/declare_completion()
-	//TODO
+	boutput(world, victory_msg())
 	. = ..()
-
-/datum/game_mode/flock/proc/get_possible_flockminds(minimum_flockminds=1)
-	var/list/candidates = list()
-
-	for (var/mob/new_player/player in mobs)
-		if (ishellbanned(player)) continue
-		if ((player.client) && (player.ready) && !(player.mind in flockminds) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_flock)
-				candidates += player.mind
-
-	if (candidates.len < minimum_flockminds)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_flock set to yes were ready. We need [minimum_flockminds] flockminds so including players who don't want to be flockminds in the pool.")
-		for (var/mob/new_player/player in mobs)
-			if (ishellbanned(player)) continue
-			if ((player.client) && (player.ready) && !(player.mind in flockminds) && !candidates.Find(player.mind))
-				candidates += player.mind
-	if (candidates.len < 1)
-		return list()
-	else
-		return candidates
 

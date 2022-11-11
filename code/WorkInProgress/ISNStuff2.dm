@@ -6,7 +6,7 @@
 
 	src.fakeloss += amount
 
-	SPAWN_DBG(seconds * 10)
+	SPAWN(seconds * 10)
 		src.fakeloss -= amount
 
 /mob/proc/false_death(var/seconds)
@@ -17,7 +17,7 @@
 	boutput(src, "<B>[src]</B> seizes up and falls limp, [his_or_her(src)] eyes dead and lifeless...")
 	src.changeStatus("weakened", 5 SECONDS)
 
-	SPAWN_DBG(seconds * 10)
+	SPAWN(seconds * 10)
 		src.fakedead = 0
 		src.delStatus("weakened")
 
@@ -88,7 +88,7 @@
 /mob/proc/is_cold_resistant()
 	if (!src)
 		return 0
-	if(src.bioHolder && src.bioHolder.HasOneOfTheseEffects("cold_resist","thermal_resist"))
+	if(src.bioHolder?.HasEffect("cold_resist") || src.bioHolder?.HasEffect("thermal_resist") > 1)
 		return 1
 	if(ischangeling(src))
 		return 1
@@ -99,7 +99,7 @@
 /mob/proc/is_heat_resistant()
 	if (!src)
 		return 0
-	if(src.bioHolder && src.bioHolder.HasOneOfTheseEffects("fire_resist","thermal_resist"))
+	if(src.bioHolder && src.bioHolder.HasOneOfTheseEffects("fire_resist") || src.bioHolder.HasEffect("thermal_resist") > 1)
 		return 1
 	if(src.nodamage)
 		return 1
@@ -178,7 +178,7 @@
 	var/being_pressed = 0
 	var/has_been_pressed = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (being_pressed)
 			boutput(user, "<span class='alert'>You can't press it while someone else is about to press it!</span>")
 			return
@@ -194,25 +194,25 @@
 			user.visible_message("<span class='alert'><b>[user] reaches for the button...</b></span>")
 			var/input = null
 
-			input = alert("Are you sure you want to press the button?","DONT PRESS IT","Yes","No")
+			input = tgui_alert(user, "Are you sure you want to press the button?", "DONT PRESS IT", list("Yes","No"))
 			if (input != "Yes")
 				boutput(user, "<span class='notice'>You made the right decision.</span>")
 				being_pressed = 0
 				return
 
-			input = alert("Are you REALLY sure?","DONT PRESS IT","Yes","No")
+			input = tgui_alert(user, "Are you REALLY sure?", "DONT PRESS IT", list("Yes", "No"))
 			if (input != "Yes")
 				boutput(user, "<span class='notice'>You made the right decision.</span>")
 				being_pressed = 0
 				return
 
-			input = alert("Should you press the button?","DONT PRESS IT","Yes","No")
+			input = tgui_alert(user, "Should you press the button?", "DONT PRESS IT", list("Yes", "No"))
 			if (input != "No")
 				boutput(user, "<span class='alert'>Haven't you been paying attention?</span>")
 				being_pressed = 0
 				return
 
-			input = alert("Are you like double-ultra turbo sure you want to press the button?","DONT PRESS IT","No","Yes")
+			input = tgui_alert(user, "Are you like double-ultra turbo sure you want to press the button?", "DONT PRESS IT", list("No", "Yes"))
 			if (input != "Yes")
 				boutput(user, "<span class='notice'>You made the right decision.</span>")
 				being_pressed = 0
@@ -221,7 +221,7 @@
 			boutput(user, "<span class='alert'>Pressing button. Please wait thirty seconds.</span>")
 			sleep(30 SECONDS)
 
-			input = alert("For real though, you're okay with pressing the button?","DONT PRESS IT","Yes","No")
+			input = tgui_alert(user, "For real though, you're okay with pressing the button?", "DONT PRESS IT", list("Yes", "No"))
 			if (input != "Yes")
 				boutput(user, "<span class='notice'>You made the right decision.</span>")
 				being_pressed = 0
@@ -231,7 +231,7 @@
 				boutput(user, "<span class='alert'>You can't press it when you're incapacitated.</span>")
 				being_pressed = 0
 				return
-			if (get_dist(user,src) > 1)
+			if (BOUNDS_DIST(user, src) > 0)
 				boutput(user, "<span class='alert'>You can't press it from over there.</span>")
 				being_pressed = 0
 				return
@@ -248,7 +248,7 @@
 			world << siren
 			for(var/area/A in world)
 				A.eject = 1
-				A.updateicon()
+				A.UpdateIcon()
 				LAGCHECK(LAG_LOW)
 
 			sleep(30 SECONDS)
@@ -260,14 +260,14 @@
 			for(var/area/A in world)
 				LAGCHECK(LAG_LOW)
 				A.eject = 0
-				A.updateicon()
+				A.UpdateIcon()
 
 			for_by_tcl(G, /obj/critter/dog/george)
 				G.visible_message("<span class='alert'><b>[G]</b> pees on the floor. Bad dog!</span>")
 				make_cleanable( /obj/decal/cleanable/urine ,get_turf(G))
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W) && steps_until_pressable == 18)
 			boutput(user, "<span class='notice'>You remove the metal bolts.</span>")
 			steps_until_pressable--
@@ -403,39 +403,3 @@
 				return "There is a metal casing which seems to be welded onto the stand."
 			if(18) // Wrench
 				return "The metal button casing is locked in place by several large metal bolts."
-
-/proc/ass_day_popup(var/mob/M)
-	if (!M || !M.client)
-		return
-	M << csound("sound/misc/Warning_AssDay.ogg")
-
-	var/dat = "<b>!!! ASS DAY !!!</b><BR><HR><BR>"
-
-	dat += {"You have joined us for Ass Day, an event that occurs on the 13th of every month. During this time, the rules
-	and their enforcement are heavily relaxed on this server. If you choose to join the game, expect complete and total chaos,
-	rampant grief, and levels of violence that would make Joe Pesci cry. Of course, there's nothing stopping you from causing
-	all that yourself if you choose to."}
-
-	dat += "<BR><BR>"
-
-	dat += {"<B>Bear in mind that a few rules are still in effect, however:</B><BR>
-	<B>1)</B> No intentionally crashing the server or causing lag.<BR>
-	<B>2)</B> No bigotry.<BR>
-	<B>3)</B> No sexual stuff.<BR>
-	<B>4)</B> No creepy shit.<BR>
-	<B>5)</B> No impersonating the admins.<BR>
-	<B>6)</B> No giving out secret recipes and the like.<BR>
-	<B>7)</B> If an admin tells you to quit doing something, quit it."}
-
-	dat += "<BR><BR>"
-
-	dat += {"If you do not see this popup, that means it is not Ass Day. Rule-breakers invoking Ass Day when it is not Ass Day
-	will be dealt with incredibly severely, so don't fuck this up! A good rule of thumb to keep in mind - Ass Day begins and ends
-	when the admins or the game itself say it is, not when you say it is."}
-
-	dat += "<BR><BR>"
-
-	dat += {"Does all this sound like it doesn't appeal to you? No problem, Ass Day is a feature of this server only and is not
-	in effect on our other servers, so if you'd like a bit of peace and quiet go ahead and check them out. We won't mind."}
-
-	M.Browse(dat, "window=assday;size=500x600;can_resize=0;can_minimize=0")

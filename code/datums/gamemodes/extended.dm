@@ -6,8 +6,10 @@
 
 /datum/game_mode/extended/pre_setup()
 	. = ..()
-	for(var/datum/mind/mind in antag_token_list())
-		mind.current?.client?.using_antag_token = FALSE
+
+	for(var/datum/random_event/event in random_events.events)
+		if(istype(event, /datum/random_event/major/ion_storm))
+			event.disabled = TRUE
 
 /datum/game_mode/extended/announce()
 	boutput(world, "<B>The current game mode is - Extended!</B>")

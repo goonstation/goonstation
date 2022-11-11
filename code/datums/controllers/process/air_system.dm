@@ -1,6 +1,6 @@
 
-// handles air processing.
-datum/controller/process/air_system
+/// handles air processing.
+/datum/controller/process/air_system
 
 	setup()
 		name = "Atmos"
@@ -14,5 +14,5 @@ datum/controller/process/air_system
 	doWork()
 		air_master.process()
 
-	copyStateFrom(var/datum/controller/process/target)
+	copyStateFrom(datum/controller/process/target)
 		air_master.parent_controller = src

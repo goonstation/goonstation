@@ -1,0 +1,65 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/mob/living/critter/small_animal/frog/weak,
+/turf/simulated/floor/auto/grass/swamp_grass,
+/area/dmm_suite/clear_area)
+"p" = (
+/turf/simulated/floor/auto/grass/swamp_grass,
+/area/dmm_suite/clear_area)
+"t" = (
+/turf/simulated/floor/auto/dirt,
+/area/dmm_suite/clear_area)
+"u" = (
+/obj/item/paper/book/from_file/fun_facts_about_shelterfrogs,
+/turf/simulated/floor/auto/dirt,
+/area/dmm_suite/clear_area)
+"B" = (
+/obj/item/clothing/under/gimmick/frog,
+/turf/simulated/floor/auto/dirt,
+/area/dmm_suite/clear_area)
+"E" = (
+/mob/living/critter/small_animal/frog/weak,
+/turf/simulated/floor/auto/grass/leafy,
+/area/dmm_suite/clear_area)
+"I" = (
+/mob/living/critter/small_animal/frog/weak,
+/obj/machinery/light/incandescent/warm/very{
+	dir = 1;
+	pixel_y = 10
+	},
+/turf/simulated/floor/auto/grass/swamp_grass,
+/area/dmm_suite/clear_area)
+"O" = (
+/mob/living/critter/small_animal/frog/weak,
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/auto/dirt,
+/area/dmm_suite/clear_area)
+"R" = (
+/obj/item/clothing/head/frog_hat,
+/turf/simulated/floor/auto/grass/leafy,
+/area/dmm_suite/clear_area)
+"Y" = (
+/turf/simulated/floor/auto/grass/leafy,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+I
+Y
+p
+t
+a
+"}
+(2,1,1) = {"
+p
+B
+u
+R
+Y
+"}
+(3,1,1) = {"
+E
+p
+p
+Y
+O
+"}

@@ -156,7 +156,7 @@
 
 			src.master.updateSelfDialog()
 			if(speedup)
-				SPAWN_DBG(0.5 SECONDS) //Ugh the process loop for items is so slow most of the time
+				SPAWN(0.5 SECONDS) //Ugh the process loop for items is so slow most of the time
 					src.process(0)
 
 		return
@@ -555,7 +555,7 @@
 			src.solution = ""
 
 		else if (href_list["giveup"])
-			if(alert("Are you sure you want to give up?","CodeBreaker","Yes","No") == "Yes")
+			if(tgui_alert(usr, "Are you sure you want to give up?", "CodeBreaker", list("Yes", "No")) == "Yes")
 				src.attempts = 0
 				src.playing = -1
 				src.temp = "<b>YOU LOSE!</b>"

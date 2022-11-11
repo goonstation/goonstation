@@ -7,7 +7,7 @@ Right Mouse Button                     = Attempt to fix Lighting on selected til
 ***********************************************************"}
 	icon_state = "light_on"
 	var/on = 1
-	var/in_progress = 0
+	var/tmp/in_progress = 0
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		if (on)

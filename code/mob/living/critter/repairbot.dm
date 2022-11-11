@@ -46,7 +46,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/screams/robot_scream.ogg" , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/screams/robot_scream.ogg' , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> screams!"
 		return null
 
@@ -72,5 +72,5 @@
 		HH.can_range_attack = 1
 
 	setup_healths()
-		add_hh_robot(-30, 30, 1)
-		add_hh_robot_burn(-30, 30, 1)
+		add_hh_robot(30, 1)
+		add_hh_robot_burn(30, 1)

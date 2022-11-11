@@ -7,15 +7,17 @@
 	icon_state = "railing"
 	layer = OBJ_LAYER
 	color = "#ffffff"
-	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
+	flags = FPRINT | USEDELAY | ON_BORDER
+	event_handler_flags = USE_FLUID_ENTER
+	object_flags = HAS_DIRECTIONAL_BLOCKING
 	dir = SOUTH
 	custom_suicide = 1
+	material_amt = 0.1
 	var/broken = 0
 	var/is_reinforced = 0
+	var/can_reinforce = TRUE
 
 	proc/layerify()
-		SPAWN_DBG(3 DECI SECONDS)
 		if (dir == SOUTH)
 			layer = MOB_LAYER + 0.1
 		else
@@ -58,14 +60,14 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					railing_deconstruct(src)
 					return
-			if(3.0)
+			if(3)
 				if (prob(25))
 					railing_break(src)
 					return
@@ -83,30 +85,32 @@
 
 	New()
 		..()
+		if(src.is_reinforced)
+			src.flags |= ALWAYS_SOLID_FLUID
 		layerify()
 
 	Turn()
 		..()
 		layerify()
 
-	CanPass(atom/movable/O as mob|obj, turf/target, height=0, air_group=0)
+	Cross(atom/movable/O as mob|obj)
 		if (O == null)
-			//logTheThing("debug", src, O, "Target is null! CanPass failed.")
 			return 0
 		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced) || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
 			return 1
-		if (air_group || (height==0))
-			return 1
-		if (get_dir(loc, O) == dir)
+		if (src.dir & get_dir(loc, O))
 			return !density
 		return 1
 
-	CheckExit(atom/movable/O as mob|obj, target as turf)
+	Uncross(atom/movable/O, do_bump = TRUE)
 		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced)  || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
-			return 1
-		if (get_dir(O.loc, target) == src.dir)
-			return 0
-		return 1
+			. = 1
+		// Second part prevents two same-dir, unanchored railings from infinitely looping and either crashing the server or breaking throwing when they try to cross
+		else if ((src.dir & get_dir(O.loc, O.movement_newloc)) && !(isobj(O) && (O:object_flags & HAS_DIRECTIONAL_BLOCKING) && (O.dir & src.dir)))
+			. = 0
+		else
+			. = 1
+		UNCROSS_BUMP_CHECK(O)
 
 	attackby(obj/item/W as obj, mob/user)
 		if (isweldingtool(W))
@@ -134,7 +138,7 @@
 			else
 				user.show_text("There's no reinforcment on [src] to cut off!", "blue")
 		else if (istype(W,/obj/item/rods))
-			if(!src.is_reinforced)
+			if(!src.is_reinforced && can_reinforce)
 				var/obj/item/rods/R = W
 				if(R.change_stack_amount(-1))
 					user.show_text("You reinforce [src] with the rods.", "blue")
@@ -150,13 +154,13 @@
 		. = ..()
 		if(!istype(AM)) return
 		if(AM.client?.check_key(KEY_RUN))
-			src.try_vault(AM)
+			src.try_vault(AM, TRUE)
 
-	proc/try_vault(mob/user)
+	proc/try_vault(mob/user, use_owner_dir = FALSE)
 		if (railing_is_broken(src))
 			user.show_text("[src] is broken! All you can really do is break it down...", "red")
-		else
-			actions.start(new /datum/action/bar/icon/railing_jump(user, src), user)
+		else if(!actions.hasAction(user, "railing_jump"))
+			actions.start(new /datum/action/bar/icon/railing_jump(user, src, use_owner_dir), user)
 
 	reinforced
 		is_reinforced = 1
@@ -204,6 +208,11 @@
 			is_reinforced = 1
 			icon_state = "railing-reinforced"
 
+	velvet
+		icon = 'icons/obj/velvetrope.dmi'
+		icon_state = "velvetrope"
+		desc = "A cushy red velvet rope strewn between two golden poles."
+		can_reinforce = FALSE
 
 /datum/action/bar/icon/railing_jump
 	duration = 1 SECOND
@@ -211,44 +220,57 @@
 	id = "railing_jump"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "railing_jump"
+	resumable = FALSE
 	var/mob/ownerMob
 	var/obj/railing/the_railing
 	var/turf/jump_target //where the mob will move to when they complete the jump!
 	var/is_athletic_jump //if the user has the athletic trait, and therefore does the BEEG HARDCORE PARKOUR YUMP
 	var/no_no_zone //if the user is trying to jump over railing onto somewhere they couldn't otherwise move through...
-	var/do_bunp = TRUE
+	var/do_bump = TRUE
+	var/use_owner_dir = FALSE
+	/// list of types exempt from bump checks when checking landing turf validity
+	var/list/collision_whitelist = null
 
-	New(The_Owner, The_Railing)
+	New(The_Owner, The_Railing, use_owner_dir = FALSE)
 		..()
+		collision_whitelist = typesof(/obj/railing, /obj/decal/stage_edge, /obj/sec_tape)
 		if (The_Owner)
 			owner = The_Owner
 			ownerMob = The_Owner
+			src.use_owner_dir = use_owner_dir
 			if (ishuman(owner))
 				var/mob/living/carbon/human/H = owner
+				var/modifier = 1
 				if (H.traitHolder.hasTrait("athletic"))
-					duration = round(duration / 2)
+					modifier++
 					is_athletic_jump = 1
+				modifier += GET_ATOM_PROPERTY(H, PROP_MOB_VAULT_SPEED)
+				duration = round(duration / modifier)
 		if (The_Railing)
 			the_railing = The_Railing
 			jump_target = getLandingLoc()
 
 	proc/getLandingLoc()
-		if (get_dist(ownerMob, the_railing) == 0)
-			return get_step(the_railing, the_railing.dir)
+		if (GET_DIST(ownerMob, the_railing) == 0)
+			if (use_owner_dir)
+				// for handling the multiple ways top hop a corner railing
+				return get_step(the_railing, owner.dir)
+			else
+				return get_step(the_railing, the_railing.dir)
 		else
 			return get_turf(the_railing)
 
 	onUpdate()
 		..()
 		// you gotta hold still to jump!
-		if (get_dist(ownerMob, the_railing) > 1)
+		if (BOUNDS_DIST(ownerMob, the_railing) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			ownerMob.show_text("Your jump was interrupted!", "red")
 			return
 
 	onStart()
 		..()
-		if (get_dist(ownerMob, the_railing) > 1 || the_railing == null || ownerMob == null)
+		if (BOUNDS_DIST(ownerMob, the_railing) > 0 || the_railing == null || ownerMob == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		for(var/mob/O in AIviewers(ownerMob))
@@ -256,52 +278,51 @@
 
 	onEnd()
 		..()
-		if(do_bunp())
+		if(do_bump())
 			return
 		// otherwise, the user jumps over without issue!
 		sendOwner()
 
-	proc/do_bunp()
-		var/bunp //the name of the thing we have bunp'd into when trying to jump the railing
-		var/list/bunp_whitelist = list(/obj/railing, /obj/decal/stage_edge) // things that we cannot bunp into
-		if (jump_target.density)
-			bunp = jump_target.name
-			no_no_zone = 1
+	proc/do_bump()
+		/// obstacle blocking the destination turf
+		var/obj/obstacle = null
+		var/direction = get_dir(get_turf(owner), jump_target)
+
+		if (jump_target.density) // is it a wall?
+			obstacle = jump_target.name
 		else
-			for (var/obj/o in jump_target.contents)
-				for (var/i=1, i <= bunp_whitelist.len + 1, i++) //+1 so we can actually go past the whitelist len check
-					if (!(i > bunp_whitelist.len))
-						// if it's an exception to the bunp rule...
-						if (istype (o, bunp_whitelist[i]))
-							break
+			obstacle = check_turf_obstacles(jump_target) // is the dest blocked?
+			if (!obstacle && (direction in ordinal)) // dest was ok, if we are moving in an ordinal what about the corners?
+				var/turf/T1 = get_step(get_turf(owner), turn(direction, 45))
+				obstacle = check_turf_obstacles(T1)
+				if (obstacle) // T1 was blocked, but was T2 also blocked?
+					var/turf/T2 = get_step(get_turf(owner), turn(direction, -45))
+					obstacle = check_turf_obstacles(T2)
 
-					// don't proceed just yet if we aren't done going through the whitelist!
-					else if (i <= bunp_whitelist.len)
-						continue
 
-					// otherwise, if it's a dense thing...
-					else if (o.density)
-						bunp = o.name
-						no_no_zone = 1
-						break
-
-		if(no_no_zone)
+		if(obstacle) // did we end up ever bumping the dest or two corners?
 			// if they are a living mob, make them TASTE THE PAIN
 			if (istype(ownerMob, /mob/living))
 				if (!ownerMob.hasStatus("weakened"))
 					ownerMob.changeStatus("weakened", 4 SECONDS)
 					playsound(the_railing, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1, -1)
 					for(var/mob/O in AIviewers(ownerMob))
-						O.show_text("[ownerMob] tries to climb straight into \the [bunp].[prob(30) ? pick(" What a goof!!", " A silly [ownerMob.name].", " <b>HE HOO HE HA</b>", " Good thing [he_or_she(ownerMob)] didn't bump [his_or_her(ownerMob)] head!") : null]", "red")
-				// HE HE U BUNPED YOUR HEAD
+						O.show_text("[ownerMob] tries to climb straight into \the [obstacle].[prob(30) ? pick(" What a goof!!", " A silly [ownerMob.name].", " <b>HE HOO HE HA</b>", " Good thing [he_or_she(ownerMob)] didn't bump [his_or_her(ownerMob)] head!") : null]", "red")
+				// chance for additional head bump damage
 				if (prob(25))
 					ownerMob.changeStatus("weakened", 4 SECONDS)
 					ownerMob.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
 					playsound(the_railing, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, -1)
 					for(var/mob/O in AIviewers(ownerMob))
-						O.show_text("[ownerMob] bumps [his_or_her(ownerMob)] head on \the [bunp].[prob(30) ? pick(" Oof, that looked like it hurt!", " Is [he_or_she(ownerMob)] okay?", " Maybe that wasn't the wisest idea...", " Don't do that!") : null]", "red")
+						O.show_text("[ownerMob] bumps [his_or_her(ownerMob)] head on \the [obstacle].[prob(30) ? pick(" Oof, that looked like it hurt!", " Is [he_or_she(ownerMob)] okay?", " Maybe that wasn't the wisest idea...", " Don't do that!") : null]", "red")
 			return TRUE
 		return FALSE
+
+	proc/check_turf_obstacles(turf/T)
+		for (var/obj/O in T.contents)
+			if (!O.density) continue // don't care.
+			if (O.type in collision_whitelist) continue
+			return O
 
 	proc/sendOwner()
 		ownerMob.set_loc(jump_target)
@@ -312,7 +333,6 @@
 			else
 				the_text = "[ownerMob] pulls [himself_or_herself(ownerMob)] over [the_railing]."
 			O.show_text("[the_text]", "red")
-		logTheThing("combat", ownerMob, the_railing, "[is_athletic_jump ? "leaps over [the_railing] with [his_or_her(ownerMob)] athletic trait" : "crawls over [the_railing]"].")
 
 
 /datum/action/bar/icon/railing_tool_interact
@@ -349,31 +369,31 @@
 
 	onUpdate()
 		..()
-		if (tool == null || the_railing == null || owner == null || get_dist(owner, the_railing) > 1)
+		if (tool == null || the_railing == null || owner == null || BOUNDS_DIST(owner, the_railing) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		//featuring code shamelessly copypasted from table.dm because fuuuuuuuck
 		..()
-		if (get_dist(ownerMob, the_railing) > 1 || the_railing == null || ownerMob == null)
+		if (BOUNDS_DIST(ownerMob, the_railing) > 0 || the_railing == null || ownerMob == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!tool)
 			interrupt(INTERRUPT_ALWAYS)
-			logTheThing("debug", src, the_railing, "tried to interact with [the_railing] using a null tool... somehow.")
+			logTheThing(LOG_DEBUG, src, "tried to interact with [the_railing] using a null tool... somehow.")
 			return
 		var/verbing = "doing something to"
 		switch (interaction)
 			if (RAILING_DISASSEMBLE)
 				verbing = "to disassemble"
-				playsound(get_turf(the_railing), "sound/items/Welder.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Welder.ogg', 50, 1)
 			if (RAILING_FASTEN)
 				verbing = "fastening"
-				playsound(get_turf(the_railing), "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
 			if (RAILING_UNFASTEN)
 				verbing = "unfastening"
-				playsound(get_turf(the_railing), "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
 		for(var/mob/O in AIviewers(ownerMob))
 			O.show_text("[owner] begins [verbing] [the_railing].", "red")
 
@@ -385,16 +405,16 @@
 				verbens = "disassembles"
 				tool:try_weld(ownerMob, 2)
 				the_railing.railing_deconstruct()
-				playsound(get_turf(the_railing), "sound/items/Welder.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Welder.ogg', 50, 1)
 			if (RAILING_FASTEN)
 				verbens = "fastens"
 				the_railing.anchored = 1
-				playsound(get_turf(the_railing), "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
 			if (RAILING_UNFASTEN)
 				verbens = "unfastens"
 				the_railing.anchored = 0
-				playsound(get_turf(the_railing), "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
 		for(var/mob/O in AIviewers(ownerMob))
 			O.show_text("[owner] [verbens] [the_railing].", "red")
-			logTheThing("station", ownerMob, the_railing, "[verbens] [the_railing].")
+			logTheThing(LOG_STATION, ownerMob, "[verbens] [the_railing].")
 

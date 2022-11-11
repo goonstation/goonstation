@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 /obj/item/parts/robot_parts
 	name = "robot parts"
 	icon = 'icons/obj/robot_parts.dmi'
@@ -8,8 +9,6 @@
 	streak_descriptor = "oily"
 	var/appearanceString = "generic"
 	var/icon_state_base = ""
-	module_research = list("medicine" = 1, "efficiency" = 8)
-	module_research_type = /obj/item/parts/robot_parts
 	accepts_normal_human_overlays = 0
 	skintoned = 0
 	/// Robot limbs shouldn't get replaced through mutant race changes
@@ -60,7 +59,7 @@
 		src.standImage = image('icons/mob/human.dmi', "[src.icon_state_base]-[appearanceString]")
 		return standImage
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
@@ -84,6 +83,7 @@
 		else ..()
 
 	surgery(var/obj/item/tool)
+		var/mob/orig_holder = holder
 
 		var/wrong_tool = 0
 
@@ -91,7 +91,7 @@
 			remove_stage = 0
 
 		else if(remove_stage == 0 || remove_stage == 2)
-			if(istype(tool, /obj/item/scalpel) || istype(tool, /obj/item/raw_material/shard) || istype(tool, /obj/item/kitchen/utensil/knife))
+			if(iscuttingtool(tool))
 				remove_stage++
 			else
 				wrong_tool = 1
@@ -106,24 +106,26 @@
 			switch(remove_stage)
 				if(0)
 					tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] staples [holder.name]'s [src.name] securely to their stump with [tool].</span>", "<span class='alert'>You staple [holder.name]'s [src.name] securely to their stump with [tool].</span>")
+					logTheThing(LOG_COMBAT, tool.the_mob, "staples [constructTarget(holder,"combat")]'s [src.name] back on.")
 				if(1)
 					tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] slices through the attachment mesh of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You slice through the attachment mesh of [holder.name]'s [src.name] with [tool].</span>")
 				if(2)
 					tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] saws through the base mount of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You saw through the base mount of [holder.name]'s [src.name] with [tool].</span>")
 
-					SPAWN_DBG(rand(150,200))
+					SPAWN(rand(150,200))
 						if(remove_stage == 2)
 							src.remove(0)
 				if(3)
 					tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] cuts through the remaining strips of material holding [holder.name]'s [src.name] on with [tool].</span>", "<span class='alert'>You cut through the remaining strips of material holding [holder.name]'s [src.name] on with [tool].</span>")
-
+					logTheThing(LOG_COMBAT, tool.the_mob, "removes [constructTarget(holder,"combat")]'s [src.name].")
 					src.remove(0)
 
-			if(!isdead(holder))
-				if(prob(40))
-					holder.emote("scream")
-			holder.TakeDamage("chest",20,0)
-			take_bleeding_damage(holder, null, 15, DAMAGE_CUT)
+			if(orig_holder)
+				if(!isdead(orig_holder))
+					if(prob(40))
+						orig_holder.emote("scream")
+				orig_holder.TakeDamage("chest",20,0)
+				take_bleeding_damage(orig_holder, null, 15, DAMAGE_CUT)
 
 	proc/ropart_take_damage(var/bluntdmg = 0,var/burnsdmg = 0)
 		src.dmg_blunt += bluntdmg
@@ -132,7 +134,7 @@
 			if(src.holder) return 1 // need to do special stuff in this case, so we let the borg's melee hit take care of it
 			else
 				src.visible_message("<b>[src]</b> breaks!")
-				playsound(get_turf(src), "sound/impact_sounds/Metal_Hit_Light_1.ogg", 40, 1)
+				playsound(src, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 40, 1)
 				if (istype(src.loc,/turf/)) make_cleanable( /obj/decal/cleanable/robot_debris/limb,src.loc)
 				del(src)
 				return 0
@@ -157,13 +159,14 @@
 				if (src.dmg_blunt || src.dmg_burns) return ((src.dmg_blunt + src.dmg_burns) / src.max_health) * 100
 				else return 0
 
+ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 /obj/item/parts/robot_parts/head
-	name = "standard cyborg head"
+	name = "cyborg head"
 	desc = "A serviceable head unit for a potential cyborg."
 	icon_state_base = "head"
 	icon_state = "head-generic"
 	slot = "head"
-	max_health = 175
+
 	var/obj/item/organ/brain/brain = null
 	var/obj/item/ai_interface/ai_interface = null
 	var/visible_eyes = 1
@@ -181,7 +184,7 @@
 		else
 			. += "<span class='alert'>This head unit is empty.</span>"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W)
 			return
 		if (istype(W,/obj/item/organ/brain))
@@ -209,7 +212,7 @@
 			B.set_loc(src)
 			src.brain = B
 			boutput(user, "<span class='notice'>You insert the brain.</span>")
-			playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 			return
 
 		else if (istype(W, /obj/item/ai_interface))
@@ -226,14 +229,14 @@
 			I.set_loc(src)
 			src.ai_interface = I
 			boutput(user, "<span class='notice'>You insert [I].</span>")
-			playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 			return
 
 		else if (iswrenchingtool(W))
 			if (!src.brain && !src.ai_interface)
 				boutput(user, "<span class='alert'>There's no brain or AI interface chip in there to remove.</span>")
 				return
-			playsound(get_turf(src), "sound/items/Ratchet.ogg", 40, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', 40, 1)
 			if (src.ai_interface)
 				boutput(user, "<span class='notice'>You open the head's compartment and take out [src.ai_interface].</span>")
 				user.put_in_hand_or_drop(src.ai_interface)
@@ -242,14 +245,19 @@
 				boutput(user, "<span class='notice'>You open the head's compartment and take out [src.brain].</span>")
 				user.put_in_hand_or_drop(src.brain)
 				src.brain = null
+		else
+			..()
 
-		else if (istype(W,/obj/item/sheet) && (src.type == /obj/item/parts/robot_parts/head))
-			// second check up there is just watching out for those ..() calls
+/obj/item/parts/robot_parts/head/standard
+	name = "standard cyborg head"
+	max_health = 175
+	attackby(obj/item/W, mob/user)
+		if (istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (M.amount >= 2)
 				boutput(user, "<span class='notice'>You reinforce [src.name] with the metal.</span>")
 				var/obj/item/parts/robot_parts/head/sturdy/newhead = new /obj/item/parts/robot_parts/head/sturdy(get_turf(src))
-				M.amount -= 2
+				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
 					qdel(M)
@@ -264,7 +272,6 @@
 			else
 				boutput(user, "<span class='alert'>You need at least two metal sheets to reinforce this component.</span>")
 				return
-
 		else
 			..()
 
@@ -277,8 +284,8 @@
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY) // shush
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W,/obj/item/sheet) && (src.type == /obj/item/parts/robot_parts/head/sturdy))
+	attackby(obj/item/W, mob/user)
+		if (istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (!M.reinforcement)
 				boutput(user, "<span class='alert'>You'll need reinforced sheets to reinforce the head.</span>")
@@ -286,7 +293,7 @@
 			if (M.amount >= 2)
 				boutput(user, "<span class='notice'>You reinforce [src.name] with the reinforced metal.</span>")
 				var/obj/item/parts/robot_parts/head/heavy/newhead = new /obj/item/parts/robot_parts/head/heavy(get_turf(src))
-				M.amount -= 2
+				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
 					qdel(M)
@@ -332,7 +339,7 @@
 	weight = 0.4
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
@@ -377,15 +384,16 @@
 	appearanceString = "screen"
 	icon_state = "head-screen"
 	max_health = 90
-	var/list/expressions = list("happy", "veryhappy", "neutral", "sad", "angry", "curious", "surprised", "unsure", "content", "tired", "cheeky")
+	var/list/expressions = list("happy", "veryhappy", "neutral", "sad", "angry", "curious", "surprised", "unsure", "content", "tired", "cheeky","skull","eye")
 
+ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 /obj/item/parts/robot_parts/chest
-	name = "standard cyborg chest"
-	desc = "The centerpiece of any cyborg. It wouldn't get very far without it."
+	name = "cyborg chest"
+	desc = "Oh no I'm an abstract parent object, how did you get me?"
 	icon_state_base = "body"
 	icon_state = "body-generic"
 	slot = "chest"
-	max_health = 250
+	//These vars track the wiring/cell that the chest needs before you can stuff it on a frame
 	var/wires = 0
 	var/obj/item/cell/cell = null
 
@@ -402,7 +410,7 @@
 		else
 			. += "<span class='alert'>This chest unit has not yet been wired up.</span>"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/cell))
 			if(src.cell)
 				boutput(user, "<span class='alert'>You have already inserted a cell!</span>")
@@ -412,7 +420,7 @@
 				W.set_loc(src)
 				src.cell = W
 				boutput(user, "<span class='notice'>You insert [W].</span>")
-				playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 
 		else if(istype(W, /obj/item/cable_coil))
 			if (src.ropart_get_damage_percentage(2) > 0) ..()
@@ -425,13 +433,13 @@
 					coil.use(1)
 					src.wires = 1
 					boutput(user, "<span class='notice'>You insert some wire.</span>")
-					playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+					playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 
 		else if (iswrenchingtool(W))
 			if(!src.cell)
 				boutput(user, "<span class='alert'>There's no cell in there to remove.</span>")
 				return
-			playsound(get_turf(src), "sound/items/Ratchet.ogg", 40, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', 40, 1)
 			boutput(user, "<span class='notice'>You remove the cell from it's slot in the chest unit.</span>")
 			src.cell.set_loc( get_turf(src) )
 			src.cell = null
@@ -440,7 +448,7 @@
 			if(src.wires < 1)
 				boutput(user, "<span class='alert'>There's no wiring in there to remove.</span>")
 				return
-			playsound(get_turf(src), "sound/items/Wirecutter.ogg", 40, 1)
+			playsound(src, 'sound/items/Wirecutter.ogg', 40, 1)
 			boutput(user, "<span class='notice'>You cut out the wires and remove them from the chest unit.</span>")
 			// i don't know why this would get abused
 			// but it probably will
@@ -450,7 +458,20 @@
 			C.amount = src.wires
 			src.wires = 0
 
-		else if (isweldingtool(W) && src.type == /obj/item/parts/robot_parts/chest)
+		else ..()
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
+/obj/item/parts/robot_parts/chest/standard
+	name = "standard cyborg chest"
+	desc = "The centerpiece of any cyborg. It wouldn't get very far without it."
+	max_health = 250
+
+	attackby(obj/item/W, mob/user)
+		if (isweldingtool(W))
 			var/obj/item/weldingtool/welder = W
 			if (welder.try_weld(user, 3, 3))
 				var/obj/item/clothing/suit/armor/makeshift/R = new /obj/item/clothing/suit/armor/makeshift(get_turf(user))
@@ -458,8 +479,9 @@
 				user.u_equip(src)
 				user.put_in_hand_or_drop(R)
 				qdel(src)
+		else
+			..()
 
-		else ..()
 
 /obj/item/parts/robot_parts/chest/light
 	name = "light cyborg chest"
@@ -469,6 +491,7 @@
 	max_health = 75
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT) // hush
 
+ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 /obj/item/parts/robot_parts/arm
 	name = "placeholder item (don't use this!)"
 	desc = "A metal arm for a cyborg. It won't be able to use as many tools without it!"
@@ -476,7 +499,7 @@
 	can_hold_items = 1
 	accepts_normal_human_overlays = 1
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if(!ismob(M))
 			return
 
@@ -490,7 +513,7 @@
 
 		var/mob/living/carbon/human/H = M
 
-		if(H.limbs.vars.Find(src.slot) && H.limbs.vars[src.slot])
+		if(H.limbs.get_limb(user.zone_sel.selecting))
 			boutput(user, "<span class='alert'>[H.name] already has one of those!</span>")
 			return
 
@@ -502,7 +525,7 @@
 
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		//gonna hack this in with appearanceString
 		if ((appearanceString == "sturdy" || appearanceString == "heavy") && isweldingtool(W))
 			if(!W:try_weld(user, 1))
@@ -536,21 +559,23 @@
 			return "has [bicon(src)] \an [initial(src.name)] attached as a"
 		return
 
+ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 /obj/item/parts/robot_parts/arm/left
-	name = "standard cyborg left arm"
+	name = "cyborg left arm"
 	slot = "l_arm"
 	icon_state_base = "l_arm"
 	icon_state = "l_arm-generic"
 	handlistPart = "armL-generic"
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W,/obj/item/sheet) && ((src.type == /obj/item/parts/robot_parts/arm/left)))
-			// second check up there is just watching out for those ..() calls
+/obj/item/parts/robot_parts/arm/left/standard
+	name = "standard cyborg left arm"
+	attackby(obj/item/W, mob/user)
+		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (M.amount >= 2)
 				boutput(user, "<span class='notice'>You reinforce [src.name] with the metal.</span>")
 				new /obj/item/parts/robot_parts/arm/left/sturdy(get_turf(src))
-				M.amount -= 2
+				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
 					del(M)
@@ -569,9 +594,8 @@
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W,/obj/item/sheet) && (src.type == /obj/item/parts/robot_parts/arm/left/sturdy))
-			// second check up there is just watching out for those ..() calls
+	attackby(obj/item/W, mob/user)
+		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (!M.reinforcement)
 				boutput(user, "<span class='alert'>You'll need reinforced sheets to reinforce the [src.name].</span>")
@@ -579,7 +603,7 @@
 			if (M.amount >= 2)
 				boutput(user, "<span class='notice'>You reinforce [src.name] with the reinforced metal.</span>")
 				new /obj/item/parts/robot_parts/arm/left/heavy(get_turf(src))
-				M.amount -= 2
+				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
 					del(M)
@@ -607,22 +631,25 @@
 	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
+ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 /obj/item/parts/robot_parts/arm/right
-	name = "standard cyborg right arm"
+	name = "cyborg right arm"
 	icon_state = "r_arm"
 	slot = "r_arm"
 	icon_state_base = "r_arm"
 	icon_state = "r_arm-generic"
 	handlistPart = "armR-generic"
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W,/obj/item/sheet) && (src.type == /obj/item/parts/robot_parts/arm/right))
-			// second check up there is just watching out for those ..() calls
+
+/obj/item/parts/robot_parts/arm/right/standard
+	name = "standard cyborg right arm"
+	attackby(obj/item/W, mob/user)
+		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (M.amount >= 2)
 				boutput(user, "<span class='notice'>You reinforce [src.name] with the metal.</span>")
 				new /obj/item/parts/robot_parts/arm/right/sturdy(get_turf(src))
-				M.amount -= 2
+				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
 					del(M)
@@ -641,9 +668,8 @@
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W,/obj/item/sheet) && (src.type == /obj/item/parts/robot_parts/arm/right/sturdy))
-			// second check up there is just watching out for those ..() calls
+	attackby(obj/item/W, mob/user)
+		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (!M.reinforcement)
 				boutput(user, "<span class='alert'>You'll need reinforced sheets to reinforce the [src.name].</span>")
@@ -651,7 +677,7 @@
 			if (M.amount >= 2)
 				boutput(user, "<span class='notice'>You reinforce [src.name] with the reinforced metal.</span>")
 				new /obj/item/parts/robot_parts/arm/right/heavy(get_turf(src))
-				M.amount -= 2
+				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
 					del(M)
@@ -679,6 +705,7 @@
 	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
+ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
 /obj/item/parts/robot_parts/leg
 	name = "placeholder item (don't use this!)"
 	desc = "A metal leg for a cyborg. It won't be able to move very well without this!"
@@ -687,7 +714,7 @@
 	var/step_sound = "step_robo"
 	var/step_priority = STEP_PRIORITY_LOW
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if(!ismob(M))
 			return
 
@@ -701,11 +728,7 @@
 
 		var/mob/living/carbon/human/H = M
 
-		if(!(src.slot in H.limbs.vars))
-			boutput(user, "<span class='alert'>You can't find a way to fit that on.</span>")
-			return
-
-		if(H.limbs.vars[src.slot])
+		if(H.limbs.get_limb(user.zone_sel.selecting))
 			boutput(user, "<span class='alert'>[H.name] already has one of those!</span>")
 			return
 
@@ -717,7 +740,7 @@
 
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/skull))
 			var/obj/item/skull/Skull = W
 			var/obj/machinery/bot/skullbot/B
@@ -766,20 +789,24 @@
 			return "has [bicon(src)] \an [initial(src.name)] attached as a"
 		return
 
+ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 /obj/item/parts/robot_parts/leg/left
-	name = "standard cyborg left leg"
+	name = "cyborg left leg"
 	slot = "l_leg"
+	step_image_state = "footprintsL"
 	icon_state_base = "l_leg"
 	icon_state = "l_leg-generic"
-	handlistPart = "legL-generic"
-	step_image_state = "footprintsL"
+	partlistPart = "legL-generic"
 	movement_modifier = /datum/movement_modifier/robotleg_left
+
+/obj/item/parts/robot_parts/leg/left/standard
+	name = "standard cyborg left leg"
 
 /obj/item/parts/robot_parts/leg/left/light
 	name = "light cyborg left leg"
 	appearanceString = "light"
 	icon_state = "l_leg-light"
-	handlistPart = "legL-light"
+	partlistPart = "legL-light"
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robotleg_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
@@ -789,7 +816,7 @@
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
 	icon_state = "l_leg-treads"
-	handlistPart = "legL-treads"
+	handlistPart = "legL-treads" // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
 	max_health = 100
 	powerdrain = 2.5
 	step_image_state = "tracksL"
@@ -797,20 +824,24 @@
 	robot_movement_modifier = /datum/movement_modifier/robot_part/tread_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS)
 
+ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 /obj/item/parts/robot_parts/leg/right
-	name = "standard cyborg right leg"
+	name = "cyborg right leg"
 	slot = "r_leg"
+	step_image_state = "footprintsR"
 	icon_state_base = "r_leg"
 	icon_state = "r_leg-generic"
-	handlistPart = "legR-generic"
-	step_image_state = "footprintsR"
+	partlistPart = "legR-generic"
 	movement_modifier = /datum/movement_modifier/robotleg_right
+
+/obj/item/parts/robot_parts/leg/right/standard
+	name = "standard cyborg right leg"
 
 /obj/item/parts/robot_parts/leg/right/light
 	name = "light cyborg right leg"
 	appearanceString = "light"
 	icon_state = "r_leg-light"
-	handlistPart = "legR-light"
+	partlistPart = "legR-light"
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robotleg_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
@@ -820,38 +851,13 @@
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
 	icon_state = "r_leg-treads"
-	handlistPart = "legR-treads"
+	handlistPart = "legR-treads"  // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
 	max_health = 100
 	powerdrain = 2.5
 	step_image_state = "tracksR"
 	movement_modifier = /datum/movement_modifier/robottread_right
 	robot_movement_modifier = /datum/movement_modifier/robot_part/tread_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS)
-
-/obj/item/parts/robot_parts/leg/treads
-	name = "cyborg treads"
-	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
-	slot = "leg_both"
-	appearanceString = "treads"
-	icon_state = "legs-treads"
-	max_health = 100
-	powerdrain = 5
-	step_image_state = "tracks-w"
-	movement_modifier = /datum/movement_modifier/robotleg_right // only one of these? if it replaces both it doesn't matter which one we put here.
-	robot_movement_modifier = /datum/movement_modifier/robot_part/tread_right
-	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS)
-
-/obj/item/parts/robot_parts/leg/thruster
-	name = "Alastor pattern thruster"
-	desc = "Nobody said this is safe."
-	slot = "leg_both"
-	appearanceString = "thruster"
-	icon_state = "legs-thruster"
-	max_health = 100
-	powerdrain = 5
-	step_image_state = null //It's flying so no need for this.
-	robot_movement_modifier = /datum/movement_modifier/robot_part/thruster_right
-	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS | LIMB_LIGHT)
 
 /obj/item/parts/robot_parts/leg/left/thruster
 	name = "left thruster assembly"
@@ -892,13 +898,13 @@
 	New()
 		..()
 		src.icon_state = "robo_suit"; //The frame is the only exception for the composite item name thing.
-		src.updateicon()
+		src.UpdateIcon()
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if(!emagged)
 			emagged = 1
 			if (user)
-				logTheThing("station", user, null, "emags a robot frame at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "emags a robot frame at [log_loc(user)].")
 				boutput(user, "<span class='notice'>You short out the behavior restrictors on the frame's motherboard.</span>")
 			return 1
 		else if(user)
@@ -913,7 +919,7 @@
 		emagged = 0
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/parts/robot_parts/))
 			var/obj/item/parts/robot_parts/P = W
 			switch (P.slot)
@@ -982,11 +988,11 @@
 					boutput(user, "<span class='alert'>You can't seem to fit this piece anywhere on the frame.</span>")
 					return
 
-			playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 			boutput(user, "<span class='notice'>You add [P] to the frame.</span>")
 			user.drop_item()
 			P.set_loc(src)
-			src.updateicon()
+			src.UpdateIcon()
 
 		if (istype(W, /obj/item/organ/brain))
 			boutput(user, "<span class='alert'>The brain needs to go in the head piece, not the frame.</span>")
@@ -1012,12 +1018,12 @@
 				boutput(user, "<span class='alert'>You can't think of anything to do with the frame.</span>")
 				return
 
-			var/action = input("What do you want to do?", "Robot Frame") in actions
+			var/action = tgui_input_list(user, "What do you want to do?", "Robot Frame", actions)
 			if (!action)
 				return
 			if (action == "Do nothing")
 				return
-			if (get_dist(src.loc,user.loc) > 1 && !user.bioHolder.HasEffect("telekinesis"))
+			if (BOUNDS_DIST(src.loc, user.loc) > 0 && !user.bioHolder.HasEffect("telekinesis"))
 				boutput(user, "<span class='alert'>You need to move closer!</span>")
 				return
 
@@ -1026,40 +1032,40 @@
 					user.unlock_medal("Weird Science", 1)
 					src.finish_cyborg()
 				if("Remove the Right leg")
-					src.r_leg.set_loc( get_turf(src) )
+					src.r_leg?.set_loc( get_turf(src) )
 					if (src.r_leg.slot == "leg_both")
 						src.r_leg = null
 						src.l_leg = null
 					else src.r_leg = null
 				if("Remove the Left leg")
-					src.l_leg.set_loc( get_turf(src) )
+					src.l_leg?.set_loc( get_turf(src) )
 					if (src.l_leg.slot == "leg_both")
 						src.r_leg = null
 						src.l_leg = null
 					else src.l_leg = null
 				if("Remove the Right arm")
-					src.r_arm.set_loc( get_turf(src) )
+					src.r_arm?.set_loc( get_turf(src) )
 					if (src.r_arm.slot == "arm_both")
 						src.r_arm = null
 						src.l_arm = null
 					else src.r_arm = null
 				if("Remove the Left arm")
-					src.l_arm.set_loc( get_turf(src) )
+					src.l_arm?.set_loc( get_turf(src) )
 					if (src.l_arm.slot == "arm_both")
 						src.r_arm = null
 						src.l_arm = null
 					else src.l_arm = null
 				if("Remove the Head")
-					src.head.set_loc( get_turf(src) )
+					src.head?.set_loc( get_turf(src) )
 					src.head = null
 				if("Remove the Chest")
-					src.chest.set_loc( get_turf(src) )
+					src.chest?.set_loc( get_turf(src) )
 					src.chest = null
-			playsound(get_turf(src), "sound/items/Ratchet.ogg", 40, 1)
-			src.updateicon()
+			playsound(src, 'sound/items/Ratchet.ogg', 40, 1)
+			src.UpdateIcon()
 			return
 
-	proc/updateicon()
+	update_icon()
 		src.overlays = null
 		if(src.chest) src.overlays += image('icons/mob/robots.dmi', "body-" + src.chest.appearanceString, OBJ_LAYER, 2)
 		if(src.head) src.overlays += image('icons/mob/robots.dmi', "head-" + src.head.appearanceString, OBJ_LAYER, 2)
@@ -1088,113 +1094,94 @@
 				return 1
 		return 0
 
-	proc/reset_frame()
-		src.chest = null
-		src.head = null
-		src.l_arm = null
-		src.r_arm = null
-		src.l_leg = null
-		src.r_leg = null
-		src.updateicon()
-
 	proc/finish_cyborg()
-		var/mob/living/silicon/robot/O = null
-		O = new /mob/living/silicon/robot(get_turf(src.loc),src,0,src.syndicate,src.emagged)
+		var/mob/living/silicon/robot/borg = null
+		borg = new /mob/living/silicon/robot(get_turf(src.loc),src,0,src.syndicate,src.emagged)
 		// there was a big transferring list of parts from the frame to the compborg here at one point, but it didn't work
 		// because the cyborg's process proc would kill it for having no chest piece set up after New() finished but
 		// before it could get around to this list, so i tweaked their New() proc instead to grab all the shit out of
 		// the frame before process could go off resulting in a borg that doesn't instantly die
 
-		O.invisibility = 0
-		O.name = "Cyborg"
-		O.real_name = "Cyborg"
+		borg.name = "Cyborg"
+		borg.real_name = "Cyborg"
 
-		if (src.head)
-			if (src.head.brain)
-				O.brain = src.head.brain
-			else if (src.head.ai_interface)
-				O.ai_interface = src.head.ai_interface
-			else
-				O.collapse_to_pieces()
-				src.reset_frame()
-				return
-		else
+		if (!src.head)
 			// how the fuck did you even do this
-			O.collapse_to_pieces()
-			src.reset_frame()
+			stack_trace("Attempted to finish a cyborg from borg frame [src] (\ref[src]) without a head. That's bad.")
+			borg.death()
+			qdel(src)
 			return
 
-		if(O.brain?.owner?.key)
-			if(O.brain.owner.current)
-				O.gender = O.brain.owner.current.gender
-				if(O.brain.owner.current.client)
-					O.lastKnownIP = O.brain.owner.current.client.address
-			var/mob/M = find_ghost_by_key(O.brain.owner.key)
+		if(borg.part_head.brain?.owner?.key)
+			if(borg.part_head.brain.owner.current)
+				borg.gender = borg.part_head.brain.owner.current.gender
+				if(borg.part_head.brain.owner.current.client)
+					borg.lastKnownIP = borg.part_head.brain.owner.current.client.address
+			var/mob/M = find_ghost_by_key(borg.part_head.brain.owner.key)
 			if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
-				src.visible_message("<span class='alert'><b>[src]</b> remains inactive.</span>")
-				O.collapse_to_pieces()
-				src.reset_frame()
+				src.visible_message("<span class='alert'><b>[src]</b> remains inactive, as the conciousness associated with that brain could not be reached.</span>")
+				borg.death()
+				qdel(src)
 				return
 			if (!isdead(M)) // so if they're in VR, the afterlife bar, or a ghostcritter
 				boutput(M, "<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
-				O.brain.owner = M.ghostize()?.mind
+				borg.part_head.brain.owner = M.ghostize()?.mind
 				qdel(M)
 			else
 				boutput(M, "<span class='alert'>You feel yourself being dragged out of the afterlife!</span>")
-			O.brain.owner.transfer_to(O)
+			borg.part_head.brain.owner.transfer_to(borg)
 			if (isdead(M) && !isliving(M))
 				qdel(M)
-		else if (O.ai_interface)
-			if (!(O in available_ai_shells))
-				available_ai_shells += O
+
+		else if (src.head.ai_interface)
+			if (!(borg in available_ai_shells))
+				available_ai_shells += borg
 			for_by_tcl(AI, /mob/living/silicon/ai)
 				boutput(AI, "<span class='success'>[src] has been connected to you as a controllable shell.</span>")
-			O.shell = 1
-		else if (istype(O.brain, /obj/item/organ/brain/latejoin))
+			borg.shell = 1
+		else if (istype(borg.part_head.brain, /obj/item/organ/brain/latejoin))
 			boutput(usr, "<span class='notice'>You activate the frame and a audible beep emanates from the head.</span>")
-			playsound(get_turf(src), "sound/weapons/radxbow.ogg", 40, 1)
+			playsound(src, 'sound/weapons/radxbow.ogg', 40, 1)
 		else
-			O.collapse_to_pieces()
-			src.reset_frame()
+			stack_trace("We finished cyborg [borg] (\ref[borg]) from frame [src] (\ref[src]) with a brain, but somehow lost the brain??? Where did it go")
+			borg.death()
+			qdel(src)
 			return
 
 		if (src.chest && src.chest.cell)
-			O.cell = src.chest.cell
-			O.cell.set_loc(O)
+			borg.cell = src.chest.cell
+			borg.cell.set_loc(borg)
 
-		if (O.mind && !O.ai_interface)
-			O.unlock_medal("Adjutant Online", 1)
-			O.set_loc(get_turf(src))
-			var/area/A = get_area(src)
-			if (A)
-				A.Entered(O)
+		if (borg.mind && !borg.part_head.ai_interface)
+			borg.unlock_medal("Adjutant Online", 1)
+			borg.set_loc(get_turf(src))
 
-			boutput(O, "<B>You are playing a Robot. The Robot can interact with most electronic objects in its view point.</B>")
-			boutput(O, "To use something, simply double-click it.")
-			boutput(O, "Use say \":s to speak to fellow cyborgs and the AI through binary.")
+			boutput(borg, "<B>You are playing a Robot. The Robot can interact with most electronic objects in its view point.</B>")
+			boutput(borg, "To use something, simply click it.")
+			boutput(borg, "Use the prefix <B>:s</B> to speak to fellow cyborgs and the AI through binary.")
 
 			if (src.emagged || src.syndicate)
-				if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && O.mind)
-					ticker.mode:revolutionaries += O.mind
-					ticker.mode:update_rev_icons_added(O.mind)
+				if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && borg.mind)
+					ticker.mode:revolutionaries += borg.mind
+					ticker.mode:update_rev_icons_added(borg.mind)
 				if (src.emagged)
-					O.emagged = 1
-					SPAWN_DBG(0)
-						O.update_appearance()
+					borg.emagged = 1
+					SPAWN(0)
+						borg.update_appearance()
 				else if (src.syndicate)
-					O.syndicate = 1
-				O.handle_robot_antagonist_status("activated", 0, usr)
+					borg.syndicate = 1
+				borg.make_syndicate("activated by [usr]")
 			else
-				boutput(O, "<B>You must follow the AI's laws to the best of your ability.</B>")
-				O.show_laws() // The antagonist proc does that too.
+				boutput(borg, "<B>You must follow the AI's laws to the best of your ability.</B>")
+				borg.show_laws() // The antagonist proc does that too.
 
-			O.job = "Cyborg"
+			borg.job = "Cyborg"
 
 		// final check to guarantee the icon shows up for everyone
-		if(O.mind && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
-			if ((O.mind in ticker.mode:revolutionaries) || (O.mind in ticker.mode:head_revolutionaries))
+		if(borg.mind && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
+			if ((borg.mind in ticker.mode:revolutionaries) || (borg.mind in ticker.mode:head_revolutionaries))
 				ticker.mode:update_all_rev_icons() //So the icon actually appears
-		O.update_appearance()
+		borg.update_appearance()
 
 		qdel(src)
 		return
@@ -1245,58 +1232,3 @@
 		AI.verbs -= whatever the vox verb is i guess
 */
 
-/obj/item/roboupgrade/ai/law_override
-	name = "AI Law Override Module"
-	desc = "A module that overrides the AI's inherent law set with a customised one."
-	icon_state = "mod-sec"
-	var/datum/ai_laws/law_set = null
-	var/datum/ai_laws/old_law_set = null
-
-	New()
-		..()
-		src.law_set = new /datum/ai_laws(src)
-
-	slot_in(var/mob/living/silicon/ai/AI)
-		if (..())
-			return
-		boutput(AI, "<b>Your inherent laws have been overridden by an inserted module.</b>")
-		src.old_law_set = ticker.centralized_ai_laws
-		ticker.centralized_ai_laws = src.law_set
-		ticker.centralized_ai_laws.show_laws(AI)
-		AI << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-		if (AI.deployed_to_eyecam)
-			AI.eyecam << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-
-	slot_out(var/mob/living/silicon/ai/AI)
-		if (..())
-			return
-		boutput(AI, "<b>Your inherent laws have been restored.</b>")
-		ticker.centralized_ai_laws = src.old_law_set
-		ticker.centralized_ai_laws.show_laws(AI)
-		AI << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-		if (AI.deployed_to_eyecam)
-			AI.eyecam << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-		src.old_law_set = null
-
-	attack_self(var/mob/user as mob)
-		if (!iscarbon(user))
-			boutput(user, "<span class='alert'>Silicon lifeforms cannot access this module's functions.</span>")
-			return
-
-		if (!istype(src.law_set,/datum/ai_laws))
-			src.law_set = new /datum/ai_laws(src)
-			// just in case
-
-		var/datum/ai_laws/LAW = src.law_set
-		var/law_counter = 1
-		var/entered_text = ""
-		while (law_counter < 4)
-			entered_text = input("Enter Law #[law_counter].","[src.name]") as null|text
-			if (entered_text)
-				if (law_counter > LAW.inherent.len)
-					LAW.inherent += entered_text
-				else
-					LAW.inherent[law_counter] = entered_text
-			else
-				break
-			law_counter++

@@ -7,11 +7,11 @@
 		cure = "Decursing"
 		reagentcure = list("water_holy")
 
-/datum/ailment/disability/clumsy/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
+/datum/ailment/disability/clumsy/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
 	var/mob/living/M = D.affected_mob
-	if (prob(6))
+	if (probmult(6))
 		boutput(M, "<span class='alert'>Your hands twitch.</span>")
 		var/h = M.hand
 		M.hand = 0
@@ -19,7 +19,7 @@
 		M.hand = 1
 		M.drop_item()
 		M.hand = h
-	if (prob(3))
+	if (probmult(3))
 		M.visible_message("<span class='alert'><B>[M.name]</B> stumbles and falls!</span>")
 		M.changeStatus("stunned", 1 SECOND)
 		M.changeStatus("weakened", 1 SECOND)
@@ -29,10 +29,10 @@
 				boutput(H, "<span class='alert'>You bash your head on the ground.</span>")
 				H.TakeDamageAccountArmor("head", 5, 0, 0, DAMAGE_BLUNT)
 				H.take_brain_damage(2)
-				H.changeStatus("paralysis", 100)
+				H.changeStatus("paralysis", 10 SECONDS)
 				H.make_jittery(1000)
 			else
 				boutput(H, "<span class='alert'>You bash your head on the ground - good thing you were wearing a helmet!</span>")
-	if (prob(1))
+	if (probmult(1))
 		boutput(M, "<span class='alert'>You forget to breathe.</span>")
 		M.take_oxygen_deprivation(33)

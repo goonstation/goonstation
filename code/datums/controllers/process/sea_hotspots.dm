@@ -1,10 +1,12 @@
+
 #ifdef MAP_OVERRIDE_OSHAN
-datum/controller/process/sea_hotspot_update
+/// Controls sea hotspots and their movement
+/datum/controller/process/sea_hotspot_update
 	var/tmp/datum/hotspot_controller/controller
 
 	setup()
 		name = "Sea Hotspot Process"
-		schedule_interval = 600 // important : this controls the speed of drift for every hotspot!
+		schedule_interval = 1 MINUTE // important : this controls the speed of drift for every hotspot!
 		controller = global.hotspot_controller
 
 	copyStateFrom(datum/controller/process/target)

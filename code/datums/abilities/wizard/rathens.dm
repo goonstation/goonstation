@@ -6,17 +6,19 @@
 	cooldown = 500
 	requires_robes = 1
 	offensive = 1
-	voice_grim = "sound/voice/wizard/RathensSecretGrim.ogg"
-	voice_fem = "sound/voice/wizard/RathensSecretFem.ogg"
-	voice_other = "sound/voice/wizard/RathensSecretLoud.ogg"
+	voice_grim = 'sound/voice/wizard/RathensSecretGrim.ogg'
+	voice_fem = 'sound/voice/wizard/RathensSecretFem.ogg'
+	voice_other = 'sound/voice/wizard/RathensSecretLoud.ogg'
+	maptext_colors = list("#d73715", "#d73715", "#fcf574")
 
 	cast()
 		if(!holder)
 			return
-		holder.owner.say("ARSE NATH!")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("ARSE NATH", FALSE, maptext_style, maptext_colors)
 		..()
 
-		playsound(holder.owner, "sound/voice/farts/superfart.ogg", 25, 1)
+		playsound(holder.owner, 'sound/voice/farts/superfart.ogg', 25, 1)
 
 		for (var/mob/*living/carbon/human*//H in oview(holder.owner))
 			if (H.traitHolder.hasTrait("training_chaplain"))

@@ -1,0 +1,110 @@
+		<h1>Mining Pocket Guide<h1>
+		<h3><i>Jeffery Jefferson and 'Prospector' Peter Sans-Culottes, NT13</i></h3>
+		<hr>
+		Howdy! Welcome to the wild world of minin'! You're tasked with getting the station valuable minerals they need by digging them up, either in space or with the mineral magnet.
+		But, there's some important information for greenhorns like you to know; we wouldn't want you drifting into space like a tumbleweed!
+
+		<h3>EQUIPMENT</h3>
+		Different mining equipment will be more or less effective on different densities of rock.  Try 'em all!
+		<br>
+		In your locker, you'll find:<br>
+		<ul><li><b>Power Pick</b> - basic tool for digging, holds 50 charges and needs to be recharged after those are spent.</li>
+		<li><b>Engineering Space Suit and Jetpack</b>- basic EVA gear essential to safely operate in space, does not protect from radiation. Remember to turn your oxygen on when you venture out!</li>
+		<li><b>Low Yield Concussive Charges</b> - mining explosives to mine large areas, slap them onto an asteroid and get the heck outta the way!</li>
+		<li><b>Ore scoop and Satchels</b> - connect a satchel to the scoop, and it will automatically pick up all useful minerals you walk over when you hold it in a hand. Each satchel can
+		hold 50 pieces of ore before being full up.</li>
+		<li><b>Geologic Scanner</b> - scans an asteroid for ore types, sweet gems, as well as points out any dangers, hinderances, or anomalies in the rock.</li></ul>
+		<br><h4>OTHER GEAR</h4>
+		These can be manufactured in your workspace once you've collected some materials to make 'em. Visit the yellow Mining Fabricator to create these.
+		<ul><li><b>Power Hammer</b> - a more powerful mining tool, but holds less charges. Hits rocks in a three-tile row in front of you.</li>
+		<li><b>Laser Drill</b> - a medium-powered mining tool that doesn't need charges.</li>
+		<li><b>Concussive Charges</b> - work the same as the low yield ones from before, but with a larger radius.</li>
+		<li><b>Industrial Armour/Suit</b> - space and diving suits that protect from radiation and explosions, both common hazards in this line of work.</li>
+		<li><b>Mechanized Boots</b> - shoes that allow for much faster movement. </li></ul>
+		<br><i>You can also make custom tools in the Nanofabricator (Mining) by loading bars of refined materials into it and then producing a tool head; then loading the tool head into the
+		machine and producing a Mining Tool. Experiment with different material combinations to discover more effective means of mining.</i><br><hr>
+		<h3>DEPARTMENT MACHINES</h3>
+		<ul><li><b>Nanofabricator (Mining)</b> - makes most mining gear (and some other stuff) when supplied with ore.</li>
+		<li><b>Mineral Magnet</b> - a big honkin' circular device that pulls in asteroids from space. Operated from the purple-screened Mining Magnet Control computer located near the rest of
+		the machinery. It can also scan the rock for you like the Geologic Scanner can. Yahoo!</li>
+		<li><b>Quantum Telescope</b> - a high-tech long range telescope that allows you to find better and rare ore. It works via triangulatin' a signal based on points you click on the computer.
+		<ul><li>Click an asteroid to track on the right of the computer screen, and then click the image of the galaxy. <b><i>A larger circle means you're further away from the asteroid you're trying to
+		find.</b></i></li><li><i>You can save asteroids to the Mining Magnet Control computer and pull them up at the Control computer.</i></li></ul>
+		<li><b>Nanocrucible</b> - makes alloys out of two refined mineral chunks, combining their properties. </li>
+		<li><b>Nanofabrictors</b> - makes special gear out of refined minerals, like metal sheets and lightbulbs.</li></ul><hr>
+		<h3>MATERIALS</h3>
+		Now, a basic rundown of what you'll find out there:
+		<ul><li><b>Mauxite</b> - standard <i>Metal</i>, easily mined with even a unpowered pickaxe</li>
+		<li><b>Pharosium</b> - standard <i>Conductor</i>, easily mined with even a unpowered pickaxe</li>
+		<li><b>Molitz</b> - standard <i>Crystal</i>, easily mined; a rare version, <b>Molitz Beta</b> may be found in deposits and will release a special gas at a high temperature</li></ul>
+		Other useful materials:
+		<ul><li><b>Borhum</b> - sturdy <i>Metal</i>, useful and easy to mine; required to make improved gear and pod armor</li>
+		<li><b>Cerenkite</b> - <i>Power Source</i>; take caution when mining, as it is also incredibly radioactive</li>
+		<li><b>Char</b> - a soft <i>Fabric</i> and fuel source for the Thermo-electric Generator</li>
+		<li><b>Claretine</b> - high power <i>Conductor</i>, required to make improved gear</li>
+        <li><b>Cobryl</b> - <i>Metal</i>; best sold unrefined through Cargo</li>
+		<li><b>Erebite</b> - a <i>Crystal</i> and <i>Power Source</i>, but watch out! It's highly unstable and prone to exploding, as well as radioactive; <b>handle with care</b></li>
+		<li><b>Gold</b> - hard-to-mine <i>Metal</i> and <i>Conductor</i> that can be exported unrefined from Cargo for lots of proft</li>
+		<li><b>Ice</b> - a cheap and easy-to-mine <i>Crystal</i> and <i>Conductor</i> that can do a pinch, but will melt if you hold it for too long</li>
+		<li><b>Koshmarite</b> - a medium-difficulty ore to mine that functions as a <i>Crystal</i> and <i>Fabric</i>, and is mildly radioactive</li>
+		<li><b>Plasmastone</b> - a volatile <i>Crystal</i>, <i>Power Source</i>, and <i>Conductor</i> that is radioactive and can catch fire in pressurized areas</li>
+		<li><b>Rock</b> - a non-valuable substance that is a decent <i>Sturdy Metal</i> for building purposes</li>
+		<li><b>Syreline</b> - a very valuable and hard-to-mine <i>Metal</i> best sold through Cargo as an export</li>
+		<li><b>Viscerite</b> - a strange <i>Fabric</i> that can also be used to restock the Cloner in Medbay; questionably edible</li></ul>
+
+		<br>This is not an exhaustive list of all matrials you can find, you may come accross more while mining, but these are some of the most useful!
+		<hr>
+		<h3>COWORKERS</h3>
+		Mining can be a huge help to other departments, so let's get to know 'em!
+		<br><br>
+		<ul><li>Your boss, the Chief Engineer, keeps the station running!  Listen to them if they have any orders, but generally they'll be more concerned with the engine.
+		<ul><li>If your station comes equipped with a Thermo-electric Generator, they might appreciate you sending them some <b>Molitz Beta</b>
+		<li>They may need you to help them obtain other ores and materials to upgrade the Thermo-electric generator using <i>Materials Science</i></ul></li></li>
+		<li>The Quartermasters will LOVE you if you send them those juicy ores and gems, and you'll help boost the station budget so y'all can afford some fancy hats!</li>
+		<li>Robotics can also use ores and gems, and sending some over is appreciated! You can do this by sending them in a crate using a cargo transporter and settin' the destination
+		to the Robotics or Cargo pads.
+		<ul><li><b>Mauxite</b> is good for making robot parts</li>
+		<li><b>Cerenkite</b> is good for rechargable and stable cells for cyborgs</li>
+		<li><b>Molitz</b> is good for crystals to create glass and electronic components
+		<li><b>Pharosium</b> is a near-essential conductor for electronics circuitry</li></ul></li></ul>
+		You can also sell ore to anyone on the station by placing your satchel on that big round orange thing somewhere near the magnet or in the mining room. That's the RockBox!
+		It saves all ores you collect and can dispense 'em to the different fabricators throughout the station. To sell ores from the RockBox, just open up the interface on it and set the
+		ores to 'For sale' by clickin' next to them in the listing. You can set your own prices too!
+		<br><hr>
+		<h3>DANGERS</h3>
+		Life isn't all fun and games on the mining frontier!  Here's some stuff to watch out for:
+
+		<ul><li>WEAR YOUR DANG SPACE SUIT AND PUT YOUR OXYGEN ON; YOU WILL DIE OUT THERE IF YOU DON'T, YOU DARN FOOL!</li>
+		<li>Your Oxygen can run out!  If you see a little red O2 icon pop up and you start gasping, get inside and take that jetpack off, it's done!
+		<ul><li>Stick it on an air or oxygen canister, pump up the pressure, and flick the switch, should fill 'er up!</li></ul></li>
+		<li>Ore that is <i><b>radioactive</b></i> like Erebite and Cerenkite. This means a lot of hard-to-heal damage over time. If you stop feelin' well and see you're injured by
+		looking at the top right,  STOP what you are doing and get to a doc, pronto!</li>
+		<li><b><i>Explosive</b></i> ore, like Erebite Your friend and enemy!  Some ore is pretty naturally volatile, and will go 'BOOM' unless handled carefully!
+		There's also sometimes pockets of gas that will glow briefly before detonating. <b>If you see a glow, it's time ta go!</b>
+		<ul><li>Keep an eye out for areas marked with a red '!' when you scan that sucker.</li></ul></li></ul>
+		<hr>
+		<h3>PODS</h3>
+		You may find you wanna go out into the Asteroid Belt or Debris Field to collect materials and need a pod. Your department should come standard with IndyPutts, which have mining tools
+		attached as arms on the front, and Ore Holds to install as secondary systems to collect materials from in the field. You can also build and retrofit your own custom pods to go mining with.
+		<br>
+		To do so:
+		<ul><li><b>Print</b> a <i>Pod Frame</i> from a white Ship Parts Fabricator that can be found in most Pod Bays, and deploy by using it on black, reinforced podbay flooring</li>
+		<li><b>Wrench</b> it into place twice</li>
+		<li><b>Weld</b> the frame</li>
+		<li><b>Wire</b> the frame up with cable coils</li>
+		<li><b>Print and add</b><i>Pod Circuitry</i> to the frame</li>
+		<li><b>Add 5 sheets of metal</b> to the exterior</li>
+		<li><b>Print and install</b> an <i>Engine Manifold</i> to the shell</li>
+		<li><b>Print and add</b> <i>Pod Armor</i> to the frame</li>
+		<li><b>Weld</b> the armor onto the frame</li>
+		<li><b>Print and install</b> a <i>Pod Control Interface</i> to the pod</li>
+		<li><b>Add 5 <i>reinforced glass</i> sheets</b> to the windshield</li>
+		<li><b>Right-click</b> the pod and select the round icon with wires to <i>Customize</i> the parts on your pod; you can add parts by clicking the pod with a component, and swap
+		parts by clicking the blue text in the parts menu, then clicking the pod with the component you want to replace the old one with</li>
+		<li><b><i>Optionally,</i> print and add</b> a <i>Pod Paint Kit</i> to the pod to decorate the exterior in a number of styles</li></ul><hr>
+		<h4>FOOTNOTE</h4>
+		Additional information is available at:
+		<br>
+		<ul>
+		<li><a href="https://wiki.ss13.co/Guide_to_Mining" target="Goonstation Wiki: Guide to Mining">https://wiki.ss13.co/Guide_to_Mining</a></li></ul>
+		We at Nanotrasen hope you find this information helpful and that you'll have more fun mining than a baby bee in a butter bucket!  Now get out there and get that ore. Good luck!

@@ -60,10 +60,10 @@
 			. += "<span class='alert'><B>the alien looks pretty beat up</B></span>"
 
 
-	attack_hand(user as mob)
+	attack_hand(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		switch(W.damtype)
 			if("fire")
 				src.health -= W.force * 0.75
@@ -98,9 +98,9 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.death()
-			if(2.0)
+			if(2)
 				src.health -= 15
 				healthcheck()
 		return
@@ -119,11 +119,11 @@
 			src.target = AM
 			set_attack()
 		else if(ismob(AM))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/turf/T = get_turf(src)
 				AM:set_loc(T)
 
-	Bump(atom/A)
+	bump(atom/A)
 		if(ismob(A) && (ishuman(A) || ismonkey(A)))
 			src.target = A
 			set_attack()
@@ -219,7 +219,7 @@
 				idle()
 
 		else if(target)
-			var/turf/distance = get_dist(src, target)
+			var/turf/distance = GET_DIST(src, target)
 			set_attack()
 
 			if(can_see(src,target,viewrange))
@@ -241,7 +241,7 @@
 						return
 					else
 						set_null()
-						SPAWN_DBG(cycle_pause) src.process()
+						SPAWN(cycle_pause) src.process()
 						return
 
 				step_towards(src,get_step_towards2(src , target))
@@ -251,7 +251,7 @@
 					path_attack(target)
 					if(!path_target)
 						set_null()
-						SPAWN_DBG(cycle_pause) src.process()
+						SPAWN(cycle_pause) src.process()
 						return
 				else
 					var/turf/next = path_target[1]
@@ -267,15 +267,15 @@
 						step_towards(src,next)
 						quick_move = 1
 
-			if (get_dist(src, src.target) >= distance) src.frustration++
+			if (GET_DIST(src, src.target) >= distance) src.frustration++
 			else src.frustration--
 			if(frustration >= 35) set_null()
 
 		if(quick_move)
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				src.process()
 		else
-			SPAWN_DBG(cycle_pause)
+			SPAWN(cycle_pause)
 				src.process()
 
 	proc/idle()
@@ -285,7 +285,7 @@
 
 		if(locate(/obj/alien/weeds) in src.loc && health < maxhealth)
 			health++
-			SPAWN_DBG(cycle_pause) idle()
+			SPAWN(cycle_pause) idle()
 			return
 
 		if(!path_idle || !length(path_idle))
@@ -298,7 +298,7 @@
 					if(!path_idle)
 						trg_idle = null
 						set_idle()
-						SPAWN_DBG(cycle_pause) src.idle()
+						SPAWN(cycle_pause) src.idle()
 						return
 			else
 				var/obj/alien/weeds/W = null
@@ -317,18 +317,18 @@
 					path_idle(W)
 					if(!path_idle)
 						trg_idle = null
-						SPAWN_DBG(cycle_pause) src.idle()
+						SPAWN(cycle_pause) src.idle()
 						return
 				else
 					for(var/mob/living/carbon/alien/humanoid/H in range(1,src))
-						SPAWN_DBG(cycle_pause) src.idle()
+						SPAWN(cycle_pause) src.idle()
 						return
 					step(src,pick(cardinal))
 
 		else
 
 			if(can_see(src,trg_idle,viewrange))
-				switch(get_dist(src, trg_idle))
+				switch(GET_DIST(src, trg_idle))
 					if(1)
 						if(istype(trg_idle,/obj/alien/weeds))
 							step_towards(src,get_step_towards2(src , trg_idle))
@@ -347,7 +347,7 @@
 					path_idle(trg_idle)
 
 				if(!path_idle)
-					SPAWN_DBG(cycle_pause) src.idle()
+					SPAWN(cycle_pause) src.idle()
 					return
 				else
 					next = path_idle[1]
@@ -356,10 +356,10 @@
 					quick_move = 1
 
 		if(quick_move)
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				idle()
 		else
-			SPAWN_DBG(cycle_pause)
+			SPAWN(cycle_pause)
 				idle()
 
 	proc/path_idle(var/atom/trg)

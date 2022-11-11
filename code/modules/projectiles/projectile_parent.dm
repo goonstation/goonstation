@@ -1,60 +1,124 @@
-/proc/roundTZ(var/i)
-	if (i < 0)
-		return -round(-i)
-	return round(i)
+/**
+ * This file is not good
+ * Fucked up var names lie ahead
+ * Caution, traveler
+ *
+ * General cleanup todo:
+ * Go through undocumented math and document it
+ * Remove bad vars, fill in gaps then created
+ * Deduplicate info between this and proj_data
+ */
 
 /obj/projectile
 	name = "projectile"
-	flags = TABLEPASS
+	flags = TABLEPASS | UNCRUSHABLE
 	layer = EFFECTS_LAYER_BASE
+	anchored = TRUE
+	animate_movement = FALSE
 
+	/// Projectile data; almost all specific projectile information and functionality lives here
+	var/datum/projectile/proj_data = null
+
+	/// List of all targets this projectile can go after; useful for homing projectiles and the like
+	var/list/targets = list()
+	/// Does this projectile pierce armor?
+	var/armor_ignored = FALSE
+	/// Maximum range this projectile can travel before impacting a (non-dense) turf
+	var/max_range = PROJ_INFINITE_RANGE
+	/// What kind of implant this projectile leaves in impacted mobs
+	var/implanted = null
+	/// Forensic ID of the gun, etc that shot this projectile, used for forensics on implanted projectiles
+	var/forensic_ID = null
+	/// The mob/thing that fired this projectile
+	var/atom/shooter = null
+	/// Mob-typed copy of `shooter` var to save time on casts later
+	var/mob/mob_shooter = null
+	/// Number of tiles this projectile has travelled
+	var/travelled = 0
+	/// Angle of this shot. For reference @see setup()
+	var/angle
+	/// Original turf this projectiles was fired from
+	var/turf/orig_turf
+
+	///Default dir, set to in do_step()
+	var/facing_dir = 1
+	/// Whether this projectile was shot point-blank style (clicking an adjacent mob). Adjusts the log entry accordingly
+	var/was_pointblank = FALSE
+
+	/// Bullshit var for storing special data for niche cases. Sucks, is probably necessary nonetheless
+	var/list/special_data = list()
+
+	/// Tracks the number of steps before a piercing projectile is allowed to hit a mob after hitting another one. Scarcely used. TODO remove?
+	var/ticks_until_can_hit_mob = 0
+	/// Whether this projectile can freely pass through dense turfs
+	var/goes_through_walls = FALSE
+	/// Whether this projectile can freely pass through mobs
+	var/goes_through_mobs = FALSE
+	/// List of atoms collided with this tick
+	var/list/hitlist = list()
+	/// Number of times this projectile has been reflected off of things. Used to cap reflections
+	var/reflectcount = 0
+	/// For disabling collision when a projectile has died but hasn't been disposed yet, e.g. under on_end effects
+	var/has_died = FALSE
+
+	// ----------------- BADLY DOCUMENTED VARS WHICH ARE NONETHELESS (PROBABLY) USEFUL, OR VARS THAT MAY BE UNNECESSARY BUT THAT IS UNCLEAR --------------------
+
+	/// TODO dunno what these are. guessing 'original x' and 'original y' but all the code involving them is mathy and i don't have the patience rn
+	/// Fill in if u know ty
 	var/xo
 	var/yo
 
-	// I have no idea what to do with these.
-	var/target = null
-	var/datum/projectile/proj_data = null
-	//var/obj/o_shooter = null
-	var/list/targets = list()
-	var/power = 20 // temp var to store what the current power of the projectile should be when it hits something
-	var/max_range = PROJ_INFINITE_RANGE //max range
-	var/initial_power = 20 // local copy of power for determining power when hitting things
-	var/implanted = null
-	var/forensic_ID = null
-	var/atom/shooter = null // Who/what fired this?
-	var/mob/mob_shooter = null
-	// We use shooter to avoid self collision, however, the shot may have been initiated through a proxy object. This is for logging.
-	var/travelled = 0 // track distance
-	var/angle // for reference @see setup()
-	animate_movement = 0
-	var/turf/orig_turf
-
-	var/facing_dir = 1 //default dir we set to in do_step()
-
-	var/data = 0
-	var/was_pointblank = 0 // Adjusts the log entry accordingly.
-
-	var/was_setup = 0
-	var/far_border_hit
-
-	var/incidence = 0 // reflection normal on the current tile (NORTH if projectile came from the north, etc.)
-	var/list/crossing = list()
-	var/list/special_data = list()
-	var/curr_t = 0
-
+	/// What the fuck is this comment your shit jesus christ ????? TODO
 	var/wx = 0
 	var/wy = 0
 
-	var/internal_speed = null // experimental
+	/// Reflection normal on the current tile (NORTH if projectile came from the north, etc.)
+	/// TODO can maybe be replaced with a single dir check when relevant? not 100% sure why we need to track this always. Might be crucial, dunno
+	var/incidence = 0
+	/// No clue. Assoc list seems like? Also accessed as a non-assoc list sometimes. fuck. TODO
+	var/list/crossing = list()
+	/// No clue. Related to curr_t. TODO
+	var/curr_t = 0
+
+	/// One of the two below vars needs to be renamed or removed. Fucking confusing
+
+	/// I don't know why this var is here it just stores the result of a proc called on the proj data. TODO revisit
+	var/power = 20 // temp var to store what the current power of the projectile should be when it hits something
+	/// TODO this var also feels dumb. convert to initial() prolly (on data not on this)
+	var/initial_power = 20
+
+	// ------------------- VARS TO BE TAKEN OUT BACK AND SHOT ----------------------------
+
+	/// Yeah this sucks. TODO remove. I don't care bring the bug back so we can actually fix it
+	var/is_processing = FALSE //MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
+
+	var/internal_speed = null // experimental    THANKS VERY INFORMATIVE   TODO: ask yass how this works
+
+	// TODO axe this var, only used for witch gimmick abilities which can be reworked
+	var/target = null
+
+	/// Arbitrary projectile data. Currently only used to hold an object that a projectile is seeking for a singular type. TODO remove
+	var/data = 0
+
+	/// Number of impassable atoms this projectile can pierce. Decremented on pierce. Can probably be axed in favor of the component. TODO remove
 	var/pierces_left = 0
-	var/ticks_until_can_hit_mob = 0
-	var/goes_through_walls = 0
-	var/goes_through_mobs = 0
+
+	/// TODO axe this after testing. Used very infrequently, looks redundant
+	var/was_setup = 0
+
+	/// Below stuff but also this is dumb and only used for frost bats and I don't even know why it's used there. TODO remove
 	var/collide_with_other_projectiles = 0 //allow us to pass canpass() function to proj_data as well as receive bullet_act events
-	var/list/hitlist = list() //list of atoms collided with this tick
-	var/reflectcount = 0
-	var/is_processing = 0//MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
-	var/is_detonating = 0//to start modeling fuses
+
+	disposing()
+		special_data = null
+		proj_data = null
+		targets = null
+		hitlist = null
+		target = null
+		shooter = null
+		data = null
+		mob_shooter = null
+		..()
 
 	proc/rotateDirection(var/angle)
 		var/oldxo = xo
@@ -81,24 +145,25 @@
 		src.setup()
 		if(proj_data)
 			proj_data.post_setup(src)
-		if (!disposed && !pooled)
-			SPAWN_DBG(0)
+		if (!QDELETED(src))
+			SPAWN(0)
 				if (!is_processing)
 					process()
 
 	proc/process()
-		if(hitlist.len)
+		if(length(hitlist))
 			hitlist.len = 0
 		is_processing = 1
-		while (!disposed && !pooled)
+		while (!QDELETED(src))
 
 			do_step()
-			sleep(0.75) //Changed from 1, minor proj. speed buff
+			sleep(1 DECI SECOND) //Changed from 1, minor proj. speed buff
 		is_processing = 0
 
 	proc/collide(atom/A as mob|obj|turf|area, first = 1)
 		if (!A) return // you never know ok??
-		if (disposed || pooled) return // if disposed = true, pooled or set for garbage collection and shouldn't process bumps
+		if (QDELETED(src)) return // if disposed = true, QDELETED(src) or set for garbage collection and shouldn't process bumps
+		if (has_died) return
 		if (!proj_data) return // this apparently happens sometimes!! (more than you think!)
 		if (proj_data?.on_pre_hit(A, src.angle, src))
 			return // Our bullet doesnt want to hit this
@@ -124,16 +189,16 @@
 			//die()
 			return
 
-		var/sigreturn = SEND_SIGNAL(src, COMSIG_PROJ_COLLIDE, A)
+		var/sigreturn = SEND_SIGNAL(src, COMSIG_OBJ_PROJ_COLLIDE, A)
 		sigreturn |= SEND_SIGNAL(A, COMSIG_ATOM_HITBY_PROJ, src)
-		if(pooled) //maybe a signal proc pooled us
+		if(QDELETED(src)) //maybe a signal proc QDELETED(src) us
 			return
 		// also run the atom's general bullet act
 		var/atom/B = A.bullet_act(src) //If bullet_act returns an atom, do all bad stuff to that atom instead
 		if(istype(B))
 			A = B
 
-		if (pooled) //maybe bullet_act pooled us. (MBC : SORRY THIS IS THE THING THAT FIXES REFLECTION RACE CONDITIONS)
+		if (QDELETED(src)) //maybe bullet_act QDELETED(src) us. (MBC : SORRY THIS IS THE THING THAT FIXES REFLECTION RACE CONDITIONS)
 			return
 
 		// if we made it this far this is a valid bump, run the specific projectile's hit code
@@ -150,33 +215,14 @@
 				O.bullet_act(src)
 			T = A
 			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL) && !(sigreturn & PROJ_ATOM_PASSTHROUGH)))
-				if (proj_data?.icon_turf_hit && istype(A, /turf/simulated/wall))
-					var/turf/simulated/wall/W = A
-					if (src.forensic_ID)
-						W.forensic_impacts += src.forensic_ID
-
-					if (W.proj_impacts.len <= 10)
-						var/image/impact = image('icons/obj/projectiles.dmi', proj_data.icon_turf_hit)
-						impact.transform = turn(impact.transform, pick(0, 90, 180, 270))
-						impact.pixel_x += rand(-12,12)
-						impact.pixel_y += rand(-12,12)
-						W.proj_impacts += impact
-						W.update_projectile_image(ticker.round_elapsed_ticks)
 				if (proj_data?.hit_object_sound)
 					playsound(A, proj_data.hit_object_sound, 60, 0.5)
 				die()
 		else if (ismob(A))
-			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
-				if (proj_data.hit_mob_sound)
-					playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
-			for (var/obj/item/cloaking_device/S in A.contents)
-				if (S.active)
-					S.deactivate(A)
-					src.visible_message("<span class='notice'><b>[A]'s cloak is disrupted!</b></span>")
-			for (var/obj/item/device/disguiser/D in A.contents)
-				if (D.on)
-					D.disrupt(A)
-					src.visible_message("<span class='notice'><b>[A]'s disguiser is disrupted!</b></span>")
+			if (proj_data?.hit_mob_sound)
+				playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
+			SEND_SIGNAL(A, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
+			SEND_SIGNAL(A, COMSIG_MOB_DISGUISER_DEACTIVATE)
 			if (ishuman(A))
 				var/mob/living/carbon/human/H = A
 				H.stamina_stun()
@@ -187,9 +233,9 @@
 			if(sigreturn & PROJ_ATOM_PASSTHROUGH || (pierces_left != 0 && first && !(sigreturn & PROJ_ATOM_CANNOT_PASS))) //try to hit other targets on the tile
 				for (var/mob/X in T.contents)
 					if(!(X in src.hitlist))
-						if (!X.CanPass(src, get_step(src, X.dir), 1, 0))
+						if (!X.Cross(src))
 							src.collide(X, first = 0)
-					if(src.pooled)
+					if(QDELETED(src))
 						return
 			if(!(sigreturn & PROJ_ATOM_PASSTHROUGH))
 				if (pierces_left == 0 || (sigreturn & PROJ_ATOM_CANNOT_PASS))
@@ -209,73 +255,21 @@
 			if(first && (sigreturn & PROJ_OBJ_HIT_OTHER_OBJS))
 				for (var/obj/X in T.contents)
 					if(!(X in src.hitlist))
-						if (!X.CanPass(src, get_step(src, X.dir), 1, 0))
+						if (!X.Cross(src))
 							src.collide(X, first = 0)
-					if(src.pooled)
+					if(QDELETED(src))
 						return
+			else if (src.was_pointblank)
+				die()
 		else
 			die()
 
-	pooled()
-		name = "projectile"
-		src.remove_simple_light()
-		xo = 0
-		yo = 0
-		pixel_x = 0
-		pixel_y = 0
-		power = 0
-		initial_power = 0
-		max_range = 0
-		travelled = 0
-		target = null
-		proj_data = null
-		//o_shooter = null
-		shooter = null
-		mob_shooter = null
-		implanted = null
-		forensic_ID = null
-		targets = null
-		angle = 0
-		was_setup = 0
-		was_pointblank = 0
-		data = 0
-		crossing.len = 0
-		curr_t = 0
-		wx = 0
-		wy = 0
-		color = null
-		incidence = 0
-		special_data.len = 0
-		overlays = null
-		overlay_refs = null
-		hitlist.len = 0
-		transform = null
-		internal_speed = null
-		orig_turf = null
-		pierces_left = 0
-		goes_through_walls = 0
-		goes_through_mobs = 0
-		ticks_until_can_hit_mob = 0
-		removeMaterial()
-		collide_with_other_projectiles = 0
-		is_processing = 0
-		facing_dir = 1
-		reflectcount = 0
-		..()
-
-	//just in fuck in case
-	unpooled()
-		//mbc hacky fix that prob doesnt work for shitty bug where unpooled projs get unpooled -- its even worse now :)
-		special_data.len = 0
-		for (var/atom/movable/A in src.contents)
-			A.set_loc(src.loc)
-
-		..()
 
 	proc/die()
+		has_died = TRUE
 		if (proj_data)
 			proj_data.on_end(src)
-		pool(src)
+		qdel(src)
 
 	proc/max_range_fail()
 
@@ -293,7 +287,10 @@
 			if (!proj_data.override_color)
 				src.color = "#ffffff"
 
+	// Awful var names. TODO rename pretty much everything here, or at least document the functions
 	proc/setup()
+		if(QDELETED(src))
+			return
 		if (src.proj_data == null || (xo == 0 && yo == 0) || proj_data.projectile_speed == 0)
 			die()
 			return
@@ -304,10 +301,11 @@
 		goes_through_mobs = src.proj_data.goes_through_mobs
 		set_icon()
 
-		var/len = sqrt(src.xo * src.xo + src.yo * src.yo)
+		var/len = sqrt(src.xo**2 + src.yo**2)
 
 		if (len == 0)
 			die()
+			return
 		src.xo = src.xo / len
 		src.yo = src.yo / len
 
@@ -331,28 +329,22 @@
 		Turn(angle)
 		if (!proj_data.precalculated)
 			return
-
+		var/speed = internal_speed || proj_data.projectile_speed
 		var/x32 = 0
 		var/xs = 1
 		var/y32 = 0
 		var/ys = 1
 		if (xo)
-			if (!isnull(internal_speed))
-				x32 = 32 / (internal_speed * xo)
-			else
-				x32 = 32 / (proj_data.projectile_speed * xo)
+			x32 = 32 / (speed * xo)
 			if (x32 < 0)
 				xs = -1
 				x32 = -x32
 		if (yo)
-			if (!isnull(internal_speed))
-				y32 = 32 / (internal_speed * yo)
-			else
-				y32 = 32 / (proj_data.projectile_speed * yo)
+			y32 = 32 / (speed * yo)
 			if (y32 < 0)
 				ys = -1
 				y32 = -y32
-		var/max_t = src.max_range + 1 // why not  --- off by one error is why not apparently
+		var/max_t = src.max_range * (32/speed)
 		var/next_x = x32 / 2
 		var/next_y = y32 / 2
 		var/ct = 0
@@ -379,13 +371,12 @@
 		curr_t = 0
 		src.was_setup = 1
 
-	Bump(var/atom/A)
+	bump(var/atom/A)
 		src.collide(A)
 
 	Crossed(var/atom/movable/A)
-		if (!istype(A))
-			return // can't happen will happen
-		if (!A.CanPass(src, get_step(src, A.dir), 1, 0))
+		..()
+		if (!A.Cross(src))
 			src.collide(A)
 
 		if (collide_with_other_projectiles && A.type == src.type)
@@ -398,7 +389,7 @@
 		for(var/thing as mob|obj|turf|area in T)
 			var/atom/A = thing
 			if (A == src) continue
-			if (!A.CanPass(src, get_step(src, A.dir), 1, 0))
+			if (!A.Cross(src))
 				src.collide(A)
 
 			if (collide_with_other_projectiles && A.type == src.type)
@@ -416,11 +407,10 @@
 			return
 		src.ticks_until_can_hit_mob--
 		proj_data.tick(src)
-		if (disposed || pooled)
+		if (QDELETED(src))
 			return
 
 		var/turf/curr_turf = loc
-
 		var/dwx
 		var/dwy
 		if (!isnull(internal_speed))
@@ -441,14 +431,15 @@
 			return
 
 		if (proj_data.precalculated)
-			for (var/i = 1, i < crossing.len, i++)
+			var/incidence_turf = curr_turf
+			for (var/i = 1, i < length(crossing), i++)
 				var/turf/T = crossing[i]
 				if (crossing[T] < curr_t)
 					Move(T)
-					if (disposed || pooled)
+					if (QDELETED(src))
 						return
-					incidence = get_dir(curr_turf, T)
-					curr_turf = T
+					incidence = get_dir(incidence_turf, T)
+					incidence_turf = T
 					crossing.Cut(1,2)
 					i--
 				else
@@ -470,7 +461,7 @@
 				else
 					set_loc(Dest) //set loc so we can cross walls etc properly
 					collide_with_applicable_in_tile(Dest)
-				if (disposed || pooled)
+				if (QDELETED(src))
 					return
 
 				incidence = get_dir(curr_turf, Dest)
@@ -492,7 +483,7 @@
 					else
 						incidence &= NORTH | SOUTH
 
-			if (!loc && !pooled)
+			if (!loc && !QDELETED(src))
 				die()
 				return
 
@@ -505,18 +496,14 @@
 		var/dpy = dy * 32
 
 		if (!dx && !dy) 	//smooth movement within a tile
-			animate(src,pixel_x = wx-dpx, pixel_y = wy-dpy, time = 0.75, flags = ANIMATION_END_NOW)
+			animate(src,pixel_x = wx-dpx, pixel_y = wy-dpy, time = 1 DECI SECOND, flags = ANIMATION_END_NOW)
 		else
-			if (dx && dy) 	//diagonals are too fucky and i cant figure out why yet :(
-				pixel_x = wx - dpx
-				pixel_y = wy - dpy
-			else			//smooth movement cross-tile
-				if ((loc.x - curr_turf.x))
-					pixel_x += 32 * -(loc.x - curr_turf.x)
-				if ((loc.y - curr_turf.y))
-					pixel_y += 32 * -(loc.y - curr_turf.y)
+			if ((loc.x - curr_turf.x))
+				pixel_x += 32 * -(loc.x - curr_turf.x)
+			if ((loc.y - curr_turf.y))
+				pixel_y += 32 * -(loc.y - curr_turf.y)
 
-				animate(src,pixel_x = wx-dpx, pixel_y = wy-dpy, time = 0.75, flags = ANIMATION_END_NOW) //todo figure out later
+			animate(src,pixel_x = wx-dpx, pixel_y = wy-dpy, time = 1 DECI SECOND, flags = ANIMATION_END_NOW) //todo figure out later
 
 	track_blood()
 		src.tracked_blood = null
@@ -526,62 +513,65 @@
 		return
 
 ABSTRACT_TYPE(/datum/projectile)
-datum/projectile
+/datum/projectile
 	// These vars were copied from the an projectile datum. I am not sure which version, probably not 4407.
-	var
-		name = "projectile"
-		icon = 'icons/obj/projectiles.dmi'
-		icon_state = "bullet"	// A special note: the icon state, if not a point-symmetric sprite, should face NORTH by default.
-		icon_turf_hit = null // what kinda overlay they puke onto turfs when they hit
-		brightness = 0
-		color_red = 0
-		color_green = 0
-		color_blue = 0
-		color_icon = "#ffffff"
-		override_color = 0
-		power = 20               // How much of a punch this has
-		cost = 1                 // How much ammo this costs
-		max_range = PROJ_INFINITE_RANGE            // How many ticks can this projectile go for if not stopped, if it doesn't die from falloff
-		dissipation_rate = 2     // How fast the power goes away
-		dissipation_delay = 10   // How many tiles till it starts to lose power - not exactly tiles, because falloff works on ticks, and doesn't seem to quite match 1-1 to tiles.
-		                         // When firing in a straight line, I was getting doubled falloff values on the fourth tile from the shooter, as well as others further along. -Tarm
-		ks_ratio = 1.0           /* Kill/Stun ratio, when it hits a mob the damage/stun is based upon this and the power
-		                            eg 1.0 will cause damage = to power while 0.0 would cause just stun = to power */
+	var/name = "projectile"
+	var/icon = 'icons/obj/projectiles.dmi'
+	var/icon_state = "bullet"	// A special note: the icon state, if not a point-symmetric sprite, should face NORTH by default.
+	var/impact_image_state = null // what kinda overlay they puke onto non-mobs when they hit
+	var/brightness = 0
+	var/color_red = 0
+	var/color_green = 0
+	var/color_blue = 0
+	var/color_icon = "#ffffff"
+	var/override_color = 0
+	var/damage = 0				 // How much damage this will do
+	var/stun = 0				 // How much "stun power" this will have.
+	var/cost = 1                 // How much ammo this costs
+	var/max_range = PROJ_INFINITE_RANGE            // How many ticks can this projectile go for if not stopped, if it doesn't die from falloff
+	var/dissipation_rate = 2     // How fast the power goes away
+	var/dissipation_delay = 10   // How many tiles till it starts to lose power - not exactly tiles, because falloff works on ticks, and doesn't seem to quite match 1-1 to tiles.
+									// When firing in a straight line, I was getting doubled falloff values on the fourth tile from the shooter, as well as others further along. -Tarm
+	var/power = 0               // How much of a punch this has. Autogenerated from damage and stun
+	var/ks_ratio = 1.0           /** Kill/Stun ratio, when it hits a mob the damage/stun is based upon this and the power
+	                                eg 1.0 will cause damage = to power while 0.0 would cause just stun = to power
+									Do not override this, it is autogenerated from damage and stun*/
 
-		sname = "stun"           // name of the projectile setting, used when you change a guns setting
-		shot_sound = 'sound/weapons/Taser.ogg' // file location for the sound you want it to play
-		shot_sound_extrarange = 0 //should the sound have extra range?
-		shot_volume = 100		 // How loud the sound plays (thank you mining drills for making this a needed thing)
-		shot_number = 0          // How many projectiles should be fired, each will cost the full cost
-		shot_delay = 1          // Time between shots in a burst.
-		damage_type = D_KINETIC  // What is our damage type
-		hit_type = null          // For blood system damage - DAMAGE_BLUNT, DAMAGE_CUT and DAMAGE_STAB
-		hit_ground_chance = 0    // With what % do we hit mobs laying down
-		window_pass = 0          // Can we pass windows
-		obj/projectile/master = null
-		silentshot = 0           // Standard visible message upon bullet_act.
-		implanted                // Path of "bullet" left behind in the mob on successful hit
-		disruption = 0           // planned thing to deal with pod electronics / etc
-		zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj
-		caliber = null
+	var/armor_ignored = 0		 // Percentage of armor to ignore. Old-style AP is 0.66 = ignore 66% of target's armor
 
-		datum/material/material = null
+	var/sname = "stun"           // name of the projectile setting, used when you change a guns setting
+	var/shot_sound = 'sound/weapons/Taser.ogg' // file location for the sound you want it to play
+	var/shot_sound_extrarange = 0 //should the sound have extra range?
+	var/shot_volume = 100		 // How loud the sound plays (thank you mining drills for making this a needed thing)
+	var/shot_number = 0          // How many projectiles should be fired, each will cost the full cost
+	var/shot_delay = 0.1 SECONDS          // Time between shots in a burst.
+	var/damage_type = D_KINETIC  // What is our damage type
+	var/hit_type = null          // For blood system damage - DAMAGE_BLUNT, DAMAGE_CUT and DAMAGE_STAB
+	var/hit_ground_chance = 0    // With what % do we hit mobs laying down
+	var/window_pass = 0          // Can we pass windows
+	var/obj/projectile/master = null // The projectile obj that we're associated with
+	var/silentshot = 0           // Standard visible message upon bullet_act.
+	var/implanted                // Path of "bullet" left behind in the mob on successful hit
+	var/disruption = 0           // planned thing to deal with pod electronics / etc
+	var/zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj
 
-		casing = null
-		reagent_payload = null
-		forensic_ID = null
-		precalculated = 1
+	var/datum/material/material = null
 
-		hit_object_sound = 0
-		hit_mob_sound = 0
+	var/casing = null
+	var/reagent_payload = null
+	var/forensic_ID = null
+	var/precalculated = 1
 
-		///if a fullauto-capable weapon should be able to fullauto this ammo type
-		fullauto_valid = 0
+	var/hit_object_sound = 0
+	var/hit_mob_sound = 0
+
+	///if a fullauto-capable weapon should be able to fullauto this ammo type
+	var/fullauto_valid = 0
 
 	// Determines the amount of length units the projectile travels each tick
 	// A tile is 32 wide, 32 long, and 32 * sqrt(2) across.
 	// Setting this to 32 will mimic the old behaviour for shots travelling in one of the cardinal directions.
-	var/projectile_speed = 28
+	var/projectile_speed = 36
 
 	// Determines the impact range of the projectile. Should ideally be half the length of the sprite
 	// for line-based stuff (lasers), or the radius for circular projectiles.
@@ -608,22 +598,38 @@ datum/projectile
 	/// for on_pre_hit. Causes it to early-return TRUE if the thing checked was already cleared for pass-thru
 	var/atom/last_thing_hit
 
+	New()
+		. = ..()
+		generate_stats()
+
+
 	proc
+		generate_stats()
+			src.power = damage + stun
+			if(power != 0)
+				src.ks_ratio = damage / power
+			else
+				src.ks_ratio = 1 //for zero-power projectiles (usually gimmick stuff etc) or weirdness. Default to full lethal I suppose
+
+		generate_inverse_stats() //in case you want to turn ks_ratio and power back into damage and stun? idk.
+			src.damage = src.power * src.ks_ratio
+			src.stun = src.power * (1-src.ks_ratio)
+
 		impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)		//3 types, K = Kinetic, E = Energy, T = Taser
 			var/obj/itemspecialeffect/impact/E = null
 			//this way is probably fastest.
 			switch (type)
 				if ("K")
 					if (iscarbon(hit))
-						E = unpool(/obj/itemspecialeffect/impact/blood)
+						E = new /obj/itemspecialeffect/impact/blood
 					else if (issilicon(hit))
-						E = unpool(/obj/itemspecialeffect/impact/silicon)
+						E = new /obj/itemspecialeffect/impact/silicon
 				if ("E")
 					if (iscarbon(hit))
-						E = unpool(/obj/itemspecialeffect/impact/energy)
+						E = new /obj/itemspecialeffect/impact/energy
 				if ("T")
 					if (iscarbon(hit))
-						E = unpool(/obj/itemspecialeffect/impact/taser)
+						E = new /obj/itemspecialeffect/impact/taser
 
 			if (E)
 				E.setup(hit.loc)
@@ -636,10 +642,7 @@ datum/projectile
 		//When it hits a mob or such should anything special happen
 		on_hit(atom/hit, angle, var/obj/projectile/O) //MBC : what the fuck shouldn't this all be in bullet_act on human in damage.dm?? this split is giving me bad vibes
 			impact_image_effect(ie_type, hit)
-//				if (isliving(hit))
-//					var/mob/living/L = hit
-//					stun_bullet_hit(O,L)
-			return
+
 		/// Does a thing every step this projectile takes
 		tick(var/obj/projectile/O)
 			return
@@ -664,113 +667,6 @@ datum/projectile
 
 		post_setup(obj/projectile/P)
 			return
-
-// WOO IMPACT RANGES
-// Meticulously calculated by hand.
-
-datum/projectile/laser
-	impact_range = 16
-	ie_type = "E"
-
-datum/projectile/laser/pred
-	impact_range = 2
-
-datum/projectile/laser/light
-	impact_range = 2
-
-datum/projectile/laser/glitter
-	impact_range = 4
-
-datum/projectile/laser/precursor
-	impact_range = 4
-
-datum/projectile/laser/precursor/sphere
-	impact_range = 16
-
-datum/projectile/laser/mining
-	impact_range = 12
-
-datum/projectile/laser/eyebeams
-	impact_range = 4
-
-datum/projectile/laser/drill
-	impact_range = 0
-
-datum/projectile/laser/drill/cutter
-	impact_range = 0
-
-datum/projectile/fourtymm
-	impact_range = 12
-
-datum/projectile/bfg
-	impact_range = 16
-
-datum/projectile/bullet
-	impact_range = 0
-	ie_type = "K"
-
-datum/projectile/bullet/autocannon
-	impact_range = 2
-
-datum/projectile/bullet/autocannon/plasma_orb
-	impact_range = 8
-
-datum/projectile/bullet/autocannon/huge
-	impact_range = 8
-
-datum/projectile/bullet/cannon
-	impact_range = 8
-
-datum/projectile/bullet/glitch
-	impact_range = 4
-
-// for the gun, not the drone
-datum/projectile/bullet/glitch/gun
-	impact_range = 16
-
-datum/projectile/bullet/frog/getin
-	impact_range = 5
-
-datum/projectile/bullet/frog/getout
-	impact_range = 5
-
-datum/projectile/bullet/rod
-	impact_range = 16
-
-datum/projectile/bullet/flare/ufo
-	impact_range = 8
-
-datum/projectile/owl
-	impact_range = 16
-
-datum/projectile/disruptor
-	impact_range = 4
-	ie_type = "E"
-
-datum/projectile/disruptor/high
-	impact_range = 4
-
-datum/projectile/energy_bolt
-	impact_range = 4
-
-datum/projectile/energy_bolt_v
-	impact_range = 4
-
-datum/projectile/energy_bolt_antighost
-	impact_range = 16
-	hits_ghosts = 1 // do it.
-
-datum/projectile/tele_bolt
-	impact_range = 4
-
-datum/projectile/rad_bolt
-	impact_range = 0
-
-datum/projectile/wavegun
-	impact_range = 4
-
-datum/projectile/snowball
-	impact_range = 4
 
 // THIS IS INTENDED FOR POINTBLANKING.
 /proc/hit_with_projectile(var/S, var/datum/projectile/DATA, var/atom/T)
@@ -805,7 +701,7 @@ datum/projectile/snowball
 		return null
 	var/obj/projectile/Q = shoot_projectile_relay(S, DATA, T, remote_sound_source, alter_proj = alter_proj)
 	if (DATA.shot_number > 1)
-		SPAWN_DBG(-1)
+		SPAWN(-1)
 			for (var/i = 2, i < DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
 				shoot_projectile_relay(S, DATA, T, remote_sound_source, alter_proj = alter_proj)
@@ -818,7 +714,7 @@ datum/projectile/snowball
 		return null
 	var/obj/projectile/Q = shoot_projectile_relay_pixel(S, DATA, T, pox, poy, alter_proj = alter_proj)
 	if (DATA.shot_number > 1)
-		SPAWN_DBG(-1)
+		SPAWN(-1)
 			for (var/i = 2, i <= DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
 				shoot_projectile_relay_pixel(S, DATA, T, pox, poy, alter_proj = alter_proj)
@@ -831,7 +727,7 @@ datum/projectile/snowball
 		return null
 	var/obj/projectile/Q = shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle, alter_proj = alter_proj)
 	if (DATA.shot_number > 1)
-		SPAWN_DBG(-1)
+		SPAWN(-1)
 			for (var/i = 2, i <= DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
 				shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle, alter_proj = alter_proj)
@@ -884,7 +780,7 @@ datum/projectile/snowball
 		return
 	var/obj/projectile/Q = shoot_projectile_XY_relay(S, DATA, xo, yo, alter_proj = alter_proj)
 	if (DATA.shot_number > 1)
-		SPAWN_DBG(-1)
+		SPAWN(-1)
 			for (var/i = 2, i <= DATA.shot_number, i++)
 				sleep(DATA.shot_delay)
 				shoot_projectile_XY_relay(S, DATA, xo, yo, alter_proj = alter_proj)
@@ -934,7 +830,7 @@ datum/projectile/snowball
 /proc/initialize_projectile(var/turf/S, var/datum/projectile/DATA, var/xo, var/yo, var/shooter = null, var/turf/remote_sound_source, var/play_shot_sound = TRUE, var/datum/callback/alter_proj = null)
 	if (!S)
 		return
-	var/obj/projectile/P = unpool(/obj/projectile)
+	var/obj/projectile/P = new
 	if(!P)
 		return
 
@@ -988,12 +884,11 @@ datum/projectile/snowball
 	else
 		P.max_range = min(DATA.dissipation_delay + round(P.power / DATA.dissipation_rate), DATA.max_range)
 
+	if (DATA.reagent_payload)
+		P.create_reagents(15)
+		P.reagents.add_reagent(DATA.reagent_payload, 15)
+
 	return P
-
-/proc/stun_bullet_hit(var/obj/projectile/O, var/mob/living/L)
-	L.do_disorient(clamp(O.power*4, O.proj_data.power*2, O.power+80), weakened = O.power*2, stunned = O.power*2, disorient = min(O.power, 80), remove_stamina_below_zero = 0)
-	L.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
-
 
 /proc/shoot_reflected_to_sender(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3)
 	if(P.reflectcount >= max_reflects)
@@ -1001,6 +896,7 @@ datum/projectile/snowball
 	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, -P.xo, -P.yo, reflector)
 	if (!Q)
 		return null
+	SEND_SIGNAL(reflector, COMSIG_ATOM_PROJECTILE_REFLECTED)
 	Q.reflectcount = P.reflectcount + 1
 	if (ismob(P.shooter))
 		Q.mob_shooter = P.shooter
@@ -1080,7 +976,7 @@ datum/projectile/snowball
 	ry = P.yo - dn * ny
 
 	if (rx == ry && rx == 0)
-		logTheThing("debug", null, null, "<b>Reflecting Projectiles</b>: Reflection failed for [P.name] (incidence: [P.incidence], direction: [P.xo];[P.yo]).")
+		logTheThing(LOG_DEBUG, null, "<b>Reflecting Projectiles</b>: Reflection failed for [P.name] (incidence: [P.incidence], direction: [P.xo];[P.yo]).")
 		return // unknown error
 
 	//spawns the new projectile in the same location as the existing one, not inside the hit thing

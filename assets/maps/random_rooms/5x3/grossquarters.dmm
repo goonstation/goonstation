@@ -1,0 +1,108 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/carpet/grime,
+/area/dmm_suite/clear_area)
+"e" = (
+/obj/table/wood/auto,
+/obj/machinery/light/lamp/black{
+	pixel_x = 1;
+	pixel_y = 10
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/carpet/grime,
+/area/dmm_suite/clear_area)
+"g" = (
+/obj/storage/closet/dresser/random,
+/obj/item/storage/secure/ssafe{
+	pixel_x = -28
+	},
+/obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/turf/simulated/floor/carpet/grime,
+/area/dmm_suite/clear_area)
+"h" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/blood{
+	icon_state = "bloodhit3"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "floor6"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/dmm_suite/clear_area)
+"j" = (
+/obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/drinks/bottle/cider,
+/turf/simulated/floor/carpet/grime,
+/area/dmm_suite/clear_area)
+"A" = (
+/obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
+/turf/simulated/floor/carpet/grime,
+/area/dmm_suite/clear_area)
+"B" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/random,
+/obj/machinery/light/small/sticky{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/vomit,
+/turf/simulated/floor/carpet/grime,
+/area/dmm_suite/clear_area)
+"H" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/blood{
+	icon_state = "drip1a"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/dmm_suite/clear_area)
+"L" = (
+/obj/stool/chair{
+	dir = 4;
+	tag = "icon-chair (EAST)"
+	},
+/obj/machinery/light/small/sticky{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/carpet/grime,
+/area/dmm_suite/clear_area)
+"V" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/vomit,
+/turf/simulated/floor/carpet/grime,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+g
+j
+H
+"}
+(2,1,1) = {"
+B
+a
+a
+"}
+(3,1,1) = {"
+a
+h
+V
+"}
+(4,1,1) = {"
+L
+a
+A
+"}
+(5,1,1) = {"
+e
+V
+a
+"}

@@ -17,7 +17,7 @@
 
 	var/setup_acc_filepath = "/logs/sysusr"//Where do we look for login data?
 	var/setup_logdump_name = "englog"
-	var/setup_mail_freq = 1149 //Which freq do we report to?
+	var/setup_mail_freq = FREQ_PDA //Which freq do we report to?
 	var/setup_mailgroup = MGO_ENGINEER //The PDA mailgroup used when alerting engineer pdas.
 
 

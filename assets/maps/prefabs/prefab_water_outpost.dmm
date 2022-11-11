@@ -1,75 +1,775 @@
-"a" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/deserted_outpost)
-"b" = (/turf/variableTurf/clear,/area/space)
-"c" = (/obj/machinery/light/incandescent/cool/very,/turf/simulated/floor/black/grime,/area/prefab/deserted_outpost)
-"d" = (/turf/simulated/floor/black/grime,/area/prefab/deserted_outpost)
-"e" = (/obj/storage/crate/loot,/turf/simulated/floor/black/grime,/area/prefab/deserted_outpost)
-"f" = (/obj/table/auto,/obj/item/device/key/random,/turf/simulated/floor/black/grime,/area/prefab/deserted_outpost)
-"g" = (/obj/item/storage/toilet,/turf/simulated/floor/sanitary/white,/area/prefab/deserted_outpost)
-"h" = (/obj/table/auto,/obj/item/sponge{name = "loofah"},/obj/machinery/light/incandescent/small{icon_state = "bulb1"; dir = 1},/turf/simulated/floor/sanitary/white,/area/prefab/deserted_outpost)
-"i" = (/obj/machinery/shower{dir = 1; icon_state = "showerhead"; pixel_y = 16},/turf/simulated/floor/sanitary/white,/area/prefab/deserted_outpost)
-"j" = (/turf/simulated/floor/sanitary/white,/area/prefab/deserted_outpost)
-"k" = (/obj/machinery/door/airlock/pyro{dir = 4},/turf/simulated/floor/sanitary/white,/area/prefab/deserted_outpost)
-"l" = (/obj/machinery/drainage,/turf/simulated/floor/sanitary/white,/area/prefab/deserted_outpost)
-"m" = (/obj/submachine/chef_sink/chem_sink{desc = "It seems a bit busted."; dir = 4; name = "leaky sink"; pixel_x = -2},/turf/simulated/floor/sanitary/white,/area/prefab/deserted_outpost)
-"n" = (/obj/machinery/light/incandescent/small,/turf/simulated/floor/sanitary/white,/area/prefab/deserted_outpost)
-"o" = (/obj/machinery/door/airlock/pyro,/turf/simulated/floor/stairs/dark,/area/prefab/deserted_outpost)
-"p" = (/obj/machinery/door/airlock/pyro,/turf/simulated/floor/grey/blackgrime/other,/area/prefab/deserted_outpost)
-"q" = (/obj/shrub/dead{name = "dead shrub"},/obj/spacevine/living,/turf/simulated/floor/grey,/area/prefab/deserted_outpost)
-"r" = (/turf/simulated/floor/grey,/area/prefab/deserted_outpost)
-"s" = (/obj/shrub/dead{name = "dead shrub"},/turf/simulated/floor/grey,/area/prefab/deserted_outpost)
-"t" = (/obj/stool/bed,/obj/item/clothing/suit/bedsheet,/turf/simulated/floor/grey/blackgrime/other,/area/prefab/deserted_outpost)
-"u" = (/turf/simulated/floor/grey/blackgrime/other,/area/prefab/deserted_outpost)
-"v" = (/obj/machinery/light/incandescent/cool/very,/turf/simulated/floor/grey/blackgrime/other,/area/prefab/deserted_outpost)
-"w" = (/turf/variableTurf/clear,/area/noGenerate)
-"x" = (/obj/stool/chair/office{icon_state = "office_chair"; dir = 4},/turf/simulated/floor/grey/blackgrime/other,/area/prefab/deserted_outpost)
-"y" = (/obj/table/auto/desk,/obj/item/audio_tape/outpost_04{pixel_x = -3; pixel_y = -2},/obj/item/audio_tape/outpost_03,/obj/item/audio_tape/outpost_02{pixel_x = -3; pixel_y = 3},/obj/item/device/audio_log/outpost{pixel_x = -3; pixel_y = 4},/turf/simulated/floor/grey/blackgrime/other,/area/prefab/deserted_outpost)
-"z" = (/obj/machinery/light/incandescent/cool/very,/turf/simulated/floor/grey,/area/prefab/deserted_outpost)
-"A" = (/obj/table/auto/desk,/obj/machinery/light/lamp,/turf/simulated/floor/grey/blackgrime/other,/area/prefab/deserted_outpost)
-"B" = (/obj/wingrille_spawn/auto,/turf/simulated/floor/plating/random,/area/prefab/deserted_outpost)
-"C" = (/obj/submachine/chef_oven,/turf/simulated/floor/grey/whitegrime,/area/prefab/deserted_outpost)
-"D" = (/obj/table/auto,/obj/item/reagent_containers/food/snacks/snack_cake/golden,/turf/simulated/floor/grey/whitegrime,/area/prefab/deserted_outpost)
-"E" = (/obj/table/auto,/obj/machinery/microwave,/turf/simulated/floor/grey/whitegrime,/area/prefab/deserted_outpost)
-"F" = (/obj/storage/secure/closet/fridge{pixel_x = -2},/turf/simulated/floor/grey/whitegrime,/area/prefab/deserted_outpost)
-"G" = (/obj/submachine/chef_sink/chem_sink{layer = 3; pixel_y = 8},/turf/simulated/floor/grey/whitegrime,/area/prefab/deserted_outpost)
-"H" = (/obj/machinery/door/airlock/pyro{dir = 4},/turf/simulated/floor/grey/blackgrime/other,/area/prefab/deserted_outpost)
-"I" = (/obj/machinery/light/incandescent/cool/very,/turf/simulated/floor/grey/whitegrime,/area/prefab/deserted_outpost)
-"J" = (/turf/simulated/floor/grey/whitegrime,/area/prefab/deserted_outpost)
-"K" = (/obj/machinery/door/airlock/pyro{dir = 4},/turf/simulated/floor/grey/whitegrime,/area/prefab/deserted_outpost)
-"L" = (/obj/table/auto/desk,/obj/item/paper/book/hydroponicsguide,/turf/simulated/floor/grey/blackgrime/other,/area/prefab/deserted_outpost)
-"M" = (/obj/stool/chair{dir = 4},/turf/simulated/floor/grey/whitegrime,/area/prefab/deserted_outpost)
-"N" = (/obj/table/auto,/obj/item/reagent_containers/food/snacks/riceandbeans,/turf/simulated/floor/grey/whitegrime,/area/prefab/deserted_outpost)
-"O" = (/obj/table/auto,/obj/item/paper{icon_state = "paper"; info = "<li>Anything edible. Seriously. We're running way too low, and now even that Danny's Snack Loaf looks good.</li>"; name = "paper-'Grocery List'"},/turf/simulated/floor/grey/whitegrime,/area/prefab/deserted_outpost)
-"P" = (/obj/stool/chair{icon_state = "chair"; dir = 8},/turf/simulated/floor/grey/whitegrime,/area/prefab/deserted_outpost)
-"Q" = (/obj/table/auto,/obj/item/kitchen/utensil/spoon,/turf/simulated/floor/grey/whitegrime,/area/prefab/deserted_outpost)
-"R" = (/obj/table/auto,/obj/item/reagent_containers/food/drinks/tea{pixel_y = 6},/turf/simulated/floor/grey/whitegrime,/area/prefab/deserted_outpost)
-"S" = (/obj/table/auto,/obj/item/old_grenade/smoke,/turf/simulated/floor/grey,/area/prefab/deserted_outpost)
-"T" = (/obj/table/auto,/obj/item/paper/book/critter_compendium,/turf/simulated/floor/grey,/area/prefab/deserted_outpost)
-"U" = (/obj/table/auto,/obj/item/matchbook{pixel_x = -3; pixel_y = 2},/obj/item/device/light/candle/small{pixel_x = 3; pixel_y = 4},/obj/item/device/light/candle/small,/turf/simulated/floor/grey,/area/prefab/deserted_outpost)
-"V" = (/obj/table/auto,/obj/item/feather{pixel_y = 3},/obj/item/dice/d8{pixel_x = 3; pixel_y = 4},/turf/simulated/floor/grey,/area/prefab/deserted_outpost)
-"W" = (/obj/decal/fakeobjects/robot{desc = "The robot stares at you through lifeless eyes."; name = "deactivated robot"},/turf/simulated/floor/grey,/area/prefab/deserted_outpost)
-"X" = (/obj/table/auto,/obj/item/extinguisher,/obj/item/card_group/plain{pixel_x = 5},/turf/simulated/floor/grey,/area/prefab/deserted_outpost)
-"Y" = (/obj/machinery/door/airlock/pyro,/turf/simulated/floor/grey,/area/prefab/deserted_outpost)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/deserted_outpost)
+"b" = (
+/turf/variableTurf/clear,
+/area/space)
+"c" = (
+/obj/machinery/light/incandescent/cool/very,
+/turf/simulated/floor/black/grime,
+/area/prefab/deserted_outpost)
+"d" = (
+/turf/simulated/floor/black/grime,
+/area/prefab/deserted_outpost)
+"e" = (
+/obj/storage/crate/loot,
+/turf/simulated/floor/black/grime,
+/area/prefab/deserted_outpost)
+"f" = (
+/obj/table/auto,
+/obj/item/device/key/random,
+/turf/simulated/floor/black/grime,
+/area/prefab/deserted_outpost)
+"g" = (
+/obj/item/storage/toilet,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/deserted_outpost)
+"h" = (
+/obj/table/auto,
+/obj/item/sponge{
+	name = "loofah"
+	},
+/obj/machinery/light/incandescent/small{
+	icon_state = "bulb1";
+	dir = 1
+	},
+/turf/simulated/floor/sanitary/white,
+/area/prefab/deserted_outpost)
+"i" = (
+/obj/machinery/shower{
+	dir = 1;
+	icon_state = "showerhead";
+	pixel_y = 16
+	},
+/turf/simulated/floor/sanitary/white,
+/area/prefab/deserted_outpost)
+"j" = (
+/turf/simulated/floor/sanitary/white,
+/area/prefab/deserted_outpost)
+"k" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/simulated/floor/sanitary/white,
+/area/prefab/deserted_outpost)
+"l" = (
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/deserted_outpost)
+"m" = (
+/obj/submachine/chef_sink/chem_sink{
+	desc = "It seems a bit busted.";
+	dir = 4;
+	name = "leaky sink";
+	pixel_x = -2
+	},
+/turf/simulated/floor/sanitary/white,
+/area/prefab/deserted_outpost)
+"n" = (
+/obj/machinery/light/incandescent/small,
+/turf/simulated/floor/sanitary/white,
+/area/prefab/deserted_outpost)
+"o" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/stairs/dark,
+/area/prefab/deserted_outpost)
+"p" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/grey/blackgrime/other,
+/area/prefab/deserted_outpost)
+"q" = (
+/obj/shrub/dead{
+	name = "dead shrub"
+	},
+/obj/spacevine/living,
+/turf/simulated/floor/grey,
+/area/prefab/deserted_outpost)
+"r" = (
+/turf/simulated/floor/grey,
+/area/prefab/deserted_outpost)
+"s" = (
+/obj/shrub/dead{
+	name = "dead shrub"
+	},
+/turf/simulated/floor/grey,
+/area/prefab/deserted_outpost)
+"t" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet,
+/turf/simulated/floor/grey/blackgrime/other,
+/area/prefab/deserted_outpost)
+"u" = (
+/turf/simulated/floor/grey/blackgrime/other,
+/area/prefab/deserted_outpost)
+"v" = (
+/obj/machinery/light/incandescent/cool/very,
+/turf/simulated/floor/grey/blackgrime/other,
+/area/prefab/deserted_outpost)
+"w" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"x" = (
+/obj/stool/chair/office{
+	icon_state = "office_chair";
+	dir = 4
+	},
+/turf/simulated/floor/grey/blackgrime/other,
+/area/prefab/deserted_outpost)
+"y" = (
+/obj/table/auto/desk,
+/obj/item/audio_tape/outpost_04{
+	pixel_x = -3;
+	pixel_y = -2
+	},
+/obj/item/audio_tape/outpost_03,
+/obj/item/audio_tape/outpost_02{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/device/audio_log/outpost{
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/turf/simulated/floor/grey/blackgrime/other,
+/area/prefab/deserted_outpost)
+"z" = (
+/obj/machinery/light/incandescent/cool/very,
+/turf/simulated/floor/grey,
+/area/prefab/deserted_outpost)
+"A" = (
+/obj/table/auto/desk,
+/obj/machinery/light/lamp/black,
+/turf/simulated/floor/grey/blackgrime/other,
+/area/prefab/deserted_outpost)
+"B" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating/random,
+/area/prefab/deserted_outpost)
+"C" = (
+/obj/submachine/chef_oven,
+/turf/simulated/floor/grey/whitegrime,
+/area/prefab/deserted_outpost)
+"D" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/snack_cake/golden,
+/turf/simulated/floor/grey/whitegrime,
+/area/prefab/deserted_outpost)
+"E" = (
+/obj/table/auto,
+/obj/machinery/microwave,
+/turf/simulated/floor/grey/whitegrime,
+/area/prefab/deserted_outpost)
+"F" = (
+/obj/storage/secure/closet/fridge{
+	pixel_x = -2
+	},
+/turf/simulated/floor/grey/whitegrime,
+/area/prefab/deserted_outpost)
+"G" = (
+/obj/submachine/chef_sink/chem_sink{
+	layer = 3;
+	pixel_y = 8
+	},
+/turf/simulated/floor/grey/whitegrime,
+/area/prefab/deserted_outpost)
+"H" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/simulated/floor/grey/blackgrime/other,
+/area/prefab/deserted_outpost)
+"I" = (
+/obj/machinery/light/incandescent/cool/very,
+/turf/simulated/floor/grey/whitegrime,
+/area/prefab/deserted_outpost)
+"J" = (
+/turf/simulated/floor/grey/whitegrime,
+/area/prefab/deserted_outpost)
+"K" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/simulated/floor/grey/whitegrime,
+/area/prefab/deserted_outpost)
+"L" = (
+/obj/table/auto/desk,
+/obj/item/paper/book/from_file/hydroponicsguide,
+/turf/simulated/floor/grey/blackgrime/other,
+/area/prefab/deserted_outpost)
+"M" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor/grey/whitegrime,
+/area/prefab/deserted_outpost)
+"N" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/riceandbeans,
+/turf/simulated/floor/grey/whitegrime,
+/area/prefab/deserted_outpost)
+"O" = (
+/obj/table/auto,
+/obj/item/paper{
+	icon_state = "paper";
+	info = "<li>Anything edible. Seriously. We're running way too low, and now even that Danny's Snack Loaf looks good.</li>";
+	name = "paper-'Grocery List'"
+	},
+/turf/simulated/floor/grey/whitegrime,
+/area/prefab/deserted_outpost)
+"P" = (
+/obj/stool/chair{
+	icon_state = "chair";
+	dir = 8
+	},
+/turf/simulated/floor/grey/whitegrime,
+/area/prefab/deserted_outpost)
+"Q" = (
+/obj/table/auto,
+/obj/item/kitchen/utensil/spoon,
+/turf/simulated/floor/grey/whitegrime,
+/area/prefab/deserted_outpost)
+"R" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_y = 6
+	},
+/turf/simulated/floor/grey/whitegrime,
+/area/prefab/deserted_outpost)
+"S" = (
+/obj/table/auto,
+/obj/item/old_grenade/smoke,
+/turf/simulated/floor/grey,
+/area/prefab/deserted_outpost)
+"T" = (
+/obj/table/auto,
+/obj/item/paper/book/from_file/critter_compendium,
+/turf/simulated/floor/grey,
+/area/prefab/deserted_outpost)
+"U" = (
+/obj/table/auto,
+/obj/item/matchbook{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/device/light/candle/small{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/device/light/candle/small,
+/turf/simulated/floor/grey,
+/area/prefab/deserted_outpost)
+"V" = (
+/obj/table/auto,
+/obj/item/feather{
+	pixel_y = 3
+	},
+/obj/item/dice/d8{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/turf/simulated/floor/grey,
+/area/prefab/deserted_outpost)
+"W" = (
+/obj/decal/fakeobjects/robot{
+	desc = "The robot stares at you through lifeless eyes.";
+	name = "deactivated robot"
+	},
+/turf/simulated/floor/grey,
+/area/prefab/deserted_outpost)
+"X" = (
+/obj/table/auto,
+/obj/item/extinguisher,
+/obj/item/card_group/plain{
+	pixel_x = 5
+	},
+/turf/simulated/floor/grey,
+/area/prefab/deserted_outpost)
+"Y" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/grey,
+/area/prefab/deserted_outpost)
 
 (1,1,1) = {"
-bbbbbbbbbbbbbbbbbbbbb
-bbbbbbbaaaaaaabbbbbbb
-bbbbbbbacddddabbbbbbb
-bbbbbbbadeeedaaaaaaab
-bbbbbbbadefedaghaiiab
-bbbbbbbadededajjkllab
-bbbbbbbaddddcamjajnab
-bbbbbbbaaaoaaaapaaaab
-bbbbbbbaqrrrsatuvxyab
-baaaaaaazrrrratuuuABw
-baCDEFGarrrrrHuuuuuBw
-baIJJJJarrrrzatuuuABw
-baJJJJJKrrrrratvuxLab
-wBMNOPIazrrrraaaaaaab
-wBMQRPJarrrrrabbbbbbb
-baaaaaaarSTUzabbbbbbb
-bbbbbbbarVWXrabbbbbbb
-bbbbbbbazrrrrabbbbbbb
-bbbbbbbarrrrrabbbbbbb
-bbbbbbbaaaYaaabbbbbbb
-bbbbbbbbwwwwwbbbbbbbb
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+w
+w
+b
+b
+b
+b
+b
+b
+"}
+(2,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+B
+B
+a
+b
+b
+b
+b
+b
+"}
+(3,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+C
+I
+J
+M
+M
+a
+b
+b
+b
+b
+b
+"}
+(4,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+D
+J
+J
+N
+Q
+a
+b
+b
+b
+b
+b
+"}
+(5,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+E
+J
+J
+O
+R
+a
+b
+b
+b
+b
+b
+"}
+(6,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+F
+J
+J
+P
+P
+a
+b
+b
+b
+b
+b
+"}
+(7,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+G
+J
+J
+I
+J
+a
+b
+b
+b
+b
+b
+"}
+(8,1,1) = {"
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+K
+a
+a
+a
+a
+a
+a
+a
+b
+"}
+(9,1,1) = {"
+b
+a
+c
+d
+d
+d
+d
+a
+q
+z
+r
+r
+r
+z
+r
+r
+r
+z
+r
+a
+w
+"}
+(10,1,1) = {"
+b
+a
+d
+e
+e
+e
+d
+a
+r
+r
+r
+r
+r
+r
+r
+S
+V
+r
+r
+a
+w
+"}
+(11,1,1) = {"
+b
+a
+d
+e
+f
+d
+d
+o
+r
+r
+r
+r
+r
+r
+r
+T
+W
+r
+r
+Y
+w
+"}
+(12,1,1) = {"
+b
+a
+d
+e
+e
+e
+d
+a
+r
+r
+r
+r
+r
+r
+r
+U
+X
+r
+r
+a
+w
+"}
+(13,1,1) = {"
+b
+a
+d
+d
+d
+d
+c
+a
+s
+r
+r
+z
+r
+r
+r
+z
+r
+r
+r
+a
+w
+"}
+(14,1,1) = {"
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+H
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+"}
+(15,1,1) = {"
+b
+b
+b
+a
+g
+j
+m
+a
+t
+t
+u
+t
+t
+a
+b
+b
+b
+b
+b
+b
+b
+"}
+(16,1,1) = {"
+b
+b
+b
+a
+h
+j
+j
+p
+u
+u
+u
+u
+v
+a
+b
+b
+b
+b
+b
+b
+b
+"}
+(17,1,1) = {"
+b
+b
+b
+a
+a
+k
+a
+a
+v
+u
+u
+u
+u
+a
+b
+b
+b
+b
+b
+b
+b
+"}
+(18,1,1) = {"
+b
+b
+b
+a
+i
+l
+j
+a
+x
+u
+u
+u
+x
+a
+b
+b
+b
+b
+b
+b
+b
+"}
+(19,1,1) = {"
+b
+b
+b
+a
+i
+l
+n
+a
+y
+A
+u
+A
+L
+a
+b
+b
+b
+b
+b
+b
+b
+"}
+(20,1,1) = {"
+b
+b
+b
+a
+a
+a
+a
+a
+a
+B
+B
+B
+a
+a
+b
+b
+b
+b
+b
+b
+b
+"}
+(21,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+w
+w
+w
+b
+b
+b
+b
+b
+b
+b
+b
+b
 "}

@@ -13,7 +13,7 @@
 		var/atom/thing = A
 		if (!A)
 			continue
-		if(IS_SOLID_TO_FLUID(thing) && thing.density)
+		if(IS_SOLID_TO_FLUID(thing) && (thing.density || thing.flags & FLUID_DENSE))
 			return 0 // && !istype(thing,/obj/grille) && !istype(thing,/obj/table) && !istype(thing,/obj/structure/girder)) return 0
 	return 1
 
@@ -21,7 +21,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	.= 0
 
 /turf/selftilenotify()
-	if (src.active_liquid && src.active_liquid.group && !canpass())
+	if (src.active_liquid && src.active_liquid.group && !src.can_crossed_by(src.active_liquid))
 		src.active_liquid.group.displace(src.active_liquid)
 	else
 		///HEY HEY LOOK AT ME TODO : This is kind of a band-aid. I'm not sure why, but tilenotify() doesn't trigger when it should sometimes. do this to be absolutely sure!
@@ -60,6 +60,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 		if (airborne)
 			for(var/reagent_id in R.reagent_list)
 				if (reagent_id in ban_from_airborne_fluid) return
+			purge_smoke_blacklist(R)
 		else
 			for(var/reagent_id in R.reagent_list)
 				if (reagent_id in ban_from_fluid) return
@@ -69,6 +70,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 			for(var/reagent_id in R.reagent_list)
 				if ( CI++ == index )
 					if (reagent_id in ban_from_airborne_fluid) return
+			purge_smoke_blacklist(R)
 		else
 			for(var/reagent_id in R.reagent_list)
 				if ( CI++ == index )
@@ -80,9 +82,9 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	var/fluid_and_group_already_exist = 0
 
 	if (airborne)
-		if (!src.active_airborne_liquid)
+		if (!src.active_airborne_liquid || QDELETED(src.active_airborne_liquid) || QDELETED(src.active_airborne_liquid.group))
 			FG = new /datum/fluid_group/airborne
-			F = unpool(/obj/fluid/airborne)
+			F = new /obj/fluid/airborne
 			src.active_airborne_liquid = F
 			F.set_up(src)
 			if (react_volume == 0)
@@ -97,9 +99,9 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 				if (react_volume == 0)
 					react_volume = 1
 	else
-		if (!src.active_liquid)
+		if (!src.active_liquid || QDELETED(src.active_liquid) || QDELETED(src.active_liquid.group))
 			FG = new
-			F = unpool(/obj/fluid)
+			F = new /obj/fluid
 			src.active_liquid = F
 			F.set_up(src)
 			if (react_volume == 0)
@@ -114,13 +116,16 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 				if (react_volume == 0)
 					react_volume = 1
 
-	R.trans_to_direct(FG.reagents, react_volume, index=index)
 	FG.add(F, react_volume, guarantee_is_member = fluid_and_group_already_exist)
+	R.trans_to_direct(FG.reagents, react_volume, index=index)
+	/*Normally `amt` isn't set until the fluid group process procs, but we sometimes need it right away for mob reactions etc.
+	  We know the puddle starts as a single tile, so until then just set `amt` as the total reacted reagent volume. */
+	F.amt = FG.reagents.total_volume
+	F.UpdateIcon()
 
 	if (!airborne)
 		var/turf/simulated/floor/T = src
-		if (T.messy <= 0) return
-		if (istype(T))
+		if (istype(T) && T.messy > 0)
 			var/found_cleanable = 0
 			for (var/obj/decal/cleanable/C in T)
 				if (istype(T) && !T.cleanable_fluid_react(C, 1)) // Some cleanables need special treatment
@@ -128,6 +133,8 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 					break
 			if (found_cleanable)
 				T.cleanable_fluid_react(0,1)
+
+	F.trigger_fluid_enter()
 
 /turf/proc/fluid_react_single(var/reagent_name, var/react_volume, var/airborne = 0) //same as the above, but using a reagent_id instead of a datum
 	if (react_volume <= 0) return
@@ -146,7 +153,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	if (airborne)
 		if (!src.active_airborne_liquid)
 			FG = new /datum/fluid_group/airborne
-			F = unpool(/obj/fluid/airborne)
+			F = new /obj/fluid/airborne
 			src.active_airborne_liquid = F
 			F.set_up(src)
 			if (react_volume == 0)
@@ -163,7 +170,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	else
 		if (!src.active_liquid)
 			FG = new
-			F = unpool(/obj/fluid)
+			F = new /obj/fluid
 			src.active_liquid = F
 			F.set_up(src)
 			if (react_volume == 0)
@@ -186,8 +193,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 
 	if (!airborne)
 		var/turf/simulated/floor/T = src
-		if (T.messy <= 0) return
-		if (istype(T))
+		if (istype(T) && T.messy > 0)
 			var/found_cleanable = 0
 			for (var/obj/decal/cleanable/C in T)
 				if (istype(T) && !T.cleanable_fluid_react(C, 1))
@@ -195,6 +201,8 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 					break
 			if (found_cleanable)
 				T.cleanable_fluid_react(0,1)
+
+	F.trigger_fluid_enter()
 
 
 /turf/proc/react_all_cleanables() //Same procedure called in fluid_react and fluid_react_single. copypasted cause i dont wanna proc call overhead up in hea
@@ -214,12 +222,14 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	if (!IS_VALID_FLUIDREACT_TURF(src)) return
 	//if possible_cleanable has a value, handle exclusively this decal. don't search thru the turf.
 	if (possible_cleanable)
-		if (possible_cleanable.qdeled || possible_cleanable.pooled) return
+		if (possible_cleanable.qdeled || possible_cleanable.disposed) return
 		if (istype(possible_cleanable, /obj/decal/cleanable/blood/dynamic))
 			var/obj/decal/cleanable/blood/dynamic/blood = possible_cleanable
 			var/blood_dna = blood.blood_DNA
 			var/blood_type = blood.blood_type
 			var/is_tracks = istype(possible_cleanable,/obj/decal/cleanable/blood/dynamic/tracks)
+			if(is_tracks)
+				return 0
 			if (blood.reagents && blood.reagents.total_volume >= 13 || src.active_liquid || grab_any_amount)
 				if (blood.reagents)
 					var/datum/reagents/R = new(blood.reagents.maximum_volume) //Store reagents, delete cleanable, and then fluid react. prevents recursion
@@ -242,7 +252,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	//all right, tally up the cleanables and attempt to call fluid_reacts on them
 	var/list/cleanables = list()
 	for (var/obj/decal/cleanable/C in src)
-		if (C.qdeled || C.pooled) continue
+		if (C.qdeled || C.disposed) continue
 		//if (C.dry) continue
 		if (istype(C,/obj/decal/cleanable/blood/dynamic)) continue // handled above
 		if (!C.can_fluid_absorb) continue

@@ -20,7 +20,7 @@ var/can_pray = 0
 				god_name = godName
 
 			boutput(world, "<h2 class='alert'><font color='red'>KNEEL, MORTALS! '[god_name]' LIVES!</font></h2>")
-			world << sound('sound/effects/thunder.ogg', volume = 80)
+			playsound_global(world, 'sound/effects/thunder.ogg', 80)
 			boutput(world, "<span class='notice'>You may now pray in the Chapel.</span>")
 			boutput(usr, "You have become a god.")
 
@@ -42,7 +42,7 @@ var/can_pray = 0
 
 		if(!length(god_list))
 			boutput(world, "<h2 class='alert'><font color='red'>YOU MORTALS HAVE A GOD NO MORE</font></h2>")
-			world << sound('sound/effects/thunder.ogg', volume = 80)
+			playsound_global(world, 'sound/effects/thunder.ogg', 80)
 			boutput(world, "<span class='notice'>You cannot pray anymore</span>")
 
 			can_pray = 0

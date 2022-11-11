@@ -40,18 +40,17 @@
 // if you want to see all erebite explosions set this to 0 or -1 or something
 
 // gameticker
-#define GAME_STATE_MAP_LOAD   0
+#define GAME_STATE_MAP_LOAD		0
 #define GAME_STATE_WORLD_INIT	1
-#define GAME_STATE_PREGAME		2
-#define GAME_STATE_SETTING_UP	3
-#define GAME_STATE_PLAYING		4
-#define GAME_STATE_FINISHED		5
+#define GAME_STATE_WORLD_NEW	2
+#define GAME_STATE_PREGAME		3
+#define GAME_STATE_SETTING_UP	4
+#define GAME_STATE_PLAYING		5
+#define GAME_STATE_FINISHED		6
 
 #define DATALOGGER
 
 #define CREW_OBJECTIVES
-
-#define MISCREANTS
 
 //#define RESTART_WHEN_ALL_DEAD 1
 
@@ -59,19 +58,12 @@
 
 #define LOOC_RANGE 8
 
-//Ass Jam! enables a bunch of wacky and not-good features. BUILD LOCALLY!!!
-#ifdef RP_MODE
-#define ASS_JAM 0
-#elif BUILD_TIME_DAY == 13 && defined(ASS_JAM_ENABLED)
-#define ASS_JAM 0 // ASS JAM DISABLED! FOR NOW! -warc
-#else
-#define ASS_JAM 0
-#endif
-
 // holiday toggles!
 
 #if (BUILD_TIME_MONTH == 10)
 #define HALLOWEEN 1
+#elif (BUILD_TIME_MONTH == 9) || (BUILD_TIME_MONTH == 10) || (BUILD_TIME_MONTH == 11)
+#define AUTUMN 1
 #elif (BUILD_TIME_MONTH == 12)
 #define XMAS 1
 #elif (BUILD_TIME_MONTH == 7) && (BUILD_TIME_DAY == 1)
@@ -82,14 +74,6 @@
 
 #define FOOTBALL_MODE 1
 //#define RP_MODE
-//#define ASS_JAM_ENABLED 1 //you need to set BUILD_TIME_DAY to 13 manually in __build.dm
-
-//handles ass jam stuff
-#if ASS_JAM
-#ifndef TRAVIS_ASSJAM
-#warn Building with ASS_JAM features enabled. Toggle this by changing BUILD_TIME_DAY in __build.dm
-#endif
-#endif
 
 #ifdef Z_LOG_ENABLE
 var/ZLOG_START_TIME
@@ -110,7 +94,7 @@ var/ZLOG_START_TIME
 #define NON_EUCLIDEAN 1
 
 // Used for /datum/respawn_controller - DOES NOT COVER ALL RESPAWNS YET
-#define DEFAULT_RESPAWN_TIME 18000
+#define DEFAULT_RESPAWN_TIME 10 MINUTES
 #define RESPAWNS_ENABLED 0
 
 #if (defined(SERVER_SIDE_PROFILING_PREGAME) || defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_INGAME_ONLY))
@@ -123,12 +107,12 @@ var/ZLOG_START_TIME
 #define PREGAME_LOBBY_TICKS 180	// raised from 120 to 180 to accomodate the v500 ads, then raised back down to 150 after Z5 was introduced.
 
 //The value of mapvotes. A passive vote is one done through player preferences, an active vote is one where the player actively chooses a map
-#define MAPVOTE_PASSIVE_WEIGHT 1.0
-#define MAPVOTE_ACTIVE_WEIGHT 1.0
+#define MAPVOTE_PASSIVE_WEIGHT 1
+#define MAPVOTE_ACTIVE_WEIGHT 1
 
 //what counts as participation?
 #ifdef RP_MODE
-#define MAX_PARTICIPATE_TIME 80 MINUTES //the maximum shift time before it doesnt count as "participating" in the round
+#define MAX_PARTICIPATE_TIME 60 MINUTES //the maximum shift time before it doesnt count as "participating" in the round
 #else
 #define MAX_PARTICIPATE_TIME 40 MINUTES //ditto above
 #endif

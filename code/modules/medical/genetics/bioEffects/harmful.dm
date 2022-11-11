@@ -37,7 +37,7 @@
 	lockedDiff = 4
 	lockedChars = list("G","C","A","T")
 	lockedTries = 10
-	icon_state  = "bad"
+	icon_state  = "speech_mime"
 
 /datum/bioEffect/deaf
 	name = "Deafness"
@@ -81,7 +81,7 @@
 	msgGain = "You feel kind of off-balance and disoriented."
 	msgLose = "You feel well co-ordinated again."
 	reclaim_fail = 15
-	stability_loss = -5
+	stability_loss = -10
 	icon_state  = "bad"
 
 /datum/bioEffect/narcolepsy
@@ -94,7 +94,7 @@
 	msgGain = "You feel a bit sleepy."
 	msgLose = "You feel wide awake."
 	reclaim_fail = 15
-	stability_loss = -5
+	stability_loss = -15
 	var/sleep_prob = 4
 	icon_state  = "bad"
 
@@ -134,7 +134,7 @@
 	msgLose = "You feel more in control."
 	reclaim_fail = 15
 	var/talk_prob = 10
-	var/list/talk_strings = list("PISS","FUCK","SHIT","DAMN","TITS","ARGH","WOOF","CRAP","BALLS")
+	var/list/talk_strings = list("PISS","FUCK","SHIT","DAMN","ARGH","WOOF","CRAP","HECK","FRICK","JESUS")
 	icon_state  = "bad"
 
 	OnLife(var/mult)
@@ -189,10 +189,10 @@
 					applied = 0
 		return
 
-/datum/bioEffect/epilepsy
-	name = "Epilepsy"
-	desc = "Causes damage to the subject's brain structure, resulting in occasional seizures from brain misfires."
-	id = "epilepsy"
+/datum/bioEffect/stupefaction
+	name = "Stupefaction"
+	desc = "Causes damage to the subject's brain structure, occassionally utterly stupefying and stunning them."
+	id = "stupefaction"
 	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 66
@@ -203,14 +203,13 @@
 	stability_loss = -10
 	icon_state  = "bad"
 
-	OnLife(var/mult)
+	OnLife(var/mult = 1)
 		if(..()) return
 		if (isdead(owner))
 			return
 		if (probmult(1) && !owner.getStatusDuration("paralysis"))
-			owner:visible_message("<span class='alert'><B>[owner] starts having a seizure!</span>", "<span class='alert'>You have a seizure!</span>")
-			owner.setStatus("paralysis", max(owner.getStatusDuration("paralysis"), 20))
-			owner:make_jittery(100)
+			owner:visible_message("<span class='alert'><B>[owner] looks totally stupefied!</span>", "<span class='alert'>You feel totally stupefied!</span>")
+			owner.setStatusMin("paralysis", 2 SECONDS * mult)
 		return
 
 /datum/bioEffect/thermal_vuln
@@ -226,6 +225,7 @@
 	reclaim_fail = 15
 	stability_loss = -20
 	icon_state  = "bad"
+	effect_group = "thermal"
 
 	OnAdd()
 		..()
@@ -254,6 +254,7 @@
 	var/tox_amount = 1
 	var/tox_prob = 10
 	icon_state  = "bad"
+	effect_group = "tox"
 
 	OnLife(var/mult)
 		if(..()) return
@@ -261,40 +262,6 @@
 			var/mob/living/carbon/C = owner
 			if (prob(tox_prob))
 				C.take_toxin_damage(tox_amount*mult)
-
-/datum/bioEffect/tourettes
-	name = "Tourettes"
-	desc = "Alters the subject's brain structure, causing periodic involuntary movements and outbursts."
-	id = "tourettes"
-	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
-	probability = 66
-	msgGain = "You feel like you can't control your actions fully."
-	msgLose = "You feel in full control of yourself once again."
-	reclaim_fail = 15
-	stability_loss = -5
-	icon_state  = "bad"
-
-	OnLife(var/mult)
-		if(..()) return
-		if (isdead(owner))
-			return
-		if ((probmult(10) && !owner.getStatusDuration("paralysis")))
-			owner.changeStatus("stunned", 3 SECONDS)
-			SPAWN_DBG( 0 )
-				switch(rand(1, 3))
-					if (1 to 2)
-						owner.emote("twitch")
-					if (3)
-						if (owner.client)
-							var/enteredtext = winget(owner, "mainwindow.input", "text")
-							if ((copytext(enteredtext,1,6) == "say \"") && length(enteredtext) > 5)
-								winset(owner, "mainwindow.input", "text=\"\"")
-								if (prob(50))
-									owner.say(uppertext(copytext(enteredtext,6,0)))
-								else
-									owner.say(copytext(enteredtext,6,0))
-		return
 
 /datum/bioEffect/cough
 	name = "Chronic Cough"
@@ -314,7 +281,7 @@
 			return
 		if ((probmult(5) && !owner.getStatusDuration("paralysis")))
 			owner:drop_item()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				owner:emote("cough")
 				return
 		return
@@ -332,7 +299,7 @@
 	msgGain = "One of your limbs feels a bit strange and twitchy."
 	msgLose = "Your limb feels fine again."
 	reclaim_fail = 15
-	stability_loss = -20
+	stability_loss = -25
 	lockProb = 50
 	lockedGaps = 2
 	lockedDiff = 4
@@ -399,7 +366,7 @@
 				owner.changeStatus("weakened", 2 SECONDS)
 			else if (probmult(2))
 				owner.visible_message("<span class='alert'><B>[owner.name]'s [src.limb] kicks [him_or_her(owner)] in the head somehow!</B></span>")
-				owner.changeStatus("paralysis", 70)
+				owner.changeStatus("paralysis", 7 SECONDS)
 				owner.TakeDamageAccountArmor("head", rand(5,10), 0, 0, DAMAGE_BLUNT)
 			else if (probmult(2))
 				owner.visible_message("<span class='alert'><B>[owner.name] can't seem to control [his_or_her(owner)] [src.limb]!</B></span>")
@@ -427,22 +394,19 @@
 	msgLose = "You no longer feel awful and sick all over."
 	reclaim_fail = 15
 	icon_state  = "bad"
+	effect_group = "rad"
 
 	OnAdd()
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#BBD90F"
+		owner.AddComponent(/datum/component/radioactive, 50, FALSE, FALSE)
 		..()
 
-	OnLife(var/mult)
-		if(..()) return
-		owner.changeStatus("radiation", 30*mult, 1)
-		for(var/mob/living/L in range(1, owner))
-			if (L == owner)
-				continue
-			boutput(L, "<span class='alert'>You are enveloped by a soft green glow emanating from [owner].</span>")
-			L.changeStatus("radiation", 50*mult, 1)
-		return
+	OnRemove()
+		. = ..()
+		var/datum/component/radioactive/R = owner.GetComponent(/datum/component/radioactive)
+		R?.RemoveComponent()
 
 /datum/bioEffect/mutagenic_field
 	name = "Mutagenic Field"
@@ -461,7 +425,7 @@
 	lockedDiff = 4
 	lockedChars = list("G","C","A","T")
 	lockedTries = 10
-	stability_loss = 50
+	stability_loss = 35
 	var/affect_others = 0
 	var/field_range = 2
 	var/proc_prob = 5
@@ -502,7 +466,7 @@
 	lockedDiff = 3
 	lockedChars = list("G","C","A","T")
 	lockedTries = 8
-	stability_loss = 15
+	stability_loss = 10
 	var/tele_prob = 5
 	icon_state  = "bad"
 
@@ -523,7 +487,9 @@
 
 			if (randomturfs.len > 0)
 				L.emote("hiccup")
-				L.set_loc(pick(randomturfs))
+				var/turf/destination = pick(randomturfs)
+				logTheThing(LOG_COMBAT, L, "was teleported by Spatial Destabilization from [log_loc(L)] to [log_loc(destination)].")
+				L.set_loc(pick(destination))
 
 //////////////
 // Annoying //
@@ -679,18 +645,31 @@
 	stability_loss = -10	//maybe 5
 	var/prob_sting = 10;
 	icon_state  = "bad"
+	var/obj/effects/bees/effect
 
 	OnAdd()
 		if (ishuman(owner))
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "buzz", layer = MOB_EFFECT_LAYER)
+			effect = new/obj/effects/bees(owner)
 		..()
+
+	OnRemove()
+		qdel(effect)
 
 	OnLife(var/mult)
 		var/mob/living/L = owner
 		if (!istype(L) || (L.stat == 2))
 			return
 		if (probmult(prob_sting))
-			boutput(src, "<span class='alert'>A bee in your cloud stung you! How rude!</span>")
+			if (ishuman(L))
+				var/mob/living/carbon/human/H = L
+				if (prob(50))
+					if (istype(H.wear_suit, /obj/item/clothing/suit/bio_suit/beekeeper))
+						boutput(owner, "<span class='subtle'>A bee in your cloud tries to sting you, but your suit protects you.</span>")
+						return
+				else if (istype(H.head, /obj/item/clothing/head/bio_hood/beekeeper))
+					boutput(owner, "<span class='subtle'>A bee in your cloud tries to sting you, but your hood protects you.</span>")
+					return
+			boutput(owner, "<span class='alert'>A bee in your cloud stung you! How rude!</span>")
 			L.reagents.add_reagent("histamine", 2)
 
 /datum/bioEffect/emp_field
@@ -711,7 +690,7 @@
 
 	OnLife(var/mult)
 		..()
-		if (prob(percentmult(50, mult)))
+		if (probmult(50))
 			var/turf/T
 			//don't really need this but to make it more harmful to the user.
 			if (prob(5))
@@ -724,7 +703,7 @@
 			pulse.icon_state = "emppulse"
 			pulse.name = "emp pulse"
 			pulse.anchored = 1
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				if (pulse) qdel(pulse)
 
 			//maybe have this only emp some things on the tile.
@@ -748,15 +727,16 @@
 	lockedGaps = 1
 	lockedDiff = 3
 	lockedTries = 8
-	stability_loss = -5
+	stability_loss = -10
 	icon_state  = "bad"
+	effect_group = "fit"
 
 	OnAdd()
-		APPLY_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-debuff", -2)
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_STAMINA_REGEN_BONUS, "g-fitness-debuff", -2)
 		src.owner.add_stam_mod_max("g-fitness-debuff", -30)
 
 	OnRemove()
-		REMOVE_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-debuff")
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_STAMINA_REGEN_BONUS, "g-fitness-debuff")
 		src.owner.remove_stam_mod_max("g-fitness-debuff")
 
 /datum/bioEffect/tinnitus
@@ -767,15 +747,15 @@
 	isBad = 1
 	msgGain = "You hear a ringing in your ears."
 	msgLose = "The ringing has stopped...Finally. Thank the Space-Gods."
-	stability_loss = -5
+	stability_loss = 0
 	probability = 99
 	var/ring_prob = 6
 	icon_state  = "bad"
 
 	OnLife(var/mult)
 		if (probmult(ring_prob) && owner.client)
-			// owner.client << sound("phone-ringing.wav")		//play sound only for client. Untested, don't know the sound
-			owner.client << sound("sound/machines/phones/ring_incoming.ogg")		//play sound only for client. Untested, don't know the sound
+			// owner.client << sound('sound/machines/phones/ring_incoming.ogg')		//hee hoo let's give someone legit tinnitus with the mutation, that's good game design (it's actually not)
+			owner.playsound_local(owner.loc, 'sound/machines/phones/ring_incoming.ogg', 40, 1)
 
 /datum/bioEffect/anemia
 	name = "Anemia"
@@ -786,9 +766,10 @@
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel lightheaded."
 	msgLose = "Your lightheadedness fades."
-	stability_loss = -5
+	stability_loss = -10
 	var/run = 1
 	icon_state  = "bad"
+	effect_group = "blood"
 
 	OnLife(var/mult)
 		if (ishuman(owner))
@@ -806,9 +787,10 @@
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "Your breathing quickens."
 	msgLose = "Your breathing returns to normal."
-	stability_loss = -5
+	stability_loss = -10
 	var/run = 1
 	icon_state  = "bad"
+	effect_group = "blood"
 
 	OnLife(var/mult)
 
@@ -842,6 +824,9 @@
 
 	OnLife(var/mult)
 		if(..()) return
+		var/turf/T = get_turf(owner)
+		if(isrestrictedz(T?.z))
+			return
 		if (probmult(proc_prob))
 			var/list/potential_victims = list()
 			for(var/mob/living/carbon/human/H in range(7,owner))
@@ -892,7 +877,7 @@
 	'sound/machines/engine_alert3.ogg','sound/machines/fortune_riff.ogg','sound/misc/ancientbot_grump2.ogg',
 	'sound/voice/farts/diarrhea.ogg','sound/misc/sad_server_death.ogg','sound/voice/animal/werewolf_howl.ogg',
 	'sound/voice/MEruncoward.ogg','sound/voice/macho/macho_become_enraged01.ogg',
-	'sound/voice/macho/macho_rage_81.ogg','sound/voice/macho/macho_rage_73.ogg','sound/weapons/male_cswordstart.ogg')
+	'sound/voice/macho/macho_rage_81.ogg','sound/voice/macho/macho_rage_73.ogg','sound/weapons/male_cswordturnon.ogg')
 	icon_state  = "bad"
 
 	New(var/for_global_list = 0)

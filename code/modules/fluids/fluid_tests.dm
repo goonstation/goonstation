@@ -5,11 +5,11 @@
 
 /mob/living/proc/ttt()//just flicker images as a test
 	src.show_submerged_image(rand(0,4))
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		src.ttt()
 
 
 /obj/proc/ttt()//just flicker images as a test
 	src.show_submerged_image(rand(0,4))
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		src.ttt()

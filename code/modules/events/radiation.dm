@@ -2,6 +2,7 @@
 	name = "Radiation Storm"
 	centcom_headline = "Radioactive Anomaly"
 	centcom_message = {"Radioactive anomalies have been detected on the station. Evacuate any areas containing abnormal green or blue energy fields. Medical personnel are advised to prepare potassium iodide and anti-toxin treatments, and remain on standby to treat cases of irradiation."}
+	centcom_origin = ALERT_WEATHER
 	var/min_pulses_per_event = 30
 	var/max_pulses_per_event = 100
 	var/min_delay_between_pulses = 2
@@ -16,9 +17,9 @@
 		var/pulse_lifespan = null
 		var/turf/pulseloc = null
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/pulses = pulse_amt, pulses > 0, pulses--)
-				pulseloc = pick(wormholeturfs)
+				pulseloc = pick(random_floor_turfs)
 				pulse_lifespan = rand(min_pulse_lifespan,max_pulse_lifespan)
 				pick(prob(90); new /obj/anomaly/radioactive_burst(pulseloc,lifespan = pulse_lifespan), prob(50); new /obj/anomaly/neutron_burst(pulseloc,lifespan = pulse_lifespan))
 				sleep(pulse_delay)
@@ -34,7 +35,7 @@
 	density = 0
 	alpha = 100
 	var/sound/pulse_sound = 'sound/weapons/ACgun2.ogg'
-	var/rad_strength = 25
+	var/rad_strength = (25/40) SIEVERTS
 	var/pulse_range = 5
 	var/mutate_prob = 25
 	var/bad_mut_prob = 75
@@ -46,11 +47,11 @@
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/rads_warning(src))
 		sleep(lifespan)
-		playsound(get_turf(src),pulse_sound,50,1)
+		playsound(src,pulse_sound,50,1)
 		irradiate_turf(get_turf(src))
 		for (var/turf/T in circular_range(src,pulse_range))
 			irradiate_turf(T)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			qdel(src)
 		return
 
@@ -62,9 +63,15 @@
 	proc/irradiate_turf(var/turf/T)
 		if (!isturf(T))
 			return
+		//spatial interdictor: nullify radiation pulses
+		//consumes 100 units of charge per tile protected
+		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
+			if (IN_RANGE(IX,T,IX.interdict_range) && IX.expend_interdict(100,1))
+				animate_flash_color_fill_inherit(T,"#FFDD00",1,5)
+				return
 		animate_flash_color_fill_inherit(T,"#00FF00",1,5)
 		for (var/mob/living/carbon/M in T.contents)
-			M.changeStatus("radiation", (rad_strength)*10, 3)
+			M.take_radiation_dose(rad_strength)
 			if (prob(mutate_prob) && M.bioHolder)
 				if (prob(bad_mut_prob))
 					M.bioHolder.RandomEffect("bad")
@@ -80,7 +87,7 @@
 	density = 0
 	alpha = 100
 	var/sound/pulse_sound = 'sound/weapons/ACgun1.ogg'
-	var/rad_strength = 10
+	var/rad_strength = (50/40) SIEVERTS
 	var/pulse_range = 3
 	var/mutate_prob = 10
 	var/bad_mut_prob = 90
@@ -92,11 +99,11 @@
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/rads_warning(src))
 		sleep(lifespan)
-		playsound(get_turf(src),pulse_sound,50,1)
+		playsound(src,pulse_sound,50,1)
 		irradiate_turf(get_turf(src))
 		for (var/turf/T in circular_range(src,pulse_range))
 			irradiate_turf(T)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			qdel(src)
 		return
 
@@ -108,9 +115,15 @@
 	proc/irradiate_turf(var/turf/T)
 		if (!isturf(T))
 			return
+		//spatial interdictor: nullify radiation pulses
+		//consumes 150 units of charge per tile protected
+		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
+			if (IN_RANGE(IX,T,IX.interdict_range) && IX.expend_interdict(150,1))
+				animate_flash_color_fill_inherit(T,"#FFDD00",1,5)
+				return
 		animate_flash_color_fill_inherit(T,"#0084ff",1,5)
-		for (var/atom/A in T.contents)
-			A.changeStatus("n_radiation", (rad_strength)*10, 3)
+		for (var/mob/A in T.contents)
+			A.take_radiation_dose(rad_strength)
 			if(iscarbon(A))
 				var/mob/living/carbon/M = A
 				if (prob(mutate_prob) && M.bioHolder)
@@ -126,10 +139,11 @@
 	name = "Radiation Wave"
 	centcom_headline = "Radiation Wave"
 	centcom_message = "A large wave of radiation is approaching the station. Personnel should use caution when traversing the station and seek medical attention if they experience any side effects from the wave."
+	centcom_origin = ALERT_WEATHER
 
 	event_effect(var/source)
 		..()
-		SPAWN_DBG(rand(100, 300))
+		SPAWN(rand(100, 300))
 		for (var/mob/living/carbon/human/H in mobs)
 			if (isdead(H))
 				continue

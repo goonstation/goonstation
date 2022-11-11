@@ -5,16 +5,19 @@
 	targeted = 1
 	cooldown = 100
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	offensive = 1
 	sticky = 1
-	voice_grim = "sound/voice/wizard/BlindGrim.ogg"
-	voice_fem = "sound/voice/wizard/BlindFem.ogg"
-	voice_other = "sound/voice/wizard/BlindLoud.ogg"
+	voice_grim = 'sound/voice/wizard/BlindGrim.ogg'
+	voice_fem = 'sound/voice/wizard/BlindFem.ogg'
+	voice_other = 'sound/voice/wizard/BlindLoud.ogg'
+	maptext_colors = list("#ffffff", "#9c9fa2", "#585c68")
 
 	cast(mob/target)
 		if(!holder)
 			return
-		holder.owner.say("YSTIGG MITAZIM")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("YSTIGG MITAZIM", FALSE, maptext_style, maptext_colors)
 		..()
 
 		elecflash(target)
@@ -37,7 +40,7 @@
 		B.set_density(0)
 		B.layer = MOB_EFFECT_LAYER
 		target.canmove = 0
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			qdel(B)
 			target.canmove = 1
 		boutput(target, "<span class='notice'>Your eyes cry out in pain!</span>")
@@ -56,7 +59,7 @@
 			target.changeStatus("weakened", 2 SECONDS)
 			if (!blindProtected)
 				target.bioHolder.AddEffect("bad_eyesight")
-				SPAWN_DBG(45 SECONDS)
+				SPAWN(45 SECONDS)
 					if (target) target.bioHolder.RemoveEffect("bad_eyesight")
 			target.take_eye_damage(blindProtected ? 5 : 10, 1)
 			target.change_eye_blurry(blindProtected ? 10 : 20)
@@ -65,7 +68,7 @@
 			target.changeStatus("weakened", 1 SECOND)
 			if (!blindProtected)
 				target.bioHolder.AddEffect("bad_eyesight")
-				SPAWN_DBG(30 SECONDS)
+				SPAWN(30 SECONDS)
 					target.bioHolder.RemoveEffect("bad_eyesight")
 			target.take_eye_damage(blindProtected ? 2 : 4, 1)
 			target.change_eye_blurry(blindProtected ? 5 : 10)

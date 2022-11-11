@@ -41,43 +41,92 @@
 
 			var/mat_id
 
-			if(exists_nearby)
-				exists_nearby.change_stack_amount(totalAmount)
-				mat_id = exists_nearby.material.mat_id
-			else
-				var/newType = getProcessedMaterialForm(X.material)
-				var/obj/item/material_piece/P = unpool(newType)
-				P.set_loc(get_output_location())
-				P.setMaterial(copyMaterial(X.material))
-				P.change_stack_amount(totalAmount - P.amount)
-				mat_id = P.material.mat_id
+			//Check for exploitable inputs and divide the result accordingly
+			var/div_factor = 1 / X.material_amt
+			var/second_mat = null
 
-			if (istype(output_location, /obj/machinery/manufacturer))
-				var/obj/machinery/manufacturer/M = output_location
-				M.update_resource_amount(mat_id, totalAmount * 10)
+			if (istype(X, /obj/item/cable_coil))
+				var/obj/item/cable_coil/C = X
+				second_mat = C.conductor
 
+			//Output processed amount if there is enough input material
+			var/out_amount = round(totalAmount/div_factor)
+			if (out_amount > 0)
+				if(exists_nearby)
+					exists_nearby.change_stack_amount(out_amount)
+					mat_id = exists_nearby.material.mat_id
+				else
+					var/newType = getProcessedMaterialForm(X.material)
+					var/obj/item/material_piece/P = new newType
+					P.set_loc(get_output_location())
+					P.setMaterial(copyMaterial(X.material))
+					P.change_stack_amount(out_amount - P.amount)
+					mat_id = P.material.mat_id
+
+				if (istype(output_location, /obj/machinery/manufacturer))
+					var/obj/machinery/manufacturer/M = output_location
+					M.update_resource_amount(mat_id, out_amount * 10)
+
+				//If the input was a cable coil, output the conductor too
+				if (second_mat)
+					var/obj/item/material_piece/second_exists_nearby = null
+					var/second_mat_id
+					for(var/obj/item/material_piece/G in output_location)
+						if(isSameMaterial(G.material, second_mat))
+							second_exists_nearby = G
+							break
+
+					if(second_exists_nearby)
+						second_exists_nearby.change_stack_amount(out_amount)
+						second_mat_id = second_exists_nearby.material.mat_id
+					else
+						var/newType = getProcessedMaterialForm(second_mat)
+						var/obj/item/material_piece/PC = new newType
+						PC.set_loc(get_output_location())
+						PC.setMaterial(copyMaterial(second_mat))
+						PC.change_stack_amount(out_amount - PC.amount)
+						second_mat_id = PC.material.mat_id
+
+					if (istype(output_location, /obj/machinery/manufacturer))
+						var/obj/machinery/manufacturer/M = output_location
+						M.update_resource_amount(second_mat_id, out_amount * 10)
+
+			//Delete items in processor and output leftovers
+			var/leftovers = (totalAmount/div_factor-out_amount)*div_factor
 			for(var/atom/movable/D in matches)
+				var/obj/item/R = D
+				if (leftovers != 0 && R.amount)
+					R.change_stack_amount(leftovers-R.amount)
+					if(R.amount < 1) //no fractionals tyvm
+						qdel(R)
+					else
+						R.set_loc(src.loc)
+					leftovers = 0
+					continue
 				D.set_loc(null)
 				qdel(D)
 				D = null
 
-			playsound(src.loc, "sound/effects/pop.ogg", 40, 1)
-			flick("fab3-work",src)
+			if (out_amount > 0)//No animation and beep if nothing processed
+				playsound(src.loc, 'sound/effects/pop.ogg', 40, 1)
+				flick("fab3-work",src)
+			else
+				playsound(src.loc, 'sound/machines/buzz-two.ogg', 40, 1)
 		return
 
-	attackby(var/obj/item/W as obj, mob/user as mob)
+	attackby(var/obj/item/W, mob/user)
 		//Wire: Fix for: undefined proc or verb /turf/simulated/floor/set loc()
 		//		like somehow a dude tried to load a turf? how the fuck? whatever just kill me
 		if (!istype(W))
 			return
 
-		if(isExploitableObject(W))
-			boutput(user, "<span class='alert'>\the [src] grumps at you and refuses to use [W].</span>")
-			return
-
 		if(istype(W, /obj/item/material_piece))
 			boutput(user, "<span class='alert'>[W] has already been processed.</span>")
 			return
+
+		if(istype(W, /obj/item/ore_scoop))
+			var/obj/item/ore_scoop/O = W
+			if (O.satchel) W = O.satchel
 
 		if(istype(W, /obj/item/satchel))
 			var/obj/item/satchel/S = W
@@ -85,10 +134,10 @@
 			for(var/obj/item/I in S)
 				if(I.material)
 					I.set_loc(src)
-			S.satchel_updateicon()
+			S.UpdateIcon()
 			return
 
-		if (W.cant_drop) //For borg held items
+		else if (W.cant_drop) //For borg held items
 			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return ..()
 
@@ -96,12 +145,12 @@
 			boutput(user, "<span class='notice'>You put \the [W] into \the [src].</span>")
 			user.u_equip(W)
 			W.set_loc(src)
-			W.dropped()
+			W.dropped(user)
 			return
 
 		return
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
 			boutput(usr, "<span class='alert'>Get your filthy dead fingers off that!</span>")
 			return
@@ -111,11 +160,11 @@
 			boutput(usr, "<span class='notice'>You reset the processor's output target.</span>")
 			return
 
-		if(get_dist(over_object,src) > 1)
+		if(BOUNDS_DIST(over_object, src) > 0)
 			boutput(usr, "<span class='alert'>The processor is too far away from the target!</span>")
 			return
 
-		if(get_dist(over_object,usr) > 1)
+		if(BOUNDS_DIST(over_object, usr) > 0)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -165,8 +214,8 @@
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
 
-	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (get_dist(user, src) > 1 || get_dist(user, O) > 1 || is_incapacitated(user) || isAI(user))
+	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
+		if (BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, O) > 0 || is_incapacitated(user) || isAI(user))
 			return
 
 		if (istype(O, /obj/storage/crate/) || istype(O, /obj/storage/cart/))
@@ -174,8 +223,6 @@
 			var/amtload = 0
 			for (var/obj/item/raw_material/M in O.contents)
 				if(!M.material)
-					continue
-				if(isExploitableObject(M))
 					continue
 				if(istype(M, /obj/item/material_piece))
 					continue
@@ -185,19 +232,20 @@
 			else boutput(user, "<span class='alert'>No material loaded!</span>")
 			return
 
+		if (!istype(O, /obj/item))
+			return
 		var/obj/item/W = O
-
-		if(W in user)
+		if(W in user && !W.cant_drop)
 			user.u_equip(W)
 			W.set_loc(src.loc)
-			W.dropped()
+			W.dropped(user)
 
 
 		//if (istype(W, /obj/item/raw_material/) || istype(W, /obj/item/sheet/) || istype(W, /obj/item/rods/) || istype(W, /obj/item/tile/) || istype(W, /obj/item/cable_coil))
-		if(!isExploitableObject(W) && W.material && !istype(W, /obj/item/material_piece))
+		if(W.material && !istype(W, /obj/item/material_piece))
 			quickload(user, W)
 		else
-			attackby(W, user)
+			src.Attackby(W, user)
 			return
 
 
@@ -208,7 +256,9 @@
 		if (!user || !O || !istype(O))
 			return
 		user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
+		user.u_equip(O)
 		O.set_loc(src)
+		O.dropped(user)
 		var/staystill = user.loc
 		for(var/obj/item/M in view(1,user))
 			if (!M || M.loc == user)
@@ -222,7 +272,7 @@
 				//	continue
 
 			M.set_loc(src)
-			playsound(get_turf(src), "sound/items/Deconstruct.ogg", 40, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
 			sleep(0.5)
 			if (user.loc != staystill) break
 		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
@@ -232,7 +282,7 @@
 		if (isnull(output_location))
 			return src.loc
 
-		if (get_dist(src.output_location,src) > 1)
+		if (BOUNDS_DIST(src.output_location, src) > 0)
 			output_location = null
 			return src.loc
 
@@ -297,8 +347,8 @@
 		light.set_brightness(0.5)
 		light.set_color(0.4, 0.8, 1)
 
-	attack_hand(mob/user as mob)
-		var/html = ""
+	attack_hand(mob/user)
+		var/list/html = list("")
 		html += "<div style=\"margin: auto;text-align:center\">[first_part ? "<a href='?src=\ref[src];remove=\ref[first_part]'>[first_part.name]</a>" : "EMPTY"] <i class=\"icon-plus\"></i> [second_part ? "<a href='?src=\ref[src];remove=\ref[second_part]'>[second_part.name]</a>" : "EMPTY"]   <i class=\"icon-double-angle-right\"></i> [resultName]</div><br>"
 		html += "<div style=\"margin: auto;text-align:center\"><a href='?src=\ref[src];activate=1'><i class=\"icon-check-sign icon-large\"></i></a></div><br><br>"
 
@@ -308,11 +358,11 @@
 			if(second_part == I) continue
 			html += "<div style=\"margin: auto;text-align:center\"><a href='?src=\ref[src];select_l=\ref[I]'><i class=\"icon-arrow-left\"></i></a> <a href='?src=\ref[src];eject=\ref[I]'>[I.name]</a> <a href='?src=\ref[src];select_r=\ref[I]'><i class=\"icon-arrow-right\"></i></a></div><br>"
 
-		user.Browse(html, "window=crucible;size=500x650;title=Nano-crucible;fade_in=0", 1)
+		user.Browse(html.Join(), "window=crucible;size=500x650;title=Nano-crucible;fade_in=0", 1)
 		return
 
 	Topic(href, href_list)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(BOUNDS_DIST(usr, src) > 0 || usr.z != src.z) return
 
 		if(href_list["select_l"])
 			var/obj/item/L = locate(href_list["select_l"]) in src
@@ -330,7 +380,7 @@
 				var/maxamt = min(FP.amount, SP.amount)
 				var/amt = input(usr, "How many? ([maxamt] max)", "Select amount", maxamt) as null|num
 				amt = max(0, amt)
-				if(amt && isnum(amt) && FP && FP.amount >= amt && SP && SP.amount >= amt && (FP in src) && (SP in src))
+				if(amt && isnum_safe(amt) && FP && FP.amount >= amt && SP && SP.amount >= amt && (FP in src) && (SP in src))
 					flick("smelter1",src)
 					var/datum/material/merged = getFusedMaterial(FP.material, SP.material)
 					var/datum/material_recipe/RE = matchesMaterialRecipe(merged)
@@ -349,9 +399,6 @@
 							merged = getMaterial(RE.result_id)
 
 					var/obj/item/piece = new newtype(src)
-
-					if(istype(FP.material, /datum/material/fissile) && istype(SP.material, /datum/material/fissile))
-						merged = merge_mat_nuke(merged, FP.material, SP.material)
 
 					if(apply_material)
 						piece.setMaterial(merged)
@@ -441,7 +488,7 @@
 		var/datum/material/M = new /datum/material/organic/flesh {desc="A disgusting wad of flesh."; color="#881111";} ()
 		M.name = "[user.real_name] flesh"
 
-		var/obj/item/material_piece/wad/dummyItem = unpool(/obj/item/material_piece/wad)
+		var/obj/item/material_piece/wad/dummyItem = new /obj/item/material_piece/wad
 		dummyItem.set_loc(src)
 		dummyItem.setMaterial(M)
 		dummyItem.change_stack_amount(5)
@@ -449,208 +496,6 @@
 		user.remove()
 
 	ex_act(severity)
-		return
-
-
-/obj/machinery/smelter_portable
-	name = "Portable Smelter"
-	desc = "A small furnace-like machine used to melt and combine metals or minerals."
-	icon = 'icons/obj/crafting.dmi'
-	icon_state = "portsmelter0"
-	anchored = 0
-	density = 1
-	layer = FLOOR_EQUIP_LAYER1
-	var/list/components = list()
-	var/sound/sound_bubble = sound('sound/effects/bubbles.ogg')
-	var/datum/material/output = null
-	var/datum/light/light
-
-	New()
-		..()
-		light = new /datum/light/point
-		light.attach(src)
-		light.set_brightness(0.5)
-		light.set_color(1, 0.6, 0.2)
-
-	ex_act(severity)
-		return
-
-/obj/machinery/smelter
-	name = "Arc Smelter"
-	desc = "A huge furnace-like machine used to melt and combine metals or minerals."
-	icon = 'icons/effects/96x96.dmi'
-	icon_state = "smelter0"
-	anchored = 1
-	bound_height = 96
-	bound_width = 96
-	density = 1
-	layer = FLOOR_EQUIP_LAYER1
-
-	var/list/components = list()
-	var/slag_level = 0
-
-	var/sound/sound_thunk = sound('sound/items/Deconstruct.ogg')
-	var/sound/sound_zap = sound('sound/effects/elec_bzzz.ogg')
-	var/sound/sound_hiss = sound('sound/machines/hiss.ogg')
-	var/sound/sound_bubble = sound('sound/effects/bubbles.ogg')
-
-	var/datum/material/output = null
-	var/datum/light/light
-
-	New()
-		..()
-		light = new /datum/light/point
-		light.attach(src, 1.5, 1.5)
-		light.set_brightness(0.5)
-		light.set_color(0.4, 0.8, 1)
-
-	proc/resetMats()
-		icon_state = "smelter0"
-		output = null
-		for(var/atom/movable/A in components)
-			A.set_loc(null)
-			qdel(A)
-			A = null
-		components.Cut()
-		return
-
-	attack_hand(mob/user as mob)
-		if(output)
-			var/datum/material_recipe/R = matchesMaterialRecipe(output)
-			if(R)
-				if(R.result_item)
-					var/atom/A = new R.result_item(locate(src.x + 1, src.y, src.z))
-					boutput(user, "<span class='notice'>You remove [A.name] from the [src].</span>")
-					playsound(src.loc, sound_thunk, 40, 1)
-					resetMats()
-					return
-				else if(length(R.result_id))
-					output = getMaterial(R.result_id)
-				else
-					R.apply_to(output)
-
-			boutput(user, "<span class='notice'>You remove [output.name] from the [src].</span>")
-
-			var/bar_type = getProcessedMaterialForm(output)
-			var/obj/item/material_piece/M = unpool(bar_type)
-			M.set_loc(locate(src.x + 1, src.y, src.z))
-
-			M.add_fingerprint(user) // May not be the same person who smelted the materials (Convair880).
-			src.add_fingerprint(user) // Add some prints to the smelter too.
-
-			M.setMaterial(output)
-			resetMats()
-			playsound(src.loc, sound_thunk, 40, 1)
-
-			if(M.material && M.material.getProperty("stability") <= 30 && prob((30 - M.material.getProperty("stability")) * 2 ) )
-				M.visible_message("<span class='alert'>[M] [getMatFailString(M.material.material_flags)]!</span>")
-				M.material.triggerOnFail(M)
-			return
-
-		if(components.len > 0)
-			light.enable()
-			playsound(src.loc, sound_zap, 40, 1)
-			SPAWN_DBG(0.5 SECONDS)
-				playsound(src.loc, sound_bubble, 40, 1)
-			if(components.len == 1)
-				boutput(user, "<span class='alert'>You activate the [src].</span>")
-				icon_state = "smelter1"
-				sleep(1 SECOND)
-				var/atom/obj1 = components[1]
-				output = copyMaterial(obj1.material)
-				logTheThing("station", user, null, "creates a [output] bar (<b>Material:</b> <i>[output.mat_id]</i>) with the [src] at [log_loc(src)].") //  Re-added/fixed because of erebite, plasmastone etc. alloys (Convair880).
-				handleSlag()
-			else
-				icon_state = "smelter1"
-				sleep(1 SECOND)
-				var/atom/obj1 = components[1]
-				var/atom/obj2 = components[2]
-
-				var/datum/material/mat1 = obj1.material
-				var/datum/material/mat2 = obj2.material
-
-				if(!mat1 || !mat2)
-					icon_state = "smelter0"
-					return
-
-				output = getFusedMaterial(mat1, mat2)
-				output.generation++
-				logTheThing("station", user, null, "creates a [output] bar (<b>Material:</b> <i>[output.mat_id]</i>) with the [src] at [log_loc(src)].") // Sorry for code duplication, but I'm regularly seeing runtime errors for some reason if this proc is called after handleSlag (Convair880).
-				handleSlag()
-			SPAWN_DBG(0.8 SECONDS)
-				playsound(src.loc, sound_hiss, 45, 1)
-				light.disable()
-		else
-			boutput(user, "<span class='alert'>There is nothing in the [src].</span>")
-		return
-
-	proc/handleSlag()
-		switch(slag_level)
-			if(500 to 1000)
-				particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#967360", 10, locate(src.x +1, src.y, src.z)))
-				//output.adjustProperty(PROP_INSTABILITY , 5)
-				output.quality += rand(5, -15)
-			if(1000 to INFINITY)
-				particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#221511", 10, locate(src.x +1, src.y, src.z)))
-				output.quality += rand(-15, -30)
-				//output.adjustProperty(PROP_INSTABILITY , 15)
-		slag_level += (100 - output.quality)
-		return
-
-	custom_suicide = 1
-	suicide(var/mob/user)
-		if (!src.user_can_suicide(user))
-			return 0
-
-		user.visible_message("<span class='alert'><b>[user] hops right into [src]! Jesus!</b></span>")
-		user.unequip_all()
-		user.set_loc(src)
-
-		var/datum/material/M = new /datum/material/organic/flesh {desc="A disgusting wad of flesh."; color="#881111";} ()
-		M.name = "[user.real_name] flesh"
-
-		var/obj/item/dummyItem = new (src)
-		dummyItem.setMaterial(M, appearance = 0, setname = 0)
-		components += dummyItem
-		user.ghostize()
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/slag_shovel))
-			if(slag_level)
-				src.visible_message("<span class='notice'>[user] removes slag from the [src]</span>")
-				slag_level = 0
-				var/obj/item/material_piece/slag/S = unpool(/obj/item/material_piece/slag)
-				S.set_loc(src.loc)
-				return
-			else
-				boutput(user, "<span class='notice'>There is no slag in [src].</span>")
-				return
-
-		if(istype(W, /obj/item/wizard_crystal) && components.len < 2 && !W.material)
-			var/obj/item/wizard_crystal/wc = W
-			wc.setMaterial(getMaterial(wc.assoc_material), appearance = 0, setname = 0)
-
-		if(W.material != null)
-			if(!W.material.canMix)
-				boutput(user, "<span class='alert'>This material can not be used in the [src].</span>")
-				return
-
-			if((W.material.material_flags & MATERIAL_METAL || W.material.material_flags & MATERIAL_CRYSTAL) && (istype(W, /obj/item/material_piece) || istype(W, /obj/item/raw_material) || istype(W, /obj/item/wizard_crystal)) )
-				if(components.len < 2)
-					src.visible_message("<span class='notice'>[user] puts [W] into [src]</span>")
-					user.drop_item()
-					components.Add(W)
-					W.set_loc(src)
-					playsound(src.loc, sound_thunk, 40, 1)
-				else
-					boutput(user, "<span class='alert'>The smelter is already filled to capacity!</span>")
-					return
-			else
-				boutput(user, "<span class='alert'>The smelter can only use metals or minerals in raw form.</span>")
-				return
-		return
-
-	ex_act(severity) // bloo bloo we blew it up and nobody gets to have fun
 		return
 
 //
@@ -662,7 +507,7 @@
 	w_class = W_CLASS_SMALL
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(get_dist(src, target) <= world.view)
+		if(GET_DIST(src, target) <= world.view)
 			animate_scanning(target, "#597B6D")
 			var/atom/W = target
 			if(!W.material)

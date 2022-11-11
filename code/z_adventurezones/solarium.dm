@@ -37,7 +37,7 @@ var/global/the_sun = null
 		light.set_height(3)
 		light.set_color(0.9, 0.5, 0.3)
 		light.enable()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (!the_sun)
 				the_sun = src
 
@@ -51,14 +51,15 @@ var/global/the_sun = null
 			the_sun = null
 		..()
 
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		if (istype(O, /obj/item/clothing/mask/cigarette))
 			if (!O:on)
 				O:light(user, "<span class='alert'><b>[user]</b> lights [O] on [src] and casually takes a drag from it. Wow.</span>")
 				if (!user.is_heat_resistant())
-					SPAWN_DBG(1 SECOND)
+					SPAWN(1 SECOND)
 						user.visible_message("<span class='alert'><b>[user]</b> burns away into ash! It's almost as though being that close to a star wasn't a great idea!</span>",\
 						"<span class='alert'><b>You burn away into ash! It's almost as though being that close to a star wasn't a great idea!</b></span>")
+						logTheThing(LOG_COMBAT, user, "was firegibbed by [src] ([src.type]) at [log_loc(user)].")
 						user.firegib()
 				else
 					user.unlock_medal("Helios", 1)
@@ -86,7 +87,7 @@ var/global/derelict_mode = 0
 		if (world.name)
 			name = world.name
 
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		..()
 		if (server_kicked_over && istype(O, /obj/item/clothing/mask/cigarette))
 			if (!O:on)
@@ -110,7 +111,7 @@ var/global/derelict_mode = 0
 		src.set_loc(null)
 		world.save_intra_round_value("somebody_ate_the_fucking_thing", 1)
 		breakdown()
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			boutput(that_asshole, "<span class='alert'><b>IT BURNS!</b></span>")
 
 	proc/breakdown()
@@ -121,7 +122,7 @@ var/global/derelict_mode = 0
 		sleep(1 SECOND)
 		src.icon_state = "serverf"
 		src.visible_message("<span class='alert'><b>[src] bursts into flames!</b><br>UHHHHHHHH</span>")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/area/the_solarium = get_area(src)
 			for (var/mob/living/M in the_solarium)
 				if (isdead(M))
@@ -137,15 +138,15 @@ var/global/derelict_mode = 0
 				LAGCHECK(LAG_LOW)
 				space.icon_state = "howlingsun"
 				space.icon = 'icons/misc/worlds.dmi'
-			world << sound('sound/machines/lavamoon_plantalarm.ogg')
-			SPAWN_DBG(1 DECI SECOND)
+			playsound_global(world, 'sound/machines/lavamoon_plantalarm.ogg', 70)
+			SPAWN(1 DECI SECOND)
 				for(var/mob/living/carbon/human/H in mobs)
 					H.flash(3 SECONDS)
 					shake_camera(H, 210, 16)
-					SPAWN_DBG(rand(1,10))
+					SPAWN(rand(1,10))
 						// H.bodytemperature = 1000
 						H.update_burning(10)
-					SPAWN_DBG(rand(50,90))
+					SPAWN(rand(50,90))
 						H.emote("scream")
 			creepify_station() // creep as heck
 			sleep(12.5 SECONDS)
@@ -155,9 +156,9 @@ var/global/derelict_mode = 0
 			cinematic.play("sadbuddy")
 			sleep(1 SECOND)
 			boutput(world, "<tt>BUG: CPU0 on fire!</tt>")
-			logTheThing("diary", null, null, "The server would have restarted, if I hadn't removed the line of code that does that. Instead, we play through.", "game")
+			logTheThing(LOG_DIARY, null, "The server would have restarted, if I hadn't removed the line of code that does that. Instead, we play through.", "game")
 
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				for (var/client/C in clients)
 					cinematic.remove_client(C)
 
@@ -169,7 +170,7 @@ proc/voidify_world()
 	lobby_titlecard = new /datum/titlecard/disaster()
 	lobby_titlecard.set_pregame_html()
 
-	SPAWN_DBG(3 SECONDS)
+	SPAWN(3 SECONDS)
 		for (var/turf/space/space in world)
 			LAGCHECK(LAG_LOW)
 			if(was_eaten)
@@ -198,5 +199,5 @@ proc/voidify_world()
 			Automaton.aggressive = 1
 			Automaton.atkcarbon = 1
 			Automaton.atksilicon = 1
-		world << sound('sound/ambience/industrial/Precursor_Drone1.ogg')
+		playsound_global(world, 'sound/ambience/industrial/Precursor_Drone1.ogg', 70)
 	return

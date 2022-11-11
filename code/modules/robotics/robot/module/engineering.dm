@@ -6,10 +6,10 @@
 	included_cosmetic = /datum/robot_cosmetic/engineering
 	included_tools = /datum/robot/module_tool_creator/recursive/module/engineering
 	radio_type = /obj/item/device/radio/headset/engineer
-	mailgroups = list(MGO_ENGINEER, MGD_STATIONREPAIR, MGO_MECHANIC, MGO_SILICON, MGD_PARTY)
+	mailgroups = list(MGO_ENGINEER, MGD_STATIONREPAIR, MGO_SILICON, MGD_PARTY)
 	alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_RKIT)
 
 /datum/robot_cosmetic/engineering
 	fx = list(255, 255, 0)
 	painted = 1
-	paint = list(130, 150, 0)
+	paint = "#829600"

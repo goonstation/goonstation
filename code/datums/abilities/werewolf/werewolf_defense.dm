@@ -24,7 +24,7 @@
 		if (!iswerewolf(M))
 			return 1
 
-		H.changeStatus("werewolf_defense_howl", 150)
+		H.changeStatus("werewolf_defense_howl", 15 SECONDS)
 
 /datum/statusEffect/defensive_howl
 	id = "werewolf_defense_howl"
@@ -35,25 +35,27 @@
 	unique = 1
 
 	onAdd(var/optional=null)
+		. = ..()
 		var/mob/living/carbon/human/H = owner
 		if (!istype(H)) return
 
 		H.visible_message("<span class='alert'><B>[H] shifts to a defensive stance and starts to howl!</B></span>")
 
 		//Do some howling
-		playsound(H.loc, 'sound/voice/animal/werewolf_howl.ogg', 70, 1, 0, 0.5) //one really long howl
+		playsound(H.loc, 'sound/voice/animal/werewolf_howl.ogg', 65, 1, 0, 0.5) //one really long howl
 
 		if (H.getStatusDuration("burning"))
 			H.delStatus("burning")
 			H.visible_message("<span class='alert'><B>[H] deafening howl completely extinguishes the fire on it!</B></span>")
 
-		//SPAWN_DBG(8 SECONDS)
+		//SPAWN(8 SECONDS)
 		//	playsound(H.loc, 'sound/voice/animal/werewolf_howl.ogg', 70, 1, 0, 0.7)
 
 		H.stance = "defensive"
 		return
 
 	onRemove()
+		. = ..()
 		var/mob/living/carbon/human/H = owner
 		if (!istype(H)) return
 		H.stance = "normal"

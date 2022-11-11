@@ -2,6 +2,7 @@
 	name = "Glowy"
 	desc = "Endows the subject with bioluminescent skin. Color and intensity may vary by subject."
 	id = "glowy"
+	icon_state = "glowy"
 	probability = 99
 	effectType = EFFECT_TYPE_POWER
 	blockCount = 3
@@ -21,15 +22,29 @@
 	name = "Cranial Keratin Formation"
 	desc = "Enables the growth of a compacted keratin formation on the subject's head."
 	id = "horns"
+	icon_state = "horns"
 	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	msgGain = "A pair of horns erupt from your head."
 	msgLose = "Your horns crumble away into nothing."
+	var/hornstyle = "random"
 
 	OnAdd()
-		if (ishuman(owner))
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "horns", layer = MOB_LAYER)
+		if(hornstyle == "random")
+			hornstyle = pick("horns","horns_ram","horns_ramblk","horns_dark","horns_beige","horns_light","horns_sml","horns_unicorn")
+
+		overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[hornstyle]", layer = MOB_LAYER)
+		if (ismonkey(owner))
+			overlay_image.pixel_y = -6
 		..()
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if(variable == "hornstyle")
+			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[newval]", layer = MOB_LAYER)
+			if(ismonkey(owner))
+				overlay_image.pixel_y = -6
+			owner.UpdateOverlays(overlay_image, id)
 
 /datum/bioEffect/horns/evil //this is just for /proc/soulcheck
 	occur_in_genepools = 0
@@ -42,11 +57,13 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	id = "demon_horns"
+	hornstyle = "horns_devil"
 
 /datum/bioEffect/particles
 	name = "Dermal Glitter"
 	desc = "Causes the subject's skin to shine and gleam."
 	id = "shiny"
+	icon_state = "dermal_glitter"
 	effectType = EFFECT_TYPE_POWER
 	probability = 66
 	msgGain = "Your skin looks all blinged out."
@@ -108,6 +125,7 @@
 	name = "Melanin Suppressor"
 	desc = "Shuts down all melanin production in the subject's body."
 	id = "albinism"
+	icon_state = "albinism"
 	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	isBad = 1
@@ -172,13 +190,18 @@
 	probability = 99
 	isBad = 1
 	color_to_use = "#FFFFFF"
-	skintone_to_use = "#FFFFFF"
 
 	OnAdd()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
-			eye_color_to_use = AH.e_color
+			src.eye_color_to_use = AH.e_color
+			//totally desaturate skintone
+			var/skin_tone = hex_to_rgb_list(AH.s_tone)
+			skin_tone = rgb2hsv(skin_tone[1], skin_tone[2], skin_tone[3])
+			skin_tone[2] = 0
+			skin_tone = hsv2rgb(skin_tone[1], skin_tone[2], skin_tone[3])
+			src.skintone_to_use = skin_tone
 		. = ..()
 
 /datum/bioEffect/stinky
@@ -190,13 +213,12 @@
 	isBad = 1
 	msgGain = "You feel sweaty."
 	msgLose = "You feel much more hygenic."
-	var/personalized_stink = "Wow, it stinks in here!"
+	var/personalized_stink = null
 
 	New()
 		..()
-		src.personalized_stink = stinkString()
 		if (prob(5))
-			src.variant = 2
+			src.personalized_stink = stinkString()
 
 	OnLife(var/mult)
 		if(..()) return
@@ -206,19 +228,64 @@
 			for(var/mob/living/carbon/C in view(6,get_turf(owner)))
 				if (C == owner)
 					continue
-				if (src.variant == 2)
+				if (ispug(C))
+					boutput(C, "<span class='alert'>Wow, [owner] sure [pick("stinks", "smells", "reeks")]!")
+				else if (src.personalized_stink)
 					boutput(C, "<span class='alert'>[src.personalized_stink]</span>")
 				else
 					boutput(C, "<span class='alert'>[stinkString()]</span>")
+
+
+/obj/effect/distort/dwarf
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "distort-dwarf"
+
+/datum/bioEffect/dwarf
+	name = "Dwarfism"
+	desc = "Greatly reduces the overall size of the subject, resulting in markedly dimished height."
+	id = "dwarf"
+	msgGain = "Did everything just get bigger?"
+	msgLose = "You feel tall!"
+	icon_state  = "dwarf"
+	var/filter = null
+	var/obj/effect/distort/dwarf/distort = new
+	var/size = 127
+
+	OnAdd()
+		. = ..()
+		owner.add_filter("dwarfism", 1, displacement_map_filter(size=src.size, render_source = src.distort.render_target))
+		owner.vis_contents += src.distort
+		src.filter = owner.get_filter("dwarfism")
+		animate(src.filter, size=0, time=0)
+		animate(size=src.size, time=0.7 SECONDS, easing=SINE_EASING)
+
+	OnRemove()
+		owner.remove_filter("dwarfism")
+		owner.vis_contents -= src.distort
+		src.filter = null
+		. = ..()
+
+	disposing()
+		qdel(src.distort)
+		src.distort = null
+		. = ..()
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if(variable == "size" && src.filter)
+			animate(src.filter, size=0, time=0)
+			animate(size=src.size, time=0.7 SECONDS, easing=SINE_EASING)
 
 /datum/bioEffect/drunk
 	name = "Ethanol Production"
 	desc = "Encourages growth of ethanol-producing symbiotic fungus in the subject's body."
 	id = "drunk"
+	icon_state = "ethanol_prod"
 	isBad = 1
 	msgGain = "You feel drunk!"
 	msgLose = "You feel sober."
 	probability = 99
+	stability_loss = -5
 	var/reagent_to_add = "ethanol"
 	var/reagent_threshold = 80
 	var/add_per_tick = 1
@@ -286,6 +353,7 @@
 	lockedGaps = 10
 	lockedDiff = 6
 	lockedChars = list("G","C","A","T","U")
+	stability_loss = 15
 	lockedTries = 10
 	curable_by_mutadone = 0
 	can_scramble = 0
@@ -308,6 +376,7 @@
 	probability = 0.25
 	var/change_prob = 25
 	add_per_tick = 7
+	stability_loss = 25
 
 	OnLife(var/mult)
 		if (prob(src.change_prob) && all_functional_reagent_ids.len > 1)
@@ -327,6 +396,7 @@
 	name = "Dactyl Crystallization"
 	desc = "The subject's digits crystallize and, when struck together, emit a pleasant noise."
 	id = "chime_snaps"
+	icon_state = "chime_snaps"
 	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	msgGain = "Your fingers and toes turn transparent and crystalline."
@@ -336,6 +406,7 @@
 	name = "Dermal Glow"
 	desc = "Causes the subject's skin to emit faint light patterns."
 	id = "aura"
+	icon_state = "aura"
 	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	msgGain = "You start to emit a pulsing glow."
@@ -364,7 +435,7 @@
 	blockGaps = 3
 	msgGain = "You feel as if you're impossibly young."
 	msgLose = "You feel like you're your own age again."
-	stability_loss = 10
+	stability_loss = 0
 
 	OnAdd()
 		holder.age = (0 - holder.age)
@@ -383,7 +454,7 @@
 	blockGaps = 3
 	msgGain = "You feel like you're growing younger - no wait, older?"
 	msgLose = "You feel like you're aging normally again."
-	stability_loss = 10
+	stability_loss = 0
 	OnLife(var/mult)
 		..()
 		if (prob(33))
@@ -398,6 +469,7 @@
 	name = "Blazing Aura"
 	desc = "Causes the subject's skin to emit harmless false fire."
 	id = "aura_fire"
+	icon_state = "blazing_aura"
 	effectType = EFFECT_TYPE_POWER
 	occur_in_genepools = 0
 	msgGain = "You burst into flames!"
@@ -415,6 +487,14 @@
 			overlay_image.color = color_hex
 		..()
 
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if(variable == "color_hex")
+			overlay_image.color = color_hex
+			if(isliving(owner))
+				var/mob/living/L = owner
+				L.UpdateOverlays(overlay_image, id)
+
 /datum/bioEffect/fire_aura/evil //this is just for /proc/soulcheck
 	occur_in_genepools = 0
 	probability = 0
@@ -426,3 +506,7 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	id = "hell_fire"
+
+	New()
+		..()
+		color_hex = "#680000"

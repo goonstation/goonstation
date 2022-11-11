@@ -4,37 +4,12 @@
 	icon_state = "up-sechud"
 	drainrate = 5
 
-	var/client/assigned = null
-
-	process()
-		if (assigned)
-			src.assigned.images.Remove(arrestIconsAll)
-			addIcons()
-
-			if (src.loc != assigned.mob)
-				src.assigned.images.Remove(arrestIconsAll)
-				src.assigned = null
-
-	proc/addIcons()
-		if (src.assigned)
-			for (var/image/I in arrestIconsAll)
-				if (!I || !I.loc || !src)
-					continue
-				if (I.loc.invisibility && I.loc != src.loc)
-					continue
-				src.assigned.images.Add(I)
-
 	upgrade_activate(var/mob/living/silicon/robot/user as mob)
 		if (..())
 			return
-		src.assigned = user.client
-		processing_items |= src
+		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(user)
 
 	upgrade_deactivate(var/mob/living/silicon/robot/user as mob)
 		if (..())
 			return
-		if (src.assigned)
-			src.assigned.images.Remove(arrestIconsAll)
-			src.assigned = null
-		processing_items.Remove(src)
-		return
+		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(user)

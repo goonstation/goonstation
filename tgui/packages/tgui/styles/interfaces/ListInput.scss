@@ -7,6 +7,9 @@
 @use '../colors.scss';
 @use '../base.scss';
 
+.ListInput__Section{
+  font-family: Segoe UI Emoji; // pretty emoji in buttons!
+}
 
 .ListInput__Section .Section__title{
  flex-shrink: 0;

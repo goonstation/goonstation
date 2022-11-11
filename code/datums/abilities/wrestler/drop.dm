@@ -7,7 +7,7 @@
 	target_nodamage_check = 1
 	target_selection_check = 1
 	max_range = 1
-	cooldown = 350
+	cooldown = 250
 	start_on_cooldown = 1
 	pointCost = 0
 	when_stunned = 0
@@ -23,11 +23,11 @@
 			return 1
 
 		if (M == target)
-			boutput(M, __red("Why would you want to wrestle yourself?"))
+			boutput(M, "<span class='alert'>Why would you want to wrestle yourself?</span>")
 			return 1
 
-		if (get_dist(M, target) > src.max_range)
-			boutput(M, __red("[target] is too far away."))
+		if (GET_DIST(M, target) > src.max_range)
+			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
 		if(check_target_immunity( target ))
@@ -35,14 +35,10 @@
 			return 1
 
 		if (!target.lying)
-			boutput(M, __red("You can use this move on prone opponents only!"))
+			boutput(M, "<span class='alert'>You can use this move on prone opponents only!</span>")
 			return 1
 
-		if (M.invisibility > 0)
-			for (var/obj/item/cloaking_device/I in M)
-				if (I.active)
-					I.deactivate(M)
-					M.visible_message("<span class='notice'><b>[M]'s cloak is disrupted!</b></span>")
+		SEND_SIGNAL(M, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 		var/obj/surface = null
 		var/turf/ST = null
@@ -73,33 +69,32 @@
 				M.pixel_y = 0
 				return 0
 
-			if ((falling == 0 && get_dist(M, target) > src.max_range) || (falling == 1 && get_dist(M, target) > (src.max_range + 1))) // We climbed onto stuff.
+			if ((falling == 0 && GET_DIST(M, target) > src.max_range) || (falling == 1 && GET_DIST(M, target) > (src.max_range + 1))) // We climbed onto stuff.
 				M.pixel_y = 0
 				if (falling == 1 && !fake)
 					M.visible_message("<span class='alert'><B>...and dives head-first into the ground, ouch!</b></span>")
 					M.TakeDamageAccountArmor("head", 15, 0, 0, DAMAGE_BLUNT)
 					M.changeStatus("weakened", 3 SECONDS)
 					M.force_laydown_standup()
-				boutput(M, __red("[target] is too far away!"))
+				boutput(M, "<span class='alert'>[target] is too far away!</span>")
 				return 0
 
 			if (!isturf(M.loc) || !isturf(target.loc))
 				M.pixel_y = 0
-				boutput(M, __red("You can't drop onto [target] from here!"))
+				boutput(M, "<span class='alert'>You can't drop onto [target] from here!</span>")
 				return 0
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (M)
-					animate(M, transform = matrix(90, MATRIX_ROTATE), time = 1, loop = 0)
+					animate(M, transform = M.transform.Turn(90), time = 1, loop = 0)
 				sleep (10)
 				if (M)
-					animate(M, transform = null, time = 1, loop = 0)
+					animate(M, transform = M.transform.Turn(-90), time = 1, loop = 0)
 
 			M.set_loc(target.loc)
 
 			M.visible_message("<span class='alert'><B>[M] [pick_string("wrestling_belt.txt", "drop")] [target]!</B></span>")
 			playsound(M.loc, "swing_hit", 50, 1)
-			M.emote("scream")
 
 			if (!fake)
 				if (falling == 1)
@@ -110,12 +105,12 @@
 				else
 					random_brute_damage(target, 15, 1)
 
-			target.changeStatus("weakened", 1 SECOND)
-			target.changeStatus("stunned", 2 SECONDS)
+			target.changeStatus("weakened", 3 SECOND)
+			target.changeStatus("stunned", 3 SECONDS)
 			target.force_laydown_standup()
 
 			M.pixel_y = 0
-			logTheThing("combat", M, target, "uses the [fake ? "fake " : ""]drop wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
+			logTheThing(LOG_COMBAT, M, "uses the [fake ? "fake " : ""]drop wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
 
 		else
 			if (M)

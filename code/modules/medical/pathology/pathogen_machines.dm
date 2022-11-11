@@ -17,7 +17,7 @@
 	var/obj/item/bloodslide/process_source
 	var/counter = 15
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/output_text = "<B>Centrifuge</B><BR><BR>"
 		if (src.on)
 			output_text = "The centrifuge is currently working.<br><a href='?src=\ref[src];shutdown=1'>Emergency shutdown</a>"
@@ -127,9 +127,9 @@
 					src.process_pathogen = P
 					src.process_source = S
 					counter = 25
-		src.attack_hand(usr)
+		src.Attackhand(usr)
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	attackby(var/obj/item/O, var/mob/user)
 		if (istype(O, /obj/item/bloodslide))
 			if (src.source)
 				boutput(user, "<span class='alert'>There is already a blood slide in the machine.</span>")
@@ -216,10 +216,10 @@
 		else
 			return null
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.target)
 			var/action = input("What would you like to do with the microscope?", "Microscope", "View [target]") in list("View [target]", "[src.zoom ? "Zoom Out" : "Zoom In"]", "Remove [target]", "Cancel")
-			if (get_dist(user.loc, src.loc) <= 1)
+			if (BOUNDS_DIST(user.loc, src.loc) == 0)
 				if (action == "View [target]")
 					if (zoom)
 						user.show_message("<span class='notice'>You look at the [target] through the microscope.</span>")
@@ -323,7 +323,7 @@
 					src.contents -= src.target
 					src.target = null
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	attackby(var/obj/item/O, var/mob/user)
 		if (istype(O, /obj/item/reagent_containers/glass/petridish) || istype(O, /obj/item/bloodslide))
 			if (src.target)
 				boutput(user, "<span class='alert'>There is already a [target] on the microscope.</span>")
@@ -357,18 +357,18 @@
 								if (P.curable_by_suppression)
 									act += "<br>The culture appears to be severely damaged by the suppressing agent."
 								src.supp_action[P.name] = act
-								SPAWN_DBG(10 SECONDS) // 100
+								SPAWN(10 SECONDS) // 100
 									src.supp_action -= P.name
 							for (var/datum/pathogeneffects/E in P.effects)
 								var/a_in = "[P.name]: " + E.react_to(R.id, 1)
 								var/a_out = "[P.name]: " + E.react_to(R.id, 0)
 								if (a_in && !(a_in in src.symptom_action_in))
 									src.symptom_action_in += a_in
-									SPAWN_DBG(10 SECONDS) // 100
+									SPAWN(10 SECONDS) // 100
 										src.symptom_action_in -= a_in
 								if (a_out && !(a_out in src.symptom_action_out))
 									src.symptom_action_out += a_out
-									SPAWN_DBG(10 SECONDS) // 100
+									SPAWN(10 SECONDS) // 100
 										src.symptom_action_out -= a_out
 
 #define PATHOGEN_MANIPULATOR_STATE_MAIN 0
@@ -407,7 +407,7 @@
 		..()
 		gui = new("html/pathoComp.html", "pathology", "size=715x685", src)
 		gui.validate_user = 1
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			rescan()
 
 	proc/rescan()
@@ -416,7 +416,7 @@
 			P.comp = src
 			break
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(status & (BROKEN|NOPOWER))
 			return
 		..()
@@ -544,7 +544,7 @@
 			//html = '<table><th><a href="#" onclick="sortAndDisplay('seq'); return false;">Sequence</a></th><th><a href="#" onclick="sortAndDisplay('stable'); return false;">Stable</a></th><th><a href="#" onclick="sortAndDisplay('trans'); return false;">Transient</a></th>' + html + '</table>';
 			usr.Browse(op, "window=pathology_ks;size=300x500")
 		if (href_list["setstate"])
-			var/state  = text2num(href_list["newstate"])
+			var/state  = text2num_safe(href_list["newstate"])
 			if(state != null && state >= 0 && state <= 5 && state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION && src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION)
 				//Received valid input, it's within bounds and it's not moving to or from a protected state (splicing in progress)
 				src.manip.machine_state = state
@@ -561,7 +561,7 @@
 					if (bit != "|")
 						src.manip.analysis_list += bit
 				src.manip.analysis_list -= src.manip.analysis_list[1]
-				src.manip.analysis_list = sortList(src.manip.analysis_list)
+				sortList(src.manip.analysis_list, /proc/cmp_text_asc)
 				qdel(src.manip.loaded)
 				src.manip.loaded = null
 				visible_message("<span class='notice'>The manipulator ejects the empty vial.</span>")
@@ -574,7 +574,7 @@
 			if (length(src.manip.analysis) >= 15)
 				return
 
-			var/id = text2num(href_list["analysisappend"])
+			var/id = text2num_safe(href_list["analysisappend"])
 			if(id != null && id >= 0)
 				id++ //JS sent a zero-based ID
 				if (id > 0 && src.manip.analysis_list.len >= id) //We want the index to be in bounds now.
@@ -691,7 +691,7 @@
 		if (href_list["exchange"])
 			if (src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION && src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_MANIPULATE)
 				var/swap = src.manip.loaded
-				var/slotid = text2num(href_list["exchange"])
+				var/slotid = text2num_safe(href_list["exchange"])
 				src.manip.loaded = src.manip.slots[slotid]
 				if (src.manip.splicesource == slotid)
 					src.manip.splicesource = 0
@@ -700,7 +700,7 @@
 
 		if (href_list["load"])
 			if (src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION && src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_MANIPULATE)
-				var/slotid = text2num(href_list["load"])
+				var/slotid = text2num_safe(href_list["load"])
 				src.manip.loaded = src.manip.slots[slotid]
 				if (src.manip.splicesource == slotid)
 					src.manip.splicesource = 0
@@ -712,7 +712,7 @@
 			gui.sendToSubscribers({"{"splice":{"source":[src.manip.splicesource]}}"}, "setUIState")
 		if (href_list["expose"])
 			if (src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION && src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_MANIPULATE)
-				var/slotid = text2num(href_list["expose"])
+				var/slotid = text2num_safe(href_list["expose"])
 				src.manip.exposed = slotid
 				if (src.manip.slots[src.manip.exposed])
 					src.manip.icon_state = "manipulatore"
@@ -720,13 +720,13 @@
 					src.manip.icon_state = "manipulator"
 				gui.sendToSubscribers({"{"exposed":[src.manip.exposed]}"}, "setUIState")
 		if (href_list["splice"])
-			var/slotid = clamp(text2num(href_list["splice"]), 1, src.manip.slots.len)
+			var/slotid = clamp(text2num_safe(href_list["splice"]), 1, src.manip.slots.len)
 			src.manip.splicesource = slotid
 			gui.sendToSubscribers({"{"splice":{"selected":[src.manip.splicesource]}}"}, "setUIState")
 
 		if (href_list["remove"])
 			if (src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION && src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_MANIPULATE)
-				var/slotid = text2num(href_list["remove"])
+				var/slotid = text2num_safe(href_list["remove"])
 				if (src.manip.splicesource == slotid)
 					src.manip.splicesource = 0
 				src.manip.slots[slotid] = null
@@ -734,7 +734,7 @@
 
 		if (href_list["save"])
 			if (src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION && src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_MANIPULATE)
-				var/slotid = text2num(href_list["save"])
+				var/slotid = text2num_safe(href_list["save"])
 				src.manip.slots[slotid] = src.manip.loaded
 				src.manip.loaded = null
 				SEND_SLOT_LOAD_INFO
@@ -759,7 +759,7 @@
 				else
 					return
 
-			var/dir = text2num(href_list["dir"])
+			var/dir = text2num_safe(href_list["dir"])
 			if(mut_type && dir && (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_MANIPULATE) && !(dir > 0 && totalPoints >= src.manip.loaded.reference.body_type.maxStats) && !(dir > 0 && points >= 50) && !(dir < 0 && points <= 0))
 				var/act = src.manip.loaded.manipulate(mut_type, dir)
 				var/out
@@ -773,7 +773,7 @@
 			if (src.manip.exposed && src.manip.slots[src.manip.exposed] && src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION)
 				var/datum/reagent/blood/pathogen/P = new
 				var/datum/pathogendna/D = src.manip.slots[src.manip.exposed]
-				var/datum/pathogen/PT = unpool(/datum/pathogen)
+				var/datum/pathogen/PT = new /datum/pathogen
 				PT.setup(0, D.reference)
 				PT.dnasample = D
 				P.pathogens += PT.pathogen_uid
@@ -791,7 +791,7 @@
 		/*Uses splicemod to insert
 		if (href_list["insert"])
 			if (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION)
-				var/offset = text2num(href_list["insert"])
+				var/offset = text2num_safe(href_list["insert"])
 				var/seq = src.manip.cache_source[src.manip.sel_source]
 				for (var/i = src.manip.sel_source, i < src.manip.cache_source.len, i++)
 					src.manip.cache_source[i] = src.manip.cache_source[i+1]
@@ -807,9 +807,9 @@
 				predictive_analysis()
 		*/
 		if(href_list["splicesel"])
-			var/lptr_index = text2num(href_list["lptr_index"])
-			var/rptr_index = text2num(href_list["rptr_index"])
-			var/t = text2num(href_list["target"])
+			var/lptr_index = text2num_safe(href_list["lptr_index"])
+			var/rptr_index = text2num_safe(href_list["rptr_index"])
+			var/t = text2num_safe(href_list["target"])
 			if(t)
 				lptr_index = clamp(lptr_index+1, 1, src.manip.cache_target.len)
 				rptr_index = clamp(rptr_index+1, 1, src.manip.cache_target.len)
@@ -824,11 +824,11 @@
 				gui.sendToSubscribers({"{"splice":{"selSource":{"lptr_index":[lptr_index], "rptr_index":[rptr_index]}}}"}, "setUIState")
 
 		if(href_list["splicemod"])
-			var/direction = text2num(href_list["direction"]) //The operation to perform, 0 = remove, -1 = insert before, 1 = insert after
-			var/s_index = text2num(href_list["s_index"]) //The source index
-			var/s_len = text2num(href_list["s_len"]) //How much from the source we want to add
-			var/t_index = text2num(href_list["t_index"]) //The target index
-			var/t_len = text2num(href_list["t_len"]) //How much we want to remove from the target (if any)
+			var/direction = text2num_safe(href_list["direction"]) //The operation to perform, 0 = remove, -1 = insert before, 1 = insert after
+			var/s_index = text2num_safe(href_list["s_index"]) //The source index
+			var/s_len = text2num_safe(href_list["s_len"]) //How much from the source we want to add
+			var/t_index = text2num_safe(href_list["t_index"]) //The target index
+			var/t_len = text2num_safe(href_list["t_len"]) //How much we want to remove from the target (if any)
 
 			if(direction == null || t_index == null || (direction != 0 && (s_index == null || s_len == null)) || (direction == 0 && t_len == null))
 				return
@@ -875,7 +875,7 @@
 		/*
 		if (href_list["target"])
 			if (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION)
-				var/offset = text2num(href_list["target"])
+				var/offset = text2num_safe(href_list["target"])
 				if (offset > 0)
 					if (src.manip.sel_target < src.manip.cache_target.len)
 						src.manip.sel_target++
@@ -885,7 +885,7 @@
 
 		if (href_list["source"])
 			if (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION)
-				var/offset = text2num(href_list["source"])
+				var/offset = text2num_safe(href_list["source"])
 				if (offset > 0)
 					if (src.manip.sel_source < src.manip.cache_source.len)
 						src.manip.sel_source++
@@ -895,11 +895,11 @@
 
 		if (href_list["jumpt"])
 			if (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION)
-				src.manip.sel_target = text2num(href_list["jumpt"])
+				src.manip.sel_target = text2num_safe(href_list["jumpt"])
 
 		if (href_list["jumps"])
 			if (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION)
-				src.manip.sel_source = text2num(href_list["jumps"])
+				src.manip.sel_source = text2num_safe(href_list["jumps"])
 		*/
 		/* Uses splicemod
 		if (href_list["seqremove"])
@@ -954,7 +954,7 @@
 						src.manip.loaded.reference.cdc_announce(usr)
 
 					var/datum/pathogendna/source = src.manip.slots[src.manip.splicesource]
-					logTheThing("pathology", usr, null, "splices pathogen [source.reference.name] into [oldname] creating [src.manip.loaded.reference.name].")
+					logTheThing(LOG_PATHOLOGY, usr, "splices pathogen [source.reference.name] into [oldname] creating [src.manip.loaded.reference.name].")
 				else
 					// how about some more feedback for what went wrong? :)
 					var/reason = ""
@@ -1067,7 +1067,7 @@
 		..()
 		flags |= NOSPLASH
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	attackby(var/obj/item/O, var/mob/user)
 		var/firstFreeSlot = -1 // -1 means no free slot, -2 means the active slot is free
 		if(!loaded)
 			firstFreeSlot = -2
@@ -1104,7 +1104,7 @@
 		if (!PT.dnasample)
 			PT.dnasample = new(PT) // damage control
 			stack_trace("Pathogen [PT.name] (\ref[PT]) had no DNA.")
-			logTheThing("pathology", user, null, "Pathogen [PT.name] (\ref[PT]) had no DNA. (this is a bug)")
+			logTheThing(LOG_PATHOLOGY, user, "Pathogen [PT.name] (\ref[PT]) had no DNA. (this is a bug)")
 		if(firstFreeSlot == -2)
 			loaded = PT.dnasample.clone()
 		else
@@ -1215,7 +1215,7 @@
 		src.reagents.my_atom = src
 		flags |= NOSPLASH
 		if (!pathogen_controller || !pathogen_controller.cure_bases || !length(pathogen_controller.cure_bases))
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				for (var/C in pathogen_controller.cure_bases)
 					src.reagents.add_reagent(C, 1)
 		else
@@ -1241,7 +1241,7 @@
 		src.add_module(new /obj/item/synthmodule/radiation())
 
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(status & (BROKEN|NOPOWER))
 			return
 		..()
@@ -1262,7 +1262,7 @@
 			return 1
 		return 0
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	attackby(var/obj/item/O, var/mob/user)
 		if(status & (BROKEN|NOPOWER))
 			boutput(user,  "<span class='alert'>You can't insert things while the machine is out of power!</span>")
 			return
@@ -1507,7 +1507,7 @@
 					M.master = null
 		else
 			if (href_list["eject"])
-				var/index = text2num(href_list["eject"])
+				var/index = text2num_safe(href_list["eject"])
 				//Arrays start at 0 -Byand
 				if(index > 0 && index <= vials.len)
 					if (vials[index])
@@ -1529,7 +1529,7 @@
 					suppressant.master = null
 					suppressant = null
 			else if (href_list["vial"])
-				var/index = text2num(href_list["vial"])
+				var/index = text2num_safe(href_list["vial"])
 				if(index > 0 && index <= vials.len)
 					if (vials[index])
 						sel_vial = index
@@ -1537,25 +1537,25 @@
 				machine_state = 1
 				icon_state = "synth2"
 				src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-				SPAWN_DBG(2 SECONDS) // 80
+				SPAWN(2 SECONDS) // 80
 					finish_creation(1, 1)
 			else if (href_list["serumrad"])
 				machine_state = 1
 				icon_state = "synth2"
 				src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-				SPAWN_DBG (2 SECONDS) // 120
+				SPAWN(2 SECONDS) // 120
 					finish_creation(0, 1)
 			else if (href_list["vaccine"])
 				machine_state = 1
 				icon_state = "synth2"
 				src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-				SPAWN_DBG(2 SECONDS) // 80
+				SPAWN(2 SECONDS) // 80
 					finish_creation(1, 0)
 			else if (href_list["vaccinerad"])
 				machine_state = 1
 				icon_state = "synth2"
 				src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-				SPAWN_DBG (2 SECONDS) // 120
+				SPAWN(2 SECONDS) // 120
 					finish_creation(0, 0)
 			else if (href_list["antiagent"])
 				var/new_antiagent = href_list["antiagent"]
@@ -1574,7 +1574,7 @@
 				#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 				var/confirm = alert("How many pathogen samples do you wish to synthesize? ([synthesize_pathogen_cost] credits per sample)", "Confirm Purchase", "1", "5", "Cancel")
 				if (confirm != "Cancel" && machine_state == 0 && (usr in range(1)))
-					var/count = text2num(confirm)
+					var/count = text2num_safe(confirm)
 					if (synthesize_pathogen_cost*count > wagesystem.research_budget)
 						boutput(usr, "<span class='alert'>Insufficient research budget to make that transaction.</span>")
 					else
@@ -1583,7 +1583,7 @@
 						machine_state = 1
 						icon_state = "synth2"
 						src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-						SPAWN_DBG (0 SECONDS)
+						SPAWN(0 SECONDS)
 							while(count > 0)
 								count--
 								sleep(5 SECONDS)
@@ -1623,11 +1623,11 @@
 		var/datum/pathogen/P = R.pathogens[uid]
 		var/is_cure = 0
 		if ((src.antiagent || !use_antiagent) && (src.suppressant || !use_suppressant))
-			if (!use_antiagent || src.antiagent.reagents.has_reagent(P.body_type.cure_base, min(max(P.suppression_threshold, 5), 50)))
+			if (!use_antiagent || src.antiagent.reagents.has_reagent(P.body_type.cure_base, clamp(P.suppression_threshold, 5, 50)))
 				var/found = 0
 				if (use_suppressant)
 					for (var/id in P.suppressant.cure_synthesis)
-						if (src.suppressant.reagents.has_reagent(id, min(max(P.suppression_threshold, 5), 50)))
+						if (src.suppressant.reagents.has_reagent(id, clamp(P.suppression_threshold, 5, 50)))
 							found = 1
 							break
 					if (found)
@@ -1654,7 +1654,7 @@
 	var/machine_state = 0
 	var/santime = 3 // 15
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	attackby(var/obj/item/O, var/mob/user)
 		if (istype(O, /obj/item/reagent_containers/glass))
 			if (!sanitizing)
 				boutput(user, "<span class='notice'>You place the [O] inside the machine.</span>")
@@ -1693,7 +1693,7 @@
 				sanitizing = null
 				icon_state = "autoclave"
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (machine_state || (status & (BROKEN|NOPOWER)))
 			return
 		if (sanitizing)
@@ -1745,21 +1745,22 @@
 		..()
 		flags |= NOSPLASH
 
-	proc/update_icon()
-		src.overlays -= src.icon_beaker
+	update_icon()
 		if (src.target)
-			src.overlays += src.icon_beaker
+			icon_state = "incubator_on"
+		else
+			icon_state = "incubator"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(isnull(user.equipped()))
 			if (src.target)
 				src.target.set_loc(src.loc)
 				user.put_in_hand_or_eject(src.target)
 				src.target = null
-				src.update_icon()
+				src.UpdateIcon()
 		return
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	attackby(var/obj/item/O, var/mob/user)
 		if (istype(O, /obj/item/reagent_containers/glass/petridish))
 			if (src.target)
 				boutput(user, "<span class='alert'>There is already a petri dish in the machine.</span>")
@@ -1773,7 +1774,7 @@
 					var/datum/pathogen/PT = Q.pathogens[pick(Q.pathogens)] 	// more than one pathogen in a petri dish won't grow properly anyway
 					medium = PT.body_type.growth_medium
 				boutput(user, "You insert the [O] into the machine.")
-				src.update_icon()
+				src.UpdateIcon()
 		else if(istype(O, /obj/item/reagent_containers/glass/vial))
 			var/obj/item/reagent_containers/glass/vial/V = O
 			if(V.reagents.total_volume)
