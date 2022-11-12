@@ -61391,14 +61391,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
-"xsz" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/camera/ranch,
-/turf/space,
-/area/station/mining/magnet)
 "xtO" = (
 /obj/rack,
 /obj/item/clothing/suit/space/captain,
@@ -107676,7 +107668,7 @@ aQJ
 aQJ
 aeV
 ree
-xsz
+gxN
 ree
 edL
 lqE
