@@ -524,9 +524,7 @@ datum
 						M.take_ear_damage(3 * mult, 1) //makes it so you can't hear people after a bit
 
 					var/list/candidates = list() //adds people just out of sight to the list of "make go away"
-					for(var/mob/living/carbon/human/human)
-						if(human != M && !(human in invisible_people) && !(human in viewers(M)))
-							candidates += human
+					candidates = by_type[/mob/living/carbon/human].Copy() - invisible_people - viewers(M)
 
 					if(length(candidates) > 0)  //makes the other people disappear
 						for(var/mob/living/carbon/human/chosen in candidates)
