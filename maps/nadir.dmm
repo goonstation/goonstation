@@ -14287,7 +14287,7 @@
 /area/station/hallway/primary/southeast)
 "gNy" = (
 /obj/machinery/power/smes{
-	chargelevel = 10000;
+	chargelevel = 9001;
 	output = 3000
 	},
 /obj/cable{
