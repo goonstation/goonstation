@@ -1,6 +1,7 @@
 #define ROBOT_BATTERY_DISTRESS_INACTIVE 0
 #define ROBOT_BATTERY_DISTRESS_ACTIVE 1
 #define ROBOT_BATTERY_DISTRESS_THRESHOLD 100
+#define ROBOT_BATTERY_WIRELESS_CHARGERATE 75
 
 /datum/robot_cosmetic
 	var/head_mod = null
@@ -2464,6 +2465,12 @@
 				if (src.oil && power_use_tally > 0) power_use_tally /= 1.5
 
 				src.cell.use(power_use_tally)
+
+				// Nimbus interdictor mainboards: wirelessly charge cyborgs
+				if(src.cell.charge < (src.cell.maxcharge - ROBOT_BATTERY_WIRELESS_CHARGERATE))
+				for_by_tcl(IX, /obj/machinery/interdictor)
+					if (IX.expend_interdict(ROBOT_BATTERY_WIRELESS_CHARGERATE,src,TRUE,ITDR_NIMBUS))
+						src.cell.give(ROBOT_BATTERY_WIRELESS_CHARGERATE)
 
 				if (fix)
 					HealDamage("All", 6, 6)

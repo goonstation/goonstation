@@ -24,6 +24,9 @@
 	var/interdict_range = 7 // range of the interdictor's field
 	//for effects that are wide-band interdicted, such as solar flares, this should dictate the response strength
 
+	var/interdict_class = ITDR_STANDARD // type of interdictor
+	//standard interdictors provide only the stellar phenomena protection; alternate variants unlock new functionality
+
 	var/list/deployed_fields = list()
 
 	var/sound/sound_interdict_on = 'sound/machines/interdictor_activate.ogg'
@@ -31,15 +34,24 @@
 	var/sound/sound_interdict_run = 'sound/machines/interdictor_operate.ogg'
 	var/sound/sound_togglebolts = 'sound/machines/click.ogg'
 
-	New(spawnlocation,var/obj/item/cell/altcap,var/obj/item/interdictor_rod/altrod,var/datum/material/mat)
+	New(spawnlocation,var/obj/item/cell/altcap,var/obj/item/interdictor_rod/altrod,var/obj/item/interdictor_board/altboard,var/datum/material/mat)
 		if(altcap)
 			altcap.set_loc(src)
 			src.intcap = altcap
 		else
-			src.intcap = new /obj/item/cell/supercell(src) //deliberately not charged
+			src.intcap = new /obj/item/cell/supercell/charged(src)
+
 		if(altrod)
 			src.interdict_range = altrod.interdist
 			qdel(altrod)
+
+		if(altboard)
+			src.interdict_class = altboard.interdict_class
+			switch(src.interdict_class)
+				if(ITDR_NIMBUS)
+					src.name = "Nimbus-class [src.name]"
+			qdel(altboard)
+
 		if(mat)
 			src.setMaterial(mat)
 		else
@@ -191,9 +203,19 @@
 //call this from an event to determine if sufficient power is remaining to complete an interdiction,
 //passing an amount in cell charge that is required to interdict the event.
 //returns 1 if interdiction was successful, 0 if power was insufficient
-//second arg skips immediate visual update (use if potential for very high amounts of individual calls)
-/obj/machinery/interdictor/proc/expend_interdict(var/stopcost,var/skipanim)
-	if (status & BROKEN || !src.canInterdict)
+
+//first arg specifies the cell charge required to successfully Do the Thing
+
+//second arg specifies where the interdiction is happening, in the case of localized interdictions; leave null for things like solar flares
+
+//third arg optionally skips immediate visual update (use if potential for very high amounts of individual calls)
+
+//fourth arg optionally specifies an alternate function type the operation requires (used for/by the alternate mainboards)
+
+/obj/machinery/interdictor/proc/expend_interdict(var/stopcost,var/target = null,var/skipanim = FALSE,var/alt_function)
+	if (status & BROKEN || !src.canInterdict || (alt_function && alt_function != src.interdict_class))
+		return 0
+	if (target && !IN_RANGE(src,target,src.interdict_range))
 		return 0
 	if (!intcap || intcap.charge < stopcost)
 		src.stop_interdicting()
@@ -274,8 +296,8 @@
 		icon_state = "interdict-rod-ex"
 		interdist = 7
 
-//interdictor board: power management circuitry and whatnot
-//included in the assembly kit alongside frame
+//interdictor board: power management circuitry and whatnot. alternate boards yield different functionality
+//can be manufactured by installing /obj/item/disk/data/floppy/manudrive/interdictor_parts
 
 /obj/item/interdictor_board
 	name = "spatial interdictor mainboard"
@@ -288,12 +310,18 @@
 	health = 6
 	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS | CONDUCT
+	var/interdict_class = ITDR_STANDARD
 
-//interdictor assembly kit: supplies the core components for assembling the interdictor (lo and behold)
+	nimbus
+		name = "Nimbus interdictor mainboard"
+		desc = "A custom-fabricated circuit board with additional micro-transformers. Grants interdictors the ability to wirelessly charge cyborgs."
+		interdict_class = ITDR_NIMBUS
+
+//interdictor frame kit: supplies the frame that is the basis for assembling the interdictor (lo and behold)
 //can be manufactured by installing /obj/item/disk/data/floppy/manudrive/interdictor_parts
 
 /obj/item/interdictor_kit
-	name = "spatial interdictor assembly kit"
+	name = "spatial interdictor frame kit"
 	desc = "You can hear an awful lot of junk rattling around in this box."
 	icon = 'icons/obj/machines/interdictor.dmi'
 	icon_state = "interdict-kit"
@@ -319,9 +347,6 @@
 			var/obj/frame = new /obj/interdictor_frame( get_turf(user) )
 			frame.fingerprints = src.fingerprints
 			frame.fingerprints_full = src.fingerprints_full
-			var/obj/board = new /obj/item/interdictor_board( get_turf(user) )
-			board.fingerprints = src.fingerprints
-			board.fingerprints_full = src.fingerprints_full
 			qdel(src)
 
 //unconstructed interdictor, where the assembly procedure happens
@@ -335,6 +360,7 @@
 	var/state = 0
 	var/obj/intcap = null
 	var/obj/introd = null
+	var/obj/intboard = null
 
 	attack_hand(mob/user)
 		if(state == 4) //permit removal of cell before you install wires
@@ -485,7 +511,8 @@
 
 			var/mob/source = owner
 			source.u_equip(the_tool)
-			qdel(the_tool)
+			the_tool.set_loc(itdr)
+			itdr.intboard = the_tool
 
 			itdr.desc = "A frame for a spatial interdictor. It's missing a phase-control rod."
 			return
@@ -544,7 +571,7 @@
 				the_tool.inventory_counter.update_number(the_tool.amount)
 
 			var/turf/T = get_turf(itdr)
-			var/obj/llama = new /obj/machinery/interdictor(T,itdr.intcap,itdr.introd,mat)
+			var/obj/llama = new /obj/machinery/interdictor(T,itdr.intcap,itdr.introd,itdr.intboard,mat)
 			itdr.intcap.set_loc(llama) //this may not be necessary but I feel like it'll stop something from randomly breaking due to timing
 			qdel(itdr)
 			return

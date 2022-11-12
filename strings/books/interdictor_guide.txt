@@ -39,7 +39,7 @@
 	<hr>
 	<h3>ASSEMBLING THE DEVICE</h3>
 	<br>
-	(I) Fabricate the assembly kit and phase-control rod at any manufacturer using the drive included with your interdictor crate. Materials not provided.
+	(I) Fabricate the frame kit, mainboard and phase-control rod at any manufacturer using the drive included with your interdictor crate. Materials not provided.
 	<br>
 	Phase control rods may be manufactured in Lambda or Sigma configurations. Lambda rods cover a three-unit radius, while the advanced but more materially complex Sigma rods cover a seven-unit radius.
 	<br>
@@ -48,7 +48,9 @@
 	<br>
 	(II) Gather the following equipment before assembly:
 	<br>
-	- Interdictor assembly kit, containing frame and mainboard
+	- Interdictor frame kit
+	<br>
+	- Interdictor mainboard of your choice
 	<br>
 	- Interdictor phase-control rod
 	<br>
