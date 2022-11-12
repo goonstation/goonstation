@@ -139,6 +139,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	var/fireloss = 0
 
 	var/mob/living/intangible/aieye/eyecam = null
+	var/obj/minimap/ai/ai_station_map
 
 	var/deployed_to_eyecam = 0
 	var/datum/ai_hologram_data/holoHolder = new
@@ -207,6 +208,8 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	START_TRACKING
 
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
+
+	ai_station_map = new /obj/minimap/ai
 
 	light = new /datum/light/point
 	light.set_color(0.4, 0.7, 0.95)
@@ -461,8 +464,8 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 				src.show_text("<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
 				src.show_text("<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>")
 				src.show_text("<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
-				src.show_text("To use something, simply double-click it.")
-				src.show_text("Currently right-click functions will not work for the AI (except examine), and will either be replaced with dialogs or won't be usable by the AI.")
+				src.show_text("To use something, simply click it.")
+				src.show_text("Use the prefix <B>:s</B> to speak to fellow silicons through binary.")
 				src.show_laws()
 				src.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
 				src.verbs += /mob/living/silicon/ai/proc/show_laws_verb

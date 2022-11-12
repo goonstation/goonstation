@@ -425,7 +425,7 @@ Code:
 
 		dat += "<h4>DoorMaster 5.1.9 Pod-Door Control System</h4>"
 		dat += "<a href='?src=\ref[src];toggle=1'>Toggle Doors</a><br><br>"
-		dat += "<font size=1><i>Like this program? Send $9.95 to SPACETREND MICROSYSTEMS in Neo Toronto, Ontario for more bargain software!</i></font>"
+		dat += "<font size=1><i>Like this program? Send 9.95[CREDIT_SIGN] to SPACETREND MICROSYSTEMS in Neo Toronto, Ontario for more bargain software!</i></font>"
 
 		return dat
 

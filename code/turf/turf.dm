@@ -61,13 +61,21 @@
 	New()
 		..()
 
+		if(global.dont_init_space)
+			return
 		src.init_lighting()
-
-		RegisterSignal(src, list(COMSIG_ATOM_SET_OPACITY, COMSIG_TURF_CONTENTS_SET_OPACITY_SMART), .proc/on_set_opacity)
 
 	disposing() // DOES NOT GET CALLED ON TURFS!!!
 		SHOULD_NOT_OVERRIDE(TRUE)
 		SHOULD_CALL_PARENT(FALSE)
+
+	set_opacity(newopacity)
+		. = ..()
+		on_set_opacity()
+
+	proc/contents_set_opacity_smart(oldopacity, atom/movable/thing)
+		on_set_opacity()
+		SEND_SIGNAL(src, COMSIG_TURF_CONTENTS_SET_OPACITY_SMART, oldopacity, thing)
 
 	onMaterialChanged()
 		..()
@@ -141,10 +149,6 @@
 		for (var/obj/O in src.contents)
 			if (HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING))
 				ADD_FLAG(src.blocked_dirs, O.dir)
-
-	Del()
-		dispose()
-		..()
 
 	proc/on_set_opacity(turf/thisTurf, old_opacity)
 		if (length(src.camera_coverage_emitters))
@@ -222,6 +226,7 @@
 
 /turf/space/New()
 	..()
+	if(global.dont_init_space) return
 	if (icon_state == "placeholder") icon_state = "[rand(1,25)]"
 	if (icon_state == "aplaceholder") icon_state = "a[rand(1,10)]"
 	if (icon_state == "dplaceholder") icon_state = "[rand(1,25)]"

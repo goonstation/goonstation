@@ -39,11 +39,10 @@ var/list/ai_move_scheduled = list()
 			LAZYLISTADDUNIQUE(AR.mobs_not_in_global_mobs_list, M)
 
 		if(owner?.abilityHolder)
-			if(!owner.abilityHolder.getAbility(/datum/targetable/ai_toggle))
+			if(src.owner.use_ai_toggle && !owner.abilityHolder.getAbility(/datum/targetable/ai_toggle))
 				owner.abilityHolder.addAbility(/datum/targetable/ai_toggle)
 
 	disposing()
-		..()
 		stop_move()
 		if (owner)
 			if (owner.mob_flags & LIGHTWEIGHT_AI_MOB)
@@ -73,11 +72,9 @@ var/list/ai_move_scheduled = list()
 		task?.switched_to()
 
 	proc/tick()
-		if(isdead(owner))
-			enabled = 0
+		if(isdead(owner) && enabled)
+			src.disable()
 		if(!enabled)
-			stop_move()
-			walk(owner, 0)
 			return
 		if (!current_task)
 			switch_to(default_task)
@@ -112,9 +109,7 @@ var/list/ai_move_scheduled = list()
 			tick()
 
 	proc/die()
-		src.enabled = 0
-		stop_move()
-		switch_to(null)
+		src.disable()
 
 	//store a path and move to it with speed - useful for going fast but using smarter pathfinding
 	proc/move_to_with_path(var/A, var/list/path = null, var/dist = 1)
@@ -196,6 +191,14 @@ var/list/ai_move_scheduled = list()
 
 	proc/was_harmed(obj/item/W, mob/M)
 		.=0
+
+	proc/disable()
+		src.enabled = FALSE
+		src.stop_move()
+
+	proc/enable()
+		src.enabled = TRUE
+		src.interrupt()
 
 /datum/aiTask
 	var/name = "task"

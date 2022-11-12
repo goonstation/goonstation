@@ -472,7 +472,7 @@
 			src.camera.set_camera_status(TRUE)
 		if (src.radio)
 			src.radio.invisibility = INVIS_ALWAYS
-		logTheThing(LOG_COMBAT, user, "places a spy sticker on [constructTarget(A,"combat")] at [log_loc(user)].")
+		logTheThing(ismob(A) ? LOG_COMBAT : LOG_STATION, user, "places a spy sticker on [constructTarget(A,"combat")] at [log_loc(user)].")
 
 		..()
 

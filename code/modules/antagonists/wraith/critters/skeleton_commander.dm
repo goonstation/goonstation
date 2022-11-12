@@ -14,10 +14,10 @@
 	health_brute_vuln = 0.7
 	health_burn = 90
 	health_burn_vuln = 0.3
-	var/mob/wraith/master = null
+	var/mob/living/intangible/wraith/master = null
 	var/deathsound = "sound/impact_sounds/plate_break.ogg"
 
-	New(var/turf/T, var/mob/wraith/M = null)
+	New(var/turf/T, var/mob/living/intangible/wraith/M = null)
 		..(T)
 		if(M != null)
 			src.master = M
@@ -155,7 +155,7 @@
 	harm(mob/target, var/mob/living/user)
 		if(check_target_immunity( target ))
 			return 0
-		logTheThing("combat", user, target, "stabs [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "stabs [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 9, rand(5,7), can_punch = 0, can_kick = 0)
 		user.attack_effects(target, affecting)

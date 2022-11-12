@@ -216,7 +216,8 @@
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/))
 			src.bites_left += 1
-		else return ..()
+		else
+			return ..()
 
 /obj/item/reagent_containers/food/snacks/burger/buttburger
 	name = "buttburger"

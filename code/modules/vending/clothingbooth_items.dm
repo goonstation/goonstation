@@ -170,6 +170,14 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/accessory/hairclips)
 		name = "Gold Hairclips"
 		path = /obj/item/clothing/head/barrette/gold
 
+	barrette_black
+		name = "Black Hairclips"
+		path = /obj/item/clothing/head/barrette/black
+
+	barrette_silver
+		name = "Silver Hairclips"
+		path = /obj/item/clothing/head/barrette/silver
+
 //Casual
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/casual)
