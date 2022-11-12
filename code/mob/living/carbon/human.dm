@@ -745,14 +745,13 @@
 		var/datum/targetable/ability = brain_slug.abilityHolder.getAbility(/datum/targetable/brain_slug/infest_host)
 		ability.doCooldown()
 		brain_slug.changeStatus("slowed", 10 SECONDS, 2)
-		src.remove_ability_holder(/datum/abilityHolder/brain_slug)
+		src.mind?.transfer_to(brain_slug)
 		if(gibbed)
 			brain_slug.set_loc(get_turf(src.loc))
-			src.mind?.transfer_to(brain_slug)
 			src.visible_message("<span class='alert'>A horrible slithery slug crawls out of [src]'s remains!</span>", "<span class='alert'>You slither out of your dying host.</span>")
+			src.remove_ability_holder(/datum/abilityHolder/brain_slug)
 			src.slug = null
 		else
-			src.mind?.transfer_to(brain_slug)
 			spawn(3 SECONDS)
 				if (src.organHolder.head) //sanity check in case you somehow lost your head but didnt die yet.
 					var/obj/head = src.organHolder.drop_organ("head")
@@ -764,7 +763,9 @@
 				//If we didnt leave the body already
 				if (src.slug)
 					brain_slug.set_loc(get_turf(src.loc))
+				src.remove_ability_holder(/datum/abilityHolder/brain_slug)
 				src.slug = null
+
 
 	src.canmove = 0
 	src.lying = 1
