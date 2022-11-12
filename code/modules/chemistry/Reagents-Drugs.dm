@@ -490,6 +490,86 @@ datum
 				..()
 				return
 
+		drug/solipsizine
+			name = "solipsizine"
+			id = "solipsizine"
+			description = "A highly potent hallucinogenic substance that causes intense delirium and acute inability to percieve others."
+			reagent_state = LIQUID
+			depletion_rate = 0.1
+			addiction_prob = 8
+			fluid_r = 200
+			fluid_g = 120
+			fluid_b = 120
+			transparency = 50
+			var/counter = 1
+			var/list/invisible_people = list()
+			var/image/override_img = null
+			var/list/image/override_list = list()
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				src.counter += 1 * mult //around half realtime
+
+				if(probmult(3))
+					boutput(M, pick("<span class='notice'>You feel eerily alone..</span>",\
+									"<span class='notice'>You feel like everything's gone silent.</span>",\
+									"<span class='notice'>Everything seems so quiet all of a sudden.</span>",\
+									"<span class='notice'>You can hear your heart beating.</span>",\
+									"<span class='notice'>Something is wrong.</span>"))
+				else if(probmult(3))
+					M.emote(pick("shiver","shudder","drool"))
+
+				if(counter > 15) //turn everyone into nothing
+					if(M.ear_damage < 15)
+						M.take_ear_damage(3 * mult, 1) //makes it so you can't hear people after a bit
+
+					var/list/candidates = list() //adds people just out of sight to the list of "make go away"
+					for(var/mob/living/carbon/human/human)
+						if(human != M && !(human in invisible_people) && !(human in viewers(M)))
+							candidates += human
+
+					if(length(candidates) > 0)  //makes the other people disappear
+						for(var/mob/living/carbon/human/chosen in candidates)
+							override_img = image(null, chosen, null, chosen.layer)
+							override_img.name = "​"
+							override_img.override = TRUE
+							var/client/client = M.client //hold a reference to the client directly
+							client?.images.Add(override_img)
+							override_list.Add(override_img)
+							invisible_people += chosen
+
+				if(counter > 25)                   //some side effects (not using a switch statement so the stages stack)
+					if(M.get_brain_damage() <= 40)
+						M.take_brain_damage(1 * mult) //some amount of brain damage
+					if(probmult(9) && !ON_COOLDOWN(M, "heartbeat_hallucination", 60 SECONDS)) //play some hearbeat sounds
+						var/turf/mob_turf = get_turf(M)
+						M.playsound_local(mob_turf, 'sound/effects/Heart Beat.ogg', 20, 1)
+				..()
+				return
+
+			on_remove()
+				. = ..()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+
+					if((length(invisible_people) > 0) && (M.get_brain_damage() > 10))          //hits you and knocks you down for a little
+						M.visible_message("<span class='alert'><B>[M]</B> starts convulsing violently!</span>",\
+											"You feel as if your body is tearing itself apart!")
+						M.setStatusMin("weakened", 10 SECONDS)
+						M.make_jittery(500)
+
+					if (M.client)
+						var/client/client = M.client
+						override_img.override = FALSE
+						client?.images.Remove(override_list)//brings everyone back
+						for(var/image/I in override_list)
+							qdel(I)
+						qdel(override_img)
+						override_img = null
+						qdel(override_list)
+						override_list = null
+						invisible_people = null
+
 		drug/THC
 			name = "tetrahydrocannabinol"
 			id = "THC"
