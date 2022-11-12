@@ -30,7 +30,7 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //////////// OPTIONS TO GO FAST
 
-#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // Skip setup for atmos, Z5, don't show changelogs, skip pregame lobby
+//#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // Skip setup for atmos, Z5, don't show changelogs, skip pregame lobby
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the map Atlas, no other zlevels. Boots way faster
 
 //////////// CONVENIENCE OPTIONS FOR TESTING ETC
@@ -115,7 +115,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_ATLAS			// gannetmap OR IS IT KUBIUSGANNETMAP??
 //#define MAP_OVERRIDE_MANTA			// manta map
 //#define MAP_OVERRIDE_DENSITY
-#define MAP_OVERRIDE_KONDARU
+//#define MAP_OVERRIDE_KONDARU
 //#define MAP_OVERRIDE_OZYMANDIAS
 //#define MAP_OVERRIDE_NADIR
 //#define MAP_OVERRIDE_FLEET
