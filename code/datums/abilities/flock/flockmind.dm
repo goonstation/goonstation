@@ -199,9 +199,11 @@
 
 	if (F.flock.isIgnored(target))
 		F.flock.removeIgnore(target)
-	else
+		return
+	if (F.flock.isEnemy(target))
 		F.flock.removeEnemy(target)
-		F.flock.addIgnore(target)
+	
+	F.flock.addIgnore(target)
 
 /////////////////////////////////////////
 
