@@ -87,7 +87,10 @@
 /turf/simulated/floor/airless/engine,
 /area/space)
 "cc" = (
-/obj/machinery/atmospherics/unary/vent_pump/west,
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 8;
+	
+	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
@@ -1932,7 +1935,10 @@
 	},
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
 "Ls" = (
-/obj/machinery/atmospherics/unary/vent_pump/south,
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 2;
+	
+	},
 /turf/simulated/floor/caution/north,
 /area/regina)
 "Lt" = (

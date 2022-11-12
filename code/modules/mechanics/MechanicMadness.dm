@@ -25,7 +25,7 @@
 	slots=1
 	var/num_f_icons = 0 // how many fill icons i have
 	var/light_time=0
-	var/datum/light/point/light
+	var/light_color = list(0, 255, 255, 255)
 	var/open=true
 	var/welded=false
 	var/can_be_welded=false
@@ -34,9 +34,6 @@
 	open_to_sound = TRUE
 
 	New()
-		src.light = new /datum/light/point
-		src.light.attach(src)
-		src.light.set_color(1,0,1)
 		processing_items |= src
 		..()
 
@@ -45,17 +42,12 @@
 			src.light_time--
 			src.UpdateIcon()
 			return
-		if(src.light.enabled) // bluh
-			src.UpdateIcon()
-			return
-		return
+
 	proc/light_up()
-		var/orig_light_time
-		src.light_time+=CONTAINER_LIGHT_TIME
-		src.light_time%=MAX_CONTAINER_LIGHT_TIME
-		if(!orig_light_time)
-			src.UpdateIcon()
-		return
+		src.light_time += CONTAINER_LIGHT_TIME
+		src.light_time = max(src.light_time, MAX_CONTAINER_LIGHT_TIME)
+		src.UpdateIcon()
+
 	ex_act(severity)
 		switch(severity)
 			if (1)
@@ -121,6 +113,7 @@
 				boutput(user,"<span class='alert'>You cannot anchor a component housing inside something else.</span>")
 				return
 			src.anchored=!src.anchored
+			notify_cabinet_state()
 			playsound(src.loc,'sound/items/Ratchet.ogg',50)
 			boutput(user,"<span class='notice'>You [src.anchored ? "anchor the [src] to" : "unsecure the [src] from"] the ground</span>")
 			if (!src.anchored)
@@ -158,12 +151,11 @@
 				src.icon_state=initial(src.icon_state)
 		else
 			src.icon_state=initial(src.icon_state)+"_closed"
-		if(src.light_time>0)
-			src.icon_state+="_e"
-			if(!src.light.enabled)
-				src.light.enable()
-		else if (src.light.enabled)
-			src.light.disable()
+		if(src.light_time > 0)
+			src.icon_state += "_e"
+			src.add_medium_light("cabinet_light", src.light_color)
+		else
+			src.remove_medium_light("cabinet_light")
 		return
 
 	proc
@@ -173,6 +165,9 @@
 					if(hud.master==src) hud.close.clicked()
 			src.users = list() // gee golly i hope garbage collection does its job
 			return 1
+		notify_cabinet_state()
+			for (var/obj/item/mechanics/comp in src.contents)
+				comp.cabinet_state_change(src)
 		destroy_outside_connections()
 			//called when the cabinet is unanchored
 			var/discons=0
@@ -228,19 +223,20 @@
 		anchored=false
 		icon_state="housing_cabinet"
 		flags = FPRINT | EXTRADELAY | CONDUCT
+		light_color = list(0, 179, 255, 255)
+
 		attack_hand(mob/user)
 			if(src.loc==user)
 				src.set_loc(get_turf(src))
 				user.drop_item()
 				return
 			return mouse_drop(user)
-		New()
-			..()
-			src.light.set_color(0,0.7,1)
+
 		attack_self(mob/user as mob)
 			src.set_loc(get_turf(user))
 			user.drop_item()
 			return
+
 		mouse_drop(atom/target)
 		// thanks, whoever hardcoded that pick-up action into obj/item/mouse_drop()!
 			if(istype(target,/atom/movable/screen/hud))
@@ -248,6 +244,7 @@
 			if(target.loc!=get_turf(target) && !isturf(target)) //return if dragged onto an item in another object (i.e backpacks on players)
 				return // you used to be able to pick up cabinets by dragging them to your backpack
 			return ..()
+
 	housing_handheld
 		var/obj/item/mechanics/trigger/trigger/the_trigger
 		slots=HANDHELD_CAPACITY + 1 // One slot used by the permanent button
@@ -261,10 +258,9 @@
 		num_f_icons=1
 		icon_state="housing_handheld"
 		flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | ONBELT
-		New()
-			..()
-			src.light.set_color(0.2,0,0)
+		light_color = list(51, 0, 0, 0)
 		spawn_contents=list(/obj/item/mechanics/trigger/trigger)
+
 		proc/find_trigger() // find the trigger comp, return 1 if found.
 			if (!istype(src.the_trigger))
 				src.the_trigger = (locate(/obj/item/mechanics/trigger/trigger) in src.contents)
@@ -281,7 +277,7 @@
 				return ..() // you can just use the trigger manually from the UI
 			if(src.find_trigger() && !src.open && src.loc==user)
 				return src.the_trigger.Attackhand(user)
-			return
+
 #undef CONTAINER_LIGHT_TIME
 #undef MAX_CONTAINER_LIGHT_TIME
 #undef CABINET_CAPACITY
@@ -347,6 +343,8 @@
 	level = 2
 	/// whether or not this component is prevented from being anchored in cabinets
 	var/cabinet_banned = FALSE
+	/// whether or not this component can only be used in cabinets
+	var/cabinet_only = FALSE
 	/// if true makes it so that only one component can be wrenched on the tile
 	var/one_per_tile = FALSE
 	var/under_floor = 0
@@ -418,6 +416,7 @@
 		return src.Attackhand(user)
 	proc/secure()
 	proc/loosen()
+	proc/cabinet_state_change(var/obj/item/storage/mechanics/container)
 
 	proc/rotate()
 		src.set_dir(turn(src.dir, -90))
@@ -445,6 +444,9 @@
 						return 0
 					if(IN_CABINET && src.cabinet_banned)
 						boutput(user,"<span class='alert'>[src] is not allowed in component housings.</span>")
+						return
+					if(!IN_CABINET && src.cabinet_only)
+						boutput(user,"<span class='alert'>[src] is not allowed outside of component housings.</span>")
 						return
 					if(src.one_per_tile)
 						for(var/obj/item/mechanics/Z in src.loc)
@@ -717,6 +719,8 @@
 	var/paper_name = "thermal paper"
 	cabinet_banned = true
 	plane = PLANE_DEFAULT
+	var/paper_left = 10
+	var/process_cycle = 0
 
 	New()
 		..()
@@ -728,10 +732,15 @@
 		if(input)
 			LIGHT_UP_HOUSING
 			flick("comp_tprint1",src)
-			playsound(src.loc, 'sound/machines/printer_thermal.ogg', 60, 0)
-			var/obj/item/paper/thermal/P = new/obj/item/paper/thermal(src.loc)
-			P.info = strip_html_tags(html_decode(input.signal))
-			P.name = paper_name
+			if(paper_left > 0)
+				playsound(src.loc, 'sound/machines/printer_thermal.ogg', 35, 0, -10)
+				var/obj/item/paper/thermal/P = new/obj/item/paper/thermal(src.loc)
+				P.info = strip_html_tags(html_decode(input.signal))
+				P.name = paper_name
+				paper_left--
+				processing_items |= src
+			else
+				playsound(src.loc, 'sound/machines/click.ogg', 35, 1, -10)
 		return
 
 	proc/setPaperName(obj/item/W as obj, mob/user as mob)
@@ -748,6 +757,14 @@
 				user.drop_item()
 				src.set_loc(target)
 		return
+
+	process()
+		. = ..()
+		var/turf/T = get_turf(src)
+		if(T && !ON_COOLDOWN(T, "ambient_paper_generation", 30 SECONDS))
+			paper_left++
+			if(paper_left >= 10)
+				processing_items -= src
 
 /obj/item/mechanics/pscan
 	name = "Paper scanner"
@@ -863,6 +880,7 @@
 		rebeam()
 
 	rotate()
+		..()
 		if(level == 1)
 			rebeam()
 
@@ -1028,7 +1046,7 @@
 		. = ..()
 		var/area/AR = get_area(src)
 		if(!AR.powered(EQUIP) || AR.area_apc?.cell?.percent() < 35)
-			. += " It does not seem to ahve enough power from the APC."
+			. += " It does not seem to have enough power from the APC."
 
 /obj/item/mechanics/pausecomp
 	name = "Delay Component"
@@ -1495,9 +1513,9 @@
 	New()
 		..()
 		src.outgoing_filters = list()
-		RegisterSignal(src, list(_COMSIG_MECHCOMP_DISPATCH_ADD_FILTER), .proc/addFilter)
-		RegisterSignal(src, list(_COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING), .proc/removeFilter)
-		RegisterSignal(src, list(_COMSIG_MECHCOMP_DISPATCH_VALIDATE), .proc/runFilter)
+		RegisterSignal(src, _COMSIG_MECHCOMP_DISPATCH_ADD_FILTER, .proc/addFilter)
+		RegisterSignal(src, _COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING, .proc/removeFilter)
+		RegisterSignal(src, _COMSIG_MECHCOMP_DISPATCH_VALIDATE, .proc/runFilter)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"dispatch", .proc/dispatch)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle exact matching",.proc/toggleExactMatching)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle single output mode",.proc/toggleSingleOutput)
@@ -2331,7 +2349,7 @@
 			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(picked.loc))).Run()
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.invisibility || M.anchored) continue
-				logTheThing(LOG_COMBAT, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
+				logTheThing(LOG_STATION, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
 				M.set_loc(get_turf(picked.loc))
 				count_sent++
 			input.signal = count_sent
@@ -2753,7 +2771,7 @@
 	var/list/compatible_guns = list(/obj/item/gun/kinetic, /obj/item/gun/flamethrower)
 	cabinet_banned = true // non-functional thankfully
 	get_desc()
-		. += "<br><span class='notice'>Current Gun: [Gun ? "[Gun] [Gun.canshoot() ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]</span>"
+		. += "<br><span class='notice'>Current Gun: [Gun ? "[Gun] [Gun.canshoot(null) ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]</span>"
 
 	New()
 		..()
@@ -2807,7 +2825,7 @@
 		if(level == 2) return
 		LIGHT_UP_HOUSING
 		if(input && Gun)
-			if(Gun.canshoot())
+			if(Gun.canshoot(null))
 				var/atom/target = getTarget()
 				if(target)
 					Gun.shoot(target, get_turf(src), src)
@@ -3291,7 +3309,121 @@
 		src.display_letter = new_letter
 		src.icon_state = new_icon_state
 
+/// allows cabinets to move around
+/obj/item/mechanics/movement
+	name = "Movement Component"
+	desc = "Allows a cabinet to move around."
+	icon_state = "comp_move"
+	cooldown_time = 1 SECOND
+	cabinet_only = TRUE
+	one_per_tile = TRUE
+	var/move_lag = 10
 
+	New()
+		..()
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "walk", .proc/do_walk)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "step", .proc/do_step)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Set walk delay", .proc/set_speed)
+
+	secure()
+		if (istype(src.loc, /obj/item/storage/mechanics/housing_handheld))
+			src.loc.AddComponent(/datum/component/legs/four)
+		else
+			src.loc.AddComponent(/datum/component/legs/six)
+
+	loosen()
+		var/datum/component/C
+		if (istype(src.loc, /obj/item/storage/mechanics/housing_handheld))
+			C = src.loc.GetComponent(/datum/component/legs/four)
+		else
+			C = src.loc.GetComponent(/datum/component/legs/six)
+		if (C)
+			C.RemoveComponent()
+		src.stop_moving()
+
+	cabinet_state_change(var/obj/item/storage/mechanics/container)
+		if (container.anchored)
+			src.stop_moving()
+
+	proc/do_walk(var/datum/mechanicsMessage/input)
+		if (ON_COOLDOWN(src, "movement_delay", move_lag))
+			return
+		var/direction = text2num_safe(input.signal)
+		if (direction == null)
+			direction = dirname_to_dir(input.signal)
+		if (direction == null)
+			return
+		var/obj/item/storage/S = src.loc
+		if (!walk_check(S))
+			return
+		set_glide_size(S)
+		walk(S, direction, move_lag, (32 / move_lag) * world.tick_lag)
+		set_glide_size(S)
+		if (direction == 0)
+			UnregisterSignal(S, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC))
+			REMOVE_ATOM_PROPERTY(S, PROP_ATOM_FLOATING, "mech-component")
+		else
+			RegisterSignals(S, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), .proc/movement_stuff, TRUE)
+			APPLY_ATOM_PROPERTY(S, PROP_ATOM_FLOATING, "mech-component")
+
+	proc/do_step(var/datum/mechanicsMessage/input)
+		if (ON_COOLDOWN(src, "movement_delay", move_lag))
+			return
+		var/direction = text2num_safe(input.signal)
+		if (!direction)
+			direction = dirname_to_dir(input.signal)
+		if (!direction)
+			return
+		var/obj/item/storage/S = src.loc
+		if (!walk_check(S))
+			return
+		set_glide_size(S)
+		step(S, direction, (32 / move_lag) * world.tick_lag)
+		UnregisterSignal(S, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC))
+
+	/// set our glide size in case it was changed
+	/// check if we are in a container or space and stop in that case
+	proc/movement_stuff()
+		var/obj/item/storage/S = src.loc
+		if (!walk_check(S))
+			stop_moving()
+			return
+		set_glide_size(S)
+
+	proc/set_glide_size(var/obj/item/storage/S)
+		S.glide_size = (32 / move_lag) * world.tick_lag
+		S.animate_movement = FORWARD_STEPS
+
+	/// checks if we may move right now
+	proc/walk_check(var/obj/item/storage/S)
+		if (!istype(S))
+			return FALSE
+		if (S.anchored)
+			return FALSE
+		if (!isturf(S.loc) || (istype(S.loc, /turf/space) && !istype(S.loc, /turf/space/fluid)))
+			return FALSE
+		return TRUE
+
+	proc/stop_moving()
+		var/obj/item/storage/S = src.loc
+		if (!istype(S))
+			return
+		walk(S, 0)
+		UnregisterSignal(S, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC))
+		REMOVE_ATOM_PROPERTY(S, PROP_ATOM_FLOATING, "mech-component")
+
+	proc/set_speed(obj/item/W as obj, mob/user as mob)
+		// as fast as humans, but they can't sprint
+		var/inp = input(user,"Please enter movement delay, lower is faster ([BASE_SPEED] - 20)", "Movement delay", src.move_lag) as num
+		if(!in_interact_range(src, user) || !isalive(user))
+			return 0
+		inp = clamp(inp, BASE_SPEED, 20)
+		move_lag = inp
+		boutput(user, "You set the movement delay set to [inp].")
+		return 1
+
+	update_icon()
+		icon_state = "[under_floor ? "u":""]comp_move"
 
 #undef IN_CABINET
 #undef LIGHT_UP_HOUSING

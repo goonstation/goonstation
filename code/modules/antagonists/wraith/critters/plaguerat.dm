@@ -40,7 +40,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	/// venom injected per bite
 	var/bite_transfer_amt = 3
 
-	New(var/turf/T, var/mob/wraith/M = null)
+	New(var/turf/T, var/mob/living/intangible/wraith/M = null)
 		..(T)
 		START_TRACKING
 		SPAWN(0)
@@ -133,7 +133,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 					return 1
 			M.reagents.add_reagent(src.venom, src.bite_transfer_amt)
 
-	proc/grow_up(var/mob/wraith/M = null)
+	proc/grow_up(var/mob/living/intangible/wraith/M = null)
 		if (!ispath(src.adultpath))
 			return 0
 		src.unequip_all()
