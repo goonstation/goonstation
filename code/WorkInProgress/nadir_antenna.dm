@@ -96,31 +96,31 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 			src.charge_intcap()
 			if(!src.primed)
 				src.attempt_restart()
-		else if(length(direct_queue) && primed && !src.is_transceiving)
-			var/atom/movable/queued_item = pick(direct_queue)
-			for_by_tcl(transc_pad, /obj/machinery/transception_pad)
-				if(transc_pad.is_transceiving)
-					continue
-				var/datum/powernet/pad_powernet = transc_pad.get_direct_powernet()
-				if(!pad_powernet)
-					continue
-				var/turf/receive_turf = get_turf(transc_pad)
-				var/obstructed = FALSE
-				if(length(receive_turf.contents) < 10) //move on to the next pad if there is excessive clutter or dense object
-					for(var/atom/movable/O in receive_turf)
-						if(istype(O,/obj))
-							if(O.density)
-								obstructed = TRUE
-								break
-				else
-					obstructed = TRUE
-				if(obstructed)
-					continue
-				var/pad_netnum = pad_powernet.number
-				if(src.can_transceive(pad_netnum) == TRANSCEIVE_OK)
-					transc_pad.attempt_transceive(null,queued_item)
-					direct_queue -= queued_item
-					break
+			else if(length(direct_queue) && !src.is_transceiving)
+				var/atom/movable/queued_item = pick(direct_queue)
+				for_by_tcl(transc_pad, /obj/machinery/transception_pad)
+					if(transc_pad.is_transceiving)
+						continue
+					var/datum/powernet/pad_powernet = transc_pad.get_direct_powernet()
+					if(!pad_powernet)
+						continue
+					var/turf/receive_turf = get_turf(transc_pad)
+					var/obstructed = FALSE
+					if(length(receive_turf.contents) < 10) //move on to the next pad if there is excessive clutter or dense object
+						for(var/atom/movable/O in receive_turf)
+							if(istype(O,/obj))
+								if(O.density)
+									obstructed = TRUE
+									break
+					else
+						obstructed = TRUE
+					if(obstructed)
+						continue
+					var/pad_netnum = pad_powernet.number
+					if(src.can_transceive(pad_netnum) == TRANSCEIVE_OK)
+						transc_pad.attempt_transceive(null,queued_item)
+						direct_queue -= queued_item
+						break
 		src.UpdateIcon() //because of apc/intcap reporting, mainly
 
 	///Respond to a pad's inquiry of whether a transception can occur
