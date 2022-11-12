@@ -6,12 +6,13 @@
 	var/product_amount
 	var/product_hidden
 	var/logged_on_vend
+	var/infinite = FALSE
 	var/static/list/product_base64_cache = list()
 
 	var/static/list/product_name_cache = list(/obj/item/reagent_containers/mender/brute = "brute auto-mender", /obj/item/reagent_containers/mender/burn = "burn auto-mender")
 
 
-	New(productpath, amount=0, cost=0, hidden=0, logged_on_vend=FALSE)
+	New(productpath, amount=0, cost=0, hidden=0, logged_on_vend=FALSE, infinite=FALSE)
 		..()
 		if (istext(productpath))
 			productpath = text2path(productpath)
@@ -35,6 +36,7 @@
 
 		src.product_hidden = hidden
 		src.logged_on_vend = logged_on_vend
+		src.infinite = infinite
 
 	proc/getBase64Img()
 		var/path = src.product_path
@@ -125,6 +127,9 @@
 	var/light_b = 1
 
 	var/output_target = null
+	///Try to put the item in the user's hand
+	var/vend_inhand = TRUE
+	var/datum/data/vending_product/currently_vending = null // zuh
 
 	power_usage = 50
 
@@ -563,7 +568,14 @@
 		var/display_amount = R.product_amount
 		if (R.product_amount < 1)
 			display_amount = "OUT OF STOCK"
-		.["productList"] += list(list("path" = R.product_path,"name" = R.product_name,"amount" = display_amount,"cost" = R.product_cost,"img" = R.getBase64Img()))
+		.["productList"] += list(list(
+			"path" = R.product_path,
+			"name" = R.product_name,
+			"amount" = display_amount,
+			"cost" = R.product_cost,
+			"img" = R.getBase64Img(),
+			"infinite" = R.infinite
+		))
 
 
 /obj/machinery/vending/ui_data(mob/user)
@@ -576,7 +588,8 @@
 		"acceptCard" = src.acceptcard,
 		"requiresMoney" = src.pay,
 		"cardname" = src.scan?.name,
-		"name" = src.name
+		"name" = src.name,
+		"currentlyVending" = src.currently_vending?.product_name
  	)
 
 	if(istype(src,/obj/machinery/vending/player))
@@ -646,11 +659,10 @@
 							P.updateAppearance()
 		// return cash
 		if("returncash")
-			SPAWN(src.vend_delay)
-				if (src.credit > 0)
-					var/obj/item/spacecash/returned = new /obj/item/spacecash
-					returned.setup(src.get_output_location(), src.credit)
-					src.credit = 0
+			if (src.credit > 0)
+				var/obj/item/spacecash/returned = new /obj/item/spacecash
+				returned.setup(src.get_output_location(), src.credit)
+				src.credit = 0
 		if("vend")
 			if(params["target"])
 				src.vend_ready = TRUE
@@ -693,6 +705,7 @@
 				if(!vend_ready || product_amount <= 0 || isnull(text2path(params["target"])))
 					return
 				src.prevend_effect()
+				src.currently_vending = product
 				SPAWN(src.vend_delay)
 					if(!vend_ready) // do not proceed if players dont have money
 						return
@@ -700,26 +713,33 @@
 						if(R.product_path == text2path(params["target"]))
 							product_amount = R.product_amount
 							product = R
-					if(product_amount > 0 && text2path(params["target"]))
-						var/atom/product_path = text2path(params["target"])
-						var/atom/movable/vended = new product_path(src.get_output_location())
-						vended.name = product.product_name
-						vended.loc = src.get_output_location()
-						vended.layer = src.layer + 0.1 //So things stop spawning under the fukin thing
-						if(isitem(vended))
-							usr.put_in_hand_or_eject(vended) // try to eject it into the users hand, if we can
-							src.postvend_effect()
+					var/atom/movable/vended = src.vend_product(product)
+					if (!product.infinite)
 						if (plist == player_list && product_amount == 1)
 							player_list -= product
 						product.product_amount--
-						if (src.pay && vended) // do we need to take their money
-							if (src.acceptcard && account)
-								account["current_money"] -= product.product_cost
-							else
-								src.credit -= product.product_cost
-						src.vend_ready = TRUE
-						update_static_data(usr)
+					if (src.pay && vended) // do we need to take their money
+						if (src.acceptcard && account)
+							account["current_money"] -= product.product_cost
+						else
+							src.credit -= product.product_cost
+					src.currently_vending = null
+					src.vend_ready = TRUE
+					update_static_data(usr)
 	. = TRUE
+
+/obj/machinery/vending/proc/vend_product(var/datum/data/vending_product/product)
+	if ((!product.infinite && product.product_amount <= 0) || !product.product_path)
+		return
+	var/atom/movable/vended = new product.product_path(src.get_output_location())
+	vended.name = product.product_name
+	vended.loc = src.get_output_location()
+	vended.layer = src.layer + 0.1 //So things stop spawning under the fukin thing
+	if(isitem(vended))
+		if (src.vend_inhand)
+			usr.put_in_hand_or_eject(vended) // try to eject it into the users hand, if we can
+		src.postvend_effect()
+	return vended
 
 /obj/machinery/vending/attack_hand(mob/user as mob)
 	if (status & (BROKEN|NOPOWER))
@@ -2322,18 +2342,65 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	desc = "A vending machine that serves... pizza?"
 	var/pizcooking = 0
 	var/piztopping = "plain"
-	anchored = 0
-	acceptcard = 0
+	anchored = FALSE
+	acceptcard = FALSE
+	vend_inhand = FALSE
+	pay = TRUE
 	pay = 1
 	credit = 100
 	slogan_list = list("A revolution in the pizza industry!",
 	"Prepared in moments!",
 	"I'm a chef who works 24 hours a day!")
+	vend_delay = 20 SECONDS
 	var/sharpen = FALSE
-
+	var/price = 50
 	light_r =1
 	light_g = 0.6
 	light_b = 0.2
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza, 1, cost=src.price, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/pepperoni, 1, cost=src.price, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/mushroom, 1, cost=src.price, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/meatball, 1, cost=src.price, infinite=TRUE)
+
+	vend_product()
+		var/obj/item/reagent_containers/food/snacks/pizza/pizza = ..()
+		if (src.sharpen)
+			pizza.sharpened = TRUE
+			var/list/slices = pizza.make_slices()
+			for(var/obj/item/reagent_containers/food/snacks/pizza/slice in slices)
+				slice.throw_at(usr, 16, 3)
+			return slices[1]
+		else
+			return pizza
+
+	prevend_effect()
+		playsound(src.loc, 'sound/machines/driveclick.ogg', 30, 1, 0.1)
+		src.pizcooking = TRUE
+		src.icon_state = "pizza-vend"
+
+	postvend_effect()
+		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1, -1)
+		src.pizcooking = FALSE
+		if (!(src.status & (NOPOWER|BROKEN)))
+			src.icon_state = "pizza"
+
+	ui_data(mob/user)
+		. = ..()
+		.["busy"] = src.pizcooking
+		.["busyphrase"] = "Cooking your pizza!"
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		if(..())
+			for (var/datum/data/vending_product/product in src.product_list)
+				product.product_cost = 0
+
+	demag(mob/user)
+		if (..())
+			for (var/datum/data/vending_product/product in src.product_list)
+				product.product_cost = src.price
 
 	attackby(obj/item/W, mob/user)
 		if (!sharpen && istype(W, /obj/item/kitchen/utensil/knife/pizza_cutter/traitor))
@@ -2344,80 +2411,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			qdel(W)
 			return
 		return ..()
-
-	generate_vending_HTML()
-		src.vending_HTML = "<TT><B>PizzaVend 0.5b</B></TT><BR>"
-
-		if (src.pizcooking)
-			src.vending_HTML += "<TT><B>Cooking your pizza, please wait!</B></TT><BR>"
-		else
-			src.vending_HTML += "Topping - <A href='?src=\ref[src];picktopping=1'>[piztopping]</A><BR>"
-			src.vending_HTML += "<A href='?src=\ref[src];cook=1'>Cook!</A><BR>"
-
-			if (src.pay)
-				src.vending_HTML += "<BR><B>Available Credits:</B> [src.emagged ? "CREDIT CALCULATION ERROR" : "[src.credit][CREDIT_SIGN]"] <a href='byond://?src=\ref[src];return_credits=1'>Return Credits</A>"
-				if (!src.acceptcard)
-					src.vending_HTML += "<BR>This machine only takes credit bills."
-
-			src.vending_HTML += "</TT>"
-
-	Topic(href, href_list)
-		if(..())
-			return
-
-		if (status & (NOPOWER|BROKEN))
-			return
-
-		if (usr.contents.Find(src) || in_interact_range(src, usr) && istype(src.loc, /turf))
-			src.add_dialog(usr)
-			if (href_list["cook"])
-				if(!pizcooking)
-					if((credit < 50)&&(!emagged))
-						boutput(usr, "<span class='alert'>Insufficient funds!</span>") // no money? get out
-						return
-					if(!emagged)
-						credit -= 50
-					pizcooking = 1
-					icon_state = "pizza-vend"
-					src.generate_HTML(1)
-					updateUsrDialog()
-					sleep(20 SECONDS)
-					playsound(src.loc, 'sound/machines/ding.ogg', 50, 1, -1)
-					var/obj/item/reagent_containers/food/snacks/pizza/P = new /obj/item/reagent_containers/food/snacks/pizza(src.loc)
-					P.quality = 0.6
-					P.heal_amt = 2
-					P.sharpened = src.sharpen
-					P.desc = "A typical [piztopping] pizza."
-					P.name = "[piztopping] pizza"
-					sleep(0.2)
-					if(piztopping != "plain")
-						switch(piztopping)
-							if("meatball") P.topping_color ="#663300"
-							if("mushroom") P.topping_color ="#CFCFCF"
-							if("pepperoni") P.topping_color ="#C90E0E"
-						P.topping = 1
-						P.add_topping(0)
-
-					if (src.sharpen)
-						var/list/slices = P.make_slices()
-						for(var/obj/item/reagent_containers/food/snacks/pizza/slice in slices)
-							slice.throw_at(usr, 16, 3)
-
-					if (!(status & (NOPOWER|BROKEN)))
-						icon_state = "pizza"
-
-					pizcooking = 0
-					src.generate_HTML(1)
-			if(href_list["picktopping"])
-				switch(piztopping)
-					if("plain") piztopping = "meatball"
-					if("meatball") piztopping = "mushroom"
-					if("mushroom") piztopping = "pepperoni"
-					if("pepperoni") piztopping = "plain"
-				src.generate_HTML(1)
-			add_fingerprint(usr)
-			updateUsrDialog()
-		return
 
 /obj/machinery/vending/pizza/fallen
 	New()
