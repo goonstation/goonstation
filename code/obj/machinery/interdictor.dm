@@ -21,7 +21,7 @@
 	var/cumulative_cost = 0 // keeps a tally of used power per tick
 	//used to play interdiction noise / modulate its volume
 
-	var/interdict_range = 7 // range of the interdictor's field
+	var/interdict_range = 5 // range of the interdictor's field
 	//for effects that are wide-band interdicted, such as solar flares, this should dictate the response strength
 
 	var/interdict_class = ITDR_STANDARD // type of interdictor
