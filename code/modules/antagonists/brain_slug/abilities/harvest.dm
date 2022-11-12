@@ -35,7 +35,7 @@
 	icon_state = "action_harvest"
 	var/mob/living/carbon/human/current_target = null
 	var/mob/living/caster = null
-	var/organ_target = null
+	var/obj/item/organ/organ_target = null
 	var/recast = 0
 
 	New(var/mob/living/carbon/human/M, var/repeats, var/mob/living/host)
@@ -47,8 +47,12 @@
 			boutput(src.caster, "<span class='notice'>There isn't anything to steal here!</span>")
 			interrupt(INTERRUPT_ALWAYS)
 		var/list/targets = list()
-		if (src.current_target.organHolder.appendix)
-			targets += src.current_target.organHolder.appendix
+		if (src.current_target.organHolder.left_eye)
+			targets += src.current_target.organHolder.left_eye
+		if (src.current_target.organHolder.right_eye)
+			targets += src.current_target.organHolder.right_eye
+		if (src.current_target.organHolder.liver)
+			targets += src.current_target.organHolder.liver
 		if (src.current_target.organHolder.left_kidney)
 			targets += src.current_target.organHolder.left_kidney
 		if (src.current_target.organHolder.left_lung)
@@ -72,6 +76,7 @@
 		if (!length(targets))
 			boutput(src.caster, "<span class='notice'>There isn't anything to steal here!</span>")
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		src.organ_target = pick(targets)
 		..()
 
