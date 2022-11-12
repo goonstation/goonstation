@@ -436,3 +436,8 @@
 
 	var/datum/material/insulator = null
 	var/datum/material/conductor = null
+
+/obj/cablespawner/New(var/newloc,var/obj/cablespawner/spawner)
+	..()
+	// this bit of the code is supposed to make the cablespawners replace themselves with cables.
+	// will it work? who knows
