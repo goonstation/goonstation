@@ -702,9 +702,8 @@
 							product_amount = R.product_amount
 							product = R
 					if(product_amount > 0 && text2path(params["target"]))
-						src.prevend_effect()
 						var/atom/movable/vended
-						if (istype(product,/datum/data/vending_product/player_product)) // pull the item out of where we stored it
+						if (istype(product, /datum/data/vending_product/player_product)) // pull the item out of where we stored it
 							var/datum/data/vending_product/player_product/playerProduct = product
 							vended = playerProduct.contents[1]
 							playerProduct.contents -= vended
