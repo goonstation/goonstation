@@ -259,6 +259,12 @@
 					animate(src, transform = matrix(), time = 1)
 				last_no_gravity = src.no_gravity
 
+			// Zephyr-class interdictor: creates an invigorating biofield in range
+			if (iscarbon(src))
+				for_by_tcl(IX, /obj/machinery/interdictor)
+					if (IX.expend_interdict(30,src,TRUE,ITDR_ZEPHYR))
+						src.changeStatus("zephyr_field", 3 SECONDS * life_mult)
+
 		clamp_values()
 
 		//Regular Trait updates

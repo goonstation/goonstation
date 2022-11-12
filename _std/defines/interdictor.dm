@@ -5,3 +5,6 @@
 
 //Nimbus interdictor: wirelessly recharges cyborgs in range
 #define ITDR_NIMBUS 1
+
+//Zephyr interdictor: carbon mobs in range receive heightened stamina recovery
+#define ITDR_ZEPHYR 2

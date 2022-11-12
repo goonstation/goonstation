@@ -2466,7 +2466,7 @@
 
 				src.cell.use(power_use_tally)
 
-				// Nimbus interdictor mainboards: wirelessly charge cyborgs
+				// Nimbus-class interdictor: wirelessly charge cyborgs
 				if(src.cell.charge < (src.cell.maxcharge - ROBOT_BATTERY_WIRELESS_CHARGERATE))
 					for_by_tcl(IX, /obj/machinery/interdictor)
 						if (IX.expend_interdict(ROBOT_BATTERY_WIRELESS_CHARGERATE,src,TRUE,ITDR_NIMBUS))

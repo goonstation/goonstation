@@ -3060,6 +3060,15 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	create = 1
 	category = "Machinery"
 
+/datum/manufacture/interdictor_board_zephyr
+	name = "Zephyr Interdictor Mainboard"
+	item_paths = list("CON-1","viscerite")
+	item_amounts = list(4,5)
+	item_outputs = list(/obj/item/interdictor_board/zephyr)
+	time = 10 SECONDS
+	create = 1
+	category = "Machinery"
+
 /datum/manufacture/interdictor_rod_lambda
 	name = "Lambda Phase-Control Rod"
 	item_paths = list("MET-2","CON-1","CRY-1","INS-1")

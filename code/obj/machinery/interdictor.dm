@@ -50,6 +50,10 @@
 			switch(src.interdict_class)
 				if(ITDR_NIMBUS)
 					src.name = "Nimbus-class [src.name]"
+					src.desc = "A device that lessens or nullifies the effects of assorted stellar phenomena. This one charges cyborgs, too!"
+				if(ITDR_ZEPHYR)
+					src.name = "Zephyr-class [src.name]"
+					src.desc = "A device that lessens or nullifies the effects of assorted stellar phenomena. This one comes with a second wind."
 			qdel(altboard)
 
 		if(mat)
@@ -132,6 +136,18 @@
 		. = ..()
 		if(Obj == src.intcap)
 			src.intcap = null
+
+	// Typed variants for manual spawning
+
+	nimbus
+		interdict_class = ITDR_NIMBUS
+		name = "Nimbus-class spatial interdictor"
+		desc = "A device that lessens or nullifies the effects of assorted stellar phenomena. This one charges cyborgs, too!"
+
+	zephyr
+		interdict_class = ITDR_ZEPHYR
+		name = "Nimbus-class spatial interdictor"
+		desc = "A device that lessens or nullifies the effects of assorted stellar phenomena. This one comes with a second wind."
 
 
 /obj/machinery/interdictor/update_icon()
@@ -317,6 +333,11 @@
 		name = "Nimbus interdictor mainboard"
 		desc = "A custom-fabricated circuit board with additional micro-transformers. Grants interdictors the ability to wirelessly charge cyborgs."
 		interdict_class = ITDR_NIMBUS
+
+	zephyr
+		name = "Zephyr interdictor mainboard"
+		desc = "A custom-fabricated circuit board with biomimetic coprocessing. Causes interdictors' field to gain beneficial bioelectric properties."
+		interdict_class = ITDR_ZEPHYR
 
 //interdictor frame kit: supplies the frame that is the basis for assembling the interdictor (lo and behold)
 //can be manufactured by installing /obj/item/disk/data/floppy/manudrive/interdictor_parts

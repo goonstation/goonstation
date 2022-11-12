@@ -1577,6 +1577,18 @@
 	maxDuration = null
 	change = -5
 
+/datum/statusEffect/staminaregen/zephyr_field
+	id = "zephyr_field"
+	name = "Zephyr Field"
+	desc = "A bioelectric field is invigorating you."
+	icon_state = "stam+"
+	maxDuration = 9 SECONDS
+	unique = 1
+	change = 5
+
+	getTooltip()
+		. = "A feeling of invigoration permeates you."
+
 /datum/statusEffect/miasma
 	id = "miasma"
 	name = "Miasma"
