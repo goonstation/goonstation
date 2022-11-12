@@ -257,7 +257,7 @@ var/list/ai_move_scheduled = list()
 		var/best_score = -INFINITY
 		var/list/best_path = null
 		if(length(targets))
-			for(var/atom/A in targets)
+			for(var/atom/A as anything in targets)
 				var/score = src.score_target(A)
 				if(score > best_score)
 					var/tmp_best_path = get_path_to(holder.owner, A, max_dist*2, can_be_adjacent_to_target, null, !move_through_space)
