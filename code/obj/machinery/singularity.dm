@@ -927,15 +927,13 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	src.gen_secondary.power -= 3
 	return
 
-/obj/machinery/containment_field/Bumped(atom/O)
+/obj/machinery/containment_field/Bumped(obj/O)
 	. = ..()
 	if(iscarbon(O))
-		shock(O)
-
-/obj/machinery/containment_field/Cross(atom/movable/mover)
-	. = ..()
-	if(prob(10))
-		. = TRUE
+		if(prob(10))
+			O.set_loc(get_turf(src))
+		else
+			shock(O)
 
 /obj/machinery/containment_field/Crossed(atom/movable/AM)
 	. = ..()
