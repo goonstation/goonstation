@@ -15,7 +15,14 @@
 	mats = 20
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
-	machine_registry_idx = MACHINES_MISC
+
+	New(new_loc)
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
 
 	process()
 		if(status & BROKEN) return
