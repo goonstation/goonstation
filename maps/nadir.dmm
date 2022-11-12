@@ -14287,9 +14287,8 @@
 /area/station/hallway/primary/southeast)
 "gNy" = (
 /obj/machinery/power/smes{
-	charge = 100000;
-	chargelevel = 4000;
-	output = 2500
+	chargelevel = 10000;
+	output = 3000
 	},
 /obj/cable{
 	icon_state = "0-2"
@@ -14298,6 +14297,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/cable,
 /turf/simulated/floor/plating/random,
 /area/listeningpost/power)
 "gNQ" = (
@@ -15587,7 +15587,7 @@
 	dir = 4
 	},
 /obj/cable{
-	icon_state = "0-4"
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating/random,
 /area/listeningpost/power)
@@ -31237,9 +31237,6 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
@@ -38645,7 +38642,7 @@
 "sdY" = (
 /obj/machinery/power/furnace{
 	active = 1;
-	fuel = 600
+	fuel = 1000
 	},
 /obj/cable{
 	icon_state = "0-2"
@@ -50140,16 +50137,16 @@
 	name = "Drop Capsule"
 	})
 "xEP" = (
-/obj/machinery/power/furnace{
-	active = 1;
-	fuel = 600
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
+	},
+/obj/machinery/power/furnace{
+	active = 1;
+	fuel = 1000
 	},
 /turf/simulated/floor/plating/random,
 /area/listeningpost/power)
