@@ -124,11 +124,10 @@
 	var/output_target = null
 	///Try to put the item in the user's hand
 	var/vend_inhand = TRUE
+	///The product currently being vended
 	var/datum/data/vending_product/currently_vending = null // zuh
 
 	power_usage = 50
-
-	var/window_size = "400x475"
 
 	New()
 		START_TRACKING
@@ -1239,7 +1238,6 @@
 	req_access_txt = "5"
 	mats = 10
 	acceptcard = 0
-	window_size = "400x675"
 	light_r =1
 	light_g = 0.88
 	light_b = 0.88
@@ -1306,7 +1304,6 @@
 	"ERROR: Item \"Stimpack\" not found!",
 	"Please, be considerate! Do not block access to the machine with your bloodied carcass.",
 	"Please contact your insurance provider for details on reduced payment options for this machine!")
-	window_size = "400x500"
 
 	light_r =1
 	light_g = 0.88
@@ -2702,7 +2699,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	pay = 1
 	acceptcard = 1
 	mats = 10
-	window_size = "400x475"
 
 	create_products()
 		..()
