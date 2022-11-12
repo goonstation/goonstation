@@ -136,10 +136,10 @@
 						if (!AH.getAbility(/datum/targetable/brain_slug/pupate))
 							AH.addAbility(/datum/targetable/brain_slug/pupate)
 					//Refund a bit of stability for doing well
-					if ((AH.points + 20) > 700)
-						AH.points = 700
+					if ((AH.points + 30) > 500)
+						AH.points = 500
 					else
-						AH.points += 20
+						AH.points += 30
 					AH.updateButtons()
 
 		if (src.recast > 0)

@@ -91,7 +91,7 @@
 		AH = src.add_ability_holder(/datum/abilityHolder/brain_slug)
 	//Set the points to a lower amount if they are a critter
 	if (istype(src, /mob/living/critter/small_animal))
-		AH.points = 350
+		AH.points = 250
 	//Then add the abilities
 	//Transfering from a human has to be a bit more obvious
 	if (!istype(src, /mob/living/carbon/human))

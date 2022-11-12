@@ -13,7 +13,7 @@
 	tabName = "Abilities"
 	topBarRendered = 1
 	rendered = 1
-	points = 700
+	points = 500
 	var/harvest_count = 0
 	onAbilityStat()
 		..()
