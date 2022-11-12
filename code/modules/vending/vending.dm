@@ -114,12 +114,7 @@
 	var/acceptcard = 1 // does the machine accept ID swiping?
 	var/credit = 0 //How much money is currently in the machine?
 	var/profit = 0.9 // cogwerks: how much of a cut should the QMs get from the sale, expressed as a percent
-
-	var/HTML = null // guh
-	var/vending_HTML = null // buh
-	var/wire_HTML = null // duh
 	var/list/vendwires = list() // fuh
-	var/datum/data/vending_product/paying_for = null // zuh
 
 	var/datum/light/light
 	var/light_r =1
@@ -321,109 +316,6 @@
 		boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 		src.scan = null
 
-/obj/machinery/vending/proc/generate_HTML(var/update_vending = 0, var/update_wire = 0)
-	src.HTML = ""
-
-	if (!src.wire_HTML || update_wire)
-		src.generate_wire_HTML()
-	if (src.panel_open || isAI(usr))
-		src.HTML += src.wire_HTML
-
-	if (!src.vending_HTML || update_vending)
-		src.generate_vending_HTML()
-	src.HTML += src.vending_HTML
-
-	src.updateUsrDialog()
-
-/obj/machinery/vending/proc/generate_vending_HTML()
-	var/list/html_parts = list()
-	html_parts += "<b>Welcome!</b><br>"
-
-	if (src.paying_for && (!istype(src.paying_for, /datum/data/vending_product) || !src.pay))
-		src.paying_for = null
-
-	if (src.pay && src.acceptcard)
-		if (src.paying_for && !src.scan)
-			html_parts += "<B>You have selected the following item:</b><br>"
-			html_parts += "&emsp;<b>[src.paying_for.product_name]</b><br>"
-			html_parts += "Please swipe your card to authorize payment.<br>"
-			html_parts += "<B>Current ID:</B> None<BR>"
-		else if (src.scan)
-			if (src.paying_for)
-				html_parts += "<B>You have selected the following item for purchase:</b><br>"
-				html_parts += "&emsp;[src.paying_for.product_name]<br>"
-				html_parts += "<B>Please swipe your card to authorize payment.</b><br>"
-			var/datum/db_record/account = null
-			account = FindBankAccountByName(src.scan.registered)
-			html_parts += "<B>Current ID:</B> <a href='byond://?src=\ref[src];logout=1'><u>([src.scan])</u></A><BR>"
-			html_parts += "<B>Credits on Account: [account["current_money"]] Credits</B> <BR>"
-		else
-			html_parts += "<B>Current ID:</B> None<BR>"
-
-	if (!length(src.product_list) && !length(src.player_list))
-		html_parts += "<font color = 'red'>No product loaded!</font>"
-
-	else if (src.paying_for)
-		html_parts += "<a href='byond://?src=\ref[src];vend=\ref[src.paying_for]'><u><b>Continue</b></u></a>"
-		html_parts += " | <a href='byond://?src=\ref[src];cancel_payfor=1;logout=1'><u><b>Cancel</b></u></a>"
-
-	else
-		html_parts += "<table style='width: 100%; border: none; border-collapse: collapse;'><thead><tr><th>Product</th><th>Amt.</th><th>Price</th></tr></thead>"
-		for (var/datum/data/vending_product/R in src.product_list)
-			if (R.product_hidden && !src.extended_inventory)
-				continue
-			if (R.product_amount > 0)
-				html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.product_name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> [R.product_cost][CREDIT_SIGN]</td></tr>"
-			else
-				html_parts += "<tr><td>[R.product_name]</a></td><td colspan='2' style='text-align: center;'><strong>SOLD OUT</strong></td></tr>"
-		if (player_list)
-			var/obj/machinery/vending/player/T = src
-			for (var/datum/data/vending_product/player_product/R in src.player_list)
-				var/obj/item/productholder = R.contents[1]
-				var/nextproduct = html_encode(sanitize(productholder.name))
-				if (!T.unlocked)
-					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[nextproduct]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> [R.product_cost][CREDIT_SIGN]</td></tr>"
-					//Player vending machines don't have "out of stock" items
-				else if (T.unlocked)
-					//Links for setting prices when player vending machines are unlocked
-					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[nextproduct]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'><a href='byond://?src=\ref[src];setprice=\ref[R]'>[R.product_cost][CREDIT_SIGN]</a> (<a href='byond://?src=\ref[src];icon=\ref[R]'>*</a>)</td></tr>"
-		html_parts += "</table>";
-
-		if (src.pay)
-			html_parts += "<BR><B>Available Credits:</B> [src.credit][CREDIT_SIGN] <a href='byond://?src=\ref[src];return_credits=1'>Return Credits</A>"
-			if (!src.acceptcard)
-				html_parts += "<BR>This machine only takes credit bills."
-
-	src.vending_HTML = jointext(html_parts, "")
-
-
-/obj/machinery/vending/proc/generate_wire_HTML()
-	src.vendwires = list("Violet" = 1,\
-		"Orange" = 2,\
-		"Goldenrod" = 3,\
-		"Green" = 4)
-	var/list/html_parts = list()
-	html_parts = "<TT><B>The Access Panel is [src.panel_open ? "open" : "closed"]:</B><br>"
-	html_parts += "<table border=\"1\" style=\"width:100%\"><tbody><tr><td><small>"
-	for (var/wiredesc in vendwires)
-		var/is_uncut = src.wires & APCWireColorToFlag[vendwires[wiredesc]]
-		html_parts += "[wiredesc] wire: "
-		if (!is_uncut)
-			html_parts += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Mend</a>"
-		else
-			html_parts += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Cut</a> "
-			html_parts += "<a href='?src=\ref[src];pulsewire=[vendwires[wiredesc]]'>Pulse</a> "
-		html_parts += "<br>"
-
-	html_parts += "<br>"
-	html_parts += "The orange light is [(src.seconds_electrified == 0) ? "off" : "on"].<BR>"
-	html_parts += "The red light is [src.shoot_inventory ? "off" : "blinking"].<BR>"
-	html_parts += "The green light is [src.extended_inventory ? "on" : "off"].<BR>"
-	html_parts += "The [(src.wires & WIRE_SCANID) ? "purple" : "yellow"] light is on.<BR>"
-	html_parts += "The AI control indicator is [src.ai_control_enabled ? "lit" : "unlit"].<BR>"
-	html_parts += "</small></td></tr></tbody></table></TT><br>"
-	src.wire_HTML = jointext(html_parts, "")
-
 /obj/machinery/vending/attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/electronics/scanner) || istype(W,/obj/item/deconstructor)) // So people don't end up making the vending machines fall on them when they try to scan/deconstruct it
 		return
@@ -435,7 +327,6 @@
 			user.u_equip(W)
 			W.dropped(user)
 			qdel( W )
-			src.generate_HTML(1)
 			return
 		else
 			boutput(user, "<span class='alert'>This machine does not accept cash.</span>")
@@ -445,7 +336,6 @@
 	if (istype(W, /obj/item/card/id))
 		if (src.acceptcard)
 			src.scan_card(W, user)
-			src.generate_HTML(1)
 			return
 			/*var/amount = input(user, "How much money would you like to deposit?", "Deposit", 0) as null|num
 			if(amount <= 0)
@@ -465,7 +355,6 @@
 		src.panel_open = !src.panel_open
 		boutput(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
 		src.UpdateOverlays(src.panel_open ? src.panel_image : null, "panel")
-		src.generate_HTML(0, 1)
 		return
 	else if (istype(W, /obj/item/device/t_scanner) || (istype(W, /obj/item/device/pda2) && istype(W:module, /obj/item/device/pda_module/tray)))
 		if (src.seconds_electrified != 0)
@@ -494,7 +383,6 @@
 			//remove all producs, reinitialize array and then create the products like new
 			src.product_list = new()
 			src.create_products()
-			src.generate_HTML(1)
 
 			boutput(user, "<span class='notice'>You restocked the items in [src].</span>")
 			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
@@ -678,20 +566,17 @@
 							boutput(usr, "<span class='alert'>No bank account associated with ID found.</span>")
 							flick(src.icon_deny,src)
 							src.vend_ready = FALSE
-							src.paying_for = params["target"]
 							return
 						if (account["current_money"] < params["cost"])
 							boutput(usr, "<span class='alert'>Insufficient funds in account. To use machine credit, log out.</span>")
 							flick(src.icon_deny,src)
 							src.vend_ready = FALSE
-							src.paying_for = params["target"]
 							return
 					else
 						if (src.credit < params["cost"])
 							boutput(usr, "<span class='alert'>Insufficient Credit.</span>")
 							flick(src.icon_deny,src)
 							src.vend_ready = FALSE
-							src.paying_for = params["target"]
 							return
 
 				var/product_amount = 0 // this is to make absolutely sure that these numbers arent desynced
@@ -816,23 +701,17 @@
 						boutput(usr, "<span class='alert'>No bank account associated with ID found.</span>")
 						flick(src.icon_deny,src)
 						src.vend_ready = 1
-						src.paying_for = R
-						src.generate_HTML(1)
 						return
 					if (account["current_money"] < R.product_cost)
 						boutput(usr, "<span class='alert'>Insufficient funds in account. To use machine credit, log out.</span>")
 						flick(src.icon_deny,src)
 						src.vend_ready = 1
-						src.paying_for = R
-						src.generate_HTML(1)
 						return
 				else
 					if (src.credit < R.product_cost)
 						boutput(usr, "<span class='alert'>Insufficient Credit.</span>")
 						flick(src.icon_deny,src)
 						src.vend_ready = 1
-						src.paying_for = R
-						src.generate_HTML(1)
 						return
 
 			if (((src.last_reply + (src.vend_delay + 200)) <= world.time) && src.vend_reply)
@@ -895,11 +774,7 @@
 				src.postvend_effect()
 
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "productDispensed=[R.product_name]")
-
-			if (src.paying_for)
-				src.paying_for = null
 				src.scan = null
-			src.generate_HTML(1)
 
 			if(R.logged_on_vend)
 				logTheThing(LOG_STATION, usr, "vended a logged product ([R.product_name]) from [src] at [log_loc(src)].")
@@ -907,11 +782,6 @@
 				logTheThing(LOG_STATION, usr, "vended a player product ([R.product_name]) from [src] at [log_loc(src)].")
 		if (href_list["logout"])
 			src.scan = null
-			src.generate_HTML(1)
-
-		if (href_list["cancel_payfor"])
-			src.paying_for = null
-			src.generate_HTML(1)
 
 		if (href_list["return_credits"])
 			SPAWN(src.vend_delay)
@@ -922,7 +792,6 @@
 					usr.put_in_hand_or_eject(returned) // try to eject it into the users hand, if we can
 					src.credit = 0
 					boutput(usr, "<span class='notice'>You receive [returned].</span>")
-					src.generate_HTML(1)
 
 		if ((href_list["cutwire"]) && (src.panel_open))
 			var/twire = text2num_safe(href_list["cutwire"])
@@ -1126,7 +995,6 @@
 			SPAWN(0)
 				playsound(src.loc, S, 50, 0)
 				src.visible_message("<span class='alert'><b>[src] launches [R.product_name] at [target.name]!</b></span>")
-				src.generate_HTML(1)
 			return 1
 
 	if (throw_item)
@@ -1135,7 +1003,6 @@
 		if (src.icon_vend) //Show the vending animation if needed
 			flick(src.icon_vend,src)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "productDispensed=[R.product_name]")
-		src.generate_HTML(1)
 		throw_item.throw_at(target, 16, 3)
 		src.visible_message("<span class='alert'><b>[src] launches [throw_item.name] at [target.name]!</b></span>")
 		postvend_effect()
@@ -1166,7 +1033,6 @@
 		if (WIRE_SCANID) //yeah the scanID wire also controls the AI control FUCK YOU
 			if(src.ai_control_enabled)
 				src.ai_control_enabled = 0
-	src.generate_HTML(0, 1)
 
 /obj/machinery/vending/proc/mend(var/wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
@@ -1179,7 +1045,6 @@
 			src.seconds_electrified = 0
 		if (WIRE_SHOOTINV)
 			src.shoot_inventory = 0
-	src.generate_HTML(0, 1)
 
 /obj/machinery/vending/proc/pulse(var/wireColor)
 	var/wireIndex = APCWireColorToIndex[wireColor]
@@ -1192,8 +1057,6 @@
 			src.seconds_electrified = 30
 		if (WIRE_SHOOTINV)
 			src.shoot_inventory = !src.shoot_inventory
-
-	src.generate_HTML(0, 1)
 
 //"Borrowed" airlock shocking code.
 /obj/machinery/vending/proc/shock(mob/user, prb)
@@ -1691,7 +1554,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			boutput(user, "<span class='notice'>You return the [W] to the vending machine.</span>")
 			product.product_amount += 1
 			qdel(W)
-			generate_HTML(1)
 			return
 
 /obj/machinery/vending/computer3
@@ -2200,7 +2062,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		for (var/obj/item/R in targetContainer)
 			targetContainer.hud.remove_object(R)
 			productListUpdater(R, user)
-		generate_HTML(1, 0)
 
 	proc/productListUpdater(obj/item/target, mob/user)
 		if (!target)
@@ -2246,27 +2107,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		if ((status & BROKEN) || status & NOPOWER)
 			updateAppearance()
 
-	generate_wire_HTML()
-		. = ..()
-		var/list/html_parts = list()
-		html_parts += "<table border=\"1\" style=\"width:100%\"><tbody><tr><td><small>"
-		html_parts += "Registered Owner: "
-		if (!owner)
-			html_parts += "<a href='?src=\ref[src];unlock=true'>Unregistered (locked)</a></br>"
-		else
-			html_parts += "<a href='?src=\ref[src];unlock=true'>[src.cardname] "
-			if (!unlocked) html_parts += "(locked) </a></br>"
-			else html_parts += "(unlocked) </a></br>"
-		html_parts += "Loading Chute:  "
-		if (loading)
-			html_parts += "<a href='?src=\ref[src];loading=false'>Open</a></br> "
-		else
-			html_parts += "<a href='?src=\ref[src];loading=true'>Closed</a></br> "
-		html_parts += "Vendor Name:  "
-		html_parts += "<a href='?src=\ref[src];rename=true'>[src.name]</a> "
-		html_parts += "</small></td></tr></tbody></table></TT><br>"
-		src.wire_HTML += jointext(html_parts, "")
-
 	attackby(obj/item/target, mob/user)
 		if (loading && panel_open)
 			addProduct(target, user)
@@ -2276,59 +2116,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		if (!panel_open) //lock up if the service panel is closed
 			loading = FALSE
 			unlocked = FALSE
-		src.generate_HTML(1)
-
-	Topic(href, href_list)
-		. = ..()
-		if (updateAppearance()) //updateAppearance returns FALSE if we're broken/off
-			return
-		if ((isdead(usr) || !can_act(usr) || !in_interact_range(src, usr)))
-			return
-
-		if (href_list["loading"])
-			if (src.panel_open && src.unlocked)
-				loading = !loading
-				src.generate_HTML(0, 1)
-		else if (href_list["unlock"] && src.panel_open)
-			if (!owner && src.scan?.registered)
-				owneraccount = FindBankAccountByName(src.scan.registered)
-				owner = src.scan.registered
-				cardname = src.scan.name
-				unlocked = TRUE
-				loading = TRUE
-			else if (src.scan?.registered && owner == src.scan.registered)
-				unlocked = !unlocked
-				if (!unlocked && loading) loading = FALSE
-			else
-				unlocked = FALSE
-				loading = FALSE
-			src.generate_HTML(0, 1)
-		else if (href_list["rename"] && src.panel_open && src.unlocked)
-			var/inp
-			inp = html_encode(sanitize(input(usr,"Enter new name:","Vendor Name", "") as text))
-			if (inp && inp != "" && !(isdead(usr) || !can_act(usr) || !in_interact_range(src, usr)))
-				src.name = inp
-				src.generate_HTML(0, 1)
-				generate_slogans()
-		else if (href_list["setprice"] && src.panel_open && src.unlocked)
-			var/inp
-			inp = input(usr,"Enter the new price:","Item Price", "") as num
-			if(!isnum_safe(inp))
-				return
-			if (!isnull(inp) && inp >= 0 && !(isdead(usr) || !can_act(usr) || !in_interact_range(src, usr)))
-				var/datum/data/vending_product/player_product/R = locate(href_list["setprice"]) in src.player_list
-				R.product_cost = inp
-				src.generate_HTML(1, 0)
-		else if (href_list["vend"] && !length(player_list))
-			promoimage = null
-			updateAppearance()
-		else if (href_list["icon"] && src.panel_open && src.unlocked)
-			var/datum/data/vending_product/player_product/R = locate(href_list["icon"]) in src.player_list
-			promoimage = R.icon
-			updateAppearance()
-		if (href_list["vend"])
-			//Vends can change the name of list entries so generate HTML
-			src.generate_HTML(1, 0)
 
 /obj/machinery/vending/player/fallen
 	New()
