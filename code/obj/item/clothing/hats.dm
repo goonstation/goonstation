@@ -1022,6 +1022,7 @@ proc/filter_trait_hats(var/type)
 
 	unequipped(mob/user)
 		..()
+		logTheThing(LOG_COMBAT, user, "unequipped [src] at [log_loc(src)].")
 		processing_items.Remove(src)
 		processing = 0
 		return
@@ -1029,7 +1030,7 @@ proc/filter_trait_hats(var/type)
 
 	equipped(var/mob/user, var/slot)
 		..()
-		logTheThing(LOG_COMBAT, user, "equipped [src].")
+		logTheThing(LOG_COMBAT, user, "equipped [src] at [log_loc(src)].")
 		if (!src.processing)
 			src.processing++
 			processing_items |= src

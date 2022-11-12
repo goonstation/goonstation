@@ -58,6 +58,8 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 	var/use_standard_failsafe = TRUE
 	///Whether array permits transception (false means just comms); disabled by the failsafe when power gets too low
 	var/primed = TRUE
+	///List of items to forcibly send to pads when possible
+	var/list/atom/movable/direct_queue = list()
 
 	///Internal capacitor; cell installed inside the array itself. Draws from grid surplus when available, configurable from the array computer.
 	var/obj/item/cell/intcap = null
@@ -94,7 +96,32 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 			src.charge_intcap()
 			if(!src.primed)
 				src.attempt_restart()
-			src.UpdateIcon() //because of apc/intcap reporting, mainly
+		else if(length(direct_queue) && primed && !src.is_transceiving)
+			var/atom/movable/queued_item = pick(direct_queue)
+			for_by_tcl(transc_pad, /obj/machinery/transception_pad)
+				if(transc_pad.is_transceiving)
+					continue
+				var/datum/powernet/pad_powernet = transc_pad.get_direct_powernet()
+				if(!pad_powernet)
+					continue
+				var/turf/receive_turf = get_turf(transc_pad)
+				var/obstructed = FALSE
+				if(length(receive_turf.contents) < 10) //move on to the next pad if there is excessive clutter or dense object
+					for(var/atom/movable/O in receive_turf)
+						if(istype(O,/obj))
+							if(O.density)
+								obstructed = TRUE
+								break
+				else
+					obstructed = TRUE
+				if(obstructed)
+					continue
+				var/pad_netnum = pad_powernet.number
+				if(src.can_transceive(pad_netnum) == TRANSCEIVE_OK)
+					transc_pad.attempt_transceive(null,queued_item)
+					direct_queue -= queued_item
+					break
+		src.UpdateIcon() //because of apc/intcap reporting, mainly
 
 	///Respond to a pad's inquiry of whether a transception can occur
 	proc/can_transceive(var/pad_netnum)
@@ -639,7 +666,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 							src.attempt_transceive(sigindex)
 
 
-	proc/post_signal(datum/signal/signal,var/newfreq)
+	proc/post_signal(datum/signal/signal, var/newfreq)
 		if(!signal)
 			return
 		var/freq = newfreq
@@ -676,7 +703,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 				return "ERR_OTHER" //what
 
 	///Try to receive or send a thing, contextually; receive if it was passed an index for pending inbound cargo or a manual receive, send otherwise
-	proc/attempt_transceive(var/cargo_index = null,var/obj/manual_receive = null)
+	proc/attempt_transceive(var/cargo_index = null, var/atom/movable/manual_receive = null)
 		if(src.is_transceiving)
 			return
 		if(!transception_array)
@@ -688,7 +715,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 		if(transception_array.can_transceive(netnum) != TRANSCEIVE_OK)
 			return
 		if(cargo_index || manual_receive)
-			var/obj/inbound_target
+			var/atom/movable/inbound_target
 			if(manual_receive)
 				inbound_target = manual_receive
 			else if(shippingmarket.pending_crates[cargo_index])
@@ -696,7 +723,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 			else
 				return
 			if(inbound_target)
-				receive_a_thing(netnum,inbound_target)
+				receive_a_thing(netnum,inbound_target,manual_receive)
 		else
 			send_a_thing(netnum)
 
@@ -744,14 +771,14 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 							shippingmarket.sell_artifact(thing2send,art)
 
 						else //how even
-							logTheThing("debug", null, null, "Telepad attempted to send [thing2send], which is not a crate or artifact")
+							logTheThing(LOG_DEBUG, null, "Telepad attempted to send [thing2send], which is not a crate or artifact")
 
 				showswirl(src.loc)
 				use_power(200) //most cost is at the array
 				src.is_transceiving = FALSE
 
 
-	proc/receive_a_thing(var/netnumber,var/atom/movable/thing2get)
+	proc/receive_a_thing(var/netnumber, var/atom/movable/thing2get, var/manual_receive = null)
 		src.is_transceiving = TRUE
 		if(thing2get in shippingmarket.pending_crates)
 			shippingmarket.pending_crates.Remove(thing2get) //avoid received thing being queued into multiple pads at once
@@ -775,7 +802,10 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 					showswirl(src.loc)
 					use_power(200) //most cost is at the array
 				else
-					shippingmarket.pending_crates.Add(thing2get)
+					if(manual_receive)
+						transception_array.direct_queue += thing2get
+					else
+						shippingmarket.pending_crates.Add(thing2get)
 					playsound(src.loc, 'sound/machines/pod_alarm.ogg', 30, 0)
 					src.visible_message("<span class='alert'><B>[src]</B> emits an [tele_obstructed ? "obstruction" : "array status"] warning.</span>")
 				src.is_transceiving = FALSE
@@ -877,7 +907,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 			src.queue_dialog_update = FALSE
 
 	//construct command packet to send out; specify cargo index for receive, otherwise defaults to send
-	proc/build_command(var/com_target,var/cargo_index)
+	proc/build_command(var/com_target, var/cargo_index)
 		if(com_target)
 			var/datum/signal/yell = new
 			yell.data["address_1"] = com_target
@@ -903,7 +933,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 		newsignal.source = src
 		src.post_signal(newsignal)
 
-	proc/post_signal(datum/signal/signal,var/newfreq)
+	proc/post_signal(datum/signal/signal, var/newfreq)
 		if(!signal)
 			return
 		var/freq = newfreq
