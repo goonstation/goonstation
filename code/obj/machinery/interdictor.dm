@@ -18,8 +18,8 @@
 	var/canInterdict = 0 // indication of operability
 	//if 0, whether from depletion or new installation, battery charge must reach 100% to set to 1 and activate interdiction
 
-	var/hasInterdicted = 0 // indication of operation in progress
-	//if 1, play interdiction active sound on next machine tick
+	var/cumulative_cost = 0 // keeps a tally of used power per tick
+	//used to play interdiction noise / modulate its volume
 
 	var/interdict_range = 7 // range of the interdictor's field
 	//for effects that are wide-band interdicted, such as solar flares, this should dictate the response strength
@@ -190,10 +190,11 @@
 		if(src.canInterdict)
 			doupdateicon = 0
 			src.stop_interdicting()
-	if(src.hasInterdicted)
-		src.hasInterdicted = 0
+	if(src.cumulative_cost)
+		var/sound_strength = clamp(cumulative_cost/30,5,30)
 		if(src.canInterdict)
-			playsound(src.loc, src.sound_interdict_run, 30, 0)
+			playsound(src.loc, src.sound_interdict_run, sound_strength, 0)
+		src.cumulative_cost = 0
 
 	if(doupdateicon)
 		src.UpdateIcon()
@@ -222,7 +223,7 @@
 		return 0
 	else
 		intcap.use(stopcost)
-		src.hasInterdicted = 1
+		src.cumulative_cost += stopcost
 		if(!skipanim) src.updatecharge()
 		return 1
 
@@ -478,22 +479,16 @@
 		..()
 		if (itdr.state == 0)
 			playsound(itdr, 'sound/items/Ratchet.ogg', 40, 1)
-			owner.visible_message("<span class='bold'>[owner]</span> begins assembling \the [itdr].")
 		if (itdr.state == 1)
 			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
-			owner.visible_message("<span class='bold'>[owner]</span> begins installing a mainboard into \the [itdr].")
 		if (itdr.state == 2)
 			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
-			owner.visible_message("<span class='bold'>[owner]</span> begins installing a phase-control rod into \the [itdr].")
 		if (itdr.state == 4)
 			playsound(itdr, 'sound/items/Deconstruct.ogg', 40, 1)
-			owner.visible_message("<span class='bold'>[owner]</span> begins connecting \the [itdr]'s electrical systems.")
 		if (itdr.state == 5)
 			playsound(itdr, 'sound/effects/zzzt.ogg', 30, 1)
-			owner.visible_message("<span class='bold'>[owner]</span> begins soldering \the [itdr]'s wiring into place.")
 		if (itdr.state == 6)
 			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
-			owner.visible_message("<span class='bold'>[owner]</span> begins installing a casing onto \the [itdr].")
 	onEnd()
 		..()
 		if (itdr.state == 0) //unassembled > no components
