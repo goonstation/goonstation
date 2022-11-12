@@ -664,7 +664,7 @@ proc/get_angle(atom/a, atom/b)
 		if(C.client)
 			. += C
 		LAGCHECK(LAG_REALTIME)
-	for(var/mob/wraith/M in mobs)
+	for(var/mob/living/intangible/wraith/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/living/intangible/blob_overmind/M in mobs)

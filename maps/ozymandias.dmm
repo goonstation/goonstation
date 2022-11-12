@@ -38973,21 +38973,13 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "kjF" = (
-/obj/rack,
-/obj/item/breaching_hammer,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
+/obj/random_item_spawner/armory_breaching_supplies,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
-	},
-/obj/item/breaching_hammer{
-	pixel_x = -1;
-	pixel_y = 1
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)

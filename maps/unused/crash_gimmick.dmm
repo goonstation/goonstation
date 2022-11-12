@@ -49526,16 +49526,20 @@
 	pixel_x = 11;
 	pixel_y = 10
 	},
-/obj/item/breaching_charge{
-	pixel_x = -5;
+/obj/item/ammo/bullets/tranq_darts/anti_mutant{
+	pixel_x = -10;
 	pixel_y = -6
 	},
-/obj/item/breaching_charge{
-	pixel_x = -1;
-	pixel_y = -3
+/obj/item/ammo/bullets/tranq_darts{
+	pixel_x = 10;
+	pixel_y = -6
 	},
-/obj/item/breaching_charge{
-	pixel_x = 8
+/obj/item/ammo/bullets/tranq_darts{
+	pixel_x = 6;
+	pixel_y = -6
+	},
+/obj/item/gun/kinetic/dart_rifle{
+	pixel_y = -8
 	},
 /turf/simulated/floor/black{
 	desc = " It is made of steel.";
@@ -54464,30 +54468,7 @@
 	},
 /area/russian/radiation)
 "llq" = (
-/obj/table/reinforced/auto,
-/obj/item/breaching_hammer{
-	pixel_x = 1;
-	pixel_y = 7
-	},
-/obj/item/breaching_hammer{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/ammo/bullets/tranq_darts/anti_mutant{
-	pixel_x = -10;
-	pixel_y = -6
-	},
-/obj/item/ammo/bullets/tranq_darts{
-	pixel_x = 10;
-	pixel_y = -6
-	},
-/obj/item/ammo/bullets/tranq_darts{
-	pixel_x = 6;
-	pixel_y = -6
-	},
-/obj/item/gun/kinetic/dart_rifle{
-	pixel_y = -8
-	},
+/obj/random_item_spawner/armory_breaching_supplies,
 /turf/simulated/floor/black{
 	desc = " It is made of steel.";
 	name = "steel floor"

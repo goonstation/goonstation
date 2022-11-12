@@ -65428,7 +65428,7 @@
 	dir = 8;
 	tag = ""
 	},
-/obj/cauldron/jellybean,
+/obj/cauldron/jellybean/halloween_only,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/lobby)
 "dMV" = (
@@ -68560,7 +68560,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/cauldron/candy,
+/obj/cauldron/candy/halloween_only,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/lobby)
 "fiv" = (
@@ -76556,7 +76556,7 @@
 /turf/unsimulated/floor/void,
 /area/diner/cow)
 "ugj" = (
-/obj/cauldron/jellybean,
+/obj/cauldron/jellybean/halloween_only,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -77464,7 +77464,7 @@
 /area/diner/cow)
 "vTd" = (
 /obj/machinery/light,
-/obj/cauldron/candy,
+/obj/cauldron/candy/halloween_only,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/lobby)
 "vTG" = (

@@ -126,17 +126,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/science/research_director)
 "acA" = (
-/obj/rack,
-/obj/item/breaching_charge{
-	pixel_x = -4
-	},
-/obj/item/breaching_charge{
-	pixel_x = 1
-	},
-/obj/item/breaching_charge{
-	pixel_x = 6
-	},
-/obj/item/breaching_hammer,
+/obj/random_item_spawner/armory_breaching_supplies,
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
