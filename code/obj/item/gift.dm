@@ -68,12 +68,7 @@
 				src.amount -= a_used
 				tooltip_rebuild = 1
 				user.drop_item()
-				var/obj/item/gift/G = new /obj/item/gift(src.loc)
-				G.size = W.w_class
-				G.w_class = G.size + 1
-				G.icon_state = "gift[clamp(G.size, 1, 3)]-[src.style]"
-				G.gift = W
-				W.set_loc(G)
+				var/obj/item/gift/G = W.gift_wrap(src.style)
 				G.add_fingerprint(user)
 				W.add_fingerprint(user)
 				src.add_fingerprint(user)
