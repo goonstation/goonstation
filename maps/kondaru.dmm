@@ -20350,8 +20350,7 @@
 /area/station/routing/depot)
 "bkp" = (
 /obj/machinery/atmospherics/pipe/simple{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
@@ -24241,6 +24240,13 @@
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -41772,8 +41778,7 @@
 /area/station/crew_quarters/md)
 "fje" = (
 /obj/machinery/atmospherics/pipe/simple{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -49620,6 +49625,16 @@
 /area/station/crew_quarters/info{
 	name = "Book Nook"
 	})
+"mLF" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "mLX" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
@@ -50734,8 +50749,7 @@
 /obj/item/clothing/gloves/latex,
 /obj/item/kitchen/utensil/knife,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/specialroom/freezer,
@@ -58158,6 +58172,10 @@
 /obj/shrub{
 	dir = 8
 	},
+/obj/machinery/camera/ranch{
+	dir = 5;
+	pixel_x = -10
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "uyf" = (
@@ -60184,6 +60202,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/camera/ranch{
+	pixel_y = 20
+	},
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "wwg" = (
@@ -61370,6 +61391,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
+"xsz" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/camera/ranch,
+/turf/space,
+/area/station/mining/magnet)
 "xtO" = (
 /obj/rack,
 /obj/item/clothing/suit/space/captain,
@@ -107647,7 +107676,7 @@ aQJ
 aQJ
 aeV
 ree
-gxN
+xsz
 ree
 edL
 lqE
@@ -113698,7 +113727,7 @@ buI
 iKN
 bvI
 bYu
-emI
+mLF
 emI
 etm
 xSz
