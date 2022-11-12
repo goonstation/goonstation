@@ -595,7 +595,7 @@ var/flock_signal_unleashed = FALSE
 	if (ismob(A))
 		var/mob/M = A
 		if (M.find_radio())
-			boutput(A, "<i class='flocksay'>A thousand whispers you didn't realise you were hearing suddenly fall silent as you feel like you are no longer being watched.</i>")
+			boutput(A, "<span class='flocksay italic'>A thousand whispers you never noticed suddenly fall silent and the feeling of being watched fades.</span>")
 	src.ignores |= A
 	src.addAnnotation(A, FLOCK_ANNOTATION_IGNORE)
 
@@ -606,7 +606,7 @@ var/flock_signal_unleashed = FALSE
 	if (ismob(A))
 		var/mob/M = A
 		if (M.find_radio())
-			boutput(A, "<i class='flocksay'>You hear harsh echoes of the Signal in your mind. The gaze of something you can't see is once again painfully fixed on you.</i>")
+			boutput(A, "<span class='flocksay italic'>You hear harsh echoes of the Signal in your mind. The gaze of something you can't see is once again painfully fixed on you.</span>")
 	src.ignores -= A
 	src.removeAnnotation(A, FLOCK_ANNOTATION_IGNORE)
 
