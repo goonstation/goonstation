@@ -577,20 +577,13 @@
 	var/directions = convert(cable_surr)
 	if (dir_count == 0)
 	// a standalone cable (not really supposed to happen)
-		var/current = new/obj/cable(src.loc)
-		current.d1 = 0
-		current.d2 = NORTH
-		current.icon_state = "0-1"
+		cable_laying(0, 1)
 	else if (dir_count == 1)
 	// end of a cable
-		var/current = new/obj/cable(src.loc)
-		current.d1 = 0
-		current.d2 = directions[1]
+		cable_laying(0, directions[1])
 	else if (dir_count == 2)
 	// a normal, single cable
-		var/current = new/obj/cable(src.loc)
-		current.d1 = directions[1]
-		current.d2 = directions[2]
+		cable_laying(directions[1], directions[2])
 	else if (dir_count >= 3)
 	// multiple cables
 		null
@@ -619,6 +612,6 @@
 /obj/cablespawner/proc/cable_laying(var/dir1, var/dir2)
 	for (var/i in 1 to dir_count+1)
 		var/current = new/obj/cable(src.loc)
-		current.d1 = directions[1]
-		current.d2 = directions[2]
-		current.icon_state = ""
+		current.d1 = dir1
+		current.d2 = dir2
+		current.icon_state = "[dir1]]-[dir2]"
