@@ -45553,6 +45553,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light_switch/north,
+/obj/machinery/camera/ranch{
+	pixel_y = 20
+	},
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "iKQ" = (
@@ -49628,7 +49631,7 @@
 "mLF" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 9;
+	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
@@ -60201,9 +60204,6 @@
 /obj/railing/orange/reinforced,
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/machinery/camera/ranch{
-	pixel_y = 20
 	},
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
