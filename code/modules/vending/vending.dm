@@ -43,6 +43,7 @@
 		. = product_base64_cache[path]
 		if(isnull(.))
 			var/atom/dummy_atom = new path // people demand overlays on their vending machine bottles
+			sleep(0) // give it a chance to do icon changes
 			var/icon/dummy_icon = getFlatIcon(dummy_atom,initial(dummy_atom.dir),no_anim=TRUE)
 			qdel(dummy_atom) // above is a hack to get this to work. if anyone has any better way of doing this, go ahead.
 			. = icon2base64(dummy_icon)
@@ -601,6 +602,7 @@
 					if (!product.infinite)
 						if (plist == player_list && product_amount == 1)
 							player_list -= product
+							qdel(product)
 						product.product_amount--
 					if (src.pay && vended) // do we need to take their money
 						if (src.acceptcard && account)
@@ -615,7 +617,13 @@
 /obj/machinery/vending/proc/vend_product(var/datum/data/vending_product/product)
 	if ((!product.infinite && product.product_amount <= 0) || !product.product_path)
 		return
-	var/atom/movable/vended = new product.product_path(src.get_output_location())
+	var/atom/movable/vended
+	if (istype(product, /datum/data/vending_product/player_product)) // pull the item out of where we stored it
+		var/datum/data/vending_product/player_product/playerProduct = product
+		vended = playerProduct.contents[1]
+		playerProduct.contents -= vended
+	else // make a new one
+		vended = new product.product_path(src.get_output_location())
 	vended.name = product.product_name
 	vended.loc = src.get_output_location()
 	vended.layer = src.layer + 0.1 //So things stop spawning under the fukin thing

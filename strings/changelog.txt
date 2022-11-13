@@ -1,4 +1,13 @@
 
+(t)sun nov 13 22
+(u)NightmarechaMillian
+(p)11683
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Fueltanks, when they blow up, will now have a sprite change. Blown up fueltanks also count as open containers.
+(u)MarkNstein
+(p)11943
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Kondaru: added rancher & normal cameras to rancher area.
 (t)sat nov 12 22
 (u)Amylizzle
 (p)11915
