@@ -436,14 +436,15 @@
 	// bit of a confusing system sorry
 	// as it has to check for multiple wires
 	// i think someone called it 8 bit directions once? idk
-	var/const/SW = 10
-	var/const/NW = 9
-	var/const/SE = 6
-	var/const/NE = 5
+	var/const/SW = 128
+	var/const/NW = 64
+	var/const/SE = 32
+	var/const/NE = 16
 	var/const/WW = 8
 	var/const/EE = 4
 	var/const/SS = 2
 	var/const/NN = 1
+	// 8 bit flags
 	src.check(cable_surr)
 	src.build(newloc)
 
@@ -483,34 +484,35 @@
 	// its a wasted wire
 	// same with NW N NE, that can be a T junction, no need for diagonals
 	// so now we check each of these cases
-	if (cable_surr & (NN + 64 + 16))
+	if (cable_surr & (NW + NN + NE))
 	// northern T
 		cable_surr
 
 
 	for (var/obj/cable in orange(1, src))
-	// normal, prexisting, manually placed cables (must be joined to)
+	// normal, prexisting, manually placed cables (must be joined to no matter what)
 		var/disx = cable.x - src.x
 		var/disy = cable.y - src.y
 		// the following assumes disxy (displacement of x or y) equals 1,0 or -1
+		// in addition, d1 and d2 use 4 bit flags, so we have to add up our regular ones
 		if (disx & disy)
 		// northeast tile 1,1
-			if (cable.d1 || cable.d2 == SW)
+			if (cable.d1 || cable.d2 == SS + WW)
 				cable_surr = cable_surr | NE
 			continue
 		else if (!disx & !disy)
 		// southwest tile -1,-1
-			if (cable.d1 || cable.d2 == NE)
+			if (cable.d1 || cable.d2 == NN + EE)
 				cable_surr = cable_surr | SW
 			continue
 		else if (disx & !disy)
 		// southeast tile 1,-1
-			if (cable.d1 || cable.d2 == NW)
+			if (cable.d1 || cable.d2 == NN + WW)
 				cable_surr = cable_surr | SE
 			continue
 		else if (!disx & disy)
 		// northeast tile -1,1
-			if (cable.d1 || cable.d2 == SE)
+			if (cable.d1 || cable.d2 == SS + EE)
 				cable_surr = cable_surr | NW
 			continue
 		else if (disx)
