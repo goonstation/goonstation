@@ -685,7 +685,7 @@
 
 	onInterrupt(flag)
 		. = ..()
-		logTheThing(user == target ? "chemistry" : "combat", user, target, " finishes automending [constructTarget(M,"combat")] [log_reagents(src)] after [looped] applications at [log_loc(user)].")
+		logTheThing(user == target ? "chemistry" : "combat", user, target, " finishes automending [constructTarget(M,"combat")] [log_reagents(M)] after [looped] applications at [log_loc(user)].")
 
 //basically the same as ecig_refill_cartridge, but there's no point subtyping it...
 ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
