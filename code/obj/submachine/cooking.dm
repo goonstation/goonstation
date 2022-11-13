@@ -120,7 +120,7 @@
 			if(user.traitHolder.hasTrait("training_medical") || user.traitHolder.hasTrait("training_chef"))
 				cleanup_rate = 3
 			user.sims.affectMotive("Hygiene", cleanup_rate)
-		user.blood_DNA = null // Don't want to use it here, though. The sink isn't a shower (Convair880).
+		user.blood_DNA = null
 		user.blood_type = null
 		user.set_clothing_icon_dirty()
 
