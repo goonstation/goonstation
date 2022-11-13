@@ -279,9 +279,6 @@
 // 1. Isolated cable (or only connects to isolated machine) -> create new powernet
 // 2. Joins to end or bridges loop of a single network (may also connect isolated machine) -> add to old network
 // 3. Bridges gap between 2 networks -> merge the networks (must rebuild lists also) (currently just calls makepowernets. welp)
-
-
-
 /obj/cable/proc/update_network()
 	if(makingpowernets) // this might cause local issues but prevents a big global race condition that breaks everything
 		return
@@ -437,7 +434,14 @@
 	var/datum/material/insulator = null
 	var/datum/material/conductor = null
 
-/obj/cablespawner/New(var/newloc,var/obj/cablespawner/spawner)
+/obj/cablespawner/New(var/newloc, var/obj/cablespawner/spawner)
 	..()
 	// this bit of the code is supposed to make the cablespawners replace themselves with cables.
-	// will it work? who knows
+	var/cable_surroundings = 0
+	// bitflag of the tiles surrounding it
+	src.check()
+	src.build()
+/obj/cablespawner/proc/build(var/newloc, var/cable_surroundings)
+	null
+/obj/cablespawner/proc/check()
+	null
