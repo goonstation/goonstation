@@ -755,8 +755,7 @@
 	/obj/item/clothing/glasses/meson,
 	/obj/item/pen/infrared,
 	/obj/item/lamp_manufacturer/organic,
-	/obj/item/pinpointer/category/apcs/station,
-	/obj/item/disk/data/floppy/manudrive/combustion_generator)
+	/obj/item/pinpointer/category/apcs/station)
 
 /obj/storage/secure/closet/engineering/mining
 	name = "\improper Miner's locker"

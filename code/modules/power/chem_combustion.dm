@@ -36,7 +36,7 @@
 	var/device = "COMBUST_GEN"
 
 	// reagents
-	var/valid_fuels = list(
+	var/static/valid_fuels = list(
 		"dbreath" = 30,
 		"kerosene" = 25,
 		"firedust" = 20,
@@ -55,7 +55,7 @@
 	) // kilowattage (returns about half for a default setup)
 
 	// bit wierd but a bunch of type checks feels bad
-	var/valid_tanks = list(
+	var/static/valid_tanks = list(
 		/obj/item/tank/air,
 		/obj/item/tank/oxygen,
 		/obj/item/tank/anesthetic
@@ -177,8 +177,13 @@
 
 		if (src.fuel_tank)
 			src.UpdateOverlays(src.fuel_tank_image, "fueltank")
+		else
+			src.ClearSpecificOverlays("fueltank")
+
 		if (src.inlet_tank)
 			src.UpdateOverlays(src.inlet_tank_image, "inlettank")
+		else
+			src.ClearSpecificOverlays("inlettank")
 
 	was_deconstructed_to_frame(mob/user)
 		. = ..()
@@ -542,7 +547,15 @@
 
 		var/turf/simulated/T = get_turf(src)
 		if (!istype(T))
-			return FALSE
+			if (istype(T, /turf/unsimulated))
+				return O2STANDARD
+
+			if (T.oxygen <= 0)
+				return FALSE
+
+			else
+				var/datum/gas_mixture/G = T.return_air()
+				return T.oxygen / TOTAL_MOLES(G)
 
 		if (!T.air || T.air.oxygen <= 0)
 			return FALSE
