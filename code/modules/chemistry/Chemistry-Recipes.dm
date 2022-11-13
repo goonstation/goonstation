@@ -2574,7 +2574,7 @@ datum
 			name = "Solipsizine"
 			id = "solipsizine"
 			result = "solipsizine"
-			required_reagents = list("morphine" = 2, "neurodepressant" = 1, "space_drugs" = 1, "haloperidol" = 1)
+			required_reagents = list("antihistamine" = 2, "neurodepressant" = 1, "LSD" = 1, "haloperidol" = 1)
 			result_amount = 3
 
 		mutadone // // COGWERKS CHEM REVISION PROJECT: magic bullshit drug, make it involve mutagen
