@@ -430,58 +430,108 @@
 	// this bit of the code is supposed to make the cablespawners replace themselves with cables.
 	var/cable_surroundings = 0
 	// bitflag of the tiles surrounding it
-	// bitflags: abcdefgh where efgh are the four cardinal directions and abcd are diagonals
-	// i.e. 10  9  6  5  8  4  2  1 (normal bitflags)
+	// i.e. 10  9  6  5  8  4  2  1 (normal bitflags) (used when you only need one direction)
 	// i.e. SW NW SE NE  W  E  S  N (corresponding directions)
+	//     128 64 32 16  8  4  2  1 (actual bitflags) (used for multiple directions)
+	// bit of a confusing system sorry
 	// as it has to check for multiple wires
-	src.check()
+	// i think someone called it 8 bit directions once? idk
+	var/const/SW = 10
+	var/const/NW = 9
+	var/const/SE = 6
+	var/const/NE = 5
+	var/const/WW = 8
+	var/const/EE = 4
+	var/const/SS = 2
+	var/const/NN = 1
+	src.check(cable_surroundings)
 	src.build()
 
-/obj/cablespawner/proc/check()
+/obj/cablespawner/proc/check(var/cable_surroundings)
+	for (var/obj/cablespawner in orange(1, src))
+	// cablespawners
+		var/disx = cable.x - src.x
+		var/disy = cable.y - src.y
+		// the following assumes disxy (displacement of x or y) equals 1,0 or -1
+		if (disx & disy)
+			cable_surroundings = cable_surroundings | NE
+			continue
+		else if (!disx & !disy)
+			cable_surroundings = cable_surroundings | SW
+			continue
+		else if (disx & !disy)
+			cable_surroundings = cable_surroundings | SE
+			continue
+		else if (!disx & disy)
+			cable_surroundings = cable_surroundings | NW
+			continue
+		else if (disx)
+			cable_surroundings = cable_surroundings | EE
+			continue
+		else if (!disx)
+			cable_surroundings = cable_surroundings | WW
+			continue
+		else if (disy)
+			cable_surroundings = cable_surroundings | NN
+			continue
+		else if (!disy)
+			cable_surroundings = cable_surroundings | SS
+			continue
+	// not every direction is needed, see
+	// if there are three adjacent directions, only two are needed
+	// e.g. N NE and E, that is technically a grid of four, doesnt need the diagonals
+	// its a wasted wire
+	// same with NW N NE, that can be a T junction, no need for diagonals
+	// so now we check each of these cases
+	if cable_surroundings &
+
+
 	for (var/obj/cable in orange(1, src))
+	// normal, prexisting, manually placed cables (must be joined to)
 		var/disx = cable.x - src.x
 		var/disy = cable.y - src.y
 		// the following assumes disxy (displacement of x or y) equals 1,0 or -1
 		if (disx & disy)
 			// northeast tile 1,1
-			if (cable.d1 || cable.d2 == 10)
-				cable_surroundings = cable_surroundings | 5
+			if (cable.d1 || cable.d2 == SW)
+				cable_surroundings = cable_surroundings | NE
 			continue
 		else if (!disx & !disy)
 			// southwest tile -1,-1
-			if (cable.d1 || cable.d2 == 5)
-				cable_surroundings = cable_surroundings | 10
+			if (cable.d1 || cable.d2 == NE)
+				cable_surroundings = cable_surroundings | SW
 			continue
 		else if (disx & !disy)
 			// southeast tile 1,-1
-			if (cable.d1 || cable.d2 == 9)
-				cable_surroundings = cable_surroundings | 6
+			if (cable.d1 || cable.d2 == NW)
+				cable_surroundings = cable_surroundings | SE
 			continue
 		else if (!disx & disy)
 			// northeast tile -1,1
-			if (cable.d1 || cable.d2 == 6)
-				cable_surroundings = cable_surroundings | 9
+			if (cable.d1 || cable.d2 == SE)
+				cable_surroundings = cable_surroundings | NW
 			continue
 		else if (disx)
 			// east tile 1,0
-			if (cable.d1 || cable.d2 == 8)
-				cable_surroundings = cable_surroundings | 4
+			if (cable.d1 || cable.d2 == WW)
+				cable_surroundings = cable_surroundings | EE
 			continue
 		else if (!disx)
 			// west tile -1,0
-			if (cable.d1 || cable.d2 == 4)
-				cable_surroundings = cable_surroundings | 8
+			if (cable.d1 || cable.d2 == EE)
+				cable_surroundings = cable_surroundings | WW
 			continue
 		else if (disy)
 			// north tile 0,1
-			if (cable.d1 || cable.d2 == 2)
-				cable_surroundings = cable_surroundings | 1
+			if (cable.d1 || cable.d2 == SS)
+				cable_surroundings = cable_surroundings | NN
 			continue
 		else if (!disy)
 			// south tile 0,-1
-			if (cable.d1 || cable.d2 == 1)
-				cable_surroundings = cable_surroundings | 2
+			if (cable.d1 || cable.d2 == NN)
+				cable_surroundings = cable_surroundings | SS
 			continue
+		// the 'real' wires override and always connect to prevent loose ends
 
 /obj/cablespawner/proc/build(var/newloc, var/cable_surroundings)
 	null
