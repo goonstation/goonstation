@@ -426,8 +426,8 @@
 	color = "#DD0000"
 	var/dir_count = 0
 
-/obj/cablespawner/New(var/newloc, var/obj/cablespawner/spawner)
-// this bit of the code is supposed to make the cablespawners replace themselves with cables.
+/obj/cablespawner/New()
+//
 	..()
 	var/cable_surr = 0
 	// bitflag of the tiles surrounding it \
@@ -440,10 +440,13 @@
 	var/const/SE = 32
 	var/const/NE = 16
 	// diagonal 8 bit flags
+/obj/cablespawner/initialize()
+// this bit of the code is supposed to make the cablespawners replace themselves with cables.
+	..()
 	cable_surr = src.check(cable_surr)
 	src.build(newloc,cable_surr)
 
-/obj/cablespawner/proc/optimise(var/cable_surr)
+/obj/cablespawner/proc/optimise()
 // if there is only cablespawners, not all 8 directions are needed. This clears some.
 	.. ()
 	//If there are three adjacent directions, only two or one are needed \
@@ -484,7 +487,7 @@
 		cable_surr &= ~(SE)
 		dir_count -= 1
 
-/obj/cablespawner/proc/check(var/cable_surr)
+/obj/cablespawner/proc/check()
 // checks around itself for cables, returns 8 bits.
 	for (var/obj/cablespawner/spawner in orange(1, src))
 	// cablespawners around itself
@@ -569,17 +572,53 @@
 		// the 'real' wires override and always connect to prevent loose ends
 	return cable_surr
 
-/obj/cablespawner/proc/build(var/newloc, var/cable_surr)
+/obj/cablespawner/proc/build()
 // causes cablespawner to spawn cables (amazing)
+	var/directions = convert(cable_surr)
 	if (dir_count == 0)
 	// a standalone cable (not really supposed to happen)
-		null
+		var/current = new/obj/cable(src.loc)
+		current.d1 = 0
+		current.d2 = NORTH
+		current.icon_state = "0-1"
 	else if (dir_count == 1)
 	// end of a cable
-		null
+		var/current = new/obj/cable(src.loc)
+		current.d1 = 0
+		current.d2 = directions[1]
 	else if (dir_count == 2)
 	// a normal, single cable
-		null
-	else if (dir_count >= 2)
+		var/current = new/obj/cable(src.loc)
+		current.d1 = directions[1]
+		current.d2 = directions[2]
+	else if (dir_count >= 3)
 	// multiple cables
 		null
+
+/obj/cablespawner/proc/convert(var/binput)
+// converts 8 bit into a list of directions.
+	var/list/directionlist
+	if (binput & NORTH)
+		directionlist += NORTH
+	if (binput & SOUTH)
+		directionlist += SOUTH
+	if (binput & EAST)
+		directionlist += EAST
+	if (binput & NE)
+		directionlist += NORTHEAST
+	if (binput & SE)
+		directionlist += SOUTHEAST
+	if (binput & WEST)
+		directionlist += WEST
+	if (binput & NW)
+		directionlist += NORTHWEST
+	if (binput & SW)
+		directionlist += SOUTHWEST
+	return directionlist
+
+/obj/cablespawner/proc/cable_laying(var/dir1, var/dir2)
+	for (var/i in 1 to dir_count+1)
+		var/current = new/obj/cable(src.loc)
+		current.d1 = directions[1]
+		current.d2 = directions[2]
+		current.icon_state = ""
