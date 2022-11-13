@@ -414,7 +414,7 @@
 	return
 
 /obj/cablespawner
-	// a cable spawner which can spawn multiple cables to connect to other cables around it.
+// a cable spawner which can spawn multiple cables to connect to other cables around it.
 	level = 1
 	name = "power cable spawner"
 	desc = "An item that should spawn actual cables. If you're reading this, something's wrong."
@@ -445,14 +445,15 @@
 	// 8 bit flags
 	cable_surr = src.check(cable_surr)
 	src.build(newloc,cable_surr)
+
 /obj/cablespawner/proc/optimise(var/cable_surr)
-// if there is only cablespawners, not all 8 directions are needed.
-.. ()
+// if there is only cablespawners, not all 8 directions are needed. This clears some.
+	.. ()
 	//If there are three adjacent directions, only two or one are needed \
 	e.g. N NE and E, that is technically a grid of four, doesnt need the diagonals, \
 	its a wasted cable. Same with NW N NE, that can be a T junction, no need for diagonals \
 	so now we check each of these cases, but if you want each cablespawner to spiderweb out in \
-	8 directions, remove this bit
+	8 directions, remove this bit. Cardinal directions are favoured.
 	if (cable_surr & (NW + NN + NE))
 	// Northern T
 		cable_surr &= ~(NW + NE)
@@ -477,7 +478,7 @@
 	if (cable_surr & (SS + SE + EE))
 	//Southeast Corner
 		cable_surr &= ~(SE)
-// this system priorities cardinal over diagonal directions. Change it if you like.
+
 /obj/cablespawner/proc/check(var/cable_surr)
 // checks around itself for cables, returns 8 bits.
 	for (var/obj/cablespawner in orange(1, src))
@@ -561,5 +562,16 @@
 		// the 'real' wires override and always connect to prevent loose ends
 
 	return cable_surr
+
 /obj/cablespawner/proc/build(var/newloc, var/cable_surr)
-	null
+// causes cablespawner to spawn cables (amazing)
+	var/dir_count = 0
+	// i'd get the amount of directions here
+	if (dir_count == 0)
+	// a standalone cable (not really supposed to happen)
+	else if (dir_count == 1)
+	// end of a cable
+	else if (dir_count == 2)
+	// a normal, single cable
+	else if (dir_count >= 2)
+	// multiple cables
