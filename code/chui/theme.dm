@@ -126,3 +126,68 @@ chui/theme/base
 	proc/generateSwitch( var/id, var/list/options )
 		return "IDK"//have the switch, when an option is selected, chui.onSwitchSelected( id, optionName )
 		//the key of the list is the name, the value is the label. these labels cannot be changed at runtime so don't worry about that
+
+
+///////////////////////
+// FLOCK CHUI THEME
+chui/theme/flock
+	name = "flock"
+	var/list/tabs
+
+	generateHeader(var/list/params)
+		params["css"] += list("css/chui/flockdrone.css")
+		params["js"] += list("js/howler.core.min.js", "js/flockmind.js")
+
+		return ..(params)
+
+	generateBody(var/body, var/list/params)
+		var/resizable = 1
+		var rendered = {"
+			<div id='titlebar'>
+				<h1>[params["title"] ? params["title"] : ""]</h1>
+				<a href='byond://winset?[params["data"]["ref"]].is-minimized=true' class='min'><strong>-</strong></a>
+				<a href='#' class='close'><i class='icon-remove'></i></a>
+			</div>
+		"}
+
+		if (params["tabs"])
+			rendered += "<div id='tabbuttons'>"
+			for(var/key in params["tabs"])
+				var/title = params["tabs"][key]
+				rendered += "<a class='tablinks button noselect' id='tab-button-[key]'>[title]</a>"
+			rendered += "</div>"
+
+		if (resizable)
+			rendered += {"
+				<div class='resizeArea top'    rx='0' ry='-1'></div>
+				<div class='resizeArea tr'     rx='1' ry='-1'></div>
+				<div class='resizeArea right'  rx='1' ry='0'></div>
+				<div class='resizeArea br'     rx='1' ry='1'></div>
+				<div class='resizeArea bottom' rx='0' ry='1'></div>
+				<div class='resizeArea bl'     rx='-1' ry='1'></div>
+				<div class='resizeArea left'   rx='-1' ry='0'></div>
+				<div class='resizeArea tl'     rx='-1' ry='-1'></div>
+			"}
+		rendered += {"
+				<div id='cornerWrap'>
+					<div id='content' class='nano'>
+						<div class='nano-content innerContent'>
+							[body]
+						</div>
+					</div>
+				</div>
+		"}
+		return rendered
+
+	generateFooter()
+		return ..()
+
+	generateButton( var/id, var/awesomeIcon )
+		return {"<a class='button' id='[id]'></span><i class='[awesomeIcon]'></i></a>"}
+
+	proc/generateTab(var/body, var/id)
+		return {"
+			<div class='tabcontent' id='tab-[id]'>
+				[body]
+			</div>
+		"}

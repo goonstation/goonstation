@@ -4481,16 +4481,14 @@
 /turf/space,
 /area/space)
 "mj" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
 "mk" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
@@ -4498,8 +4496,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "ml" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
@@ -4511,8 +4508,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "mm" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
@@ -4524,8 +4520,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/space)
 "mn" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
@@ -4536,8 +4531,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/space)
 "mo" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
@@ -4703,8 +4697,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/space)
 "mI" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "salvage belt - west";
 	operating = 1
 	},
@@ -4716,8 +4709,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/space)
 "mJ" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "salvage belt - west";
 	operating = 1
 	},
@@ -4725,8 +4717,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/space)
 "mK" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "salvage belt - west";
 	operating = 1
 	},

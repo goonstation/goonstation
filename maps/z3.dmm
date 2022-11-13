@@ -3696,7 +3696,7 @@
 /turf/simulated/floor,
 /area/buddyfactory)
 "aqE" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aqF" = (
@@ -4292,8 +4292,7 @@
 /turf/simulated/floor,
 /area/buddyfactory)
 "asp" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_x = 4;
@@ -4302,8 +4301,7 @@
 /turf/simulated/floor/caution/corner/nw,
 /area/buddyfactory)
 "asq" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_x = 4;
@@ -4419,8 +4417,7 @@
 /turf/simulated/floor,
 /area/buddyfactory)
 "asH" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_y = 2
@@ -4730,8 +4727,7 @@
 /turf/simulated/floor,
 /area/buddyfactory)
 "atD" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_y = 2
@@ -4739,8 +4735,7 @@
 /turf/simulated/floor/caution/corner/sw,
 /area/buddyfactory)
 "atE" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_x = -4;
@@ -4749,8 +4744,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/buddyfactory)
 "atF" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_x = -4;
@@ -4928,8 +4922,7 @@
 /turf/simulated/floor,
 /area/buddyfactory)
 "auc" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_x = 4;
@@ -4939,8 +4932,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/buddyfactory)
 "aud" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_y = 2
@@ -7606,16 +7598,14 @@
 	},
 /area/abandonedmedicalship)
 "aKr" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aKs" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
@@ -7625,8 +7615,7 @@
 	name = "GLOMAR Salvager"
 	})
 "aKt" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
@@ -7640,8 +7629,7 @@
 	name = "GLOMAR Salvager"
 	})
 "aKu" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
@@ -7655,8 +7643,7 @@
 	name = "GLOMAR Salvager"
 	})
 "aKv" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
@@ -7669,8 +7656,7 @@
 	name = "GLOMAR Salvager"
 	})
 "aKw" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
@@ -7810,8 +7796,7 @@
 	name = "GLOMAR Salvager"
 	})
 "aKT" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "salvage belt - west";
 	operating = 1
 	},
@@ -7825,8 +7810,7 @@
 	name = "GLOMAR Salvager"
 	})
 "aKU" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "salvage belt - west";
 	operating = 1
 	},
@@ -7836,8 +7820,7 @@
 	name = "GLOMAR Salvager"
 	})
 "aKV" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "salvage belt - west";
 	operating = 1
 	},
@@ -8339,7 +8322,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aMu" = (
@@ -9693,7 +9676,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aQa" = (
@@ -9891,7 +9874,7 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aQJ" = (
@@ -9995,7 +9978,7 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aQY" = (
@@ -10147,7 +10130,7 @@
 	icon_state = "0-4"
 	},
 /obj/cable,
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aRy" = (
@@ -10551,7 +10534,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/grille,
+/obj/grille/steel,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -10636,7 +10619,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aSO" = (
@@ -11048,7 +11031,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aTM" = (
@@ -15079,7 +15062,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bgT" = (
@@ -15090,7 +15073,7 @@
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat)
 "bgU" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/auto/reinforced,
 /obj/cable{
 	d1 = 1;
@@ -15232,7 +15215,7 @@
 /turf/simulated/floor,
 /area/derelict_ai_sat)
 "bhl" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/lattice{
 	icon_state = "lattice-dir-b"
 	},
@@ -15243,7 +15226,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bhn" = (
@@ -15259,8 +15242,8 @@
 /turf/simulated/floor,
 /area/derelict_ai_sat)
 "bhq" = (
-/obj/grille,
-/obj/grille,
+/obj/grille/steel,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bhr" = (
@@ -15277,7 +15260,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bht" = (
@@ -15692,7 +15675,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bim" = (
@@ -15706,7 +15689,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bio" = (
@@ -18516,7 +18499,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "fQg" = (
@@ -20428,7 +20411,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "luF" = (

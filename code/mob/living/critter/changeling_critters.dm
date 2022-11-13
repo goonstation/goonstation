@@ -31,7 +31,7 @@
 		if (bodypart)
 			bodypart.name = "mutagenic [initial(bodypart.name)]"
 		src.original_bodypart = bodypart
-		src.original_bodypart.set_loc(src)
+		src.original_bodypart?.set_loc(src)
 
 	say(message, involuntary = 0)
 		if (hivemind_owner)

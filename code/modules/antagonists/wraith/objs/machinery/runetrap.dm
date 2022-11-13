@@ -10,9 +10,9 @@
 	anchored = 1
 	var/visible = FALSE
 	var/armed = FALSE
-	var/mob/wraith/wraith_trickster/master = null
+	var/mob/living/intangible/wraith/wraith_trickster/master = null
 
-	New(var/turf/T, var/mob/wraith/wraith_trickster/W = null)
+	New(var/turf/T, var/mob/living/intangible/wraith/wraith_trickster/W = null)
 		..()
 		master = W
 		SPAWN(5 SECONDS)
@@ -63,6 +63,7 @@
 		if(!try_trigger(AM)) return
 		var/mob/M = AM
 		if(!checkRun(M)) return
+		if(!M.reagents) return
 		if (M.reagents.total_volume + src.amount_to_inject >= M.reagents.maximum_volume)
 			M.reagents.remove_any(M.reagents.total_volume + amount_to_inject - M.reagents.maximum_volume)
 		M.reagents.add_reagent("madness_toxin", src.amount_to_inject)

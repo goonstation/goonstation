@@ -9,9 +9,6 @@
 // moving to a selected target, performing a /datum/action on the selected target
 /datum/aiTask/sequence/goalbased/
 	name = "goal parent"
-	var/weight = 1 // for weighting the importance of the goal this sequence is in charge of
-	var/max_dist = 5 // the maximum tile distance that we look for targets
-	var/can_be_adjacent_to_target = 1 // do we need to be AT the target specifically, or is being in 1 tile of it fine?
 
 /datum/aiTask/sequence/goalbased/New(parentHolder, transTask)
 	..(parentHolder, transTask)
@@ -19,43 +16,17 @@
 	// SECOND TASK IS SUBGOAL SPECIFIC
 
 /datum/aiTask/sequence/goalbased/evaluate()
-	. = score_goal() * weight
-
-/datum/aiTask/sequence/goalbased/proc/get_best_target(var/list/targets)
-	. = null
-	var/best_score = -1.#INF
-	if(length(targets))
-		for(var/atom/A in targets)
-			var/score = src.score_target(A)
-			if(score > best_score)
-				best_score = score
-				. = A
-	holder.target = .
-
-/datum/aiTask/sequence/goalbased/proc/get_targets()
-	// obviously a specific goal will have specific requirements for targets
-	. = list()
+	. = 0
+	if(src.precondition())
+		return score_target(get_best_target(get_targets())) * weight
 
 ///Is the target VALID?
 /datum/aiTask/sequence/goalbased/proc/valid_target(var/atom/target)
 	return FALSE
 
-/datum/aiTask/sequence/goalbased/proc/score_target(var/atom/target)
-	. = 0
-	if(target)
-		return 100*(max_dist - GET_MANHATTAN_DIST(get_turf(holder.owner), get_turf(target)))/max_dist //normalize distance weighting
-
 /datum/aiTask/sequence/goalbased/proc/precondition()
 	// useful for goals that have a requirement, return 0 to instantly make this state score 0 and not be picked
-	. = 1
-
-/datum/aiTask/sequence/goalbased/proc/score_goal()
-	// do any specific stuff here, eg. if the goal requires some conditions and they don't exist, reduce the score here
-	// by default, return the score of the best target
-	. = 0
-	var/precond = precondition()
-	if(precond)
-		. = precond * score_target(get_best_target(get_targets()))
+	. = TRUE
 
 /datum/aiTask/sequence/goalbased/on_tick()
 	..()
@@ -65,15 +36,8 @@
 		// make sure we both set our target and move to our target correctly
 		var/datum/aiTask/succeedable/move/M = subtasks[subtask_index]
 		if(M && !M.move_target)
-			var/target_turf = get_turf(holder.target)
-			if(can_be_adjacent_to_target)
-				var/list/tempPath = get_path_to(holder.owner, target_turf, 40, 1)
-				var/length_of_path = length(tempPath)
-				if(length_of_path) // fix runtime Cannot read length(null)
-					M.move_target = tempPath[length_of_path]
-					if(M.move_target)
-						return
-			M.move_target = target_turf
+			M.can_be_adjacent_to_target = src.can_be_adjacent_to_target
+			M.move_target = get_turf(holder.target)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // WANDER TASK
@@ -101,27 +65,10 @@
 	name = "targeted"
 	var/target_range = 8
 
-/datum/aiTask/timed/targeted/proc/get_best_target(var/list/targets)
-	. = null
-	var/best_score = -1.#INF
-	if(length(targets))
-		for(var/atom/A in targets)
-			var/score = src.score_target(A)
-			if(score > best_score)
-				best_score = score
-				. = A
-	holder.target = .
-
-// vvv OVERRIDE THE PROCS BELOW AS REQUIRED vvv
-
-/datum/aiTask/timed/targeted/proc/get_targets()
-	. = list()
-
-/datum/aiTask/timed/targeted/proc/score_target(var/atom/target)
-	. = 0
-	if(target)
-		return 100*(target_range - GET_MANHATTAN_DIST(get_turf(holder.owner), get_turf(target)))/target_range //normalize distance weighting
-
+	score_target(atom/target)
+		. = 0
+		if(target)
+			return 100*(target_range - GET_MANHATTAN_DIST(get_turf(holder.owner), get_turf(target)))/target_range //normalize distance weighting
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MOVE TASK
 // target: holder target assigned by a sequence task
@@ -130,20 +77,26 @@
 	max_fails = 2
 	var/max_path_dist = 50 //keeping this low by default, but you can override it - see /datum/aiTask/sequence/goalbased/rally for details
 	var/list/found_path = null
-	var/atom/move_target = null
+	var/turf/move_target = null
 
 // use the target from our holder
 /datum/aiTask/succeedable/move/proc/get_path()
 	if(!move_target)
 		fails++
 		return
-	src.found_path = get_path_to(holder.owner, move_target, src.max_path_dist, 0)
+	if(length(holder.target_path) && GET_DIST(holder.target_path[length(holder.target_path)], move_target) <= can_be_adjacent_to_target)
+		src.found_path = holder.target_path
+	else
+		src.found_path = get_path_to(holder.owner, move_target, src.max_path_dist, can_be_adjacent_to_target, null, !move_through_space)
+		if(GET_DIST(get_turf(holder.target), move_target) <= can_be_adjacent_to_target)
+			holder.target_path = src.found_path
 	if(!src.found_path) // no path :C
 		fails++
 
 /datum/aiTask/succeedable/move/on_reset()
 	src.found_path = null
 	src.move_target = null
+
 
 /datum/aiTask/succeedable/move/on_tick()
 	if(!src.move_target)
@@ -152,11 +105,13 @@
 	if(!length(src.found_path))
 		get_path()
 	if(length(src.found_path))
-		holder.move_to_with_path(move_target,src.found_path,0)
+		holder.move_to_with_path(move_target, src.found_path, 0)
 
 /datum/aiTask/succeedable/move/succeeded()
 	if(move_target)
-		. = (GET_DIST(holder.owner, src.move_target) == 0)
+		. = (GET_DIST(holder.owner, src.move_target) <= can_be_adjacent_to_target)
+		if(.)
+			holder.stop_move()
 		return
 
 /datum/aiTask/succeedable/move/failed()

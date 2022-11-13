@@ -161,13 +161,13 @@
 			abilitystat = new
 			abilitystat.owner = src
 
-		var/msg = ""
-
 		var/i = 0
 		var/longest_line = 0
-		var/list/stats = src.onAbilityStat()
+		var/msg = ""
+		//var/style = "font-size: 7px;"
+		var/list/stats = onAbilityStat()
 		for (var/x in stats)
-			var/line_length = length(x) + 1 + max(length(num2text(stats[x])), length(stats[x]))
+			var/line_length = length(x) + 1 + length(num2text(stats[x]))
 			longest_line = max(longest_line, line_length)
 			msg += "[x] [stats[x]]<br>"
 			i++
@@ -175,8 +175,8 @@
 		abilitystat.maptext = "<span class='vga l vt ol'>[msg] </span>"
 		abilitystat.maptext_width = longest_line * 9 //font size is 9px
 		if (i > 2)
-			abilitystat.maptext_height = ((i+1) % 2) * 32
-			abilitystat.maptext_y = -abilitystat.maptext_height + 16
+			abilitystat.maptext_height = (32 + ((i-2) * 16))
+			abilitystat.maptext_y = ((i-2) * -16) - 7
 		else if (abilitystat.maptext_height > 32)
 			abilitystat.maptext_height = initial(abilitystat.maptext_height)
 			abilitystat.maptext_y = initial(abilitystat.maptext_y)
@@ -208,13 +208,6 @@
 		owner = newbody
 		if(owner)
 			owner.attach_hud(hud)
-
-	proc/Stat()
-		if (usesPoints && pointName != "" && rendered)
-			stat(null, " ")
-			stat("[src.pointName]:", src.points)
-			if (src.regenRate || src.lastBonus)
-				stat("Generation Rate:", "[src.regenRate] + [src.lastBonus]")
 
 	proc/StatAbilities()
 		if (!rendered)
@@ -1213,10 +1206,6 @@
 	generatePoints(var/mult = 1)
 		for (var/datum/abilityHolder/H in holders)
 			H.generatePoints(mult)
-
-	Stat()
-		for (var/datum/abilityHolder/H in holders)
-			H.Stat()
 
 	StatAbilities()
 		for (var/datum/abilityHolder/H in holders)

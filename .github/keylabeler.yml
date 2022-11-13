@@ -62,8 +62,8 @@ labelMappings:
     "[CLOTHING]": a-clothing
     "[GAME OBJECTS]": a-game-objects
     "[OBJECTS]": a-game-objects
-    "[GAMEMODES]": a-gamemodes 
-    "[GAME MODES]": a-gamemodes 
+    "[GAMEMODES]": a-gamemodes
+    "[GAME MODES]": a-gamemodes
     "[MODES]": a-gamemodes
     "[INTERNAL]": a-internal
     "[MAPPING]": a-mapping
@@ -79,3 +79,6 @@ labelMappings:
     "[BORGS]": a-silicons
     "[STATION SYSTEMS]": a-station-systems
     "[STATUS EFFECTS]": a-status-effects
+    "[EVENTS]": a-events
+    "[RP]": a-rp
+    "[ROLEPLAY]": a-rp

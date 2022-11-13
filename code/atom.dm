@@ -213,7 +213,7 @@
 			boutput(user, "<span class='alert'>[A] is full!</span>") // Notify the user, then exit the process.
 			return
 
-		logTheThing(LOG_COMBAT, user, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // Ditto (Convair880).
+		logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // Ditto (Convair880).
 		var/T = src.reagents.trans_to(A, src.reagents.total_volume) // Dump it all!
 		boutput(user, "<span class='notice'>You transfer [T] units into [A].</span>")
 		return
@@ -968,7 +968,8 @@
 	// turf that is not obscuring vision, we were obscuring vision and are not
 	// anymore.
 	if (isturf(src.loc) && ((src.loc.opacity == 0 && src.opacity == 1) || (src.loc.opacity == 0 && oldopacity == 1 && src.opacity == 0)))
-		SEND_SIGNAL(src.loc, COMSIG_TURF_CONTENTS_SET_OPACITY_SMART, oldopacity, src)
+		var/turf/T = src.loc
+		T.contents_set_opacity_smart(oldopacity, src)
 
 // standardized damage procs
 
@@ -1108,3 +1109,41 @@
 	message_admins("[key_name(usr)] rotated [target] by [rot] degrees")
 	target.Turn(rot)
 	return
+
+/atom/movable/proc/gift_wrap(var/style = FALSE, var/xmas_style = FALSE)
+	var/obj/item/gift/G = new /obj/item/gift(src.loc)
+	var/gift_type
+	if(isitem(src))
+		var/obj/item/gifted_item = src
+		G.size = gifted_item.w_class
+		G.w_class = G.size + 1
+		gift_type = "gift[clamp(G.size, 1, 3)]"
+		gifted_item.set_loc(G)
+	else if(ismob(src) || istype(src, /obj/critter))
+		G.size = 3
+		G.w_class = G.size + 1
+		gift_type = "strange"
+		if(ismob(src))
+			var/mob/gifted_mob = src
+			gifted_mob.set_loc(G)
+		else
+			var/obj/critter/gifted_critter = src
+			gifted_critter.set_loc(G)
+	else
+		var/obj/gifted_obj = src
+		G.size = 3
+		G.w_class = W_CLASS_BULKY
+		gift_type = "gift3"
+		gifted_obj.set_loc(G)
+	var/random_style
+	if (!style)
+		if(!xmas_style)
+			random_style = rand(1,8)
+		else
+			random_style = pick("r", "rs", "g", "gs")
+		G.icon_state = "[gift_type]-[random_style]"
+	else
+		G.icon_state = "[gift_type]-[style]"
+	G.gift = src
+
+	return G

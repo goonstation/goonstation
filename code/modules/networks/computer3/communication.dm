@@ -181,6 +181,9 @@
 								src.print_text("Contacting Central Command. Warning: Frivolous use of this communication channel is punishable by bloodline termination.")
 								src.transmit_type = "centcom"
 						else if(lowertext(command) == "message")
+							if(isnull(game_servers.get_buddy()))
+								menu = MENU_MAIN
+								src.print_text("No partner station detected. Unable to send message.")
 							if(GET_COOLDOWN(global, "transmit_station"))
 								menu = MENU_MAIN
 								src.print_text("Partner station communication beam recharging. Available in [time_to_text(GET_COOLDOWN(global, "transmit_station"))].")
@@ -255,6 +258,10 @@
 
 			if(MENU_TRANSMIT_MESSAGE)
 				menu = MENU_MAIN
+
+				if(isnull(game_servers.get_buddy()) && transmit_type == "station")
+					src.print_text("No partner station detected. Unable to send message.")
+					return
 
 				if(!src.pnet_card)
 					src.print_text("<b>Error:</b> Network card required.")

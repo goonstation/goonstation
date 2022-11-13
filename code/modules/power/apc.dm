@@ -33,7 +33,7 @@ var/zapLimiter = 0
 	var/autoname_on_spawn = 0 // Area.name
 	var/obj/item/cell/cell
 	var/start_charge = 90				// initial cell charge %
-	var/cell_type = 2500				// 0=no cell, 1=regular, 2=high-cap (x5) <- old, now it's just 0=no cell, otherwise dictate cellcapacity by changing this value. 1 used to be 1000, 2 was 2500
+	var/cell_type = 2500				//  0=no cell, otherwise dictate cellcapacity by changing this value. 1 used to be 1000, 2 was 2500
 	var/opened = 0
 	var/circuit_disabled = 0
 	var/shorted = 0
@@ -473,6 +473,7 @@ var/zapLimiter = 0
 				W.set_loc(src)
 				cell = W
 				boutput(user, "You insert the power cell.")
+				logTheThing(LOG_STATION, user, "inserted [cell] to APC [src] [log_loc(src)].")
 				chargecount = 0
 		UpdateIcon()
 	else if	(isscrewingtool(W))
@@ -583,10 +584,11 @@ var/zapLimiter = 0
 
 	if(opened && !isAIeye(user) && !issilicon(user))
 		if(cell)
-			user.put_in_hand_or_drop(cell)
 			cell.UpdateIcon()
-			src.cell = null
+			user.put_in_hand_or_drop(cell)
 			boutput(user, "You remove the power cell.")
+			logTheThing(LOG_STATION, user, "removed [cell] from APC [src] [log_loc(src)].")
+			src.cell = null
 			charging = 0
 			src.UpdateIcon()
 
