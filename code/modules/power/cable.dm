@@ -445,7 +445,39 @@
 	// 8 bit flags
 	cable_surr = src.check(cable_surr)
 	src.build(newloc,cable_surr)
-
+/obj/cablespawner/proc/optimise(var/cable_surr)
+// if there is only cablespawners, not all 8 directions are needed.
+.. ()
+	//If there are three adjacent directions, only two or one are needed \
+	e.g. N NE and E, that is technically a grid of four, doesnt need the diagonals, \
+	its a wasted cable. Same with NW N NE, that can be a T junction, no need for diagonals \
+	so now we check each of these cases, but if you want each cablespawner to spiderweb out in \
+	8 directions, remove this bit
+	if (cable_surr & (NW + NN + NE))
+	// Northern T
+		cable_surr &= ~(NW + NE)
+	if (cable_surr & (SW + SS + SE))
+	// Southern T
+		cable_surr &= ~(SW + SE)
+	if (cable_surr & (NE + EE + SE))
+	// Eastern T
+		cable_surr &= ~(NE + SE)
+	if (cable_surr & (NW + WW + SW))
+	// Western T
+		cable_surr &= ~(NW + SW)
+	if (cable_surr & (WW + NW + NN))
+	//Northwest Corner
+		cable_surr &= ~(NW)
+	if (cable_surr & (NN + NE + EE))
+	//Northeast Corner
+		cable_surr &= ~(NE)
+	if (cable_surr & (WW + SW + SS))
+	//Southwest Corner
+		cable_surr &= ~(SW)
+	if (cable_surr & (SS + SE + EE))
+	//Southeast Corner
+		cable_surr &= ~(SE)
+// this system priorities cardinal over diagonal directions. Change it if you like.
 /obj/cablespawner/proc/check(var/cable_surr)
 	for (var/obj/cablespawner in orange(1, src))
 	// cablespawners around itself
@@ -477,39 +509,7 @@
 			cable_surr |= SS
 			continue
 
-
-	proc/optimise()
-	// if there is only cablespawners, not all 8 directions are needed. \
-	If there are three adjacent directions, only two or one are needed \
-	e.g. N NE and E, that is technically a grid of four, doesnt need the diagonals, \
-	its a wasted cable. Same with NW N NE, that can be a T junction, no need for diagonals \
-	so now we check each of these cases, but if you want each cablespawner to spiderweb out in \
-	8 directions, remove this bit
-		if (cable_surr & (NW + NN + NE))
-		// Northern T
-			cable_surr &= ~(NW + NE)
-		if (cable_surr & (SW + SS + SE))
-		// Southern T
-			cable_surr &= ~(SW + SE)
-		if (cable_surr & (NE + EE + SE))
-		// Eastern T
-			cable_surr &= ~(NE + SE)
-		if (cable_surr & (NW + WW + SW))
-		// Western T
-			cable_surr &= ~(NW + SW)
-		if (cable_surr & (WW + NW + NN))
-		//Northwest Corner
-			cable_surr &= ~(NW)
-		if (cable_surr & (NN + NE + EE))
-		//Northeast Corner
-			cable_surr &= ~(NE)
-		if (cable_surr & (WW + SW + SS))
-		//Southwest Corner
-			cable_surr &= ~(SW)
-		if (cable_surr & (SS + SE + EE))
-		//Southeast Corner
-			cable_surr &= ~(SE)
-	// this system priorities cardinal over diagonal directions. Change it if you like.
+	optimise(cable_surr)
 
 	for (var/obj/cable in orange(1, src))
 	// normal, prexisting, manually placed cables (must be joined to no matter what)
@@ -517,42 +517,42 @@
 		var/disy = cable.y - src.y
 		// the following assumes disxy (displacement of x or y) equals 1,0 or -1
 		// in addition, d1 and d2 use 4 bit flags, so we have to add up our regular ones
-		if (disx & disy)
+		if (disx & disy == 1)
 		// northeast tile 1,1
 			if (cable.d1 || cable.d2 == SS + WW)
 				cable_surr = cable_surr | NE
 			continue
-		else if (!disx & !disy)
+		else if (-disx & -disy == 1)
 		// southwest tile -1,-1
 			if (cable.d1 || cable.d2 == NN + EE)
 				cable_surr = cable_surr | SW
 			continue
-		else if (disx & !disy)
+		else if (disx & -disy == 1)
 		// southeast tile 1,-1
 			if (cable.d1 || cable.d2 == NN + WW)
 				cable_surr = cable_surr | SE
 			continue
-		else if (!disx & disy)
+		else if (-disx & disy == 1)
 		// northeast tile -1,1
 			if (cable.d1 || cable.d2 == SS + EE)
 				cable_surr = cable_surr | NW
 			continue
-		else if (disx)
+		else if (disx == 1)
 		// east tile 1,0
 			if (cable.d1 || cable.d2 == WW)
 				cable_surr = cable_surr | EE
 			continue
-		else if (!disx)
+		else if (-disx == 1)
 		// west tile -1,0
 			if (cable.d1 || cable.d2 == EE)
 				cable_surr = cable_surr | WW
 			continue
-		else if (disy)
+		else if (disy == 1)
 		// north tile 0,1
 			if (cable.d1 || cable.d2 == SS)
 				cable_surr = cable_surr | NN
 			continue
-		else if (!disy)
+		else if (-disy == 1)
 		// south tile 0,-1
 			if (cable.d1 || cable.d2 == NN)
 				cable_surr = cable_surr | SS
