@@ -68,13 +68,67 @@
 				H.gloves.clean_forensic() // Ditto (Convair880).
 				H.set_clothing_icon_dirty()
 			else
-				user.visible_message("<span class='notice'>[user] washes [his_or_her(user)] hands.</span>")
-				if (H.sims)
-					H.sims.affectMotive("Hygiene", 2)
-				H.blood_DNA = null // Don't want to use it here, though. The sink isn't a shower (Convair880).
-				H.blood_type = null
-				H.set_clothing_icon_dirty()
+				if(H.sims)
+					user.visible_message("<span class='notice'>[user] starts washing [his_or_her(user)] hands.</span>")
+					actions.start(new/datum/action/bar/handwashing(user,src),user)
+				else //simpler handwashing if hygiene isn't a concern
+					user.visible_message("<span class='notice'>[user] washes [his_or_her(user)] hands.</span>")
+					H.blood_DNA = null
+					H.blood_type = null
+					H.set_clothing_icon_dirty()
 		..()
+
+/datum/action/bar/handwashing
+	duration = 1 SECOND //roughly matches the rate of manual clicking
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+	id = "handwashing"
+	var/mob/living/carbon/human/user
+	var/obj/submachine/chef_sink/sink
+
+	New(usermob,sinkerino)
+		user = usermob
+		sink = sinkerino
+		..()
+
+	onUpdate()
+		..()
+		if(BOUNDS_DIST(user, sink) > 1 || user == null || sink == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+
+	onStart()
+		..()
+		if(BOUNDS_DIST(user, sink) > 1 || user == null || sink == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		src.loopStart()
+
+
+	loopStart()
+		..()
+		playsound(get_turf(sink), 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+
+	onEnd()
+		if(BOUNDS_DIST(user, sink) > 1 || user == null || sink == null)
+			..()
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if (user.sims)
+			var/cleanup_rate = 2
+			if(user.traitHolder.hasTrait("training_medical") || user.traitHolder.hasTrait("training_chef"))
+				cleanup_rate = 3
+			user.sims.affectMotive("Hygiene", cleanup_rate)
+		user.blood_DNA = null // Don't want to use it here, though. The sink isn't a shower (Convair880).
+		user.blood_type = null
+		user.set_clothing_icon_dirty()
+
+		src.onRestart()
+
+	onInterrupt()
+		..()
+
 
 /obj/submachine/ice_cream_dispenser
 	name = "Ice Cream Dispenser"
