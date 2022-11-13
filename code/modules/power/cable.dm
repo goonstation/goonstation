@@ -428,7 +428,7 @@
 /obj/cablespawner/New(var/newloc, var/obj/cablespawner/spawner)
 	..()
 	// this bit of the code is supposed to make the cablespawners replace themselves with cables.
-	var/cable_surroundings = 0
+	var/cable_surr = 0
 	// bitflag of the tiles surrounding it
 	// i.e. 10  9  6  5  8  4  2  1 (normal bitflags) (used when you only need one direction)
 	// i.e. SW NW SE NE  W  E  S  N (corresponding directions)
@@ -444,38 +444,38 @@
 	var/const/EE = 4
 	var/const/SS = 2
 	var/const/NN = 1
-	src.check(cable_surroundings)
-	src.build()
+	src.check(cable_surr)
+	src.build(newloc)
 
-/obj/cablespawner/proc/check(var/cable_surroundings)
+/obj/cablespawner/proc/check(var/cable_surr)
 	for (var/obj/cablespawner in orange(1, src))
-	// cablespawners
+	// cablespawners around itself
 		var/disx = cable.x - src.x
 		var/disy = cable.y - src.y
 		// the following assumes disxy (displacement of x or y) equals 1,0 or -1
 		if (disx & disy)
-			cable_surroundings = cable_surroundings | NE
+			cable_surr = cable_surr | NE
 			continue
 		else if (!disx & !disy)
-			cable_surroundings = cable_surroundings | SW
+			cable_surr = cable_surr | SW
 			continue
 		else if (disx & !disy)
-			cable_surroundings = cable_surroundings | SE
+			cable_surr = cable_surr | SE
 			continue
 		else if (!disx & disy)
-			cable_surroundings = cable_surroundings | NW
+			cable_surr = cable_surr | NW
 			continue
 		else if (disx)
-			cable_surroundings = cable_surroundings | EE
+			cable_surr = cable_surr | EE
 			continue
 		else if (!disx)
-			cable_surroundings = cable_surroundings | WW
+			cable_surr = cable_surr | WW
 			continue
 		else if (disy)
-			cable_surroundings = cable_surroundings | NN
+			cable_surr = cable_surr | NN
 			continue
 		else if (!disy)
-			cable_surroundings = cable_surroundings | SS
+			cable_surr = cable_surr | SS
 			continue
 	// not every direction is needed, see
 	// if there are three adjacent directions, only two are needed
@@ -483,7 +483,9 @@
 	// its a wasted wire
 	// same with NW N NE, that can be a T junction, no need for diagonals
 	// so now we check each of these cases
-	if cable_surroundings &
+	if (cable_surr & (NN + 64 + 16))
+	// northern T
+		cable_surr
 
 
 	for (var/obj/cable in orange(1, src))
@@ -492,46 +494,46 @@
 		var/disy = cable.y - src.y
 		// the following assumes disxy (displacement of x or y) equals 1,0 or -1
 		if (disx & disy)
-			// northeast tile 1,1
+		// northeast tile 1,1
 			if (cable.d1 || cable.d2 == SW)
-				cable_surroundings = cable_surroundings | NE
+				cable_surr = cable_surr | NE
 			continue
 		else if (!disx & !disy)
-			// southwest tile -1,-1
+		// southwest tile -1,-1
 			if (cable.d1 || cable.d2 == NE)
-				cable_surroundings = cable_surroundings | SW
+				cable_surr = cable_surr | SW
 			continue
 		else if (disx & !disy)
-			// southeast tile 1,-1
+		// southeast tile 1,-1
 			if (cable.d1 || cable.d2 == NW)
-				cable_surroundings = cable_surroundings | SE
+				cable_surr = cable_surr | SE
 			continue
 		else if (!disx & disy)
-			// northeast tile -1,1
+		// northeast tile -1,1
 			if (cable.d1 || cable.d2 == SE)
-				cable_surroundings = cable_surroundings | NW
+				cable_surr = cable_surr | NW
 			continue
 		else if (disx)
-			// east tile 1,0
+		// east tile 1,0
 			if (cable.d1 || cable.d2 == WW)
-				cable_surroundings = cable_surroundings | EE
+				cable_surr = cable_surr | EE
 			continue
 		else if (!disx)
-			// west tile -1,0
+		// west tile -1,0
 			if (cable.d1 || cable.d2 == EE)
-				cable_surroundings = cable_surroundings | WW
+				cable_surr = cable_surr | WW
 			continue
 		else if (disy)
-			// north tile 0,1
+		// north tile 0,1
 			if (cable.d1 || cable.d2 == SS)
-				cable_surroundings = cable_surroundings | NN
+				cable_surr = cable_surr | NN
 			continue
 		else if (!disy)
-			// south tile 0,-1
+		// south tile 0,-1
 			if (cable.d1 || cable.d2 == NN)
-				cable_surroundings = cable_surroundings | SS
+				cable_surr = cable_surr | SS
 			continue
 		// the 'real' wires override and always connect to prevent loose ends
 
-/obj/cablespawner/proc/build(var/newloc, var/cable_surroundings)
+/obj/cablespawner/proc/build(var/newloc, var/cable_surr)
 	null
