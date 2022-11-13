@@ -1,9 +1,5 @@
 
 (t)sun nov 13 22
-(u)MarkNstein
-(p)11957
-(e)⚖💅💊⚗|C-Balance, C-QoL, A-Medical, A-Chemistry
-(*)Sterile masks now block miasma and other smokes.
 (u)NightmarechaMillian
 (p)11683
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
