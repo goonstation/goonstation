@@ -426,8 +426,8 @@
 	color = "#DD0000"
 
 /obj/cablespawner/New(var/newloc, var/obj/cablespawner/spawner)
+// this bit of the code is supposed to make the cablespawners replace themselves with cables.
 	..()
-	// this bit of the code is supposed to make the cablespawners replace themselves with cables.
 	var/cable_surr = 0
 	// bitflag of the tiles surrounding it \
 	i.e. 10  9  6  5  8  4  2  1 (normal bitflags) (used when you only need one direction) \
@@ -479,6 +479,7 @@
 		cable_surr &= ~(SE)
 // this system priorities cardinal over diagonal directions. Change it if you like.
 /obj/cablespawner/proc/check(var/cable_surr)
+// checks around itself for cables, returns 8 bits.
 	for (var/obj/cablespawner in orange(1, src))
 	// cablespawners around itself
 		var/disx = cable.x - src.x
