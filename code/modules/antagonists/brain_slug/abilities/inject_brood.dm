@@ -28,9 +28,9 @@
 			violent_standup_twitch(H)
 			SPAWN (5 SECONDS)
 				if (!H) return
-				new/mob/living/critter/small_animal/broodling(H.loc, holder.owner, 3 MINUTES)
-				new/mob/living/critter/small_animal/broodling(H.loc, holder.owner, 3 MINUTES)
-				new/mob/living/critter/small_animal/broodling(H.loc, holder.owner, 3 MINUTES)
+				new/mob/living/critter/small_animal/broodling(H.loc, summoner = holder.owner, duration = 3 MINUTES)
+				new/mob/living/critter/small_animal/broodling(H.loc, summoner = holder.owner, duration = 3 MINUTES)
+				new/mob/living/critter/small_animal/broodling(H.loc, summoner = holder.owner, duration = 3 MINUTES)
 				H.visible_message("<span class='alert'>[H]'s flesh is ripped apart as some horrible creatures pour out of them!")
 				gibs(H.loc, headbits = FALSE)
 				random_brute_damage(H, 80)

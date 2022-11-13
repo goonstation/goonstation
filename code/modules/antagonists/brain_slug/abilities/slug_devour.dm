@@ -22,7 +22,7 @@
 		return TRUE
 
 /datum/action/bar/icon/devour_action
-	duration = 3 SECONDS
+	duration = 2 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_ATTACKED
 	id = "brain_slug_devour"
 	icon = 'icons/mob/brainslug_ui.dmi'

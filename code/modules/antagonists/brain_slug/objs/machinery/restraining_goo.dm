@@ -14,10 +14,10 @@
 			linked_mob = mob_to_link
 			APPLY_ATOM_PROPERTY(linked_mob, PROP_MOB_CANTMOVE, "slimed_up")
 			linked_mob.anchored = TRUE
-			var/datum/component/gluecomp = src.GetComponent(/datum/component/glued)
-			gluecomp?.RemoveComponent()
 			var/atom/movable/our_atom = src
-			our_atom.AddComponent(/datum/component/glued, linked_mob, -1, -1, FALSE)
+			var/datum/component/gluecomp = our_atom.GetComponent(/datum/component/glued)
+			gluecomp?.RemoveComponent()
+			our_atom.AddComponent(/datum/component/glued, linked_mob, null, null, FALSE)
 
 	disposing()
 		if (linked_mob)

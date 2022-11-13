@@ -28,7 +28,7 @@
 		return FALSE
 
 /datum/action/bar/icon/slug_harvest
-	duration = 8 SECONDS
+	duration = 7 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_ATTACKED
 	id = "brain_slug_devour"
 	icon = 'icons/mob/brainslug_ui.dmi'
