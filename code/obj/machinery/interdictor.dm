@@ -48,6 +48,8 @@
 		if(altboard)
 			src.interdict_class = altboard.interdict_class
 			switch(src.interdict_class)
+				if(ITDR_STANDARD)
+					src.interdict_range++
 				if(ITDR_NIMBUS)
 					src.name = "Nimbus-class [src.name]"
 					src.desc = "A device that lessens or nullifies the effects of assorted stellar phenomena. This one charges cyborgs, too!"
@@ -146,7 +148,7 @@
 
 	zephyr
 		interdict_class = ITDR_ZEPHYR
-		name = "Nimbus-class spatial interdictor"
+		name = "Zephyr-class spatial interdictor"
 		desc = "A device that lessens or nullifies the effects of assorted stellar phenomena. This one comes with a second wind."
 
 

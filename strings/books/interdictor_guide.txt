@@ -37,6 +37,24 @@
 	<br>
 	<br>
 	<hr>
+	<h3>MAINBOARD SELECTION</h3>
+	<br>
+	The spatial interdictor's mainboard manages current flow into the phase-control rod, and several variants are available for your manufacture.
+	<br>
+	Some of these variants are more costly to manufacture, but will provide additional secondary functionality of benefit to station operations. The following schematics are included:
+	<br>
+	<br>
+	Standard Mainboard: Cheapest selection. No additional functionality, but grants one additional standard unit of radius.
+	<br>
+	Nimbus Mainboard: Provides over-the-air recharging to cyborgs in range. Recommended for use in industrial circumstances where sensitive equipment is present and uptime is crucial.
+	<br>
+	Zephyr Mainboard: Creates a bioelectric field within the standard operating radius, with beneficial* effects on human physiology, primarily reflected as an improvement in stamina.
+	<br>
+	<br>
+	<i>*Please consult station physicians before use.</i>
+	<br>
+	<br>
+	<hr>
 	<h3>ASSEMBLING THE DEVICE</h3>
 	<br>
 	(I) Fabricate the frame kit, mainboard and phase-control rod at any manufacturer using the drive included with your interdictor crate. Materials not provided.
