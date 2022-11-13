@@ -33,7 +33,6 @@
 	for(var/mob/living/carbon/human/T in view(max_dist, holder.owner))
 		if(isliving(T) && !is_incapacitated(T) && isalive(T))
 			. += T
-	. = get_path_to(holder.owner, ., max_dist*2, 1)
 
 /datum/aiTask/succeedable/rushdown
 	name = "rushdown subtask"

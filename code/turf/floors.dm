@@ -1629,29 +1629,6 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	else
 		boutput(user, "Your attack bounces off the foamed metal floor.")
 
-/turf/simulated/floor/Cross(atom/movable/mover)
-	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
-		if (!( locate(/obj/machinery/mass_driver, src) ))
-			var/obj/machinery/vehicle/O = mover
-			if (istype(O?.sec_system, /obj/item/shipcomponent/secondary_system/crash)) //For ships crashing with the SEED
-				var/obj/item/shipcomponent/secondary_system/crash/I = O.sec_system
-				if (I.crashable)
-					mover.Bump(src)
-					return TRUE
-			return FALSE
-	return ..()
-
-/turf/simulated/shuttle/Cross(atom/movable/mover)
-	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
-		return 0
-	return ..()
-
-/turf/unsimulated/floor/Cross(atom/movable/mover)
-	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
-		if (!( locate(/obj/machinery/mass_driver, src) ))
-			return 0
-	return ..()
-
 /turf/simulated/floor/burn_down()
 	if (src.intact)
 		src.ex_act(2)

@@ -105,4 +105,3 @@
 		targetcount++
 		if(targetcount >= maxtargets) //prevents them from getting too hung up on finding folks
 			break
-	//. = get_path_to(holder.owner, ., max_dist*2, 1) //calculate paths to the target, any unreachable targets will be discarded

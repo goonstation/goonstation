@@ -28,7 +28,7 @@
 	name = "attack"
 	minimum_task_ticks = 7
 	maximum_task_ticks = 20
-	var/weight = 15
+	weight = 15
 	target_range = 8
 	frustration_threshold = 3
 	var/last_seek = 0
@@ -166,7 +166,7 @@
 	name = "attack"
 	minimum_task_ticks = 7
 	maximum_task_ticks = 20
-	var/weight = 15
+	weight = 15
 	target_range = 7
 	frustration_threshold = 3
 	var/last_seek
@@ -266,7 +266,7 @@
 	name = "attack"
 	minimum_task_ticks = 7
 	maximum_task_ticks = 26
-	var/weight = 15
+	weight = 15
 	target_range = 8
 	frustration_threshold = 5
 	var/last_seek = 0
