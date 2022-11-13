@@ -264,6 +264,7 @@
 				for_by_tcl(IX, /obj/machinery/interdictor)
 					if (IX.expend_interdict(30,src,TRUE,ITDR_ZEPHYR))
 						src.changeStatus("zephyr_field", 3 SECONDS * life_mult)
+						break
 
 		clamp_values()
 

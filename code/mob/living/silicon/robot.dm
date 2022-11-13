@@ -2471,6 +2471,7 @@
 					for_by_tcl(IX, /obj/machinery/interdictor)
 						if (IX.expend_interdict(ROBOT_BATTERY_WIRELESS_CHARGERATE,src,TRUE,ITDR_NIMBUS))
 							src.cell.give(ROBOT_BATTERY_WIRELESS_CHARGERATE)
+							break
 
 				if (fix)
 					HealDamage("All", 6, 6)
