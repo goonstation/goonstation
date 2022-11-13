@@ -429,13 +429,11 @@
 	..()
 	// this bit of the code is supposed to make the cablespawners replace themselves with cables.
 	var/cable_surr = 0
-	// bitflag of the tiles surrounding it
-	// i.e. 10  9  6  5  8  4  2  1 (normal bitflags) (used when you only need one direction)
-	// i.e. SW NW SE NE  W  E  S  N (corresponding directions)
-	//     128 64 32 16  8  4  2  1 (actual bitflags) (used for multiple directions)
-	// bit of a confusing system sorry
-	// as it has to check for multiple wires
-	// i think someone called it 8 bit directions once? idk
+	// bitflag of the tiles surrounding it \
+	i.e. 10  9  6  5  8  4  2  1 (normal bitflags) (used when you only need one direction) \
+	i.e. SW NW SE NE  W  E  S  N (corresponding directions) \
+	    128 64 32 16  8  4  2  1 (actual bitflags) (used for multiple directions) \
+	i think someone called it 8 bit directions once? idk
 	var/const/SW = 128
 	var/const/NW = 64
 	var/const/SE = 32
@@ -445,8 +443,8 @@
 	var/const/SS = 2
 	var/const/NN = 1
 	// 8 bit flags
-	src.check(cable_surr)
-	src.build(newloc)
+	cable_surr = src.check(cable_surr)
+	src.build(newloc,cable_surr)
 
 /obj/cablespawner/proc/check(var/cable_surr)
 	for (var/obj/cablespawner in orange(1, src))
@@ -454,40 +452,64 @@
 		var/disx = cable.x - src.x
 		var/disy = cable.y - src.y
 		// the following assumes disxy (displacement of x or y) equals 1,0 or -1
-		if (disx & disy)
-			cable_surr = cable_surr | NE
+		if (disx & disy == 1)
+			cable_surr |= NE
 			continue
-		else if (!disx & !disy)
-			cable_surr = cable_surr | SW
+		else if (-disx & -disy == 1)
+			cable_surr |= SW
 			continue
-		else if (disx & !disy)
-			cable_surr = cable_surr | SE
+		else if (disx & -disy == 1)
+			cable_surr |= SE
 			continue
-		else if (!disx & disy)
-			cable_surr = cable_surr | NW
+		else if (-disx & disy == 1)
+			cable_surr |= NW
 			continue
-		else if (disx)
-			cable_surr = cable_surr | EE
+		else if (disx == 1)
+			cable_surr |= EE
 			continue
-		else if (!disx)
-			cable_surr = cable_surr | WW
+		else if (-disx == 1)
+			cable_surr |= WW
 			continue
-		else if (disy)
-			cable_surr = cable_surr | NN
+		else if (disy == 1)
+			cable_surr |= NN
 			continue
-		else if (!disy)
-			cable_surr = cable_surr | SS
+		else if (-disy == 1)
+			cable_surr |= SS
 			continue
-	// not every direction is needed, see
-	// if there are three adjacent directions, only two are needed
-	// e.g. N NE and E, that is technically a grid of four, doesnt need the diagonals
-	// its a wasted wire
-	// same with NW N NE, that can be a T junction, no need for diagonals
-	// so now we check each of these cases
-	if (cable_surr & (NW + NN + NE))
-	// northern T
-		cable_surr
 
+
+	proc/optimise()
+	// if there is only cablespawners, not all 8 directions are needed. \
+	If there are three adjacent directions, only two or one are needed \
+	e.g. N NE and E, that is technically a grid of four, doesnt need the diagonals, \
+	its a wasted cable. Same with NW N NE, that can be a T junction, no need for diagonals \
+	so now we check each of these cases, but if you want each cablespawner to spiderweb out in \
+	8 directions, remove this bit
+		if (cable_surr & (NW + NN + NE))
+		// Northern T
+			cable_surr &= ~(NW + NE)
+		if (cable_surr & (SW + SS + SE))
+		// Southern T
+			cable_surr &= ~(SW + SE)
+		if (cable_surr & (NE + EE + SE))
+		// Eastern T
+			cable_surr &= ~(NE + SE)
+		if (cable_surr & (NW + WW + SW))
+		// Western T
+			cable_surr &= ~(NW + SW)
+		if (cable_surr & (WW + NW + NN))
+		//Northwest Corner
+			cable_surr &= ~(NW)
+		if (cable_surr & (NN + NE + EE))
+		//Northeast Corner
+			cable_surr &= ~(NE)
+		if (cable_surr & (WW + SW + SS))
+		//Southwest Corner
+			cable_surr &= ~(SW)
+		if (cable_surr & (SS + SE + EE))
+		//Southeast Corner
+			cable_surr &= ~(SE)
+	// this system priorities cardinal over diagonal directions. Change it if you like.
 
 	for (var/obj/cable in orange(1, src))
 	// normal, prexisting, manually placed cables (must be joined to no matter what)
@@ -537,5 +559,6 @@
 			continue
 		// the 'real' wires override and always connect to prevent loose ends
 
+	return cable_surr
 /obj/cablespawner/proc/build(var/newloc, var/cable_surr)
 	null
