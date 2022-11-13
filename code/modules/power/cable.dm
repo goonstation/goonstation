@@ -424,6 +424,7 @@
 	layer = CABLE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 	color = "#DD0000"
+	var/dir_count = 0
 
 /obj/cablespawner/New(var/newloc, var/obj/cablespawner/spawner)
 // this bit of the code is supposed to make the cablespawners replace themselves with cables.
@@ -453,32 +454,41 @@
 	if (cable_surr & (NW + NORTH + NE))
 	// Northern T
 		cable_surr &= ~(NW + NE)
+		dir_count -= 2
 	if (cable_surr & (SW + SOUTH + SE))
 	// Southern T
 		cable_surr &= ~(SW + SE)
+		dir_count -= 2
 	if (cable_surr & (NE + EAST + SE))
 	// Eastern T
 		cable_surr &= ~(NE + SE)
+		dir_count -= 2
 	if (cable_surr & (NW + WEST + SW))
 	// Western T
 		cable_surr &= ~(NW + SW)
+		dir_count -= 2
 	if (cable_surr & (NORTHWEST + NW))
 	//Northwest Corner
 		cable_surr &= ~(NW)
+		dir_count -= 1
 	if (cable_surr & (NORTHEAST + NE))
 	//Northeast Corner
 		cable_surr &= ~(NE)
+		dir_count -= 1
 	if (cable_surr & (SOUTHWEST + SW))
 	//Southwest Corner
 		cable_surr &= ~(SW)
+		dir_count -= 1
 	if (cable_surr & (SOUTHEAST + SE))
 	//Southeast Corner
 		cable_surr &= ~(SE)
+		dir_count -= 1
 
 /obj/cablespawner/proc/check(var/cable_surr)
 // checks around itself for cables, returns 8 bits.
 	for (var/obj/cablespawner/spawner in orange(1, src))
 	// cablespawners around itself
+		dir_count += 1
 		var/disx = cable.x - src.x
 		var/disy = cable.y - src.y
 		// the following assumes disxy (displacement of x or y) equals 1,0 or -1
@@ -509,8 +519,9 @@
 
 	optimise(cable_surr)
 
-	for (var/obj/cable in orange(1, src))
+	for (var/obj/cable/normal_cable in orange(1, src))
 	// normal, prexisting, manually placed cables (must be joined to no matter what)
+		dir_count += 1
 		var/disx = cable.x - src.x
 		var/disy = cable.y - src.y
 		// the following assumes disxy (displacement of x or y) equals 1,0 or -1
@@ -556,20 +567,19 @@
 				cable_surr = cable_surr | SOUTH
 			continue
 		// the 'real' wires override and always connect to prevent loose ends
-
 	return cable_surr
 
 /obj/cablespawner/proc/build(var/newloc, var/cable_surr)
 // causes cablespawner to spawn cables (amazing)
-	var/dir_count = 0
-	// i'd get the amount of directions here, hamming weight
-	// [placeholder]
 	if (dir_count == 0)
 	// a standalone cable (not really supposed to happen)
-
+		null
 	else if (dir_count == 1)
 	// end of a cable
+		null
 	else if (dir_count == 2)
 	// a normal, single cable
+		null
 	else if (dir_count >= 2)
 	// multiple cables
+		null
