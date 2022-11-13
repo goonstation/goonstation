@@ -416,32 +416,72 @@
 /obj/cablespawner
 	// a cable spawner which can spawn multiple cables to connect to other cables around it.
 	level = 1
-	anchored =1
-	var/tmp/netnum = 0
 	name = "power cable spawner"
-	desc = ""
+	desc = "An item that should spawn actual cables. If you're reading this, something's wrong."
 	icon = 'icons/obj/power_cond.dmi'
 	icon_state = "superstate"
 	var/iconmod = null
 	layer = CABLE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 	color = "#DD0000"
-	text = ""
-
-	var/insulator_default = "synthrubber"
-	var/condcutor_default = "copper"
-
-	var/datum/material/insulator = null
-	var/datum/material/conductor = null
 
 /obj/cablespawner/New(var/newloc, var/obj/cablespawner/spawner)
 	..()
 	// this bit of the code is supposed to make the cablespawners replace themselves with cables.
 	var/cable_surroundings = 0
 	// bitflag of the tiles surrounding it
+	// bitflags: abcdefgh where efgh are the four cardinal directions and abcd are diagonals
+	// i.e. 10  9  6  5  8  4  2  1 (normal bitflags)
+	// i.e. SW NW SE NE  W  E  S  N (corresponding directions)
+	// as it has to check for multiple wires
 	src.check()
 	src.build()
-/obj/cablespawner/proc/build(var/newloc, var/cable_surroundings)
-	null
+
 /obj/cablespawner/proc/check()
+	for (var/obj/cable in orange(1, src))
+		var/disx = cable.x - src.x
+		var/disy = cable.y - src.y
+		// the following assumes disxy (displacement of x or y) equals 1,0 or -1
+		if (disx & disy)
+			// northeast tile 1,1
+			if (cable.d1 || cable.d2 == 10)
+				cable_surroundings = cable_surroundings | 5
+			continue
+		else if (!disx & !disy)
+			// southwest tile -1,-1
+			if (cable.d1 || cable.d2 == 5)
+				cable_surroundings = cable_surroundings | 10
+			continue
+		else if (disx & !disy)
+			// southeast tile 1,-1
+			if (cable.d1 || cable.d2 == 9)
+				cable_surroundings = cable_surroundings | 6
+			continue
+		else if (!disx & disy)
+			// northeast tile -1,1
+			if (cable.d1 || cable.d2 == 6)
+				cable_surroundings = cable_surroundings | 9
+			continue
+		else if (disx)
+			// east tile 1,0
+			if (cable.d1 || cable.d2 == 8)
+				cable_surroundings = cable_surroundings | 4
+			continue
+		else if (!disx)
+			// west tile -1,0
+			if (cable.d1 || cable.d2 == 4)
+				cable_surroundings = cable_surroundings | 8
+			continue
+		else if (disy)
+			// north tile 0,1
+			if (cable.d1 || cable.d2 == 2)
+				cable_surroundings = cable_surroundings | 1
+			continue
+		else if (!disy)
+			// south tile 0,-1
+			if (cable.d1 || cable.d2 == 1)
+				cable_surroundings = cable_surroundings | 2
+			continue
+
+/obj/cablespawner/proc/build(var/newloc, var/cable_surroundings)
 	null
