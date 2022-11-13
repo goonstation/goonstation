@@ -440,7 +440,7 @@
 	icon_state = "sterile"
 	item_state = "s_mask"
 	w_class = W_CLASS_TINY
-	c_flags = COVERSMOUTH | BLOCKSMOKE
+	c_flags = COVERSMOUTH
 	path_prot = 0
 
 	setupProperties()
