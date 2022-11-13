@@ -162,7 +162,6 @@
 		else
 			src.icon_state = "chemportgen0"
 
-		src.ClearSpecificOverlays("fueltank", "inlettank")
 		if (!src.fuel_tank_image)
 			src.fuel_tank_image = image('icons/obj/power.dmi')
 		if (!src.inlet_tank_image)
