@@ -70,7 +70,7 @@
 			else
 				if(H.sims)
 					user.visible_message("<span class='notice'>[user] starts washing [his_or_her(user)] hands.</span>")
-					actions.start(new/datum/action/bar/handwashing(user,src),user)
+					actions.start(new/datum/action/bar/private/handwashing(user,src),user)
 				else //simpler handwashing if hygiene isn't a concern
 					user.visible_message("<span class='notice'>[user] washes [his_or_her(user)] hands.</span>")
 					H.blood_DNA = null
@@ -78,7 +78,7 @@
 					H.set_clothing_icon_dirty()
 		..()
 
-/datum/action/bar/handwashing
+/datum/action/bar/private/handwashing
 	duration = 1 SECOND //roughly matches the rate of manual clicking
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
 	id = "handwashing"
@@ -92,14 +92,14 @@
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(user, sink) > 1 || user == null || sink == null)
+		if(BOUNDS_DIST(user, sink) > 1 || user == null || sink == null || user.l_hand || user.r_hand)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(user, sink) > 1 || user == null || sink == null)
+		if(BOUNDS_DIST(user, sink) > 1 || user == null || sink == null || user.l_hand || user.r_hand)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.loopStart()
@@ -110,7 +110,7 @@
 		playsound(get_turf(sink), 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 
 	onEnd()
-		if(BOUNDS_DIST(user, sink) > 1 || user == null || sink == null)
+		if(BOUNDS_DIST(user, sink) > 1 || user == null || sink == null || user.l_hand || user.r_hand)
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return
