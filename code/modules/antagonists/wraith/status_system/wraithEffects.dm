@@ -4,7 +4,7 @@
 	desc = "The dark is trying to get you! Stay in the light!"
 	icon_state = "dread1"
 	unique = 1
-	duration = 20 SECONDS
+	duration = 30 SECONDS
 	maxDuration = 3 MINUTES
 	var/mob/living/carbon/human/H
 
@@ -38,7 +38,7 @@
 					if (5)
 						H.emote("twitch_v")
 						boutput(H, pick("<span class='alert'>You feel something crawling on your back<span class='alert'>", "<span class='alert'>Something just crawled up your leg!</span>"))
-		if ((duration > 30 SECONDS) && (duration < 60 SECONDS))
+		if ((duration > 30 SECONDS) && (duration < 45 SECONDS))
 			if(icon_state != "dread2")
 				icon_state = "dread2"
 			if(probmult(9))
@@ -52,10 +52,9 @@
 					if (3)
 						H.setStatus("stunned", 2 SECONDS)
 						H.visible_message("<span class='alert'>[H] flails around wildly, trying to get some invisible things off [himself_or_herself(H)].</span>", "<span class='alert'>You flail around wildly trying to defend yourself from the shadows!</span>")
-		if ((duration >= 60 SECONDS) && (duration < 90 SECONDS))
+		if ((duration >= 45 SECONDS) && (duration < 70 SECONDS))
 			SPAWN(1 SECOND)
 				H.playsound_local(H, "sound/effects/heartbeat.ogg", 50)
-			H.make_jittery(30)
 			H.setStatus("terror", 30 SECONDS)
 			if(icon_state != "dread3")
 				icon_state = "dread3"
@@ -75,10 +74,9 @@
 						random_brute_damage(H, 3)
 						H.playsound_local(H, "sound/impact_sounds/Flesh_Tear_[pick("1", "2", "3")].ogg", 70)
 						boutput(H, pick("<span class='alert'>SOMETHING BIT YOU, HOLY SHIT!!!</span>"))
-		if ((duration >= 90 SECONDS) && (duration < 130 SECONDS))
+		if ((duration >= 70 SECONDS) && (duration < 100 SECONDS))
 			SPAWN(5 DECI SECONDS)
 				H.playsound_local(H, "sound/effects/heartbeat.ogg", 70)
-			H.make_jittery(30)
 			H.setStatus("terror", 30 SECONDS)
 			if(icon_state != "dread4")
 				icon_state = "dread4"
@@ -96,7 +94,7 @@
 					if (4)
 						H.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)	//Bad luck
 						H.visible_message("<span class='alert'>[H] suddenly clutches their chest with a terrified expression</span>", "<span class='alert'>Your heart is beating out of your chest! You feel like death!</span>")
-		if ((duration >= 130 SECONDS))
+		if ((duration >= 100 SECONDS))
 			H.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)
 			H.contract_disease(/datum/ailment/malady/flatline,null,null,1)
 			H.visible_message("<span class='alert'>[H]'s face goes blank as they start to collapse to the ground</span>", "<span class='alert'>Your nerves can't take it any longer! Your heart is giving up on you!</span>")

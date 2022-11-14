@@ -216,7 +216,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				F.group.drain(F, amt / F.group.amt_per_tile, src) // drain uses weird units
 			else //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids
 				var/turf/T = get_turf(F)
-				logTheThing(LOG_COMBAT, user, "transfers chemicals from [src] [log_reagents(src)] to [F] at [log_loc(user)].") // Added reagents (Convair880).
+				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [F] at [log_loc(user)].") // Added reagents (Convair880).
 				var/trans = src.reagents.trans_to(T, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
 				boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [T].</span>")
 
@@ -246,7 +246,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				boutput(user, "<span class='alert'>[target] is full.</span>")
 				return
 
-			logTheThing(LOG_COMBAT, user, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].") // Added reagents (Convair880).
+			logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].") // Added reagents (Convair880).
 			var/trans = src.reagents.trans_to(target, 10)
 			boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 
@@ -261,7 +261,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				boutput(user, "<span class='alert'>[target] is full.</span>")
 				return
 
-			logTheThing(LOG_COMBAT, user, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].")
+			logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].")
 			var/trans = src.reagents.trans_to(target, 10)
 			boutput(user, "<span class='notice'>You dump [trans] units of the solution to [target].</span>")
 
@@ -363,7 +363,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		else if (istype(I, /obj/item/scalpel) || istype(I, /obj/item/circular_saw) || istype(I, /obj/item/surgical_spoon) || istype(I, /obj/item/scissors/surgical_scissors))
 			if (src.reagents && I.reagents)
 				src.reagents.trans_to(I, 5)
-				logTheThing(LOG_COMBAT, user, "poisoned [I] [log_reagents(I)] with reagents from [src] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
+				logTheThing(LOG_CHEMISTRY, user, "poisoned [I] [log_reagents(I)] with reagents from [src] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
 				user.visible_message("<span class='alert'><b>[user]</b> dips the blade of [I] into [src]!</span>")
 				return
 
