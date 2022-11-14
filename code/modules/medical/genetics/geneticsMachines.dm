@@ -975,7 +975,7 @@
 	var/mob/living/subject = get_scan_subject()
 	if (subject)
 		var/mob/living/carbon/human/H = subject
-		var/datum/character_preview/multiclient/P = src.get_occupant_preview()
+		var/datum/map_preview/character/multiclient/P = src.get_occupant_preview()
 		P?.add_client(user?.client)
 		.["subject"] = list(
 			"preview" = P?.preview_id,
@@ -1123,7 +1123,7 @@
 
 /obj/machinery/computer/genetics/ui_close(mob/user)
 	. = ..()
-	var/datum/character_preview/multiclient/P = src.get_occupant_preview()
+	var//datum/map_preview/character/multiclient/P = src.get_occupant_preview()
 	P?.remove_client(user?.client)
 	src.modify_appearance?.ui_close(user)
 

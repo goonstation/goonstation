@@ -9,7 +9,7 @@ var/list/genetek_hair_styles = list()
 	mats = 15
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/mob/occupant = null
-	var/datum/character_preview/multiclient/occupant_preview = null
+	var/datum/map_preview/character/multiclient/occupant_preview = null
 	var/locked = 0
 	anchored = 1
 	soundproofing = 10
@@ -281,7 +281,7 @@ var/list/genetek_hair_styles = list()
 
 	var/s_tone = "#FAD7D0"
 
-	var/datum/character_preview/multiclient/preview = null
+	var//datum/map_preview/character/multiclient/preview = null
 
 	New(mob/target)
 		..()

@@ -44,7 +44,7 @@ var/list/clothingbooth_items = list()
 
 //clothing booth stuffs <3
 /obj/machinery/clothingbooth
-	var/datum/character_preview/multiclient/preview
+	var/datum/map_preview/character/multiclient/preview
 	var/obj/item/preview_item = null
 	var/money = 0
 	var/open = TRUE

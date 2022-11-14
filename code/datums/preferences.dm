@@ -70,7 +70,7 @@ datum/preferences
 
 	var/datum/appearanceHolder/AH = new
 
-	var/datum/character_preview/preview = null
+	var/datum/map_preview/character/preview = null
 
 	var/mentor = 0
 	var/see_mentor_pms = 1 // do they wanna disable mentor pms?

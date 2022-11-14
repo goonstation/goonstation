@@ -1,16 +1,19 @@
+/datum/map_preview
+
+
 /**
  * # Character Preview
  *
  * Essentially, it creates a human on a 1x1 map and lets you set the appearance of that human.
  *
  * This parent type is for use in single-client windows.
- * See [datum/character_preview/window] for a detatched window and and [datum/character_preview/multiclient] for a multi-client variant.
+ * See [/datum/map_preview/character/window] for a detatched window and and [/datum/map_preview/character/multiclient] for a multi-client variant.
  *
  * Use winset() to position the control within the window.
  *
  * See the default code for an example - places it at 0,0 and makes it 128x128 pixels.
  */
-datum/character_preview
+/datum/map_preview/character
 	var/global/max_preview_id = 0
 	/// The map ID for use with winset().
 	var/preview_id
@@ -108,7 +111,7 @@ datum/character_preview
 
 /// Manages its own window.
 /// Basically a simplified version for when you don't need to put other stuff in the preview window.
-datum/character_preview/window
+/datum/map_preview/character/window
 	New(client/viewer)
 		var/winid = "preview_[max_preview_id]"
 
@@ -140,7 +143,7 @@ datum/character_preview/window
  *
  * You need to call the special client procs to manage subscribers in addition to the winset.
  */
-datum/character_preview/multiclient
+/datum/map_preview/character/multiclient
 	var/list/viewers = list()
 
 	New(control_id = null)
