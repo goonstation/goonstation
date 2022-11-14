@@ -127,7 +127,7 @@
 	// HAAAAA
 	src.visible_message("<span class='alert'>[src] is not a ghost, and is therefore unaffected by [P]!</span>","<span class='notice'>You feel a little [pick("less", "more")] [pick("fuzzy", "spooky", "glowy", "flappy", "bouncy")].</span>")
 
-/mob/living/intangible/flock/proc/select_drone(var/mob/living/critter/flock/drone/drone)
+/mob/living/intangible/flock/proc/select_drone(mob/living/critter/flock/drone/drone)
 	var/datum/abilityHolder/flockmind/holder = src.abilityHolder
 	holder.drone_controller.drone = drone
 	drone.AddComponent(/datum/component/flock_ping/selected)

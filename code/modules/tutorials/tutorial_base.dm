@@ -107,7 +107,7 @@
 		var/datum/mapPrefab/allocated/prefab = get_singleton(src.region_type)
 		src.region = prefab.load()
 		logTheThing(LOG_DEBUG, usr, "<b>[src.name]</b>: Got bottom left corner [log_loc(src.region.bottom_left)]")
-		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_START])
+		for(var/turf/T as anything in landmarks[LANDMARK_TUTORIAL_START])
 			if(region.turf_in_region(T))
 				initial_turf = T
 				break

@@ -69,7 +69,7 @@
 	SPAWN(cooldown + 5)
 		holder?.updateButtons()
 
-/datum/targetable/flockmindAbility/proc/tutorial_check(var/id, var/atom/context, var/silent = FALSE)
+/datum/targetable/flockmindAbility/proc/tutorial_check(id, atom/context, silent = FALSE)
 	var/mob/living/intangible/flock/flockmind/flockmind_owner = src.holder.owner
 	if (istype(flockmind_owner))
 		if (flockmind_owner.tutorial)
@@ -302,8 +302,8 @@
 	for(var/obj/machinery/door/airlock/A in range(10, get_turf(holder.owner)))
 		if(A.canAIControl())
 			targets += A
-	src.tutorial_check(FLOCK_ACTION_GATECRASH, targets, TRUE)
 	if(length(targets))
+		src.tutorial_check(FLOCK_ACTION_GATECRASH, targets, TRUE)
 		playsound(holder.get_controlling_mob(), 'sound/misc/flockmind/flockmind_cast.ogg', 80, 1)
 		boutput(holder.get_controlling_mob(), "<span class='notice'>You force open all the doors around you.</span>")
 		logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts gatecrash at [log_loc(src.holder.owner)].")
@@ -508,7 +508,7 @@
 
 /datum/targetable/flockmindAbility/tutorial
 	name = "Interactive Tutorial"
-	desc = "Check out the interactive flock tutorial to get started."
+	desc = "Check out the interactive Flock tutorial to get started."
 	icon_state = "question_mark"
 	cooldown = 0 SECONDS
 	targeted = FALSE
@@ -525,7 +525,7 @@
 //yes this is copy pasted from blob, blob abilities are their own cursed thing so we have to reimplement
 /datum/targetable/flockmindAbility/tutorial_exit
 	name = "Exit Tutorial"
-	desc = "Exit the flock tutorial and re-enter the game."
+	desc = "Exit the Flock tutorial and re-enter the game."
 	icon_state = "x"
 	targeted = FALSE
 	special_screen_loc = "SOUTH,EAST"

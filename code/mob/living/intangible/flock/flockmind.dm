@@ -46,15 +46,14 @@
 		boutput(src, "<span class='alert'>Could not start tutorial! Please try again later or call Wire.</span>")
 		src.tutorial = null
 
-/mob/living/intangible/flock/flockmind/select_drone(var/mob/living/critter/flock/drone/drone)
+/mob/living/intangible/flock/flockmind/select_drone(mob/living/critter/flock/drone/drone)
 	if(src.tutorial && !src.tutorial.PerformAction(FLOCK_ACTION_DRONE_SELECT))
 		return
 	..()
 
 /mob/living/intangible/flock/flockmind/Move(NewLoc, direct)
-	if (isturf(NewLoc))
-		if (istype(NewLoc, /turf/cordon))
-			return FALSE
+	if (istype(NewLoc, /turf/cordon))
+		return FALSE
 	..()
 
 /mob/living/intangible/flock/flockmind/special_desc(dist, mob/user)

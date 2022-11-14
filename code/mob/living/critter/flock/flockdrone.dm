@@ -914,7 +914,7 @@
 	else
 		return TRUE
 
-/mob/living/critter/flock/drone/proc/set_stupid(var/value)
+/mob/living/critter/flock/drone/proc/set_stupid(value)
 	if (value)
 		src.ai = new /datum/aiHolder/flock/drone/tutorial(src)
 	else
