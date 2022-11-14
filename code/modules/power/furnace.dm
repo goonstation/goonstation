@@ -15,7 +15,14 @@
 	mats = 20
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
-	machine_registry_idx = MACHINES_MISC
+
+	New(new_loc)
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
 
 	process()
 		if(status & BROKEN) return
@@ -208,11 +215,11 @@
 		else if (istype(W, /obj/item/spacecash/))
 			if (W.amount == 1)
 				fuel_name = "a credit"
-				fuel += 1
+				fuel += 0.1
 			else
 				fuel_name = "credits"
 				stacked = TRUE
-				handle_stacks(W, 2)
+				handle_stacks(W, 0.1)
 		else if (istype(W, /obj/item/paper/)) fuel += 6
 		else if (istype(W, /obj/item/clothing/gloves/)) fuel += 10
 		else if (istype(W, /obj/item/clothing/head/)) fuel += 20
