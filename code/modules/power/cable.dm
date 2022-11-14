@@ -413,7 +413,7 @@
 
 	return
 
-///a cable spawner which can spawn multiple cables to connect to other cables around it.
+/// a cable spawner which can spawn multiple cables to connect to other cables around it.
 /obj/cablespawner
 	level = 1
 	name = "power cable spawner"
