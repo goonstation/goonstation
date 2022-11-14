@@ -81,7 +81,7 @@ task-test() {
 ## Mr. Proper
 task-clean() {
   cd "${base_dir}"
-  rm -rf../browserassets/tgui/.tmp
+  rm -rf ../browserassets/tgui/.tmp
   rm -f ../browserassets/tgui/*.map
   rm -f ../browserassets/tgui/*.chunk.*
   rm -f ../browserassets/tgui/*.bundle.*
