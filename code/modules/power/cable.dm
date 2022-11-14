@@ -425,23 +425,19 @@
 	plane = PLANE_NOSHADOW_BELOW
 	color = "#DD0000"
 	var/dir_count = 0
-
-/obj/cablespawner/New()
-//
-	..()
-	var/cable_surr = 0
-	/*
-	* bitflag of the tiles surrounding it 
-	* i.e.(10)(9)(6)(5) 8  4  2  1 (normal bitflags) (used when you only need one direction) 
-	* i.e. SW NW SE NE  W  E  S  N (corresponding directions) 
-	*     128 64 32 16  8  4  2  1 (actual bitflags) (used for multiple directions) 
-	* i think someone called it 8 bit directions once? idk
-	*/
+	// some bit flags for 8 bit directions
 	var/const/SW = 128
 	var/const/NW = 64
 	var/const/SE = 32
 	var/const/NE = 16
-	// diagonal 8 bit flags
+	var/cable_surr = 0
+	/*
+	* bitflag of the tiles surrounding itself:
+	* i.e.(10)(9)(6)(5) 8  4  2  1 (normal bitflags) (used when you only need one direction)
+	* i.e. SW NW SE NE  W  E  S  N (corresponding directions)
+	*     128 64 32 16  8  4  2  1 (actual bitflags) (used for multiple directions)
+	* i think someone called it 8 bit directions once? idk
+	*/
 /obj/cablespawner/initialize(var/newloc, var/cable_surr)
 // this bit of the code is supposed to make the cablespawners replace themselves with cables.
 	..()
@@ -450,12 +446,12 @@
 
 /obj/cablespawner/proc/optimise(var/cable_surr)
 // if there is only cablespawners, not all 8 directions are needed. This clears some.
-	.. ()
-	//If there are three adjacent directions, only two or one are needed \
-	e.g. N NE and E, that is technically a grid of four, doesnt need the diagonals, \
-	its a wasted cable. Same with NW N NE, that can be a T junction, no need for diagonals \
-	so now we check each of these cases, but if you want each cablespawner to spiderweb out in \
-	8 directions, remove this bit. Cardinal directions are favoured.
+	/*If there are three adjacent directions, only two or one are needed
+	* e.g. N NE and E, that is technically a grid of four, doesnt need the diagonals,
+	* its a wasted cable. Same with NW N NE, that can be a T junction, no need for diagonals
+	* so now we check each of these cases, but if you want each cablespawner to spiderweb out in
+	* 8 directions, remove this bit. Cardinal directions are favoured.
+	*/
 	if (cable_surr & (NW + NORTH + NE))
 	// Northern T
 		cable_surr &= ~(NW + NE)
