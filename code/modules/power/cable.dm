@@ -413,8 +413,8 @@
 
 	return
 
+///a cable spawner which can spawn multiple cables to connect to other cables around it.
 /obj/cablespawner
-// a cable spawner which can spawn multiple cables to connect to other cables around it.
 	level = 1
 	name = "power cable spawner"
 	desc = "An item that should spawn actual cables. If you're reading this, something's wrong."
@@ -441,14 +441,15 @@
 	* i think someone called it 8 bit directions once? idk
 	* anyway thats what cable_surr does
 	*/
+/// this bit of the code is supposed to make the cablespawners replace themselves with cables.
 /obj/cablespawner/initialize(var/newloc)
-// this bit of the code is supposed to make the cablespawners replace themselves with cables.
 	..()
 	src.check()
 	src.build(newloc,cable_surr)
 
+/// if there is only cablespawners, not all 8 directions are needed. This removes some flotsam.
 /obj/cablespawner/proc/optimise()
-// if there is only cablespawners, not all 8 directions are needed. This clears some.
+
 	/*If there are three adjacent directions, only two or one are needed
 	* e.g. N NE and E, that is technically a grid of four, doesnt need the diagonals,
 	* its a wasted cable. Same with NW N NE, that can be a T junction, no need for diagonals
@@ -488,8 +489,8 @@
 		cable_surr &= ~(SE)
 		dir_count -= 1
 
+/// checks around itself for cables, adds up to 8 bits to cable_surr
 /obj/cablespawner/proc/check(var/obj/cable/cable)
-// checks around itself for cables, adds up to 8 bits to cable_surr
 	for (var/obj/cablespawner/spawner in orange(1, src))
 	// cablespawners around itself
 		dir_count += 1
@@ -521,7 +522,7 @@
 			cable_surr |= SOUTH
 			continue
 
-	optimise(cable_surr)
+	optimise()
 
 	for (var/obj/cable/normal_cable in orange(1, src))
 	// normal, prexisting, manually placed cables (must be joined to no matter what)
@@ -573,8 +574,8 @@
 		// the 'real' wires override and always connect to prevent loose ends
 	return cable_surr
 
+/// causes cablespawner to spawn cables (amazing)
 /obj/cablespawner/proc/build()
-// causes cablespawner to spawn cables (amazing)
 	var/directions = convert()
 	if (dir_count == 0)
 	// a standalone cable (not really supposed to happen)
@@ -589,9 +590,8 @@
 	// multiple cables, spiral out from the centre
 		for (var/i in 1 to dir_count+1)
 			cable_laying(0, directions[i])
-
+/// converts 8 bit into a list of directions. In order of bitflag
 /obj/cablespawner/proc/convert()
-// converts 8 bit into a list of directions. In order of bitflag
 	var/list/directionlist
 	if (cable_surr & NORTH)
 		directionlist += NORTH
@@ -611,8 +611,8 @@
 		directionlist += SOUTHWEST
 	return directionlist
 
+/// places a cable with d1 and d2
 /obj/cablespawner/proc/cable_laying(var/dir1, var/dir2, var/obj/cable/cable)
-// places a cable with d1 and d2
 	var/obj/cable/current = new/obj/cable(src.loc)
 	current.d1 = dir1
 	current.d2 = dir2
