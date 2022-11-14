@@ -1208,13 +1208,13 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Necessities Vending Machine Restocking Pack"
 
 /datum/supply_packs/catering_vending_restock
-	name = "Catering Vending Machine Restocking Pack"
-	desc = "Various Vending Machine Restock Cartridges for catering"
+	name = "Catering and Hydroponics Vending Machine Restocking Pack"
+	desc = "Various Vending Machine Restock Cartridges for catering and hydroponics"
 	contains = list(/obj/item/vending/restock_cartridge/hydroponics,
 					/obj/item/vending/restock_cartridge/kitchen)
 	cost = 1000
 	containertype = /obj/storage/crate
-	containername = "Catering Vending Machine Restocking Pack"
+	containername = "Catering and Hydroponics Vending Machine Restocking Pack"
 
 /datum/supply_packs/medical_vending_restock
 	name = "Medical Vending Machine Restock Pack"
@@ -1464,7 +1464,8 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containertype = /obj/storage/crate
 	containername = "Cargo Bay Kit"
 
-
+//Nadir is not intended to have station pods/submarines
+#ifndef MAP_OVERRIDE_NADIR
 /datum/supply_packs/complex/pod_kit
 	name = "Pod Production Kit"
 	desc = "Frames: 1x Ship Component Fabricator, 1x Reclaimer"
@@ -1473,6 +1474,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	cost = 5000
 	containertype = /obj/storage/crate
 	containername = "Pod Production Kit"
+#endif
 
 /datum/supply_packs/complex/turret_kit
 	name = "Defense Turret Kit"

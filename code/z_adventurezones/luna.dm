@@ -116,7 +116,7 @@ Contents:
 
 
 	Entered(atom/A as mob|obj)
-		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
+		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/living/intangible))
 			return ..()
 
 		var/turf/T = pick_landmark(isHemera ? LANDMARK_FALL_MOON_HEMERA : LANDMARK_FALL_MOON_MUSEUM)
@@ -1255,8 +1255,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 		src: url('glass_tty_vt220.eot');
 		src: url('glass_tty_vt220.eot') format('embedded-opentype'),
 			 url('glass_tty_vt220.ttf') format('truetype'),
-			 url('glass_tty_vt220.woff') format('woff'),
-			 url('glass_tty_vt220.svg') format('svg');
+			 url('glass_tty_vt220.woff') format('woff');
 	}
 
 	body {background-color:#999876;}

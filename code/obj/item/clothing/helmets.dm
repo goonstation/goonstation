@@ -181,6 +181,7 @@
 	name = "diving helmet"
 	desc = "Comes equipped with a builtin flashlight."
 	icon_state = "diving0"
+	acid_survival_time = 8 MINUTES
 
 	flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
 		on = !on
@@ -448,6 +449,7 @@
 	desc = "A modified combat helmet for Nanotrasen security forces."
 	icon_state = "ntso_specialist"
 	item_state = "ntso_specialist"
+	acid_survival_time = 6 MINUTES
 
 	setupProperties()
 		..()
@@ -674,6 +676,10 @@
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 100)
 
+	show_buttons()	//Hide the button from non-human mobs
+		if (ishuman(the_mob))
+			..()
+
 	proc/obscure(mob/user)
 		user.addOverlayComposition(/datum/overlayComposition/weldingmask)
 		user.updateOverlaysClient(user.client)
@@ -686,27 +692,28 @@
 		up = FALSE
 		see_face = FALSE
 		icon_state = "welding"
-		boutput(user, "You flip the mask down. The mask is now protecting you from eye damage.")
-		if (user.head == src)
-			src.obscure(user)
-			user.update_clothing()
-
+		boutput(user, "You flip the mask down. The mask now provides protection from eye damage.")
 		src.c_flags |= (COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 100)
+		if (ishuman(user))
+			if (user.head == src)
+				src.obscure(user)
+				user.update_clothing()
+
 
 	proc/flip_up(var/mob/living/carbon/human/user)
 		up = TRUE
 		see_face = TRUE
 		icon_state = "welding-up"
-		boutput(user, "You flip the mask up. The mask is now providing greater armor to your head.")
-		if (user.head == src)
-			src.reveal(user)
-			user.update_clothing()
-
+		boutput(user, "You flip the mask up. The mask now provides higher armor to the head.")
 		src.c_flags &= ~(COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 4)
 		setProperty("disorient_resist_eye", 0)
+		if (ishuman(user))
+			if (user.head == src)
+				src.reveal(user)
+				user.update_clothing()
 
 	equipped(mob/user, slot)
 		. = ..()
@@ -850,6 +857,7 @@
 	name = "industrial space helmet"
 	desc = "Goes with Industrial Space Armor. Now with zesty citrus-scented visor!"
 #endif
+	acid_survival_time = 8 MINUTES
 
 	setupProperties()
 		..()

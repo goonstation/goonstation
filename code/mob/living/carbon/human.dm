@@ -157,7 +157,7 @@
 	var/special_hair_override = 0 // only really works if they have any special hair
 
 	random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
-	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r", "nosepick")
+	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r")
 
 	var/icon/flat_icon = null
 
@@ -742,6 +742,11 @@
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
 
 	if (src.mind) // I think this is kinda important (Convair880).
+#ifdef DATALOGGER
+		if (src.mind.ckey)
+			// game_stats.Increment("playerdeaths")
+			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
+#endif
 		src.mind.register_death()
 		if (src.mind.special_role == ROLE_MINDHACK)
 			remove_mindhack_status(src, "mindhack", "death")
@@ -749,11 +754,6 @@
 			remove_mindhack_status(src, "vthrall", "death")
 		else if (src.mind.master)
 			remove_mindhack_status(src, "otherhack", "death")
-#ifdef DATALOGGER
-		if (src.mind.ckey)
-			// game_stats.Increment("playerdeaths")
-			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
-#endif
 
 	logTheThing(LOG_COMBAT, src, "dies [log_health(src)] at [log_loc(src)].")
 	//src.icon_state = "dead"
@@ -1011,12 +1011,12 @@
 /mob/living/carbon/human/proc/throw_mode_off()
 	src.in_throw_mode = 0
 	src.update_cursor()
-	hud.update_throwing()
+	hud?.update_throwing()
 
 /mob/living/carbon/human/proc/throw_mode_on()
 	src.in_throw_mode = 1
 	src.update_cursor()
-	hud.update_throwing()
+	hud?.update_throwing()
 
 /mob/living/carbon/human/throw_item(atom/target, list/params)
 	..()
@@ -1841,12 +1841,6 @@
 		hud.remove_item(I)
 		hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["twohand"])
 
-		var/icon/IC = new/icon(I.icon)
-		var/width = IC.Width()
-		var/regex/locfinder = new(@"^(CENTER[+-]\d:)(\d+)(.*)$") //matches screen placement of the 2handed spot (e.g.: "CENTER-1:31, SOUTH:5"), saves the pixel offset of the east-west component separate from the rest
-		if(locfinder.Find("[I.screen_loc]")) //V offsets the screen loc of the item by half the difference of the sprite width and the default sprite width (32), to center the sprite in the box V
-			I.screen_loc = "[locfinder.group[1]][text2num(locfinder.group[2])-(width-32)/2][locfinder.group[3]]"
-
 		src.l_hand = I
 		src.r_hand = I
 	else //Object is 1-hand, remove ui elements, set item to proper location.
@@ -1911,12 +1905,6 @@
 			hud.set_visible(hud.rhand, 0)
 			hud.set_visible(hud.twohandl, 1)
 			hud.set_visible(hud.twohandr, 1)
-
-		var/icon/IC = new/icon(I.icon)
-		var/width = IC.Width()
-		var/regex/locfinder = new(@"^(CENTER[+-]\d:)(\d+)(.*)$") //matches screen placement of the 2handed spot (e.g.: "CENTER-1:31, SOUTH:5"), saves the pixel offset of the east-west component separate from the rest
-		if(locfinder.Find("[I.screen_loc]")) //V offsets the screen loc of the item by half the difference of the sprite width and the default sprite width (32), to center the sprite in the box V
-			I.screen_loc = "[locfinder.group[1]][text2num(locfinder.group[2])-(width-32)/2][locfinder.group[3]]"
 
 		return 1
 	else
@@ -2953,7 +2941,7 @@
 	src.drop_from_slot(src.r_hand)
 	src.drop_from_slot(src.l_hand)
 	src.update_body()
-	logTheThing(LOG_COMBAT, src, "drops the items they were juggling")
+	logTheThing(LOG_STATION, src, "drops the items they were juggling")
 
 /mob/living/carbon/human/proc/add_juggle(var/obj/thing as obj)
 	if (!thing || src.stat)
@@ -2982,7 +2970,7 @@
 		var/obj/item/i = thing
 		i.on_spin_emote(src)
 	src.update_body()
-	logTheThing(LOG_COMBAT, src, "juggles [thing]")
+	logTheThing(LOG_STATION, src, "starts juggling [thing].")
 
 /mob/living/carbon/human/does_it_metabolize()
 	return 1
@@ -3077,7 +3065,7 @@
 		var/maxVolumeAdd = src.reagents.maximum_volume - src.reagents.total_volume	// Get max available volume in human
 		if (maxVolumeAdd > 0)	// If we can add reagents to human, print message and dump shit into human
 			boutput(src, "<span class='alert'><b>[src.chest_item] spills its contents inside your chest!</span>")
-			logTheThing(LOG_COMBAT, src, "transfers chemicals from [src.chest_item] [log_reagents(src.chest_item)] to [src] at [log_loc(src)]")
+			logTheThing(LOG_CHEMISTRY, src, "transfers chemicals from [src.chest_item] [log_reagents(src.chest_item)] to [src] at [log_loc(src)]")
 			src.chest_item.reagents.trans_to(src, maxVolumeAdd)
 	return
 
@@ -3135,7 +3123,7 @@
 		// Make copy of item on ground
 		var/obj/item/outChestItem = src.chest_item
 		outChestItem.set_loc(get_turf(src))
-		src.chest_item.AttackSelf(src)
+		outChestItem.AttackSelf(src)
 		src.chest_item = null
 		return
 	src.chest_item.AttackSelf(src)
@@ -3460,3 +3448,14 @@
 		. = id?.pronouns
 	if(isnull(.))
 		return ..()
+
+/mob/living/carbon/human/hear_talk(mob/M, text, real_name, lang_id) //Allows stuff in your hands/pockets/belt to pickup voice from other people
+	var/mob/self = src
+	if(M != self)	//So we dont hear ourselves twice
+		src.l_store?.hear_talk(M, text, real_name, lang_id)
+		src.r_store?.hear_talk(M, text, real_name, lang_id)
+		src.belt?.hear_talk(M, text, real_name, lang_id)
+		src.r_hand?.hear_talk(M, text, real_name, lang_id)
+		src.l_hand?.hear_talk(M, text, real_name, lang_id)
+	. = ..()
+

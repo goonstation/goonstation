@@ -1,6 +1,6 @@
 /obj/machinery/wraith/vortex_wraith
 	name = "Summoning portal"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/wraith_objects.dmi'
 	icon_state = "harbinger_circle_inact"
 	desc = "It hums and thrums as you stare at it. Dark shadows weave in and out of sight within."
 	anchored = 1
@@ -15,7 +15,7 @@
 	var/total_mob_value = 0	//Total point value of all linked mobs
 	var/obj/mob_type = null
 	var/random_mode = true
-	var/mob/wraith/master = null
+	var/mob/living/intangible/wraith/master = null
 	var/datum/light/light
 	var/datum/light/portal_light
 	var/list/obj/critter/default_mobs = list(/obj/critter/crunched,	//Useful for random mode or when we dont have a mob_type on spawn
@@ -55,8 +55,15 @@
 		if ((src.next_growth != null) && (growth < 4))	//Dont grow if we are at max level
 			if (src.next_growth < TIME)	//Growth grants us more health, spawn range, and spawn cap
 				next_growth = TIME + 10 SECONDS + (growth * 10) SECONDS	//Subsequent levels are slower
-				if (growth == 0)
-					icon_state = "harbinger_circle"
+				switch (growth)
+					if (0)
+						icon_state = "harbinger_circle_2"
+					if (1)
+						icon_state = "harbinger_circle_3"
+					if (2)
+						icon_state = "harbinger_circle_4"
+					if (3)
+						icon_state = "harbinger_circle_5"
 				growth++
 				src._health += 10
 				src.mob_value_cap += 5
@@ -95,7 +102,7 @@
 				portal_light.set_color(150, 40, 40)
 				portal_light.attach(portal)
 				portal_light.enable()
-				playsound(chosen_turf, "sound/effects/flameswoosh.ogg" , 80, 1)
+				playsound(chosen_turf, 'sound/effects/flameswoosh.ogg' , 80, 1)
 				SPAWN(3 SECOND)
 					animate(portal, alpha=0, time=1 SECONDS)
 					SPAWN(1 SECOND)

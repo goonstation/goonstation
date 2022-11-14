@@ -44,6 +44,9 @@
 	var/artifacts_on_the_way = FALSE
 	var/static/launch_distance = 0
 
+	///List of pending crates (used only for transception antenna, nadir cargo system)
+	var/list/pending_crates = list()
+
 	New()
 		..()
 
@@ -273,6 +276,8 @@
 		var/price = 0
 		var/modifier = sell_art_datum.get_rarity_modifier()
 		var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in sell_art.vis_contents
+		var/obj/item/card/id/scan = sell_art_datum.scan
+		var/datum/db_record/account = sell_art_datum.account
 
 		// calculate price
 		price = calculate_artifact_price(modifier, max(pap?.lastAnalysis, 1))
@@ -309,7 +314,11 @@
 				src.artifacts_on_the_way = FALSE
 
 		// sell
-		wagesystem.shipping_budget += price
+		if (scan && account)
+			wagesystem.shipping_budget += price / 2
+			account["current_money"] += price / 2
+		else
+			wagesystem.shipping_budget += price
 		qdel(sell_art)
 
 		// give PDA group messages
@@ -482,6 +491,17 @@
 
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
+	//NADIR: Transception antenna cargo I/O
+#ifdef MAP_OVERRIDE_NADIR
+	proc/receive_crate(atom/movable/shipped_thing)
+
+		pending_crates.Add(shipped_thing)
+
+		var/datum/signal/pdaSignal = get_free_signal()
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="New shipment pending transport: [shipped_thing.name].")
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+
+#else
 	proc/receive_crate(atom/movable/shipped_thing)
 
 		var/turf/spawnpoint
@@ -508,8 +528,6 @@
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [shipped_thing.name].")
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
-
-
 		for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 			if (P.id == "qm_dock")
 				playsound(P.loc, 'sound/machines/bellalert.ogg', 50, 0)
@@ -521,6 +539,7 @@
 						P.close()
 
 		shipped_thing.throw_at(target, src.launch_distance, 1)
+#endif
 
 	proc/get_path_to_market()
 		var/list/bounds = get_area_turfs(/area/supply/delivery_point)
@@ -564,20 +583,20 @@
 		payroll += R["wage"]
 
 	var/dat = {"<B>Budget Variables:</B>
-	<BR><BR><u><b>Total Station Funds:</b> $[num2text(totalfunds,50)]</u>
+	<BR><BR><u><b>Total Station Funds:</b> [num2text(totalfunds,50)][CREDIT_SIGN]</u>
 	<BR>
-	<BR><b>Current Payroll Budget:</b> $[num2text(wagesystem.station_budget,50)]
-	<BR><b>Current Research Budget:</b> $[num2text(wagesystem.research_budget,50)]
-	<BR><b>Current Shipping Budget:</b> $[num2text(wagesystem.shipping_budget,50)]
+	<BR><b>Current Payroll Budget:</b> [num2text(wagesystem.station_budget,50)][CREDIT_SIGN]
+	<BR><b>Current Research Budget:</b> [num2text(wagesystem.research_budget,50)][CREDIT_SIGN]
+	<BR><b>Current Shipping Budget:</b> [num2text(wagesystem.shipping_budget,50)][CREDIT_SIGN]
 	<BR>
-	<b>Current Payroll Cost:</b> $[payroll]<HR>"}
+	<b>Current Payroll Cost:</b> [payroll][CREDIT_SIGN]<HR>"}
 
 	dat += "Shipping Market Prices<BR><BR>"
 	for(var/item_type in shippingmarket.commodities)
 		var/datum/commodity/C = shippingmarket.commodities[item_type]
 		var/viewprice = C.price
 		if (C.indemand) viewprice *= shippingmarket.demand_multiplier
-		dat += "<BR><B>[C.comname]:</B> $[viewprice] per unit "
+		dat += "<BR><B>[C.comname]:</B> [viewprice][CREDIT_SIGN] per unit "
 		if (C.indemand) dat += " <b>(High Demand!)</b>"
 	var/timer = shippingmarket.get_market_timeleft()
 	dat += "<BR><HR><b>Next Price Shift:</B> [timer]<BR>"

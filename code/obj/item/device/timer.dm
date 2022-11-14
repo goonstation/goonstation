@@ -48,7 +48,7 @@
 
 		if (src.time > 0)
 			src.time -= passed_time
-			if(time<5)
+			if(time < 5 SECONDS)
 				src.c_state(2)
 			else
 				// they might increase the time while it is timing

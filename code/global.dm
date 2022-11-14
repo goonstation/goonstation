@@ -290,6 +290,7 @@ var/global
 	toggles_enabled = 1
 	announce_banlogin = 1
 	announce_jobbans = 0
+	radio_audio_enabled = 1
 
 
 	outpost_destroyed = 0
@@ -341,6 +342,7 @@ var/global
 		LOG_SIGNALERS	=	list(),
 		LOG_PATHOLOGY	=	list(),
 		LOG_TOPIC		=	list(),
+		LOG_CHEMISTRY	=	list(),
 	)
 	/// The file holding computer ID information
 	savefile/compid_file
@@ -509,8 +511,11 @@ var/global
 
 	hardRebootFilePath = "data/hard-reboot"
 
-	/// The map object used to display the AI station map
-	obj/station_map/ai_station_map
+	list/icon/z_level_maps = list()
+
+	/// When toggled on creating new /turf/space will be faster but they will be slightly broken
+	/// used when creating new z-levels
+	dont_init_space = FALSE
 
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])

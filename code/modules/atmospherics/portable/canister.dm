@@ -92,7 +92,7 @@
 		icon_state = "[casecolor]"
 		if (overlay_state)
 			if (src.det && src.det.part_fs.timing && !src.det.safety && !src.det.defused)
-				if (src.det.part_fs.time > 5)
+				if (src.det.part_fs.time > 5 SECONDS)
 					bomb_dmi.icon_state = "overlay_ticking"
 					UpdateOverlays(bomb_dmi, "canbomb")
 				else
@@ -216,7 +216,7 @@
 	//Canister bomb grumpy sounds
 	if (src.det && src.det.part_fs)
 		if (src.det.part_fs.timing) //If it's counting down
-			if (src.det.part_fs.time > 9)
+			if (src.det.part_fs.time > 9 SECONDS)
 				src.add_simple_light("canister", list(0.94 * 255, 0.94 * 255, 0.3 * 255, 0.6 * 255))
 				if (prob(8)) //originally 5ish
 					switch(rand(1,6))
@@ -241,13 +241,13 @@
 								theAPC.UpdateIcon()
 								theAPC.update()
 
-			else if (src.det.part_fs.time < 10 && src.det.part_fs.time > 7)  //EXPLOSION IMMINENT
+			else if (src.det.part_fs.time < 10 SECONDS && src.det.part_fs.time > 7 SECONDS)  //EXPLOSION IMMINENT
 				src.add_simple_light("canister", list(1 * 255, 0.03 * 255, 0.03 * 255, 0.6 * 255))
 				src.visible_message("<span class='alert'>[src] flashes and sparks wildly!</span>")
 				playsound(src.loc, 'sound/machines/siren_generalquarters.ogg', 50, 1)
 				playsound(src.loc, "sparks", 75, 1, -1)
 				elecflash(src,power = 2)
-			else if (src.det.part_fs.time <= 3)
+			else if (src.det.part_fs.time <= 3 SECONDS)
 				playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 1)
 		else //Someone might have defused it or the bomb failed
 			src.remove_simple_light("canister")
@@ -376,7 +376,7 @@
 		attack_particle(user,src)
 		hit_twitch(src)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
-		logTheThing(LOG_COMBAT, user, "attacked [src] [log_atmos(src)] with [W] at [log_loc(src)].")
+		logTheThing(LOG_STATION, user, "attacks [src] [log_atmos(src)] with [W] at [log_loc(src)].")
 		src.health -= W.force
 		healthcheck(user)
 	..()
@@ -421,7 +421,7 @@
 				"safetyIsOn" = src.det.safety,
 				"isAnchored" = src.anchored,
 				"isPrimed" = src.det.part_fs.timing ? TRUE : FALSE,
-				"time" = src.det.part_fs.time * 10, // using tenths of a second on the client
+				"time" = src.det.part_fs.time,
 				"trigger" = src.det.trigger ? src.det.trigger.name : null,
 			)
 		)
@@ -477,7 +477,7 @@
 			if(!src.det.part_fs.timing)
 				var/new_time = params["newTime"]
 				if(isnum(new_time))
-					src.det.part_fs.set_time(new_time/10)
+					src.det.part_fs.set_time(new_time)
 					. = TRUE
 		if("wire-interact")
 			var/tool = null
@@ -559,11 +559,11 @@
 					if("losetime")
 						src.det.failsafe_engage()
 						playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1)
-						if (src.det.part_fs.time > 7)
-							src.det.part_fs.time -= 7
+						if (src.det.part_fs.time > 7 SECONDS)
+							src.det.part_fs.time -= 7 SECONDS
 						else
-							src.det.part_fs.time = 2
-							src.visible_message("<B><font color=#B7410E>The failsafe beeps rapidly for two moments. The external display indicates that the timer has reduced to [src.det.part_fs.time] seconds.</font></B>")
+							src.det.part_fs.time = 2 SECONDS
+							src.visible_message("<B><font color=#B7410E>The failsafe beeps rapidly for two moments. The external display indicates that the timer has reduced to [src.det.part_fs.time SECONDS] seconds.</font></B>")
 					if("mobility")
 						src.det.failsafe_engage()
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
@@ -603,8 +603,8 @@
 					if ("detonate")
 						if (src.det.part_fs.timing)
 							playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
-							if (src.det.part_fs.time > 7)
-								src.det.part_fs.time = 7
+							if (src.det.part_fs.time > 7 SECONDS)
+								src.det.part_fs.time = 7 SECONDS
 								src.visible_message("<B><font color=#B7410E>The failsafe timer buzzes loudly and sets itself to 7 seconds.</font></B>")
 							else
 								src.visible_message("<B><font color=#B7410E>The failsafe timer buzzes refusingly before going quiet forever.</font></B>")
@@ -612,15 +612,15 @@
 									src.det.detonate()
 						else
 							src.det.failsafe_engage()
-							src.det.part_fs.time = rand(8,14)
+							src.det.part_fs.time = rand(8,14) SECONDS
 							playsound(src.loc, 'sound/machines/pod_alarm.ogg', 50, 1)
-							src.visible_message("<B><font color=#B7410E>The failsafe timer buzzes loudly and activates. You have [src.det.part_fs.time] seconds to act.</font></B>")
+							src.visible_message("<B><font color=#B7410E>The failsafe timer buzzes loudly and activates. You have [src.det.part_fs.time / 10] seconds to act.</font></B>")
 					if ("defuse")
 						src.det.failsafe_engage()
 						if (src.det.grant)
-							src.det.part_fs.time += 5
+							src.det.part_fs.time += 5 SECONDS
 							playsound(src.loc, 'sound/machines/ping.ogg', 50, 1)
-							src.visible_message("<B><font color=#B7410E>The detonator assembly emits a reassuring noise. You notice that the failsafe timer has increased to [src.det.part_fs.time] seconds.</font></B>")
+							src.visible_message("<B><font color=#B7410E>The detonator assembly emits a reassuring noise. You notice that the failsafe timer has increased to [src.det.part_fs.time / 10] seconds.</font></B>")
 							src.det.grant = 0
 						else
 							playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
@@ -635,11 +635,11 @@
 					if ("losetime")
 						src.det.failsafe_engage()
 						src.det.shocked = 1
-						var/losttime = rand(2,5)
-						src.visible_message("<B><font color=#B7410E>The bomb buzzes oddly, emitting electric sparks. It would be a bad idea to touch any wires for the next [losttime] seconds.</font></B>")
+						var/losttime = rand(2,5) SECONDS
+						src.visible_message("<B><font color=#B7410E>The bomb buzzes oddly, emitting electric sparks. It would be a bad idea to touch any wires for the next [losttime / 10] seconds.</font></B>")
 						playsound(src.loc, "sparks", 75, 1, -1)
 						elecflash(src,power = 2)
-						SPAWN(10 * losttime)
+						SPAWN(losttime)
 							src.det.shocked = 0
 							src.visible_message("<B><font color=#B7410E>The buzzing stops, and the countdown continues.</font></B>")
 					if ("mobility")

@@ -16,7 +16,7 @@
 /datum/biome/icemoon/ice
 	turf_type = /turf/unsimulated/floor/arctic/snow/ice
 
-	fauna_types = list(/obj/critter/spider/ice/queen=1, /obj/critter/spider/ice/nice=5, /obj/critter/spider/ice=20, /obj/critter/brullbar=5)
+	fauna_types = list(/mob/living/critter/spider/ice/queen=1, /mob/living/critter/spider/ice/nice=5, /mob/living/critter/spider/ice=20, /obj/critter/brullbar=5)
 	fauna_density = 0.5
 
 /datum/biome/icemoon/icewall

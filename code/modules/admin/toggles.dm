@@ -83,6 +83,7 @@ var/list/server_toggles_tab_verbs = list(\
 /datum/admins/proc/toggle_pull_slowing,\
 /client/proc/admin_toggle_nightmode,\
 /client/proc/toggle_camera_network_reciprocity,\
+/datum/admins/proc/toggle_radio_audio,\
 )
 
 /client/proc/toggle_server_toggles_tab()
@@ -916,6 +917,34 @@ client/proc/toggle_ghost_respawns()
 	logTheThing(LOG_DIARY, usr, "toggled pull slowing [pull_slowing ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled pull slowing [pull_slowing ? "on" : "off"]")
 
+/datum/admins/proc/toggle_radio_audio()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	set desc = "Toggle whether record players and tape decks can play any audio"
+	set name = "Toggle Radio Audio"
+	NOT_IF_TOGGLES_ARE_OFF
+
+	var/oview_phrase
+	switch (radio_audio_enabled)
+		if (FALSE)
+			oview_phrase = "<span class='alert'>A glowing hand appears out of nowhere and rips \"out of order\" sticker on OBJECT_NAME!</span>"
+		if (TRUE)
+			oview_phrase = "<span class='alert'>A glowing hand appears out of nowhere and slaps a \"out of order\" sticker on OBJECT_NAME!</span>"
+
+	for(var/obj/submachine/tape_deck/O in by_type[/obj/submachine/tape_deck])
+		for(var/mob/living/M in oview(5, O))
+			boutput(M, replacetext(oview_phrase, "OBJECT_NAME", "\the [O.name]"))
+		O.can_play_tapes = !radio_audio_enabled
+
+	for(var/obj/submachine/record_player/O in by_type[/obj/submachine/record_player])
+		for(var/mob/living/M in oview(5, O))
+			boutput(M, replacetext(oview_phrase, "OBJECT_NAME", "\the [O.name]"))
+		O.can_play_music = !radio_audio_enabled
+
+	radio_audio_enabled = !radio_audio_enabled
+
+	message_admins("<span class='internal'>[key_name(usr)] [radio_audio_enabled ? "" : "dis"]allowed for radio music/tapes to play.</span>")
+	logTheThing(LOG_DIARY, usr, "[radio_audio_enabled ? "" : "dis"]allowed for radio music/tapes to play.")
+	logTheThing(LOG_ADMIN, usr, "[radio_audio_enabled ? "" : "dis"]allowed for radio music/tapes to play.")
 
 //Dont need this any more? Player controlled now
 /*
