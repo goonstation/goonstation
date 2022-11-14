@@ -438,13 +438,13 @@
 	*     128 64 32 16  8  4  2  1 (actual bitflags) (used for multiple directions)
 	* i think someone called it 8 bit directions once? idk
 	*/
-/obj/cablespawner/initialize(var/newloc, var/cable_surr)
+/obj/cablespawner/initialize(var/newloc)
 // this bit of the code is supposed to make the cablespawners replace themselves with cables.
 	..()
 	cable_surr = src.check(cable_surr)
 	src.build(newloc,cable_surr)
 
-/obj/cablespawner/proc/optimise(var/cable_surr)
+/obj/cablespawner/proc/optimise()
 // if there is only cablespawners, not all 8 directions are needed. This clears some.
 	/*If there are three adjacent directions, only two or one are needed
 	* e.g. N NE and E, that is technically a grid of four, doesnt need the diagonals,
@@ -485,7 +485,7 @@
 		cable_surr &= ~(SE)
 		dir_count -= 1
 
-/obj/cablespawner/proc/check(var/cable_surr, var/obj/cable/cable)
+/obj/cablespawner/proc/check(var/obj/cable/cable)
 // checks around itself for cables, returns 8 bits.
 	for (var/obj/cablespawner/spawner in orange(1, src))
 	// cablespawners around itself
@@ -570,7 +570,7 @@
 		// the 'real' wires override and always connect to prevent loose ends
 	return cable_surr
 
-/obj/cablespawner/proc/build(var/cable_surr)
+/obj/cablespawner/proc/build()
 // causes cablespawner to spawn cables (amazing)
 	var/directions = convert(cable_surr)
 	if (dir_count == 0)
@@ -586,7 +586,7 @@
 	// multiple cables
 		for (var/i in 1 to dir_count+1)
 
-/obj/cablespawner/proc/convert(var/binput, var/const/NE, var/const/SE, var/const/NW,var/const/SW)
+/obj/cablespawner/proc/convert(var/binput)
 // converts 8 bit into a list of directions.
 	var/list/directionlist
 	if (binput & NORTH)
