@@ -424,12 +424,14 @@
 	layer = CABLE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 	color = "#DD0000"
+	/// this variable counts how many tiles around cablespawner need connections, in decimal
 	var/dir_count = 0
 	// some bit flags for 8 bit directions
 	var/const/SW = 128
 	var/const/NW = 64
 	var/const/SE = 32
 	var/const/NE = 16
+	/// this 8 bit variable uses bit flags to tell which 8 tiles need connections
 	var/cable_surr = 0
 	/*
 	* bitflag of the tiles surrounding itself:
@@ -437,11 +439,12 @@
 	* i.e. SW NW SE NE  W  E  S  N (corresponding directions)
 	*     128 64 32 16  8  4  2  1 (actual bitflags) (used for multiple directions)
 	* i think someone called it 8 bit directions once? idk
+	* anyway thats what cable_surr does
 	*/
 /obj/cablespawner/initialize(var/newloc)
 // this bit of the code is supposed to make the cablespawners replace themselves with cables.
 	..()
-	cable_surr = src.check(cable_surr)
+	src.check()
 	src.build(newloc,cable_surr)
 
 /obj/cablespawner/proc/optimise()
@@ -486,7 +489,7 @@
 		dir_count -= 1
 
 /obj/cablespawner/proc/check(var/obj/cable/cable)
-// checks around itself for cables, returns 8 bits.
+// checks around itself for cables, adds up to 8 bits to cable_surr
 	for (var/obj/cablespawner/spawner in orange(1, src))
 	// cablespawners around itself
 		dir_count += 1
@@ -572,7 +575,7 @@
 
 /obj/cablespawner/proc/build()
 // causes cablespawner to spawn cables (amazing)
-	var/directions = convert(cable_surr)
+	var/directions = convert()
 	if (dir_count == 0)
 	// a standalone cable (not really supposed to happen)
 		cable_laying(0, 1)
@@ -583,33 +586,34 @@
 	// a normal, single cable
 		cable_laying(directions[1], directions[2])
 	else if (dir_count >= 3)
-	// multiple cables
+	// multiple cables, spiral out from the centre
 		for (var/i in 1 to dir_count+1)
+			cable_laying(0, directions[i])
 
-/obj/cablespawner/proc/convert(var/binput)
-// converts 8 bit into a list of directions.
+/obj/cablespawner/proc/convert()
+// converts 8 bit into a list of directions. In order of bitflag
 	var/list/directionlist
-	if (binput & NORTH)
+	if (cable_surr & NORTH)
 		directionlist += NORTH
-	if (binput & SOUTH)
+	if (cable_surr & SOUTH)
 		directionlist += SOUTH
-	if (binput & EAST)
+	if (cable_surr & EAST)
 		directionlist += EAST
-	if (binput & NE)
+	if (cable_surr & NE)
 		directionlist += NORTHEAST
-	if (binput & SE)
+	if (cable_surr & SE)
 		directionlist += SOUTHEAST
-	if (binput & WEST)
+	if (cable_surr & WEST)
 		directionlist += WEST
-	if (binput & NW)
+	if (cable_surr & NW)
 		directionlist += NORTHWEST
-	if (binput & SW)
+	if (cable_surr & SW)
 		directionlist += SOUTHWEST
 	return directionlist
 
 /obj/cablespawner/proc/cable_laying(var/dir1, var/dir2, var/obj/cable/cable)
-	for (var/i in 1 to dir_count+1)
-		var/current = new/obj/cable(src.loc)
-		current.d1 = dir1
-		current.d2 = dir2
-		current.icon_state = "[dir1]]-[dir2]"
+// places a cable with d1 and d2
+	var/obj/cable/current = new/obj/cable(src.loc)
+	current.d1 = dir1
+	current.d2 = dir2
+	current.icon_state = "[dir1]]-[dir2]"
