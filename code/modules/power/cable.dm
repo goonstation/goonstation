@@ -473,82 +473,53 @@
 /obj/cablespawner/proc/check(var/obj/cable/cable)
 	for (var/obj/cablespawner/spawner in orange(1, src))
 	// cablespawners around itself
+		var/tempflag = 0
+		// this will store the 4 bit direction temporarily for the for loop
 		var/disx = spawner.x - src.x
 		var/disy = spawner.y - src.y
 		// the following assumes disxy (displacement of x or y) equals 1,0 or -1
-		if (disx & disy == 1)
+		if (disx)
+			temp_flags |= EAST
+		if (disx == -1)
+			temp_flags |= WEST
+		if (disy)
+			temp_flags |= NORTH
+		if (disy == -1)
+			temp_flags |= SOUTH
+		// each iteration can only have one direction at a time, luckily
+		if (temp_flags == NORTHEAST)
 			cable_surr |= NE
-			continue
-		else if (-disx & -disy == 1)
-			cable_surr |= SW
-			continue
-		else if (disx & -disy == 1)
-			cable_surr |= SE
-			continue
-		else if (-disx & disy == 1)
+		else if (temp_flags == NORTHWEST)
 			cable_surr |= NW
-			continue
-		else if (disx == 1)
-			cable_surr |= EAST
-			continue
-		else if (-disx == 1)
-			cable_surr |= WEST
-			continue
-		else if (disy == 1)
-			cable_surr |= NORTH
-			continue
-		else if (-disy == 1)
-			cable_surr |= SOUTH
-			continue
-
+		else if (temp_flags == SOUTHEAST)
+			cable_surr |= SE
+		else if (temp_flags == SOUTHWEST)
+			cable_surr |= SW
+		else cable_surr |= temp_flags
 	optimise()
-
 	for (var/obj/cable/normal_cable in orange(1, src))
 	// normal, prexisting, manually placed cables (must be joined to no matter what)
+		temp_flags = 0
 		var/disx = normal_cable.x - src.x
 		var/disy = normal_cable.y - src.y
-		// the following assumes disxy (displacement of x or y) equals 1,0 or -1
-		// in addition, d1 and d2 use 4 bit flags, so we have to add up our regular ones
-		if (disx & disy == 1)
-		// northeast tile 1,1
-			if (normal_cable.d1 || normal_cable.d2 == SOUTHWEST)
-				cable_surr |= NE
-			continue
-		else if (-disx & -disy == 1)
-		// southwest tile -1,-1
-			if (normal_cable.d1 || normal_cable.d2 == NORTHEAST)
-				cable_surr |= SW
-			continue
-		else if (disx & -disy == 1)
-		// southeast tile 1,-1
-			if (normal_cable.d1 || normal_cable.d2 == NORTHWEST)
-				cable_surr |= SE
-			continue
-		else if (-disx & disy == 1)
-		// northeast tile -1,1
-			if (normal_cable.d1 || normal_cable.d2 == SOUTHEAST)
-				cable_surr |= NW
-			continue
-		else if (disx == 1)
-		// east tile 1,0
-			if (normal_cable.d1 || normal_cable.d2 == WEST)
-				cable_surr |= EAST
-			continue
-		else if (-disx == 1)
-		// west tile -1,0
-			if (normal_cable.d1 || normal_cable.d2 == EAST)
-				cable_surr |= WEST
-			continue
-		else if (disy == 1)
-		// north tile 0,1
-			if (normal_cable.d1 || normal_cable.d2 == SOUTH)
-				cable_surr |= NORTH
-			continue
-		else if (-disy == 1)
-		// south tile 0,-1
-			if (normal_cable.d1 || normal_cable.d2 == NORTH)
-				cable_surr |= SOUTH
-			continue
+		if (disx)
+			temp_flags |= EAST
+		if (disx == -1)
+			temp_flags |= WEST
+		if (disy)
+			temp_flags |= NORTH
+		if (disy == -1)
+			temp_flags |= SOUTH
+		// each iteration can only have one direction at a time, luckily
+		if (temp_flags == NORTHEAST)
+			cable_surr |= NE
+		else if (temp_flags == NORTHWEST)
+			cable_surr |= NW
+		else if (temp_flags == SOUTHEAST)
+			cable_surr |= SE
+		else if (temp_flags == SOUTHWEST)
+			cable_surr |= SW
+		else cable_surr |= temp_flags
 		// the 'real' wires override and always connect to prevent loose ends
 
 /// causes cablespawner to spawn cables (amazing)
