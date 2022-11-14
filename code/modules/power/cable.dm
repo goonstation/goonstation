@@ -457,16 +457,16 @@
 	This won't work on the manually connected cables.
 	*/
 	if (cable_surr & NE)
-		if (cable_surr & NORTHEAST)
+		if (cable_surr & NORTH || cable_surr & EAST)
 			cable_surr &= ~NE
 	if (cable_surr & NW)
-		if (cable_surr & NORTHWEST)
+		if (cable_surr & NORTH || cable_surr & WEST)
 			cable_surr &= ~NW
 	if (cable_surr & SE)
-		if (cable_surr & SOUTHEAST)
+		if (cable_surr & SOUTH || cable_surr & EAST)
 			cable_surr &= ~SE
 	if (cable_surr & SW)
-		if (cable_surr & SOUTHWEST)
+		if (cable_surr & SOUTH || cable_surr & WEST)
 			cable_surr &= ~SW
 
 /// checks around itself for cables, adds up to 8 bits to cable_surr
@@ -498,10 +498,12 @@
 		else if (temp_flags == SOUTHWEST)
 			cable_surr |= SW
 		else cable_surr |= temp_flags
-	qdel(temp_flags)
 	optimise()
 	for (var/obj/cable/normal_cable in orange(1, src))
 	// normal, prexisting, manually placed cables (must be joined to no matter what)
+	// turns out, since initialize() does cablespawners one by one
+	// they turn into regular cables and must be considered like that by the system
+	// this bit is MANDATORY
 		var/temp_flags = 0
 		var/disx = normal_cable.x - src.x
 		var/disy = normal_cable.y - src.y
@@ -515,16 +517,26 @@
 			temp_flags |= SOUTH
 		// each iteration can only have one direction at a time, luckily
 		if (temp_flags == NORTHEAST)
-			cable_surr |= NE
+			if (normal_cable.d1 == SOUTHWEST || normal_cable.d2 == SOUTHWEST)
+				cable_surr |= NE
 		else if (temp_flags == NORTHWEST)
-			cable_surr |= NW
+			if (normal_cable.d1 == SOUTHEAST || normal_cable.d2 == SOUTHEAST)
+				cable_surr |= NW
 		else if (temp_flags == SOUTHEAST)
-			cable_surr |= SE
+			if (normal_cable.d1 == NORTHWEST || normal_cable.d2 == NORTHWEST)
+				cable_surr |= SE
 		else if (temp_flags == SOUTHWEST)
-			cable_surr |= SW
-		else cable_surr |= temp_flags
+			if (normal_cable.d1 == NORTHEAST || normal_cable.d2 == NORTHEAST)
+				cable_surr |= SW
+		else if (normal_cable.d1 == SOUTH || normal_cable.d2 == SOUTH)
+			cable_surr |= NORTH
+		else if (normal_cable.d1 == NORTH || normal_cable.d2 == NORTH)
+			cable_surr |= SOUTH
+		else if (normal_cable.d1 == WEST || normal_cable.d2 == WEST)
+			cable_surr |= EAST
+		else if (normal_cable.d1 == EAST || normal_cable.d2 == EAST)
+			cable_surr |= WEST
 		// the 'real' wires override and always connect to prevent loose ends
-	qdel(temp_flags)
 /// causes cablespawner to spawn cables (amazing)
 /obj/cablespawner/proc/replace()
 	var/directions = convert()
