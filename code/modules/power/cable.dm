@@ -607,4 +607,3 @@
 	current.d1 = dir1
 	current.d2 = dir2
 	current.icon_state = "[dir1]-[dir2]"
-	// this bit is not fucking working
