@@ -475,14 +475,16 @@
 	// cablespawners around itself
 		var/tempflag = 0
 		// this will store the 4 bit direction temporarily for the for loop
+		// tempflag is 4bit, stores a NESW direction
+		// cable_surr is 8 bit, stores up to 8 NESW directions
 		var/disx = spawner.x - src.x
 		var/disy = spawner.y - src.y
 		// the following assumes disxy (displacement of x or y) equals 1,0 or -1
-		if (disx)
+		if (disx == 1)
 			temp_flags |= EAST
 		if (disx == -1)
 			temp_flags |= WEST
-		if (disy)
+		if (disy == 1)
 			temp_flags |= NORTH
 		if (disy == -1)
 			temp_flags |= SOUTH
@@ -496,17 +498,18 @@
 		else if (temp_flags == SOUTHWEST)
 			cable_surr |= SW
 		else cable_surr |= temp_flags
+	qdel(temp_flags)
 	optimise()
 	for (var/obj/cable/normal_cable in orange(1, src))
 	// normal, prexisting, manually placed cables (must be joined to no matter what)
-		temp_flags = 0
+		var/temp_flags = 0
 		var/disx = normal_cable.x - src.x
 		var/disy = normal_cable.y - src.y
-		if (disx)
+		if (disx == 1)
 			temp_flags |= EAST
 		if (disx == -1)
 			temp_flags |= WEST
-		if (disy)
+		if (disy == 1)
 			temp_flags |= NORTH
 		if (disy == -1)
 			temp_flags |= SOUTH
@@ -521,7 +524,7 @@
 			cable_surr |= SW
 		else cable_surr |= temp_flags
 		// the 'real' wires override and always connect to prevent loose ends
-
+	qdel(temp_flags)
 /// causes cablespawner to spawn cables (amazing)
 /obj/cablespawner/proc/replace()
 	var/directions = convert()
