@@ -223,9 +223,9 @@
 
 /// Get a suggested input type based on the thing you're editing
 /// @param var_value The value to evaluate
-/// @param L The list the value is contained in, if applicable, to determine if the var value is associated to another value
+/// @param varname The name of the variable
 /// @return Suggested input type for input_data()
-/client/proc/suggest_input_type(var/var_value, var/varname = null)
+/client/proc/suggest_input_type(var_value, varname = null)
 	var/default = null
 
 	if (varname == "particles")
@@ -235,8 +235,12 @@
 		default = DATA_INPUT_FILTER_EDITOR
 
 	else if (istype(var_value, /matrix))
-		boutput(src, "Variable appears to be <b>MATRIX</b>.")
-		default = DATA_INPUT_MATRIX
+		if (varname == "color")
+			boutput(src, "Variable appears to be <b>COLOR MATRIX</b>.")
+			default = DATA_INPUT_COLOR_MATRIX_EDITOR
+		else
+			boutput(src, "Variable appears to be <b>MATRIX</b>.")
+			default = DATA_INPUT_MATRIX
 
 	else if (isnum(var_value))
 		boutput(src, "Variable appears to be <b>NUM</b>.")

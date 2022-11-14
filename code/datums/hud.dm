@@ -1,7 +1,9 @@
 /atom/movable/screen
 	anchored = 1
 	plane = PLANE_HUD//wow WOW why won't you use /atom/movable/screen/hud, HUD OBJECTS???
+	animate_movement = SLIDE_STEPS
 	text = ""
+
 	New()
 		..()
 		appearance_flags |= NO_CLIENT_COLOR
@@ -10,6 +12,20 @@
 		. = ..()
 		if(!isnull(newloc))
 			CRASH("HUD object [type] was moved to [newloc] ([newloc.type])")
+
+/**
+ * Sets screen_loc of this screen object, in form of point coordinates,
+ * with optional pixel offset (px, py).
+ *
+ * There's finer equivalents below this for hud datums
+ *
+ * If applicable, "assigned_map" has to be assigned before this proc call.
+ *
+ * Code Snippet licensed under MIT from /tg/station (#49960)
+ * Copyright (c) 2020 Aleksej Komarov
+ */
+/atom/movable/screen/proc/set_position(x, y, px = 0, py = 0)
+	screen_loc = "[x]:[px],[y]:[py]"
 
 /atom/movable/screen/hud
 	plane = PLANE_HUD
@@ -60,6 +76,8 @@
 			master.MouseDrop_T(src, O, user)
 
 	disposing()
+		src.master = null
+		src.item = null
 		src.screen_loc = null // idk if this is necessary but im writing it anyways so there
 		..()
 

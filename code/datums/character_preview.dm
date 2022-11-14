@@ -12,7 +12,7 @@
 /datum/movable_preview
 	/// Global ID for this preview datum
 	var/global/max_preview_id = 0 // Could be replaced with \ref ?
-	/// The map ID for use with winset().
+	/// The map ID for use with winset() or <ByondUi.id>
 	var/preview_id
 	var/window_id
 	var/client/viewer

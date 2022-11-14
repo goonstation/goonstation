@@ -714,6 +714,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\spacebee_extension\commands.dm"
 #include "code\modules\admin\spacebee_extension\system.dm"
 #include "code\modules\admin\viewvariables\call_proc_menu.dm"
+#include "code\modules\admin\viewvariables\color_matrix_editor.dm"
 #include "code\modules\admin\viewvariables\datumvars.dm"
 #include "code\modules\admin\viewvariables\filterrific.dm"
 #include "code\modules\admin\viewvariables\modifyvariables.dm"

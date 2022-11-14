@@ -47,6 +47,7 @@ module.exports = (env = {}, argv) => {
       filename: '[name].bundle.js',
       chunkFilename: '[name].bundle.js',
       chunkLoadTimeout: 15000,
+      hashFunction: "sha256",
     },
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
@@ -91,7 +92,7 @@ module.exports = (env = {}, argv) => {
               options: {
                 esModule: false,
               },
-            }
+            },
           ],
         },
       ],

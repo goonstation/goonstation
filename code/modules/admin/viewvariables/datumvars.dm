@@ -790,10 +790,11 @@
 		else
 			original_name = D:name
 
-	var/datum/data_input_result/result = src.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_NUM_ADJUST, DATA_INPUT_TYPE, DATA_INPUT_MOB_REFERENCE, \
-											DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, DATA_INPUT_ICON, DATA_INPUT_FILE, \
-											DATA_INPUT_COLOR, DATA_INPUT_LIST_EDIT, DATA_INPUT_JSON, DATA_INPUT_LIST_BUILD, DATA_INPUT_MATRIX, \
-											DATA_INPUT_NULL, DATA_INPUT_REF, DATA_INPUT_RESTORE, DATA_INPUT_PARTICLE_EDITOR, DATA_INPUT_FILTER_EDITOR), \
+	var/datum/data_input_result/result = src.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_NUM_ADJUST, DATA_INPUT_TYPE, \
+											DATA_INPUT_MOB_REFERENCE, DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, \
+											DATA_INPUT_ICON, DATA_INPUT_FILE, DATA_INPUT_COLOR, DATA_INPUT_LIST_EDIT, DATA_INPUT_JSON, \
+											DATA_INPUT_LIST_BUILD, DATA_INPUT_MATRIX, DATA_INPUT_NULL, DATA_INPUT_REF, DATA_INPUT_RESTORE, \
+											DATA_INPUT_PARTICLE_EDITOR, DATA_INPUT_FILTER_EDITOR, DATA_INPUT_COLOR_MATRIX_EDITOR), \
 											default = var_value, default_type = default)
 
 	switch(result.output_type) // specified cases are special handling. everything in the `else` is generic cases
@@ -821,6 +822,11 @@
 			if(src.holder)
 				src.holder.particool = new /datum/particle_editor(D)
 				src.holder.particool.ui_interact(mob)
+
+		if (DATA_INPUT_COLOR_MATRIX_EDITOR)
+			if(src.holder)
+				src.holder.color_matrix_editor = new /datum/color_matrix_editor(src, D)
+				src.holder.color_matrix_editor.ui_interact(mob)
 
 		if (DATA_INPUT_NUM_ADJUST)
 			if (!isnum(var_value))
