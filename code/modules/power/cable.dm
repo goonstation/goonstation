@@ -49,7 +49,7 @@
 	else
 		..()
 
-// the power cable object
+/// the power cable object
 /obj/cable
 	level = 1
 	anchored =1
@@ -179,7 +179,7 @@
 	//	cableimg.icon_state = icon_state
 	//	cableimg.alpha = invisibility ? 128 : 255
 
-// returns the powernet this cable belongs to
+/// returns the powernet this cable belongs to
 /obj/cable/proc/get_powernet()
 	var/datum/powernet/PN			// find the powernet
 	if(netnum && powernets && powernets.len >= netnum)
@@ -603,7 +603,7 @@
 
 /// places a cable with d1 and d2
 /obj/cablespawner/proc/cable_laying(var/dir1, var/dir2, var/obj/cable/cable)
-	var/obj/cable/current = new/obj/cable(src.loc)
+	new/var/obj/cable/current
 	current.d1 = dir1
 	current.d2 = dir2
-	current.icon_state = "[dir1]]-[dir2]"
+	current.icon_state = "[dir1]-[dir2]"
