@@ -2,6 +2,7 @@
 #define ATMOS_DRAIN_RATE 0.05
 #define CARBON_OUTPUT_RATE 0.025 // for every part of fuel burnt
 #define OPTIMAL_MIX 14.7 // how many parts oxygen for every part of fuel
+#define EXHAUST_TEMP_INCREASE 50 // will heat up the room based on this
 
 #define INLET_MAX 1
 #define INLET_MIN 0
@@ -431,16 +432,20 @@
 		P.newavail += src.last_output
 
 		var/turf/simulated/T = get_turf(src.loc)
-		if (istype(T))
-			var/datum/gas_mixture/payload = new /datum/gas_mixture
-			payload.carbon_dioxide = CARBON_OUTPUT_RATE * (src.last_mix * 2) * src.last_inlet * src.output_multiplier * mult
-			payload.temperature = 323.15 // bit hotter since its exhaust
-			T.assume_air(payload)
-
 		if (src.check_tank_oxygen(src.inlet_tank))
 			src.inlet_tank.remove_air(ATMOS_DRAIN_RATE * (src.last_mix * 2) * src.last_inlet * src.output_multiplier * mult)
 		else if (istype(T))
 			T.remove_air(ATMOS_DRAIN_RATE * (src.last_mix * 2) * src.last_inlet * mult)
+
+		if (istype(T))
+			var/datum/gas_mixture/payload = new /datum/gas_mixture
+			payload.carbon_dioxide = CARBON_OUTPUT_RATE * (src.last_mix * 2) * src.last_inlet * src.output_multiplier * mult
+			if (src.check_tank_oxygen(src.inlet_tank))
+				payload.temperature = src.inlet_tank.air_contents.temperature + EXHAUST_TEMP_INCREASE // hotter than intake
+			else
+				payload.temperature = T.air.temperature
+
+			T.assume_air(payload)
 
 		src.fuel_tank.reagents.remove_any(FUEL_DRAIN_RATE * (src.last_mix * 2) * src.last_inlet * src.output_multiplier * mult)
 
@@ -546,15 +551,15 @@
 
 		var/turf/simulated/T = get_turf(src)
 		if (!istype(T))
-			if (istype(T, /turf/unsimulated))
-				return O2STANDARD
+			if (!istype(T, /turf/))
+				return
 
-			if (T.oxygen <= 0)
-				return FALSE
+			var/datum/gas_mixture/G = T.return_air()
+			if (G.oxygen)
+				return T.oxygen / TOTAL_MOLES(G)
 
 			else
-				var/datum/gas_mixture/G = T.return_air()
-				return T.oxygen / TOTAL_MOLES(G)
+				return FALSE
 
 		if (!T.air || T.air.oxygen <= 0)
 			return FALSE
@@ -620,3 +625,4 @@
 #undef OPTIMAL_MIX
 #undef INLET_MAX
 #undef INLET_MIN
+#undef EXHAUST_TEMP_INCREASE
