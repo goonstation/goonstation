@@ -39,14 +39,14 @@
 		fowner.flock.enemies = list()
 		fowner.tutorial = null
 
-	proc/make_maptext(var/atom/target, var/msg)
+	proc/make_maptext(atom/target, msg)
 		msg = "<span class=\"ol vga c\" style=\"font-size:9pt\">[msg]</span>"
 		var/obj/dummy = new(get_turf(target))
 		var/image/chat_maptext/text = make_chat_maptext(dummy, msg, force = TRUE, time = INFINITY)
 		var/mob/actual_mob = src.fowner.abilityHolder.get_controlling_mob() //hunt for the client
 		text.show_to(actual_mob.client)
 
-	proc/portal_in(var/turf/location, var/type)
+	proc/portal_in(turf/location, type)
 		var/obj/portal/portal = new(location)
 		sleep(1 SECOND)
 		animate_portal_tele(portal)
@@ -109,9 +109,9 @@
 		src.must_deploy = locate(ftutorial.initial_turf.x, ftutorial.initial_turf.y + 1, ftutorial.initial_turf.z)
 		src.must_deploy.UpdateOverlays(src.marker,"marker")
 
-	PerformAction(var/action, var/context)
+	PerformAction(action, context)
 		if (action == FLOCK_ACTION_RIFT_SPAWN)
-			if (context == must_deploy)
+			if (context == src.must_deploy)
 				return TRUE
 			else
 				return "<span class='alert'><b>You must deploy on the marked tile.</b></span>"
@@ -121,11 +121,11 @@
 		return FALSE
 
 	TearDown()
-		must_deploy.UpdateOverlays(null,"marker")
+		src.must_deploy.UpdateOverlays(null, "marker")
 
 /datum/tutorialStep/flock/gatecrash
 	name = "Gatecrash"
-	instructions = "Your flockdrone is stuck in this room, use your Gatecrash ability to force the door open."
+	instructions = "Your Flockdrone is stuck in this room, use your Gatecrash ability to force the door open."
 
 	PerformAction(action, context)
 		if (action == FLOCK_ACTION_GATECRASH)
@@ -134,7 +134,7 @@
 
 /datum/tutorialStep/flock/move
 	name = "Move"
-	instructions = "Now move your flockdrone through the door by clicking and dragging it."
+	instructions = "Now move your Flockdrone through the door by click-dragging it to a visible tile past the door."
 
 	PerformAction(action, context)
 		if (action == FLOCK_ACTION_DRAGMOVE)
@@ -143,7 +143,7 @@
 
 /datum/tutorialStep/flock/control
 	name = "Control drone"
-	instructions = "Sometimes you may want to take direct control of a single drone, for combat or fine movement control. Click drag yourself over the flockdrone to take control of it."
+	instructions = "Sometimes you may want to take direct control of a single drone, for combat or fine movement control. Click-drag yourself onto the Flockdrone to take control of it."
 
 	PerformAction(action, context)
 		if (action == FLOCK_ACTION_DRONE_CONTROL)
@@ -152,7 +152,7 @@
 
 /datum/tutorialStep/flock/gather
 	name = "Gather resources"
-	instructions = "In order to convert the station around you, you are going to need resources. Pick up some items using your manipulator hand and place them into your disintigrator (equip hotkey) to break them down into resources."
+	instructions = "In order to convert the station around you, you are going to need resources. Pick up some items using your manipulating hand (grip tool) and place them into your disintegration reclaimer (or use equip hotkey) to break them down into resources."
 	var/amount = 30
 
 	PerformAction(action, context)
@@ -164,7 +164,7 @@
 	name = "Conversion"
 	instructions = "Convert the window in front of you to allow you to pass through it. Convert it by clicking on it with your nanite spray (middle) hand."
 
-	PerformAction(var/action, var/context)
+	PerformAction(action, context)
 		if (action == FLOCK_ACTION_START_CONVERSION)
 			if (locate(/obj/window) in get_turf(context))
 				return TRUE
@@ -175,8 +175,8 @@
 			return TRUE
 
 /datum/tutorialStep/flock/floorrun
-	name = "Floor running"
-	instructions = "While controlling a flockdrone you can press your sprint key to disappear into the floor, becoming untargetable and passing through flock walls and windows. Use it to pass through the window you just converted."
+	name = "Floorrunning"
+	instructions = "While controlling a Flockdrone you can press or hold your sprint key to disappear into the newly Flock converted floor, becoming unhittable, and you can pass into nearby Flock floortiles and Flock walls, as long as you have resources. This is referred to as "Floorrunning." Floorrun through the window you just converted. This is possible as a Flock floortile is underneath"
 
 	PerformAction(action, context)
 		if (action == FLOCK_ACTION_FLOORRUN)
@@ -194,14 +194,14 @@
 		SPAWN(1 SECOND)
 			flock_spiral_conversion(src.ftutorial.center, ftutorial.fowner.flock, 0.1 SECONDS)
 		for (var/i = 1 to 4)
-			var/mob/living/critter/flock/drone/flockdrone = new(locate(src.ftutorial.center.x + rand(-3,3), src.ftutorial.center.y + rand(-3,3), src.ftutorial.center.z), ftutorial.fowner.flock)
+			var/mob/living/critter/flock/drone/flockdrone = new(locate(src.ftutorial.center.x + rand(-3, 3), src.ftutorial.center.y + rand(-3, 3), src.ftutorial.center.z), ftutorial.fowner.flock)
 			spawn_animation1(flockdrone)
 			sleep(0.2 SECONDS)
 		for (var/i = 1 to 2)
-			var/mob/living/critter/flock/bit/flockdrone = new(locate(src.ftutorial.center.x + rand(-3,3), src.ftutorial.center.y + rand(-3,3), src.ftutorial.center.z), ftutorial.fowner.flock)
+			var/mob/living/critter/flock/bit/flockdrone = new(locate(src.ftutorial.center.x + rand(-3, 3), src.ftutorial.center.y + rand(-3, 3), src.ftutorial.center.z), ftutorial.fowner.flock)
 			spawn_animation1(flockdrone)
 			sleep(0.2 SECONDS)
-		var/msg = "Human resource containers convert into Flock resource Fabricators."
+		var/msg = "Human resource containers convert into Flock resource fabricators."
 		src.ftutorial.make_maptext(locate(/obj/machinery/vending) in range(10, src.ftutorial.center), msg)
 
 		msg = "Human computers convert into Flock compute nodes. Each provides 60 compute."
@@ -214,7 +214,7 @@
 
 /datum/tutorialStep/flock/kill
 	name = "Eliminate threat"
-	instructions = "That human has just violated causality to teleport right into your flock! Mark them for elimination using your \"designate enemy\" ability and watch as your drones attack."
+	instructions = "That human has just violated causality to teleport right into your flock! Mark them for elimination using your \"Designate Enemy\" ability and watch as your drones fire at, subdue, and cage them."
 
 	SetUp()
 		..()
@@ -248,7 +248,7 @@
 
 /datum/tutorialStep/flock/deposit_sentinel
 	name = "Direct drones to construct"
-	instructions = "Nearby drones will slowly automatically deposit their resources into tealprints, but you can override their torpid cognition to order them directly. Click on a drone to select it, then click on the tealprint to target it. The same works to order a drone to convert, attack, cage and so on depending what you click on."
+	instructions = "Nearby AI controlled drones will automatically deposit their resources into tealprints, but you can also order them to do so directly. Click on a drone to select it, then click on the tealprint to target it. The same works to order a drone to convert, attack, cage, and so on depending what you click on."
 
 	PerformAction(action, context)
 		if (action == FLOCK_ACTION_DRONE_SELECT)
@@ -287,7 +287,7 @@
 
 /datum/tutorialStep/flock/build_thing/interceptor
 	name = "Construct Interceptor"
-	instructions = "As you can see, humans often carry guns that can be very harmful to our drones. Construct an Interceptor to destroy their bullets in mid air."
+	instructions = "As you can see, humans often carry guns that can be very harmful to our drones. Construct an Interceptor to destroy their bullets in midair."
 	structure_type = /obj/flock_structure/interceptor
 
 	SetUp()
@@ -336,7 +336,7 @@
 
 /datum/tutorialStep/flock/showcase
 	name = "Structure showcase"
-	instructions = "Here are all the flock structures you can create, along with a shadow of the relay, your ultimate goal. Click the exit tutorial button in the bottom right corner to exit the tutorial."
+	instructions = "Here are all the Flock structures you can create, along with a shadow of the Relay, your ultimate goal. Click the exit tutorial button in the bottom right corner to exit the tutorial."
 	SetUp()
 		..()
 		src.ftutorial.fowner.abilityHolder.addAbility(/datum/targetable/flockmindAbility/tutorial_exit)
@@ -348,7 +348,7 @@
 			var/mob/living/carbon/human/bad_immortal/fake_tdummy = locate() in T
 			if (fake_tdummy)
 				src.ftutorial.fowner.flock.updateEnemy(fake_tdummy)
-		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_START])
+		for(var/turf/T as anything in landmarks[LANDMARK_TUTORIAL_START])
 			if(region.turf_in_region(T))
 				src.ftutorial.fowner.set_loc(T)
 				break
@@ -410,7 +410,7 @@
 	var/structure_type = null
 	var/ghost = FALSE
 
-	proc/spawn_structure(var/datum/flock/flock)
+	proc/spawn_structure(datum/flock/flock)
 		if (!ispath(src.structure_type))
 			return
 		if (src.ghost)
