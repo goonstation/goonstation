@@ -274,6 +274,8 @@
 			if(D_SLASHING)
 				damage_mult = 1.5
 				damtype = "brute"
+			if(D_SPECIAL)
+				return
 
 		src.take_damage(damage,damage_mult,damtype)
 		return

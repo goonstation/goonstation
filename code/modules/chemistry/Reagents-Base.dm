@@ -847,11 +847,12 @@ datum
 						else
 							if (ishuman(M))
 								var/mob/living/carbon/human/H = M
-								if(H.bioHolder?.HasEffect("blood_curse") || H.bioHolder?.HasEffect("blind_curse") || H.bioHolder?.HasEffect("weak_curse") || H.bioHolder?.HasEffect("rot_curse"))
+								if(H.bioHolder?.HasEffect("blood_curse") || H.bioHolder?.HasEffect("blind_curse") || H.bioHolder?.HasEffect("weak_curse") || H.bioHolder?.HasEffect("rot_curse") || H.bioHolder?.HasEffect("death_curse"))
 									H.bioHolder.RemoveEffect("blood_curse")
 									H.bioHolder.RemoveEffect("blind_curse")
 									H.bioHolder.RemoveEffect("weak_curse")
 									H.bioHolder.RemoveEffect("rot_curse")
+									H.bioHolder.RemoveEffect("death_curse")
 									H.visible_message("[H] screams as some black smoke exits their body.")
 									H.emote("scream")
 									random_burn_damage(H, 5)
