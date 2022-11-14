@@ -26,7 +26,7 @@ A Flamethrower in various states of assembly
 /obj/item/gun/flamethrower/
 	name = "flamethrower"
 	icon = 'icons/obj/items/weapons.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "flamethrower_no_oxy_no_fuel"
 	item_state = "flamethrower0"
 	desc = "You are a firestarter!"
@@ -76,7 +76,7 @@ A Flamethrower in various states of assembly
 		AddComponent(/datum/component/holdertargeting/fullauto, src.shoot_delay, src.shoot_delay, 1)
 
 	/// Just check if there's a usable air and fuel tank
-	canshoot()
+	canshoot(mob/user)
 		if(istype(src.gastank) && src.gastank.air_contents && istype(src.fueltank) && src.fueltank.reagents)
 			return TRUE
 
@@ -91,7 +91,7 @@ A Flamethrower in various states of assembly
 				tank.reagents.trans_to(src.fueltank, (src.fueltank.reagents.maximum_volume - (src.fueltank.reagents.total_volume)))
 				inventory_counter.update_percent(src.fueltank.reagents.total_volume, src.fueltank.reagents.maximum_volume)
 				boutput(user, "<span class='notice'>You refill the flamethrower's fuel tank.</span>")
-				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+				playsound(src.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
 				user.lastattacked = target
 			else
 				boutput(user, "<span class='notice'>Load the fuel tank first!</span>")
@@ -119,7 +119,7 @@ A Flamethrower in various states of assembly
 		if(!P.proj_data)
 			return
 
-		if(!canshoot())
+		if(!canshoot(null)) //null because I can't be assed
 			return
 
 		var/list/P_special_data = P.special_data
@@ -177,7 +177,7 @@ A Flamethrower in various states of assembly
 /obj/item/gun/flamethrower/assembled
 	name = "flamethrower"
 	icon = 'icons/obj/items/weapons.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	desc = "You are a firestarter!"
 	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
 	force = 3
@@ -570,7 +570,7 @@ A Flamethrower in various states of assembly
 
 	src.updateSelfDialog()
 	SPAWN(0.5 SECONDS)
-		playsound(src, "sound/effects/valve_creak.ogg", 40, 1)
+		playsound(src, 'sound/effects/valve_creak.ogg', 40, 1)
 	return TRUE
 
 /obj/item/gun/flamethrower/assembled/attackby(obj/item/W, mob/user as mob)
@@ -631,7 +631,7 @@ A Flamethrower in various states of assembly
 	if (href_list["light"])
 		if(!src.gastank || !src.fueltank)	return
 		lit = !(lit)
-		playsound(src, "sound/misc/lightswitch.ogg", 20, 1)
+		playsound(src, 'sound/misc/lightswitch.ogg', 20, 1)
 		if(lit)
 			icon_state = "flamethrower_ignite_on"
 			item_state = "flamethrower1"
@@ -660,7 +660,7 @@ A Flamethrower in various states of assembly
 			fuel = "_fuel"
 		icon_state = "flamethrower_no_oxy[fuel]"
 		item_state = "flamethrower0"
-		playsound(src, "sound/effects/valve_creak.ogg", 15, 1)
+		playsound(src, 'sound/effects/valve_creak.ogg', 15, 1)
 		var/remove_sound = "sound/items/pickup_[clamp(src.w_class, 1, 3)].ogg"
 		if(A?.pickup_sfx)
 			remove_sound = A.pickup_sfx
@@ -691,11 +691,11 @@ A Flamethrower in various states of assembly
 		playsound(src, remove_sound, 30, 1)
 		SPAWN(0.5 SECONDS)
 			if(src)
-				playsound(src, "sound/effects/valve_creak.ogg", 15, 1)
+				playsound(src, 'sound/effects/valve_creak.ogg', 15, 1)
 
 	if (href_list["mode"])
 		mode = text2num_safe(href_list["mode"])
-		playsound(src, "sound/effects/valve_creak.ogg", 15, 1)
+		playsound(src, 'sound/effects/valve_creak.ogg', 15, 1)
 		src.current_projectile.fullauto_valid = 1
 		src.current_projectile.shot_number = 1
 		switch(src.mode)
@@ -727,7 +727,7 @@ A Flamethrower in various states of assembly
 		else
 			var/tempnum = text2num_safe(href_list["temp"])
 			src.base_temperature = clamp(src.base_temperature += tempnum, src.min_temperature, src.max_temperature)
-		playsound(src, "sound/misc/lightswitch.ogg", 20, 1)
+		playsound(src, 'sound/misc/lightswitch.ogg', 20, 1)
 
 	if (href_list["c_amt"])
 		if (href_list["c_amt"] == "reset")
@@ -735,7 +735,7 @@ A Flamethrower in various states of assembly
 		else
 			var/tempnum = text2num_safe(href_list["c_amt"])
 			src.amt_chem = clamp(src.amt_chem += tempnum, FLAMER_MIN_CHEM_AMT, src.amt_chem_max)
-		playsound(src, "sound/effects/valve_creak.ogg", 10, 0.2)
+		playsound(src, 'sound/effects/valve_creak.ogg', 10, 0.2)
 
 	inventory_counter?.update_percent(src.fueltank?.reagents?.total_volume, src.fueltank?.reagents?.maximum_volume)
 	src.updateSelfDialog()

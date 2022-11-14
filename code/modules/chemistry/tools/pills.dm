@@ -32,7 +32,6 @@
 		if (!src.reagents || !src.reagents.total_volume)
 			user.show_text("[src] doesn't contain any reagents.", "red")
 			return
-		
 		src.pill_action(user, user)
 		return
 
@@ -86,7 +85,7 @@
 				user.visible_message("<span class='alert'>[user] puts something in [target].</span>",\
 				"<span class='success'>You dissolve [src] in [target].</span>")
 
-			logTheThing(LOG_COMBAT, user, "dissolves a [src.name] [log_reagents(src)] in [target] at [log_loc(user)].")
+			logTheThing(LOG_CHEMISTRY, user, "dissolves a [src.name] [log_reagents(src)] in [target] at [log_loc(user)].")
 			reagents.trans_to(target, src.reagents.total_volume)
 			user.u_equip(src)
 			qdel(src)
@@ -106,7 +105,7 @@
 				user.visible_message("<span class='alert'>[user] forces [target] to swallow [src].</span>",\
 				"<span class='alert'>You force [target] to swallow [src].</span>")
 
-			logTheThing("combat", user, target, "[user == target ? "swallows" : "makes [constructTarget(target,"combat")] swallow"] a [src.name] [log_reagents(src)] at [log_loc(user)].")
+			logTheThing(user == target ? LOG_CHEMISTRY : LOG_COMBAT, user, "[user == target ? "swallows" : "makes [constructTarget(target,"combat")] swallow"] a [src.name] [log_reagents(src)] at [log_loc(user)].")
 
 			if (src.reagents.total_volume)
 				src.reagents.reaction(target, INGEST)

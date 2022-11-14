@@ -14,7 +14,7 @@
 	var/list/civilian_access_list = list(access_morgue, access_maint_tunnels, access_chapel_office, access_tech_storage, access_bar, access_janitor, access_crematorium, access_kitchen, access_hydro, access_ranch)
 	var/list/engineering_access_list = list(access_external_airlocks, access_construction, access_engineering, access_engineering_storage, access_engineering_power, access_engineering_engine, access_engineering_mechanic, access_engineering_atmos, access_engineering_control)
 	var/list/supply_access_list = list(access_hangar, access_cargo, access_supply_console, access_mining, access_mining_shuttle, access_mining_outpost)
-	var/list/research_access_list = list(access_medical, access_tox, access_tox_storage, access_medlab, access_medical_lockers, access_research, access_robotics, access_chemistry, access_pathology)
+	var/list/research_access_list = list(access_medical, access_tox, access_tox_storage, access_medlab, access_medical_lockers, access_research, access_robotics, access_chemistry, access_pathology, access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
 	var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_securitylockers, access_carrypermit, access_contrabandpermit)
 	var/list/command_access_list = list(access_research_director, access_emergency_storage, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_dwaine_superuser)
 	var/list/allowed_access_list
@@ -98,7 +98,7 @@
 				boutput(user, "<span class='alert'>There is no energy cell inserted!</span>")
 				return
 
-			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			src.cell.set_loc(get_turf(src))
 			src.cell = null
 			user.visible_message("<span class='alert'>[user] removes the power cell from [src]!.</span>","<span class='alert'>You remove the power cell from [src]!</span>")
@@ -138,6 +138,11 @@
 
 		src.power_change()
 		return
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
 
 /obj/machinery/computer/card/attack_hand(var/mob/user)
 	if(..())
@@ -194,7 +199,7 @@
 
 			//Jobs organised into sections
 			var/list/civilianjobs = list("Staff Assistant", "Bartender", "Chef", "Botanist", "Rancher", "Chaplain", "Janitor", "Clown")
-			var/list/maintainencejobs = list("Engineer", "Mechanic", "Miner", "Quartermaster")
+			var/list/maintainencejobs = list("Engineer", "Miner", "Quartermaster")
 			var/list/researchjobs = list("Scientist", "Medical Doctor", "Geneticist", "Roboticist", "Pathologist")
 			var/list/securityjobs = list("Security Officer", "Security Assistant", "Detective")
 			var/list/commandjobs = list("Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Captain")
@@ -379,7 +384,7 @@
 				return
 
 			if (t1 == "Custom Assignment")
-				t1 = input(usr, "Enter a custom job assignment.", "Assignment")
+				t1 = tgui_input_text(usr, "Enter a custom job assignment.", "Assignment")
 				if(!src.modify || !src.authenticated)
 					return
 				t1 = strip_html(t1, 100, 1)
@@ -403,7 +408,7 @@
 		if (src.authenticated)
 			var/t2 = src.modify
 
-			var/t1 = input(usr, "What name?", "ID computer", null)
+			var/t1 = tgui_input_text(usr, "What name?", "ID computer")
 			t1 = strip_html(t1, 100, 1)
 
 			if ((src.authenticated && src.modify == t2 && (in_interact_range(src, usr) || (issilicon(usr) || isAI(usr))) && istype(src.loc, /turf)))

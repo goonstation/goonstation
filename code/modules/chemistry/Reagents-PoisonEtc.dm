@@ -124,6 +124,7 @@ datum
 				P.growth -= 3
 
 			reaction_blob(var/obj/blob/B, var/volume)
+				. = ..()
 				if (!blob_damage)
 					return
 				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
@@ -181,6 +182,7 @@ datum
 				P.HYPdamageplant("acid", 1)
 
 			reaction_blob(var/obj/blob/B, var/volume)
+				. = ..()
 				if (!blob_damage)
 					return
 				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
@@ -383,7 +385,7 @@ datum
 							M.setStatus("slowed", 5 SECONDS)
 						if (probmult(8))
 							M.visible_message("<span class='alert'>[M] vomits a lot of blood!</span>")
-							playsound(M, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+							playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
 							make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
 						else if (probmult(5))
 							boutput(M, "<span class='alert'>You feel a sudden pain in your chest.</span>")
@@ -474,6 +476,7 @@ datum
 				return
 
 			reaction_blob(var/obj/blob/B, var/volume)
+				. = ..()
 				if (istype(B, /obj/blob/lipid))
 					B.take_damage(B.health_max, 2, "chaos")
 
@@ -650,7 +653,7 @@ datum
 								B.beeKid = DEFAULT_BLOOD_COLOR
 								B.UpdateIcon()
 
-								playsound(H.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+								playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 								take_bleeding_damage(H, null, rand(10,30) * mult, DAMAGE_STAB)
 								H.visible_message("<span class='alert'><B>A bee bursts out of [H]'s chest! Oh fuck!</B></span>", \
 								"<span class='alert'><b>A bee bursts out of your chest! OH FUCK!</b></span>")
@@ -731,7 +734,7 @@ datum
 								B.beeKid = DEFAULT_BLOOD_COLOR
 								B.UpdateIcon()
 
-								playsound(H.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+								playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 								bleed(H, 500, 5) // you'll be gibbed in a moment you don't need it anyway
 								H.visible_message("<span class='alert'><B>A huge bee bursts out of [H]! OH FUCK!</B></span>")
 								qdel(H.organHolder.heart)
@@ -792,6 +795,7 @@ datum
 				..()
 
 			reaction_blob(var/obj/blob/B, var/volume)
+				. = ..()
 				if (B.type == /obj/blob)
 					var/obj/blob/lipid/L = new /obj/blob/lipid(B.loc)
 					L.setOvermind(B.overmind)
@@ -831,7 +835,6 @@ datum
 					M.setStatusMin("weakened", 6 SECONDS * mult)
 					M.make_jittery(6)
 					M.visible_message("<span class='alert'><b>[M.name]</b> falls to the floor, scratching themselves violently!</span>")
-					M.emote("scream")
 				..()
 				return
 
@@ -874,7 +877,7 @@ datum
 						else
 							if (H.head)
 								var/obj/item/clothing/head/D = H.head
-								if (!(D.item_function_flags & IMMUNE_TO_ACID) && D.getProperty("chemprot") * 2 < raw_volume)
+								if (!(D.item_function_flags & IMMUNE_TO_ACID) && D.getProperty("chemprot") <= raw_volume * 2)
 									if(!D.hasStatus("acid"))
 										boutput(M, "<span class='alert'>Your [H.head] begins to melt!</span>")
 										D.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
@@ -884,7 +887,7 @@ datum
 							if (!(H.head?.c_flags & SPACEWEAR) || !(H.head?.item_function_flags & IMMUNE_TO_ACID))
 								if (H.wear_mask)
 									var/obj/item/clothing/mask/K = H.wear_mask
-									if (!(K.item_function_flags & IMMUNE_TO_ACID) && K.getProperty("chemprot") * 3 < raw_volume)
+									if (!(K.item_function_flags & IMMUNE_TO_ACID) && K.getProperty("chemprot") <= raw_volume * 2)
 										if(!K.hasStatus("acid"))
 											boutput(M, "<span class='alert'>Your [H.wear_mask] begins to melt away!</span>")
 											K.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
@@ -928,6 +931,155 @@ datum
 				P.growth -= 5
 
 			reaction_blob(var/obj/blob/B, var/volume)
+				. = ..()
+				if (!blob_damage)
+					return
+				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
+
+		harmful/tene
+			name = "aqua tenebrae"
+			id = "tene"
+			description = "A highly-caustic fluid comprised of several unknown acids, found in abundance in the seas of X-13."
+			reagent_state = LIQUID
+			fluid_r = 80
+			fluid_g = 60
+			fluid_b = 255
+			dispersal = 1
+			blob_damage = 2
+			viscosity = 0.25
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+				if(!ischangeling(M))
+					M.take_toxin_damage(1 * mult)
+					M.TakeDamage("chest", 0, 1 * mult, 0, DAMAGE_BURN)
+				..()
+				return
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
+				. = ..()
+				if(method == TOUCH)
+					. = 0
+				var/datum/reagents/fluid_group/wildwetride = src.holder
+				if(istype(wildwetride)) //applied by a fluid body, so we can keep it "simpleish"
+					var/mob/living/carbon/human/H
+					var/blocked = FALSE
+
+					//if fluid touch chemloop exists, eliminate this cooldown and pass apply_decay the mult-adjusted time spent in acid
+					if(ON_COOLDOWN(M, "corrode_a_homie", 1 SECOND))
+						return
+
+					if(ishuman(M))
+						H = M
+						var/obj/item/clothing/head/headgear = H.head
+						var/obj/item/clothing/suit/suitgear = H.wear_suit
+
+						//check for sealed protection
+						if(headgear && suitgear)
+							if(headgear.item_function_flags & IMMUNE_TO_ACID && suitgear.item_function_flags & IMMUNE_TO_ACID)
+								return
+							else if(headgear.c_flags & SPACEWEAR && suitgear.c_flags & SPACEWEAR) //full seal
+								blocked = TRUE
+
+						//apply decay if item isn't acid-immune and is yielding chemprot protection or full seal protection
+						if(headgear && (blocked || headgear.getProperty("chemprot") > 0))
+							var/datum/component/gear_corrosion/hcorroder = headgear.LoadComponent(/datum/component/gear_corrosion)
+							hcorroder.apply_decay()
+						if(suitgear && (blocked || suitgear.getProperty("chemprot") > 0))
+							var/datum/component/gear_corrosion/scorroder = suitgear.LoadComponent(/datum/component/gear_corrosion)
+							scorroder.apply_decay()
+
+					if(blocked)
+						return
+
+					var/damage2deal = clamp(volume / 6, 0, 10)
+
+					//var for message and emote, apply cooldown to this to make screams less often
+					var/do_an_ouch = TRUE
+
+					damage2deal = round(damage2deal)
+
+					//changelings don't take damage, but they do get a bit liquefied if they're wandering around
+					if(H && ischangeling(H))
+						if(damage2deal >= 5 && !H.disfigured && !H.wear_mask && !H.head)
+							boutput(H, "<span class='alert'>The acid withers our visage.</span>")
+							H.disfigured = TRUE
+							H.UpdateName()
+						return
+
+					if(damage2deal >= 5) //scream and face melty
+						if(H)
+							if(do_an_ouch)
+								H.emote("scream")
+							if (!H.wear_mask && !H.head)
+								if(!H.disfigured)
+									boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
+									H.disfigured = TRUE
+									H.UpdateName()
+									H.unlock_medal("Red Hood", 1)
+					else //just a gasp of pain
+						if(H && do_an_ouch && damage2deal)
+							H.emote("gasp")
+					if(damage2deal)
+						random_burn_damage(M, damage2deal)
+						if(do_an_ouch)
+							boutput(M, "<span class='alert'>The blueish acidic substance burns!</span>")
+				else //applied by a beaker splash
+					if (method == TOUCH && volume >= 30)
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							var/blocked = FALSE
+							if (!H.wear_mask && !H.head)
+								if(ischangeling(H)) //disfigures you, but doesn't harm you. make sure to scream to play along
+									if(!H.disfigured)
+										boutput(H, "<span class='alert'>The acid withers our visage.</span>")
+										H.disfigured = TRUE
+										H.UpdateName()
+									return
+								H.TakeDamage("head", 0, clamp((volume - 5), 8, 50), 0, DAMAGE_BURN)
+								H.emote("scream")
+								if(!H.disfigured)
+									boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
+									H.disfigured = TRUE
+									H.UpdateName()
+								H.unlock_medal("Red Hood", 1)
+								return
+							else
+								if (H.head)
+									var/obj/item/clothing/head/D = H.head
+									if (!(D.item_function_flags & IMMUNE_TO_ACID))
+										if(!D.hasStatus("acid"))
+											boutput(M, "<span class='alert'>Your [H.head] begins to melt!</span>")
+											D.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
+									else
+										H.visible_message("<span class='alert>The blueish acidic substance slides off \the [D] harmlessly.</span>", "<span class='alert'>Your [H.head] protects you from the acid!</span>")
+									blocked = TRUE
+								if (!(H.head?.c_flags & SPACEWEAR) || !(H.head?.item_function_flags & IMMUNE_TO_ACID))
+									if (H.wear_mask)
+										var/obj/item/clothing/mask/K = H.wear_mask
+										if (!(K.item_function_flags & IMMUNE_TO_ACID))
+											if(!K.hasStatus("acid"))
+												boutput(M, "<span class='alert'>Your [H.wear_mask] begins to melt away!</span>")
+												K.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
+										else
+											H.visible_message("<span class='alert'>The blueish acidic substance slides off \the [K] harmlessly.</span>", "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
+										blocked = TRUE
+
+								if (blocked)
+									return
+						else if(!ischangeling(M))
+							random_brute_damage(M, min(15,volume))
+					else if (volume >= 6 && !ischangeling(M))
+						M.emote("scream")
+						M.TakeDamage("All", 0, volume / 6, 0, DAMAGE_BURN)
+					boutput(M, "<span class='alert'>The blueish acidic substance stings[volume < 6 ? " you, but isn't concentrated enough to harm you" : null]!</span>")
+
+			on_plant_life(var/obj/machinery/plantpot/P)
+				P.HYPdamageplant("acid",8)
+				P.growth -= 4
+
+			reaction_blob(var/obj/blob/B, var/volume)
+				. = ..()
 				if (!blob_damage)
 					return
 				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
@@ -998,7 +1150,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.changeStatus("radiation", 5 SECONDS * mult, 4)
+				M.take_radiation_dose(0.125 SIEVERTS * mult, internal=TRUE)
 				..()
 				return
 
@@ -1090,6 +1242,7 @@ datum
 						if (probmult(25)) M.emote("yawn")
 					if (6 to 9)
 						M.change_eye_blurry(10, 10)
+						M.setStatus("drowsy", 10 SECONDS)
 						if (probmult(35)) M.emote("yawn")
 					if (10)
 						M.emote("faint")
@@ -1379,7 +1532,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.changeStatus("radiation", 3 SECONDS * mult, 1)
+				M.take_radiation_dose(0.02 SIEVERTS * mult, internal=TRUE)
 				var/mutChance = 4
 				if (M.traitHolder && M.traitHolder.hasTrait("stablegenes")) mutChance = 2
 				if (probmult(mutChance))
@@ -1415,7 +1568,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.changeStatus("radiation", 2 SECONDS * mult)
+				M.take_radiation_dose(0.02 SIEVERTS * mult, internal=TRUE)
 				// DNA buckshot
 				var/mutChance = 15
 				if (M.traitHolder && M.traitHolder.hasTrait("stablegenes")) mutChance = 7
@@ -1461,9 +1614,9 @@ datum
 			transparency = 220
 
 		harmful/wolfsbane
-			name = "Aconitum"
+			name = "Aconitine"
 			id = "wolfsbane"
-			description = "Also known as monkshood or wolfsbane, aconitum is a very potent neurotoxin."
+			description = "Also known as monkshood or wolfsbane, aconitine is a very potent neurotoxin."
 			reagent_state = LIQUID
 			fluid_r = 129
 			fluid_b = 116
@@ -1507,7 +1660,7 @@ datum
 				if (probmult(7))
 					for(var/mob/O in AIviewers(M, null))
 						O.show_message("<span class='alert'>[M] vomits up some green goo.</span>", 1)
-					playsound(M.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+					playsound(M.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 					make_cleanable( /obj/decal/cleanable/greenpuke,M.loc)
 				..()
 
@@ -1592,7 +1745,7 @@ datum
 						M.setStatusMin("weakened", 8 SECONDS * mult)
 					else if (effect <= 7)
 						boutput(M, "<span class='alert'><b>Your heartbeat is pounding inside your head!</b></span>")
-						M.playsound_local(M.loc, "sound/effects/heartbeat.ogg", 50, 1)
+						M.playsound_local(M.loc, 'sound/effects/heartbeat.ogg', 50, 1)
 						M.emote("collapse")
 						M.take_oxygen_deprivation(8 * mult)
 						M.take_toxin_damage(3 * mult)
@@ -1636,8 +1789,6 @@ datum
 							M.change_misstep_chance(15 * mult)
 						if (prob(15))
 							M.setStatusMin("stunned", 2 SECONDS * mult)
-							if (!isdead(M))
-								M.emote("scream")
 					if (30 to 60)
 						M.change_eye_blurry(5, 5)
 						M.stuttering = max(M.stuttering, 5)
@@ -1686,7 +1837,6 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				//M.changeStatus("radiation", 30, 1)
 				if (!src.data) // Pull bioholder data from blood that's in the same reagentholder
 					for (var/bloodtype in holder.reagent_list)
 						var/datum/reagent/blood = holder.reagent_list[bloodtype]
@@ -1985,7 +2135,6 @@ datum
 							if(3) //Trip
 								H.show_text(pick_string("chemistry_reagent_messages.txt", "strychnine2b"), "red")
 								H.visible_message("<span class='combat bold'>[H] stumbles and falls!</span>")
-								if(probmult(10)) H.emote("scream")
 								H.changeStatus("weakened", 2 SECONDS * mult)
 							if(4) //Light-headedness
 								H.show_text("You feel like you are about to faint!", "red")
@@ -2019,7 +2168,7 @@ datum
 					else if (prob(5))
 						var/damage = rand(1,10)
 						H.visible_message("<span class='alert'>[H] [damage > 3 ? "vomits" : "coughs up"] blood!</span>", "<span class='alert'>You [damage > 3 ? "vomit" : "cough up"] blood!</span>")
-						playsound(H.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+						playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 						H.TakeDamage(zone="All", brute=damage)
 						bleed(H, damage * 2 * mult, 3)
 

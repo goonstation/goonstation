@@ -10,7 +10,13 @@
 
 	compute = -FLOCKTRACE_COMPUTE_COST //it is expensive to run more threads
 
+	var/creation_time = 0
+
+	var/dying = FALSE
+
 /mob/living/intangible/flock/trace/New(atom/loc, datum/flock/F, free = FALSE)
+	src.creation_time = TIME
+
 	if (free)
 		src.compute = 0
 	..(loc)
@@ -19,6 +25,7 @@
 	if(istype(F))
 		src.flock = F
 		src.flock.addTrace(src)
+		src.flock.partitions_made++
 	else
 		src.death()
 
@@ -88,9 +95,26 @@
 /mob/living/intangible/flock/trace/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return TRUE
-	if (src.flock && src.compute != 0 && src.flock.total_compute() < src.flock.used_compute)
-		boutput(src, "<span class='alert'>The Flock has insufficient compute to sustain your consciousness!</span>")
-		src.death()
+	if (src.flock && src.compute != 0 && src.flock.total_compute() - src.flock.used_compute < -FLOCKTRACE_COMPUTE_COST * src.flock.queued_trace_deaths && !src.dying)
+		src.dying = TRUE
+		src.flock.queued_trace_deaths++
+		boutput(src, "<span class='alert'>The Flock has insufficient compute to sustain your consciousness! You will die soon!</span>")
+		src.addOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
+		src.updateOverlaysClient(src.client)
+		if (istype(src.loc, /mob/living/critter/flock/drone))
+			var/mob/living/critter/flock/drone/flockdrone = src.loc
+			flockdrone.addOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
+			flockdrone.updateOverlaysClient(src.client)
+		SPAWN(5 SECONDS)
+			if (src?.flock)
+				if (src.flock.total_compute() < src.flock.used_compute)
+					src.death()
+				else
+					src.dying = FALSE
+					boutput(src, "<span class='alert'>The Flock has gained enough compute to keep you alive!</span>")
+					src.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
+					src.updateOverlaysClient(src.client)
+				src.flock.queued_trace_deaths--
 
 /mob/living/intangible/flock/trace/death(gibbed, suicide = FALSE)
 	. = ..()

@@ -312,10 +312,11 @@
 			animate_storage_rustle(src)
 		else
 			..()
-			for (var/mob/M as anything in hud.mobs)
-				if (M != user)
-					M.detach_hud(hud)
-			hud.update(user)
+			if (hud)
+				for (var/mob/M as anything in hud.mobs)
+					if (M != user)
+						M.detach_hud(hud)
+				hud.update(user)
 
 	attack_self(mob/user as mob)
 		..()
@@ -363,12 +364,17 @@
 			new /obj/item/tank/emergency_oxygen(src)
 		if (ticker?.round_elapsed_ticks > 20 MINUTES)
 			new /obj/item/crowbar/red(src)
+#ifdef MAP_OVERRIDE_NADIR //guarantee protective gear
+		new /obj/item/clothing/suit/space/emerg(src)
+		new /obj/item/clothing/head/emerg(src)
+#else
 		if (prob(10)) // put these together
 			new /obj/item/clothing/suit/space/emerg(src)
 			new /obj/item/clothing/head/emerg(src)
+#endif
 
 /obj/item/storage/box/starter/withO2
-	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen)
+	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/emergency_oxygen)
 
 /obj/item/storage/pill_bottle
 	name = "pill bottle"
@@ -431,7 +437,7 @@
 			if (src.id && K.id == src.id)
 				src.locked = !src.locked
 				user.visible_message("[user] [!src.locked ? "un" : null]locks [src].")
-				playsound(src, "sound/items/Screwdriver2.ogg", 50, 1)
+				playsound(src, 'sound/items/Screwdriver2.ogg', 50, 1)
 			else
 				boutput(user, "<span class='alert'>[K] doesn't seem to fit in [src]'s lock.</span>")
 			return

@@ -67,9 +67,11 @@ var/list/headset_channel_lookup
 		set_secure_frequencies()
 
 /obj/item/device/radio/disposing()
+	src.patch_link = null
+	src.traitorradio  = null
 	src.secure_connections = null
 	src.secure_frequencies = null
-
+	src.speech_bubble = null
 	..()
 
 /obj/item/device/radio/proc/set_frequency(new_frequency)
@@ -697,7 +699,7 @@ var/list/headset_channel_lookup
 	attackby(obj/item/I, mob/user)
 		if (isscrewingtool(I))
 			if (src.anchored)
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user.visible_message("[user] unscrews [src] from the floor.", "You unscrew [src] from the floor.", "You hear a screwdriver.")
 				src.anchored = 0
 				return
@@ -708,7 +710,7 @@ var/list/headset_channel_lookup
 						user.show_text("What exactly are you gonna secure [src] to?", "red")
 						return
 					else
-						playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+						playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 						user.visible_message("[user] screws [src] to the floor, anchoring it in place.", "You screw [src] to the floor, anchoring it in place.", "You hear a screwdriver.")
 						src.anchored = 1
 						return

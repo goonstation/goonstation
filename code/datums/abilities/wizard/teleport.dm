@@ -20,9 +20,9 @@
 
 // These two procs were so similar that I combined them (Convair880).
 /mob/proc/teleportscroll(var/effect = 0, var/perform_check = 0, var/obj/item_to_check = null, var/datum/targetable/spell/teleport/spell, var/abort_if_incapacitated = FALSE)
-	var/voice_grim = "sound/voice/wizard/TeleportGrim.ogg"
-	var/voice_fem = "sound/voice/wizard/TeleportFem.ogg"
-	var/voice_other = "sound/voice/wizard/TeleportLoud.ogg"
+	var/voice_grim = 'sound/voice/wizard/TeleportGrim.ogg'
+	var/voice_fem = 'sound/voice/wizard/TeleportFem.ogg'
+	var/voice_other = 'sound/voice/wizard/TeleportLoud.ogg'
 
 	if (src.getStatusDuration("paralysis") || !isalive(src))
 		boutput(src, "<span class='alert'>Not when you're incapacitated.</span>")
@@ -171,13 +171,13 @@
 	if (effect)
 		animate_teleport_wiz(src)
 		sleep(2 SECONDS) // Animation.
-		playsound(src.loc, "sound/effects/mag_teleport.ogg", 25, 1, -1)
+		playsound(src.loc, 'sound/effects/mag_teleport.ogg', 25, 1, -1)
 		sleep(2 SECONDS) // Animation.
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 		smoke.set_up(5, 0, src.loc)
 		smoke.attach(src)
 
-		playsound(destination, "sound/effects/mag_teleport.ogg", 25, 1, -1)
+		playsound(destination, 'sound/effects/mag_teleport.ogg', 25, 1, -1)
 		src.set_loc(destination)
 		smoke.start()
 

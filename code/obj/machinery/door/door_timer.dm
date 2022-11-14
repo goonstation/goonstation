@@ -194,14 +194,14 @@
 	return
 
 /obj/machinery/door_timer/power_change()
-	UpdateIcon()
+	src.UpdateIcon()
 
 
 // Why range 30? COG2 places linked fixtures much further away from the timer than originally envisioned.
 /obj/machinery/door_timer/proc/alarm()
 	if (!src)
 		return
-	if (status & (NOPOWER|BROKEN))
+	if (src.status & (NOPOWER|BROKEN))
 		return
 
 	for_by_tcl(M, /obj/machinery/door/window/brigdoor)
@@ -347,10 +347,10 @@
 	return src.ui_interact(user)
 
 /obj/machinery/door_timer/update_icon()
-	if (status & (NOPOWER))
+	if (src.status & (NOPOWER))
 		icon_state = "doortimer-p"
 		return
-	else if (status & (BROKEN))
+	else if (src.status & (BROKEN))
 		icon_state = "doortimer-b"
 		return
 	else

@@ -82,7 +82,7 @@
 			playsound(src, "shatter", 70, 1)
 			UpdateIcon()
 	else
-		playsound(src.loc, "sound/impact_sounds/Glass_Hit_1.ogg", 75, 1)
+		playsound(src.loc, 'sound/impact_sounds/Glass_Hit_1.ogg', 75, 1)
 	return
 
 /obj/displaycase/update_icon()
@@ -97,16 +97,16 @@
 	if (isscrewingtool(W)) // To bolt to the floor
 		if (src.anchored == 0)
 			src.anchored = 1
-			playsound(user, "sound/items/Screwdriver2.ogg", 65, 1)
+			playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
 			user.show_message("<span class='notice'>You bolt the display case to the floor.</span>")
 		else
 			src.anchored = 0
-			playsound(user, "sound/items/Screwdriver2.ogg", 65, 1)
+			playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
 			user.show_message("<span class='notice'>You unbolt the display case from the floor.</span>")
 		return
 	else if (iswrenchingtool(W) && destroyed) // To disassemble when broken
 		boutput(user, "<span class='notice'>You begin to disassemble the broken display case.</span>")
-		playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		var/turf/T = user.loc
 		sleep(2 SECONDS)
 		if ((user.loc == T && user.equipped() == W))
@@ -115,7 +115,7 @@
 		return
 	else if (istype(W, /obj/item/sheet/glass) && destroyed) // To repair when broken
 		boutput(user, "<span class='notice'>You begin to repair the broken display case.</span>")
-		playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		var/turf/T = user.loc
 		sleep(1.5 SECONDS)
 		if ((user.loc == T && user.equipped() == W))
@@ -168,7 +168,7 @@
 	name = "antique laser gun"
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "caplaser"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "gun"
 	force = 1
 	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT

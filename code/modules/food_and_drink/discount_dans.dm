@@ -297,6 +297,7 @@
 			..()
 
 	heal(var/mob/M)
+		..()
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
 				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
@@ -307,7 +308,7 @@
 	proc/splat()
 		var/turf/T = get_turf(src)
 		if(!locate(/obj/decal/cleanable/vomit) in T)
-			playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 			var/obj/decal/cleanable/vomit/filling = make_cleanable( /obj/decal/cleanable/vomit,src)
 			var/icon/fillicon = icon(filling.icon, filling.icon_state)
 			fillicon.MapColors(0.5, 0.25, 0)
@@ -559,6 +560,7 @@
 		return
 
 	heal(var/mob/M)
+		..()
 		if (prob(8))
 			if (M.mind && M.mind.ckey)
 				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
@@ -587,6 +589,7 @@
 
 
 	heal(var/mob/M)
+		..()
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
 				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")

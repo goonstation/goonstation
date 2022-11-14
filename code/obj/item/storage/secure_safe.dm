@@ -136,7 +136,7 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 		return
 
 	if (!ON_COOLDOWN(src, "playsound", 0.2 SECONDS))
-		playsound(src.loc, "sound/machines/keypress.ogg", 55, 1)
+		playsound(src.loc, 'sound/machines/keypress.ogg', 55, 1)
 
 	if (src.disabled || src.emagged)
 		return
@@ -236,13 +236,13 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 		src.locked = !src.locked
 		src.overlays = src.locked ? null : list(image('icons/obj/items/storage.dmi', icon_open))
 		boutput(user, "<span class='alert'>[src]'s lock mechanism clicks [src.locked ? "locked" : "unlocked"].</span>")
-		playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 65, 1)
 	else
 		if (length(guess) == src.code_len)
 			var/desctext = src.gen_hint(guess)
 			if (desctext)
 				boutput(user, "<span class='alert'>[src]'s lock panel emits [desctext].</span>")
-				playsound(src.loc, "sound/machines/twobeep.ogg", 55, 1)
+				playsound(src.loc, 'sound/machines/twobeep.ogg', 55, 1)
 
 		src.pad_msg = KEYPAD_ERR
 		src.guess= ""
@@ -330,8 +330,8 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 					S.setup(src)
 			if (7)
-				new /obj/item/gun/kinetic/riotgun(src)
-				new /obj/item/ammo/bullets/abg(src)
+				new /obj/item/gun/kinetic/single_action/mts_255(src)
+				new /obj/item/ammo/bullets/pipeshot/scrap/five(src)
 				for (var/i=3, i>0, i--)
 					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 					S.setup(src)
@@ -359,7 +359,7 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 				/obj/item/raw_material/miracle,\
 				/obj/item/raw_material/uqill,\
 				/obj/item/rcd = /obj/item/rcd_ammo/big,\
-				/obj/item/gun/kinetic/riotgun = /obj/item/ammo/bullets/abg,\
+				/obj/item/gun/kinetic/single_action/mts_255 = /obj/item/ammo/bullets/pipeshot/scrap/five,\
 				/obj/item/gun/energy/taser_gun,\
 				/obj/item/gun/energy/phaser_gun,\
 				/obj/item/gun/energy/egun_jr,\
@@ -392,7 +392,7 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 			iou_name = pick("L Alliman", "J Antonsson") // we're stealin all ur stuff >:D
 		var/iou_thing = pick("gold bar", "telecrystal", "skull", "football", "human arm", "human arm", "human leg", "human leg", "[pick("pile", "wad")] of cash",\
 		"piece of scrap", "bottle of questionable drugs", "vial of some mysterious chemical", "bag of some mysterious chemical", "bee egg", "parrot egg", "owl egg",\
-		"gem", "miracle matter", "uqill nugget", "RCD", "riot shotgun", "taser", "phaser", "laser", "weird old key", "IOU note")
+		"gem", "miracle matter", "uqill nugget", "RCD", "shotgun", "taser", "phaser", "laser", "weird old key", "IOU note")
 		src.desc = "Looks like \"[iou_name]\" got here first. Hope you didn't want that [iou_thing] too bad, cause unless you find whoever that is, you're probably never gunna see that thing."
 		src.info = {"I owe you one (1):
 		<u>[iou_thing]</u>
@@ -505,8 +505,8 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 				var/obj/item/spacecash/random/tourist/S = new /obj/item/spacecash/random/tourist
 				S.setup(src)
 			if (3)
-				new /obj/item/gun/kinetic/riotgun(src)
-				new /obj/item/ammo/bullets/abg(src)
+				new /obj/item/gun/kinetic/single_action/mts_255(src)
+				new /obj/item/ammo/bullets/pipeshot/scrap/five(src)
 			if (4)
 				new /obj/item/paper/freeze(src)
 

@@ -7,6 +7,7 @@
 	pays_to_construct = FALSE
 	health_brute = 5
 	health_burn = 5
+	repair_per_resource = 1
 	fits_under_table = TRUE
 	flags = TABLEPASS
 
@@ -22,6 +23,11 @@
 	src.name = "[pick_string("flockmind.txt", "flockbit_name_adj")] [pick_string("flockmind.txt", "flockbit_name_noun")]"
 	src.real_name = src.flock ? src.flock.pick_name("flockbit") : name
 	src.update_name_tag()
+	src.flock_name_tag = new
+	src.flock_name_tag.set_name(src.real_name)
+	src.vis_contents += src.flock_name_tag
+
+	src.flock?.bits_made++
 
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection)

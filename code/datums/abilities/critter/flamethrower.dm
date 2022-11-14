@@ -33,7 +33,7 @@
 				return 1
 		if (target == holder.owner || target == OT)
 			return 1
-		playsound(target, "sound/effects/spray.ogg", 50, 1, -1,1.5)
+		playsound(target, 'sound/effects/spray.ogg', 50, 1, -1,1.5)
 		var/list/L = getline(OT, target)
 		for (var/turf/T in L)
 			if (T == OT)
@@ -43,7 +43,6 @@
 				if (!M.is_heat_resistant())
 					M.TakeDamage("All", 0, 15, 0, DAMAGE_BURN)
 					M.changeStatus("stunned", 2 SECONDS)
-					M.emote("scream")
 					logTheThing(LOG_COMBAT, usr, "used their [src.name] ability on [M] at [log_loc(usr)]")
 					if (throws)
 						M.throw_at(original_target, 20, 2)

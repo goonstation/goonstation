@@ -16,6 +16,7 @@
 	var/image/screen = image('icons/misc/featherzone.dmi', "compute_screen", EFFECTS_LAYER_BASE)
 	screen.pixel_y = 14
 	src.UpdateOverlays(screen, "screen")
+	src.info_tag.set_info_tag("Compute provided: [src.compute]")
 
 /obj/flock_structure/compute/process()
 	var/id = rand(1, src.display_count)

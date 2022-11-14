@@ -41,7 +41,10 @@
 	#define COMSIG_ATTACKBY "attackby"
 	/// Attacking without an item in-hand (attacker)
 	#define COMSIG_ATTACKHAND "attackhand"
-
+	/// when an atom changes its opacity (thing, previous_opacity)
+	#define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
+	/// get radioactivity level of atom (0 if signal not registered - ie, has no radioactive component) (return_val as a list)
+	#define COMSIG_ATOM_RADIOACTIVITY "atom_get_radioactivity"
 // ---- atom/movable signals ----
 
 	// ---- generic ----
@@ -67,6 +70,12 @@
 	#define XSIG_OUTERMOST_MOVABLE_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_outermost_changed")
 	/// when the z-level of a movable changes (works in nested contents) (thing, old_z_level, new_z_level)
 	#define XSIG_MOVABLE_Z_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_z-level_changed")
+
+// ---- turf signals ----
+	// when an atom inside the turfs contents changes opacity (turf, previous_opacity, thing)
+	#define COMSIG_TURF_CONTENTS_SET_OPACITY "turf_contents_set_opacity"
+	// when an atom inside the turfs contents changes opacity, but only called when it would actually do a meaningful change (turf, previous_opacity, thing)
+	#define COMSIG_TURF_CONTENTS_SET_OPACITY_SMART "turf_contents_set_opacity_smart"
 
 // ---- obj signals ----
 
@@ -175,7 +184,7 @@
 	#define COMSIG_MOB_SHOCKED_DEFIB "mob_shocked"
 	/// Sent to mob when client lifts the mouse button
 	#define COMSIG_MOB_MOUSEUP "mob_mouseup"
-	/// Sent when a mob is grabbed by another mob (grab)
+	/// Sent when a mob is grabbed by another mob (grab object)
 	#define COMSIG_MOB_GRABBED "mob_grabbed"
 
 	// ---- cloaking device signal ----
@@ -198,7 +207,7 @@
 	#define COMSIG_MOB_DISGUISER_DEACTIVATE "disguiser_deactivate"
 
 // ---- living signals ----
-		// When Life() ticks
+		// When Life() ticks (mult)
 		#define COMSIG_LIVING_LIFE_TICK "mob_life_tick"
 
 // ---- human signals ----

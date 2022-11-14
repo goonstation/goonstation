@@ -139,7 +139,7 @@
 
 			hit_type = DAMAGE_BLUNT
 
-			playsound(src, "sound/impact_sounds/burn_sizzle.ogg", 50, 1)
+			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (src.on == 0)
@@ -341,7 +341,7 @@
 			explosion(src, tlocation, 0, 1, 1, 2)
 		else
 			elecflash(src,power = 2)
-			playsound(src.loc, "sound/effects/Explosion1.ogg", 75, 1)
+			playsound(src.loc, 'sound/effects/Explosion1.ogg', 75, 1)
 		src.visible_message("<span class='alert'>The [src] explodes!</span>")
 
 		// Added (Convair880).
@@ -386,13 +386,6 @@
 		else
 			src.flavor = "nicotine"
 		..()
-
-
-/obj/item/clothing/mask/cigarette/dryjoint
-	name = "dried up joint"
-	desc = "An ancient joint, it's paper now resembles the burial shroud of an egyptian king. There's no telling what the roller could have twisted up in here."
-	nic_free = 1
-	flavor = "THC"
 
 /obj/item/clothing/mask/cigarette/cigar
 	name = "cigar"
@@ -953,7 +946,7 @@
 		src.firesource = FIRESOURCE_OPEN_FLAME
 		src.icon_state = "match-lit"
 
-		playsound(user, "sound/items/matchstick_light.ogg", 50, 1)
+		playsound(user, 'sound/items/matchstick_light.ogg', 50, 1)
 		light.enable()
 
 		processing_items |= src
@@ -966,11 +959,11 @@
 			src.icon_state = "match-broken"
 			src.name = "broken match"
 			if (user)
-				playsound(user, "sound/impact_sounds/Flesh_Crush_1.ogg", 60, 1, 0, 2)
+				playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 60, 1, 0, 2)
 		else
 			src.icon_state = "match-burnt"
 			src.name = "burnt-out match"
-			playsound(src, "sound/impact_sounds/burn_sizzle.ogg", 50, 1)
+			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
 
 		light.disable()
 
@@ -1116,6 +1109,10 @@
 	col_g = 0.69
 	col_b = 0.27
 	var/infinite_fuel = 0 //1 is infinite fuel. Borgs use this apparently.
+	/// exposure temp when heating reagents
+	var/reagent_expose_temp = 4000
+	/// exposure temp of passive enviromental heating
+	var/enviromental_expose_temp = 700
 
 	New()
 		..()
@@ -1225,7 +1222,7 @@
 				if (O.reagents.has_reagent("fuel"))
 					O.reagents.trans_to(src, src.reagents.maximum_volume - src.reagents.get_reagent_amount("fuel"), 1, 1, O.reagents.reagent_list.Find("fuel"))
 					boutput(user, "<span class='notice'>[src] has been refueled.</span>")
-					playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+					playsound(src.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
 				else
 					user.show_text("[src] can only be refilled with fuel.", "red")
 			else
@@ -1234,7 +1231,7 @@
 
 		else if (!ismob(O) && src.on && O.reagents)
 			user.show_text("You heat [O].", "blue")
-			O.reagents.temperature_reagents(4000,10)
+			O.reagents.temperature_reagents(reagent_expose_temp,10)
 		else
 			return ..()
 
@@ -1247,7 +1244,7 @@
 					location = M.loc
 			var/turf/T = get_turf(src.loc)
 			if (T)
-				T.hotspot_expose(700,5)
+				T.hotspot_expose(enviromental_expose_temp,5)
 
 			if (infinite_fuel) //skip all fuel checks
 				return
@@ -1267,7 +1264,7 @@
 			//sleep(1 SECOND)
 
 	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-		if (exposed_temperature > 1000)
+		if (exposed_temperature > enviromental_expose_temp)
 			return ..()
 		return
 
@@ -1320,7 +1317,7 @@
 	infinite_fuel = 1
 
 /obj/item/device/light/zippo/syndicate
-	desc = "A sleek black lighter with a red stripe."
+	desc = "A sleek black lighter with a red stripe and an incredibly hot flame."
 	icon_state = "syndie_zippo"
 	icon_off = "syndie_zippo"
 	icon_on = "syndie_zippoon"
@@ -1331,10 +1328,12 @@
 	col_g = 0.658
 	col_b = 0
 	is_syndicate = 1
+	reagent_expose_temp = 20000
+	enviromental_expose_temp = 3500
 
 	New()
 		. = ..()
-		RegisterSignal(src, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), .proc/update_hotbox_flag)
+		RegisterSignals(src, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), .proc/update_hotbox_flag)
 
 	proc/update_hotbox_flag(thing, previous_loc, direction)
 		if (!firesource) return

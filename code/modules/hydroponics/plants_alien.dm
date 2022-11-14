@@ -28,7 +28,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 
 		if (POT.growth > (P.harvtime + DNA.harvtime) && prob(20))
 			POT.visible_message("<span class='alert'><b>[POT.name]</b> vomits profusely!</span>")
-			playsound(POT, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			playsound(POT, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 			if(!locate(/obj/decal/cleanable/vomit) in get_turf(POT)) make_cleanable( /obj/decal/cleanable/vomit,get_turf(POT))
 
 /datum/plant/artifact/peeker
@@ -123,7 +123,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 			for (var/mob/living/X in view(7,POT)) stuffnearby.Add(X)
 			if(!extreme_start)
 				for (var/obj/item/X in view(7,POT)) stuffnearby.Add(X)
-			if (stuffnearby.len > 1)
+			if (stuffnearby.len >= 1)
 				var/thing = pick(stuffnearby)
 				POT.visible_message("<span class='alert'><b>[POT.name]</b> stares at [thing].</span>")
 				if(extreme_start)

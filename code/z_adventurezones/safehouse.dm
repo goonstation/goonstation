@@ -63,7 +63,7 @@
 	flags = FPRINT | IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID //The poddoors aren't inherently fullbright, need a suitable turf or area underneath.
 
 	podbay_autoclose
-		autoclose = 1
+		autoclose = TRUE
 
 		asteroid_horizontal
 			name = "asteroid"
@@ -161,7 +161,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	src.add_fingerprint(user)
 	if(ON_COOLDOWN(src, "bio_handscanner_attackhand", cooldown)) // To reduce chat spam in case of multi-click
 		return
-	playsound(src.loc, "sound/effects/handscan.ogg", 50, 1)
+	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.bioHolder.Uid == allowed_bioHolders) //Are you the authorised bioHolder (for all intents and purposes)?
@@ -214,7 +214,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 
 	attack_hand(mob/user)
 		boutput(user, "An advanced cloning pod, designed to be operated automatically through packets. What a great idea!<br>Currently idle.<br><span class='alert'>Alert: Biomatter reserves are low (5% full).</span>")
-		playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, 1)
 		src.add_fingerprint(user)
 		return
 
@@ -669,12 +669,12 @@ obj/item/reagent_containers/iv_drip/dead_exec
 "",
 "Here's your order summary:",
 "",
-"CO2 Filters - 4 off - $1400",
+"CO2 Filters - 4 off - 1400[CREDIT_SIGN]",
 "",
-"Subtotal: $1400",
-"Shipping: $40",
-"Discount $0",
-"Grand Total: $1440",
+"Subtotal: 1400[CREDIT_SIGN]",
+"Shipping: 40[CREDIT_SIGN]",
+"Discount 0[CREDIT_SIGN]",
+"Grand Total: 1440[CREDIT_SIGN]",
 "",
 "If you have any queries about your order please log",
 "on to our customer portal.",

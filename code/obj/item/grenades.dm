@@ -38,7 +38,7 @@ PIPE BOMBS + CONSTRUCTION
 
 	attack_self(mob/user as mob)
 		if (!src.state)
-			src.state = 1		//This could help for now. Should leverege the click buffer from combat stuff too.
+			src.state = 1		//This could help for now. Should leverage the click buffer from combat stuff too.
 			if (!isturf(user.loc))
 				src.state = 0
 				return
@@ -108,7 +108,7 @@ PIPE BOMBS + CONSTRUCTION
 
 	proc/logGrenade(mob/user)
 		var/area/A = get_area(src)
-		if(!A.dont_log_combat)
+		if(!A.dont_log_combat && user)
 			if(is_dangerous)
 				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
@@ -120,14 +120,14 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
 	is_syndicate = 1
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	is_dangerous = FALSE
 	var/payload = null
 
 	prime()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, "sound/weapons/flashbang.ogg", 25, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 25, 1)
 			new payload(T)
 			for (var/i = 1; i<= 8; i= i*2)
 				if (istype(get_turf(get_step(T,i)),/turf/simulated/floor))
@@ -171,7 +171,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "banana"
 	item_state = "banana"
 	is_syndicate = 1
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "banana1"
 	is_dangerous = FALSE
 	var/payload = /obj/item/reagent_containers/food/snacks/plant/tomato
@@ -180,7 +180,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	prime()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, "sound/weapons/flashbang.ogg", 25, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 25, 1)
 			for(var/i = 1; i <= src.count; i++)
 				var/atom/movable/thing = new payload(T)
 				var/turf/target = locate(T.x + rand(-4, 4), T.y + rand(-4, 4), T.z)
@@ -199,7 +199,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	item_state = "emp" //TODO: grenades REALLY need custom inhands, but I'm not submitting them in this PR
 	is_syndicate = 1
 	mats = 12
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "graviton1"
 	var/icon_state_exploding = "graviton2"
 
@@ -258,7 +258,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	item_state = "emp"
 	is_syndicate = 1
 	mats = 12
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "graviton1"
 	var/icon_state_exploding = "graviton2"
 	var/radius = 3
@@ -324,7 +324,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	alt_det_time = 6 SECONDS
 	item_state = "flashbang"
 	is_syndicate = 1
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "smoke1"
 	var/datum/effects/system/bad_smoke_spread/smoke
 
@@ -340,7 +340,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			var/obj/item/old_grenade/smoke/mustard/M = null
 			if (istype(src, /obj/item/old_grenade/smoke/mustard))
 				M = src
-			playsound(T, "sound/effects/smoke.ogg", 50, 1, -3)
+			playsound(T, 'sound/effects/smoke.ogg', 50, 1, -3)
 
 			SPAWN(0)
 				if (src)
@@ -397,7 +397,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	alt_det_time = 6 SECONDS
 	item_state = "fragnade"
 	is_syndicate = 0
-	sound_armed = "sound/weapons/pindrop.ogg"
+	sound_armed = 'sound/weapons/pindrop.ogg'
 	icon_state_armed = "fragnade1"
 	var/custom_projectile_type = /datum/projectile/bullet/stinger_ball
 	var/pellets_to_fire = 20
@@ -405,7 +405,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	prime()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, "sound/weapons/grenade.ogg", 25, 1)
+			playsound(T, 'sound/weapons/grenade.ogg', 25, 1)
 			explosion(src, T, -1, -1, -0.25, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
 			O.anchored = 1
@@ -417,7 +417,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			if (istype(src, /obj/item/old_grenade/stinger/frag))
 				F = src
 			if (F)
-				playsound(T, "sound/effects/smoke.ogg", 20, 1, -2)
+				playsound(T, 'sound/effects/smoke.ogg', 20, 1, -2)
 				SPAWN(0)
 					if (F?.smoke) //Wire note: Fix for Cannot execute null.start()
 						for(var/i = 1 to 6)
@@ -462,13 +462,13 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	alt_det_time = 6 SECONDS
 	item_state = "fragnade"
 	is_syndicate = 0
-	sound_armed = "sound/weapons/pindrop.ogg"
+	sound_armed = 'sound/weapons/pindrop.ogg'
 
 	prime()
 		var/turf/T = ..()
 		if (T)
 			explosion_new(src, T, 5.0, 2)
-			playsound(T, "sound/weapons/grenade.ogg", 25, 1)
+			playsound(T, 'sound/weapons/grenade.ogg', 25, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
 			O.anchored = 1
 			O.name = "Explosion"
@@ -491,7 +491,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	alt_det_time = 6 SECONDS
 	item_state = "flashbang"
 	is_syndicate = 1
-	sound_armed = "sound/effects/screech.ogg"
+	sound_armed = 'sound/effects/screech.ogg'
 	icon_state_armed = "sonic1"
 
 	prime()
@@ -503,7 +503,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				qdel(src)
 				return
 
-			playsound(T, "sound/weapons/flashbang.ogg", 25, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 25, 1)
 
 			for (var/mob/living/M in hearers(8, T))
 				if(check_target_immunity(M)) continue
@@ -532,13 +532,13 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "emp"
 	item_state = "emp"
 	is_syndicate = 1
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "emp1"
 
 	prime()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, "sound/items/Welder2.ogg", 25, 1)
+			playsound(T, 'sound/items/Welder2.ogg', 25, 1)
 			T.hotspot_expose(700,125)
 
 			var/grenade = src // detaching the proc - in theory
@@ -572,7 +572,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "oxy"
 	item_state = "flashbang"
 	mats = list("MET-2"=2, "CON-1"=2, "molitz"=10, "char"=1 )
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "oxy1"
 	is_dangerous = FALSE
 
@@ -580,8 +580,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		var/turf/simulated/T = ..()
 		var/datum/gas_mixture/GM = new /datum/gas_mixture
 		GM.temperature = T20C + 15
-		GM.oxygen = 1500
-		GM.carbon_dioxide = 100
+		GM.oxygen = 1830
+		GM.carbon_dioxide = 20
 
 		var/obj/effects/explosion/E = new /obj/effects/explosion(T)
 		// Uses existing animated icon adjust coloration of explosion to lighter cyan to match oxygen items
@@ -599,12 +599,14 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				else
 					var/count = length(T.parent?.members)
 					if (count)
+						var/o2_per = GM.oxygen / count
+						var/co2_per = GM.carbon_dioxide / count
 						for (var/turf/simulated/MT as() in T.parent.members)
 							if (GM.disposed)
 								GM = new /datum/gas_mixture
 							GM.temperature = T20C + 15
-							GM.oxygen = 1500 / count
-							GM.carbon_dioxide = 100 / count
+							GM.oxygen = o2_per
+							GM.carbon_dioxide = co2_per
 							MT.assume_air(GM)
 					else
 						T.assume_air(GM)
@@ -618,7 +620,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				HH.apply_sonic_stun(0, 0, misstep, 0, 2, ear_damage, ear_tempdeaf, stamina)
 
 			animate(E, alpha=0, time=2.5 SECONDS)
-			playsound(T, "sound/weapons/flashbang.ogg", 30, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 30, 1)
 			var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
 			steam.set_up(10, 0, get_turf(src), color="#0ff", plane=PLANE_NOSHADOW_ABOVE)
 			steam.attach(src.loc)
@@ -626,7 +628,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 		else
 			animate(E, alpha=0, time=2 SECONDS)
-			playsound(T, "sound/weapons/flashbang.ogg", 15, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 15, 1)
 
 		E.fingerprintslast = src.fingerprintslast
 		qdel(src)
@@ -641,7 +643,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "moustache"
 	item_state = "flashbang"
 	is_syndicate = 1
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "moustache1"
 
 	prime()
@@ -702,7 +704,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc))
 			return
 		if (istype(target, /obj/item/storage)) return ..()
-		if (src.state == 0)
+		if (src.state == 0 && user)
 			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
 			boutput(user, "<span class='alert'>You pull the pin on [src]. You're not sure what that did, but you throw it anyway.</span>")
@@ -715,7 +717,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	attack_self(mob/user as mob)
 		if (!isturf(user.loc))
 			return
-		if (src.state == 0)
+		if (src.state == 0 && user)
 			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
 			boutput(user, "<span class='alert'>You pull the pin on [src]. You're not sure what that did. Maybe you should throw it?</span>")
@@ -756,10 +758,11 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					sleep(1 DECI SECOND)
 					if (isdead(user) || user.nodamage || isAI(user)) return
 					logTheThing(LOG_COMBAT, user, "was killed by touching a [src] at [log_loc(src)].")
-					var/mob/dead/observer/newmob
-					newmob = new/mob/dead/observer(user)
-					user.client.mob = newmob
-					user.mind.transfer_to(newmob)
+					if(user.client)
+						var/mob/dead/observer/newmob
+						newmob = new/mob/dead/observer(user)
+						user.client.mob = newmob
+						user.mind.transfer_to(newmob)
 					qdel(user)
 				else
 					logTheThing(LOG_COMBAT, user, "was teleported by touching [src] ([src.type]) at [log_loc(src)].")
@@ -805,7 +808,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 	proc/logGrenade(mob/user)
 		var/area/A = get_area(src)
-		if(!A.dont_log_combat)
+		if(!A.dont_log_combat && user)
 			if(is_dangerous)
 				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
@@ -1036,15 +1039,15 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 				if ((src.bootleg_level == 2) && (ishuman(user)))
 					var/mob/living/carbon/human/H = user
-					H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm") // copied from weapon_racks.dm
+					H.sever_limb(H.hand == LEFT_HAND ? "l_arm" : "r_arm") // copied from weapon_racks.dm
 
 			else
 				elecflash(src,power = 2)
 
 				if (src.bootleg_level == 0)
-					playsound(src.loc, "sound/effects/Explosion1.ogg", 75, 1)
+					playsound(src.loc, 'sound/effects/Explosion1.ogg', 75, 1)
 				else
-					playsound(src.loc, "sound/effects/Explosion2.ogg", 75, 1)
+					playsound(src.loc, 'sound/effects/Explosion2.ogg', 75, 1)
 
 		src.visible_message("<span class='alert'>\The [src] explodes!</span>")
 
@@ -1145,7 +1148,6 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 //////////////////////// Breaching charges //////////////////////////////////
 
 /obj/item/breaching_charge
-	desc = "It is set to detonate in 5 seconds."
 	name = "Breaching Charge"
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "bcharge"
@@ -1230,13 +1232,13 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					for(var/client/C in clients)
 						if(C.mob && (C.mob.z == src.z))
 							shake_camera(C.mob, 8, 24) // remove if this is too laggy
-							playsound(C.mob, explosions.distant_sound, 100, 0)
+							playsound(C.mob, explosions.distant_sound, 70, 0)
 							new /obj/effects/explosion (src.loc)
 				else
 					playsound(src.loc, pick(sounds_explosion), 75, 1)
 					new/obj/effect/supplyexplosion(src.loc)
 			else
-				playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
+				playsound(src.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 
 			explosion(src, location, src.expl_devas, src.expl_heavy, src.expl_light, src.expl_flash)
 			// Breaching charges should be, you know, actually be decent at breaching walls and windows (Convair880).
@@ -1323,7 +1325,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				qdel(src)
 				return
 
-			playsound(location, "sound/effects/bamf.ogg", 100, 0.5)
+			playsound(location, 'sound/effects/bamf.ogg', 100, 0.5)
 			src.invisibility = INVIS_ALWAYS
 
 			for (var/turf/T in range(src.expl_range, location))
@@ -1449,7 +1451,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			if((src.state + other_frame.state == 3)) // one of pipes is welded, other one is not
 				user.u_equip(src)
 				user.u_equip(W)
-				playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
+				playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 				var/obj/item/gun/kinetic/slamgun/S = new/obj/item/gun/kinetic/slamgun
 				user.put_in_hand_or_drop(S)
 				qdel(W)
@@ -1658,7 +1660,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		boutput(user, "<span class='alert'>You activate the pipe bomb! 5 seconds!</span>")
 		armed = 1
 		var/area/A = get_area(src)
-		if(!A.dont_log_combat)
+		if(!A.dont_log_combat && user)
 			if(is_dangerous)
 				message_admins("[key_name(user)] arms a [src.name] (power [strength]) at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "arms a [src.name] (power [strength]) at [log_loc(src)])")
@@ -1697,11 +1699,11 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					boutput(M, "<span class='alert'>You are splashed with hot green liquid!</span>")
 			if (butt)
 				if (butt > 1)
-					playsound(src.loc, "sound/voice/farts/superfart.ogg", 90, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.loc, 'sound/voice/farts/superfart.ogg', 90, 1, channel=VOLUME_CHANNEL_EMOTE)
 					for (var/mob/M in view(3+butt,src.loc))
 						ass_explosion(M, 0, 5)
 				else
-					playsound(src.loc, "sound/voice/farts/poo2.ogg", 90, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.loc, 'sound/voice/farts/poo2.ogg', 90, 1, channel=VOLUME_CHANNEL_EMOTE)
 					for (var/mob/M in view(3,src.loc))
 						ass_explosion(M, 0, 5)
 			if (confetti)
@@ -1759,7 +1761,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 							boutput(M, "<span class='alert'>You suddenly teleport ...</span>")
 							M.set_loc(warp_to)
 			if (rcd)
-				playsound(src, "sound/items/Deconstruct.ogg", 70, 1)
+				playsound(src, 'sound/items/Deconstruct.ogg', 70, 1)
 				for (var/turf/T in view(rcd,src.loc))
 					if (istype(T, /turf/space))
 						var/turf/simulated/floor/F = T:ReplaceWithFloor()

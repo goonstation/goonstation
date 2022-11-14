@@ -28,7 +28,7 @@
 		if (has_material)
 			if (isnull(plate_mat))
 				plate_mat = getMaterial("steel")
-			setMaterial(plate_mat)
+			setMaterial(plate_mat, copy = FALSE)
 		roundstart_icon_state = icon_state
 		roundstart_dir = dir
 		#ifdef XMAS
@@ -181,8 +181,10 @@
 		if (prob(20))
 			if (prob(50))
 				src.break_tile()
+				src.icon_old = null // we're already plating
 			else
 				src.burn_tile()
+				src.icon_old = null
 			src.UpdateIcon()
 		if (prob(2))
 			make_cleanable(/obj/decal/cleanable/dirt,src)
@@ -214,8 +216,10 @@
 		if (prob(20))
 			if (prob(50))
 				src.break_tile()
+				src.icon_old = null
 			else
 				src.burn_tile()
+				src.icon_old = null
 
 
 /////////////////////////////////////////
@@ -647,8 +651,8 @@
 	step_priority = STEP_PRIORITY_MED
 
 	New()
-		..()
-		setMaterial(getMaterial("pharosium"))
+		plate_mat = getMaterial("pharosium")
+		. = ..()
 
 /turf/simulated/floor/circuit/green
 	icon_state = "circuit-green"
@@ -1054,8 +1058,8 @@ DEFINE_FLOORS(minitiles/black,
 	step_priority = STEP_PRIORITY_MED
 
 	New()
-		..()
-		setMaterial(getMaterial("wood"))
+		plate_mat = getMaterial("wood")
+		. = ..()
 
 /turf/simulated/floor/wood/two
 	icon_state = "wooden"
@@ -1129,7 +1133,7 @@ DEFINE_FLOORS(minitiles/black,
 	Entered(atom/A as mob|obj)
 		if (istype(A, /obj/stool/chair/comfy/wheelchair))
 			var/obj/stool/chair/comfy/wheelchair/W = A
-			if (!W.lying && prob(40))
+			if (!W.lying && prob(10))
 				if (W.buckled_guy && W.buckled_guy.m_intent == "walk")
 					return ..()
 				else
@@ -1380,9 +1384,9 @@ DEFINE_FLOORS(techfloor/green,
 			src.ReplaceWith(/turf/simulated/floor/snow/snowball, keep_old_material=FALSE, handle_air = FALSE)
 			return
 		#endif
-
+		plate_mat = getMaterial("synthrubber")
 		..()
-		setMaterial(getMaterial("synthrubber"))
+
 /turf/proc/grassify()
 	.=0
 
@@ -1435,6 +1439,41 @@ DEFINE_FLOORS(techfloor/green,
 	mat_changedesc = 0
 
 /////////////////////////////////////////
+
+//// some other floors ////
+
+/turf/simulated/floor/marslike
+	name = "imitation martian dirt"
+	desc = "Wow, you almost believed it was real martian dirt for a moment!"
+	icon = 'icons/misc/mars_outpost.dmi'
+	icon_state = "placeholder"
+	step_material = "step_outdoors"
+	step_priority = STEP_PRIORITY_MED
+	mat_appearances_to_ignore = list("steel")
+
+/turf/simulated/floor/marslike/t1
+	icon_state = "t1"
+/turf/simulated/floor/marslike/t2
+	icon_state = "t2"
+/turf/simulated/floor/marslike/t3
+	icon_state = "t4"
+/turf/simulated/floor/marslike/t4
+	icon_state = "t4"
+
+/turf/simulated/floor/stone
+	name = "stone"
+	icon = 'icons/turf/dojo.dmi'
+	icon_state = "stone"
+	mat_appearances_to_ignore = list("steel","rock")
+	mat_changename = 0
+	mat_changedesc = 0
+
+	New()
+		plate_mat = getMaterial("rock")
+		..()
+
+/////////////////////////////////////////
+
 
 /* Outdoors tilesets - Walp */
 
@@ -1530,8 +1569,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	allows_vehicles = 1
 
 	New()
+		plate_mat = getMaterial("blob")
 		..()
-		setMaterial(getMaterial("blob"))
 
 	proc/setOvermind(var/mob/living/intangible/blob_overmind/O)
 		setMaterial(copyMaterial(O.my_material))
@@ -1571,7 +1610,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if (istype(C, /obj/item/tile))
 		var/obj/item/tile/T = C
 		if (T.amount >= 1)
-			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 			T.build(src)
 		return
 
@@ -1580,23 +1619,6 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		boutput(user, "You easily smash through the foamed metal floor.")
 	else
 		boutput(user, "Your attack bounces off the foamed metal floor.")
-
-/turf/simulated/floor/Cross(atom/movable/mover)
-	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
-		if (!( locate(/obj/machinery/mass_driver, src) ))
-			return 0
-	return ..()
-
-/turf/simulated/shuttle/Cross(atom/movable/mover)
-	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
-		return 0
-	return ..()
-
-/turf/unsimulated/floor/Cross(atom/movable/mover)
-	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
-		if (!( locate(/obj/machinery/mass_driver, src) ))
-			return 0
-	return ..()
 
 /turf/simulated/floor/burn_down()
 	if (src.intact)
@@ -1690,9 +1712,9 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	broken = 0
 	burnt = 0
 	if(plate_mat)
-		src.setMaterial(plate_mat)
+		src.setMaterial(plate_mat, copy = FALSE)
 	else
-		src.setMaterial(getMaterial("steel"))
+		src.setMaterial(getMaterial("steel"), copy = FALSE)
 	levelupdate()
 
 /turf/simulated/floor/proc/dismantle_wall()//can get called due to people spamming weldingtools on walls
@@ -1761,7 +1783,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if (!user || !istype(W, /obj/item/light_parts/floor))
 		return
 	if(!instantly)
-		playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
 		boutput(user, "You begin to attach the light fixture to [src]...")
 		SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /turf/simulated/floor/proc/finish_attaching,\
 			list(W, user), W.icon, W.icon_state, null, null)
@@ -1807,7 +1829,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		user.unlock_medal("Misclick", 1)
 
 	to_plating()
-	playsound(src, "sound/items/Crowbar.ogg", 80, 1)
+	playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
 
 /turf/simulated/floor/attackby(obj/item/C, mob/user, params)
 
@@ -1830,7 +1852,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if (src.reinforced && ((isweldingtool(C) && C:try_weld(user,0,-1,0,1)) || iswrenchingtool(C)))
 		boutput(user, "<span class='notice'>Loosening rods...</span>")
 		if(iswrenchingtool(C))
-			playsound(src, "sound/items/Ratchet.ogg", 80, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 3 SECONDS))
 			if(!src.reinforced)
 				return
@@ -1840,8 +1862,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				R1.setMaterial(material)
 				R2.setMaterial(material)
 			else
-				R1.setMaterial(getMaterial("steel"))
-				R2.setMaterial(getMaterial("steel"))
+				R1.setMaterial(getMaterial("steel"), copy = FALSE)
+				R2.setMaterial(getMaterial("steel"), copy = FALSE)
 			ReplaceWithFloor()
 			src.to_plating()
 			return
@@ -1874,7 +1896,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				src.plate_mat = src.material
 				if(C.material)
 					src.setMaterial(C.material)
-				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 
 				if(!istype(src.material, /datum/material/metal/steel))
 					logTheThing(LOG_STATION, user, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(src)].")
@@ -2018,7 +2040,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if (I.material)
 		src.setMaterial(I.material)
 	I.change_stack_amount(-2)
-	playsound(src, "sound/items/Deconstruct.ogg", 80, 1)
+	playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
 
 /turf/simulated/floor/MouseDrop_T(atom/A, mob/user as mob)
 	..(A,user)
@@ -2029,7 +2051,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			if(istype(I,/obj/item/cable_coil))
 				var/obj/item/cable_coil/C = I
 				if(BOUNDS_DIST(user,F) == 0 && BOUNDS_DIST(user,src) == 0)
-					C.move_callback(user, F, src)
+					C.move_callback(user, F, 0, src)
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////
 DEFINE_FLOORS_SIMMED_UNSIMMED(racing,
@@ -2127,8 +2149,8 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		can_replace_with_stuff = 1
 
 		attackby(obj/item/W, mob/user)
-			if (istype(W, /obj/item/device/key))
-				playsound(src, "sound/effects/mag_warp.ogg", 50, 1)
+			if (istype(W, /obj/item/device/key/generic/coldsteel))
+				playsound(src, 'sound/effects/mag_warp.ogg', 50, 1)
 				src.visible_message("<span class='notice'><b>[src] slides away!</b></span>")
 				src.ReplaceWithSpace() // make sure the area override says otherwise - maybe this sucks
 
@@ -2168,8 +2190,8 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 			var/mob/M = A
 			if(!M.stat && ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if(H.gender == MALE) playsound(H.loc, "sound/voice/screams/male_scream.ogg", 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-				else playsound(H.loc, "sound/voice/screams/female_scream.ogg", 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+				if(H.gender == MALE) playsound(H.loc, 'sound/voice/screams/male_scream.ogg', 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+				else playsound(H.loc, 'sound/voice/screams/female_scream.ogg', 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			random_brute_damage(M, 50)
 			M.changeStatus("paralysis", 7 SECONDS)
 			SPAWN(0)
@@ -2250,7 +2272,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 			icon_state = "deeps"
 
 			Entered(atom/A as mob|obj)
-				if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
+				if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/living/intangible))
 					return ..()
 
 				var/turf/T = pick_landmark(LANDMARK_FALL_DEEP)
@@ -2399,8 +2421,8 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 	mat_appearances_to_ignore = list("ice")
 
 	New()
+		plate_mat = getMaterial("ice")
 		..()
-		setMaterial(getMaterial("ice"))
 		name = initial(name)
 
 /turf/simulated/floor/auto/water/ice/rough
@@ -2465,3 +2487,39 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		. = ..()
 		if(prob(10))
 			src.icon_state = "snow_rough[rand(1,3)]"
+
+/turf/unsimulated/floor/pool
+	mat_changename = FALSE
+	mat_changedesc = FALSE
+	name = "water"
+	icon_state = "poolwaterfloor"
+
+	New()
+		..()
+		src.set_dir(pick(NORTH,SOUTH))
+
+/turf/unsimulated/floor/pool/no_animate
+	name = "pool floor"
+	icon_state = "poolwaterfloor_static"
+
+	New()
+		..()
+		src.set_dir(pick(NORTH,SOUTH))
+
+/turf/simulated/floor/pool
+	mat_changename = FALSE
+	mat_changedesc = FALSE
+	name = "water"
+	icon_state = "poolwaterfloor"
+
+	New()
+		..()
+		src.set_dir(pick(NORTH,SOUTH))
+
+/turf/simulated/floor/pool/no_animate
+	name = "pool floor"
+	icon_state = "poolwaterfloor_static"
+
+	New()
+		..()
+		src.set_dir(pick(NORTH,SOUTH))

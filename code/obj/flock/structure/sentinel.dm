@@ -1,5 +1,5 @@
 //
-/// # Sentinel structure,
+// Sentinel structure
 //
 #define NOT_CHARGED -1 //! The sentinel is without charge
 #define LOSING_CHARGE 0 //! The sentinel is losing charge
@@ -24,8 +24,6 @@
 	var/wattage = 6000
 	var/powered = FALSE
 
-
-	// flockdrones can pass through this
 	passthrough = TRUE
 
 	var/online_compute_cost = 20
@@ -33,92 +31,114 @@
 
 	var/obj/effect/flock_sentinelrays/rays = null
 
-/obj/flock_structure/sentinel/New(var/atom/location, var/datum/flock/F=null)
+/obj/flock_structure/sentinel/New(atom/location, datum/flock/F = null)
 	..(location, F)
 	src.rays = new /obj/effect/flock_sentinelrays
-	src.vis_contents += rays
+	src.vis_contents += src.rays
+	src.info_tag.set_info_tag("Charge: [src.charge]%")
 
 /obj/flock_structure/sentinel/disposing()
 	qdel(src.rays)
 	..()
 
-
 /obj/flock_structure/sentinel/building_specific_info()
-	return {"<span class='bold'>Status:</span> [charge_status == 1 ? "charging" : (charge_status == 2 ? "charged" : "idle")].
-	<br><span class='bold'>Charge Percentage:</span> [charge]%."}
+	var/charge_message
+	switch (src.charge_status)
+		if (NOT_CHARGED)
+			charge_message = "Idle"
+		if (LOSING_CHARGE)
+			charge_message = "Losing charge"
+		if (CHARGING)
+			charge_message = "Charging"
+		if (CHARGED)
+			charge_message = "Charged"
+	return {"<span class='bold'>Status:</span> [charge_message].
+		<br><span class='bold'>Charge Percentage:</span> [src.charge]%."}
 
 /obj/flock_structure/sentinel/process(mult)
-	updatefilter()
-
-	if(!src.flock)//if it dont exist it off
-		if (powered)
+	if(!src.flock)
+		if (src.powered)
 			src.update_flock_compute("remove")
 		src.compute = 0
-		powered = FALSE
-	else if(src.flock.can_afford_compute(online_compute_cost))//if it has atleast 0 or more free compute, the poweruse is already calculated in the group
-		src.compute = -online_compute_cost
-		if (!powered)
+		src.powered = FALSE
+	else if(src.flock.can_afford_compute(src.online_compute_cost))
+		src.compute = -src.online_compute_cost
+		if (!src.powered)
 			src.update_flock_compute("apply")
-			powered = TRUE
-	else if (src.flock.used_compute > src.flock.total_compute() || !src.powered)//if there isnt enough juice
-		if (powered)
+			src.powered = TRUE
+	else if (src.flock.used_compute > src.flock.total_compute() || !src.powered)
+		if (src.powered)
 			src.update_flock_compute("remove")
 		src.compute = 0
-		powered = FALSE
+		src.powered = FALSE
 
-	if(powered == 1)
-		switch(charge_status)
-			if(NOT_CHARGED)
-				charge_status = CHARGING//begin charging as there is energy available
-			if(LOSING_CHARGE)
-				charge_status = CHARGING//if its losing charge and suddenly theres energy available begin charging
-			if(CHARGING)
-				if(icon_state != "sentinelon") icon_state = "sentinelon"//forgive me
-				src.charge(charge_per_tick * mult)
-			if(CHARGED)
-				var/mob/loopmob = null
-				var/list/hit = list()
-				var/mob/mobtohit = null
-				for(loopmob in view(src.range,src))
-					if(!isflockmob(loopmob) && src.flock?.isEnemy(loopmob) && isturf(loopmob.loc) && isalive(loopmob) && !isintangible(loopmob))
-						mobtohit = loopmob
-						break//found target
-				if(!mobtohit) return//if no target stop
-				arcFlash(src, mobtohit, wattage, 1.1)
-				hit += mobtohit
-				for(var/i in 1 to rand(5,6))//this facilitates chaining. legally distinct from the loop above
-					for(var/mob/nearbymob in view(2, mobtohit.loc))
-						if(nearbymob != mobtohit && !isflockmob(nearbymob) && !(nearbymob in hit) && isturf(nearbymob.loc) && src.flock?.isEnemy(nearbymob) && isalive(loopmob) && !isintangible(loopmob))
-							arcFlash(mobtohit, nearbymob, wattage/1.5, 1.1)
-							hit += nearbymob
-							mobtohit = nearbymob
-				hit.len = 0//clean up
-				charge = 1
-				var/filter = src.rays.get_filter("flock_sentinel_rays")
-				animate(filter, size=((-(cos(180*(3/100))-1)/2)*32), time=1 SECONDS, flags = ANIMATION_PARALLEL)
-				charge_status = CHARGING
+	if(src.powered)
+		if (src.charge_status != CHARGED)
+			src.icon_state = "sentinelon"
+			src.charge(src.charge_per_tick * mult)
+			src.charge_status = CHARGING
+		if (src.charge == 100)
+			src.charge_status = CHARGED
+			if (!length(src.flock?.enemies))
+				src.updatefilter()
 				return
+			var/atom/to_hit
+			var/list/hit = list()
+			for(var/atom/A as anything in view(src.range, src))
+				if(src.flock?.isEnemy(A))
+					if (ismob(A))
+						var/mob/M = A
+						if (isdead(M))
+							continue
+					if (ON_COOLDOWN(A, "sentinel_shock", 2 SECONDS))
+						continue
+					to_hit = A
+					break
+			if(!to_hit)
+				src.updatefilter()
+				return
+			arcFlash(src, to_hit, wattage, 1.1)
+			logTheThing(LOG_COMBAT, src, "Flock sentinel at [log_loc(src)] belonging to flock [src.flock?.name] fires an arcflash at [constructTarget(to_hit)].")
+			hit += to_hit
+
+			var/atom/last_hit = to_hit
+			var/found_chain_target
+			for(var/i in 1 to rand(5, 6)) // chaining
+				found_chain_target = FALSE
+				for(var/atom/A as anything in view(2, last_hit.loc))
+					if(src.flock?.isEnemy(A) && !(A in hit))
+						if (ismob(A))
+							var/mob/M = A
+							if (isdead(M))
+								continue
+						found_chain_target = TRUE
+						arcFlash(last_hit, A, wattage / 1.5, 1.1)
+						logTheThing(LOG_COMBAT, src, "Flock sentinel at [log_loc(src)] belonging to [src.flock?.name] hits [constructTarget(A)] with a chained arcflash.")
+						hit += A
+						last_hit = A
+						break
+				if (!found_chain_target)
+					break
+			src.charge = 0
+			src.charge_status = CHARGING
 	else
-		if(charge > 0)//if theres charge make it decrease with time
+		if(src.charge > 0)
+			src.charge(-5 * mult)
 			src.charge_status = LOSING_CHARGE
-			src.charge(-5)
-		else
-			if(icon_state != "sentinel") icon_state = "sentinel"//forgive me again
-			src.charge_status = NOT_CHARGED //out of juice its dead
+		if (src.charge <= 0)
+			src.icon_state = "sentinel"
+			src.charge_status = NOT_CHARGED
 
-/obj/flock_structure/sentinel/proc/charge(var/chargeamount = 0)
-	if(charge < 100)
-		src.charge = min(chargeamount + charge, 100)
-	else
-		charge_status = CHARGED
+	src.updatefilter()
 
+/obj/flock_structure/sentinel/proc/charge(chargeamount)
+	src.charge = clamp(src.charge + chargeamount, 0, 100)
+	src.info_tag.set_info_tag("Charge: [src.charge]%")
 
 /obj/flock_structure/sentinel/proc/updatefilter()
-	var/filter = rays.get_filter("flock_sentinel_rays")
-	if(charge > 2)//else it just makes the sprite invisible, due to floats. this is small enough that it doesnt even showup anyway since its under the sprite
-		animate(filter, size=((-(cos(180*(charge/100))-1)/2)*32), time=10 SECONDS, flags = ANIMATION_PARALLEL)
-	else
-		animate(filter, size=((-(cos(180*(3/100))-1)/2)*32), time=10 SECONDS, flags = ANIMATION_PARALLEL)
+	UNLINT(var/dm_filter/filter = src.rays.get_filter("flock_sentinel_rays")) // remove when SpacemanDMM knows about this type
+	// for non-linear scaling of size, using an oscillating value from 0 to 1 * 32
+	UNLINT(animate(filter, size = ((-(cos(180 * (charge / 100)) - 1) / 2) * 32), flags = ANIMATION_PARALLEL))
 
 /obj/effect/flock_sentinelrays
 	mouse_opacity = 0
@@ -126,9 +146,9 @@
 	blend_mode = BLEND_ADD
 
 	New()
-		src.add_filter("flock_sentinel_rays", 0, rays_filter(x=-0.2, y=6, size=1, color=rgb(255,255,255), offset=rand(1000), density=20, threshold=0.2, factor=1))
-		var/f = src.get_filter("flock_sentinel_rays")
-		animate(f, size=((-(cos(180*(3/100))-1)/2)*32), time=5 MINUTES, easing=LINEAR_EASING, loop=-1, offset=f:offset + 100, flags=ANIMATION_PARALLEL)
+		src.add_filter("flock_sentinel_rays", 0, rays_filter(x = -0.2, y = 6, size = 1, color = rgb(255,255,255), offset = rand(1000), density = 20, threshold = 0.2, factor = 1))
+		UNLINT(var/dm_filter/f = src.get_filter("flock_sentinel_rays")) // remove when SpacemanDMM knows about this type
+		UNLINT(animate(f, size = 0, time = 5 MINUTES, loop = -1, offset = f.offset + 100))
 		..()
 
 #undef NOT_CHARGED

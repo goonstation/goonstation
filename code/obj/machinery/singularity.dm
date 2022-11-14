@@ -44,10 +44,9 @@ Contains:
 		if(GET_DIST(gen,loc)<(SINGULARITY_MAX_DIMENSION/2)+1)
 			if(gen.active_dirs >= 2)
 				goodgenerators++
-				smallestdimension = min(smallestdimension, gen.shortestlink)
+				smallestdimension = clamp(gen.shortestlink, 1, smallestdimension)
 
 	if (goodgenerators>=4)
-
 		// Did you know this thing still works? And wasn't logged (Convair880)?
 		logTheThing(LOG_BOMBING, src.fingerprintslast, "A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
 		message_admins("A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [key_name(src.fingerprintslast)]")
@@ -71,12 +70,12 @@ Contains:
 	if (iswrenchingtool(W))
 		if (!anchored)
 			anchored = 1
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You secure the [src.name] to the floor.")
 			src.anchored = 1
 		else if (anchored)
 			anchored = 0
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You unsecure the [src.name].")
 			src.anchored = 0
 
@@ -102,7 +101,6 @@ Contains:
 	pixel_x = -64
 	pixel_y = -64
 
-	var/maxboom = 0
 	var/has_moved
 	var/active = 0 //determines if the singularity is contained
 	var/energy = 10
@@ -114,6 +112,7 @@ Contains:
 	var/grav_pull = 6
 	var/radius = 0 //the variable used for all calculations involving size.this is the current size
 	var/maxradius = INFINITY//the maximum size the singularity can grow to
+	var/restricted_z_allowed = FALSE
 
 
 
@@ -149,7 +148,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/process()
 	var/turf/T = get_turf(src)
-	if(isrestrictedz(T?.z))
+	if(isrestrictedz(T?.z) && !src.restricted_z_allowed)
 		src.visible_message("<span class='notice'>Something about this place makes [src] wither and implode.</span>")
 		qdel(src)
 	eat()
@@ -171,7 +170,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if (prob(20))//Chance for it to run a special event
 		event()
-
+	var/containment_min = max(MIN_TO_CONTAIN,(radius*8))
 	if (active == 1)
 		move()
 		SPAWN(1.1 SECONDS) // slowing this baby down a little -drsingh
@@ -182,23 +181,24 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				var/checkpointC = 0
 				for (var/obj/machinery/containment_field/X in orange(radius+2,src))
 					checkpointC++
-				if (checkpointC > max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
+				if (checkpointC >= containment_min)//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
 					src.active = FALSE
 					animate(get_filter("loose rays"), size=1, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
 					maxradius = radius + 1
-					logTheThing(LOG_STATION, null, "[src] has been contained at [log_loc(src)]")
-					message_admins("[src] has been contained at [log_loc(src)]")
+					logTheThing(LOG_STATION, null, "[src] has been contained ([checkpointC] >= [containment_min] fields) at [log_loc(src)]")
+					message_admins("[src] has been contained ([checkpointC] >= [containment_min] fields) at [log_loc(src)]")
 
 	else//this should probably be modified to use the enclosed test of the generator
 		var/checkpointC = 0
 		for (var/obj/machinery/containment_field/X in orange(maxradius+2,src))
 			checkpointC ++
-		if (checkpointC < max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
+
+		if (checkpointC < containment_min)//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
 			src.active = TRUE
 			animate(get_filter("loose rays"), size=100, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
 			maxradius = INFINITY
-			logTheThing(LOG_STATION, null, "[src] has become loose at [log_loc(src)]")
-			message_admins("[src] has become loose at [log_loc(src)]")
+			logTheThing(LOG_STATION, null, "[src] has become loose ([checkpointC] < [containment_min] fields) at [log_loc(src)]")
+			message_admins("[src] has become loose ([checkpointC] < [containment_min] fields) at [log_loc(src)]")
 
 
 /obj/machinery/the_singularity/emp_act()
@@ -248,12 +248,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 
 /obj/machinery/the_singularity/ex_act(severity, last_touched, power)
-	if(!maxboom)
-		SPAWN(0.1 SECONDS)
-			if(severity == 1 && (maxboom ? prob(maxboom*5) : prob(30))) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
-				qdel(src)
-			maxboom = 0
-	maxboom = max(power, maxboom)
+	if (severity == 1 && prob(power * 5)) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
+		qdel(src)
 
 /obj/machinery/the_singularity/Bumped(atom/A)
 	var/gain = 0
@@ -291,7 +287,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					if ("Chief Engineer")
 						// Hubris
 						gain = 150
-					if ("Engineer", "Mechanic")
+					if ("Engineer")
 						// More hubris
 						gain = 100
 					if ("Staff Assistant", "Captain")
@@ -374,23 +370,22 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 
 /obj/machinery/the_singularity/proc/Toxmob()
-
-	for (var/mob/living/carbon/M in orange(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if (H.wear_suit)
-				return
-		M.take_toxin_damage(12)
-		M.changeStatus("radiation", 4*(radius+1) SECONDS)
+	for (var/mob/living/carbon/M in hearers(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
+		M.take_radiation_dose(clamp(0.2 SIEVERTS*(radius+1), 0, 2 SIEVERTS))
 		M.show_text("You feel odd.", "red")
 
 /obj/machinery/the_singularity/proc/Mezzer()
-
-	for (var/mob/living/carbon/M in oviewers(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
+	for (var/mob/living/carbon/M in hearers(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if (istype(H.glasses,/obj/item/clothing/glasses/meson))
+			if (H.bioHolder?.HasEffect("blind") || H.blinded)
+				return
+			else if (istype(H.glasses,/obj/item/clothing/glasses/meson))
 				M.show_text("You look directly into [src.name], good thing you had your protective eyewear on!", "green")
+				return
+			// remaining eye(s) meson cybereyes?
+			else if((!H.organHolder?.left_eye || istype(H.organHolder?.left_eye, /obj/item/organ/eye/cyber/meson)) && (!H.organHolder?.right_eye || istype(H.organHolder?.right_eye, /obj/item/organ/eye/cyber/meson)))
+				M.show_text("You look directly into [src.name], good thing your eyes are protected!", "green")
 				return
 		M.changeStatus("stunned", 7 SECONDS)
 		M.visible_message("<span class='alert'><B>[M] stares blankly at [src]!</B></span>",\
@@ -430,6 +425,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				T.ReplaceWithFloor()
 	return
 #endif
+
+/// Singularity that can exist on restricted z levels
+/obj/machinery/the_singularity/admin
+	restricted_z_allowed = TRUE
+
 
 /particles/singularity
 	transform = list(1, 0, 0, 0,
@@ -650,7 +650,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 		else if(state == UNWRENCHED)
 			state = WRENCHED
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You secure the external reinforcing bolts to the floor.")
 			desc = "Projects an energy field when active. It has been bolted to the floor."
 			src.anchored = 1
@@ -658,7 +658,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 		else if(state == WRENCHED)
 			state = UNWRENCHED
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You undo the external reinforcing bolts.")
 			desc = "Projects an energy field when active."
 			src.anchored = 0
@@ -895,7 +895,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 			return
 
-	user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
+	user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, shock_damage)
 	boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body sending you flying!</B></span>")
 	user.unlock_medal("HIGH VOLTAGE", 1)
 	if (isliving(user))
@@ -1078,7 +1078,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 		else if(state == UNWRENCHED)
 			state = WRENCHED
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You secure the external reinforcing bolts to the floor.")
 			src.anchored = 1
 			desc = "Shoots a high power laser when active, it has been bolted to the floor."
@@ -1086,7 +1086,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 		else if(state == WRENCHED)
 			state = UNWRENCHED
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You undo the external reinforcing bolts.")
 			src.anchored = 0
 			desc = "Shoots a high power laser when active."
@@ -1235,6 +1235,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/active = 0
 	var/obj/item/tank/plasma/P = null
 	var/obj/machinery/power/collector_control/CU = null
+	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL | DECON_CROWBAR | DECON_WRENCH
+	mats = 20
 
 /obj/machinery/power/collector_array/New()
 	..()
@@ -1298,11 +1300,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			boutput("<span class='alert'>The [src.name] must be turned off first!</span>")
 		else
 			if (!src.anchored)
-				playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You secure the [src.name] to the floor.")
 				src.anchored = 1
 			else
-				playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You unsecure the [src.name].")
 				src.anchored = 0
 			logTheThing(LOG_STATION, user, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
@@ -1364,6 +1366,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/obj/machinery/power/collector_array/CAE = null
 	var/obj/machinery/power/collector_array/CAW = null
 	var/list/obj/machinery/the_singularity/S = null
+	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL | DECON_CROWBAR | DECON_WRENCH
+	mats = 25
 
 /obj/machinery/power/collector_control/New()
 	..()
@@ -1525,11 +1529,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			boutput("<span class='alert'>The [src.name] must be turned off first!</span>")
 		else
 			if (!src.anchored)
-				playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You secure the [src.name] to the floor.")
 				src.anchored = 1
 			else
-				playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You unsecure the [src.name].")
 				src.anchored = 0
 			logTheThing(LOG_STATION, user, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
@@ -1569,14 +1573,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 		if(state == UNWRENCHED)
 			state = WRENCHED
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You secure the external reinforcing bolts to the floor.")
 			src.anchored = 1
 			return
 
 		else if(state == WRENCHED)
 			state = UNWRENCHED
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You undo the external reinforcing bolts.")
 			src.anchored = 0
 			return

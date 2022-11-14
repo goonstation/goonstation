@@ -92,7 +92,7 @@
 		src.add_fingerprint(user)
 		logTheThing(LOG_STATION, user, "turns [on ? "on" : "off"] a lightswitch at [log_loc(user)]")
 
-	playsound(src, "sound/misc/lightswitch.ogg", 50, 1)
+	playsound(src, 'sound/misc/lightswitch.ogg', 50, 1)
 
 	if(on && !ON_COOLDOWN(src, "turtlesplode", 10 SECONDS))
 		for_by_tcl(S, /obj/critter/turtle)

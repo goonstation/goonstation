@@ -13,6 +13,7 @@
 	var/corrode_resist = 0
 	var/shock_when_entered = 1
 	var/auto = TRUE
+	//zewaka: typecacheof here
 	var/list/connects_to_turf = list(/turf/simulated/wall/auto, /turf/simulated/wall/auto/reinforced, /turf/simulated/shuttle/wall, /turf/unsimulated/wall)
 	var/list/connects_to_obj = list(/obj/indestructible/shuttle_corner,	/obj/grille/, /obj/machinery/door, /obj/window)
 	text = "<font color=#aaa>+"
@@ -33,6 +34,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		if(src.auto)
 			SPAWN(0) //fix for sometimes not joining on map load
 				if (map_setting && ticker)
@@ -41,6 +43,7 @@
 				src.UpdateIcon()
 
 	disposing()
+		STOP_TRACKING
 		var/list/neighbors = null
 		if (src.auto && src.anchored && map_setting)
 			neighbors = list()
@@ -57,7 +60,7 @@
 		New()
 			..()
 			var/datum/material/M = getMaterial("steel")
-			src.setMaterial(M)
+			src.setMaterial(M, copy=FALSE)
 
 	steel/broken
 		desc = "Looks like its been in this sorry state for quite some time."
@@ -84,6 +87,11 @@
 		connects_to_turf = null
 		connects_to_turf = null
 		event_handler_flags = 0
+
+		New()
+			..()
+			var/datum/material/M = getMaterial("steel")
+			src.setMaterial(M, appearance = FALSE, setname = FALSE, copy = FALSE)
 
 		update_icon(special_icon_state, override_parent = TRUE)
 			if (ruined)

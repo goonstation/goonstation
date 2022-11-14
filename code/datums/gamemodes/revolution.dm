@@ -12,11 +12,14 @@
 	config_tag = "revolution"
 	shuttle_available = 0
 
+	antag_token_support = TRUE
 	var/list/datum/mind/head_revolutionaries = list()
 	var/list/datum/mind/revolutionaries = list()
 	var/finished = 0
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
+	var/const/TrackerTime_min = 27 MINUTES //lower bound on time before intercept arrives (in tenths of seconds)
+	var/const/TrackerTime_max = 30 MINUTES //upper bound on time before intercept arrives (in tenths of seconds)
 	var/const/min_revheads = 3
 	var/const/max_revheads = 5
 	var/const/pop_divisor = 15
@@ -103,6 +106,8 @@
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
+	SPAWN(rand(TrackerTime_min, TrackerTime_max))
+		send_tracker()
 
 /datum/game_mode/revolution/proc/equip_revolutionary(mob/living/carbon/human/rev_mob)
 	equip_traitor(rev_mob)
@@ -164,6 +169,18 @@
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 
+/datum/game_mode/revolution/proc/send_tracker()
+	command_alert("Foreign mutiny located [station_or_ship()]wide, a program to track revolutionary leaders have been sent to all crew member PDA's.", "Central Command Security Alert", 'sound/misc/announcement_1.ogg', alert_origin = "Watchful Eye Sensor Array Update")
+	command_alert("Relevant biometric signatures of Command have been identified. To aid with the ongoing revolution, station command can now be tracked through the transmitted PDA program.", "Unregistered Signal Insertion", alert_origin = "Egeria Providence Array Broadcast")
+	var/datum/signal/signal1 = get_free_signal()
+	signal1.data_file = (new /datum/computer/file/pda_program/revheadtracker)
+	signal1.data = list("command"="file_send", "file_name" = "Revolutionary Leader Locater", "file_ext" = "PPROG", "file_size" = "1", "tag" = "auto_fileshare", "sender_name"="Central Command Distribution Line", "sender"="00000000")
+	radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal1)
+	var/datum/signal/signal2 = get_free_signal()
+	signal2.data_file = (new /datum/computer/file/pda_program/headtracker)
+	signal2.data = list("command"="file_send", "file_name" = "Nanotrasen Command Tracker", "file_ext" = "PPROG", "file_size" = "1", "tag" = "auto_fileshare", "sender"="00000000")
+	radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal2)
+
 /datum/game_mode/revolution/process()
 	..()
 	if (!istype(ticker.mode, /datum/game_mode/revolution/extended) && ticker.round_elapsed_ticks >= round_limit && !gibwave_started)
@@ -189,9 +206,9 @@
 		return 0
 
 /datum/game_mode/revolution/proc/start_gibwave()
-	command_alert("A revolution has been detected on [station_name(1)]. All loyal members of the crew are to ensure the revolution is quelled.","Emergency Riot Update")
+	command_alert("A revolution is still ongoing aboard [station_name(1)]. All loyal members of the crew are to ensure the revolution is quelled.","Emergency Riot Update") // first warning 40 minutes in
 	sleep(10 MINUTES) // 10 minutes to clean up shop
-	command_alert("Revolution heads have been identified. Please stand by for hostile employee termination.", "Emergency Riot Update")
+	command_alert("The Revolutionary heads' biometric signatures have been confirmed. Please stand by for hostile employee termination.", "Emergency Riot Update")
 	sleep(5 MINUTES) // 5 minutes until everyone dies
 	command_alert("You may feel a slight burning sensation.", "Emergency Riot Update")
 	sleep(10 SECONDS) // welp
@@ -513,7 +530,7 @@
 
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "revsign"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_tall.dmi'
 	item_state = "revsign"
 
 	w_class = W_CLASS_BULKY

@@ -167,7 +167,7 @@
 					end_tracking()
 					for(var/mob/M in ship)
 						boutput(M, "<span class='alert'>Tracking signal lost.</span>")
-					playsound(src.loc, "sound/machines/whistlebeep.ogg", 50, 1)
+					playsound(src.loc, 'sound/machines/whistlebeep.ogg', 50, 1)
 
 			// sleep(SENSOR_REFRESH_RATE)
 
@@ -204,7 +204,7 @@
 		scanning = 1
 		src.tracking_target = O
 		boutput(usr, "<span class='notice'>Attempting to pinpoint energy source...</span>")
-		playsound(ship.loc, "sound/machines/signal.ogg", 50, 0)
+		playsound(ship.loc, 'sound/machines/signal.ogg', 50, 0)
 		sleep(1 SECOND)
 		if (src.tracking_target && GET_DIST(src,src.tracking_target) <= seekrange)
 			scanning = 0		//remove this if we want to force the user to manually stop tracking before trying to track something else
@@ -247,7 +247,7 @@
 					z = src.loc.z
 
 			boutput(usr, "<span class='notice'>Attempting to pinpoint: <b>X</b>: [x], <b>Y</b>: [y], Z</b>: [z]</span>")
-			playsound(ship.loc, "sound/machines/signal.ogg", 50, 0)
+			playsound(ship.loc, 'sound/machines/signal.ogg', 50, 0)
 			sleep(1 SECOND)
 			var/turf/T = locate(x,y,z)
 

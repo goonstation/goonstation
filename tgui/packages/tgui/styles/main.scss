@@ -27,7 +27,6 @@
 @include meta.load-css('./components/Flex.scss');
 @include meta.load-css('./components/GeneIcon.scss');
 @include meta.load-css('./components/Icon.scss');
-@include meta.load-css('./components/Image.scss');
 @include meta.load-css('./components/Input.scss');
 @include meta.load-css('./components/Knob.scss');
 @include meta.load-css('./components/LabeledList.scss');
@@ -56,6 +55,7 @@
 @include meta.load-css('./interfaces/CloningConsole.scss');
 @include meta.load-css('./interfaces/CyborgModuleRewriter.scss');
 @include meta.load-css('./interfaces/GasCanister.scss');
+@include meta.load-css('./interfaces/MusicInstrument.scss');
 @include meta.load-css('./interfaces/ListInput.scss');
 @include meta.load-css('./interfaces/Paper.scss');
 @include meta.load-css('./interfaces/PortableAtmos.scss');

@@ -61,6 +61,12 @@
 			for (var/i = 0, i < 9, i++) // ugly hack
 				reagents.temperature_reagents(exposed_temperature, exposed_volume)
 
+	attackby(obj/item/W, mob/user)
+		// prevent attacked by messages
+		if(istype(W, /obj/item/reagent_containers/hypospray) || istype(W, /obj/item/reagent_containers/mender))
+			return
+		..(W, user)
+
 	mouse_drop(atom/over_object as obj)
 		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/machinery/hydro_mister) && !istype(over_object, /obj/item/tank/jetpack/backtank))
 			return ..()
@@ -169,11 +175,11 @@
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			if(!src.anchored)
 				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				src.anchored = 1
 			else
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				src.anchored = 0
 			return
 
@@ -257,7 +263,7 @@
 
 		if (isscrewingtool(W))
 			if (src.anchored)
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user.show_text("You start unscrewing [src] from the floor.", "blue")
 				if (do_after(user, 3 SECONDS))
 					user.show_text("You unscrew [src] from the floor.", "blue")
@@ -269,7 +275,7 @@
 					user.show_text("What exactly are you gunna secure [src] to?", "red")
 					return
 				else
-					playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 					user.show_text("You start securing [src] to [T].", "blue")
 					if (do_after(user, 3 SECONDS))
 						user.show_text("You secure [src] to [T].", "blue")
@@ -324,6 +330,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "weldtank"
 	amount_per_transfer_from_this = 25
+	var/isburst = FALSE
 
 	New()
 		..()
@@ -337,7 +344,7 @@
 			return 0
 		user.visible_message("<span class='alert'><b>[user] drinks deeply from [src]. [capitalize(he_or_she(user))] then pulls out a match from somewhere, strikes it and swallows it!</b></span>")
 		src.reagents.remove_any(20)
-		playsound(src.loc, "sound/items/drink.ogg", 50, 1, -6)
+		playsound(src.loc, 'sound/items/drink.ogg', 50, 1, -6)
 		user.TakeDamage("chest", 0, 150)
 		if (isliving(user))
 			var/mob/living/L = user
@@ -359,6 +366,14 @@
 			add_fingerprint(AM, TRUE)
 		else if (ismob(usr))
 			add_fingerprint(usr, TRUE)
+
+	ex_act(severity)
+		..()
+		icon_state = "weldtank-burst" //to ensure that a weldertank's always going to be updated by their own explosion
+		isburst = TRUE
+
+	is_open_container()
+		return isburst
 
 /obj/reagent_dispensers/heliumtank
 	name = "heliumtank"
@@ -405,11 +420,11 @@
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			if(!src.anchored)
 				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				src.anchored = 1
 			else
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				src.anchored = 0
 			return
 		var/load = 1
@@ -421,7 +436,7 @@
 
 		if(load)
 			boutput(user, "<span class='notice'>[src] mulches up [W].</span>")
-			playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 30, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 30, 1)
 			user.u_equip(W)
 			W.dropped(user)
 			qdel( W )
@@ -455,7 +470,7 @@
 					amount = 2
 				else if (istype(P,/obj/item/plant/))
 					amount = 15
-				playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 30, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 30, 1)
 				src.reagents.add_reagent("poo", amount)
 				qdel( P )
 				sleep(0.3 SECONDS)

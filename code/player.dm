@@ -191,8 +191,12 @@
 	proc/cloud_fetch()
 		var/list/data = cloud_fetch_target_ckey(src.ckey)
 		if (data)
+#ifdef LIVE_SERVER
 			cloudsaves = data["saves"]
 			clouddata = data["cdata"]
+#else
+			clouddata = data
+#endif
 			return TRUE
 
 	/// Refreshes clouddata

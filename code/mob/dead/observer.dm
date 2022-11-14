@@ -55,7 +55,7 @@
 /mob/dead/observer/click(atom/target, params, location, control)
 
 	if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
-		src.point(target)
+		src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 		if (src.in_point_mode)
 			src.toggle_point_mode()
 		return
@@ -76,7 +76,7 @@
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "clientless")
 
 
-/mob/dead/observer/point_at(var/atom/target)
+/mob/dead/observer/point_at(atom/target, var/pixel_x, var/pixel_y)
 	if (!isturf(src.loc))
 		return
 
@@ -91,7 +91,7 @@
 		point_invisibility = INVIS_NONE
 #endif
 	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
-		make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y, color="#5c00e6", invisibility=point_invisibility, pointer=src)
+		make_point(target, pixel_x=pixel_x, pixel_y=pixel_y, color="#5c00e6", invisibility=point_invisibility, pointer=src)
 
 
 #define GHOST_LUM	1		// ghost luminosity
@@ -286,7 +286,7 @@
 
 
 /mob/proc/ghostize()
-	RETURN_TYPE(/mob/dead/observer)
+	RETURN_TYPE(/mob/dead)
 	// do nothing for NPCs
 	if(src.key || src.client)
 
@@ -295,7 +295,7 @@
 			return null
 
 		// step 1: either find a ghost or make one
-		var/mob/dead/observer/our_ghost = null
+		var/mob/dead/our_ghost = null
 
 		// if we already have a ghost, just go get that instead
 		if (src.ghost && !src.ghost.disposed)
@@ -325,9 +325,10 @@
 
 		respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[our_ghost.ckey]
-		if(istype(respawnee))
+		if(istype(respawnee) && istype(our_ghost, /mob/dead/observer)) // target observers don't have huds
 			respawnee.update_time_display()
-			our_ghost.hud?.get_join_other() // remind them of the other server
+			//var/mob/dead/observer/our_observer = our_ghost
+			//our_observer.hud?.get_join_other() // remind them of the other server
 
 		our_ghost.update_item_abilities()
 		return our_ghost
@@ -639,7 +640,7 @@
 	for (var/client/C in clients)
 		LAGCHECK(LAG_LOW)
 		// not sure how this could happen, but be safe about it
-		if (!C.mob)
+		if (!C?.mob)
 			continue
 		var/mob/M = C.mob
 		// remove some types you cannot observe
@@ -666,7 +667,7 @@
 		creatures[name] = M
 
 	var/eye_name = null
-	creatures = sortList(creatures)
+	sortList(creatures, /proc/cmp_text_asc)
 	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
 
 	if (!eye_name)
@@ -792,7 +793,7 @@
 					creatures -= name
 
 	var/eye_name = null
-	creatures = sortList(creatures)
+	sortList(creatures, /proc/cmp_text_asc)
 	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
 
 	if (!eye_name)

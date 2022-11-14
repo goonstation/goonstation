@@ -38,13 +38,13 @@
 
 	death(var/gibbed)
 		if (!gibbed)
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 			gibs(src.loc)
 			ghostize()
 			qdel(src)
 		else
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 			..()
 
@@ -52,7 +52,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/screams/robot_scream.ogg" , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/screams/robot_scream.ogg' , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> screams!"
 		return null
 
@@ -84,7 +84,7 @@
 		switch (act)
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/killme.ogg", 70, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/killme.ogg', 70, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> begs for mercy!"
 
 /mob/living/critter/mechmonstrosity/medical
@@ -166,7 +166,7 @@
 		switch (act)
 			if ("laugh")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/mechmonstrositylaugh.ogg" , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/mechmonstrositylaugh.ogg' , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 /datum/targetable/critter/inject
 	name = "Inject Corrupted Nanites"
@@ -280,7 +280,7 @@
 			logTheThing(LOG_COMBAT, ownerMob, "injects [constructTarget(target,"combat")]. Crawler transformation")
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span class='alert'><B>[owner] successfully injected [target]!</B></span>", 1)
-			playsound(ownerMob, "sound/items/hypo.ogg", 80, 0)
+			playsound(ownerMob, 'sound/items/hypo.ogg', 80, 0)
 
 			var/obj/critter/mechmonstrositycrawler/FUCK = new /obj/critter/mechmonstrositycrawler(get_turf(target))
 			FUCK.CustomizeMechMon(target.real_name, ismonkey(target))
@@ -370,9 +370,8 @@
 	icon_state = "syringeproj"
 	dissipation_rate = 1
 	dissipation_delay = 7
-	power = 1
+	damage = 1
 	hit_ground_chance = 10
-	ks_ratio = 1
 	shot_sound = 'sound/effects/syringeproj.ogg'
 	var/venom_id = "corruptnanites"
 	var/inject_amount = 15
@@ -451,11 +450,7 @@
 
 	New()
 		..()
-		playsound(src.loc, "sound/effects/glitchy1.ogg", 50, 0)
-
-	Move()
-		playsound(src.loc, "sound/machines/glitch4.ogg", 50, 0)
-		. = ..()
+		playsound(src.loc, 'sound/effects/glitchy1.ogg', 50, 0)
 
 	seek_target()
 
@@ -475,7 +470,7 @@
 			src.target = Cc
 			src.oldtarget_name = Cc.name
 			src.visible_message("<span class='combat'><b>[src]</b> crawls towards [Cc.name]!</span>")
-			playsound(src.loc, "sound/effects/glitchy1.ogg", 50, 0)
+			playsound(src.loc, 'sound/effects/glitchy1.ogg', 50, 0)
 			src.task = "chasing"
 			return
 
@@ -504,7 +499,7 @@
 		src.attacking = 1
 		if(!M.stat)
 			M.visible_message("<span class='combat'><B>[src]</B> scratches [src.target] mercilessly!</span>")
-			playsound(src.loc, "sound/impact_sounds/Blade_Small.ogg", 50, 1, -1)
+			playsound(src.loc, 'sound/impact_sounds/Blade_Small.ogg', 50, 1, -1)
 			if(prob(10)) // lowered probability slightly
 				M.visible_message("<span class='combat'><B>[M]</B> staggers!</span>")
 				M.changeStatus("stunned", 2 SECONDS)

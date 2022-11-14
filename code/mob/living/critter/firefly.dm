@@ -332,10 +332,10 @@ TYPEINFO(/datum/component/bug_capture)
 
 /datum/component/bug_capture/Initialize(atom/A, mob/living/critter/B, mob/living/carbon/human/user)
 	if(add_bug(A, B, user))
-		RegisterSignal(parent, list(COMSIG_ITEM_PICKUP), .proc/pickup)
-		RegisterSignal(parent, list(COMSIG_ITEM_DROPPED), .proc/dropped)
-		RegisterSignal(parent, list(COMSIG_ATOM_POST_UPDATE_ICON), .proc/update_icon)
-		RegisterSignal(parent, list(COMSIG_ATOM_REAGENT_CHANGE, COMSIG_ITEM_ATTACK_SELF), .proc/bye_bugs)
+		RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/pickup)
+		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/dropped)
+		RegisterSignal(parent, COMSIG_ATOM_POST_UPDATE_ICON, .proc/update_icon)
+		RegisterSignals(parent, list(COMSIG_ATOM_REAGENT_CHANGE, COMSIG_ITEM_ATTACK_SELF), .proc/bye_bugs)
 
 		update_jar(A,user)
 	else

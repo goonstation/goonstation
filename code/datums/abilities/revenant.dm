@@ -7,12 +7,6 @@
 	var/datum/bioEffect/hidden/revenant/revenant = null
 	pointName = "Wraith Points"
 
-	Stat()
-		if (relay)
-			relay.Stat()
-		if (owner)
-			stat("Human vessel integrity:", "[(owner.max_health + 50) / 1.5]%")
-
 	generatePoints(var/mult = 1)
 		if (relay)
 			relay.generatePoints(mult)
@@ -50,10 +44,13 @@
 	isBad = 0 // depends on who you ask really
 	can_copy = 0
 	var/isDying = 0
-	var/mob/wraith/wraith = null
+	var/mob/living/intangible/wraith/wraith = null
 	var/ghoulTouchActive = 0
 	var/list/abilities
 	icon_state  = "evilaura"
+
+	var/datum/hud/revenant/hud
+	var/hud_path = /datum/hud/revenant
 
 	OnAdd()
 		if (ishuman(owner) && isdead(owner))
@@ -87,6 +84,9 @@
 		owner.set_mutantrace(null)
 		owner.set_face_icon_dirty()
 		owner.set_body_icon_dirty()
+		hud = new hud_path(owner)
+		owner.attach_hud(hud)
+
 		animate_levitate(owner)
 
 		APPLY_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST, "revenant", 100)
@@ -100,6 +100,7 @@
 			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST, "revenant")
 			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST_MAX, "revenant")
 			REMOVE_MOVEMENT_MODIFIER(owner, /datum/movement_modifier/revenant, src.type)
+			owner.detach_hud(hud)
 		..()
 
 	proc/ghoulTouch(var/mob/living/carbon/human/poorSob, var/obj/item/affecting)
@@ -119,7 +120,7 @@
 			step_away(poorSob, owner, 15)
 
 
-	proc/wraithPossess(var/mob/wraith/W)
+	proc/wraithPossess(var/mob/living/intangible/wraith/W)
 		if (!W.mind && !W.client)
 			return
 		if (owner.client || owner.mind)
@@ -161,7 +162,7 @@
 			return
 
 		message_admins("Revenant [key_name(owner)] died at [log_loc(owner)].")
-		playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 60, 0)
+		playsound(owner.loc, 'sound/voice/wraith/revleave.ogg', 60, 0)
 		logTheThing(LOG_COMBAT, usr, "died as a revenant at [log_loc(owner)].")
 		if (owner.mind)
 			owner.mind.transfer_to(src.wraith)
@@ -172,7 +173,7 @@
 		src.wraith.abilityHolder.topBarRendered = 1
 		src.wraith.abilityHolder.regenRate /= 3
 		owner.bioHolder.RemoveEffect("revenant")
-		owner:decomp_stage = 4
+		owner:decomp_stage = DECOMP_STAGE_SKELETONIZED
 		if (ishuman(owner) && owner:organHolder && owner:organHolder:brain)
 			qdel(owner:organHolder:brain)
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(owner.x, owner.y, owner.z)))
@@ -206,15 +207,15 @@
 		owner.take_brain_damage(-120)
 		owner.bodytemperature = owner.base_body_temp
 		setalive(owner)
-
+		hud.update_health()
 
 		if (owner.health < -50 || owner.max_health < -50) // Makes revenants have a definite time limit, instead of being able to just spam abilities in deepcrit.
 			boutput(owner, "<span class='alert'><strong>This vessel has grown too weak to maintain your presence.</strong></span>")
-			playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 60, 0)
+			playsound(owner.loc, 'sound/voice/wraith/revleave.ogg', 60, 0)
 			owner.death(FALSE) // todo: add custom death
 			return
 
-		var/e_decomp_stage = 0
+		var/e_decomp_stage = DECOMP_STAGE_NO_ROT
 		if (owner.max_health < 75)
 			e_decomp_stage++
 			if (owner.max_health < 50)
@@ -315,7 +316,7 @@
 	cooldown = 30 SECONDS
 
 	cast(atom/target)
-		playsound(target.loc, "sound/voice/wraith/wraithlivingobject.ogg", 60, 0)
+		playsound(target.loc, 'sound/voice/wraith/wraithlivingobject.ogg', 60, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -357,7 +358,7 @@
 	var/static/list/next = list("1" = NORTHEAST, "5" = EAST,  "4" = SOUTHEAST, "6" = SOUTH, "2" = SOUTHWEST, "10" = WEST,  "8" = NORTHWEST, "9" = NORTH)
 
 	proc/shock(var/turf/T)
-		playsound(usr.loc, "sound/voice/wraith/revshock.ogg", 30, 0)
+		playsound(usr.loc, 'sound/voice/wraith/revshock.ogg', 30, 0)
 		SPAWN(0)
 			for (var/mob/living/carbon/human/M in T)
 				if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))
@@ -434,7 +435,7 @@
 	cooldown = 30 SECONDS
 
 	cast()
-		playsound(usr.loc, "sound/voice/wraith/revtouch.ogg", 70, 0)
+		playsound(usr.loc, 'sound/voice/wraith/revtouch.ogg', 70, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -492,7 +493,7 @@
 	cooldown = 1 MINUTE
 
 	cast(atom/target)
-		playsound(target.loc, "sound/voice/wraith/revfocus.ogg", 80, 0)
+		playsound(target.loc, 'sound/voice/wraith/revfocus.ogg', 80, 0)
 		if (!ishuman(target))
 			holder.owner.show_message("<span class='alert'>You must target a human with this ability.</span>")
 			return 1

@@ -17,7 +17,7 @@
 
 	generate_turf(gen_turf, flags)
 		. = ..()
-		if((flags & (MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA) == 0) && prob(corridor_density))
+		if((flags & (MAPGEN_TURF_ONLY) == 0) && prob(corridor_density))
 			new/obj/map/light/void(gen_turf)
 			SPAWN(5 SECONDS)
 				void_corridor(get_step(gen_turf, pick(cardinal)), rand(6,10), start=TRUE)
@@ -64,10 +64,10 @@
 
 
 /datum/biome/void/oddities
-	flora_types = list(/obj/decal/floatingtiles/random=1, /obj/spook=1, /obj/map/light/void=2)
+	flora_types = list(/obj/decal/floatingtiles/random=1, /obj/item/spook=1, /obj/map/light/void=2)
 	flora_density = 1
 
-	fauna_types = list( /obj/critter/floateye=4, /obj/spook=1)
+	fauna_types = list( /obj/critter/floateye=4, /obj/item/spook=1)
 	fauna_density = 0.6
 
 	corridor_density = 0.3
@@ -76,7 +76,7 @@
 	flora_types = list(/obj/decal/floatingtiles/random=1, /obj/map/light/void=5)
 	flora_density = 0.5
 
-	fauna_types = list(/obj/spook=3, /obj/critter/aberration=1, /obj/critter/crunched=2, /obj/critter/spirit=6)
+	fauna_types = list(/obj/item/spook=3, /obj/critter/aberration=1, /obj/critter/crunched=2, /obj/critter/spirit=6)
 	fauna_density = 0.5
 
 	corridor_density = 1

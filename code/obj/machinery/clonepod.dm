@@ -263,11 +263,22 @@
 			if(health_penalty >= 100)
 				src.occupant.unlock_medal("Quit Cloning Around")
 
-		src.mess = 0
+		src.mess = FALSE
+		var/is_puritan = FALSE
 		if (!isnull(traits) && src.occupant.traitHolder)
 			traits.copy_to(src.occupant.traitHolder)
-			if (src.occupant.traitHolder.hasTrait("puritan"))
-				src.mess = 1
+
+
+			#ifndef MAP_OVERRIDE_POD_WARS
+			if(src.occupant.traitHolder.hasTrait("puritan"))
+				is_puritan = TRUE
+
+			for (var/trait as anything in src.occupant?.client.preferences.traitPreferences.traits_selected)
+				if(trait == "puritan")
+					is_puritan = TRUE
+
+			if (is_puritan)
+				src.mess = TRUE
 				// Puritans have a bad time.
 				// This is a little different from how it was before:
 				// - Immediately take 250 tox and 100 random brute
@@ -288,6 +299,7 @@
 						for (var/limb in limbs)
 							if (prob(50))
 								P.limbs.sever(limb)
+			#endif
 
 		if (src.mess)
 			boutput(src.occupant, "<span class='notice'><b>Clone generation process initi&mdash;</b></span><span class='alert'> oh fuck oh god oh no no NO <b>NO NO THIS IS NOT GOOD</b></span>")
@@ -320,7 +332,7 @@
 
 		// -- End mode specific stuff
 
-		logTheThing(LOG_COMBAT, usr, "starts cloning [constructTarget(src.occupant,"combat")] at [log_loc(src)].")
+		logTheThing(LOG_STATION, usr, "starts cloning [constructTarget(src.occupant,"combat")] at [log_loc(src)].")
 
 		if (isobserver(ghost))
 			qdel(ghost) //Don't leave ghosts everywhere!!
@@ -338,6 +350,17 @@
 			else
 				src.occupant.setStatus("mindhack", null, implant_hacker)
 
+		// Remove zombie antag status as zombie race is removed on cloning
+		var/mob/M = src.occupant
+		if (!M?.mind)
+			logTheThing(LOG_DEBUG, src, "Cloning pod failed to check mind status of occupant [M].")
+		else if (M.mind.get_antagonist(ROLE_ZOMBIE))
+			var/success = M.mind.remove_antagonist(ROLE_ZOMBIE)
+			if (success)
+				logTheThing(LOG_COMBAT, M, "Cloning pod removed zombie antag status.")
+			else
+				logTheThing(LOG_DEBUG, src, "Cloning pod failed to remove zombie antag status from [M] with return code [success].")
+
 		// Someone is having their brain zapped. 75% chance of them being de-antagged if they were one
 		//MBC todo : logging. This shouldn't be an issue thoug because the mindwipe doesn't even appear ingame (yet?)
 		if(src.connected?.mindwipe)
@@ -351,7 +374,8 @@
 		if (src.connected?.BE)
 			src.occupant.bioHolder.AddEffectInstance(src.connected.BE,1)
 
-		src.occupant.changeStatus("paralysis", 10 SECONDS)
+		if (!is_puritan)
+			src.occupant.changeStatus("paralysis", 10 SECONDS)
 		previous_heal = src.occupant.health
 		return 1
 
@@ -387,8 +411,8 @@
 
 			if (src.clonehack == 1 && prob(10))
 				// Mindhack cloning modules make obnoxious noises.
-				playsound(src.loc, pick("sound/machines/glitch1.ogg","sound/machines/glitch2.ogg",
-				"sound/machines/genetics.ogg","sound/machines/shieldoverload.ogg"), 50, 1)
+				playsound(src.loc, pick('sound/machines/glitch1.ogg','sound/machines/glitch2.ogg',
+				'sound/machines/genetics.ogg','sound/machines/shieldoverload.ogg'), 50, 1)
 
 			if (isdead(src.occupant) || src.occupant.suiciding)  //Autoeject corpses and suiciding dudes.
 				// Dead or suiciding people are ejected.
@@ -459,7 +483,7 @@
 					src.connected_message("Additional biomatter required to continue.", "warning")
 					src.send_pda_message("Low Biomatter")
 					src.visible_message("<span class='alert'>[src] emits an urgent boop!</span>")
-					playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
+					playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 					src.failed_tick_counter = 1
 
 				var/heal_delta = (src.occupant.health - previous_heal)
@@ -490,7 +514,7 @@
 					src.connected_message("Cloning Process Complete.", "success")
 					src.send_pda_message("Cloning Process Complete")
 					// literally ding like a microwave
-					playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+					playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 					look_busy()
 					src.go_out(1)
 				else
@@ -564,7 +588,7 @@
 				boutput(user,"<span class='alert'>The cloning pod emits an angry boop!</span>")
 				return
 			user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
-			logTheThing(LOG_COMBAT, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
+			logTheThing(LOG_STATION, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
 			speed_bonus *= 3
 			meat_used_per_tick *= 4
 			is_speedy = 1
@@ -580,7 +604,7 @@
 				boutput(user,"<span class='alert'>The cloning pod emits a[pick("n angry", " grumpy", "n annoyed", " cheeky")] [pick("boop","bop", "beep", "blorp", "burp")]!</span>")
 				return
 			user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
-			logTheThing(LOG_COMBAT, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
+			logTheThing(LOG_STATION, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
 			meat_used_per_tick *= 0.5
 			is_efficient = 1
 			user.drop_item()
@@ -591,7 +615,7 @@
 			if (operating && attempting)
 				boutput(user,"<span class='alert'>The cloning pod emits a[pick("n angry", " grumpy", "n annoyed", " cheeky")] [pick("boop","bop", "beep", "blorp", "burp")]!</span>")
 				return
-			logTheThing(LOG_COMBAT, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
+			logTheThing(LOG_STATION, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
 			clonehack = 1
 			implant_hacker = user
 			light.enable()
@@ -605,13 +629,13 @@
 				boutput(user, "<space class='alert'>You must wait for the current cloning cycle to finish before you can remove the mindhack module.</span>")
 				return
 			boutput(user, "<span class='notice'>You begin detatching the mindhack cloning module...</span>")
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			if (do_after(user, 50) && clonehack)
 				new /obj/item/cloneModule/mindhack_module( src.loc )
 				clonehack = 0
 				implant_hacker = null
 				boutput(user,"<span class='alert'>The mindhack cloning module falls to the floor!</span>")
-				playsound(src.loc, "sound/effects/pop.ogg", 80, 0)
+				playsound(src.loc, 'sound/effects/pop.ogg', 80, 0)
 				light.disable()
 				src.UpdateIcon()
 			else
@@ -644,7 +668,7 @@
 		src.connected.currentStatusMessage["status"] = status
 		tgui_process.update_uis(src)
 		SPAWN(5 SECONDS)
-			if(src.connected.currentStatusMessage == message)
+			if(src?.connected.currentStatusMessage == message)
 				src.connected.currentStatusMessage["text"] = ""
 				src.connected.currentStatusMessage["status"] = ""
 				tgui_process.update_uis(src)
@@ -1084,10 +1108,8 @@
 		src.icon_state = "grinder[fluid_level]"
 
 		if (update_grindpaddle)
-			src.overlays = null
-			src.overlays += "grindpaddle[src.process_timer > 0 ? 1 : 0]"
-
-			src.overlays += "grindglass[fluid_level]"
+			UpdateOverlays(image(src.icon, "grindpaddle[src.process_timer > 0 ? 1 : 0]"),"paddle")
+			UpdateOverlays(image(src.icon, "grindglass[fluid_level]"),"glass")
 		return
 
 	ex_act(severity)

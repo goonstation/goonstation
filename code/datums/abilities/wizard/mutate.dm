@@ -6,9 +6,9 @@
 	cooldown = 400
 	requires_robes = 1
 	offensive = 1
-	voice_grim = "sound/voice/wizard/MutateGrim.ogg"
-	voice_fem = "sound/voice/wizard/MutateFem.ogg"
-	voice_other = "sound/voice/wizard/MutateLoud.ogg"
+	voice_grim = 'sound/voice/wizard/MutateGrim.ogg'
+	voice_fem = 'sound/voice/wizard/MutateFem.ogg'
+	voice_other = 'sound/voice/wizard/MutateLoud.ogg'
 	maptext_colors = list("#d73715", "#d73715", "#fcf574")
 
 	cast()

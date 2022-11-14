@@ -111,7 +111,7 @@
 				D.icon_state = "chempuff"
 				D.layer = EFFECTS_LAYER_BASE
 
-				playsound(cam, "sound/machines/mixer.ogg", 50, 1)
+				playsound(cam, 'sound/machines/mixer.ogg', 50, 1)
 
 				logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] fires [src.name], creating metal foam at [log_loc(T)].")
 
@@ -298,6 +298,10 @@
 
 			var/obj/machinery/networked/telepad/telepad = get_first_teleporter()
 			if(is_teleportation_allowed(T))
+				if(prob(15))
+					if(prob(10))
+						boutput(holder.owner, "<span class='alert'>Recalculating...</span>")
+					sleep(rand(0.5 SECONDS, 2.5 SECONDS))
 				telepad.send(T)
 			else
 				boutput(holder.owner, "<span class='alert'>Interference inhibits teleportation.</span>")
@@ -313,12 +317,18 @@
 			var/turf/T = get_turf(target)
 			var/obj/machinery/networked/telepad/telepad = get_first_teleporter()
 			if(is_teleportation_allowed(T))
+				if(prob(85))
+					if(prob(10))
+						boutput(holder.owner, "<span class='alert'>Recalculating...</span>")
+					sleep(rand(0.5 SECONDS, 2.5 SECONDS))
 				telepad.receive(T)
 			else
 				boutput(holder.owner, "<span class='alert'>Interference inhibits teleportation.</span>")
 
 /datum/targetable/ai/module/nanite_repair
+	name = "Nanite Repair"
 	icon_state = "nanites"
+	desc = "Send out targeted nanites to repair a silicon being or a camera."
 	targeted = TRUE
 	cooldown = 15 SECONDS
 
@@ -338,16 +348,12 @@
 			var/obj/machinery/camera/C
 			var/nanite_overlay = C.SafeGetOverlayImage("nanite_heal",'icons/misc/critter.dmi', "nanites")
 			C.UpdateOverlays(nanite_overlay, "nanite_heal")
-			C.camera_status = TRUE
+			C.set_camera_status(TRUE)
 			C.icon_state = "camera"
-			LAZYLISTADDUNIQUE(camerasToRebuild, C)
 
 			SPAWN(5 SECONDS)
 				C.audible_message("[C] makes a soft clicking sound.")
 				C.UpdateOverlays(null, "nanite_heal")
-
-				if (current_state > GAME_STATE_WORLD_NEW && !global.explosions.exploding)
-					world.updateCameraVisibility()
 
 		else
 			boutput(holder.owner, "<span class='alert'>[target] is not a silicon entity.</span>")
@@ -374,9 +380,8 @@
 				for(C in cameras_to_repair)
 					var/nanite_overlay = C.SafeGetOverlayImage("nanite_heal",'icons/misc/critter.dmi', "nanites")
 					C.UpdateOverlays(nanite_overlay, "nanite_heal")
-					C.camera_status = TRUE
+					C.set_camera_status(TRUE)
 					C.icon_state = "camera"
-					LAZYLISTADDUNIQUE(camerasToRebuild, C)
 
 					SPAWN(5 SECONDS)
 						C.audible_message("[C] makes a soft clicking sound.")
@@ -387,9 +392,6 @@
 
 					repaired++
 
-				sleep(4.5 SECONDS)
-				if (current_state > GAME_STATE_WORLD_NEW && !global.explosions.exploding)
-					world.updateCameraVisibility()
 		else
 			SPAWN(rand(15 SECONDS, 35 SECONDS))
 				boutput(holder.owner, "<span class='alert'>No damaged cameras detected.</span>")
@@ -498,7 +500,7 @@
 
 		if(C)
 			logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] activates AI [src.name], targeting [log_loc(target)].")
-			playsound(C, "sound/weapons/flash.ogg", 100, 1)
+			playsound(C, 'sound/weapons/flash.ogg', 100, 1)
 			C.visible_message("[C] emits a sudden flash.")
 			for (var/atom/A in oviewers((flash_range), get_turf(C)))
 				var/mob/living/M

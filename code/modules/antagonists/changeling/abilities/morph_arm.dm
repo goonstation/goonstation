@@ -7,8 +7,8 @@
 	target_anything = 0
 	pointCost = 0
 	can_use_in_container = 1
-	var/list/potential_r_arms = list("/obj/item/parts/human_parts/arm/right/claw", "/obj/item/parts/human_parts/arm/right/abomination")
-	var/list/potential_l_arms = list("/obj/item/parts/human_parts/arm/left/claw","/obj/item/parts/human_parts/arm/left/abomination")
+	var/list/potential_r_arms = list(/obj/item/parts/human_parts/arm/right/claw, /obj/item/parts/human_parts/arm/right/abomination)
+	var/list/potential_l_arms = list(/obj/item/parts/human_parts/arm/left/claw,/obj/item/parts/human_parts/arm/left/abomination)
 
 	cast(atom/target)
 		if (..())
@@ -56,7 +56,7 @@
 		if (!new_limb)
 			return 1
 
-		C.limbs.replace_with(target_limb, text2path(new_limb), C, 0)
+		C.limbs.replace_with(target_limb, new_limb, C, 0)
 		var/adjective = pick("terrifying","scary","menacing","badass","deadly","disgusting","grody")
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s [(target_limb == "r_arm") ? "right" : "left"] arm quivers and rearranges itself into a [adjective] new form!</B></span>"))
 		logTheThing(LOG_COMBAT, C, "morphs a [new_limb], [log_loc(C)].")
@@ -64,11 +64,11 @@
 
 		SPAWN(cooldown)
 			if (target_limb == "r_arm")
-				if (C.limbs.r_arm && istype(C.limbs.r_arm,text2path(new_limb)))
+				if (C.limbs.r_arm && istype(C.limbs.r_arm, new_limb))
 					C.limbs.replace_with(target_limb, /obj/item/parts/human_parts/arm/right, C, 0)
 					boutput(holder.owner, "<span class='notice'><B>Our right arm shrinks back to normal size.</B></span>")
 			else
-				if (C.limbs.l_arm && istype(C.limbs.l_arm,text2path(new_limb)))
+				if (C.limbs.l_arm && istype(C.limbs.l_arm, new_limb))
 					C.limbs.replace_with(target_limb, /obj/item/parts/human_parts/arm/left, C, 0)
 					boutput(holder.owner, "<span class='notice'><B>Our left arm shrinks back to normal size.</B></span>")
 		return 0

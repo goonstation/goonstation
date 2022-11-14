@@ -1195,7 +1195,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
 	if (play_sound)
-		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
+		playsound(target_turf, 'sound/effects/teleport.ogg', 50, 1)
 	SPAWN(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
@@ -1212,7 +1212,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
 	if (play_sound)
-		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
+		playsound(target_turf, 'sound/effects/teleport.ogg', 50, 1)
 	SPAWN(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
@@ -1229,7 +1229,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
 	if (play_sound)
-		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
+		playsound(target_turf, 'sound/effects/teleport.ogg', 50, 1)
 	SPAWN(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
@@ -1359,7 +1359,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if (ismob(A))
 		var/mob/M = A
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
-	playsound(A.loc,"sound/voice/heavenly3.ogg",50,0)
+	playsound(A.loc, 'sound/voice/heavenly3.ogg', 50,0)
 	animate(lightbeam, alpha=255, time=45)
 	animate(A,alpha=255,time=45)
 	sleep(4.5 SECONDS)
@@ -1397,7 +1397,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		var/mob/M = A
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
 	if (play_sound)
-		playsound(center,"sound/effects/darkspawn.ogg",50,0)
+		playsound(center, 'sound/effects/darkspawn.ogg', 50,0)
 	SPAWN(5 SECONDS)
 		var/turf/TA = locate(A.x - size, A.y - size, A.z)
 		var/turf/TB = locate(A.x + size, A.y + size, A.z)
@@ -1467,7 +1467,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_storage_thump(var/atom/A, wiggle=6)
 	if(!istype(A))
 		return
-	playsound(A, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+	playsound(A, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 	var/orig_x = A.pixel_x
 	var/orig_y = A.pixel_y
 	animate(A, pixel_x=orig_x, pixel_y=orig_y, flags=ANIMATION_PARALLEL, time=0.01 SECONDS)
@@ -1667,5 +1667,34 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		SPAWN(stomp_duration)
 			REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "hatstomp")
 			M.update_canmove()
+
+/obj/decal/laserbeam
+	icon = 'icons/obj/singularity.dmi'
+	icon_state = "Contain_F"
+
+/proc/spawn_beam(atom/movable/AM)
+	var/scale_x = 3
+	var/scale_y = -15
+	var/beam_time = 4 DECI SECONDS
+	AM.alpha = 0
+	var/turf/T = get_turf(AM)
+	var/matrix/M = matrix()
+	M.Scale(scale_x, scale_y)
+	var/obj/decal/laserbeam/beam = new(T)
+	beam.pixel_y =  abs(scale_y * 32)
+	beam.Scale(scale_x, 1)
+	beam.plane = PLANE_ABOVE_LIGHTING
+	beam.layer = NOLIGHT_EFFECTS_LAYER_BASE
+	playsound(T, 'sound/weapons/hadar_impact.ogg', 30, 1)
+	animate(beam, time = beam_time / 2, pixel_y = abs(scale_y * 32 / 2 + 16), transform = M, flags = ANIMATION_PARALLEL)
+	animate(time = beam_time / 2, transform = matrix(0,0,0,0,scale_y,0))
+	SPAWN(beam_time / 2)
+		AM.alpha = initial(AM.alpha)
+		if (issimulatedturf(T))
+			var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched[rand(1,2)]")
+			burn_overlay.alpha = 200
+			T.UpdateOverlays(burn_overlay,"burn")
+	SPAWN(beam_time)
+		qdel(beam)
 
 

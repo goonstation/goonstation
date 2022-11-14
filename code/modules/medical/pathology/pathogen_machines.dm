@@ -561,7 +561,7 @@
 					if (bit != "|")
 						src.manip.analysis_list += bit
 				src.manip.analysis_list -= src.manip.analysis_list[1]
-				src.manip.analysis_list = sortList(src.manip.analysis_list)
+				sortList(src.manip.analysis_list, /proc/cmp_text_asc)
 				qdel(src.manip.loaded)
 				src.manip.loaded = null
 				visible_message("<span class='notice'>The manipulator ejects the empty vial.</span>")

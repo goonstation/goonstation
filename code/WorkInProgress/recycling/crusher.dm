@@ -91,7 +91,7 @@
 			var/mob/M = target
 			random_brute_damage(M, rand(5, 10), TRUE)
 			take_bleeding_damage(M, null, 10, DAMAGE_CRUSH)
-			playsound(M, pick("sound/impact_sounds/Flesh_Stab_1.ogg","sound/impact_sounds/Metal_Clang_1.ogg","sound/impact_sounds/Slimy_Splat_1.ogg","sound/impact_sounds/Flesh_Tear_2.ogg","sound/impact_sounds/Slimy_Hit_3.ogg"), 66)
+			playsound(M, pick('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg','sound/impact_sounds/Slimy_Hit_3.ogg'), 66)
 			if(prob(10) && ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.limbs?.sever(pick("l_arm", "r_arm", "l_leg", "r_leg"))
@@ -104,7 +104,7 @@
 			var/mob/M = target
 			random_brute_damage(M, rand(15, 45))
 			take_bleeding_damage(M, null, 10, DAMAGE_CRUSH)
-			playsound(M, pick("sound/impact_sounds/Flesh_Stab_1.ogg","sound/impact_sounds/Metal_Clang_1.ogg","sound/impact_sounds/Slimy_Splat_1.ogg","sound/impact_sounds/Flesh_Tear_2.ogg","sound/impact_sounds/Slimy_Hit_3.ogg"), 100)
+			playsound(M, pick('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg','sound/impact_sounds/Slimy_Hit_3.ogg'), 100)
 			M.emote("scream", FALSE)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M

@@ -14,9 +14,10 @@
 	anchored = TRUE
 	mats = 20
 	power_usage = 200
+	// req_access is used to lock out specific featurs and not limit deconstruciton therefore DECON_NO_ACCESS is required
 	req_access = list(access_heads)
 	event_handler_flags = NO_MOUSEDROP_QOL
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_NO_ACCESS
 	flags = NOSPLASH | FLUID_SUBMERGE
 
 	// General stuff
@@ -520,7 +521,7 @@
 				if(!OCD.for_sale || !OCD.amount)
 					continue
 				var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(OCD.price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
-				dat += "[ore]: [OCD.amount] ($[OCD.price+taxes+(!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0)]/ore) (<A href='?src=\ref[src];purchase=1;storage=\ref[S];ore=[ore]'>Purchase</A>)<br>"
+				dat += "[ore]: [OCD.amount] ([OCD.price+taxes+(!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0)][CREDIT_SIGN]/ore) (<A href='?src=\ref[src];purchase=1;storage=\ref[S];ore=[ore]'>Purchase</A>)<br>"
 
 		dat += "</small><HR>"
 
@@ -562,7 +563,7 @@
 				if (src.shock(usr, 10))
 					return
 
-		if (((BOUNDS_DIST(src, usr) == 0 || isAI(usr)) && istype(src.loc, /turf)))
+		if (((BOUNDS_DIST(src, usr) == 0 || (isAI(usr) || isrobot(usr))) && istype(src.loc, /turf)))
 			src.add_dialog(usr)
 
 			if (src.malfunction && prob(10))
@@ -954,7 +955,7 @@
 					C.use(1)
 					src.take_damage(-10)
 					user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if (src.health >= 50)
 						boutput(user, "<span class='notice'>The wiring is fully repaired. Now you need to weld the external plating.</span>")
 
@@ -970,7 +971,7 @@
 				user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
 				src.load_item(W,user)
 			else
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if (src.dismantle_stage == 0)
 					user.visible_message("<b>[user]</b> loosens [src]'s external plating bolts.")
 					src.dismantle_stage = 1
@@ -986,7 +987,7 @@
 
 		else if (ispryingtool(W) && src.dismantle_stage == 1)
 			user.visible_message("<b>[user]</b> pries off [src]'s plating.")
-			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			src.dismantle_stage = 2
 			new /obj/item/sheet/steel/reinforced(src.loc)
 			src.build_icon()
@@ -996,7 +997,7 @@
 				if (src.shock(user,100))
 					return
 			user.visible_message("<b>[user]</b> disconnects [src]'s cabling.")
-			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 			src.dismantle_stage = 3
 			src.status |= NOPOWER
 			var/obj/item/cable_coil/cut/C = new /obj/item/cable_coil/cut(src.loc)
@@ -1336,6 +1337,8 @@
 			return TRUE
 		if (pattern == "ORG|RUB")
 			return mat.material_flags & MATERIAL_RUBBER || mat.material_flags & MATERIAL_ORGANIC
+		if (pattern == "RUB")
+			return mat.material_flags & MATERIAL_RUBBER
 		else if (copytext(pattern, 4, 5) == "-") // wildcard
 			var/firstpart = copytext(pattern, 1, 4)
 			var/secondpart = text2num_safe(copytext(pattern, 5))
@@ -1955,6 +1958,9 @@
 		else
 			return src.loc
 
+
+// Fabricator Defines
+
 /obj/machinery/manufacturer/general
 	name = "general manufacturer"
 	supplemental_desc = "This one produces tools and other hardware, as well as general-purpose items like replacement lights."
@@ -1983,6 +1989,7 @@
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
 		/datum/manufacture/powercellC,
+		/datum/manufacture/powercellH,
 		/datum/manufacture/light_bulb,
 		/datum/manufacture/red_bulb,
 		/datum/manufacture/yellow_bulb,
@@ -2002,12 +2009,21 @@
 		/datum/manufacture/table_folding,
 		/datum/manufacture/jumpsuit,
 		/datum/manufacture/shoes,
+#ifdef UNDERWATER_MAP
+		/datum/manufacture/flippers,
+#endif
 		/datum/manufacture/breathmask,
+#ifdef MAP_OVERRIDE_NADIR
+		/datum/manufacture/nanoloom,
+		/datum/manufacture/nanoloom_cart,
+#endif
 		/datum/manufacture/fluidcanister,
 		/datum/manufacture/meteorshieldgen,
 		/datum/manufacture/shieldgen,
 		/datum/manufacture/doorshieldgen,
-		/datum/manufacture/patch)
+		/datum/manufacture/patch,
+		/datum/manufacture/saxophone,
+		/datum/manufacture/trumpet)
 	hidden = list(/datum/manufacture/RCDammo,
 		/datum/manufacture/RCDammomedium,
 		/datum/manufacture/RCDammolarge,
@@ -2017,7 +2033,9 @@
 		/datum/manufacture/bikehorn,
 		/datum/manufacture/bullet_22,
 		/datum/manufacture/bullet_smoke,
-		/datum/manufacture/stapler)
+		/datum/manufacture/stapler,
+		/datum/manufacture/bagpipe,
+		/datum/manufacture/whistle)
 
 /obj/machinery/manufacturer/robotics
 	name = "robotics fabricator"
@@ -2061,6 +2079,7 @@
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
 		/datum/manufacture/powercellC,
+		/datum/manufacture/powercellH,
 		/datum/manufacture/crowbar,
 		/datum/manufacture/wrench,
 		/datum/manufacture/screwdriver,
@@ -2259,14 +2278,20 @@
 		/datum/manufacture/shoes,
 		/datum/manufacture/breathmask,
 		/datum/manufacture/engspacesuit,
+#ifdef UNDERWATER_MAP
+		/datum/manufacture/engdivesuit,
+		/datum/manufacture/flippers,
+#endif
 		/datum/manufacture/industrialarmor,
 		/datum/manufacture/industrialboots,
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
 		/datum/manufacture/powercellC,
+		/datum/manufacture/powercellH,
 		/datum/manufacture/ore_scoop,
 		/datum/manufacture/oresatchel,
 		/datum/manufacture/oresatchelL,
+		/datum/manufacture/microjetpack,
 		/datum/manufacture/jetpack,
 		/datum/manufacture/geoscanner,
 		/datum/manufacture/geigercounter,
@@ -2342,6 +2367,7 @@
 	available = list(/datum/manufacture/shoes,	//hey if you update these please remember to add it to /hop_and_uniform's list too
 		/datum/manufacture/shoes_brown,
 		/datum/manufacture/shoes_white,
+		/datum/manufacture/flippers,
 		/datum/manufacture/civilian_headset,
 		/datum/manufacture/jumpsuit_assistant,
 		/datum/manufacture/jumpsuit_pink,
@@ -2453,6 +2479,7 @@
 		/datum/manufacture/shoes,
 		/datum/manufacture/shoes_brown,
 		/datum/manufacture/shoes_white,
+		/datum/manufacture/flippers,
 		/datum/manufacture/civilian_headset,
 		/datum/manufacture/jumpsuit_assistant,
 		/datum/manufacture/jumpsuit,
@@ -2505,7 +2532,6 @@
 	accept_blueprints = FALSE
 	available = list(/datum/manufacture/crate,
 		/datum/manufacture/packingcrate,
-		/datum/manufacture/pizzabox,
 		/datum/manufacture/wooden,
 		/datum/manufacture/medical,
 		/datum/manufacture/biohazard,
@@ -2629,11 +2655,11 @@
 	icon_state = "blueprint"
 	blueprint = /datum/manufacture/alastor
 
-/obj/item/paper/manufacturer_blueprint/interdictor_frame
-	name = "Interdictor Frame Kit"
+/obj/item/paper/manufacturer_blueprint/interdictor_kit
+	name = "Interdictor Assembly Kit"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "interdictor_blueprint"
-	blueprint = /datum/manufacture/interdictor_frame
+	blueprint = /datum/manufacture/interdictor_kit
 
 /obj/item/paper/manufacturer_blueprint/interdictor_rod_lambda
 	name = "Lambda Phase-Control Rod"
@@ -2653,6 +2679,15 @@
 	blueprint = /datum/manufacture/mechanics/gunbot
 	override_name_desc = FALSE
 
+/******************** Nadir Resonators *******************/
+
+/obj/item/paper/manufacturer_blueprint/resonator_type_ax
+	name = "Type-AX Resonator"
+	blueprint = /datum/manufacture/resonator_type_ax
+
+/obj/item/paper/manufacturer_blueprint/resonator_type_sm
+	name = "Type-SM Resonator"
+	blueprint = /datum/manufacture/resonator_type_sm
 
 
 /// This is a special item that breaks apart into blueprints for the machines needed to build/repair a cloner.

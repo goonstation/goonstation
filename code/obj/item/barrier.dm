@@ -12,12 +12,14 @@
 	throwforce = 6
 	w_class = W_CLASS_SMALL
 	mats = 8
-	stamina_damage = 40
+	stamina_damage = 20
+	var/stamina_damage_active = 40
 	stamina_cost = 10
+	var/stamina_cost_active = 25
 	stamina_crit_chance = 0
 	hitsound = 0
 
-	can_disarm = 1
+	can_disarm = 0
 	two_handed = 0
 
 	/// Potentially could be used for subtypes; set it to 1 so that the object occupies two hands when activated.
@@ -57,6 +59,8 @@
 				setProperty("disorient_resist", 65)
 				setProperty("disorient_resist_eye", 65)
 				setProperty("disorient_resist_ear", 50) //idk how lol ok
+				stamina_damage = stamina_damage_active
+				stamina_cost = stamina_cost_active
 				setProperty("deflection", 20)
 				flick("barrier_a",src)
 				c_flags |= BLOCK_TOOLTIP
@@ -73,6 +77,8 @@
 				delProperty("disorient_resist_ear", 0)
 				setProperty("deflection", 0)
 				c_flags &= ~BLOCK_TOOLTIP
+				stamina_damage = initial(stamina_damage)
+				stamina_cost = initial(stamina_cost)
 
 				src.setItemSpecial(/datum/item_special/simple)
 

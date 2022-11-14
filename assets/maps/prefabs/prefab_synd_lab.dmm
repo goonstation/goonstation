@@ -120,7 +120,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/synd_lab)
 "p" = (
-/obj/machinery/conveyor/south,
+/obj/machinery/conveyor/NS,
 /turf/simulated/floor/black,
 /area/prefab/synd_lab)
 "r" = (
@@ -208,7 +208,7 @@
 /turf/simulated/floor/black,
 /area/prefab/synd_lab)
 "D" = (
-/obj/machinery/conveyor/west,
+/obj/machinery/conveyor/EW,
 /obj/machinery/light,
 /turf/simulated/floor/black,
 /area/prefab/synd_lab)
@@ -247,7 +247,7 @@
 /turf/space,
 /area/space)
 "K" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	desc = "A conveyor belt. This one looks pretty battered."
 	},
 /turf/simulated/floor/redblack{
@@ -268,7 +268,7 @@
 /turf/simulated/floor/black,
 /area/prefab/synd_lab)
 "N" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	desc = "A conveyor belt. This one looks pretty battered."
 	},
 /turf/simulated/floor/black,

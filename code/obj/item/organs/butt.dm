@@ -146,7 +146,7 @@
 
 			//Commence owie
 			take_bleeding_damage(target, null, rand(4, 8), DAMAGE_BLUNT)	//My
-			playsound(target, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1) //head,
+			playsound(target, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1) //head,
 			target.emote("scream") 									//FUCKING
 			target.TakeDamage("head", rand(8, 16), 0) 				//OW!
 
@@ -183,7 +183,7 @@
 	allow_staple = 0
 	toned = 0
 	made_from = "pharosium"
-	sound_fart = "sound/voice/farts/poo2_robot.ogg"
+	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
 // no this is not done and I dunno when it will be done
 // I am a bad person who accepts bribes of freaky macho butt drawings and then doesn't prioritize the request the bribe was for
 

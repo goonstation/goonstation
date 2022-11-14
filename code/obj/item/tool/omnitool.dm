@@ -287,7 +287,7 @@
 			if (O.reagents.total_volume)
 				O.reagents.trans_to(src, 20)
 				boutput(user, "<span class='notice'>Welder refueled</span>")
-				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+				playsound(src.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
 			else
 				boutput(user, "<span class='alert'>The [O.name] is empty!</span>")
 			return

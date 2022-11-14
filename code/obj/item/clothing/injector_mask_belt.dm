@@ -98,7 +98,7 @@ There's much less duplicate code here than there used to be, it could probably b
 				src.can_trigger = 0
 				SPAWN(src.min_time) src.can_trigger = 1
 
-				playsound(src,"sound/items/injectorbelt_active.ogg", 33, 0, -5)
+				playsound(src, 'sound/items/injectorbelt_active.ogg', 33, 0, -5)
 				boutput(src.owner, "<span class='notice'>Your Injector belt activates.</span>")
 
 				src.container.reagents.reaction(src.owner, INGEST)
@@ -214,9 +214,9 @@ There's much less duplicate code here than there used to be, it could probably b
 				SPAWN(src.min_time) src.can_trigger = 1
 				var/turf/T = get_turf(src)
 				if(T)
-					playsound(T,"sound/items/injectorbelt_active.ogg", 33, 0, -5)
+					playsound(T, 'sound/items/injectorbelt_active.ogg', 33, 0, -5)
 					SPAWN(0.5 SECONDS)
-						playsound(T,"sound/machines/hiss.ogg", 40, 1, -5)
+						playsound(T, 'sound/machines/hiss.ogg', 40, 1, -5)
 
 				boutput(src.owner, "<span class='notice'>Your [src] activates.</span>")
 

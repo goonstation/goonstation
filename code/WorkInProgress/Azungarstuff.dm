@@ -110,7 +110,7 @@
 
 	Entered(var/mob/M)
 		. = ..()
-		if (istype(M,/mob/dead) || istype(M,/mob/wraith) || istype(M,/mob/living/intangible) || istype(M, /obj/lattice))
+		if (istype(M,/mob/dead) || istype(M,/mob/living/intangible) || istype(M, /obj/lattice))
 			return
 		if(!ismob(M))
 			return
@@ -126,13 +126,13 @@
 					boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
 					visible_message("<span class='alert'>[M] gets too close to the edge of the lava and spontaniously combusts from the heat!</span>")
 					H.set_burning(500)
-					playsound(M.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
+					playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 					M.emote("scream")
 				if (isrobot(M))
 					M.canmove = 0
 					M.TakeDamage("chest", pick(5,10), 0, DAMAGE_BURN)
 					M.emote("scream")
-					playsound(M.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
+					playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 					boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
 					visible_message("<span class='alert'>[M] gets too close to the edge of the lava and their internal wiring suffers a major burn!</span>")
 					M.changeStatus("stunned", 6 SECONDS)
@@ -143,7 +143,7 @@
 					M.changeStatus("weakened", 10 SECONDS)
 					M.set_body_icon_dirty()
 					H.set_burning(1000)
-					playsound(M.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
+					playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 					M.emote("scream")
 					if (H.limbs.l_leg && H.limbs.r_leg)
 						if (H.limbs.l_leg)
@@ -161,7 +161,7 @@
 					R.canmove = 0
 					R.TakeDamage("chest", pick(20,40), 0, DAMAGE_BURN)
 					R.emote("scream")
-					playsound(R.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
+					playsound(R.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 					R.changeStatus("stunned", 10 SECONDS)
 					R.part_leg_r.holder = null
 					qdel(R.part_leg_r)
@@ -746,7 +746,7 @@
 	attack_hand(mob/user)
 		if (can_reach(user,src))
 			boutput(user, "<span class='alert'>You attempt to open the container but its doors are sealed tight. It doesn't look like you'll be able to open it.</span>")
-			playsound(src.loc, "sound/machines/door_locked.ogg", 50, 1, -2)
+			playsound(src.loc, 'sound/machines/door_locked.ogg', 50, 1, -2)
 
 	yellow
 		icon_state = "mantayellow"
@@ -807,7 +807,7 @@
 		UpdateIcon()
 		var/real_run_time = rand(src.run_time - 10, src.run_time + 10)
 		sleep(real_run_time - 10)
-		playsound(src.loc, "sound/items/coindrop.ogg", 30, 1)
+		playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1)
 		sleep(1 SECOND)
 
 		src.last_result = rand(0,36)
@@ -1070,7 +1070,7 @@
 
 	onStart()
 		..()
-		playsound(thecrate, "sound/machines/click.ogg", 60, 1)
+		playsound(thecrate, 'sound/machines/click.ogg', 60, 1)
 		owner.visible_message("<span class='notice'>[owner] starts to calibrate the cargo teleporter in a suspicious manner.</span>")
 	onEnd()
 		..()
@@ -1079,4 +1079,4 @@
 		qdel(thecrate)
 		message_admins("One of the NT supply crates has been succesfully teleported!")
 		boutput(owner, "<span class='notice'>You have successfully teleported one of the supply crates to the Syndicate.</span>")
-		playsound(thecrate, "sound/machines/click.ogg", 60, 1)
+		playsound(thecrate, 'sound/machines/click.ogg', 60, 1)

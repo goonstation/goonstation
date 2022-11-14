@@ -209,7 +209,7 @@
 	if (src.disable)
 		return
 
-	playsound(src.loc, "sound/weapons/flash.ogg", 100, 1)
+	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
 	flick("[base_state]_flash", src)
 	ON_COOLDOWN(src, "flash", cooldown_flash)
 	use_power(1000)

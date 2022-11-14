@@ -10,7 +10,7 @@
 	isWireCut - returns 1 if that wire (e.g. AIRLOCK_WIRE_DOOR_BOLTS) is cut, or 0 if not
 	canAIControl - 1 if the AI can control the airlock, 0 if not (then check canAIHack to see if it can hack in)
 	canAIHack - 1 if the AI can hack into the airlock to recover control, 0 if not. Also returns 0 if the AI does not *need* to hack it.
-	arePowerSystemsOn - 1 if the main or backup power are functioning, 0 if not. Does not check whether the power grid is charged or an APC has equipment on or anything like that. (Check (status & NOPOWER) for that)
+	arePowerSystemsOn - 1 if the main or backup power are functioning, 0 if not. Does not check whether the power grid is charged or an APC has equipment on or anything like that. (Check (src.status & NOPOWER) for that)
 	requiresIDs - 1 if the airlock is requiring IDs, 0 if not
 	isAllPowerCut - 1 if the main and backup power both have cut wires.
 	regainMainPower - handles the effects of main power coming back on.
@@ -23,7 +23,7 @@
 
 /obj/machinery/door/airlock/proc/shock_temp(mob/user)
 	//electrify door for 30 seconds
-	if(!src.arePowerSystemsOn() || (status & NOPOWER))
+	if(!src.arePowerSystemsOn() || (src.status & NOPOWER))
 		boutput(user, "The door has no power - you can't electrify it.")
 		return
 	if(!src.can_shock)
@@ -50,19 +50,21 @@
 	if (src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
 		boutput(user, "<span class='alert'>You can't drop the door bolts - The door bolt dropping wire has been cut.</span>")
 		return
-	if(!src.arePowerSystemsOn() || (status & NOPOWER))
+	if(!src.arePowerSystemsOn() || (src.status & NOPOWER))
 		boutput(user, "<span class='alert'>The door has no power - you can't raise/lower the door bolts.</span>")
 		return
 	if(src.locked)
 		src.locked = 0
-		UpdateIcon()
+		src.UpdateIcon()
+		playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, 1, -2)
 	else
 		logTheThing(LOG_STATION, user, "[user] has bolted a door at [log_loc(src)].")
 		src.locked = 1
-		UpdateIcon()
+		src.UpdateIcon()
+		playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
 
 /obj/machinery/door/airlock/proc/shock_perm(mob/user)
-	if(!src.arePowerSystemsOn() || (status & NOPOWER))
+	if(!src.arePowerSystemsOn() || (src.status & NOPOWER))
 		boutput(user, "<span class='alert'>The door has no power - you can't electrify it.</span>")
 		return
 	//electrify door indefinitely
@@ -81,7 +83,7 @@
 
 /obj/machinery/door/airlock/proc/shock_restore(mob/user)
 	//un-electrify door
-	if(!src.arePowerSystemsOn() || (status & NOPOWER))
+	if(!src.arePowerSystemsOn() || (src.status & NOPOWER))
 		boutput(user, "The door has no power - you can't electrify it.")
 		return
 	if (src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
@@ -93,23 +95,23 @@
 
 
 /obj/machinery/door/airlock/proc/idscantoggle(mob/user)
-	if(!src.arePowerSystemsOn() || (status & NOPOWER))
+	if(!src.arePowerSystemsOn() || (src.status & NOPOWER))
 		boutput(user, "<span class='alert'>The door has no power - you toggle the ID scanner.</span>")
 		return
 	//enable/disable ID scanner
 	if (src.isWireCut(AIRLOCK_WIRE_IDSCAN))
 		boutput(user, "The IdScan wire has been cut - So, you can't disable it, but it is already disabled anyways.")
 	else
-		aiDisabledIdScanner = !aiDisabledIdScanner
+		src.aiDisabledIdScanner = !src.aiDisabledIdScanner
 
 
 /obj/machinery/door/airlock/proc/user_toggle_open(mob/user)
 	if (src.operating == 1)
 		return
-	if((!src.arePowerSystemsOn()) || (status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
+	if((!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
 		boutput(user, "<span class='alert'>The door has no power - you can't open/close it.</span>")
 		return
-	if(welded)
+	if(src.welded)
 		boutput(user, text("<span class='alert'>The airlock has been welded shut!</span>"))
 	else if(locked)
 		boutput(user, text("<span class='alert'>The door bolts are down!</span>"))
@@ -151,7 +153,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "airlock"
 	icon = 'icons/obj/doors/SL_doors.dmi'
 	icon_state = "door_closed"
-	deconstruct_flags = DECON_ACCESS | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER | DECON_MULTITOOL
+	deconstruct_flags = DECON_NULL_ACCESS | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER | DECON_MULTITOOL
 	object_flags = BOTS_DIRBLOCK | CAN_REPROGRAM_ACCESS
 
 	var/image/panel_image = null
@@ -168,18 +170,18 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
 	var/secondsMainPowerLost = 0 //The number of seconds until power is restored.
 	var/secondsBackupPowerLost = 0 //The number of seconds until power is restored.
+	var/cyborgBumpAccess = TRUE
 	var/spawnPowerRestoreRunning = 0
 	var/welded = null
 	var/wires = 1023 //goddd use bitflag defines please
 	var/list/wire_colors = list("Orange" = 1, "Pink" = 2, "White" = 3, "Yellow" = 4, "Red" = 5, "Blue" = 6, "Green" = 7, "Grey" = 8, "Olive" = 9, "Teal" = 10)
 	secondsElectrified = 0 //How many seconds remain until the door is no longer electrified. -1 if it is permanently electrified until someone fixes it.
-	var/aiDisabledIdScanner = 0
+	var/aiDisabledIdScanner = FALSE
 	var/aiHacking = 0
 	var/obj/machinery/door/airlock/closeOther = null
 	var/closeOtherId = null
 	var/list/signalers[10]
 	var/lockdownbyai = 0
-	var/last_bump = 0
 	var/net_id = null
 	var/sound_airlock = 'sound/machines/airlock_swoosh_temp.ogg'
 	var/sound_close_airlock = null
@@ -190,38 +192,51 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/safety = 1
 	var/can_shock = TRUE
 	var/hackingProgression = 0
-	var/HTML = null
-	var/has_panel = 1
+	var/has_panel = TRUE
 	var/hackMessage = ""
 	var/net_access_code = null
 
 	var/no_access = 0
 
-	autoclose = 1
+	autoclose = TRUE
 	power_usage = 50
 	operation_time = 6
-	brainloss_stumble = 1
+	brainloss_stumble = TRUE
 
-	New()
-		..()
-		if(!isrestrictedz(src.z) && src.name == initial(src.name)) //The second half prevents varedited names being overwritten
-			var/area/station/A = get_area(src)
-			src.name = A.name
-		src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
-		START_TRACKING
+	get_desc()
+		var/healthpercent = src.health/src.health_max * 100
+		switch(healthpercent)
+			if(90 to 99) //dont want to clog up the description unless it's actually damaged
+				. += "It seems to be in mostly good condition"
+			if(75 to 89)
+				. += "It seems slightly [pick("dinged up", "dented", "damaged", "scratched")]"
+			if(50 to 74)
+				. += "It looks [pick("busted", "damaged", "messed up", "dented")]."
+			if(25 to 49)
+				. += "It looks [pick("quite", "pretty", "rather", "notably")] [pick("mangled", "busted", "messed up", "wrecked", "destroyed", "haggard")]."
+			if(0 to 24)
+				. += "It is barely intact!"
+
+/obj/machinery/door/airlock/New()
+	..()
+	if(!isrestrictedz(src.z) && src.name == initial(src.name)) //The second half prevents varedited names being overwritten
+		var/area/station/A = get_area(src)
+		src.name = A.name
+	src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
+	START_TRACKING
 
 
-	was_built_from_frame(mob/user, newly_built)
-		. = ..()
-		req_access = list()
+/obj/machinery/door/airlock/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	req_access = list()
 
-	disposing()
-		. = ..()
-		STOP_TRACKING
+/obj/machinery/door/airlock/disposing()
+	. = ..()
+	STOP_TRACKING
 
 
 /obj/machinery/door/airlock/check_access(obj/item/I)
-	if (no_access) //nope :)
+	if (src.no_access) //nope :)
 		return 0
 	.= ..()
 
@@ -263,32 +278,34 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	desc = "Looks pretty tough. I wouldn't take this door on in a fight."
 	icon = 'icons/obj/doors/Doorext.dmi'
 	req_access_txt = "52"
-	cant_emag = 1
-	hardened = 1
-	aiControlDisabled = 1
+	cant_emag = TRUE
+	cyborgBumpAccess = FALSE
+	hardened = TRUE
+	aiControlDisabled = TRUE
 	object_flags = BOTS_DIRBLOCK
 	mats = 0
 
-	meteorhit()
-		return
+/obj/machinery/door/airlock/syndicate/meteorhit()
+	return
 
-	ex_act()
-		return
+/obj/machinery/door/airlock/syndicate/ex_act()
+	return
 
 /obj/machinery/door/airlock/centcom
 	icon = 'icons/obj/doors/Doorcom.dmi'
 	req_access_txt = "57"
-	cant_emag = 1
-	hardened = 1
-	aiControlDisabled = 1
+	cant_emag = TRUE
+	cyborgBumpAccess = FALSE
+	hardened = TRUE
+	aiControlDisabled = TRUE
 	object_flags = BOTS_DIRBLOCK
 	mats = 0
 
-	meteorhit()
-		return
+/obj/machinery/door/airlock/centcom/meteorhit()
+	return
 
-	ex_act()
-		return
+/obj/machinery/door/airlock/centcom/ex_act()
+	return
 
 /obj/machinery/door/airlock/glass
 	name = "glass airlock"
@@ -335,15 +352,16 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "command airlock"
 	icon_state = "com_closed"
 	icon_base = "com"
-	req_access = list(access_heads)
+	req_access = null
 	health = 800
 	health_max = 800
 
 /obj/machinery/door/airlock/pyro/command/centcom
 	req_access_txt = "57"
-	cant_emag = 1
-	hardened = 1
-	aiControlDisabled = 1
+	cant_emag = TRUE
+	cyborgBumpAccess = FALSE
+	hardened = TRUE
+	aiControlDisabled = TRUE
 	object_flags = BOTS_DIRBLOCK
 	mats = 0
 
@@ -364,12 +382,14 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	panel_icon_state = "2_panel_open"
 	welded_icon_state = "2_welded"
 	req_access = null
-	hardened = 1
-	aiControlDisabled = 1
+	hardened = TRUE
+	aiControlDisabled = TRUE
+	cyborgBumpAccess = FALSE
 
 /obj/machinery/door/airlock/pyro/weapons/noemag
 	req_access = null
-	cant_emag = 1
+	cant_emag = TRUE
+	cyborgBumpAccess = FALSE
 
 
 
@@ -378,7 +398,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "security airlock"
 	icon_state = "sec_closed"
 	icon_base = "sec"
-	req_access = list(access_security)
+	req_access = null
 
 /obj/machinery/door/airlock/pyro/security/alt
 	icon_state = "sec2_closed"
@@ -391,7 +411,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "engineering airlock"
 	icon_state = "eng_closed"
 	icon_base = "eng"
-	req_access = list(access_engineering)
+	req_access = null
 
 /obj/machinery/door/airlock/pyro/engineering/alt
 	icon_state = "eng2_closed"
@@ -404,7 +424,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "medical airlock"
 	icon_state = "research_closed"
 	icon_base = "research"
-	req_access = list(access_medical)
+	req_access = null
 
 /obj/machinery/door/airlock/pyro/medical/alt
 	icon_state = "research2_closed"
@@ -439,7 +459,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "maintenance airlock"
 	icon_state = "maint_closed"
 	icon_base = "maint"
-	req_access = list(access_maint_tunnels)
+	req_access = null
 
 /obj/machinery/door/airlock/pyro/maintenance/alt
 	icon_state = "maint2_closed"
@@ -459,7 +479,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	visible = 0
 	operation_time = 10
 
-/obj/machinery/door/airlock/pyro/syndicate
+/obj/machinery/door/airlock/pyro/reinforced
 	name = "reinforced external airlock"
 	desc = "Looks pretty tough. I wouldn't take this door on in a fight."
 	icon_state = "airlock_closed"
@@ -468,18 +488,27 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	welded_icon_state = "airlock_welded"
 	sound_airlock = 'sound/machines/airlock.ogg'
 	operation_time = 10
-	req_access_txt = "52"
-	cant_emag = 1
-	hardened = 1
-	aiControlDisabled = 1
+	cant_emag = TRUE
+	hardened = TRUE
+	aiControlDisabled = TRUE
 	mats = 0
 
-	meteorhit()
-		return
-	ex_act()
-		return
-	blob_act(power)
-		return
+/obj/machinery/door/airlock/pyro/reinforced/meteorhit()
+	return
+/obj/machinery/door/airlock/pyro/reinforced/ex_act()
+	return
+/obj/machinery/door/airlock/pyro/reinforced/blob_act(power)
+	return
+
+/obj/machinery/door/airlock/pyro/reinforced/syndicate
+	req_access_txt = "52"
+	cyborgBumpAccess = FALSE
+
+/obj/machinery/door/airlock/pyro/reinforced/arrivals
+	icon_state = "arrivals_closed"
+	icon_base = "arrivals"
+	opacity = 0
+	visible = 0
 
 /obj/machinery/door/airlock/pyro/glass
 	name = "glass airlock"
@@ -490,6 +519,22 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	opacity = 0
 	visible = 0
 
+/obj/machinery/door/airlock/pyro/glass/reinforced
+	name = "reinforced glass airlock"
+	desc = "Looks pretty tough. I wouldn't take this door on in a fight."
+	operation_time = 10
+	cant_emag = TRUE
+	hardened = TRUE
+	aiControlDisabled = TRUE
+	mats = 0
+
+/obj/machinery/door/airlock/pyro/glass/reinforced/meteorhit()
+	return
+/obj/machinery/door/airlock/pyro/glass/reinforced/ex_act()
+	return
+/obj/machinery/door/airlock/pyro/glass/reinforced/blob_act(power)
+	return
+
 /obj/machinery/door/airlock/pyro/glass/brig
 	req_access_txt = "2"
 
@@ -497,19 +542,25 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "command airlock"
 	icon_state = "com_glass_closed"
 	icon_base = "com_glass"
-	req_access = list(access_heads)
+	req_access = null
 
 /obj/machinery/door/airlock/pyro/glass/engineering
 	name = "engineering airlock"
 	icon_state = "eng_glass_closed"
 	icon_base = "eng_glass"
-	req_access = list(access_engineering)
+	req_access = null
 
 /obj/machinery/door/airlock/pyro/glass/security //Shitty Azungar recolor, no need to thank me.
 	name = "security airlock"
 	icon_state = "sec_glass_closed"
 	icon_base = "sec_glass"
-	req_access = list(access_security)
+	req_access = null
+
+/obj/machinery/door/airlock/pyro/glass/security/alt
+	name = "security airlock"
+	icon_state = "sec_glassalt_closed"
+	icon_base = "sec_glassalt"
+	req_access = null
 
 /obj/machinery/door/airlock/pyro/glass/med
 	name = "medical airlock"
@@ -557,7 +608,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	panel_icon_state = "windoor_panel_open"
 	welded_icon_state = "fdoor_weld"
 	sound_airlock = 'sound/machines/windowdoor.ogg'
-	has_crush = 0
+	has_crush = FALSE
 	health = 500
 	health_max = 500
 	layer = EFFECTS_LAYER_UNDER_1
@@ -565,95 +616,94 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	flags = FPRINT | IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID | ON_BORDER
 	event_handler_flags = USE_FLUID_ENTER
 
-	opened()
-		layer = COG2_WINDOW_LAYER //this is named weirdly, but seems right
-		. = ..()
+/obj/machinery/door/airlock/pyro/glass/windoor/opened()
+	layer = COG2_WINDOW_LAYER //this is named weirdly, but seems right
+	. = ..()
 
-	close()
-		layer = EFFECTS_LAYER_UNDER_1
-		. = ..()
+/obj/machinery/door/airlock/pyro/glass/windoor/close()
+	layer = EFFECTS_LAYER_UNDER_1
+	. = ..()
 
-	bumpopen(mob/user as mob)
-		if (src.density)
-			src.autoclose = 1
-		..(user)
+/obj/machinery/door/airlock/pyro/glass/windoor/bumpopen(mob/user)
+	if (src.density)
+		src.autoclose = TRUE
+	..(user)
 
-	attack_hand(mob/user)
-		if (src.density)
-			src.autoclose = 0
-		..(user)
+/obj/machinery/door/airlock/pyro/glass/windoor/attack_hand(mob/user)
+	if (src.density)
+		src.autoclose = FALSE
+	..(user)
 
-	Cross(atom/movable/mover)
-		if (istype(mover, /obj/projectile))
-			var/obj/projectile/P = mover
-			if (P.proj_data.window_pass)
-				return 1
-
-		if (get_dir(loc, mover) & dir) // Check for appropriate border.
-			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
-				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
-					// If they're pulling something and the door would open anyway,
-					// just let the door open instead.
-					return 0
-				animate_door_squeeze(mover)
-				return 1 // they can pass through a closed door
-			return !density
-		else
+/obj/machinery/door/airlock/pyro/glass/windoor/Cross(atom/movable/mover)
+	if (istype(mover, /obj/projectile))
+		var/obj/projectile/P = mover
+		if (P.proj_data.window_pass)
 			return 1
 
-	gas_cross(turf/target)
-		if(get_dir(loc, target) & dir)
-			return !density
-		else
+	if (get_dir(loc, mover) & dir) // Check for appropriate border.
+		if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
+			if (ismob(mover) && mover:pulling && src.bumpopen(mover))
+				// If they're pulling something and the door would open anyway,
+				// just let the door open instead.
+				return 0
+			animate_door_squeeze(mover)
+			return 1 // they can pass through a closed door
+		return !density
+	else
+		return 1
+
+/obj/machinery/door/airlock/pyro/glass/windoor/gas_cross(turf/target)
+	if(get_dir(loc, target) & dir)
+		return !density
+	else
+		return TRUE
+
+/obj/machinery/door/airlock/pyro/glass/windoor/Uncross(atom/movable/mover, do_bump = TRUE)
+	if (istype(mover, /obj/projectile))
+		var/obj/projectile/P = mover
+		if (P.proj_data.window_pass)
 			return TRUE
+	if (get_dir(loc, mover.movement_newloc) & dir)
+		if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
+			if (ismob(mover) && mover:pulling && src.bumpopen(mover))
+				// If they're pulling something and the door would open anyway,
+				// just let the door open instead.
+				. = FALSE
+				UNCROSS_BUMP_CHECK(mover)
+				return
+			animate_door_squeeze(mover)
+			return TRUE // they can pass through a closed door
+		. = !density
+	else
+		. = TRUE
+	UNCROSS_BUMP_CHECK(mover)
+/obj/machinery/door/airlock/pyro/glass/windoor/update_nearby_tiles(need_rebuild)
+	if (!air_master) return 0
 
-	Uncross(atom/movable/mover, do_bump = TRUE)
-		if (istype(mover, /obj/projectile))
-			var/obj/projectile/P = mover
-			if (P.proj_data.window_pass)
-				return TRUE
-		if (get_dir(loc, mover.movement_newloc) & dir)
-			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
-				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
-					// If they're pulling something and the door would open anyway,
-					// just let the door open instead.
-					. = FALSE
-					UNCROSS_BUMP_CHECK(mover)
-					return
-				animate_door_squeeze(mover)
-				return TRUE // they can pass through a closed door
-			. = !density
-		else
-			. = TRUE
-		UNCROSS_BUMP_CHECK(mover)
+	var/turf/simulated/source = loc
+	var/turf/simulated/target = get_step(source,dir)
 
-	update_nearby_tiles(need_rebuild)
-		if (!air_master) return 0
+	if (need_rebuild)
+		if (istype(source)) // Rebuild resp. update nearby group geometry.
+			if (source.parent)
+				air_master.groups_to_rebuild |= source.parent
+			else
+				air_master.tiles_to_update |= source
 
-		var/turf/simulated/source = loc
-		var/turf/simulated/target = get_step(source,dir)
+		if (istype(target))
+			if (target.parent)
+				air_master.groups_to_rebuild |= target.parent
+			else
+				air_master.tiles_to_update |= target
+	else
+		if (istype(source)) air_master.tiles_to_update |= source
+		if (istype(target)) air_master.tiles_to_update |= target
 
-		if (need_rebuild)
-			if (istype(source)) // Rebuild resp. update nearby group geometry.
-				if (source.parent)
-					air_master.groups_to_rebuild |= source.parent
-				else
-					air_master.tiles_to_update |= source
+	if (istype(source))
+		source.selftilenotify() //for fluids
 
-			if (istype(target))
-				if (target.parent)
-					air_master.groups_to_rebuild |= target.parent
-				else
-					air_master.tiles_to_update |= target
-		else
-			if (istype(source)) air_master.tiles_to_update |= source
-			if (istype(target)) air_master.tiles_to_update |= target
-
-		if (istype(source))
-			source.selftilenotify() //for fluids
-
-	xmasify()
-		return
+/obj/machinery/door/airlock/pyro/glass/windoor/xmasify()
+	return
 
 /obj/machinery/door/airlock/pyro/glass/windoor/alt
 	icon_state = "windoor2_closed"
@@ -661,7 +711,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	panel_icon_state = null
 	welded_icon_state = "windoor2_weld"
 	sound_airlock = 'sound/machines/windowdoor.ogg'
-	has_crush = 0
+	has_crush = FALSE
 
 /obj/machinery/door/airlock/pyro/sci_alt
 	name = "research airlock"
@@ -902,7 +952,7 @@ About the new airlock wires panel:
 	switch(wireIndex)
 		if(AIRLOCK_WIRE_IDSCAN)
 			//Sending a pulse through this flashes the red light on the door (if the door has power).
-			if ((src.arePowerSystemsOn()) && (!(status & NOPOWER)))
+			if ((src.arePowerSystemsOn()) && (!(src.status & NOPOWER)))
 				play_deny()
 		if (AIRLOCK_WIRE_MAIN_POWER1, AIRLOCK_WIRE_MAIN_POWER2)
 			//Sending a pulse through either one causes a breaker to trip, disabling the door for 10 seconds if backup power is connected, or 1 minute if not (or until backup power comes back on, whichever is shorter).
@@ -915,13 +965,15 @@ About the new airlock wires panel:
 			if (!src.locked)
 				src.locked = 1
 				logTheThing(LOG_STATION, usr, "[usr] has bolted a door at [log_loc(src)].")
-				boutput(usr, "You hear a click from the bottom of the door.")
+				boutput(usr, "You hear a clunk from the bottom of the door.")
+				playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
 				tgui_process.update_uis(src)
 			else
 				if(src.arePowerSystemsOn()) //only can raise bolts if power's on
 					src.locked = 0
-				boutput(usr, "You hear a click from inside the door.")
-			UpdateIcon()
+					boutput(usr, "You hear a clunk from inside the door.")
+					playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, 1, -2)
+			src.UpdateIcon()
 			SPAWN(1 DECI SECOND)
 				src.shock(usr, 25)
 
@@ -1036,8 +1088,9 @@ About the new airlock wires panel:
 			//Cutting this wire also drops the door bolts, and mending it does not raise them. (This is what happens now, except there are a lot more wires going to door bolts at present)
 			if (src.locked!=1)
 				src.locked = 1
+				playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
 				logTheThing(LOG_STATION, usr, "[usr] has bolted a door at [log_loc(src)].")
-			UpdateIcon()
+			src.UpdateIcon()
 
 		if (AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
 			//Cutting either one disables the backup door power (allowing it to be crowbarred open, but disabling bolts-raising), but may electocute the user.
@@ -1130,7 +1183,7 @@ About the new airlock wires panel:
 	return (src.secondsMainPowerLost==0 || src.secondsBackupPowerLost==0)
 
 /obj/machinery/door/airlock/requiresID()
-	return !(src.isWireCut(AIRLOCK_WIRE_IDSCAN) || aiDisabledIdScanner)
+	return !(src.isWireCut(AIRLOCK_WIRE_IDSCAN) || src.aiDisabledIdScanner)
 
 /obj/machinery/door/airlock/proc/isAllPowerCut()
 	var/retval=0
@@ -1182,7 +1235,7 @@ About the new airlock wires panel:
 
 //borrowed from the grille's get_connection
 /obj/machinery/door/airlock/proc/get_connection()
-	if(status & NOPOWER)
+	if(src.status & NOPOWER)
 		return 0
 
 	var/obj/machinery/power/apc/localAPC = get_local_apc(src)
@@ -1204,7 +1257,7 @@ About the new airlock wires panel:
 	if(!net) // cable is unpowered
 		return 0
 
-	if(src.electrocute(user, prb, net))
+	if(src.electrocute(user, 100, net)) //this is on purpose so the rng wont roll twice
 		return 1
 
 	else
@@ -1217,7 +1270,7 @@ About the new airlock wires panel:
 			icon_state = "[icon_base]_locked"
 		else
 			icon_state = "[icon_base]_closed"
-		if (p_open)
+		if (src.panel_open)
 			if (!src.panel_image)
 				src.panel_image = image(src.icon, src.panel_icon_state)
 			src.UpdateOverlays(src.panel_image, "panel")
@@ -1232,20 +1285,20 @@ About the new airlock wires panel:
 	else
 		src.UpdateOverlays(null, "panel")
 		src.UpdateOverlays(null, "weld")
-		icon_state = "[icon_base]_open"
+		src.icon_state = "[icon_base]_open"
 	return
 
 /obj/machinery/door/airlock/play_animation(animation)
 	switch (animation)
 		if ("opening")
 			src.UpdateIcon()
-			if (p_open)
+			if (src.panel_open)
 				flick("o_[icon_base]_opening", src) // there's an issue with the panel overlay not being gone by the time the animation is nearly done but I can't make that stop, despite my best efforts
 			else
 				flick("[icon_base]_opening", src)
 		if ("closing")
 			src.UpdateIcon()
-			if (p_open)
+			if (src.panel_open)
 				flick("o_[icon_base]_closing", src)
 			else
 				flick("[icon_base]_closing", src)
@@ -1264,7 +1317,7 @@ About the new airlock wires panel:
 		SPAWN(2 SECONDS)
 			//TODO: Make this take a minute
 			boutput(user, "<span class='notice'>Airlock AI control has been blocked. Beginning fault-detection.</span>")
-			hackMessage = "Fault Detection..."
+			src.hackMessage = "Fault Detection..."
 			hackingProgression = 1
 			tgui_process.update_uis(src)
 			sleep(5 SECONDS)
@@ -1277,12 +1330,12 @@ About the new airlock wires panel:
 				src.aiHacking=0
 				return
 			boutput(user, "<span class='notice'>Fault confirmed: airlock control wire disabled or cut.</span>")
-			hackMessage = "Fault Confirmed..."
+			src.hackMessage = "Fault Confirmed..."
 			hackingProgression = 2
 			tgui_process.update_uis(src)
 			sleep(2 SECONDS)
 			boutput(user, "<span class='notice'>Attempting to hack into airlock. This may take some time.</span>")
-			hackMessage = "Hacking into airlock..."
+			src.hackMessage = "Hacking into airlock..."
 			hackingProgression = 3
 			tgui_process.update_uis(src)
 			sleep(20 SECONDS)
@@ -1295,7 +1348,7 @@ About the new airlock wires panel:
 				src.aiHacking=0
 				return
 			boutput(user, "<span class='notice'>Upload access confirmed. Loading control program into airlock software.</span>")
-			hackMessage = "Uploading..."
+			src.hackMessage = "Uploading..."
 			hackingProgression = 4
 			tgui_process.update_uis(src)
 			sleep(17 SECONDS)
@@ -1308,41 +1361,39 @@ About the new airlock wires panel:
 				src.aiHacking=0
 				return
 			boutput(user, "<span class='notice'>Transfer complete. Forcing airlock to execute program.</span>")
-			hackMessage = "Transfer complete"
+			src.hackMessage = "Transfer complete"
 			hackingProgression = 5
 			tgui_process.update_uis(src)
 			sleep(5 SECONDS)
 			//disable blocked control
 			src.aiControlDisabled = 2
 			boutput(user, "<span class='notice'>Receiving control information from airlock.</span>")
-			hackMessage = "Receiving Information"
+			src.hackMessage = "Receiving Information"
 			hackingProgression = 6
 			tgui_process.update_uis(src)
 			sleep(1 SECOND)
 			hackingProgression = 0
-			hackMessage = ""
+			src.hackMessage = ""
 			tgui_process.update_uis(src)
 			//bring up airlock dialog
 			src.aiHacking = 0
 
-/obj/machinery/door/airlock/Bumped(atom/AM)
+/obj/machinery/door/airlock/Bumped(atom/movable/AM)
+	if(ON_COOLDOWN(src, "airlock_bump_try_open", 3 SECONDS))
+		return
 	if(ismob(AM))
-		if(world.time - src.last_bump <= 30)
-			return
-
-		if (issilicon(AM))
-			if (aiControlDisabled || cant_emag)
-				return
-			var/mob/silicon = AM
-			if (!silicon.mind)
-				return
-
-		src.last_bump = world.time
 		if (src.isElectrified())
 			if(src.shock(AM, 100))
 				return
 	..()
-
+/obj/machinery/door/airlock/bumpopen(atom/movable/AM)
+	if (issilicon(AM))
+		if (!src.cyborgBumpAccess)
+			return
+		var/mob/silicon = AM
+		if (!silicon.mind)
+			return
+	. = ..()
 /obj/machinery/door/airlock/ui_static_data(mob/user)
 	. = list(
 		"wireColors" = src.wire_colors,
@@ -1368,7 +1419,7 @@ About the new airlock wires panel:
 			start = list(0,15)
 			stop = list(0,-15)
 	else
-		switch(welded_icon_state)
+		switch(src.welded_icon_state)
 			if("welded")
 				if(dir == NORTH || dir == SOUTH)
 					if(rel_dir == NORTH || rel_dir == NORTHWEST || rel_dir == NORTHEAST)
@@ -1432,7 +1483,7 @@ About the new airlock wires panel:
 						start = list(15,-15)
 						stop = list(15,15)
 
-	if(welded)
+	if(src.welded)
 		. = list(stop,start)
 	else
 		. = list(start,stop)
@@ -1449,13 +1500,13 @@ About the new airlock wires panel:
 			if (src.shock(user, 100))
 				interact_particle(user,src)
 				return
-	else if (aiControlDisabled == 1 || cant_emag)
+	else if (src.aiControlDisabled == 1 || src.cant_emag)
 		return
 
 	if (ishuman(user) && src.density && src.brainloss_stumble && src.do_brainstumble(user) == 1)
 		return
 
-	if (src.p_open && valid_tool_found)
+	if (src.panel_open && valid_tool_found)
 		ui_interact(user)
 		interact_particle(user,src)
 
@@ -1475,7 +1526,7 @@ About the new airlock wires panel:
 		if(src.isElectrified())
 			boutput(user, "<span class='alert'>[bicon(C)] <b>WARNING</b>: Abnormal electrical response received from access panel.</span>")
 		else
-			if(status & NOPOWER)
+			if(src.status & NOPOWER)
 				boutput(user, "<span class='alert'>[bicon(C)] No electrical response received from access panel.</span>")
 			else
 				boutput(user, "<span class='notice'>[bicon(C)] Regular electrical response received from access panel.</span>")
@@ -1491,6 +1542,9 @@ About the new airlock wires panel:
 		return
 
 	if ((isweldingtool(C) && !( src.operating ) && src.density))
+		if (src.hardened)
+			boutput(user, "<span class='alert'>Your tool is unable to weld this airlock! Huh.</span>")
+			return
 		if(!C:try_weld(user, 1, burn_eyes = 1))
 			return
 
@@ -1505,16 +1559,16 @@ About the new airlock wires panel:
 
 		return
 	else if (isscrewingtool(C))
-		if (src.hardened == 1)
+		if (src.hardened)
 			boutput(user, "<span class='alert'>Your tool can't pierce this airlock! Huh.</span>")
 			return
 		if (!src.has_panel)
 			boutput(user, "<span class='alert'>[src] does not have a panel for you to unscrew!</span>")
 			return
-		src.p_open = !(src.p_open)
+		src.panel_open = !(src.panel_open)
 		tgui_process.update_uis(src)
 		src.UpdateIcon()
-	else if (issnippingtool(C) && src.p_open)
+	else if (issnippingtool(C) && src.panel_open)
 		return src.Attackhand(user)
 	else if (ispulsingtool(C))
 		return src.Attackhand(user)
@@ -1542,11 +1596,11 @@ About the new airlock wires panel:
 	if (!src || !istype(src))
 		return
 
-	if ((src.density) && (!( src.welded ) && !( src.operating ) && ((!src.arePowerSystemsOn()) || (status & NOPOWER)) && !( src.locked )))
+	if ((src.density) && (!( src.welded ) && !( src.operating ) && ((!src.arePowerSystemsOn()) || (src.status & NOPOWER)) && !( src.locked )))
 		SPAWN( 0 )
 			src.operating = 1
 			play_animation("opening")
-			UpdateIcon(1)
+			src.UpdateIcon(1)
 
 			sleep(src.operation_time)
 
@@ -1554,7 +1608,7 @@ About the new airlock wires panel:
 
 			if (!istype(src, /obj/machinery/door/airlock/glass))
 				if (ignore_light_or_cam_opacity)
-					src.opacity = 0
+					src.set_opacity(0)
 				else
 					src.RL_SetOpacity(0)
 			src.operating = 0
@@ -1564,14 +1618,14 @@ About the new airlock wires panel:
 		SPAWN( 0 )
 			src.operating = 1
 			play_animation("closing")
-			UpdateIcon(1)
+			src.UpdateIcon(1)
 
 			src.set_density(1)
 			sleep(1.5 SECONDS)
 
 			if (src.visible)
 				if (ignore_light_or_cam_opacity)
-					src.opacity = 1
+					src.set_opacity(1)
 				else
 					src.RL_SetOpacity(1)
 			src.operating = 0
@@ -1589,17 +1643,17 @@ About the new airlock wires panel:
 	else if (src.arePowerSystemsOn())
 		boutput(usr, "<span class='alert'>You try to pry [src]  open, but it won't budge! The power of \the [src] must be disabled first.</span>")
 
-	if(!ON_COOLDOWN(src, "playsound", 1.5 SECONDS))
+	if(!ON_COOLDOWN(src, "prying_sound", 1.5 SECONDS))
 		playsound(src, 'sound/machines/airlock_pry.ogg', 35, 1)
 
 	return
 
 /obj/machinery/door/airlock/open()
-	if (src.welded || src.locked || src.operating == 1 || (!src.arePowerSystemsOn()) || (status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
+	if (src.welded || src.locked || src.operating == 1 || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
 		return 0
-	use_power(50)
-	if (linked_forcefield)
-		use_power(100)
+	src.use_power(50)
+	if (src.linked_forcefield)
+		src.use_power(100)
 	.= ..()
 
 	if (narrator_mode)
@@ -1611,12 +1665,14 @@ About the new airlock wires panel:
 		src.closeOther.close(1)
 
 /obj/machinery/door/airlock/close()
-	if (linked_forcefield) //mbc : this sucks, but I need the forcefield to turn off even if the door is unpowered and can't close.
-		linked_forcefield.setactive(0)
-
-	if (src.welded || src.locked || src.operating || (!src.arePowerSystemsOn()) || (status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
+	//split into two sets of checks so failures to close due to lacking power will cause linked shields to deactivate
+	if ((!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
+		if (src.linked_forcefield)
+			src.linked_forcefield.setactive(0)
 		return
-	use_power(50)
+	if (src.welded || src.locked || src.operating)
+		return
+	src.use_power(50)
 
 	if(!..(!src.safety))
 		if (narrator_mode)
@@ -1644,12 +1700,12 @@ About the new airlock wires panel:
 					break
 
 /obj/machinery/door/airlock/isblocked()
-	if(src.density && ((status & NOPOWER) || src.welded || src.locked || (src.operating == -1) ))
+	if(src.density && ((src.status & NOPOWER) || src.welded || src.locked || (src.operating == -1) ))
 		return 1
 	return 0
 
 /obj/machinery/door/airlock/autoclose()
-	if(!welded)
+	if(!src.welded)
 		close(0, 1)
 	else
 		..()
@@ -1722,7 +1778,7 @@ obj/machinery/door/airlock
 			return
 
 		var/sent_code = text2num_safe(signal.data["access_code"])
-		if (aiControlDisabled > 0 || cant_emag || sent_code != src.net_access_code)
+		if (src.aiControlDisabled > 0 || src.cant_emag || sent_code != src.net_access_code)
 			if(prob(20))
 				src.play_deny()
 			if(signal.data["command"] && signal.data["command"] == "nack")
@@ -1754,24 +1810,24 @@ obj/machinery/door/airlock
 
 			if("unlock")
 				locked = 0
-				UpdateIcon()
+				src.UpdateIcon()
 				send_status(,senderid)
 
 			if("lock")
 				locked = 1
-				UpdateIcon()
+				src.UpdateIcon()
 				send_status()
 
 			if("secure_open")
 				SPAWN(0)
 					locked = 0
-					UpdateIcon()
+					src.UpdateIcon()
 
 					sleep(0.5 SECONDS)
 					open(1)
 
 					locked = 1
-					UpdateIcon()
+					src.UpdateIcon()
 					sleep(src.operation_time)
 					send_status(,senderid)
 
@@ -1782,7 +1838,7 @@ obj/machinery/door/airlock
 
 					locked = 1
 					sleep(0.5 SECONDS)
-					UpdateIcon()
+					src.UpdateIcon()
 					sleep(src.operation_time)
 					send_status(,senderid)
 
@@ -1804,7 +1860,7 @@ obj/machinery/door/airlock
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, radiorange)
 
-	proc/send_packet(userid,target,message) //For unique conditions like a rejection message instead of overall status
+	proc/send_packet(userid,target,message) //For unique conditions like a rejection message instead of overall src.status
 		if(message)
 			var/datum/signal/signal = get_free_signal()
 			signal.source = src
@@ -1879,7 +1935,7 @@ obj/machinery/door/airlock
 
 	initialize()
 		..()
-		UpdateIcon()
+		src.UpdateIcon()
 
 	New()
 		..()
@@ -1917,30 +1973,30 @@ obj/machinery/door/airlock
 		. = 1
 		// need to do it in the right order or nothing will happen
 		if (locked)
-			toggle_bolt(user)
-			user_toggle_open(user)
+			src.toggle_bolt(user)
+			src.user_toggle_open(user)
 		else
-			user_toggle_open(user)
-			toggle_bolt(user)
+			src.user_toggle_open(user)
+			src.toggle_bolt(user)
 		return
 
 	else if (user.client.check_key(KEY_OPEN))
 		. = 1
-		user_toggle_open(user)
+		src.user_toggle_open(user)
 		return
 
 	else if (user.client.check_key(KEY_BOLT))
 		. = 1
-		toggle_bolt(user)
+		src.toggle_bolt(user)
 		return
 
 	else if (user.client.check_key(KEY_SHOCK))
 		. = 1
 		//electrify door for 30 seconds
 		if (src.secondsElectrified!=0)
-			shock_restore(user)
+			src.shock_restore(user)
 		else
-			if(!src.arePowerSystemsOn() || (status & NOPOWER))
+			if(!src.arePowerSystemsOn() || (src.status & NOPOWER))
 				boutput(user, "The door has no power - you can't electrify it.")
 				return
 
@@ -1948,7 +2004,7 @@ obj/machinery/door/airlock
 				sleep(0.2 SECONDS) // num seems to work fine
 
 			if (tgui_alert(user, "Are you sure? Electricity might harm a human!", "Electrification Confirmation", list("Yes", "No")) == "Yes")
-				shock_temp(user)
+				src.shock_temp(user)
 
 /obj/machinery/door/airlock/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -1965,28 +2021,28 @@ obj/machinery/door/airlock
 			"isAi" = isAI(user),
 			"isCarbon" = iscarbon(user),
 		),
-		"panelOpen" = src.p_open,
+		"panelOpen" = src.panel_open,
 
 		"mainTimeLeft" = secondsMainPowerLost,
-		"backupTimeLeft" = secondsBackupPowerLost,
-		"shockTimeLeft" = secondsElectrified,
+		"backupTimeLeft" = src.secondsBackupPowerLost,
+		"shockTimeLeft" = src.secondsElectrified,
 
-		"idScanner" = !aiDisabledIdScanner,
+		"idScanner" = !src.aiDisabledIdScanner,
 		"boltsAreUp" = !src.locked,		// not bolted
-		"welded" = welded,						// welded
+		"welded" = src.welded,						// welded
 		"opened" = !density,					// opened
 		"safety" = src.safety,
 
-		"canAiControl" = canAIControl(),
+		"canAiControl" = src.canAIControl(),
 		"aiHacking" = src.aiHacking,
-		"canAiHack" = canAIHack(),
+		"canAiHack" = src.canAIHack(),
 		"hackingProgression" = src.hackingProgression,
-		"hackMessage" = hackMessage,
-		"aiControlVar" = aiControlDisabled,
+		"hackMessage" = src.hackMessage,
+		"aiControlVar" = src.aiControlDisabled,
 		"aiControlDisabled" = src.aiControlDisabled,
 
-		"noPower" = (status & NOPOWER),
-		"powerIsOn" = src.arePowerSystemsOn() && !(status & NOPOWER),
+		"noPower" = (src.status & NOPOWER),
+		"powerIsOn" = src.arePowerSystemsOn() && !(src.status & NOPOWER),
 		"accessCode" = src.net_access_code,
 		"wires" = list(
 			"main_1" = !src.isWireCut(AIRLOCK_WIRE_MAIN_POWER1),
@@ -2009,7 +2065,7 @@ obj/machinery/door/airlock
 	. += list("wireStates" = wire_states)
 
 /obj/machinery/door/airlock/proc/aidoor_access_check(mob/user)
-	if (status & (NOPOWER | POWEROFF))
+	if (src.status & (NOPOWER | POWEROFF))
 		return UI_UPDATE
 
 /obj/machinery/door/airlock/ui_act(action, params)
@@ -2022,43 +2078,43 @@ obj/machinery/door/airlock
 				if (src.canAIHack() && !src.aiHacking)
 					src.hack(usr)
 					. = TRUE
-	if(src.arePowerSystemsOn() && canAIControl() && (ishivebot(usr) || isrobot(usr) || isAI(usr)))
+	if(src.arePowerSystemsOn() && src.canAIControl() && (ishivebot(usr) || isrobot(usr) || isAI(usr)))
 		switch(action)
 			if("disruptMain")
 				if(!secondsMainPowerLost)
 					loseMainPower()
-					UpdateIcon()
+					src.UpdateIcon()
 					. = TRUE
 				else
 					boutput(usr, "<span class='alert'>Main power is already offline.</span>")
 				. = TRUE
 			if("disruptBackup")
-				if(!secondsBackupPowerLost)
-					loseBackupPower()
-					UpdateIcon()
+				if(!src.secondsBackupPowerLost)
+					src.loseBackupPower()
+					src.UpdateIcon()
 					. = TRUE
 				else
 					boutput(usr, "<span class='alert'>Backup power is already offline.</span>")
 				. = TRUE
 			if("shockRestore")
-				shock_restore(usr)
+				src.shock_restore(usr)
 				. = TRUE
 			if("shockTemp")
-				shock_temp(usr)
+				src.shock_temp(usr)
 				. = TRUE
 			if("shockPerm")
-				shock_perm(usr)
+				src.shock_perm(usr)
 				. = TRUE
 			if("idScanToggle")
-				idscantoggle(usr)
+				src.idscantoggle(usr)
 				. = TRUE
 			if("boltToggle")
-				toggle_bolt(usr)
+				src.toggle_bolt(usr)
 				. = TRUE
 			if("openClose")
-				user_toggle_open(usr)
+				src.user_toggle_open(usr)
 				. = TRUE
-	if(src.p_open && BOUNDS_DIST(src, usr) == 0 && !isAI(usr))
+	if(src.panel_open && BOUNDS_DIST(src, usr) == 0 && !isAI(usr))
 		switch(action)
 			if("cut")
 				var/which_wire = params["wireColorIndex"]

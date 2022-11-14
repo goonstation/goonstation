@@ -213,7 +213,7 @@
 // nothing in the game currently forces dead mobs to vomit. this will probably change or end up exposed via someone fucking up (likely me) in future. - cirr
 /mob/dead/vomit(var/nutrition=0, var/specialType=null)
 	..(0, /obj/item/reagent_containers/food/snacks/ectoplasm)
-	playsound(src.loc, "sound/effects/ghost2.ogg", 50, 1)
+	playsound(src.loc, 'sound/effects/ghost2.ogg', 50, 1)
 	src.visible_message("<span class='alert'>Ectoplasm splats onto the ground from nowhere!</span>",
 		"<span class='alert'>Even dead, you're nauseated enough to vomit![pick("", "Oh god!")]</span>",
 		"<span class='alert'>You hear something strangely insubstantial land on the floor with a wet splat!</span>")

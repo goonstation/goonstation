@@ -32,7 +32,7 @@
 			for(var/obj/O in Vspread)
 				if (istype(O, /obj/window) || istype(O, /obj/forcefield) || istype(O, /obj/blob) || istype(O, /obj/spacevine) || istype(O, /obj/alien/weeds)) dogrowth = 0
 				if (istype(O, /obj/machinery/door/))
-					if(!O:p_open && prob(70))
+					if(!O:panel_open && prob(70))
 						O:open()
 						O:operating = -1
 					else dogrowth = 0

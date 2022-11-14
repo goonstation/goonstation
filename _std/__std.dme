@@ -5,22 +5,27 @@
  * the order that things are compiled in is important. please stick with alphabetical order unless it wont compile in alphabetical order.
  */
 
-#include "__build.dm"							// this controls how a lot of our defines and macros and code is compiled, so it absolutely needs to be the first
+#include "__build.dm"				// this controls how a lot of our defines and macros and code is compiled, so it absolutely needs to be the first
 #include "macros\_metamacros.dm"	// this has some structural helpers that a lot of other macros/defines use, so it needs to be near the start
-#include "_spaceman_dmm.dm"				// linter stuff is used in other macros
-#include "mapDefines.dm"					// knowing if we're underwater is important for some later macros
-#include "setup.dm"								// initializes important stuff for later macros
-#include "defines\_units.dm"			// this has some unit defines that a lot of other macros/defines use, so it needs to go near the start too
+#include "_spaceman_dmm.dm"			// linter stuff is used in other macros
+#include "mapDefines.dm"			// knowing if we're underwater is important for some later macros
+#include "setup.dm"					// initializes important stuff for later macros
+#include "defines\_units.dm"		// this has some unit defines that a lot of other macros/defines use, so it needs to go near the start too
+#include "defines\lag.dm"			// the all important LAGCHECK()
+#include "types.dm"					// stuff like childrentypesof()
+#include "datum.dm"					// hasvar()
 #include "defines\access.dm"
 #include "defines\actions.dm"
 #include "defines\admin.dm"
 #include "defines\ai.dm"
 #include "defines\antagonists.dm"
+#include "defines\area.dm"
 #include "defines\announcement_origins.dm"
 #include "defines\artifacts.dm"
 #include "defines\atom.dm"
 #include "defines\bioeffect.dm"
 #include "defines\blocking.dm"
+#include "defines\camera_coverage.dm"
 #include "defines\chemicompiler.dm"
 #include "defines\chemistry.dm"
 #include "defines\client.dm"
@@ -49,9 +54,9 @@
 #include "defines\item.dm"
 #include "defines\invisibility.dm"
 #include "defines\jobs.dm"
-#include "defines\lag.dm"
 #include "defines\landmarks.dm"
 #include "defines\layer.dm"
+#include "defines\life.dm"
 #include "defines\logging.dm"
 #include "defines\logic.dm"
 #include "defines\materials.dm"
@@ -127,11 +132,12 @@
 #include "macros\vehicles.dm"
 #include "address.dm"
 #include "color.dm"
+#include "compare.dm"
 #include "copy.dm"
-#include "datum.dm"
 #include "filesystem.dm"
 #include "filters.dm"
 #include "heap.dm"
+#include "lists.dm"
 #include "machinery.dm"
 #include "map.dm"
 #include "math.dm"
@@ -141,10 +147,10 @@
 #include "promises.dm"
 #include "rust_g.dm"
 #include "record_db.dm"
+#include "sorting.dm"
 #include "text.dm"
 #include "tgs.dm"
 #include "tgui.dm"
-#include "types.dm"
 #include "vox.dm"
 #include "weakref.dm"
 #include "zlevel.dm"

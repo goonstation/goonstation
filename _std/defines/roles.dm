@@ -20,6 +20,8 @@
 #define ROLE_EMAGGED_ROBOT "emagged robot"
 #define ROLE_SYNDICATE_ROBOT "syndicate robot"
 #define ROLE_POLTERGEIST "poltergeist"
+#define ROLE_PLAGUERAT "plaguerat"
+#define ROLE_HARBINGERSUMMON "harbinger summon"
 #define ROLE_HANDSPIDER "handspider"
 #define ROLE_EYESPIDER "eyespider"
 #define ROLE_LEGWORM "legworm"
@@ -29,6 +31,7 @@
 #define ROLE_HARDMODE_TRAITOR "hard-mode traitor"
 #define ROLE_MINDHACK "mindhack"
 #define ROLE_NUKEOP_GUNBOT "nukeop gunbot"
+#define ROLE_SALVAGER "salvager"
 #define ROLE_ZOMBIE "zombie"
 
 // gimmicks

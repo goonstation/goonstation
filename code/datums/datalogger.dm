@@ -37,6 +37,7 @@ var/global/datum/datalogger/game_stats
 		stats["admins"] = 0
 		stats["gunfire"] = 0
 		stats["grass_touched"] = 0
+		stats["slips"] = 0
 	proc
 		Increment(var/p)
 			if(!(p in stats))

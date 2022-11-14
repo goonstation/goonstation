@@ -53,9 +53,9 @@
 			boutput(H, "Your cannot bring yourself to commit suicide!")
 			return
 
-	logTheThing(LOG_COMBAT, src, "commits suicide")
 	src.suiciding = TRUE
 	if (src.do_suicide()) //                           <------ put mob unique behaviour here in an override!!!!
+		logTheThing(LOG_COMBAT, src, "commits suicide")
 		src.unlock_medal("Damned", 1) //You don't get the medal if you tried to wuss out!
 		if (src.suiciding)
 			if (src.suicide_alert)

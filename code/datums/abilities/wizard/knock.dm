@@ -6,9 +6,9 @@
 	cooldown = 100
 	requires_robes = 1
 	restricted_area_check = 1
-	voice_grim = "sound/voice/wizard/KnockGrim.ogg"
-	voice_fem = "sound/voice/wizard/KnockFem.ogg"
-	voice_other = "sound/voice/wizard/KnockLoud.ogg"
+	voice_grim = 'sound/voice/wizard/KnockGrim.ogg'
+	voice_fem = 'sound/voice/wizard/KnockFem.ogg'
+	voice_other = 'sound/voice/wizard/KnockLoud.ogg'
 	maptext_colors = list("#24639a", "#24bdc6", "#05bd82", "#038463")
 
 	cast()

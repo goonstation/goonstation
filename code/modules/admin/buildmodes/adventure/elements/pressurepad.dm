@@ -71,6 +71,7 @@
 	density = 0
 	opacity = 0
 	anchored = 1
+	layer = 2
 	var/pad_type
 	var/pressed = 0
 	var/list/pressing = list()

@@ -129,7 +129,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 				sort1[name] = S1
 
-			src.items_general = sortList(sort1)
+			src.items_general = sortList(sort1, /proc/cmp_text_asc)
 
 		if (length(src.items_job))
 			var/list/sort2 = list()
@@ -145,7 +145,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 				sort2[name] = S2
 
-			src.items_job = sortList(sort2)
+			src.items_job = sortList(sort2, /proc/cmp_text_asc)
 
 		if (length(src.items_objective))
 			var/list/sort3 = list()
@@ -161,7 +161,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 				sort3[name] = S3
 
-			src.items_objective = sortList(sort3)
+			src.items_objective = sortList(sort3, /proc/cmp_text_asc)
 
 		if (length(src.items_telecrystal))
 			var/list/sort4 = list()
@@ -177,7 +177,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 				sort4[name] = S4
 
-			src.items_telecrystal = sortList(sort4)
+			src.items_telecrystal = sortList(sort4, /proc/cmp_text_asc)
 
 		return
 
@@ -821,7 +821,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 							H.changeStatus("weakened", 3 SECONDS)
 							playsound(H.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 							H.emote("scream")
-							logTheThing(LOG_COMBAT, user, "spy thief claimed [constructTarget(H)]'s [HP] at [log_loc(user)]")
+							logTheThing(LOG_STATION, user, "spy thief claimed [constructTarget(H)]'s [HP] at [log_loc(user)]")
 						else if(HP != B.item)
 							user.show_text("That isn't the right limb!", "red")
 							return 0
@@ -938,7 +938,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		var/obj/item/photo/P = new(src, photo_image, photo_icon, title, detail)
 		user.put_in_hand_or_drop(P)
-		playsound(src, "sound/machines/scan.ogg", 10, 1)
+		playsound(src, 'sound/machines/scan.ogg', 10, 1)
 		last_photo_print = TIME
 
 	generate_menu()
@@ -1064,7 +1064,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 				sort1[name] = S
 
-			src.commander_buylist = sortList(sort1)
+			src.commander_buylist = sortList(sort1, /proc/cmp_text_asc)
 
 	attack_self(mob/user)
 		return ui_interact(user)
@@ -1111,7 +1111,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 								new B.item3(get_turf(src))
 
 							B.run_on_spawn(A, usr, FALSE, src)
-							logTheThing(LOG_COMBAT, usr, "bought a [initial(B.item.name)] from a [src] at [log_loc(usr)].")
+							logTheThing(LOG_STATION, usr, "bought a [initial(B.item.name)] from a [src] at [log_loc(usr)].")
 							var/loadnum = world.load_intra_round_value("Nuclear-Commander-[initial(B)]-Purchased")
 							if(isnull(loadnum))
 								loadnum = 0

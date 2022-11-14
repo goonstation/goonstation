@@ -255,6 +255,10 @@
 		var/obj/item/luggable_computer/personal/case //The object that holds us when we're all closed up.
 		var/deployed = 1
 
+		Exited(Obj, newloc)
+			. = ..()
+			if(Obj == src.cell)
+				src.cell = null
 
 		personal
 			name = "Personal Laptop"
@@ -362,6 +366,8 @@
 			src.temp += temp_add
 			temp_add = null
 
+		// preference is in a percentage of the default
+		var/font_size = user.client ? (((user.client.preferences.font_size/100) * 10) || 10) : 10 // font size pref is null if you haven't changed it from the default, so we need extra logic
 		var/dat = {"<title>Computer Terminal</title>
 		<style type="text/css">
 		body
@@ -385,7 +391,7 @@
 			background-color:[src.setup_bg_color];
 			color:[src.setup_font_color];
 			font-family: "Consolas", monospace;
-			font-size:10pt;
+			font-size:[font_size]pt;
 		}
 
 		#consoleshell
@@ -677,7 +683,7 @@ function lineEnter (ev)
 			boutput(user, "<span class='alert'>There's no visible peripheral device to insert the disk into!</span>")
 
 	else if (isscrewingtool(W))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer3/proc/unscrew_monitor,\
 		list(W, user), W.icon, W.icon_state, null, null)
 
@@ -689,6 +695,7 @@ function lineEnter (ev)
 	if(!ispath(setup_frame_type, /obj/computer3frame))
 		src.setup_frame_type = /obj/computer3frame
 	var/obj/computer3frame/A = new setup_frame_type( src.loc )
+	A.computer_type = src.type
 	if(src.material) A.setMaterial(src.material)
 	A.created_icon_state = src.base_icon_state
 	A.set_dir(src.dir)
@@ -1089,7 +1096,7 @@ function lineEnter (ev)
 				boutput(user, "<span class='alert'>There is no energy cell inserted!</span>")
 				return
 
-			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			src.cell.set_loc(get_turf(src))
 			src.cell = null
 			user.visible_message("<span class='alert'>[user] removes the power cell from [src]!.</span>","<span class='alert'>You remove the power cell from [src]!</span>")

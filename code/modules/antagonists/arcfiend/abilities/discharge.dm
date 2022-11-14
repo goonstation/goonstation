@@ -26,7 +26,7 @@
 			var/obj/machinery/door/airlock/airlock = target
 			airlock.loseMainPower()
 			target.add_fingerprint(src.holder.owner)
-			playsound(src.holder.owner, "sound/effects/electric_shock.ogg", 50, TRUE)
+			playsound(src.holder.owner, 'sound/effects/electric_shock.ogg', 50, TRUE)
 			boutput(src.holder.owner, "<span class='alert'>You run a powerful current into [target], temporarily cutting its power!</span>")
 		else
 			return TRUE

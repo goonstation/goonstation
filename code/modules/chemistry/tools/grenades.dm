@@ -41,7 +41,7 @@
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/grenade_fuse) && !stage)
 			boutput(user, "<span class='notice'>You add [W] to the metal casing.</span>")
-			playsound(src, "sound/items/Screwdriver2.ogg", 25, -3)
+			playsound(src, 'sound/items/Screwdriver2.ogg', 25, -3)
 			qdel(W) //Okay so we're not really adding anything here. cheating.
 			icon_state = "grenade-chem2"
 			name = "unsecured grenade"
@@ -49,7 +49,7 @@
 		else if (isscrewingtool(W) && stage == 1)
 			if (beakers.len)
 				boutput(user, "<span class='notice'>You lock the assembly.</span>")
-				playsound(src, "sound/items/Screwdriver.ogg", 25, -3)
+				playsound(src, 'sound/items/Screwdriver.ogg', 25, -3)
 				name = "grenade"
 				icon_state = "grenade-chem3"
 				stage = 2
@@ -164,14 +164,14 @@
 				if (G.reagents.total_volume) log_reagents += "[log_reagents(G)] "
 
 		if(!A.dont_log_combat)
-			if(is_dangerous)
+			if(is_dangerous && user)
 				message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
 
 		boutput(user, "<span class='alert'>You prime the grenade! 3 seconds!</span>")
 		src.state = 1
 		src.icon_state = icon_state_armed
-		playsound(src, "sound/weapons/armbomb.ogg", 75, 1, -3)
+		playsound(src, 'sound/weapons/armbomb.ogg', 75, 1, -3)
 		SPAWN(3 SECONDS)
 			if (src && !src.disposed)
 				if(user?.equipped() == src)
@@ -186,11 +186,11 @@
 			if (G.reagents.total_volume) has_reagents = 1
 
 		if (!has_reagents)
-			playsound(src.loc, "sound/items/Screwdriver2.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver2.ogg', 50, 1)
 			state = 0
 			return
 
-		playsound(src.loc, "sound/effects/bamf.ogg", 50, 1)
+		playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1)
 
 		for (var/obj/item/reagent_containers/glass/G in beakers)
 			G.reagents.trans_to(src, G.reagents.total_volume)

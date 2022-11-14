@@ -16,6 +16,9 @@
 	/// Override for the texture size used by setTexture.
 	var/texture_size = 0
 
+	/// Should points thrown at this take into account the click pixel value
+	var/pixel_point = FALSE
+
 	/// If hear_talk is triggered on this object, make my contents hear_talk as well
 	var/open_to_sound = 0
 
@@ -26,14 +29,6 @@
 
 	/// A multiplier that changes how an atom stands up from resting. Yes.
 	var/rest_mult = 0
-
-	/// Gets the atoms name with all the ugly prefixes things remove
-	proc/clean_name()
-		return strip_special(name)
-
-	/// clean_name(), but encoded too since everything ever uses HTML in the game.
-	proc/safe_name()
-		return html_encode(strip_special(name))
 
 	proc/RawClick(location,control,params)
 		return
@@ -99,7 +94,7 @@
 				if (amt_suffixes >= src.num_allowed_suffixes)
 					break
 				suffix += " " + i
-				amt_suffixes ++
+				amt_suffixes++
 			return suffix
 
 	proc/remove_prefixes(var/num = 1)
@@ -113,7 +108,7 @@
 				if (num <= 0 || !length(src.name_prefixes))
 					return
 				src.name_prefixes -= i
-				num --
+				num--
 
 	proc/remove_suffixes(var/num = 1)
 		if (!num || !name_suffixes)
@@ -126,7 +121,7 @@
 				if (num <= 0 || !length(src.name_suffixes))
 					return
 				src.name_suffixes -= i
-				num --
+				num--
 
 	proc/UpdateName()
 		src.name = "[name_prefix(null, 1)][initial(src.name)][name_suffix(null, 1)]"
@@ -218,7 +213,7 @@
 			boutput(user, "<span class='alert'>[A] is full!</span>") // Notify the user, then exit the process.
 			return
 
-		logTheThing(LOG_COMBAT, user, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // Ditto (Convair880).
+		logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // Ditto (Convair880).
 		var/T = src.reagents.trans_to(A, src.reagents.total_volume) // Dump it all!
 		boutput(user, "<span class='notice'>You transfer [T] units into [A].</span>")
 		return
@@ -355,6 +350,9 @@
 	usr << output("[src.name]", "atom_label")
 */
 
+/atom/proc/get_examine_tag(mob/examiner)
+	return null
+
 /atom/movable/overlay/attackby(a, b)
 	//Wire note: hascall check below added as fix for: undefined proc or verb /datum/targetable/changeling/monkey/attackby() (lmao)
 	if (src.master && hascall(src.master, "attackby"))
@@ -453,7 +451,7 @@
 
 	last_turf = src.loc // instead rely on set_loc to clear last_turf
 	set_loc(null)
-	..()
+	. = ..()
 
 
 /atom/movable/Move(NewLoc, direct)
@@ -949,6 +947,30 @@
 /atom/proc/set_density(var/newdensity)
 	src.density = HAS_ATOM_PROPERTY(src, PROP_ATOM_NEVER_DENSE) ? 0 : newdensity
 
+/atom/proc/set_opacity(var/newopacity)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if (newopacity == src.opacity)
+		return // Why even bother
+
+	var/oldopacity = src.opacity
+	src.opacity = newopacity
+
+	SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, oldopacity)
+
+	if (isturf(src.loc))
+		// Not a turf, so we must send a signal to the turf
+		SEND_SIGNAL(src.loc, COMSIG_TURF_CONTENTS_SET_OPACITY, oldopacity, src)
+
+	// Below is a "smart" signal on a turf that only get called when the opacity
+	// actually changes in a meaningfull way. If atom is on a turf and we are
+	// obscuring vision in a turf that was originally not obscured. Or we are on a
+	// turf that is not obscuring vision, we were obscuring vision and are not
+	// anymore.
+	if (isturf(src.loc) && ((src.loc.opacity == 0 && src.opacity == 1) || (src.loc.opacity == 0 && oldopacity == 1 && src.opacity == 0)))
+		var/turf/T = src.loc
+		T.contents_set_opacity_smart(oldopacity, src)
+
 // standardized damage procs
 
 /// Does x blunt damage to the atom
@@ -996,43 +1018,37 @@
 
 // auto-connecting sprites
 /// Check a turf and its contents to see if they're a valid auto-connection target
-/atom/proc/should_auto_connect(var/turf/T, var/connect_to = list(), var/exceptions = list(), var/cross_areas = TRUE)
-	if (!connect_to || !islist(connect_to)) // nothing to connect to
+/atom/proc/should_auto_connect(turf/T, connect_to = list(), list/exceptions = list(), cross_areas = TRUE)
+	if (!T) // nothing to connect to
 		return FALSE
 	if (!cross_areas && (get_area(T) != get_area(src))) // don't connect across areas
 		return FALSE
 
-	for (var/connect in connect_to)
-		var/list/matches= list()
-		if(istype(T, connect))
-			matches.Add(T)
-		else
-			for (var/atom/A in T)
-				if (!isnull(A))
-					if (istype(A, /atom/movable))
-						var/atom/movable/M = A
-						if (!M.anchored)
-							continue
-						if (istype(A, connect))
-							matches.Add(A)
-		for (var/match in matches)
-			var/valid = TRUE
-			if (exceptions && islist(exceptions))
-				for (var/exception in exceptions)
-					if (istype(match, exception))
-						valid = FALSE
-			if (valid)
-				return TRUE
+	// quick path, basically istype(T, anything in connect-except)
+	if (connect_to[T.type] && !exceptions[T.type])
+		return TRUE
+
+	// slow 😩
+	for (var/atom/movable/AM in T)
+		if (!AM.anchored)
+			continue
+		if (connect_to[AM.type] && !exceptions[AM.type])
+			return TRUE
 	return FALSE
 
-/// Return a bitflag that represents all potential connected icon_states
-/*
-connecting with diagonal tiles require additional bitflags
-i.e. there is a difference between N & E, and N & E & NE
-N, S, E, W, NE, SE, SW, NW
-1, 2, 4, 8, 16, 32, 64, 128
-*/
-/atom/proc/get_connected_directions_bitflag(var/valid_atoms = list(), var/exceptions = list(), var/cross_areas = TRUE, var/connect_diagonal = 0)
+/**
+ * Return a bitflag that represents all potential connected icon_states
+ *
+ * connecting with diagonal tiles require additional bitflags
+ * i.e. there is a difference between N & E, and N & E & NE
+ *
+ * N, S, E, W, NE, SE, SW, NW
+ *
+ * 1, 2, 4, 8, 16, 32, 64, 128
+ *
+ * connect_diagonals 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
+ */
+/atom/proc/get_connected_directions_bitflag(list/valid_atoms = list(), list/exceptions = list(), cross_areas = TRUE, connect_diagonal = 0)
 	var/ordir = null
 	var/connected_directions = 0
 	if (!valid_atoms || !islist(valid_atoms))
@@ -1044,7 +1060,6 @@ N, S, E, W, NE, SE, SW, NW
 		if (should_auto_connect(CT, valid_atoms, exceptions, cross_areas))
 			connected_directions |= dir
 
-	// connect_diagonals 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
 	if (connect_diagonal)
 		for (var/i = 1 to 4)  // needed for bitshift
 			ordir = ordinal[i]
@@ -1094,3 +1109,41 @@ N, S, E, W, NE, SE, SW, NW
 	message_admins("[key_name(usr)] rotated [target] by [rot] degrees")
 	target.Turn(rot)
 	return
+
+/atom/movable/proc/gift_wrap(var/style = FALSE, var/xmas_style = FALSE)
+	var/obj/item/gift/G = new /obj/item/gift(src.loc)
+	var/gift_type
+	if(isitem(src))
+		var/obj/item/gifted_item = src
+		G.size = gifted_item.w_class
+		G.w_class = G.size + 1
+		gift_type = "gift[clamp(G.size, 1, 3)]"
+		gifted_item.set_loc(G)
+	else if(ismob(src) || istype(src, /obj/critter))
+		G.size = 3
+		G.w_class = G.size + 1
+		gift_type = "strange"
+		if(ismob(src))
+			var/mob/gifted_mob = src
+			gifted_mob.set_loc(G)
+		else
+			var/obj/critter/gifted_critter = src
+			gifted_critter.set_loc(G)
+	else
+		var/obj/gifted_obj = src
+		G.size = 3
+		G.w_class = W_CLASS_BULKY
+		gift_type = "gift3"
+		gifted_obj.set_loc(G)
+	var/random_style
+	if (!style)
+		if(!xmas_style)
+			random_style = rand(1,8)
+		else
+			random_style = pick("r", "rs", "g", "gs")
+		G.icon_state = "[gift_type]-[random_style]"
+	else
+		G.icon_state = "[gift_type]-[style]"
+	G.gift = src
+
+	return G

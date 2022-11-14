@@ -446,7 +446,7 @@
 
 	New()
 		. = ..()
-		RegisterSignal(src, list(COMSIG_ITEM_ATTACKBY_PRE), .proc/pre_attackby)
+		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, .proc/pre_attackby)
 
 	get_desc()
 		// We display this on a separate line and with a different color to show emphasis
@@ -597,7 +597,7 @@
 		newsignal.data["sender_name"] = "RKIT-MAILBOT"
 		newsignal.data["message"] = message
 		if (target) newsignal.data["address_1"] = target
-		newsignal.data["group"] = list(MGO_MECHANIC, MGA_RKIT)
+		newsignal.data["group"] = list(MGO_ENGINEER, MGA_RKIT)
 		newsignal.data["sender"] = src.net_id
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
 
@@ -950,17 +950,17 @@
 		var/decon_complexity = O.build_deconstruction_buttons()
 		if (!decon_complexity)
 			boutput(user, "<span class='alert'>[target] cannot be deconstructed.</span>")
-			if (O.deconstruct_flags & DECON_ACCESS)
+			if (O.deconstruct_flags & DECON_NULL_ACCESS)
 				boutput(user, "<span class='alert'>[target] is under an access lock and must have its access requirements removed first.</span>")
 			return
 		if (issilicon(user) && (O.deconstruct_flags & DECON_NOBORG))
 			boutput(user, "<span class='alert'>Cyborgs cannot deconstruct this [target].</span>")
 			return
-		if ((!O.allowed(user) || O.is_syndicate) && !(O.deconstruct_flags & DECON_BUILT))
+		if ((!(O.allowed(user) || O.deconstruct_flags & DECON_NO_ACCESS) || O.is_syndicate) && !(O.deconstruct_flags & DECON_BUILT))
 			boutput(user, "<span class='alert'>You cannot deconstruct [target] without sufficient access to operate it.</span>")
 			return
 
-		if(locate(/mob/living) in O)
+		if(length(get_all_mobs_in(O)))
 			boutput(user, "<span class='alert'>You cannot deconstruct [target] while someone is inside it!</span>")
 			return
 
@@ -1022,7 +1022,7 @@
 	if (src.decon_contexts)
 		for(var/datum/contextAction/C in src.decon_contexts)
 			C.dispose()
-	..()
+	. = ..()
 
 /obj/proc/was_deconstructed_to_frame(mob/user)
 	.= 0
@@ -1033,7 +1033,7 @@
 /obj/proc/build_deconstruction_buttons()
 	.= 0
 
-	if (deconstruct_flags & DECON_ACCESS)
+	if (deconstruct_flags & DECON_NULL_ACCESS)
 		if (src.has_access_requirements())
 			return
 

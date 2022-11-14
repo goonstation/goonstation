@@ -32,9 +32,10 @@
 			src.deactivate(user)
 		else
 			if (src.activate(user))
-				user.show_text("You can't have more than one active [src.name] on your person.", "red")
-			else
 				user.show_text("The [src.name] is now active.", "blue")
+			else
+				user.show_text("You can't have more than one active [src.name] on your person.", "red")
+
 
 	update_icon()
 		if (src.active)
@@ -98,6 +99,11 @@
 		if (src.active && ismob(src.loc))
 			src.deactivate(src.loc)
 
+	disposing()
+		if (src.active && ismob(src.loc))
+			src.deactivate(src.loc)
+		..()
+
 	limited
 		name = "limited-use cloaking device"
 		desc = "A man-portable cloaking device, miniturization has reduced it's total uses to five."
@@ -130,4 +136,5 @@
 
 		disposing()
 			. = ..()
-			STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
+			if (hunter_key)
+				STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)

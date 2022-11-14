@@ -39,7 +39,7 @@
 				boutput(C, "<span class='ahelp'><font size='3'><b><span class='alert'>HELP: </span>[key_name(client.mob,0,0)][(client.mob.real_name ? "/"+client.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [msg]</font></span>")
 				switch(C.holder.audible_ahelps)
 					if(PM_AUDIBLE_ALERT)
-						C.mob.playsound_local(C.mob.loc, "sound/misc/newsting.ogg", 50, 1)
+						C.mob.playsound_local(C.mob.loc, 'sound/misc/newsting.ogg', 50, 1)
 					if(PM_DECTALK_ALERT)
 						var/audio = dectalk(msg)
 						var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN)

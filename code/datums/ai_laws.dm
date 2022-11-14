@@ -52,7 +52,7 @@
 				if(!S.emagged && S.law_rack_connection == null && !S.syndicate)
 					S.law_rack_connection = src.default_ai_rack
 					logTheThing(LOG_STATION, new_rack, "[S.name] is connected to the rack [constructName(new_rack)]")
-					S.playsound_local(S, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
+					S.playsound_local(S, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
 					S.show_text("<h3>Law rack connection re-established!</h3>", "red")
 					S.show_laws()
 			#endif
@@ -73,7 +73,7 @@
 				if(!S.emagged && S.law_rack_connection == null && S.syndicate)
 					S.law_rack_connection = src.default_ai_rack_syndie
 					logTheThing(LOG_STATION, new_rack, "[S.name] is connected to the rack [constructName(new_rack)]")
-					S.playsound_local(S, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
+					S.playsound_local(S, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
 					S.show_text("<h3>Law rack connection re-established!</h3>", "red")
 					S.show_laws()
 			#endif
@@ -110,14 +110,14 @@
 				continue
 			if(R.law_rack_connection == dead_rack)
 				R.law_rack_connection = null
-				R.playsound_local(R, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
+				R.playsound_local(R, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
 				R.show_text("<h3>ERROR: Lost connection to law rack. No laws detected!</h3>", "red")
-				logTheThing(LOG_STATION,  R, null, "[R.name] loses connection to the rack [constructName(dead_rack)] and now has no laws")
+				logTheThing(LOG_STATION,  R, "[R.name] loses connection to the rack [constructName(dead_rack)] and now has no laws")
 
 		for (var/mob/living/intangible/aieye/E in mobs)
 			if(E.mainframe?.law_rack_connection == dead_rack)
 				E.mainframe.law_rack_connection = null
-				E.playsound_local(E, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
+				E.playsound_local(E, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
 				logTheThing(LOG_STATION, E.mainframe, "[E.mainframe.name] loses connection to the rack [constructName(dead_rack)] and now has no laws")
 
 /* ION STORM */

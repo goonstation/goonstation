@@ -60,7 +60,7 @@
 
 	var/started = 0
 	mats = 40
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_NO_ACCESS
 
 	var/datum/light/light
 	var/light_r =0.88
@@ -224,7 +224,7 @@
 		UpdateIcon()
 
 		usr.show_text("You have selected [P.name]. Walk into an opening on the side of this machine to purchase this item.", "blue")
-		playsound(src.loc, "sound/machines/keypress.ogg", 50, 1, extrarange = -15, pitch = 0.6)
+		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, extrarange = -15, pitch = 0.6)
 
 	proc/just_pick_anything()
 		for (var/datum/geneboothproduct/P as anything in offered_genes)
@@ -242,7 +242,7 @@
 				UpdateOverlays(workingoverlay, "abil", 0, 1)
 				UpdateOverlays(screenoverlay, "screen", 0, 1)
 				animate_shake(src,5,3,2, return_x = -3)
-				playsound(src.loc, "sound/impact_sounds/Metal_Clang_1.ogg", 30, 1, pitch = 1.4)
+				playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 30, 1, pitch = 1.4)
 				if (entry_time + process_time < world.timeofday)
 					eject_occupant()
 			else
@@ -376,7 +376,7 @@
 					started = 0
 
 					if (!ON_COOLDOWN(M, "genebooth_message_antispam", 3 SECONDS))
-						playsound(src.loc, "sound/machines/heater_on.ogg", 90, 1, pitch = 0.78)
+						playsound(src.loc, 'sound/machines/heater_on.ogg', 90, 1, pitch = 0.78)
 						M.show_text("[src] is warming up. Please hold still.", "blue")
 
 					UpdateIcon()
@@ -402,7 +402,7 @@
 		user.lastattacked = src
 		letgo_hp -= W.force
 		attack_particle(user,src)
-		playsound(src.loc, "sound/impact_sounds/Metal_Clang_3.ogg", 50, 1, pitch = 0.8)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1, pitch = 0.8)
 
 		if (letgo_hp <= 0)
 			src.eject_occupant(add_power = 0)

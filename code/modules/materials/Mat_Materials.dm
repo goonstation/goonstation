@@ -154,6 +154,8 @@ ABSTRACT_TYPE(/datum/material)
 	var/list/triggersExp = list()
 	/// Called when the material is added to an object
 	var/list/triggersOnAdd = list()
+	/// Called when the material is removed from an object
+	var/list/triggersOnRemove = list()
 	/// Called when the life proc of a mob that has the owning item equipped runs.
 	var/list/triggersOnLife = list()
 	/// Called when the owning object is used to attack something or someone.
@@ -200,6 +202,11 @@ ABSTRACT_TYPE(/datum/material)
 
 	proc/triggerOnAdd(var/location)
 		for(var/datum/materialProc/X in triggersOnAdd)
+			call(X,  "execute")(location)
+		return
+
+	proc/triggerOnRemove(var/location)
+		for(var/datum/materialProc/X in triggersOnRemove)
 			call(X,  "execute")(location)
 		return
 
@@ -569,6 +576,8 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	desc = "Molitz is a common crystalline substance."
 	color = "#FFFFFF"
 	alpha = 180
+	var/unexploded = 1
+	var/iterations = 4
 
 	New()
 		..()
@@ -578,12 +587,11 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		addTrigger(triggersOnHit, new /datum/materialProc/molitz_on_hit())
 		addTrigger(triggersExp, new /datum/materialProc/molitz_exp())
 
-
 	beta
 		mat_id = "molitz_b"
 		name = "molitz beta"
 		color = "#ff2288"
-		desc = "A rare form of Molitz. When heated produces a powerful plasma fire catalyst."
+		desc = "A rare form of Molitz. When heated under special conditions it produces a powerful plasma fire catalyst."
 
 		New()
 			..()

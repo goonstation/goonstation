@@ -384,22 +384,17 @@ obj/machinery/atmospherics/retrofilter
 		return
 
 	network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
-		if(reference == node_out1)
-			if (!isnull(node_out1))
-				network_out1 = new_network
+		if(reference == node_in)
+			network_in = new_network
+
+		else if(reference == node_out1)
+			network_out1 = new_network
 
 		else if(reference == node_out2)
-			//network_out2 = new_network
-			if(!isnull(node_out2))
-				return node_out2.network_expand(new_network, src)
-
-		else if(reference == node_in)
-			//network_in = new_network
-			if (!isnull(node_in))
-				return node_in.network_expand(new_network, src)
+			network_out2 = new_network
 
 		if(new_network.normal_members.Find(src))
-			return 0
+			return FALSE
 
 		new_network.normal_members += src
 

@@ -2,7 +2,7 @@
 	name = "BFG shot"
 	icon_state = "bfg"
 	power = 400
-	cost = 100
+	damage = 100
 	sname = "plasma blast"
 	shot_sound = null
 	shot_number = 1
@@ -21,7 +21,7 @@
 		flick("bfg_explode", explosion)
 		SPAWN(1.6 SECONDS)
 			qdel(explosion)
-		playsound(master, "sound/weapons/DSRXPLOD.ogg", 75)
+		playsound(master, 'sound/weapons/DSRXPLOD.ogg', 75)
 //		explosion(master, get_turf(master), 2, 3, 4, 5, lagreducer = 1)
 		for(var/mob/M in range(master, 4))
 			M.ex_act(clamp(GET_DIST(M, master), 1, 3))

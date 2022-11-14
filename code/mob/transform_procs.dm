@@ -118,8 +118,8 @@
 	boutput(O, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
 	boutput(O, "<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>")
 	boutput(O, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
-	boutput(O, "To use something, simply double-click it.")
-	boutput(O, "Currently right-click functions will not work for the AI (except examine), and will either be replaced with dialogs or won't be usable by the AI.")
+	boutput(O, "To use something, simply click it.")
+	boutput(O, "Use the prefix <B>:s</B> to speak to fellow silicons through binary.")
 
 	O.show_laws()
 	boutput(O, "<b>These laws may be changed by other players.</b>")
@@ -175,6 +175,9 @@
 	var/mob/living/critter/newmob = new critter_type()
 	if(ghost_spawned)
 		newmob.ghost_spawned = ghost_spawned
+		if(!istype(newmob, /mob/living/critter/small_animal/mouse/weak/mentor))
+			newmob.name_prefix("ethereal")
+			newmob.UpdateName()
 	if (!T || !isturf(T))
 		T = get_turf(src)
 	newmob.set_loc(T)
@@ -479,7 +482,7 @@
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 	for(var/t in src.organs) qdel(src.organs[text("[t]")])
 
-	var/mob/living/critter/mechmonstrosity/suffering/O = new /mob/living/critter/mechmonstrosity/suffering/(src.loc,null,1)
+	var/mob/living/critter/mechmonstrosity/suffering/O = new /mob/living/critter/mechmonstrosity/suffering/(src.loc,null,null,1)
 
 
 	O.gender = src.gender

@@ -8,6 +8,7 @@
 	name = "spy_thief"
 	config_tag = "spy_theft"
 
+	antag_token_support = TRUE
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_TRAITOR)
 	var/const/waittime_l = 600	// Minimum after round start to send threat information to printer
@@ -465,7 +466,6 @@
 	station_bounties[/obj/item/device/radio/headset/clown] = 1
 	station_bounties[/obj/item/device/radio/headset/deaf] = 1
 	station_bounties[/obj/item/device/radio/headset/miner] = 1
-	station_bounties[/obj/item/device/radio/headset/mechanic] = 1
 	station_bounties[/obj/item/device/radio/headset/security] = 2
 	station_bounties[/obj/item/device/radio/headset/command/radio_show_host] = 2
 	station_bounties[/obj/item/device/radio/headset/command/hop] = 2

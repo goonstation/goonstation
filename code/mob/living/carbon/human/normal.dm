@@ -36,6 +36,11 @@
 		..()
 		JobEquipSpawned("Research Director")
 
+/mob/living/carbon/human/normal/medicaldirector
+	New()
+		..()
+		JobEquipSpawned("Medical Director")
+
 /mob/living/carbon/human/normal/headofsecurity
 	New()
 		..()
@@ -90,11 +95,6 @@
 	New()
 		..()
 		JobEquipSpawned("Janitor")
-
-/mob/living/carbon/human/normal/mechanic
-	New()
-		..()
-		JobEquipSpawned("Mechanic")
 
 /mob/living/carbon/human/normal/engineer
 	New()

@@ -431,7 +431,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		else if (ispryingtool(W))
 			var/turf/T = user.loc
 			boutput(user, "<span class='notice'>Prying door open.</span>")
-			playsound(src.loc, "sound/items/Crowbar.ogg", 100, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 			sleep(15 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.locked = 0
@@ -692,9 +692,9 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 		src.homeloc = src.loc
 
-		possible_new_friend = typesof(/obj/critter/bear) + typesof(/obj/critter/spider/ice) + typesof(/obj/critter/cat) + typesof(/obj/critter/parrot)\
+		possible_new_friend = typesof(/obj/critter/bear) + typesof(/mob/living/critter/spider/ice) + typesof(/obj/critter/cat) + typesof(/obj/critter/parrot)\
 						+ list(/obj/critter/aberration, /obj/critter/domestic_bee, /obj/critter/domestic_bee/chef, /obj/critter/bat/buff, /obj/critter/bat, /obj/critter/bloodling, /obj/critter/wraithskeleton, /obj/critter/magiczombie, /obj/critter/brullbar)\
-						- list(/obj/critter/spider/ice/queen)
+						- list(/mob/living/critter/spider/ice/queen)
 
 	disposing()
 		if (islist(portable_machinery))
@@ -784,15 +784,15 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 					if(51 to 70) //A nice tan
 						for(var/mob/living/carbon/M in src.contents)
-							M.changeStatus("radiation", 20 SECONDS, 1)
+							M.take_radiation_dose(0.5 SIEVERTS)
 							M.show_text("\The [src] buzzes oddly.", "red")
 					if(31 to 50) //A very nice tan
 						for(var/mob/living/carbon/M in src.contents)
-							M.changeStatus("radiation", 30 SECONDS, 2)
+							M.take_radiation_dose(1.25 SIEVERTS)
 							M.show_text("You feel a warm tingling sensation.", "red")
 					if(21 to 30) //The nicest tan
 						for(var/mob/living/carbon/human/M in src.contents)
-							M.changeStatus("radiation", 40 SECONDS, 3)
+							M.take_radiation_dose(2 SIEVERTS)
 							M.show_text("<B>You feel a wave of searing heat wash over you!</B>", "red")
 							//if(M.bioHolder && M.bioHolder.mobAppearance) //lol
 								// s_tone now an RGB rather than a numeric value so disabling this for the moment

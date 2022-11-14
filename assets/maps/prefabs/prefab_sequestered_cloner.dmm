@@ -721,7 +721,7 @@
 /area/prefab/sequestered_cloner)
 "Me" = (
 /obj/decal/cleanable/blood/tracks,
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	id = "seq_cloner_exit";
 	name = "reinforced airlock"
 	},
@@ -853,7 +853,7 @@
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
 	id = "seq_education_exit";
 	name = "reinforced airlock"

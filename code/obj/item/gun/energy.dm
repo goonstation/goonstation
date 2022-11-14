@@ -85,7 +85,7 @@
 		return
 */
 
-	canshoot()
+	canshoot(mob/user)
 		if(src.current_projectile)
 			if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, current_projectile.cost) & CELL_SUFFICIENT_CHARGE)
 				return 1
@@ -100,12 +100,12 @@
 					return 1
 			return 0
 		else
-			if(canshoot())
+			if(canshoot(user))
 				SEND_SIGNAL(src, COMSIG_CELL_USE, src.current_projectile.cost)
 				return 1
 			boutput(user, "<span class='alert'>*click* *click*</span>")
 			if (!src.silenced)
-				playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
+				playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
 			return 0
 
 
@@ -132,7 +132,7 @@
 
 	pixelaction(atom/target, params, mob/user, reach)
 		if(..(target, params, user, reach))
-			playsound(user, "sound/weapons/heavyioncharge.ogg", 90)
+			playsound(user, 'sound/weapons/heavyioncharge.ogg', 90)
 
 ////////////////////////////////////TASERGUN
 /obj/item/gun/energy/taser_gun
@@ -142,7 +142,7 @@
 	uses_multiple_icon_states = 1
 	force = 1
 	cell_type = /obj/item/ammo/power_cell/med_power
-	desc = "A weapon that produces an cohesive electrical charge that stuns its target."
+	desc = "The Five Points Armory Taser Mk.I, a weapon that produces a cohesive electrical charge to stun and subdue its target."
 	muzzle_flash = "muzzle_flash_elec"
 
 	New()
@@ -174,7 +174,7 @@
 
 /obj/item/gun/energy/taser_gun/bouncy
 	name = "richochet taser gun"
-	desc = "A weapon that produces an cohesive electrical charge that stuns its target. This one appears to be capable of firing ricochet charges."
+	desc = "A modified Five Points Armory taser gun. This one appears to be capable of firing ricochet stun charges."
 
 	New()
 		..()
@@ -198,7 +198,7 @@
 	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
 	force = 7
-	desc = "A gun that produces a harmful laser, causing substantial damage."
+	desc = "The venerable Hafgan Mod.28 laser gun, causes substantial damage in close quarters and space environments. Not suitable for use in dust storms."
 	muzzle_flash = "muzzle_flash_laser"
 
 	New()
@@ -230,7 +230,7 @@
 	name = "antique laser gun"
 	icon_state = "caplaser"
 	uses_multiple_icon_states = 1
-	desc = "Wait, that's not a plastic toy..."
+	desc = "It's a kit model of the Mod.00 'Lunaport Legend' laser gun from Super! Protector Friend. With realistic sound fx and exciting LED display! This one has been hazardously upgraded."
 	muzzle_flash = "muzzle_flash_laser"
 	cell_type = null
 
@@ -258,7 +258,7 @@
 	uses_multiple_icon_states = 1
 	item_state = "phaser"
 	force = 7
-	desc = "A carbon-arc energy weapon designed by Radnor Photonics. Popular among frontier adventurers and explorers."
+	desc = "An amplified carbon-arc weapon designed by Radnor Photonics. Popular among frontier adventurers and explorers."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_power
 
@@ -307,14 +307,13 @@
 	icon_state = "phaser-xl"
 	uses_multiple_icon_states = 1
 	item_state = "phaser"
-	force = 10
-	desc = "The largest carbon-arc phaser from Radnor Photonics. A big gun for big problems."
+	desc = "The largest amplified carbon-arc weapon from Radnor Photonics. A big gun for big problems."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
 	shoot_delay = 10
 	charge_up = 5
 	can_dual_wield = FALSE
-	force = MELEE_DMG_LARGE
+	force = MELEE_DMG_RIFLE
 	two_handed = 1
 	mats = list("MET-1"=15, "MET-2"=10, "CON-2"=10, "POW-2"=15, "CRY-1"=10)
 	New()
@@ -330,9 +329,6 @@
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "phaser-xl[ratio]"
 			return
-
-	shoot_point_blank(atom/target, var/mob/user as mob, var/second_shot = 0)
-		return FALSE
 
 ///////////////////////////////////////Rad Crossbow
 /obj/item/gun/energy/crossbow
@@ -352,7 +348,7 @@
 	is_syndicate = 1
 	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
 	silenced = 1 // No conspicuous text messages, please (Convair880).
-	hide_attack = 1
+	hide_attack = ATTACK_FULLY_HIDDEN
 	custom_cell_max_capacity = 100 // Those self-charging ten-shot radbows were a bit overpowered (Convair880)
 	muzzle_flash = null
 
@@ -380,7 +376,7 @@
 	icon_state = "energy"
 	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
-	desc = "Its a gun that has two modes, stun and kill"
+	desc = "The Five Points Armory Energy Gun. Double emitters with switchable fire modes, for stun bolts or lethal laser fire."
 	item_state = "egun"
 	force = 5
 	mats = list("MET-1"=15, "CON-1"=5, "POW-1"=5)
@@ -424,8 +420,8 @@
 	icon_state = "egun-jr"
 	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/med_minus_power
-	desc = "A smaller, disposable version of the energy gun, with dual modes for stun and kill."
-	item_state = "egun-jr"
+	desc = "A smaller, disposable version of the Five Points Armory energy gun, with dual modes for stun and kill."
+	item_state = "egun"
 	force = 3
 	mats = list("MET-1"=10, "CON-1"=5, "POW-1"=5)
 	muzzle_flash = "muzzle_flash_elec"
@@ -502,13 +498,13 @@
 /obj/item/gun/energy/tasershotgun
 	name = "taser shotgun"
 	icon_state = "tasers100"
-	desc = "A weapon that produces an cohesive electrical charge that stuns its target. Now in a shotgun format."
+	desc = "The Five Points Armory Taser Mk.II, a shotgun-format weapon that produces a spreading electrical charge to stuns its targets."
 	item_state = "tasers"
 	cell_type = /obj/item/ammo/power_cell/med_power
 	force = 12
 	two_handed = 1
 	can_dual_wield = 0
-	shoot_delay = 8 DECI SECONDS
+	shoot_delay = 6 DECI SECONDS
 	muzzle_flash = "muzzle_flash_elec"
 
 	New()
@@ -576,7 +572,7 @@
 	attackby(obj/item/b, mob/user)
 		if(istype(b, /obj/item/ammo/power_cell))
 			boutput(user, "<span class='alert'>You attempt to swap the cell but \the [src] bites you instead.</span>")
-			playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1, -6)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1, -6)
 			user.TakeDamage(user.zone_sel.selecting, 3, 0)
 			take_bleeding_damage(user, user, 3, DAMAGE_CUT)
 			return
@@ -650,8 +646,8 @@
 		return
 
 	shoot(var/target,var/start,var/mob/user)
-		if (canshoot()) // No more attack messages for empty guns (Convair880).
-			playsound(user, "sound/weapons/DSBFG.ogg", 75)
+		if (canshoot(user)) // No more attack messages for empty guns (Convair880).
+			playsound(user, 'sound/weapons/DSBFG.ogg', 75)
 			sleep(0.9 SECONDS)
 		return ..(target, start, user)
 
@@ -661,7 +657,7 @@
 ///////////////////////////////////////Telegun
 /obj/item/gun/energy/teleport
 	name = "teleport gun"
-	desc = "A hacked together combination of a taser and a handheld teleportation unit."
+	desc = "A hacked together combination of a taser gun and a handheld teleportation unit."
 	icon_state = "teleport"
 	uses_multiple_icon_states = 1
 	w_class = W_CLASS_NORMAL
@@ -1132,8 +1128,8 @@
 		..()
 
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
-		if (canshoot()) // No more attack messages for empty guns (Convair880).
-			playsound(user, "sound/weapons/DSBFG.ogg", 75)
+		if (canshoot(user)) // No more attack messages for empty guns (Convair880).
+			playsound(user, 'sound/weapons/DSBFG.ogg', 75)
 			sleep(0.1 SECONDS)
 		return ..(target, start, user)
 
@@ -1195,7 +1191,8 @@
 
 	disposing()
 		. = ..()
-		STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
+		if (hunter_key)
+			STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
 
 /////////////////////////////////////// Pickpocket Grapple, Grayshift's grif gun
 /obj/item/gun/energy/pickpocket
@@ -1214,7 +1211,7 @@
 	is_syndicate = 1
 	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
 	silenced = 1
-	hide_attack = 1
+	hide_attack = ATTACK_FULLY_HIDDEN
 	mats = 100 //yeah no, you can do it if you REALLY want to
 	custom_cell_max_capacity = 100
 	var/obj/item/heldItem = null
@@ -1305,7 +1302,7 @@
 
 /obj/item/gun/energy/alastor
 	name = "\improper Alastor pattern laser rifle"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "alastor100"
 	item_state = "alastor"
 	icon = 'icons/obj/large/38x38.dmi'
@@ -1334,12 +1331,6 @@
 			return
 
 ///////////////////////////////////////////////////
-/obj/item/gun/energy/lawbringer/old
-	name = "antique Lawbringer"
-	icon = 'icons/obj/items/gun.dmi'
-	icon_state = "old-lawbringer0"
-	old = 1
-
 /obj/item/gun/energy/lawbringer
 	name = "\improper Lawbringer"
 	icon = 'icons/obj/items/gun.dmi'
@@ -1434,42 +1425,42 @@
 				if ("detain")
 					set_current_projectile(projectiles["detain"])
 					item_state = "lawg-detain"
-					playsound(M, "sound/vox/detain.ogg", 50)
+					playsound(M, 'sound/vox/detain.ogg', 50)
 				if ("execute", "exterminate")
 					set_current_projectile(projectiles["execute"])
 					current_projectile.cost = 30
 					item_state = "lawg-execute"
-					playsound(M, "sound/vox/exterminate.ogg", 50)
+					playsound(M, 'sound/vox/exterminate.ogg', 50)
 				if ("smokeshot","fog")
 					set_current_projectile(projectiles["smokeshot"])
 					current_projectile.cost = 50
 					item_state = "lawg-smokeshot"
-					playsound(M, "sound/vox/smoke.ogg", 50)
+					playsound(M, 'sound/vox/smoke.ogg', 50)
 				if ("knockout", "sleepshot")
 					set_current_projectile(projectiles["knockout"])
 					current_projectile.cost = 60
 					item_state = "lawg-knockout"
-					playsound(M, "sound/vox/sleep.ogg", 50)
+					playsound(M, 'sound/vox/sleep.ogg', 50)
 				if ("hotshot","incendiary")
 					set_current_projectile(projectiles["hotshot"])
 					current_projectile.cost = 60
 					item_state = "lawg-hotshot"
-					playsound(M, "sound/vox/hot.ogg", 50)
+					playsound(M, 'sound/vox/hot.ogg', 50)
 				if ("bigshot","highexplosive","he")
 					set_current_projectile(projectiles["bigshot"])
 					current_projectile.cost = 170
 					item_state = "lawg-bigshot"
-					playsound(M, "sound/vox/high.ogg", 50)
+					playsound(M, 'sound/vox/high.ogg', 50)
 					SPAWN(0.4 SECONDS)
-						playsound(M, "sound/vox/explosive.ogg", 50)
+						playsound(M, 'sound/vox/explosive.ogg', 50)
 				if ("clownshot","clown")
 					set_current_projectile(projectiles["clownshot"])
 					item_state = "lawg-clownshot"
-					playsound(M, "sound/vox/clown.ogg", 30)
+					playsound(M, 'sound/vox/clown.ogg', 30)
 				if ("pulse", "push", "throw")
 					set_current_projectile(projectiles["pulse"])
 					item_state = "lawg-pulse"
-					playsound(M, "sound/vox/push.ogg", 50)
+					playsound(M, 'sound/vox/push.ogg', 50)
 
 					/datum/projectile/energy_bolt/pulse
 		else		//if you're not the owner and try to change it, then fuck you
@@ -1493,7 +1484,7 @@
 			if (src in M.contents)
 				if (M.job != "Head of Security")
 					src.cant_self_remove = 1
-					playsound(src.loc, "sound/weapons/armbomb.ogg", 75, 1, -3)
+					playsound(src.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
 					logTheThing(LOG_COMBAT, src, "Is not the law. Caused explosion with Lawbringer.")
 
 					SPAWN(2 SECONDS)
@@ -1564,13 +1555,8 @@
 			return 1
 		return 0
 
-	proc/make_antique()
-		icon_state = "old-lawbringer0"
-		old = 1
-		UpdateIcon()
-
 	shoot(var/target,var/start,var/mob/user)
-		if (canshoot())
+		if (canshoot(user))
 			//removing this for now so anyone can shoot it. I PROBABLY will want it back, doing this for some light appeasement to see how it goes.
 			//shock the guy who tries to use this if they aren't the proper owner. (or if the gun is not emagged)
 			// if (!fingerprints_can_shoot(user))
@@ -1597,7 +1583,7 @@
 /obj/item/gun/energy/lawbringer/proc/shoot_fire_hotspots(var/target,var/start,var/mob/user)
 	var/list/affected_turfs = getline(get_turf(start), get_turf(target))
 	var/range = 6
-	playsound(user.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
+	playsound(user.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 	var/turf/currentturf
 	var/turf/previousturf
 	for(var/turf/F in affected_turfs)
@@ -1761,11 +1747,14 @@
 
 /obj/item/gun/energy/cornicen3
 	name = "\improper Cornicen III"
-	desc = "It's a shotgun? Or an assault rifle? You can't tell."
+	desc = "Formal enough for the boardroom. Rugged enough for the battlefield."
 	icon = 'icons/obj/large/48x32.dmi'
 	muzzle_flash = "muzzle_flash_bluezap"
 	icon_state = "cornicen_close"
 	item_state = "ntgun2"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 	w_class = W_CLASS_NORMAL		//for clarity
 	two_handed = TRUE
 	force = 9
@@ -1807,7 +1796,7 @@
 /obj/item/gun/energy/tasersmg
 	name = "taser SMG"
 	icon_state = "tsmg_burst100"
-	desc = "A weapon that produces an cohesive electrical charge that stuns its target, capable of firing in two shot burst or full auto configurations."
+	desc = "The Five Points Armory Taser Mk.III. A weapon that produces a cohesive electrical charge to stun its target, capable of firing in two shot burst or full auto configurations."
 	item_state = "tsmg"
 	force = 5
 	two_handed = 1
@@ -1862,7 +1851,7 @@
 		return
 
 	shoot(var/target,var/start,var/mob/user) //it's experimental for a reason; use at your own risk!
-		if (canshoot())
+		if (canshoot(user))
 			if (GET_COOLDOWN(src, "raygun_cooldown"))
 				return
 			if (prob(30))
