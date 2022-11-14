@@ -9,7 +9,7 @@ var/list/genetek_hair_styles = list()
 	mats = 15
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/mob/occupant = null
-	var/datum/map_preview/character/multiclient/occupant_preview = null
+	var/datum/movable_preview/character/multiclient/occupant_preview = null
 	var/locked = 0
 	anchored = 1
 	soundproofing = 10
@@ -281,7 +281,7 @@ var/list/genetek_hair_styles = list()
 
 	var/s_tone = "#FAD7D0"
 
-	var//datum/map_preview/character/multiclient/preview = null
+	var/datum/movable_preview/character/multiclient/preview = null
 
 	New(mob/target)
 		..()
@@ -291,7 +291,7 @@ var/list/genetek_hair_styles = list()
 
 		src.target_mob = target
 		src.preview = new()
-		src.preview.add_background("#092426")
+		src.preview.add_background("#092426", height_mult = 2)
 		src.load_mob_data(src.target_mob)
 		return
 

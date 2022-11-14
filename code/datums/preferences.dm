@@ -70,7 +70,7 @@ datum/preferences
 
 	var/datum/appearanceHolder/AH = new
 
-	var/datum/map_preview/character/preview = null
+	var/datum/movable_preview/character/preview = null
 
 	var/mentor = 0
 	var/see_mentor_pms = 1 // do they wanna disable mentor pms?
@@ -643,7 +643,7 @@ datum/preferences
 				src.profile_modified = TRUE
 				return TRUE
 			if ("update-specialStyle")
-				var/mob/living/carbon/human/H = src.preview.preview_mob
+				var/mob/living/carbon/human/H = src.preview.preview_thing
 				var/typeinfo/datum/mutantrace/typeinfo = H.mutantrace?.get_typeinfo()
 				if (!typeinfo || !typeinfo.special_styles)
 					tgui_alert(usr, "No usable special styles detected for this mutantrace.", "Error")
@@ -1059,7 +1059,7 @@ datum/preferences
 		// bald trait preview stuff
 		if (!src.preview)
 			return
-		var/mob/living/carbon/human/H = src.preview.preview_mob
+		var/mob/living/carbon/human/H = src.preview.preview_thing
 		var/ourWig = H.head
 		if (ourWig)
 			H.u_equip(ourWig)

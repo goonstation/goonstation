@@ -44,7 +44,7 @@ var/list/clothingbooth_items = list()
 
 //clothing booth stuffs <3
 /obj/machinery/clothingbooth
-	var/datum/map_preview/character/multiclient/preview
+	var/datum/movable_preview/character/multiclient/preview
 	var/obj/item/preview_item = null
 	var/money = 0
 	var/open = TRUE
@@ -87,12 +87,13 @@ var/list/clothingbooth_items = list()
 					boutput(usr, "<span class='alert'>Insufficient funds!</span>")
 					animate_shake(src, 12, 3, 3)
 			if("render")
+				var/mob/living/carbon/human/preview_mob = src.preview.preview_thing
 				if (src.preview_item)
-					src.preview.preview_mob.u_equip(src.preview_item)
+					preview_mob.u_equip(src.preview_item)
 					qdel(src.preview_item)
 					src.preview_item = null
 				src.preview_item = new itempath()
-				src.preview.preview_mob.force_equip(src.preview_item, cb_item.slot)
+				preview_mob.force_equip(src.preview_item, cb_item.slot)
 
 	Click()
 		if(!ishuman(usr))

@@ -6,7 +6,7 @@
 	anchored = 0
 	req_access = null //will revisit later
 	var/mob/occupant = null
-	var/datum/map_preview/character/multiclient/occupant_preview = null
+	var/datum/movable_preview/character/multiclient/occupant_preview = null
 	var/locked = 0
 	var/homeloc = null
 
