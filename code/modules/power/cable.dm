@@ -602,8 +602,9 @@
 	return directionlist
 
 /// places a cable with d1 and d2
-/obj/cablespawner/proc/cable_laying(var/dir1, var/dir2, var/obj/cable/cable)
+/obj/cablespawner/proc/cable_laying(var/dir1, var/dir2)
 	var/obj/cable/current = new/obj/cable(src.loc)
 	current.d1 = dir1
 	current.d2 = dir2
 	current.icon_state = "[dir1]-[dir2]"
+	// this bit is not fucking working
