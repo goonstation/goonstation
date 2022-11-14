@@ -449,37 +449,25 @@
 	src.replace()
 /// if there is only cablespawners, not all 8 directions are needed. This removes some flotsam.
 /obj/cablespawner/proc/optimise()
-
-	/*If there are three adjacent directions, only two or one are needed
-	* e.g. N NE and E, that is technically a grid of four, doesnt need the diagonals,
-	* its a wasted cable. Same with NW N NE, that can be a T junction, no need for diagonals
-	* so now we check each of these cases, but if you want each cablespawner to spiderweb out in
-	* 8 directions, remove this bit. Cardinal directions are favoured.
+	/*
+	Diagonals are ugly. So if the option to connect to a diagonal tile orthogonally presents itself
+	we'll get rid of the corners and connect in NESW directions first.
+	This gets rid of diagonals in 2x2 and 3x3 grids, and stops small 'L's from becoming triangles.
+	if a diagonal tile is next to a cardinal, we disregard it.
+	This won't work on the manually connected cables.
 	*/
-	if ((cable_surr & (NW + NORTH + NE)) == (NW + NORTH + NE))
-	// Northern T
-		cable_surr &= ~(NW + NE)
-	if ((cable_surr & (SW + SOUTH + SE)) == (SW + SOUTH + SE))
-	// Southern T
-		cable_surr &= ~(SW + SE)
-	if ((cable_surr & (NE + EAST + SE)) == (NE + EAST + SE))
-	// Eastern T
-		cable_surr &= ~(NE + SE)
-	if ((cable_surr & (NW + WEST + SW)) == (NW + WEST + SW))
-	// Western T
-		cable_surr &= ~(NW + SW)
-	if ((cable_surr & (NORTHWEST + NW)) == (NORTHWEST + NW))
-	//Northwest Corner
-		cable_surr &= ~(NW)
-	if ((cable_surr & (NORTHEAST + NE)) == (NORTHEAST + NE))
-	//Northeast Corner
-		cable_surr &= ~(NE)
-	if ((cable_surr & (SOUTHWEST + SW)) == (SOUTHWEST + SW))
-	//Southwest Corner
-		cable_surr &= ~(SW)
-	if ((cable_surr & (SOUTHEAST + SE)) == (SOUTHEAST + SE))
-	//Southeast Corner
-		cable_surr &= ~(SE)
+	if (cable_surr & NE)
+		if (cable_surr & NORTHEAST)
+			cable_surr &= ~NE
+	if (cable_surr & NW)
+		if (cable_surr & NORTHWEST)
+			cable_surr &= ~NW
+	if (cable_surr & SE)
+		if (cable_surr & SOUTHEAST)
+			cable_surr &= ~SE
+	if (cable_surr & SW)
+		if (cable_surr & SOUTHWEST)
+			cable_surr &= ~SW
 
 /// checks around itself for cables, adds up to 8 bits to cable_surr
 /obj/cablespawner/proc/check(var/obj/cable/cable)
