@@ -274,7 +274,7 @@ var/global/list/job_start_locations = list()
 	name = LANDMARK_CHARACTER_PREVIEW_SPAWN
 
 /obj/landmark/tutorial/flock_conversion
-	name = LANDMARK_TUTORIAL_FLOCKCONVERSION
+	name = LANDMARK_TUTORIAL_FLOCK_CONVERSION
 
 /obj/landmark/viscontents_spawn
 	name = "visual mirror spawn"

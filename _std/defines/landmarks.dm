@@ -59,7 +59,7 @@
 #define LANDMARK_AI_GUNBOT_SHUTTLE "AIgunbotshuttle" // MALF AI module thing
 #define LANDMARK_BIGBOOM "bigboom" // unfinished Manta event
 #define LANDMARK_TUTORIAL_START "tutorial_start_marker"
-#define LANDMARK_TUTORIAL_FLOCKCONVERSION "tutorial_flock_conversion"
+#define LANDMARK_TUTORIAL_FLOCK_CONVERSION "tutorial_flock_conversion"
 #define LANDMARK_CRUISER_ENTRANCE "cruiser_entrance"
 #define LANDMARK_CRUISER_CENTER "cruiser_center"
 // loading screen maptext landmarks

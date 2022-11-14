@@ -8,8 +8,7 @@
 /obj/flock_structure/sentinel
 	name = "glowing pylon"
 	desc = "A glowing pylon of sorts, faint sparks are jumping inside of it."
-	flock_desc = "A charged pylon, capable of sending disorienting arcs of electricity at enemies."
-	tutorial_desc = "A charged pylon, capable of sending disorienting arcs of electricity at enemies. Consumes 20 compute."
+	flock_desc = "A charged pylon, capable of sending disorienting arcs of electricity at enemies. Consumes 20 compute."
 	icon_state = "sentinel"
 	flock_id = "Sentinel"
 	health = 80

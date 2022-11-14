@@ -54,8 +54,8 @@
 	for (var/i in 1 to 3)
 		new /mob/living/critter/flock/bit(get_turf(src), src.flock)
 
-/obj/flock_structure/egg/stupid
+/obj/flock_structure/egg/tutorial
 
-/obj/flock_structure/egg/stupid/spawn_contents()
+/obj/flock_structure/egg/tutorial/spawn_contents()
 	var/mob/living/critter/flock/drone/drone = new(get_turf(src), src.flock)
-	drone.set_stupid(TRUE)
+	drone.set_tutorial_ai(TRUE)

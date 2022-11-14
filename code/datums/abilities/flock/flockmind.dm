@@ -326,6 +326,8 @@
 /datum/targetable/flockmindAbility/radioStun/cast(atom/target)
 	if(..())
 		return TRUE
+	if (!src.tutorial_check(FLOCK_ACTION_RADIO_STUN))
+		return TRUE
 	var/list/targets = list()
 	for(var/mob/living/M in range(10, holder.get_controlling_mob()))
 		if(M.ear_disability)
@@ -333,8 +335,6 @@
 		var/obj/item/device/radio/R = M.ears // wont work on flock as they have no slot for this
 		if(istype(R) && R.listening) // working and toggled on
 			targets += M
-	if (!src.tutorial_check(FLOCK_ACTION_RADIO_STUN, targets))
-		return TRUE
 	if(length(targets))
 		playsound(holder.get_controlling_mob(), 'sound/misc/flockmind/flockmind_cast.ogg', 80, 1)
 		boutput(holder.get_controlling_mob(), "<span class='notice'>You transmit the worst static you can weave into the headsets around you.</span>")

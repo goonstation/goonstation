@@ -44,6 +44,7 @@
 		src.tutorial.Start()
 	else
 		boutput(src, "<span class='alert'>Could not start tutorial! Please try again later or call Wire.</span>")
+		logTheThing(LOG_GAMEMODE, src, "Failed to set up flock tutorial, something went very wrong.")
 		src.tutorial = null
 
 /mob/living/intangible/flock/flockmind/select_drone(mob/living/critter/flock/drone/drone)

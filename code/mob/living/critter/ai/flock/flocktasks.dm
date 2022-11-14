@@ -5,11 +5,11 @@
 /*
 replicate
 	-weight 7
-	-precondition: can_afford(FLOCK_LAY_EGG_COST) and less than FLOCK_DRONE_LIMIT drones
+	-precondition: not in tutorial, can_afford(FLOCK_LAY_EGG_COST), and less than FLOCK_DRONE_LIMIT drones
 
 nest
 	-weight 6
-	-precondition: can_afford(FLOCK_LAY_EGG_COST) and less than FLOCK_DRONE_LIMIT drones
+	-precondition: not in tutorial, can_afford(FLOCK_LAY_EGG_COST), and less than FLOCK_DRONE_LIMIT drones
 
 building
 	-weight 5

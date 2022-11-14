@@ -22,12 +22,12 @@
 		src.AddStep(new /datum/tutorialStep/flock/turret_demo)
 		src.AddStep(new /datum/tutorialStep/flock/showcase)
 		src.exit_point = pick_landmark(LANDMARK_OBSERVER)
-		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_FLOCKCONVERSION])
+		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_FLOCK_CONVERSION])
 			if(src.region.turf_in_region(T))
 				center = T
 				break
 		if (!center)
-			CRASH("Okay who removed the goddamn [LANDMARK_TUTORIAL_FLOCKCONVERSION] landmark")
+			CRASH("Okay who removed the goddamn [LANDMARK_TUTORIAL_FLOCK_CONVERSION] landmark")
 		src.fowner = M
 
 	Finish()
@@ -190,7 +190,7 @@
 	SetUp()
 		..()
 		var/mob/living/critter/flock/drone/first_drone = src.ftutorial.fowner.flock.units[/mob/living/critter/flock/drone/][1] // lol
-		first_drone.set_stupid(FALSE)
+		first_drone.set_tutorial_ai(FALSE)
 		SPAWN(1 SECOND)
 			flock_spiral_conversion(src.ftutorial.center, ftutorial.fowner.flock, 0.1 SECONDS)
 		for (var/i = 1 to 4)

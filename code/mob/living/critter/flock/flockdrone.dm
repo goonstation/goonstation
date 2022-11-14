@@ -914,7 +914,8 @@
 	else
 		return TRUE
 
-/mob/living/critter/flock/drone/proc/set_stupid(value)
+/// Sets the AI to tutorial mode, disabling all tasks except manual orders
+/mob/living/critter/flock/drone/proc/set_tutorial_ai(value)
 	if (value)
 		src.ai = new /datum/aiHolder/flock/drone/tutorial(src)
 	else
