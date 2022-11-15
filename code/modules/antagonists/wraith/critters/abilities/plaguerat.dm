@@ -79,7 +79,7 @@
 		current_target = targets[1]
 		M.visible_message("<span class='combat'><b>[M] begins eating [current_target]!</b></span>",\
 			"<span class='combat'><b>You start eating [current_target]!</b></span>")
-		logTheThing("debug", src, null, "Targets = [length(targets)]")
+		logTheThing(LOG_DEBUG, src, "Targets = [length(targets)]")
 
 	onUpdate()
 		..()
@@ -101,9 +101,9 @@
 		P.visible_message("<span class='combat'><b>[P] eats [current_target]!</b></span>",\
 					"<span class='combat'><b>You finish eating [current_target]!</b></span>")
 		targets -= targets[1]
-		logTheThing("debug", src, null, "Targets = [length(targets)]")
+		logTheThing(LOG_DEBUG, src, "Targets = [length(targets)]")
 		qdel(current_target)
-		logTheThing("debug", src, null, "Targets = [length(targets)]")
+		logTheThing(LOG_DEBUG, src, "Targets = [length(targets)]")
 		P.eaten_amount ++
 		if (P.eaten_amount >= P.amount_to_grow)
 			P.grow_up()
