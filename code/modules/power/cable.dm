@@ -440,6 +440,15 @@
 	* anyway thats what cable_surr does
 	*/
 
+/// reinforced, thick cables. They should also connect to the regular kind.
+/obj/cablespawner/reinforced
+	name = "reinforced power cable spawner"
+	desc = "An item that should spawn actual reinforced cables. If you're reading this, something's wrong."
+	icon = 'icons/obj/power_cond.dmi'
+	icon_state = "superstate"
+	var/iconmod = "-thick"
+	color = "#075C90"
+
 /// creates new cablespawners
 /obj/cablespawner/New()
 	..()
@@ -573,7 +582,13 @@
 
 /// places a cable with d1 and d2
 /obj/cablespawner/proc/cable_laying(var/dir1, var/dir2)
-	var/obj/cable/current = new/obj/cable(src.loc)
-	current.d1 = dir1
-	current.d2 = dir2
-	current.UpdateIcon()
+	if (src.iconmod == "-thick")
+		var/obj/cable/current = new/obj/cable/reinforced(src.loc)
+		current.d1 = dir1
+		current.d2 = dir2
+		current.UpdateIcon()
+	else
+		var/obj/cable/current = new/obj/cable(src.loc)
+		current.d1 = dir1
+		current.d2 = dir2
+		current.UpdateIcon()
