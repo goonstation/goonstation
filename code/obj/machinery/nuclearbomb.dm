@@ -431,6 +431,8 @@
 	target_override_name = "anywhere"
 
 /obj/machinery/nuclearbomb/event/micronuke
+	name = "micronuke"
+	desc = "A moderately powerful bomb capable of levelling most of a room."
 	boom_size = 212
 	_health = 75
 	_max_health = 75
