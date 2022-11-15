@@ -440,15 +440,41 @@
 	* anyway thats what cable_surr does
 	*/
 
-/// creates new cablespawners, which should replace themselves
+/// creates new cablespawners
 /obj/cablespawner/New()
 	..()
+
+/// makes the cable spawners actually spawn cables and delete themselves
 /obj/cablespawner/initialize()
 	. = ..()
 	src.check()
 	src.replace()
-/// if there is only cablespawners, not all 8 directions are needed. This removes some flotsam.
-/obj/cablespawner/proc/optimise()
+
+/// checks around itself for cables, adds up to 8 bits to cable_surr
+/obj/cablespawner/proc/check(var/obj/cable/cable)
+	for (var/obj/cablespawner/spawner in orange(1, src))
+	// checks for cablespawners around itself
+		var/disx = spawner.x - src.x
+		var/disy = spawner.y - src.y
+		if (disy == 1)
+			if (disx == 1)
+				cable_surr |= NE
+			else if (disx == -1)
+				cable_surr |= NW
+			else
+				cable_surr |= NORTH
+		else if (disy == -1)
+			if (disx == 1)
+				cable_surr |= SE
+			else if (disx == -1)
+				cable_surr |= SW
+			else
+				cable_surr |= SOUTH
+		else if (disy == 0)
+			if (disx == 1)
+				cable_surr |= EAST
+			else if (disx == -1)
+				cable_surr |= WEST
 	/*
 	Diagonals are ugly. So if the option to connect to a diagonal tile orthogonally presents itself
 	we'll get rid of the corners and connect in NESW directions first.
@@ -478,39 +504,12 @@
 		for (var/obj/cablespawner/spawner in orange(1, src))
 			if (spawner.x - src.x == 1 && spawner.y - src.y == 0)
 				spawner.cable_surr |= WEST
-/// checks around itself for cables, adds up to 8 bits to cable_surr
-/obj/cablespawner/proc/check(var/obj/cable/cable)
-	for (var/obj/cablespawner/spawner in orange(1, src))
-	// checks for cablespawners around itself
-		var/disx = spawner.x - src.x
-		var/disy = spawner.y - src.y
-		// the following assumes disxy (displacement of x or y) equals 1,0 or -1
-		if (disy == 1)
-			if (disx == 1)
-				cable_surr |= NE
-			else if (disx == -1)
-				cable_surr |= NW
-			else
-				cable_surr |= NORTH
-		else if (disy == -1)
-			if (disx == 1)
-				cable_surr |= SE
-			else if (disx == -1)
-				cable_surr |= SW
-			else
-				cable_surr |= SOUTH
-		else if (disy == 0)
-			if (disx == 1)
-				cable_surr |= EAST
-			else if (disx == -1)
-				cable_surr |= WEST
-	optimise()
+
 	for (var/obj/cable/normal_cable in orange(1, src))
-	// normal, prexisting, manually placed cables (must be joined to no matter what)
+	// checks normal, prexisting, manually placed cables (must be joined to no matter what)
 	// turns out, since initialize() does cablespawners one by one
 	// they turn into regular cables and must be considered like that by the system
-	// this bit is MANDATORY
-	// it is also (probably) where it is breaking
+	// making this bit MANDATORY
 		var/disx = normal_cable.x - src.x
 		var/disy = normal_cable.y - src.y
 		if (disy == 1)
@@ -540,45 +539,39 @@
 					cable_surr |= WEST
 		// the 'real' wires override and always connect to prevent loose ends
 		// cable_surr is any direction that needs to be connected to at all
-/// causes cablespawner to spawn cables (amazing) (WORKS)
+		// this bit does not get optimised
+/// causes cablespawner to spawn cables (amazing)
 /obj/cablespawner/proc/replace()
-	var/directions = convert()
-	if (length(directions) == 0)
-	// a standalone cable (not really supposed to happen if you use cables properly)
-		cable_laying(0, 1)
-	else if (length(directions) == 1)
+	var/list/directions = list()
+	if (cable_surr & NORTH)
+		directions += NORTH
+	if (cable_surr & SOUTH)
+		directions += SOUTH
+	if (cable_surr & EAST)
+		directions += EAST
+	if (cable_surr & NE)
+		directions += NORTHEAST
+	if (cable_surr & SE)
+		directions += SOUTHEAST
+	if (cable_surr & WEST)
+		directions += WEST
+	if (cable_surr & NW)
+		directions += NORTHWEST
+	if (cable_surr & SW)
+		directions += SOUTHWEST
+	if (length(directions) == 1)
 	// end of a cable
 		cable_laying(0, directions[1])
 	else if (length(directions) == 2)
 	// a normal, single cable
 		cable_laying(directions[1], directions[2])
-	else
+	else if (length(directions) >= 3)
 	// multiple cables, spiral out from the centre
 		for (var/i in 1 to length(directions))
 			cable_laying(0, directions[i])
 	qdel(src)
-/// converts 8 bit into a list of directions. In order of bitflag (WORKS)
-/obj/cablespawner/proc/convert()
-	var/list/directionlist = list()
-	if (cable_surr & NORTH)
-		directionlist += NORTH
-	if (cable_surr & SOUTH)
-		directionlist += SOUTH
-	if (cable_surr & EAST)
-		directionlist += EAST
-	if (cable_surr & NE)
-		directionlist += NORTHEAST
-	if (cable_surr & SE)
-		directionlist += SOUTHEAST
-	if (cable_surr & WEST)
-		directionlist += WEST
-	if (cable_surr & NW)
-		directionlist += NORTHWEST
-	if (cable_surr & SW)
-		directionlist += SOUTHWEST
-	return directionlist
 
-/// places a cable with d1 and d2 (WORKS)
+/// places a cable with d1 and d2
 /obj/cablespawner/proc/cable_laying(var/dir1, var/dir2)
 	var/obj/cable/current = new/obj/cable(src.loc)
 	current.d1 = dir1
