@@ -1,4 +1,57 @@
 
+(t)tue nov 15 22
+(u)DrWolfy
+(p)11111
+(e)🔄💨📦⚗|C-Rework, A-Atmospherics, A-Game-Objects, A-Chemistry
+(+)Reagent and atmospheric analyzers report temperature in Kelvin.
+(u)LeahTheTech
+(p)11941
+(e)🪲🔎📄🍝|C-Bug, C-Code-Quality, A-UI, A-Catering
+(*)Pizza vendors now work again and have a new TGUI interface.
+(u)pali
+(+)The APC pinpointer now has a "current room" option.
+(t)mon nov 14 22
+(u)tarmunora
+(+)adjust bilk depletion, overdose
+(t)sun nov 13 22
+(u)NightmarechaMillian
+(p)11683
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Fueltanks, when they blow up, will now have a sprite change. Blown up fueltanks also count as open containers.
+(u)MarkNstein
+(p)11943
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Kondaru: added rancher & normal cameras to rancher area.
+(t)sat nov 12 22
+(u)Amylizzle
+(p)11915
+(e)🆕🧫🧛|C-Feature, C-Experimental, A-Gamemodes
+(+)As flockmind/flocktrace, you can now double-click a drone to take control of it.
+(t)wed nov 09 22
+(u)Bartimeus973
+(p)11880
+(e)⚖🔨|C-Balance, A-Player-Actions
+(*)Plaguebringer's curse of death can now be cancelled by holy water or a chaplain's bible beatings, like other curses. Trickster's creeping dread is faster.
+(u)LeahTheTech
+(p)11654
+(e)🔄📄🧛|C-Rework, A-UI, A-Gamemodes
+(*)Greatly simplified Flockdrone manual control. Drones now infer orders from the target given.
+(u)Roddy
+(p)11849
+(e)🗺💅💊|A-Mapping, C-QoL, A-Medical
+(+)Minor Donut 2 changes: Beepsky is no longer homeless, notably.
+(u)Amylizzle
+(p)11755
+(e)🆕🎨💨|C-Feature, C-Sprites, A-Atmospherics
+(+)Adds nuclear fallout gas. Don't breathe the glowy green stuff.
+(u)Waffleloffle & Azrun
+(p)11804
+(e)🆕🎨🚨|C-Feature, C-Sprites, A-Admin
+(+)Adds Iguanas! Maybe you'll see one in a tree!
+(u)Kubius
+(p)11870
+(e)⚖📦🌠|C-Balance, A-Game-Objects, A-Events
+(+)Spatial interdictors can now protect most devices from ion storms if the affected device is within interdiction range. Law racks are an exception, due to the sensitive nature of involved components.
 (t)tue nov 08 22
 (u)Mora
 (p)11823

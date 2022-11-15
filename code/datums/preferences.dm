@@ -2,6 +2,7 @@ var/list/bad_name_characters = list("_", "'", "\"", "<", ">", ";", "\[", "\]", "
 var/list/removed_jobs = list(
 	// jobs that have been removed or replaced (replaced -> new name, removed -> null)
 	"Barman" = "Bartender",
+	"Mechanic" = "Engineer",
 )
 
 datum/preferences
