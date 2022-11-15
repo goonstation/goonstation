@@ -45,7 +45,7 @@
 			candidate_turfs -= pick(candidate_turfs)
 
 		var/sentinel_count = 2
-		for(var/turf/simulated/floor/feather/floor as anything in candidate_turfs)
+		for(var/turf/simulated/floor/floor as anything in candidate_turfs)
 			if (src.flock)
 				src.flock.claimTurf(flock_convert_turf(floor))
 			else
