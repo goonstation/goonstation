@@ -468,8 +468,6 @@
 
 	click(atom/target)
 		. = ..()
-		if (. == 100)
-			return 100
 		if (!density)
 			src.examine_verb(target)
 
