@@ -81,6 +81,7 @@
 	flock_speak(null, "Flocktrace [src.real_name] has been promoted to Flockmind.", src.flock)
 
 	var/mob/living/intangible/flock/flockmind/original = src.flock.flockmind
+	original.tutorial?.Finish()
 	if (remove_flockmind_from_flock)
 		var/mob/living/intangible/flock/flockmind/F = new (get_turf(src), src.flock)
 		src.mind.transfer_to(F)
