@@ -544,6 +544,7 @@
 			cable_surr |= EAST
 		else if (normal_cable.d1 == EAST || normal_cable.d2 == EAST)
 			cable_surr |= WEST
+		temp_flags2 = 0
 		// the 'real' wires override and always connect to prevent loose ends
 		// cable_surr is any direction that needs to be connected to at all
 /// causes cablespawner to spawn cables (amazing) (WORKS)
