@@ -426,7 +426,7 @@
 ////////////////////////////////
 
 /datum/targetable/flockmindAbility/createStructure
-	name = "Fabricate Structure"
+	name = "Place Tealprint"
 	desc = "Create a structure tealprint for your drones to construct onto."
 	icon_state = "fabstructure"
 	cooldown = 0

@@ -79,7 +79,8 @@
 		return list("structures" = structures)
 
 	ui_status(mob/user)
-		return istype(user, /mob/living/intangible/flock/flockmind) || tgui_admin_state.can_use_topic(src, user)
+		if(istype(user, /mob/living/intangible/flock/flockmind) || tgui_admin_state.can_use_topic(src, user))
+			return UI_INTERACTIVE
 
 /datum/tutorialStep/flock
 	name = "Flock tutorial step"
@@ -204,7 +205,8 @@
 		var/msg = "Human resource containers convert into Flock resource fabricators."
 		src.ftutorial.make_maptext(locate(/obj/machinery/vending) in range(10, src.ftutorial.center), msg)
 
-		msg = "Human computers convert into Flock compute nodes. Each provides 60 compute."
+		var/obj/flock_structure/compute/type = /obj/flock_structure/compute/
+		msg = "Human computers convert into Flock compute nodes. Each provides [initial(type.compute)] compute."
 		src.ftutorial.make_maptext(locate(/obj/machinery/computer) in range(10, src.ftutorial.center), msg)
 
 	PerformAction(action, context)
@@ -230,7 +232,7 @@
 
 /datum/tutorialStep/flock/place_sentinel
 	name = "Construct Sentinel"
-	instructions = "There may be more humans around, build a Sentinel for protection. Move over the marked turf and use your \"place tealprint\" ability to place one."
+	instructions = "There may be more humans around, build a Sentinel for protection. Move over the marked turf and use your \"Place Tealprint\" ability to place one."
 	var/turf/location = null
 
 	SetUp()
@@ -302,7 +304,7 @@
 		if (action == FLOCK_ACTION_TEALPRINT_COMPLETE)
 			var/obj/flock_structure/interceptor/struct = context
 			OVERRIDE_COOLDOWN(struct, "bolt_gen_time", 0 SECONDS)
-			struct.power_projectile_checkers(TRUE)
+			struct.process(1)
 
 /datum/tutorialStep/flock/turret_demo
 	name = "Intercept"
