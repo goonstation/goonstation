@@ -1,4 +1,7 @@
 
+(t)tue nov 15 22
+(u)pali
+(+)The APC pinpointer now has a "current room" option.
 (t)mon nov 14 22
 (u)tarmunora
 (+)adjust bilk depletion, overdose
