@@ -1,0 +1,29 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author Garash (https://github.com/Garash2k)
+ * @license ISC
+ */
+
+@use '../colors.scss';
+
+.IDComputer__DeptBox {
+  margin-bottom: 0.25rem;
+  background-color: darken(colors.$grey, 20%);
+}
+
+.IDComputer__DeptBox_color_blue {
+  background-color: darken(colors.$blue, 20%);
+}
+.IDComputer__DeptBox_color_yellow {
+  background-color: darken(colors.$yellow, 28%);
+}
+.IDComputer__DeptBox_color_purple {
+  background-color: darken(colors.$purple, 20%);
+}
+.IDComputer__DeptBox_color_red {
+  background-color: darken(colors.$red, 20%);
+}
+.IDComputer__DeptBox_color_green {
+  background-color: darken(colors.$green, 20%);
+}
