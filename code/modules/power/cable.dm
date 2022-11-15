@@ -473,7 +473,7 @@
 /obj/cablespawner/proc/check(var/obj/cable/cable)
 	for (var/obj/cablespawner/spawner in orange(1, src))
 	// checks forcablespawners around itself
-		var/tempflag = 0
+		var/tempflags = 0
 		// this will store the 4 bit direction temporarily for the for loop
 		// tempflag is 4bit, stores a NESW direction
 		// cable_surr is 8 bit, stores up to 8 NESW directions at once
