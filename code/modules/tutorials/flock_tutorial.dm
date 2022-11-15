@@ -324,7 +324,7 @@
 /datum/tutorialStep/flock/relay
 	name = "The Relay"
 	New()
-		src.instructions = "This is the Relay, your ultimate goal. Unlocked at [FLOCK_RELAY_COMPUTE_COST] compute, when complete it will allow you to transmit the Signal and cast the Flock out towards our next target."
+		src.instructions = "This is the Relay, your ultimate goal. Unlocked at [FLOCK_RELAY_COMPUTE_COST] compute, when complete it will allow you to transmit the Signal and cast the Flock out towards the Source."
 		..()
 
 	SetUp()
