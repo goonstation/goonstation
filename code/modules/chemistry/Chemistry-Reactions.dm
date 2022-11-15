@@ -134,9 +134,9 @@
 				react_amount = react_amount / (1 + ((FG.contained_amt - diminishing_returns_thingymabob) * 0.1))//MBC MAGIC NUMBERS :)
 				//boutput(world,"[react_amount]")
 
-		var/divisor = howmany * 4
+		var/divisor = howmany
 		if (covered.len > 4)
-			divisor += 0.2
+			divisor *= 1.2
 		source.fluid_react(holder, react_amount/divisor, airborne = 1)
 
 		if (!prev_group_exists && source.active_airborne_liquid && source.active_airborne_liquid.group)
