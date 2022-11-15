@@ -1417,7 +1417,7 @@
 
 	if(istype(src.loc, /obj/item/storage))
 		var/obj/item/storage/storage = src.loc
-		src.set_loc(get_turf(src)) // so the storage doesn't add it back >:(
+		src.set_loc(null) // so the storage doesn't add it back >:(
 		storage.hud?.remove_item(src)
 
 	var/turf/T = loc
