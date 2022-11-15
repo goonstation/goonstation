@@ -468,7 +468,16 @@
 	if (cable_surr & SW)
 		if (cable_surr & SOUTH || cable_surr & WEST)
 			cable_surr &= ~SW
-
+	/* there is exactly one case where this code breaks
+	* consider a grid of: X
+	*                     X X
+	* The bottom left spawns in, connects to its two neighbours, and the bottom right connects in 2
+	* directions. This if statement fixes that, by making the bottom left alter the bottom right one.
+	*/
+	if (cable_surr & EAST)
+		for (var/obj/cablespawner/spawner in orange(1, src))
+			if (spawner.x - src.x == 1 && spawner.y - src.y == 0)
+				spawner.cable_surr |= WEST
 /// checks around itself for cables, adds up to 8 bits to cable_surr
 /obj/cablespawner/proc/check(var/obj/cable/cable)
 	for (var/obj/cablespawner/spawner in orange(1, src))
@@ -501,7 +510,7 @@
 	// turns out, since initialize() does cablespawners one by one
 	// they turn into regular cables and must be considered like that by the system
 	// this bit is MANDATORY
-	// it is also probably where it is breaking
+	// it is also (probably) where it is breaking
 		var/disx = normal_cable.x - src.x
 		var/disy = normal_cable.y - src.y
 		if (disy == 1)
