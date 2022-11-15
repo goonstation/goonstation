@@ -524,7 +524,7 @@ datum
 						M.take_ear_damage(3 * mult, 1) //makes it so you can't hear people after a bit
 
 					var/list/candidates = list() //adds people just out of sight to the list of "make go away"
-					candidates = by_type[/mob/living/carbon/human].Copy() - invisible_people - viewers(M)
+					candidates = by_type[/mob/living/carbon/human] - invisible_people - viewers(M)
 
 					if(length(candidates) > 0)  //makes the other people disappear
 						for(var/mob/living/carbon/human/chosen in candidates)
@@ -543,7 +543,6 @@ datum
 						var/turf/mob_turf = get_turf(M)
 						M.playsound_local(mob_turf, 'sound/effects/Heart Beat.ogg', 20, 1)
 				..()
-				return
 
 			on_remove()
 				. = ..()
