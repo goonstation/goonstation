@@ -877,7 +877,7 @@
 /atom/movable/proc/set_loc(atom/newloc)
 	SHOULD_CALL_PARENT(TRUE)
 	if(QDELETED(src) && !isnull(newloc))
-		CRASH("Tried to call set_loc on [src] ([src.type]) to non-null location: [newloc] ([newloc?.type])")
+		CRASH("Tried to call set_loc on [src] (\ref[src] [src.type]) to non-null location: [newloc] (\ref[newloc] [newloc?.type])")
 
 	if (loc == newloc)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, loc)
