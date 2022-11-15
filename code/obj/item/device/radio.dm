@@ -256,6 +256,11 @@ var/list/headset_channel_lookup
 	if(tooltip)
 		. = {"<div class='tooltip'>[.]<span class="tooltiptext">[tooltip]</span></div>"}
 
+
+/** Max number of radios that will show maptext for a single message.
+ *  5 should be sufficient for any normal gameplay; any more is people constructing extras
+ */
+#define RADIO_MAPTEXT_MAX_RADIOS_DISPLAYING 5
 /obj/item/device/radio/talk_into(mob/M as mob, messages, secure, real_name, lang_id)
 	if (length(by_cat[TR_CAT_RADIO_JAMMERS]) && check_for_radio_jammers(src))
 		return
@@ -476,7 +481,10 @@ var/list/headset_channel_lookup
 				// We also do our client pref checks here and not when forming receive[], so that other things unrelated
 				// to maptext can use the big list of people associated with the radios they're hearing through
 				if (!R.client?.preferences.flying_chat_hidden)
+					var/count = 0
 					for (var/obj/item/device/radio/rad in receive[R])
+						if (++count > RADIO_MAPTEXT_MAX_RADIOS_DISPLAYING)
+							break
 						rad.showMapText(R, M, receive, messages[1], secure, real_name, lang_id)
 
 				R.show_message(thisR, 2)
@@ -495,7 +503,10 @@ var/list/headset_channel_lookup
 					thisR = "<span class='adminHearing' data-ctx='[R.client.chatOutput.getContextFlags()]'>[thisR]</span>"
 
 				if (!R.client?.preferences.flying_chat_hidden)
+					var/count = 0
 					for (var/obj/item/device/radio/rad in receive[R])
+						if (++count > RADIO_MAPTEXT_MAX_RADIOS_DISPLAYING)
+							break
 						rad.showMapText(R, M, receive, messages[1], secure, real_name, lang_id)
 
 				R.show_message(thisR, 2)
@@ -513,7 +524,10 @@ var/list/headset_channel_lookup
 					thisR = "<span class='adminHearing' data-ctx='[R.client.chatOutput.getContextFlags()]'>[thisR]</span>"
 
 				if (!R.client?.preferences.flying_chat_hidden)
+					var/count = 0
 					for (var/obj/item/device/radio/rad in receive[R])
+						if (++count > RADIO_MAPTEXT_MAX_RADIOS_DISPLAYING)
+							break
 						rad.showMapText(R, M, receive, messages[1], secure, real_name, lang_id)
 
 				R.show_message(thisR, 2)
@@ -529,7 +543,10 @@ var/list/headset_channel_lookup
 					thisR = "<span class='adminHearing' data-ctx='[R.client.chatOutput.getContextFlags()]'>[thisR]</span>"
 
 				if (!R.client?.preferences.flying_chat_hidden)
+					var/count = 0
 					for (var/obj/item/device/radio/rad in receive[R])
+						if (++count > RADIO_MAPTEXT_MAX_RADIOS_DISPLAYING)
+							break
 						rad.showMapText(R, M, receive, messages[2], secure, real_name, lang_id)
 
 				R.show_message(thisR, 2)
@@ -544,6 +561,7 @@ var/list/headset_channel_lookup
 				if (R.client && R.client.holder && ismob(M) && M.mind)
 					thisR = "<span class='adminHearing' data-ctx='[R.client.chatOutput.getContextFlags()]'>[thisR]</span>"
 				R.show_message(thisR, 2)
+#undef RADIO_MAPTEXT_MAX_RADIOS_DISPLAYING
 
 
 /obj/item/device/radio/hear_talk(mob/M as mob, msgs, real_name, lang_id)
