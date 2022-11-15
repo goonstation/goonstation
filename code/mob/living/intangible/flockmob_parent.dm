@@ -66,6 +66,12 @@
 			plane.alpha = 0
 	..()
 
+
+/mob/living/intangible/flock/Move(NewLoc, direct)
+	if (istype(NewLoc, /turf/cordon))
+		return FALSE
+	..()
+
 /mob/living/intangible/flock/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return 1

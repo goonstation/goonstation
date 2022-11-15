@@ -4,60 +4,60 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area/space)
+/area/tutorial/flock)
 "d" = (
 /obj/machinery/computer/robotics{
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 "e" = (
 /obj/machinery/vending/computer3,
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 "f" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 "g" = (
 /obj/landmark/tutorial_start,
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 "h" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 "j" = (
 /obj/machinery/door/airlock/pyro/command,
 /obj/access_spawn/heads,
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 "k" = (
 /obj/stool/chair/office/blue{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
-/area/space)
+/area/tutorial/flock)
 "l" = (
 /turf/simulated/wall/auto/supernorn,
-/area/space)
+/area/tutorial/flock)
 "m" = (
 /obj/storage/secure/closet/security/forensics,
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 "n" = (
 /obj/machinery/vending/book{
 	dir = 8;
 	pixel_x = 9
 	},
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 "p" = (
 /obj/storage/secure/closet/fridge/kitchen,
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 "q" = (
 /obj/rack,
 /obj/item/crowbar{
@@ -74,95 +74,95 @@
 	},
 /obj/machinery/junk_spawner,
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 "r" = (
 /turf/simulated/floor/carpet/blue/fancy,
-/area/space)
+/area/tutorial/flock)
 "s" = (
 /obj/machinery/computer/card{
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 "u" = (
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 "x" = (
 /obj/stool/chair/office/blue{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
-/area/space)
+/area/tutorial/flock)
 "y" = (
 /turf/simulated/floor/carpet/blue/fancy/edge,
-/area/space)
+/area/tutorial/flock)
 "C" = (
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 "D" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 "E" = (
 /obj/machinery/computer3/generic/secure_data{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 "G" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/space)
+/area/tutorial/flock)
 "H" = (
 /obj/machinery/vending/coffee{
 	dir = 4;
 	pixel_x = -9
 	},
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 "J" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/space)
+/area/tutorial/flock)
 "K" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/space)
+/area/tutorial/flock)
 "L" = (
 /obj/machinery/vending/floppy,
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 "O" = (
 /obj/landmark/tutorial/flock_conversion,
 /turf/simulated/floor/carpet/blue/fancy,
-/area/space)
+/area/tutorial/flock)
 "P" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 "Q" = (
 /obj/stool/chair/office/blue{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
-/area/space)
+/area/tutorial/flock)
 "R" = (
 /turf/cordon,
 /area/space)
 "S" = (
 /obj/machinery/light,
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 "T" = (
 /obj/table/reinforced/industrial/auto,
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 "V" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 "X" = (
 /obj/machinery/vending/cola/blue{
 	credit = 12;
@@ -170,13 +170,13 @@
 	pixel_x = -9
 	},
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 "Y" = (
 /obj/machinery/computer3/terminal{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 "Z" = (
 /obj/machinery/vending/pizza{
 	anchored = 1;
@@ -184,7 +184,7 @@
 	pixel_x = 9
 	},
 /turf/simulated/floor,
-/area/space)
+/area/tutorial/flock)
 
 (1,1,1) = {"
 R

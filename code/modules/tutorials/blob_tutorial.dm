@@ -1,4 +1,4 @@
-/area/blob/tutorial_zone
+/area/tutorial/blob
 	name = "Blob Tutorial Zone"
 	icon_state = "yellow"
 	sound_group = "blob1"

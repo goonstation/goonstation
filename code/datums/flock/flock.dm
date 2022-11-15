@@ -584,8 +584,6 @@ var/flock_signal_unleashed = FALSE
 	for(var/pathkey in src.units)
 		for(var/mob/living/critter/flock/F as anything in src.units[pathkey])
 			F.dormantize()
-	for(var/mob/living/intangible/flock/trace/T as anything in src.traces)
-		T.death()
 	for(var/obj/flock_structure/S as anything in src.structures)
 		S.gib()
 	for(var/turf/T in src.priority_tiles)
@@ -600,6 +598,8 @@ var/flock_signal_unleashed = FALSE
 	if (!real)
 		src.load_structures()
 		return
+	for(var/mob/living/intangible/flock/trace/T as anything in src.traces)
+		T.death()
 	if (src.flockmind)
 		hideAnnotations(src.flockmind)
 	qdel(get_image_group(src))

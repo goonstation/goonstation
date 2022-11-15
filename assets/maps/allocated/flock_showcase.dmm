@@ -3,59 +3,59 @@
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
-/area/space)
+/area/tutorial/flock)
 "f" = (
 /obj/spawner/flock_structure{
 	structure_type = /obj/flock_structure/collector
 	},
 /turf/simulated/floor/feather,
-/area/space)
+/area/tutorial/flock)
 "j" = (
 /obj/landmark/tutorial_start,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
-/area/space)
+/area/tutorial/flock)
 "m" = (
 /obj/spawner/flock_structure{
 	structure_type = /obj/flock_structure/compute
 	},
 /turf/simulated/floor/feather,
-/area/space)
+/area/tutorial/flock)
 "s" = (
 /obj/spawner/flock_structure{
 	structure_type = /obj/flock_structure/sentinel
 	},
 /turf/simulated/floor/feather,
-/area/space)
+/area/tutorial/flock)
 "v" = (
 /obj/spawner/flock_structure{
 	structure_type = /obj/flock_structure/relay;
 	ghost = 1
 	},
 /turf/simulated/floor/feather,
-/area/space)
+/area/tutorial/flock)
 "w" = (
 /obj/spawner/flock_structure{
 	structure_type = /obj/flock_structure/fabricator
 	},
 /turf/simulated/floor/feather,
-/area/space)
+/area/tutorial/flock)
 "C" = (
 /obj/spawner/flock_structure{
 	structure_type = /obj/flock_structure/interceptor
 	},
 /turf/simulated/floor/feather,
-/area/space)
+/area/tutorial/flock)
 "J" = (
 /turf/simulated/floor/feather,
-/area/space)
+/area/tutorial/flock)
 "L" = (
 /obj/spawner/flock_structure{
 	structure_type = /obj/flock_structure/gnesisturret
 	},
 /turf/simulated/floor/feather,
-/area/space)
+/area/tutorial/flock)
 "S" = (
 /turf/cordon,
 /area/space)
@@ -64,10 +64,10 @@
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
-/area/space)
+/area/tutorial/flock)
 "V" = (
 /turf/simulated/wall/auto/feather,
-/area/space)
+/area/tutorial/flock)
 
 (1,1,1) = {"
 S

@@ -37,6 +37,7 @@
 	src.addAbility(/datum/targetable/flockmindAbility/designateEnemy)
 	src.addAbility(/datum/targetable/flockmindAbility/directSay)
 	src.addAbility(/datum/targetable/flockmindAbility/ping)
+	src.set_loc(get_turf(src.flock?.flockmind))
 
 /mob/living/intangible/flock/trace/proc/describe_state()
 	var/state = list()
@@ -63,6 +64,11 @@
 		<br><span class='bold'>System Integrity:</span> [round(src.flock.total_health_percentage()*100)]%
 		<br><span class='bold'>Cognition:</span> SYNAPTIC PROCESS
 		<br>###=-</span></span>"}
+
+/mob/living/intangible/flock/trace/select_drone(mob/living/critter/flock/drone/drone)
+	if (src.flock?.flockmind.tutorial)
+		return
+	..()
 
 /mob/living/intangible/flock/trace/proc/promoteToFlockmind(remove_flockmind_from_flock)
 	var/was_in_drone = FALSE

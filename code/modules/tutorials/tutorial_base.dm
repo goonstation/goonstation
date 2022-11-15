@@ -1,3 +1,6 @@
+/area/tutorial
+	allowed_restricted_z = TRUE
+
 /datum/tutorial_base
 	var/name = "Tutorial"
 	var/mob/owner = null

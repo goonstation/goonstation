@@ -70,13 +70,16 @@
 		holder?.updateButtons()
 
 /datum/targetable/flockmindAbility/proc/tutorial_check(id, atom/context, silent = FALSE)
-	var/mob/living/intangible/flock/flockmind/flockmind_owner = src.holder.owner
-	if (istype(flockmind_owner))
-		if (flockmind_owner.tutorial)
+	var/mob/living/intangible/flock/flockmind/flock_owner = src.holder.owner
+	if (istype(flock_owner))
+		if (flock_owner.tutorial)
 			if (silent)
-				return flockmind_owner.tutorial.PerformSilentAction(id, context)
+				return flock_owner.tutorial.PerformSilentAction(id, context)
 			else
-				return flockmind_owner.tutorial.PerformAction(id, context)
+				return flock_owner.tutorial.PerformAction(id, context)
+	else //we are a flocktrace
+		if (flock_owner.flock.flockmind.tutorial) //flocktraces can only watch
+			return FALSE
 	return TRUE
 
 /////////////////////////////////////////
@@ -105,7 +108,7 @@
 			boutput(F, "<spawn class='alert'>Your rift can't be placed inside arrivals!</span>")
 			return TRUE
 
-		if (!istype(T.loc, /area/station/))
+		if (!istype(T.loc, /area/station/) && !istype(T.loc, /area/tutorial/flock))
 			boutput(F, "<spawn class='alert'>Your rift needs to be placed on the [station_or_ship()]!</span>")
 			return TRUE
 

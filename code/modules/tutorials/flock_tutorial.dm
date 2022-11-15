@@ -1,3 +1,7 @@
+/area/tutorial/flock
+	name = "Flock Tutorial Zone"
+	icon_state = "yellow"
+
 /datum/tutorial_base/regional/flock
 	name = "Flock tutorial"
 	var/mob/living/intangible/flock/flockmind/fowner = null
@@ -30,6 +34,12 @@
 			CRASH("Okay who removed the goddamn [LANDMARK_TUTORIAL_FLOCK_CONVERSION] landmark")
 		src.fowner = M
 
+	Start()
+		. = ..()
+		for (var/mob/living/intangible/flock/trace/trace as anything in src.fowner.flock.traces)
+			boutput(trace, "<span class='notice'>You have joined your Flockmind in the tutorial, you will not be able to interact with anything while they complete it.</span>")
+			trace.set_loc(get_turf(src.fowner))
+
 	Finish()
 		. = ..()
 		if (!.)
@@ -38,6 +48,8 @@
 		fowner.flock.perish(FALSE)
 		fowner.flock.enemies = list()
 		fowner.tutorial = null
+		for (var/mob/living/intangible/flock/trace/trace as anything in src.fowner.flock.traces)
+			trace.set_loc(get_turf(src.fowner))
 
 	proc/make_maptext(atom/target, msg)
 		msg = "<span class=\"ol vga c\" style=\"font-size:9pt\">[msg]</span>"
@@ -350,11 +362,18 @@
 			var/mob/living/carbon/human/bad_immortal/fake_tdummy = locate() in T
 			if (fake_tdummy)
 				src.ftutorial.fowner.flock.updateEnemy(fake_tdummy)
+		var/turf/landmark = null
 		for(var/turf/T as anything in landmarks[LANDMARK_TUTORIAL_START])
 			if(region.turf_in_region(T))
-				src.ftutorial.fowner.set_loc(T)
+				landmark = T
 				break
+		if (!landmark)
+			CRASH("No flock showcase landmark found, aaaaa")
+		src.ftutorial.fowner.set_loc(landmark)
 		src.ftutorial.ui_interact(src.ftutorial.fowner)
+		for (var/mob/living/intangible/flock/trace/trace as anything in src.ftutorial.fowner.flock.traces)
+			trace.set_loc(get_turf(src.ftutorial.fowner))
+			src.ftutorial.ui_interact(trace)
 
 /mob/living/intangible/flock/flockmind/verb/help_my_tutorial_is_being_a_massive_shit()
 	set name = "EMERGENCY TUTORIAL STOP"

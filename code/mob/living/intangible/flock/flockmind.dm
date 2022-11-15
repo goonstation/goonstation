@@ -52,11 +52,6 @@
 		return
 	..()
 
-/mob/living/intangible/flock/flockmind/Move(NewLoc, direct)
-	if (istype(NewLoc, /turf/cordon))
-		return FALSE
-	..()
-
 /mob/living/intangible/flock/flockmind/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
