@@ -473,9 +473,9 @@
 /obj/cablespawner/proc/check(var/obj/cable/cable)
 	for (var/obj/cablespawner/spawner in orange(1, src))
 	// checks forcablespawners around itself
-		var/temp_flags = 0
+		var/temp_flags1 = 0
 		// this will store the 4 bit direction temporarily for the for loop
-		// tempflag is 4bit, stores a NESW direction
+		// temp_flags is 4bit, stores a NESW direction
 		// cable_surr is 8 bit, stores up to 8 NESW directions at once
 		var/disx = spawner.x - src.x
 		var/disy = spawner.y - src.y
@@ -483,25 +483,26 @@
 		if (disx == 0 && disy == 0)
 			continue
 		if (disx == 1)
-			temp_flags |= EAST
+			temp_flags1 |= EAST
 		if (disx == -1)
-			temp_flags |= WEST
+			temp_flags1 |= WEST
 		if (disy == 1)
-			temp_flags |= NORTH
+			temp_flags1 |= NORTH
 		if (disy == -1)
-			temp_flags |= SOUTH
-		// each iteration can only have one direction at a time, luckily, which is tempflag
+			temp_flags1 |= SOUTH
+		// each iteration can only have one direction at a time, luckily, which is temp_flags
 		// the diagonal cases:
-		if (temp_flags == NORTHEAST)
+		if (temp_flags1 == NORTHEAST)
 			cable_surr |= NE
-		else if (temp_flags == NORTHWEST)
+		else if (temp_flags1 == NORTHWEST)
 			cable_surr |= NW
-		else if (temp_flags == SOUTHEAST)
+		else if (temp_flags1 == SOUTHEAST)
 			cable_surr |= SE
-		else if (temp_flags == SOUTHWEST)
+		else if (temp_flags1 == SOUTHWEST)
 			cable_surr |= SW
 		// if it's not diagonal, just match it with a cardinal direction
-		else cable_surr |= temp_flags
+		else cable_surr |= temp_flags1
+		temp_flags1 = 0
 	optimise()
 	for (var/obj/cable/normal_cable in orange(1, src))
 	// normal, prexisting, manually placed cables (must be joined to no matter what)
@@ -509,30 +510,32 @@
 	// they turn into regular cables and must be considered like that by the system
 	// this bit is MANDATORY
 	// it is also probably where it is breaking
-		var/temp_flags = 0
+		var/temp_flags2 = 0
 		var/disx = normal_cable.x - src.x
 		var/disy = normal_cable.y - src.y
 		if (disx == 1)
-			temp_flags |= EAST
+			temp_flags2 |= EAST
 		if (disx == -1)
-			temp_flags |= WEST
+			temp_flags2 |= WEST
 		if (disy == 1)
-			temp_flags |= NORTH
+			temp_flags2 |= NORTH
 		if (disy == -1)
-			temp_flags |= SOUTH
+			temp_flags2 |= SOUTH
 		// each iteration can only have one direction at a time, luckily
-		if (temp_flags == NORTHEAST)
+		// check for diagonal cables
+		if (temp_flags2 == NORTHEAST)
 			if (normal_cable.d1 == SOUTHWEST || normal_cable.d2 == SOUTHWEST)
 				cable_surr |= NE
-		else if (temp_flags == NORTHWEST)
+		else if (temp_flags2 == NORTHWEST)
 			if (normal_cable.d1 == SOUTHEAST || normal_cable.d2 == SOUTHEAST)
 				cable_surr |= NW
-		else if (temp_flags == SOUTHEAST)
+		else if (temp_flags2 == SOUTHEAST)
 			if (normal_cable.d1 == NORTHWEST || normal_cable.d2 == NORTHWEST)
 				cable_surr |= SE
-		else if (temp_flags == SOUTHWEST)
+		else if (temp_flags2 == SOUTHWEST)
 			if (normal_cable.d1 == NORTHEAST || normal_cable.d2 == NORTHEAST)
 				cable_surr |= SW
+		// check for regular cables
 		else if (normal_cable.d1 == SOUTH || normal_cable.d2 == SOUTH)
 			cable_surr |= NORTH
 		else if (normal_cable.d1 == NORTH || normal_cable.d2 == NORTH)
@@ -542,6 +545,7 @@
 		else if (normal_cable.d1 == EAST || normal_cable.d2 == EAST)
 			cable_surr |= WEST
 		// the 'real' wires override and always connect to prevent loose ends
+		// cable_surr is any direction that needs to be connected to at all
 /// causes cablespawner to spawn cables (amazing) (WORKS)
 /obj/cablespawner/proc/replace()
 	var/directions = convert()
