@@ -347,6 +347,7 @@ proc/generate_space_color()
 	explosion_resistance = 999999
 	density = 1
 	opacity = 1
+	gas_impermeable = 1
 
 	Enter()
 		return 0 // nope
