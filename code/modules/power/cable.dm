@@ -480,6 +480,8 @@
 		var/disx = spawner.x - src.x
 		var/disy = spawner.y - src.y
 		// the following assumes disxy (displacement of x or y) equals 1,0 or -1
+		if (disx == 0 && disy == 0)
+			continue
 		if (disx == 1)
 			temp_flags |= EAST
 		if (disx == -1)
@@ -490,13 +492,13 @@
 			temp_flags |= SOUTH
 		// each iteration can only have one direction at a time, luckily, which is tempflag
 		// the diagonal cases:
-		if (temp_flags == NORTHEAST)
+		if (temp_flags & NORTHEAST)
 			cable_surr |= NE
-		else if (temp_flags == NORTHWEST)
+		else if (temp_flags & NORTHWEST)
 			cable_surr |= NW
-		else if (temp_flags == SOUTHEAST)
+		else if (temp_flags & SOUTHEAST)
 			cable_surr |= SE
-		else if (temp_flags == SOUTHWEST)
+		else if (temp_flags & SOUTHWEST)
 			cable_surr |= SW
 		// if it's not diagonal, just match it with a cardinal direction
 		else cable_surr |= temp_flags
@@ -540,7 +542,7 @@
 		else if (normal_cable.d1 == EAST || normal_cable.d2 == EAST)
 			cable_surr |= WEST
 		// the 'real' wires override and always connect to prevent loose ends
-/// causes cablespawner to spawn cables (amazing)
+/// causes cablespawner to spawn cables (amazing) (WORKS)
 /obj/cablespawner/proc/replace()
 	var/directions = convert()
 	if (length(directions) == 0)
@@ -557,7 +559,7 @@
 		for (var/i in 1 to length(directions))
 			cable_laying(0, directions[i])
 	qdel(src)
-/// converts 8 bit into a list of directions. In order of bitflag
+/// converts 8 bit into a list of directions. In order of bitflag (WORKS)
 /obj/cablespawner/proc/convert()
 	var/list/directionlist = list()
 	if (cable_surr & NORTH)
@@ -578,7 +580,7 @@
 		directionlist += SOUTHWEST
 	return directionlist
 
-/// places a cable with d1 and d2
+/// places a cable with d1 and d2 (WORKS)
 /obj/cablespawner/proc/cable_laying(var/dir1, var/dir2)
 	var/obj/cable/current = new/obj/cable(src.loc)
 	current.d1 = dir1
