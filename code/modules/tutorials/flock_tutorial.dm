@@ -21,7 +21,7 @@
 		src.AddStep(new /datum/tutorialStep/flock/build_thing/interceptor)
 		src.AddStep(new /datum/tutorialStep/flock/turret_demo)
 		src.AddStep(new /datum/tutorialStep/flock/showcase)
-		src.exit_point = pick_landmark(LANDMARK_OBSERVER)
+		src.exit_point = pick_landmark(LANDMARK_LATEJOIN)
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_FLOCK_CONVERSION])
 			if(src.region.turf_in_region(T))
 				center = T
@@ -102,7 +102,7 @@
 
 /datum/tutorialStep/flock/deploy
 	name = "Realizing"
-	instructions = "If at any point this tutorial glitches up and leaves you in a stuck state, use the emergency tutorial stop verb. <br /> Choose a suitable area to spawn your rift. In the real world you should try to choose an out of the way area with plenty of resources and delicious computers to eat. Here though, just deploy on the marked tile."
+	instructions = "If at any point this tutorial glitches up and leaves you in a stuck state, use the emergency tutorial stop verb (found in the Commands tab top right). <br /> Choose a suitable area to spawn your rift. In the real world you should try to choose an out of the way area with plenty of resources and delicious computers to eat. Here though, just deploy on the marked tile."
 	var/turf/must_deploy = null
 
 	SetUp()
@@ -193,7 +193,7 @@
 		var/mob/living/critter/flock/drone/first_drone = src.ftutorial.fowner.flock.units[/mob/living/critter/flock/drone/][1] // lol
 		first_drone.set_tutorial_ai(FALSE)
 		SPAWN(1 SECOND)
-			flock_spiral_conversion(src.ftutorial.center, ftutorial.fowner.flock, 0.1 SECONDS)
+			flock_spiral_conversion(src.ftutorial.center, ftutorial.fowner.flock, 10, 0.1 SECONDS)
 		for (var/i = 1 to 4)
 			var/mob/living/critter/flock/drone/flockdrone = new(locate(src.ftutorial.center.x + rand(-3, 3), src.ftutorial.center.y + rand(-3, 3), src.ftutorial.center.z), ftutorial.fowner.flock)
 			spawn_animation1(flockdrone)
@@ -363,6 +363,13 @@
 		return
 	src.tutorial.Finish()
 	src.tutorial = null
+
+/mob/living/critter/flock/drone/verb/help_my_tutorial_is_being_a_massive_shit()
+	set name = "EMERGENCY TUTORIAL STOP"
+	if (istype(src.controller, /mob/living/intangible/flock/flockmind))
+		var/mob/living/intangible/flock/flockmind/flockmind = src.controller
+		src.release_control()
+		flockmind.help_my_tutorial_is_being_a_massive_shit()
 
 //for debug, do not enable on live or it will cause runtimes and break everything
 // /mob/living/intangible/flock/flockmind/verb/skip_tutorial_step()

@@ -704,6 +704,8 @@ var/flock_signal_unleashed = FALSE
 	src.claimTurf(flock_convert_turf(T))
 	playsound(T, 'sound/items/Deconstruct.ogg', 30, 1, extrarange = -10)
 
+// Z LEVEL CHECK
+
 /datum/flock/proc/z_level_check(var/atom/A)
 	if (src.flockmind.tutorial || A.z == Z_LEVEL_STATION)
 		return TRUE
@@ -864,7 +866,7 @@ var/flock_signal_unleashed = FALSE
 
 	flock_spiral_conversion(T, F)
 
-/proc/flock_spiral_conversion(var/turf/T, datum/flock/F, delay = 0.2 SECONDS)
+/proc/flock_spiral_conversion(turf/T, datum/flock/F, radius = 15, delay = 0.2 SECONDS)
 	if(!T) return
 	// spiral algorithm adapted from https://stackoverflow.com/questions/398299/looping-in-a-spiral
 	var/ox = T.x
@@ -876,7 +878,7 @@ var/flock_signal_unleashed = FALSE
 	var/dy = -1
 	var/temp = 0
 
-	while(isturf(T))
+	while(isturf(T) && x <= radius)
 		if(istype(T, /turf/simulated) && !isfeathertile(T))
 			if (F)
 				F.claimTurf(flock_convert_turf(T))
