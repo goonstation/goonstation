@@ -415,15 +415,13 @@
 
 /// a cable spawner which can spawn multiple cables to connect to other cables around it.
 /obj/cablespawner
-	level = 1
 	name = "power cable spawner"
-	desc = "An item that should spawn actual cables. If you're reading this, something's wrong."
 	icon = 'icons/obj/power_cond.dmi'
 	icon_state = "superstate"
-	var/iconmod = null
 	layer = CABLE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 	color = "#DD0000"
+	var/needsconnection = FALSE
 	var/cable_type = /obj/cable
 	// some bit flags for 8 bit directions
 	var/const/SW = 128
@@ -444,10 +442,8 @@
 /// reinforced, thick cables. They should also connect to the regular kind.
 /obj/cablespawner/reinforced
 	name = "reinforced power cable spawner"
-	desc = "An item that should spawn actual reinforced cables. If you're reading this, something's wrong."
 	icon = 'icons/obj/power_cond.dmi'
 	icon_state = "superstate"
-	iconmod = "-thick"
 	cable_type = /obj/cable/reinforced
 	color = "#075C90"
 
@@ -463,6 +459,9 @@
 
 /// checks around itself for cables, adds up to 8 bits to cable_surr
 /obj/cablespawner/proc/check(var/obj/cable/cable)
+	for (var/obj/object in range(0, src))
+	// checks to see if a terminal is needed
+		null
 	for (var/obj/cablespawner/spawner in orange(1, src))
 	// checks for cablespawners around itself
 		var/disx = spawner.x - src.x
@@ -571,10 +570,12 @@
 	if (cable_surr & SW)
 		directions += SOUTHWEST
 
-	if (length(directions) >= 3)
+	if (length(directions) >= 3 || src.needsconnection)
 	// multiple cables, spiral out from the centre
 		for (var/i in 1 to length(directions))
 			cable_laying(0, directions[i])
+		// if (src.needsconnection)
+		// we dont need this i think, apcs place their own or something
 	else if (length(directions) == 1)
 	// end of a cable
 		cable_laying(0, directions[1])
@@ -586,9 +587,6 @@
 /// places a cable with d1 and d2
 /obj/cablespawner/proc/cable_laying(var/dir1, var/dir2)
 	var/obj/cable/current = new src.cable_type(src.loc)
-	if(!istype(current))
-    	CRASH("[src.cable_type] must be a /obj/cable!")
-    	return
 	current.d1 = dir1
 	current.d2 = dir2
 	current.UpdateIcon()
