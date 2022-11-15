@@ -1,5 +1,9 @@
 
 (t)tue nov 15 22
+(u)LeahTheTech
+(p)11941
+(e)🪲🔎📄🍝|C-Bug, C-Code-Quality, A-UI, A-Catering
+(*)Pizza vendors now work again and have a new TGUI interface.
 (u)pali
 (+)The APC pinpointer now has a "current room" option.
 (t)mon nov 14 22
