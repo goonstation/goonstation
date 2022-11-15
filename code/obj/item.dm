@@ -454,8 +454,7 @@
 	if(src.burning || (src in by_cat[TR_CAT_BURNING_ITEMS]))
 		return
 	START_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
-	src.visible_message("<span class='alert'>[src] catches on fire!</span>")
-	src.burning = 1
+	src.burning = TRUE
 	src.firesource = FIRESOURCE_OPEN_FLAME
 	if (istype(src, /obj/item/plant))
 		if (!GET_COOLDOWN(global, "hotbox_adminlog"))
