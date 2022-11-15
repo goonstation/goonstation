@@ -472,11 +472,11 @@
 /// checks around itself for cables, adds up to 8 bits to cable_surr
 /obj/cablespawner/proc/check(var/obj/cable/cable)
 	for (var/obj/cablespawner/spawner in orange(1, src))
-	// cablespawners around itself
+	// checks forcablespawners around itself
 		var/tempflag = 0
 		// this will store the 4 bit direction temporarily for the for loop
 		// tempflag is 4bit, stores a NESW direction
-		// cable_surr is 8 bit, stores up to 8 NESW directions
+		// cable_surr is 8 bit, stores up to 8 NESW directions at once
 		var/disx = spawner.x - src.x
 		var/disy = spawner.y - src.y
 		// the following assumes disxy (displacement of x or y) equals 1,0 or -1
@@ -488,7 +488,8 @@
 			temp_flags |= NORTH
 		if (disy == -1)
 			temp_flags |= SOUTH
-		// each iteration can only have one direction at a time, luckily
+		// each iteration can only have one direction at a time, luckily, which is tempflag
+		// the diagonal cases:
 		if (temp_flags == NORTHEAST)
 			cable_surr |= NE
 		else if (temp_flags == NORTHWEST)
@@ -497,6 +498,7 @@
 			cable_surr |= SE
 		else if (temp_flags == SOUTHWEST)
 			cable_surr |= SW
+		// if it's not diagonal, just match it with a cardinal direction
 		else cable_surr |= temp_flags
 	optimise()
 	for (var/obj/cable/normal_cable in orange(1, src))
@@ -504,6 +506,7 @@
 	// turns out, since initialize() does cablespawners one by one
 	// they turn into regular cables and must be considered like that by the system
 	// this bit is MANDATORY
+	// it is also probably where it is breaking
 		var/temp_flags = 0
 		var/disx = normal_cable.x - src.x
 		var/disy = normal_cable.y - src.y
@@ -549,7 +552,7 @@
 	else if (length(directions) == 2)
 	// a normal, single cable
 		cable_laying(directions[1], directions[2])
-	else if (length(directions) >= 3)
+	else
 	// multiple cables, spiral out from the centre
 		for (var/i in 1 to length(directions))
 			cable_laying(0, directions[i])
