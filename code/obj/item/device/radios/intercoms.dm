@@ -59,8 +59,8 @@
 // /obj/item/device/radio/attackby(obj/item/W, mob/user)
 // 	if (istype(W, /obj/item/fish))
 // 		if(src.dir == SOUTH)
-// 			user.visible_message("<b><span class='hint'>[user] shoves the fish over the intercom, and then mounts the whole thing on a board \
-// 				which they conveniently had.</span></b>", "<b><span class='hint'>You shove the fish over the intercom, and then mount the whole thing on a board \
+// 			user.visible_message("<b><span class='hint'>[user] shoves the fish over the intercom, and then mounts the whole thing on a board
+// 				which they conveniently had.</span></b>", "<b><span class='hint'>You shove the fish over the intercom, and then mount the whole thing on a board
 // 				which you conveniently had.</span></b>")
 
 // 			new /obj/item/device/radio/intercom/fish(src.loc, src)
