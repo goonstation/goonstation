@@ -1,16 +1,21 @@
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Divider, Icon , Input, LabeledList, NoticeBox, Section} from '../components';
-import { Window } from '../layouts';
+declare const React;
 
-export const ATM = (props, context) => {
-  const { data } = useBackend(context);
+import { useBackend, useLocalState } from '../../backend';
+import { Box, Button, Divider, Icon, Input, LabeledList, NoticeBox, Section, Tabs } from '../../components';
+import { Window } from '../../layouts';
+import { AtmData } from './types';
+
+export const Atm = (props, context) => {
+  const { data } = useBackend<AtmData>(context);
   const { scannedCard, loggedIn } = data;
-  let body
-  if (loggedIn == "STATE_LOGGEDIN") {
+
+  let body;
+  if (loggedIn === "STATE_LOGGEDIN") {
     body = <LoggedIn />;
   } else {
     body = <InputPIN />;
   }
+
   return (
     <Window
       title="Automatic Teller Machine"
@@ -18,16 +23,16 @@ export const ATM = (props, context) => {
       height={525}>
       <Window.Content>
         <Section title="Automatic Teller Machine">
-          <Box>
-            <Icon name="info-circle"/> Thank you for using Nanotrasen financial services.
-          </Box>
-          <Divider/>
+          <NoticeBox info>
+            Please insert card and enter PIN to access your account.
+          </NoticeBox>
+          <Divider />
           <Box>
             { !scannedCard ? (
               <InsertCard />
-              ) : (
+            ) : (
               <Section>
-                <InsertedCard/>
+                <InsertedCard />
                 <Box>
                   {body}
                 </Box>
@@ -74,12 +79,12 @@ const InputPIN = (props, context) => {
   const [enteredPIN, setEnteredPIN] = useLocalState(context, "enteredPIN", null);
   return (
     <Box>
-      <Divider/>
+      <Divider />
       <LabeledList>
         <LabeledList.Item label="Enter your PIN">
           <Input
             placeholder="4 Digit Number"
-            onInput={(e, value) => setEnteredPIN(value)}/>
+            onInput={(e, value) => setEnteredPIN(value)} />
           <Button
             icon="sign-out-alt"
             content={'Login'}
@@ -98,7 +103,7 @@ const LoggedIn = (props, context) => {
         Welcome, <strong>USR</strong>. Your account balance is <strong>$0</strong>.
       </Box>
       <Box>
-        Withdrawal amount: <Input placeholder="Amount"/>
+        Withdrawal amount: <Input placeholder="Amount" />
         <Button
           icon="dollar-sign"
           content={'Withdraw cash'}
@@ -111,10 +116,10 @@ const LoggedIn = (props, context) => {
 const Lottery = (props, context) => {
   return (
     <Section title="Lottery">
-      <Box>
-        <Icon name="info-circle"/> To claim your winnings, you'll need to insert your lottery ticket.
-      </Box>
-      <Divider/>
+      <NoticeBox info>
+        To claim your winnings, you must insert your lottery ticket.
+      </NoticeBox>
+      <Divider />
       <Box>
         <Button
           icon="ticket-alt"
@@ -133,13 +138,13 @@ const SpacebuxMenu = (props, context) => {
         <NoticeBox info>
           This menu is only here for you. Other players cannot access your Spacebux!
         </NoticeBox>
-        <Icon name ="exclamation-circle"/> Deposit Spacebux at any time by inserting a token. It will always go to <strong>your</strong> account!
+        <Icon name="exclamation-circle" /> Deposit Spacebux at any time by inserting a token. It will always go to <strong>your</strong> account!
       </Box>
-      <Divider/>
+      <Divider />
       <Box>
         Current balance: <strong>0</strong> Spacebux
       </Box>
-      <Divider/>
+      <Divider />
       <Box>
         <Button
           icon="coins"

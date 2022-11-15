@@ -825,55 +825,57 @@
 		if(..())
 			return
 
-		src.add_dialog(user)
-		var/list/dat = list("<span style=\"inline-flex\">")
+		ui_interact(user)
 
-		switch(src.state)
-			if(STATE_LOGGEDOFF)
-				if (src.scan)
-					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Logout</A> \]"
-					if(afterlife)
-						dat += "<BR><BR><A HREF='?src=\ref[src];operation=login'>Log In</A>"
-					else
-						dat += "<BR><BR><A HREF='?src=\ref[src];operation=enterpin'>Enter Pin</A>"
+		// src.add_dialog(user)
+		// var/list/dat = list("<span style=\"inline-flex\">")
 
-				else dat += "Please swipe your card to begin."
+		// switch(src.state)
+		// 	if(STATE_LOGGEDOFF)
+		// 		if (src.scan)
+		// 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Logout</A> \]"
+		// 			if(afterlife)
+		// 				dat += "<BR><BR><A HREF='?src=\ref[src];operation=login'>Log In</A>"
+		// 			else
+		// 				dat += "<BR><BR><A HREF='?src=\ref[src];operation=enterpin'>Enter Pin</A>"
 
-			if(STATE_LOGGEDIN)
-				if(!src.accessed_record)
-					dat += "ERROR, NO RECORD DETECTED. LOGGING OFF."
-					src.state = STATE_LOGGEDOFF
-					src.updateUsrDialog()
+		// 		else dat += "Please swipe your card to begin."
 
-				else
-					dat += "<BR><A HREF='?src=\ref[src];operation=logout'>Logout</A>"
+		// 	if(STATE_LOGGEDIN)
+		// 		if(!src.accessed_record)
+		// 			dat += "ERROR, NO RECORD DETECTED. LOGGING OFF."
+		// 			src.state = STATE_LOGGEDOFF
+		// 			src.updateUsrDialog()
 
-					if (src.scan)
-						dat += "<BR><BR>Your balance is: [src.accessed_record["current_money"]][CREDIT_SIGN]."
-						dat += "<BR><A HREF='?src=\ref[src];operation=withdrawcash'>Withdraw Cash</A>"
-						dat += "<BR><BR><A HREF='?src=\ref[src];operation=buy'>Buy Lottery Ticket (100 credits)</A>"
-						dat += "<BR>To claim your winnings you'll need to insert your lottery ticket."
-					else
-						dat += "<BR>Please swipe your card to continue."
+		// 		else
+		// 			dat += "<BR><A HREF='?src=\ref[src];operation=logout'>Logout</A>"
+
+		// 			if (src.scan)
+		// 				dat += "<BR><BR>Your balance is: [src.accessed_record["current_money"]][CREDIT_SIGN]."
+		// 				dat += "<BR><A HREF='?src=\ref[src];operation=withdrawcash'>Withdraw Cash</A>"
+		// 				dat += "<BR><BR><A HREF='?src=\ref[src];operation=buy'>Buy Lottery Ticket (100 credits)</A>"
+		// 				dat += "<BR>To claim your winnings you'll need to insert your lottery ticket."
+		// 			else
+		// 				dat += "<BR>Please swipe your card to continue."
 
 
-		if (user.client)
-			dat += {"
-			<br><br><br>
-			<div style="color:#666; border: 1px solid #555; padding:5px; margin: 3px; background-color:#efefef;">
-			<strong>&mdash; [user.client.key] Spacebux Menu &mdash;</strong>
-			<br><em>(This menu is only here for <strong>you</strong>. Other players cannot access your Spacebux!)</em>
-			<br>
-			<br>Current balance: <strong>[user.client.persistent_bank]</strong> Spacebux <!-- <a href='?src=\ref[src];operation=view_spacebux_balance'>Check Spacebux Balance</a> -->
-			<br><a href='?src=\ref[src];operation=withdraw_spacebux'>Withdraw Spacebux</a>
-			<br><a href='?src=\ref[src];operation=transfer_spacebux'>Securely Send Spacebux</a>
-			<br>Deposit Spacebux at any time by inserting a token. It will always go to <strong>your</strong> account!
-			</div>
-			"}
+		// if (user.client)
+		// 	dat += {"
+		// 	<br><br><br>
+		// 	<div style="color:#666; border: 1px solid #555; padding:5px; margin: 3px; background-color:#efefef;">
+		// 	<strong>&mdash; [user.client.key] Spacebux Menu &mdash;</strong>
+		// 	<br><em>(This menu is only here for <strong>you</strong>. Other players cannot access your Spacebux!)</em>
+		// 	<br>
+		// 	<br>Current balance: <strong>[user.client.persistent_bank]</strong> Spacebux <!-- <a href='?src=\ref[src];operation=view_spacebux_balance'>Check Spacebux Balance</a> -->
+		// 	<br><a href='?src=\ref[src];operation=withdraw_spacebux'>Withdraw Spacebux</a>
+		// 	<br><a href='?src=\ref[src];operation=transfer_spacebux'>Securely Send Spacebux</a>
+		// 	<br>Deposit Spacebux at any time by inserting a token. It will always go to <strong>your</strong> account!
+		// 	</div>
+		// 	"}
 
-		dat += "<BR><BR><A HREF='?action=mach_close&window=atm'>Close</A></span>"
-		user.Browse(dat.Join(), "window=atm;size=400x500;title=Automated Teller Machine")
-		onclose(user, "atm") */
+		// dat += "<BR><BR><A HREF='?action=mach_close&window=atm'>Close</A></span>"
+		// user.Browse(dat.Join(), "window=atm;size=400x500;title=Automated Teller Machine")
+		// onclose(user, "atm") */
 
 	bullet_act(var/obj/projectile/P)
 		if (P.power && P.proj_data.ks_ratio) //shooting ATMs with lethal rounds instantly makes them spit out their money, just like in the movies!
@@ -1010,13 +1012,13 @@
 /obj/submachine/ATM/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
-		ui = new(user, src, "ATM", name)
+		ui = new(user, src, "Atm", name)
 		ui.open()
 
 /obj/submachine/ATM/ui_data(mob/user)
 	. = list(
 		"scannedCard" = src.scan,
-		"scannedPIN" = src.scan.pin,
+		"cardname" = src.scan?.name,
 		"loggedIn" = src.state
 	)
 
@@ -1049,6 +1051,7 @@
 			if (enteredPIN == src.scan.pin)
 				if(TryToFindRecord())
 					src.state = STATE_LOGGEDIN
+					. = TRUE
 				else
 					boutput(usr, "<span class='alert'>Cannot find a bank record for this card.</span>")
 			else
