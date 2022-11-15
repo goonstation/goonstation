@@ -1125,7 +1125,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	pointCost = 120
 	var/const/max_decals = 40
 	var/const/min_decals = 10
-	var/const/strong_exploder_threshold = 20
+	var/const/strong_exploder_threshold = 30
 	var/list/decal_list = list(/obj/decal/cleanable/blood,
 	/obj/decal/cleanable/ketchup,
 	/obj/decal/cleanable/rust,
@@ -1144,6 +1144,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		for (var/obj/decal/cleanable/found_cleanable in range(3, get_turf(holder.owner)))
 			if (istypes(found_cleanable, decal_list))
 				found_decal_list += found_cleanable
+				decal_count ++
 				if (length(found_decal_list) >= max_decals)
 					break
 		if (length(found_decal_list) > min_decals)
