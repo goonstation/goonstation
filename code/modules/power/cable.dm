@@ -424,6 +424,7 @@
 	layer = CABLE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 	color = "#DD0000"
+	var/cable_type = /obj/cable
 	// some bit flags for 8 bit directions
 	var/const/SW = 128
 	var/const/NW = 64
@@ -446,7 +447,8 @@
 	desc = "An item that should spawn actual reinforced cables. If you're reading this, something's wrong."
 	icon = 'icons/obj/power_cond.dmi'
 	icon_state = "superstate"
-	var/iconmod = "-thick"
+	iconmod = "-thick"
+	cable_type = /obj/cable/reinforced
 	color = "#075C90"
 
 /// creates new cablespawners
@@ -568,27 +570,25 @@
 		directions += NORTHWEST
 	if (cable_surr & SW)
 		directions += SOUTHWEST
-	if (length(directions) == 1)
+
+	if (length(directions) >= 3)
+	// multiple cables, spiral out from the centre
+		for (var/i in 1 to length(directions))
+			cable_laying(0, directions[i])
+	else if (length(directions) == 1)
 	// end of a cable
 		cable_laying(0, directions[1])
 	else if (length(directions) == 2)
 	// a normal, single cable
 		cable_laying(directions[1], directions[2])
-	else if (length(directions) >= 3)
-	// multiple cables, spiral out from the centre
-		for (var/i in 1 to length(directions))
-			cable_laying(0, directions[i])
 	qdel(src)
 
 /// places a cable with d1 and d2
 /obj/cablespawner/proc/cable_laying(var/dir1, var/dir2)
-	if (src.iconmod == "-thick")
-		var/obj/cable/current = new/obj/cable/reinforced(src.loc)
-		current.d1 = dir1
-		current.d2 = dir2
-		current.UpdateIcon()
-	else
-		var/obj/cable/current = new/obj/cable(src.loc)
-		current.d1 = dir1
-		current.d2 = dir2
-		current.UpdateIcon()
+	var/obj/cable/current = new src.cable_type(src.loc)
+	if(!istype(current))
+    	CRASH("[src.cable_type] must be a /obj/cable!")
+    	return
+	current.d1 = dir1
+	current.d2 = dir2
+	current.UpdateIcon()
