@@ -40,10 +40,10 @@
 			return
 		if (!src.user_can_suicide(user))
 			return FALSE
-		usr.visible_message("<span class='alert'><b>[user] attempts to reach the valve with [his_or_her(user)] mouth to release some pressure!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] attempts to reach the valve with [his_or_her(user)] mouth to release some pressure!</b></span>")
 		if (src.det)
 			if (!src.det.part_fs.timing || src.det.defused)
-				boutput(usr, "<span class='alert'>You try to reach the valve with your mouth but the failsafe prevents you from reaching it.<br><i>Looks like priming the bomb might make it accessible to you...?</i></span>")
+				boutput(user, "<span class='alert'>You try to reach the valve with your mouth but the failsafe prevents you from reaching it.<br><i>Looks like priming the bomb might make it accessible to you...?</i></span>")
 				return
 			if (locate(/obj/item/device/analyzer/atmospheric) in src.det.attachments)
 				src.visible_message("<span class='alert'>[usr] opened the valve and triggered the detonation process.</span>")
@@ -54,7 +54,7 @@
 			boutput(user, "<span class='alert'>You hold your mouth to the release valve and open it. Nothing happens. You close the valve in shame.<br><i>Maybe if you used more pressure...?</i></span>")
 			return
 		src.valve_open = TRUE
-		usr.gib()
+		user.gib()
 
 	powered()
 		return 1
