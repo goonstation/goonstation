@@ -473,7 +473,7 @@
 /obj/cablespawner/proc/check(var/obj/cable/cable)
 	for (var/obj/cablespawner/spawner in orange(1, src))
 	// checks forcablespawners around itself
-		var/tempflags = 0
+		var/temp_flags = 0
 		// this will store the 4 bit direction temporarily for the for loop
 		// tempflag is 4bit, stores a NESW direction
 		// cable_surr is 8 bit, stores up to 8 NESW directions at once
@@ -492,13 +492,13 @@
 			temp_flags |= SOUTH
 		// each iteration can only have one direction at a time, luckily, which is tempflag
 		// the diagonal cases:
-		if (temp_flags & NORTHEAST)
+		if (temp_flags == NORTHEAST)
 			cable_surr |= NE
-		else if (temp_flags & NORTHWEST)
+		else if (temp_flags == NORTHWEST)
 			cable_surr |= NW
-		else if (temp_flags & SOUTHEAST)
+		else if (temp_flags == SOUTHEAST)
 			cable_surr |= SE
-		else if (temp_flags & SOUTHWEST)
+		else if (temp_flags == SOUTHWEST)
 			cable_surr |= SW
 		// if it's not diagonal, just match it with a cardinal direction
 		else cable_surr |= temp_flags
