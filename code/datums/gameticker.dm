@@ -108,7 +108,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	switch(master_mode)
 		if("random","secret") src.mode = config.pick_random_mode()
-		if("action") src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
+		if("action") src.mode = config.pick_mode(pick("nuclear", "wizard", "blob", "flock"))
 		if("intrigue") src.mode = config.pick_mode(pick(prob(300);"mixed_rp", prob(200); "traitor", prob(75);"changeling","vampire", prob(50); "conspiracy", "spy_theft","arcfiend", prob(50); "extended"))
 		if("pod_wars") src.mode = config.pick_mode("pod_wars")
 		else src.mode = config.pick_mode(master_mode)
