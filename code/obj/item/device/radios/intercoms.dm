@@ -70,6 +70,7 @@
 			qdel(src)
 		else
 			boutput(user, "<span class='alert'>Looks like the fish won't fit over an intercom facing that way.</span>")
+		return
 	. = ..()
 
 
@@ -284,6 +285,12 @@
 	pixel_y = 28 // fish only approved for dir = SOUTH
 	device_color = "#3983C6" // for chat color
 
+	// burning stuff
+	burn_type = 1 // burn down to a glob
+	burn_possible = TRUE
+	burn_point = 300
+	health = 50 // same as a plank
+
 	New(var/loc, var/obj/item/device/radio/intercom/intercom_to_copy)
 		. = ..()
 		if (intercom_to_copy && istype(intercom_to_copy))
@@ -291,6 +298,11 @@
 			src.broadcasting = intercom_to_copy.broadcasting
 			src.name = replacetext(intercom_to_copy.name, "Intercom", "Fishercom")
 			src.frequency = intercom_to_copy.frequency
+
+	generateMapText(text, textLoc, mob/R, style, alpha, force, time)
+		if (src.burning)
+			text = stutter(text)
+		. = ..()
 
 	// kind of a hack since it'll flick for every mob that hears from this, but as far as I can see this is the only proc which is reliably called when
 	// an intercom recieves a message. all the other logic is handled in talk_into of the sending radio.
@@ -300,4 +312,3 @@
 
 	update_pixel_offset_dir()
 		return // no
-
