@@ -459,9 +459,6 @@
 	if (. == 100)
 		return 100
 
-	if (istype(src, /mob/living/intangible/wraith))
-		return
-
 	if (params["middle"])
 		src.swap_hand()
 		return
