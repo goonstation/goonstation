@@ -313,7 +313,7 @@
 	/obj/item/clothing/ears/earmuffs,
 	/obj/item/clothing/glasses/meson,
 	/obj/item/clothing/suit/fire,
-	/obj/item/clothing/mask/gas,
+	/obj/item/clothing/mask/gas/engineer,
 	/obj/item/storage/belt/utility/prepared/ceshielded,
 	/obj/item/clothing/head/helmet/welding,
 	/obj/item/clothing/head/helmet/hardhat,

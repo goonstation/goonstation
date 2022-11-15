@@ -129,6 +129,16 @@
 		..()
 		setProperty("disorient_resist_eye", 20)
 
+/obj/item/clothing/mask/gas/engineer
+	name = "Engineering gas mask"
+	desc = "A standard gas mask with an orange visor to more closely fit the departmental colors of engineering."
+	icon_state = "gas_eng"
+	item_state = "gas_eng"
+
+	color_r = 1 // ORANGE TINT ORANGE TINT ORANGE TINT
+	color_g = 0.9
+	color_b = 0.6
+
 /obj/item/clothing/mask/moustache
 	name = "fake moustache"
 	desc = "Nobody will know who you are if you put this on. Nobody."

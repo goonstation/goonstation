@@ -3196,7 +3196,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/engineering, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/hi_vis, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/fire, 2)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/gas, 6)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/gas/engineer, 6)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/black, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/yellow/unsulated, 2) //heh
 		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/brown, 4)
