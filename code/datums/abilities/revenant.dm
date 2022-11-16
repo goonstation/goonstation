@@ -526,7 +526,7 @@
 
 /datum/action/bar/crush
 	duration = 8 SECONDS
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_ATTACKED
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT
 	id = "crush"
 	var/mob/living/casting_mob = null
 	var/mob/living/target_mob = null
