@@ -426,6 +426,11 @@
 	var/override_centre_connection = FALSE
 	var/cable_type = /obj/cable
 	/// this 8 bit variable uses bit flags to tell which 8 tiles need connections
+	var/const/SW = 128
+	var/const/NW = 64
+	var/const/SE = 32
+	var/const/NE = 16
+	// these constants ARE needed they are DIFFERENT from the regular NORTHWEST and such
 	var/cable_surr = 0
 	/*
 	* bitflag of the tiles surrounding itself:
