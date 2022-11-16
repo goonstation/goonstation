@@ -102,6 +102,31 @@
 			return
 
 		switch (signal.data["command"])
+			if ("help")
+				var/datum/signal/reply = get_free_signal()
+				reply.source = src
+				reply.data["sender"] = src.net_id
+				reply.data["address_1"] = sender
+				if (!signal.data["topic"])
+					reply.data["description"] = "Chemical Combustion Generator"
+					reply.data["topics"] = "status,set_var"
+
+				else
+					reply.data["topic"] = signal.data["topic"]
+					switch (lowertext(signal.data["topic"]))
+						if ("status")
+							reply.data["description"] = "Returns the status of the Chemical Combustion Generator."
+
+						if ("set_var")
+							reply.data["description"] = "Allows you to set various data used by the generator's control unit, possible fields are displayed by status."
+							reply.data["args"] = "var_name,data"
+
+						else
+							reply.data["description"] = "ERROR: UNKNOWN TOPIC"
+
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+				return
+
 			if ("status")
 				src.send_status(sender)
 
