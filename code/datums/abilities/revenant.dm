@@ -303,7 +303,7 @@
 		last_cast = world.time + cooldown
 		holder.updateButtons()
 		SPAWN(cooldown + 5)
-			holder?.updateButtons()
+			holder.updateButtons()
 
 
 /datum/targetable/revenantAbility/massCommand
@@ -323,17 +323,11 @@
 		holder.owner.visible_message("<span class='alert'><strong>[holder.owner]</strong> gestures upwards, then at [target] with a swift striking motion!</span>")
 		var/list/thrown = list()
 		var/current_prob = 100
-		var/turf/destination = null
-		if (!isturf(target))
-			destination = get_turf(target)
-		else
-			destination = target
-		if (!destination) return TRUE
 		if (ishuman(target))
 			var/mob/living/carbon/T = target
 			if (T.traitHolder.hasTrait("training_chaplain"))
 				target.visible_message("<span class='alert'> [target] gives a rude gesture right back to [holder.owner]!</span>")
-				return TRUE
+				return 1
 			else if( check_target_immunity(T) )
 				holder.owner.show_message( "<span class='alert'>That target seems to be warded from the effects!</span>" )
 			else
@@ -348,9 +342,8 @@
 					thrown += O
 					animate_float(O)
 		SPAWN(1 SECOND)
-			if (!destination) return
 			for (var/obj/O in thrown)
-				O.throw_at(destination, 32, 2)
+				O.throw_at(target, 32, 2)
 
 /datum/targetable/revenantAbility/shockwave
 	name = "Shockwave"
@@ -503,65 +496,66 @@
 		playsound(target.loc, 'sound/voice/wraith/revfocus.ogg', 80, 0)
 		if (!ishuman(target))
 			holder.owner.show_message("<span class='alert'>You must target a human with this ability.</span>")
-			return TRUE
+			return 1
 		var/mob/living/carbon/human/H = target
 		if (!isturf(holder.owner.loc))
 			holder.owner.show_message("<span class='alert'>You cannot cast this ability inside a [holder.owner.loc].</span>")
-			return TRUE
+			return 1
 		if (holder.owner.equipped())
 			holder.owner.show_message("<span class='alert'>You require a free hand to cast this ability.</span>")
-			return TRUE
+			return 1
 		if (H.traitHolder.hasTrait("training_chaplain"))
 			holder.owner.show_message("<span class='alert'>Some mysterious force shields [target] from your influence.</span>")
 			JOB_XP(H, "Chaplain", 2)
-			return TRUE
+			return 1
 		else if( check_target_immunity(H) )
 			holder.owner.show_message("<span class='alert'>[target] seems to be warded from the effects!</span>")
-			return TRUE
+			return 1
+
+		var/location = holder.owner.loc
 
 		holder.owner.visible_message("<span class='alert'>[holder.owner] reaches out towards [H], making a crushing motion.</span>", "<span class='notice'>You reach out towards [H].</span>")
 		H.changeStatus("weakened", 2 SECONDS)
-		actions.start(new/datum/action/bar/crush(holder.owner, H), holder.owner)
-		return FALSE
 
-/datum/action/bar/crush
-	duration = 8 SECONDS
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_ATTACKED
-	id = "crush"
-	var/mob/living/casting_mob = null
-	var/mob/living/target_mob = null
-
-	New(var/mob/living/caster, var/mob/living/target)
-		src.casting_mob = caster
-		src.target_mob = target
-		..()
-
-	onStart()
-		..()
-		if (src.casting_mob == null || src.target_mob == null || !isalive(src.casting_mob) || !can_act(src.casting_mob) || (GET_DIST(src.casting_mob, src.target_mob) > 7))
-			interrupt(INTERRUPT_ALWAYS)
+		var/datum/abilityHolder/revenant/RH
+		if (istype(holder, /datum/abilityHolder/revenant))
+			RH = holder
+			RH.channeling = 1
+		if (!RH || !istype(RH, /datum/abilityHolder/revenant/))
 			return
 
-	onUpdate()
-		..()
-		if (src.casting_mob == null || src.target_mob == null || !isalive(src.casting_mob) || !can_act(src.casting_mob) || (GET_DIST(src.casting_mob, src.target_mob) > 7))
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		src.target_mob.changeStatus("weakened", 2 SECONDS)
-		src.target_mob.TakeDamage("chest", 5, 0, 0, DAMAGE_CRUSH)
-		if (prob(25))
-			src.target_mob.visible_message("<span class='alert'>[src.target_mob]'s bones crack loudly!</span>", "<span class='alert'>You feel like you're about to be [pick("crushed", "destroyed", "vaporized")].</span>")
-			playsound(src.target_mob.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 70, 1)
-
-	onEnd()
-		..()
-		src.target_mob.visible_message("<span class='alert'>[src.target_mob]'s body gives in to the telekinetic grip!</span>", "<span class='alert'>You are completely crushed.</span>")
-		logTheThing(LOG_COMBAT, src.casting_mob, "gibs [constructTarget(src.target_mob,"combat")] with the Revenant crush ability at [log_loc(casting_mob)].")
-		src.target_mob.gib()
-
-	onInterrupt()
-		..()
-		boutput(src.casting_mob, "<span class='alert'>You were interrupted!</span>")
+		SPAWN(0.5 SECONDS)
+			var/iterations = 0
+			while (holder.owner.loc == location && isalive(holder.owner) && !holder.owner.equipped())
+				iterations++
+				if (!holder.owner)
+					RH.channeling = 0
+					break
+				if (RH.channeling == 0)
+					holder.owner.show_message("<span class='alert'>You were interrupted!</span>")
+					break
+				if (!H)
+					holder.owner.show_message("<span class='alert'>You were interrupted!</span>")
+					RH.channeling = 0
+					break
+				if (GET_DIST(holder.owner, H) > 7)
+					holder.owner.show_message("<span class='alert'>[H] is pulled from your telekinetic grip!</span>")
+					RH.channeling = 0
+					break
+				H.changeStatus("weakened", (2 + rand(0, iterations)) SECONDS)
+				H.TakeDamage("chest", 4 + rand(0, iterations), 0, 0, DAMAGE_CRUSH)
+				if (prob(40))
+					H.visible_message("<span class='alert'>[H]'s bones crack loudly!</span>", "<span class='alert'>You feel like you're about to be [pick("crushed", "destroyed", "vaporized")].</span>")
+				if (prob(50))
+					H.emote("scream")
+				if (iterations > 12 && prob((iterations - 12) * 5))
+					H.visible_message("<span class='alert'>[H]'s body gives in to the telekinetic grip!</span>", "<span class='alert'>You are completely crushed.</span>")
+					logTheThing(LOG_COMBAT, holder.owner, "gibs [constructTarget(H,"combat")] with the Revenant crush ability at [log_loc(holder.owner)].")
+					H.gib()
+					return
+				sleep(0.7 SECONDS)
+			holder.owner.show_message("<span class='alert'>You were interrupted!</span>")
+		return 0
 
 /datum/targetable/revenantAbility/help
 	name = "Toggle Help Mode"
