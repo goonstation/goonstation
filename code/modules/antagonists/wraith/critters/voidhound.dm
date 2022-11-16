@@ -67,9 +67,5 @@
 				for(var/damage_type in src.healthlist)
 					var/datum/healthHolder/hh = src.healthlist[damage_type]
 					hh.HealDamage(2)
-			if (!HAS_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS))
-				APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "voidhound_darkness", 5)
-		else
-			if (HAS_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS))
-				REMOVE_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "voidhound_darkness")
+			src.setStatus("darkness_stam_regen", 5 SECONDS)
 		..()
