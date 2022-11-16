@@ -150,7 +150,6 @@
 			if (O in user.contents)
 				continue
 			src.load_item(M)
-			M.set_loc(src)
 			playsound(src, sound_load, 40, 1)
 			sleep(0.5)
 			if (user.loc != staystill) break
@@ -201,8 +200,7 @@
 	proc/load_item(var/obj/item/raw_material/R,var/mob/living/user)
 		if (!R)
 			return
-		R.set_loc(src)
-		if (user && R)
+		if (user)
 			user.u_equip(R)
 			R.dropped(user)
 		add_ore_amount(R.material_name,R.amount,R)

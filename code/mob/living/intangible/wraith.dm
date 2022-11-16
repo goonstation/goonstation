@@ -42,6 +42,7 @@
 	var/list/area/excluded_areas = list(/area/shuttle/escape/transit, /area/shuttle_transit_space)
 	var/next_area_change = 10 MINUTES
 	var/list/mob/living/critter/summons = list()	//Keep track of who we summoned to the material plane
+	var/datum/abilityHolder/wraith/AH = null
 
 	var/list/poltergeists
 	/// how much holy water a corpse can have while still being absorbable
@@ -93,6 +94,7 @@
 		src.set_a_intent("disarm")
 		src.see_in_dark = SEE_DARK_FULL
 		src.abilityHolder = new /datum/abilityHolder/wraith(src)
+		AH = src.abilityHolder
 		src.abilityHolder.points = 50
 		if (!istype(src, /mob/living/intangible/wraith/wraith_trickster) && !istype(src, /mob/living/intangible/wraith/wraith_decay) && !istype(src, /mob/living/intangible/wraith/wraith_harbinger) && !istype(src, /mob/living/intangible/wraith/poltergeist))
 			src.addAbility(/datum/targetable/wraithAbility/specialize)
@@ -465,9 +467,8 @@
 		return 0
 
 	click(atom/target)
-		. = ..()
-		if (. == 100)
-			return 100
+		if (src.targeting_ability)
+			..()
 		if (!density)
 			src.examine_verb(target)
 
@@ -677,8 +678,6 @@
 	icon_state = "wraith_trickster"
 	/// How many points do we need to possess someone?
 	var/points_to_possess = 50
-	// /How many do we currently have?
-	var/possession_points = 0
 	/// Steal someone's appearance and use it during haunt
 	var/mutable_appearance/copied_appearance = null
 	/// Steal their descriptions too
@@ -703,7 +702,7 @@
 		if(src.haunting)
 			for (var/mob/living/carbon/human/H in viewers(6, src))
 				if (!H.stat && !H.bioHolder.HasEffect("revenant"))
-					possession_points ++
+					AH.possession_points ++
 
 //////////////
 // Related procs and verbs

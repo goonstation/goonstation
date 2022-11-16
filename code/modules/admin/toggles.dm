@@ -943,8 +943,8 @@ client/proc/toggle_ghost_respawns()
 	radio_audio_enabled = !radio_audio_enabled
 
 	message_admins("<span class='internal'>[key_name(usr)] [radio_audio_enabled ? "" : "dis"]allowed for radio music/tapes to play.</span>")
-	logTheThing(LOG_DIARY, usr, null, "[radio_audio_enabled ? "" : "dis"]allowed for radio music/tapes to play.")
-	logTheThing(LOG_ADMIN, usr, null, "[radio_audio_enabled ? "" : "dis"]allowed for radio music/tapes to play.")
+	logTheThing(LOG_DIARY, usr, "[radio_audio_enabled ? "" : "dis"]allowed for radio music/tapes to play.")
+	logTheThing(LOG_ADMIN, usr, "[radio_audio_enabled ? "" : "dis"]allowed for radio music/tapes to play.")
 
 //Dont need this any more? Player controlled now
 /*
