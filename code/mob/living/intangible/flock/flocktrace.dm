@@ -37,7 +37,6 @@
 	src.addAbility(/datum/targetable/flockmindAbility/designateEnemy)
 	src.addAbility(/datum/targetable/flockmindAbility/directSay)
 	src.addAbility(/datum/targetable/flockmindAbility/ping)
-	src.set_loc(get_turf(src.flock?.flockmind))
 
 /mob/living/intangible/flock/trace/proc/describe_state()
 	var/state = list()

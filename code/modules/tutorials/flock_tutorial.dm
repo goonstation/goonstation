@@ -189,7 +189,7 @@
 
 /datum/tutorialStep/flock/floorrun
 	name = "Floorrunning"
-	instructions = "While controlling a Flockdrone you can press or hold your sprint key to disappear into the newly Flock converted floor, becoming unhittable, and you can pass into nearby Flock floortiles and Flock walls, as long as you have resources. This is referred to as \"Floorrunning.\" Floorrun through the window you just converted. This is possible as a Flock floortile is underneath"
+	instructions = "While controlling a Flockdrone you can press or hold your sprint key to disappear into the newly Flock converted floor, becoming unhittable, and you can pass into nearby Flock floortiles and Flock walls, as long as you have resources. This is referred to as \"Floorrunning.\" Floorrun through the window you just converted. This is possible as a Flock floortile is underneath."
 
 	PerformAction(action, context)
 		if (action == FLOCK_ACTION_FLOORRUN)
