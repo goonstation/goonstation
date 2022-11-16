@@ -225,6 +225,17 @@ var/flock_signal_unleashed = FALSE
 	processing_items -= src
 	..()
 
+//stats should probably be on their own datum, but we'll do this for now
+/datum/flock/proc/reset_stats()
+	src.drones_made = 0
+	src.bits_made = 0
+	src.deaths = 0
+	src.resources_gained = 0
+	src.partitions_made = 0
+	src.tiles_converted = 0
+	src.structures_made = 0
+	src.peak_compute = 0
+
 /datum/flock/proc/total_health_percentage()
 	var/hp = 0
 	var/max_hp = 0

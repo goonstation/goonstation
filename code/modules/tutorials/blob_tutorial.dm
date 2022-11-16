@@ -2,7 +2,6 @@
 	name = "Blob Tutorial Zone"
 	icon_state = "yellow"
 	sound_group = "blob1"
-	dont_log_combat = TRUE
 
 /datum/tutorial_base/regional/blob
 	name = "Blob tutorial"

@@ -1,5 +1,6 @@
 /area/tutorial
 	allowed_restricted_z = TRUE
+	dont_log_combat = TRUE
 
 /datum/tutorial_base
 	var/name = "Tutorial"

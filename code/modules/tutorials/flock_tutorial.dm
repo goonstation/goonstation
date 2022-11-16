@@ -47,6 +47,7 @@
 		fowner.reset()
 		fowner.flock.perish(FALSE)
 		fowner.flock.enemies = list()
+		fowner.flock.reset_stats()
 		fowner.tutorial = null
 		for (var/mob/living/intangible/flock/trace/trace as anything in src.fowner.flock.traces)
 			trace.set_loc(get_turf(src.fowner))
