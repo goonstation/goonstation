@@ -498,7 +498,7 @@ this is already used where it needs to be used, you can probably ignore it.
 	if (isvampire(some_idiot) && (some_idiot.get_vampire_blood() <= 0) || (!isvampire(some_idiot) && !some_idiot.reagents && !some_idiot.blood_volume))
 		return 0
 								//this makes it so the amounts of chemicals you extract scales nonlinearly with the amount of chemicals in you compared to the amount of blood
-	var/reagents_to_transfer = (amount *(0.2 + (0.8 *(some_idiot.reagents.total_volume**(5/4)/(some_idiot.reagents.total_volume**(5/4) + some_idiot.blood_volume)))))
+	var/reagents_to_transfer = (amount * (0.2 + (0.8 * (some_idiot.reagents.total_volume**(5/4)/(some_idiot.reagents.total_volume**(5/4) + some_idiot.blood_volume)))))
 	var/blood_to_transfer = (amount - min(reagents_to_transfer, some_idiot.reagents.total_volume))
 
 	var/datum/bioHolder/bloodHolder = null
