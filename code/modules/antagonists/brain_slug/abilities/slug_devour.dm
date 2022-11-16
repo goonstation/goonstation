@@ -36,56 +36,61 @@
 	New(var/mob/living/carbon/human/M, var/mob/living/source)
 		current_target = M
 		src.caster = source
-		switch(src.caster.zone_sel.selecting)
-			if ("r_arm")
-				if (src.current_target.limbs.r_arm)
-					src.target = src.current_target.limbs.r_arm
-					src.limb_acronym = "r_arm"
-			if ("l_arm")
-				if (src.current_target.limbs.l_arm)
-					src.target = src.current_target.limbs.l_arm
-					src.limb_acronym = "l_arm"
-			if ("r_leg")
-				if (src.current_target.limbs.r_leg)
-					src.target = src.current_target.limbs.r_leg
-					src.limb_acronym = "r_leg"
-			if ("l_leg")
-				if (src.current_target.limbs.l_leg)
-					src.target = src.current_target.limbs.l_leg
-					src.limb_acronym = "l_leg"
-			if ("chest")
-				//Lets pick a random organ
-				var/list/targets = list()
-				if (src.current_target.organHolder.appendix)
-					targets += src.current_target.organHolder.appendix
-				if (src.current_target.organHolder.left_kidney)
-					targets += src.current_target.organHolder.left_kidney
-				if (src.current_target.organHolder.left_lung)
-					targets += src.current_target.organHolder.left_lung
-				if (src.current_target.organHolder.right_kidney)
-					targets += src.current_target.organHolder.right_kidney
-				if (src.current_target.organHolder.right_lung)
-					targets += src.current_target.organHolder.right_lung
-				if (src.current_target.organHolder.spleen)
-					targets += src.current_target.organHolder.spleen
-				if (src.current_target.organHolder.pancreas)
-					targets += src.current_target.organHolder.pancreas
-				if (src.current_target.organHolder.intestines)
-					targets += src.current_target.organHolder.intestines
-				if (src.current_target.organHolder.stomach)
-					targets += src.current_target.organHolder.stomach
-				//No organs left? Go for the heart
-				if (!length(targets))
-					if (src.current_target.organHolder.heart)
-						targets += src.current_target.organHolder.heart
-				if (length(targets))
-					src.target = pick(targets)
+		if (!src.current_target.organHolder) return
+		else
+			switch(src.caster.zone_sel.selecting)
+				if ("r_arm")
+					if (src.current_target.limbs.r_arm)
+						src.target = src.current_target.limbs.r_arm
+						src.limb_acronym = "r_arm"
+				if ("l_arm")
+					if (src.current_target.limbs.l_arm)
+						src.target = src.current_target.limbs.l_arm
+						src.limb_acronym = "l_arm"
+				if ("r_leg")
+					if (src.current_target.limbs.r_leg)
+						src.target = src.current_target.limbs.r_leg
+						src.limb_acronym = "r_leg"
+				if ("l_leg")
+					if (src.current_target.limbs.l_leg)
+						src.target = src.current_target.limbs.l_leg
+						src.limb_acronym = "l_leg"
+				if ("chest" || "head")
+					var/list/targets = list()
 					src.target_is_limb = FALSE
-
-		..()
+					if (src.current_target.organHolder.left_eye)
+						targets += src.current_target.organHolder.left_eye
+					if (src.current_target.organHolder.right_eye)
+						targets += src.current_target.organHolder.right_eye
+					if (src.current_target.organHolder.liver)
+						targets += src.current_target.organHolder.liver
+					if (src.current_target.organHolder.left_kidney)
+						targets += src.current_target.organHolder.left_kidney
+					if (src.current_target.organHolder.left_lung)
+						targets += src.current_target.organHolder.left_lung
+					if (src.current_target.organHolder.right_kidney)
+						targets += src.current_target.organHolder.right_kidney
+					if (src.current_target.organHolder.right_lung)
+						targets += src.current_target.organHolder.right_lung
+					if (src.current_target.organHolder.spleen)
+						targets += src.current_target.organHolder.spleen
+					if (src.current_target.organHolder.pancreas)
+						targets += src.current_target.organHolder.pancreas
+					if (src.current_target.organHolder.intestines)
+						targets += src.current_target.organHolder.intestines
+					if (src.current_target.organHolder.stomach)
+						targets += src.current_target.organHolder.stomach
+					//No organs left? Go for the heart
+					if (!length(targets))
+						if (src.current_target.organHolder.heart)
+							targets += src.current_target.organHolder.heart
+						if (!length(targets))
+							return
+					src.target = pick(targets)
+			..()
 
 	onStart()
-		if (src.caster == null || !isalive(src.caster) || !can_act(src.caster) || src.current_target == null)
+		if (!src.caster || !isalive(src.caster) || !can_act(src.caster) || !src.current_target)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (src.target)
@@ -100,7 +105,7 @@
 
 	onUpdate()
 		..()
-		if (src.caster == null || !isalive(src.caster) || !can_act(src.caster) || src.current_target == null || BOUNDS_DIST(src.caster, src.current_target) > 0)
+		if (!src.caster || !isalive(src.caster) || !can_act(src.caster) || !src.current_target || BOUNDS_DIST(src.caster, src.current_target) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

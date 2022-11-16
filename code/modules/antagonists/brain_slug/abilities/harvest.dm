@@ -43,46 +43,47 @@
 		src.caster = host
 		src.recast = repeats
 		//Get all the organs inside the person
-		if (!src.current_target.organHolder)
-			boutput(src.caster, "<span class='notice'>There isn't anything to steal here!</span>")
-			interrupt(INTERRUPT_ALWAYS)
-		var/list/targets = list()
-		if (src.current_target.organHolder.left_eye)
-			targets += src.current_target.organHolder.left_eye
-		if (src.current_target.organHolder.right_eye)
-			targets += src.current_target.organHolder.right_eye
-		if (src.current_target.organHolder.liver)
-			targets += src.current_target.organHolder.liver
-		if (src.current_target.organHolder.left_kidney)
-			targets += src.current_target.organHolder.left_kidney
-		if (src.current_target.organHolder.left_lung)
-			targets += src.current_target.organHolder.left_lung
-		if (src.current_target.organHolder.right_kidney)
-			targets += src.current_target.organHolder.right_kidney
-		if (src.current_target.organHolder.right_lung)
-			targets += src.current_target.organHolder.right_lung
-		if (src.current_target.organHolder.spleen)
-			targets += src.current_target.organHolder.spleen
-		if (src.current_target.organHolder.pancreas)
-			targets += src.current_target.organHolder.pancreas
-		if (src.current_target.organHolder.intestines)
-			targets += src.current_target.organHolder.intestines
-		if (src.current_target.organHolder.stomach)
-			targets += src.current_target.organHolder.stomach
-		//No organs left? Go for the heart
-		if (!length(targets))
-			if (src.current_target.organHolder.heart)
-				targets += src.current_target.organHolder.heart
-		if (!length(targets))
-			boutput(src.caster, "<span class='notice'>There isn't anything to steal here!</span>")
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		src.organ_target = pick(targets)
-		..()
+		if (!src.current_target.organHolder) return
+		else
+			var/list/targets = list()
+			if (src.current_target.organHolder.left_eye)
+				targets += src.current_target.organHolder.left_eye
+			if (src.current_target.organHolder.right_eye)
+				targets += src.current_target.organHolder.right_eye
+			if (src.current_target.organHolder.liver)
+				targets += src.current_target.organHolder.liver
+			if (src.current_target.organHolder.left_kidney)
+				targets += src.current_target.organHolder.left_kidney
+			if (src.current_target.organHolder.left_lung)
+				targets += src.current_target.organHolder.left_lung
+			if (src.current_target.organHolder.right_kidney)
+				targets += src.current_target.organHolder.right_kidney
+			if (src.current_target.organHolder.right_lung)
+				targets += src.current_target.organHolder.right_lung
+			if (src.current_target.organHolder.spleen)
+				targets += src.current_target.organHolder.spleen
+			if (src.current_target.organHolder.pancreas)
+				targets += src.current_target.organHolder.pancreas
+			if (src.current_target.organHolder.intestines)
+				targets += src.current_target.organHolder.intestines
+			if (src.current_target.organHolder.stomach)
+				targets += src.current_target.organHolder.stomach
+			//No organs left? Go for the heart
+			if (!length(targets))
+				if (src.current_target.organHolder.heart)
+					targets += src.current_target.organHolder.heart
+				if (!length(targets))
+					return
+			src.organ_target = pick(targets)
+			..()
 
 	onStart()
 		..()
-		if (src.caster == null || !isalive(src.caster) || !can_act(src.caster) || src.current_target == null)
+		if (!src.caster || !isalive(src.caster) || !can_act(src.caster) || !src.current_target)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (!src.organ_target)
+			boutput(src.caster, "<span class='notice'>There isn't anything to steal here!</span>")
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.caster.visible_message("<span class='alert'><b>[src.caster] jabs their hands forward into [src.current_target]'s chest and begins grasping inside!</b></span>", "<span class='notice'>You begin to harvest [src.organ_target].</span>")
@@ -95,7 +96,7 @@
 
 	onUpdate()
 		..()
-		if (src.caster == null || !isalive(src.caster) || !can_act(src.caster) || src.current_target == null || BOUNDS_DIST(src.caster, src.current_target) > 0)
+		if (!src.caster || !isalive(src.caster) || !can_act(src.caster) || !src.current_target || BOUNDS_DIST(src.caster, src.current_target) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
