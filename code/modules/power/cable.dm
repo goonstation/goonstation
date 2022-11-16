@@ -421,7 +421,9 @@
 	layer = CABLE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 	color = "#DD0000"
-	var/needsconnection = FALSE
+	// this would make it connect to the centre, for like terminals and whatnot
+	// has to be var edited because lazy
+	var/override_centre_connection = FALSE
 	var/cable_type = /obj/cable
 	// some bit flags for 8 bit directions
 	var/const/SW = 128
@@ -570,12 +572,12 @@
 	if (cable_surr & SW)
 		directions += SOUTHWEST
 
-	if (length(directions) >= 3 || src.needsconnection)
+	if (length(directions) == 0)
+		null
+	if (length(directions) >= 3 || src.override_centre_connection)
 	// multiple cables, spiral out from the centre
 		for (var/i in 1 to length(directions))
 			cable_laying(0, directions[i])
-		// if (src.needsconnection)
-		// we dont need this i think, apcs place their own or something
 	else if (length(directions) == 1)
 	// end of a cable
 		cable_laying(0, directions[1])
@@ -590,3 +592,22 @@
 	current.d1 = dir1
 	current.d2 = dir2
 	current.UpdateIcon()
+
+/obj/cablespawner/black
+	color = "#272e30"
+/obj/cablespawner/blue
+	color = "#009ae7"
+/obj/cablespawner/brown
+	color = "#633221"
+/obj/cablespawner/green
+	color = "#03c53d"
+/obj/cablespawner/hotpink
+	color = "#FF69B4"
+/obj/cablespawner/orange
+	color = "#FF5D06"
+/obj/cablespawner/purple
+	color = "#9b59b6"
+/obj/cablespawner/white
+	color = "#ffffff"
+/obj/cablespawner/yellow
+	color = "#fffb00"
