@@ -65,6 +65,7 @@ TYPEINFO(/datum/component/barber)
 	var/mob/barber
 	var/datum/character_preview/preview
 	var/datum/appearanceHolder/new_AH
+	var/hair_portion = BOTTOM_DETAIL
 
 /datum/component/barber/Initialize()
 	if(!istype(parent, /obj/item))
@@ -460,46 +461,52 @@ TYPEINFO(/datum/component/barber)
 /datum/component/barber/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "CuttingHair")
+		ui = new(user, src, "BarberingMenu")
 		ui.open()
 
 /datum/component/barber/ui_data(mob/user)
 	if (isnull(src.preview))
-		src.preview = new /datum/character_preview(barbee, "barber", "barber_[src.barbee.name]")
+		src.preview = new /datum/character_preview(barbee.client, "barber", "barber_[src.barbee.real_name]")
 		src.preview.add_background("#101010")
-		src.preview.update_appearance(barbee.bioHolder.mobAppearance)
-
+		src.preview.update_appearance(barbee.bioHolder.mobAppearance, direction=SOUTH, name=barbee.real_name)
 	// Checking if we are cutting hair or shaving hair
 
 	var/cut_or_shave
 
 	if (istype(src.barber.equipped(), /obj/item/scissors))
 		cut_or_shave = "cut"
-	if else(istype(src.barber.equipped(), /obj/item/razor_blade))
+
+	else if(istype(src.barber.equipped(), /obj/item/razor_blade))
 		cut_or_shave = "shave"
 	else
 		// ???? what do we do??????
 		cut_or_shave = "none"
 
-	. = list("preview" = src.preview.preview_id, "available_options" = cut_or_shave)
+	. = list("preview" = src.preview.preview_id, "cutorshave" = cut_or_shave, "selected_hair_portion" = hair_portion)
 
 /datum/component/barber/ui_static_data(mob/user)
 	// Preparing both lists
 	var/all_hairs = list("haircuts" = list(), "shaves" = list())
+	var/list/shaving_styles = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns)
+	var/list/haircut_styles = concrete_typesof(/datum/customization_style/hair)
 
 	// just so we get a special icon sprite for no hair
-	all_hairs["haircuts"] += list("None" = list("none", icon2base64(icon('icons/map-editing/landmarks.dmi', "x"))))
-	all_hairs["shaves"] += list("None" = list("none", icon2base64(icon('icons/map-editing/landmarks.dmi', "x"))))
+	all_hairs["haircuts"] += list("None" = list("none", "data:image/png;base64," + icon2base64(icon('icons/map-editing/landmarks.dmi', "x"))))
+	all_hairs["shaves"] += list("None" = list("none", "data:image/png;base64," + icon2base64(icon('icons/map-editing/landmarks.dmi', "x"))))
 
-	for (var/datum/customization_style/hair_style as anything in concrete_typesof(/datum/customization_style/hair))
-		var/hair_icon = "data:image/png;base64," + icon2base64(icon('icons/mob/human_hair.dmi', hair_style.id, frame=1)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
-		all_hairs["haircuts"] += list(hair_style.name = list(hair_style.id, hair_icon))
+	for (var/datum/customization_style/hair_styles as anything in haircut_styles)
+		var/datum/customization_style/hair_style = new hair_styles
+		var/hair_icon = "data:image/png;base64," + icon2base64(icon('icons/mob/human_hair.dmi', hair_style.id, SOUTH)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
+		all_hairs["haircuts"] += list(hair_style.name = list("hair_id" = hair_style.id, "hair_icon" = hair_icon))
 
-	for (var/datum/customization_style/hair_style as anything in concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns))
-		var/hair_icon = "data:image/png;base64," + icon2base64(icon('icons/mob/human_hair.dmi', hair_style.id, frame=1)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
-		all_hairs["shave"] += list(hair_style.name = list(hair_style.id, hair_icon))
+	for (var/datum/customization_style/hair_styles as anything in shaving_styles)
+		var/datum/customization_style/hair_style = new hair_styles
+		var/hair_icon = "data:image/png;base64," + icon2base64(icon('icons/mob/human_hair.dmi', hair_style.id, SOUTH)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
+		all_hairs["shaves"] += list(hair_style.name = list("hair_id" = hair_style.id, "hair_icon" = hair_icon))
 
-	. = list("hair_styles" = all_hairs)
+	boutput(user, "[length(all_hairs["haircuts"])] [length(all_hairs["shaves"])]")
+
+	. = list("hairstyles" = all_hairs)
 
 /datum/component/barber/ui_act(var/action, var/params)
 	. = ..()
@@ -508,29 +515,40 @@ TYPEINFO(/datum/component/barber)
 
 	switch(action)
 
+		if("change_hair_portion")
+
+			src.hair_portion = params["new_portion"]
+			return TRUE
+
 		if("do_hair")
+			if (isnull(params["style_id"]))
+				actions.start(new/datum/action/bar/barber/haircut(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), null, ALL_HAIR), src.barber)
+
+			var/datum/customization_style/new_hairstyle = null
+			var/list/all_hairs = concrete_typesof(/datum/customization_style/hair) + concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns)
+			for (var/datum/customization_style/iteration in all_hairs)
+				if (iteration.id == params["style_id"])
+					new_hairstyle = iteration
+
 			if(params["cut_or_shave"] == HAIRCUT)
-				actions.start(new/datum/action/bar/barber/haircut(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), params["new_style"], params["which_part"]), src.barber)
+				actions.start(new/datum/action/bar/barber/haircut(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), new_hairstyle, src.hair_portion), src.barber)
 			else
-				actions.start(new/datum/action/bar/barber/shave(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), params["new_style"], params["which_part"]), src.barber)
+				actions.start(new/datum/action/bar/barber/shave(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), new_hairstyle, src.hair_portion), src.barber)
 
 			return TRUE
 
 		if("update_preview")
-
 			switch(params["what_to_do"])
-				if("new_first_hair")
+				if("new_hair")
 					src.new_AH = barbee.bioHolder.mobAppearance
-					src.new_AH.customization_first = params["new_hair"]
+					if (hair_portion == BOTTOM_DETAIL)
+						src.new_AH.customization_first = params["new_hair"]
+					else if (hair_portion == MIDDLE_DETAIL)
+						src.new_AH.customization_second = params["new_hair"]
+					else if (hair_portion == TOP_DETAIL)
+						src.new_AH.customization_third = params["new_hair"]
 					preview.update_appearance(src.new_AH)
-				if("new_second_hair")
-					src.new_AH = barbee.bioHolder.mobAppearance
-					src.new_AH.customization_second = params["new_hair"]
-					src.preview.update_appearance(new_AH)
-				if("new_third_hair")
-					src.new_AH = barbee.bioHolder.mobAppearance
-					src.new_AH.customization_third = params["new_hair"]
-					src.preview.update_appearance(src.new_AH)
+
 				if("change_direction")
 					// This is so we don't have to deal with numbers in the TGUI part.
 					var/map_of_directions = list(
@@ -542,8 +560,7 @@ TYPEINFO(/datum/component/barber)
 
 					if(isnull(src.new_AH))
 						src.new_AH = barbee.bioHolder.mobAppearance
-
-					src.preview.update_appearance(new_AH, direction=params[map_of_directions[params["direction"]]])
+					src.preview.update_appearance(new_AH, direction=map_of_directions[params["direction"]])
 
 			return TRUE
 
