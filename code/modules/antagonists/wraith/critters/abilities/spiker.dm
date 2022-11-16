@@ -151,9 +151,9 @@
 		SPAWN(10 SECONDS)
 			if (!the_spiker) return
 			the_spiker.flags &= ~(DOORPASS | TABLEPASS)
-			the_spiker.icon_state = "spiker"
 			the_spiker.shuffling = FALSE
-
+			if (!isdead(the_spiker))
+				the_spiker.icon_state = "spiker"
 		return FALSE
 	onAttach(datum/abilityHolder/holder)
 		..()
