@@ -461,9 +461,6 @@
 
 /// checks around itself for cables, adds up to 8 bits to cable_surr
 /obj/cablespawner/proc/check(var/obj/cable/cable)
-	for (var/obj/object in range(0, src))
-	// checks to see if a terminal is needed
-		null
 	for (var/obj/cablespawner/spawner in orange(1, src))
 	// checks for cablespawners around itself
 		var/disx = spawner.x - src.x
@@ -573,9 +570,7 @@
 		directions += SOUTHWEST
 
 	if (length(directions) == 0)
-		// how do i pass wtf
-		qdel(src)
-		return
+		cable_laying(0,NORTH)
 	// multiple cables, spiral out from the centre
 	else if (src.override_centre_connection)
 		for (var/i in 1 to length(directions))
