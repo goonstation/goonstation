@@ -591,6 +591,7 @@
 	var/obj/cable/current = new src.cable_type(src.loc)
 	current.d1 = dir1
 	current.d2 = dir2
+	current.color = src.color
 	current.UpdateIcon()
 
 /obj/cablespawner/black
