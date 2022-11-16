@@ -503,8 +503,8 @@ datum
 			transparency = 50
 			var/counter = 1
 			var/list/invisible_people = list()
-			var/image/override_img = null
-			var/list/image/override_list = list()
+			var/image/invisible_img = null
+			var/list/image/invisible_list = list()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -528,20 +528,19 @@ datum
 
 					if(length(candidates) > 0)  //makes the other people disappear
 						for(var/mob/living/carbon/human/chosen in candidates)
-							override_img = image(null, chosen, null, chosen.layer)
-							override_img.name = "​"
-							override_img.override = TRUE
+							invisible_img = image(null, chosen, null, chosen.layer)
+							invisible_img.name = "​"
+							invisible_img.override = TRUE
 							var/client/client = M.client //hold a reference to the client directly
-							client?.images.Add(override_img)
-							override_list.Add(override_img)
+							client?.images.Add(invisible_img)
+							invisible_list.Add(invisible_img)
 							invisible_people += chosen
 
 				if(counter > 25)                   //some side effects (not using a switch statement so the stages stack)
 					if(M.get_brain_damage() <= 40)
 						M.take_brain_damage(1 * mult) //some amount of brain damage
 					if(probmult(9) && !ON_COOLDOWN(M, "heartbeat_hallucination", 60 SECONDS)) //play some hearbeat sounds
-						var/turf/mob_turf = get_turf(M)
-						M.playsound_local(mob_turf, 'sound/effects/Heart Beat.ogg', 20, 1)
+						M.playsound_local(get_turf(M), 'sound/effects/HeartBeatLong.ogg', 20, 1)
 				..()
 
 			on_remove()
@@ -557,14 +556,14 @@ datum
 
 					if (M.client)
 						var/client/client = M.client
-						override_img.override = FALSE
-						client?.images.Remove(override_list)//brings everyone back
-						for(var/image/I in override_list)
+						invisible_img.override = FALSE
+						client?.images.Remove(invisible_list)//brings everyone back
+						for(var/image/I in invisible_list)
 							qdel(I)
-						qdel(override_img)
-						override_img = null
-						qdel(override_list)
-						override_list = null
+						qdel(invisible_img)
+						invisible_img = null
+						qdel(invisible_list)
+						invisible_list = null
 						invisible_people = null
 
 		drug/THC

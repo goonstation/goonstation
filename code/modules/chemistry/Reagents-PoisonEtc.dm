@@ -1951,7 +1951,7 @@ datum
 					H.ai_aggressive = 1 //Fak
 					H.ai_calm_down = 0
 					logTheThing(LOG_COMBAT, H, "has their AI enabled by [src.id]")
-					H.playsound_local(H, 'sound/effects/Heart Beat.ogg', 50, 1)
+					H.playsound_local(H, 'sound/effects/HeartBeatLong.ogg', 50, 1)
 					lastSpook = world.time
 
 				if (t6 && ticks >= t6)
@@ -1964,7 +1964,7 @@ datum
 
 					if (probmult(20) && world.time > lastSpook + 510)
 						H.show_text("You feel your heartbeat pounding inside your head...", "red")
-						H.playsound_local(H, 'sound/effects/Heart Beat.ogg', 75, 1) // LOUD
+						H.playsound_local(H, 'sound/effects/HeartBeatLong.ogg', 75, 1) // LOUD
 						lastSpook = world.time
 
 
@@ -2003,7 +2003,7 @@ datum
 
 					if (probmult(20) && world.time > lastSpook + 510)
 						H.show_text("You feel your heartbeat pounding inside your head...", "red")
-						H.playsound_local(H, 'sound/effects/Heart Beat.ogg', 100, 1) // LOUD
+						H.playsound_local(H, 'sound/effects/HeartBeatLong.ogg', 100, 1) // LOUD
 						lastSpook = world.time
 
 
