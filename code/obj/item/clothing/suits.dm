@@ -1133,6 +1133,9 @@
 	New()
 		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	setupProperties()
+		..()
 		setProperty("heatprot", 35)
 
 	#ifdef MAP_OVERRIDE_POD_WARS

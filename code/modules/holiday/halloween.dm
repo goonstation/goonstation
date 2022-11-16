@@ -26,6 +26,12 @@
 // also /obj/item/storage/nerd_kit/New() is in storage.dm with /obj/item/storage/nerd_kit instead of RANDOMLY FLOATING AROUND IN HERE WHAT IS WRONG WITH YOU PEOPLE
 //deathbutton to deathbutton.dm
 
+#ifdef HALLOWEEN
+#define EPHEMERAL_HALLOWEEN EPHEMERAL_SHOWN
+#else
+#define EPHEMERAL_HALLOWEEN EPHEMERAL_HIDDEN
+#endif
+
 /*
  *	DEATH PLAQUE
  */
@@ -551,6 +557,9 @@
 				newcandy.razor_blade = 1
 			boutput(user, "You grab [newcandy] from the cauldron!")
 
+	candy/halloween_only
+		EPHEMERAL_HALLOWEEN
+
 	jellybean
 		name = "jellybean-filled cauldron"
 		desc = "It's full of jellybeans! Wonder what's in these..."
@@ -560,3 +569,6 @@
 			var/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor/B = new
 			user.put_in_hand_or_drop(B)
 			boutput(user, "You grab [B] from the cauldron!")
+
+	jellybean/halloween_only
+		EPHEMERAL_HALLOWEEN

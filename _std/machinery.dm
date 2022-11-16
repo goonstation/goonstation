@@ -90,7 +90,7 @@
 
 #define MACHINES_REGISTRY_MAX MACHINES_PLANTPOTS
 
-var/global/list/processing_machines = generate_machinery_processing_buckets()
+var/global/list/list/list/processing_machines = generate_machinery_processing_buckets()
 var/global/list/machine_registry = generate_machine_registry()
 
 /proc/generate_machine_registry()
