@@ -841,7 +841,6 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	can_fall = 0
 	mats = null
 	ai_control_enabled = 1
-	window_size = "400x675"
 	var/homeloc = null
 
 	New()
