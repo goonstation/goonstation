@@ -26,10 +26,6 @@
 	metabolizes = FALSE
 	blood_id = null
 
-	minimaps_to_display_on = MAP_AI
-	tracked_minimap_marker = TRUE
-	minimap_marker_icon_state = "ai_eye"
-
 	var/mob/living/silicon/ai/mainframe = null
 	var/last_loc = 0
 
@@ -53,6 +49,13 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 		if (render_special)
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
+		AddComponent(/datum/component/minimap_marker, MAP_AI, "ai_eye")
+		SEND_SIGNAL(src, COMSIG_CREATE_MINIMAP_MARKERS)
+
+	disposing()
+		SEND_SIGNAL(src, COMSIG_REMOVE_MINIMAP_MARKERS)
+		. = ..()
+
 	Login()
 		.=..()
 		src.client.show_popup_menus = 1

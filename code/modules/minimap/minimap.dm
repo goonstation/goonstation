@@ -65,17 +65,11 @@
 		return A.station_map_colour
 
 	///Creates a minimap marker from a specified target, icon, and icon state.
-	proc/create_minimap_marker(var/uses_tracked_marker, var/atom/target, var/icon, var/icon_state)
+	proc/create_minimap_marker(var/atom/target, var/icon, var/icon_state)
 		if (target in src.minimap_markers)
 			return
 
-		var/marker_path
-		if (uses_tracked_marker)
-			marker_path = /datum/minimap_marker/tracking
-		else
-			marker_path = /datum/minimap_marker
-
-		var/datum/minimap_marker/marker = new marker_path(target)
+		var/datum/minimap_marker/marker = new /datum/minimap_marker(target)
 		marker.map = src
 		marker.marker.icon = icon(icon, icon_state)
 

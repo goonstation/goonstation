@@ -13,8 +13,7 @@
 		vis_contents += map.minimap_render
 
 		for (var/atom/movable/marker_object in minimap_marker_targets)
-			if (src.map_type & marker_object.minimaps_to_display_on)
-				src.map.create_minimap_marker(marker_object.tracked_minimap_marker, marker_object, marker_object.minimap_marker_icon, marker_object.minimap_marker_icon_state)
+			SEND_SIGNAL(marker_object, COMSIG_NEW_MINIMAP_MARKER, src)
 
 	disposing()
 		STOP_TRACKING

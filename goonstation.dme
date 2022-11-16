@@ -274,6 +274,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\components\loc_invisibility.dm"
 #include "code\datums\components\mat_triggersonlife.dm"
 #include "code\datums\components\mechComp_signals.dm"
+#include "code\datums\components\minimap_marker.dm"
 #include "code\datums\components\mob_pierce.dm"
 #include "code\datums\components\no_gravity.dm"
 #include "code\datums\components\obj_projectile_damage.dm"
