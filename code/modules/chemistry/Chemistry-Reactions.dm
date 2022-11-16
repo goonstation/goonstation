@@ -100,7 +100,7 @@
 	if (!covered || !length(covered))
 		covered = list(get_turf(holder.my_atom))
 
-	var/howmany = max(1,covered.len / 4)
+	var/howmany = clamp(covered.len / 4, 1, 100)
 	for(var/i = 0, i < howmany, i++)
 		var/turf/source = 0
 		if (location)
@@ -134,9 +134,9 @@
 				react_amount = react_amount / (1 + ((FG.contained_amt - diminishing_returns_thingymabob) * 0.1))//MBC MAGIC NUMBERS :)
 				//boutput(world,"[react_amount]")
 
-		var/divisor = length(covered)
+		var/divisor = howmany
 		if (covered.len > 4)
-			divisor += 0.2
+			divisor *= 1.2
 		source.fluid_react(holder, react_amount/divisor, airborne = 1)
 
 		if (!prev_group_exists && source.active_airborne_liquid && source.active_airborne_liquid.group)

@@ -467,9 +467,8 @@
 		return 0
 
 	click(atom/target)
-		. = ..()
-		if (. == 100)
-			return 100
+		if (src.targeting_ability)
+			..()
 		if (!density)
 			src.examine_verb(target)
 
