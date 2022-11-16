@@ -501,6 +501,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			M.changeStatus("stunned", 5 SECONDS)
 			M.changeStatus("weakened", 5 SECONDS)
 
+#define INTERLINK_COMPUTER_RANGE 100
 
 /obj/machinery/computer/transception
 	name = "\improper Transception Interlink"
@@ -600,7 +601,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		signal.source = src
 		signal.data["sender"] = src.net_id
 
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, 20, freq)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, INTERLINK_COMPUTER_RANGE, freq)
 
 /obj/machinery/computer/transception/attack_hand(var/mob/user as mob)
 	if(!src.allowed(user))
@@ -724,6 +725,8 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 				src.build_command(manifest["INT_TARGETID"])
 
 	src.add_fingerprint(usr)
+
+#undef INTERLINK_COMPUTER_RANGE
 
 
 #undef TRANSCEIVE_BUSY
