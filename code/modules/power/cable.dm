@@ -425,13 +425,7 @@
 	// has to be var edited because lazy
 	var/override_centre_connection = FALSE
 	var/cable_type = /obj/cable
-	/// this 8 bit variable uses bit flags to tell which 8 tiles need connections
-	var/const/SW = 128
-	var/const/NW = 64
-	var/const/SE = 32
-	var/const/NE = 16
-	// these constants ARE needed they are DIFFERENT from the regular NORTHWEST and such
-	var/cable_surr = 0
+	/// the following 8 bit variable constants use bit flags to tell which 8 tiles need connections
 	/*
 	* bitflag of the tiles surrounding itself:
 	* i.e.(10)(9)(6)(5) 8  4  2  1 (normal bitflags) (used when you only need one direction)
@@ -440,7 +434,12 @@
 	* i think someone called it 8 bit directions once? idk
 	* anyway thats what cable_surr does
 	*/
-
+	var/const/SOUTHWEST_UNIQUE = 128
+	var/const/NORTHWEST_UNIQUE = 64
+	var/const/SOUTHEAST_UNIQUE = 32
+	var/const/NORTHEAST_UNIQUE = 16
+	// these constants ARE needed they are DIFFERENT from the regular NORTHWEST and such
+	var/cable_surr = 0
 /// reinforced, thick cables. They should also connect to the regular kind.
 /obj/cablespawner/reinforced
 	name = "reinforced power cable spawner"
@@ -467,16 +466,16 @@
 		var/disy = spawner.y - src.y
 		if (disy == 1)
 			if (disx == 1)
-				cable_surr |= NE
+				cable_surr |= NORTHEAST_UNIQUE
 			else if (disx == -1)
-				cable_surr |= NW
+				cable_surr |= NORTHWEST_UNIQUE
 			else
 				cable_surr |= NORTH
 		else if (disy == -1)
 			if (disx == 1)
-				cable_surr |= SE
+				cable_surr |= SOUTHEAST_UNIQUE
 			else if (disx == -1)
-				cable_surr |= SW
+				cable_surr |= SOUTHWEST_UNIQUE
 			else
 				cable_surr |= SOUTH
 		else if (disy == 0)
@@ -486,23 +485,23 @@
 				cable_surr |= WEST
 	/*
 	Diagonals are ugly. So if the option to connect to a diagonal tile orthogonally presents itself
-	we'll get rid of the corners and connect in NESW directions first.
+	we'll get rid of the corners and connect in NESOUTHWEST_UNIQUE directions first.
 	This gets rid of diagonals in 2x2 and 3x3 grids, and stops small 'L's from becoming triangles.
 	if a diagonal tile is next to a cardinal, we disregard it.
 	This won't work on the manually connected cables.
 	*/
-	if (cable_surr & NE)
+	if (cable_surr & NORTHEAST_UNIQUE)
 		if (cable_surr & NORTH || cable_surr & EAST)
-			cable_surr &= ~NE
-	if (cable_surr & NW)
+			cable_surr &= ~NORTHEAST_UNIQUE
+	if (cable_surr & NORTHWEST_UNIQUE)
 		if (cable_surr & NORTH || cable_surr & WEST)
-			cable_surr &= ~NW
-	if (cable_surr & SE)
+			cable_surr &= ~NORTHWEST_UNIQUE
+	if (cable_surr & SOUTHEAST_UNIQUE)
 		if (cable_surr & SOUTH || cable_surr & EAST)
-			cable_surr &= ~SE
-	if (cable_surr & SW)
+			cable_surr &= ~SOUTHEAST_UNIQUE
+	if (cable_surr & SOUTHWEST_UNIQUE)
 		if (cable_surr & SOUTH || cable_surr & WEST)
-			cable_surr &= ~SW
+			cable_surr &= ~SOUTHWEST_UNIQUE
 	/* there is exactly one case where this code breaks
 	* consider a grid of: X
 	*                     X X
@@ -524,19 +523,19 @@
 		if (disy == 1)
 			if (disx == 1)
 				if (normal_cable.d1 == SOUTHWEST || normal_cable.d2 == SOUTHWEST)
-					cable_surr |= NE
+					cable_surr |= NORTHEAST_UNIQUE
 			else if (disx == -1)
 				if (normal_cable.d1 == SOUTHEAST || normal_cable.d2 == SOUTHEAST)
-					cable_surr |= NW
+					cable_surr |= NORTHWEST_UNIQUE
 			else if (normal_cable.d1 == SOUTH || normal_cable.d2 == SOUTH)
 				cable_surr |= NORTH
 		else if (disy == -1)
 			if (disx == 1)
 				if (normal_cable.d1 == NORTHWEST || normal_cable.d2 == NORTHWEST)
-					cable_surr |= SE
+					cable_surr |= SOUTHEAST_UNIQUE
 			else if (disx == -1)
 				if (normal_cable.d1 == NORTHEAST || normal_cable.d2 == NORTHEAST)
-					cable_surr |= SW
+					cable_surr |= SOUTHWEST_UNIQUE
 			else if (normal_cable.d1 == NORTH || normal_cable.d2 == NORTH)
 				cable_surr |= SOUTH
 		else if (disy == 0)
@@ -558,15 +557,15 @@
 		directions += SOUTH
 	if (cable_surr & EAST)
 		directions += EAST
-	if (cable_surr & NE)
+	if (cable_surr & NORTHEAST_UNIQUE)
 		directions += NORTHEAST
-	if (cable_surr & SE)
+	if (cable_surr & SOUTHEAST_UNIQUE)
 		directions += SOUTHEAST
 	if (cable_surr & WEST)
 		directions += WEST
-	if (cable_surr & NW)
+	if (cable_surr & NORTHWEST_UNIQUE)
 		directions += NORTHWEST
-	if (cable_surr & SW)
+	if (cable_surr & SOUTHWEST_UNIQUE)
 		directions += SOUTHWEST
 
 	if (length(directions) == 0)
