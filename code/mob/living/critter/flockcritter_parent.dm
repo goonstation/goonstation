@@ -115,26 +115,16 @@
 		target.emp_act()
 
 /mob/living/critter/flock/weapon_attack(atom/target, obj/item/W, reach, params)
-	if (HAS_ATOM_PROPERTY(target, PROP_ATOM_FLOCK_THING) && target.density)
-		if (!reach && istype(W, /obj/item/gun))
+	if (HAS_ATOM_PROPERTY(target, PROP_ATOM_FLOCK_THING) && !reach && istype(W, /obj/item/gun))
+		var/prevent_attack = target.density
+		if (istype(target, /mob/living/critter/flock/bit))
+			var/mob/living/critter/flock/bit/flockbit = target
+			if (flockbit.flock == src.flock)
+				prevent_attack = TRUE
+		if (prevent_attack)
 			boutput(src, "<span class='alert'>The grip tool refuses to harm this, jamming briefly.</span>")
 			return
-		return ..()
-	if (istype(W, /obj/item/gun))
-		if (src.a_intent == INTENT_GRAB && reach)
-			boutput(src, "<span class='alert'>You can't gun grab someone!</span>")
-			return
-		if (!reach || (reach && src.a_intent != INTENT_HELP))
-			if (prob(75))
-				boutput(src, "<span class='alert'>The grip tool can't quite reach the trigger!</span>")
-				playsound(src, 'sound/effects/brrp.ogg', 20, FALSE)
-				return
-			return ..()
-	else if (!reach)
-		return ..()
 	..()
-	if (!src.lastattacked)
-		src.lastattacked = target // prevents message and sound spam for when targetting unhittable stuff such as floors
 
 //trying out a world where you can't stun flockdrones
 /mob/living/critter/flock/do_disorient(stamina_damage, weakened, stunned, paralysis, disorient, remove_stamina_below_zero, target_type, stack_stuns)

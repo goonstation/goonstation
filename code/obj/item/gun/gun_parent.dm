@@ -271,10 +271,11 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	if(user.a_intent != INTENT_HELP && isliving(M))
 		if (user.a_intent == INTENT_GRAB)
-			attack_particle(user,M)
-			return ..()
-		else
-			src.shoot_point_blank(M, user)
+			var/datum/limb/current_limb = user.equipped_limb()
+			if (current_limb.can_gun_grab)
+				attack_particle(user,M)
+				return ..()
+		src.shoot_point_blank(M, user)
 	else
 		..()
 		attack_particle(user,M)
