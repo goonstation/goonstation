@@ -496,7 +496,7 @@
 				data += "[reagent_data]"
 
 			if (show_temp)
-				data += "<br><span class='notice'>Overall temperature: [reagents.total_temperature - T0C]&deg;C ([reagents.total_temperature * 1.8 - T0F]&deg;F)</span>"
+				data += "<br><span class='notice'>Overall temperature: [reagents.total_temperature] K</span>"
 		else
 			data = "<span class='notice'>No active chemical agents found in [A].</span>"
 	else
@@ -755,14 +755,14 @@
 		if (pda_readout == 1) // Output goes into PDA interface, not the user's chatbox.
 			data = "Air Pressure: [round(pressure, 0.1)] kPa<br>\
 			[CONCENTRATION_REPORT(check_me, "<br>")]\
-			Temperature: [round(check_me.temperature - T0C)]&deg;C<br>"
+			Temperature: [round(check_me.temperature)] K<br>"
 
 		else if (simple_output) // For the log_atmos() proc.
-			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature - T0C)]&deg;C</i>\
+			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature)] K</i>\
 			, <b>Contents:</b> <i>[CONCENTRATION_REPORT(check_me, ", ")]</i>"
 
 		else if (alert_output) // For the alert_atmos() proc.
-			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature - T0C)]&deg;C</i>\
+			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature)] K</i>\
 			, <b>Contents:</b> <i>[SIMPLE_CONCENTRATION_REPORT(check_me, ", ")]</i>"
 
 		else
@@ -771,7 +771,7 @@
 			<br>\
 			Pressure: [round(pressure, 0.1)] kPa<br>\
 			[CONCENTRATION_REPORT(check_me, "<br>")]\
-			Temperature: [round(check_me.temperature - T0C)]&deg;C<br>"
+			Temperature: [round(check_me.temperature)] K<br>"
 
 	else
 		// Only used for "Atmospheric Scan" accessible through the PDA interface, which targets the turf

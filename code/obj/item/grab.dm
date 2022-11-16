@@ -100,10 +100,11 @@
 		if (src.disposed)
 			src.set_loc(null)
 
-	set_loc() //never ever ever ever!!!
-		..()
-		if (src.loc && !istype(src.loc, /mob))
-			set_loc(null)
+	set_loc(new_loc) //never ever ever ever!!!
+		if (!istype(new_loc, /mob))
+			..(null)
+		else
+			..()
 
 	dropped()
 		..()

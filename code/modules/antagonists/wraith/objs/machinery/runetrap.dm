@@ -10,9 +10,9 @@
 	anchored = 1
 	var/visible = FALSE
 	var/armed = FALSE
-	var/mob/wraith/wraith_trickster/master = null
+	var/mob/living/intangible/wraith/wraith_trickster/master = null
 
-	New(var/turf/T, var/mob/wraith/wraith_trickster/W = null)
+	New(var/turf/T, var/mob/living/intangible/wraith/wraith_trickster/W = null)
 		..()
 		master = W
 		SPAWN(5 SECONDS)

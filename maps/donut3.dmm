@@ -15843,28 +15843,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "esA" = (
-/obj/table/reinforced/auto{
-	icon_state = "2"
-	},
-/obj/item/breaching_hammer{
-	pixel_x = 1;
-	pixel_y = 7
-	},
-/obj/item/breaching_hammer{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/breaching_charge{
-	pixel_x = 8
-	},
-/obj/item/breaching_charge{
-	pixel_x = 6;
-	pixel_y = -3
-	},
-/obj/item/breaching_charge{
-	pixel_x = 3;
-	pixel_y = -6
-	},
+/obj/random_item_spawner/armory_breaching_supplies,
 /obj/machinery/light/incandescent/warm/very{
 	dir = 8
 	},

@@ -44,7 +44,7 @@
 	isBad = 0 // depends on who you ask really
 	can_copy = 0
 	var/isDying = 0
-	var/mob/wraith/wraith = null
+	var/mob/living/intangible/wraith/wraith = null
 	var/ghoulTouchActive = 0
 	var/list/abilities
 	icon_state  = "evilaura"
@@ -120,7 +120,7 @@
 			step_away(poorSob, owner, 15)
 
 
-	proc/wraithPossess(var/mob/wraith/W)
+	proc/wraithPossess(var/mob/living/intangible/wraith/W)
 		if (!W.mind && !W.client)
 			return
 		if (owner.client || owner.mind)

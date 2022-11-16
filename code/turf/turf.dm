@@ -65,7 +65,17 @@
 			return
 		src.init_lighting()
 
-		RegisterSignal(src, list(COMSIG_ATOM_SET_OPACITY, COMSIG_TURF_CONTENTS_SET_OPACITY_SMART), .proc/on_set_opacity) // ZEWAKA/INIT signif.
+	disposing() // DOES NOT GET CALLED ON TURFS!!!
+		SHOULD_NOT_OVERRIDE(TRUE)
+		SHOULD_CALL_PARENT(FALSE)
+
+	set_opacity(newopacity)
+		. = ..()
+		on_set_opacity()
+
+	proc/contents_set_opacity_smart(oldopacity, atom/movable/thing)
+		on_set_opacity()
+		SEND_SIGNAL(src, COMSIG_TURF_CONTENTS_SET_OPACITY_SMART, oldopacity, thing)
 
 	onMaterialChanged()
 		..()
@@ -337,6 +347,7 @@ proc/generate_space_color()
 	explosion_resistance = 999999
 	density = 1
 	opacity = 1
+	gas_impermeable = 1
 
 	Enter()
 		return 0 // nope

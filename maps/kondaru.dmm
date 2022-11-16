@@ -20350,8 +20350,7 @@
 /area/station/routing/depot)
 "bkp" = (
 /obj/machinery/atmospherics/pipe/simple{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
@@ -24241,6 +24240,13 @@
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -41772,8 +41778,7 @@
 /area/station/crew_quarters/md)
 "fje" = (
 /obj/machinery/atmospherics/pipe/simple{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -45548,6 +45553,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light_switch/north,
+/obj/machinery/camera/ranch{
+	pixel_y = 20
+	},
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "iKQ" = (
@@ -49620,6 +49628,16 @@
 /area/station/crew_quarters/info{
 	name = "Book Nook"
 	})
+"mLF" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "mLX" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
@@ -50734,8 +50752,7 @@
 /obj/item/clothing/gloves/latex,
 /obj/item/kitchen/utensil/knife,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/specialroom/freezer,
@@ -56826,27 +56843,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "trP" = (
-/obj/rack,
-/obj/item/breaching_charge{
-	pixel_x = 10;
-	pixel_y = 1
-	},
-/obj/item/breaching_charge{
-	pixel_x = 4;
-	pixel_y = -2
-	},
-/obj/item/breaching_charge{
-	pixel_x = -2;
-	pixel_y = -5
-	},
-/obj/item/breaching_hammer{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/breaching_hammer{
-	pixel_x = -1;
-	pixel_y = 1
-	},
+/obj/random_item_spawner/armory_breaching_supplies,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
@@ -58177,6 +58174,10 @@
 "uxX" = (
 /obj/shrub{
 	dir = 8
+	},
+/obj/machinery/camera/ranch{
+	dir = 5;
+	pixel_x = -10
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -113718,7 +113719,7 @@ buI
 iKN
 bvI
 bYu
-emI
+mLF
 emI
 etm
 xSz

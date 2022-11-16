@@ -192,9 +192,6 @@ var/global/datum/mob_stat_thinker/mobStat = new
 
 		stat(null, " ")
 
-	if (abilityHolder)
-		abilityHolder.Stat()
-
 	if (is_near_gauntlet())
 		gauntlet_controller.Stat()
 

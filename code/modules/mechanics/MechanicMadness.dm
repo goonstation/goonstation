@@ -880,6 +880,7 @@
 		rebeam()
 
 	rotate()
+		..()
 		if(level == 1)
 			rebeam()
 
@@ -1512,9 +1513,9 @@
 	New()
 		..()
 		src.outgoing_filters = list()
-		RegisterSignal(src, list(_COMSIG_MECHCOMP_DISPATCH_ADD_FILTER), .proc/addFilter)
-		RegisterSignal(src, list(_COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING), .proc/removeFilter)
-		RegisterSignal(src, list(_COMSIG_MECHCOMP_DISPATCH_VALIDATE), .proc/runFilter)
+		RegisterSignal(src, _COMSIG_MECHCOMP_DISPATCH_ADD_FILTER, .proc/addFilter)
+		RegisterSignal(src, _COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING, .proc/removeFilter)
+		RegisterSignal(src, _COMSIG_MECHCOMP_DISPATCH_VALIDATE, .proc/runFilter)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"dispatch", .proc/dispatch)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle exact matching",.proc/toggleExactMatching)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle single output mode",.proc/toggleSingleOutput)
@@ -2348,7 +2349,7 @@
 			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(picked.loc))).Run()
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.invisibility || M.anchored) continue
-				logTheThing(LOG_COMBAT, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
+				logTheThing(LOG_STATION, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
 				M.set_loc(get_turf(picked.loc))
 				count_sent++
 			input.signal = count_sent
@@ -3362,7 +3363,7 @@
 			UnregisterSignal(S, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC))
 			REMOVE_ATOM_PROPERTY(S, PROP_ATOM_FLOATING, "mech-component")
 		else
-			RegisterSignal(S, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), .proc/movement_stuff, TRUE)
+			RegisterSignals(S, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), .proc/movement_stuff, TRUE)
 			APPLY_ATOM_PROPERTY(S, PROP_ATOM_FLOATING, "mech-component")
 
 	proc/do_step(var/datum/mechanicsMessage/input)

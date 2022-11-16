@@ -91,6 +91,7 @@ SERVERNAME Goonstation
 SERVERREGION Development
 
 CDN http://cdn.goonhub.com
+RSC http://cdn.goonhub.com/rsc.zip
 ENV dev
 
 # Spacebee API
