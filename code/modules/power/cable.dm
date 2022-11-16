@@ -425,11 +425,6 @@
 	// has to be var edited because lazy
 	var/override_centre_connection = FALSE
 	var/cable_type = /obj/cable
-	// some bit flags for 8 bit directions
-	var/const/SW = 128
-	var/const/NW = 64
-	var/const/SE = 32
-	var/const/NE = 16
 	/// this 8 bit variable uses bit flags to tell which 8 tiles need connections
 	var/cable_surr = 0
 	/*
