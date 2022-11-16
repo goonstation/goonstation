@@ -573,7 +573,9 @@
 		directions += SOUTHWEST
 
 	if (length(directions) == 0)
-		null
+		// how do i pass wtf
+		qdel(src)
+		return
 	// multiple cables, spiral out from the centre
 	else if (src.override_centre_connection)
 		for (var/i in 1 to length(directions))
