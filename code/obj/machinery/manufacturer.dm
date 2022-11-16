@@ -3,6 +3,8 @@
 #define WIRE_POWER 2
 #define WIRE_MALF 3
 #define WIRE_SHOCK 4
+#define MAX_SPEED
+#define MAX_SPEED_HACKED
 
 /obj/machinery/manufacturer
 	name = "manufacturing unit"
@@ -615,7 +617,7 @@
 							break
 
 			if (href_list["speed"])
-				var/upperbound = src.hacked ? 5 : 3
+				var/upperbound = src.hacked ? MAX_SPEED_HACKED : MAX_SPEED
 				var/given_speed = text2num(href_list["speed"])
 				if (src.mode == "working")
 					boutput(usr, "<span class='alert'>You cannot alter the speed setting while the unit is working.</span>")
@@ -1302,11 +1304,7 @@
 				return
 
 			if ("queue")
-				var/return_queue
-				for (var/datum/manufacture/I in src.queue)
-					return_queue += I.name + ","
-
-				post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "queue", "data" = return_queue))
+				post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "queue", "data" = src.queue.Join(",")))
 				return
 
 			if ("add")
@@ -1342,8 +1340,9 @@
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#APPENDED"))
 
 			if ("clear")
-				var/Qcounter = 1
+				var/Qcounter = 0
 				for (var/datum/manufacture/M in src.queue)
+					Qcounter++
 					if (Qcounter == 1 && src.mode == "working") continue
 					src.queue -= src.queue[Qcounter]
 
@@ -1357,7 +1356,7 @@
 
 			if ("remove")
 				var/operation = text2num_safe(signal.data["data"])
-				if (!isnum(operation) || src.queue.len < 1 || operation > src.queue.len)
+				if (!isnum(operation) || length(src.queue) < 1 || operation > length(src.queue))
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#BADOPERATION"))
 					return
 
@@ -1403,15 +1402,15 @@
 					return
 
 				if (state)
-					src.repeat = 1
+					src.repeat = TRUE
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#REPEAT"))
 
 				else
-					src.repeat = 0
+					src.repeat = FALSE
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#NOREPEAT"))
 
 			if ("speed")
-				var/upperbound = src.hacked ? 5 : 3
+				var/upperbound = src.hacked ? MAX_SPEED_HACKED : MAX_SPEED
 				var/given_speed = text2num(signal.data["data"])
 				if (src.mode == "working")
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#WORKING"))
@@ -1994,10 +1993,10 @@
 		var/list/dat = list()
 
 		var/list/speed_opts = list()
-		for (var/i in 1 to (src.hacked ? 5 : 3))
+		for (var/i in 1 to (src.hacked ? MAX_SPEED_HACKED : MAX_SPEED))
 			speed_opts += "<a href='?src=\ref[src];speed=[i]' class='buttonlink' style='[i == src.speed ? "font-weight: bold; background: #6c6;" : ""]'>[i]</a>"
 
-		if (src.speed > (src.hacked ? 5 : 3))
+		if (src.speed > (src.hacked ? MAX_SPEED_HACKED : MAX_SPEED))
 			// sometimes people get these set to wacky values
 			speed_opts += "<a href='?src=\ref[src];speed=[src.speed]' class='buttonlink' style='font-weight: bold; background: #c66;'>[src.speed]</a>"
 
