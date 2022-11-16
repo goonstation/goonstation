@@ -593,8 +593,6 @@ datum
 
 					return 0
 
-			src.handle_reactions() // trigger inhibited reactions
-
 			return 1
 
 		proc/update_total()

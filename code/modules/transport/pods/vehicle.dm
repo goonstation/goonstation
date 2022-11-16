@@ -48,8 +48,6 @@
 	var/view_offset_x = 0
 	var/view_offset_y = 0
 	var/datum/movement_controller/movement_controller
-	/// Whether the pod can ignore [/turf/var/allows_vehicles].
-	var/ignore_turf_restrictions = FALSE
 
 	var/req_smash_velocity = 9 //7 is the 'normal' cap right now
 	var/hitmob = 0
@@ -665,13 +663,9 @@
 		src.health -= 50
 		checkhealth()
 
-	Move(turf/NewLoc, Dir=0, step_x=0, step_y=0)
+	Move(NewLoc,Dir=0,step_x=0,step_y=0)
 		// set return value to default
-		if(NewLoc.allows_vehicles || src.ignore_turf_restrictions)
-			.= ..(NewLoc,Dir,step_x,step_y)
-		else
-			src.Bump(NewLoc) // to avoid implementing Cross() on all station turfs, we do it ourselves.
-			. = FALSE
+		.=..(NewLoc,Dir,step_x,step_y)
 
 		if (movement_controller)
 			movement_controller.update_owner_dir()
@@ -1692,8 +1686,7 @@
 	icon_state = "minisub_body"
 	var/body_type = "minisub"
 	var/obj/item/shipcomponent/locomotion/locomotion = null //wheels treads hovermagnets etc
-	ignore_turf_restrictions = TRUE
-	uses_weapon_overlays = FALSE
+	uses_weapon_overlays = 0
 	health = 100
 	maxhealth = 100
 	speed = 0 // speed literally does nothing? what??
