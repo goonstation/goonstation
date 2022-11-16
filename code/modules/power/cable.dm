@@ -574,8 +574,11 @@
 
 	if (length(directions) == 0)
 		null
-	if (length(directions) >= 3 || src.override_centre_connection)
 	// multiple cables, spiral out from the centre
+	else if (src.override_centre_connection)
+		for (var/i in 1 to length(directions))
+			cable_laying(0, directions[i])
+	else if (length(directions) >= 3)
 		for (var/i in 1 to length(directions))
 			cable_laying(0, directions[i])
 	else if (length(directions) == 1)
