@@ -429,7 +429,7 @@
 							default = src.master.uplink.lock_code
 							prompt += " Your uplink code has been pre-entered for your convenience."
 
-						var/t = input(usr, prompt, src.name, default) as text
+						var/t = tgui_input_text(usr, prompt, src.name, default)
 						if (!t)
 							return
 
@@ -551,7 +551,7 @@
 						if(href_list["message_send"])
 							t = href_list["message_send"]
 						else
-							t = input(usr, "Please enter message", target_name, null) as null|text
+							t = tgui_input_text(usr, "Please enter message", target_name)
 						if (!t || !isalive(usr))
 							return
 

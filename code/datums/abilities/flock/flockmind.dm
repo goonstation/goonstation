@@ -177,7 +177,7 @@
 
 /datum/targetable/flockmindAbility/partitionMind
 	name = "Partition Mind"
-	icon_state = "awaken_drone"
+	icon_state = "partition_mind"
 	cooldown = 60 SECONDS
 	targeted = FALSE
 	///Are we still waiting for ghosts to respond
@@ -204,27 +204,36 @@
 
 /datum/targetable/flockmindAbility/healDrone
 	name = "Concentrated Repair Burst"
-	desc = "Fully heal a drone through acceleration of its repair processes."
+	desc = "Accelerate the repair processes of all flock units in an area (maximum 4 drones)."
 	icon_state = "heal_drone"
-	cooldown = 20 SECONDS
+	cooldown = 30 SECONDS
+	var/max_targets = 4 //maximum number of drones healed
 
-/datum/targetable/flockmindAbility/healDrone/cast(mob/living/critter/flock/drone/target)
+/datum/targetable/flockmindAbility/healDrone/cast(atom/target)
 	if(..())
 		return TRUE
-	if(!istype(target))
-		return TRUE
-	if (target.get_health_percentage() >= 1)
-		boutput(holder.get_controlling_mob(), "<span class='notice'>[target.real_name] has no damage!</span>")
-		return TRUE
-	if (isdead(target))
-		boutput(holder.get_controlling_mob(), "<span class='notice'>[target.real_name] is dead!</span>")
-		return TRUE
+	var/mob/living/intangible/flock/flockowner = holder.owner
+	var/healed = 0
+	for (var/mob/living/critter/flock/flockcritter in range(3, target))
+		var/health_ratio = flockcritter.get_health_percentage()
+		if (isdead(flockcritter) || health_ratio >= 1 || flockcritter.flock != flockowner.flock)
+			continue
+		flockcritter.HealDamage("All", 30, 30) //half of a flockdrone's health
+		var/particles/healing/flock/particles = new
+		particles.spawning = 1 - health_ratio //more heal = more particles
+		flockcritter.UpdateParticles(particles, "flockmind_heal")
+		SPAWN(1.5 SECONDS)
+			particles.spawning = 0
+			sleep(1.5 SECONDS)
+			flockcritter.ClearSpecificParticles("flockmind_heal")
+		if (istype(flockcritter, /mob/living/critter/flock/drone))
+			healed++
+		if (healed >= src.max_targets)
+			break
 
 	playsound(holder.get_controlling_mob(), 'sound/misc/flockmind/flockmind_cast.ogg', 80, 1)
-	boutput(holder.get_controlling_mob(), "<span class='notice'>You focus the flock's efforts on fixing [target.real_name]</span>")
-	target.HealDamage("All", 200, 200)
-	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts repair burst on [constructTarget(target)] at [log_loc(src.holder.owner)].")
-	target.visible_message("<span class='notice'><b>[target]</b> suddenly reforms its broken parts into a solid whole!</span>", "<span class='notice'>The flockmind has restored you to full health!</span>")
+	boutput(holder.get_controlling_mob(), "<span class='notice'>You focus the flock's efforts on repairing nearby units.</span>")
+	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts repair burst at [log_loc(src.holder.owner)].")
 
 /////////////////////////////////////////
 
@@ -468,10 +477,39 @@
 /datum/targetable/flockmindAbility/droneControl
 	cooldown = 0
 	icon = null
-	var/task_type
 	var/mob/living/critter/flock/drone/drone = null
 
 /datum/targetable/flockmindAbility/droneControl/cast(atom/target)
+	//remove the selected outline component
+	var/datum/component/flock_ping/selected/ping = drone.GetComponent(/datum/component/flock_ping/selected)
+	ping.RemoveComponent()
+	qdel(ping)
+
+	if (target == src.drone)
+		return
+	//by default we try to convert the target
+	var/task_type = /datum/aiTask/sequence/goalbased/flock/build/targetable
+	//order is important here
+	if (isflockvalidenemy(target))
+		if (ismob(target) && is_incapacitated(target))
+			task_type = /datum/aiTask/sequence/goalbased/flock/flockdrone_capture/targetable
+		else
+			task_type = /datum/aiTask/timed/targeted/flockdrone_shoot/targetable
+	else if (istype(target, /obj/flock_structure/ghost))
+		task_type = /datum/aiTask/sequence/goalbased/flock/deposit/targetable
+	else if (istype(target, /obj/flock_structure))
+		task_type = /datum/aiTask/sequence/goalbased/flock/repair/targetable
+	else if (istype(target, /obj/flock_structure) || isfeathertile(target))
+		task_type = /datum/aiTask/sequence/goalbased/flock/rally
+	else if (istype(target, /mob/living/critter/flock))
+		var/mob/living/critter/flock/mob = target
+		if (isalive(mob))
+			task_type = /datum/aiTask/sequence/goalbased/flock/repair/targetable
+		else
+			task_type = /datum/aiTask/sequence/goalbased/flock/butcher/targetable
+	else if (isitem(target))
+		task_type = /datum/aiTask/sequence/goalbased/flock/harvest/targetable
+
 	var/datum/aiTask/task = drone.ai.get_instance(task_type, list(drone.ai, drone.ai.default_task))
 	task.target = target
 	drone.ai.priority_tasks += task

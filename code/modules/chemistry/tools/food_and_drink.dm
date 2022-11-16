@@ -10,7 +10,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/needfork = 0
 	var/needspoon = 0
 	/// Color for various food items
-	var/food_color = null 
+	var/food_color = null
 	var/custom_food = 1 //Can it be used to make custom food like for pizzas
 	var/festivity = 0
 	var/brew_result = null // what will it make if it's brewable?
@@ -41,28 +41,29 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 		return food_color
 
 	proc/heal(var/mob/living/M)
+		SHOULD_CALL_PARENT(TRUE)
 		var/healing = src.heal_amt
-
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if (H.sims)
-				H.sims.affectMotive("Hunger", heal_amt * 6)
-				H.sims.affectMotive("Bladder", -heal_amt * 0.2)
-
-		if (quality >= 5)
-			boutput(M, "<span class='notice'>That tasted amazing!</span>")
-			healing *= 2
-
-		if (src.reagents && src.reagents.has_reagent("THC"))
-			boutput(M, "<span class='notice'>Wow this tastes really good man!!</span>")
-			healing *= 2
-
 
 		if (quality <= 0.5)
 			boutput(M, "<span class='alert'>Ugh! That tasted horrible!</span>")
 			if (prob(20))
 				M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
 			healing = 0
+
+		if (healing > 0)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (H.sims)
+					H.sims.affectMotive("Hunger", healing * 6)
+					H.sims.affectMotive("Bladder", -healing * 0.2)
+
+			if (quality >= 5)
+				boutput(M, "<span class='notice'>That tasted amazing!</span>")
+				healing *= 2
+
+			if (src.reagents && src.reagents.has_reagent("THC"))
+				boutput(M, "<span class='notice'>Wow this tastes really good man!!</span>")
+				healing *= 2
 
 		if (!isnull(src.unlock_medal_when_eaten))
 			M.unlock_medal(src.unlock_medal_when_eaten, 1)
@@ -279,7 +280,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if (consumer == feeder)
 			consumer.visible_message("<span class='notice'>[consumer] takes a bite of [src]!</span>",\
 			  "<span class='notice'>You take a bite of [src]!</span>")
-			logTheThing(LOG_COMBAT, consumer, "takes a bite of [src] [log_reagents(src)] at [log_loc(consumer)].")
+			logTheThing(LOG_CHEMISTRY, consumer, "takes a bite of [src] [log_reagents(src)] at [log_loc(consumer)].")
 		else
 			feeder.tri_message(consumer, "<span class='alert'><b>[feeder]</b> feeds [consumer] [src]!</span>",\
 				"<span class='alert'>You feed [consumer] [src]!</span>",\
@@ -492,7 +493,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					JOB_XP(user, "Bartender", 1)
 			else
 				user.visible_message("<span class='alert'><b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b></span>")
-				logTheThing(LOG_COMBAT, user, "spills the contents of [src] [log_reagents(src)] all over [him_or_her(user)]self at [log_loc(user)].")
+				logTheThing(LOG_CHEMISTRY, user, "spills the contents of [src] [log_reagents(src)] all over [him_or_her(user)]self at [log_loc(user)].")
 				src.reagents.reaction(get_turf(user), TOUCH)
 				src.reagents.clear_reagents()
 
@@ -606,7 +607,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			"<span class='alert'>[feeder] makes you drink from the [src].</span>\n[tasteMessage]",
 				group = "drinkMessages")
 		if (src.reagents.total_volume)
-			logTheThing(LOG_COMBAT, feeder, "[feeder == consumer ? "takes a sip from" : "makes [constructTarget(consumer,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(feeder)].")
+			logTheThing(LOG_CHEMISTRY, feeder, "[feeder == consumer ? "takes a sip from" : "makes [constructTarget(consumer,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(feeder)].")
 			src.reagents.reaction(consumer, INGEST, clamp(reagents.total_volume, CHEM_EPSILON, min(src.gulp_size, (consumer.reagents?.maximum_volume - consumer.reagents?.total_volume))))
 			SPAWN(0.5 SECONDS)
 				if (src?.reagents && consumer?.reagents)
@@ -641,7 +642,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 			else //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids
 				var/turf/T = get_turf(F)
-				logTheThing(LOG_COMBAT, user, "transfers chemicals from [src] [log_reagents(src)] to [F] at [log_loc(user)].") // Added reagents (Convair880).
+
+				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [F] at [log_loc(user)].") // Added reagents (Convair880).
 				var/trans = src.reagents.trans_to(T, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
 				boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [T].</span>")
 
@@ -667,7 +669,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				boutput(user, "<span class='alert'>[target] is full.</span>")
 				return
 
-			logTheThing(LOG_COMBAT, user, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].") // Added reagents (Convair880).
+			logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].") // Added reagents (Convair880).
 			var/trans = src.reagents.trans_to(target, 10)
 			boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 
@@ -680,7 +682,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				boutput(user, "<span class='alert'>[target] is full.</span>")
 				return
 
-			logTheThing(LOG_COMBAT, user, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].")
+			logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].")
 			var/trans = src.reagents.trans_to(target, 10)
 			boutput(user, "<span class='notice'>You dump [trans] units of the solution to [target].</span>")
 
@@ -689,7 +691,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			if (ismob(target) || (isobj(target) && target:flags & NOSPLASH))
 				return
 			boutput(user, "<span class='notice'>You [src.splash_all_contents ? "pour all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target].</span>")
-			logTheThing(LOG_COMBAT, user, "pours [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
+			logTheThing(LOG_CHEMISTRY, user, "pours [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
 			reagents.physical_shock(14)
 
 			var/splash_volume
@@ -787,6 +789,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			var/obj/item/reagent_containers/food/snacks/soup/custom/S = new(L.my_soup, src)
 			S.pixel_x = src.pixel_x
 			S.pixel_y = src.pixel_y
+			for(var/obj/surgery_tray/target_tray in src.loc)
+				target_tray.attach(S)
+				break
+
 			L.my_soup = null
 			L.UpdateOverlays(null, "fluid")
 
@@ -1343,7 +1349,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		src.smash(A)
 
 	pixelaction(atom/target, list/params, mob/living/user, reach)
-		if(!istype(target, /obj/table))
+		if(!istype(target, /obj/table) || src.cant_drop)
 			return ..()
 		var/obj/table/target_table = target
 		var/obj/table/source_table = locate() in get_step(user, user.dir)
@@ -1365,7 +1371,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		var/list/turf/path = raytrace(get_turf(source_table), get_turf(target_table))
 		var/turf/last_turf = get_turf(source_table)
 		SPAWN(0)
+			var/max_iterations = 20
 			for(var/turf/T in path)
+				if(max_iterations-- <= 0)
+					break
 				if(src.loc != last_turf)
 					break
 				if(!(locate(/obj/table) in src.loc))
@@ -1404,7 +1413,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			glassholder.visible_message("[glassholder.name] starts chugging the [glass.name]!")
 		else
 			glassholder.visible_message("[glassholder.name] starts forcing [target.name] to chug the [glass.name]!")
-		logTheThing(LOG_COMBAT, glassholder, "[glassholder == target ? "starts chugging from" : "makes [constructTarget(target,"combat")] chug from"] [glass] [log_reagents(glass)] at [log_loc(target)].")
+		logTheThing(glassholder == target ? LOG_CHEMISTRY : LOG_COMBAT, glassholder, "[glassholder == target ? "starts chugging from" : "makes [constructTarget(target,"combat")] chug from"] [glass] [log_reagents(glass)] at [log_loc(target)].")
 		return
 
 	loopStart()

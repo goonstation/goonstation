@@ -115,7 +115,9 @@ ABSTRACT_TYPE(/datum/artifact/)
 		OTHER_START_TRACKING_CAT(holder, TR_CAT_ARTIFACTS)
 
 	disposing()
-		OTHER_STOP_TRACKING_CAT(holder, TR_CAT_ARTIFACTS)
+		if(src.artitype)
+			OTHER_STOP_TRACKING_CAT(holder, TR_CAT_ARTIFACTS)
+
 		artitype = null
 		fx_image = null
 		holder = null
@@ -224,11 +226,10 @@ ABSTRACT_TYPE(/datum/artifact/art)
 	name = "energy bolt"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "u_laser"
-	power = 75
+	damage = 75
 	cost = 25
 	dissipation_rate = 0
 	dissipation_delay = 50
-	ks_ratio = 1
 	sname = "energy bolt"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_number = 1
@@ -258,7 +259,7 @@ ABSTRACT_TYPE(/datum/artifact/art)
 		src.dissipation_rate = rand(1,power)
 		src.dissipation_delay = rand(1,10)
 		src.ks_ratio = pick(0, 1, prob(10); (rand(0, 10000) / 10000))
-
+		src.generate_inverse_stats()
 		src.cost = rand(50,150)
 		if (prob(20))
 			src.window_pass = 1
@@ -279,6 +280,7 @@ ABSTRACT_TYPE(/datum/artifact/art)
 		src.power = max(10, src.power)
 		if(prob(90))
 			src.ks_ratio = 1
+		src.generate_inverse_stats()
 
 	on_pre_hit(atom/hit, angle, obj/projectile/O)
 		. = ..()

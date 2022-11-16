@@ -611,7 +611,7 @@
 			if(SEED.planttype)
 				src.HYPnewplant(SEED)
 				if(SEED && istype(SEED.planttype,/datum/plant/maneater)) // Logging for man-eaters, since they can't be harvested (Convair880).
-					logTheThing(LOG_COMBAT, user, "plants a [SEED.planttype] seed at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "plants a [SEED.planttype] seed at [log_loc(src)].")
 				if(!(user in src.contributors))
 					src.contributors += user
 			else
@@ -638,7 +638,7 @@
 			if(SEED.planttype)
 				src.HYPnewplant(SEED)
 				if(SEED && istype(SEED.planttype,/datum/plant/maneater)) // Logging for man-eaters, since they can't be harvested (Convair880).
-					logTheThing(LOG_COMBAT, user, "plants a [SEED.planttype] seed at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "plants a [SEED.planttype] seed at [log_loc(src)].")
 				if(!(user in src.contributors))
 					src.contributors += user
 			else
@@ -796,10 +796,10 @@
 			if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
 				if(!QDELETED(src))
 					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
+					logTheThing(LOG_STATION, usr, "cleared a hydroponics tray containing [current.name] at [log_loc(src)]")
 					src.reagents.clear_reagents()
 					UpdateIcon()
 					update_name()
-		return
 
 	MouseDrop_T(atom/over_object as obj, mob/user as mob) // ty to Razage for the initial code
 		if(BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, over_object) > 0 || is_incapacitated(user) || isAI(user))
@@ -1335,9 +1335,9 @@
 
 			// Mostly for dangerous produce (explosive tomatoes etc) that should show up somewhere in the logs (Convair880).
 			if(istype(MUT,/datum/plantmutation/))
-				logTheThing(LOG_COMBAT, user, "harvests [cropcount] items from a [MUT.name] plant ([MUT.type]) at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "harvests [cropcount] items from a [MUT.name] plant ([MUT.type]) at [log_loc(src)].")
 			else
-				logTheThing(LOG_COMBAT, user, "harvests [cropcount] items from a [growing.name] plant ([growing.type]) at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "harvests [cropcount] items from a [growing.name] plant ([growing.type]) at [log_loc(src)].")
 
 			// At this point all the harvested items are inside the plant pot, and this is the
 			// part where we decide where they're going and get them out.

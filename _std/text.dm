@@ -16,6 +16,11 @@
 		return FALSE
 	return copytext(text, 1, length(start) + 1) == start
 
+/proc/endswith(text, end)
+	if(length(text) < length(end))
+		return FALSE
+	return copytext(text, length(text) - length(end) + 1, length(text) + 1) == end
+
 /proc/trim(text)
 	return trim_left(trim_right(text))
 
