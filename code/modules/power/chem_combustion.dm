@@ -1,6 +1,6 @@
 #define FUEL_DRAIN_RATE 0.3
-#define ATMOS_DRAIN_RATE 0.05
-#define CARBON_OUTPUT_RATE 0.025 // for every part of fuel burnt
+#define ATMOS_DRAIN_RATE 0.025
+#define CARBON_OUTPUT_RATE 0.1 // for every part of fuel burnt
 #define OPTIMAL_MIX 14.7 // how many parts oxygen for every part of fuel
 #define EXHAUST_TEMP_INCREASE 50 // will heat up the room based on this
 
@@ -441,7 +441,7 @@
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
 			payload.carbon_dioxide = CARBON_OUTPUT_RATE * (src.last_mix * 2) * src.last_inlet * src.output_multiplier * mult
 			if (src.check_tank_oxygen(src.inlet_tank))
-				payload.temperature = src.inlet_tank.air_contents.temperature + EXHAUST_TEMP_INCREASE // hotter than intake
+				payload.temperature = clamp(src.inlet_tank.air_contents.temperature + EXHAUST_TEMP_INCREASE, EXHAUST_TEMP_INCREASE, T100C) // hotter than intake
 			else
 				payload.temperature = T.air.temperature
 
