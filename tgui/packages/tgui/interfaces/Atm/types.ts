@@ -7,5 +7,10 @@
 
 export interface AtmData {
   scannedCard: string;
-  loggedIn: string;
+  loggedIn: number;
+}
+
+export enum AtmTabKeys {
+  Teller,
+  Spacebux,
 }

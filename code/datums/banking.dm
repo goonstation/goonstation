@@ -1039,10 +1039,12 @@
 				. = TRUE
 		if("eject")
 			if(!src.scan)
-				return TRUE
+				. = FALSE
+				return
 			boutput(usr, "<span class='notice'>You eject your ID card.</span>")
 			usr.put_in_hand_or_eject(src.scan)
 			src.scan = null
+			src.state = STATE_LOGGEDOFF
 			. = TRUE
 		if("login_attempt")
 			if(!src.scan)
