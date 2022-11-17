@@ -15,7 +15,7 @@
 	var/max_tries = 3
 
 
-/mob/living/intangible/flock/flockmind/New(turf/newLoc, datum/flock/F = null)
+/mob/living/intangible/flock/flockmind/New(turf/newLoc, datum/flock/F = null, round_start = TRUE)
 	..()
 
 	src.abilityHolder = new /datum/abilityHolder/flockmind(src)
@@ -28,6 +28,8 @@
 	if (!F)
 		src.addAbility(/datum/targetable/flockmindAbility/spawnEgg)
 		src.addAbility(/datum/targetable/flockmindAbility/ping)
+		if (!round_start)
+			src.max_tries = 1
 	else
 		src.started = TRUE
 		src.addAllAbilities()

@@ -211,7 +211,7 @@
 						failed = 1
 
 				if ("Flockmind")
-					var/mob/living/intangible/flock/flockmind/F = M3.make_flockmind()
+					var/mob/living/intangible/flock/flockmind/F = M3.make_flockmind(round_start = FALSE)
 					if (F && istype(F))
 						M3 = F
 						role = ROLE_FLOCKMIND

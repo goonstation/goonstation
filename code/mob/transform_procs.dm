@@ -841,11 +841,11 @@ var/respawn_arena_enabled = 0
 			return make_flocktrace(get_turf(src), flock)
 	return null
 
-/mob/proc/make_flockmind()
+/mob/proc/make_flockmind(round_start = TRUE)
 	if (!src.mind && !src.client)
 		return null
 
-	var/mob/living/intangible/flock/flockmind/O = new/mob/living/intangible/flock/flockmind(src)
+	var/mob/living/intangible/flock/flockmind/O = new/mob/living/intangible/flock/flockmind(src, round_start = round_start)
 
 	var/turf/T = get_turf(src)
 	if (!(T && isturf(T)) || (isghostrestrictedz(T.z) && !(src.client && src.client.holder)))
