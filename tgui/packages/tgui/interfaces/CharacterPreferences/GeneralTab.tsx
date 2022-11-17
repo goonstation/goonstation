@@ -13,6 +13,10 @@ import { CharacterPreferencesData } from './type';
 export const GeneralTab = (_props, context) => {
   const { act, data } = useBackend<CharacterPreferencesData>(context);
 
+  let ellipsis = function ellipsis(text) {
+    return text.length > 200 ? text.substring(0, 200) + "…" : text;
+  };
+
   return (
     <>
       <Section title="Records">
@@ -101,7 +105,9 @@ export const GeneralTab = (_props, context) => {
                 Edit
               </Button>
             }>
-            <BlockQuote>{data.syndintNote ? decodeHtmlEntities(data.syndintNote) : <Box italic>None</Box>}</BlockQuote>
+            <BlockQuote>
+              {data.syndintNote ? ellipsis(decodeHtmlEntities(data.syndintNote)) : <Box italic>None</Box>}
+            </BlockQuote>
           </LabeledList.Item>
         </LabeledList>
       </Section>
