@@ -1,4 +1,9 @@
 
+(t)wed nov 16 22
+(u)goonstation-enjoyer
+(p)11973
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Fixes guardbuddies patrolling on Kondaru
 (t)tue nov 15 22
 (u)DrWolfy
 (p)11111
