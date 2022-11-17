@@ -96,8 +96,8 @@
 
 /datum/game_mode/flock/victory_msg()
 	if (start_flock.relay_finished)
-	else
-		return "<b style='font-size:20px'>Station victory!</b><br>The crew succeeded in preventing the Flock conversion of the station."
+		return "<b style='font-size:20px'>Flock victory!</b><br>The Flock successfully transmitted the Signal, leaving irreparable damage to the station."
+	return "<b style='font-size:20px'>Station victory!</b><br>The crew succeeded in preventing the Flock conversion of the station."
 
 /datum/game_mode/flock/declare_completion()
 	boutput(world, victory_msg())
