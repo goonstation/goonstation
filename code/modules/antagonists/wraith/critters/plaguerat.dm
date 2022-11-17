@@ -111,7 +111,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 		return ..()
 
 	death(var/gibbed)
-		if (src.master)
+		if (src.master && istype(src.master, /mob/living/intangible/wraith))
 			src.master.summons -= src
 			src.master = null
 		if (!gibbed)
