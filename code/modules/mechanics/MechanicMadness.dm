@@ -71,6 +71,7 @@
 					src.UpdateIcon()
 				return
 		return
+
 	suicide(var/mob/user as mob) // lel
 		if (!src.user_can_suicide(user))
 			return 0
@@ -83,10 +84,12 @@
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return
+
 	attack_self(mob/user as mob)
 		if(!(user in src.users) && istype(user))
 			src.users+=user
 		return ..()
+
 	attack_hand(mob/user)
 		if(!(user in src.users) && istype(user))
 			src.users+=user
@@ -169,9 +172,11 @@
 					if(hud.master==src) hud.close.clicked()
 			src.users = list() // gee golly i hope garbage collection does its job
 			return 1
+
 		notify_cabinet_state()
 			for (var/obj/item/mechanics/comp in src.contents)
 				comp.cabinet_state_change(src)
+
 		destroy_outside_connections()
 			//called when the cabinet is unanchored
 			var/discons=0
@@ -196,10 +201,28 @@
 					SEND_SIGNAL(M, _COMSIG_MECHCOMP_RM_OUTGOING, comp)
 					discons++
 			return discons
+
+		use_cabinet_power(power_usage)
+			var/datum/powernet/net
+			var/obj/cable/C
+
+			for (var/obj/cable/candidate in get_turf(src))
+				if (!candidate.d1)
+					C = candidate
+					break
+			if (C)
+				net = C.get_powernet()
+
+			if (net)
+				if (net.avail - net.newload > power_usage)
+					net.newload += amount
+					. = TRUE
+
 	disposing()
 		..()
 		src.contents=null
 		return
+
 	mouse_drop(atom/target)
 		if(!istype(usr))
 			return
@@ -361,7 +384,6 @@
 	var/when_next_ready = 0
 	var/list/particle_list
 	var/mob/owner = null
-	var/power_usage
 
 	New()
 		particle_list = new/list()
@@ -398,6 +420,11 @@
 			owner = user
 
 		use_power(watts, min_apc_perc=35, extra_cooldown=null, requires_power=FALSE)
+			var/obj/item/storage/mechanics/cabinet = src.loc
+			if(istype(cabinet))
+				if(cabinet.can_be_anchored && cabinet.use_cabinet_power(watts))
+					return TRUE
+
 			var/area/AR = get_area(src)
 			if(!AR.requires_power)
 				if(requires_power)

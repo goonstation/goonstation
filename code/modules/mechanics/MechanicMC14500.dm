@@ -25,6 +25,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 
 #define INSTRUCTIONS_PER_PROCESS 32
 #define MAX_ROM_SIZE 128
+#define MECHCOMP_MC14500B_POWER (25 WATTS)
 
 /obj/item/mechanics/mc14500
 	name = "Control Unit"
@@ -78,6 +79,11 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 	process()
 		if (..() || !running || !level)
 			return
+
+		if(!use_power(MECHCOMP_MC14500B_POWER, min_apc_perc=15, requires_power=TRUE))
+			toggleActivate() // Clear registers
+			return
+
 		SPAWN(0) src.light_up_housing()
 		. = length(ROM)
 		if (. < 2 || . % 2) //Too short or an odd length and we're out of here.
