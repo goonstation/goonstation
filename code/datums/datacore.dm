@@ -8,7 +8,7 @@
 	var/list/datum/ticket/tickets = list()
 	var/obj/machinery/networked/mainframe/mainframe = null
 
-/datum/datacore/proc/addManifest(var/mob/living/carbon/human/H as mob, var/sec_note = "", var/med_note = "", var/pda_net_id = null, var/synd_int_note = "")
+/datum/datacore/proc/addManifest(mob/living/carbon/human/H as mob, sec_note = "", med_note = "", pda_net_id = null, synd_int_note = "")
 	if (!H || !H.mind)
 		return
 
