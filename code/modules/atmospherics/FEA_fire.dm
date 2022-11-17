@@ -79,6 +79,7 @@
 	anchored = 2
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	plane = PLANE_ABOVE_LIGHTING
+	appearance_flags = LONG_GLIDE | PIXEL_SCALE | TILE_BOUND // TILE_BOUND makes wall overlays not appear from the other side of the wall
 
 	icon = 'icons/effects/fire.dmi' //Icon for fire on turfs, also helps for nurturing small fires until they are full tile
 	icon_state = "1"
