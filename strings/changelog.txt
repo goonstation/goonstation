@@ -1,4 +1,9 @@
 
+(t)thu nov 17 22
+(u)Kubius
+(p)11986
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)Increased connection range of Nadir's transception pads and interlink computers to 100 tiles, from 20; player-constructed pads should now consistently be operable from QM's interlink computers.
 (t)wed nov 16 22
 (u)Hans
 (p)10758
