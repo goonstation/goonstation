@@ -71,3 +71,9 @@
 					hh.HealDamage(2 * life_mult)
 			src.setStatus("darkness_stam_regen", 5 SECONDS * life_mult)
 		..()
+
+	death(var/gibbed)
+		if (src.master)
+			src.master.summons -= src
+			src.master = null
+		return ..()

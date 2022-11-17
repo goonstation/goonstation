@@ -774,14 +774,14 @@
 
 		var/obj/spookMarker/marker = new /obj/spookMarker(T)
 		var/list/text_messages = list()
-		text_messages.Add("Would you like to respawn as a poltergeist? Your name will be added to the list of eligible candidates and set to DNR if selected.")
+		text_messages.Add("Would you like to respawn as a poltergeist? Your name will be added to the list of eligible candidates.")
 		text_messages.Add("You are eligible to be respawned as a poltergeist. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
 		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
 		usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithportal.ogg', 50, 0)
 		message_admins("Sending poltergeist offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
-		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages)
+		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
 		if (!islist(candidates) || candidates.len <= 0)
 			message_admins("Couldn't set up poltergeist ; no ghosts responded. Source: [src.holder]")
 			logTheThing(LOG_ADMIN, null, "Couldn't set up poltergeist ; no ghosts responded. Source: [src.holder]")
@@ -799,11 +799,8 @@
 
 		//add poltergeist to master's list is done in /mob/living/intangible/wraith/potergeist/New
 		var/mob/living/intangible/wraith/poltergeist/P = new /mob/living/intangible/wraith/poltergeist(T, W, marker)
-		lucky_dude.special_role = ROLE_POLTERGEIST
-		lucky_dude.dnr = 1
 		lucky_dude.transfer_to(P)
 		ticker.mode.Agimmicks |= lucky_dude
-		//P.ckey = lucky_dude.ckey
 		P.antagonist_overlay_refresh(1, 0)
 		message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
 		usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50, 0)
@@ -1735,14 +1732,14 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 
 		var/obj/spookMarker/marker = new /obj/spookMarker(T)
 		var/list/text_messages = list()
-		text_messages.Add("Would you like to respawn as a harbinger's summon? Your name will be added to the list of eligible candidates and set to DNR if selected.")
+		text_messages.Add("Would you like to respawn as a harbinger's summon? Your name will be added to the list of eligible candidates.")
 		text_messages.Add("You are eligible to be respawned as a harbinger's summon. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
 		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
 		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithportal.ogg", 50, 0)
 		message_admins("Sending harbinger summon offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
-		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages)
+		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
 		if (!islist(candidates) || candidates.len <= 0)
 			message_admins("Couldn't set up harbinger summon ; no ghosts responded. Source: [src.holder]")
 			logTheThing(LOG_ADMIN, null, "Couldn't set up harbinger summon ; no ghosts responded. Source: [src.holder]")
@@ -1759,18 +1756,15 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		var/datum/mind/lucky_dude = pick(candidates)
 
 		//add poltergeist to master's list is done in /mob/living/intangible/wraith/potergeist/New
-		var/mob/living/critter/wraith/nascent/P = new /mob/living/critter/wraith/nascent(T, W)
-		lucky_dude.special_role = ROLE_HARBINGERSUMMON
-		lucky_dude.dnr = 1
-		lucky_dude.transfer_to(P)
-		ticker.mode.Agimmicks |= lucky_dude
-		//P.ckey = lucky_dude.ckey
-		P.antagonist_overlay_refresh(1, 0)
-		message_admins("[lucky_dude.key] respawned as a harbinger summon for [src.holder.owner].")
-		usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
-		logTheThing(LOG_ADMIN, lucky_dude.current, "respawned as a harbinger summon for [src.holder.owner].")
-		boutput(P, "<span class='notice'><b>You have been respawned as a harbinger summon!</b></span>")
-		boutput(P, "<span class='alert'><b>[W] is your master! Use your abilities to choose a path! Work with your master to spread chaos!</b></span>")
+		if (lucky_dude.current)
+			var/mob/living/critter/wraith/nascent/P = new /mob/living/critter/wraith/nascent(T, W)
+			lucky_dude.transfer_to(P)
+			antagify(lucky_dude.current, null, 1)
+			message_admins("[lucky_dude.key] respawned as a harbinger summon for [src.holder.owner].")
+			usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
+			logTheThing("admin", lucky_dude.current, null, "respawned as a harbinger summon for [src.holder.owner].")
+			boutput(P, "<span class='notice'><b>You have been respawned as a harbinger summon!</b></span>")
+			boutput(P, "<span class='alert'><b>[W] is your master! Use your abilities to choose a path! Work with your master to spread chaos!</b></span>")
 		qdel(marker)
 
 /datum/targetable/wraithAbility/make_plague_rat
@@ -1830,14 +1824,14 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 
 		var/obj/spookMarker/marker = new /obj/spookMarker(T)
 		var/list/text_messages = list()
-		text_messages.Add("Would you like to respawn as a plague rat? Your name will be added to the list of eligible candidates and set to DNR if selected.")
+		text_messages.Add("Would you like to respawn as a plague rat? Your name will be added to the list of eligible candidates.")
 		text_messages.Add("You are eligible to be respawned as a plague rat. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
 		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
 		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithportal.ogg", 50, 0)
 		message_admins("Sending plague rat offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
-		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages)
+		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
 		if (!islist(candidates) || candidates.len <= 0)
 			message_admins("Couldn't set up plague rat ; no ghosts responded. Source: [src.holder]")
 			logTheThing(LOG_ADMIN, null, "Couldn't set up plague rat ; no ghosts responded. Source: [src.holder]")
@@ -1854,21 +1848,15 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		var/datum/mind/lucky_dude = pick(candidates)
 
 		//add plague rat to master's list is done in /mob/living/critter/wraith/plaguerat/New
-		var/mob/living/critter/wraith/plaguerat/young/P = new /mob/living/critter/wraith/plaguerat/young(T, W)
-		lucky_dude.special_role = ROLE_PLAGUERAT
-		lucky_dude.dnr = 1
-		lucky_dude.transfer_to(P)
-		ticker.mode.Agimmicks |= lucky_dude
-		//Might need to re-add those.
-		//P.ckey = lucky_dude.ckey
-		//P.antagonist_overlay_refresh(1, 0)
-		message_admins("[lucky_dude.key] respawned as a plague rat for [src.holder.owner].")
-		usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
-		logTheThing(LOG_ADMIN, lucky_dude.current, "respawned as a plague rat for [src.holder.owner].")
-		P.show_antag_popup("plaguerat")
-		boutput(P, "<span class='notice'><b>You have been respawned as a plague rat!</b></span>")
-		boutput(P, "[W] is your master! Eat filth, spread disease and reproduce!")
-		boutput(P, "Obey your master's orders, avoid mouse traps and live the rat life!")
+		if (lucky_dude.current)
+			var/mob/living/critter/wraith/plaguerat/young/P = new /mob/living/critter/wraith/plaguerat/young(T, W)
+			lucky_dude.transfer_to(P)
+			antagify(lucky_dude.current, null, 1)
+			message_admins("[lucky_dude.key] respawned as a plague rat for [src.holder.owner].")
+			usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
+			logTheThing("admin", lucky_dude.current, null, "respawned as a plague rat for [src.holder.owner].")
+			boutput(P, "<span class='notice'><b>You have been respawned as a plague rat!</b></span>")
+			boutput(P, "<span class='alert'><b>[W] is your master! Use your abilities to spread disease and consume rot! Work with your master to turn the station into a rat den!</b></span>")
 		qdel(marker)
 
 /datum/targetable/wraithAbility/speak

@@ -36,6 +36,9 @@
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
 	death(var/gibbed)
+		if (src.master)
+			src.master.summons -= src
+			src.master = null
 		if (!gibbed)
 			src.unequip_all()
 			playsound(src, src.deathsound, 50, 0)
