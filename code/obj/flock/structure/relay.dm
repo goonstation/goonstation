@@ -141,7 +141,6 @@
 		return
 	logTheThing(LOG_GAMEMODE, src, "Flock relay[src.flock ? " belonging to flock [src.flock.name]" : ""] unleashes the signal, exploding at [log_loc(src)].")
 	src.finished = TRUE
-	src.flock.relay_finished = TRUE
 	processing_items -= src
 	var/turf/location = get_turf(src)
 	overlays += "structure-relay-sparks"
@@ -169,6 +168,7 @@
 		for(var/y = -2 to 2)
 			flockdronegibs(locate(location.x + x, location.y + y, location.z))
 	explosion_new(src, location, 2000)
+	src.flock.relay_finished = TRUE
 	gib(location)
 	flock_signal_unleashed = TRUE
 	sleep(2 SECONDS) //allow them to hear the explosion before their headsets scream and die
