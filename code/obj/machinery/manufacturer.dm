@@ -3008,3 +3008,5 @@
 #undef WIRE_MALF
 #undef WIRE_SHOCK
 #undef MAX_QUEUE_LENGTH
+#undef MAX_SPEED
+#undef MAX_SPEED_HACKED
