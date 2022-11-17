@@ -3,8 +3,8 @@
 #define WIRE_POWER 2
 #define WIRE_MALF 3
 #define WIRE_SHOCK 4
-#define MAX_SPEED
-#define MAX_SPEED_HACKED
+#define MAX_SPEED 3
+#define MAX_SPEED_HACKED 5
 
 /obj/machinery/manufacturer
 	name = "manufacturing unit"
@@ -628,14 +628,21 @@
 					src.speed = clamp(newset, 1, upperbound)
 
 			if (href_list["clearQ"])
-				var/Qcounter = 1
-				for (var/datum/manufacture/M in src.queue)
-					if (Qcounter == 1 && src.mode == "working") continue
-					src.queue -= src.queue[Qcounter]
-				if (src.mode == "halt")
-					src.manual_stop = 0
+				var/Qlength = length(src.queue)
+				if (Qlength < 1) // Nothing in list
+					return
+
+				if (Qlength > 2)
+					src.queue.Cut(2)
+
+				if (src.mode != "working")
+					src.queue -= src.queue[1]
+
+				if (src.mode == "halt") // Set ready if halted
+					src.manual_stop = FALSE
 					src.error = null
 					src.mode = "ready"
+
 					src.build_icon()
 
 			if (href_list["removefromQ"])
@@ -1340,19 +1347,28 @@
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#APPENDED"))
 
 			if ("clear")
-				var/Qcounter = 0
-				for (var/datum/manufacture/M in src.queue)
-					Qcounter++
-					if (Qcounter == 1 && src.mode == "working") continue
-					src.queue -= src.queue[Qcounter]
+				var/Qlength = length(src.queue)
+				if (Qlength < 1) // Nothing in list
+					return
 
-				if (src.mode == "halt")
-					src.manual_stop = 0
+				if (Qlength > 2)
+					src.queue.Cut(2)
+
+				if (src.mode != "working")
+					src.queue -= src.queue[1]
+
+				if (src.mode == "halt") // Set ready if halted
+					src.manual_stop = FALSE
 					src.error = null
 					src.mode = "ready"
+
 					src.build_icon()
 
-				post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#CLEARED"))
+				if (length(src.queue) < 1)
+					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#CLEARED"))
+
+				else
+					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#WORKING"))
 
 			if ("remove")
 				var/operation = text2num_safe(signal.data["data"])
