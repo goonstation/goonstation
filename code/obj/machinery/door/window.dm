@@ -103,7 +103,7 @@
 /obj/machinery/door/window/Cross(atom/movable/mover)
 	if (istype(mover, /obj/projectile))
 		var/obj/projectile/P = mover
-		if (P.proj_data.window_pass)
+		if (P.proj_data?.window_pass)
 			return 1
 
 	if (get_dir(loc, mover) & dir) // Check for appropriate border.
