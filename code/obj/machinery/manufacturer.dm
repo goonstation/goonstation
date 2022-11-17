@@ -210,7 +210,7 @@
 			if (!src.repeat)
 				src.queue -= src.queue[1]
 
-		if (src.queue.len < 1)
+		if (length(src.queue) < 1)
 			src.manual_stop = 0
 			playsound(src.loc, src.sound_happy, 50, 1)
 			src.visible_message("<span class='notice'>[src] finishes its production queue.</span>")
@@ -647,7 +647,7 @@
 
 			if (href_list["removefromQ"])
 				var/operation = text2num_safe(href_list["removefromQ"])
-				if (!isnum(operation) || src.queue.len < 1 || operation > src.queue.len)
+				if (!isnum(operation) || length(src.queue) < 1 || operation > length(src.queue))
 					boutput(usr, "<span class='alert'>Invalid operation.</span>")
 					return
 
@@ -663,7 +663,7 @@
 				src.repeat = !src.repeat
 
 			if (href_list["continue"])
-				if (src.queue.len < 1)
+				if (length(src.queue) < 1)
 					boutput(usr, "<span class='alert'>Cannot find any items in queue to continue production.</span>")
 					return
 				if (!check_enough_materials(src.queue[1]))
@@ -705,7 +705,7 @@
 
 				if (!check_enough_materials(I))
 					boutput(usr, "<span class='alert'>Insufficient usable materials to manufacture that item.</span>")
-				else if (src.queue.len >= MAX_QUEUE_LENGTH)
+				else if (length(src.queue) >= MAX_QUEUE_LENGTH)
 					boutput(usr, "<span class='alert'>Manufacturer queue length limit reached.</span>")
 				else
 					src.queue += I
@@ -713,7 +713,7 @@
 						src.begin_work(1)
 						src.updateUsrDialog()
 
-				if (src.queue.len > 0 && src.mode == "ready")
+				if (length(src.queue) > 0 && src.mode == "ready")
 					src.begin_work(1)
 					src.updateUsrDialog()
 					return
@@ -1337,7 +1337,7 @@
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#NOMATERIALS"))
 					return
 
-				else if (src.queue.len >= MAX_QUEUE_LENGTH)
+				else if (length(src.queue) >= MAX_QUEUE_LENGTH)
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#QUEUEFULL"))
 					return
 
@@ -1387,7 +1387,7 @@
 				post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#REMOVED"))
 
 			if ("resume")
-				if (src.queue.len < 1)
+				if (length(src.queue) < 1)
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#NOQUEUE"))
 					return
 
@@ -1677,7 +1677,7 @@
 	proc/begin_work(new_production = TRUE)
 		if (status & NOPOWER || status & BROKEN)
 			return
-		if (!src.queue.len)
+		if (!length(src.queue))
 			src.manual_stop = 0
 			src.mode = "ready"
 			src.build_icon()
@@ -1851,7 +1851,7 @@
 				X.set_loc(src.loc)
 				X.throw_at(pick(src.nearby_turfs), 16, 3)
 				to_throw--
-		if (src.queue.len > 1 && prob(20))
+		if (length(src.queue) > 1 && prob(20))
 			var/list_counter = 0
 			for (var/datum/manufacture/X in src.queue)
 				list_counter++
