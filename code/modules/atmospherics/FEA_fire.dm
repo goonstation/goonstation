@@ -99,11 +99,13 @@
 	var/bypassing = 0
 	var/catalyst_active = FALSE
 
-	var/list/wall_overlay_images = list()
-	var/list/blocked_perspective_objects = list()
+	var/list/wall_overlay_images
+	var/list/blocked_perspective_objects
+
 	New()
 		..()
 		START_TRACKING
+		blocked_perspective_objects = list()
 		set_dir(pick(cardinal))
 #ifndef HOTSPOT_MEDIUM_LIGHTS
 		light = new /datum/light/point
@@ -327,7 +329,7 @@
 	proc/clear_overlay(var/key = 0)
 		if (!key)
 			src.ClearAllOverlays()
-		else if(key && wall_overlay_images && wall_overlay_images[key])
+		else if(key &&  wall_overlay_images?[key])
 			src.ClearSpecificOverlays(key)
 
 	proc/update_perspective_overlays() // fancy perspective overlaying
