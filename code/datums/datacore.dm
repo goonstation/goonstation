@@ -294,56 +294,57 @@
 		var/rank = staff_record["rank"]
 		if(synd_int_request_device && !length(staff_record["notes"]))
 			continue
+		var/entry = "[staff_record["name"]] - [staff_record["rank"]][synd_int_request_device ? " - <a href='byond://?src=\ref[synd_int_request_device];select_exp=\ref[staff_record]'>Info</a>" : ""]<br>"
 		if(rank in command_jobs)
 			if(rank == "Captain")
-				Command.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]][synd_int_request_device ? " - <a href='byond://?src=\ref[synd_int_request_device];select_exp=\ref[staff_record]'>Info</a>" : ""]</b><br>")
+				Command.Insert(1, entry)
 				continue // Only Continue as Captain, as non-captain command staff appear both in the command section and their departmental section
 			else
-				Command.Add("[staff_record["name"]] - [staff_record["rank"]][synd_int_request_device ? " - <a href='byond://?src=\ref[synd_int_request_device];select_exp=\ref[staff_record]'>Info</a>" : ""]<br>")
+				Command.Add(entry)
 				if(rank == "Communications Officer")
 					continue
 
 		if((rank in security_jobs) || (rank in security_gimmicks))
 			if(rank in command_jobs)
-				Security.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]][synd_int_request_device ? " - <a href='byond://?src=\ref[synd_int_request_device];select_exp=\ref[staff_record]'>Info</a>" : ""]</b><br>")
+				Security.Insert(1, "<b>[entry]</b>")
 			else if(rank in command_gimmicks)
-				Security.Insert(2, "<b>[staff_record["name"]] - [staff_record["rank"]][synd_int_request_device ? " - <a href='byond://?src=\ref[synd_int_request_device];select_exp=\ref[staff_record]'>Info</a>" : ""]</b><br>")
+				Security.Insert(2, "<b>[entry]</b>")
 			else
-				Security.Add("[staff_record["name"]] - [staff_record["rank"]][synd_int_request_device ? " - <a href='byond://?src=\ref[synd_int_request_device];select_exp=\ref[staff_record]'>Info</a>" : ""]<br>")
+				Security.Add(entry)
 			continue
 
 		if((rank in engineering_jobs) || (rank in engineering_gimmicks))
 			if(rank in command_jobs)
-				Engineering.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]][synd_int_request_device ? " - <a href='byond://?src=\ref[synd_int_request_device];select_exp=\ref[staff_record]'>Info</a>" : ""]</b><br>")
+				Engineering.Insert(1, "<b>[entry]</b>")
 			else if(rank in command_gimmicks)
-				Engineering.Insert(2, "<b>[staff_record["name"]] - [staff_record["rank"]][synd_int_request_device ? " - <a href='byond://?src=\ref[synd_int_request_device];select_exp=\ref[staff_record]'>Info</a>" : ""]</b><br>")
+				Engineering.Insert(2, "<b>[entry]</b>")
 			else
-				Engineering.Add("[staff_record["name"]] - [staff_record["rank"]][synd_int_request_device ? " - <a href='byond://?src=\ref[synd_int_request_device];select_exp=\ref[staff_record]'>Info</a>" : ""]<br>")
+				Engineering.Add(entry)
 			continue
 		if((rank in medsci_jobs) || (rank in medsci_gimmicks))
 			if(rank in command_jobs)
-				Medsci.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]][synd_int_request_device ? " - <a href='byond://?src=\ref[synd_int_request_device];select_exp=\ref[staff_record]'>Info</a>" : ""]</b><br>")
+				Medsci.Insert(1, "<b>[entry]</b>")
 				medsci_integer++
 			else if(rank in command_gimmicks)
-				Medsci.Insert(medsci_integer + 1, "<b>[staff_record["name"]] - [staff_record["rank"]][synd_int_request_device ? " - <a href='byond://?src=\ref[synd_int_request_device];select_exp=\ref[staff_record]'>Info</a>" : ""]</b><br>") // If there are two heads, both an MD and RD, medsci_integer will be at two, thus the Head Surgeon gets placed at 3 in the manifest
+				Medsci.Insert(medsci_integer + 1, "<b>[entry]</b>") // If there are two heads, both an MD and RD, medsci_integer will be at two, thus the Head Surgeon gets placed at 3 in the manifest
 			else
-				Medsci.Add("[staff_record["name"]] - [staff_record["rank"]][synd_int_request_device ? " - <a href='byond://?src=\ref[synd_int_request_device];select_exp=\ref[staff_record]'>Info</a>" : ""]<br>")
+				Medsci.Add(entry)
 			continue
 
 		if((rank in service_jobs) || (rank in service_gimmicks))
 			if(rank in command_jobs)
-				Service.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]][synd_int_request_device ? " - <a href='byond://?src=\ref[synd_int_request_device];select_exp=\ref[staff_record]'>Info</a>" : ""]</b><br>")
+				Service.Insert(1, "<b>[entry]</b>")
 			else if(rank in command_gimmicks)
-				Service.Insert(2, "<b>[staff_record["name"]] - [staff_record["rank"]][synd_int_request_device ? " - <a href='byond://?src=\ref[synd_int_request_device];select_exp=\ref[staff_record]'>Info</a>" : ""]</b><br>") //Future proofing, just in case
+				Service.Insert(2, "<b>[entry]</b>") //Future proofing, just in case
 			else
-				Service.Add("[staff_record["name"]] - [staff_record["rank"]][synd_int_request_device ? " - <a href='byond://?src=\ref[synd_int_request_device];select_exp=\ref[staff_record]'>Info</a>" : ""]<br>")
+				Service.Add(entry)
 			continue
 #ifdef MAP_OVERRIDE_OSHAN // Radio host is on Oshan
 		if(rank == "Radio Show Host" || rank == "Talk Show Host")
-			Service.Add("<b>[staff_record["name"]]</b> - [staff_record["rank"]][synd_int_request_device ? " - <a href='byond://?src=\ref[synd_int_request_device];select_exp=\ref[staff_record]'>Info</a>" : ""]<br>")
+			Service.Add(entry)
 #endif
 			continue
-		Unassigned += "<b>[staff_record["name"]]</b> - [staff_record["rank"]][synd_int_request_device ? " - <a href='byond://?src=\ref[synd_int_request_device];select_exp=\ref[staff_record]'>Info</a>" : ""]<br>"
+		Unassigned += entry
 
 	sorted_manifest += "<b><u>Station Command:</u></b><br>"
 	for(var/crew in Command)
