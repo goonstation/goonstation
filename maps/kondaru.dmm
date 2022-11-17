@@ -6756,7 +6756,6 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon10,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "asV" = (
@@ -6862,7 +6861,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "att" = (
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon11,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
@@ -45535,6 +45533,10 @@
 	dir = 8
 	},
 /area/station/security/main)
+"iKF" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon11,
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "iKH" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -59337,6 +59339,10 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
+"vEX" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon10,
+/turf/simulated/floor/grey,
+/area/station/hallway/primary/north)
 "vFg" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -114574,7 +114580,7 @@ aFv
 cCG
 aFv
 xQm
-wHG
+vEX
 rDI
 aFv
 nbW
@@ -120312,7 +120318,7 @@ neS
 aAg
 adK
 uzL
-uzL
+iKF
 aum
 meA
 jCn
