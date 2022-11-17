@@ -1,5 +1,7 @@
 
 (t)thu nov 17 22
+(u)pali
+(+)Skeleton limbs damage for vestigal ballistics has been lowered because they can reuse this ability really easily
 (u)Kubius
 (p)11940
 (e)🆕🗺⚖🔄⛔|C-Feature, A-Mapping, C-Balance, C-Rework, C-Removal
