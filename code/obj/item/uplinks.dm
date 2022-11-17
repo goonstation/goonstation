@@ -259,7 +259,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		else if(reading_synd_int)
 			dat += "<h4>Syndicate Intelligence</h4>"
-			dat += get_manifest(src)
+			dat += get_manifest(FALSE, src)
 			dat += "<br>"
 			dat += "<A href='byond://?src=\ref[src];back=1'>Back</A>"
 			dat += "<br>"
