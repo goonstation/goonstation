@@ -166,7 +166,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\abilities\critter\powerkick.dm"
 #include "code\datums\abilities\critter\psyblast.dm"
 #include "code\datums\abilities\critter\scuttlebot.dm"
-#include "code\datums\abilities\critter\seed.dm"
 #include "code\datums\abilities\critter\shedtears.dm"
 #include "code\datums\abilities\critter\singularity.dm"
 #include "code\datums\abilities\critter\slam.dm"

@@ -209,14 +209,14 @@ proc/dm_dump(var/x)
 /// DO NOT USE THIS IN NORMAL MAPPING!!! Linters WILL fail.
 /obj/merge_conflict_marker
 	name = "Merge Conflict Marker - DO NOT USE"
-	icon = 'icons/map_editing/mapping_helpers.dmi'
+	icon = 'icons/map-editing/mapping_helpers.dmi'
 	icon_state = "merge_conflict_marker"
 	desc = "If you are seeing this in-game: someone REALLY, REALLY, REALLY fucked up. They physically mapped in a fucking Merge Conflict Marker. What the shit."
-	plane = PLANE_SCREEN_OVERLAYS
+	plane = 40 // sue me
 
 /// We REALLY do not want un-addressed merge conflicts in maps for an inexhaustible list of reasons. This should help ensure that this will not be missed in case linters fail to catch it for any reason what-so-ever.
 /obj/merge_conflict_marker/New()
 	. = ..()
 	var/msg = "HEY, LISTEN!!! Merge Conflict Marker detected at [log_loc(src)]! Please manually address all potential merge conflicts!!!"
-	boutput(world, span_boldannounce("[msg]"))
+	boutput(world, "<span class='bold notice'>[msg],</span>")
 	message_admins(msg)

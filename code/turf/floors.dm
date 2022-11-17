@@ -2059,14 +2059,6 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		else
 			return
 
-	// hi i don't know where else to put this :D - cirr
-	else if (istype(C, /obj/item/martianSeed))
-		var/obj/item/martianSeed/S = C
-		if(S)
-			S.plant(src)
-			logTheThing(LOG_STATION, user, "plants a martian biotech seed (<b>Structure:</b> [S.spawn_path]) at [log_loc(src)].")
-			return
-
 	//also in turf.dm. Put this here for lowest priority.
 	else if (src.temp_flags & HAS_KUDZU)
 		var/obj/spacevine/K = locate(/obj/spacevine) in src.contents
