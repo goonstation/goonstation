@@ -15633,8 +15633,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "chapel"
 	},
 /obj/machinery/atmospherics/pipe/simple{
@@ -46809,8 +46808,7 @@
 	},
 /area/russian/radiation)
 "hHZ" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -46827,8 +46825,7 @@
 	},
 /area/russian/radiation)
 "hII" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -46844,8 +46841,7 @@
 	},
 /area/russian/radiation)
 "hIL" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -46864,8 +46860,7 @@
 	name = "ejection outlet";
 	pixel_x = 10
 	},
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -49531,16 +49526,20 @@
 	pixel_x = 11;
 	pixel_y = 10
 	},
-/obj/item/breaching_charge{
-	pixel_x = -5;
+/obj/item/ammo/bullets/tranq_darts/anti_mutant{
+	pixel_x = -10;
 	pixel_y = -6
 	},
-/obj/item/breaching_charge{
-	pixel_x = -1;
-	pixel_y = -3
+/obj/item/ammo/bullets/tranq_darts{
+	pixel_x = 10;
+	pixel_y = -6
 	},
-/obj/item/breaching_charge{
-	pixel_x = 8
+/obj/item/ammo/bullets/tranq_darts{
+	pixel_x = 6;
+	pixel_y = -6
+	},
+/obj/item/gun/kinetic/dart_rifle{
+	pixel_y = -8
 	},
 /turf/simulated/floor/black{
 	desc = " It is made of steel.";
@@ -54469,30 +54468,7 @@
 	},
 /area/russian/radiation)
 "llq" = (
-/obj/table/reinforced/auto,
-/obj/item/breaching_hammer{
-	pixel_x = 1;
-	pixel_y = 7
-	},
-/obj/item/breaching_hammer{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/ammo/bullets/tranq_darts/anti_mutant{
-	pixel_x = -10;
-	pixel_y = -6
-	},
-/obj/item/ammo/bullets/tranq_darts{
-	pixel_x = 10;
-	pixel_y = -6
-	},
-/obj/item/ammo/bullets/tranq_darts{
-	pixel_x = 6;
-	pixel_y = -6
-	},
-/obj/item/gun/kinetic/dart_rifle{
-	pixel_y = -8
-	},
+/obj/random_item_spawner/armory_breaching_supplies,
 /turf/simulated/floor/black{
 	desc = " It is made of steel.";
 	name = "steel floor"
@@ -69486,7 +69462,7 @@
 	},
 /area/space)
 "sgV" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	name = "garbo belt";
 	operating = 1
 	},
@@ -69499,7 +69475,7 @@
 	},
 /area/russian/radiation)
 "shj" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	name = "garbo belt";
 	operating = 1
 	},
@@ -69516,7 +69492,7 @@
 /turf/space,
 /area/space)
 "shH" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	name = "garbo belt";
 	operating = 1
 	},
@@ -70012,7 +69988,7 @@
 	},
 /area/russian/radiation)
 "svF" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	name = "garbo belt";
 	operating = 1
 	},
@@ -70039,7 +70015,7 @@
 	},
 /area/russian/radiation)
 "svS" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	move_lag = 25;
 	name = "garbo belt";
 	operating = 1
@@ -70381,7 +70357,7 @@
 	},
 /area/russian/radiation)
 "sHC" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	desc = "A conveyor belt, for choosing where to send your trash.";
 	id = "trash_sort";
 	name = "decider belt";
@@ -70393,7 +70369,7 @@
 	},
 /area/russian/radiation)
 "sHV" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	desc = "A conveyor belt, for choosing where to send your trash.";
 	id = "trash_sort";
 	name = "decider belt";
@@ -70418,7 +70394,7 @@
 	},
 /area/russian/radiation)
 "sIS" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	move_lag = 25;
 	name = "garbo belt";
 	operating = 1
@@ -70736,7 +70712,7 @@
 	},
 /area/russian/radiation)
 "sRv" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	name = "garbo belt";
 	operating = 1
 	},
@@ -70814,7 +70790,7 @@
 	},
 /area/russian/radiation)
 "sTq" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	move_lag = 25;
 	name = "garbo belt";
 	operating = 1
@@ -71085,8 +71061,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -71099,8 +71074,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -71175,7 +71149,7 @@
 	},
 /area/russian/radiation)
 "tcS" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	name = "garbo belt";
 	operating = 1
 	},
@@ -71234,7 +71208,7 @@
 	},
 /area/russian/radiation)
 "tgm" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	move_lag = 25;
 	name = "garbo belt";
 	operating = 1
@@ -71451,7 +71425,7 @@
 	},
 /area/russian/radiation)
 "toN" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	move_lag = 25;
 	name = "garbo belt";
 	operating = 1
@@ -71462,7 +71436,7 @@
 	},
 /area/russian/radiation)
 "tpj" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	move_lag = 25;
 	name = "garbo belt";
 	operating = 1
@@ -71479,7 +71453,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	move_lag = 25;
 	name = "garbo belt";
 	operating = 1
@@ -71499,7 +71473,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	move_lag = 25;
 	name = "garbo belt";
 	operating = 1
@@ -71518,7 +71492,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	move_lag = 25;
 	name = "garbo belt";
 	operating = 1
@@ -71692,16 +71666,14 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
 /turf/space,
 /area/space)
 "tuF" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -71711,8 +71683,7 @@
 	},
 /area/space)
 "tuG" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -71729,8 +71700,7 @@
 	},
 /area/russian/radiation)
 "tvd" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -71740,8 +71710,7 @@
 	},
 /area/russian/radiation)
 "tvN" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -71754,8 +71723,7 @@
 	},
 /area/russian/radiation)
 "twE" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -71766,8 +71734,7 @@
 	},
 /area/russian/radiation)
 "txd" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -74540,7 +74507,7 @@
 	},
 /area/russian/radiation)
 "vbk" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "cargo_shutter";
 	name = "cargo belt - south";
 	operating = 1
@@ -74556,8 +74523,7 @@
 	},
 /area/russian/radiation)
 "vbp" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -74567,8 +74533,7 @@
 	},
 /area/russian/radiation)
 "vbW" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -74580,8 +74545,7 @@
 	},
 /area/russian/radiation)
 "vcg" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -74591,8 +74555,7 @@
 	},
 /area/russian/radiation)
 "vcz" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -74602,8 +74565,7 @@
 	},
 /area/russian/radiation)
 "vcW" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -74614,8 +74576,7 @@
 	},
 /area/russian/radiation)
 "vdd" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -74626,8 +74587,7 @@
 	},
 /area/russian/radiation)
 "vdz" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -75587,8 +75547,7 @@
 	},
 /area/russian/radiation)
 "vEs" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -75604,8 +75563,7 @@
 	},
 /area/russian/radiation)
 "vFh" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -75615,8 +75573,7 @@
 /turf/space,
 /area/russian/radiation)
 "vFw" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -75632,8 +75589,7 @@
 	},
 /area/russian/radiation)
 "vFA" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -75646,8 +75602,7 @@
 	},
 /area/russian/radiation)
 "vFE" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -75660,8 +75615,7 @@
 	},
 /area/russian/radiation)
 "vFK" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -76219,8 +76173,7 @@
 	},
 /area/russian/radiation)
 "waa" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -76698,8 +76651,7 @@
 	},
 /area/shuttle/arrival/station)
 "wov" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -77026,8 +76978,7 @@
 	},
 /area/russian/radiation)
 "wvc" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -77058,7 +77009,7 @@
 /turf/space,
 /area/space)
 "wwh" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "ghostdrone_cuba";
 	operating = 1
 	},
@@ -77066,8 +77017,7 @@
 /area/space)
 "wxx" = (
 /obj/machinery/ghostdrone_factory,
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone_cuba";
 	operating = 1
 	},
@@ -77430,8 +77380,7 @@
 /turf/space,
 /area/space)
 "wIQ" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -77447,7 +77396,7 @@
 /turf/space,
 /area/space)
 "wJn" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "cargo_shutter";
 	name = "cargo belt - south";
 	operating = 1
@@ -77803,7 +77752,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "cargo_shutter";
 	name = "cargo belt - south";
 	operating = 1
@@ -77815,16 +77764,14 @@
 /turf/space,
 /area/space)
 "wWK" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone_cuba";
 	operating = 1
 	},
 /turf/space,
 /area/space)
 "wWZ" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone_cuba";
 	operating = 1
 	},
@@ -78069,15 +78016,13 @@
 	},
 /area/russian/radiation)
 "xeB" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	operating = 1
 	},
 /turf/space,
 /area/space)
 "xeR" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	operating = 1
 	},
 /obj/machinery/ghostdrone_factory/part3,
@@ -78888,8 +78833,7 @@
 /turf/space,
 /area/space)
 "xCq" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "salvage belt - west";
 	operating = 1
 	},
@@ -79137,8 +79081,7 @@
 /turf/space,
 /area/space)
 "xIW" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -79484,8 +79427,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -79704,8 +79646,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},

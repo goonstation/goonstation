@@ -454,8 +454,7 @@
 	if(src.burning || (src in by_cat[TR_CAT_BURNING_ITEMS]))
 		return
 	START_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
-	src.visible_message("<span class='alert'>[src] catches on fire!</span>")
-	src.burning = 1
+	src.burning = TRUE
 	src.firesource = FIRESOURCE_OPEN_FLAME
 	if (istype(src, /obj/item/plant))
 		if (!GET_COOLDOWN(global, "hotbox_adminlog"))
@@ -673,7 +672,7 @@
 /obj/item/proc/click_drag_tk(atom/over_object, src_location, over_location, over_control, params)
 	if(!src.anchored)
 		if (iswraith(usr))
-			var/mob/wraith/W = usr
+			var/mob/living/intangible/wraith/W = usr
 			//Basically so poltergeists need to be close to an object to send it flying far...
 			if (W.weak_tk && !IN_RANGE(src, W, 2))
 				src.throw_at(over_object, 1, 1)
@@ -923,6 +922,7 @@
 	#ifdef COMSIG_ITEM_UNEQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_UNEQUIPPED, user)
 	#endif
+	src.hide_buttons()
 	for(var/datum/objectProperty/equipment/prop in src.properties)
 		prop.onUnequipped(src, user, src.properties[prop])
 	src.equipped_in_slot = null
@@ -1417,7 +1417,7 @@
 
 	if(istype(src.loc, /obj/item/storage))
 		var/obj/item/storage/storage = src.loc
-		src.set_loc(get_turf(src)) // so the storage doesn't add it back >:(
+		src.set_loc(null) // so the storage doesn't add it back >:(
 		storage.hud?.remove_item(src)
 
 	var/turf/T = loc

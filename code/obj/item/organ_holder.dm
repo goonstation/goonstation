@@ -1468,12 +1468,12 @@
 
 /datum/projectile/laser/eyebeams/left
 	icon_state = "eyebeamL"
-	power = 10
+	damage = 10
 	cost = 10
 
 /datum/projectile/laser/eyebeams/right
 	icon_state = "eyebeamR"
-	power = 10
+	damage = 10
 	cost = 10
 
 /datum/targetable/organAbility/meson
