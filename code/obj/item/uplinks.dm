@@ -258,7 +258,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			dat += "<b>Extended Item Information:</b><hr>[item_about]<hr><A href='byond://?src=\ref[src];back=1'>Back</A>"
 
 		else if(reading_exploitable)
-			dat += "<h4>Exploitable Information</h4>"
+			dat += "<h4>Syndicate Intelligence</h4>"
 			dat += get_manifest(src)
 			dat += "<br>"
 			dat += "<A href='byond://?src=\ref[src];back=1'>Back</A>"
@@ -311,7 +311,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				var/do_divider = 1
 
 				if(has_exploitable)
-					dat += "<HR><A href='byond://?src=\ref[src];exploitable=1'>Exploitable Information</A><BR>"
+					dat += "<HR><A href='byond://?src=\ref[src];exploitable=1'>Syndicate Intelligence</A><BR>"
 
 				if (istype(src, /obj/item/uplink/integrated/radio))
 					var/obj/item/uplink/integrated/radio/RU = src
@@ -608,7 +608,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		src.menu_message += "<I>Each item costs a number of [syndicate_currency] as indicated by the number following their name.</I><BR><table cellspacing=5>"
 
 		if(reading_exploitable)
-			src.menu_message += "<h4>Exploitable Information</h4>"
+			src.menu_message += "<h4>Syndicate Intelligence</h4>"
 			src.menu_message += get_manifest(FALSE, src)
 			src.menu_message += "<br>"
 			src.menu_message += "<A href='byond://?src=\ref[src];back_menu=1'>Back</A>"
@@ -644,7 +644,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		src.menu_message += "</table><HR>"
 		if(has_exploitable)
-			src.menu_message += "<A href='byond://?src=\ref[src];exploitable=1'>Exploitable Information</A><BR>"
+			src.menu_message += "<A href='byond://?src=\ref[src];exploitable=1'>Syndicate Intelligence</A><BR>"
 			src.menu_message += "<HR>"
 		return
 
@@ -1013,7 +1013,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		src.menu_message = "<B>Spy Console:</B> Current location: [get_area(src)]<BR>"
 
 		if(reading_exploitable)
-			src.menu_message += "<br><h4>Exploitable Information</h4>"
+			src.menu_message += "<br><h4>Syndicate Intelligence</h4>"
 			src.menu_message += get_manifest(FALSE, src)
 			src.menu_message += "<br>"
 			src.menu_message += "<A href='byond://?src=\ref[src];back_menu=1'>Back</A>"
@@ -1066,7 +1066,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		src.menu_message += "<I>Stand in the Deliver Area and touch a bountied item (or use click + drag) to this PDA. Our fancy wormhole tech can take care of the rest. Your efforts will be rewarded.</I><BR><table cellspacing=5>"
 		if(has_exploitable)
 			src.menu_message += "<HR>"
-			src.menu_message += "<A href='byond://?src=\ref[src];exploitable=1'>Exploitable Information</A><BR>"
+			src.menu_message += "<A href='byond://?src=\ref[src];exploitable=1'>Syndicate Intelligence</A><BR>"
 		return
 
 	Topic(href, href_list)

@@ -278,7 +278,7 @@
 		return
 
 ///Returns the crew manifest, but sorted according to the individual's rank. include_cryo includes a list of individuals in cryogenic storage
-///Set `exploit_request` to the object calling the proc to get exploitable information.
+///Set `exploit_request` to the object calling the proc to get Syndicate Intelligence.
 /proc/get_manifest(include_cryo = TRUE, obj/exploit_request = null)
 	var/list/sorted_manifest
 	var/list/Command = list()

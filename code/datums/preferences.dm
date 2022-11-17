@@ -574,7 +574,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-exploitNote")
-				var/new_text = input(usr, "Please enter new exploitable information (visible to traitors and spies):", "Character Generation", src.exploit_note) as null|text
+				var/new_text = input(usr, "Please enter new Syndicate Intelligence (visible to traitors and spies):", "Character Generation", src.exploit_note) as null|text
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
