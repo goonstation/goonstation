@@ -21,8 +21,8 @@ var/list/datum/contextAction/globalContextActions = null
 		var/mob/living/critter/R = target
 		R.hud.add_screen(C)
 
-	else if(istype(target, /mob/wraith))
-		var/mob/wraith/W = target
+	else if(istype(target, /mob/living/intangible/wraith))
+		var/mob/living/intangible/wraith/W = target
 		W.hud.add_screen(C)
 
 	else if (isrobot(target))

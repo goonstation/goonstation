@@ -18,10 +18,11 @@ datum
 			fluid_b = 65
 			transparency = 240
 			taste = "vile"
-			depletion_rate = 0.075
+			depletion_rate = 0.4
 			description = "This appears to be beer mixed with milk."
 			reagent_state = LIQUID
 			value = 2
+			overdose = 30
 			thirst_value = 0.4
 			bladder_value = -0.2
 			viscosity = 0.2
@@ -38,6 +39,34 @@ datum
 					M.HealDamage("All", 1 * mult, 1 * mult)
 				..()
 				return
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				var/effect = ..(severity, M)
+				if (severity == 1) //lesser
+					M.stuttering += 1
+					if(effect <= 1)
+						M.visible_message("<span class='alert'><b>[M.name]</b> suddenly cluches their gut!</span>")
+						M.emote("scream")
+						M.setStatusMin("weakened", 4 SECONDS * mult)
+					else if(effect <= 3)
+						M.visible_message("<span class='alert'><b>[M.name]</b> completely spaces out for a moment.</span>")
+						M.change_misstep_chance(15 * mult)
+					else if(effect <= 5)
+						M.visible_message("<span class='alert'><b>[M.name]</b> stumbles and staggers.</span>")
+						M.dizziness += 5
+						M.setStatusMin("weakened", 4 SECONDS * mult)
+					else if(effect <= 7)
+						M.visible_message("<span class='alert'><b>[M.name]</b> shakes uncontrollably.</span>")
+						M.make_jittery(30)
+				else if (severity == 2) // greater
+					if(effect <= 5)
+						M.visible_message(pick("<span class='alert'><b>[M.name]</b> jerks bolt upright, then collapses!</span>",
+							"<span class='alert'><b>[M.name]</b> suddenly cluches their gut!</span>"))
+						M.setStatusMin("weakened", 8 SECONDS * mult)
+					else if(effect <= 8)
+						M.visible_message("<span class='alert'><b>[M.name]</b> stumbles and staggers.</span>")
+						M.dizziness += 5
+						M.setStatusMin("weakened", 4 SECONDS * mult)
 
 		fooddrink/milk
 			name = "milk"

@@ -13,6 +13,7 @@
 #include "defines\_units.dm"		// this has some unit defines that a lot of other macros/defines use, so it needs to go near the start too
 #include "defines\lag.dm"			// the all important LAGCHECK()
 #include "types.dm"					// stuff like childrentypesof()
+#include "datum.dm"					// hasvar()
 #include "defines\access.dm"
 #include "defines\actions.dm"
 #include "defines\admin.dm"
@@ -120,6 +121,7 @@
 #include "macros\mob_status.dm"
 #include "macros\movable.dm"
 #include "macros\movement_modifiers.dm"
+#include "macros\process.dm"
 #include "macros\procs.dm"
 #include "macros\qdel.dm"
 #include "macros\spawn.dm"
@@ -133,7 +135,6 @@
 #include "color.dm"
 #include "compare.dm"
 #include "copy.dm"
-#include "datum.dm"
 #include "filesystem.dm"
 #include "filters.dm"
 #include "heap.dm"

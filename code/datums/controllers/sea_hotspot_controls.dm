@@ -1034,6 +1034,7 @@
 	var/jump_time = 1 SECONDS//! Time the jump takes, in seconds.
 	var/stomp_cooldown = 10 SECONDS
 	var/stomp_damage = 20
+	requires_equip = TRUE
 
 	execute_ability()
 		if(!(the_item in the_mob.get_equipped_items()))
@@ -1066,28 +1067,35 @@
 					flags = ANIMATION_RELATIVE)
 
 				SPAWN(0)
+					var/mob/jumper = the_mob // do this so we still have a reference if the button gets deleted
 					sleep(jump_time)
-					the_mob.layer = prevLayer
-					the_mob.plane = prevPlane
-					REMOVE_ATOM_PROPERTY(the_mob, PROP_ATOM_NEVER_DENSE, src)
-					the_mob.flags &= ~TABLEPASS
+					jumper.layer = prevLayer
+					jumper.plane = prevPlane
+					REMOVE_ATOM_PROPERTY(jumper, PROP_ATOM_NEVER_DENSE, src)
+					jumper.flags &= ~TABLEPASS
 					playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 50, 1, 0.1, 0.7)
 
-					if (hotspot_controller.stomp_turf(get_turf(src))) //we didn't stomped center, do an additional SFX
-						SPAWN(0.4 SECONDS)
-							playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, 0.1, 0.7)
+					if (locate(/obj/item/clothing/shoes) in jumper.get_equipped_items())
+						if (hotspot_controller.stomp_turf(get_turf(src))) //we didn't stomped center, do an additional SFX
+							SPAWN(0.4 SECONDS)
+								playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, 0.1, 0.7)
 
-					for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
-						if (BOUNDS_DIST(src, H.center.turf()) == 0)
-							playsound(src, 'sound/machines/twobeep.ogg', 50, 1, 0.1, 0.7)
-							for (var/mob/O in hearers(the_mob, null))
-								O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Hotspot pinned.\"</span></span>", 2)
+						for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
+							if (BOUNDS_DIST(src, H.center.turf()) == 0)
+								playsound(src, 'sound/machines/twobeep.ogg', 50, 1, 0.1, 0.7)
+								for (var/mob/O in hearers(jumper, null))
+									O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Hotspot pinned.\"</span></span>", 2)
 
-					for (var/mob/M in get_turf(src))
-						if (isliving(M) && M != the_mob)
-							random_brute_damage(M, src.stomp_damage, TRUE)
-							M.changeStatus("weakened", 1 SECOND)
-							playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 70, 1)
+						for (var/mob/M in get_turf(src))
+							if (isliving(M) && M != jumper)
+								random_brute_damage(M, src.stomp_damage, TRUE)
+								M.changeStatus("weakened", 1 SECOND)
+								playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 70, 1)
+					else
+						// took them off mid air
+						random_brute_damage(jumper, 25, FALSE)
+						jumper.changeStatus("weakened", 3 SECONDS)
+						playsound(jumper.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 90, 1)
 
 
 			else if (istype(the_mob.loc, /obj/))

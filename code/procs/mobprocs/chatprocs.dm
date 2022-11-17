@@ -84,7 +84,7 @@
 		var/token = channels[choice]
 		if (!token)
 			boutput(src, "Somehow '[choice]' didn't match anything. Welp. Probably busted.")
-		var/text = tgui_input_text(usr, "Speaking over [choice] ([token])", "Speaking")
+		var/text = input("", "Speaking over [choice] ([token])") as null|text
 		if (text)
 			if (src.capitalize_speech())
 				text = capitalize(text)
@@ -132,14 +132,13 @@
 			else
 				token = ":" + R.secure_frequencies[choice_index - 1]
 
-			var/text = tgui_input_text(usr, "Speaking to [choice] frequency", "Speaking")
-			if (text)
-				if (src.capitalize_speech())
-					var/i = 1
-					while (copytext(text, i, i+1) == " ")
-						i++
-					text = capitalize(copytext(text, i))
-				src.say_verb(token + " " + text)
+			var/text = input("", "Speaking to [choice] frequency") as null|text
+			if (src.capitalize_speech())
+				var/i = 1
+				while (copytext(text, i, i+1) == " ")
+					i++
+				text = capitalize(copytext(text, i))
+			src.say_verb(token + " " + text)
 		else
 			boutput(src, "<span class='notice'>You must put a headset on your ear slot to speak on the radio.</span>")
 
@@ -1079,7 +1078,8 @@
 	else
 		rendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[name]</span> <span class='message'>[message]</span></span>"
 		flockmindRendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name'>[flock && speaker ? "<a href='?src=\ref[flock.flockmind];origin=\ref[structure_speaking ? structure_speaking.loc : mob_speaking]'>[name]</a>" : "[name]"]</span> <span class='message'>[message]</span></span>"
-		siliconrendered = "<span class='game [class]'><span class='bold'>\[[flock ? flockBasedGarbleText(flock.name, -30, flock) : "--.--"]\] </span><span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[flockBasedGarbleText(name, -20, flock)]</span> <span class='message'>[flockBasedGarbleText(message, 0, flock)]</span></span>"
+		if (flock && flock.total_compute() >= FLOCK_RELAY_COMPUTE_COST / 4 && prob(90))
+			siliconrendered = "<span class='game [class]'><span class='bold'>\[?????\] </span><span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[radioGarbleText(name, FLOCK_RADIO_GARBLE_CHANCE)]</span> <span class='message'>[radioGarbleText(message, FLOCK_RADIO_GARBLE_CHANCE)]</span></span>"
 
 	for (var/client/CC)
 		if (!CC.mob) continue
@@ -1091,7 +1091,7 @@
 
 		if((isflockmob(M)) || (M.client.holder && !M.client.player_mode) || (isobserver(M) && !(istype(M, /mob/dead/target_observer/hivemind_observer))))
 			thisR = rendered
-		if(flock?.snooping && M.client && M.robot_talk_understand)
+		if(M.robot_talk_understand || istype(M, /mob/living/intangible/aieye))
 			thisR = siliconrendered
 		if(istype(M, /mob/living/intangible/flock/flockmind) && !(istype(mob_speaking, /mob/living/intangible/flock/flockmind)) && M:flock == flock)
 			thisR = flockmindRendered

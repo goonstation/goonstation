@@ -2295,7 +2295,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 			icon_state = "deeps"
 
 			Entered(atom/A as mob|obj)
-				if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
+				if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/living/intangible))
 					return ..()
 
 				var/turf/T = pick_landmark(LANDMARK_FALL_DEEP)

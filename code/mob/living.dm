@@ -512,7 +512,6 @@
 					for(var/obj/item/grab/gunpoint/G in grabbed_by)
 						G.shoot()
 
-				.= 0
 				return
 		else
 			var/reach = can_reach(src, target)

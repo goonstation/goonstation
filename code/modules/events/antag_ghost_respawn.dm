@@ -54,7 +54,7 @@
 				return
 
 			src.antagonist_type = pick(list("Blob", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Flockmind"))
-			for(var/mob/wraith/W in ticker.mode.traitors)
+			for(var/mob/living/intangible/wraith/W in ticker.mode.traitors)
 				if(W.deaths < 2)
 					src.antagonist_type -= list("Wraith")
 					src.antagonist_type = pick(list())
@@ -224,7 +224,7 @@
 						failed = 1
 
 				if ("Wraith")
-					var/mob/wraith/W = M3.make_wraith()
+					var/mob/living/intangible/wraith/W = M3.make_wraith()
 					if (W && istype(W))
 						M3 = W
 						role = ROLE_WRAITH

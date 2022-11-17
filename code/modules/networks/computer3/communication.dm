@@ -259,6 +259,10 @@
 			if(MENU_TRANSMIT_MESSAGE)
 				menu = MENU_MAIN
 
+				if(isnull(game_servers.get_buddy()) && transmit_type == "station")
+					src.print_text("No partner station detected. Unable to send message.")
+					return
+
 				if(!src.pnet_card)
 					src.print_text("<b>Error:</b> Network card required.")
 					src.master.add_fingerprint(usr)

@@ -2,6 +2,7 @@ var/list/bad_name_characters = list("_", "'", "\"", "<", ">", ";", "\[", "\]", "
 var/list/removed_jobs = list(
 	// jobs that have been removed or replaced (replaced -> new name, removed -> null)
 	"Barman" = "Bartender",
+	"Mechanic" = "Engineer",
 )
 
 datum/preferences
@@ -645,8 +646,8 @@ datum/preferences
 			if ("update-specialStyle")
 				var/mob/living/carbon/human/H = src.preview.preview_mob
 				var/typeinfo/datum/mutantrace/typeinfo = H.mutantrace?.get_typeinfo()
-				if (!typeinfo)
-					tgui_alert(usr, "No usable special styles detected.", "Error")
+				if (!typeinfo || !typeinfo.special_styles)
+					tgui_alert(usr, "No usable special styles detected for this mutantrace.", "Error")
 					return
 				var/list/style_list = typeinfo.special_styles
 				var/current_index = style_list.Find(AH.special_style) // do they already have a special style in their prefs

@@ -436,6 +436,7 @@ toxic - poisons
 
 /datum/projectile/bullet/revolver_38/stunners//energy bullet things so he can actually stun something
 	name = "stun bullet"
+	damage = 0
 	stun = 20
 	dissipation_delay = 6 //One more tick before falloff begins
 	damage_type = D_ENERGY // FUCK YOU.
@@ -740,6 +741,27 @@ toxic - poisons
 			// impact_image_effect("K", hit)
 				//take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
 
+/datum/projectile/bullet/sledgehammer
+	name = "\"sledgehammer\" round"
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	icon_state = "buckshot"
+	damage = 20
+	stun = 20
+	dissipation_rate = 15
+	dissipation_delay = 1
+	implanted = null
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	impact_image_state = "bhole"
+	casing = /obj/item/casing/shotgun/gray
+
+	on_hit(atom/hit)
+		..()
+		if(istype(hit , /obj/machinery/door))
+			var/obj/machinery/door/D = hit
+			if(!D.cant_emag)
+				D.take_damage(D.health/2) //fuck up doors without needing ex_act(1)
+
 /datum/projectile/bullet/cryo
 	name = "cryogenic slug"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
@@ -944,16 +966,6 @@ datum/projectile/bullet/autocannon
 	on_hit(atom/hit)
 		explosion_new(null, get_turf(hit), 12)
 
-	knocker
-		name = "breaching round"
-		damage = 10
-		on_hit(atom/hit)
-			if(istype(hit , /obj/machinery/door))
-				var/obj/machinery/door/D = hit
-				if(!D.cant_emag)
-					D.take_damage(D.health/2) //fuck up doors without needing ex_act(1)
-			explosion_new(null, get_turf(hit), 4, 1.75)
-
 	plasma_orb
 		name = "fusion orb"
 		damage_type = D_BURNING
@@ -985,7 +997,7 @@ datum/projectile/bullet/autocannon
 		var/type_to_seek = /obj/critter/gunbot/drone //what are we going to seek
 		precalculated = 0
 		disruption = INFINITY //disrupt every system at once
-		on_hit(atom/hit, angle, var/obj/projectile/P)
+		on_hit(atom/hit, angle, obj/projectile/P)
 			if (P.data)
 				..()
 			else
@@ -996,12 +1008,12 @@ datum/projectile/bullet/autocannon
 					M.do_disorient(stunned = 40)
 
 
-		on_launch(var/obj/projectile/P)
+		on_launch(obj/projectile/P)
 			var/D = locate(type_to_seek) in range(15, P)
 			if (D)
 				P.data = D
 
-		tick(var/obj/projectile/P)
+		tick(obj/projectile/P)
 			if (!P)
 				return
 			if (!P.loc)
@@ -1280,6 +1292,31 @@ datum/projectile/bullet/autocannon
 		else if (O)
 			src.has_det = 0
 
+/datum/projectile/bullet/breach_flashbang
+	name = "door-breaching flashbang"
+	window_pass = 0
+	icon_state = "40mm_lethal"
+	damage_type = D_KINETIC
+	damage = 20
+	dissipation_delay = 20
+	cost = 1
+	shot_sound = 'sound/weapons/launcher.ogg'
+	impact_image_state = "bhole-large"
+	casing = /obj/item/casing/grenade
+	implanted = null
+
+	on_launch(obj/projectile/O)
+		. = ..()
+		O.AddComponent(/datum/component/proj_door_breach)
+
+	on_end(obj/projectile/O)
+		var/obj/machinery/door/breached = O.special_data["door_hit"]
+		if(istype(breached) && !QDELETED(breached) && !breached.cant_emag)
+			var/turf/T = get_turf(O)
+			flashpowder_reaction(T, 50)
+			sonicpowder_reaction(T, 50)
+			breached.open()
+		. = ..()
 
 //1.58
 // Ported from old, non-gun RPG-7 object class (Convair880).

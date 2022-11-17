@@ -8,7 +8,7 @@ TYPEINFO(/datum/component/buildable_turf)
 /datum/component/buildable_turf/Initialize()
 	if(!istype(parent, /turf))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, list(COMSIG_ATTACKBY), .proc/check_build_item)
+	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/check_build_item)
 	var/turf/unsimulated/T = parent
 	if(istype(T))
 		T.can_replace_with_stuff = TRUE
