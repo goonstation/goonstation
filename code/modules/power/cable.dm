@@ -442,6 +442,7 @@
 	var/cable_surr = 0
 
 /obj/cablespawner/New()
+	..()
 	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
 		SPAWN(1 SECONDS)
 			if(!src.disposed)
