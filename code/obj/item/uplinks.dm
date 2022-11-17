@@ -267,7 +267,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		else if(reading_specific_synd_int)
 			var/datum/db_record/staff_record = reading_specific_synd_int
 			dat += "<h4>Information on [staff_record["name"]]</h4>"
-			dat += staff_record["notes"]
+			dat += staff_record["syndint"]
 			dat += "<br>"
 			dat += "<A href='byond://?src=\ref[src];back=1'>Back</A>"
 			dat += "<br>"
@@ -617,7 +617,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		else if(reading_specific_synd_int)
 			var/datum/db_record/staff_record = reading_specific_synd_int
 			src.menu_message += "<h4>Information on [staff_record["name"]]</h4>"
-			src.menu_message += replacetext(staff_record["notes"], "\n", "<br>")
+			src.menu_message += replacetext(staff_record["syndint"], "\n", "<br>")
 			src.menu_message += "<br>"
 			src.menu_message += "<A href='byond://?src=\ref[src];back_menu=1'>Back</A>"
 			return
@@ -1022,7 +1022,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		else if(reading_specific_synd_int)
 			var/datum/db_record/staff_record = reading_specific_synd_int
 			src.menu_message += "<br><h4>Information on [staff_record["name"]]</h4>"
-			src.menu_message += src.menu_message += replacetext(staff_record["notes"], "\n", "<br>")
+			src.menu_message += src.menu_message += replacetext(staff_record["syndint"], "\n", "<br>")
 			src.menu_message += "<br>"
 			src.menu_message += "<A href='byond://?src=\ref[src];back_menu=1'>Back</A>"
 			return

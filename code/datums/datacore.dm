@@ -62,9 +62,9 @@
 				G["file_photo"] = IMG
 
 	if(!length(synd_int_note))
-		G["notes"] = null
+		G["syndint"] = null
 	else
-		G["notes"] = synd_int_note
+		G["syndint"] = synd_int_note
 
 	M["bioHolder.bloodType"] = "[H.bioHolder.bloodType]"
 	M["mi_dis"] = "None"
@@ -292,7 +292,7 @@
 		if (staff_record["p_stat"] == "In Cryogenic Storage")
 			continue
 		var/rank = staff_record["rank"]
-		if(synd_int_request_device && !length(staff_record["notes"]))
+		if(synd_int_request_device && !length(staff_record["syndint"]))
 			continue
 		var/entry = "[staff_record["name"]] - [staff_record["rank"]][synd_int_request_device ? " - <a href='byond://?src=\ref[synd_int_request_device];select_exp=\ref[staff_record]'>Info</a>" : ""]<br>"
 		if(rank in command_jobs)
