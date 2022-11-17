@@ -440,6 +440,12 @@
 	var/const/NORTHEAST_UNIQUE = 16
 	// these constants ARE needed they are DIFFERENT from the regular NORTHWEST and such
 	var/cable_surr = 0
+
+/obj/cablespawner/New()
+	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
+		SPAWN(1 SECONDS)
+			if(!src.disposed)
+				initialize()
 /// reinforced, thick cables. They should also connect to the regular kind.
 /obj/cablespawner/reinforced
 	name = "reinforced power cable spawner"
