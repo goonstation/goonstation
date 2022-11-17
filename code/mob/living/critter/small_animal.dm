@@ -2002,6 +2002,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if(prob(20))
 			icon_state = "iguana2"
 			icon_state_dead = "iguana2-dead"
+		AddComponent(/datum/component/waddling, height=4, angle=8)
 
 	disposing()
 		STOP_TRACKING

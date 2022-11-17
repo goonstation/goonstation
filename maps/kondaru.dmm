@@ -6756,7 +6756,6 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon10,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "asV" = (
@@ -6862,7 +6861,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "att" = (
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon11,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
@@ -20350,8 +20348,7 @@
 /area/station/routing/depot)
 "bkp" = (
 /obj/machinery/atmospherics/pipe/simple{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
@@ -24241,6 +24238,13 @@
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -41772,8 +41776,7 @@
 /area/station/crew_quarters/md)
 "fje" = (
 /obj/machinery/atmospherics/pipe/simple{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -45530,6 +45533,10 @@
 	dir = 8
 	},
 /area/station/security/main)
+"iKF" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon11,
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "iKH" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -45548,6 +45555,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light_switch/north,
+/obj/machinery/camera/ranch{
+	pixel_y = 20
+	},
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "iKQ" = (
@@ -49620,6 +49630,16 @@
 /area/station/crew_quarters/info{
 	name = "Book Nook"
 	})
+"mLF" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "mLX" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
@@ -50734,8 +50754,7 @@
 /obj/item/clothing/gloves/latex,
 /obj/item/kitchen/utensil/knife,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/specialroom/freezer,
@@ -58158,6 +58177,10 @@
 /obj/shrub{
 	dir = 8
 	},
+/obj/machinery/camera/ranch{
+	dir = 5;
+	pixel_x = -10
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "uyf" = (
@@ -59316,6 +59339,10 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
+"vEX" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon10,
+/turf/simulated/floor/grey,
+/area/station/hallway/primary/north)
 "vFg" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -113698,7 +113725,7 @@ buI
 iKN
 bvI
 bYu
-emI
+mLF
 emI
 etm
 xSz
@@ -114553,7 +114580,7 @@ aFv
 cCG
 aFv
 xQm
-wHG
+vEX
 rDI
 aFv
 nbW
@@ -120291,7 +120318,7 @@ neS
 aAg
 adK
 uzL
-uzL
+iKF
 aum
 meA
 jCn

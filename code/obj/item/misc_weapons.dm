@@ -480,6 +480,7 @@
 	stamina_cost = 5
 	stamina_crit_chance = 50
 	pickup_sfx = 'sound/items/blade_pull.ogg'
+	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 
 	New()
 		..()
@@ -504,7 +505,6 @@
 		take_bleeding_damage(M, null, 5, DAMAGE_CUT)
 
 /obj/item/dagger/attack(target, mob/user)
-	playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 	if(ismob(target))
 		take_bleeding_damage(target, user, 5, DAMAGE_STAB)
 	..()
@@ -795,7 +795,8 @@
 
 	disposing()
 		. = ..()
-		STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
+		if (hunter_key)
+			STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
 
 /////////////////////////////////////////////////// Axe ////////////////////////////////////////////
 

@@ -30,6 +30,7 @@ Make sure to add new items to this list if you document new components.
     - [`Grid.Column`](#gridcolumn)
     - [`Icon`](#icon)
     - [`Icon.Stack`](#iconstack)
+    - [`Image`](#image)
     - [`Input`](#input)
     - [`Knob`](#knob)
     - [`LabeledControls`](#labeledcontrols)
@@ -553,6 +554,20 @@ Renders children icons on top of each other in order to make your own icon.
 
 - See inherited props: [Box](#box)
 - `children: Icon` - Icons to stack.
+
+### `Image`
+
+Wrapper for a basic html `<img>` tag. Often used alongside base64 image encoding to render icons from the backend like so:
+```jsx
+<Image
+  pixelated
+  height="32px"
+  width="32px"
+  src={`data:image/png;base64,${img}`}
+/>
+```
+**Props:**
+- `pixelated: boolean` - Whether the icon is rendered with pixelated or fuzzy scaling. Equivalent to `-ms-interpolation-mode: nearest-neighbor`.
 
 ### `Input`
 

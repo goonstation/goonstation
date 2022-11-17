@@ -430,6 +430,20 @@
 	target_override = /area
 	target_override_name = "anywhere"
 
+/obj/machinery/nuclearbomb/event/micronuke
+	name = "micronuke"
+	desc = "A moderately powerful bomb capable of levelling most of a room."
+	boom_size = 250
+	_health = 75
+	_max_health = 75
+	timer_default = 5 MINUTES
+	timer_modifier_disk = 1.5 MINUTES
+	p_class = 1
+
+	New()
+		. = ..()
+		src.SafeScale(0.75, 0.75)
+
 /obj/bomb_decoy
 	name = "nuclear bomb"
 	desc = "An extremely powerful balloon capable of deceiving the whole station."

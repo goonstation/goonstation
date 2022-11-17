@@ -342,6 +342,7 @@ var/global
 		LOG_SIGNALERS	=	list(),
 		LOG_PATHOLOGY	=	list(),
 		LOG_TOPIC		=	list(),
+		LOG_CHEMISTRY	=	list(),
 	)
 	/// The file holding computer ID information
 	savefile/compid_file

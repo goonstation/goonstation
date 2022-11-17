@@ -40,17 +40,17 @@
 		if (target)
 			var/turf/T = get_turf(target)
 			if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && (restricted_z_allowed(src, T) || (src.client && src.client.holder)))))
-				src.set_loc(T)
+				src.ghost.set_loc(T)
 			else
 				if (ASLoc)
-					src.set_loc(ASLoc)
+					src.ghost.set_loc(ASLoc)
 				else
-					src.z = 1
+					src.ghost.z = 1
 		else
 			if (ASLoc)
-				src.set_loc(ASLoc)
+				src.ghost.set_loc(ASLoc)
 			else
-				src.z = 1
+				src.ghost.z = 1
 		STOP_TRACKING
 		..()
 
