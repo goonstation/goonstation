@@ -448,9 +448,6 @@
 	cable_type = /obj/cable/reinforced
 	color = "#075C90"
 
-/// creates new cablespawners
-/obj/cablespawner/New()
-	..()
 
 /// makes the cable spawners actually spawn cables and delete themselves
 /obj/cablespawner/initialize()
