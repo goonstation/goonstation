@@ -845,16 +845,36 @@ DEFINE_FLOORS(marble/border_wb,
 
 /////////////////////////////////////////
 
-DEFINE_FLOORS(glassblock,
-	name = "glass block tiling";\
-	icon = 'icons/turf/floors.dmi';\
-	icon_state = "glass_small";\
-	mat_appearances_to_ignore = list("steel","synthrubber");\
-	step_material = "step_wood";\
-	step_priority = STEP_PRIORITY_MED)
+/turf/simulated/floor/glassblock
+	name = "glass block tiling"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "glass_small"
+	mat_appearances_to_ignore = list("steel","synthrubber")
+	step_material = "step_wood"
+	step_priority = STEP_PRIORITY_MED
+	mat_changename = 0
 
-DEFINE_FLOORS(glassblock/large,
-	icon_state = "glass_large")
+	New()
+		plate_mat = getMaterial("glass")
+		..()
+
+/turf/simulated/floor/glassblock/large
+	icon_state = "glass_large"
+
+/turf/simulated/floor/glassblock/transparent_cyan
+	icon_state = "glasstr_cyan"
+
+/turf/simulated/floor/glassblock/transparent_indigo
+	icon_state = "glasstr_indigo"
+
+/turf/simulated/floor/glassblock/transparent_red
+	icon_state = "glasstr_red"
+
+/turf/simulated/floor/glassblock/transparent_grey
+	icon_state = "glasstr_grey"
+
+/turf/simulated/floor/glassblock/transparent_purple
+	icon_state = "glasstr_purple"
 
 /////////////////////////////////////////
 
