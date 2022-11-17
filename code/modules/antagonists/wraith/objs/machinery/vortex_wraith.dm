@@ -5,7 +5,7 @@
 	desc = "It hums and thrums as you stare at it. Dark shadows weave in and out of sight within."
 	anchored = 1
 	density = 0
-	_health = 35
+	_health = 30
 	var/list/obj/critter/critter_list = list()
 	var/list/obj/critter/strong_critter_list = list()
 	var/mob_value_cap = 2	//Total allowed point value of all linked mobs
@@ -149,6 +149,10 @@
 
 	proc/deleteLinkedCritters()
 		for (var/obj/critter/C in src.critter_list)
+			animate(C, alpha=0, time=2 SECONDS)
+			SPAWN(2 SECOND)
+				qdel(C)
+		for (var/obj/critter/C in src.strong_critter_list)
 			animate(C, alpha=0, time=2 SECONDS)
 			SPAWN(2 SECOND)
 				qdel(C)
