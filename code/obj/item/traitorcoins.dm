@@ -5,7 +5,7 @@
 	icon_state = "telecrystal_pure"
 	max_stack = INFINITY
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(W.type == src.type)
 			stack_item(W)
 			if(!user.is_in_hands(src))
@@ -14,13 +14,13 @@
 			return
 		else ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(user.is_in_hands(src) && src.amount > 1)
 			var/splitnum = round(input("How many [src] do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
-			if (!src.loc || get_dist(src, user) > 1)
+			if (!src.loc || BOUNDS_DIST(src, user) > 0)
 				return
 			var/obj/item/raw_material/new_stack = split_stack(splitnum)
 			user.put_in_hand_or_drop(new_stack)

@@ -12,11 +12,11 @@ Right Mouse Button                     = Cancel the first corner<br>
 Right Mouse Button on the mode         = Cycle saving modes<br>
 ***********************************************************"}
 	icon_state = "buildmode5"
-	var/turf/A = null
-	var/saving = 0
-	var/dmm_suite/dmm_suite
+	var/tmp/turf/A = null
+	var/tmp/saving = 0
+	var/tmp/dmm_suite/dmm_suite
 	var/mode_number = 0
-	var/list/mode_names = list("default", "don't save space", "save as prefab", "save as unsimulated prefab", "don't save turfs")
+	var/static/list/mode_names = list("default", "don't save space", "save as prefab", "save as unsimulated prefab", "don't save turfs")
 
 	deselected()
 		..()

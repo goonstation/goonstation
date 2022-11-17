@@ -29,7 +29,7 @@
 	dropped(mob/user)
 		..()
 		if (light)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (src.loc != user)
 					light.attach(src)
 
@@ -45,6 +45,7 @@
 	item_state = "flight"
 	icon_on = "flight1"
 	icon_off = "flight0"
+	var/icon_broken = "flightbroken"
 	w_class = W_CLASS_SMALL
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
 	m_amt = 50
@@ -58,13 +59,13 @@
 	light_type = null
 	brightness = 4.6
 
-	var/datum/component/holdertargeting/simple_light/light_dir
+	var/datum/component/loctargeting/medium_directional_light/light_dir
 	New(loc, R = initial(col_r), G = initial(col_g), B = initial(col_b))
 		..()
 		col_r = R
 		col_g = G
 		col_b = B
-		light_dir = src.AddComponent(/datum/component/holdertargeting/medium_directional_light, col_r * 255, col_g * 255, col_b  * 255, 210)
+		light_dir = src.AddComponent(/datum/component/loctargeting/medium_directional_light, col_r * 255, col_g * 255, col_b  * 255, 210)
 		light_dir.update(0)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -86,15 +87,15 @@
 		return 1
 
 	attack_self(mob/user)
-		src.toggle(user)
+		src.toggle(user, TRUE)
 
-	proc/toggle(var/mob/user)
+	proc/toggle(var/mob/user, activated_inhand = FALSE)
 		if (src.broken)
 			name = "broken flashlight"
 			return
 
 		src.on = !src.on
-		playsound(src, "sound/items/penclick.ogg", 30, 1)
+		playsound(src, 'sound/items/penclick.ogg', 30, 1)
 		if (src.on)
 			set_icon_state(src.icon_on)
 			if (src.emagged) // Burn them all!
@@ -104,18 +105,23 @@
 						var/mob/living/target = M
 						if (istype(target))
 							target.apply_flash(60, 8, 0, 0, rand(2, 8), rand(1, 15), 0, 30, 100, stamina_damage = 190, disorient_time = 50)
-							logTheThing("combat", user, target, "flashes [constructTarget(target,"combat")] with an emagged flashlight.")
+							logTheThing(LOG_COMBAT, user, "flashes [constructTarget(target,"combat")] with an emagged flashlight.")
 				user.visible_message("<span class='alert'>The [src] in [user]'s hand bursts with a blinding flash!</span>", "<span class='alert'>The bulb in your hand explodes with a blinding flash!</span>")
 				on = 0
 				light_dir.update(0)
-				icon_state = "flightbroken"
-				name = "broken flashlight"
+				icon_state = icon_broken
+				name = "broken [name]"
 				src.broken = 1
+				return
 			else
 				light_dir.update(1)
 		else
 			set_icon_state(src.icon_off)
 			light_dir.update(0)
+
+		if (activated_inhand)
+			var/obj/ability_button/flashlight_toggle/flashlight_button = locate(/obj/ability_button/flashlight_toggle) in src.ability_buttons
+			flashlight_button.icon_state = src.on ? "lighton" : "lightoff"
 
 /obj/item/device/light/flashlight/abilities = list(/obj/ability_button/flashlight_toggle)
 
@@ -124,22 +130,22 @@
 	icon_state = "glowstick-green0"
 	var/base_state = "glowstick-green"
 	name = "emergency glowstick"
-	desc = "For emergency use only. Not for use in illegal lightswitch raves."
+	desc = "A small tube that reacts chemicals in order to produce a larger radius of illumination than PDA lights. A label on it reads, WARNING: USE IN RAVES, DANCING, OR FUN WILL VOID WARRANTY."// I love the idea of a glowstick having a warranty so I'm leaving the description like this
 	w_class = W_CLASS_SMALL
 	flags = ONBELT | TABLEPASS
 	var/heated = 0
-	col_r = 0.0
+	col_r = 0
 	col_g = 0.9
 	col_b = 0.1
 	brightness = 0.33
 	height = 0.75
 	var/color_name = "green"
 	light_type = null
-	var/datum/component/holdertargeting/sm_light/light_c
+	var/datum/component/loctargeting/sm_light/light_c
 
 	New()
 		..()
-		light_c = src.AddComponent(/datum/component/holdertargeting/sm_light, col_r*255, col_g*255, col_b*255, 255 * brightness)
+		light_c = src.AddComponent(/datum/component/loctargeting/sm_light, col_r*255, col_g*255, col_b*255, 255 * brightness)
 		light_c.update(0)
 
 	proc/burst()
@@ -154,7 +160,7 @@
 		light_c.update(1)
 
 	//Can be heated. Has chance to explode when heated. After heating, can explode when thrown or fussed with!
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if ((isweldingtool(W) && W:try_weld(user,0,-1,0,0)) || istype(W, /obj/item/device/igniter) || ((istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle) || istype(W, /obj/item/clothing/mask/cigarette)) && W:on) || W.burning)
 			user.visible_message("<span class='alert'><b>[user]</b> heats [src] with [W].</span>")
 			src.heated += 1
@@ -185,12 +191,12 @@
 	attack_self(mob/user as mob)
 		if (!on)
 			boutput(user, "<span class='notice'>You crack [src].</span>")
-			playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+			playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			src.turnon()
 		else
 			if (prob(10) || (heated > 0 && prob(20 + heated * 20)))
 				user.visible_message("<span class='notice'><b>[user]</b> breaks [src]! What [pick("a clutz", "a putz", "a chump", "a doofus", "an oaf", "a jerk")]!</span>")
-				playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+				playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 				if (user.reagents)
 					if (heated > 0)
 						user.reagents.add_reagent("radium", 10, null, T0C + heated * 200)
@@ -205,7 +211,7 @@
 	icon_state = "glowstick-green0"
 	name = "emergency glowstick"
 	desc = "For emergency use only. Not for use in illegal lightswitch raves."
-	col_r = 0.0
+	col_r = 0
 	col_g = 0.9
 	col_b = 0.1
 	color_name = "green"
@@ -282,7 +288,7 @@
 	desc = "A regular emergency glowstick edgy and red!"
 	col_r = 0.9
 	col_g = 0.1
-	col_b = 0.0
+	col_b = 0
 	color_name = "red"
 
 /obj/item/device/light/candle
@@ -297,7 +303,7 @@
 	icon_on = "candle"
 	col_r = 0.5
 	col_g = 0.3
-	col_b = 0.0
+	col_b = 0
 
 	attack_self(mob/user as mob)
 		if (src.on)
@@ -306,13 +312,13 @@
 			"You [fluff] out [src].")
 			src.put_out(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!src.on)
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
 
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				src.light(user, "<span class='alert'>Did [user] just light \his [src] with [W]? Holy Shit.</span>")
+				src.light(user, "<span class='alert'>Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit.</span>")
 
 			else if (istype(W, /obj/item/device/igniter))
 				src.light(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
@@ -382,7 +388,7 @@
 		..()
 		var/spookydegrees = rand(5, 20)
 
-		SPAWN_DBG(rand(1, 10))
+		SPAWN(rand(1, 10))
 			animate(src, pixel_y = 32, transform = matrix(spookydegrees, MATRIX_ROTATE), time = 20, loop = -1, easing = SINE_EASING)
 			animate(pixel_y = 0, transform = matrix(spookydegrees * -1, MATRIX_ROTATE), time = 20, loop = -1, easing = SINE_EASING)
 
@@ -434,18 +440,26 @@
 /obj/item/device/light/lava_lamp
 	name = "lava lamp"
 	icon = 'icons/obj/lighting.dmi'
-	icon_state = "lava_lamp0"
-	icon_on = "lava_lamp1"
-	icon_off = "lava_lamp0"
+	icon_state = "lava_lamp-blue0"
+	icon_on = "lava_lamp-blue1"
+	icon_off = "lava_lamp-blue1"
 	w_class = W_CLASS_BULKY
 	desc = "An ancient relic from a simpler, more funky time."
 	col_r = 0.85
 	col_g = 0.45
 	col_b = 0.35
 	brightness = 0.8
+	var/lamp_color
+
+	New()
+		. = ..()
+		lamp_color = pick("blue", "pink", "orange")
+		icon_state = "lava_lamp-[lamp_color]0"
+		icon_on = "lava_lamp-[lamp_color]1"
+		icon_off = "lava_lamp-[lamp_color]0"
 
 	attack_self(mob/user as mob)
-		playsound(src, "sound/items/penclick.ogg", 30, 1)
+		playsound(src, 'sound/items/penclick.ogg', 30, 1)
 		src.on = !src.on
 		user.visible_message("<b>[user]</b> flicks [src.on ? "on" : "off"] the [src].")
 		if (src.on)
@@ -456,6 +470,25 @@
 			src.light.disable()
 
 /obj/item/device/light/lava_lamp/activated
+	New()
+		..()
+		on = 1
+		set_icon_state(src.icon_on)
+		src.light.enable()
+
+/obj/item/device/light/magic_lantern
+	name = "magical lantern"
+	desc = "A magical lantern that burns with no fuel."
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "wizard1"
+	icon_on = "wizard1"
+	icon_off = "wizard0"
+	anchored = 1
+	col_r = 1
+	col_g = 0.9
+	col_b = 0.9
+	brightness = 0.8
+
 	New()
 		..()
 		on = 1

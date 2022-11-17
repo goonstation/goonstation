@@ -45,7 +45,7 @@
 	setupProperties()
 		..()
 		setProperty("coldprot", 7)
-		setProperty("conductivity", 0.3)
+		setProperty("conductivity", 0.4)
 
 //======
 //Shinai
@@ -61,14 +61,14 @@
 
 	w_class = W_CLASS_BULKY
 	two_handed = 1
-	throwforce = 4.0
+	throwforce = 4
 	throw_range = 4
 	stamina_crit_chance = 2
 
 	//these combat variables will change depending on the guard
-	force = 6.0
+	force = 6
 	stamina_damage = 10
-	stamina_cost = 5.0
+	stamina_cost = 5
 
 	hit_type = DAMAGE_BLUNT
 	flags = FPRINT | TABLEPASS | USEDELAY
@@ -144,7 +144,7 @@
 		if(guard != user.a_intent)
 			change_guard(user,user.a_intent)
 
-	attack(mob/living/carbon/human/defender as mob, mob/living/carbon/human/attacker as mob)
+	attack(mob/living/carbon/human/defender, mob/living/carbon/human/attacker)
 		if(ishuman(defender))
 			if(defender.equipped() && istype(defender.equipped(),/obj/item/shinai))
 				var/obj/item/shinai/S = defender.equipped()
@@ -155,6 +155,8 @@
 
 			if((attacker.a_intent=="disarm") && prob(20) && defender.equipped())
 				var/obj/item/I = defender.equipped()
+				if (I.cant_drop)
+					return
 				defender.u_equip(I)
 				I.set_loc(defender.loc)
 				var/target_turf = get_offset_target_turf(I.loc,rand(5)-rand(5),rand(5)-rand(5))
@@ -163,7 +165,7 @@
 				attacker.show_text("<b>You knock the [I] right out of [defender]'s hands!</b>","green")
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.loc != user)
 			change_guard(user,user.a_intent)
 		..()
@@ -179,7 +181,7 @@
 /obj/item/shinai_bag
 	name = "shinai bag"
 	desc = "\improper 竹刀袋 : A tube-like back for holding two shinai."
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "shinaibag-closed"
 	item_state = "shinaibag-closed"
 	flags = ONBACK | FPRINT | TABLEPASS
@@ -220,7 +222,7 @@
 		open = !open
 		update_sprite(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.loc == user)
 			if(open)
 				draw_shinai(user)
@@ -232,13 +234,29 @@
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/shinai) && open && shinai + length(src.contents) < 2)
 			user.u_equip(W)
 			W.set_loc(src)
 			update_sprite(user)
 		else
 			..()
+
+	mouse_drop(atom/over_object, src_location, over_location)
+		..()
+		var/atom/movable/screen/hud/S = over_object
+		if (istype(S))
+			playsound(src.loc, "rustle", 50, 1, -5)
+			if (can_act(usr) && src.loc == usr)
+				if (S.id == "rhand")
+					if (!usr.r_hand)
+						usr.u_equip(src)
+						usr.put_in_hand_or_drop(src, 0)
+				else
+					if (S.id == "lhand")
+						if (!usr.l_hand)
+							usr.u_equip(src)
+							usr.put_in_hand_or_drop(src, 1)
 
 /obj/item/storage/box/kendo_box
 	name = "kendo box"
@@ -247,7 +265,7 @@
 	spawn_contents = list(/obj/item/clothing/head/helmet/men=2,/obj/item/clothing/suit/armor/douandtare=2,/obj/item/clothing/gloves/kote=2,/obj/item/shinai_bag=1)
 
 /obj/item/storage/box/kendo_box/hakama
-	name = "hakama box"
-	desc = "A box full of hakama!"
+	name = "uwagi and hakama box"
+	desc = "A box full of sets of uwagi and hakama!"
 	icon_state = "box"
 	spawn_contents = list(/obj/item/clothing/under/gimmick/hakama/random=7)

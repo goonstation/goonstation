@@ -1,79 +1,34 @@
 
 #define SAMOSTREL_LIVE 1	//On broadway!!
 
-var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 'sound/ambience/spooky/Hospital_Haunted1.ogg', 'sound/ambience/spooky/Hospital_Haunted2.ogg',
-	'sound/ambience/spooky/Hospital_Drone3.ogg', 'sound/ambience/spooky/Hospital_Haunted3.ogg', 'sound/ambience/spooky/Hospital_Feedback.ogg', 'sound/ambience/spooky/Hospital_Drone2.ogg', 'sound/ambience/spooky/Hospital_ScaryChimes.ogg')
-
 /area/hospital
 	name = "Ainley Staff Retreat Center"
 	icon_state = "purple"
 	ambient_light = rgb(0.5 * 255, 0.5 * 255, 0.5 * 255)
-
-	var/sound/ambientSound = 'sound/ambience/spooky/Hospital_Drone1.ogg'
-	var/list/fxlist = null
-	var/list/soundSubscribers = null
 	sound_group = "ainley"
+	sound_loop = 'sound/ambience/spooky/Hospital_Drone1.ogg'
 
-	New()
-		..()
-		fxlist = hospital_fx_sounds
-		if (ambientSound)
+/area/hospital/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 
-			SPAWN_DBG(6 SECONDS)
-				var/sound/S = new/sound()
-				S.file = ambientSound
-				S.repeat = 0
-				S.wait = 0
-				S.channel = 123
-				S.volume = 60
-				S.priority = 255
-				S.status = SOUND_UPDATE
-				ambientSound = S
+/area/hospital/disposing()
+	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	. = ..()
 
-				soundSubscribers = list()
-				process()
+/area/hospital/area_process()
+	if(prob(20))
+		src.sound_fx_2 = pick('sound/ambience/spooky/Hospital_Chords.ogg',\
+		'sound/ambience/spooky/Hospital_Haunted1.ogg',\
+		'sound/ambience/spooky/Hospital_Haunted2.ogg',
+		'sound/ambience/spooky/Hospital_Drone3.ogg',\
+		'sound/ambience/spooky/Hospital_Haunted3.ogg',\
+		'sound/ambience/spooky/Hospital_Feedback.ogg',\
+		'sound/ambience/spooky/Hospital_Drone2.ogg',\
+		'sound/ambience/spooky/Hospital_ScaryChimes.ogg')
 
-	Entered(atom/movable/Obj,atom/OldLoc)
-		. = ..()
-		if(ambientSound && ismob(Obj))
-			soundSubscribers |= Obj
-
-	proc/process()
-		if (!soundSubscribers)
-			return
-
-		var/sound/S = null
-		var/sound_delay = 0
-
-
-		while(current_state < GAME_STATE_FINISHED)
-			sleep(6 SECONDS)
-
-			if(prob(10) && fxlist)
-				S = sound(file=pick(fxlist), volume=50)
-				sound_delay = rand(0, 50)
-			else
-				S = null
-				continue
-
-			for(var/mob/living/H in soundSubscribers)
-				var/area/mobArea = get_area(H)
-				if (!istype(mobArea) || mobArea.type != src.type)
-					soundSubscribers -= H
-					if (H.client)
-						ambientSound.status = SOUND_PAUSED | SOUND_UPDATE
-						ambientSound.volume = 0
-						H << ambientSound
-					continue
-
-				if(H.client)
-					ambientSound.status = SOUND_UPDATE
-					ambientSound.volume = 60
-					H << ambientSound
-					if(S)
-						SPAWN_DBG(sound_delay)
-							H << S
-
+		for(var/mob/living/carbon/human/H in src)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 50)
 
 /area/hospital/underground
 	name = "utility tunnels"
@@ -92,7 +47,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	sound_group = "samostrel"
 
 /area/adventure/channel
-	name = "The Channel"
+	name = "Channel"
 	desc = "Better not try and change it!"
 	icon_state = "purple"
 	requires_power = 0
@@ -100,6 +55,8 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	force_fullbright = 1
 
 	flingy
+		name = "Unstable Channel"
+
 		Entered(atom/movable/Obj,atom/OldLoc)
 			..()
 
@@ -109,6 +66,8 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 			return
 
 	teleport
+		name = "Extremely Unstable Channel"
+
 		Entered(atom/movable/Obj, atom/OldLoc)
 			..()
 
@@ -118,7 +77,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 				playsound(T, pick('sound/effects/elec_bigzap.ogg', 'sound/effects/elec_bzzz.ogg', 'sound/effects/electric_shock.ogg'), 50, 0)
 				var/obj/somesparks = new /obj/effects/sparks
 				somesparks.set_loc(T)
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					if (somesparks) qdel(somesparks)
 
 				Obj.throw_at(get_edge_target_turf(T, NORTH), 200, 1)
@@ -173,8 +132,8 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 				if(AM:client)
 					if(prob(75))
 						maniac_active |= 2
-						SPAWN_DBG(1 MINUTE) maniac_active &= ~2
-						SPAWN_DBG(rand(10,30))
+						SPAWN(1 MINUTE) maniac_active &= ~2
+						SPAWN(rand(10,30))
 							var/obj/chaser/hospital/C = new /obj/chaser/hospital(src.loc)
 							C.target = AM
 
@@ -186,13 +145,12 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	desc = "&#9617;????&#9617;&#9617;&#9617;&#9617;"
 	density = 1
 	anchored = 1
-	var/sound/aaah = sound('sound/ambience/loop/Static_Horror_Loop.ogg',channel=7)
 	var/targeting = 0
 
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			process()
 
 	proximity_act()
@@ -204,7 +162,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 			boutput(target, "<span><B>no no no no no no no no no no no no non&#9617;NO&#9617;NNnNNO</B></span>")
 			if (LANDMARK_SAMOSTREL_WARP in landmarks)
 				var/target_original_loc = target.loc
-				target.setStatus("paralysis", max(target.getStatusDuration("paralysis"), 10 SECONDS))
+				target.setStatusMin("paralysis", 10 SECONDS)
 				do_teleport(target, pick_landmark(LANDMARK_SAMOSTREL_WARP), 0, 0)
 
 				if (ishuman(target))
@@ -230,12 +188,11 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 		if(!targeting)
 			targeting = 1
 			//target<< 'sound/misc/chefsong_start.ogg'
-			SPAWN_DBG(8 SECONDS)
-				aaah.repeat = 1
-				target << aaah
+			SPAWN(8 SECONDS)
+				playsound(target, 'sound/ambience/loop/Static_Horror_Loop.ogg', 100)
 				sleep(rand(100,400))
 				if(target)
-					target << sound('sound/ambience/loop/Static_Horror_Loop_End.ogg',channel=7)
+					playsound(target, 'sound/ambience/loop/Static_Horror_Loop_End.ogg', 100)
 				qdel(src)
 			walk_towards(src, src.target, 3)
 
@@ -414,7 +371,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 /obj/storage/crate/freezer/hospital
 	var/keySpawned = 0
 
-	open()
+	open(entanglelogic, mob/user)
 		if (!keySpawned)
 			var/obj/item/device/key/hospital/theKey = new (src)
 			keySpawned = 1
@@ -483,7 +440,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 #ifndef SAMOSTREL_LIVE
 		del(src)
 #endif
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (src.botcard)
 				src.botcard.access += FREQ_AINLEY_BUDDY
 
@@ -550,7 +507,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 			var/edge = get_edge_target_turf(src, pick(alldirs))
 			O.throw_at(edge, 100, 4)
 
-		SPAWN_DBG(0) //Delete the overlay when finished with it.
+		SPAWN(0) //Delete the overlay when finished with it.
 			src.on = 0
 			sleep(1.5 SECONDS)
 			qdel(Ov)
@@ -662,7 +619,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 		new_destination = "__nearest__"
 		master.post_find_beacon("patrol")
 		awaiting_beacon = 5
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(!master || !master.on || master.stunned || master.idle)
 				return
 			if(master.task != src)
@@ -699,11 +656,11 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 
 		// if looking for nearest beacon
 		else if(new_destination == "__nearest__")
-			var/dist = get_dist(master,signal.source.loc)
+			var/dist = GET_DIST(master,signal.source.loc)
 			if(nearest_beacon)
 
 				// note we ignore the beacon we are located at
-				if(dist>1 && dist<get_dist(master,nearest_beacon_loc))
+				if(dist>1 && dist<GET_DIST(master,nearest_beacon_loc))
 					nearest_beacon = recv
 					nearest_beacon_loc = signal.source.loc
 					next_destination = signal.data["next_patrol"]

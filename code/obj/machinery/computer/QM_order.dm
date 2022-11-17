@@ -27,7 +27,7 @@
 	boutput(user, "<span class='alert'>AI Interfacing with this computer has been disabled.</span>")
 	return
 
-/obj/machinery/computer/ordercomp/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/ordercomp/attack_hand(var/mob/user)
 	if(..())
 		return
 
@@ -56,14 +56,14 @@
 	onclose(user, "computer_[src]")
 	return
 
-/obj/machinery/computer/ordercomp/attackby(var/obj/item/I as obj, mob/user as mob)
+/obj/machinery/computer/ordercomp/attackby(var/obj/item/I, mob/user)
 	if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 		if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 		boutput(user, "<span class='notice'>You swipe the ID card.</span>")
 		var/datum/db_record/account = null
 		account = FindBankAccountByName(I:registered)
 		if(account)
-			var/enterpin = input(user, "Please enter your PIN number.", "Order Console", 0) as null|num
+			var/enterpin = user.enter_pin("Order Console")
 			if (enterpin == I:pin)
 				boutput(user, "<span class='notice'>Card authorized.</span>")
 				src.scan = I
@@ -157,7 +157,7 @@
 					O.console_location = src.console_location
 					var/obj/storage/S = O.create(usr)
 					shippingmarket.receive_crate(S)
-					logTheThing("station", usr, null, "ordered a [P.name] at [log_loc(src)].")
+					logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
 					boutput(usr, "Your order of [P.name] has been processed and will be delivered shortly.")
 					shippingmarket.supply_history += "[O.object.name] ordered by [O.orderedby] for [P.cost] credits from personal account.<BR>"
 
@@ -199,7 +199,7 @@
 				var/datum/db_record/account = null
 				account = FindBankAccountByName(I:registered)
 				if(account)
-					var/enterpin = input(usr, "Please enter your PIN number.", "Order Console", 0) as null|num
+					var/enterpin = usr.enter_pin("Order Console")
 					if (enterpin == I:pin)
 						boutput(usr, "<span class='notice'>Card authorized.</span>")
 						src.scan = I

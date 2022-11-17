@@ -3,6 +3,11 @@
 	desc = "Designed to interface the player piano."
 	icon = 'icons/obj/instruments.dmi'
 	icon_state = "piano_key"
+	w_class = W_CLASS_TINY
+
+#define MIN_TIMING 0.25
+#define MAX_TIMING 0.5
+#define MAX_NOTE_INPUT 15360
 
 /obj/player_piano //this is the big boy im pretty sure all this code is garbage
 	name = "player piano"
@@ -30,18 +35,35 @@
 
 	New()
 		..()
-//		linked_pianos += src
 		if (!items_claimed)
 			src.desc += " The free user essentials box is untouched!" //jank
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "play", .proc/mechcompPlay)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set notes", .proc/mechcompNotes)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set timing", .proc/mechcompTiming)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "reset", .proc/reset_piano)
 
-	attackby(obj/item/W as obj, mob/user as mob) //this one is big and sucks, where all of our key and construction stuff is
+	// requires it's own proc because else the mechcomp input will be taken as first argument of ready_piano()
+	proc/mechcompPlay(var/datum/mechanicsMessage/input)
+		ready_piano()
+
+	proc/mechcompNotes(var/datum/mechanicsMessage/input)
+		if (input.signal)
+			set_notes(input.signal)
+
+	proc/mechcompTiming(var/datum/mechanicsMessage/input)
+		var/new_timing = text2num(input.signal)
+		if (new_timing)
+			set_timing(new_timing)
+
+	attackby(obj/item/W, mob/user) //this one is big and sucks, where all of our key and construction stuff is
 		if (istype(W, /obj/item/piano_key)) //piano key controls
 			var/mode_sel = input("Which do you want to do?", "Piano Control") as null|anything in list("Reset Piano", "Toggle Looping", "Adjust Timing")
 
 			switch(mode_sel)
 				if ("Reset Piano") //reset piano B)
 					reset_piano()
-					src.visible_message("<span class='alert'>[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] grumbles and shuts down completely.</span>")
+					src.visible_message("<span class='alert'>[user] sticks \the [W] into a slot on \the [src] and twists it!</span>")
 					return
 
 				if ("Toggle Looping") //self explanatory, sets whether or not the piano should be looping
@@ -56,31 +78,31 @@
 
 				if ("Adjust Timing") //adjusts tempo
 					var/time_sel = input("Input a custom tempo from 0.25 to 0.5 BPS", "Tempo Control") as num
-					if (time_sel < 0.25 || time_sel > 0.5)
+					if (!src.set_timing(time_sel))
 						src.visible_message("<span class='alert'>The mechanical workings of [src] emit a horrible din for several seconds before \the [src] shuts down.")
 						return
-					timing = time_sel
 					src.visible_message("<span class='alert'>[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] rumbles indifferently.")
 
-		else if (istype(W, /obj/item/screwdriver)) //unanchoring piano
+		else if (isscrewingtool(W)) //unanchoring piano
 			if (anchored)
 				user.visible_message("[user] starts loosening the piano's castors...", "You start loosening the piano's castors...")
 				if (!do_after(user, 3 SECONDS) || anchored != 1)
 					return
-				playsound(user, "sound/items/Screwdriver2.ogg", 65, 1)
+				playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
 				src.anchored = 0
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 				user.visible_message("[user] loosens the piano's castors!", "You loosen the piano's castors!")
 				return
 			else
 				user.visible_message("[user] starts tightening the piano's castors...", "You start tightening the piano's castors...")
 				if (!do_after(user, 3 SECONDS) || anchored != 0)
 					return
-				playsound(user, "sound/items/Screwdriver2.ogg", 65, 1)
+				playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
 				src.anchored = 1
 				user.visible_message("[user] tightens the piano's castors!", "You tighten the piano's castors!")
 				return
 
-		else if (istype(W, /obj/item/crowbar)) //prying off panel
+		else if (ispryingtool(W)) //prying off panel
 			if (is_busy)
 				boutput(user, "You can't do that while the piano is running!")
 				return
@@ -88,13 +110,13 @@
 				user.visible_message("[user] starts prying off the piano's maintenance panel...", "You begin to pry off the maintenance panel...")
 				if (!do_after(user, 3 SECONDS) || panel_exposed != 0)
 					return
-				playsound(user, "sound/items/Crowbar.ogg", 65, 1)
+				playsound(user, 'sound/items/Crowbar.ogg', 65, 1)
 				user.visible_message("[user] prys off the piano's maintenance panel.","You pry off the maintenance panel.")
 				var/obj/item/plank/P = new(get_turf(user))
 				P.name = "Piano Maintenance Panel"
 				P.desc = "A cover for the internal workings of a piano. Better not lose it."
 				panel_exposed = 1
-				update_icon()
+				UpdateIcon()
 			else
 				boutput(user, "There's nothing to pry off of \the [src].")
 
@@ -103,13 +125,13 @@
 				user.visible_message("[user] starts replacing the piano's maintenance panel...", "You start replacing the piano's maintenance panel...")
 				if (!do_after(user, 3 SECONDS) || panel_exposed != 1)
 					return
-				playsound(user, "sound/items/Deconstruct.ogg", 65, 1)
+				playsound(user, 'sound/items/Deconstruct.ogg', 65, 1)
 				user.visible_message("[user] replaces the maintenance panel!", "You replace the maintenance panel!")
 				panel_exposed = 0
-				update_icon(0)
+				UpdateIcon(0)
 				qdel(W)
 
-		else if (istype(W, /obj/item/wirecutters)) //turning off looping... forever!
+		else if (issnippingtool(W)) //turning off looping... forever!
 			if (is_looping == 2)
 				boutput(user, "There's no wires to snip!")
 				return
@@ -117,10 +139,10 @@
 			if (!do_after(user, 7 SECONDS) || is_looping == 2)
 				return
 			is_looping = 2
-			playsound(user, "sound/items/Wirecutter.ogg", 65, 1)
+			playsound(user, 'sound/items/Wirecutter.ogg', 65, 1)
 			user.visible_message("<span class='alert'>[user] snips the looping control wire!</span>", "You snip the looping control wire!")
 
-		else if (istype(W, /obj/item/device/multitool)) //resetting piano the hard way
+		else if (ispulsingtool(W)) //resetting piano the hard way
 			if (panel_exposed == 0)
 				..()
 				return
@@ -132,19 +154,15 @@
 		else
 			..()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (is_busy)
 			src.visible_message("<span class='alert'>\The [src] emits an angry beep!</span>")
 			return
 		var/mode_sel = input("Which mode would you like?", "Mode Select") as null|anything in list("Choose Notes", "Play Song")
 		if (mode_sel == "Choose Notes")
-			note_input = ""
-			note_input = input("Write out the notes you want to be played.", "Composition Menu", note_input)
-			if (length(note_input) > 2048)//still room to get long piano songs in, but not too crazy
+			var/given_notes = input("Write out the notes you want to be played.", "Composition Menu", note_input)
+			if (!set_notes(given_notes))//still room to get long piano songs in, but not too crazy
 				src.visible_message("<span class='alert'>\The [src] makes an angry whirring noise and shuts down.</span>")
-				return
-			clean_input(note_input) //if updating input order to have a different order, update build_notes to reflect that order
-			build_notes(piano_notes)
 			return
 		else if (mode_sel == "Play Song")
 			ready_piano()
@@ -152,7 +170,7 @@
 		else //just in case
 			return
 
-	MouseDrop(obj/player_piano/O, null)//, var/src_location, var/control_orig, var/control_new, var/params)
+	mouse_drop(obj/player_piano/piano)
 		if (!istype(usr, /mob/living))
 			return
 		if (usr.stat)
@@ -160,27 +178,34 @@
 		if (!allowChange(usr))
 			boutput(usr, "<span class='alert'>You can't link pianos without a multitool!</span>")
 			return
-		if (O.is_busy || is_busy)
+		ENSURE_TYPE(piano)
+		if (!piano)
+			return
+		if (piano == src)
+			boutput(usr, "<span class='alert'>You can't link a piano with itself!</span>")
+			return
+		if (piano.is_busy || src.is_busy)
 			boutput(usr, "<span class='alert'>You can't link a busy piano!</span>")
-		if (O.panel_exposed && panel_exposed)
+			return
+		if (piano.panel_exposed && panel_exposed)
 			usr.visible_message("[usr] links the pianos.", "You link the pianos!")
-			add_piano(O)
-			O.add_piano(src)
+			src.add_piano(piano)
+			piano.add_piano(src)
 
 	disposing() //just to clear up ANY funkiness
 		reset_piano(1)
 		..()
 
 	proc/allowChange(var/mob/M) //copypasted from mechanics code because why do something someone else already did better
-		if(hasvar(M, "l_hand") && istype(M:l_hand, /obj/item/device/multitool)) return 1
-		if(hasvar(M, "r_hand") && istype(M:r_hand, /obj/item/device/multitool)) return 1
+		if(hasvar(M, "l_hand") && ispulsingtool(M:l_hand)) return 1
+		if(hasvar(M, "r_hand") && ispulsingtool(M:r_hand)) return 1
 		if(hasvar(M, "module_states"))
 			for(var/atom/A in M:module_states)
-				if(istype(A, /obj/item/device/multitool))
+				if(ispulsingtool(A))
 					return 1
 		return 0
 
-	proc/clean_input(var/list/input) //breaks our big input string into chunks
+	proc/clean_input() //breaks our big input string into chunks
 		is_busy = 1
 		piano_notes = list()
 //		src.visible_message("<span class='notice'>\The [src] starts humming and rattling as it processes!</span>")
@@ -233,26 +258,28 @@
 		is_busy = 0
 
 	proc/ready_piano(var/is_linked) //final checks to make sure stuff is right, gets notes into a compiled form for easy playsounding
+		if (is_busy)
+			return
 		is_busy = 1
 		if (note_volumes.len + note_octaves.len - note_names.len - note_accidentals.len)
 			src.visible_message("<span class='alert'>\The [src] makes a grumpy ratchetting noise and shuts down!</span>")
 			is_busy = 0
-			update_icon(0)
+			UpdateIcon(0)
 		song_length = length(note_names)
 		compiled_notes = list()
 		for (var/i = 1, i <= note_names.len, i++)
 			var/string = lowertext("[note_names[i]][note_accidentals[i]][note_octaves[i]]")
 			compiled_notes += string
 		for (var/i = 1, i <= compiled_notes.len, i++)
-			var/string = "sound/piano/"
+			var/string = "sound/musical_instruments/player_piano/"
 			string += "[compiled_notes[i]].ogg"
 			if (!(string in soundCache))
 				src.visible_message("<span class='alert'>\The [src] makes an atrocious racket and beeps [i] times.</span>")
 				is_busy = 0
-				update_icon(0)
+				UpdateIcon(0)
 				return
 		src.visible_message("<span class='notice'>\The [src] starts playing music!</span>")
-		update_icon(1)
+		UpdateIcon(1)
 		if (is_linked)
 			play_notes(0)
 			return
@@ -261,7 +288,7 @@
 	proc/play_notes(var/is_master) //how notes are handled, using while and spawn to set a very strict interval, solo piano process loop was too variable to work for music
 		if (linked_pianos.len > 0 && is_master)
 			for (var/obj/player_piano/p in linked_pianos)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					p.ready_piano(1)
 		while (curr_note <= song_length)
 			curr_note++
@@ -273,14 +300,35 @@
 				is_busy = 0
 				curr_note = 0
 				src.visible_message("<span class='notice'>\The [src] stops playing music.</span>")
-				update_icon(0)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "musicStopped")
+				UpdateIcon(0)
 				return
 			sleep((timing * 10)) //to get delay into 10ths of a second
-			var/sound_name = "sound/piano/"
-			sound_name += "[compiled_notes[curr_note]].ogg"
+			if (!curr_note) // else we get runtimes when the piano is reset while playing
+				return
+			var/sound_name = "sound/musical_instruments/player_piano/[compiled_notes[curr_note]].ogg"
 			playsound(src, sound_name, note_volumes[curr_note],0,10,0)
 
+	proc/set_notes(var/given_notes)
+		if (is_busy)
+			return FALSE
+		if (length(note_input) > MAX_NOTE_INPUT)
+			return FALSE
+		src.note_input = given_notes
+		clean_input()
+		build_notes(piano_notes)
+		return TRUE
+
+	proc/set_timing(var/time_sel)
+		if (is_busy)
+			return FALSE
+		if (time_sel < MIN_TIMING || time_sel > MAX_TIMING)
+			return FALSE
+		src.timing = time_sel
+		return TRUE
+
 	proc/reset_piano(var/disposing) //so i dont have to have duplicate code for multiool pulsing and piano key
+		src.visible_message("<span class='notice'>\The [src] grumbles and shuts down completely.</span>")
 		if (is_looping != 2 || disposing)
 			is_looping = 0
 		song_length = 0
@@ -295,9 +343,9 @@
 		note_accidentals = list()
 		compiled_notes = list()
 		linked_pianos = list()
-		update_icon(0)
+		UpdateIcon(0)
 
-	proc/update_icon(var/active) //1: active, 0: inactive
+	update_icon(var/active) //1: active, 0: inactive
 		if (panel_exposed)
 			icon_state = "player_piano_open"
 			return
@@ -327,3 +375,7 @@
 		items_claimed = 1
 		src.visible_message("\The [src] spills out a key and a booklet! Nifty!")
 		src.desc = "A piano that can take raw text and turn it into music! The future is now! The free user essentials box has been raided!" //jaaaaaaaank
+
+#undef MIN_TIMING
+#undef MAX_TIMING
+#undef MAX_NOTE_INPUT

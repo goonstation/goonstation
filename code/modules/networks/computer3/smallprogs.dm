@@ -633,6 +633,7 @@ file_save - Save file to local disk."}
 					return
 
 				saved = src.temp_file.copy_file()
+				saved.name = toSaveName
 				if (!saved)
 					src.print_text("Error: Cannot save to disk.")
 					return
@@ -1322,7 +1323,7 @@ file_save - Save file to local disk."}
 
 			src.text_buffer += text
 
-			src.selected_line = max(min(src.selected_line, 8), 1)
+			src.selected_line = clamp(src.selected_line, 1, 8)
 
 			if (!istype(working_signal, /list))
 				working_signal = list()
@@ -1366,7 +1367,7 @@ file_save - Save file to local disk."}
 		var/dat = "Crew Manifest<br>Entries cannot be modified from this terminal.<br>"
 
 
-		dat += get_manifest()
+		dat += get_manifest(FALSE)
 
 
 		src.master.temp = null

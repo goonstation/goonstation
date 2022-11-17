@@ -127,7 +127,7 @@
 		sleep(3 SECONDS)
 		locked =! locked
 		user.show_message(text("<span class='alert'>Done!</span>"),1)
-		src.updateicon()
+		src.UpdateIcon()
 		return
 	if(istype(W, /obj/item/weapon/cable_coil) && !bypassed)
 		if(src.locked)
@@ -142,14 +142,14 @@
 		user.show_message(text("<span class='alert'>Now bypassing the access system... <I>(This may take a while)</I></span>"), 1)
 		sleep(10 SECONDS)
 		bypassed = 1
-		src.updateicon()
+		src.UpdateIcon()
 		return
 	if (issnippingtool(W) && bypassed)
 		src.add_fingerprint(user)
 		user.show_message(text("<span class='alert'>Now removing the bypass wires... <I>(This may take a while)</I></span>"), 1)
 		sleep(5 SECONDS)
 		bypassed = 0
-		src.updateicon()
+		src.UpdateIcon()
 		return
 	if(istype(W, /obj/item/weapon/card/emag) && (!emagged))
 		emagged++
@@ -158,7 +158,7 @@
 			O.show_message(text("<span class='alert'>[] has shorted out the [] with an electromagnetic card!</span>", user, src), 1)
 		src.overlays += image('pipes2.dmi', "filter-spark")
 		sleep(0.6 SECONDS)
-		src.updateicon()
+		src.UpdateIcon()
 		return src.Attackhand(user)
 	return src.Attackhand(user)
 
@@ -166,7 +166,7 @@
 /obj/machinery/pipefilter/attack_ai(mob/user as mob)
 	return src.Attackhand(user)
 
-/obj/machinery/pipefilter/attack_hand(mob/user as mob)
+/obj/machinery/pipefilter/attack_hand(mob/user)
 /*	if(status & NOPOWER)
 		user << browse(null, "window=pipefilter")
 		user.machine = null
@@ -198,7 +198,7 @@
 	..()
 	if(usr.restrained() || usr.lying)
 		return
-	if ((((get_dist(src, usr) <= 1 || usr.telekinesis == 1) || isAI(usr)) && istype(src.loc, /turf)))
+	if ((((BOUNDS_DIST(src, usr) == 0 || usr.telekinesis == 1) || isAI(usr)) && istype(src.loc, /turf)))
 		src.add_dialog(usr)
 		if (href_list["close"])
 			usr << browse(null, "window=pipefilter;")
@@ -206,11 +206,11 @@
 			return
 		if (src.allowed(usr) || src.emagged || src.bypassed)
 			if (href_list["fp"])
-				src.f_per = min(max(round(src.f_per + text2num_safe(href_list["fp"])), 0), src.maxrate)
+				src.f_per = clamp(round(src.f_per + text2num_safe(href_list["fp"])), 0, src.maxrate)
 			else if (href_list["tg"])
 				// toggle gas
 				src.f_mask ^= text2num_safe(href_list["tg"])
-				src.updateicon()
+				src.UpdateIcon()
 		else
 			usr.see("<span class='alert'>Access Denied ([src.name] operation restricted to authorized atmospheric technicians.)</span>")
 		AutoUpdateAI(src)
@@ -226,10 +226,10 @@
 		status &= ~NOPOWER
 	else
 		status |= NOPOWER
-	SPAWN_DBG(rand(1,15))	//so all the filters don't come on at once
-		updateicon()
+	SPAWN(rand(1,15))	//so all the filters don't come on at once
+		UpdateIcon()
 
-/obj/machinery/pipefilter/proc/updateicon()
+/obj/machinery/pipefilter/UpdateIcon()
 	src.overlays = null
 	if(status & NOPOWER)
 		icon_state = "filter-off"

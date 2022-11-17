@@ -7,7 +7,7 @@ var/list/default_limb_paths = list("l_arm" = /obj/item/parts/human_parts/arm/lef
 /client/proc/modify_parts(var/mob/living/carbon/human/target as mob)
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 	if (!istype(target))
 		return
 	if (!target.limbs)
@@ -27,7 +27,7 @@ var/list/default_limb_paths = list("l_arm" = /obj/item/parts/human_parts/arm/lef
 		..()
 		if (!href_list["action"] || !usr)
 			return
-		usr_admin_only
+		USR_ADMIN_ONLY
 		switch (href_list["action"])
 // refresh
 			if ("refresh")
@@ -85,7 +85,7 @@ var/list/default_limb_paths = list("l_arm" = /obj/item/parts/human_parts/arm/lef
 					boutput(usr, "Error: invalid target.")
 					return
 				limbs.mend()
-				logTheThing("admin", usr, limbs.holder, "replaced all of [constructTarget(limbs.holder,"admin")]'s missing limbs")
+				logTheThing(LOG_ADMIN, usr, "replaced all of [constructTarget(limbs.holder,"admin")]'s missing limbs")
 				message_admins("[key_name(usr)] replaced all of [key_name(limbs.holder)]'s missing limbs")
 				limbs.holder.set_body_icon_dirty()
 				src.show_window(limbs.holder, usr)
@@ -136,7 +136,7 @@ var/list/default_limb_paths = list("l_arm" = /obj/item/parts/human_parts/arm/lef
 				if (target_organ == "all" && alert(usr, "Are you sure you want to make [organs.donor] drop every single organ? This will kill them!", "Confirmation", "Yes", "No") == "No")
 					return
 				if (organs.drop_organ(target_organ, null)) // returns with the organ when at least one organ is dropped
-					logTheThing("admin", usr, organs.donor, "made [constructTarget(organs.donor,"admin")] drop their organ(s): [uppertext(target_organ)]")
+					logTheThing(LOG_ADMIN, usr, "made [constructTarget(organs.donor,"admin")] drop their organ(s): [uppertext(target_organ)]")
 					message_admins("[key_name(usr)] made [key_name(organs.donor)] drop their organ(s): [uppertext(target_organ)]")
 				src.show_window(organs.donor, usr)
 // replace organs
@@ -160,7 +160,7 @@ var/list/default_limb_paths = list("l_arm" = /obj/item/parts/human_parts/arm/lef
 
 				var/obj/item/I = new new_type(organs.donor)
 				if (organs.receive_organ(I, target_organ, 0.0, 1)) // returns 1 if replace was successful
-					logTheThing("admin", usr, organs.donor, "replaced [constructTarget(organs.donor,"admin")]'s [uppertext(target_organ)] with [new_type]")
+					logTheThing(LOG_ADMIN, usr, "replaced [constructTarget(organs.donor,"admin")]'s [uppertext(target_organ)] with [new_type]")
 					message_admins("[key_name(usr)] replaced [key_name(organs.donor)]'s organ(s): [uppertext(target_organ)] (new type: [new_type])")
 				else
 					qdel(I) // ugly  :/
@@ -172,7 +172,7 @@ var/list/default_limb_paths = list("l_arm" = /obj/item/parts/human_parts/arm/lef
 					boutput(usr, "Error: invalid target.")
 					return
 				organs.create_organs()
-				logTheThing("admin", usr, organs.donor, "replaced all of [constructTarget(organs.donor,"admin")]'s missing organs")
+				logTheThing(LOG_ADMIN, usr, "replaced all of [constructTarget(organs.donor,"admin")]'s missing organs")
 				message_admins("[key_name(usr)] replaced all of [key_name(organs.donor)]'s missing organs")
 				organs.donor.set_body_icon_dirty()
 				src.show_window(organs.donor, usr)

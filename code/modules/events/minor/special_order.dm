@@ -34,7 +34,10 @@
 			new_order.pack_crate()
 			shippingmarket.receive_crate(new_order.sendingCrate)
 		else
-			shippingmarket.receive_crate(new_order.req_sheet)
+			if(transception_array)
+				transception_array.direct_queue += new_order.req_sheet
+			else
+				shippingmarket.receive_crate(new_order.req_sheet)
 
 /obj/item/paper/requisition
 	name = "Order Requisition"
@@ -417,7 +420,7 @@ ABSTRACT_TYPE(/datum/special_order/chef)
 		target.TakeDamage("All", rand(10, 20), rand(10, 20))
 		target.organHolder.damage_organs(1, 6, 10, target_organs)
 
-		SPAWN_DBG(0.5 SECOND) // Delay for JobEquipSpawned to resolve
+		SPAWN(0.5 SECOND) // Delay for JobEquipSpawned to resolve
 			for(var/slot in list(SLOT_EARS, SLOT_WEAR_ID, SLOT_BACK, SLOT_BELT))
 				var/obj/O = target.get_slot(slot)
 				if(O)

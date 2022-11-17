@@ -33,7 +33,7 @@
 		rad = new(src)
 		*/
 		update_controller_verbs()
-		update_icon()
+		UpdateIcon()
 
 	disposing()
 		controller?.ghostize()
@@ -58,7 +58,7 @@
 	proc/set_appearance(var/colour="blue")
 		if(colour in list("blue", "red", "green", "yellow"))
 			src.colour = colour
-			update_icon()
+			UpdateIcon()
 			. = 1
 
 	proc/update_controller_verbs()
@@ -84,7 +84,7 @@
 		else
 			src.verbs -= /obj/item/device/brainjar/proc/detonate_tank_transfer_valve
 
-	proc/update_icon()
+	update_icon()
 		icon_state = "tb-[colour]"
 		overlays.Cut()
 
@@ -126,9 +126,9 @@
 					var/obj/item/cable_coil/C = W
 					if(C.use(5))
 						user.show_text("You attach the wires to the cyborg head and secure them to the assembly. Needs a monitoring tool before it'll work, by all appearances.", "blue")
-						playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 20, 1)
+						playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 20, 1)
 						crafting_stage = 1
-						update_icon()
+						UpdateIcon()
 					else
 						user.show_text("There's not enough wire on \the [C]!.", "red")
 					return
@@ -139,27 +139,27 @@
 					user.u_equip(W)
 					qdel(W)
 					crafting_stage = 2
-					update_icon()
+					UpdateIcon()
 					return
 			if(2)
 				if (ispulsingtool(W))
 					user.show_text("You use \the [W] to root the health analyzer, voiding the warranty! Probably won't be enough to power the assembly, though.", "blue")
-					playsound(src.loc, "sound/effects/brrp.ogg", 50, 1)
+					playsound(src.loc, 'sound/effects/brrp.ogg', 50, 1)
 					crafting_stage = 3
 					return
 			if(3)
 				if (istype(W, /obj/item/cell))
 					user.show_text("You attach \the [W] to the assembly. It drones slightly. Won't do much good without a comms interface, however.", "blue")
-					playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 20, 1)
+					playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 20, 1)
 					user.u_equip(W)
 					qdel(W)
 					crafting_stage = 4
-					update_icon()
+					UpdateIcon()
 					return
 			if(4)
 				if(istype(W, /obj/item/device/radio))
 					user.show_text("You hook up \the [W] to the assembly. It emits a loud screech!", "blue")
-					var/bad_noise = pick("sound/machines/glitch1.ogg", "sound/machines/glitch2.ogg", "sound/machines/glitch3.ogg", "sound/machines/glitch4.ogg", "sound/machines/glitch5.ogg")
+					var/bad_noise = pick('sound/machines/glitch1.ogg', 'sound/machines/glitch2.ogg', 'sound/machines/glitch3.ogg', 'sound/machines/glitch4.ogg', 'sound/machines/glitch5.ogg')
 					playsound(src.loc, bad_noise, 50, 1)
 					user.u_equip(W)
 					rad = W
@@ -190,8 +190,8 @@
 				B.set_loc(src)
 				B.owner.transfer_to(controller)
 				user.show_text("You install \the [B] in \the [src].", "blue")
-				logTheThing("combat", user, controller, "installs [constructTarget(controller,"combat")] into a brain assembly!")
-				update_icon()
+				logTheThing(LOG_COMBAT, user, "installs [constructTarget(controller,"combat")] into a brain assembly!")
+				UpdateIcon()
 			else
 				user.show_text("This brain seems unfit to use in the assembly.", "red")
 			update_controller_verbs()
@@ -210,7 +210,7 @@
 			W.set_loc(controller)
 			user.show_text("You hook up \the [W] to \the [src].", "blue")
 			update_controller_verbs()
-			update_icon()
+			UpdateIcon()
 			return
 
 		else ..()
@@ -338,5 +338,5 @@
 
 	controller.show_text("You open the valve on \the [TV]! [prob(20) ? "This is gonna be good!" : null]")
 	TV.toggle_valve()
-	logTheThing("bombing", controller, null, "opened the valve on a tank-transfer bomb.")
+	logTheThing(LOG_BOMBING, controller, "opened the valve on a tank-transfer bomb.")
 

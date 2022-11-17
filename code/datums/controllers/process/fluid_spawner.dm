@@ -1,7 +1,12 @@
 
 #define FLUID_SPAWNER_TURF_BLOCKED(t) (!t || (t.active_liquid && t.active_liquid.group && t.active_liquid.group.amt_per_tile >= 300) || !t.ocean_canpass())
 
+#ifdef MAP_OVERRIDE_NADIR
+var/global/ocean_reagent_id = "tene"
+#else
 var/global/ocean_reagent_id = "water"
+#endif
+
 var/global/ocean_name = "ocean"
 var/global/datum/color/ocean_color = 0
 var/global/obj/fluid/ocean_fluid_obj = null
@@ -43,7 +48,7 @@ var/global/obj/fluid/ocean_fluid_obj = null
 
 		src.processing_fluid_turfs = global.processing_fluid_turfs
 
-		SPAWN_DBG(20 SECONDS)
+		SPAWN(20 SECONDS)
 			if (total_clients() >= OSHAN_LIGHT_OVERLOAD)
 				do_light_gen = 0
 

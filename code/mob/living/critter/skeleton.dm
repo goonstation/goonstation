@@ -10,7 +10,7 @@
 		var/PT = /obj/item/material_piece/bone
 		var/obj/item/material_piece/bone/P = new PT
 		P.set_loc(T)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/k = 1, k <= 3, k++)
 			P.streak_object(dirlist[i])
 		produce += P
@@ -38,15 +38,16 @@
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
-	blood_id = null
+	blood_id = "calcium"
 	burning_suffix = "humanoid"
 	metabolizes = 0
+	mob_flags = IS_BONEY
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream", "clak")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/items/Scissor.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/items/Scissor.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='alert'>[src] claks!</span>"
 		return null
 

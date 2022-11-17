@@ -18,18 +18,19 @@
 
 /mob/living/carbon/human/npc
 	name = "human"
+	real_name = "human"
 	is_npc = 1
 	ai_attacknpc = 0
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.mind = new(src)
 			if (src.name == "human")
 				randomize_look(src, 1, 1, 1, 1, 1, 0) // change gender/bloodtype/age/name/underwear, keep bioeffects
-				src.organHolder.head.update_icon()
-		SPAWN_DBG(1 SECOND)
+				src.organHolder.head.UpdateIcon()
+		SPAWN(1 SECOND)
 			set_clothing_icon_dirty()
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			ai_init()
 
 /mob/living/carbon/human/npc/assistant
@@ -37,7 +38,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			JobEquipSpawned("Staff Assistant")
 
 	ai_findtarget_new()
@@ -61,6 +62,11 @@
 		"[target_name] just fucking attacked me",\
 		"SOMEONE [prob(40) ? "FUCKING " : ""]ARREST [uppertext(target_name)]",\
 		"need help",\
+		"[uppertext(target_name)] IS [prob(50) ? "A TRAITOR" : "AN ANTAG"] [prob(40) ? "FUCKING" : ""] HELP [prob(40) ? "ME" : ""]",\
+		"[prob(40) ? "please" : ""] I need help can someone [prob(50) ? "hear" : "help"] me",\
+		"[uppertext(target_name)] WON'T [prob(40) ? "FUCKING " : ""]LEAVE ME ALONE, HELP",\
+		"SOMEONE [prob(40) ? "PLEASE " : ""] [prob(40) ? "FUCKING" : ""] HELP [prob(40) ? "ME" : ""] [prob(40) ? "I SWEAR TO GOD" : ""]",\
+		"[prob(40) ? "FUCKING" : ""] GRIEFERES WON'T LEAVE ME ALONE",\
 		"[pick("HLEP","HELP")] ME [uppertext(target_name)] IS [prob(40) ? "FUCKING " : ""]KILLING ME")
 		if(prob(60))
 			complaint = uppertext(complaint)
@@ -73,7 +79,7 @@
 		..()
 		if(M.a_intent in list(INTENT_HARM,INTENT_DISARM,INTENT_GRAB))
 			if(!ON_COOLDOWN(src, "cry_grief", 5 SECONDS))
-				SPAWN_DBG(rand(10,30))
+				SPAWN(rand(10,30))
 					src.cry_grief(M)
 
 	attackby(obj/item/W, mob/M)
@@ -83,7 +89,7 @@
 		var/damage = ((get_brute_damage() - oldbloss) + (get_burn_damage() - oldfloss))
 		if((damage > 0) || W.force)
 			if(!ON_COOLDOWN(src, "cry_grief", 5 SECONDS))
-				SPAWN_DBG(rand(10,30))
+				SPAWN(rand(10,30))
 					src.cry_grief(M)
 
 
@@ -95,13 +101,13 @@
 	ai_aggressive = 1
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 				src.real_name = "[syndicate_name()] Operative #[ticker.mode:agent_number]"
 				ticker.mode:agent_number++
 			else
 				src.real_name = "Syndicate Agent"
-			JobEquipSpawned("Syndicate")
+			JobEquipSpawned("Syndicate Operative")
 			u_equip(l_store) // Deletes syndicate remote teleporter to keep people out of the syndie shuttle
 			u_equip(r_store) // Deletes uplink radio because fuckem
 
@@ -109,7 +115,7 @@
 	ai_aggressive = 1
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.real_name = "Junior Syndicate Agent"
 			JobEquipSpawned("Junior Syndicate Operative")
 
@@ -117,7 +123,7 @@
 	ai_aggressive = 1
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.real_name = "Junior Syndicate Agent"
 			JobEquipSpawned("Poorly Equipped Junior Syndicate Operative")
 
@@ -151,6 +157,10 @@
 	ai_threatened = 0
 	ai_movedelay = 3
 	ai_attacked = 0
+
+	if(abilityHolder)
+		if(src.use_ai_toggle && !abilityHolder.getAbility(/datum/targetable/ai_toggle))
+			abilityHolder.addAbility(/datum/targetable/ai_toggle)
 
 /mob/living/carbon/human/proc/ai_stop()
 	ai_set_active(0)
@@ -202,7 +212,7 @@
 	ai_move()
 
 	if(ai_target)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			ai_move()
 		action_delay += 10
 	else
@@ -234,7 +244,7 @@
 	//Priority-based target finding
 	var/mob/T
 	var/lastRating = -INFINITY
-	for (var/mob/living/carbon/M in view(7,src))
+	for (var/mob/living/carbon/M in viewers(7,src))
 		//Any reason we do not want to take this target into account AT ALL?
 		if((M == src && !ai_suicidal) || isdead(M) || (M.is_npc && !ai_attacknpc)) continue //Let's not fight ourselves (unless we're real crazy) or a dead person... or NPCs, unless we're allowed to.
 
@@ -250,7 +260,7 @@
 
 		//Why do we NOT want to go after this jerk
 		if(isunconscious(M)) rating-=8 //This one's unconscious
-		for(var/mob/living/carbon/human/H in oview(7,src))
+		for(var/mob/living/carbon/human/H in viewers(7,src))
 			if(H.ai_target == M) rating -= 4 //I'd rather fight my own fight
 		if(M.is_npc) rating -= 5 //I don't want to go after my fellow NPCs unless there is no other option
 		if(M == src) rating -= 14 //I don't want to go after myself
@@ -281,7 +291,7 @@
 	switch(ai_state)
 		if(AI_PASSIVE) //Life is good.
 
-			src.a_intent = src.ai_default_intent
+			src.set_a_intent(src.ai_default_intent)
 
 			ai_pickupstuff()
 			ai_obstacle(1)
@@ -293,7 +303,7 @@
 				ai_findtarget_new()
 		if(AI_ANGERING)	//WHATS THAT?
 
-			if (get_dist(src,ai_target) > 6)
+			if (GET_DIST(src,ai_target) > 6)
 				ai_target = null
 				ai_state = AI_PASSIVE
 				ai_threatened = 0
@@ -305,7 +315,7 @@
 
 		if(AI_ATTACKING)	//Gonna kick your ass.
 
-			src.a_intent = INTENT_HARM
+			src.set_a_intent(INTENT_HARM)
 
 			if(src.health < src.max_health / 8 && !src.ai_suicidal && !src.ai_aggressive)
 				src.ai_state = AI_FLEEING
@@ -319,7 +329,7 @@
 				return
 
 			var/valid = ai_validpath()
-			var/distance = get_dist(src,ai_target)
+			var/distance = GET_DIST(src,ai_target)
 
 			ai_obstacle(0)
 			ai_openclosets()
@@ -327,12 +337,16 @@
 			if(ai_target == src && prob(10)) //If we're fighting ourselves we wanna look for other targets periodically
 				src.ai_findtarget_new()
 
-			if (ai_frustration >= 100)
-				ai_target_old |= ai_target //Can't get to this dork
-				ai_frustration = 0
-				ai_target = null
-				ai_state = AI_PASSIVE
-				walk_towards(src,null)
+			if (ai_frustration >= 25)
+				var/datum/bioEffect/power/adrenaline/adrenaline_rush = src.bioHolder.GetEffect("adrenaline")
+				adrenaline_rush?.ability.handleCast()
+
+				if (ai_frustration >= 100)
+					ai_target_old |= ai_target //Can't get to this dork
+					ai_frustration = 0
+					ai_target = null
+					ai_state = AI_PASSIVE
+					walk_towards(src,null)
 
 			var/area/A = get_area(src)
 
@@ -379,19 +393,29 @@
 							suit:set_loc(carbon_target:loc)
 							suit:dropped(carbon_target)
 							suit:layer = initial(suit:layer)
-				if(prob(75) && distance > 1 && (world.timeofday - ai_attacked) > 100 && ai_validpath() && (istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot() && !A?.sanctuary))
+				if(prob(75) && distance > 1 && (world.timeofday - ai_attacked) > 100 && ai_validpath() && ((istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot(src)) || src.bioHolder.HasOneOfTheseEffects("eyebeams", "cryokinesis", "jumpy")) && !A?.sanctuary)
 					//I can attack someone! =D
 					ai_target_old.Cut()
-					var/obj/item/gun/W = src.r_hand
-					W.shoot(get_turf(carbon_target), get_turf(src), src, 0, 0)
-					if(src.bioHolder.HasEffect("coprolalia") && prob(10))
-						switch(pick(1,2))
-							if(1)
-								hearers(src) << "<B>[src.name]</B> makes machine-gun noises with \his mouth."
-							if(2)
-								src.say(pick("BANG!", "POW!", "Eat lead, [carbon_target.name]!", "Suck it down, [carbon_target.name]!"))
+					var/datum/bioEffect/power/eyebeams/eyebeams = src.bioHolder.GetEffect("eyebeams")
+					var/datum/bioEffect/power/cryokinesis = src.bioHolder.GetEffect("cryokinesis")
+					var/datum/bioEffect/power/jumpy/jumpy = src.bioHolder.GetEffect("jumpy")
+					if (eyebeams && (eyebeams.ability.last_cast < world.time))
+						eyebeams?.ability.handleCast(target)
+					else if (cryokinesis && (cryokinesis.ability.last_cast < world.time))
+						cryokinesis?.ability.handleCast(target)
+					else if (jumpy && (jumpy.ability.last_cast < world.time))
+						jumpy?.ability.handleCast(target)
+					else
+						var/obj/item/gun/W = src.r_hand
+						W.shoot(get_turf(carbon_target), get_turf(src), src, 0, 0)
+						if(src.bioHolder.HasEffect("coprolalia") && prob(10))
+							switch(pick(1,2))
+								if(1)
+									hearers(src) << "<B>[src.name]</B> makes machine-gun noises with [his_or_her(src)] mouth."
+								if(2)
+									src.say(pick("BANG!", "POW!", "Eat lead, [carbon_target.name]!", "Suck it down, [carbon_target.name]!"))
 
-				if((prob(33) || ai_throw) && (distance > 1 || A?.sanctuary) && ai_validpath() && src.equipped() && !(istype(src.equipped(),/obj/item/gun) && src.equipped():canshoot() && !A?.sanctuary))
+				if((prob(33) || ai_throw) && (distance > 1 || A?.sanctuary) && ai_validpath() && src.equipped() && !(istype(src.equipped(),/obj/item/gun) && src.equipped():canshoot(src) && !A?.sanctuary))
 					//I can attack someone! =D
 					ai_target_old.Cut()
 					src.throw_item(ai_target, list("npc_throw"))
@@ -417,7 +441,7 @@
 				if(istype(src.equipped(),/obj/item/gun))
 					src.swap_hand()
 
-				src.a_intent = INTENT_HARM
+				src.set_a_intent(INTENT_HARM)
 
 				var/prefer_hand = FALSE
 				if(istype(ai_target, /obj/fitness/speedbag))
@@ -435,7 +459,7 @@
 					//	target.attack_paw(src) // idiots bite
 					//else
 					if(prob(20) && !ON_COOLDOWN(src, "ai grab", 15 SECONDS))
-						src.a_intent = INTENT_GRAB
+						src.set_a_intent(INTENT_GRAB)
 					src.ai_attack_target(ai_target, null)
 				else // With a weapon
 					if(istype(src.equipped(), /obj/item/sword) && prob(80))
@@ -443,7 +467,7 @@
 						if(!csaber.open)
 							src.ai_attack_target(csaber, null)
 					src.ai_attack_target(ai_target, src.equipped())
-					src.a_intent = INTENT_HARM
+					src.set_a_intent(INTENT_HARM)
 
 
 
@@ -455,7 +479,7 @@
 					ai_pounced = world.timeofday
 					src.visible_message("<span class='alert'>[src] lunges at [ai_target]!</span>")
 					ai_target:changeStatus("weakened", 2 SECONDS)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						step_towards(src,ai_target)
 						step_towards(src,ai_target)
 
@@ -541,7 +565,7 @@
 			src.put_in_hand_or_drop(taken)
 
 	// wear clothes
-	if(src.hand && IS_NPC_CLOTHING(src.equipped()) && prob(80) && (!(src.equipped().flags & ONBELT) || prob(0.1)))
+	if(src.hand && IS_NPC_CLOTHING(src.equipped()) && prob(80) && (!(src.equipped()?.flags & ONBELT) || prob(0.1)))
 		src.hud.relay_click("invtoggle", src, list())
 		if(src.equipped())
 			throw_equipped |= prob(80)
@@ -553,11 +577,11 @@
 				if(istype(src.equipped(), /obj/item/device/light/zippo))
 					var/obj/item/device/light/zippo/zippo = src.equipped()
 					if(!zippo.on)
-						zippo.attack_self(src)
+						zippo.AttackSelf(src)
 				if(istype(src.equipped(), /obj/item/weldingtool))
 					var/obj/item/weldingtool/welder = src.equipped()
 					if(!welder.welding)
-						welder.attack_self(src)
+						welder.AttackSelf(src)
 				src.ai_attack_target(cigarette, src.equipped())
 				throw_equipped = 1
 
@@ -592,20 +616,20 @@
 
 	// use
 	if(src.equipped() && prob(ai_state == AI_PASSIVE ? 2 : 7) && ai_useitems)
-		src.equipped().attack_self(src)
+		src.equipped().AttackSelf(src)
 
 	// throw
 	if(throw_equipped)
 		var/turf/T = get_turf(src)
 		if(T)
-			SPAWN_DBG(0.2 SECONDS) // todo: probably reorder ai_move stuff and remove this spawn, without this they keep hitting themselves
+			SPAWN(0.2 SECONDS) // todo: probably reorder ai_move stuff and remove this spawn, without this they keep hitting themselves
 				src.throw_item(locate(T.x + rand(-5, 5), T.y + rand(-5, 5), T.z), list("npc_throw"))
 
 	// give
 	if(prob(src.hand ? 5 : 1) && src.equipped() && ai_state != AI_ATTACKING)
 		for(var/mob/living/carbon/human/H in view(1))
 			if(H != src && isalive(H))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.give_to(H)
 				break
 
@@ -626,12 +650,12 @@
 	if( ai_state == AI_ATTACKING && ai_canmove() )
 		if(src.pulling)
 			src.set_pulling(null)
-		if(!ai_validpath() && get_dist(src,ai_target) <= 1)
+		if(!ai_validpath() && BOUNDS_DIST(src, ai_target) == 0)
 			set_dir(get_step_towards(src,ai_target))
 			ai_obstacle() //Remove.
 		else
 			//step_towards(src, ai_target)
-			var/dist = get_dist(src,ai_target)
+			var/dist = GET_DIST(src,ai_target)
 			if(ai_target && dist > 2) //We're in fast approach mode
 				walk_towards(src,ai_target, ai_movedelay)
 			else if (dist > 1)
@@ -708,7 +732,7 @@
 			var/obj/item/clothing/mask/cigarette/cigarette = src.wear_mask
 			if(!cigarette.on && (istype(G, /obj/item/device/light/zippo) || istype(G, /obj/item/weldingtool) || istype(G, /obj/item/device/igniter)))
 				score += 8
-		score += G.contraband
+		score += G.contraband // this doesn't use get_contraband() because monkeys aren't feds
 		score += rand(-2, 2)
 		if(score > pickup_score)
 			pickup_score = score
@@ -729,10 +753,10 @@
 			src.set_clothing_icon_dirty()
 
 /mob/living/carbon/human/proc/ai_pickupweapon()
-	if(istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot())
+	if(istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot(src))
 		return
 
-	if(istype(src.r_hand,/obj/item/gun/kinetic) && !src.r_hand:canshoot())
+	if(istype(src.r_hand,/obj/item/gun/kinetic) && !src.r_hand:canshoot(src))
 		var/obj/item/gun/kinetic/GN = src.r_hand
 		for(var/obj/item/ammo/bullets/BB in src.contents)
 			src.l_hand = BB
@@ -748,7 +772,7 @@
 	if(src.r_hand?.cant_drop)
 		return
 
-	if(istype(src.r_hand, /obj/item/gun) && !src.r_hand:canshoot())
+	if(istype(src.r_hand, /obj/item/gun) && !src.r_hand:canshoot(src))
 		var/obj/item/gun/GN = src.r_hand
 		src.drop_item()
 		if(src.w_uniform && !src.belt)
@@ -764,7 +788,7 @@
 
 	for(var/obj/item/G in src.contents)
 		if(G.throwing) continue
-		if((istype(G,/obj/item/gun) && G:canshoot()) && src.r_hand != G)
+		if((istype(G,/obj/item/gun) && G:canshoot(src)) && src.r_hand != G)
 			pickup = G
 			src.u_equip(G)
 			break
@@ -773,7 +797,7 @@
 		for (var/obj/item/G in view(1,src))
 			if(G.throwing) continue
 			if(!istype(G.loc, /turf) || G.anchored) continue
-			if((istype(G,/obj/item/gun) && G:canshoot()))
+			if((istype(G,/obj/item/gun) && G:canshoot(src)))
 				pickup = G
 				break
 			else if(!src.r_hand && !pickup && G.force > 3)
@@ -911,9 +935,9 @@
 		var/obj/storage/closet/C = src.loc
 		if (C.open)
 			C.close()
-			C.open()
+			C.open(user=src)
 		else
-			C.open()
+			C.open(user=src)
 
 	else if(istype(src.loc, /obj/vehicle/))
 		var/obj/vehicle/V = src.loc
@@ -959,10 +983,10 @@
 		return
 	for (var/obj/storage/closet/C in view(1,src))
 		if (!C.open)
-			C.open()
+			C.open(user=src)
 	for (var/obj/storage/secure/closet/S in view(1,src))
 		if (!S.open && !S.locked)
-			S.open()
+			S.open(user=src)
 
 
 #undef IS_NPC_HATED_ITEM

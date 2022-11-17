@@ -4,14 +4,14 @@
 	icon_state = "igniter1"
 	machine_registry_idx = MACHINES_SPARKERS
 	var/id = null
-	var/on = 1.0
-	anchored = 1.0
-	desc = "A device that ignites in order to start fires remotely."
+	var/on = 1
+	anchored = 1
+	desc = "A device can be paired with other electronics, or used to heat chemicals directly."
 
 /obj/machinery/igniter/attack_ai(mob/user as mob)
 	return src.Attackhand(user)
 
-/obj/machinery/igniter/attack_hand(mob/user as mob)
+/obj/machinery/igniter/attack_hand(mob/user)
 	if(..())
 		return
 	add_fingerprint(user)
@@ -49,7 +49,6 @@
 	machine_registry_idx = MACHINES_SPARKERS
 	var/id = null
 	var/disable = 0
-	var/last_spark = 0
 	var/base_state = "migniter"
 	var/datum/light/light
 	anchored = 1
@@ -70,7 +69,7 @@
 		icon_state = "[base_state]-p"
 		light.disable()
 
-/obj/machinery/sparker/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/sparker/attackby(obj/item/W, mob/user)
 	if (isscrewingtool(W))
 		add_fingerprint(user)
 		src.disable = !src.disable
@@ -94,13 +93,12 @@
 	if (!(powered()))
 		return
 
-	if ((src.disable) || (src.last_spark && world.time < src.last_spark + 50))
+	if ((src.disable) || ON_COOLDOWN(src,"spark", 5 SECONDS))
 		return
 
 
 	flick("[base_state]-spark", src)
 	elecflash(src)
-	src.last_spark = world.time
 	use_power(1000)
 	var/turf/location = src.loc
 	if (isturf(location))
@@ -108,43 +106,22 @@
 	return 1
 
 
-/obj/machinery/ignition_switch/attack_ai(mob/user as mob)
-	return src.Attackhand(user)
+/obj/machinery/activation_button/ignition_switch
+	name = "Ignition Switch"
+	desc = "A remote control switch for a mounted igniter."
 
-/obj/machinery/ignition_switch/attackby(obj/item/W, mob/user as mob)
+	activate()
+		for(var/obj/machinery/sparker/M in machine_registry[MACHINES_SPARKERS])
+			if (M.id == src.id)
+				SPAWN( 0 )
+					M.ignite()
+			LAGCHECK(LAG_MED)
 
-	if(istype(W, /obj/item/device/detective_scanner))
-		return
-	return src.Attackhand(user)
+		for(var/obj/machinery/igniter/M in machine_registry[MACHINES_SPARKERS])
+			if(M.id == src.id)
+				use_power(50)
+				M.on = !( M.on )
+				M.icon_state = text("igniter[]", M.on)
+			LAGCHECK(LAG_MED)
 
-/obj/machinery/ignition_switch/attack_hand(mob/user as mob)
-
-	if(status & (NOPOWER|BROKEN))
-		return
-	if(active)
-		return
-
-	use_power(5)
-
-	active = 1
-	icon_state = "launcheract"
-
-	for(var/obj/machinery/sparker/M in machine_registry[MACHINES_SPARKERS])
-		if (M.id == src.id)
-			SPAWN_DBG( 0 )
-				M.ignite()
-		LAGCHECK(LAG_MED)
-
-	for(var/obj/machinery/igniter/M in machine_registry[MACHINES_SPARKERS])
-		if(M.id == src.id)
-			use_power(50)
-			M.on = !( M.on )
-			M.icon_state = text("igniter[]", M.on)
-		LAGCHECK(LAG_MED)
-
-	sleep(5 SECONDS)
-
-	icon_state = "launcherbtt"
-	active = 0
-
-	return
+		sleep(5 SECONDS)

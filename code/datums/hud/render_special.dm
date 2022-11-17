@@ -15,6 +15,10 @@
 		center_light.blend_mode = BLEND_ADD
 		center_light.plane = PLANE_LIGHTING
 		center_light.color = rgb(0.15 * 255, 0.15 * 255, 0.15 * 255)
+		#ifdef UPSCALED_MAP
+		center_light.Scale(3, 3)
+		center_light.color = rgb(0.3 * 255, 0.3 * 255, 0.3 * 255)
+		#endif
 
 	proc/set_centerlight_icon(state, color = rgb(0.15 * 255, 0.15 * 255, 0.15 * 255), blend_mode = BLEND_ADD, plane = PLANE_LIGHTING, wide = 0, alpha = 255)
 		switch(state)

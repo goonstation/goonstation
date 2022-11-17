@@ -126,7 +126,7 @@ var/list/dirty_keystates = list()
 	MouseUp(object,location,control,params)
 		var/mob/user = usr
 		user.onMouseUp(object,location,control,params)
-		SEND_SIGNAL(user, COMSIG_MOUSEUP, object,location,control,params)
+		SEND_SIGNAL(user, COMSIG_MOB_MOUSEUP, object,location,control,params)
 
 
 		//If we click a tile we cannot see (object is null), pass along a Click. Ordinarily, Click() does not recieve mouse events from unseen tiles.
@@ -148,10 +148,6 @@ var/list/dirty_keystates = list()
 		return
 
 	Click(atom/object, location, control, params)
-		if(hellbanned && prob(click_drops)) //Drop some of their clicks
-			if(prob(2)) fake_lagspike()
-			return
-
 		object.RawClick(location, control, params) //Required since atom/Click is effectively broken for some reason, and sometimes you just need it. If you have a better idea let me know.
 
 		var/list/parameters = params2list(params)
@@ -163,7 +159,7 @@ var/list/dirty_keystates = list()
 		if (src.mob.mob_flags & SEE_THRU_CAMERAS)
 			if(isturf(object))
 				var/turf/T = object
-				if (!length(T.cameras))
+				if (!length(T.camera_coverage_emitters))
 					return
 				else
 					if (parameters["right"])
@@ -175,7 +171,7 @@ var/list/dirty_keystates = list()
 
 		if(findtext( control, "viewport" ))
 			var/datum/viewport/vp = getViewportById(control)
-			if(vp && vp.clickToMove && object && isturf(object) && (mob.type == /mob/living/intangible/blob_overmind || mob.type == /mob/dead/aieye))//NYI: Replace the typechecks with something Better.
+			if(vp && vp.clickToMove && object && isturf(object) && isintangible(mob))//NYI: Replace the typechecks with something Better.
 				mob.set_loc(object)
 				return
 		//In case we receive a dollop of modifier keys with the Click() we should force a keydown immediately.
@@ -223,14 +219,14 @@ var/list/dirty_keystates = list()
 				stathover = null
 			else
 				var/turf/t = get_turf(object)
-				if( get_dist(t, get_turf(mob)) < 5 )
+				if( GET_DIST(t, get_turf(mob)) < 5 )
 					src.stathover = t
 					src.stathover_start = get_turf(mob)
 
 		if(prob(10) && user.traitHolder && iscarbon(user) && isturf(object.loc) && user.traitHolder.hasTrait("clutz"))
 			var/list/filtered = list()
 			for(var/atom/movable/A in view(1, src.mob))
-				if(A == object || !isturf(A.loc) || !isobj(A) && !ismob(A)) continue
+				if(A == object || !isturf(A.loc) || !ismovable(A) || !A.mouse_opacity) continue
 				filtered.Add(A)
 			if(filtered.len) object = pick(filtered)
 
@@ -238,7 +234,7 @@ var/list/dirty_keystates = list()
 
 		if (isnum(next) && src.preferences.use_click_buffer && src.queued_click != object && next <= max(user.click_delay, user.combat_click_delay))
 			src.queued_click = object
-			SPAWN_DBG(next+1)
+			SPAWN(next+1)
 				if (src.queued_click == object)
 					user.click(object, parameters, location, control)
 					src.queued_click = 0
@@ -292,8 +288,7 @@ var/list/dirty_keystates = list()
 		// stub
 
 	proc/recheck_keys()
-		if (src.client)
-			keys_changed(src.client.key_state, 0xFFFF) //ZeWaka: Fix for null.key_state
+		keys_changed(src.client?.key_state, 0xFFFF) //ZeWaka: Fix for null.key_state
 
 	// returns TRUE if it schedules a move
 	proc/internal_process_move(keys)
@@ -308,10 +303,6 @@ var/list/dirty_keystates = list()
 /proc/process_keystates()
 	for (var/client/C in dirty_keystates)
 		var/new_state = C.key_state
-		if(C.hellbanned && prob(C.move_drops))
-			if(prob(1) && prob(25)) C.fake_lagspike()
-			new_state = C.last_keys // lol
-
 		if (new_state != C.last_keys) // !?
 			var/mob/M = C.mob
 			usr = M
@@ -330,7 +321,7 @@ var/list/dirty_keystates = list()
 	dirty_keystates.len = 0
 
 /proc/start_input_loop()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		while (1)
 			process_keystates()
 

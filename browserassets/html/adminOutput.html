@@ -27,15 +27,13 @@ opts.menuTypes = { /* Action flags for context menu */
 };
 opts.contextMenuTarget = null; /* Contains the player mind ref */
 opts.showMessagesFilters = { /* Contains the current filters. "show: false" filters it out. "match" is all the css classes to filter on. */
-	'All': {show: true},
-	'Admin': {show: true, match: ['admin']},
-	'Combat': {show: true, match: ['combat']},
-	'Radios': {show: true, match: ['radio']},
-	'Speech': {show: true, match: ['say']},
-	'OOC': {show: true, match: ['ooc']},
-	'Misc': {show: true},
+	'Admin': {show: true},
+	'Combat': {show: true},
+	'Radios': {show: true},
+	'Speech': {show: true},
+	'OOC': {show: true},
+	'Misc': {show: true}
 };
-opts.filterHideAll = false;
 
 $contextMenu = $('#contextMenu');
 $subOptions.append('<a href="#" class="filterMessagesOpt" id="filterMessagesOpt"><span>Filter Messages</span> <i class="icon-filter"></i></a>');
@@ -44,7 +42,6 @@ function openContextMenu(flags, target, x, y) {
 	for (var i in opts.menuTypes) {
 		$('#ctx_' + opts.menuTypes[i])[(flags & i) === 0 ? 'hide' : 'show']();
 	}
-	
 	$contextMenu.hide(0, function() {
 		if (($contextMenu.height() + y) > ($(window).height() - 16)) {
 			y -= $contextMenu.height() + 4;
@@ -61,79 +58,40 @@ function hideContextMenu() {
 	opts.contextMenuTarget = null;
 }
 
-function toggleFilter(type) {
-	if (type == 'All') {
-		if (opts.showMessagesFilters['All'].show === true) {
-			$.each(opts.showMessagesFilters, function(key) {
-				opts.showMessagesFilters[key].show = false;
-				if (key != 'All') {
-					$('#filter_'+key).prop('checked', false);
-				}
-			});
-			$('#messages .entry *:nth-child(1):not(.internal)').parent('.entry').addClass('hidden').attr('data-filter', 'All');
-			opts.filterHideAll = true;
-			output('<span class="internal boldnshit">Hiding <strong>ALL</strong> messages. Uhhh are you sure about this?</span>');
-		} else {
-			$.each(opts.showMessagesFilters, function(key) {
-				opts.showMessagesFilters[key].show = true;
-				if (key != 'All') {
-					$('#filter_'+key).prop('checked', true);
-				}
-			});
-			$('#messages .entry.hidden[data-filter]').removeClass('hidden');
-			opts.filterHideAll = false;
-			output('<span class="internal boldnshit">Showing <strong>ALL</strong> messages</span>');
-		}
+function executeFilter(type, show) {
+	if (show === undefined) {
+		show = $('#filter_' + type).prop('checked');
+	}
+	opts.showMessagesFilters[type].show = show;
+
+	if (show) {
+		$('#messages').removeClass('filter-' + type);
 	} else {
-		var onoff = !opts.showMessagesFilters[type].show;
-		opts.showMessagesFilters[type].show = onoff;
-		var allTrue = true;
-		var allFalse = true;
-		$.each(opts.showMessagesFilters, function(key, val) {
-			if (key != 'All') {
-				if (allTrue)
-					allTrue = (val.show ? true : false);
-				if (allFalse)
-					allFalse = (val.show ? false : true);
-			}
+		$('#messages').addClass('filter-' + type);
+	}
+}
+
+function toggleFilter(type) {
+	if (type === 'showAll' || type === 'hideAll') {
+		let showAll = (type === 'showAll');
+
+		$.each(opts.showMessagesFilters, function (key) {
+			$('#filter_' + key).prop('checked', showAll);
+			executeFilter(key,showAll);
 		});
-		opts.showMessagesFilters['All'].show = (allTrue ? true : false);
-		$('#filter_All').prop('checked', (allTrue ? true : false));
 
-		if (allTrue) {
-			opts.filterHideAll = false;
-			$('#messages .entry.hidden[data-filter]').removeClass('hidden');
-		} else if (allFalse) {
-			opts.filterHideAll = true;
-			$('#messages .entry *:nth-child(1):not(.internal)').each(function(i, el) {
-				$(el).parent('.entry').addClass('hidden').attr('data-filter', 'All');
-			});
-		} else if (typeof opts.showMessagesFilters[type].match != 'undefined') { /* If the filter has classes to match against */
-			/* Hide/Show all prior messages */
-			for (var i = 0; i < opts.showMessagesFilters[type].match.length; i++) {
-				var thisClass = opts.showMessagesFilters[type].match[i];
-				if (onoff) { /* showing */
-					$('#messages .entry.hidden[data-filter="'+type+'"]').removeClass('hidden');
-				} else { /* hiding */
-					$('#messages .'+thisClass).each(function(i, el) {
-						$(el).closest('.entry').addClass('hidden').attr('data-filter', type);
-					});
-				}
-			}
-		} else if (type == 'Misc') {
-			if (onoff) {
-				$('#messages .entry.hidden[data-filter="Misc"]').removeClass('hidden');
-			} else {
-				$('#messages .entry *:nth-child(1):not([class]), #messages .entry:not(:has(>*))').each(function(i, el) {
-					$(el).parent('.entry').addClass('hidden').attr('data-filter', 'Misc');
-				});
-			}
+		if (showAll) {
+			output('<span class="internal boldnshit">Showing <strong>ALL</strong> messages</span>');
+		} else {
+			output('<span class="internal boldnshit">Hiding <strong>ALL</strong> messages. Uhhh are you sure about this?</span>');
 		}
-
-		var msg = (onoff ? 'Showing' : 'Filtering <strong>OUT</strong>') + ' messages of type <strong>'+type+'</strong>';
+	}
+	else{
+		executeFilter(type);
+		let showing = opts.showMessagesFilters[type].show;
+		let msg = (showing ? 'Showing' : 'Filtering <strong>OUT</strong>') + ' messages of type <strong>'+type+'</strong>';
 		output('<span class="internal boldnshit">'+msg+'</span>');
 	}
-	console.log('filters is: ', opts.showMessagesFilters);
 }
 
 $contextMenu.on('mousedown', function(e) {
@@ -168,14 +126,15 @@ $subOptions.on('click', '#filterMessagesOpt', function(e) {
 	var content = '<div class="head">Filter Messages</div>'+
 		'<div id="filterMessages" class="filterMessages">';
 	$.each(opts.showMessagesFilters, function(key, val) {
-		content += '<div><input type="checkbox" id="filter_'+key+'" name="'+key+'" value="'+key+'" '+(val.show ? 'checked="checked" ' : '')+'/> <label for="filter_'+key+'">'+key+'</label></div>';
+		content += '<div><input type="checkbox" data-filter-for="'+key+'" id="filter_'+key+'" '+(val.show ? 'checked="checked" ' : '')+'/> <label for="filter_'+key+'">'+key+'</label></div>';
 	});
+	content += '<div><a href="#" id="showAll" data-filter-for="showAll">show All</a> <a href="#" id="hideAll" data-filter-for="hideAll">hide All</a></div>';
 	content += '</div>';
 	createPopup(content, 150);
 });
 
-$('body').on('click', '#filterMessages input', function() {
-	var type = $(this).val();
+$('body').on('click', '#filterMessages input, #filterMessages a', function() {
+	var type = $(this).data("filterFor");
 	console.log('hit change event with type: '+type);
 	toggleFilter(type);
 	$('body,html').scrollTop($messages.outerHeight());

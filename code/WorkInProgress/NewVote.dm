@@ -185,7 +185,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 		vote_started = world.time
 		data = A
 		newVoteLinkStat.update_name(src.vote_name ? src.vote_name : "Vote")
-		SPAWN_DBG(vote_length)
+		SPAWN(vote_length)
 			end_vote()
 		..()
 

@@ -28,6 +28,13 @@
 			hit_twitch(H)
 			if (brute > 30 && prob(brute - 30) && !disallow_limb_loss)
 				src.sever()
+			else if (burn > 30 && prob(burn) && !disallow_limb_loss)
+				holder.visible_message("<span class='alert'>[holder.name]'s [initial(src.name)] is burnt to ash!</span>")
+				src.remove(FALSE)
+				playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 30)
+				if(prob(20))
+					make_cleanable(/obj/decal/cleanable/ash, get_turf(holder))
+				qdel(src)
 			else if (bone_system && src.bones && brute && prob(brute * 2))
 				src.bones.take_damage(damage_type)
 		health_update_queue |= holder
@@ -45,7 +52,7 @@
 	get_damage()
 		return src.brute_dam + src.burn_dam	+ src.tox_dam
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if(!ismob(M))
 			return
 
@@ -77,6 +84,9 @@
 			if(!src.holder_ahol && ishuman(original_holder))
 				var/mob/living/carbon/human/H = original_holder
 				src.holder_ahol = H?.bioHolder?.mobAppearance
+			if (src.holder_ahol.special_style)
+				icon = src.holder_ahol.body_icon
+				partIcon = src.holder_ahol.body_icon
 			if(!src.bones)
 				src.bones = new /datum/bone(src)
 			src.bones.donor = new_holder
@@ -86,7 +96,7 @@
 			src.add_fingerprint(holder)
 			//https://forum.ss13.co/showthread.php?tid=1774
 			// zam note - removing this again.
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				if (new_holder && istype(new_holder))
 					name = "[new_holder.real_name]'s [initial(name)]"
 		if (src.skintoned)
@@ -94,7 +104,7 @@
 				colorize_limb_icon()
 				set_skin_tone()
 			else if(holder)	//
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					colorize_limb_icon()
 					set_skin_tone()
 					holder.set_body_icon_dirty()
@@ -156,20 +166,20 @@
 		switch(remove_stage)
 			if(0)
 				tool.the_mob.visible_message("<span class'alert'>[tool.the_mob] attaches [holder.name]'s [src.name] securely with [tool].</span>", "<span class='alert'>You attach [holder.name]'s [src.name] securely with [tool].</span>")
-				logTheThing("combat", tool.the_mob, holder, "staples [constructTarget(holder,"combat")]'s [src.name] back on")
-				logTheThing("diary", tool.the_mob, holder, "staples [constructTarget(holder,"diary")]'s [src.name] back on", "combat")
+				logTheThing(LOG_COMBAT, tool.the_mob, "staples [constructTarget(holder,"combat")]'s [src.name] back on.")
+				logTheThing(LOG_DIARY, tool.the_mob, "staples [constructTarget(holder,"diary")]'s [src.name] back on.", "combat")
 			if(1)
 				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] slices through the skin and flesh of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You slice through the skin and flesh of [holder.name]'s [src.name] with [tool].</span>")
 			if(2)
 				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] saws through the bone of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You saw through the bone of [holder.name]'s [src.name] with [tool].</span>")
 
-				SPAWN_DBG(rand(150,200))
+				SPAWN(rand(150,200))
 					if(remove_stage == 2)
 						src.remove(0)
 			if(3)
 				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] cuts through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool].</span>", "<span class='alert'>You cut through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool].</span>")
-				logTheThing("combat", tool.the_mob, holder, "removes [constructTarget(holder,"combat")]'s [src.name]")
-				logTheThing("diary", tool.the_mob, holder, "removes [constructTarget(holder,"diary")]'s [src.name]", "combat")
+				logTheThing(LOG_COMBAT, tool.the_mob, "removes [constructTarget(holder,"combat")]'s [src.name].")
+				logTheThing(LOG_DIARY, tool.the_mob, "removes [constructTarget(holder,"diary")]'s [src.name]", "combat")
 				src.remove(0)
 
 
@@ -179,22 +189,37 @@
 		if ((isnull(src.original_DNA) || isnull(src.original_fprints)) && ismob(src.original_holder))
 			if (src.original_holder && src.original_holder.bioHolder) //ZeWaka: Fix for null.bioHolder
 				src.original_DNA = src.original_holder.bioHolder.Uid
-				src.original_fprints = src.original_holder.bioHolder.uid_hash
+				src.original_fprints = src.original_holder.bioHolder.fingerprints
 		return ..()
 
 	attach(mob/living/carbon/human/attachee, mob/attacher, both_legs)
-		if (..()) // A successful attachment
+		. = ..()
+		if (.) // A successful attachment
 			if(ismob(attachee) && attachee?.bioHolder) // Whose limb is this?
 				if(isnull(src.original_holder)) // Limb never had an original owner?
 					src.original_holder = attachee // Now it does
 					if (src.original_holder?.bioHolder)
 						src.original_DNA = src.original_holder.bioHolder.Uid
-						src.original_fprints = src.original_holder.bioHolder.uid_hash
+						src.original_fprints = src.original_holder.bioHolder.fingerprints
 					return
 				if(src.original_DNA != attachee.bioHolder.Uid) // Limb isnt ours
 					src.limb_is_transplanted = TRUE
 				else // Maybe we got our old limb back?
 					src.limb_is_transplanted = FALSE
+
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		if (hit_atom == thr.return_target)
+			var/mob/living/carbon/human/H = hit_atom
+			if (isskeletonlimb(src) && isskeleton(H) && !H.limbs.get_limb(src.slot))
+				src.attach(H)
+				H.visible_message("<span class='alert'>[H] has been hit by [src].</span> <span class='notice'>It fuses instantly with [H]'s empty socket!</span>")
+				playsound(H, 'sound/effects/attach.ogg', 50, 1)
+			else
+				hit_atom.visible_message("<span class='alert'><b>[hit_atom]</b> gets clonked in the face with [src]!</span>")
+				playsound(hit_atom, 'sound/impact_sounds/Flesh_Break_1.ogg', 30, 1)
+				hit_atom.changeStatus("stunned", 2 SECONDS)
+			return
+		..()
 
 	/// Determines what the limb's skin tone should be
 	proc/colorize_limb_icon()
@@ -355,22 +380,38 @@
 
 /obj/item/parts/human_parts/arm/left
 	name = "left arm"
+	desc = "According to superstition, left handed people are unlucky. Whoever lost this sure seems to back that belief up."
 	icon_state = "arm_left"
 	item_state = "arm-left"
 	slot = "l_arm"
 	handlistPart = "hand_left"
 
+	disposing()
+		if (src.holder)
+			if (ishuman(src.holder))
+				var/mob/living/carbon/human/H = src.holder
+				H.drop_from_slot(H?.l_hand)
+		. = ..()
+
 /obj/item/parts/human_parts/arm/right
 	name = "right arm"
+	desc = "Someone's right hand.... hand. Or arm, whatever."
 	icon_state = "arm_right"
 	item_state = "arm-right"
 	slot = "r_arm"
 	side = "right"
 	handlistPart = "hand_right"
 
+	disposing()
+		if (src.holder)
+			if (ishuman(src.holder))
+				var/mob/living/carbon/human/H = src.holder
+				H.drop_from_slot(H?.r_hand)
+		. = ..()
+
 /obj/item/parts/human_parts/leg
 	name = "placeholder item (don't use this!)"
-	desc = "A human leg."
+	desc = "A human leg, pretty important for mobility."
 	object_flags = NO_ARM_ATTACH
 	var/rebelliousness = 0
 
@@ -390,7 +431,7 @@
 			holder.emote(pick("trip", "collapse"))
 		else if(prob(rebelliousness)) //Slow down
 			boutput(holder, "<span class='alert'><b>Your [src.name] is slowing you down!</b></span>")
-			holder.setStatus("slowed", max(holder.getStatusDuration("slowed"), 1 SECOND))
+			holder.setStatusMin("slowed", 1 SECOND)
 		else if(prob(rebelliousness)) //Stumble around
 			boutput(holder, "<span class='alert'><b>Your [src.name] won't do what you tell it to!</b></span>")
 			if (holder.misstep_chance < 20)
@@ -486,7 +527,7 @@
 		if (istype(I))
 			//if(I.over_clothes) handlistPart += "l_arm_[I.arm_icon]"
 			//else partlistPart += "l_arm_[I.arm_icon]"
-			handlistPart += "r_arm_[I.arm_icon]"
+			handlistPart += "l_arm_[I.arm_icon]"
 			override_attack_hand = I.override_attack_hand
 			can_hold_items = I.can_hold_items
 
@@ -537,8 +578,8 @@
 				H.l_hand = null
 
 		if (delete && remove_object)
-			remove_object = null
 			qdel(remove_object)
+			remove_object = null
 
 	getHandIconState()
 		if (handlistPart && !(handlistPart in icon_states(special_icons)))
@@ -699,60 +740,60 @@
 		if (src.remove_object)
 			return "has [bicon(src.remove_object)] \an [src.remove_object] attached as a"
 
-/obj/item/parts/human_parts/arm/left/wendigo
-	name = "left wendigo arm"
-	icon_state = "arm_left_wendigo"
+/obj/item/parts/human_parts/arm/left/brullbar
+	name = "left brullbar arm"
+	icon_state = "arm_left_brullbar"
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = 0
 	skintoned = 0
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
-	limb_type = /datum/limb/wendigo
-	handlistPart = "l_hand_wendigo"
+	limb_type = /datum/limb/brullbar
+	handlistPart = "l_hand_brullbar"
 	show_on_examine = 1
-	/// Wendigeese are pretty unnatural, and most people'd miss em if they suddenly turned into a lizard arm
+	/// Brullbar are pretty unnatural, and most people'd miss em if they suddenly turned into a lizard arm
 	limb_is_unnatural = TRUE
-	kind_of_limb = (LIMB_WENDIGO)
+	kind_of_limb = (LIMB_BRULLBAR)
 
 	New(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_wendigo")
+		src.standImage = image('icons/mob/human.dmi', "[src.slot]_brullbar")
 		return standImage
 
-/obj/item/parts/human_parts/arm/right/wendigo
-	name = "right wendigo arm"
-	icon_state = "arm_right_wendigo"
+/obj/item/parts/human_parts/arm/right/brullbar
+	name = "right brullbar arm"
+	icon_state = "arm_right_brullbar"
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = 0
 	skintoned = 0
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
-	limb_type = /datum/limb/wendigo
-	handlistPart = "r_hand_wendigo"
+	limb_type = /datum/limb/brullbar
+	handlistPart = "r_hand_brullbar"
 	show_on_examine = 1
 	/// If you went through the trouble to get yourself a wendy arm, you should keep it no matter how inhuman you become
 	limb_is_unnatural = TRUE
-	kind_of_limb = (LIMB_WENDIGO)
+	kind_of_limb = (LIMB_BRULLBAR)
 
 	New(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_wendigo")
+		src.standImage = image('icons/mob/human.dmi', "[src.slot]_brullbar")
 		return standImage
 
 /obj/item/parts/human_parts/arm/left/hot
@@ -817,7 +858,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		set_skin_tone()
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
@@ -846,7 +887,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		set_skin_tone()
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
@@ -875,7 +916,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -902,7 +943,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -929,7 +970,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -956,7 +997,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1010,7 +1051,25 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	sever(mob/user)
+		. = ..()
+		src.visible_message("<span class='alert'>[src] rapidly keratinizes!</span>")
+		var/obj/item/parts/human_parts/arm/left/claw/newlimb = new(src.loc)
+		newlimb.original_DNA = src.original_DNA
+		newlimb.original_holder = src.original_holder
+		newlimb.original_fprints = src.original_fprints
+		qdel(src)
+
+	remove(show_message)
+		. = ..()
+		src.visible_message("<span class='alert'>[src] rapidly keratinizes!</span>")
+		var/obj/item/parts/human_parts/arm/left/claw/newlimb = new(src.loc)
+		newlimb.original_DNA = src.original_DNA
+		newlimb.original_holder = src.original_holder
+		newlimb.original_fprints = src.original_fprints
+		qdel(src)
+
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1037,7 +1096,25 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	sever(mob/user)
+		. = ..()
+		src.visible_message("<span class='alert'>[src] rapidly keratinizes!</span>")
+		var/obj/item/parts/human_parts/arm/right/claw/newlimb = new(src.loc)
+		newlimb.original_DNA = src.original_DNA
+		newlimb.original_holder = src.original_holder
+		newlimb.original_fprints = src.original_fprints
+		qdel(src)
+
+	remove(show_message)
+		. = ..()
+		src.visible_message("<span class='alert'>[src] rapidly keratinizes!</span>")
+		var/obj/item/parts/human_parts/arm/right/claw/newlimb = new(src.loc)
+		newlimb.original_DNA = src.original_DNA
+		newlimb.original_holder = src.original_holder
+		newlimb.original_fprints = src.original_fprints
+		qdel(src)
+
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1090,7 +1167,7 @@
 
 /obj/item/parts/human_parts/arm/left/claw
 	name = "left claw arm"
-	icon_state = "arm_left_wendigo"
+	icon_state = "arm_left_brullbar"
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = 0
@@ -1098,27 +1175,27 @@
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
 	limb_type = /datum/limb/claw
-	handlistPart = "l_hand_wendigo"
+	handlistPart = "l_hand_brullbar"
 	siemens_coefficient = 0
 	show_on_examine = 1
 	limb_is_unnatural = TRUE
-	kind_of_limb = (LIMB_WENDIGO)
+	kind_of_limb = (LIMB_BRULLBAR)
 
 	New(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_wendigo")
+		src.standImage = image('icons/mob/human.dmi', "[src.slot]_brullbar")
 		return standImage
 
 /obj/item/parts/human_parts/arm/right/claw
 	name = "right claw arm"
-	icon_state = "arm_right_wendigo"
+	icon_state = "arm_right_brullbar"
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = 0
@@ -1126,22 +1203,22 @@
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
 	limb_type = /datum/limb/claw
-	handlistPart = "r_hand_wendigo"
+	handlistPart = "r_hand_brullbar"
 	siemens_coefficient = 0
 	show_on_examine = 1
 	limb_is_unnatural = TRUE
-	kind_of_limb = (LIMB_WENDIGO)
+	kind_of_limb = (LIMB_BRULLBAR)
 
 	New(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_wendigo")
+		src.standImage = image('icons/mob/human.dmi', "[src.slot]_brullbar")
 		return standImage
 
 /obj/item/parts/human_parts/arm/right/stone
@@ -1163,7 +1240,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1189,7 +1266,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1215,7 +1292,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1241,7 +1318,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1344,6 +1421,50 @@
 		. = ..()
 		if(prob(1))
 			src.desc += " Bears the brand of a legendary roleplayer."
+
+//// PUG LIMBS ////
+
+/obj/item/parts/human_parts/arm/mutant/pug
+	icon = 'icons/mob/pug/fawn.dmi'
+	partIcon = 'icons/mob/pug/fawn.dmi'
+
+/obj/item/parts/human_parts/arm/mutant/pug/left
+	name = "left pug arm"
+	desc = "A pug's left arm. Pawsitive."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/pug/right
+	name = "right pug arm"
+	desc = "A pug's right arm."
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/pug
+	icon = 'icons/mob/pug/fawn.dmi'
+	partIcon = 'icons/mob/pug/fawn.dmi'
+
+/obj/item/parts/human_parts/leg/mutant/pug/left
+	name = "left pug leg"
+	desc = "A pug's left leg."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/pug/right
+	name = "right pug leg"
+	desc = "A pug's right leg."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
 
 //// LIZARD LIMBS ////
 //////  PARENT  //////
@@ -1593,6 +1714,16 @@
 	limb_type = /datum/limb/abomination/werewolf
 	kind_of_limb = (LIMB_MUTANT | LIMB_WOLF)
 
+	sever(mob/user)
+		. = ..()
+		src.visible_message("<span class='notice'>[src] withers greatly as it falls off!</span>")
+		src.limb_data = new/datum/limb/brullbar/severed_werewolf(src)
+
+	remove(show_message)
+		. = ..()
+		src.visible_message("<span class='notice'>[src] withers greatly as it falls off!</span>")
+		src.limb_data = new/datum/limb/brullbar/severed_werewolf(src)
+
 //// THE ACTUAL WOLFLIMBS ////
 /obj/item/parts/human_parts/leg/mutant/werewolf/left
 	name = "left werewolf leg"
@@ -1705,12 +1836,16 @@
 	partIcon = 'icons/mob/skeleton.dmi'
 	easy_attach = 1 // Its just a bone... full of meat. Kind of.
 	kind_of_limb = (LIMB_MUTANT | LIMB_SKELLY)
+	force = 10
+	throw_return = TRUE
 
 /obj/item/parts/human_parts/leg/mutant/skeleton
 	icon = 'icons/mob/skeleton.dmi'
 	partIcon = 'icons/mob/skeleton.dmi'
 	easy_attach = 1
 	kind_of_limb = (LIMB_MUTANT | LIMB_SKELLY)
+	force = 10
+	throw_return = TRUE
 
 //// LIMBS ////
 /obj/item/parts/human_parts/arm/mutant/skeleton/left

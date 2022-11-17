@@ -134,7 +134,7 @@
 	msgLose = "You feel more in control."
 	reclaim_fail = 15
 	var/talk_prob = 10
-	var/list/talk_strings = list("PISS","FUCK","SHIT","DAMN","TITS","ARGH","WOOF","CRAP","BALLS")
+	var/list/talk_strings = list("PISS","FUCK","SHIT","DAMN","ARGH","WOOF","CRAP","HECK","FRICK","JESUS")
 	icon_state  = "bad"
 
 	OnLife(var/mult)
@@ -203,13 +203,13 @@
 	stability_loss = -10
 	icon_state  = "bad"
 
-	OnLife(var/mult)
+	OnLife(var/mult = 1)
 		if(..()) return
 		if (isdead(owner))
 			return
 		if (probmult(1) && !owner.getStatusDuration("paralysis"))
 			owner:visible_message("<span class='alert'><B>[owner] looks totally stupefied!</span>", "<span class='alert'>You feel totally stupefied!</span>")
-			owner.setStatus("paralysis", max(owner.getStatusDuration("paralysis"), 2 SECONDS))
+			owner.setStatusMin("paralysis", 2 SECONDS * mult)
 		return
 
 /datum/bioEffect/thermal_vuln
@@ -281,7 +281,7 @@
 			return
 		if ((probmult(5) && !owner.getStatusDuration("paralysis")))
 			owner:drop_item()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				owner:emote("cough")
 				return
 		return
@@ -400,17 +400,13 @@
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#BBD90F"
+		owner.AddComponent(/datum/component/radioactive, 50, FALSE, FALSE)
 		..()
 
-	OnLife(var/mult)
-		if(..()) return
-		owner.changeStatus("radiation", 3 SECONDS*mult, 1)
-		for(var/mob/living/L in range(1, owner))
-			if (L == owner)
-				continue
-			boutput(L, "<span class='alert'>You are enveloped by a soft green glow emanating from [owner].</span>")
-			L.changeStatus("radiation", 5 SECONDS*mult, 1)
-		return
+	OnRemove()
+		. = ..()
+		var/datum/component/radioactive/R = owner.GetComponent(/datum/component/radioactive)
+		R?.RemoveComponent()
 
 /datum/bioEffect/mutagenic_field
 	name = "Mutagenic Field"
@@ -491,7 +487,9 @@
 
 			if (randomturfs.len > 0)
 				L.emote("hiccup")
-				L.set_loc(pick(randomturfs))
+				var/turf/destination = pick(randomturfs)
+				logTheThing(LOG_COMBAT, L, "was teleported by Spatial Destabilization from [log_loc(L)] to [log_loc(destination)].")
+				L.set_loc(pick(destination))
 
 //////////////
 // Annoying //
@@ -662,7 +660,16 @@
 		if (!istype(L) || (L.stat == 2))
 			return
 		if (probmult(prob_sting))
-			boutput(src, "<span class='alert'>A bee in your cloud stung you! How rude!</span>")
+			if (ishuman(L))
+				var/mob/living/carbon/human/H = L
+				if (prob(50))
+					if (istype(H.wear_suit, /obj/item/clothing/suit/bio_suit/beekeeper))
+						boutput(owner, "<span class='subtle'>A bee in your cloud tries to sting you, but your suit protects you.</span>")
+						return
+				else if (istype(H.head, /obj/item/clothing/head/bio_hood/beekeeper))
+					boutput(owner, "<span class='subtle'>A bee in your cloud tries to sting you, but your hood protects you.</span>")
+					return
+			boutput(owner, "<span class='alert'>A bee in your cloud stung you! How rude!</span>")
 			L.reagents.add_reagent("histamine", 2)
 
 /datum/bioEffect/emp_field
@@ -683,7 +690,7 @@
 
 	OnLife(var/mult)
 		..()
-		if (prob(percentmult(50, mult)))
+		if (probmult(50))
 			var/turf/T
 			//don't really need this but to make it more harmful to the user.
 			if (prob(5))
@@ -696,7 +703,7 @@
 			pulse.icon_state = "emppulse"
 			pulse.name = "emp pulse"
 			pulse.anchored = 1
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				if (pulse) qdel(pulse)
 
 			//maybe have this only emp some things on the tile.
@@ -725,11 +732,11 @@
 	effect_group = "fit"
 
 	OnAdd()
-		APPLY_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-debuff", -2)
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_STAMINA_REGEN_BONUS, "g-fitness-debuff", -2)
 		src.owner.add_stam_mod_max("g-fitness-debuff", -30)
 
 	OnRemove()
-		REMOVE_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-debuff")
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_STAMINA_REGEN_BONUS, "g-fitness-debuff")
 		src.owner.remove_stam_mod_max("g-fitness-debuff")
 
 /datum/bioEffect/tinnitus
@@ -747,8 +754,8 @@
 
 	OnLife(var/mult)
 		if (probmult(ring_prob) && owner.client)
-			// owner.client << sound("sound/machines/phones/ring_incoming.ogg")		//hee hoo let's give someone legit tinnitus with the mutation, that's good game design (it's actually not)
-			owner.playsound_local(owner.loc, "sound/machines/phones/ring_incoming.ogg", 40, 1)
+			// owner.client << sound('sound/machines/phones/ring_incoming.ogg')		//hee hoo let's give someone legit tinnitus with the mutation, that's good game design (it's actually not)
+			owner.playsound_local(owner.loc, 'sound/machines/phones/ring_incoming.ogg', 40, 1)
 
 /datum/bioEffect/anemia
 	name = "Anemia"
@@ -870,7 +877,7 @@
 	'sound/machines/engine_alert3.ogg','sound/machines/fortune_riff.ogg','sound/misc/ancientbot_grump2.ogg',
 	'sound/voice/farts/diarrhea.ogg','sound/misc/sad_server_death.ogg','sound/voice/animal/werewolf_howl.ogg',
 	'sound/voice/MEruncoward.ogg','sound/voice/macho/macho_become_enraged01.ogg',
-	'sound/voice/macho/macho_rage_81.ogg','sound/voice/macho/macho_rage_73.ogg','sound/weapons/male_cswordstart.ogg')
+	'sound/voice/macho/macho_rage_81.ogg','sound/voice/macho/macho_rage_73.ogg','sound/weapons/male_cswordturnon.ogg')
 	icon_state  = "bad"
 
 	New(var/for_global_list = 0)

@@ -2,21 +2,21 @@
 //      Deployer Code      //
 /////////////////////////////
 
+ABSTRACT_TYPE(/obj/item/turret_deployer)
 /obj/item/turret_deployer
-	name = "NAS-T Deployer"
-	desc = "A Nuclear Agent Sentry Turret Deployer. Use it in your hand to deploy."
+	name = "fucked up turret deployer that you shouldn't see"
+	desc = "this isn't going to spawn anything and will also probably yell errors at you"
 	icon = 'icons/obj/syndieturret.dmi'
-	icon_state = "st_deployer"
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
-	health = 100
-	//var/emagged = 0 removing all emag stuff because it's a bad idea in retrospect
-	var/damage_words = "fully operational!"
-	var/icon_tag = "st"
-	var/quick_deploy_fuel = 2
+	var/damage_words = "mostly undamaged!"
+	var/icon_tag = null
+	var/quick_deploy_fuel = 0
+	var/associated_turret = null //what kind of turret should this spawn?
+	var/turret_health = 100
 
 	New()
 		..()
@@ -27,6 +27,9 @@
 
 
 	attack_self(mob/user as mob)
+		if(istype(get_area(src), /area/sim/gunsim))
+			boutput(user, "You can't deploy the turret here!")
+			return
 		user.show_message("You assemble the turret parts.")
 		src.set_loc(get_turf(user))
 		src.spawn_turret(user.dir)
@@ -35,23 +38,16 @@
 		qdel(src)
 
 	proc/spawn_turret(var/direct)
-		var/obj/deployable_turret/turret = new /obj/deployable_turret(src.loc,direction=direct)
-		turret.health = src.health // NO FREE REPAIRS, ASSHOLES
-		//turret.emagged = src.emagged
+		var/obj/deployable_turret/turret = new src.associated_turret(src.loc, direct)
+		turret.health = src.turret_health // NO FREE REPAIRS, ASSHOLES
 		turret.damage_words = src.damage_words
 		turret.quick_deploy_fuel = src.quick_deploy_fuel
 		return turret
 
-	/*
-	emag_act(var/user, var/emag)
-		if(src.emagged)
-			return
-		src.emagged = 1
-		boutput(user,"You short out the safeties on the turret.")
-		src.damage_words += "<br><span class='alert'>Its safety indicator is off!</span>"
-	*/
-
 	throw_end(list/params, turf/thrown_from)
+		if(istype(get_area(src), /area/sim/gunsim))
+			boutput(usr, "You can't deploy the turret here!")
+			return
 		if(src.quick_deploy_fuel > 0)
 			var/turf/thrown_to = get_turf(src)
 			var/spawn_direction = get_dir(thrown_to,thrown_from)
@@ -60,18 +56,42 @@
 			turret.quick_deploy()
 			qdel(src)
 
+/obj/item/turret_deployer/syndicate
+	name = "NAS-T Deployer"
+	desc = "A Nuclear Agent Sentry Turret Deployer. Use it in your hand to deploy."
+	turret_health = 250
+	icon_tag = "st"
+	quick_deploy_fuel = 2
+	associated_turret = /obj/deployable_turret/syndicate
 
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
+/obj/item/turret_deployer/riot
+	name = "N.A.R.C.S. Deployer"
+	desc = "A Nanotrasen Automatic Riot Control System Deployer. Use it in your hand to deploy."
+	turret_health = 125
+	icon_state = "st_deployer"
+	w_class = W_CLASS_BULKY
+	icon_tag = "nt"
+	mats = list("INS-1"=10, "CON-1"=10, "CRY-1"=3, "MET-2"=2)
+	is_syndicate = 1
+	associated_turret = /obj/deployable_turret/riot
 
 /////////////////////////////
 //       Turret Code       //
 /////////////////////////////
-
+ABSTRACT_TYPE(/obj/deployable_turret)
 /obj/deployable_turret
 
-	name = "NAS-T"
-	desc = "A Nuclear Agent Sentry Turret."
+	name = "fucked up abstract turret that should never exist"
+	desc = "why did you do this"
 	icon = 'icons/obj/syndieturret.dmi'
-	icon_state = "st_off"
 	anchored = 0
 	density = 1
 	var/health = 250
@@ -82,23 +102,24 @@
 	var/range = 7 // tiles
 	var/internal_angle = 0 // used for the matrix transforms
 	var/external_angle = 180 // used for determining target validity
-	var/projectile_type = /datum/projectile/bullet/ak47
+	var/projectile_type = null
 	var/datum/projectile/current_projectile
 	var/burst_size = 3 // number of shots to fire. Keep in mind the bullet's shot_count
 	var/fire_rate = 3 // rate of fire in shots per second
 	var/angle_arc_size = 45
 	var/active = 0 // are we gonna shoot some peeps?
-	//var/emagged = 0
-	var/damage_words = "fully operational!"
+	var/damage_words = "mostly undamaged!"
 	var/waiting = 0 // tracks whether or not the turret is waiting
 	var/shooting = 0 // tracks whether we're currently in the process of shooting someone
-	var/icon_tag = "st"
+	var/icon_tag = null //tag for icons to get correct states on activating/deactivating. 'st' for syndicate, 'nt' for NT
 	var/quick_deploy_fuel = 2 // number of quick deploys the turret has left
 	var/spread = 0
+	var/associated_deployer = null //what kind of turret deployer should this deconstruct to?
+	var/deconstructable = TRUE
 
-	New(var/direction)
+	New(var/loc, var/direction)
 		..()
-		src.set_dir(direction)
+		src.set_dir(direction || src.dir) // don't set the dir if we weren't passed one
 		src.set_initial_angle()
 
 		src.icon_state = "[src.icon_tag]_base"
@@ -114,13 +135,17 @@
 		if(active)
 			set_projectile()
 
+		#ifdef LOW_SECURITY
+		START_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
+
 	disposing()
 		processing_items.Remove(src)
 		..()
 
 
 	get_desc(dist)
-		. = "<br><span class='notice'>It looks [damage_words]</span>"
+		. = "<br><span class='notice'>It looks [src.damage_words]. It is [src.anchored ? "secured to" : "unsecured from"] the floor and powered [src.active ? "on" : "off"].</span>"
 
 	proc/set_initial_angle()
 		switch(src.dir)
@@ -148,7 +173,6 @@
 		current_projectile.shot_number = burst_size
 		current_projectile.shot_delay = 10/fire_rate
 
-
 	proc/process()
 		if(src.active)
 			if(!src.target && !src.seek_target()) //attempt to set the target if no target
@@ -159,7 +183,7 @@
 				return
 			else //GUN THEM DOWN
 				if(src.target)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						for(var/i in 1 to src.current_projectile.shot_number) //loop animation until finished
 							flick("[src.icon_tag]_fire",src)
 							muzzle_flash_any(src, 0, "muzzle_flash")
@@ -170,38 +194,15 @@
 	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
 		if (isweldingtool(W) && !(src.active))
-			var/turf/T = user.loc
 			if(!W:try_weld(user, 1))
 				return
 
-			if(src.anchored)
-				user.show_message("You start to unweld the turret from the floor.")
-				sleep(3 SECONDS)
-
-				if ((user.loc == T && user.equipped() == W))
-					user.show_message("You unweld the turret from the floor.")
-					src.anchored = 0
-
-
-				else if((istype(user, /mob/living/silicon/robot) && (user.loc == T)))
-					user.show_message("You unweld the turret  the floor.")
-					src.anchored = 0
-
-			else
-				user.show_message("You start to weld the turret to the floor.")
-				sleep(3 SECONDS)
-
-				if ((user.loc == T && user.equipped() == W))
-					user.show_message("You weld the turret to the floor.")
-					src.anchored = 1
-
-
-				else if((istype(user, /mob/living/silicon/robot) && (user.loc == T)))
-					user.show_message("You weld the turret to the floor.")
-					src.anchored = 1
+			user.show_message(src.anchored ? "You start to unweld the turret from the floor." : "You start to weld the turret to the floor.")
+			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, .proc/toggle_anchored, null, W.icon, W.icon_state, \
+			  src.anchored ? "[user] unwelds the turret from the floor." : "[user] welds the turret to the floor.", \
+			  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 		else if (isweldingtool(W) && (src.active))
-			var/turf/T = user.loc
 			if (src.health >= max_health)
 				user.show_message("<span class='notice'>The turret is already fully repaired!.</span>")
 				return
@@ -210,12 +211,9 @@
 				return
 
 			user.show_message("You start to repair the turret.")
-			sleep(2 SECONDS)
-
-			if ((user.loc == T && user.equipped() == W))
-				user.show_message("You repair some of the damage on the turret.")
-				src.health = min(src.max_health, (src.health + 10))
-				src.check_health()
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, .proc/repair, null, W.icon, W.icon_state, \
+			  "[user] repairs some of the turret's damage.", \
+			  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 		else if  (iswrenchingtool(W))
 
@@ -227,27 +225,14 @@
 				user.update_cursor()
 				A.my_turret = src
 				A.user_turf = get_turf(user)
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 
 			else
-				var/turf/T = user.loc
 				user.show_message("You begin to disassemble the turret.")
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-
-				sleep(2 SECONDS)
-
-				if ((user.loc == T && user.equipped() == W))
-					user.show_message("You disassemble the turret.")
-					src.active = 0
-					src.shooting = 0
-					src.waiting = 0
-					src.target = null
-					src.spawn_deployer()
-					qdel(src)
-		/*
-		else if (istype(W, /obj/item/card/emag))
-			return
-		*/
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, .proc/spawn_deployer, null, W.icon, W.icon_state, \
+				  "[user] disassembles the turret.", \
+				  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 		else if (isscrewingtool(W))
 
@@ -255,63 +240,56 @@
 				user.show_message("<span class='notice'>The turret is too unstable to fire! Secure it to the ground with a welding tool first!</span>")
 				return
 
-			var/turf/T = user.loc
+			if (!src.deconstructable)
+				user.show_message("<span class='alert'>You can't power the turret off! The controls are too secure!</span>")
+				return
 
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 
-			sleep(1 SECOND)
-
-			if ((user.loc == T && user.equipped() == W))
-				if(src.active)
-					user.show_message("<span class='notice'>You power off the turret.</span>")
-					src.icon_state = "[src.icon_tag]_off"
-					src.active = 0
-					src.shooting = 0
-					src.waiting = 0
-					src.target = null
-
-				else
-					user.show_message("<span class='notice'>You power on the turret.</span>")
-					set_projectile()
-					src.active = 1
-					src.icon_state = "[src.icon_tag]_idle"
-
-			else if((istype(user, /mob/living/silicon/robot) && (user.loc == T)))
-				if(src.active)
-					user.show_message("<span class='notice'>You power off the turret.</span>")
-					src.icon_state = "[src.icon_tag]_off"
-					src.active = 0
-					src.shooting = 0
-					src.waiting = 0
-					src.target = null
-
-				else
-					user.show_message("<span class='notice'>You power on the turret.</span>")
-					set_projectile()
-					src.active = 1
-					src.icon_state = "[src.icon_tag]_idle"
+			SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, .proc/toggle_activated, null, W.icon, W.icon_state, \
+			  "[user] powers the turret [src.active ? "off" : "on"].", \
+			  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 		else
 			src.health = src.health - W.force
-			playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 25, 1)
+			playsound(get_turf(src), 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 25, 1)
 			attack_particle(user,src)
 			src.check_health()
 			..()
 
-		return
+	//actionbar procs
+	///Anchor if unanchored, unanchor if anchored
+	proc/toggle_anchored()
+		src.anchored = !src.anchored
+
+	///Repair the turret by 10 health (only repaired by welding currently, so no custom values)
+	proc/repair()
+		src.health = min(src.max_health, (src.health + 10))
+		src.check_health()
+
+	///Toggle the turret on or off.
+	proc/toggle_activated()
+		if (src.active)
+			src.icon_state = "[src.icon_tag]_off"
+			src.active = 0
+			src.shooting = 0
+			src.waiting = 0
+			src.target = null
+		else
+			src.set_projectile()
+			src.active = 1
+			src.icon_state = "[src.icon_tag]_idle"
 
 	proc/quick_deploy()
 		if(!(src.quick_deploy_fuel > 0))
 			return
 		src.quick_deploy_fuel--
 		src.visible_message("<span class='alert'>[src]'s quick deploy system engages, automatically securing it!</span>")
-		playsound(src.loc, "sound/items/Welder2.ogg", 30, 1)
+		playsound(src.loc, 'sound/items/Welder2.ogg', 30, 1)
 		set_projectile()
 		src.anchored = 1
 		src.active = 1
 		src.icon_state = "[src.icon_tag]_idle"
-
-
 
 	bullet_act(var/obj/projectile/P)
 		var/damage = 0
@@ -320,7 +298,6 @@
 			return
 		src.health = src.health - max(P.power/2,0) // staples have a power of 5, .22 bullets have a power of 35
 		src.check_health()
-
 
 	proc/check_health()
 		if(src.health <= 0)
@@ -333,7 +310,7 @@
 		var/percent_damage = src.health/src.max_health * 100
 		switch(percent_damage)
 			if(90 to 100)
-				damage_words = "fully operational!"
+				damage_words = "mostly undamaged!"
 			if(75 to 89)
 				damage_words = "a little bit damaged."
 			if(30 to 74)
@@ -341,27 +318,19 @@
 			if(0 to 29)
 				damage_words = "to be on the verge of falling apart!"
 
-		/*
-		if(src.emagged)
-			damage_words += "<br><span class='alert'>Its safety indicator is off!</span>"
-		*/
-
-
 	proc/die()
-		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 		new /obj/decal/cleanable/robot_debris(src.loc)
 		qdel(src)
 
-
 	proc/spawn_deployer()
-		var/obj/item/turret_deployer/deployer = new /obj/item/turret_deployer(src.loc)
-		deployer.health = src.health // NO FREE REPAIRS, ASSHOLES
-		//deployer.emagged = src.emagged
+		var/obj/item/turret_deployer/deployer = new src.associated_deployer(src.loc)
+		deployer.turret_health = src.health // NO FREE REPAIRS, ASSHOLES
 		deployer.damage_words = src.damage_words
 		deployer.quick_deploy_fuel = src.quick_deploy_fuel
 		deployer.tooltip_rebuild = 1
+		qdel(src)
 		return deployer
-
 
 	proc/seek_target()
 		src.target_list = list()
@@ -369,9 +338,9 @@
 			if(!src)
 				break
 
-			if (src.target_valid(C))
+			if (!isnull(C) && src.target_valid(C))
 				src.target_list += C
-				var/distance = get_dist(C.loc,src.loc)
+				var/distance = GET_DIST(C.loc,src.loc)
 				src.target_list[C] = distance
 
 			else
@@ -387,13 +356,12 @@
 
 			src.icon_state = "[src.icon_tag]_active"
 
-			playsound(src.loc, "sound/vox/woofsound.ogg", 40, 1)
+			playsound(src.loc, 'sound/vox/woofsound.ogg', 40, 1)
 
 		return src.target
 
-
 	proc/target_valid(var/mob/living/C)
-		var/distance = get_dist(get_turf(C),get_turf(src))
+		var/distance = GET_DIST(get_turf(C),get_turf(src))
 
 		if(distance > src.range)
 			return 0
@@ -405,21 +373,15 @@
 			return 0
 		if (C.stat == 2)
 			return 0
+		for(var/atom/movable/some_loc in obj_loc_chain(C))
+			if(istype(some_loc, /obj/item)) // prevent shooting at pickled people and such
+				return 0
 		if (istype(C,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = C
 			if (H.hasStatus(list("resting", "weakened", "stunned", "paralysis"))) // stops it from uselessly firing at people who are already suppressed. It's meant to be a suppression weapon!
 				return 0
 		if (is_friend(C))
 			return 0
-
-
-		/*var/turf/curr_step = src.loc // CAUSES GAME CRASH??
-
-		while(curr_step != C.loc)
-			curr_step = get_step(C.loc,get_dir(C.loc,curr_step))
-			if (curr_step.opacity || curr_step.density)
-				return 0 */
-
 
 		var/angle = get_angle(get_turf(src),get_turf(C))
 
@@ -449,11 +411,7 @@
 
 
 	proc/is_friend(var/mob/living/C) //tried to keep this generic in case you want to make a turret that only shoots monkeys or something
-		/*
-		if (src.emagged)
-			return 0 // NO FRIENDS :'[
-		*/
-		return istype(C.get_id(), /obj/item/card/id/syndicate)
+		return null
 
 	proc/set_angle(var/angle)
 		angle = angle > 0 ? angle%360 : -((-angle)%360)+360 //limit user input to a sane range!
@@ -478,15 +436,66 @@
 		animate(transform = matrix(transform_original, ang/3, MATRIX_ROTATE | MATRIX_MODIFY), time = 10/3, loop = 0) // needs to do in multiple steps because byond takes shortcuts
 		animate(transform = matrix(transform_original, ang/3, MATRIX_ROTATE | MATRIX_MODIFY), time = 10/3, loop = 0) // :argh:
 
-	/*
-	emag_act(var/user, var/emag)
-		if(src.emagged)
-			return
-		src.emagged = 1
-		boutput(user,"You short out the safeties on the turret.")
-		src.damage_words += "<br><span class='alert'>Its safety indicator is off!</span>"
-	*/
 
+/obj/deployable_turret/syndicate
+	name = "NAS-T"
+	desc = "A Nuclear Agent Sentry Turret."
+	projectile_type = /datum/projectile/bullet/akm
+	icon_tag = "st"
+	associated_deployer = /obj/item/turret_deployer/syndicate
+
+	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
+	is_friend(var/mob/living/C)
+		return istype(C.get_id(), /obj/item/card/id/syndicate) || istype(C, /mob/living/critter/robotic/gunbot/syndicate) //dumb lazy
+
+/obj/deployable_turret/syndicate/active
+	anchored = 1
+
+	New(loc)
+		..(src.loc, src.dir)
+		src.toggle_activated()
+
+/obj/deployable_turret/riot
+	name = "N.A.R.C.S."
+	desc = "A Nanotrasen Automatic Riot Control System."
+	health = 125
+	max_health = 125
+	range = 5
+	projectile_type = /datum/projectile/bullet/abg
+	burst_size = 1
+	fire_rate = 1
+	angle_arc_size = 60
+	icon_tag = "nt"
+	quick_deploy_fuel = 0
+	associated_deployer = /obj/item/turret_deployer/riot
+
+	is_friend(var/mob/living/C)
+		var/obj/item/card/id/I = C.get_id()
+		if(!istype(I))
+			return 0
+		switch(I.icon_state)
+			if("id_sec")
+				return 1
+			if("id_com")
+				return 1
+			if("gold")
+				return 1
+			else
+				return 0
+
+/obj/deployable_turret/riot/active
+	anchored = 1
+
+	New(loc)
+		..(src.loc, src.dir)
+		src.toggle_activated()
 
 /////////////////////////////
 //   Turret Ability Stuff  //
@@ -512,7 +521,12 @@
 
 		if (istype(M))
 
-			if(!istype(M.equipped(),/obj/item/wrench))
+			if(!iswrenchingtool(M.equipped()))
+				boutput(M, "<span class='alert'>You need to be holding a wrench or similar to modify the turret's facing.</span>")
+				return
+
+			if (!my_turret.deconstructable)
+				boutput(M, "<span class='alert'>You can't modify this turret's facing- it's bolted in place!</span>")
 				return
 
 			if(!(get_turf(usr) == src.user_turf))
@@ -527,95 +541,10 @@
 			if(target == get_turf(my_turret))
 				return
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				src.my_turret.set_angle(get_angle(my_turret,target))
 
 			return 0
-
-
-
-/////////////////////////////
-//Why not one for security?//
-/////////////////////////////
-
-/obj/item/turret_deployer/riot
-	name = "N.A.R.C.S. Deployer"
-	desc = "A Nanotrasen Automatic Riot Control System Deployer. Use it in your hand to deploy."
-	icon_state = "st_deployer"
-	w_class = W_CLASS_BULKY
-	health = 125
-	icon_tag = "nt"
-	quick_deploy_fuel = 0
-	mats = list("INS-1"=10, "CON-1"=10, "CRY-1"=3, "MET-2"=2)
-	is_syndicate = 1
-
-
-	spawn_turret(var/direct)
-		var/obj/deployable_turret/riot/turret = new /obj/deployable_turret/riot(src.loc,direction=direct)
-		turret.health = src.health
-		//turret.emagged = src.emagged
-		turret.damage_words = src.damage_words
-		turret.quick_deploy_fuel = src.quick_deploy_fuel
-		return turret
-
-/obj/deployable_turret/riot
-	name = "N.A.R.C.S."
-	desc = "A Nanotrasen Automatic Riot Control System."
-	icon_state = "nt_off"
-	health = 125
-	max_health = 125
-	wait_time = 20 //wait if it can't find a target
-	range = 5 // tiles
-	projectile_type = /datum/projectile/bullet/abg
-	current_projectile = new/datum/projectile/bullet/abg
-	burst_size = 1 // number of shots to fire. Keep in mind the bullet's shot_count
-	fire_rate = 1 // rate of fire in shots per second
-	angle_arc_size = 60
-	icon_tag = "nt"
-	quick_deploy_fuel = 0
-
-	New(var/direction)
-		..(direction=direction)
-		/*
-		SPAWN_DBG(src.wait_time)
-
-			if (src.emagged)
-				src.projectile_type = /datum/projectile/bullet/a12
-				src.current_projectile = new/datum/projectile/bullet/a12
-		*/
-
-	is_friend(var/mob/living/C)
-		/*
-		if (src.emagged)
-			return 0
-		*/
-		var/obj/item/card/id/I = C.get_id()
-		if(!istype(I))
-			return 0
-		switch(I.icon_state)
-			if("id_sec")
-				return 1
-			if("id_com")
-				return 1
-			if("gold")
-				return 1
-			else
-				return 0
-
-	spawn_deployer()
-		var/obj/item/turret_deployer/riot/deployer = new /obj/item/turret_deployer/riot(src.loc)
-		deployer.health = src.health
-		//deployer.emagged = src.emagged
-		deployer.damage_words = src.damage_words
-		deployer.quick_deploy_fuel = src.quick_deploy_fuel
-		return deployer
-
-	/*
-	emag_act(var/user, var/emag)
-		..()
-		src.projectile_type = /datum/projectile/bullet/a12
-		src.current_projectile = new/datum/projectile/bullet/a12
-	*/
 
 /////////////////////////////
 //       User Manuals      //

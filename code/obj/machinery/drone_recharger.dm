@@ -42,12 +42,13 @@
 				return
 			if (!occupant.cell)
 				return
-			else if (occupant.cell.charge >= occupant.cell.maxcharge) //fully charged yo
+			else if (occupant.cell.charge >= occupant.cell.maxcharge && !src.occupant.newDrone) //fully charged yo
 				occupant.cell.charge = occupant.cell.maxcharge
 				src.turnOff("fullcharge")
 				return
-			else
+			else if (occupant.cell.charge < occupant.cell.maxcharge)
 				occupant.cell.charge += src.chargerate
+				occupant.cell.charge = min(occupant.cell.maxcharge, occupant.cell.charge)
 				use_power(50)
 				return
 		return 1
@@ -76,7 +77,7 @@
 
 		//Do opening thing
 		src.icon_state = "drone-charger-open"
-		SPAWN_DBG(0.7 SECONDS) //Animation is 6 ticks, 1 extra for byond
+		SPAWN(0.7 SECONDS) //Animation is 6 ticks, 1 extra for byond
 			src.occupant = G
 			src.updateSprite()
 			G.charging = 1
@@ -87,27 +88,26 @@
 		return 1
 
 	proc/turnOff(reason)
-		if (!src.occupant || src.occupant.newDrone) return 0
+		if (src.occupant)
+			var/list/msg = list("<span class='notice'>")
+			if (reason == "nopower")
+				msg += "The [src] spits you out seconds before running out of power."
+			else if (reason == "fullcharge")
+				msg += "The [src] beeps happily and disengages. You are full."
+			else
+				msg += "The [src] disengages, allowing you to float [pick("serenely", "hurriedly", "briskly", "lazily")] away."
+			boutput(src.occupant, "[msg.Join()]</span>")
 
-		var/msg = "<span class='notice'>"
-		if (reason == "nopower")
-			msg += "The [src] spits you out seconds before running out of power."
-		else if (reason == "fullcharge")
-			msg += "The [src] beeps happily and disengages. You are full."
-		else
-			msg += "The [src] disengages, allowing you to float [pick("serenely", "hurriedly", "briskly", "lazily")] away."
-		out(src.occupant, "[msg]</span>")
-
-		src.occupant.charging = 0
-		src.occupant.setFace(src.occupant.faceType, src.occupant.faceColor)
-		src.occupant.updateHoverDiscs(src.occupant.faceColor)
-		src.occupant.updateSprite()
+			src.occupant.charging = 0
+			src.occupant.setFace(src.occupant.faceType, src.occupant.faceColor)
+			src.occupant.updateHoverDiscs(src.occupant.faceColor)
+			src.occupant.updateSprite()
 		src.occupant = null
 
 		//Do closing thing
 		src.icon_state = "drone-charger-close"
 		src.transition = 1
-		SPAWN_DBG(0.7 SECONDS)
+		SPAWN(0.7 SECONDS)
 			src.set_density(0)
 			src.transition = 0
 			src.updateSprite()
@@ -135,11 +135,11 @@
 
 	power_change()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 
 
 /obj/machinery/drone_recharger/factory

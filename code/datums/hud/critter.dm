@@ -95,21 +95,17 @@
 
 /// gets the leftmost screen loc
 /datum/hud/critter/proc/loc_left()
-	if (src.left_offset < -6) // wraps vertically if the magnitude of left offset is greater than 6
+	if (src.left_offset < -9) // Wraps vertically if the magnitude of left offset is greater than 9. Leave a 1 space column for storage containers.
 		src.wraparound_offset_left++
-		if (src.wraparound_offset_right < src.wraparound_offset_left)
-			src.right_offset = 0
-		else
-			src.right_offset = -1
 
 	var/next_left_offset = src.next_left()
 	var/x_offset = 0
 	var/y_offset = 0
 
 	if (next_left_offset < 0)
-		x_offset = next_left_offset
+		x_offset = next_left_offset + src.wraparound_offset_left
 	else if (next_left_offset > 0)
-		x_offset = "+[next_left_offset]"
+		x_offset = "+[next_left_offset + src.wraparound_offset_left]"
 	else
 		x_offset = ""
 
@@ -122,21 +118,17 @@
 
 /// gets the rightmost screen loc
 /datum/hud/critter/proc/loc_right()
-	if (src.right_offset > 6) // wraps vertically if the magnitude of right offset is greater than 6
+	if (src.right_offset > 9) // Wraps vertically if the magnitude of right offset is greater than 8. Leave a 1 space column for the leave pod button.
 		src.wraparound_offset_right++
-		if (src.wraparound_offset_left < src.wraparound_offset_right)
-			src.right_offset = 0
-		else
-			src.right_offset = 1
 
 	var/next_right_offset = src.next_right()
 	var/x_offset = 0
 	var/y_offset = 0
 
 	if (next_right_offset < 0)
-		x_offset = next_right_offset
+		x_offset = next_right_offset - src.wraparound_offset_right
 	else if (next_right_offset > 0)
-		x_offset = "+[next_right_offset]"
+		x_offset = "+[next_right_offset - src.wraparound_offset_right]"
 	else
 		x_offset = ""
 
@@ -223,14 +215,14 @@
 				var/icon_y = text2num(params["icon-y"])
 				if (icon_x > 16)
 					if (icon_y > 16)
-						src.master.a_intent = INTENT_DISARM
+						src.master.set_a_intent(INTENT_DISARM)
 					else
-						src.master.a_intent = INTENT_HARM
+						src.master.set_a_intent(INTENT_HARM)
 				else
 					if (icon_y > 16)
-						src.master.a_intent = INTENT_HELP
+						src.master.set_a_intent(INTENT_HELP)
 					else
-						src.master.a_intent = INTENT_GRAB
+						src.master.set_a_intent(INTENT_GRAB)
 				src.update_intent()
 
 			if ("mintent")
@@ -242,10 +234,27 @@
 				src.update_mintent()
 
 			if ("pull")
-				if (src.master.pulling)
-					global.unpull_particle(src.master, src.pulling)
-				src.master.remove_pulling()
-				src.update_pulling()
+				if (master.pulling)
+					unpull_particle(master,pulling)
+					master.remove_pulling()
+					src.update_pulling()
+				else if(!isturf(master.loc))
+					boutput(master, "<span class='notice'>You can't pull things while inside \a [master.loc].</span>")
+				else
+					var/list/atom/movable/pullable = list()
+					for(var/atom/movable/AM in range(1, get_turf(master)))
+						if(AM.anchored || !AM.mouse_opacity || AM.invisibility > master.see_invisible || AM == master)
+							continue
+						pullable += AM
+					var/atom/movable/to_pull = null
+					if(length(pullable) == 1)
+						to_pull = pullable[1]
+					else if(length(pullable) < 1)
+						boutput(master, "<span class='notice'>There is nothing to pull.</span>")
+					else
+						to_pull = tgui_input_list(master, "Which do you want to pull? You can also Ctrl+Click on things to pull them.", "Which thing to pull?", pullable)
+					if(!isnull(to_pull) && BOUNDS_DIST(master, to_pull) == 0)
+						to_pull.pull(master)
 
 			if ("throw")
 				var/icon_y = text2num(params["icon-y"])
@@ -358,7 +367,8 @@
 
 /// updates bleeding hud element
 /datum/hud/critter/proc/update_blood_indicator()
-	if (!src.bleeding || isdead(src.master))
+	if (!src.bleeding) return //doesn't have a hud element to update
+	if (isdead(src.master))
 		src.bleeding.icon_state = "blood0"
 		src.bleeding.tooltipTheme = "healthDam healthDam0"
 		return

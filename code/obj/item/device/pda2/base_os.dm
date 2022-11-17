@@ -60,7 +60,8 @@
 		var/list/blocked_numbers = list()
 		/// List of mailgroups we don't want to hear from anymore
 		var/list/muted_mailgroups = list()
-
+		/// Whether there's a PDA-report packet-reply-triggered UI update queued
+		var/report_refresh_queued = FALSE
 
 		mess_off //Same as regular but with messaging off
 			message_on = 0
@@ -191,7 +192,7 @@
 									continue
 								pdaOwnerNames += P_name
 								pdaOwnerNames[P_name] = P_id
-							pdaOwnerNames = sortList(pdaOwnerNames)
+							sortList(pdaOwnerNames, /proc/cmp_text_asc)
 							for (var/P_name in pdaOwnerNames)
 								var/P_id = pdaOwnerNames[P_name]
 
@@ -422,7 +423,13 @@
 			else if(href_list["input"])
 				switch(href_list["input"])
 					if("tone")
-						var/t = input(usr, "Please enter new ring message", src.name, src.message_tone) as text
+						var/prompt = "Please enter new ring message."
+						var/default = src.message_tone
+						if (usr.ckey == src.master?.uplink?.owner_ckey)
+							default = src.master.uplink.lock_code
+							prompt += " Your uplink code has been pre-entered for your convenience."
+
+						var/t = tgui_input_text(usr, prompt, src.name, default)
 						if (!t)
 							return
 
@@ -432,13 +439,13 @@
 						if(!(src.holder in src.master))
 							return
 
-						if ((src.master.uplink) && (cmptext(t,src.master.uplink.lock_code)))
+						if (t == src.master?.uplink?.lock_code)
 							boutput(usr, "The PDA softly beeps.")
 							src.master.uplink.unlock()
 						else
 							t = copytext(sanitize(strip_html(t)), 1, 20)
 							src.message_tone = t
-							logTheThing("pdamsg", usr, null, "sets ring message of <b>[src.master]</b> to: [src.message_tone]")
+							logTheThing(LOG_PDAMSG, usr, "sets ring message of <b>[src.master]</b> to: [src.message_tone]")
 
 					if("note")
 						var/inputtext = html_decode(replacetext(src.note, "<br>", "\n"))
@@ -544,7 +551,7 @@
 						if(href_list["message_send"])
 							t = href_list["message_send"]
 						else
-							t = input(usr, "Please enter message", target_name, null) as null|text
+							t = tgui_input_text(usr, "Please enter message", target_name)
 						if (!t || !isalive(usr))
 							return
 
@@ -765,7 +772,13 @@
 				newsignal.data["owner"] = src.master.owner
 				src.post_signal(newsignal)
 
-				src.master.updateSelfDialog()
+				if(!ON_COOLDOWN(src.master, "report_pda_refresh", 1 SECOND))
+					src.master.updateSelfDialog()
+				else if(!src.report_refresh_queued)
+					src.report_refresh_queued = TRUE
+					SPAWN(1 SECOND)
+						src.report_refresh_queued = FALSE
+						src.master.updateSelfDialog()
 
 			if(signal.encryption) return
 
@@ -778,7 +791,7 @@
 					pingreply.data["address_1"] = signal.data["sender"]
 					pingreply.data["command"] = "ping_reply"
 					pingreply.data["data"] = src.master.owner
-					SPAWN_DBG(0.5 SECONDS)
+					SPAWN(0.5 SECONDS)
 						src.post_signal(pingreply)
 					return
 
@@ -856,7 +869,7 @@
 					if((signal.data["batt_adjust"] == netpass_syndicate) && (signal.data["address_1"] == src.master.net_id) && !(src.master.exploding))
 						if (src.master)
 							src.master.exploding = 1
-						SPAWN_DBG(2 SECONDS)
+						SPAWN(2 SECONDS)
 							if (src.master)
 								src.master.explode()
 
@@ -992,7 +1005,13 @@
 					detected_pdas[newsender] = sender_name
 					master.pdasay_autocomplete[sender_name] = newsender
 
-					src.master.updateSelfDialog()
+					if(!ON_COOLDOWN(src.master, "report_pda_refresh", 1 SECOND))
+						src.master.updateSelfDialog()
+					else if(!src.report_refresh_queued)
+						src.report_refresh_queued = TRUE
+						SPAWN(1 SECOND)
+							src.report_refresh_queued = FALSE
+							src.master.updateSelfDialog()
 
 			return
 
@@ -1044,7 +1063,7 @@
 			src.message_note += "<i><b>&rarr; To [target_name]:</b></i><br>[message]<br>"
 			src.message_last = world.time
 
-			logTheThing("pdamsg", null, null, "<i><b>[src.master.owner]'s PDA used by [key_name(src.master.loc)] &rarr; [target_name]:</b></i> [message]")
+			logTheThing(LOG_PDAMSG, null, "<i><b>[src.master.owner]'s PDA used by [key_name(src.master.loc)] &rarr; [target_name]:</b></i> [message]")
 			return 0
 
 		proc/SendFile(var/target_id, var/group, var/just_send_it, var/datum/computer/file/file)

@@ -35,12 +35,13 @@
 			src.reagents.trans_to(P, P.proj_data.cost)
 
 	on_reagent_change(add)
+		..()
 		if(!add || !src.ammo_reagents)
-			src.update_icon()
+			src.UpdateIcon()
 			return
 		var/mob/M = ismob(src.loc) ? src.loc : null
 		global.check_whitelist(src, src.ammo_reagents, M, src.custom_reject_message)
-		src.update_icon()
+		src.UpdateIcon()
 
 	get_desc()
 		. = "[src.projectiles ? "It is set to [src.current_projectile.sname]. " : ""]There are [src.reagents.total_volume]/[src.reagents.maximum_volume] units left!"
@@ -51,6 +52,7 @@
 		..()
 
 	update_icon()
+
 		if (src.current_projectile)
 			var/amt = round(src.reagents.total_volume) / round(src.current_projectile.cost)
 			if(fractional)
@@ -63,7 +65,7 @@
 
 		return 0
 
-	canshoot()
+	canshoot(mob/user)
 		if(src.reagents && src.current_projectile)
 			if(src.fractional && src.reagents.total_volume > 0)
 				return 1
@@ -72,19 +74,19 @@
 		return 0
 
 	process_ammo(var/mob/user)
-		if (!canshoot())
+		if (!canshoot(user))
 			boutput(user, "<span class='alert'>\The [src]'s internal reservoir does not contain enough reagents to fire it!</span>")
 		if(!src.projectile_reagents)
 			src.reagents.remove_any(src.current_projectile.cost)
-			src.update_icon()
+			src.UpdateIcon()
 		return 1
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		..()
 		if(!isliving(usr))
 			return
 
-		if(get_dist(src, usr) > 1)
+		if(BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You need to be closer to empty \the [src] out!</span>")
 			return
 
@@ -94,15 +96,15 @@
 
 		if(src.reagents.total_volume)
 			if (src.dump_reagents_on_turf)
-				logTheThing("combat", usr, null, "transfers chemicals from [src] [log_reagents(src)] to [get_turf(src)] at [log_loc(usr)].")
+				logTheThing(LOG_CHEMISTRY, usr, "transfers chemicals from [src] [log_reagents(src)] to [get_turf(src)] at [log_loc(usr)].")
 				src.reagents.trans_to(get_turf(src), src.reagents.total_volume)
 			src.reagents.clear_reagents()
-			src.update_icon()
+			src.UpdateIcon()
 			boutput(usr, "<span class='notice'>You dump out \the [src]'s stored reagents.</span>")
 		else
 			boutput(usr, "<span class='alert'>There's nothing loaded to drain!</span>")
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/reagent_containers/glass))
 			return
 
@@ -115,7 +117,7 @@
 	w_class = W_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 10
-	force = 4.0
+	force = 4
 	contraband = 3
 	add_residue = 1 // Does this gun add gunshot residue when fired? These syringes are probably propelled by CO2 or something, but whatever (Convair880).
 	mats = 12 // These are some of the few syndicate items that would be genuinely useful to non-antagonists when scanned.
@@ -126,7 +128,7 @@
 	tooltip_flags = REBUILD_DIST
 
 	New()
-		set_current_projectile(new/datum/projectile/syringe)
+		set_current_projectile(new/datum/projectile/syringe/syringe_barbed)
 		. = ..()
 
 	get_desc(dist)
@@ -140,6 +142,12 @@
 		else
 			. += "<br><span class='notice'>&emsp; Nothing</span>"
 
+	shoot(target, start, mob/user, POX, POY, is_dual_wield)
+		var/obj/projectile/P = ..()
+		if (istype(P)) //we actually shot something
+			P.create_reagents()
+
+
 /obj/item/gun/reagent/syringe/NT
 	name = "NT syringe gun"
 	icon_state = "syringegun-NT"
@@ -150,6 +158,7 @@
 
 	New()
 		..()
+		set_current_projectile(new/datum/projectile/syringe)
 		if (src.safe && islist(global.chem_whitelist) && length(global.chem_whitelist))
 			src.ammo_reagents = global.chem_whitelist
 
@@ -161,7 +170,7 @@
 		src.safe = 0
 		src.fractional = TRUE
 		src.current_projectile.cost = 90
-		src.update_icon()
+		src.UpdateIcon()
 		var/image/magged = image(src.icon, "syringemag", layer = FLOAT_LAYER)
 		src.UpdateOverlays(magged, "emagged")
 		return 1
@@ -183,6 +192,7 @@
 
 	New()
 		..()
+		set_current_projectile(new/datum/projectile/syringe)
 		src.reagents.add_reagent("love", src.reagents.maximum_volume)
 
 
@@ -195,7 +205,7 @@ obj/item/gun/reagent/syringe/love/plus // Sometimes you just need more love in y
 	name = "ectoblaster"
 	icon_state = "ecto0"
 	ammo_reagents = list("ectoplasm")
-	force = 7.0
+	force = 7
 	desc = "A weapon that launches concentrated ectoplasm. Harmless to humans, deadly to ghosts."
 
 	New()
@@ -204,13 +214,14 @@ obj/item/gun/reagent/syringe/love/plus // Sometimes you just need more love in y
 		..()
 
 	update_icon()
+
 		if(src.reagents)
 			var/ratio = min(1, src.reagents.total_volume / src.reagents.maximum_volume)
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "ecto[ratio]"
 			return
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/reagent_containers/food/snacks/ectoplasm) && !src.reagents.is_full())
 			I.reagents.trans_to(src, I.reagents.total_volume)
 			user.visible_message("<span style=\"color:red\">[user] smooshes a glob of ectoplasm into [src].</span>")

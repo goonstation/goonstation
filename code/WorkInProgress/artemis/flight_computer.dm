@@ -11,13 +11,13 @@
 	New()
 		..()
 		src.myhud = new /datum/hud/flight_computer(src)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for(var/obj/artemis/S in world)
 				if(S.stars_id == src.stars_id)
 					src.ship = S
 					break
 
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		if(istype(O,/obj/item/grab))
 			var/obj/item/grab/G = O
 			if (!ismob(G.affecting))
@@ -74,7 +74,7 @@
 
 	*/
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		return
 
 	go_out(var/do_set_loc = 1)

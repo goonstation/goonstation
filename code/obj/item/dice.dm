@@ -1,5 +1,4 @@
 #define MAX_DICE_GROUP 6
-#define ROLL_WAIT_TIME 30
 var/list/rollList = list()
 
 /obj/item/dice
@@ -13,7 +12,6 @@ var/list/rollList = list()
 	stamina_cost = 0
 	var/sides = 6
 	var/last_roll = null
-	var/last_roll_time = null
 	var/can_have_pals = 1
 	var/list/obj/item/dice/dicePals = list() // for combined dice rolls, up to 9 in a stack
 	var/sound_roll = 'sound/items/dicedrop.ogg'
@@ -31,7 +29,7 @@ var/list/rollList = list()
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			initialName = name
 			initialDesc = desc
 
@@ -48,18 +46,18 @@ var/list/rollList = list()
 			return 0
 		user.visible_message("<span class='alert'><b>[user] attempts to swallow [src] and chokes on it.</b></span>")
 		user.take_oxygen_deprivation(160)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
 
 	proc/roll_dat_thang() // fine if I can't use proc/roll() then we'll all just have to suffer this
-		if (src.last_roll_time && world.time < (src.last_roll_time + ROLL_WAIT_TIME))
+		if (ON_COOLDOWN(src,"roll", 3 SECONDS))
 			return
 		var/roll_total = null
 
 		if (src.sound_roll)
-			playsound(src, src.sound_roll, 100, 1)
+			playsound(src, src.sound_roll, 50, 1)
 
 		if (!src.cant_drop)
 			src.set_loc(get_turf(src))
@@ -173,7 +171,8 @@ var/list/rollList = list()
 			src.colorcache = src.color //removes src color, then overlays a decoy image to make the icon look unchanged
 			src.color = null
 			src.decoyimageicon = new /icon(src.icon,src.icon_state)
-			decoyimageicon.Blend(colorcache, ICON_MULTIPLY)
+			if(src.colorcache)
+				decoyimageicon.Blend(src.colorcache, ICON_MULTIPLY)
 			src.decoyimage = image(decoyimageicon)
 			src.UpdateOverlays(src.decoyimage,"0") //dats a zero :P
 
@@ -291,7 +290,7 @@ var/list/rollList = list()
 			if (src.addPal(O, user))
 				user.visible_message("<b>[user]</b> gathers up some dice.",\
 				"You gather up some dice.")
-				SPAWN_DBG(0.2 SECONDS)
+				SPAWN(0.2 SECONDS)
 					for (var/obj/item/dice/D in range(1, user))
 						if (D == src)
 							continue
@@ -373,7 +372,7 @@ var/list/rollList = list()
 			user.u_equip(src)
 			src.layer = initial(src.layer)
 			src.set_loc(user.loc)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			user.visible_message("<span class='alert'><b>[user] is crushed into a bloody ball by an unseen force, and vanishes into nothingness!</b></span>")
 			user.implode()
 		return 1
@@ -430,7 +429,7 @@ var/list/rollList = list()
 		return 1
 
 	roll_dat_thang() // fine if I can't use proc/roll() then we'll all just have to suffer this
-		if (src.last_roll_time && world.time < (src.last_roll_time + ROLL_WAIT_TIME))
+		if (ON_COOLDOWN(src,"roll", 3 SECONDS))
 			return
 		var/roll_total = null
 
@@ -438,7 +437,7 @@ var/list/rollList = list()
 			usr.mind.damned = 1
 
 		if (src.sound_roll)
-			playsound(src, src.sound_roll, 100, 1)
+			playsound(src, src.sound_roll, 50, 1)
 
 		if (!src.cant_drop)
 			src.set_loc(get_turf(src))
@@ -724,13 +723,13 @@ var/list/rollList = list()
 				src.UpdateOverlays(null,"[i]",0,1)
 			src.icon_state = "dicebox"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((src in user.contents) && (src.icon_state != "dicebox"))
 			removeDie(user)
 		else
 			..()
 
-	attackby(obj/item/dice/W as obj, mob/living/user as mob)
+	attackby(obj/item/dice/W, mob/living/user)
 		if(src.icon_state != "dicebox")
 			addDice(W,"diceboxt",user)
 
@@ -757,7 +756,7 @@ var/list/rollList = list()
 				user.visible_message("<span class='notice'>[user] shakes the dice cup!</span>","<span class='notice'>You shake the dice cup!</span>")
 				hiddenroll()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((src in user.contents) && (src.icon_state == "dicecup"))
 			removeDie(user)
 		else if(src.icon_state == "dicecupf")
@@ -775,7 +774,7 @@ var/list/rollList = list()
 		else
 			..()
 
-	attackby(obj/item/dice/W as obj, mob/living/user as mob)
+	attackby(obj/item/dice/W, mob/living/user)
 		if(src.icon_state == "dicecup")
 			addDice(W,"dicecup",user)
 
@@ -783,7 +782,7 @@ var/list/rollList = list()
 	name = "dice pouch"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "dicepouch"
-	max_wclass = 1
+	max_wclass = W_CLASS_TINY
 	w_class = W_CLASS_TINY
 	var/setcolor
 	can_hold=list(/obj/item/dice)

@@ -8,7 +8,7 @@ proc/pick_landmark(name, default=null)
 
 /obj/landmark
 	name = "landmark"
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/map-editing/landmarks.dmi'
 	icon_state = "x2"
 	anchored = 1
 	invisibility = INVIS_ALWAYS
@@ -20,8 +20,10 @@ proc/pick_landmark(name, default=null)
 	ex_act()
 		return
 
-/obj/landmark/proc/init()
+/obj/landmark/proc/init(delay_qdel=FALSE)
 	if(src.add_to_landmarks)
+		if(src.name == "landmark")
+			CRASH("Landmark [src] at [log_loc(src)] has no name override!")
 		if(!landmarks)
 			landmarks = list()
 		var/name = src.name_override ? src.name_override : src.name
@@ -29,26 +31,32 @@ proc/pick_landmark(name, default=null)
 			landmarks[name] = list()
 		landmarks[name][src.loc] = src.data
 	if(src.deleted_on_start)
-		qdel(src)
+		if(delay_qdel)
+			SPAWN(0)
+				qdel(src)
+		else
+			qdel(src)
 
 /obj/landmark/New()
+	..()
 	if(current_state > GAME_STATE_MAP_LOAD)
-		SPAWN_DBG(0)
-			src.init()
-		..()
+		src.init(delay_qdel=TRUE)
 	else
 		src.init()
-		if(!src.disposed)
-			..()
 
 var/global/list/job_start_locations = list()
 
 /obj/landmark/start
 	name = "start"
-	icon_state = "x"
+	icon_state = "player-start"
 	add_to_landmarks = FALSE
+	var/static/list/aliases = list(
+		"Mechanic" = "Engineer"
+	)
 
-	New()
+	init(delay_qdel=FALSE)
+		if(src.name in src.aliases)
+			src.name = src.aliases[src.name]
 		if (job_start_locations)
 			if (!islist(job_start_locations[src.name]))
 				job_start_locations[src.name] = list(src.loc)
@@ -60,6 +68,7 @@ var/global/list/job_start_locations = list()
 // most of these are here just for backwards compatibility
 
 /obj/landmark/start/latejoin
+	icon_state = "latejoin"
 	name = LANDMARK_LATEJOIN
 	add_to_landmarks = TRUE
 
@@ -72,36 +81,28 @@ var/global/list/job_start_locations = list()
 /obj/landmark/escape_pod_succ
 	name = LANDMARK_ESCAPE_POD_SUCCESS
 	icon_state = "xp"
-	var/shuttle = SHUTTLE_NODEF
 
 	New()
-		src.data = src.shuttle// save dir
+		src.data = src.dir
 		..()
 
 	north
 		dir = NORTH
-		shuttle = SHUTTLE_NORTH
-
-		donut3
-			shuttle = SHUTTLE_DONUT3
 
 	south
 		dir = SOUTH
-		shuttle = SHUTTLE_SOUTH
 
 	east
 		dir = EAST
-		shuttle = SHUTTLE_EAST
-
-		oshan
-			shuttle = SHUTTLE_OSHAN
 
 	west
 		dir = WEST
-		shuttle = SHUTTLE_WEST
 
 /obj/landmark/tutorial_start
 	name = LANDMARK_TUTORIAL_START
+
+/obj/landmark/shuttle_transit
+	name= LANDMARK_SHUTTLE_TRANSIT
 
 /obj/landmark/halloween
 	name = LANDMARK_HALLOWEEN_SPAWN
@@ -114,11 +115,21 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/magnet_center
 	name = LANDMARK_MAGNET_CENTER
-	icon_state = "x"
+	icon_state = "magnet-center"
+	var/width = 15
+	var/height = 15
+	var/obj/machinery/mining_magnet/magnet
+
+	New()
+		var/turf/T = locate(src.x-round(width/2), src.y-round(height/2), src.z)
+		var/obj/magnet_target_marker/M = new /obj/magnet_target_marker(T)
+		M.width = src.width
+		M.height = src.height
+		..()
 
 /obj/landmark/magnet_shield
 	name = LANDMARK_MAGNET_SHIELD
-	icon_state = "x"
+	icon_state = "magnet-shield"
 
 /obj/landmark/latejoin_missile
 	name = "missile latejoin spawn marker"
@@ -151,11 +162,19 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/artifact
 	name = LANDMARK_ARTIFACT_SPAWN
-	icon_state = "x3"
+	icon_state = "artifact-spawn"
 	var/spawnchance = 100 // prob chance out of 100 to spawn artifact at game start
 	New()
 		src.data = src.spawnchance
 		..()
+
+	random_room
+		name = LANDMARK_RANDOM_ROOM_ARTIFACT_SPAWN
+
+		New()
+			if (prob(src.spawnchance))
+				Artifact_Spawn(get_turf(src))
+			..()
 
 /obj/landmark/spawner
 	name = "spawner"
@@ -192,7 +211,7 @@ var/global/list/job_start_locations = list()
 
 	New()
 		if(current_state >= GAME_STATE_WORLD_INIT && prob(spawnchance) && !src.disposed)
-			SPAWN_DBG(6 SECONDS) // bluh, replace with some `initialize` variant later when someone makes it (needs to work with dmm loader)
+			SPAWN(6 SECONDS) // bluh, replace with some `initialize` variant later when someone makes it (needs to work with dmm loader)
 				if(!src.disposed)
 					initialize()
 		..()
@@ -207,6 +226,13 @@ var/global/list/job_start_locations = list()
 			src.type_to_spawn = name_to_type[src.name]
 		if(isnull(src.type_to_spawn))
 			CRASH("Spawner [src] at [src.x] [src.y] [src.z] had no type.")
+
+		#ifdef BAD_MONKEY_NO_BANANA
+		if (findtext("[src.type_to_spawn]", "monkey")) //ugly
+			qdel(src)
+			return
+		#endif
+
 		new type_to_spawn(src.loc)
 		qdel(src)
 
@@ -222,7 +248,7 @@ var/global/list/job_start_locations = list()
 /obj/landmark/spawner/loot
 	name = "Loot spawn"
 	type_to_spawn = /obj/storage/crate/loot
-	spawnchance = 75
+	spawnchance = 10
 
 // LONG RANGE TELEPORTER
 // consider refactoring to be associative the other way around later
@@ -306,25 +332,3 @@ var/global/list/job_start_locations = list()
 		var/obj/overlay/tile_effect/lighting/L = locate() in vistarget.vis_contents
 		if(L)
 			vistarget.vis_contents -= L
-
-/obj/landmark/load_prefab_shuttledmm
-	name = "custom shuttle dmm loading location"
-	desc = "Tells the dmm loader where to put the bottom left corner of the shuttle prefab."
-	icon = 'icons/effects/mapeditor.dmi'
-	icon_state = "landmark"
-	color = "#ff0000"
-
-	cog1
-		name = LANDMARK_SHUTTLE_COG1
-	cog2
-		name = LANDMARK_SHUTTLE_COG2
-	sealab
-		name = LANDMARK_SHUTTLE_SEALAB
-	manta
-		name = LANDMARK_SHUTTLE_MANTA
-	donut2
-		name = LANDMARK_SHUTTLE_DONUT2
-	donut3
-		name = LANDMARK_SHUTTLE_DONUT3
-	destiny
-		name = LANDMARK_SHUTTLE_DESTINY

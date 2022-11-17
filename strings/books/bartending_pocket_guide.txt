@@ -13,7 +13,7 @@
 			<br>To salt the rim of a glass, just pour salt into a beaker or make some of your own at a Chemical Dispenser, then hit the glass with it. You'll want to do this when you've already poured your drink of choice into the glass, so you don't accidentally end up adding salt into the drinking glass!
 	    <br><hr>
 	    <b>Part Three, Defending the bar and beyond the drink dispenser</b>
-	    <br>Look at that, now you know the basics. While normally the Bar is a fairly peaceful place, sometimes people have a bad day or made poor decisions and choose to take it out on your patrons. Luckily for you, an armory-grade riot shotgun has been issued to you in order to silence these rough-housers. Be warned though, you don't formally have a gun licence on the station and the robots might not take kindly to you luggin' it around.
+	    <br>Look at that, now you know the basics. While normally the Bar is a fairly peaceful place, sometimes people have a bad day or made poor decisions and choose to take it out on your patrons. Luckily for you, a sawn-off double barreled shotgun has been issued to you in order to silence these rough-housers. Be warned though, you don't formally have a gun licence on the station and the robots might not take kindly to you luggin' it around.
 	    <br>
 	    <br>And now, if you are still feeling lost, here is a small list of the most commonly ordered drinks by crew.
 	    <br>
@@ -21,7 +21,7 @@
 	    <br>Old Fashioned: Bourbon + Bitters + Sugar + Water
 	    <br>Screwdriver: Vodka + Orange Juice
 	    <br>Martini: Gin + Vermouth
-	    <br>Sex on the Beach: Screwdriver + Cranberry Juice
+	    <br>Bliss on the Beach: Screwdriver + Cranberry Juice
 	    <br>Whiskey Sour: Bourbon + Lemonade
 	    <br>
 	    <br>Now, if you still feel like you can do better, maybe it might be in your best interest to do some real Mixology and try your hand at discovering some of the drinks Nanotrasen doesn't want you to know about.

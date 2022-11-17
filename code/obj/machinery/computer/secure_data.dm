@@ -21,6 +21,7 @@
 	// var/can_change_id = 0
 	var/require_login = 1
 	desc = "A computer that allows an authorized user to set warrants, view fingerprints, and add notes to various crewmembers."
+	var/ai_access
 
 	light_r =1
 	light_g = 0.7
@@ -31,8 +32,8 @@
 	icon_state = "messyfiles"
 	req_access = list(access_forensics_lockers)
 
-/obj/machinery/computer/secure_data/attack_hand(mob/user as mob)
-	if (..())
+/obj/machinery/computer/secure_data/attack_hand(mob/user)
+	if (!ai_access && ..())
 		return
 	var/dat
 
@@ -473,7 +474,7 @@
 					if ("age")
 						if (istype(src.active_record_general, /datum/db_record))
 							var/t1 = input("Age:", "Security Records", src.active_record_general["age"], null) as num
-							t1 = max(1, min(t1, 99))
+							t1 = clamp(t1, 1, 99)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_general["age"] = t1
@@ -560,7 +561,7 @@
 						// <br>
 						// "}
 						else
-							alert(usr, "You do not have the required rank to do this!")
+							tgui_alert(usr, "You do not have the required rank to do this!", "Rank not high enough")
 
 			// if ("rank")
 			// 	if (src.active_record_general)
@@ -606,7 +607,7 @@
 						if ("arrest")
 							src.active_record_security["criminal"] = "*Arrest*"
 							if (usr && src.active_record_general["name"])
-								logTheThing("station", usr, null, "[src.active_record_general["name"]] is set to arrest by [usr] (using the ID card of [src.authenticated]) [log_loc(src)]")
+								logTheThing(LOG_STATION, usr, "[src.active_record_general["name"]] is set to arrest by [usr] (using the ID card of [src.authenticated]) [log_loc(src)]")
 						if ("incarcerated")
 							src.active_record_security["criminal"] = "Incarcerated"
 						if ("parolled")
@@ -756,7 +757,7 @@
 			if ("print_record")
 				if (!( src.printing ))
 					src.printing = 1
-					playsound(src.loc, "sound/machines/printer_press.ogg", 50, 0)
+					playsound(src.loc, 'sound/machines/printer_press.ogg', 50, 0)
 					sleep(3 SECONDS)
 					var/obj/item/paper/P = new /obj/item/paper( src.loc )
 					P.info = "<center><b>Security Record</b></center><br>"

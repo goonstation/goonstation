@@ -16,4 +16,4 @@
 #define CUSTOMJOB_SAVEFILE_VERSION_MAX	3
 
 //human voice stuff
-#define RANDOM_HUMAN_VOICE pick(1,2,3)
+#define RANDOM_HUMAN_VOICE pick("1", "2", "3", "4")

@@ -61,7 +61,7 @@
 				if(IN_RANGE(src, M, 7))
 					if(!ON_COOLDOWN(src, "[DUCKBOT_ANNOY_LOCKOUT_TIMEOUT]-[M.name]", src.forget_annoyed_timeout))
 						src.annoy_target = M
-						src.navigate_to(get_turf(M), src.bot_move_delay, 0, 100)
+						src.navigate_to(get_turf(M), src.bot_move_delay, 0, 20)
 						break
 	else
 		src.navigate_to(get_step_rand(src))
@@ -76,7 +76,7 @@
 	if(length(T) >= 1)
 		T = (pick(T))
 		src.mystical_access()
-		src.navigate_to(T, src.bot_move_delay, 0, 300)
+		src.navigate_to(T, src.bot_move_delay, 0, 100)
 		if(length(src.path) >= 1)
 			return TRUE
 
@@ -95,7 +95,7 @@
 			src.speak(message, 1, 1)
 			wakka_wakka(TRUE) // Seek loser is TRUE
 			if(prob(70))
-				playsound(src.loc, "sound/misc/amusingduck.ogg", 50, 1) // MUSIC
+				playsound(src.loc, 'sound/misc/amusingduck.ogg', 50, 1) // MUSIC
 		else
 			if(!ON_COOLDOWN(src, DUCKBOT_QUACK_COOLDOWN, src.quack_cooldown) && prob(60))
 				var/message = pick("wacka", "quack","quacky","gaggle")
@@ -109,12 +109,12 @@
 				else
 					wakka_wakka()
 			if(!ON_COOLDOWN(src, DUCKBOT_AMUSEMENT_COOLDOWN, src.amusement_cooldown) && prob(20))
-				playsound(src.loc, "sound/misc/amusingduck.ogg", 50, 0) // MUSIC
+				playsound(src.loc, 'sound/misc/amusingduck.ogg', 50, 0) // MUSIC
 		if(prob (7) && src.eggs >= 1)
 			var/obj/item/a_gift/easter/E = new /obj/item/a_gift/easter(src.loc)
 			E.name = "duck egg"
 			src.eggs--
-			playsound(src.loc, "sound/misc/eggdrop.ogg", 50, 0)
+			playsound(src.loc, 'sound/misc/eggdrop.ogg', 50, 0)
 		if(prob(80))
 			src.egg_process++
 		if(src.egg_process >= 100 && prob(20))
@@ -145,7 +145,7 @@
 		on = !on
 	attack_hand(usr)
 
-/obj/machinery/bot/duckbot/attack_hand(mob/user as mob)
+/obj/machinery/bot/duckbot/attack_hand(mob/user)
 	var/dat
 	dat += "<TT><B>AMUSING DUCK</B></TT><BR>"
 	dat += "<B>toy series with strong sense for playing</B><BR><BR>"
@@ -162,7 +162,7 @@
 		if(user)
 			boutput(user, "<span class='alert'>You short out the horn on [src].</span>")
 		src.audible_message("<span class='alert'><B>[src] quacks loudly!</B></span>", 1)
-		playsound(src.loc, "sound/misc/amusingduck.ogg", 50, 1)
+		playsound(src.loc, 'sound/misc/amusingduck.ogg', 50, 1)
 		src.eggs += rand(3,9)
 		src.emagged = 1
 		src.processing_tier = src.PT_active
@@ -189,10 +189,10 @@
 	var/list/T = get_area_turfs(src.duck_migration_target, 1)
 	if(length(T) >= 1)
 		. = TRUE
-		SPAWN_DBG(rand(0,10 SECONDS)) // give em some time to spread out a bit
+		SPAWN(rand(0,10 SECONDS)) // give em some time to spread out a bit
 			T = (pick(T))
 			//src.mystical_access() AB SO FUC KING LUTE LEY NOT THANK YOU VERRY MOUCHE - warc
-			src.navigate_to(T, src.bot_move_delay, 0, 300)
+			src.navigate_to(T, src.bot_move_delay, 0, 80)
 			if(length(src.path) < 1)
 				src.KillPathAndGiveUp(1)
 
@@ -264,7 +264,7 @@
 			src.access_lookup = initial(src.access_lookup)
 			src.botcard.access = get_access(src.access_lookup)
 
-/obj/machinery/bot/duckbot/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/bot/duckbot/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/card/emag))
 		emag_act(user, W)
 	else
@@ -281,7 +281,8 @@
 	src.exploding = 1
 	src.on = 0
 	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
-	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
+	new /obj/item/instrument/bikehorn(src.loc)
 	qdel(src)
 	return

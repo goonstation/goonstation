@@ -33,8 +33,8 @@
 		/obj/item/device/light/flashlight,
 		/obj/item/kitchen/utensil/knife,
 		/obj/item/staple_gun,
-		/obj/item/old_grenade/banana/cheese_sandwich,
-		/obj/item/old_grenade/banana/banana_corndog,
+		/obj/item/old_grenade/spawner/cheese_sandwich,
+		/obj/item/old_grenade/spawner/banana_corndog,
 		/obj/item/rubberduck,
 		/obj/item/clothing/gloves/yellow/unsulated
 	)
@@ -61,7 +61,7 @@
 		/obj/item/gimmickbomb/hotdog,
 		/obj/item/card/id/captains_spare,
 		/obj/item/storage/banana_grenade_pouch,
-		/obj/critter/wendigo, // have fun!
+		/obj/critter/brullbar, // have fun!
 		/obj/item/artifact/teleport_wand,
 		/obj/item/storage/firstaid/crit
 	)
@@ -69,18 +69,18 @@
 	money_roll(waver)
 		var/roll = rand(1,max_roll)
 		var/exclamation = ""
-		var/win_sound = "sound/machines/ping.ogg"
+		var/win_sound = 'sound/machines/ping.ogg'
 		var/prize_type = null
 
 		if(roll > (max_roll - uses * 20)) // failure chances increase by 2% every roll
 			src.emag_act(null, null) // bye bye!
 			prize_type = /obj/item/gimmickbomb/butt/prearmed
 			exclamation = "Big Loser! Goodbye! "
-			win_sound = "sound/musical_instruments/Trombone_Failiure.ogg"
+			win_sound = 'sound/musical_instruments/Trombone_Failiure.ogg'
 			return
 		else if (roll <= 20 && wager > 250) // rare tier, 2% chance, only on high wagers
 			prize_type = pick(raretier)
-			win_sound = "sound/misc/airraid_loop_short.ogg"
+			win_sound = 'sound/misc/airraid_loop_short.ogg'
 			exclamation = "JACKPOT! "
 			src.uses += 20
 		else if (roll > 20 && roll <= 170) // half decent tier, 15% chance
@@ -104,14 +104,14 @@
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E) // Freak out and die
 		src.icon_state = "slotsitem-malf"
-		playsound(get_turf(src), "sound/misc/klaxon.ogg", 55, 1)
+		playsound(get_turf(src), 'sound/misc/klaxon.ogg', 55, 1)
 		src.visible_message("<span class='subtle'><b>[src]</b> says, 'WINNER! WINNER! JACKPOT! WINNER! JACKPOT! BIG WINNER! BIG WINNER!'</span>")
-		playsound(src.loc, "sound/impact_sounds/Metal_Clang_1.ogg", 60, 1, pitch = 1.2)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 60, 1, pitch = 1.2)
 		animate_shake(src,7,5,2)
 		sleep(3.5 SECONDS)
 
 		src.visible_message("<span class='subtle'><b>[src]</b> says, 'BIG WINNER! BIG WINNER!'</span>")
-		playsound(src.loc, "sound/impact_sounds/Metal_Clang_2.ogg", 60, 1, pitch = 0.8)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Clang_2.ogg', 60, 1, pitch = 0.8)
 		animate_shake(src,5,7,2)
 		sleep(1.5 SECONDS)
 
@@ -120,6 +120,7 @@
 		if (src.scan)
 			src.scan.set_loc(src.loc)
 		qdel(src)
+		return TRUE
 
 // Misc props
 

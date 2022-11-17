@@ -10,7 +10,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "pdamod"
 	w_class = W_CLASS_SMALL
-	mats = 4.0
+	mats = 4
 	var/obj/item/device/pda2/host = null
 
 	var/setup_use_menu_badge = 0  //Should we have a line in the main menu?
@@ -127,7 +127,7 @@
 
 	relay_drop(mob/user)
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.host)
 				if (src.host.loc != user)
 					if (!use_simple_light && !use_medium_light)
@@ -234,11 +234,15 @@
 	desc = "A terahertz-ray emitter and scanner built into a handy PDA module."
 	icon_state = "pdamod_tscanner"
 	setup_use_menu_badge = 1
-	var/on = 0
 	abilities = list(/obj/ability_button/pda_tray_toggle)
+	var/obj/item/device/t_scanner/pda/scanner
+
+	New()
+		..()
+		scanner = new(src)
 
 	return_menu_badge()
-		var/text = "<a href='byond://?src=\ref[src];toggle=1'>[src.on ? "Disable" : "Enable"] T-Scanner</a>"
+		var/text = "<a href='byond://?src=\ref[src];toggle=1'>[src.scanner.on ? "Disable" : "Enable"] T-Scanner</a>"
 		return text
 
 	Topic(href, href_list)
@@ -246,54 +250,22 @@
 			return
 		if(href_list["toggle"])
 			src.toggle_scan()
-		return
 
 	proc/toggle_scan()
-		src.on = !src.on
-		if(src.on) processing_items |= src
+		scanner.set_on(!scanner.on)
 		for (var/obj/ability_button/pda_tray_toggle/B in src.ability_buttons)
-			B.icon_state = "pda[src.on]"
+			B.icon_state = "pda[scanner.on]"
 		if (src.host)
 			src.host.updateSelfDialog()
 
+	disposing()
+		qdel(scanner)
+		scanner = null
+		..()
+
 	uninstall()
 		..()
-		src.on = 0
-		return
-
-	process()
-		if(!src.on || !src.host)
-			processing_items.Remove(src)
-			return
-		var/loc_to_check = src.host.loc
-
-		for(var/turf/T in range(1, loc_to_check) )
-
-			if(!T.intact)
-				continue
-
-			for(var/obj/O in T.contents)
-				if(O.level != 1)
-					continue
-
-				if(O.invisibility == INVIS_ALWAYS)
-					O.invisibility = INVIS_NONE
-					O.alpha = 128
-					SPAWN_DBG(1 SECOND)
-						if(O)
-							var/turf/U = O.loc
-							if(!istype(U))
-								return
-							if(U.intact)
-								O.invisibility = INVIS_ALWAYS
-								O.alpha = 255
-
-			var/mob/living/M = locate() in T
-			if(M?.invisibility == INVIS_CLOAK)
-				M.invisibility = INVIS_NONE
-				SPAWN_DBG(0.2 SECONDS)
-					if(M)
-						M.invisibility = INVIS_CLOAK
+		scanner.set_on(FALSE)
 
 /obj/ability_button/pda_tray_toggle
 	name = "Toggle PDA T-Scanner"
@@ -320,15 +292,15 @@
 		if(..())
 			return
 		if(href_list["toggle"])
-			src.send_alert()
+			src.send_alert(usr)
 		return
 
-	proc/send_alert()
+	proc/send_alert(mob/user)
 		if (!src.host)
-			boutput(usr, "<span class='alert'>No PDA detected.")
+			boutput(user, "<span class='alert'>No PDA detected.")
 			return
 		if (ON_COOLDOWN(src, "send_alert", 5 MINUTES))
-			boutput(usr, "<span class='alert'>[src] is still on cooldown mode!</span>")
+			boutput(user, "<span class='alert'>[src] is still on cooldown mode!</span>")
 			return
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.host
@@ -339,7 +311,17 @@
 		var/area/A = get_area(src.host)
 		signal.data["message"]  = "<b><span class='alert'>***SECURITY BACKUP REQUESTED*** Location: [A ? A.name : "nowhere"]!"
 		src.host.post_signal(signal)
-		boutput(usr, "<span class='notice'>Alert sent.</span>")
+
+		if(isliving(user))
+			playsound(src, 'sound/items/security_alert.ogg', 60)
+			var/map_text = null
+			map_text = make_chat_maptext(usr, "Emergency alert sent. Please assist this officer.", "font-family: 'Helvetica'; color: #D30000; font-size: 7px;", alpha = 215)
+			for (var/mob/O in hearers(usr))
+				O.show_message(assoc_maptext = map_text)
+			usr.visible_message("<span class='alert'>[usr] presses a red button on the side of their [src.host].</span>",
+			"<span class='notice'>You press the \"Alert\" button on the side of your [src.host].</span>",
+			"<span class='alert'>You see [usr] press a button on the side of their [src.host].</span>")
+
 
 /obj/ability_button/pda_security_alert
 	name = "Send Security Alert"
@@ -348,4 +330,4 @@
 	execute_ability()
 		var/obj/item/device/pda_module/alert/J = the_item
 		if (J.host)
-			J.send_alert()
+			J.send_alert(src.the_mob)

@@ -39,14 +39,14 @@
 			adulterants--
 			reagents.add_reagent(pick_string("chemistry_tools.txt", "CYBERPUNK_drug_adulterants"), rand(1,3))
 
-		update_icon()
+		UpdateIcon()
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
 /obj/item/reagent_containers/food/drinks/bottle/wine
 	name = "wine"
-	desc = "Not to be confused with pubbie tears."
+	desc = "Not to be confused with high-pitched crying."
 	icon_state = "bottle-wine"
 	heal_amt = 1
 	g_amt = 40
@@ -126,12 +126,12 @@
 				src.broken = 1
 				src.reagents.reaction(U)
 				src.create_reagents(0)
-				src.update_icon()
+				src.UpdateIcon()
 			var/new_name = input(user, "Enter new name for [O]", "Rename [O]", O.name) as null|text
 			if (isnull(new_name) || !length(new_name) || new_name == " ")
 				return
 			phrase_log.log_phrase("vehicle", new_name, no_duplicates=TRUE)
-			logTheThing("station", user, null, "renamed [O] to [new_name] in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
+			logTheThing(LOG_STATION, user, "renamed [O] to [new_name] in [get_area(user)] ([log_loc(user)])")
 			new_name = copytext(strip_html(new_name), 1, 32)
 			O.name = new_name
 			return

@@ -2,7 +2,11 @@
 /* ==================== Area ==================== */
 
 /area/station/shield_zone
+	name = "shield protected space"
 	icon_state = "shield_zone"
+	expandable = FALSE
+	do_not_irradiate = TRUE
+	requires_power = FALSE
 
 /* ==================== Generator ==================== */
 
@@ -26,8 +30,8 @@
 
 	New()
 		..()
-		src.update_icon()
-		SPAWN_DBG(0.6 SECONDS)
+		src.UpdateIcon()
+		SPAWN(0.6 SECONDS)
 			if (!src.link)
 				var/turf/T = get_turf(src)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
@@ -36,7 +40,8 @@
 					src.link.master = src
 			src.net_id = generate_net_id(src)
 
-	proc/update_icon()
+	update_icon()
+
 		if (status & (NOPOWER|BROKEN))
 			src.icon_state = "shieldgen0"
 			src.UpdateOverlays(null, "top_lights")
@@ -101,7 +106,7 @@
 		//Otherwise, ff they aren't addressing us, ignore them
 		if (signal.data["address_1"] != src.net_id)
 			if ((signal.data["address_1"] == "ping") && signal.data["sender"])
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					src.post_status(target, "command", "ping_reply", "device", "PNET_SHIELD_GEN", "netid", src.net_id)
 			return
 
@@ -125,7 +130,7 @@
 				src.post_reply("SGEN_DACTVD", target)
 
 	// for testing atm
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (status & (NOPOWER|BROKEN) || !src.link)
 			user.show_text("[src] seems inoperable, as pressing the button does nothing.")
 			return
@@ -143,7 +148,7 @@
 				src.activate()
 				user.show_text("Shields Activated.")
 			message_admins("<span class='internal'>[key_name(user)] [src.active ? "activated" : "deactivated"] shields</span>")
-			logTheThing("station", null, null, "[key_name(user)] [src.active ? "activated" : "deactivated"] shields")
+			logTheThing(LOG_STATION, null, "[key_name(user)] [src.active ? "activated" : "deactivated"] shields")
 		else
 			user.show_text("<span class='alert'><b>That is still not ready to be used again.</b></span>")
 
@@ -168,7 +173,7 @@
 	proc/post_reply(error_text, target_id)
 		if (!error_text || !target_id)
 			return
-		SPAWN_DBG(0.3 SECONDS)
+		SPAWN(0.3 SECONDS)
 			src.post_status(target_id, "command", "device_reply", "status", error_text)
 		return
 
@@ -191,7 +196,7 @@
 			return
 		src.active = 1
 		src.create_shield()
-		src.update_icon()
+		src.UpdateIcon()
 		playsound(src.loc, src.sound_startup, 75)
 
 	proc/deactivate()
@@ -199,7 +204,7 @@
 			return
 		src.active = 0
 		src.remove_shield()
-		src.update_icon()
+		src.UpdateIcon()
 		playsound(src.loc, src.sound_shutoff, 75)
 
 
@@ -208,6 +213,7 @@
 	icon_state = "engine1"
 
 	update_icon()
+
 		return
 
 /obj/machinery/shield_generator/console_lower
@@ -215,6 +221,7 @@
 	icon_state = "engine2"
 
 	update_icon()
+
 		return
 
 /* ==================== Computer ==================== */
@@ -404,13 +411,13 @@
 						src.print_text("<b>Alert:</b> Shield generator activated.")
 						if (usr)
 							message_admins("<span class='internal'>[key_name(usr)] activated shields</span>")
-							logTheThing("station", null, null, "[key_name(usr)] activated shields")
+							logTheThing(LOG_STATION, null, "[key_name(usr)] activated shields")
 
 					if ("sgen_dactvd")
 						src.print_text("<b>Alert:</b> Shield generator deactivated.")
 						if (usr)
 							message_admins("<span class='internal'>[key_name(usr)] deactivated shields</span>")
-							logTheThing("station", null, null, "[key_name(usr)] deactivated shields")
+							logTheThing(LOG_STATION, null, "[key_name(usr)] deactivated shields")
 				return
 		return
 

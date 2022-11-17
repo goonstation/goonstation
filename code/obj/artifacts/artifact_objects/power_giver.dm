@@ -5,6 +5,7 @@
 /datum/artifact/power_giver
 	associated_object = /obj/artifact/power_giver
 	type_name = "Mutator"
+	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 200
 	validtypes = list("martian","wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
@@ -23,7 +24,7 @@
 		..()
 		power_granted = pick("blind","mute","clumsy","fire_resist","cold_resist","resist_electric",
 		"psy_resist","glowy","hulk","xray","horns","stinky","monkey","mattereater","jumpy","telepathy","empath",
-		"immolate","eyebeams","melt")
+		"immolate","eyebeams","melt","accent_uwu")
 		power_time = rand(30,180)
 		if (prob(5))
 			power_time = 0
@@ -43,6 +44,6 @@
 			O.ArtifactFaultUsed(user)
 			if (recharge_time > 0)
 				ready = 0
-				SPAWN_DBG(recharge_time)
+				SPAWN(recharge_time)
 					T.visible_message("<b>[O]</b> begins to glow again.")
 					ready = 1

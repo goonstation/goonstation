@@ -6,21 +6,33 @@
 	max_range = 1
 	cooldown = 1350
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	offensive = 1
 	sticky = 1
-	voice_grim = "sound/voice/wizard/CluwneGrim.ogg"
-	voice_fem = "sound/voice/wizard/CluwneFem.ogg"
-	voice_other = "sound/voice/wizard/CluwneLoud.ogg"
+	voice_grim = 'sound/voice/wizard/CluwneGrim.ogg'
+	voice_fem = 'sound/voice/wizard/CluwneFem.ogg'
+	voice_other = 'sound/voice/wizard/CluwneLoud.ogg'
+	maptext_colors = list("#3fb54f", "#9eee80", "#d3cb21", "#b97517")
 
 	cast(mob/target)
 		if(!holder)
-			return
-		var/mob/living/carbon/human/T = target
-		if (!istype(T))
+			return 1
+
+		if (!ishuman(target))
 			boutput(holder.owner, "Your target must be human!")
 			return 1
-		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell on [target]!</b></span>")
-		actions.start(new/datum/action/bar/icon/cluwne_spell(target, src), holder.owner)
+
+		if(!can_act(holder.owner))
+			boutput(holder.owner, "You can't cast this whilst incapacitated!")
+			return 1
+
+		var/mob/living/carbon/human/H = target
+
+		if (targetSpellImmunity(H, TRUE, 2))
+			return 1
+
+		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell on [H]!</b></span>")
+		actions.start(new/datum/action/bar/icon/cluwne_spell(usr, target, src), holder.owner)
 
 /datum/action/bar/icon/cluwne_spell
 	duration = 1.5 SECONDS
@@ -31,122 +43,108 @@
 
 	var/datum/targetable/spell/cluwne/spell
 	var/mob/living/carbon/human/target
+	var/datum/abilityHolder/A
+	var/mob/living/M
 
-	New(Target, Spell)
+	New(Source, Target, Spell)
 		target = Target
 		spell = Spell
+		A = spell.holder
+		M = Source
 		..()
 
 	onStart()
 		..()
 
-		var/mob/living/M = owner
-		var/datum/abilityHolder/A = spell.holder
-		var/mob/living/carbon/human/T = target
-
-		if (!A || get_dist(M, T) > spell.max_range || !T || !M || !ishuman(T) || !A || !istype(A) || !M.wizard_castcheck(spell))
+		if (isnull(A) || GET_DIST(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onUpdate()
 		..()
 
-		var/mob/living/M = owner
-		var/datum/abilityHolder/A = spell.holder
-		var/mob/living/carbon/human/T = target
-
-		if (!A || get_dist(M, T) > spell.max_range || !T || !M || !ishuman(T) || !A || !istype(A) || !M.wizard_castcheck(spell))
+		if (isnull(A) || GET_DIST(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onEnd()
 		..()
 
-		var/mob/living/M = owner
-		var/datum/abilityHolder/A = spell.holder
-		var/mob/living/carbon/human/T = target
-
 		if(!istype(get_area(M), /area/sim/gunsim))
-			M.say("NWOLC EGNEVER")
-			..()
+			M.say("NWOLC EGNEVER", FALSE, spell.maptext_style, spell.maptext_colors)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(spell.voice_grim && H && istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(H.head, /obj/item/clothing/head/wizard/necro))
+				playsound(H.loc, spell.voice_grim, 50, 0, -1)
+			else if(spell.voice_fem && H.gender == "female")
+				playsound(H.loc, spell.voice_fem, 50, 0, -1)
+			else if (spell.voice_other)
+				playsound(H.loc, spell.voice_other, 50, 0, -1)
 
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-		smoke.set_up(5, 0, T.loc)
-		smoke.attach(T)
+		smoke.set_up(5, 0, target.loc)
+		smoke.attach(target)
 		smoke.start()
+		logTheThing(LOG_COMBAT, M, "casts a Cluwne spell on [constructTarget(target,"combat")] at [log_loc(target)].")
+		if (target.job != "Cluwne")
+			boutput(target, "<span class='alert'><B>You HONK painfully!</B></span>")
+			target.take_brain_damage(50)
+			target.stuttering = 120
+			target.contract_disease(/datum/ailment/disability/clumsy/cluwne,null,null,1)
+			target.contract_disease(/datum/ailment/disease/cluwneing_around/cluwne,null,null,1)
+			target.job = "Cluwne"
+			target.real_name = "cluwne"
+			target.UpdateName()
+			playsound(target, pick('sound/voice/cluwnelaugh1.ogg','sound/voice/cluwnelaugh2.ogg','sound/voice/cluwnelaugh3.ogg'), 35, 0, 0, clamp(1.0 + (30 - target.bioHolder.age)/50, 0.7, 1.4))
+			target.change_misstep_chance(60)
 
-		if (T.traitHolder.hasTrait("training_chaplain"))
-			boutput(A, "<span class='alert'>[T] has divine protection from magic.</span>")
-			T.visible_message("<span class='alert'>The spell has no effect on [T]!</span>")
-			JOB_XP(T, "Chaplain", 2)
-			return
-
-		if (iswizard(T))
-			T.visible_message("<span class='alert'>The spell has no effect on [T]!</span>")
-			return
-
-		if(check_target_immunity( T ))
-			T.visible_message("<span class='alert'>[T] seems to be warded from the effects!</span>")
-			return 1
-
-		if (T.job != "Cluwne")
-			boutput(T, "<span class='alert'><B>You HONK painfully!</B></span>")
-			T.take_brain_damage(50)
-			T.stuttering = 120
-			T.job = "Cluwne"
-			T.contract_disease(/datum/ailment/disability/clumsy/cluwne,null,null,1)
-			T.contract_disease(/datum/ailment/disease/cluwneing_around/cluwne,null,null,1)
-			playsound(T, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, max(0.7, min(1.4, 1.0 + (30 - T.bioHolder.age)/50)))
-			T.change_misstep_chance(60)
-
-			animate_clownspell(T)
-			//T.unequip_all()
-			T.drop_from_slot(T.w_uniform)
-			T.drop_from_slot(T.shoes)
-			T.drop_from_slot(T.wear_mask)
-			T.drop_from_slot(T.gloves)
-			T.equip_if_possible(new /obj/item/clothing/under/gimmick/cursedclown(T), T.slot_w_uniform)
-			T.equip_if_possible(new /obj/item/clothing/shoes/cursedclown_shoes(T), T.slot_shoes)
-			T.equip_if_possible(new /obj/item/clothing/mask/cursedclown_hat(T), T.slot_wear_mask)
-			T.equip_if_possible(new /obj/item/clothing/gloves/cursedclown_gloves(T), T.slot_gloves)
-			T.real_name = "cluwne"
-			SPAWN_DBG(2.5 SECONDS) // Don't remove.
-				if (T) T.assign_gimmick_skull() // The mask IS your new face, my friend (Convair880).
+			animate_clownspell(target)
+			//target.unequip_all()
+			target.drop_from_slot(target.w_uniform)
+			target.drop_from_slot(target.shoes)
+			target.drop_from_slot(target.wear_mask)
+			target.drop_from_slot(target.gloves)
+			target.equip_if_possible(new /obj/item/clothing/under/gimmick/cursedclown(target), target.slot_w_uniform)
+			target.equip_if_possible(new /obj/item/clothing/shoes/cursedclown_shoes(target), target.slot_shoes)
+			target.equip_if_possible(new /obj/item/clothing/mask/cursedclown_hat(target), target.slot_wear_mask)
+			target.equip_if_possible(new /obj/item/clothing/gloves/cursedclown_gloves(target), target.slot_gloves)
+			SPAWN(2.5 SECONDS) // Don't remove.
+				if (target) target.assign_gimmick_skull() // The mask IS your new face, my friend (Convair880).
 		else
-			boutput(T, "<span class='alert'><b>You don't feel very funny.</b></span>")
-			T.take_brain_damage(-120)
-			T.stuttering = 0
-			if (T.mind)
-				T.mind.assigned_role = "Lawyer"
-			T.change_misstep_chance(-INFINITY)
+			boutput(target, "<span class='alert'><b>You don't feel very funny.</b></span>")
+			target.take_brain_damage(-120)
+			target.stuttering = 0
+			if (target.mind)
+				target.mind.assigned_role = "Lawyer"
+			target.change_misstep_chance(-INFINITY)
 
-			animate_clownspell(T)
-			for(var/datum/ailment_data/AD in T.ailments)
+			animate_clownspell(target)
+			for(var/datum/ailment_data/AD in target.ailments)
 				if(istype(AD.master,/datum/ailment/disability/clumsy))
-					T.cure_disease(AD)
-			var/obj/old_uniform = T.w_uniform
-			var/obj/item/the_id = T.wear_id
+					target.cure_disease(AD)
+			var/obj/old_uniform = target.w_uniform
+			var/obj/item/the_id = target.wear_id
 
-			if(T.w_uniform && findtext("[T.w_uniform.type]","clown"))
-				T.w_uniform = new /obj/item/clothing/under/suit(T)
+			if(target.w_uniform && findtext("[target.w_uniform.type]","clown"))
+				target.w_uniform = new /obj/item/clothing/under/suit(target)
 				qdel(old_uniform)
 
-			if(T.shoes && findtext("[T.shoes.type]","clown"))
-				qdel(T.shoes)
-				T.shoes = new /obj/item/clothing/shoes/black(T)
+			if(target.shoes && findtext("[target.shoes.type]","clown"))
+				qdel(target.shoes)
+				target.shoes = new /obj/item/clothing/shoes/black(target)
 
-			if(the_id && the_id:registered == T.real_name)
+			if(the_id && the_id:registered == target.real_name)
 				if (istype(the_id, /obj/item/card/id))
 					the_id:assignment = "Lawyer"
-					the_id:name = "[T.real_name]'s ID Card (Lawyer)"
+					the_id:name = "[target.real_name]'s ID Card (Lawyer)"
 				else if (istype(the_id, /obj/item/device/pda2))
 					the_id:assignment = "Lawyer"
 					the_id:ID_card:assignment = "Lawyer"
-					the_id:ID_card:name = "[T.real_name]'s ID Card (Lawyer)"
-				T.wear_id = the_id
+					the_id:ID_card:name = "[target.real_name]'s ID Card (Lawyer)"
+				target.wear_id = the_id
 
-			for(var/obj/item/W in T)
+			for(var/obj/item/W in target)
 				if (findtext("[W.type]","clown"))
-					T.u_equip(W)
+					target.u_equip(W)
 					if (W)
-						W.set_loc(T.loc)
-						W.dropped(T)
+						W.set_loc(target.loc)
+						W.dropped(target)
 						W.layer = initial(W.layer)

@@ -8,7 +8,7 @@
 	boutput(world, "<B>Escape on the shuttle but the humans have precedence!</B>")
 
 /datum/game_mode/monkey/post_setup()
-	SPAWN_DBG(5 SECONDS)
+	SPAWN(5 SECONDS)
 		var/list/players = list()
 		for (var/mob/living/carbon/human/player in mobs)
 			if (player.client)

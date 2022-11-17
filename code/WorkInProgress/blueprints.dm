@@ -1,5 +1,4 @@
 /obj/abcuMarker
-	name = "ABCU Marker"
 	desc = "Denotes a valid tile."
 	icon = 'icons/obj/objects.dmi'
 	name = "Building marker (valid)"
@@ -9,7 +8,6 @@
 	layer = TURF_LAYER
 
 /obj/abcuMarker/red
-	name = "ABCU Marker"
 	desc = "Denotes an invalid tile."
 	icon = 'icons/obj/objects.dmi'
 	name = "Building marker (invalid)"
@@ -46,7 +44,7 @@
 		boutput(user, "<span class='alert'>This machine is not linked to your network.</span>")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/blueprint))
 			if(currentBp)
 				boutput(user, "<span class='alert'>Theres already a blueprint in the machine.</span>")
@@ -64,13 +62,13 @@
 			return
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(building)
 			boutput(user, "<span class='alert'>The machine is currently constructing something. Best not touch it until it's done.</span>")
 			return
 
 		var/list/options = list(locked ? "Unlock":"Lock", "Begin Building", "Dump Materials", "Check Materials" ,currentBp ? "Eject Blueprint":null)
-		var/input = input(usr,"Select option:","Option") in options
+		var/input = input(user,"Select option:","Option") in options
 		switch(input)
 			if("Unlock")
 				if(!locked || building) return
@@ -181,7 +179,7 @@
 		building = 1
 		icon_state = "builder1"
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 
 			for(var/datum/tileinfo/T in currentBp.roominfo)
 				var/turf/pos = locate(text2num(T.posx) + src.x,text2num(T.posy) + src.y, src.z)
@@ -297,6 +295,30 @@
 				bp.roominfo.Add(tf)
 				bp.name = "Blueprint '[roomname]'"
 
+/verb/adminDeleteBlueprint()
+	set name = "Delete Blueprint"
+	set desc = "Allows deletion of blueprints of any user."
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+
+	var/list/bps = new/list()
+	var/savefile/save = new/savefile("data/blueprints.dat")
+	save.cd = "/"
+
+	for(var/currckey in save.dir)
+		save.cd = "/[currckey]"
+		for(var/currroom in save.dir)
+			save.cd = "/[currckey]/[currroom]"
+			bps.Add("[currckey]/[currroom]")
+
+	save.cd = "/"
+
+	var/input = input(usr,"Select save:","Blueprints") in bps
+	var/list/split = splittext(input, "/")
+	if(save.dir.Find("[split[1]]"))
+		save.cd = "/[split[1]]"
+		if(save.dir.Find("[split[2]]"))
+			save.dir.Remove("[split[2]]")
+			boutput(usr, "<span class='alert'>Blueprint [split[2]] deleted..</span>")
 
 /obj/item/blueprint
 	name = "Blueprint"
@@ -354,7 +376,6 @@
 	var/list/turf/roomList = new/list()
 
 	var/list/permittedObjectTypes = list(\
-	"/obj/closet", \
 	"/obj/stool", \
 	"/obj/grille", \
 	"/obj/window", \
@@ -377,7 +398,7 @@
 	"/obj/machinery/disposal", \
 	"/obj/machinery/gibber",
 	"/obj/machinery/floorflusher",
-	"/obj/machinery/driver_button", \
+	"/obj/machinery/activation_button/driver_button", \
 	"/obj/machinery/door_control",
 	"/obj/machinery/disposal",
 	"/obj/submachine/chef_oven",
@@ -405,10 +426,10 @@
 	"/obj/machinery/portable_atmospherics/canister")
 	var/list/permittedTileTypes = list("/turf/simulated")
 
-	var/savefile/save = new/savefile("data/blueprints.dat")
+	var/static/savefile/save = new/savefile("data/blueprints.dat")
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(get_dist(src,target) > 2) return
+		if(GET_DIST(src,target) > 2) return
 
 		if(!isturf(target)) target = get_turf(target)
 
@@ -525,16 +546,19 @@
 			save["state"] << curr.icon_state
 
 			for(var/obj/o in curr)
-				for(var/p in blacklistedObjectTypes)
-					var/type = text2path(p)
-					if(istype(o, type))
-						break//no
 				var/permitted = 0
 				for(var/p in permittedObjectTypes)
 					var/type = text2path(p)
 					if(istype(o, type))
 						permitted = 1
 						break
+
+				for(var/p in blacklistedObjectTypes)
+					var/type = text2path(p)
+					if(istype(o, type))
+						permitted = 0
+						break//no
+
 				if(permitted || !applyWhitelist)
 					var/id = "\ref[o]"
 					save.cd = "/[usr.client.ckey]/[name]/[posx],[posy]"
@@ -573,7 +597,7 @@
 					tf.tiletype = save["type"]
 					tf.state = save["state"]
 					tf.direction = save["dir"]
-					bp.req_metal += 1.0
+					bp.req_metal += 1
 					bp.req_glass += 0.5
 					for (var/B in save.dir)
 						if(B == "type" || B == "state") continue
@@ -612,8 +636,10 @@
 
 
 	attack_self(mob/user as mob)
+		if(!user.client)
+			return
 		var/list/options = list("Reset", "Set Blueprint Name", "Print Saved Blueprint", "Save Blueprint", "Delete Blueprint" , "Information")
-		var/input = input(usr,"Select option:","Option") in options
+		var/input = input(user,"Select option:","Option") in options
 
 		switch(input)
 			if("Reset")

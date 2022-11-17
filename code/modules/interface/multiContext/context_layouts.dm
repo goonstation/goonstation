@@ -21,8 +21,8 @@ var/list/datum/contextAction/globalContextActions = null
 		var/mob/living/critter/R = target
 		R.hud.add_screen(C)
 
-	else if(istype(target, /mob/wraith))
-		var/mob/wraith/W = target
+	else if(istype(target, /mob/living/intangible/wraith))
+		var/mob/living/intangible/wraith/W = target
 		W.hud.add_screen(C)
 
 	else if (isrobot(target))
@@ -36,13 +36,16 @@ var/list/datum/contextAction/globalContextActions = null
 	else if (isAI(target))
 		var/mob/living/silicon/ai/A = target
 		if (isAIeye(target))
-			var/mob/dead/aieye/AE = target
+			var/mob/living/intangible/aieye/AE = target
 			A = AE.mainframe
 		A.hud.add_screen(C)
 
 	else if (ishivebot(target))
 		var/mob/living/silicon/hivebot/hivebot = target
 		hivebot.hud.add_screen(C)
+	else if (istype(target, /mob/living/intangible/flock))
+		var/mob/living/intangible/flock/flock_entity = target
+		flock_entity.render_special.add_screen(C)
 
 
 /datum/contextLayout/flexdefault
@@ -125,80 +128,10 @@ var/list/datum/contextAction/globalContextActions = null
 
 		. = buttons
 
-/datum/contextLayout/newinstrumental
-	var/spacingX = 16
-	var/spacingY = 16
-	var/offsetX = 0
-	var/offsetY = 0
-	var/keyOffset = 1
-
-	New(var/SpacingX = 5, var/SpacingY = 16, var/OffsetX = 0, var/OffsetY = 0, var/KeyOffset = 1)
-		spacingX = SpacingX
-		spacingY = SpacingY
-		offsetX = OffsetX
-		offsetY = OffsetY
-		keyOffset = KeyOffset
-		. = ..()
-
-	showButtons(list/buttons, atom/target)
-		var/offX = 0
-		var/offY = spacingY
-		var/finalOff = spacingX * (length(buttons)-3)
-		offX -= finalOff/2
-
-		var/buttonIndex = keyOffset
-
-		var/list/blackKeys = list()
-		var/list/blackKeysOffX = list()
-
-		var/blackKeyYOff = 12
-
-		var/keyCIndex = 1
-		var/keyFIndex = 6
-		var/keyBIndex = 12
-
-		for(var/atom/movable/screen/contextButton/C as anything in buttons)
-			C.screen_loc = "CENTER,CENTER+0.6"
-
-			if(buttonIndex > keyBIndex)
-				offX += 5
-				buttonIndex = keyCIndex
-
-			if(buttonIndex == keyFIndex)
-				offX += 5
-
-			switch(buttonIndex)
-				if(2,4,7,9,11) // C#, D#, F#, G#, A# added to blackKeys list for proper rendering
-					blackKeys += C
-					blackKeysOffX += offX
-					offY = spacingY + 12
-				else
-					offY = spacingY
-					addButtonToHud(usr, C)
-
-					var/matrix/trans = new /matrix
-					trans = trans.Reset()
-					trans.Translate(offX, offY)
-
-					animate(C, alpha=255, transform=trans, easing=CUBIC_EASING, time=1)
-
-			buttonIndex += 1
-			offX += spacingX
-
-		for(var/i in 1 to length(blackKeys))
-			var/key = blackKeys[i]
-			addButtonToHud(usr, key)
-
-			var/matrix/trans = new /matrix
-			trans = trans.Reset()
-			trans.Translate(blackKeysOffX[i], offY+blackKeyYOff)
-
-			animate(key, alpha=255, transform=trans, easing=CUBIC_EASING, time=1)
-
-		. = buttons
-
 /datum/contextLayout/experimentalcircle
 	var/dist
+	///If true the first button in the list will be rendered in the center of the circle
+	var/center = FALSE
 
 	New(var/Dist = 32)
 		dist = Dist
@@ -216,7 +149,7 @@ var/list/datum/contextAction/globalContextActions = null
 			screenX = (screenCenter.x - target.x) * -1 * 32
 			screenY = (screenCenter.y - target.y) * -1 * 32
 
-		var/anglePer = round(360 / buttons.len)
+		var/anglePer = round(360 / (length(buttons) - (center ? 1 : 0)))
 
 		var/count = 0
 
@@ -232,7 +165,9 @@ var/list/datum/contextAction/globalContextActions = null
 
 			var/offX = round(dist * cos(anglePer * count)) + round(sizeX / 2)
 			var/offY = round(dist * sin(anglePer * count)) + round(sizeY / 2)
-
+			if (center && count == 0)
+				offX = round(sizeX / 2)
+				offY = round(sizeY / 2)
 			var/matrix/trans = new /matrix
 			trans = trans.Reset()
 			trans.Translate(offX, offY)

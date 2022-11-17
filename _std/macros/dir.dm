@@ -3,6 +3,15 @@ var/global/list
 	ordinal = list(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST)
 	alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST)
 	modulo_angle_to_dir = list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST)
+	dirnames = list("north"=NORTH, "south"=SOUTH, "east"=EAST, "west"=WEST, "northeast"=NORTHEAST, "southeast"=SOUTHEAST, "southwest"=SOUTHWEST, "northwest"=NORTHWEST)
+
+proc/dir_to_dirname(dir)
+	for(var/name in global.dirnames)
+		if(dirnames[name] == dir)
+			return name
+
+proc/dirname_to_dir(dir)
+	return global.dirnames[dir]
 
 /// returns true if a direction is cardinal
 #define is_cardinal(DIR) (!((DIR - 1) & DIR))
@@ -83,3 +92,8 @@ proc/angle_to_vector(ang)
 	.= list()
 	. += cos(ang)
 	. += sin(ang)
+
+/// Calculates the angle you need to pass to the turn proc to get dir_to from dir_from
+/// turn(dir, turn_needed(dir, dir_to)) = dir_to
+#define turn_needed(dir_from, dir_to) (-(dir_to_angle(dir_to) - dir_to_angle(dir_from)))
+// note that the - is necessary because dir_to_angle returns a clockwise angle, but turn() takes a counter-clockwise angle

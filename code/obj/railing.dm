@@ -8,15 +8,16 @@
 	layer = OBJ_LAYER
 	color = "#ffffff"
 	flags = FPRINT | USEDELAY | ON_BORDER
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT 
+	event_handler_flags = USE_FLUID_ENTER
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	dir = SOUTH
 	custom_suicide = 1
+	material_amt = 0.1
 	var/broken = 0
 	var/is_reinforced = 0
+	var/can_reinforce = TRUE
 
 	proc/layerify()
-		SPAWN_DBG(3 DECI SECONDS)
 		if (dir == SOUTH)
 			layer = MOB_LAYER + 0.1
 		else
@@ -59,14 +60,14 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					railing_deconstruct(src)
 					return
-			if(3.0)
+			if(3)
 				if (prob(25))
 					railing_break(src)
 					return
@@ -97,16 +98,19 @@
 			return 0
 		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced) || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
 			return 1
-		if (dir & get_dir(loc, O))
+		if (src.dir & get_dir(loc, O))
 			return !density
 		return 1
 
-	CheckExit(atom/movable/O as mob|obj, target as turf)
+	Uncross(atom/movable/O, do_bump = TRUE)
 		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced)  || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
-			return 1
-		if (dir & get_dir(O.loc, target))
-			return 0
-		return 1
+			. = 1
+		// Second part prevents two same-dir, unanchored railings from infinitely looping and either crashing the server or breaking throwing when they try to cross
+		else if ((src.dir & get_dir(O.loc, O.movement_newloc)) && !(isobj(O) && (O:object_flags & HAS_DIRECTIONAL_BLOCKING) && (O.dir & src.dir)))
+			. = 0
+		else
+			. = 1
+		UNCROSS_BUMP_CHECK(O)
 
 	attackby(obj/item/W as obj, mob/user)
 		if (isweldingtool(W))
@@ -134,7 +138,7 @@
 			else
 				user.show_text("There's no reinforcment on [src] to cut off!", "blue")
 		else if (istype(W,/obj/item/rods))
-			if(!src.is_reinforced)
+			if(!src.is_reinforced && can_reinforce)
 				var/obj/item/rods/R = W
 				if(R.change_stack_amount(-1))
 					user.show_text("You reinforce [src] with the rods.", "blue")
@@ -155,7 +159,7 @@
 	proc/try_vault(mob/user, use_owner_dir = FALSE)
 		if (railing_is_broken(src))
 			user.show_text("[src] is broken! All you can really do is break it down...", "red")
-		else
+		else if(!actions.hasAction(user, "railing_jump"))
 			actions.start(new /datum/action/bar/icon/railing_jump(user, src, use_owner_dir), user)
 
 	reinforced
@@ -204,6 +208,11 @@
 			is_reinforced = 1
 			icon_state = "railing-reinforced"
 
+	velvet
+		icon = 'icons/obj/velvetrope.dmi'
+		icon_state = "velvetrope"
+		desc = "A cushy red velvet rope strewn between two golden poles."
+		can_reinforce = FALSE
 
 /datum/action/bar/icon/railing_jump
 	duration = 1 SECOND
@@ -211,6 +220,7 @@
 	id = "railing_jump"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "railing_jump"
+	resumable = FALSE
 	var/mob/ownerMob
 	var/obj/railing/the_railing
 	var/turf/jump_target //where the mob will move to when they complete the jump!
@@ -223,22 +233,25 @@
 
 	New(The_Owner, The_Railing, use_owner_dir = FALSE)
 		..()
-		collision_whitelist = typesof(/obj/railing, /obj/decal/stage_edge)
+		collision_whitelist = typesof(/obj/railing, /obj/decal/stage_edge, /obj/sec_tape)
 		if (The_Owner)
 			owner = The_Owner
 			ownerMob = The_Owner
 			src.use_owner_dir = use_owner_dir
 			if (ishuman(owner))
 				var/mob/living/carbon/human/H = owner
+				var/modifier = 1
 				if (H.traitHolder.hasTrait("athletic"))
-					duration = round(duration / 2)
+					modifier++
 					is_athletic_jump = 1
+				modifier += GET_ATOM_PROPERTY(H, PROP_MOB_VAULT_SPEED)
+				duration = round(duration / modifier)
 		if (The_Railing)
 			the_railing = The_Railing
 			jump_target = getLandingLoc()
 
 	proc/getLandingLoc()
-		if (get_dist(ownerMob, the_railing) == 0)
+		if (GET_DIST(ownerMob, the_railing) == 0)
 			if (use_owner_dir)
 				// for handling the multiple ways top hop a corner railing
 				return get_step(the_railing, owner.dir)
@@ -250,14 +263,14 @@
 	onUpdate()
 		..()
 		// you gotta hold still to jump!
-		if (get_dist(ownerMob, the_railing) > 1)
+		if (BOUNDS_DIST(ownerMob, the_railing) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			ownerMob.show_text("Your jump was interrupted!", "red")
 			return
 
 	onStart()
 		..()
-		if (get_dist(ownerMob, the_railing) > 1 || the_railing == null || ownerMob == null)
+		if (BOUNDS_DIST(ownerMob, the_railing) > 0 || the_railing == null || ownerMob == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		for(var/mob/O in AIviewers(ownerMob))
@@ -320,7 +333,6 @@
 			else
 				the_text = "[ownerMob] pulls [himself_or_herself(ownerMob)] over [the_railing]."
 			O.show_text("[the_text]", "red")
-		logTheThing("combat", ownerMob, the_railing, "[is_athletic_jump ? "leaps over [the_railing] with [his_or_her(ownerMob)] athletic trait" : "crawls over [the_railing]"].")
 
 
 /datum/action/bar/icon/railing_tool_interact
@@ -357,31 +369,31 @@
 
 	onUpdate()
 		..()
-		if (tool == null || the_railing == null || owner == null || get_dist(owner, the_railing) > 1)
+		if (tool == null || the_railing == null || owner == null || BOUNDS_DIST(owner, the_railing) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		//featuring code shamelessly copypasted from table.dm because fuuuuuuuck
 		..()
-		if (get_dist(ownerMob, the_railing) > 1 || the_railing == null || ownerMob == null)
+		if (BOUNDS_DIST(ownerMob, the_railing) > 0 || the_railing == null || ownerMob == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!tool)
 			interrupt(INTERRUPT_ALWAYS)
-			logTheThing("debug", src, the_railing, "tried to interact with [the_railing] using a null tool... somehow.")
+			logTheThing(LOG_DEBUG, src, "tried to interact with [the_railing] using a null tool... somehow.")
 			return
 		var/verbing = "doing something to"
 		switch (interaction)
 			if (RAILING_DISASSEMBLE)
 				verbing = "to disassemble"
-				playsound(the_railing, "sound/items/Welder.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Welder.ogg', 50, 1)
 			if (RAILING_FASTEN)
 				verbing = "fastening"
-				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
 			if (RAILING_UNFASTEN)
 				verbing = "unfastening"
-				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
 		for(var/mob/O in AIviewers(ownerMob))
 			O.show_text("[owner] begins [verbing] [the_railing].", "red")
 
@@ -393,16 +405,16 @@
 				verbens = "disassembles"
 				tool:try_weld(ownerMob, 2)
 				the_railing.railing_deconstruct()
-				playsound(the_railing, "sound/items/Welder.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Welder.ogg', 50, 1)
 			if (RAILING_FASTEN)
 				verbens = "fastens"
 				the_railing.anchored = 1
-				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
 			if (RAILING_UNFASTEN)
 				verbens = "unfastens"
 				the_railing.anchored = 0
-				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
 		for(var/mob/O in AIviewers(ownerMob))
 			O.show_text("[owner] [verbens] [the_railing].", "red")
-			logTheThing("station", ownerMob, the_railing, "[verbens] [the_railing].")
+			logTheThing(LOG_STATION, ownerMob, "[verbens] [the_railing].")
 

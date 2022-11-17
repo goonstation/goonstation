@@ -1,6 +1,9 @@
 /datum/component/obj_projectile_damage
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
+TYPEINFO(/datum/component/obj_projectile_damage)
+	initialization_args = list()
+
 /datum/component/obj_projectile_damage/Initialize()
 	if(!istype(parent, /obj))
 		return COMPONENT_INCOMPATIBLE
@@ -19,11 +22,11 @@
 /datum/component/obj_projectile_damage/proc/examine(mob/owner, mob/examiner, list/lines)
 	var/obj/O = parent
 	switch(O._health/O._max_health)
-		if (0.60 to 0.90)
+		if (0.6 to 0.9)
 			lines += "<span class='alert'>It is a little bit damaged.</span>"
-		if (0.30 to 0.60)
+		if (0.3 to 0.6)
 			lines += "<span class='alert'>It looks pretty beaten up.</span>"
-		if (0 to 0.30)
+		if (0 to 0.3)
 			lines += "<span class='alert'><b>It seems to be on the verge of falling apart!</b></span>"
 
 /datum/component/obj_projectile_damage/UnregisterFromParent()

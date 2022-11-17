@@ -2,7 +2,7 @@
 
 TYPEINFO(/datum/component/wearertargeting)
 	initialization_args = list(
-		ARG_INFO("valid_slots", "list", "List of wear slots that the component should function in \[1-19\]")
+		ARG_INFO("valid_slots", DATA_INPUT_LIST_BUILD, "List of wear slots that the component should function in \[1-19\]")
 	)
 
 /datum/component/wearertargeting

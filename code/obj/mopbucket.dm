@@ -15,7 +15,7 @@
 		. = ..()
 		src.fluid_image = image(src.icon, "fluid", -1)
 
-	proc/update_icon()
+	update_icon()
 		if (reagents.total_volume)
 			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
@@ -25,7 +25,7 @@
 
 	on_reagent_change()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 
 /obj/mopbucket/New()
 	..()
@@ -44,7 +44,7 @@
 	. = "<br><span class='notice'>[reagents.get_description(user,rc_flags)]</span>"
 	return
 
-/obj/mopbucket/attackby(obj/item/W as obj, mob/user as mob)
+/obj/mopbucket/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/mop))
 		if (src.reagents.total_volume >= 3)
 			if (W.reagents)
@@ -52,17 +52,17 @@
 			src.reagents.trans_to(W, W.reagents ? W.reagents.maximum_volume : 10)
 
 			boutput(user, "<span class='notice'>You dunk the mop into [src].</span>")
-			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 		if (src.reagents.total_volume < 1)
 			boutput(user, "<span class='notice'>[src] is empty!</span>")
 	else
 		return ..()
 
-/obj/mopbucket/MouseDrop(atom/over_object as obj)
+/obj/mopbucket/mouse_drop(atom/over_object as obj)
 	if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket))
 		return ..()
 
-	if (get_dist(usr, src) > 1 || get_dist(usr, over_object) > 1)
+	if (BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
 		boutput(usr, "<span class='alert'>That's too far!</span>")
 		return
 
@@ -109,14 +109,14 @@
 
 /obj/mopbucket/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				qdel(src)
 				return
-		if(3.0)
+		if(3)
 			if (prob(5))
 				qdel(src)
 				return

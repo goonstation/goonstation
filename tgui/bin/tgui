@@ -102,10 +102,11 @@ task-clean() {
 task-validate-build() {
   cd "${target_dir}/.."
   local diff
-  diff="$(git diff ${target_dir_name}/*)"
+  diff="$(git diff `ls $target_dir_name/* | grep -v css`)"
   if [[ -n ${diff} ]]; then
     echo "Error: our build differs from the build committed into git."
     echo "Please rebuild tgui."
+    echo "Diff: ${diff}"
     exit 1
   fi
   echo "tgui: build is ok"
@@ -119,7 +120,7 @@ task-install-git-hooks() {
   git_root="$(git rev-parse --show-toplevel)"
   git_base_dir="${base_dir/${git_root}/.}"
   git config --replace-all merge.tgui-merge-bundle.driver \
-    "${git_base_dir}/bin/tgui --merge=bundle %O %A %B %L"
+    "${git_base_dir}/bin/tgui --merge=bundle %O %A %B %L %P"
   echo "tgui: Merge drivers have been successfully installed!"
 }
 
@@ -129,8 +130,13 @@ task-merge-bundle() {
   local file_current="${2}"
   local file_other="${3}"
   local conflict_marker_size="${4}"
-  echo "tgui: Discarding a local tgui build"
-  ## Do nothing (file_current will be merged and is what we want to keep).
+  local file_target="${5}"
+  echo "tgui: Rebuilding tgui bundle"
+  pushd .
+  task-install
+  task-webpack --mode=production
+  popd
+  cp "$file_target" "$file_current"
   exit 0
 }
 
@@ -150,6 +156,17 @@ fi
 if [[ ${1} == "--install-git-hooks" ]]; then
   shift 1
   task-install-git-hooks
+  exit 0
+fi
+
+## Continuous integration scenario
+if [[ ${1} == "--ci" ]]; then
+  shift 1
+  task-clean
+  task-install
+  task-lint "${@}"
+  task-webpack --mode=production
+  task-validate-build
   exit 0
 fi
 

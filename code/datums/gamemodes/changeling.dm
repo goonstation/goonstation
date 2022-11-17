@@ -3,6 +3,7 @@
 	config_tag = "changeling"
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_CHANGELING)
+	antag_token_support = TRUE
 
 	var/const/changelings_possible = 4
 
@@ -29,7 +30,7 @@
 			num_players++
 
 	var/i = rand(5)
-	var/num_changelings = max(1, min(round((num_players + i) / pop_divisor), changelings_possible))
+	var/num_changelings = clamp(round((num_players + i) / pop_divisor), 1, changelings_possible)
 
 	var/list/possible_changelings = get_possible_enemies(ROLE_CHANGELING, num_changelings)
 
@@ -42,7 +43,7 @@
 			break
 		src.traitors += tplayer
 		token_players.Remove(tplayer)
-		logTheThing("admin", tplayer.current, null, "successfully redeems an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeems an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 		//num_changelings = max(0, num_changelings - 1)
 
@@ -71,7 +72,7 @@
 				boutput(changeling.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 				obj_count++
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/changeling/send_intercept()

@@ -16,12 +16,11 @@
 
 // you might be asking "why in seconds?" the answer is that shuttle code uses seconds as a base unit and I'm too tired to refactor it
 
+// Shuttle disabled-ness
 
-#define SHUTTLE_SOUTH    "cogmap"
-#define SHUTTLE_EAST  	 "cogmap2"
-#define SHUTTLE_WEST   	 "donut2"
-#define SHUTTLE_DONUT3   "donut3"
-#define SHUTTLE_OSHAN    "oshan"
-#define SHUTTLE_MANTA    "manta"
-#define SHUTTLE_NORTH    "destiny"
-#define SHUTTLE_NODEF    "nodef"
+/// Default; shuttle can be called or auto-calls
+#define SHUTTLE_CALL_ENABLED 0
+/// Shuttle cannot be called manually, only automatically or by admins
+#define SHUTTLE_CALL_MANUAL_CALL_DISABLED 1
+/// Shuttle will not be called, period
+#define SHUTTLE_CALL_FULLY_DISABLED 2

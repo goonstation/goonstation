@@ -8,8 +8,8 @@
 	name = "proxy bucket"
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "bucket_proxy"
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 2
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -82,7 +82,7 @@
 		icon_state_base = copytext(icon_state, 1, -1)
 		src.add_simple_light("bot", list(255, 255, 255, 255 * 0.4))
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (src)
 				src.clear_invalid_targets = TIME
 
@@ -113,7 +113,7 @@
 				src.reagents.clear_reagents()
 				src.reagents.add_reagent(src.reagent_emagged, 50)
 
-			logTheThing("station", src.emagger, null, "emagged a [src.name], setting it to spread [src.reagent_emagged] at [log_loc(src)].")
+			logTheThing(LOG_STATION, src.emagger, "emagged a [src.name], setting it to spread [src.reagent_emagged] at [log_loc(src)].")
 			return 1
 
 		return 0
@@ -155,7 +155,7 @@
 
 		return
 
-	attack_hand(mob/user as mob, params)
+	attack_hand(mob/user, params)
 		src.add_fingerprint(user)
 		var/dat = ""
 
@@ -163,7 +163,7 @@
 		dat += "<br><br>"
 		dat += "Status: <A href='?src=\ref[src];start=1'>[src.on ? "On" : "Off"]</A><br>"
 
-		if (user.client.tooltipHolder)
+		if (user.client?.tooltipHolder)
 			user.client.tooltipHolder.showClickTip(src, list(
 				"params" = params,
 				"title" = "Cleanerbot v1.1 controls",
@@ -234,13 +234,17 @@
 			src.doing_something = 1
 
 			// are we there yet
-			if (IN_RANGE(src, src.target, 1))
+			if ((BOUNDS_DIST(src, src.target) == 0))
 				do_the_thing()
+				// stop the bot mover so it doesn't interrupt us if we're already in range
+				src.frustration = 0
+				src.path = null
+				qdel(src.bot_mover)
 				return
 
 			// we are not there. how do we get there
 			if (!src.path || !length(src.path))
-				src.navigate_to(get_turf(src.target), CLEANBOT_MOVE_SPEED, max_dist = 120)
+				src.navigate_to(get_turf(src.target), CLEANBOT_MOVE_SPEED, max_dist = 20)
 				if (!src.path || !length(src.path))
 					// answer: we don't. try to find something else then.
 					src.KillPathAndGiveUp(1)
@@ -306,10 +310,10 @@
 
 	ex_act(severity)
 		switch (severity)
-			if (1.0)
+			if (1)
 				src.explode()
 				return
-			if (2.0)
+			if (2)
 				src.health -= 15
 				if (src.health <= 0)
 					src.explode()
@@ -333,7 +337,7 @@
 		src.exploding = 1
 		src.on = 0
 		src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
-		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 
 		elecflash(src, radius=1, power=3, exclude_center = 0)
 
@@ -346,6 +350,9 @@
 
 		qdel(src)
 		return
+
+	is_open_container()
+		return TRUE
 
 	red
 		icon_state = "cleanbot-red0"
@@ -380,7 +387,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		playsound(master, "sound/impact_sounds/Liquid_Slosh_2.ogg", 25, 1)
+		playsound(master, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 25, 1)
 		master.anchored = 1
 		master.icon_state = "[master.icon_state_base]-c"
 		master.visible_message("<span class='alert'>[master] begins to clean the [T.name].</span>")
@@ -394,8 +401,7 @@
 			return
 
 	onInterrupt(flag)
-		master.cleanbottargets -= master.turf2coordinates(get_turf(master.target))
-		master.KillPathAndGiveUp(1)
+		master.KillPathAndGiveUp(0)
 		. = ..()
 
 	onEnd()

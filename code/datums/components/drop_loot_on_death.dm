@@ -5,7 +5,7 @@
 
 TYPEINFO(/datum/component/drop_loot_on_death)
 	initialization_args = list(
-		ARG_INFO("loot", "type", "Path or list of paths for loot to drop on death")
+		ARG_INFO("loot", DATA_INPUT_TYPE, "Path or list of paths for loot to drop on death")
 	)
 /datum/component/drop_loot_on_death
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
@@ -20,9 +20,9 @@ TYPEINFO(/datum/component/drop_loot_on_death)
 		return COMPONENT_INCOMPATIBLE // no items to drop were provided, no point in adding the component
 
 	if (ismob(parent))
-		RegisterSignal(parent, list(COMSIG_MOB_DEATH), .proc/drop_loot)
+		RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/drop_loot)
 	else if (iscritter(parent))
-		RegisterSignal(parent, list(COMSIG_OBJ_CRITTER_DEATH), .proc/drop_loot)
+		RegisterSignal(parent, COMSIG_OBJ_CRITTER_DEATH, .proc/drop_loot)
 	else
 		return COMPONENT_INCOMPATIBLE
 

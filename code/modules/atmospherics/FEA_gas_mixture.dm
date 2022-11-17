@@ -15,10 +15,6 @@ What are the archived variables for?
 	specific_heat = 40
 /datum/gas/oxygen_agent_b
 	specific_heat = 300
-/datum/gas/volatile_fuel
-	specific_heat = 30
-/datum/gas/rad_particles
-	specific_heat = 20
 
 
 /datum/gas_mixture
@@ -109,14 +105,12 @@ What are the archived variables for?
 	graphic = 0
 
 	UPDATE_GAS_MIXTURE_GRAPHIC(graphic, GAS_IMG_PLASMA, toxins)
-
+	UPDATE_GAS_MIXTURE_GRAPHIC(graphic, GAS_IMG_RAD, radgas)
 	if(length(trace_gases))
 		// refs are accessed directly to optimize functions as trace_gases
 		// has already been asserted above instead of utilizing get_trace_gas_by_type()
 		var/datum/gas/sleeping_agent = src.trace_gas_refs[/datum/gas/sleeping_agent]
-		var/datum/gas/rad_particles = src.trace_gas_refs[/datum/gas/rad_particles]
 		UPDATE_GAS_MIXTURE_GRAPHIC(graphic, GAS_IMG_N2O, sleeping_agent?.moles)
-		UPDATE_GAS_MIXTURE_GRAPHIC(graphic, GAS_IMG_RAD, rad_particles?.moles)
 	. = graphic != graphic_archived
 	graphic_archived = graphic
 
@@ -164,26 +158,6 @@ What are the archived variables for?
 /datum/gas_mixture/proc/fire()
 	var/energy_released = 0
 	var/old_heat_capacity = HEAT_CAPACITY(src)
-
-	if(length(src.trace_gases))
-		var/datum/gas/volatile_fuel/fuel_store = src.get_trace_gas_by_type(/datum/gas/volatile_fuel/)
-		if(fuel_store) //General volatile gas burn
-			var/burned_fuel = 0
-
-			if(src.oxygen < fuel_store.moles)
-				burned_fuel = src.oxygen
-				fuel_store.moles -= burned_fuel
-				src.oxygen = 0
-			else
-				burned_fuel = fuel_store.moles
-				src.oxygen -= fuel_store.moles
-				//qdel(fuel_store)
-				src.remove_trace_gas(fuel_store)
-				fuel_store = null
-
-			energy_released += FIRE_CARBON_ENERGY_RELEASED * burned_fuel
-			src.carbon_dioxide += burned_fuel
-			src.fuel_burnt += burned_fuel
 
 	//Handle plasma burning
 	if(src.toxins > MINIMUM_REACT_QUANTITY)
@@ -564,7 +538,7 @@ What are the archived variables for?
 			sharer.temperature = (old_sharer_heat_capacity*sharer.temperature-heat_capacity_sharer_to_self*sharer.ARCHIVED(temperature) + heat_capacity_self_to_sharer*ARCHIVED(temperature))/new_sharer_heat_capacity
 
 			if(abs(old_sharer_heat_capacity) > MINIMUM_HEAT_CAPACITY)
-				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.10) // <10% change in sharer heat capacity
+				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.1) // <10% change in sharer heat capacity
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
 
 	// Check that either threshold was met for pressure_difference calculations
@@ -826,6 +800,12 @@ What are the archived variables for?
 				else
 					return 0
 	return 1
+
+/datum/gas_mixture/proc/check_if_dangerous()
+	if(TOTAL_MOLES(src) && (temperature > T100C || temperature < T0C || trace_gases || toxins || farts || carbon_dioxide || (nitrogen && !oxygen)))
+		return TRUE
+	else
+		return FALSE
 
 // Dead prototypes (or never implemented?)
 // /datum/gas_mixture/proc/check_me_then_share(datum/gas_mixture/sharer)

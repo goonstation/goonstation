@@ -28,10 +28,10 @@
 		..()
 
 	proc/TakeDamage(var/amt, var/bypass_multiplier = 0)
-		if (!bypass_multiplier)
+		if (!bypass_multiplier && amt > 0)
 			amt *= damage_multiplier
 		if (minimum_value < maximum_value)
-			value = max(minimum_value, min(value - amt, maximum_value))
+			value = clamp(value - amt, minimum_value, maximum_value)
 		else
 			value = min(value - amt, maximum_value)
 		health_update_queue |= holder
@@ -46,7 +46,7 @@
 		return value < maximum_value
 
 	proc/on_deplete()
-		holder.death(0)
+		holder.death(FALSE)
 
 	proc/Life()
 		if (value != last_value)

@@ -15,7 +15,7 @@ obj/machinery/access_button
 
 	var/on = 1
 
-	proc/update_icon()
+	update_icon()
 		if(on)
 			icon_state = "access_button_standby"
 		else

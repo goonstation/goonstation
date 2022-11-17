@@ -29,7 +29,7 @@
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_SWORD)
 
-	attack(target as mob, mob/user as mob)
+	attack(target, mob/user)
 		..()
 		if (ishuman(user))
 			var/mob/living/carbon/human/U = user
@@ -57,7 +57,7 @@
 		playsound(loc, 'sound/items/gavel.ogg', 75, 1)
 		user.visible_message("<span class='alert'><b> Sweet Jesus! [user] is bashing their head in with [name]!</b></span>")
 		user.TakeDamage("head", 150, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -109,7 +109,7 @@
 	..()
 	src.desc = "This is Clown College diploma, a Bachelor of Farts Degree for the study of [pick("slipology", "jugglemancy", "pie science", "bicycle horn accoustics", "comic sans calligraphy", "gelotology", "flatology", "nuclear physics", "goonstation coder")]. It appears to be written in crayon."
 
-/obj/item/toy/diploma/attack(mob/M as mob, mob/user as mob)
+/obj/item/toy/diploma/attack(mob/M, mob/user)
 	if (isliving(user))
 		var/mob/living/L = user
 		if (L.mind && L.mind.assigned_role == "Clown")
@@ -121,7 +121,7 @@
 	name = "gooncode hard disk drive"
 	desc = "The prized, sought after spaghetti and pooballs code, and the only known cure to apiphobia. Conveniently on a fancy hard drive that connects to PDAs. \
 	The most stealable thing in the universe."
-	icon = 'icons/obj/cloning.dmi' // sprite is an altered harddisk
+	icon = 'icons/obj/items/disks.dmi' // sprite is an altered harddisk
 	icon_state = "gooncode"
 	flags = SUPPRESSATTACK
 	throwforce = 3
@@ -222,8 +222,10 @@
 /obj/item/toy/handheld/arcade
 	arcademode = TRUE
 	icon_state = "arcade-adventure"
+
 /obj/item/item_box/figure_capsule/gaming_capsule
 	name = "game capsule"
+
 	New()
 		contained_item = pick(30;/obj/item/toy/handheld/arcade, 70;/obj/item/toy/handheld/robustris)
 		. = ..()
@@ -233,3 +235,135 @@
 			itemstate = "arcade-fig"
 		else
 			itemstate = "game-fig"
+
+/obj/item/toy/ornate_baton
+	name = "ornate baton"
+	desc = "Twirly."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "ornate-baton"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	item_state = "ornate_baton"
+	w_class = W_CLASS_NORMAL
+	throwforce = 1
+	throw_speed = 3
+	throw_range = 7
+	stamina_damage = 25
+	stamina_cost = 10
+	stamina_crit_chance = 5
+
+/obj/item/rubberduck
+	name = "rubber duck"
+	desc = "Awww, it squeaks!"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "rubber_duck"
+	item_state = "sponge"
+	throwforce = 1
+	w_class = W_CLASS_TINY
+	throw_speed = 3
+	throw_range = 15
+
+/obj/item/rubberduck/attack_self(mob/user as mob)
+	if (!ON_COOLDOWN(src,"quack",2 SECONDS))
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if (H.sims)
+				H.sims.affectMotive("fun", 1)
+		if (narrator_mode)
+			playsound(user, 'sound/vox/duct.ogg', 50, 1)
+		else
+			playsound(user, 'sound/items/rubberduck.ogg', 50, 1)
+		if(prob(1))
+			user.drop_item()
+			playsound(user, 'sound/ambience/industrial/AncientPowerPlant_Drone3.ogg', 50, 1) // this is gonna spook some people!!
+			var/wacka = 0
+			while (wacka++ < 50)
+				sleep(0.2 SECONDS)
+				pixel_x = rand(-6,6)
+				pixel_y = rand(-6,6)
+				sleep(0.1 SECONDS)
+				pixel_y = 0
+				pixel_x = 0
+		src.add_fingerprint(user)
+	return
+
+/obj/item/ghostboard
+	name = "\improper Ouija board"
+	desc = "A wooden board that allows for communication with spirits and such things. Or that's what the company that makes them claims, at least."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "lboard"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
+	item_state = "ouijaboard"
+	w_class = W_CLASS_NORMAL
+	var/emoji_prob = 30
+	var/emoji_min = 1
+	var/emoji_max = 3
+	var/words_prob = 100
+	var/words_min = 7
+	var/words_max = 10
+
+	New()
+		. = ..()
+		START_TRACKING
+		BLOCK_SETUP(BLOCK_BOOK)
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
+
+	proc/generate_words()
+		var/list/words = list()
+		if(prob(words_prob))
+			words |= get_ouija_word_list(src, words_min, words_max)
+		if(prob(emoji_prob))
+			for(var/i in 1 to rand(emoji_min, emoji_max))
+				words |= random_emoji()
+		return words
+
+	Click(location,control,params)
+		if(isobserver(usr) || iswraith(usr) || isAIeye(usr)) //explicitly added AIeye because AIeye is no longer dead and AI's are ghosts trapped in metal boxes.
+			if(isAIeye(usr))
+				boutput(usr, "<span class='notice'>Whoa, you can use this as an AI? Are you actually just a ghost trapped in a metal box??</span>")
+
+			if(ON_COOLDOWN(src, usr, 3 SECONDS))
+				usr.show_text("Please wait a moment before using the board again.", "red")
+				return
+
+			var/selected
+			do
+				var/list/words = list("*REFRESH*") + src.generate_words()
+				selected = tgui_input_list(usr, "Select a word:", src.name, words, allowIllegal=TRUE)
+			while(selected == "*REFRESH*")
+
+			if(!selected)
+				return
+
+			animate_float(src, 1, 5, 1)
+			if(prob(20) && !ON_COOLDOWN(src, "bother chaplains", 1 MINUTE))
+				var/area/AR = get_area(src)
+				for(var/mob/M in by_cat[TR_CAT_CHAPLAINS])
+					if(M.client)
+						boutput(M, "<span class='notice'>You sense a disturbance emanating from \a [src] in \the [AR.name].</span>")
+			for (var/mob/O in observersviewers(7, src))
+				O.show_message("<B><span class='notice'>The board spells out a message ... \"[selected]\"</span></B>", 1)
+			#ifdef HALLOWEEN
+			if (istype(usr.abilityHolder, /datum/abilityHolder/ghost_observer))
+				var/datum/abilityHolder/ghost_observer/GH = usr.abilityHolder
+				GH.change_points(30)
+			#endif
+		else
+			return ..(location,control,params)
+
+/obj/item/ghostboard/emouija
+	name = "Emouija board"
+	desc = "A wooden board that allows for communication with spirits and such things. Wait, this one doesn't even have proper letters on it."
+	emoji_prob = 100
+	emoji_min = 5
+	emoji_max = 10
+	words_prob = 0
+
+
+/proc/fartes()
+	for(var/imageToLoad in flist("images/"))
+		usr << browse_rsc(file("images/[imageToLoad]"))
+		boutput(world, "[imageToLoad] - [file("images/[imageToLoad]")]")
+	return

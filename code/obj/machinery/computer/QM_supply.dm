@@ -1,3 +1,5 @@
+#define ORDER_LABEL_MAX_LEN 32 // The "order label" refers to the label you can specify when ordering something through cargo.
+
 /datum/rockbox_globals
 	var/const/rockbox_standard_fee = 5
 	var/rockbox_client_fee_min = 1
@@ -80,7 +82,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 					var/datum/pathogen/P = patho[uid]
 					var/datum/cdc_contact_analysis/D = new
 					D.uid = uid
-					var/sym_count = max(min(length(P.effects), 7), 2)
+					var/sym_count = clamp(length(P.effects), 2, 7)
 					D.time_factor = sym_count * rand(10, 15) // 200, 600
 					D.cure_cost = sym_count * rand(25, 40) // 2100, 4300
 					D.name = P.name
@@ -117,7 +119,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "QMcom"
 	req_access = list(access_supply_console)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
 	circuit_type = /obj/item/circuitboard/qmsupply
 	var/temp = null
@@ -144,7 +146,8 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 /obj/machinery/computer/supplycomp/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(!hacked)
 		if(user)
-			boutput(user, "<span class='notice'>Special supplies unlocked.</span>")
+			boutput(user, "<span class='notice'>The intake safety shorts out. Special supplies unlocked.</span>")
+		shippingmarket.launch_distance = 200 // dastardly
 		src.hacked = 1
 		return 1
 	return 0
@@ -157,12 +160,12 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	src.hacked = 0
 	return 1
 
-/obj/machinery/computer/supplycomp/attackby(I as obj, mob/user as mob)
+/obj/machinery/computer/supplycomp/attackby(I, mob/user)
 	if(!istype(I,/obj/item/card/emag))
 		//I guess you'll wanna put the emag away now instead of getting a massive popup
 		..()
 
-/obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/supplycomp/attack_hand(var/mob/user)
 	if(!src.allowed(user))
 		boutput(user, "<span class='alert'>Access Denied.</span>")
 		return
@@ -529,13 +532,19 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					var/datum/supply_packs/P = O.object
 					shippingmarket.supply_requests -= O
 					if(wagesystem.shipping_budget >= P.cost)
-						wagesystem.shipping_budget -= P.cost
 						O.object = P
 						O.orderedby = usr.name
-						O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment","")), 1, MAX_MESSAGE_LEN)
+						var/default_comment = ""
+						O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = TRUE, max_length = ORDER_LABEL_MAX_LEN, allowEmpty = TRUE)
+						if (isnull(O.comment))
+							return .("list") // The user cancelled the order
+						O.comment = html_encode(O.comment)
+						wagesystem.shipping_budget -= P.cost
 						var/obj/storage/S = O.create(usr)
 						shippingmarket.receive_crate(S)
-						logTheThing("station", usr, null, "ordered a [P.name] at [log_loc(src)].")
+						logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
+						if(O.comment && O.comment != default_comment)
+							phrase_log.log_phrase("order-comment", O.comment, no_duplicates=TRUE)
 						shippingmarket.supply_history += "[O.object.name] ordered by [O.orderedby] for [P.cost] credits. Comment: [O.comment]<br>"
 						. = {"<strong>Thanks for your order.</strong>"}
 					else
@@ -545,7 +554,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 					var/datum/supply_order/O = new/datum/supply_order ()
 					var/datum/supply_packs/P = locate(href_list["what"])
-					if(P)
+					if(istype(P))
 
 						// The order computer has no emagged / other ability to display hidden or syndicate packs.
 						// It follows that someone's being clever if trying to order either of these items
@@ -558,13 +567,19 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 							return
 
 						if(wagesystem.shipping_budget >= P.cost)
-							wagesystem.shipping_budget -= P.cost
 							O.object = P
 							O.orderedby = usr.name
-							O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment","")), 1, MAX_MESSAGE_LEN)
+							var/default_comment = ""
+							O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = FALSE, max_length = ORDER_LABEL_MAX_LEN, allowEmpty = TRUE)
+							if (isnull(O.comment))
+								return .("list") // The user cancelled the order
+							O.comment = html_encode(O.comment)
+							wagesystem.shipping_budget -= P.cost
 							var/obj/storage/S = O.create(usr)
 							shippingmarket.receive_crate(S)
-							logTheThing("station", usr, null, "ordered a [P.name] at [log_loc(src)].")
+							logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
+							if(O.comment && O.comment != default_comment)
+								phrase_log.log_phrase("order-comment", O.comment, no_duplicates=TRUE)
 							shippingmarket.supply_history += "[O.object.name] ordered by [O.orderedby] for [P.cost] credits. Comment: [O.comment]<br>"
 							. = {"<strong>Thanks for your order.</strong>"}
 						else
@@ -609,16 +624,16 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		switch (subaction)
 			if (null, "list")
 				. = {"<h2>Rockbox™ Ore Cloud Storage Service Settings:</h2><ul><br>
-					<B>Rockbox™ Fees:</B> $[!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our <A href='[topicLink("rockbox_controls", "premium_service")]'>Premium Service</A> to remove this fee!)" : ""]<BR>
+					<B>Rockbox™ Fees:</B> [!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0][CREDIT_SIGN] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our <A href='[topicLink("rockbox_controls", "premium_service")]'>Premium Service</A> to remove this fee!)" : ""]<BR>
 					<B>Client Quartermaster Transaction Fee:</B> <A href='[topicLink("rockbox_controls", "fee_pct")]'>[rockbox_globals.rockbox_client_fee_pct]%</A><BR>
-					<B>Client Quartermaster Transaction Fee Per Ore Minimum:</B> <A href='[topicLink("rockbox_controls", "fee_min")]'>$[rockbox_globals.rockbox_client_fee_min]</A><BR>
+					<B>Client Quartermaster Transaction Fee Per Ore Minimum:</B> <A href='[topicLink("rockbox_controls", "fee_min")]'>[rockbox_globals.rockbox_client_fee_min][CREDIT_SIGN]</A><BR>
 					</ul>"}
 
 				return
 
 			if ("premium_service")
 				var/response = ""
-				response = alert(usr,"Would you like to purchase the Rockbox™ Premium Service for 10000 Credits?",,"Yes","No")
+				response = tgui_alert(usr, "Would you like to purchase the Rockbox™ Premium Service for 10000 Credits?", "Rockbox™ Premium Service", list("Yes", "No"))
 				if(response == "Yes")
 					if(wagesystem.shipping_budget >= 10000)
 						wagesystem.shipping_budget -= 10000
@@ -640,7 +655,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				fee_min = input(usr,"What fee min would you like to set? (Min 0)","Minimum Fee per Transaction in Credits:",) as num
 				fee_min = max(0,fee_min)
 				rockbox_globals.rockbox_client_fee_min = fee_min
-				. = {"Minimum Fee per Transaction is now $[rockbox_globals.rockbox_client_fee_min]"}
+				. = {"Minimum Fee per Transaction is now [rockbox_globals.rockbox_client_fee_min][CREDIT_SIGN]"}
 
 		return
 
@@ -851,7 +866,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			if (shippingmarket && istype(shippingmarket,/datum/shipping_market))
 				buy_cap = shippingmarket.max_buy_items_at_once
 			else
-				logTheThing("debug", null, null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
+				logTheThing(LOG_DEBUG, null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
 
 			for(var/datum/commodity/cartcom in T.shopping_cart)
 				total_stuff_in_cart += cartcom.amount
@@ -989,7 +1004,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			if (shippingmarket && istype(shippingmarket,/datum/shipping_market))
 				buy_cap = shippingmarket.max_buy_items_at_once
 			else
-				logTheThing("debug", null, null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
+				logTheThing(LOG_DEBUG, null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
 
 			if (total_cart_amount > buy_cap)
 				boutput(usr, "<span class='alert'>There are too many items in the cart. You may only order [buy_cap] items at a time.</span>")
@@ -1068,16 +1083,22 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		src.temp += "Requisition Code: [RC.req_code]<br><br>"
 		if(RC.flavor_desc) src.temp += "[RC.flavor_desc]<br><br>"
 		src.temp += "[RC.requis_desc]"
-		if(RC.req_class == AID_CONTRACT)
+		if(RC.req_class == AID_CONTRACT && !RC.pinned) // Cannot ordinarily be pinned. Unpin support included for contract testing.
+			var/datum/req_contract/aid/RCAID = RC
 			src.temp += "URGENT - Cannot Be Reserved<br>"
+			if(RCAID.cycles_remaining)
+				var/formatted_cycles_remaining = RCAID.cycles_remaining + 1
+				src.temp += "Contract leaves market in [formatted_cycles_remaining] cycles<br>"
+			else
+				src.temp += "Contract leaves market with next cycle<br>"
 		else
 			src.temp += "<A href='[topicLink("pin_contract","\ref[RC]")]'>[RC.pinned ? "Unpin Contract" : "Pin Contract"]</A><br>"
 		src.temp += "<A href='[topicLink("print_req","\ref[RC]")]'>Print List</A>"
 
 /obj/machinery/computer/supplycomp/proc/print_requisition(var/datum/req_contract/contract)
 	src.printing = 1
-	playsound(src.loc, "sound/machines/printer_thermal.ogg", 60, 0)
-	SPAWN_DBG(2 SECONDS)
+	playsound(src.loc, 'sound/machines/printer_thermal.ogg', 60, 0)
+	SPAWN(2 SECONDS)
 		var/obj/item/paper/thermal/P = new(src.loc)
 		P.info = "<font face='System' size='2'><center>REQUISITION CONTRACT MANIFEST<br>"
 		P.info += "FOR SUPPLIER REFERENCE ONLY<br><br>"
@@ -1101,7 +1122,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 	var/topMenu = {"
 		<h2>Trader Communications</h2>
-		<div style='float: right;'><a href='[topicLink("trader_cart", "\ref[T]")]'>🛒 [cart_items] item\s ($[cart_price])</a></div>
+		<div style='float: right;'><a href='[topicLink("trader_cart", "\ref[T]")]'>🛒 [cart_items] item\s ([cart_price][CREDIT_SIGN])</a></div>
 		[T.goods_sell.len ? "<a href='[topicLink("trader_selling", "\ref[T]")]'>Selling ([T.goods_sell.len])</a>" : ""]
 		[T.goods_sell.len && T.goods_buy.len ? " &bull; " : ""]
 		[T.goods_buy.len ? "<a href='[topicLink("trader_buying", "\ref[T]")]'>Buying ([T.goods_buy.len])</a>" : ""]
@@ -1261,5 +1282,8 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	status_signal.source = src
 	status_signal.transmission_method = 1
 	status_signal.data["command"] = command
+	status_signal.data["address_tag"] = "STATDISPLAY"
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal, null, FREQ_STATUS_DISPLAY)
+
+#undef ORDER_LABEL_MAX_LEN

@@ -1,4 +1,4 @@
-/mob/living/critter/drone
+/mob/living/critter/robotic/drone
 	name = "Drone"
 	real_name = "Drone"
 	var/drone_designation = "SC"
@@ -55,11 +55,12 @@
 		loot_table = list(/obj/item/device/prox_sensor = 25)
 
 	death(var/gibbed)
+		. = ..()
 		if (dying)
 			return
 		dying = 1
 		overlays += image('icons/obj/ship.dmi', "dying-overlay")
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			ghostize()
 			var/turf/L = get_turf(src)
 			for (var/T in loot_table)

@@ -31,25 +31,26 @@
 	requires_power = 0
 	sound_group = "nomad"
 	sound_loop = 'sound/ambience/nature/Rain_Heavy.ogg'
+	sound_loop_vol = 70
 	sound_environment = 15
 
-	New()
-		..()
-		SPAWN_DBG(1 SECOND)
-			process()
+/area/nomad/inside/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 
-	proc/process()
-		// Shamelessly stolen from biodome
-		while(current_state < GAME_STATE_FINISHED)
-			sleep(10 SECONDS)
-			if (current_state == GAME_STATE_PLAYING)
-				if(!played_fx_2 && prob(10))
-					sound_fx_2 = pick('sound/ambience/nature/Rain_ThunderDistant.ogg','sound/ambience/nature/Wind_Cold1.ogg','sound/ambience/nature/Wind_Cold2.ogg','sound/ambience/nature/Wind_Cold3.ogg')
-					for(var/mob/M in src)
-						if (M.client)
-							M.client.playAmbience(src, AMBIENCE_FX_2, 50)
+/area/nomad/inside/disposing()
+	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	. = ..()
 
+/area/nomad/inside/area_process()
+	if(prob(20))
+		src.sound_fx_2 = pick('sound/ambience/nature/Rain_ThunderDistant.ogg',\
+			'sound/ambience/nature/Wind_Cold1.ogg',\
+			'sound/ambience/nature/Wind_Cold2.ogg',\
+			'sound/ambience/nature/Wind_Cold3.ogg')
 
+		for(var/mob/living/carbon/human/H in src)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 50)
 
 
 /datum/computer/file/record/nomad/story_01
@@ -291,7 +292,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			set_broken()
 
 

@@ -25,7 +25,7 @@ obj/machinery/air_sensor
 
 
 
-	proc/update_icon()
+	update_icon()
 		icon_state = "gsensor[on]"
 
 	process()

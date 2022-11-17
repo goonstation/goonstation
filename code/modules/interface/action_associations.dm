@@ -10,6 +10,7 @@ var/list/action_names = list(
 
 	"fart" = "Fart",
 	"flip" = "Flip",
+	"twirl" = "Twirl",
 	"eyebrow" = "Raise Eyebrow",
 	"gasp" = "Gasp",
 	"raisehand" = "Raise Hand",
@@ -92,10 +93,7 @@ var/list/action_names = list(
 
 ///Used for literal input of actions
 var/list/action_verbs = list(
-	"say" = "start-say",	// lord forgive me for i have sinned
 	"say_radio" = "say_radio",
-	"say_main_radio" = "say_main_radio",
-	"emote" = "say *customv",
 	"salute" = "me_hotkey salute",
 	"burp" = "me_hotkey burp",
 	"dab" = "me_hotkey dab",
@@ -103,6 +101,7 @@ var/list/action_verbs = list(
 	"eyebrow" = "me_hotkey eyebrow",
 	"fart" = "me_hotkey fart",
 	"flip" = "me_hotkey flip",
+	"twirl" = "me_hotkey twirl",
 	"gasp" = "me_hotkey gasp",
 	"raisehand" = "me_hotkey raisehand",
 	"laugh" = "me_hotkey laugh",
@@ -110,16 +109,11 @@ var/list/action_verbs = list(
 	"wave" = "me_hotkey wave",
 	"flip" = "me_hotkey flip",
 	"scream" = "me_hotkey scream",
-	"whisper" = "whisper",
 	"wink" = "me_hotkey wink",
 	"flex" = "me_hotkey flex",
 	"yawn" = "me_hotkey yawn",
 	"snap" = "me_hotkey snap",
 	"pickup" = "pick-up",
-	"ooc" = "ooc",
-	"looc" = "looc",
-	"dsay" = "dsay",
-	"asay" = "asay",
 	"adminhelp" = "adminhelp",
 	"mentorhelp" = "mentorhelp",
 	"autoscreenshot" = ".autoscreenshot",
@@ -129,6 +123,17 @@ var/list/action_verbs = list(
 	"mainfocus" = ".winset \"mainwindow.input.focus=false;mapwindow.map.focus=true;mainwindow.input.text=\"\"\"",
 	//"lazyfocus" = ".winset \\\"mainwindow.input.focus=true\\\"",
 	"Admin Interact" = "admin_interact"
+)
+
+var/list/action_macros = list(
+	"asay" = "asaymacro",
+	"dsay" = "dsaymacro",
+	"say" = "startsay",
+	"emote" = "startemote",
+	"say_main_radio" = "radiosay",
+	"ooc" = "ooc",
+	"looc" = "looc",
+	"whisper" = "whisper",
 )
 
 ///Used to translate bitflags of hotkeys into human-readable names

@@ -66,14 +66,14 @@
 		if(overlay_image_two)
 			var/mob/living/L = owner
 			L.UpdateOverlays(overlay_image_two, id + "2")
-		APPLY_MOB_PROPERTY(owner, PROP_HEATPROT, src.type, 50)
-		APPLY_MOB_PROPERTY(owner, PROP_COLDPROT, src.type, 50)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 50)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 50)
 		owner.temp_tolerance *= 10
 
 	OnRemove()
 		..()
-		REMOVE_MOB_PROPERTY(owner, PROP_HEATPROT, src.type)
-		REMOVE_MOB_PROPERTY(owner, PROP_COLDPROT, src.type)
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type)
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type)
 		owner.temp_tolerance /= 10
 		if(overlay_image_two)
 			if(isliving(owner))
@@ -105,25 +105,25 @@
 			boutput(owner, "<span class='alert'>Something is wrong with your cyberheart, it stops beating!</span>")
 		if(ismob(owner))
 			if(src.power > 1)
-				APPLY_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY, src, 40)
-				APPLY_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY_MAX, src, 40)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_DISORIENT_RESIST_BODY, src, 40)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_DISORIENT_RESIST_BODY_MAX, src, 40)
 
 	onPowerChange(oldval, newval)
 		. = ..()
 		if(ismob(owner))
 			if(oldval > 1)
-				REMOVE_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY, src)
-				REMOVE_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY_MAX, src)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_DISORIENT_RESIST_BODY, src)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_DISORIENT_RESIST_BODY_MAX, src)
 			if(newval > 1)
-				APPLY_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY, src, 40)
-				APPLY_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY_MAX, src, 40)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_DISORIENT_RESIST_BODY, src, 40)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_DISORIENT_RESIST_BODY_MAX, src, 40)
 
 	OnRemove()
 		. = ..()
 		if(ismob(owner))
 			if(src.power > 1)
-				APPLY_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY, src, 40)
-				APPLY_MOB_PROPERTY(owner, PROP_DISORIENT_RESIST_BODY_MAX, src, 40)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_DISORIENT_RESIST_BODY, src, 40)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_DISORIENT_RESIST_BODY_MAX, src, 40)
 
 	heal
 		id = "resist_electric_heal"
@@ -148,19 +148,19 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			APPLY_MOB_PROPERTY(M, PROP_RADPROT, src, min(75 * power, 100))
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, 75 * power)
 
 	onPowerChange(oldval, newval)
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			APPLY_MOB_PROPERTY(M, PROP_RADPROT, src, min(75 * newval, 100))
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, 75 * newval)
 
 	OnRemove()
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			REMOVE_MOB_PROPERTY(M, PROP_RADPROT, src)
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src)
 
 /datum/bioEffect/alcres
 	name = "Alcohol Resistance"
@@ -228,28 +228,28 @@
 		H.losebreath = 0
 		if(ismob(owner))
 			if(src.power == 1)
-				APPLY_MOB_PROPERTY(H, PROP_REBREATHING, src.type)
+				APPLY_ATOM_PROPERTY(H, PROP_MOB_REBREATHING, src.type)
 			else
-				APPLY_MOB_PROPERTY(H, PROP_BREATHLESS, src.type)
+				APPLY_ATOM_PROPERTY(H, PROP_MOB_BREATHLESS, src.type)
 		health_update_queue |= H
 
 	onPowerChange(oldval, newval)
 		. = ..()
 		if(ismob(owner))
 			if(oldval == 1)
-				REMOVE_MOB_PROPERTY(owner, PROP_REBREATHING, src.type)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING, src.type)
 			else
-				REMOVE_MOB_PROPERTY(owner, PROP_BREATHLESS, src.type)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_BREATHLESS, src.type)
 			if(newval == 1)
-				APPLY_MOB_PROPERTY(owner, PROP_REBREATHING, src.type)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING, src.type)
 			else
-				APPLY_MOB_PROPERTY(owner, PROP_BREATHLESS, src.type)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_BREATHLESS, src.type)
 
 	OnRemove()
 		. = ..()
 		if(ismob(owner))
-			REMOVE_MOB_PROPERTY(owner, PROP_BREATHLESS, src.type)
-			REMOVE_MOB_PROPERTY(owner, PROP_REBREATHING, src.type)
+			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_BREATHLESS, src.type)
+			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING, src.type)
 
 /datum/bioEffect/breathless/contract
 	name = "Airless Breathing"
@@ -392,17 +392,17 @@
 	OnAdd()
 		. = ..()
 		if(ismob(owner))
-			APPLY_MOB_PROPERTY(owner, PROP_CHEM_PURGE, src.type, remove_per_tick * power)
+			APPLY_ATOM_PROPERTY(owner, PROP_MOB_CHEM_PURGE, src.type, remove_per_tick * power)
 
 	onPowerChange(oldval, newval)
 		. = ..()
 		if(ismob(owner))
-			APPLY_MOB_PROPERTY(owner, PROP_CHEM_PURGE, src.type, remove_per_tick * power)
+			APPLY_ATOM_PROPERTY(owner, PROP_MOB_CHEM_PURGE, src.type, remove_per_tick * power)
 
 	OnRemove()
 		. = ..()
 		if(ismob(owner))
-			REMOVE_MOB_PROPERTY(owner, PROP_CHEM_PURGE, src.type)
+			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_CHEM_PURGE, src.type)
 
 /////////////
 // Stealth //
@@ -637,30 +637,30 @@ var/list/radio_brains = list()
 		. = ..()
 		if(ismob(owner))
 			if(power == 1)
-				APPLY_MOB_PROPERTY(owner, PROP_XRAYVISION_WEAK, src)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK, src)
 			else
-				APPLY_MOB_PROPERTY(owner, PROP_XRAYVISION, src)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION, src)
 
 	onPowerChange(oldval, newval)
 		. = ..()
 		if(ismob(owner))
 			if(oldval == 1)
-				REMOVE_MOB_PROPERTY(owner, PROP_XRAYVISION_WEAK, src)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK, src)
 			else
-				REMOVE_MOB_PROPERTY(owner, PROP_XRAYVISION, src)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION, src)
 
 			if(newval == 1)
-				APPLY_MOB_PROPERTY(owner, PROP_XRAYVISION_WEAK, src)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK, src)
 			else
-				APPLY_MOB_PROPERTY(owner, PROP_XRAYVISION, src)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION, src)
 
 	OnRemove()
 		. = ..()
 		if(ismob(owner))
 			if(power == 1)
-				REMOVE_MOB_PROPERTY(owner, PROP_XRAYVISION_WEAK, src)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK, src)
 			else
-				REMOVE_MOB_PROPERTY(owner, PROP_XRAYVISION, src)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION, src)
 
 /datum/bioEffect/nightvision
 	name = "Night Vision"
@@ -686,30 +686,30 @@ var/list/radio_brains = list()
 		. = ..()
 		if(ismob(owner))
 			if(power == 1)
-				APPLY_MOB_PROPERTY(owner, PROP_NIGHTVISION_WEAK, src)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION_WEAK, src)
 			else
-				APPLY_MOB_PROPERTY(owner, PROP_NIGHTVISION, src)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION, src)
 
 	onPowerChange(oldval, newval)
 		. = ..()
 		if(ismob(owner))
 			if(oldval == 1)
-				REMOVE_MOB_PROPERTY(owner, PROP_NIGHTVISION_WEAK, src)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION_WEAK, src)
 			else
-				REMOVE_MOB_PROPERTY(owner, PROP_NIGHTVISION, src)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION, src)
 
 			if(newval == 1)
-				APPLY_MOB_PROPERTY(owner, PROP_NIGHTVISION_WEAK, src)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION_WEAK, src)
 			else
-				APPLY_MOB_PROPERTY(owner, PROP_NIGHTVISION, src)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION, src)
 
 	OnRemove()
 		. = ..()
 		if(ismob(owner))
 			if(power == 1)
-				REMOVE_MOB_PROPERTY(owner, PROP_NIGHTVISION_WEAK, src)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION_WEAK, src)
 			else
-				REMOVE_MOB_PROPERTY(owner, PROP_NIGHTVISION, src)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION, src)
 
 /datum/bioEffect/toxic_farts
 	name = "High Decay Digestion"
@@ -751,19 +751,19 @@ var/list/radio_brains = list()
 	OnAdd()
 		. = ..()
 		if(ismob(owner))
-			APPLY_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff", 1.33 * power)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_STAMINA_REGEN_BONUS, "g-fitness-buff", 1.33 * power)
 			src.owner.add_stam_mod_max("g-fitness-buff", 20 * power)
 
 	onPowerChange(oldval, newval)
 		. = ..()
 		if(ismob(owner))
-			APPLY_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff", 1.33 * newval)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_STAMINA_REGEN_BONUS, "g-fitness-buff", 1.33 * newval)
 			src.owner.add_stam_mod_max("g-fitness-buff", 20 * newval)
 
 	OnRemove()
 		. = ..()
 		if(ismob(owner))
-			REMOVE_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff")
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_STAMINA_REGEN_BONUS, "g-fitness-buff")
 			src.owner.remove_stam_mod_max("g-fitness-buff")
 
 /datum/bioEffect/blood_overdrive
@@ -844,10 +844,10 @@ var/list/radio_brains = list()
 		if (probmult(20))
 			src.active = !src.active
 		if (src.active)
-			APPLY_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src, INVIS_INFRA)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_INFRA)
 		else
-			REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
 
 	OnRemove()
-		REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
 		. = ..()

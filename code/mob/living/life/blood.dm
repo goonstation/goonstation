@@ -50,7 +50,7 @@
 			if (owner.get_surgery_status())
 				decrease_chance -= 1
 
-			if (prob(percentmult(decrease_chance, mult)))
+			if (probmult(decrease_chance))
 				owner.bleeding -= 1 * mult
 				boutput(owner, "<span class='notice'>Your wounds feel [pick("better", "like they're healing a bit", "a little better", "itchy", "less tender", "less painful", "like they're closing", "like they're closing up a bit", "like they're closing up a little")].</span>")
 
@@ -66,7 +66,7 @@
 				if (anticoag_amt)
 					final_bleed += round(clamp((anticoag_amt / 10), 0, 2), 1)
 				final_bleed *= mult
-				if (prob(max(0, min(final_bleed, 10)) * 5)) // up to 50% chance to make a big bloodsplatter
+				if (prob(clamp(final_bleed, 0, 10) * 5)) // up to 50% chance to make a big bloodsplatter
 					bleed(owner, final_bleed, 5)
 
 				else
@@ -97,7 +97,7 @@
 				if (prob(20))
 					critter_owner.blood_volume -= 1 * mult
 
-		// very low (90/60 or lower) (<375u)
+		// very low (70/50 or lower) (<300u)
 		// low (100/65) (<415u)
 		// normal (120/80) (500u)
 		// high (stage 1) (140/90 or higher) (>585u)
@@ -140,10 +140,11 @@
 			return ..()
 
 		//special case
-		if (current_blood_amt >= 1500)
-			if (prob(10))
+		if (current_blood_amt >= 1000 && !HAS_ATOM_PROPERTY(owner, PROP_MOB_BLOODGIB_IMMUNE))
+			if (prob(clamp((current_blood_amt - 1000)/10, 0, 100))) //0% at 1000, 100% at 2000, linear scaling
 				owner.visible_message("<span class='alert'><b>[owner] bursts like a bloody balloon! Holy fucking shit!!</b></span>")
-				owner.gib(1) // :v
+				logTheThing(LOG_COMBAT, owner, "gibbed due to having over 1000 units of blood at [log_loc(src)].")
+				owner.gib(TRUE) // :v
 				return ..()
 
 		if (isdead(owner))
@@ -165,10 +166,10 @@
 					boutput(owner, "<span class='alert'><b>You feel [feeling]!</b></span>")
 					owner.changeStatus("weakened", 4 SECONDS * mult)
 				owner.contract_disease(/datum/ailment/malady/shock, null, null, 1) // if you have no blood you're gunna be in shock
-				APPLY_MOB_PROPERTY(owner, PROP_STAMINA_REGEN_BONUS, "hypotension", -3)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypotension", -3)
 				owner.add_stam_mod_max("hypotension", -15)
 
-			if (1 to 374) // very low (90/60)
+			if (1 to 299) // very low (70/50)
 				owner.take_oxygen_deprivation(0.8 * mult)
 				owner.take_brain_damage(0.8 * mult)
 				owner.losebreath += (0.8 * mult)
@@ -184,10 +185,10 @@
 					owner.changeStatus("weakened", 3 SECONDS * mult)
 				if (prob(25))
 					owner.contract_disease(/datum/ailment/malady/shock, null, null, 1)
-				APPLY_MOB_PROPERTY(owner, PROP_STAMINA_REGEN_BONUS, "hypotension", -2)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypotension", -2)
 				owner.add_stam_mod_max("hypotension", -10)
 
-			if (375 to 414) // low (100/65)
+			if (300 to 414) // low (100/65)
 				if (prob(2))
 					owner.emote(pick("pale", "shudder", "shiver"))
 				if (prob(5))
@@ -196,12 +197,12 @@
 					boutput(owner, "<span class='alert'><b>You feel [extreme][feeling]!</b></span>")
 				if (prob(5))
 					owner.contract_disease(/datum/ailment/malady/shock, null, null, 1)
-				APPLY_MOB_PROPERTY(owner, PROP_STAMINA_REGEN_BONUS, "hypotension", -1)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypotension", -1)
 				owner.add_stam_mod_max("hypotension", -5)
 
 			if (415 to 584) // normal (120/80)
-				REMOVE_MOB_PROPERTY(owner, PROP_STAMINA_REGEN_BONUS, "hypertension")
-				REMOVE_MOB_PROPERTY(owner, PROP_STAMINA_REGEN_BONUS, "hypotension")
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypertension")
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypotension")
 				owner.remove_stam_mod_max("hypertension")
 				owner.remove_stam_mod_max("hypotension")
 				return ..()
@@ -218,7 +219,7 @@
 					owner.emote("gasp")
 				if (prob(1) && prob(10))
 					owner.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
-				APPLY_MOB_PROPERTY(owner, PROP_STAMINA_REGEN_BONUS, "hypertension", -1)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypertension", -1)
 				owner.add_stam_mod_max("hypertension", -5)
 
 			if (666 to 749) // very high (160/100)
@@ -234,7 +235,7 @@
 					owner.emote("gasp")
 				if (prob(1))
 					owner.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
-				APPLY_MOB_PROPERTY(owner, PROP_STAMINA_REGEN_BONUS, "hypertension", -2)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypertension", -2)
 				owner.add_stam_mod_max("hypertension", -10)
 
 			if (750 to INFINITY) // critically high (180/110)
@@ -255,9 +256,9 @@
 					owner.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
 				if (prob(2))
 					owner.visible_message("<span class='alert'>[owner] coughs up a little blood!</span>")
-					playsound(owner, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+					playsound(owner, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
 					bleed(owner, rand(1,2) * mult, 1)
-				APPLY_MOB_PROPERTY(owner, PROP_STAMINA_REGEN_BONUS, "hypertension", -3)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypertension", -3)
 				owner.add_stam_mod_max("hypertension", -15)
 
 		..()

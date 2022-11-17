@@ -28,7 +28,6 @@ var/fartcount = 0
 	desc = "These cheap sandals don't even look legal."
 	icon_state = "thong"
 	protective_temperature = 0
-	permeability_coefficient = 1
 	var/possible_names = list("sandals", "flip-flops", "thongs", "rubber slippers", "jandals", "slops", "chanclas")
 	var/stapled = FALSE
 
@@ -56,12 +55,14 @@ var/fartcount = 0
 		setProperty("coldprot", 0)
 		setProperty("heatprot", 0)
 		setProperty("conductivity", 1)
+		delProperty("chemprot")
 
 
 
-/obj/machinery/vending/meat //MEAT VENDING MACHINE
-	name = "Meat4cash"
-	desc = "An exotic meat vendor."
+ABSTRACT_TYPE(/obj/machinery/vending/meat)
+/obj/machinery/vending/meat //MEAT VENDING MACHINE ((parent because we need more than 1 kind))
+	name = "ABSTRACT MEAT VENDOR"
+	desc = "YOU SHOULD NOT BE SEEING THIS OH NO"
 	icon_state = "steak"
 	icon_panel = "standard-panel"
 	icon_off = "monkey-off"
@@ -81,14 +82,35 @@ var/fartcount = 0
 
 	create_products()
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat, 10, cost=PAY_UNTRAINED/4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat, 10, cost=PAY_UNTRAINED/5)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat, 20, cost=PAY_UNTRAINED/6)
 
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat, 2, cost=PAY_UNTRAINED, hidden=1)
+/obj/machinery/vending/meat/prefab_grill
+	name = "Meat4cash"
+	desc = "An exotic meat vendor."
 
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat, 10, cost=PAY_UNTRAINED/4) // 30
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat, 10, cost=PAY_UNTRAINED/5) // 24
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat, 20, cost=PAY_UNTRAINED/6) // 20
 
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat, 2, cost=PAY_UNTRAINED, hidden=1) // 120
 
+/// This is currently unused as it was intended for use in PR 6684, but it was removed upon request. This might be a temporary removal, so it's staying here.
+/obj/machinery/vending/meat/station
+	// too much meat trivializes the fine art of monkey butchering, gotta have one with less meat
+	name = "FreshFlesh"
+	desc = "All of its branding and identification tags have been scratched or peeled off. What the fuck is this?"
+
+	create_products()
+		..()
+		// prices here are triple of the prefab_grill version where applicable
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat, 3, cost=90)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget, 5, cost=400)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/fish, 3, cost=300)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat, 6, cost=60)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat, 3, cost=72)
+
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat, 5, cost=1000, hidden=1)
 
 // all of john's area specific lines here
 /area/var/john_talk = null
@@ -130,6 +152,7 @@ var/fartcount = 0
 	real_name = "John Bill"
 	interesting = "Found in a coffee can at age fifteen. Went to jail for fraud. Recently returned to the can."
 	gender = MALE
+	is_npc = TRUE
 	var/talk_prob = 7
 	var/greeted_murray = 0
 	var/list/snacks = null
@@ -197,9 +220,9 @@ var/fartcount = 0
 			if(target)
 				if(isdead(target))
 					target = null
-				if(get_dist(src, target) > 1)
+				if(BOUNDS_DIST(src, target) > 0)
 					step_to(src, target, 1)
-				if(get_dist(src, target) <= 1 && !LinkBlocked(src.loc, target.loc))
+				if(BOUNDS_DIST(src, target) == 0 && !LinkBlocked(src.loc, target.loc))
 					var/obj/item/W = src.equipped()
 					if (!src.restrained())
 						if(W)
@@ -207,7 +230,7 @@ var/fartcount = 0
 						else
 							target.Attackhand(src)
 			else if(ai_aggressive)
-				a_intent = INTENT_HARM
+				set_a_intent(INTENT_HARM)
 				for(var/mob/M in oview(5, src))
 					if(M == src)
 						continue
@@ -223,7 +246,7 @@ var/fartcount = 0
 			if(prob(20) && src.canmove && isturf(src.loc))
 				step(src, pick(NORTH, SOUTH, EAST, WEST))
 			if(prob(2))
-				SPAWN_DBG(0) emote(JOHN_PICK("emotes"))
+				SPAWN(0) emote(JOHN_PICK("emotes"))
 			if(prob(15))
 				snacktime()
 			var/area/A = get_area(src)
@@ -244,7 +267,7 @@ var/fartcount = 0
 			snacc.Eat(src,src,1)
 
 	proc/pacify()
-		src.a_intent = INTENT_HELP
+		src.set_a_intent(INTENT_HELP)
 		src.target = null
 		src.ai_state = 0
 		src.ai_target = null
@@ -252,11 +275,11 @@ var/fartcount = 0
 	proc/speak()
 		if(nude)
 			return // nude john is for looking at, not listening to.
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/list/grills = list()
 
 			var/obj/machinery/bot/guardbot/old/tourguide/murray = pick(by_type[/obj/machinery/bot/guardbot/old/tourguide])
-			if (murray && get_dist(src,murray) > 7)
+			if (murray && GET_DIST(src,murray) > 7)
 				murray = null
 			if (istype(murray))
 				if (!findtext(murray.name, "murraycompliment"))
@@ -277,7 +300,7 @@ var/fartcount = 0
 					grills.Add(G)
 
 			if (A.john_talk && prob(90))
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					var/area/john_area = get_area(src)
 					say(pick(john_area.john_talk))
 					john_area.john_talk = null
@@ -311,7 +334,7 @@ var/fartcount = 0
 				if (murray && !greeted_murray)
 					greeted_murray = 1
 					say("[JOHN_PICK("greetings")] Murray! How's it [JOHN_PICK("verbs")]?")
-					SPAWN_DBG(rand(20,40))
+					SPAWN(rand(20,40))
 						if (murray?.on && !murray.idle)
 							murray.speak("Hi, John! It's [JOHN_PICK("murraycompliment")] to see you here, of all places.")
 
@@ -358,7 +381,7 @@ var/fartcount = 0
 							say("I think my [JOHN_PICK("friends")] [JOHN_PICK("friendsactions")].")
 
 					if (prob(25) && length(by_cat[TR_CAT_SHITTYBILLS]))
-						SPAWN_DBG(3.5 SECONDS)
+						SPAWN(3.5 SECONDS)
 							var/mob/living/carbon/human/biker/MB = pick(by_cat[TR_CAT_SHITTYBILLS])
 							switch (speech_type)
 								if (4)
@@ -386,14 +409,14 @@ var/fartcount = 0
 		if (istype(W, /obj/item/paper/tug/invoice))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
 			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				say("One of them [JOHN_PICK("people")] folks from the station helped us raise the cash. Lil bro been dreamin bout it fer years.")
 			return
 		#ifdef SECRETS_ENABLED
 		if (istype(W, /obj/item/paper/grillnasium/fartnasium_recruitment))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
 			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				say("Well hot dog! [JOHN_PICK("insults")], you wouldn't believe it but I use to work there!")
 				johnbill_shuttle_fartnasium_active = 1
 				sleep(2 SECONDS)
@@ -406,11 +429,11 @@ var/fartcount = 0
 			boutput(M, "<span class='notice'><b>You offer [W] to [src]</b> </span>")
 			M.u_equip(W)
 			W.set_loc(src)
-			W.dropped()
+			W.dropped(M)
 			src.drop_item()
 			src.put_in_hand_or_drop(W)
 
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				say("Oh? [W] eh?")
 				say(pick("No kiddin' fer me?","I guess I could go fer a quick one yeah!","Oh dang dang dang! Haven't had one of these babies in a while!","Well I never get tired of those!","You're offering this to me? Don't mind if i do, [JOHN_PICK("people")]"))
 				pacify()
@@ -467,18 +490,18 @@ var/fartcount = 0
 			src.ai_state = AI_ATTACKING
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
-			src.a_intent = INTENT_HARM
+			src.set_a_intent(INTENT_HARM)
 			src.ai_set_active(1)
 
 		for (var/mob/SB in by_cat[TR_CAT_SHITTYBILLS])
 			var/mob/living/carbon/human/biker/S = SB
-			if (get_dist(S,src) <= 7)
+			if (GET_DIST(S,src) <= 7)
 				if(!(S.ai_active) || (prob(25)))
 					S.say("That's my brother, you [JOHN_PICK("insults")]!")
 					M.add_karma(-1)
 				S.target = M
 				S.ai_set_active(1)
-				S.a_intent = INTENT_HARM
+				S.set_a_intent(INTENT_HARM)
 
 
 
@@ -557,7 +580,7 @@ obj/item/paper/tug/warehouse
 /turf/simulated/wall/r_wall/afterbar
 	name = "wall"
 	desc = null
-	attackby(obj/item/W as obj, mob/user as mob, params)
+	attackby(obj/item/W, mob/user, params)
 		return
 
 
@@ -608,7 +631,7 @@ Urs' Hauntdog critter
 		H.food_effects = list("food_all","food_brute")
 		if (H.reagents)
 			H.reagents.add_reagent("ectoplasm", 10)
-		H.update_icon()
+		H.UpdateIcon()
 
 		qdel(src)
 
@@ -627,7 +650,7 @@ Urs' Hauntdog critter
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		if(act == "scream" && src.emote_check(voluntary, 50))
 			var/turf/T = get_turf(src)
-			var/hogg = pick("sound/voice/hagg_vorbis.ogg","sound/voice/hogg_vorbis.ogg","sound/voice/hogg_vorbis_the.ogg","sound/voice/hogg_vorbis_screams.ogg","sound/voice/hogg_with_scream.ogg","sound/voice/hoooagh2.ogg","sound/voice/hoooagh.ogg",)
+			var/hogg = pick('sound/voice/hagg_vorbis.ogg','sound/voice/hogg_vorbis.ogg','sound/voice/hogg_vorbis_the.ogg','sound/voice/hogg_vorbis_screams.ogg','sound/voice/hogg_with_scream.ogg','sound/voice/hoooagh2.ogg','sound/voice/hoooagh.ogg',)
 			playsound(T, hogg, 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 			return "<span class='emote'><b>[src]</b> screeeams!</span>"
 		return null
@@ -641,11 +664,11 @@ Urs' Hauntdog critter
 	on_pet(mob/user)
 		if (..())
 			return 1
-		if (prob(ASS_JAM?50:25))
+		if (prob(25))
 			var/turf/T = get_turf(src)
 			src.visible_message("[src] screams![prob(5) ? " ...uh?" : null]",\
 			"You screams!")
-			var/hogg = pick("sound/voice/hagg_vorbis.ogg","sound/voice/hogg_vorbis.ogg","sound/voice/hogg_vorbis_the.ogg","sound/voice/hogg_vorbis_screams.ogg","sound/voice/hogg_with_scream.ogg","sound/voice/hoooagh2.ogg","sound/voice/hoooagh.ogg",)
+			var/hogg = pick('sound/voice/hagg_vorbis.ogg','sound/voice/hogg_vorbis.ogg','sound/voice/hogg_vorbis_the.ogg','sound/voice/hogg_vorbis_screams.ogg','sound/voice/hogg_with_scream.ogg','sound/voice/hoooagh2.ogg','sound/voice/hoooagh.ogg',)
 			playsound(T, hogg, 60, 1)
 			user.add_karma(1.5)
 
@@ -677,7 +700,6 @@ Urs' Hauntdog critter
 	is_npc = 1
 	uses_mobai = 1
 	real_name = "Juicer Gene"
-	gender = NEUTER
 	max_health = 50
 
 	New()

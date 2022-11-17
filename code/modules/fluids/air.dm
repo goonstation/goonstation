@@ -53,6 +53,13 @@ var/list/ban_from_airborne_fluid = list()
 			if (i > 40)
 				break
 
+	trigger_fluid_enter()
+		for(var/atom/A in src.loc)
+			if (src.group && !src.group.disposed && A.event_handler_flags & USE_FLUID_ENTER)
+				A.EnteredAirborneFluid(src, src.loc)
+		if(src.group && !src.group.disposed)
+			src.loc?.EnteredAirborneFluid(src, src.loc)
+
 	turf_remove_cleanup(turf/the_turf)
 		the_turf.active_airborne_liquid = null
 
@@ -69,7 +76,7 @@ var/list/ban_from_airborne_fluid = list()
 	//ALTERNATIVE to force ingest in life
 	proc/just_do_the_apply_thing(var/mob/M, var/mult = 1, var/hasmask = 0)
 		if (!M) return
-		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list || src.group.waitforit) return
+		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list) return
 
 		var/react_volume = src.amt > 10 ? (src.amt-10) / 3 + 10 : (src.amt)
 		react_volume = min(react_volume,20) * mult
@@ -91,7 +98,7 @@ var/list/ban_from_airborne_fluid = list()
 
 	force_mob_to_ingest(var/mob/M, var/mult = 1)//called when mob is drowning/standing in the smoke
 		if (!M) return
-		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list || src.group.waitforit) return
+		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list) return
 
 		var/react_volume = src.amt > 10 ? (src.amt-10) / 3 + 10 : (src.amt)
 		react_volume = min(react_volume,20) * mult
@@ -112,7 +119,7 @@ var/list/ban_from_airborne_fluid = list()
 	//incorporate touch_modifier?
 	Crossed(atom/movable/A)
 		..()
-		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid))
+		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid) || src.group.disposed)
 			return
 		A.EnteredAirborneFluid(src, A.last_turf)
 
@@ -126,20 +133,19 @@ var/list/ban_from_airborne_fluid = list()
 		.=0
 
 	update() //returns list of created fluid tiles
-		if (!src.group) return
+		if (!src.group || src.group.disposed) //uh oh
+			src.removed()
+			return
 		.= list()
 		last_spread_was_blocked = 1
 		src.touched_channel = 0
 		blocked_dirs = 0
 		spawned_any = 0
+		purge_smoke_blacklist(src.group.reagents)
 
 		var/turf/t
 		if(!waterflow_enabled) return
 		for( var/dir in cardinal )
-			LAGCHECK(LAG_LOW)
-			if (!src.group)
-				src.removed()
-				return
 			blocked_perspective_objects["[dir]"] = 0
 			t = get_step( src, dir )
 			if (!t) //the fuck? how
@@ -156,11 +162,10 @@ var/list/ban_from_airborne_fluid = list()
 					t.active_airborne_liquid.icon_state = "airborne"
 				continue
 
-			if(! t.density )
+			if( t.gas_cross(src) )
 				var/suc = 1
 				var/push_thing = 0
 				for(var/obj/thing in t.contents) //HEY maybe do item pushing here since you're looping thru turf contents anyway??
-					LAGCHECK(LAG_MED)
 					var/found = 0
 					if (IS_SOLID_TO_FLUID(thing))
 						found = 1
@@ -187,13 +192,12 @@ var/list/ban_from_airborne_fluid = list()
 							suc=0
 							break
 
-				if(suc && src.group) //group went missing? ok im doin a check here lol
-					LAGCHECK(LAG_MED)
+				if(suc && src.group && !src.group.disposed) //group went missing? ok im doin a check here lol
 					spawned_any = 1
 					src.icon_state = "airborne"
 					var/obj/fluid/F = new /obj/fluid/airborne
 					F.set_up(t,0)
-					if (!F || !src.group) continue //set_up may decide to remove F
+					if (!F || !src.group || src.group.disposed) continue //set_up may decide to remove F
 
 					F.amt = src.group.amt_per_tile
 					F.name = src.name
@@ -207,12 +211,13 @@ var/list/ban_from_airborne_fluid = list()
 					F.movement_speed_mod = src.movement_speed_mod
 
 					if (src.group)
+						src.group.add(F, src.group.amt_per_tile)
 						F.group = src.group
-						. += F
 					else
 						var/datum/fluid_group/FG = new
 						FG.add(F, src.group.amt_per_tile)
 						F.group = FG
+					. += F
 
 					F.done_init()
 					last_spread_was_blocked = 0
@@ -226,10 +231,7 @@ var/list/ban_from_airborne_fluid = list()
 						else
 							step_away(push_thing,src)
 
-					for(var/atom/A in F.loc)
-						if (A.event_handler_flags & USE_FLUID_ENTER)
-							A.EnteredAirborneFluid(F, F.loc)
-					F.loc.EnteredAirborneFluid(F, F.loc)
+					F.trigger_fluid_enter()
 
 		if (spawned_any && prob(40))
 			playsound( src.loc, 'sound/effects/smoke_tile_spread.ogg', 30,1,7)
@@ -305,7 +307,7 @@ var/list/ban_from_airborne_fluid = list()
 
 		//air specific:
 		var/old_opacity = src.opacity
-		src.opacity = group.reagents.get_master_reagent_gas_opaque()
+		src.set_opacity(group.reagents.get_master_reagent_gas_opaque())
 		if(src.opacity != old_opacity)
 			var/turf/L = src.loc
 			if(istype(L)) L.opaque_atom_count += src.opacity ? 1 : -1
@@ -331,6 +333,9 @@ var/list/ban_from_airborne_fluid = list()
 /obj/effects/EnteredAirborneFluid(obj/fluid/F as obj)
 	.=0
 
+/obj/blob/EnteredAirborneFluid(obj/fluid/F)
+	F.group.reagents.reaction(src, TOUCH, F.amt, 0)
+
 /mob/EnteredAirborneFluid(obj/fluid/airborne/F as obj, atom/oldloc)
 	.=0
 	var/entered_group = 1 //Did the entering atom cross from a non-fluid to a fluid tile?
@@ -352,4 +357,3 @@ var/list/ban_from_airborne_fluid = list()
 
 ///mob/EnteredAirborneFluid(obj/fluid/F as obj, atom/oldloc)
 //	.=0
-

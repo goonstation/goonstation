@@ -1,4 +1,4 @@
-/mob/living/critter/drone/ar
+/mob/living/critter/robotic/drone/ar
 	drone_designation = "AR"
 	desc = "A highly dangerous Syndicate artillery drone."
 	icon_state = "drone5"

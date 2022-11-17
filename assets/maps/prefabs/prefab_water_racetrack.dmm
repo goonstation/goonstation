@@ -1,117 +1,1300 @@
-"aa" = (/turf/variableTurf/wall,/area/space)
-"ab" = (/turf/variableTurf/clear,/area/space)
-"ac" = (/obj/wingrille_spawn/auto/crystal,/turf/simulated/floor/plating/random,/area/prefab/raceway)
-"ad" = (/obj/decal/tile_edge/check/white{icon_state = "check1"; dir = 6},/obj/machinery/light/incandescent/warm,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"ae" = (/obj/decal/tile_edge/check/white{icon_state = "check1"},/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"af" = (/obj/shrub{icon_state = "shrub"; dir = 1},/obj/decal/tile_edge/check/white{icon_state = "check1"},/obj/item/old_grenade/banana,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"ag" = (/obj/decal/tile_edge/check/white{icon_state = "check1"},/obj/machinery/light/incandescent/warm,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"ah" = (/obj/decal/tile_edge/check/white{icon_state = "check1"; dir = 10},/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"ai" = (/turf/variableTurf/floor,/area/space)
-"aj" = (/obj/decal/tile_edge/check/white{icon_state = "check1"; dir = 6},/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"ak" = (/obj/decal/tile_edge/check/white{icon_state = "check2"; dir = 6},/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"al" = (/turf/simulated/floor/shuttlebay{name = "reinforced plating"},/area/prefab/raceway)
-"am" = (/obj/shrub,/obj/decal/tile_edge/check/white{icon_state = "check2"; dir = 10},/obj/item/old_grenade/banana,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"an" = (/obj/decal/tile_edge/check/white{icon_state = "check1"; dir = 4},/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"ao" = (/obj/decal/tile_edge/line/white{icon_state = "line3"; dir = 8},/turf/simulated/floor/shuttlebay{name = "reinforced plating"},/area/prefab/raceway)
-"ap" = (/obj/decal/tile_edge/check/white{icon_state = "check1"; dir = 8},/obj/machinery/light/incandescent/warm,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"aq" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/raceway)
-"ar" = (/obj/item/shipcomponent/locomotion/wheels,/obj/item/shipcomponent/locomotion/wheels,/turf/simulated/floor/shuttlebay{name = "reinforced plating"},/area/prefab/raceway)
-"as" = (/obj/decal/tile_edge/check/white{icon_state = "check1"; dir = 8},/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"at" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/black,/area/prefab/raceway)
-"au" = (/obj/machinery/light/incandescent/cool,/turf/simulated/floor/black,/area/prefab/raceway)
-"av" = (/obj/submachine/chef_sink/chem_sink{layer = 3; pixel_y = 8},/turf/simulated/floor/black,/area/prefab/raceway)
-"aw" = (/turf/variableTurf/clear,/area/noGenerate)
-"ax" = (/turf/simulated/floor/black,/area/prefab/raceway)
-"ay" = (/obj/reagent_dispensers/fueltank,/turf/simulated/floor/black,/area/prefab/raceway)
-"az" = (/obj/storage/crate,/obj/item/reagent_containers/food/drinks/fueltank,/obj/item/weldingtool,/obj/item/weldingtool,/obj/item/reagent_containers/glass/oilcan,/obj/machinery/light/incandescent/cool,/obj/item/reagent_containers/glass/bucket,/turf/simulated/floor/black,/area/prefab/raceway)
-"aA" = (/obj/decal/tile_edge/check/white{icon_state = "check1"; dir = 4},/obj/machinery/light/incandescent/warm,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"aB" = (/obj/machinery/light/small/floor/warm,/turf/simulated/floor/shuttlebay{name = "reinforced plating"},/area/prefab/raceway)
-"aC" = (/obj/decal/tile_edge/check/white{icon_state = "check2"; dir = 9},/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"aD" = (/obj/decal/tile_edge/check/white{icon_state = "check1"; dir = 1},/obj/item/seed/grass,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"aE" = (/obj/decal/tile_edge/check/white{icon_state = "check2"; dir = 5},/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"aF" = (/obj/wingrille_spawn/auto,/turf/simulated/floor/plating/random,/area/prefab/raceway)
-"aG" = (/obj/item/sheet/steel/fullstack,/obj/item/rods/steel/fullstack,/turf/simulated/floor/black,/area/prefab/raceway)
-"aH" = (/obj/decal/cleanable/oil/streak,/turf/simulated/floor/black,/area/prefab/raceway)
-"aI" = (/obj/decal/cleanable/dirt,/obj/rack,/obj/item/paint_can/random,/obj/item/paint_can/random,/obj/item/paint_can/random,/turf/simulated/floor/black,/area/prefab/raceway)
-"aJ" = (/obj/decal/tile_edge/check/white{icon_state = "check1"; dir = 9},/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"aK" = (/obj/decal/tile_edge/check/white{icon_state = "check3"; dir = 8},/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"aL" = (/obj/decal/tile_edge/check/white{icon_state = "check1"; dir = 5},/obj/item/seed/alien,/obj/machinery/light/small/floor/warm,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"aM" = (/obj/machinery/door/airlock/pyro{dir = 4},/turf/simulated/floor/plating/random,/area/prefab/raceway)
-"aN" = (/obj/table/auto,/obj/critter/mimic,/turf/simulated/floor/black,/area/prefab/raceway)
-"aO" = (/obj/table/auto,/obj/item/shipcomponent/secondary_system/lock,/obj/item/shipcomponent/secondary_system/lock,/turf/simulated/floor/black,/area/prefab/raceway)
-"aP" = (/obj/wingrille_spawn/auto/crystal,/obj/wingrille_spawn/auto/crystal,/turf/simulated/floor/plating/random,/area/prefab/raceway)
-"aQ" = (/obj/shrub{icon_state = "shrub"; dir = 6},/obj/decal/tile_edge/check/white{icon_state = "check1"; dir = 4},/obj/item/old_grenade/banana,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"aR" = (/obj/shrub{icon_state = "shrub"; dir = 6},/obj/item/seed/alien,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"aS" = (/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"aT" = (/obj/critter/spacebee,/obj/shrub{icon_state = "shrub"; dir = 6},/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"aU" = (/obj/critter/mimic,/obj/item/sea_ladder,/turf/simulated/floor/shuttlebay{name = "reinforced plating"},/area/prefab/raceway)
-"aV" = (/obj/decal/tile_edge/check/white{icon_state = "check1"; dir = 8},/obj/shrub,/obj/machinery/light/incandescent/warm,/obj/item/old_grenade/banana,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"aW" = (/obj/decal/cleanable/oil,/obj/item/storage/belt/utility,/turf/simulated/floor/black,/area/prefab/raceway)
-"aX" = (/obj/decal/cleanable/oil,/turf/simulated/floor/black,/area/prefab/raceway)
-"aY" = (/obj/table/auto,/obj/item/shipcomponent/mainweapon/taser,/obj/item/shipcomponent/mainweapon/taser,/turf/simulated/floor/black,/area/prefab/raceway)
-"aZ" = (/obj/table/auto,/obj/item/shipcomponent/locomotion/treads,/obj/item/shipcomponent/locomotion/treads,/turf/simulated/floor/black,/area/prefab/raceway)
-"ba" = (/obj/machinery/light/small/floor/warm,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"bb" = (/obj/critter/spacebee,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"bc" = (/obj/decal/skeleton,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"bd" = (/obj/decal/cleanable/dirt,/obj/item/mop,/turf/simulated/floor/black,/area/prefab/raceway)
-"be" = (/obj/machinery/manufacturer/hangar,/obj/machinery/light/incandescent/cool,/turf/simulated/floor/black,/area/prefab/raceway)
-"bf" = (/obj/item/parts/robot_parts/chest/light,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"bg" = (/obj/stool/bench/green,/obj/item/storage/toolbox/mechanical,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"bh" = (/obj/machinery/door/airlock/pyro,/turf/simulated/floor/black,/area/prefab/raceway)
-"bi" = (/obj/item/parts/robot_parts/head/antique,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"bj" = (/obj/machinery/vending/coffee,/obj/machinery/light/incandescent/warm,/turf/simulated/floor/black,/area/prefab/raceway)
-"bk" = (/obj/machinery/vending/cigarette,/turf/simulated/floor/black,/area/prefab/raceway)
-"bl" = (/obj/shrub{icon_state = "shrub"; dir = 6},/obj/landmark/artifact,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"bm" = (/obj/decal/tile_edge/line/white{icon_state = "line1"; dir = 2},/obj/decal/tile_edge/line/white{icon_state = "line3"; dir = 2},/obj/decal/tile_edge/line/white{icon_state = "line1"; dir = 1},/turf/simulated/floor/shuttlebay{name = "reinforced plating"},/area/prefab/raceway)
-"bn" = (/obj/wingrille_spawn/auto,/turf/simulated/floor/black,/area/prefab/raceway)
-"bo" = (/obj/stool/bench/red,/turf/simulated/floor/black,/area/prefab/raceway)
-"bp" = (/turf/simulated/floor,/area/prefab/raceway)
-"bq" = (/obj/table/auto,/obj/item/reagent_containers/food/snacks/cereal_box,/obj/item/reagent_containers/food/snacks/chips,/obj/item/reagent_containers/food/snacks/chips,/obj/item/reagent_containers/food/snacks/corndog/banana,/obj/item/reagent_containers/food/snacks/corndog/banana,/obj/item/reagent_containers/food/snacks/corndog/banana,/turf/simulated/floor/black,/area/prefab/raceway)
-"br" = (/obj/table/auto,/obj/item/material_piece/gold,/obj/machinery/light/incandescent/warm,/turf/simulated/floor/black,/area/prefab/raceway)
-"bs" = (/obj/shrub,/obj/decal/tile_edge/check/white{icon_state = "check1"; dir = 4},/obj/item/old_grenade/banana,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"bt" = (/obj/shrub{icon_state = "shrub"; dir = 10},/obj/item/old_grenade/banana/cheese_sandwich,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"bu" = (/obj/shrub{icon_state = "shrub"; dir = 1},/obj/item/old_grenade/banana,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"bv" = (/obj/table/auto,/obj/item/reagent_containers/food/snacks/cookie/chocolate_chip,/obj/item/reagent_containers/food/snacks/cookie/chocolate_chip,/obj/item/reagent_containers/food/snacks/cookie/chocolate_chip,/obj/item/reagent_containers/food/snacks/cookie/chocolate_chip,/obj/item/reagent_containers/food/snacks/cookie/chocolate_chip,/turf/simulated/floor/black,/area/prefab/raceway)
-"bw" = (/obj/decal/tile_edge/check/white{icon_state = "check2"; dir = 10},/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"bx" = (/obj/decal/tile_edge/check/white{icon_state = "check1"; dir = 10},/obj/machinery/light/small/floor/warm,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"by" = (/obj/table/auto,/obj/item/sticker/ribbon/participant,/obj/item/sticker/ribbon/third_place,/obj/item/sticker/ribbon/second_place,/obj/item/sticker/ribbon/first_place,/turf/simulated/floor/black,/area/prefab/raceway)
-"bz" = (/obj/decal/tile_edge/check/white{icon_state = "check1"},/obj/decal/tile_edge/check/white{icon_state = "check3"; dir = 8},/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"bA" = (/obj/machinery/light/incandescent/netural,/turf/simulated/floor,/area/prefab/raceway)
-"bB" = (/obj/machinery/door/airlock/pyro/external,/turf/simulated/floor/red/checker,/area/prefab/raceway)
-"bC" = (/obj/decal/tile_edge/check/white{icon_state = "check1"; dir = 5},/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"bD" = (/obj/shrub{icon_state = "shrub"; dir = 1},/obj/decal/tile_edge/check/white{icon_state = "check1"; dir = 9},/obj/item/old_grenade/banana,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"bE" = (/obj/machinery/drainage/big,/turf/simulated/floor,/area/prefab/raceway)
-"bF" = (/obj/decal/tile_edge/check/white{icon_state = "check1"; dir = 1},/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"bG" = (/obj/shrub{icon_state = "shrub"; dir = 6},/obj/decal/tile_edge/check/white{icon_state = "check1"; dir = 1},/obj/item/old_grenade/banana,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"bH" = (/obj/decal/tile_edge/check/white{icon_state = "check1"; dir = 1},/obj/machinery/light/incandescent/warm,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"bI" = (/obj/machinery/door/airlock/pyro/external,/turf/simulated/floor/blackwhite/whitegrime,/area/prefab/raceway)
-"bJ" = (/obj/machinery/vehicle/tank/car/blue,/turf/simulated/floor/shuttlebay{name = "reinforced plating"},/area/prefab/raceway)
-"bK" = (/obj/machinery/vehicle/tank/car/red,/turf/simulated/floor/shuttlebay{name = "reinforced plating"},/area/prefab/raceway)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/variableTurf/wall,
+/area/space)
+"ab" = (
+/turf/variableTurf/clear,
+/area/space)
+"ac" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating/random,
+/area/prefab/raceway)
+"ad" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1";
+	dir = 6
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"ae" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1"
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"af" = (
+/obj/shrub{
+	icon_state = "shrub";
+	dir = 1
+	},
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1"
+	},
+/obj/item/old_grenade/spawner/banana,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"ag" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1"
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"ah" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1";
+	dir = 10
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"ai" = (
+/turf/variableTurf/floor,
+/area/space)
+"aj" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1";
+	dir = 6
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"ak" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check2";
+	dir = 6
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"al" = (
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/prefab/raceway)
+"am" = (
+/obj/shrub,
+/obj/decal/tile_edge/check/white{
+	icon_state = "check2";
+	dir = 10
+	},
+/obj/item/old_grenade/spawner/banana,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"an" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1";
+	dir = 4
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"ao" = (
+/obj/decal/tile_edge/line/white{
+	icon_state = "line3";
+	dir = 8
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/prefab/raceway)
+"ap" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1";
+	dir = 8
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"aq" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/raceway)
+"ar" = (
+/obj/item/shipcomponent/locomotion/wheels,
+/obj/item/shipcomponent/locomotion/wheels,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/prefab/raceway)
+"as" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1";
+	dir = 8
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"at" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"au" = (
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"av" = (
+/obj/submachine/chef_sink/chem_sink{
+	layer = 3;
+	pixel_y = 8
+	},
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"aw" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ax" = (
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"ay" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"az" = (
+/obj/storage/crate,
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/weldingtool,
+/obj/item/weldingtool,
+/obj/item/reagent_containers/glass/oilcan,
+/obj/machinery/light/incandescent/cool,
+/obj/item/reagent_containers/glass/bucket,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"aA" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1";
+	dir = 4
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"aB" = (
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/prefab/raceway)
+"aC" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check2";
+	dir = 9
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"aD" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1";
+	dir = 1
+	},
+/obj/item/seed/grass,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"aE" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check2";
+	dir = 5
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"aF" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating/random,
+/area/prefab/raceway)
+"aG" = (
+/obj/item/sheet/steel/fullstack,
+/obj/item/rods/steel/fullstack,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"aH" = (
+/obj/decal/cleanable/oil/streak,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"aI" = (
+/obj/decal/cleanable/dirt,
+/obj/rack,
+/obj/item/paint_can/random,
+/obj/item/paint_can/random,
+/obj/item/paint_can/random,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"aJ" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1";
+	dir = 9
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"aK" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check3";
+	dir = 8
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"aL" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1";
+	dir = 5
+	},
+/obj/item/seed/alien,
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"aM" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/raceway)
+"aN" = (
+/obj/table/auto,
+/obj/critter/mimic,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"aO" = (
+/obj/table/auto,
+/obj/item/shipcomponent/secondary_system/lock,
+/obj/item/shipcomponent/secondary_system/lock,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"aP" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating/random,
+/area/prefab/raceway)
+"aQ" = (
+/obj/shrub{
+	icon_state = "shrub";
+	dir = 6
+	},
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1";
+	dir = 4
+	},
+/obj/item/old_grenade/spawner/banana,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"aR" = (
+/obj/shrub{
+	icon_state = "shrub";
+	dir = 6
+	},
+/obj/item/seed/alien,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"aS" = (
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"aT" = (
+/obj/critter/wasp,
+/obj/shrub{
+	icon_state = "shrub";
+	dir = 6
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"aU" = (
+/obj/critter/mimic,
+/obj/item/sea_ladder,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/prefab/raceway)
+"aV" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1";
+	dir = 8
+	},
+/obj/shrub,
+/obj/machinery/light/incandescent/warm,
+/obj/item/old_grenade/spawner/banana,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"aW" = (
+/obj/decal/cleanable/oil,
+/obj/item/storage/belt/utility,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"aX" = (
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"aY" = (
+/obj/table/auto,
+/obj/item/shipcomponent/mainweapon/taser,
+/obj/item/shipcomponent/mainweapon/taser,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"aZ" = (
+/obj/table/auto,
+/obj/item/shipcomponent/locomotion/treads,
+/obj/item/shipcomponent/locomotion/treads,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"ba" = (
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"bb" = (
+/obj/critter/wasp,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"bc" = (
+/obj/decal/fakeobjects/skeleton,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"bd" = (
+/obj/decal/cleanable/dirt,
+/obj/item/mop,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"be" = (
+/obj/machinery/manufacturer/hangar,
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"bf" = (
+/obj/item/parts/robot_parts/chest/light,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"bg" = (
+/obj/stool/bench/green,
+/obj/item/storage/toolbox/mechanical,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"bh" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"bi" = (
+/obj/item/parts/robot_parts/head/antique,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"bj" = (
+/obj/machinery/vending/coffee,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"bk" = (
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"bl" = (
+/obj/shrub{
+	icon_state = "shrub";
+	dir = 6
+	},
+/obj/landmark/artifact,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"bm" = (
+/obj/decal/tile_edge/line/white{
+	icon_state = "line1";
+	dir = 2
+	},
+/obj/decal/tile_edge/line/white{
+	icon_state = "line3";
+	dir = 2
+	},
+/obj/decal/tile_edge/line/white{
+	icon_state = "line1";
+	dir = 1
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/prefab/raceway)
+"bn" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"bo" = (
+/obj/stool/bench/red,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"bp" = (
+/turf/simulated/floor,
+/area/prefab/raceway)
+"bq" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/cereal_box,
+/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/reagent_containers/food/snacks/corndog/banana,
+/obj/item/reagent_containers/food/snacks/corndog/banana,
+/obj/item/reagent_containers/food/snacks/corndog/banana,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"br" = (
+/obj/table/auto,
+/obj/item/stamped_bullion,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"bs" = (
+/obj/shrub,
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1";
+	dir = 4
+	},
+/obj/item/old_grenade/spawner/banana,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"bt" = (
+/obj/shrub{
+	icon_state = "shrub";
+	dir = 10
+	},
+/obj/item/old_grenade/spawner/cheese_sandwich,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"bu" = (
+/obj/shrub{
+	icon_state = "shrub";
+	dir = 1
+	},
+/obj/item/old_grenade/spawner/banana,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"bv" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/cookie/chocolate_chip,
+/obj/item/reagent_containers/food/snacks/cookie/chocolate_chip,
+/obj/item/reagent_containers/food/snacks/cookie/chocolate_chip,
+/obj/item/reagent_containers/food/snacks/cookie/chocolate_chip,
+/obj/item/reagent_containers/food/snacks/cookie/chocolate_chip,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"bw" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check2";
+	dir = 10
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"bx" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1";
+	dir = 10
+	},
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"by" = (
+/obj/table/auto,
+/obj/item/sticker/ribbon/participant,
+/obj/item/sticker/ribbon/third_place,
+/obj/item/sticker/ribbon/second_place,
+/obj/item/sticker/ribbon/first_place,
+/turf/simulated/floor/black,
+/area/prefab/raceway)
+"bz" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1"
+	},
+/obj/decal/tile_edge/check/white{
+	icon_state = "check3";
+	dir = 8
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"bA" = (
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor,
+/area/prefab/raceway)
+"bB" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/red/checker,
+/area/prefab/raceway)
+"bC" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1";
+	dir = 5
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"bD" = (
+/obj/shrub{
+	icon_state = "shrub";
+	dir = 1
+	},
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1";
+	dir = 9
+	},
+/obj/item/old_grenade/spawner/banana,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"bE" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor,
+/area/prefab/raceway)
+"bF" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1";
+	dir = 1
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"bG" = (
+/obj/shrub{
+	icon_state = "shrub";
+	dir = 6
+	},
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1";
+	dir = 1
+	},
+/obj/item/old_grenade/spawner/banana,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"bH" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1";
+	dir = 1
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"bI" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/raceway)
+"bJ" = (
+/obj/machinery/vehicle/tank/car/blue,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/prefab/raceway)
+"bK" = (
+/obj/machinery/vehicle/tank/car/red,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/prefab/raceway)
 
 (1,1,1) = {"
-abababababababababababababababababababababababab
-ababacacacacacacacacacacacacacabababaaaaaaaaabab
-abacacadaeafaeagaeaeaeagaeahacacabaiaiaiaaaaabab
-abacajakalalalalalalalalalamahacabaiaiaaaaaaabab
-abacanalalaoalalaoalalaoalalapaqaqaqaqaqaqaqaqab
-abacanalalalalalalalaralalalasaqatauavaxayazaqab
-abacaAalaoalaBaCaDaEalbJaoalasaFaxaGaHaxaxaIaqab
-abacanalalalaCaJaKaLaEalbKalasaMaxaxaxaxaNaOaqab
-abaPaQalaralasaRaSaTanaUalalaVaMaxaWaxaXaYaZaqab
-abaPanalaoalasbabbbcanalaoalasaFaxaxaxaxaxaxaqab
-abacaAalalalasaSaKbbanalalalasaqaxauaxaxbdbeaqab
-abaPanalaoalasbfbgbaanalaoalasaqaqaqbhbhaqaqaqab
-abacanalalalasaSaKbianalalalasaqaxaxaxaxbjbkaqab
-abacanalalalasbablaSanbmbmbmasbnboaxaxaxaxaxaqab
-abacaAalaoalasaSaSaSanalaoalapbnboaxbpbpaxbqaqab
-abacanalalalasaSaKbaanalalalasbnboaxbpbpaxbraqab
-abacbsalalalasbtaSbuanalalalasbnboaxbpbpaxbvaqab
-abacanalaoalbwbxaSajakalaoalasbnboaxbpbpaxbyaqab
-abacanalalalalbwbzakaBalalalasaqaxaxbpbpaxaxaqab
-abacaAalalalalalalalalalalalapaqbpbAbpbpbpbAaqab
-abacanalalaoalalaoalalaoalalasaqaqaqbBbBaqaqaqab
-abacbCaEalalalalalalalalalaCbDaqabaqbEbEaqababab
-abacacbCbFbGbHbFbFbFbFbHbFaJacacabaqbpbpaqababab
-ababacacacacacacacacacacacacacababaqbIbIaqababab
-abababababababababababababababababawawawawababab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(2,1,1) = {"
+ab
+ab
+ac
+ac
+ac
+ac
+ac
+ac
+aP
+aP
+ac
+aP
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ab
+ab
+"}
+(3,1,1) = {"
+ab
+ac
+ac
+aj
+an
+an
+aA
+an
+aQ
+an
+aA
+an
+an
+an
+aA
+an
+bs
+an
+an
+aA
+an
+bC
+ac
+ac
+ab
+"}
+(4,1,1) = {"
+ab
+ac
+ad
+ak
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+aE
+bC
+ac
+ab
+"}
+(5,1,1) = {"
+ab
+ac
+ae
+al
+al
+al
+ao
+al
+ar
+ao
+al
+ao
+al
+al
+ao
+al
+al
+ao
+al
+al
+al
+al
+bF
+ac
+ab
+"}
+(6,1,1) = {"
+ab
+ac
+af
+al
+ao
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+ao
+al
+bG
+ac
+ab
+"}
+(7,1,1) = {"
+ab
+ac
+ae
+al
+al
+al
+aB
+aC
+as
+as
+as
+as
+as
+as
+as
+as
+as
+bw
+al
+al
+al
+al
+bH
+ac
+ab
+"}
+(8,1,1) = {"
+ab
+ac
+ag
+al
+al
+al
+aC
+aJ
+aR
+ba
+aS
+bf
+aS
+ba
+aS
+aS
+bt
+bx
+bw
+al
+al
+al
+bF
+ac
+ab
+"}
+(9,1,1) = {"
+ab
+ac
+ae
+al
+ao
+al
+aD
+aK
+aS
+bb
+aK
+bg
+aK
+bl
+aS
+aK
+aS
+aS
+bz
+al
+ao
+al
+bF
+ac
+ab
+"}
+(10,1,1) = {"
+ab
+ac
+ae
+al
+al
+al
+aE
+aL
+aT
+bc
+bb
+ba
+bi
+aS
+aS
+ba
+bu
+aj
+ak
+al
+al
+al
+bF
+ac
+ab
+"}
+(11,1,1) = {"
+ab
+ac
+ae
+al
+al
+ar
+al
+aE
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ak
+aB
+al
+al
+al
+bF
+ac
+ab
+"}
+(12,1,1) = {"
+ab
+ac
+ag
+al
+ao
+al
+bJ
+al
+aU
+al
+al
+al
+al
+bm
+al
+al
+al
+al
+al
+al
+ao
+al
+bH
+ac
+ab
+"}
+(13,1,1) = {"
+ab
+ac
+ae
+al
+al
+al
+ao
+bK
+al
+ao
+al
+ao
+al
+bm
+ao
+al
+al
+ao
+al
+al
+al
+al
+bF
+ac
+ab
+"}
+(14,1,1) = {"
+ab
+ac
+ah
+am
+al
+al
+al
+al
+al
+al
+al
+al
+al
+bm
+al
+al
+al
+al
+al
+al
+al
+aC
+aJ
+ac
+ab
+"}
+(15,1,1) = {"
+ab
+ac
+ac
+ah
+ap
+as
+as
+as
+aV
+as
+as
+as
+as
+as
+ap
+as
+as
+as
+as
+ap
+as
+bD
+ac
+ac
+ab
+"}
+(16,1,1) = {"
+ab
+ab
+ac
+ac
+aq
+aq
+aF
+aM
+aM
+aF
+aq
+aq
+aq
+bn
+bn
+bn
+bn
+bn
+aq
+aq
+aq
+aq
+ac
+ab
+ab
+"}
+(17,1,1) = {"
+ab
+ab
+ab
+ab
+aq
+at
+ax
+ax
+ax
+ax
+ax
+aq
+ax
+bo
+bo
+bo
+bo
+bo
+ax
+bp
+aq
+ab
+ab
+ab
+ab
+"}
+(18,1,1) = {"
+ab
+ab
+ai
+ai
+aq
+au
+aG
+ax
+aW
+ax
+au
+aq
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+bA
+aq
+aq
+aq
+aq
+aw
+"}
+(19,1,1) = {"
+ab
+aa
+ai
+ai
+aq
+av
+aH
+ax
+ax
+ax
+ax
+bh
+ax
+ax
+bp
+bp
+bp
+bp
+bp
+bp
+bB
+bE
+bp
+bI
+aw
+"}
+(20,1,1) = {"
+ab
+aa
+ai
+aa
+aq
+ax
+ax
+ax
+aX
+ax
+ax
+bh
+ax
+ax
+bp
+bp
+bp
+bp
+bp
+bp
+bB
+bE
+bp
+bI
+aw
+"}
+(21,1,1) = {"
+ab
+aa
+aa
+aa
+aq
+ay
+ax
+aN
+aY
+ax
+bd
+aq
+bj
+ax
+ax
+ax
+ax
+ax
+ax
+bp
+aq
+aq
+aq
+aq
+aw
+"}
+(22,1,1) = {"
+ab
+aa
+aa
+aa
+aq
+az
+aI
+aO
+aZ
+ax
+be
+aq
+bk
+ax
+bq
+br
+bv
+by
+ax
+bA
+aq
+ab
+ab
+ab
+ab
+"}
+(23,1,1) = {"
+ab
+ab
+ab
+ab
+aq
+aq
+aq
+aq
+aq
+aq
+aq
+aq
+aq
+aq
+aq
+aq
+aq
+aq
+aq
+aq
+aq
+ab
+ab
+ab
+ab
+"}
+(24,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 "}

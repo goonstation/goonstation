@@ -1,226 +1,2110 @@
-"aa" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/sea_monkey_hideout)
-"ab" = (/turf/variableTurf/clear,/area/space)
-"ac" = (/obj/wingrille_spawn/auto/crystal,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"ad" = (/obj/item/raw_material/gold,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"ae" = (/obj/item/spacecash/hundred,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"af" = (/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"ag" = (/obj/item/staff{name = "kingly staff"},/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"ah" = (/obj/stool/chair{desc = ""; foldable = 0; icon_state = "chair_pool"},/obj/landmark/spawner{name = "seamonkeyspawn_rich"},/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"ai" = (/obj/decal/poster/wallsign/hazard_danger,/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/sea_monkey_hideout)
-"aj" = (/obj/decal/poster/wallsign/biohazard,/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/sea_monkey_hideout)
-"ak" = (/obj/decal/poster/wallsign/hazard_caution,/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/sea_monkey_hideout)
-"al" = (/obj/item/reagent_containers/food/snacks/plant/banana,/obj/item/reagent_containers/food/snacks/plant/banana,/obj/item/reagent_containers/food/snacks/plant/banana,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"am" = (/obj/item/raw_material/gold,/obj/item/spacecash/hundred,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"an" = (/obj/item/reagent_containers/food/snacks/plant/banana,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"ao" = (/obj/table/auto,/obj/item/storage/box/biohazard_bags,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"ap" = (/obj/rack,/obj/item/clothing/suit/labcoat/science,/obj/item/clothing/suit/labcoat,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"aq" = (/obj/rack,/obj/item/clothing/glasses/spectro,/obj/item/clothing/glasses/spectro,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"ar" = (/obj/decal/cleanable/blood{icon_state = "floor6"},/obj/item/ammo/bullets/a38/stun,/turf/simulated/floor/black,/area/prefab/sea_monkey_hideout)
-"as" = (/obj/critter/gunbot,/turf/simulated/floor/black,/area/prefab/sea_monkey_hideout)
-"at" = (/turf/simulated/floor/black/grime,/area/prefab/sea_monkey_hideout)
-"au" = (/obj/reagent_dispensers/fueltank,/obj/decal/cleanable/dirt,/obj/decal/cleanable/blood{icon_state = "floor6"},/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"av" = (/obj/reagent_dispensers/watertank,/obj/decal/cleanable/dirt,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"aw" = (/turf/variableTurf/clear,/area/noGenerate)
-"ax" = (/obj/table/auto,/obj/item/reagent_containers/glass/bottle/acetone/janitors,/obj/machinery/light/incandescent/cool/very,/obj/item/reagent_containers/dropper,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"ay" = (/obj/machinery/chem_master,/obj/decal/cleanable/dirt,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"az" = (/obj/machinery/chem_dispenser,/obj/decal/cleanable/dirt,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"aA" = (/obj/machinery/chem_heater,/obj/decal/cleanable/dirt,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"aB" = (/obj/table/auto,/obj/table/auto,/obj/item/reagent_containers/glass/beaker/strange_reagent{name = "beaker"},/obj/machinery/microscope,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"aC" = (/obj/table/auto,/obj/item/reagent_containers/glass/beaker/large,/obj/machinery/light/incandescent/cool/very,/obj/item/reagent_containers/pill/methamphetamine,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"aD" = (/obj/table/auto,/obj/item/reagent_containers/pill/bathsalts,/obj/item/reagent_containers/pill/bathsalts,/obj/item/reagent_containers/pill/catdrugs,/obj/item/reagent_containers/pill/catdrugs,/obj/item/reagent_containers/pill/catdrugs,/obj/item/reagent_containers/pill/crank,/obj/item/reagent_containers/pill/crank,/obj/item/reagent_containers/pill/crank,/obj/item/reagent_containers/pill/cyberpunk,/obj/item/reagent_containers/pill/cyberpunk,/obj/item/reagent_containers/pill/mutadone,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"aE" = (/obj/item/reagent_containers/food/snacks/plant/banana,/obj/ladder{id = "sea_monkey_lab"; layer = 2},/obj/machinery/light/incandescent/warm,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"aF" = (/turf/simulated/floor/carpet/blue/fancy/narrow/nw,/area/prefab/sea_monkey_hideout)
-"aG" = (/turf/simulated/floor/carpet/blue/fancy/narrow/ne,/area/prefab/sea_monkey_hideout)
-"aH" = (/obj/item/reagent_containers/food/snacks/plant/banana,/obj/machinery/light/incandescent/warm,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"aI" = (/obj/table/auto,/obj/item/reagent_containers/patch/mini/bruise,/obj/item/reagent_containers/patch/mini/bruise,/obj/item/reagent_containers/patch/mini/bruise,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"aJ" = (/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"aK" = (/obj/machinery/light/incandescent/cool/very,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"aL" = (/obj/disposalpipe/segment{dir = 4; icon_state = "pipe-s"},/obj/decal/poster/wallsign/hazard_danger,/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/sea_monkey_hideout)
-"aM" = (/obj/disposalpipe/segment{dir = 4; icon_state = "pipe-s"},/obj/decal/poster/wallsign/hazard_caution,/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/sea_monkey_hideout)
-"aN" = (/obj/disposalpipe/segment{dir = 4; icon_state = "pipe-s"},/obj/table/auto,/turf/simulated/floor/black,/area/prefab/sea_monkey_hideout)
-"aO" = (/obj/disposalpipe/segment{dir = 4; icon_state = "pipe-s"},/obj/table/auto,/turf/simulated/floor/black/grime,/area/prefab/sea_monkey_hideout)
-"aP" = (/obj/disposalpipe/segment{dir = 4; icon_state = "pipe-s"},/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/sea_monkey_hideout)
-"aQ" = (/obj/machinery/disposal/sci,/obj/disposalpipe/trunk/west,/obj/decal/cleanable/dirt,/obj/decal/cleanable/dirt,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"aR" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/saltpile,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"aS" = (/obj/decal/cleanable/saltpile,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"aT" = (/obj/stool/chair/office{dir = 1; icon_state = "office_chair"},/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"aU" = (/obj/decal/cleanable/saltpile,/obj/item/reagent_containers/pill/methamphetamine,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"aV" = (/obj/item/reagent_containers/pill/methamphetamine,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"aW" = (/obj/item/storage/pill_bottle/cyberpunk,/obj/decal/cleanable/dirt,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"aX" = (/obj/item/reagent_containers/food/snacks/plant/banana,/obj/decal/fakeobjects/palmtree,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"aY" = (/obj/item/reagent_containers/food/snacks/plant/banana,/obj/item/reagent_containers/food/snacks/plant/banana,/obj/item/reagent_containers/food/snacks/plant/banana,/turf/simulated/floor/carpet/blue/fancy/edge/west,/area/prefab/sea_monkey_hideout)
-"aZ" = (/obj/item/reagent_containers/food/snacks/plant/banana,/turf/simulated/floor/carpet/blue/fancy/edge/east,/area/prefab/sea_monkey_hideout)
-"ba" = (/obj/decal/fakeobjects/palmtree{dir = 1; icon_state = "palm"},/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"bb" = (/obj/ladder{desc = "Is this supposed to be here?"; icon_state = "ladder_wall"; id = "sea_monkey_lab"; layer = 2.5; pixel_y = 32},/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"bc" = (/obj/machinery/door/airlock/pyro{dir = 4},/obj/decal/cleanable/blood{icon_state = "drip5"},/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"bd" = (/obj/machinery/door/airlock/pyro{dir = 4},/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"be" = (/obj/decal/cleanable/blood,/turf/simulated/floor/black/grime,/area/prefab/sea_monkey_hideout)
-"bf" = (/turf/simulated/floor/black,/area/prefab/sea_monkey_hideout)
-"bg" = (/obj/item/reagent_containers/syringe,/obj/item/reagent_containers/pill/methamphetamine,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"bh" = (/obj/decal/cleanable/oil,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"bi" = (/obj/item/reagent_containers/syringe,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"bj" = (/obj/item/storage/pill_bottle/cyberpunk,/obj/decal/cleanable/dirt,/obj/decal/cleanable/saltpile,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"bk" = (/obj/item/storage/pill_bottle/cyberpunk,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"bl" = (/turf/simulated/floor/carpet/blue/fancy/edge/west,/area/prefab/sea_monkey_hideout)
-"bm" = (/turf/simulated/floor/carpet/blue/fancy/edge/east,/area/prefab/sea_monkey_hideout)
-"bn" = (/obj/item/bananapeel,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"bo" = (/obj/decal/poster/wallsign/poster_rand,/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/sea_monkey_hideout)
-"bp" = (/obj/machinery/door/airlock/pyro,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"bq" = (/obj/item/bananapeel,/obj/machinery/light/incandescent/warm/very,/obj/decal/fakeobjects/palmtree,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"br" = (/obj/machinery/light/incandescent/warm/very,/obj/decal/fakeobjects/palmtree{dir = 1; icon_state = "palm"},/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"bs" = (/obj/table/auto,/obj/item/reagent_containers/food/snacks/steak_h,/obj/item/reagent_containers/food/snacks/steak_h,/obj/item/kitchen/utensil/fork,/turf/simulated/floor/carpet,/area/prefab/sea_monkey_hideout)
-"bt" = (/obj/stool,/turf/simulated/floor/carpet,/area/prefab/sea_monkey_hideout)
-"bu" = (/obj/table/auto,/obj/item/reagent_containers/pill/methamphetamine,/turf/simulated/floor/carpet,/area/prefab/sea_monkey_hideout)
-"bv" = (/obj/stool,/obj/machinery/light/incandescent/warm,/turf/simulated/floor/carpet,/area/prefab/sea_monkey_hideout)
-"bw" = (/turf/simulated/floor/carpet,/area/prefab/sea_monkey_hideout)
-"bx" = (/obj/item/reagent_containers/food/snacks/ingredient/meat{desc = "Ew."; name = "meat of questionable origin"},/obj/machinery/light/incandescent/harsh,/turf/simulated/floor/black/grime,/area/prefab/sea_monkey_hideout)
-"by" = (/obj/machinery/gibber/output_west,/turf/simulated/floor/plating/random,/area/prefab/sea_monkey_hideout)
-"bz" = (/obj/stool/chair{dir = 4},/turf/simulated/floor/black/grime,/area/prefab/sea_monkey_hideout)
-"bA" = (/obj/machinery/computer/security{dir = 8; icon_state = "security"},/turf/simulated/floor/black/grime,/area/prefab/sea_monkey_hideout)
-"bB" = (/obj/landmark/spawner{name = "seamonkeyspawn_lab"},/turf/simulated/floor/black/grime,/area/prefab/sea_monkey_hideout)
-"bC" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"bD" = (/obj/item/wrench/monkey,/turf/simulated/floor/carpet/blue/fancy/edge/east,/area/prefab/sea_monkey_hideout)
-"bE" = (/obj/storage/crate,/obj/item/spacecash/thousand,/obj/item/spacecash/thousand,/obj/item/spacecash/thousand,/obj/item/spacecash/fivehundred,/obj/item/spacecash/hundred,/obj/item/spacecash/hundred,/obj/item/spacecash/hundred,/obj/item/spacecash/hundred,/obj/item/spacecash/hundred,/obj/item/spacecash/five,/obj/item/spacecash/thousand,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"bF" = (/obj/storage/crate,/obj/item/storage/pill_bottle/cyberpunk,/obj/item/storage/pill_bottle/catdrugs,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"bG" = (/obj/table/auto,/obj/item/clothing/gloves/boxing,/obj/item/kitchen/utensil/fork,/obj/item/reagent_containers/food/snacks/salad,/turf/simulated/floor/carpet,/area/prefab/sea_monkey_hideout)
-"bH" = (/obj/table/auto,/obj/item/reagent_containers/food/snacks/yoghurt,/obj/item/kitchen/utensil/spoon,/turf/simulated/floor/carpet,/area/prefab/sea_monkey_hideout)
-"bI" = (/obj/machinery/door/airlock/pyro{dir = 4},/turf/simulated/floor/plating/random,/area/prefab/sea_monkey_hideout)
-"bJ" = (/obj/item/reagent_containers/food/snacks/ingredient/meat{desc = "Ew."; name = "meat of questionable origin"},/obj/decal/cleanable/blood/tracks{dir = 8; icon_state = "tracks"},/turf/simulated/floor/black/grime,/area/prefab/sea_monkey_hideout)
-"bK" = (/obj/decal/cleanable/blood/tracks{dir = 8; icon_state = "tracks"},/turf/simulated/floor/plating/random,/area/prefab/sea_monkey_hideout)
-"bL" = (/obj/decal/cleanable/blood/tracks{dir = 1; icon_state = "tracks"},/obj/decal/cleanable/blood/tracks{dir = 6},/turf/simulated/floor/plating/random,/area/prefab/sea_monkey_hideout)
-"bM" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/black/grime,/area/prefab/sea_monkey_hideout)
-"bN" = (/obj/item/handcuffs,/turf/simulated/floor/black/grime,/area/prefab/sea_monkey_hideout)
-"bO" = (/obj/decal/fakeobjects/palmtree,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"bP" = (/obj/item/bananapeel,/obj/decal/fakeobjects/palmtree{dir = 1; icon_state = "palm"},/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"bQ" = (/obj/storage/crate,/obj/item/spacecash/thousand,/obj/item/spacecash/thousand,/obj/item/spacecash/thousand,/obj/item/spacecash/fivehundred,/obj/item/spacecash/hundred,/obj/item/spacecash/hundred,/obj/item/spacecash/hundred,/obj/item/spacecash/hundred,/obj/item/spacecash/hundred,/obj/item/spacecash/five,/obj/item/spacecash/thousand,/obj/item/raw_material/gold,/obj/item/spacecash/thousand,/obj/item/spacecash/thousand,/obj/item/spacecash/thousand,/obj/item/spacecash/thousand,/obj/item/spacecash/thousand,/obj/item/spacecash/thousand,/obj/item/spacecash/thousand,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"bR" = (/obj/storage/crate,/obj/item/storage/pill_bottle/cyberpunk,/obj/item/storage/pill_bottle/methamphetamine,/obj/item/storage/pill_bottle/catdrugs,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"bS" = (/obj/storage/crate,/obj/item/device/radio/electropack,/obj/item/device/radio/electropack,/obj/item/clothing/glasses/blindfold,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"bT" = (/obj/machinery/light/incandescent/warm,/turf/simulated/floor/carpet,/area/prefab/sea_monkey_hideout)
-"bU" = (/obj/landmark/spawner{name = "seamonkeyspawn_gang"},/turf/simulated/floor/carpet,/area/prefab/sea_monkey_hideout)
-"bV" = (/turf/simulated/floor/plating/random,/area/prefab/sea_monkey_hideout)
-"bW" = (/obj/decal/cleanable/blood/tracks{dir = 1; icon_state = "tracks"},/turf/simulated/floor/black/grime,/area/prefab/sea_monkey_hideout)
-"bX" = (/obj/machinery/light/lamp,/turf/simulated/floor/black/grime,/area/prefab/sea_monkey_hideout)
-"bY" = (/obj/stool/bed,/obj/item/clothing/suit/bedsheet,/obj/item/coin{pixel_y = 4},/turf/simulated/floor/black/grime,/area/prefab/sea_monkey_hideout)
-"bZ" = (/obj/table/auto,/obj/item/paper/book/from_file/the_trial,/turf/simulated/floor/black/grime,/area/prefab/sea_monkey_hideout)
-"ca" = (/obj/item/clipboard,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"cb" = (/obj/item/paper{info = ":-("},/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"cc" = (/obj/machinery/door/unpowered/wood/pyro{dir = 1},/turf/simulated/floor/carpet/blue/fancy/edge/west,/area/prefab/sea_monkey_hideout)
-"cd" = (/obj/machinery/door/unpowered/wood/pyro{dir = 1},/turf/simulated/floor/carpet/blue/fancy/edge/east,/area/prefab/sea_monkey_hideout)
-"ce" = (/obj/machinery/door/airlock/pyro,/turf/simulated/floor,/area/prefab/sea_monkey_hideout)
-"cf" = (/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,/turf/simulated/floor/plating/random,/area/prefab/sea_monkey_hideout)
-"cg" = (/obj/decal/skeleton{desc = "50% of a rotten corpse."; dir = 8; icon = 'icons/misc/hstation.dmi'; icon_state = "body5"; name = "pair of legs"; pixel_x = 14},/turf/simulated/floor/plating/random,/area/prefab/sea_monkey_hideout)
-"ch" = (/obj/item/paper,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"ci" = (/obj/item/device/light/zippo,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"cj" = (/obj/machinery/light/incandescent/warm,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"ck" = (/turf/simulated/floor/carpet/blue/fancy/narrow/sw,/area/prefab/sea_monkey_hideout)
-"cl" = (/turf/simulated/floor/carpet/blue/fancy/narrow/se,/area/prefab/sea_monkey_hideout)
-"cm" = (/obj/reagent_dispensers/beerkeg,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"cn" = (/obj/storage/crate/freezer,/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"co" = (/obj/item/inner_tube/random,/obj/machinery/light/incandescent/warm,/obj/decal/fakeobjects/palmtree,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"cp" = (/turf/simulated/floor/stairs{dir = 4; icon_state = "Stairs_wide"},/area/prefab/sea_monkey_hideout)
-"cq" = (/obj/machinery/light/incandescent/warm,/turf/simulated/floor,/area/prefab/sea_monkey_hideout)
-"cr" = (/turf/simulated/floor,/area/prefab/sea_monkey_hideout)
-"cs" = (/obj/decal/oven,/obj/disposalpipe/segment{dir = 4; icon_state = "pipe-c"},/turf/simulated/floor/black/grime,/area/prefab/sea_monkey_hideout)
-"ct" = (/obj/item/reagent_containers/food/snacks/ingredient/flour,/obj/item/reagent_containers/food/snacks/ingredient/flour,/obj/item/reagent_containers/food/snacks/ingredient/flour,/obj/disposalpipe/segment{dir = 4; icon_state = "pipe-s"},/turf/simulated/floor/plating/random,/area/prefab/sea_monkey_hideout)
-"cu" = (/obj/disposalpipe/segment{dir = 4; icon_state = "pipe-s"},/turf/simulated/floor/plating/random,/area/prefab/sea_monkey_hideout)
-"cv" = (/obj/item/parts/human_parts/arm/left,/obj/item/kitchen/utensil/knife,/obj/disposalpipe/segment{dir = 4; icon_state = "pipe-s"},/turf/simulated/floor/plating/random,/area/prefab/sea_monkey_hideout)
-"cw" = (/obj/decal/cleanable/blood/tracks{dir = 1; icon_state = "tracks"},/obj/disposalpipe/segment{dir = 4; icon_state = "pipe-s"},/turf/simulated/floor/plating/random,/area/prefab/sea_monkey_hideout)
-"cx" = (/obj/item/skull{desc = "It looks... pretty fresh. Huh."; name = "human skull"; pixel_x = -2; pixel_y = 11},/turf/simulated/floor/plating/random,/area/prefab/sea_monkey_hideout)
-"cy" = (/obj/submachine/chef_sink,/turf/simulated/floor/black/grime,/area/prefab/sea_monkey_hideout)
-"cz" = (/obj/storage/crate,/obj/item/reagent_containers/food/snacks/granola_bar,/obj/item/reagent_containers/food/snacks/granola_bar,/obj/item/reagent_containers/food/snacks/granola_bar,/obj/item/reagent_containers/food/snacks/granola_bar,/obj/item/reagent_containers/food/snacks/granola_bar,/obj/item/reagent_containers/food/snacks/granola_bar,/obj/item/reagent_containers/food/snacks/granola_bar,/obj/item/reagent_containers/food/snacks/granola_bar,/obj/item/reagent_containers/food/snacks/granola_bar,/obj/item/reagent_containers/food/snacks/granola_bar,/obj/item/reagent_containers/food/snacks/granola_bar,/obj/item/reagent_containers/food/snacks/granola_bar,/obj/item/reagent_containers/food/snacks/granola_bar,/obj/item/reagent_containers/food/snacks/granola_bar,/obj/item/reagent_containers/food/snacks/granola_bar,/obj/item/reagent_containers/food/snacks/granola_bar,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"cA" = (/obj/decal/cleanable/dirt,/obj/machinery/light/incandescent/cool/very,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"cB" = (/obj/table/auto,/obj/item/plant/herb/cannabis/mega/spawnable,/obj/item/plant/herb/cannabis/mega/spawnable,/obj/item/paper,/obj/item/paper,/obj/item/paper,/obj/item/paper,/obj/item/reagent_containers/syringe/krokodil,/obj/item/reagent_containers/syringe/krokodil,/obj/item/storage/pill_bottle/cyberpunk,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"cC" = (/obj/shrub{dir = 4; icon_state = "shrub"},/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"cD" = (/turf/simulated/floor/stairs{dir = 4; icon_state = "stairs_middle"},/area/prefab/sea_monkey_hideout)
-"cE" = (/obj/table/auto,/obj/item/kitchen/utensil/knife,/obj/machinery/light/incandescent/harsh,/obj/disposalpipe/segment,/turf/simulated/floor/plating/random,/area/prefab/sea_monkey_hideout)
-"cF" = (/obj/stool,/turf/simulated/floor/plating/random,/area/prefab/sea_monkey_hideout)
-"cG" = (/obj/landmark/spawner{name = "seamonkeyspawn_gang"},/turf/simulated/floor/plating/random,/area/prefab/sea_monkey_hideout)
-"cH" = (/obj/item/clothing/head/helmet/hardhat,/turf/simulated/floor/plating/random,/area/prefab/sea_monkey_hideout)
-"cI" = (/obj/machinery/light/incandescent/harsh/very,/turf/simulated/floor/plating/random,/area/prefab/sea_monkey_hideout)
-"cJ" = (/obj/item/reagent_containers/glass/petridish,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"cK" = (/obj/critter/roach,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"cL" = (/obj/shrub{dir = 8; icon_state = "shrub"},/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"cM" = (/obj/item/clothing/gloves/water_wings,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"cN" = (/obj/table/auto,/obj/machinery/microwave,/obj/disposalpipe/segment,/turf/simulated/floor,/area/prefab/sea_monkey_hideout)
-"cO" = (/obj/table/auto,/obj/item/kitchen/utensil/knife/bread,/obj/item/reagent_containers/food/snacks/breadslice/banana,/obj/item/reagent_containers/food/snacks/breadslice/banana,/obj/item/reagent_containers/food/snacks/breadslice/banana,/obj/item/reagent_containers/food/snacks/breadslice/banana,/obj/disposalpipe/segment,/turf/simulated/floor/plating/random,/area/prefab/sea_monkey_hideout)
-"cP" = (/obj/item/reagent_containers/food/snacks/yuck,/turf/simulated/floor/plating/random,/area/prefab/sea_monkey_hideout)
-"cQ" = (/obj/decal/cleanable/blood/tracks{dir = 10; icon_state = "tracks"},/turf/simulated/floor/black/grime,/area/prefab/sea_monkey_hideout)
-"cR" = (/obj/decal/cleanable/blood/gibs{icon_state = "gibmid3"},/turf/simulated/floor/plating/random,/area/prefab/sea_monkey_hideout)
-"cS" = (/obj/decal/cleanable/blood/gibs{icon_state = "gibup1"},/turf/simulated/floor/plating/random,/area/prefab/sea_monkey_hideout)
-"cT" = (/obj/item/clothing/shoes/magnetic,/turf/simulated/floor/black/grime,/area/prefab/sea_monkey_hideout)
-"cU" = (/obj/storage/crate,/obj/item/reagent_containers/syringe/krokodil,/obj/item/reagent_containers/glass/beaker,/obj/item/reagent_containers/glass/beaker,/obj/item/reagent_containers/syringe,/obj/item/reagent_containers/dropper,/obj/item/weldingtool,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"cV" = (/obj/storage/crate,/obj/decal/cleanable/dirt,/obj/item/dice/magic8ball,/obj/item/reagent_containers/emergency_injector/saline,/obj/item/reagent_containers/emergency_injector/epinephrine,/obj/item/reagent_containers/emergency_injector/antihistamine,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"cW" = (/obj/storage/crate,/obj/item/hand_labeler,/obj/item/pen,/obj/item/device/multitool,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
-"cX" = (/obj/pool/perspective{dir = 9; icon_state = "pool"; tag = "icon-pool (NORTHWEST)"},/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"cY" = (/obj/pool/perspective{dir = 1; icon_state = "pool"; tag = "icon-pool (NORTH)"},/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"cZ" = (/obj/pool/perspective{density = 0; dir = 1; icon_state = "pool"; tag = "icon-pool (NORTH)"},/obj/channel{required_to_pass = 210},/obj/pool/ladder,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"da" = (/obj/pool/perspective{dir = 5; icon_state = "pool"; tag = "icon-pool (NORTHEAST)"},/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"db" = (/obj/disposalpipe/segment,/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/sea_monkey_hideout)
-"dc" = (/obj/pool/perspective{dir = 8; icon_state = "pool"; tag = "icon-pool (WEST)"},/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"dd" = (/obj/critter/sealpup,/turf/simulated/pool/no_animate,/area/prefab/sea_monkey_hideout)
-"de" = (/turf/simulated/pool/no_animate,/area/prefab/sea_monkey_hideout)
-"df" = (/obj/pool/perspective{dir = 4; icon_state = "pool"; tag = "icon-pool (EAST)"},/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"dg" = (/obj/landmark/spawner{name = "seamonkeyspawn_gang_gun"},/turf/simulated/floor/stairs{dir = 4; icon_state = "stairs_middle"},/area/prefab/sea_monkey_hideout)
-"dh" = (/obj/pool/perspective{dir = 8; icon_state = "pool"; tag = "icon-pool (WEST)"},/obj/decal/fakeobjects/palmtree,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"di" = (/obj/machinery/light/small/floor/blueish,/turf/simulated/pool/no_animate,/area/prefab/sea_monkey_hideout)
-"dj" = (/obj/item/sticker/banana,/turf/simulated/pool/no_animate,/area/prefab/sea_monkey_hideout)
-"dk" = (/obj/item/rubberduck{pixel_y = 6},/turf/simulated/pool/no_animate,/area/prefab/sea_monkey_hideout)
-"dl" = (/obj/pool/perspective{dir = 4; icon_state = "pool"; tag = "icon-pool (EAST)"},/obj/pool_springboard,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"dm" = (/obj/table/auto,/turf/simulated/floor,/area/prefab/sea_monkey_hideout)
-"dn" = (/obj/disposalpipe/segment,/turf/simulated/floor,/area/prefab/sea_monkey_hideout)
-"do" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/simulated/floor,/area/prefab/sea_monkey_hideout)
-"dp" = (/obj/pool_springboard,/obj/pool/perspective{dir = 4; icon_state = "pool"; tag = "icon-pool (EAST)"},/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"dq" = (/obj/table/auto,/obj/item/item_box/banana,/turf/simulated/floor,/area/prefab/sea_monkey_hideout)
-"dr" = (/obj/fluid_spawner{amount = 3700},/turf/simulated/pool/no_animate,/area/prefab/sea_monkey_hideout)
-"ds" = (/obj/critter/walrus,/turf/simulated/pool/no_animate,/area/prefab/sea_monkey_hideout)
-"dt" = (/obj/decal/cleanable/blood/tracks{dir = 1; icon_state = "tracks"},/turf/simulated/floor,/area/prefab/sea_monkey_hideout)
-"du" = (/obj/pool/perspective{dir = 10; icon_state = "pool"; tag = "icon-pool (SOUTHWEST)"},/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"dv" = (/obj/pool/perspective,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"dw" = (/obj/pool/perspective{dir = 6; icon_state = "pool"; tag = "icon-pool (SOUTHEAST)"},/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"dx" = (/obj/stool/chair{dir = 8; icon_state = "chair"},/obj/storage/crate,/obj/item/reagent_containers/patch/nicotine,/obj/item/reagent_containers/patch/nicotine,/turf/simulated/floor,/area/prefab/sea_monkey_hideout)
-"dy" = (/obj/decal/cleanable/blood{icon_state = "floor6"},/obj/table/reinforced/auto,/obj/item/chair/folded,/obj/item/wrench,/turf/simulated/floor,/area/prefab/sea_monkey_hideout)
-"dz" = (/obj/item/chair/folded,/obj/table/reinforced/auto,/turf/simulated/floor,/area/prefab/sea_monkey_hideout)
-"dA" = (/obj/structure/woodwall,/obj/disposalpipe/segment,/turf/simulated/floor,/area/prefab/sea_monkey_hideout)
-"dB" = (/obj/item/reagent_containers/glass/wateringcan,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"dC" = (/obj/shrub{dir = 8; icon_state = "shrub"},/obj/item/football,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"dD" = (/mob/living/critter/small_animal/bird/seagull,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"dE" = (/obj/item/chair/folded,/obj/stool/chair,/obj/item/wirecutters,/obj/storage/crate,/turf/simulated/floor,/area/prefab/sea_monkey_hideout)
-"dF" = (/obj/item/raw_material/shard,/obj/storage/crate,/turf/simulated/floor,/area/prefab/sea_monkey_hideout)
-"dG" = (/obj/decal/cleanable/blood{icon_state = "floor5"},/obj/storage/crate,/turf/simulated/floor,/area/prefab/sea_monkey_hideout)
-"dH" = (/obj/machinery/door/airlock/pyro/external{dir = 4; locked = 1},/turf/simulated/floor,/area/prefab/sea_monkey_hideout)
-"dI" = (/obj/machinery/drainage/big,/obj/disposalpipe/segment,/turf/simulated/floor,/area/prefab/sea_monkey_hideout)
-"dJ" = (/obj/rack,/obj/item/clothing/suit/space/diving/command,/obj/item/clothing/head/helmet/space/engineer/diving/command,/obj/item/tank/oxygen,/turf/simulated/floor,/area/prefab/sea_monkey_hideout)
-"dK" = (/obj/machinery/plantpot,/turf/simulated/floor/grass,/area/prefab/sea_monkey_hideout)
-"dL" = (/obj/storage/crate,/obj/item/reagent_containers/patch/LSD,/obj/item/reagent_containers/patch/LSD,/obj/item/reagent_containers/patch/LSD,/obj/item/reagent_containers/patch/LSD,/turf/simulated/floor/stairs{dir = 4; icon_state = "Stairs2_wide"},/area/prefab/sea_monkey_hideout)
-"dM" = (/obj/machinery/light/incandescent/warm,/obj/stool/chair{dir = 1},/turf/simulated/floor,/area/prefab/sea_monkey_hideout)
-"dN" = (/obj/item/screwdriver,/obj/storage/crate,/obj/item/reagent_containers/patch/mini/bruise,/obj/item/reagent_containers/patch/mini/burn,/turf/simulated/floor,/area/prefab/sea_monkey_hideout)
-"dO" = (/obj/table/reinforced/auto,/obj/item/chair/folded,/turf/simulated/floor,/area/prefab/sea_monkey_hideout)
-"dP" = (/obj/machinery/disposal,/obj/disposalpipe/trunk/north,/turf/simulated/floor,/area/prefab/sea_monkey_hideout)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/sea_monkey_hideout)
+"ab" = (
+/turf/variableTurf/clear,
+/area/space)
+"ac" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"ad" = (
+/obj/item/raw_material/gold,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"ae" = (
+/obj/item/spacecash/hundred,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"af" = (
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"ag" = (
+/obj/item/staff{
+	name = "kingly staff"
+	},
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"ah" = (
+/obj/stool/chair{
+	desc = "";
+	foldable = 0;
+	icon_state = "chair_pool"
+	},
+/obj/landmark/spawner{
+	name = "seamonkeyspawn_rich"
+	},
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"ai" = (
+/obj/decal/poster/wallsign/hazard_danger,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/sea_monkey_hideout)
+"aj" = (
+/obj/decal/poster/wallsign/biohazard,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/sea_monkey_hideout)
+"ak" = (
+/obj/decal/poster/wallsign/hazard_caution,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/sea_monkey_hideout)
+"al" = (
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"am" = (
+/obj/item/raw_material/gold,
+/obj/item/spacecash/hundred,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"an" = (
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"ao" = (
+/obj/table/auto,
+/obj/item/storage/box/biohazard_bags,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"ap" = (
+/obj/rack,
+/obj/item/clothing/suit/labcoat/science,
+/obj/item/clothing/suit/labcoat,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"aq" = (
+/obj/rack,
+/obj/item/clothing/glasses/spectro,
+/obj/item/clothing/glasses/spectro,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"ar" = (
+/obj/decal/cleanable/blood{
+	icon_state = "floor6"
+	},
+/obj/item/ammo/bullets/a38/stun,
+/turf/simulated/floor/black,
+/area/prefab/sea_monkey_hideout)
+"as" = (
+/obj/critter/gunbot,
+/turf/simulated/floor/black,
+/area/prefab/sea_monkey_hideout)
+"at" = (
+/turf/simulated/floor/black/grime,
+/area/prefab/sea_monkey_hideout)
+"au" = (
+/obj/reagent_dispensers/fueltank,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/blood{
+	icon_state = "floor6"
+	},
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"av" = (
+/obj/reagent_dispensers/watertank,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"aw" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ax" = (
+/obj/table/auto,
+/obj/item/reagent_containers/glass/bottle/acetone/janitors,
+/obj/machinery/light/incandescent/cool/very,
+/obj/item/reagent_containers/dropper,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"ay" = (
+/obj/machinery/chem_master,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"az" = (
+/obj/machinery/chem_dispenser/chemical,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"aA" = (
+/obj/machinery/chem_heater,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"aB" = (
+/obj/table/auto,
+/obj/table/auto,
+/obj/item/reagent_containers/glass/beaker/strange_reagent{
+	name = "beaker"
+	},
+/obj/machinery/microscope,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"aC" = (
+/obj/table/auto,
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/machinery/light/incandescent/cool/very,
+/obj/item/reagent_containers/pill/methamphetamine,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"aD" = (
+/obj/table/auto,
+/obj/item/reagent_containers/pill/bathsalts,
+/obj/item/reagent_containers/pill/bathsalts,
+/obj/item/reagent_containers/pill/catdrugs,
+/obj/item/reagent_containers/pill/catdrugs,
+/obj/item/reagent_containers/pill/catdrugs,
+/obj/item/reagent_containers/pill/crank,
+/obj/item/reagent_containers/pill/crank,
+/obj/item/reagent_containers/pill/crank,
+/obj/item/reagent_containers/pill/cyberpunk,
+/obj/item/reagent_containers/pill/cyberpunk,
+/obj/item/reagent_containers/pill/mutadone,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"aE" = (
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/obj/ladder{
+	id = "sea_monkey_lab";
+	layer = 2
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"aF" = (
+/turf/simulated/floor/carpet/blue/fancy/narrow/nw,
+/area/prefab/sea_monkey_hideout)
+"aG" = (
+/turf/simulated/floor/carpet/blue/fancy/narrow/ne,
+/area/prefab/sea_monkey_hideout)
+"aH" = (
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"aI" = (
+/obj/table/auto,
+/obj/item/reagent_containers/patch/mini/bruise,
+/obj/item/reagent_containers/patch/mini/bruise,
+/obj/item/reagent_containers/patch/mini/bruise,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"aJ" = (
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"aK" = (
+/obj/machinery/light/incandescent/cool/very,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"aL" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/obj/decal/poster/wallsign/hazard_danger,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/sea_monkey_hideout)
+"aM" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/obj/decal/poster/wallsign/hazard_caution,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/sea_monkey_hideout)
+"aN" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/obj/table/auto,
+/turf/simulated/floor/black,
+/area/prefab/sea_monkey_hideout)
+"aO" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/obj/table/auto,
+/turf/simulated/floor/black/grime,
+/area/prefab/sea_monkey_hideout)
+"aP" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/sea_monkey_hideout)
+"aQ" = (
+/obj/machinery/disposal/sci,
+/obj/disposalpipe/trunk/west,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"aR" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/saltpile,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"aS" = (
+/obj/decal/cleanable/saltpile,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"aT" = (
+/obj/stool/chair/office{
+	dir = 1;
+	icon_state = "office_chair"
+	},
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"aU" = (
+/obj/decal/cleanable/saltpile,
+/obj/item/reagent_containers/pill/methamphetamine,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"aV" = (
+/obj/item/reagent_containers/pill/methamphetamine,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"aW" = (
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"aX" = (
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/obj/decal/fakeobjects/palmtree,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"aY" = (
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/turf/simulated/floor/carpet/blue/fancy/edge/west,
+/area/prefab/sea_monkey_hideout)
+"aZ" = (
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/turf/simulated/floor/carpet/blue/fancy/edge/east,
+/area/prefab/sea_monkey_hideout)
+"ba" = (
+/obj/decal/fakeobjects/palmtree{
+	dir = 1;
+	icon_state = "palm"
+	},
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"bb" = (
+/obj/ladder{
+	desc = "Is this supposed to be here?";
+	icon_state = "ladder_wall";
+	id = "sea_monkey_lab";
+	layer = 2.5;
+	pixel_y = 32
+	},
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"bc" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "drip5"
+	},
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"bd" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"be" = (
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/black/grime,
+/area/prefab/sea_monkey_hideout)
+"bf" = (
+/turf/simulated/floor/black,
+/area/prefab/sea_monkey_hideout)
+"bg" = (
+/obj/item/reagent_containers/syringe,
+/obj/item/reagent_containers/pill/methamphetamine,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"bh" = (
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"bi" = (
+/obj/item/reagent_containers/syringe,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"bj" = (
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/saltpile,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"bk" = (
+/obj/item/storage/pill_bottle/cyberpunk,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"bl" = (
+/turf/simulated/floor/carpet/blue/fancy/edge/west,
+/area/prefab/sea_monkey_hideout)
+"bm" = (
+/turf/simulated/floor/carpet/blue/fancy/edge/east,
+/area/prefab/sea_monkey_hideout)
+"bn" = (
+/obj/item/bananapeel,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"bo" = (
+/obj/decal/poster/wallsign/poster_rand,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/sea_monkey_hideout)
+"bp" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"bq" = (
+/obj/item/bananapeel,
+/obj/machinery/light/incandescent/warm/very,
+/obj/decal/fakeobjects/palmtree,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"br" = (
+/obj/machinery/light/incandescent/warm/very,
+/obj/decal/fakeobjects/palmtree{
+	dir = 1;
+	icon_state = "palm"
+	},
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"bs" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/steak_h,
+/obj/item/reagent_containers/food/snacks/steak_h,
+/obj/item/kitchen/utensil/fork,
+/turf/simulated/floor/carpet,
+/area/prefab/sea_monkey_hideout)
+"bt" = (
+/obj/stool,
+/turf/simulated/floor/carpet,
+/area/prefab/sea_monkey_hideout)
+"bu" = (
+/obj/table/auto,
+/obj/item/reagent_containers/pill/methamphetamine,
+/turf/simulated/floor/carpet,
+/area/prefab/sea_monkey_hideout)
+"bv" = (
+/obj/stool,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/carpet,
+/area/prefab/sea_monkey_hideout)
+"bw" = (
+/turf/simulated/floor/carpet,
+/area/prefab/sea_monkey_hideout)
+"bx" = (
+/obj/item/reagent_containers/food/snacks/ingredient/meat{
+	desc = "Ew.";
+	name = "meat of questionable origin"
+	},
+/obj/machinery/light/incandescent/harsh,
+/turf/simulated/floor/black/grime,
+/area/prefab/sea_monkey_hideout)
+"by" = (
+/obj/machinery/gibber/output_west,
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_monkey_hideout)
+"bz" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor/black/grime,
+/area/prefab/sea_monkey_hideout)
+"bA" = (
+/obj/machinery/computer/security{
+	dir = 8;
+	icon_state = "security"
+	},
+/turf/simulated/floor/black/grime,
+/area/prefab/sea_monkey_hideout)
+"bB" = (
+/obj/landmark/spawner{
+	name = "seamonkeyspawn_lab"
+	},
+/turf/simulated/floor/black/grime,
+/area/prefab/sea_monkey_hideout)
+"bC" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"bD" = (
+/obj/item/wrench/monkey,
+/turf/simulated/floor/carpet/blue/fancy/edge/east,
+/area/prefab/sea_monkey_hideout)
+"bE" = (
+/obj/storage/crate,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/fivehundred,
+/obj/item/spacecash/hundred,
+/obj/item/spacecash/hundred,
+/obj/item/spacecash/hundred,
+/obj/item/spacecash/hundred,
+/obj/item/spacecash/hundred,
+/obj/item/spacecash/five,
+/obj/item/spacecash/thousand,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"bF" = (
+/obj/storage/crate,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/storage/pill_bottle/catdrugs,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"bG" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/boxing,
+/obj/item/kitchen/utensil/fork,
+/obj/item/reagent_containers/food/snacks/salad,
+/turf/simulated/floor/carpet,
+/area/prefab/sea_monkey_hideout)
+"bH" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/yoghurt,
+/obj/item/kitchen/utensil/spoon,
+/turf/simulated/floor/carpet,
+/area/prefab/sea_monkey_hideout)
+"bI" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_monkey_hideout)
+"bJ" = (
+/obj/item/reagent_containers/food/snacks/ingredient/meat{
+	desc = "Ew.";
+	name = "meat of questionable origin"
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 8;
+	icon_state = "tracks"
+	},
+/turf/simulated/floor/black/grime,
+/area/prefab/sea_monkey_hideout)
+"bK" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 8;
+	icon_state = "tracks"
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_monkey_hideout)
+"bL" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 1;
+	icon_state = "tracks"
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_monkey_hideout)
+"bM" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/black/grime,
+/area/prefab/sea_monkey_hideout)
+"bN" = (
+/obj/item/handcuffs,
+/turf/simulated/floor/black/grime,
+/area/prefab/sea_monkey_hideout)
+"bO" = (
+/obj/decal/fakeobjects/palmtree,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"bP" = (
+/obj/item/bananapeel,
+/obj/decal/fakeobjects/palmtree{
+	dir = 1;
+	icon_state = "palm"
+	},
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"bQ" = (
+/obj/storage/crate,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/fivehundred,
+/obj/item/spacecash/hundred,
+/obj/item/spacecash/hundred,
+/obj/item/spacecash/hundred,
+/obj/item/spacecash/hundred,
+/obj/item/spacecash/hundred,
+/obj/item/spacecash/five,
+/obj/item/spacecash/thousand,
+/obj/item/raw_material/gold,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/obj/item/spacecash/thousand,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"bR" = (
+/obj/storage/crate,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/storage/pill_bottle/methamphetamine,
+/obj/item/storage/pill_bottle/catdrugs,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"bS" = (
+/obj/storage/crate,
+/obj/item/device/radio/electropack,
+/obj/item/device/radio/electropack,
+/obj/item/clothing/glasses/blindfold,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"bT" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/carpet,
+/area/prefab/sea_monkey_hideout)
+"bU" = (
+/obj/landmark/spawner{
+	name = "seamonkeyspawn_gang"
+	},
+/turf/simulated/floor/carpet,
+/area/prefab/sea_monkey_hideout)
+"bV" = (
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_monkey_hideout)
+"bW" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 1;
+	icon_state = "tracks"
+	},
+/turf/simulated/floor/black/grime,
+/area/prefab/sea_monkey_hideout)
+"bX" = (
+/obj/machinery/light/lamp/black,
+/turf/simulated/floor/black/grime,
+/area/prefab/sea_monkey_hideout)
+"bY" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet,
+/obj/item/coin{
+	pixel_y = 4
+	},
+/turf/simulated/floor/black/grime,
+/area/prefab/sea_monkey_hideout)
+"bZ" = (
+/obj/table/auto,
+/obj/item/paper/book/from_file/the_trial,
+/turf/simulated/floor/black/grime,
+/area/prefab/sea_monkey_hideout)
+"ca" = (
+/obj/item/clipboard,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"cb" = (
+/obj/item/paper{
+	info = ":-("
+	},
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"cc" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/west,
+/area/prefab/sea_monkey_hideout)
+"cd" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/east,
+/area/prefab/sea_monkey_hideout)
+"ce" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor,
+/area/prefab/sea_monkey_hideout)
+"cf" = (
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_monkey_hideout)
+"cg" = (
+/obj/decal/fakeobjects/skeleton{
+	desc = "50% of a rotten corpse.";
+	dir = 8;
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body5";
+	name = "pair of legs";
+	pixel_x = 14
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_monkey_hideout)
+"ch" = (
+/obj/item/paper,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"ci" = (
+/obj/item/device/light/zippo,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"cj" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"ck" = (
+/turf/simulated/floor/carpet/blue/fancy/narrow/sw,
+/area/prefab/sea_monkey_hideout)
+"cl" = (
+/turf/simulated/floor/carpet/blue/fancy/narrow/se,
+/area/prefab/sea_monkey_hideout)
+"cm" = (
+/obj/reagent_dispensers/beerkeg,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"cn" = (
+/obj/storage/crate/freezer,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"co" = (
+/obj/item/inner_tube/random,
+/obj/machinery/light/incandescent/warm,
+/obj/decal/fakeobjects/palmtree,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"cp" = (
+/turf/simulated/floor/stairs{
+	dir = 4;
+	icon_state = "Stairs_wide"
+	},
+/area/prefab/sea_monkey_hideout)
+"cq" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor,
+/area/prefab/sea_monkey_hideout)
+"cr" = (
+/turf/simulated/floor,
+/area/prefab/sea_monkey_hideout)
+"cs" = (
+/obj/decal/fakeobjects/oven,
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/black/grime,
+/area/prefab/sea_monkey_hideout)
+"ct" = (
+/obj/item/reagent_containers/food/snacks/ingredient/flour,
+/obj/item/reagent_containers/food/snacks/ingredient/flour,
+/obj/item/reagent_containers/food/snacks/ingredient/flour,
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_monkey_hideout)
+"cu" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_monkey_hideout)
+"cv" = (
+/obj/item/parts/human_parts/arm/left,
+/obj/item/kitchen/utensil/knife,
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_monkey_hideout)
+"cw" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 1;
+	icon_state = "tracks"
+	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_monkey_hideout)
+"cx" = (
+/obj/item/skull{
+	desc = "It looks... pretty fresh. Huh.";
+	name = "human skull";
+	pixel_x = -2;
+	pixel_y = 11
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_monkey_hideout)
+"cy" = (
+/obj/submachine/chef_sink,
+/turf/simulated/floor/black/grime,
+/area/prefab/sea_monkey_hideout)
+"cz" = (
+/obj/storage/crate,
+/obj/item/reagent_containers/food/snacks/granola_bar,
+/obj/item/reagent_containers/food/snacks/granola_bar,
+/obj/item/reagent_containers/food/snacks/granola_bar,
+/obj/item/reagent_containers/food/snacks/granola_bar,
+/obj/item/reagent_containers/food/snacks/granola_bar,
+/obj/item/reagent_containers/food/snacks/granola_bar,
+/obj/item/reagent_containers/food/snacks/granola_bar,
+/obj/item/reagent_containers/food/snacks/granola_bar,
+/obj/item/reagent_containers/food/snacks/granola_bar,
+/obj/item/reagent_containers/food/snacks/granola_bar,
+/obj/item/reagent_containers/food/snacks/granola_bar,
+/obj/item/reagent_containers/food/snacks/granola_bar,
+/obj/item/reagent_containers/food/snacks/granola_bar,
+/obj/item/reagent_containers/food/snacks/granola_bar,
+/obj/item/reagent_containers/food/snacks/granola_bar,
+/obj/item/reagent_containers/food/snacks/granola_bar,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"cA" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/light/incandescent/cool/very,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"cB" = (
+/obj/table/auto,
+/obj/item/plant/herb/cannabis/mega/spawnable,
+/obj/item/plant/herb/cannabis/mega/spawnable,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/paper,
+/obj/item/reagent_containers/syringe/krokodil,
+/obj/item/reagent_containers/syringe/krokodil,
+/obj/item/storage/pill_bottle/cyberpunk,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"cC" = (
+/obj/shrub{
+	dir = 4;
+	icon_state = "shrub"
+	},
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"cD" = (
+/turf/simulated/floor/stairs{
+	dir = 4;
+	icon_state = "stairs_middle"
+	},
+/area/prefab/sea_monkey_hideout)
+"cE" = (
+/obj/table/auto,
+/obj/item/kitchen/utensil/knife,
+/obj/machinery/light/incandescent/harsh,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_monkey_hideout)
+"cF" = (
+/obj/stool,
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_monkey_hideout)
+"cG" = (
+/obj/landmark/spawner{
+	name = "seamonkeyspawn_gang"
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_monkey_hideout)
+"cH" = (
+/obj/item/clothing/head/helmet/hardhat,
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_monkey_hideout)
+"cI" = (
+/obj/machinery/light/incandescent/harsh/very,
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_monkey_hideout)
+"cJ" = (
+/obj/item/reagent_containers/glass/petridish,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"cK" = (
+/obj/critter/roach,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"cL" = (
+/obj/shrub{
+	dir = 8;
+	icon_state = "shrub"
+	},
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"cM" = (
+/obj/item/clothing/gloves/water_wings,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"cN" = (
+/obj/table/auto,
+/obj/machinery/microwave,
+/obj/disposalpipe/segment,
+/turf/simulated/floor,
+/area/prefab/sea_monkey_hideout)
+"cO" = (
+/obj/table/auto,
+/obj/item/kitchen/utensil/knife/bread,
+/obj/item/reagent_containers/food/snacks/breadslice/banana,
+/obj/item/reagent_containers/food/snacks/breadslice/banana,
+/obj/item/reagent_containers/food/snacks/breadslice/banana,
+/obj/item/reagent_containers/food/snacks/breadslice/banana,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_monkey_hideout)
+"cP" = (
+/obj/item/reagent_containers/food/snacks/yuck,
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_monkey_hideout)
+"cQ" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 10;
+	icon_state = "tracks"
+	},
+/turf/simulated/floor/black/grime,
+/area/prefab/sea_monkey_hideout)
+"cR" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibmid3"
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_monkey_hideout)
+"cS" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibup1"
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_monkey_hideout)
+"cT" = (
+/obj/item/clothing/shoes/magnetic,
+/turf/simulated/floor/black/grime,
+/area/prefab/sea_monkey_hideout)
+"cU" = (
+/obj/storage/crate,
+/obj/item/reagent_containers/syringe/krokodil,
+/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/syringe,
+/obj/item/reagent_containers/dropper,
+/obj/item/weldingtool,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"cV" = (
+/obj/storage/crate,
+/obj/decal/cleanable/dirt,
+/obj/item/dice/magic8ball,
+/obj/item/reagent_containers/emergency_injector/saline,
+/obj/item/reagent_containers/emergency_injector/epinephrine,
+/obj/item/reagent_containers/emergency_injector/antihistamine,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"cW" = (
+/obj/storage/crate,
+/obj/item/hand_labeler,
+/obj/item/pen,
+/obj/item/device/multitool,
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
+"cX" = (
+/obj/pool/perspective{
+	dir = 9;
+	icon_state = "pool";
+	tag = "icon-pool (NORTHWEST)"
+	},
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"cY" = (
+/obj/pool/perspective{
+	dir = 1;
+	icon_state = "pool";
+	tag = "icon-pool (NORTH)"
+	},
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"cZ" = (
+/obj/pool/perspective{
+	density = 0;
+	dir = 1;
+	icon_state = "pool";
+	tag = "icon-pool (NORTH)"
+	},
+/obj/channel{
+	required_to_pass = 210
+	},
+/obj/pool/ladder,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"da" = (
+/obj/pool/perspective{
+	dir = 5;
+	icon_state = "pool";
+	tag = "icon-pool (NORTHEAST)"
+	},
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"db" = (
+/obj/disposalpipe/segment,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/sea_monkey_hideout)
+"dc" = (
+/obj/pool/perspective{
+	dir = 8;
+	icon_state = "pool";
+	tag = "icon-pool (WEST)"
+	},
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"dd" = (
+/obj/critter/sealpup,
+/turf/simulated/floor/pool/no_animate,
+/area/prefab/sea_monkey_hideout)
+"de" = (
+/turf/simulated/floor/pool/no_animate,
+/area/prefab/sea_monkey_hideout)
+"df" = (
+/obj/pool/perspective{
+	dir = 4;
+	icon_state = "pool";
+	tag = "icon-pool (EAST)"
+	},
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"dg" = (
+/obj/landmark/spawner{
+	name = "seamonkeyspawn_gang_gun"
+	},
+/turf/simulated/floor/stairs{
+	dir = 4;
+	icon_state = "stairs_middle"
+	},
+/area/prefab/sea_monkey_hideout)
+"dh" = (
+/obj/pool/perspective{
+	dir = 8;
+	icon_state = "pool";
+	tag = "icon-pool (WEST)"
+	},
+/obj/decal/fakeobjects/palmtree,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"di" = (
+/obj/machinery/light/small/floor/blueish,
+/turf/simulated/floor/pool/no_animate,
+/area/prefab/sea_monkey_hideout)
+"dj" = (
+/obj/item/sticker/banana,
+/turf/simulated/floor/pool/no_animate,
+/area/prefab/sea_monkey_hideout)
+"dk" = (
+/obj/item/rubberduck{
+	pixel_y = 6
+	},
+/turf/simulated/floor/pool/no_animate,
+/area/prefab/sea_monkey_hideout)
+"dl" = (
+/obj/pool/perspective{
+	dir = 4;
+	icon_state = "pool";
+	tag = "icon-pool (EAST)"
+	},
+/obj/pool_springboard,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"dm" = (
+/obj/table/auto,
+/turf/simulated/floor,
+/area/prefab/sea_monkey_hideout)
+"dn" = (
+/obj/disposalpipe/segment,
+/turf/simulated/floor,
+/area/prefab/sea_monkey_hideout)
+"do" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/prefab/sea_monkey_hideout)
+"dp" = (
+/obj/pool_springboard,
+/obj/pool/perspective{
+	dir = 4;
+	icon_state = "pool";
+	tag = "icon-pool (EAST)"
+	},
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"dq" = (
+/obj/table/auto,
+/obj/item/item_box/banana,
+/turf/simulated/floor,
+/area/prefab/sea_monkey_hideout)
+"dr" = (
+/obj/fluid_spawner{
+	amount = 3700
+	},
+/turf/simulated/floor/pool/no_animate,
+/area/prefab/sea_monkey_hideout)
+"ds" = (
+/obj/critter/walrus,
+/turf/simulated/floor/pool/no_animate,
+/area/prefab/sea_monkey_hideout)
+"dt" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 1;
+	icon_state = "tracks"
+	},
+/turf/simulated/floor,
+/area/prefab/sea_monkey_hideout)
+"du" = (
+/obj/pool/perspective{
+	dir = 10;
+	icon_state = "pool";
+	tag = "icon-pool (SOUTHWEST)"
+	},
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"dv" = (
+/obj/pool/perspective,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"dw" = (
+/obj/pool/perspective{
+	dir = 6;
+	icon_state = "pool";
+	tag = "icon-pool (SOUTHEAST)"
+	},
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"dx" = (
+/obj/stool/chair{
+	dir = 8;
+	icon_state = "chair"
+	},
+/obj/storage/crate,
+/obj/item/reagent_containers/patch/nicotine,
+/obj/item/reagent_containers/patch/nicotine,
+/turf/simulated/floor,
+/area/prefab/sea_monkey_hideout)
+"dy" = (
+/obj/decal/cleanable/blood{
+	icon_state = "floor6"
+	},
+/obj/table/reinforced/auto,
+/obj/item/chair/folded,
+/obj/item/wrench,
+/turf/simulated/floor,
+/area/prefab/sea_monkey_hideout)
+"dz" = (
+/obj/item/chair/folded,
+/obj/table/reinforced/auto,
+/turf/simulated/floor,
+/area/prefab/sea_monkey_hideout)
+"dA" = (
+/obj/structure/woodwall,
+/obj/disposalpipe/segment,
+/turf/simulated/floor,
+/area/prefab/sea_monkey_hideout)
+"dB" = (
+/obj/item/reagent_containers/glass/wateringcan,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"dC" = (
+/obj/shrub{
+	dir = 8;
+	icon_state = "shrub"
+	},
+/obj/item/football,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"dD" = (
+/mob/living/critter/small_animal/bird/seagull,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"dE" = (
+/obj/item/chair/folded,
+/obj/stool/chair,
+/obj/item/wirecutters,
+/obj/storage/crate,
+/turf/simulated/floor,
+/area/prefab/sea_monkey_hideout)
+"dF" = (
+/obj/item/raw_material/shard,
+/obj/storage/crate,
+/turf/simulated/floor,
+/area/prefab/sea_monkey_hideout)
+"dG" = (
+/obj/decal/cleanable/blood{
+	icon_state = "floor5"
+	},
+/obj/storage/crate,
+/turf/simulated/floor,
+/area/prefab/sea_monkey_hideout)
+"dH" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
+	locked = 1
+	},
+/turf/simulated/floor,
+/area/prefab/sea_monkey_hideout)
+"dI" = (
+/obj/machinery/drainage/big,
+/obj/disposalpipe/segment,
+/turf/simulated/floor,
+/area/prefab/sea_monkey_hideout)
+"dJ" = (
+/obj/rack,
+/obj/item/clothing/suit/space/diving/command,
+/obj/item/clothing/head/helmet/space/engineer/diving/command,
+/obj/item/tank/oxygen,
+/turf/simulated/floor,
+/area/prefab/sea_monkey_hideout)
+"dK" = (
+/obj/machinery/plantpot,
+/turf/simulated/floor/grass,
+/area/prefab/sea_monkey_hideout)
+"dL" = (
+/obj/storage/crate,
+/obj/item/reagent_containers/patch/LSD,
+/obj/item/reagent_containers/patch/LSD,
+/obj/item/reagent_containers/patch/LSD,
+/obj/item/reagent_containers/patch/LSD,
+/turf/simulated/floor/stairs{
+	dir = 4;
+	icon_state = "Stairs2_wide"
+	},
+/area/prefab/sea_monkey_hideout)
+"dM" = (
+/obj/machinery/light/incandescent/warm,
+/obj/stool/chair{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/prefab/sea_monkey_hideout)
+"dN" = (
+/obj/item/screwdriver,
+/obj/storage/crate,
+/obj/item/reagent_containers/patch/mini/bruise,
+/obj/item/reagent_containers/patch/mini/burn,
+/turf/simulated/floor,
+/area/prefab/sea_monkey_hideout)
+"dO" = (
+/obj/table/reinforced/auto,
+/obj/item/chair/folded,
+/turf/simulated/floor,
+/area/prefab/sea_monkey_hideout)
+"dP" = (
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/north,
+/turf/simulated/floor,
+/area/prefab/sea_monkey_hideout)
 
 (1,1,1) = {"
-abababababawawawawabababababababababababababababababababababababab
-ababababaaacacacacaaababababababababababababababababababababababab
-abababaaaaadaeaeafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab
-abababaaafagahahaeafaaaiajakaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab
-abababaaalamamafanafaaaoapaqaaaaarasataaaaauavaxayazaAaBaCaDaaaaab
-abababaaaaaEaFaGaHaaaaaIaJaKaLaMaNaNaOaPaPaQaRaSaTaTaJaUaVaWaaaaab
-ababababaaaXaYaZbaaabbaJaJaJbcbdbebfbfbdbdaVbgbhbiaWbjaSbkaJaaaaab
-ababababaaafblbmbnaaaJaJaJaaaaaaaaaaaaaaaaaaaaaaboaaaaaabpbpaaaaab
-ababababaabqblbmbraaaKaJaJaabsbtbubvbwaaatbxbyaabzbAbBaabCaJaaaaab
-ababababaaafblbDbnaabEbFaJaabGbtbHbtbwbIbJbKbLaabMbNatbdaJaJaaaaab
-ababababaabOblbmbPaabQbRbSaabTbwbwbUbwaabVbVbWaabXbYbZaacacbaaaaab
-abaaaaaaaaaacccdaaaaaaaaaaaaaaceceaaaaaacfcgbWaaaaaaaaaachchaaaaab
-awacciafbOcjckclcjcmcncoafcpcqcrcraacsctcucvcwbVcxcyaaczaJcAaaaaab
-awacafcBafafafafcCafafafafcDcrcrcraacEcFcGbVbVbVcHcIaacJbCcKaaaaab
-awaccLafafafafafafafcMafafcDcrcrcNaacOcPbVbVcQcRcScTaacUcVcWaaaaab
-awacafcXcYcYcZcYcYcYcYdaafcDcrcrcqaadbaaaaaaaaaaaaaaaaaaaaaaaaaaab
-awacafdcdddededededededfcLdgcrcrcraadbaaaaaaaaaaaaaaaaaaaaaaaaaaab
-awacafdhdedidjdkdedidedlafcDcrcrdmaadndocraaawawawawababababababab
-awacafdcdedidedededidedpafcDcrcrdqaadnaacrdoawawawabababababababab
-awacafdcdedrdededededsdfafcDcrdtcqaadnaacraaawawababababababababab
-awacafdudvdvdvdvdvdvdvdwcLcDdxdydzaadAaaaaaaawabababababababababab
-awacafdBafafdCafafafdDcLafcDdEdFdGdHdIdJaaabababababababababababab
-awacafafdKcjafafcjafafcjafdLdMdNdOaadPaaaaabababababababababababab
-abaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababab
-ababababababababababababababababababababababababababababababababab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+ab
+ab
+"}
+(2,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+ab
+"}
+(3,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+ci
+af
+cL
+af
+af
+af
+af
+af
+af
+af
+af
+aa
+ab
+"}
+(4,1,1) = {"
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+aa
+af
+cB
+af
+cX
+dc
+dh
+dc
+dc
+du
+dB
+af
+aa
+ab
+"}
+(5,1,1) = {"
+ab
+aa
+aa
+af
+al
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bO
+af
+af
+cY
+dd
+de
+de
+de
+dv
+af
+dK
+aa
+ab
+"}
+(6,1,1) = {"
+aw
+ac
+ad
+ag
+am
+aE
+aX
+af
+bq
+af
+bO
+aa
+cj
+af
+af
+cY
+de
+di
+di
+dr
+dv
+af
+cj
+aa
+ab
+"}
+(7,1,1) = {"
+aw
+ac
+ae
+ah
+am
+aF
+aY
+bl
+bl
+bl
+bl
+cc
+ck
+af
+af
+cZ
+de
+dj
+de
+de
+dv
+dC
+af
+aa
+ab
+"}
+(8,1,1) = {"
+aw
+ac
+ae
+ah
+af
+aG
+aZ
+bm
+bm
+bD
+bm
+cd
+cl
+af
+af
+cY
+de
+dk
+de
+de
+dv
+af
+af
+aa
+ab
+"}
+(9,1,1) = {"
+aw
+ac
+af
+ae
+an
+aH
+ba
+bn
+br
+bn
+bP
+aa
+cj
+cC
+af
+cY
+de
+de
+de
+de
+dv
+af
+cj
+aa
+ab
+"}
+(10,1,1) = {"
+ab
+aa
+aa
+af
+af
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+cm
+af
+af
+cY
+de
+di
+di
+de
+dv
+af
+af
+aa
+ab
+"}
+(11,1,1) = {"
+ab
+ab
+aa
+aa
+aa
+aa
+bb
+aJ
+aK
+bE
+bQ
+aa
+cn
+af
+cM
+cY
+de
+de
+de
+ds
+dv
+dD
+af
+aa
+ab
+"}
+(12,1,1) = {"
+ab
+ab
+aa
+ai
+ao
+aI
+aJ
+aJ
+aJ
+bF
+bR
+aa
+co
+af
+af
+da
+df
+dl
+dp
+df
+dw
+cL
+cj
+aa
+ab
+"}
+(13,1,1) = {"
+ab
+ab
+aa
+aj
+ap
+aJ
+aJ
+aJ
+aJ
+aJ
+bS
+aa
+af
+af
+af
+af
+cL
+af
+af
+af
+cL
+af
+af
+aa
+ab
+"}
+(14,1,1) = {"
+ab
+ab
+aa
+ak
+aq
+aK
+aJ
+aa
+aa
+aa
+aa
+aa
+cp
+cD
+cD
+cD
+dg
+cD
+cD
+cD
+cD
+cD
+dL
+aa
+ab
+"}
+(15,1,1) = {"
+ab
+ab
+aa
+aa
+aa
+aL
+bc
+aa
+bs
+bG
+bT
+aa
+cq
+cr
+cr
+cr
+cr
+cr
+cr
+cr
+dx
+dE
+dM
+aa
+ab
+"}
+(16,1,1) = {"
+ab
+ab
+aa
+aa
+aa
+aM
+bd
+aa
+bt
+bt
+bw
+ce
+cr
+cr
+cr
+cr
+cr
+cr
+cr
+dt
+dy
+dF
+dN
+aa
+ab
+"}
+(17,1,1) = {"
+ab
+ab
+aa
+aa
+ar
+aN
+be
+aa
+bu
+bH
+bw
+ce
+cr
+cr
+cN
+cq
+cr
+dm
+dq
+cq
+dz
+dG
+dO
+aa
+ab
+"}
+(18,1,1) = {"
+ab
+ab
+aa
+aa
+as
+aN
+bf
+aa
+bv
+bt
+bU
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+dH
+aa
+aa
+ab
+"}
+(19,1,1) = {"
+ab
+ab
+aa
+aa
+at
+aO
+bf
+aa
+bw
+bw
+bw
+aa
+cs
+cE
+cO
+db
+db
+dn
+dn
+dn
+dA
+dI
+dP
+aa
+ab
+"}
+(20,1,1) = {"
+ab
+ab
+aa
+aa
+aa
+aP
+bd
+aa
+aa
+bI
+aa
+aa
+ct
+cF
+cP
+aa
+aa
+do
+aa
+aa
+aa
+dJ
+aa
+aa
+ab
+"}
+(21,1,1) = {"
+ab
+ab
+aa
+aa
+aa
+aP
+bd
+aa
+at
+bJ
+bV
+cf
+cu
+cG
+bV
+aa
+aa
+cr
+cr
+cr
+aa
+aa
+aa
+ab
+ab
+"}
+(22,1,1) = {"
+ab
+ab
+aa
+aa
+au
+aQ
+aV
+aa
+bx
+bK
+bV
+cg
+cv
+bV
+bV
+aa
+aa
+aa
+do
+aa
+aa
+ab
+ab
+ab
+ab
+"}
+(23,1,1) = {"
+ab
+ab
+aa
+aa
+av
+aR
+bg
+aa
+by
+bL
+bW
+bW
+cw
+bV
+cQ
+aa
+aa
+aw
+aw
+aw
+aw
+ab
+ab
+ab
+ab
+"}
+(24,1,1) = {"
+ab
+ab
+aa
+aa
+ax
+aS
+bh
+aa
+aa
+aa
+aa
+aa
+bV
+bV
+cR
+aa
+aa
+aw
+aw
+aw
+ab
+ab
+ab
+ab
+ab
+"}
+(25,1,1) = {"
+ab
+ab
+aa
+aa
+ay
+aT
+bi
+bo
+bz
+bM
+bX
+aa
+cx
+cH
+cS
+aa
+aa
+aw
+aw
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(26,1,1) = {"
+ab
+ab
+aa
+aa
+az
+aT
+aW
+aa
+bA
+bN
+bY
+aa
+cy
+cI
+cT
+aa
+aa
+aw
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(27,1,1) = {"
+ab
+ab
+aa
+aa
+aA
+aJ
+bj
+aa
+bB
+at
+bZ
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(28,1,1) = {"
+ab
+ab
+aa
+aa
+aB
+aU
+aS
+aa
+aa
+bd
+aa
+aa
+cz
+cJ
+cU
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(29,1,1) = {"
+ab
+ab
+aa
+aa
+aC
+aV
+bk
+bp
+bC
+aJ
+ca
+ch
+aJ
+bC
+cV
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(30,1,1) = {"
+ab
+ab
+aa
+aa
+aD
+aW
+aJ
+bp
+aJ
+aJ
+cb
+ch
+cA
+cK
+cW
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(31,1,1) = {"
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(32,1,1) = {"
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(33,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 "}

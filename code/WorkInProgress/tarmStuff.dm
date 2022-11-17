@@ -1,5 +1,132 @@
 //bot go brr?
 //GUNS GUNS GUNS
+/obj/item/gun/energy/cannon
+	name = "Vexillifer IV"
+	desc = "It's a cannon? A laser gun? You can't tell."
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "lasercannon"
+	item_state = "cannon"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	force = MELEE_DMG_LARGE
+
+
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+
+	can_dual_wield = 0
+
+	//color = list(0.110785,0.179801,0.533943,0.0890215,-0.0605533,-1.35334,0.823851,0.958116,1.79703)
+
+	two_handed = 1
+	w_class = W_CLASS_BULKY
+	muzzle_flash = "muzzle_flash_bluezap"
+	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
+	shoot_delay = 0.8 SECONDS
+
+
+	New()
+		set_current_projectile(new/datum/projectile/laser/asslaser)
+		..()
+
+	setupProperties()
+		..()
+		setProperty("movespeed", 0.3)
+
+	flashy
+		icon_state = "lasercannon-anim"
+
+		shoot(target, start, mob/user, POX, POY, is_dual_wield)
+			if(src.canshoot(user))
+				flick("lasercannon-fire", src)
+			. = ..()
+
+/datum/projectile/energy_bolt/taser_beam
+	cost = 0
+	max_range = PROJ_INFINITE_RANGE
+	dissipation_rate = 0
+	projectile_speed = 12800
+	shot_volume = 10
+
+	on_hit(atom/hit, angle, obj/projectile/P)
+		. = ..()
+		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
+		var/obj/railgun_trg_dummy/end = new(get_turf(hit))
+
+		var/Sx = P.orig_turf.x*32 + P.orig_turf.pixel_x
+		var/Sy = P.orig_turf.y*32 + P.orig_turf.pixel_y
+
+		var/Hx = hit.x*32 + hit.pixel_x
+		var/Hy = hit.y*32 + hit.pixel_y
+
+		var/dist = sqrt((Hx-Sx)**2 + (Hy-Sy)**2)
+
+		var/Px = Sx + sin(P.angle) * dist
+		var/Py = Sy + cos(P.angle) * dist
+
+		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,0,"HalfStartRailG","HalfEndRailG",OBJ_LAYER, 0, Sx, Sy, Px, Py)
+		for(var/obj/O in affected)
+			O.color = list(1,2.30348,-4.4382,0,0,1.96078,0,-1.3074,3.46173)
+			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
+		SPAWN(1 SECOND)
+			for(var/obj/O in affected)
+				O.alpha = initial(O.alpha)
+				qdel(O)
+			qdel(start)
+			qdel(end)
+
+/datum/projectile/bullet/optio
+	name = "hardlight bolt"
+	sname = "needle bolt"
+	cost = 20
+	damage = 35
+	dissipation_delay = 6
+	damage_type = D_PIERCING
+	hit_type = DAMAGE_BURN
+	icon_state = "laser_white"
+	shot_sound = 'sound/weapons/optio.ogg'
+	implanted = null
+	armor_ignored = 0.66
+	impact_image_state = "bhole"
+	shot_volume = 66
+	window_pass = 1
+
+/datum/projectile/bullet/optio/hitscan
+	name = "hardlight beam"
+	sname = "pencil beam"
+	cost = 40
+	max_range = PROJ_INFINITE_RANGE
+	dissipation_rate = 0
+	projectile_speed = 12800
+	armor_ignored = 0.33
+
+
+	on_hit(atom/hit, angle, obj/projectile/P)
+		. = ..()
+		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
+		var/obj/railgun_trg_dummy/end = new(get_turf(hit))
+
+		var/Sx = P.orig_turf.x*32 + P.orig_turf.pixel_x
+		var/Sy = P.orig_turf.y*32 + P.orig_turf.pixel_y
+
+		var/Hx = hit.x*32 + hit.pixel_x
+		var/Hy = hit.y*32 + hit.pixel_y
+
+		var/dist = sqrt((Hx-Sx)**2 + (Hy-Sy)**2)
+
+		var/Px = Sx + sin(P.angle) * dist
+		var/Py = Sy + cos(P.angle) * dist
+
+		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,0,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0, Sx, Sy, Px, Py)
+		for(var/obj/O in affected)
+			O.color = list(-0.8, 0, 0, 0, -0.8, 0, 0, 0, -0.8, 1.5, 1.5, 1.5)
+			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
+		SPAWN(1 SECOND)
+			for(var/obj/O in affected)
+				O.alpha = initial(O.alpha)
+				qdel(O)
+			qdel(start)
+			qdel(end)
+
 /datum/projectile/special/target_designator
 	sname = "foo"
 	name = "bar"
@@ -7,7 +134,7 @@
 	dissipation_rate = 0
 	projectile_speed = 12800
 	casing = /obj/item/casing/cannon
-	power = 1
+	damage = 1
 	max_range = 500
 	damage_type = D_SPECIAL
 	shot_sound = null
@@ -31,7 +158,7 @@
 			animate(time = 0.1 SECONDS, alpha = 0, easing = JUMP_EASING | EASE_IN)
 			animate(time = 0.1 SECONDS, alpha = 255, easing = JUMP_EASING | EASE_IN)
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for(var/obj/O in affected)
 				O.alpha = initial(O.alpha)
 				O.color = initial(O.color)
@@ -49,9 +176,9 @@
 	dissipation_rate = 0
 	projectile_speed = 12800
 	casing = /obj/item/casing/cannon
-	power = 125
+	damage = 125
 	implanted = /obj/item/implant/projectile/rakshasa
-	icon_turf_hit = "bhole-large"
+	impact_image_state = "bhole-large"
 	goes_through_walls = 1
 	pierces = -1
 
@@ -62,7 +189,7 @@
 		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
 		for(var/obj/O in affected)
 			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for(var/obj/O in affected)
 				O.alpha = initial(O.alpha)
 				qdel(O)
@@ -84,13 +211,16 @@
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "g11"
 	item_state = "g11"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 	has_empty_state = 1
 	var/shotcount = 0
 	var/last_shot_time = 0
 	uses_multiple_icon_states = 1
-	force = 15.0
+	force = 15
 	contraband = 8
-	caliber = 0.185
+	ammo_cats = list(AMMO_CASELESS_G11)
 	max_ammo_capacity = 45
 	can_dual_wield = 0
 	two_handed = 1
@@ -108,7 +238,7 @@
 		. = ..(target, start, user, POX+rand(-spread_angle, spread_angle)*16, POY+rand(-spread_angle, spread_angle)*16)
 		last_shot_time = TIME
 
-	shoot_point_blank(mob/M, mob/user, second_shot)
+	shoot_point_blank(atom/target, mob/user, second_shot)
 		shotcount = 0
 		. = ..()
 
@@ -123,9 +253,9 @@
 	desc = "The side of the magazine is stamped with \"Anderson Para-Munitions\""
 	ammo_type = new/datum/projectile/bullet/g11
 	icon_state = "caseless"
-	amount_left = 45.0
-	max_amount = 45.0
-	caliber = 0.185
+	amount_left = 45
+	max_amount = 45
+	ammo_cat = AMMO_CASELESS_G11
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 	icon_empty = "caseless-empty"
 
@@ -140,28 +270,26 @@
 /datum/projectile/bullet/g11
 	name = "\improper Manticore round"
 	cost = 3
-	power = 60
-	ks_ratio = 1.0
+	damage = 60
 	hit_ground_chance = 100
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	shot_number = 3
-	shot_delay = 0.4
+	shot_delay = 0.04 SECONDS
 	shot_sound = 'sound/weapons/gunshot.ogg'
 	shot_volume = 66
-	caliber = 0.185
 	dissipation_delay = 10
 	dissipation_rate = 5
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 
 	small
 		shot_sound = 'sound/weapons/9x19NATO.ogg'
 		shot_volume = 50
-		power = 15
+		damage = 15
 		hit_ground_chance = 33
 
 	void
-		power = 30
+		damage = 30
 		on_hit(atom/hit, angle, obj/projectile/O)
 			var/turf/T = get_turf(hit)
 			new/obj/decal/implo(T)
@@ -174,7 +302,7 @@
 			..()
 
 	blast
-		power = 15
+		damage = 15
 		damage_type = D_KINETIC
 		hit_type = DAMAGE_BLUNT
 		on_hit(atom/hit, angle, obj/projectile/O)
@@ -236,10 +364,11 @@
 	desc = "A semi-automatic handgun that fires rocket-propelled bullets, developed by Mabinogi Firearms Company."
 	icon_state = "gyrojet"
 	item_state = "gyrojet"
-	caliber = 0.512
+	ammo_cats = list(AMMO_GYROJET)
 	max_ammo_capacity = 6
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/gyrojet
+	fire_animation = TRUE
 
 	New()
 		ammo = new default_magazine
@@ -250,23 +379,21 @@
 	sname = "13mm Gyrojet"
 	name = "gyrojet magazine"
 	icon_state = "pistol_magazine"
-	amount_left = 6.0
-	max_amount = 6.0
+	amount_left = 6
+	max_amount = 6
 	ammo_type = new/datum/projectile/bullet/gyrojet
-	caliber = 0.512
+	ammo_cat = AMMO_GYROJET
 
 /datum/projectile/bullet/gyrojet
 	name = "gyrojet bullet"
 	projectile_speed = 6
 	max_range = 500
 	dissipation_rate = 0
-	power = 10
+	damage = 10
 	precalculated = 0
-	caliber = 0.512
 	shot_volume = 100
 	shot_sound = 'sound/weapons/gyrojet.ogg'
-	ks_ratio = 1
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 
 	on_launch(obj/projectile/O)
 		O.internal_speed = projectile_speed
@@ -287,7 +414,7 @@
 	throwforce = 20 //HEAVY pistol
 	auto_eject = 1
 	max_ammo_capacity = 7
-	caliber = list(0.50, 0.41, 0.357, 0.38, 0.355, 0.22) //the omnihandgun
+	ammo_cats = list(AMMO_PISTOL_ALL, AMMO_REVOLVER_ALL, AMMO_DEAGLE) //the omnihandgun
 	has_empty_state = 1
 	gildable = 1
 	fire_animation = TRUE
@@ -313,10 +440,10 @@
 	sname = "0.50 AE"
 	name = "\improper Simurgh magazine"
 	icon_state = "pistol_magazine"
-	amount_left = 7.0
-	max_amount = 7.0
+	amount_left = 7
+	max_amount = 7
 	ammo_type = new/datum/projectile/bullet/deagle50cal
-	caliber = 0.50
+	ammo_cat = AMMO_DEAGLE
 
 	//gimmick deagle ammo that decapitates
 	decapitation
@@ -324,13 +451,11 @@
 
 /datum/projectile/bullet/deagle50cal
 	name = "bullet"
-	power = 120
+	damage = 120
 	dissipation_delay = 5
 	dissipation_rate = 5
-	ks_ratio = 1.0
 	implanted = /obj/item/implant/projectile/bullet_50
-	caliber = 0.50
-	icon_turf_hit = "bhole-large"
+	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/deagle
 	shot_sound = 'sound/weapons/deagle.ogg'
 
@@ -365,7 +490,7 @@
 			var/msg = text("As [user] slaps the [src] onto the [target], the [target]")
 			var/currentench = I.enchant(incr)
 			var/turf/T = get_turf(target)
-			playsound(T, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
+			playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, 1)
 			if(currentench-incr <= 2 || !rand(0, currentench))
 				user.visible_message("<span class='notice'>[msg] glows with a faint light[(currentench >= 3) ? " and vibrates violently!" : "."]</span>")
 			else
@@ -410,7 +535,7 @@
 	icon_state = "voting_box"
 	density = 1
 	flags = FPRINT
-	anchored = 1.0
+	anchored = 1
 	desc = "Some sort of thing to put suggestions into. If you're lucky, they might even be read!"
 	var/taken_suggestion = 0
 	var/list/turf/floors = null
@@ -431,11 +556,11 @@
 				message_admins("[user] ([user?.ckey]) has made a suggestion in [src]:<br>[P.name]<br><br>[copytext(P.info,1,MAX_MESSAGE_LEN)]")
 				var/ircmsg[] = new()
 				ircmsg["msg"] = "[user] ([user?.ckey]) has made a suggestion in [src]:\n**[P.name]**\n[strip_html_tags(P.info)]"
-				ircbot.export("admin", ircmsg)
+				ircbot.export_async("admin", ircmsg)
 				taken_suggestion = 1
 			user.u_equip(P)
 			qdel(P)
-			playsound(src.loc, "sound/machines/paper_shredder.ogg", 90, 1)
+			playsound(src.loc, 'sound/machines/paper_shredder.ogg', 90, 1)
 			var/turf/T = pick(floors)
 			if(T)
 				new /obj/decal/cleanable/paper(T)
@@ -458,6 +583,20 @@
 		new /datum/mutation_orb_mutdata(id = "dwarf", magical = 1)
 		)
 
+/obj/item/mutation_orb/cow_orb
+	name = "essence of cowness"
+	desc = "Moo!"
+	icon = 'icons/misc/GerhazoStuff.dmi'
+	icon_state = "orb_fire"
+
+	envelop_message = "hair"
+	leaving_message = "mooing softly and vanishing"
+
+	New()
+		. = ..()
+		color = list(0.3, 0.4, 0.1, 0, 1, 0, 0, 0, 1)
+		mutations_to_add = list(new /datum/mutation_orb_mutdata(id = "cow", magical = 1))
+
 //lily's office
 /obj/item/storage/desk_drawer/lily/
 	spawn_contents = list(	/obj/item/reagent_containers/food/snacks/cake,\
@@ -479,11 +618,11 @@
 
 /obj/machinery/door/unpowered/wood/lily/open()
 	if(src.locked) return
-	playsound(src.loc, "sound/voice/screams/fescream3.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+	playsound(src.loc, 'sound/voice/screams/fescream3.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 	. = ..()
 
 /obj/machinery/door/unpowered/wood/lily/close()
-	playsound(src.loc, "sound/voice/screams/robot_scream.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+	playsound(src.loc, 'sound/voice/screams/robot_scream.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 	. = ..()
 
 
@@ -548,3 +687,20 @@
 			for (var/mob/living/M in view(src, 5))
 				if (M.bioHolder)
 					M.bioHolder.AddEffect("cold_resist", 0, 45)
+
+/obj/item/firebot_deployer
+	name = "compressed firebrand firebot"
+	desc = "Deploys a firebot dedicated to putting out friendly fire(s)"
+	icon = 'icons/obj/bots/aibots.dmi'
+	icon_state = "firebot0"
+
+	New()
+		. = ..()
+		src.SafeScale(0.5, 0.5)
+
+	attack_self(mob/user)
+		if(src == user.equipped())
+			new/obj/machinery/bot/firebot/firebrand(get_turf(src))
+			user.u_equip(src)
+			qdel(src)
+		. = ..()

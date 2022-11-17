@@ -42,9 +42,9 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	// ever put this much effort into the dumbest thing ever haha
 	user.visible_message("[user] [pick("reels in", "catches", "pulls in", "fishes up")] a \
 	[pick("big", "wriggly", "fat", "slimy", "fishy", "large", "high-quality", "nasty", "chompy", "real", "wily")] \
-	[prob(80) ? "[fish.name]" : pick("one", "catch", "chomper", "wriggler", "sunovabitch", "sucker")]!")
+	[prob(80) ? "[fish.name]" : pick("one", "catch", "chomper", "wriggler", "sunovagun", "sucker")]!")
 	fish.set_loc(get_turf(user))
-	playsound(user, "sound/items/fishing_rod_reel.ogg", 50, 1)
+	playsound(user, 'sound/items/fishing_rod_reel.ogg', 50, 1)
 	fishing_rod.last_fished = TIME //set the last fished time
 	return 1
 
@@ -56,6 +56,15 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/herring = 15,\
 	/obj/item/fish/red_herring = 5)
 
+/datum/fishing_spot/swamp
+	fishing_atom_type = /turf/unsimulated/floor/auto/swamp
+	fish_available = list(/obj/item/fish/carp = 40,\
+	/obj/item/fish/bass = 30,\
+	/obj/critter/slug = 10,\
+	/mob/living/critter/small_animal/snake = 10,\
+	/obj/critter/frog = 10,\
+	/obj/item/clothing/head/rafflesia = 5)
+
 /datum/fishing_spot/test
 	fishing_atom_type = /turf/simulated/floor/ancient
 	fish_available = list(/obj/item/fish/carp = 40,\
@@ -64,6 +73,18 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/herring = 15,\
 	/obj/item/fish/red_herring = 5)
 	do_not_generate = 1
+
+/datum/fishing_spot/toilet
+	fishing_atom_type = /obj/item/storage/toilet
+	fish_available = list( /obj/item/reagent_containers/food/snacks/yuck = 20, \
+	/obj/item/reagent_containers/food/snacks/yuckburn = 20, \
+	/obj/item/reagent_containers/food/snacks/shell = 20, \
+	/obj/item/reagent_containers/food/snacks/burger/moldy = 5, \
+	/obj/item/raw_material/scrap_metal = 5, \
+	/obj/item/reagent_containers/food/snacks/fish_fingers = 10)
+
+/datum/fishing_spot/toilet/random
+	fishing_atom_type = /obj/item/storage/toilet/random
 
 /datum/fishing_spot/spatial_tear
 	fishing_atom_type = /obj/forcefield/event
@@ -85,7 +106,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/critter/aberration = 1,\
 	/obj/critter/cat = 2,\
 	/obj/item/clothing/head/void_crown = 1,\
-	/obj/item/record/random = 4,\
+	/obj/item/record/spacebux = 4,\
 	/obj/critter/domestic_bee/trauma = 20)
 
 /datum/fishing_spot/fryer

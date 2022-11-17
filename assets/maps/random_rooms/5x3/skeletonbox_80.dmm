@@ -1,0 +1,42 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"s" = (
+/obj/decal/fakeobjects/skeleton,
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"B" = (
+/obj/item/pen/crayon/random,
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"T" = (
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+T
+T
+T
+"}
+(2,1,1) = {"
+a
+a
+B
+"}
+(3,1,1) = {"
+s
+a
+T
+"}
+(4,1,1) = {"
+a
+a
+T
+"}
+(5,1,1) = {"
+T
+T
+T
+"}

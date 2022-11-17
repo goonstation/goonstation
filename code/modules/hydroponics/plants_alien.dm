@@ -28,7 +28,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 
 		if (POT.growth > (P.harvtime + DNA.harvtime) && prob(20))
 			POT.visible_message("<span class='alert'><b>[POT.name]</b> vomits profusely!</span>")
-			playsound(POT, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			playsound(POT, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 			if(!locate(/obj/decal/cleanable/vomit) in get_turf(POT)) make_cleanable( /obj/decal/cleanable/vomit,get_turf(POT))
 
 /datum/plant/artifact/peeker
@@ -80,6 +80,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		else if(focus_level <= 6)
 			boutput(M, "<span style=\"color:red;font-size:3em\">Run.</span>")
 		else
+			logTheThing(LOG_COMBAT, M, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
 			if (M.organHolder)
 				var/obj/brain = M.organHolder.drop_organ("brain")
 				brain?.throw_at(get_edge_cheap(get_turf(M), pick(cardinal)), 16, 3)
@@ -90,10 +91,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 					M.gib()
 			else if(istype(M, /mob/living/silicon/robot))
 				var/mob/living/silicon/robot/R = M
-				if(R.brain)
-					R.brain.set_loc(get_turf(R))
-					R.brain.throw_at(get_edge_cheap(get_turf(R), pick(cardinal)), 16, 3)
-					R.brain = null
+				R.eject_brain(fling = TRUE)
 				R.update_appearance()
 				R.TakeDamage("head", 420, 0)
 			else
@@ -125,7 +123,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 			for (var/mob/living/X in view(7,POT)) stuffnearby.Add(X)
 			if(!extreme_start)
 				for (var/obj/item/X in view(7,POT)) stuffnearby.Add(X)
-			if (stuffnearby.len > 1)
+			if (stuffnearby.len >= 1)
 				var/thing = pick(stuffnearby)
 				POT.visible_message("<span class='alert'><b>[POT.name]</b> stares at [thing].</span>")
 				if(extreme_start)

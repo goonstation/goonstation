@@ -6,7 +6,7 @@
 	anchored = 1
 	density = 1
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/paper) || istype(W, /obj/item/folder))
 			icon_state = "filecabinet-open"
 			if (istype(W, /obj/item/paper)) //couldnt get this to work nicely with [w] so you get this instead god
@@ -15,16 +15,16 @@
 				boutput(user, "You file the folder.")
 			user.drop_item()
 			W.set_loc(src)
-			SPAWN_DBG(5 DECI SECONDS)
+			SPAWN(5 DECI SECONDS)
 				icon_state = "filecabinet"
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		icon_state = "filecabinet-open"
 		show_window(user)
 
 	Topic(var/href, var/href_list)
 
-		if (get_dist(src, usr) > 1 || iswraith(usr) || isintangible(usr) || is_incapacitated(usr))
+		if (BOUNDS_DIST(src, usr) > 0 || iswraith(usr) || isintangible(usr) || is_incapacitated(usr))
 			return
 		..()
 

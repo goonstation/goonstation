@@ -7,8 +7,8 @@
 
 	// no fake admins
 	if (src.tempmin)
-		logTheThing("admin", src.owner, target_key, "tried to change the login notice of [constructTarget(target_key,"admin")]")
-		logTheThing("diary", src.owner, target_key, "tried to change the login notice of [constructTarget(target_key,"diary")]", "admin")
+		logTheThing(LOG_ADMIN, src.owner, "tried to change the login notice of [constructTarget(target_key,"admin")]")
+		logTheThing(LOG_DIARY, src.owner, "tried to change the login notice of [constructTarget(target_key,"diary")]", "admin")
 		alert("You need to be an actual admin to view login notices.")
 		return
 
@@ -54,7 +54,7 @@
 	message_admins("<span class='internal'>[key_name(src.owner.mob)] added a login notice for <a href='?src=%admin_ref%;action=notes&target=[target_key]'>[target_key]</A>:<br><div style='whitespace: pre-wrap;'>[message_text]</div></span>")
 	tgui_alert(src.owner.mob, "Login notice for '[target_key]' has been set. They should see it next time they connect.")
 
-	ircbot.export("admin", list(
+	ircbot.export_async("admin", list(
 		"key" = src.owner.ckey,
 		"name" = src.owner.mob.name,
 		"msg" = "added an admin notice for `[target_key]`:\n[message_text]"))
@@ -81,7 +81,7 @@
 	var/message = src.player.cloud_get("login_notice")
 
 	if (message)
-		src << csound("sound/voice/bfreeze.ogg")
+		src << csound('sound/voice/bfreeze.ogg')
 
 		var/login_notice_html = {"
 						<!doctype html>
@@ -124,9 +124,9 @@
 		message_admins("<span class='internal'>[src.ckey] acknowledged their login notice.</span>")
 		addPlayerNote(src.ckey, "(AUTO)", "Acknowledged their login notice.")
 		src.mob.Browse(null, "window=loginnotice")
-		src << csound("sound/machines/futurebuddy_beep.ogg")
+		src << csound('sound/machines/futurebuddy_beep.ogg')
 		alert("You have acknowledged the admin notice and can now play.")
-		ircbot.export("admin", list(
+		ircbot.export_async("admin", list(
 			"key" = src.ckey,
 			"name" = src.mob.name,
 			"msg" = "Acknowledged their admin notice."))

@@ -28,7 +28,7 @@ Fibre wire
 			M.show_text("<B><I>It burns...!</I></B>", "red")
 			if(ishuman(M)) evil_act(M)
 /* oops didn't quite think this through
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/parts/robot_parts/leg))
 			var/obj/machinery/bot/skullbot/B = new /obj/machinery/bot/skullbot
 			B.icon = icon('icons/obj/bots/aibots.dmi', "skullbot-ominous")
@@ -47,7 +47,7 @@ Fibre wire
 
 		if(ticker?.mode) //Yes, I'm sure my runtimes will matter if the goddamn TICKER is gone.
 			for(var/datum/mind/M in (ticker.mode.Agimmicks | ticker.mode.traitors)) //We want an EVIL ghost
-				if(!M.dnr && M.current && isobserver(M.current) && M.current.client && M.special_role != ROLE_VAMPTHRALL && M.special_role != ROLE_MINDSLAVE)
+				if(!M.dnr && M.current && isobserver(M.current) && M.current.client && M.special_role != ROLE_VAMPTHRALL && M.special_role != ROLE_MINDHACK)
 					priority_targets.Add(M.current)
 
 		if(!priority_targets.len) //Okay, fine. Any ghost. *sigh
@@ -67,12 +67,12 @@ Fibre wire
 		src.set_loc(H.loc)
 		src.layer = EFFECTS_LAYER_4
 		playsound(src.loc, 'sound/ambience/spooky/Void_Calls.ogg', 40, 1)
-		SPAWN_DBG(0) animate_levitate(src, -1)
+		SPAWN(0) animate_levitate(src, -1)
 		H.emote("scream")
 
 		H.changeStatus("weakened", 10 SECONDS)
 
-		SPAWN_DBG(7 SECONDS)
+		SPAWN(7 SECONDS)
 			if(!H)
 				being_mean = 0
 				return
@@ -122,18 +122,22 @@ proc/Create_Tommyname()
 	else
 		T.key = src.key
 
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		qdel(src)
 
 /mob/living/carbon/human/proc/tommyize_reshape()
 	//Set up the new appearance
-	var/datum/appearanceHolder/AH = new
-	AH.gender = "male"
-	AH.customization_first = new /datum/customization_style/hair/long/dreads
-	AH.gender = "male"
-	AH.s_tone = "#FAD7D0"
-	AH.owner = src
-	AH.parentHolder = src.bioHolder
+	if(src.bioHolder)
+		src.bioHolder.AddEffect("accent_tommy")
+		if(src.bioHolder.mobAppearance)
+			var/datum/appearanceHolder/AH = src.bioHolder.mobAppearance
+			AH.gender = "male"
+			AH.customization_first = new /datum/customization_style/hair/long/dreads
+			AH.customization_first_color = "#101010"
+			AH.customization_second = new /datum/customization_style/none
+			AH.customization_third = new /datum/customization_style/none
+			AH.s_tone = "#FAD7D0"
+			src.bioHolder.AddEffect("accent_tommy")
 
 	src.gender = "male"
 	src.real_name = Create_Tommyname()
@@ -161,9 +165,6 @@ proc/Create_Tommyname()
 	src.sound_scream = 'sound/voice/tommy_you-are-tearing-me-apart-lisauh.ogg'
 	src.sound_fingersnap = 'sound/voice/tommy_did-not-hit-hehr.ogg'
 
-	if(src.bioHolder)
-		src.bioHolder.mobAppearance = AH
-		src.bioHolder.AddEffect("accent_tommy")
 	src.update_colorful_parts()
 
 //------------------------//
@@ -175,15 +176,13 @@ proc/Create_Tommyname()
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "random_thing"
 //How much of a punch this has, tends to be seconds/damage before any resist
-	power = 10
+	stun = 10
 //How much ammo this costs
 	cost = 10
 //How fast the power goes away
 	dissipation_rate = 1
 //How many tiles till it starts to lose power
 	dissipation_delay = 10
-//Kill/Stun ratio
-	ks_ratio = 0.0
 //name of the projectile setting, used when you change a guns setting
 	sname = "Tommify"
 //file location for the sound you want it to play
@@ -213,7 +212,7 @@ proc/Create_Tommyname()
 	icon_state = "tommygun"
 	m_amt = 4000
 	rechargeable = 1
-	force = 0.0
+	force = 0
 	cell_type = /obj/item/ammo/power_cell/high_power
 	desc = "It smells of cheap cologne and..."
 
@@ -221,9 +220,6 @@ proc/Create_Tommyname()
 		set_current_projectile(new/datum/projectile/tommy)
 		projectiles = list(new/datum/projectile/tommy)
 		..()
-
-	update_icon()
-		return
 
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
 		for(var/mob/O in AIviewers(user, null))
@@ -274,7 +270,7 @@ proc/Create_Tommyname()
 				if(reagents_cache[RID])
 					output = analyze_single(output, RID)
 				else
-					logTheThing("debug", null, null, "<B>SpyGuy/spectro:</B> attempted to analyze invalid reagent id: [RID]")
+					logTheThing(LOG_DEBUG, null, "<B>SpyGuy/spectro:</B> attempted to analyze invalid reagent id: [RID]")
 
 			return output
 
@@ -476,6 +472,8 @@ proc/Create_Tommyname()
 		INIT_CHECK //Initialize the SpyGUI instance on use
 		if((target in connecting))
 			return
+		if(!target.client)
+			return
 		connecting[target] = initData
 		var/retries = max_retries
 		var/extrasleep = 0
@@ -593,7 +591,7 @@ proc/Create_Tommyname()
 	var/paneldir2 = turn(extension_dir, -90)
 	var/list/turf/panelturfs = list()
 	var/turf/walker = get_turf(src)
-	DEBUG_MESSAGE("Extending panel at [showCoords(src.x, src.y, src.z)]. extension_dir: [extension_dir] ([dir2text(extension_dir)]), paneldir1: [paneldir1] ([dir2text(paneldir1)]), paneldir2: [paneldir2] ([dir2text(paneldir2)])")
+	DEBUG_MESSAGE("Extending panel at [log_loc(src)]. extension_dir: [extension_dir] ([dir2text(extension_dir)]), paneldir1: [paneldir1] ([dir2text(paneldir1)]), paneldir2: [paneldir2] ([dir2text(paneldir2)])")
 	var/total_len = station_padding + controller_padding + (panel_space * (num_panels -1)) + num_panels * panel_width
 	DEBUG_MESSAGE("Determined total length of panel to be [total_len] tiles.")
 
@@ -605,7 +603,7 @@ proc/Create_Tommyname()
 		walker = get_step(walker,extension_dir)
 		/*
 		if(i == 0)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				move_create_obj(list(new /obj/lattice{icon_state="lattice-dir-b"}), walker, paneldir1, paneldir2 | extension_dir)
 			move_create_obj(list(new /obj/lattice{icon_state="lattice-dir-b"}), walker, paneldir2, paneldir1 | turn(extension_dir, 180))
 		*/
@@ -627,11 +625,11 @@ proc/Create_Tommyname()
 	DEBUG_MESSAGE("Creating solar panels")
 	var/list/solar_list = list(/turf/simulated/floor/airless/solar, /obj/machinery/power/solar)
 	for(var/turf/T in panelturfs)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/turf/w1 = T
 			var/turf/w2 = T
 			for(var/i = 0; i < panel_length; i++)
-				SPAWN_DBG(-1)
+				SPAWN(-1)
 					move_create_obj(solar_list, w1, paneldir1, paneldir1)
 				w1 = get_step(w1, paneldir1)
 				move_create_obj(solar_list, w2, paneldir2, paneldir2)
@@ -640,7 +638,7 @@ proc/Create_Tommyname()
 	DEBUG_MESSAGE("Creating solar controller")
 	move_create_obj(list(/turf/simulated/floor/plating/airless, /obj/machinery/power/tracker), walker, extension_dir)
 	walker = get_step(walker,extension_dir)
-	SPAWN_DBG(0) move_create_obj(list(new /obj/lattice{icon_state="lattice-dir-b"}), walker, paneldir1, paneldir2)
+	SPAWN(0) move_create_obj(list(new /obj/lattice{icon_state="lattice-dir-b"}), walker, paneldir1, paneldir2)
 	move_create_obj(list(new /obj/lattice{icon_state="lattice-dir-b"}), walker, paneldir2, paneldir1)
 
 	status = STAT_EXTENDED
@@ -655,7 +653,7 @@ proc/Create_Tommyname()
 	for(var/i = panels.len; i > 0; i--)
 		var/list/atom/L = panels[i]
 		for(var/atom/A in L)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				move_and_delete_object(A)
 		sleep(DEFAULT_ANIMATION_TIME)
 
@@ -745,7 +743,7 @@ proc/Create_Tommyname()
 		if(ispath(t_type, /turf))
 			turf_type = t_type
 			break
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for(var/t_type in to_create)
 			var/obj/O
 			is_turf = ispath(t_type, /turf) //If it's a turf we need some special handling.
@@ -771,10 +769,10 @@ proc/Create_Tommyname()
 			O.set_loc(T)
 			animate_slide(O, 0, 0, animtime, LINEAR_EASING)
 
-	playsound(T, "sound/effects/airbridge_dpl.ogg", 50, 1)
+	playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, 1)
 	sleep(animtime)
 	if(turf_type)
-		DEBUG_MESSAGE("Creating [turf_type] at [showCoords(T.x, T.y, T.z)]")
+		DEBUG_MESSAGE("Creating [turf_type] at [log_loc(T)]")
 		var/turf/NT = new turf_type(T)
 		if(setdir) NT.set_dir(setdir)
 		created_atoms += NT
@@ -794,7 +792,7 @@ proc/Create_Tommyname()
 	else if ( extension_dir & (EAST|WEST) )
 		.= abs(A.y - src.y)
 
-	DEBUG_MESSAGE("get_dist from [showCoords(A.x, A.y, A.z)] returned: [.]")
+	DEBUG_MESSAGE("get_dist from [log_loc(A)] returned: [.]")
 
 
 //The dummy object that imitates a turf
@@ -810,12 +808,12 @@ proc/Create_Tommyname()
 	src.icon = initial(T.icon)
 	src.icon_state = initial(T.icon_state)
 	src.set_density(initial(T.density))
-	src.opacity = initial(T.opacity)
+	src.set_opacity(initial(T.opacity))
 	src.set_dir(initial(T.dir))
 	src.layer = initial(T.layer)
 	src.invisibility = INVIS_NONE
 	if(TTL)
-		SPAWN_DBG(TTL)
+		SPAWN(TTL)
 			qdel(src)
 
 #undef STAT_STANDBY
@@ -850,7 +848,7 @@ proc/Create_Tommyname()
 	desc = "A sturdy wire between two handles. Could be used with both hands to really ruin someone's day."
 	w_class = W_CLASS_TINY
 	c_flags = EQUIPPED_WHILE_HELD
-	object_flags = NO_ARM_ATTACH
+	object_flags = NO_ARM_ATTACH | NO_GHOSTCRITTER
 
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "garrote0"
@@ -874,9 +872,9 @@ proc/Create_Tommyname()
 	wire_readied = new_readiness
 	// Try to stretch the wire
 	if(!src.setTwoHanded(new_readiness))
+		usr.show_text("You need two free hands in order to activate the [src.name].", "red")
 		wire_readied = 0
 		return
-
 
 	if(wire_readied)
 		playsound(usr, 'sound/items/garrote_twang.ogg', 25,5)
@@ -947,8 +945,8 @@ proc/Create_Tommyname()
 /obj/item/garrote/try_grab(var/mob/living/target, var/mob/living/assailant)
 	if(..())
 		assailant.visible_message("<span class='combat bold'>[assailant] wraps \the [src] around [target]'s neck!</span>")
-		chokehold.state = GRAB_NECK
-		chokehold.upgrade_to_kill()
+		chokehold.state = GRAB_AGGRESSIVE
+		chokehold.upgrade_to_choke()
 		update_state()
 
 // Drop the grab
@@ -958,8 +956,9 @@ proc/Create_Tommyname()
 
 // It will crumple when dropped
 /obj/item/garrote/dropped(mob/user)
+	if (src.wire_readied)
+		set_readiness(0)
 	..()
-	set_readiness(0)
 
 /obj/item/garrote/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..(hit_atom)
@@ -975,44 +974,31 @@ proc/Create_Tommyname()
 	if(src.chokehold && src.loc != src.chokehold.assailant)
 		set_readiness(0)
 
+/obj/item/garrote/proc/try_upgrade_grab()
+	if (istype(src.chokehold, /obj/item/grab/block))
+		return
+	var/obj/item/grab/garrote_grab/GG = src.chokehold
+	GG.extra_deadly = !GG.extra_deadly
+	if(GG.extra_deadly)
+		GG.assailant.visible_message("<span class='combat bold'>[GG.assailant] tightens their grip on \the [src], it digs into [GG.affecting]'s neck!</span>")
+	else
+		GG.assailant.visible_message("<span class='combat bold'>[GG.assailant] releases their hold on [GG.affecting] slightly!</span>")
+
+	src.update_state()
+
 // Change the size of the garrote or the posture
 /obj/item/garrote/attack_self(mob/user)
 	if(!chokehold)
 		..()
-		toggle_wire_readiness()
+		src.toggle_wire_readiness()
 	else
-		if (istype(src.chokehold, /obj/item/grab/block)) return
-		var/obj/item/grab/garrote_grab/GG = src.chokehold
-		GG.extra_deadly = !GG.extra_deadly
-		if(GG.extra_deadly)
-			GG.assailant.visible_message("<span class='combat bold'>[GG.assailant] tightens their grip on \the [src], it digs into [GG.affecting]'s neck!</span>")
-		else
-			GG.assailant.visible_message("<span class='combat bold'>[GG.assailant] releases their hold on [GG.affecting] slightly!</span>")
-
-		update_state()
+		src.try_upgrade_grab()
 
 /obj/item/garrote/attack(mob/target, mob/user, def_zone, is_special = 0)
-	attempt_grab(user, target)
-
-// Need a nice drop button
-/obj/item/garrote/Click(location, control, params)
-
-	if(src.chokehold)
-		if(usr == src.loc)
-			var/list/P = params2list(params)
-			var/x = text2num(P["icon-x"])
-			var/y = text2num(P["icon-y"])
-			DEBUG_MESSAGE("Click on [src] - params x,y: ([x], [y]) - [params]")
-
-			//The "drop" icon bounding box
-			// 16, 8
-			//CODER LOG: Click on the fibre wire - params x,y: (16, 8) - icon-x=16;icon-y=8;left=1;screen-loc=11:32,1:8
-			if((x >= 6 && x <= 28 ) && (y >= 4 && y <= 13 ))
-				drop_grab()
-				return
-
-	..()
-
+	if (target && target == src.chokehold?.affecting)
+		src.try_upgrade_grab()
+	else
+		src.attempt_grab(user, target)
 
 /datum/action/bar/private/icon/garrote_target
 	duration = 10
@@ -1028,10 +1014,9 @@ proc/Create_Tommyname()
 		the_garrote=garrote
 		..()
 
-
 	proc/check_conditions()
 		. = 0
-		if(get_dist(owner, target) > 1 || !target || !owner || !the_garrote || !the_garrote.wire_readied)
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || !the_garrote || !the_garrote.wire_readied)
 			interrupt(INTERRUPT_ALWAYS)
 			. = 1
 
@@ -1056,14 +1041,14 @@ proc/Create_Tommyname()
 // Special grab obj that doesn't care if it's in someone's hands
 /obj/item/grab/garrote_grab
 	// No breaking out under own power
-	prob_mod = 0
+	irresistible = 1
 	var/extra_deadly = 0
 	check()
 		if(!assailant || !affecting)
 			qdel(src)
 			return 1
 
-		if(!isturf(assailant.loc) || (!isturf(affecting.loc) || assailant.loc != affecting.loc && get_dist(assailant, affecting) > 1) )
+		if(!isturf(assailant.loc) || (!isturf(affecting.loc) || assailant.loc != affecting.loc && BOUNDS_DIST(assailant, affecting) > 0) )
 			qdel(src)
 			return 1
 
@@ -1085,8 +1070,8 @@ proc/Create_Tommyname()
 /proc/trigger_anti_cheat(var/mob/M, var/message, var/external_alert = 1)
 	if(M)
 		message_admins("[key_name(M)] [message].")
-		logTheThing("admin", M, null, message)
-		logTheThing("diary", M, null, message, "admin")
+		logTheThing(LOG_ADMIN, M, message)
+		logTheThing(LOG_DIARY, M, message, "admin")
 
 		if(external_alert)
 			//IRCbot alert, for fun
@@ -1094,7 +1079,7 @@ proc/Create_Tommyname()
 			ircmsg["key"] =  M.key
 			ircmsg["name"] = stripTextMacros(M.real_name)
 			ircmsg["msg"] = "[message] and got themselves got by the anti-cheat cluwne."
-			ircbot.export("admin", ircmsg)
+			ircbot.export_async("admin", ircmsg)
 
 		M.cluwnegib(15, 1)
 

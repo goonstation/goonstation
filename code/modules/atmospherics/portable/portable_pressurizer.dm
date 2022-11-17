@@ -80,11 +80,10 @@
 			src.process_raw_materials()
 			src.updateDialog()
 
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 	update_icon()
-		. = ..()
 		if(src.fan_state != FAN_OFF)
 			UpdateOverlays(image_fan, "fan")
 		else
@@ -218,7 +217,7 @@
 		if (istype(I,/obj/item/satchel/) && I.contents.len)
 			var/obj/item/satchel/S = I
 			for(var/obj/item/O in S.contents) O.set_loc(src)
-			S.satchel_updateicon()
+			S.UpdateIcon()
 			user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 			return
 		if (istype(I,/obj/item/storage/) && I.contents.len)
@@ -256,7 +255,7 @@
 		else
 			var/blast_key = rand()
 			blast_armed = blast_key
-			SPAWN_DBG(blast_delay)
+			SPAWN(blast_delay)
 				if(src.blast_armed == blast_key && src.is_air_safe())
 					blast_release()
 
@@ -277,7 +276,7 @@
 						air_contents.oxygen+air_contents.toxins/TOTAL_MOLES(air_contents)*255)
 		poof.alpha = clamp(MIXTURE_PRESSURE(src.air_contents)/src.maximum_pressure*180, 90, 220)
 		flick("pressurizer-poof", poof)
-		SPAWN_DBG(0.8 SECONDS)
+		SPAWN(0.8 SECONDS)
 			if(poof) qdel(poof)
 
 	proc/blast_release()
@@ -286,7 +285,7 @@
 
 		// Flashbang pressure wave is 30,000 psi thus 206 MPa
 		var/volume = clamp(pressure KILO PASCALS / 206 MEGA PASCAL * 35, 15, 70)
-		playsound(src, "sound/effects/exlow.ogg", volume, 1)
+		playsound(src, 'sound/effects/exlow.ogg', volume, 1)
 
 		var/turf/simulated/T = get_turf(src)
 		if(T && istype(T))
@@ -309,8 +308,8 @@
 						T.assume_air(temp)
 
 			if(pressure > (maximum_pressure * BLAST_EFFECT_RATIO))
-				for(var/mob/living/HH in range(8, src))
-					var/checkdist = get_dist(HH.loc, T)
+				for(var/mob/living/HH in hearers(8, T))
+					var/checkdist = GET_DIST(HH.loc, T)
 
 					// Reduced sonic boom effect with increased misstep from shockwave
 					var/misstep = clamp(1 + 10 * (5 - checkdist), 0, 40)
@@ -320,7 +319,7 @@
 					HH.apply_sonic_stun(0, 0, misstep, 0, 2, ear_damage, ear_tempdeaf, stamina)
 
 		src.blast_armed = FALSE
-		update_icon()
+		UpdateIcon()
 
 	proc/set_release_pressure(pressure as num)
 		src.release_pressure = clamp(pressure, PORTABLE_ATMOS_MIN_RELEASE_PRESSURE, PORTABLE_ATMOS_MAX_RELEASE_PRESSURE)
@@ -381,13 +380,13 @@
 			if(MIXTURE_PRESSURE(src.air_contents) < (maximum_pressure * min_blast_ratio) || !is_air_safe())
 				return
 			src.arm_blast()
-			src.update_icon()
+			src.UpdateIcon()
 			. = TRUE
 
 		if("fan")
 			var/target_mode = params["fanState"]
 			src.fan_state = target_mode
-			src.update_icon()
+			src.UpdateIcon()
 			. = TRUE
 
 		if("eject-materials")

@@ -1,6 +1,6 @@
-#include "..\oshan.dmm"
-#include "..\z2.dmm"
-#include "..\z3_blank.dmm"
+INCLUDE_MAP("../oshan.dmm")
+INCLUDE_MAP("../z2.dmm")
+INCLUDE_MAP("../z3_water.dmm")
 #include "z4.dm"
-#include "..\z5_trench.dmm"
+INCLUDE_MAP("../z5_trench.dmm")
 #define MAP_MODE "standard"

@@ -3,18 +3,17 @@
  * 90 101 87 97 107 97 39 115 83 116 117 102 102
  */
 
-//foo 44: bodacious grandiose bargaloo mambo prime preceed wow github cdn sub jekyll docs rsc ci2 rename profile rat
+//foo 45: bodacious grandiose bargaloo mambo prime preceed wow github cdn sub jekyll docs rsc ci2 rename profile rat
 
 
 /* 514 checklist
 	?[] experimentation perhaps
 	make some lib animate stuff better with spaces? (better rainbow anyone?)
-	enable TILE_MOVEMENT_MODE and see if break
 	particle abuse
 */
 
-// cat
-
+// playsound\(([^,]*), "(sound/[^\[]+)"
+// playsound($1, '$2'
 // Greek Adventurezone Thingy
 
 /turf/unsimulated/greek/
@@ -174,7 +173,7 @@
 		src.attacking = 1
 		src.visible_message("<span class='combat'><B>[src]</B> bites [src.target] viciously!</span>")
 		random_brute_damage(src.target, rand(5,15),1)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.attacking = 0
 
 // Underworld Stuff

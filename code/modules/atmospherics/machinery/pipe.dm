@@ -257,7 +257,7 @@ obj/machinery/atmospherics/pipe
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))
 				invisibility = i ? INVIS_ALWAYS : INVIS_NONE
-			update_icon()
+			UpdateIcon()
 
 		process()
 			if(!parent) //This should cut back on the overhead calling build_network thousands of times per cycle
@@ -304,7 +304,7 @@ obj/machinery/atmospherics/pipe
 
 			var/datum/gas_mixture/gas = return_air()
 			var/pressure = MIXTURE_PRESSURE(gas)
-			if(!ruptured && pressure > fatigue_pressure) check_pressure(pressure)
+			if(pressure > fatigue_pressure) check_pressure(pressure)
 
 		proc/leak_gas()
 			var/datum/gas_mixture/gas = return_air()
@@ -322,12 +322,14 @@ obj/machinery/atmospherics/pipe
 				hi_side = environment
 				lo_side = gas
 
-			var/pressure = min(100*ruptured, MIXTURE_PRESSURE(hi_side) - MIXTURE_PRESSURE(lo_side))
+			var/pressure = lerp(100*(src.ruptured**2), MIXTURE_PRESSURE(hi_side)*(ruptured/150), 0.1 )
+			pressure = min(pressure,  MIXTURE_PRESSURE(hi_side) - MIXTURE_PRESSURE(lo_side))
 
 			if(pressure > 0 && hi_side.temperature )
 				var/transfer_moles = pressure*lo_side.volume/(hi_side.temperature * R_IDEAL_GAS_EQUATION)
 				var/datum/gas_mixture/removed = hi_side.remove(transfer_moles)
 				if(removed) lo_side==environment ? loc.assume_air(removed) : lo_side.merge(removed)
+				UpdateIcon()
 
 		check_pressure(pressure)
 			if (!loc)
@@ -337,7 +339,7 @@ obj/machinery/atmospherics/pipe
 
 			var/pressure_difference = pressure - MIXTURE_PRESSURE(environment)
 
-			if(can_rupture && pressure_difference > fatigue_pressure)
+			if(can_rupture && !GET_COOLDOWN(parent, "pipeline_rupture_protection") && !GET_COOLDOWN(src, "rupture_protection") && pressure_difference > fatigue_pressure)
 				var/rupture_prob = (pressure_difference - fatigue_pressure)/50000
 				if(prob(rupture_prob))
 					rupture(pressure_difference)
@@ -345,40 +347,46 @@ obj/machinery/atmospherics/pipe
 		proc/rupture(pressure, destroy=FALSE)
 			var/new_rupture
 			if (src.destroyed || destroy)
-				ruptured = 4
+				ruptured = 10
 				src.destroyed = TRUE
 				src.desc = "The remnants of a section of pipe that needs to be replaced.  Perhaps rods would be sufficient?"
 				parent?.mingle_with_turf(loc, volume)
 				node1?.disconnect(src)
 				node2?.disconnect(src)
-				update_icon()
+				UpdateIcon()
 				return
-			else if ((pressure > (4*fatigue_pressure)) && prob(30)) new_rupture = 3
-			else if ((pressure > (2*fatigue_pressure)) && prob(60)) new_rupture = 2
-			else new_rupture = 1
-			ruptured = max(ruptured, new_rupture)
-			icon_state = "exposed"
+
+			if(pressure && src.fatigue_pressure)
+				var/iterations = clamp(log(pressure/src.fatigue_pressure)/log(2),0,20)
+				for(var/i = iterations; i>0 && i>=ruptured; i--)
+					if(prob(5/i))
+						new_rupture = i + 1
+						break
+			if(new_rupture > src.ruptured)
+				ON_COOLDOWN(parent, "pipeline_rupture_protection", 16 SECONDS + rand(4 SECONDS, 24 SECONDS))
+			ruptured = max(src.ruptured, new_rupture, 1)
 			src.desc = "A one meter section of ruptured pipe still looks salvageable through some careful welding."
+			UpdateIcon()
 
 		ex_act(severity) // cogwerks - adding an override so pda bombs aren't quite so ruinous in the engine
 			switch(severity)
-				if(1.0)
+				if(1)
 					if(prob(5))
 						qdel(src)
 					else
 						rupture(destroy=TRUE)
-				if(2.0)
+				if(2)
 					if(prob(10))
 						rupture(destroy=TRUE)
 					else
 						rupture()
-				if(3.0)
+				if(3)
 					if (prob(50))
 						rupture()
 			return
 
 
-		attackby(var/obj/item/W as obj, var/mob/user as mob)
+		attackby(var/obj/item/W, var/mob/user)
 			if(isweldingtool(W))
 
 				if(!ruptured)
@@ -388,11 +396,15 @@ obj/machinery/atmospherics/pipe
 					boutput(user, "<span class='alert'>This needs more than just a welder. We need to make a new pipe!</span>")
 					return
 
-				if(!W:try_weld(user, 1, noisy=2))
+				if(!W:try_weld(user, 0.8, noisy=2))
 					return
 
 				boutput(user, "You start to repair the [src.name].")
-				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/atmospherics/pipe/simple/proc/repair_pipe, list(), W.icon, W.icon_state, "You repair the [src.name].", null)
+
+				var/positions = src.get_welding_positions()
+				actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/atmospherics/pipe/simple/proc/repair_pipe, \
+						list(user), "<span class='notice'>[user] repairs the [src.name].</span>", positions[1], positions[2]),user)
+
 
 			else if(destroyed && istype(W, /obj/item/rods))
 				var/duration = 15 SECONDS
@@ -403,10 +415,54 @@ obj/machinery/atmospherics/pipe
 				list(user, S), W.icon, W.icon_state, "[user] finishes working with \the [src].")
 				actions.start(action_bar, user)
 
+		proc/get_welding_positions()
+			var/start
+			var/stop
+			var/axis_start_value
+			var/axis_stop_value
+			if(icon_state=="exposed")
+				axis_start_value = 6
+				axis_stop_value = 20
+			else
+				axis_start_value = 12
+				axis_stop_value = -12
+
+			switch(dir)
+				if(SOUTH)
+					start = list(0, axis_start_value)
+					stop = list(0, axis_stop_value)
+				if(NORTH)
+					start = list(0, -axis_start_value)
+					stop = list(0, -axis_stop_value)
+				if(EAST)
+					start = list(-axis_start_value, 0)
+					stop = list(-axis_stop_value, 0)
+				if(WEST)
+					start = list(axis_start_value, 0)
+					stop = list(axis_stop_value, 0)
+				if(SOUTHEAST)
+					start = list(0, -axis_start_value)
+					stop = list(axis_start_value, 0)
+				if(SOUTHWEST)
+					start = list(0, -axis_start_value)
+					stop = list(-axis_start_value, 0)
+				if(NORTHEAST)
+					start = list(0, axis_start_value)
+					stop = list(axis_start_value, 0)
+				if(NORTHWEST)
+					start = list(0, axis_start_value)
+					stop = list(-axis_start_value, 0)
+
+			if(rand(50))
+				. = list(start, stop)
+			else
+				. = list(stop, start)
+
 		proc/repair_pipe()
 			src.ruptured = 0
-			icon_state = initial_icon_state
 			desc = initial(desc)
+			UpdateIcon()
+			ON_COOLDOWN(src, "rupture_protection", 20 SECONDS + rand(10 SECONDS, 220 SECONDS))
 
 		proc/reconstruct_pipe(mob/M, obj/item/rods/R)
 			if(istype(R) && istype(M))
@@ -416,9 +472,11 @@ obj/machinery/atmospherics/pipe
 				src.icon_state = "disco"
 				src.desc = "A one meter section of regular pipe has been placed but needs to be welded into place."
 				// create valid edges back to us and rebuild from here out to merge pipeline(s)
-				node1.dir = node1.initialize_directions
+				if(!istype(node1, /obj/machinery/atmospherics/pipe/manifold))
+					node1.dir = node1.initialize_directions
 				node1.initialize()
-				node2.dir = node2.initialize_directions
+				if(!istype(node2, /obj/machinery/atmospherics/pipe/manifold))
+					node2.dir = node2.initialize_directions
 				node2.initialize()
 				src.parent.build_pipeline(src)
 
@@ -437,7 +495,21 @@ obj/machinery/atmospherics/pipe
 			if(destroyed)
 				icon_state = "destroyed"
 			else if(node1 && node2)
-				icon_state = "intact"//[invisibility ? "-f" : "" ]"
+				if(ruptured)
+					icon_state = "exposed"
+
+					var/image/leak
+					var/datum/gas_mixture/gas = return_air()
+					var/datum/gas_mixture/environment = loc.return_air()
+
+					if( (MIXTURE_PRESSURE(gas) - (2 * MIXTURE_PRESSURE(environment))) > 0 )
+						leak = SafeGetOverlayImage("leak", src.icon, "leak")
+						leak.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_ALPHA | RESET_COLOR
+						leak.alpha = clamp(ruptured * 10, 40, 200)
+					UpdateOverlays(leak,"leak")
+				else
+					icon_state = "intact"//[invisibility ? "-f" : "" ]"
+					UpdateOverlays(null,"leak")
 				alpha = invisibility ? 128 : 255
 
 				var/node1_direction = get_dir(src, node1)
@@ -499,7 +571,7 @@ obj/machinery/atmospherics/pipe
 
 			var/turf/T = src.loc			// hide if turf is not intact
 			hide(T.intact)
-			//update_icon()
+			//UpdateIcon()
 
 		disconnect(obj/machinery/atmospherics/reference)
 			if(reference == node1)
@@ -516,7 +588,7 @@ obj/machinery/atmospherics/pipe
 					parent = null
 				node2 = null
 
-			update_icon()
+			UpdateIcon()
 
 			return null
 
@@ -578,6 +650,7 @@ obj/machinery/atmospherics/pipe
 			dir = WEST
 
 		update_icon()
+
 			if(istype(node1, /obj/machinery/atmospherics/pipe/simple/heat_exchanging))
 				dir = get_dir(src, node1)
 
@@ -621,6 +694,7 @@ obj/machinery/atmospherics/pipe
 			dir = NORTHWEST
 
 		update_icon()
+
 			if(node1 && node2)
 				icon_state = "intact"
 
@@ -724,30 +798,6 @@ obj/machinery/atmospherics/pipe
 				trace_gas.moles = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 
 				..()
-
-		rad_particles
-			icon = 'icons/obj/atmospherics/tanks/green_pipe_tank.dmi'
-			name = "Pressure Tank (Nuclear Exhaust)"
-
-			north
-				dir = NORTH
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
-
-			New()
-				air_temporary = new /datum/gas_mixture
-				air_temporary.volume = volume
-				air_temporary.temperature = T0C
-
-				var/datum/gas/rad_particles/trace_gas = air_temporary.get_or_add_trace_gas_by_type(/datum/gas/rad_particles)
-				trace_gas.moles = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-				..()
-
 
 		oxygen
 			icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi'
@@ -891,7 +941,7 @@ obj/machinery/atmospherics/pipe
 					node1 = target
 					break
 
-			update_icon()
+			UpdateIcon()
 
 		disconnect(obj/machinery/atmospherics/reference)
 			if(reference == node1)
@@ -901,7 +951,7 @@ obj/machinery/atmospherics/pipe
 					parent = null
 				node1 = null
 
-			update_icon()
+			UpdateIcon()
 
 			return null
 
@@ -959,7 +1009,7 @@ obj/machinery/atmospherics/pipe
 					node1 = target
 					break
 
-			update_icon()
+			UpdateIcon()
 
 		disconnect(obj/machinery/atmospherics/reference)
 			if(reference == node1)
@@ -969,7 +1019,7 @@ obj/machinery/atmospherics/pipe
 					parent = null
 				node1 = null
 
-			update_icon()
+			UpdateIcon()
 
 			return null
 
@@ -1017,9 +1067,6 @@ obj/machinery/atmospherics/pipe
 		pipeline_expansion()
 			return list(node1, node2)
 
-		update_icon()
-			return
-
 		initialize()
 			var/turf/T = get_turf(src)
 			var/connect_direction = dir
@@ -1031,7 +1078,7 @@ obj/machinery/atmospherics/pipe
 
 			// Search disjoint connections for vertical pipe
 			node2 = locate() in T.get_disjoint_objects_by_type(DISJOINT_TURF_CONNECTION_ATMOS_MACHINERY, /obj/machinery/atmospherics/pipe/vertical_pipe)
-			update_icon()
+			UpdateIcon()
 
 		disconnect(obj/machinery/atmospherics/reference)
 			if(reference == node1)
@@ -1048,7 +1095,7 @@ obj/machinery/atmospherics/pipe
 					parent = null
 				node2 = null
 
-			update_icon()
+			UpdateIcon()
 			return null
 
 
@@ -1102,7 +1149,7 @@ obj/machinery/atmospherics/pipe
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))
 				invisibility = i ? INVIS_ALWAYS : INVIS_NONE
-			update_icon()
+			UpdateIcon()
 
 		pipeline_expansion()
 			return list(node1, node2, node3)
@@ -1148,7 +1195,7 @@ obj/machinery/atmospherics/pipe
 					parent = null
 				node3 = null
 
-			update_icon()
+			UpdateIcon()
 
 			..()
 
@@ -1215,4 +1262,4 @@ obj/machinery/atmospherics/pipe
 
 			var/turf/T = src.loc			// hide if turf is not intact
 			hide(T.intact)
-			//update_icon()
+			//UpdateIcon()

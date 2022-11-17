@@ -9,7 +9,7 @@
 
 /obj/effects/expl_particles/New()
 	..()
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		dispose()
 	return
 
@@ -26,7 +26,7 @@
 /datum/effects/system/expl_particles/proc/start()
 	var/i = 0
 	for(i=0, i<src.number, i++)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/obj/effects/expl_particles/expl = new /obj/effects/expl_particles(src.location)
 			var/direct = pick(alldirs)
 			for(i=0, i<pick(1;25,2;55,3,4;200), i++)
@@ -49,7 +49,7 @@
 
 		New()
 			..()
-			SPAWN_DBG(rand(0,1))
+			SPAWN(rand(0,1))
 				explosion(src, src.loc, -1,0,1,1)
 			return
 
@@ -60,7 +60,7 @@
 
 /obj/effects/explosion/New()
 	..()
-	SPAWN_DBG(3 SECONDS)
+	SPAWN(3 SECONDS)
 		dispose()
 	return
 
@@ -79,7 +79,7 @@
 	var/datum/effects/system/expl_particles/P = new/datum/effects/system/expl_particles()
 	P.set_up(10,location)
 	P.start()
-	SPAWN_DBG(3 SECONDS)
+	SPAWN(3 SECONDS)
 		var/datum/effects/system/harmless_smoke_spread/S = new/datum/effects/system/harmless_smoke_spread()
 		S.set_up(3,0,location,null)
 		S.start()

@@ -28,7 +28,7 @@
 
 		//update_canmove
 
-		if (HAS_MOB_PROPERTY(owner, PROP_CANTMOVE))
+		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_CANTMOVE))
 			owner.canmove = 0
 			return ..()
 

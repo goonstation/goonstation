@@ -19,7 +19,7 @@ Custom Books
 	burn_point = 400
 	burn_output = 1100
 	burn_possible = 1
-	health = 30
+	health = 4
 	//
 
 	stamina_damage = 2
@@ -147,6 +147,12 @@ Custom Books
 	icon_state = "hydrohandbook"
 	file_path = "strings/books/hydroponicsguide.txt"
 
+/obj/item/paper/book/from_file/bee_book  // By Keiya, bee-cause she felt like it
+	name = "Bee Exposition Extravaganza"
+	icon_state = "bee_book"
+	desc = "Also called \"The BEE Book\" for short."
+	file_path = "strings/books/bee_book.txt"
+
 //needs a review + bullet reformat
 /obj/item/paper/book/from_file/cookbook
 	name = "To Serve Man"
@@ -273,7 +279,7 @@ Custom Books
 				if(hos && !ON_COOLDOWN(H, "spacelaw_confession", 10 SECONDS))
 					H.say("[pick("Alright, fine, I ", "I confess that I ", "I confess! I ", "Okay, okay, I admit that I ")][pick("nabbed ", "stole ", "klepped ", "grabbed ", "thieved ", "pilfered ")]the [pick("Head of Security's ", "Captain's ", "Head of Personnel's ", "Chief Engineer's ", "Research Director's ", "Science Department's ", "Mining Team's ", "Quartermaster's ")] [pick("hair brush!", "shoes!", "stuffed animal!", "spare uniform!", "bedsheets!", "hat!", "trophy!", "glasses!", "fizzy lifting drink!", "ID card!")]")
 				prob_clonk = min(prob_clonk + 5, 40)
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					prob_clonk = max(prob_clonk - 5, 0)
 
 		return ..(hit_atom)
@@ -299,10 +305,16 @@ Custom Books
 	file_path = "strings/books/grifening.txt"
 
 /obj/item/paper/book/from_file/DNDrulebook
-	name = "Stations and Syndicates 8th Edition Rulebook"
+	name = "Stations and Syndicates 9th Edition Rulebook"
 	desc = "A book detailing the ruleset for the tabletop RPG, Stations and Syndicates. You don't know what happened to the previous 7 editions but maybe its probably not worth looking for them."
 	icon_state = "bookcc"
 	file_path = "strings/books/DNDrulebook.txt"
+
+/obj/item/paper/book/from_file/MONOrules
+	name = "MONO card game rules"
+	desc = "A pamphlet describing the rules of MONO, the family-friendly and legally distinct card game for all ages!"
+	icon_state = "paper"
+	file_path = "strings/books/MONOrules.txt"
 
 /******************** OTHER BOOKS ********************/
 /obj/item/diary
@@ -377,7 +389,7 @@ Custom Books
 	icon_state = "bookadps"
 	file_path = "strings/books/deep_blue_sea.txt"
 
-	attackby(obj/item/P as obj, mob/user as mob)
+	attackby(obj/item/P, mob/user)
 		..()
 		if (istype(P, /obj/item/magnifying_glass))
 			boutput(user, "<span class='notice'>You pore over the book with the magnifying glass.</span>")
@@ -422,6 +434,27 @@ Custom Books
 	icon_state = "syndiebook"
 	file_path = "strings/books/syndies_guide.txt"
 
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
+	stolen //crew obtainable version
+
+		New()
+			..()
+			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE) //ugly but oh well
+
+/obj/item/paper/book/from_file/fleurscookbook
+	name = "Fleur's Cookbook"
+	desc = "A life's work in progress."
+	icon = 'icons/misc/janstuff.dmi'
+	icon_state = "cookbook-fleur"
+	file_path = "strings/books/fleurs_cookbook.txt"
+
 /obj/item/paper/book/from_file/zoo_diary
 	name = "grimy diary"
 	desc = "It looks bedraggled."
@@ -448,6 +481,12 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 		if (voidMessage)
 			boutput(wearer, "[voidMessage]")
 		return
+
+/obj/item/paper/book/from_file/vendbook //Guide for build-a-vends in maint bazaar random room
+	name = "A Treatise on Build-A-Vends"
+	desc = "A hefty looking guide on how to start your own business."
+	icon_state = "vendbook"
+	file_path = "strings/books/buildavend_treatise.txt"
 
 /******************** CUSTOM BOOKS ********************/
 
@@ -492,3 +531,10 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 				src.book_cover = "book0"
 			src.icon_state = src.book_cover
 		src.info = "<span style=\"color:[src.ink_color]\">[src.info]</span>"
+
+/obj/item/paper/spaceodyssey
+	name = "strange printout"
+	info = {"<tt>Daisy, Daisy,<BR/>
+give me your answer do.<BR/>
+I'm half crazy,<BR/>
+all for the love of you.</tt>"}

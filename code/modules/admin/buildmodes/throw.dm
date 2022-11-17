@@ -5,7 +5,7 @@ Left Mouse Button on mob/obj      = Select thrown object<br>
 Right Mouse Button                = Throw object<br>
 ***********************************************************"}
 	icon_state = "buildmode4"
-	var/throwing = null
+	var/tmp/throwing = null
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (istype(object, /atom/movable))

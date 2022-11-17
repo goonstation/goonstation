@@ -1,0 +1,120 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/neon_lining{
+	lining_color = "pink"
+	},
+/turf/simulated/floor/marble/black,
+/area/dmm_suite/clear_area)
+"b" = (
+/obj/neon_lining{
+	dir = 8
+	},
+/turf/simulated/floor/marble/black,
+/area/dmm_suite/clear_area)
+"j" = (
+/obj/stool/neon{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/neon_lining/cut/small{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/turf/simulated/floor/marble/border_wb{
+	dir = 8
+	},
+/area/dmm_suite/clear_area)
+"l" = (
+/obj/neon_lining{
+	dir = 1;
+	lining_color = "yellow"
+	},
+/turf/simulated/floor/marble/black,
+/area/dmm_suite/clear_area)
+"m" = (
+/obj/stool/neon{
+	pixel_y = 6;
+	pixel_x = -5
+	},
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/marble/border_wb{
+	dir = 4
+	},
+/area/dmm_suite/clear_area)
+"v" = (
+/obj/table/neon/auto,
+/obj/item/paper/neonlining{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/turf/simulated/floor/marble,
+/area/dmm_suite/clear_area)
+"y" = (
+/obj/neon_lining{
+	lining_color = "pink"
+	},
+/obj/decal/cleanable/dirt,
+/obj/item/neon_lining/cut/small{
+	pixel_y = -6
+	},
+/turf/simulated/floor/marble/black,
+/area/dmm_suite/clear_area)
+"A" = (
+/obj/neon_lining{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt/dirt4,
+/obj/item/neon_lining/cut/small{
+	pixel_y = 7;
+	pixel_x = 9
+	},
+/turf/simulated/floor/marble/black,
+/area/dmm_suite/clear_area)
+"L" = (
+/obj/neon_lining{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/marble/black,
+/area/dmm_suite/clear_area)
+"O" = (
+/turf/simulated/floor/marble/black,
+/area/dmm_suite/clear_area)
+"T" = (
+/obj/neon_lining{
+	dir = 1;
+	lining_color = "yellow"
+	},
+/obj/decal/cleanable/dirt/dirt4,
+/obj/item/neon_lining/cut/small{
+	pixel_y = 3;
+	pixel_x = -9
+	},
+/turf/simulated/floor/marble/black,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+O
+L
+O
+"}
+(2,1,1) = {"
+a
+j
+l
+"}
+(3,1,1) = {"
+a
+v
+A
+"}
+(4,1,1) = {"
+y
+m
+T
+"}
+(5,1,1) = {"
+O
+b
+O
+"}

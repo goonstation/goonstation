@@ -3,7 +3,11 @@ var/global/meteor_shower_active = 0
 /datum/random_event/major/meteor_shower
 	name = "Meteor Shower"
 	// centcom message handled modularly here
+#ifdef RP_MODE
 	required_elapsed_round_time = 55 MINUTES
+#else
+	required_elapsed_round_time = 26.6 MINUTES
+#endif
 	customization_available = 1
 	var/wave_direction = 1
 	var/meteors_in_wave = 20
@@ -21,6 +25,12 @@ var/global/meteor_shower_active = 0
 	var/shower_name = "meteor shower"
 	var/meteor_type = /obj/newmeteor/massive
 #endif
+
+	is_event_available(var/ignore_time_lock = 0)
+		. = ..()
+		if(.)
+			if ( map_setting == "NADIR" ) // Nadir can have a counterpart to this event with acid hailstones, but it will need to function differently
+				. = FALSE
 
 	event_effect(var/source, var/amount, var/direction, var/delay, var/warning_time, var/speed)
 		..()
@@ -62,15 +72,15 @@ var/global/meteor_shower_active = 0
 		var/commins = round((ticker.round_elapsed_ticks + warning_delay - ticker.round_elapsed_ticks)/10 ,1)
 		commins = max(0,commins)
 		if (random_events.announce_events)
-			command_alert("[comsev] [shower_name] approaching [comdir]. Impact in [commins] seconds.", "Meteor Alert")
+			command_alert("[comsev] [shower_name] approaching [comdir]. Impact in [commins] seconds.", "Meteor Alert", alert_origin = ALERT_WEATHER)
 			playsound_global(world, 'sound/machines/engine_alert2.ogg', 40)
 			meteor_shower_active = direction
 			for (var/obj/machinery/shield_generator/S as anything in machine_registry[MACHINES_SHIELDGENERATORS])
-				S.update_icon()
+				S.UpdateIcon()
 
-		SPAWN_DBG(warning_delay)
+		SPAWN(warning_delay)
 			if (random_events.announce_events)
-				command_alert("The [shower_name] has reached the [station_or_ship()]. Brace for impact.", "Meteor Alert")
+				command_alert("The [shower_name] has reached the [station_or_ship()]. Brace for impact.", "Meteor Alert", alert_origin = ALERT_WEATHER)
 				playsound_global(world, 'sound/machines/engine_alert1.ogg', 30)
 
 			var/start_x
@@ -121,7 +131,7 @@ var/global/meteor_shower_active = 0
 
 			meteor_shower_active = 0
 			for (var/obj/machinery/shield_generator/S as anything in machine_registry[MACHINES_SHIELDGENERATORS])
-				S.update_icon()
+				S.UpdateIcon()
 
 	admin_call(var/source)
 		if (..())
@@ -161,7 +171,7 @@ var/global/meteor_shower_active = 0
 	icon_state = "flaming"
 	desc = "A chunk of space debris. You might want to stop staring at it and run."
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	var/speed = 1
 	var/pix_speed = 8
 	var/hit_object = 0 //If we hit something we skip the next step (we dont move)
@@ -205,7 +215,7 @@ var/global/meteor_shower_active = 0
 		//animate_spin(src, dir = "R", T = 1, looping = -1)
 		src.set_loc(my_spawn)
 		target = get_turf(trg)
-		SPAWN_DBG(time_to_die)
+		SPAWN(time_to_die)
 			qdel(src)
 		walk_towards(src, target, speed, pix_speed)
 		process()
@@ -217,7 +227,7 @@ var/global/meteor_shower_active = 0
 		..()
 
 	bump(atom/A)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (A)
 				A.meteorhit(src)
 				if (sound_impact)
@@ -228,17 +238,18 @@ var/global/meteor_shower_active = 0
 
 		return
 
-	Move(atom/NewLoc,Dir)
+	Move(atom/NewLoc, Dir)
 		if(src.x == world.maxx || src.y == world.maxy || src.x == 1 || src.y == 1)
 			qdel(src)
 		if(src.loc == target)
 			shatter()
 			return
+		. = ..()
 		if(src.loc == last_tile)
 			walk_towards(src, target, speed, pix_speed)
 		if(!hit_object)
 			last_tile = src.loc
-			src.loc.Exit()
+			src.loc.Exit(src, NewLoc)
 			if(NewLoc.Enter())
 				src.set_loc(NewLoc)
 				src.set_dir(Dir)
@@ -264,7 +275,7 @@ var/global/meteor_shower_active = 0
 		if (src.loc == last_tile)
 			walk_towards(src, target, speed, pix_speed)
 		last_tile = src.loc
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			process()
 
 	proc/check_hits()
@@ -304,7 +315,7 @@ var/global/meteor_shower_active = 0
 	proc/shatter()
 		playsound(src.loc, sound_explode, 50, 1)
 		if (explodes)
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				explosion(src, get_turf(src), exp_dev, exp_hvy, exp_lit, exp_fsh)
 		var/atom/source = src
 		qdel(source)
@@ -329,7 +340,7 @@ var/global/meteor_shower_active = 0
 	icon = 'icons/obj/large/meteor96x96.dmi'
 	icon_state = "flaming"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	layer = EFFECTS_LAYER_UNDER_1
 	//bound_width = 96
 	//bound_height = 96
@@ -354,7 +365,7 @@ var/global/meteor_shower_active = 0
 	shatter()
 		playsound(src.loc, sound_explode, 50, 1)
 		if (explodes)
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				explosion(src, get_turf(src), exp_dev, exp_hvy, exp_lit, exp_fsh)
 		for(var/A in alldirs)
 			if(prob(15))

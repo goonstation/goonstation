@@ -352,3 +352,108 @@
 
 
 		update_states()
+
+//for some reason this was in the removed pod colloseum code, moved it here since it's still in use
+/datum/healthBar
+	var/list/barBits = list()
+	var/image/health_overlay
+
+	New(var/barLength = 4, var/is_left = 0)
+		..()
+		for (var/i = 1, i <= barLength, i++)
+			var/atom/movable/screen/S = new /atom/movable/screen()
+			var/edge = is_left ? "WEST" : "EAST"
+			S.layer = HUD_LAYER
+			S.name = "health"
+			S.icon = 'icons/obj/colosseum.dmi'
+			if (i == 1)
+				S.icon_state = "health_bar_left"
+				var/sl = barLength - i
+				S.screen_loc = "NORTH+1,[edge]-[sl]"
+			else if (i == barLength)
+				S.icon_state = "health_bar_right"
+				S.screen_loc = "NORTH+1,[edge]"
+			else
+				S.icon_state = "health_bar_center"
+				var/sl = barLength - i
+				S.screen_loc = "NORTH+1,[edge]-[sl]"
+			barBits += S
+		health_overlay = image('icons/obj/colosseum.dmi', "health")
+
+	proc/add_to_hud(var/datum/hud/H)
+		for (var/atom/movable/screen/S in barBits)
+			H.add_object(S)
+
+	proc/add_to(var/mob/M)
+		if (M.client)
+			for (var/atom/movable/screen/S in barBits)
+				M.client.screen += S
+
+	proc/remove_from(var/mob/M)
+		if (M.client)
+			for (var/atom/movable/screen/S in barBits)
+				M.client.screen -= S
+
+	proc/update_health_overlay(var/health_value, var/health_max, var/shield_value, var/shield_max)
+		for (var/atom/movable/screen/S in barBits)
+			S.overlays.len = 0
+		add_overlay(health_value, health_max, 204, 0, 0, 0, 204, 0)
+		if (shield_value > 0)
+			add_overlay(shield_value, shield_max, 0, 255, 255, 0, 102, 102)
+			add_counter(barBits.len, shield_value, "#000000")
+		else
+			add_counter(barBits.len, health_value, "#000000")
+
+	proc/add_overlay(value, max_value, r0, g0, b0, r1, g1, b1)
+		var/percentage = value / max_value
+		var/remaining = round(percentage * 100)
+		var/bars = length(barBits)
+		var/eachBar = 100 / bars
+		var/missingBars = 0
+		health_overlay.color = rgb(lerp(r0, r1, percentage), lerp(g0, g1, percentage), lerp(b0, b1, percentage))
+		while (100 - (missingBars * eachBar) >= remaining && missingBars <= bars)
+			missingBars++
+		missingBars--
+
+		for (var/i = 1, i <= bars, i++)
+			var/atom/movable/screen/S = barBits[i]
+			if (i <= missingBars)
+				continue
+			else if (i == missingBars + 1)
+				var/matrix/Mat = matrix()
+				var/present = (bars - missingBars - 1) * eachBar
+				var/mine = remaining - present
+				var/scale = mine / eachBar
+				var/move = 16 - (16 * scale)
+				Mat.Scale(scale, 1)
+				health_overlay.transform = Mat
+				health_overlay.pixel_x = move + 1
+				S.overlays += health_overlay
+				health_overlay.transform = null
+				health_overlay.pixel_x = 0
+			else
+				S.overlays += health_overlay
+
+	proc/add_counter(var/bit, var/value, var/textcolor)
+		var/atom/movable/screen/counter = barBits[bit]
+		if (value < 0)
+			counter.overlays += image('icons/obj/colosseum.dmi', "INF")
+		else
+			if (value > 999)
+				value = 999
+			if (value >= 100)
+				var/R2 = round(value / 100)
+				var/image/left = image('icons/obj/colosseum.dmi', "[R2]")
+				left.color = textcolor
+				left.pixel_x = -8
+				counter.overlays += left
+			if (value >= 10)
+				var/R1 = round(value / 10) % 10
+				var/image/center = image('icons/obj/colosseum.dmi', "[R1]")
+				center.color = textcolor
+				counter.overlays += center
+			var/R0 = round(value % 10)
+			var/image/right = image('icons/obj/colosseum.dmi', "[R0]")
+			right.color = textcolor
+			right.pixel_x = 8
+			counter.overlays += right

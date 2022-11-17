@@ -23,14 +23,14 @@
 	Crossed(atom/movable/A)
 		..()
 		if(istype(A,/obj/racing_clowncar))
-			playsound(A, "sound/mksounds/boost.ogg",30, 0)
+			playsound(A, 'sound/mksounds/boost.ogg', 30, 0)
 			step(A,src.dir)
 
 			var/obj/racing_clowncar/R = A
 			R.speed = R.base_speed - R.turbo
 			R.drive(R.dir, R.speed)
 			R.overlays += image('icons/mob/robots.dmi', "up-speed")
-			SPAWN_DBG(1.5 SECONDS)
+			SPAWN(1.5 SECONDS)
 				R.speed = R.base_speed
 				if (R.driving) R.drive(R.dir, 2)
 				R.overlays -= image('icons/mob/robots.dmi', "up-speed")
@@ -79,8 +79,8 @@
 		src.set_loc(spawnloc)
 		src.set_dir(spawndir)
 		source_car = sourcecar
-		SPAWN_DBG(7.5 SECONDS)
-			playsound(src, "sound/mksounds/itemdestroy.ogg",45, 0)
+		SPAWN(7.5 SECONDS)
+			playsound(src, 'sound/mksounds/itemdestroy.ogg', 45, 0)
 			qdel(src)
 		move_process()
 
@@ -88,14 +88,14 @@
 		if(istype(A,/obj/racing_clowncar) && A != source_car)
 			var/obj/racing_clowncar/R = A
 			R.spin(20)
-			playsound(A, "sound/mksounds/gothit.ogg",45, 0)
+			playsound(A, 'sound/mksounds/gothit.ogg', 45, 0)
 			qdel(src)
 
 	proc/move_process()
 		if (src.qdeled || src.disposed)
 			return
 		step(src,dir)
-		SPAWN_DBG(1 DECI SECOND) move_process()
+		SPAWN(1 DECI SECOND) move_process()
 
 /obj/super_racing_butt/
 	name = "superbutt"
@@ -111,8 +111,8 @@
 		src.set_loc(spawnloc)
 		src.set_dir(spawndir)
 		source_car = sourcecar
-		SPAWN_DBG(7.5 SECONDS)
-			playsound(src, "sound/mksounds/itemdestroy.ogg",45, 0)
+		SPAWN(7.5 SECONDS)
+			playsound(src, 'sound/mksounds/itemdestroy.ogg', 45, 0)
 			qdel(src)
 		move_process()
 
@@ -120,7 +120,7 @@
 		if(istype(A,/obj/racing_clowncar) && A != source_car)
 			var/obj/racing_clowncar/R = A
 			R.spin(15)
-			playsound(A, "sound/mksounds/gothit.ogg",45, 0)
+			playsound(A, 'sound/mksounds/gothit.ogg', 45, 0)
 			qdel(src)
 
 	proc/move_process()
@@ -136,10 +136,10 @@
 
 		if(target)
 			step_towards(src,target)
-			SPAWN_DBG(1 DECI SECOND) move_process()
+			SPAWN(1 DECI SECOND) move_process()
 		else
 			step(src, src.dir)
-			SPAWN_DBG(1 DECI SECOND) move_process()
+			SPAWN(1 DECI SECOND) move_process()
 
 /obj/racing_trap_banana/
 	name = "banana peel"
@@ -171,7 +171,7 @@
 		if(istype(A,/obj/racing_clowncar))
 			var/obj/racing_clowncar/R = A
 			R.spin(20)
-			playsound(src, "sound/mksounds/itemdestroy.ogg",45, 0)
+			playsound(src, 'sound/mksounds/itemdestroy.ogg', 45, 0)
 			if(delete)	qdel(src)
 
 
@@ -230,7 +230,7 @@
 		var/turf/T = get_turf(src.loc)
 		new/obj/racing_trap_banana/(T)
 
-		playsound(T, "sound/mksounds/itemdrop.ogg",45, 0)
+		playsound(T, 'sound/mksounds/itemdrop.ogg', 45, 0)
 
 		qdel(src)
 
@@ -260,7 +260,7 @@
 
 		new/obj/racing_butt(trg, C.dir, C)
 
-		playsound(C, "sound/mksounds/throw.ogg",33, 0)
+		playsound(C, 'sound/mksounds/throw.ogg', 33, 0)
 
 		qdel(src)
 
@@ -290,7 +290,7 @@
 
 		new/obj/super_racing_butt(trg, C.dir, C)
 
-		playsound(C, "sound/mksounds/throw.ogg",33, 0)
+		playsound(C, 'sound/mksounds/throw.ogg', 33, 0)
 
 		qdel(src)
 
@@ -313,7 +313,7 @@
 
 		var/obj/racing_clowncar/R = source.loc
 
-		playsound(R, "sound/mksounds/boost.ogg",33, 0)
+		playsound(R, 'sound/mksounds/boost.ogg', 33, 0)
 
 		R.boost()
 		qdel(source)
@@ -336,7 +336,7 @@
 
 		var/obj/racing_clowncar/R = source.loc
 
-		playsound(R, "sound/mksounds/invin10sec.ogg",33, 0,0) // 33
+		playsound(R, 'sound/mksounds/invin10sec.ogg',33, 0,0) // 33
 
 		R.super = 1
 		R.boost()
@@ -370,7 +370,7 @@
 		var/list/powerups = childrentypesof(/obj/powerup/)
 		if(!powerups.len) return
 
-		playsound(src, "sound/mksounds/gotitem.ogg",33, 0)
+		playsound(src, 'sound/mksounds/gotitem.ogg', 33, 0)
 
 		for(var/obj/powerup/OLD in src)
 			qdel(OLD)
@@ -427,15 +427,15 @@
 		var/image/out_of_control = image('icons/misc/racing.dmi',"broken")
 		src.overlays += out_of_control
 
-		playsound(src, "sound/mksounds/cpuspin.ogg",33, 0)
+		playsound(src, 'sound/mksounds/cpuspin.ogg', 33, 0)
 
-		SPAWN_DBG(magnitude+1)
+		SPAWN(magnitude+1)
 			cant_control = 0
 			dir_original = 0
 			set_density(1)
 			src.overlays -= out_of_control
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for(var/i=0, i<magnitude, i++)
 				src.set_dir(turn(src.dir, 90))
 				sleep(0.1 SECONDS)
@@ -447,14 +447,14 @@
 
 //		if(istype(src,/obj/racing_clowncar)) //what the fuck? src is a power up, why would it be a clown car
 		icon_state = "clowncar_boost"
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			speed = base_speed
 			if (driving) drive(dir, speed)
 			icon_state = "clowncar"
 
 //		else
 //			R.overlays += image('icons/mob/robots.dmi', "up-speed")
-//			SPAWN_DBG(5 SECONDS)
+//			SPAWN(5 SECONDS)
 //				R.speed = R.base_speed
 //				if (R.driving) R.drive(R.dir, 2)
 //				R.overlays -= image('icons/mob/robots.dmi', "up-speed")
@@ -462,11 +462,12 @@
 	proc/drive(var/direction, var/speed)
 		set_dir(direction)
 		driving = 1
+		src.glide_size = (32 / speed) * world.tick_lag
 		walk(src, dir, speed)
 
 	proc/stop()
 		driving = 0
-		playsound(src, "sound/mksounds/skidd.ogg",25, 0)
+		playsound(src, 'sound/mksounds/skidd.ogg', 25, 0)
 		walk(src, 0)
 
 	relaymove(mob/user, direction)

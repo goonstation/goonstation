@@ -1,6 +1,6 @@
 /obj/machinery/imp/chair
 	name = "Implant Chair"
-	desc = "Implants the user with a loyalty implant"
+	desc = "Implants the user with an counter-revolutionary implant"
 	icon = 'icons/misc/simroom.dmi'
 	icon_state = "simchair"
 	anchored = 1
@@ -15,7 +15,7 @@
 	if (!ticker)
 		boutput(user, "You can't buckle anyone in before the game starts.")
 		return
-	if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || user.stat))
+	if ((!( iscarbon(M) ) || BOUNDS_DIST(src, user) > 0 || M.loc != src.loc || user.restrained() || user.stat))
 		return
 	if (M.buckled)	return
 	if (M == user)
@@ -27,11 +27,11 @@
 	M.set_loc(src.loc)
 	implantgo(M)
 	src.add_fingerprint(user)
-	playsound(src, "sound/misc/belt_click.ogg", 50, 1)
+	playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
 	M.setStatus("buckled", duration = INFINITE_STATUS)
 	return
 
-/obj/machinery/imp/chair/attack_hand(mob/user as mob)
+/obj/machinery/imp/chair/attack_hand(mob/user)
 	for(var/mob/M in src.loc)
 		if (M.buckled)
 			if (M != user)
@@ -41,19 +41,19 @@
 			reset_anchored(M)
 			M.buckled = null
 			src.add_fingerprint(user)
-			playsound(src, "sound/misc/belt_click.ogg", 50, 1)
+			playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
 	return
 
 /obj/machinery/imp/chair/proc/implantgo(mob/M as mob)
 	if (!ismob(M))
 		return
 
-	src.imp = new/obj/item/implant/antirev(src)
+	src.imp = new/obj/item/implant/counterrev(src)
 
 	M.visible_message("<span class='alert'>[M] has been implanted by the [src].</span>")
 
 
-	logTheThing("combat", usr, M, "has implanted [constructTarget(M,"combat")] with a [src.imp] implant ([src.imp.type]) at [log_loc(M)].")
+	logTheThing(LOG_COMBAT, usr, "has implanted [constructTarget(M,"combat")] with a [src.imp] implant ([src.imp.type]) at [log_loc(M)].")
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.implant.Add(src.imp)

@@ -93,7 +93,7 @@
 /turf/simulated/floor/purple/side,
 /area/prefab/sequestered_cloner)
 "hw" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "hB" = (
@@ -143,7 +143,7 @@
 	name = "Molecular Integrity Hazard";
 	pixel_y = -4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/prefab/sequestered_cloner)
 "ob" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
@@ -263,7 +263,7 @@
 /turf/simulated/floor,
 /area/prefab/sequestered_cloner)
 "rW" = (
-/obj/storage/secure/closet/command/chief_engineer{
+/obj/storage/secure/closet/command/chief_engineer/puzzle{
 	locked = 0;
 	pixel_x = -8
 	},
@@ -295,7 +295,7 @@
 	},
 /area/prefab/sequestered_cloner)
 "tI" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/prefab/sequestered_cloner)
 "tJ" = (
 /turf/simulated/floor/plating,
@@ -368,7 +368,7 @@
 /area/prefab/sequestered_cloner)
 "xI" = (
 /obj/cable,
-/obj/machinery/power/apc/puzzle_apc{
+/obj/machinery/power/apc/puzzle_apc/nopoweralert{
 	autoname_on_spawn = 0;
 	desc = "A note is attached: To leave, power this APC and press the neighboring button. The APC can be a little slow.";
 	name = "Engine Test APC";
@@ -717,11 +717,11 @@
 /obj/cable{
 	icon_state = "5-9"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/prefab/sequestered_cloner)
 "Me" = (
 /obj/decal/cleanable/blood/tracks,
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	id = "seq_cloner_exit";
 	name = "reinforced airlock"
 	},
@@ -853,7 +853,7 @@
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
 	id = "seq_education_exit";
 	name = "reinforced airlock"

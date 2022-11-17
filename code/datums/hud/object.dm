@@ -16,20 +16,20 @@
 	relay_click(id, mob/user, list/params)
 		if (id == "release")
 			if (master)
-				master.death(0)
+				master.death(FALSE)
 		else if (id == "intent") // copy n pasted but fuck it for now
 			var/icon_x = text2num(params["icon-x"])
 			var/icon_y = text2num(params["icon-y"])
 			if (icon_x > 16)
 				if (icon_y > 16)
-					master.a_intent = INTENT_DISARM
+					master.set_a_intent(INTENT_DISARM)
 				else
-					master.a_intent = INTENT_HARM
+					master.set_a_intent(INTENT_HARM)
 			else
 				if (icon_y > 16)
-					master.a_intent = INTENT_HELP
+					master.set_a_intent(INTENT_HELP)
 				else
-					master.a_intent = INTENT_GRAB
+					master.set_a_intent(INTENT_GRAB)
 			src.update_intent()
 
 	proc/update_intent()

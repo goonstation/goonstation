@@ -1,0 +1,8 @@
+# This is the file you modify if you want to make yourself an admin.
+# The available ranks can be found in /proc/rank_to_level().
+# Most of the time, you'll want to make yourself a Host.
+# To do so, type your BYOND key with no spaces, capitals or other punctuation (including underscores!),
+# a dash with spaces on both side, then the rank you want.
+# For example, the key "ZeWaka" would be given Host rank like this: zewaka - Host
+
+# This is a sample file; make a copy as "admins.txt" and edit that instead.

@@ -5,7 +5,7 @@
 // magboots
 // slime
 
-/// Special wrapper to add food status effects, due to special overriding and duration behaivor.
+/// Special wrapper to add food status effects, due to special overriding and duration behavior.
 /mob/living/proc/add_food_bonus(var/id, var/obj/item/reagent_containers/food/snacks/eaten)
 	if(id)
 
@@ -39,39 +39,16 @@
 
 		src.changeStatus(id, bite_time)
 
+#define DIGESTION_PER_LIFE_TICK 3 //Total amount of reagents we can digest each Life tick
 /mob/living/proc/handle_digestion(var/mult = 1)
 	if (src.stomach_process && length(src.stomach_process))
 		var/count_to_process = min(length(src.stomach_process), 10)
 		var/count_left = count_to_process
 		for(var/obj/item/reagent_containers/food/snacks/bite/B in stomach_process)
-			B.process_stomach(src, (1 / count_to_process) * mult) //1 units processed per Life() tick. Takes an even amt of reagents from all stomach contents
+			B.process_stomach(src, (DIGESTION_PER_LIFE_TICK / count_to_process) * mult) //Takes an even amt of reagents from all stomach contents
 			if(count_left-- <= 0)
 				break
-
-//TODO MOVE
-/mob/living/proc/handle_skinstuff(var/mult = 1)
-	if (src.skin_process && length(src.skin_process))
-
-		//you absorb shit faster if you have lots of patches stacked
-		//gives patches a way to heal quickly if you slap on a whole bunch, also makes long heals over time less viable
-
-		var/multi_process_mult = skin_process.len > 1 ? (skin_process.len * 1.5) : 1
-		var/use_volume = 0.35 * mult * multi_process_mult
-
-		for (var/atom/A as anything in skin_process)
-
-			if (A.loc != src)
-				skin_process -= A
-				continue
-
-			if (A.reagents && A.reagents.total_volume)
-				A.reagents.reaction(src, TOUCH, react_volume = use_volume, paramslist = (A.reagents.total_volume == A.reagents.maximum_volume) ? 0 : list("silent", "nopenetrate"))
-				A.reagents.trans_to(src, use_volume/2)
-				A.reagents.remove_any(use_volume/2)
-			else
-				if (A.reagents.total_volume <= 0)
-					src.skin_process -= A //disposing will do this too but whatever
-					qdel(A)
+#undef DIGESTION_PER_LIFE_TICK
 
 
 /mob/living/vomit(var/nutrition=0, var/specialType=null)
@@ -346,13 +323,13 @@
 	proc/cast()
 		var/turf/T = get_step(owner,owner.dir)
 		var/range_breath = 1
-		while((get_dist(owner,T) < range) && (range_breath < 20))// range is used for the range the fireburp can reach from the caster.
+		while((GET_DIST(owner,T) < range) && (range_breath < 20))// range is used for the range the fireburp can reach from the caster.
 			T = get_step(T,owner.dir)
 			range_breath ++ //range_breath is used to make sure the loop doesn't stay active too long and lag the game if something messes up range.
 		var/list/affected_turfs = getline(owner, T)
 
 		owner.visible_message("<span class='alert'><b>[owner] burps a stream of fire!</b></span>")
-		playsound(owner.loc, "sound/effects/mag_fireballlaunch.ogg", 30, 0)
+		playsound(owner.loc, 'sound/effects/mag_fireballlaunch.ogg', 30, 0)
 
 		var/turf/currentturf
 		var/turf/previousturf
@@ -365,7 +342,7 @@
 				break
 			if (F == get_turf(owner))
 				continue
-			if (get_dist(owner,F) > range)
+			if (GET_DIST(owner,F) > range)
 				continue
 			tfireflash(F,0.5,temp)
 
@@ -391,13 +368,13 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			APPLY_MOB_PROPERTY(M, PROP_EXPLOPROT, src, optional)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_EXPLOPROT, src, optional)
 
 	onRemove()
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			REMOVE_MOB_PROPERTY(M, PROP_EXPLOPROT, src)
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_EXPLOPROT, src)
 
 /datum/statusEffect/disease_resist
 	id = "food_disease_resist"
@@ -427,13 +404,13 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			APPLY_MOB_PROPERTY(M, PROP_RADPROT, src, optional)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, optional)
 
 	onRemove()
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			REMOVE_MOB_PROPERTY(M, PROP_RADPROT, src)
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src)
 
 /datum/statusEffect/space_farts
 	id = "food_space_farts"

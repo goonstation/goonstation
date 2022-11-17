@@ -7,12 +7,12 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	throw_speed = 2
 	throw_range = 8
-	max_wclass = 2 // medbot.dm modifies attackby() for firstaid, which effectively reduces max_wclass to 1, EXCEPT for non-chemmaster pill bottles
+	max_wclass = W_CLASS_SMALL // medbot.dm modifies attackby() for firstaid, which effectively reduces max_wclass to 1, EXCEPT for non-chemmaster pill bottles
 	var/list/kit_styles = null
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (length(kit_styles))
 				icon_state = pick(kit_styles)
 				item_state = icon_state
@@ -29,22 +29,12 @@
 	/obj/item/device/analyzer/healthanalyzer,\
 	/obj/item/reagent_containers/emergency_injector/epinephrine)
 
-	// Comes with upgraded health scanner.
-	doctor_spawn
-		spawn_contents = list(/obj/item/reagent_containers/mender/brute,\
-		/obj/item/reagent_containers/mender/burn,\
-		/obj/item/reagent_containers/patch/bruise,\
-		/obj/item/reagent_containers/patch/burn,\
-		/obj/item/reagent_containers/pill/salicylic_acid,\
-		/obj/item/device/analyzer/healthanalyzer/borg,\
-		/obj/item/reagent_containers/emergency_injector/epinephrine)
-
 	emergency
 		spawn_contents = list(/obj/item/item_box/medical_patches/mini_styptic,\
 		/obj/item/item_box/medical_patches/mini_silver_sulf,\
 		/obj/item/reagent_containers/pill/menthol,\
 		/obj/item/reagent_containers/pill/salicylic_acid,\
-		/obj/item/device/analyzer/healthanalyzer/borg,\
+		/obj/item/device/analyzer/healthanalyzer/upgraded,\
 		/obj/item/reagent_containers/emergency_injector/epinephrine,\
 		/obj/item/reagent_containers/emergency_injector/atropine)
 

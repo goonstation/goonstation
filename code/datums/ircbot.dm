@@ -15,7 +15,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 	New()
 		..()
 		if (!src.load())
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				if (!src.loaded)
 					src.load()
 
@@ -37,13 +37,14 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 			else
 				loadTries++
 				if (loadTries >= 5)
-					logTheThing("debug", null, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts")
-					logTheThing("diary", null, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts", "debug")
+					logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts")
+					logTheThing(LOG_DIARY, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts", "debug")
 				return 0
 
 
 		//Shortcut proc for event-type exports
 		event(type, data)
+			set waitfor = FALSE // events async by default because who cares about the result really, we are just notifying the bot about something
 			if (!type) return 0
 			var/list/eventArgs = list("type" = type)
 			if (data) eventArgs |= data
@@ -58,6 +59,10 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 		text_args(list/arguments)
 			return src.apikey_scrub(list2params(arguments))
 
+		export_async(iface, args)
+			set waitfor = FALSE
+			export(iface, args)
+
 		//Send a message to an irc bot! Yay!
 		export(iface, args)
 			if (src.debugging)
@@ -69,7 +74,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 				if (src.debugging)
 					src.logDebug("Export, message queued due to unloaded config")
 
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					if (!src.loaded)
 						src.load()
 				return "queued"
@@ -96,7 +101,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 					response = request.into_response()
 
 				if (response.errored || !response.body)
-					logTheThing("debug", null, null, "<b>IRCBOT:</b> No return data from export. <b>errored:</b> [response.errored] <b>status_code:</b> [response.status_code] <b>iface:</b> [iface]. <b>args:</b> [text_args(args)] <br> <b>error:</b> [response.error]")
+					logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> No return data from export. <b>errored:</b> [response.errored] <b>status_code:</b> [response.status_code] <b>iface:</b> [iface]. <b>args:</b> [text_args(args)] <br> <b>error:</b> [response.error]")
 					return
 
 				var/content = response.body
@@ -107,7 +112,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 				//Handle the response
 				var/list/contentJson = json_decode(content)
 				if (!contentJson["status"])
-					logTheThing("debug", null, null, "<b>IRCBOT:</b> Object missing status parameter in export response: [json_encode(contentJson)]")
+					logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> Object missing status parameter in export response: [json_encode(contentJson)]")
 					return 0
 				if (contentJson["status"] == "error")
 					var/log = ""
@@ -115,7 +120,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 						log = "Error returned from export: [contentJson["errormsg"]][(contentJson["error"] ? ". Error code: [contentJson["error"]]": "")]"
 					else
 						log = "An unknown error was returned from export: [json_encode(contentJson)]"
-					logTheThing("debug", null, null, "<b>IRCBOT:</b> [log]")
+					logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> [log]")
 				return 1
 
 
@@ -157,7 +162,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 
 		logDebug(log)
 			if (!log) return 0
-			logTheThing("debug", null, null, "<b>IRCBOT DEBUGGING:</b> [log]")
+			logTheThing(LOG_DEBUG, null, "<b>IRCBOT DEBUGGING:</b> [log]")
 			return 1
 
 
@@ -166,7 +171,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 	set desc = "Enables in-depth logging of all IRC Bot exports and returns"
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 
-	admin_only
+	ADMIN_ONLY
 
 	ircbot.toggleDebug(src)
 	return 1
@@ -175,11 +180,14 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 /client/verb/linkDiscord(discordCode as text)
 	set name = "Link Discord"
 	set category = "Commands"
-	set desc = "Links your Byond key with your Discord account. Enter the code Spacebee gave you when you ran !link."
+	set desc = "Links your Byond key with your Discord account. Enter the code Medical Assistant gave you when you ran ]link."
 	set popup_menu = 0
 
 	if (!discordCode)
-		discordCode = input(src, "Please enter your Discord access code. You can get this by running !link in Discord.", "Link Discord") as null|text
+		discordCode = input(src, "Please enter your Discord access code. You can get this by running ]link in Discord. Or leave the field empty if you want to receive the Discord invite.", "Link Discord") as null|text
+
+	if (!discordCode)
+		usr << link("https://discord.gg/zd8t6pY")
 
 	if (ircbot.debugging)
 		ircbot.logDebug("linkDiscord verb called. <b>src.ckey:</b> [src.ckey]. <b>discordCode:</b> [discordCode]")
@@ -189,12 +197,12 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 	var/ircmsg[] = new()
 	ircmsg["key"] = src.key
 	ircmsg["ckey"] = src.ckey
-	ircmsg["nick"] = discordCode
+	ircmsg["code"] = discordCode
 	var/res = ircbot.export("link", ircmsg)
 
 	if (res)
-		alert(src, "Please return to Discord and look for any spacebee PMs.")
+		tgui_alert(src, "Please return to Discord and look for any Medical Assistant PMs.", "Discord")
 		return 1
 	else
-		alert(src, "An unknown internal error occurred. Please report this.")
+		tgui_alert(src, "An unknown internal error occurred. Please report this.", "Error")
 		return 0

@@ -1,134 +1,1450 @@
-"aa" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/water_treatment)
-"ab" = (/obj/machinery/light/small/warm/very{dir = 4; pixel_x = 12},/turf/simulated/floor/engine/vacuum,/area/prefab/water_treatment)
-"ac" = (/obj/machinery/door/poddoor/pyro{dir = 4; id = "wtp_drain"},/turf/simulated/floor/engine/vacuum,/area/prefab/water_treatment)
-"ae" = (/obj/securearea,/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/water_treatment)
-"af" = (/turf/variableTurf/clear,/area/space)
-"ai" = (/obj/decal/cleanable/blood/drip/high{icon_state = "handblood_c"},/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/water_treatment)
-"aj" = (/obj/decal/skeleton,/obj/decal/skeleton,/obj/decal/cleanable/blood/drip/high,/obj/item/toy/sponge_capsule/syndicate{pixel_y = 9; pixel_x = -8},/obj/machinery/light/small/warm/very{dir = 8; pixel_x = -12},/obj/decal/cleanable/cobweb,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/prefab/water_treatment)
-"al" = (/obj/decal/cleanable/blood/tracks{icon_state = "drip3"},/obj/critter/bat/buff,/turf/simulated/floor/plating,/area/prefab/water_treatment)
-"am" = (/obj/machinery/door/airlock/pyro/classic{dir = 4},/obj/decal/cleanable/blood/tracks{dir = 8},/turf/simulated/floor/black/grime,/area/prefab/water_treatment)
-"an" = (/obj/critter/bear,/obj/map/light/dimred,/obj/machinery/light/small/warm/very{dir = 1; pixel_y = 10},/turf/simulated/floor/circuit/red,/area/prefab/water_treatment)
-"ap" = (/obj/decal/cleanable/blood/tracks{dir = 8},/turf/simulated/floor/redblack{dir = 8},/area/prefab/water_treatment)
-"aq" = (/obj/decal/cleanable/blood/drip/high{icon_state = "drip4b"},/obj/item/reagent_containers/food/drinks/water,/turf/simulated/floor/red,/area/prefab/water_treatment)
-"ar" = (/obj/decal/cleanable/blood/tracks{dir = 8},/obj/decal/cleanable/blood/gibs{color = "#990000"},/turf/simulated/floor/plating,/area/prefab/water_treatment)
-"as" = (/obj/decal/cleanable/blood/drip/high{icon_state = "floor4"},/turf/simulated/floor/red,/area/prefab/water_treatment)
-"at" = (/obj/critter/bat/buff,/obj/decal/cleanable/blood/tracks{dir = 8},/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/prefab/water_treatment)
-"au" = (/obj/decal/cleanable/blood/tracks{dir = 8},/turf/simulated/floor/plating,/area/prefab/water_treatment)
-"aw" = (/obj/submachine/chef_sink/chem_sink{dir = 4; pixel_x = -6},/turf/simulated/floor/redblack{icon_state = "redblack"; dir = 9},/area/prefab/water_treatment)
-"az" = (/turf/simulated/floor/red,/area/prefab/water_treatment)
-"aC" = (/obj/machinery/chem_dispenser,/turf/simulated/floor/purple/side{dir = 1},/area/prefab/water_treatment)
-"aF" = (/obj/decal/fakeobjects{anchored = 1; desc = "A vent.  A rather decrepit one, at that."; dir = 1; icon = 'icons/obj/atmospherics/pipe_vent.dmi'; icon_state = "intact"; name = "defunct vent"},/turf/simulated/floor/redblack{dir = 1},/area/prefab/water_treatment)
-"aG" = (/obj/machinery/door_control{id = "wtp_drain"; name = "Drainage"; pixel_x = 8},/obj/machinery/door_control{id = "wtp_intake"; name = "Water Intake"; pixel_x = -8},/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/water_treatment)
-"aH" = (/obj/machinery/drainage/big,/turf/simulated/floor/engine/vacuum,/area/prefab/water_treatment)
-"aO" = (/obj/machinery/fluid_canister,/obj/decal/cleanable/cobweb,/obj/decal/cleanable/dirt/dirt5,/turf/simulated/floor/plating,/area/prefab/water_treatment)
-"aS" = (/obj/table/reinforced/chemistry/auto,/obj/item/clothing/glasses/spectro{pixel_y = 9},/obj/item/reagent_containers/glass/beaker/large,/obj/item/reagent_containers/glass/beaker/large,/turf/simulated/floor/purple/side{dir = 9},/area/prefab/water_treatment)
-"aT" = (/obj/table/reinforced/chemistry/auto,/obj/machinery/light{dir = 1; pixel_y = 10},/obj/item/reagent_containers/glass/flask{pixel_x = -6; pixel_y = -2},/obj/item/reagent_containers/glass/flask{pixel_y = 14; pixel_x = -6},/obj/item/reagent_containers/glass/flask{pixel_x = -6; pixel_y = 7},/obj/item/reagent_containers/glass/flask{pixel_x = 6; pixel_y = -2},/obj/item/reagent_containers/glass/flask{pixel_x = 6; pixel_y = 14},/obj/item/reagent_containers/glass/flask{pixel_x = 6; pixel_y = 7},/turf/simulated/floor/purple/side{dir = 1},/area/prefab/water_treatment)
-"aU" = (/obj/machinery/light/small/floor,/turf/simulated/floor/martian,/area/prefab/water_treatment)
-"ba" = (/obj/machinery/chem_heater,/turf/simulated/floor/purple/side{dir = 1},/area/prefab/water_treatment)
-"bb" = (/obj/decal/cleanable/rust,/turf/simulated/floor/plating,/area/prefab/water_treatment)
-"bc" = (/obj/table/reinforced/chemistry/auto,/obj/item/storage/box/beakerbox{pixel_y = 15},/obj/machinery/light{dir = 1; pixel_y = 10},/obj/item/storage/box/syringes{pixel_y = 1},/turf/simulated/floor/purple/side{dir = 1},/area/prefab/water_treatment)
-"bd" = (/obj/table/reinforced/chemistry/auto,/obj/machinery/glass_recycler,/turf/simulated/floor/purple/side{dir = 5},/area/prefab/water_treatment)
-"bi" = (/obj/table/reinforced/chemistry/auto,/obj/machinery/microscope,/turf/simulated/floor/redblack{icon_state = "redblack"; dir = 10},/area/prefab/water_treatment)
-"bj" = (/obj/table/reinforced/chemistry/auto,/obj/item/clothing/glasses/spectro,/obj/machinery/light/small/warm/very,/obj/item/reagent_containers/dropper{pixel_y = 7},/turf/simulated/floor/redblack,/area/prefab/water_treatment)
-"bk" = (/obj/table/reinforced/chemistry/auto,/obj/item/spongecaps{pixel_x = -6; pixel_y = 2},/obj/machinery/light/small/warm/very,/obj/item/reagent_containers/glass/flask{pixel_x = 6; pixel_y = 7},/obj/item/reagent_containers/glass/flask{pixel_x = 6; pixel_y = -2},/turf/simulated/floor/redblack,/area/prefab/water_treatment)
-"bl" = (/obj/table/reinforced/chemistry/auto,/obj/item/reagent_containers/syringe,/obj/item/reagent_containers/syringe{pixel_y = 8},/turf/simulated/floor/redblack,/area/prefab/water_treatment)
-"bn" = (/turf/simulated/floor/redblack/corner{dir = 4},/area/prefab/water_treatment)
-"bs" = (/obj/machinery/door/poddoor/pyro{id = "wtp_intake"},/turf/simulated/floor/engine/vacuum,/area/prefab/water_treatment)
-"bt" = (/turf/simulated/floor/purple/side{dir = 9},/area/prefab/water_treatment)
-"bv" = (/turf/simulated/floor/purple/corner{dir = 1},/area/prefab/water_treatment)
-"bx" = (/obj/machinery/drainage,/turf/simulated/floor/martian,/area/prefab/water_treatment)
-"bB" = (/obj/submachine/chem_extractor{dir = 8},/turf/simulated/floor/purple/side{dir = 4},/area/prefab/water_treatment)
-"bE" = (/obj/machinery/fluid_canister,/obj/machinery/light/incandescent/warm/very{dir = 1; pixel_y = 10},/turf/simulated/floor/plating,/area/prefab/water_treatment)
-"bF" = (/obj/machinery/fluid_canister,/obj/decal/cleanable/cobweb{icon_state = "cobweb2"},/turf/simulated/floor/plating,/area/prefab/water_treatment)
-"bH" = (/obj/decal/fakeobjects/cpucontroller,/obj/map/light/dimred,/turf/simulated/floor/circuit/red,/area/prefab/water_treatment)
-"bJ" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/simulated/floor/purple/side{dir = 1},/area/prefab/water_treatment)
-"dp" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "A large rack of server modules.  It doesn't seem to be in service."; icon = 'icons/obj/networked.dmi'; icon_state = "server0"; name = "downed server"},/turf/simulated/floor/circuit/red,/area/prefab/water_treatment)
-"dV" = (/obj/machinery/door/airlock/pyro/classic{dir = 4},/obj/decal/cleanable/blood/tracks{dir = 8},/turf/simulated/floor/plating,/area/prefab/water_treatment)
-"eA" = (/obj/machinery/drainage,/turf/simulated/floor/purple/side{dir = 1},/area/prefab/water_treatment)
-"fE" = (/obj/machinery/light/small/warm/very{dir = 8; pixel_x = -12},/obj/fluid_spawner{amount = 5000; reagent_id = "urine"},/turf/simulated/floor/purple/side{dir = 9},/area/prefab/water_treatment)
-"hn" = (/obj/decal/fakeobjects{anchored = 1; desc = "Like conventional cables, but more burly."; dir = 6; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; name = "power conduit"},/obj/decal/cleanable/blood/drip/high{icon_state = "gibdown1"},/turf/simulated/floor/plating/damaged3,/area/prefab/water_treatment)
-"hy" = (/turf/simulated/wall/false_wall,/area/prefab/water_treatment)
-"jR" = (/obj/decal/fakeobjects{anchored = 1; desc = "Like conventional cables, but more burly."; dir = 8; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; layer = 2.5; name = "power conduit"},/turf/simulated/floor/plating/damaged2,/area/prefab/water_treatment)
-"kh" = (/turf/simulated/floor/redblack{icon_state = "redblack"; dir = 5},/area/prefab/water_treatment)
-"mH" = (/obj/decal/fakeobjects{anchored = 1; desc = "Like conventional cables, but more burly."; dir = 4; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; layer = 2.5; name = "power conduit"},/turf/simulated/floor/plating,/area/prefab/water_treatment)
-"nW" = (/obj/machinery/light/small/warm/very{dir = 1},/turf/simulated/floor/purple/side{dir = 1},/area/prefab/water_treatment)
-"of" = (/turf/simulated/floor/plating,/area/prefab/water_treatment)
-"oC" = (/obj/machinery/door/airlock/pyro/external{dir = 8},/turf/simulated/floor/purple/side{dir = 1},/area/prefab/water_treatment)
-"pF" = (/turf/simulated/floor/redblack{dir = 4},/area/prefab/water_treatment)
-"qY" = (/obj/decal/fakeobjects{anchored = 1; desc = "Like conventional cables, but more burly."; dir = 4; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; layer = 2.5; name = "power conduit"},/obj/decal/fakeobjects{name = "power conduit"; desc = "Like conventional cables, but more burly."; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; dir = 5; anchored = 1},/turf/simulated/floor/plating,/area/prefab/water_treatment)
-"rl" = (/obj/machinery/light/small/warm/very{dir = 8; pixel_x = -12},/turf/simulated/floor/engine/vacuum,/area/prefab/water_treatment)
-"rn" = (/turf/simulated/floor/purple/side{dir = 4},/area/prefab/water_treatment)
-"sm" = (/turf/simulated/floor/redblack{dir = 6},/area/prefab/water_treatment)
-"tw" = (/obj/critter/crab/party,/obj/map/light/dimred,/obj/machinery/light/small/warm/very{dir = 4; pixel_x = 12},/turf/simulated/floor/circuit/red,/area/prefab/water_treatment)
-"vs" = (/obj/machinery/door/airlock/pyro/classic{dir = 4},/turf/simulated/floor/black/grime,/area/prefab/water_treatment)
-"vV" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/prefab/water_treatment)
-"wm" = (/obj/decal/fakeobjects{anchored = 1; desc = "Like conventional cables, but more burly."; dir = 8; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; layer = 2.5; name = "power conduit"},/obj/decal/cleanable/blood/tracks{color = "#990000"; icon_state = "floor4"},/turf/simulated/floor/plating/damaged3,/area/prefab/water_treatment)
-"wt" = (/turf/variableTurf/clear,/area/noGenerate)
-"wL" = (/obj/item/raw_material/shard/plasmacrystal{pixel_x = -7; pixel_y = 7},/obj/item/raw_material/shard/plasmacrystal{pixel_y = -8},/obj/item/raw_material/shard/plasmacrystal{pixel_x = 9},/obj/decal/cleanable/blood/drip/high{icon_state = "gibbl1"},/turf/simulated/floor/delivery/caution,/area/prefab/water_treatment)
-"xE" = (/obj/map/light/dimred,/obj/machinery/light/small/warm/very{dir = 4; pixel_x = 12},/turf/simulated/floor/circuit/red,/area/prefab/water_treatment)
-"zn" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/simulated/floor/purple/side,/area/prefab/water_treatment)
-"zA" = (/obj/decal/cleanable/blood/drip/high{icon_state = "bloodhit4"},/turf/simulated/floor/red,/area/prefab/water_treatment)
-"zB" = (/turf/simulated/floor/redblack{icon_state = "redblack"; dir = 10},/area/prefab/water_treatment)
-"zC" = (/obj/item/sponge,/obj/decal/cleanable/blood/drip/high,/obj/map/light/dimred,/obj/machinery/light/small/warm/very{dir = 4; pixel_x = 12},/turf/simulated/floor/circuit/red,/area/prefab/water_treatment)
-"zE" = (/turf/simulated/floor/redblack{dir = 1},/area/prefab/water_treatment)
-"AF" = (/obj/machinery/light/small/warm/very{dir = 8; pixel_x = -12},/obj/fluid_spawner{amount = 5000; reagent_id = "sewage"},/turf/simulated/floor/purple/side{dir = 9},/area/prefab/water_treatment)
-"AN" = (/obj/machinery/drainage,/turf/simulated/floor/purple/side,/area/prefab/water_treatment)
-"Bz" = (/obj/decal/fakeobjects/tapedeck,/turf/simulated/floor/circuit/red,/area/prefab/water_treatment)
-"BW" = (/obj/decal/fakeobjects/tapedeck,/obj/map/light/dimred,/turf/simulated/floor/circuit/red,/area/prefab/water_treatment)
-"Ck" = (/obj/machinery/light/small/warm/very,/turf/simulated/floor/purple/side,/area/prefab/water_treatment)
-"Ef" = (/obj/decal/cleanable/dirt,/obj/decal/fakeobjects{anchored = 1; desc = "Like conventional cables, but more burly."; dir = 10; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; layer = 2; name = "power conduit"},/turf/simulated/floor/plating,/area/prefab/water_treatment)
-"Ez" = (/obj/machinery/door/airlock/pyro/external{dir = 8},/turf/simulated/floor/purple/side,/area/prefab/water_treatment)
-"FA" = (/obj/machinery/door/poddoor/pyro{dir = 4; id = "wtp_mix_2"},/turf/simulated/floor/purple,/area/prefab/water_treatment)
-"GN" = (/obj/machinery/light/small/floor,/turf/simulated/floor/purple/side,/area/prefab/water_treatment)
-"GR" = (/turf/simulated/floor/redblack{dir = 8},/area/prefab/water_treatment)
-"GT" = (/obj/decal/cleanable/blood/tracks{icon_state = "gibdown1"},/obj/map/light/dimred,/obj/machinery/light/small/warm/very{dir = 1; pixel_y = 10},/turf/simulated/floor/circuit/red,/area/prefab/water_treatment)
-"GX" = (/turf/simulated/floor/purple/side,/area/prefab/water_treatment)
-"GY" = (/turf/simulated/floor/purple/side{dir = 10},/area/prefab/water_treatment)
-"Hd" = (/obj/decal/cleanable/blood/drip/high{icon_state = "floor4"},/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/water_treatment)
-"JO" = (/obj/forcefield/energyshield/perma,/turf/simulated/floor/delivery/caution,/area/prefab/water_treatment)
-"Kk" = (/obj/decal/cleanable/blood/tracks{color = "#990000"; icon_state = "floor6"},/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/water_treatment)
-"Kl" = (/obj/machinery/light/small/warm/very{dir = 4; pixel_x = 12},/turf/simulated/floor/purple/side{dir = 5},/area/prefab/water_treatment)
-"Ll" = (/obj/decal/cleanable/blood/drip/high{icon_state = "handblood_c"},/turf/simulated/floor/redblack{dir = 8},/area/prefab/water_treatment)
-"Ls" = (/turf/simulated/floor/martian,/area/prefab/water_treatment)
-"Mc" = (/obj/machinery/light/small/warm/very{dir = 8; pixel_x = -12},/obj/fluid_spawner{amount = 20000; reagent_id = "chlorine"},/turf/simulated/floor/purple/side{dir = 9},/area/prefab/water_treatment)
-"Md" = (/turf/simulated/floor/purple/side{dir = 1},/area/prefab/water_treatment)
-"MD" = (/turf/simulated/floor/purple/side{dir = 6},/area/prefab/water_treatment)
-"NA" = (/obj/securearea{desc = ""; icon_state = "shock"; name = "Danger: High Voltage"},/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/water_treatment)
-"NX" = (/obj/item/sponge,/obj/map/light/dimred,/obj/decal/cleanable/blood/drip/high{icon_state = "floor2"},/obj/machinery/light/small/warm/very{dir = 4; pixel_x = 12},/turf/simulated/floor/circuit/red,/area/prefab/water_treatment)
-"OP" = (/obj/machinery/door/poddoor/pyro{dir = 4; id = "wtp_mix_1"},/turf/simulated/floor/purple,/area/prefab/water_treatment)
-"Pm" = (/obj/decal/fakeobjects{anchored = 1; desc = "A vent.  A rather decrepit one, at that."; dir = 1; icon = 'icons/obj/atmospherics/pipe_vent.dmi'; icon_state = "intact"; name = "defunct vent"},/turf/simulated/floor/red,/area/prefab/water_treatment)
-"PJ" = (/obj/wingrille_spawn/auto/crystal,/turf/simulated/floor/delivery/caution,/area/prefab/water_treatment)
-"QW" = (/obj/decal/fakeobjects{name = "power conduit"; desc = "Like conventional cables, but more burly."; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; dir = 5; anchored = 1},/turf/simulated/floor/plating,/area/prefab/water_treatment)
-"Ro" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "A large rack of server modules.  It doesn't seem to be in service."; icon = 'icons/obj/networked.dmi'; icon_state = "server0"; name = "downed server"},/obj/map/light/dimred,/turf/simulated/floor/circuit/red,/area/prefab/water_treatment)
-"Rt" = (/obj/item/sponge,/obj/fluid_spawner/polluted_filth/blood,/obj/machinery/light/small/warm/very{dir = 1; pixel_y = 10},/obj/decal/cleanable/blood/drip/high{icon_state = "gibdown1"},/obj/map/light/dimred,/turf/simulated/floor/circuit/red,/area/prefab/water_treatment)
-"RL" = (/obj/table/reinforced/chemistry/auto,/obj/item/reagent_containers/glass/bucket{pixel_y = 8},/obj/item/reagent_containers/glass/bucket/red,/turf/simulated/floor/purple/corner{dir = 1},/area/prefab/water_treatment)
-"SI" = (/obj/decal/cleanable/blood/splatter,/turf/simulated/floor/redblack{dir = 8},/area/prefab/water_treatment)
-"Tc" = (/obj/decal/cleanable/blood/tracks{icon_state = "drip3"},/turf/simulated/floor/plating/damaged1,/area/prefab/water_treatment)
-"TA" = (/obj/map/light/dimred,/turf/simulated/floor/circuit/red,/area/prefab/water_treatment)
-"TR" = (/obj/critter/cat,/obj/map/light/dimred,/obj/machinery/light/small/warm/very{dir = 4; pixel_x = 12},/turf/simulated/floor/circuit/red,/area/prefab/water_treatment)
-"Vp" = (/obj/machinery/light/incandescent/warm/very{dir = 1; pixel_y = 10},/turf/simulated/floor/red,/area/prefab/water_treatment)
-"WO" = (/obj/forcefield/energyshield/perma{name = "Permanent Liquid Forcefield"; powerlevel = 4},/turf/simulated/floor/delivery/caution,/area/prefab/water_treatment)
-"WR" = (/obj/machinery/door_control{id = "wtp_mix_1"; name = "Mixer Control 1"},/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/water_treatment)
-"Xl" = (/turf/simulated/floor/engine/vacuum,/area/prefab/water_treatment)
-"Xq" = (/obj/decal/fakeobjects{name = "power conduit"; desc = "Like conventional cables, but more burly."; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; dir = 6; layer = 2.5; anchored = 1},/turf/simulated/floor/plating,/area/prefab/water_treatment)
-"XK" = (/obj/machinery/door_control{id = "wtp_mix_2"; name = "Mixer Control 2"},/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/water_treatment)
-"XT" = (/turf/simulated/floor/circuit/red,/area/prefab/water_treatment)
-"YL" = (/obj/machinery/power/smes/magical{desc = "A high-capacity superconducting magnetic energy storage (SMES) unit with an integral radiothermal generating core."; icon_state = "rtg"; name = "SMES-RTG"},/obj/map/light/cyan,/turf/simulated/floor/plating,/area/prefab/water_treatment)
-"ZL" = (/obj/item/sponge,/obj/decal/cleanable/blood/drip/high,/obj/decal/skeleton,/obj/decal/cleanable/cobweb,/obj/decal/cleanable/blood/drip/high{icon_state = "gibdown1"},/obj/decal/cleanable/blood/splatter,/turf/simulated/floor/plating,/area/prefab/water_treatment)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/water_treatment)
+"ab" = (
+/obj/machinery/light/small/warm/very{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/prefab/water_treatment)
+"ac" = (
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "wtp_drain"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/prefab/water_treatment)
+"ae" = (
+/obj/securearea,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/water_treatment)
+"af" = (
+/turf/variableTurf/clear,
+/area/space)
+"ai" = (
+/obj/decal/cleanable/blood/drip/high{
+	icon_state = "handblood_c"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/water_treatment)
+"aj" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/decal/fakeobjects/skeleton,
+/obj/decal/cleanable/blood/drip/high,
+/obj/item/toy/sponge_capsule/syndicate{
+	pixel_y = 9;
+	pixel_x = -8
+	},
+/obj/machinery/light/small/warm/very{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/decal/cleanable/cobweb,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/prefab/water_treatment)
+"al" = (
+/obj/decal/cleanable/blood/tracks{
+	icon_state = "drip3"
+	},
+/obj/critter/bat/buff,
+/turf/simulated/floor/plating,
+/area/prefab/water_treatment)
+"am" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/simulated/floor/black/grime,
+/area/prefab/water_treatment)
+"an" = (
+/obj/critter/bear,
+/obj/map/light/dimred,
+/obj/machinery/light/small/warm/very{
+	dir = 1;
+	pixel_y = 10
+	},
+/turf/simulated/floor/circuit/red,
+/area/prefab/water_treatment)
+"ap" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/prefab/water_treatment)
+"aq" = (
+/obj/decal/cleanable/blood/drip/high{
+	icon_state = "drip4b"
+	},
+/obj/item/reagent_containers/food/drinks/water,
+/turf/simulated/floor/red,
+/area/prefab/water_treatment)
+"ar" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/obj/decal/cleanable/blood/gibs{
+	color = "#990000"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/water_treatment)
+"as" = (
+/obj/decal/cleanable/blood/drip/high{
+	icon_state = "floor4"
+	},
+/turf/simulated/floor/red,
+/area/prefab/water_treatment)
+"at" = (
+/obj/critter/bat/buff,
+/obj/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/prefab/water_treatment)
+"au" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/prefab/water_treatment)
+"aw" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -6
+	},
+/turf/simulated/floor/redblack{
+	icon_state = "redblack";
+	dir = 9
+	},
+/area/prefab/water_treatment)
+"az" = (
+/turf/simulated/floor/red,
+/area/prefab/water_treatment)
+"aC" = (
+/obj/machinery/chem_dispenser/chemical,
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/prefab/water_treatment)
+"aF" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent.  A rather decrepit one, at that.";
+	dir = 1;
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "intact";
+	name = "defunct vent"
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/prefab/water_treatment)
+"aG" = (
+/obj/machinery/door_control{
+	id = "wtp_drain";
+	name = "Drainage";
+	pixel_x = 8
+	},
+/obj/machinery/door_control{
+	id = "wtp_intake";
+	name = "Water Intake";
+	pixel_x = -8
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/water_treatment)
+"aH" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor/engine/vacuum,
+/area/prefab/water_treatment)
+"aO" = (
+/obj/machinery/fluid_canister,
+/obj/decal/cleanable/cobweb,
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/plating,
+/area/prefab/water_treatment)
+"aS" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/clothing/glasses/spectro{
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/glass/beaker/large,
+/turf/simulated/floor/purple/side{
+	dir = 9
+	},
+/area/prefab/water_treatment)
+"aT" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/glass/flask{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/glass/flask{
+	pixel_y = 14;
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/glass/flask{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/glass/flask{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/glass/flask{
+	pixel_x = 6;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/glass/flask{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/prefab/water_treatment)
+"aU" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/martian,
+/area/prefab/water_treatment)
+"ba" = (
+/obj/machinery/chem_heater,
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/prefab/water_treatment)
+"bb" = (
+/obj/decal/cleanable/rust,
+/turf/simulated/floor/plating,
+/area/prefab/water_treatment)
+"bc" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/storage/box/beakerbox{
+	pixel_y = 15
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 10
+	},
+/obj/item/storage/box/syringes{
+	pixel_y = 1
+	},
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/prefab/water_treatment)
+"bd" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/machinery/glass_recycler,
+/turf/simulated/floor/purple/side{
+	dir = 5
+	},
+/area/prefab/water_treatment)
+"bi" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/machinery/microscope,
+/turf/simulated/floor/redblack{
+	icon_state = "redblack";
+	dir = 10
+	},
+/area/prefab/water_treatment)
+"bj" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/clothing/glasses/spectro,
+/obj/machinery/light/small/warm/very,
+/obj/item/reagent_containers/dropper{
+	pixel_y = 7
+	},
+/turf/simulated/floor/redblack,
+/area/prefab/water_treatment)
+"bk" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/spongecaps{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/machinery/light/small/warm/very,
+/obj/item/reagent_containers/glass/flask{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/glass/flask{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/turf/simulated/floor/redblack,
+/area/prefab/water_treatment)
+"bl" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/reagent_containers/syringe,
+/obj/item/reagent_containers/syringe{
+	pixel_y = 8
+	},
+/turf/simulated/floor/redblack,
+/area/prefab/water_treatment)
+"bn" = (
+/turf/simulated/floor/redblack/corner{
+	dir = 4
+	},
+/area/prefab/water_treatment)
+"bs" = (
+/obj/machinery/door/poddoor/pyro{
+	id = "wtp_intake"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/prefab/water_treatment)
+"bt" = (
+/turf/simulated/floor/purple/side{
+	dir = 9
+	},
+/area/prefab/water_treatment)
+"bv" = (
+/turf/simulated/floor/purple/corner{
+	dir = 1
+	},
+/area/prefab/water_treatment)
+"bx" = (
+/obj/machinery/drainage,
+/turf/simulated/floor/martian,
+/area/prefab/water_treatment)
+"bB" = (
+/obj/submachine/chem_extractor{
+	dir = 8
+	},
+/turf/simulated/floor/purple/side{
+	dir = 4
+	},
+/area/prefab/water_treatment)
+"bE" = (
+/obj/machinery/fluid_canister,
+/obj/machinery/light/incandescent/warm/very{
+	dir = 1;
+	pixel_y = 10
+	},
+/turf/simulated/floor/plating,
+/area/prefab/water_treatment)
+"bF" = (
+/obj/machinery/fluid_canister,
+/obj/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/water_treatment)
+"bH" = (
+/obj/decal/fakeobjects/cpucontroller,
+/obj/map/light/dimred,
+/turf/simulated/floor/circuit/red,
+/area/prefab/water_treatment)
+"bJ" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/prefab/water_treatment)
+"dp" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A large rack of server modules.  It doesn't seem to be in service.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "server0";
+	name = "downed server"
+	},
+/turf/simulated/floor/circuit/red,
+/area/prefab/water_treatment)
+"dV" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/prefab/water_treatment)
+"eA" = (
+/obj/machinery/drainage,
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/prefab/water_treatment)
+"fE" = (
+/obj/machinery/light/small/warm/very{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/fluid_spawner{
+	amount = 5000;
+	reagent_id = "urine"
+	},
+/turf/simulated/floor/purple/side{
+	dir = 9
+	},
+/area/prefab/water_treatment)
+"hn" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/obj/decal/cleanable/blood/drip/high{
+	icon_state = "gibdown1"
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/prefab/water_treatment)
+"hy" = (
+/turf/simulated/wall/false_wall,
+/area/prefab/water_treatment)
+"jR" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 8;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating/damaged2,
+/area/prefab/water_treatment)
+"kh" = (
+/turf/simulated/floor/redblack{
+	icon_state = "redblack";
+	dir = 5
+	},
+/area/prefab/water_treatment)
+"mH" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/water_treatment)
+"nW" = (
+/obj/machinery/light/small/warm/very{
+	dir = 1
+	},
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/prefab/water_treatment)
+"of" = (
+/turf/simulated/floor/plating,
+/area/prefab/water_treatment)
+"oC" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 8
+	},
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/prefab/water_treatment)
+"pF" = (
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/prefab/water_treatment)
+"qY" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	name = "power conduit";
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	dir = 5;
+	anchored = 1
+	},
+/turf/simulated/floor/plating,
+/area/prefab/water_treatment)
+"rl" = (
+/obj/machinery/light/small/warm/very{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/prefab/water_treatment)
+"rn" = (
+/turf/simulated/floor/purple/side{
+	dir = 4
+	},
+/area/prefab/water_treatment)
+"sm" = (
+/turf/simulated/floor/redblack{
+	dir = 6
+	},
+/area/prefab/water_treatment)
+"tw" = (
+/obj/critter/crab/party,
+/obj/map/light/dimred,
+/obj/machinery/light/small/warm/very{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/circuit/red,
+/area/prefab/water_treatment)
+"vs" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/turf/simulated/floor/black/grime,
+/area/prefab/water_treatment)
+"vV" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/prefab/water_treatment)
+"wm" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 8;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/cleanable/blood/tracks{
+	color = "#990000";
+	icon_state = "floor4"
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/prefab/water_treatment)
+"wt" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"wL" = (
+/obj/item/raw_material/shard/plasmacrystal{
+	pixel_x = -7;
+	pixel_y = 7
+	},
+/obj/item/raw_material/shard/plasmacrystal{
+	pixel_y = -8
+	},
+/obj/item/raw_material/shard/plasmacrystal{
+	pixel_x = 9
+	},
+/obj/decal/cleanable/blood/drip/high{
+	icon_state = "gibbl1"
+	},
+/turf/simulated/floor/delivery/caution,
+/area/prefab/water_treatment)
+"xE" = (
+/obj/map/light/dimred,
+/obj/machinery/light/small/warm/very{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/circuit/red,
+/area/prefab/water_treatment)
+"zn" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/purple/side,
+/area/prefab/water_treatment)
+"zA" = (
+/obj/decal/cleanable/blood/drip/high{
+	icon_state = "bloodhit4"
+	},
+/turf/simulated/floor/red,
+/area/prefab/water_treatment)
+"zB" = (
+/turf/simulated/floor/redblack{
+	icon_state = "redblack";
+	dir = 10
+	},
+/area/prefab/water_treatment)
+"zC" = (
+/obj/item/sponge,
+/obj/decal/cleanable/blood/drip/high,
+/obj/map/light/dimred,
+/obj/machinery/light/small/warm/very{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/circuit/red,
+/area/prefab/water_treatment)
+"zE" = (
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/prefab/water_treatment)
+"AF" = (
+/obj/machinery/light/small/warm/very{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/fluid_spawner{
+	amount = 5000;
+	reagent_id = "sewage"
+	},
+/turf/simulated/floor/purple/side{
+	dir = 9
+	},
+/area/prefab/water_treatment)
+"AN" = (
+/obj/machinery/drainage,
+/turf/simulated/floor/purple/side,
+/area/prefab/water_treatment)
+"Bz" = (
+/obj/decal/fakeobjects/tapedeck,
+/turf/simulated/floor/circuit/red,
+/area/prefab/water_treatment)
+"BW" = (
+/obj/decal/fakeobjects/tapedeck,
+/obj/map/light/dimred,
+/turf/simulated/floor/circuit/red,
+/area/prefab/water_treatment)
+"Ck" = (
+/obj/machinery/light/small/warm/very,
+/turf/simulated/floor/purple/side,
+/area/prefab/water_treatment)
+"Ef" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 10;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2;
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/water_treatment)
+"Ez" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 8
+	},
+/turf/simulated/floor/purple/side,
+/area/prefab/water_treatment)
+"FA" = (
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "wtp_mix_2"
+	},
+/turf/simulated/floor/purple,
+/area/prefab/water_treatment)
+"GN" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/purple/side,
+/area/prefab/water_treatment)
+"GR" = (
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/prefab/water_treatment)
+"GT" = (
+/obj/decal/cleanable/blood/tracks{
+	icon_state = "gibdown1"
+	},
+/obj/map/light/dimred,
+/obj/machinery/light/small/warm/very{
+	dir = 1;
+	pixel_y = 10
+	},
+/turf/simulated/floor/circuit/red,
+/area/prefab/water_treatment)
+"GX" = (
+/turf/simulated/floor/purple/side,
+/area/prefab/water_treatment)
+"GY" = (
+/turf/simulated/floor/purple/side{
+	dir = 10
+	},
+/area/prefab/water_treatment)
+"Hd" = (
+/obj/decal/cleanable/blood/drip/high{
+	icon_state = "floor4"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/water_treatment)
+"JO" = (
+/obj/forcefield/energyshield/perma,
+/turf/simulated/floor/delivery/caution,
+/area/prefab/water_treatment)
+"Kk" = (
+/obj/decal/cleanable/blood/tracks{
+	color = "#990000";
+	icon_state = "floor6"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/water_treatment)
+"Kl" = (
+/obj/machinery/light/small/warm/very{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/purple/side{
+	dir = 5
+	},
+/area/prefab/water_treatment)
+"Ll" = (
+/obj/decal/cleanable/blood/drip/high{
+	icon_state = "handblood_c"
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/prefab/water_treatment)
+"Ls" = (
+/turf/simulated/floor/martian,
+/area/prefab/water_treatment)
+"Mc" = (
+/obj/machinery/light/small/warm/very{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/fluid_spawner{
+	amount = 20000;
+	reagent_id = "chlorine"
+	},
+/turf/simulated/floor/purple/side{
+	dir = 9
+	},
+/area/prefab/water_treatment)
+"Md" = (
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/prefab/water_treatment)
+"MD" = (
+/turf/simulated/floor/purple/side{
+	dir = 6
+	},
+/area/prefab/water_treatment)
+"NA" = (
+/obj/securearea{
+	desc = "";
+	icon_state = "shock";
+	name = "Danger: High Voltage"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/water_treatment)
+"NX" = (
+/obj/item/sponge,
+/obj/map/light/dimred,
+/obj/decal/cleanable/blood/drip/high{
+	icon_state = "floor2"
+	},
+/obj/machinery/light/small/warm/very{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/circuit/red,
+/area/prefab/water_treatment)
+"OP" = (
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "wtp_mix_1"
+	},
+/turf/simulated/floor/purple,
+/area/prefab/water_treatment)
+"Pm" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent.  A rather decrepit one, at that.";
+	dir = 1;
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "intact";
+	name = "defunct vent"
+	},
+/turf/simulated/floor/red,
+/area/prefab/water_treatment)
+"PJ" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/delivery/caution,
+/area/prefab/water_treatment)
+"QW" = (
+/obj/decal/fakeobjects{
+	name = "power conduit";
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	dir = 5;
+	anchored = 1
+	},
+/turf/simulated/floor/plating,
+/area/prefab/water_treatment)
+"Ro" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A large rack of server modules.  It doesn't seem to be in service.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "server0";
+	name = "downed server"
+	},
+/obj/map/light/dimred,
+/turf/simulated/floor/circuit/red,
+/area/prefab/water_treatment)
+"Rt" = (
+/obj/item/sponge,
+/obj/fluid_spawner/polluted_filth/blood,
+/obj/machinery/light/small/warm/very{
+	dir = 1;
+	pixel_y = 10
+	},
+/obj/decal/cleanable/blood/drip/high{
+	icon_state = "gibdown1"
+	},
+/obj/map/light/dimred,
+/turf/simulated/floor/circuit/red,
+/area/prefab/water_treatment)
+"RL" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/reagent_containers/glass/bucket{
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/glass/bucket/red,
+/turf/simulated/floor/purple/corner{
+	dir = 1
+	},
+/area/prefab/water_treatment)
+"SI" = (
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/prefab/water_treatment)
+"Tc" = (
+/obj/decal/cleanable/blood/tracks{
+	icon_state = "drip3"
+	},
+/turf/simulated/floor/plating/damaged1,
+/area/prefab/water_treatment)
+"TA" = (
+/obj/map/light/dimred,
+/turf/simulated/floor/circuit/red,
+/area/prefab/water_treatment)
+"TR" = (
+/obj/critter/cat,
+/obj/map/light/dimred,
+/obj/machinery/light/small/warm/very{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/circuit/red,
+/area/prefab/water_treatment)
+"Vp" = (
+/obj/machinery/light/incandescent/warm/very{
+	dir = 1;
+	pixel_y = 10
+	},
+/turf/simulated/floor/red,
+/area/prefab/water_treatment)
+"WO" = (
+/obj/forcefield/energyshield/perma{
+	name = "Permanent Liquid Forcefield";
+	powerlevel = 4
+	},
+/turf/simulated/floor/delivery/caution,
+/area/prefab/water_treatment)
+"WR" = (
+/obj/machinery/door_control{
+	id = "wtp_mix_1";
+	name = "Mixer Control 1"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/water_treatment)
+"Xl" = (
+/turf/simulated/floor/engine/vacuum,
+/area/prefab/water_treatment)
+"Xq" = (
+/obj/decal/fakeobjects{
+	name = "power conduit";
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	dir = 6;
+	layer = 2.5;
+	anchored = 1
+	},
+/turf/simulated/floor/plating,
+/area/prefab/water_treatment)
+"XK" = (
+/obj/machinery/door_control{
+	id = "wtp_mix_2";
+	name = "Mixer Control 2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/water_treatment)
+"XT" = (
+/turf/simulated/floor/circuit/red,
+/area/prefab/water_treatment)
+"YL" = (
+/obj/machinery/power/smes/magical{
+	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit with an integral radiothermal generating core.";
+	icon_state = "rtg";
+	name = "SMES-RTG"
+	},
+/obj/map/light/cyan,
+/turf/simulated/floor/plating,
+/area/prefab/water_treatment)
+"ZL" = (
+/obj/item/sponge,
+/obj/decal/cleanable/blood/drip/high,
+/obj/decal/fakeobjects/skeleton,
+/obj/decal/cleanable/cobweb,
+/obj/decal/cleanable/blood/drip/high{
+	icon_state = "gibdown1"
+	},
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor/plating,
+/area/prefab/water_treatment)
 
 (1,1,1) = {"
-afafafafwtwtwtwtwtwtwtwtwtafafafafafafafafafafafafafafafafafafafaf
-afafafafwtwtwtwtwtwtwtwtwtafafafafafafafafafafaaaaaaaaaaaaaaafafaf
-afafafafwtwtaabsbsbsaawtwtafafafafafafafafafafaaanaaGTaaRtaaafafaf
-afafafafaaaaaarlXlabaaaaaaafafafafafafafafafafaaPJaaPJaaPJaaaaaaaa
-afafafafaaaHacXlXlXlacaHaaafafafafaaaaaaaaaaaaaiawzEzEaFzEkhPJtwaa
-afafafafaaaaaarlXlabaaaaaaaaaaaaaaaaajalatarauamapaqasazazpFaaaaaa
-afafafafafafaaJOJOJOaGaSaTaCbabcbdaaaaaaaaaaaaaabibjbkblbnpFPJTRaa
-afafaeaaaaaaaabtMdMdMdRLLsbxLsLsbBaaaaaObEbFaaaaaaaaaaaaGRpFaaaaaa
-wtwtbJeAnWoCMdbvLsaULsLsLsLsLsaUrnvsbbofofvVaaaadpbHXTPJGRpFwLxEaa
-wtwtznANCkEzGNGXGXGXGXGXGNGXGXGXMDaaaaaaNAQWaaaaRoTATAPJLlpFaaaaaa
-afafaeaaaaaaPJWOPJWRPJWOPJXKPJWOPJaaYLmHqYXqaaaadpBWBzPJSIpFPJzCaa
-afafafafafaaMcMdKlaafEMdKlaaAFMdKlaaaahyaaaaaaNAaaaaaaHdGRpFaaKkaa
-afafafafafaaGYGXMDOPGYGXMDFAGYGXMDaaZLTcEfwmjRhndVzAVpPmzBsmPJNXaa
-afafafafafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+af
+af
+af
+af
+af
+af
+af
+af
+wt
+wt
+af
+af
+af
+af
+"}
+(2,1,1) = {"
+af
+af
+af
+af
+af
+af
+af
+af
+wt
+wt
+af
+af
+af
+af
+"}
+(3,1,1) = {"
+af
+af
+af
+af
+af
+af
+af
+ae
+bJ
+zn
+ae
+af
+af
+af
+"}
+(4,1,1) = {"
+af
+af
+af
+af
+af
+af
+af
+aa
+eA
+AN
+aa
+af
+af
+af
+"}
+(5,1,1) = {"
+wt
+wt
+wt
+aa
+aa
+aa
+af
+aa
+nW
+Ck
+aa
+af
+af
+af
+"}
+(6,1,1) = {"
+wt
+wt
+wt
+aa
+aH
+aa
+af
+aa
+oC
+Ez
+aa
+aa
+aa
+aa
+"}
+(7,1,1) = {"
+wt
+wt
+aa
+aa
+ac
+aa
+aa
+aa
+Md
+GN
+PJ
+Mc
+GY
+aa
+"}
+(8,1,1) = {"
+wt
+wt
+bs
+rl
+Xl
+rl
+JO
+bt
+bv
+GX
+WO
+Md
+GX
+aa
+"}
+(9,1,1) = {"
+wt
+wt
+bs
+Xl
+Xl
+Xl
+JO
+Md
+Ls
+GX
+PJ
+Kl
+MD
+aa
+"}
+(10,1,1) = {"
+wt
+wt
+bs
+ab
+Xl
+ab
+JO
+Md
+aU
+GX
+WR
+aa
+OP
+aa
+"}
+(11,1,1) = {"
+wt
+wt
+aa
+aa
+ac
+aa
+aG
+Md
+Ls
+GX
+PJ
+fE
+GY
+aa
+"}
+(12,1,1) = {"
+wt
+wt
+wt
+aa
+aH
+aa
+aS
+RL
+Ls
+GX
+WO
+Md
+GX
+aa
+"}
+(13,1,1) = {"
+wt
+wt
+wt
+aa
+aa
+aa
+aT
+Ls
+Ls
+GN
+PJ
+Kl
+MD
+aa
+"}
+(14,1,1) = {"
+af
+af
+af
+af
+af
+aa
+aC
+bx
+Ls
+GX
+XK
+aa
+FA
+aa
+"}
+(15,1,1) = {"
+af
+af
+af
+af
+af
+aa
+ba
+Ls
+Ls
+GX
+PJ
+AF
+GY
+aa
+"}
+(16,1,1) = {"
+af
+af
+af
+af
+af
+aa
+bc
+Ls
+aU
+GX
+WO
+Md
+GX
+aa
+"}
+(17,1,1) = {"
+af
+af
+af
+af
+af
+aa
+bd
+bB
+rn
+MD
+PJ
+Kl
+MD
+aa
+"}
+(18,1,1) = {"
+af
+af
+af
+af
+aa
+aa
+aa
+aa
+vs
+aa
+aa
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+af
+af
+af
+af
+aa
+aj
+aa
+aa
+bb
+aa
+YL
+aa
+ZL
+aa
+"}
+(20,1,1) = {"
+af
+af
+af
+af
+aa
+al
+aa
+aO
+of
+aa
+mH
+hy
+Tc
+aa
+"}
+(21,1,1) = {"
+af
+af
+af
+af
+aa
+at
+aa
+bE
+of
+NA
+qY
+aa
+Ef
+aa
+"}
+(22,1,1) = {"
+af
+af
+af
+af
+aa
+ar
+aa
+bF
+vV
+QW
+Xq
+aa
+wm
+aa
+"}
+(23,1,1) = {"
+af
+af
+af
+af
+aa
+au
+aa
+aa
+aa
+aa
+aa
+aa
+jR
+aa
+"}
+(24,1,1) = {"
+af
+aa
+aa
+aa
+ai
+am
+aa
+aa
+aa
+aa
+aa
+NA
+hn
+aa
+"}
+(25,1,1) = {"
+af
+aa
+an
+PJ
+aw
+ap
+bi
+aa
+dp
+Ro
+dp
+aa
+dV
+aa
+"}
+(26,1,1) = {"
+af
+aa
+aa
+aa
+zE
+aq
+bj
+aa
+bH
+TA
+BW
+aa
+zA
+aa
+"}
+(27,1,1) = {"
+af
+aa
+GT
+PJ
+zE
+as
+bk
+aa
+XT
+TA
+Bz
+aa
+Vp
+aa
+"}
+(28,1,1) = {"
+af
+aa
+aa
+aa
+aF
+az
+bl
+aa
+PJ
+PJ
+PJ
+Hd
+Pm
+aa
+"}
+(29,1,1) = {"
+af
+aa
+Rt
+PJ
+zE
+az
+bn
+GR
+GR
+Ll
+SI
+GR
+zB
+aa
+"}
+(30,1,1) = {"
+af
+aa
+aa
+aa
+kh
+pF
+pF
+pF
+pF
+pF
+pF
+pF
+sm
+aa
+"}
+(31,1,1) = {"
+af
+af
+af
+aa
+PJ
+aa
+PJ
+aa
+wL
+aa
+PJ
+aa
+PJ
+aa
+"}
+(32,1,1) = {"
+af
+af
+af
+aa
+tw
+aa
+TR
+aa
+xE
+aa
+zC
+Kk
+NX
+aa
+"}
+(33,1,1) = {"
+af
+af
+af
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}

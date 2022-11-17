@@ -1,99 +1,1435 @@
-"aV" = (/obj/item/instrument/bikehorn{layer = 2; pixel_x = 5; pixel_y = 3},/obj/decal/fakeobjects/firelock_broken{desc = "Rust has rendered this airlock useless."; icon = 'icons/obj/doors/SL_doors.dmi'; icon_state = "airlock_open"; name = "broken external airlock"},/turf/simulated/floor/airless/plating,/area/prefab/clown_nest)
-"bT" = (/obj/structure/girder/reinforced,/turf/simulated/floor/airless/plating,/area/prefab/clown_nest)
-"cc" = (/obj/decal/cleanable/dirt/dirt2,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"dg" = (/obj/item/material_piece/cloth/spidersilk{pixel_x = -3; pixel_y = 1},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"dl" = (/obj/lattice{dir = 9; icon_state = "lattice-dir-b"; tag = "icon-lattice-dir-b (NORTHWEST)"},/turf/variableTurf/clear,/area/noGenerate)
-"dO" = (/obj/decal/cleanable/cobweb2,/obj/random_item_spawner/junk/one_or_zero,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"eb" = (/turf/variableTurf/clear,/area/allowGenerate)
-"fr" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/simulated/floor/airless/plating,/area/prefab/clown_nest)
-"gl" = (/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor{pixel_x = 7; pixel_y = -2},/obj/decal/cleanable/slime,/turf/simulated/floor/carpet/arcade/half,/area/prefab/clown_nest)
-"hU" = (/obj/decal/cleanable/balloon,/obj/item/pen/crayon/orange{pixel_x = -7},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"ix" = (/obj/decal/cleanable/slime,/obj/item/clothing/mask/clown_hat/pink{name = "Honkys pink clown mask"; pixel_x = 2; pixel_y = -6},/turf/simulated/floor/carpet/arcade/half,/area/prefab/clown_nest)
-"iA" = (/obj/decal/cleanable/dirt/dirt4,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"jC" = (/obj/juggleplaque{desc = "Welcome to the fantastical and only ... but guaranteed safe ... Clownspider farm in the funny universe! You are entering Honky Gibbersons Clown-Farm! Honk!"; name = "Honkys Clownspider Farm"},/turf/simulated/wall/asteroid{desc = "A free-floating mineral deposit from space. It seems to be very dense."; hardness = 5; name = "dense asteroid"},/area/prefab/clown_nest)
-"kh" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"ml" = (/obj/item/reagent_containers/food/snacks/candy/peach_ring{pixel_x = 7; pixel_y = 6},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"mm" = (/obj/item/clothing/shoes/clown_shoes/pink{pixel_x = 1; pixel_y = 17},/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,/obj/decal/cleanable/blood{icon_state = "u_guilty"},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"mM" = (/obj/item/material_piece/cloth/spidersilk{pixel_x = 3; pixel_y = 2},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"om" = (/turf/simulated/floor/airless/solar,/area/noGenerate)
-"oz" = (/turf/simulated/wall/asteroid{name_old = "hardened"},/area/prefab/clown_nest)
-"oS" = (/obj/decal/cleanable/vomit/spiders,/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{icon = 'icons/effects/blood.dmi'; icon_state = "gibhead"; name = "grody thing"},/obj/item/reagent_containers/food/drinks/milk/clownspider{pixel_x = 4; pixel_y = 4},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"pG" = (/obj/decal/cleanable/dirt/dirt3,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"rg" = (/obj/item/clothing/gloves/latex/pink{pixel_x = 3; pixel_y = 3},/obj/item/reagent_containers/food/drinks/milk/clownspider{layer = 2; pixel_x = -2; pixel_y = 5},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"rj" = (/obj/wingrille_spawn/auto/tuff,/turf/simulated/floor/airless/plating,/area/prefab/clown_nest)
-"rO" = (/obj/decal/fakeobjects{anchored = 1; desc = "Like conventional cables, but more burly."; dir = 4; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; layer = 2.5; name = "power conduit"; tag = "icon-conduit (EAST)"},/turf/variableTurf/clear,/area/noGenerate)
-"rW" = (/turf/simulated/floor/airless/solar,/area/noGenerate{force_fullbright = 1})
-"tA" = (/obj/decal/cleanable/slime,/obj/item/gun/reagent/syringe/love,/obj/item/clothing/under/misc/clown/pink{pixel_x = -5; pixel_y = -5},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"tI" = (/obj/decal/cleanable/cobweb,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"ui" = (/obj/item/material_piece/cloth/spidersilk{pixel_x = 1},/obj/decal/cleanable/cobwebFloor,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"uY" = (/obj/lattice{dir = 2; icon_state = "lattice-dir-b"},/turf/variableTurf/clear,/area/noGenerate)
-"vK" = (/obj/item/reagent_containers/food/snacks/candy/peach_ring{pixel_x = -6; pixel_y = -1},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"wI" = (/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"yb" = (/obj/critter/spider/clown,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"zi" = (/obj/fitness/speedbag/clown,/turf/simulated/floor/carpet/arcade/half,/area/prefab/clown_nest)
-"zB" = (/obj/item/kitchen/peach_rings{pixel_x = 4},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"Bg" = (/obj/item/material_piece/cloth/spidersilk{pixel_x = -4; pixel_y = -4},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"By" = (/obj/item/material_piece/cloth/spidersilk{pixel_x = -7; pixel_y = -2},/obj/decal/cleanable/cobwebFloor,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"Cw" = (/obj/table/round/auto,/obj/item/reagent_containers/food/snacks/soup/creamofmushroom/psilocybin{pixel_x = -5; pixel_y = 10},/obj/item/pen/crayon/random{pixel_x = 7; pixel_y = 8},/turf/simulated/floor/carpet/arcade/half,/area/prefab/clown_nest)
-"CZ" = (/turf/simulated/floor/carpet/arcade/half,/area/prefab/clown_nest)
-"Dg" = (/obj/item/material_piece/cloth/spidersilk{pixel_x = 4; pixel_y = 3},/obj/machinery/light/small/sticky/warm{dir = 8},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"DN" = (/obj/decal/cleanable/vomit/spiders,/obj/item/kitchen/utensil/spoon{dir = 4; pixel_x = -7; pixel_y = -8},/turf/simulated/floor/carpet/arcade/half,/area/prefab/clown_nest)
-"Eg" = (/obj/lattice{dir = 5; icon_state = "lattice-dir-b"},/turf/variableTurf/clear,/area/noGenerate)
-"Ff" = (/obj/lattice{dir = 4; icon_state = "lattice-dir"},/turf/variableTurf/clear,/area/noGenerate)
-"Fv" = (/obj/decal/cleanable/dirt/dirt5,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"Fy" = (/turf/simulated/wall/r_wall,/area/prefab/clown_nest)
-"Gt" = (/obj/grille/catwalk,/obj/decal/fakeobjects{anchored = 1; desc = "Like conventional cables, but more burly."; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; name = "power conduit"},/turf/variableTurf/clear,/area/noGenerate)
-"HA" = (/obj/candle_light{pixel_x = 8; pixel_y = 7},/obj/table/round/auto,/obj/item/reagent_containers/food/snacks/snack_cake{pixel_x = -6; pixel_y = 8},/obj/decal/cleanable/vomit/spiders,/turf/simulated/floor/carpet/arcade/half,/area/prefab/clown_nest)
-"Ir" = (/obj/random_item_spawner/junk/one_or_zero,/obj/decal/cleanable/cobwebFloor,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"JK" = (/obj/item/material_piece/cloth/spidersilk{pixel_x = -1; pixel_y = -2},/obj/decal/cleanable/cobwebFloor,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"JY" = (/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,/obj/decal/cleanable/cobwebFloor,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"KI" = (/obj/item/material_piece/cloth/spidersilk{pixel_y = 5},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"Lg" = (/obj/table/auto{pixel_y = 1},/obj/item/storage/goodybag{pixel_x = 4; pixel_y = 12},/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor{pixel_x = -6; pixel_y = -3},/turf/simulated/floor/carpet/arcade/half,/area/prefab/clown_nest)
-"LW" = (/obj/decal/cleanable/slime,/obj/item/paper/rippednote{desc = "This piece of paper looks like it was written by a clown. A sad clown."; icon_state = "paper_singed"; info = "If anyone reads this...they have turned on poor me! No...my suit! Oh! Honk! Hear them crawling! Honk! Heeeelp!"; name = "dirty and soggy paper'"; pixel_x = 3; pixel_y = 5},/turf/simulated/floor/airless/plating,/area/prefab/clown_nest)
-"NR" = (/obj/item/material_piece/cloth/spidersilk{pixel_x = -6; pixel_y = 1},/obj/decal/cleanable/cobwebFloor,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"Ol" = (/obj/grille/catwalk,/obj/decal/fakeobjects{anchored = 1; desc = "Like conventional cables, but more burly."; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; name = "power conduit"},/obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled{pixel_x = 7},/turf/variableTurf/clear,/area/noGenerate)
-"Om" = (/turf/simulated/wall/asteroid,/area/noGenerate)
-"Qt" = (/obj/item/reagent_containers/food/snacks/candy/peach_ring{pixel_y = -1},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"Ra" = (/obj/critter/spider/clownqueen,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"Rb" = (/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{icon = 'icons/effects/blood.dmi'; icon_state = "gibmid2"; name = "gross organs"},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"Sp" = (/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"TB" = (/turf/simulated/wall/asteroid{desc = "A free-floating mineral deposit from space. It seems to be very dense."; hardness = 5; name = "dense asteroid"},/area/prefab/clown_nest)
-"Ut" = (/obj/item/item_box/balloon{pixel_x = -6; pixel_y = 1},/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"UW" = (/obj/random_item_spawner/junk/one_or_zero,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"XN" = (/obj/decal/cleanable/blood{icon_state = "floor5"},/turf/simulated/floor/carpet/arcade/half,/area/prefab/clown_nest)
-"XY" = (/turf/variableTurf/clear,/area/noGenerate)
-"YY" = (/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{pixel_x = -3; pixel_y = -6},/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{pixel_x = 4; pixel_y = 6},/obj/decal/cleanable/blood{icon_state = "floor6"},/obj/critter/spider/clownqueen/cluwne,/turf/simulated/floor/plating/airless/asteroid,/area/prefab/clown_nest)
-"Zh" = (/obj/decal/fakeobjects{anchored = 1; desc = "A vent.  A rather decrepit one, at that."; dir = 2; icon = 'icons/obj/atmospherics/pipe_vent.dmi'; icon_state = "intact"; name = "crusty vent"},/turf/simulated/floor/airless/plating,/area/prefab/clown_nest)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aV" = (
+/obj/item/instrument/bikehorn{
+	layer = 2;
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "airlock_open";
+	name = "broken external airlock"
+	},
+/turf/simulated/floor/airless/plating,
+/area/prefab/clown_nest)
+"bT" = (
+/obj/structure/girder/reinforced,
+/turf/simulated/floor/airless/plating,
+/area/prefab/clown_nest)
+"cc" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"dg" = (
+/obj/item/material_piece/cloth/spidersilk{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"dl" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b";
+	tag = "icon-lattice-dir-b (NORTHWEST)"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"dO" = (
+/obj/decal/cleanable/cobweb2,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"eb" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"fr" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating,
+/area/prefab/clown_nest)
+"gl" = (
+/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor{
+	pixel_x = 7;
+	pixel_y = -2
+	},
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/clown_nest)
+"hU" = (
+/obj/decal/cleanable/balloon,
+/obj/item/pen/crayon/orange{
+	pixel_x = -7
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"ix" = (
+/obj/decal/cleanable/slime,
+/obj/item/clothing/mask/clown_hat/pink{
+	name = "Honkys pink clown mask";
+	pixel_x = 2;
+	pixel_y = -6
+	},
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/clown_nest)
+"iA" = (
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"jC" = (
+/obj/juggleplaque{
+	desc = "Welcome to the fantastical and only ... but guaranteed safe ... Clownspider farm in the funny universe! You are entering Honky Gibbersons Clown-Farm! Honk!";
+	name = "Honkys Clownspider Farm"
+	},
+/turf/simulated/wall/auto/asteroid{
+	desc = "A free-floating mineral deposit from space. It seems to be very dense.";
+	hardness = 5;
+	name = "dense asteroid"
+	},
+/area/prefab/clown_nest)
+"kh" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"ml" = (
+/obj/item/reagent_containers/food/snacks/candy/peach_ring{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"mm" = (
+/obj/item/clothing/shoes/clown_shoes/pink{
+	pixel_x = 1;
+	pixel_y = 17
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/decal/cleanable/blood{
+	icon_state = "u_guilty"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"mM" = (
+/obj/item/material_piece/cloth/spidersilk{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"om" = (
+/turf/simulated/floor/airless/solar,
+/area/noGenerate)
+"oz" = (
+/turf/simulated/wall/auto/asteroid{
+	name_old = "hardened"
+	},
+/area/prefab/clown_nest)
+"oS" = (
+/obj/decal/cleanable/vomit/spiders,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "gibhead";
+	name = "grody thing"
+	},
+/obj/item/reagent_containers/food/drinks/milk/clownspider{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"pG" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"rg" = (
+/obj/item/clothing/gloves/latex/pink{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/drinks/milk/clownspider{
+	layer = 2;
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"rj" = (
+/obj/wingrille_spawn/auto/tuff,
+/turf/simulated/floor/airless/plating,
+/area/prefab/clown_nest)
+"rO" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	tag = "icon-conduit (EAST)"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"rW" = (
+/turf/simulated/floor/airless/solar,
+/area/noGenerate{
+	force_fullbright = 1
+	})
+"tA" = (
+/obj/decal/cleanable/slime,
+/obj/item/gun/reagent/syringe/love,
+/obj/item/clothing/under/misc/clown/pink{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"tI" = (
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"ui" = (
+/obj/item/material_piece/cloth/spidersilk{
+	pixel_x = 1
+	},
+/obj/decal/cleanable/cobwebFloor,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"uY" = (
+/obj/lattice{
+	dir = 2;
+	icon_state = "lattice-dir-b"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"vK" = (
+/obj/item/reagent_containers/food/snacks/candy/peach_ring{
+	pixel_x = -6;
+	pixel_y = -1
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"wI" = (
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"yb" = (
+/mob/living/critter/spider/clown,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"zi" = (
+/obj/fitness/speedbag/clown,
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/clown_nest)
+"zB" = (
+/obj/item/kitchen/peach_rings{
+	pixel_x = 4
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"Bg" = (
+/obj/item/material_piece/cloth/spidersilk{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"By" = (
+/obj/item/material_piece/cloth/spidersilk{
+	pixel_x = -7;
+	pixel_y = -2
+	},
+/obj/decal/cleanable/cobwebFloor,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"Cw" = (
+/obj/table/round/auto,
+/obj/item/reagent_containers/food/snacks/soup/creamofmushroom/psilocybin{
+	pixel_x = -5;
+	pixel_y = 10
+	},
+/obj/item/pen/crayon/random{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/clown_nest)
+"CZ" = (
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/clown_nest)
+"Dg" = (
+/obj/item/material_piece/cloth/spidersilk{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/machinery/light/small/sticky/warm{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"DN" = (
+/obj/decal/cleanable/vomit/spiders,
+/obj/item/kitchen/utensil/spoon{
+	dir = 4;
+	pixel_x = -7;
+	pixel_y = -8
+	},
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/clown_nest)
+"Eg" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Ff" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Fv" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"Fy" = (
+/turf/simulated/wall/r_wall,
+/area/prefab/clown_nest)
+"Gt" = (
+/obj/grille/catwalk,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"HA" = (
+/obj/candle_light{
+	pixel_x = 8;
+	pixel_y = 7
+	},
+/obj/table/round/auto,
+/obj/item/reagent_containers/food/snacks/snack_cake{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/decal/cleanable/vomit/spiders,
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/clown_nest)
+"Ir" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/cobwebFloor,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"JK" = (
+/obj/item/material_piece/cloth/spidersilk{
+	pixel_x = -1;
+	pixel_y = -2
+	},
+/obj/decal/cleanable/cobwebFloor,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"JY" = (
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,
+/obj/decal/cleanable/cobwebFloor,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"KI" = (
+/obj/item/material_piece/cloth/spidersilk{
+	pixel_y = 5
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"Lg" = (
+/obj/table/auto{
+	pixel_y = 1
+	},
+/obj/item/storage/goodybag{
+	pixel_x = 4;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor{
+	pixel_x = -6;
+	pixel_y = -3
+	},
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/clown_nest)
+"LW" = (
+/obj/decal/cleanable/slime,
+/obj/item/paper/rippednote{
+	desc = "This piece of paper looks like it was written by a clown. A sad clown.";
+	icon_state = "paper_singed";
+	info = "If anyone reads this...they have turned on poor me! No...my suit! Oh! Honk! Hear them crawling! Honk! Heeeelp!";
+	name = "dirty and soggy paper'";
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/turf/simulated/floor/airless/plating,
+/area/prefab/clown_nest)
+"NR" = (
+/obj/item/material_piece/cloth/spidersilk{
+	pixel_x = -6;
+	pixel_y = 1
+	},
+/obj/decal/cleanable/cobwebFloor,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"Ol" = (
+/obj/grille/catwalk,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled{
+	pixel_x = 7
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Om" = (
+/turf/simulated/wall/auto/asteroid,
+/area/noGenerate)
+"Qt" = (
+/obj/item/reagent_containers/food/snacks/candy/peach_ring{
+	pixel_y = -1
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"Ra" = (
+/mob/living/critter/spider/clownqueen,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"Rb" = (
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "gibmid2";
+	name = "gross organs"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"Sp" = (
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"TB" = (
+/turf/simulated/wall/auto/asteroid{
+	desc = "A free-floating mineral deposit from space. It seems to be very dense.";
+	hardness = 5;
+	name = "dense asteroid"
+	},
+/area/prefab/clown_nest)
+"Ut" = (
+/obj/item/item_box/balloon{
+	pixel_x = -6;
+	pixel_y = 1
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"UW" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"XN" = (
+/obj/decal/cleanable/blood{
+	icon_state = "floor5"
+	},
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/clown_nest)
+"XY" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"YY" = (
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	pixel_x = -3;
+	pixel_y = -6
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "floor6"
+	},
+/mob/living/critter/spider/clownqueen/cluwne,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/prefab/clown_nest)
+"Zh" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent.  A rather decrepit one, at that.";
+	dir = 2;
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "intact";
+	name = "crusty vent"
+	},
+/turf/simulated/floor/airless/plating,
+/area/prefab/clown_nest)
 
 (1,1,1) = {"
-ebebebebebebebebebebebebXYXYXYXYXYXYXYXYXYXYebebebebebebebeb
-ebebebebebebebebebebebXYXYXYXYXYXYXYXYXYXYXYXYebebebebebebeb
-ebebebebebebXYXYXYebebXYXYXYXYuYXYuYXYuYXYXYXYXYebebebebebeb
-ebebebebebebXYXYXYXYXYXYXYXYXYomrOomXYomXYXYXYXYXYebebebebeb
-ebebebebebXYXYXYXYXYXYXYXYXYXYrWXYomrOomXYXYXYXYXYebebebebeb
-ebebebebebXYXYXYXYXYXYXYXYXYXYdlFfOlFfEgXYXYXYXYXYXYXYebebeb
-ebebebebXYXYXYXYXYpGwIwIXYXYXYXYXYGtXYXYXYXYXYXYXYXYXYXYebeb
-ebebebebXYXYXYTBUWwIwIwIzBwIXYXYXYGtXYXYTBTBTBTBXYXYXYXYebeb
-ebebebXYXYXYXYTBTBRawIwITBFyrjrjrjbTXYTBTBTBTBTBTBXYXYXYXYeb
-ebebebXYXYXYTBTBvKwISpJKTBFyHACwzibTXYTBTBdOTBTBTBXYXYXYXYeb
-ebebebXYXYTBTBTBwImlTBTBTBFyCZCZDNFyTBTBwIwINRKITBTBXYXYXYeb
-ebebXYXYXYTBTBTBTBTBTBTBtAbTglixXNFyTBTBRawIwIwITBTBXYXYXYeb
-ebebXYXYXYXYTBTBTBTBYYRbmmFyLgFyaVFyFyDgwIwIwIByTBozozXYXYeb
-ebXYXYXYXYXYXYXYTBTBTBoSTBFyFyFyZhLWfrrgwIwIRaTBTBozXYXYXYeb
-XYXYXYOmXYXYXYXYXYTBTBTBTBTBTBFyFyFybTkhwIdgTBTBTBXYXYXYebeb
-XYXYOmOmXYXYXYXYXYTBTBmMBgUWTBTBTBTBwIwIwIwITBXYXYXYXYXYebeb
-XYXYOmOmXYXYXYXYozTBtIwIwIwIwITBTBwIwIhUozwITBXYXYXYXYebebeb
-XYXYXYXYXYXYXYXYXYTBTBwIybuiwIwIFvwIwIwIjCwITBozXYXYXYebebeb
-ebXYXYXYXYXYXYXYXYXYTBUWwITBwIwIwITBUtwIwIwIozozXYXYebebebeb
-ebebebXYXYXYXYXYXYXYTBTBTBTBTBiAwITBTBwIwIwIwIozXYXYXYebebeb
-ebebXYXYXYXYXYXYXYXYXYTBTBTBXYXYozozTBTBTBUWwITBTBXYXYebebeb
-ebXYXYOmOmOmXYXYXYXYXYXYTBXYXYXYXYXYTBTBtIwImlUWTBXYXYXYXYeb
-ebXYOmOmOmOmXYXYXYXYXYXYXYXYXYXYXYTBTBJYQtwIwIybwIXYXYXYXYXY
-ebXYOmOmOmOmOmXYXYXYXYXYXYXYXYXYXYTBTBIrozTBccwIwIXYXYXYXYXY
-ebXYOmOmOmOmOmXYXYXYXYXYebXYXYXYXYTBTBTBTBTBozozXYXYXYXYXYXY
-ebXYXYOmOmOmOmXYXYXYebebebebebebXYXYTBTBXYXYozXYXYXYXYXYXYXY
-ebXYXYXYXYOmXYXYebebebebebebebebXYXYXYXYXYXYXYXYXYXYXYXYXYXY
-ebebXYXYXYXYXYXYebebebebebebebebebebXYXYXYXYXYXYXYXYXYXYXYeb
-ebebXYXYXYXYXYebebebebebebebebebebebebebebXYXYXYXYXYXYXYXYeb
-ebebebebebebebebebebebebebebebebebebebebebebebXYXYXYXYXYebeb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+XY
+XY
+XY
+XY
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+"}
+(2,1,1) = {"
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+XY
+XY
+XY
+XY
+XY
+XY
+eb
+eb
+XY
+XY
+XY
+XY
+XY
+XY
+eb
+eb
+eb
+"}
+(3,1,1) = {"
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+XY
+XY
+XY
+XY
+Om
+Om
+XY
+XY
+eb
+XY
+XY
+Om
+Om
+Om
+XY
+XY
+XY
+XY
+eb
+"}
+(4,1,1) = {"
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+XY
+XY
+XY
+XY
+XY
+XY
+Om
+Om
+Om
+XY
+XY
+XY
+XY
+Om
+Om
+Om
+Om
+Om
+XY
+XY
+XY
+eb
+"}
+(5,1,1) = {"
+eb
+eb
+eb
+eb
+eb
+eb
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+Om
+Om
+Om
+Om
+Om
+XY
+XY
+XY
+eb
+"}
+(6,1,1) = {"
+eb
+eb
+eb
+eb
+XY
+XY
+XY
+XY
+XY
+XY
+TB
+TB
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+Om
+Om
+Om
+Om
+Om
+Om
+XY
+XY
+eb
+"}
+(7,1,1) = {"
+eb
+eb
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+TB
+TB
+TB
+TB
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+Om
+Om
+Om
+XY
+XY
+XY
+eb
+"}
+(8,1,1) = {"
+eb
+eb
+XY
+XY
+XY
+XY
+XY
+TB
+TB
+TB
+TB
+TB
+TB
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+eb
+eb
+"}
+(9,1,1) = {"
+eb
+eb
+XY
+XY
+XY
+XY
+XY
+UW
+TB
+vK
+wI
+TB
+TB
+TB
+XY
+XY
+oz
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+eb
+eb
+eb
+eb
+"}
+(10,1,1) = {"
+eb
+eb
+eb
+XY
+XY
+XY
+pG
+wI
+Ra
+wI
+ml
+TB
+TB
+TB
+TB
+TB
+TB
+TB
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+eb
+eb
+eb
+eb
+"}
+(11,1,1) = {"
+eb
+eb
+eb
+XY
+XY
+XY
+wI
+wI
+wI
+Sp
+TB
+TB
+YY
+TB
+TB
+TB
+tI
+TB
+TB
+TB
+XY
+XY
+XY
+XY
+XY
+eb
+eb
+eb
+eb
+eb
+"}
+(12,1,1) = {"
+eb
+XY
+XY
+XY
+XY
+XY
+wI
+wI
+wI
+JK
+TB
+TB
+Rb
+oS
+TB
+mM
+wI
+wI
+UW
+TB
+TB
+XY
+XY
+XY
+XY
+eb
+eb
+eb
+eb
+eb
+"}
+(13,1,1) = {"
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+zB
+TB
+TB
+TB
+tA
+mm
+TB
+TB
+Bg
+wI
+yb
+wI
+TB
+TB
+TB
+XY
+XY
+eb
+eb
+eb
+eb
+eb
+eb
+"}
+(14,1,1) = {"
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+wI
+Fy
+Fy
+Fy
+bT
+Fy
+Fy
+TB
+UW
+wI
+ui
+TB
+TB
+TB
+XY
+XY
+XY
+XY
+eb
+eb
+eb
+eb
+eb
+"}
+(15,1,1) = {"
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+rj
+HA
+CZ
+gl
+Lg
+Fy
+TB
+TB
+wI
+wI
+wI
+TB
+XY
+XY
+XY
+XY
+XY
+eb
+eb
+eb
+eb
+eb
+"}
+(16,1,1) = {"
+XY
+XY
+uY
+om
+rW
+dl
+XY
+XY
+rj
+Cw
+CZ
+ix
+Fy
+Fy
+Fy
+TB
+TB
+wI
+wI
+iA
+XY
+XY
+XY
+XY
+XY
+eb
+eb
+eb
+eb
+eb
+"}
+(17,1,1) = {"
+XY
+XY
+XY
+rO
+XY
+Ff
+XY
+XY
+rj
+zi
+DN
+XN
+aV
+Zh
+Fy
+TB
+TB
+Fv
+wI
+wI
+oz
+XY
+XY
+XY
+XY
+XY
+XY
+eb
+eb
+eb
+"}
+(18,1,1) = {"
+XY
+XY
+uY
+om
+om
+Ol
+Gt
+Gt
+bT
+bT
+Fy
+Fy
+Fy
+LW
+Fy
+TB
+wI
+wI
+TB
+TB
+oz
+XY
+TB
+TB
+TB
+XY
+XY
+eb
+eb
+eb
+"}
+(19,1,1) = {"
+XY
+XY
+XY
+XY
+rO
+Ff
+XY
+XY
+XY
+XY
+TB
+TB
+Fy
+fr
+bT
+wI
+wI
+wI
+Ut
+TB
+TB
+TB
+TB
+TB
+TB
+TB
+XY
+XY
+eb
+eb
+"}
+(20,1,1) = {"
+XY
+XY
+uY
+om
+om
+Eg
+XY
+XY
+TB
+TB
+TB
+TB
+Dg
+rg
+kh
+wI
+hU
+wI
+wI
+wI
+TB
+TB
+JY
+Ir
+TB
+TB
+XY
+XY
+eb
+eb
+"}
+(21,1,1) = {"
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+TB
+TB
+TB
+wI
+Ra
+wI
+wI
+wI
+wI
+oz
+jC
+wI
+wI
+TB
+tI
+Qt
+oz
+TB
+XY
+XY
+XY
+eb
+eb
+"}
+(22,1,1) = {"
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+TB
+TB
+dO
+wI
+wI
+wI
+wI
+dg
+wI
+wI
+wI
+wI
+wI
+UW
+wI
+wI
+TB
+TB
+XY
+XY
+XY
+XY
+eb
+"}
+(23,1,1) = {"
+eb
+XY
+XY
+XY
+XY
+XY
+XY
+TB
+TB
+TB
+NR
+wI
+wI
+Ra
+TB
+TB
+TB
+TB
+oz
+wI
+wI
+ml
+wI
+cc
+oz
+oz
+XY
+XY
+XY
+eb
+"}
+(24,1,1) = {"
+eb
+eb
+XY
+XY
+XY
+XY
+XY
+TB
+TB
+TB
+KI
+wI
+By
+TB
+TB
+XY
+XY
+oz
+oz
+oz
+TB
+UW
+yb
+wI
+oz
+XY
+XY
+XY
+XY
+XY
+"}
+(25,1,1) = {"
+eb
+eb
+eb
+XY
+XY
+XY
+XY
+XY
+TB
+TB
+TB
+TB
+TB
+TB
+TB
+XY
+XY
+XY
+XY
+XY
+TB
+TB
+wI
+wI
+XY
+XY
+XY
+XY
+XY
+XY
+"}
+(26,1,1) = {"
+eb
+eb
+eb
+eb
+eb
+XY
+XY
+XY
+XY
+XY
+TB
+TB
+oz
+oz
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+"}
+(27,1,1) = {"
+eb
+eb
+eb
+eb
+eb
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+oz
+XY
+XY
+XY
+XY
+XY
+eb
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+"}
+(28,1,1) = {"
+eb
+eb
+eb
+eb
+eb
+eb
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+eb
+eb
+eb
+eb
+eb
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+"}
+(29,1,1) = {"
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+XY
+XY
+XY
+XY
+XY
+XY
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+XY
+eb
+"}
+(30,1,1) = {"
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+XY
+XY
+XY
+XY
+XY
+eb
+eb
+eb
 "}

@@ -54,7 +54,7 @@
 
 		if(deflecting_sword)
 			if(deflecting_sword.active == 0)  // turn the sword on if it's off
-				deflecting_sword.attack_self(src)
+				deflecting_sword.AttackSelf(src)
 				src.visible_message("<span class='alert'>[src] instinctively switches his [deflecting_sword] on in response to the incoming [P.name]!</span>")
 			var/datum/abilityHolder/cyalume_knight/my_ability_holder = src.get_ability_holder(/datum/abilityHolder/cyalume_knight)
 			var/force_drain_multiplier = 0.3  // projectile's damage(power) is multiplied by this and then subtracted from ability holder's points
@@ -108,7 +108,7 @@
 				return
 			else
 				owner.waiting_for_hotkey = 1
-				src.updateIcon()
+				src.UpdateIcon()
 				boutput(usr, "<span class='hint'>Please press a number to bind this ability to...</span>")
 				return
 
@@ -125,7 +125,7 @@
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 
@@ -242,7 +242,7 @@
 		// assuming no super weird things happened, the sword should be on the ground at this point
 		for(var/i=0, i<100, i++)
 			step_to(sword, my_mob)
-			if (get_dist(sword,my_mob) <= 1)
+			if (BOUNDS_DIST(sword, my_mob) == 0)
 				playsound(my_mob, 'sound/effects/throw.ogg', 50, 1)
 				sword.set_loc(get_turf(my_mob))
 				if (my_mob.put_in_hand(sword))
@@ -257,12 +257,12 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "crescent_white"
 	shot_sound = null
-	power = 0
+	damage = 0
 	dissipation_delay = 8
 	dissipation_rate = 5
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	icon_turf_hit = "bhole"
+	impact_image_state = "bhole"
 	implanted = null
 	casing = null
 
@@ -270,7 +270,6 @@
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			var/turf/target = get_edge_target_turf(M, dirflag)
-			//if(!M.stat) M.emote("scream")
 			M.do_disorient(15, weakened = 10)
 			M.throw_at(target, 6, 3, throw_type = THROW_GUNIMPACT)
 			M.update_canmove()
@@ -339,14 +338,14 @@
 
 		var/mob/living/M = holder.owner
 
-		if (get_dist(holder.owner,target_turf) < radius + 1)
-			var/distance = get_dist(M,target_turf)
+		if (GET_DIST(holder.owner,target_turf) < radius + 1)
+			var/distance = GET_DIST(M,target_turf)
 			var/difference = (radius + 1) - distance
 			var/i
 			for(i = 0; i < difference; i++)
 				target_turf = get_step_away(target_turf, M)
 
-			if(get_dist(holder.owner, target_turf) < (radius + 1)) // we could have hit the edge of the map or otherwise couldn't maneuver into a proper distance
+			if(GET_DIST(holder.owner, target_turf) < (radius + 1)) // we could have hit the edge of the map or otherwise couldn't maneuver into a proper distance
 				boutput(M, "<span class='alert'>That's too close, you could end up frying yourself.</span>")
 				return 1
 
@@ -693,13 +692,13 @@
 /obj/item/mutation_orb
 	name = "empty orb"
 	desc = "You have a feeling you shouldn't be able to see this."
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	var/list/datum/mutation_orb_mutdata/mutations_to_add
 	var/envelop_message // envelops [user] in [envelop_message]
 	var/leaving_message // before [leaving_message]!
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		return
 
 	attack_self(mob/user as mob)
@@ -750,8 +749,7 @@
 
 	New()
 		. = ..()
-		mutations_to_add = list(new /datum/mutation_orb_mutdata(id = "fire_resist", magical = 1),
-		new /datum/mutation_orb_mutdata(id = "aura_fire", magical = 1),
+		mutations_to_add = list(new /datum/mutation_orb_mutdata(id = "aura_fire", magical = 1),
 		new /datum/mutation_orb_mutdata(id = "fire_breath", stabilized = 1)
 		//new /datum/mutation_orb_mutdata(id = "immolate", stabilized = 1, powerboosted = 1)
 		)
@@ -766,9 +764,9 @@
 	icon = 'icons/misc/GerhazoStuff.dmi'
 	icon_state = "feather_fire"
 	color = "#ff8902"
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		return
 
 	afterattack(var/atom/target, mob/user, flag)
@@ -788,12 +786,12 @@
 		if (did_something)
 			var/turf/T = get_turf(target)
 			T.visible_message("<span class='notice'>As [user] brings \the [src] near [target], \the [src] spontaneously bursts into flames and [target]'s wounds appear to fade away!</span>")
-			var/obj/heavenly_light/lightbeam = new /obj/heavenly_light
+			var/obj/effects/heavenly_light/lightbeam = new /obj/effects/heavenly_light
 			lightbeam.set_loc(T)
 			lightbeam.alpha = 0
-			playsound(T, "sound/voice/heavenly.ogg", 100, 1, 0)
+			playsound(T, 'sound/voice/heavenly.ogg', 100, 1, 0)
 			animate(lightbeam, alpha=255, time=3.5 SECONDS)
-			SPAWN_DBG(30)
+			SPAWN(30)
 				animate(lightbeam,alpha = 0, time=3.5 SECONDS)
 				sleep(3.5 SECONDS)
 				qdel(lightbeam)
@@ -826,13 +824,13 @@
 	desc = "You shouldn't see this."
 	icon = 'icons/misc/GerhazoStuff.dmi'
 	icon_state = "fabric"
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	var/list/datum/property_setter_property/properties_to_set
 	var/prefix_to_set = ""
 	var/suffix_to_set = ""
 	var/color_to_set
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		return
 
 	afterattack(var/atom/target, mob/user, flag)
@@ -869,7 +867,7 @@
 
 			if (did_something) // some property got changed, display a message and delete src
 				var/turf/T = get_turf(target)
-				playsound(T, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
+				playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, 1)
 				T.visible_message("<span class='notice'>As [user] brings \the [src] towards \the [target], \the [src] begins to smoothly meld into \the [target]!</span>")
 				if (length(src.prefix_to_set))
 					target.name_prefix(prefix_to_set)
@@ -902,7 +900,7 @@
 
 	New()
 		. = ..()
-		properties_to_set = list(new /datum/property_setter_property(incrementative = 0, cap = 100, property_name = "heatprot", property_value = 100))
+		properties_to_set = list(new /datum/property_setter_property(incrementative = 0, cap = 100, property_name = "heatprot", property_value = 50))
 
 
 /obj/item/property_setter/reinforce

@@ -6,19 +6,19 @@
 
 		//the master vore loop
 		if (owner.stomach_contents && length(owner.stomach_contents))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for (var/mob/M in owner.stomach_contents)
 					if (M.loc != owner)
 						owner.stomach_contents.Remove(M)
 						continue
 					if (iscarbon(M) && !isdead(owner))
 						if (isdead(M))
-							M.death(1)
+							M.death(TRUE)
 							owner.stomach_contents.Remove(M)
 							M.ghostize()
 							qdel(M)
 							owner.emote("burp")
-							playsound(owner.loc, "sound/voice/burp.ogg", 50, 1)
+							playsound(owner.loc, 'sound/voice/burp.ogg', 50, 1)
 							continue
 						if (air_master.current_cycle%3==1)
 							if (!M.nodamage)
@@ -39,21 +39,20 @@
 		sleep(1 SECOND)
 
 	var/datum/organHolder/oH = src.organHolder
-	if (!oH.head && !src.nodamage)
+	if (!oH.head && !isskeleton(src) && !src.nodamage) // skeletons can survive without their head
 		src.death()
 
 	// time to find out why this wasn't added - cirr
 	oH.handle_organs(mult)
 
 
-	if (!oH.skull) // look okay it's close enough to an organ and there's no other place for it right now shut up
-		if (!src.nodamage && oH.head)
-			src.death()
-			src.visible_message("<span class='alert'><b>[src]</b>'s head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!</span>",\
-			"<span class='alert'>Your head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!</span>")
+	if (!oH.skull && oH.head && !isskeleton(src) && !src.nodamage) // skeletons can also survive without their skull because reasons
+		src.death()
+		src.visible_message("<span class='alert'><b>[src]</b>'s head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!</span>",\
+		"<span class='alert'>Your head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!</span>")
 
 	//Wire note: Fix for Cannot read null.loc
-	else if (oH.skull.loc != src)
+	else if (oH.skull?.loc != src)
 		oH.skull = null
 
 	if (!oH.brain)

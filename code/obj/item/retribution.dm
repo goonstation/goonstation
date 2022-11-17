@@ -20,7 +20,7 @@
 	item_state = "SDS_empty_inhands"
 	hit_type = DAMAGE_BLUNT
 	force = 1
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL	//Becomes 5.0 when the core is inserted.
@@ -45,11 +45,11 @@
 	var/scan_center_x
 	var/scan_center_y
 	var/destruction_point_z
-	var/datum/component/holdertargeting/simple_light/light
+	var/datum/component/loctargeting/simple_light/light
 
 	New()
 		..()
-		light = src.AddComponent(/datum/component/holdertargeting/simple_light, 255, 250, 245, 150)
+		light = src.AddComponent(/datum/component/loctargeting/simple_light, 255, 250, 245, 150)
 		light.update(0)
 		src.setItemSpecial(/datum/item_special/simple)
 		BLOCK_SETUP(BLOCK_ALL)
@@ -63,13 +63,13 @@
 			src.item_state = "SDS_empty_inhands"
 			src.setItemSpecial(/datum/item_special/simple)
 			SET_BLOCKS(BLOCK_KNIFE)
-			var/datum/component/holdertargeting/simple_light/light = src.GetComponent(/datum/component/holdertargeting/simple_light)
+			var/datum/component/loctargeting/simple_light/light = src.GetComponent(/datum/component/loctargeting/simple_light)
 			light.update(0)
 			force = inactive_force
 			stamina_damage = inactive_stamina_dmg
 			stamina_cost = inactive_stamina_cost
 			w_class = W_CLASS_SMALL
-			
+
 			user.show_message("<span class='notice'>You remove the SWORD core from the Syndicate Destruction System!</span>", 1)
 			desc = "After a delay, scans nearby tiles, damaging walls and enemies. The core is missing."
 			tooltip_rebuild = 1
@@ -82,7 +82,7 @@
 			src.item_state = "SDS_inhands"
 			src.setItemSpecial(/datum/item_special/swipe)
 			SET_BLOCKS(BLOCK_ALL)
-			var/datum/component/holdertargeting/simple_light/light = src.GetComponent(/datum/component/holdertargeting/simple_light)
+			var/datum/component/loctargeting/simple_light/light = src.GetComponent(/datum/component/loctargeting/simple_light)
 			light.update(1)
 			force = active_force
 			stamina_damage = active_stamina_dmg
@@ -126,7 +126,7 @@
 			for (increment_y = -1; increment_y <= 1; increment_y++)
 				for (increment_x = -1; increment_x <= 1; increment_x++)
 					if (increment_x == 0 && increment_y == 0)
-						playsound(user.loc, "sound/effects/shielddown.ogg", 50, 1)
+						playsound(user.loc, 'sound/effects/shielddown.ogg', 50, 1)
 					else
 						destruction_point_x = scan_center_x + increment_x
 						destruction_point_y = scan_center_y + increment_y
@@ -147,7 +147,7 @@
 					random_burn_damage(scan_target, 30)
 					scan_target.changeStatus("weakened", 2 SECOND)
 				INVOKE_ASYNC(scan_target, /mob.proc/emote, "scream")
-				playsound(scan_target.loc, "sound/impact_sounds/burn_sizzle.ogg", 70, 1)
+				playsound(scan_target.loc, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
 			else if (istype(scan_target, /obj/structure/girder))
 				create_scan_decal = true
 				scan_target.ex_act(1)
@@ -164,7 +164,7 @@
 			T = T.ReplaceWith(/turf/simulated/floor/plating/random)
 		if(create_scan_decal)
 			leavescan(T, 1)
-			playsound(T, "sound/effects/smoke_tile_spread.ogg", 50, 1)
+			playsound(T, 'sound/effects/smoke_tile_spread.ogg', 50, 1)
 		return
 
 /obj/decal/syndicate_destruction_scan_center

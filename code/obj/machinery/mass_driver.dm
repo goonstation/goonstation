@@ -4,10 +4,10 @@
 	desc = "A device that launches objects on it at great velocity when activated."
 	icon_state = "mass_driver"
 	machine_registry_idx = MACHINES_MASSDRIVERS
-	var/power = 1.0
-	var/code = 1.0
-	var/id = 1.0
-	anchored = 1.0
+	var/power = 1
+	var/code = 1
+	var/id = 1
+	anchored = 1
 	layer = 2.6
 	var/drive_range = 200 //this is mostly irrelevant since current mass drivers throw into space, but you could make a lower-range mass driver for interstation transport or something I guess.
 	plane = PLANE_NOSHADOW_BELOW
@@ -19,7 +19,7 @@
 	var/O_limit
 	var/atom/target = get_edge_target_turf(src, src.dir)
 	for(var/atom/movable/O in src.loc)
-		if(O.anchored || isobserver(O) || isintangible(O)) continue
+		if(O.anchored || isobserver(O) || isintangible(O) || HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOATING)) continue
 		O_limit++
 		if(O_limit >= 20)
 			for(var/mob/M in hearers(src, null))

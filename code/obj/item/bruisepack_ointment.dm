@@ -16,7 +16,7 @@
 		. = ..()
 		. += "[bicon(src)] <span class='notice'>There [src.amount == 1 ? "is" : "are"] [src.amount] [src.name]\s left on the stack!</span>"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.r_hand == src || user.l_hand == src)
 			src.add_fingerprint(user)
 			var/obj/item/medical/split = new src.type(user)
@@ -31,7 +31,7 @@
 			..()
 			return
 
-	attackby(obj/item/medical/W as obj, mob/user as mob)
+	attackby(obj/item/medical/W, mob/user)
 		if (!istype(W, src.type))
 			return
 
@@ -46,7 +46,7 @@
 			qdel(src)
 		return
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (issilicon(M))
 			if (prob(5))
 				user.show_text("I'm a doctor, not a mechanic.", "red")
@@ -55,15 +55,9 @@
 			return
 		if (user)
 			if (M != user)
-				M.visible_message("<span class='alert'>[M] has been applied with [src] by [user]</span>",)
+				M.visible_message("<span class='alert'>[user] applies [src] to [M].</span>",)
 			else
-				var/t_himself = "itself"
-				if (user.gender == MALE)
-					t_himself = "himself"
-				else if (user.gender == FEMALE)
-					t_himself = "herself"
-
-				M.visible_message("<span class='alert'>[M] applied [src] on [t_himself]</span>")
+				M.visible_message("<span class='alert'>[M] applies [src] to [himself_or_herself(M)].</span>")
 
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M

@@ -230,7 +230,7 @@
 		usr.Topic("[action_tag]=[action_arg];gid=[src.icon_id]", list("[action_tag]"="[action_arg]","gid"=src.icon_id), src.owner)	// Topic redirection time!
 		return
 
-	MouseDrop(obj/O, null, var/src_location, var/control_orig, var/control_new, var/params)
+	mouse_drop(obj/O, null, var/src_location, var/control_orig, var/control_new, var/params)
 		if(!istype(owner) || !usr || src.no_drag)
 			return
 

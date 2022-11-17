@@ -19,10 +19,10 @@
 	desc = "an incredibly fragile glass test tube"
 	icon_state = "vial0"
 	item_state = "vial"
-	throwforce = 3.0
+	throwforce = 3
 	throw_speed = 1
 	throw_range = 8
-	force = 3.0
+	force = 3
 	w_class = W_CLASS_TINY
 	initial_volume = 30
 
@@ -101,7 +101,7 @@
 				M.weakened += 5
 				M.contract_disease(src.contained,null,null,1)
 			if(2)
-				SPAWN_DBG(20 SECONDS)
+				SPAWN(20 SECONDS)
 					M.contract_disease(src.contained,null,null,1)
 	return
 
@@ -178,7 +178,7 @@
 /proc/liquify(var/mob/H, time = 150)
 
 	if(H.stat) return
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/mobloc = get_turf(H.loc)
 		var/obj/dummy/liquid/holder = new /obj/dummy/liquid( mobloc )
 		var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
@@ -194,10 +194,10 @@
 		sleep(0.4 SECONDS)
 		H.set_loc(holder)
 		H.canmove = 1
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/i
 			for(i=0, i<10, i++)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/obj/effects/water/water1 = new /obj/effects/water( mobloc )
 					var/direction = pick(alldirs)
 					water1.name = "water"
@@ -207,7 +207,7 @@
 					for(i=0, i<pick(1,2,3), i++)
 						sleep(0.5 SECONDS)
 						step(water1,direction)
-					SPAWN_DBG(2 SECONDS)
+					SPAWN(2 SECONDS)
 						qdel(water1)
 
 		sleep(time)
@@ -216,7 +216,7 @@
 		animation.set_loc(mobloc)
 		var/b
 		for(b=0, b<10, b++)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/turf = mobloc
 				var/direction = pick(alldirs)
 				var/c
@@ -264,7 +264,7 @@
 			src.y--
 			src.x--
 	src.canmove = 0
-	SPAWN_DBG(2 SECONDS) canmove = 1
+	SPAWN(2 SECONDS) canmove = 1
 
 /obj/dummy/liquid/ex_act(blah)
 	return
@@ -298,7 +298,7 @@
 		..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.contents.len > 0)
 			boutput(user, "<span class='notice'>You slide a random test tube carefully out of the rack</span>")
 			var/obj/item/reagent_containers/glass/vial/V = pick(src.contents)

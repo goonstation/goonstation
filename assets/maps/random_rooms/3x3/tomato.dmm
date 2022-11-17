@@ -1,0 +1,86 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"n" = (
+/obj/item/skull{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/decal/cleanable/blood/gibs,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"s" = (
+/obj/decal/fakeobjects/skeleton{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"t" = (
+/obj/item/seed/grass{
+	auxillary_datum = /datum/plant/vegetable/tomato;
+	name = "tomato seed";
+	pixel_x = 3;
+	pixel_y = 35
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"u" = (
+/obj/item/seed/grass{
+	auxillary_datum = /datum/plant/vegetable/tomato;
+	name = "tomato seed";
+	pixel_x = 3;
+	pixel_y = -32
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"F" = (
+/obj/decal/cleanable/tomatosplat,
+/obj/item/reagent_containers/food/snacks/plant/tomato{
+	pixel_y = 8
+	},
+/obj/item/kitchen/utensil/knife/plastic{
+	pixel_x = 6;
+	layer = 1
+	},
+/obj/decal/cleanable/blood/tracks,
+/obj/item/paper{
+	layer = 0;
+	pixel_x = 7;
+	pixel_y = -7;
+	info = ">:(";
+	name = "tomato-soaked paper"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"M" = (
+/obj/item/seed/grass{
+	auxillary_datum = /datum/plant/vegetable/tomato;
+	name = "tomato seed";
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"W" = (
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+M
+u
+s
+"}
+(2,1,1) = {"
+a
+F
+W
+"}
+(3,1,1) = {"
+n
+t
+W
+"}

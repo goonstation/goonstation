@@ -13,14 +13,11 @@
 
 	elecflash(src)
 
-	return user.shock(src, PN ? PN.avail : 0, user.hand == 1 ? "l_arm": "r_arm", 1, ignore_gloves ? 1 : 0)
+	return user.shock(src, PN ? PN.avail : 0, user.hand == LEFT_HAND ? "l_arm": "r_arm", 1, ignore_gloves ? 1 : 0)
 
-// attach a wire to a power machine - leads from the turf you are standing on
-
+/// attach a wire to a power machine - leads from the turf you are standing on
 /obj/machinery/power/attackby(obj/item/W, mob/user)
-
 	if(istype(W, /obj/item/cable_coil))
-
 		var/obj/item/cable_coil/coil = W
 
 		var/turf/T = user.loc
@@ -28,14 +25,13 @@
 		if(T.intact || !istype(T, /turf/simulated/floor))
 			return
 
-		if(get_dist(src, user) > 1)
+		if(BOUNDS_DIST(src, user) > 0)
 			return
 
 		if(!directwired)		// only for attaching to directwired machines
 			return
 
 		var/dirn = get_dir(user, src)
-
 
 		for(var/obj/cable/LC in T)
 			if(LC.d1 == dirn || LC.d2 == dirn)
@@ -47,14 +43,11 @@
 		NC.d2 = dirn
 		NC.iconmod = coil.iconmod
 		NC.add_fingerprint()
-		NC.updateicon()
+		NC.UpdateIcon()
 		NC.update_network()
 		coil.use(1)
-		return
 	else
 		..()
-	return
-
 
 // the power cable object
 /obj/cable
@@ -122,7 +115,7 @@
 		if (cuts >= cuts_required)
 			..()
 		else
-			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 
 /obj/cable/New(var/newloc, var/obj/item/cable_coil/source)
 	..()
@@ -131,12 +124,20 @@
 
 	d2 = text2num( copytext( icon_state, findtext(icon_state, "-")+1 ) )
 
-	if (source) src.iconmod = source.iconmod
+	if (source)
+		src.iconmod = source.iconmod
 
-	var/turf/T = src.loc			// hide if turf is not intact
-									// but show if in space
-	if(istype(T, /turf/space) && !istype(T,/turf/space/fluid)) hide(0)
-	else if(level==1) hide(T.intact)
+	var/turf/T = src.loc
+
+	if (isnull(T)) // we are getting immediately deleted? lol
+		return
+
+	// hide if turf is not intact
+	// but show if in space
+	if(istype(T, /turf/space) && !istype(T,/turf/space/fluid))
+		hide(0)
+	else if(level==1)
+		hide(T.intact)
 
 	//cableimg = image(src.icon, src.loc, src.icon_state)
 	//cableimg.layer = OBJ_LAYER
@@ -144,21 +145,19 @@
 	if (istype(source))
 		applyCableMaterials(src, source.insulator, source.conductor)
 	else
-		applyCableMaterials(src, getMaterial(insulator_default), getMaterial(condcutor_default))
+		applyCableMaterials(src, getMaterial(insulator_default), getMaterial(condcutor_default), copy_material = FALSE)
 
 	START_TRACKING
 
 /obj/cable/disposing()		// called when a cable is deleted
-
 	if(!defer_powernet_rebuild)	// set if network will be rebuilt manually
-
-		if(netnum && powernets && powernets.len >= netnum)		// make sure cable & powernet data is valid
+		if(netnum && powernets && length(powernets) >= netnum)		// make sure cable & powernet data is valid
 			var/datum/powernet/PN = powernets[netnum]
 			PN.cut_cable(src)									// updated the powernets
 	else
 		defer_powernet_rebuild = 2
 
-		if(netnum && powernets && powernets.len >= netnum) //NEED FOR CLEAN GC IN EXPLOSIONS
+		if(netnum && powernets && length(powernets) >= netnum) //NEED FOR CLEAN GC IN EXPLOSIONS
 			powernets[netnum].cables -= src
 
 	insulator.owner = null
@@ -169,12 +168,11 @@
 	..()													// then go ahead and delete the cable
 
 /obj/cable/hide(var/i)
-
 	if(level == 1)// && istype(loc, /turf/simulated))
 		invisibility = i ? INVIS_ALWAYS : INVIS_NONE
-	updateicon()
+	UpdateIcon()
 
-/obj/cable/proc/updateicon()
+/obj/cable/update_icon()
 	icon_state = "[d1]-[d2][iconmod]"
 	alpha = invisibility ? 128 : 255
 	//if (cableimg)
@@ -186,6 +184,8 @@
 	var/datum/powernet/PN			// find the powernet
 	if(netnum && powernets && powernets.len >= netnum)
 		PN = powernets[netnum]
+	if (isnull(PN) && netnum)
+		CRASH("Attempted to get powernet number [netnum] but it was null.")
 	return PN
 
 /obj/cable/proc/cut(mob/user,turf/T)
@@ -195,14 +195,14 @@
 		if (src.iconmod)
 			var/obj/item/cable_coil/C = A
 			C.iconmod = src.iconmod
-			C.updateicon()
+			C.UpdateIcon()
 	else
 		var/atom/A = new/obj/item/cable_coil(T, 1)
 		applyCableMaterials(A, src.insulator, src.conductor)
 		if (src.iconmod)
 			var/obj/item/cable_coil/C = A
 			C.iconmod = src.iconmod
-			C.updateicon()
+			C.UpdateIcon()
 
 	src.visible_message("<span class='alert'>[user] cuts the cable.</span>")
 	src.log_wirelaying(user, 1)
@@ -226,7 +226,7 @@
 
 	else if (istype(W, /obj/item/cable_coil))
 		var/obj/item/cable_coil/coil = W
-		coil.cable_join(src, user)
+		coil.cable_join(src, get_turf(user), user, TRUE)
 		//note do shock in cable_join
 
 	else if (istype(W, /obj/item/device/t_scanner) || ispulsingtool(W) || (istype(W, /obj/item/device/pda2) && istype(W:module, /obj/item/device/pda_module/tray)))
@@ -234,15 +234,16 @@
 		var/datum/powernet/PN = get_powernet()		// find the powernet
 		var/powernet_id = ""
 
-		if(PN && (PN.avail > 0))		// is it powered?
-			if(ispulsingtool(W))
-				// 3 Octets: Netnum, 4 Octets: Nodes+Data Nodes*2, 4 Octets: Cable Count
-				powernet_id = " ID#[num2text(PN.number,3,8)]:[num2text(length(PN.nodes)+(length(PN.data_nodes)<<2),4,8)]:[num2text(length(PN.cables),4,8)]"
+		if(PN && ispulsingtool(W))
+			// 3 Octets: Netnum, 4 Octets: Nodes+Data Nodes*2, 4 Octets: Cable Count
+			powernet_id = " ID#[num2text(PN.number,3,8)]:[num2text(length(PN.nodes)+(length(PN.data_nodes)<<2),4,8)]:[num2text(length(PN.cables),4,8)]"
 
-			boutput(user, "<span class='alert'>[PN.avail]W in power network.[powernet_id]</span>")
+		if(PN?.avail > 0)		// is it powered?
+
+			boutput(user, "<span class='alert'>[PN.avail]W in power network. [powernet_id]</span>")
 
 		else
-			boutput(user, "<span class='alert'>The cable is not powered.</span>")
+			boutput(user, "<span class='alert'>The cable is not powered. [powernet_id]</span>")
 
 		if(prob(40))
 			shock(user, 10)
@@ -301,11 +302,11 @@
 	// this is bad and should be fixed, probably by having a queue of stuff to process once current makepowernets finishes
 	// but I'm too lazy to do that, so here's a bandaid
 	if(cable_d1 && !cable_d1.netnum)
-		logTheThing("debug", src, cable_d1, "Cable \ref[src] ([src.x], [src.y], [src.z]) connected to \ref[cable_d1] which had netnum 0, rebuilding powernets.")
+		logTheThing(LOG_DEBUG, src, "Cable \ref[src] ([src.x], [src.y], [src.z]) connected to \ref[cable_d1] which had netnum 0, rebuilding powernets.")
 		DEBUG_MESSAGE("Cable \ref[src] ([src.x], [src.y], [src.z]) connected to \ref[cable_d1] which had netnum 0, rebuilding powernets.")
 		return makepowernets()
 	if(cable_d2 && !cable_d2.netnum)
-		logTheThing("debug", src, cable_d1, "Cable \ref[src] ([src.x], [src.y], [src.z]) connected to \ref[cable_d2] which had netnum 0, rebuilding powernets.")
+		logTheThing(LOG_DEBUG, src, "Cable \ref[src] ([src.x], [src.y], [src.z]) connected to \ref[cable_d2] which had netnum 0, rebuilding powernets.")
 		DEBUG_MESSAGE("Cable \ref[src] ([src.x], [src.y], [src.z]) connected to \ref[cable_d2] which had netnum 0, rebuilding powernets.")
 		return makepowernets()
 
@@ -409,8 +410,8 @@
 
 
 	if (cut) //avoid some slower string builds lol
-		logTheThing("station", user, null, "cuts a cable[powered == 1 ? " (powered when cut)" : ""] at [log_loc(src)].")
+		logTheThing(LOG_STATION, user, "cuts a cable[powered == 1 ? " (powered when cut)" : ""] at [log_loc(src)].")
 	else
-		logTheThing("station", user, null, "lays a cable[powered == 1 ? " (powered when connected)" : ""] at [log_loc(src)].")
+		logTheThing(LOG_STATION, user, "lays a cable[powered == 1 ? " (powered when connected)" : ""] at [log_loc(src)].")
 
 	return

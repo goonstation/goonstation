@@ -76,7 +76,7 @@
 					if (src.blinktimernotifredundant < 3)
 						src.blinktimerstage = 3
 				if (60 to 100)
-					owner.take_eye_damage(max(0, min(3, 3 - tempblind)), 1)
+					owner.take_eye_damage(clamp(3 - tempblind, 0, 3), 1)
 					if (src.blinktimernotifredundant < 4)
 						src.blinktimerstage = 4
 				if (100 to INFINITY)
@@ -103,7 +103,7 @@
 					src.blinktimernotifredundant = 5
 			src.blinktimerstage = 0
 
-			if (src.blinkstate) owner.take_eye_damage(max(0, min(1, 1 - tempblind)), 1)
+			if (src.blinkstate) owner.take_eye_damage(clamp(1 - tempblind, 0, 1), 1)
 
 		if (owner.get_eye_damage(1)) // Temporary blindness.
 			owner.take_eye_damage(-mult, 1)
@@ -129,10 +129,6 @@
 			owner.take_toxin_damage(-5000)
 			owner.take_oxygen_deprivation(-5000)
 			owner.take_brain_damage(-120)
-			owner.delStatus("radiation")
-			owner.delStatus("paralysis")
-			owner.delStatus("weakened")
-			owner.delStatus("stunned")
 			owner.stuttering = 0
 			owner.take_ear_damage(-INFINITY)
 			owner.take_ear_damage(-INFINITY, 1)

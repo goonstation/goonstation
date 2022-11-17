@@ -25,7 +25,7 @@
 		src.cell = new /obj/item/cell(src)
 		src.cell.maxcharge = setup_charge_maximum
 		src.cell.charge = src.cell.maxcharge
-		SPAWN_DBG(0.6 SECONDS)
+		SPAWN(0.6 SECONDS)
 			var/obj/overlay/U1 = new
 			U1.icon = src.icon
 			U1.icon_state = "aitrack"
@@ -72,7 +72,7 @@
 			return
 
 		src.now_pushing = 0
-		SPAWN_DBG(0)
+		SPAWN(0)
 			..()
 			if (!istype(AM, /atom/movable))
 				return
@@ -138,7 +138,7 @@
 							boutput(src, "You've lost power!")
 							/*
 							// this shit is probably broken now but w/e mobile ais dont exist
-							SPAWN_DBG(5 SECONDS)
+							SPAWN(5 SECONDS)
 								while ((src:aiRestorePowerRoutine!=0) && stat!=2)
 									src.death_timer -= 1
 									sleep(5 SECONDS)
@@ -227,7 +227,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.6 SECONDS)
+		SPAWN(0.6 SECONDS)
 			var/obj/overlay/U1 = new
 			U1.icon = src.icon
 			U1.icon_state = "railtrack"
@@ -277,7 +277,7 @@
 			return
 
 		src.now_pushing = 0
-		SPAWN_DBG(0)
+		SPAWN(0)
 			..()
 			if (!istype(AM, /atom/movable))
 				return

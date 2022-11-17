@@ -1,15 +1,7 @@
 var/global/datum/controller/gameticker/ticker
 var/global/current_state = GAME_STATE_WORLD_INIT
-/* -- moved to _setup.dm
-#define GAME_STATE_PREGAME		1
-#define GAME_STATE_SETTING_UP	2
-#define GAME_STATE_PLAYING		3
-#define GAME_STATE_FINISHED		4
-*/
-/datum/controller/gameticker
-	//var/current_state = GAME_STATE_PREGAME
-	//replaced with global
 
+/datum/controller/gameticker
 	var/hide_mode = TRUE
 	var/datum/game_mode/mode = null
 	var/event_time = null
@@ -25,7 +17,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	var/click_delay = 3
 
-	var/datum/ai_laws/centralized_ai_laws
+	var/datum/ai_rack_manager/ai_law_rack_manager = new /datum/ai_rack_manager()
 
 	var/skull_key_assigned = 0
 
@@ -34,8 +26,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	var/tmp/timeDilationLowerBound = MIN_TICKLAG
 	var/tmp/timeDilationUpperBound = OVERLOADED_WORLD_TICKLAG
 	var/tmp/highMapCpuCount = 0 // how many times in a row has the map_cpu been high
-	var/tmp/highCpuCount = 0 // how many times in a row has the cpu been high
-	var/tmp/automatic_profiling_on = FALSE
 
 /datum/controller/gameticker/proc/pregame()
 
@@ -50,6 +40,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	if(master_mode == "battle_royale")
 		lobby_titlecard = new /datum/titlecard/battleroyale()
 		lobby_titlecard.set_pregame_html()
+
+	if(master_mode != "extended")
+		src.hide_mode = TRUE
+	else
+		src.hide_mode = FALSE
 
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
 	pregame_timeleft = 1
@@ -105,20 +100,16 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 #endif
 
 
-	SPAWN_DBG(0) setup()
+	SPAWN(0) setup()
 
 /datum/controller/gameticker/proc/setup()
 	set background = 1
 	//Create and announce mode
-	if(master_mode != "extended")
-		src.hide_mode = TRUE
-	else
-		src.hide_mode = FALSE
 
 	switch(master_mode)
 		if("random","secret") src.mode = config.pick_random_mode()
 		if("action") src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
-		if("intrigue") src.mode = config.pick_mode(pick("mixed_rp", "traitor","changeling","vampire","conspiracy","spy_theft","arcfiend", prob(50); "extended"))
+		if("intrigue") src.mode = config.pick_mode(pick(prob(300);"mixed_rp", prob(200); "traitor", prob(75);"changeling","vampire", prob(50); "conspiracy", "spy_theft","arcfiend", prob(50); "extended"))
 		if("pod_wars") src.mode = config.pick_mode("pod_wars")
 		else src.mode = config.pick_mode(master_mode)
 
@@ -131,16 +122,13 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		boutput(world, "<B>Have fun and RP!</B>")
 
 		#else
-		var/modes = sortList(config.get_used_mode_names())
+		var/modes = sortList(config.get_used_mode_names(), /proc/cmp_text_asc)
 		boutput(world, "<B>The current game mode is a secret!</B>")
 		boutput(world, "<B>Possibilities:</B> [english_list(modes)]")
 
 		#endif
 	else
 		src.mode.announce()
-
-	// uhh is this where this goes??
-	src.centralized_ai_laws = new /datum/ai_laws/asimov()
 
 	//Configure mode and assign player to special mode stuff
 	var/can_continue = src.mode.pre_setup()
@@ -151,11 +139,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		current_state = GAME_STATE_PREGAME
 		boutput(world, "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby.")
 
-		SPAWN_DBG(0) pregame()
+		SPAWN(0) pregame()
 
 		return 0
 
-	logTheThing("debug", null, null, "Chosen game mode: [mode] ([master_mode]) on map [getMapNameFromID(map_setting)].")
+	logTheThing(LOG_DEBUG, null, "Chosen game mode: [mode] ([master_mode]) on map [getMapNameFromID(map_setting)].")
 
 	//Tell the participation recorder to queue player data while the round starts up
 	participationRecorder.setHold()
@@ -166,7 +154,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	ooc_allowed = 0
 	boutput(world, "<B>OOC has been automatically disabled until the round ends.</B>")
 #else
-	if (ASS_JAM || istype(src.mode, /datum/game_mode/construction))
+	if (istype(src.mode, /datum/game_mode/construction))
 		looc_allowed = 1
 		boutput(world, "<B>LOOC has been automatically enabled.</B>")
 	else
@@ -222,11 +210,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	current_state = GAME_STATE_PLAYING
 	round_time_check = world.timeofday
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		ircbot.event("roundstart")
 		mode.post_setup()
 
-		event_wormhole_buildturflist()
+		build_random_floor_turf_list()
 
 		mode.post_post_setup()
 
@@ -237,7 +225,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 		shippingmarket.get_market_timeleft()
 
-		logTheThing("ooc", null, null, "<b>Current round begins</b>")
+		logTheThing(LOG_OOC, null, "<b>Current round begins</b>")
 		boutput(world, "<FONT class='notice'><B>Enjoy the game!</B></FONT>")
 		boutput(world, "<span class='notice'><b>Tip:</b> [pick(dd_file2list("strings/roundstart_hints.txt"))]</span>")
 
@@ -252,13 +240,22 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		//Tell the participation recorder that we're done FAFFING ABOUT
 		participationRecorder.releaseHold()
 
-	SPAWN_DBG (6000) // 10 minutes in
+#ifdef MAP_OVERRIDE_NADIR
+	SPAWN(30 MINUTES) // special catalytic engine warning
+		for(var/obj/machinery/power/catalytic_generator/CG in machine_registry[MACHINES_POWER])
+			LAGCHECK(LAG_LOW)
+			if(CG?.gen_rate < 70000 WATTS)
+				command_alert("Reports indicate that one or more catalytic generators on [station_name()] may require replacement rods for continued operation. If catalytic rods are not replaced, this may result in sitewide power failures.", "Power Grid Warning")
+			break
+#else
+	SPAWN(10 MINUTES) // standard engine warning
 		for(var/obj/machinery/computer/power_monitor/smes/E in machine_registry[MACHINES_POWER])
 			LAGCHECK(LAG_LOW)
 			var/datum/powernet/PN = E.get_direct_powernet()
 			if(PN?.avail <= 0)
-				command_alert("Reports indicate that the engine on-board [station_name()] has not yet been started. Setting up the engine is strongly recommended, or else stationwide power failures may occur.", "Power Grid Warning")
+				command_alert("Reports indicate that the engine on-board [station_name()] has not yet been started. Setting up the engine is strongly recommended, or else stationwide power failures may occur.", "Power Grid Warning", alert_origin = ALERT_STATION)
 			break
+#endif
 
 	for(var/turf/T in job_start_locations["AI"])
 		if(isnull(locate(/mob/living/silicon/ai) in T))
@@ -276,13 +273,13 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 /datum/controller/gameticker/proc/handle_mapvote()
 	var/bustedMapSwitcher = isMapSwitcherBusted()
 	if (!bustedMapSwitcher)
-		SPAWN_DBG (mapSwitcher.autoVoteDelay)
+		SPAWN(mapSwitcher.autoVoteDelay)
 			//Trigger the automatic map vote
 			try
 				mapSwitcher.startMapVote(duration = mapSwitcher.autoVoteDuration)
 			catch (var/exception/e)
-				logTheThing("admin", usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]")
-				logTheThing("diary", usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]", "admin")
+				logTheThing(LOG_ADMIN, usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]")
+				logTheThing(LOG_DIARY, usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]", "admin")
 				message_admins("[key_name(usr ? usr : src)] the automated map switch vote couldn't run because: [e.name]")
 
 /datum/controller/gameticker
@@ -309,10 +306,10 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 				else if (player.mind && player.mind.special_role == ROLE_WRAITH)
 					player.close_spawn_windows()
-					var/mob/wraith/W = player.make_wraith()
+					var/mob/living/intangible/wraith/W = player.make_wraith()
 					if (W)
 						W.set_loc(pick_landmark(LANDMARK_OBSERVER))
-						logTheThing("debug", W, null, "<b>Late join</b>: assigned antagonist role: wraith.")
+						logTheThing(LOG_DEBUG, W, "<b>Late join</b>: assigned antagonist role: wraith.")
 						antagWeighter.record(role = ROLE_WRAITH, ckey = W.ckey)
 
 				else if (player.mind && player.mind.special_role == ROLE_BLOB)
@@ -320,7 +317,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					var/mob/living/intangible/blob_overmind/B = player.make_blob()
 					if (B)
 						B.set_loc(pick_landmark(LANDMARK_OBSERVER))
-						logTheThing("debug", B, null, "<b>Late join</b>: assigned antagonist role: blob.")
+						logTheThing(LOG_DEBUG, B, "<b>Late join</b>: assigned antagonist role: blob.")
 						antagWeighter.record(role = ROLE_BLOB, ckey = B.ckey)
 
 				else if (player.mind && player.mind.special_role == ROLE_FLOCKMIND)
@@ -328,11 +325,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					var/mob/living/intangible/flock/flockmind/F = player.make_flockmind()
 					if (F)
 						F.set_loc(pick_landmark(LANDMARK_OBSERVER))
-						logTheThing("debug", F, null, "<b>Late join</b>: assigned antagonist role: flockmind.")
+						logTheThing(LOG_DEBUG, F, "<b>Late join</b>: assigned antagonist role: flockmind.")
 						antagWeighter.record(role = ROLE_FLOCKMIND, ckey = F.ckey)
 
 				else if (player.mind)
-					if (player.client.using_antag_token)
+					if (player.client.using_antag_token && ticker.mode.antag_token_support)
 						player.client.use_antag_token()	//Removes a token from the player
 					player.create_character()
 					qdel(player)
@@ -344,9 +341,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			if (player.mind && !istype(player, /mob/new_player) && player.client)
 				if (!(player.mind in ticker.minds))
 					if (periodic_check == 1)
-						logTheThing("debug", player, null, "<b>Gameticker fallback:</b> re-added player to ticker.minds.")
+						logTheThing(LOG_DEBUG, player, "<b>Gameticker fallback:</b> re-added player to ticker.minds.")
 					else
-						logTheThing("debug", player, null, "<b>Gameticker setup:</b> added player to ticker.minds.")
+						logTheThing(LOG_DEBUG, player, "<b>Gameticker setup:</b> added player to ticker.minds. [player.mind.on_ticker_add_log()]")
 					ticker.minds.Add(player.mind)
 
 	proc/implant_skull_key()
@@ -361,20 +358,20 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				var/mob/living/carbon/human/H = pick(HL)
 				if(istype(H))
 					skull_key_assigned = 1
-					SPAWN_DBG(5 SECONDS)
+					SPAWN(5 SECONDS)
 						if(H.organHolder && H.organHolder.skull)
 							H.organHolder.skull.key = new /obj/item/device/key/skull (H.organHolder.skull)
-							logTheThing("debug", H, null, "has the dubious pleasure of having a key embedded in their skull.")
+							logTheThing(LOG_DEBUG, H, "has the dubious pleasure of having a key embedded in their skull.")
 						else
 							skull_key_assigned = 0
 		else if(!skull_key_assigned)
-			logTheThing("debug", null, null, "<B>SpyGuy/collar key:</B> Did not implant a key because there was not enough players.")
+			logTheThing(LOG_DEBUG, null, "<B>SpyGuy/collar key:</B> Did not implant a key because there was not enough players.")
 
 	proc/equip_characters()
 		for(var/mob/living/carbon/human/player in mobs)
 			if(player.mind && player.mind.assigned_role)
 				if(player.mind.assigned_role != "MODE")
-					SPAWN_DBG(0)
+					SPAWN(0)
 						player.Equip_Rank(player.mind.assigned_role)
 
 	proc/process()
@@ -388,9 +385,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		spooktober_GH.update()
 #endif
 
-		emergency_shuttle.process()
+		wagesystem.process()
 
-		automatic_profiling()
+		emergency_shuttle.process()
 
 		#if DM_VERSION >= 514
 		if (useTimeDilation)//TIME_DILATION_ENABLED set this
@@ -429,28 +426,30 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			current_state = GAME_STATE_FINISHED
 
 			// This does a little more than just declare - it handles all end of round processing
-			//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] Starting declare_completion.")
+			//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] Starting declare_completion.")
 			try
 				declare_completion()
 			catch(var/exception/e)
-				logTheThing("debug", null, null, "Game Completion Runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
-				logTheThing("diary", null, null, "Game Completion Runtime: [e.file]:[e.line] - [e.name] - [e.desc]", "debug")
+				logTheThing(LOG_DEBUG, null, "Game Completion Runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
+				logTheThing(LOG_DIARY, null, "Game Completion Runtime: [e.file]:[e.line] - [e.name] - [e.desc]", "debug")
 
-			//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] Finished declare_completion. The round is now over.")
+			//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] Finished declare_completion. The round is now over.")
 
 			// Official go-ahead to be an end-of-round asshole
 			boutput(world, "<h3>The round has ended!</h3><strong style='color: #393;'>Further actions will have no impact on round results. Go hog wild!</strong>")
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				change_ghost_invisibility(INVIS_NONE)
+				for(var/mob/M in global.mobs)
+					M.antagonist_overlay_refresh(bypass_cooldown=TRUE)
 
 			// i feel like this should probably be a proc call somewhere instead but w/e
 			if (!ooc_allowed)
 				ooc_allowed = 1
 				boutput(world, "<B>OOC is now enabled.</B>")
 
-			SPAWN_DBG(5 SECONDS)
-				//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] game-ending spawn happening")
+			SPAWN(5 SECONDS)
+				//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] game-ending spawn happening")
 
 				boutput(world, "<span class='bold notice'>A new round will begin soon.</span>")
 
@@ -465,7 +464,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					sleep(1 SECONDS)
 					roundend_time--
 
-				//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] one minute delay, game should restart now")
+				//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] one minute delay, game should restart now")
 				if (game_end_delayed == 1)
 					roundend_countdown.update_delayed()
 
@@ -473,10 +472,10 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					game_end_delayed = 2
 					var/ircmsg[] = new()
 					ircmsg["msg"] = "Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]."
-					ircbot.export("admin", ircmsg)
+					ircbot.export_async("admin", ircmsg)
 				else
 					ircbot.event("roundend")
-					//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] REBOOTING THE SERVER!!!!!!!!!!!!!!!!!")
+					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] REBOOTING THE SERVER!!!!!!!!!!!!!!!!!")
 					Reboot_server()
 
 		return 1
@@ -492,43 +491,14 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			if (elapsed > 0)
 				ticker.round_elapsed_ticks += elapsed
 
-	proc/automatic_profiling(force_stop=FALSE, force_start=FALSE)
-		var/static/profilerLogID = 0
-		if(automatic_profiling_on)
-			if(world.cpu <= CPU_STOP_PROFILING_THRESHOLD)
-				highCpuCount--
-			else
-				highCpuCount = CPU_STOP_PROFILING_COUNT
-			if(highCpuCount <= 0 || force_stop)
-				var/output = world.Profile(PROFILE_REFRESH | PROFILE_STOP, null, "json")
-				var/fname = "data/logs/profiling/[global.roundLog_date]_automatic_[profilerLogID++].json"
-				rustg_file_write(output, fname)
-				message_admins("CPU back down to [world.cpu], turning off profiling, saved as [fname].")
-				logTheThing("debug", null, null, "Automatic profiling finished, CPU at [world.cpu], saved as [fname].")
-				ircbot.export("admin", list("msg"="Automatic profiling finished, CPU at [world.cpu], saved as [fname]."))
-				highCpuCount = 0
-				automatic_profiling_on = FALSE
-		else
-			if(world.cpu >= CPU_START_PROFILING_THRESHOLD)
-				highCpuCount++
-			else
-				highCpuCount = 0
-			if(highCpuCount >= CPU_START_PROFILING_COUNT || force_start)
-				world.Profile(PROFILE_START | PROFILE_CLEAR, null, "json")
-				message_admins("CPU at [world.cpu], turning on profiling.")
-				logTheThing("debug", null, null, "Automatic profiling started, CPU at [world.cpu].")
-				ircbot.export("admin", list("msg"="Automatic profiling started, CPU at [world.cpu]."))
-				highCpuCount = CPU_STOP_PROFILING_COUNT
-				automatic_profiling_on = TRUE
-
 /datum/controller/gameticker/proc/declare_completion()
 	//End of round statistic collection for goonhub
 
-	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] statlog_traitors")
+	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] statlog_traitors")
 	statlog_traitors()
-	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] statlog_ailaws")
+	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] statlog_ailaws")
 	statlog_ailaws(0)
-	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] round_end_data")
+	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] round_end_data")
 	round_end_data(1) //Export round end packet (normal completion)
 
 	var/pets_rescued = 0
@@ -540,7 +510,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			var/mob/living/critter/P = pet
 			if(isalive(P) && in_centcom(P)) pets_rescued++
 
-	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] Processing end-of-round generic medals")
+	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] Processing end-of-round generic medals")
 	var/list/all_the_baddies = ticker.mode.traitors + ticker.mode.token_players + ticker.mode.Agimmicks + ticker.mode.former_antagonists
 	for(var/mob/living/player in mobs)
 		if (player.client)
@@ -571,7 +541,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 						H.unlock_medal("Mostly Armless", 1)
 
 #ifdef CREW_OBJECTIVES
-	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] Processing crew objectives")
+	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] Processing crew objectives")
 	var/list/successfulCrew = list()
 	for (var/datum/mind/crewMind in minds)
 		if (!crewMind.current || !length(crewMind.objectives))
@@ -585,12 +555,12 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			if(CO.check_completion())
 				crewMind.completed_objs++
 				boutput(crewMind.current, "<B>Objective #[count]</B>: [CO.explanation_text] <span class='success'><B>Success</B></span>")
-				logTheThing("diary",crewMind,null,"completed objective: [CO.explanation_text]")
+				logTheThing(LOG_DIARY, crewMind, "completed objective: [CO.explanation_text]")
 				if (!isnull(CO.medal_name) && !isnull(crewMind.current))
 					crewMind.current.unlock_medal(CO.medal_name, CO.medal_announce)
 			else
 				boutput(crewMind.current, "<B>Objective #[count]</B>: [CO.explanation_text] <span class='alert'>Failed</span>")
-				logTheThing("diary",crewMind,null,"failed objective: [CO.explanation_text]. Bummer!")
+				logTheThing(LOG_DIARY, crewMind, "failed objective: [CO.explanation_text]. Bummer!")
 				allComplete = 0
 				crewMind.all_objs = 0
 		if (allComplete && count)
@@ -598,12 +568,12 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		boutput(crewMind.current, "<br>")
 #endif
 
-	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] mode.declare_completion()")
+	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] mode.declare_completion()")
 	mode.declare_completion()
-	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] mode.declare_completion() done - calculating score")
+	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] mode.declare_completion() done - calculating score")
 
 	score_tracker.calculate_score()
-	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] score calculated")
+	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] score calculated")
 
 	var/final_score = score_tracker.final_score_all
 	if (final_score > 200)
@@ -618,47 +588,34 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	boutput(world, score_tracker.escapee_facts())
 	boutput(world, score_tracker.heisenhat_stats())
-	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] ai law display")
-	boutput(world, "<b>AIs and Cyborgs had the following laws at the end of the game:</b><br>[ticker.centralized_ai_laws.format_for_logs()]")
+	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] ai law display")
+	boutput(world, "<b>AIs and Cyborgs had the following laws at the end of the game:</b><br>[ticker.ai_law_rack_manager.format_for_logs("<br>",true)]")
 
 
-	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] resetting gauntlet (why? who cares! the game is over!)")
+	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] resetting gauntlet (why? who cares! the game is over!)")
 	if (gauntlet_controller.state)
 		gauntlet_controller.resetArena()
 #ifdef CREW_OBJECTIVES
-	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] displaying completed crew objectives")
+	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] displaying completed crew objectives")
 	if (successfulCrew.len)
 		boutput(world, "<B>The following crewmembers completed all of their Crew Objectives:</B><br>[successfulCrew.Join("<br>")]<br>Good job!")
 	else
 		boutput(world, "<B>Nobody completed all of their Crew Objectives!</B>")
 #endif
-#ifdef MISCREANTS
-	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] displaying miscreants")
-	boutput(world, "<B>Miscreants:</B>")
-	if(miscreants.len == 0) boutput(world, "None!")
-	for(var/datum/mind/miscreantMind in miscreants)
-		if(!miscreantMind.objectives.len)
-			continue
-
-		var/miscreant_info = "[miscreantMind.displayed_key]"
-		if(miscreantMind.current) miscreant_info = "[miscreantMind.current.real_name] ([miscreantMind.displayed_key])"
-
-		boutput(world, "<B>[miscreant_info] was a miscreant!</B>")
-		for (var/datum/objective/miscreant/O in miscreantMind.objectives)
-			boutput(world, "Objective: [O.explanation_text] <B>Maybe</B>")
-#endif
 
 	// DO THE PERSISTENT_BANK STUFF
-	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] processing spacebux updates")
+	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] processing spacebux updates")
 
 	var/time = world.time
 
-	logTheThing("debug", null, null, "Revving up the spacebux loop...")
+	logTheThing(LOG_DEBUG, null, "Revving up the spacebux loop...")
 
+	/// list of ckeys and keypairs to bulk commit
+	var/list/bulk_commit = list()
 	for(var/mob/player in mobs)
 		if (player?.client && player.mind && !player.mind.joined_observer && !istype(player,/mob/new_player))
-			logTheThing("debug", null, null, "Iterating on [player.client]")
-			//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] spacebux calc start: [player.mind.ckey]")
+			logTheThing(LOG_DEBUG, null, "Iterating on [player.client]")
+			//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] spacebux calc start: [player.mind.ckey]")
 
 			var/chui/window/earn_spacebux/bank_earnings = new
 
@@ -708,7 +665,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			if (isAI(player) || isshell(player))
 				player_body_escaped = 1
 				if (isAIeye(player))
-					var/mob/dead/aieye/E = player
+					var/mob/living/intangible/aieye/E = player
 					player_loses_held_item = isdead(E.mainframe)
 
 			if (!mode.escape_possible)
@@ -731,7 +688,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			else if (istype(player.loc, /obj/cryotron) || player.mind && (player.mind in all_the_baddies)) // Cryo'd or was a baddie at any point? Keep your shit, but you don't get the extra bux
 				player_loses_held_item = 0
 			//some might not actually have a wage
-			if (!isvirtual(player) && (isnukeop(player) ||  (isblob(player) && (player.mind && player.mind.special_role == ROLE_BLOB)) || iswraith(player) || (iswizard(player) && (player.mind && player.mind.special_role == ROLE_WIZARD)) ))
+			if (!isvirtual(player) && ((isnukeop(player) || isnukeopgunbot(player)) ||  (isblob(player) && (player.mind && player.mind.special_role == ROLE_BLOB)) || iswraith(player) || (iswizard(player) && (player.mind && player.mind.special_role == ROLE_WIZARD)) ))
 				bank_earnings.wage_base = 0 //only effects the end of round display
 				earnings = 800
 
@@ -763,65 +720,71 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 			//add_to_bank and show earnings receipt
 			earnings = round(earnings)
-			//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] spacebux calc finish: [player.mind.ckey]")
+			//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] spacebux calc finish: [player.mind.ckey]")
 
-			SPAWN_DBG(0)
-				if(player.client)
-					player.client.add_to_bank(earnings)
-					// Fix for persistent_bank-is-NaN bug
-					if (player.client.persistent_bank != player.client.persistent_bank)
-						player.client.set_persistent_bank(50000)
-					if (player_loses_held_item)
-						logTheThing("debug", null, null, "[player.ckey] lost held item")
-						player.client.set_last_purchase(0)
+			if(player.client)
+				if (player_loses_held_item)
+					logTheThing(LOG_DEBUG, null, "[player.ckey] lost held item")
+					player.client.persistent_bank_item = "none"
 
+				bulk_commit[player.ckey] = list(
+					"persistent_bank" = list(
+						"command" = "add",
+						"value" = earnings
+					),
+					"persistent_bank_item" = list(
+						"command" = "replace",
+						"value" = player.client.persistent_bank_item
+					)
+				)
+				SPAWN(0)
 					bank_earnings.pilot_bonus = pilot_bonus
 					bank_earnings.final_payout = earnings
 					bank_earnings.held_item = player.client.persistent_bank_item
-					bank_earnings.new_balance = player.client.persistent_bank
+					bank_earnings.new_balance = player.client.persistent_bank + earnings
 					bank_earnings.Subscribe( player.client )
 
-
-	logTheThing("debug", null, null, "Done with spacebux")
+	//do bulk commit
+	SPAWN(0)
+		cloud_put_bulk(json_encode(bulk_commit))
+		logTheThing(LOG_DEBUG, null, "Done with spacebux")
 
 	for_by_tcl(P, /obj/bookshelf/persistent) //make the bookshelf save its contents
 		P.build_curr_contents()
-
-	global.save_noticeboards()
 
 #ifdef SECRETS_ENABLED
 	for_by_tcl(S, /obj/santa_helper)
 		S.save_mail()
 #endif
 
-	logTheThing("debug", null, null, "Done with books")
+	logTheThing(LOG_DEBUG, null, "Done with books")
 
 	award_archived_round_xp()
 
-	logTheThing("debug", null, null, "Spawned XP")
+	logTheThing(LOG_DEBUG, null, "Spawned XP")
 
-	SPAWN_DBG(0)
-		//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] creds/new")
+	SPAWN(0)
+		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] creds/new")
 		var/chui/window/crew_credits/creds = new
-		//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] displaying tickets and scores")
+		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] displaying tickets and scores")
 		for(var/mob/E in mobs)
 			if(E.client)
 				if (E.client.preferences.view_tickets)
-					//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] sending tickets to [E.ckey]")
+					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] sending tickets to [E.ckey]")
 					E.showtickets()
-					//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] done sending tickets to [E.ckey]")
+					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] done sending tickets to [E.ckey]")
 
 				if (E.client.preferences.view_score)
-					//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] sending crew credits to [E.ckey]")
+					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] sending crew credits to [E.ckey]")
 					creds.Subscribe(E.client)
-					//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] done crew credits to [E.ckey]")
-				SPAWN_DBG(0) show_xp_summary(E.key, E)
+					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] done crew credits to [E.ckey]")
+				SPAWN(0) show_xp_summary(E.key, E)
 
-		//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] done showing tickets/scores")
+		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] done showing tickets/scores")
 
-	logTheThing("debug", null, null, "Did credits")
+	logTheThing(LOG_DEBUG, null, "Did credits")
 
-	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] finished spacebux updates")
+	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] finished spacebux updates")
 
 	var/list/playtimes = list() //associative list with the format list("ckeys\[[player_ckey]]" = playtime_in_seconds)
 	for_by_tcl(P, /datum/player)
@@ -834,77 +797,10 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	try
 		apiHandler.queryAPI("playtime/record-multiple", playtimes)
 	catch(var/exception/e)
-		logTheThing("debug", null, null, "playtime was unable to be logged because of: [e.name]")
-		logTheThing("diary", null, null, "playtime was unable to be logged because of: [e.name]", "debug")
+		logTheThing(LOG_DEBUG, null, "playtime was unable to be logged because of: [e.name]")
+		logTheThing(LOG_DIARY, null, "playtime was unable to be logged because of: [e.name]", "debug")
 
-	if(automatic_profiling_on)
-		automatic_profiling(force_stop=TRUE)
+	if(global.lag_detection_process.automatic_profiling_on)
+		global.lag_detection_process.automatic_profiling(force_stop=TRUE)
 
 	return 1
-
-/////
-/////SETTING UP THE GAME
-/////
-
-/////
-/////MAIN PROCESS PART
-/////
-/*
-/datum/controller/gameticker/proc/game_process()
-
-	switch(mode.name)
-		if("deathmatch","monkey","nuclear emergency","Corporate Restructuring","revolution","traitor",
-		"wizard","extended")
-			do
-				if (!( shuttle_frozen ))
-					if (src.timing == 1)
-						src.timeleft -= 10
-					else
-						if (src.timing == -1.0)
-							src.timeleft += 10
-							if (src.timeleft >= shuttle_time_to_arrive)
-								src.timeleft = null
-								src.timing = 0
-				if (prob(0.5))
-					spawn_meteors()
-				if (src.timeleft <= 0 && src.timing)
-					src.timeup()
-				sleep(1 SECOND)
-			while(src.processing)
-			return
-//Standard extended process (incorporates most game modes).
-//Put yours in here if you don't know where else to put it.
-		if("AI malfunction")
-			do
-				check_win()
-				ticker.AItime += 10
-				sleep(1 SECOND)
-				if (ticker.AItime == 6000)
-					boutput(world, "<FONT size = 3><B>Cent. Com. Update</B> AI Malfunction Detected</FONT>")
-					boutput(world, "<span class='alert'>It seems we have provided you with a malfunctioning AI. We're very sorry.</span>")
-			while(src.processing)
-			return
-//malfunction process
-		if("meteor")
-			do
-				if (!( shuttle_frozen ))
-					if (src.timing == 1)
-						src.timeleft -= 10
-					else
-						if (src.timing == -1.0)
-							src.timeleft += 10
-							if (src.timeleft >= shuttle_time_to_arrive)
-								src.timeleft = null
-								src.timing = 0
-				for(var/i = 0; i < 10; i++)
-					spawn_meteors()
-				if (src.timeleft <= 0 && src.timing)
-					src.timeup()
-				sleep(1 SECOND)
-			while(src.processing)
-			return
-//meteor mode!!! MORE METEORS!!!
-		else
-			return
-//Anything else, like sandbox, return.
-*/

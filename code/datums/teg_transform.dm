@@ -35,7 +35,7 @@
 
 	proc/transform_to_type(type, mat_id)
 		if(ispath(type, /datum/teg_transformation))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if(generator.active_form)
 					generator.active_form.on_revert()
 				generator.active_form = new type
@@ -50,7 +50,7 @@
 		if(!generator.active_form || istype(generator.active_form, /datum/teg_transformation/matsci))
 			if(generator.semiconductor?.material && ((src.generator.semiconductor.material.mat_id != src.generator.material?.mat_id) || !src.generator.material))
 				if(src.generator.semiconductor_state == 0 && src.generator.powered())
-					SPAWN_DBG(1.5 SECONDS)
+					SPAWN(1.5 SECONDS)
 						src.generator.use_power(500 WATTS)
 						elecflash(src.generator)
 						src.generator.visible_message("<span class='alert'>[src.generator] is suddenly engulfed in a swarm of nanites!</span>")
@@ -149,11 +149,11 @@ datum/teg_transformation
 			*/
 			electrical_conductivity = 50
 			if(src.teg.material.hasProperty("electrical"))
-				electrical_conductivity = src.teg.material.getProperty("electrical")
+				electrical_conductivity = src.teg.material.getProperty("electrical") * 10
 
 			thermal_conductivity = 50
 			if(src.teg.material.hasProperty("thermal"))
-				thermal_conductivity = src.teg.material.getProperty("thermal")
+				thermal_conductivity =  src.teg.material.getProperty("thermal") * 10
 
 			/*    2σ / κ = zT    - Offset 				Result 	*/
 			/*  2*75 / 25 = 6    - 2 = 4  		 	 Great! 	*/

@@ -65,11 +65,13 @@
 
 	var/last_blob_life_tick = 0 //needed for mult to properly work for blob abilities
 
+	var/admin_override = FALSE //for sudo blobs
+
 	proc/start_tutorial()
 		if (tutorial)
 			return
 		tutorial = new(src)
-		if (tutorial.tutorial_area)
+		if (tutorial.initial_turf)
 			tutorial.Start()
 		else
 			boutput(src, "<span class='alert'>Could not start tutorial! Please try again later or call Wire.</span>")
@@ -82,7 +84,7 @@
 		src.add_ability(/datum/blob_ability/set_color)
 		src.add_ability(/datum/blob_ability/tutorial)
 		src.add_ability(/datum/blob_ability/help)
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_SPOOKY)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.see_invisible = INVIS_SPOOKY
 		src.see_in_dark = SEE_DARK_FULL
@@ -98,19 +100,26 @@
 		src.nucleus_overlay.alpha = 0
 		src.nucleus_overlay.appearance_flags = RESET_COLOR
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while (src)
 				if (src.client)
 					update_cooldown_costs()
 				sleep(1 SECOND)
 
-	Move(NewLoc)
+	Move(atom/NewLoc)
 		if (tutorial)
 			if (!tutorial.PerformAction("move", NewLoc))
 				return 0
 		if (isturf(NewLoc))
 			if (istype(NewLoc, /turf/unsimulated/wall))
 				return 0
+		..()
+
+	set_loc(atom/newloc)
+		// Blobs can only move to turfs. Blobs shouldn't be moving off station Z UNLESS they're riding the escape shuttle or the game has ended (so they can spread to centcom)
+		// Letting them move off station Z causes Issues when blobs take the mining shuttle, sea elevator, etc
+		if (isturf(newloc) && newloc.z != Z_LEVEL_STATION && !tutorial && !istype(get_area(newloc), /area/shuttle/escape/transit) && global.current_state < GAME_STATE_FINISHED)
+			return
 		..()
 
 	Life(datum/controller/process/mobs/parent)
@@ -192,10 +201,7 @@
 		src.last_blob_life_tick = TIME
 
 	death()
-		//death was called but the player isnt playing this blob anymore
-		//OR they're in the process of transforming (e.g. gibbing)
-		if ((src.client && src.client.mob != src) || src.transforming)
-			return
+		. = ..()
 
 		//if within grace period, respawn
 		if (src.current_try < src.extra_tries_max && world.timeofday <= src.extra_try_timestamp)
@@ -211,7 +217,7 @@
 
 			boutput(src, "<span class='alert'><b>With no nuclei to bind it to your biomass, your consciousness slips away into nothingness...</b></span>")
 			src.ghostize()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				qdel(src)
 
 	Stat()
@@ -255,7 +261,7 @@
 			if (plane)
 				plane.alpha = 255
 
-	MouseDrop()
+	mouse_drop()
 		return
 
 	MouseDrop_T()
@@ -301,15 +307,7 @@
 					if (src.tutorial)
 						if (!tutorial.PerformAction("clickmove", T))
 							return
-					src.set_loc(T)
-					return
-
-				if (T && isghostrestrictedz(T.z) && !restricted_z_allowed(src, T) && !(src.client && src.client.holder))
-					var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-					if (OS)
-						src.set_loc(OS)
-					else
-						src.z = 1
+					src.Move(T)
 
 	say_understands() return 1
 	can_use_hands()	return 0
@@ -529,7 +527,7 @@
 
 	proc/BlobPointsBezierApproximation(var/t)
 		// t = number of tiles occupied by the blob
-		t = max(0, min(1000, t))
+		t = clamp(t, 0, 1000)
 		var/points
 
 		if (t < 514)
@@ -567,8 +565,7 @@
 				lipids -= Q
 		return bio_points + lipids.len * 4 >= amt
 
-	projCanHit(datum/projectile/P)
-		return 0
+
 
 	proc/setHat( var/obj/item/clothing/head/hat )
 		hat.pixel_y = 10
@@ -670,7 +667,7 @@
 					return
 				var/my_upgrade_id = user.upgrade_id
 				user.upgrading = my_upgrade_id
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					if (user.upgrading <= my_upgrade_id)
 						user.upgrading = 0
 					else

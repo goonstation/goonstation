@@ -1,243 +1,3175 @@
-"ad" = (/obj/machinery/shuttle/engine/propulsion{dir = 8; icon_state = "alt_propulsion"},/turf/variableTurf/clear,/area/noGenerate)
-"aj" = (/obj/lattice{dir = 9; icon_state = "lattice-dir"},/obj/machinery/shuttle/engine/heater{dir = 8; icon_state = "alt_heater"},/turf/variableTurf/clear,/area/noGenerate)
-"ak" = (/obj/lattice{dir = 4; icon_state = "lattice-dir"},/obj/disposalpipe/segment{dir = 4},/turf/variableTurf/clear,/area/noGenerate)
-"aZ" = (/obj/decal/fakeobjects/firelock_broken{desc = "Rust has rendered this airlock useless."; icon = 'icons/obj/doors/SL_doors.dmi'; icon_state = "com_open"; name = "broken airlock"},/turf/simulated/floor/shuttle{icon_state = "floor3"},/area/prefab/discount_dans_asteroid)
-"bg" = (/obj/lattice{dir = 8; icon_state = "lattice-dir"},/obj/disposalpipe/mechanics_switch/west,/turf/variableTurf/clear,/area/noGenerate)
-"bQ" = (/obj/machinery/shuttle/engine/heater{icon_state = "alt_heater"},/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/discount_dans_asteroid)
-"bR" = (/obj/decal/cleanable/machine_debris,/turf/simulated/floor/wood,/area/prefab/discount_dans_asteroid)
-"bV" = (/obj/lattice{dir = 5; icon_state = "lattice-dir"},/obj/machinery/shuttle/engine/heater{dir = 4; icon_state = "alt_heater"},/turf/variableTurf/clear,/area/noGenerate)
-"bW" = (/obj/machinery/manufacturer/hangar,/obj/map/light/white,/turf/simulated/floor/airless/grime,/area/prefab/discount_dans_asteroid)
-"bX" = (/obj/machinery/shuttle/engine/propulsion{dir = 4; icon_state = "alt_propulsion"},/turf/variableTurf/clear,/area/noGenerate)
-"ci" = (/obj/lattice{icon_state = "lattice-dir"},/obj/disposalpipe/segment,/turf/variableTurf/clear,/area/noGenerate)
-"cI" = (/obj/decal/cleanable/molten_item,/obj/decal/cleanable/blood{icon_state = "floor5"},/turf/simulated/floor/plating/damaged3,/area/prefab/discount_dans_asteroid)
-"cL" = (/turf/simulated/floor/plating/damaged3,/area/prefab/discount_dans_asteroid)
-"cV" = (/obj/machinery/vending/snack,/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
-"dg" = (/obj/item/ammo/power_cell/self_charging/potato{pixel_x = 5; pixel_y = 3},/obj/decal/cleanable/dirt/dirt4,/obj/item/reagent_containers/food/drinks/covfefe{pixel_x = -10; pixel_y = 9},/turf/simulated/floor/shuttle{icon_state = "floor3"},/area/prefab/discount_dans_asteroid)
-"dB" = (/obj/rack,/obj/item/ticket/platinum,/obj/item/clothing/suit/jacket/dan{pixel_x = 4; pixel_y = -3},/obj/item/clothing/head/apprentice/dan{pixel_x = -5; pixel_y = -5},/obj/item/ticket/golden,/obj/item/ticket/golden,/obj/item/ticket/golden,/obj/item/ticket/golden,/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
-"dJ" = (/obj/item/device/pda_module/flashlight/dan{pixel_x = -6; pixel_y = 6},/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
-"dS" = (/obj/decal/cleanable/blood{icon_state = "floor6"},/obj/item/parts/human_parts/arm/left{dir = 8; pixel_x = -6; pixel_y = -4},/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
-"eK" = (/obj/decal/cleanable/blood{icon_state = "u_guilty"},/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
-"eT" = (/obj/ai_core_frame,/obj/decal/cleanable/dirt,/obj/map/light/cyan,/turf/simulated/floor/airless{icon_state = "circuit"},/area/prefab/discount_dans_asteroid)
-"fd" = (/obj/structure/girder,/turf/simulated/floor/airless/plating,/area/prefab/discount_dans_asteroid)
-"fx" = (/obj/random_item_spawner/junk/one_or_zero,/obj/decal/cleanable/blood/tracks{dir = 10; icon_state = "tracks"},/turf/simulated/floor/plating/scorched,/area/prefab/discount_dans_asteroid)
-"fC" = (/obj/decal/cleanable/blood/gibs/body,/obj/critter/wendigo,/turf/simulated/floor/plating,/area/prefab/discount_dans_asteroid)
-"fM" = (/obj/rack,/obj/item/clothing/under/jersey/dan{pixel_x = -5},/obj/item/clothing/under/jersey/dan{pixel_x = -1; pixel_y = -4},/obj/item/clothing/under/jersey/dan{pixel_x = 5; pixel_y = -3},/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
-"fO" = (/obj/item/organ/brain{pixel_x = 7; pixel_y = -1},/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
-"fT" = (/obj/decal/cleanable/dirt/dirt5,/obj/random_item_spawner/junk/one,/turf/simulated/floor/plating,/area/prefab/discount_dans_asteroid)
-"gl" = (/obj/decal/tile_edge/stripe/big{icon_state = "xtra_bigstripe-edge"},/obj/table/reinforced/auto,/obj/item/storage/toolbox/emergency{pixel_x = -1; pixel_y = 3},/turf/simulated/floor/airless/grime,/area/prefab/discount_dans_asteroid)
-"gq" = (/obj/item/clothing/head/danberet{pixel_x = 3; pixel_y = 3},/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
-"gC" = (/obj/decal/cleanable/blood/gibs{dir = 4; icon_state = "gib4"},/obj/critter/wendigo,/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
-"gE" = (/obj/table/auto,/obj/item/reagent_containers/food/snacks/burrito{pixel_x = -4; pixel_y = 4},/obj/item/reagent_containers/food/snacks/burrito{pixel_x = 5; pixel_y = 7},/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
-"gQ" = (/obj/item/sheet/glass{pixel_x = 8},/obj/item/scrap{pixel_x = -5},/obj/decal/cleanable/dirt/dirt3,/turf/simulated/floor/shuttle{icon_state = "floor3"},/area/prefab/discount_dans_asteroid)
-"gU" = (/obj/decal/cleanable/ash,/turf/unsimulated/floor/plating/scorched,/area/prefab/discount_dans_asteroid)
-"gX" = (/obj/decal/cleanable/blood/tracks,/obj/decal/cleanable/blood{icon_state = "u_guilty"},/obj/item/organ/chest{pixel_x = 3; pixel_y = -3},/turf/simulated/floor/airless/neutral,/area/prefab/discount_dans_asteroid)
-"hI" = (/obj/decal/fakeobjects/pipe{dir = 10; pixel_y = -1},/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/discount_dans_asteroid)
-"hK" = (/obj/random_item_spawner/junk/one,/turf/simulated/floor/shuttle{icon_state = "floor3"},/area/prefab/discount_dans_asteroid)
-"hP" = (/obj/item/raw_material/scrap_metal{pixel_x = -4; pixel_y = 2},/turf/simulated/floor/plating/scorched,/area/prefab/discount_dans_asteroid)
-"jo" = (/obj/table/auto,/obj/item/device/light/zippo/dan{layer = 4; pixel_x = 7; pixel_y = 5},/obj/item/clothing/mask/cigarette/syndicate{layer = 4; pixel_x = -6},/obj/item/reagent_containers/food/drinks/mug/dan_drunk{layer = 4; pixel_x = -7; pixel_y = 9},/turf/unsimulated/floor/arctic/snow/ice,/area/prefab/discount_dans_asteroid)
-"jQ" = (/obj/item/raw_material/shard/glass{pixel_x = -4; pixel_y = 4},/turf/variableTurf/clear,/area/noGenerate)
-"jU" = (/turf/variableTurf/clear,/area/noGenerate)
-"kI" = (/obj/table/auto,/obj/item/reagent_containers/food/snacks/snack_cake{pixel_x = -5; pixel_y = 3},/obj/item/reagent_containers/food/drinks/peach{pixel_x = 8; pixel_y = 7},/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
-"kP" = (/obj/decal/cleanable/blood{icon_state = "gibdown1"},/turf/unsimulated/floor/arctic/snow/ice,/area/prefab/discount_dans_asteroid)
-"lT" = (/obj/stool/chair/comfy/shuttle/red{dir = 8},/obj/decal/cleanable/dirt/dirt3,/turf/simulated/floor/shuttle{icon_state = "floor3"},/area/prefab/discount_dans_asteroid)
-"lU" = (/obj/item/clothing/suit/labcoat/dan{pixel_x = -11; pixel_y = 6},/obj/decal/fakeobjects/lightbulb_broken{dir = 4},/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
-"mo" = (/obj/item/clothing/suit/labcoat/dan{pixel_x = 4; pixel_y = 4},/turf/variableTurf/clear,/area/noGenerate)
-"mu" = (/obj/decal/fakeobjects/apc_broken,/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/discount_dans_asteroid)
-"mz" = (/obj/machinery/shuttle/engine/propulsion{dir = 10; icon_state = "alt_propulsion"},/turf/variableTurf/clear,/area/noGenerate)
-"mC" = (/obj/stool/chair/comfy/shuttle/red{dir = 4},/obj/decal/cleanable/dirt,/turf/simulated/floor/shuttle{icon_state = "floor3"},/area/prefab/discount_dans_asteroid)
-"mM" = (/obj/decal/cleanable/blood/tracks{dir = 10; icon_state = "tracks"},/obj/decal/cleanable/blood{icon_state = "floor6"},/turf/unsimulated/floor/arctic/snow/ice,/area/prefab/discount_dans_asteroid)
-"mS" = (/obj/item/scrap{pixel_x = -5},/turf/variableTurf/clear,/area/noGenerate)
-"mV" = (/obj/decal/cleanable/blood/tracks{dir = 8; icon_state = "tracks"},/turf/unsimulated/floor/arctic/snow/ice,/area/prefab/discount_dans_asteroid)
-"na" = (/obj/lattice{icon_state = "lattice-dir-b"},/obj/machinery/shuttle/engine/heater{dir = 1; icon_state = "alt_heater"},/turf/variableTurf/clear,/area/noGenerate)
-"nl" = (/obj/stool/chair/comfy/shuttle/red{dir = 4},/turf/unsimulated/floor/airless/plating/scorched,/area/prefab/discount_dans_asteroid)
-"nu" = (/obj/random_item_spawner/hat/one_or_zero,/turf/simulated/floor/shuttle{icon_state = "floor3"},/area/prefab/discount_dans_asteroid)
-"od" = (/obj/decal/cleanable/blood,/turf/unsimulated/floor/arctic/snow/ice,/area/prefab/discount_dans_asteroid)
-"of" = (/obj/machinery/shuttle/engine/heater{icon_state = "alt_heater-R"},/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/discount_dans_asteroid)
-"oi" = (/turf/simulated/floor/carpet/blue/standard/edge/nw,/area/prefab/discount_dans_asteroid)
-"oj" = (/obj/item/raw_material/shard/glass{pixel_x = 2},/turf/variableTurf/clear,/area/noGenerate)
-"ot" = (/obj/machinery/light/lamp/green{pixel_x = -5; pixel_y = 13},/obj/table/wood/auto,/obj/item/reagent_containers/food/drinks/bottle/soda/orange{pixel_x = 5; pixel_y = 14},/obj/item/reagent_containers/food/snacks/plant/orange/wedge{pixel_x = -5; pixel_y = 1},/turf/simulated/floor/wood,/area/prefab/discount_dans_asteroid)
-"ox" = (/obj/decal/fakeobjects/apc_broken,/turf/simulated/wall/auto/jen,/area/prefab/discount_dans_asteroid)
-"oO" = (/obj/item/storage/secure/ssafe/theorangeroom,/turf/simulated/wall/auto/supernorn,/area/prefab/discount_dans_asteroid)
-"oX" = (/obj/newmeteor/small,/obj/decal/cleanable/dirt/dirt5,/turf/simulated/floor/plating{icon_state = "platingdmg2"},/area/prefab/discount_dans_asteroid)
-"oZ" = (/obj/decal/cleanable/molten_item,/turf/variableTurf/clear,/area/noGenerate)
-"pR" = (/obj/lattice{dir = 1; icon_state = "lattice-dir"},/obj/disposalpipe/mechanics_switch/north,/turf/variableTurf/clear,/area/noGenerate)
-"pX" = (/obj/decal/floatingtiles{dir = 4; icon_state = "floattiles3"},/turf/variableTurf/clear,/area/noGenerate)
-"qh" = (/turf/simulated/floor/airless/plating/damaged2,/area/prefab/discount_dans_asteroid)
-"qG" = (/obj/storage/secure/closet/fridge/opened{anchored = 1},/obj/map/light/dimreddish,/turf/unsimulated/floor/arctic/snow/ice,/area/prefab/discount_dans_asteroid)
-"rw" = (/obj/item/raw_material/scrap_metal{pixel_x = -4; pixel_y = 2},/turf/variableTurf/clear,/area/noGenerate)
-"rR" = (/obj/decal/cleanable/dirt/dirt2,/turf/simulated/floor/wood,/area/prefab/discount_dans_asteroid)
-"sh" = (/obj/lattice,/turf/variableTurf/clear,/area/noGenerate)
-"sq" = (/turf/variableTurf/clear,/area/allowGenerate)
-"sr" = (/obj/lattice{dir = 5; icon_state = "lattice-dir"},/turf/variableTurf/clear,/area/noGenerate)
-"sw" = (/obj/machinery/light/small/sticky/warm/very{dir = 8},/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
-"tL" = (/obj/item/organ/liver{pixel_x = 7; pixel_y = -4},/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
-"uq" = (/obj/decal/cleanable/blood{icon_state = "floor5"},/obj/critter/wendigo,/obj/item/reagent_containers/food/snacks/burrito{pixel_x = -5; pixel_y = 4},/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
-"uM" = (/obj/decal/cleanable/machine_debris,/turf/unsimulated/floor/plating/scorched,/area/prefab/discount_dans_asteroid)
-"uY" = (/obj/grille,/turf/simulated/floor/airless/plating/scorched,/area/prefab/discount_dans_asteroid)
-"vk" = (/obj/storage/secure/crate/dan/snacks,/turf/unsimulated/floor/arctic/snow/ice,/area/prefab/discount_dans_asteroid)
-"vO" = (/obj/decal/fakeobjects/airmonitor_broken,/turf/simulated/wall/auto/supernorn,/area/prefab/discount_dans_asteroid)
-"vS" = (/turf/simulated/floor/plating,/area/prefab/discount_dans_asteroid)
-"we" = (/turf/simulated/floor/plating/scorched,/area/prefab/discount_dans_asteroid)
-"wk" = (/obj/decal/cleanable/blood/tracks{dir = 5; icon_state = "tracks"},/turf/unsimulated/floor/arctic/snow/ice,/area/prefab/discount_dans_asteroid)
-"wG" = (/turf/simulated/wall/auto/supernorn,/area/prefab/discount_dans_asteroid)
-"wQ" = (/obj/decal/cleanable/ash,/obj/item/device/light/glowstick/green_on{pixel_x = -5; pixel_y = 5},/turf/unsimulated/floor/plating/scorched,/area/prefab/discount_dans_asteroid)
-"wX" = (/obj/rack,/obj/item/clothing/suit/lshirt/dan_blue{pixel_x = -1; pixel_y = 1},/obj/item/clothing/suit/lshirt/dan_blue{pixel_x = 3; pixel_y = -3},/obj/item/bat,/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
-"xq" = (/obj/decal/cleanable/dirt/dirt4,/turf/simulated/floor/carpet/blue/standard/edge/south,/area/prefab/discount_dans_asteroid)
-"xu" = (/obj/decal/cleanable/blood{icon_state = "floor6"},/turf/unsimulated/floor/arctic/snow/ice,/area/prefab/discount_dans_asteroid)
-"xv" = (/obj/decal/tile_edge/stripe/big{dir = 1; icon_state = "xtra_bigstripe-edge"},/obj/decal/fakeobjects/lightbulb_broken,/turf/simulated/floor/airless/grime,/area/prefab/discount_dans_asteroid)
-"xw" = (/obj/plasticflaps,/turf/unsimulated/floor/arctic/snow/ice,/area/prefab/discount_dans_asteroid)
-"xz" = (/obj/decal/cleanable/blood/tracks{dir = 10; icon_state = "tracks"},/turf/unsimulated/floor/arctic/snow/ice,/area/prefab/discount_dans_asteroid)
-"xC" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/blood/tracks{dir = 8; icon_state = "tracks"},/turf/unsimulated/floor/arctic/snow/ice,/area/prefab/discount_dans_asteroid)
-"xV" = (/obj/decal/fakeobjects/firelock_broken,/obj/decal/cleanable/blood/tracks{dir = 8; icon_state = "tracks"},/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
-"yc" = (/obj/decal/skeleton/decomposed_corpse,/turf/variableTurf/clear,/area/noGenerate)
-"yo" = (/obj/decal/cleanable/blood{icon_state = "u_guilty"},/obj/item/clothing/suit/lshirt/dan_red{pixel_x = 3; pixel_y = 5},/obj/decal/cleanable/blood/tracks{dir = 8; icon_state = "tracks"},/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
-"yv" = (/obj/decal/cleanable/blood/tracks{dir = 8; icon_state = "tracks"},/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
-"yL" = (/turf/simulated/floor/wood,/area/prefab/discount_dans_asteroid)
-"zZ" = (/turf/simulated/wall/asteroid/comet/ice,/area/noGenerate)
-"Al" = (/obj/decal/poster/wallsign/poster_discount,/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/discount_dans_asteroid)
-"Am" = (/obj/decal/cleanable/blood/gibs{icon_state = "gibdown1"},/turf/unsimulated/floor/arctic/snow/ice,/area/prefab/discount_dans_asteroid)
-"AW" = (/obj/newmeteor/small,/turf/simulated/floor/plating,/area/prefab/discount_dans_asteroid)
-"Bc" = (/obj/decal/cleanable/dirt/dirt4,/obj/item/device/light/glowstick/green_on{pixel_x = -3; pixel_y = 5},/turf/simulated/floor/airless/neutral,/area/prefab/discount_dans_asteroid)
-"Bg" = (/obj/decal/fakeobjects/pipe{dir = 6; pixel_y = -1},/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/discount_dans_asteroid)
-"BG" = (/obj/item/clothing/under/gimmick/shirtnjeans{pixel_x = -6; pixel_y = 6},/turf/unsimulated/floor/arctic/snow/ice,/area/prefab/discount_dans_asteroid)
-"BV" = (/obj/decal/floatingtiles{dir = 1; icon_state = "floattiles4"},/turf/variableTurf/clear,/area/noGenerate)
-"Cm" = (/obj/random_item_spawner/junk/one_or_zero,/turf/simulated/floor/plating/damaged1,/area/prefab/discount_dans_asteroid)
-"Cu" = (/obj/stool/chair/office/yellow{dir = 8},/turf/unsimulated/floor/arctic/snow/ice,/area/prefab/discount_dans_asteroid)
-"Da" = (/obj/item/raw_material/shard/glass{pixel_x = -2; pixel_y = -3},/turf/variableTurf/clear,/area/noGenerate)
-"Dj" = (/obj/decal/cleanable/blood/tracks,/obj/decal/cleanable/blood{icon_state = "u_guilty"},/obj/item/parts/human_parts/leg/left{pixel_x = -2; pixel_y = -7},/obj/item/gun/kinetic/flaregun{pixel_y = 5},/turf/unsimulated/floor/arctic/snow/ice,/area/prefab/discount_dans_asteroid)
-"Dl" = (/obj/decal/cleanable/blood/tracks{dir = 10; icon_state = "tracks"},/obj/item/ammo/bullets/flare{pixel_x = -5; pixel_y = -5},/obj/item/clothing/shoes/orange{pixel_x = 2; pixel_y = 5},/turf/unsimulated/floor/arctic/snow/ice,/area/prefab/discount_dans_asteroid)
-"DW" = (/obj/decal/fakeobjects/firelock_broken{desc = "Rust has rendered this airlock useless."; icon = 'icons/obj/doors/SL_doors.dmi'; icon_state = "generic_open"; name = "broken airlock"},/obj/decal/cleanable/oil/streak,/obj/decal/cleanable/blood/tracks,/turf/simulated/floor/plating,/area/prefab/discount_dans_asteroid)
-"Ec" = (/obj/decal/fakeobjects/pipe{desc = "The air from it smells faintly of mildew."; dir = 8; icon = 'icons/obj/atmospherics/pipes.dmi'; icon_state = "vent"; name = "grimy vent"},/turf/simulated/floor/plating/scorched,/area/prefab/discount_dans_asteroid)
-"EZ" = (/obj/item/paper/shipping_precautions{pixel_x = 3; pixel_y = -4},/turf/unsimulated/floor/arctic/snow/ice,/area/prefab/discount_dans_asteroid)
-"Fc" = (/obj/item/light/bulb{pixel_x = -4; pixel_y = 5},/turf/simulated/floor/wood,/area/prefab/discount_dans_asteroid)
-"Fr" = (/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{dir = 4; id = natra},/turf/simulated/floor/shuttlebay{icon_state = "engine_caution_east"},/area/prefab/discount_dans_asteroid)
-"Fy" = (/obj/decal/cleanable/oil/streak,/turf/unsimulated/floor/plating/damaged1,/area/prefab/discount_dans_asteroid)
-"FP" = (/obj/decal/cleanable/dirt/dirt3,/turf/simulated/floor/wood,/area/prefab/discount_dans_asteroid)
-"Gj" = (/obj/decal/cleanable/dirt/dirt5,/turf/simulated/floor/wood,/area/prefab/discount_dans_asteroid)
-"Gk" = (/obj/decal/cleanable/dirt/dirt5,/obj/random_item_spawner/junk/one,/turf/simulated/floor/carpet/blue/standard/edge/se,/area/prefab/discount_dans_asteroid)
-"GU" = (/obj/decal/cleanable/dirt/dirt5,/obj/random_item_spawner/hat/one_or_zero,/turf/simulated/floor/carpet/blue/standard/edge/se,/area/prefab/discount_dans_asteroid)
-"HU" = (/obj/decal/cleanable/ash,/turf/simulated/floor/plating,/area/prefab/discount_dans_asteroid)
-"Ic" = (/turf/simulated/floor/carpet/blue/standard/edge/ne,/area/prefab/discount_dans_asteroid)
-"Ip" = (/obj/structure/girder/reinforced,/turf/simulated/floor/plating{icon_state = "platingdmg1"},/area/prefab/discount_dans_asteroid)
-"Ir" = (/obj/item/reagent_containers/food/snacks/strudel{pixel_x = 4; pixel_y = 12},/turf/unsimulated/floor/arctic/snow/ice,/area/prefab/discount_dans_asteroid)
-"Iz" = (/obj/decal/cleanable/blood{icon_state = "u_guilty"},/turf/simulated/floor/wood,/area/prefab/discount_dans_asteroid)
-"Jd" = (/obj/lattice{dir = 1; icon_state = "lattice-dir-b"},/obj/machinery/shuttle/engine/heater{icon_state = "alt_heater"},/turf/variableTurf/clear,/area/noGenerate)
-"Jx" = (/obj/item/raw_material/shard/glass{pixel_x = 5; pixel_y = 5},/turf/variableTurf/clear,/area/noGenerate)
-"JG" = (/obj/random_item_spawner/dressup/one_or_zero,/turf/simulated/floor/plating{icon_state = "platingdmg1"},/area/prefab/discount_dans_asteroid)
-"JH" = (/obj/machinery/atmospherics/pipe/tank/air/north,/turf/simulated/floor/airless/snow,/area/prefab/discount_dans_asteroid)
-"Kl" = (/turf/simulated/floor/stairs,/area/prefab/discount_dans_asteroid)
-"Ko" = (/obj/machinery/shuttle/engine/propulsion{icon_state = "alt_propulsion"},/turf/variableTurf/clear,/area/noGenerate)
-"Ky" = (/obj/machinery/shuttle/engine/heater{icon_state = "alt_heater-L"},/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/discount_dans_asteroid)
-"Kz" = (/turf/unsimulated/floor/plating/scorched,/area/prefab/discount_dans_asteroid)
-"Lq" = (/obj/random_item_spawner/junk/one_or_zero,/turf/simulated/floor/airless/grime,/area/prefab/discount_dans_asteroid)
-"Lw" = (/obj/item/gun/kinetic/zipgun{pixel_x = -3; pixel_y = 5},/turf/simulated/floor/plating/scorched,/area/prefab/discount_dans_asteroid)
-"Ly" = (/obj/decal/tile_edge/stripe/big{dir = 6; icon_state = "xtra_bigstripe-corner2"},/turf/simulated/floor/airless/grime,/area/prefab/discount_dans_asteroid)
-"LZ" = (/obj/decal/cleanable/dirt/dirt4,/obj/decal/cleanable/blood/tracks{dir = 8; icon_state = "tracks"},/obj/item/organ/stomach{pixel_x = -4; pixel_y = -6},/turf/simulated/floor/plating,/area/prefab/discount_dans_asteroid)
-"Mb" = (/obj/wingrille_spawn/auto/tuff,/turf/simulated/floor/airless/plating,/area/prefab/discount_dans_asteroid)
-"Mm" = (/obj/decal/tile_edge/stripe/big{icon_state = "xtra_bigstripe-edge"},/obj/storage/closet/emergency,/turf/simulated/floor/airless/grime,/area/prefab/discount_dans_asteroid)
-"Mo" = (/obj/decal/cleanable/ash,/turf/simulated/floor/airless/neutral,/area/prefab/discount_dans_asteroid)
-"My" = (/turf/simulated/floor/airless/grime,/area/prefab/discount_dans_asteroid)
-"MA" = (/obj/decal/cleanable/blood/gibs{icon_state = "gibmid3"},/turf/simulated/floor/airless/neutral,/area/prefab/discount_dans_asteroid)
-"MI" = (/obj/decal/tile_edge/stripe/big{dir = 4; icon_state = "xtra_bigstripe-edge"},/obj/item/device/light/flashlight{pixel_x = -2; pixel_y = 6},/turf/simulated/floor/airless/grime,/area/prefab/discount_dans_asteroid)
-"Nf" = (/obj/decal/fakeobjects/pipe{dir = 5; pixel_y = -1; tag = "icon-intact (NORTHEAST)"},/turf/variableTurf/clear,/area/noGenerate)
-"Ni" = (/obj/decal/fakeobjects/lightbulb_broken{dir = 8},/turf/simulated/floor/airless/grime,/area/prefab/discount_dans_asteroid)
-"Nn" = (/obj/stool/bed,/obj/item/clothing/suit/bedsheet/orange,/obj/decal/skeleton{pixel_x = 2; pixel_y = 1},/obj/machinery/light/incandescent/small{dir = 1},/turf/simulated/floor/wood,/area/prefab/discount_dans_asteroid)
-"Nr" = (/obj/decal/fakeobjects/pipe{dir = 9; pixel_y = -1; tag = "icon-intact-f (NORTHWEST)"},/turf/variableTurf/clear,/area/noGenerate)
-"Nv" = (/obj/decal/cleanable/dirt/dirt4,/obj/random_item_spawner/junk/one,/turf/simulated/floor/wood,/area/prefab/discount_dans_asteroid)
-"Nz" = (/obj/decal/tile_edge/stripe/big{dir = 4; icon_state = "xtra_bigstripe-edge"},/obj/decal/fakeobjects{anchored = 1; desc = "A vent. Cool air is gently flowing through it."; icon = 'icons/obj/atmospherics/pipe_vent.dmi'; icon_state = "hvent"; name = "air vent"},/obj/decal/cleanable/dirt/dirt3,/turf/simulated/floor/airless/grime,/area/prefab/discount_dans_asteroid)
-"NL" = (/obj/machinery/vehicle/miniputt/indyputt{dir = 8},/turf/simulated/floor/shuttlebay,/area/prefab/discount_dans_asteroid)
-"NQ" = (/obj/decal/tile_edge/stripe/big{dir = 4; icon_state = "xtra_bigstripe-edge"},/obj/decal/cleanable/oil/streak,/turf/simulated/floor/airless/grime,/area/prefab/discount_dans_asteroid)
-"NV" = (/turf/simulated/wall/asteroid/comet/ice,/area/prefab/discount_dans_asteroid)
-"Od" = (/obj/item/device/light/glowstick/green_on{pixel_x = -5; pixel_y = 3},/turf/simulated/floor/shuttlebay,/area/prefab/discount_dans_asteroid)
-"Ol" = (/turf/simulated/floor/carpet/blue/standard/edge/north,/area/prefab/discount_dans_asteroid)
-"Oz" = (/obj/table/auto,/obj/item/ticket/golden{pixel_x = 1; pixel_y = 3},/obj/item/ticket/golden{pixel_x = 6; pixel_y = 7},/turf/unsimulated/floor/arctic/snow/ice,/area/prefab/discount_dans_asteroid)
-"OO" = (/obj/rack,/obj/item/storage/box/glowstickbox,/turf/simulated/floor/airless/grime,/area/prefab/discount_dans_asteroid)
-"Pc" = (/obj/item/organ/eye{pixel_x = -6; pixel_y = 7},/turf/variableTurf/clear,/area/noGenerate)
-"Ph" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/discount_dans_asteroid)
-"Pk" = (/obj/decal/tile_edge/stripe/big{dir = 1; icon_state = "xtra_bigstripe-edge"},/turf/simulated/floor/airless/grime,/area/prefab/discount_dans_asteroid)
-"Pr" = (/obj/decal/floatingtiles{dir = 8; icon_state = "floattiles4"},/turf/variableTurf/clear,/area/noGenerate)
-"Pu" = (/obj/decal/cleanable/dirt/dirt4,/turf/simulated/floor/airless/grime,/area/prefab/discount_dans_asteroid)
-"Px" = (/obj/decal/tile_edge/stripe/big{dir = 5; icon_state = "xtra_bigstripe-corner2"},/turf/simulated/floor/airless/grime,/area/prefab/discount_dans_asteroid)
-"PC" = (/obj/machinery/r_door_control{id = natra},/turf/simulated/wall/auto/jen,/area/prefab/discount_dans_asteroid)
-"PS" = (/obj/machinery/door/airlock/pyro,/turf/simulated/floor/airless/neutral,/area/prefab/discount_dans_asteroid)
-"Qe" = (/turf/simulated/floor/carpet/blue/standard/edge/sw,/area/prefab/discount_dans_asteroid)
-"Qp" = (/obj/decal/tile_edge/stripe/big{icon_state = "xtra_bigstripe-edge"},/obj/table/reinforced/auto,/obj/table/reinforced/auto,/turf/simulated/floor/airless/grime,/area/prefab/discount_dans_asteroid)
-"QA" = (/obj/machinery/door/airlock/pyro,/obj/decal/cleanable/dirt/dirt5,/turf/simulated/floor/airless/neutral,/area/prefab/discount_dans_asteroid)
-"QE" = (/obj/shrub{dir = 4; icon = 'icons/obj/stationobjs.dmi'; icon_state = "plant"},/turf/simulated/floor/airless/neutral,/area/prefab/discount_dans_asteroid)
-"Rg" = (/obj/decal/floatingtiles{dir = 8; icon_state = "floattiles3"},/turf/variableTurf/clear,/area/noGenerate)
-"Rk" = (/obj/item/clothing/head/danberet{pixel_x = -2; pixel_y = 5},/turf/unsimulated/floor/arctic/snow/ice,/area/prefab/discount_dans_asteroid)
-"Rl" = (/obj/decal/cleanable/blood{icon_state = "gib3"},/obj/item/clothing/under/misc/bandshirt{pixel_x = 8; pixel_y = -8},/turf/simulated/floor/airless/neutral,/area/prefab/discount_dans_asteroid)
-"RA" = (/turf/simulated/floor/airless/neutral,/area/prefab/discount_dans_asteroid)
-"RH" = (/obj/storage/secure/crate/dan/beverages,/turf/unsimulated/floor/arctic/snow/ice,/area/prefab/discount_dans_asteroid)
-"RP" = (/obj/decal/fakeobjects/lighttube_broken{dir = 4},/turf/simulated/floor/airless/neutral,/area/prefab/discount_dans_asteroid)
-"RY" = (/obj/decal/fakeobjects/lighttube_broken,/turf/simulated/wall/auto/jen,/area/prefab/discount_dans_asteroid)
-"Se" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "What was this thing even supposed to do?"; icon = 'icons/obj/machines/nuclear.dmi'; icon_state = "engineoff"; name = "broken machine"},/obj/map/light/white,/turf/simulated/floor/plating,/area/prefab/discount_dans_asteroid)
-"Sf" = (/turf/simulated/wall/auto/jen,/area/prefab/discount_dans_asteroid)
-"Sy" = (/obj/table/auto,/obj/machinery/coffeemaker,/obj/map/light/white,/turf/simulated/floor/airless/neutral,/area/prefab/discount_dans_asteroid)
-"SO" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "It's just sideways but apparently that's enough to stop it dead in its tracks."; icon = 'icons/obj/vending.dmi'; icon_state = "grife-fallen"; name = "broken vending machine"},/obj/decal/cleanable/blood{icon_state = "gib3"},/turf/simulated/floor/airless/neutral,/area/prefab/discount_dans_asteroid)
-"Tk" = (/obj/stool/chair/wooden{dir = 1},/turf/simulated/floor/carpet/blue/standard/edge/nw,/area/prefab/discount_dans_asteroid)
-"Ty" = (/obj/item/device/light/glowstick/green_on{pixel_x = 3; pixel_y = -3},/turf/simulated/floor/airless/neutral,/area/prefab/discount_dans_asteroid)
-"Ub" = (/obj/item/pen{pixel_x = -9; pixel_y = -2},/turf/simulated/floor/carpet/blue/standard/edge/ne,/area/prefab/discount_dans_asteroid)
-"Ue" = (/turf/simulated/floor/shuttlebay,/area/prefab/discount_dans_asteroid)
-"Ug" = (/obj/table/auto,/obj/decal/cleanable/dirt/dirt5,/obj/item/clothing/mask/cigarette/random{pixel_x = -5; pixel_y = 10},/obj/item/clothing/mask/cigarette/random{pixel_x = -4; pixel_y = 6},/obj/item/clothing/mask/cigarette/random{pixel_x = 2; pixel_y = 9},/obj/item/reagent_containers/food/drinks/mug/random_color{pixel_x = 6; pixel_y = 2},/turf/simulated/floor/airless/neutral,/area/prefab/discount_dans_asteroid)
-"UU" = (/obj/machinery/door/airlock/pyro/maintenance{dir = 4; icon_state = "maint_locked"; locked = 1; req_access = null},/turf/simulated/floor/wood,/area/prefab/discount_dans_asteroid)
-"Ve" = (/turf/simulated/wall/auto/reinforced/supernorn/orange,/area/prefab/discount_dans_asteroid)
-"Wr" = (/obj/decal/cleanable/ash,/turf/simulated/floor/wood,/area/prefab/discount_dans_asteroid)
-"Wz" = (/obj/decal/cleanable/dirt/dirt5,/turf/simulated/floor/airless/neutral,/area/prefab/discount_dans_asteroid)
-"WB" = (/obj/item/organ/eye{pixel_x = 3; pixel_y = 6},/turf/simulated/floor/airless/neutral,/area/prefab/discount_dans_asteroid)
-"WC" = (/obj/table/wood/auto,/obj/item/reagent_containers/food/snacks/plant/orange{pixel_x = 6; pixel_y = 11},/obj/item/paper/dreamy_rhyme{pixel_x = -6; pixel_y = 4},/turf/simulated/floor/wood,/area/prefab/discount_dans_asteroid)
-"Xc" = (/turf/unsimulated/floor/arctic/snow/ice,/area/prefab/discount_dans_asteroid)
-"XA" = (/obj/decal/cleanable/molten_item,/turf/unsimulated/floor/plating/scorched,/area/prefab/discount_dans_asteroid)
-"XI" = (/obj/decal/floatingtiles{icon_state = "floattiles5"},/turf/variableTurf/clear,/area/noGenerate)
-"ZZ" = (/obj/decal/cleanable/blood{icon_state = "floor6"},/turf/simulated/floor/airless/neutral,/area/prefab/discount_dans_asteroid)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ad" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "alt_propulsion"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"aj" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ak" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"aZ" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "com_open";
+	name = "broken airlock"
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/prefab/discount_dans_asteroid)
+"bg" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/disposalpipe/mechanics_switch/west,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"bQ" = (
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/discount_dans_asteroid)
+"bR" = (
+/obj/decal/cleanable/machine_debris,
+/turf/simulated/floor/wood,
+/area/prefab/discount_dans_asteroid)
+"bV" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/shuttle/engine/heater{
+	dir = 4;
+	icon_state = "alt_heater"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"bW" = (
+/obj/machinery/manufacturer/hangar,
+/obj/map/light/white,
+/turf/simulated/floor/airless/grime,
+/area/prefab/discount_dans_asteroid)
+"bX" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "alt_propulsion"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ci" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/disposalpipe/segment,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"cI" = (
+/obj/decal/cleanable/molten_item,
+/obj/decal/cleanable/blood{
+	icon_state = "floor5"
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/prefab/discount_dans_asteroid)
+"cL" = (
+/turf/simulated/floor/plating/damaged3,
+/area/prefab/discount_dans_asteroid)
+"cV" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/airless/snow,
+/area/prefab/discount_dans_asteroid)
+"dg" = (
+/obj/item/ammo/power_cell/self_charging/potato{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/decal/cleanable/dirt/dirt4,
+/obj/item/reagent_containers/food/drinks/covfefe{
+	pixel_x = -10;
+	pixel_y = 9
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/prefab/discount_dans_asteroid)
+"dB" = (
+/obj/rack,
+/obj/item/ticket/platinum,
+/obj/item/clothing/suit/jacket/dan{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/clothing/head/apprentice/dan{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/obj/item/ticket/golden,
+/obj/item/ticket/golden,
+/obj/item/ticket/golden,
+/obj/item/ticket/golden,
+/turf/simulated/floor/airless/snow,
+/area/prefab/discount_dans_asteroid)
+"dJ" = (
+/obj/item/device/pda_module/flashlight/dan{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/turf/simulated/floor/airless/snow,
+/area/prefab/discount_dans_asteroid)
+"dS" = (
+/obj/decal/cleanable/blood{
+	icon_state = "floor6"
+	},
+/obj/item/parts/human_parts/arm/left{
+	dir = 8;
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/turf/simulated/floor/airless/snow,
+/area/prefab/discount_dans_asteroid)
+"eK" = (
+/obj/decal/cleanable/blood{
+	icon_state = "u_guilty"
+	},
+/turf/simulated/floor/airless/snow,
+/area/prefab/discount_dans_asteroid)
+"eT" = (
+/obj/ai_core_frame,
+/obj/decal/cleanable/dirt,
+/obj/map/light/cyan,
+/turf/simulated/floor/airless{
+	icon_state = "circuit"
+	},
+/area/prefab/discount_dans_asteroid)
+"fd" = (
+/obj/structure/girder,
+/turf/simulated/floor/airless/plating,
+/area/prefab/discount_dans_asteroid)
+"fx" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/blood/tracks{
+	dir = 10;
+	icon_state = "tracks"
+	},
+/turf/simulated/floor/plating/scorched,
+/area/prefab/discount_dans_asteroid)
+"fM" = (
+/obj/rack,
+/obj/item/clothing/under/jersey/dan{
+	pixel_x = -5
+	},
+/obj/item/clothing/under/jersey/dan{
+	pixel_x = -1;
+	pixel_y = -4
+	},
+/obj/item/clothing/under/jersey/dan{
+	pixel_x = 5;
+	pixel_y = -3
+	},
+/turf/simulated/floor/airless/snow,
+/area/prefab/discount_dans_asteroid)
+"fO" = (
+/obj/item/organ/brain{
+	pixel_x = 7;
+	pixel_y = -1
+	},
+/turf/simulated/floor/airless/snow,
+/area/prefab/discount_dans_asteroid)
+"fT" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/random_item_spawner/junk/one,
+/turf/simulated/floor/plating,
+/area/prefab/discount_dans_asteroid)
+"gl" = (
+/obj/decal/tile_edge/stripe/big{
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/emergency{
+	pixel_x = -1;
+	pixel_y = 3
+	},
+/turf/simulated/floor/airless/grime,
+/area/prefab/discount_dans_asteroid)
+"gq" = (
+/obj/item/clothing/head/danberet{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/simulated/floor/airless/snow,
+/area/prefab/discount_dans_asteroid)
+"gE" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/burrito{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/burrito{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/turf/simulated/floor/airless/snow,
+/area/prefab/discount_dans_asteroid)
+"gQ" = (
+/obj/item/sheet/glass{
+	pixel_x = 8
+	},
+/obj/item/scrap{
+	pixel_x = -5
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/prefab/discount_dans_asteroid)
+"gU" = (
+/obj/decal/cleanable/ash,
+/turf/unsimulated/floor/plating/scorched,
+/area/prefab/discount_dans_asteroid)
+"gX" = (
+/obj/decal/cleanable/blood/tracks,
+/obj/decal/cleanable/blood{
+	icon_state = "u_guilty"
+	},
+/obj/item/organ/chest{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/turf/simulated/floor/airless/neutral,
+/area/prefab/discount_dans_asteroid)
+"hI" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 10;
+	pixel_y = -1
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/discount_dans_asteroid)
+"hK" = (
+/obj/random_item_spawner/junk/one,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/prefab/discount_dans_asteroid)
+"hP" = (
+/obj/item/raw_material/scrap_metal{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/turf/simulated/floor/plating/scorched,
+/area/prefab/discount_dans_asteroid)
+"jo" = (
+/obj/table/auto,
+/obj/item/device/light/zippo/dan{
+	layer = 4;
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/clothing/mask/cigarette/syndicate{
+	layer = 4;
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/food/drinks/mug/dan_drunk{
+	layer = 4;
+	pixel_x = -7;
+	pixel_y = 9
+	},
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/prefab/discount_dans_asteroid)
+"jQ" = (
+/obj/item/raw_material/shard/glass{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"jU" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"kI" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/snack_cake{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/drinks/peach{
+	pixel_x = 8;
+	pixel_y = 7
+	},
+/turf/simulated/floor/airless/snow,
+/area/prefab/discount_dans_asteroid)
+"kP" = (
+/obj/decal/cleanable/blood{
+	icon_state = "gibdown1"
+	},
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/prefab/discount_dans_asteroid)
+"lT" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/prefab/discount_dans_asteroid)
+"lU" = (
+/obj/item/clothing/suit/labcoat/dan{
+	pixel_x = -11;
+	pixel_y = 6
+	},
+/obj/decal/fakeobjects/lightbulb_broken{
+	dir = 4
+	},
+/turf/simulated/floor/airless/snow,
+/area/prefab/discount_dans_asteroid)
+"mo" = (
+/obj/item/clothing/suit/labcoat/dan{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"mu" = (
+/obj/decal/fakeobjects/apc_broken,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/discount_dans_asteroid)
+"mz" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 10;
+	icon_state = "alt_propulsion"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"mC" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/prefab/discount_dans_asteroid)
+"mM" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 10;
+	icon_state = "tracks"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "floor6"
+	},
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/prefab/discount_dans_asteroid)
+"mS" = (
+/obj/item/scrap{
+	pixel_x = -5
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"mV" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 8;
+	icon_state = "tracks"
+	},
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/prefab/discount_dans_asteroid)
+"na" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/shuttle/engine/heater{
+	dir = 1;
+	icon_state = "alt_heater"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"nl" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 4
+	},
+/turf/unsimulated/floor/airless/plating/scorched,
+/area/prefab/discount_dans_asteroid)
+"nu" = (
+/obj/random_item_spawner/hat/one_or_zero,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/prefab/discount_dans_asteroid)
+"od" = (
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/prefab/discount_dans_asteroid)
+"of" = (
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-R"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/discount_dans_asteroid)
+"oi" = (
+/turf/simulated/floor/carpet/blue/standard/edge/nw,
+/area/prefab/discount_dans_asteroid)
+"oj" = (
+/obj/item/raw_material/shard/glass{
+	pixel_x = 2
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ot" = (
+/obj/machinery/light/lamp/green{
+	pixel_x = -5;
+	pixel_y = 13
+	},
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/drinks/bottle/soda/orange{
+	pixel_x = 5;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/food/snacks/plant/orange/wedge{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/turf/simulated/floor/wood,
+/area/prefab/discount_dans_asteroid)
+"ox" = (
+/obj/decal/fakeobjects/apc_broken,
+/turf/simulated/wall/auto/jen,
+/area/prefab/discount_dans_asteroid)
+"oO" = (
+/obj/item/storage/secure/ssafe/theorangeroom,
+/turf/simulated/wall/auto/supernorn,
+/area/prefab/discount_dans_asteroid)
+"oX" = (
+/obj/newmeteor/small,
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/prefab/discount_dans_asteroid)
+"oZ" = (
+/obj/decal/cleanable/molten_item,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"pR" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/disposalpipe/mechanics_switch/north,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"pX" = (
+/obj/decal/floatingtiles{
+	dir = 4;
+	icon_state = "floattiles3"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"qh" = (
+/turf/simulated/floor/airless/plating/damaged2,
+/area/prefab/discount_dans_asteroid)
+"qG" = (
+/obj/storage/secure/closet/fridge/opened{
+	anchored = 1
+	},
+/obj/map/light/dimreddish,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/prefab/discount_dans_asteroid)
+"rw" = (
+/obj/item/raw_material/scrap_metal{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"rR" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/wood,
+/area/prefab/discount_dans_asteroid)
+"sh" = (
+/obj/lattice,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"sq" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"sr" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"sw" = (
+/obj/machinery/light/small/sticky/warm/very{
+	dir = 8
+	},
+/turf/simulated/floor/airless/snow,
+/area/prefab/discount_dans_asteroid)
+"tL" = (
+/obj/item/organ/liver{
+	pixel_x = 7;
+	pixel_y = -4
+	},
+/turf/simulated/floor/airless/snow,
+/area/prefab/discount_dans_asteroid)
+"uM" = (
+/obj/decal/cleanable/machine_debris,
+/turf/unsimulated/floor/plating/scorched,
+/area/prefab/discount_dans_asteroid)
+"uY" = (
+/obj/grille/steel,
+/turf/simulated/floor/airless/plating/scorched,
+/area/prefab/discount_dans_asteroid)
+"vk" = (
+/obj/storage/secure/crate/dan/snacks,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/prefab/discount_dans_asteroid)
+"vO" = (
+/obj/decal/fakeobjects/airmonitor_broken,
+/turf/simulated/wall/auto/supernorn,
+/area/prefab/discount_dans_asteroid)
+"vS" = (
+/turf/simulated/floor/plating,
+/area/prefab/discount_dans_asteroid)
+"we" = (
+/turf/simulated/floor/plating/scorched,
+/area/prefab/discount_dans_asteroid)
+"wk" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 5;
+	icon_state = "tracks"
+	},
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/prefab/discount_dans_asteroid)
+"wG" = (
+/turf/simulated/wall/auto/supernorn,
+/area/prefab/discount_dans_asteroid)
+"wQ" = (
+/obj/decal/cleanable/ash,
+/obj/item/device/light/glowstick/green_on{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/turf/unsimulated/floor/plating/scorched,
+/area/prefab/discount_dans_asteroid)
+"wX" = (
+/obj/rack,
+/obj/item/clothing/suit/lshirt/dan_blue{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/obj/item/clothing/suit/lshirt/dan_blue{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/bat,
+/turf/simulated/floor/airless/snow,
+/area/prefab/discount_dans_asteroid)
+"xq" = (
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/carpet/blue/standard/edge/south,
+/area/prefab/discount_dans_asteroid)
+"xu" = (
+/obj/decal/cleanable/blood{
+	icon_state = "floor6"
+	},
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/prefab/discount_dans_asteroid)
+"xv" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/decal/fakeobjects/lightbulb_broken,
+/turf/simulated/floor/airless/grime,
+/area/prefab/discount_dans_asteroid)
+"xw" = (
+/obj/plasticflaps,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/prefab/discount_dans_asteroid)
+"xz" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 10;
+	icon_state = "tracks"
+	},
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/prefab/discount_dans_asteroid)
+"xC" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/blood/tracks{
+	dir = 8;
+	icon_state = "tracks"
+	},
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/prefab/discount_dans_asteroid)
+"xV" = (
+/obj/decal/fakeobjects/firelock_broken,
+/obj/decal/cleanable/blood/tracks{
+	dir = 8;
+	icon_state = "tracks"
+	},
+/turf/simulated/floor/airless/snow,
+/area/prefab/discount_dans_asteroid)
+"yo" = (
+/obj/decal/cleanable/blood{
+	icon_state = "u_guilty"
+	},
+/obj/item/clothing/suit/lshirt/dan_red{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 8;
+	icon_state = "tracks"
+	},
+/turf/simulated/floor/airless/snow,
+/area/prefab/discount_dans_asteroid)
+"yv" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 8;
+	icon_state = "tracks"
+	},
+/turf/simulated/floor/airless/snow,
+/area/prefab/discount_dans_asteroid)
+"yL" = (
+/turf/simulated/floor/wood,
+/area/prefab/discount_dans_asteroid)
+"zZ" = (
+/turf/simulated/wall/auto/asteroid/comet/ice,
+/area/noGenerate)
+"Al" = (
+/obj/decal/poster/wallsign/poster_discount,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/discount_dans_asteroid)
+"Am" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibdown1"
+	},
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/prefab/discount_dans_asteroid)
+"AW" = (
+/obj/newmeteor/small,
+/turf/simulated/floor/plating,
+/area/prefab/discount_dans_asteroid)
+"Bc" = (
+/obj/decal/cleanable/dirt/dirt4,
+/obj/item/device/light/glowstick/green_on{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/turf/simulated/floor/airless/neutral,
+/area/prefab/discount_dans_asteroid)
+"Bg" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 6;
+	pixel_y = -1
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/discount_dans_asteroid)
+"BG" = (
+/obj/item/clothing/under/gimmick/shirtnjeans{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/prefab/discount_dans_asteroid)
+"BV" = (
+/obj/decal/floatingtiles{
+	dir = 1;
+	icon_state = "floattiles4"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Cm" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating/damaged1,
+/area/prefab/discount_dans_asteroid)
+"Cu" = (
+/obj/stool/chair/office/yellow{
+	dir = 8
+	},
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/prefab/discount_dans_asteroid)
+"Da" = (
+/obj/item/raw_material/shard/glass{
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Dj" = (
+/obj/decal/cleanable/blood/tracks,
+/obj/decal/cleanable/blood{
+	icon_state = "u_guilty"
+	},
+/obj/item/parts/human_parts/leg/left{
+	pixel_x = -2;
+	pixel_y = -7
+	},
+/obj/item/gun/kinetic/flaregun{
+	pixel_y = 5
+	},
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/prefab/discount_dans_asteroid)
+"Dl" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 10;
+	icon_state = "tracks"
+	},
+/obj/item/ammo/bullets/flare{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/obj/item/clothing/shoes/orange{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/prefab/discount_dans_asteroid)
+"DW" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "door_open";
+	name = "broken airlock"
+	},
+/obj/decal/cleanable/oil/streak,
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/plating,
+/area/prefab/discount_dans_asteroid)
+"Ec" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "The air from it smells faintly of mildew.";
+	dir = 8;
+	icon = 'icons/obj/atmospherics/pipes.dmi';
+	icon_state = "vent";
+	name = "grimy vent"
+	},
+/turf/simulated/floor/plating/scorched,
+/area/prefab/discount_dans_asteroid)
+"EZ" = (
+/obj/item/paper/shipping_precautions{
+	pixel_x = 3;
+	pixel_y = -4
+	},
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/prefab/discount_dans_asteroid)
+"Fc" = (
+/obj/item/light/bulb{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/turf/simulated/floor/wood,
+/area/prefab/discount_dans_asteroid)
+"Fr" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
+	id = natra
+	},
+/turf/simulated/floor/shuttlebay{
+	icon_state = "engine_caution_east"
+	},
+/area/prefab/discount_dans_asteroid)
+"Fy" = (
+/obj/decal/cleanable/oil/streak,
+/turf/unsimulated/floor/plating/damaged1,
+/area/prefab/discount_dans_asteroid)
+"FP" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/wood,
+/area/prefab/discount_dans_asteroid)
+"Gj" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/wood,
+/area/prefab/discount_dans_asteroid)
+"Gk" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/random_item_spawner/junk/one,
+/turf/simulated/floor/carpet/blue/standard/edge/se,
+/area/prefab/discount_dans_asteroid)
+"GU" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/random_item_spawner/hat/one_or_zero,
+/turf/simulated/floor/carpet/blue/standard/edge/se,
+/area/prefab/discount_dans_asteroid)
+"HU" = (
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/plating,
+/area/prefab/discount_dans_asteroid)
+"Ic" = (
+/turf/simulated/floor/carpet/blue/standard/edge/ne,
+/area/prefab/discount_dans_asteroid)
+"Ip" = (
+/obj/structure/girder/reinforced,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/prefab/discount_dans_asteroid)
+"Ir" = (
+/obj/item/reagent_containers/food/snacks/strudel{
+	pixel_x = 4;
+	pixel_y = 12
+	},
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/prefab/discount_dans_asteroid)
+"Iz" = (
+/obj/decal/cleanable/blood{
+	icon_state = "u_guilty"
+	},
+/turf/simulated/floor/wood,
+/area/prefab/discount_dans_asteroid)
+"Jc" = (
+/obj/decal/cleanable/blood/gibs{
+	dir = 4;
+	icon_state = "gib4"
+	},
+/obj/critter/brullbar,
+/turf/simulated/floor/airless/snow,
+/area/prefab/discount_dans_asteroid)
+"Jd" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Jr" = (
+/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Jx" = (
+/obj/item/raw_material/shard/glass{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"JG" = (
+/obj/random_item_spawner/dressup/one_or_zero,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/prefab/discount_dans_asteroid)
+"JH" = (
+/obj/machinery/atmospherics/pipe/tank/air/north,
+/turf/simulated/floor/airless/snow,
+/area/prefab/discount_dans_asteroid)
+"Kl" = (
+/turf/simulated/floor/stairs,
+/area/prefab/discount_dans_asteroid)
+"Ko" = (
+/obj/machinery/shuttle/engine/propulsion{
+	icon_state = "alt_propulsion"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Ky" = (
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-L"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/discount_dans_asteroid)
+"Kz" = (
+/turf/unsimulated/floor/plating/scorched,
+/area/prefab/discount_dans_asteroid)
+"Lq" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/airless/grime,
+/area/prefab/discount_dans_asteroid)
+"Lw" = (
+/obj/item/gun/kinetic/zipgun{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/turf/simulated/floor/plating/scorched,
+/area/prefab/discount_dans_asteroid)
+"Ly" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/airless/grime,
+/area/prefab/discount_dans_asteroid)
+"LZ" = (
+/obj/decal/cleanable/dirt/dirt4,
+/obj/decal/cleanable/blood/tracks{
+	dir = 8;
+	icon_state = "tracks"
+	},
+/obj/item/organ/stomach{
+	pixel_x = -4;
+	pixel_y = -6
+	},
+/turf/simulated/floor/plating,
+/area/prefab/discount_dans_asteroid)
+"Mb" = (
+/obj/wingrille_spawn/auto/tuff,
+/turf/simulated/floor/airless/plating,
+/area/prefab/discount_dans_asteroid)
+"Mm" = (
+/obj/decal/tile_edge/stripe/big{
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/storage/closet/emergency,
+/turf/simulated/floor/airless/grime,
+/area/prefab/discount_dans_asteroid)
+"Mo" = (
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/airless/neutral,
+/area/prefab/discount_dans_asteroid)
+"My" = (
+/turf/simulated/floor/airless/grime,
+/area/prefab/discount_dans_asteroid)
+"MA" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibmid3"
+	},
+/turf/simulated/floor/airless/neutral,
+/area/prefab/discount_dans_asteroid)
+"MI" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/item/device/light/flashlight{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/turf/simulated/floor/airless/grime,
+/area/prefab/discount_dans_asteroid)
+"Nf" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 5;
+	pixel_y = -1;
+	tag = "icon-intact (NORTHEAST)"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Ni" = (
+/obj/decal/fakeobjects/lightbulb_broken{
+	dir = 8
+	},
+/turf/simulated/floor/airless/grime,
+/area/prefab/discount_dans_asteroid)
+"Nr" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 9;
+	pixel_y = -1;
+	tag = "icon-intact-f (NORTHWEST)"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Nv" = (
+/obj/decal/cleanable/dirt/dirt4,
+/obj/random_item_spawner/junk/one,
+/turf/simulated/floor/wood,
+/area/prefab/discount_dans_asteroid)
+"Nz" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent. Cool air is gently flowing through it.";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "hvent";
+	name = "air vent"
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/airless/grime,
+/area/prefab/discount_dans_asteroid)
+"NL" = (
+/obj/machinery/vehicle/miniputt/indyputt{
+	dir = 8
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/discount_dans_asteroid)
+"NQ" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/decal/cleanable/oil/streak,
+/turf/simulated/floor/airless/grime,
+/area/prefab/discount_dans_asteroid)
+"NV" = (
+/turf/simulated/wall/auto/asteroid/comet/ice,
+/area/prefab/discount_dans_asteroid)
+"Od" = (
+/obj/item/device/light/glowstick/green_on{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/discount_dans_asteroid)
+"Ol" = (
+/turf/simulated/floor/carpet/blue/standard/edge/north,
+/area/prefab/discount_dans_asteroid)
+"Oz" = (
+/obj/table/auto,
+/obj/item/ticket/golden{
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/obj/item/ticket/golden{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/prefab/discount_dans_asteroid)
+"OO" = (
+/obj/rack,
+/obj/item/storage/box/glowstickbox,
+/turf/simulated/floor/airless/grime,
+/area/prefab/discount_dans_asteroid)
+"Pc" = (
+/obj/item/organ/eye{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Ph" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/discount_dans_asteroid)
+"Pk" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/airless/grime,
+/area/prefab/discount_dans_asteroid)
+"Pr" = (
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles4"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Pu" = (
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/airless/grime,
+/area/prefab/discount_dans_asteroid)
+"Px" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/airless/grime,
+/area/prefab/discount_dans_asteroid)
+"PC" = (
+/obj/machinery/r_door_control{
+	id = natra
+	},
+/turf/simulated/wall/auto/jen,
+/area/prefab/discount_dans_asteroid)
+"PS" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/airless/neutral,
+/area/prefab/discount_dans_asteroid)
+"Qe" = (
+/turf/simulated/floor/carpet/blue/standard/edge/sw,
+/area/prefab/discount_dans_asteroid)
+"Qj" = (
+/obj/decal/cleanable/blood{
+	icon_state = "floor5"
+	},
+/obj/critter/brullbar,
+/obj/item/reagent_containers/food/snacks/burrito{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/turf/simulated/floor/airless/snow,
+/area/prefab/discount_dans_asteroid)
+"Qp" = (
+/obj/decal/tile_edge/stripe/big{
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/table/reinforced/auto,
+/obj/table/reinforced/auto,
+/turf/simulated/floor/airless/grime,
+/area/prefab/discount_dans_asteroid)
+"QA" = (
+/obj/machinery/door/airlock/pyro,
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/airless/neutral,
+/area/prefab/discount_dans_asteroid)
+"QE" = (
+/obj/shrub{
+	dir = 4;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
+/turf/simulated/floor/airless/neutral,
+/area/prefab/discount_dans_asteroid)
+"QS" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/orange,
+/obj/decal/fakeobjects/skeleton{
+	pixel_x = 2;
+	pixel_y = 1
+	},
+/obj/machinery/light/incandescent/small{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/prefab/discount_dans_asteroid)
+"Rg" = (
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles3"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Rk" = (
+/obj/item/clothing/head/danberet{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/prefab/discount_dans_asteroid)
+"Rl" = (
+/obj/decal/cleanable/blood{
+	icon_state = "gib3"
+	},
+/obj/item/clothing/under/misc/bandshirt{
+	pixel_x = 8;
+	pixel_y = -8
+	},
+/turf/simulated/floor/airless/neutral,
+/area/prefab/discount_dans_asteroid)
+"RA" = (
+/turf/simulated/floor/airless/neutral,
+/area/prefab/discount_dans_asteroid)
+"RH" = (
+/obj/storage/secure/crate/dan/beverages,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/prefab/discount_dans_asteroid)
+"RP" = (
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 4
+	},
+/turf/simulated/floor/airless/neutral,
+/area/prefab/discount_dans_asteroid)
+"RY" = (
+/obj/decal/fakeobjects/lighttube_broken,
+/turf/simulated/wall/auto/jen,
+/area/prefab/discount_dans_asteroid)
+"Se" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "What was this thing even supposed to do?";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "broken machine"
+	},
+/obj/map/light/white,
+/turf/simulated/floor/plating,
+/area/prefab/discount_dans_asteroid)
+"Sf" = (
+/turf/simulated/wall/auto/jen,
+/area/prefab/discount_dans_asteroid)
+"Sy" = (
+/obj/table/auto,
+/obj/machinery/coffeemaker,
+/obj/map/light/white,
+/turf/simulated/floor/airless/neutral,
+/area/prefab/discount_dans_asteroid)
+"SO" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's just sideways but apparently that's enough to stop it dead in its tracks.";
+	icon = 'icons/obj/vending.dmi';
+	icon_state = "grife-fallen";
+	name = "broken vending machine"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "gib3"
+	},
+/turf/simulated/floor/airless/neutral,
+/area/prefab/discount_dans_asteroid)
+"Tk" = (
+/obj/stool/chair/wooden{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/blue/standard/edge/nw,
+/area/prefab/discount_dans_asteroid)
+"Ty" = (
+/obj/item/device/light/glowstick/green_on{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/turf/simulated/floor/airless/neutral,
+/area/prefab/discount_dans_asteroid)
+"Ub" = (
+/obj/item/pen{
+	pixel_x = -9;
+	pixel_y = -2
+	},
+/turf/simulated/floor/carpet/blue/standard/edge/ne,
+/area/prefab/discount_dans_asteroid)
+"Ue" = (
+/turf/simulated/floor/shuttlebay,
+/area/prefab/discount_dans_asteroid)
+"Ug" = (
+/obj/table/auto,
+/obj/decal/cleanable/dirt/dirt5,
+/obj/item/clothing/mask/cigarette/random{
+	pixel_x = -5;
+	pixel_y = 10
+	},
+/obj/item/clothing/mask/cigarette/random{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/clothing/mask/cigarette/random{
+	pixel_x = 2;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/drinks/mug/random_color{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/turf/simulated/floor/airless/neutral,
+/area/prefab/discount_dans_asteroid)
+"UU" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4;
+	icon_state = "maint_locked";
+	locked = 1;
+	req_access = null
+	},
+/turf/simulated/floor/wood,
+/area/prefab/discount_dans_asteroid)
+"Ve" = (
+/turf/simulated/wall/auto/reinforced/supernorn/orange,
+/area/prefab/discount_dans_asteroid)
+"Wo" = (
+/obj/decal/cleanable/blood/gibs/body,
+/obj/critter/brullbar,
+/turf/simulated/floor/plating,
+/area/prefab/discount_dans_asteroid)
+"Wr" = (
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/wood,
+/area/prefab/discount_dans_asteroid)
+"Wz" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/airless/neutral,
+/area/prefab/discount_dans_asteroid)
+"WB" = (
+/obj/item/organ/eye{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/turf/simulated/floor/airless/neutral,
+/area/prefab/discount_dans_asteroid)
+"WC" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/snacks/plant/orange{
+	pixel_x = 6;
+	pixel_y = 11
+	},
+/obj/item/paper/dreamy_rhyme{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/turf/simulated/floor/wood,
+/area/prefab/discount_dans_asteroid)
+"Xc" = (
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/prefab/discount_dans_asteroid)
+"XA" = (
+/obj/decal/cleanable/molten_item,
+/turf/unsimulated/floor/plating/scorched,
+/area/prefab/discount_dans_asteroid)
+"XI" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles5"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ZZ" = (
+/obj/decal/cleanable/blood{
+	icon_state = "floor6"
+	},
+/turf/simulated/floor/airless/neutral,
+/area/prefab/discount_dans_asteroid)
 
 (1,1,1) = {"
-sqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqjUjUjUjUjUjUsqsqsqsqsqsqsqsqsqsq
-sqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqjUjUjUjUjUjUjUjUjUjUsqsqsqsqsqsqsqsq
-sqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqjUjUjUjUjUjUjUjUjUjUjUjUjUjUsqsqsqsqsqsq
-sqsqsqsqsqsqsqsqsqsqsqsqsqsqsqjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUsqsqsqsqsq
-sqsqsqsqsqsqsqsqsqsqsqsqsqsqjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUsqsqsqsqsq
-sqsqsqsqsqjUjUjUsqsqjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUsqsqsqsq
-sqsqsqsqjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUadajakakakbgakbVbXjUjUsqsqsqsq
-sqsqjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUcijUjUjUjUjUjUsqsqsq
-sqjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUNVNVjUPhjUjUjUjUjUjUsqsqsq
-sqjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUNVNVNVNVPhjUjUjUjUjUjUsqsqsq
-sqjUjUjUjUjUjUzZzZjUjUjUjUjUjUjUjUjUjUjUjUjUNVNVPhPhAlPhjUjUjUjUjUjUjUsqsq
-sqjUjUjUjUjUzZzZzZzZzZjUjUjUjUjUjUjUjUjUjUjUjUNVcVdBwXPhNVjUjUjUjUjUjUsqsq
-sqjUjUjUjUjUzZzZzZzZjUjUMbMbMbjUNVNVjUjUjUjUNVNVdJdSeKJHNVjUjUjUjUjUjUsqsq
-sqsqjUjUjUzZzZzZzZzZjUMbMbeTMbNVNVNVNVRgjUNVNVfMfOgqgCNVNVNVjUjUjUjUjUjUsq
-sqsqjUjUjUzZzZzZjUzZjUwGgQhKhPNVNVycjQjUjUjUNVNVkPlUmuNVjUjUjUmzjUjUjUjUsq
-sqsqjUjUjUjUzZzZjUjUjUwGmCdgjUPcmSjUjUjUjUjUjUNVmMmVwkNVNVjUjUnajUjUjUjUjU
-sqsqjUjUjUjUjUjUjUjUjUwGnlnulTwGojmozZjUjUjUNVNVNVvkDjOzNVNVjUcijUjUjUjUjU
-sqsqjUjUjUjUjUjUjUjUSfoxRYaZRYNVNVBVjUjUNVNVNVAlPhPhDlqGNVjUjUcijUjUjUjUjU
-sqjUjUjUjUjUjUjUoZSfSfyLGjyLKzuMNVjUjUPhPhgEkIjoRHPhxwPhPhPhakpRjUjUjUjUjU
-jUjUjUjUjUzZzZpXjUqhrRAWoiOlIcvSshsrNVPhswtLuqodXcEZXcNVNVjUjUcijUjUjUjUjU
-jUjUjUjUjUjUjUjUjUuYwewQQexqGkyLxuxzxCxVyoyvAmBGCuNVqGNVNVjUjUcijUjUjUjUjU
-jUjUjUjUjUjUjUzZDaVevSFyFPNVNVIzWrVeRkPhIpPhIrXcNVNVNVNVjUjUjUJdjUjUjUjUjU
-jUjUjUjUjUjUjUjUjUSfSfKlKlwGwGwGSfSfNVNVjUNVNVqGNVNVNVjUjUjUjUKojUjUjUjUsq
-sqjUjUrwjUjUjUjUjUjUSfLqLyMmQpglSfjUjUjUjUjUNVNVNVjUNVjUjUjUjUjUjUjUjUjUsq
-sqjUjUjUjUjUjUjUjUjUwGMyMIUeUeUeFrjUjUrwjUjUjUNVNVjUjUjUjUjUjUjUjUjUjUjUsq
-jUjUjUjUjUjUjUjUjUjUwGNiNzNLUeUeFrjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUsqsq
-jUjUjUjUjUjUjUjUjUjUwGMyNQOdUeUeFrjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUsqsq
-jUjUjUjUjUjUjUjUjUjUSfPuPxxvPkPkPCjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUsqsqsq
-jUjUjUjUjUjUjUjUjUSfSfPSQAwGbWOOSfSfjUjUjUzZzZjUjUjUjUjUjUjUjUjUjUjUsqsqsq
-sqjUjUjUjUjUjUjUjUSfQERlBcwGwGoOwGSfjUjUzZzZzZzZzZjUjUjUjUjUjUjUjUsqsqsqsq
-sqsqsqjUjUjUjUjUjUVeRARARPwGotWCNnVejUjUzZzZzZzZzZjUjUjUjUjUjUjUsqsqsqsqsq
-sqsqsqjUjUjUjUjUjUMbSyRASOwGgUTkUbMbjUjUjUzZjUzZzZjUjUjUjUjUjUjUsqsqsqsqsq
-sqsqsqjUjUjUjUjUjUMbUgWzWBUUNvQeGUMbJxXIjUjUjUzZjUjUjUjUjUjUjUjUsqsqsqsqsq
-sqsqsqsqjUjUjUjUjUMbZZMARPwGoXFcbRcLjUjUjUjUjUjUjUrwjUjUjUjUjUsqsqsqsqsqsq
-sqsqsqsqjUjUjUjUjUVeTygXMofdXAJGNVNVNVjUjUPrjUjUjUjUjUjUjUjUjUsqsqsqsqsqsq
-sqsqsqsqjUjUjUjUjUSfwGDWwGvOwGwGwGNVNVNVrwjUjUjUjUjUjUjUjUjUjUsqsqsqsqsqsq
-sqsqsqsqjUjUjUjUjUSfSffxLZfCCmHUSfSfNVjUjUjUjUjUjUjUjUjUjUjUjUjUsqsqsqsqsq
-sqsqsqjUjUjUjUjUjUjUPhEccISefTLwPhjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUsqsqsqsqsq
-sqsqsqjUjUjUjUjUjUjUKyofhIPhBgKyofjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUsqsqsqsqsq
-sqsqjUjUjUjUjUzZjUjUKoKoNfbQNrKoKojUjUjUjUjUjUjUjUjUsqsqjUjUjUsqsqsqsqsqsq
-sqsqjUjUjUjUzZzZzZjUjUjUjUKojUjUjUjUjUjUjUjUjUjUsqsqsqsqsqsqsqsqsqsqsqsqsq
-sqsqsqjUjUjUjUzZzZjUjUjUjUjUjUjUjUjUjUjUjUjUjUsqsqsqsqsqsqsqsqsqsqsqsqsqsq
-sqsqsqjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUsqsqsqsqsqsqsqsqsqsqsqsqsqsq
-sqsqsqsqjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUsqsqsqsqsqsqsqsqsqsqsqsqsqsqsq
-sqsqsqsqjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUjUsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsq
-sqsqsqsqsqsqjUjUjUjUjUjUjUjUjUjUjUjUsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsq
-sqsqsqsqsqsqsqsqjUjUjUjUjUjUjUjUsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsq
-sqsqsqsqsqsqsqsqsqsqjUjUjUjUjUsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsqsq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+sq
+sq
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+"}
+(2,1,1) = {"
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+"}
+(3,1,1) = {"
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+jU
+jU
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+"}
+(4,1,1) = {"
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+rw
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+sq
+sq
+"}
+(5,1,1) = {"
+sq
+sq
+sq
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+"}
+(6,1,1) = {"
+sq
+sq
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+zZ
+zZ
+jU
+jU
+jU
+jU
+zZ
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+"}
+(7,1,1) = {"
+sq
+sq
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+zZ
+zZ
+zZ
+zZ
+zZ
+jU
+jU
+jU
+zZ
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+zZ
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+"}
+(8,1,1) = {"
+sq
+sq
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+zZ
+zZ
+zZ
+zZ
+zZ
+zZ
+jU
+jU
+jU
+pX
+jU
+zZ
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+zZ
+zZ
+zZ
+jU
+jU
+jU
+jU
+sq
+sq
+"}
+(9,1,1) = {"
+sq
+sq
+sq
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+zZ
+zZ
+zZ
+zZ
+jU
+jU
+jU
+jU
+oZ
+jU
+jU
+Da
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+zZ
+zZ
+jU
+jU
+jU
+jU
+jU
+sq
+"}
+(10,1,1) = {"
+sq
+sq
+sq
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+zZ
+zZ
+zZ
+zZ
+jU
+jU
+jU
+Sf
+qh
+uY
+Ve
+Sf
+jU
+jU
+jU
+jU
+jU
+Sf
+Sf
+Ve
+Mb
+Mb
+Mb
+Ve
+Sf
+Sf
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+"}
+(11,1,1) = {"
+sq
+sq
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+zZ
+jU
+jU
+jU
+jU
+jU
+Sf
+Sf
+rR
+we
+vS
+Sf
+Sf
+wG
+wG
+wG
+Sf
+Sf
+QE
+RA
+Sy
+Ug
+ZZ
+Ty
+wG
+Sf
+Ph
+Ky
+Ko
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+"}
+(12,1,1) = {"
+sq
+sq
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+Mb
+wG
+wG
+wG
+ox
+yL
+AW
+wQ
+Fy
+Kl
+Lq
+My
+Ni
+My
+Pu
+PS
+Rl
+RA
+RA
+Wz
+MA
+gX
+DW
+fx
+Ec
+of
+Ko
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+"}
+(13,1,1) = {"
+sq
+sq
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+Mb
+Mb
+gQ
+mC
+nl
+RY
+Gj
+oi
+Qe
+FP
+Kl
+Ly
+MI
+Nz
+NQ
+Px
+QA
+Bc
+RP
+SO
+WB
+RP
+Mo
+wG
+LZ
+cI
+hI
+Nf
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+"}
+(14,1,1) = {"
+sq
+sq
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+Mb
+eT
+hK
+dg
+nu
+aZ
+yL
+Ol
+xq
+NV
+wG
+Mm
+Ue
+NL
+Od
+xv
+wG
+wG
+wG
+wG
+UU
+wG
+fd
+vO
+Wo
+Se
+Ph
+bQ
+Ko
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+"}
+(15,1,1) = {"
+sq
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+Mb
+Mb
+hP
+jU
+lT
+RY
+Kz
+Ic
+Gk
+NV
+wG
+Qp
+Ue
+Ue
+Ue
+Pk
+bW
+wG
+ot
+gU
+Nv
+oX
+XA
+wG
+Cm
+fT
+Bg
+Nr
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+"}
+(16,1,1) = {"
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+NV
+NV
+Pc
+wG
+NV
+uM
+vS
+yL
+Iz
+wG
+gl
+Ue
+Ue
+Ue
+Pk
+OO
+oO
+WC
+Tk
+Qe
+Fc
+JG
+wG
+HU
+Lw
+Ky
+Ko
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+"}
+(17,1,1) = {"
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+NV
+NV
+NV
+mS
+oj
+NV
+NV
+sh
+xu
+Wr
+Sf
+Sf
+Fr
+Fr
+Fr
+PC
+Sf
+wG
+QS
+Ub
+GU
+bR
+NV
+wG
+Sf
+Ph
+of
+Ko
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+"}
+(18,1,1) = {"
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+NV
+NV
+Jr
+jU
+mo
+BV
+jU
+sr
+xz
+Ve
+Sf
+jU
+jU
+jU
+jU
+jU
+Sf
+Sf
+Ve
+Mb
+Mb
+cL
+NV
+NV
+Sf
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+"}
+(19,1,1) = {"
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+NV
+jQ
+jU
+zZ
+jU
+jU
+NV
+xC
+Rk
+NV
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+Jx
+jU
+NV
+NV
+NV
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+"}
+(20,1,1) = {"
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+Rg
+jU
+jU
+jU
+jU
+Ph
+Ph
+xV
+Ph
+NV
+jU
+rw
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+XI
+jU
+jU
+NV
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+"}
+(21,1,1) = {"
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+NV
+Ph
+sw
+yo
+Ip
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+zZ
+zZ
+jU
+jU
+jU
+jU
+rw
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+sq
+"}
+(22,1,1) = {"
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+NV
+jU
+jU
+jU
+NV
+gE
+tL
+yv
+Ph
+NV
+jU
+jU
+jU
+jU
+jU
+zZ
+zZ
+zZ
+zZ
+jU
+jU
+Pr
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+sq
+"}
+(23,1,1) = {"
+jU
+jU
+jU
+jU
+jU
+jU
+ad
+jU
+jU
+jU
+NV
+jU
+NV
+NV
+NV
+jU
+NV
+NV
+kI
+Qj
+Am
+Ir
+NV
+NV
+jU
+jU
+jU
+jU
+zZ
+zZ
+zZ
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+sq
+sq
+"}
+(24,1,1) = {"
+jU
+jU
+jU
+jU
+jU
+jU
+aj
+jU
+jU
+NV
+NV
+NV
+NV
+fM
+NV
+NV
+NV
+Al
+jo
+od
+BG
+Xc
+qG
+NV
+NV
+jU
+jU
+jU
+jU
+zZ
+zZ
+zZ
+zZ
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+"}
+(25,1,1) = {"
+jU
+jU
+jU
+jU
+jU
+jU
+ak
+jU
+NV
+NV
+Ph
+cV
+dJ
+fO
+kP
+mM
+NV
+Ph
+RH
+Xc
+Cu
+NV
+NV
+NV
+NV
+jU
+jU
+jU
+jU
+zZ
+zZ
+zZ
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+"}
+(26,1,1) = {"
+jU
+jU
+jU
+jU
+jU
+jU
+ak
+jU
+NV
+NV
+Ph
+dB
+dS
+gq
+lU
+mV
+vk
+Ph
+Ph
+EZ
+NV
+NV
+NV
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+rw
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+"}
+(27,1,1) = {"
+jU
+jU
+jU
+jU
+jU
+jU
+ak
+jU
+jU
+NV
+Al
+wX
+eK
+Jc
+mu
+wk
+Dj
+Dl
+xw
+Xc
+qG
+NV
+NV
+NV
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+"}
+(28,1,1) = {"
+sq
+jU
+jU
+jU
+jU
+jU
+bg
+ci
+Ph
+Ph
+Ph
+Ph
+JH
+NV
+NV
+NV
+Oz
+qG
+Ph
+NV
+NV
+NV
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+"}
+(29,1,1) = {"
+sq
+jU
+jU
+jU
+jU
+jU
+ak
+jU
+jU
+jU
+jU
+NV
+NV
+NV
+jU
+NV
+NV
+NV
+Ph
+NV
+NV
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+"}
+(30,1,1) = {"
+sq
+sq
+jU
+jU
+jU
+jU
+bV
+jU
+jU
+jU
+jU
+jU
+jU
+NV
+jU
+jU
+NV
+jU
+Ph
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+"}
+(31,1,1) = {"
+sq
+sq
+jU
+jU
+jU
+jU
+bX
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+ak
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+"}
+(32,1,1) = {"
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+mz
+na
+ci
+ci
+pR
+ci
+ci
+Jd
+Ko
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+jU
+jU
+jU
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+"}
+(33,1,1) = {"
+sq
+sq
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+"}
+(34,1,1) = {"
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+"}
+(35,1,1) = {"
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+"}
+(36,1,1) = {"
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+"}
+(37,1,1) = {"
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
 "}

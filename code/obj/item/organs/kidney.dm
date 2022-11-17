@@ -3,7 +3,7 @@
 	organ_name = "kidney_t"
 	desc = "Bean shaped, but not actually beans. You can still eat them, though!"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 7.0
+	organ_holder_required_op_stage = 7
 	icon_state = "kidneys"
 	failure_disease = /datum/ailment/disease/kidney_failure
 	var/chem_metabolism_modifier = 1
@@ -15,31 +15,29 @@
 		if (!..())
 			return 0
 		if (body_side == L_ORGAN)
-			if (src.holder.left_kidney && src.holder.left_kidney.get_damage() > FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+			if (src.holder.left_kidney && src.holder.left_kidney.get_damage() > fail_damage && prob(src.get_damage() * 0.2))
 				donor.contract_disease(failure_disease,null,null,1)
 		else
-			if (src.holder.right_kidney && src.holder.right_kidney.get_damage() > FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+			if (src.holder.right_kidney && src.holder.right_kidney.get_damage() > fail_damage && prob(src.get_damage() * 0.2))
 				donor.contract_disease(failure_disease,null,null,1)
 		return 1
 
 	on_transplant(mob/M)
 		. = ..()
 		if(!broken)
-			APPLY_MOB_PROPERTY(M, PROP_METABOLIC_RATE, src, chem_metabolism_modifier)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_METABOLIC_RATE, src, chem_metabolism_modifier)
 
 	on_removal()
+		REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_METABOLIC_RATE, src)
 		. = ..()
-		REMOVE_MOB_PROPERTY(src.donor, PROP_METABOLIC_RATE, src)
 
 	unbreakme()
-		..()
-		if(donor)
-			APPLY_MOB_PROPERTY(src.donor, PROP_METABOLIC_RATE, src, chem_metabolism_modifier)
+		if(..() && donor)
+			APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_METABOLIC_RATE, src, chem_metabolism_modifier)
 
 	breakme()
-		..()
-		if(donor)
-			REMOVE_MOB_PROPERTY(src.donor, PROP_METABOLIC_RATE, src)
+		if(..() && donor)
+			REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_METABOLIC_RATE, src)
 
 	on_broken(var/mult = 1)
 		if (!holder.get_working_kidney_amt())
@@ -72,27 +70,27 @@
 				target_organ_location = pick("right", "left")
 
 			if (target_organ_location == "right" && !H.organHolder.right_kidney)
-				H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right kidney socket!</span>",\
-				user, "<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] right kidney socket!</span>",\
-				H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your right kidney socket!</span>")
+				user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right kidney socket!</span>",\
+					"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] right kidney socket!</span>",\
+					"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your right kidney socket!</span>")
 
 				if (user.find_in_hand(src))
 					user.u_equip(src)
-				H.organHolder.receive_organ(src, "right_kidney", 2.0)
+				H.organHolder.receive_organ(src, "right_kidney", 2)
 				H.update_body()
 			else if (target_organ_location == "left" && !H.organHolder.left_kidney)
-				H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] left kidney socket!</span>",\
-				user, "<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] left kidney socket!</span>",\
-				H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your left kidney socket!</span>")
+				user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] left kidney socket!</span>",\
+					"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] left kidney socket!</span>",\
+					"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your left kidney socket!</span>")
 
 				if (user.find_in_hand(src))
 					user.u_equip(src)
-				H.organHolder.receive_organ(src, "left_kidney", 2.0)
+				H.organHolder.receive_organ(src, "left_kidney", 2)
 				H.update_body()
 			else
-				H.tri_message("<span class='alert'><b>[user]</b> tries to [fluff] the [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right kidney socket!<br>But there's something already there!</span>",\
-				user, "<span class='alert'>You try to [fluff] the [src] into [user == H ? "your" : "[H]'s"] right kidney socket!<br>But there's something already there!</span>",\
-				H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [H == user ? "try" : "tries"] to [fluff] the [src] into your right kidney socket!<br>But there's something already there!</span>")
+				user.tri_message(H, "<span class='alert'><b>[user]</b> tries to [fluff] the [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right kidney socket!<br>But there's something already there!</span>",\
+					"<span class='alert'>You try to [fluff] the [src] into [user == H ? "your" : "[H]'s"] right kidney socket!<br>But there's something already there!</span>",\
+					"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [H == user ? "try" : "tries"] to [fluff] the [src] into your right kidney socket!<br>But there's something already there!</span>")
 				return 0
 
 			return 1

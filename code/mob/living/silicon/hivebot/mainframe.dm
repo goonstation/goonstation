@@ -85,7 +85,7 @@
 /mob/living/silicon/hive_mainframe/proc/return_to(var/mob/user)
 	if(user.mind)
 		user.mind.transfer_to(src)
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			if (user)
 				user:shell = 1
 				user:real_name = "Robot [pick(rand(1, 999))]"
@@ -113,13 +113,13 @@
 				if(!H.stat)
 					bodies += H
 
-	var/target_shell = input(usr, "Which body to control?") as null|anything in bodies
+	var/target_shell = tgui_input_list(usr, "Which body to control?", "Deploy", sortList(bodies, /proc/cmp_text_asc))
 
 	if (!target_shell)
 		return
 
 	else if(src.mind)
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			target_shell:mainframe = src
 			target_shell:dependent = 1
 			target_shell:real_name = src.name

@@ -23,7 +23,7 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 		var/datum/plantgenes/DNA = S.plantgenes
 		if (!DNA) return
 		switch(reagent)
-			if("phlogiston","infernite","thalmerite","sorium")
+			if("phlogiston","infernite","pyrosium","sorium")
 				if (prob(33))
 					DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tomato/incendiary)
 			if("strange_reagent")
@@ -206,6 +206,15 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	endurance = 10
 	genome = 19
 	commuts = list(/datum/plant_gene_strain/damage_res,/datum/plant_gene_strain/stabilizer)
+	assoc_reagents = list("juice_pumpkin")
+
+	HYPinfusionP(var/obj/item/seed/S,var/reagent)
+		..()
+		var/datum/plantgenes/DNA = S.plantgenes
+		if (!DNA) return
+		if (reagent == "capsaicin")
+			if (prob(80))
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/pumpkin/latte)
 
 /datum/plant/fruit/avocado
 	name = "Avocado"
@@ -308,6 +317,7 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	harvests = 4
 	endurance = 10
 	genome = 21
+	assoc_reagents = list("juice_pineapple")
 
 /datum/plant/fruit/pear
 	name = "Pear"
@@ -349,3 +359,17 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	nectarlevel = 10
 	assoc_reagents = list("juice_peach")
 	commuts = list(/datum/plant_gene_strain/quality)
+
+/datum/plant/fruit/cucumber
+	name = "Cucumber"
+	seedcolor = "#005622"
+	crop = /obj/item/reagent_containers/food/snacks/plant/cucumber
+	starthealth = 25
+	growtime = 50
+	harvtime = 100
+	cropsize = 8
+	harvests = 1
+	isgrass = 1
+	endurance = 6
+	genome = 19
+	commuts = list(/datum/plant_gene_strain/damage_res,/datum/plant_gene_strain/stabilizer)

@@ -4,7 +4,7 @@
 	name = "Communications Console"
 	icon_state = "comm"
 	req_access = list(access_heads)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	machine_registry_idx = MACHINES_COMMSCONSOLES
 	circuit_type = /obj/item/circuitboard/communications
 	var/prints_intercept = 1
@@ -27,7 +27,7 @@
 	var/status_display_freq = FREQ_STATUS_DISPLAY
 	var/stat_msg1
 	var/stat_msg2
-	desc = "A computer that allows one to call and recall the emergency shuttle, as well as recieve messages from Centcom."
+	desc = "A computer that allows one to call and recall the emergency shuttle, as well as receive messages from Centcom."
 
 	light_r =0.6
 	light_g = 1
@@ -39,9 +39,9 @@
 
 /obj/machinery/computer/communications/special_deconstruct(obj/computerframe/frame as obj)
 	if(src.status & BROKEN)
-		logTheThing("station", usr, null, "disassembles [src] (broken) [log_loc(src)]")
+		logTheThing(LOG_STATION, usr, "disassembles [src] (broken) [log_loc(src)]")
 	else
-		logTheThing("station", usr, null, "disassembles [src] [log_loc(src)]")
+		logTheThing(LOG_STATION, usr, "disassembles [src] [log_loc(src)]")
 
 
 /obj/machinery/computer/communications/process()
@@ -179,22 +179,22 @@
 	boutput(world, "<span class='alert'>Lockdown cancelled by [usr.name]!</span>")
 
 	for(var/obj/machinery/firealarm/FA as anything in machine_registry[MACHINES_FIREALARMS]) //deactivate firealarms
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(FA.lockdownbyai == 1)
 				FA.lockdownbyai = 0
 				FA.reset()
 	for_by_tcl(AL, /obj/machinery/door/airlock) //open airlocks
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(AL.canAIControl() && AL.lockdownbyai == 1)
 				AL.open()
 				AL.lockdownbyai = 0
 
-/obj/machinery/computer/communications/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/communications/attack_hand(var/mob/user)
 	if(..())
 		return
 
 	src.add_dialog(user)
-	var/dat = "<head><title>Communications Console</title></head><body>"
+	var/list/dat = list("<head><title>Communications Console</title></head><body>")
 	if (emergency_shuttle.online && emergency_shuttle.location == SHUTTLE_LOC_CENTCOM)
 		var/timeleft = emergency_shuttle.timeleft()
 		dat += "<B>Emergency shuttle</B><br><BR><br>ETA: [timeleft / 60 % 60]:[add_zero(num2text(timeleft % 60), 2)]<BR>"
@@ -203,7 +203,7 @@
 		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat +=  dat2
-			user.Browse(dat, "window=communications;size=400x500")
+			user.Browse(dat.Join(), "window=communications;size=400x500")
 			onclose(user, "communications")
 		return
 
@@ -261,7 +261,7 @@
 
 
 	dat += "<BR>\[ [(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?action=mach_close&window=communications'>Close</A> \]"
-	user.Browse(dat, "window=communications;size=400x500")
+	user.Browse(dat.Join(), "window=communications;size=400x500")
 	onclose(user, "communications")
 
 /obj/machinery/computer/communications/proc/interact_ai(var/mob/living/silicon/ai/user as mob)
@@ -316,19 +316,18 @@
 	set category = "AI Commands"
 	set name = "Call Emergency Shuttle"
 
-	if (usr == src || usr == src.eyecam)
-		if((alert(usr, "Are you sure?",,"Yes","No") != "Yes"))
-			return
+	var/call_reason = tgui_input_text(usr, "Please state the nature of your current emergency.", "Emergency Shuttle Call Reason", allowEmpty = TRUE)
 
-	var/call_reason = input("Please state the nature of your current emergency.", "Emergency Shuttle Call Reason", "") as text
-
+	if (isnull(call_reason)) // Cancel
+		return
 	if(isdead(src))
 		boutput(usr, "You can't call the shuttle because you are dead!")
 		return
-	logTheThing("admin", usr, null,  "called the Emergency Shuttle (reason: [call_reason])")
-	logTheThing("diary", usr, null, "called the Emergency Shuttle (reason: [call_reason])", "admin")
+
+	logTheThing(LOG_ADMIN, usr,  "called the Emergency Shuttle (reason: [call_reason])")
+	logTheThing(LOG_DIARY, usr, "called the Emergency Shuttle (reason: [call_reason])", "admin")
 	message_admins("<span class='internal'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
-	call_shuttle_proc(src, call_reason)
+	call_shuttle_proc(usr, call_reason)
 
 	// hack to display shuttle timer
 	if(emergency_shuttle.online)
@@ -374,6 +373,9 @@
 	if(!call_reason || length(call_reason) < 1)
 		call_reason = "No reason given."
 
+	message_admins("<span class='internal'>[key_name(user)] called the Emergency Shuttle to the station</span>")
+	logTheThing(LOG_STATION, null, "[key_name(user)] called the Emergency Shuttle to the station")
+
 	emergency_shuttle.incall()
 	command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
 	return 0
@@ -392,6 +394,8 @@
 
 	boutput(world, "<span class='notice'><B>Alert: The shuttle is going back!</B></span>") //marker4
 
+	logTheThing(LOG_STATION, user, "recalled the Emergency Shuttle")
+	message_admins("<span class='internal'>[key_name(user)] recalled the Emergency Shuttle</span>")
 	emergency_shuttle.recall()
 
 	return 0
@@ -401,6 +405,7 @@
 	status_signal.source = src
 	status_signal.transmission_method = 1
 	status_signal.data["command"] = command
+	status_signal.data["address_tag"] = "STATDISPLAY"
 
 	switch(command)
 		if("message")

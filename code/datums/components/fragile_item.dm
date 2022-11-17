@@ -19,13 +19,13 @@
 
 TYPEINFO(/datum/component/fragile_item)
 	initialization_args = list(
-		ARG_INFO("safe_hits", "num", "Buffer of hits before rolling for breaking", 3),
-		ARG_INFO("probability_of_breaking", "num", "Chance that the item will break once all safe hits are consumed", 40),
-		ARG_INFO("stay_in_hand", "num", "If the item left behind should stay in the user's hand (bool)", TRUE),
-		ARG_INFO("type_to_break_into", "num", "Path of stuff to break into", /obj/item/raw_material/shard/glass),
-		ARG_INFO("sound_to_play_on_breaking", "text", "Sound effect that plays when the item breaks", "sound/impact_sounds/Crystal_Shatter_1.ogg")
+		ARG_INFO("safe_hits", DATA_INPUT_NUM, "Buffer of hits before rolling for breaking", 3),
+		ARG_INFO("probability_of_breaking", DATA_INPUT_NUM, "Chance that the item will break once all safe hits are consumed", 40),
+		ARG_INFO("stay_in_hand", DATA_INPUT_BOOL, "If the item left behind should stay in the user's hand", TRUE),
+		ARG_INFO("type_to_break_into", DATA_INPUT_NULL, "Path of stuff to break into", /obj/item/raw_material/shard/glass),
+		ARG_INFO("sound_to_play_on_breaking", DATA_INPUT_TEXT, "Sound effect that plays when the item breaks", 'sound/impact_sounds/Crystal_Shatter_1.ogg')
 	)
-/datum/component/fragile_item/Initialize(var/safe_hits = 3, var/probability_of_breaking = 40, var/stay_in_hand = 1, var/type_to_break_into = /obj/item/raw_material/shard/glass, var/sound_to_play_on_breaking = "sound/impact_sounds/Crystal_Shatter_1.ogg")
+/datum/component/fragile_item/Initialize(var/safe_hits = 3, var/probability_of_breaking = 40, var/stay_in_hand = 1, var/type_to_break_into = /obj/item/raw_material/shard/glass, var/sound_to_play_on_breaking = 'sound/impact_sounds/Crystal_Shatter_1.ogg')
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 	src.safe_hits = safe_hits
@@ -34,8 +34,8 @@ TYPEINFO(/datum/component/fragile_item)
 	src.type_to_break_into = type_to_break_into
 	src.sound_to_play_on_breaking = sound_to_play_on_breaking
 
-	RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_POST), .proc/on_after_attack)
-	RegisterSignal(parent, list(COMSIG_MOVABLE_THROW_END), .proc/on_after_throw)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_POST, .proc/on_after_attack)
+	RegisterSignal(parent, COMSIG_MOVABLE_THROW_END, .proc/on_after_throw)
 
 /datum/component/fragile_item/proc/on_after_attack(var/obj/item/I, var/mob/M, var/mob/user, var/damage)
 	potentially_break_melee_swinged(I, user)
@@ -69,7 +69,7 @@ TYPEINFO(/datum/component/fragile_item)
 		return
 	else
 		if(prob(probability_of_breaking))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if(!type_to_break_into)
 					thrown_item.visible_message("<span class='alert'>As [thrown_item] stops, a shattering sound echoes, leaving nothing but dust!</span>")
 				else

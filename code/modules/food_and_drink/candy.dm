@@ -15,7 +15,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 		reagents.add_reagent("sugar", sugar_content)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/razor_blade))
 			boutput(user, "You add the razor blade to [src]")
 			qdel(W)
@@ -62,6 +62,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 	real_name = "candy cane"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "candycane"
+	item_state = "candycane_h"
 	sugar_content = 20
 	food_effects = list("food_energized")
 
@@ -93,7 +94,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 	desc = "A confection resembling a kernel of corn. A Halloween classic."
 	icon_state = "candy-corn"
 	real_name = "candy corn"
-	amount = 1
+	bites_left = 1
 	sugar_content = 25
 	food_color = "#FFCC00"
 	initial_reagents = list("badgrease"=5)
@@ -108,7 +109,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 /obj/item/reagent_containers/food/snacks/candy/negativeonebar
 	name = "-1 Bar"
 	desc = "A candy bar containing '-1 calories.'"
-	amount = 1
+	bites_left = 1
 	heal_amt = -1
 	icon_state = "candy-blue"
 	sugar_content = 10
@@ -133,7 +134,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 	real_name = "Hetz's Cup"
 	var/unwrapped = 0
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (user == M)
 			boutput(user, "<span class='alert'>You need to unwrap them first, you greedy beast!</span>")
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
@@ -160,7 +161,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 	icon_state = "candy-pbcup"
 	sugar_content = 20
 	heal_amt = 5
-	amount = 2
+	bites_left = 2
 	food_color = "#663300"
 	real_name = "Hetz's Cup"
 	initial_reagents = list("chocolate" = 10)
@@ -170,7 +171,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	name = "jelly bean"
 	desc = "YOU SHOULDN'T SEE THIS OBJECT"
 	icon_state = "bean"
-	amount = 1
+	bites_left = 1
 	initial_volume = 100
 	sugar_content = 0 // hacky, I know. but it's necessary for the color!
 	var/flavor
@@ -183,7 +184,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.reagents)
 				if (prob(33))
 					src.reagents.add_reagent(pick("milk", "coffee", "VHFCS", "gravy", "fakecheese", "grease", "ethanol", "chickensoup", "vanilla", "cornsyrup", "chocolate"), 10)
@@ -210,6 +211,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 				tastesbad = 0
 
 	heal(var/mob/M)
+		..()
 		if (tastesbad)
 			boutput(M, "<span class='alert'>[phrase]! That tasted like [flavor]...</span>")
 		else
@@ -222,7 +224,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.reagents)
 				if (prob(12))
 					src.reagents.add_reagent(pick("milk", "coffee", "VHFCS", "gravy", "fakecheese", "grease"), 10)
@@ -254,23 +256,23 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 					phrase = pick("Yum", "Wow", "MMM", "Delicious", "Scrumptious", "Fantastic", "Oh yeah")
 
 /obj/item/kitchen/everyflavor_box
-	amount = 6
+	var/beans_left = 6
 	icon = 'icons/obj/foodNdrink/food_candy.dmi'
 	icon_state = "beans"
 	name = "bag of Farty Snott's Every Flavour Beans"
 
-/obj/item/kitchen/everyflavor_box/attack_hand(mob/user as mob, unused, flag)
+/obj/item/kitchen/everyflavor_box/attack_hand(mob/user, unused, flag)
 	if (flag)
 		return ..()
 	if (user.r_hand == src || user.l_hand == src)
-		if(src.amount == 0)
+		if(src.beans_left == 0)
 			boutput(user, "<span class='alert'>You're out of beans. You feel strangely sad.</span>")
 			return
 		else
 			var/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor/B = new(user)
 			user.put_in_hand_or_drop(B)
-			src.amount--
-			if(src.amount == 0)
+			src.beans_left--
+			if(src.beans_left == 0)
 				src.icon_state = "beans-empty"
 				src.name = "empty Farty Snott's bag"
 	else
@@ -279,7 +281,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 /obj/item/kitchen/everyflavor_box/examine()
 	. = ..()
-	var/n = round(src.amount)
+	var/n = round(src.beans_left)
 	if (n <= 0)
 		. += "There are no beans left in the bag."
 	else
@@ -298,7 +300,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	var/icon_random = 0 // does it just choose from the existing random colors?
 	var/image/image_candy
 	heal_amt = 1
-	amount = 5
+	bites_left = 5
 	real_name = "lollipop"
 
 	New()
@@ -306,10 +308,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 		if (src.icon_random)
 			src.icon_state = "lpop-[rand(1,6)]"
 		else
-			SPAWN_DBG(0)
-				src.update_icon()
+			SPAWN(0)
+				src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		if (src.icon_random)
 			return
 		if (src.reagents)
@@ -324,7 +326,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.icon_state == "lpop-")
 				src.icon_state = "lpop-[rand(1,6)]"
 			if (islist(src.flavors) && length(src.flavors))
@@ -336,7 +338,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	desc = "A chewy gummy bright red fish. Those crazy Swedes and their fish obesssion."
 	icon = 'icons/obj/foodNdrink/food_candy.dmi'
 	icon_state = "swedishfiskfisk"
-	amount = 1
+	bites_left = 1
 	heal_amt = 1
 	food_color = "#e50000"
 	initial_volume = 10
@@ -362,24 +364,24 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	icon_empty = "swedishfisk-empty"
 
 /obj/item/kitchen/peach_rings
-	amount = 6
+	var/mbc_left = 6
 	icon = 'icons/obj/foodNdrink/food_candy.dmi'
 	icon_state = "rings-full"
 	name = "bag of peach rings"
 	desc = "A bag of gummy peach rings. A Delectable Dan's favorite."
 
-	attack_hand(mob/user as mob, unused, flag)
+	attack_hand(mob/user, unused, flag)
 		if (flag)
 			return ..()
 		if (user.r_hand == src || user.l_hand == src)
-			if(src.amount == 0)
+			if(src.mbc_left == 0)
 				boutput(user, "<span class='alert'>You're out of peach rings. You feel strangely sad.</span>")
 				return
 			else
 				var/obj/item/reagent_containers/food/snacks/candy/peach_ring/B = new(user)
 				user.put_in_hand_or_drop(B)
-				src.amount--
-				if(src.amount == 0)
+				src.mbc_left--
+				if(src.mbc_left == 0)
 					src.icon_state = "rings-empty"
 					src.name = "empty peach ring bag"
 					src.desc = "A crumpled bag that was once full of gummy peach rings."
@@ -391,18 +393,57 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	name = "peach ring"
 	desc = "A gummy peach ring dusted with sugar."
 	icon_state = "peachring"
-	amount = 1
+	bites_left = 1
 	sugar_content = 5
 
 	New()
 		..()
 		reagents.add_reagent("juice_peach",5)
 
+/obj/item/kitchen/gummy_worms_bag
+	var/worms_left = 6
+	icon = 'icons/obj/foodNdrink/food_candy.dmi'
+	icon_state = "gummyw-full"
+	name = "bag of gummy worms"
+	desc = "A bag of sour gummy worms. Still a little wriggly."
+
+	attack_hand(mob/user, unused, flag)
+		if (flag)
+			return ..()
+		if (user.r_hand == src || user.l_hand == src)
+			if(src.worms_left == 0)
+				boutput(user, "<span class='alert'>You're out of gummy worms. The world is a little bleaker.</span>")
+				return
+			else
+				var/obj/item/reagent_containers/food/snacks/candy/gummy_worm/B = new(user)
+				user.put_in_hand_or_drop(B)
+				src.worms_left--
+				if(src.worms_left == 0)
+					src.icon_state = "gummyw-empty"
+					src.name = "empty gummy worms bag"
+					src.desc = "A crumpled bag that was once full of sour gummy worms."
+		else
+			return ..()
+		return
+
+/obj/item/reagent_containers/food/snacks/candy/gummy_worm
+	name = "gummy worm"
+	desc = "A sour gummy worm sprinkled in sugar. Comes in several flavours."
+	icon_state = "gummyworm-1"
+	bites_left = 1
+	sugar_content = 5
+
+	New()
+		..()
+		src.icon_state = "gummyworm-[rand(1,3)]"
+		src.reagents.add_reagent(pick("juice_cherry", "juice_orange", "lemonade", "juice_strawberry", "juice_blueberry", "juice_apple", "juice_blueraspberry", "juice_watermelon", "juice_peach", "cocktail_citrus"), 5)
+		src.heal_amt = 1
+
 /obj/item/reagent_containers/food/snacks/candy/candyheart
 	name = "candy heart"
 	desc = "Can you find the perfect phrase for that special someone?"
 	icon_state = "heart"
-	amount = 1
+	bites_left = 1
 	sugar_content = 5
 	var/phrase
 	var/list/heart_phrases = list("Be Mine", "XOXO", "Kiss Me", "Love", "U Rock", "I <3 U", "i wuv u", "U Leave Me Breathless", "UR my man", "Cutie Pie", "U-R-2 Cute",
@@ -437,7 +478,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 		for (var/F in flavors)
 			R.add_reagent(F, 10)
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (user == M)
 			boutput(user, "<span class='alert'>You need to unwrap this first!</span>")
 			user.visible_message("<span class='emote'><b>[user]</b> stares at [src] in a confused manner.</span>")

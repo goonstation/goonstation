@@ -20,10 +20,10 @@
 			target.set_loc(src)
 			img = image('icons/effects/effects.dmi',src ,"energyorb")
 			target << img
-		RegisterSignal(the_user, list(COMSIG_MOB_DROPPED), .proc/handle_dropped_item)
-		APPLY_MOB_PROPERTY(the_user, PROP_CANTTHROW, src)
+		RegisterSignal(the_user, COMSIG_MOB_DROPPED, .proc/handle_dropped_item)
+		APPLY_ATOM_PROPERTY(the_user, PROP_MOB_CANTTHROW, src)
 
-		//SPAWN_DBG(0) check() but why
+		//SPAWN(0) check() but why
 
 	proc/handle_dropped_item(mob/user, atom/movable/AM)
 		AM.set_loc(get_turf(user))
@@ -35,12 +35,12 @@
 		return Air
 
 	proc/spawn_sparks()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			// Check spawn limits
 			if(limiter.canISpawn(/obj/effects/sparks))
 				var/obj/effects/sparks/O = new /obj/effects/sparks
 				O.set_loc(src.loc)
-				SPAWN_DBG(2 SECONDS) if (O) qdel(O)
+				SPAWN(2 SECONDS) if (O) qdel(O)
 
 	relaymove(mob/user, direction)
 
@@ -61,12 +61,12 @@
 
 				src.set_loc(new_loc)
 				can_move = 0
-				SPAWN_DBG(speed) can_move = 1
+				SPAWN(speed) can_move = 1
 		return
 
 	disposing()
 		the_user?.client.images -= cableimgs
-		REMOVE_MOB_PROPERTY(the_user, PROP_CANTTHROW, src)
+		REMOVE_ATOM_PROPERTY(the_user, PROP_MOB_CANTTHROW, src)
 		the_user = null
 		return ..()
 
@@ -104,7 +104,7 @@
 	var/vision_radius = 2
 	New()
 		handle_overlay()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			check()//ohly fucke pls rewrite me
 		cableimgs = new/list((vision_radius*2+1)**2)
 		var/obj/cable/ctype = /obj/cable
@@ -226,13 +226,13 @@
 		activating = 1
 
 		on_cooldown = 1
-		SPAWN_DBG(3 SECONDS) on_cooldown = 0
+		SPAWN(3 SECONDS) on_cooldown = 0
 
 		var/atom/dummy = D
 		if(D)
 			dummy.invisibility = INVIS_ALWAYS
 
-		playsound(src, "sound/effects/shielddown2.ogg", 40, 1)
+		playsound(src, 'sound/effects/shielddown2.ogg', 40, 1)
 		var/obj/overlay/O = new/obj/overlay(get_turf(target))
 		O.name = "Energy"
 		O.anchored = 1
@@ -266,7 +266,7 @@
 
 			activating = 1
 
-			playsound(src, "sound/effects/singsuck.ogg", 40, 1)
+			playsound(src, 'sound/effects/singsuck.ogg', 40, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(user))
 			O.name = "Energy"
 			O.anchored = 1
@@ -317,10 +317,10 @@
 					return
 				EXIT = PH.parent.linked.handset
 				user.visible_message("[user] enters the phone line using their [src].", "You enter the phone line using your [src].", "You hear a strange sucking noise.")
-				playsound(user.loc, "sound/effects/singsuck.ogg", 40, 1)
+				playsound(user.loc, 'sound/effects/singsuck.ogg', 40, 1)
 				user.drop_item(PH)
 				user.set_loc(target_loc)
-				playsound(user.loc, "sound/effects/singsuck.ogg", 40, 1)
+				playsound(user.loc, 'sound/effects/singsuck.ogg', 40, 1)
 				user.visible_message("[user] suddenly emerges from the [EXIT]. [pick("","What the fuck?")]", "You emerge from the [EXIT].", "You hear a strange sucking noise.")
 			else
 				boutput(user, "<span class='notice'>You activate the [src].</span>")

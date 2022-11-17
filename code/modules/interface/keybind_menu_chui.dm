@@ -54,6 +54,7 @@ chui/window/keybind_menu
 
 					var/datum/keymap/keydat = new(changed_keys_rev) //this should only have the changed entries, for optimal merge
 					current_keymap.overwrite_by_action(keydat)
+					current_keymap.on_update(owner)
 					owner.cloud_put("custom_keybind_data", json_encode(changed_keys_rev))
 					boutput("<span class='notice'>Your custom keybinding data has been saved.</span>")
 			else if (id == "reset")

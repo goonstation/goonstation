@@ -148,8 +148,8 @@ proc/vox_help(var/mob/user)
 
 	var/output = vox_play(input, src)
 	if(output)
-		logTheThing("admin", src, null, "has created an intercom announcement: [output]")
-		logTheThing("diary", src, null, "has created an intercom announcement: [output]", "admin")
+		logTheThing(LOG_ADMIN, src, "has created an intercom announcement: [output]")
+		logTheThing(LOG_DIARY, src, "has created an intercom announcement: [output]", "admin")
 		message_admins("[key_name(src)] has created an intercom announcement: [output]")
 
 /client/proc/cmd_admin_intercom_announce_freq()
@@ -177,8 +177,8 @@ proc/vox_help(var/mob/user)
 		freq_input = 99
 	var/output = vox_play(input, src, freq_input)
 	if(output)
-		logTheThing("admin", src, null, "has created an intercom announcement: [output] : With frequency [freq_input]")
-		logTheThing("diary", src, null, "has created an intercom announcement: [output] : With frequency [freq_input]", "admin")
+		logTheThing(LOG_ADMIN, src, "has created an intercom announcement: [output] : With frequency [freq_input]")
+		logTheThing(LOG_DIARY, src, "has created an intercom announcement: [output] : With frequency [freq_input]", "admin")
 		message_admins("[key_name(src)] has created an intercom announcement: [output] : With frequency [freq_input]")
 
 proc/vox_play(var/input, var/user, var/pitch = 1)
@@ -238,7 +238,7 @@ proc/vox_play(var/input, var/user, var/pitch = 1)
 	for (var/client/C in clients)
 		if (C.ignore_sound_flags & (SOUND_VOX | SOUND_ALL))
 			continue
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/datum/VOXsound/vxx in soundQueue)
 				vxx.play(C)
 				sleep(0.1 SECONDS)
@@ -318,7 +318,6 @@ proc/init_vox()
 "aeiou" = new/datum/VOXsound("aeiou", "sound/vox/aeiou.ogg", FX),
 "afraid" = new/datum/VOXsound("afraid", "sound/vox/afraid.ogg", ADJECTIVE),
 "afro" = new/datum/VOXsound("afro", "sound/vox/afro.ogg", NOUN),
-"aft" = new/datum/VOXsound("aft", "sound/vox/aft.ogg", NOUN | ADJECTIVE | PREPOSITION),
 "aft" = new/datum/VOXsound("aft", "sound/vox/aft.ogg", NOUN | ADJECTIVE | PREPOSITION),
 "after" = new/datum/VOXsound("after", "sound/vox/after.ogg", ADVERB | PREPOSITION),
 "afterwards" = new/datum/VOXsound("afterwards", "sound/vox/afterwards.ogg", ADVERB),
@@ -410,7 +409,6 @@ proc/init_vox()
 "australia" = new/datum/VOXsound("australia", "sound/vox/australia.ogg", NOUN),
 "authorize" = new/datum/VOXsound("authorize", "sound/vox/authorize.ogg", VERB),
 "authorized" = new/datum/VOXsound("authorized", "sound/vox/authorized.ogg", VERB | ADJECTIVE),
-
 "automate" = new/datum/VOXsound("automate", "sound/vox/automate.ogg", VERB),
 "automated" = new/datum/VOXsound("automated", "sound/vox/automated.ogg", ADJECTIVE),
 "automatic" = new/datum/VOXsound("automatic", "sound/vox/automatic.ogg", ADJECTIVE),
@@ -554,7 +552,6 @@ proc/init_vox()
 "bowl" = new/datum/VOXsound("bowl", "sound/vox/bowl.ogg", NOUN|VERB),
 "box" = new/datum/VOXsound("box", "sound/vox/box.ogg", NOUN | VERB),
 "boxer" = new/datum/VOXsound("boxer", "sound/vox/boxer.ogg", NOUN),
-"boxer" = new/datum/VOXsound("boxer", "sound/vox/boxer.ogg", NOUN),
 "boy" = new/datum/VOXsound("boy", "sound/vox/boy.ogg", NOUN),
 "brain" = new/datum/VOXsound("brain", "sound/vox/brain.ogg", NOUN | VERB),
 "brains" = new/datum/VOXsound("brains", "sound/vox/brains.ogg", NOUN),
@@ -562,7 +559,6 @@ proc/init_vox()
 "brazilian" = new/datum/VOXsound("brazilian", "sound/vox/brazilian.ogg", NOUN | ADJECTIVE),
 "breach" = new/datum/VOXsound("breach", "sound/vox/breach.ogg", NOUN | VERB),
 "breached" = new/datum/VOXsound("breached", "sound/vox/breached.ogg", VERB),
-"breaching" = new/datum/VOXsound("breaching", "sound/vox/breaching.ogg", VERB),
 "breaching" = new/datum/VOXsound("breaching", "sound/vox/breaching.ogg", VERB),
 "break" = new/datum/VOXsound("break", "sound/vox/break.ogg", NOUN | VERB),
 "bridge" = new/datum/VOXsound("bridge", "sound/vox/bridge.ogg", NOUN | VERB),
@@ -646,7 +642,6 @@ proc/init_vox()
 "check" = new/datum/VOXsound("check", "sound/vox/check.ogg", VERB),
 "checkpoint" = new/datum/VOXsound("checkpoint", "sound/vox/checkpoint.ogg", NOUN),
 "cheese" = new/datum/VOXsound("cheese", "sound/vox/cheese.ogg", NOUN),
-"cheese" = new/datum/VOXsound("cheese", "sound/vox/cheese.ogg", NOUN),
 "chef" = new/datum/VOXsound("chef", "sound/vox/chef.ogg", NOUN),
 "chefs" = new/datum/VOXsound("chefs", "sound/vox/chefs.ogg", NOUN),
 "chemical" = new/datum/VOXsound("chemical", "sound/vox/chemical.ogg", ADJECTIVE),
@@ -657,7 +652,6 @@ proc/init_vox()
 "chicken" = new/datum/VOXsound("chicken", "sound/vox/chicken.ogg", NOUN | ADJECTIVE),
 "chickensound" = new/datum/VOXsound("chickensound", "sound/vox/chickensound.ogg", FX),
 "chief" = new/datum/VOXsound("chief", "sound/vox/chief.ogg", NOUN),
-"chiefengineer" = new/datum/VOXsound("chiefengineer", "sound/vox/chief engineer.ogg", NOUN),
 "chiefengineer" = new/datum/VOXsound("chiefengineer", "sound/vox/chiefengineer.ogg", NOUN),
 "chii" = new/datum/VOXsound("chii", "sound/vox/chii.ogg", FLAG),
 "child" = new/datum/VOXsound("child", "sound/vox/child.ogg", NOUN),
@@ -715,7 +709,6 @@ proc/init_vox()
 "coomer" = new/datum/VOXsound("coomer", "sound/vox/coomer.ogg", FLAG),
 "coop" = new/datum/VOXsound("coop", "sound/vox/coop.ogg", NOUN ),
 "core" = new/datum/VOXsound("core", "sound/vox/core.ogg", NOUN),
-"core" = new/datum/VOXsound("core", "sound/vox/core.ogg", NOUN),
 "corn" = new/datum/VOXsound("corn", "sound/vox/corn.ogg", NOUN),
 "correct" = new/datum/VOXsound("correct", "sound/vox/correct.ogg", VERB | ADJECTIVE),
 "correction" = new/datum/VOXsound("correction", "sound/vox/correction.ogg", NOUN),
@@ -752,7 +745,6 @@ proc/init_vox()
 "customs" = new/datum/VOXsound("customs", "sound/vox/customs.ogg", NOUN),
 "cut" = new/datum/VOXsound("cut", "sound/vox/cut.ogg", VERB ),
 "cyborg" = new/datum/VOXsound("cyborg", "sound/vox/cyborg.ogg", NOUN),
-"cyborg" = new/datum/VOXsound("cyborg", "sound/vox/cyborg.ogg", NOUN),
 "d" = new/datum/VOXsound("d", "sound/vox/d.ogg", LETTER),
 "da" = new/datum/VOXsound("da", "sound/vox/da.ogg", FLAG),
 "dad" = new/datum/VOXsound("dad", "sound/vox/dad.ogg", NOUN),
@@ -787,7 +779,6 @@ proc/init_vox()
 "degrees" = new/datum/VOXsound("degrees", "sound/vox/degrees.ogg", NOUN),
 "deimos" = new/datum/VOXsound("deimos", "sound/vox/deimos.ogg", NOUN),
 "delta" = new/datum/VOXsound("delta", "sound/vox/delta.ogg", LETTER | NOUN),
-"delta" = new/datum/VOXsound("delta", "sound/vox/delta.ogg", LETTER),
 "den" = new/datum/VOXsound("den", "sound/vox/den.ogg", NOUN),
 "denied" = new/datum/VOXsound("denied", "sound/vox/denied.ogg", VERB | ADJECTIVE),
 "deny" = new/datum/VOXsound("deny", "sound/vox/deny.ogg", VERB),
@@ -802,7 +793,7 @@ proc/init_vox()
 "detect" = new/datum/VOXsound("detect", "sound/vox/detect.ogg", VERB),
 "detected" = new/datum/VOXsound("detected", "sound/vox/detected.ogg", VERB | ADJECTIVE),
 "detective" = new/datum/VOXsound("detective", "sound/vox/detective.ogg", NOUN),
-"detectives" = new/datum/VOXsound("detective's", "sound/vox/detective\'s.ogg", NOUN),
+"detective's" = new/datum/VOXsound("detective's", "sound/vox/detective\'s.ogg", NOUN),
 "detectives" = new/datum/VOXsound("detectives", "sound/vox/detectives.ogg", ADJECTIVE),
 "detonate" = new/datum/VOXsound("detonate", "sound/vox/detonate.ogg", VERB),
 "detonation" = new/datum/VOXsound("detonation", "sound/vox/detonation.ogg", NOUN),
@@ -823,7 +814,7 @@ proc/init_vox()
 "dip" = new/datum/VOXsound("dip", "sound/vox/dip.ogg", NOUN | VERB),
 "diploma" = new/datum/VOXsound("diploma", "sound/vox/diploma.ogg", NOUN),
 "director" = new/datum/VOXsound("director", "sound/vox/director.ogg", NOUN),
-"directors" = new/datum/VOXsound("director's", "sound/vox/director\'s.ogg", NOUN),
+"director's" = new/datum/VOXsound("director's", "sound/vox/director\'s.ogg", NOUN),
 "directors" = new/datum/VOXsound("directors", "sound/vox/directors.ogg", NOUN),
 "dirt" = new/datum/VOXsound("dirt", "sound/vox/dirt.ogg", NOUN | VERB),
 "disco" = new/datum/VOXsound("disco", "sound/vox/disco.ogg", NOUN | VERB),
@@ -1103,7 +1094,7 @@ proc/init_vox()
 "gear" = new/datum/VOXsound("gear", "sound/vox/gear.ogg", NOUN | VERB),
 "gemini" = new/datum/VOXsound("gemini", "sound/vox/gemini.ogg", NOUN),
 "genetic" = new/datum/VOXsound("genetic", "sound/vox/genetic.ogg", ADJECTIVE),
-"geneticist" = new/datum/VOXsound("geneticist", "sound/vox/genecitist.ogg", NOUN),
+"genecitist" = new/datum/VOXsound("genecitist", "sound/vox/genecitist.ogg", NOUN),
 "geneticist" = new/datum/VOXsound("geneticist", "sound/vox/geneticist.ogg", NOUN),
 "genetics" = new/datum/VOXsound("genetics", "sound/vox/genetics.ogg", NOUN),
 "genius" = new/datum/VOXsound("genius", "sound/vox/genius.ogg", NOUN | ADJECTIVE),
@@ -1358,12 +1349,11 @@ proc/init_vox()
 "jam" = new/datum/VOXsound("jam", "sound/vox/jam.ogg", VERB | NOUN),
 "jamesbond" = new/datum/VOXsound("jamesbond", "sound/vox/jamesbond.ogg", NOUN),
 "janitor" = new/datum/VOXsound("janitor", "sound/vox/janitor.ogg", NOUN),
-"janitors" = new/datum/VOXsound("janitor's", "sound/vox/janitor\'s.ogg", NOUN),
+"janitor's" = new/datum/VOXsound("janitor's", "sound/vox/janitor\'s.ogg", NOUN),
 "janitors" = new/datum/VOXsound("janitors", "sound/vox/janitors.ogg", NOUN),
 "javelin" = new/datum/VOXsound("javelin", "sound/vox/javelin.ogg", NOUN),
 "jazz" = new/datum/VOXsound("jazz", "sound/vox/jazz.ogg", NOUN),
 "je" = new/datum/VOXsound("je", "sound/vox/je.ogg", INTERJECTION),
-"jeff" = new/datum/VOXsound("jeff", "sound/vox/geoff.ogg", NOUN),
 "jeff" = new/datum/VOXsound("jeff", "sound/vox/jeff.ogg", NOUN),
 "jerk" = new/datum/VOXsound("jerk", "sound/vox/jerk.ogg", NOUN | VERB),
 "jesus" = new/datum/VOXsound("jesus", "sound/vox/jesus.ogg", NOUN | INTERJECTION),
@@ -1667,7 +1657,7 @@ proc/init_vox()
 "nice" = new/datum/VOXsound("nice", "sound/vox/nice.ogg", ADJECTIVE | ADVERB | INTERJECTION),
 "nick" = new/datum/VOXsound("nick", "sound/vox/nick.ogg", NOUN | VERB),
 "nickel" = new/datum/VOXsound("nickel", "sound/vox/nickel.ogg", NOUN),
-"nickel" = new/datum/VOXsound("nickle", "sound/vox/nickle.ogg", NOUN),
+"nickle" = new/datum/VOXsound("nickle", "sound/vox/nickle.ogg", NOUN),
 "nightmare" = new/datum/VOXsound("nightmare", "sound/vox/nightmare.ogg", NOUN),
 "nine" = new/datum/VOXsound("nine", "sound/vox/nine.ogg", NUMBER | NOUN | ADJECTIVE),
 "nineteen" = new/datum/VOXsound("nineteen", "sound/vox/nineteen.ogg", NUMBER | NOUN | ADJECTIVE),
@@ -1788,7 +1778,7 @@ proc/init_vox()
 "permitted" = new/datum/VOXsound("permitted", "sound/vox/permitted.ogg", VERB),
 "person" = new/datum/VOXsound("person", "sound/vox/person.ogg", NOUN),
 "personnel" = new/datum/VOXsound("personnel", "sound/vox/personnel.ogg", NOUN),
-"personnels" = new/datum/VOXsound("personnel's", "sound/vox/personnel\'s.ogg", NOUN),
+"personnel's" = new/datum/VOXsound("personnel's", "sound/vox/personnel\'s.ogg", NOUN),
 "personnels" = new/datum/VOXsound("personnels", "sound/vox/personnels.ogg", NOUN),
 "persuade" = new/datum/VOXsound("persuade", "sound/vox/persuade.ogg", VERB),
 "pesky" = new/datum/VOXsound("pesky", "sound/vox/pesky.ogg", ADJECTIVE),
@@ -1838,7 +1828,7 @@ proc/init_vox()
 "poetry" = new/datum/VOXsound("poetry", "sound/vox/poetry.ogg", NOUN),
 "point" = new/datum/VOXsound("point", "sound/vox/point.ogg", NOUN | VERB),
 "poo" = new/datum/VOXsound("poo", "sound/vox/poo-vox.ogg", NOUN | VERB | INTERJECTION),
-"poo" = new/datum/VOXsound("poo", "sound/vox/poo.ogg", NOUN),
+// "poo" = new/datum/VOXsound("poo", "sound/vox/poo.ogg", NOUN),
 "pool" = new/datum/VOXsound("pool", "sound/vox/pool.ogg", NOUN),
 "poop" = new/datum/VOXsound("poop", "sound/vox/poop.ogg", NOUN | VERB),
 "pope" = new/datum/VOXsound("pope", "sound/vox/pope.ogg", NOUN),
@@ -1957,7 +1947,6 @@ proc/init_vox()
 "retrofit" = new/datum/VOXsound("retrofit", "sound/vox/retrofit.ogg", NOUN | VERB),
 "rhinoceros" = new/datum/VOXsound("rhinoceros", "sound/vox/rhinoceros.ogg", NOUN),
 "rhythm" = new/datum/VOXsound("rhythm", "sound/vox/rhythm.ogg", NOUN),
-"rhythm" = new/datum/VOXsound("rythym", "sound/vox/rythym.ogg", NOUN),
 "ri" = new/datum/VOXsound("ri", "sound/vox/ri.ogg", FLAG),
 "ribs" = new/datum/VOXsound("ribs", "sound/vox/ribs.ogg", NOUN),
 "ride" = new/datum/VOXsound("ride", "sound/vox/ride.ogg", VERB | NOUN),
@@ -1973,7 +1962,6 @@ proc/init_vox()
 "robusting" = new/datum/VOXsound("robusting", "sound/vox/robusting.ogg", VERB),
 "robutticist" = new/datum/VOXsound("robutticist", "sound/vox/robutticist.ogg", NOUN),
 "rock" = new/datum/VOXsound("rock", "sound/vox/rock.ogg", VERB | NOUN),
-"rocket" = new/datum/VOXsound("rocket", "sound/vox/rocket.ogg", NOUN | VERB),
 "rocket" = new/datum/VOXsound("rocket", "sound/vox/rocket.ogg", NOUN | VERB),
 "rod" = new/datum/VOXsound("rod", "sound/vox/rod.ogg", NOUN),
 "roger" = new/datum/VOXsound("roger", "sound/vox/roger.ogg", VERB | INTERJECTION | FLAG),
@@ -2472,7 +2460,7 @@ proc/init_vox()
 "welcome" = new/datum/VOXsound("welcome", "sound/vox/welcome.ogg", NOUN|VERB|ADJECTIVE),
 "welcomes" = new/datum/VOXsound("welcomes", "sound/vox/welcomes.ogg", VERB),
 "well" = new/datum/VOXsound("well", "sound/vox/well.ogg", VERB | ADVERB | NOUN),
-"wendigo" = new/datum/VOXsound("wendigo", "sound/vox/wendigo.ogg", NOUN),
+"brullbar" = new/datum/VOXsound("brullbar", "sound/vox/brullbar.ogg", NOUN),
 "wepon" = new/datum/VOXsound("wepon", "sound/vox/wepon.ogg", NOUN),
 "werewolf" = new/datum/VOXsound("werewolf", "sound/vox/werewolf.ogg", NOUN),
 "west" = new/datum/VOXsound("west", "sound/vox/west.ogg", NOUN),
@@ -2506,7 +2494,7 @@ proc/init_vox()
 "wiz" = new/datum/VOXsound("wiz", "sound/vox/wiz.ogg", NOUN | VERB),
 "wizard" = new/datum/VOXsound("wizard", "sound/vox/wizard.ogg", NOUN),
 "wizardry" = new/datum/VOXsound("wizardry", "sound/vox/wizardry.ogg", NOUN),
-"wizards" = new/datum/VOXsound("wizard's", "sound/vox/wizard\'s.ogg", NOUN),
+"wizard's" = new/datum/VOXsound("wizard's", "sound/vox/wizard\'s.ogg", NOUN),
 "wizards" = new/datum/VOXsound("wizards", "sound/vox/wizards.ogg", NOUN),
 "woah" = new/datum/VOXsound("woah", "sound/vox/woah.ogg", INTERJECTION),
 "wodka" = new/datum/VOXsound("wodka", "sound/vox/wodka.ogg", NOUN),
@@ -2582,7 +2570,7 @@ proc/init_vox()
 "zulu" = new/datum/VOXsound("zulu", "sound/vox/zulu.ogg", LETTER | NOUN)
 )
 
-	SPAWN_DBG(0.1 SECONDS)
+	SPAWN(0.1 SECONDS)
 		for(var/id in voxsounds)
 			var/datum/VOXsound/vox = voxsounds[id]
 			vox.ogg = file(vox.ogg)

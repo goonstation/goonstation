@@ -168,11 +168,11 @@
 
 		src.activated = 1
 		if (reagents)
-			reagents.add_reagent("thalmerite",2)
+			reagents.add_reagent("pyrosium",2)
 			reagents.add_reagent("oxygen", 2)
 			reagents.handle_reactions()
-			SPAWN_DBG(10 SECONDS)
-				reagents.del_reagent("thalmerite")
+			SPAWN(10 SECONDS)
+				reagents.del_reagent("pyrosium")
 		boutput(user, "The cup emits a soft clack as the heater triggers.")
 		return
 
@@ -181,13 +181,12 @@
 	desc = "A self-heating convenience reinterpretation of Mexican cuisine. The exact mechanism used to heat it is probably best left to speculation."
 	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "burrito"
-	amount = 3
+	bites_left = 3
 	heal_amt = 2
 	doants = 0 //Ants aren't dumb enough to try to eat these.
 	var/activated = 0
 	initial_volume = 50
 	initial_reagents = list("msg"=9)
-	brewable = 1
 	brew_result = list("sewage", "ethanol")
 	food_effects = list("food_sweaty")
 
@@ -284,7 +283,7 @@
 
 		src.activated = 1
 		if (reagents)
-			reagents.add_reagent("thalmerite",2)
+			reagents.add_reagent("pyrosium",2)
 			reagents.add_reagent("oxygen", 2)
 			reagents.handle_reactions()
 		boutput(user, "You crack the burrito like a glow stick, activating the heater mechanism.")
@@ -298,6 +297,7 @@
 			..()
 
 	heal(var/mob/M)
+		..()
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
 				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
@@ -308,10 +308,10 @@
 	proc/splat()
 		var/turf/T = get_turf(src)
 		if(!locate(/obj/decal/cleanable/vomit) in T)
-			playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 			var/obj/decal/cleanable/vomit/filling = make_cleanable( /obj/decal/cleanable/vomit,src)
 			var/icon/fillicon = icon(filling.icon, filling.icon_state)
-			fillicon.MapColors(0.50, 0.25, 0)
+			fillicon.MapColors(0.5, 0.25, 0)
 			filling.icon = fillicon
 
 			filling.name = "burrito filling"
@@ -326,12 +326,11 @@
 	desc = "A highly-processed miniature cake, coated with a thin layer of solid pseudofrosting."
 	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "snackcake"
-	amount = 2
+	bites_left = 2
 	heal_amt = 2
 	var/color_prob = 100
 	initial_volume = 50
 	initial_reagents = list("badgrease"=3,"VHFCS"=9)
-	brewable = 1
 	brew_result = list("sewage", "yuck")
 	food_effects = list("food_sweaty")
 
@@ -413,7 +412,7 @@
 				src.desc = "A box containing a self-heating TV dinner. Have \"fusion\" dishes gone too far?"
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.find_in_hand(src))//r_hand == src || user.l_hand == src)
 			if (src.full == 0)
 				user.show_text("The box is empty[prob(20) ? " (much like your head)" : null].", "red")
@@ -437,7 +436,7 @@
 	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "tvdinnert"
 	needfork = 1
-	amount = 2
+	bites_left = 2
 	heal_amt = 2
 	doants = 0 //Ants aren't dumb enough to try to eat these.
 	var/activated = 0
@@ -552,7 +551,7 @@
 
 		src.activated = 1
 		if (reagents)
-			reagents.add_reagent("thalmerite",2)
+			reagents.add_reagent("pyrosium",2)
 			reagents.add_reagent("oxygen", 2)
 			reagents.add_reagent("radium", 1) //Self Microwaving?!
 			reagents.handle_reactions()
@@ -561,6 +560,7 @@
 		return
 
 	heal(var/mob/M)
+		..()
 		if (prob(8))
 			if (M.mind && M.mind.ckey)
 				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
@@ -573,7 +573,7 @@
 	desc = "A gigantic toaster strudel with a fruit filling. It looks pretty decent!"
 	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "strudel"
-	amount = 2
+	bites_left = 2
 	heal_amt = 2
 	doants = 0
 	initial_volume = 30
@@ -589,6 +589,7 @@
 
 
 	heal(var/mob/M)
+		..()
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
 				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")

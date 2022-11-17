@@ -1,5 +1,5 @@
 
-/mob/attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
+/mob/attackby(obj/item/W, mob/user, params, is_special = 0)
 	actions.interrupt(src, INTERRUPT_ATTACKED)
 
 	// why is this not in human/attackby?
@@ -33,23 +33,24 @@
 					shielded = 1
 
 	if (!shielded || !(W.flags & NOSHIELD))
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 		// drsingh Cannot read null.force
 #ifdef DATALOGGER
-			if (W?.force)
+			if (W.force)
 				game_stats.Increment("violence")
 #endif
 			if (!isnull(W))
 				W.attack(src, user, (user.zone_sel && user.zone_sel.selecting ? user.zone_sel.selecting : null), is_special) // def_zone var was apparently useless because the only thing that ever passed def_zone anything was shitty bill when he attacked people
 				if (W && user != src) //ZeWaka: Fix for cannot read null.hide_attack
+					var/anim_mult = clamp(0.5, W.force / 10, 4)
 					if (!W.hide_attack)
 						attack_particle(user,src)
-						attack_twitch(user)
-					else if (W.hide_attack == 2)
-						attack_twitch(user)
+						attack_twitch(user, anim_mult, anim_mult)
+					else if (W.hide_attack == ATTACK_PARTIALLY_HIDDEN)
+						attack_twitch(user, anim_mult, , anim_mult)
 
 
-				if (W?.force) //Wire: Fix for Cannot read null.force
+				if (W.force)
 					message_admin_on_attack(user, "uses \a [W.name] on")
 			return
 	return
@@ -67,11 +68,11 @@
 	if(attack_alert || !time) return
 
 	attack_alert = 1
-	SPAWN_DBG(time) attack_alert = 0
+	SPAWN(time) attack_alert = 0
 
 /mob/proc/temporary_suicide_alert(var/time = 600)
 	//Only start the clock if there's time and we're not already alerting about suicides
 	if(suicide_alert || !time) return
 
 	suicide_alert = 1
-	SPAWN_DBG(time) suicide_alert = 0
+	SPAWN(time) suicide_alert = 0

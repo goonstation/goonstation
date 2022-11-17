@@ -14,6 +14,7 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 	icon_state = "speech"
+	var/mixingdesk_allowed = TRUE
 
 	proc/OnSpeak(var/message)
 		if (!istext(message))
@@ -240,7 +241,7 @@
 	OnAdd()
 		var/mob/living/L = owner
 		if (istype(L))
-			L.speechpopupstyle = "font-family: 'XFont 6x9'; font-size: 6px; color: black !important; -dm-text-outline: 1px #ff0000;"
+			L.speechpopupstyle = "font-family: 'XFont 6x9'; font-size: 6px; color: red !important; text-shadow: 1px 1px 0 black; -dm-text-outline: 1px black;"
 
 	OnRemove()
 		var/mob/living/L = owner
@@ -252,6 +253,51 @@
 			return ""
 		return message
 		// just let this one handle itself for now
+
+	goodmin
+		name = "Frontal Gyrus Alteration Type-Goodmin"
+		desc = "Wow!"
+		id = "accent_goodmin"
+		msgGain = "You now speak with white, glowing text."
+		msgLose = "Back to normal text."
+
+		OnAdd()
+			var/mob/living/L = owner
+			if (istype(L))
+				L.speechpopupstyle = "color: white !important; text-shadow: 0px 0px 3px white; -dm-text-outline: 1px black;"
+
+	rainbow
+		name = "Frontal Gyrus Alteration Type-Radmin"
+		desc = "Colors!"
+		id = "accent_radmin"
+		msgGain = "You now speak with color-cycling text."
+		msgLose = "Back to normal text."
+
+		OnAdd()
+			var/mob/living/L = owner
+			if (istype(L))
+				L.speechpopupstyle = "color: white !important; text-shadow: 0px 0px 3px white; -dm-text-outline: 1px black;"
+				animate_rainbow_glow(L.chat_text)
+
+		OnRemove()
+			var/mob/living/L = owner
+			if (istype(L))
+				L.speechpopupstyle = ""
+				L.chat_text.color = null
+				animate(L.chat_text)
+
+		rainglow
+			name = "Frontal Gyrus Alteration Type-Fabmin"
+			desc = "Glowy colors!"
+			id = "accent_fabmin"
+			msgGain = "You now speak with glowing, color-cycling text."
+			msgLose = "Back to normal text."
+
+			OnAdd()
+				var/mob/living/L = owner
+				if (istype(L))
+					L.speechpopupstyle = "color: black !important; text-shadow: 0px 0px 3px white; -dm-text-outline: 1px white;"
+					animate_rainbow_glow(L.chat_text)
 
 /datum/bioEffect/speech/slurring
 	name = "Frontal Gyrus Alteration Type-D"
@@ -601,31 +647,6 @@
 		return jointext(speech_list, " ")
 
 
-/datum/bioEffect/speech/owowhatsthis //God is Dead
-	name = "Frontal Gyrus Alteration Type-W"
-	desc = "Reconstructs the language center of the subject's brain to create less threatening speech patterns."
-	id = "accent_owo"
-	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
-	msgGain = "You feew weawwy good!"
-	msgLose = "You feel really good!"
-	probability = 0 // no
-	occur_in_genepools = 0 // also no
-	scanner_visibility = 0
-	can_research = 0
-	can_make_injector = 0
-	can_copy = 0
-	can_reclaim = 0
-	can_scramble = 0
-	curable_by_mutadone = 0
-	acceptable_in_mutini = 0
-
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = owotalk(message)
-		return message
-
 /datum/bioEffect/speech/uwuwhatsthis //God is Dead
 	// okay this one is less creepy/weird than the owo one because it
 	// doesn't have the awkward prefix/suffixes. It's more like an actual accent.
@@ -634,7 +655,7 @@
 	desc = "Reconstructs the language center of the subject's brain to create less threatening speech patterns."
 	id = "accent_uwu"
 	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
+	isBad = 0 // heh
 	msgGain = "Oh nyo. uwu"
 	msgLose = "Nyo more funny talking."
 	occur_in_genepools = 0
@@ -783,3 +804,91 @@
 			return ""
 		message = scoobify(message, 1)
 		return message
+
+/datum/bioEffect/speech/thrall
+	name = "Frontal Gyrus Alteration Type-V"
+	desc = "Forces the language center of the subject's brain to emit gurgling, raspy speech."
+	id = "accent_thrall"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 1
+	msgGain = "Your throat gurgles with blood."
+	msgLose = "You feel your throat clear."
+	probability = 0
+	occur_in_genepools = 0
+	scanner_visibility = 0
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	can_reclaim = 0
+	can_scramble = 0
+	curable_by_mutadone = 0
+	acceptable_in_mutini = 1
+
+	OnSpeak(message)
+		if (!istext(message))
+			return ""
+		return thrall_parse(message)
+
+/datum/bioEffect/speech/emoji
+	name = "Frontal Gyrus Alteration Type-😃"
+	desc = "Makes the 💬 center of the 🧑's 🧠 to use pictograms in 🗣."
+	id = "emoji"
+	probability = 1
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 1
+	msgGain = "Y-you feel a bit 🤪."
+	msgLose = "You don't feel like talking in pictograms anymore."
+	reclaim_fail = 10
+	lockProb = 25
+	lockedGaps = 2
+	lockedDiff = 2
+	lockedChars = list("G","C")
+	lockedTries = 3
+	mixingdesk_allowed = FALSE
+	var/static/regex/word_regex = regex("(\[a-zA-Z0-9-\]*)")
+	var/static/list/word_to_emoji = null
+	var/static/list/suffixes = list("", "ing", "s", "ed", "er", "ings")
+
+	OnSpeak(message)
+		if (!istext(message))
+			return ""
+		var/list/words = splittext_char(message, src.word_regex)
+		var/list/out_words = list()
+		if(isnull(src.word_to_emoji))
+			src.word_to_emoji = json_decode(file2text("strings/word_to_emoji.json"))
+
+		for(var/word in words)
+			var/found = FALSE
+			for(var/suffix in src.suffixes)
+				if(suffix == "" || (length(word) > 3 && endswith(word, suffix)))
+					var/modword = suffix == "" ? word : copytext(word, 1, length(word) - length(suffix))
+					var/list/emojis = src.word_to_emoji[lowertext(modword)]
+					if(length(emojis))
+						out_words += pick(emojis)
+						found = TRUE
+						break
+			if(!found)
+				out_words += word
+
+		return jointext(out_words, "")
+
+
+/datum/bioEffect/speech/emoji/only
+	name = "Frontal Gyrus Alteration Type-🤪"
+	desc = "💬🧑🧠🗣"
+	id = "emojionly"
+	probability = 0.2
+	msgGain = "🧑⬅🗨🤪"
+	msgLose = "You don't feel like talking only in pictograms anymore."
+
+	OnSpeak(message)
+		var/processed = ..(message)
+		var/list/output = list()
+		for(var/i in 1 to length(processed))
+			var/char = text2ascii_char(processed, i)
+			if(char == 0)
+				break
+			else if(char > 127)
+				output += ascii2text(char)
+		return jointext(output, "")
+

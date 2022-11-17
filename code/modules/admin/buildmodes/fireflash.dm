@@ -12,7 +12,7 @@ Left Mouse Button on turf/mob/obj      = FIRE! Literally.<br>
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		radius = input("Fireflash range", "Range", radius) as num
-		radius = max(min(radius, 40), 0)
+		radius = clamp(radius, 0, 40)
 		temperature = input("Fireflash center temperature", "Temperature", temperature) as num
 		falloff = input("Fireflash temperature falloff over range", "Temperature falloff", falloff) as num
 		melting = (alert("Does the fire melt floors?",,"Yes", "No") == "Yes") ? 1 : 0

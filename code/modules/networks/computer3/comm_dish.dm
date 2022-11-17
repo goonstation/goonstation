@@ -19,7 +19,7 @@
 	New()
 		..()
 		START_TRACKING
-		SPAWN_DBG(0.6 SECONDS)
+		SPAWN(0.6 SECONDS)
 			if(!src.link)
 				var/turf/T = get_turf(src)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
@@ -74,20 +74,22 @@
 				src.link.post_signal(src, signal)
 
 		transmit_to_centcom(var/title, var/message, var/user)
-			var/sound_to_play = "sound/misc/announcement_1.ogg"
-			command_alert(message, title, sound_to_play, override_big_title="Transmission to Central Command")
+			var/sound_to_play = 'sound/misc/announcement_1.ogg'
+			command_alert(message, title, sound_to_play, alert_origin = "Transmission to Central Command")
 			message_admins("[user ? user : "Someone"] sent a message to Central Command:<br>[title]<br><br>[message]")
 			var/ircmsg[] = new()
 			ircmsg["msg"] = "[user ? user : "Unknown"] sent a message to Central Command:\n**[title]**\n[message]"
-			ircbot.export("admin", ircmsg)
+			ircbot.export_async("admin", ircmsg)
 
 		transmit_to_partner_station(var/title, var/message, var/user)
-			var/sound_to_play = "sound/misc/announcement_1.ogg"
-			command_alert(message, title, sound_to_play, override_big_title="Transmission to Partner Station")
+			var/sound_to_play = 'sound/misc/announcement_1.ogg'
+			command_alert(message, title, sound_to_play, alert_origin = "Transmission to Partner Station")
 			var/ircmsg[] = new()
-			ircmsg["msg"] = "[user ? user : "Unknown"] sent a message to __[game_servers.get_buddy().name]__:\n**[title]**\n[message]"
-			ircbot.export("admin", ircmsg)
-			return game_servers.send_to_buddy("announce", title, message)
+			var/sent = game_servers.get_buddy() ? "sent" : "failed to send"
+			ircmsg["msg"] = "[user ? user : "Unknown"] [sent] a message to __[game_servers.get_buddy()?.name]__:\n**[title]**\n[message]"
+			ircbot.export_async("admin", ircmsg)
+			if(game_servers.get_buddy())
+				return game_servers.send_to_buddy("announce", title, message)
 
 		add_cargo_logs(var/atom/A)
 			if (!A)
@@ -123,7 +125,7 @@
 		post_reply(error_text, target_id, key3, value3)
 			if(!error_text || !target_id)
 				return
-			SPAWN_DBG(0.3 SECONDS)
+			SPAWN(0.3 SECONDS)
 				src.post_status(target_id, "command", "device_reply", "status", error_text, key3, value3)
 			return
 
@@ -150,7 +152,7 @@
 		//Otherwise, ff they aren't addressing us, ignore them
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && signal.data["sender"])
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					src.post_status(target, "command", "ping_reply", "device", "PNET_COM_ARRAY", "netid", src.net_id)
 
 			return
@@ -176,12 +178,12 @@
 
 						if(sigcommand == "call")
 							//don't spam call it you buttes
-							if(emergency_shuttle.online || call_shuttle_proc(call_reason=call_reason)) //Returns 1 on failure
+							if(emergency_shuttle.online || call_shuttle_proc(signal.author, call_reason=call_reason)) //Returns 1 on failure
 								src.post_reply("SHUTL_E_DIS", target)
 								return
 							src.post_reply("SHUTL_E_SEN", target)
 						else if(sigcommand == "recall")
-							if(!emergency_shuttle.online || cancel_call_proc())
+							if(!emergency_shuttle.online || cancel_call_proc(signal.author))
 								src.post_reply("SHUTL_E_DIS", target)
 								return
 							src.post_reply("SHUTL_E_RET", target)
@@ -209,14 +211,14 @@
 				if(target in src.terminals)
 					//something might be wrong here, disconnect them!
 					src.terminals.Remove(target)
-					SPAWN_DBG(0.3 SECONDS)
+					SPAWN(0.3 SECONDS)
 						src.post_status(target, "command","term_disconnect")
 					return
 
 				src.terminals.Add(target) //Accept the connection!
 				src.post_status(target, "command","term_connect","data","noreply","device","PNET_COM_ARRAY")
 				src.updateUsrDialog()
-				SPAWN_DBG(0.2 SECONDS) //Hello!
+				SPAWN(0.2 SECONDS) //Hello!
 					src.post_status(target,"command","term_message","data","command=register")
 				return
 
@@ -237,7 +239,7 @@
 
 							.["[add_zero("[x]",2)]"] = "[mtitle]"
 
-						SPAWN_DBG(0.3 SECONDS)
+						SPAWN(0.3 SECONDS)
 							src.post_status(target, "command","term_message","data",list2params(.),"render","multiline")
 						return
 
@@ -268,7 +270,7 @@
 						filesig.data["address_1"] = target
 						filesig.data["sender"] = src.net_id
 
-						SPAWN_DBG(0.3 SECONDS)
+						SPAWN(0.3 SECONDS)
 							src.link.post_signal(src, filesig)
 
 /*
@@ -290,7 +292,7 @@
 						if(!listdat)
 							listdat = "No messages available."
 
-						SPAWN_DBG(0.3 SECONDS)
+						SPAWN(0.3 SECONDS)
 							src.post_status(target, "command","term_message","data",listdat,"render","multiline")
 						return
 
@@ -322,7 +324,7 @@
 						filesig.data["address_1"] = target
 						filesig.data["sender"] = src.net_id
 
-						SPAWN_DBG(0.3 SECONDS)
+						SPAWN(0.3 SECONDS)
 							src.link.post_signal(src, filesig)
 */
 				return

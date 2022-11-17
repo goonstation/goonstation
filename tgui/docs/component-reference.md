@@ -30,6 +30,7 @@ Make sure to add new items to this list if you document new components.
     - [`Grid.Column`](#gridcolumn)
     - [`Icon`](#icon)
     - [`Icon.Stack`](#iconstack)
+    - [`Image`](#image)
     - [`Input`](#input)
     - [`Knob`](#knob)
     - [`LabeledControls`](#labeledcontrols)
@@ -40,6 +41,7 @@ Make sure to add new items to this list if you document new components.
     - [`Modal`](#modal)
     - [`NoticeBox`](#noticebox)
     - [`NumberInput`](#numberinput)
+    - [`Popper`](#popper)
     - [`ProgressBar`](#progressbar)
     - [`RoundGauge`](#roundgauge)
     - [`Section`](#section)
@@ -522,10 +524,10 @@ Renders one of the FontAwesome icons of your choice.
 <Icon name="plus" />
 ```
 
-To smoothen the transition from v4 to v5, we have added a v4 semantic to
+To smoothen the transition from v4 to v5 to v6 (🙄), we have added a v4 semantic to
 transform names with `-o` suffixes to FA Regular icons. For example:
-- `square` will get transformed to `fas square`
-- `square-o` will get transformed to `far square`
+- `square` will get transformed to `fa-solid square`
+- `square-o` will get transformed to `fa-regular square`
 
 **Props:**
 
@@ -552,6 +554,20 @@ Renders children icons on top of each other in order to make your own icon.
 
 - See inherited props: [Box](#box)
 - `children: Icon` - Icons to stack.
+
+### `Image`
+
+Wrapper for a basic html `<img>` tag. Often used alongside base64 image encoding to render icons from the backend like so:
+```jsx
+<Image
+  pixelated
+  height="32px"
+  width="32px"
+  src={`data:image/png;base64,${img}`}
+/>
+```
+**Props:**
+- `pixelated: boolean` - Whether the icon is rendered with pixelated or fuzzy scaling. Equivalent to `-ms-interpolation-mode: nearest-neighbor`.
 
 ### `Input`
 
@@ -785,7 +801,11 @@ percentage and how filled the bar is.
 - `maxValue: number` - Highest possible value.
 - `ranges: { color: [from, to] }` - Applies a `color` to the progress bar
 based on whether the value lands in the range between `from` and `to`.
-- `color: string` - Color of the progress bar.
+- `color: string` - Color of the progress bar. Can take any of the following formats:
+  - `#ffffff` - Hex format
+  - `rgb(r,g,b) / rgba(r,g,b,a)` - RGB format
+  - `<name>` - the name of a `color-<name>` CSS class. See `CSS_COLORS` in `constants.js`.
+  - `<name>` - the name of a base CSS color, if not overridden by the definitions above.
 - `children: any` - Content to render inside the progress bar.
 
 ### `RoundGauge`

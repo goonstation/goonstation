@@ -34,11 +34,11 @@
 				qdel(E)
 				return
 
-		the_mob.visible_message("<span class='alert'>[the_mob] prepares to spray the contents of the extinguisher all around \himself!</span>")
+		the_mob.visible_message("<span class='alert'>[the_mob] prepares to spray the contents of the extinguisher all around [himself_or_herself(the_mob)]!</span>")
 
 		E.special = 1
 		the_mob.transforming = 1
-		SPAWN_DBG(3 SECONDS) if (the_mob) the_mob.transforming = 0
+		SPAWN(3 SECONDS) if (the_mob) the_mob.transforming = 0
 		sleep(3 SECONDS)
 
 		var/theturf
@@ -52,7 +52,7 @@
 		for(var/i=0, i<9, i++)
 			if (!E.reagents || E.reagents.total_volume <= 0) break
 			var/obj/effects/spray/S = new/obj/effects/spray(theturf)
-			SPAWN_DBG(15 SECONDS) qdel(S)
+			SPAWN(15 SECONDS) qdel(S)
 			S.set_dir(direction)
 			S.original_dir = direction
 			direction = turn(direction,45)
@@ -66,7 +66,7 @@
 			spraybits += S
 
 			/* // What the heck? This ran 8 times. Also the spraybits loop does the same exact thing below. commenting this out to prevent fluid duplication
-			SPAWN_DBG(0)
+			SPAWN(0)
 				S.reagents.reaction(theturf, TOUCH)
 				for(var/atom/A in theturf)
 					if (istype(A,/obj/fluid)) continue
@@ -79,7 +79,7 @@
 		sleep(0.5 SECONDS)
 		E.special = 0
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			//Center tile
 			var/obj/effects/spray/S = spraybits[1]
 			S.reagents.reaction(S.loc, TOUCH)
@@ -115,58 +115,48 @@
 
 	execute_ability()
 		var/obj/item/clothing/head/helmet/welding/W = the_item
-		if(W.up)
-			W.up = !W.up
-			W.icon_state = "welding"
-			boutput(the_mob, "You flip the mask down. The mask is now protecting you from eye damage.")
-			if (!W.nodarken) //Used for The Slasher
-				W.see_face = !W.see_face
-				W.color_r = 0.3 // darken
-				W.color_g = 0.3
-				W.color_b = 0.3
-			the_mob.set_clothing_icon_dirty()
-			icon_state = "weldup"
-
-			W.flip_down()
-		else
-			W.up = !W.up
-			W.see_face = !W.see_face
-			W.icon_state = "welding-up"
-			boutput(the_mob, "You flip the mask up. The mask is now providing greater armor to your head.")
-			W.color_r = 1 // default
-			W.color_g = 1
-			W.color_b = 1
-			the_mob.set_clothing_icon_dirty()
-			icon_state = "welddown"
-
-			W.flip_up()
+		W.up ? W.flip_down(the_mob) : W.flip_up(the_mob)
+		icon_state = "[W.up ? "welddown" : "weldup"]"
 		..()
 
 
-/obj/ability_button/labcoat_toggle
-	name = "(Un)Button Labcoat"
+/obj/ability_button/coat_toggle
+	name = "(Un)Button Coat"
 	icon_state = "labcoat"
 
 	execute_ability()
-		var/obj/item/clothing/suit/labcoat/W = the_item
-		if(W.buttoned)
-			W.unbutton()
-		else
-			W.button()
+		var/obj/item/clothing/suit/W = the_item
+		W.AttackSelf(the_mob)
+		..()
+
+/obj/ability_button/hood_toggle
+	name = "Toggle Hood"
+	icon_state = "hood_up"
+
+	execute_ability()
+		var/obj/item/clothing/suit/W = the_item
+		W.AttackSelf(the_mob)
 		..()
 
 /obj/ability_button/magboot_toggle
 	name = "(De)Activate Magboots"
-	icon_state = "shieldceon"
+	icon_state = "magbootson"
+	desc = "Toggle your magboots.<br>When on, they firmly anchor you to the floor, preventing the majority of outside forces from moving you."
+	requires_equip = TRUE
 
 	execute_ability()
 		var/obj/item/clothing/shoes/magnetic/W = the_item
+		if(!(the_item in the_mob.get_equipped_items()))
+			boutput(the_mob, "<span class='alert'>Try wearing [src] first.</span>")
+			return
+
 		if(W.magnetic)
 			W.deactivate()
-			boutput(the_mob, "You power off your magnetic boots")
+			boutput(the_mob, "<span class='hint'>You power off your magnetic boots.</span><br><span class='alert'>You are no longer anchored to the floor.</span>", group = "magbootsoff")
 		else
 			W.activate()
-			boutput(the_mob, "You power on your magnetic boots")
+			boutput(the_mob, "<span class='hint'>You power on your magnetic boots.</span><br><span class='success'>You are now firmly anchored to the floor, and cannot be moved by pushing or teleportation.</span>", \
+				group = "magbootson")
 		the_mob.update_equipped_modifiers()
 		the_mob.update_clothing()
 		..()
@@ -194,6 +184,7 @@
 	name = "Activate Shoes"
 	icon_state = "rocketshoes"
 	var/explosion_chance = 3
+	requires_equip = TRUE
 
 	execute_ability()
 		if(!the_item || !the_mob || !the_mob.canmove) return
@@ -208,6 +199,7 @@
 		if(R.uses < 0)
 			the_item.name = "Empty Rocket Shoes"
 			boutput(the_mob, "<span class='alert'>Your rocket shoes are empty.</span>")
+			the_item.hide_buttons()
 			R.abilities.Cut()
 			qdel(src)
 			return
@@ -221,7 +213,7 @@
 			qdel(src)
 			return
 		if( the_mob.buckled )
-			SPAWN_DBG(0)
+			SPAWN(0)
 				the_mob.emote("scream")
 				the_mob:canmove = 0
 				for(var/i=0, i<30, i++)
@@ -243,10 +235,11 @@
 						the_mob:update_burning(1)
 						sleep(0.3 SECONDS)
 				the_mob.unlock_medal( "Too Fast Too Furious", 1 )
+				logTheThing(LOG_COMBAT, the_mob, "was gibbed by rocket shoes at [log_loc(the_mob)].")
 				the_mob.gib()
 
 			return
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/turf/curr = get_turf(the_mob)
 
 			for(var/i=0, i<15, i++)
@@ -254,13 +247,13 @@
 
 			the_mob.throw_unlimited = 1
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for(var/i=0, i<15, i++)
 					if(isnull(the_mob))
 						break
 					var/obj/effect/smoketemp/A = new /obj/effect/smoketemp
 					A.set_loc(the_mob.loc)
-					SPAWN_DBG(1 SECOND)
+					SPAWN(1 SECOND)
 						src = null // Detatch this from the parent proc so we get to stay alive if the shoes blow up.
 						if(A)
 							qdel(A)
@@ -273,6 +266,7 @@
 /obj/ability_button/sonic
 	name = "Activate Shoes"
 	icon_state = "rocketshoes"
+	requires_equip = TRUE
 
 	execute_ability()
 		if(!the_item || !the_mob || !the_mob.canmove) return
@@ -282,14 +276,14 @@
 			boutput(the_mob, "<span class='alert'>You must be wearing the shoes to use them.</span>")
 			return
 
-		playsound(the_mob, "sound/effects/bamf.ogg", 100, 1)
+		playsound(the_mob, 'sound/effects/bamf.ogg', 100, 1)
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for(var/i=0, i<R.soniclength, i++)
 				if(!the_mob) break
 				var/obj/effect/smoketemp/A = new /obj/effect/smoketemp
 				A.set_loc(the_mob.loc)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					src = null
 					if(A)
 						qdel(A)
@@ -310,6 +304,7 @@
 /obj/ability_button/cebelt_toggle
 	name = "Toggle overshield"
 	icon_state = "shieldceon"
+	requires_equip = TRUE
 
 	execute_ability()
 		var/obj/item/storage/belt/utility/prepared/ceshielded/C = the_item
@@ -322,12 +317,12 @@
 
 /obj/ability_button/flashlight_toggle
 	name = "Toggle Flashlight"
-	icon_state = "on"
+	icon_state = "lightoff"
 
 	execute_ability()
 		var/obj/item/device/light/flashlight/J = the_item
 		J.toggle()
-		src.icon_state = J.on ? "off" : "on"
+		src.icon_state = J.on ? "lighton" : "lightoff"
 		..()
 
 ////////////////////////////////////////////////////////////
@@ -338,7 +333,40 @@
 
 	execute_ability()
 		var/obj/item/saw/S = the_item
-		S.attack_self(usr)
+		S.AttackSelf(usr)
+		..()
+
+////////////////////////////////////////////////////////////
+
+/obj/ability_button/saw_replace_arm
+	name = "Replace arm"
+	icon_state = "saw"
+
+	execute_ability()
+		if (!ishuman(usr))
+			boutput(usr, "<span class='alert'>Only a human can do that.</span>")
+			return
+		var/mob/living/carbon/human/H = usr
+		if (the_item.temp_flags & IS_LIMB_ITEM)
+			boutput(usr, "<span class='alert'>The saw is already attached as an arm.</span>")
+			return
+		switch (alert(usr, "Which arm would you like to replace with [the_item]?",,"Left","Right","Cancel"))
+			if ("Cancel")
+				return
+			if ("Right")
+				if (!H.limbs.r_arm)
+					var/obj/item/saw/syndie/S = the_item
+					S.end_replace_arm("r_arm", H)
+					return
+				boutput(H, "<span class='alert'>You need to hold still...</span>")
+				SETUP_GENERIC_ACTIONBAR(H, the_item, 3 SECONDS, /obj/item/saw/syndie/proc/end_replace_arm, list("r_arm", H), the_item.icon, the_item.icon_state,"", INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION)
+			if ("Left")
+				if (!H.limbs.l_arm)
+					var/obj/item/saw/syndie/S = the_item
+					S.end_replace_arm("l_arm", H)
+					return
+				boutput(H, "<span class='alert'>You need to hold still...</span>")
+				SETUP_GENERIC_ACTIONBAR(H, the_item, 3 SECONDS, /obj/item/saw/syndie/proc/end_replace_arm, list("l_arm", H), the_item.icon, the_item.icon_state,"", INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 		..()
 
 ////////////////////////////////////////////////////////////
@@ -349,47 +377,47 @@
 
 	execute_ability()
 		var/obj/item/cable_coil/C = the_item
-		C.attack_self(usr)
+		C.AttackSelf(usr)
 		..()
 
 ////////////////////////////////////////////////////////////
 
 /obj/ability_button/flashlight_engiehelm
 	name = "Toggle Helmet Light"
-	icon_state = "on"
+	icon_state = "lightoff"
 
 	execute_ability()
 		var/obj/item/clothing/head/helmet/space/engineer/J = the_item
 
 		J.flashlight_toggle(the_mob)
-		if (J.on) src.icon_state = "off"
-		else  src.icon_state = "on"
+		if (J.on) src.icon_state = "lighton"
+		else  src.icon_state = "lightoff"
 		..()
 
 ////////////////////////////////////////////////////////////
 
 /obj/ability_button/flashlight_hardhat
 	name = "Toggle Hardhat Light"
-	icon_state = "on"
+	icon_state = "lightoff"
 
 	execute_ability()
 		var/obj/item/clothing/head/helmet/hardhat/J = the_item
 
 		J.flashlight_toggle(the_mob)
-		src.icon_state = J.on ? "off" : "on"
+		src.icon_state = J.on ? "lighton" : "lightoff"
 		..()
 
 ////////////////////////////////////////////////////////////
 
 /obj/ability_button/tscanner_toggle
 	name = "Toggle T-Scanner"
-	icon_state = "on"
+	icon_state = "lightoff" //TODO: make bespoke sprites for this I guess
 
 	execute_ability()
 		var/obj/item/device/t_scanner/J = the_item
-		J.attack_self(the_mob)
-		if(J.on) icon_state = "off"
-		else  icon_state = "on"
+		J.AttackSelf(the_mob)
+		if(J.on) icon_state = "lighton"
+		else  icon_state = "lightoff"
 		..()
 
 ////////////////////////////////////////////////////////////
@@ -400,7 +428,7 @@
 
 	execute_ability()
 		var/obj/item/clothing/glasses/meson/J = the_item
-		J.attack_self(the_mob)
+		J.AttackSelf(the_mob)
 		if(J.on) icon_state = "meson1"
 		else  icon_state = "meson0"
 		..()
@@ -413,7 +441,7 @@
 
 	execute_ability()
 		var/obj/item/clothing/head/helmet/space/syndicate/specialist/engineer/J = the_item
-		J.attack_self(the_mob)
+		J.AttackSelf(the_mob)
 		if(J.on) icon_state = "meson1"
 		else  icon_state = "meson0"
 		..()
@@ -422,24 +450,26 @@
 
 /obj/ability_button/jetpack2_toggle
 	name = "Toggle jetpack MKII"
-	icon_state = "jet2on"
+	icon_state = "jetoff"
+	requires_equip = TRUE
 
 	execute_ability()
 		var/obj/item/tank/jetpack/jetpackmk2/J = the_item
 		J.toggle()
-		if(J.on) icon_state = "jet2off"
-		else  icon_state = "jet2on"
+		if(J.on) icon_state = "jet2on"
+		else  icon_state = "jet2off"
 		..()
 
 /obj/ability_button/jetpack_toggle
 	name = "Toggle jetpack"
-	icon_state = "jeton"
+	icon_state = "jetoff"
+	requires_equip = TRUE
 
 	execute_ability()
 		var/obj/item/tank/jetpack/J = the_item
 		J.toggle()
-		if(J.on) icon_state = "jetoff"
-		else  icon_state = "jeton"
+		if(J.on) icon_state = "jeton"
+		else  icon_state = "jetoff"
 		..()
 
 ////////////////////////////////////////////////////////////
@@ -447,6 +477,7 @@
 /obj/ability_button/jetboot_toggle
 	name = "Toggle jet boots"
 	icon_state = "jeton"
+	requires_equip = TRUE
 
 	execute_ability()
 		var/obj/item/clothing/shoes/jetpack/J = the_item
@@ -486,6 +517,7 @@
 	name = "Rush"
 	icon_state = "rushon"
 	cooldown = 100
+	requires_equip = TRUE
 
 	ability_allowed()
 		if (!the_mob || !the_mob.canmove || the_mob.stat || the_mob.getStatusDuration("paralysis"))
@@ -705,7 +737,7 @@
 				B.the_item = src
 				B.name = B.name + " ([src.name])"
 //		if(ability_buttons.len > 0)
-//			SPAWN_DBG(0) check_abilities()
+//			SPAWN(0) check_abilities()
 		..()
 
 	proc/disposing_abilities()
@@ -731,10 +763,14 @@
 
 	proc/show_buttons()
 		if(!the_mob || !islist(src.ability_buttons) || !length(ability_buttons)) return
-		if(!the_mob.item_abilities.Find(ability_buttons[1]))
-			the_mob.item_abilities.Add(ability_buttons)
-			the_mob.need_update_item_abilities = 1
-			the_mob.update_item_abilities()
+		var/list/abilities_toadd = list()
+		for (var/obj/ability_button/AB in ability_buttons)
+			if (AB.requires_equip && !(AB.the_item in the_mob.get_equipped_items())) continue
+			abilities_toadd += AB
+		if (!length(abilities_toadd)) return
+		the_mob.item_abilities |= abilities_toadd
+		the_mob.need_update_item_abilities = 1
+		the_mob.update_item_abilities()
 
 	proc/hide_buttons()
 		if(!the_mob || !islist(src.ability_buttons)) return
@@ -747,7 +783,7 @@
 			heh += src
 			boutput(world, "heh len = [heh.len]")
 		if(!the_mob)
-			SPAWN_DBG(3 SECONDS) check_abilities()
+			SPAWN(3 SECONDS) check_abilities()
 			return
 
 		if(!(src in the_mob.get_equipped_items()))
@@ -757,7 +793,7 @@
 				clear_buttons()
 			show_buttons()
 
-		SPAWN_DBG(1 SECOND) check_abilities()
+		SPAWN(1 SECOND) check_abilities()
 */
 
 	proc/clear_buttons()
@@ -774,12 +810,18 @@
 	plane = PLANE_HUD
 	anchored = 1
 	flags = NOSPLASH
+	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
 
 	var/cooldown = 0
 	var/last_use_time = 0
 
-	var/targeted = 0 //does activating this ability let you click on something to target it?
-	var/target_anything = 0 //can you target any atom, not just people?
+	///does activating this ability let you click on something to target it?
+	var/targeted = 0
+	///can you target any atom, not just people?
+	var/target_anything = 0
+
+	/// can you see this button without equipping the item
+	var/requires_equip = FALSE
 
 	var/obj/item/the_item = null
 	var/mob/the_mob = null

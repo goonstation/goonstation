@@ -19,7 +19,7 @@
 		..()
 		if (to_set)
 			object_to_call = to_set
-		SPAWN_DBG(2 SECONDS) // let the world load
+		SPAWN(2 SECONDS) // let the world load
 			for (var/atom/A as anything in get_turf(src))
 				if (src.object_to_call == A.name || src.object_to_call == A.interesting) // oh boo hoo, sue me for misuse of variables
 					object_to_call = A

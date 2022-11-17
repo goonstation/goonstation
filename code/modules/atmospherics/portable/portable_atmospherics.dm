@@ -54,9 +54,6 @@
 		..()
 
 	proc
-		update_icon()
-			return null
-
 		connect(obj/machinery/atmospherics/portables_connector/new_port)
 			//Make sure not already connected to something else
 			if(connected_port || !new_port || new_port.connected_device)
@@ -65,8 +62,6 @@
 			//Make sure are close enough for a valid connection
 			if(new_port.loc != loc)
 				return 0
-
-			//logTheThing("combat", usr, null, "attaches [src] to [new_port] at [showCoords(new_port.x, new_port.y, new_port.z)].")
 
 			add_fingerprint(usr)
 
@@ -103,17 +98,17 @@
 		holding.set_loc(loc)
 		usr.put_in_hand_or_eject(holding) // try to eject it into the users hand, if we can
 		holding = null
-		update_icon()
+		UpdateIcon()
 	return
 
-/obj/machinery/portable_atmospherics/attackby(var/obj/item/W as obj, var/mob/user as mob)
+/obj/machinery/portable_atmospherics/attackby(var/obj/item/W, var/mob/user)
 	if(istype(W, /obj/item/tank))
 		if(!src.holding)
 			boutput(user, "<span class='notice'>You attach the [W.name] to the the [src.name]</span>")
 			user.drop_item()
 			W.set_loc(src)
 			src.holding = W
-			update_icon()
+			UpdateIcon()
 			tgui_process.update_uis(src) //update UI immediately
 
 	else if (iswrenchingtool(W))
@@ -123,19 +118,19 @@
 				boutput(user, "<span class='alert'>The detonating mechanism blocks you from modifying the anchors on the [src.name].</span>")
 				return
 		if(connected_port)
-			logTheThing("station", user, null, "has disconnected \the [src] [log_atmos(src)] from the port at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "has disconnected \the [src] [log_atmos(src)] from the port at [log_loc(src)].")
 			disconnect()
 			boutput(user, "<span class='notice'>You disconnect [name] from the port.</span>")
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			tgui_process.update_uis(src)
 			return
 		else
 			var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
 			if(possible_port)
 				if(connect(possible_port))
-					logTheThing("station", user, null, "has connected \the [src] [log_atmos(src)] to the port at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "has connected \the [src] [log_atmos(src)] to the port at [log_loc(src)].")
 					boutput(user, "<span class='notice'>You connect [name] to the port.</span>")
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					tgui_process.update_uis(src)
 					return
 				else

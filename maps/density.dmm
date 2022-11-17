@@ -684,7 +684,7 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bA" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2;
 	icon_state = "morgue1"
 	},
@@ -884,7 +884,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/central)
 "bZ" = (
-/obj/machinery/smelter,
+/obj/machinery/neosmelter,
 /turf/simulated/floor/neutral,
 /area/station/quartermaster/office)
 "ca" = (
@@ -1504,23 +1504,20 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/office)
 "dv" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /turf/simulated/floor/neutral,
 /area/station/quartermaster/office)
 "dw" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/neutral,
 /area/station/quartermaster/office)
 "dx" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -1531,22 +1528,19 @@
 	id = "cargodock_in";
 	name = "Cargo Routing Door"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
 "dz" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "dA" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /obj/cable{
@@ -1556,15 +1550,13 @@
 /area/station/crew_quarters/clown)
 "dB" = (
 /obj/machinery/launcher_loader/west,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "dC" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /obj/machinery/door/poddoor{
@@ -1574,8 +1566,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "dD" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /turf/space,
@@ -1929,23 +1920,20 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "ev" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /turf/simulated/floor/neutral,
 /area/station/quartermaster/office)
 "ew" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/neutral,
 /area/station/quartermaster/office)
 "ex" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -1956,15 +1944,13 @@
 	id = "cargodock_out";
 	name = "Cargo Routing Door"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
 "ez" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /turf/simulated/floor/plating,
@@ -1996,10 +1982,6 @@
 /area/station/crew_quarters/clown)
 "eD" = (
 /obj/submachine/chef_oven,
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/kitchen)
-"eE" = (
-/obj/decal/sink,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
 "eF" = (
@@ -2255,8 +2237,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
 "fd" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	operating = 1
 	},
@@ -2416,8 +2397,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/janitor/supply)
 "fy" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	operating = 1
 	},
@@ -2581,16 +2561,14 @@
 /turf/simulated/floor/red,
 /area/station/storage/warehouse)
 "fV" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	operating = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/janitor/supply)
 "fW" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "garbage";
 	operating = 1
 	},
@@ -2646,7 +2624,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/lounge)
 "gc" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -2751,8 +2729,7 @@
 	id = "speedboost_crusher";
 	name = "Disposals Door"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "garbage";
 	operating = 1
 	},
@@ -2760,8 +2737,7 @@
 /area/station/janitor/supply)
 "gr" = (
 /obj/machinery/crusher,
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	operating = 1
 	},
@@ -3615,24 +3591,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"hZ" = (
-/obj/machinery/computer/aiupload{
-	dir = 8
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "ia" = (
 /obj/disposalpipe/segment,
 /obj/machinery/power/apc{
@@ -4405,7 +4363,6 @@
 	pixel_x = 28
 	},
 /obj/table/reinforced/auto,
-/obj/item/aiModule/rename,
 /obj/item/aiModule/freeform,
 /obj/item/aiModule/notHuman,
 /obj/item/aiModule/makeCaptain,
@@ -4443,7 +4400,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/bathroom)
 "jA" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /turf/simulated/floor/grass,
@@ -4472,7 +4429,7 @@
 	},
 /area/station/chapel/sanctuary)
 "jD" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2;
 	icon_state = "morgue1"
 	},
@@ -4978,7 +4935,7 @@
 /area/station/chapel/sanctuary)
 "kz" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station)
 "kA" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/disposalpipe/segment{
@@ -5964,7 +5921,10 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "mx" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/east,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
+	dir = 4;
+	
+	},
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -6549,8 +6509,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "nL" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "garbage";
 	operating = 1
 	},
@@ -6710,7 +6669,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "ob" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -7102,6 +7061,24 @@
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/security/main)
+"qT" = (
+/obj/machinery/lawrack{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "uG" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -7114,6 +7091,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"uX" = (
+/obj/decal/fakeobjects/sink,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/kitchen)
 "vP" = (
 /obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /turf/simulated/floor/red,
@@ -44146,7 +44127,7 @@ cw
 dd
 dH
 ef
-eE
+uX
 fg
 fA
 fZ
@@ -56837,7 +56818,7 @@ gp
 gR
 fx
 hF
-hZ
+qT
 iz
 jc
 jw

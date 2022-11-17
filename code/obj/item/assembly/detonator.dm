@@ -27,8 +27,8 @@
 	var/mob/builtBy = null
 
 	flags = FPRINT | TABLEPASS | CONDUCT
-	force = 1.0
-	throwforce = 2.0
+	force = 1
+	throwforce = 2
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
@@ -81,7 +81,7 @@
 			src.icon_state = "m-i-p-w-timer"
 			src.det_state = 4
 
-/obj/item/assembly/detonator/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/detonator/attackby(obj/item/W, mob/user)
 	switch (src.det_state)
 		if (0)
 			if (istype(W, /obj/item/tank/plasma))
@@ -143,7 +143,7 @@
 				W.master = src
 				W.layer = initial(src.layer)
 				src.part_fs = W
-				src.part_fs.time = 90 //Minimum det time
+				src.part_fs.time = 90 SECONDS //Minimum det time
 				src.add_fingerprint(user)
 				user.show_message("<span class='notice'>You wire the timer failsafe to the assembly, disabling its external controls.</span>")
 			else if (issnippingtool(W))
@@ -245,7 +245,7 @@
 
 	if(force_dud)
 		var/turf/T = get_turf(src)
-		message_admins("A canister bomb would have detonated at at [T.loc.name] ([showCoords(T.x, T.y, T.z)]) but was forced to dud!")
+		message_admins("A canister bomb would have detonated at at [T.loc.name] ([log_loc(T)]) but was forced to dud!")
 		return
 
 	src.attachedTo.anchored = 0
@@ -279,8 +279,8 @@
 		return
 
 	var/turf/epicenter = get_turf(loc)
-	logTheThing("bombing", null, null, "A canister bomb detonates at [epicenter.loc.name] ([showCoords(epicenter.x, epicenter.y, epicenter.z)])")
-	message_admins("A canister bomb detonates at [epicenter.loc.name] ([showCoords(epicenter.x, epicenter.y, epicenter.z)])")
+	logTheThing(LOG_BOMBING, null, "A canister bomb detonates at [epicenter.loc.name] ([log_loc(epicenter)])")
+	message_admins("A canister bomb detonates at [epicenter.loc.name] ([log_loc(epicenter)])")
 	src.attachedTo.visible_message("<b><span class='alert'>The ruptured canister shatters from the pressure, and the hot gas ignites.</span></b>")
 
 	var/power = min(850 * (MIXTURE_PRESSURE(attachedTo.air_contents) + attachedTo.air_contents.temperature - 107000) / 233196469.0 + 200, 7000) //the second arg is the max explosion power
@@ -308,10 +308,10 @@
 	processing_items |= src.part_fs
 	src.dispatch_event("prime")
 
-	command_alert("A canister bomb is primed in [get_area(src)] at coordinates (<b>X</b>: [src.master.x], <b>Y</b>: [src.master.y], <b>Z</b>: [src.master.z])! It is set to go off in [src.part_fs.time] seconds.")
-	logTheThing("bombing", usr, null, "primes a canister bomb at [get_area(src.master)] ([showCoords(src.master.x, src.master.y, src.master.z)])")
-	message_admins("[key_name(usr)] primes a canister bomb at [get_area(src.master)] ([showCoords(src.master.x, src.master.y, src.master.z)])")
-	src.attachedTo.visible_message("<B><font color=#FF0000>The detonator's priming process initiates. Its timer shows [src.part_fs.time] seconds.</font></B>")
+	command_alert("A canister bomb is primed in [get_area(src)] at coordinates (<b>X</b>: [src.master.x], <b>Y</b>: [src.master.y], <b>Z</b>: [src.master.z])! It is set to go off in [src.part_fs.time / 10] seconds.")
+	logTheThing(LOG_BOMBING, usr, "primes a canister bomb at [get_area(src.master)] ([log_loc(src.master)])")
+	message_admins("[key_name(usr)] primes a canister bomb at [get_area(src.master)] ([log_loc(src.master)])")
+	src.attachedTo.visible_message("<B><font color=#FF0000>The detonator's priming process initiates. Its timer shows [src.part_fs.time / 10] seconds.</font></B>")
 
 // Legacy.
 /obj/item/assembly/detonator/proc/leaking()
@@ -353,6 +353,6 @@
 		var/obj/item/device/timer/timer = new /obj/item/device/timer(src)
 		timer.master = src
 		src.part_fs = timer
-		src.part_fs.time = 90 //Minimum det time
+		src.part_fs.time = 90 SECONDS //Minimum det time
 
 		setDetState(4)

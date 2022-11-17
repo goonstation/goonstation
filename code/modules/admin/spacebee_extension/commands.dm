@@ -40,8 +40,8 @@
 	execute(user, ckey, note)
 		addPlayerNote(ckey, user + " (Discord)", note)
 
-		logTheThing("admin", "[user] (Discord)", null, "added a note for [ckey]: [note]")
-		logTheThing("diary", "[user] (Discord)", null, "added a note for [ckey]: [note]", "admin")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "added a note for [ckey]: [note]")
+		logTheThing(LOG_DIARY, "[user] (Discord)", null, "added a note for [ckey]: [note]", "admin")
 		message_admins("<span class='internal'>[user] (Discord) added a note for [ckey]: [note]</span>")
 
 		var/ircmsg[] = new()
@@ -67,8 +67,8 @@
 			return
 		// else it succeeded
 		addPlayerNote(ckey, user + " (Discord)", "New login notice set:\n\n[notice]")
-		logTheThing("admin", "[user] (Discord)", null, "added a login notice for [ckey]: [notice]")
-		logTheThing("diary", "[user] (Discord)", null, "added a login notice for [ckey]: [notice]", "admin")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "added a login notice for [ckey]: [notice]")
+		logTheThing(LOG_DIARY, "[user] (Discord)", null, "added a login notice for [ckey]: [notice]", "admin")
 		message_admins("<span class='internal'>[user] (Discord) added a login notice for [ckey]: [notice]</span>")
 
 		ircbot.export("admin", list(
@@ -78,7 +78,7 @@
 /datum/spacebee_extension_command/ban
 	name = "ban"
 	server_targeting = COMMAND_TARGETING_MAIN_SERVER
-	help_message = "Bans a given ckey. Arguments in the order of ckey, length (number of minutes, or put \"hour\", \"day\", \"week\", \"month\", \"perma\" or \"untilappeal\"), and ban reason. Make sure you specify the server that the person is on. Also keep in mind that this bans them from all servers. e.g. ban1 shelterfrog perma Lol rip."
+	help_message = "Bans a given ckey. Arguments in the order of ckey, length (number of minutes, or put \"hour\", \"day\", \"halfweek\", \"week\", \"twoweeks\", \"month\", \"perma\" or \"untilappeal\"), and ban reason. Make sure you specify the server that the person is on. Also keep in mind that this bans them from all servers. e.g. ban1 shelterfrog perma Lol rip."
 	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/string="length",
 	/datum/command_argument/the_rest="reason")
 	execute(user, ckey, length, reason)
@@ -109,8 +109,12 @@
 			length = 60
 		else if (length == "day")
 			length = 1440
+		else if (length == "halfweek")
+			length = 5040
 		else if (length == "week")
 			length = 10080
+		else if (length == "twoweeks")
+			length = 20160
 		else if (length == "month")
 			length = 43200
 		else if (length == "perma")
@@ -133,6 +137,80 @@
 		ircmsg["msg"] = "Banned [ckey] from all servers for [length] minutes, reason: [reason]"
 		ircbot.export("admin", ircmsg)
 
+/datum/spacebee_extension_command/serverban
+	name = "serverban"
+	server_targeting = COMMAND_TARGETING_MAIN_SERVER
+	help_message = "Bans a given ckey from a specified server. Arguments in the order of ckey, server ID (for example: main1/1/goon1), length (number of minutes, or put \"hour\", \"day\", \"halfweek\", \"week\", \"twoweeks\", \"month\", \"perma\" or \"untilappeal\"), and ban reason, e.g. serverban shelterfrog goon1 perma Lol rip."
+	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/string/optional="server", /datum/command_argument/string="length",
+	/datum/command_argument/the_rest="reason")
+	execute(user, ckey, server, length, reason)
+		if (!(ckey && server && length && reason))
+			system.reply("Insufficient arguments.", user)
+			return
+		var/data[] = new()
+		data["ckey"] = ckey
+		var/mob/M = ckey_to_mob(ckey)
+		if (M)
+			data["compID"] = M.computer_id
+			data["ip"] = M.lastKnownIP
+		else
+			var/list/response
+			try
+				response = apiHandler.queryAPI("playerInfo/get", list("ckey" = data["ckey"]), forceResponse = 1)
+			catch ()
+				var/ircmsg[] = new()
+				ircmsg["name"] = user
+				ircmsg["msg"] = "Failed to query API, try again later."
+				ircbot.export("admin", ircmsg)
+				return
+			data["ip"] = response["last_ip"]
+			data["compID"] = response["last_compID"]
+		if(server == "main1" || server == "1" || server == "goon1")
+			server = "main1"
+		else if(server == "main2" || server == "2" || server == "goon2")
+			server = "main2"
+		else if(server == "main3" || server == "3" || server == "goon3")
+			server = "main3"
+		else if(server == "main4" || server == "4" || server == "goon4")
+			server = "main4"
+		else
+			system.reply("Invalid server.", user)
+			return
+		data["server"] = server
+		data["text_ban_length"] = length
+		data["reason"] = reason
+		if (length == "hour")
+			length = 60
+		else if (length == "day")
+			length = 1440
+		else if (length == "halfweek")
+			length = 5040
+		else if (length == "week")
+			length = 10080
+		else if (length == "twoweeks")
+			length = 20160
+		else if (length == "month")
+			length = 43200
+		else if (length == "perma")
+			length = 0
+			data["text_ban_length"] = "Permanent"
+		else if (ckey(length) == "untilappeal")
+			length = -1
+			data["text_ban_length"] = "Until Appeal"
+		else
+			length = text2num(length)
+		if (!isnum(length))
+			system.reply("Ban length invalid.", user)
+			return
+		data["mins"] = length
+		data["akey"] = ckey(user) + " (Discord)"
+		addBan(data) // logging, messaging, and noting are all taken care of by this proc
+
+		var/ircmsg[] = new()
+		ircmsg["name"] = user
+		ircmsg["msg"] = "Banned [ckey] from [server] for [length] minutes, reason: [reason]"
+		ircbot.export("admin", ircmsg)
+
 /datum/spacebee_extension_command/boot
 	name = "boot"
 	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
@@ -143,11 +221,62 @@
 		for(var/client/C)
 			if (C.ckey == ckey)
 				del(C)
-				logTheThing("admin", "[user] (Discord)", null, "booted [constructTarget(C,"admin")].")
-				logTheThing("diary", "[user] (Discord)", null, "booted [constructTarget(C,"diary")].", "admin")
+				logTheThing(LOG_ADMIN, "[user] (Discord)", null, "booted [constructTarget(C,"admin")].")
+				logTheThing(LOG_DIARY, "[user] (Discord)", null, "booted [constructTarget(C,"diary")].", "admin")
 				system.reply("Booted [ckey].", user)
 				return
 		system.reply("Could not locate [ckey].", user)
+
+/datum/spacebee_extension_command/kick
+	name = "kick"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Kick a given ckey off the specified server."
+	argument_types = list(/datum/command_argument/string/ckey="ckey")
+
+	execute(user, ckey)
+		for(var/client/C)
+			if (C.ckey == ckey)
+				del(C)
+				logTheThing(LOG_ADMIN, "[user] (Discord)", null, "kicked [constructTarget(C,"admin")].")
+				logTheThing(LOG_DIARY, "[user] (Discord)", null, "kicked [constructTarget(C,"diary")].", "admin")
+				system.reply("Kicked [ckey].", user)
+				return
+		system.reply("Could not locate [ckey].", user)
+
+/datum/spacebee_extension_command/alert
+	name = "alert"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Send an admin alert to a given ckey."
+	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/the_rest="message")
+
+	execute(user, ckey, message)
+		for(var/client/C)
+			if (C.ckey == ckey)
+				message_admins("[user] (Discord) displayed an alert to [ckey] with the message \"[message]\"")
+				system.reply("Displayed an alert to [ckey].", user)
+				logTheThing(LOG_ADMIN, "[user] (Discord)", null, "displayed an alert to [constructTarget(C,"admin")] with the message \"[message]\"")
+				logTheThing(LOG_DIARY, "[user] (Discord)", null, "displayed an alert to  [constructTarget(C,"diary")] with the message \"[message]\"", "admin")
+				if (C?.mob)
+					SPAWN(0)
+						C.mob.playsound_local(C.mob, 'sound/voice/animal/goose.ogg', 100, flags = SOUND_IGNORE_SPACE)
+						if (alert(C.mob, message, "!! Admin Alert !!", "OK") == "OK")
+							message_admins("[ckey] acknowledged the alert from [user] (Discord).")
+							system.reply("[ckey] acknowledged the alert.", user)
+				return
+		system.reply("Could not locate [ckey].", user)
+
+/datum/spacebee_extension_command/removelabels
+	name = "removelabels"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Removes all labels from a chosen server."
+
+	execute(user)
+		for(var/atom/A in world)
+			if(!isnull(A.name_suffixes))
+				A.name_suffixes = null
+				A.UpdateName()
+			LAGCHECK(LAG_LOW)
+		system.reply("Labels removed.", user)
 
 /datum/spacebee_extension_command/prison
 	name = "prison"
@@ -165,8 +294,8 @@
 						M.changeStatus("paralysis", 8 SECONDS)
 						M.set_loc(prison)
 						M.show_text("<h2><font color=red><b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b></font></h2>", "red")
-						logTheThing("admin", "[user] (Discord)", null, "prisoned [constructTarget(C,"admin")].")
-						logTheThing("diary", "[user] (Discord)", null, "prisoned [constructTarget(C,"diary")].", "admin")
+						logTheThing(LOG_ADMIN, "[user] (Discord)", null, "prisoned [constructTarget(C,"admin")].")
+						logTheThing(LOG_DIARY, "[user] (Discord)", null, "prisoned [constructTarget(C,"diary")].", "admin")
 						system.reply("Prisoned [ckey].", user)
 						return
 					system.reply("Could not locate prison zone.", user)
@@ -196,12 +325,12 @@
 	argument_types = list(/datum/command_argument/string="headline", /datum/command_argument/the_rest="body")
 	execute(user, headline, body)
 		for_by_tcl(C, /obj/machinery/communications_dish)
-			C.add_centcom_report("[command_name()] Update", body)
+			C.add_centcom_report(ALERT_GENERAL, body)
 		body = discord_emojify(body)
 		headline = discord_emojify(headline)
-		command_alert(body, headline, "sound/misc/announcement_1.ogg")
-		logTheThing("admin", "[user] (Discord)", null, "has created a command report: [body]")
-		logTheThing("diary", "[user] (Discord)", null, "has created a command report: [body]", "admin")
+		command_alert(body, headline, 'sound/misc/announcement_1.ogg')
+		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "has created a command report: [body]")
+		logTheThing(LOG_DIARY, "[user] (Discord)", null, "has created a command report: [body]", "admin")
 		message_admins("[user] (Discord) has created a command report")
 		system.reply("Command report created.", user)
 		global.cooldowns["transmit_centcom"] = 0 // reset cooldown for reply
@@ -219,8 +348,8 @@
 				master_mode = new_mode
 				which = ""
 			world.save_mode(new_mode)
-			logTheThing("admin", "[user] (Discord)", null, "set the [which]mode as [new_mode]")
-			logTheThing("diary", "[user] (Discord)", null, "set the [which]mode as [new_mode]", "admin")
+			logTheThing(LOG_ADMIN, "[user] (Discord)", null, "set the [which]mode as [new_mode]")
+			logTheThing(LOG_DIARY, "[user] (Discord)", null, "set the [which]mode as [new_mode]", "admin")
 			message_admins("[user] (Discord) set the [which]mode as [new_mode].")
 			system.reply("Set the [which]mode to [new_mode].", user)
 		else if(length(new_mode) > 0)
@@ -275,8 +404,8 @@
 	action_name = "gib"
 
 	perform_action(user, mob/target)
-		logTheThing("admin", "[user] (Discord)", target, "gibbed [constructTarget(target,"admin")]")
-		logTheThing("diary", "[user] (Discord)", target, "gibbed [constructTarget(target,"diary")].", "admin")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", target, "gibbed [constructTarget(target,"admin")]")
+		logTheThing(LOG_DIARY, "[user] (Discord)", target, "gibbed [constructTarget(target,"diary")].", "admin")
 		message_admins("[user] (Discord) gibbed [key_name(target)].")
 		target.transforming = 1
 		target.gib()
@@ -293,9 +422,27 @@
 			return FALSE
 		var/mob/living/carbon/human/H = target
 		H.limbs.sever("all")
-		logTheThing("admin", "[user] (Discord)", target, "delimbed [constructTarget(target,"admin")]")
-		logTheThing("diary", "[user] (Discord)", target, "delimbed [constructTarget(target,"diary")].", "admin")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", target, "delimbed [constructTarget(target,"admin")]")
+		logTheThing(LOG_DIARY, "[user] (Discord)", target, "delimbed [constructTarget(target,"diary")].", "admin")
 		message_admins("[user] (Discord) delimbed [key_name(target)].")
+		return TRUE
+
+/datum/spacebee_extension_command/state_based/confirmation/mob_targeting/cryo
+	name = "cryo"
+	help_message = "Cryos a given ckey."
+	action_name = "cryo"
+
+	perform_action(user, mob/target)
+		if (!length(by_type[/obj/cryotron]))
+			system.reply("Error, no cryotron detected.", user)
+			return FALSE
+		var/obj/cryotron/C = pick(by_type[/obj/cryotron])
+		if (!C.add_person_to_storage(target, FALSE))
+			system.reply("Error, cryoing failed.", user)
+			return FALSE
+		logTheThing(LOG_ADMIN, "[user] (Discord)", target, "cryos [constructTarget(target,"admin")]")
+		logTheThing(LOG_DIARY, "[user] (Discord)", target, "cryos [constructTarget(target,"diary")].", "admin")
+		message_admins("[user] (Discord) cryos [key_name(target)].")
 		return TRUE
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/send_to_arrivals
@@ -304,8 +451,8 @@
 	action_name = "send to arrivals"
 
 	perform_action(user, mob/target)
-		logTheThing("admin", "[user] (Discord)", target, "sent [constructTarget(target,"admin")] to arrivals")
-		logTheThing("diary", "[user] (Discord)", target, "sent [constructTarget(target,"diary")] to arrivals.", "admin")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", target, "sent [constructTarget(target,"admin")] to arrivals")
+		logTheThing(LOG_DIARY, "[user] (Discord)", target, "sent [constructTarget(target,"diary")] to arrivals.", "admin")
 		message_admins("[user] (Discord) sent [key_name(target)] to arrivals.")
 		target.set_loc(pick_landmark(LANDMARK_LATEJOIN, locate(150, 150, 1)))
 		return TRUE
@@ -316,8 +463,8 @@
 	action_name = "respawn"
 
 	perform_action(user, mob/target)
-		logTheThing("admin", "[user] (Discord)", target, "respawned [constructTarget(target,"admin")]")
-		logTheThing("diary", "[user] (Discord)", target, "respawned [constructTarget(target,"diary")].", "admin")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", target, "respawned [constructTarget(target,"admin")]")
+		logTheThing(LOG_DIARY, "[user] (Discord)", target, "respawned [constructTarget(target,"diary")].", "admin")
 		message_admins("[user] (Discord) respawned [key_name(target)].")
 
 		var/mob/new_player/newM = new()
@@ -353,8 +500,8 @@
 			return FALSE
 		target.revive()
 		message_admins("<span class='alert'>Admin [user] (Discord) healed / revived [key_name(target)]!</span>")
-		logTheThing("admin", "[user] (Discord)", target, "healed / revived [constructTarget(target,"admin")]")
-		logTheThing("diary", "[user] (Discord)", target, "healed / revived [constructTarget(target,"diary")]", "admin")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", target, "healed / revived [constructTarget(target,"admin")]")
+		logTheThing(LOG_DIARY, "[user] (Discord)", target, "healed / revived [constructTarget(target,"diary")]", "admin")
 		return TRUE
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/heal/revive
@@ -401,7 +548,7 @@
 		if(!length(result))
 			system.reply("No results.", user)
 		else
-			system.reply(reverse_list(result).Join("\n"), user)
+			system.reply(reverse_list_range(result).Join("\n"), user)
 
 /datum/spacebee_extension_command/crate
 	name = "crate"
@@ -448,8 +595,8 @@
 		if(isnull(src.new_name))
 			return FALSE
 		message_admins("<span class='alert'>Admin [user] (Discord) renamed [key_name(target)] to [src.new_name]!</span>")
-		logTheThing("admin", "[user] (Discord)", target, "renamed [constructTarget(target,"admin")] to [src.new_name]!")
-		logTheThing("diary", "[user] (Discord)", target, "renamed [constructTarget(target,"diary")] to [src.new_name]!", "admin")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", target, "renamed [constructTarget(target,"admin")] to [src.new_name]!")
+		logTheThing(LOG_DIARY, "[user] (Discord)", target, "renamed [constructTarget(target,"diary")] to [src.new_name]!", "admin")
 		target.real_name = src.new_name
 		target.name = src.new_name
 		target.choose_name(1, null, target.real_name, force_instead=TRUE)
@@ -470,6 +617,126 @@
 			return FALSE
 		global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
 		message_admins("Ckey [ckey] added to the VPN whitelist by [user] (Discord).")
-		logTheThing("admin", "[user] (Discord)", null, "Ckey [ckey] added to the VPN whitelist.")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "Ckey [ckey] added to the VPN whitelist.")
+		addPlayerNote(ckey, user + " (Discord)", "Ckey [ckey] added to the VPN whitelist.")
 		system.reply("[ckey] added to the VPN whitelist.")
 		return TRUE
+
+/datum/spacebee_extension_command/hard_reboot
+	name = "hardreboot"
+	help_message = "Toggle a hard server reboot"
+	argument_types = list()
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+
+	execute(user)
+		var/logMessage = ""
+		if (fexists(hardRebootFilePath))
+			fdel(hardRebootFilePath)
+			logMessage = "removed a server hard reboot"
+		else
+			file(hardRebootFilePath) << ""
+			logMessage = "queued a server hard reboot"
+
+		logTheThing(LOG_DEBUG, "[user] (Discord)", null, logMessage)
+		logTheThing(LOG_DIARY, "[user] (Discord)", null, "admin")
+		message_admins("[user] (Discord) [logMessage]")
+		system.reply(logMessage)
+
+
+/datum/spacebee_extension_command/state_based/confirmation/renamestation
+	name = "renamestation"
+	help_message = "Rename the station."
+	argument_types = list(/datum/command_argument/the_rest="new_name")
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	var/new_name = null
+
+	prepare(user, new_name)
+		src.new_name = new_name
+		return "You are about to rename the station to `[new_name]`."
+
+	do_it(user)
+		if(isnull(src.new_name))
+			return
+		set_station_name(user, new_name, admin_override=TRUE)
+		message_admins("<span class='alert'>Admin [user] (Discord) renamed station to [src.new_name]!</span>")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "renamed station to [src.new_name]!")
+		logTheThing(LOG_DIARY, "[user] (Discord)", null, "renamed station to [src.new_name]!", "admin")
+		var/success_msg = "Station renamed to [src.new_name]."
+		system.reply(success_msg)
+
+/datum/spacebee_extension_command/medal
+	name = "medal"
+	help_message = "Give or revoke a medal for a player. E.g., `;;medal give zewaka Contributor`"
+	argument_types = list(
+		/datum/command_argument/string = "giverevoke",
+		/datum/command_argument/string/ckey = "player",
+		/datum/command_argument/the_rest = "medalname"
+	)
+	server_targeting = COMMAND_TARGETING_MAIN_SERVER
+
+	execute(user, giverevoke, player, medalname)
+		if(isnull(giverevoke) || isnull(player) || isnull(medalname))
+			system.reply("Failed to set medal; insufficient arguments. \
+				Provided: gr:[json_encode(giverevoke)] p:[json_encode(player)] m:[json_encode(medalname)]", user)
+			return
+
+		var/result
+		if (giverevoke == "give")
+			result = world.SetMedal(medalname, player, config.medal_hub, config.medal_password)
+		else if (giverevoke == "revoke")
+			result = world.ClearMedal(medalname, player, config.medal_hub, config.medal_password)
+		else
+			system.reply("Failed to set medal; neither `give` nor `revoke` was specified as the first argument.")
+			return
+		if (isnull(result))
+			system.reply("Failed to set medal; error communicating with BYOND hub!")
+			return
+
+		var/to_log = "[giverevoke == "revoke" ? "revoked" : "gave"] the [medalname] medal for [player]."
+		message_admins("<span class='alert'>Admin [user] (Discord) [to_log]</span>")
+		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "[to_log]")
+		logTheThing(LOG_DIARY, "[user] (Discord)", null, "admin")
+		system.reply("[user] [to_log]")
+
+/datum/spacebee_extension_command/antagtokens
+	name = "antagtokens"
+	help_message = "Get antag tokens for a player"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	argument_types = list(/datum/command_argument/string/ckey="ckey")
+
+	execute(user, ckey)
+		for(var/client/C)
+			if (C.ckey == ckey)
+				system.reply("Current tokens for [ckey]: [C.antag_tokens]", user)
+				return
+		system.reply("Could not locate [ckey].", user)
+
+/datum/spacebee_extension_command/state_based/confirmation/setantagtokens
+	name = "setantagtokens"
+	help_message = "Set antag tokens for a player(<1 to clear). E.g., `;;setantagtokens zewaka 3`"
+	argument_types = list(/datum/command_argument/string/ckey = "player", /datum/command_argument/the_rest = "tokens")
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	var/client/target_client = null
+	var/token_amt = null
+
+	prepare(user, player, tokens)
+		var/mob/playermob = ckey_to_mob(player)
+		src.target_client = playermob.client
+		src.token_amt = tokens
+		return "You are about to set [target_client]'s antag tokens to: [token_amt]. Current: [target_client.antag_tokens]"
+
+	do_it(user)
+		if(isnull(src.target_client) || isnull(src.token_amt))
+			return
+		target_client.set_antag_tokens(token_amt)
+		var/success_msg = null
+		if (token_amt <= 0)
+			logTheThing(LOG_ADMIN, usr, "Removed all antag tokens from [constructTarget(target_client,"admin")]")
+			logTheThing(LOG_DIARY, usr, "Removed all antag tokens from [constructTarget(target_client,"diary")]", "admin")
+			success_msg = "<span class='internal'>[key_name(user)] removed all antag tokens from [key_name(target_client)]</span>"
+		else
+			logTheThing(LOG_ADMIN, usr, "Set [constructTarget(target_client,"admin")]'s Antag tokens to [token_amt].")
+			logTheThing(LOG_DIARY, usr, "Set [constructTarget(target_client,"diary")]'s Antag tokens to [token_amt].")
+			success_msg = "<span class='internal'>[key_name(user)] set [key_name(target_client)]'s Antag tokens to [token_amt].</span>"
+		message_admins(success_msg)
+		system.reply("Antag tokens for [target_client] successfully [(token_amt <= 0) ? "cleared" : "set to " + token_amt]")

@@ -13,8 +13,8 @@
 		..()
 
 /obj/machinery/power/smes
-	name = "power storage unit"
-	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
+	name = "Dianmu power storage unit"
+	desc = "The XIANG|GIESEL model '電母' high-capacity superconducting magnetic energy storage (SMES) unit. Acts as a giant capacitor for facility power grids, soaking up extra power or dishing it out."
 	icon_state = "smes"
 	density = 1
 	anchored = 1
@@ -56,7 +56,7 @@
 	src.charge -= 1e6
 	if (src.charge < 0)
 		src.charge = 0
-	SPAWN_DBG(10 SECONDS)
+	SPAWN(10 SECONDS)
 		src.output = initial(src.output)
 		src.charging = initial(src.charging)
 		src.online = initial(src.online)
@@ -65,7 +65,7 @@
 /obj/machinery/power/smes/New()
 	..()
 
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		dir_loop:
 			for(var/d in cardinal)
 				var/turf/T = get_step(src, d)
@@ -80,11 +80,10 @@
 
 		terminal.master = src
 
-		updateicon()
+		UpdateIcon()
 
 
-/obj/machinery/power/smes/proc/updateicon()
-
+/obj/machinery/power/smes/update_icon()
 	if (status & BROKEN)
 		ClearAllOverlays()
 		return
@@ -154,7 +153,7 @@
 
 	if (online)		// if outputting
 		if (prob(5))
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				playsound(src.loc, pick(ambience_power), 60, 1)
 
 		lastout = min(charge, output)		//limit output to that stored
@@ -168,7 +167,7 @@
 
 	// only update icon if state changed
 	if (last_disp != chargedisplay() || last_chrg != charging || last_onln != online)
-		updateicon()
+		UpdateIcon()
 
 	src.updateDialog()
 
@@ -199,7 +198,7 @@
 	loaddemand = lastout - excess
 
 	if (clev != chargedisplay())
-		updateicon()
+		UpdateIcon()
 
 
 ///obj/machinery/power/smes/add_avail(var/amount)
@@ -246,11 +245,11 @@
 			src.chargemode = !src.chargemode
 			if (!chargemode)
 				charging = 0
-			src.updateicon()
+			src.UpdateIcon()
 			. = TRUE
 		if("toggle-output")
 			src.online = !src.online
-			src.updateicon()
+			src.UpdateIcon()
 			. = TRUE
 		if("set-input")
 			var/target = params["target"]

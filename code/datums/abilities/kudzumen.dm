@@ -15,7 +15,7 @@
 				return
 			else
 				owner.waiting_for_hotkey = 1
-				src.updateIcon()
+				src.UpdateIcon()
 				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 				return
 
@@ -32,7 +32,7 @@
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 
@@ -113,7 +113,7 @@
 	onAttach(var/datum/abilityHolder/H)
 		..()
 		if (src.unlock_message && src.holder && src.holder.owner)
-			boutput(src.holder.owner, __blue("<h3>[src.unlock_message]</h3>"))
+			boutput(src.holder.owner, "<span class='notice'><h3>[src.unlock_message]</h3></span>")
 		return
 
 	updateObject()
@@ -146,17 +146,17 @@
 			return 0
 
 		if (!(iscarbon(M) || ismobcritter(M)))
-			boutput(M, __red("You cannot use any powers in your current form."))
+			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
 			return 0
 
 		if (can_cast_anytime && !isdead(M))
 			return 1
 		if (!can_act(M, 0))
-			boutput(M, __red("You can't use this ability while incapacitated!"))
+			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return 0
 
 		if (src.not_when_handcuffed && M.restrained())
-			boutput(M, __red("You can't use this ability when restrained!"))
+			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
 		//maybe have to be on kudzu to use power?
@@ -237,7 +237,7 @@
 		..()
 
 	//mostly same as kudzu
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W) return
 		if (!user) return
 		var/dmg = 1
@@ -342,7 +342,7 @@
 		var/message = html_encode(input("Choose something to say:","Enter Message.","") as null|text)
 		if (!message)
 			return
-		logTheThing("say", holder.owner, holder.owner.name, "[message]")
+		logTheThing(LOG_SAY, holder.owner, "[message]")
 		.= holder.owner.say_kudzu(message, holder)
 
 		return 0
@@ -511,7 +511,7 @@
 	cast()
 		var/mob/owner = holder?.owner
 		if (!istype(owner))
-			logTheThing("debug", null, null, "no owner for this kudzu ability. [src]")
+			logTheThing(LOG_DEBUG, null, "no owner for this kudzu ability. [src]")
 			return 1
 		//turn on
 		if (!active)
@@ -621,7 +621,7 @@
 			amount = length(K.kudzu)
 		else
 			boutput(usr, "messed up kudzu controller call 1-800-CODER")
-			logTheThing("debug", null, null, "Messed up kudzu controller for kudzuman")
+			logTheThing(LOG_DEBUG, null, "Messed up kudzu controller for kudzuman")
 
 	disposing()
 		kudzu_controller = null
@@ -676,8 +676,8 @@
 	icon_state = "vine-item"
 	// inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	// item_state = "knife"
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	throw_range = 5
 	hit_type = DAMAGE_BLUNT
 	burn_type = 1
@@ -709,7 +709,7 @@
 			boutput(user, "<span class='alert'>[src] breaks apart in your hands.</span>")
 			qdel(src)
 
-	attack(mob/M as mob, mob/user as mob, def_zone, is_special = 0)
+	attack(mob/M, mob/user, def_zone, is_special = 0)
 		..()
 
 		if (prob(20))
@@ -750,19 +750,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, kudzu) > 1 || kudzu == null || kudzu.growth < 20 || owner == null)	//20 growth is currently the lowest for dense kudzu. Should be a constant.
+		if(BOUNDS_DIST(owner, kudzu) > 0 || kudzu == null || kudzu.growth < 20 || owner == null)	//20 growth is currently the lowest for dense kudzu. Should be a constant.
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, kudzu) > 1 ||  kudzu == null || kudzu.growth < 20 || owner == null)
+		if(BOUNDS_DIST(owner, kudzu) > 0 ||  kudzu == null || kudzu.growth < 20 || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, kudzu) > 1 || kudzu == null || kudzu.growth < 20 || owner == null)
+		if(BOUNDS_DIST(owner, kudzu) > 0 || kudzu == null || kudzu.growth < 20 || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!iskudzuman(owner))
@@ -784,14 +784,4 @@
 //O is obj to be destroyed, W is obj used to destroy.
 //This is total shit too, but I'm in a hurry again. I'll be back, -Kyle
 /proc/destroys_kudzu_object(var/obj/O, var/obj/item/W as obj, var/mob/user)
-		var/destroyed = 0
-		if (istool(W, TOOL_CUTTING | TOOL_SAWING | TOOL_SCREWING | TOOL_SNIPPING | TOOL_WELDING)) destroyed = 1
-		else if (istype(W, /obj/item/axe)) destroyed = 1
-		else if (istype(W, /obj/item/circular_saw)) destroyed = 1
-		else if (istype(W, /obj/item/kitchen/utensil/knife)) destroyed = 1
-		else if (istype(W, /obj/item/scalpel)) destroyed = 1
-		else if (istype(W, /obj/item/sword)) destroyed = 1
-		else if (istype(W, /obj/item/saw)) destroyed = 1
-
-		return destroyed
-
+	return istool(W, TOOL_CUTTING | TOOL_SAWING | TOOL_SCREWING | TOOL_SNIPPING | TOOL_WELDING)

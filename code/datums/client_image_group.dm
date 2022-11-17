@@ -4,6 +4,7 @@ var/global/list/datum/client_image_group/client_image_groups
 	var/list/image/images
 	var/list/mob_to_associated_images_lookup
 	var/list/subscribed_mobs_with_subcount
+	var/list/subscribed_minds_with_subcount
 
 	New()
 		. = ..()
@@ -12,6 +13,8 @@ var/global/list/datum/client_image_group/client_image_groups
 		mob_to_associated_images_lookup = list()
 		/// Associative list containing subscribed mobs and the amount of times they subscribed to the image group (to handle multiple sources).
 		subscribed_mobs_with_subcount = list()
+		/// Associative list containing subscribed minds with counts.
+		subscribed_minds_with_subcount = list()
 
 	/// Adds an image to the image list and adds it to all mobs' clients directly where appropriate. Registers signal to track mob invisibility changes.
 	proc/add_image(image/img)
@@ -20,7 +23,7 @@ var/global/list/datum/client_image_group/client_image_groups
 			mob_to_associated_images_lookup[img.loc] += img
 		else // first time a mob's image is added, on top of adding it to the lookup list a signal is registered on the mob to track invisibility changes.
 			mob_to_associated_images_lookup[img.loc] = list(img)
-			RegisterSignal(img.loc, COMSIG_MOB_PROP_INVISIBILITY, .proc/on_mob_invisibility_changed)
+			RegisterSignal(img.loc, COMSIG_ATOM_PROP_MOB_INVISIBILITY, .proc/on_mob_invisibility_changed)
 
 		for (var/mob/iterated_mob as() in subscribed_mobs_with_subcount)
 			if (!img.loc.invisibility || (img.loc == iterated_mob) || istype(iterated_mob, /mob/dead/observer))
@@ -32,7 +35,7 @@ var/global/list/datum/client_image_group/client_image_groups
 		mob_to_associated_images_lookup[img.loc] -= img
 		if (!length(mob_to_associated_images_lookup[img.loc])) // no images of a mob remain, removing from lookup and unregistering mob's invisibility update signal.
 			mob_to_associated_images_lookup.Remove(img.loc)
-			UnregisterSignal(img.loc, COMSIG_MOB_PROP_INVISIBILITY)
+			UnregisterSignal(img.loc, COMSIG_ATOM_PROP_MOB_INVISIBILITY)
 		for (var/mob/iterated_mob as() in subscribed_mobs_with_subcount)
 			iterated_mob.client?.images.Remove(img)
 
@@ -48,15 +51,46 @@ var/global/list/datum/client_image_group/client_image_groups
 			RegisterSignal(added_mob, COMSIG_MOB_LOGOUT, .proc/remove_images_from_client_of_mob)
 			RegisterSignal(added_mob, COMSIG_PARENT_PRE_DISPOSING, .proc/remove_mob_forced)
 
-	/// Removes a mob from the mob list, removes the images from its client and unregisters signals on it.
-	proc/remove_mob(mob/removed_mob) // same just reverse, and unregisters signals
-		subscribed_mobs_with_subcount[removed_mob] -= 1
+	/// Removes a mob from the mob list, removes the images from its client and unregisters signals on it. Force overrides subcount and removes it no matter what.
+	proc/remove_mob(mob/removed_mob, force = FALSE) // same just reverse, and unregisters signals
+		if (force)
+			subscribed_mobs_with_subcount[removed_mob] = 0
+		else
+			subscribed_mobs_with_subcount[removed_mob] -= 1
 		if (subscribed_mobs_with_subcount[removed_mob] <= 0) // mob no longer subscribed, removing images from client and unregistering signals
 			subscribed_mobs_with_subcount.Remove(removed_mob)
 			removed_mob.client?.images.Remove(images)
 			UnregisterSignal(removed_mob, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_PARENT_PRE_DISPOSING))
 
+	/// Adds a mind to the mind list, adds all images to its client and registers signals on it.
+	proc/add_mind(datum/mind/added_mind)
+		subscribed_minds_with_subcount[added_mind] += 1
+		if (subscribed_minds_with_subcount[added_mind] == 1)
+			if(added_mind.current)
+				add_mob(added_mind.current)
+				RegisterSignal(added_mind, COMSIG_PARENT_PRE_DISPOSING, .proc/remove_mind)
+				RegisterSignal(added_mind, COMSIG_MIND_ATTACH_TO_MOB, .proc/on_mind_attach)
+				RegisterSignal(added_mind, COMSIG_MIND_DETACH_FROM_MOB, .proc/on_mind_detach)
+
+	proc/remove_mind(datum/mind/removed_mind)
+		subscribed_minds_with_subcount[removed_mind] -= 1
+		if (subscribed_minds_with_subcount[removed_mind] <= 0)
+			subscribed_minds_with_subcount.Remove(removed_mind)
+			if(removed_mind.current)
+				remove_mob(removed_mind.current)
+				UnregisterSignal(removed_mind, list(COMSIG_PARENT_PRE_DISPOSING, COMSIG_MIND_ATTACH_TO_MOB, COMSIG_MIND_DETACH_FROM_MOB))
+
 	// private procs for signal purposes:
+
+	/// when a registered mind attaches to a mob
+	proc/on_mind_attach(datum/mind/mind, mob/M)
+		PRIVATE_PROC(TRUE)
+		add_mob(M)
+
+	/// when a registered mind detaches from a mob
+	proc/on_mind_detach(datum/mind/mind, mob/M)
+		PRIVATE_PROC(TRUE)
+		remove_mob(M)
 
 	/// Registered on MOB_LOGIN, when a client enters the mob adds the images to it.
 	proc/add_images_to_client_of_mob(mob/target_mob)

@@ -5,7 +5,6 @@
 #define PLANE_NOSHADOW_BELOW -101
 #define PLANE_DEFAULT -100
 #define PLANE_NOSHADOW_ABOVE -99
-#define PLANE_EXAMINE -96
 #define PLANE_HIDDENGAME -95
 #define PLANE_LIGHTING -90
 #define PLANE_SELFILLUM -80
@@ -79,7 +78,7 @@ client
 	var/atom/movable/screen/plane_display/master/game_display
 
 	New()
-		Z_LOG_DEBUG("Cient/New", "[src.ckey] - Adding plane_parents")
+		Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding plane_parents")
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_UNDERFLOOR, name = "underfloor_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SPACE, name = "space_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_FLOOR, name = "floor_plane"))
@@ -87,8 +86,6 @@ client
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_NOSHADOW_BELOW, name = "noshadow_below_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_DEFAULT, name = "game_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_NOSHADOW_ABOVE, name = "noshadow_above_plane"))
-		var/atom/examine_plane = add_plane(new /atom/movable/screen/plane_parent(PLANE_EXAMINE, name = "examine_plane"))
-		examine_plane.alpha = 0
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_LIGHTING, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_MULTIPLY, mouse_opacity = 0, name = "lighting_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SELFILLUM, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_ADD, mouse_opacity = 0, name = "selfillum_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_ABOVE_LIGHTING, name = "emissive_plane"))
@@ -97,6 +94,7 @@ client
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_OVERLAY_EFFECTS, mouse_opacity = 0, name = "overlay_effects_plane", is_screen = 1))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_HUD, appearance_flags = NO_CLIENT_COLOR, name = "hud_plane", is_screen = 1))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SCREEN_OVERLAYS, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "screen_overlays_plane", is_screen = 1))
+
 
 #ifdef COOL_PLANE_STUFF
 		game_display = new
@@ -113,7 +111,9 @@ client
 		var/atom/movable/screen/plane_parent/P = new /atom/movable/screen/plane_parent(PLANE_HIDDENGAME, name = "hidden_game_plane")
 		add_plane(P)
 
-		SPAWN_DBG(5 SECONDS) //Because everything needs to wait!
+		src.setup_special_screens()
+
+		SPAWN(5 SECONDS)
 			apply_depth_filter()
 		..()
 

@@ -1,6 +1,7 @@
 /obj/dummy/chameleon
 	name = ""
 	desc = ""
+	object_flags = NO_GHOSTCRITTER
 	density = 0
 	anchored = 1
 	soundproofing = -1
@@ -59,7 +60,7 @@
 	relaymove(var/mob/user, direction)
 		if (can_move)
 			can_move = 0
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				can_move = 1
 			step(src,direction)
 		return
@@ -69,7 +70,7 @@
 	icon_state = "shield0"
 	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY | ONBELT | SUPPRESSATTACK
 	item_state = "electronic"
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
@@ -117,9 +118,11 @@
 		scan(target, user)
 
 	proc/scan(obj/target, mob/user)
-		if (get_dist(src, target) > 1)
+		if (BOUNDS_DIST(src, target) > 0)
 			if (user && ismob(user))
 				user.show_text("You are too far away to do that.", "red")
+			return
+		if (target.plane == PLANE_HUD || isgrab(target)) //just don't scan hud stuff or grabs
 			return
 		//Okay, enough scanning shit without actual icons yo.
 		if (!isnull(initial(target.icon)) && !isnull(initial(target.icon_state)) && target.icon && target.icon_state && isobj(target)) // please blame flourish
@@ -127,14 +130,13 @@
 				cham = new(src)
 				cham.master = src
 
-			playsound(src, "sound/weapons/flash.ogg", 100, 1, 1)
+			playsound(src, 'sound/weapons/flash.ogg', 100, 1, 1)
 			boutput(user, "<span class='notice'>Scanned [target].</span>")
 			cham.name = target.name
 			cham.real_name = target.name
 			cham.desc = target.desc
 			cham.real_desc = target.desc
-			cham.icon = target.icon
-			cham.icon_state = target.icon_state
+			cham.icon = getFlatIcon(target)
 			cham.set_dir(target.dir)
 			can_use = 1
 			tooltip_rebuild = 1
@@ -150,21 +152,21 @@
 
 		if (active) //active_dummy)
 			active = 0
-			playsound(src, "sound/effects/pop.ogg", 100, 1, 1)
+			playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
 			for (var/atom/movable/A in cham)
 				A.set_loc(get_turf(cham))
 			cham.set_loc(src)
 			boutput(usr, "<span class='notice'>You deactivate the [src].</span>")
 			anim.set_loc(get_turf(src))
 			flick("emppulse",anim)
-			SPAWN_DBG(0.8 SECONDS)
+			SPAWN(0.8 SECONDS)
 				anim.set_loc(src)
 		else
 			if (istype(src.loc, /obj/dummy/chameleon)) //No recursive chameleon projectors!!
 				boutput(usr, "<span class='alert'>As your finger nears the power button, time seems to slow, and a strange silence falls.  You reconsider turning on a second projector.</span>")
 				return
 
-			playsound(src, "sound/effects/pop.ogg", 100, 1, 1)
+			playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
 			cham.master = src
 			cham.set_loc(get_turf(src))
 			usr.set_loc(cham)
@@ -173,7 +175,7 @@
 			boutput(usr, "<span class='notice'>You activate the [src].</span>")
 			anim.set_loc(get_turf(src))
 			flick("emppulse",anim)
-			SPAWN_DBG(0.8 SECONDS)
+			SPAWN(0.8 SECONDS)
 				anim.set_loc(src)
 
 	proc/disrupt()
@@ -185,7 +187,7 @@
 			cham.set_loc(src)
 			can_use = 0
 			tooltip_rebuild = 1
-			SPAWN_DBG(10 SECONDS)
+			SPAWN(10 SECONDS)
 				can_use = 1
 				tooltip_rebuild = 1
 
@@ -202,11 +204,11 @@
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.active)
 			if (user)
 				message_admins("[key_name(user)] triggers a chameleon bomb ([src]) by hitting it with [W] at [log_loc(user)].")
-				logTheThing("bombing", user, null, "triggers a chameleon bomb ([src]) by hitting it with [W] at [log_loc(user)].")
+				logTheThing(LOG_BOMBING, user, "triggers a chameleon bomb ([src]) by hitting it with [W] at [log_loc(user)].")
 			src.disrupt()
 		else
 			return ..()
@@ -214,7 +216,7 @@
 	attack_hand(var/mob/user)
 		if (src.active && isturf(loc))
 			message_admins("[key_name(user)] picks up and triggers a chameleon bomb ([src]) at [log_loc(user)].")
-			logTheThing("bombing", user, null, "picks up and triggers a chameleon bomb ([src]) at [log_loc(user)].")
+			logTheThing(LOG_BOMBING, user, "picks up and triggers a chameleon bomb ([src]) at [log_loc(user)].")
 			src.disrupt()
 		else
 			return ..()
@@ -232,12 +234,14 @@
 			return ..()
 
 	scan(obj/target, mob/user)
-		if (get_dist(src, target) > 1)
+		if (BOUNDS_DIST(src, target) > 0)
 			if (user && ismob(user))
 				user.show_text("You are too far away to do that.", "red")
 			return
+		if (target.plane == PLANE_HUD  || isgrab(target)) //just don't scan hud stuff and grabs
+			return
 		if (!isnull(initial(target.icon)) && !isnull(initial(target.icon_state)) && target.icon && target.icon_state && (isitem(target) || istype(target, /obj/shrub) || istype(target, /obj/critter) || istype(target, /obj/machinery/bot))) // cogwerks - added more fun
-			playsound(src, "sound/weapons/flash.ogg", 100, 1, 1)
+			playsound(src, 'sound/weapons/flash.ogg', 100, 1, 1)
 			boutput(user, "<span class='notice'>Scanned [target].</span>")
 			src.name = target.name
 			src.real_name = target.name
@@ -259,17 +263,17 @@
 
 		if (active)
 			active = 0
-			playsound(src, "sound/effects/pop.ogg", 100, 1, 1)
+			playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
 			boutput(usr, "<span class='notice'>You disarm the [src].</span>")
 			message_admins("[key_name(usr)] disarms a chameleon bomb ([src]) at [log_loc(usr)].")
-			logTheThing("bombing", usr, null, "disarms a chameleon bomb ([src]) at [log_loc(usr)].")
+			logTheThing(LOG_BOMBING, usr, "disarms a chameleon bomb ([src]) at [log_loc(usr)].")
 
 		else
-			playsound(src, "sound/effects/pop.ogg", 100, 1, 1)
+			playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
 			src.active = 1
 			boutput(usr, "<span class='notice'>You arm the [src].</span>")
 			message_admins("[key_name(usr)] arms a chameleon bomb ([src]) at [log_loc(usr)].")
-			logTheThing("bombing", usr, null, "arms a chameleon bomb ([src]) at [log_loc(usr)].")
+			logTheThing(LOG_BOMBING, usr, "arms a chameleon bomb ([src]) at [log_loc(usr)].")
 
 	disrupt()
 		if (active)

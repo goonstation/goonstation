@@ -27,7 +27,7 @@
 	"Fool. You have not treated these proceedings with the due consideration they require. We are leaving.",
 	"This is a waste of time. We will take our leave to engage in more important pursuits.")
 	dialogue_purchase = list("We thank you for your custom.",
-	"Excellent. You will recieve your goods shortly.",
+	"Excellent. You will receive your goods shortly.",
 	"As we suspected, this has benefited us both.")
 	dialogue_haggle_accept = list("If that is what it takes to facilitate this transaction, so be it.",
 	"Very well. You should find this compromise to be adequate.",

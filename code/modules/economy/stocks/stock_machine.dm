@@ -143,7 +143,7 @@
 	onclose(user, "computer")
 	return
 
-/obj/machinery/computer/stockexchange/attackby(obj/item/I as obj, user as mob)
+/obj/machinery/computer/stockexchange/attackby(obj/item/I, mob/user)
 	if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 		if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 		var/obj/item/card/id/ID = I
@@ -151,7 +151,7 @@
 		var/datum/db_record/account = null
 		account = FindBankAccountByName(ID.registered)
 		if(account)
-			var/enterpin = input(user, "Please enter your PIN number.", "Order Console", 0) as null|num
+			var/enterpin = user.enter_pin("Stock Exchange")
 			if (enterpin == ID.pin)
 				boutput(user, "<span class='notice'>Card authorized.</span>")
 				src.logged_in = ID.registered

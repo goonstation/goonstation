@@ -1,3 +1,4 @@
+// If you're looking for ghostdrone code itself, check mob\living\silicon\ghostdrone.dm. This is hud.
 /datum/hud/ghostdrone
 	var/atom/movable/screen/hud
 		mod1
@@ -346,7 +347,7 @@
 						maptextc = "#9cbcff"
 
 				temp.maptext_y = 19
-				temp.maptext = "<span style='text-align: center; font-family: \"Small Fonts\"; font-size: 7px; font-weight: bold; -dm-text-outline: 1px black; color: [maptextc];'>[environment.temperature >= (1000 + T0C) ? "ERR" : "[round(environment.temperature - T0C)]'"]</span>"
+				temp.maptext = "<span style='text-align: center; font-family: \"Small Fonts\"; font-size: 7px; font-weight: bold; -dm-text-outline: 1px black; color: [maptextc];'>[environment.temperature >= (1000 + T0C) ? "ERR" : "[round(TO_CELSIUS(environment.temperature))]'"]</span>"
 
 		update_ability_hotbar()
 			if (!master.client)

@@ -15,7 +15,7 @@
 				return
 			else
 				owner.waiting_for_hotkey = 1
-				src.updateIcon()
+				src.UpdateIcon()
 				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 				return
 
@@ -32,7 +32,7 @@
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 
@@ -110,17 +110,17 @@
 			return 0
 
 		if (!(iscarbon(M) || ismobcritter(M)))
-			boutput(M, __red("You cannot use any powers in your current form."))
+			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
 			return 0
 
 		if (!isdead(M))
 			return 1
 		if (!can_act(M, 0))
-			boutput(M, __red("You can't use this ability while incapacitated!"))
+			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return 0
 
 		if (src.not_when_handcuffed && M.restrained())
-			boutput(M, __red("You can't use this ability when restrained!"))
+			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
 		return 1
@@ -138,7 +138,7 @@
 	cooldown = 1 MINUTES
 
 	cast()
-		playsound(holder.owner.loc, "sound/voice/heavenly.ogg", 100, 1, 0)
+		playsound(holder.owner.loc, 'sound/voice/heavenly.ogg', 100, 1, 0)
 		holder.owner.visible_message("<span class='alert'><B>[holder.owner] calls on the power of Spacemas to heal everyone!</B></span>")
 		for (var/mob/living/M in view(holder.owner,5))
 			M.HealDamage("All", 30, 30)
@@ -152,7 +152,7 @@
 
 	cast()
 		holder.owner.visible_message("<span class='alert'><B>[holder.owner] throws out a bunch of Spacemas presents from nowhere!</B></span>")
-		playsound(usr.loc, "sound/machines/fortune_laugh.ogg", 25, 1, -1)
+		playsound(usr.loc, 'sound/machines/fortune_laugh.ogg', 25, 1, -1)
 		holder.owner.transforming = 1
 		var/to_throw = rand(3,12)
 
@@ -177,7 +177,7 @@
 
 	cast()
 		holder.owner.visible_message("<span class='alert'><B>[holder.owner] casts out a whole shitload of snacks from nowhere!</B></span>")
-		playsound(holder.owner.loc, "sound/machines/fortune_laugh.ogg", 25, 1, -1)
+		playsound(holder.owner.loc, 'sound/machines/fortune_laugh.ogg', 25, 1, -1)
 		holder.owner.transforming = 1
 		var/to_throw = rand(6,18)
 
@@ -203,7 +203,7 @@
 	cooldown = 80 SECONDS
 
 	cast()
-		playsound(holder.owner.loc, "sound/effects/MagShieldUp.ogg", 100, 1, 0)
+		playsound(holder.owner.loc, 'sound/effects/MagShieldUp.ogg', 100, 1, 0)
 		holder.owner.visible_message("<span class='alert'><B>[holder.owner] summons the warmth of a nice toasty fireplace!</B></span>")
 		for (var/mob/living/M in view(holder.owner,5))
 			if (M.bioHolder)
@@ -217,13 +217,19 @@
 	cooldown = 30 SECONDS
 
 	cast()
-		var/A
-		A = input("Area to jump to", "TELEPORTATION", A) in get_teleareas()
+		var/list/tele_areas = get_teleareas()
+		var/A = tgui_input_list(src, "Area to jump to", "Teleportation", tele_areas)
+		if (isnull(A))
+			boutput(src, "<span class='alert'>Invalid area selected.</span>")
+			return 1
 		var/area/thearea = get_telearea(A)
+		if(thearea.teleport_blocked)
+			boutput(src, "<span class='alert'>That area is blocked from teleportation.</span>")
+			return 1
 
 		holder.owner.visible_message("<span class='alert'><B>[holder.owner] poofs away in a puff of cold, snowy air!</B></span>")
-		playsound(usr.loc, "sound/effects/bamf.ogg", 25, 1, -1)
-		playsound(usr.loc, "sound/machines/fortune_laugh.ogg", 25, 1, -1)
+		playsound(usr.loc, 'sound/effects/bamf.ogg', 25, 1, -1)
+		playsound(usr.loc, 'sound/machines/fortune_laugh.ogg', 25, 1, -1)
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 		smoke.set_up(1, 0, usr.loc)
 		smoke.attach(usr)
@@ -252,7 +258,7 @@
 		for (var/mob/living/carbon/cube/meat/krampus/K in view(7,holder.owner))
 			holder.owner.visible_message("<span class='alert'><B>[holder.owner] makes a stern gesture at [K]!</B></span>")
 			boutput(K, "<span class='alert'>You have been banished by Santa Claus!</span>")
-			playsound(usr.loc, "sound/effects/bamf.ogg", 25, 1, -1)
+			playsound(usr.loc, 'sound/effects/bamf.ogg', 25, 1, -1)
 			smoke.set_up(1, 0, K.loc)
 			smoke.attach(K)
 			smoke.start()

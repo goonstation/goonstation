@@ -7,14 +7,13 @@
 	if(istype(/atom, .))
 		return . //meatshielded
 
+	var/armor_value_bullet = get_ranged_protection()
+
 	var/damage = 0
 	if (P.proj_data)  //ZeWaka: Fix for null.ks_ratio
 		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
+		armor_value_bullet = max(armor_value_bullet*(1-P.proj_data.armor_ignored),1)
 
-	var/armor_value_bullet = 1
-
-	if (!(client && client.hellbanned))
-		armor_value_bullet = get_ranged_protection()
 	var/target_organ = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
 	if (P.proj_data) //Wire: Fix for: Cannot read null.damage_type
 		switch(P.proj_data.damage_type)
@@ -51,7 +50,6 @@
 								src.TakeDamage("chest", 0, (damage/armor_value_bullet), 0, DAMAGE_BURN)
 								if (src.organHolder)//Damage the organ again for more.
 									src.organHolder.damage_organ(0, (damage/armor_value_bullet)*2, 0, target_organ)
-							//implanted.implanted(src, null, min(20, max(0, round(damage / 10) ) ))
 			if (D_PIERCING)
 				if (armor_value_bullet > 1)
 					if (src.organHolder && prob(50))
@@ -84,7 +82,6 @@
 							src.TakeDamage("chest", 0, (damage/armor_value_bullet), 0, DAMAGE_BURN)
 							if (src.organHolder)//Damage the organ again for more burn.
 								src.organHolder.damage_organ(0, (damage/armor_value_bullet)*2, 0, target_organ)
-						//implanted.implanted(src, null, min(20, max(0, round(damage / 10) ) ))
 
 			if (D_SLASHING)
 				if (armor_value_bullet > 1)
@@ -102,6 +99,11 @@
 					if (src.organHolder && prob(50))
 						src.organHolder.damage_organ(0, damage, 0, target_organ)
 
+				if (istype(P.proj_data, /datum/projectile/laser))
+					var/wound_num = rand(0, 4)
+					var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = "laser_wound-[wound_num]", layer = MOB_EFFECT_LAYER)
+					src.UpdateOverlays(I, "laser_wound-[wound_num]")
+
 			if (D_BURNING)
 				if (armor_value_bullet > 1)
 					if (src.organHolder && prob(50))
@@ -111,16 +113,20 @@
 						src.organHolder.damage_organ(0, damage, 0, target_organ)
 
 			if (D_TOXIC)
-				if (P.proj_data.reagent_payload)
+				if (P.reagents)
 					if (P.implanted)
 						if (istext(P.implanted))
 							P.implanted = text2path(P.implanted)
 							if (!P.implanted)
 								return
 						var/obj/item/implant/projectile/implanted = new P.implanted
+						implanted.create_reagents(P.reagents.maximum_volume)
+						P.reagents.trans_to(implanted, P.reagents.maximum_volume)
 						implanted.set_loc(src)
 						if (istype(implanted))
 							implanted.owner = src
+							if (P.forensic_ID)
+								implanted.forensic_ID = P.forensic_ID
 							src.implant += implanted
 							implanted.setMaterial(P.proj_data.material)
 							implanted.implanted(src, null, 0)
@@ -135,7 +141,7 @@
 	src.flash(3 SECONDS)
 
 	if (isdead(src) && src.client)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.gib(1)
 		return
 
@@ -148,7 +154,7 @@
 		if (src.bioHolder && src.bioHolder.Uid && src.bioHolder.bloodType) //ZeWaka: Fix for null.bioHolder
 			bdna = src.bioHolder.Uid
 			btype = src.bioHolder.bloodType
-		SPAWN_DBG(0)
+		SPAWN(0)
 			gibs(A, virus, null, bdna, btype)
 
 		qdel(src)
@@ -189,18 +195,24 @@
 	if(src.bioHolder && src.bioHolder.HasEffect("shoot_limb"))
 		delib_chance += 20
 
-	if (src.traitHolder && src.traitHolder.hasTrait("explolimbs") || src.getStatusDuration("food_explosion_resist"))
+	if (src.getStatusDuration("food_explosion_resist"))
 		delib_chance = round(delib_chance / 2)
 
 	if (prob(delib_chance) && !shielded)
-		src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg"))) //max one delimb at once
+		if (src.traitHolder && src.traitHolder.hasTrait("explolimbs"))
+			if(prob(50))
+				boutput(src, "<span class='notice'><b>Your unusually strong bones keep your limbs attached through the blast!</b></span>")
+			else
+				src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg")))
+		else
+			src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg"))) //max one delimb at once
 
 	switch (power)
 		if (-INFINITY to 0) //blocked
 			boutput(src, "<span class='alert'><b>You are shielded from the blast!</b></span>")
 			return
 		if (6 to INFINITY) //gib
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				src.gib(1)
 			return
 	src.apply_sonic_stun(0, 0, 0, 0, 0, round(power*7), round(power*7), power*40)
@@ -213,7 +225,7 @@
 	src.UpdateDamageIcon()
 
 /mob/living/carbon/human/blob_act(var/power)
-	logTheThing("combat", src, null, "is hit by a blob")
+	logTheThing(LOG_COMBAT, src, "is hit by a blob")
 	if (isdead(src) || src.nodamage)
 		return
 	var/shielded = 0
@@ -385,7 +397,7 @@
 		try
 			E = src.organs[zone]
 		catch
-			logTheThing("debug", null, null, "<b>ORGAN/INDEX_DMG</b> Invalid index: [zone]")
+			logTheThing(LOG_DEBUG, null, "<b>ORGAN/INDEX_DMG</b> Invalid index: [zone]")
 			return 0
 		if (isitem(E))
 			if (E.take_damage(brute, burn, 0/*tox*/, damage_type))
@@ -429,6 +441,12 @@
 		src.TakeDamage(zone, brute, burn, tox, null, FALSE, TRUE)
 
 	src.take_toxin_damage(-tox)
+
+	if (burn > 0)
+		if (burn >= 10 || src.get_burn_damage() <= 5)
+			src.heal_laser_wound("all")
+		else if (prob(10))
+			src.heal_laser_wound("single")
 
 	if (zone == "All")
 		var/bruteOrganCount = 0.0 		//How many organs have brute damage?
@@ -504,6 +522,16 @@
 			return 0
 	return
 
+/mob/living/carbon/human/proc/heal_laser_wound(type)
+	if (type == "single")
+		for (var/i in 0 to 4)
+			if (src.GetOverlayImage("laser_wound-[i]"))
+				src.UpdateOverlays(null, "laser_wound-[i]")
+				break
+	else if (type == "all")
+		for (var/i in 0 to 4)
+			src.UpdateOverlays(null, "laser_wound-[i]")
+
 /mob/living/carbon/human/take_eye_damage(var/amount, var/tempblind = 0, var/side)
 	if (!src || !ishuman(src) || (!isnum(amount) || amount == 0))
 		return 0
@@ -555,7 +583,7 @@
 					eyeblind = 5
 					src.change_eye_blurry(5)
 					src.bioHolder.AddEffect("bad_eyesight")
-					SPAWN_DBG(10 SECONDS)
+					SPAWN(10 SECONDS)
 						src.bioHolder.RemoveEffect("bad_eyesight")
 
 			if (25 to INFINITY)

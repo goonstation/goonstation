@@ -25,6 +25,7 @@
 /datum/artifact/mining
 	associated_object = /obj/item/artifact/mining_tool
 	type_name = "Mining Tool"
+	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 450
 	validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	react_xray = list(12,80,95,5,"DENSE")

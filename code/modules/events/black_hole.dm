@@ -1,6 +1,6 @@
 /datum/random_event/major/black_hole
 	name = "Black Hole"
-	required_elapsed_round_time = 40 MINUTES
+	required_elapsed_round_time = 26.6 MINUTES
 #ifdef RP_MODE
 	disabled = 1
 #endif
@@ -35,7 +35,7 @@
 		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
 			if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(9001))
 				playsound(IX,'sound/machines/alarm_a.ogg',50,0,5,1.5)
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					if(IX) playsound(IX,'sound/machines/alarm_a.ogg',50,0,5,1.5)
 				IX.visible_message("<span class='alert'><b>[IX] emits a gravitational anomaly warning!</b></span>")
 				feedings_required = rand(12,24)
@@ -45,9 +45,11 @@
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/bhole_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(src))
 
-		for (var/mob/M in range(14,src))
-			boutput(M, "<span class='alert'>The air grows heavy and thick. Something feels terribly wrong.</span>")
-			shake_camera(M, 5, 16)
+		var/turf/T = get_turf(src)
+		for (var/mob/M in GET_NEARBY(T, 15))
+			if (M.client)
+				boutput(M, "<span class='alert'>The air grows heavy and thick. Something feels terribly wrong.</span>")
+				shake_camera(M, 5, 16)
 		playsound(src,'sound/effects/creaking_metal1.ogg',100,0,5,0.5)
 
 		sleep(lifespan / 2)
@@ -56,17 +58,17 @@
 			playsound(src,'sound/machines/engine_alert3.ogg',100,0,5,0.5)
 			animate(src, transform = matrix(4, MATRIX_SCALE), time = 300, loop = 0, easing = LINEAR_EASING)
 		if (random_events.announce_events)
-			command_alert("A severe gravitational anomaly has been detected on the [station_or_ship()] in [get_area(src)]. It may collapse into a black hole if not stabilized. All personnel should feed mass to the anomaly until it stabilizes.", "Gravitational Anomaly")
+			command_alert("A severe gravitational anomaly has been detected on the [station_or_ship()] in [get_area(src)]. It may collapse into a black hole if not stabilized. All personnel should feed mass to the anomaly until it stabilizes.", "Gravitational Anomaly", alert_origin = ALERT_ANOMALY)
 
 		sleep(lifespan)
 		if (!stable)
 			src.visible_message("<span class='alert'><b>[src] collapses into a black hole!</b></span>")
-			playsound(src,'sound/machines/satcrash.ogg',100,0,5,0.5)
+			playsound(src, 'sound/machines/singulo_start.ogg', 90, 0, 5)
 			new /obj/bhole(get_turf(src),300,12)
 		else
 			src.visible_message("<span class='alert'><b>[src]</b> dissipates quietly into nothing.</span>")
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			qdel(src)
 		return
 
@@ -78,6 +80,7 @@
 				qdel(A)
 			else if (isliving(A))
 				var/mob/living/L = A
+				logTheThing(LOG_COMBAT, L, "was elecgibbed by [src] ([src.type]) at [log_loc(L)].")
 				L.elecgib()
 				src.get_fed(10)
 
@@ -107,6 +110,7 @@
 	anchored = 1
 	pixel_x = -64
 	pixel_y = -64
+	event_handler_flags = IMMUNE_SINGULARITY
 	var/move_prob = 12
 	var/time_to_die = 0
 
@@ -128,6 +132,7 @@
 
 	Bumped(atom/A)
 		if (isliving(A))
+			logTheThing(LOG_COMBAT, A, "was gibbed by [src] ([src.type]) at [log_loc(A)].")
 			A:gib()
 		else if(isobj(A))
 			var/obj/O = A
@@ -142,7 +147,7 @@
 			return
 
 		for (var/atom/X in range(7,src))
-			if (X == src || (X.event_handler_flags & IMMUNE_SINGULARITY))
+			if (X.event_handler_flags & IMMUNE_SINGULARITY)
 				continue
 			var/area/A = get_area(X)
 			if(A?.sanctuary) continue
@@ -151,7 +156,7 @@
 				if(O.anchored == 2) continue
 				var/pull_prob = 0
 				var/hit_strength = 0
-				var/distance = get_dist(src,O)
+				var/distance = GET_DIST(src,O)
 				switch(distance)
 					if (-INFINITY to 0)
 						src.Bumped(O)
@@ -179,13 +184,13 @@
 			if (ismob(X))
 				var/mob/M = X
 				step_towards(M,src)
-				if (get_dist(src, M) <= 0)
+				if (GET_DIST(src, M) <= 0)
 					src.Bumped(M)
 
 			if (isturf(X))
 				var/turf/T = X
 				var/shred_prob = 0
-				var/distance = get_dist(src,T)
+				var/distance = GET_DIST(src,T)
 				switch(distance)
 					if (-INFINITY to 0)
 						T.ReplaceWithSpace()

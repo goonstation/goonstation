@@ -11,7 +11,7 @@
 	Space
 		name = "Telecrystal Stone"
 		stonetype = "Telecrystal Stone"
-		icon_state = "potentialstone"
+		icon_state = "dimensionrock"
 		ability = /obj/ability_button/stone_teleport
 
 	//Will probably shoot stuff idk getting back to this
@@ -30,9 +30,10 @@
 		ability = /obj/ability_button/stone_animate
 
 		//The stone requires a price
-		attack_hand(mob/user as mob)
+		attack_hand(mob/user)
 			if(user.mind.karma <= 49)
 				boutput(user,"<span class='alert'><B>You are not a Just enough being. The stone finds you unworthy.</B></span>")
+				logTheThing(LOG_COMBAT, user, "is gibbed by [src] at [log_loc(user)]")
 				user.gib()
 			else
 				return ..(user)
@@ -57,18 +58,20 @@
 
 	//owl
 	Owl
+		name = "Owl Stone"
 		stonetype = "Owl Stone"
 		icon_state = "owlstone"
 		ability = /obj/ability_button/stone_owl
 
-		attack_hand(mob/user as mob)
+		attack_hand(mob/user)
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user
 				if (istype(H.w_uniform, /obj/item/clothing/under/gimmick/owl) && istype(H.wear_mask, /obj/item/clothing/mask/owl_mask))
 					return ..(user)
 				else
 					boutput(user,"<span class='alert'><B>The stone finds you unworthy.</B></span>")
-					playsound(user.loc, "sound/voice/animal/hoot.ogg", 100, 1)
+					playsound(user.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
+					logTheThing(LOG_COMBAT, user, "is owlgibbed by [src] at [log_loc(user)]")
 					user.owlgib()
 
 	//Gall
@@ -79,11 +82,10 @@
 		icon_state = "gallstone"
 		ability = /obj/ability_button/stone_gall
 
-		attack_hand(mob/user as mob)
+		attack_hand(mob/user)
 			if(!istype(user, /mob/living/carbon/human)) return
 			boutput(user,"<span class='alert'><B>God, holding it makes you feel sick.</B></span>")
-			playsound(user, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
-			make_cleanable( /obj/decal/cleanable/vomit, user.loc)
+			user.vomit()
 			random_brute_damage(user, rand(5,30))
 			if(prob(50)) //The stone has a price to pay
 				var/mob/living/carbon/human/M = user

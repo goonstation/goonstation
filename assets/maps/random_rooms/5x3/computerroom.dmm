@@ -1,0 +1,126 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/computerframe,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"q" = (
+/obj/computer3frame/terminal,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"s" = (
+/obj/item/cable_coil/cut{
+	icon_state = "coil1"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"w" = (
+/obj/table/auto,
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/obj/item/sheet/glass{
+	pixel_x = 5
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"y" = (
+/obj/table/auto,
+/obj/item/disk/data/floppy/read_only/communications{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/obj/item/disk/data/floppy/read_only/terminal_os{
+	pixel_x = -8;
+	pixel_y = 7
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"C" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"E" = (
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"H" = (
+/obj/table/auto,
+/obj/item/storage/box/cablesbox,
+/obj/item/wirecutters,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"L" = (
+/obj/table/auto,
+/obj/item/storage/box/diskbox{
+	pixel_y = 4;
+	pixel_x = 6
+	},
+/obj/item/screwdriver{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/obj/item/disk/data/fixed_disk{
+	pixel_y = -2
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"S" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/stool,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"T" = (
+/obj/item/cable_coil/cut,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"V" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+w
+E
+y
+"}
+(2,1,1) = {"
+a
+S
+C
+"}
+(3,1,1) = {"
+E
+E
+T
+"}
+(4,1,1) = {"
+H
+s
+L
+"}
+(5,1,1) = {"
+q
+V
+E
+"}

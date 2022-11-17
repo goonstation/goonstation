@@ -1,5 +1,6 @@
 /obj/decal
 	text = ""
+	plane = PLANE_NOSHADOW_BELOW
 	var/list/random_icon_states = list()
 	var/random_dir = 0
 
@@ -18,8 +19,6 @@
 		src.flags |= UNCRUSHABLE
 
 	proc/setup(var/L,var/list/viral_list)
-		set_loc(L)
-
 		if (random_icon_states && length(src.random_icon_states) > 0)
 			src.icon_state = pick(src.random_icon_states)
 		if (src.random_dir)
@@ -63,12 +62,119 @@
 	pixel_x = 0
 	mouse_opacity = 0
 	blend_mode = 2
+	plane = PLANE_NOSHADOW_ABOVE
 
 	New()
 		add_filter("motion blur", 1, motion_blur_filter(x=0, y=3))
 		..()
 
-/obj/decal/skeleton
+/obj/decal/floatingtiles
+	name = "floating tiles"
+	desc = "These tiles are just floating around in the void."
+	opacity = 0
+	density = 0
+	anchored = 1
+	icon = 'icons/obj/adventurezones/void.dmi'
+	icon_state = "floattiles1"
+
+/obj/decal/implo
+	name = "implosion"
+	icon = 'icons/effects/64x64.dmi'
+	icon_state = "dimplo"
+	layer = EFFECTS_LAYER_BASE
+	opacity = 0
+	anchored = 1
+	pixel_y = -16
+	pixel_x = -16
+	mouse_opacity = 0
+	plane = PLANE_NOSHADOW_ABOVE
+	New(var/atom/location)
+		src.set_loc(location)
+		SPAWN(2 SECONDS) qdel(src)
+		return ..(location)
+
+/obj/decal/shockwave
+	name = "shockwave"
+	icon = 'icons/effects/64x64.dmi'
+	icon_state = "explocom"
+	layer = EFFECTS_LAYER_BASE
+	opacity = 0
+	anchored = 1
+	pixel_y = -16
+	pixel_x = -16
+	mouse_opacity = 0
+	plane = PLANE_NOSHADOW_ABOVE
+	New(var/atom/location)
+		src.set_loc(location)
+		SPAWN(2 SECONDS) qdel(src)
+		return ..(location)
+
+/obj/decal/point
+	name = "point"
+	icon = 'icons/mob/screen1.dmi'
+	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
+	icon_state = "arrow"
+	layer = EFFECTS_LAYER_1
+	plane = PLANE_HUD
+	anchored = 1
+
+proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time=2 SECONDS, invisibility=INVIS_NONE, atom/movable/pointer)
+	// note that `target` can also be a turf, but byond sux and I can't declare the var as atom because areas don't have vis_contents
+	if(QDELETED(target)) return
+	var/obj/decal/point/point = new
+	if (!target.pixel_point)
+		pixel_x = target.pixel_x
+		pixel_y = target.pixel_y
+	else
+		pixel_x -= 16 - target.pixel_x
+		pixel_y -= 16 - target.pixel_y
+	point.pixel_x = pixel_x
+	point.pixel_y = pixel_y
+	point.color = color
+	point.invisibility = invisibility
+	var/turf/target_turf = get_turf(target)
+	target_turf.vis_contents += point
+	if(pointer && GET_DIST(pointer, target_turf) <= 10) // check so that you can't shoot points across the station
+		var/matrix/M = matrix()
+		M.Translate((pointer.x - target_turf.x)*32 - pixel_x, (pointer.y - target_turf.y)*32 - pixel_y)
+		point.transform = M
+		animate(point, transform=null, time=2)
+	SPAWN(time)
+		if(target_turf)
+			target_turf.vis_contents -= point
+		qdel(point)
+	return point
+
+/* - Replaced by functional version: /obj/item/instrument/large/jukebox
+/obj/decal/jukebox
+	name = "Old Jukebox"
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "jukebox"
+	desc = "This doesn't seem to be working anymore."
+	layer = OBJ_LAYER
+	anchored = 1
+	density = 1
+*/
+
+/obj/decal/nav_danger
+	name = "DANGER"
+	desc = "This navigational marker indicates a hazardous zone of space."
+	icon = 'icons/obj/decals/misc.dmi'
+	icon_state = "mule_dropoff"
+
+obj/decal/fakeobjects
+	layer = OBJ_LAYER
+	plane = PLANE_DEFAULT
+	var/true_name = "fuck you erik"	//How else will players banish it or place curses on it?? honestly people
+
+	New()
+		..()
+		true_name = name
+
+	UpdateName()
+		src.name = "[name_prefix(null, 1)][src.true_name][name_suffix(null, 1)]"
+
+/obj/decal/fakeobjects/skeleton
 	name = "skeleton"
 	desc = "The remains of a human."
 	opacity = 0
@@ -76,6 +182,7 @@
 	anchored = 1
 	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "skeleton_l"
+	plane = PLANE_DEFAULT
 
 	decomposed_corpse
 		name = "decomposed corpse"
@@ -101,80 +208,7 @@
 		icon = 'icons/obj/adventurezones/void.dmi'
 		icon_state = "skeleton_l"
 
-/obj/decal/floatingtiles
-	name = "floating tiles"
-	desc = "These tiles are just floating around in the void."
-	opacity = 0
-	density = 0
-	anchored = 1
-	icon = 'icons/obj/adventurezones/void.dmi'
-	icon_state = "floattiles1"
-
-/obj/decal/implo
-	name = "implosion"
-	icon = 'icons/effects/64x64.dmi'
-	icon_state = "dimplo"
-	layer = EFFECTS_LAYER_BASE
-	opacity = 0
-	anchored = 1
-	pixel_y = -16
-	pixel_x = -16
-	mouse_opacity = 0
-	New(var/atom/location)
-		src.set_loc(location)
-		SPAWN_DBG(2 SECONDS) qdel(src)
-		return ..(location)
-
-/obj/decal/shockwave
-	name = "shockwave"
-	icon = 'icons/effects/64x64.dmi'
-	icon_state = "explocom"
-	layer = EFFECTS_LAYER_BASE
-	opacity = 0
-	anchored = 1
-	pixel_y = -16
-	pixel_x = -16
-	mouse_opacity = 0
-	New(var/atom/location)
-		src.set_loc(location)
-		SPAWN_DBG(2 SECONDS) qdel(src)
-		return ..(location)
-
-/obj/decal/point
-	name = "point"
-	icon = 'icons/mob/screen1.dmi'
-	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
-	icon_state = "arrow"
-	layer = EFFECTS_LAYER_1
-	plane = PLANE_HUD
-	anchored = 1
-
-proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time=2 SECONDS, invisibility=INVIS_NONE)
-	// note that `target` can also be a turf, but byond sux and I can't declare the var as atom because areas don't have vis_contents
-	var/obj/decal/point/point = new
-	point.pixel_x = pixel_x
-	point.pixel_y = pixel_y
-	point.color = color
-	point.invisibility = invisibility
-	target.vis_contents += point
-	SPAWN_DBG(time)
-		if(target)
-			target.vis_contents -= point
-		qdel(point)
-	return point
-
-/* - Replaced by functional version: /obj/item/instrument/large/jukebox
-/obj/decal/jukebox
-	name = "Old Jukebox"
-	icon = 'icons/obj/decoration.dmi'
-	icon_state = "jukebox"
-	desc = "This doesn't seem to be working anymore."
-	layer = OBJ_LAYER
-	anchored = 1
-	density = 1
-*/
-
-/obj/decal/pole
+/obj/decal/fakeobjects/pole
 	name = "Barber Pole"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "pole"
@@ -182,8 +216,9 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	density = 0
 	desc = "Barber poles historically were signage used to convey that the barber would perform services such as blood letting and other medical procedures, with the red representing blood, and the white representing the bandaging. In America, long after the time when blood-letting was offered, a third colour was added to bring it in line with the colours of their national flag. This one is in space."
 	layer = OBJ_LAYER
+	plane = PLANE_DEFAULT
 
-/obj/decal/oven
+/obj/decal/fakeobjects/oven
 	name = "Oven"
 	desc = "An old oven."
 	icon = 'icons/obj/kitchen.dmi'
@@ -191,8 +226,9 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	anchored = 1
 	density = 1
 	layer = OBJ_LAYER
+	plane = PLANE_DEFAULT
 
-/obj/decal/sink
+/obj/decal/fakeobjects/sink
 	name = "Sink"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "sink"
@@ -200,17 +236,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	anchored = 1
 	density = 1
 	layer = OBJ_LAYER
-
-obj/decal/fakeobjects
-	layer = OBJ_LAYER
-	var/true_name = "fuck you erik"	//How else will players banish it or place curses on it?? honestly people
-
-	New()
-		..()
-		true_name = name
-
-	UpdateName()
-		src.name = "[name_prefix(null, 1)][src.true_name][name_suffix(null, 1)]"
+	plane = PLANE_DEFAULT
 
 /obj/decal/fakeobjects/console_lever
 	name = "lever console"
@@ -232,7 +258,7 @@ obj/decal/fakeobjects
 
 obj/decal/fakeobjects/cargopad
 	name = "Cargo Pad"
-	desc = "Used to recieve objects transported by a Cargo Transporter."
+	desc = "Used to receive objects transported by a Cargo Transporter."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "cargopad"
 	anchored = 1
@@ -274,6 +300,15 @@ obj/decal/fakeobjects/teleport_pad
 	icon_state = "door0"
 	anchored = 1
 
+/obj/decal/fakeobjects/airlock_broken
+	name = "rusted airlock"
+	desc = "Rust has rendered this airlock useless."
+	icon = 'icons/obj/doors/Door1.dmi';
+	icon_state = "doorl";
+	anchored = 1
+	density = 1
+	opacity = 1
+
 /obj/decal/fakeobjects/lighttube_broken
 	name = "shattered light tube"
 	desc = "Something has broken this light."
@@ -298,8 +333,8 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/fakeobjects/shuttlethruster
 	name = "propulsion unit"
 	desc = "A small impulse drive that moves the shuttle."
-	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "propulsion"
+	icon = 'icons/obj/shuttle.dmi'
+	icon_state = "alt_propulsion"
 	anchored = 1
 	density = 1
 	opacity = 0
@@ -307,7 +342,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/fakeobjects/shuttleweapon
 	name = "weapons unit"
 	desc = "A weapons system for shuttles and similar craft."
-	icon = 'icons/turf/shuttle.dmi'
+	icon = 'icons/obj/shuttle.dmi'
 	icon_state = "shuttle_laser"
 	anchored = 1
 	density = 1
@@ -343,7 +378,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/fakeobjects/shuttleengine
 	name = "engine unit"
 	desc = "A generator unit that uses complex technology."
-	icon = 'icons/turf/shuttle.dmi'
+	icon = 'icons/obj/shuttle.dmi'
 	icon_state = "heater"
 	anchored = 1
 	density = 1
@@ -391,6 +426,15 @@ obj/decal/fakeobjects/teleport_pad
 	anchored = 1
 	density = 1
 
+/obj/decal/fakeobjects/lawrack
+	name = "defunct AI Law Mount Rack"
+	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behaivor of connected AIs. This one looks non-functional."
+	icon = 'icons/obj/large/32x48.dmi'
+	icon_state = "airack_empty"
+	anchored = 1
+	density = 1
+	layer = EFFECTS_LAYER_UNDER_1
+	plane = PLANE_DEFAULT
 
 /obj/decal/bloodtrace
 	name = "blood trace"
@@ -408,26 +452,29 @@ obj/decal/fakeobjects/teleport_pad
 	anchored = 1
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
+	plane = PLANE_DEFAULT
 	layer = OBJ_LAYER
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT 
+	event_handler_flags = USE_FLUID_ENTER
 
 	Cross(atom/movable/mover) // stolen from window.dm
 		if (mover && mover.throwing & THROW_CHAIRFLIP)
 			return 1
 		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || src.dir == SOUTH || src.dir == NORTH)
 			return 0
-		if(get_dir(loc, mover) == dir)
+		if(get_dir(loc, mover) & dir)
 
 			return !density
 		else
 			return 1
 
-	CheckExit(atom/movable/O as mob|obj, target as turf)
+	Uncross(atom/movable/O, do_bump = TRUE)
 		if (!src.density)
-			return 1
-		if (get_dir(O.loc, target) == src.dir)
-			return 0
-		return 1
+			. = 1
+		else if (get_dir(O.loc, O.movement_newloc) & src.dir)
+			. = 0
+		else
+			. = 1
+		UNCROSS_BUMP_CHECK(O)
 
 /obj/stool/chair/boxingrope_corner
 	name = "Boxing Ropes"
@@ -437,7 +484,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
 	layer = OBJ_LAYER
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT 
+	event_handler_flags = USE_FLUID_ENTER
 
 	rotatable = 0
 	foldable = 0
@@ -448,7 +495,7 @@ obj/decal/fakeobjects/teleport_pad
 	can_buckle(var/mob/M as mob, var/mob/user as mob)
 		if (M != user)
 			return 0
-		if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || user.restrained() || user.stat || !user.canmove))
+		if ((!( iscarbon(M) ) || BOUNDS_DIST(src, user) > 0 || user.restrained() || user.stat || !user.canmove))
 			return 0
 		return 1
 
@@ -463,18 +510,20 @@ obj/decal/fakeobjects/teleport_pad
 			return 1
 		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || src.dir == SOUTH || src.dir == NORTH)
 			return 0
-		if(get_dir(loc, mover) == dir)
+		if(get_dir(loc, mover) & dir)
 
 			return !density
 		else
 			return 1
 
-	CheckExit(atom/movable/O as mob|obj, target as turf)
+	Uncross(atom/movable/O, do_bump = TRUE)
 		if (!src.density)
-			return 1
-		if (get_dir(O.loc, target) == src.dir)
-			return 0
-		return 1
+			. = 1
+		else if (get_dir(O.loc, O.movement_newloc) & src.dir)
+			. = 0
+		else
+			. = 1
+		UNCROSS_BUMP_CHECK(O)
 
 /obj/decal/boxingropeenter
 	name = "Ring entrance"
@@ -491,6 +540,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "alienflower"
 	random_dir = 8
+	plane = PLANE_DEFAULT
 
 	New()
 		..()
@@ -503,6 +553,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "avine_l1"
 	random_icon_states = list("avine_l1", "avine_l2", "avine_l3")
+	plane = PLANE_DEFAULT
 	New()
 		..()
 		src.set_dir(pick(cardinal))
@@ -533,7 +584,7 @@ obj/decal/fakeobjects/teleport_pad
 			if (prob(5))
 				M.TakeDamage("head", 5, 0, 0, DAMAGE_BLUNT)
 				M.visible_message("<span class='alert'><b>[M]</b> hits their head on [src]!</span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1)
 
 // These used to be static turfs derived from the standard grey floor tile and thus didn't always blend in very well (Convair880).
 /obj/decal/mule
@@ -618,6 +669,7 @@ obj/decal/fakeobjects/teleport_pad
 	density = 0
 	opacity = 0
 	anchored = 1
+	plane = PLANE_DEFAULT
 
 
 

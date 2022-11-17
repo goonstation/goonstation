@@ -4,11 +4,11 @@
 
 TYPEINFO(/datum/component/holdertargeting/light)
 	initialization_args = list(
-		ARG_INFO("r", "num", "Value of red component \[0-1\]", 1),
-		ARG_INFO("g", "num", "Value of green component \[0-1\]", 1),
-		ARG_INFO("b", "num", "Value of blue component \[0-1\]", 1),
-		ARG_INFO("brightness", "num", "Brightness of the light", 1.5),
-		ARG_INFO("height", "num", "Height of the light", 1)
+		ARG_INFO("r", DATA_INPUT_NUM, "Value of red component \[0-1\]", 1),
+		ARG_INFO("g", DATA_INPUT_NUM, "Value of green component \[0-1\]", 1),
+		ARG_INFO("b", DATA_INPUT_NUM, "Value of blue component \[0-1\]", 1),
+		ARG_INFO("brightness", DATA_INPUT_NUM, "Brightness of the light", 1.5),
+		ARG_INFO("height", DATA_INPUT_NUM, "Height of the light", 1)
 	)
 
 /datum/component/holdertargeting/light/Initialize(r = 1.0, g = 1.0, b = 1.0, brightness = 1.5, height = 1.0)

@@ -5,6 +5,7 @@ var/datum/score_tracker/score_tracker
 	var/score_calculated = 0
 	var/final_score_all = 0
 	var/grade = "The Aristocrats!"
+	var/inspector_report = ""
 	// SECURITY DEPARTMENT
 	// var/score_crew_evacuation_rate = 0 save this for later to keep categories balanced
 	var/score_crew_survival_rate = 0
@@ -42,6 +43,8 @@ var/datum/score_tracker/score_tracker
 		// Even if its the end of the round it'd probably be nice to just calculate this once and let players grab that
 		// instead of calculating it again every time a player wants to look at the score
 
+		inspector_report = get_inspector_report()
+
 		// SECURITY DEPARTMENT SECTION
 		var/crew_count = 0
 		var/fatalities = 0
@@ -67,7 +70,6 @@ var/datum/score_tracker/score_tracker
 #ifdef CREW_OBJECTIVES
 				if (istype(objective, /datum/objective/crew)) continue
 #endif
-				if (istype(objective, /datum/objective/miscreant)) continue
 				if (!objective.check_completion())
 					traitor_objectives_failed++
 
@@ -242,8 +244,12 @@ var/datum/score_tracker/score_tracker
 					most_damaged_escapee = M
 
 				var/cash_total = get_cash_in_thing(M)
-				if (richest_total < cash_total)
-					richest_total = cash_total
+				var/bank_account = data_core.bank.find_record("name", M.real_name)
+				var/bank_total = 0
+				if(bank_account)
+					bank_total = bank_account["current_money"]
+				if (richest_total < (cash_total + bank_total))
+					richest_total = cash_total + bank_total
 					richest_escapee = M
 
 		command_pets_escaped = list()
@@ -334,7 +340,7 @@ var/datum/score_tracker/score_tracker
 	proc/escapee_facts()
 		. = list()
 		//Richest Escapee | Most Damaged Escapee | Dr. Acula Blood Total | Clown Beatings
-		if (richest_escapee)		. += "<B>Richest Escapee:</B> [richest_escapee.real_name] : $[richest_total]<BR>"
+		if (richest_escapee)		. += "<B>Richest Escapee:</B> [richest_escapee.real_name] : [richest_total][CREDIT_SIGN]<BR>"
 		if (most_damaged_escapee) 	. += "<B>Most Damaged Escapee:</B> [most_damaged_escapee.real_name] : [most_damaged_escapee.get_damage()]%<BR>"		//it'll be kinda different from when it's calculated, but whatever.
 		if (length(command_pets_escaped))
 			var/list/who_escaped = list()
@@ -352,13 +358,29 @@ var/datum/score_tracker/score_tracker
 
 		return jointext(., "")
 
+	proc/get_inspector_report()
+		. = list()
+		for_by_tcl(clipboard, /obj/item/clipboard/with_pen/inspector)
+			. += "<B>Inspector[clipboard.inspector_name ? " [clipboard.inspector_name]" : ""]'s report</B><BR><HR>"
+			for(var/obj/item/paper/paper in clipboard.contents)
+				//ignore blank untitled pages
+				if (paper.name == "paper" && !paper.info)
+					continue
+				if (paper.name != "paper")
+					. += "<B>[paper.name]</B>"
+				. += paper.info ? paper.info : "<BR><BR>"
+		return jointext(., "")
+
 
 /mob/proc/scorestats()
 	if (score_tracker.score_calculated == 0)
 		return
 
 	if (!score_tracker.score_text)
-		score_tracker.score_text = {"<B>Round Statistics and Score</B><BR><HR>"}
+		score_tracker.score_text = ticker.mode.victory_msg()
+		if (length(score_tracker.score_text))
+			score_tracker.score_text += "<br><br>"
+		score_tracker.score_text += {"<B>Round Statistics and Score</B><BR><HR>"}
 		score_tracker.score_text += "<B><U>TOTAL SCORE: [round(score_tracker.final_score_all)]%</U></B>"
 		if(round(score_tracker.final_score_all) == 69)
 			score_tracker.score_text += " <b>nice</b>"
@@ -400,12 +422,14 @@ var/datum/score_tracker/score_tracker
 	src.Browse(score_tracker.score_text, "window=roundscore;size=500x700;title=Round Statistics")
 
 /mob/proc/showtickets()
-	if(!data_core.tickets.len && !length(data_core.fines)) return
+	if(!length(data_core.tickets) && !length(data_core.fines) && !length(score_tracker.inspector_report)) return
 
 	if (!score_tracker.tickets_text)
-		logTheThing("debug", null, null, "Zamujasa/SHOWTICKETS: [world.timeofday] generating showtickets text")
+		logTheThing(LOG_DEBUG, null, "Zamujasa/SHOWTICKETS: [world.timeofday] generating showtickets text")
 
-		score_tracker.tickets_text = {"<B>Tickets</B><BR><HR>"}
+		score_tracker.tickets_text = score_tracker.inspector_report
+
+		score_tracker.tickets_text += {"<B>Tickets</B><BR><HR>"}
 
 		if(data_core.tickets.len)
 			var/list/people_with_tickets = list()
@@ -434,8 +458,8 @@ var/datum/score_tracker/score_tracker
 					if(F.target == N)
 						score_tracker.tickets_text += "[F.target]: [F.amount] credits<br>Reason: [F.reason]<br>[F.approver ? "[F.issuer != F.approver ? "Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [F.approver] - [F.approver_job]" : "Issued by: [F.approver] - [F.approver_job]"]" : "Not Approved"]<br>Paid: [F.paid_amount] credits<br><br>"
 		else
-			score_tracker.tickets_text += "No fines were issued!"
-		logTheThing("debug", null, null, "Zamujasa/SHOWTICKETS: [world.timeofday] done")
+			score_tracker.tickets_text += "No fines were issued!<br><br>"
+		logTheThing(LOG_DEBUG, null, "Zamujasa/SHOWTICKETS: [world.timeofday] done")
 
 	src.Browse(score_tracker.tickets_text, "window=tickets;size=500x650")
 	return

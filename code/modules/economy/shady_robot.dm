@@ -91,7 +91,7 @@
 
 	var/num_common_products = 13 //how many of these to pick for sale
 
-	var/list/rare_products = list(/datum/commodity/contraband/radiojammer,/datum/commodity/contraband/stealthstorage,/datum/commodity/medical/injectorbelt,/datum/commodity/medical/injectormask,/datum/commodity/junk/voltron,/datum/commodity/laser_gun,/datum/commodity/relics/crown,/datum/commodity/contraband/egun,/datum/commodity/relics/armor,/datum/commodity/contraband/spareid,/datum/commodity/contraband/voicechanger,/datum/commodity/contraband/chamsuit,/datum/commodity/contraband/dnascram)
+	var/list/rare_products = list(/datum/commodity/contraband/radiojammer,/datum/commodity/contraband/stealthstorage,/datum/commodity/medical/injectorbelt,/datum/commodity/medical/injectormask,/datum/commodity/junk/voltron,/datum/commodity/laser_gun,/datum/commodity/relics/crown,/datum/commodity/contraband/egun,/datum/commodity/relics/armor,/datum/commodity/contraband/voicechanger,/datum/commodity/contraband/chamsuit,/datum/commodity/contraband/dnascram)
 	var/num_rare_products = 2 //how many of these to pick for sale
 
 	New()
@@ -110,7 +110,7 @@
 			rare_products -= C //so we don't get duplicates
 
 	proc/process()
-		SPAWN_DBG(30 SECONDS)
+		SPAWN(30 SECONDS)
 			if(prob(20) && !scan)
 				teleport()
 			process()
@@ -120,7 +120,7 @@
 			boutput(M, "<span class='alert'><B>[src.name]</B> becomes angry!</span>")
 		src.desc = "[src] looks angry."
 		teleport()
-		SPAWN_DBG(rand(1000,3000))
+		SPAWN(rand(1000,3000))
 			src.visible_message("<b>[src.name] calms down.</b>")
 			src.desc = "[src] looks a bit annoyed."
 			src.temp = "[src.name] has calmed down.<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
@@ -163,7 +163,7 @@
 
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(..())
 			return
 		if(angry)
@@ -344,7 +344,7 @@
 		if (href_list["duration"])
 			var/input = input("Duration in seconds (1-600)?","Temporary ID") as num
 			if(isnum_safe(input))
-				src.card_duration = min(max(input,1),600)
+				src.card_duration = clamp(input, 1, 600)
 
 			updatecardprice()
 			href = "temp_card=1"
@@ -468,7 +468,7 @@
 					var/datum/db_record/account = null
 					account = FindBankAccountByName(I:registered)
 					if(account)
-						var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
+						var/enterpin = usr.enter_pin("Card Reader")
 						if (enterpin == I:pin)
 							boutput(usr, "<span class='notice'>Card authorized.</span>")
 							src.scan = I

@@ -45,7 +45,7 @@
 
 	disposing()
 		if(viewer)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if(viewer)
 					winset( viewer, "[viewport_id].map_[viewport_id]", "parent=none" )
 					winset( viewer, "[viewport_id]", "parent=none" )
@@ -107,7 +107,7 @@
 ///client/verb/dupeVP()
 //	var/datum/viewport/vp = new(src)
 //	vp.SetViewport( get_turf(src.mob), 8, 8 )
-/mob/dead/aieye/verb/create_viewport()
+/mob/living/intangible/aieye/verb/create_viewport()
 	set category = "AI Commands"
 	set name = "EXPERIMENTAL: Create Viewport"
 	set desc = "Expand your powers with Nanotransen's Viewportifier!"

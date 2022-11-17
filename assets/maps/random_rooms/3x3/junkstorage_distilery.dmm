@@ -1,0 +1,90 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/table/auto,
+/obj/shrub/dead{
+	dir = 8;
+	name = "Dead plant";
+	pixel_y = 10
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"i" = (
+/obj/reagent_dispensers/still,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"q" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"v" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"w" = (
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"D" = (
+/obj/table/auto,
+/obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe{
+	pixel_x = -7;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe{
+	pixel_x = 6;
+	pixel_y = 9
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"E" = (
+/obj/decal/cleanable/dirt,
+/obj/item/hand_labeler,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"K" = (
+/obj/stool/chair,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"V" = (
+/obj/table/auto,
+/obj/item/decoration/ashtray,
+/obj/item/reagent_containers/dropper{
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/obj/item/device/reagentscanner{
+	pixel_x = -6
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+i
+K
+V
+"}
+(2,1,1) = {"
+w
+q
+v
+"}
+(3,1,1) = {"
+D
+E
+a
+"}

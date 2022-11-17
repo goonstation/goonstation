@@ -32,59 +32,30 @@
 		if (!src.reagents || !src.reagents.total_volume)
 			user.show_text("[src] doesn't contain any reagents.", "red")
 			return
-
-		if (iscarbon(user) || ismobcritter(user))
-			user.visible_message("[user] swallows [src].",\
-			"<span class='notice'>You swallow [src].</span>")
-			logTheThing("combat", user, null, "swallows a [src.name] [log_reagents(src)] at [log_loc(user)].")
-			if (reagents.total_volume)
-				reagents.reaction(user, INGEST)
-				sleep(0.1 SECONDS)
-				reagents.trans_to(user, reagents.total_volume)
-			user.u_equip(src)
-			qdel(src)
+		src.pill_action(user, user)
 		return
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (!src.reagents || !src.reagents.total_volume)
 			user.show_text("[src] doesn't contain any reagents.", "red")
 			return
 
 		if (iscarbon(M) || ismobcritter(M))
 			if (M == user)
-				//boutput(M, "<span class='notice'>You swallow [src].</span>")
-				user.visible_message("[user] swallows [src].",\
-				"<span class='notice'>You swallow [src].</span>")
+				src.pill_action(M, user)
 			else if(check_target_immunity(M))
-				user.show_message( "<span class='alert'>You try to force [M] to swallow [src], but fail!</span>")
+				user.show_message( "<span class='alert'>You try to force [M] to swallow [src], but can't!</span>")
 				return
 			else
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to swallow [src].</span>",\
 				"<span class='alert'>You attempt to force [M] to swallow [src].</span>")
-				logTheThing("combat", user, M, "tries to force-feed a [src.name] [log_reagents(src)] to [constructTarget(M,"combat")] at [log_loc(user)].")
-
-				if (!do_mob(user, M))
-					if (user && ismob(user))
-						user.show_text("You were interrupted!", "red")
-					return
-				if (!src.reagents || !src.reagents.total_volume)
-					user.show_text("[src] doesn't contain any reagents.", "red")
-					return
-				user.visible_message("<span class='alert'>[user] forces [M] to swallow [src].</span>",\
-				"<span class='alert'>You force [M] to swallow [src].</span>")
-
-			logTheThing("combat", user, M, "[user == M ? "swallows" : "makes [constructTarget(M,"combat")] swallow"] a [src.name] [log_reagents(src)] at [log_loc(user)].")
-			if (reagents.total_volume)
-				reagents.reaction(M, INGEST)
-				sleep(0.1 SECONDS)
-				reagents.trans_to(M, reagents.total_volume)
-			user.u_equip(src)
-			qdel(src)
+				logTheThing(LOG_COMBAT, user, "tries to force-feed a [src.name] [log_reagents(src)] to [constructTarget(M,"combat")] at [log_loc(user)].")
+				actions.start(new/datum/action/bar/icon/pill(M, src, src.icon, src.icon_state), user)
 			return 1
 
 		return 0
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (!I)
 			return
 		if (I.is_open_container() && I.reagents)
@@ -114,7 +85,7 @@
 				user.visible_message("<span class='alert'>[user] puts something in [target].</span>",\
 				"<span class='success'>You dissolve [src] in [target].</span>")
 
-			logTheThing("combat", user, null, "dissolves a [src.name] [log_reagents(src)] in [target] at [log_loc(user)].")
+			logTheThing(LOG_CHEMISTRY, user, "dissolves a [src.name] [log_reagents(src)] in [target] at [log_loc(user)].")
 			reagents.trans_to(target, src.reagents.total_volume)
 			user.u_equip(src)
 			qdel(src)
@@ -122,6 +93,26 @@
 		else
 			return ..()
 
+	proc/pill_action(mob/user, mob/target)
+		if (iscarbon(target) || ismobcritter(target))
+			if (target == user)
+				user.visible_message("[user] swallows [src].",\
+				"<span class='notice'>You swallow [src].</span>")
+			else if(check_target_immunity(target))
+				user.show_message( "<span class='alert'>You try to force [target] to swallow [src], but fail!</span>")
+				return
+			else
+				user.visible_message("<span class='alert'>[user] forces [target] to swallow [src].</span>",\
+				"<span class='alert'>You force [target] to swallow [src].</span>")
+
+			logTheThing(user == target ? LOG_CHEMISTRY : LOG_COMBAT, user, "[user == target ? "swallows" : "makes [constructTarget(target,"combat")] swallow"] a [src.name] [log_reagents(src)] at [log_loc(user)].")
+
+			if (src.reagents.total_volume)
+				src.reagents.reaction(target, INGEST)
+				sleep(0.1 SECONDS)
+				reagents?.trans_to(target, src.reagents.total_volume)
+			user.u_equip(src)
+			qdel(src)
 
 
 
@@ -175,7 +166,7 @@
 
 /obj/item/reagent_containers/pill/salicylic_acid
 	name = "analgesic pill"
-	desc = "Commonly used to treat moderate pain and fevers."
+	desc = "A painkiller used to treat minor injuries."
 	icon_state = "pill4"
 
 	New()

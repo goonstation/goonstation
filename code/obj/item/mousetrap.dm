@@ -61,7 +61,7 @@
 			clear_armer()
 
 		src.armed = !src.armed
-		playsound(user.loc, "sound/weapons/handcuffs.ogg", 30, 1, -3)
+		playsound(user.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
 		return
 
 	proc/clear_armer()
@@ -76,7 +76,7 @@
 		clear_armer()
 		. = ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.armed)
 			if ((user.get_brain_damage() >= 60 || user.bioHolder.HasEffect("clumsy")) && prob(50))
 				var/which_hand = "l_arm"
@@ -90,58 +90,80 @@
 		..()
 		return
 
-	attackby(obj/item/C as obj, mob/user as mob)
+	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/chem_grenade) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			var/obj/item/chem_grenade/CG = C
 			if (CG.stage == 2 && !CG.state)
+				if(!(src in user.equipped_list()))
+					boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+					return
+
 				user.u_equip(CG)
 				CG.set_loc(src)
 				user.show_text("You attach [CG]'s detonator to [src].", "blue")
 				src.grenade = CG
 				src.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
+				src.w_class = max(src.w_class, C.w_class)
 
-				message_admins("[key_name(user)] rigs [src] with [CG] at [log_loc(user)].")
-				logTheThing("bombing", user, null, "rigs [src] with [CG] at [log_loc(user)].")
+				if(CG.is_dangerous)
+					message_admins("[key_name(user)] rigs [src] with [CG] at [log_loc(user)].")
+				logTheThing(LOG_BOMBING, user, "rigs [src] with [CG] at [log_loc(user)].")
 
 		else if (istype(C, /obj/item/old_grenade/) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			var/obj/item/old_grenade/OG = C
 			if (OG.not_in_mousetraps == 0 && !OG.state)
+				if(!(src in user.equipped_list()))
+					boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+					return
+
 				user.u_equip(OG)
 				OG.set_loc(src)
 				user.show_text("You attach [OG]'s detonator to [src].", "blue")
 				src.grenade_old = OG
 				src.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
+				src.w_class = max(src.w_class, C.w_class)
 
-				message_admins("[key_name(user)] rigs [src] with [OG] at [log_loc(user)].")
-				logTheThing("bombing", user, null, "rigs [src] with [OG] at [log_loc(user)].")
+				if(OG.is_dangerous)
+					message_admins("[key_name(user)] rigs [src] with [OG] at [log_loc(user)].")
+				logTheThing(LOG_BOMBING, user, "rigs [src] with [OG] at [log_loc(user)].")
 
 		else if (istype(C, /obj/item/pipebomb/bomb) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			var/obj/item/pipebomb/bomb/PB = C
 			if (!PB.armed)
+				if(!(src in user.equipped_list()))
+					boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+					return
+
 				user.u_equip(PB)
 				PB.set_loc(src)
 				user.show_text("You attach [PB]'s detonator to [src].", "blue")
 				src.pipebomb = PB
 				src.overlays += image('icons/obj/items/weapons.dmi', "trap-pipebomb")
+				src.w_class = max(src.w_class, C.w_class)
 
 				message_admins("[key_name(user)] rigs [src] with [PB] at [log_loc(user)].")
-				logTheThing("bombing", user, null, "rigs [src] with [PB] at [log_loc(user)].")
+				logTheThing(LOG_BOMBING, user, "rigs [src] with [PB] at [log_loc(user)].")
 
 		else if (istype(C, /obj/item/device/radio/signaler) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
+			if(!(src in user.equipped_list()))
+				boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+				return
+
 			var/obj/item/device/radio/signaler/S = C
 			user.u_equip(S)
 			S.set_loc(src)
 			user.show_text("You attach [S]'s detonator to [src].", "blue")
 			src.signaler = S
 			src.overlays += image('icons/obj/items/weapons.dmi', "trap-signaler")
+			src.w_class = max(src.w_class, C.w_class)
 
 			message_admins("[key_name(user)] rigs [src] with [S] at [log_loc(user)].")
-			logTheThing("bombing", user, null, "rigs [src] with [S] at [log_loc(user)].")
+			logTheThing(LOG_BOMBING, user, "rigs [src] with [S] at [log_loc(user)].")
 
 		else if (istype(C, /obj/item/pipebomb/frame))
 			var/obj/item/pipebomb/frame/PF = C
-			if (src.loc != user)
-				user.show_text("You need to actually be holding [src] to do this.", "red")
+			if(!(src in user.equipped_list()))
+				boutput(user, "<span class='alert'>You need to be holding [src] to do this.</span>")
 				return
 
 			if (PF.state > 2)
@@ -160,6 +182,10 @@
 			return
 
 		else if (!src.arm && (istype(C, /obj/item/parts/robot_parts/arm) || istype(C, /obj/item/parts/human_parts/arm)) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.buttbomb)
+			if(!(src in user.equipped_list()))
+				boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+				return
+
 			user.u_equip(C)
 			src.arm = C
 			C.set_loc(src)
@@ -176,15 +202,24 @@
 			else if (C.w_class > W_CLASS_TINY) // Transfer valve bomb pies are a thing. Shouldn't fit in a backpack, much less a box.
 				user.show_text("[C] is way too large. You can't find any way to balance it on the arm.", "red")
 				return
+			if(!(src in user.equipped_list()))
+				boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+				return
+
 			user.u_equip(C)
 			src.pie = C
 			C.set_loc(src)
 			src.overlays += image(C.icon, C.icon_state)
+			src.w_class = max(src.w_class, C.w_class)
 			user.show_text("You carefully set [C] in [src]'s [src.arm].", "blue")
 
-			logTheThing("bombing", user, null, "rigs [src] with [src.arm] and [C] at [log_loc(user)].")
+			logTheThing(LOG_BOMBING, user, "rigs [src] with [src.arm] and [C] at [log_loc(user)].")
 
 		else if (istype(C, /obj/item/clothing/head/butt) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.buttbomb)
+			if(!(src in user.equipped_list()))
+				boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+				return
+
 			var/obj/item/clothing/head/butt/B = C
 			user.u_equip(B)
 			B.set_loc(src)
@@ -193,6 +228,10 @@
 			src.overlays += image('icons/obj/items/weapons.dmi', "trap-[src.butt.icon_state]")
 
 		else if (istype(C, /obj/item/gimmickbomb/butt) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.buttbomb)
+			if(!(src in user.equipped_list()))
+				boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+				return
+
 			var/obj/item/gimmickbomb/BB = C
 			user.u_equip(BB)
 			BB.set_loc(src)
@@ -257,6 +296,25 @@
 				H.visible_message("<span class='alert'><B>[H] accidentally steps on the mousetrap.</B></span>",\
 				"<span class='alert'><B>You accidentally step on the mousetrap!</B></span>")
 
+		else if (istype(AM, /mob/living/critter/wraith/plaguerat/adult) && src.armed)
+			var/mob/living/critter/wraith/plaguerat/P = AM
+			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
+			icon_state = "mousetrap"
+			src.armed = 0
+			clear_armer()
+			src.visible_message("<span class='alert'><b>[P] is caught in the trap and squeals in pain!</b></span>")
+			P.setStatus("stunned", 3 SECONDS)
+			random_brute_damage(P, 20)
+
+		else if (istype(AM, /mob/living/critter/wraith/plaguerat) && src.armed)
+			var/mob/living/critter/wraith/plaguerat/P = AM
+			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
+			icon_state = "mousetrap"
+			src.armed = 0
+			clear_armer()
+			src.visible_message("<span class='alert'><b>[P] is caught in the trap and explodes violently into a rain of gibs!</b></span>")
+			P.gib()
+
 		else if ((ismobcritter(AM)) && (src.armed))
 			var/mob/living/critter/C = AM
 			src.triggered(C)
@@ -265,7 +323,7 @@
 
 		else if (istype(AM, /obj/critter/mouse) && (src.armed))
 			var/obj/critter/mouse/M = AM
-			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			icon_state = "mousetrap"
 			src.armed = 0
 			clear_armer()
@@ -290,7 +348,7 @@
 			var/mob/living/carbon/human/H = target
 			switch(type)
 				if ("feet")
-					if (!H.shoes)
+					if (!H.shoes && !H.mutantrace?.can_walk_on_shards)
 						affecting = H.organs[pick("l_leg", "r_leg")]
 						H.changeStatus("weakened", 3 SECONDS)
 				if ("l_arm", "r_arm")
@@ -306,41 +364,41 @@
 			C.TakeDamage("All", 1)
 
 		if (target)
-			playsound(target.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+			playsound(target.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 		src.icon_state = "mousetrap"
 		src.armed = 0
 
 		if (src.grenade)
-			logTheThing("bombing", target, null, "triggers [src] (armed with: [src.grenade]) at [log_loc(src)]")
+			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.grenade]) at [log_loc(src)]")
 			src.grenade.explode()
 			src.grenade = null
 			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-grenade")
 
 		else if (src.grenade_old)
-			logTheThing("bombing", target, null, "triggers [src] (armed with: [src.grenade_old]) at [log_loc(src)]")
+			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.grenade_old]) at [log_loc(src)]")
 			src.grenade_old.prime()
 			src.grenade_old = null
 			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-grenade")
 
 		else if (src.pipebomb)
-			logTheThing("bombing", target, null, "triggers [src] (armed with: [src.pipebomb]) at [log_loc(src)]")
+			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.pipebomb]) at [log_loc(src)]")
 			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-pipebomb")
 			src.pipebomb.do_explode()
 			src.pipebomb = null
 
 		else if (src.signaler)
-			logTheThing("bombing", target, null, "triggers [src] (armed with: [src.signaler]) at [log_loc(src)]")
+			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.signaler]) at [log_loc(src)]")
 			src.signaler.send_signal("ACTIVATE")
 
 		else if (src.pie && src.arm)
-			logTheThing("bombing", target, null, "triggers [src] (armed with: [src.arm] and [src.pie]) at [log_loc(src)]")
+			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.arm] and [src.pie]) at [log_loc(src)]")
 			target.visible_message("<span class='alert'><b>[src]'s [src.arm] launches [src.pie] at [target]!</b></span>",\
 			"<span class='alert'><b>[src]'s [src.arm] launches [src.pie] at you!</b></span>")
 			src.overlays -= image(src.pie.icon, src.pie.icon_state)
 			src.pie.layer = initial(src.pie.layer)
 			src.pie.set_loc(get_turf(target))
 			var/datum/thrown_thing/thr = new
-			thr.user = (armer || usr) // ew gross
+			thr.user = armer
 			thr.thing = src.pie
 			src.pie.throw_impact(target, thr)
 			src.pie = null
@@ -349,15 +407,15 @@
 			if (src.butt.sound_fart)
 				playsound(target, src.butt.sound_fart, 50)
 			else
-				playsound(target, "sound/voice/farts/poo2.ogg", 50)
+				playsound(target, 'sound/voice/farts/poo2.ogg', 50)
 
 		else if (src.buttbomb)
 			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-buttbomb")
 			var/obj/effects/explosion/E = new /obj/effects/explosion(get_turf(src.loc))
 			E.fingerprintslast = src.fingerprintslast
 			playsound(src.loc, 'sound/voice/farts/superfart.ogg', 100, 1)
-			src.buttbomb = null
 			qdel(src.buttbomb)
+			src.buttbomb = null
 		clear_armer()
 		return
 
@@ -411,7 +469,7 @@
 
 		return
 
-	attackby(obj/item/C as obj, mob/user as mob)
+	attackby(obj/item/C, mob/user)
 		if (iswrenchingtool(C))
 			if (!isturf(src.loc))
 				user.show_text("Place the [src.name] on the ground first.", "red")
@@ -433,7 +491,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.armed)
 			return
 
@@ -449,10 +507,10 @@
 
 		user.visible_message("<span class='alert'>[user] starts up the [src.name].</span>", "You start up the [src.name]")
 		message_admins("[key_name(user)] releases a [src] (Payload: [src.payload]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
-		logTheThing("bombing", user, null, "releases a [src] (Payload: [src.payload]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
+		logTheThing(LOG_BOMBING, user, "releases a [src] (Payload: [src.payload]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
 
 		src.armed = 1
-		if (src.mousetrap)
+		if (!(src.mousetrap?.armed))
 			src.mousetrap.armed = 1 // Must be armed or it won't work in mousetrap.triggered().
 			src.mousetrap.set_armer(user)
 		src.set_density(1)
@@ -466,7 +524,7 @@
 		if (src.armed && src.mousetrap)
 			src.visible_message("<span class='alert'>[src] bumps against [AM]!</span>")
 			walk(src, 0)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				src.mousetrap.triggered(AM && ismob(AM) ? AM : null)
 
 				if (src.mousetrap)

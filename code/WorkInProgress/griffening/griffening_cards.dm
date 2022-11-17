@@ -383,9 +383,9 @@
 				card_name = "Automaton"
 				card_data = "It whirrs and claks ominously. Nobody knows where it came from, or why it appeared. Some theories suggest it just happened into existence."
 
-			wendigo
+			brullbar
 				attributes = GRIFFENING_ATTRIBUTE_ORGANIC
-				card_name = "Wendigo"
+				card_name = "Brullbar"
 				card_data = "A fearsome creature, living in the shadows of plains and caverns of ice."
 
 				king
@@ -393,8 +393,8 @@
 					LVL = 8
 					ATK = 75
 					DEF = 60
-					card_name = "Wendigo King"
-					card_data = "You must sacrifice one wendigo from your side of the field to play Wendigo King. Wendigo King sends killed creatures to the gibbed pile instead of the discard pile."
+					card_name = "Brullbar King"
+					card_data = "You must sacrifice one brullbar from your side of the field to play Brullbar King. Brullbar King sends killed creatures to the gibbed pile instead of the discard pile."
 
 			bear
 				attributes = GRIFFENING_ATTRIBUTE_ORGANIC
@@ -447,10 +447,10 @@
 			card_name = "Injector Belt"
 			card_data = "The human equipped with this card can only be killed in battle by mobs with at least 20 higher ATK than its DEF."
 
-		mindslave
+		mindhack
 			card_type = GRIFFENING_TYPE_EQUIP
 			targeting = GRIFFENING_TARGET_OPPONENT_HUMAN
-			card_name = "Mindslave Implant"
+			card_name = "Mindhack Implant"
 			card_data = "This card can only be played if the player has a Traitor or Spy in play. Equip this card to an opponent's human to take control of it. If this card is destroyed, the controlled mob is returned to the opponent."
 
 		motivation

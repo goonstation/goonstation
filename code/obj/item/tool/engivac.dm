@@ -41,7 +41,7 @@ obj/item/engivac
 ///				SPRITE-ALTERING PROCS
 ///
 
-obj/item/engivac/proc/update_icon(mob/M = null)
+obj/item/engivac/update_icon(mob/M = null)
 	item_state = "engivac_" + (held_toolbox ? held_toolbox.icon_state : "")
 	wear_state = item_state
 	underlays = null
@@ -57,10 +57,10 @@ obj/item/engivac/equipped(var/mob/user, var/slot)
 	..()
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_move)
 	if (slot == SLOT_BACK)
-		wear_image = image('icons/mob/back.dmi')
+		wear_image = image('icons/mob/clothing/back.dmi')
 	if (slot == SLOT_BELT)
-		wear_image = image('icons/mob/belt.dmi')
-	update_icon(user)
+		wear_image = image('icons/mob/clothing/belt.dmi')
+	UpdateIcon(user)
 
 
 ///
@@ -72,7 +72,7 @@ obj/item/engivac/New(var/spawnbox = null)
 	toolbox_img = image('icons/obj/items/storage.dmi', "") //where the toolbox sprites are
 	if (ispath(spawnbox, /obj/item/storage/toolbox))
 		held_toolbox = new spawnbox
-		update_icon()
+		UpdateIcon()
 	rebuild_collection_list()
 
 
@@ -98,17 +98,17 @@ obj/item/engivac/afterattack(atom/target)
 	find_crud_on_turf(isturf(target) ? target : get_turf(target))
 
 
-obj/item/engivac/attackby(obj/item/I as obj, mob/user as mob)
+obj/item/engivac/attackby(obj/item/I, mob/user)
 	if (istype(I, /obj/item/storage/toolbox) && !held_toolbox)
 		if (!toolbox_contents_check(I))
 			if(!ON_COOLDOWN(src, "rejectsound", 2 SECONDS))
-				playsound(get_turf(src), "sound/machines/buzz-sigh.ogg", 50, 0)
+				playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
 			boutput(user, "<span class='alert'>This toolbox has too many unrecognised things in it, and the vacuum rejects it.</span>")
 			return
 		user.u_equip(I)
 		held_toolbox = I
 		I.set_loc(src)
-		update_icon(user)
+		UpdateIcon(user)
 		var/obj/item/storage/toolbox/toolbox = I
 		if(user.s_active == toolbox.hud)
 			user.detach_hud(user.s_active)
@@ -116,14 +116,14 @@ obj/item/engivac/attackby(obj/item/I as obj, mob/user as mob)
 	..()
 
 
-obj/item/engivac/attack_hand(mob/living/user as mob)
+obj/item/engivac/attack_hand(mob/living/user)
 	if (user.find_in_hand(src) && held_toolbox)
 		if (user.put_in_hand(held_toolbox))
 			held_toolbox = null
 			placing_tiles = FALSE
 			current_stack = null
 			toolbox_col = ""
-			update_icon(user)
+			UpdateIcon(user)
 			return
 	..()
 	//copy-pasted from mounted defibs ewww
@@ -139,7 +139,7 @@ obj/item/engivac/attack_hand(mob/living/user as mob)
 obj/item/engivac/attack_self(mob/user)
 	..()
 	var/list/options = list("Toggle collecting building materials", "Toggle collecting debris",held_toolbox ? "Toggle floor tile auto-placement" : null, held_toolbox ? "Remove Toolbox" : null)
-	var/input = input(usr,"Select option:","Option") in options
+	var/input = input(user,"Select option:","Option") in options
 	switch(input)
 		if ("Toggle collecting building materials")
 			collect_buildmats = !collect_buildmats
@@ -164,7 +164,7 @@ obj/item/engivac/attack_self(mob/user)
 			placing_tiles = FALSE
 			current_stack = null
 			toolbox_col = ""
-			update_icon(user)
+			UpdateIcon(user)
 
 
 obj/item/engivac/proc/on_move(mob/M, turf/source, dir)
@@ -180,7 +180,7 @@ obj/item/engivac/proc/on_move(mob/M, turf/source, dir)
 		if (!scan_for_floortiles()) //...and I'm all out of tiles
 			placing_tiles = FALSE
 			tooltip_rebuild = 1
-			playsound(get_turf(src), "sound/machines/buzz-sigh.ogg", 50, 0)
+			playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
 			boutput(M, "<span class='alert'>\The [name] does not have any floor tiles left, and deactivates auto-placing.</span>")
 			return
 	if (istype(target, /turf/simulated/floor))
@@ -195,6 +195,10 @@ obj/item/engivac/proc/on_move(mob/M, turf/source, dir)
 
 
 obj/item/engivac/get_desc(dist)
+	if(held_toolbox)
+		. += "<br>There's \a [held_toolbox] loaded in it."
+	else
+		. += "<br>It seems like you need to load an empty toolbox into it first."
 	if (dist <= 2) //List settings
 		. += "<br>It is set to [collect_buildmats ? "collect" : "leave"] building materials and [collect_debris ? "collect" : "leave"] debris."
 		. += "<br>It is currently [placing_tiles? "" : "not "]automatically placing floor tiles."
@@ -225,7 +229,7 @@ obj/item/engivac/proc/find_crud_on_turf(turf/target_turf)
 obj/item/engivac/proc/attempt_fill(obj/item/target)
 	if (!target)
 		return FALSE
-	if (get_dist(target, src) > 1) //I'm sure smartasses will find a way
+	if (BOUNDS_DIST(target, src) > 0) //I'm sure smartasses will find a way
 		return FALSE
 	var/succeeded = FALSE
 	var/list/toolbox_contents = held_toolbox.get_contents()

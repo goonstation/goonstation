@@ -1,6 +1,10 @@
 /datum/random_event/major/vampire_teg
 	name = "Haunted TEG"
+#ifdef RP_MODE
 	required_elapsed_round_time = 40 MINUTES
+#else
+	required_elapsed_round_time = 26.6 MINUTES
+#endif
 	customization_available = 1
 #ifdef HALLOWEEN
 	weight = 75
@@ -11,10 +15,6 @@
 	var/list/circulators_to_relube
 	var/event_active
 	var/target_grump
-
-#ifdef RP_MODE
-	disabled = 1
-#endif
 
 	is_event_available(var/ignore_time_lock = 0)
 		. = ..()
@@ -41,7 +41,7 @@
 
 	event_effect(warning_delay, event_duration, grump_to_overcome)
 		..()
-		var/list/spooky_sounds = list("sound/ambience/nature/Wind_Cold1.ogg", "sound/ambience/nature/Wind_Cold2.ogg", "sound/ambience/nature/Wind_Cold3.ogg","sound/ambience/nature/Cave_Bugs.ogg", "sound/ambience/nature/Glacier_DeepRumbling1.ogg", "sound/effects/bones_break.ogg",	"sound/effects/gust.ogg", "sound/effects/static_horror.ogg", "sound/effects/blood.ogg")
+		var/list/spooky_sounds = list('sound/ambience/nature/Wind_Cold1.ogg', 'sound/ambience/nature/Wind_Cold2.ogg', 'sound/ambience/nature/Wind_Cold3.ogg','sound/ambience/nature/Cave_Bugs.ogg', 'sound/ambience/nature/Glacier_DeepRumbling1.ogg', 'sound/effects/bones_break.ogg',	'sound/effects/gust.ogg', 'sound/effects/static_horror.ogg', 'sound/effects/blood.ogg')
 		var/list/area/stationAreas = get_accessible_station_areas()
 
 		if(!generator)
@@ -84,9 +84,9 @@
 			C.reagents.add_reagent("black_goop", 10)
 
 		// Delayed Warning and Instruction
-		SPAWN_DBG(warning_delay)
+		SPAWN(warning_delay)
 			if(event_active)
-				command_alert("Reports indicate that the engine on-board [station_name()] is behaving unusually. Stationwide power failures may occur or worse.", "Engine Warning")
+				command_alert("Reports indicate that the engine on-board [station_name()] is behaving unusually. Stationwide power failures may occur or worse.", "Engine Warning", alert_origin = ALERT_STATION)
 				sleep(30 SECONDS)
 			if(event_active)
 				command_alert("Onsite Engineers inform us a sympathetic connection exists between the furnaces and the engine. Considering burning something it might enjoy: food, people, weed. We're grasping at straws here. ", "Engine Suggestion")
@@ -96,7 +96,7 @@
 				pda_msg("Unknown substance detected in Themo-Electric Generator Circulators. Please drain and replace lubricants.")
 
 		// FAILURE EVENT
-		SPAWN_DBG(event_duration)
+		SPAWN(event_duration)
 			if(event_active)
 				event_active = FALSE
 				for (var/obj/machinery/light_switch/L as() in station_switches)
@@ -105,7 +105,7 @@
 						L.Attackhand(null)
 				generator.transformation_mngr.transform_to_type(/datum/teg_transformation/vampire)
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/area/A = get_area(generator)
 			var/obj/machinery/teg_light_switch = locate(/obj/machinery/light_switch) in A.machines
 
@@ -117,7 +117,7 @@
 				elecflash(A.area_apc)
 				if(!A.area_apc.lighting)
 					A.area_apc.lighting = 0
-					SPAWN_DBG(rand(5 SECONDS,10 SECONDS))
+					SPAWN(rand(5 SECONDS,10 SECONDS))
 						A.area_apc.lighting = 3
 
 			while(event_active)
@@ -151,7 +151,7 @@
 									if (D.secondsElectrified == 0)
 										elecflash(D)
 										D.secondsElectrified = -1
-										SPAWN_DBG(10 SECONDS)
+										SPAWN(10 SECONDS)
 											if (D)
 												D.secondsElectrified = 0
 						if(5)
@@ -168,7 +168,7 @@
 								apc.lighting = 0
 								apc.equipment = 0
 								apc.environ = 0
-								SPAWN_DBG(20 SECONDS)
+								SPAWN(20 SECONDS)
 									apc.equipment = 3
 									apc.environ = 3
 
@@ -212,6 +212,8 @@ datum/teg_transformation/vampire
 		abilityHolder = new /datum/abilityHolder/vampire(src)
 		abilityHolder.owner = teg
 		abilityHolder.addAbility(/datum/targetable/vampire/blood_steal)
+		abilityHolder.addAbility(/datum/targetable/vampire/glare)
+		abilityHolder.addAbility(/datum/targetable/vampire/enthrall/teg)
 		for(var/datum/targetable/vampire/A in abilityHolder.abilities)
 			abilities[A.name] = A
 		RegisterSignal(src.teg, COMSIG_ATOM_HITBY_PROJ, .proc/projectile_collide)
@@ -239,6 +241,14 @@ datum/teg_transformation/vampire
 		O.color = "#bd1335"
 		animate_flash_color_fill_inherit(O,"#e13333",-1, 2 SECONDS)
 
+	proc/use_ability(abilityType, mob/target)
+		var/datum/targetable/vampire/A = abilityHolder.getAbility(abilityType)
+		if(A)
+			if (world.time < A.last_cast)
+				return
+			SPAWN(0)
+				A.handleCast(target)
+
 	on_revert()
 		var/datum/reagents/leaked
 		teg.UpdateOverlays(null, "mask")
@@ -258,7 +268,7 @@ datum/teg_transformation/vampire
 		animate(src.teg.circ1)
 		animate(src.teg.circ2)
 		for(var/mob/M in abilityHolder.thralls)
-			remove_mindslave_status(M)
+			remove_mindhack_status(M)
 		. = ..()
 
 	on_grump(mult)
@@ -273,26 +283,25 @@ datum/teg_transformation/vampire
 		if(length(targets))
 			if(probmult(30))
 				if( !ON_COOLDOWN(src.teg,"blood", 30 SECONDS) )
-					playsound(src.teg, "sound/effects/blood.ogg", rand(10,20), 0, -1)
+					playsound(src.teg, 'sound/effects/blood.ogg', rand(10,20), 0, -1)
 
 			var/mob/living/carbon/target = pick(targets)
 
 			if(target in abilityHolder.thralls)
 				H = target
 				if( abilityHolder.points > 100 && target.blood_volume < 50 && !ON_COOLDOWN(src.teg,"heal", 120 SECONDS) )
-					enthrall(H)
+					use_ability(/datum/targetable/vampire/enthrall/teg, target)
 			else
 				if(isalive(target))
 					if( prob(80) && !ON_COOLDOWN(target,"teg_glare", 30 SECONDS) )
-						glare(target)
+						use_ability(/datum/targetable/vampire/glare, target)
 
-					if(!actions.hasAction(src.teg, "vamp_blood_suck_ranged") && !ON_COOLDOWN(src.teg,"vamp_blood_suck_ranged", 10 SECONDS))
-						actions.start(new/datum/action/bar/private/icon/vamp_ranged_blood_suc(src.teg,abilityHolder, target, abilities["Blood Steal"]), src.teg)
+					use_ability(/datum/targetable/vampire/blood_steal, target)
 
 			if(ishuman(target))
 				H = target
 				if(isdead(H) && abilityHolder.points > 100 && !ON_COOLDOWN(src.teg,"enthrall",30 SECONDS))
-					enthrall(H)
+					use_ability(/datum/targetable/vampire/enthrall/teg, target)
 
 		if(probmult(10))
 			var/list/responses = list("I hunger! Bring us food so we may eat!", "Blood... I needs it.", "I HUNGER!", "Summon them here so we may feast!")
@@ -311,7 +320,7 @@ datum/teg_transformation/vampire
 				reagents.remove_any_to(100)
 				make_cleanable(/obj/decal/cleanable/blood,get_step(src.teg, SOUTH))
 				src.teg.efficiency_controller += 5
-				SPAWN_DBG(45 SECONDS)
+				SPAWN(45 SECONDS)
 					if(src.teg?.active_form == src)
 						src.teg?.efficiency_controller -= 5
 		else
@@ -330,7 +339,7 @@ datum/teg_transformation/vampire
 					src.health -= 5
 					C.reagents.remove_reagent("water_holy", 8)
 					if (!(locate(/datum/effects/system/steam_spread) in C.loc))
-						playsound(C.loc, "sound/effects/bubbles3.ogg", 80, 1, -3, pitch=0.7)
+						playsound(C.loc, 'sound/effects/bubbles3.ogg', 80, 1, -3, pitch=0.7)
 						var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
 						steam.set_up(1, 0, get_turf(C))
 						steam.attach(C)
@@ -340,7 +349,7 @@ datum/teg_transformation/vampire
 			on_revert()
 
 	// Implement attackby to handle objects and attacks to Generator and Circulators
-	proc/attackby(obj/T, obj/item/I as obj, mob/user as mob)
+	proc/attackby(obj/T, obj/item/I, mob/user)
 		var/force = I.force
 		if(istype(I,/obj/item/storage/bible) && user.traitHolder.hasTrait("training_chaplain"))
 			force = 60
@@ -358,34 +367,18 @@ datum/teg_transformation/vampire
 
 	// Customized implementation of collision with vamp blood and be susceptable to projectiles
 	proc/projectile_collide(owner, obj/projectile/P)
-		if (("vamp" in P.special_data))
-			var/bitesize = 10
-			var/mob/living/carbon/victim = P.special_data["victim"]
-			var/datum/abilityHolder/vampire/vampire = P.special_data["vamp"]
-			if (vampire == abilityHolder && P.max_range == PROJ_INFINITE_RANGE)
-				P.travelled = 0
-				P.max_range = 4
-				P.special_data.len = 0 // clear special data so normal on_end() wont trigger
-				vampire.vamp_blood += bitesize
-				vampire.addPoints(bitesize)
-				vampire.tally_bite(victim,bitesize)
-				if (victim.blood_volume < bitesize)
-					victim.blood_volume = 0
-				else
-					victim.blood_volume -= bitesize
-		else
-			if(P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING))
-				var/damage = P.power*P.proj_data.ks_ratio
+		if(P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING))
+			var/damage = P.power*P.proj_data.ks_ratio
 
-				switch (P.proj_data.damage_type)
-					if (D_KINETIC)
-						damage /= 5
-					if (D_SLASHING)
-						damage /= 7
-					if (D_ENERGY)
-						damage /= 10
+			switch (P.proj_data.damage_type)
+				if (D_KINETIC)
+					damage /= 5
+				if (D_SLASHING)
+					damage /= 7
+				if (D_ENERGY)
+					damage /= 10
 
-				health -= round(damage, 1.0)
+			health -= round(damage, 1.0)
 
 	// Talk like a vampire
 	proc/say_thrall(var/message)
@@ -395,90 +388,9 @@ datum/teg_transformation/vampire
 		if (!message || !length(src.abilityHolder.thralls) )
 			return
 
-		var/rendered = "<span class='game thrallsay'><span class='prefix'>THRALLSPEAK:</span> <span class='name'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
+		var/rendered = "<span class='game thrallsay'><span class='prefix'>Thrall speak:</span> <span class='name vamp'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 		for (var/mob/M in src.abilityHolder.thralls)
 			boutput(M, rendered)
 
-	// Look at others like a vampire
-	proc/glare(mob/living/carbon/target)
-		var/obj/O = src.teg
-		if (!target || !ismob(target))
-			return 1
-
-		if (get_dist(src.teg, target) > 3)
-			return 1
-
-		if (isdead(target))
-			return 1
-
-		O.visible_message("<span class='alert'><B>[O] emits a blinding flash at [target]!</B></span>")
-		var/obj/itemspecialeffect/glare/E = new /obj/itemspecialeffect/glare
-		E.color = "#FFFFFF"
-		E.setup(O.loc)
-		playsound(O.loc,"sound/effects/glare.ogg", 50, 1, pitch = 1, extrarange = -4)
-
-		SPAWN_DBG(1 DECI SECOND)
-			var/obj/itemspecialeffect/glare/EE = new /obj/itemspecialeffect/glare
-			EE.color = "#FFFFFF"
-			EE.setup(target.loc)
-			playsound(target.loc,"sound/effects/glare.ogg", 50, 1, pitch = 0.8, extrarange = -4)
-
-		target.apply_flash(30, rand(1,5), stamina_damage = 350)
-
-	proc/enthrall(mob/living/carbon/human/target)
-		var/datum/abilityHolder/vampire/H = src.abilityHolder
-		if(istype(target))
-			if (!istype(target.mutantrace, /datum/mutantrace/vampiric_thrall))
-				if (!target.mind && !target.client)
-					if (target.ghost && target.ghost.client && !(target.ghost.mind && target.ghost.mind.dnr))
-						var/mob/dead/ghost = target.ghost
-						ghost.show_text("<span class='red'>You feel yourself torn away from the afterlife and back into your body!</span>")
-						if(ghost.mind)
-							ghost.mind.transfer_to(target)
-						else if (ghost.client)
-							target.client = ghost.client
-						else if (ghost.key)
-							target.key = ghost.key
-
-					else if (target.last_client) //if all fails, lets try this
-						for (var/client/C in clients)
-							if (C == target.last_client && C.mob && isobserver(C.mob))
-								if(C.mob && C.mob.mind)
-									C.mob.mind.transfer_to(target)
-								else
-									target.client = C
-								break
-
-				if (!target.client)
-					return
-
-				target.full_heal()
-
-				target.real_name = "zombie [target.real_name]"
-				if (target.mind)
-					target.mind.special_role = ROLE_VAMPTHRALL
-					target.mind.master = src.teg
-					if (!(target.mind in ticker.mode.Agimmicks))
-						ticker.mode.Agimmicks += target.mind
-
-				src.abilityHolder.thralls += target
-
-				target.set_mutantrace(/datum/mutantrace/vampiric_thrall)
-				var/datum/abilityHolder/vampiric_thrall/VZ = target.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
-				if (VZ && istype(VZ))
-					VZ.master = H
-
-				boutput(target, __red("<b>You awaken filled with purpose - you must serve your master \"vampire\", [src.teg]!</B>"))
-				boutput(target, __red("<b>You are bound to the [src.teg]. It hungers for blood! You must protect it and feed it!</B>"))
-				SHOW_MINDSLAVE_TIPS(target)
-			else
-				target.full_heal()
-
-			if (target in H.thralls)
-				//and add blood!
-				var/datum/mutantrace/vampiric_thrall/V = target.mutantrace
-				if (V)
-					V.blood_points += 200
-
-				H.blood_tracking_output(100)
-				H.deductPoints(100)
+/datum/targetable/vampire/enthrall/teg
+	max_range = 10

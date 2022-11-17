@@ -56,7 +56,7 @@
 		src.id = "\ref[src]"
 
 	disposing()
-		host?.peripherals.Remove(src)
+		host?.peripherals?.Remove(src)
 		..()
 
 
@@ -241,7 +241,7 @@
 					var/broadcast_range = src.range
 					if(src.setup_netmode_norange)
 						broadcast_range = 0
-					SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+					SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 						SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, broadcast_range)
 
 				return //Just toss out the rest of the signal then I guess
@@ -275,7 +275,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(src.host && !src.link) //Wait for the map to load and hook up if installed() hasn't done it.
 				src.check_connection()
 			//Let's blindy attempt to generate a unique network ID!
@@ -359,7 +359,7 @@
 				pingsignal.data["address_1"] = signal.data["sender"]
 				pingsignal.data["command"] = "ping_reply"
 				pingsignal.transmission_method = TRANSMISSION_WIRE
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					src.link.post_signal(src, pingsignal)
 
 			return //Just toss out the rest of the signal then I guess
@@ -455,7 +455,7 @@
 				if(!print_data)
 					src.printing = 0
 					return
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					var/obj/item/paper/P = new /obj/item/paper( src.host.loc )
 					P.info = print_data
 					if(print_title)
@@ -485,7 +485,7 @@
 			if(!print_data)
 				src.printing = 0
 				return
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				var/obj/item/paper/P = new /obj/item/paper( src.host.loc )
 				P.info = print_data
 				if(print_title)
@@ -553,6 +553,7 @@
 			if(2)
 				prize = new /obj/item/device/radio/beacon( prize_location )
 				prize.name = "electronic blink toy game"
+				prize.anchored = FALSE
 				prize.desc = "Blink.  Blink.  Blink."
 			if(3)
 				prize = new /obj/item/device/light/zippo( prize_location )
@@ -651,7 +652,7 @@
 				newrec.fields["access"] = jointext(src.authid.access, ";")
 				newrec.fields["balance"] = src.authid.money
 
-				SPAWN_DBG(0.4 SECONDS)
+				SPAWN(0.4 SECONDS)
 					send_command("card_authed", newrec)
 
 				return newrec
@@ -668,7 +669,7 @@
 					newrec.fields["registered"] = src.authid.registered
 					newrec.fields["assignment"] = src.authid.assignment
 					newrec.fields["balance"] = src.authid.money
-					SPAWN_DBG(0.4 SECONDS)
+					SPAWN(0.4 SECONDS)
 						send_command("card_authed", newrec)
 
 					return newrec
@@ -679,13 +680,13 @@
 
 				//We need correct PIN numbers you jerks.
 				if(text2num_safe(rec.fields["pin"]) != src.authid.pin)
-					SPAWN_DBG(0.4 SECONDS)
+					SPAWN(0.4 SECONDS)
 						send_command("card_bad_pin")
 					return
 
 				var/charge_amount = text2num_safe(rec.fields["amount"])
 				if(!charge_amount || (charge_amount <= 0) || charge_amount > src.authid.money)
-					SPAWN_DBG(0.4 SECONDS)
+					SPAWN(0.4 SECONDS)
 						send_command("card_bad_charge")
 					return
 
@@ -708,7 +709,7 @@
 					var/datum/signal/newrec = new
 					newrec.fields["access"] = new_access
 */
-					SPAWN_DBG(0.4 SECONDS)
+					SPAWN(0.4 SECONDS)
 						send_command("card_add")
 
 					return
@@ -728,7 +729,7 @@
 					var/datum/signal/newrec = new
 					newrec.fields["access"] = rem_access
 */
-					SPAWN_DBG(0.4 SECONDS)
+					SPAWN(0.4 SECONDS)
 						send_command("card_remove")
 
 					return
@@ -740,7 +741,7 @@
 		if(..())
 			return
 
-		if(issilicon(usr) && get_dist(src, usr) > 1)
+		if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
@@ -772,7 +773,7 @@
 
 		switch(command)
 			if("beep")
-				playsound(src.host.loc, "sound/machines/twobeep.ogg", 50, 1)
+				playsound(src.host.loc, 'sound/machines/twobeep.ogg', 50, 1)
 				for (var/mob/O in hearers(3, src.host.loc))
 					O.show_message(text("[bicon(src.host)] *beep*"))
 
@@ -855,7 +856,7 @@
 		if(..())
 			return
 
-		if(issilicon(usr) && get_dist(src, usr) > 1)
+		if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
@@ -954,7 +955,7 @@
 		if(..())
 			return
 
-		if(issilicon(usr) && get_dist(src, usr) > 1)
+		if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
@@ -1048,7 +1049,7 @@
 		if(..())
 			return 1
 
-		SPAWN_DBG(rand(50,100))
+		SPAWN(rand(50,100))
 			if(host)
 				for(var/mob/M in viewers(host, null))
 					if(M.client)
@@ -1070,7 +1071,7 @@
 						if(M.client)
 							M.show_message(text("<span class='alert'><B>The [src.host.name] catches on fire!</B></span>"), 1)
 						fireflash(src.host.loc, 0)
-						playsound(src.host.loc, "sound/items/Welder2.ogg", 50, 1)
+						playsound(src.host.loc, 'sound/items/Welder2.ogg', 50, 1)
 						src.host.set_broken()
 						qdel(src)
 						return

@@ -1,10 +1,10 @@
 
 
-/proc/scan_health(var/mob/M as mob, var/verbose_reagent_info = 0, var/disease_detection = 1, var/organ_scan = 0, var/visible = 0)
+/proc/scan_health(var/mob/M as mob, var/verbose_reagent_info = 0, var/disease_detection = 1, var/organ_scan = 0, var/visible = 0, syndicate = FALSE)
 	if (!M)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
 
-	if (isghostdrone(M))
+	if (issilicon(M))
 		return "<span class='alert'>ERROR: INVALID DATA FROM SUBJECT</span>"
 
 	if(visible)
@@ -26,7 +26,11 @@
 	else colored_health = "<span class='alert'>[health_percent]</span>"
 
 	var/optimal_temp = M.base_body_temp
-	var/body_temp = "[M.bodytemperature - T0C]&deg;C ([M.bodytemperature * 1.8-459.67]&deg;F)"
+	var/body_temp_C = TO_CELSIUS(M.bodytemperature)
+	body_temp_C = round(body_temp_C, body_temp_C < 1000 ? 0.01 : 1)
+	var/body_temp_F = TO_FAHRENHEIT(M.bodytemperature)
+	body_temp_F = round(body_temp_F, body_temp_F < 1000 ? 0.01 : 1)
+	var/body_temp = "[body_temp_C]&deg;C ([body_temp_F]&deg;F)"
 	var/colored_temp = ""
 	if (M.bodytemperature >= (optimal_temp + 60))
 		colored_temp = "<span class='alert'>[body_temp]</span>"
@@ -39,10 +43,10 @@
 	else
 		colored_temp = "[body_temp]"
 
-	var/oxy = M.get_oxygen_deprivation()
-	var/tox = M.get_toxin_damage()
-	var/burn = M.get_burn_damage()
-	var/brute = M.get_brute_damage()
+	var/oxy = round(M.get_oxygen_deprivation(), 0.01)
+	var/tox = round(M.get_toxin_damage(), 0.01)
+	var/burn = round(M.get_burn_damage(), 0.01)
+	var/brute = round(M.get_brute_damage(), 0.01)
 
 	// contained here in order to change them easier
 	var/oxy_font = "<span style='color:#1F75D1'>"
@@ -63,6 +67,7 @@
 	var/reagent_data = null
 	var/pathogen_data = null
 	var/disease_data = null
+	var/implant_data = null
 	var/organ_data = null
 	var/interesting_data = null
 
@@ -72,12 +77,12 @@
 	if (isliving)
 		var/mob/living/L = M
 
-		if (blood_system)
+		if (blood_system && L.can_bleed)
 			var/bp_col
 			switch (L.blood_pressure["total"])
-				if (-INFINITY to 374) // very low (90/60)
+				if (-INFINITY to 299) // very low (70/50)
 					bp_col = "red"
-				if (375 to 414) // low (100/65)
+				if (300 to 414) // low (100/65)
 					bp_col = "#CC7A1D"
 				if (415 to 584) // normal (120/80)
 					bp_col = "#138015"
@@ -107,10 +112,26 @@
 
 
 			var/bad_stuff = 0
-			if (L.implant && L.implant.len > 0)
+			if (length(L.implant))
+				var/list/implant_list = list()
 				for (var/obj/item/implant/I in L.implant)
 					if (istype(I, /obj/item/implant/projectile))
-						bad_stuff ++
+						bad_stuff++
+						continue
+					if (I.scan_category == "not_shown")
+						continue
+					if (I.scan_category != "syndicate")
+						if (I.scan_category != "unknown")
+							implant_list[capitalize(I.name)]++
+						else
+							implant_list["Unknown implant"]++
+					else if (syndicate)
+						implant_list[capitalize(I.name)]++
+
+				if (length(implant_list))
+					implant_data = "<span style='color:#2770BF'><b>Implants detected:</b></span>"
+					for (var/implant in implant_list)
+						implant_data += "<br><span style='color:#2770BF'>[implant_list[implant]]x [implant]</span>"
 
 			if (ishuman)
 				var/mob/living/carbon/human/H = L
@@ -153,6 +174,9 @@
 				organ_data1 += organ_health_scan("heart", H, obfuscate)
 				// organ_data1 += organ_health_scan("brain", H, obfuscate) //Might want, might not. will be slightly more accurate than current brain damage scan
 
+				organ_data1 += organ_health_scan("left_eye", H, obfuscate)
+				organ_data1 += organ_health_scan("right_eye", H, obfuscate)
+
 				organ_data1 += organ_health_scan("left_lung", H, obfuscate)
 				organ_data1 += organ_health_scan("right_lung", H, obfuscate)
 
@@ -179,11 +203,9 @@
 
 
 	var/datum/statusEffect/simpledot/radiation/R = M.hasStatus("radiation")
-	var/datum/statusEffect/simpledot/radiation/NR = M.hasStatus("n_radiation")
-	if (R)
-		rad_data = "&emsp;<span class='alert'>Radiation poisoning: Lv [R.stage]</span>"
-	if (NR)
-		nrad_data = "&emsp;<span class='alert'>Neutron Radiation poisoning: Lv [NR.stage]</span>"
+	if (R?.stage)
+		rad_data = "&emsp;<span class='alert'>The subject is [R.howMuch]irradiated. Dose: [M.radiation_dose] Sv</span>"
+
 	for (var/datum/ailment_data/A in M.ailments)
 		if (disease_detection >= A.detectability)
 			disease_data += "<br>[A.scan_info()]"
@@ -220,6 +242,7 @@
 	[nrad_data ? "<br>[nrad_data]" : null]\
 	[blood_data ? "<br>[blood_data]" : null]\
 	[brain_data ? "<br>[brain_data]" : null]\
+	[implant_data ? "<br>[implant_data]" : null]\
 	[organ_data ? "<br>[organ_data]" : null]\
 	[reagent_data ? "<br>[reagent_data]" : null]\
 	[pathogen_data ? "<br>[pathogen_data]" : null]\
@@ -253,20 +276,22 @@
 		return null
 	var/list/ret = list()
 	var/damage = O.get_damage()
-	if (damage >= O.MAX_DAMAGE)
+	if (damage >= O.max_damage)
 		ret += "<br><span class='alert'><b>[O.name]</b> - Dead</span>"
-	else if (damage >= O.MAX_DAMAGE*0.9)
+	else if (damage >= O.max_damage*0.9)
 		ret += "<br><span class='alert'><b>[O.name]</b> - Critical</span>"
-	else if (damage >= O.MAX_DAMAGE*0.65)
+	else if (damage >= O.max_damage*0.65)
 		ret += "<br><span class='alert'><b>[O.name]</b> - Significant</span>"
-	else if (damage >= O.MAX_DAMAGE*0.30)
+	else if (damage >= O.max_damage*0.3)
 		ret += "<br><span style='color:purple'><b>[O.name]</b> - Moderate</span>"
 	else if (damage > 0)
 		ret += "<br><span style='color:purple'><b>[O.name]</b> - Minor</span>"
-	else if (O.robotic)
+	else if (O.robotic || O.unusual)
 		ret += "<br><span style='color:purple'><b>[O.name]</b></span>"
 	if (O.robotic)
 		ret += "<span style='color:purple'> - Robotic organ detected</span>"
+	else if (O.unusual)
+		ret += "<span style='color:purple'> - Unknown organ detected</span>"
 	return ret.Join()
 
 /datum/genetic_prescan
@@ -374,20 +399,25 @@
 				R["cdi_d"] = "No notes."
 	return
 
+/proc/scan_health_generate_text(var/mob/M)
+	var/h_pct = M.max_health ? round(100 * M.health / M.max_health) : M.health
+	if(M.max_health <= 0)
+		h_pct = "???"
+	var/oxy = round(M.get_oxygen_deprivation())
+	var/tox = round(M.get_toxin_damage())
+	var/burn = round(M.get_burn_damage())
+	var/brute = round(M.get_brute_damage())
+
+	return "<span class='ol c pixel'><span class='vga'>[h_pct]%</span>\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
+
+
 // output a health pop-up overhead thing to the client
 /proc/scan_health_overhead(var/mob/M as mob, var/mob/C as mob) // M is who we're scanning, C is who to give the overhead to
 	if (C.client && !C.client.preferences?.flying_chat_hidden)
 
 		var/image/chat_maptext/chat_text = null
-		var/h_pct = M.max_health ? round(100 * M.health / M.max_health) : M.health
-		if(M.max_health <= 0)
-			h_pct = "???"
-		var/oxy = round(M.get_oxygen_deprivation())
-		var/tox = round(M.get_toxin_damage())
-		var/burn = round(M.get_burn_damage())
-		var/brute = round(M.get_brute_damage())
+		var/popup_text = scan_health_generate_text(M)
 
-		var/popup_text = "<span class='ol c pixel'><span class='vga'>[h_pct]%</span>\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
 		chat_text = make_chat_maptext(M, popup_text, force = 1)
 		if(chat_text)
 			chat_text.measure(C.client)
@@ -423,7 +453,7 @@
 	record_prog.active1 = GR
 	record_prog.active2 = MR
 	record_prog.mode = 1
-	pda.attack_self(usr)
+	pda.AttackSelf(usr)
 
 /proc/scan_reagents(var/atom/A as turf|obj|mob, var/show_temp = 1, var/single_line = 0, var/visible = 0, var/medical = 0)
 	if (!A)
@@ -468,7 +498,7 @@
 				data += "[reagent_data]"
 
 			if (show_temp)
-				data += "<br><span class='notice'>Overall temperature: [reagents.total_temperature - T0C]&deg;C ([reagents.total_temperature * 1.8-459.67]&deg;F)</span>"
+				data += "<br><span class='notice'>Overall temperature: [reagents.total_temperature] K</span>"
 		else
 			data = "<span class='notice'>No active chemical agents found in [A].</span>"
 	else
@@ -501,11 +531,11 @@
 			if (WG.glove_ID)
 				glove_data += "[WG.glove_ID] (<span class='notice'>[H]'s worn [WG.name]</span>)"
 			if (!WG.hide_prints)
-				fingerprint_data += "<br><span class='notice'>[H]'s fingerprints:</span> [H.bioHolder.uid_hash]"
+				fingerprint_data += "<br><span class='notice'>[H]'s fingerprints:</span> [H.bioHolder.fingerprints]"
 			else
 				fingerprint_data += "<br><span class='notice'>Unable to scan [H]'s fingerprints.</span>"
 		else
-			fingerprint_data += "<br><span class='notice'>[H]'s fingerprints:</span> [H.bioHolder.uid_hash]"
+			fingerprint_data += "<br><span class='notice'>[H]'s fingerprints:</span> [H.bioHolder.fingerprints]"
 
 		if (H.gunshot_residue) // Left by firing a kinetic gun.
 			forensic_data += "<br><span class='notice'>Gunshot residue found.</span>"
@@ -616,8 +646,8 @@
 
 		if (isitem(A))
 			var/obj/item/I = A
-			if(I.contraband)
-				contraband_data = "<span class='alert'>(CONTRABAND: LEVEL [I.contraband])</span>"
+			if(I.get_contraband())
+				contraband_data = "<span class='alert'>(CONTRABAND: LEVEL [I.get_contraband()])</span>"
 
 		if (istype(A, /obj/item/clothing/gloves))
 			var/obj/item/clothing/gloves/G = A
@@ -666,7 +696,7 @@
 	return data
 
 // Made this a global proc instead of 10 or so instances of duplicate code spread across the codebase (Convair880).
-/proc/scan_atmospheric(var/atom/A as turf|obj, var/pda_readout = 0, var/simple_output = 0, var/visible = 0)
+/proc/scan_atmospheric(var/atom/A as turf|obj, var/pda_readout = 0, var/simple_output = 0, var/visible = 0, var/alert_output = 0)
 	if (istype(A, /obj/ability_button))
 		return
 	if (!A)
@@ -727,11 +757,15 @@
 		if (pda_readout == 1) // Output goes into PDA interface, not the user's chatbox.
 			data = "Air Pressure: [round(pressure, 0.1)] kPa<br>\
 			[CONCENTRATION_REPORT(check_me, "<br>")]\
-			Temperature: [round(check_me.temperature - T0C)]&deg;C<br>"
+			Temperature: [round(check_me.temperature)] K<br>"
 
-		else if (simple_output == 1) // For the log_atmos() proc.
-			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature - T0C)]&deg;C</i>\
+		else if (simple_output) // For the log_atmos() proc.
+			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature)] K</i>\
 			, <b>Contents:</b> <i>[CONCENTRATION_REPORT(check_me, ", ")]</i>"
+
+		else if (alert_output) // For the alert_atmos() proc.
+			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature)] K</i>\
+			, <b>Contents:</b> <i>[SIMPLE_CONCENTRATION_REPORT(check_me, ", ")]</i>"
 
 		else
 			data = "--------------------------------<br>\
@@ -739,7 +773,7 @@
 			<br>\
 			Pressure: [round(pressure, 0.1)] kPa<br>\
 			[CONCENTRATION_REPORT(check_me, "<br>")]\
-			Temperature: [round(check_me.temperature - T0C)]&deg;C<br>"
+			Temperature: [round(check_me.temperature)] K<br>"
 
 	else
 		// Only used for "Atmospheric Scan" accessible through the PDA interface, which targets the turf
@@ -794,3 +828,32 @@
 
 	HYPgeneticanalysis(user, A, P, DNA) // Just use the existing proc.
 	return
+
+/proc/scan_secrecord(var/obj/item/device/pda2/pda, var/mob/M as mob, var/visible = 0)
+	if (!M)
+		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
+
+	if (!ishuman(M))
+		return "<span class='alert'>ERROR: INVALID DATA FROM SUBJECT</span>"
+
+	if(visible)
+		animate_scanning(M, "#ef0a0a")
+
+	var/mob/living/carbon/human/H = M
+	var/datum/db_record/GR = data_core.general.find_record("name", H.name)
+	var/datum/db_record/SR = data_core.security.find_record("name", H.name)
+	if (!SR)
+		return "<span class='alert'>ERROR: NO RECORD FOUND</span>"
+
+	//Find security records program
+	var/list/programs = null
+	for (var/obj/item/disk/data/mod in pda.contents)
+		programs += mod.root.contents.Copy()
+	var/datum/computer/file/pda_program/records/security/record_prog = locate(/datum/computer/file/pda_program/records/security) in programs
+	if (!record_prog)
+		return "<span class='alert'>ERROR: NO SECURITY RECORD FILE</span>"
+	pda.run_program(record_prog)
+	record_prog.active1 = GR
+	record_prog.active2 = SR
+	record_prog.mode = 1
+	pda.AttackSelf(usr)

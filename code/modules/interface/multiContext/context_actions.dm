@@ -5,9 +5,13 @@
 	var/name = ""
 	var/desc = ""
 	var/tooltip_flags = null
-	var/use_tooltip = 1
-	var/close_clicked = 1
+	var/use_tooltip = TRUE
+	var/close_clicked = TRUE
+	///Does the action close when the mob moves
+	var/close_moved = TRUE
 	var/flick_on_click = null
+	var/text = ""
+	var/background_color = null
 
 	/// Is this action even allowed to show up under the given circumstances? TRUE=yes, FALSE=no
 	proc/checkRequirements(atom/target, mob/user)
@@ -199,7 +203,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.go_to_vr()
 		..()
 
@@ -212,7 +216,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.respawn_as_animal()
 		..()
 
@@ -228,7 +232,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.respawn_as_mentor_mouse()
 		..()
 
@@ -244,7 +248,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.respawn_as_admin_mouse()
 		..()
 
@@ -257,7 +261,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.enter_ghostdrone_queue()
 		..()
 
@@ -270,7 +274,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.go_to_deadbar()
 		..()
 
@@ -344,12 +348,54 @@
 		user.closeContextActions()
 		return 0
 
+/datum/contextAction/wraith_evolve_button
+	name = "Specialize"
+	desc = "Ascend into a stronger form"
+	icon = 'icons/mob/wraith_ui.dmi'
+	icon_state = "minus"
+	icon_background = ""
+	var/ability_code = 0
+
+	New(code as num)
+		..()
+		src.ability_code = code
+		switch(code)
+			if (1)
+				name = "Plaguebringer"
+				desc = "Become a disease spreading spirit."
+				icon_state = "choose_plague"
+			if (2)
+				name = "Harbinger"
+				desc = "Lead an army of otherwoldly foes."
+				icon_state = "choose_harbinger"
+			if (3)
+				name = "Trickster"
+				desc = "Fool the crew with illusions and let them tear themselves apart."
+				icon_state = "choose_trickster"
+
+	checkRequirements(atom/target, mob/user)
+		. = TRUE
+		if (istype(target, /atom/movable/screen/ability/topBar/wraith))
+			var/atom/movable/screen/ability/topBar/wraith/B = target
+			if (istype(B.owner, /datum/targetable/wraithAbility/specialize))
+				var/datum/targetable/wraithAbility/specialize/A = B.owner
+				if (!A.cooldowncheck())
+					return FALSE
+
+	execute(atom/target, mob/user)
+		if (istype(target, /atom/movable/screen/ability/topBar/wraith))
+			var/atom/movable/screen/ability/topBar/wraith/B = target
+			if (istype(B.owner, /datum/targetable/wraithAbility/specialize))
+				var/datum/targetable/wraithAbility/specialize/A = B.owner
+				A.evolve(ability_code)
+				A.doCooldown()
+		user.closeContextActions()
+		return 0
 
 /datum/contextAction/genebooth_product
 	icon = 'icons/ui/context32x32.dmi'
 	var/datum/geneboothproduct/GBP = null
 	var/obj/machinery/genetics_booth/GB = null
-	var/spamt = 0
 
 	disposing()
 		GBP = null
@@ -363,14 +409,9 @@
 
 	checkRequirements(atom/target, mob/user)
 		. = FALSE
-		if (get_dist(target,user) <= 1 && isliving(user))
-			. = GBP && GB
-			if (GB?.occupant && world.time > spamt + 5)
-				user.show_text("[target] is currently occupied. Wait until it's done.", "blue")
-				spamt = world.time
-				. = FALSE
-			if(.)
-				GB.show_admin_panel(user)
+		if (GBP && GB && (BOUNDS_DIST(target, user) == 0 && isliving(user)) && !GB?.occupant)
+			. = TRUE
+			GB.show_admin_panel(user)
 
 	buildBackgroundIcon(atom/target, mob/user)
 		var/image/background = image('icons/ui/context32x32.dmi', src, "[getBackground(target, user)]0")
@@ -437,7 +478,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (iswrenchingtool(I))
 					user.show_text("You wrench [target]'s bolts.", "blue")
-					playsound(target, "sound/items/Ratchet.ogg", 50, 1)
+					playsound(target, 'sound/items/Ratchet.ogg', 50, 1)
 					return ..()
 
 	cut
@@ -449,7 +490,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (iscuttingtool(I) || issnippingtool(I))
 					user.show_text("You cut some vestigial wires from [target].", "blue")
-					playsound(target, "sound/items/Wirecutter.ogg", 50, 1)
+					playsound(target, 'sound/items/Wirecutter.ogg', 50, 1)
 					return ..()
 	weld
 		name = "Weld"
@@ -472,7 +513,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (ispryingtool(I))
 					user.show_text("You pry on [target] without remorse.", "blue")
-					playsound(target, "sound/items/Crowbar.ogg", 50, 1)
+					playsound(target, 'sound/items/Crowbar.ogg', 50, 1)
 					return ..()
 
 	screw
@@ -484,7 +525,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (isscrewingtool(I))
 					user.show_text("You unscrew some of the screws on [target].", "blue")
-					playsound(target, "sound/items/Screwdriver.ogg", 50, 1)
+					playsound(target, 'sound/items/Screwdriver.ogg', 50, 1)
 					return ..()
 
 	pulse
@@ -496,7 +537,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (ispulsingtool(I))
 					user.show_text("You pulse [target]. In a general sense.", "blue")
-					playsound(target, "sound/items/penclick.ogg", 50, 1)
+					playsound(target, 'sound/items/penclick.ogg', 50, 1)
 					return ..()
 
 /datum/contextAction/vehicle
@@ -597,7 +638,7 @@
 		execute(atom/target, mob/user)
 			..()
 			var/obj/machinery/vehicle/V = target
-			V.fire_main_weapon()
+			V.fire_main_weapon(user)
 
 	use_external_speaker
 		name = "Use External Speaker"
@@ -703,7 +744,7 @@
 		I.play_note(note,user)
 
 	checkRequirements(atom/target, mob/user)
-		. = ((user.equipped() == target) || target.density && target.loc == get_turf(target) && get_dist(user,target)<=1 && istype(target,/obj/item/instrument))
+		. = ((user.equipped() == target) || target.density && target.loc == get_turf(target) && BOUNDS_DIST(user, target) == 0 && istype(target,/obj/item/instrument))
 
 	special
 		icon_background = "key_special"
@@ -1134,3 +1175,68 @@
 			target.addContextAction(/datum/contextAction/testfour)
 			return 0
 */
+/datum/contextAction/rcd
+	icon = 'icons/ui/context16x16.dmi'
+	close_clicked = TRUE
+	desc = ""
+	icon_state = "wrench"
+	var/mode = RCD_MODE_FLOORSWALLS
+
+	execute(var/obj/item/rcd/rcd, var/mob/user)
+		if (!istype(rcd))
+			return
+		rcd.switch_mode(src.mode, user)
+
+	checkRequirements(var/obj/item/rcd/rcd, var/mob/user)
+		return rcd in user
+
+	floorswalls
+		name = "Floors/walls"
+		icon_state = "wall"
+		mode = RCD_MODE_FLOORSWALLS
+	airlock
+		name = "Airlocks"
+		icon_state = "door"
+		mode = RCD_MODE_AIRLOCK
+
+	deconstruct
+		name = "Deconstruct"
+		icon_state = "close"
+		mode = RCD_MODE_DECONSTRUCT
+
+	windows
+		name = "Windows"
+		icon_state = "window"
+		mode = RCD_MODE_WINDOWS
+
+	lightbulbs
+		name = "Lightbulbs"
+		icon_state = "bulb"
+		mode = RCD_MODE_LIGHTBULBS
+
+	lighttubes
+		name = "Light tubes"
+		icon_state = "tube"
+		mode = RCD_MODE_LIGHTTUBES
+
+/datum/contextAction/reagent
+	icon_background = "whitebg"
+	icon_state = "note"
+	var/reagent_id = ""
+
+	New(var/reagent_id)
+		..()
+		src.reagent_id = reagent_id || src.reagent_id
+		var/datum/reagent/reagent = reagents_cache[reagent_id]
+		if (!istype(reagent))
+			return
+		src.background_color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
+		src.text = reagent_shorthands[reagent_id] || copytext(capitalize(reagent.name), 1, 3)
+		src.name = capitalize(reagent.name)
+
+/datum/contextAction/reagent/robospray
+	close_moved = FALSE
+	checkRequirements(var/obj/item/robospray/robospray, var/mob/user)
+		return robospray in user
+	execute(var/obj/item/robospray/robospray, var/mob/user)
+		robospray.change_reagent(src.reagent_id, user)

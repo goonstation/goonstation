@@ -151,7 +151,7 @@
 
 			else if (probmult(2))
 				owner.visible_message("<span class='alert'>[owner.name] vomits blood!</span>")
-				playsound(owner.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(owner.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				random_brute_damage(owner, rand(5,8))
 				bleed(owner, rand(5,8), 5)
 
@@ -191,16 +191,25 @@
 		if (prob(5))
 			src.personalized_stink = stinkString()
 
+	OnAdd()
+		. = ..()
+		holder.owner?.UpdateParticles(new/particles/stink_lines, "stink_lines", KEEP_APART | RESET_TRANSFORM)
+
 	OnLife(var/mult)
 		if(..()) return
-		if (probmult(10))
-			for(var/mob/living/carbon/C in view(6,get_turf(owner)))
+		if (probmult(5))
+			for(var/mob/living/carbon/C in view(3,get_turf(owner)))
 				if (C == owner)
 					continue
-				if (src.personalized_stink)
+				if (ispug(C))
+					boutput(C, "<span class='alert'>Wow, [owner] sure [pick("stinks", "smells", "reeks")]!")
+				else if (src.personalized_stink)
 					boutput(C, "<span class='alert'>[src.personalized_stink]</span>")
 				else
 					boutput(C, "<span class='alert'>[stinkString()]</span>")
+	OnRemove()
+		holder.owner?.ClearSpecificParticles("stink_lines")
+		. = ..()
 
 // Magnetic Random Event
 
@@ -235,7 +244,7 @@
 
 	proc/deactivate(var/time)
 		active = 0
-		SPAWN_DBG(time)
+		SPAWN(time)
 			active = 1
 
 /datum/bioEffect/hidden/magnetic/positive

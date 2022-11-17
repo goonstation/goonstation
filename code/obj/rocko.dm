@@ -30,7 +30,16 @@ obj/item/rocko
 
 		src.rocko_is = list("a great listener", "a good friend", "trustworthy", "wise", "sweet", "great at parties")
 		src.hat = new /obj/item/clothing/head/helmet/hardhat(src)
-		update_icon()
+
+		if (prob(10))
+			var/new_material = pick(childrentypesof(/datum/material/metal))
+			var/datum/material/dummy = new new_material
+			src.setMaterial(getMaterial(dummy.mat_id), setname = FALSE)
+		else
+			src.setMaterial(getMaterial("rock"), appearance = FALSE, setname = FALSE, copy = FALSE)
+
+		UpdateIcon()
+
 		START_TRACKING_CAT(TR_CAT_PETS)
 		processing_items |= src
 
@@ -64,7 +73,7 @@ obj/item/rocko
 			view_chance += 2
 			if(src.holder == M)
 				view_chance += 5
-		else if(M.job in list("Engineer", "Mechanic"))
+		else if(M.job in list("Engineer"))
 			view_chance += 1
 			if(src.holder == M)
 				view_chance += 1
@@ -121,7 +130,7 @@ obj/item/rocko
 			if(src.can_mob_observe(O))
 				O.show_message("<span class='emote'>[message]</span>", assoc_maptext = chat_text)
 
-	proc/update_icon()
+	update_icon()
 		var/image/smiley = image('icons/misc/rocko.dmi', src.smile ? "smile" : "frown")
 		if(bright)
 			painted = pick(list("#EE2","#2EE", "#E2E","#EEE"))
@@ -147,10 +156,13 @@ obj/item/rocko
 	get_desc(dist, mob/user)
 		if(ismob(user) &&	user.job == "Chief Engineer")
 			. = "A rock but also [pick(rocko_is)]."
-		else if(ismob(user) && (user.job in list("Engineer", "Mechanic", "Quartermaster", "Captain")))
+		else if(ismob(user) && (user.job in list("Engineer", "Quartermaster", "Captain")))
 			. = "The Chief Engineer loves this rock.  Maybe it's to make up for their lack of a pet."
 		else
 			. = "A rock with a [src.smile ? "smiley" : "frowny"] face painted on it."
+
+		if (src.material?.mat_id != "rock")
+			. += "<br>Wait, that isn't a rock. It's a [pick("hunk", "chunk")] of [src.material.name]!"
 
 	attackby(obj/item/W, mob/living/user)
 		if(istype(W,/obj/item/clothing/head))
@@ -176,6 +188,6 @@ obj/item/rocko
 	afterattack(atom/target, mob/user, reach, params)
 		if(src.smile && ismob(target) && prob(10))
 			src.smile = FALSE
-			update_icon()
+			UpdateIcon()
 
 

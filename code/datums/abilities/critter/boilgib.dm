@@ -13,7 +13,7 @@
 			return 1
 		var/mob/ow = holder.owner
 
-		if(alert(ow, "This will destroy your body to scald all nearby targets! Are you sure?",,"Yes","No") == "No")
+		if(tgui_alert(ow, "This will destroy your body to scald all nearby targets! Are you sure?", "Blood boil", list("Yes","No")) != "Yes")
 			return
 
 		for (var/turf/splat in view(2,ow.loc))

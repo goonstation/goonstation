@@ -64,12 +64,12 @@
 
 	CritterAttack(mob/M)
 		..()
-		var/S = pick("sound/impact_sounds/Generic_Hit_2.ogg", "sound/impact_sounds/Wood_Hit_Small_1.ogg")
+		var/S = pick('sound/impact_sounds/Generic_Hit_2.ogg', 'sound/impact_sounds/Wood_Hit_Small_1.ogg')
 		playsound(src.loc, S, 30, 1, -1)
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 20, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 20, 1, -1)
 		M.changeStatus("stunned", 3 SECONDS)
 
 	on_grump()
@@ -114,9 +114,13 @@
 
 			boutput(user, "You inject the solution into [src].")
 
-			if(S.reagents.has_reagent("plasma", 1))
-				message_admins("[key_name(user)] rigged [src] to explode in [user.loc.loc], [showCoords(user.x, user.y, user.z)].")
-				logTheThing("combat", user, null, "rigged [src] to explode in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+			if(!rigged && S.reagents.has_reagent("plasma", 1))
+				for (var/mob/living/M in mobs)
+					if (M.mind && M.mind.assigned_role == "Head of Security")
+						boutput(M, "<span class='alert'>You feel a foreboding feeling about the imminent fate of a certain turtle in [get_area(src)], better act quick.</span>")
+
+				message_admins("[key_name(user)] rigged [src] to explode in [user.loc.loc], [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "rigged [src] to explode in [user.loc.loc] ([log_loc(user)])")
 				rigged = TRUE
 				rigger = user
 
@@ -131,7 +135,7 @@
 	// explode the turtle
 
 	proc/explode()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.rigged = FALSE
 			src.rigger = null
 			enter_shell()	//enter shell first to give a warning
@@ -144,7 +148,7 @@
 			var/chat_text = make_chat_maptext(src, message)
 			for (var/mob/O in all_hearers(7, get_turf(src)))
 				O.show_message("<span class='game say bold'><span class='name'>[src]</span></span> says, <span class='message'>\"[message]\"</span>", 2, assoc_maptext = chat_text)
-			playsound(src.loc, "sound/misc/rimshot.ogg", 50, 1)
+			playsound(src.loc, 'sound/misc/rimshot.ogg', 50, 1)
 
 	//sets the turtle to sleep inside their shell. Will exit their shell if hit again
 	proc/enter_shell()
@@ -198,9 +202,9 @@
 			enter_shell()
 
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.health -= shell_count ? 75 : 200
-			if(2.0)
+			if(2)
 				src.health -= shell_count ? 25 : 75
 			else
 				src.health -= shell_count ? 0 : 25
@@ -239,14 +243,14 @@
 
 	New()
 		..()
-		update_icon()
+		UpdateIcon()
 	ai_think()
 		..()
 		//find clown
 		if (search_frequency <= 0)
 			if (task != "chasing" || task != "attacking" || task != "sleeping")
 				for (var/mob/M in mobs)
-					if (M.job == "Clown" && get_dist(src, M) < 7)
+					if (M.job == "Clown" && GET_DIST(src, M) < 7)
 						target = M
 						attack = 1
 						task = "chasing"
@@ -268,13 +272,13 @@
 		if (src.costume_name)
 			. += "And he's wearing an adorable costume! Wow!"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, preferred_hat))
 			give_beret(W, user)
 		else
 			..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!src.alive)
 			take_beret(user)
 			return
@@ -298,7 +302,7 @@
 			brutevuln = 0.7
 			firevuln = 1
 
-		update_icon()
+		UpdateIcon()
 
 		return 1
 
@@ -309,7 +313,7 @@
 		else
 			src.icon_state = "[base_icon_state]-dead"
 
-		update_icon()
+		UpdateIcon()
 
 	on_revive()
 		..()
@@ -318,7 +322,7 @@
 		else
 			src.icon_state = base_icon_state
 
-		update_icon()
+		UpdateIcon()
 
 	proc/give_beret(var/obj/hat, var/mob/user)
 		if (shell_count || wearing_beret) return 0
@@ -347,7 +351,7 @@
 		wearing_beret = hat
 
 
-		update_icon()
+		UpdateIcon()
 		// if (src.alive)
 		// 	src.icon_state = "turtle-beret"
 		// else
@@ -388,12 +392,12 @@
 			brutevuln = initial(brutevuln)
 			firevuln = initial(firevuln)
 
-			update_icon()
+			UpdateIcon()
 
 			return 1
 		return 0
 
-	MouseDrop(atom/over_object as mob|obj)
+	mouse_drop(atom/over_object as mob|obj)
 		if (over_object == usr && ishuman(usr))
 			var/mob/living/carbon/human/H = usr
 			if (in_interact_range(src, H))
@@ -402,7 +406,7 @@
 		..()
 
 	//I'm sorry sylvester... I'll fix this later when I have time, I promise. - Kyle
-	proc/update_icon()
+	update_icon()
 		if (src.alive)
 			if (src.wearing_beret)
 				if (istype(wearing_beret, /obj/item/clothing/head/hos_hat))

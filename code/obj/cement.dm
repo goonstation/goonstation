@@ -50,7 +50,6 @@
 	density = 1
 	opacity = 0 	// changed in New()
 	anchored = 1
-	name = "concrete wall"
 	desc = "A heavy duty wall made of concrete! This thing is gonna take some manual labour to get through..."
 	flags = FPRINT | CONDUCT | USEDELAY
 	var/const/baseHealth = 30
@@ -67,7 +66,7 @@
 			loc:ReplaceWithConcreteFloor()
 
 		update_nearby_tiles(1)
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			RL_SetOpacity(1)
 
 	disposing()
@@ -112,7 +111,7 @@
 
 	onDestroy()
 		src.visible_message( "<span class='alert'>\The [src] crumbles to dust!</span>")
-		playsound(src.loc, "sound/impact_sounds/Stone_Scrape_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 50, 1)
 		..()
 
 	proc/update_nearby_tiles(need_rebuild)
