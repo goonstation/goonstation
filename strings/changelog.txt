@@ -1,5 +1,9 @@
 
 (t)wed nov 16 22
+(u)Hans
+(p)10758
+(e)⚖💊⚗|C-Balance, A-Medical, A-Chemistry
+(+)You now bleed blood and reagents at the ratio to which you have them on your body. It's also now scaled by how much you are bleeding.
 (u)goonstation-enjoyer
 (p)11973
 (e)🪲🗺|C-Bug, A-Mapping
