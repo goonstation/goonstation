@@ -26,9 +26,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/lock_code = null
 	var/lock_code_autogenerate = 0
 	var/locked = 0
-	var/reading_exploitable = FALSE
-	var/reading_specific_exploitable = null
-	var/has_exploitable = TRUE
+	var/reading_synd_int = FALSE
+	var/reading_specific_synd_int = null
+	var/has_synd_int = TRUE
 
 	var/use_default_GUI = 0 // Use the parent's HTML interface (less repeated code).
 	var/temp = null
@@ -48,7 +48,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				src.setup()
 
 	disposing()
-		reading_specific_exploitable = null
+		reading_specific_synd_int = null
 		reading_about = null
 		..()
 
@@ -257,15 +257,15 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			if(reading_about.desc) item_about = "[reading_about.desc]"
 			dat += "<b>Extended Item Information:</b><hr>[item_about]<hr><A href='byond://?src=\ref[src];back=1'>Back</A>"
 
-		else if(reading_exploitable)
+		else if(reading_synd_int)
 			dat += "<h4>Syndicate Intelligence</h4>"
 			dat += get_manifest(src)
 			dat += "<br>"
 			dat += "<A href='byond://?src=\ref[src];back=1'>Back</A>"
 			dat += "<br>"
 
-		else if(reading_specific_exploitable)
-			var/datum/db_record/staff_record = reading_specific_exploitable
+		else if(reading_specific_synd_int)
+			var/datum/db_record/staff_record = reading_specific_synd_int
 			dat += "<h4>Information on [staff_record["name"]]</h4>"
 			dat += staff_record["notes"]
 			dat += "<br>"
@@ -310,8 +310,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				dat += "</table>"
 				var/do_divider = 1
 
-				if(has_exploitable)
-					dat += "<HR><A href='byond://?src=\ref[src];exploitable=1'>Syndicate Intelligence</A><BR>"
+				if(has_synd_int)
+					dat += "<HR><A href='byond://?src=\ref[src];synd_int=1'>Syndicate Intelligence</A><BR>"
 
 				if (istype(src, /obj/item/uplink/integrated/radio))
 					var/obj/item/uplink/integrated/radio/RU = src
@@ -437,11 +437,11 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		else if (href_list["back"])
 			if(reading_about)
 				reading_about = null
-			if(reading_exploitable)
-				reading_exploitable = FALSE
-			if(reading_specific_exploitable)
-				reading_specific_exploitable = null
-				reading_exploitable = TRUE
+			if(reading_synd_int)
+				reading_synd_int = FALSE
+			if(reading_specific_synd_int)
+				reading_specific_synd_int = null
+				reading_synd_int = TRUE
 
 		else if (href_list["selfdestruct"] && src.can_selfdestruct == 1)
 			src.selfdestruct = 1
@@ -449,13 +449,13 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				if (src)
 					src.explode()
 
-		else if (href_list["exploitable"])
-			reading_exploitable = TRUE
+		else if (href_list["synd_int"])
+			reading_synd_int = TRUE
 
 		else if (href_list["select_exp"])
 			var/datum/db_record/staff_record = locate(href_list["select_exp"])
-			reading_specific_exploitable = staff_record
-			reading_exploitable = FALSE
+			reading_specific_synd_int = staff_record
+			reading_synd_int = FALSE
 
 		else if (href_list["temp"])
 			src.temp = null
@@ -607,15 +607,15 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		src.menu_message += "<B>Request item:</B><BR>"
 		src.menu_message += "<I>Each item costs a number of [syndicate_currency] as indicated by the number following their name.</I><BR><table cellspacing=5>"
 
-		if(reading_exploitable)
+		if(reading_synd_int)
 			src.menu_message += "<h4>Syndicate Intelligence</h4>"
 			src.menu_message += get_manifest(FALSE, src)
 			src.menu_message += "<br>"
 			src.menu_message += "<A href='byond://?src=\ref[src];back_menu=1'>Back</A>"
 			return
 
-		else if(reading_specific_exploitable)
-			var/datum/db_record/staff_record = reading_specific_exploitable
+		else if(reading_specific_synd_int)
+			var/datum/db_record/staff_record = reading_specific_synd_int
 			src.menu_message += "<h4>Information on [staff_record["name"]]</h4>"
 			src.menu_message += staff_record["notes"]
 			src.menu_message += "<br>"
@@ -643,8 +643,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_telecrystal[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_telecrystal[O]]'>About</A></td>"
 
 		src.menu_message += "</table><HR>"
-		if(has_exploitable)
-			src.menu_message += "<A href='byond://?src=\ref[src];exploitable=1'>Syndicate Intelligence</A><BR>"
+		if(has_synd_int)
+			src.menu_message += "<A href='byond://?src=\ref[src];synd_int=1'>Syndicate Intelligence</A><BR>"
 			src.menu_message += "<HR>"
 		return
 
@@ -700,20 +700,20 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			src.print_to_host("<b>Extended Item Information:</b><hr>[item_about]<hr><A href='byond://?src=\ref[src];back=1'>Back</A>")
 			return
 
-		else if (href_list["exploitable"])
-			reading_exploitable = TRUE
+		else if (href_list["synd_int"])
+			reading_synd_int = TRUE
 
 		else if (href_list["select_exp"])
 			var/datum/db_record/staff_record = locate(href_list["select_exp"])
-			reading_specific_exploitable = staff_record
-			reading_exploitable = FALSE
+			reading_specific_synd_int = staff_record
+			reading_synd_int = FALSE
 
 		else if (href_list["back_menu"])
-			if(reading_exploitable)
-				reading_exploitable = FALSE
-			if(reading_specific_exploitable)
-				reading_specific_exploitable = null
-				reading_exploitable = TRUE
+			if(reading_synd_int)
+				reading_synd_int = FALSE
+			if(reading_specific_synd_int)
+				reading_specific_synd_int = null
+				reading_synd_int = TRUE
 
 		src.generate_menu()
 		src.print_to_host(src.menu_message)
@@ -1012,15 +1012,15 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	generate_menu()
 		src.menu_message = "<B>Spy Console:</B> Current location: [get_area(src)]<BR>"
 
-		if(reading_exploitable)
+		if(reading_synd_int)
 			src.menu_message += "<br><h4>Syndicate Intelligence</h4>"
 			src.menu_message += get_manifest(FALSE, src)
 			src.menu_message += "<br>"
 			src.menu_message += "<A href='byond://?src=\ref[src];back_menu=1'>Back</A>"
 			return
 
-		else if(reading_specific_exploitable)
-			var/datum/db_record/staff_record = reading_specific_exploitable
+		else if(reading_specific_synd_int)
+			var/datum/db_record/staff_record = reading_specific_synd_int
 			src.menu_message += "<br><h4>Information on [staff_record["name"]]</h4>"
 			src.menu_message += staff_record["notes"]
 			src.menu_message += "<br>"
@@ -1064,9 +1064,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		src.menu_message += "<br><I>Each bounty is open to all spies. Be sure to satisfy the requirements before your enemies.</I><BR><BR>"
 		src.menu_message += "<br><I>A **HOT** bounty indicates that the payout will be higher in value.</I><BR><BR>"
 		src.menu_message += "<I>Stand in the Deliver Area and touch a bountied item (or use click + drag) to this PDA. Our fancy wormhole tech can take care of the rest. Your efforts will be rewarded.</I><BR><table cellspacing=5>"
-		if(has_exploitable)
+		if(has_synd_int)
 			src.menu_message += "<HR>"
-			src.menu_message += "<A href='byond://?src=\ref[src];exploitable=1'>Syndicate Intelligence</A><BR>"
+			src.menu_message += "<A href='byond://?src=\ref[src];synd_int=1'>Syndicate Intelligence</A><BR>"
 		return
 
 	Topic(href, href_list)
@@ -1081,20 +1081,20 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				//print photo of item or mob owner
 				src.print_photo(locate(href_list["bounty"]) , usr)
 
-		else if (href_list["exploitable"])
-			reading_exploitable = TRUE
+		else if (href_list["synd_int"])
+			reading_synd_int = TRUE
 
 		else if (href_list["select_exp"])
 			var/datum/db_record/staff_record = locate(href_list["select_exp"])
-			reading_specific_exploitable = staff_record
-			reading_exploitable = FALSE
+			reading_specific_synd_int = staff_record
+			reading_synd_int = FALSE
 
 		else if (href_list["back_menu"])
-			if(reading_exploitable)
-				reading_exploitable = FALSE
-			if(reading_specific_exploitable)
-				reading_specific_exploitable = null
-				reading_exploitable = TRUE
+			if(reading_synd_int)
+				reading_synd_int = FALSE
+			if(reading_specific_synd_int)
+				reading_specific_synd_int = null
+				reading_synd_int = TRUE
 
 		src.generate_menu()
 		src.print_to_host(src.menu_message)

@@ -95,13 +95,13 @@ export const GeneralTab = (_props, context) => {
             <BlockQuote>{data.medicalNote ? decodeHtmlEntities(data.medicalNote) : <Box italic>None</Box>}</BlockQuote>
           </LabeledList.Item>
           <LabeledList.Item
-            label="Exploitable Information"
+            label="Syndicate Intelligence"
             buttons={
-              <Button onClick={() => act('update-exploitNote')} icon="wrench">
+              <Button onClick={() => act('update-syndintNote')} icon="wrench">
                 Edit
               </Button>
             }>
-            <BlockQuote>{data.exploitNote ? decodeHtmlEntities(data.exploitNote) : <Box italic>None</Box>}</BlockQuote>
+            <BlockQuote>{data.syndintNote ? decodeHtmlEntities(data.syndintNote) : <Box italic>None</Box>}</BlockQuote>
           </LabeledList.Item>
         </LabeledList>
       </Section>
