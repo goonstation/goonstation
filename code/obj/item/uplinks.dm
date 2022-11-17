@@ -609,7 +609,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		if(reading_exploitable)
 			src.menu_message += "<h4>Exploitable Information</h4>"
-			src.menu_message += get_manifest(src)
+			src.menu_message += get_manifest(FALSE, src)
 			src.menu_message += "<br>"
 			src.menu_message += "<A href='byond://?src=\ref[src];back_menu=1'>Back</A>"
 			return
@@ -1014,7 +1014,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		if(reading_exploitable)
 			src.menu_message += "<br><h4>Exploitable Information</h4>"
-			src.menu_message += get_manifest(src)
+			src.menu_message += get_manifest(FALSE, src)
 			src.menu_message += "<br>"
 			src.menu_message += "<A href='byond://?src=\ref[src];back_menu=1'>Back</A>"
 			return
