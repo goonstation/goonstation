@@ -61,11 +61,13 @@
 		..()
 
 	Life()
+		var/life_time_passed = max(tick_spacing, TIME - last_life_tick)
+		var/life_mult = life_time_passed / tick_spacing
 		var/turf/local_turf = get_turf(src)
 		if (local_turf.RL_GetBrightness() < 0.3 || src.cloaked)
 			if ((src.health < (src.health_brute + src.health_burn)))
 				for(var/damage_type in src.healthlist)
 					var/datum/healthHolder/hh = src.healthlist[damage_type]
-					hh.HealDamage(2)
-			src.setStatus("darkness_stam_regen", 5 SECONDS)
+					hh.HealDamage(2 * life_mult)
+			src.setStatus("darkness_stam_regen", 5 SECONDS * life_mult)
 		..()
