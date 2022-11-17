@@ -660,11 +660,14 @@
 	desc = "An evil looking, regal specter. Usually seen commanding a horde of minions."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "wraith_harbinger"
+	//Used for the "create_guard" ability
+	var/guard_amount = 0
 
 	New(var/mob/M)
 		..()
 		src.abilityHolder.regenRate = 3
 		src.addAbility(/datum/targetable/wraithAbility/create_summon_portal)
+		src.addAbility(/datum/targetable/wraithAbility/create_guard)
 		src.addAbility(/datum/targetable/wraithAbility/raiseSkeleton)
 		src.addAbility(/datum/targetable/wraithAbility/makeRevenant)
 		src.addAbility(/datum/targetable/wraithAbility/harbinger_summon)

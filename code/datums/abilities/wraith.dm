@@ -1598,7 +1598,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	name = "Summon void portal"
 	icon_state = "open_portal"
 	desc = "Summon a void portal from which otherworldly creatures pour out. You get increased point generation when near it. Use ability again to upgrade it or destroy it."
-	pointCost = 150
+	pointCost = 100
 	targeted = 0
 	cooldown = 120 SECONDS
 
@@ -1608,6 +1608,12 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 
 		var/turf/T = get_turf(holder.owner)
 		if (isturf(T) && istype(T,/turf/simulated/floor))
+			for (var/turf/simulated/wall/W in T)
+				boutput(holder.owner, "<span class='notice'>You cannot place your portal in a wall!</span>")
+				return TRUE
+			for (var/obj/window/W in T)
+				boutput(holder.owner, "<span class='notice'>You cannot place your portal  in a window!</span>")
+				return TRUE
 			if(istype(holder.owner, /mob/living/intangible/wraith))
 				var/mob/living/intangible/wraith/W = holder.owner
 				if (W.linked_portal)
@@ -1628,6 +1634,56 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		else
 			boutput(holder.owner, "<span class='notice'>We cannot open a portal here</span>")
 			return TRUE
+
+/datum/targetable/wraithAbility/create_guard
+	name = "Summon ghostly guardian"
+	icon_state = "summon_guard"
+	desc = "Spawns an immobile guardian that attacks those in range. Requires an upgraded portal to cast."
+	pointCost = 70
+	targeted = 1
+	target_anything = 1
+	cooldown = 50 SECONDS
+
+	cast(atom/target)
+		if (..())
+			return TRUE
+		if (!istype(holder.owner, /mob/living/intangible/wraith/wraith_harbinger))
+			boutput(holder.owner, "<span class='notice'>You cannot use this ability without being a wraith!</span>")
+			return TRUE
+		var/mob/living/intangible/wraith/wraith_harbinger/the_wraith = holder.owner
+		if (!the_wraith.linked_portal)
+			boutput(holder.owner, "<span class='notice'>You must place a portal and upgrade it to use this ability!</span>")
+			return TRUE
+		var/obj/machinery/wraith/vortex_wraith/the_vortex = the_wraith.linked_portal
+		if (the_vortex.portal_level < 1)
+			boutput(holder.owner, "<span class='notice'>You must upgrade your portal a little before you can use this!</span>")
+			return TRUE
+		if (the_wraith.guard_amount >= the_vortex.mob_value_cap)
+			boutput(holder.owner, "<span class='notice'>You reached maximum guard capacity! Upgrade your portal's summon capacity to summon more!</span>")
+			return TRUE
+		var/turf/T = null
+		if (!isturf(target))
+			T = get_turf(target)
+		else
+			T = target
+		if (!T || !istype(T,/turf/simulated/floor))
+			boutput(holder.owner, "<span class='notice'>You cannot use this here!</span>")
+			return TRUE
+		for (var/turf/simulated/wall/W in T)
+			boutput(holder.owner, "<span class='notice'>You cannot place a guard in a wall!</span>")
+			return TRUE
+		for (var/obj/window/W in T)
+			boutput(holder.owner, "<span class='notice'>You cannot place a guard in a window!</span>")
+			return TRUE
+		for (var/obj/machinery/wraith/harbinger_guard/G in T)
+			boutput(holder.owner, "<span class='notice'>There is already a guard here!</span>")
+			return TRUE
+		if (!IN_RANGE(target, the_vortex, (1 + the_vortex.spawn_radius)))
+			boutput(holder.owner, "<span class='notice'>That is too far from the portal! Increase your portal's spawning range to place guards further!</span>")
+			return TRUE
+		new /obj/machinery/wraith/harbinger_guard(T, the_wraith)
+		the_wraith.guard_amount ++
+		return FALSE
 
 /datum/targetable/wraithAbility/choose_haunt_appearance
 	name = "Choose haunt appearance"

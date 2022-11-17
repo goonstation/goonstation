@@ -776,6 +776,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\antagonists\wraith\objs\wraith_critters.dm"
 #include "code\modules\antagonists\wraith\objs\decal\harbinger_portal.dm"
 #include "code\modules\antagonists\wraith\objs\item\spirit_candle.dm"
+#include "code\modules\antagonists\wraith\objs\machinery\harbinger_guard.dm"
 #include "code\modules\antagonists\wraith\objs\machinery\rat_den.dm"
 #include "code\modules\antagonists\wraith\objs\machinery\runetrap.dm"
 #include "code\modules\antagonists\wraith\objs\machinery\vortex_wraith.dm"
