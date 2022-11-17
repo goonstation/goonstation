@@ -211,12 +211,13 @@
 						failed = 1
 
 				if ("Flockmind")
-					var/mob/living/intangible/flock/flockmind/F = M3.make_flockmind(round_start = FALSE)
+					var/mob/living/intangible/flock/flockmind/F = M3.make_flockmind()
 					if (F && istype(F))
 						M3 = F
 						role = ROLE_FLOCKMIND
 						objective_path = /datum/objective/specialist/flock
 						send_to = 3
+						F.set_up_midround()
 						if (alive_player_count() > 40) //flockmind can have a free trace, as a treat
 							SPAWN(1)
 								F.partition(TRUE)

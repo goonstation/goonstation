@@ -15,7 +15,7 @@
 	var/max_tries = 3
 
 
-/mob/living/intangible/flock/flockmind/New(turf/newLoc, datum/flock/F = null, round_start = TRUE)
+/mob/living/intangible/flock/flockmind/New(turf/newLoc, datum/flock/F = null)
 	..()
 
 	src.abilityHolder = new /datum/abilityHolder/flockmind(src)
@@ -28,8 +28,6 @@
 	if (!F)
 		src.addAbility(/datum/targetable/flockmindAbility/spawnEgg)
 		src.addAbility(/datum/targetable/flockmindAbility/ping)
-		if (!round_start)
-			src.max_tries = 1
 	else
 		src.started = TRUE
 		src.addAllAbilities()
@@ -103,6 +101,9 @@
 	src.addAbility(/datum/targetable/flockmindAbility/directSay)
 	src.addAbility(/datum/targetable/flockmindAbility/createStructure)
 	src.addAbility(/datum/targetable/flockmindAbility/deconstruct)
+
+/mob/living/intangible/flock/flockmind/proc/set_up_midround()
+	src.max_tries = 1
 
 /mob/living/intangible/flock/flockmind/proc/reset()
 	for (var/datum/targetable/ability in src.abilityHolder.abilities)
