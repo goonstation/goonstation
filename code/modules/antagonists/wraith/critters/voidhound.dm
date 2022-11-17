@@ -60,3 +60,8 @@
 			boutput(src, "<span class='alert'>We reappear</span>")
 		..()
 
+	death(var/gibbed)
+		if (src.master)
+			src.master.summons -= src
+			src.master = null
+		return ..()
