@@ -155,7 +155,7 @@
 	for(var/mob/M in mobs)
 		M.playsound_local(M, 'sound/misc/flockmind/flock_broadcast_kaboom.ogg', 30, 0)
 		M.flash(3 SECONDS)
-	if (!src.shuttle_departure_delayed)
+	if (!src.shuttle_departure_delayed && !istype(ticker?.mode, /datum/game_mode/flock))
 		SPAWN(1 SECOND)
 			emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
 			emergency_shuttle.incall()
