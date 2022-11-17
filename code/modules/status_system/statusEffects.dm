@@ -2191,3 +2191,34 @@
 	onRemove()
 		. = ..()
 		owner.remove_filter("gnesis_tint")
+
+/datum/statusEffect/portal_weakness
+	id = "portal_weakness"
+	name = "Dark Influence"
+	desc = "An ominous aura instills fear in you. You feel your grasp on life slipping. Maximum Health and Stamina lowered."
+	icon_state = "maxhealth-"
+	unique = 1
+	maxDuration = 1 MINUTES
+	var/max_health = 30
+	var/max_stam = -30
+	var/mob/living/carbon/human/H
+
+	onAdd(optional=null)
+		. = ..()
+		if (!ishuman(owner))
+			owner.delStatus("portal_weakness")
+		else
+			H = owner
+			H.max_health -= max_health
+			health_update_queue |= H
+			H.add_stam_mod_max("portal_weakness", max_stam)
+
+	onRemove()
+		. = ..()
+		if (ishuman(owner))
+			H.max_health += max_health
+			health_update_queue |= H
+			H.remove_stam_mod_max("portal_weakness")
+
+	getTooltip()
+		. = "An ominous aura instills fear in you. You feel your grasp on life slipping. Maximum Health and Stamina lowered."
