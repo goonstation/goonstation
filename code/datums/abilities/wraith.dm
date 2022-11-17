@@ -1818,7 +1818,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			return 1
 
 	proc/make_plague_rat(var/mob/W, var/turf/T, var/tries = 0)
-		if (!istype(W, /mob/living/intangible/wraith/wraith_decay) && !istype(W, /mob/living/critter/wraith/plaguerat))
+		if (!istype(W, /mob/living/intangible/wraith/wraith_decay))
 			boutput(W, "something went terribly wrong, call 1-800-CODER")
 			return
 
