@@ -1,6 +1,10 @@
 
 (t)thu nov 17 22
 (u)Kubius
+(p)11940
+(e)🆕🗺⚖🔄⛔|C-Feature, A-Mapping, C-Balance, C-Rework, C-Removal
+(+)Nadir fixbatch 8 - including public tool storage, coffee creamer, notice boards and bio suits.
+(u)Kubius
 (p)11986
 (e)🪲💡|C-Bug, A-Station-Systems
 (+)Increased connection range of Nadir's transception pads and interlink computers to 100 tiles, from 20; player-constructed pads should now consistently be operable from QM's interlink computers.
