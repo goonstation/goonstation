@@ -361,6 +361,9 @@
 /turf/unsimulated/floor/darkpurple/side
 	icon_state = "dpurple"
 
+/turf/unsimulated/floor/darkpurple/corner
+	icon_state = "dpurplecorner"
+
 /////////////////////////////////////////
 
 /turf/unsimulated/floor/bluegreen
