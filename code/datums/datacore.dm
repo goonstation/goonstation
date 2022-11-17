@@ -346,24 +346,30 @@
 			continue
 		Unassigned += entry
 
-	sorted_manifest += "<b><u>Station Command:</u></b><br>"
-	for(var/crew in Command)
-		sorted_manifest += crew
-	sorted_manifest += "<b><u>Station Security:</u></b><br>"
-	for(var/crew in Security)
-		sorted_manifest += crew
-	sorted_manifest += "<b><u>Engineering and Supply:</u></b><br>"
-	for(var/crew in Engineering)
-		sorted_manifest += crew
-	sorted_manifest += "<b><u>Medical and Research:</u></b><br>"
-	for(var/crew in Medsci)
-		sorted_manifest += crew
-	sorted_manifest += "<b><u>Crew Service:</u></b><br>"
-	for(var/crew in Service)
-		sorted_manifest += crew
-	sorted_manifest += "<b><u>Unassigned and Civilians:</u></b><br>"
-	for(var/crew in Unassigned)
-		sorted_manifest += crew
+	if(length(Command))
+		sorted_manifest += "<b><u>Station Command:</u></b><br>"
+		for(var/crew in Command)
+			sorted_manifest += crew
+	if(length(Security))
+		sorted_manifest += "<b><u>Station Security:</u></b><br>"
+		for(var/crew in Security)
+			sorted_manifest += crew
+	if(length(Engineering))
+		sorted_manifest += "<b><u>Engineering and Supply:</u></b><br>"
+		for(var/crew in Engineering)
+			sorted_manifest += crew
+	if(length(Medsci))
+		sorted_manifest += "<b><u>Medical and Research:</u></b><br>"
+		for(var/crew in Medsci)
+			sorted_manifest += crew
+	if(length(Service))
+		sorted_manifest += "<b><u>Crew Service:</u></b><br>"
+		for(var/crew in Service)
+			sorted_manifest += crew
+	if(length(Unassigned))
+		sorted_manifest += "<b><u>Unassigned and Civilians:</u></b><br>"
+		for(var/crew in Unassigned)
+			sorted_manifest += crew
 
 	if (include_cryo)
 		var/stored = ""
@@ -371,7 +377,8 @@
 			var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
 			for(var/L as anything in cryo_unit.stored_crew_names)
 				stored += "<i>- [L]<i><br>"
-		sorted_manifest += "<br><b>In Cryogenic Storage:</b><hr>[stored]<br>"
+		if(length(stored))
+			sorted_manifest += "<br><b>In Cryogenic Storage:</b><hr>[stored]<br>"
 
 	return sorted_manifest
 
