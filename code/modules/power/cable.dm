@@ -551,6 +551,7 @@
 		// the 'real' wires override and always connect to prevent loose ends
 		// cable_surr is any direction that needs to be connected to at all
 		// this bit does not get optimised
+
 /// causes cablespawner to spawn cables (amazing)
 /obj/cablespawner/proc/replace()
 	var/list/directions = list()
