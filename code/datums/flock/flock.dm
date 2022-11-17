@@ -68,7 +68,8 @@ var/flock_signal_unleashed = FALSE
 		src.unlockableStructures += new DT(src)
 
 /datum/flock/ui_status(mob/user)
-	return istype(user, /mob/living/intangible/flock/flockmind) || tgui_admin_state.can_use_topic(src, user)
+	if(istype(user, /mob/living/intangible/flock/flockmind) || tgui_admin_state.can_use_topic(src, user))
+		return UI_INTERACTIVE
 
 /datum/flock/ui_data(mob/user)
 	return describe_state(src.ui_tab)

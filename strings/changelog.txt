@@ -1,4 +1,24 @@
 
+(t)thu nov 17 22
+(u)pali
+(+)Skeleton limbs damage for vestigal ballistics has been lowered because they can reuse this ability really easily
+(u)Kubius
+(p)11940
+(e)🆕🗺⚖🔄⛔|C-Feature, A-Mapping, C-Balance, C-Rework, C-Removal
+(+)Nadir fixbatch 8 - including public tool storage, coffee creamer, notice boards and bio suits.
+(u)Kubius
+(p)11986
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)Increased connection range of Nadir's transception pads and interlink computers to 100 tiles, from 20; player-constructed pads should now consistently be operable from QM's interlink computers.
+(t)wed nov 16 22
+(u)Hans
+(p)10758
+(e)⚖💊⚗|C-Balance, A-Medical, A-Chemistry
+(+)You now bleed blood and reagents at the ratio to which you have them on your body. It's also now scaled by how much you are bleeding.
+(u)goonstation-enjoyer
+(p)11973
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Fixes guardbuddies patrolling on Kondaru
 (t)tue nov 15 22
 (u)DrWolfy
 (p)11111
