@@ -27,11 +27,11 @@
 	src.info_tag.set_info_tag("Entry time: [round(src.build_time - elapsed)] seconds")
 	if(elapsed >= build_time)
 		src.visible_message("<span class='text-blue'>Multiple shapes exit out of [src]!</span>")
-		for(var/i in 1 to pick(3, 4))
+		for(var/i in 1 to pick(3, 4) + src.flock?.player_mod)
 			var/obj/item/flockcache/x = new(src.contents)
 			x.resources = rand(40, 50)
 			eject += x
-		for(var/i in 1 to 4)
+		for(var/i in 1 to 4 + src.flock?.player_mod)
 			var/obj/flock_structure/egg/e = new(src.contents, src.flock)
 			eject += e
 		var/obj/flock_structure/egg/bit/bitegg = new(src.contents, src.flock)

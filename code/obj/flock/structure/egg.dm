@@ -51,5 +51,5 @@
 	flock_desc = "Will soon hatch into Flockbits."
 
 /obj/flock_structure/egg/bit/spawn_contents()
-	for (var/i in 1 to 3)
+	for (var/i in 1 to 3 + round(src.flock?.player_mod / 2))
 		new /mob/living/critter/flock/bit(get_turf(src), src.flock)

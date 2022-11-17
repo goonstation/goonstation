@@ -12,6 +12,7 @@
 	latejoin_only_if_all_antags_dead = TRUE
 	latejoin_antag_roles = list(ROLE_TRAITOR, ROLE_VAMPIRE, ROLE_CHANGELING, ROLE_ARCFIEND)
 
+	var/starting_players = 0
 	var/datum/mind/start_flockmind = null
 	var/datum/flock/start_flock = null
 	// counts flockmind + up to 3 traces
@@ -24,16 +25,15 @@
 	boutput(world, "It's unclear if the Flock is hostile. However, it will do everything it can to transmit the Signal.</B>")
 
 /datum/game_mode/flock/pre_setup()
-	var/num_players = 0
 	for (var/client/C as anything in clients)
 		var/mob/new_player/player = C.mob
 		if (!istype(player))
 			continue
 		if (player.ready)
-			num_players++
+			src.starting_players++
 
 	// 1 flockmind up to 50 players, then at 50 players get 1 flocktrace, another for every 25 players more
-	var/num_flock = clamp(num_players < 50 ? 1 : round(num_players / 25), roundstart_flock_min, roundstart_flock_max)
+	var/num_flock = clamp(src.starting_players < 50 ? 1 : round(src.starting_players / 25), roundstart_flock_min, roundstart_flock_max)
 
 	var/list/possible_flock = get_possible_enemies(ROLE_FLOCKTRACE, num_flock)
 
@@ -75,6 +75,7 @@
 	..()
 	bestow_objective(start_flockmind, /datum/objective/specialist/flock)
 	var/mob/living/intangible/flock/flockmind/flockmind = start_flockmind.current.make_flockmind()
+	flockmind.flock.player_mod = max(0, round(src.starting_players / 25) - 2)
 	start_flock = flockmind.flock
 
 	for (var/datum/mind/flock as anything in traitors)

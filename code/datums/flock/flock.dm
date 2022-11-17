@@ -54,6 +54,9 @@ var/flock_signal_unleashed = FALSE
 	var/tiles_converted = 0
 	var/structures_made = 0
 
+	// used for round start flock gamemode player scaling
+	var/player_mod = 0
+
 /datum/flock/New()
 	..()
 	src.name = src.pick_name("flock")
