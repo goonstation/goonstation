@@ -15,6 +15,8 @@
 	health_brute_vuln = 1
 	health_burn = 50
 	health_burn_vuln = 1
+	///Are we currently escaping?
+	var/shuffling = FALSE
 	var/mob/living/intangible/wraith/master = null
 
 	New(var/turf/T, var/mob/living/intangible/wraith/M = null)
@@ -28,6 +30,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
 		abilityHolder.addAbility(/datum/targetable/critter/spiker/hook)
 		abilityHolder.addAbility(/datum/targetable/critter/spiker/lash)
+		abilityHolder.addAbility(/datum/targetable/critter/spiker/shuffle)
 
 	setup_healths()
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
@@ -36,13 +39,26 @@
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.name = "long range stun tentacles"					// designation of the hand - purely for show
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
-		HH.icon_state = "tentacles"				// the icon state of the hand UI background
-		HH.limb_name = "long range stun tentacles"					// name for the dummy holder
-		HH.limb = new /datum/limb		// if not null, the special limb to use when attack_handing
+		HH.name = "tentacles"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "tentacles"
+		HH.limb_name = "tentacles"
+		HH.limb = new /datum/limb/tentacle
 		HH.can_hold_items = 1
 		HH.can_attack = 1
+
+	click(atom/target, params, location, control)
+		if (src.shuffling)
+			boutput(src, "<span class='notice'>You cannot interact with this while in this form!</span>")
+			return
+		else
+			..()
+
+	death(var/gibbed)
+		if (src.master)
+			src.master.summons -= src
+			src.master = null
+		return ..()
 
 /datum/projectile/special/tentacle	//Get over here!
 	name = "tentacle"
@@ -69,7 +85,7 @@
 				playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 				M.TakeDamageAccountArmor("All", rand(3,4), 0, 0, DAMAGE_CUT)
 				M.force_laydown_standup()
-				M.changeStatus("paralysis", 3 SECONDS)
+				M.changeStatus("paralysis", 5 SECONDS)
 				M.visible_message("<span class='alert'>[M] gets grabbed by a tentacle and dragged!</span>")
 
 		previous_line = DrawLine(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"mid_tentacle",1,1,"start_tentacle","end_tentacle",OBJ_LAYER,1)
