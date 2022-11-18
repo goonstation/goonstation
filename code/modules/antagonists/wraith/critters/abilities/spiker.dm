@@ -95,7 +95,7 @@
 				holder.owner.set_dir((cardinal))
 				holder.owner.pixel_x = rand(-5, 5)
 				holder.owner.pixel_y = rand(-5, 5)
-				random_brute_damage(M, 7,1)
+				random_brute_damage(M, 7, 1)
 				take_bleeding_damage(M, null, 15, DAMAGE_CUT, 0, get_turf(M))
 				if(prob(33))
 					bleed(M, 5, 5, get_step(get_turf(M), pick(alldirs)), 1)
