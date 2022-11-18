@@ -62,6 +62,7 @@ If these features do not work in the current codebase then your map PR will be *
 - **Keep some crime in mind!** Maybe make some areas with less camera coverage, back rooms that are a little odd and musty. Give antags places to play with too.
 - **Windows are important**. Walking through hallways shouldn't feel like a prison. People like to peer in and spy on the 'hard working' department workers, plus, it makes the shape of the map and layout of departments easier to interpret. It's easy to forget when you fly around in ghost mode, but visibility is quite important for hallways. The opposite applies too though, obviously don't make every wall out of glass.
 - **Choke points.** Try not to make entrances to important places like medbay and escape too narrow (unless you're making tiny maps on purpose, of course). It just makes everyone unhappy and then you'll end up engineers removing walls every round then someone pull requests a change-- just save yourself the hassle. In medbay especially, most people get treated right in the lobby or in the main foyer, don't make it too small.
+- Use default maintainence floors under windows. You gotta.
 
 ## Tips and Tricks
 ###### These aren't one hundred percent necessary to make maps, but they might make your life a bit easier
