@@ -1116,6 +1116,9 @@ var/list/fun_images = list()
 		if (M.mind && M.mind.special_role == ROLE_BLOB)
 			remove_antag(M, src, 0, 1) // Ditto.
 			return
+		if (M.mind && M.mind.special_role == ROLE_FLOCKMIND || M.mind.special_role == ROLE_FLOCKTRACE)
+			remove_antag(M, src, FALSE, TRUE)
+			return
 		send_to_arrival_shuttle = 1
 	else if (isAI(M))
 		send_to_arrival_shuttle = 1

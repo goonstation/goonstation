@@ -1737,6 +1737,7 @@
 		if ("spyminion") return
 		if (ROLE_BLOB) M.humanize(1)
 		if (ROLE_WRAITH) M.humanize(1)
+		if (ROLE_FLOCKMIND, ROLE_FLOCKTRACE) M.humanize(TRUE)
 		else
 			if (ishuman(M))
 				// They could be in a pod or whatever, which would have unfortunate results when respawned.
