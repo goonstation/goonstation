@@ -425,20 +425,7 @@
 	// has to be var edited because lazy
 	var/override_centre_connection = FALSE
 	var/cable_type = /obj/cable
-	/// the following 8 bit variable constants use bit flags to tell which 8 tiles need connections
-	/*
-	* bitflag of the tiles surrounding itself:
-	* i.e.(10)(9)(6)(5) 8  4  2  1 (normal bitflags) (used when you only need one direction)
-	* i.e. SW NW SE NE  W  E  S  N (corresponding directions)
-	*     128 64 32 16  8  4  2  1 (actual bitflags) (used for multiple directions)
-	* i think someone called it 8 bit directions once? idk
-	* anyway thats what cable_surr does
-	*/
-	var/const/SOUTHWEST_UNIQUE = 128
-	var/const/NORTHWEST_UNIQUE = 64
-	var/const/SOUTHEAST_UNIQUE = 32
-	var/const/NORTHEAST_UNIQUE = 16
-	// these constants ARE needed they are DIFFERENT from the regular NORTHWEST and such
+	// cable_surr uses the macros NORTHEAST_UNIQUE and such to save directions
 	var/cable_surr = 0
 /// reinforced, thick cables. They should also connect to the regular kind.
 /obj/cablespawner/reinforced
