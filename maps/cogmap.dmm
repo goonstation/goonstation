@@ -1070,27 +1070,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/clown)
 "adV" = (
-/obj/rack,
-/obj/item/breaching_charge{
-	pixel_x = 10;
-	pixel_y = 1
-	},
-/obj/item/breaching_charge{
-	pixel_x = 4;
-	pixel_y = -2
-	},
-/obj/item/breaching_charge{
-	pixel_x = -2;
-	pixel_y = -5
-	},
-/obj/item/breaching_hammer{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/breaching_hammer{
-	pixel_x = -1;
-	pixel_y = 1
-	},
+/obj/random_item_spawner/armory_breaching_supplies,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -3274,7 +3254,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "akd" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "akf" = (
@@ -5256,7 +5236,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "apO" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "apP" = (
@@ -20355,7 +20335,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bck" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bcl" = (
@@ -22351,7 +22331,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bhb" = (
@@ -34894,7 +34874,7 @@
 	},
 /area/station/storage/warehouse)
 "bPf" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "bPg" = (
@@ -53577,7 +53557,7 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "hrg" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /obj/cable{
 	d1 = 1;
 	d2 = 4;

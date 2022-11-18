@@ -852,7 +852,7 @@
 	OnSpeak(message)
 		if (!istext(message))
 			return ""
-		var/list/words = splittext(message, src.word_regex)
+		var/list/words = splittext_char(message, src.word_regex)
 		var/list/out_words = list()
 		if(isnull(src.word_to_emoji))
 			src.word_to_emoji = json_decode(file2text("strings/word_to_emoji.json"))

@@ -68,7 +68,8 @@ var/flock_signal_unleashed = FALSE
 		src.unlockableStructures += new DT(src)
 
 /datum/flock/ui_status(mob/user)
-	return istype(user, /mob/living/intangible/flock/flockmind) || tgui_admin_state.can_use_topic(src, user)
+	if(istype(user, /mob/living/intangible/flock/flockmind) || tgui_admin_state.can_use_topic(src, user))
+		return UI_INTERACTIVE
 
 /datum/flock/ui_data(mob/user)
 	return describe_state(src.ui_tab)
@@ -113,6 +114,25 @@ var/flock_signal_unleashed = FALSE
 				if(istype(host))
 					boutput(host, "<span class='flocksay'><b>\[SYSTEM: The flockmind has removed you from your previous corporeal shell.\]</b></span>")
 					host.release_control()
+		if("promote_trace")
+			var/message = "Are you sure?"
+
+			var/mob/living/intangible/flock/trace/trace_to_promote = locate(params["origin"])
+			if(!istype(trace_to_promote.loc, /mob/living/critter/flock/drone))
+				if (!trace_to_promote.client || trace_to_promote.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD)
+					message += " This Flocktrace is unresponsive."
+			else
+				var/mob/living/critter/flock/drone/host = trace_to_promote.loc
+				if (!host.client || host.controller.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD)
+					message += " This Flocktrace is unresponsive."
+
+			if (tgui_alert(user, message, "Promote Flocktrace", list("Yes", "Cancel")) == "Yes")
+				var/choice = tgui_alert(user, "Leave the Flock?", "Promote Flocktrace", list("No", "Yes", "Cancel"))
+				if (choice && choice != "Cancel")
+					if (!trace_to_promote)
+						return
+					trace_to_promote.promoteToFlockmind(choice == "No" ? FALSE : TRUE)
+
 		if("delete_trace")
 			var/mob/living/intangible/flock/trace/T = locate(params["origin"])
 			if(T)

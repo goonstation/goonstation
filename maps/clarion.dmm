@@ -14003,7 +14003,7 @@
 "aCH" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10;
-	
+
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -43943,6 +43943,8 @@
 /obj/machinery/light,
 /obj/storage/closet/wardrobe/orange,
 /obj/item/clothing/head/beret/prisoner,
+/obj/item/clothing/head/beret/random_color,
+/obj/item/clothing/head/beret/random_color,
 /turf/simulated/floor/caution/south,
 /area/station/security/main)
 "eAD" = (
@@ -44077,9 +44079,7 @@
 /turf/space,
 /area/space)
 "eRf" = (
-/obj/storage/closet/wardrobe/red/security_gimmick,
-/obj/item/clothing/head/beret/random_color,
-/obj/item/clothing/head/beret/random_color,
+/obj/machinery/vending/jobclothing/security,
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
@@ -48369,8 +48369,7 @@
 	},
 /obj/machinery/gibber/output_south,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/machinery/firealarm{
 	layer = 3.5;
@@ -50013,31 +50012,7 @@
 	},
 /area/station/hallway/primary/west)
 "tyz" = (
-/obj/rack,
-/obj/item/breaching_charge{
-	pixel_x = 10;
-	pixel_y = 1
-	},
-/obj/item/breaching_charge{
-	pixel_x = 4;
-	pixel_y = -2
-	},
-/obj/item/breaching_charge{
-	pixel_x = -2;
-	pixel_y = -5
-	},
-/obj/item/breaching_hammer{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/breaching_hammer{
-	pixel_x = -1;
-	pixel_y = 1
-	},
-/obj/disposalpipe/segment/food,
-/turf/simulated/floor/redblack{
-	dir = 10
-	},
+/obj/random_item_spawner/armory_breaching_supplies,
 /area/station/ai_monitored/armory)
 "tAi" = (
 /turf/simulated/floor/red/side{

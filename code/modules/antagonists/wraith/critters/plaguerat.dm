@@ -26,7 +26,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	health_burn_vuln = 0.65
 	var/obj/machinery/wraith/rat_den/linked_den = null
 	reagent_capacity = 100
-	var/master = null
+	var/mob/living/intangible/wraith/master = null
 
 	can_help = 1
 	can_throw = 1
@@ -111,6 +111,9 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 		return ..()
 
 	death(var/gibbed)
+		if (src.master && istype(src.master, /mob/living/intangible/wraith))
+			src.master.summons -= src
+			src.master = null
 		if (!gibbed)
 			src.unequip_all()
 			playsound(src, src.deathsound, 50, 0)

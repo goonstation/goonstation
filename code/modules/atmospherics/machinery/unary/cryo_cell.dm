@@ -116,11 +116,11 @@
 		src.add_dialog(user)
 		var/temp_text = ""
 		if(air_contents.temperature > T0C)
-			temp_text = "<FONT color=red>[air_contents.temperature - T0C]</FONT>"
+			temp_text = "<FONT color=red>[TO_CELSIUS(air_contents.temperature)]</FONT>"
 		else if(air_contents.temperature > 170)
-			temp_text = "<FONT color=black>[air_contents.temperature - T0C]</FONT>"
+			temp_text = "<FONT color=black>[TO_CELSIUS(air_contents.temperature)]</FONT>"
 		else
-			temp_text = "<FONT color=blue>[air_contents.temperature - T0C]</FONT>"
+			temp_text = "<FONT color=blue>[TO_CELSIUS(air_contents.temperature)]</FONT>"
 
 		var/dat = "<B>Cryo cell control system</B><BR>"
 		dat += "<B>Current cell temperature:</B> [temp_text]&deg;C<BR>"
@@ -200,7 +200,7 @@
 			user.drop_item()
 			I.set_loc(src)
 			user.visible_message("[user] adds a beaker to \the [src]!", "You add a beaker to the [src]!")
-			logTheThing(LOG_COMBAT, user, "adds a beaker [log_reagents(I)] to [src] at [log_loc(src)].")
+			logTheThing(LOG_CHEMISTRY, user, "adds a beaker [log_reagents(I)] to [src] at [log_loc(src)].") // Rigging cryo is advertised in the 'Tip of the Day' list (Convair880).
 			src.add_fingerprint(user)
 		else if(istype(I, /obj/item/grab))
 			var/obj/item/grab/G = I
@@ -208,7 +208,7 @@
 				qdel(G)
 		else if (istype(I, /obj/item/reagent_containers/syringe))
 			//this is in syringe.dm
-			logTheThing(LOG_COMBAT, user, "injects [log_reagents(I)] to [src] at [log_loc(src)].")
+			logTheThing(LOG_CHEMISTRY, user, "injects [log_reagents(I)] to [src] at [log_loc(src)].")
 			if (!src.beaker)
 				boutput(user, "<span class='alert'>There is no beaker in [src] for you to inject reagents.</span>")
 				return

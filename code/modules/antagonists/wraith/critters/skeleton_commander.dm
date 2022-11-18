@@ -35,6 +35,9 @@
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
 	death(var/gibbed)
+		if (src.master)
+			src.master.summons -= src
+			src.master = null
 		if (!gibbed)
 			src.unequip_all()
 			playsound(src, src.deathsound, 50, 0)
@@ -155,7 +158,7 @@
 	harm(mob/target, var/mob/living/user)
 		if(check_target_immunity( target ))
 			return 0
-		logTheThing("combat", user, target, "stabs [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "stabs [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 9, rand(5,7), can_punch = 0, can_kick = 0)
 		user.attack_effects(target, affecting)

@@ -90,6 +90,8 @@ var/global/list/smart_string_pickers = list()
 					//
 				else if(isnum(thing))
 					thing = "[thing]"
+				else if(isatom(thing))
+					thing = "[thing]"
 				else
 					try
 						thing = call(thing)(arglist(params))

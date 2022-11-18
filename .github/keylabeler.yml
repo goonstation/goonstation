@@ -80,3 +80,5 @@ labelMappings:
     "[STATION SYSTEMS]": a-station-systems
     "[STATUS EFFECTS]": a-status-effects
     "[EVENTS]": a-events
+    "[RP]": a-rp
+    "[ROLEPLAY]": a-rp
