@@ -170,6 +170,14 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/accessory/hairclips)
 		name = "Gold Hairclips"
 		path = /obj/item/clothing/head/barrette/gold
 
+	barrette_black
+		name = "Black Hairclips"
+		path = /obj/item/clothing/head/barrette/black
+
+	barrette_silver
+		name = "Silver Hairclips"
+		path = /obj/item/clothing/head/barrette/silver
+
 //Casual
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/casual)
@@ -1195,6 +1203,12 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/western/westhat)
 /datum/clothingbooth_item/western/western
 	name = "Western Shirt and Pants"
 	path = /obj/item/clothing/under/misc/western
+	slot = SLOT_W_UNIFORM
+	cost = PAY_UNTRAINED/1
+
+/datum/clothingbooth_item/western/westerndress
+	name = "Western Saloon Dress"
+	path = /obj/item/clothing/under/misc/westerndress
 	slot = SLOT_W_UNIFORM
 	cost = PAY_UNTRAINED/1
 

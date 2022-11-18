@@ -248,7 +248,7 @@ WET FLOOR SIGN
 			sleep(0.3 SECONDS)
 		qdel(D)
 	var/turf/logTurf = get_turf(D)
-	logTheThing(LOG_COMBAT, user, "sprays [src] at [constructTarget(logTurf,"combat")] [log_reagents] at [log_loc(user)].")
+	logTheThing(LOG_CHEMISTRY, user, "sprays [src] at [constructTarget(logTurf,"combat")] [log_reagents] at [log_loc(user)].")
 
 	return
 
@@ -329,7 +329,7 @@ WET FLOOR SIGN
 	// Some people use mops for heat-delayed fireballs and stuff.
 	// Mopping the floor with just water isn't of any interest, however (Convair880).
 	if (src.reagents.total_volume && (!src.reagents.has_reagent("water") || (src.reagents.has_reagent("water") && src.reagents.reagent_list.len > 1)))
-		logTheThing(LOG_COMBAT, user, "mops [U && isturf(U) ? "[U]" : "[A]"] with chemicals [log_reagents(src)] at [log_loc(user)].")
+		logTheThing(LOG_CHEMISTRY, user, "mops [U && isturf(U) ? "[U]" : "[A]"] with chemicals [log_reagents(src)] at [log_loc(user)].")
 
 	if (U && isturf(U))
 		src.reagents.reaction(U,1,5)
@@ -381,6 +381,8 @@ WET FLOOR SIGN
 // Its the old mop. It makes floors slippery
 /obj/item/mop/old
 	name = "antique mop"
+	icon_state = "mop_old"
+	item_state = "mop_old"
 	desc = "This thing looks ancient, but it sure does get the job done!"
 
 	afterattack(atom/A, mob/user as mob)

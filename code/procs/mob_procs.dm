@@ -482,6 +482,9 @@
 	var/datum/pronouns/pronouns = subject.get_pronouns()
 	return pronouns.subjective + (pronouns.pluralize ? "'re" : "'s")
 
+/proc/is_or_are(var/mob/subject)
+	return (subject.get_pronouns().pluralize ? "are" : "is")
+
 /proc/himself_or_herself(var/mob/subject)
 	return subject.get_pronouns().reflexive
 

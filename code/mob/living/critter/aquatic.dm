@@ -91,6 +91,10 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	if(P.mob_shooter)
 		src.harmed_by(P.mob_shooter)
 
+/mob/living/critter/aquatic/EnteredFluid(obj/fluid/F, atom/oldloc)
+	. = ..()
+	src.aquabreath_process?.update_water_status()
+
 /datum/lifeprocess/aquatic_breathing
 	var/water_need = 0 // 0, 1, or 2; 1 and 2 just differ in intensity
 	var/in_water_to_out_of_water = 0 // did they enter an area with sufficient water from an area with insufficient water?
@@ -98,11 +102,12 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	var/out_of_water_to_in_water = 0 // did they enter an area with insufficient water from an area with sufficient water?
 	var/in_water_buff = 1 // buff amount for being in water
 
-	New(new_owner,arguments)
+	New(mob/new_owner,arguments)
 		..()
 		if(length(arguments) >= 2)
 			in_water_buff = arguments[1]
 			out_of_water_debuff = arguments[2]
+		new_owner.event_handler_flags |= USE_FLUID_ENTER
 
 	process()
 		src.update_water_status()
@@ -243,7 +248,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 		walk(src,0)
 		swimming_away = 0
 		if (src.ai)
-			src.ai.enabled = 0
+			src.ai.disable()
 
 /mob/living/critter/aquatic/fish/specific_emotes(var/act, var/param = null, var/voluntary = 0)
 	switch (act)

@@ -441,6 +441,12 @@ this is already used where it needs to be used, you can probably ignore it.
 		var/obj/decal/cleanable/blood/dynamic/B = null
 		if (T.messy > 0)
 			B = locate(/obj/decal/cleanable/blood/dynamic) in T
+			if(istype(B, /obj/decal/cleanable/blood/dynamic/tracks))
+				B = null
+				for(var/obj/decal/cleanable/blood/dynamic/blood in T)
+					if(!istype(blood, /obj/decal/cleanable/blood/dynamic/tracks))
+						B = blood
+						break
 
 		if (!B) // look for an existing dynamic blood decal and add to it if you find one
 			B = make_cleanable( /obj/decal/cleanable/blood/dynamic,T)
@@ -534,7 +540,8 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	// Vampires can't use this trick to inflate their blood count, because they can't get more than ~30% of it back (Convair880).
 	if (blood_system && (isvampire(some_idiot) && (some_idiot.get_vampire_blood() >= blood_to_transfer)))
-		some_idiot.change_vampire_blood(-blood_to_transfer)
+		some_idiot.change_vampire_blood(-blood_to_transfer, total_blood=FALSE)
+		some_idiot.change_vampire_blood(-blood_to_transfer, total_blood=TRUE)
 
 	// Ignore that second container of blood entirely if it's a vampire (Convair880).
 	if (blood_system && !isvampire(some_idiot) && (some_idiot.blood_volume >= blood_to_transfer))

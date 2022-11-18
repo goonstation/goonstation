@@ -18,6 +18,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	var/blood = 7 //how much blood cleanables we are allowed to spawn
 
 	heal(var/mob/living/M)
+		..()
 		if (prob(33))
 			boutput(M, "<span class='alert'>You briefly think you probably shouldn't be eating raw meat.</span>")
 			M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
@@ -123,6 +124,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 		src.pixel_y += rand(-4,4)
 
 	heal(var/mob/M)
+		..()
 		M.nutrition += 20
 		return
 
@@ -678,7 +680,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 				heal_amt += 4
 			else
 				heal_amt += round((F.heal_amt * F.bites_left)/bites_left) + 1
-			topping_color = F.food_color
+			topping_color = F.get_food_color()
 			if(num < 3)
 				num ++
 				add_topping(src.num)
@@ -802,6 +804,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles)
 	food_color = "#FFFF99"
 
 	heal(var/mob/M)
+		..()
 		boutput(M, "<span class='alert'>Raw potato tastes pretty nasty...</span>") // does it?
 
 

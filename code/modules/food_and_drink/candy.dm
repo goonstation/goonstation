@@ -211,6 +211,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 				tastesbad = 0
 
 	heal(var/mob/M)
+		..()
 		if (tastesbad)
 			boutput(M, "<span class='alert'>[phrase]! That tasted like [flavor]...</span>")
 		else

@@ -344,19 +344,17 @@
 		if ((nuke_turf.z != 1 && !area_correct) && (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
 			gamemode.the_bomb = null
 			command_alert("A nuclear explosive has been detonated nearby. The station was not in range of the blast.", "Attention")
+			explosion(src, src.loc, 20, 30, 40, 50)
+			qdel(src)
 			return
 		explosion(src, src.loc, 35, 45, 55, 55)
 #ifdef MAP_OVERRIDE_MANTA
-		world.showCinematic("manta_nukies", TRUE)
+		world.showCinematic("manta_nukies")
 #else
 		var/datum/hud/cinematic/cinematic = new
 		for (var/client/C in clients)
 			cinematic.add_client(C)
 		cinematic.play("nuke")
-
-		SPAWN(15 SECONDS) // give it a lil time to sort the explosions out
-			for (var/client/C in clients)
-				cinematic?.remove_client(C)
 #endif
 		if(istype(gamemode))
 			gamemode.nuke_detonated = 1
@@ -369,8 +367,7 @@
 			if(!nukee.stat)
 				nukee.emote("scream")
 			// until we can fix the lag related to deleting mobs we should probably just leave the end of the animation up and kill everyone instead of firegibbing everyone
-			// update: yolo
-			nukee.firegib()
+			nukee.death()//firegib()
 
 		creepify_station()
 
@@ -381,8 +378,6 @@
 			sleep(30 SECONDS)
 			logTheThing(LOG_DIARY, null, "Rebooting due to nuclear destruction of station", "game")
 			Reboot_server()
-
-		qdel(src)
 
 /datum/action/bar/icon/unanchorNuke
 	duration = 55
@@ -434,6 +429,20 @@
 	anyone_can_activate = 1
 	target_override = /area
 	target_override_name = "anywhere"
+
+/obj/machinery/nuclearbomb/event/micronuke
+	name = "micronuke"
+	desc = "A moderately powerful bomb capable of levelling most of a room."
+	boom_size = 250
+	_health = 75
+	_max_health = 75
+	timer_default = 5 MINUTES
+	timer_modifier_disk = 1.5 MINUTES
+	p_class = 1
+
+	New()
+		. = ..()
+		src.SafeScale(0.75, 0.75)
 
 /obj/bomb_decoy
 	name = "nuclear bomb"
