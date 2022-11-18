@@ -31,7 +31,11 @@
 /obj/cablespawner/_color;\
 /obj/cablespawner/_color/name = ""+#_color+" power cable";\
 /obj/cablespawner/_color/color = _hexcolor;\
-/obj/cablespawner/_color/cable_type = /obj/cable/_color
+/obj/cablespawner/_color/cable_type = /obj/cable/_color;\
+/obj/cablespawner/_color/node;\
+/obj/cablespawner/_color/node/name = "node "+#_color+" cable spawner";\
+/obj/cablespawner/_color/node/override_centre_connection = TRUE;\
+/obj/cablespawner/_color/node/icon_state = "superstate-node"
 
 colorcable(yellow, "#fffb00")
 colorcable(orange, "#FF5D06")

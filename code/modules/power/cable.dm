@@ -435,6 +435,11 @@
 			if(!src.disposed)
 				initialize()
 
+/obj/cablespawner/node
+	name = "node cable spawner"
+	override_centre_connection = TRUE
+	icon_state = "superstate-node"
+
 /// reinforced, thick cables. They should also connect to the regular kind.
 /obj/cablespawner/reinforced
 	name = "reinforced power cable spawner"
@@ -442,6 +447,11 @@
 	icon_state = "superstate"
 	cable_type = /obj/cable/reinforced
 	color = "#075C90"
+
+/obj/cablespawner/reinforced/node
+	name = "node reinforced cable spawner"
+	override_centre_connection = TRUE
+	icon_state = "superstate-node"
 
 
 /// makes the cable spawners actually spawn cables and delete themselves
