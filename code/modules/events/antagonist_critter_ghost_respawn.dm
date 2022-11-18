@@ -166,8 +166,8 @@
 		SPAWN(0)
 			// 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
 			var/list/text_messages = list()
-			text_messages.Add("Would you like to respawn as one of [critter_name] (antagonist critters)? You may be randomly selected from the list of candidates.")
-			text_messages.Add("You are eligible to be respawned as one of [critter_name] (antagonist critters)?. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
+			text_messages.Add("Would you like to respawn as one of a team of [critter_name] (antagonist critters)? You may be randomly selected from the list of candidates.")
+			text_messages.Add("You are eligible to be respawned as one of the [critter_name] (antagonist critters)?. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
 			text_messages.Add("You have been added to the list of eligible candidates. Please wait for the game to choose, good luck!")
 
 			// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
