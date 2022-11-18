@@ -3772,7 +3772,7 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground/canyon)
 "eDp" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "eDC" = (
@@ -15851,7 +15851,7 @@
 /area/syndicate_station)
 "sWL" = (
 /obj/decal/cleanable/dirt,
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/unsimulated/floor/cave,
 /area/crater)
 "sWO" = (

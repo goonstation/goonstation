@@ -10474,7 +10474,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aqD" = (
@@ -15113,23 +15113,23 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aym" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
 /area/station/hydroponics/lobby)
 "ayn" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "ayo" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "ayp" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "ayq" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "ayr" = (

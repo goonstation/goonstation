@@ -13,36 +13,6 @@
 	flying = 1
 	flags = FPRINT | CONDUCT | USEDELAY | TABLEPASS | FLUID_SUBMERGE
 
-/obj/critter/roach
-	name = "cockroach"
-	desc = "An unpleasant insect that lives in filthy places."
-	icon_state = "roach"
-	critter_family = BUG
-	density = 0
-	health = 10
-	aggressive = 0
-	defensive = 0
-	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
-	atkcarbon = 0
-	atksilicon = 0
-	butcherable = 1
-	flags = FPRINT | CONDUCT | USEDELAY | TABLEPASS | FLUID_SUBMERGE | FLUID_SUBMERGE
-
-	attack_hand(mob/user)
-		if (src.alive && (user.a_intent != INTENT_HARM))
-			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
-			return
-		if (prob(95))
-			if(src.alive)
-				src.visible_message("<span class='combat'><B>[user] stomps [src], killing it instantly!</B></span>")
-				CritterDeath()
-				return
-			else
-				src.visible_message("<span class='combat'><B>[user] squishes [src] a little more for good measure.</B></span>")
-				return
-		..()
-
 /obj/critter/opossum
 	name = "space opossum"
 	desc = "A possum that came from space. Or maybe went to space. Who knows how it got here?"
