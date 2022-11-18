@@ -3610,6 +3610,48 @@ var/global/noir = 0
 									dat += "<td>[mob_loc.loc]</td></tr>"
 								dat += "</table>"
 
+							else if (istype(ticker.mode, /datum/game_mode/flock))
+								var/datum/game_mode/flock/gamemode = ticker.mode
+								dat += "<br><table cellspacing=5><tr><td><B>Flock</B></td><td></td></tr>"
+								if (!gamemode.start_flock.flockmind)
+									dat += "<tr><td>Flock is dead.</td><td></td></tr>"
+								else
+									var/list/flock_minds = list()
+
+									for (var/mob/living/intangible/flock/flock as anything in list(gamemode.start_flock.flockmind) + gamemode.start_flock.traces)
+										if (!istype(flock.loc, /mob/living/critter/flock/drone))
+											flock_minds += flock.mind
+										else
+											var/mob/living/critter/flock/drone/flockdrone = flock.loc
+											flock_minds += flockdrone.mind
+
+									var/mob/M = null
+									for (var/datum/mind/flock_mind as anything in flock_minds)
+										M = flock_mind.current
+										if (!M)
+											continue
+										dat += {"<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a> <b>(\
+											[flock_mind.special_role == ROLE_FLOCKMIND ? "Flockmind" : "Flocktrace"])</b>[M.client ? "" : " <i>(\
+											logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"}
+										dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td></tr>"
+
+									var/obj/flock_structure/relay/relay = locate(/obj/flock_structure/relay) in gamemode.start_flock.structures
+
+									if (!relay && !gamemode.start_flock.relay_finished)
+										dat += "</table><br><table><tr><td><b>Relay not yet constructed.</b></td></tr>"
+									else if (gamemode.start_flock.relay_finished)
+										dat += "</table><br><table><tr><td><b>Relay transmitted successfully.</b></td></tr>"
+									else
+										dat += "</table><br><table><tr><td><b>Relay:</b></td></tr>"
+										var/turf/T = get_turf(relay)
+										dat += "<tr><td>Location:"
+										if (istype(T))
+											dat += " <a href='?src=\ref[src];action=jumptocoords;target=[T.x],[T.y],[T.z]'>[T.x],[T.y],[T.z]</a> ([get_area(relay)])</tr></td>"
+										else
+											dat += " Unknown location</tr></td>"
+
+								dat += "</table>"
+
 							else if (istype(ticker.mode, /datum/game_mode/spy))
 								var/datum/game_mode/spy/spymode = ticker.mode
 								if(length(spymode.leaders))
