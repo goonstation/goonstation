@@ -688,7 +688,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			else if (istype(player.loc, /obj/cryotron) || player.mind && (player.mind in all_the_baddies)) // Cryo'd or was a baddie at any point? Keep your shit, but you don't get the extra bux
 				player_loses_held_item = 0
 			//some might not actually have a wage
-			if (!isvirtual(player) && ((isnukeop(player) || isnukeopgunbot(player)) ||  (isblob(player) && (player.mind && player.mind.special_role == ROLE_BLOB)) || iswraith(player) || (iswizard(player) && (player.mind && player.mind.special_role == ROLE_WIZARD)) ))
+			if (!isvirtual(player) && ((isnukeop(player) || isnukeopgunbot(player)) ||  (isblob(player) && (player.mind && player.mind.special_role == ROLE_BLOB)) || iswraith(player) || isflockmob(player) || (iswizard(player) && (player.mind && player.mind.special_role == ROLE_WIZARD)) ))
 				bank_earnings.wage_base = 0 //only effects the end of round display
 				earnings = 800
 
