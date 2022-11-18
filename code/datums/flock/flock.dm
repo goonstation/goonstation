@@ -32,6 +32,7 @@ var/flock_signal_unleashed = FALSE
 	/// associative list of used names (for traces, drones, and bits) to true values
 	var/list/active_names = list()
 	var/list/enemies = list()
+	var/list/atom/movable/ignores = list()
 	///Associative list of objects to an associative list of their annotation names to images
 	var/list/annotations = list()
 	///Static cache of annotation images
@@ -375,6 +376,13 @@ var/flock_signal_unleashed = FALSE
 	health.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	.[FLOCK_ANNOTATION_HEALTH] = health
 
+	var/image/ignore = image('icons/misc/featherzone.dmi', icon_state = "ignore")
+	ignore.blend_mode = BLEND_ADD
+	ignore.plane = PLANE_ABOVE_LIGHTING
+	ignore.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	ignore.pixel_y = 16
+	.[FLOCK_ANNOTATION_IGNORE] = ignore
+
 ///proc to get the indexed list of annotations on a particular mob
 /datum/flock/proc/getAnnotations(atom/target)
 	var/active = src.annotations[target]
@@ -543,6 +551,8 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/proc/updateEnemy(atom/M)
 	if(!M)
 		return
+	if (src.isIgnored(M))
+		return
 	if (isvehicle(M))
 		for (var/mob/occupant in M) // making assumption flock knows who everyone in the pod is
 			src.updateEnemy(occupant)
@@ -572,6 +582,31 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/proc/isEnemy(atom/M)
 	var/enemy_name = M
 	return (enemy_name in src.enemies)
+
+/datum/flock/proc/addIgnore(atom/A)
+	if (isvehicle(A))
+		for (var/mob/occupant in A)
+			src.addIgnore(occupant)
+	if (ismob(A))
+		var/mob/M = A
+		if (M.find_radio())
+			boutput(A, "<span class='flocksay italic'>A thousand whispers you never noticed suddenly fall silent and the feeling of being watched fades.</span>")
+	src.ignores |= A
+	src.addAnnotation(A, FLOCK_ANNOTATION_IGNORE)
+
+/datum/flock/proc/removeIgnore(atom/A)
+	if (isvehicle(A))
+		for (var/mob/occupant in A)
+			src.removeIgnore(occupant)
+	if (ismob(A))
+		var/mob/M = A
+		if (M.find_radio())
+			boutput(A, "<span class='flocksay italic'>You hear harsh echoes of the Signal in your mind. The gaze of something you can't see is once again painfully fixed on you.</span>")
+	src.ignores -= A
+	src.removeAnnotation(A, FLOCK_ANNOTATION_IGNORE)
+
+/datum/flock/proc/isIgnored(atom/A)
+	return A in src.ignores
 
 // DEATH
 ///if real is FALSE then perish will not deallocate needed lists (used for pity respawn)
@@ -692,6 +727,9 @@ var/flock_signal_unleashed = FALSE
 		M = src.enemies[enemy]["mob"]
 		if (QDELETED(M))
 			src.removeEnemy(M)
+	for(var/atom/ignore as anything in src.ignores)
+		if (QDELETED(ignore))
+			src.removeIgnore(ignore)
 
 /datum/flock/proc/convert_turf(var/turf/T, var/converterName)
 	src.unreserveTurf(converterName)
@@ -882,5 +920,3 @@ var/flock_signal_unleashed = FALSE
 		y += dy
 		// get next turf
 		T = locate(ox + x, oy + y, z)
-
-

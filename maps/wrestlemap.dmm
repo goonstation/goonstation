@@ -4220,7 +4220,7 @@
 /area/station/ai_monitored/armory)
 "bLh" = (
 /obj/decal/fakeobjects/lighttube_broken,
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "bLq" = (
@@ -43939,7 +43939,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/east,
 /area/station/crew_quarters/hos)
 "sAn" = (
-/obj/critter/mouse/remy,
+/mob/living/critter/small_animal/mouse/remy,
 /turf/simulated/floor/white/checker2,
 /area/station/crew_quarters/kitchen)
 "sAI" = (

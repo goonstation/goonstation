@@ -2803,7 +2803,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "ahR" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "ahS" = (
@@ -32375,7 +32375,7 @@
 /area/station/ranch)
 "bYv" = (
 /obj/decal/cleanable/dirt,
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "bYA" = (
@@ -43455,7 +43455,7 @@
 /area/station/maintenance/southeast)
 "gDO" = (
 /obj/disposalpipe/segment/vertical,
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/south)
 "gEt" = (
@@ -45676,7 +45676,7 @@
 	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt,
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /obj/cable{
 	d1 = 1;
 	d2 = 8;
@@ -54471,7 +54471,7 @@
 /turf/simulated/floor,
 /area/station/mining/magnet)
 "rgA" = (
-/obj/critter/mouse/remy,
+/mob/living/critter/small_animal/mouse/remy,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "rgP" = (

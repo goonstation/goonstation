@@ -167,7 +167,7 @@
 	desc = "Spawn your rat nest, healing you when in range and summoning some tiny diseased mice."
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "ratden"
-	cooldown = 90 SECONDS
+	cooldown = 120 SECONDS
 	targeted = 0
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = "plague_frame"

@@ -18300,7 +18300,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "beP" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "beQ" = (
@@ -54600,18 +54600,14 @@
 /turf/unsimulated/floor/wood,
 /area/afterlife/bar/barspawn)
 "daC" = (
-/turf/unsimulated/wall/trench/side{
-	fullbright = 1
-	},
+/turf/unsimulated/wall/trench/side,
 /area/afterlife/bar/sanctuary)
 "daD" = (
 /obj/map/light/brighterwhite,
 /turf/unsimulated/wall/auto/adventure/old/reinforced,
 /area/afterlife/bar/sanctuary)
 "daE" = (
-/turf/unsimulated/wall/trench{
-	fullbright = 1
-	},
+/turf/unsimulated/wall/trench,
 /area/afterlife/bar/sanctuary)
 "daF" = (
 /obj/stool/chair/couch{
