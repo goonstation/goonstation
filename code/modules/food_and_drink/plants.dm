@@ -559,7 +559,8 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 
 	make_reagents()
 		..()
-		reagents.add_reagent("capsaicin", 10)
+		var/datum/plantgenes/DNA = src.plantgenes
+		reagents.add_reagent("capsaicin", DNA.potency)
 
 /obj/item/reagent_containers/food/snacks/plant/chili/chilly
 	name = "chilly pepper"
@@ -575,7 +576,8 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 
 	make_reagents()
 		..()
-		reagents.add_reagent("cryostylane", 10)
+		var/datum/plantgenes/DNA = src.plantgenes
+		reagents.add_reagent("cryostylane", DNA.potency)
 
 	heal(var/mob/M)
 		..()
@@ -795,7 +797,8 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 
 	make_reagents()
 		..()
-		reagents.add_reagent("capulettium", 10)
+		var/datum/plantgenes/DNA = src.plantgenes
+		reagents.add_reagent("capulettium", DNA.potency)
 
 //Apple on a stick
 /obj/item/reagent_containers/food/snacks/plant/apple/stick
