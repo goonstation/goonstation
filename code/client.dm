@@ -979,7 +979,7 @@ var/global/curr_day = null
 	if(!A)
 		boutput(src, "No target selected.")
 		return
-	if(GET_DIST(src.mob, A) > 1)
+	if(GET_DIST(src.mob, A) > 1 && !(src.holder || istype(src.mob, /mob/dead)))
 		boutput(src, "Target is too far away (it needs to be next to you).")
 		return
 	if(ON_COOLDOWN(src.player, "download_sprite", 30 SECONDS))
