@@ -52958,7 +52958,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/interrogation)
 "wyW" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},

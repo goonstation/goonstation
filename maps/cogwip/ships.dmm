@@ -4418,7 +4418,7 @@
 /turf/space,
 /area/space)
 "mb" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/shuttlebay,
 /area/diner/tug)
 "mc" = (

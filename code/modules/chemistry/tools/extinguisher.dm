@@ -164,7 +164,7 @@
 		src.reagents.trans_to_direct(R, min(src.reagents.total_volume, (distance * reagents_per_dist)))
 		src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 
-		logTheThing(LOG_COMBAT, user, "sprays [src] at [constructTarget(T,"combat")], [log_reagents(src)] at [log_loc(user)] ([get_area(user)])")
+		logTheThing(LOG_CHEMISTRY, user, "sprays [src] at [constructTarget(T,"combat")], [log_reagents(src)] at [log_loc(user)] ([get_area(user)])")
 
 		user.lastattacked = target
 

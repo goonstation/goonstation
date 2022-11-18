@@ -1302,7 +1302,7 @@
 				if (prob(25))
 					boutput(target, "<span class='alert'>[pick("Your insides don't feel good!", "You don't feel right somehow.", "You feel strange inside.")]</span>")
 
-		logTheThing("combat", user, target, "punches [constructTarget(target, "combat")] with eldritch arms at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "punches [constructTarget(target, "combat")] with eldritch arms at [log_loc(user)].")
 
 		user.lastattacked = target
 

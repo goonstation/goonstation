@@ -812,7 +812,7 @@
 			if ("percent")
 				return (val * 100)
 			if ("temperature")
-				return "[val - T0C]&deg;C"
+				return "[TO_CELSIUS(val)]&deg;C"
 			if ("round")
 				return round(val)
 
