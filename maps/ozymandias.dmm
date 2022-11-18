@@ -1271,7 +1271,7 @@
 	name = "Tanhony Creek Station"
 	})
 "asN" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /obj/decal/cleanable/oil,
 /obj/item/clothing/suit/cardboard_box,
 /turf/simulated/floor/plating,
@@ -5073,7 +5073,7 @@
 /turf/simulated/floor,
 /area/station/security/hos)
 "byj" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/ne)
 "byk" = (
