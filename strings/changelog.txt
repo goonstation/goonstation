@@ -1,5 +1,9 @@
 
 (t)fri nov 18 22
+(u)LeahTheTech
+(p)11760
+(e)🆕🎨🧛|C-Feature, C-Sprites, A-Gamemodes
+(*)Flockminds and traces can now designate people as ignored, preventing them from being automatically marked as enemy for damaging the Flock.
 (u)DrWolfy
 (p)11501
 (e)💅⚗🤖|C-QoL, A-Chemistry, A-Silicons
