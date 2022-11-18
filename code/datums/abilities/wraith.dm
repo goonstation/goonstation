@@ -1659,10 +1659,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			boutput(holder.owner, "<span class='notice'>You reached maximum guard capacity! Upgrade your portal's summon capacity to summon more!</span>")
 			return TRUE
 		var/turf/T = null
-		if (!isturf(target))
-			T = get_turf(target)
-		else
-			T = target
+		T = get_turf(target)
 		if (!T || !istype(T,/turf/simulated/floor))
 			boutput(holder.owner, "<span class='notice'>You cannot use this here!</span>")
 			return TRUE
