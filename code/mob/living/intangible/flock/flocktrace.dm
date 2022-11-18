@@ -35,6 +35,7 @@
 
 	src.addAbility(/datum/targetable/flockmindAbility/designateTile)
 	src.addAbility(/datum/targetable/flockmindAbility/designateEnemy)
+	src.addAbility(/datum/targetable/flockmindAbility/designateIgnore)
 	src.addAbility(/datum/targetable/flockmindAbility/directSay)
 	src.addAbility(/datum/targetable/flockmindAbility/ping)
 
