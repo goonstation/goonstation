@@ -274,6 +274,11 @@
 	is_on_cooldown(var/mob/user)
 		return GET_COOLDOWN(user, "\ref[src] reload")
 
+/datum/limb/gun/kinetic
+	shoot(atom/target, var/mob/user, var/pointblank = FALSE, params)
+		if(..() && istype(user.loc, /turf/space) || user.no_gravity)
+			user.inertia_dir = get_dir(target, user)
+			step(user, user.inertia_dir)
 	arm38
 		proj = new/datum/projectile/bullet/revolver_38
 		shots = 3
@@ -290,33 +295,12 @@
 		reload_time = 300
 		muzzle_flash = "muzzle_flash"
 
-	phaser
-		proj = new/datum/projectile/laser/light
-		shots = 1
-		current_shots = 1
-		cooldown = 30
-		reload_time = 30
-
-	cutter
-		proj = new/datum/projectile/laser/drill/cutter
-		shots = 1
-		current_shots = 1
-		cooldown = 30
-		reload_time = 30
-
 	artillery
 		proj = new/datum/projectile/bullet/autocannon
 		shots = 1
 		current_shots = 1
 		cooldown = 50
 		reload_time = 50
-
-	disruptor
-		proj = new/datum/projectile/disruptor/high
-		shots = 1
-		current_shots = 1
-		cooldown = 40
-		reload_time = 40
 
 	glitch
 		proj = new/datum/projectile/bullet/glitch
@@ -352,6 +336,28 @@
 		current_shots = 5
 		cooldown = 1 SECOND
 		reload_time = 20 SECONDS
+
+/datum/limb/gun/energy
+	phaser
+		proj = new/datum/projectile/laser/light
+		shots = 1
+		current_shots = 1
+		cooldown = 30
+		reload_time = 30
+
+	cutter
+		proj = new/datum/projectile/laser/drill/cutter
+		shots = 1
+		current_shots = 1
+		cooldown = 30
+		reload_time = 30
+
+	disruptor
+		proj = new/datum/projectile/disruptor/high
+		shots = 1
+		current_shots = 1
+		cooldown = 40
+		reload_time = 40
 
 /datum/limb/mouth
 	var/sound_attack = 'sound/voice/animal/werewolf_attack1.ogg'
