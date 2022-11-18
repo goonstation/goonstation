@@ -1,5 +1,10 @@
 
 (t)fri nov 18 22
+(u)Tyrant
+(p)11962
+(e)🆕🗺🎨💅📦⚙💡|C-Feature, A-Mapping, C-Sprites, C-QoL, A-Game-Objects, A-Internal, A-Station-Systems
+(*)Added Cable Spawners, which check the tiles around them for cables and 'collapse' into a certain set of cables accordingly. They come in all the same default colours as normal cables, along with the reinforced variant.
+(+)cleaned up a teensy tiny little bit of the cable.dm code (mainly comments) . Also made a new cable icon, "superstate".
 (u)Bartimeus973
 (p)11537
 (e)🗺🎨🔄📡|A-Mapping, C-Sprites, C-Rework, A-AI
