@@ -70,3 +70,4 @@ If these features do not work in the current codebase then your map PR will be *
 - In StrongDMM, "ctrl+1,2,3 to toggle layers, shift click to highlight thing, ctrl shift click to delete thing, 1 2 3 to switch between placing a singular thing, placing multiple things in the area via clickdrag and selecting an area without placing things" ~ Caro, in the #immapper pins
 - At the moment, admins are not really accepting maps unless they offer a big gameplay change (like Nadir). It's good habit to start out by making smaller rooms in order to get used to wiring, APC placement, pipe placement, door permissions and such before tackling a larger project. A lot goes into even small rooms: let's not start out challenging ozymandias, yeah?
 - Conveyor belts can have *corners* now (quite incredible). Try them out!
+- When placing **items on tables**, `var/rand_pos` being true means that the pixel position will be randomised. Otherwise, `pixel_x` or `pixel_y` will be used.
