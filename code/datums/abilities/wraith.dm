@@ -1141,7 +1141,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		for (var/obj/decal/cleanable/found_cleanable in range(3, get_turf(holder.owner)))
 			if (istypes(found_cleanable, decal_list))
 				found_decal_list += found_cleanable
-				decal_count ++
+				decal_count++
 				if (length(found_decal_list) >= max_decals)
 					break
 		if (length(found_decal_list) > min_decals)
