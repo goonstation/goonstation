@@ -427,6 +427,13 @@
 	var/cable_type = /obj/cable
 	// cable_surr uses the macros NORTHEAST_UNIQUE and such to save directions
 	var/cable_surr = 0
+
+/obj/cablespawner/New()
+	..()
+	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
+		SPAWN(1 SECONDS)
+			if(!src.disposed)
+				initialize()
 /// reinforced, thick cables. They should also connect to the regular kind.
 /obj/cablespawner/reinforced
 	name = "reinforced power cable spawner"
@@ -435,9 +442,6 @@
 	cable_type = /obj/cable/reinforced
 	color = "#075C90"
 
-/// creates new cablespawners
-/obj/cablespawner/New()
-	..()
 
 /// makes the cable spawners actually spawn cables and delete themselves
 /obj/cablespawner/initialize()
@@ -535,6 +539,7 @@
 		// the 'real' wires override and always connect to prevent loose ends
 		// cable_surr is any direction that needs to be connected to at all
 		// this bit does not get optimised
+
 /// causes cablespawner to spawn cables (amazing)
 /obj/cablespawner/proc/replace()
 	var/list/directions = list()
