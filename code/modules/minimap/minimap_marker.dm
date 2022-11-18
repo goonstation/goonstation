@@ -16,6 +16,11 @@
 			src.RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/handle_move)
 			src.handle_move(target)
 
+	disposing()
+		src.UnregisterSignal(target, COMSIG_MOVABLE_SET_LOC)
+		src.UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
+		. = ..()
+
 	proc/handle_move(var/atom/movable/target)
 		if (!map || !target)
 			return

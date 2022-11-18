@@ -26,7 +26,7 @@
 
 	New()
 		. = ..()
-		src.minimap_render = new /atom/movable
+		src.minimap_render = new
 		// If the map for the z-level has already been rendered, avoid re-rendering it.
 		if (!z_level_maps["[src.z_level]"])
 			src.render_minimap()

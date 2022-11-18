@@ -199,7 +199,6 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 
 /mob/living/silicon/ai/disposing()
 	STOP_TRACKING
-	SEND_SIGNAL(src, COMSIG_REMOVE_MINIMAP_MARKERS)
 	if (light)
 		light.dispose()
 	..()
@@ -212,7 +211,6 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 
 	ai_station_map = new /obj/minimap/ai
 	AddComponent(/datum/component/minimap_marker, MAP_AI, "ai")
-	SEND_SIGNAL(src, COMSIG_CREATE_MINIMAP_MARKERS)
 
 	light = new /datum/light/point
 	light.set_color(0.4, 0.7, 0.95)

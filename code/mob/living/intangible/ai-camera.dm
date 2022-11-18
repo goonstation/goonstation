@@ -50,10 +50,8 @@
 		if (render_special)
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 		AddComponent(/datum/component/minimap_marker, MAP_AI, "ai_eye")
-		SEND_SIGNAL(src, COMSIG_CREATE_MINIMAP_MARKERS)
 
 	disposing()
-		SEND_SIGNAL(src, COMSIG_REMOVE_MINIMAP_MARKERS)
 		. = ..()
 
 	Login()

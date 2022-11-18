@@ -12,13 +12,15 @@ TYPEINFO(/datum/component/minimap_marker)
 
 /datum/component/minimap_marker/Initialize(minimaps_to_display_on, marker_icon_state = "pin", marker_icon = 'icons/obj/minimap/minimap_markers.dmi')
 	. = ..()
+	if(!istype(parent,/atom))
+		return COMPONENT_INCOMPATIBLE
+
 	src.minimaps_to_display_on = minimaps_to_display_on
 	src.marker_icon_state = marker_icon_state
 	src.marker_icon = marker_icon
+	src.create_minimap_markers()
 
-	RegisterSignal(parent, COMSIG_CREATE_MINIMAP_MARKERS, .proc/create_minimap_markers)
 	RegisterSignal(parent, COMSIG_NEW_MINIMAP_MARKER, .proc/new_minimap_marker)
-	RegisterSignal(parent, COMSIG_REMOVE_MINIMAP_MARKERS, .proc/remove_minimap_markers)
 
 /datum/component/minimap_marker/proc/create_minimap_markers()
 	if (!minimaps_to_display_on || !marker_icon_state || !marker_icon)
@@ -49,7 +51,5 @@ TYPEINFO(/datum/component/minimap_marker)
 				minimap.map.remove_minimap_marker(parent)
 
 /datum/component/minimap_marker/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_CREATE_MINIMAP_MARKERS)
-	UnregisterSignal(parent, COMSIG_NEW_MINIMAP_MARKER)
-	UnregisterSignal(parent, COMSIG_REMOVE_MINIMAP_MARKERS)
+	src.remove_minimap_markers()
 	. = ..()
