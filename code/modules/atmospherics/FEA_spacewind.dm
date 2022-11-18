@@ -216,7 +216,7 @@
 	playsound(src.loc, pick(sounds_punch), 100, 1, -1)
 	var/weak_amt
 	if(istype(flying,/obj/item))
-		weak_amt = flying:w_class*2 ///Heheheh
+		weak_amt = flying:w_class * 2 ///Heheheh
 	else if(flying.pre_airflow_density == TRUE)
 		weak_amt = 5 //Getting crushed by a flying canister or computer is going to fuck you up
 	else
@@ -231,7 +231,7 @@
 	if(ismob(flying))
 		damage = 10
 	else if(isitem(flying))
-		damage = flying:w_class*5 ///Heheheh
+		damage = flying:w_class * 5 ///Heheheh
 	else if(flying.pre_airflow_density == TRUE)
 		damage = 30//Getting crushed by a flying canister or computer is going to fuck you up
 	else
