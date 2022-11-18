@@ -1,5 +1,9 @@
 
 (t)thu nov 17 22
+(u)goonstation-enjoyer
+(p)11860
+(e)🆕🤖|C-Feature, A-Silicons
+(+)Mining cyborgs now get Cargo alerts.
 (u)Lizzy
 (p)11854
 (e)🪲⚗|C-Bug, A-Chemistry
