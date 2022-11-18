@@ -26,7 +26,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/slice_amount = 0
 	/// if the produce is inert while being sliced
 	var/slice_inert = FALSE
-	// When we want to name them slices or wedges or what-have-not. Default is slice
+	/// When we want to name them slices or wedges or what-have-not. Default is slice
 	var/slice_suffix = "slice"
 	rc_flags = 0
 
