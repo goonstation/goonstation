@@ -89,6 +89,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			var/turf/T = get_turf(src)
 			user.visible_message("[user] cuts [src] into [src.slice_amount] [src.slice_suffix]s.", "You cut [src] into [src.slice_amount] [src.slice_suffix]s.")
 			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
+			if (src.reagents)
+				src.reagents.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
 			for (var/i in 1 to src.slice_amount)
 				var/obj/item/reagent_containers/food/slice = new src.slice_product(T)
 				src.process_sliced_products(slice, amount_to_transfer)
@@ -104,9 +106,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 		if (src.slice_inert)
 			if (!slice.reagents)
 				slice.reagents = new //when the created produce didn't spawned with some reagents in them, we need that
+			var/Temp_Inert = slice.reagents.inert
 			slice.reagents.inert = 1 //when we got produce that shouldn't explode while being cut
 			src.reagents.trans_to(slice, amount_to_transfer)
-			slice.reagents.inert = 0 //let's hope noone makes an inert container AND set this variable to TRUE
+			slice.reagents.inert = Temp_Inert
 		else
 			src.reagents.trans_to(slice, amount_to_transfer)
 
