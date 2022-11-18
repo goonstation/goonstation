@@ -119,6 +119,7 @@
 			message_admins("Couldn't set up Antagonist Spawn ([src.antagonist_type]); no ghosts responded. Source: [source ? "[source]" : "random"]")
 			logTheThing(LOG_ADMIN, null, "Couldn't set up Antagonist Spawn ([src.antagonist_type]); no ghosts responded. Source: [source ? "[source]" : "random"]")
 			src.post_event()
+			global.random_events.next_spawn_event = TIME + 1 MINUTE
 			return
 
 		for(var/antag_idx in 1 to src.antag_count)

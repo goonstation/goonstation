@@ -163,18 +163,23 @@
 			if(length(name_list))
 				critter_name = english_list(name_list)
 
-		// 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
-		var/list/text_messages = list()
-		text_messages.Add("Would you like to respawn as one of [critter_name] (antagonist critters)? You may be randomly selected from the list of candidates.")
-		text_messages.Add("You are eligible to be respawned as one of [critter_name] (antagonist critters)?. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
-		text_messages.Add("You have been added to the list of eligible candidates. Please wait for the game to choose, good luck!")
+		SPAWN(0)
+			// 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
+			var/list/text_messages = list()
+			text_messages.Add("Would you like to respawn as one of [critter_name] (antagonist critters)? You may be randomly selected from the list of candidates.")
+			text_messages.Add("You are eligible to be respawned as one of [critter_name] (antagonist critters)?. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
+			text_messages.Add("You have been added to the list of eligible candidates. Please wait for the game to choose, good luck!")
 
-		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
-		message_admins("Sending offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
-		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
+			// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
+			message_admins("Sending offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
+			var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
 
 
-		if (candidates.len)
+			if (!length(candidates))
+				cleanup_event()
+				global.random_events.next_spawn_event = TIME + 1 MINUTE
+				return
+
 			var/list/EV = list()
 			for (var/landmark_type in list(LANDMARK_PESTSTART, LANDMARK_MONKEY, LANDMARK_BLOBSTART, LANDMARK_KUDZUSTART))
 				if (landmarks[landmark_type])
@@ -218,7 +223,7 @@
 				candidates -= M
 
 			command_alert("Our sensors have detected a hostile nonhuman lifeform in the vicinity of the station.", "Hostile Critter", alert_origin = ALERT_GENERAL)
-		cleanup_event()
+			cleanup_event()
 
 	proc/cleanup_event()
 		src.critter_type = null
