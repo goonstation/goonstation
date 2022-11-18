@@ -323,11 +323,7 @@
 		holder.owner.visible_message("<span class='alert'><strong>[holder.owner]</strong> gestures upwards, then at [target] with a swift striking motion!</span>")
 		var/list/thrown = list()
 		var/current_prob = 100
-		var/turf/destination = null
-		if (!isturf(target))
-			destination = get_turf(target)
-		else
-			destination = target
+		var/turf/destination = get_turf(target)
 		if (!destination) return TRUE
 		if (ishuman(target))
 			var/mob/living/carbon/T = target
