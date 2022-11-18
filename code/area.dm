@@ -385,6 +385,11 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 		for (var/obj/window/W in our_contents)
 			value++
 
+		if (length(flocks))
+			for (var/atom/A as anything in our_contents)
+				if (isfeathertile(A) || istype(A, /obj/machinery/light/flock) || istype(A, /obj/window/auto/feather))
+					value--
+
 		return value
 
 	proc/calculate_area_cleanliness()
@@ -394,6 +399,8 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 		var/list/dirtyStuff = list(/obj/decal/cleanable,/obj/fluid)
 
 		for (var/turf/simulated/T in src.contents)
+			if (isfeathertile(T))
+				continue
 			dirty = 0
 			total_count++
 			for (var/thing in T.contents)
