@@ -1,4 +1,9 @@
 
+(t)fri nov 18 22
+(u)Bartimeus973
+(p)11537
+(e)🗺🎨🔄📡|A-Mapping, C-Sprites, C-Rework, A-AI
+(+)Roaches are now mob critters.
 (t)thu nov 17 22
 (u)goonstation-enjoyer
 (p)11860
