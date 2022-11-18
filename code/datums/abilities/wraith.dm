@@ -759,7 +759,7 @@
 
 		var/turf/T = get_turf(holder.owner)
 		if (isturf(T) && !istype(T, /turf/space))
-			boutput(holder.owner, "You begin to channel power to call a spirit to this realm, you won't be able to cast any other spells for the next 30 seconds!")
+			boutput(holder.owner, "You begin to channel power to call a spirit to this realm!")
 			src.doCooldown()
 			make_poltergeist(holder.owner, T)
 			return 0
@@ -1717,7 +1717,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 
 		var/turf/T = get_turf(holder.owner)
 		if (isturf(T) && !istype(T, /turf/space))
-			boutput(holder.owner, "You begin to channel power to call a spirit to this realm, you won't be able to cast any other spells for the next 30 seconds!")
+			boutput(holder.owner, "You begin to channel power to call a spirit to this realm!")
 			src.doCooldown()
 			make_summon(holder.owner, T)
 			return 0
@@ -1795,18 +1795,9 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			if (istype(M, /mob/living/critter/wraith/plaguerat))
 				total_plague_rats++
 		if(total_plague_rats < (max_allowed_rats + (player_count / 30)))	//Population scaling
-			if (istype(holder.owner, /mob/living/critter/wraith/plaguerat))	//plaguerats must be near their den
-				var/near_den = false
-				var/turf/T = get_turf(holder.owner)
-				for (var/obj/O in T.contents)
-					if(istype(O, /obj/machinery/wraith/rat_den))
-						near_den = true
-				if(!near_den)
-					boutput(holder.owner, "We arent close enough to a rat den to do this.")
-					return 1
 			var/turf/T = get_turf(holder.owner)
 			if (isturf(T) && !istype(T, /turf/space))
-				boutput(holder.owner, "You begin to channel power to summon a plague rat into this realm, you won't be able to cast any other spells for the next 30 seconds!")
+				boutput(holder.owner, "You begin to channel power to summon a plague rat into this realm!")
 				src.doCooldown()
 				make_plague_rat(holder.owner, T)
 				return 0
