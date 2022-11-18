@@ -15,8 +15,8 @@
 	var/datum/light/light
 	var/datum/light/portal_light
 	var/list/obj/critter/level_0_mobs = list(/obj/critter/floateye)
-	var/list/obj/critter/level_1_mobs = list(/obj/critter/crunched, /obj/critter/ancient_repairbot/grumpy)
-	var/list/obj/critter/level_2_mobs = list(/obj/critter/ancient_repairbot/security, /obj/critter/ancient_thing, /obj/critter/magiczombie)
+	var/list/obj/critter/level_1_mobs = list(/obj/critter/crunched, /obj/critter/ancient_thing)
+	var/list/obj/critter/level_2_mobs = list(/obj/critter/ancient_repairbot/security, /obj/critter/ancient_repairbot/grumpy, /obj/critter/magiczombie)
 	var/list/obj/critter/level_3_mobs = list(/obj/critter/bloodling, /obj/critter/bear)
 	var/list/obj/critter/level_4_mobs = list(/obj/critter/ancient_repairbot/security, /obj/critter/brullbar)
 	var/spawn_rate = 40 SECONDS	//How often do we summon mobs
