@@ -55,3 +55,5 @@ colorcablespawner(black, "#272e30")
 colorcablespawner(hotpink, "#FF69B4")
 colorcablespawner(brown, "#633221")
 colorcablespawner(white, "#ffffff")
+
+#undef colorcablespawner
