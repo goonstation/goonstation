@@ -1121,7 +1121,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 
 	New()
 		..()
-		src.slice_amount = rand(3, 5) //keeps the previous random amount of slices onions had
+		src.slice_amount = rand(3, 5)
 
 	attackby(obj/item/W, mob/user)
 		//we check for sliceability for when someone makes a child of that that should not be sliced.
