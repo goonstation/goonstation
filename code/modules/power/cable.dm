@@ -434,6 +434,7 @@
 		SPAWN(1 SECONDS)
 			if(!src.disposed)
 				initialize()
+
 /// reinforced, thick cables. They should also connect to the regular kind.
 /obj/cablespawner/reinforced
 	name = "reinforced power cable spawner"
