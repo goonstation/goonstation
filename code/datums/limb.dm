@@ -1527,7 +1527,7 @@
 		logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
 		user.calculate_melee_attack()
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 8, rand(3, 5), can_punch = 0, can_kick = 0)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 8, rand(3, 5), can_punch = FALSE, can_kick = FALSE)
 		user.attack_effects(target, affecting)
 		var/action = pick("maim", "maul", "mangle", "slap", "lacerate", "mutilate")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with [src.holder]!</span></b>"
