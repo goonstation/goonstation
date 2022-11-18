@@ -583,31 +583,3 @@
 	current.d1 = dir1
 	current.d2 = dir2
 	current.UpdateIcon()
-
-/obj/cablespawner/black
-	color = "#272e30"
-	cable_type = /obj/cable/black
-/obj/cablespawner/blue
-	color = "#009ae7"
-	cable_type = /obj/cable/blue
-/obj/cablespawner/brown
-	color = "#633221"
-	cable_type = /obj/cable/brown
-/obj/cablespawner/green
-	color = "#03c53d"
-	cable_type = /obj/cable/green
-/obj/cablespawner/hotpink
-	color = "#FF69B4"
-	cable_type = /obj/cable/hotpink
-/obj/cablespawner/orange
-	color = "#FF5D06"
-	cable_type = /obj/cable/orange
-/obj/cablespawner/purple
-	color = "#9b59b6"
-	cable_type = /obj/cable/purple
-/obj/cablespawner/white
-	color = "#ffffff"
-	cable_type = /obj/cable/white
-/obj/cablespawner/yellow
-	color = "#fffb00"
-	cable_type = /obj/cable/yellow

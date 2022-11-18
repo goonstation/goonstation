@@ -40,3 +40,18 @@ colorcable(brown, "#633221")
 colorcable(white, "#ffffff")
 
 #undef colorcable
+
+#define colorcablespawner(_color, _hexcolor)\
+/obj/cablespawner/_color;\
+/obj/cablespawner/_color/name = ""+#_color+" power cable";\
+/obj/cablespawner/_color/color = _hexcolor;\
+
+colorcablespawner(yellow, "#fffb00")
+colorcablespawner(orange, "#FF5D06")
+colorcablespawner(blue, "#009ae7")
+colorcablespawner(green, "#03c53d")
+colorcablespawner(purple, "#9b59b6")
+colorcablespawner(black, "#272e30")
+colorcablespawner(hotpink, "#FF69B4")
+colorcablespawner(brown, "#633221")
+colorcablespawner(white, "#ffffff")
