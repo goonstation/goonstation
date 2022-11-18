@@ -33,7 +33,7 @@
 			if (src.next_spawn_check < TIME)
 				next_spawn_check = TIME + rand(20 SECONDS, 25 SECONDS)
 				if (linked_critters < max_critters)
-					var/obj/critter/mouse/mad/ratden/M = new /obj/critter/mouse/mad/ratden(src.loc)
+					var/mob/living/critter/small_animal/mouse/mad/rat_den/M = new /mob/living/critter/small_animal/mouse/mad/rat_den(src.loc)
 					M.linked_den = src
 					linked_critters ++
 
