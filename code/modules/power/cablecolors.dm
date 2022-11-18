@@ -27,8 +27,11 @@
 /datum/supply_packs/electrical/_color/name = ""+"Electrical Supplies Crate ("+#_color+") - 2 pack";\
 /datum/supply_packs/electrical/_color/desc = ""+"x2 Cabling Box - "+#_color+" (14 cable coils total)";\
 /datum/supply_packs/electrical/_color/contains = list(/obj/item/storage/box/cablesbox/_color = 2);\
-/datum/supply_packs/electrical/_color/containername = ""+"Electrical Supplies Crate ("+#_color+")- 2 pack"
-
+/datum/supply_packs/electrical/_color/containername = ""+"Electrical Supplies Crate ("+#_color+")- 2 pack"\
+/obj/cablespawner/_color;\
+/obj/cablespawner/_color/name = ""+#_color+" power cable";\
+/obj/cablespawner/_color/color = _hexcolor;\
+/obj/cablespawner/_color/cable_type = /obj/cable/_color
 colorcable(yellow, "#fffb00")
 colorcable(orange, "#FF5D06")
 colorcable(blue, "#009ae7")
@@ -40,20 +43,3 @@ colorcable(brown, "#633221")
 colorcable(white, "#ffffff")
 
 #undef colorcable
-
-#define colorcablespawner(_color, _hexcolor)\
-/obj/cablespawner/_color;\
-/obj/cablespawner/_color/name = ""+#_color+" power cable";\
-/obj/cablespawner/_color/color = _hexcolor;\
-
-colorcablespawner(yellow, "#fffb00")
-colorcablespawner(orange, "#FF5D06")
-colorcablespawner(blue, "#009ae7")
-colorcablespawner(green, "#03c53d")
-colorcablespawner(purple, "#9b59b6")
-colorcablespawner(black, "#272e30")
-colorcablespawner(hotpink, "#FF69B4")
-colorcablespawner(brown, "#633221")
-colorcablespawner(white, "#ffffff")
-
-#undef colorcablespawner
