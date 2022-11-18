@@ -686,30 +686,34 @@
 
 	// Same thing you could do with the old auth disk. The bomb is equally important
 	// and should appear at the top of any unsorted list  (Convair880).
-	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-		var/datum/game_mode/nuclear/N = ticker.mode
-		if (N.the_bomb && istype(N.the_bomb, /obj/machinery/nuclearbomb/))
-			var/name = "Nuclear bomb"
-			if (name in names)
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = N.the_bomb
+	if (ticker?.mode)
+		var/obj_name = null
+		var/target_obj = null
+		if (istype(ticker.mode, /datum/game_mode/nuclear))
+			var/datum/game_mode/nuclear/N = ticker.mode
+			if (N.the_bomb && istype(N.the_bomb, /obj/machinery/nuclearbomb/))
+				obj_name = "Nuclear bomb"
+				target_obj = N.the_bomb
+		else if (istype(ticker.mode, /datum/game_mode/flock))
+			var/datum/game_mode/flock/gamemode = ticker.mode
+			var/obj/flock_structure/relay/relay = locate(/obj/flock_structure/relay) in gamemode.start_flock.structures
+			if (relay)
+				obj_name = "Flock Relay"
+				target_obj = relay
+		else if (istype(ticker.mode, /datum/game_mode/football))
+			var/datum/game_mode/football/F = ticker.mode
+			if (F.the_football && istype(F.the_football, /obj/item/football/the_big_one))
+				obj_name = "THE FOOTBALL"
+				target_obj = F.the_football
 
-
-	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
-		var/datum/game_mode/football/F = ticker.mode
-		if (F.the_football && istype(F.the_football, /obj/item/football/the_big_one))
-			var/name = "THE FOOTBALL"
-			if (name in names)
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
+		if (obj_name)
+			if (obj_name in names)
+				namecounts[obj_name]++
+				obj_name = "[obj_name] ([namecounts[obj_name]])"
 			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = F.the_football
+				names.Add(obj_name)
+				namecounts[obj_name] = 1
+			creatures[obj_name] = target_obj
 
 
 	for_by_tcl(O, /obj/observable)
