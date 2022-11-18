@@ -1,5 +1,9 @@
 
 (t)fri nov 18 22
+(u)Zonespace
+(p)12000
+(e)🆕📄|C-Feature, A-UI
+(*)Mostly RP-focused change: You can now fill out "Syndicate Intelligence" in character setup, which is visible to antagonists.<br>Exploitable information is intended to be things such as character weaknesses or blackmail material, try to lean into it, should you fill it out!<br>Antagonists can find this at the bottom of their uplink traitor item list.
 (u)LeahTheTech
 (p)11760
 (e)🆕🎨🧛|C-Feature, C-Sprites, A-Gamemodes
