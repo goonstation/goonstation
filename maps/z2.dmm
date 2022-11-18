@@ -13677,7 +13677,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/north)
 "aSs" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aSt" = (
@@ -18300,7 +18300,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "beP" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "beQ" = (
@@ -19291,7 +19291,7 @@
 /area/crater)
 "bhG" = (
 /obj/decal/cleanable/dirt,
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/unsimulated/floor/cave,
 /area/crater)
 "bhH" = (
@@ -45099,7 +45099,7 @@
 /turf/unsimulated/floor/black,
 /area/owlery/lab)
 "cFh" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/unsimulated/floor/red,
 /area/owlery/gangzone)
 "cFi" = (
@@ -47362,7 +47362,7 @@
 /area/owlery/gangzone)
 "cKK" = (
 /obj/decal/cleanable/machine_debris,
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/unsimulated/floor/yellowblack{
 	dir = 6
 	},
@@ -48329,7 +48329,7 @@
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cNl" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/unsimulated/floor/yellowblack{
 	dir = 9
 	},
@@ -49178,7 +49178,7 @@
 	},
 /area/owlery/gangzone)
 "cPk" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/unsimulated/floor/redblack{
 	dir = 8
 	},
@@ -49353,7 +49353,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait)
 "cPG" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/unsimulated/floor/yellowblack{
 	dir = 8
 	},
@@ -52044,7 +52044,7 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
 "cVo" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /obj/machinery/light/emergency{
 	dir = 4
 	},
@@ -54600,18 +54600,14 @@
 /turf/unsimulated/floor/wood,
 /area/afterlife/bar/barspawn)
 "daC" = (
-/turf/unsimulated/wall/trench/side{
-	fullbright = 1
-	},
+/turf/unsimulated/wall/trench/side,
 /area/afterlife/bar/sanctuary)
 "daD" = (
 /obj/map/light/brighterwhite,
 /turf/unsimulated/wall/auto/adventure/old/reinforced,
 /area/afterlife/bar/sanctuary)
 "daE" = (
-/turf/unsimulated/wall/trench{
-	fullbright = 1
-	},
+/turf/unsimulated/wall/trench,
 /area/afterlife/bar/sanctuary)
 "daF" = (
 /obj/stool/chair/couch{
@@ -68216,7 +68212,7 @@
 	},
 /area/centcom/offices/cogwerks)
 "eAl" = (
-/obj/critter/roach{
+/mob/living/critter/small_animal/cockroach{
 	name = "unsquashed bug"
 	},
 /obj/fakeobjects{
@@ -69581,7 +69577,7 @@
 	},
 /area/meat_derelict/guts)
 "hnz" = (
-/obj/critter/roach{
+/mob/living/critter/small_animal/cockroach{
 	name = "\"feature\""
 	},
 /turf/unsimulated/floor{
