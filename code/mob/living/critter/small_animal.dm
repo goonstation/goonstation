@@ -229,6 +229,12 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		src.set_a_intent(INTENT_HELP)
 		return can_act(src,TRUE)
 
+/mob/living/critter/small_animal/mouse/dead
+
+	New()
+		. = ..()
+		src.death()
+
 /mob/living/critter/small_animal/mouse/weak
 	health_brute = 2
 	health_burn = 2
