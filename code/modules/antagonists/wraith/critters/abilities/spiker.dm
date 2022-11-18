@@ -118,7 +118,7 @@
 	name = "Shuffle"
 	desc = "Squish yourself down to cancel stuns, squeeze through doors and escape assailants."
 	cooldown = 50 SECONDS
-	targeted = 0
+	targeted = FALSE
 	icon_state = "shuffle"
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = "harbinger_frame"
