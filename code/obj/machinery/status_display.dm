@@ -17,6 +17,7 @@
 	anchored = 1
 	density = 0
 	mats = 14
+	plane = PLANE_NOSHADOW_ABOVE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/glow_in_dark_screen = TRUE
 	var/image/screen_image
