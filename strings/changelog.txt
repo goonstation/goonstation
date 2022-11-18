@@ -1,6 +1,10 @@
 
 (t)fri nov 18 22
 (u)Bartimeus973
+(p)11577
+(e)🗺🔄📡|A-Mapping, C-Rework, A-AI
+(+)Turns all mouse into mobs. Go hug Remy today!
+(u)Bartimeus973
 (p)11876
 (e)🪲🎨⚖🔨|C-Bug, C-Sprites, C-Balance, A-Player-Actions
 (*)Wraith-summoned critters recieved some changes! Details in minor notes.
