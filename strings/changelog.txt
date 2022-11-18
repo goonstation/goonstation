@@ -1,5 +1,9 @@
 
 (t)fri nov 18 22
+(u)DrWolfy
+(p)11501
+(e)💅⚗🤖|C-QoL, A-Chemistry, A-Silicons
+(+)Cyborgs can now use their beakers in the reagent extractor.
 (u)Bartimeus973
 (p)11577
 (e)🗺🔄📡|A-Mapping, C-Rework, A-AI
