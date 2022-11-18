@@ -1523,7 +1523,7 @@
 /datum/limb/tentacle
 	harm(mob/target, var/mob/living/user)
 		if(check_target_immunity( target ))
-			return 0
+			return FALSE
 		logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
 		user.calculate_melee_attack()
