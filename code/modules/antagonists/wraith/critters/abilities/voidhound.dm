@@ -19,7 +19,7 @@
 			SPAWN(20 SECONDS)
 				if(V?.cloaked)
 					animate(V, alpha=255, time=3 SECONDS)
-					boutput(V, "<span class='notice'>We reappear</span>")
+					boutput(V, "<span class='alert'>We reappear...</span>")
 					V.cloaked = FALSE
 
 	onAttach(datum/abilityHolder/holder)
