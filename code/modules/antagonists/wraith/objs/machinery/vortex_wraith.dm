@@ -22,12 +22,14 @@
 	var/spawn_rate = 40 SECONDS	//How often do we summon mobs
 	var/spawn_radius = 2	//At what range from the center do we summon mobs?
 	var/last_upgrade = 0	//When did we last upgrade the portal?
+	var/upgrade_cooldown = 15 SECONDS //Time between allowed upgrades
 	var/summon_power = 0	//Changes the mob type to pull from the mob lists by level.
 	var/upgrade_count = 0	//Total upgrades
 	var/upgrade_cost = 10	//Base cost of an upgrade
 	var/max_health = 30
 	var/portal_level = 0 //Goes up by 1 when a threshold of upgrade is reached for additional effects
 	var/active = TRUE	//Are we summoning mobs
+	var/upgrate_cost_increase = 30 //Exponential cost increase on each upgrade
 
 	New()
 		src.visible_message("<span class='alert'>A [src] appears into view, some shadows coalesce within!</b></span>")
@@ -210,10 +212,10 @@
 						return
 					else
 						src.spawn_rate -= 3 SECONDS
-						src.last_upgrade = TIME + 15 SECONDS
+						src.last_upgrade = TIME + src.upgrade_cooldown
 						src.upgrade_count ++
 						AH.points -= src.upgrade_cost
-						src.upgrade_cost += 40
+						src.upgrade_cost += src.upgrate_cost_increase
 			if ("up_spawnrange")
 				if (TIME < src.last_upgrade)
 					boutput(usr, "<span class='alert'>You just upgraded your portal. Give it a minute.</span>")
@@ -230,10 +232,10 @@
 						return
 					else
 						src.spawn_radius ++
-						src.last_upgrade = TIME + 15 SECONDS
+						src.last_upgrade = TIME + src.upgrade_cooldown
 						src.upgrade_count ++
 						AH.points -= src.upgrade_cost
-						src.upgrade_cost += 40
+						src.upgrade_cost += src.upgrate_cost_increase
 			if ("up_summoncap")
 				if (TIME < src.last_upgrade)
 					boutput(usr, "<span class='alert'>You just upgraded your portal. Give it a minute.</span>")
@@ -250,10 +252,10 @@
 						return
 					else
 						src.mob_value_cap ++
-						src.last_upgrade = TIME + 15 SECONDS
+						src.last_upgrade = TIME + src.upgrade_cooldown
 						src.upgrade_count ++
 						AH.points -= src.upgrade_cost
-						src.upgrade_cost += 40
+						src.upgrade_cost += src.upgrate_cost_increase
 			if ("up_portalhealth")
 				if (TIME < src.last_upgrade)
 					boutput(usr, "<span class='alert'>You just upgraded your portal. Give it a minute.</span>")
@@ -271,10 +273,10 @@
 					else
 						src._health += 15
 						src.max_health += 15
-						src.last_upgrade = TIME + 15 SECONDS
+						src.last_upgrade = TIME + src.upgrade_cooldown
 						src.upgrade_count ++
 						AH.points -= src.upgrade_cost
-						src.upgrade_cost += 40
+						src.upgrade_cost += src.upgrate_cost_increase
 			if ("up_summonpower")
 				if (TIME < src.last_upgrade)
 					boutput(usr, "<span class='alert'>You just upgraded your portal. Give it a minute.</span>")
@@ -291,10 +293,10 @@
 						return
 					else
 						src.summon_power ++
-						src.last_upgrade = TIME + 15 SECONDS
+						src.last_upgrade = TIME + src.upgrade_cooldown
 						src.upgrade_count ++
 						AH.points -= src.upgrade_cost
-						src.upgrade_cost += 40
+						src.upgrade_cost += src.upgrate_cost_increase
 			if ("portalheal")
 				if (TIME < src.last_upgrade)
 					boutput(usr, "<span class='alert'>You just upgraded your portal. Give it a minute.</span>")
@@ -310,7 +312,7 @@
 					else
 						src._health += 30
 					AH.points -= src.upgrade_cost
-					src.last_upgrade = TIME + 15 SECONDS
+					src.last_upgrade = TIME + src.upgrade_cooldown
 					. = TRUE
 					return
 				else
