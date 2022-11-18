@@ -939,7 +939,7 @@
 		desc = "Your stamina regen is increased"
 		icon_state = "stam+"
 		maxDuration = 60 SECONDS
-		unique = 1
+		unique = TRUE
 		change = 5
 
 	fitness_staminamax
