@@ -142,7 +142,6 @@
 		the_spiker.stuttering = 0
 		the_spiker.delStatus("drowsy")
 		the_spiker.delStatus("resting")
-		//todo icon state
 		the_spiker.flags |= DOORPASS | TABLEPASS
 		the_spiker.unequip_all()
 		the_spiker.shuffling = TRUE
