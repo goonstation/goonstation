@@ -46,14 +46,14 @@
 	/// get radioactivity level of atom (0 if signal not registered - ie, has no radioactive component) (return_val as a list)
 	#define COMSIG_ATOM_RADIOACTIVITY "atom_get_radioactivity"
 
-	// ---- minimap ----
+// ---- minimap ----
 
-	/// When an atom requires to create minimap markers for all minimaps.
-	#define COMSIG_CREATE_MINIMAP_MARKERS "create_minimap_markers"
-	/// When an atom requires to create a single minimap marker a specific minimap.
-	#define COMSIG_NEW_MINIMAP_MARKER "new_minimap_marker"
-	/// When an atom requires to remove minimap markers for all minimaps.
-	#define COMSIG_REMOVE_MINIMAP_MARKERS "remove_minimap_markers"
+/// When an atom requires to create minimap markers for all applicable minimaps.
+#define COMSIG_CREATE_MINIMAP_MARKERS "create_minimap_markers"
+/// When an atom requires to create a single minimap marker for a specific minimap.
+#define COMSIG_NEW_MINIMAP_MARKER "new_minimap_marker"
+/// When an atom requires to remove minimap markers for all minimaps.
+#define COMSIG_REMOVE_MINIMAP_MARKERS "remove_minimap_markers"
 
 // ---- atom/movable signals ----
 
