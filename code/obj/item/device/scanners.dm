@@ -612,13 +612,27 @@ that cannot be itched
 	name = "security RecordTrak"
 	desc = "A device used to scan in prisoners and update their security records."
 	icon_state = "recordtrak"
-	var/mode = 1
 	var/datum/db_record/active1 = null
 	var/datum/db_record/active2 = null
 	w_class = W_CLASS_NORMAL
 	item_state = "recordtrak"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | EXTRADELAY
 	mats = 3
+	contextLayout = new /datum/contextLayout/experimentalcircle
+
+	///List of record settings
+	var/list/modes = list(PRISONER_MODE_NONE, PRISONER_MODE_PAROLED, PRISONER_MODE_INCARCERATED, PRISONER_MODE_RELEASED)
+	///The current setting
+	var/mode = 1
+
+	var/list/datum/contextAction/contexts = list()
+
+	New()
+		..()
+		for(var/actionType in childrentypesof(/datum/contextAction/prisoner_scanner))
+			var/datum/contextAction/prisoner_scanner/action = new actionType()
+			if (action.mode in src.modes)
+				src.contexts += action
 
 	attack(mob/living/carbon/human/M, mob/user)
 		if (!istype(M))
@@ -668,27 +682,36 @@ that cannot be itched
 		////Security Records
 		var/datum/db_record/E = data_core.security.find_record("name", src.active1["name"])
 		if(E)
-			if(src.mode == 1)
-				E["criminal"] = "Incarcerated"
-			else if(src.mode == 2)
-				E["criminal"] = "Parolled"
-			else if(src.mode == 3)
-				E["criminal"] = "Released"
-			else
-				E["criminal"] = "None"
+			switch (mode)
+				if(PRISONER_MODE_NONE)
+					E["criminal"] = "None"
+
+				if(PRISONER_MODE_PAROLED)
+					E["criminal"] = "Parolled"
+
+				if(PRISONER_MODE_RELEASED)
+					E["criminal"] = "Released"
+
+				if(PRISONER_MODE_INCARCERATED)
+					E["criminal"] = "Incarcerated"
 			return
 
 		src.active2 = new /datum/db_record()
 		src.active2["name"] = src.active1["name"]
 		src.active2["id"] = src.active1["id"]
-		if(src.mode == 1)
-			src.active2["criminal"] = "Incarcerated"
-		else if(src.mode == 2)
-			src.active2["criminal"] = "Parolled"
-		else if(src.mode == 3)
-			src.active2["criminal"] = "Released"
-		else
-			src.active2["criminal"] = "None"
+		switch (mode)
+			if(PRISONER_MODE_NONE)
+				src.active2["criminal"] = "None"
+
+			if(PRISONER_MODE_PAROLED)
+				src.active2["criminal"] = "Parolled"
+
+			if(PRISONER_MODE_RELEASED)
+				src.active2["criminal"] = "Released"
+
+			if(PRISONER_MODE_INCARCERATED)
+				src.active2["criminal"] = "Incarcerated"
+
 		src.active2["sec_flag"] = "None"
 		src.active2["mi_crim"] = "None"
 		src.active2["mi_crim_d"] = "No minor crime convictions."
@@ -700,19 +723,24 @@ that cannot be itched
 		return
 
 	attack_self(mob/user as mob)
+		user.showContextActions(src.contexts, src, src.contextLayout)
 
-		if (src.mode == 1)
-			src.mode = 2
-			boutput(user, "<span class='notice'>you switch the record mode to Parolled</span>")
-		else if (src.mode == 2)
-			src.mode = 3
-			boutput(user, "<span class='notice'>you switch the record mode to Released</span>")
-		else if (src.mode == 3)
-			src.mode = 4
-			boutput(user, "<span class='notice'>you switch the record mode to None</span>")
-		else
-			src.mode = 1
-			boutput(user, "<span class='notice'>you switch the record mode to Incarcerated</span>")
+	proc/switch_mode(var/mode, var/mob/user)
+
+		src.mode = mode
+
+		switch (mode)
+			if(PRISONER_MODE_NONE)
+				boutput(user, "<span class='notice'>you switch the record mode to None</span>")
+
+			if(PRISONER_MODE_PAROLED)
+				boutput(user, "<span class='notice'>you switch the record mode to Paroled</span>")
+
+			if(PRISONER_MODE_RELEASED)
+				boutput(user, "<span class='notice'>you switch the record mode to Released</span>")
+
+			if(PRISONER_MODE_INCARCERATED)
+				boutput(user, "<span class='notice'>you switch the record mode to Incarcerated</span>")
 
 		add_fingerprint(user)
 		return
