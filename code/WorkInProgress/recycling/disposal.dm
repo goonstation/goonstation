@@ -2009,14 +2009,14 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 		current.dpdir = dpdir
 	else if (length(directions) == 2)
 		// lays a normal pipe segment
-		var/obj/disposalpipe/current = new src.pipe_type(src.loc)
 		if (dpdir & (NORTH + SOUTH) || dpdir & (EAST + WEST))
 			// straight pipe
+			var/obj/disposalpipe/current = new src.pipe_type(src.loc)
 			current.dir = directions[1]
-			current.icon_state = "pipe-s"
 			current.dpdir = dpdir
 		else
-			current.icon_state = "pipe-c"
+			// curved pipe
+			var/obj/disposalpipe/segment/bent/current = new src.pipe_type(src.loc)
 			current.dpdir = dpdir
 			if (dpdir & NORTHEAST)
 				current.dir = NORTH
