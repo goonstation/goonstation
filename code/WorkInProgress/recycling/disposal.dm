@@ -1939,19 +1939,34 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 	if (dpdir & WEST)
 		directions += WEST
 
-	if (dpdir == 0)
-		pipelaying(0, NORTH)
-	else if (length(directions) == 1)
-		// lays a trunk pipe
-		pipe_laying(0, directions[1])
-	else if (length(directions) == 2)
-		// lays a normal pipe segment
-		pipe_laying(directions[1],directions[2])
-	else
-		// DO NOT MAKE JUNCTIONS, FOOLS
-		ERROR
-/obj/disposalpipespawner/pipelaying(var/dir1, var/dir2)
 	var/obj/disposalpipe/current = new src.loc
 	current.dpdir = dpdir
-	if (dir1 == 0)
-		icon_state = "pipe-t"
+	if (dpdir == 0)
+		current.dir = NORTH
+		current.icon_state = "pipe-t"
+	else if (length(directions) == 1)
+		// lays a trunk pipe
+		current.dir = directions[1]
+		current.icon_state = "pipe-t"
+	else if (length(directions) == 2)
+		// lays a normal pipe segment
+		if (dpdir & (NORTH + SOUTH) || dpdir & (EAST + WEST))
+			// straight pipe
+			current.dir = directions[1]
+			current.icon_state = "pipe-s"
+		else
+			current.icon_state = "pipe-c"
+			if (dpdir & NORTHEAST)
+				current.dir = NORTH
+			else if (dpdir & NORTHWEST)
+				current.dir = WEST
+			else if (dpdir & SOUTHEAST)
+				current.dir = EAST
+			else if (dpdir & SOUTHWEST)
+				current.dir = SOUTH
+	else
+		// DO NOT MAKE JUNCTIONS, FOOLS
+		null
+		//CRASH("Pipe Spawners cannot connect to 3 or 4 directions!\nPipe coords: " + [src.x]
+		//+ " x, " + [src.y] + " y, " + [src.z]) + " z."
+
