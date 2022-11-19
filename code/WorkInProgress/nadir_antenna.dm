@@ -1075,12 +1075,13 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 
 		if ("receive")
 			var/manifest_identifier = locate(subaction) in src.known_pads
-			var/list/manifest = known_pads[manifest_identifier]
-			if(manifest["Identifier"])
-				var/wanted_thing = input(usr,"! WORK IN PROGRESS !","Select Cargo",null) in shippingmarket.pending_crates
-				var/thingpos = shippingmarket.pending_crates.Find(wanted_thing)
-				if(thingpos)
-					src.build_command(manifest["INT_TARGETID"],thingpos)
+			if(manifest_identifier && known_pads[manifest_identifier])
+				var/list/manifest = known_pads[manifest_identifier]
+				if(manifest["Identifier"])
+					var/wanted_thing = input(usr,"! WORK IN PROGRESS !","Select Cargo",null) in shippingmarket.pending_crates
+					var/thingpos = shippingmarket.pending_crates.Find(wanted_thing)
+					if(thingpos)
+						src.build_command(manifest["INT_TARGETID"],thingpos)
 
 		if ("send")
 			var/manifest_identifier = locate(subaction) in src.known_pads
