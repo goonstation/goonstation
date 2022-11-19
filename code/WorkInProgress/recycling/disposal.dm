@@ -1942,9 +1942,16 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 	if (dpdir == 0)
 		pipelaying(0, NORTH)
 	else if (length(directions) == 1)
+		// lays a trunk pipe
 		pipe_laying(0, directions[1])
 	else if (length(directions) == 2)
+		// lays a normal pipe segment
 		pipe_laying(directions[1],directions[2])
 	else
+		// DO NOT MAKE JUNCTIONS, FOOLS
 		ERROR
-/obj/disposalpipespawner/pipelaying()
+/obj/disposalpipespawner/pipelaying(var/dir1, var/dir2)
+	var/obj/disposalpipe/current = new src.loc
+	current.dpdir = dpdir
+	if (dir1 == 0)
+		icon_state = "pipe-t"
