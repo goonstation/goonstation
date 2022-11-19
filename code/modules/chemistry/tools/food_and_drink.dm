@@ -23,7 +23,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	/// what product to spawn when sliced
 	var/slice_product = null
 	/// how much product to spawn when sliced
-	var/slice_amount = 0
+	var/slice_amount = 1
 	/// if the produce is inert while being sliced
 	var/slice_inert = FALSE
 	/// When we want to name them slices or wedges or what-have-not. Default is slice
@@ -87,7 +87,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	attackby(obj/item/W, mob/user)
 		if (src.sliceable && istool(W, TOOL_CUTTING | TOOL_SAWING))
 			var/turf/T = get_turf(src)
-			user.visible_message("[user] cuts [src] into [src.slice_amount] [src.slice_suffix]s.", "You cut [src] into [src.slice_amount] [src.slice_suffix]s.")
+			user.visible_message("[user] cuts [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].", "You cut [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].")
 			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
 			if (src.reagents)
 				src.reagents.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
