@@ -114,6 +114,7 @@
 	src.addAbility(/datum/targetable/flockmindAbility/controlPanel)
 	src.addAbility(/datum/targetable/flockmindAbility/designateTile)
 	src.addAbility(/datum/targetable/flockmindAbility/designateEnemy)
+	src.addAbility(/datum/targetable/flockmindAbility/designateIgnore)
 	src.addAbility(/datum/targetable/flockmindAbility/partitionMind)
 	src.addAbility(/datum/targetable/flockmindAbility/splitDrone)
 	src.addAbility(/datum/targetable/flockmindAbility/healDrone)

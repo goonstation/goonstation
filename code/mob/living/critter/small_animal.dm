@@ -136,23 +136,30 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	speechverb_ask = "squeaks"
 	health_brute = 8
 	health_burn = 8
+	ai_type = /datum/aiHolder/mouse
+	is_npc = TRUE
+	var/attack_damage = 3
+	var/use_custom_color = TRUE
 
 
 	New()
 		..()
 		fur_color =	pick("#101010", "#924D28", "#61301B", "#E0721D", "#D7A83D","#D8C078", "#E3CC88", "#F2DA91", "#F21AE", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")
 		eye_color = "#FFFFF"
+		setup_overlays()
 
 	setup_overlays()
-		fur_color = src.client?.preferences.AH.customization_first_color
-		eye_color = src.client?.preferences.AH.e_color
-		var/image/overlay = image('icons/misc/critter.dmi', "mouse_colorkey")
-		overlay.color = fur_color
-		src.UpdateOverlays(overlay, "hair")
+		if (use_custom_color)
+			if (src.client)
+				fur_color = src.client.preferences.AH.customization_first_color
+				eye_color = src.client.preferences.AH.e_color
+			var/image/overlay = image('icons/misc/critter.dmi', "mouse_colorkey")
+			overlay.color = fur_color
+			src.UpdateOverlays(overlay, "hair")
 
-		var/image/overlay_eyes = image('icons/misc/critter.dmi', "mouse_eyes")
-		overlay_eyes.color = eye_color
-		src.UpdateOverlays(overlay_eyes, "eyes")
+			var/image/overlay_eyes = image('icons/misc/critter.dmi', "mouse_eyes")
+			overlay_eyes.color = eye_color
+			src.UpdateOverlays(overlay_eyes, "eyes")
 
 	death()
 		src.ClearAllOverlays()
@@ -212,10 +219,56 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			return
 		. = ..()
 
+	critter_attack(var/mob/target)
+		src.visible_message("<span class='combat'><B>[src]</B> bites [target]!</span>", "<span class='combat'>You bite [target]!</span>")
+		playsound(src.loc, 'sound/weapons/handcuffs.ogg', 50, 1, -1)
+		random_brute_damage(target, rand(src.attack_damage, src.attack_damage+2))
+
+	can_critter_eat()
+		src.active_hand = 2 // mouth hand
+		src.set_a_intent(INTENT_HELP)
+		return can_act(src,TRUE)
+
+/mob/living/critter/small_animal/mouse/dead
+
+	New()
+		. = ..()
+		src.death()
+
 /mob/living/critter/small_animal/mouse/weak
 	health_brute = 2
 	health_burn = 2
 
+/mob/living/critter/small_animal/mouse/mad
+	ai_type = /datum/aiHolder/mouse/mad
+
+	seek_target(range)
+		. = list()
+		for (var/mob/living/C in hearers(range, src))
+			if (isintangible(C)) continue
+			if (isdead(C)) continue
+			if (istype(C, /mob/living/critter/small_animal/mouse) || istype(C, /mob/living/critter/wraith/plaguerat)) continue
+			. += C
+
+	critter_attack(var/mob/target)
+		src.visible_message("<span class='combat'><B>[src]</B> bites [target]!</span>", "<span class='combat'>You bite [target]!</span>")
+		playsound(src.loc, 'sound/weapons/handcuffs.ogg', 50, 1, -1)
+		if(prob(30) && ishuman(target))
+			var/mob/living/carbon/human/H = target
+			if(!H.clothing_protects_from_chems())
+				src.visible_message("<span class='alert'>[src] bites you hard enough to draw blood!</span>", "<span class='alert'>You bite [H] with all your might!</span>")
+				H.emote("scream")
+				bleed(H, rand(5,8), 5)
+				H.contract_disease(pick(/datum/ailment/disease/space_madness, /datum/ailment/disease/berserker), null, null, 1)
+
+//for mice spawned by plaguerat dens
+/mob/living/critter/small_animal/mouse/mad/rat_den
+	var/obj/machinery/wraith/rat_den/linked_den = null
+
+	death()
+		if(linked_den.linked_critters > 0)
+			linked_den.linked_critters--
+		..()
 /* -------------------- Remy -------------------- */
 
 /mob/living/critter/small_animal/mouse/remy
@@ -227,6 +280,8 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_burn = 33
 	fits_under_table = 0
 	pull_w_class = W_CLASS_NORMAL
+	ai_type = /datum/aiHolder/mouse_remy
+	use_custom_color = FALSE
 
 	setup_overlays()
 		return
@@ -1434,6 +1489,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 5
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
+	ai_type = /datum/aiHolder/roach
+	is_npc = TRUE
 
 	setup_healths()
 		. = ..()
@@ -1453,11 +1510,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		src.UpdateOverlays(overlay_eyes, "eyes")
 
 	death()
-		src.ClearAllOverlays()
-		//appears to be missing a dead colorkey
-		//var/image/overlay = image('icons/misc/critter.dmi', "roach_colorkey-dead")
-		//overlay.color = fur_color
-		//src.UpdateOverlays(overlay, "hair")
+		can_lie = 0
+		if (fur_color)
+			var/image/overlay = image('icons/misc/critter.dmi', "roach_colorkey-dead")
+			overlay.color = fur_color
+			src.UpdateOverlays(overlay, "hair")
 		..()
 
 
@@ -1483,6 +1540,22 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream","chitter")
 				return 2
 		return ..()
+
+	attack_hand(mob/living/M)
+		if (ishuman(M) && M.a_intent == INTENT_HARM)
+			if(isdead(src))
+				src.visible_message("<span class='combat'><B>[M] squishes [src] a little more for good measure.</B></span>")
+				return
+			else
+				if (prob(95))
+					src.visible_message("<span class='combat'><B>[M] stomps [src], killing it instantly!</B></span>")
+					src.death()
+					return
+				else
+					src.visible_message("<span class='alert'>Against all odds, [src] stops [M]'s foot and throws them off balance! Woah!</span>", "<span class='alert'>You use all your might to stop [M]'s foot before it crushes you!</span>")
+					M.setStatus("weakened", 5 SECONDS)
+					return
+		. = ..()
 
 /* =================================================== */
 /* -------------------- Scorpion --------------------- */
@@ -3067,6 +3140,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	var/icon_state_exclaim = "mouse-mentor-exclaim"
 	health_brute = 35
 	health_burn = 35
+	is_npc = FALSE
+	use_custom_color = FALSE
 
 	New()
 		..()
@@ -3209,6 +3284,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state_dead = "mouse-admin-dead"
 	icon_state_exclaim = "mouse-admin-exclaim"
 	pull_w_class = W_CLASS_BULKY
+	is_npc = FALSE
+	use_custom_color = FALSE
 
 	setup_hands()
 		..()

@@ -17,15 +17,15 @@
 	pixel_x = 8;
 	pixel_y = 11
 	},
-/obj/critter/mouse/mad,
+/mob/living/critter/small_animal/mouse/mad,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "o" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "r" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating/damaged3,
 /area/dmm_suite/clear_area)
 "E" = (
@@ -64,9 +64,7 @@
 /area/dmm_suite/clear_area)
 "V" = (
 /obj/item/cable_coil/black/cut,
-/obj/critter/mouse{
-	alive = 0
-	},
+/mob/living/critter/small_animal/mouse/dead,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "X" = (

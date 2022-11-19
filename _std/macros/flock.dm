@@ -17,6 +17,7 @@
 #define FLOCK_ANNOTATION_FLOCKMIND_CONTROL "flockmind_face"
 #define FLOCK_ANNOTATION_FLOCKTRACE_CONTROL "flocktrace_face"
 #define FLOCK_ANNOTATION_HEALTH "health"
+#define FLOCK_ANNOTATION_IGNORE "ignore"
 
 // flock intangibles
 #define FLOCK_AFK_COUNTER_THRESHOLD 180 SECONDS
