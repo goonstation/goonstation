@@ -1884,3 +1884,15 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 					pipe.set_dir(new_dir)
 				break
 	pipe.fix_sprite()
+
+/obj/disposalpipespawner
+	icon = 'icons/obj/disposal.dmi'
+	name = "disposal pipe spawner"
+	anchored = 1
+	density = 0
+	text = ""
+
+	var/dpdir = 0		//! bitmask of pipe directions
+	dir = 0				//! dir will contain dominant direction for junction pipes
+	var/base_icon_state	//! Initial icon state on map
+	var/list/mail_tag = null //! Tag of mail group for switching pipes
