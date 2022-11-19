@@ -1,14 +1,22 @@
 names@=
 	Aaden
+	Aakesh
+	Aanan
 	Aaron
+	Aat
 	Abel
 	Abraham
 	Adam
 	Adan
+	Adeem
 	Aden
 	Adrian
+	Ahmed
+	Ai
 	Aidan
 	Aiden
+	Akeem
+	Akito
 	Alan
 	Albert
 	Alberto
@@ -22,28 +30,35 @@ names@=
 	Alfredo
 	Alger
 	Ali
+	Ali
 	Alijah
 	Allen
 	Alvin
 	Amari
 	Amir
+	Amir
 	Amos
 	Anderson
 	Andre
+	Andrei
 	Andres
 	Andrew
 	Andy
 	Angel
 	Angelo
+	Anh Duong
 	Anthony
 	Antonio
+	Anurak
 	Apple
 	Archie
 	Armando
 	Arnie
 	Art
+	Arthit
 	Arthur
 	Arturo
+	Artyom
 	Asher
 	Ashton
 	August
@@ -51,14 +66,28 @@ names@=
 	Avery
 	Axel
 	Ayden
+	Ba
+	Baek-Hyun
+	Bahadurjit
+	Bai
+	Baihu
 	Baldric
+	Balvan
+	Bao
 	Bartholomew
 	Beau
 	Beckett
 	Benjamin
+	Benjiro
 	Bennett
+	Bhavin
 	Bill
+	Binah
+	Binh
 	Blake
+	Bon-Hwa
+	Boon-nam
+	Botan
 	Braden
 	Bradley
 	Brady
@@ -85,15 +114,19 @@ names@=
 	Bryant
 	Bryce
 	Brycen
+	Brynjar
 	Bryson
 	Buck
 	Burt
 	Butch
 	Byrne
 	Byron
+	Ca
 	Cade
 	Caden
 	Caiden
+	Cain
+	Caishen
 	Caleb
 	Calvin
 	Camden
@@ -101,6 +134,7 @@ names@=
 	Camron
 	Camryn
 	Carl
+	Carlos
 	Carlos
 	Carson
 	Carter
@@ -111,16 +145,23 @@ names@=
 	Cayden
 	Cesar
 	Chad
+	Chaisai
+	Chakradev
 	Chance
 	Chandler
+	Chandresh
+	Chao
 	Charles
 	Charlie
 	Charlton
 	Chase
+	Chiko
+	Chinh
 	Chip
 	Chris
 	Christian
 	Christopher
+	Chung-Hee
 	Clark
 	Claudius
 	Clayton
@@ -149,6 +190,8 @@ names@=
 	Cruz
 	Curtis
 	Cy
+	Dae-Hyun
+	Dai
 	Dakota
 	Dallas
 	Dalton
@@ -159,11 +202,14 @@ names@=
 	Daniel
 	Danny
 	Dante
+	Daoming
 	Dapper
 	Darcey
 	Darell
 	Darin
+	Dario
 	Darius
+	Darpan
 	Darren
 	David
 	Davion
@@ -179,14 +225,18 @@ names@=
 	Derek
 	Derrick
 	Desmond
+	Devaj
 	Devin
 	Devon
 	Diego
 	Dillon
+	Dinh
 	Dirk
+	Dmitriy
 	Dominic
 	Dominick
 	Donald
+	Dong-Hyun
 	Donny
 	Donovan
 	Dorian
@@ -201,6 +251,7 @@ names@=
 	Easton
 	Eddie
 	Edgar
+	Edmundo
 	Eduardo
 	Edward
 	Edwin
@@ -224,6 +275,7 @@ names@=
 	Eric
 	Erick
 	Erik
+	Erik
 	Ernesto
 	Esteban
 	Ethan
@@ -232,6 +284,9 @@ names@=
 	Ezekiel
 	Ezra
 	Fabian
+	Faheem
+	Faisal
+	Fayez
 	Felix
 	Fenton
 	Fernando
@@ -274,19 +329,36 @@ names@=
 	Greyson
 	Griffin
 	Guillermo
+	Guneet
+	Gunnar
 	Gunner
+	Guohua
+	Guoqiang
 	Gustavo
+	Hafeez
+	Hai
+	Halvar
 	Hampus
 	Han
+	Han
+	Hansuke
+	Haoyu
 	Happy
+	Harish
 	Harrison
 	Harry
 	Hartley
+	Haru
+	Haruto
 	Harvey
+	Hashem
+	Hassan
+	Hatem
 	Hayden
 	Hector
 	Henderson
 	Henry
+	Hinata
 	Holden
 	Homer
 	Hope
@@ -301,10 +373,13 @@ names@=
 	Isaac
 	Isaiah
 	Isaias
+	Ishaan
+	Ishir
 	Isiah
 	Ismael
 	Israel
 	Issac
+	Ivan
 	Ivan
 	Izaiah
 	Jace
@@ -319,6 +394,7 @@ names@=
 	Jake
 	Jakob
 	Jalen
+	Jamal
 	Jamar
 	Jamari
 	Jamarion
@@ -347,6 +423,7 @@ names@=
 	Jed
 	Jeffrey
 	Jemmy
+	Jeong-Hoon
 	Jeremiah
 	Jeremy
 	Jermaine
@@ -354,8 +431,14 @@ names@=
 	Jerry
 	Jesse
 	Jesus
+	Ji-Hoon
+	Jianguo
+	Jianjun
+	Jianping
 	Jim
 	Jimmy
+	Jiro
+	Jivin
 	Joachim
 	Joaquin
 	Joe
@@ -378,26 +461,34 @@ names@=
 	Josiah
 	Josue
 	Juan
+	Juan
 	Judah
 	Jude
 	Julian
 	Julio
 	Julius
+	Jun
+	Junjie
 	Justice
 	Justin
 	Kade
 	Kaden
 	Kai
+	Kai
 	Kaiden
+	Kaito
 	Kale
 	Kaleb
 	Kameron
 	Kane
+	Kao
+	Kareem
 	Karson
 	Kayden
 	Keagan
 	Keaton
 	Keegan
+	Keiji
 	Keith
 	Kellen
 	Kelvin
@@ -406,12 +497,18 @@ names@=
 	Kevin
 	Keziah
 	Khalil
+	Khalil
+	Khemkhaeng
+	Kija
 	Kingston
 	Kobe
+	Koji
 	Kolton
+	Krishiv
 	Kristopher
 	Kyle
 	Kyler
+	Kyong
 	Lance
 	Landen
 	Lando
@@ -422,6 +519,8 @@ names@=
 	Larry
 	Launce
 	Lawrence
+	Lei
+	Leif
 	Leland
 	Lennox
 	Lenny
@@ -431,11 +530,14 @@ names@=
 	Leonel
 	Leroy
 	Levi
+	Li
 	Liam
 	Lief
+	Lijun
 	Lincoln
 	Linden
 	Linton
+	Liu
 	Logan
 	Lorde
 	Lorenzo
@@ -444,10 +546,15 @@ names@=
 	Louis
 	Luca
 	Lucas
+	Luhan
+	Luis
 	Luis
 	Lukas
 	Luke
 	Maddox
+	Mahdi
+	Mahit
+	Makoto
 	Malachi
 	Malcolm
 	Malik
@@ -473,6 +580,7 @@ names@=
 	Maximilian
 	Maximus
 	Maxwell
+	Mayan
 	Maynard
 	Mekhi
 	Melvin
@@ -482,25 +590,36 @@ names@=
 	Micheal
 	Miguel
 	Mike
+	Mikhail
+	Miki
 	Miles
 	Milo
 	Milton
+	Min
+	Minghao
+	Minoru
 	Mister
 	Mitchell
+	Mohammad
 	Moises
 	Montague
 	Monte
 	Monty
 	Morgan
 	Moses
+	Muyang
 	Myles
+	Naji
+	Nasir
 	Nasir
 	Nat
 	Nathan
 	Nathaniel
+	Naveen
 	Nehemiah
 	Nelson
 	Nerdy
+	Nguyen
 	Nicholas
 	Nick
 	Nickolas
@@ -510,7 +629,9 @@ names@=
 	Noel
 	Nolan
 	Oddball
+	Ojasvat
 	Oliver
+	Omar
 	Omar
 	Opie
 	Orlando
@@ -527,8 +648,10 @@ names@=
 	Patrick
 	Patton
 	Paul
+	Pavel
 	Paxton
 	Payton
+	Pedro
 	Pedro
 	Percival
 	Persh
@@ -538,23 +661,38 @@ names@=
 	Phillip
 	Phoenix
 	Porter
+	Pranav
+	Pranay
+	Pranit
+	Prem
 	Preston
+	Punyaa
+	Puyi
+	Qianfan
+	Qiang
 	Quentin
+	Qui
 	Quinn
 	Quinton
 	Rafael
 	Ramon
 	Randy
+	Rasheed
 	Rastus
 	Raul
+	Rayaan
 	Raymond
 	Rayner
 	Reece
 	Reed
 	Reef
 	Reese
+	Rei
 	Reid
+	Reiji
+	Renzo
 	Reuben
+	Reyansh
 	Reynard
 	Ricardo
 	Rich
@@ -565,7 +703,9 @@ names@=
 	Rickey
 	Rickie
 	Ricky
+	Riku
 	Riley
+	Ritthirong
 	River
 	Robert
 	Roberto
@@ -590,9 +730,13 @@ names@=
 	Ryder
 	Ryker
 	Rylan
+	Sakda
 	Sal
+	Salah
+	Salim
 	Salvador
 	Sam
+	Samesh
 	Samuel
 	Santiago
 	Saul
@@ -601,41 +745,60 @@ names@=
 	Scotty
 	Sean
 	Sebastian
+	Seiji
+	Seo-Jun
 	Sergio
 	Seth
 	Seymour
+	Shan
 	Shane
 	Shaun
 	Shawn
+	Shen
 	Shiloh
+	Shuai
+	Sigurd
 	Silas
 	Simon
 	Skyler
 	Sloan
 	Smoke
 	Solomon
+	Somsak
 	Sorrel
 	Spencer
 	Spike
 	Stephen
 	Steven
+	Sung-Min
+	Suveer
 	Sybil
 	Syd
+	Tae-Hyun
+	Tai
 	Talon
 	Tamsin
+	Tanet
 	Tanner
+	Tao
+	Taro
 	Tate
 	Taylor
+	Teiji
 	Tel
 	Terrell
 	Terry
 	Theodore
 	Thomas
+	Tien
 	Tim
 	Timothy
 	Titus
 	Todd
+	Tomeo
 	Tony
+	Toru
+	Toshiro
 	Travis
 	Trent
 	Trenton
@@ -654,16 +817,20 @@ names@=
 	Uland
 	Ulric
 	Uriel
+	Vaibhav
 	Vaughn
+	Vedant
 	Victor
 	Vince
 	Vincent
 	Vinny
+	Vyacheslav
 	Walker
 	Walter
 	Ward
 	Warner
 	Wayne
+	Wei
 	Wesley
 	Weston
 	Whitaker
@@ -675,7 +842,19 @@ names@=
 	Wyatt
 	Xander
 	Xavier
+	Xiao
+	Xin
 	Yahir
+	Yan
+	Yanghao
+	Yao
+	Yaseen
+	Young-Chin
+	Young-Soo
+	Yu
+	Yuhang
+	Yuxuan
+	Yuze
 	Zachariah
 	Zachary
 	Zack
@@ -683,5 +862,11 @@ names@=
 	Zander
 	Zane
 	Zayden
+	Zehaan
 	Zeke
+	Zhi
+	Zhi-Ming
+	Zhu
+	Zihai
 	Zion
+	Zuheir
