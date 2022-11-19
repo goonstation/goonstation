@@ -17,7 +17,7 @@
 					LAGCHECK(LAG_LOW)
 			if (2)
 				while (spawnamount > 0)
-					new /obj/critter/mouse(pestlandmark)
+					new /mob/living/critter/small_animal/mouse(pestlandmark)
 					spawnamount -= 1
 					LAGCHECK(LAG_LOW)
 			if (3)

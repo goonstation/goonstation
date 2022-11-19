@@ -40519,7 +40519,7 @@
 	},
 /area/station/hallway/primary/south)
 "pcj" = (
-/obj/critter/mouse/remy,
+/mob/living/critter/small_animal/mouse/remy,
 /obj/machinery/drainage,
 /obj/cable{
 	icon_state = "1-4"
@@ -46198,7 +46198,7 @@
 /turf/simulated/floor/delivery,
 /area/station/hallway/primary/south)
 "tEd" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "tEL" = (
