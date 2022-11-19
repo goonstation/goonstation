@@ -426,7 +426,8 @@
 	})
 "cq" = (
 /obj/machinery/vending/pda{
-	dir = 4
+	dir = 4;
+	pixel_x = -7
 	},
 /turf/simulated/floor/terrazzo/black,
 /area/station/hallway/primary/west)
@@ -721,7 +722,8 @@
 /area/station/hallway/primary/north)
 "dS" = (
 /obj/machinery/vending/book{
-	dir = 4
+	dir = 4;
+	pixel_x = -5
 	},
 /turf/simulated/floor/terrazzo,
 /area/station/hallway/primary/west)
@@ -1472,7 +1474,8 @@
 	})
 "hi" = (
 /obj/machinery/vending/cigarette{
-	dir = 4
+	dir = 4;
+	pixel_x = -4
 	},
 /obj/machinery/light{
 	dir = 8;
@@ -2291,7 +2294,8 @@
 	})
 "lU" = (
 /obj/machinery/vending/air_vendor{
-	dir = 4
+	dir = 4;
+	pixel_x = -5
 	},
 /turf/simulated/floor/terrazzo/black,
 /area/station/hallway/primary/west)
@@ -5315,7 +5319,8 @@
 /area/listeningpost/solars)
 "Cf" = (
 /obj/machinery/vending/floppy{
-	dir = 4
+	dir = 4;
+	pixel_x = -7
 	},
 /turf/simulated/floor/terrazzo,
 /area/station/hallway/primary/west)
@@ -6122,7 +6127,8 @@
 	})
 "GE" = (
 /obj/machinery/vending/coffee{
-	dir = 4
+	dir = 4;
+	pixel_x = -6
 	},
 /turf/simulated/floor/terrazzo,
 /area/station/hallway/primary/west)
@@ -8867,7 +8873,8 @@
 	})
 "Wl" = (
 /obj/machinery/vending/computer3{
-	dir = 4
+	dir = 4;
+	pixel_x = -7
 	},
 /obj/machinery/light{
 	dir = 8;
