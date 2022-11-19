@@ -1378,7 +1378,6 @@
 
 				if(TIME < last_queue_op + 5)
 					return
-
 				else
 					last_queue_op = TIME
 
