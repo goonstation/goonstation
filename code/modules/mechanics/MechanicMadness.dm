@@ -3439,8 +3439,6 @@
 	proc/do_walk(var/datum/mechanicsMessage/input)
 		if (ON_COOLDOWN(src, "movement_delay", move_lag))
 			return
-		if(!use_power(MECHCOMP_LOW_POWER))
-			return
 		var/direction = text2num_safe(input.signal)
 		if (direction == null)
 			direction = dirname_to_dir(input.signal)
@@ -3484,6 +3482,10 @@
 		set_glide_size(S)
 
 	proc/set_glide_size(var/obj/item/storage/S)
+		if(use_power(MECHCOMP_MED_POWER))
+			move_lag = initial(move_lag)
+		else
+			move_lag = initial(move_lag) * 3
 		S.glide_size = (32 / move_lag) * world.tick_lag
 		S.animate_movement = FORWARD_STEPS
 
@@ -3494,8 +3496,6 @@
 		if (S.anchored)
 			return FALSE
 		if (!isturf(S.loc) || (istype(S.loc, /turf/space) && !istype(S.loc, /turf/space/fluid)))
-			return FALSE
-		if(!use_power(MECHCOMP_MED_POWER))
 			return FALSE
 		return TRUE
 
