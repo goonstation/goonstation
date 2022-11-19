@@ -572,6 +572,7 @@ datum
 						qdel(invisible_list)
 						invisible_list = null
 						invisible_people = null
+						not_yet_invisible = null
 
 		drug/THC
 			name = "tetrahydrocannabinol"
