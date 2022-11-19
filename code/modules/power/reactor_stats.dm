@@ -112,7 +112,7 @@
 		if(G.carbon_dioxide) .["Carbon Dioxide|mols"] = G.carbon_dioxide
 		if(G.nitrogen) .["Nitrogen|mols"] = G.nitrogen
 
-		.["Pressure|Pa"] = MIXTURE_PRESSURE(G)*1000
+		.["Pressure|Pa"] = MIXTURE_PRESSURE(G) KILO PASCALS
 		.["Temperature|K"] = G.temperature
 		.["Fuel Burnt|units"] = G.fuel_burnt
 		.["Heat Capacity|J/K"] = HEAT_CAPACITY(G)
@@ -135,7 +135,7 @@
 		if(G?.ARCHIVED(nitrogen)) .["Nitrogen|mols"] = G.ARCHIVED(nitrogen)
 
 		if (G) //sorry, this was still somehow causing runtimes????
-			.["Pressure|Pa"] = MIXTURE_PRESSURE(G)*1000
+			.["Pressure|Pa"] = MIXTURE_PRESSURE(G) KILO PASCALS
 			.["Temperature|K"] = G.ARCHIVED(temperature)
 			.["Fuel Burnt|units"] = G.fuel_burnt
 			.["Heat Capacity|J/K"] = HEAT_CAPACITY_ARCHIVED(G)
@@ -158,12 +158,12 @@
 	.["Output|W"] = teg.lastgen
 	.["Temperature In (Hot)|K"] = teg_hot.air1?.temperature
 	.["Temperature Out (Hot)|K"] = teg_hot.air2?.temperature
-	.["Pressure In (Hot)|Pa"] = teg_hot.air1 ? MIXTURE_PRESSURE(teg_hot.air1)*1000 : 0
-	.["Pressure Out (Hot)|Pa"] = teg_hot.air2 ? MIXTURE_PRESSURE(teg_hot.air2)*1000 : 0
+	.["Pressure In (Hot)|Pa"] = teg_hot.air1 ? MIXTURE_PRESSURE(teg_hot.air1) KILO PASCALS : 0
+	.["Pressure Out (Hot)|Pa"] = teg_hot.air2 ? MIXTURE_PRESSURE(teg_hot.air2) KILO PASCALS : 0
 	.["Temperature In (Cold)|K"] = teg_cold.air1?.temperature
 	.["Temperature Out (Cold)|K"] = teg_cold.air2?.temperature
-	.["Pressure In (Cold)|Pa"] = teg_cold.air1 ? MIXTURE_PRESSURE(teg_cold.air1)*1000 : 0
-	.["Pressure Out (Cold)|Pa"] = teg_cold.air2 ? MIXTURE_PRESSURE(teg_cold.air2)*1000 : 0
+	.["Pressure In (Cold)|Pa"] = teg_cold.air1 ? MIXTURE_PRESSURE(teg_cold.air1) KILO PASCALS : 0
+	.["Pressure Out (Cold)|Pa"] = teg_cold.air2 ? MIXTURE_PRESSURE(teg_cold.air2) KILO PASCALS : 0
 
 /obj/machinery/power/reactor_stats/proc/get_chamber_turfs()
 	. = list()
