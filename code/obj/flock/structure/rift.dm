@@ -51,7 +51,6 @@
 				src.flock.claimTurf(flock_convert_turf(floor))
 			else
 				flock_convert_turf(floor)
-		shuffle_list(candidate_turfs)
 		for (var/i in 1 to min(sentinel_count, length(candidate_turfs)))
 			var/turf/simulated/floor/feather/floor = candidate_turfs[i]
 			if (!flock_is_blocked_turf(floor))
