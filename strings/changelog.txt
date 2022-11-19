@@ -1,5 +1,9 @@
 
 (t)sat nov 19 22
+(u)Mr. Moriarty
+(p)11836
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)AI station minimaps will now display the location of all AI cores and AI eyes.
 (u)Glamurio (Ryou)
 (p)11331
 (e)🎨⚖💅🎩|C-Sprites, C-Balance, C-QoL, A-Clothing
