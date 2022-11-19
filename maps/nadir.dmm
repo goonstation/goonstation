@@ -7923,6 +7923,7 @@
 	icon_state = "1-2"
 	},
 /obj/access_spawn/engineering,
+/obj/access_spawn/cargo,
 /turf/simulated/floor/black,
 /area/station/engine/inner{
 	name = "Transception Array Control"
@@ -23672,13 +23673,6 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/item/paper{
-	icon_state = "index_card";
-	info = "NADIR-TRSC-COMM: Cargo personnel are authorized to unlock the Transception Array area power controller. ";
-	name = "printed card";
-	pixel_x = -5;
-	pixel_y = -1
-	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/quartermaster/storage{
 	name = "Cargo Auxiliary Endpoint"
@@ -34352,16 +34346,12 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
-	cell_type = 7500;
-	dir = 1;
-	name = "Transception Antenna APC";
-	pixel_y = 24;
-	req_access = list(43,31)
-	},
 /obj/decal/tile_edge/line/yellow{
 	dir = 1;
 	icon_state = "line1"
+	},
+/obj/machinery/power/apc/autoname_north{
+	cell_type = 5000
 	},
 /turf/simulated/floor/blackwhite{
 	dir = 9
@@ -50996,6 +50986,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/engineering,
+/obj/access_spawn/cargo,
 /turf/simulated/floor/minitiles/black,
 /area/station/engine/inner{
 	name = "Transception Array Control"
