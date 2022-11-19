@@ -449,8 +449,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 
 		if(target.repair_status > 2)
 			user.show_text("You finish welding the array cabinet.", "blue")
-			..()
-			return
+			return ..()
 
 		src.onRestart()
 
