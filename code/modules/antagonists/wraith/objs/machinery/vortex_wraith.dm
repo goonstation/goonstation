@@ -29,7 +29,7 @@
 	var/max_health = 30
 	var/portal_level = 0 //Goes up by 1 when a threshold of upgrade is reached for additional effects
 	var/active = TRUE	//Are we summoning mobs
-	var/upgrate_cost_increase = 30 //Exponential cost increase on each upgrade
+	var/upgrate_cost_increase = 20 //Exponential cost increase on each upgrade
 
 	New()
 		src.visible_message("<span class='alert'>A [src] appears into view, some shadows coalesce within!</b></span>")
