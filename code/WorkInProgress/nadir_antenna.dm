@@ -1084,9 +1084,10 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 
 		if ("send")
 			var/manifest_identifier = locate(subaction) in src.known_pads
-			var/list/manifest = known_pads[manifest_identifier]
-			if(manifest["Identifier"])
-				src.build_command(manifest["INT_TARGETID"])
+			if(manifest_identifier && known_pads[manifest_identifier])
+				var/list/manifest = known_pads[manifest_identifier]
+				if(manifest["Identifier"])
+					src.build_command(manifest["INT_TARGETID"])
 
 	src.add_fingerprint(usr)
 
