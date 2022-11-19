@@ -1302,7 +1302,7 @@
 				if (prob(25))
 					boutput(target, "<span class='alert'>[pick("Your insides don't feel good!", "You don't feel right somehow.", "You feel strange inside.")]</span>")
 
-		logTheThing("combat", user, target, "punches [constructTarget(target, "combat")] with eldritch arms at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "punches [constructTarget(target, "combat")] with eldritch arms at [log_loc(user)].")
 
 		user.lastattacked = target
 
@@ -1519,3 +1519,19 @@
 		src.setDisarmSpecial (/datum/item_special/slam/no_item_attack)
 		src.setHarmSpecial (/datum/item_special/swipe/limb)
 
+//I wanted a claw-like limb but without the random item pickup fail
+/datum/limb/tentacle
+	harm(mob/target, var/mob/living/user)
+		if(check_target_immunity( target ))
+			return FALSE
+		logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
+		var/obj/item/affecting = target.get_affecting(user)
+		user.calculate_melee_attack()
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 8, rand(3, 5), can_punch = FALSE, can_kick = FALSE)
+		user.attack_effects(target, affecting)
+		var/action = pick("maim", "maul", "mangle", "slap", "lacerate", "mutilate")
+		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with [src.holder]!</span></b>"
+		msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_3.ogg'
+		msgs.damage_type = DAMAGE_CUT
+		msgs.flush(SUPPRESS_LOGS)
+		user.lastattacked = target

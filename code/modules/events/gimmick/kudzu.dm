@@ -10,10 +10,8 @@
 		if(ishuman( M ))
 			if( user == M )
 				boutput(user, "You feed yourself the [src]. <span class='alert'>Oh god!</span>")
-				logTheThing(LOG_COMBAT, user, "fed themself a [src].")
 			else
 				boutput(user, "You feed [M] the [src]. <span class='alert'>Oh god!</span>")
-				logTheThing(LOG_COMBAT, user, "fed [constructTarget(M,"combat")] a [src].")
 			animate(M, color = "#0F0", time = 300)//TODO: See below.
 			qdel(src)
 			return
@@ -26,8 +24,9 @@
 				new /obj/spacevine/alien/living(A, src.to_spread)
 			else
 				new /obj/spacevine/living(A, src.to_spread)
+
 			boutput(user, "You plant the [src] on the [A].")
-			logTheThing(LOG_COMBAT, user, "plants [src] (kudzu) at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "plants [src] (kudzu) at [log_loc(src)].")
 			message_admins("[key_name(user)] planted kudzu at [log_loc(src)].")
 			user.u_equip(src)
 			qdel(src)
@@ -53,10 +52,12 @@
 		var/kudzloc = isturf(startturf) ? startturf : pick_landmark(LANDMARK_KUDZUSTART)
 		if (prob(1) || aggressive)
 			var/obj/spacevine/alien/living/L = new /obj/spacevine/alien/living(kudzloc, KUDZU_TO_SPREAD_INITIAL)
-			L.set_loc(kudzloc)
+			if(!QDELETED(L))
+				L.set_loc(kudzloc)
 		else
 			var/obj/spacevine/living/L = new /obj/spacevine/living(kudzloc, KUDZU_TO_SPREAD_INITIAL)
-			L.set_loc(kudzloc)
+			if(!QDELETED(L))
+				L.set_loc(kudzloc)
 
 	admin_call(var/source)
 		if (..())
@@ -258,7 +259,8 @@
 
 	if (dogrowth == 1)
 		var/obj/V = new src.vinepath(loc=Vspread, to_spread=to_spread-1)
-		V.set_loc(Vspread)
+		if(!QDELETED(V))
+			V.set_loc(Vspread)
 	if (src.growth < 20 && !stunted)
 		src.growth++
 		src.update_self()
@@ -364,7 +366,8 @@
 		SPAWN(0)
 			if (prob(20) && !locate(/obj/spacevine/alien/flower) in get_turf(src))
 				var/obj/spacevine/alien/flower/F = new /obj/spacevine/alien/flower()
-				F.set_loc(src.loc)
+				if(!QDELETED(F))
+					F.set_loc(src.loc)
 
 	herbicide()
 		return

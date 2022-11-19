@@ -105,7 +105,7 @@ What are the archived variables for?
 	graphic = 0
 
 	UPDATE_GAS_MIXTURE_GRAPHIC(graphic, GAS_IMG_PLASMA, toxins)
-
+	UPDATE_GAS_MIXTURE_GRAPHIC(graphic, GAS_IMG_RAD, radgas)
 	if(length(trace_gases))
 		// refs are accessed directly to optimize functions as trace_gases
 		// has already been asserted above instead of utilizing get_trace_gas_by_type()

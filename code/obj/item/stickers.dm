@@ -212,7 +212,7 @@
 			src.plane = F.plane
 			F.vis_contents += src
 
-	proc/remove_from_attached()
+	proc/remove_from_attached(do_loc = TRUE)
 		if (!src.attached)
 			return
 		if (istype(src.attached, /atom/movable))
@@ -221,8 +221,8 @@
 		else if (istype(src.attached, /turf))
 			var/turf/F = src.attached
 			F.vis_contents -= src
-
-		src.set_loc(src.attached.loc)
+		if(do_loc)
+			src.set_loc(src.attached.loc)
 		src.layer = initial(src.layer)
 		src.plane = initial(src.plane)
 		src.pixel_x = initial(src.pixel_x)
@@ -236,6 +236,17 @@
 	disposing()
 		src.remove_from_attached()
 		..()
+
+	set_loc(newloc)
+		. = ..()
+		if(src.attached && src.loc != src.attached)
+			remove_from_attached(do_loc = FALSE)
+
+	Move(NewLoc, direct)
+		. = ..()
+		if(src.attached && src.loc != src.attached)
+			remove_from_attached(do_loc = FALSE)
+
 
 /obj/item/sticker/gold_star
 	name = "gold star sticker"
@@ -472,7 +483,7 @@
 			src.camera.set_camera_status(TRUE)
 		if (src.radio)
 			src.radio.invisibility = INVIS_ALWAYS
-		logTheThing(LOG_COMBAT, user, "places a spy sticker on [constructTarget(A,"combat")] at [log_loc(user)].")
+		logTheThing(ismob(A) ? LOG_COMBAT : LOG_STATION, user, "places a spy sticker on [constructTarget(A,"combat")] at [log_loc(user)].")
 
 		..()
 

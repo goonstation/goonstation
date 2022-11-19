@@ -53,8 +53,7 @@
 
 /datum/aiTask/sequence/goalbased/critter/attack/get_targets()
 	var/mob/living/critter/C = holder.owner
-	var/targets = C.seek_target(src.max_dist)
-	return get_path_to(holder.owner, targets, max_dist*2, 1, null, FALSE)
+	return C.seek_target(src.max_dist)
 
 /////////////// The aiTask/succeedable handles the behaviour to do when we're in range of the target
 
@@ -107,8 +106,7 @@
 
 /datum/aiTask/sequence/goalbased/critter/scavenge/get_targets()
 	var/mob/living/critter/C = holder.owner
-	var/targets = C.seek_scavenge_target(src.max_dist)
-	return get_path_to(holder.owner, targets, max_dist*2, 1, null, FALSE)
+	return C.seek_scavenge_target(src.max_dist)
 
 ////////
 
@@ -161,8 +159,7 @@
 
 /datum/aiTask/sequence/goalbased/critter/eat/get_targets()
 	var/mob/living/critter/C = holder.owner
-	var/targets = C.seek_food_target(src.max_dist)
-	return get_path_to(holder.owner, targets, max_dist*2, 1, null, FALSE)
+	return C.seek_food_target(src.max_dist)
 
 ////////
 
@@ -189,7 +186,7 @@
 		var/obj/item/reagent_containers/food/snacks/T = holder.target
 		if(C && T && BOUNDS_DIST(holder.owner, holder.target) == 0)
 			holder.owner.set_dir(get_dir(holder.owner, holder.target))
-			T.Eat(C)
+			T.Eat(C, C, TRUE)
 			has_started = TRUE
 
 /datum/aiTask/succeedable/critter/scavenge/on_reset()
@@ -197,8 +194,4 @@
 
 // Don't worry about this, we need to enable unsimulated turf pathing for the critter gauntlet
 /datum/aiTask/sequence/goalbased/critter
-	New()
-		..()
-		if(istype(subtasks[subtask_index], /datum/aiTask/succeedable/move))
-			var/datum/aiTask/succeedable/move/m_subtask = subtasks[subtask_index]
-			m_subtask.move_through_space = TRUE
+	move_through_space = TRUE

@@ -709,7 +709,7 @@ datum/pump_ui/circulator_ui
 			src.transformation_mngr.generator = src
 
 			//furnaces
-			for(var/obj/machinery/power/furnace/F in machine_registry[MACHINES_MISC])
+			for_by_tcl(F, /obj/machinery/power/furnace)
 				src.furnaces += F
 
 			src.generate_variants()
