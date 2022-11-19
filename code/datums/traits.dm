@@ -141,26 +141,15 @@
 			other.addTrait(id, traits[id])
 
 	proc/addTrait(id, datum/trait/trait_instance=null)
-		// Blacklist for harmful afterlife traits that shouldn't be added
-		var/blacklist_afterlife = list(
-			"deaf",
-			"shortsighted",
-			"blind",
-			"mildly_mutated",
-			"addict",
-			"randomallergy",
-			"medicalallergy",
-			"allergic",
-			"clutz",
-			"leftfeet"
-		)
-		if(!(id in traits) && !((id in blacklist_afterlife) && inafterlifebar(owner)) )
+		if(!(id in traits))
 			var/datum/trait/T = null
 			if(isnull(trait_instance))
 				var/traitType = traitList[id].type
 				T = new traitType
 			else
 				T = trait_instance
+			if(T.afterlife_blacklisted && inafterlifebar(owner))
+				return
 			traits[id] = T
 			if(!isnull(owner))
 				if(T.isMoveTrait)
@@ -205,6 +194,7 @@
 	var/requiredUnlock = null //If set to a string, the xp unlock of that name is required for this to be selectable.
 	var/isMoveTrait = FALSE // If TRUE, onMove will be called each movement step from the holder's mob
 	var/datum/mutantrace/mutantRace = null //If set, should be in the "species" category.
+	var/afterlife_blacklisted = FALSE // If TRUE, trait will not be added in the Afterlife Bar
 
 	New()
 		ASSERT(src.name)
@@ -415,6 +405,7 @@
 	icon_state = "glassesG"
 	category = list("vision")
 	points = 1
+	afterlife_blacklisted = TRUE
 
 	onAdd(var/mob/owner)
 		if(owner.bioHolder)
@@ -432,6 +423,7 @@
 	id = "blind"
 	category = list("vision")
 	points = 2
+	afterlife_blacklisted = TRUE
 
 	onAdd(var/mob/owner)
 		if(owner.bioHolder)
@@ -451,6 +443,7 @@
 	icon_state = "mildly_mutatedB"
 	points = 0
 	category = list("genetics")
+	afterlife_blacklisted = TRUE
 
 	onAdd(var/mob/owner)
 		var/datum/bioHolder/B = owner.bioHolder
@@ -706,6 +699,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "randomallergy"
 	points = 0
 	category = list("allergy")
+	afterlife_blacklisted = TRUE
 
 	var/allergen = null
 
@@ -734,6 +728,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "medicalallergy"
 	points = 1
 	category = list("allergy")
+	afterlife_blacklisted = TRUE
 
 	allergen_id_list = list("spaceacillin","morphine","teporone","salicylic_acid","calomel","synthflesh","omnizine","saline","anti_rad","smelling_salt",\
 	"haloperidol","epinephrine","insulin","silver_sulfadiazine","mutadone","ephedrine","penteticacid","antihistamine","styptic_powder","cryoxadone","atropine",\
@@ -745,6 +740,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "addict"
 	icon_state = "syringe"
 	points = 2
+	afterlife_blacklisted = TRUE
 	var/selected_reagent = "ethanol"
 	var/addictive_reagents = list("bath salts", "lysergic acid diethylamide", "space drugs", "psilocybin", "cat drugs", "methamphetamine", "ethanol", "nicotine")
 	var/do_addiction = FALSE
@@ -906,6 +902,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "You will sometimes randomly pick up nearby items."
 	id = "kleptomaniac"
 	points = 1
+	afterlife_blacklisted = TRUE
 
 	onLife(var/mob/owner, var/mult)
 		if(!owner.stat && !owner.lying && can_act(owner) && !owner.equipped() && probmult(6))
@@ -920,12 +917,14 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "When interacting with anything you have a chance to interact with something different instead."
 	id = "clutz"
 	points = 2
+	afterlife_blacklisted = TRUE
 
 /datum/trait/leftfeet
 	name = "Two left feet"
 	desc = "Every now and then you'll stumble in a random direction."
 	id = "leftfeet"
 	points = 1
+	afterlife_blacklisted = TRUE
 
 /datum/trait/scaredshitless
 	name = "Scared Shitless"

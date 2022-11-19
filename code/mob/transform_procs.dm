@@ -776,7 +776,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	// 	newbody.abilityHolder.transferOwnership(newbody)
 	// src.abilityHolder = null
 
-	// There are some traits removed in the afterlife bar: see proc/traitHolder/addTrait()
+	// There are some traits removed in the afterlife bar, these have afterlife_blacklist set to TRUE.
 
 	newbody.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
 	newbody.set_clothing_icon_dirty()
