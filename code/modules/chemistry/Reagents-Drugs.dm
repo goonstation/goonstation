@@ -502,12 +502,18 @@ datum
 			fluid_b = 120
 			transparency = 50
 			var/counter = 1
-			var/list/invisible_people = list()
-			var/list/image/invisible_list = list()
+			var/list/invisible_people
+			var/list/image/invisible_list
+			var/list/mob/not_yet_invisible
+			var/tick_counter = 0 // we actually count ticks, no mult here
 
 			on_mob_life(var/mob/M, var/mult = 1)
+				if(isnull(invisible_people))
+					invisible_people = list()
+					invisible_list = list()
 				if(!M) M = holder.my_atom
 				src.counter += 1 * mult //around half realtime
+				src.tick_counter += 1
 
 				if(probmult(3))
 					boutput(M, pick("<span class='notice'>You feel eerily alone..</span>",\
@@ -522,8 +528,13 @@ datum
 					if(M.ear_damage < 15)
 						M.take_ear_damage(3 * mult, 1) //makes it so you can't hear people after a bit
 
-					var/list/candidates = list() //adds people just out of sight to the list of "make go away"
-					candidates = by_type[/mob/living/carbon/human] - invisible_people - viewers(M)
+					var/list/candidates = null
+					// every 15 ticks we check for newly created mobs just in case
+					if(isnull(not_yet_invisible) || tick_counter % 15 == 0)
+						not_yet_invisible = by_type[/mob/living/carbon/human] - invisible_people
+					var/list/mob/current_viewers = viewers(M)
+					candidates = not_yet_invisible - current_viewers
+					not_yet_invisible &= current_viewers
 
 					if(length(candidates) > 0)  //makes the other people disappear
 						for(var/mob/living/carbon/human/chosen in candidates)
