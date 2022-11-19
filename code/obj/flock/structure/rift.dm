@@ -41,8 +41,9 @@
 			if (istype(S, /turf/simulated/floor/feather))
 				continue
 			candidate_turfs += S
-		while (length(candidate_turfs) > 13)
-			candidate_turfs -= pick(candidate_turfs)
+		shuffle_list(candidate_turfs)
+		if (length(candidate_turfs) > 13)
+			candidate_turfs = candidate_turfs.Copy(1, 14)
 
 		var/sentinel_count = 2
 		for(var/turf/simulated/floor/floor as anything in candidate_turfs)
