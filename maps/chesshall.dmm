@@ -504,6 +504,9 @@
 /turf/simulated/floor/carpet/red,
 /area/listeningpost)
 "cU" = (
+/obj/landmark/start{
+	name = "Security Officer"
+	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/podbay)
 "cX" = (
@@ -1581,6 +1584,9 @@
 	dir = 4;
 	tag = "icon-office_chair_red (EAST)"
 	},
+/obj/landmark/start{
+	name = "Security Officer"
+	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/podbay)
 "hR" = (
@@ -2286,7 +2292,7 @@
 	name = "Parking Lot"
 	})
 "lT" = (
-/obj/decal/fakeobjects/vacuumtape,
+/obj/machinery/photocopier,
 /turf/unsimulated/floor/wood/eight,
 /area/station/engine/singcore{
 	name = "Convention Hall";
@@ -6146,7 +6152,7 @@
 /turf/simulated/floor/black/side,
 /area/station/hallway/primary/north)
 "GP" = (
-/obj/decal/fakeobjects/operatorconsole,
+/obj/filing_cabinet,
 /turf/unsimulated/floor/wood,
 /area/station/engine/singcore{
 	name = "Convention Hall";
@@ -6402,6 +6408,12 @@
 /area/station/hangar/main{
 	name = "Parking Lot"
 	})
+"Ih" = (
+/obj/landmark/start{
+	name = "Medical Doctor"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbooth)
 "Ij" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -7903,6 +7915,11 @@
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
 	name = "Toilets"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "arena";
+	name = "Convention Hall Access Control Shutters";
+	dir = 4
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
@@ -54744,7 +54761,7 @@ jP
 Wd
 BA
 KU
-oH
+Ih
 oH
 pr
 Nb
