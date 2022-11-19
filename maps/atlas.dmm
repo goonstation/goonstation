@@ -18911,7 +18911,7 @@
 /turf/simulated/floor/engine,
 /area/station/hangar/main)
 "Un" = (
-/obj/critter/mouse/remy,
+/mob/living/critter/small_animal/mouse/remy,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "Up" = (

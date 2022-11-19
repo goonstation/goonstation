@@ -600,6 +600,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 #undef MAX_CHARGE_RATE
 
 #undef TRSC_FULLREPAIR
+#define INTERLINK_RANGE 100
 
 /obj/machinery/transception_pad
 	icon = 'icons/obj/stationobjs.dmi'
@@ -676,7 +677,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 		signal.source = src
 		signal.data["sender"] = src.net_id
 
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, 20, freq)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, INTERLINK_RANGE, freq)
 
 	///Polls to see if the pad can connect to the array, and if it can, whether said array is capable of completing the pad's request
 	proc/check_transceive()
@@ -844,7 +845,6 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 			M.changeStatus("stunned", 5 SECONDS)
 			M.changeStatus("weakened", 5 SECONDS)
 
-
 /obj/machinery/computer/transception
 	name = "\improper Transception Interlink"
 	desc = "A console capable of remotely connecting to and operating cargo transception pads."
@@ -943,7 +943,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 		signal.source = src
 		signal.data["sender"] = src.net_id
 
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, 20, freq)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, INTERLINK_RANGE, freq)
 
 /obj/machinery/computer/transception/attack_hand(var/mob/user as mob)
 	if(!src.allowed(user))
@@ -1067,6 +1067,8 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 				src.build_command(manifest["INT_TARGETID"])
 
 	src.add_fingerprint(usr)
+
+#undef INTERLINK_RANGE
 
 
 #undef TRANSCEIVE_BUSY

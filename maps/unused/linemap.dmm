@@ -3237,7 +3237,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -17661,7 +17661,7 @@
 /obj/item/storage/box/lightbox/tubes,
 /obj/item/device/radio,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/janitor/office)
@@ -24467,7 +24467,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/kitchen)
 "bdP" = (
-/obj/critter/mouse/remy,
+/mob/living/critter/small_animal/mouse/remy,
 /obj/cable{
 	icon_state = "4-8";
 	d1 = 4;

@@ -116,11 +116,11 @@
 		src.add_dialog(user)
 		var/temp_text = ""
 		if(air_contents.temperature > T0C)
-			temp_text = "<FONT color=red>[air_contents.temperature - T0C]</FONT>"
+			temp_text = "<FONT color=red>[TO_CELSIUS(air_contents.temperature)]</FONT>"
 		else if(air_contents.temperature > 170)
-			temp_text = "<FONT color=black>[air_contents.temperature - T0C]</FONT>"
+			temp_text = "<FONT color=black>[TO_CELSIUS(air_contents.temperature)]</FONT>"
 		else
-			temp_text = "<FONT color=blue>[air_contents.temperature - T0C]</FONT>"
+			temp_text = "<FONT color=blue>[TO_CELSIUS(air_contents.temperature)]</FONT>"
 
 		var/dat = "<B>Cryo cell control system</B><BR>"
 		dat += "<B>Current cell temperature:</B> [temp_text]&deg;C<BR>"

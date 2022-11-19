@@ -1,3 +1,8 @@
+#define SOUTHWEST_UNIQUE (1<<6)
+#define NORTHWEST_UNIQUE (1<<7)
+#define SOUTHEAST_UNIQUE (1<<8)
+#define NORTHEAST_UNIQUE (1<<9)
+
 var/global/list
 	cardinal = list(NORTH, SOUTH, EAST, WEST)
 	ordinal = list(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST)
