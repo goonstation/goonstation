@@ -2070,7 +2070,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/storage/northeast)
 "afU" = (
@@ -2803,7 +2803,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "ahR" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "ahS" = (
@@ -6756,7 +6756,6 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon10,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "asV" = (
@@ -6862,7 +6861,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "att" = (
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon11,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
@@ -32377,7 +32375,7 @@
 /area/station/ranch)
 "bYv" = (
 /obj/decal/cleanable/dirt,
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "bYA" = (
@@ -43457,7 +43455,7 @@
 /area/station/maintenance/southeast)
 "gDO" = (
 /obj/disposalpipe/segment/vertical,
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/south)
 "gEt" = (
@@ -45535,6 +45533,10 @@
 	dir = 8
 	},
 /area/station/security/main)
+"iKF" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon11,
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "iKH" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -45674,7 +45676,7 @@
 	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt,
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /obj/cable{
 	d1 = 1;
 	d2 = 8;
@@ -54469,7 +54471,7 @@
 /turf/simulated/floor,
 /area/station/mining/magnet)
 "rgA" = (
-/obj/critter/mouse/remy,
+/mob/living/critter/small_animal/mouse/remy,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "rgP" = (
@@ -59337,6 +59339,10 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
+"vEX" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon10,
+/turf/simulated/floor/grey,
+/area/station/hallway/primary/north)
 "vFg" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -62260,7 +62266,7 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "xZA" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /obj/item/device/multitool,
 /turf/simulated/floor/grime,
 /area/station/maintenance/southeast)
@@ -114574,7 +114580,7 @@ aFv
 cCG
 aFv
 xQm
-wHG
+vEX
 rDI
 aFv
 nbW
@@ -120312,7 +120318,7 @@ neS
 aAg
 adK
 uzL
-uzL
+iKF
 aum
 meA
 jCn

@@ -46,7 +46,7 @@ Map: [global.map_setting]
 	if(success)
 		tgui_alert(user_client.mob, "Issue reported!", "Issue reported!")
 		if(prob(easteregg_chance))
-			var/obj/critter/roach/actual_bug = new(user_client.mob.loc)
+			var/mob/living/critter/small_animal/cockroach/actual_bug = new(user_client.mob.loc)
 			actual_bug.name = title
 	else
 		tgui_alert(user_client.mob, "There has been an issue with reporting your bug, please try again later!", "Issue not reported!")
