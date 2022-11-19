@@ -495,7 +495,7 @@ datum
 			id = "solipsizine"
 			description = "A highly potent hallucinogenic substance that causes intense delirium and acute inability to percieve others."
 			reagent_state = LIQUID
-			depletion_rate = 0.1
+			depletion_rate = 0.2
 			addiction_prob = 8
 			fluid_r = 200
 			fluid_g = 120
@@ -503,7 +503,6 @@ datum
 			transparency = 50
 			var/counter = 1
 			var/list/invisible_people = list()
-			var/image/invisible_img = null
 			var/list/image/invisible_list = list()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -528,8 +527,8 @@ datum
 
 					if(length(candidates) > 0)  //makes the other people disappear
 						for(var/mob/living/carbon/human/chosen in candidates)
-							invisible_img = image(null, chosen, null, chosen.layer)
-							invisible_img.name = "​"
+							var/image/invisible_img = image(null, chosen, null, chosen.layer)
+							invisible_img.name = "\u200b"
 							invisible_img.override = TRUE
 							var/client/client = M.client //hold a reference to the client directly
 							client?.images.Add(invisible_img)
@@ -556,12 +555,9 @@ datum
 
 					if (M.client)
 						var/client/client = M.client
-						invisible_img.override = FALSE
 						client?.images.Remove(invisible_list)//brings everyone back
 						for(var/image/I in invisible_list)
 							qdel(I)
-						qdel(invisible_img)
-						invisible_img = null
 						qdel(invisible_list)
 						invisible_list = null
 						invisible_people = null
