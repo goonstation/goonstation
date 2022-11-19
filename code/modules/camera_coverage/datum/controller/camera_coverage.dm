@@ -12,7 +12,7 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 #if defined(IM_REALLY_IN_A_FUCKING_HURRY_HERE) && !defined(SPACEMAN_DMM)
 	return
 #endif
-#if !defined(MAP_OVERRIDE_POD_WARS) && !defined(UPSCALED_MAP) && !defined(MAP_OVERRIDE_EVENT)
+#if !defined(MAP_OVERRIDE_POD_WARS) && !defined(UPSCALED_MAP)
 	var/mutable_appearance/ma = new(image('icons/misc/static.dmi', icon_state = "static"))
 	ma.plane = PLANE_HUD
 	ma.layer = 100

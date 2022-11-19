@@ -175,19 +175,12 @@
 #elif defined(MAP_OVERRIDE_EVENT)
 #include "event.dm"
 
-#elif defined(MAP_OVERRIDE_CHESSHALL)
-#include "chesshall.dm"
-
 #elif defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
 #include "gottagofast.dm"
 
 //Entry below is the "default" map
 #else
 #include "standard.dm"
-#endif
-
-#if FOOTBALL_MODE && !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW) && !defined(UNIT_TESTS) && !defined(SPACE_PREFAB_RUNTIME_CHECKING) && !defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)
-INCLUDE_MAP("../zamujasa/football2.dmm")
 #endif
 
 #endif

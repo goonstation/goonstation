@@ -38,8 +38,7 @@ var/global/list/mapNames = list(
 	"Manta" =				list("id" = "MANTA",		"settings" = "manta",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 80),
 	"Wrestlemap" =			list("id" = "WRESTLEMAP",	"settings" = "wrestlemap",		"playerPickable" = FALSE),
 	"pod_wars" =			list("id" = "POD_WARS",		"settings" = "pod_wars",		"playerPickable" = FALSE),
-	"Event" =				list("id" = "EVENT",		"settings" = "destiny/clarion",	"playerPickable" = FALSE),
-	"Chess Hall" =			list("id" = "CHESSHALL",	"settings" = "chesshall",		"playerPickable" = FALSE),
+	"Event" =				list("id" = "EVENT",		"settings" = "event",	"playerPickable" = FALSE),
 	"blank" =				list("id" = "BLANK",		"settings" = "", 				"playerPickable" = FALSE),
 	"blank_underwater" =	list("id" = "BLANK_UNDERWATER", "settings" = "", 			"playerPickable" = FALSE)
 )
@@ -1035,8 +1034,8 @@ var/global/list/mapNames = list(
 	valid_nuke_targets = list()
 
 
-/datum/map_settings/chesshall
-	name = "CHESSHALL"
+/datum/map_settings/event
+	name = "EVENT"
 	display_name = "Seneca Memorial Chess Hall"
 	goonhub_map = "https://cdn.discordapp.com/attachments/890223118482800790/1043358329889636483/chess_hall_upd1.png"
 	walls = /turf/simulated/wall/auto/supernorn
