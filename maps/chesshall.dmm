@@ -81,16 +81,23 @@
 	},
 /turf/simulated/floor/terrazzo,
 /area/station/hallway/primary/west)
-"av" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+"au" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
 	},
-/obj/grille/catwalk,
-/obj/effects/background_objects/quadriga,
-/turf/simulated/floor/airless/plating/catwalk,
-/area/station/solar/east)
+/obj/table/folding,
+/obj/item/gameclock{
+	name = "Board 9 game clock"
+	},
+/obj/item/paper/chesspamphlet{
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/wood/seven,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "aw" = (
 /obj/decal/tile_edge/line/black{
 	dir = 5;
@@ -301,6 +308,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crewquarters/garbagegarbs)
+"br" = (
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
+/turf/simulated/floor/glassblock/transparent_grey,
+/area/station/hallway/secondary/entry)
 "by" = (
 /turf/simulated/floor,
 /area/station/storage/emergency)
@@ -362,20 +375,6 @@
 /obj/machinery/light/runway_light,
 /turf/space,
 /area/space)
-"cd" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/table/folding,
-/obj/item/gameclock{
-	name = "Board 4 game clock"
-	},
-/turf/unsimulated/floor/wood/seven,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
 "ce" = (
 /obj/lattice{
 	dir = 8;
@@ -498,10 +497,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
-"cN" = (
-/obj/table/reinforced/auto,
-/turf/simulated/floor/glassblock/transparent_grey,
-/area/station/hallway/secondary/entry)
 "cP" = (
 /obj/table/wood/auto,
 /obj/machinery/recharger,
@@ -510,12 +505,6 @@
 "cU" = (
 /turf/simulated/floor,
 /area/station/security/checkpoint/podbay)
-"cW" = (
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/turf/simulated/floor/glassblock/transparent_grey,
-/area/station/hallway/secondary/entry)
 "cX" = (
 /obj/stool/chair/office,
 /obj/landmark/start{
@@ -637,6 +626,23 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
+"dw" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/table/folding,
+/obj/item/gameclock{
+	name = "Board 11 game clock"
+	},
+/obj/item/paper/chesspamphlet{
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/wood/seven,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "dz" = (
 /obj/item/device/radio/intercom,
 /obj/cable{
@@ -758,6 +764,12 @@
 	name = "Convention Hall";
 	do_not_irradiate = 1
 	})
+"dY" = (
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
+/turf/simulated/floor/glassblock/transparent_red,
+/area/station/hallway/secondary/entry)
 "ea" = (
 /turf/simulated/floor{
 	desc = "";
@@ -802,12 +814,6 @@
 "eh" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/solar/east)
-"em" = (
-/turf/simulated/floor/carpet/purple/fancy/edge/east,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
 "ep" = (
 /obj/machinery/light/small/floor/netural,
 /obj/decal/tile_edge/line/black{
@@ -819,6 +825,10 @@
 	name = "Convention Hall";
 	do_not_irradiate = 1
 	})
+"et" = (
+/obj/machinery/light,
+/turf/simulated/floor/glassblock/transparent_grey,
+/area/station/hallway/secondary/entry)
 "ew" = (
 /turf/simulated/floor/caution/corner/se,
 /area/station/hangar/main{
@@ -980,6 +990,15 @@
 	name = "Convention Hall";
 	do_not_irradiate = 1
 	})
+"fd" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/glassblock/transparent_grey,
+/area/station/hallway/secondary/entry)
 "fe" = (
 /obj/machinery/light/small/floor/netural,
 /obj/cable{
@@ -1098,12 +1117,6 @@
 	dir = 4
 	},
 /area/listeningpost)
-"fA" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/glassblock/transparent_grey,
-/area/station/hallway/secondary/entry)
 "fC" = (
 /obj/machinery/vending/alcohol,
 /obj/machinery/light_switch/north,
@@ -1146,11 +1159,6 @@
 	dir = 4
 	},
 /area/listeningpost)
-"fO" = (
-/obj/machinery/light/small/floor/netural,
-/obj/stool/chair/office,
-/turf/simulated/floor/glassblock/transparent_grey,
-/area/station/hallway/secondary/entry)
 "fP" = (
 /obj/grille/catwalk{
 	dir = 9;
@@ -1256,6 +1264,23 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
+"gv" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/table/folding,
+/obj/item/gameclock{
+	name = "Board 17 game clock"
+	},
+/obj/item/paper/chesspamphlet{
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/wood/seven,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "gw" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -1432,6 +1457,13 @@
 	dir = 4
 	},
 /area/listeningpost)
+"hl" = (
+/obj/machinery/light/small/floor/netural,
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/hallway/secondary/entry)
 "hm" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/black/corner{
@@ -1474,6 +1506,34 @@
 	},
 /turf/simulated/floor/terrazzo/black,
 /area/station/hallway/primary/west)
+"hH" = (
+/obj/decal/poster/wallsign/stencil/left/e{
+	pixel_x = -15
+	},
+/obj/decal/tile_edge/floorguide/arrow_n{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/turf/simulated/floor/terrazzo,
+/area/station/hallway/primary/west)
+"hJ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/poster/wallsign/stencil/left/e{
+	pixel_y = -4;
+	pixel_x = -18
+	},
+/obj/decal/poster/wallsign/stencil/left/n{
+	pixel_y = -4;
+	pixel_x = -6
+	},
+/obj/decal/poster/wallsign/stencil/left/t{
+	pixel_y = -4;
+	pixel_x = 6
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/station/hallway/primary/west)
 "hL" = (
 /obj/stool/chair/office/red{
 	dir = 4;
@@ -1506,14 +1566,17 @@
 	},
 /turf/simulated/floor/carpet/blue/standard/narrow/west,
 /area/station/hallway/primary/north)
-"hW" = (
+"hX" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
 	icon_state = "line1"
 	},
 /obj/table/folding,
 /obj/item/gameclock{
-	name = "Board 9 game clock"
+	name = "Board 14 game clock"
+	},
+/obj/item/paper/chesspamphlet{
+	pixel_y = 16
 	},
 /turf/unsimulated/floor/wood/seven,
 /area/station/engine/singcore{
@@ -1547,6 +1610,11 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
+"ib" = (
+/obj/table/reinforced/auto,
+/obj/item/boardgame/chess,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/cafeteria)
 "id" = (
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/plating/random,
@@ -1642,6 +1710,23 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
+"iB" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/table/folding,
+/obj/item/gameclock{
+	name = "Board 5 game clock"
+	},
+/obj/item/paper/chesspamphlet{
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/wood/seven,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "iC" = (
 /obj/decal/tile_edge/line/black{
 	dir = 6;
@@ -1851,6 +1936,9 @@
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
+"jT" = (
+/turf/simulated/floor/glassblock/transparent_red,
+/area/station/hallway/secondary/entry)
 "jU" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -1860,6 +1948,24 @@
 	dir = 1
 	},
 /area/station/hallway/primary/south)
+"jV" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
+"jW" = (
+/obj/access_spawn/captain,
+/obj/machinery/door/airlock/pyro{
+	name = "Toilets"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "arena";
+	name = "Convention Hall Access Control Shutters"
+	},
+/turf/unsimulated/floor/wood,
+/area/station/crew_quarters/toilets)
 "jX" = (
 /turf/space,
 /area/shuttle/escape/station)
@@ -1928,10 +2034,6 @@
 /area/station/hangar/main{
 	name = "Parking Lot"
 	})
-"kq" = (
-/obj/effects/background_objects/antistes,
-/turf/simulated/floor/glassblock/transparent_grey,
-/area/station/hallway/secondary/entry)
 "ks" = (
 /obj/machinery/vending/cola/red,
 /turf/simulated/floor/black,
@@ -1960,12 +2062,6 @@
 	},
 /turf/simulated/floor/terrazzo,
 /area/station/hallway/primary/west)
-"kC" = (
-/turf/simulated/floor/carpet/purple/fancy/edge/nw,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
 "kF" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -2092,10 +2188,6 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
-"lE" = (
-/obj/machinery/light/small/floor/frostedred,
-/turf/simulated/floor/glassblock/transparent_red,
-/area/station/hallway/secondary/entry)
 "lJ" = (
 /turf/simulated/floor,
 /area/station/crew_quarters/catering)
@@ -2152,20 +2244,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
-"ma" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/table/folding,
-/obj/item/gameclock{
-	name = "Board 14 game clock"
-	},
-/turf/unsimulated/floor/wood/seven,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
 "mc" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/health_scanner/wall{
@@ -2371,13 +2449,6 @@
 	dir = 4
 	},
 /area/station/crew_quarters/catering)
-"nm" = (
-/obj/machinery/door/airlock/pyro{
-	dir = 4;
-	name = "Toilets"
-	},
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/toilets)
 "no" = (
 /obj/decal/boxingropeenter,
 /obj/decal/tile_edge/line/black{
@@ -2387,6 +2458,23 @@
 /area/station/crew_quarters/fitness{
 	name = "Chess Ring"
 	})
+"np" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/table/folding,
+/obj/item/gameclock{
+	name = "Board 6 game clock"
+	},
+/obj/item/paper/chesspamphlet{
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/wood/seven,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "nq" = (
 /obj/lattice{
 	dir = 1;
@@ -2394,15 +2482,6 @@
 	},
 /turf/space,
 /area/station/solar/east)
-"nr" = (
-/obj/decal/poster/wallsign/stencil/left/i{
-	pixel_x = -5
-	},
-/obj/decal/poster/wallsign/stencil/left/c{
-	pixel_x = 4
-	},
-/turf/simulated/floor/terrazzo/black,
-/area/station/hallway/primary/west)
 "ns" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -2457,12 +2536,6 @@
 "nA" = (
 /turf/simulated/wall/auto/supernorn/wood,
 /area/station/maintenance/solar/east)
-"nD" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/glassblock/transparent_grey,
-/area/station/hallway/secondary/entry)
 "nE" = (
 /obj/submachine/chef_oven,
 /turf/simulated/floor/black,
@@ -2618,6 +2691,12 @@
 /area/station/crew_quarters/fitness{
 	name = "Chess Ring"
 	})
+"oz" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/ne,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "oA" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/cablesbox{
@@ -2646,16 +2725,25 @@
 	icon_state = "4"
 	},
 /area/shuttle/arrival/station)
-"oL" = (
+"oJ" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
 	icon_state = "line1"
 	},
 /obj/table/folding,
 /obj/item/gameclock{
-	name = "Board 17 game clock"
+	name = "Board 1 game clock"
+	},
+/obj/item/paper/chesspamphlet{
+	pixel_y = 16
 	},
 /turf/unsimulated/floor/wood/seven,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
+"oM" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/se,
 /area/station/engine/singcore{
 	name = "Convention Hall";
 	do_not_irradiate = 1
@@ -2678,24 +2766,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
-"oS" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/decal/tile_edge/floorguide/arrow_e{
-	pixel_y = 9;
-	pixel_x = 17
-	},
-/obj/decal/poster/wallsign/stencil/left/e{
-	pixel_y = -4;
-	pixel_x = -7
-	},
-/obj/decal/poster/wallsign/stencil/left/v{
-	pixel_y = -4;
-	pixel_x = 4
-	},
-/turf/simulated/floor/terrazzo,
-/area/station/hallway/primary/west)
 "oU" = (
 /obj/decal/tile_edge/line/black{
 	dir = 6;
@@ -2832,6 +2902,23 @@
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/green/checker,
 /area/station/storage/emergency)
+"pA" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/table/folding,
+/obj/item/gameclock{
+	name = "Board 4 game clock"
+	},
+/obj/item/paper/chesspamphlet{
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/wood/seven,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "pD" = (
 /obj/lattice,
 /turf/space,
@@ -2867,6 +2954,23 @@
 	name = "Convention Hall";
 	do_not_irradiate = 1
 	})
+"pN" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/table/folding,
+/obj/item/gameclock{
+	name = "Board 7 game clock"
+	},
+/obj/item/paper/chesspamphlet{
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/wood/seven,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "pP" = (
 /obj/decal/tile_edge/line/black{
 	dir = 10;
@@ -2896,20 +3000,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/janitor/office)
-"pU" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/table/folding,
-/obj/item/gameclock{
-	name = "Board 18 game clock"
-	},
-/turf/unsimulated/floor/wood/seven,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
 "pV" = (
 /obj/table/auto,
 /obj/item/clothing/shoes/utenashoes{
@@ -2985,22 +3075,13 @@
 "qj" = (
 /turf/simulated/floor/terrazzo/black,
 /area/station/hallway/primary/north)
-"qo" = (
+"ql" = (
+/obj/machinery/light/small/floor/netural,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/decal/poster/wallsign/stencil/left/s{
-	pixel_x = -14;
-	pixel_y = -3
-	},
-/obj/decal/poster/wallsign/stencil/left/c{
-	pixel_y = -3
-	},
-/turf/simulated/floor/terrazzo,
-/area/station/hallway/primary/west)
+/turf/simulated/floor/glassblock/transparent_grey,
+/area/station/hallway/secondary/entry)
 "qp" = (
 /obj/decal/tile_edge/line/black{
 	dir = 6;
@@ -3036,14 +3117,6 @@
 /obj/cryotron,
 /turf/simulated/floor/terrazzo,
 /area/station/hallway/primary/west)
-"qB" = (
-/obj/disposalpipe/segment/horizontal,
-/obj/decal/tile_edge/floorguide/arrow_w{
-	pixel_x = 18;
-	pixel_y = 8
-	},
-/turf/simulated/floor/terrazzo,
-/area/station/hallway/primary/west)
 "qH" = (
 /obj/table/reinforced/auto,
 /obj/item/plate,
@@ -3074,25 +3147,6 @@
 	name = "Convention Hall";
 	do_not_irradiate = 1
 	})
-"qK" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/table/folding,
-/obj/item/gameclock{
-	name = "Board 5 game clock"
-	},
-/turf/unsimulated/floor/wood/seven,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
-"qL" = (
-/obj/table/reinforced/auto,
-/obj/item/stamp,
-/turf/simulated/floor/glassblock/transparent_grey,
-/area/station/hallway/secondary/entry)
 "qN" = (
 /obj/window/auto/reinforced/indestructible,
 /obj/grille/steel,
@@ -3116,6 +3170,12 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
+"qW" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/west,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "qX" = (
 /turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/toilets)
@@ -3148,17 +3208,6 @@
 /obj/cable,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/east)
-"rd" = (
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/turf/simulated/floor{
-	desc = "";
-	dir = 8;
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor6"
-	},
-/area/shuttle/arrival/station)
 "rh" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -3230,16 +3279,6 @@
 /obj/item/paper_bin,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
-"rs" = (
-/obj/table/wood,
-/obj/machinery/light,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
-	},
-/turf/simulated/floor/black/side{
-	dir = 1
-	},
-/area/station/hallway/primary/north)
 "rt" = (
 /obj/machinery/chem_dispenser/alcohol,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
@@ -3407,12 +3446,6 @@
 /area/station/crew_quarters/fitness{
 	name = "Chess Ring"
 	})
-"sq" = (
-/turf/simulated/floor/carpet/purple/fancy/edge/ne,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
 "sr" = (
 /obj/lattice{
 	dir = 4;
@@ -3430,6 +3463,13 @@
 	dir = 1
 	},
 /area/listeningpost)
+"st" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "sv" = (
 /obj/table/folding,
 /obj/item/gameclock,
@@ -3484,13 +3524,6 @@
 	icon_state = "2"
 	},
 /area/shuttle/arrival/station)
-"sS" = (
-/obj/machinery/light/small/floor/netural,
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/hallway/secondary/entry)
 "sU" = (
 /obj/decal/boxingrope,
 /obj/decal/tile_edge/line/black{
@@ -3501,6 +3534,13 @@
 /area/station/crew_quarters/fitness{
 	name = "Chess Ring"
 	})
+"sV" = (
+/obj/decal/poster/wallsign/stencil/left/p,
+/obj/decal/poster/wallsign/stencil/left/r{
+	pixel_x = 13
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/station/hallway/primary/west)
 "sW" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -3559,14 +3599,6 @@
 /area/station/crew_quarters/fitness{
 	name = "Chess Ring"
 	})
-"tn" = (
-/obj/disposalpipe/segment/horizontal,
-/obj/decal/tile_edge/floorguide/arrow_e{
-	pixel_x = 21;
-	pixel_y = 9
-	},
-/turf/simulated/floor/terrazzo/black,
-/area/station/hallway/primary/west)
 "to" = (
 /obj/submachine/chef_sink{
 	dir = 4
@@ -3602,22 +3634,6 @@
 	dir = 4
 	},
 /area/listeningpost)
-"tw" = (
-/obj/table/reinforced/bar/auto{
-	name = "wooden table"
-	},
-/obj/item/device/radio/intercom{
-	pixel_y = -1
-	},
-/obj/item/decoration/ashtray{
-	pixel_y = -9;
-	pixel_x = -4
-	},
-/turf/unsimulated/floor/wood,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
 "tz" = (
 /obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/bluewhite,
@@ -3626,19 +3642,30 @@
 /obj/machinery/space_heater,
 /turf/simulated/floor/green/checker,
 /area/station/storage/emergency)
-"tG" = (
-/obj/machinery/light/small/floor/netural,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/glassblock/transparent_grey,
-/area/station/hallway/secondary/entry)
 "tH" = (
 /obj/machinery/vending/medical_public,
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
 /area/listeningpost)
+"tI" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/floorguide/arrow_e{
+	pixel_y = 9;
+	pixel_x = 17
+	},
+/obj/decal/poster/wallsign/stencil/left/e{
+	pixel_y = -4;
+	pixel_x = -7
+	},
+/obj/decal/poster/wallsign/stencil/left/v{
+	pixel_y = -4;
+	pixel_x = 4
+	},
+/turf/simulated/floor/terrazzo,
+/area/station/hallway/primary/west)
 "tL" = (
 /obj/machinery/light{
 	dir = 8;
@@ -3670,12 +3697,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/terrazzo/black,
 /area/station/hallway/primary/west)
-"tV" = (
-/obj/table/reinforced/auto,
-/obj/item/paper_bin,
-/obj/item/pen,
-/turf/simulated/floor/glassblock/transparent_grey,
-/area/station/hallway/secondary/entry)
 "tX" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/west,
@@ -3972,6 +3993,11 @@
 /area/station/hangar/main{
 	name = "Parking Lot"
 	})
+"vm" = (
+/obj/table/reinforced/auto,
+/obj/item/stamp,
+/turf/simulated/floor/glassblock/transparent_grey,
+/area/station/hallway/secondary/entry)
 "vu" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -4153,12 +4179,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
-"wa" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/glassblock/transparent_grey,
-/area/station/hallway/secondary/entry)
 "wc" = (
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/black,
@@ -4193,6 +4213,12 @@
 	name = "Convention Hall";
 	do_not_irradiate = 1
 	})
+"wj" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/nw,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "wk" = (
 /obj/table/auto,
 /obj/item/clothing/shoes/swat{
@@ -4208,19 +4234,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crewquarters/garbagegarbs)
-"wm" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/decal/poster/wallsign/stencil/left/m{
-	pixel_y = -3
-	},
-/obj/decal/poster/wallsign/stencil/left/i{
-	pixel_y = -3;
-	pixel_x = 9
-	},
-/turf/simulated/floor/terrazzo/black,
-/area/station/hallway/primary/west)
 "wn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -4239,13 +4252,6 @@
 	opacity = 1
 	},
 /area/listeningpost)
-"wt" = (
-/obj/wingrille_spawn/auto/crystal,
-/turf/simulated/floor/plating,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
 "wv" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
@@ -4492,17 +4498,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
 "xA" = (
-/obj/decal/poster/wallsign/stencil/left{
-	pixel_x = -5
-	},
-/obj/decal/poster/wallsign/stencil/left/c{
-	pixel_x = 7
-	},
-/obj/decal/poster/wallsign/stencil/left/t{
-	pixel_x = 17
-	},
-/turf/simulated/floor/terrazzo,
-/area/station/hallway/primary/west)
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/glassblock/transparent_grey,
+/area/station/hallway/secondary/entry)
+"xB" = (
+/turf/simulated/floor/glassblock/transparent_grey,
+/area/station/hallway/secondary/entry)
 "xD" = (
 /obj/lattice{
 	dir = 5;
@@ -4551,6 +4552,23 @@
 "xM" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/cafeteria)
+"xN" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/table/folding,
+/obj/item/gameclock{
+	name = "Board 10 game clock"
+	},
+/obj/item/paper/chesspamphlet{
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/wood/seven,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "xR" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -4637,20 +4655,6 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/hangar/main{
 	name = "Parking Lot"
-	})
-"yy" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/table/folding,
-/obj/item/gameclock{
-	name = "Board 10 game clock"
-	},
-/turf/unsimulated/floor/wood/seven,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
 	})
 "yz" = (
 /turf/simulated/floor/terrazzo/black,
@@ -4772,20 +4776,6 @@
 	dir = 8
 	},
 /area/listeningpost)
-"zl" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/table/folding,
-/obj/item/gameclock{
-	name = "Board 13 game clock"
-	},
-/turf/unsimulated/floor/wood/seven,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
 "zm" = (
 /obj/machinery/conveyor/EW{
 	id = "garbage";
@@ -4833,18 +4823,6 @@
 	dir = 1
 	},
 /area/station/security/checkpoint/podbay)
-"zy" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/decal/tile_edge/floorguide/arrow_n{
-	pixel_x = 13;
-	pixel_y = 7
-	},
-/turf/simulated/floor/terrazzo,
-/area/station/hallway/primary/west)
 "zA" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/disposalpipe/segment/vertical,
@@ -4854,22 +4832,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/maintenance/disposal)
-"zB" = (
-/obj/table/folding,
-/obj/item/boardgame/chess,
-/obj/machinery/camera{
-	c_tag = "Chessring";
-	dir = 9;
-	invisibility = 101;
-	name = "The Chessring";
-	network = "Zeta";
-	tag = ""
-	},
-/obj/landmark/boxing_ring,
-/turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness{
-	name = "Chess Ring"
-	})
 "zG" = (
 /obj/grille/catwalk{
 	dir = 1;
@@ -4906,12 +4868,6 @@
 /obj/machinery/deep_fryer,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
-"zZ" = (
-/obj/landmark/map{
-	name = "EVENT"
-	},
-/turf/space,
-/area/space)
 "Ac" = (
 /obj/cable{
 	d1 = 4;
@@ -5043,12 +4999,12 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/listeningpost)
-"Ax" = (
-/turf/simulated/floor/carpet/purple/fancy/edge/se,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
+"AB" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/cafeteria)
 "AE" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/caution/east,
@@ -5072,6 +5028,12 @@
 	dir = 5
 	},
 /area/listeningpost)
+"AH" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/glassblock/transparent_grey,
+/area/station/hallway/secondary/entry)
 "AK" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/light,
@@ -5241,26 +5203,6 @@
 "BQ" = (
 /turf/simulated/floor/black/side,
 /area/station/hallway/primary/north)
-"BR" = (
-/obj/table/reinforced/auto,
-/obj/item/device/radio/intercom{
-	pixel_y = -1
-	},
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness{
-	name = "Chess Ring"
-	})
-"BT" = (
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/turf/simulated/floor/glassblock/transparent_red,
-/area/station/hallway/secondary/entry)
 "BV" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main{
@@ -5291,13 +5233,6 @@
 	},
 /turf/simulated/floor/terrazzo,
 /area/station/hallway/primary/west)
-"Cg" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_west,
-/turf/simulated/floor/glassblock/transparent_grey,
-/area/station/hallway/secondary/entry)
 "Ch" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -5333,17 +5268,6 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
-"Cu" = (
-/obj/access_spawn/captain,
-/obj/machinery/door/airlock/pyro{
-	name = "Toilets"
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "arena";
-	name = "Convention Hall Access Control Shutters"
-	},
-/turf/unsimulated/floor/wood,
-/area/station/crew_quarters/toilets)
 "Cx" = (
 /obj/cable{
 	d1 = 4;
@@ -5352,6 +5276,22 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/toilets)
+"Cz" = (
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
+	},
+/obj/item/device/radio/intercom{
+	pixel_y = -1
+	},
+/obj/item/decoration/ashtray{
+	pixel_y = -9;
+	pixel_x = -4
+	},
+/turf/unsimulated/floor/wood,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "CD" = (
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
@@ -5364,6 +5304,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
+"CH" = (
+/obj/table/wood,
+/obj/machinery/light,
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_y = 8
+	},
+/turf/simulated/floor/black/side{
+	dir = 1
+	},
+/area/station/hallway/primary/north)
 "CJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -5395,6 +5345,14 @@
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
+"Db" = (
+/obj/shrub{
+	dir = 1;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
+/turf/simulated/floor/glassblock/transparent_grey,
+/area/station/hallway/secondary/entry)
 "Dc" = (
 /obj/machinery/light/small/floor/netural,
 /obj/decal/tile_edge/line/black{
@@ -5455,12 +5413,6 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/listeningpost)
-"Do" = (
-/obj/stool/chair{
-	dir = 8
-	},
-/turf/simulated/floor/wood/two,
-/area/station/crew_quarters/cafeteria)
 "Dp" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
@@ -5473,6 +5425,23 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/security/checkpoint/podbay)
+"Dr" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/table/folding,
+/obj/item/gameclock{
+	name = "Board 8 game clock"
+	},
+/obj/item/paper/chesspamphlet{
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/wood/seven,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "Ds" = (
 /obj/cable{
 	d1 = 1;
@@ -5495,20 +5464,12 @@
 	},
 /turf/simulated/floor/terrazzo,
 /area/station/hallway/primary/west)
-"DI" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/table/folding,
-/obj/item/gameclock{
-	name = "Board 11 game clock"
-	},
-/turf/unsimulated/floor/wood/seven,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
+"DD" = (
+/obj/table/reinforced/auto,
+/obj/item/paper_bin,
+/obj/item/pen,
+/turf/simulated/floor/glassblock/transparent_grey,
+/area/station/hallway/secondary/entry)
 "DL" = (
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -5584,6 +5545,12 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
+"Em" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/east,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "En" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -5599,18 +5566,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/terrazzo/black,
 /area/station/hallway/primary/west)
-"Ev" = (
-/obj/table/wood,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
-	},
-/turf/simulated/floor/black/side,
-/area/station/hallway/primary/south)
 "EA" = (
 /obj/storage/crate{
 	name = "Cone Crate"
@@ -5667,6 +5622,32 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
+"EK" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/table/folding,
+/obj/item/gameclock{
+	name = "Board 2 game clock"
+	},
+/obj/item/paper/chesspamphlet{
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/wood/seven,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
+"EL" = (
+/obj/decal/poster/wallsign/stencil/left/i{
+	pixel_x = -5
+	},
+/obj/decal/poster/wallsign/stencil/left/c{
+	pixel_x = 4
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/station/hallway/primary/west)
 "EM" = (
 /obj/stool/chair{
 	dir = 1
@@ -5743,20 +5724,6 @@
 	name = "Convention Hall";
 	do_not_irradiate = 1
 	})
-"Fm" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/table/folding,
-/obj/item/gameclock{
-	name = "Board 1 game clock"
-	},
-/turf/unsimulated/floor/wood/seven,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
 "Fo" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/south)
@@ -5771,6 +5738,18 @@
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/green/checker,
 /area/station/storage/emergency)
+"Ft" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/decal/tile_edge/floorguide/arrow_w{
+	pixel_x = 53;
+	pixel_y = 44
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/station/hallway/primary/west)
+"Fu" = (
+/obj/machinery/light/small/floor/frostedred,
+/turf/simulated/floor/glassblock/transparent_red,
+/area/station/hallway/secondary/entry)
 "Fx" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
@@ -5905,13 +5884,6 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/emergency)
-"Gb" = (
-/turf/simulated/floor/glassblock/transparent_red,
-/area/station/hallway/secondary/entry)
-"Gh" = (
-/obj/machinery/light,
-/turf/simulated/floor/glassblock/transparent_grey,
-/area/station/hallway/secondary/entry)
 "Gi" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/regular,
@@ -6050,6 +6022,22 @@
 /area/station/crew_quarters/fitness{
 	name = "Chess Ring"
 	})
+"GD" = (
+/obj/table/folding,
+/obj/item/boardgame/chess,
+/obj/machinery/camera{
+	c_tag = "Chessring";
+	dir = 9;
+	invisibility = 101;
+	name = "The Chessring";
+	network = "Zeta";
+	tag = ""
+	},
+/obj/landmark/boxing_ring,
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness{
+	name = "Chess Ring"
+	})
 "GE" = (
 /obj/machinery/vending/coffee{
 	dir = 4
@@ -6112,6 +6100,18 @@
 /obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/green/checker,
 /area/station/storage/emergency)
+"Hb" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/decal/tile_edge/floorguide/arrow_n{
+	pixel_x = 13;
+	pixel_y = 7
+	},
+/turf/simulated/floor/terrazzo,
+/area/station/hallway/primary/west)
 "Hd" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -6197,6 +6197,23 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
+"Hz" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/table/folding,
+/obj/item/gameclock{
+	name = "Board 18 game clock"
+	},
+/obj/item/paper/chesspamphlet{
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/wood/seven,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "HB" = (
 /obj/stool/chair{
 	dir = 4
@@ -6243,13 +6260,6 @@
 	dir = 8
 	},
 /area/station/crewquarters/garbagegarbs)
-"HH" = (
-/obj/decal/poster/wallsign/stencil/left/p,
-/obj/decal/poster/wallsign/stencil/left/r{
-	pixel_x = 13
-	},
-/turf/simulated/floor/terrazzo/black,
-/area/station/hallway/primary/west)
 "HK" = (
 /obj/item/device/radio/intercom,
 /obj/disposalpipe/segment/horizontal,
@@ -6291,6 +6301,19 @@
 /area/station/hangar/main{
 	name = "Parking Lot"
 	})
+"Ij" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/poster/wallsign/stencil/left/m{
+	pixel_y = -3
+	},
+/obj/decal/poster/wallsign/stencil/left/i{
+	pixel_y = -3;
+	pixel_x = 9
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/station/hallway/primary/west)
 "Ik" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
@@ -6317,6 +6340,29 @@
 /obj/decal/tile_edge/line/black{
 	dir = 8;
 	icon_state = "line1"
+	},
+/turf/unsimulated/floor/wood/seven,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
+"Iv" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/glassblock/transparent_grey,
+/area/station/hallway/secondary/entry)
+"Iy" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/table/folding,
+/obj/item/gameclock{
+	name = "Board 16 game clock"
+	},
+/obj/item/paper/chesspamphlet{
+	pixel_y = 16
 	},
 /turf/unsimulated/floor/wood/seven,
 /area/station/engine/singcore{
@@ -6373,11 +6419,6 @@
 /obj/item/storage/wall/clothingrack/dresses,
 /turf/simulated/floor/black,
 /area/station/crewquarters/garbagegarbs)
-"IW" = (
-/obj/table/reinforced/auto,
-/obj/item/boardgame/chess,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/cafeteria)
 "IY" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/north,
@@ -6437,20 +6478,6 @@
 	},
 /turf/simulated/floor/carpet/blue/standard/narrow/west,
 /area/station/hallway/primary/south)
-"Jm" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/table/folding,
-/obj/item/gameclock{
-	name = "Board 16 game clock"
-	},
-/turf/unsimulated/floor/wood/seven,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
 "Jn" = (
 /obj/machinery/disposal_pipedispenser,
 /turf/simulated/floor/plating/random,
@@ -6691,6 +6718,14 @@
 	dir = 1
 	},
 /area/shuttle/arrival/station)
+"KK" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness{
+	name = "Chess Ring"
+	})
 "KM" = (
 /obj/cable{
 	d2 = 8;
@@ -6710,14 +6745,6 @@
 	},
 /turf/simulated/floor/terrazzo/black,
 /area/station/hallway/primary/west)
-"KP" = (
-/obj/shrub{
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
-/turf/simulated/floor/glassblock/transparent_grey,
-/area/station/hallway/secondary/entry)
 "KQ" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -6739,20 +6766,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
-"KW" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/table/folding,
-/obj/item/gameclock{
-	name = "Board 8 game clock"
-	},
-/turf/unsimulated/floor/wood/seven,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
 "KZ" = (
 /obj/machinery/computer/security/wooden_tv,
 /obj/machinery/light/small{
@@ -6907,6 +6920,14 @@
 	},
 /turf/space,
 /area/station/solar/east)
+"LX" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/decal/tile_edge/floorguide/arrow_e{
+	pixel_x = 21;
+	pixel_y = 9
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/station/hallway/primary/west)
 "Mb" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/janitor/office)
@@ -6939,15 +6960,16 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
-"Mn" = (
+"Mm" = (
 /obj/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/glassblock/transparent_grey,
-/area/station/hallway/secondary/entry)
+/obj/grille/catwalk,
+/obj/effects/background_objects/quadriga,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/station/solar/east)
 "Mo" = (
 /obj/decal/tile_edge/line/black{
 	dir = 6;
@@ -7059,6 +7081,12 @@
 /obj/machinery/light/runway_light,
 /turf/space,
 /area/space)
+"MW" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/sw,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "Nb" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -7212,6 +7240,12 @@
 /area/station/crew_quarters/fitness{
 	name = "Chess Ring"
 	})
+"NQ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/glassblock/transparent_grey,
+/area/station/hallway/secondary/entry)
 "NR" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/catering)
@@ -7299,6 +7333,20 @@
 	},
 /turf/simulated/floor/sand,
 /area/station/hallway/secondary/entry)
+"Os" = (
+/obj/table/reinforced/auto,
+/obj/item/device/radio/intercom{
+	pixel_y = -1
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness{
+	name = "Chess Ring"
+	})
 "Ov" = (
 /obj/decal/tile_edge/line/black{
 	dir = 9;
@@ -7334,6 +7382,23 @@
 	dir = 8
 	},
 /area/station/security/checkpoint/podbay)
+"OA" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/table/folding,
+/obj/item/gameclock{
+	name = "Board 13 game clock"
+	},
+/obj/item/paper/chesspamphlet{
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/wood/seven,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "OD" = (
 /obj/disposalpipe/segment/bent/east,
 /obj/cable{
@@ -7403,24 +7468,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor,
 /area/station/crew_quarters/catering)
-"Pa" = (
-/turf/simulated/floor/glassblock/transparent_grey,
-/area/station/hallway/secondary/entry)
-"Pb" = (
-/obj/disposalpipe/segment/horizontal,
-/obj/decal/tile_edge/floorguide/arrow_w{
-	pixel_x = 53;
-	pixel_y = 44
-	},
-/turf/simulated/floor/terrazzo/black,
-/area/station/hallway/primary/west)
-"Pd" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_north,
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/toilets)
 "Ph" = (
 /obj/lattice{
 	dir = 9;
@@ -7434,12 +7481,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
-"Pk" = (
-/turf/simulated/floor/carpet/purple/fancy/edge/sw,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
 "Pr" = (
 /obj/decal/tile_edge/line/black{
 	dir = 6;
@@ -7529,14 +7570,6 @@
 	},
 /turf/simulated/floor/carpet/blue/standard/narrow/east,
 /area/station/hallway/primary/north)
-"PV" = (
-/obj/stool/chair{
-	dir = 8
-	},
-/turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness{
-	name = "Chess Ring"
-	})
 "PX" = (
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
@@ -7555,6 +7588,18 @@
 	},
 /turf/simulated/floor/carpet/blue/standard/narrow/east,
 /area/station/hallway/primary/north)
+"Qb" = (
+/obj/decal/poster/wallsign/stencil/left{
+	pixel_x = -5
+	},
+/obj/decal/poster/wallsign/stencil/left/c{
+	pixel_x = 7
+	},
+/obj/decal/poster/wallsign/stencil/left/t{
+	pixel_x = 17
+	},
+/turf/simulated/floor/terrazzo,
+/area/station/hallway/primary/west)
 "Qd" = (
 /turf/simulated/floor/caution/corner/misc{
 	dir = 6
@@ -7596,6 +7641,12 @@
 	dir = 4
 	},
 /area/station/medical/medbooth)
+"Qq" = (
+/obj/landmark/map{
+	name = "EVENT"
+	},
+/turf/space,
+/area/space)
 "Qs" = (
 /turf/simulated/floor/caution/westeast,
 /area/station/hangar/main{
@@ -7622,12 +7673,6 @@
 "Qw" = (
 /turf/simulated/floor/caution/north,
 /area/station/hallway/secondary/exit)
-"Qx" = (
-/turf/simulated/floor/carpet/purple/fancy/edge/west,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
 "Qy" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -7743,6 +7788,13 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
+"Rm" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	name = "Toilets"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
 "Rt" = (
 /obj/machinery/sleeper/port_a_medbay,
 /turf/simulated/floor/bluewhite,
@@ -7827,6 +7879,23 @@
 /area/station/hangar/main{
 	name = "Parking Lot"
 	})
+"RO" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/table/folding,
+/obj/item/gameclock{
+	name = "Board 3 game clock"
+	},
+/obj/item/paper/chesspamphlet{
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/wood/seven,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "RQ" = (
 /obj/machinery/light{
 	dir = 4;
@@ -7852,20 +7921,6 @@
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/caution/northsouth,
 /area/station/hallway/secondary/exit)
-"RW" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/table/folding,
-/obj/item/gameclock{
-	name = "Board 6 game clock"
-	},
-/turf/unsimulated/floor/wood/seven,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
 "RX" = (
 /obj/disposaloutlet/north,
 /obj/machinery/conveyor/SN{
@@ -7981,6 +8036,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
+"Ss" = (
+/obj/table/reinforced/auto,
+/turf/simulated/floor/glassblock/transparent_grey,
+/area/station/hallway/secondary/entry)
 "Sx" = (
 /obj/table/reinforced/auto,
 /obj/machinery/glass_recycler{
@@ -8035,6 +8094,23 @@
 	dir = 8
 	},
 /area/listeningpost)
+"SM" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/table/folding,
+/obj/item/gameclock{
+	name = "Board 12 game clock"
+	},
+/obj/item/paper/chesspamphlet{
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/wood/seven,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "SN" = (
 /obj/table/auto,
 /obj/item/clothing/shoes/blue{
@@ -8121,20 +8197,6 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
-"Tn" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/table/folding,
-/obj/item/gameclock{
-	name = "Board 2 game clock"
-	},
-/turf/unsimulated/floor/wood/seven,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
 "To" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8204,6 +8266,11 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
+"TI" = (
+/obj/machinery/light/small/floor/netural,
+/obj/stool/chair/office,
+/turf/simulated/floor/glassblock/transparent_grey,
+/area/station/hallway/secondary/entry)
 "TJ" = (
 /obj/cable,
 /obj/cable{
@@ -8272,20 +8339,6 @@
 "Ua" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/solar/east)
-"Uc" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/table/folding,
-/obj/item/gameclock{
-	name = "Board 7 game clock"
-	},
-/turf/unsimulated/floor/wood/seven,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
 "Ue" = (
 /obj/cable{
 	d1 = 1;
@@ -8352,6 +8405,14 @@
 	},
 /turf/simulated/floor/grey/side,
 /area/station/crew_quarters/catering)
+"Uu" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/decal/tile_edge/floorguide/arrow_w{
+	pixel_x = 18;
+	pixel_y = 8
+	},
+/turf/simulated/floor/terrazzo,
+/area/station/hallway/primary/west)
 "Uv" = (
 /obj/table/auto,
 /obj/item/shaker/salt,
@@ -8423,6 +8484,10 @@
 	name = "Convention Hall";
 	do_not_irradiate = 1
 	})
+"UK" = (
+/obj/effects/background_objects/antistes,
+/turf/simulated/floor/glassblock/transparent_grey,
+/area/station/hallway/secondary/entry)
 "UL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8445,6 +8510,22 @@
 	},
 /turf/simulated/floor/grey,
 /area/listeningpost)
+"UN" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/decal/poster/wallsign/stencil/left/s{
+	pixel_x = -14;
+	pixel_y = -3
+	},
+/obj/decal/poster/wallsign/stencil/left/c{
+	pixel_y = -3
+	},
+/turf/simulated/floor/terrazzo,
+/area/station/hallway/primary/west)
 "UO" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/latex,
@@ -8476,20 +8557,6 @@
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor,
 /area/station/crew_quarters/catering)
-"UY" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/table/folding,
-/obj/item/gameclock{
-	name = "Board 3 game clock"
-	},
-/turf/unsimulated/floor/wood/seven,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
 "Vb" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
@@ -8571,6 +8638,17 @@
 /area/station/crew_quarters/fitness{
 	name = "Chess Ring"
 	})
+"VG" = (
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
+/turf/simulated/floor{
+	desc = "";
+	dir = 8;
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor6"
+	},
+/area/shuttle/arrival/station)
 "VH" = (
 /obj/stool/chair{
 	dir = 1
@@ -8694,20 +8772,6 @@
 	name = "Convention Hall";
 	do_not_irradiate = 1
 	})
-"Wq" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/table/folding,
-/obj/item/gameclock{
-	name = "Board 12 game clock"
-	},
-/turf/unsimulated/floor/wood/seven,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
 "Ws" = (
 /turf/simulated/floor/caution/east,
 /area/station/hallway/secondary/exit)
@@ -8766,24 +8830,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/arrival/station)
-"WN" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/table/folding,
-/obj/item/gameclock{
-	name = "Board 15 game clock"
-	},
-/turf/unsimulated/floor/wood/seven,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
-"WP" = (
-/obj/machinery/light/small/floor/netural,
-/turf/simulated/floor/glassblock/transparent_grey,
-/area/station/hallway/secondary/entry)
 "WQ" = (
 /obj/grille/catwalk{
 	dir = 10;
@@ -8934,24 +8980,6 @@
 	dir = 1
 	},
 /area/station/security/checkpoint/podbay)
-"Xv" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/decal/poster/wallsign/stencil/left/e{
-	pixel_y = -4;
-	pixel_x = -18
-	},
-/obj/decal/poster/wallsign/stencil/left/n{
-	pixel_y = -4;
-	pixel_x = -6
-	},
-/obj/decal/poster/wallsign/stencil/left/t{
-	pixel_y = -4;
-	pixel_x = 6
-	},
-/turf/simulated/floor/terrazzo/black,
-/area/station/hallway/primary/west)
 "Xy" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
@@ -8990,6 +9018,18 @@
 	icon_state = "floor4"
 	},
 /area/shuttle/arrival/station)
+"XC" = (
+/obj/table/wood,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_y = 8
+	},
+/turf/simulated/floor/black/side,
+/area/station/hallway/primary/south)
 "XD" = (
 /obj/machinery/light,
 /turf/simulated/floor/terrazzo,
@@ -9054,11 +9094,35 @@
 /area/station/crew_quarters/fitness{
 	name = "Chess Ring"
 	})
+"XS" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west,
+/turf/simulated/floor/glassblock/transparent_grey,
+/area/station/hallway/secondary/entry)
 "XW" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness{
 	name = "Chess Ring"
+	})
+"XY" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/table/folding,
+/obj/item/gameclock{
+	name = "Board 15 game clock"
+	},
+/obj/item/paper/chesspamphlet{
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/wood/seven,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
 	})
 "Yb" = (
 /obj/machinery/light/small/floor/netural,
@@ -9268,16 +9332,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
-"Zr" = (
-/obj/decal/poster/wallsign/stencil/left/e{
-	pixel_x = -15
-	},
-/obj/decal/tile_edge/floorguide/arrow_n{
-	pixel_x = 5;
-	pixel_y = 6
-	},
-/turf/simulated/floor/terrazzo,
-/area/station/hallway/primary/west)
 "Zs" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -9983,7 +10037,7 @@ jP
 jP
 jP
 jP
-zZ
+Qq
 jP
 "}
 (3,1,1) = {"
@@ -42458,7 +42512,7 @@ Bm
 XQ
 XQ
 Be
-BR
+Os
 vP
 Gy
 hT
@@ -43360,7 +43414,7 @@ Xp
 xH
 sf
 XW
-zB
+GD
 sv
 Sc
 no
@@ -43662,7 +43716,7 @@ sX
 Uq
 tl
 IQ
-PV
+KK
 Sc
 IQ
 sU
@@ -45771,10 +45825,10 @@ tb
 tb
 tb
 wY
-Do
-Do
-Do
-Do
+AB
+AB
+AB
+AB
 CD
 dI
 vZ
@@ -46083,7 +46137,7 @@ vZ
 Ng
 Ah
 Qu
-IW
+ib
 vh
 jR
 uy
@@ -48197,7 +48251,7 @@ mg
 Ng
 Ah
 Qu
-IW
+ib
 vh
 JV
 RN
@@ -51223,18 +51277,18 @@ mX
 IP
 JO
 kB
-Pb
+Ft
 cr
 aA
 Sf
-Pa
-Pa
-Pa
-Cg
-KP
-KP
-KP
-KP
+xB
+xB
+xB
+XS
+Db
+Db
+Db
+Db
 aA
 aA
 jP
@@ -51524,20 +51578,20 @@ VP
 Vc
 IP
 qA
-wm
-qB
+Ij
+Uu
 yz
 Bi
 JC
-WP
-Pa
-Pa
-tG
-Pa
-Pa
-cW
-Pa
-Gh
+xA
+xB
+xB
+ql
+xB
+xB
+br
+xB
+et
 aA
 jP
 jP
@@ -51826,20 +51880,20 @@ lc
 xK
 IP
 yz
-qo
+UN
 Hr
 LM
 gy
 EF
-Mn
-nD
-nD
-wa
-Pa
-Gb
-Pa
-Pa
-Pa
+fd
+AH
+AH
+Iv
+xB
+jT
+xB
+xB
+xB
 aA
 jP
 jP
@@ -52133,25 +52187,25 @@ wU
 ur
 aA
 kG
-fA
-qL
-tV
-Pa
-BT
-lE
-Pa
-Pa
-cW
+NQ
+vm
+DD
+xB
+dY
+Fu
+xB
+xB
+br
 gj
 aA
 DL
 RG
 aP
-rd
+VG
 sQ
 pb
 mJ
-rd
+VG
 Xy
 RG
 jP
@@ -52435,21 +52489,21 @@ Eo
 cr
 Ad
 vM
-wa
-fO
-cN
-Gb
-Gb
-Gb
-Gb
-Gb
-Gb
+Iv
+TI
+Ss
+jT
+jT
+jT
+jT
+jT
+jT
 cu
 ey
 kz
 Ao
 os
-rd
+VG
 os
 fZ
 os
@@ -52731,23 +52785,23 @@ tr
 tr
 tr
 qa
-zy
+Hb
 iX
 wU
 yz
 Ad
 ji
-Pa
-fO
-cN
-Gb
-BT
-Gb
-BT
-Gb
-BT
+xB
+TI
+Ss
+jT
+dY
+jT
+dY
+jT
+dY
 cu
-sS
+hl
 kz
 Ao
 os
@@ -53033,21 +53087,21 @@ tr
 tr
 tr
 iF
-HH
+sV
 kB
 Eo
 cr
 aA
 Sf
-Pa
-qL
-tV
-Pa
-Gb
-lE
-Pa
-Pa
-Pa
+xB
+vm
+DD
+xB
+jT
+Fu
+xB
+xB
+xB
 gj
 aA
 DL
@@ -53335,21 +53389,21 @@ ar
 hh
 MQ
 qa
-xA
+Qb
 iX
 wU
 yz
 wZ
 JC
-Pa
-Pa
-Pa
-cW
-Pa
-Gb
-Pa
-Pa
-cW
+xB
+xB
+xB
+br
+xB
+jT
+xB
+xB
+br
 aA
 jP
 jP
@@ -53357,7 +53411,7 @@ sj
 vw
 Xi
 Xi
-rd
+VG
 ZS
 Xi
 vw
@@ -53637,21 +53691,21 @@ vL
 iv
 ZF
 fu
-nr
+EL
 kB
 Eo
 cr
 Bi
 JC
-WP
-Pa
-Pa
-WP
-Pa
-Pa
-cW
-kq
-Gh
+xA
+xB
+xB
+xA
+xB
+xB
+br
+UK
+et
 aA
 jP
 jP
@@ -53939,20 +53993,20 @@ Lp
 mK
 qJ
 qa
-Zr
+hH
 iX
 wU
 ur
 aA
 kG
-Pa
-Pa
-Pa
-Pa
-KP
-KP
-KP
-KP
+xB
+xB
+xB
+xB
+Db
+Db
+Db
+Db
 aA
 aA
 jP
@@ -54242,8 +54296,8 @@ tr
 tr
 iF
 yz
-oS
-tn
+tI
+LX
 cr
 Ad
 aA
@@ -54544,7 +54598,7 @@ tr
 tr
 qa
 oZ
-Xv
+hJ
 wU
 yz
 Ad
@@ -56040,16 +56094,16 @@ fu
 fu
 Od
 WE
-Fm
+oJ
 oU
 tr
 Od
 WE
-Tn
+EK
 Nh
 Od
 WE
-UY
+RO
 Mo
 Od
 fu
@@ -57248,16 +57302,16 @@ Mc
 qa
 tr
 WE
-cd
+pA
 ll
 tr
 tr
 WE
-qK
+iB
 cn
 tr
 WE
-RW
+np
 JP
 tr
 qa
@@ -57848,7 +57902,7 @@ WX
 WX
 Hs
 Tc
-rs
+CH
 fu
 qa
 qa
@@ -57865,7 +57919,7 @@ qa
 qa
 wg
 fu
-Ev
+XC
 pw
 uw
 MM
@@ -58758,16 +58812,16 @@ fu
 fu
 Od
 WE
-Uc
+pN
 gg
 tr
 Od
 WE
-KW
+Dr
 ad
 Od
 WE
-hW
+au
 PL
 Od
 fu
@@ -59966,16 +60020,16 @@ Mc
 qa
 tr
 WE
-yy
+xN
 qp
 tr
 tr
 WE
-DI
+dw
 fc
 tr
 WE
-Wq
+SM
 rj
 tr
 qa
@@ -60566,7 +60620,7 @@ zA
 NK
 Fr
 eF
-rs
+CH
 fu
 qa
 qa
@@ -60583,7 +60637,7 @@ qa
 qa
 wg
 fu
-Ev
+XC
 xo
 jU
 qR
@@ -61476,16 +61530,16 @@ fu
 fu
 Od
 WE
-zl
+OA
 Pr
 tr
 Od
 WE
-ma
+hX
 uj
 Od
 WE
-WN
+XY
 Rx
 Od
 fu
@@ -62684,16 +62738,16 @@ Mc
 qa
 tr
 WE
-Jm
+Iy
 rQ
 tr
 tr
 WE
-oL
+gv
 FA
 tr
 WE
-pU
+Hz
 iC
 tr
 qa
@@ -63299,7 +63353,7 @@ qa
 qa
 qa
 qX
-nm
+Rm
 qX
 qX
 Zq
@@ -63597,11 +63651,11 @@ tr
 pI
 iE
 ef
-tw
+Cz
 ef
 xu
 qX
-Pd
+jV
 zt
 zt
 pm
@@ -64195,16 +64249,16 @@ qf
 qf
 xh
 tr
-kC
-Qx
-Pk
+wj
+qW
+MW
 UJ
 tr
-kC
-Qx
-Pk
+wj
+qW
+MW
 tr
-Cu
+jW
 nK
 rh
 nK
@@ -64497,14 +64551,14 @@ qf
 Lf
 nA
 GP
-sq
-em
-Ax
+oz
+Em
+oM
 tr
 tr
-sq
-em
-Ax
+oz
+Em
+oM
 Ai
 qX
 zd
@@ -65404,12 +65458,12 @@ jP
 wB
 QP
 QP
-wt
-wt
+st
+st
 QP
-wt
-wt
-wt
+st
+st
+st
 QP
 QP
 mY
@@ -66617,7 +66671,7 @@ qZ
 qZ
 qZ
 Zw
-av
+Mm
 qZ
 qZ
 qZ

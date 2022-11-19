@@ -1102,3 +1102,19 @@ Only trained personnel should operate station systems. Follow all procedures car
 
 	Congrats! Your mineral magnet is now assembled and ready for use!
 	"}
+
+/obj/item/paper/chesspamphlet
+	name = "Pre and post game instructions"
+	icon_state = "index_card"
+	info = {"
+	<b>Before a round:</b><br><br>
+
+	1. Ensure that the board has been reset to its starting position.<br>
+	2. Ensure that the clock timers have been reset and that the current turn has been set to White.<br>
+	3. To start the game, have Black start the clock when both participants are ready and when the round has begun.<br><br>
+
+	<b>After a round:</b><br><br>
+	1. Send one person to the judge's table to report the result of the game, making sure that you tell them your board number.<br>
+	2. Reset the board and the clocks for the next game.<br>
+	3. Exit the convention hall and await the next round.
+	"}
