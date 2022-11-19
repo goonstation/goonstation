@@ -2031,4 +2031,4 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 	else
 		// DO NOT MAKE JUNCTIONS, FOOLS
 		CRASH("Pipe Spawners can't make junctions!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
-
+	qdel(src)
