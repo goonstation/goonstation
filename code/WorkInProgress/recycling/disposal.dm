@@ -1577,6 +1577,11 @@
 		desc = "An underfloor mineral pipe."
 		color = PIPEC_MINERAL
 
+	cargo
+		name = "cargo pipe"
+		desc = "An underfloor cargo pipe"
+		color = PIPEC_CARGO
+
 	New()
 		..()
 		dpdir = dir
