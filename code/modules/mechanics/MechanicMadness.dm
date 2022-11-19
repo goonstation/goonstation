@@ -233,6 +233,7 @@
 		if(!src.anchored && target != usr)
 			return ..()
 		return
+
 	get_desc()
 		.+="[src.welded ? " It is welded shut." : ""][src.open ? " Its cover has been opened." : ""]\
 		[src.anchored ? "It is [src.open || src.welded ? "also" : ""] anchored to the ground." : ""]"
@@ -298,6 +299,7 @@
 					qdel(src) // delet
 					return false
 			return true
+
 		attack_self(mob/user as mob)
 			if(src.open)
 				if(!(user in src.users))
@@ -1397,18 +1399,19 @@
 
 	proc/checkstr(var/datum/mechanicsMessage/input)
 		if(level == 2 || !length(expressionpatt)) return
+		if(GET_COOLDOWN(src, SEND_COOLDOWN_ID))	return
 		if(!R || R.flags != expressionflag || R.name != expressionpatt)
 			R = new(expressionpatt, expressionflag)
 		if(!R) return
-		if(use_power(MECHCOMP_MED_POWER, min_apc_perc=15))
-			LIGHT_UP_HOUSING
+		use_power(MECHCOMP_MED_POWER, min_apc_perc=15, extra_cooldown=0.5 SECONDS)
+		LIGHT_UP_HOUSING
 
-			var/mod = R.Replace(input.signal, expressionrepl)
-			mod = strip_html_tags(sanitize(html_encode(mod)))//U G H
+		var/mod = R.Replace(input.signal, expressionrepl)
+		mod = strip_html_tags(sanitize(html_encode(mod)))//U G H
 
-			if(mod)
-				input.signal = mod
-				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
+		if(mod)
+			input.signal = mod
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_regrep"
@@ -1477,18 +1480,18 @@
 
 	proc/checkstr(var/datum/mechanicsMessage/input)
 		if(level == 2 || !length(expressionTT)) return
+		if(GET_COOLDOWN(src, SEND_COOLDOWN_ID))	return
 		if(!R || R.flags != expressionflag || R.name != expressionpatt)
 			R = new(expressionpatt, expressionflag)
 		if(!R) return
-
-		if(use_power(MECHCOMP_MED_POWER, min_apc_perc=15))
-			LIGHT_UP_HOUSING
-			if(R.Find(input.signal))
-				if(replacesignal)
-					SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG,input)
-				else
-					input.signal = R.match
-					SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
+		use_power(MECHCOMP_MED_POWER, min_apc_perc=15, extra_cooldown=0.5 SECONDS)
+		LIGHT_UP_HOUSING
+		if(R.Find(input.signal))
+			if(replacesignal)
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG,input)
+			else
+				input.signal = R.match
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		return
 
 	update_icon()
@@ -1544,14 +1547,15 @@
 	proc/checkstr(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		var/transmissionStyle = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_MSG
-		if(use_power(MECHCOMP_LOW_POWER, min_apc_perc=15))
-			LIGHT_UP_HOUSING
-			if(findtext(input.signal, triggerSignal))
-				if(!not)
-					SEND_SIGNAL(src,transmissionStyle,input)
-			else
-				if(not)
-					SEND_SIGNAL(src,transmissionStyle,input)
+		if(GET_COOLDOWN(src, SEND_COOLDOWN_ID)) return
+		use_power(MECHCOMP_LOW_POWER, min_apc_perc=15, extra_cooldown=0.5 SECONDS)
+		LIGHT_UP_HOUSING
+		if(findtext(input.signal, triggerSignal))
+			if(!not)
+				SEND_SIGNAL(src,transmissionStyle,input)
+		else
+			if(not)
+				SEND_SIGNAL(src,transmissionStyle,input)
 		return
 
 	proc/settrigger(var/datum/mechanicsMessage/input)
@@ -1854,8 +1858,6 @@
 	var/net_id = null //What is our ID on the network?
 	var/last_ping = 0
 	var/range = null
-
-	var/noise_enabled = true
 	var/frequency = FREQ_FREE
 
 	get_desc()
@@ -1927,11 +1929,8 @@
 		if(input.data_file)
 			sendsig.data_file = input.data_file.copy_file()
 		SPAWN(0)
-			if(src.noise_enabled)
-				src.noise_enabled = false
+			if(!ON_COOLDOWN(src, "sound_cooldown", WIFI_NOISE_COOLDOWN))
 				playsound(src, 'sound/machines/wifi.ogg', WIFI_NOISE_VOLUME, 0, 0)
-				SPAWN(WIFI_NOISE_COOLDOWN)
-					src.noise_enabled = true
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, sendsig, src.range, "main")
 
 		animate_flash_color_fill(src,"#FF0000",2, 2)
@@ -1954,11 +1953,8 @@
 				pingsignal.data["data"] = "Wifi Component"
 
 				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
-					if(src.noise_enabled)
-						src.noise_enabled = false
+					if(!ON_COOLDOWN(src, "sound_cooldown", WIFI_NOISE_COOLDOWN))
 						playsound(src, 'sound/machines/wifi.ogg', WIFI_NOISE_VOLUME, 0, 0)
-						SPAWN(WIFI_NOISE_COOLDOWN)
-							src.noise_enabled = true
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, src.range)
 
 			if(signal.data["command"] == "text_message" && signal.data["batt_adjust"] == netpass_syndicate)
@@ -2011,6 +2007,7 @@
 
 #undef WIFI_NOISE_COOLDOWN
 #undef WIFI_NOISE_VOLUME
+
 /obj/item/mechanics/selectcomp
 	name = "Selection Component"
 	desc = ""
@@ -2560,17 +2557,18 @@
 
 	hear_talk(mob/M as mob, msg, real_name, lang_id)
 		if(level == 2) return
-		if(use_power(MECHCOMP_LOW_POWER, min_apc_perc=10))
-			LIGHT_UP_HOUSING
-			var/message = msg[2]
-			if(lang_id in list("english", ""))
-				message = msg[1]
-			message = strip_html(html_decode(message), no_fucking_autoparse = TRUE)
-			var/heardname = M.name
-			if(real_name)
-				heardname = real_name
-			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,add_sender ? "[heardname] : [message]":"[message]")
-			animate_flash_color_fill(src,"#00FF00",2, 2)
+		if(GET_COOLDOWN(src, SEND_COOLDOWN_ID)) return
+		use_power(MECHCOMP_LOW_POWER, min_apc_perc=10, extra_cooldown=1 SECOND)
+		LIGHT_UP_HOUSING
+		var/message = msg[2]
+		if(lang_id in list("english", ""))
+			message = msg[1]
+		message = strip_html(html_decode(message), no_fucking_autoparse = TRUE)
+		var/heardname = M.name
+		if(real_name)
+			heardname = real_name
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,add_sender ? "[heardname] : [message]":"[message]")
+		animate_flash_color_fill(src,"#00FF00",2, 2)
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_mic"
@@ -2619,30 +2617,31 @@
 
 	proc/hear_radio(atom/movable/AM, msg, lang_id)
 		if (level == 2) return
-		if(use_power(MECHCOMP_LOW_POWER, min_apc_perc=10))
-			LIGHT_UP_HOUSING
-			var/message = msg[2]
-			if (lang_id in list("english", ""))
-				message = msg[1]
-			message = strip_html_tags(html_decode(message))
-			var/heardname = null
-			if (isobj(AM))
-				heardname = AM.name
-			else if (ismob(AM))
-				heardname = AM:real_name
-				if (ishuman(AM))
-					var/mob/living/carbon/human/H = AM
-					if (H.wear_mask && H.wear_mask.vchange)
-						if (istype(H.wear_id, /obj/item/card/id))
-							var/obj/item/card/id/ID = H.wear_id
-							heardname = ID.registered
-						else
-							heardname = "Unknown"
-					else if (H.vdisfigured)
+		if(GET_COOLDOWN(src, SEND_COOLDOWN_ID)) return
+		use_power(MECHCOMP_LOW_POWER, min_apc_perc=10, extra_cooldown=1 SECOND)
+		LIGHT_UP_HOUSING
+		var/message = msg[2]
+		if (lang_id in list("english", ""))
+			message = msg[1]
+		message = strip_html_tags(html_decode(message))
+		var/heardname = null
+		if (isobj(AM))
+			heardname = AM.name
+		else if (ismob(AM))
+			heardname = AM:real_name
+			if (ishuman(AM))
+				var/mob/living/carbon/human/H = AM
+				if (H.wear_mask && H.wear_mask.vchange)
+					if (istype(H.wear_id, /obj/item/card/id))
+						var/obj/item/card/id/ID = H.wear_id
+						heardname = ID.registered
+					else
 						heardname = "Unknown"
+				else if (H.vdisfigured)
+					heardname = "Unknown"
 
-			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"name=[heardname]&message=[message]")
-			animate_flash_color_fill(src,"#00FF00",2, 2)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"name=[heardname]&message=[message]")
+		animate_flash_color_fill(src,"#00FF00",2, 2)
 		return
 
 	update_icon()
