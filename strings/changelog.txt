@@ -1,5 +1,10 @@
 
 (t)sat nov 19 22
+(u)Glamurio (Ryou)
+(p)11331
+(e)🎨⚖💅🎩|C-Sprites, C-Balance, C-QoL, A-Clothing
+(*)Janitors now start with a janny pack which contains some custodial supplies.
+(+)They also start with a mop in their hand now.
 (u)Caio029
 (p)11977
 (e)|
