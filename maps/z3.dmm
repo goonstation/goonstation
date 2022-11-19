@@ -3517,7 +3517,7 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "apX" = (
-/obj/critter/cat{
+/mob/living/critter/small_animal/cat{
 	desc = "How long has this cat been here?";
 	icon_state = "cat6";
 	name = "jons the catte";

@@ -21748,7 +21748,7 @@
 	},
 /area/space)
 "bfI" = (
-/obj/critter/cat/jones,
+/mob/living/critter/small_animal/cat/jones,
 /obj/cable{
 	icon_state = "4-8"
 	},

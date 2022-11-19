@@ -322,13 +322,21 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	flags = TABLEPASS
 	fits_under_table = 1
 	add_abilities = list(/datum/targetable/critter/pounce)
+	ai_type = /datum/aiHolder/cat
+	is_npc = TRUE
 	var/cattype = 1
-	var/randomize_name = 1
-	var/randomize_look = 1
+	var/randomize_name = TRUE
+	var/randomize_look = TRUE
 	var/catnip = 0
+	var/is_annoying = FALSE
+	var/attack_damage = 3
+	var/recent_pug_pet = FALSE
+	var/last_claw_fury = 0
 
 	New()
 		..()
+		if(src.name == "jons the catte")
+			src.is_pet = 1
 		if (src.randomize_name)
 			src.name = pick_string_autokey("names/cats.txt")
 			src.real_name = src.name
@@ -341,6 +349,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			src.icon_state = "cat[cattype]"
 			src.icon_state_alive = src.icon_state
 			src.icon_state_dead = "cat[cattype]-dead"
+			src.last_claw_fury = TIME
 
 	setup_hands()
 		..()
@@ -370,14 +379,16 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			..()
 
 	proc/catnip_effect()
-		if (src.catnip)
-			return
 		src.catnip = 45
 		src.visible_message("[src]'s eyes dilate.")
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
+
+		//Cats meow sometimes
+		if (src.ai.enabled && prob(5))
+			src.emote("scream", 1)
 
 		if (getStatusDuration("burning"))
 			return ..()
@@ -447,11 +458,101 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		if (prob(10))
 			src.audible_message("[src] purrs!",\
 			"You purr!")
+		if (src.ai.enabled && ispug(user) && prob(10))
+			src.recent_pug_pet = TRUE
+			SPAWN(15 SECONDS)
+				src?.recent_pug_pet = FALSE
+			src.ai.priority_tasks += src.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(src, src.ai.default_task))
+			src.ai.interrupt()
+			src.visible_message("<span class='notice'>[src] recoils and hisses at [user]'s attempt to pet them, then goes for the jugular!</span>")
+			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
+
+	Crossed(atom/movable/M as mob)
+		..()
+		if (!isalive(src))
+			return
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(prob(10) && src.is_annoying)
+				src.visible_message("<span class='combat'>[src] weaves around [H]'s legs and trips [him_or_her(H)]!</span>")
+				H.setStatus("resting", duration = INFINITE_STATUS)
+				H.force_laydown_standup()
+			else if (prob(4) && ishuman(M))
+				var/mob/living/carbon/human/H = M
+				boutput(src, "<span class='notice'>You weave around [H] to [pick("show your affection!", "get them to feed you.", "annoy them for no reason in particular.")]</span>")
+				boutput(H, "<span class='notice'>[src] weaves around you, waving their tail around. A bunch of hair clings to your clothes and some gets in your nose.</span>")
+				H.emote("sneeze")
+		return
+
+	seek_target(range)
+		. = list()
+		if (src.recent_pug_pet)
+			for (var/mob/living/carbon/human/H in hearers(range, src))
+				if (ispug(H) && isalive(H))
+					. += H
+					return
+		for (var/mob/living/critter/small_animal/mouse/C in hearers(range, src))
+			if (isdead(C)) continue
+			. += C
+		for (var/obj/critter/livingtail/C in hearers(range, src))
+			. += C
+
+		if (length(.) && prob(20))
+			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
+			src.visible_message("<span class='alert'>[src] hisses!</span>")
+
+	critter_attack(var/the_target)
+		if (istype(the_target, /obj/critter))
+			var/obj/critter/C = the_target
+			if (C.health <= 0 && C.alive)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
+				C.health -= 2
+		else if (istype(the_target, /mob))
+			var/mob/target = the_target
+			if(istype(target, /mob/living/critter/small_animal/mouse/weak/mentor) && prob(90))
+				src.visible_message("<span class='combat'><B>[src]</B> tries to bite [target] but \the [target] dodges [pick("nimbly", "effortlessly", "gracefully")]!</span>")
+				return
+			if ((src.catnip || prob(2) ) && (last_claw_fury < (TIME + 15 SECONDS)))
+				var/attackCount = rand(5, 9)
+				var/iteration = 0
+				while (iteration <= attackCount && (get_dist(src, target) <= 1))
+					if (iteration == 0)
+						target.setStatus("weakened", 2 SECONDS)
+						src.visible_message("<span class='combat'>[src] [pick("starts to claw the living <b>shit</b> out of ", "unleashes a flury of claw at ")] [target]!</span>")
+					random_brute_damage(target, src.attack_damage + 2, 1)
+					playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 60, 1)
+					iteration ++
+					sleep(0.3 SECONDS)
+			else
+				var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
+				if (!pounce.disabled && pounce.cooldowncheck() && prob(50))
+					src.visible_message("<span class='combat'><B>[src]</B> pounces on [target] and trips them!</span>", "<span class='combat'>You pounce on [target]!</span>")
+					pounce.handleCast(target)
+				else
+					if (prob(50))
+						src.visible_message("<span class='combat'><B>[src]</B> pounces on [target]!</span>", "<span class='combat'>You pounce on [target]!</span>")
+						playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
+						random_brute_damage(target, src.attack_damage, 1)
+					else
+						src.visible_message("<span class='combat'><B>[src]</B> scratches [target]!</span>", "<span class='combat'>You scratch on [target]!</span>")
+						playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 50, 1, -1)
+						random_brute_damage(target, src.attack_damage + 2, 1)
+						if (prob(10))
+							bleed(target, 2)
+							boutput(target, "<span class='alert'>[src] scratches you hard enough to draw some blood! [pick("Bad kitty", "Piece of shit", "Ow")]!</span>")
 
 /mob/living/critter/small_animal/cat/weak
 	add_abilities = list()
 	health_brute = 10
 	health_burn = 10
+
+/mob/living/critter/small_animal/cat/synth
+	icon_state = "catsynth"
+	icon_state_dead = "catsynth-dead"
+	cattype = "synth"
+	randomize_name = FALSE
+	randomize_look = FALSE
+	desc = "Although this cat is vegan, it's still a carnivore."
 
 /* -------------------- Jones -------------------- */
 
@@ -459,10 +560,12 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	name = "Jones"
 	desc = "Jones the cat."
 	health = 30
-	randomize_name = 0
-	randomize_look = 0
+	randomize_name = FALSE
+	randomize_look = FALSE
 	health_brute = 30
 	health_burn = 30
+	is_annoying = TRUE
+	is_pet = 1
 	var/swiped = 0
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)

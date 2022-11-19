@@ -14517,7 +14517,7 @@
 /turf/simulated/floor,
 /area/station/bridge)
 "aYa" = (
-/obj/critter/cat/jones{
+/mob/living/critter/small_animal/cat/jones{
 	desc = "Didn't we have TWO cats?  Oh well.  Jones have you been putting on weight."
 	},
 /turf/simulated/floor/black,

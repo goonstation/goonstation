@@ -32107,7 +32107,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/crew_quarters/captain)
 "bih" = (
-/obj/critter/cat/jones,
+/mob/living/critter/small_animal/cat/jones,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bii" = (
@@ -32131,7 +32131,7 @@
 	},
 /area/station/bridge)
 "bil" = (
-/obj/critter/cat,
+/mob/living/critter/small_animal/cat,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bim" = (

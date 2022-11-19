@@ -71110,7 +71110,7 @@
 /turf/unsimulated/floor/plating/random,
 /area/syndicate_station/firing_range)
 "kmS" = (
-/obj/critter/cat,
+/mob/living/critter/small_animal/cat,
 /turf/unsimulated/floor/carpet/wizard/standard/edge/nw,
 /area/wizard_station)
 "kmZ" = (
@@ -72020,7 +72020,7 @@
 	c_flags = 94208;
 	pixel_x = 1;
 	pixel_y = 10;
-	
+
 	},
 /obj/table/wood/auto/desk/lily,
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/ne,
@@ -77022,7 +77022,7 @@
 	dir = 1;
 	name = "epic gamer chair"
 	},
-/obj/critter/cat/cathara,
+/mob/living/critter/small_animal/cat/cathara,
 /turf/unsimulated/floor/carpet/office/other,
 /area/centcom/offices/adhara)
 "vij" = (
@@ -77728,7 +77728,7 @@
 	},
 /area/centcom)
 "wAT" = (
-/obj/critter/cat{
+/mob/living/critter/small_animal/cat{
 	generic = 0;
 	icon_state = "cat2";
 	name = "Moo";

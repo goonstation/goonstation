@@ -12089,7 +12089,7 @@
 /obj/storage/secure/closet/security/armory,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
 	dir = 6;
-	
+
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
@@ -32364,7 +32364,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
 	dir = 10;
-	
+
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
@@ -35261,7 +35261,7 @@
 "kcT" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
 	dir = 10;
-	
+
 	},
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -46787,7 +46787,7 @@
 	icon_state = "beebed";
 	name = "cat bed"
 	},
-/obj/critter/cat/jones{
+/mob/living/critter/small_animal/cat/jones{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/green/fancy/edge{
@@ -82622,7 +82622,7 @@
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
 	dir = 6;
-	
+
 	},
 /obj/cable{
 	d1 = 1;

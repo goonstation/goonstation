@@ -3938,10 +3938,10 @@
 							END_NEAT
 						return
 
-				else if (!(src.neat_things & NT_JONES) && istype(AM, /obj/critter/cat) && AM.name == "Jones")
+				else if (!(src.neat_things & NT_JONES) && istype(AM, /mob/living/critter/small_animal/cat) && AM.name == "Jones")
 					FOUND_NEAT(NT_JONES)
-						var/obj/critter/cat/jones = AM
-						src.speak_with_maptext("And over here is the ship's cat, J[jones.alive ? "ones! No spacecraft is complete without a cat!" : "-oh mercy, MOVING ON, MOVING ON"]")
+						var/mob/living/critter/small_animal/cat/jones = AM
+						src.speak_with_maptext("And over here is the ship's cat, J[isalive(jones) ? "ones! No spacecraft is complete without a cat!" : "-oh mercy, MOVING ON, MOVING ON"]")
 						END_NEAT
 					return
 

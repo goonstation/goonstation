@@ -12350,7 +12350,7 @@
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
-	
+
 	},
 /obj/cable{
 	d1 = 4;
@@ -15056,7 +15056,7 @@
 	},
 /area/station/crew_quarters/jazz)
 "ayd" = (
-/obj/critter/cat/jones,
+/mob/living/critter/small_animal/cat/jones,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -34596,7 +34596,7 @@
 "boF" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen{
 	dir = 1;
-	
+
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -63897,7 +63897,7 @@
 	},
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
 	dir = 8;
-	
+
 	},
 /turf/simulated/floor/redwhite{
 	dir = 4

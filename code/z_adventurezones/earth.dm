@@ -428,11 +428,12 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 //adhara office
 
 //adhara herself....?
-/obj/critter/cat/cathara
+/mob/living/critter/small_animal/cat/cathara
 	name = "Cathara"
 	desc = "...is this really her?? Do they let cats be admins??"
 	icon_state = "cat1"
-	randomize_cat = 0
+	randomize_name = FALSE
+	randomize_look = FALSE
 
 	New()
 		..()

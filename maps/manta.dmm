@@ -10060,7 +10060,7 @@
 /turf/simulated/floor,
 /area/station/hallway/portupperhallway)
 "aCY" = (
-/obj/critter/cat/jones,
+/mob/living/critter/small_animal/cat/jones,
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"

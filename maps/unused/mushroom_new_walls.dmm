@@ -19923,7 +19923,7 @@
 	},
 /area/station/security/brig)
 "cjS" = (
-/obj/critter/cat,
+/mob/living/critter/small_animal/cat,
 /turf/simulated/floor/carpet{
 	icon_state = "fblue1"
 	},
@@ -31411,7 +31411,7 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "qBm" = (
-/obj/critter/cat/jones,
+/mob/living/critter/small_animal/cat/jones,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/captain)
 "qBr" = (

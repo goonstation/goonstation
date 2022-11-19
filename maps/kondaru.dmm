@@ -56068,7 +56068,7 @@
 /turf/simulated/floor/neutral/corner,
 /area/station/hallway/primary/east)
 "sNg" = (
-/obj/critter/cat/jones,
+/mob/living/critter/small_animal/cat/jones,
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/station/bridge)
 "sNP" = (
