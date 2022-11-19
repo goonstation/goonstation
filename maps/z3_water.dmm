@@ -82,7 +82,6 @@
 /turf/simulated/martian/floor,
 /area/evilreaver/security)
 "ar" = (
-/obj/martianBiotech,
 /obj/decal/cleanable/blood,
 /turf/simulated/martian/floor,
 /area/evilreaver/security)
@@ -180,10 +179,6 @@
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibdown1"
 	},
-/turf/simulated/martian/floor,
-/area/evilreaver/security)
-"aG" = (
-/obj/martianBiotech,
 /turf/simulated/martian/floor,
 /area/evilreaver/security)
 "aH" = (
@@ -7001,7 +6996,7 @@ ad
 ae
 ae
 aB
-aG
+ae
 aK
 ad
 ab

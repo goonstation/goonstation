@@ -227,6 +227,18 @@
 	asteroid
 		icon_state = "aplaceholder"
 
+	plasma
+		temperature = T20C
+		toxins = ONE_ATMOSPHERE/3
+		New()
+			..()
+			var/obj/overlay/tile_gas_effect/gas_icon_overlay = new
+			gas_icon_overlay.icon = 'icons/effects/tile_effects.dmi'
+			gas_icon_overlay.icon_state = "plasma-alpha"
+			gas_icon_overlay.dir = pick(cardinal)
+			gas_icon_overlay.alpha = 100
+			gas_icon_overlay.set_loc(src)
+
 /turf/space/no_replace
 
 /turf/space/New()

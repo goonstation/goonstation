@@ -5,6 +5,21 @@
  * Ported from TGStation with permission from @Ryll-Ryll, also ryll is cool
  */
 
+/// Pathfind option key; The maximum number of steps we can take in a given path to search (default: 30, 0 = infinite)
+#define POP_MAX_DIST "max_distance"
+/// Pathfind option key; Minimum distance to the target before path returns, could be used to get near a target, but not right to it - for an AI mob with a gun, for example.
+#define POP_MIN_DIST "min_distance"
+/// Pathfind option key; An ID card representing what access we have and what doors we can open. Its location relative to the pathing atom is irrelevant
+#define POP_ID "id"
+/// Pathfind option key; Whether we consider turfs without atmos simulation (AKA do we want to ignore space)
+#define POP_SIMULATED_ONLY "simulated_only"
+/// Pathfind option key; If we want to avoid a specific turf, like if we're a mulebot who already got blocked by some turf
+#define POP_EXCLUDE "exclude"
+/// Pathfind option key; Whether to find only paths consisting of cardinal steps.
+#define POP_CARDINAL_ONLY "cardinal_only"
+/// Pathfind option key; Whether or not to check if doors are blocked (welded, out of power, locked, etc...)
+#define POP_DOOR_CHECK "do_doorcheck"
+
 /**
  * This is the proc you use whenever you want to have pathfinding more complex than "try stepping towards the thing".
  *
@@ -33,7 +48,20 @@
 	if(!caller || !length(ends))
 		return
 
-	var/datum/pathfind/pathfind_datum = new(caller, ends, id, max_distance, mintargetdist, simulated_only, exclude, cardinal_only, do_doorcheck)
+	var/list/options = list(
+		POP_MAX_DIST=max_distance,
+		POP_MIN_DIST=mintargetdist,
+		POP_ID=id,
+		POP_SIMULATED_ONLY=simulated_only,
+		POP_EXCLUDE=exclude,
+		POP_CARDINAL_ONLY=cardinal_only,
+		POP_DOOR_CHECK=do_doorcheck,
+	)
+	if(istype(caller, /obj/machinery/bot) && isnull(id)) // Stonepillar: remove this when amy finishes mob-ifying /obj/machinery/bot
+		var/obj/machinery/bot/bot = caller
+		options[POP_ID] = bot.botcard
+
+	var/datum/pathfind/pathfind_datum = new(caller, ends, options)
 	if(!isnull(required_goals))
 		pathfind_datum.n_target_goals = required_goals
 	pathfind_datum.search()
@@ -59,7 +87,7 @@
  * Note that this can only be used inside the [datum/pathfind][pathfind datum] since it uses variables from said datum.
  * If you really want to optimize things, optimize this, cuz this gets called a lot.
  */
-#define CAN_STEP(cur_turf, next) (next && jpsTurfPassable(next, source=cur_turf, passer=caller, id=id, checkdoor=do_doorcheck) && !(simulated_only && !istype(next, /turf/simulated)) && (next != avoid))
+#define CAN_STEP(cur_turf, next) (next && jpsTurfPassable(next, cur_turf, caller, options) && !(simulated_only && !istype(next, /turf/simulated)) && (next != avoid))
 /// Another helper macro for JPS, for telling when a node has forced neighbors that need expanding
 #define STEP_NOT_HERE_BUT_THERE(cur_turf, dirA, dirB) ((!CAN_STEP(cur_turf, get_step(cur_turf, dirA)) && CAN_STEP(cur_turf, get_step(cur_turf, dirB))))
 
@@ -134,8 +162,7 @@
 	var/list/list/turf/paths
 
 	// general pathfinding vars/args
-	/// An ID card representing what access we have and what doors we can open. Its location relative to the pathing atom is irrelevant
-	var/obj/item/card/id/id
+
 	/// How far away we have to get to the end target before we can call it quits
 	var/mintargetdist = 0
 	/// I don't know what this does vs , but they limit how far we can search before giving up on a path
@@ -146,10 +173,10 @@
 	var/turf/avoid
 	/// Whether we only want cardinal steps
 	var/cardinal_only = FALSE
-	/// Whether or not we check if doors are blocked (welded, out of power, locked, etc...)
-	var/do_doorcheck = FALSE
+	/// Raw associative list of options passed from get_path_to.
+	var/list/options
 
-/datum/pathfind/New(atom/movable/caller, list/atom/goals, id, max_distance, mintargetdist, simulated_only, avoid, cardinal_only=FALSE, do_doorcheck=FALSE)
+/datum/pathfind/New(atom/movable/caller, list/atom/goals, list/options)
 	..()
 	src.caller = caller
 	ends = list()
@@ -165,13 +192,12 @@
 			ends[T] = list(goal)
 	open = new /datum/heap(/proc/HeapPathWeightCompare)
 	sources = new()
-	src.id = id
-	src.max_distance = max_distance
-	src.mintargetdist = mintargetdist
-	src.simulated_only = simulated_only
-	src.avoid = avoid
-	src.cardinal_only = cardinal_only
-	src.do_doorcheck = do_doorcheck
+	src.options = options
+	src.max_distance = options[POP_MAX_DIST]
+	src.mintargetdist = options[POP_MIN_DIST]
+	src.simulated_only = options[POP_SIMULATED_ONLY]
+	src.avoid = options[POP_EXCLUDE]
+	src.cardinal_only = options[POP_CARDINAL_ONLY]
 	src.paths = list()
 
 /**
@@ -417,7 +443,7 @@
 
 /// this is a slight modification of /proc/checkTurfPassable to avoid indirect proc call overhead
 /// Returns false if there is a dense atom on the turf, unless a custom hueristic is passed.
-/proc/jpsTurfPassable(turf/T, turf/source=null, atom/passer=null, id=null, checkdoor=FALSE)
+/proc/jpsTurfPassable(turf/T, turf/source, atom/passer, list/options)
 	. = TRUE
 	if(istype(passer,/mob/living/critter/flock/drone) && istype(T, /turf/simulated/wall/auto/feather))
 		var/mob/living/critter/flock/drone/F = passer
@@ -435,11 +461,8 @@
 	if(!is_cardinal(direction))
 		var/turf/corner_1 = get_step(source, turn(direction, 45))
 		var/turf/corner_2 = get_step(source, turn(direction, -45))
-		return jpsTurfPassable(corner_1, source, passer, id, checkdoor) && jpsTurfPassable(T, corner_1, passer, id, checkdoor) || \
-				jpsTurfPassable(corner_2, source, passer, id, checkdoor) && jpsTurfPassable(T, corner_2, passer, id, checkdoor)
-	if(isnull(id) && istype(passer, /obj/machinery/bot))
-		var/obj/machinery/bot/bot = passer
-		id = bot.botcard
+		return jpsTurfPassable(corner_1, source, passer, options) && jpsTurfPassable(T, corner_1, passer, options) || \
+				jpsTurfPassable(corner_2, source, passer, options) && jpsTurfPassable(T, corner_2, passer, options)
 	// if a source turf was included check for directional blocks between the two turfs
 	if (source && (T.blocked_dirs || source.blocked_dirs))
 		// do either of these turfs explicitly block entry or exit to the other?
@@ -447,6 +470,7 @@
 			return FALSE
 		else if (source && HAS_ALL_FLAGS(source.blocked_dirs, direction))
 			return FALSE
+	var/id = options[POP_ID]
 	for(var/atom/A as anything in T.contents)
 		if (isobj(A))
 			var/obj/O = A
@@ -456,7 +480,7 @@
 			if (istype(A, /obj/overlay) || istype(A, /obj/effects)) continue
 			if ((passer || id) && A.density)
 				if (O.object_flags & BOTS_DIRBLOCK) //NEW - are we a door-like-openable-thing?
-					if(checkdoor && istype(O, /obj/machinery/door))
+					if(options[POP_DOOR_CHECK] && istype(O, /obj/machinery/door))
 						var/obj/machinery/door/door = O
 						if (door.isblocked())
 							return FALSE
