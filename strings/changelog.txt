@@ -1,5 +1,9 @@
 
 (t)sat nov 19 22
+(u)LeahTheTech
+(p)12006
+(e)🆕⚖|C-Feature, C-Balance
+(+)Gunbots will now be pushed backwards by firing their guns in space.
 (u)Zonespace
 (p)12031
 (e)🪲🧛|C-Bug, A-Gamemodes
