@@ -479,7 +479,6 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 				H.setStatus("resting", duration = INFINITE_STATUS)
 				H.force_laydown_standup()
 			else if (prob(4) && ishuman(M))
-				var/mob/living/carbon/human/H = M
 				boutput(src, "<span class='notice'>You weave around [H] to [pick("show your affection!", "get them to feed you.", "annoy them for no reason in particular.")]</span>")
 				boutput(H, "<span class='notice'>[src] weaves around you, waving their tail around. A bunch of hair clings to your clothes and some gets in your nose.</span>")
 				H.emote("sneeze")
