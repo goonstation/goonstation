@@ -732,6 +732,7 @@
 
 	disposing()
 		UnsubscribeProcess()
+		src.update_delay = 0
 		..()
 
 	process()
