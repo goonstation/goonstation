@@ -744,6 +744,9 @@ that cannot be itched
 
 		add_fingerprint(user)
 		return
+	dropped(var/mob/user)
+		. = ..()
+		user.closeContextActions()
 
 /obj/item/device/ticket_writer
 	name = "Security TicketWriter 2000"
