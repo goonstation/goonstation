@@ -2001,9 +2001,7 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 		directions += WEST
 
 	if (dpdir == 0)
-		var/obj/disposalpipe/trunk/current = new src.trunk_type(src.loc)
-		current.dir = NORTH
-		current.dpdir = dpdir
+		CRASH("Lone Pipespawner doesn't connect to anything!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
 	else if (length(directions) == 1)
 		// lays a trunk pipe
 		var/obj/disposalpipe/trunk/current = new src.trunk_type(src.loc)

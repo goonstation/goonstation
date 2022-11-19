@@ -573,6 +573,7 @@
 
 	if (length(directions) == 0)
 		cable_laying(0,NORTH)
+		CRASH("Lone cablespawner!\nCable location: [src.x] x, [src.y] y, [src.z] z.")
 	// multiple cables, spiral out from the centre
 	else if (src.override_centre_connection)
 		for (var/i in 1 to length(directions))
