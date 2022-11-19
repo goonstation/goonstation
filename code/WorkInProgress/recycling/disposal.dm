@@ -1939,17 +1939,19 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 	if (dpdir & WEST)
 		directions += WEST
 
-	var/obj/disposalpipe/current = new src.loc
 	current.dpdir = dpdir
 	if (dpdir == 0)
+		var/obj/disposalpipe/trunk/current = new src.loc
 		current.dir = NORTH
 		current.icon_state = "pipe-t"
 	else if (length(directions) == 1)
 		// lays a trunk pipe
+		var/obj/disposalpipe/trunk/current = new src.loc
 		current.dir = directions[1]
 		current.icon_state = "pipe-t"
 	else if (length(directions) == 2)
 		// lays a normal pipe segment
+		var/obj/disposalpipe/current = new src.loc
 		if (dpdir & (NORTH + SOUTH) || dpdir & (EAST + WEST))
 			// straight pipe
 			current.dir = directions[1]
