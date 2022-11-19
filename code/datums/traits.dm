@@ -148,9 +148,9 @@
 				T = new traitType
 			else
 				T = trait_instance
+			traits[id] = T
 			if(T.afterlife_blacklisted && inafterlifebar(owner))
 				return
-			traits[id] = T
 			if(!isnull(owner))
 				if(T.isMoveTrait)
 					moveTraits.Add(id)
