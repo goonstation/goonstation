@@ -1,22 +1,27 @@
 import { useBackend } from '../backend';
 import { Box, Section, Divider, Button, Table, BlockQuote } from '../components';
 import { Window } from '../layouts';
-import { ReagentBlocks } from './EspressoMachine';
 
 export const TransitShuttle = (props, context) => {
   const { act, data } = useBackend(context);
   const Destinations = data.Destinations || [];
   const currentlocation = data.currentlocation || [];
+  const endlocation = data.endlocation || [];
 
   const {
     shuttlename,
     moving,
     locked,
   } = data;
+
+  let traveltext = `the ${shuttlename} is currently at ${currentlocation.name}`;
+  if (moving && endlocation) {
+    traveltext += ` moving to ${endlocation.name}`;
+  }
+
   return (
     <Window height="520" width="300" title={shuttlename} >
-      <BlockQuote>the {shuttlename} is currently at {currentlocation.name}
-      </BlockQuote>
+      <BlockQuote>{traveltext}</BlockQuote>
       <Section fill scrollable height="100%">
         {Destinations.map(Destination => {
           return (

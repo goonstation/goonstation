@@ -46,6 +46,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 	var/list/Destinations // list of the area paths
 
 	var/area/currentlocation
+	var/area/end_location
 	var/ejectdir = NORTH
 	var/shuttle_locked = FALSE// prevents shuttle console from calling
 	var/embed = FALSE // embeds the console on creation
@@ -100,12 +101,17 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 	for(var/path in Destinations)
 		var/area/A = locate(path)
 		.["Destinations"] +=  list(list("type" = A?.type,"name" = A?.name))
-	if (currentlocation)
-		.["currentlocation"] = list("type" = currentlocation?.type, "name" = currentlocation?.name)
 
 /obj/machinery/computer/transit_shuttle/ui_data(mob/user)
 	. = ..()
-	. = list("moving" = src.active, "locked" = src.shuttle_locked)
+	. = list(
+		"moving" = src.active,
+		"locked" = src.shuttle_locked,
+		)
+	if(src.currentlocation)
+		.["currentlocation"] = list("type" = src.currentlocation.type,"name" = src.currentlocation.name)
+	if(src.end_location && src.end_location != src.currentlocation && src.active)
+		.["endlocation"] = list("type" = src.end_location.type,"name" = src.end_location.name)
 
 /obj/machinery/computer/transit_shuttle/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -115,12 +121,11 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 			if (active || shuttle_locked)
 				return
 			if (params["dest"])
-				var/area/end_location = locate(text2path(params["dest"]))
+				src.end_location = locate(text2path(params["dest"]))
 				if(src.announce_move(end_location))
 					SPAWN(src.transit_delay)
 						src.active = TRUE
 						src.call_shuttle(end_location)
-				update_static_data(usr)
 
 /obj/machinery/computer/transit_shuttle/proc/announce_move(area/end_location)
 	if (!src.transit_delay) return (currentlocation && end_location) // dont bother sending a message
