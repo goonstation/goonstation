@@ -43,10 +43,10 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 
 	var/active =  FALSE
 	var/shuttlename = "imcoder"
-	var/list/Destinations // list of the area paths
+	var/list/destinations // list of the area paths
 
 	var/area/currentlocation
-	var/area/end_location
+	var/area/endlocation
 	var/ejectdir = NORTH
 	var/shuttle_locked = FALSE// prevents shuttle console from calling
 	var/embed = FALSE // embeds the console on creation
@@ -71,6 +71,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 				pixel_y = -25
 			if (WEST)
 				pixel_x = -25
+
 /obj/machinery/computer/transit_shuttle/power_change()  // fuck you parent code
 	if(powered() && embed)
 		icon_state = "shuttle-embed"
@@ -84,6 +85,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 			src.UpdateOverlays(screen_image, "screen_image")
 	else
 		. = ..()
+
 /obj/machinery/computer/transit_shuttle/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
@@ -98,9 +100,9 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 /obj/machinery/computer/transit_shuttle/ui_static_data(mob/user)
 	. = ..()
 	. = list("shuttlename" = src.shuttlename)
-	for(var/path in Destinations)
+	for(var/path in destinations)
 		var/area/A = locate(path)
-		.["Destinations"] +=  list(list("type" = A?.type,"name" = A?.name))
+		.["destinations"] +=  list(list("type" = A?.type,"name" = A?.name))
 
 /obj/machinery/computer/transit_shuttle/ui_data(mob/user)
 	. = ..()
@@ -110,8 +112,8 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 		)
 	if(src.currentlocation)
 		.["currentlocation"] = list("type" = src.currentlocation.type,"name" = src.currentlocation.name)
-	if(src.end_location && src.end_location != src.currentlocation && src.active)
-		.["endlocation"] = list("type" = src.end_location.type,"name" = src.end_location.name)
+	if(src.endlocation && src.endlocation != src.currentlocation && src.active)
+		.["endlocation"] = list("type" = src.endlocation.type,"name" = src.endlocation.name)
 
 /obj/machinery/computer/transit_shuttle/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -121,11 +123,11 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 			if (active || shuttle_locked)
 				return
 			if (params["dest"])
-				src.end_location = locate(text2path(params["dest"]))
-				if(src.announce_move(end_location))
+				src.endlocation = locate(text2path(params["dest"]))
+				if(src.announce_move(endlocation))
 					SPAWN(src.transit_delay)
 						src.active = TRUE
-						src.call_shuttle(end_location)
+						src.call_shuttle(endlocation)
 
 /obj/machinery/computer/transit_shuttle/proc/announce_move(area/end_location)
 	if (!src.transit_delay) return (currentlocation && end_location) // dont bother sending a message
@@ -137,6 +139,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 			Console.active = TRUE
 			Console.visible_message("<span class='alert'>[src.shuttlename] is moving to [end_location]!</span>")
 	return (currentlocation && end_location)
+
 /obj/machinery/computer/transit_shuttle/proc/call_shuttle(area/end_location)
 	// shuttle crush stuff stolen from shuttle_controller.dm
 	if (currentlocation && end_location)
@@ -183,10 +186,10 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 		currentlocation.move_contents_to(end_location, turf_to_skip=list(/turf/space, global.map_settings.shuttle_map_turf))
 
 		// cant figure out why the walls arent behaving when moved so
-		for (var/turf/unsimulated/wall/auto/Wall in end_location)
-			Wall.UpdateIcon()
-		for (var/turf/simulated/wall/auto/Wall in end_location)
-			Wall.UpdateIcon()
+		for (var/turf/unsimulated/wall/auto/wall in end_location)
+			wall.UpdateIcon()
+		for (var/turf/simulated/wall/auto/wall in end_location)
+			wall.UpdateIcon()
 
 		if (currentlocation.z == Z_LEVEL_STATION && station_repair.station_generator)
 			var/list/turf/turfs_to_fix = get_area_turfs(currentlocation)
@@ -198,8 +201,6 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 		Console.visible_message("<span class='alert'>[src.shuttlename] has Moved!</span>")
 		Console.currentlocation = end_location
 		Console.active = FALSE
-	update_static_data(usr)
-	return
 
 // non escape Shuttle types below
 
@@ -209,25 +210,27 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 	ejectdir = SOUTH
 /obj/machinery/computer/transit_shuttle/mining/New()
 	..()
-	Destinations = list(/area/shuttle/mining/station,
+	destinations = list(/area/shuttle/mining/station,
 	/area/shuttle/mining/diner,
 	/area/shuttle/mining/outpost)
 	currentlocation = locate(/area/shuttle/mining/diner)
+
 // asylum shuttle
 /obj/machinery/computer/transit_shuttle/asylum
 	shuttlename = "Asylum Shuttle"
 /obj/machinery/computer/transit_shuttle/asylum/New()
 	..()
-	Destinations = list(/area/shuttle/asylum/observation,
+	destinations = list(/area/shuttle/asylum/observation,
 	/area/shuttle/asylum/medbay,
 	/area/shuttle/asylum/pathology)
 	currentlocation = locate(/area/shuttle/asylum/medbay)
+
 // research shuttle
 /obj/machinery/computer/transit_shuttle/research
 	shuttlename = "Research Shuttle"
 /obj/machinery/computer/transit_shuttle/research/New()
 	..()
-	Destinations = list(/area/shuttle/research/station,
+	destinations = list(/area/shuttle/research/station,
 	/area/shuttle/research/outpost)
 	currentlocation = locate(/area/shuttle/research/outpost)
 
@@ -248,10 +251,10 @@ var/bombini_saved
 	ejectdir = SOUTH
 /obj/machinery/computer/transit_shuttle/johnbus/New()
 	..()
-	Destinations = list(/area/shuttle/john/owlery,/area/shuttle/john/diner)
+	destinations = list(/area/shuttle/john/owlery,/area/shuttle/john/diner)
 	currentlocation = locate(/area/shuttle/john/owlery)
 #ifndef UNDERWATER_MAP
-	Destinations += /area/shuttle/john/mining
+	destinations += /area/shuttle/john/mining
 #endif
 
 /obj/machinery/computer/transit_shuttle/johnbus/ui_static_data(mob/user)
@@ -259,7 +262,7 @@ var/bombini_saved
 	var/area/A
 	if(johnbill_shuttle_fartnasium_active)
 		A = locate(/area/shuttle/john/grillnasium)
-		.["Destinations"] += list(list("type" = A?.type,"name" = A?.name))
+		.["destinations"] += list(list("type" = A?.type,"name" = A?.name))
 
 /obj/machinery/computer/transit_shuttle/johnbus/call_shuttle(area/end_location)
 	var/turf/T = get_turf(src)

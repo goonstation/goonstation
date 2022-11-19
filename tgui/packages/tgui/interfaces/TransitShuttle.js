@@ -4,7 +4,7 @@ import { Window } from '../layouts';
 
 export const TransitShuttle = (props, context) => {
   const { act, data } = useBackend(context);
-  const Destinations = data.Destinations || [];
+  const destinations = data.destinations || [];
   const currentlocation = data.currentlocation || [];
   const endlocation = data.endlocation || [];
 
