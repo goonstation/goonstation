@@ -1,5 +1,9 @@
 
 (t)sat nov 19 22
+(u)Caio029
+(p)11977
+(e)|
+(+)Floor health scanners and health status screens are now mech-scannable. You can switch their IDs to work together with a multi-tool!
 (u)LeahTheTech
 (p)12006
 (e)🆕⚖|C-Feature, C-Balance
