@@ -455,6 +455,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 		src.onRestart()
 
 /obj/machinery/communications_dish/transception/update_icon()
+	//Visual indication of damage on base icon
 	if(repair_status < ARRAY_INTEG_FULL)
 		src.icon_state = "array_busted[repair_status]"
 	else
@@ -567,7 +568,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 			max_transception_readout = "0"
 
 		var/arrayborked = "NOMINAL"
-		if(transception_array.repair_status < TRSC_FULLREPAIR)
+		if(transception_array.repair_status < ARRAY_INTEG_FULL)
 			arrayborked = "BREACH"
 
 		. = list(
@@ -612,7 +613,16 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 #undef MAX_FREE_POWER
 #undef MAX_CHARGE_RATE
 
-#undef TRSC_FULLREPAIR
+#undef ARRAY_INTEG_WELD0
+#undef ARRAY_INTEG_WELD1
+#undef ARRAY_INTEG_WELD2
+#undef ARRAY_INTEG_WRENCH_OFF
+#undef ARRAY_INTEG_PRY_RODS
+#undef ARRAY_INTEG_ADD_SHEET
+#undef ARRAY_INTEG_ADD_RODS
+#undef ARRAY_INTEG_WRENCH_ON
+#undef ARRAY_INTEG_FULL
+
 #define INTERLINK_RANGE 100
 
 /obj/machinery/transception_pad
