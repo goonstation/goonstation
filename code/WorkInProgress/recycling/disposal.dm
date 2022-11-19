@@ -1888,11 +1888,63 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 /obj/disposalpipespawner
 	icon = 'icons/obj/disposal.dmi'
 	name = "disposal pipe spawner"
-	anchored = 1
-	density = 0
+	icon_state = "pipe-spawner"
 	text = ""
-
 	var/dpdir = 0		//! bitmask of pipe directions
-	dir = 0				//! dir will contain dominant direction for junction pipes
-	var/base_icon_state	//! Initial icon state on map
-	var/list/mail_tag = null //! Tag of mail group for switching pipes
+
+/obj/disposalpipespawner/New()
+	..()
+	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
+		SPAWN(1 SECONDS)
+			if(!src.disposed)
+				initialize()
+
+/obj/disposalpipespawner/initialize()
+	for (var/obj/disposalpipespawner/_pipe in orange(1, src))
+	// checks for disposal pipe spawners around itself
+		var/disx = _pipe.x - src.x
+		var/disy = _pipe.y - src.y
+		if (disx == 1 && disy == 0)
+			dpdir |= EAST
+		else if (disx == -1 && disy == 0)
+			dpdir |= WEST
+		else if (disx == 0 && disy == 1)
+			dpdir |= NORTH
+		else if (disx == 0 && disy == -1)
+			dpdir |= SOUTH
+	for (var/obj/disposalpipe/_pipe in orange(1, src))
+	// checks for disposal pipes around itself
+		var/disx = _pipe.x - src.x
+		var/disy = _pipe.y - src.y
+		if (disx == 1 && disy == 0)
+			if (_pipe.dpdir & WEST)
+				dpdir |= EAST
+		else if (disx == -1 && disy == 0)
+			if (_pipe.dpdir & EAST)
+				dpdir |= WEST
+		else if (disx == 0 && disy == 1)
+			if (_pipe.dpdir & SOUTH)
+				dpdir |= NORTH
+		else if (disx == 0 && disy == -1)
+			if (_pipe.dpdir & NORTH)
+				dpdir |= SOUTH
+
+	var/list/directions = list()
+	if (dpdir & NORTH)
+		directions += NORTH
+	if (dpdir & SOUTH)
+		directions += SOUTH
+	if (dpdir & EAST)
+		directions += EAST
+	if (dpdir & WEST)
+		directions += WEST
+
+	if (dpdir == 0)
+		pipelaying(0, NORTH)
+	else if (length(directions) == 1)
+		pipe_laying(0, directions[1])
+	else if (length(directions) == 2)
+		pipe_laying(directions[1],directions[2])
+	else
+		ERROR
+/obj/disposalpipespawner/pipelaying()
