@@ -1,4 +1,9 @@
 
+(t)sat nov 19 22
+(u)Zonespace
+(p)12031
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)You can no longer access Syndicate Intelligence via VR uplinks
 (t)fri nov 18 22
 (u)LeahTheTech
 (p)12022
