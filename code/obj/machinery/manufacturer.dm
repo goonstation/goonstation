@@ -1376,7 +1376,7 @@
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#BADOPERATION"))
 					return
 
-				if(world.time < last_queue_op + 5)
+				if(TIME < last_queue_op + 5)
 					return
 
 				else
