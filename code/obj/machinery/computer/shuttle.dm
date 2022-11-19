@@ -226,6 +226,12 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 	/area/shuttle/research/outpost)
 	currentlocation = locate(/area/shuttle/research/outpost)
 
+/obj/machinery/computer/transit_shuttle/research/embedded
+	icon_state = "shuttle-embed";
+	pixel_y = -25
+	ejectdir = 2
+	embed = 1
+
 // JOHN BILL'S JUICIN' BUS
 // This is used for a secondary reliable transport between Z3 and Z5
 // And also for certain adventure zones!

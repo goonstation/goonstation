@@ -76815,12 +76815,7 @@
 /area/station/ai_monitored/armory)
 "hXM" = (
 /obj/stool/chair/comfy/shuttle/green,
-/obj/machinery/computer/transit_shuttle/research{
-	icon_state = "shuttle-embed";
-	pixel_y = -25;
-	ejectdir = 2;
-	embed = 1
-	},
+/obj/machinery/computer/transit_shuttle/research/embedded,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/research/outpost)
 "hYU" = (
