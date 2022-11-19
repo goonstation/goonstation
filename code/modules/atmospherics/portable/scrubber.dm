@@ -17,6 +17,11 @@
 	//for smoke
 	var/drain_min = 5
 	var/drain_max = 12
+	var/obj/item/reagent_containers/glass/beaker/extractor_tank/tank = null
+
+	New()
+		..()
+		src.tank = new(src)
 
 /obj/machinery/portable_atmospherics/scrubber/update_icon()
 	if(on)
@@ -84,10 +89,7 @@
 			var/obj/fluid/F = my_turf.active_airborne_liquid
 			if (F?.group)
 				power_usage += (inlet_flow / 8) * 5 KILO WATTS
-				F.group.queued_drains += inlet_flow / 8
-				F.group.last_drain = my_turf
-				if (!F.group.draining)
-					F.group.add_drain_process()
+				F.group.drain(F, inlet_flow / 8, src.tank)
 
 		var/original_my_moles = TOTAL_MOLES(src.air_contents)
 		if(src.holding)
@@ -154,6 +156,7 @@
 		"pressure" = MIXTURE_PRESSURE(src.holding.air_contents),
 		"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
 	)
+	.["reagent_container"] = src.tank.ui_describe()
 
 /obj/machinery/portable_atmospherics/scrubber/ui_static_data(mob/user)
 	. = list(
