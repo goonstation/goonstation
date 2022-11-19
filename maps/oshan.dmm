@@ -17135,9 +17135,9 @@
 /area/research_outpost/toxins)
 "aQc" = (
 /obj/storage/crate,
-/obj/critter/roach,
-/obj/critter/roach,
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
+/mob/living/critter/small_animal/cockroach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "aQd" = (
@@ -22778,7 +22778,7 @@
 	pixel_x = -28
 	},
 /obj/item/cigbutt,
-/obj/critter/mouse{
+/mob/living/critter/small_animal/mouse{
 	name = "Sgt. Pepper"
 	},
 /turf/simulated/floor/plating/damaged3,
@@ -24573,7 +24573,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "bmv" = (
-/obj/critter/mouse/remy,
+/mob/living/critter/small_animal/mouse/remy,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -38507,7 +38507,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bVB" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/random,
 /area/station/storage/warehouse)
@@ -40473,7 +40473,7 @@
 /turf/simulated/floor/scorched,
 /area/diner/bathroom)
 "cbq" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
 /area/diner/bathroom)
 "cbr" = (
@@ -40667,7 +40667,7 @@
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "ccb" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "ccc" = (
@@ -42008,7 +42008,7 @@
 /area/station/maintenance/inner/central)
 "cfN" = (
 /obj/disposalpipe/segment,
-/obj/critter/mouse{
+/mob/living/critter/small_animal/mouse{
 	name = "Moose"
 	},
 /turf/simulated/floor/plating/random,
@@ -43278,7 +43278,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
 "cjU" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "cjV" = (

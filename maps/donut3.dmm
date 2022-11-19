@@ -11476,7 +11476,7 @@
 	},
 /area/shuttle/asylum/medbay)
 "deR" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "deT" = (

@@ -18,10 +18,11 @@ datum
 			fluid_b = 65
 			transparency = 240
 			taste = "vile"
-			depletion_rate = 0.075
+			depletion_rate = 0.4
 			description = "This appears to be beer mixed with milk."
 			reagent_state = LIQUID
 			value = 2
+			overdose = 30
 			thirst_value = 0.4
 			bladder_value = -0.2
 			viscosity = 0.2
@@ -38,6 +39,34 @@ datum
 					M.HealDamage("All", 1 * mult, 1 * mult)
 				..()
 				return
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				var/effect = ..(severity, M)
+				if (severity == 1) //lesser
+					M.stuttering += 1
+					if(effect <= 1)
+						M.visible_message("<span class='alert'><b>[M.name]</b> suddenly cluches their gut!</span>")
+						M.emote("scream")
+						M.setStatusMin("weakened", 4 SECONDS * mult)
+					else if(effect <= 3)
+						M.visible_message("<span class='alert'><b>[M.name]</b> completely spaces out for a moment.</span>")
+						M.change_misstep_chance(15 * mult)
+					else if(effect <= 5)
+						M.visible_message("<span class='alert'><b>[M.name]</b> stumbles and staggers.</span>")
+						M.dizziness += 5
+						M.setStatusMin("weakened", 4 SECONDS * mult)
+					else if(effect <= 7)
+						M.visible_message("<span class='alert'><b>[M.name]</b> shakes uncontrollably.</span>")
+						M.make_jittery(30)
+				else if (severity == 2) // greater
+					if(effect <= 5)
+						M.visible_message(pick("<span class='alert'><b>[M.name]</b> jerks bolt upright, then collapses!</span>",
+							"<span class='alert'><b>[M.name]</b> suddenly cluches their gut!</span>"))
+						M.setStatusMin("weakened", 8 SECONDS * mult)
+					else if(effect <= 8)
+						M.visible_message("<span class='alert'><b>[M.name]</b> stumbles and staggers.</span>")
+						M.dizziness += 5
+						M.setStatusMin("weakened", 4 SECONDS * mult)
 
 		fooddrink/milk
 			name = "milk"
@@ -859,34 +888,50 @@ datum
 			transparency = 155
 			data = null
 			depletion_rate = 1
+			var/datum/mutantrace/orig_mutantrace = null
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				if (!volume_passed)
 					return
-				if (!ishuman(M))
+				if(ishuman(M))
+					src.grantPower(M)
+
+			on_add()
+				if(!ishuman(holder?.my_atom))
 					return
-				if (!islist(mutini_effects) || !length(mutini_effects))
-					return ..()
-				var/power_granted = pick(mutini_effects)
-				var/power_time = rand(1,10)
-				M.bioHolder.AddEffect(power_granted)//, 0, power_time) the timeLeft var either wasn't working here or was grumpy about something so now we manually remove this below
-				SPAWN(power_time*10)
-					if (M?.bioHolder)
-						M.bioHolder.RemoveEffect(power_granted)
+				var/mob/living/carbon/human/M = holder.my_atom
+				if(M.mutantrace && !src.orig_mutantrace)
+					src.orig_mutantrace = M.mutantrace.type
+
+			on_mob_life_complete(var/mob/living/carbon/human/M)
+				if(M && M.bioHolder && src.orig_mutantrace && src.orig_mutantrace != M.mutantrace)
+					M.set_mutantrace(src.orig_mutantrace)
+				src.orig_mutantrace = null
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
 					M = holder.my_atom
-				if (!islist(mutini_effects) || !length(mutini_effects))
-					return ..()
-				var/power_granted = pick(mutini_effects)
-				var/power_time = rand(1,10)
-				M.bioHolder.AddEffect(power_granted)//, 0, power_time)
-				SPAWN(power_time*10)
-					if (M?.bioHolder)
-						M.bioHolder.RemoveEffect(power_granted)
+				if(ishuman(M))
+					src.grantPower(M)
 				..()
 				return
+
+			proc/grantPower(var/mob/living/carbon/human/M)
+				if (!islist(mutini_effects) || !length(mutini_effects) || !M.bioHolder)
+					return
+				var/power_granted = pick(mutini_effects)
+				if (M.bioHolder.HasEffect(power_granted))
+					return
+				var/power_time = rand(1,10)
+				var/is_mutant_race = istype(GetBioeffectFromGlobalListByID(power_granted), /datum/bioEffect/mutantrace)
+
+				M.bioHolder.AddEffect(power_granted)//, 0, power_time) the timeLeft var either wasn't working here or was grumpy about something so now we manually remove this below
+				// Keep whatever mutant races we get until mutini wears off
+				if(!is_mutant_race)
+					SPAWN(power_time*10)
+						if (M.bioHolder)
+							M.bioHolder.RemoveEffect(power_granted)
 
 		fooddrink/alcoholic/Manhattan
 			name = "Manhattan"

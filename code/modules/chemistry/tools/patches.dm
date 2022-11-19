@@ -175,7 +175,7 @@
 							H.patchesused ++
 						JOB_XP(user, "Medical Doctor", 1)
 
-			logTheThing(user == M ? LOG_CHEMISTRY : LOG_COMBAT, user, M, "applies a patch to [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
+			logTheThing(user == M ? LOG_CHEMISTRY : LOG_COMBAT, user, "applies a patch to [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 
 			src.clamp_reagents()
 
@@ -548,7 +548,7 @@
 				if (M.health < 90)
 					JOB_XP(user, "Medical Doctor", 2)
 
-			logTheThing(user == M ? LOG_CHEMISTRY : LOG_COMBAT, user, M, "begins automending [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
+			logTheThing(user == M ? LOG_CHEMISTRY : LOG_COMBAT, user, "begins automending [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 			begin_application(M,user=user)
 			return 1
 
@@ -685,7 +685,7 @@
 
 	onInterrupt(flag)
 		. = ..()
-		logTheThing(user == target ? "chemistry" : "combat", user, target, " finishes automending [constructTarget(M,"combat")] [log_reagents(M)] after [looped] applications at [log_loc(user)].")
+		logTheThing(user == target ? "chemistry" : "combat", user, " finishes automending [constructTarget(M,"combat")] [log_reagents(M)] after [looped] applications at [log_loc(user)].")
 
 //basically the same as ecig_refill_cartridge, but there's no point subtyping it...
 ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)

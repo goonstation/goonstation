@@ -121,6 +121,7 @@
 #include "macros\mob_status.dm"
 #include "macros\movable.dm"
 #include "macros\movement_modifiers.dm"
+#include "macros\process.dm"
 #include "macros\procs.dm"
 #include "macros\qdel.dm"
 #include "macros\spawn.dm"
