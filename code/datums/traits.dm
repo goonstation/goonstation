@@ -154,7 +154,6 @@
 			"clutz",
 			"leftfeet"
 		)
-		//logTheThing(LOG_DEBUG, owner, "got trait [id]. Afterlife: [inafterlifebar(owner)]; Blacklist: [inafterlifebar(owner)]")
 		if(!(id in traits) && !((id in blacklist_afterlife) && inafterlifebar(owner)) )
 			var/datum/trait/T = null
 			if(isnull(trait_instance))
