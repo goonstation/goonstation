@@ -141,7 +141,21 @@
 			other.addTrait(id, traits[id])
 
 	proc/addTrait(id, datum/trait/trait_instance=null)
-		if(!(id in traits))
+		// Blacklist for harmful afterlife traits that shouldn't be added
+		var/blacklist_afterlife = list(
+			"deaf",
+			"shortsighted",
+			"blind",
+			"mildly_mutated",
+			"addict",
+			"randomallergy",
+			"medicalallergy",
+			"allergic",
+			"clutz",
+			"leftfeet"
+		)
+		//logTheThing(LOG_DEBUG, owner, "got trait [id]. Afterlife: [inafterlifebar(owner)]; Blacklist: [inafterlifebar(owner)]")
+		if(!(id in traits) && !((id in blacklist_afterlife) && inafterlifebar(owner)) )
 			var/datum/trait/T = null
 			if(isnull(trait_instance))
 				var/traitType = traitList[id].type
