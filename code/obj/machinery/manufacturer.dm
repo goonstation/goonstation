@@ -1380,7 +1380,7 @@
 					return
 
 				else
-					last_queue_op = world.time
+					last_queue_op = TIME
 
 				src.queue -= src.queue[operation]
 				begin_work()
