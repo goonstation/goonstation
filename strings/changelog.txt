@@ -1,5 +1,9 @@
 
 (t)fri nov 18 22
+(u)LeahTheTech
+(p)12022
+(e)💅🎩|C-QoL, A-Clothing
+(+)Black lawyer suits are now available in the security clothing vendor.
 (u)Zonespace
 (p)12000
 (e)🆕📄|C-Feature, A-UI
