@@ -802,6 +802,12 @@
 "eh" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/solar/east)
+"em" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/east,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "ep" = (
 /obj/machinery/light/small/floor/netural,
 /obj/decal/tile_edge/line/black{
@@ -1954,6 +1960,12 @@
 	},
 /turf/simulated/floor/terrazzo,
 /area/station/hallway/primary/west)
+"kC" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/nw,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "kF" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -2080,6 +2092,10 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
+"lE" = (
+/obj/machinery/light/small/floor/frostedred,
+/turf/simulated/floor/glassblock/transparent_red,
+/area/station/hallway/secondary/entry)
 "lJ" = (
 /turf/simulated/floor,
 /area/station/crew_quarters/catering)
@@ -2355,6 +2371,13 @@
 	dir = 4
 	},
 /area/station/crew_quarters/catering)
+"nm" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	name = "Toilets"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
 "no" = (
 /obj/decal/boxingropeenter,
 /obj/decal/tile_edge/line/black{
@@ -2371,6 +2394,15 @@
 	},
 /turf/space,
 /area/station/solar/east)
+"nr" = (
+/obj/decal/poster/wallsign/stencil/left/i{
+	pixel_x = -5
+	},
+/obj/decal/poster/wallsign/stencil/left/c{
+	pixel_x = 4
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/station/hallway/primary/west)
 "ns" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -2646,6 +2678,24 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
+"oS" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/floorguide/arrow_e{
+	pixel_y = 9;
+	pixel_x = 17
+	},
+/obj/decal/poster/wallsign/stencil/left/e{
+	pixel_y = -4;
+	pixel_x = -7
+	},
+/obj/decal/poster/wallsign/stencil/left/v{
+	pixel_y = -4;
+	pixel_x = 4
+	},
+/turf/simulated/floor/terrazzo,
+/area/station/hallway/primary/west)
 "oU" = (
 /obj/decal/tile_edge/line/black{
 	dir = 6;
@@ -2942,6 +2992,13 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/decal/poster/wallsign/stencil/left/s{
+	pixel_x = -14;
+	pixel_y = -3
+	},
+/obj/decal/poster/wallsign/stencil/left/c{
+	pixel_y = -3
+	},
 /turf/simulated/floor/terrazzo,
 /area/station/hallway/primary/west)
 "qp" = (
@@ -2977,6 +3034,14 @@
 /area/listeningpost)
 "qA" = (
 /obj/cryotron,
+/turf/simulated/floor/terrazzo,
+/area/station/hallway/primary/west)
+"qB" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/decal/tile_edge/floorguide/arrow_w{
+	pixel_x = 18;
+	pixel_y = 8
+	},
 /turf/simulated/floor/terrazzo,
 /area/station/hallway/primary/west)
 "qH" = (
@@ -3168,6 +3233,9 @@
 "rs" = (
 /obj/table/wood,
 /obj/machinery/light,
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_y = 8
+	},
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
@@ -3339,6 +3407,12 @@
 /area/station/crew_quarters/fitness{
 	name = "Chess Ring"
 	})
+"sq" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/ne,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "sr" = (
 /obj/lattice{
 	dir = 4;
@@ -3485,6 +3559,14 @@
 /area/station/crew_quarters/fitness{
 	name = "Chess Ring"
 	})
+"tn" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/decal/tile_edge/floorguide/arrow_e{
+	pixel_x = 21;
+	pixel_y = 9
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/station/hallway/primary/west)
 "to" = (
 /obj/submachine/chef_sink{
 	dir = 4
@@ -4126,6 +4208,19 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crewquarters/garbagegarbs)
+"wm" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/poster/wallsign/stencil/left/m{
+	pixel_y = -3
+	},
+/obj/decal/poster/wallsign/stencil/left/i{
+	pixel_y = -3;
+	pixel_x = 9
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/station/hallway/primary/west)
 "wn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -4396,6 +4491,18 @@
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
+"xA" = (
+/obj/decal/poster/wallsign/stencil/left{
+	pixel_x = -5
+	},
+/obj/decal/poster/wallsign/stencil/left/c{
+	pixel_x = 7
+	},
+/obj/decal/poster/wallsign/stencil/left/t{
+	pixel_x = 17
+	},
+/turf/simulated/floor/terrazzo,
+/area/station/hallway/primary/west)
 "xD" = (
 /obj/lattice{
 	dir = 5;
@@ -4726,6 +4833,18 @@
 	dir = 1
 	},
 /area/station/security/checkpoint/podbay)
+"zy" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/decal/tile_edge/floorguide/arrow_n{
+	pixel_x = 13;
+	pixel_y = 7
+	},
+/turf/simulated/floor/terrazzo,
+/area/station/hallway/primary/west)
 "zA" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/disposalpipe/segment/vertical,
@@ -4789,7 +4908,7 @@
 /area/station/crew_quarters/kitchen)
 "zZ" = (
 /obj/landmark/map{
-	name = "CHESSHALL"
+	name = "EVENT"
 	},
 /turf/space,
 /area/space)
@@ -4924,6 +5043,12 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/listeningpost)
+"Ax" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/se,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "AE" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/caution/east,
@@ -5480,6 +5605,9 @@
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
+	},
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_y = 8
 	},
 /turf/simulated/floor/black/side,
 /area/station/hallway/primary/south)
@@ -6115,6 +6243,13 @@
 	dir = 8
 	},
 /area/station/crewquarters/garbagegarbs)
+"HH" = (
+/obj/decal/poster/wallsign/stencil/left/p,
+/obj/decal/poster/wallsign/stencil/left/r{
+	pixel_x = 13
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/station/hallway/primary/west)
 "HK" = (
 /obj/item/device/radio/intercom,
 /obj/disposalpipe/segment/horizontal,
@@ -6238,6 +6373,11 @@
 /obj/item/storage/wall/clothingrack/dresses,
 /turf/simulated/floor/black,
 /area/station/crewquarters/garbagegarbs)
+"IW" = (
+/obj/table/reinforced/auto,
+/obj/item/boardgame/chess,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/cafeteria)
 "IY" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/north,
@@ -7266,11 +7406,15 @@
 "Pa" = (
 /turf/simulated/floor/glassblock/transparent_grey,
 /area/station/hallway/secondary/entry)
-"Pd" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 4;
-	pixel_x = -8
+"Pb" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/decal/tile_edge/floorguide/arrow_w{
+	pixel_x = 53;
+	pixel_y = 44
 	},
+/turf/simulated/floor/terrazzo/black,
+/area/station/hallway/primary/west)
+"Pd" = (
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -7290,6 +7434,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
+"Pk" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/sw,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "Pr" = (
 /obj/decal/tile_edge/line/black{
 	dir = 6;
@@ -7472,6 +7622,12 @@
 "Qw" = (
 /turf/simulated/floor/caution/north,
 /area/station/hallway/secondary/exit)
+"Qx" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/west,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "Qy" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -8778,6 +8934,24 @@
 	dir = 1
 	},
 /area/station/security/checkpoint/podbay)
+"Xv" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/poster/wallsign/stencil/left/e{
+	pixel_y = -4;
+	pixel_x = -18
+	},
+/obj/decal/poster/wallsign/stencil/left/n{
+	pixel_y = -4;
+	pixel_x = -6
+	},
+/obj/decal/poster/wallsign/stencil/left/t{
+	pixel_y = -4;
+	pixel_x = 6
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/station/hallway/primary/west)
 "Xy" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
@@ -9094,6 +9268,16 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
+"Zr" = (
+/obj/decal/poster/wallsign/stencil/left/e{
+	pixel_x = -15
+	},
+/obj/decal/tile_edge/floorguide/arrow_n{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/turf/simulated/floor/terrazzo,
+/area/station/hallway/primary/west)
 "Zs" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -45899,7 +46083,7 @@ vZ
 Ng
 Ah
 Qu
-VN
+IW
 vh
 jR
 uy
@@ -48013,7 +48197,7 @@ mg
 Ng
 Ah
 Qu
-VN
+IW
 vh
 JV
 RN
@@ -51039,7 +51223,7 @@ mX
 IP
 JO
 kB
-Eo
+Pb
 cr
 aA
 Sf
@@ -51340,8 +51524,8 @@ VP
 Vc
 IP
 qA
-iX
-wU
+wm
+qB
 yz
 Bi
 JC
@@ -51954,7 +52138,7 @@ qL
 tV
 Pa
 BT
-Gb
+lE
 Pa
 Pa
 cW
@@ -52547,7 +52731,7 @@ tr
 tr
 tr
 qa
-oZ
+zy
 iX
 wU
 yz
@@ -52849,7 +53033,7 @@ tr
 tr
 tr
 iF
-yz
+HH
 kB
 Eo
 cr
@@ -52860,7 +53044,7 @@ qL
 tV
 Pa
 Gb
-Gb
+lE
 Pa
 Pa
 Pa
@@ -53151,7 +53335,7 @@ ar
 hh
 MQ
 qa
-cr
+xA
 iX
 wU
 yz
@@ -53453,7 +53637,7 @@ vL
 iv
 ZF
 fu
-yz
+nr
 kB
 Eo
 cr
@@ -53755,7 +53939,7 @@ Lp
 mK
 qJ
 qa
-cr
+Zr
 iX
 wU
 ur
@@ -54058,8 +54242,8 @@ tr
 tr
 iF
 yz
-kB
-Eo
+oS
+tn
 cr
 Ad
 aA
@@ -54360,7 +54544,7 @@ tr
 tr
 qa
 oZ
-iX
+Xv
 wU
 yz
 Ad
@@ -57679,7 +57863,7 @@ qa
 fu
 qa
 qa
-qa
+wg
 fu
 Ev
 pw
@@ -60397,7 +60581,7 @@ qa
 fu
 qa
 qa
-qa
+wg
 fu
 Ev
 xo
@@ -63115,7 +63299,7 @@ qa
 qa
 qa
 qX
-qX
+nm
 qX
 qX
 Zq
@@ -64011,14 +64195,14 @@ qf
 qf
 xh
 tr
-tr
-tr
-tr
+kC
+Qx
+Pk
 UJ
 tr
-tr
-tr
-tr
+kC
+Qx
+Pk
 tr
 Cu
 nK
@@ -64313,14 +64497,14 @@ qf
 Lf
 nA
 GP
+sq
+em
+Ax
 tr
 tr
-tr
-tr
-tr
-tr
-tr
-tr
+sq
+em
+Ax
 Ai
 qX
 zd
