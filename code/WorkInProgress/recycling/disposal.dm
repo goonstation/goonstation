@@ -1890,7 +1890,62 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 	name = "disposal pipe spawner"
 	icon_state = "pipe-spawner"
 	text = ""
+	pipe_type = /obj/disposalpipe
 	var/dpdir = 0		//! bitmask of pipe directions
+
+/obj/disposalpipespawner/types
+	mail
+		name = "mail pipe spawner"
+		color = PIPEC_MAIL
+		pipe_type = /obj/disposalpipe/segment/mail
+		trunk_type = /obj/disposalpipe/trunk/mail
+	brig
+		name = "brig pipe spawner"
+		color = PIPEC_BRIG
+		pipe_type = /obj/disposalpipe/segment/brig
+		trunk_type = /obj/disposalpipe/trunk/brig
+
+	ejection
+		name = "ejection pipe spawner"
+		color = PIPEC_EJECTION
+		pipe_type = /obj/disposalpipe/segment/ejection
+		trunk_type = /obj/disposalpipe/trunk/ejection
+
+	morgue
+		name = "morgue pipe spawner"
+		color = PIPEC_MORGUE
+		pipe_type = /obj/disposalpipe/segment/morgue
+		trunk_type = /obj/disposalpipe/trunk/morgue
+
+	food
+		name = "food pipe spawner"
+		color = PIPEC_FOOD
+		pipe_type = /obj/disposalpipe/segment/food
+		trunk_type = /obj/disposalpipe/trunk/food
+
+	produce
+		name = "produce pipe spawner"
+		color = PIPEC_PRODUCE
+		pipe_type = /obj/disposalpipe/segment/produce
+		trunk_type = /obj/disposalpipe/trunk/produce
+
+	transport
+		name = "transport pipe spawner"
+		color = PIPEC_TRANSPORT
+		pipe_type = /obj/disposalpipe/segment/transport
+		trunk_type = /obj/disposalpipe/trunk/transport
+
+	mineral
+		name = "mineral pipe spawner"
+		color = PIPEC_MINERAL
+		pipe_type = /obj/disposalpipe/segment/mineral
+		trunk_type = /obj/disposalpipe/trunk/mineral
+
+	cargo
+		name = "cargo pipe spawner"
+		color = PIPEC_CARGO
+		pipe_type = /obj/disposalpipe/segment/cargo
+		trunk_type = /obj/disposalpipe/trunk/cargo
 
 /obj/disposalpipespawner/New()
 	..()
@@ -1939,23 +1994,26 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 	if (dpdir & WEST)
 		directions += WEST
 
-	current.dpdir = dpdir
 	if (dpdir == 0)
-		var/obj/disposalpipe/trunk/current = new src.loc
+		var/obj/disposalpipe/trunk/current = new src.trunk_type(src.loc)
 		current.dir = NORTH
+		current.dpdir = dpdir
 	else if (length(directions) == 1)
 		// lays a trunk pipe
-		var/obj/disposalpipe/trunk/current = new src.loc
+		var/obj/disposalpipe/trunk/current = new src.trunk_type(src.loc)
 		current.dir = directions[1]
+		current.dpdir = dpdir
 	else if (length(directions) == 2)
 		// lays a normal pipe segment
-		var/obj/disposalpipe/current = new src.loc
+		var/obj/disposalpipe/current = new src.pipe_type(src.loc)
 		if (dpdir & (NORTH + SOUTH) || dpdir & (EAST + WEST))
 			// straight pipe
 			current.dir = directions[1]
 			current.icon_state = "pipe-s"
+			current.dpdir = dpdir
 		else
 			current.icon_state = "pipe-c"
+			current.dpdir = dpdir
 			if (dpdir & NORTHEAST)
 				current.dir = NORTH
 			else if (dpdir & NORTHWEST)
