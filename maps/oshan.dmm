@@ -22778,7 +22778,7 @@
 	pixel_x = -28
 	},
 /obj/item/cigbutt,
-/obj/critter/mouse{
+/mob/living/critter/small_animal/mouse{
 	name = "Sgt. Pepper"
 	},
 /turf/simulated/floor/plating/damaged3,
@@ -24573,7 +24573,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "bmv" = (
-/obj/critter/mouse/remy,
+/mob/living/critter/small_animal/mouse/remy,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -42008,7 +42008,7 @@
 /area/station/maintenance/inner/central)
 "cfN" = (
 /obj/disposalpipe/segment,
-/obj/critter/mouse{
+/mob/living/critter/small_animal/mouse{
 	name = "Moose"
 	},
 /turf/simulated/floor/plating/random,

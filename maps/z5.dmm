@@ -1940,7 +1940,7 @@
 	pixel_x = -28
 	},
 /obj/item/cigbutt,
-/obj/critter/mouse{
+/mob/living/critter/small_animal/mouse{
 	name = "Sgt. Pepper"
 	},
 /turf/simulated/floor/plating/damaged3,

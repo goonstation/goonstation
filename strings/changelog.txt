@@ -1,5 +1,31 @@
 
 (t)fri nov 18 22
+(u)LeahTheTech
+(p)12022
+(e)💅🎩|C-QoL, A-Clothing
+(+)Black lawyer suits are now available in the security clothing vendor.
+(u)Zonespace
+(p)12000
+(e)🆕📄|C-Feature, A-UI
+(*)Mostly RP-focused change: You can now fill out "Syndicate Intelligence" in character setup, which is visible to antagonists.<br>Exploitable information is intended to be things such as character weaknesses or blackmail material, try to lean into it, should you fill it out!<br>Antagonists can find this at the bottom of their uplink traitor item list.
+(u)LeahTheTech
+(p)11760
+(e)🆕🎨🧛|C-Feature, C-Sprites, A-Gamemodes
+(*)Flockminds and traces can now designate people as ignored, preventing them from being automatically marked as enemy for damaging the Flock.
+(u)DrWolfy
+(p)11501
+(e)💅⚗🤖|C-QoL, A-Chemistry, A-Silicons
+(+)Cyborgs can now use their beakers in the reagent extractor.
+(u)Bartimeus973
+(p)11577
+(e)🗺🔄📡|A-Mapping, C-Rework, A-AI
+(+)Turns all mouse into mobs. Go hug Remy today!
+(u)Bartimeus973
+(p)11876
+(e)🪲🎨⚖🔨|C-Bug, C-Sprites, C-Balance, A-Player-Actions
+(*)Wraith-summoned critters recieved some changes! Details in minor notes.
+(+)Skeleton commanders do slightly more damage and have a bit more stamina. Voidhounds heal in the dark and when cloaked. Tentacle fiends stun longer and have a new ability to escape.
+(+)Plaguerat dens now heal more at a reduced range. Plague rats can no longer summon more plague rats. Plague rat summon ability now costs points and has a shorter cooldown. Rats get a bit more health to compensate!
 (u)Bartimeus973
 (p)11537
 (e)🗺🎨🔄📡|A-Mapping, C-Sprites, C-Rework, A-AI

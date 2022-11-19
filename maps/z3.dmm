@@ -9967,7 +9967,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/critter/mouse{
+/mob/living/critter/small_animal/mouse{
 	name = "Sgt. Pepper"
 	},
 /turf/simulated/floor/carpet/grime,

@@ -13,58 +13,6 @@
 	flying = 1
 	flags = FPRINT | CONDUCT | USEDELAY | TABLEPASS | FLUID_SUBMERGE
 
-/obj/critter/mouse
-	name = "space mouse"
-	desc = "A mouse.  In space."
-	icon_state = "mouse"
-	density = 0
-	health = 2
-	aggressive = 1
-	defensive = 1
-	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
-	atkcarbon = 0
-	atksilicon = 0
-	firevuln = 1
-	brutevuln = 1
-	butcherable = 1
-	chases_food = 1
-	health_gain_from_food = 2
-	feed_text = "squeaks happily!"
-	flags = FPRINT | CONDUCT | USEDELAY | TABLEPASS | FLUID_SUBMERGE | FLUID_SUBMERGE
-	//var/diseased = 0
-	atk_delay = 10
-
-	skinresult = /obj/item/material_piece/cloth/leather //YEP
-	max_skins = 1
-
-	New()
-		..()
-		if (prob(10))
-			//diseased = 1
-			src.atk_diseases = list(/datum/ailment/disease/berserker, /datum/ailment/disease/space_madness)
-			src.atk_disease_prob = 10
-			src.atkcarbon = 1
-
-/obj/critter/mouse/mad
-	name = "rabid space mouse"
-	desc = "A mouth-foaming cheese and flesh eating mouse. In space."
-	health = 10
-	chases_food = 0
-	feed_text = "squeaks viciously!"
-	atk_delay = 10
-	atk_diseases = list(/datum/ailment/disease/berserker, /datum/ailment/disease/space_madness)
-	atk_disease_prob = 35
-	atkcarbon = 1
-
-/obj/critter/mouse/remy
-	name = "Remy"
-	desc = "A rat.  In space... wait, is it wearing a chef's hat?"
-	icon_state = "remy"
-	health = 33
-	aggressive = 0
-	generic = 0
-
 /obj/critter/opossum
 	name = "space opossum"
 	desc = "A possum that came from space. Or maybe went to space. Who knows how it got here?"
@@ -165,10 +113,7 @@
 
 	seek_target()
 		src.anchored = 0
-		//for (var/obj/critter/mouse/C in view(src.seekrange,src))
 		var/list/targets_in_area = list()
-		for (var/obj/critter/mouse/C in view(src.seekrange,src))
-			targets_in_area += C
 		for (var/mob/living/critter/small_animal/mouse/C in view(src.seekrange,src))
 			targets_in_area += C
 		for (var/obj/critter/livingtail/C in view(src.seekrange, src))
@@ -180,9 +125,9 @@
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100))
 				continue
 			//if (isobj(C))
-			if (istype(C, /obj/critter/mouse))
-				var/obj/critter/mouse/OC = C
-				if (OC.health <= 0)
+			if (istype(C, /mob/living/critter/small_animal/mouse))
+				var/mob/living/critter/small_animal/mouse/OC = C
+				if (!isalive(OC))
 					continue
 			if (istype(C, /obj/critter/livingtail))
 				var/obj/critter/livingtail/OC = C
@@ -537,7 +482,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 	seek_target()
 		src.anchored = 0
-		for (var/obj/critter/mouse/C in view(src.seekrange,src))
+		for (var/mob/living/critter/small_animal/mouse/C in view(src.seekrange,src))
 			if (src.target)
 				src.task = "chasing"
 				break

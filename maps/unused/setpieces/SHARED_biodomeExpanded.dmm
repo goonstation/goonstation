@@ -14830,7 +14830,7 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
 "rMj" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "rMB" = (
