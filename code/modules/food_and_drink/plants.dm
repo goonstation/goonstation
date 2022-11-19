@@ -11,7 +11,8 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	var/crop_prefix = ""	// Prefix for crop name when harvested ("rainbow" melon)
 	var/crop_suffix = ""	// Suffix for crop name when harvested (bamboo "shoot")
 	food_effects = list("food_cold", "food_disease_resist")
-	var/made_reagents = FALSE //set this to true so the stuff gets no new reagents added after creation
+	///set this to true so the stuff gets no new reagents added after creation
+	var/made_reagents = FALSE
 
 	New()
 		..()
