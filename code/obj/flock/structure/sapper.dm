@@ -38,7 +38,7 @@
 
 	process(mult)
 		if (!src.linked_apc)
-			src.try_link_apc()
+			src.linked_apc = src.try_link_apc()
 			if (!src.linked_apc)
 				src.icon_state = "sapper-off"
 				return
