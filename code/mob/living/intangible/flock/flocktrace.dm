@@ -10,9 +10,13 @@
 
 	compute = -FLOCKTRACE_COMPUTE_COST //it is expensive to run more threads
 
+	var/creation_time = 0
+
 	var/dying = FALSE
 
 /mob/living/intangible/flock/trace/New(atom/loc, datum/flock/F, free = FALSE)
+	src.creation_time = TIME
+
 	if (free)
 		src.compute = 0
 	..(loc)
@@ -31,6 +35,7 @@
 
 	src.addAbility(/datum/targetable/flockmindAbility/designateTile)
 	src.addAbility(/datum/targetable/flockmindAbility/designateEnemy)
+	src.addAbility(/datum/targetable/flockmindAbility/designateIgnore)
 	src.addAbility(/datum/targetable/flockmindAbility/directSay)
 	src.addAbility(/datum/targetable/flockmindAbility/ping)
 

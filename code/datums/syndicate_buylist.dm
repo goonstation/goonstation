@@ -1187,6 +1187,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/commander)
 	cost = 1
 	desc = "Did you lose the nuke? Have no fear, with this handy one-use remote, you can immediately call it back to you!"
 	category = "Main"
+	vr_allowed = FALSE
 
 /datum/syndicate_buylist/commander/mrl
 	name = "Fomalhaut MRL"

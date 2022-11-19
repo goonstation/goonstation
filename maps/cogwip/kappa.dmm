@@ -241,12 +241,18 @@
 	icon_state = "lattice-dir";
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold/horizontal,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4;
+	
+	},
 /turf/space/cavern,
 /area/space)
 "aV" = (
 /obj/structure/girder/reinforced,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold/southwest,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 10;
+	
+	},
 /turf/simulated/floor/engine/vacuum,
 /area/space)
 "aW" = (
@@ -275,7 +281,10 @@
 	icon_state = "catwalk";
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold/horizontal,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4;
+	
+	},
 /turf/simulated/floor/airless/plating,
 /area/space)
 "ba" = (
@@ -287,15 +296,24 @@
 	icon_state = "fdoor0";
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold/horizontal,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4;
+	
+	},
 /turf/simulated/floor/airless/engine/caution/north,
 /area/space)
 "bb" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold/horizontal,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4;
+	
+	},
 /turf/simulated/floor/plating,
 /area/space)
 "bc" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold/horizontal,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4;
+	
+	},
 /obj/pool/perspective{
 	tag = "icon-pool (WEST)";
 	icon_state = "pool";
@@ -569,11 +587,17 @@
 	},
 /area/space)
 "bT" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southeast,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6;
+	
+	},
 /turf/simulated/floor/pool,
 /area/space)
 "bU" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southwest,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10;
+	
+	},
 /turf/simulated/floor/pool,
 /area/space)
 "bV" = (
@@ -606,8 +630,14 @@
 	},
 /area/space)
 "cb" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/northeast,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southeast,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5;
+	
+	},
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6;
+	
+	},
 /obj/fluid_spawner{
 	amount = 2700
 	},
@@ -626,8 +656,14 @@
 /turf/simulated/floor/pool,
 /area/space)
 "ce" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/northwest,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southwest,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9;
+	
+	},
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10;
+	
+	},
 /obj/fluid_spawner{
 	amount = 2700
 	},
@@ -659,11 +695,17 @@
 /turf/simulated/floor,
 /area/space)
 "ck" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/northeast,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5;
+	
+	},
 /turf/simulated/floor/pool,
 /area/space)
 "cl" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/northwest,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9;
+	
+	},
 /turf/simulated/floor/pool,
 /area/space)
 "cm" = (
@@ -1775,11 +1817,17 @@
 /area/space)
 "fH" = (
 /obj/grille/catwalk,
-/obj/machinery/atmospherics/pipe/manifold/north,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 1;
+	
+	},
 /turf/simulated/floor/airless/plating,
 /area/space)
 "fI" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold/horizontal,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4;
+	
+	},
 /turf/simulated/wall/auto/asteroid/comet/ice_dense,
 /area/space)
 "fJ" = (
@@ -1787,7 +1835,10 @@
 	icon_state = "lattice-dir";
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold/southwest,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 10;
+	
+	},
 /turf/space/cavern,
 /area/space)
 "fK" = (
@@ -1850,7 +1901,10 @@
 /area/space)
 "fT" = (
 /obj/grille/catwalk,
-/obj/machinery/atmospherics/pipe/manifold/overfloor/east,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 4;
+	
+	},
 /turf/simulated/floor/airless/plating,
 /area/space)
 "fU" = (
@@ -1858,7 +1912,10 @@
 	icon_state = "lattice-dir";
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold/vertical,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 1;
+	
+	},
 /turf/space/cavern,
 /area/space)
 "fV" = (
@@ -1868,11 +1925,17 @@
 	},
 /area/space)
 "fW" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor/southeast,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
+	dir = 6;
+	
+	},
 /turf/simulated/floor,
 /area/space)
 "fX" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor/southwest,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
+	dir = 10;
+	
+	},
 /turf/simulated/floor,
 /area/space)
 "fY" = (
@@ -1913,7 +1976,10 @@
 /area/space)
 "ge" = (
 /obj/structure/girder/reinforced,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold/northeast,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5;
+	
+	},
 /turf/simulated/floor/engine/vacuum,
 /area/space)
 "gf" = (
@@ -1924,7 +1990,10 @@
 /turf/space/cavern,
 /area/space)
 "gg" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
+	dir = 1;
+	
+	},
 /turf/simulated/floor,
 /area/space)
 "gh" = (
@@ -1986,19 +2055,31 @@
 	icon_state = "catwalk";
 	dir = 6
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold/vertical,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 1;
+	
+	},
 /turf/simulated/floor/airless/plating,
 /area/space)
 "gp" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
+	dir = 1;
+	
+	},
 /turf/simulated/floor/pool,
 /area/space)
 "gq" = (
 /turf/simulated/floor/blueblack,
 /area/space)
 "gr" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southeast,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor/vertical,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6;
+	
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
+	dir = 1;
+	
+	},
 /turf/simulated/floor/pool,
 /area/space)
 "gs" = (
@@ -2014,25 +2095,43 @@
 /area/space)
 "gt" = (
 /obj/wingrille_spawn/reinforced/full,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold/southeast,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 6;
+	
+	},
 /turf/simulated/floor/plating,
 /area/space)
 "gu" = (
 /obj/wingrille_spawn/reinforced/full,
-/obj/machinery/atmospherics/pipe/manifold/east,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4;
+	
+	},
 /turf/simulated/floor/plating,
 /area/space)
 "gv" = (
-/obj/machinery/atmospherics/pipe/tank/oxygen/north,
+/obj/machinery/atmospherics/pipe/tank/oxygen{
+	dir = 1;
+	
+	},
 /turf/simulated/floor/plating,
 /area/space)
 "gw" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southwest,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southeast,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10;
+	
+	},
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6;
+	
+	},
 /turf/simulated/floor/pool,
 /area/space)
 "gx" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4;
+	
+	},
 /turf/simulated/floor/pool,
 /area/space)
 "gy" = (
@@ -2092,8 +2191,14 @@
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
 "gF" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southeast,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southwest,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6;
+	
+	},
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10;
+	
+	},
 /turf/simulated/floor/pool,
 /area/space)
 "gG" = (
@@ -2141,8 +2246,14 @@
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
 "gN" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southwest,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor/vertical,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10;
+	
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
+	dir = 1;
+	
+	},
 /turf/simulated/floor/pool,
 /area/space)
 "gO" = (
@@ -2869,12 +2980,21 @@
 /turf/unsimulated/floor/green,
 /area/space)
 "iT" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/northeast,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southeast,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5;
+	
+	},
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6;
+	
+	},
 /obj/fluid_spawner{
 	amount = 2700
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor/northeast,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
+	dir = 5;
+	
+	},
 /turf/simulated/floor/pool,
 /area/space)
 "iU" = (
@@ -3255,7 +3375,10 @@
 	dir = 8
 	},
 /obj/disposalpipe/trunk/east,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/vertical,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 1;
+	
+	},
 /turf/simulated/floor/pool,
 /area/space)
 "jY" = (
@@ -3430,7 +3553,10 @@
 	icon_state = "heater";
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/vertical,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 1;
+	
+	},
 /turf/simulated/floor/pool,
 /area/space)
 "ku" = (
@@ -3439,7 +3565,10 @@
 	icon_state = "heater";
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/vertical,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 1;
+	
+	},
 /turf/simulated/floor/pool,
 /area/space)
 "kv" = (
@@ -3448,31 +3577,58 @@
 	dir = 4
 	},
 /obj/disposalpipe/trunk/west,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/vertical,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 1;
+	
+	},
 /turf/simulated/floor/pool,
 /area/space)
 "kw" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/northwest,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southwest,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9;
+	
+	},
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10;
+	
+	},
 /obj/fluid_spawner{
 	amount = 2700
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/northwest,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 9;
+	
+	},
 /turf/simulated/floor/pool,
 /area/space)
 "kx" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/northwest,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/northeast,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9;
+	
+	},
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5;
+	
+	},
 /turf/simulated/floor/pool,
 /area/space)
 "ky" = (
 /obj/disposalpipe/segment/vertical,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4;
+	
+	},
 /turf/simulated/floor/pool,
 /area/space)
 "kz" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/northeast,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/northwest,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5;
+	
+	},
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9;
+	
+	},
 /turf/simulated/floor/pool,
 /area/space)
 "kA" = (
@@ -5303,8 +5459,7 @@
 	icon_state = "outlet";
 	name = "ore outlet"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_x = 4;
@@ -5313,8 +5468,7 @@
 /turf/simulated/floor/engine,
 /area/space)
 "pM" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_x = 4;
@@ -5328,8 +5482,7 @@
 	id = "security_out";
 	name = "Cargo Door"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_x = 4;
@@ -5617,8 +5770,7 @@
 /turf/simulated/floor/wood/seven,
 /area/space)
 "qH" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_y = 2
@@ -6111,8 +6263,7 @@
 /obj/disposaloutlet/north{
 	name = "ore outlet"
 	},
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_y = 2
@@ -6379,7 +6530,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/space)
 "sJ" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/shuttlebay,
 /area/space)
 "sK" = (

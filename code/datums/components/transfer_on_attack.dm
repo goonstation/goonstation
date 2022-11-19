@@ -10,7 +10,7 @@ TYPEINFO(/datum/component/transfer_on_attack)
 		return COMPONENT_INCOMPATIBLE
 	if(trans_amt)
 		src.trans_amt=trans_amt
-	RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_POST), .proc/stab_transfer)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_POST, .proc/stab_transfer)
 
 /datum/component/transfer_on_attack/proc/stab_transfer(var/obj/item/I, var/mob/M, var/mob/user, var/damage)
 	if (I.reagents && I.reagents.total_volume)

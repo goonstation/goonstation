@@ -65,7 +65,7 @@
 /turf/simulated/wall,
 /area/hallway/primary/north)
 "am" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -122,7 +122,7 @@
 /turf/simulated/floor/shuttle,
 /area/space)
 "aw" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTHEAST)";
 	icon_state = "rwindow";
@@ -151,7 +151,7 @@
 /turf/simulated/floor,
 /area/hallway/primary/north)
 "az" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -202,7 +202,7 @@
 /turf/simulated/wall,
 /area/hallway/primary/north)
 "aG" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTHEAST)";
 	icon_state = "rwindow";
@@ -215,7 +215,7 @@
 /turf/simulated/floor,
 /area/hallway/primary/north)
 "aI" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aJ" = (
@@ -447,7 +447,7 @@
 /turf/simulated/floor,
 /area/engine/engineering)
 "br" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -589,7 +589,7 @@
 /turf/simulated/floor,
 /area/engine/engineering)
 "bG" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -881,7 +881,7 @@
 	name = "Engineering SMES Centre"
 	})
 "cm" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -892,7 +892,7 @@
 /area/ai_monitored/storage/eva)
 "cn" = (
 /obj/machinery/atmospherics/pipe/simple,
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -902,7 +902,7 @@
 /turf/simulated/floor/plating,
 /area/ai_monitored/storage/eva)
 "co" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -950,7 +950,7 @@
 /turf/simulated/floor,
 /area/engine/engineering)
 "cu" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -1103,7 +1103,7 @@
 /turf/simulated/floor,
 /area/engine/engineering)
 "cK" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -1129,7 +1129,7 @@
 /turf/space,
 /area/space)
 "cM" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -1250,7 +1250,7 @@
 /turf/simulated/floor,
 /area/engine/engineering)
 "cZ" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -1605,7 +1605,7 @@
 "dI" = (
 /obj/table,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/bridge)
@@ -1673,7 +1673,7 @@
 	icon_state = "rwindow";
 	dir = 5
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "dQ" = (
@@ -1700,7 +1700,7 @@
 /turf/simulated/floor,
 /area/engine/engineering)
 "dS" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -2813,7 +2813,7 @@
 /turf/simulated/floor,
 /area/engine/engineering)
 "gm" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -2847,7 +2847,7 @@
 /turf/simulated/wall,
 /area/storage/tech)
 "gr" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -2862,7 +2862,7 @@
 /turf/simulated/floor/plating,
 /area/storage/tech)
 "gs" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -2876,7 +2876,7 @@
 /turf/simulated/floor/plating,
 /area/storage/tech)
 "gt" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -2996,7 +2996,7 @@
 	name = "Captain"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/crew_quarters/captain)
@@ -3690,7 +3690,7 @@
 /area/crew_quarters/courtroom)
 "is" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/crew_quarters/courtroom)
@@ -3728,7 +3728,7 @@
 	icon_state = "rwindow";
 	dir = 5
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/medical/medbay)
 "iy" = (
@@ -3902,7 +3902,7 @@
 /obj/table,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/medical/medbay)
@@ -4190,7 +4190,7 @@
 /turf/simulated/floor/white,
 /area/medical/medbay)
 "jH" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -4326,7 +4326,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -5810,7 +5810,7 @@
 "nl" = (
 /obj/secure_closet/personal,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/crew_quarters/quarters)
@@ -6240,7 +6240,7 @@
 /turf/simulated/floor,
 /area/hallway/secondary/exit)
 "oo" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTHEAST)";
 	icon_state = "rwindow";
@@ -6366,22 +6366,22 @@
 /turf/simulated/floor/red/side,
 /area/hallway/primary/central)
 "oE" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/maintenance/maintcentral)
 "oF" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/landmark{
 	name = "NASSA spawn"
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/maintcentral)
 "oG" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/scorched,
 /area/maintenance/maintcentral)
 "oH" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-4";
@@ -6390,7 +6390,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/maintcentral)
 "oI" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -6402,7 +6402,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/maintcentral)
 "oJ" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/machinery/power/apc{
 	dir = 0;
 	name = "Worn-out APC";
@@ -6527,7 +6527,7 @@
 /turf/simulated/floor,
 /area/janitor)
 "oY" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -6543,7 +6543,7 @@
 	name = "Unemployment Office"
 	})
 "oZ" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -6563,7 +6563,7 @@
 	name = "Unemployment Office"
 	})
 "pa" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -6584,7 +6584,7 @@
 	name = "Unemployment Office"
 	})
 "pb" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -6608,7 +6608,7 @@
 	name = "Unemployment Office"
 	})
 "pc" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -6795,7 +6795,7 @@
 /obj/item/cleaner,
 /obj/item/cleaner,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/janitor)
@@ -6933,7 +6933,7 @@
 	network = "SS13"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/security/main)
@@ -6993,7 +6993,7 @@
 /turf/simulated/floor/plating,
 /area/toxins/lab)
 "pV" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	reinf = 1
@@ -7007,7 +7007,7 @@
 /area/toxins/lab)
 "pW" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	reinf = 1
@@ -7020,7 +7020,7 @@
 /turf/simulated/floor/plating,
 /area/toxins/lab)
 "pX" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	reinf = 1
@@ -7052,7 +7052,7 @@
 /area/hallway/secondary/exit)
 "qb" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/hallway/secondary/exit)
@@ -7199,7 +7199,7 @@
 /turf/simulated/floor,
 /area/security/main)
 "qw" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/maintenance/maintcentral)
 "qx" = (
@@ -7261,7 +7261,7 @@
 "qF" = (
 /obj/closet/wardrobe/pink,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/crew_quarters/quarters)
@@ -7330,7 +7330,7 @@
 /area/atmos)
 "qO" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/computer/general_air_control{
 	frequency = 1441;
@@ -7400,7 +7400,7 @@
 /turf/simulated/floor,
 /area/security/main)
 "qY" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -7630,7 +7630,7 @@
 /turf/simulated/floor,
 /area/security/main)
 "rz" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/damaged1,
 /area/maintenance/maintcentral)
 "rA" = (
@@ -7811,7 +7811,7 @@
 /turf/simulated/floor,
 /area/security/main)
 "rV" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -8018,7 +8018,7 @@
 /turf/simulated/floor,
 /area/security/main)
 "st" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/item/wirecutters,
 /obj/item/wrench,
 /turf/simulated/floor/plating/airless,
@@ -8050,7 +8050,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/toxins/lab)
 "sx" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	dir = 10;
@@ -8065,7 +8065,7 @@
 /turf/simulated/floor/plating,
 /area/hallway/secondary/exit)
 "sz" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	dir = 1;
@@ -8380,7 +8380,7 @@
 	c_tag = "Bar"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/crew_quarters/bar)
@@ -8429,7 +8429,7 @@
 /area/crew_quarters/cafeteria)
 "tr" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/crew_quarters/cafeteria)
@@ -8755,7 +8755,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/crew_quarters/bar)
 "ue" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTHEAST)";
 	icon_state = "rwindow";
@@ -9661,21 +9661,21 @@
 	},
 /area/syndicate_station)
 "we" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/item/hand_tele,
 /turf/simulated/floor/plating/scorched,
 /area/maintenance/maintcentral)
 "wf" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/damaged3,
 /area/maintenance/maintcentral)
 "wg" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/item/tank/oxygen,
 /turf/simulated/floor/plating/airless,
 /area/maintenance/maintcentral)
 "wh" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /turf/simulated/floor/plating/damaged2,
 /area/maintenance/maintcentral)
@@ -9772,7 +9772,7 @@
 	},
 /area/syndicate_station)
 "wr" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	dir = 4;
@@ -10448,7 +10448,7 @@
 	},
 /area/wizard_station)
 "xE" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	reinf = 1
@@ -10549,7 +10549,7 @@
 	},
 /area/wizard_station)
 "xO" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	dir = 1;
@@ -10709,7 +10709,7 @@
 	sd_lighting = 0
 	})
 "yg" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -10718,7 +10718,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "yh" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -10757,7 +10757,7 @@
 /turf/simulated/shuttle/wall,
 /area/shuttle/escape/centcom)
 "yn" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -10810,7 +10810,7 @@
 	},
 /area/shuttle/escape/centcom)
 "yw" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -11032,7 +11032,7 @@
 /turf/simulated/wall/r_wall,
 /area/tdome/tdomea)
 "zi" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	dir = 8;
@@ -11060,7 +11060,7 @@
 /turf/simulated/floor/white,
 /area/tdome/tdomea)
 "zj" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	reinf = 1
@@ -11083,7 +11083,7 @@
 /turf/simulated/floor/white,
 /area/tdome/tdomea)
 "zk" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	dir = 4;
@@ -11143,7 +11143,7 @@
 	density = 1;
 	name = "blocker (thunderdome)"
 	},
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	dir = 10;
@@ -11797,7 +11797,7 @@
 	},
 /area/space)
 "AO" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/space,
 /area/space)
 "AP" = (
@@ -11944,11 +11944,11 @@
 /turf/simulated/floor/plating,
 /area/space)
 "Bi" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/turret_protected/AIsatextFP)
 "Bj" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/turret_protected/aisat)
 "Bk" = (
@@ -11957,11 +11957,11 @@
 	d1 = 1;
 	d2 = 2
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/turret_protected/aisat)
 "Bl" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/turret_protected/AIsatextFS)
 "Bm" = (
@@ -12251,7 +12251,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "BR" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/cable{
 	icon_state = "4-8";
 	d1 = 4;
@@ -12423,7 +12423,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/black,
 /area/turret_protected/aisat_interior)
@@ -12506,7 +12506,7 @@
 /turf/space,
 /area/turret_protected/AIsatextAP)
 "Cs" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/turret_protected/AIsatextAP)
 "Ct" = (
@@ -12516,7 +12516,7 @@
 /turf/simulated/floor/engine,
 /area/turret_protected/aisat)
 "Cu" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/turret_protected/AIsatextAS)
 "Cv" = (
@@ -12609,7 +12609,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "CJ" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/space,
 /area/turret_protected/AIsatextAS)
 "CK" = (
@@ -12737,7 +12737,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/space_diner)
 "Dd" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/specialroom/bar,
 /area/space_diner)
 "De" = (
@@ -13110,7 +13110,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -13248,7 +13248,7 @@
 /area/medical/cdc)
 "Ep" = (
 /obj/cable,
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -13367,7 +13367,7 @@
 /turf/simulated/floor/white,
 /area/medical/cdc)
 "EA" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
 /turf/simulated/floor/plating,
@@ -13455,7 +13455,7 @@
 /turf/simulated/floor/white,
 /area/chemistry)
 "EL" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -13493,7 +13493,7 @@
 /turf/simulated/floor,
 /area/zeta)
 "EP" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced/west,
 /obj/window/reinforced/west{
 	tag = "icon-rwindow";
@@ -13503,7 +13503,7 @@
 /turf/simulated/floor/plating,
 /area/medical/cdc)
 "EQ" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced/west{
 	tag = "icon-rwindow";
 	icon_state = "rwindow";
@@ -13517,7 +13517,7 @@
 /turf/simulated/floor/plating,
 /area/medical/cdc)
 "ER" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west{
 	tag = "icon-rwindow (NORTH)";
@@ -13540,7 +13540,7 @@
 /turf/simulated/floor/white,
 /area/medical/cdc)
 "ET" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced/west,
 /obj/window/reinforced/west{
 	tag = "icon-rwindow (NORTH)";
@@ -13550,7 +13550,7 @@
 /turf/simulated/floor/plating,
 /area/medical/cdc)
 "EU" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west{
 	tag = "icon-rwindow";
@@ -13591,7 +13591,7 @@
 /turf/simulated/floor,
 /area/zeta)
 "EZ" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTHEAST)";
 	icon_state = "rwindow";
@@ -13613,7 +13613,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -13636,7 +13636,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -13658,7 +13658,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -13672,7 +13672,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -13688,7 +13688,7 @@
 /turf/simulated/floor/plating,
 /area/chemistry)
 "Ff" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTHEAST)";
 	icon_state = "rwindow";
@@ -13720,7 +13720,7 @@
 /turf/simulated/floor,
 /area/zeta)
 "Fh" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -13742,7 +13742,7 @@
 /turf/simulated/floor,
 /area/zeta/security)
 "Fj" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
 /obj/window/reinforced/west{
@@ -13763,7 +13763,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/ai_monitored/storage/secure)
 "Fm" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -13777,7 +13777,7 @@
 /turf/simulated/floor/plating,
 /area/zeta)
 "Fn" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -13787,7 +13787,7 @@
 /turf/simulated/floor/plating,
 /area/zeta)
 "Fo" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -13878,7 +13878,7 @@
 /turf/simulated/floor/caution/north,
 /area/zeta)
 "Fx" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -13908,7 +13908,7 @@
 /turf/simulated/floor,
 /area/zeta/security)
 "Fz" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
@@ -13924,7 +13924,7 @@
 /turf/simulated/floor/plating,
 /area/zeta/security)
 "FA" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -13934,7 +13934,7 @@
 /turf/simulated/floor/plating,
 /area/zeta/security)
 "FB" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -13952,7 +13952,7 @@
 /turf/simulated/wall,
 /area/zeta/security)
 "FD" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -13962,7 +13962,7 @@
 /turf/simulated/floor/plating,
 /area/crew_quarters/hor)
 "FE" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -14007,7 +14007,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/ai_monitored/storage/secure)
 "FJ" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -14045,7 +14045,7 @@
 /turf/simulated/floor/plating,
 /area/toxins/storage)
 "FQ" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -14145,7 +14145,7 @@
 /turf/simulated/floor/plating,
 /area/toxins/storage)
 "Ge" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -14492,7 +14492,7 @@
 /turf/simulated/floor/plating,
 /area/toxins/storage)
 "GQ" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
@@ -14502,7 +14502,7 @@
 /turf/simulated/floor/plating,
 /area/toxins/storage)
 "GR" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -14521,7 +14521,7 @@
 /turf/simulated/floor/plating,
 /area/toxins/storage)
 "GT" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -14541,7 +14541,7 @@
 /turf/simulated/floor/plating,
 /area/toxins/storage)
 "GU" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -14573,7 +14573,7 @@
 /turf/simulated/floor,
 /area/zeta/security)
 "GW" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -14588,7 +14588,7 @@
 /turf/simulated/floor/plating,
 /area/zeta/security)
 "GX" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -14704,7 +14704,7 @@
 	},
 /area/shuttle/research/outpost)
 "Hh" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -14864,7 +14864,7 @@
 /turf/simulated/floor,
 /area/zeta/security)
 "Hx" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -15062,7 +15062,7 @@
 /turf/simulated/floor,
 /area/zeta/security)
 "HV" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -15254,7 +15254,7 @@
 /turf/simulated/floor/white,
 /area/chemistry)
 "Im" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -15273,7 +15273,7 @@
 /turf/simulated/floor/plating,
 /area/chemistry)
 "In" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -15295,7 +15295,7 @@
 /turf/simulated/floor/plating,
 /area/chemistry)
 "Io" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -15340,7 +15340,7 @@
 /turf/simulated/floor,
 /area/zeta/security)
 "Is" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -15399,7 +15399,7 @@
 /turf/simulated/floor/white,
 /area/medical/cdc)
 "Iz" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -15461,7 +15461,7 @@
 /turf/simulated/floor/white,
 /area/ai_monitored/storage/secure)
 "IF" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced/east,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
@@ -15495,7 +15495,7 @@
 /turf/simulated/floor/engine,
 /area/ai_monitored/storage/secure)
 "II" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTHEAST)";
 	icon_state = "rwindow";
@@ -15504,7 +15504,7 @@
 /turf/simulated/floor/plating,
 /area/zeta)
 "IJ" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -15519,7 +15519,7 @@
 /turf/simulated/floor/plating,
 /area/zeta)
 "IK" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -15775,7 +15775,7 @@
 /turf/simulated/floor/white,
 /area/ai_monitored/storage/secure)
 "Jf" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -15963,7 +15963,7 @@
 	},
 /area/shuttle/research/outpost)
 "Jw" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -16092,7 +16092,7 @@
 /turf/simulated/floor/white,
 /area/artifact)
 "JM" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -16111,7 +16111,7 @@
 /turf/simulated/floor/plating,
 /area/artifact)
 "JN" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -16134,7 +16134,7 @@
 /turf/simulated/floor/plating,
 /area/artifact)
 "JO" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -16213,7 +16213,7 @@
 /turf/simulated/floor,
 /area/zeta/bot_storage)
 "JX" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -16228,7 +16228,7 @@
 /turf/simulated/floor/plating,
 /area/zeta/bot_storage)
 "JY" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -16238,7 +16238,7 @@
 /turf/simulated/floor/plating,
 /area/zeta/bot_storage)
 "JZ" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -16328,7 +16328,7 @@
 	},
 /area/shuttle/research/outpost)
 "Kh" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
@@ -16479,7 +16479,7 @@
 /turf/simulated/floor/white,
 /area/zeta/patients)
 "Kv" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -16968,7 +16968,7 @@
 /turf/simulated/floor/white,
 /area/zeta/patients)
 "Lu" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -17231,7 +17231,7 @@
 /turf/simulated/floor/plating,
 /area/artifact)
 "LQ" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -17308,7 +17308,7 @@
 	},
 /area/space)
 "LY" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -17531,7 +17531,7 @@
 /turf/simulated/floor/circuit,
 /area/turret_protected/Zeta)
 "Mv" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -17562,7 +17562,7 @@
 /turf/simulated/floor/caution/north,
 /area/turret_protected/Zeta)
 "Mx" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -17731,7 +17731,7 @@
 /turf/simulated/floor,
 /area/turret_protected/Zeta)
 "MK" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
@@ -17741,7 +17741,7 @@
 /turf/simulated/floor/plating,
 /area/zeta/patients)
 "ML" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -17751,7 +17751,7 @@
 /turf/simulated/floor/plating,
 /area/zeta/patients)
 "MM" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -17786,7 +17786,7 @@
 /turf/simulated/floor/caution/south,
 /area/turret_protected/Zeta)
 "MP" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -17810,7 +17810,7 @@
 /turf/simulated/floor/plating,
 /area/turret_protected/Zeta)
 "MQ" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -17907,7 +17907,7 @@
 /turf/simulated/floor/circuit,
 /area/turret_protected/Zeta)
 "MY" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -17979,7 +17979,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "Nh" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -17989,7 +17989,7 @@
 /turf/simulated/floor/plating,
 /area/zeta)
 "Ni" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -17999,7 +17999,7 @@
 /turf/simulated/floor/plating,
 /area/zeta)
 "Nj" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -18489,7 +18489,7 @@
 /turf/simulated/wall,
 /area/engine/miningoutpost)
 "OD" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -18503,7 +18503,7 @@
 /turf/simulated/floor/plating,
 /area/engine/miningoutpost)
 "OE" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -18512,7 +18512,7 @@
 /turf/simulated/floor/plating,
 /area/engine/miningoutpost)
 "OF" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -18544,7 +18544,7 @@
 /turf/simulated/wall/auto/asteroid,
 /area/space)
 "OI" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -18637,7 +18637,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fuck/main)
 "OS" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -18766,7 +18766,7 @@
 /turf/simulated/wall/auto/asteroid,
 /area/space)
 "Pf" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
@@ -18776,7 +18776,7 @@
 /turf/simulated/floor/plating,
 /area/engine/miningoutpost)
 "Pg" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -18791,7 +18791,7 @@
 /turf/simulated/floor/plating,
 /area/engine/miningoutpost)
 "Ph" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -18806,7 +18806,7 @@
 /turf/simulated/floor/plating,
 /area/engine/miningoutpost)
 "Pi" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -18894,7 +18894,7 @@
 /turf/simulated/floor,
 /area/engine/miningoutpost)
 "Pq" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -18909,7 +18909,7 @@
 /turf/simulated/floor/plating,
 /area/engine/miningoutpost)
 "Pr" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -18929,7 +18929,7 @@
 	},
 /area/space)
 "Pt" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -18966,7 +18966,7 @@
 /turf/simulated/floor,
 /area/engine/miningoutpost)
 "Py" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -18991,7 +18991,7 @@
 	},
 /area/fuck/main)
 "PA" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -19001,7 +19001,7 @@
 /turf/simulated/floor/plating,
 /area/engine/miningoutpost)
 "PB" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -19056,7 +19056,7 @@
 /turf/simulated/floor,
 /area/engine/miningoutpost)
 "PH" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -19189,7 +19189,7 @@
 	},
 /area/space)
 "PW" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -19219,15 +19219,13 @@
 /turf/simulated/floor/delivery,
 /area/engine/miningoutpost)
 "Qa" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "mining"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/engine/miningoutpost)
 "Qb" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "mining"
 	},
 /obj/machinery/door/poddoor{
@@ -19240,8 +19238,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/engine/miningoutpost)
 "Qc" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "mining"
 	},
 /turf/simulated/floor/plating/airless,
@@ -19261,7 +19258,7 @@
 	},
 /area/fuck/main)
 "Qf" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
@@ -19332,7 +19329,7 @@
 /turf/simulated/floor/caution/south,
 /area/engine/miningoutpost)
 "Qn" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -19462,7 +19459,7 @@
 /turf/simulated/floor,
 /area/engine/miningoutpost)
 "QF" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
@@ -19477,7 +19474,7 @@
 /turf/simulated/floor/plating,
 /area/engine/miningoutpost)
 "QG" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";

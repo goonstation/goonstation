@@ -22,6 +22,8 @@ proc/pick_landmark(name, default=null)
 
 /obj/landmark/proc/init(delay_qdel=FALSE)
 	if(src.add_to_landmarks)
+		if(src.name == "landmark")
+			CRASH("Landmark [src] at [log_loc(src)] has no name override!")
 		if(!landmarks)
 			landmarks = list()
 		var/name = src.name_override ? src.name_override : src.name
@@ -36,13 +38,11 @@ proc/pick_landmark(name, default=null)
 			qdel(src)
 
 /obj/landmark/New()
+	..()
 	if(current_state > GAME_STATE_MAP_LOAD)
 		src.init(delay_qdel=TRUE)
-		..()
 	else
 		src.init()
-		if(!src.disposed)
-			..()
 
 var/global/list/job_start_locations = list()
 
@@ -54,7 +54,7 @@ var/global/list/job_start_locations = list()
 		"Mechanic" = "Engineer"
 	)
 
-	New()
+	init(delay_qdel=FALSE)
 		if(src.name in src.aliases)
 			src.name = src.aliases[src.name]
 		if (job_start_locations)

@@ -206,10 +206,9 @@
 						P = locate(href_list["op"])
 						if(P)
 							P.locked = !P.locked
-							if(!selected_product || selected_product.locked)
-								selected_product = null
-								just_pick_anything()
-								UpdateIcon()
+							if(selected_product?.locked)
+								select_product(null)
+								eject_occupant(0)
 							reload_contexts()
 
 			show_admin_panel(usr)
@@ -220,20 +219,14 @@
 
 	proc/select_product(var/datum/geneboothproduct/P)
 		selected_product = P
-		abilityoverlay = SafeGetOverlayImage("abil", P.BE.icon, P.BE.icon_state,src.layer + 0.1)
-		UpdateIcon()
-
-		usr.show_text("You have selected [P.name]. Walk into an opening on the side of this machine to purchase this item.", "blue")
-		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, extrarange = -15, pitch = 0.6)
-
-	proc/just_pick_anything()
-		for (var/datum/geneboothproduct/P as anything in offered_genes)
-			if(P.locked)
-				continue
-			selected_product = P
+		if(P)
 			abilityoverlay = SafeGetOverlayImage("abil", P.BE.icon, P.BE.icon_state,src.layer + 0.1)
 			UpdateIcon()
-			break
+			usr.show_text("You have selected [P.name]. Walk into an opening on the side of this machine to purchase this item.", "blue")
+			playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, extrarange = -15, pitch = 0.6)
+		else
+			abilityoverlay = SafeGetOverlayImage("abil", 'icons/mob/genetics_powers.dmi', "none")
+			UpdateIcon()
 
 	update_icon()
 		if (powered())

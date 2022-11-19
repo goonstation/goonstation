@@ -3,6 +3,8 @@
 #define isflockmob(x) (istype(x, /mob/living/intangible/flock) || istype(x, /mob/living/critter/flock))
 #define isflockstructure(x) (istype(x, /obj/flock_structure))
 #define isflockdeconimmune(x) (istype(target, /obj/flock_structure/ghost) || istype(target, /mob/living/critter/flock) || istype(target, /turf/simulated/floor/feather) || istype(target, /obj/flock_structure/rift) || istype(target, /obj/flock_structure/egg) || istype(target, /obj/flock_structure/relay))
+/// Checks if something could potentially be considered an enemy of the flock
+#define isflockvalidenemy(x) ((ismob(x) || iscritter(x) || isvehicle(x)) && !isflockmob(x))
 
 // process controller
 #define FLOCK_PROCESS_SCHEDULE_INTERVAL 2 SECONDS
@@ -15,6 +17,7 @@
 #define FLOCK_ANNOTATION_FLOCKMIND_CONTROL "flockmind_face"
 #define FLOCK_ANNOTATION_FLOCKTRACE_CONTROL "flocktrace_face"
 #define FLOCK_ANNOTATION_HEALTH "health"
+#define FLOCK_ANNOTATION_IGNORE "ignore"
 
 // flock intangibles
 #define FLOCK_AFK_COUNTER_THRESHOLD 180 SECONDS
@@ -26,6 +29,8 @@
 #define FLOCK_REPAIR_COST 10
 #define FLOCK_GHOST_DEPOSIT_AMOUNT 10
 
+#define FLOCK_RELAY_COMPUTE_COST 500 // total compute
+
 #define FLOCKTRACE_COMPUTE_COST 100
 
 // achievements
@@ -35,6 +40,9 @@
 #define FLOCK_ACHIEVEMENT_BULLETS_HIT "bullets_hit"
 
 #define FLOCK_BULLETS_HIT_THRESHOLD 15
+
+// radio effects
+#define FLOCK_RADIO_GARBLE_CHANCE 50
 
 // replication defs
 #define FLOCK_MIN_DESIRED_POP 10

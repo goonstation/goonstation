@@ -82,7 +82,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	var/fluid_and_group_already_exist = 0
 
 	if (airborne)
-		if (!src.active_airborne_liquid)
+		if (!src.active_airborne_liquid || QDELETED(src.active_airborne_liquid) || QDELETED(src.active_airborne_liquid.group))
 			FG = new /datum/fluid_group/airborne
 			F = new /obj/fluid/airborne
 			src.active_airborne_liquid = F
@@ -99,7 +99,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 				if (react_volume == 0)
 					react_volume = 1
 	else
-		if (!src.active_liquid)
+		if (!src.active_liquid || QDELETED(src.active_liquid) || QDELETED(src.active_liquid.group))
 			FG = new
 			F = new /obj/fluid
 			src.active_liquid = F
@@ -228,6 +228,8 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 			var/blood_dna = blood.blood_DNA
 			var/blood_type = blood.blood_type
 			var/is_tracks = istype(possible_cleanable,/obj/decal/cleanable/blood/dynamic/tracks)
+			if(is_tracks)
+				return 0
 			if (blood.reagents && blood.reagents.total_volume >= 13 || src.active_liquid || grab_any_amount)
 				if (blood.reagents)
 					var/datum/reagents/R = new(blood.reagents.maximum_volume) //Store reagents, delete cleanable, and then fluid react. prevents recursion
