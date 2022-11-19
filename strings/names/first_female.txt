@@ -1,19 +1,29 @@
 names@=
 	Aaliyah
+	Aashvi
 	Abby
 	Abigail
+	Achara
 	Addison
 	Addyson
 	Adeline
 	Adriana
 	Adrianna
+	Ahnjong
+	Ai
 	Aida
+	Aiko
 	Aileen
 	Ainsley
+	Aitana
+	Akahana
+	Akari
+	Aki
 	Alaina
 	Alana
 	Alanna
 	Alayna
+	Alba
 	Alejandra
 	Alessandra
 	Alexa
@@ -26,7 +36,6 @@ names@=
 	Alice
 	Alicia
 	Alina
-	Alisa
 	Alison
 	Alissa
 	Alisya
@@ -44,9 +53,11 @@ names@=
 	Alyson
 	Alyssa
 	Alyssia
+	Amaia
 	Amanda
 	Amari
 	Amaryllis
+	Amaterasu
 	Amaya
 	Amber
 	Ambrosine
@@ -55,11 +66,13 @@ names@=
 	Amiyah
 	Amy
 	Amya
+	An
 	Ana
 	Anahi
 	Anastasia
 	Anaya
 	Andrea
+	Aneko
 	Angel
 	Angela
 	Angelica
@@ -73,21 +86,34 @@ names@=
 	Anne
 	Annie
 	Annika
+	Anong
+	Antonella
 	Anya
 	April
 	Arabella
+	Araceli
+	Aranya
+	Aria
 	Ariana
 	Arianna
 	Ariel
 	Arielle
 	Arleen
+	Aroha
+	Asagi
 	Ashley
 	Ashlie
 	Ashlyn
 	Ashlynn
 	Asia
+	Astika
 	Astor
+	Astra
+	Astraea
+	Asuka
+	Ataahua
 	Athena
+	Atsuko
 	Aubree
 	Aubrey
 	Aubrie
@@ -99,6 +125,8 @@ names@=
 	Avalon
 	Averill
 	Avery
+	Ayaka
+	Ayano
 	Ayla
 	Bailey
 	Barbra
@@ -113,6 +141,7 @@ names@=
 	Betsy
 	Bianca
 	Bidelia
+	Botan
 	Breanna
 	Breanne
 	Brenda
@@ -127,6 +156,7 @@ names@=
 	Brooklyn
 	Brooklynn
 	Brynn
+	Busarakham
 	Bysshe
 	Cadence
 	Caitlin
@@ -166,11 +196,14 @@ names@=
 	Cherry
 	Cheyanne
 	Cheyenne
+	Chihiro
+	Chin-Sun
 	Chloe
 	Christa
 	Christiana
 	Christina
 	Christobel
+	Chun
 	Ciara
 	Cindy
 	Claire
@@ -190,7 +223,6 @@ names@=
 	Dana
 	Danica
 	Daniela
-	Daniella
 	Danielle
 	Danika
 	Danna
@@ -201,30 +233,38 @@ names@=
 	Dee
 	Deena
 	Delaney
+	Delfina
 	Delilah
 	Della
 	Delma
+	Delphi
 	Denise
 	Denys
 	Desiree
 	Destiny
 	Diamond
 	Diana
+	Dimitra
 	Dina
+	Dionysia
 	Dolores
 	Donella
 	Donna
 	Dorothy
 	Dortha
+	Duangkamol
 	Dulce
 	Easter
 	Ebba
 	Eden
 	Effie
+	Eiko
 	Elaina
 	Eleanor
 	Elena
+	Elenji
 	Eliana
+	Elisa
 	Elise
 	Eliza
 	Elizabeth
@@ -234,17 +274,23 @@ names@=
 	Emely
 	Emerson
 	Emery
+	Emiko
 	Emilee
 	Emilia
 	Emily
 	Emma
+	Ena
+	Eri
 	Erica
 	Erika
 	Erin
 	Ermintrude
+	Eshima
 	Esmeralda
+	Esperanza
 	Esther
 	Estrella
+	Etsu
 	Eugenia
 	Euphemia
 	Eustace
@@ -254,8 +300,10 @@ names@=
 	Evelina
 	Evelyn
 	Faith
+	Fang
 	Fatima
 	Fay
+	Fen
 	Fernanda
 	Ffion
 	Fiona
@@ -264,9 +312,12 @@ names@=
 	Flossie
 	Fortune
 	Francesca
-	Gabriela
+	Fuji
+	Fumiko
+	Fuyuko
 	Gabriella
 	Gabrielle
+	Gamon
 	Genesis
 	Genette
 	Genevieve
@@ -288,6 +339,9 @@ names@=
 	Guadalupe
 	Gwenda
 	Gwenevere
+	Ha-Hun
+	Ha-Joon
+	Hachi
 	Hadley
 	Haidee
 	Hailee
@@ -295,37 +349,63 @@ names@=
 	Hal
 	Haleigh
 	Haley
+	Hana
+	Hanako
+	Hanami
+	Haneul
 	Hanna
 	Hannah
+	Harishita
 	Harley
 	Harmony
 	Harper
+	Haru
+	Haruka
+	Haruko
+	Hasini
+	Hathai
+	Hatsuko
 	Hayden
 	Haylee
 	Hayley
-	Haylie
 	Hazel
 	Heather
 	Heaven
+	Hebe
 	Hedley
 	Heidi
 	Helen
 	Hepsie
 	Holly
+	Hom
+	Homura
 	Hope
 	Hortensia
+	Hrshita
+	Hua
+	Hui
+	Hui Fen
+	Hyo-Soon
+	I-Jun
 	Iantha
 	Ileen
+	Ima
 	Imani
 	Innocent
+	Ipsa
 	Irene
 	Iris
+	Irya
 	Isabel
 	Isabella
 	Isabelle
+	Isamu
 	Itzel
 	Ivy
+	Iwa
 	Izabella
+	Izanami
+	Izumi
 	Jacaline
 	Jacqueline
 	Jacquetta
@@ -368,9 +448,14 @@ names@=
 	Jere
 	Jeri
 	Jessica
+	Ji-Hye
+	Ji-Woo
+	Jie
 	Jillian
 	Jillie
 	Jimena
+	Jing
+	Jing Hua
 	Joanna
 	Jocelyn
 	Joetta
@@ -379,21 +464,31 @@ names@=
 	Joni
 	Jordan
 	Jordyn
+	Josefina
 	Joselyn
 	Josepha
 	Josephine
 	Josie
 	Joye
+	Juanita
 	Julia
 	Juliana
 	Julianna
 	Julie
 	Juliet
+	Julieta
 	Julissa
 	July
+	Jun
+	Junko
+	Juno
 	Kadence
+	Kaede
 	Kaelea
 	Kaelyn
+	Kagami
+	Kagome
+	Kaia
 	Kailey
 	Kailyn
 	Kaitlin
@@ -407,6 +502,7 @@ names@=
 	Karla
 	Karly
 	Karyn
+	Kassandra
 	Kassidy
 	Kat
 	Kate
@@ -418,6 +514,8 @@ names@=
 	Kathy
 	Katie
 	Katlyn
+	Katsuki
+	Katsumi
 	Kayden
 	Kaydence
 	Kayla
@@ -426,9 +524,11 @@ names@=
 	Kaylie
 	Kaylin
 	Keegan
+	Kei
 	Keira
 	Keith
 	Kellie
+	Kellita
 	Kelly
 	Kelsey
 	Kendall
@@ -445,8 +545,10 @@ names@=
 	Kiley
 	Kimberley
 	Kimberly
+	Kimiko
 	Kimora
 	Kira
+	Kiyomi
 	Kristen
 	Kristina
 	Kyla
@@ -458,14 +560,17 @@ names@=
 	Lacy
 	Laila
 	Lakeisha
+	Lakshmi
 	Lalla
 	Lana
+	Lara
 	Latanya
 	Laura
 	Lauren
 	Laurencia
 	Laurissa
 	Lauryn
+	Lavana
 	Layla
 	Leah
 	Leeann
@@ -480,19 +585,19 @@ names@=
 	Lexi
 	Lexia
 	Lexus
+	Li
+	Li Hua
+	Li Mei
 	Lia
 	Lila
 	Lilah
 	Lilian
 	Liliana
 	Lillian
-	Lilliana
 	Lillie
 	Lilly
-	Lily
 	Lindsay
 	Lindsey
-	Lindsie
 	Lindy
 	Lizbeth
 	Lockie
@@ -504,8 +609,11 @@ names@=
 	Luanne
 	Lucia
 	Lucian
+	Luciana
 	Lucy
+	Lula
 	Luna
+	Lupe
 	Luvenia
 	Lydia
 	Lyla
@@ -514,6 +622,7 @@ names@=
 	Lynsey
 	Lynwood
 	Lyric
+	Ma-Ri
 	Mabelle
 	Macey
 	Macie
@@ -531,11 +640,18 @@ names@=
 	Madyson
 	Maegan
 	Maggie
+	Mahati
+	Maia
+	Maiko
 	Makayla
 	Makenna
 	Makenzie
+	Makoto
+	Malavi
 	Malia
 	Mallory
+	Mami
+	Manaia
 	Marcia
 	Marely
 	Margaret
@@ -547,6 +663,7 @@ names@=
 	Marion
 	Marisol
 	Marissa
+	Maritza
 	Marje
 	Marjory
 	Marlee
@@ -554,45 +671,63 @@ names@=
 	Marlowe
 	Marlyn
 	Marshall
+	Martina
 	Mary
 	Maryann
+	Masuyo
 	Maudie
 	Maurene
 	May
 	Maya
 	Mckenna
 	Mckenzie
+	Meera
 	Megan
 	Meghan
+	Megumi
+	Mei
 	Melanie
 	Melany
 	Melissa
 	Melody
+	Meng
 	Meredith
 	Merideth
 	Merrilyn
 	Meryl
+	Mi
 	Mia
 	Michaela
 	Michelle
+	Michi
+	Midori
 	Mikayla
+	Miku
 	Miley
+	Min
+	Min-Jun
+	Ming Zhu
 	Minnie
 	Miracle
 	Miranda
 	Miriam
 	Molly
+	Momo
 	Monica
 	Monna
 	Morgan
 	Muriel
 	Mya
+	Myeong
 	Mylee
 	Myriam
 	Myrtie
 	Nadia
+	Nakano
+	Nali
 	Nan
 	Nancy
+	Nanno
 	Naomi
 	Natalia
 	Natalie
@@ -605,15 +740,21 @@ names@=
 	Netta
 	Nettie
 	Nevaeh
+	Neysa
 	Nia
 	Nicole
+	Nikephoros
+	Nimeesha
 	Nina
+	Nitara
 	Noelle
+	Noemi
 	Nonie
 	Nora
 	Norah
 	Nova
 	Nowell
+	Nozomi
 	Nydia
 	Nyla
 	Olive
@@ -625,7 +766,9 @@ names@=
 	Paris
 	Patience
 	Patricia
+	Paula
 	Pauleen
+	Paulina
 	Payton
 	Pene
 	Penelope
@@ -639,8 +782,11 @@ names@=
 	Phyllis
 	Piper
 	Porsche
+	Pradha
 	Presley
 	Priscilla
+	Prisha
+	Priyal
 	Prosper
 	Prue
 	Quanah
@@ -650,52 +796,84 @@ names@=
 	Raegan
 	Raelene
 	Rain
+	Raji
 	Randa
 	Randal
+	Rashmika
 	Reagan
 	Rebecca
 	Rebeckah
 	Rebekah
 	Reene
 	Reese
+	Regina
+	Rei
+	Reiki
+	Reiko
+	Renata
 	Renie
 	Rexana
+	Reya
 	Rhetta
 	Rihanna
 	Riley
+	Rin
+	Rocio
+	Roma
+	Romina
 	Ronnette
+	Roopitha
 	Rosa
 	Rose
 	Rosemary
 	Rowan
 	Ruby
 	Rubye
+	Ruhi
+	Rui
+	Rumi
 	Ruth
 	Rylee
 	Ryleigh
 	Rylie
+	Saanvi
 	Sabella
 	Sabrina
 	Sachie
+	Sachiko
+	Sadako
 	Sadie
 	Sage
+	Sai
+	Sakura
 	Sally
 	Samantha
 	Samara
+	Samiha
 	Sandra
+	Sanija
+	Sanyu
+	Saori
 	Sara
 	Sarah
 	Sarai
 	Saranna
+	Sarika
 	Sasha
 	Savanna
 	Savannah
 	Scarlett
 	Selena
 	Seneca
+	Seo-Bi
+	Seo-Jun
+	Seo-Yeon
 	Serena
 	Serenity
+	Shalvi
+	Shan
 	Shana
+	Shanaya
 	Shanika
 	Shannah
 	Shannon
@@ -708,12 +886,17 @@ names@=
 	Sherie
 	Sherill
 	Sherri
+	Shu
+	Shun
+	Shyla
 	Sienna
 	Sierra
 	Sissy
+	Sita
 	Skylar
 	Skyler
 	Sofia
+	Soo-Ah
 	Sophia
 	Sophie
 	Star
@@ -721,15 +904,19 @@ names@=
 	Steph
 	Stephanie
 	Stephany
+	Su-Ho
 	Sue
 	Sukie
 	Summer
+	Sun-Young
 	Sunshine
+	Susana
 	Susanna
 	Susannah
 	Suzan
 	Suzy
 	Sydney
+	Taka
 	Talia
 	Tamika
 	Tania
@@ -743,25 +930,40 @@ names@=
 	Tessa
 	Tiffany
 	Tolly
+	Tomie
+	Tomiju
 	Topaz
 	Tori
 	Tracee
 	Tracey
 	Trinity
+	Tui
+	Ukti
 	Ulyssa
+	Uma
+	Ume
+	Umi
+	Usagi
+	Vaidehi
+	Vaishali
 	Valary
 	Valentina
 	Valeria
 	Valerie
 	Vanessa
+	Vaya
 	Verna
 	Veronica
 	Victoria
+	Vidula
 	Vinnie
 	Violet
 	Vivian
 	Viviana
 	Vivyan
+	Vrddhi
+	Vrushika
+	Wen
 	Wendi
 	Wendy
 	Willow
@@ -769,10 +971,26 @@ names@=
 	Wynonna
 	Wynter
 	Ximena
+	Xiu
+	Ya
+	Yan
 	Yasmin
+	Yasu
+	Ye-Jun
+	Yeong-Ja
+	Yesenia
+	Yi Nuo
+	Ying
+	Yokai
 	Yolanda
+	Young-Mi
 	Ysabel
+	Yu
+	Yu Xi
+	Yu-Jun
 	Zelda
+	Zhu
+	Zinaida
 	Zoe
 	Zoey
 	Zune
