@@ -1556,6 +1556,8 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\assembly\misc_assemblies.dm"
 #include "code\obj\item\assembly\shock_kit.dm"
 #include "code\obj\item\assembly\single_tank_bomb.dm"
+#include "code\obj\item\boardgame\boardgame.dm"
+#include "code\obj\item\boardgame\gameclock.dm"
 #include "code\obj\item\clothing\armor.dm"
 #include "code\obj\item\clothing\cardboard.dm"
 #include "code\obj\item\clothing\chameleon_js.dm"

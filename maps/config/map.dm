@@ -175,6 +175,9 @@
 #elif defined(MAP_OVERRIDE_EVENT)
 #include "event.dm"
 
+#elif defined(MAP_OVERRIDE_CHESSHALL)
+#include "chesshall.dm"
+
 #elif defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
 #include "gottagofast.dm"
 
