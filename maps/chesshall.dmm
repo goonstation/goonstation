@@ -593,6 +593,16 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor,
 /area/listeningpost)
+"dn" = (
+/obj/decal/tile_edge/floorguide/arrow_e{
+	pixel_y = 21;
+	pixel_x = 9
+	},
+/turf/unsimulated/floor/wood,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "dq" = (
 /obj/machinery/light{
 	dir = 8;
@@ -801,6 +811,10 @@
 /obj/machinery/computer/security/wooden_tv/small{
 	pixel_y = 8
 	},
+/obj/item/decoration/ashtray{
+	pixel_y = -9;
+	pixel_x = -4
+	},
 /turf/unsimulated/floor/wood,
 /area/station/engine/singcore{
 	name = "Convention Hall";
@@ -814,6 +828,16 @@
 "eh" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/solar/east)
+"ei" = (
+/obj/table/nanotrasen/auto{
+	name = "Judge's Table"
+	},
+/obj/random_item_spawner/desk_stuff/g_clip_bin_pen/three,
+/turf/simulated/floor/carpet/purple/fancy/edge/ne,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "ep" = (
 /obj/machinery/light/small/floor/netural,
 /obj/decal/tile_edge/line/black{
@@ -1476,6 +1500,16 @@
 	},
 /turf/simulated/floor/carpet/blue/standard/narrow/west,
 /area/station/hallway/primary/south)
+"hx" = (
+/obj/stool/chair/wooden/regal{
+	dir = 8;
+	name = "Judge's Chair"
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/east,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "hy" = (
 /obj/decal/poster/wallsign/stencil/right/one,
 /turf/simulated/wall/auto/supernorn/wood,
@@ -2126,14 +2160,6 @@
 "kX" = (
 /turf/simulated/floor/terrazzo,
 /area/station/hallway/primary/north)
-"kY" = (
-/turf/unsimulated/floor/stairs/wood2/wide{
-	dir = 5
-	},
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
 "la" = (
 /obj/stool/chair,
 /turf/simulated/floor/wood/seven,
@@ -2173,6 +2199,22 @@
 	name = "Convention Hall";
 	do_not_irradiate = 1
 	})
+"lo" = (
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
+	},
+/obj/item/extinguisher{
+	pixel_x = 6
+	},
+/obj/item/spraybottle/cleaner{
+	pixel_x = -5;
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/wood/eight,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "ls" = (
 /turf/simulated/floor/black/side{
 	dir = 1
@@ -2188,6 +2230,10 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
+"lI" = (
+/obj/effects/background_objects/fatuus,
+/turf/space,
+/area/space)
 "lJ" = (
 /turf/simulated/floor,
 /area/station/crew_quarters/catering)
@@ -2571,6 +2617,21 @@
 	icon_state = "floor6"
 	},
 /area/shuttle/arrival/station)
+"nJ" = (
+/obj/decal/poster/wallsign/stencil/left/d{
+	pixel_x = -13
+	},
+/obj/decal/poster/wallsign/stencil/left/g{
+	pixel_x = 0
+	},
+/obj/decal/poster/wallsign/stencil/left/e{
+	pixel_x = 12
+	},
+/turf/unsimulated/floor/wood,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "nK" = (
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
@@ -2628,6 +2689,10 @@
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
 /area/listeningpost)
+"nV" = (
+/obj/effects/background_objects/station/ss10,
+/turf/space,
+/area/space)
 "nW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -2924,31 +2989,11 @@
 /turf/space,
 /area/station/solar/east)
 "pI" = (
-/obj/table/wood/auto{
-	pixel_w = -1
-	},
-/obj/item/device/radio/intercom{
-	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show.";
-	device_color = "#E52780";
-	icon = 'icons/obj/radiostation.dmi';
-	icon_state = "mixtable-1";
-	name = "broadcast radio"
-	},
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
 	},
-/turf/unsimulated/floor/wood,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
-"pJ" = (
-/obj/table/wood/auto{
-	pixel_w = -1
-	},
-/obj/submachine/mixing_desk,
 /turf/unsimulated/floor/wood,
 /area/station/engine/singcore{
 	name = "Convention Hall";
@@ -3343,6 +3388,16 @@
 	icon_state = "catwalk_cross"
 	},
 /area/listeningpost/solars)
+"rO" = (
+/obj/table/nanotrasen/auto{
+	name = "Judge's Table"
+	},
+/obj/random_item_spawner/desk_stuff/g_clip_bin_fpen/four,
+/turf/simulated/floor/carpet/purple/fancy/edge/west,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "rP" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/black,
@@ -3928,6 +3983,17 @@
 	},
 /turf/simulated/floor/grey,
 /area/listeningpost)
+"uM" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "uN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -4408,20 +4474,13 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/arrival/station)
-"xg" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/toilets)
 "xh" = (
-/obj/access_spawn/captain,
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "arena";
 	name = "Convention Hall Access Control Shutters"
 	},
+/obj/access_spawn/maint,
 /turf/unsimulated/floor/wood,
 /area/station/maintenance/solar/east)
 "xl" = (
@@ -4487,6 +4546,9 @@
 /obj/item/reagent_containers/food/snacks/popcorn{
 	pixel_x = -5;
 	pixel_y = 1
+	},
+/obj/item/device/radio/intercom{
+	pixel_y = -1
 	},
 /turf/unsimulated/floor/wood,
 /area/station/engine/singcore{
@@ -4672,6 +4734,16 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
+"yK" = (
+/obj/table/wood/auto{
+	pixel_w = -1
+	},
+/obj/submachine/mixing_desk,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "yL" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
@@ -4847,10 +4919,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/listeningpost/solars)
-"zJ" = (
-/obj/machinery/drainage,
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/toilets)
 "zN" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/exit)
@@ -4880,14 +4948,10 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/secondary/entry)
 "Ae" = (
-/obj/stool/chair/office/blue{
-	dir = 8
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
 	},
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
+/obj/random_item_spawner/desk_stuff/g_clip_bin_pen/lots,
 /turf/unsimulated/floor/wood/eight,
 /area/station/engine/singcore{
 	name = "Convention Hall";
@@ -5276,22 +5340,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/toilets)
-"Cz" = (
-/obj/table/reinforced/bar/auto{
-	name = "wooden table"
-	},
-/obj/item/device/radio/intercom{
-	pixel_y = -1
-	},
-/obj/item/decoration/ashtray{
-	pixel_y = -9;
-	pixel_x = -4
-	},
-/turf/unsimulated/floor/wood,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
 "CD" = (
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
@@ -5566,6 +5614,16 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/terrazzo/black,
 /area/station/hallway/primary/west)
+"Et" = (
+/obj/table/nanotrasen/auto{
+	name = "Judge's Table"
+	},
+/obj/random_item_spawner/desk_stuff/g_clip_bin_pen/three,
+/turf/simulated/floor/carpet/purple/fancy/edge/se,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "EA" = (
 /obj/storage/crate{
 	name = "Cone Crate"
@@ -5687,6 +5745,18 @@
 /obj/lattice,
 /turf/space,
 /area/listeningpost/solars)
+"Ff" = (
+/obj/decal/stage_edge{
+	dir = 2;
+	layer = 2.8
+	},
+/turf/unsimulated/floor/stairs/wood2/wide{
+	dir = 5
+	},
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "Fh" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -5956,16 +6026,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
-"Gw" = (
-/obj/stool/chair/comfy{
-	dir = 8
-	},
-/obj/machinery/light,
-/turf/unsimulated/floor/wood,
-/area/station/engine/singcore{
-	name = "Convention Hall";
-	do_not_irradiate = 1
-	})
 "Gy" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/head/helmet/men{
@@ -6271,6 +6331,19 @@
 	dir = 4
 	},
 /area/listeningpost)
+"HU" = (
+/obj/table/nanotrasen/auto{
+	name = "Judge's Table"
+	},
+/obj/item/decoration/ashtray{
+	pixel_y = 9;
+	pixel_x = 6
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/sw,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "HV" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -6563,6 +6636,16 @@
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/wood/seven,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
+"JT" = (
+/obj/decal/poster/wallsign/stencil/left/j,
+/obj/decal/poster/wallsign/stencil/left/u{
+	pixel_x = 9
+	},
+/turf/unsimulated/floor/wood,
 /area/station/engine/singcore{
 	name = "Convention Hall";
 	do_not_irradiate = 1
@@ -7795,6 +7878,16 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
+"Rq" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	name = "Judge Office"
+	},
+/turf/unsimulated/floor/wood,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "Rt" = (
 /obj/machinery/sleeper/port_a_medbay,
 /turf/simulated/floor/bluewhite,
@@ -8443,6 +8536,16 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
+"Ux" = (
+/obj/decal/tile_edge/floorguide/arrow_e{
+	pixel_y = 21;
+	pixel_x = 6
+	},
+/turf/unsimulated/floor/wood,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "Uz" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -8619,6 +8722,19 @@
 	dir = 1
 	},
 /area/shuttle/arrival/station)
+"Vu" = (
+/obj/table/nanotrasen/auto{
+	name = "Judge's Table"
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = 5;
+	pixel_y = -3
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/nw,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "Vy" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8806,6 +8922,16 @@
 	icon_state = "line2"
 	},
 /turf/unsimulated/floor/wood/seven,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
+"WJ" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/access_spawn/captain,
+/turf/unsimulated/floor/wood/eight,
 /area/station/engine/singcore{
 	name = "Convention Hall";
 	do_not_irradiate = 1
@@ -9085,6 +9211,22 @@
 /obj/cable,
 /turf/simulated/floor/grey,
 /area/listeningpost)
+"XO" = (
+/obj/item/device/radio/intercom{
+	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show.";
+	device_color = "#E52780";
+	icon = 'icons/obj/radiostation.dmi';
+	icon_state = "mixtable-1";
+	name = "broadcast radio"
+	},
+/obj/table/wood/auto{
+	pixel_w = -1
+	},
+/turf/unsimulated/floor/wood,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "XQ" = (
 /obj/decal/boxingrope{
 	density = 0;
@@ -40693,7 +40835,7 @@ jP
 jP
 jP
 jP
-jP
+lI
 jP
 jP
 jP
@@ -51533,7 +51675,7 @@ jP
 jP
 jP
 jP
-jP
+nV
 jP
 jX
 jX
@@ -56398,8 +56540,8 @@ tr
 tr
 tr
 tr
-tr
-tr
+JT
+dn
 tr
 tr
 tr
@@ -56700,8 +56842,8 @@ tr
 tr
 tr
 tr
-tr
-tr
+nJ
+Ux
 tr
 Se
 tr
@@ -59116,8 +59258,8 @@ tr
 tr
 tr
 tr
-tr
-tr
+JT
+dn
 tr
 tr
 tr
@@ -59418,8 +59560,8 @@ tr
 tr
 tr
 tr
-tr
-tr
+nJ
+Ux
 tr
 aT
 tr
@@ -61834,8 +61976,8 @@ tr
 tr
 tr
 tr
-tr
-tr
+JT
+dn
 tr
 tr
 tr
@@ -62136,8 +62278,8 @@ tr
 tr
 tr
 tr
-tr
-tr
+nJ
+Ux
 tr
 dX
 tr
@@ -63344,14 +63486,14 @@ nA
 nA
 qa
 fu
-Iq
-Iq
+Rq
+Rq
 fu
-qa
-qa
-qa
-qa
-qa
+fu
+fu
+fu
+fu
+fu
 qX
 Rm
 qX
@@ -63646,12 +63788,12 @@ oA
 nA
 qe
 lN
-tr
-tr
+ab
+Ff
 pI
+tr
+XO
 iE
-ef
-Cz
 ef
 xu
 qX
@@ -63947,18 +64089,18 @@ Xh
 Ul
 nA
 mB
-lN
-ab
-kY
-pJ
+tr
+tr
+tr
+tr
+tr
+yK
 dQ
 xn
 xn
-xn
-Gw
+fu
+fu
 qX
-xg
-zJ
 nK
 nK
 nK
@@ -64249,18 +64391,18 @@ qf
 qf
 xh
 tr
-wj
-qW
-MW
-UJ
+Vu
+rO
+rO
+HU
 tr
+UJ
 wj
 qW
 MW
+tr
 tr
 jW
-nK
-rh
 nK
 rh
 nK
@@ -64551,18 +64693,18 @@ qf
 Lf
 nA
 GP
+ei
+hx
+hx
+Et
+tr
+Iq
 oz
 Em
 oM
 tr
-tr
-oz
-Em
-oM
 Ai
 qX
-zd
-Ju
 zd
 Ju
 zd
@@ -64858,13 +65000,13 @@ zR
 zR
 zR
 zR
+WJ
+zR
 zR
 zR
 zR
 Xn
 qX
-Kv
-Ju
 Kv
 Ju
 Kv
@@ -65159,13 +65301,13 @@ Fl
 ns
 Hd
 Ae
+lo
+uM
 RY
 RY
 BP
 gw
 QP
-Bb
-Bb
 Bb
 Bb
 Bb
@@ -65460,6 +65602,8 @@ QP
 QP
 st
 st
+st
+st
 QP
 st
 st
@@ -65467,8 +65611,6 @@ st
 QP
 QP
 mY
-jP
-jP
 sr
 jP
 jP

@@ -1037,7 +1037,7 @@ var/global/list/mapNames = list(
 /datum/map_settings/event
 	name = "EVENT"
 	display_name = "Seneca Memorial Chess Hall"
-	goonhub_map = "https://cdn.discordapp.com/attachments/851972461871235093/1043456636880171038/image.png"
+	goonhub_map = "https://cdn.discordapp.com/attachments/851972461871235093/1043462477859536916/image.png"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
