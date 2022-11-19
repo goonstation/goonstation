@@ -1966,7 +1966,5 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 				current.dir = SOUTH
 	else
 		// DO NOT MAKE JUNCTIONS, FOOLS
-		null
-		//CRASH("Pipe Spawners cannot connect to 3 or 4 directions!\nPipe coords: " + [src.x]
-		//+ " x, " + [src.y] + " y, " + [src.z]) + " z."
+		CRASH("Pipe Spawners can't make junctions!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
 
