@@ -58,12 +58,11 @@
 		switch(src.mode)
 			if (CHARGING_BITS)
 				var/list/nearby_bits = list()
-				var/area/src_area = get_area(src)
 				var/perform_lag_check = length(src.flock.units[/mob/living/critter/flock/bit]) > 10
 				for (var/mob/living/critter/flock/bit/flockbit as anything in src.flock.units[/mob/living/critter/flock/bit])
 					if (perform_lag_check)
 						LAGCHECK(LAG_MED)
-					if (GET_DIST(src, flockbit) < 7 || get_area(flockbit) == src_area)
+					if (GET_DIST(src, flockbit) < 7)
 						nearby_bits += flockbit
 				if (!length(nearby_bits))
 					return
