@@ -477,7 +477,6 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 				boutput(src, "<span class='notice'>You weave around [H] to [pick("show your affection!", "get them to feed you.", "annoy them for no reason in particular.")]</span>")
 				boutput(H, "<span class='notice'>[src] weaves around you, waving their tail around. A bunch of hair clings to your clothes and some gets in your nose.</span>")
 				H.emote("sneeze")
-		return
 
 	seek_target(range)
 		. = list()
