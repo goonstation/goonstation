@@ -1890,7 +1890,8 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 	name = "disposal pipe spawner"
 	icon_state = "pipe-spawner"
 	text = ""
-	pipe_type = /obj/disposalpipe
+	var/pipe_type = /obj/disposalpipe
+	var/trunk_type = /obj/disposalpipe/trunk
 	var/dpdir = 0		//! bitmask of pipe directions
 
 /obj/disposalpipespawner/types
