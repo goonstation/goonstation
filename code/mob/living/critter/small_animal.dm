@@ -337,6 +337,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		..()
 		if(src.name == "jons the catte")
 			src.is_pet = 1
+			src.is_annoying = TRUE
 		if (src.randomize_name)
 			src.name = pick_string_autokey("names/cats.txt")
 			src.real_name = src.name
