@@ -330,8 +330,6 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	var/catnip = 0
 	var/is_annoying = FALSE
 	var/attack_damage = 3
-	var/recent_pug_pet = FALSE
-	var/last_claw_fury = 0
 
 	New()
 		..()
@@ -350,7 +348,6 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			src.icon_state = "cat[cattype]"
 			src.icon_state_alive = src.icon_state
 			src.icon_state_dead = "cat[cattype]-dead"
-			src.last_claw_fury = TIME
 
 	setup_hands()
 		..()
@@ -460,9 +457,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			src.audible_message("[src] purrs!",\
 			"You purr!")
 		if (src.ai.enabled && ispug(user) && prob(10))
-			src.recent_pug_pet = TRUE
-			SPAWN(15 SECONDS)
-				src?.recent_pug_pet = FALSE
+			ON_COOLDOWN(src, "recent_pug_pet", 15 SECONDS)
 			src.ai.priority_tasks += src.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(src, src.ai.default_task))
 			src.ai.interrupt()
 			src.visible_message("<span class='notice'>[src] recoils and hisses at [user]'s attempt to pet them, then goes for the jugular!</span>")
@@ -486,16 +481,18 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 	seek_target(range)
 		. = list()
-		if (src.recent_pug_pet)
-			for (var/mob/living/carbon/human/H in hearers(range, src))
-				if (ispug(H) && isalive(H))
+		for (var/atom/movable/AM in hearers(range, src))
+			if (istype(AM, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = AM
+				if (ispug(H) && isalive(H) && GET_COOLDOWN(src, "recent_pug_pet"))
 					. += H
 					return
-		for (var/mob/living/critter/small_animal/mouse/C in hearers(range, src))
-			if (isdead(C)) continue
-			. += C
-		for (var/obj/critter/livingtail/C in hearers(range, src))
-			. += C
+			if (istype(AM, /mob/living/critter/small_animal/mouse))
+				var/mob/living/critter/small_animal/mouse/M = AM
+				if (isdead(M)) continue
+				. += M
+		for (var/obj/critter/livingtail/tail in range(src, 3))
+			. += tail
 
 		if (length(.) && prob(20))
 			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
@@ -512,34 +509,35 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			if(istype(target, /mob/living/critter/small_animal/mouse/weak/mentor) && prob(90))
 				src.visible_message("<span class='combat'><B>[src]</B> tries to bite [target] but \the [target] dodges [pick("nimbly", "effortlessly", "gracefully")]!</span>")
 				return
-			if ((src.catnip || prob(2) ) && (last_claw_fury < (TIME + 15 SECONDS)))
+			if ((src.catnip || prob(2) ) && (!GET_COOLDOWN(src, "claw_fury")))
+				ON_COOLDOWN(src, "claw_fury", 20 SECONDS)
 				var/attackCount = rand(5, 9)
 				var/iteration = 0
-				while (iteration <= attackCount && (get_dist(src, target) <= 1))
-					if (iteration == 0)
-						target.setStatus("weakened", 2 SECONDS)
-						src.visible_message("<span class='combat'>[src] [pick("starts to claw the living <b>shit</b> out of ", "unleashes a flury of claw at ")] [target]!</span>")
-					random_brute_damage(target, src.attack_damage + 2, 1)
-					playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 60, 1)
-					iteration ++
-					sleep(0.3 SECONDS)
-			else
-				var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
-				if (!pounce.disabled && pounce.cooldowncheck() && prob(50))
-					src.visible_message("<span class='combat'><B>[src]</B> pounces on [target] and trips them!</span>", "<span class='combat'>You pounce on [target]!</span>")
-					pounce.handleCast(target)
-				else
-					if (prob(50))
-						src.visible_message("<span class='combat'><B>[src]</B> pounces on [target]!</span>", "<span class='combat'>You pounce on [target]!</span>")
-						playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
-						random_brute_damage(target, src.attack_damage, 1)
-					else
-						src.visible_message("<span class='combat'><B>[src]</B> scratches [target]!</span>", "<span class='combat'>You scratch on [target]!</span>")
-						playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 50, 1, -1)
+				target.setStatus("weakened", 2 SECONDS)
+				src.visible_message("<span class='combat'>[src] [pick("starts to claw the living <b>shit</b> out of ", "unleashes a flury of claw at ")] [target]!</span>")
+				SPAWN(0)
+					while (iteration <= attackCount && (get_dist(src, target) <= 1))
 						random_brute_damage(target, src.attack_damage + 2, 1)
-						if (prob(10))
-							bleed(target, 2)
-							boutput(target, "<span class='alert'>[src] scratches you hard enough to draw some blood! [pick("Bad kitty", "Piece of shit", "Ow")]!</span>")
+						playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 60, 1)
+						iteration ++
+						sleep(0.3 SECONDS)
+					return
+			var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
+			if (!pounce.disabled && pounce.cooldowncheck() && prob(50))
+				src.visible_message("<span class='combat'><B>[src]</B> pounces on [target] and trips them!</span>", "<span class='combat'>You pounce on [target]!</span>")
+				pounce.handleCast(target)
+				return
+			if (prob(50))
+				src.visible_message("<span class='combat'><B>[src]</B> pounces on [target]!</span>", "<span class='combat'>You pounce on [target]!</span>")
+				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
+				random_brute_damage(target, src.attack_damage, 1)
+			else
+				src.visible_message("<span class='combat'><B>[src]</B> scratches [target]!</span>", "<span class='combat'>You scratch on [target]!</span>")
+				playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 50, 1, -1)
+				random_brute_damage(target, src.attack_damage + 2, 1)
+				if (prob(10))
+					bleed(target, 2)
+					boutput(target, "<span class='alert'>[src] scratches you hard enough to draw some blood! [pick("Bad kitty", "Piece of shit", "Ow")]!</span>")
 
 /mob/living/critter/small_animal/cat/weak
 	add_abilities = list()
