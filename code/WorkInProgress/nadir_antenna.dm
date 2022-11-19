@@ -21,8 +21,16 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 #define MAX_FREE_POWER 200 KILO WATTS
 #define MAX_CHARGE_RATE 50 KILO WATTS
 
-//Transception array's fully-repaired state number
-#define TRSC_FULLREPAIR 8
+//Transception array integrity states, as defined by the repair needed to progress to the next state.
+#define ARRAY_INTEG_WELD0 0
+#define ARRAY_INTEG_WELD1 1
+#define ARRAY_INTEG_WELD2 2
+#define ARRAY_INTEG_WRENCH_OFF 3
+#define ARRAY_INTEG_PRY_RODS 4
+#define ARRAY_INTEG_ADD_SHEET 5
+#define ARRAY_INTEG_ADD_RODS 6
+#define ARRAY_INTEG_WRENCH_ON 7
+#define ARRAY_INTEG_FULL 8
 
 /*
 Breakdown of each transception (sending or receiving of a thing through the transception system), as happens through standard cargo operations:
@@ -74,7 +82,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 
 	//If the internal capacitor is sabotaged, it will rupture, damaging the capacitor cabinet and bringing the array offline.
 	///This condition tracks the progress of array repair; status of 8 (defined above, change if process changes) indicates full condition
-	var/repair_status = TRSC_FULLREPAIR
+	var/repair_status = ARRAY_INTEG_FULL
 
 	New()
 		. = ..()
@@ -266,7 +274,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 		src.status |= BROKEN
 		src.primed = FALSE
 		src.intcap_door_open = FALSE
-		src.repair_status = 0
+		src.repair_status = ARRAY_INTEG_WELD0
 		src.UpdateIcon()
 		if (intcap.rigger)
 			message_admins("[key_name(intcap.rigger)]'s rigged cell damaged the transception array at [log_loc(src)].")
@@ -304,22 +312,22 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 		var/tell_you_what_to_do_next = TRUE //probably-simpler way to tell people what to do next
 
 		if (isweldingtool(I))
-			if (src.repair_status <= 2)
+			if (src.repair_status <= ARRAY_INTEG_WELD2)
 				boutput(user, "You start repairing the damaged sections of the outer cabinet plating.")
 				actions.start(new/datum/action/bar/icon/array_repair_weld(user,I,src), user)
 				tell_you_what_to_do_next = FALSE
 
 		else if (iswrenchingtool(I))
-			if (src.repair_status == 3 || src.repair_status == 7)
-				var/cursed_check = src.repair_status - 3
-				boutput(user, "You start [cursed_check ? "reinstalling" : "removing"] the rod retention bolts.")
+			if (src.repair_status == ARRAY_INTEG_WRENCH_OFF || src.repair_status == ARRAY_INTEG_WRENCH_ON)
+				var/less_cursed_check = src.repair_status == ARRAY_INTEG_WRENCH_ON
+				boutput(user, "You start [less_cursed_check ? "reinstalling" : "removing"] the rod retention bolts.")
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, /obj/machinery/communications_dish/transception/proc/wrench_cabinet,\
 				list(user), I.icon, I.icon_state, null, null)
 				tell_you_what_to_do_next = FALSE
 
 		else if (ispryingtool(I))
-			if (src.repair_status == 4)
+			if (src.repair_status == ARRAY_INTEG_PRY_RODS)
 				boutput(user, "You start prying out the damaged frame rods.")
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 75, 1)
 				SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /obj/machinery/communications_dish/transception/proc/pry_cabinet,\
@@ -327,7 +335,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 				tell_you_what_to_do_next = FALSE
 
 		else if(istype(I, /obj/item/sheet))
-			if (src.repair_status == 5)
+			if (src.repair_status == ARRAY_INTEG_ADD_SHEET)
 				var/obj/item/sheet/S = I
 				if (S.material && S.material.material_flags & MATERIAL_METAL)
 					S.change_stack_amount(-1)
@@ -338,7 +346,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 					tell_you_what_to_do_next = FALSE
 
 		else if(istype(I, /obj/item/rods))
-			if (src.repair_status == 6)
+			if (src.repair_status == ARRAY_INTEG_ADD_RODS)
 				var/obj/item/rods/R = I
 				if (R.material && R.material.material_flags & MATERIAL_METAL && R.amount > 1)
 					R.change_stack_amount(-2)
@@ -350,17 +358,17 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 
 		if (tell_you_what_to_do_next)
 			switch (src.repair_status)
-				if(0 to 2)
+				if(ARRAY_INTEG_WELD0 to ARRAY_INTEG_WELD2)
 					boutput(user, "The array looks pretty beat. A good place to start would be welding the microvoltage cabinet's plating.")
-				if(3)
+				if(ARRAY_INTEG_WRENCH_OFF)
 					boutput(user, "The cabinet is mostly back together, but some of the rods are shredded. There are bolts holding them in place.")
-				if(4)
+				if(ARRAY_INTEG_PRY_RODS)
 					boutput(user, "The bolts for the broken rods have been removed, but it seems they'll need some prying to come out.")
-				if(5)
+				if(ARRAY_INTEG_ADD_SHEET)
 					boutput(user, "With broken rods gone, this seems like a good time to grab some metal sheets and make a new compartment door.")
-				if(6)
+				if(ARRAY_INTEG_ADD_RODS)
 					boutput(user, "The internal capacitor's microvoltage cabinet seems intact now. Some rods for the frame would be good.")
-				if(7)
+				if(ARRAY_INTEG_WRENCH_ON)
 					boutput(user, "The newly-repaired rods seem a bit shaky; they haven't been bolted in yet.")
 	else
 		if (ispryingtool(I))
@@ -376,11 +384,11 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 			..(I,user)
 
 /obj/machinery/communications_dish/transception/proc/wrench_cabinet(mob/user)
-	var/cursed_check = src.repair_status - 3
-	boutput(user, "You finish [cursed_check ? "reinstalling" : "removing"] the rod retention bolts.")
+	var/less_cursed_check = src.repair_status == ARRAY_INTEG_WRENCH_ON
+	boutput(user, "You finish [less_cursed_check ? "reinstalling" : "removing"] the rod retention bolts.")
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	src.repair_status++
-	if(src.repair_status == TRSC_FULLREPAIR)
+	if(src.repair_status == ARRAY_INTEG_FULL)
 		src.status &= ~BROKEN
 	src.UpdateIcon()
 
@@ -447,16 +455,18 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 		src.onRestart()
 
 /obj/machinery/communications_dish/transception/update_icon()
-	if(repair_status < TRSC_FULLREPAIR)
+	if(repair_status < ARRAY_INTEG_FULL)
 		src.icon_state = "array_busted[repair_status]"
 	else
 		src.icon_state = "array[intcap_door_open ? "_panelopen" : null]"
 
 	if(powered() && !(status & BROKEN))
+		//Light indicating whether the array is active at all
 		var/image/commglow = SafeGetOverlayImage("commglow", 'icons/obj/machines/transception.dmi', "powered")
 		commglow.plane = PLANE_ABOVE_LIGHTING
 		UpdateOverlays(commglow, "commglow", 0, 1)
 
+		//Light indicating whether transception capability is primed (in plain english, whether it can send and receive cargo)
 		var/primed_state = "trsc_sys_warn"
 		if(src.primed)
 			primed_state = "trsc_sys_primed"
@@ -464,6 +474,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 		primer.plane = PLANE_ABOVE_LIGHTING
 		UpdateOverlays(primer, "primed", 0, 1)
 
+		//Light indicating whether the internal capacitor is charging (detected a power surplus from the grid that matches set parameters)
 		var/intcap_charger = "allquiet"
 		if(src.intcap_charging == TRUE)
 			intcap_charger = "intcap_charging"
@@ -471,6 +482,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 		chargelight.plane = PLANE_ABOVE_LIGHTING
 		UpdateOverlays(chargelight, "charger", 0, 1)
 
+		//Light indicating the internal capacitor's state of charge, with 5 indicator intervals
 		var/intcap_power = "allquiet"
 		if(src.intcap?.charge > 0)
 			var/charge_tier = ceil((src.intcap.charge / src.intcap.maxcharge) * 5) * 20
@@ -479,6 +491,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 		intcapbar.plane = PLANE_ABOVE_LIGHTING
 		UpdateOverlays(intcapbar, "intcap", 0, 1)
 
+		//Light indicating the area APC's state of charge relative to the failsafe threshold, with 5 indicator intervals
 		var/apc_power = "allquiet"
 		var/obj/machinery/power/apc/AC = get_local_apc(src)
 		if(AC?.cell?.charge > 0)
