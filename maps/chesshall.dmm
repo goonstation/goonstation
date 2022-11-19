@@ -815,6 +815,11 @@
 	pixel_y = -9;
 	pixel_x = -4
 	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
 /turf/unsimulated/floor/wood,
 /area/station/engine/singcore{
 	name = "Convention Hall";
@@ -1821,6 +1826,17 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"iK" = (
+/obj/table/nanotrasen/auto{
+	name = "Judge's Table"
+	},
+/obj/random_item_spawner/desk_stuff/g_clip_bin_fpen/four,
+/obj/item/clipboard/with_pen,
+/turf/simulated/floor/carpet/purple/fancy/edge/west,
+/area/station/engine/singcore{
+	name = "Convention Hall";
+	do_not_irradiate = 1
+	})
 "iM" = (
 /obj/machinery/light{
 	dir = 4;
@@ -4548,7 +4564,7 @@
 	pixel_y = 1
 	},
 /obj/item/device/radio/intercom{
-	pixel_y = -1
+	dir = 4
 	},
 /turf/unsimulated/floor/wood,
 /area/station/engine/singcore{
@@ -6401,10 +6417,10 @@
 	},
 /area/listeningpost)
 "Iq" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
 /obj/access_spawn/captain,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 1
+	},
 /turf/unsimulated/floor/wood,
 /area/station/engine/singcore{
 	name = "Convention Hall";
@@ -8933,10 +8949,10 @@
 	do_not_irradiate = 1
 	})
 "WJ" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
 /obj/access_spawn/captain,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 1
+	},
 /turf/unsimulated/floor/wood/eight,
 /area/station/engine/singcore{
 	name = "Convention Hall";
@@ -64398,7 +64414,7 @@ qf
 xh
 tr
 Vu
-rO
+iK
 rO
 HU
 tr
@@ -64407,7 +64423,7 @@ wj
 qW
 MW
 tr
-tr
+pI
 jW
 nK
 rh
