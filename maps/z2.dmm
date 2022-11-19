@@ -77729,10 +77729,10 @@
 /area/centcom)
 "wAT" = (
 /mob/living/critter/small_animal/cat{
-	generic = 0;
 	icon_state = "cat2";
 	name = "Moo";
-	randomize_cat = 0
+	randomize_name = 0;
+	randomize_look = 0
 	},
 /obj/decal/stage_edge{
 	layer = 2.8;
