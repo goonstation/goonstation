@@ -4873,6 +4873,12 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
+"zu" = (
+/obj/landmark{
+	name = "Observer-Start"
+	},
+/turf/simulated/floor/glassblock/transparent_red,
+/area/station/hallway/secondary/entry)
 "zv" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -52636,7 +52642,7 @@ TI
 Ss
 jT
 jT
-jT
+zu
 jT
 jT
 jT
@@ -52938,7 +52944,7 @@ TI
 Ss
 jT
 dY
-jT
+zu
 dY
 jT
 dY
