@@ -14,9 +14,8 @@
 		owner = M
 
 	proc
-		AddStep(var/datum/tutorialStep/T)
-			steps += T
-			T.tutorial = src
+		AddStep(step_type)
+			steps += new step_type(src)
 
 		ShowStep()
 			if (!current_step || current_step > steps.len)
@@ -141,6 +140,10 @@
 	var/instructions = "Do something"
 	var/datum/tutorial_base/tutorial = null
 	var/finished = FALSE
+
+	New(datum/tutorial_base/tutorial)
+		. = ..()
+		src.tutorial = tutorial
 
 	proc
 		SetUp()

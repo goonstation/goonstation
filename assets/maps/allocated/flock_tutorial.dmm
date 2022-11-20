@@ -30,7 +30,9 @@
 /turf/simulated/floor,
 /area/tutorial/flock)
 "j" = (
-/obj/machinery/door/airlock/pyro/command,
+/obj/machinery/door/airlock/pyro/command{
+	opacity = 0
+	},
 /obj/access_spawn/heads,
 /turf/simulated/floor,
 /area/tutorial/flock)
@@ -41,7 +43,9 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/tutorial/flock)
 "l" = (
-/turf/simulated/wall/auto/supernorn,
+/turf/simulated/wall/auto/supernorn{
+	opacity = 0
+	},
 /area/tutorial/flock)
 "m" = (
 /obj/storage/secure/closet/security/forensics,

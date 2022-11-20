@@ -10,21 +10,21 @@
 
 	New(mob/M)
 		. = ..()
-		src.AddStep(new /datum/tutorialStep/flock/deploy)
-		src.AddStep(new /datum/tutorialStep/flock/gatecrash)
-		src.AddStep(new /datum/tutorialStep/flock/move)
-		src.AddStep(new /datum/tutorialStep/flock/control)
-		src.AddStep(new /datum/tutorialStep/flock/gather)
-		src.AddStep(new /datum/tutorialStep/flock/convert_window)
-		src.AddStep(new /datum/tutorialStep/flock/floorrun)
-		src.AddStep(new /datum/tutorialStep/flock/release_drone)
-		src.AddStep(new /datum/tutorialStep/flock/kill)
-		src.AddStep(new /datum/tutorialStep/flock/place_sentinel)
-		src.AddStep(new /datum/tutorialStep/flock/deposit_sentinel)
-		src.AddStep(new /datum/tutorialStep/flock/build_thing/finish_sentinel)
-		src.AddStep(new /datum/tutorialStep/flock/build_thing/interceptor)
-		src.AddStep(new /datum/tutorialStep/flock/turret_demo)
-		src.AddStep(new /datum/tutorialStep/flock/showcase)
+		src.AddStep(/datum/tutorialStep/flock/deploy)
+		src.AddStep(/datum/tutorialStep/flock/gatecrash)
+		src.AddStep(/datum/tutorialStep/flock/move)
+		src.AddStep(/datum/tutorialStep/flock/control)
+		src.AddStep(/datum/tutorialStep/flock/gather)
+		src.AddStep(/datum/tutorialStep/flock/convert_window)
+		src.AddStep(/datum/tutorialStep/flock/floorrun)
+		src.AddStep(/datum/tutorialStep/flock/release_drone)
+		src.AddStep(/datum/tutorialStep/flock/kill)
+		src.AddStep(/datum/tutorialStep/flock/place_sentinel)
+		src.AddStep(/datum/tutorialStep/flock/deposit_sentinel)
+		src.AddStep(/datum/tutorialStep/flock/build_thing/finish_sentinel)
+		src.AddStep(/datum/tutorialStep/flock/build_thing/interceptor)
+		src.AddStep(/datum/tutorialStep/flock/turret_demo)
+		src.AddStep(/datum/tutorialStep/flock/showcase)
 		src.exit_point = pick_landmark(LANDMARK_LATEJOIN)
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_FLOCK_CONVERSION])
 			if(src.region.turf_in_region(T))
@@ -36,6 +36,8 @@
 
 	Start()
 		. = ..()
+		src.fowner.sight = SEE_SELF | SEE_BLACKNESS
+		src.fowner.abilityHolder.addAbility(/datum/targetable/flockmindAbility/tutorial_exit)
 		for (var/mob/living/intangible/flock/trace/trace as anything in src.fowner.flock.traces)
 			boutput(trace, "<span class='notice'>You have joined your Flockmind in the tutorial, you will not be able to interact with anything while they complete it.</span>")
 			trace.set_loc(get_turf(src.fowner))
@@ -49,12 +51,14 @@
 		fowner.flock.enemies = list()
 		fowner.flock.reset_stats()
 		fowner.tutorial = null
+		fowner.sight = initial(fowner.sight)
 		for (var/mob/living/intangible/flock/trace/trace as anything in src.fowner.flock.traces)
 			trace.set_loc(get_turf(src.fowner))
 
 	proc/make_maptext(atom/target, msg)
 		msg = "<span class=\"ol vga c\" style=\"font-size:9pt\">[msg]</span>"
 		var/obj/dummy = new(get_turf(target))
+		dummy.mouse_opacity = 0
 		var/image/chat_maptext/text = make_chat_maptext(dummy, msg, force = TRUE, time = INFINITY)
 		var/mob/actual_mob = src.fowner.abilityHolder.get_controlling_mob() //hunt for the client
 		text.show_to(actual_mob.client)
@@ -100,18 +104,36 @@
 	instructions = "If you see this, tell a coder!!!11"
 	var/static/image/marker = null
 	var/datum/tutorial_base/regional/flock/ftutorial = null
+	var/list/highlighted = list()
 
 	New()
 		..()
 		if (!marker)
 			marker = image('icons/effects/VR.dmi', "lightning_marker")
 			marker.filters= filter(type="outline", size=1)
+		src.ftutorial = src.tutorial
+
 	SetUp()
 		. = ..()
-		src.ftutorial = src.tutorial
+		for (var/atom/thing in src.highlighted)
+			thing.AddComponent(/datum/component/flock_ping/tutorial_highlight)
+
+	TearDown()
+		SHOULD_CALL_PARENT(TRUE)
+		. = ..()
+		for (var/atom/thing in src.highlighted)
+			if (QDELETED(thing))
+				continue
+			var/datum/component/flock_ping/tutorial_highlight/ping = thing.GetComponent(/datum/component/flock_ping/tutorial_highlight)
+			ping.RemoveComponent()
+			qdel(ping)
 
 	PerformAction(action, context)
 		return FALSE //fuck you, no action
+
+	proc/get_ability_object(var/ability_type)
+		var/datum/targetable/flockmindAbility/ability = src.ftutorial.fowner.abilityHolder.getAbility(ability_type)
+		return ability.object
 
 /datum/tutorialStep/flock/deploy
 	name = "Realizing"
@@ -119,6 +141,7 @@
 	var/turf/must_deploy = null
 
 	SetUp()
+		src.highlighted |= src.get_ability_object(/datum/targetable/flockmindAbility/spawnEgg)
 		..()
 		src.must_deploy = locate(ftutorial.initial_turf.x, ftutorial.initial_turf.y + 1, ftutorial.initial_turf.z)
 		src.must_deploy.UpdateOverlays(src.marker,"marker")
@@ -135,11 +158,16 @@
 		return FALSE
 
 	TearDown()
+		..()
 		src.must_deploy.UpdateOverlays(null, "marker")
 
 /datum/tutorialStep/flock/gatecrash
 	name = "Gatecrash"
 	instructions = "Your Flockdrone is stuck in this room, use your Gatecrash ability to force the door open."
+
+	SetUp()
+		src.highlighted |= src.get_ability_object(/datum/targetable/flockmindAbility/doorsOpen)
+		. = ..()
 
 	PerformAction(action, context)
 		if (action == FLOCK_ACTION_GATECRASH)
@@ -169,6 +197,14 @@
 	instructions = "In order to convert the station around you, you are going to need resources. Pick up some items using your manipulating hand (grip tool) and place them into your disintegration reclaimer (or use equip hotkey) to break them down into resources."
 	var/amount = 30
 
+	SetUp()
+		//highlight gripper hand and absorber
+		var/mob/living/critter/flock/drone/drone = src.ftutorial.fowner.flock.flockmind_mind.current
+		src.highlighted |= drone.absorber.screenObj
+		var/datum/handHolder/holder = drone.hands[1]
+		src.highlighted |= holder.screenObj
+		..()
+
 	PerformAction(action, context)
 		if (action == FLOCK_ACTION_GAIN_RESOURCES && context >= amount)
 			src.finished = TRUE
@@ -177,6 +213,13 @@
 /datum/tutorialStep/flock/convert_window
 	name = "Conversion"
 	instructions = "Convert the window in front of you to allow you to pass through it. Convert it by clicking on it with your nanite spray (middle) hand."
+
+	SetUp()
+		//highlight nanite spray hand
+		var/mob/living/critter/flock/drone/drone = src.ftutorial.fowner.flock.flockmind_mind.current
+		var/datum/handHolder/holder = drone.hands[2]
+		src.highlighted |= holder.screenObj
+		..()
 
 	PerformAction(action, context)
 		if (action == FLOCK_ACTION_START_CONVERSION)
@@ -206,7 +249,7 @@
 		var/mob/living/critter/flock/drone/first_drone = src.ftutorial.fowner.flock.units[/mob/living/critter/flock/drone/][1] // lol
 		first_drone.set_tutorial_ai(FALSE)
 		SPAWN(1 SECOND)
-			flock_spiral_conversion(src.ftutorial.center, ftutorial.fowner.flock, 10, 0.1 SECONDS)
+			flock_spiral_conversion(src.ftutorial.center, ftutorial.fowner.flock, 10, 0.1 SECONDS, TRUE)
 		for (var/i = 1 to 4)
 			var/mob/living/critter/flock/drone/flockdrone = new(locate(src.ftutorial.center.x + rand(-3, 3), src.ftutorial.center.y + rand(-3, 3), src.ftutorial.center.z), ftutorial.fowner.flock)
 			spawn_animation1(flockdrone)
@@ -232,6 +275,7 @@
 	instructions = "That human has just violated causality to teleport right into your flock! Mark them for elimination using your \"Designate Enemy\" ability and watch as your drones fire at, subdue, and cage them."
 
 	SetUp()
+		src.highlighted |= src.get_ability_object(/datum/targetable/flockmindAbility/designateEnemy)
 		..()
 		var/turf/T = locate(src.ftutorial.center.x, src.ftutorial.center.y + 3, src.ftutorial.center.z)
 		src.ftutorial.portal_in(T, /mob/living/carbon/human/normal/assistant)
@@ -249,6 +293,7 @@
 	var/turf/location = null
 
 	SetUp()
+		src.highlighted |= src.get_ability_object(/datum/targetable/flockmindAbility/createStructure)
 		..()
 		src.location = locate(src.ftutorial.center.x, src.ftutorial.center.y - 3, src.ftutorial.center.z)
 		src.location.UpdateOverlays(marker, "marker")
@@ -275,6 +320,10 @@
 /datum/tutorialStep/flock/build_thing
 	var/turf/location = null
 	var/structure_type = null
+
+	SetUp()
+		src.highlighted |= src.get_ability_object(/datum/targetable/flockmindAbility/createStructure)
+		. = ..()
 
 	PerformAction(action, context)
 		if (action in list(FLOCK_ACTION_START_CONVERSION, FLOCK_ACTION_DRONE_SELECT, FLOCK_ACTION_DRONE_ORDER))
@@ -354,7 +403,6 @@
 	instructions = "Here are all the Flock structures you can create, along with a shadow of the Relay, your ultimate goal. Click the exit tutorial button in the bottom right corner to exit the tutorial."
 	SetUp()
 		..()
-		src.ftutorial.fowner.abilityHolder.addAbility(/datum/targetable/flockmindAbility/tutorial_exit)
 		var/datum/mapPrefab/allocated/prefab = get_singleton(/datum/mapPrefab/allocated/flock_showcase)
 		var/datum/allocated_region/region = prefab.load()
 		for (var/turf/T in REGION_TILES(region))
@@ -392,9 +440,9 @@
 		flockmind.help_my_tutorial_is_being_a_massive_shit()
 
 //for debug, do not enable on live or it will cause runtimes and break everything
-// /mob/living/intangible/flock/flockmind/verb/skip_tutorial_step()
-// 	set name = "SKIP TUTORIAL STEP"
-// 	src.tutorial.Advance()
+/mob/living/intangible/flock/flockmind/verb/skip_tutorial_step()
+	set name = "SKIP TUTORIAL STEP"
+	src.tutorial.Advance()
 
 /obj/machinery/junk_spawner
 	var/stuff = list(/obj/item/extinguisher, /obj/item/crowbar, /obj/item/wrench)

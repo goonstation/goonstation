@@ -834,7 +834,7 @@ var/flock_signal_unleashed = FALSE
 	var/area/area = get_area(T)
 	return !(istype(area, /area/listeningpost) || istype(area, /area/ghostdrone_factory))
 
-/proc/flock_convert_turf(var/turf/T)
+/proc/flock_convert_turf(var/turf/T, tutorial = FALSE)
 	if(!T)
 		return
 	if (!flockTurfAllowed(T))
@@ -846,6 +846,8 @@ var/flock_signal_unleashed = FALSE
 
 	if(istype(T, /turf/simulated/wall))
 		T.ReplaceWith("/turf/simulated/wall/auto/feather", FALSE)
+		if (tutorial)
+			T.opacity = 0
 		animate_flock_convert_complete(T)
 
 	// regular and flock lattices
@@ -916,7 +918,7 @@ var/flock_signal_unleashed = FALSE
 
 	flock_spiral_conversion(T, F)
 
-/proc/flock_spiral_conversion(turf/T, datum/flock/F, radius = 15, delay = 0.2 SECONDS)
+/proc/flock_spiral_conversion(turf/T, datum/flock/F, radius = 15, delay = 0.2 SECONDS, tutorial = FALSE)
 	if(!T) return
 	// spiral algorithm adapted from https://stackoverflow.com/questions/398299/looping-in-a-spiral
 	var/ox = T.x
@@ -931,9 +933,9 @@ var/flock_signal_unleashed = FALSE
 	while(isturf(T) && x <= radius)
 		if(istype(T, /turf/simulated) && !isfeathertile(T))
 			if (F)
-				F.claimTurf(flock_convert_turf(T))
+				F.claimTurf(flock_convert_turf(T, tutorial))
 			else
-				flock_convert_turf(T)
+				flock_convert_turf(T, tutorial)
 			sleep(delay)
 		LAGCHECK(LAG_LOW)
 		// figure out where next turf is

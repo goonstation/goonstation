@@ -555,7 +555,7 @@
 	desc = "Exit the Flock tutorial and re-enter the game."
 	icon_state = "x"
 	targeted = FALSE
-	special_screen_loc = "SOUTH,EAST"
+	special_screen_loc = "SOUTH,EAST-1"
 	cooldown = 0
 
 	cast()
@@ -563,10 +563,11 @@
 			return
 		var/mob/living/intangible/flock/flockmind/flockmind = holder.owner
 		if (!flockmind.tutorial)
-			boutput(flockmind, "<span class='alert'>You're not in the tutorial!</span>")
+			boutput(holder.get_controlling_mob(), "<span class='alert'>You're not in the tutorial!</span>")
 			return
-		flockmind.tutorial.Finish()
-		flockmind.tutorial = null
+		if (tgui_alert(holder.get_controlling_mob(), "Exit tutorial?", "Confirm", list("Ok", "Cancel")) == "Ok")
+			flockmind.tutorial.Finish()
+			flockmind.tutorial = null
 
 /datum/targetable/flockmindAbility/droneControl
 	cooldown = 0
