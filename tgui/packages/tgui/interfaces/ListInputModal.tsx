@@ -107,8 +107,10 @@ export const ListInputModal = (_, context) => {
     let newSelected = newDisplayed.indexOf(currentSelectedText);
     if (newSelected === -1 && newDisplayed.length > 0) {
       setSelected(0);
+      document!.getElementById('0')?.scrollIntoView();
     } else if (newDisplayed.length !== 0) {
       setSelected(newSelected);
+      document!.getElementById(newSelected.toString())?.scrollIntoView();
     }
     setSearchQuery(query);
   };
@@ -151,11 +153,6 @@ export const ListInputModal = (_, context) => {
       event.preventDefault();
       act('submit', { entry: filteredItems[selected] });
     }
-    else if (!searchBarVisible && keyCode >= KEY_A && keyCode <= KEY_Z) {
-      event.preventDefault();
-      onLetterSearch(keyCode);
-      event.stopPropagation();
-    }
     else if (keyCode === KEY_ESCAPE) {
       event.preventDefault();
       act('cancel');
@@ -187,7 +184,15 @@ export const ListInputModal = (_, context) => {
   return (
     <Window title={title} width={325} height={windowHeight}>
       {timeout && <Loader value={timeout} />}
-      <Window.Content>
+      <Window.Content
+        onkeydown={(event) => {
+          const keyCode = window.event ? event.which : event.keyCode;
+          if (!searchBarVisible && keyCode >= KEY_A && keyCode <= KEY_Z && !event.ctrlKey) {
+            event.preventDefault();
+            event.stopPropagation();
+            onLetterSearch(keyCode);
+          }
+        }}>
         <Section
           buttons={
             <Button
