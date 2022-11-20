@@ -46,6 +46,10 @@
 		. = ..()
 		if (!.)
 			return FALSE
+		if (istype(src.fowner.flock.flockmind_mind.current, /mob/living/critter/flock/drone))
+			var/mob/living/critter/flock/drone/drone = src.fowner.flock.flockmind_mind.current
+			drone.release_control()
+			src.fowner.set_loc(src.exit_point)
 		fowner.reset()
 		fowner.flock.perish(FALSE)
 		fowner.flock.enemies = list()
@@ -436,7 +440,6 @@
 	set name = "EMERGENCY TUTORIAL STOP"
 	if (istype(src.controller, /mob/living/intangible/flock/flockmind))
 		var/mob/living/intangible/flock/flockmind/flockmind = src.controller
-		src.release_control()
 		flockmind.help_my_tutorial_is_being_a_massive_shit()
 
 //for debug, do not enable on live or it will cause runtimes and break everything
