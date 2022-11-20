@@ -17,7 +17,8 @@
 	//for smoke
 	var/drain_min = 5
 	var/drain_max = 12
-	var/obj/item/reagent_containers/buffer = null
+	///Temporary reagent buffer, reagents are stored in src.reagents
+	var/obj/item/reagent_containers/glass/buffer = null
 
 	New()
 		..()
@@ -91,7 +92,7 @@
 			if (F?.group)
 				power_usage += (inlet_flow / 8) * 5 KILO WATTS
 				F.group.drain(F, inlet_flow / 8, src.buffer)
-				src.buffer.reagents.remove_any(src.buffer.reagents.total_volume/2)
+				// src.buffer.reagents.remove_any(src.buffer.reagents.total_volume/2)
 				if (src.reagents.total_volume < src.reagents.maximum_volume)
 					src.buffer.transfer_all_reagents(src)
 				else
