@@ -8,7 +8,6 @@
 	var/outline_color = "#00ff9d"
 	var/outline_thickness = 1
 	var/animate = TRUE
-	var/plane = PLANE_FLOCKVISION
 
 	Initialize()
 		if (!ismovable(parent) && !isturf(parent))
@@ -22,7 +21,7 @@
 
 		dummy = new()
 		dummy.layer = target.layer
-		dummy.plane = src.plane
+		dummy.plane = PLANE_FLOCKVISION
 		dummy.invisibility = INVIS_FLOCK
 		dummy.appearance_flags = PIXEL_SCALE | RESET_TRANSFORM | RESET_COLOR | PASS_MOUSE
 		dummy.icon = target.icon
@@ -74,5 +73,3 @@
 /datum/component/flock_ping/tutorial_highlight
 	outline_thickness = 2
 	duration = INFINITY
-	//render above HUD
-	plane = PLANE_SCREEN_OVERLAYS

@@ -66,7 +66,9 @@
 	},
 /area/tutorial/flock)
 "V" = (
-/turf/simulated/wall/auto/feather,
+/turf/simulated/wall/auto/feather{
+	opacity = 0
+	},
 /area/tutorial/flock)
 
 (1,1,1) = {"

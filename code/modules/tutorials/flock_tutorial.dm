@@ -58,6 +58,7 @@
 		fowner.sight = initial(fowner.sight)
 		for (var/mob/living/intangible/flock/trace/trace as anything in src.fowner.flock.traces)
 			trace.set_loc(get_turf(src.fowner))
+		qdel(src)
 
 	proc/make_maptext(atom/target, msg)
 		msg = "<span class=\"ol vga c\" style=\"font-size:9pt\">[msg]</span>"
