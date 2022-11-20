@@ -17,17 +17,23 @@
 		..()
 		drone_controller = addAbility(/datum/targetable/flockmindAbility/droneControl)
 
-/datum/abilityHolder/flockmind/proc/updateCompute(usedCompute, totalCompute)
+/datum/abilityHolder/flockmind/proc/updateCompute(usedCompute, totalCompute, forceTextUpdate = FALSE)
 	var/mob/living/intangible/flock/F = owner
 	if(!F?.flock)
 		return //someone made a flockmind or flocktrace without a flock, or gave this ability holder to something else.
 	src.points = totalCompute - usedCompute
 	src.totalCompute = totalCompute
+	if (forceTextUpdate)
+		src.updateText()
 
 /datum/abilityHolder/flockmind/onAbilityStat()
 	..()
 	.= list()
 	.["Compute:"] = "[round(src.points)]/[round(src.totalCompute)]"
+	var/mob/living/intangible/flock/F = owner
+	if (!istype(F) || !F.flock)
+		return
+	.["Traces:"] = "[length(F.flock.traces)]/[F.flock.max_trace_count]"
 
 /atom/movable/screen/ability/topBar/flockmind
 	tens_offset_x = 19
@@ -236,19 +242,25 @@
 	var/waiting = FALSE
 
 /datum/targetable/flockmindAbility/partitionMind/New()
-	src.desc = "Create a Flocktrace, using [FLOCKTRACE_COMPUTE_COST] compute."
+	src.desc = "Create a Flocktrace. Requires [FLOCKTRACE_COMPUTE_COST] total compute per trace."
 	..()
 
 /datum/targetable/flockmindAbility/partitionMind/cast(atom/target)
 	if(waiting || ..())
 		return TRUE
 
-	if(!holder.pointCheck(FLOCKTRACE_COMPUTE_COST))
+	var/mob/living/intangible/flock/flockmind/F = holder.owner
+
+	if(length(F.flock.traces) >= F.flock.max_trace_count)
+		if (length(F.flock.traces) < round(FLOCK_RELAY_COMPUTE_COST / FLOCKTRACE_COMPUTE_COST))
+			boutput(holder.get_controlling_mob(), "<span class='alert'>You need more compute!</span>")
+		else
+			boutput(holder.get_controlling_mob(), "<span class='alert'>You cannot make any more Flocktraces!</span>")
 		return TRUE
 
 	if (!src.tutorial_check(FLOCK_ACTION_PARTITION))
 		return TRUE
-	var/mob/living/intangible/flock/flockmind/F = holder.owner
+
 	waiting = TRUE
 	SPAWN(0)
 		F.partition()

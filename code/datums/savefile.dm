@@ -62,6 +62,7 @@
 		F["[profileNum]_flavor_text"] << src.flavor_text
 		F["[profileNum]_medical_note"] << src.medical_note
 		F["[profileNum]_security_note"] << src.security_note
+		F["[profileNum]_synd_int_note"] << src.synd_int_note
 
 		// Randomize appearances
 		F["[profileNum]_name_is_always_random"] << src.be_random_name
@@ -226,6 +227,7 @@
 		F["[profileNum]_flavor_text"] >> src.flavor_text
 		F["[profileNum]_medical_note"] >> src.medical_note
 		F["[profileNum]_security_note"] >> src.security_note
+		F["[profileNum]_synd_int_note"] >> src.synd_int_note
 
 		// Randomization options
 		F["[profileNum]_name_is_always_random"] >> src.be_random_name
