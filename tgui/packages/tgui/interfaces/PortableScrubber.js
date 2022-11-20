@@ -22,7 +22,7 @@ export const PortableScrubber = (props, context) => {
   return (
     <Window
       width={305}
-      height={340}>
+      height={450}>
       <Window.Content>
         <PortableBasicInfo
           connected={connected}
@@ -56,7 +56,9 @@ export const PortableScrubber = (props, context) => {
         <PortableHoldingTank
           holding={holding}
           onEjectTank={() => act("eject-tank")} />
-        <ReagentGraph container={reagent_container} />
+        <Section title="Fluid Tank">
+          <ReagentGraph container={reagent_container} />
+        </Section>
       </Window.Content>
     </Window>
   );

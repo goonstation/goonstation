@@ -30,6 +30,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\__secret_public.dme"
 
 // BEGIN_INCLUDE
+#include "_std\macros\reagents.dm"
 #include "code\area.dm"
 #include "code\atom.dm"
 #include "code\client.dm"

@@ -163,7 +163,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		UpdateIcon()
 
 	afterattack(obj/target, mob/user, flag)
-		if(istype(target, /obj/reagent_dispensers) && target.reagents)
+		if(is_reagent_dispenser(target) && target.reagents)
 			if (!target.reagents.total_volume)
 				boutput(user, "<span class='alert'>[target] is already empty.</span>")
 				return

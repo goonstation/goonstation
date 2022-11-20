@@ -53,7 +53,7 @@
 			t = min(src.transfer_amount, src.reagents.maximum_volume - src.reagents.total_volume)
 			if (t <= 0) return
 
-			if (target.is_open_container() != 1 && !istype(target, /obj/reagent_dispensers))
+			if (target.is_open_container() != 1 && !is_reagent_dispenser(target))
 				boutput(user, "<span class='alert'>You cannot directly remove reagents from [target].</span>")
 				return
 			if (!target.reagents.total_volume)

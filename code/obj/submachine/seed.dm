@@ -701,9 +701,12 @@
 		var/list/containersData = list()
 		// Container data
 		for(var/container_id in containers)
-			var/obj/item/reagent_containers/thisContainer = src.containers[container_id]
-			containersData[container_id] = thisContainer.ui_describe()
+			var/obj/item/reagent_containers/thisContainer = containers[container_id]
+			if (!thisContainer)
+				continue
+			containersData[container_id] = ui_describe_reagents(thisContainer)
 			containersData[container_id]["selected"] = src.extract_to == thisContainer
+			containersData[container_id]["id"] = container_id
 
 		.["containersData"] = containersData
 

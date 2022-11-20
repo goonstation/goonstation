@@ -131,35 +131,34 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 		src.transfer_all_reagents(over_object, usr)
 
-	///Returns a serialized representation of the reagent container for use with the ReagentInfo TGUI components
-	///Note that this is not a built in TGUI proc
-	proc/ui_describe()
-		var/datum/reagents/R = src.reagents
-		var/list/thisContainerData = list(
-			name = src.name,
-			id = container_id,
-			maxVolume = R.maximum_volume,
-			totalVolume = R.total_volume,
-			contents = list(),
-			finalColor = "#000000"
-		)
+///Returns a serialized representation of the reagents of an atom for use with the ReagentInfo TGUI components
+///Note that this is not a built in TGUI proc
+proc/ui_describe_reagents(atom/A)
+	var/datum/reagents/R = A.reagents
+	var/list/thisContainerData = list(
+		name = A.name,
+		maxVolume = R.maximum_volume,
+		totalVolume = R.total_volume,
+		contents = list(),
+		finalColor = "#000000"
+	)
 
-		var/list/contents = thisContainerData["contents"]
-		if(istype(R) && R.reagent_list.len>0)
-			thisContainerData["finalColor"] = R.get_average_rgb()
-			// Reagent data
-			for(var/reagent_id in R.reagent_list)
-				var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
+	var/list/contents = thisContainerData["contents"]
+	if(istype(R) && R.reagent_list.len>0)
+		thisContainerData["finalColor"] = R.get_average_rgb()
+		// Reagent data
+		for(var/reagent_id in R.reagent_list)
+			var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
 
-				contents.Add(list(list(
-					name = reagents_cache[reagent_id],
-					id = reagent_id,
-					colorR = current_reagent.fluid_r,
-					colorG = current_reagent.fluid_g,
-					colorB = current_reagent.fluid_b,
-					volume = current_reagent.volume
-				)))
-		return thisContainerData
+			contents.Add(list(list(
+				name = reagents_cache[reagent_id],
+				id = reagent_id,
+				colorR = current_reagent.fluid_r,
+				colorG = current_reagent.fluid_g,
+				colorB = current_reagent.fluid_b,
+				volume = current_reagent.volume
+			)))
+	return thisContainerData
 
 /* ====================================================== */
 /* -------------------- Glass Parent -------------------- */
@@ -252,7 +251,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1, 0.3)
 
-		else if (istype(target, /obj/reagent_dispensers) || (target.is_open_container() == -1 && target.reagents) || ((istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) && !src.reagents.total_volume)) //A dispenser. Transfer FROM it TO us.
+		else if (is_reagent_dispenser(target) || (target.is_open_container() == -1 && target.reagents) || ((istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) && !src.reagents.total_volume)) //A dispenser. Transfer FROM it TO us.
 			if (target.reagents && !target.reagents.total_volume)
 				boutput(user, "<span class='alert'>[target] is empty.</span>")
 				return
