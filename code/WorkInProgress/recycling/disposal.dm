@@ -178,7 +178,7 @@
 	anchored = 1
 	density = 0
 	text = ""
-
+	var/spawner_type = /obj/disposalpipespawner
 	level = 1			//! underfloor only
 	var/dpdir = 0		//! bitmask of pipe directions
 	dir = 0				//! dir will contain dominant direction for junction pipes
@@ -508,6 +508,7 @@
 		name = "mail pipe"
 		desc = "An underfloor mail pipe."
 		color = PIPEC_MAIL
+		spawner_type = /obj/disposalpipespawner/type/mail
 
 		horizontal
 			dir = EAST
@@ -528,41 +529,49 @@
 		name = "brig pipe"
 		desc = "An underfloor brig pipe."
 		color = PIPEC_BRIG
+		spawner_type = /obj/disposalpipespawner/type/brig
 
 	ejection
 		name = "ejection pipe"
 		desc = "An underfloor ejection pipe."
 		color = PIPEC_EJECTION
+		spawner_type = /obj/disposalpipespawner/type/ejection
 
 	morgue
 		name = "morgue pipe"
 		desc = "An underfloor morgue pipe."
 		color = PIPEC_MORGUE
+		spawner_type = /obj/disposalpipespawner/type/morgue
 
 	food
 		name = "food pipe"
 		desc = "An underfloor food pipe."
 		color = PIPEC_FOOD
+		spawner_type = /obj/disposalpipespawner/type/food
 
 	produce
 		name = "produce pipe"
 		desc = "An underfloor produce pipe."
 		color = PIPEC_PRODUCE
+		spawner_type = /obj/disposalpipespawner/type/produce
 
 	transport
 		name = "transport pipe"
 		desc = "An underfloor transport pipe."
 		color = PIPEC_TRANSPORT
+		spawner_type = /obj/disposalpipespawner/type/transport
 
 	mineral
 		name = "mineral pipe"
 		desc = "An underfloor mineral pipe."
 		color = PIPEC_MINERAL
+		spawner_type = /obj/disposalpipespawner/type/mineral
 
 	cargo
 		name = "cargo pipe"
 		desc = "An underfloor cargo pipe."
 		color = PIPEC_CARGO
+		spawner_type = /obj/disposalpipespawner/type/cargo
 
 	New()
 		..()
@@ -1895,7 +1904,7 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 	name = "disposal pipe spawner"
 	icon_state = "pipe-spawner"
 	text = ""
-	var/self_type = /obj/disposalpipespawner
+	var/spawner_type = /obj/disposalpipespawner
 	var/pipe_type = /obj/disposalpipe
 	var/trunk_type = /obj/disposalpipe/trunk
 	var/dpdir = 0		//! bitmask of pipe directions
@@ -1904,62 +1913,62 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 	mail
 		name = "mail pipe spawner"
 		color = PIPEC_MAIL
-		self_type = /obj/disposalpipespawner/mail
+		spawner_type = /obj/disposalpipespawner/type/mail
 		pipe_type = /obj/disposalpipe/segment/mail
 		trunk_type = /obj/disposalpipe/trunk/mail
 	brig
 		name = "brig pipe spawner"
 		color = PIPEC_BRIG
-		self_type = /obj/disposalpipespawner/brig
+		spawner_type = /obj/disposalpipespawner/type/brig
 		pipe_type = /obj/disposalpipe/segment/brig
 		trunk_type = /obj/disposalpipe/trunk/brig
 
 	ejection
 		name = "ejection pipe spawner"
 		color = PIPEC_EJECTION
-		self_type = /obj/disposalpipespawner/ejection
+		spawner_type = /obj/disposalpipespawner/type/ejection
 		pipe_type = /obj/disposalpipe/segment/ejection
 		trunk_type = /obj/disposalpipe/trunk/ejection
 
 	morgue
 		name = "morgue pipe spawner"
 		color = PIPEC_MORGUE
-		self_type = /obj/disposalpipespawner/morgue
+		spawner_type = /obj/disposalpipespawner/type/morgue
 		pipe_type = /obj/disposalpipe/segment/morgue
 		trunk_type = /obj/disposalpipe/trunk/morgue
 
 	food
 		name = "food pipe spawner"
 		color = PIPEC_FOOD
-		self_type = /obj/disposalpipespawner/food
+		spawner_type = /obj/disposalpipespawner/type/food
 		pipe_type = /obj/disposalpipe/segment/food
 		trunk_type = /obj/disposalpipe/trunk/food
 
 	produce
 		name = "produce pipe spawner"
 		color = PIPEC_PRODUCE
-		self_type = /obj/disposalpipespawner/produce
+		spawner_type = /obj/disposalpipespawner/type/produce
 		pipe_type = /obj/disposalpipe/segment/produce
 		trunk_type = /obj/disposalpipe/trunk/produce
 
 	transport
 		name = "transport pipe spawner"
 		color = PIPEC_TRANSPORT
-		self_type = /obj/disposalpipespawner/transport
+		spawner_type = /obj/disposalpipespawner/type/transport
 		pipe_type = /obj/disposalpipe/segment/transport
 		trunk_type = /obj/disposalpipe/trunk/transport
 
 	mineral
 		name = "mineral pipe spawner"
 		color = PIPEC_MINERAL
-		self_type = /obj/disposalpipespawner/mineral
+		spawner_type = /obj/disposalpipespawner/type/mineral
 		pipe_type = /obj/disposalpipe/segment/mineral
 		trunk_type = /obj/disposalpipe/trunk/mineral
 
 	cargo
 		name = "cargo pipe spawner"
 		color = PIPEC_CARGO
-		self_type = /obj/disposalpipespawner/cargo
+		spawner_type = /obj/disposalpipespawner/type/cargo
 		pipe_type = /obj/disposalpipe/segment/cargo
 		trunk_type = /obj/disposalpipe/trunk/cargo
 
@@ -1972,21 +1981,22 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 
 /obj/disposalpipespawner/initialize()
 	var/list/directions = list()
-	for (var/obj/_pipe in orange(1, src))
+	for (var/obj/disposalpipespawner/_pipe in orange(1, src))
+		// checks for pipe spawners
 		var/tempdir = get_dir(src, _pipe)
 		if (tempdir == NORTHEAST || tempdir == NORTHWEST || tempdir == SOUTHEAST || tempdir == SOUTHWEST)
 			continue
-		if (_pipe.type == var/obj/disposalpipespawner)
-		// checks for pipe spawners
-			if (_pipe.self_type == src.self_type)
-				dpdir |= tempdir
-				directions += tempdir
-		else if (_pipe.type == var/obj/disposalpipe)
+		if (_pipe.spawner_type == src.spawner_type)
+			dpdir |= tempdir
+			directions += tempdir
+	for (var/obj/disposalpipe/_pipe in orange(1, src))
 		// checks for regular pipes
-			if (_pipe.type == src.trunk_type || _pipe.type == src.pipe_type)
-				dpdir |= tempdir
-				directions += tempdir
-
+		var/tempdir = get_dir(src, _pipe)
+		if (tempdir == NORTHEAST || tempdir == NORTHWEST || tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+			continue
+		if (_pipe.spawner_type == src.spawner_type)
+			dpdir |= tempdir
+			directions += tempdir
 
 	if (dpdir == 0)
 		CRASH("Lone Pipespawner doesn't connect to anything!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
