@@ -294,8 +294,9 @@
 
 		//Personal bounties (items that belong to a person)
 		//Pair list, stores job for difficulty lookup
-		if (H.trinket && istype(H.trinket))
-			personal_bounties += list(list(H.trinket, H.job))
+		var/datum/deref = H.trinket.deref()
+		if (istype(deref, /obj/item))
+			personal_bounties += list(list(H.trinket.deref(), H.job))
 		if (H.wear_id)
 			personal_bounties += list(list(H.wear_id, H.job))
 
