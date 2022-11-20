@@ -85,6 +85,7 @@ var/global/list/datum/client_image_group/client_image_groups
 	disposing()
 		if(src.key)
 			client_image_groups -= key
+		src.key = null
 		for(var/datum/mind/iterated_mind as anything in subscribed_minds_with_subcount)
 			remove_mind(iterated_mind)
 		for(var/mob/iterated_mob as anything in subscribed_mobs_with_subcount)
