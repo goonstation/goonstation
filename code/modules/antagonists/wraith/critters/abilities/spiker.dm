@@ -155,16 +155,8 @@
 				the_spiker.icon_state = "spiker"
 		return FALSE
 
-	castcheck()
-		if (!holder)
-			return FALSE
-		var/mob/living/M = holder.owner
-		if (!M)
-			return FALSE
-		if (src.disabled)
-			boutput(holder.owner, "<span class='alert'>You cannot use that ability at this time.</span>")
-			return FALSE
-		return TRUE
+	incapacitationCheck()
+		return FALSE
 
 	onAttach(datum/abilityHolder/holder)
 		..()
