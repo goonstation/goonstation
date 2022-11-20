@@ -278,7 +278,7 @@ datum/mind
 	proc/on_ticker_add_log()
 		var/list/traits = list()
 		for(var/trait_id in src.current.traitHolder.traits)
-			var/obj/trait/trait = src.current.traitHolder.traits[trait_id]
+			var/datum/trait/trait = src.current.traitHolder.traits[trait_id]
 			traits += trait.name
 		. = "<br>Traits: [jointext(traits, ", ")]"
 

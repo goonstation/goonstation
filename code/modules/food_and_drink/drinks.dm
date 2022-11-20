@@ -331,7 +331,7 @@
 			user.visible_message("[user] pops the tab on \the [src]!", "You pop \the [src] open!")
 			is_sealed = 0
 			can_chug = 1
-			playsound(src.loc, "sound/items/can_open.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/can_open.ogg', 50, 1)
 			return
 		if (!src.reagents || !src.reagents.total_volume)
 			var/zone = user.zone_sel.selecting
@@ -349,6 +349,10 @@
 			if (!drop_this_shit) //see?
 				user.put_in_hand_or_drop(C)
 			qdel(src)
+
+	is_open_container()
+		return !is_sealed
+
 
 	proc/setup_soda() // made to be overridden, so that the Spess-Pepsi/Space-Coke debacle can continue
 		if (prob(50)) // without having to change the Space-Cola path

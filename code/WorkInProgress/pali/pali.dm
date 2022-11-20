@@ -115,7 +115,7 @@
 	fits_under_table = 1
 	good_grip = 1
 	bird_call_msg = "honks"
-	bird_call_sound = "sound/voice/animal/goose.ogg"
+	bird_call_sound = 'sound/voice/animal/goose.ogg'
 	health_brute = 50
 	health_burn = 50
 	add_abilities = list(/datum/targetable/critter/peck,

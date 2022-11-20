@@ -451,7 +451,7 @@
 			if (IsGuestKey( user.key ))
 				return 0
 			if (save_to)
-				CRASH("Tried to save a cloud save with a client and a key to save to specified- need one or the")
+				CRASH("Tried to save a cloud save with a client and a key to save to specified- need one or the other")
 
 		var/savefile/save = src.savefile_save(ckey(save_to) || user.ckey, 1, 1)
 		var/exported = save.ExportText()

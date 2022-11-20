@@ -44,25 +44,26 @@ if there are any violations).
 var/global/list/cached_concrete_types
 
 /**
-	* typesof() but only for concrete (not abstract) types,
-	* it caches the result so you don't need to worry about doing that manually
-	* so subsequent calls on the same type will be very fast.
-	*
-	* just don't modify the result of the call directly
-	* OKAY: `var/list/hats = concrete_typesof(/obj/item/clothing/head) - /obj/item/clothing/head/hosberet`
-	*
-	* ALSO OKAY:
-	* ```dm
-	* var/list/hats = concrete_typesof(/obj/item/clothing/head).Copy()
-	* hats -= /obj/item/clothing/head/hosberet
-	* ```
-	*
-	* NOT OKAY:
-	* ```dm
-	* var/list/hats = concrete_typesof(/obj/item/clothing/head)
-	* hats -= /obj/item/clothing/head/hosberet
-	* ```
-	*/
+ * [/proc/typesof()] but only for concrete (not abstract) types,
+ * it caches the result so you don't need to worry about doing that manually
+ * so subsequent calls on the same type will be very fast.
+ *
+ * just don't modify the result of the call directly
+ *
+ * OKAY: `var/list/hats = concrete_typesof(/obj/item/clothing/head) - /obj/item/clothing/head/hosberet`
+ *
+ * ALSO OKAY:
+ * ```dm
+ * var/list/hats = concrete_typesof(/obj/item/clothing/head).Copy()
+ * hats -= /obj/item/clothing/head/hosberet
+ * ```
+ *
+ * NOT OKAY:
+ * ```dm
+ * var/list/hats = concrete_typesof(/obj/item/clothing/head)
+ * hats -= /obj/item/clothing/head/hosberet
+ * ```
+ */
 proc/concrete_typesof(type, cache=TRUE)
 	if(isnull(cached_concrete_types))
 		cached_concrete_types = list()
@@ -108,9 +109,7 @@ proc/filtered_concrete_typesof(type, filter)
 		cached_filtered_types[type] = list()
 	cached_filtered_types[type][filter] = .
 
-/**
-	* Gets the instance of a singleton type (or a non-singleton type if you decide to use it on one).
-	*/
+/// Gets the instance of a singleton type (or a non-singleton type if you decide to use it on one).
 proc/get_singleton(type)
 	RETURN_TYPE(type)
 	if(!(type in singletons))
@@ -238,6 +237,8 @@ var/list/list/by_cat = list()
 /typeinfo/mob
 	parent_type = /typeinfo/atom/movable
 
+/typeinfo/var/SpacemanDMM_return_type = /typeinfo/
+
 /**
  * Declares typeinfo for some type.
  *
@@ -262,6 +263,7 @@ var/list/list/by_cat = list()
 	} \
 	/typeinfo ## TYPE
 
+#define TYPEINFO_NEW(TYPE) /typeinfo ## TYPE/New()
 
 /// var storing the subtype of /typeinfo relevant for this object
 /datum/var/typeinfo_type = /typeinfo/datum

@@ -85,6 +85,10 @@
 		while (tries > 0 && (!proj || proj.disposed))
 			proj = initialize_projectile_ST(HH, new/datum/projectile/special/homing/vamp_blood, M)
 			tries--
+		if(isnull(proj) || proj.disposed)
+			boutput(HH, "<span class='alert'>Blood steal interrupted.</span>")
+			interrupt(INTERRUPT_ALWAYS)
+			return
 
 		proj.special_data["vamp"] = H
 		proj.special_data["victim"] = HH
@@ -140,7 +144,7 @@
 	silentshot = 1
 	pierces = -1
 	max_range = 10
-	shot_sound = "sound/impact_sounds/Flesh_Tear_1.ogg"
+	shot_sound = 'sound/impact_sounds/Flesh_Tear_1.ogg'
 
 	on_launch(var/obj/projectile/P)
 		if (!("victim" in P.special_data))

@@ -5,6 +5,7 @@
 	var/id = 0.0 // who are we?
 	var/partner_range = 3 // how far away should we look?
 	var/find_in_range = 1
+	mats = list("CON-1" = 5, "CRY" = "2")
 
 	New()
 		..()
@@ -110,7 +111,7 @@
 				scan_health_overhead(H, H)
 				if (alert && H.health < 0)
 					src.crit_alert(H)
-			playsound(src.loc, "sound/machines/scan2.ogg", 30, 0)
+			playsound(src.loc, 'sound/machines/scan2.ogg', 30, 0)
 		return data
 
 	proc/crit_alert(var/mob/living/carbon/human/H)

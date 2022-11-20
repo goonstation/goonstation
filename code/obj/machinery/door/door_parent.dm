@@ -120,10 +120,15 @@
 		if(P.proj_data.window_pass)
 			return !opacity
 	if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
-		if (ismob(mover) && mover:pulling && src.bumpopen(mover))
-			// If they're pulling something and the door would open anyway,
-			// just let the door open instead.
-			return 0
+		if (ismob(mover))
+			var/mob/M = mover
+			if (M.pulling && src.bumpopen(M))
+				// If they're pulling something and the door would open anyway,
+				// just let the door open instead.
+				return 0
+			for (var/obj/item/grab/G in M.equipped_list(check_for_magtractor = 0))
+				if (G.state >= GRAB_STRONG)
+					return 0
 		animate_door_squeeze(mover)
 		return 1 // they can pass through a closed door
 
@@ -218,19 +223,12 @@
 #ifdef HALLOWEEN
 	user.emote("scream")
 #endif
-	if (do_after(user, 100) && !(user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user) || user.restrained()))
-		var/success = 0
-		SPAWN(0.6 SECONDS)
-			success = try_force_open(user)
-			if (success != 0)
-				src.operating = -1 // It's broken now.
-				src.visible_message("<span class='alert'>[user] pries open [src]!</span>")
-	else
-		user.show_text("You were interrupted.", "red")
+	SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, /obj/machinery/door/proc/try_force_open, list(user, TRUE), src.icon, src.icon_state, \
+	"<span class='alert'>[user] pries open [src]!</span>", \
+	INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 
-	return
 
-/obj/machinery/door/proc/try_force_open(mob/user as mob)
+/obj/machinery/door/proc/try_force_open(mob/user as mob, var/break_door = FALSE)
 	var/success = 0
 	if (src)
 		if (istype(src, /obj/machinery/door/poddoor))
@@ -270,7 +268,8 @@
 				else
 					AL.open()
 				success = 1
-
+	if(success && break_door)
+		src.operating = -1
 	return success
 
 /obj/machinery/door/proc/requiresID()
@@ -341,32 +340,22 @@
 		else
 			src.last_used = world.time
 			src.close()
+		return
+
 	else if (src.density && !ON_COOLDOWN(src, "deny_sound", 1 SECOND)) // stop the sound from spamming, if there is one
 		play_animation("deny")
 		if (src.sound_deny)
 			playsound(src, src.sound_deny, 25, 0)
 
-	if (src.density && !src.operating && I)
+	if (src.density && !src.operating && I?.force > 5)
+		var/resolvedForce = I.force
+		if (I.tool_flags & TOOL_CHOPPING)
+			resolvedForce *= 4
 		user.lastattacked = src
 		attack_particle(user,src)
 		playsound(src, src.hitsound , 50, 1, pitch = 1.6)
-		src.take_damage(I.force, user)
-/*
-		var/resolvedForce = I.force
-		if (I.tool_flags & TOOL_CHOPPING)
-			resolvedForce *= 4
-*/
-
-		var/resolvedForce = I.force
-		if (I.tool_flags & TOOL_CHOPPING)
-			resolvedForce *= 4
-			user.lastattacked = src
-			attack_particle(user,src)
-			playsound(src, src.hitsound , 50, 1, pitch = 1.6)
-			src.take_damage(resolvedForce, user)
-
-
-	return ..(I,user)
+		src.take_damage(resolvedForce, user)
+		return ..(I,user) // only call parent if force > 5; no material hit or attack message otherwise
 
 /obj/machinery/door/proc/bumpopen(atom/movable/AM)
 	if (src.operating)
@@ -471,8 +460,6 @@
 			take_damage(damage)
 		if(D_BURNING)
 			take_damage(damage/2)
-		if(D_RADIOACTIVE)
-			take_damage(damage/4)
 	return
 
 /obj/machinery/door/update_icon(var/toggling = 0)
@@ -517,7 +504,7 @@
 		next_timeofday_opened = world.timeofday + (src.operation_time)
 		SPAWN(-1)
 			if (ignore_light_or_cam_opacity)
-				src.opacity = 0
+				src.set_opacity(0)
 			else
 				src.RL_SetOpacity(0)
 		src.use_power(100)
@@ -590,7 +577,7 @@
 
 		if(src.visible)
 			if (ignore_light_or_cam_opacity)
-				src.opacity = 1
+				src.set_opacity(1)
 			else
 				src.RL_SetOpacity(1)
 
@@ -654,13 +641,13 @@
 	cant_emag = TRUE
 
 /obj/machinery/door/unpowered/attack_ai(mob/user as mob)
-	return src.Attackhand(user)
+	return
 
 /obj/machinery/door/unpowered/attack_hand(mob/user)
 	return src.Attackby(null, user)
 
 /obj/machinery/door/unpowered/attackby(obj/item/I, mob/user)
-	if (src.operating)
+	if (src.operating || isintangible(user) || isdead(user))
 		return
 	src.add_fingerprint(user)
 	if (src.allowed(user))
@@ -806,6 +793,8 @@
 	set category = "Local"
 	set src in oview(1)
 
+	if (isdead(user) || isintangible(user))
+		return
 	if (!src.density || src.operating)
 		boutput(user, "<span class='alert'>You COULD flip the lock on [src] while it's open, but it wouldn't actually accomplish anything!</span>")
 		return

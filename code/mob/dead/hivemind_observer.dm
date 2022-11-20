@@ -15,7 +15,7 @@
 		return 1
 
 	say(var/message)
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trim(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
 
 		if (!message)
 			return
@@ -41,7 +41,7 @@
 
 	click(atom/target, params)
 		if (src.client.check_key(KEY_POINT))
-			point_at(target)
+			point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 			return
 		if (try_launch_attack(target))
 			return
@@ -54,15 +54,26 @@
 				src.set_cursor('icons/cursors/point.dmi')
 				return
 
-	point_at(atom/target)
+	point_at(atom/target, var/pixel_x, var/pixel_y)
 		if(ON_COOLDOWN(src, "hivemind_member_point", 1 SECOND))
 			return
-		make_hive_point(target, color="#e2a059")
+		make_hive_point(target, pixel_x, pixel_y, color="#e2a059")
 
 	/// Like make_point, but the point is an image that is only displayed to hivemind members
-	proc/make_hive_point(atom/movable/target, color="#ffffff", time=2 SECONDS)
-		var/image/point = image(point_img, loc = target, layer = EFFECTS_LAYER_1)
+	proc/make_hive_point(atom/movable/target, var/pixel_x, var/pixel_y, color="#ffffff", time=2 SECONDS)
+		var/turf/target_turf = get_turf(target)
+		var/image/point = image(point_img, loc = target_turf, layer = EFFECTS_LAYER_1)
+		if (!target.pixel_point)
+			pixel_x = target.pixel_x
+			pixel_y = target.pixel_y
+		else
+			pixel_x -= 16 - target.pixel_x
+			pixel_y -= 16 - target.pixel_y
+		point.pixel_x = pixel_x
+		point.pixel_y = pixel_y
 		point.color = color
+		point.layer = EFFECTS_LAYER_1
+		point.plane = PLANE_HUD
 		var/list/client/viewers = new
 		for (var/mob/member in hivemind_owner.get_current_hivemind())
 			if (!member.client)
@@ -71,7 +82,7 @@
 			member.client.images += point
 			viewers += member.client
 		var/matrix/M = matrix()
-		M.Translate((hivemind_owner.owner.x - target.x)*32, (hivemind_owner.owner.y - target.y)*32)
+		M.Translate((hivemind_owner.owner.x - target_turf.x)*32 - pixel_x, (hivemind_owner.owner.y - target_turf.y)*32 - pixel_y)
 		point.transform = M
 		animate(point, transform=null, time=2)
 		SPAWN(time)

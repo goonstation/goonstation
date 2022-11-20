@@ -337,7 +337,7 @@
 		src.exploding = 1
 		src.on = 0
 		src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
-		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 
 		elecflash(src, radius=1, power=3, exclude_center = 0)
 
@@ -350,6 +350,9 @@
 
 		qdel(src)
 		return
+
+	is_open_container()
+		return TRUE
 
 	red
 		icon_state = "cleanbot-red0"
@@ -384,7 +387,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		playsound(master, "sound/impact_sounds/Liquid_Slosh_2.ogg", 25, 1)
+		playsound(master, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 25, 1)
 		master.anchored = 1
 		master.icon_state = "[master.icon_state_base]-c"
 		master.visible_message("<span class='alert'>[master] begins to clean the [T.name].</span>")

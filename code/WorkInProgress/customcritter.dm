@@ -170,7 +170,7 @@
 			if ("suffocation")
 				M.take_oxygen_deprivation(damage)
 			if ("radiation")
-				M.changeStatus("radiation", damage SECONDS, 3)
+				M.take_radiation_dose(damage)
 
 	CritterAttack(mob/N)
 		if (!melee)

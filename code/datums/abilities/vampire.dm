@@ -201,6 +201,11 @@
 			the_coffin = null
 			if (isdead(owner))
 				owner.full_heal()
+				if (ishuman(owner)) // oof
+					var/mob/living/carbon/human/owner_human = owner
+					owner_human.decomp_stage = DECOMP_STAGE_NO_ROT
+					owner_human.update_face()
+					owner_human.update_body()
 			else
 				changeling_super_heal_step(healed = owner, mult = mult*2, changer = 0)
 
@@ -352,7 +357,7 @@
 	proc/make_thrall(var/mob/victim)
 		if (ishuman(victim))
 
-			var/mob/living/M = victim
+			var/mob/living/carbon/human/M = victim
 
 
 			if (!M.mind && !M.client)
@@ -390,8 +395,6 @@
 					owner.TakeDamage("chest", 0, 30)
 					return
 
-
-			M.real_name = "thrall [M.real_name]"
 			if (M.mind)
 				M.mind.special_role = ROLE_VAMPTHRALL
 				if(ismob(owner))
@@ -403,13 +406,13 @@
 
 			thralls += M
 
+			M.decomp_stage = DECOMP_STAGE_NO_ROT
 			M.set_mutantrace(/datum/mutantrace/vampiric_thrall)
 			var/datum/abilityHolder/vampiric_thrall/VZ = M.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 			if (VZ && istype(VZ))
 				VZ.master = src
 
 			boutput(M, "<span class='alert'><b>You awaken filled with purpose - you must serve your master vampire, [owner.real_name]!</B></span>")
-			M.show_antag_popup("mindhack")
 			M.antagonist_overlay_refresh(1)
 			owner.antagonist_overlay_refresh(1)
 

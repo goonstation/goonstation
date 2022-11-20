@@ -159,7 +159,7 @@
 		H.check_for_unlocks()
 
 	eat_twitch(src.owner)
-	playsound(src.owner.loc,"sound/items/drink.ogg", rand(5,20), 1, pitch = 1.4)
+	playsound(src.owner.loc,'sound/items/drink.ogg', rand(5,20), 1, pitch = 1.4)
 	HH.was_harmed(M, special = "vamp")
 	bleed(HH, 1, 3, get_turf(src.owner))
 
@@ -313,7 +313,7 @@
 		HH.death(FALSE)
 
 	eat_twitch(src.owner)
-	playsound(src.owner.loc,"sound/items/drink.ogg", rand(5,20), 1, pitch = 1.4)
+	playsound(src.owner.loc,'sound/items/drink.ogg', rand(5,20), 1, pitch = 1.4)
 	HH.was_harmed(M, special = "vamp")
 
 

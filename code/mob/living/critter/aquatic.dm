@@ -19,10 +19,10 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 	is_npc = 1
 
-	var/health_brute = 10
-	var/health_brute_vuln = 1
-	var/health_burn = 10
-	var/health_burn_vuln = 2
+	health_brute = 10
+	health_brute_vuln = 1
+	health_burn = 10
+	health_burn_vuln = 2
 
 	var/out_of_water_debuff = 1 // debuff amount for being out of water
 	var/in_water_buff = 1 // buff amount for being in water
@@ -91,6 +91,10 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	if(P.mob_shooter)
 		src.harmed_by(P.mob_shooter)
 
+/mob/living/critter/aquatic/EnteredFluid(obj/fluid/F, atom/oldloc)
+	. = ..()
+	src.aquabreath_process?.update_water_status()
+
 /datum/lifeprocess/aquatic_breathing
 	var/water_need = 0 // 0, 1, or 2; 1 and 2 just differ in intensity
 	var/in_water_to_out_of_water = 0 // did they enter an area with sufficient water from an area with insufficient water?
@@ -98,11 +102,12 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	var/out_of_water_to_in_water = 0 // did they enter an area with insufficient water from an area with sufficient water?
 	var/in_water_buff = 1 // buff amount for being in water
 
-	New(new_owner,arguments)
+	New(mob/new_owner,arguments)
 		..()
 		if(length(arguments) >= 2)
 			in_water_buff = arguments[1]
 			out_of_water_debuff = arguments[2]
+		new_owner.event_handler_flags |= USE_FLUID_ENTER
 
 	process()
 		src.update_water_status()
@@ -243,7 +248,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 		walk(src,0)
 		swimming_away = 0
 		if (src.ai)
-			src.ai.enabled = 0
+			src.ai.disable()
 
 /mob/living/critter/aquatic/fish/specific_emotes(var/act, var/param = null, var/voluntary = 0)
 	switch (act)
@@ -556,7 +561,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/limb/mouth/fish
-	sound_attack = "sound/impact_sounds/Glub_2.ogg"
+	sound_attack = 'sound/impact_sounds/Glub_2.ogg'
 	dam_low = 0
 	dam_high = 1
 	miss_prob = 100 // you ever meet those fish that eat the dead skin off of the backs of your feet?
@@ -633,11 +638,11 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	if (no_logs != 1)
 		logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with pincers at [log_loc(user)].")
 	var/obj/item/affecting = target.get_affecting(user)
-	var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 10, 20, 0, 2)
+	var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 10, 20, 0, 2, can_punch = 0, can_kick = 0)
 	user.attack_effects(target, affecting)
 	var/action = pick("slashes", "tears into", "gouges", "rips into", "lacerates", "mutilates")
 	msgs.base_attack_message = "<b><span class='alert'>[user] [action] [target] with their [src.holder]!</span></b>"
-	msgs.played_sound = "sound/impact_sounds/Glub_1.ogg"
+	msgs.played_sound = 'sound/impact_sounds/Glub_1.ogg'
 	msgs.damage_type = DAMAGE_CUT
 	msgs.flush(SUPPRESS_LOGS)
 

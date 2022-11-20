@@ -1,80 +1,4 @@
-// gimme your guts
-/obj/item/clothing/suit/space/repo
-	name = "leather overcoat"
-	desc = "Dark and mysterious..."
-	icon_state = "repo"
-	item_state = "repo"
-	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
-	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
-	item_function_flags = IMMUNE_TO_ACID
-	contraband = 3
-	body_parts_covered = TORSO|LEGS|ARMS
-	wear_layer = MOB_OVERLAY_BASE
-
-	setupProperties()
-		..()
-		setProperty("space_movespeed", 0)
-		setProperty("exploprot", 10)
-		setProperty("meleeprot", 4)
-		setProperty("rangedprot", 1.5)
-		setProperty("disorient_resist", 65)
-
-/obj/item/clothing/head/helmet/space/repo
-	name = "ominous helmet"
-	desc = "How is the visor glowing like that?"
-	icon_state = "repo"
-	item_state = "repo"
-	item_function_flags = IMMUNE_TO_ACID
-	blocked_from_petasusaphilic = TRUE
-	color_r = 0.7
-	color_g = 0.7
-	color_b = 0.9
-
-// Komentaja
-/mob/living/carbon/human/mari
-
-	New()
-		..()
-		src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, slot_w_uniform)
-		src.equip_new_if_possible(/obj/item/clothing/shoes/swat, slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
-		src.equip_new_if_possible(/obj/item/clothing/head/beret/syndie, slot_head)
-		src.equip_new_if_possible(/obj/item/storage/backpack/satchel/syndie, slot_back)
-		src.equip_new_if_possible(/obj/item/device/radio/headset/syndicate/leader, slot_ears)
-		src.equip_new_if_possible(/obj/item/card/id/syndicate/commander, slot_wear_id)
-		src.equip_new_if_possible(/obj/item/storage/belt/security/shoulder_holster/inspector, slot_belt)
-		src.equip_new_if_possible(/obj/item/uplink/syndicate/alternate, slot_r_store)
-		src.equip_new_if_possible(/obj/item/storage/pouch/flechette, slot_l_store)
-		src.equip_new_if_possible(/obj/item/gun/kinetic/flechette_rifle, slot_l_hand)
-
-	initializeBioholder()
-		. = ..()
-		src.real_name = "Mari Toivola"
-		src.sound_list_laugh = list('sound/voice/felaugh1.ogg', 'sound/voice/felaugh2.ogg')
-		src.sound_list_scream = list('sound/voice/screams/female_scream.ogg')
-
-		bioHolder.age = 34
-		bioHolder.bloodType = "O-"
-		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/hairup/fun_bun
-		bioHolder.mobAppearance.customization_first_color = "#a06025"
-		bioHolder.mobAppearance.s_tone = "#E4B6A7"
-		bioHolder.mobAppearance.e_color = "#0a5834"
-		bioHolder.mobAppearance.underwear = "braboy"
-		bioHolder.mobAppearance.u_color = "#3d0808"
-		bioHolder.mobAppearance.gender = "female"
-
-
-/obj/item/clothing/head/beret/syndie
-	name = "syndicate beret"
-	desc = "A Syndicate officer's beret."
-	icon_state = "beret_base"
-	blocked_from_petasusaphilic = TRUE
-
-	New()
-		..()
-		src.color = "#890000"
-
-// pew pew
+// flechette rifle stuff
 /obj/item/implant/projectile/bullet_flechette
 	name = "flechette"
 	desc = "A small, nasty-looking steel dart designed to pierce through armor and space suits."
@@ -92,24 +16,23 @@ obj/item/ammo/bullets/flechette_mag
 	name = "Flechette magazine"
 	ammo_type = new/datum/projectile/bullet/flechette
 	icon_state = "flech_mag"
-	amount_left = 24
-	max_amount = 24
-	ammo_cat = AMMO_FLECHETTE // the actual diameter of the flechette once free of the sabot
+	amount_left = 20
+	max_amount = 20
+	ammo_cat = AMMO_FLECHETTE
 	sound_load = 'sound/weapons/gunload_hitek.ogg'
 
 /datum/projectile/bullet/flechette
 	name = "flechette"
 	shot_sound = 'sound/weapons/fleshot.ogg'
 	shot_volume = 70
-	power = 20
+	damage = 30
 	cost = 2
-	ks_ratio = 1
 	hit_ground_chance = 100
 	damage_type = D_PIERCING
 	armor_ignored = 0.66
 	hit_type = DAMAGE_STAB
 	shot_number = 2
-	shot_delay = 0.07 SECONDS
+	shot_delay = 70 MILLI SECONDS
 	dissipation_delay = 10
 	dissipation_rate = 3
 	projectile_speed = 56
@@ -128,13 +51,16 @@ obj/item/ammo/bullets/flechette_mag
 	force = MELEE_DMG_RIFLE
 	contraband = 8
 	ammo_cats = list(AMMO_FLECHETTE)
-	max_ammo_capacity = 24
+	max_ammo_capacity = 20
 	can_dual_wield = 0
 	two_handed = 1
 	auto_eject = 1
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 	w_class = W_CLASS_NORMAL
 	spread_angle = 3
 	default_magazine = /obj/item/ammo/bullets/flechette_mag
+	ammobag_magazines = list(/obj/item/ammo/bullets/flechette_mag)
 
 	New()
 		ammo = new default_magazine
@@ -146,7 +72,200 @@ obj/item/ammo/bullets/flechette_mag
 	icon_state = "ammopouch-double"
 	spawn_contents = list(/obj/item/ammo/bullets/flechette_mag = 5)
 
-// Office
+// kuvalda stuff
+/datum/projectile/bullet/kuvalda/barrikada
+	name = "barrikada slug"
+	icon_state = "trace"
+	shot_sound = 'sound/weapons/kuvalda.ogg'
+	damage = 110
+	dissipation_delay = 2
+	dissipation_rate = 5
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_STAB
+	impact_image_state = "bhole"
+	hit_ground_chance = 25
+	implanted = /obj/item/implant/projectile/shrapnel
+	casing = /obj/item/casing/shotgun/orange
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if (ishuman(hit))
+			var/mob/living/carbon/human/M = hit
+			if(proj.power >= 30)
+				M.do_disorient(75, weakened = 50, stunned = 50, disorient = 30, remove_stamina_below_zero = 0)
+
+			if(proj.power >= 40)
+				var/throw_range = (proj.power > 50) ? 6 : 3
+				var/turf/target = get_edge_target_turf(M, dirflag)
+				M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
+				M.update_canmove()
+			if (M.organHolder)
+				var/targetorgan
+				for (var/i in 1 to (power/10)-2)
+					targetorgan = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
+					M.organHolder.damage_organ(proj.power/M.get_ranged_protection(), 0, 0, prob(5) ? "heart" : targetorgan)
+
+			..()
+
+/datum/projectile/bullet/kuvalda/shrapnel
+	name = "shrapnel buckshot"
+	sname = "shrapnel buckshot"
+	icon_state = "trace"
+	damage = 12
+	dissipation_rate = 2
+	dissipation_delay = 5
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_CUT
+	impact_image_state = "bhole"
+	hit_ground_chance = 50
+	implanted = null
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if (ishuman(hit))
+			var/mob/living/carbon/human/M = hit
+
+			if (M.organHolder)
+				var/targetorgan
+				for (var/i in 1 to (power/10)-2)
+					targetorgan = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
+					M.organHolder.damage_organ(proj.power/M.get_ranged_protection(), 0, 0, prob(5) ? "heart" : targetorgan)
+
+			if(prob(proj.power/4) && power > 5)
+				M.sever_limb(pick("l_arm","r_arm","l_leg","r_leg"))
+			..()
+
+/datum/projectile/special/spreader/buckshot_burst/kuvalda
+	name = "shrapnel buckshot"
+	sname = "shrapnel buckshot"
+	cost = 1
+	pellets_to_fire = 8
+	spread_projectile_type = /datum/projectile/bullet/kuvalda/shrapnel
+	casing = /obj/item/casing/shotgun/gray
+	shot_sound = 'sound/weapons/kuvalda.ogg'
+	speed_max = 50
+	speed_min = 45
+	spread_angle_variance = 7
+	dissipation_variance = 3
+
+/obj/item/ammo/bullets/barrikada
+	sname = "Barrikada Slugs"
+	name = "23mm barrikada slugs"
+	desc = "Enormous 23mm shotgun shells, loaded with terrifying solid-steel slugs."
+	ammo_type = new/datum/projectile/bullet/kuvalda/barrikada
+	icon_state = "barrikada"
+	amount_left = 4
+	max_amount = 4
+	ammo_cat = AMMO_KUVALDA
+	icon_dynamic = 1
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	delete_on_reload = TRUE
+	w_class = W_CLASS_NORMAL
+
+/obj/item/ammo/bullets/shrapnel
+	sname = "Shrapnel Buckshot"
+	name = "23mm shrapnel buckshot"
+	desc = "Enormous 23mm shotgun shells, loaded with a spread of lethal buckshot."
+	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/kuvalda
+	icon_state = "shrapnel"
+	amount_left = 4
+	max_amount = 4
+	ammo_cat = AMMO_KUVALDA
+	icon_dynamic = 1
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	delete_on_reload = TRUE
+	w_class = W_CLASS_NORMAL
+
+// /obj/item/ammo/bullets/cheremukha
+
+// /obj/item/ammo/bullets/zvezda
+
+// /obj/item/ammo/bullets/grapple
+
+
+/obj/item/gun/kinetic/kuvalda
+	name = "\improper Karabin Kuvalda"
+	desc = "A heavy pump-action carbine with a rifled 23mm bore, produced by the Zvezda Design Bureau. Issued to Soviet counter-boarding teams to dissuade nosey pod pilots."
+	icon = 'icons/obj/large/48x32.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	icon_state = "kuvalda"
+	item_state = "kuvalda"
+	wear_state = "kuvalda"
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	force = MELEE_DMG_RIFLE
+	contraband = 10
+	ammo_cats = list(AMMO_KUVALDA)
+	max_ammo_capacity = 4
+	auto_eject = 0
+	can_dual_wield = 0
+	two_handed = 1
+	has_empty_state = 1
+	gildable = 1
+	default_magazine = /obj/item/ammo/bullets/shrapnel
+	var/racked_slide = FALSE
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/special/spreader/buckshot_burst/kuvalda)
+		..()
+
+	update_icon()
+		. = ..()
+		src.icon_state = "kuvalda" + (gilded ? "-golden" : "") + (racked_slide ? "" : "-empty" )
+
+	canshoot(mob/user)
+		return(..() && src.racked_slide)
+
+	shoot(var/target,var/start ,var/mob/user)
+		if(ammo.amount_left > 0 && !racked_slide)
+			boutput(user, "<span class='notice'>Pump that action, comrade!</span>")
+		..()
+		src.racked_slide = FALSE
+		src.casings_to_eject = src.ammo.amount_left ? 1 : 0
+		src.UpdateIcon()
+
+	shoot_point_blank(atom/target, mob/user, second_shot)
+		if(ammo.amount_left > 0 && !racked_slide)
+			boutput(user, "<span class='notice'>Pump that action, comrade!</span>")
+			return
+		..()
+		src.racked_slide = FALSE
+		src.casings_to_eject = src.ammo.amount_left ? 1 : 0
+		src.UpdateIcon()
+
+	attack_self(mob/user as mob)
+		..()
+		src.rack(user)
+
+	proc/rack(var/atom/movable/user)
+		var/mob/mob_user = null
+		if(ismob(user))
+			mob_user = user
+		if (!src.racked_slide)
+			if (src.ammo.amount_left == 0)
+				boutput(mob_user, "<span class ='notice'>Carbine is empty!</span>")
+				UpdateIcon()
+			else
+				src.racked_slide = TRUE
+				if (src.icon_state == "kuvalda[src.gilded ? "-golden" : ""]")
+					src.icon_state = "kuvalda[src.gilded ? "-golden-empty" : "-empty"]"
+					animate(src, time = 0.2 SECONDS)
+					animate(icon_state = "kuvalda[gilded ? "-golden" : ""]")
+				else
+					UpdateIcon()
+				boutput(mob_user, "<span class='notice'>You pump the action!</span>")
+				playsound(user.loc, 'sound/weapons/kuvaldapump.ogg', 50, 1)
+				src.casings_to_eject = 0
+				if (src.ammo.amount_left < 4)
+					var/turf/T = get_turf(src)
+					if (T && src.current_projectile.casing)
+						new src.current_projectile.casing(T, src.forensic_ID)
+
+/obj/item/storage/pouch/kuvalda
+	name = "kuvalda shell pouch"
+	icon_state = "ammopouch-large"
+	spawn_contents = list(/obj/item/ammo/bullets/shrapnel = 3, /obj/item/ammo/bullets/barrikada = 2)
+
+// office stuff
 /obj/item/reagent_containers/food/drinks/flask/taskumatti
 	name = "taskumatti"
 	desc = "Korpikuusen kyynel...? "
@@ -159,63 +278,3 @@ obj/item/ammo/bullets/flechette_mag
 	name = "pretty purple hibiscus"
 	desc = "A lovely flower from a dear friend."
 	icon_state = "virvase"
-
-/obj/item/gun/kinetic/sokk
-	desc = "A familiar looking machine pistol."
-	name = "\improper Sokk Taktische Maschinenpistole"
-	icon_state = "glocksyn"
-	item_state = "glocksyn"
-	shoot_delay = 1
-	w_class = W_CLASS_SMALL
-	force = MELEE_DMG_PISTOL
-	ammo_cats = list(AMMO_FLECHETTE)
-	max_ammo_capacity = 21
-	auto_eject = 1
-	has_empty_state = 1
-	gildable = 0
-	fire_animation = TRUE
-	default_magazine = /obj/item/ammo/bullets/sokk
-
-	New()
-		ammo = new default_magazine
-		set_current_projectile(new/datum/projectile/bullet/sokk)
-		projectiles = list(current_projectile,new/datum/projectile/bullet/sokk/burst)
-		..()
-
-	attack_self(mob/user as mob)
-		..()	//burst shot has a slight spread.
-		if (istype(current_projectile, /datum/projectile/bullet/sokk/burst/))
-			spread_angle = 6
-			shoot_delay = 3 DECI SECONDS
-		else
-			spread_angle = 0
-			shoot_delay = 2 DECI SECONDS
-
-/obj/item/ammo/bullets/sokk
-	sname = "6.5×20mm AP"
-	name = "6.5×20mm SOKK magazine"
-	desc = "High-velocity pistol cartridges, loaded with armor-piercing bullets."
-	icon_state = "pistol_clip"
-	amount_left = 21
-	max_amount = 21
-	ammo_type = new/datum/projectile/bullet/sokk
-	ammo_cat = AMMO_FLECHETTE
-
-/datum/projectile/bullet/sokk
-	name = "bullet"
-	shot_sound = 'sound/weapons/9x19NATO.ogg'
-	power = 15
-	damage_type = D_PIERCING
-	armor_ignored = 0.66
-	hit_type = DAMAGE_STAB
-	hit_ground_chance = 50
-	projectile_speed = 60
-	impact_image_state = "bhole-small"
-	implanted = /obj/item/implant/projectile/bullet_flechette
-	casing = /obj/item/casing/small
-
-/datum/projectile/bullet/sokk/burst
-	sname = "burst fire"
-	power = 15
-	cost = 3
-	shot_number = 3

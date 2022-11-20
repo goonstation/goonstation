@@ -17,19 +17,48 @@ import traceback
 from github import Github, InputGitAuthor
 
 labels_to_emoji = {
-	'a-balance': '⚖',
-	'c-bug-critical': '🐛',
-	'c-bug-major': '🐛',
-	'c-bug': '🐛',
-	'c-bug-minor': '🐛',
-	'c-bug-trivial': '🐛',
-	'c-feature': '🆕',
-	'c-removal': '⛔',
-	'c-revert': '⛔',
-	'a-sprites': '🎨',
+	'a-admin': '🚨',
+	'a-ai': '📡',
+	'a-atmospherics': '💨',
+	'a-catering': '🍝',
+	'a-chemistry': '⚗',
+	'a-clothing': '🎩',
+	'a-events': '🌠',
+	'a-game-objects': '📦',
+	'a-gamemodes': '🧛',
+	'a-github': '🏗',
+	'a-hydroponics': '🌱',
+	'a-internal': '⚙',
 	'a-mapping': '🗺',
+	'a-materials': '🧱',
+	'a-medal': '🏅',
+	'a-medical': '💊',
+	'a-mutantraces': '👽',
+	'a-player-actions': '🔨',
+	'a-science': '🔬',
+	'a-secret': '🔒',
+	'a-silicons': '🤖',
+	'a-station-systems': '💡',
+	'a-status-effects': '⏰',
+	'a-tooling': '🔧',
+	'a-traits': '💪',
+	'a-ui': '📄',
+	'c-balance': '⚖',
+	'c-bug': '🪲',
+	'c-code-quality': '🔎',
+	'c-documentation': '📜',
+	'c-experimental': '🧫',
+	'c-feature': '🆕',
+	'c-performance': '🚄',
+	'c-qol': '💅',
+	'c-removal': '⛔',
+	'c-revert': '↩',
 	'c-rework': '🔄',
-	'a-ui': '📄'
+	'c-runtime': '🐛',
+	'c-sound': '🔊',
+	'c-sprites': '🎨',
+	'e-contest': '🎉',
+	'e-fuck': '❗',
 }
 
 def parse_pr_changelog(pr):
@@ -39,8 +68,8 @@ def parse_pr_changelog(pr):
 	if changelog_match is None:
 		return
 	lines = changelog_match.group(1).split('\n')
-	emoji = ''.join(labels_to_emoji.get(label.name, '') for label in pr.labels)
-	emoji += "|" + ', '.join(label.name for label in pr.labels if label.name in labels_to_emoji)
+	emoji = ''.join(labels_to_emoji.get(label.name.lower(), '') for label in pr.labels)
+	emoji += "|" + ', '.join(label.name for label in pr.labels if label.name.lower() in labels_to_emoji)
 	for line in lines:
 		line = line.strip()
 		if not line:

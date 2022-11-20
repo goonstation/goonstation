@@ -47,7 +47,7 @@
 		icon_state = "meter4"
 		if(!noiselimiter)
 			if(prob(50))
-				playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 				noiselimiter = 1
 				SPAWN(6 SECONDS)
 				noiselimiter = 0

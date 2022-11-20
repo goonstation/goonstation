@@ -21,10 +21,10 @@
 	var/image/display_active = null
 	var/image/display_battery = null
 	var/image/display_panel = null
-	var/sound/sound_on = "sound/effects/shielddown.ogg"
-	var/sound/sound_off = "sound/effects/shielddown2.ogg"
-	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
-	var/sound/sound_battwarning = "sound/machines/pod_alarm.ogg"
+	var/sound/sound_on = 'sound/effects/shielddown.ogg'
+	var/sound/sound_off = 'sound/effects/shielddown2.ogg'
+	var/sound/sound_shieldhit = 'sound/impact_sounds/Energy_Hit_1.ogg'
+	var/sound/sound_battwarning = 'sound/machines/pod_alarm.ogg'
 	var/list/deployed_shields = list()
 	var/direction = ""	//for building the icon, always north or directional
 	var/connected = 0	//determine if gen is wrenched over a wire.
@@ -254,7 +254,7 @@
 				src.anchored = !src.anchored
 				src.backup = 0
 				src.visible_message("<b>[user.name]</b> [src.connected ? "connects" : "disconnects"] [src.name] [src.connected ? "to" : "from"] the wire.")
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			else
 				boutput(user, "There is no cable to connect to.")
 
@@ -337,6 +337,11 @@
 		playsound(src.loc, src.sound_off, 50, 1)
 		build_icon()
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.PCEL)
+			src.PCEL = null
+
 /*
 /Force field objects for various generators
 **/
@@ -346,7 +351,7 @@
 	desc = "A force field deployed to stop meteors and other high velocity masses."
 	icon = 'icons/obj/meteor_shield.dmi'
 	icon_state = "shield"
-	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
+	var/sound/sound_shieldhit = 'sound/impact_sounds/Energy_Hit_1.ogg'
 	var/obj/machinery/shieldgenerator/meteorshield/deployer = null
 
 	attackby(obj/item/W, mob/user)
@@ -443,7 +448,7 @@
 	var/isactive = TRUE
 	density = 0
 
-	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
+	var/sound/sound_shieldhit = 'sound/impact_sounds/Energy_Hit_1.ogg'
 	var/obj/machinery/shieldgenerator/deployer = null
 	var/obj/machinery/door/linked_door = null
 	var/update_tiles
@@ -464,6 +469,7 @@
 			src.icon_state = "shieldw"
 			src.color = "#FF33FF" //change colour for different power levels
 			src.powerlevel = 4
+			src.mouse_opacity = 0
 			flags = ALWAYS_SOLID_FLUID | FLUID_DENSE
 		else if(deployer != null && deployer.power_level == 1)
 			src.name = "Atmospheric Forcefield"
@@ -471,6 +477,7 @@
 			src.icon_state = "shieldw"
 			src.color = "#3333FF" //change colour for different power levels
 			src.powerlevel = 1
+			src.mouse_opacity = 0
 			flags = 0
 			gas_impermeable = TRUE
 		else if(deployer != null && deployer.power_level == 2)
@@ -479,6 +486,7 @@
 			src.icon_state = "shieldw"
 			src.color = "#33FF33"
 			src.powerlevel = 2
+			src.mouse_opacity = 0
 			flags = ALWAYS_SOLID_FLUID | FLUID_DENSE
 			gas_impermeable = TRUE
 		else if(deployer != null)
@@ -487,6 +495,7 @@
 			src.icon_state = "shieldw"
 			src.color = "#FF3333"
 			src.powerlevel = 3
+			src.mouse_opacity = 1
 			flags = ALWAYS_SOLID_FLUID | USEDELAY | FLUID_DENSE
 			density = 1
 
@@ -507,12 +516,17 @@
 			//these power levels are kind of arbitrary
 			if(src.powerlevel >= 2) src.flags |= FLUID_DENSE
 			if(src.powerlevel < 3) src.gas_impermeable = TRUE
+			if(src.powerlevel == 3)
+				src.mouse_opacity = 1
+				src.density = 1
 		else
 			src.icon_state = ""
 			src.isactive = FALSE
 			src.invisibility = INVIS_ALWAYS_ISH //ehh whatever this "works"
 			src.flags &= ~FLUID_DENSE
 			src.gas_impermeable = FALSE
+			src.mouse_opacity = 0
+			src.density = 0
 
 	proc/update_nearby_tiles(need_rebuild)
 		var/turf/simulated/source = loc

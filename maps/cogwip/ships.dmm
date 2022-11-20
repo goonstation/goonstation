@@ -243,7 +243,7 @@
 /turf/space,
 /area/space)
 "aJ" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
 	icon_state = "airlock_closed"
 	},
@@ -4418,7 +4418,7 @@
 /turf/space,
 /area/space)
 "mb" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/shuttlebay,
 /area/diner/tug)
 "mc" = (
@@ -4481,16 +4481,14 @@
 /turf/space,
 /area/space)
 "mj" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
 "mk" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
@@ -4498,8 +4496,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "ml" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
@@ -4511,8 +4508,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "mm" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
@@ -4524,8 +4520,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/space)
 "mn" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
@@ -4536,8 +4531,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/space)
 "mo" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
 	operating = 1
 	},
@@ -4703,8 +4697,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/space)
 "mI" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "salvage belt - west";
 	operating = 1
 	},
@@ -4716,8 +4709,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/space)
 "mJ" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "salvage belt - west";
 	operating = 1
 	},
@@ -4725,8 +4717,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/space)
 "mK" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "salvage belt - west";
 	operating = 1
 	},
@@ -5466,7 +5457,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/critter/mouse{
+/mob/living/critter/small_animal/mouse{
 	name = "Sgt. Pepper"
 	},
 /turf/simulated/floor/carpet/grime,
@@ -8589,7 +8580,7 @@
 /turf/unsimulated/floor/darkpurple,
 /area/space)
 "vZ" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 8;
 	icon_state = "airlock_closed";
 	name = "launch bay"
@@ -8745,7 +8736,7 @@
 	dir = 8;
 	icon_state = "line-broken1"
 	},
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/unsimulated/floor/plating/random,
 /area/space)
 "wu" = (
@@ -9622,7 +9613,7 @@
 /turf/unsimulated/floor/redwhite,
 /area/space)
 "yt" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	name = "reinforced internal airlock"
 	},
 /obj/cable{
@@ -10085,7 +10076,7 @@
 /turf/simulated/floor/black,
 /area/space)
 "zA" = (
-/obj/machinery/door/airlock/pyro/syndicate,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate,
 /turf/simulated/floor/black,
 /area/space)
 "zB" = (
@@ -10207,7 +10198,10 @@
 /turf/simulated/wall/auto/shuttle,
 /area/space)
 "zQ" = (
-/obj/machinery/atmospherics/unary/vent_pump/south,
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 2;
+	
+	},
 /turf/simulated/floor/caution/north,
 /area/space)
 "zR" = (
@@ -10595,7 +10589,10 @@
 /turf/simulated/floor/shuttlebay,
 /area/space)
 "AT" = (
-/obj/machinery/atmospherics/unary/vent_pump/west,
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 8;
+	
+	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4;
 	icon_state = "xtra_bigstripe-edge"

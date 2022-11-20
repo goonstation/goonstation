@@ -118,11 +118,12 @@
 
 /mob/proc/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0, throw_type=THROW_SLIP, list/params=null)
 	. = null
+	SHOULD_CALL_PARENT(1)
 
 	if (!src.can_slip())
 		return
 
-	var/slip_delay = BASE_SPEED_SUSTAINED + (WALK_DELAY_ADD*0.14) //we need to fall under this movedelay value in order to slip :O
+	var/slip_delay = BASE_SPEED_SUSTAINED //we need to fall under this movedelay value in order to slip :O
 
 	if (walking_matters)
 		slip_delay = BASE_SPEED_SUSTAINED + WALK_DELAY_ADD
@@ -142,9 +143,9 @@
 			throw_range = max(throw_range,0)
 
 		if (intensity <= 2.4)
-			playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
+			playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 		else
-			playsound(src.loc, "sound/misc/slip_big.ogg", 50, 1, -3)
+			playsound(src.loc, 'sound/misc/slip_big.ogg', 50, 1, -3)
 		src.remove_pulling()
 		var/turf/T = get_ranged_target_turf(src, src.move_dir, throw_range)
 		var/throw_speed = 2
@@ -161,6 +162,7 @@
 						return 1
 		else
 			params += list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS))
+		game_stats.Increment("slips")
 		. = src.throw_at(T, intensity, throw_speed, params, src.loc, throw_type = throw_type)
 
 /mob/living/carbon/human/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0, throw_type=THROW_SLIP, list/params=null)
@@ -171,7 +173,7 @@
 	if (!istype(src))
 		return
 	src.set_mutantrace(/datum/mutantrace/skeleton)
-	src.decomp_stage = 4
+	src.decomp_stage = DECOMP_STAGE_SKELETONIZED
 	if (src.organHolder && src.organHolder.brain)
 		qdel(src.organHolder.brain)
 	src.set_clothing_icon_dirty()
@@ -480,6 +482,9 @@
 	var/datum/pronouns/pronouns = subject.get_pronouns()
 	return pronouns.subjective + (pronouns.pluralize ? "'re" : "'s")
 
+/proc/is_or_are(var/mob/subject)
+	return (subject.get_pronouns().pluralize ? "are" : "is")
+
 /proc/himself_or_herself(var/mob/subject)
 	return subject.get_pronouns().reflexive
 
@@ -750,6 +755,7 @@
 	var/see_heads = 0
 	var/see_xmas = 0
 	var/see_zombies = 0
+	var/see_salvager = 0
 	var/see_special = 0 // Just a pass-through. Game mode-specific stuff is handled further down in the proc.
 	var/see_everything = 0
 	var/datum/gang/gang_to_see = null
@@ -801,6 +807,8 @@
 			see_zombies = 1
 		else if (src.mind && src.mind.special_role == ROLE_GRINCH)
 			see_xmas = 1
+		else if (src.mind && src.mind.special_role == ROLE_SALVAGER)
+			see_salvager = 1
 
 	// Clear existing overlays.
 	delete_overlays:
@@ -815,7 +823,7 @@
 	if (remove)
 		return
 
-	if (!see_traitors && !see_nukeops && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_zombies && !see_special && !see_everything && gang_to_see == null && PWT_to_see == null && !V && !VT)
+	if (!see_traitors && !see_nukeops && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_zombies && !see_salvager && !see_special && !see_everything && gang_to_see == null && PWT_to_see == null && !V && !VT)
 		src.last_overlay_refresh = world.time
 		return
 
@@ -910,6 +918,10 @@
 				if (ROLE_ZOMBIE)
 					if (see_everything || see_zombies)
 						var/I = image(antag_generic, loc = M.current)
+						can_see.Add(I)
+				if (ROLE_SALVAGER)
+					if (see_everything || see_salvager)
+						var/I = image(antag_salvager, loc = M.current)
 						can_see.Add(I)
 				else
 					if (see_everything)
@@ -1051,7 +1063,7 @@
 			if (!G.shock(src, 70))
 				if (show_message)
 					G.visible_message("<span class='alert'><b>[src]</b> violently slashes [G]!</span>")
-				playsound(G.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 80, 1)
+				playsound(G.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
 				G.damage_slashing(15)
 				return TRUE
 
@@ -1063,7 +1075,7 @@
 
 		if (S == "table" && istype(target, /obj/table))
 			var/obj/table/table = target
-			playsound(table.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+			playsound(table.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 			table.deconstruct()
 			return TRUE
 

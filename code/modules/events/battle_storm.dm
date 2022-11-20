@@ -72,19 +72,19 @@
 				else
 					break
 	#endif
-			for(var/area/A in world)
-				if (A.z != Z_LEVEL_STATION)
+			for_by_tcl(area, /area)
+				if (area.z != Z_LEVEL_STATION)
 					continue
-				var/B = 1
-				for(var/area/S in safe_areas)
-					if(istype(A,S))
-						B = 0
-				for(var/E in excluded_areas)
-					if(istype(A,E))
-						B = 0
-				if(B)
-					A.icon_state = "red"
-					A.storming = 1
+				var/will_storm = TRUE
+				for(var/area/safe_area in safe_areas)
+					if(istype(area,safe_area))
+						will_storm = FALSE
+				for(var/excluded_area in excluded_areas)
+					if(istype(area,excluded_area))
+						will_storm = FALSE
+				if(will_storm)
+					area.icon_state = "red"
+					area.storming = TRUE
 
 			world << siren
 
@@ -110,7 +110,7 @@
 					for(var/mob/living/M in mobs)
 						if(M.z == Z_LEVEL_STATION)
 							M.changeStatus("burning", 10 SECONDS)
-							M.changeStatus("radiation", 10 SECONDS)
+							M.take_radiation_dose(rand() * 1.0 SIEVERTS)
 							random_brute_damage(M, 14)
 							random_burn_damage(M, 14)
 			else
@@ -123,7 +123,7 @@
 						if(mob_area?.storming)
 							M.changeStatus("burning", clamp(2 * activations, 2, 8) SECONDS)
 							if  (activations > 1)
-								M.changeStatus("radiation", clamp(1 * activations, 2, 6) SECONDS)
+								M.take_radiation_dose((clamp(1 * activations, 2, 6)/10) SIEVERTS) //0.2 - 0.6 Sv
 							random_brute_damage(M, clamp(2 * activations, 2, 10))
 
 			command_alert("The storm has almost passed. ETA 5 seconds until all areas are safe.", "BATTLE STORM ABOUT TO END")

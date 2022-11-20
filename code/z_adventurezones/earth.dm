@@ -192,6 +192,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	ines
 		ckey = "hokie"
 		name = "Office of Ines"
+	janantilles
+		ckey = "janantilles"
+		name = "Office of Fleur DeLaCreme"
 	katzen
 		ckey = "flappybat"
 		name = "Office of Katzen"
@@ -618,7 +621,7 @@ proc/get_centcom_mob_cloner_spawn_loc()
 
 	set_loc(newloc)
 		. = ..()
-		if(isnull(newloc))
+		if(isnull(newloc) && !QDELETED(src))
 			src.vis_contents = null
 			qdel(src)
 
@@ -645,7 +648,7 @@ proc/put_mob_in_centcom_cloner(mob/living/L, indirect=FALSE)
 		L.density = TRUE
 		L.set_a_intent(INTENT_HARM)
 		L.dir_locked = TRUE
-	playsound(clone, "sound/machines/ding.ogg", 50, 1)
+	playsound(clone, 'sound/machines/ding.ogg', 50, 1)
 	clone.visible_message("<span class='notice'>[L.name || "A clone"] pops out of the cloner.</span>")
 	var/static/list/obj/machinery/conveyor/conveyors = null
 	var/static/conveyor_running_count = 0

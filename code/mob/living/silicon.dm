@@ -46,6 +46,7 @@
 	else
 		src.law_rack_connection = ticker?.ai_law_rack_manager.default_ai_rack
 		logTheThing(LOG_STATION, src, "New cyborg [src] connects to default rack [constructName(src.law_rack_connection)]")
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING, src)
 
 /mob/living/silicon/disposing()
 	req_access = null
@@ -95,7 +96,7 @@
 		usr.show_text("You cannot use this command when your shell or mainframe is incapacitated.", "red")
 		return
 
-	var/list/creatures = sortList(get_mobs_trackable_by_AI())
+	var/list/creatures = sortList(get_mobs_trackable_by_AI(), /proc/cmp_text_asc)
 	var/target_name = tgui_input_list(usr, "Open doors nearest to which creature?", "Open Door", creatures)
 
 	if (!target_name)
@@ -267,11 +268,9 @@
 					if (S.client && S.client.holder && src.mind)
 						thisR = "<span class='adminHearing' data-ctx='[S.client.chatOutput.getContextFlags()]'>[rendered]</span>"
 					S.show_message(thisR, 2)
-			else if(istype(S, /mob/living/intangible/flock))
-				var/mob/living/intangible/flock/f = S
-				if(f.flock?.snooping)
-					var/flockrendered = "<span class='game roboticsay'>[flockBasedGarbleText("Robotic Talk", -20, f.flock)], <span class='name' data-ctx='\ref[src.mind]'>[flockBasedGarbleText(src.name, -15, f.flock)]</span> <span class='message'>[flockBasedGarbleText(message_a, 0, f.flock)]</span></span>"
-					f.show_message(flockrendered, 2)
+			else if(istype(S, /mob/living/intangible/flock) || istype(S, /mob/living/critter/flock/drone))
+				var/flockrendered = "<span class='game roboticsay'>[radioGarbleText("Robotic Talk", FLOCK_RADIO_GARBLE_CHANCE / 2)], <span class='name' data-ctx='\ref[src.mind]'>[radioGarbleText(src.name, FLOCK_RADIO_GARBLE_CHANCE / 2)]</span> <span class='message'>[radioGarbleText(message_a, FLOCK_RADIO_GARBLE_CHANCE / 2)]</span></span>"
+				S.show_message(flockrendered, 2)
 
 	var/list/listening = hearers(1, src)
 	listening |= src
@@ -503,7 +502,7 @@ var/global/list/module_editors = list()
 		if(force_instead)
 			newname = default_name
 		else
-			newname = input(src, "You are a Robot. Would you like to change your name to something else?", "Name Change", default_name) as null|text
+			newname = tgui_input_text(src, "You are a Robot. Would you like to change your name to something else?", "Name Change", default_name)
 			if(newname && newname != default_name)
 				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 		if (!newname)
@@ -524,6 +523,10 @@ var/global/list/module_editors = list()
 		src.real_name = borgify_name("Robot")
 
 	src.UpdateName()
+
+/mob/living/silicon/UpdateName()
+	..()
+	src.botcard.registered = src.name
 
 /mob/living/silicon/robot/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 	. = ..()
@@ -567,9 +570,6 @@ var/global/list/module_editors = list()
 		// Mundane objectives probably don't make for an interesting antagonist.
 		for (var/datum/objective/O in src?.mind?.objectives)
 			if (istype(O, /datum/objective/crew))
-				src.mind.objectives -= O
-				qdel(O)
-			if (istype(O, /datum/objective/miscreant))
 				src.mind.objectives -= O
 				qdel(O)
 		src.syndicate = TRUE
@@ -643,4 +643,9 @@ var/global/list/module_editors = list()
 	var/note_img = "<img class=\"icon misc\" style=\"position: relative; bottom: -3px;\" src=\"[resource("images/radio_icons/noterobot.png")]\">"
 	if (src.singing & LOUD_SINGING)
 		note_img = "[note_img][note_img]"
-	return "[adverb] [speech_verb],[note_img]<span style=\"font-style: italic; color: lightcyan;\">[text]</span>[note_img]"
+	return "[adverb] [speech_verb],[note_img]<span class='game robotsing'><i>[text]</i></span>[note_img]"
+
+/mob/living/silicon/Exited(Obj, newloc)
+	. = ..()
+	if(Obj == src.cell)
+		src.cell = null

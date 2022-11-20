@@ -141,14 +141,13 @@
 					fluff = "turbo [fluff]"
 				if (3)
 					fluff = "atomic [fluff]"
-					playsound(M.loc, "sound/effects/explosionfar.ogg", 60, 1)
+					playsound(M.loc, 'sound/effects/explosionfar.ogg', 60, 1)
 
-			playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+			playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 			M.visible_message("<span class='alert'><B>[M] [fluff] [HH]!</B></span>")
 
 			if (!fake)
 				if (!isdead(HH))
-					HH.emote("scream")
 					HH.changeStatus("weakened", 3 SECONDS)
 					HH.changeStatus("stunned", 3 SECONDS)
 					HH.force_laydown_standup()

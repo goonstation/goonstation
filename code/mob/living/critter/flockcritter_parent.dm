@@ -18,8 +18,8 @@
 	mat_changedesc = FALSE
 	see_invisible = INVIS_FLOCK
 	// HEALTHS
-	var/health_brute = 1
-	var/health_burn = 1
+	health_brute = 1
+	health_burn = 1
 	var/repair_per_resource
 
 	metabolizes = FALSE // under assumption drones dont metabolize chemicals due to gnesis internals
@@ -31,6 +31,9 @@
 	var/datum/flock/flock
 
 	var/mob/living/intangible/flock/controller = null
+
+	var/atom/movable/name_tag/flock_examine_tag/flock_name_tag
+
 	// do i pay for building?
 	var/pays_to_construct = TRUE
 
@@ -56,11 +59,11 @@
 
 /mob/living/critter/flock/New(var/atom/L, var/datum/flock/F=null)
 	..()
-
+	remove_lifeprocess(/datum/lifeprocess/radiation)
 	qdel(abilityHolder)
-	setMaterial(getMaterial("gnesis"))
+	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	src.material.setProperty("reflective", 5)
-	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT, src, 100)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
@@ -89,12 +92,31 @@
 		state["area"] = "???"
 	return state
 
+/mob/living/critter/flock/get_examine_tag(mob/examiner)
+	if (isdead(src) || !src.flock || !(istype(examiner, /mob/living/intangible/flock) || istype(examiner, /mob/living/critter/flock/drone)))
+		return ..()
+	if (istype(examiner, /mob/living/intangible/flock))
+		var/mob/living/intangible/flock/flock_intangible = examiner
+		if (src.flock != flock_intangible.flock)
+			return ..()
+	if (istype(examiner, /mob/living/critter/flock/drone))
+		var/mob/living/critter/flock/drone/flockdrone = examiner
+		if (src.flock != flockdrone.flock)
+			return ..()
+	return src.flock_name_tag
+
 /mob/living/critter/flock/hand_attack(atom/target, params)
 	var/datum/handHolder/HH = get_active_hand()
 	if (HH.can_attack && !HH.can_hold_items && ismob(target) && src.a_intent == INTENT_GRAB)
 		var/datum/limb/L = src.equipped_limb()
 		L.grab(target, src)
 	. = ..()
+	if (istype(target, /obj/item) && target.loc == src) //no batong for radio birds
+		target.emp_act()
+
+//trying out a world where you can't stun flockdrones
+/mob/living/critter/flock/do_disorient(stamina_damage, weakened, stunned, paralysis, disorient, remove_stamina_below_zero, target_type, stack_stuns)
+	src.changeStatus("slowed", max(weakened, stunned, paralysis, disorient))
 
 /mob/living/critter/flock/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()
@@ -105,6 +127,8 @@
 	src.ai?.die()
 	actions.stop_all(src)
 	src.is_npc = FALSE
+	src.flock_name_tag.set_name(src.name)
+	src.flock_name_tag.set_info_tag(he_or_she(src))
 	if (!src.flock)
 		return
 
@@ -112,8 +136,10 @@
 	src.flock.removeDrone(src)
 
 /mob/living/critter/flock/projCanHit(datum/projectile/P)
-	if(istype(P, /datum/projectile/energy_bolt/flockdrone))
+	if (istype(P, /datum/projectile/energy_bolt/flockdrone))
 		return FALSE
+	if (!isalive(src)) //we cant_lie but still want to have projectiles act as if we are lying when dead
+		return prob(P.hit_ground_chance)
 	return ..()
 
 /mob/living/critter/flock/bullet_act(var/obj/projectile/P)
@@ -143,7 +169,7 @@
 
 	..(message) // caw at the non-drones
 
-	if (involuntary || message == "" || stat)
+	if (message == "" || stat)
 		return
 	if (dd_hasprefix(message, "*"))
 		return
@@ -151,9 +177,7 @@
 	var/prefixAndMessage = separate_radio_prefix_and_message(message)
 	message = prefixAndMessage[2]
 
-	if(!src.is_npc)
-		message = gradientText("#3cb5a3", "#124e43", message)
-	flock_speak(src, message, src.flock)
+	flock_speak(src, message, src.flock, involuntary)
 
 /mob/living/critter/flock/understands_language(var/langname)
 	if (langname == say_language || langname == "feather" || langname == "english")
@@ -166,7 +190,7 @@
 
 	// automatic extinguisher! after some time, anyway
 	if(getStatusDuration("burning") > 0 && !src.extinguishing)
-		playsound(src, "sound/weapons/rev_flash_startup.ogg", 40, 1, -3)
+		playsound(src, 'sound/weapons/rev_flash_startup.ogg', 40, 1, -3)
 		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Fire detected in critical systems. Integrated extinguishing systems are engaging.\]</b></span>")
 		src.extinguishing = TRUE
 		SPAWN(5 SECONDS)
@@ -176,7 +200,7 @@
 				F.set_loc(src.loc)
 				SPAWN(10 SECONDS)
 					qdel(F)
-			playsound(src, "sound/effects/spray.ogg", 50, 1, -3)
+			playsound(src, 'sound/effects/spray.ogg', 50, 1, -3)
 			update_burning(-100)
 			sleep(2 SECONDS)
 			src.extinguishing = FALSE
@@ -215,13 +239,19 @@
 	src.ai.die()
 	walk(src, 0)
 	src.update_health_icon()
-	src.flock?.removeDrone(src)
-	playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)
+	qdel(src.flock_name_tag)
+	src.flock_name_tag = null
+	if (src.flock)
+		src.flock.deaths++
+		src.flock.removeDrone(src)
+	playsound(src, 'sound/impact_sounds/Glass_Shatter_3.ogg', 50, 1)
 
 /mob/living/critter/flock/disposing()
 	if (src.flock)
 		src.update_health_icon()
 		src.flock.removeDrone(src)
+	qdel(src.flock_name_tag)
+	src.flock_name_tag = null
 	..()
 
 //////////////////////////////////////////////////////
@@ -252,14 +282,14 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (!F || isdead(F) || !target || !in_interact_range(F, target) || isfeathertile(target) || !F.can_afford(FLOCK_CONVERT_COST))
+		if (!F || isdead(F) || !target || !in_interact_range(F, target) || isfeathertile(target) || !F.can_afford(FLOCK_CONVERT_COST) || !flockTurfAllowed(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if(!F || isdead(F) || !target || !in_interact_range(F, target) || isfeathertile(target) || !F.can_afford(FLOCK_CONVERT_COST))
+		if(!F || isdead(F) || !target || !in_interact_range(F, target) || isfeathertile(target) || !F.can_afford(FLOCK_CONVERT_COST) || !flockTurfAllowed(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -484,14 +514,14 @@
 		if (istype(target, /mob/living/critter/flock))
 			var/mob/living/critter/flock/flockcritter = target
 			var/health_given = min(min(F.resources, FLOCK_REPAIR_COST) * flockcritter.repair_per_resource, clamp(1 - flockcritter.get_health_percentage(), 0, 1) * (flockcritter.health_brute + flockcritter.health_burn))
+			if(health_given)
+				var/datum/healthHolder/brute = flockcritter.healthlist["brute"]
+				var/brute_weight = min((brute.value > 0 ? brute.maximum_value - brute.value : brute.maximum_value + abs(brute.value)) / health_given, 1)
+				var/burn_weight = 1 - brute_weight
 
-			var/datum/healthHolder/brute = flockcritter.healthlist["brute"]
-			var/brute_weight = min((brute.value > 0 ? brute.maximum_value - brute.value : brute.maximum_value + abs(brute.value)) / health_given, 1)
-			var/burn_weight = 1 - brute_weight
-
-			flockcritter.HealDamage("All", health_given * brute_weight, health_given * burn_weight)
-			F.pay_resources(ceil(health_given / flockcritter.repair_per_resource))
-			keep_repairing = flockcritter.get_health_percentage() < 1
+				flockcritter.HealDamage("All", health_given * brute_weight, health_given * burn_weight)
+				F.pay_resources(ceil(health_given / flockcritter.repair_per_resource))
+				keep_repairing = flockcritter.get_health_percentage() < 1
 			if (flockcritter.is_npc)
 				flockcritter.ai.interrupt()
 		else if (istype(target, /obj/flock_structure))
@@ -592,6 +622,7 @@
 		var/obj/flock_structure/cage/cage = new /obj/flock_structure/cage(target.loc, target, F.flock)
 		cage.visible_message("<span class='alert'>[cage] forms around [target], entombing them completely!</span>")
 		playsound(target, 'sound/misc/flockmind/flockdrone_build_complete.ogg', 70, 1)
+		logTheThing(LOG_COMBAT, owner, "entombs [constructTarget(target)] in a flock cage at [log_loc(owner)]")
 
 ///
 //decon action
@@ -646,7 +677,7 @@
 			door.deconstruct()
 		else if(istype(target, /obj/table/flock))
 			var/obj/table/flock/f = target
-			playsound(f, "sound/items/Deconstruct.ogg", 30, 1, extrarange = -10)
+			playsound(f, 'sound/items/Deconstruct.ogg', 30, 1, extrarange = -10)
 			f.deconstruct()
 		else if(istype(target, /obj/flock_structure))
 			var/obj/flock_structure/f = target

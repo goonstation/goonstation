@@ -39,7 +39,7 @@
 			O.show_message("<b>[src]</b> screeches, 'GBVQW UVQWIBJZ PKDDR!!!'", 1)
 		if (!ishuman(target))
 			return
-		playsound(target.loc, "sound/effects/ghost2.ogg", 100, 1)
+		playsound(target.loc, 'sound/effects/ghost2.ogg', 100, 1)
 		var/mob/living/carbon/human/H = target
 		if (istype(H.head, /obj/item/clothing/head/tinfoil_hat) || H.bioHolder?.HasEffect("psy_resist") == 2)
 			if(istype(H.head, /obj/item/clothing/head/tinfoil_hat))
@@ -96,7 +96,7 @@
 				src.target = C
 				src.oldtarget_name = C.name
 				src.visible_message("<span class='alert'><b>[src]</b> shoots at [C.name]!</span>")
-				playsound(src.loc, "sound/weapons/lasermed.ogg", 100, 1)
+				playsound(src.loc, 'sound/weapons/lasermed.ogg', 100, 1)
 				if (prob(66))
 					C.TakeDamage("chest", 0, rand(3,5)/C.get_ranged_protection())
 					elecflash(C)

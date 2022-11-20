@@ -52,7 +52,7 @@
 		if(integrity_state == 0)
 			boutput(user, "<span class='notice'>Pieces of mangled metal make screwing off the panel impossible!</span>")
 			return
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		var/action_buffer = 0
 		if(integrity_state == 1)
 			boutput(user, "<span class='notice'>You unscrew the panel!</span>")
@@ -70,7 +70,7 @@
 		if (!istype(src.loc, /turf/simulated/floor/))
 			boutput(user, "<span class='alert'>Not sure what this floor is made of but you can't seem to wrench a hole for a bolt in it.</span>")
 			return
-		playsound(src.loc, "sound/items/Ratchet.ogg", 100, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		var/turf/T = get_turf(user)
 		if(src.anchored == 0)
 			boutput(user, "<span class='notice'>Now securing the SWORD Engine.</span>")

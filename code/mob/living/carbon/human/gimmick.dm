@@ -31,7 +31,7 @@
 		if(prob(5))
 			SPAWN(0)
 				src.say("HANK!")
-				playsound(src.loc, "sound/musical_instruments/Boathorn_1.ogg", 45, 1)
+				playsound(src.loc, 'sound/musical_instruments/Boathorn_1.ogg', 45, 1)
 
 /mob/living/carbon/human/cluwne/floor
 	nodamage = 1
@@ -539,7 +539,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			var/area/A = get_area(src)
 			var/list/alive_mobs = list()
 			var/list/dead_mobs = list()
-			if (A.population && length(A.population))
+			if (length(A?.population))
 				for(var/mob/living/M in oview(5,src))
 					if(!isdead(M))
 						alive_mobs += M
@@ -947,7 +947,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		src.ai = new /datum/aiHolder/human/yank(src)
 		remove_lifeprocess(/datum/lifeprocess/blindness)
 		remove_lifeprocess(/datum/lifeprocess/viruses)
-		src.ai.enabled = 0
+		src.ai.disable()
 
 	initializeBioholder()
 		. = ..()
@@ -964,7 +964,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			say(pick("Oh no you don't - not today, not ever!","Nice try fuckass, but I ain't goin' down so easy!","IMMA SCREAM BUDDY!","You wanna fuck around bucko? You wanna try your luck?"))
 			src.ai.interrupt()
 		src.ai.target = M
-		src.ai.enabled = 1
+		src.ai.enable()
 
 // This is Big Yank, one of John Bill's old buds. Yank owes John a favor. He's a Juicer.
 /mob/living/carbon/human/big_yank
@@ -981,7 +981,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		src.ai = new /datum/aiHolder/human/yank(src)
 		remove_lifeprocess(/datum/lifeprocess/blindness)
 		remove_lifeprocess(/datum/lifeprocess/viruses)
-		src.ai.enabled = 0
+		src.ai.disable()
 
 	initializeBioholder()
 		. = ..()
@@ -1001,7 +1001,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		if (prob(30))
 			say(pick("Hey you better back off [pick_string("johnbill.txt", "insults")]- I'm busy.","You feelin lucky, [pick_string("johnbill.txt", "insults")]?"))
 			src.ai.target = null
-			src.ai.enabled = 0
+			src.ai.disable()
 
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/tug/invoice))
@@ -1020,7 +1020,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			say(pick("Oh no you don't - not today, not ever!","Nice try asshole, but I ain't goin' down so easy!","Gonna take more than that to take out THIS Juicer!","You wanna fuck around bucko? You wanna try your luck?"))
 			src.ai.interrupt()
 		src.ai.target = M
-		src.ai.enabled = 1
+		src.ai.enable()
 
 
 #undef BILL_PICK

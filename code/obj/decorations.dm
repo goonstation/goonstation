@@ -197,7 +197,7 @@
 			graze(user)
 			return 0
 
-		playsound(src, "sound/impact_sounds/Bush_Hit.ogg", 50, 1, -1)
+		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, 1, -1)
 
 		var/original_x = pixel_x
 		var/original_y = pixel_y
@@ -276,7 +276,7 @@
 		user.lastattacked = src
 		hit_twitch(src)
 		attack_particle(user,src)
-		playsound(src, "sound/impact_sounds/Bush_Hit.ogg", 50, 1, 0)
+		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, 1, 0)
 		src.take_damage(W.force)
 		user.visible_message("<span class='alert'><b>[user] hacks at [src] with [W]!</b></span>")
 
@@ -291,7 +291,7 @@
 			src.add_filter("bite", 0, alpha_mask_filter(icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
 
 		eat_twitch(user)
-		playsound(user, "sound/items/eatfood.ogg", rand(10,50), 1)
+		playsound(user, 'sound/items/eatfood.ogg', rand(10,50), 1)
 
 		if (is_plastic)
 			user.setStatus("weakened", 3 SECONDS)
@@ -316,7 +316,7 @@
 	proc/destroy()
 		src.visible_message("<span class='alert'><b>The [src.name] falls apart!</b></span>")
 		new /obj/decal/cleanable/leaves(get_turf(src))
-		playsound(src.loc, "sound/impact_sounds/Wood_Snap.ogg", 90, 1)
+		playsound(src.loc, 'sound/impact_sounds/Wood_Snap.ogg', 90, 1)
 		qdel(src)
 
 	random
@@ -359,7 +359,7 @@
 		src.set_density(0)
 		icon_state = "bonsai-destroyed"
 		src.desc = "The scattered remains of a once-beautiful bonsai tree."
-		playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 0)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_3.ogg', 100, 0)
 		// The bonsai tree goes to the deadbar because of course it does, except when there is no deadbar of course
 		var/list/afterlife_turfs = get_area_turfs(/area/afterlife/bar)
 		if(length(afterlife_turfs))
@@ -402,7 +402,7 @@
 		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
 			src.destroy()
 			boutput(user, "<span class='alert'>I don't think the Captain is going to be too happy about this...</span>")
-			src.visible_message("<b><span class='alert'>[user] ravages the [src] with [W].</span></b>", 1)
+			src.visible_message("<b><span class='alert'>[user] ravages [src] with [W].</span></b>", 1)
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
 		return
 
@@ -433,7 +433,7 @@
 		if (!src) return
 		src.destroyed = 1
 		src.desc = "The scattered remains of a once-beautiful ship in a bottle."
-		playsound(src.loc, "sound/impact_sounds/Glass_Shards_Hit_1.ogg", 100, 0)
+		playsound(src.loc, 'sound/impact_sounds/Glass_Shards_Hit_1.ogg', 100, 0)
 		// The bonsai goes to the deadbar so I guess the ship in a bottle does too lol
 		var/obj/captain_bottleship/C = new /obj/captain_bottleship
 		C.overlays += image('icons/misc/32x64.dmi',"halo")
@@ -558,10 +558,10 @@
 	update_icon()
 		if (src.open)
 			src.icon_state = "[src.base_state]-c"
-			src.opacity = 1
+			src.set_opacity(1)
 		else
 			src.icon_state = "[src.base_state]-o"
-			src.opacity = 0
+			src.set_opacity(0)
 
 	left
 		icon_state = "blindsH-L-o"
@@ -848,6 +848,13 @@
 		pixel_x = -256
 		pixel_y = -256
 
+	regina
+		icon = 'icons/obj/large/320x320.dmi'
+		icon_state = "regina"
+		name = "Regina"
+		pixel_x = -110
+		pixel_y = -170
+
 	amantes
 		icon_state = "amantes"
 		name = "Amantes"
@@ -857,6 +864,12 @@
 	antistes
 		icon_state = "antistes"
 		name = "Antistes"
+		pixel_x = -256
+		pixel_y = -256
+
+	mors
+		icon_state = "mors"
+		name = "Mors"
 		pixel_x = -256
 		pixel_y = -256
 
@@ -1255,7 +1268,7 @@ obj/decoration/gibberBroken
 	icon = 'icons/obj/decoration.dmi'
 	desc = "A terribly cheap and discontinued old model of laser pistol."
 	icon_state = "laser_pistol"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "protopistol"
 	stamina_damage = 0
 	stamina_cost = 4
@@ -1292,7 +1305,6 @@ obj/decoration/gibberBroken
 	stamina_damage = 0
 	stamina_cost = 4
 	stamina_crit_chance = 0
-	var/list/proj_impacts = list()
 	var/image/proj_image = null
 	var/last_proj_update_time = null
 
@@ -1400,7 +1412,7 @@ obj/decoration/gibberBroken
 	proc/toggle_secure(mob/user as mob)
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the floor bolts of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
-		playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 		src.anchored = !(src.anchored)
 		src.p_class = src.anchored ? initial(src.p_class) : 2
 		return
@@ -1418,7 +1430,7 @@ obj/decoration/gibberBroken
 			if (P && src.material)
 				P.setMaterial(src.material)
 		else
-			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			var/obj/item/sheet/S = new (src.loc)
 			if (src.material)
 				S.setMaterial(src.material)
@@ -1495,8 +1507,9 @@ obj/decoration/pottedfern
 		anchored = 1
 
 		SPAWN(0)
-			for(var/i=0, i<rand(30,40), i++)
+			for(var/i=0, i<rand(15,25), i++)
 				particleMaster.SpawnSystem(new /datum/particleSystem/fireworks(src.loc))
+				playsound(src.loc, 'sound/effects/firework.ogg', 50, 1)
 				sleep(rand(2, 15))
 
 			for(var/mob/O in oviewers(world.view, src))

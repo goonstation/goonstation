@@ -4,6 +4,7 @@
 /turf/simulated/floor/feather
 	name = "weird floor"
 	desc = "I don't like the looks of that whatever-it-is."
+	var/flock_id = "Conduit"
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "floor"
 	flags = USEDELAY
@@ -26,7 +27,7 @@
 
 /turf/simulated/floor/feather/New()
 	..()
-	setMaterial(getMaterial("gnesis"))
+	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	light = new /datum/light/point
 	light.set_brightness(src.brightness)
 	light.set_color(col_r, col_g, col_b)
@@ -38,7 +39,7 @@
 	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Conduit
+		<br><span class='bold'>ID:</span> [src.flock_id]
 		<br><span class='bold'>System Integrity:</span> [round((src.health/50)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 
@@ -50,7 +51,7 @@
 		grab_smash(C, user)
 		return
 	if(ispryingtool(C) && src.broken)
-		playsound(src, "sound/items/Crowbar.ogg", 80, 1)
+		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
 		src.break_tile_to_plating()
 		return
 	if(src.broken)
@@ -61,11 +62,11 @@
 		src.visible_message("<span class='alert'><span class='bold'>[user]</span> smacks [src] with [C], shattering it!</span>")
 		src.name = "weird broken floor"
 		src.desc = "It's broken. You could probably use a crowbar to pull the remnants out."
-		playsound(src, "sound/impact_sounds/Crystal_Shatter_1.ogg", 25, 1)
+		playsound(src, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 25, 1)
 		break_tile()
 	else
 		src.visible_message("<span class='alert'><span class='bold'>[user]</span> smacks [src] with [C]!</span>")
-		playsound(src, "sound/impact_sounds/Crystal_Hit_1.ogg", 25, 1)
+		playsound(src, 'sound/impact_sounds/Crystal_Hit_1.ogg', 25, 1)
 	user.lastattacked = src
 
 /turf/simulated/floor/feather/break_tile_to_plating()
@@ -137,7 +138,7 @@
 	src.name = "weird glowing floor"
 	src.desc = "Looks like disco's not dead after all."
 	on = TRUE
-	//playsound(src.loc, "sound/machines/ArtifactFea3.ogg", 25, 1)
+	//playsound(src.loc, 'sound/machines/ArtifactFea3.ogg', 25, 1)
 	src.light.enable()
 
 /turf/simulated/floor/feather/proc/off()
@@ -162,9 +163,17 @@
 // WALL
 // -----
 
+TYPEINFO(/turf/simulated/wall/auto/feather)
+TYPEINFO_NEW(/turf/simulated/wall/auto/feather)
+	. = ..()
+	connect_overlay = TRUE
+	connect_diagonal = TRUE
+	connects_to = typecacheof(list(/turf/simulated/wall/auto/feather, /obj/machinery/door, /obj/window))
+	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window))
 /turf/simulated/wall/auto/feather
 	name = "weird glowing wall"
 	desc = "You can feel it thrumming and pulsing."
+	var/flock_id = "Nanite block"
 	icon = 'icons/turf/walls_flock.dmi'
 	icon_state = "flock0"
 	mod = "flock"
@@ -175,15 +184,11 @@
 	mat_appearances_to_ignore = list("steel", "gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-	connect_overlay = TRUE
-	connect_diagonal = TRUE
-	connects_to = list(/turf/simulated/wall/auto/feather, /obj/machinery/door, /obj/window)
-	connects_with_overlay = list(/obj/machinery/door, /obj/window)
 	var/broken = FALSE
 	var/on = FALSE
 
-	update_icon()
-		..()
+	// update_icon()
+	// 	..()
 		//TODO animate walls and put this back
 		//if (src.broken)
 		//	icon_state = icon_state + "b"
@@ -192,7 +197,7 @@
 
 /turf/simulated/wall/auto/feather/New()
 	..()
-	setMaterial(getMaterial("gnesis"))
+	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	src.health = src.max_health
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection)
@@ -201,7 +206,7 @@
 	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Nanite Block
+		<br><span class='bold'>ID:</span> [src.flock_id]
 		<br><span class='bold'>System Integrity:</span> [round((src.health/src.max_health)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 
@@ -222,7 +227,7 @@
 	if(!C || !user)
 		return
 	if(ispryingtool(C) && src.broken)
-		playsound(src, "sound/items/Crowbar.ogg", 80, 1)
+		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
 		src.destroy()
 		return
 	if(src.broken)
@@ -274,7 +279,7 @@
 /turf/simulated/wall/auto/feather/proc/takeDamage(damageType, amount, playAttackSound = TRUE)
 	src.health = max(src.health - amount, 0)
 	if (src.health > 0 && playAttackSound)
-		playsound(src, "sound/impact_sounds/Crystal_Hit_1.ogg", 80, 1)
+		playsound(src, 'sound/impact_sounds/Crystal_Hit_1.ogg', 80, 1)
 
 	if (!src.broken && src.health <= 0)
 		src.name = "weird broken wall"
@@ -283,7 +288,7 @@
 		src.UpdateIcon()
 		src.material.setProperty("reflective", 3)
 		if (playAttackSound)
-			playsound(src, "sound/impact_sounds/Crystal_Shatter_1.ogg", 25, 1)
+			playsound(src, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 25, 1)
 
 		for (var/mob/living/critter/flock/drone/flockdrone in src.contents)
 			if (flockdrone.floorrunning)
@@ -296,10 +301,10 @@
 	for (var/i = 1 to rand(3, 6))
 		if (prob(70))
 			B = new /obj/item/raw_material/scrap_metal(T)
-			B.setMaterial(getMaterial("gnesis"))
+			B.setMaterial(getMaterial("gnesis"), copy = FALSE)
 		else
 			B = new /obj/item/raw_material/shard(T)
-			B.setMaterial(getMaterial("gnesisglass"))
+			B.setMaterial(getMaterial("gnesisglass"), copy = FALSE)
 
 	src.ReplaceWith("/turf/simulated/floor/feather", FALSE)
 
@@ -321,7 +326,7 @@
 		src.desc = initial(src.desc)
 		src.broken = FALSE
 		src.UpdateIcon()
-		src.setMaterial(getMaterial("gnesis"))
+		src.setMaterial(getMaterial("gnesis"), copy = FALSE)
 	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.max_health - src.health)
 	src.health += health_given
 	return ceil(health_given / src.repair_per_resource)

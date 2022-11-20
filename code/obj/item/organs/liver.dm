@@ -11,7 +11,7 @@
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		if (src.get_damage() >= FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+		if (src.get_damage() >= fail_damage && prob(src.get_damage() * 0.2))
 			donor.contract_disease(failure_disease,null,null,1)
 		return 1
 

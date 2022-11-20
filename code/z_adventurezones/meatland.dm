@@ -189,7 +189,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			if (src.alive && ispryingtool(O))
 				user.visible_message("<span class='alert'><b>[user] jabs [src] with [O]!</b></span>", "<span class='alert'>You jab [src] with [O] and begin to pull!  Hold on!</span>")
 				if (do_after(user, 2 SECONDS))
-					playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 					gibs(src.loc)
 					if (src.loc)
 						new /obj/item/tile/steel (src.loc)
@@ -215,7 +215,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		if(ismob(M))
 			src.attacking = 1
 			src.visible_message("<span class='alert'><B>[src]</B> chomps down on [M]!</span>")
-			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 			random_brute_damage(M, rand(10,35), 1)
 			SPAWN(1 SECOND)
 				src.attacking = 0
@@ -229,7 +229,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 				src.task = "thinking"
 
 			src.icon_state = "[initial(src.icon_state)]-attack"
-			src.opacity = 0
+			src.set_opacity(0)
 			if (target)
 				if (GET_DIST(src, src.target) <= src.attack_range)
 					var/mob/living/carbon/M = src.target
@@ -247,11 +247,11 @@ meaty thoughts from cogwerks to his spacepal aibm:
 				src.task = "thinking"
 		else if (task == "attacking")
 			src.icon_state = "[initial(src.icon_state)]-attack"
-			src.opacity = 0
+			src.set_opacity(0)
 			return ..()
 		else
 			src.icon_state = initial(src.icon_state)
-			src.opacity = initial(src.opacity)
+			src.set_opacity(initial(src.opacity))
 			return ..()
 
 	proc/update_meat_head_dialog(var/new_text)
@@ -305,7 +305,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 				src.task = "thinking"
 
 			src.icon_state = "[initial(src.icon_state)]-attack"
-			src.opacity = 0
+			src.set_opacity(0)
 			if (target)
 				if(prob(30))
 					playsound(src.loc, pick(meathead_noises), 40, 1)
@@ -338,7 +338,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 		src.attacking = 1
 		src.visible_message("<span class='alert'>[src] slaps [M] with a meaty tendril!</span>")
-		playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 		M.changeStatus("weakened", 10 SECONDS)
 		random_brute_damage(M, 10, 1)
 		M.throw_at(get_edge_target_turf(M, get_dir(src, get_step_away(M, src))), 200, 4)
@@ -448,7 +448,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			var/mob/living/carbon/human/H = M
 			src.visible_message("<span class='alert'><b>[src] latches onto [M]'s stump!!</b></span>")
 			boutput(M, "<span class='alert'>OH FUCK OH FUCK GET IT OFF GET IT OFF IT STINGS!</span>")
-			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 			M.emote("scream")
 			M.changeStatus("stunned", 2 SECONDS)
 			random_brute_damage(M, 3)
@@ -471,7 +471,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		else
 			src.visible_message("<span class='alert'><B>[src]</B> smacks against [M]!</span>")
 			src.set_loc(M.loc)
-			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 			if(iscarbon(M))
 				if (prob(25))
 					M.changeStatus("weakened", 1 SECONDS)
@@ -523,7 +523,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 	CritterAttack(mob/M)
 		if (prob(20))
-			playsound(src.loc, "sound/misc/meatmonaut1.ogg", 50, 0)
+			playsound(src.loc, 'sound/misc/meatmonaut1.ogg', 50, 0)
 		return ..()
 
 /obj/item/disk/data/fixed_disk/meatland
@@ -874,7 +874,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 	explode()
 		. = isturf(src.loc) ? src.loc : get_turf(src)
-		playsound(., "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+		playsound(., 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 		gibs(.)
 		qdel(src)
 
@@ -1083,16 +1083,16 @@ meaty thoughts from cogwerks to his spacepal aibm:
 					locked = 0
 					src.icon_state = "cheget_unlocked"
 					src.visible_message("<span class='alert'>[src]'s lock mechanism clicks unlocked.</span>")
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 65, 1)
 					if (prob(50))
 						src.visible_message("<span class='alert'>[src] emits a happy bleep.</span>")
-						playsound(src.loc, "sound/machines/cheget_goodbloop.ogg", 30, 1)
+						playsound(src.loc, 'sound/machines/cheget_goodbloop.ogg', 30, 1)
 
 				else
 					locked = 1
 					src.icon_state = "cheget_closed"
 					src.visible_message("<span class='alert'>[src]'s lock mechanism clunks locked.</span>")
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 65, 1)
 			else if (href_list["enter"] == "")
 				if (locked)
 					return
@@ -1100,7 +1100,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 				src.icon_state = "cheget_closed"
 
 				src.visible_message("<span class='alert'>[src]'s lock mechanism clunks locked.</span>")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 65, 1)
 
 			else
 				usr << output("HET!&0", "cheget.browser:updateReadout")
@@ -1111,7 +1111,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 							any_of_them_right++
 
 					src.visible_message("<span class='alert'>[src] emits a[(any_of_them_right > 1) ? "couple" : null] grumpy boop[(any_of_them_right > 1) ? "s" : null].</span>")
-					playsound(src.loc, "sound/machines/cheget_grumpbloop.ogg", 30, 1)
+					playsound(src.loc, 'sound/machines/cheget_grumpbloop.ogg', 30, 1)
 
 /obj/machinery/computer3/luggable/cheget
 	name = "\improper Cheget"
@@ -1193,7 +1193,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		if(href_list["key"] && istype(usr.equipped(), /obj/item/device/key))
 			boutput(usr, "<span class='alert'>It doesn't fit.  Must be the wrong key.</span>")
 			host.visible_message("<span class='alert'>[src.loc] emits a grumpy boop.</span>")
-			playsound(src.loc, "sound/machines/cheget_grumpbloop.ogg", 30, 1)
+			playsound(src.loc, 'sound/machines/cheget_grumpbloop.ogg', 30, 1)
 
 		return
 
@@ -1246,7 +1246,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		else if (href_list["eject_key"])
 			if(src.inserted_key)
 				boutput(usr, "<span class='notice'>You turn the key and pull it out of the lock. The green light turns off.</span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 30, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 30, 1)
 				src.inserted_key.set_loc(get_turf(src.loc))
 				src.inserted_key = null
 				SPAWN(1 SECOND)
@@ -1289,7 +1289,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			if (findtext(O.name, "onyx"))
 				opened = 1
 				user.visible_message("<span class='alert'><b>[user] inserts [O] into [src]!</b></span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 60, 1)
 				qdel(O)
 
 				src.visible_message("<span class='alert'>Something pops out of [src]!</span>")
@@ -1368,7 +1368,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		if (active)
 			return 1
 
-		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 		src.icon_state = "ganglion[++active]"
 		light.enable()
 
@@ -1408,7 +1408,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		if (!active || latching)
 			return 1
 
-		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 		src.icon_state = "ganglion[--active]"
 		light.disable()
 
@@ -1451,7 +1451,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		flick("fangdoorc0",src)
 		src.icon_state = "fangdoor0"
 		set_density(0)
-		opacity = 0
+		set_opacity(0)
 		src.name = "unsealed door"
 		SPAWN(1.3 SECONDS)
 			changing_state = 0
@@ -1467,7 +1467,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		active = (opened != default_state)
 
 		set_density(1)
-		opacity = 1
+		set_opacity(1)
 		flick("fangdoorc1",src)
 		for (var/mob/living/L in src.loc)
 			if (prob(10))
@@ -1480,7 +1480,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 					random_brute_damage(L, 25, 1)
 			else
 				L.visible_message("<span class='alert'><b>[L] is gored by [src]!</b></span>", "<span class='alert'><b>OH SHIT</b></span>")
-				playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				logTheThing(LOG_COMBAT, L, "was gibbed by [src] ([src.type]) at [log_loc(L)].")
 				L.gib()
 
@@ -1608,7 +1608,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 			theGib.throw_at(target, 8, 2)
 			random_brute_damage(user, rand(5,15))
-			playsound(T, "sound/impact_sounds/Flesh_Break_1.ogg", 40, 1)
+			playsound(T, 'sound/impact_sounds/Flesh_Break_1.ogg', 40, 1)
 
 			user.visible_message("<span class='alert'><b>[user]</b> blasts a lump of flesh at [target]!</span>")
 			if (prob(15))

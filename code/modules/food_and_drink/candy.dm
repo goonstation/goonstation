@@ -62,6 +62,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 	real_name = "candy cane"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "candycane"
+	item_state = "candycane_h"
 	sugar_content = 20
 	food_effects = list("food_energized")
 
@@ -210,6 +211,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 				tastesbad = 0
 
 	heal(var/mob/M)
+		..()
 		if (tastesbad)
 			boutput(M, "<span class='alert'>[phrase]! That tasted like [flavor]...</span>")
 		else

@@ -147,7 +147,7 @@
 				src.set_density(0)
 				src.update_nearby_tiles()
 				if (ignore_light_or_cam_opacity)
-					src.opacity = 0
+					src.set_opacity(0)
 				else
 					src.RL_SetOpacity(0)
 				src.operating = 0
@@ -163,7 +163,7 @@
 				sleep(1.5 SECONDS)
 
 				if (ignore_light_or_cam_opacity)
-					src.opacity = 1
+					src.set_opacity(1)
 				else
 					src.RL_SetOpacity(1)
 				src.operating = 0
@@ -260,6 +260,6 @@
 	var/obj/head = user.organHolder.drop_organ("head")
 	qdel(head)
 	make_cleanable( /obj/decal/cleanable/blood/gibs,src.loc)
-	playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
+	playsound(src.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 
 	return TRUE

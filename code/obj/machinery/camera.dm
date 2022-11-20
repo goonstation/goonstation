@@ -10,7 +10,7 @@
 	layer = EFFECTS_LAYER_UNDER_1
 	var/c_tag = null
 	var/c_tag_order = 999
-	var/camera_status = 1
+	var/camera_status = TRUE
 	anchored = 1
 	var/invuln = null
 	var/last_paper = 0
@@ -28,34 +28,11 @@
 	//Here's a list of cameras pointing to this camera for reprocessing purposes
 	var/list/obj/machinery/camera/referrers = list()
 
-	//MBC : Ok so this is a kind of dumb optimization thing. We want to unsubscribe cameras from the machine loop that do not need to process (All wall-mounted stuffs)
-	//		But sometimes a camera is created and then placed inside an object after a certain amount of ticks!!
-	//		We are gonna give cameras a grace period of a few process cycles before they decide they aren't needed. This is PROBABLY FINE!
-	var/unsubscribe_grace_counter = 0
-
-	var/oldx = 0
-	var/oldy = 0
-
 	ranch
 		name = "autoname"
 		network = "ranch"
 		color = "#AAFF99"
 		c_tag = "autotag"
-
-/obj/machinery/camera/process()
-	.=..()
-	if(!isturf(src.loc)) //This will end up removing coverage if camera is inside a thing.
-		var/turf/T = get_turf(src)
-		if(T && (T.x != oldx || T.y != oldy)) //This will end up removing coverage if camera is inside a thing.
-			src.updateCoverage() //MBC : handles moving cameras!
-			oldx = T.x
-			oldy = T.y
-
-	else if (src.type == /obj/machinery/camera) //we actually don't want this check to affect children, so we compare to exact type
-		unsubscribe_grace_counter++
-		if (unsubscribe_grace_counter >= 5)
-			UnsubscribeProcess()
-			unsubscribe_grace_counter = -1
 
 /obj/machinery/camera/television
 	name = "television camera"
@@ -131,11 +108,22 @@
 	//if only these had a common parent...
 	if (istype(area, /area/station/turret_protected/ai) || istype(area, /area/station/turret_protected/ai_upload) || istype(area, /area/station/turret_protected/AIsat))
 		src.ai_only = TRUE
+
+	AddComponent(/datum/component/camera_coverage_emitter)
+
 	START_TRACKING
 	SPAWN(1 SECOND)
 		addToNetwork()
-		updateCoverage()
 
+/obj/machinery/camera/proc/set_camera_status(status)
+	src.camera_status = status
+	var/datum/component/camera_coverage_emitter/emitter = GetComponent(/datum/component/camera_coverage_emitter)
+	emitter.set_active(src.camera_status)
+
+/obj/machinery/camera/proc/update_coverage()
+	PRIVATE_PROC(TRUE)
+	var/datum/component/camera_coverage_emitter/emitter = GetComponent(/datum/component/camera_coverage_emitter)
+	camera_coverage_controller.update_emitter(emitter)
 
 /obj/machinery/camera/proc/addToNetwork()
 
@@ -165,12 +153,10 @@
 /obj/machinery/camera/disposing()
 	STOP_TRACKING
 	if(src.camera_status)
-		src.camera_status = FALSE
-		updateCoverage()
+		src.set_camera_status(FALSE)
 
 	if(camnets && camnets[network])
 		camnets[network].Remove(src)
-
 
 	if (c_north)
 		c_north.referrers -= src
@@ -207,7 +193,7 @@
 	if(src.invuln)
 		return
 	else
-		updateCoverage() // explosion happened, probably destroyed nearby turfs, better rebuild
+		update_coverage() // explosion happened, probably destroyed nearby turfs, better rebuild
 		..(severity)
 	return
 
@@ -225,7 +211,7 @@
 		if(!istype(src, /obj/machinery/camera/television))
 			src.icon_state = initial(src.icon_state)
 
-		updateCoverage()
+		update_coverage()
 
 	src.disconnect_viewers()
 	return
@@ -265,20 +251,19 @@
 				boutput(O, "The screen bursts into static.")
 
 /obj/machinery/camera/proc/break_camera(mob/user)
-	src.camera_status = FALSE
-	playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
+	src.set_camera_status(FALSE)
+	playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 	src.icon_state = "camera1"
-	updateCoverage()
 	if (user)
 		user.visible_message("<span class='alert'>[user] has deactivated [src]!</span>", "<span class='alert'>You have deactivated [src].</span>")
 		logTheThing(LOG_STATION, null, "[key_name(user)] deactivated a security camera ([log_loc(src.loc)])")
 		add_fingerprint(user)
 
 /obj/machinery/camera/proc/repair_camera(mob/user)
-	src.camera_status = TRUE
-	playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
+	src.set_camera_status(TRUE)
+	playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 	src.icon_state = "camera"
-	updateCoverage()
+	// updateCoverage()
 	if (user)
 		user.visible_message("<span class='alert'>[user] has reactivated [src]!</span>", "<span class='alert'>You have reactivated [src].</span>")
 		add_fingerprint(user)
@@ -325,8 +310,7 @@
 	.= 0
 	if (isturf(M.loc))
 		var/turf/T = M.loc
-		.= (T.cameras && length(T.cameras))
-
+		. = (T.camera_coverage_emitters && length(T.camera_coverage_emitters))
 
 /obj/machinery/camera/motion
 	name = "Motion Security Camera"
@@ -506,7 +490,3 @@
 	else
 		logTheThing(LOG_DEBUG, null, "<B>SpyGuy/Camnet:</B> Camera at [log_loc(C)] rejected because [dir_var] was already set.")
 		*/
-
-
-
-

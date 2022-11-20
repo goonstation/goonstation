@@ -13,6 +13,8 @@ proc/check_map_correctness()
 	check_apcless_station_areas()
 	check_lightswitchless_station_areas()
 	check_unsimulated_station_turfs()
+	check_duplicate_area_names()
+	check_missing_material()
 
 proc/check_missing_navbeacons()
 	var/list/all_beacons = list()
@@ -69,6 +71,7 @@ proc/check_door_turfs()
 proc/check_window_turfs()
 	var/list/log_lines = list()
 	for(var/obj/window/window in world)
+		if (QDELETED(window)) return
 		var/turf/T = window.loc
 		if(istype(T.loc, /turf/space) || T.density)
 			log_lines += "[window] [window.type] on [T.x], [T.y], [T.z] in [T.loc]"
@@ -126,5 +129,34 @@ proc/check_unsimulated_station_turfs()
 		log_lines += "[T] [T.type] on [T.x], [T.y], [T.z] in [T.loc]"
 	if(length(log_lines))
 		CRASH("Unsimulated station turfs:\n" + jointext(log_lines, "\n"))
+
+proc/check_duplicate_area_names()
+	var/list/names = list()
+	for (var/area/A in world)
+		if (!istype(A, /area/shuttle/merchant_shuttle)) // i quite frankly do not have the fucking energy to defuck merchant shuttle paths
+			LAZYLISTINIT(names[A.name])
+			names[A.name] |= A.type
+
+	var/list/dupes = list()
+	for (var/name in names)
+		if (length(names[name]) > 1)
+			dupes += name
+
+	if (length(dupes))
+		// Build descriptive failure message
+		var/log_msg
+		for (var/dupe in dupes)
+			log_msg += "The following areas have duplicate name \"[dupe || "***EMPTY STRING***"]\": [english_list(names[dupe])]\n"
+
+		CRASH(log_msg)
+
+proc/check_missing_material()
+	var/list/missing = list()
+	for_by_tcl(grille, /obj/grille)
+		if (isnull(grille.material))
+			missing += "[grille] [grille.type] on [grille.x], [grille.y], [grille.z] in [get_area(grille)]"
+	if(length(missing))
+		var/missing_text = jointext(missing, "\n")
+		CRASH("Missing materials:\n" + missing_text)
 
 #endif

@@ -56,7 +56,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 				if (P.status & (NOPOWER|BROKEN))
 					continue
 				flick("printer-printing",P)
-				playsound(P.loc, "sound/machines/printer_dotmatrix.ogg", 50, 1)
+				playsound(P.loc, 'sound/machines/printer_dotmatrix.ogg', 50, 1)
 				SPAWN(3.2 SECONDS)
 					var/obj/item/poster/titled_photo/np = new(get_turf(P))
 					if (p_title)
@@ -159,7 +159,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 				if (P.status & (NOPOWER|BROKEN))
 					continue
 				flick("printer-printing",P)
-				playsound(P.loc, "sound/machines/printer_dotmatrix.ogg", 50, 1)
+				playsound(P.loc, 'sound/machines/printer_dotmatrix.ogg', 50, 1)
 				SPAWN(3.2 SECONDS)
 					var/obj/item/poster/titled_photo/wp = new(get_turf(P))
 					if (w_name)
@@ -291,12 +291,12 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			return ..()
 
 	attack(mob/M, mob/user)
-		if (src.popup_win && (src.no_spam + 25) <= ticker.round_elapsed_ticks)
+		if (src.popup_win && !ON_COOLDOWN(M, "poster_spam", 8 SECONDS))
 			user.tri_message(M, "<span class='alert'><b>[user]</b> shoves [src] in [user == M ? "[his_or_her(user)] own" : "[M]'s"] face!</span>",\
 				"<span class='alert'>You shove [src] in [user == M ? "your own" : "[M]'s"] face!</span>",\
 				"<span class='alert'>[M == user ? "You shove" : "<b>[user]</b> shoves"] [src] in your[M == user ? " own" : null] face!</span>")
 			if (M.client)
-				src.show_popup_win(M.client)
+				SETUP_GENERIC_ACTIONBAR(user, M, 2 SECONDS, .proc/show_popup_win, M.client, src.icon, src.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED)
 			src.no_spam = ticker.round_elapsed_ticks
 		else
 			return // don't attack people with the poster thanks
@@ -499,7 +499,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			boutput(user, "<span class='alert'>\The [src] buzzes grumpily!</span>")
 			return
 		src.papers --
-		playsound(src, "sound/machines/printer_dotmatrix.ogg", 30, 1)
+		playsound(src, 'sound/machines/printer_dotmatrix.ogg', 30, 1)
 		var/obj/item/poster/titled_photo/P = new (src.loc)
 		P.author = user.key
 		P.name = "Wanted: [src.plist["name"]]"

@@ -13,7 +13,7 @@
 	return {"<span class='bold'>Construction Percentage:</span> [!src.goal == 0 ? round((src.currentmats/src.goal)*100) : 0]%
 	<br><span class='bold'>Construction Progress:</span> [currentmats] materials added, [goal] needed"}
 
-/obj/flock_structure/ghost/New(atom/location, obj/flock_structure/building = null, datum/flock/F = null, goal = 0)
+/obj/flock_structure/ghost/New(atom/location, datum/flock/F, obj/flock_structure/building = null, goal = 0)
 	..(location, F)
 	START_TRACKING
 	if(building)
@@ -48,22 +48,19 @@
 
 	if (src.flock)
 		if(building == /obj/flock_structure/relay)
-			src.flock.relay_in_progress_or_finished = TRUE
+			src.flock.relay_in_progress = TRUE
 			src.uses_health_icon = FALSE
 			src.flock.removeAnnotation(src, FLOCK_ANNOTATION_HEALTH)
+			src.info_tag?.set_tag_offset(64, -4) // see comments for same numbers in relay file
+
+	src.info_tag?.set_info_tag("Resources: [src.currentmats]/[src.goal]")
 
 /obj/flock_structure/ghost/disposing()
 	if (src.flock)
-		if (src.flock.relay_in_progress_or_finished && src.building == /obj/flock_structure/relay && !(locate(/obj/flock_structure/relay) in src.flock.structures))
-			src.flock.relay_in_progress_or_finished = FALSE
+		if (src.flock.relay_in_progress && src.building == /obj/flock_structure/relay && !(locate(/obj/flock_structure/relay) in src.flock.structures))
+			src.flock.relay_in_progress = FALSE
 	STOP_TRACKING
 	. = ..()
-
-/obj/flock_structure/ghost/Click(location, control, params)
-	if (("alt" in params2list(params)) || !istype(usr, /mob/living/intangible/flock/flockmind))
-		return ..()
-	if (tgui_alert(usr, "Cancel tealprint construction?", "Tealprint", list("Yes", "No")) == "Yes")
-		cancelBuild()
 
 /obj/flock_structure/ghost/deconstruct()
 	cancelBuild()
@@ -93,10 +90,12 @@
 		return
 
 	updatealpha()
+	src.info_tag.set_info_tag("Resources: [src.currentmats]/[src.goal]")
 
 /obj/flock_structure/ghost/proc/completebuild()
 	if(src.building)
 		new building(get_turf(src), src.flock)
+		src.flock?.structures_made++
 	qdel(src)
 
 /obj/flock_structure/ghost/proc/cancelBuild()

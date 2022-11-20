@@ -25,6 +25,7 @@
 #endif
 		var/docked_where = shuttle == "diner" ? "space diner" : "station";
 		command_alert("A merchant shuttle will dock with the [docked_where] shortly.", "Commerce and Customs Alert")
+		signal_dock(shuttle, DOCK_EVENT_INCOMING)
 		for(var/client/C in clients)
 			if(C.mob && (C.mob.z == Z_LEVEL_STATION))
 				C.mob.playsound_local(C.mob, 'sound/misc/announcement_chime.ogg', 30, 0)
@@ -41,15 +42,26 @@
 					end_location = locate(map_settings ? map_settings.merchant_right_station : /area/shuttle/merchant_shuttle/right_station)
 
 			var/list/dest_turfs = src.arrive()
+			signal_dock(shuttle, DOCK_EVENT_ARRIVED)
 
 			SPAWN(rand(5 MINUTES, 10 MINUTES))
 				command_alert("The merchant shuttle is preparing to undock, please stand clear.", "Merchant Departure Alert")
 
+				signal_dock(shuttle, DOCK_EVENT_OUTGOING)
 				sleep(30 SECONDS)
 
 				src.depart(dest_turfs)
-
+				signal_dock(shuttle, DOCK_EVENT_DEPARTED)
 				active = FALSE
+
+	proc/signal_dock(var/dock, var/event)
+		switch(dock)
+			if("diner")
+				SEND_GLOBAL_SIGNAL(COMSIG_DOCK_TRADER_DINER, event)
+			if("left")
+				SEND_GLOBAL_SIGNAL(COMSIG_DOCK_TRADER_WEST, event)
+			if("right")
+				SEND_GLOBAL_SIGNAL(COMSIG_DOCK_TRADER_EAST, event)
 
 	/// Get shuttle from centcom
 	proc/arrive()

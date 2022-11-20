@@ -232,7 +232,7 @@
 
 	proc/toggle()
 		src.on = !src.on
-		playsound(assigned, "sound/items/mesonactivate.ogg", 30, 1)
+		playsound(assigned, 'sound/items/mesonactivate.ogg', 30, 1)
 		if (src.on)
 			assigned.vision.set_scan(1)
 			APPLY_ATOM_PROPERTY(donor, PROP_MOB_MESONVISION, src)

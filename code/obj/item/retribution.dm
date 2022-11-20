@@ -126,7 +126,7 @@
 			for (increment_y = -1; increment_y <= 1; increment_y++)
 				for (increment_x = -1; increment_x <= 1; increment_x++)
 					if (increment_x == 0 && increment_y == 0)
-						playsound(user.loc, "sound/effects/shielddown.ogg", 50, 1)
+						playsound(user.loc, 'sound/effects/shielddown.ogg', 50, 1)
 					else
 						destruction_point_x = scan_center_x + increment_x
 						destruction_point_y = scan_center_y + increment_y
@@ -147,7 +147,7 @@
 					random_burn_damage(scan_target, 30)
 					scan_target.changeStatus("weakened", 2 SECOND)
 				INVOKE_ASYNC(scan_target, /mob.proc/emote, "scream")
-				playsound(scan_target.loc, "sound/impact_sounds/burn_sizzle.ogg", 70, 1)
+				playsound(scan_target.loc, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
 			else if (istype(scan_target, /obj/structure/girder))
 				create_scan_decal = true
 				scan_target.ex_act(1)
@@ -164,7 +164,7 @@
 			T = T.ReplaceWith(/turf/simulated/floor/plating/random)
 		if(create_scan_decal)
 			leavescan(T, 1)
-			playsound(T, "sound/effects/smoke_tile_spread.ogg", 50, 1)
+			playsound(T, 'sound/effects/smoke_tile_spread.ogg', 50, 1)
 		return
 
 /obj/decal/syndicate_destruction_scan_center

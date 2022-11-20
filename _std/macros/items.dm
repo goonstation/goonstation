@@ -12,6 +12,7 @@
 #define ischoppingtool(x) (istool(x, TOOL_CHOPPING))
 #define isweldingtool(x) (istool(x, TOOL_WELDING))
 #define issawingtool(x) (istool(x, TOOL_SAWING))
+#define isspooningtool(x) (istool(x, TOOL_SPOONING))
 
 /// Returns true if the given x is a grab (obj/item/grab)
 #define isgrab(x) (istype(x, /obj/item/grab/))

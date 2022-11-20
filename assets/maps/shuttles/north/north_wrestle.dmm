@@ -70,8 +70,10 @@
 /area/centcom/outside)
 "aT" = (
 /obj/machinery/door/airlock/pyro/security{
-	dir = 4
+	dir = 4;
+	hardened = 1
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/airless/black,
 /area/shuttle/escape/centcom)
 "bi" = (
@@ -696,7 +698,10 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "tU" = (
-/obj/machinery/door/airlock/pyro/glass/command,
+/obj/machinery/door/airlock/pyro/glass/command{
+	hardened = 1
+	},
+/obj/access_spawn/heads,
 /turf/unsimulated/floor/white,
 /area/shuttle/escape/centcom)
 "uI" = (
@@ -1002,7 +1007,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "Li" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "Mk" = (
@@ -1351,7 +1356,7 @@
 	},
 /area/shuttle/escape/centcom)
 "TB" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/white,
 /area/shuttle/escape/centcom)
 "Ua" = (

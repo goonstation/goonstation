@@ -1,0 +1,921 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aI" = (
+/obj/reagent_dispensers/watertank/fountain,
+/turf/simulated/floor,
+/area/prefab/adrift_cargorouter)
+"bj" = (
+/obj/stool/bed,
+/obj/decal/cleanable/generic{
+	name = "Shredded Fabric"
+	},
+/obj/item/clothing/suit/bedsheet/yellow{
+	desc = "A linen sheet used to cover yourself while you sleep. Seems to have a few holes scorched into it...";
+	eyeholes = 1
+	},
+/turf/simulated/floor/yellow,
+/area/prefab/adrift_cargorouter)
+"br" = (
+/obj/rack,
+/obj/item/weldingtool{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 1;
+	pixel_y = 10
+	},
+/turf/simulated/floor,
+/area/prefab/adrift_cargorouter)
+"bv" = (
+/turf/simulated/floor/bot,
+/area/prefab/adrift_cargorouter)
+"cm" = (
+/obj/storage/crate/medical{
+	desc = "A medical crate. For holding medical things. A serial code seems to have been scratched off it."
+	},
+/obj/item/clothing/mask/gas/injector_mask,
+/obj/item/reagent_containers/syringe/morphine,
+/obj/item/reagent_containers/emergency_injector/random{
+	pixel_y = -6
+	},
+/obj/item/reagent_containers/emergency_injector/random,
+/turf/simulated/floor/orangeblack/side{
+	dir = 6
+	},
+/area/prefab/adrift_cargorouter)
+"di" = (
+/turf/simulated/floor/caution/misc{
+	dir = 1
+	},
+/area/prefab/adrift_cargorouter)
+"ez" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/engine,
+/area/prefab/adrift_cargorouter)
+"fB" = (
+/obj/decal/floatingtiles/random,
+/turf/space,
+/area/noGenerate)
+"fJ" = (
+/obj/machinery/conveyor/SN{
+	id = "lostrouter"
+	},
+/turf/simulated/floor,
+/area/prefab/adrift_cargorouter)
+"fZ" = (
+/obj/decal/cleanable/paper,
+/turf/simulated/floor,
+/area/prefab/adrift_cargorouter)
+"gI" = (
+/obj/forcefield/energyshield/perma,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/engine,
+/area/prefab/adrift_cargorouter)
+"he" = (
+/obj/lattice{
+	dir = 2;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/noGenerate)
+"hA" = (
+/obj/storage/closet/emergency,
+/turf/simulated/floor,
+/area/prefab/adrift_cargorouter)
+"hD" = (
+/obj/forcefield/energyshield/perma,
+/turf/simulated/floor/engine,
+/area/prefab/adrift_cargorouter)
+"hI" = (
+/obj/table/auto,
+/obj/machinery/light/lamp/green{
+	pixel_x = -4;
+	pixel_y = 13
+	},
+/obj/item/paper/book/from_file/pocketguide/quartermaster{
+	pixel_x = 6;
+	pixel_y = 4;
+	name = "Pristine Cargo Pocket Guide";
+	desc = "A condensed guide of job responsibilities and tips for new crewmembers, though this copy looks like it has never been touched."
+	},
+/obj/decoration/bullethole{
+	pixel_x = -24;
+	pixel_y = -5
+	},
+/obj/decoration/bullethole{
+	pixel_x = -27;
+	pixel_y = 5
+	},
+/turf/simulated/floor/yellow,
+/area/prefab/adrift_cargorouter)
+"ig" = (
+/obj/lattice,
+/turf/space,
+/area/noGenerate)
+"iy" = (
+/obj/decal/cleanable/oil/streak,
+/turf/simulated/floor/engine,
+/area/prefab/adrift_cargorouter)
+"iQ" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/noGenerate)
+"iZ" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/wall/false_wall,
+/area/prefab/adrift_cargorouter)
+"jn" = (
+/obj/machinery/launcher_loader/north,
+/turf/simulated/floor/delivery,
+/area/prefab/adrift_cargorouter)
+"kW" = (
+/obj/machinery/conveyor/SN{
+	id = "lostrouter"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 1
+	},
+/area/prefab/adrift_cargorouter)
+"kY" = (
+/obj/shrub/dead,
+/turf/simulated/floor/yellow,
+/area/prefab/adrift_cargorouter)
+"ls" = (
+/obj/machinery/conveyor/WE{
+	id = "lostrouter"
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
+	},
+/area/prefab/adrift_cargorouter)
+"mf" = (
+/turf/simulated/floor/yellow/corner{
+	dir = 8
+	},
+/area/prefab/adrift_cargorouter)
+"nn" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"nV" = (
+/obj/forcefield/energyshield/perma,
+/obj/plasticflaps,
+/obj/machinery/conveyor/SN{
+	id = "lostrouter"
+	},
+/turf/simulated/floor/delivery,
+/area/prefab/adrift_cargorouter)
+"or" = (
+/obj/machinery/light,
+/obj/table/auto,
+/obj/item/paper{
+	icon_state = "paper";
+	info = "<center><h3>Current Inventory</h3></center><ul style='list-style-type:disc'><li>One Standard Fish Shipment</li><li>One Urgent Cola Resupply</li><li>One Live Sample Crate, Welded for Safety</li><li>One Experimental Medical Crate</li><li>One Counter-Revolutionary Kit, Never Arrived</li><li>One Weapons Crate - Phasers</li></ul>";
+	name = "Current Inventory";
+	pixel_y = 5;
+	pixel_x = -4
+	},
+/obj/item/pen{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/turf/simulated/floor/orangeblack/side,
+/area/prefab/adrift_cargorouter)
+"oB" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"oG" = (
+/obj/storage/crate/biohazard{
+	welded = 1;
+	name = "strange biohazard crate";
+	desc = "A crate for biohazardous materials. You can hear a faint scratching from it..."
+	},
+/mob/living/critter/small_animal/mouse/mad,
+/mob/living/critter/small_animal/mouse/mad,
+/obj/critter/fermid,
+/obj/critter/bat/buff,
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
+	},
+/area/prefab/adrift_cargorouter)
+"pU" = (
+/obj/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/prefab/adrift_cargorouter)
+"qV" = (
+/turf/simulated/floor,
+/area/prefab/adrift_cargorouter)
+"rh" = (
+/obj/item/raw_material/scrap_metal,
+/turf/space,
+/area/noGenerate)
+"rP" = (
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
+	},
+/area/prefab/adrift_cargorouter)
+"sN" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
+	},
+/area/prefab/adrift_cargorouter)
+"tH" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"tJ" = (
+/turf/simulated/floor/orangeblack/corner{
+	dir = 1
+	},
+/area/prefab/adrift_cargorouter)
+"un" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/engine,
+/area/prefab/adrift_cargorouter)
+"uD" = (
+/obj/disposalpipe/segment/transport{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/obj/item/device/infra_sensor,
+/turf/simulated/floor,
+/area/prefab/adrift_cargorouter)
+"vl" = (
+/obj/decal/cleanable/rust,
+/turf/simulated/wall/auto/supernorn,
+/area/prefab/adrift_cargorouter)
+"vq" = (
+/obj/item/scrap,
+/turf/space,
+/area/noGenerate)
+"vz" = (
+/turf/simulated/floor/delivery/caution,
+/area/prefab/adrift_cargorouter)
+"vM" = (
+/obj/machinery/disposal/transport{
+	name = "transport chute - Crew Module"
+	},
+/obj/disposalpipe/trunk/transport{
+	dir = 8
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 5
+	},
+/area/prefab/adrift_cargorouter)
+"wh" = (
+/obj/machinery/conveyor_switch{
+	id = "lostrouter"
+	},
+/turf/simulated/floor,
+/area/prefab/adrift_cargorouter)
+"wn" = (
+/turf/simulated/wall/auto/supernorn,
+/area/prefab/adrift_cargorouter)
+"xX" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	name = "Crew Module";
+	aiControlDisabled = 1;
+	aiDisabledIdScanner = 1
+	},
+/turf/simulated/floor/yellow,
+/area/prefab/adrift_cargorouter)
+"ya" = (
+/obj/table/auto,
+/obj/item/clipboard/with_pen{
+	pixel_y = 8;
+	pixel_x = -5
+	},
+/obj/item/paper{
+	pixel_y = 2;
+	pixel_x = 5;
+	name = "Old List";
+	info = "<h4>Shitty TODO List</h4>Clean the podbay, bit of a slippin hazard.<br>Clean the chute back to my bed off, tired of getting dirt in my bed.<br>Get someone to find out why my walls keep creaking, either I got rats or this whole router is about to snap off the damn station.."
+	},
+/obj/item/clothing/head/paper_hat{
+	pixel_y = 11;
+	pixel_x = 7
+	},
+/turf/simulated/floor/yellow,
+/area/prefab/adrift_cargorouter)
+"yo" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/noGenerate)
+"zk" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/prefab/adrift_cargorouter)
+"zl" = (
+/obj/stool/chair/office/yellow{
+	dir = 1;
+	tag = "icon-office_chair_yellow (NORTH)"
+	},
+/turf/simulated/floor/yellow,
+/area/prefab/adrift_cargorouter)
+"zu" = (
+/obj/storage/closet/fire,
+/turf/simulated/floor,
+/area/prefab/adrift_cargorouter)
+"zA" = (
+/obj/structure/girder,
+/turf/simulated/floor/plating/airless,
+/area/prefab/adrift_cargorouter)
+"Az" = (
+/obj/decal/poster/wallsign/warning3,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/adrift_cargorouter)
+"Bj" = (
+/obj/decal/poster/wallsign/poster_sol{
+	pixel_x = 13
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/prefab/adrift_cargorouter)
+"CS" = (
+/obj/random_pod_spawner/random_putt_spawner,
+/turf/simulated/floor/engine,
+/area/prefab/adrift_cargorouter)
+"CT" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/engine,
+/area/prefab/adrift_cargorouter)
+"Dl" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/storage/secure/crate/weapon{
+	open = 1;
+	locked = 0
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 9
+	},
+/area/prefab/adrift_cargorouter)
+"Dn" = (
+/obj/grille/catwalk{
+	dir = 9;
+	icon_state = "catwalk_cross"
+	},
+/turf/space,
+/area/noGenerate)
+"DY" = (
+/obj/railing/yellow{
+	dir = 8
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 10
+	},
+/area/prefab/adrift_cargorouter)
+"Ef" = (
+/turf/simulated/floor/engine,
+/area/prefab/adrift_cargorouter)
+"Eo" = (
+/obj/machinery/manufacturer/qm,
+/turf/simulated/floor/orangeblack,
+/area/prefab/adrift_cargorouter)
+"Er" = (
+/obj/disposaloutlet{
+	dir = 1
+	},
+/obj/disposalpipe/trunk/transport{
+	dir = 4
+	},
+/turf/simulated/floor/yellow,
+/area/prefab/adrift_cargorouter)
+"Ft" = (
+/obj/machinery/conveyor/WE{
+	id = "lostrouter"
+	},
+/turf/simulated/floor,
+/area/prefab/adrift_cargorouter)
+"GY" = (
+/obj/grille/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/turf/space,
+/area/noGenerate)
+"Ip" = (
+/obj/disposalpipe/segment/transport{
+	icon_state = "pipe-c"
+	},
+/obj/item/pen/infrared,
+/obj/decal/cleanable/writing/infrared{
+	pixel_y = 25;
+	words = "Another one down! Another one down~ Another NT dirtbag drifting in space! I eagerly await the next...";
+	name = "Faint Scrawlings"
+	},
+/obj/decal/cleanable/cobweb2,
+/obj/item/reagent_containers/food/snacks/burger/moldy{
+	pixel_x = -5;
+	pixel_y = -6
+	},
+/obj/item/ammo/power_cell/self_charging/potato{
+	pixel_x = 7;
+	pixel_y = 8;
+	max_charge = 75;
+	charge = 0;
+	recharge_rate = 0.5
+	},
+/turf/simulated/floor,
+/area/prefab/adrift_cargorouter)
+"ID" = (
+/obj/table/folding,
+/obj/item/matchbook{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/decoration/ashtray{
+	icon_state = "ashtray4";
+	pixel_x = -4
+	},
+/obj/item/clothing/mask/cigarette/random{
+	pixel_x = 6;
+	pixel_y = -1
+	},
+/obj/item/device/light/lava_lamp/activated{
+	pixel_y = 16;
+	pixel_x = -6
+	},
+/turf/simulated/floor,
+/area/prefab/adrift_cargorouter)
+"II" = (
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 19
+	},
+/obj/railing/yellow{
+	dir = 8
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 9
+	},
+/area/prefab/adrift_cargorouter)
+"JY" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/adrift_cargorouter)
+"Ki" = (
+/obj/decal/cleanable/ash,
+/turf/simulated/floor,
+/area/prefab/adrift_cargorouter)
+"Kn" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/prefab/adrift_cargorouter)
+"Ng" = (
+/turf/space,
+/area/allowGenerate)
+"NB" = (
+/obj/decal/poster/wallsign/poster_beach,
+/turf/simulated/wall/auto/supernorn,
+/area/prefab/adrift_cargorouter)
+"PY" = (
+/obj/storage/crate/freezer{
+	desc = "A freezer. This one smells faintly of fish."
+	},
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/item/fish/bass,
+/obj/item/fish/carp,
+/obj/item/fish/herring,
+/obj/item/fish/mahimahi,
+/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/snacks/swedish_fish,
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
+	},
+/area/prefab/adrift_cargorouter)
+"QD" = (
+/obj/lattice{
+	dir = 2;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"QF" = (
+/obj/storage/crate/wooden{
+	desc = "A wooden crate. Markings on the side indicate the contents may be fragile."
+	},
+/obj/random_item_spawner/cola,
+/obj/random_item_spawner/cola,
+/obj/random_item_spawner/cola,
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
+	},
+/area/prefab/adrift_cargorouter)
+"RT" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/yellow,
+/area/prefab/adrift_cargorouter)
+"So" = (
+/obj/machinery/mass_driver{
+	dir = 1
+	},
+/turf/simulated/floor/delivery,
+/area/prefab/adrift_cargorouter)
+"Ss" = (
+/obj/item/storage/wall/office{
+	pixel_x = -7
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 1
+	},
+/area/prefab/adrift_cargorouter)
+"TZ" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/noGenerate)
+"Ub" = (
+/turf/space,
+/area/noGenerate)
+"UG" = (
+/obj/forcefield/energyshield/perma,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/engine,
+/area/prefab/adrift_cargorouter)
+"Vc" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/prefab/adrift_cargorouter)
+"Wm" = (
+/obj/grille/catwalk{
+	dir = 8
+	},
+/turf/space,
+/area/noGenerate)
+"XO" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 1
+	},
+/area/prefab/adrift_cargorouter)
+"XR" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/engine,
+/area/prefab/adrift_cargorouter)
+"Ys" = (
+/turf/simulated/floor/yellow,
+/area/prefab/adrift_cargorouter)
+"YJ" = (
+/obj/structure/girder/displaced,
+/turf/space,
+/area/noGenerate)
+"ZB" = (
+/obj/grille/steel/broken/melted,
+/obj/window/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/prefab/adrift_cargorouter)
+"ZM" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+
+(1,1,1) = {"
+Ng
+Ng
+Ng
+Ng
+Ub
+Ub
+Ub
+Ub
+Ub
+Ng
+Ng
+Ng
+Ng
+Ng
+Ng
+Ng
+"}
+(2,1,1) = {"
+Ng
+Ng
+Ng
+Ng
+tH
+wn
+wn
+pU
+pU
+wn
+wn
+Ng
+Ng
+Ng
+Ng
+Ub
+"}
+(3,1,1) = {"
+Ng
+pU
+wn
+wn
+wn
+Bj
+ID
+hA
+zu
+br
+wn
+wn
+wn
+wn
+yo
+Ub
+"}
+(4,1,1) = {"
+Ub
+pU
+hI
+ya
+zl
+NB
+Kn
+Ki
+qV
+qV
+CT
+XR
+XR
+UG
+Ub
+Ub
+"}
+(5,1,1) = {"
+Ub
+pU
+kY
+RT
+Ys
+xX
+qV
+qV
+qV
+qV
+Vc
+CS
+Ef
+hD
+Ub
+Ub
+"}
+(6,1,1) = {"
+Ub
+pU
+bj
+Ys
+Er
+vl
+aI
+qV
+qV
+qV
+Vc
+iy
+Ef
+hD
+Ub
+Ub
+"}
+(7,1,1) = {"
+Ub
+pU
+ZB
+wn
+zk
+wn
+wn
+wh
+bv
+qV
+ez
+un
+un
+gI
+Ub
+Ub
+"}
+(8,1,1) = {"
+Ub
+Ub
+Wm
+wn
+Ip
+uD
+wn
+II
+ls
+DY
+wn
+wn
+wn
+wn
+yo
+Ng
+"}
+(9,1,1) = {"
+Ub
+Dn
+GY
+wn
+wn
+iZ
+wn
+Ss
+Ft
+mf
+vz
+vz
+pU
+Ub
+Ub
+Ng
+"}
+(10,1,1) = {"
+Ub
+Wm
+JY
+JY
+Az
+Dl
+rP
+tJ
+Ft
+qV
+vz
+Eo
+pU
+Ub
+Ng
+Ng
+"}
+(11,1,1) = {"
+Ub
+di
+So
+jn
+nV
+kW
+fJ
+fJ
+fJ
+qV
+vz
+vz
+pU
+Ub
+Ng
+Ng
+"}
+(12,1,1) = {"
+Ub
+Wm
+JY
+JY
+Az
+XO
+qV
+qV
+qV
+fZ
+or
+wn
+wn
+Ng
+Ng
+Ng
+"}
+(13,1,1) = {"
+Ub
+Wm
+Ub
+zA
+wn
+vM
+sN
+PY
+QF
+oG
+cm
+wn
+Ng
+Ng
+Ng
+Ng
+"}
+(14,1,1) = {"
+Ub
+vq
+Ub
+YJ
+wn
+wn
+wn
+wn
+pU
+pU
+pU
+wn
+Ng
+Ng
+Ng
+Ng
+"}
+(15,1,1) = {"
+Ub
+Ub
+fB
+Ub
+Ub
+ZM
+iQ
+QD
+ig
+nn
+he
+oB
+Ng
+Ng
+Ng
+Ng
+"}
+(16,1,1) = {"
+rh
+Ub
+Ub
+Ub
+Ng
+Ng
+Ng
+Ub
+TZ
+Ub
+Ng
+Ng
+Ng
+Ng
+Ng
+Ng
+"}

@@ -80,7 +80,7 @@
 		logTheThing(LOG_COMBAT, src, "'s AI shell was destroyed at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
 		src.mainframe.return_to(src)
 	if (src.camera)
-		src.camera.camera_status = 0
+		src.camera.set_camera_status(FALSE)
 
 	setdead(src)
 	src.canmove = 0
@@ -118,7 +118,7 @@
 
 		/*if ("shit")
 			new /obj/item/rods/(src.loc)
-			playsound(src.loc, "sound/voice/farts/poo2_robot.ogg", 50, 1)
+			playsound(src.loc, 'sound/voice/farts/poo2_robot.ogg', 50, 1)
 			message = "<B>[src]</B> shits on the floor."
 			m_type = 1*/
 
@@ -307,21 +307,25 @@
 
 		if ("flip")
 			if (src.emote_check(voluntary, 50))
-				if (narrator_mode)
-					playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+				if (isobj(src.loc))
+					var/obj/container = src.loc
+					container.mob_flip_inside(src)
 				else
-					playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-				message = "<B>[src]</B> does a flip!"
-				if (prob(50))
-					animate_spin(src, "R", 1, 0)
-				else
-					animate_spin(src, "L", 1, 0)
+					if (narrator_mode)
+						playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					else
+						playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					message = "<B>[src]</B> does a flip!"
+					if (prob(50))
+						animate_spin(src, "R", 1, 0)
+					else
+						animate_spin(src, "L", 1, 0)
 
-				for (var/mob/living/M in view(1, null))
-					if (M == src)
-						continue
-					message = "<B>[src]</B> beep-bops at [M]."
-					break
+					for (var/mob/living/M in viewers(1, null))
+						if (M == src)
+							continue
+						message = "<B>[src]</B> beep-bops at [M]."
+						break
 
 		if ("fart")
 			if (src.emote_check(voluntary))
@@ -408,7 +412,7 @@
 		. += "<span class='alert'>[src.name] is powered-down.</span>"
 	if (src.bruteloss)
 		if (src.bruteloss < 75)
-			. += "<span class='alert'>[src.name] looks slightly dented</span>"
+			. += "<span class='alert'>[src.name] looks slightly dented.</span>"
 		else
 			. += "<span class='alert'><B>[src.name] looks severely dented!</B></span>"
 	if (src.fireloss)
@@ -851,7 +855,7 @@ Frequency:
 				return 1
 			else
 				return 0
-		else if (this_hand == "left" || this_hand == 1)
+		else if (this_hand == "left" || this_hand == LEFT_HAND)
 			if (src.module_states[1] && src.module_states[1] == I)
 				return 1
 			else
@@ -885,7 +889,7 @@ Frequency:
 				return 1
 			else
 				return 0
-		else if (this_hand == "left" || this_hand == 1)
+		else if (this_hand == "left" || this_hand == LEFT_HAND)
 			if (src.module_states[1] && istype(I, src.module_states[1]))
 				return 1
 			else
@@ -912,7 +916,7 @@ Frequency:
 			var/obj/item/I = src.module_states[2]
 			if (I && (I.tool_flags & tool_flag))
 				return src.module_states[2]
-		if (hand == "left" || hand == 1)
+		if (hand == "left" || hand == LEFT_HAND)
 			var/obj/item/I = src.module_states[1]
 			if (I && (I.tool_flags & tool_flag))
 				return src.module_states[1]
@@ -1067,6 +1071,11 @@ Frequency:
 	var/has_radio = 0
 	var/has_interface = 0
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
 /obj/item/shell_frame/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/sheet))
 		if (src.build_step < 1)
@@ -1074,7 +1083,7 @@ Frequency:
 			if (M.change_stack_amount(-1))
 				src.build_step++
 				boutput(user, "You add the plating to [src]!")
-				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 				src.icon_state = "shell-plate"
 				return
 			else
@@ -1092,7 +1101,7 @@ Frequency:
 			if (coil.amount >= 3)
 				src.build_step++
 				boutput(user, "You add \the cable to [src]!")
-				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 				coil.amount -= 3
 				src.icon_state = "shell-cable"
 				if (coil.amount < 1)
@@ -1111,7 +1120,7 @@ Frequency:
 			if (!src.cell)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 				src.cell = W
 				user.u_equip(W)
 				W.set_loc(src)
@@ -1128,7 +1137,7 @@ Frequency:
 			if (!src.has_radio)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 				src.icon_state = "shell-radio"
 				src.has_radio = 1
 				qdel(W)
@@ -1145,7 +1154,7 @@ Frequency:
 			if (!src.has_interface)
 				src.build_step++
 				boutput(user, "You add the [W] to [src]!")
-				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 				src.has_interface = 1
 				qdel(W)
 				return

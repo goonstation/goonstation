@@ -7,9 +7,9 @@
 	requires_robes = 1
 	cooldown_staff = 1
 	restricted_area_check = 1
-	voice_grim = "sound/voice/wizard/MistFormGrim.ogg"
-	voice_fem = "sound/voice/wizard/MistFormFem.ogg"
-	voice_other = "sound/voice/wizard/MistFormLoud.ogg"
+	voice_grim = 'sound/voice/wizard/MistFormGrim.ogg'
+	voice_fem = 'sound/voice/wizard/MistFormFem.ogg'
+	voice_other = 'sound/voice/wizard/MistFormLoud.ogg'
 	maptext_colors = list("#24639a", "#24bdc6", "#55eec2", "#24bdc6")
 
 	cast()
@@ -27,7 +27,7 @@
 			SPtime = 50
 		else
 			boutput(holder.owner, "<span class='alert'>Your spell doesn't last as long without a staff to focus it!</span>")
-		playsound(holder.owner.loc, "sound/effects/mag_phase.ogg", 25, 1, -1)
+		playsound(holder.owner.loc, 'sound/effects/mag_phase.ogg', 25, 1, -1)
 		spell_invisibility(holder.owner, SPtime, 0, 1)
 
 // Merged some stuff from wizard and vampire phaseshift for easy of use (Convair880).
@@ -62,7 +62,9 @@
 			H.delStatus("burning")
 
 	SPAWN(0)
+		var/start_loc
 		var/mobloc = get_turf(H.loc)
+		start_loc = H.loc
 		var/obj/dummy/spell_invis/holder = new /obj/dummy/spell_invis( mobloc )
 		var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
 		animation.name = "water"
@@ -89,6 +91,7 @@
 		flick("reappear",animation)
 		sleep(0.5 SECONDS)
 		H.set_loc(mobloc)
+		logTheThing(LOG_COMBAT, H, "used phaseshift to move from [log_loc(start_loc)] to [log_loc(H.loc)].")
 		H.canmove = 1
 		H.restrain_time = 0
 		qdel(animation)
@@ -152,6 +155,8 @@
 		return
 	if (!H.canmove)
 		return
+	if(isrestrictedz(H.loc.z))
+		return
 
 	if (isliving(H))
 		var/mob/living/owner = H
@@ -209,7 +214,7 @@
 
 		var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
 		P.setup(src.loc)
-		playsound(src.loc,"sound/effects/poff.ogg", 50, 1, pitch = 1)
+		playsound(src.loc, 'sound/effects/poff.ogg', 50, 1, pitch = 1)
 
 		//overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 		//overlay_image.color = "#333333"
@@ -276,7 +281,7 @@
 		var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
 		P.setup(src.loc, forced)
 
-		playsound(src.loc,"sound/effects/poff.ogg", 50, 1, pitch = 1.3)
+		playsound(src.loc, 'sound/effects/poff.ogg', 50, 1, pitch = 1.3)
 
 		qdel(src)
 
@@ -311,7 +316,7 @@
 				if (vampholder)
 					if (ishuman(atom) && vampholder.can_bite(atom, is_pointblank = 0))
 						vampholder.do_bite(atom, mult = 0.25)
-						playsound(src.loc,"sound/impact_sounds/Flesh_Crush_1.ogg", 35, 1, pitch = 1.3)
+						playsound(src.loc, 'sound/impact_sounds/Flesh_Crush_1.ogg', 35, 1, pitch = 1.3)
 						break
 				if (istype(atom,/obj/machinery/door))
 					var/obj/machinery/door/D = atom
@@ -324,6 +329,9 @@
 		actions.interrupt(user, INTERRUPT_MOVE)
 
 		.= delay
+
+	mob_flip_inside(mob/user)
+		animate_spin(src, pick("L", "R"), 1, FALSE)
 
 	ex_act(severity)
 		dispel(1)
@@ -351,7 +359,7 @@
 
 		New()
 			..()
-			playsound(src.loc, "sound/effects/mag_fireballlaunch.ogg", 15, 1, pitch = 1.8)
+			playsound(src.loc, 'sound/effects/mag_fireballlaunch.ogg', 15, 1, pitch = 1.8)
 
 		relaymove()
 			..()
@@ -359,5 +367,5 @@
 
 
 		dispel()
-			playsound(src.loc, "sound/effects/mag_fireballlaunch.ogg", 15, 1, pitch = 2)
+			playsound(src.loc, 'sound/effects/mag_fireballlaunch.ogg', 15, 1, pitch = 2)
 			..()

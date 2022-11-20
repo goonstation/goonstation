@@ -5,15 +5,15 @@ var/datum/event_controller/random_events
 	var/major_events_begin = 30 MINUTES // 30m
 	var/time_between_events_lower = 11 MINUTES  // 11m
 	var/time_between_events_upper = 20 MINUTES // 20m
-	var/events_enabled = 1
-	var/announce_events = 1
+	var/events_enabled = TRUE
+	var/announce_events = TRUE
 	var/event_cycle_count = 0
 
 	var/list/minor_events = list()
 	var/minor_events_begin = 10 MINUTES // 10m
 	var/time_between_minor_events_lower = 400 SECONDS // roughly 8m
 	var/time_between_minor_events_upper = 800 SECONDS // roughly 14m
-	var/minor_events_enabled = 1
+	var/minor_events_enabled = TRUE
 	var/minor_event_cycle_count = 0
 
 	var/list/antag_spawn_events = list()
@@ -25,7 +25,8 @@ var/datum/event_controller/random_events
 	var/list/player_spawn_events = list()
 	var/dead_players_threshold = 0.3
 	var/spawn_events_begin = 23 MINUTES
-	var/time_between_spawn_events = 8 MINUTES
+	var/time_between_spawn_events_lower = 8 MINUTES
+	var/time_between_spawn_events_upper = 12 MINUTES
 
 	var/major_event_timer = 0
 	var/minor_event_timer = 0
@@ -38,27 +39,35 @@ var/datum/event_controller/random_events
 	var/list/special_events = list()
 	var/minimum_population = 15 // Minimum amount of players connected for event to occur
 
+	var/start_events_enabled = FALSE
+	var/list/start_events = list()
+
 	New()
 		..()
-		for (var/X in childrentypesof(/datum/random_event/major))
+
+		for (var/X in concrete_typesof(/datum/random_event/major))
 			var/datum/random_event/RE = new X
 			events += RE
 
-		for (var/X in childrentypesof(/datum/random_event/major/antag))
+		for (var/X in concrete_typesof(/datum/random_event/major/antag))
 			var/datum/random_event/RE = new X
 			antag_spawn_events += RE
 
-		for (var/X in childrentypesof(/datum/random_event/major/player_spawn))
+		for (var/X in concrete_typesof(/datum/random_event/major/player_spawn))
 			var/datum/random_event/RE = new X
 			player_spawn_events += RE
 
-		for (var/X in childrentypesof(/datum/random_event/minor))
+		for (var/X in concrete_typesof(/datum/random_event/minor))
 			var/datum/random_event/RE = new X
 			minor_events += RE
 
-		for (var/X in childrentypesof(/datum/random_event/special))
+		for (var/X in concrete_typesof(/datum/random_event/special))
 			var/datum/random_event/RE = new X
 			special_events += RE
+
+		for (var/X in concrete_typesof(/datum/random_event/start))
+			var/datum/random_event/RE = new X
+			start_events += RE
 
 	proc/process()
 		// prevent random events near round end
@@ -120,7 +129,7 @@ var/datum/event_controller/random_events
 				message_admins("<span class='internal'>A spawn event would have happened now, but it was not needed based on alive players + antagonists headcount or game mode!<br> \
 								[round(100 * aap, 0.1)]% of the alive crew were antags and [round(100 * dcp, 0.1)]% of the entire crew were dead.</span>")
 
-		next_spawn_event = ticker.round_elapsed_ticks + time_between_spawn_events
+		next_spawn_event = ticker.round_elapsed_ticks + rand(time_between_spawn_events_lower, time_between_spawn_events_upper)
 
 	proc/do_random_event(var/list/event_bank, var/source = null)
 		if (!event_bank || event_bank.len < 1)
@@ -203,6 +212,12 @@ var/datum/event_controller/random_events
 		for(var/datum/random_event/RE in special_events)
 			dat += "<a href='byond://?src=\ref[src];TriggerSEvent=\ref[RE]'><b>[RE.name]</b></a><br>"
 
+		if(length(start_events))
+			dat += "<BR>"
+			dat += "<b><u>Round Start Events</u></b><BR>"
+			for(var/datum/random_event/RE in start_events)
+				dat += "<a href='byond://?src=\ref[src];TriggerStartEvent=\ref[RE]'><b>[RE.name]</b></a><br>"
+
 		dat += "<HR>"
 		dat += "</body></html>"
 		usr.Browse(dat,"window=reconfig;size=450x450")
@@ -243,6 +258,21 @@ var/datum/event_controller/random_events
 
 		else if(href_list["TriggerSEvent"])
 			var/datum/random_event/RE = locate(href_list["TriggerSEvent"]) in special_events
+			if (!istype(RE,/datum/random_event/))
+				return
+			var/choice = alert("Trigger a [RE.name] event?","Random Events","Yes","No")
+			if (choice == "Yes")
+				if (RE.customization_available)
+					var/choice2 = alert("Random or custom variables?","[RE.name]","Random","Custom")
+					if (choice2 == "Custom")
+						RE.admin_call(key_name(usr, 1))
+					else
+						RE.event_effect("Triggered by [key_name(usr)]")
+				else
+					RE.event_effect("Triggered by [key_name(usr)]")
+
+		else if(href_list["TriggerStartEvent"])
+			var/datum/random_event/RE = locate(href_list["TriggerStartEvent"]) in start_events
 			if (!istype(RE,/datum/random_event/))
 				return
 			var/choice = alert("Trigger a [RE.name] event?","Random Events","Yes","No")

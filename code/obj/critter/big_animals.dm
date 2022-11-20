@@ -116,7 +116,7 @@
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, pick("sound/voice/MEraaargh.ogg"), 40, 0)
+		playsound(src.loc, pick('sound/voice/MEraaargh.ogg'), 40, 0)
 		M.changeStatus("weakened", 3 SECONDS)
 		M.changeStatus("stunned", 2 SECONDS)
 		random_brute_damage(M, rand(2,5),1)
@@ -133,7 +133,7 @@ obj/critter/bear/care
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, pick("sound/voice/babynoise.ogg"), 50, 0)
+		playsound(src.loc, pick('sound/voice/babynoise.ogg'), 50, 0)
 		M.changeStatus("weakened", 3 SECONDS)
 		M.changeStatus("stunned", 2 SECONDS)
 		random_brute_damage(M, rand(2,5),1)
@@ -177,7 +177,7 @@ obj/critter/bear/care
 				src.target = C
 				src.oldtarget_name = C.name
 				src.visible_message("<span class='combat'><b>[src]</b> [src.angertext] [src.target]!</span>")
-				playsound(src.loc, pick("sound/voice/animal/YetiGrowl.ogg"), 40, 0)
+				playsound(src.loc, pick('sound/voice/animal/YetiGrowl.ogg'), 40, 0)
 				src.task = "chasing"
 				break
 			else
@@ -185,7 +185,7 @@ obj/critter/bear/care
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 40, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 40, 1, -1)
 		M.changeStatus("stunned", 10 SECONDS)
 		M.changeStatus("weakened", 10 SECONDS)
 
@@ -209,12 +209,12 @@ obj/critter/bear/care
 		src.attacking = 1
 		src.visible_message("<span class='combat'><B>[src]</B> devours the rest of [M] in one bite!</span>")
 		logTheThing(LOG_COMBAT, M, "was devoured by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
-		playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
+		playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
 		M.remove()
 		src.task = "thinking"
 		src.seek_target()
 		src.attacking = 0
-		playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
+		playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
 
 		sleeping = 1
 
@@ -288,7 +288,7 @@ obj/critter/bear/care
 				src.oldtarget_name = C.name
 				src.visible_message("<span class='combat'><b>[src]</b> [src.angertext] [src.target]!</span>")
 				if(!recentsound)
-					playsound(src.loc, "sound/misc/jaws.ogg", 50, 0)
+					playsound(src.loc, 'sound/misc/jaws.ogg', 50, 0)
 					recentsound = 1
 					SPAWN(1 MINUTE) recentsound = 0
 				src.task = "chasing"
@@ -298,7 +298,7 @@ obj/critter/bear/care
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, -1)
 		M.changeStatus("stunned", 2 SECONDS)
 		M.changeStatus("weakened", 2 SECONDS)
 
@@ -306,16 +306,16 @@ obj/critter/bear/care
 		if (isdead(M))
 			src.visible_message("<span class='combat'><B>[src]</B> gibs [M] in one bite!</span>")
 			logTheThing(LOG_COMBAT, M, "was gibbed by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
-			playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
+			playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
 			M.gib()
-			SPAWN(3 SECONDS) playsound(src.loc, "sound/voice/burp_alien.ogg", 50, 0)
+			SPAWN(3 SECONDS) playsound(src.loc, 'sound/voice/burp_alien.ogg', 50, 0)
 			src.task = "thinking"
 			src.seek_target()
 			src.attacking = 0
 			sleeping = 1
 		else
 			..()
-			playsound(src.loc, "sound/impact_sounds/Flesh_Tear_1.ogg", 50, 0.4)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 50, 0.4)
 
 
 
@@ -431,7 +431,7 @@ obj/critter/bear/care
 		else return 0
 
 		if (sips_taken == 0 || prob(80))
-			playsound(src.loc,"sound/items/drink.ogg", rand(10,50), 1)
+			playsound(src.loc,'sound/items/drink.ogg', rand(10,50), 1)
 		// if (prob(20))
 		eat_twitch(src)
 

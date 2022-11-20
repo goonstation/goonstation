@@ -472,7 +472,7 @@
 	if (!(src.status & BROKEN))
 		src.status |= BROKEN
 		src.visible_message("<span class='alert'>[src] emits a sad thunk.  That can't be good.</span>")
-		playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 50, 1)
 	else
 		boutput(user, "<span class='alert'>It's broken.</span>")
 

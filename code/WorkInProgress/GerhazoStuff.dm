@@ -257,7 +257,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "crescent_white"
 	shot_sound = null
-	power = 0
+	damage = 0
 	dissipation_delay = 8
 	dissipation_rate = 5
 	damage_type = D_KINETIC
@@ -270,7 +270,6 @@
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			var/turf/target = get_edge_target_turf(M, dirflag)
-			//if(!M.stat) M.emote("scream")
 			M.do_disorient(15, weakened = 10)
 			M.throw_at(target, 6, 3, throw_type = THROW_GUNIMPACT)
 			M.update_canmove()
@@ -693,7 +692,7 @@
 /obj/item/mutation_orb
 	name = "empty orb"
 	desc = "You have a feeling you shouldn't be able to see this."
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	var/list/datum/mutation_orb_mutdata/mutations_to_add
 	var/envelop_message // envelops [user] in [envelop_message]
@@ -765,7 +764,7 @@
 	icon = 'icons/misc/GerhazoStuff.dmi'
 	icon_state = "feather_fire"
 	color = "#ff8902"
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	attack(mob/M, mob/user)
 		return
@@ -790,7 +789,7 @@
 			var/obj/effects/heavenly_light/lightbeam = new /obj/effects/heavenly_light
 			lightbeam.set_loc(T)
 			lightbeam.alpha = 0
-			playsound(T, "sound/voice/heavenly.ogg", 100, 1, 0)
+			playsound(T, 'sound/voice/heavenly.ogg', 100, 1, 0)
 			animate(lightbeam, alpha=255, time=3.5 SECONDS)
 			SPAWN(30)
 				animate(lightbeam,alpha = 0, time=3.5 SECONDS)
@@ -825,7 +824,7 @@
 	desc = "You shouldn't see this."
 	icon = 'icons/misc/GerhazoStuff.dmi'
 	icon_state = "fabric"
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	var/list/datum/property_setter_property/properties_to_set
 	var/prefix_to_set = ""
 	var/suffix_to_set = ""
@@ -868,7 +867,7 @@
 
 			if (did_something) // some property got changed, display a message and delete src
 				var/turf/T = get_turf(target)
-				playsound(T, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
+				playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, 1)
 				T.visible_message("<span class='notice'>As [user] brings \the [src] towards \the [target], \the [src] begins to smoothly meld into \the [target]!</span>")
 				if (length(src.prefix_to_set))
 					target.name_prefix(prefix_to_set)

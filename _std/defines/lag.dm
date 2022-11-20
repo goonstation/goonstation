@@ -58,7 +58,7 @@
 #define TICKLAG_DILATE_INTERVAL 20
 
 /// whether we want to profile in advance of a lagspike every tick to catch relevant lagspike info
-#define PRE_PROFILING_ENABLED
+// #define PRE_PROFILING_ENABLED
 /// what value must world.cpu cross upwards to trigger automatic profiling
 #define CPU_START_PROFILING_THRESHOLD 150
 /// what value must world.cpu cross upwards to trigger automatic profiling but this one ignores CPU_START_PROFILING_COUNT
@@ -80,8 +80,6 @@
 #define SEMIOVERLOAD_PLAYERCOUNT 85
 /// when pcount is above this number on game load, dont generate lighting surrounding the station because it lags the map to heck
 #define OSHAN_LIGHT_OVERLOAD 18
-/// whenn pcount is <= this number, speed up Life() processing a bit
-#define FAST_LIFE_PLAYERCOUNT 40
 /// whenn pcount is >= this number, slow Life() processing a bit
 #define SLOW_LIFE_PLAYERCOUNT 85
 /// whenn pcount is >= this number, slow Life() processing a lot
@@ -95,9 +93,10 @@
 //fuck me, I have no idea why there's only 2 framerates that handle smooth glides for us. It's probably because byond is bugged.
 //anyway just putting this define here for the client framerate toggle button between SMOOTH AND CHUNKY OH YEAH
 #define CLIENTSIDE_TICK_LAG_CHUNKY 0.4
-
 //its the future now
 #define CLIENTSIDE_TICK_LAG_CREAMY 0.15
+//its the future now
+#define CLIENTSIDE_TICK_LAG_VELVETY 0.09
 
 #define DEFAULT_CLICK_DELAY MIN_TICKLAG //used to be 1
 #define CLICK_GRACE_WINDOW 0 //2.5

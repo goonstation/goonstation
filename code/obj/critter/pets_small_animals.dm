@@ -13,88 +13,6 @@
 	flying = 1
 	flags = FPRINT | CONDUCT | USEDELAY | TABLEPASS | FLUID_SUBMERGE
 
-/obj/critter/roach
-	name = "cockroach"
-	desc = "An unpleasant insect that lives in filthy places."
-	icon_state = "roach"
-	critter_family = BUG
-	density = 0
-	health = 10
-	aggressive = 0
-	defensive = 0
-	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
-	atkcarbon = 0
-	atksilicon = 0
-	butcherable = 1
-	flags = FPRINT | CONDUCT | USEDELAY | TABLEPASS | FLUID_SUBMERGE | FLUID_SUBMERGE
-
-	attack_hand(mob/user)
-		if (src.alive && (user.a_intent != INTENT_HARM))
-			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
-			return
-		if (prob(95))
-			if(src.alive)
-				src.visible_message("<span class='combat'><B>[user] stomps [src], killing it instantly!</B></span>")
-				CritterDeath()
-				return
-			else
-				src.visible_message("<span class='combat'><B>[user] squishes [src] a little more for good measure.</B></span>")
-				return
-		..()
-
-/obj/critter/mouse
-	name = "space mouse"
-	desc = "A mouse.  In space."
-	icon_state = "mouse"
-	density = 0
-	health = 2
-	aggressive = 1
-	defensive = 1
-	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
-	atkcarbon = 0
-	atksilicon = 0
-	firevuln = 1
-	brutevuln = 1
-	butcherable = 1
-	chases_food = 1
-	health_gain_from_food = 2
-	feed_text = "squeaks happily!"
-	flags = FPRINT | CONDUCT | USEDELAY | TABLEPASS | FLUID_SUBMERGE | FLUID_SUBMERGE
-	//var/diseased = 0
-	atk_delay = 10
-
-	skinresult = /obj/item/material_piece/cloth/leather //YEP
-	max_skins = 1
-
-	New()
-		..()
-		if (prob(10))
-			//diseased = 1
-			src.atk_diseases = list(/datum/ailment/disease/berserker, /datum/ailment/disease/space_madness)
-			src.atk_disease_prob = 10
-			src.atkcarbon = 1
-
-/obj/critter/mouse/mad
-	name = "rabid space mouse"
-	desc = "A mouth-foaming cheese and flesh eating mouse. In space."
-	health = 10
-	chases_food = 0
-	feed_text = "squeaks viciously!"
-	atk_delay = 10
-	atk_diseases = list(/datum/ailment/disease/berserker, /datum/ailment/disease/space_madness)
-	atk_disease_prob = 35
-	atkcarbon = 1
-
-/obj/critter/mouse/remy
-	name = "Remy"
-	desc = "A rat.  In space... wait, is it wearing a chef's hat?"
-	icon_state = "remy"
-	health = 33
-	aggressive = 0
-	generic = 0
-
 /obj/critter/opossum
 	name = "space opossum"
 	desc = "A possum that came from space. Or maybe went to space. Who knows how it got here?"
@@ -195,10 +113,7 @@
 
 	seek_target()
 		src.anchored = 0
-		//for (var/obj/critter/mouse/C in view(src.seekrange,src))
 		var/list/targets_in_area = list()
-		for (var/obj/critter/mouse/C in view(src.seekrange,src))
-			targets_in_area += C
 		for (var/mob/living/critter/small_animal/mouse/C in view(src.seekrange,src))
 			targets_in_area += C
 		for (var/obj/critter/livingtail/C in view(src.seekrange, src))
@@ -210,9 +125,9 @@
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100))
 				continue
 			//if (isobj(C))
-			if (istype(C, /obj/critter/mouse))
-				var/obj/critter/mouse/OC = C
-				if (OC.health <= 0)
+			if (istype(C, /mob/living/critter/small_animal/mouse))
+				var/mob/living/critter/small_animal/mouse/OC = C
+				if (!isalive(OC))
 					continue
 			if (istype(C, /obj/critter/livingtail))
 				var/obj/critter/livingtail/OC = C
@@ -268,7 +183,7 @@
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 
 		if(ismob(M))
 			M.changeStatus("stunned", 2 SECONDS)
@@ -411,7 +326,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 			I.dropped(user)
 			qdel(I)
 			src.visible_message("<span class='notice'>[src] happily chows down on [I]!</span>")
-			playsound(src,"sound/items/eatfood.ogg", rand(10,50), 1)
+			playsound(src,'sound/items/eatfood.ogg', rand(10,50), 1)
 			return
 		..()
 
@@ -466,7 +381,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 
 		if(ismob(M))
 			M.changeStatus("stunned", 2 SECONDS)
@@ -567,7 +482,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 	seek_target()
 		src.anchored = 0
-		for (var/obj/critter/mouse/C in view(src.seekrange,src))
+		for (var/mob/living/critter/small_animal/mouse/C in view(src.seekrange,src))
 			if (src.target)
 				src.task = "chasing"
 				break
@@ -590,7 +505,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 
 		if(ismob(M))
 			M.changeStatus("stunned", 4 SECONDS)
@@ -653,7 +568,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			//addBan(data)
 
 		if(istype(W, /obj/item/plutonium_core/hootonium_core))//Owls interestingly are capable of absorbing hootonium into their bodies harmlessly. This is the only safe method of removing it.
-			playsound(M.loc, "sound/items/eatfood.ogg", 100, 1)
+			playsound(M.loc, 'sound/items/eatfood.ogg', 100, 1)
 			boutput(M, "<span class='alert'><B>You feed the [src] the [W]. It looks [pick("confused", "annoyed", "worried", "satisfied", "upset", "a tad miffed", "at you and winks")].</B></span>")
 			M.drop_item()
 			W.set_loc(src)
@@ -678,7 +593,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 		random_brute_damage(src.target, 1)//peck peck
 
 		return
@@ -733,18 +648,18 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			if (prob(20))
 				if (!src.muted)
 					src.audible_message("<b>[src]</b> honks!")
-				playsound(src.loc, "sound/voice/animal/goose.ogg", 70, 1)
+				playsound(src.loc, 'sound/voice/animal/goose.ogg', 70, 1)
 		else
 			if (prob(20))
 				flick("[src.icon_state]-flap", src)
-				playsound(src.loc, "sound/voice/animal/cat_hiss.ogg", 50, 1)
+				playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
 
 	seek_target()
 		..()
 		if (src.target)
 			flick("[src.icon_state]-flaploop", src)
 			src.visible_message("<span class='combat'><b>[src]</b> [src.angertext] [src.target]!</span>")
-			playsound(src.loc, "sound/voice/animal/cat_hiss.ogg", 50, 1)
+			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
 
 	CritterAttack(mob/M)
 		flick("[src.icon_state]-flap", src)
@@ -753,7 +668,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 	ChaseAttack(mob/M)
 		flick("[src.icon_state]-flaploop", src)
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 		..()
 
 		if(ismob(M))
@@ -764,7 +679,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		..()
 		if(prob(10))
 			src.audible_message("<b>[src]</b> honks!",2)
-			playsound(src.loc, "sound/voice/animal/goose.ogg", 50, 1)
+			playsound(src.loc, 'sound/voice/animal/goose.ogg', 50, 1)
 
 	patrol_to(var/turf/towhat)
 		.=..()
@@ -1088,7 +1003,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		if (iscarbon(M))
 			if (prob(60)) //Go for the eyes!
 				src.visible_message("<span class='combat'><B>[src]</B> pecks [M] in the eyes!</span>")
-				playsound(src.loc, "sound/impact_sounds/Flesh_Stab_2.ogg", 30, 1)
+				playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_2.ogg', 30, 1)
 				M.take_eye_damage(rand(2,10)) //High variance because the bird might not hit well
 				if (prob(75) && !M.stat)
 					M.emote("scream")
@@ -1116,7 +1031,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 
 		if (prob(3))
 			src.create_feather()
@@ -1185,7 +1100,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 			if (C.amount >= 3000) // coffins
 				FP = /obj/storage/closet/coffin
-				FP_name = "Slutstation"
+				FP_name = "Likkista"
 				C.amount -= 3000
 
 			else if (C.amount >= 1700) // segways
@@ -1568,7 +1483,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	sealed = 1
 	info = {"<small<i>This looks quite tattered and ripped up. You can't read everything around the edges because of all the holes and tears in the paper.</i></small<br><br>
 <b><i>Produkt</i></b> - <i>Pris</i><br>
-<b>Slutstation</b> - 3000<small>SSEK</small><br>
+<b>Likkista</b> - 3000<small>SSEK</small><br>
 <b>Fart</b> - 1700<small>SSEK</small><br>
 <b>Arbetsplatsolycka</b> - 330<small>SSEK</small><br>
 <b>Fyllehund</b> - 320<small>SSEK</small><br>
@@ -1680,7 +1595,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		if (iscarbon(M))
 			if (prob(60)) //Go for the eyes!
 				src.visible_message("<span class='combat'><B>[src]</B> pecks [M] in the eyes!</span>")
-				playsound(src.loc, "sound/impact_sounds/Flesh_Stab_2.ogg", 30, 1)
+				playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_2.ogg', 30, 1)
 				M.take_eye_damage(rand(2,10)) //High variance because the bird might not hit well
 				if (prob(75) && !M.stat)
 					M.emote("scream")
@@ -1697,7 +1612,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 					if (E)
 						src.visible_message("<span class='combat'><B>[src] [pick("tears","yanks","rips")] [M]'s eye out! <i>Holy shit!!</i></B></span>")
 						E = H.drop_organ(chosen_eye)
-						playsound(M, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
+						playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 						E.set_loc(src.loc)
 			if (isliving(M))
 				var/mob/living/H = M
@@ -1721,7 +1636,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 
 		if (ismob(M))
 			M.changeStatus("stunned", 2 SECONDS)
@@ -1802,7 +1717,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		..()
 
 	ChaseAttack(mob/M)
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 		..()
 
 		if(ismob(M))
@@ -1934,7 +1849,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				src.lying = 0
 				src.wanderer = initial(src.wanderer)
 			src.visible_message("<span class='combat'><b>[user]</b> swings at [src], but misses!</span>")
-			playsound(src, "sound/impact_sounds/Generic_Swing_1.ogg", 50, 0)
+			playsound(src, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 0)
 			return
 		else
 			return ..()
@@ -2087,7 +2002,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		..()
 		if(src.target)
 			src.visible_message("<span class='combat'><b>[src]</b> [src.angertext] [src.target]!</span>")
-			playsound(src.loc, "sound/items/Scissor.ogg", 30, 0, -1)
+			playsound(src.loc, 'sound/items/Scissor.ogg', 30, 0, -1)
 
 	CritterAttack(mob/M)
 		if(ismob(M))
@@ -2095,9 +2010,9 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			src.visible_message("<span class='combat'><B>[src]</B> snips [src.target] with its claws!</span>")
 			random_brute_damage(src.target, 2)
 			SPAWN(0)
-				playsound(src.loc, "sound/items/Wirecutter.ogg", 30, 0, -1)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 30, 0, -1)
 				sleep(0.3 SECONDS)
-				playsound(src.loc, "sound/items/Wirecutter.ogg", 30, 0, -1)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 30, 0, -1)
 			SPAWN(rand(1,10))
 				src.attacking = 0
 		return

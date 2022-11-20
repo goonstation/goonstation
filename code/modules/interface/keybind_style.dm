@@ -311,6 +311,46 @@ var/global/list/datum/keybind_style/keybind_styles = null
 //	MISC-SPECIFIC KEYBINDS
 //
 
+/datum/keybind_style/instrument_keyboard
+	name = "instrument_keyboard"
+	changed_keys = list(
+		"1" = "",
+		"2" = "",
+		"3" = "",
+		"4" = "",
+		"5" = "",
+		"6" = "",
+		"7" = "",
+		"8" = "",
+		"9" = "",
+		"0" = "",
+		"Q" = "",
+		"W" = "",
+		"E" = "",
+		"R" = "",
+		"T" = "",
+		"Y" = "",
+		"U" = "",
+		"O" = "",
+		"P" = "",
+		"A" = "",
+		"S" = "",
+		"D" = "",
+		"F" = "",
+		"G" = "",
+		"H" = "",
+		"J" = "",
+		"K" = "",
+		"L" = "",
+		"Z" = "",
+		"X" = "",
+		"C" = "",
+		"V" = "",
+		"B" = "",
+		"N" = "",
+		"M" = "",
+	)
+
 /datum/keybind_style/pod
 	name = "pod"
 	changed_keys = list(

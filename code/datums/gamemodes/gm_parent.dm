@@ -22,6 +22,7 @@
 
 	var/datum/game_mode/spy_theft/spy_market = 0	//In case any spies are spawned into a round that is NOT spy_theft, we need a place to hold their spy market.
 
+	var/antag_token_support = FALSE // players can redeem antag tokens for this game mode
 	var/do_antag_random_spawns = 1
 	var/do_random_events = 1
 	var/escape_possible = 1		//for determining if players lose their held spacebux item on round end if they are able to "escape" in this mode.
@@ -180,6 +181,8 @@
 						rewarded_detail = copytext(rewarded_detail, 1, -2)
 						stuff_to_output += stolen_detail
 						stuff_to_output += rewarded_detail
+						if (stolen >= 7)
+							traitor.current?.unlock_medal("Professional thief", TRUE)
 
 				if (traitor.special_role == ROLE_FLOCKMIND)
 					for (var/flockname in flocks)
@@ -193,12 +196,17 @@
 									//the first character in this string is an invisible brail character, because otherwise DM eats my indentation
 									stuff_to_output += "<b>⠀   [trace_name] (played by [trace_mind.displayed_key])<b>"
 
+							if (flock.relay_finished)
+								flock.flockmind_mind.current.unlock_medal("To the stars", TRUE)
+								var/time = TIME
+								for (var/mob/living/intangible/flock/trace/flocktrace as anything in flock.traces)
+									if (time - flocktrace.creation_time >= 5 MINUTES)
+										flocktrace.unlock_medal("To the stars", TRUE)
+
 				for (var/datum/objective/objective in traitor.objectives)
 	#ifdef CREW_OBJECTIVES
 					if (istype(objective, /datum/objective/crew)) continue
 	#endif
-					if (istype(objective, /datum/objective/miscreant)) continue
-
 					obj_count++
 					if (objective.check_completion())
 						stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] <span class='success'><B>Success</B></span>"
@@ -374,9 +382,8 @@
 			antag.current.make_vampire()
 
 		if (ROLE_HUNTER)
-			objective_set_path = /datum/objective_set/hunter
-			antag.current.show_text("<h2><font color=red><B>You are a hunter!</B></font></h2>", "red")
-			antag.current.make_hunter()
+			antag.add_antagonist(ROLE_HUNTER)
+			do_objectives = FALSE
 
 		if (ROLE_GRINCH)
 			objective_set_path = /datum/objective_set/grinch
@@ -467,3 +474,25 @@
 	var/datum/objective/O = new objective_path(null, traitor)
 
 	return O
+
+
+////////////////////////////////
+// Special Antag related code //
+////////////////////////////////
+
+/datum/game_mode/proc/add_wraith(var/num_wraiths) // This simplifies adding a wraith during round setup as a single proc
+	var/list/possible_wraiths = get_possible_enemies(ROLE_WRAITH, num_wraiths)
+	var/list/chosen_wraiths = antagWeighter.choose(pool = possible_wraiths, role = ROLE_WRAITH, amount = num_wraiths, recordChosen = 1)
+	for (var/datum/mind/wraith in chosen_wraiths)
+		traitors += wraith
+		wraith.special_role = ROLE_WRAITH
+		possible_wraiths.Remove(wraith)
+
+/datum/game_mode/proc/add_token_wraith(var/token_wraith) // Handles adding a token wraith
+	token_wraith = 1 // only allow 1 wraith to spawn
+	var/datum/mind/twraith = pick(token_players) //Randomly pick from the token list so the first person to ready up doesn't always get it.
+	traitors += twraith
+	token_players.Remove(twraith)
+	twraith.special_role = ROLE_WRAITH
+
+

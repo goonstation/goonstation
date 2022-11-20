@@ -203,17 +203,17 @@
 		if (istype(source) && plank != source.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 		if (prob(20))
-			playsound(wall.loc, "sound/impact_sounds/Wood_Hit_1.ogg", rand(50,90), 1)
+			playsound(wall.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', rand(50,90), 1)
 
 	onStart()
 		..()
-		playsound(wall.loc, "sound/impact_sounds/Wood_Hit_1.ogg", rand(50,90), 1)
+		playsound(wall.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', rand(50,90), 1)
 		owner.visible_message("<span class='notice'>[owner] begins repairing [wall]!</span>")
 
 	onEnd()
 		..()
 		owner.visible_message("<span class='notice'>[owner] uses a [plank] to completely repair the [wall]!</span>")
-		playsound(wall.loc, "sound/impact_sounds/Wood_Hit_1.ogg", rand(50,90), 1)
+		playsound(wall.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', rand(50,90), 1)
 		//do repair shit.
 		wall.health = wall.health_max
 		wall.checkhealth()

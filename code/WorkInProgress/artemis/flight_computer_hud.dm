@@ -238,7 +238,7 @@
 				if(src.coffee_level)
 					src.coffee_level--
 					src.coffee.icon_state = null
-					playsound(get_turf(user),"sound/items/drink.ogg", rand(10,50), 1)
+					playsound(get_turf(user),'sound/items/drink.ogg', rand(10,50), 1)
 					SPAWN(0.5 SECONDS)
 						src.coffee.icon_state = "coffee[coffee_level]"
 				else

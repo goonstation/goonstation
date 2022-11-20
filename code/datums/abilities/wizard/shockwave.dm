@@ -6,9 +6,9 @@
 	cooldown = 400
 	requires_robes = 1
 	offensive = 1
-	voice_grim = "sound/voice/wizard/EarthquakeGrim.ogg"
-	voice_fem = "sound/voice/wizard/EarthquakeFem.ogg"
-	voice_other = "sound/voice/wizard/EarthquakeLoud.ogg"
+	voice_grim = 'sound/voice/wizard/EarthquakeGrim.ogg'
+	voice_fem = 'sound/voice/wizard/EarthquakeFem.ogg'
+	voice_other = 'sound/voice/wizard/EarthquakeLoud.ogg'
 
 	cast()
 		if(!holder)
@@ -17,7 +17,7 @@
 			holder.owner.say("ERATH QUUK")
 		..()
 
-		playsound(holder.owner.loc, "sound/effects/exlow.ogg", 25, 1, -1)
+		playsound(holder.owner.loc, 'sound/effects/exlow.ogg', 25, 1, -1)
 
 		new/obj/effects/shockwave(holder.owner.loc)
 

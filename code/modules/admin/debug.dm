@@ -304,7 +304,7 @@ var/global/debug_messages = 0
 		var/datum/data_input_result/arg = src.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_BOOL, DATA_INPUT_TYPE, DATA_INPUT_JSON, DATA_INPUT_REF, DATA_INPUT_MOB_REFERENCE, \
 										DATA_INPUT_ATOM_ON_CURRENT_TURF, DATA_INPUT_ICON, DATA_INPUT_COLOR, DATA_INPUT_FILE, DATA_INPUT_REFPICKER, DATA_INPUT_LIST_BUILD, DATA_INPUT_NULL, \
 										DATA_INPUT_NEW_INSTANCE) \
-										+ custom_options, default = arginfo ? arginfo[i][ARG_INFO_DEFAULT] : null, custom_type_title = arginfo ? arginfo[i][ARG_INFO_DESC] + ":" : "Type of Argument #[i]", \
+										+ custom_options, default = (length(arginfo?[i]) > 3) ? arginfo[i][ARG_INFO_DEFAULT] : null, custom_type_title = arginfo ? arginfo[i][ARG_INFO_DESC] + ":" : "Type of Argument #[i]", \
 										custom_type_message =  arginfo ? "Argument #[i]: " + arginfo[i][ARG_INFO_NAME] : "Variable Type", \
 										default_type = arginfo?[i][ARG_INFO_TYPE])
 
@@ -563,7 +563,7 @@ var/global/debug_messages = 0
 	for (var/V in prefs.vars)
 		names += V
 
-	names = sortList(names)
+	sortList(names, /proc/cmp_text_asc)
 
 	for (var/V in names)
 		body += debug_variable(V, prefs.vars[V], 0)
@@ -1312,7 +1312,7 @@ var/datum/flock/testflock
 		comps = list(comps)
 
 	var/datum/component/selection
-	selection = text2path(tgui_input_list(usr, "Select a component to remove", "Matches for pattern", comps))
+	selection = tgui_input_list(usr, "Select a component to remove", "Matches for pattern", comps)
 	if (!selection)
 		return // user cancelled
 

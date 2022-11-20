@@ -161,13 +161,26 @@
 			abilitystat = new
 			abilitystat.owner = src
 
-		var/msg = ""
-		//var/style = "font-size: 7px;"
+		var/list/lines = list()
+
+		var/i = 0
+		var/longest_line = 0
 		var/list/stats = onAbilityStat()
 		for (var/x in stats)
-			msg += "[x] [stats[x]]<br>"
+			var/line_length = length(x) + 1 + max(length(num2text(stats[x])), length(stats[x]))
+			longest_line = max(longest_line, line_length)
+			lines += "[x] [stats[x]]"
+			i++
 
-		abilitystat.maptext = "<span class='vga l vt ol'>[msg] </span>"
+		abilitystat.maptext = "<span class='vga l vt ol'>[lines.Join("<br>")]</span>"
+		abilitystat.maptext_width = longest_line * 9 //font size is 9px
+
+		if (i >= 2)
+			abilitystat.maptext_height = i * 15
+			abilitystat.maptext_y = -abilitystat.maptext_height + 32
+		else
+			abilitystat.maptext_height = initial(abilitystat.maptext_height)
+			abilitystat.maptext_y = initial(abilitystat.maptext_y)
 
 	proc/deepCopy()
 		var/datum/abilityHolder/copy = new src.type
@@ -196,13 +209,6 @@
 		owner = newbody
 		if(owner)
 			owner.attach_hud(hud)
-
-	proc/Stat()
-		if (usesPoints && pointName != "" && rendered)
-			stat(null, " ")
-			stat("[src.pointName]:", src.points)
-			if (src.regenRate || src.lastBonus)
-				stat("Generation Rate:", "[src.regenRate] + [src.lastBonus]")
 
 	proc/StatAbilities()
 		if (!rendered)
@@ -1182,33 +1188,11 @@
 			src.updateText(0, x_occupied, y_occupied)
 			src.abilitystat?.update_on_hud(x_occupied,y_occupied)
 
-	updateText(var/called_by_owner = 0)
-		if (!abilitystat)
-			abilitystat = new
-			abilitystat.owner = src
-
-		var/msg = ""
-		//var/style = "font-size: 7px;"
-
-		var/i = 0
-		var/longest_line = 0
+	onAbilityStat()
+		. = list()
 		for (var/datum/abilityHolder/H in holders)
 			if (H.topBarRendered && H.rendered)
-				var/list/stats = H.onAbilityStat()
-				for (var/x in stats)
-					var/line_length = length(x) + 1 + length(stats[x])
-					longest_line = max(longest_line, line_length)
-					msg += "[x] [stats[x]]<br>"
-					i++
-
-		abilitystat.maptext = "<span class='vga l vt ol'>[msg] </span>"
-		abilitystat.maptext_width = longest_line * 9 //font size is 9px
-		if (i > 2)
-			abilitystat.maptext_height = ((i+1) % 2) * 32
-			abilitystat.maptext_y = -abilitystat.maptext_height + 16
-		else if (abilitystat.maptext_height > 32)
-			abilitystat.maptext_height = initial(abilitystat.maptext_height)
-			abilitystat.maptext_y = initial(abilitystat.maptext_y)
+				. += H.onAbilityStat()
 
 	click(atom/target, params)
 		// ok, this is not ideal since each ability holder has its own keybinds. That sucks and should be reworked
@@ -1223,10 +1207,6 @@
 	generatePoints(var/mult = 1)
 		for (var/datum/abilityHolder/H in holders)
 			H.generatePoints(mult)
-
-	Stat()
-		for (var/datum/abilityHolder/H in holders)
-			H.Stat()
 
 	StatAbilities()
 		for (var/datum/abilityHolder/H in holders)

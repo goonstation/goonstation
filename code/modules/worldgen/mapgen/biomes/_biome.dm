@@ -87,10 +87,11 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 	flora_types = list(/obj/tree1/elm_random = 75, /obj/shrub/random = 150, /obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10, /obj/machinery/plantpot/bareplant/swamp_flora = 1)
 	flora_density = 40
 
+	fauna_types = list(/mob/living/critter/small_animal/dragonfly/ai_controlled=50, /mob/living/critter/small_animal/firefly/lightning/ai_controlled=2, /mob/living/critter/small_animal/firefly/pyre/ai_controlled=1, /mob/living/critter/small_animal/iguana/ai_controlled=3)
+	fauna_density = 0.2
+
 /datum/biome/jungle/deep
 	flora_density = 65
-
-	fauna_types = list(/mob/living/critter/small_animal/dragonfly/ai_controlled=50, /mob/living/critter/small_animal/firefly/lightning/ai_controlled=2, /mob/living/critter/small_animal/firefly/pyre/ai_controlled=1, /mob/living/critter/small_animal/firefly/ai_controlled=10)
 	fauna_density = 0.8
 
 /datum/biome/wasteland
@@ -100,7 +101,7 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 	turf_type = /turf/unsimulated/floor/auto/swamp
 
 /datum/biome/water/swamp
-	fauna_types = list(/mob/living/critter/small_animal/dragonfly/ai_controlled=10, /mob/living/critter/small_animal/firefly/lightning/ai_controlled=1, /mob/living/critter/small_animal/firefly/pyre/ai_controlled=1, /mob/living/critter/small_animal/firefly/ai_controlled=30)
+	fauna_types = list(/mob/living/critter/small_animal/dragonfly/ai_controlled=30, /mob/living/critter/small_animal/firefly/lightning/ai_controlled=1, /mob/living/critter/small_animal/firefly/pyre/ai_controlled=1)
 	fauna_density = 0.5
 
 /datum/biome/water/clear

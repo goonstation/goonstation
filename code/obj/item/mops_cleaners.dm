@@ -215,7 +215,7 @@ WET FLOOR SIGN
 
 	if(src.reagents.has_reagent("water") || src.reagents.has_reagent("cleaner"))
 		JOB_XP(user, "Janitor", 2)
-	playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+	playsound(src.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
 	// Make sure we clean an item that was sprayed directly in case it is in contents
 	if (!isturf(A.loc))
 		if (istype(A, /obj/item))
@@ -248,7 +248,7 @@ WET FLOOR SIGN
 			sleep(0.3 SECONDS)
 		qdel(D)
 	var/turf/logTurf = get_turf(D)
-	logTheThing(LOG_COMBAT, user, "sprays [src] at [constructTarget(logTurf,"combat")] [log_reagents] at [log_loc(user)].")
+	logTheThing(LOG_CHEMISTRY, user, "sprays [src] at [constructTarget(logTurf,"combat")] [log_reagents] at [log_loc(user)].")
 
 	return
 
@@ -263,7 +263,7 @@ WET FLOOR SIGN
 // MOP
 
 /obj/item/mop
-	desc = "The world of janitalia wouldn't be complete without a mop."
+	desc = "The world of janitorial paraphernalia wouldn't be complete without a mop."
 	name = "mop"
 	icon = 'icons/obj/janitor.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
@@ -281,7 +281,7 @@ WET FLOOR SIGN
 	stamina_crit_chance = 10
 
 /obj/item/mop/orange
-	desc = "The world of janitalia wouldn't be complete without a mop. This one comes in orange!"
+	desc = "The world of janitorial paraphernalia wouldn't be complete without a mop. This one comes in orange!"
 	name = "orange mop"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mop_orange"
@@ -324,12 +324,12 @@ WET FLOOR SIGN
 /obj/item/mop/proc/clean(atom/A, mob/user as mob)
 	var/turf/U = get_turf(A)
 	JOB_XP(user, "Janitor", 2)
-	playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+	playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 
 	// Some people use mops for heat-delayed fireballs and stuff.
 	// Mopping the floor with just water isn't of any interest, however (Convair880).
 	if (src.reagents.total_volume && (!src.reagents.has_reagent("water") || (src.reagents.has_reagent("water") && src.reagents.reagent_list.len > 1)))
-		logTheThing(LOG_COMBAT, user, "mops [U && isturf(U) ? "[U]" : "[A]"] with chemicals [log_reagents(src)] at [log_loc(user)].")
+		logTheThing(LOG_CHEMISTRY, user, "mops [U && isturf(U) ? "[U]" : "[A]"] with chemicals [log_reagents(src)] at [log_loc(user)].")
 
 	if (U && isturf(U))
 		src.reagents.reaction(U,1,5)
@@ -381,6 +381,8 @@ WET FLOOR SIGN
 // Its the old mop. It makes floors slippery
 /obj/item/mop/old
 	name = "antique mop"
+	icon_state = "mop_old"
+	item_state = "mop_old"
 	desc = "This thing looks ancient, but it sure does get the job done!"
 
 	afterattack(atom/A, mob/user as mob)
@@ -397,7 +399,7 @@ WET FLOOR SIGN
 					user.show_text("You were interrupted.", "red")
 					return
 				user.show_text("You have finished mopping!", "blue")
-				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 				if (U && isturf(U))
 					U.clean_forensic()
 				else
@@ -434,7 +436,7 @@ WET FLOOR SIGN
 	clean(atom/A, mob/user as mob)
 		var/turf/U = get_turf(A)
 		JOB_XP(user, "Janitor", 2)
-		playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+		playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 
 		if (U && isturf(U))
 			src.reagents.remove_any(5)
@@ -525,7 +527,7 @@ WET FLOOR SIGN
 		if(prob(hit_face_prob))
 			var/mob/living/carbon/human/DUDE = hit
 			hit.visible_message("<span class='alert'><b>[src] hits [DUDE] squarely in the face!</b></span>")
-			playsound(DUDE.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			playsound(DUDE.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 			if(DUDE.wear_mask || (DUDE.head && DUDE.head.c_flags & COVERSEYES))
 				boutput(DUDE, "<span class='alert'>Your headgear protects you! PHEW!!!</span>")
 				SPAWN(1 DECI SECOND) src.reagents.clear_reagents()
@@ -976,9 +978,9 @@ WET FLOOR SIGN
 			return
 		new/obj/effect/suck(T, get_dir(T, user))
 		if(src.suck(T, user))
-			playsound(T, "sound/effects/suck.ogg", 20, TRUE, 0, 1.5)
+			playsound(T, 'sound/effects/suck.ogg', 20, TRUE, 0, 1.5)
 		else
-			playsound(T, "sound/effects/brrp.ogg", 20, TRUE, 0, 0.8)
+			playsound(T, 'sound/effects/brrp.ogg', 20, TRUE, 0, 0.8)
 
 	proc/suck(turf/T, mob/user)
 		. = TRUE
@@ -995,7 +997,7 @@ WET FLOOR SIGN
 				F.group.reagents.skip_next_update = 1
 				F.group.update_amt_per_tile()
 				var/amt = min(F.group.amt_per_tile, src.bucket.reagents.maximum_volume - src.bucket.reagents.total_volume)
-				F.group.drain(F, amt / F.group.amt_per_tile, src.bucket)
+				F.group.drain(F, amt / max(1, F.group.amt_per_tile), src.bucket)
 				if(src.bucket.reagents.is_full())
 					boutput(user, "<span class='notice'>[src]'s [src.bucket] is now full.</span>")
 				success = TRUE
@@ -1166,7 +1168,7 @@ WET FLOOR SIGN
 					break
 
 			afterUse(user)
-			playsound(master, "sound/effects/suck.ogg", 40, TRUE, 0, 0.5)
+			playsound(master, 'sound/effects/suck.ogg', 40, TRUE, 0, 0.5)
 
 /obj/effect/suck
 	anchored = 2

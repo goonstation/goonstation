@@ -165,11 +165,11 @@
 				logTheThing(LOG_COMBAT, user, "accidentally stuns [himself_or_herself(user)] with the [src.name] at [log_loc(user)].")
 				user.visible_message("<span class='alert'><b>[user]</b> fumbles with the [src.name] and accidentally stuns [himself_or_herself(user)]!</span>")
 				flick(flick_baton_active, src)
-				playsound(src, "sound/impact_sounds/Energy_Hit_3.ogg", 50, 1, -1)
+				playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 50, 1, -1)
 
 			if ("failed_stun")
 				user.visible_message("<span class='alert'><B>[victim] has been prodded with the [src.name] by [user]! Luckily it was off.</B></span>")
-				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1, -1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, 1, -1)
 				logTheThing(LOG_COMBAT, user, "unsuccessfully tries to stun [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
 
 				if (src.is_active && !(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, src.cost_normal) & CELL_SUFFICIENT_CHARGE))
@@ -179,13 +179,13 @@
 
 			if ("failed_harm")
 				user.visible_message("<span class='alert'><B>[user] has attempted to beat [victim] with the [src.name] but held it wrong!</B></span>")
-				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1, -1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1, -1)
 				logTheThing(LOG_COMBAT, user, "unsuccessfully tries to beat [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
 
 			if ("stun")
 				user.visible_message("<span class='alert'><B>[victim] has been stunned with the [src.name] by [user]!</B></span>")
 				logTheThing(LOG_COMBAT, user, "stuns [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
-				playsound(src, "sound/impact_sounds/Energy_Hit_3.ogg", 50, 1, -1)
+				playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 50, 1, -1)
 				flick(flick_baton_active, src)
 				JOB_XP(victim, "Clown", 3)
 
@@ -346,7 +346,9 @@
 	icon_off = "stuncane"
 	item_on = "cane"
 	item_off = "cane"
-	cell_type = /obj/item/ammo/power_cell
+	cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
+	can_swap_cell = 0
+	rechargable = 0
 	mats = list("MET-3"=10, "CON-2"=10, "gem"=1, "gold"=1)
 
 /obj/item/baton/classic
@@ -432,9 +434,9 @@
 					boutput(user, "<span class='alert'>The [src.name] doesn't have enough power to be turned on.</span>")
 					src.state = EXTENDO_BATON_OPEN_AND_OFF
 					src.is_active = FALSE
-					src.w_class = W_CLASS_BULKY
+					src.w_class = W_CLASS_NORMAL
 					src.force = 7
-					playsound(src, "sound/misc/lightswitch.ogg", 75, 1, -1)
+					playsound(src, 'sound/misc/lightswitch.ogg', 75, 1, -1)
 					boutput(user, "<span class='notice'>The [src.name] is now open and unpowered.</span>")
 					src.UpdateIcon()
 					user.update_inhands()
@@ -444,15 +446,15 @@
 				src.state = EXTENDO_BATON_OPEN_AND_ON
 				src.is_active = TRUE
 				boutput(user, "<span class='notice'>The [src.name] is now open and on.</span>")
-				src.w_class = W_CLASS_BULKY
+				src.w_class = W_CLASS_NORMAL
 				src.force = 7
 				playsound(src, "sparks", 75, 1, -1)
 			if (EXTENDO_BATON_OPEN_AND_ON)		//move to open/off state
 				src.state = EXTENDO_BATON_OPEN_AND_OFF
 				src.is_active = FALSE
-				src.w_class = W_CLASS_BULKY
+				src.w_class = W_CLASS_NORMAL
 				src.force = 7
-				playsound(src, "sound/misc/lightswitch.ogg", 75, 1, -1)
+				playsound(src, 'sound/misc/lightswitch.ogg', 75, 1, -1)
 				boutput(user, "<span class='notice'>The [src.name] is now open and unpowered.</span>")
 				// playsound(src, "sparks", 75, 1, -1)
 			if (EXTENDO_BATON_OPEN_AND_OFF)		//move to closed/off state

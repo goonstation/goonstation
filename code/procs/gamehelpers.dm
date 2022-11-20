@@ -14,6 +14,7 @@ var/list/stinkThings = list("garbage can","trash heap","cesspool","toilet","pile
 var/list/stinkVerbs = list("took a shit","died","farted","threw up","wiped its ass")
 var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administrator")
 
+
 /proc/stinkString()
 	// i am five - ISN
 	switch (rand(1,4))
@@ -26,16 +27,9 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 		else
 			return "[pick(stinkExclamations)], it smells like \a [pick(stinkThings)]'s [pick(stinkThingies)] in here!"
 
-//For fuck's sake.
-/*
-/proc/bubblesort(list/L)
-	var i, j
-	for(i=L.len, i>0, i--)
-		for(j=1, j<i, j++)
-			if(L[j] > L[j+1])
-				L.Swap(j, j+1)
-	return L
-*/
+// TODO convert the above to use a file/string picker
+
+
 /proc/get_local_apc(O)
 	var/turf/T = get_turf(O)
 	if (!T)
@@ -207,7 +201,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 	. = list()
 
 	var/turf/T = get_turf(center)
-	if(length(T?.cameras))
+	if(length(T?.camera_coverage_emitters))
 		for_by_tcl(theAI, /mob/living/silicon/ai)
 			if (theAI.deployed_to_eyecam)
 				var/mob/living/intangible/aieye/AIeye = theAI.eyecam
@@ -253,7 +247,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 	if(!the_atom) return
 	. = format_net_id("\ref[the_atom]")
 
-#define CLUWNE_NOISE_DELAY 50
+#define CLUWNE_NOISE_DELAY 5 SECONDS
 
 /proc/process_accents(var/mob/living/carbon/human/H, var/message)
 	// Separate the radio prefix (if it exists) and message so the accent can't destroy the prefix
@@ -282,18 +276,19 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 				messageEffects += "Muffled by [H.grabbed_by]"
 				break
 
+	var/do_laugh = FALSE
 	if (iscluwne(H))
 		message = honk(message)
 		messageEffects += "Cluwne Honk"
-		if (world.time >= (H.last_cluwne_noise + CLUWNE_NOISE_DELAY))
-			playsound(H, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, H.get_age_pitch())
-			H.last_cluwne_noise = world.time
+		do_laugh = TRUE
+
 	if (ishorse(H))
 		message = neigh(message)
 		messageEffects += "Horse"
-		if (world.time >= (H.last_cluwne_noise + CLUWNE_NOISE_DELAY))
-			playsound(H, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, H.get_age_pitch())
-			H.last_cluwne_noise = world.time
+		do_laugh = TRUE
+
+	if (do_laugh && !ON_COOLDOWN(H, "cluwne laugh", CLUWNE_NOISE_DELAY))
+		playsound(H, pick('sound/voice/cluwnelaugh1.ogg','sound/voice/cluwnelaugh2.ogg','sound/voice/cluwnelaugh3.ogg'), 35, 0, 0, H.get_age_pitch())
 
 	if ((H.reagents && H.reagents.get_reagent_amount("ethanol") > 30 && !isdead(H)) || H.traitHolder.hasTrait("alcoholic"))
 		if((H.reagents.get_reagent_amount("ethanol") > 125 && prob(20)))
@@ -355,6 +350,8 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 		logTheThing(LOG_ADMIN, H, "[H] tried to say [prefixAndMessage[2]] but it was garbled into [message] which is uncool by the following effects: "+jointext(messageEffects,", ")+". We garbled the bad words.")
 		message = replacetext(message,phrase_log.uncool_words,pick("urr","blargh","der","hurr","pllt"))
 	return prefix + message
+
+#undef CLUWNE_NOISE_DELAY
 
 
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
@@ -569,6 +566,9 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 	//		 into the new area will not be moved.
 	if(!A || !src) return 0
 
+	if(!isnull(turf_to_skip) && !islist(turf_to_skip))
+		turf_to_skip = list(turf_to_skip)
+
 	var/list/turfs_src = get_area_turfs(src.type)
 	var/list/turfs_trg = get_area_turfs(A.type)
 
@@ -590,7 +590,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 
 	for (var/turf/S in turfs_src)
 		var/turf/T = locate(S.x - src_min_x + trg_min_x, S.y - src_min_y + trg_min_y, trg_z)
-		if(T?.loc != A || istype(S, turf_to_skip)) continue
+		if(T?.loc != A || istypes(S, turf_to_skip)) continue
 		T.ReplaceWith(S.type, keep_old_material = 0, force=1)
 		T.appearance = S.appearance
 		T.set_density(S.density)
@@ -602,7 +602,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 			if (istype(AM, /obj/effects/precipitation)) continue
 			if (istype(AM, /obj/forcefield) || istype(AM, /obj/overlay/tile_effect)) continue
 			if (!ignore_fluid && istype(AM, /obj/fluid)) continue
-			if (istype(AM, /obj/decal/tile_edge) && istype(S, turf_to_skip)) continue
+			if (istype(AM, /obj/decal/tile_edge) && istypes(S, turf_to_skip)) continue
 			AM.set_loc(T)
 		if(turftoleave)
 			S.ReplaceWith(turftoleave, keep_old_material = 0, force=1)
@@ -736,7 +736,7 @@ proc/get_ouija_word_list(var/atom/movable/source = null, var/words_min = 5, var/
 					words |= (M.real_name ? M.real_name : M.name)
 			if (1 to 5)
 				// fake wraith
-				words |= call(/mob/wraith/proc/make_name)()
+				words |= call(/mob/living/intangible/wraith/proc/make_name)()
 			if (6 to 10)
 				// fake blob (heh)
 				var/blobname = phrase_log.random_phrase("name-blob")
@@ -765,3 +765,15 @@ proc/get_ouija_word_list(var/atom/movable/source = null, var/words_min = 5, var/
 					words |= (M.real_name ? M.real_name : M.name)
 
 	return words
+
+// returns initial health of an item or an item type
+/proc/get_initial_item_health(obj/item/I)
+	if (initial(I.health))
+		return initial(I.health)
+	else
+		var/weight_class = initial(I.w_class)
+		switch (weight_class)
+			if (W_CLASS_TINY to W_CLASS_NORMAL)
+				return weight_class + 1
+			else
+				return weight_class + 2

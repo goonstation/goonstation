@@ -26,8 +26,10 @@
 	else colored_health = "<span class='alert'>[health_percent]</span>"
 
 	var/optimal_temp = M.base_body_temp
-	var/body_temp_C = round(M.bodytemperature - T0C, M.bodytemperature - T0C < 1000 ? 0.01 : 1)
-	var/body_temp_F = round(M.bodytemperature * 1.8 - T0F, M.bodytemperature * 1.8 - T0F < 1000 ? 0.01 : 1)
+	var/body_temp_C = TO_CELSIUS(M.bodytemperature)
+	body_temp_C = round(body_temp_C, body_temp_C < 1000 ? 0.01 : 1)
+	var/body_temp_F = TO_FAHRENHEIT(M.bodytemperature)
+	body_temp_F = round(body_temp_F, body_temp_F < 1000 ? 0.01 : 1)
 	var/body_temp = "[body_temp_C]&deg;C ([body_temp_F]&deg;F)"
 	var/colored_temp = ""
 	if (M.bodytemperature >= (optimal_temp + 60))
@@ -172,6 +174,9 @@
 				organ_data1 += organ_health_scan("heart", H, obfuscate)
 				// organ_data1 += organ_health_scan("brain", H, obfuscate) //Might want, might not. will be slightly more accurate than current brain damage scan
 
+				organ_data1 += organ_health_scan("left_eye", H, obfuscate)
+				organ_data1 += organ_health_scan("right_eye", H, obfuscate)
+
 				organ_data1 += organ_health_scan("left_lung", H, obfuscate)
 				organ_data1 += organ_health_scan("right_lung", H, obfuscate)
 
@@ -198,11 +203,9 @@
 
 
 	var/datum/statusEffect/simpledot/radiation/R = M.hasStatus("radiation")
-	var/datum/statusEffect/simpledot/radiation/NR = M.hasStatus("n_radiation")
-	if (R)
-		rad_data = "&emsp;<span class='alert'>Radiation poisoning: Lv [R.stage]</span>"
-	if (NR)
-		nrad_data = "&emsp;<span class='alert'>Neutron Radiation poisoning: Lv [NR.stage]</span>"
+	if (R?.stage)
+		rad_data = "&emsp;<span class='alert'>The subject is [R.howMuch]irradiated. Dose: [M.radiation_dose] Sv</span>"
+
 	for (var/datum/ailment_data/A in M.ailments)
 		if (disease_detection >= A.detectability)
 			disease_data += "<br>[A.scan_info()]"
@@ -273,13 +276,13 @@
 		return null
 	var/list/ret = list()
 	var/damage = O.get_damage()
-	if (damage >= O.MAX_DAMAGE)
+	if (damage >= O.max_damage)
 		ret += "<br><span class='alert'><b>[O.name]</b> - Dead</span>"
-	else if (damage >= O.MAX_DAMAGE*0.9)
+	else if (damage >= O.max_damage*0.9)
 		ret += "<br><span class='alert'><b>[O.name]</b> - Critical</span>"
-	else if (damage >= O.MAX_DAMAGE*0.65)
+	else if (damage >= O.max_damage*0.65)
 		ret += "<br><span class='alert'><b>[O.name]</b> - Significant</span>"
-	else if (damage >= O.MAX_DAMAGE*0.3)
+	else if (damage >= O.max_damage*0.3)
 		ret += "<br><span style='color:purple'><b>[O.name]</b> - Moderate</span>"
 	else if (damage > 0)
 		ret += "<br><span style='color:purple'><b>[O.name]</b> - Minor</span>"
@@ -495,7 +498,7 @@
 				data += "[reagent_data]"
 
 			if (show_temp)
-				data += "<br><span class='notice'>Overall temperature: [reagents.total_temperature - T0C]&deg;C ([reagents.total_temperature * 1.8 - T0F]&deg;F)</span>"
+				data += "<br><span class='notice'>Overall temperature: [reagents.total_temperature] K</span>"
 		else
 			data = "<span class='notice'>No active chemical agents found in [A].</span>"
 	else
@@ -643,8 +646,8 @@
 
 		if (isitem(A))
 			var/obj/item/I = A
-			if(I.contraband)
-				contraband_data = "<span class='alert'>(CONTRABAND: LEVEL [I.contraband])</span>"
+			if(I.get_contraband())
+				contraband_data = "<span class='alert'>(CONTRABAND: LEVEL [I.get_contraband()])</span>"
 
 		if (istype(A, /obj/item/clothing/gloves))
 			var/obj/item/clothing/gloves/G = A
@@ -754,14 +757,14 @@
 		if (pda_readout == 1) // Output goes into PDA interface, not the user's chatbox.
 			data = "Air Pressure: [round(pressure, 0.1)] kPa<br>\
 			[CONCENTRATION_REPORT(check_me, "<br>")]\
-			Temperature: [round(check_me.temperature - T0C)]&deg;C<br>"
+			Temperature: [round(check_me.temperature)] K<br>"
 
 		else if (simple_output) // For the log_atmos() proc.
-			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature - T0C)]&deg;C</i>\
+			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature)] K</i>\
 			, <b>Contents:</b> <i>[CONCENTRATION_REPORT(check_me, ", ")]</i>"
 
 		else if (alert_output) // For the alert_atmos() proc.
-			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature - T0C)]&deg;C</i>\
+			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature)] K</i>\
 			, <b>Contents:</b> <i>[SIMPLE_CONCENTRATION_REPORT(check_me, ", ")]</i>"
 
 		else
@@ -770,7 +773,7 @@
 			<br>\
 			Pressure: [round(pressure, 0.1)] kPa<br>\
 			[CONCENTRATION_REPORT(check_me, "<br>")]\
-			Temperature: [round(check_me.temperature - T0C)]&deg;C<br>"
+			Temperature: [round(check_me.temperature)] K<br>"
 
 	else
 		// Only used for "Atmospheric Scan" accessible through the PDA interface, which targets the turf

@@ -41,7 +41,7 @@
 						interdictor_influence = 1
 						break
 				if(!interdictor_influence)
-					owner.changeStatus("radiation", (A.irradiated * 10 * mult) SECONDS)
+					owner.take_radiation_dose((rand() * 0.5 SIEVERTS * A.irradiated * mult))
 
 		if (owner.bioHolder)
 			var/total_stability = owner.bioHolder.genetic_stability

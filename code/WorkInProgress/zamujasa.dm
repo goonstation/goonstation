@@ -50,7 +50,6 @@
 
 #ifdef DEBUG_LIGHTING_UPDATES
 /obj/maptext_junk/RL_counter
-	icon = null
 	maptext = ""
 	anchored = 2
 	var/applies = 0
@@ -205,7 +204,7 @@
 			// jesus christ don't teleport OURSELVES
 			return ..()
 		Z_LOG_DEBUG("shit", "Checking things: event_handler_flags [event_handler_flags], [AM] entered")
-		if (busy || istype(AM, /obj/overlay/tile_effect) || istype(AM, /mob/dead) || istype(AM, /mob/wraith) || istype(AM, /mob/living/intangible))
+		if (busy || istype(AM, /obj/overlay/tile_effect) || istype(AM, /mob/dead) || istype(AM, /mob/living/intangible))
 			Z_LOG_DEBUG("shit", "Decided not to teleport")
 			return ..()
 
@@ -325,7 +324,7 @@
 
 
 	proc/mulch_item(var/obj/I, score)
-		playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1)
 		qdel( I )
 		total_score += score
 		round_score += score
@@ -397,13 +396,12 @@
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "cleanbot1"
 
-	var/area/sim/gunsim/gunsim
+	var/area/sim/gunsim/arena/gunsim
 	var/active = 0
 
 	New()
 		..()
-		SPAWN(0.5 SECONDS)
-			gunsim = locate() in world
+		gunsim = get_area_by_type(/area/sim/gunsim/arena)
 
 	attack_hand(mob/user)
 		if (active)
@@ -677,7 +675,7 @@
 		if (src.last_count != runtime_count)
 			src.last_count = runtime_count
 			animate_storage_rustle(src)
-			playsound(src, "sound/mksounds/gotitem.ogg",33, 0)
+			playsound(src, 'sound/mksounds/gotitem.ogg', 33, 0)
 			src.maptext = "<span class='ps2p sh vb c'><span style='font-size: 12px;'>[runtime_count]</span>\nruntimes</span>"
 			src.maptext_x = -100
 			src.maptext_width = 232
@@ -697,7 +695,7 @@
 		if (src.last_count != harddel_count)
 			src.last_count = harddel_count
 			animate_storage_rustle(src)
-			playsound(src, "sound/mksounds/gotitem.ogg",33, 0)
+			playsound(src, 'sound/mksounds/gotitem.ogg', 33, 0)
 			src.maptext = "<span class='ps2p sh vb c'><span style='font-size: 12px;'>[harddel_count]</span>\nharddels</span>"
 			src.maptext_x = -100
 			src.maptext_width = 232
@@ -721,7 +719,7 @@
 	var/maptext_prefix = "<span class='c pixel sh'>Value:\n<span class='vga'>"
 	var/maptext_suffix = "</span></span>"
 	var/ding_on_change = 0
-	var/ding_sound = "sound/machines/ping.ogg"
+	var/ding_sound = 'sound/machines/ping.ogg'
 	var/update_delay = 0
 	var/require_var_or_list = 1
 
@@ -742,6 +740,8 @@
 			UnsubscribeProcess()
 			SPAWN(0)
 				while (src.update_delay)
+					if(QDELETED(src))
+						return
 					src.update_monitor()
 					sleep(update_delay)
 
@@ -814,7 +814,7 @@
 			if ("percent")
 				return (val * 100)
 			if ("temperature")
-				return "[val - T0C]&deg;C"
+				return "[TO_CELSIUS(val)]&deg;C"
 			if ("round")
 				return round(val)
 
@@ -1019,27 +1019,27 @@
 		deaths
 			monitored_var = "deaths"
 			maptext_prefix = "<span class='c pixel sh'>Deaths:\n<span class='vga'>"
-			ding_sound = "sound/misc/lose.ogg"
+			ding_sound = 'sound/misc/lose.ogg'
 
 			players
 				monitored_var = "playerdeaths"
 				maptext_prefix = "<span class='c pixel sh'>Deaths:\n<span class='vga'>"
-				ding_sound = "sound/misc/lose.ogg"
+				ding_sound = 'sound/misc/lose.ogg'
 
 		adminhelps
 			monitored_var = "adminhelps"
 			maptext_prefix = "<span class='c pixel sh'>Adminhelps:\n<span class='vga'>"
-			ding_sound = "sound/voice/screams/mascream6.ogg"
+			ding_sound = 'sound/voice/screams/mascream6.ogg'
 
 		mentorhelps
 			monitored_var = "mentorhelps"
 			maptext_prefix = "<span class='c pixel sh'>Mentorhelps:\n<span class='vga'>"
-			ding_sound = "sound/voice/animal/mouse_squeak.ogg"
+			ding_sound = 'sound/voice/animal/mouse_squeak.ogg'
 
 		prayers
 			monitored_var = "prayers"
 			maptext_prefix = "<span class='c pixel sh'>Prayers:\n<span class='vga'>"
-			ding_sound = "sound/voice/heavenly.ogg"
+			ding_sound = 'sound/voice/heavenly.ogg'
 
 		violence
 			monitored_var = "violence"
@@ -1055,7 +1055,7 @@
 			require_var_or_list = 0
 			maptext_prefix = "<span class='c pixel sh'>Last Death:<br><span class='vga'>"
 			maptext_suffix = "</span>"
-			ding_sound = "sound/misc/lose.ogg"
+			ding_sound = 'sound/misc/lose.ogg'
 
 			get_value()
 				if (!src.monitored["stats"]["lastdeath"])
@@ -1072,7 +1072,7 @@
 		display_mode = "round"
 		monitored_var = "station_budget"
 		maptext_prefix = "<span class='c pixel sh'>Station Budget:\n<span class='vga'>$"
-		ding_sound = "sound/misc/cashregister.ogg"
+		ding_sound = 'sound/misc/cashregister.ogg'
 
 		station
 			// the default, but explicit...

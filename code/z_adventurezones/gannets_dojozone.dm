@@ -136,13 +136,13 @@ Contents:
 	name = "Samurai"
 	limit = 0
 	wages = 0
-//	slot_belt = /obj/item/katana_sheath
+//	slot_belt = /obj/item/swords_sheaths/katana
 	slot_jump = list(/obj/item/clothing/under/gimmick/hakama/random)
 	slot_head = list(/obj/item/clothing/head/bandana/random_color)
 	slot_foot = list(/obj/item/clothing/shoes/sandal/wizard)
 	slot_rhan = null
 	slot_lhan = list(/obj/item/dojohammer)
-	slot_belt = list(/obj/item/katana_sheath/reverse)
+	slot_belt = list(/obj/item/swords_sheaths/katana/reverse)
 	slot_back = list(/obj/item/storage/backpack/randoseru)
 	slot_card = null
 	slot_ears = null
@@ -238,24 +238,25 @@ Contents:
 	afterattack(var/atom/target, var/mob/user)
 		var/obj/item/reagent_containers/RC = target
 		var/can_quench = istype(RC) && RC.is_open_container()  && RC.reagents.total_volume >= 120
-		if( can_quench && (src.strikes > (src.strikes_to_complete * 0.25)) && (src.temperature > T0C+1000))
+		if(!QDELETED(src) && can_quench && (src.strikes > (src.strikes_to_complete * 0.25)) && (src.temperature > T0C+1000))
 			if( src.strikes > src.strikes_to_complete )
 				if(RC.reagents.has_reagent("reversium",1))
-					new /obj/item/katana/reverse(get_turf(target))
+					new /obj/item/swords/katana/reverse(get_turf(target))
 				else
-					new /obj/item/katana/crafted(get_turf(target))
+					new /obj/item/swords/katana/crafted(get_turf(target))
 				RC.reagents.smoke_start(RC.reagents.total_volume)
+				user.u_equip(src)
 				qdel(src)
 			else
 				RC.reagents.smoke_start(RC.reagents.total_volume)
-				var/obj/item/fragile_sword/sword = new(get_turf(target))
+				var/obj/item/swords/fragile_sword/sword = new(get_turf(target))
 
 				// scale sword based on % complete
 				sword.maximum_force = max(30 * (src.strikes / src.strikes_to_complete),10)
 				sword.force = sword.maximum_force
 				sword.throwforce = 10
+				user.u_equip(src)
 				qdel(src)
-
 
 
 /datum/action/bar/icon/forge_katana
@@ -521,7 +522,7 @@ Contents:
 		if(ON_COOLDOWN(src,"bellows", 2 SECOND))
 			boutput(user,"The bellows are still working...")
 		else
-			playsound(src, "sound/impact_sounds/Stone_Scrape_1.ogg", 40)
+			playsound(src, 'sound/impact_sounds/Stone_Scrape_1.ogg', 40)
 			for(var/obj/machinery/dojo_tatara/T in orange(2))
 				src.visible_message("\The [src] breathe life into \the [T] causing it errupt in flames.", blind_message="A loud roar of air causes a fire to errupt.")
 				T.temperature = clamp(T.temperature + 150, initial(T.temperature)-150, T0C+2500)
@@ -686,14 +687,21 @@ Contents:
 // Turfs
 
 // -Walls
-
+TYPEINFO(/turf/unsimulated/wall/auto/sengoku)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/sengoku)
+	. = ..()
+	connects_to = typecacheof(/turf/unsimulated/wall/auto/sengoku)
 /turf/unsimulated/wall/auto/sengoku
 	icon = 'icons/turf/walls_sengoku.dmi'
-	connects_to = list(/turf/unsimulated/wall/auto/sengoku)
 
+
+TYPEINFO(/turf/unsimulated/wall/auto/paper)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/paper)
+	. = ..()
+	connects_to = typecacheof(/turf/unsimulated/wall/auto/paper)
 /turf/unsimulated/wall/auto/paper
 	icon = 'icons/turf/walls_paper.dmi'
-	connects_to = list(/turf/unsimulated/wall/auto/paper)
+
 
 /turf/unsimulated/wall/sengoku_tall
 	icon = 'icons/turf/walls_sengoku.dmi'

@@ -361,6 +361,9 @@
 /turf/unsimulated/floor/darkpurple/side
 	icon_state = "dpurple"
 
+/turf/unsimulated/floor/darkpurple/corner
+	icon_state = "dpurplecorner"
+
 /////////////////////////////////////////
 
 /turf/unsimulated/floor/bluegreen
@@ -497,7 +500,7 @@
 
 	New()
 		..()
-		setMaterial(getMaterial("pharosium"))
+		setMaterial(getMaterial("pharosium"), copy = FALSE)
 
 /turf/unsimulated/floor/circuit/green
 	icon_state = "circuit-green"
@@ -761,7 +764,7 @@
 
 	New()
 		..()
-		setMaterial(getMaterial("wood"))
+		setMaterial(getMaterial("wood"), copy = FALSE)
 
 /turf/unsimulated/floor/wood/two
 	icon_state = "wooden"
@@ -977,7 +980,7 @@
 
 	New()
 		..()
-		setMaterial(getMaterial("synthrubber"))
+		setMaterial(getMaterial("synthrubber"), copy = FALSE)
 
 /turf/unsimulated/floor/grass/leafy
 	icon_state = "grass_leafy"
@@ -997,6 +1000,33 @@
 
 /turf/unsimulated/floor/longtile/black
 	icon_state = "longtile-dark"
+
+/////////////////////////////////////////
+
+/turf/unsimulated/floor/glassblock
+	name = "glass block tiling"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "glass_small"
+	step_material = "step_wood"
+	step_priority = STEP_PRIORITY_MED
+
+/turf/unsimulated/floor/glassblock/large
+	icon_state = "glass_large"
+
+/turf/unsimulated/floor/glassblock/transparent_cyan
+	icon_state = "glasstr_cyan"
+
+/turf/unsimulated/floor/glassblock/transparent_indigo
+	icon_state = "glasstr_indigo"
+
+/turf/unsimulated/floor/glassblock/transparent_red
+	icon_state = "glasstr_red"
+
+/turf/unsimulated/floor/glassblock/transparent_grey
+	icon_state = "glasstr_grey"
+
+/turf/unsimulated/floor/glassblock/transparent_purple
+	icon_state = "glasstr_purple"
 
 /////////////////////////////////////////
 
@@ -1126,7 +1156,7 @@
 
 	New()
 		..()
-		setMaterial(getMaterial("ice"))
+		setMaterial(getMaterial("ice"), copy = FALSE)
 		name = initial(name)
 
 /turf/unsimulated/floor/auto/water/ice/rough

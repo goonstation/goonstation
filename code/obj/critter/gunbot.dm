@@ -35,7 +35,7 @@
 				src.visible_message("<span class='alert'><b>[src]</b> fires at [src.target]!</span>")
 
 
-				playsound(src.loc, "sound/weapons/Gunshot.ogg", 50, 1)
+				playsound(src.loc, 'sound/weapons/Gunshot.ogg', 50, 1)
 				var/tturf = get_turf(target)
 				SPAWN(1 DECI SECOND)
 					Shoot(tturf, src.loc, src)
@@ -62,7 +62,7 @@
 
 				src.visible_message("<span class='alert'><b>[src]</b> fires at [src.target]!</span>")
 
-				playsound(src.loc, "sound/weapons/Gunshot.ogg", 50, 1)
+				playsound(src.loc, 'sound/weapons/Gunshot.ogg', 50, 1)
 				var/tturf = get_turf(target)
 				SPAWN(1 DECI SECOND)
 					Shoot(tturf, src.loc, src)

@@ -155,7 +155,7 @@
 				level = 1
 				set_density(0)
 				boutput(user, "You attach the pipe to the underfloor.")
-			playsound(src.loc, "sound/items/Ratchet.ogg", 100, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 
 		else if(isweldingtool(I))
 			if(I:try_weld(user, 2, noisy = 2))

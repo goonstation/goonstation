@@ -46,7 +46,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 		//I could just change this quietly, but this.
 		//THIS FUCKING ABOMINATION stays here as a memory of someone's shame.
 		//researchTreeTiered = bubblesort(researchTreeTiered)
-		researchTreeTiered = sortList(researchTreeTiered)
+		sortList(researchTreeTiered, /proc/cmp_text_asc)
 		return
 
 	proc/isResearched(var/type)

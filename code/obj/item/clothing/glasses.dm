@@ -84,7 +84,7 @@
 		src.item_state = "[src.base_state][src.on ? null : "-off"]"
 		set_icon_state("[src.base_state][src.on ? null : "-off"]")
 		toggler.update_clothing()
-		playsound(src, "sound/items/mesonactivate.ogg", 30, 1)
+		playsound(src, 'sound/items/mesonactivate.ogg', 30, 1)
 		if (ishuman(toggler))
 			var/mob/living/carbon/human/H = toggler
 			if (istype(H.glasses, /obj/item/clothing/glasses/meson)) //hamdling of the rest is done in life.dm
@@ -168,7 +168,7 @@
 		if(H.mind)
 			if(H.mind.assigned_role == "Detective" && !src.already_worn)
 				src.already_worn = 1
-				playsound(user, "sound/voice/yeaaahhh.ogg", 100, 0)
+				playsound(user, 'sound/voice/yeaaahhh.ogg', 100, 0)
 				user.visible_message("<span class='alert'><B><font size=3>YEAAAAAAAAAAAAAAAH!</font></B></span>")
 	..()
 	return
@@ -219,6 +219,7 @@
 	color_r = 1
 	color_g = 1
 	color_b = 1
+	contraband = 4 // illegal (stolen) crimefighting vigilante gear
 
 /obj/item/clothing/glasses/thermal
 	name = "optical thermal scanner"
@@ -515,7 +516,7 @@
 					APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
 				src.icon_state = "prodocs-upgraded"
 				boutput(user, "<span class='notice'>Health scan upgrade installed.</span>")
-				playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
+				playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 				user.u_equip(W)
 				qdel(W)
 				return
@@ -666,6 +667,9 @@
 		icon_state = "nightvisionsechud"
 		mats = 12
 		desc = "Goggles with separate built-in image-intensifier tubes to allow vision in the dark. Keep away from bright lights. This version also has built in SecHUD functionality."
+		color_r = 1
+		color_g = 0.5
+		color_b = 0.5
 
 		equipped(var/mob/user, var/slot)
 			..()
@@ -679,7 +683,7 @@
 
 		flashblocking //Admin or gimmick spawn option
 			name = "SUPER night vision sechud goggles"
-			mats = 15 //expensive if someone scans them
+			mats = 25 //expensive if someone scans them because I can do what I want
 			desc = "Goggles with separate built-in image-intensifier tubes to allow vision in the dark AND SecHUDs AND with darkened lenses? Wowee!"
 
 			setupProperties()
