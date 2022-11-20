@@ -3512,7 +3512,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/gun/spike
+		HH.limb = new /datum/limb/gun/kinetic/spike
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handzap"
 		HH.name = "spikes"

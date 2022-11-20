@@ -232,7 +232,9 @@
 		OCD.amount += max(delta,0)
 		if(ore.material)
 			for(var/i in 1 to delta) //make some copies of the material if this is a stack
-				OCD.stats += ore.material
+				var/datum/material/matCopy = copyMaterial(ore.material)
+				matCopy.owner = null
+				OCD.stats += matCopy
 		OCD.amount = round(max(OCD.amount,0)) //floor values to avoid float imprecision
 		ores[material_name] = OCD
 
