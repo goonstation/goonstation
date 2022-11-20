@@ -2160,20 +2160,14 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 		var/obj/disposalpipe/trunk/current = new src.trunk_type(src.loc)
 		current.dir = directions[1]
 		current.dpdir = dpdir
+		update_icon(current)
 	else if (length(directions) == 2)
 		// lays a normal pipe segment
-		if ((dpdir & (NORTH | SOUTH)) || (dpdir & (EAST | WEST)))
-			// straight pipe
-			var/obj/disposalpipe/segment/current = new src.pipe_type(src.loc)
-			current.dir = directions[1]
-			current.dpdir = dpdir
-			current.icon_state = "pipe-s"
-		else
+		if (dpdir == NORTHWEST || dpdir == NORTHEAST || dpdir == SOUTHWEST || dpdir == SOUTHEAST)
 			// curved pipe
 			var/obj/disposalpipe/segment/bent/current = new src.pipe_type(src.loc)
 			current.dpdir = dpdir
-			current.icon_state = "pipe-c"
-			// this is to make it face the right way
+			// this is to make it face the right way, for the icon
 			if (dpdir & NORTHEAST)
 				current.dir = NORTH
 			else if (dpdir & NORTHWEST)
@@ -2182,6 +2176,15 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 				current.dir = EAST
 			else if (dpdir & SOUTHWEST)
 				current.dir = SOUTH
+			current.icon_state = "pipe-c"
+			update_icon(current)
+		else
+			// straight pipe
+			var/obj/disposalpipe/segment/current = new src.pipe_type(src.loc)
+			current.dir = directions[1]
+			current.dpdir = dpdir
+			current.icon_state = "pipe-s"
+			update_icon(current)
 	else
 		// DO NOT MAKE JUNCTIONS, FOOLS
 		CRASH("Pipe Spawners can't make junctions!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
