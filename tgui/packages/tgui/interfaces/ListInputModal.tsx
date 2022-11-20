@@ -55,7 +55,7 @@ export const ListInputModal = (_, context) => {
     if (newSelected < 0) newSelected = 0;
     if (newSelected > len) newSelected = len;
     setSelected(newSelected);
-     document!.getElementById(newSelected.toString())?.scrollIntoView();
+     document!.getElementById(newSelected.toString())?.focus();
   };
   // User selects an item with mouse
   const onClick = (index: number) => {
@@ -78,7 +78,7 @@ export const ListInputModal = (_, context) => {
     if (foundItem) {
       const foundIndex = items.indexOf(foundItem);
       setSelected(foundIndex);
-       document!.getElementById(foundIndex.toString())?.scrollIntoView();
+       document!.getElementById(foundIndex.toString())?.focus();
     }
   };
   // User types into search bar
@@ -88,7 +88,7 @@ export const ListInputModal = (_, context) => {
     }
     setSearchQuery(query);
     setSelected(0);
-     document!.getElementById('0')?.scrollIntoView();
+     document!.getElementById('0')?.focus();
   };
   // User presses the search button
   const onSearchBarToggle = () => {
@@ -131,12 +131,12 @@ export const ListInputModal = (_, context) => {
           }
           if (keyCode === KEY_END) {
             setSelected(len);
-             document!.getElementById(len.toString())?.scrollIntoView();
+             document!.getElementById(len.toString())?.focus();
              event.preventDefault();
           }
           if (keyCode === KEY_HOME) {
             setSelected(0);
-             document!.getElementById('0')?.scrollIntoView();
+             document!.getElementById('0')?.focus();
              event.preventDefault();
           }
         }}>
