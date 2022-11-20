@@ -2009,7 +2009,7 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 		current.dpdir = dpdir
 	else if (length(directions) == 2)
 		// lays a normal pipe segment
-		if (dpdir & (NORTH + SOUTH) || dpdir & (EAST + WEST))
+		if ((dpdir & (NORTH | SOUTH)) || (dpdir & (EAST | WEST)))
 			// straight pipe
 			var/obj/disposalpipe/current = new src.pipe_type(src.loc)
 			current.dir = directions[1]
