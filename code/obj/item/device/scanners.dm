@@ -645,8 +645,8 @@ that cannot be itched
 		//if( !istype(get_area(src), /area/security/prison) && !istype(get_area(src), /area/security/main))
 		//	boutput(user, "<span class='alert'>Device only works in designated security areas!</span>")
 		//	return
-		boutput(user, "<span class='notice'>You scan in [M]</span>")
-		boutput(M, "<span class='alert'>[user] scans you with the RecordTrak</span>")
+		boutput(user, "<span class='notice'>You scan in [M].</span>")
+		boutput(M, "<span class='alert'>[user] scans you with the RecordTrak.</span>")
 		for(var/datum/db_record/R as anything in data_core.general.records)
 			if (lowertext(R["name"]) == lowertext(M.name))
 				//Update Information
