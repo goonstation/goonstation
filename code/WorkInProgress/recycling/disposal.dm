@@ -1970,9 +1970,8 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 				continue
 			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
 				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			dpdir |= tempdir
+			directions += tempdir
 		for (var/obj/disposalpipe/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
 			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
@@ -1990,9 +1989,8 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 				continue
 			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
 				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			dpdir |= tempdir
+			directions += tempdir
 		for (var/obj/disposalpipe/segment/mail/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
 			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
@@ -2010,9 +2008,8 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 				continue
 			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
 				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			dpdir |= tempdir
+			directions += tempdir
 		for (var/obj/disposalpipe/segment/brig/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
 			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
@@ -2030,9 +2027,8 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 				continue
 			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
 				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			dpdir |= tempdir
+			directions += tempdir
 		for (var/obj/disposalpipe/segment/ejection/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
 			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
@@ -2050,9 +2046,8 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 				continue
 			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
 				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			dpdir |= tempdir
+			directions += tempdir
 		for (var/obj/disposalpipe/segment/morgue/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
 			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
@@ -2070,9 +2065,8 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 				continue
 			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
 				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			dpdir |= tempdir
+			directions += tempdir
 		for (var/obj/disposalpipe/segment/food/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
 			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
@@ -2090,9 +2084,8 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 				continue
 			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
 				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			dpdir |= tempdir
+			directions += tempdir
 		for (var/obj/disposalpipe/segment/produce/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
 			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
@@ -2110,9 +2103,8 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 				continue
 			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
 				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			dpdir |= tempdir
+			directions += tempdir
 		for (var/obj/disposalpipe/segment/transport/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
 			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
@@ -2130,9 +2122,8 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 				continue
 			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
 				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			dpdir |= tempdir
+			directions += tempdir
 		for (var/obj/disposalpipe/segment/mineral/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
 			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
@@ -2150,9 +2141,8 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 				continue
 			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
 				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			dpdir |= tempdir
+			directions += tempdir
 		for (var/obj/disposalpipe/segment/cargo/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
 			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
