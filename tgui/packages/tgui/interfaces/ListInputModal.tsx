@@ -25,11 +25,12 @@ const nextTick
    init_value: string;
    timeout: number;
    title: string;
+   start_with_search: number;
  };
 
 export const ListInputModal = (_, context) => {
   const { act, data } = useBackend<ListInputData>(context);
-  const { items = [], message, init_value, timeout, title } = data;
+  const { items = [], message, init_value, timeout, title, start_with_search } = data;
   const [selected, setSelected] = useLocalState<number>(
     context,
     'selected',
@@ -38,7 +39,7 @@ export const ListInputModal = (_, context) => {
   const [searchBarVisible, setSearchBarVisible] = useLocalState<boolean>(
     context,
     'searchBarVisible',
-    items.length > 9
+    start_with_search === 1
   );
   const [searchQuery, setSearchQuery] = useLocalState<string>(
     context,
