@@ -8,7 +8,7 @@
 import { Loader } from './common/Loader';
 import { InputButtons } from './common/InputButtons';
 import { Button, Input, Section, Stack } from '../components';
-import { KEY_A, KEY_DOWN, KEY_ESCAPE, KEY_ENTER, KEY_UP, KEY_Z } from '../../common/keycodes';
+import { KEY_A, KEY_DOWN, KEY_ESCAPE, KEY_ENTER, KEY_UP, KEY_Z, KEY_PAGEUP, KEY_PAGEDOWN } from '../../common/keycodes';
 import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
 
@@ -40,23 +40,24 @@ export const ListInputModal = (_, context) => {
   );
   // User presses up or down on keyboard
   // Simulates clicking an item
-  const onArrowKey = (key: number) => {
+  // offset is for page keys
+  const onArrowKey = (key: number, offset: number = 1) => {
     const len = filteredItems.length - 1;
-    if (key === KEY_DOWN) {
+    if (key === KEY_DOWN || key === KEY_PAGEDOWN) {
       if (selected === null || selected === len) {
         setSelected(0);
-         document!.getElementById('0')?.scrollIntoView();
+        document!.getElementById('0')?.scrollIntoView();
       } else {
-        setSelected(selected + 1);
-         document!.getElementById((selected + 1).toString())?.scrollIntoView();
+        setSelected(selected + offset);
+        document!.getElementById((selected + offset).toString())?.scrollIntoView();
       }
-    } else if (key === KEY_UP) {
+    } else if (key === KEY_UP || key === KEY_PAGEUP) {
       if (selected === null || selected === 0) {
         setSelected(len);
-         document!.getElementById(len.toString())?.scrollIntoView();
+        document!.getElementById(len.toString())?.scrollIntoView();
       } else {
-        setSelected(selected - 1);
-         document!.getElementById((selected - 1).toString())?.scrollIntoView();
+        setSelected(selected - offset);
+        document!.getElementById((selected - offset).toString())?.scrollIntoView();
       }
     }
   };
@@ -118,6 +119,10 @@ export const ListInputModal = (_, context) => {
           if (keyCode === KEY_DOWN || keyCode === KEY_UP) {
             event.preventDefault();
             onArrowKey(keyCode);
+          }
+          if (keyCode === KEY_PAGEUP|| keyCode === KEY_PAGEDOWN) {
+            event.preventDefault();
+            onArrowKey(keyCode, 10); // page keys offset by 10
           }
           if (keyCode === KEY_ENTER) {
             event.preventDefault();
