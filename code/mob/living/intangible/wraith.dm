@@ -467,9 +467,8 @@
 		return 0
 
 	click(atom/target)
-		. = ..()
-		if (. == 100)
-			return 100
+		if (src.targeting_ability)
+			..()
 		if (!density)
 			src.examine_verb(target)
 
@@ -681,8 +680,10 @@
 	var/points_to_possess = 50
 	/// Steal someone's appearance and use it during haunt
 	var/mutable_appearance/copied_appearance = null
-	/// Steal their descriptions too
+	/// Steal their descriptions and name too
 	var/copied_desc = null
+	var/copied_name = null
+	var/copied_real_name = null
 	var/traps_laid = 0
 
 	New(var/mob/M)
