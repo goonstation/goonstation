@@ -623,7 +623,7 @@ that cannot be itched
 	///List of record settings
 	var/list/modes = list(PRISONER_MODE_NONE, PRISONER_MODE_PAROLED, PRISONER_MODE_INCARCERATED, PRISONER_MODE_RELEASED)
 	///The current setting
-	var/mode = 1
+	var/mode = PRISONER_MODE_NONE
 
 	var/list/datum/contextAction/contexts = list()
 
