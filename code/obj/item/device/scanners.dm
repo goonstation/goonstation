@@ -618,7 +618,7 @@ that cannot be itched
 	item_state = "recordtrak"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | EXTRADELAY
 	mats = 3
-	contextLayout = new /datum/contextLayout/experimentalcircle
+
 
 	///List of record settings
 	var/list/modes = list(PRISONER_MODE_NONE, PRISONER_MODE_PAROLED, PRISONER_MODE_INCARCERATED, PRISONER_MODE_RELEASED)
@@ -628,6 +628,7 @@ that cannot be itched
 	var/list/datum/contextAction/contexts = list()
 
 	New()
+		contextLayout = new /datum/contextLayout/experimentalcircle
 		..()
 		for(var/actionType in childrentypesof(/datum/contextAction/prisoner_scanner))
 			var/datum/contextAction/prisoner_scanner/action = new actionType()
@@ -744,7 +745,7 @@ that cannot be itched
 
 		add_fingerprint(user)
 		return
-		
+
 	dropped(var/mob/user)
 		. = ..()
 		user.closeContextActions()
