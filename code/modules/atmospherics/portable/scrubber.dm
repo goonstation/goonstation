@@ -17,9 +17,11 @@
 	//for smoke
 	var/drain_min = 5
 	var/drain_max = 12
+	var/obj/item/reagent_containers/buffer = null
 
 	New()
 		..()
+		src.buffer = new(src, 500)
 		src.create_reagents(500)
 
 /obj/machinery/portable_atmospherics/scrubber/update_icon()
@@ -88,13 +90,13 @@
 			var/obj/fluid/F = my_turf.active_airborne_liquid
 			if (F?.group)
 				power_usage += (inlet_flow / 8) * 5 KILO WATTS
+				F.group.drain(F, inlet_flow / 8, src.buffer)
+				src.buffer.reagents.remove_any(src.buffer.reagents.total_volume/2)
 				if (src.reagents.total_volume < src.reagents.maximum_volume)
-					F.group.drain(F, inlet_flow / 8, src)
-				else //can't drain directly to a turf, so we use a temp reagent container
-					var/obj/item/reagent_containers/temp = new(src, 500)
-					F.group.drain(F, inlet_flow / 8, temp)
-					temp.reagents.reaction(get_turf(src), TOUCH, 500)
-					qdel(temp)
+					src.buffer.transfer_all_reagents(src)
+				else
+					src.buffer.reagents.reaction(get_turf(src), TOUCH, src.buffer.reagents.total_volume)
+				src.buffer.reagents.clear_reagents()
 
 		var/original_my_moles = TOTAL_MOLES(src.air_contents)
 		if(src.holding)
