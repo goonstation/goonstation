@@ -30,12 +30,10 @@ names@=
 	Alfredo
 	Alger
 	Ali
-	Ali
 	Alijah
 	Allen
 	Alvin
 	Amari
-	Amir
 	Amir
 	Amos
 	Anderson
@@ -134,7 +132,6 @@ names@=
 	Camron
 	Camryn
 	Carl
-	Carlos
 	Carlos
 	Carson
 	Carter
@@ -275,7 +272,6 @@ names@=
 	Eric
 	Erick
 	Erik
-	Erik
 	Ernesto
 	Esteban
 	Ethan
@@ -340,7 +336,6 @@ names@=
 	Halvar
 	Hampus
 	Han
-	Han
 	Hansuke
 	Haoyu
 	Happy
@@ -379,7 +374,6 @@ names@=
 	Ismael
 	Israel
 	Issac
-	Ivan
 	Ivan
 	Izaiah
 	Jace
@@ -461,7 +455,6 @@ names@=
 	Josiah
 	Josue
 	Juan
-	Juan
 	Judah
 	Jude
 	Julian
@@ -473,7 +466,6 @@ names@=
 	Justin
 	Kade
 	Kaden
-	Kai
 	Kai
 	Kaiden
 	Kaito
@@ -496,7 +488,6 @@ names@=
 	Kenneth
 	Kevin
 	Keziah
-	Khalil
 	Khalil
 	Khemkhaeng
 	Kija
@@ -547,7 +538,6 @@ names@=
 	Luca
 	Lucas
 	Luhan
-	Luis
 	Luis
 	Lukas
 	Luke
@@ -611,7 +601,6 @@ names@=
 	Myles
 	Naji
 	Nasir
-	Nasir
 	Nat
 	Nathan
 	Nathaniel
@@ -632,7 +621,6 @@ names@=
 	Ojasvat
 	Oliver
 	Omar
-	Omar
 	Opie
 	Orlando
 	Osbert
@@ -651,7 +639,6 @@ names@=
 	Pavel
 	Paxton
 	Payton
-	Pedro
 	Pedro
 	Percival
 	Persh
