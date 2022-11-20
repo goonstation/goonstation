@@ -166,7 +166,6 @@
 			return FALSE
 		return TRUE
 
-
 	onAttach(datum/abilityHolder/holder)
 		..()
 		var/atom/movable/screen/ability/topBar/B = src.object
