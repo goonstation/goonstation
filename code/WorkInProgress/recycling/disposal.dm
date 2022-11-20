@@ -1900,6 +1900,7 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 	var/dpdir = 0		//! bitmask of pipe directions
 
 /obj/disposalpipespawner/types
+	regular
 	mail
 		name = "mail pipe spawner"
 		color = PIPEC_MAIL
@@ -1962,26 +1963,7 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 
 /obj/disposalpipespawner/initialize()
 	var/list/directions = list()
-	if (src.pipe_type == /obj/disposalpipe)
-	// regular pipe spawners
-		for (var/obj/disposalpipespawner/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			dpdir |= tempdir
-			directions += tempdir
-		for (var/obj/disposalpipe/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
-	else if (src.pipe_type == /obj/disposalpipespawner/types/mail)
+	if (src.pipe_type == /obj/disposalpipespawner/types/mail)
 	// mail pipes
 		for (var/obj/disposalpipespawner/types/mail/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
@@ -2152,7 +2134,26 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 			if (_pipe.dpdir & get_dir(_pipe, src))
 				dpdir |= tempdir
 				directions += tempdir
-
+	else if (src.pipe_type == /obj/disposalpipe)
+	// regular pipe spawners
+		for (var/obj/disposalpipespawner/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			dpdir |= tempdir
+			directions += tempdir
+		for (var/obj/disposalpipe/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+// regular ones have to go at the end otherwise it breaks
 	if (dpdir == 0)
 		CRASH("Lone Pipespawner doesn't connect to anything!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
 	else if (length(directions) == 1)
