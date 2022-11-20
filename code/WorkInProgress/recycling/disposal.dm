@@ -440,16 +440,10 @@
 
 		if (isweldingtool(I))
 			if (I:try_weld(user, 3, noisy = 2))
-				// check if anything changed over 2 seconds
-				var/turf/uloc = user.loc
-				var/atom/wloc = I.loc
-				boutput(user, "You begin slicing [src].")
-				sleep(0.1 SECONDS)
-				if (user.loc == uloc && wloc == I.loc)
-					welded(user)
-				else
-					boutput(user, "You must stay still while welding the pipe.")
-					return
+				var/duration = 0.1 SECONDS
+				if (src.holed_up)
+					duration = 5 SECONDS
+				actions.start(new/datum/action/bar/icon/weld_disposal_pipe(src, user, duration), user)
 
 		if (istype(I, /obj/item/sheet) && src.holed_up)
 			var/obj/item/sheet/S = I
@@ -499,6 +493,46 @@
 		src.UpdateOverlays(null, "hole")
 
 #undef MISSING_DISPOSAL_IMAGE_COLOR
+
+/datum/action/bar/icon/weld_disposal_pipe
+	duration = 0.1 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_ATTACKED
+	id = "weld_disposal_pipe"
+	icon = 'icons/obj/items/tools/weldingtool.dmi'
+	icon_state = "weldingtool-on"
+	var/mob/living/welder = null
+	var/obj/disposalpipe/the_pipe = null
+
+	New(var/obj/disposalpipe/obj, var/mob/living/M, var/weld_duration = 0.1 SECONDS)
+		src.welder = M
+		src.the_pipe = obj
+		src.duration = weld_duration
+		..()
+
+	onStart()
+		..()
+		if (!src.welder || !isalive(src.welder) || !can_act(src.welder) || !src.the_pipe)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (src.the_pipe.holed_up)
+			src.welder.visible_message("<span class='notice'>[src.welder] begins slowly welding [src.the_pipe], trying not to cut themselves on any of the broken parts.</span>")
+		else
+			src.welder.visible_message("<span class='notice'>[src.welder] begins welding [src.the_pipe].</span>")
+
+	onUpdate()
+		..()
+		if (!src.welder || !isalive(src.welder) || !can_act(src.welder) || !src.the_pipe || BOUNDS_DIST(src.welder, src.the_pipe) > 0)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onEnd()
+		src.the_pipe.welded(src.welder)
+		..()
+
+	onInterrupt()
+		boutput(src.welder, "<span class='alert'>You were interrupted!</span>")
+		..()
+
 
 // a straight or bent segment
 /obj/disposalpipe/segment

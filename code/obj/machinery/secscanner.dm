@@ -174,6 +174,8 @@
 		if (!ishuman(target))
 			if (istype(target, /mob/living/critter/changeling))
 				return 6
+			if (istype(target, /mob/living/critter/adult_brain_slug))
+				return 4
 			for( var/obj/item/item in target.contents )
 				threatcount += item.get_contraband()
 			return threatcount
