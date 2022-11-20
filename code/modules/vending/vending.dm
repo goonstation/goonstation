@@ -553,7 +553,8 @@
 				src.credit = 0
 		if("vend")
 			if(params["target"])
-				src.vend_ready = TRUE
+				if (!src.vend_ready)
+					return
 				var/datum/db_record/account = null
 				account = FindBankAccountByName(src.scan?.registered)
 				if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID))
@@ -565,18 +566,15 @@
 						if (!account)
 							boutput(usr, "<span class='alert'>No bank account associated with ID found.</span>")
 							flick(src.icon_deny,src)
-							src.vend_ready = FALSE
 							return
 						if (account["current_money"] < params["cost"])
 							boutput(usr, "<span class='alert'>Insufficient funds in account. To use machine credit, log out.</span>")
 							flick(src.icon_deny,src)
-							src.vend_ready = FALSE
 							return
 					else
 						if (src.credit < params["cost"])
 							boutput(usr, "<span class='alert'>Insufficient Credit.</span>")
 							flick(src.icon_deny,src)
-							src.vend_ready = FALSE
 							return
 
 				var/product_amount = 0 // this is to make absolutely sure that these numbers arent desynced
@@ -587,13 +585,13 @@
 					if(R.product_path == text2path(params["target"]))
 						product_amount = R.product_amount
 						product = R
-				if(!vend_ready || product_amount <= 0 || isnull(text2path(params["target"])))
+				if(product_amount <= 0 || isnull(text2path(params["target"])))
 					return
+				src.vend_ready = 0
 				src.prevend_effect()
 				src.currently_vending = product
 				SPAWN(src.vend_delay)
-					if(!vend_ready) // do not proceed if players dont have money
-						return
+					src.vend_ready = 1
 					for (var/datum/data/vending_product/R in plist)
 						if(R.product_path == text2path(params["target"]))
 							product_amount = R.product_amount
@@ -610,7 +608,6 @@
 						else
 							src.credit -= product.product_cost
 					src.currently_vending = null
-					src.vend_ready = TRUE
 					update_static_data(usr)
 	. = TRUE
 
@@ -668,17 +665,13 @@
 				flick(src.icon_deny,src)
 				return
 
-			src.vend_ready = 0 //One thing at a time!!
-
 			var/datum/data/vending_product/R = locate(href_list["vend"]) in src.product_list
 			if (!R)
 				R = locate(href_list["vend"]) in src.player_list
 				isplayer = TRUE
 			if (!R || !istype(R))
-				src.vend_ready = 1
 				return
 			else if(R.product_hidden && !src.extended_inventory)
-				src.vend_ready = 1
 				return
 			var/product_path = R.product_path
 
@@ -686,17 +679,13 @@
 				product_path = text2path(product_path)
 
 			if (!product_path && !isplayer)
-				src.vend_ready = 1
 				return
 
 			if (R.product_amount <= 0)
-				src.vend_ready = 1
 				return
 
 			//Wire: Fix for href exploit allowing for vending of arbitrary items
 			if (!(R in src.product_list) && !(R in src.player_list))
-				src.vend_ready = 1
-
 				trigger_anti_cheat(usr, "tried to href exploit [src] to spawn an invalid item.")
 				return
 
@@ -707,18 +696,15 @@
 					if (!account)
 						boutput(usr, "<span class='alert'>No bank account associated with ID found.</span>")
 						flick(src.icon_deny,src)
-						src.vend_ready = 1
 						return
 					if (account["current_money"] < R.product_cost)
 						boutput(usr, "<span class='alert'>Insufficient funds in account. To use machine credit, log out.</span>")
 						flick(src.icon_deny,src)
-						src.vend_ready = 1
 						return
 				else
 					if (src.credit < R.product_cost)
 						boutput(usr, "<span class='alert'>Insufficient Credit.</span>")
 						flick(src.icon_deny,src)
-						src.vend_ready = 1
 						return
 
 			if (((src.last_reply + (src.vend_delay + 200)) <= world.time) && src.vend_reply)
@@ -730,6 +716,7 @@
 			if (src.icon_vend) //Show the vending animation if needed
 				flick(src.icon_vend,src)
 
+			src.vend_ready = 0
 			src.prevend_effect()
 			if(!src.freestuff) R.product_amount--
 
@@ -753,8 +740,9 @@
 				var/datum/data/vending_product/player_product/T = R
 				playervended = T.contents[1]
 				T.contents -= playervended
+
 			SPAWN(src.vend_delay)
-				src.vend_ready = 1 // doin this at the top here just in case something goes fucky and the proc crashes
+				src.vend_ready = 1
 
 				if (ispath(product_path))
 					var/atom/movable/vended = new product_path(src.get_output_location()) // changed from obj, because it could be a mob, THANKS VALUCHIMP
@@ -2876,6 +2864,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/security, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/security/assistant, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/lawyer/red, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/lawyer/black, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/jersey/red, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/dirty_vest, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/tourist, 2)

@@ -587,6 +587,9 @@
 /turf/simulated/floor/darkpurple/side
 	icon_state = "dpurple"
 
+/turf/simulated/floor/darkpurple/corner
+	icon_state = "dpurplecorner"
+
 /////////////////////////////////////////
 
 /turf/simulated/floor/yellow
@@ -810,6 +813,12 @@ DEFINE_FLOORS(twotone/blue,
 DEFINE_FLOORS(twotone/yellow,
 	icon_state = "twotone_yellow")
 
+DEFINE_FLOORS(twotone/white,
+	icon_state = "twotone_white")
+
+DEFINE_FLOORS(twotone/black,
+	icon_state = "twotone_black")
+
 /////////////////////////////////////////
 
 DEFINE_FLOORS(terrazzo,
@@ -849,7 +858,7 @@ DEFINE_FLOORS(marble/border_wb,
 	name = "glass block tiling"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "glass_small"
-	mat_appearances_to_ignore = list("steel","synthrubber")
+	mat_appearances_to_ignore = list("steel","synthrubber","glass")
 	step_material = "step_wood"
 	step_priority = STEP_PRIORITY_MED
 	mat_changename = 0
@@ -2057,14 +2066,6 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		if  (!grab_smash(G, user))
 			return ..(C, user)
 		else
-			return
-
-	// hi i don't know where else to put this :D - cirr
-	else if (istype(C, /obj/item/martianSeed))
-		var/obj/item/martianSeed/S = C
-		if(S)
-			S.plant(src)
-			logTheThing(LOG_STATION, user, "plants a martian biotech seed (<b>Structure:</b> [S.spawn_path]) at [log_loc(src)].")
 			return
 
 	//also in turf.dm. Put this here for lowest priority.
