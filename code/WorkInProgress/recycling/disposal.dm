@@ -2174,7 +2174,7 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 		// lays a normal pipe segment
 		if ((dpdir & (NORTH | SOUTH)) || (dpdir & (EAST | WEST)))
 			// straight pipe
-			var/obj/disposalpipe/current = new src.pipe_type(src.loc)
+			var/obj/disposalpipe/segment/current = new src.pipe_type(src.loc)
 			current.dir = directions[1]
 			current.dpdir = dpdir
 			current.icon_state = "pipe-s"
@@ -2183,6 +2183,7 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 			var/obj/disposalpipe/segment/bent/current = new src.pipe_type(src.loc)
 			current.dpdir = dpdir
 			current.icon_state = "pipe-c"
+			// this is to make it face the right way
 			if (dpdir & NORTHEAST)
 				current.dir = NORTH
 			else if (dpdir & NORTHWEST)
