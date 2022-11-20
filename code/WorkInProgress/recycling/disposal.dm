@@ -508,7 +508,6 @@
 		name = "mail pipe"
 		desc = "An underfloor mail pipe."
 		color = PIPEC_MAIL
-		spawner_type = /obj/disposalpipespawner/type/mail
 
 		horizontal
 			dir = EAST
@@ -529,49 +528,41 @@
 		name = "brig pipe"
 		desc = "An underfloor brig pipe."
 		color = PIPEC_BRIG
-		spawner_type = /obj/disposalpipespawner/type/brig
 
 	ejection
 		name = "ejection pipe"
 		desc = "An underfloor ejection pipe."
 		color = PIPEC_EJECTION
-		spawner_type = /obj/disposalpipespawner/type/ejection
 
 	morgue
 		name = "morgue pipe"
 		desc = "An underfloor morgue pipe."
 		color = PIPEC_MORGUE
-		spawner_type = /obj/disposalpipespawner/type/morgue
 
 	food
 		name = "food pipe"
 		desc = "An underfloor food pipe."
 		color = PIPEC_FOOD
-		spawner_type = /obj/disposalpipespawner/type/food
 
 	produce
 		name = "produce pipe"
 		desc = "An underfloor produce pipe."
 		color = PIPEC_PRODUCE
-		spawner_type = /obj/disposalpipespawner/type/produce
 
 	transport
 		name = "transport pipe"
 		desc = "An underfloor transport pipe."
 		color = PIPEC_TRANSPORT
-		spawner_type = /obj/disposalpipespawner/type/transport
 
 	mineral
 		name = "mineral pipe"
 		desc = "An underfloor mineral pipe."
 		color = PIPEC_MINERAL
-		spawner_type = /obj/disposalpipespawner/type/mineral
 
 	cargo
 		name = "cargo pipe"
 		desc = "An underfloor cargo pipe."
 		color = PIPEC_CARGO
-		spawner_type = /obj/disposalpipespawner/type/cargo
 
 	New()
 		..()
@@ -1904,7 +1895,6 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 	name = "disposal pipe spawner"
 	icon_state = "pipe-spawner"
 	text = ""
-	var/spawner_type = /obj/disposalpipespawner
 	var/pipe_type = /obj/disposalpipe
 	var/trunk_type = /obj/disposalpipe/trunk
 	var/dpdir = 0		//! bitmask of pipe directions
@@ -1913,62 +1903,53 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 	mail
 		name = "mail pipe spawner"
 		color = PIPEC_MAIL
-		spawner_type = /obj/disposalpipespawner/type/mail
 		pipe_type = /obj/disposalpipe/segment/mail
 		trunk_type = /obj/disposalpipe/trunk/mail
 	brig
 		name = "brig pipe spawner"
 		color = PIPEC_BRIG
-		spawner_type = /obj/disposalpipespawner/type/brig
 		pipe_type = /obj/disposalpipe/segment/brig
 		trunk_type = /obj/disposalpipe/trunk/brig
 
 	ejection
 		name = "ejection pipe spawner"
 		color = PIPEC_EJECTION
-		spawner_type = /obj/disposalpipespawner/type/ejection
 		pipe_type = /obj/disposalpipe/segment/ejection
 		trunk_type = /obj/disposalpipe/trunk/ejection
 
 	morgue
 		name = "morgue pipe spawner"
 		color = PIPEC_MORGUE
-		spawner_type = /obj/disposalpipespawner/type/morgue
 		pipe_type = /obj/disposalpipe/segment/morgue
 		trunk_type = /obj/disposalpipe/trunk/morgue
 
 	food
 		name = "food pipe spawner"
 		color = PIPEC_FOOD
-		spawner_type = /obj/disposalpipespawner/type/food
 		pipe_type = /obj/disposalpipe/segment/food
 		trunk_type = /obj/disposalpipe/trunk/food
 
 	produce
 		name = "produce pipe spawner"
 		color = PIPEC_PRODUCE
-		spawner_type = /obj/disposalpipespawner/type/produce
 		pipe_type = /obj/disposalpipe/segment/produce
 		trunk_type = /obj/disposalpipe/trunk/produce
 
 	transport
 		name = "transport pipe spawner"
 		color = PIPEC_TRANSPORT
-		spawner_type = /obj/disposalpipespawner/type/transport
 		pipe_type = /obj/disposalpipe/segment/transport
 		trunk_type = /obj/disposalpipe/trunk/transport
 
 	mineral
 		name = "mineral pipe spawner"
 		color = PIPEC_MINERAL
-		spawner_type = /obj/disposalpipespawner/type/mineral
 		pipe_type = /obj/disposalpipe/segment/mineral
 		trunk_type = /obj/disposalpipe/trunk/mineral
 
 	cargo
 		name = "cargo pipe spawner"
 		color = PIPEC_CARGO
-		spawner_type = /obj/disposalpipespawner/type/cargo
 		pipe_type = /obj/disposalpipe/segment/cargo
 		trunk_type = /obj/disposalpipe/trunk/cargo
 
@@ -1981,22 +1962,206 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 
 /obj/disposalpipespawner/initialize()
 	var/list/directions = list()
-	for (var/obj/disposalpipespawner/_pipe in orange(1, src))
-		// checks for pipe spawners
-		var/tempdir = get_dir(src, _pipe)
-		if (tempdir == NORTHEAST || tempdir == NORTHWEST || tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-			continue
-		if (_pipe.spawner_type == src.spawner_type)
-			dpdir |= tempdir
-			directions += tempdir
-	for (var/obj/disposalpipe/_pipe in orange(1, src))
-		// checks for regular pipes
-		var/tempdir = get_dir(src, _pipe)
-		if (tempdir == NORTHEAST || tempdir == NORTHWEST || tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-			continue
-		if (_pipe.spawner_type == src.spawner_type)
-			dpdir |= tempdir
-			directions += tempdir
+	if (src.pipe_type == /obj/disposalpipe)
+	// regular pipe spawners
+		for (var/obj/disposalpipespawner/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+		for (var/obj/disposalpipe/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+	else if (src.pipe_type == /obj/disposalpipespawner/types/mail)
+	// mail pipes
+		for (var/obj/disposalpipespawner/types/mail/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+		for (var/obj/disposalpipe/segment/mail/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+	else if (src.pipe_type == /obj/disposalpipespawner/types/brig)
+	// brig pipes
+		for (var/obj/disposalpipespawner/types/brig/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+		for (var/obj/disposalpipe/segment/brig/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+	else if (src.pipe_type == /obj/disposalpipespawner/types/ejection)
+	// ejection pipes
+		for (var/obj/disposalpipespawner/types/ejection/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+		for (var/obj/disposalpipe/segment/ejection/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+	else if (src.pipe_type == /obj/disposalpipespawner/types/morgue)
+	// morgue pipes
+		for (var/obj/disposalpipespawner/types/morgue/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+		for (var/obj/disposalpipe/segment/morgue/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+	else if (src.pipe_type == /obj/disposalpipespawner/types/food)
+	// food pipes
+		for (var/obj/disposalpipespawner/types/food/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+		for (var/obj/disposalpipe/segment/food/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+	else if (src.pipe_type == /obj/disposalpipespawner/types/produce)
+	// produce pipes
+		for (var/obj/disposalpipespawner/types/produce/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+		for (var/obj/disposalpipe/segment/produce/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+	else if (src.pipe_type == /obj/disposalpipespawner/types/transport)
+	// transport pipes
+		for (var/obj/disposalpipespawner/types/transport/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+		for (var/obj/disposalpipe/segment/transport/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+	else if (src.pipe_type == /obj/disposalpipespawner/types/mineral)
+	// mineral pipes
+		for (var/obj/disposalpipespawner/types/mineral/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+		for (var/obj/disposalpipe/segment/mineral/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+	else if (src.pipe_type == /obj/disposalpipespawner/types/cargo)
+	// cargo pipes
+		for (var/obj/disposalpipespawner/types/cargo/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+		for (var/obj/disposalpipe/segment/cargo/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
 
 	if (dpdir == 0)
 		CRASH("Lone Pipespawner doesn't connect to anything!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
