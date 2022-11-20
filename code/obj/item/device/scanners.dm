@@ -731,16 +731,16 @@ that cannot be itched
 
 		switch (mode)
 			if(PRISONER_MODE_NONE)
-				boutput(user, "<span class='notice'>you switch the record mode to None</span>")
+				boutput(user, "<span class='notice'>you switch the record mode to None.</span>")
 
 			if(PRISONER_MODE_PAROLED)
-				boutput(user, "<span class='notice'>you switch the record mode to Paroled</span>")
+				boutput(user, "<span class='notice'>you switch the record mode to Paroled.</span>")
 
 			if(PRISONER_MODE_RELEASED)
-				boutput(user, "<span class='notice'>you switch the record mode to Released</span>")
+				boutput(user, "<span class='notice'>you switch the record mode to Released.</span>")
 
 			if(PRISONER_MODE_INCARCERATED)
-				boutput(user, "<span class='notice'>you switch the record mode to Incarcerated</span>")
+				boutput(user, "<span class='notice'>you switch the record mode to Incarcerated.</span>")
 
 		add_fingerprint(user)
 		return
