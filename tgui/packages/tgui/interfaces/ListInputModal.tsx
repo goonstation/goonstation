@@ -1,14 +1,14 @@
 /**
  * @file
  * @copyright 2022
- * @author jlsnow301 (https://github.com/jlsnow301)
+ * @author jlsnow301 (https://github.com/jlsnow301) and pali (https://github.com/pali6)
  * @license ISC
  */
 
 import { Loader } from './common/Loader';
 import { InputButtons } from './common/InputButtons';
 import { Button, Input, Section, Stack } from '../components';
-import { KEY_A, KEY_DOWN, KEY_ESCAPE, KEY_ENTER, KEY_UP, KEY_Z } from '../../common/keycodes';
+import { KEY_A, KEY_DOWN, KEY_ESCAPE, KEY_ENTER, KEY_UP, KEY_Z, KEY_PAGEUP, KEY_PAGEDOWN, KEY_END, KEY_HOME } from 'common/keycodes';
 import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
 
@@ -42,23 +42,20 @@ export const ListInputModal = (_, context) => {
   // Simulates clicking an item
   const onArrowKey = (key: number) => {
     const len = filteredItems.length - 1;
-    if (key === KEY_DOWN) {
-      if (selected === null || selected === len) {
-        setSelected(0);
-         document!.getElementById('0')?.scrollIntoView();
-      } else {
-        setSelected(selected + 1);
-         document!.getElementById((selected + 1).toString())?.scrollIntoView();
-      }
-    } else if (key === KEY_UP) {
-      if (selected === null || selected === 0) {
-        setSelected(len);
-         document!.getElementById(len.toString())?.scrollIntoView();
-      } else {
-        setSelected(selected - 1);
-         document!.getElementById((selected - 1).toString())?.scrollIntoView();
-      }
+    let direction = -1;
+    switch (key) {
+      case KEY_UP: direction = -1; break;
+      case KEY_DOWN: direction = 1; break;
+      case KEY_PAGEUP: direction = -10; break;
+      case KEY_PAGEDOWN: direction = 10; break;
     }
+    let newSelected = selected + direction;
+    if (newSelected < 0 && Math.abs(direction) === 1) newSelected = len;
+    if (newSelected > len && Math.abs(direction) === 1) newSelected = 0;
+    if (newSelected < 0) newSelected = 0;
+    if (newSelected > len) newSelected = len;
+    setSelected(newSelected);
+     document!.getElementById(newSelected.toString())?.scrollIntoView();
   };
   // User selects an item with mouse
   const onClick = (index: number) => {
@@ -114,8 +111,9 @@ export const ListInputModal = (_, context) => {
       {timeout && <Loader value={timeout} />}
       <Window.Content
         onKeyDown={(event) => {
+          const len = filteredItems.length - 1;
           const keyCode = window.event ? event.which : event.keyCode;
-          if (keyCode === KEY_DOWN || keyCode === KEY_UP) {
+          if (keyCode === KEY_DOWN || keyCode === KEY_UP || keyCode === KEY_PAGEUP || keyCode === KEY_PAGEDOWN) {
             event.preventDefault();
             onArrowKey(keyCode);
           }
@@ -130,6 +128,16 @@ export const ListInputModal = (_, context) => {
           if (keyCode === KEY_ESCAPE) {
             event.preventDefault();
             act('cancel');
+          }
+          if (keyCode === KEY_END) {
+            setSelected(len);
+             document!.getElementById(len.toString())?.scrollIntoView();
+             event.preventDefault();
+          }
+          if (keyCode === KEY_HOME) {
+            setSelected(0);
+             document!.getElementById('0')?.scrollIntoView();
+             event.preventDefault();
           }
         }}>
         <Section
