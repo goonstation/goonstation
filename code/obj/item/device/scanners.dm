@@ -744,6 +744,7 @@ that cannot be itched
 
 		add_fingerprint(user)
 		return
+		
 	dropped(var/mob/user)
 		. = ..()
 		user.closeContextActions()
