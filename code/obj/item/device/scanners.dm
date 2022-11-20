@@ -646,7 +646,7 @@ that cannot be itched
 		//	boutput(user, "<span class='alert'>Device only works in designated security areas!</span>")
 		//	return
 		boutput(user, "<span class='notice'>You scan in [M].</span>")
-		boutput(M, "<span class='alert'>[user] scans you with the RecordTrak.</span>")
+		boutput(M, "<span class='alert'>[user] scans you with the RecordTrak!</span>")
 		for(var/datum/db_record/R as anything in data_core.general.records)
 			if (lowertext(R["name"]) == lowertext(M.name))
 				//Update Information
