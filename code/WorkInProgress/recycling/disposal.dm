@@ -1963,7 +1963,7 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 
 /obj/disposalpipespawner/initialize()
 	var/list/directions = list()
-	if (src.pipe_type == /obj/disposalpipespawner/types/mail)
+	if (src.pipe_type == /obj/disposalpipe/segment/mail)
 	// mail pipes
 		for (var/obj/disposalpipespawner/types/mail/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
@@ -1982,7 +1982,7 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 			if (_pipe.dpdir & get_dir(_pipe, src))
 				dpdir |= tempdir
 				directions += tempdir
-	else if (src.pipe_type == /obj/disposalpipespawner/types/brig)
+	else if (src.pipe_type == /obj/disposalpipe/segment/brig)
 	// brig pipes
 		for (var/obj/disposalpipespawner/types/brig/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
@@ -2001,7 +2001,7 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 			if (_pipe.dpdir & get_dir(_pipe, src))
 				dpdir |= tempdir
 				directions += tempdir
-	else if (src.pipe_type == /obj/disposalpipespawner/types/ejection)
+	else if (src.pipe_type == /obj/disposalpipe/segment/ejection)
 	// ejection pipes
 		for (var/obj/disposalpipespawner/types/ejection/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
@@ -2020,7 +2020,7 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 			if (_pipe.dpdir & get_dir(_pipe, src))
 				dpdir |= tempdir
 				directions += tempdir
-	else if (src.pipe_type == /obj/disposalpipespawner/types/morgue)
+	else if (src.pipe_type == /obj/disposalpipe/segment/morgue)
 	// morgue pipes
 		for (var/obj/disposalpipespawner/types/morgue/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
@@ -2039,7 +2039,7 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 			if (_pipe.dpdir & get_dir(_pipe, src))
 				dpdir |= tempdir
 				directions += tempdir
-	else if (src.pipe_type == /obj/disposalpipespawner/types/food)
+	else if (src.pipe_type == /obj/disposalpipe/segment/food)
 	// food pipes
 		for (var/obj/disposalpipespawner/types/food/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
@@ -2058,7 +2058,7 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 			if (_pipe.dpdir & get_dir(_pipe, src))
 				dpdir |= tempdir
 				directions += tempdir
-	else if (src.pipe_type == /obj/disposalpipespawner/types/produce)
+	else if (src.pipe_type == /obj/disposalpipe/segment/produce)
 	// produce pipes
 		for (var/obj/disposalpipespawner/types/produce/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
@@ -2077,7 +2077,7 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 			if (_pipe.dpdir & get_dir(_pipe, src))
 				dpdir |= tempdir
 				directions += tempdir
-	else if (src.pipe_type == /obj/disposalpipespawner/types/transport)
+	else if (src.pipe_type == /obj/disposalpipe/segment/transport)
 	// transport pipes
 		for (var/obj/disposalpipespawner/types/transport/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
@@ -2096,7 +2096,7 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 			if (_pipe.dpdir & get_dir(_pipe, src))
 				dpdir |= tempdir
 				directions += tempdir
-	else if (src.pipe_type == /obj/disposalpipespawner/types/mineral)
+	else if (src.pipe_type == /obj/disposalpipe/segment/mineral)
 	// mineral pipes
 		for (var/obj/disposalpipespawner/types/mineral/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
@@ -2115,7 +2115,7 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 			if (_pipe.dpdir & get_dir(_pipe, src))
 				dpdir |= tempdir
 				directions += tempdir
-	else if (src.pipe_type == /obj/disposalpipespawner/types/cargo)
+	else if (src.pipe_type == /obj/disposalpipe/segment/cargo)
 	// cargo pipes
 		for (var/obj/disposalpipespawner/types/cargo/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
