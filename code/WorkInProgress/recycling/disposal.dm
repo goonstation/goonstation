@@ -1966,257 +1966,79 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 	if (src.pipe_type == /obj/disposalpipe/segment/mail)
 	// mail pipes
 		for (var/obj/disposalpipespawner/types/mail/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			dpdir |= tempdir
-			directions += tempdir
+			check(_pipe)
 		for (var/obj/disposalpipe/segment/mail/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			check(_pipe)
 		for (var/obj/disposalpipe/trunk/mail/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			check(_pipe)
 	else if (src.pipe_type == /obj/disposalpipe/segment/brig)
 	// brig pipes
 		for (var/obj/disposalpipespawner/types/brig/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			dpdir |= tempdir
-			directions += tempdir
+			check(_pipe)
 		for (var/obj/disposalpipe/segment/brig/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			check(_pipe)
 		for (var/obj/disposalpipe/trunk/brig/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			check(_pipe)
 	else if (src.pipe_type == /obj/disposalpipe/segment/ejection)
 	// ejection pipes
 		for (var/obj/disposalpipespawner/types/ejection/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			dpdir |= tempdir
-			directions += tempdir
+			check(_pipe)
 		for (var/obj/disposalpipe/segment/ejection/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			check(_pipe)
 		for (var/obj/disposalpipe/trunk/ejection/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			check(_pipe)
 	else if (src.pipe_type == /obj/disposalpipe/segment/morgue)
 	// morgue pipes
 		for (var/obj/disposalpipespawner/types/morgue/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			dpdir |= tempdir
-			directions += tempdir
+			check(_pipe)
 		for (var/obj/disposalpipe/segment/morgue/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			check(_pipe)
 		for (var/obj/disposalpipe/trunk/morgue/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			check(_pipe)
 	else if (src.pipe_type == /obj/disposalpipe/segment/food)
 	// food pipes
 		for (var/obj/disposalpipespawner/types/food/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			dpdir |= tempdir
-			directions += tempdir
+			check(_pipe)
 		for (var/obj/disposalpipe/segment/food/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			check(_pipe)
 		for (var/obj/disposalpipe/trunk/food/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			check(_pipe)
 	else if (src.pipe_type == /obj/disposalpipe/segment/produce)
 	// produce pipes
 		for (var/obj/disposalpipespawner/types/produce/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			dpdir |= tempdir
-			directions += tempdir
+			check(_pipe)
 		for (var/obj/disposalpipe/segment/produce/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			check(_pipe)
 		for (var/obj/disposalpipe/trunk/produce/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			check(_pipe)
 	else if (src.pipe_type == /obj/disposalpipe/segment/transport)
 	// transport pipes
 		for (var/obj/disposalpipespawner/types/transport/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			dpdir |= tempdir
-			directions += tempdir
+			check(_pipe)
 		for (var/obj/disposalpipe/segment/transport/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			check(_pipe)
 		for (var/obj/disposalpipe/trunk/transport/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			check(_pipe)
 	else if (src.pipe_type == /obj/disposalpipe/segment/mineral)
 	// mineral pipes
 		for (var/obj/disposalpipespawner/types/mineral/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			dpdir |= tempdir
-			directions += tempdir
+			check(_pipe)
 		for (var/obj/disposalpipe/segment/mineral/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			check(_pipe)
 		for (var/obj/disposalpipe/trunk/mineral/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			check(_pipe)
 	else if (src.pipe_type == /obj/disposalpipe/segment/cargo)
 	// cargo pipes
 		for (var/obj/disposalpipespawner/types/cargo/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			dpdir |= tempdir
-			directions += tempdir
+			check(_pipe)
 		for (var/obj/disposalpipe/segment/cargo/_pipe in orange(1, src))
-			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			check(_pipe)
 		for (var/obj/disposalpipe/trunk/cargo/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
-			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
-				continue
-			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
-				continue
-			if (_pipe.dpdir & get_dir(_pipe, src))
-				dpdir |= tempdir
-				directions += tempdir
+			check(_pipe)
 	else if (src.pipe_type == /obj/disposalpipe)
 	// regular pipe spawners
+	// main problem with this is because it's the base type, it picks up on ALL types
 		for (var/obj/disposalpipespawner/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
 			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
@@ -2225,7 +2047,27 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 				continue
 			dpdir |= tempdir
 			directions += tempdir
-		for (var/obj/disposalpipe/_pipe in orange(1, src))
+		for (var/obj/disposalpipe/horizontal/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			//if (_pipe.type == )
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+		for (var/obj/disposalpipe/vertical/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			//if (_pipe.type == )
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+		for (var/obj/disposalpipe/trunk/north/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
 			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
 				continue
@@ -2234,7 +2076,25 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 			if (_pipe.dpdir & get_dir(_pipe, src))
 				dpdir |= tempdir
 				directions += tempdir
-		for (var/obj/disposalpipe/trunk/_pipe in orange(1, src))
+		for (var/obj/disposalpipe/trunk/south/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+		for (var/obj/disposalpipe/trunk/east/_pipe in orange(1, src))
+			var/tempdir = get_dir(src, _pipe)
+			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+				continue
+			if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+				continue
+			if (_pipe.dpdir & get_dir(_pipe, src))
+				dpdir |= tempdir
+				directions += tempdir
+		for (var/obj/disposalpipe/trunk/west/_pipe in orange(1, src))
 			var/tempdir = get_dir(src, _pipe)
 			if (tempdir == NORTHEAST || tempdir == NORTHWEST)
 				continue
@@ -2280,3 +2140,14 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 	// DO NOT MAKE JUNCTIONS, FOOLS
 		CRASH("Pipe Spawners can't make junctions!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
 	qdel(src)
+
+/obj/disposalpipespawner/proc/check(var/_pipe)
+	var/tempdir = get_dir(src, _pipe)
+	if (tempdir == NORTHEAST || tempdir == NORTHWEST)
+		return
+	if (tempdir == SOUTHEAST || tempdir == SOUTHWEST)
+		return
+	//if (_pipe.type == )
+	if (_pipe.dpdir & get_dir(_pipe, src))
+		dpdir |= tempdir
+		directions += tempdir
