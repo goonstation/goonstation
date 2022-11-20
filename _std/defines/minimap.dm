@@ -1,3 +1,8 @@
+// Determines the minimap types the icon/area should be displayed on.
+#define MAP_DEFAULT		(1<<0)
+#define MAP_AI			(1<<1)
+
+// Area colours on minimaps.
 #define MAPC_DEFAULT "#808080"
 #define MAPC_MAINTENANCE "#474747"
 #define MAPC_HALLWAY "#ffffff"

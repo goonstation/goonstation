@@ -310,7 +310,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				dat += "</table>"
 				var/do_divider = 1
 
-				if(has_synd_int)
+				if(has_synd_int && !is_VR_uplink)
 					dat += "<HR><A href='byond://?src=\ref[src];synd_int=1'>Syndicate Intelligence</A><BR>"
 
 				if (istype(src, /obj/item/uplink/integrated/radio))
