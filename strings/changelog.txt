@@ -1,4 +1,9 @@
+
 (t)mon nov 21 22
+(u)Lord_Earthfire
+(p)11929
+(e)🪲⚖🔄🍝|C-Bug, C-Balance, C-Rework, A-Catering
+(+)Changed how food is sliced. That means melons aren't inert anymore while being sliced and more wedges/slices now keep the name of the spliced produce.
 (u)tarmunora
 (+)powered mining tools have a short delay before they can be repowered after powering down, and a longer one if they completely ran out of charge
 (t)sun nov 20 22
