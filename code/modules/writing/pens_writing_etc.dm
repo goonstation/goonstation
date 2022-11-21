@@ -596,6 +596,7 @@
 		if(. == "queue input")
 			var/inp = tgui_input_text(user, "Type letters you want to write.", "Crayon Letter Queue")
 			inp = uppertext(inp)
+			phrase_log.log_phrase("crayon-queue", inp, no_duplicates=TRUE)
 			. = list()
 			for(var/i = 1 to min(length(inp), 100))
 				var/c = copytext(inp, i, i + 1)
