@@ -30,6 +30,21 @@
 // This is where the actual behaviour is defined.
 //--------------------------------------------------------------------------------------------------------------------------------------------------//
 
+
+///This is standard wander behaviour with frequent checks for nearby enemies, which will interrupt the wandering.
+/datum/aiTask/timed/wander/critter/aggressive
+	name = "aggressive wander"
+
+/datum/aiTask/timed/wander/critter/aggressive/on_tick()
+	var/mob/living/critter/C = holder.owner
+	if(istype(holder.owner) && length(C.seek_target()))
+		src.holder.owner.ai.interrupt()
+	else
+		..()
+
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------//
+
 /// This one makes the critter move towards a target returned from holder.owner.seek_target()
 /datum/aiTask/sequence/goalbased/critter/attack
 	name = "attacking"
