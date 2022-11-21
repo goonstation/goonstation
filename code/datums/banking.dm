@@ -318,7 +318,7 @@
 					dat += "<BR><A HREF='?src=\ref[src];operation=logout'>Logout</A>"
 
 					if (src.scan)
-						dat += "<BR><BR>Your balance is: $ [src.accessed_record["current_money"]]."
+						dat += "<BR><BR>Your balance is: [src.accessed_record["current_money"]][CREDIT_SIGN]."
 						dat += "<BR><A HREF='?src=\ref[src];operation=withdrawcash'>Withdraw Cash</A>"
 						dat += "<BR><BR><A HREF='?src=\ref[src];operation=buy'>Buy Lottery Ticket (100 credits)</A>"
 						dat += "<BR>To claim your winnings you'll need to insert your lottery ticket."
@@ -522,17 +522,17 @@
 					<tr><th colspan="2">Budget Status</th></tr>
 				</thead>
 				<tbody>
-					<tr><th>Payroll Budget</th><td class='r'>$[num2text(round(wagesystem.station_budget),50)]</td></tr>
-					<tr><th>Shipping Budget</th><td class='r'>$[num2text(round(wagesystem.shipping_budget),50)]</td></tr>
-					<tr><th>Research Budget</th><td class='r'>$[num2text(round(wagesystem.research_budget),50)]</td></tr>
-					<tr><th>Total Funds</th><th class='r'>$[num2text(round(total_funds),50)]</th></tr>
+					<tr><th>Payroll Budget</th><td class='r'>[num2text(round(wagesystem.station_budget),50)][CREDIT_SIGN]</td></tr>
+					<tr><th>Shipping Budget</th><td class='r'>[num2text(round(wagesystem.shipping_budget),50)][CREDIT_SIGN]</td></tr>
+					<tr><th>Research Budget</th><td class='r'>[num2text(round(wagesystem.research_budget),50)][CREDIT_SIGN]</td></tr>
+					<tr><th>Total Funds</th><th class='r'>[num2text(round(total_funds),50)][CREDIT_SIGN]</th></tr>
 					<tr><th colspan="2" class='second'>Payroll Details</th></tr>
-					<tr><th>Payroll Stipend</th><td class='r'>$[num2text(round(wagesystem.payroll_stipend),50)]</td></tr>
-					<tr><th>Payroll Cost</th><td class='r'>$[num2text(round(payroll),50)]</td></tr>
+					<tr><th>Payroll Stipend</th><td class='r'>[num2text(round(wagesystem.payroll_stipend),50)][CREDIT_SIGN]</td></tr>
+					<tr><th>Payroll Cost</th><td class='r'>[num2text(round(payroll),50)][CREDIT_SIGN]</td></tr>
 					[surplus >= 0 ? {"
-					<tr><th>Surplus</th><th class='r'>+$[num2text(round(surplus),50)]</th></tr>
+					<tr><th>Surplus</th><th class='r'>+[num2text(round(surplus),50)][CREDIT_SIGN]</th></tr>
 					"} : {"
-					<tr><th>Deficit</th><th style="text-align: right; color: red;">-$[num2text(round(surplus * -1),50)]</th></tr>
+					<tr><th>Deficit</th><th style="text-align: right; color: red;">-[num2text(round(surplus * -1),50)][CREDIT_SIGN]</th></tr>
 					"}]
 				</tbody>
 			</table>
@@ -562,8 +562,8 @@
 					<tr>
 						<th class='l'><a href='?src=\ref[src];Fname=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a> [R["name"]]</th>
 						<td><a href='?src=\ref[src];Fjob=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a> [R["job"]]</td>
-						<td class='r'>$[R["wage"]] <a href='?src=\ref[src];Fwage=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a></td>
-						<td style="text-align: right; font-weight: bold;">$[R["current_money"]] <a href='?src=\ref[src];Fmoney=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a></td>
+						<td class='r'>[R["wage"]][CREDIT_SIGN] <a href='?src=\ref[src];Fwage=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a></td>
+						<td style="text-align: right; font-weight: bold;">[R["current_money"]][CREDIT_SIGN] <a href='?src=\ref[src];Fmoney=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a></td>
 					</tr>
 					"}
 
@@ -636,8 +636,8 @@
 					if (!t1) t1 = 0
 					if (t1 > 10000)
 						t1 = 10000
-						boutput(usr, "<span class='alert'>Maximum wage is $10,000.</span>")
-					logTheThing(LOG_STATION, usr, "sets <b>[R["name"]]</b>'s wage to $[t1].")
+						boutput(usr, "<span class='alert'>Maximum wage is 10,000[CREDIT_SIGN].</span>")
+					logTheThing(LOG_STATION, usr, "sets <b>[R["name"]]</b>'s wage to [t1][CREDIT_SIGN].")
 					R["wage"] = t1
 				else if(href_list["Fmoney"])
 					var/datum/db_record/R = locate(href_list["Fmoney"])
@@ -654,16 +654,16 @@
 						if (t1 < 1) return
 						R["current_money"] -= t1
 						wagesystem.station_budget += t1
-						logTheThing(LOG_STATION, usr, "adds $[t1] to the station budget from <b>[R["name"]]</b>'s account.")
-						boutput(usr, "<span class='notice'>$[t1] added to station budget from [R["name"]]'s account.</span>")
+						logTheThing(LOG_STATION, usr, "adds [t1][CREDIT_SIGN] to the station budget from <b>[R["name"]]</b>'s account.")
+						boutput(usr, "<span class='notice'>[t1][CREDIT_SIGN] added to station budget from [R["name"]]'s account.</span>")
 					else if (t2 == "Deposit")
 						avail = wagesystem.station_budget
 						if (t1 > avail) t1 = avail
 						if (t1 < 1) return
 						R["current_money"] += t1
 						wagesystem.station_budget -= t1
-						logTheThing(LOG_STATION, usr, "adds $[t1] to <b>[R["name"]]</b>'s account from the station budget.")
-						boutput(usr, "<span class='notice'>$[t1] added to [R["name"]]'s account from station budget.</span>")
+						logTheThing(LOG_STATION, usr, "adds [t1][CREDIT_SIGN] to <b>[R["name"]]</b>'s account from the station budget.")
+						boutput(usr, "<span class='notice'>[t1][CREDIT_SIGN] added to [R["name"]]'s account from station budget.</span>")
 					else boutput(usr, "<span class='alert'>Error selecting withdraw/deposit mode.</span>")
 				else if(href_list["payroll"])
 					if(world.time >= src.payroll_rate_limit_time)
@@ -848,7 +848,7 @@
 					dat += "<BR><A HREF='?src=\ref[src];operation=logout'>Logout</A>"
 
 					if (src.scan)
-						dat += "<BR><BR>Your balance is: $ [src.accessed_record["current_money"]]."
+						dat += "<BR><BR>Your balance is: [src.accessed_record["current_money"]][CREDIT_SIGN]."
 						dat += "<BR><A HREF='?src=\ref[src];operation=withdrawcash'>Withdraw Cash</A>"
 						dat += "<BR><BR><A HREF='?src=\ref[src];operation=buy'>Buy Lottery Ticket (100 credits)</A>"
 						dat += "<BR>To claim your winnings you'll need to insert your lottery ticket."

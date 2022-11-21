@@ -5459,8 +5459,7 @@
 	icon_state = "outlet";
 	name = "ore outlet"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_x = 4;
@@ -5469,8 +5468,7 @@
 /turf/simulated/floor/engine,
 /area/space)
 "pM" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_x = 4;
@@ -5484,8 +5482,7 @@
 	id = "security_out";
 	name = "Cargo Door"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_x = 4;
@@ -5773,8 +5770,7 @@
 /turf/simulated/floor/wood/seven,
 /area/space)
 "qH" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_y = 2
@@ -6267,8 +6263,7 @@
 /obj/disposaloutlet/north{
 	name = "ore outlet"
 	},
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_y = 2
@@ -6535,7 +6530,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/space)
 "sJ" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/shuttlebay,
 /area/space)
 "sK" = (

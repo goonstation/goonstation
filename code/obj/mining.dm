@@ -12,6 +12,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		SPAWN(0)
 			src.update_dir()
 			for (var/obj/machinery/mining_magnet/MM in range(1,src))
@@ -20,6 +21,7 @@
 				break
 
 	disposing()
+		STOP_TRACKING
 		if (linked_magnet)
 			qdel(linked_magnet)
 		linked_magnet = null
@@ -812,7 +814,9 @@
 /obj/machinery/computer/magnet/connection_scan()
 	linked_magnets = list()
 	var/badmagnets = 0
-	for (var/obj/machinery/magnet_chassis/MC in range(20,src))
+	for_by_tcl(MC, /obj/machinery/magnet_chassis)
+		if(!IN_RANGE(MC, src, 20))
+			continue
 		if (MC.linked_magnet)
 			linked_magnets += MC.linked_magnet
 		else
@@ -2120,10 +2124,10 @@ obj/item/clothing/gloves/concussive
 			var/action = tgui_input_list(user, "What do you want to do?", "Mineral Accumulator", list("Flip the power switch","Change the destination","Remove the power cell"))
 			if (action == "Remove the power cell")
 				var/obj/item/cell/PCEL = src.cell
-				user.put_in_hand_or_drop(PCEL)
 				boutput(user, "You remove [cell].")
 				if (PCEL) //ZeWaka: fix for null.updateicon
 					PCEL.UpdateIcon()
+				user.put_in_hand_or_drop(PCEL)
 
 				src.cell = null
 			else if (action == "Change the destination")

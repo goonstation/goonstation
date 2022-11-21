@@ -1090,6 +1090,7 @@
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
 	var/rip = 0
+	acid_survival_time = 3 MINUTES
 
 	setupProperties()
 		..()
@@ -1132,6 +1133,9 @@
 	New()
 		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	setupProperties()
+		..()
 		setProperty("heatprot", 35)
 
 	#ifdef MAP_OVERRIDE_POD_WARS

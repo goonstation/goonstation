@@ -286,11 +286,12 @@
 	},
 /area/centcom)
 "gJ" = (
-/obj/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
 /area/shuttle/escape/centcom)
 "gW" = (
 /obj/shrub,
@@ -612,13 +613,6 @@
 /obj/machinery/computer/announcement,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
-"tL" = (
-/obj/wingrille_spawn/auto,
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-R"
-	},
-/turf/space,
-/area/shuttle/escape/centcom)
 "uE" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
@@ -699,11 +693,12 @@
 /turf/unsimulated/floor/plating/damaged3,
 /area/shuttle/escape/centcom)
 "xe" = (
-/obj/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
 /area/shuttle/escape/centcom)
 "xf" = (
 /obj/stool/bench/blue/auto,
@@ -895,15 +890,15 @@
 /area/shuttle/escape/centcom)
 "Gc" = (
 /obj/table/auto,
-/obj/mug_rack{
-	pixel_x = -26;
-	pixel_y = 4
-	},
 /obj/machinery/coffeemaker{
 	pixel_x = -1;
 	pixel_y = 2
 	},
 /obj/machinery/light,
+/obj/drink_rack/mug{
+	pixel_x = -26;
+	pixel_y = 4
+	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Gh" = (
@@ -1148,11 +1143,12 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "PO" = (
-/obj/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
 /area/shuttle/escape/centcom)
 "PV" = (
 /obj/decal/cleanable/paper,
@@ -2006,7 +2002,7 @@ VE
 dd
 KN
 Hx
-tL
+PO
 eL
 Cf
 qp

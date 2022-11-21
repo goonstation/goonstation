@@ -583,20 +583,20 @@
 		payroll += R["wage"]
 
 	var/dat = {"<B>Budget Variables:</B>
-	<BR><BR><u><b>Total Station Funds:</b> $[num2text(totalfunds,50)]</u>
+	<BR><BR><u><b>Total Station Funds:</b> [num2text(totalfunds,50)][CREDIT_SIGN]</u>
 	<BR>
-	<BR><b>Current Payroll Budget:</b> $[num2text(wagesystem.station_budget,50)]
-	<BR><b>Current Research Budget:</b> $[num2text(wagesystem.research_budget,50)]
-	<BR><b>Current Shipping Budget:</b> $[num2text(wagesystem.shipping_budget,50)]
+	<BR><b>Current Payroll Budget:</b> [num2text(wagesystem.station_budget,50)][CREDIT_SIGN]
+	<BR><b>Current Research Budget:</b> [num2text(wagesystem.research_budget,50)][CREDIT_SIGN]
+	<BR><b>Current Shipping Budget:</b> [num2text(wagesystem.shipping_budget,50)][CREDIT_SIGN]
 	<BR>
-	<b>Current Payroll Cost:</b> $[payroll]<HR>"}
+	<b>Current Payroll Cost:</b> [payroll][CREDIT_SIGN]<HR>"}
 
 	dat += "Shipping Market Prices<BR><BR>"
 	for(var/item_type in shippingmarket.commodities)
 		var/datum/commodity/C = shippingmarket.commodities[item_type]
 		var/viewprice = C.price
 		if (C.indemand) viewprice *= shippingmarket.demand_multiplier
-		dat += "<BR><B>[C.comname]:</B> $[viewprice] per unit "
+		dat += "<BR><B>[C.comname]:</B> [viewprice][CREDIT_SIGN] per unit "
 		if (C.indemand) dat += " <b>(High Demand!)</b>"
 	var/timer = shippingmarket.get_market_timeleft()
 	dat += "<BR><HR><b>Next Price Shift:</B> [timer]<BR>"

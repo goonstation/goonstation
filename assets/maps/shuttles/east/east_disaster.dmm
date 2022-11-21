@@ -1352,7 +1352,7 @@
 	pixel_x = -1;
 	pixel_y = 2
 	},
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = -26;
 	pixel_y = 4
 	},

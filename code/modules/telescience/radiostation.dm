@@ -144,7 +144,7 @@
 		src.accents = list()
 		for(var/bio_type in concrete_typesof(/datum/bioEffect/speech, FALSE))
 			var/datum/bioEffect/speech/effect = new bio_type()
-			if(!effect.acceptable_in_mutini || !effect.occur_in_genepools)
+			if(!effect.acceptable_in_mutini || !effect.occur_in_genepools || !effect.mixingdesk_allowed)
 				continue
 			var/name = effect.id
 			if(length(name) >= 7 && copytext(name, 1, 8) == "accent_")
@@ -275,7 +275,7 @@
 			W.set_loc(src)
 			src.record_inside = W
 			src.has_record = TRUE
-			var/R = copytext(html_encode(input("What is the name of this record?","Record Name", src.record_inside.record_name) as null|text), 1, MAX_MESSAGE_LEN)
+			var/R = copytext(html_encode(tgui_input_text(user, "What is the name of this record?", "Record Name", src.record_inside.record_name)), 1, MAX_MESSAGE_LEN)
 			if(!in_interact_range(src, user))
 				boutput(user, "You're out of range of the [src.name]!")
 				return

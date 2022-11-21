@@ -64,7 +64,7 @@
 /turf/space,
 /area/noGenerate)
 "fJ" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "lostrouter"
 	},
 /turf/simulated/floor,
@@ -145,7 +145,7 @@
 /turf/simulated/floor/delivery,
 /area/prefab/adrift_cargorouter)
 "kW" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "lostrouter"
 	},
 /obj/disposalpipe/segment/transport{
@@ -160,7 +160,7 @@
 /turf/simulated/floor/yellow,
 /area/prefab/adrift_cargorouter)
 "ls" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "lostrouter"
 	},
 /turf/simulated/floor/orangeblack/side{
@@ -181,7 +181,7 @@
 "nV" = (
 /obj/forcefield/energyshield/perma,
 /obj/plasticflaps,
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "lostrouter"
 	},
 /turf/simulated/floor/delivery,
@@ -215,8 +215,8 @@
 	name = "strange biohazard crate";
 	desc = "A crate for biohazardous materials. You can hear a faint scratching from it..."
 	},
-/obj/critter/mouse/mad,
-/obj/critter/mouse/mad,
+/mob/living/critter/small_animal/mouse/mad,
+/mob/living/critter/small_animal/mouse/mad,
 /obj/critter/fermid,
 /obj/critter/bat/buff,
 /turf/simulated/floor/orangeblack/side{
@@ -426,7 +426,7 @@
 /turf/simulated/floor/yellow,
 /area/prefab/adrift_cargorouter)
 "Ft" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "lostrouter"
 	},
 /turf/simulated/floor,
