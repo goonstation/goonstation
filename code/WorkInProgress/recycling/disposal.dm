@@ -1925,8 +1925,6 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 	var/pipe_type = /obj/disposalpipe/segment/regular
 	var/trunk_type = /obj/disposalpipe/trunk/regular
 	var/dpdir = 0		//! bitmask of pipe directions
-
-/obj/disposalpipespawner/types
 	regular
 		pipe_type = /obj/disposalpipe/segment/regular
 		trunk_type = /obj/disposalpipe/trunk/regular
