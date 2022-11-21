@@ -407,7 +407,7 @@ var/datum/score_tracker/score_tracker
 
 		score_tracker.score_text += "<B><U>CIVILIAN DEPARTMENT</U></B><BR>"
 		score_tracker.score_text += "<B>Overall Station Cleanliness:</B> [round(score_tracker.score_cleanliness)]%<BR>"
-		score_tracker.score_text += "<B>Profit Made from Initial Budget:</B> [round(score_tracker.score_expenses)]%<BR>"
+		score_tracker.score_text += "<B>Station Profitabilty:</B> [round(score_tracker.score_expenses)]%<BR>"
 		score_tracker.score_text += "<B>Total Department Score:</B> [round(score_tracker.final_score_civ)]%<BR>"
 		score_tracker.score_text += "<BR>"
 	 /* until this is actually done or being worked on im just going to comment it out

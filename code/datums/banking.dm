@@ -537,7 +537,7 @@
 					"} : {"
 					<tr><th>Deficit</th><th style="text-align: right; color: red;">-[num2text(round(surplus * -1),50)][CREDIT_SIGN]</th></tr>
 					"}]
-					<tr><th>Stipend Sum</th><td class='r'>[num2text(round(wagesystem.total_stipend), 50)][CREDIT_SIGN]</td></tr>
+					<tr><th>Total Stipend</th><td class='r'>[num2text(round(wagesystem.total_stipend), 50)][CREDIT_SIGN]</td></tr>
 				</tbody>
 			</table>
 			<div class='c'>
@@ -549,7 +549,7 @@
 			<br>
 			<br>The payday stipend is based on typical staffing costs and will not change if you adjust the pay scales below.
 			<br>
-			<br>The station is profitable if the collected budgets are larger than the sum of all payroll stipends.
+			<br>The station is profitable if the <em>total funds</em> are larger than the <em>total stipend</em>.
 			<hr>
 			<table>
 				<thead>
