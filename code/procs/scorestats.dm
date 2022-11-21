@@ -151,7 +151,7 @@ var/datum/score_tracker/score_tracker
 			// something glitched out and broke so give them a free pass on it
 			score_expenses = 100
 		else
-			var/profit_target = 300000
+			var/profit_target = wagesystem.total_stipend
 			var/totalfunds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
 			if (totalfunds == 0)
 				score_expenses = 0

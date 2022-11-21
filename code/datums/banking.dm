@@ -11,6 +11,7 @@
 	var/shipping_budget = 0
 	var/research_budget = 0
 	var/payroll_stipend = 0
+	var/total_stipend = 0
 
 	var/list/jobs = new/list()
 
@@ -141,6 +142,7 @@
 		// This also means that payday stopping is strictly a result of
 		// someone tampering it and not just having 80 assistants in 20 minutes
 		station_budget += payroll_stipend
+		total_stipend += payroll_stipend
 
 		// Everyone gets paid into their bank accounts
 		if (!wagesystem.pay_active) return // some greedy prick suspended the payroll!
@@ -534,6 +536,7 @@
 					"} : {"
 					<tr><th>Deficit</th><th style="text-align: right; color: red;">-[num2text(round(surplus * -1),50)][CREDIT_SIGN]</th></tr>
 					"}]
+					<tr><th>Stipend Payout Sum</th><td class='r'>[num2text(round(wagesystem.total_stipend), 50)][CREDIT_SIGN]</td></tr>
 				</tbody>
 			</table>
 			<div class='c'>
@@ -544,6 +547,8 @@
 			Every payday cycle, Centcom distributes the <em>payroll stipend</em> into the station's budget, which is then paid out to crew accounts.
 			<br>
 			<br>The payday stipend is based on typical staffing costs and will not change if you adjust the pay scales below.
+			<br>
+			<br>The station is profitable if the collected budgets are larger than the sum of all payroll stipends.
 			<hr>
 			<table>
 				<thead>
