@@ -1,0 +1,66 @@
+<h1>PROTOTYPE SYSTEMS BRIEF: "TRANSCEPTION ARRAY"</h1>
+	<br>
+	<i>
+	<p>CONTENTS AUDITED BY PROJECT SUPERVISOR 2</p>
+	<p>CLEARED FOR RELEASE TO X-13 PERSONNEL</p>
+	</i>
+	<br>
+	<hr>
+	<h3>SYSTEMS MANIFEST</h3>
+	<br>
+	Personnel responsible for installation are to verify the presence and structural integrity of each element listed below before assembly begins.
+	<br>
+	<ul>
+		<li>MICROVOLTAGE CABINET ONE: Contains internal capacitor and primary stepdown hardware. Casing prominently labeled with the letter I. To be installed under Left Attunement Dish.
+		<li>MICROVOLTAGE CABINET TWO: Contains area power controller interface hardware and transception buffering systems. Casing prominently labeled with the letter A. To be installed under Right Attunement Dish.
+		<li>LEFT AND RIGHT ATTUNEMENT DISHES: Provides microscale on-the-fly adjustments to signal confinement and boosts conventional communications. Match base unit and dish by the letter on their connection point and place atop appropiate scaffold.
+		<li>BEAM CONFINEMENT UNITS 1-4: Performs encoding and focusing of long-range matter packet. Install bottom to top as numbered, in center scaffold; <b>ALIGNMENT MUST BE EXACT TO WITHIN 0.08 MILLIMETERS.</b>
+	</ul>
+	<br>
+	<hr>
+	<h3>ONBOARD INDICATORS</h3>
+	<br>
+	For at-a-glance readout of current systems state, indicators have been built into Transception Array systems. Personnel operating these systems should familiarize themselves with the indicators' function.
+	<br>
+	<ul>
+		<li>Lower vertical indicator, Microvoltage Cabinet One (I): Indicates whether cabinet has detected sufficient spare grid power to charge internal capacitor.
+		<li>5-bar indicator stack, Microvoltage Cabinet One (I): Displays internal capacitor's state of charge in 20% intervals (rounded up).
+		<li>Lower vertical indicator, Microvoltage Cabinet Two (A): Indicates whether area power controller is detected and operational. This must be active for transception to occur.
+		<li>5-bar indicator stack, Microvoltage Cabinet Two (A): Displays area power controller's state of charge relative to standard failsafe threshold, displayed in 20% intervals (rounded up).
+		<li>Vertical running lights, Beam Confinement Units: Illuminated when "primed" (transception capability is active). An additional beam will be visible through core of confinement units on successful operation.
+		<li>Square indicator light, Left and Right Attunement Dishes: Glows green when "primed". Blinks yellow when array could be primed but is shut down due to the inbuilt power-draw failsafe.
+		<li>Vertical indicator lights, Left and Right Attunement Dishes: When illuminated, basic communcations capability is activated. Lack of illumination would likely indicate area power failure.
+	</ul>
+	<br>
+	<hr>
+	<h3>ELECTRICAL LOAD FROM TRANSCEPTION</h3>
+	<br>
+	The process of transception involves three distinct points of electrical load:
+	<br>
+	<ul>
+		<li>The "kick-start cost" drawn directly from a local cell, incurred at the exact moment when an object is sent or received through a transception
+		<li>A moderate but standard electrical load from the Transception Array's general systems, billed to its area power controller
+		<li>Another small electrical load from the pad that sent or received the cargo, billed to the area power controller of the pad's area
+	</ul>
+	<br>
+	This "kick-start cost" is the primary load; each transception directly expends 80 units of cell power (approximately 40,000 watts of burst load).
+	<br>
+	<br>
+	To mitigate this heavy cost, the Transception Array is equipped with an internal capacitor. This capacitor is user-replaceable with any Nanotrasen-standard power cell.
+	<br>
+	<br>
+	The internal capacitor automatically draws down spare electricity from the Site's electrical grid; the Transception Array Control console is capable of adjusting parameters for this behavior.
+	<br>
+	<br>
+	Target charge rate may be set from zero to 50,000 watts, while the required surplus may be set from 10,000 to 200,000 watts.
+	<br>
+	When total excess grid power (before the internal capacitor's draw is factored in) exceeds target charge rate plus required surplus, the cell will charge at the target charge rate.
+	<br>
+	<br>
+	Transceptions will first attempt to charge the "kick-start cost" to the internal capacitor, falling back to the area power controller's cell if the internal capacitor is depleted or absent.
+	<br>
+	<br>
+	To avoid entirely depleting area power, a failsafe is included in the array to deactivate transception when the area's power cell approaches 30% capacity.
+	<br>
+	Transception capability automatically reactivates when power exceeds the failsafe by 10%; the failsafe may also be reduced to a minimal threshold (one transception's cost).
+	<br>

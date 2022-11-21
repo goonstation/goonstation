@@ -144,6 +144,12 @@ Custom Books
 	desc = "A handy guide on proper construction and maintenance of Spatial Interdictors"
 	file_path = "strings/books/interdictor_guide.txt"
 
+/obj/item/paper/book/from_file/transception_guide
+	name = "Nanotrasen Prototypes Division: Transception Array"
+	icon_state = "orangebook"
+	desc = "A book detailing behaviors and operations of Nadir's transception array"
+	file_path = "strings/books/transception_guide.txt"
+
 /****Civilian Guides****/
 
 /obj/item/paper/book/from_file/hydroponicsguide
