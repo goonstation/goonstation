@@ -537,7 +537,7 @@
 					"} : {"
 					<tr><th>Deficit</th><th style="text-align: right; color: red;">-[num2text(round(surplus * -1),50)][CREDIT_SIGN]</th></tr>
 					"}]
-					<tr><th>Stipend Payout Sum</th><td class='r'>[num2text(round(wagesystem.total_stipend), 50)][CREDIT_SIGN]</td></tr>
+					<tr><th>Stipend Sum</th><td class='r'>[num2text(round(wagesystem.total_stipend), 50)][CREDIT_SIGN]</td></tr>
 				</tbody>
 			</table>
 			<div class='c'>
