@@ -24,7 +24,7 @@
 		Please be aware that each transception requires a considerable amount of activation energy, and high-volume transception may cause the array's automated power-loss failsafe to activate.
 		<br>
 		<br>
-		For more details on the transception array's power systems, please consult the guide book located in the control room. Quartermasters are authorized to access aforementioned control room for power systems configuration.
+		For more details on the transception array's systems, please consult the guide book located in the control room. Quartermasters are authorized to access aforementioned control room for power systems configuration.
 		<br>
 		<hr>
 		<h3>IMPORT SUPPLIES AS NECESSARY</h3>

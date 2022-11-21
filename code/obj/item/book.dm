@@ -145,7 +145,7 @@ Custom Books
 	file_path = "strings/books/interdictor_guide.txt"
 
 /obj/item/paper/book/from_file/transception_guide
-	name = "Nanotrasen Prototypes Division: Transception Array"
+	name = "NT-PROTO: Transception Array"
 	icon_state = "orangebook"
 	desc = "A book detailing behaviors and operations of Nadir's transception array"
 	file_path = "strings/books/transception_guide.txt"
