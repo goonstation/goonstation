@@ -2416,6 +2416,14 @@
 	hidden = list(/datum/manufacture/breathmask,
 		/datum/manufacture/patch,
 		/datum/manufacture/towel,
+		/datum/manufacture/handkerchief_white,
+		/datum/manufacture/handkerchief_yellow,
+		/datum/manufacture/handkerchief_red,
+		/datum/manufacture/handkerchief_purple,
+		/datum/manufacture/handkerchief_orange,
+		/datum/manufacture/handkerchief_green,
+		/datum/manufacture/handkerchief_blue,
+		/datum/manufacture/handkerchief_pink,
 		/datum/manufacture/tricolor,
 		/datum/manufacture/hat_ltophat)
 

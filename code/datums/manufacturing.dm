@@ -2696,6 +2696,78 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Resource"
 
+/datum/manufacture/handkerchief_white
+	name = "White Handkerchief"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/cloth/handkerchief/white)
+	time = 4 SECONDS
+	create = 1
+	category = "Resource"
+
+/datum/manufacture/handkerchief_yellow
+	name = "Yellow Handkerchief"
+	item_paths = list("FAB-1")
+	item_amounts = list(6)
+	item_outputs = list(/obj/item/cloth/handkerchief/yellow)
+	time = 4 SECONDS
+	create = 1
+	category = "Resource"
+
+/datum/manufacture/handkerchief_red
+	name = "Red Handkerchief"
+	item_paths = list("FAB-1")
+	item_amounts = list(6)
+	item_outputs = list(/obj/item/cloth/handkerchief/red)
+	time = 4 SECONDS
+	create = 1
+	category = "Resource"
+
+/datum/manufacture/handkerchief_purple
+	name = "Purple Handkerchief"
+	item_paths = list("FAB-1")
+	item_amounts = list(6)
+	item_outputs = list(/obj/item/cloth/handkerchief/purple)
+	time = 4 SECONDS
+	create = 1
+	category = "Resource"
+
+/datum/manufacture/handkerchief_orange
+	name = "Orange Handkerchief"
+	item_paths = list("FAB-1")
+	item_amounts = list(6)
+	item_outputs = list(/obj/item/cloth/handkerchief/orange)
+	time = 4 SECONDS
+	create = 1
+	category = "Resource"
+
+/datum/manufacture/handkerchief_green
+	name = "Green Handkerchief"
+	item_paths = list("FAB-1")
+	item_amounts = list(6)
+	item_outputs = list(/obj/item/cloth/handkerchief/green)
+	time = 4 SECONDS
+	create = 1
+	category = "Resource"
+
+/datum/manufacture/handkerchief_blue
+	name = "Blue Handkerchief"
+	item_paths = list("FAB-1")
+	item_amounts = list(6)
+	item_outputs = list(/obj/item/cloth/handkerchief/blue)
+	time = 4 SECONDS
+	create = 1
+	category = "Resource"
+
+/datum/manufacture/handkerchief_pink
+	name = "Pink Handkerchief"
+	item_paths = list("FAB-1")
+	item_amounts = list(6)
+	item_outputs = list(/obj/item/cloth/handkerchief/pink)
+	time = 4 SECONDS
+	create = 1
+	category = "Resource"
+
 /////// pod construction components
 
 /datum/manufacture/pod/parts
