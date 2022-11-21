@@ -15999,9 +15999,7 @@
 "aMV" = (
 /obj/machinery/light/incandescent/warm,
 /obj/machinery/shieldgenerator/energy_shield,
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
+/turf/simulated/floor/bot,
 /area/station/storage/eeva)
 "aMW" = (
 /obj/cable{
@@ -43578,7 +43576,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/turf/simulated/floor/yellow/side,
+/turf/simulated/floor/bot,
 /area/station/storage/eeva)
 "ckX" = (
 /obj/structure/girder,
