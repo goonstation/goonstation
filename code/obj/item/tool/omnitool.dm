@@ -37,9 +37,24 @@
 		else
 			..()
 
-	get_desc(var/dist)
-		if (dist < 3)
-			. = "<span class='notice'>It is currently set to [src.mode] mode.</span>"
+	get_desc()
+		. += "It is currently set to "
+		switch(src.mode)
+			if(OMNI_MODE_PRYING)
+				. += "prying"
+			if(OMNI_MODE_SNIPPING)
+				. += "snipping"
+			if(OMNI_MODE_WRENCHING)
+				. += "wrenching"
+			if(OMNI_MODE_SCREWING)
+				. += "screwing"
+			if(OMNI_MODE_PULSING)
+				. += "pulsing"
+			if(OMNI_MODE_CUTTING)
+				. += "cutting"
+			if(OMNI_MODE_WELDING)
+				. += "welding"
+		. += " mode."
 
 	suicide(var/mob/user)
 		if (!src.user_can_suicide(user))
