@@ -22666,7 +22666,9 @@
 /obj/item/storage/box/cablesbox{
 	pixel_y = 2
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
 /area/station/storage/eeva)
 "bhn" = (
 /obj/machinery/door/airlock/pyro/glass,
