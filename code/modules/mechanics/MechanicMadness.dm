@@ -494,10 +494,25 @@
 		SEND_SIGNAL(src,_COMSIG_MECHCOMP_DROPCONNECT,O,usr)
 		return
 
+#define src_exists_inside_user_or_user_storage (src.loc == user || (istype(src.loc, /obj/item/storage) && src.loc.loc == user))
 	proc/componentSay(var/string)
 		string = trim(sanitize(html_encode(string)))
-		for(var/mob/O in all_hearers(7, src.loc))
-			O.show_message("<span class='game radio'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks", "beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",2)
+		var/maptext = null
+		var/mob/user = usr
+		if (src_exists_inside_user_or_user_storage && !istype(src,/obj/item/storage))
+			maptext = make_chat_maptext(src.owner, "[string]", "color: #FFBF00;", alpha = 255)
+			for(var/mob/O in all_hearers(7, src.loc))
+				O.show_message("<span class='game radio' style='color: #FFBF00;'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks",  \
+				"beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",1)
+				O.show_message(assoc_maptext = maptext)
+		else
+			maptext = make_chat_maptext(src.loc, "[string]", "color: #FFBF00;", alpha = 255)
+			for(var/mob/O in all_hearers(7, src.loc))
+				O.show_message("<span class='game radio' style='color: #FFBF00;'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks",  \
+				"beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",1)
+				O.show_message(assoc_maptext = maptext)
+		playsound(src.loc, 'sound/machines/reprog.ogg', 45, 2, pitch = 1.4)
+#undef src_exists_inside_user_or_user_storage
 
 	hide(var/intact)
 		under_floor = (intact && level==1)
