@@ -23,6 +23,7 @@
  *  name-bee - custom bee / bee larva name
  *  name-critter - custom critter name (you can rename those with a pen too, whoa)
  *  seed - custom botany seed name
+ *  paper - stuff people write on papers
  */
 
 var/global/datum/phrase_log/phrase_log = new
