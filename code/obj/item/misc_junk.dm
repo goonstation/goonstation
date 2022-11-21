@@ -137,8 +137,8 @@
 
 	disposing()
 		disposed = FALSE
-		CRASH("Something tried to delete the can_reach dummy!")
 		..()
+		CRASH("Something tried to delete the can_reach dummy!")
 
 /obj/item/rubber_chicken
 	name = "Rubber Chicken"
