@@ -17,6 +17,7 @@
 #define FLOCK_ANNOTATION_FLOCKMIND_CONTROL "flockmind_face"
 #define FLOCK_ANNOTATION_FLOCKTRACE_CONTROL "flocktrace_face"
 #define FLOCK_ANNOTATION_HEALTH "health"
+#define FLOCK_ANNOTATION_IGNORE "ignore"
 
 // flock intangibles
 #define FLOCK_AFK_COUNTER_THRESHOLD 180 SECONDS
@@ -28,9 +29,9 @@
 #define FLOCK_REPAIR_COST 10
 #define FLOCK_GHOST_DEPOSIT_AMOUNT 10
 
-#define FLOCK_RELAY_COMPUTE_COST 500 // total compute
+#define FLOCK_RELAY_COMPUTE_COST 500 // total compute, also make sure to update flockmindTips.html if changing this
 
-#define FLOCKTRACE_COMPUTE_COST 100
+#define FLOCKTRACE_COMPUTE_COST 100 // total compute
 
 // achievements
 #define FLOCK_ACHIEVEMENT_CHEAT_STRUCTURES "all_structures"

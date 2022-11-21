@@ -90,7 +90,7 @@
 		boutput(user, "<span class='alert'>Man, the handle broke off, you won't spray anything with this.</span>")
 		return
 
-	if ( istype(target, /obj/reagent_dispensers) && BOUNDS_DIST(src, target) == 0)
+	if ( is_reagent_dispenser(target) && BOUNDS_DIST(src, target) == 0)
 		var/obj/o = target
 		o.reagents.trans_to(src, (src.reagents.maximum_volume - src.reagents.total_volume))
 		src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)

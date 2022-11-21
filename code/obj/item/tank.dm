@@ -205,7 +205,7 @@ Contains:
 	examine(mob/user)
 		. = list()
 		var/can_interact = in_interact_range(src, user) || isobserver(user)
-		var/celsius_temperature = src.air_contents.temperature - T0C
+		var/celsius_temperature = TO_CELSIUS(src.air_contents.temperature)
 		var/descriptive = "buggy. Report this to a coder."
 		switch (celsius_temperature)
 			if (-INFINITY to -1)

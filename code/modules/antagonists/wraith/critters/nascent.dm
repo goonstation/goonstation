@@ -37,6 +37,9 @@
 
 
 	death(var/gibbed)
+		if (src.master)
+			src.master.summons -= src
+		src.master = null
 		if (!gibbed)
 			playsound(src, src.deathsound, 50, 0)
 			qdel(src)

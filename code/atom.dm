@@ -285,6 +285,12 @@
 	mover.movement_newloc = target
 	return src.Uncross(mover, do_bump=do_bump)
 
+/// This is the proc to check if a movable can cross this atom.
+/// DO NOT put side effects in this proc, it is called for pathfinding
+/// Seriously I mean it, you think it'll be fine and then it causes the teleporting gene booth bug
+/atom/Cross(atom/movable/mover)
+	return (!density)
+
 /atom/Crossed(atom/movable/AM)
 	SHOULD_CALL_PARENT(TRUE)
 	#ifdef SPACEMAN_DMM // idk a tiny optimization to omit the parent call here, I don't think it actually breaks anything in byond internals
@@ -876,6 +882,9 @@
   */
 /atom/movable/proc/set_loc(atom/newloc)
 	SHOULD_CALL_PARENT(TRUE)
+	if(QDELETED(src) && !isnull(newloc))
+		CRASH("Tried to call set_loc on [src] (\ref[src] [src.type]) to non-null location: [newloc] (\ref[newloc] [newloc?.type])")
+
 	if (loc == newloc)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, loc)
 		return src

@@ -587,6 +587,9 @@
 /turf/simulated/floor/darkpurple/side
 	icon_state = "dpurple"
 
+/turf/simulated/floor/darkpurple/corner
+	icon_state = "dpurplecorner"
+
 /////////////////////////////////////////
 
 /turf/simulated/floor/yellow
@@ -810,6 +813,12 @@ DEFINE_FLOORS(twotone/blue,
 DEFINE_FLOORS(twotone/yellow,
 	icon_state = "twotone_yellow")
 
+DEFINE_FLOORS(twotone/white,
+	icon_state = "twotone_white")
+
+DEFINE_FLOORS(twotone/black,
+	icon_state = "twotone_black")
+
 /////////////////////////////////////////
 
 DEFINE_FLOORS(terrazzo,
@@ -845,16 +854,36 @@ DEFINE_FLOORS(marble/border_wb,
 
 /////////////////////////////////////////
 
-DEFINE_FLOORS(glassblock,
-	name = "glass block tiling";\
-	icon = 'icons/turf/floors.dmi';\
-	icon_state = "glass_small";\
-	mat_appearances_to_ignore = list("steel","synthrubber");\
-	step_material = "step_wood";\
-	step_priority = STEP_PRIORITY_MED)
+/turf/simulated/floor/glassblock
+	name = "glass block tiling"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "glass_small"
+	mat_appearances_to_ignore = list("steel","synthrubber","glass")
+	step_material = "step_wood"
+	step_priority = STEP_PRIORITY_MED
+	mat_changename = 0
 
-DEFINE_FLOORS(glassblock/large,
-	icon_state = "glass_large")
+	New()
+		plate_mat = getMaterial("glass")
+		..()
+
+/turf/simulated/floor/glassblock/large
+	icon_state = "glass_large"
+
+/turf/simulated/floor/glassblock/transparent_cyan
+	icon_state = "glasstr_cyan"
+
+/turf/simulated/floor/glassblock/transparent_indigo
+	icon_state = "glasstr_indigo"
+
+/turf/simulated/floor/glassblock/transparent_red
+	icon_state = "glasstr_red"
+
+/turf/simulated/floor/glassblock/transparent_grey
+	icon_state = "glasstr_grey"
+
+/turf/simulated/floor/glassblock/transparent_purple
+	icon_state = "glasstr_purple"
 
 /////////////////////////////////////////
 
@@ -1620,6 +1649,29 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	else
 		boutput(user, "Your attack bounces off the foamed metal floor.")
 
+/turf/simulated/floor/Cross(atom/movable/mover)
+	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
+		if (!( locate(/obj/machinery/mass_driver, src) ))
+			var/obj/machinery/vehicle/O = mover
+			if (istype(O?.sec_system, /obj/item/shipcomponent/secondary_system/crash)) //For ships crashing with the SEED
+				var/obj/item/shipcomponent/secondary_system/crash/I = O.sec_system
+				if (I.crashable)
+					mover.Bump(src)
+					return TRUE
+			return FALSE
+	return ..()
+
+/turf/simulated/shuttle/Cross(atom/movable/mover)
+	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
+		return 0
+	return ..()
+
+/turf/unsimulated/floor/Cross(atom/movable/mover)
+	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
+		if (!( locate(/obj/machinery/mass_driver, src) ))
+			return 0
+	return ..()
+
 /turf/simulated/floor/burn_down()
 	if (src.intact)
 		src.ex_act(2)
@@ -2014,14 +2066,6 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		if  (!grab_smash(G, user))
 			return ..(C, user)
 		else
-			return
-
-	// hi i don't know where else to put this :D - cirr
-	else if (istype(C, /obj/item/martianSeed))
-		var/obj/item/martianSeed/S = C
-		if(S)
-			S.plant(src)
-			logTheThing(LOG_STATION, user, "plants a martian biotech seed (<b>Structure:</b> [S.spawn_path]) at [log_loc(src)].")
 			return
 
 	//also in turf.dm. Put this here for lowest priority.
