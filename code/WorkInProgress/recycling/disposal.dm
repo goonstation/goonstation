@@ -1965,14 +1965,14 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 	for(var/dir_to_pipe in cardinal)
 		for(var/obj/disposalpipespawner/maybe_pipe in get_step(src, dir_to_pipe))
 			if(maybe_pipe.type == src.type)
-				if (maybe_pipe.dpdir & get_dir(maybe_pipe, src))
-					dpdir |= get_dir(src, maybe_pipe)
-					directions += get_dir(src, maybe_pipe)
+				if (maybe_pipe.dpdir & get_dir(maybe_pipe, src).contents)
+					dpdir |= dir_to_pipe
+					directions += dir_to_pipe
 		for(var/obj/disposalpipe/maybe_pipe in get_step(src, dir_to_pipe))
 			if(maybe_pipe.type == src.pipe_type || maybe_pipe.type == src.trunk_type)
-				if (maybe_pipe.dpdir & get_dir(maybe_pipe, src))
-					dpdir |= get_dir(src, maybe_pipe)
-					directions += get_dir(src, maybe_pipe)
+				if (maybe_pipe.dpdir & get_dir(maybe_pipe, src).contents)
+					dpdir |= dir_to_pipe
+					directions += dir_to_pipe
 	if (dpdir == 0)
 		CRASH("Lone Pipespawner doesn't connect to anything!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
 	else if (length(directions) == 1)
