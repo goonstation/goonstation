@@ -320,7 +320,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_brute = 15
 	health_burn = 15
 	flags = TABLEPASS
-	fits_under_table = 1
+	fits_under_table = TRUE
 	add_abilities = list(/datum/targetable/critter/pounce)
 	ai_type = /datum/aiHolder/cat
 	is_npc = TRUE
