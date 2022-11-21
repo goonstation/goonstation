@@ -456,7 +456,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		if (prob(10))
 			src.audible_message("[src] purrs!",\
 			"You purr!")
-		if (src.ai.enabled && ispug(user) && prob(10))
+		if (src.ai?.enabled && ispug(user) && prob(10))
 			ON_COOLDOWN(src, "recent_pug_pet", 15 SECONDS)
 			src.ai.priority_tasks += src.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(src, src.ai.default_task))
 			src.ai.interrupt()
