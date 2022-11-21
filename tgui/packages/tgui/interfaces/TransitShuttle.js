@@ -23,7 +23,7 @@ export const TransitShuttle = (props, context) => {
     <Window height="520" width="300" title={shuttlename} >
       <BlockQuote style={{ "margin": "5px" }}>{traveltext}</BlockQuote>
       <Section fill scrollable height="100%">
-        {Destinations.map(Destination => {
+        {destinations.map(Destination => {
           return (
             <>
               <Table direction="row" align="center" key={Destination.type}>

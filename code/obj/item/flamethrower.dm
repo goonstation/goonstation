@@ -85,7 +85,7 @@ A Flamethrower in various states of assembly
 
 	/// allow refilling the fuel tank by simply clicking the reagent dispensers
 	afterattack(atom/target, mob/user, flag)
-		if(istype(target, /obj/reagent_dispensers) && in_interact_range(src,target))
+		if(is_reagent_dispenser(target)&& in_interact_range(src,target))
 			if(src.fueltank?.reagents)
 				var/obj/tank = target
 				tank.reagents.trans_to(src.fueltank, (src.fueltank.reagents.maximum_volume - (src.fueltank.reagents.total_volume)))
