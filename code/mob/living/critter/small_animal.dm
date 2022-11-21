@@ -79,6 +79,8 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		..()
 
 		src.add_stam_mod_max("small_animal", -(STAMINA_MAX*0.5))
+		if (src.real_name == "critter")
+			src.real_name = src.name
 
 	disposing()
 		if(src.is_pet)
