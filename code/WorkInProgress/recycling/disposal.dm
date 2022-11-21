@@ -503,7 +503,24 @@
 			dir = SOUTH
 		west
 			dir = WEST
+	// /regular should be used instead of /segment from now on
+	// don't know if segment/horizontal and such are used, is the issue
+	regular
+		horizontal
+			dir = EAST
+		vertical
+			dir = NORTH
+		bent
+			icon_state = "pipe-c"
 
+			north
+				dir = NORTH
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
 	mail
 		name = "mail pipe"
 		desc = "An underfloor mail pipe."
@@ -1519,6 +1536,7 @@
 	icon_state = "pipe-t"
 	var/obj/linked 	// the linked obj/machinery/disposal or obj/disposaloutlet
 
+	// these four types need to be removed, but i dont know if they're used in maps
 	north
 		dir = NORTH
 	east
@@ -1528,6 +1546,15 @@
 	west
 		dir = WEST
 
+	regular
+		north
+			dir = NORTH
+		east
+			dir = EAST
+		south
+			dir = SOUTH
+		west
+			dir = WEST
 	mail
 		name = "mail pipe"
 		desc = "An underfloor mail pipe."
@@ -1895,11 +1922,14 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 	name = "disposal pipe spawner"
 	icon_state = "pipe-spawner"
 	text = ""
-	var/pipe_type = /obj/disposalpipe
-	var/trunk_type = /obj/disposalpipe/trunk
+	var/pipe_type = /obj/disposalpipe/segment/regular
+	var/trunk_type = /obj/disposalpipe/trunk/regular
 	var/dpdir = 0		//! bitmask of pipe directions
 
 /obj/disposalpipespawner/types
+	regular
+		pipe_type = /obj/disposalpipe/segment/regular
+		trunk_type = /obj/disposalpipe/trunk/regular
 	mail
 		name = "mail pipe spawner"
 		color = PIPEC_MAIL
@@ -1965,12 +1995,12 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 	for(var/dir_to_pipe in cardinal)
 		for(var/obj/disposalpipespawner/maybe_pipe in get_step(src, dir_to_pipe))
 			if(maybe_pipe.type == src.type)
-				if (maybe_pipe.dpdir & get_dir(maybe_pipe, src).contents)
+				if (maybe_pipe.dpdir & get_dir(maybe_pipe, src))
 					dpdir |= dir_to_pipe
 					directions += dir_to_pipe
 		for(var/obj/disposalpipe/maybe_pipe in get_step(src, dir_to_pipe))
 			if(maybe_pipe.type == src.pipe_type || maybe_pipe.type == src.trunk_type)
-				if (maybe_pipe.dpdir & get_dir(maybe_pipe, src).contents)
+				if (maybe_pipe.dpdir & get_dir(maybe_pipe, src))
 					dpdir |= dir_to_pipe
 					directions += dir_to_pipe
 	if (dpdir == 0)
