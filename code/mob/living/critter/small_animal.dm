@@ -385,7 +385,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			return 1
 
 		//Cats meow sometimes
-		if (src.ai.enabled && prob(5))
+		if (src.ai?.enabled && prob(5))
 			src.emote("scream", 1)
 
 		if (getStatusDuration("burning"))
