@@ -681,7 +681,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 				else
 					var/mob/M = message_who
 					var/client/C = istype(M) ? M.client : message_who
-					message = replacetext(replacetext(message, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]"))
+					message = replacetext(replacetext(message, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]")
 					boutput(message_who, message)
 	if(alert_them)
 		var/list/both_collide = ip_to_ckeys[src.address] & cid_to_ckeys[src.computer_id]
