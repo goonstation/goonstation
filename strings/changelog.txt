@@ -1,4 +1,35 @@
 
+(t)sun nov 20 22
+(u)Kubius
+(p)11878
+(e)🪲🆕🗺🎨🔎💅📄💡|C-Bug, C-Feature, A-Mapping, C-Sprites, C-Code-Quality, C-QoL, A-UI, A-Station-Systems
+(*)Nadir's transception array has been overhauled. It's now equipped with an internal capacitor capable of drawing down excess grid power at a configurable rate, and improved on-device indication of system status.
+(u)LeahTheTech
+(p)12072
+(e)🆕📄⚗|C-Feature, A-UI, A-Chemistry
+(*)Air scrubbers now store the airborne reagents they collect.
+(t)sat nov 19 22
+(u)Mr. Moriarty
+(p)11836
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)AI station minimaps will now display the location of all AI cores and AI eyes.
+(u)Glamurio (Ryou)
+(p)11331
+(e)🎨⚖💅🎩|C-Sprites, C-Balance, C-QoL, A-Clothing
+(*)Janitors now start with a janny pack which contains some custodial supplies.
+(+)They also start with a mop in their hand now.
+(u)Caio029
+(p)11977
+(e)|
+(+)Floor health scanners and health status screens are now mech-scannable. You can switch their IDs to work together with a multi-tool!
+(u)LeahTheTech
+(p)12006
+(e)🆕⚖|C-Feature, C-Balance
+(+)Gunbots will now be pushed backwards by firing their guns in space.
+(u)Zonespace
+(p)12031
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)You can no longer access Syndicate Intelligence via VR uplinks
 (t)fri nov 18 22
 (u)LeahTheTech
 (p)12022
