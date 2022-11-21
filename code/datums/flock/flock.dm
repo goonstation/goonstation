@@ -419,6 +419,22 @@ var/flock_signal_unleashed = FALSE
 		active -= annotation
 		qdel(image)
 
+/// Removes all annotations
+/datum/flock/proc/clearAnnotations(atom/target)
+	if (!(target in src.annotations))
+		return
+	var/list/target_annotations = src.annotations[target]
+	if (!length(target_annotations))
+		src.annotations -= target
+		return
+	var/datum/client_image_group/img_group = get_image_group(src)
+	for (var/annotation in target_annotations)
+		for (var/image/image in target_annotations[annotation])
+			img_group.remove_image(image)
+			qdel(image)
+			//target_annotations[annotation] = null
+	src.annotations -= target
+
 /datum/flock/proc/showAnnotations(var/mob/M)
 	get_image_group(src).add_mob(M)
 
@@ -527,6 +543,7 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/proc/removeStructure(obj/flock_structure/S)
 	if(isflockstructure(S))
 		src.structures -= S
+		src.clearAnnotations(S)
 		S.GetComponent(/datum/component/flock_interest)?.RemoveComponent(/datum/component/flock_interest)
 		S.flock = null
 		var/comp_provided = S.compute_provided()
