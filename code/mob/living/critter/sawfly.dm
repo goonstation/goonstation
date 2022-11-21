@@ -23,6 +23,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	health = 50 //this value's pretty arbitrary, since it's overridden when they get their healtholders
 	var/beeps = list('sound/machines/sawfly1.ogg','sound/machines/sawfly2.ogg','sound/machines/sawfly3.ogg')
 	var/friends = list()
+	var/retaliate = FALSE
 	misstep_chance = 40 //makes them behave more like drones, and harder to kite into a straightaway then shoot
 
 	//mob variables
@@ -121,14 +122,18 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		return ..()
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
+		do_retaliate(user)
+		..()
+
+	proc/do_retaliate(mob/living/user)
 		if(!(issawflybuddy(user) || (user in src.friends) || (user.health < 40)))//are you an eligible target: nonantag or healthy enough?
-			if(prob(50) && !isdead(src))//now that you're eligible, are WE eligible?
+			if(prob(50) && !ON_COOLDOWN(src, "sawfly_retaliate_cd", 5 SECONDS) && !isdead(src))//now that you're eligible, are WE eligible?
 				if((ai.target != user))
 					src.lastattacker = user
-					ai.interrupt()//even though the AI doing this is nigh impossible, we'll still want to tell the AI that something's happening
+					src.retaliate = TRUE
 					src.visible_message("<span class='alert'><b>[src]'s targeting subsystems identify [user] as a high priority threat!</b></span>")
 					playsound(src, pick(src.beeps), 40, 1)
-		..()
+					ai.interrupt()
 
 	death(var/gibbed)
 		if(isdead(src)) return//we already dead, somehow
@@ -194,6 +199,8 @@ This file is the critter itself, and all the custom procs it needs in order to f
 					boutput(user, "<span class='alert'>In your attempt to pet [src], you cut yourself on it's blades!</span>")
 				random_brute_damage(user, 7)
 				take_bleeding_damage(user, null, 7, DAMAGE_CUT, 1)
+		else //harm or shove intent is an attack
+			do_retaliate(user)
 		..()
 
 	Life()
@@ -202,7 +209,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 
 
 	seek_target(range) //ai mob critter targetting behaviour - returns a list of acceptable targets
-		if(src.lastattacker && GET_DIST(src, src.lastattacker) <= range)
+		if(src.lastattacker && src.retaliate && GET_DIST(src, src.lastattacker) <= range)
 			return list(src.lastattacker)
 		var/targetcount = 0
 		. = list()
@@ -227,6 +234,12 @@ This file is the critter itself, and all the custom procs it needs in order to f
 			if(targetcount >= 8) //prevents them from getting too hung up on finding folks
 				break
 
+	critter_attack(var/mob/target)
+		if(src.retaliate)
+			src.retaliate = FALSE
+			..() //double stab for hitting back
+			OVERRIDE_COOLDOWN(src, "sawfly_attackCD", 0 SECONDS)
+		..()
 
 /mob/living/critter/robotic/sawfly/ai_controlled //don't use this normally- sawflies' AIs will be determined by the grenade
 	New()
