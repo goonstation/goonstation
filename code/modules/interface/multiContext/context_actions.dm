@@ -1332,11 +1332,12 @@
 	desc = ""
 	icon_state = "wrench"
 	var/mode = OMNI_MODE_PRYING
+	var/typepath = /obj/item/crowbar
 
 	execute(var/obj/item/tool/omnitool/omnitool, var/mob/user)
 		if (!istype(omnitool))
 			return
-		omnitool.change_mode(src.mode, user)
+		omnitool.change_mode(src.mode, user, src.typepath)
 
 	checkRequirements(var/obj/item/tool/omnitool/omnitool, var/mob/user)
 		return omnitool in user
@@ -1345,27 +1346,34 @@
 		name = "Crowbar"
 		icon_state = "bar"
 		mode = OMNI_MODE_PRYING
+		typepath = /obj/item/crowbar
 	snipping
 		name = "Wirecutters"
 		icon_state = "cut"
 		mode = OMNI_MODE_SNIPPING
+		typepath = /obj/item/wirecutters
 	wrenching
 		name = "Wrench"
 		icon_state = "wrench"
 		mode = OMNI_MODE_WRENCHING
+		typepath = /obj/item/wrench
 	screwing
 		name = "Screwdriver"
 		icon_state = "screw"
 		mode = OMNI_MODE_SCREWING
+		typepath = /obj/item/screwdriver
 	pulsing
 		name = "Multitool"
 		icon_state = "pulse"
 		mode = OMNI_MODE_PULSING
+		typepath = /obj/item/device/multitool
 	cutting
 		name = "Knife"
 		icon_state = "beepsky"
 		mode = OMNI_MODE_CUTTING
+		typepath = /obj/item/kitchen/utensil/knife
 	welding
 		name = "Welding tool"
 		icon_state = "weld"
 		mode = OMNI_MODE_WELDING
+		typepath = /obj/item/weldingtool

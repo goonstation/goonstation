@@ -12,7 +12,7 @@
 
 	custom_suicide = 1
 	///List of tool settings
-	var/list/modes = list(OMNI_MODE_PRYING, OMNI_MODE_SNIPPING, OMNI_MODE_SCREWING, OMNI_MODE_WRENCHING, OMNI_MODE_PULSING, OMNI_MODE_CUTTING, OMNI_MODE_WELDING)
+	var/list/modes = list(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING, OMNI_MODE_PULSING, OMNI_MODE_CUTTING, OMNI_MODE_WELDING)
 	///The current setting
 	var/mode = OMNI_MODE_PRYING
 
@@ -53,140 +53,64 @@
 		. = ..()
 		user.closeContextActions()
 
-	proc/change_mode(var/mode, var/mob/holder)
+	proc/change_mode(var/mode, var/mob/holder, var/typepath)
 		tooltip_rebuild = 1
+		var/obj/item/currtype = typepath
+		src.mode = mode
+		src.force = initial(currtype.force)
+		src.tool_flags = initial(currtype.tool_flags)
+		src.throwforce = initial(currtype.throwforce)
+		src.throw_range = initial(currtype.throw_range)
+		src.throw_speed = initial(currtype.throw_speed)
+		src.stamina_damage = initial(currtype.stamina_damage)
+		src.stamina_cost = initial(currtype.stamina_cost)
+		src.stamina_crit_chance = initial(currtype.stamina_crit_chance)
+		src.hit_type = initial(currtype.hit_type)
+		src.hitsound = initial(currtype.hitsound)
 		switch (mode)
 			if (OMNI_MODE_PRYING)
-				src.mode = OMNI_MODE_PRYING
-				// based on /obj/item/crowbar
 				set_icon_state("[prefix]-prying")
-				src.tool_flags = TOOL_PRYING
-				src.force = 7
-				src.throwforce = 7
-				src.throw_range = 7
-				src.throw_speed = 2
-				// using relative amounts in case the default changes
-				src.stamina_damage = 35
-				src.stamina_cost = 12
-				src.stamina_crit_chance = 10
-				src.hit_type = DAMAGE_BLUNT
-				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 				src.setItemSpecial(/datum/item_special/tile_fling)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-prying"), src)
 
 			if (OMNI_MODE_PULSING)
-				src.mode = OMNI_MODE_PULSING
-				// based on /obj/item/device/multitool
 				set_icon_state("[prefix]-pulsing")
-				src.tool_flags = TOOL_PULSING
-				src.force = 5
-				src.throwforce = 5
-				src.throw_range = 15
-				src.throw_speed = 3
-				// using relative amounts in case the default changes
-				src.stamina_damage = 5
-				src.stamina_cost = 5
-				src.stamina_crit_chance = 1
-				src.hit_type = DAMAGE_BLUNT
-				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 				src.setItemSpecial(/datum/item_special/elecflash)
+
 				if(src.animated_changes)
 					flick(("[prefix]-swap-pulsing"), src)
 
 			if (OMNI_MODE_SCREWING)
-				src.mode = OMNI_MODE_SCREWING
-				// based on /obj/item/screwdriver
 				set_icon_state("[prefix]-screwing")
-				src.tool_flags = TOOL_SCREWING
-				src.force = 5
-				src.throwforce = 5
-				src.throw_range = 5
-				src.throw_speed = 3
-				// using relative amounts in case the default changes
-				src.stamina_damage = 10
-				src.stamina_cost = 5
-				src.stamina_crit_chance = 30
-				src.hit_type = DAMAGE_STAB
-				src.hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 				src.setItemSpecial(/datum/item_special/simple)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-screwing"), src)
 
 			if (OMNI_MODE_SNIPPING)
-				src.mode = OMNI_MODE_SNIPPING
-				// based on /obj/item/wirecutters
 				set_icon_state("[prefix]-snipping")
-				src.tool_flags = TOOL_SNIPPING
-				src.force = 6
-				src.throwforce = 1
-				src.throw_range = 9
-				src.throw_speed = 2
-				// using relative amounts in case the default changes
-				src.stamina_damage = 15
-				src.stamina_cost = 10
-				src.stamina_crit_chance = 30
-				src.hit_type = DAMAGE_STAB
-				src.hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 				src.setItemSpecial(/datum/item_special/simple)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-snipping"), src)
 
 			if (OMNI_MODE_WRENCHING)
-				src.mode = OMNI_MODE_WRENCHING
-				// based on /obj/item/wrench
 				set_icon_state("[prefix]-wrenching")
-				src.tool_flags = TOOL_WRENCHING
-				src.force = 5
-				src.throwforce = 7
-				src.throw_range = 7
-				src.throw_speed = 2
-				// using relative amounts in case the default changes
-				src.stamina_damage = 40
-				src.stamina_cost = 14
-				src.stamina_crit_chance = 15
-				src.hit_type = DAMAGE_BLUNT
-				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 				src.setItemSpecial(/datum/item_special/simple)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-wrenching"), src)
 
 			if (OMNI_MODE_CUTTING)
-				src.mode = OMNI_MODE_CUTTING
-				//based on /obj/item/kitchen/utensil/knife
 				set_icon_state("[prefix]-cutting")
-				src.tool_flags = TOOL_CUTTING
-				src.force = 7
-				src.throwforce = 10
-				src.throw_range = 5
-				src.throw_speed = 2
-				// taken from wirecutters because I don't know what's going on here
-				src.stamina_damage = 5
-				src.stamina_cost = 10
-				src.stamina_crit_chance = 15
-				src.hit_type = DAMAGE_CUT
-				src.hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 				src.setItemSpecial(/datum/item_special/double)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-cutting"), src)
 
 			if(OMNI_MODE_WELDING)
-				src.mode = OMNI_MODE_WELDING
-				// based on /obj/item/weldingtool
-				src.tool_flags = TOOL_WELDING
-				throwforce = 5
-				throw_speed = 1
-				throw_range = 5
-				// using relative amounts in case the default changes
-				src.stamina_damage = 10
-				src.stamina_cost = 18
-				src.stamina_crit_chance = 0
-				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 				src.setItemSpecial(/datum/item_special/flame)
 
 				if(get_fuel())
@@ -199,7 +123,6 @@
 					src.force = 3
 					hit_type = DAMAGE_BLUNT
 					welding = 0
-
 		if (holder)
 			holder.update_inhands()
 
