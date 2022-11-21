@@ -632,7 +632,14 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	name = "bandana"
 	desc = "The desperado's choice."
 	see_face = 0
+	var/is_pulled_down = FALSE
 	var/obj/item/cloth/handkerchief/handkerchief = null
+
+	show_buttons()	//Hide the button from non-human mobs
+		if (ishuman(the_mob))
+			..()
+
+/obj/item/clothing/mask/bandana/abilities = list(/obj/ability_button/toggle_bandana)
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
 	if (!src.handkerchief)
