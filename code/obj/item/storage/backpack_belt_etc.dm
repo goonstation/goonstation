@@ -443,6 +443,19 @@
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
+/obj/item/storage/fanny/janny
+	name = "janny pack"
+	desc = "It's a janny fanny, a fanny for a janny."
+	icon_state = "janny"
+	item_state = "janny"
+	spawn_contents = list(
+		/obj/item/cloth/towel/janitor,
+		/obj/item/handheld_vacuum,
+		/obj/item/sponge,
+		/obj/item/spraybottle/cleaner
+	)
+	slots = 5
+
 /* -------------------- Belts -------------------- */
 
 /obj/item/storage/belt

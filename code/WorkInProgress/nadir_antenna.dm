@@ -6,15 +6,47 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 //Cost to follow through on the transception, charged against grid in grid units of power
 #define ARRAY_TELECOST 2500
 
-//Alert codes
+//Alert codes for the transception array-to-pad "handshake"
 #define TRANSCEIVE_BUSY 0
 #define TRANSCEIVE_NOPOWER 1
 #define TRANSCEIVE_POWERWARN 2
 #define TRANSCEIVE_NOWIRE 3
 #define TRANSCEIVE_OK 4
 
-//Delay after a successful transception before another one may begin
+//Minimum required interval between transceptions, on the array side
 #define TRANSCEPTION_COOLDOWN 0.1
+
+//Bounds for internal capacitor charging management; can be adjusted within these ranges by the array control computer
+#define MIN_FREE_POWER 10 KILO WATTS
+#define MAX_FREE_POWER 200 KILO WATTS
+#define MAX_CHARGE_RATE 50 KILO WATTS
+
+//Transception array integrity states, as defined by the repair needed to progress to the next state.
+#define ARRAY_INTEG_WELD0 0
+#define ARRAY_INTEG_WELD1 1
+#define ARRAY_INTEG_WELD2 2
+#define ARRAY_INTEG_WRENCH_OFF 3
+#define ARRAY_INTEG_PRY_RODS 4
+#define ARRAY_INTEG_ADD_SHEET 5
+#define ARRAY_INTEG_ADD_RODS 6
+#define ARRAY_INTEG_WRENCH_ON 7
+#define ARRAY_INTEG_FULL 8
+
+/*
+Breakdown of each transception (sending or receiving of a thing through the transception system), as happens through standard cargo operations:
+
+If purchasing an item, it'll be put in the shipping market's pending crates queue, to be pulled from later
+
+Interlink computer sends an instruction (build_command), optionally with an index from that queue (presence of this index makes it a "receive" signal)
+
+Transception pad receives its signal, and attempts to operate (attempt_transceive); this proc takes care of checking whether the pad and array can
+serve the transception request, and if they can, delegates the actual receiving or sending to receive_a_thing or send_a_thing respectively
+
+send_a_thing passes the things it sends into the shipping market, assuming they're of a compatible type
+
+receive_a_thing pulls a thing out of a queue (shipping market or direct queue) when the transception starts,
+and delivers it to the pad after a few seconds, or returns it to the queue it came from if the transception fails
+*/
 
 /obj/machinery/communications_dish/transception
 	name = "Transception Array"
@@ -25,22 +57,37 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 	bound_width = 96
 	mats = 0
 
-	///Whether array permits transception; can be disabled temporarily by anti-overload measures, or toggled manually
-	var/primed = TRUE
-	///Whether array is currently transceiving
+	///Whether array is currently transceiving (interfacing with a pad for the process of sending or receiving a thing)
 	var/is_transceiving = FALSE
-	///Beam overlay
+	///Beam overlay (this was made an object overlay for the purpose of having access to flick)
 	var/obj/overlay/telebeam
 
 	///Determines if failsafe threshold is equipment power threshold plus transception cost (true) or transception cost (false).
-	var/equipment_failsafe = TRUE
-	///While failsafe is active, communications capability is retained but cargo transception is unavailable. Prompts attempt_restart periodically.
-	var/failsafe_active = FALSE
+	var/use_standard_failsafe = TRUE
+	///Whether array permits transception (false means just comms); disabled by the failsafe when power gets too low
+	var/primed = TRUE
 	///List of items to forcibly send to pads when possible
 	var/list/atom/movable/direct_queue = list()
 
+	///Internal capacitor; cell installed inside the array itself. Draws from grid surplus when available, configurable from the array computer.
+	var/obj/item/cell/intcap = null
+	///Whether the array's conditions for refilling its internal capacitor are satisfied; used for load logic and overlay control
+	var/intcap_charging = FALSE
+	///Whether the door for the internal capacitor's compartment is open
+	var/intcap_door_open = FALSE
+	///How fast the internal capacitor will attempt to draw down grid power while intcap_charging is true
+	var/intcap_draw_rate = 10 KILO WATTS
+	///Amount of surplus past intcap_draw_rate that's required for charging, as a safeguard against spikes in demand
+	var/grid_surplus_threshold = 20 KILO WATTS
+
+	//If the internal capacitor is sabotaged, it will rupture, damaging the capacitor cabinet and bringing the array offline.
+	///This condition tracks the progress of array repair; status of 8 (defined above, change if process changes) indicates full condition
+	var/repair_status = ARRAY_INTEG_FULL
+
 	New()
 		. = ..()
+		src.intcap = new /obj/item/cell(src)
+		src.intcap.give(1000)
 		src.telebeam = new /obj/overlay/transception_beam()
 		src.vis_contents += telebeam
 		src.UpdateIcon()
@@ -53,45 +100,45 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 
 	process()
 		. = ..()
-		if(src.failsafe_active)
-			if(src.primed) //don't attempt restart if somehow primed while failsafe is online
-				src.failsafe_active = FALSE
-			else
+		if(!(status & BROKEN))
+			src.charge_intcap()
+			if(!src.primed)
 				src.attempt_restart()
-		else if(length(direct_queue) && primed && !src.is_transceiving)
-			var/atom/movable/queued_item = pick(direct_queue)
-			for_by_tcl(transc_pad, /obj/machinery/transception_pad)
-				if(transc_pad.is_transceiving)
-					continue
-				var/datum/powernet/pad_powernet = transc_pad.get_direct_powernet()
-				if(!pad_powernet)
-					continue
-				var/turf/receive_turf = get_turf(transc_pad)
-				var/obstructed = FALSE
-				if(length(receive_turf.contents) < 10) //move on to the next pad if there is excessive clutter or dense object
-					for(var/atom/movable/O in receive_turf)
-						if(istype(O,/obj))
-							if(O.density)
-								obstructed = TRUE
-								break
-				else
-					obstructed = TRUE
-				if(obstructed)
-					continue
-				var/pad_netnum = pad_powernet.number
-				if(src.can_transceive(pad_netnum) == TRANSCEIVE_OK)
-					transc_pad.attempt_transceive(null,queued_item)
-					direct_queue -= queued_item
-					break
+			else if(length(direct_queue) && !src.is_transceiving)
+				var/atom/movable/queued_item = pick(direct_queue)
+				for_by_tcl(transc_pad, /obj/machinery/transception_pad)
+					if(transc_pad.is_transceiving)
+						continue
+					var/datum/powernet/pad_powernet = transc_pad.get_direct_powernet()
+					if(!pad_powernet)
+						continue
+					var/turf/receive_turf = get_turf(transc_pad)
+					var/obstructed = FALSE
+					if(length(receive_turf.contents) < 10) //move on to the next pad if there is excessive clutter or dense object
+						for(var/atom/movable/O in receive_turf)
+							if(istype(O,/obj))
+								if(O.density)
+									obstructed = TRUE
+									break
+					else
+						obstructed = TRUE
+					if(obstructed)
+						continue
+					var/pad_netnum = pad_powernet.number
+					if(src.can_transceive(pad_netnum) == TRANSCEIVE_OK)
+						transc_pad.attempt_transceive(null,queued_item)
+						direct_queue -= queued_item
+						break
+		src.UpdateIcon() //because of apc/intcap reporting, mainly
 
 	///Respond to a pad's inquiry of whether a transception can occur
 	proc/can_transceive(var/pad_netnum)
 		. = TRANSCEIVE_BUSY
 		if(src.is_transceiving)
 			return
-		if(!powered() || !src.primed)
+		if(!powered() || !src.primed || status & BROKEN)
 			return TRANSCEIVE_NOPOWER
-		if(src.apc_power_check())
+		if(src.failsafe_inquiry())
 			return TRANSCEIVE_POWERWARN
 		var/datum/powernet/powernet = src.get_direct_powernet()
 		var/netnum = powernet.number
@@ -99,20 +146,20 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			return TRANSCEIVE_NOWIRE
 		return TRANSCEIVE_OK
 
-	///Respond to a pad's request to do a transception
+	///Respond to a pad's request to do a transception; if successful, do the transception animation, power draw and cooldown
 	proc/transceive(var/pad_netnum)
 		. = FALSE
 		if(src.is_transceiving)
 			return
 		if(!powered() || !src.primed)
 			return
-		if(src.apc_power_check())
+		if(src.failsafe_inquiry())
 			return
 		var/datum/powernet/powernet = src.get_direct_powernet()
 		var/netnum = powernet.number
 		if(netnum != pad_netnum)
 			return
-		if(!src.use_area_cell_power(ARRAY_STARTCOST))
+		if(!src.pay_startcost(ARRAY_STARTCOST))
 			return
 		src.is_transceiving = TRUE
 		use_power(ARRAY_TELECOST)
@@ -122,20 +169,28 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			src.is_transceiving = FALSE
 		return TRUE
 
-	///Directly discharge power from the area's cell
-	proc/use_area_cell_power(var/use_amount)
+	///Attempt to pay the "kick-start" cost for transception; uses internal capacitor first, then area power cell
+	proc/pay_startcost(var/use_amount)
+		var/cost_to_apc = use_amount
+		if(src.intcap && src.intcap.charge > 0)
+			if(src.intcap.charge >= use_amount) //can use internal capacitor to fully cover cost, skip the APC calcs
+				return use_intcap(use_amount)
+			else //internal capacitor lacks enough charge to handle the kick-start solo; prepare to expend from APC
+				cost_to_apc -= src.intcap.charge
 		var/obj/machinery/power/apc/AC = get_local_apc(src)
 		if (!AC)
 			return 0
 		var/obj/item/cell/C = AC.cell
-		if (!C || C.charge < use_amount)
+		if (!C || C.charge < cost_to_apc)
 			return 0
 		else
-			C.use(use_amount)
+			C.use(cost_to_apc)
+			if(cost_to_apc < use_amount)
+				return use_intcap(use_amount - cost_to_apc)
 			return 1
 
-	///Checks status of local APC, disables transception if power is insufficient (just over 30% if equipment failsafe is enabled, 1 transception
-	proc/apc_power_check() //returns true if error
+	///Checks status of local APC, activates failsafe if power is insufficient (30% plus 1 startcost with standard failsafe, 1 startcost otherwise)
+	proc/failsafe_inquiry() //returns true if failsafe kicked in
 		var/obj/machinery/power/apc/AC = get_local_apc(src)
 		if (!AC)
 			return
@@ -143,20 +198,18 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			return
 		var/obj/item/cell/C = AC.cell
 		var/combined_cost = (0.3 * C.maxcharge) + ARRAY_STARTCOST
-		if (equipment_failsafe && C.charge < combined_cost)
+		if (use_standard_failsafe && C.charge < combined_cost)
 			playsound(src.loc, 'sound/effects/manta_alarm.ogg', 50, 1)
 			src.primed = FALSE
-			src.failsafe_active = TRUE
 			src.UpdateIcon()
 			. = TRUE
 		else if(C.charge <= ARRAY_STARTCOST)
 			playsound(src.loc, 'sound/effects/manta_alarm.ogg', 50, 1)
 			src.primed = FALSE
-			src.failsafe_active = TRUE
 			src.UpdateIcon()
 			. = TRUE
 
-	///Primed status restarts when power is sufficiently restored
+	///When array has failsafe active, this is called each machine tick to see if power has sufficiently recovered to restart transception
 	proc/attempt_restart()
 		var/obj/machinery/power/apc/AC = get_local_apc(src)
 		if (!AC)
@@ -165,34 +218,290 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			return
 		var/obj/item/cell/C = AC.cell
 		var/combined_cost
-		if (equipment_failsafe)
+		if (use_standard_failsafe) //slightly over failsafe values in each case so it doesn't just turn right back on again
 			combined_cost = (0.4 * C.maxcharge) + ARRAY_STARTCOST
 		else
 			combined_cost = (0.1 * C.maxcharge) + ARRAY_STARTCOST
 		if (C.charge > combined_cost)
 			playsound(src.loc, 'sound/machines/shieldgen_startup.ogg', 50, 1)
 			src.primed = TRUE
-			src.failsafe_active = FALSE
 			src.UpdateIcon()
 			. = TRUE
 		return
 
-	ex_act(severity) //tbi: damage and repair
+	proc/charge_intcap()
+		if(src.intcap && src.intcap_draw_rate > 0)
+			if(src.intcap.rigged)
+				intcap_failure()
+				return
+
+			var/datum/powernet/powernet = src.get_direct_powernet()
+
+			//if we're not charging a cell yet, figure out what we'd be billing the powernet if we were
+			var/total_load = src.intcap_charging ? powernet.load : powernet.load + src.intcap_draw_rate
+
+			if(powernet.avail - total_load >= src.grid_surplus_threshold) //netexcess exists but... isn't ever actually set up?
+				src.intcap_charging = TRUE
+				if(src.intcap.charge < src.intcap.maxcharge)
+					var/yield_to_cell = src.intcap_draw_rate * CELLRATE
+					var/final_draw = src.intcap_draw_rate
+					//this bit is so you don't spend more on charge than you actually need to charge the cell
+					if(intcap.charge + yield_to_cell > src.intcap.maxcharge)
+						yield_to_cell = src.intcap.maxcharge - src.intcap.charge
+						final_draw = yield_to_cell * 500
+					src.intcap.give(yield_to_cell)
+					powernet.newload += final_draw
+					var/area/arrayarea = get_area(src) //gotta let the grid know!
+					arrayarea.use_power(final_draw,EQUIP)
+			else
+				src.intcap_charging = FALSE
+		else
+			src.intcap_charging = FALSE
+
+	///Layer for using internal capacitor; separated to intercept rigged cells and handle with custom damage behavior
+	proc/use_intcap(var/use_amount)
+		. = TRUE
+		if(src.intcap.rigged)
+			intcap_failure()
+			. = FALSE
+		else
+			src.intcap.use(use_amount)
+
+	///Sabotaged cells, instead of blowing out the turf, will blow out the associated microvoltage cabinet and bring the array offline
+	proc/intcap_failure()
+		src.intcap.rigged = FALSE
+		src.intcap_charging = FALSE
+		src.status |= BROKEN
+		src.primed = FALSE
+		src.intcap_door_open = FALSE
+		src.repair_status = ARRAY_INTEG_WELD0
+		src.UpdateIcon()
+		if (intcap.rigger)
+			message_admins("[key_name(intcap.rigger)]'s rigged cell damaged the transception array at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, intcap.rigger, "'s rigged cell damaged the transception array at [log_loc(src)].")
+
+		src.visible_message("<span class='alert'><b>[src]'s internal capacitor compartment explodes!</b></span>")
+
+		for(var/client/C in clients)
+			playsound(C.mob, 'sound/effects/explosionfar.ogg', 35, 0)
+
+		var/epicenter = get_turf(src)
+		playsound(epicenter, "explosion", 90, 1)
+		//this doesn't actually explode because turf safe explosions don't respect "space" (ocean) turfs, and I'd like surroundings not punctured
+
+		SPAWN(0)
+			qdel(src.intcap)
+			src.intcap = null
+
+	ex_act(severity)
+		return //it's a tough critter if you're not damaging it from the inside
+
+/obj/machinery/communications_dish/transception/attack_hand(mob/user)
+	if(src.intcap && intcap_door_open)
+		boutput(user, "<span class='notice'>You remove \the [intcap] from the cabinet's cell compartment.</span>")
+		playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
+
+		user.put_in_hand_or_drop(src.intcap)
+		src.intcap = null
 		return
+	..()
+
+/obj/machinery/communications_dish/transception/attackby(obj/item/I, mob/user)
+	src.add_fingerprint(user)
+	if(status & BROKEN && !istype(I, /obj/item/grab/))
+		var/tell_you_what_to_do_next = TRUE //probably-simpler way to tell people what to do next
+
+		if (isweldingtool(I))
+			if (src.repair_status <= ARRAY_INTEG_WELD2)
+				boutput(user, "You start repairing the damaged sections of the outer cabinet plating.")
+				actions.start(new/datum/action/bar/icon/array_repair_weld(user,I,src), user)
+				tell_you_what_to_do_next = FALSE
+
+		else if (iswrenchingtool(I))
+			if (src.repair_status == ARRAY_INTEG_WRENCH_OFF || src.repair_status == ARRAY_INTEG_WRENCH_ON)
+				var/less_cursed_check = src.repair_status == ARRAY_INTEG_WRENCH_ON
+				boutput(user, "You start [less_cursed_check ? "reinstalling" : "removing"] the rod retention bolts.")
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, /obj/machinery/communications_dish/transception/proc/wrench_cabinet,\
+				list(user), I.icon, I.icon_state, null, null)
+				tell_you_what_to_do_next = FALSE
+
+		else if (ispryingtool(I))
+			if (src.repair_status == ARRAY_INTEG_PRY_RODS)
+				boutput(user, "You start prying out the damaged frame rods.")
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 75, 1)
+				SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /obj/machinery/communications_dish/transception/proc/pry_cabinet,\
+				list(user), I.icon, I.icon_state, null, null)
+				tell_you_what_to_do_next = FALSE
+
+		else if(istype(I, /obj/item/sheet))
+			if (src.repair_status == ARRAY_INTEG_ADD_SHEET)
+				var/obj/item/sheet/S = I
+				if (S.material && S.material.material_flags & MATERIAL_METAL)
+					S.change_stack_amount(-1)
+					boutput(user, "You install a new compartment door.")
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					src.repair_status++
+					src.UpdateIcon()
+					tell_you_what_to_do_next = FALSE
+
+		else if(istype(I, /obj/item/rods))
+			if (src.repair_status == ARRAY_INTEG_ADD_RODS)
+				var/obj/item/rods/R = I
+				if (R.material && R.material.material_flags & MATERIAL_METAL && R.amount > 1)
+					R.change_stack_amount(-2)
+					boutput(user, "You install new structural rods.")
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					src.repair_status++
+					src.UpdateIcon()
+					tell_you_what_to_do_next = FALSE
+
+		if (tell_you_what_to_do_next)
+			switch (src.repair_status)
+				if(ARRAY_INTEG_WELD0 to ARRAY_INTEG_WELD2)
+					boutput(user, "The array looks pretty beat. A good place to start would be welding the microvoltage cabinet's plating.")
+				if(ARRAY_INTEG_WRENCH_OFF)
+					boutput(user, "The cabinet is mostly back together, but some of the rods are shredded. There are bolts holding them in place.")
+				if(ARRAY_INTEG_PRY_RODS)
+					boutput(user, "The bolts for the broken rods have been removed, but it seems they'll need some prying to come out.")
+				if(ARRAY_INTEG_ADD_SHEET)
+					boutput(user, "With broken rods gone, this seems like a good time to grab some metal sheets and make a new compartment door.")
+				if(ARRAY_INTEG_ADD_RODS)
+					boutput(user, "The internal capacitor's microvoltage cabinet seems intact now. Some rods for the frame would be good.")
+				if(ARRAY_INTEG_WRENCH_ON)
+					boutput(user, "The newly-repaired rods seem a bit shaky; they haven't been bolted in yet.")
+	else
+		if (ispryingtool(I))
+			boutput(user, "You [intcap_door_open ? "close" : "open"] the internal capacitor cabinet's cell compartment.")
+			src.intcap_door_open = !src.intcap_door_open
+			src.UpdateIcon()
+		else if(!src.intcap && intcap_door_open && istype(I,/obj/item/cell))
+			boutput(user, "You install [I] into the cabinet's cell compartment.")
+			user.u_equip(I)
+			I.set_loc(src)
+			src.intcap = I
+		else
+			..(I,user)
+
+/obj/machinery/communications_dish/transception/proc/wrench_cabinet(mob/user)
+	var/less_cursed_check = src.repair_status == ARRAY_INTEG_WRENCH_ON
+	boutput(user, "You finish [less_cursed_check ? "reinstalling" : "removing"] the rod retention bolts.")
+	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+	src.repair_status++
+	if(src.repair_status == ARRAY_INTEG_FULL)
+		src.status &= ~BROKEN
+	src.UpdateIcon()
+
+/obj/machinery/communications_dish/transception/proc/pry_cabinet(mob/user)
+	boutput(user, "You finish prying out the damaged rods.")
+	playsound(src.loc, 'sound/items/Crowbar.ogg', 75, 1)
+	src.repair_status++
+	src.UpdateIcon()
+
+/datum/action/bar/icon/array_repair_weld
+	duration = 5 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+	id = "array_repair_weld"
+	icon = 'icons/obj/items/tools/weldingtool.dmi'
+	icon_state = "weldingtool-on"
+	var/mob/living/user
+	var/obj/weldingtool
+	var/obj/machinery/communications_dish/transception/target
+
+	New(usermob,tool,array)
+		user = usermob
+		weldingtool = tool
+		target = array
+		..()
+
+	onUpdate()
+		..()
+		if(BOUNDS_DIST(user, target) > 0 || user == null || target == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if(BOUNDS_DIST(user, target) > 0 || user == null || target == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		src.loopStart()
+
+	loopStart()
+		..()
+		if (!isweldingtool(weldingtool) || !istype(target))
+			logTheThing(LOG_DEBUG, null, "Transception array welding action bar was passed improper objects. Somehow.")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onEnd()
+		if(BOUNDS_DIST(user, target) > 0 || user == null || target == null || !user.find_in_hand(weldingtool))
+			..()
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if(weldingtool:try_weld(user, 1))
+			target.repair_status++
+			target.UpdateIcon()
+		else
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if(target.repair_status > 2)
+			user.show_text("You finish welding the array cabinet.", "blue")
+			return ..()
+
+		src.onRestart()
 
 /obj/machinery/communications_dish/transception/update_icon()
-	if(powered())
-		var/primed_state = "allquiet"
+	//Visual indication of damage on base icon
+	if(repair_status < ARRAY_INTEG_FULL)
+		src.icon_state = "array_busted[repair_status]"
+	else
+		src.icon_state = "array[intcap_door_open ? "_panelopen" : null]"
+
+	if(powered() && !(status & BROKEN))
+		//Light indicating whether the array is active at all
+		var/image/commglow = SafeGetOverlayImage("commglow", 'icons/obj/machines/transception.dmi', "powered")
+		commglow.plane = PLANE_ABOVE_LIGHTING
+		UpdateOverlays(commglow, "commglow", 0, 1)
+
+		//Light indicating whether transception capability is primed (in plain english, whether it can send and receive cargo)
+		var/primed_state = "trsc_sys_warn"
 		if(src.primed)
-			primed_state = "glow_primed"
-
-		var/image/glowy = SafeGetOverlayImage("glows", 'icons/obj/machines/transception.dmi', "glow_online")
-		glowy.plane = PLANE_ABOVE_LIGHTING
-		UpdateOverlays(glowy, "glows", 0, 1)
-
+			primed_state = "trsc_sys_primed"
 		var/image/primer = SafeGetOverlayImage("primed", 'icons/obj/machines/transception.dmi', primed_state)
 		primer.plane = PLANE_ABOVE_LIGHTING
 		UpdateOverlays(primer, "primed", 0, 1)
+
+		//Light indicating whether the internal capacitor is charging (detected a power surplus from the grid that matches set parameters)
+		var/intcap_charger = "allquiet"
+		if(src.intcap_charging == TRUE)
+			intcap_charger = "intcap_charging"
+		var/image/chargelight = SafeGetOverlayImage("charger", 'icons/obj/machines/transception.dmi', intcap_charger)
+		chargelight.plane = PLANE_ABOVE_LIGHTING
+		UpdateOverlays(chargelight, "charger", 0, 1)
+
+		//Light indicating the internal capacitor's state of charge, with 5 indicator intervals
+		var/intcap_power = "allquiet"
+		if(src.intcap?.charge > 0)
+			var/charge_tier = ceil((src.intcap.charge / src.intcap.maxcharge) * 5) * 20
+			intcap_power = "intcap[charge_tier]"
+		var/image/intcapbar = SafeGetOverlayImage("intcap", 'icons/obj/machines/transception.dmi', intcap_power)
+		intcapbar.plane = PLANE_ABOVE_LIGHTING
+		UpdateOverlays(intcapbar, "intcap", 0, 1)
+
+		//Light indicating the area APC's state of charge relative to the failsafe threshold, with 5 indicator intervals
+		var/apc_power = "allquiet"
+		var/obj/machinery/power/apc/AC = get_local_apc(src)
+		if(AC?.cell?.charge > 0)
+			var/failsafe_maxcharge = AC.cell.maxcharge * 0.7
+			var/charge_over_threshold = max(0,AC.cell.charge - (AC.cell.maxcharge * 0.3))
+			var/charge_tier = ceil((charge_over_threshold / failsafe_maxcharge) * 5) * 20
+			apc_power = "apc[charge_tier]"
+		var/image/apcbar = SafeGetOverlayImage("apcbar", 'icons/obj/machines/transception.dmi', apc_power)
+		apcbar.plane = PLANE_ABOVE_LIGHTING
+		UpdateOverlays(apcbar, "apcbar", 0, 1)
 	else
 		ClearAllOverlays()
 
@@ -218,45 +527,102 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			ui.open()
 
 	ui_data(mob/user)
-		var/obj/machinery/power/apc/arrayapc = get_local_apc(transception_array)
-		var/obj/item/cell/arraycell = arrayapc.cell
-		var/cellstat_formatted
-		var/celldiff_val
 		var/safe_transceptions
 		var/max_transceptions
-		if(arraycell)
-			cellstat_formatted = "[round(arraycell.charge)]/[arraycell.maxcharge]"
-			celldiff_val = arraycell.charge / arraycell.maxcharge
-			var/check_safe = round((arraycell.charge - (0.3 * arraycell.maxcharge)) / ARRAY_STARTCOST)
-			var/check_max = round(arraycell.charge / ARRAY_STARTCOST)
-			safe_transceptions = "[check_safe]"
-			max_transceptions = "[check_max]"
+		var/safe_transception_readout
+		var/max_transception_readout
+
+		var/obj/machinery/power/apc/arrayapc = get_local_apc(transception_array)
+		var/obj/item/cell/apc_cell = arrayapc.cell
+		var/apc_cellstat_formatted
+		var/apc_celldiff_val
+		if(apc_cell)
+			apc_cellstat_formatted = "[round(apc_cell.charge)]/[apc_cell.maxcharge]"
+			apc_celldiff_val = apc_cell.charge / apc_cell.maxcharge
+			safe_transceptions += round((apc_cell.charge - (0.3 * apc_cell.maxcharge)) / ARRAY_STARTCOST)
+			max_transceptions += round(apc_cell.charge / ARRAY_STARTCOST)
 		else
-			cellstat_formatted = "ERROR"
-			celldiff_val = 0
-			safe_transceptions = "ERROR"
-			max_transceptions = "ERROR"
+			apc_cellstat_formatted = "ERROR"
+			apc_celldiff_val = 0
+
+		var/obj/item/cell/arraycell = transception_array.intcap
+		var/array_cellstat_formatted
+		var/array_celldiff_val
+		if(arraycell)
+			array_cellstat_formatted = "[round(arraycell.charge)]/[arraycell.maxcharge]"
+			array_celldiff_val = arraycell.charge / arraycell.maxcharge
+			safe_transceptions += round(arraycell.charge / ARRAY_STARTCOST)
+			max_transceptions += round(arraycell.charge / ARRAY_STARTCOST)
+		else
+			array_cellstat_formatted = "NONE FOUND"
+			array_celldiff_val = 0
+
+		if(safe_transceptions > 0)
+			safe_transception_readout = "[safe_transceptions]"
+		else
+			safe_transception_readout = "0"
+		if(max_transceptions > 0)
+			max_transception_readout = "[max_transceptions]"
+		else
+			max_transception_readout = "0"
+
+		var/arrayborked = "NOMINAL"
+		if(transception_array.repair_status < ARRAY_INTEG_FULL)
+			arrayborked = "BREACH"
+
 		. = list(
-			"cellStat" = cellstat_formatted,
-			"cellDiff" = celldiff_val,
-			"sendsSafe" = safe_transceptions,
-			"sendsMax" = max_transceptions,
-			"failsafeThreshold" = transception_array.equipment_failsafe ? "STANDARD" : "MINIMUM",
-			"failsafeStat" = transception_array.failsafe_active ? "FAILSAFE HALT" : "OPERATIONAL",
+			"apcCellStat" = apc_cellstat_formatted,
+			"apcCellDiff" = apc_celldiff_val,
+			"arrayCellStat" = array_cellstat_formatted,
+			"arrayCellDiff" = array_celldiff_val,
+			"sendsSafe" = safe_transception_readout,
+			"sendsMax" = max_transception_readout,
+			"failsafeThreshold" = transception_array.use_standard_failsafe ? "STANDARD" : "MINIMUM",
+			"failsafeStat" = transception_array.primed ? "OPERATIONAL" : "FAILSAFE HALT",
+			"drawRateTarget" = transception_array.intcap_draw_rate,
+			"surplusThreshold" = transception_array.grid_surplus_threshold,
 			"arrayImage" = icon2base64(icon(initial(transception_array.icon), initial(transception_array.icon_state))),
-			"arrayHealth" = "NOMINAL" //when array can be damaged, provides a string describing current level of damage
+			"arrayHealth" = arrayborked
 		)
 
 	ui_act(action, list/params)
 		. = ..()
 		if (.)
 			return
-		else if (action == "toggle_failsafe")
-			transception_array.equipment_failsafe = !(transception_array.equipment_failsafe)
+		switch(action)
+			if ("toggle_failsafe")
+				transception_array.use_standard_failsafe = !(transception_array.use_standard_failsafe)
+			if ("set_surplus")
+				var/new_surplus_value = params["surplusThreshold"]
+				if(text2num(new_surplus_value) != null)
+					transception_array.grid_surplus_threshold = clamp(text2num(new_surplus_value), MIN_FREE_POWER, MAX_FREE_POWER)
+					. = TRUE
+			if ("set_draw_rate")
+				var/new_draw_rate = params["drawRateTarget"]
+				if(text2num(new_draw_rate) != null)
+					transception_array.intcap_draw_rate = clamp(text2num(new_draw_rate), 0, MAX_CHARGE_RATE)
+					. = TRUE
+
 
 #undef ARRAY_STARTCOST
 #undef ARRAY_TELECOST
 #undef TRANSCEPTION_COOLDOWN
+
+#undef MIN_FREE_POWER
+#undef MAX_FREE_POWER
+#undef MAX_CHARGE_RATE
+
+#undef ARRAY_INTEG_WELD0
+#undef ARRAY_INTEG_WELD1
+#undef ARRAY_INTEG_WELD2
+#undef ARRAY_INTEG_WRENCH_OFF
+#undef ARRAY_INTEG_PRY_RODS
+#undef ARRAY_INTEG_ADD_SHEET
+#undef ARRAY_INTEG_ADD_RODS
+#undef ARRAY_INTEG_WRENCH_ON
+#undef ARRAY_INTEG_FULL
+
+#define INTERLINK_RANGE 100
 
 /obj/machinery/transception_pad
 	icon = 'icons/obj/stationobjs.dmi'
@@ -270,7 +636,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 	var/is_transceiving = FALSE
 	var/frequency = FREQ_TRANSCEPTION_SYS
 	var/net_id
-	///Used for clarity in transception interlink computer
+	///Fancy identifier, which you can see in the pad's name; lets you know which pad you're operating from the transception interlink computer
 	var/pad_id = null
 
 	New()
@@ -333,9 +699,9 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		signal.source = src
 		signal.data["sender"] = src.net_id
 
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, 20, freq)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, INTERLINK_RANGE, freq)
 
-	///Polls to see if pad's transception connection is operable
+	///Polls to see if the pad can connect to the array, and if it can, whether said array is capable of completing the pad's request
 	proc/check_transceive()
 		. = "ERR_NO_ARRAY"
 		if(!transception_array)
@@ -359,7 +725,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			else
 				return "ERR_OTHER" //what
 
-	///Attempts to perform a transception operation; receive if it was passed an index for pending inbound cargo or a manual receive, send otherwise
+	///Try to receive or send a thing, contextually; receive if it was passed an index for pending inbound cargo or a manual receive, send otherwise
 	proc/attempt_transceive(var/cargo_index = null, var/atom/movable/manual_receive = null)
 		if(src.is_transceiving)
 			return
@@ -501,7 +867,6 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			M.changeStatus("stunned", 5 SECONDS)
 			M.changeStatus("weakened", 5 SECONDS)
 
-
 /obj/machinery/computer/transception
 	name = "\improper Transception Interlink"
 	desc = "A console capable of remotely connecting to and operating cargo transception pads."
@@ -600,7 +965,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		signal.source = src
 		signal.data["sender"] = src.net_id
 
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, 20, freq)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, INTERLINK_RANGE, freq)
 
 /obj/machinery/computer/transception/attack_hand(var/mob/user as mob)
 	if(!src.allowed(user))
@@ -710,20 +1075,24 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 
 		if ("receive")
 			var/manifest_identifier = locate(subaction) in src.known_pads
-			var/list/manifest = known_pads[manifest_identifier]
-			if(manifest["Identifier"])
-				var/wanted_thing = input(usr,"! WORK IN PROGRESS !","Select Cargo",null) in shippingmarket.pending_crates
-				var/thingpos = shippingmarket.pending_crates.Find(wanted_thing)
-				if(thingpos)
-					src.build_command(manifest["INT_TARGETID"],thingpos)
+			if(manifest_identifier && known_pads[manifest_identifier])
+				var/list/manifest = known_pads[manifest_identifier]
+				if(manifest["Identifier"])
+					var/wanted_thing = input(usr,"! WORK IN PROGRESS !","Select Cargo",null) in shippingmarket.pending_crates
+					var/thingpos = shippingmarket.pending_crates.Find(wanted_thing)
+					if(thingpos)
+						src.build_command(manifest["INT_TARGETID"],thingpos)
 
 		if ("send")
 			var/manifest_identifier = locate(subaction) in src.known_pads
-			var/list/manifest = known_pads[manifest_identifier]
-			if(manifest["Identifier"])
-				src.build_command(manifest["INT_TARGETID"])
+			if(manifest_identifier && known_pads[manifest_identifier])
+				var/list/manifest = known_pads[manifest_identifier]
+				if(manifest["Identifier"])
+					src.build_command(manifest["INT_TARGETID"])
 
 	src.add_fingerprint(usr)
+
+#undef INTERLINK_RANGE
 
 
 #undef TRANSCEIVE_BUSY

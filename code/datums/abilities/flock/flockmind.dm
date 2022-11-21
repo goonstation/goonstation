@@ -17,17 +17,23 @@
 		..()
 		drone_controller = addAbility(/datum/targetable/flockmindAbility/droneControl)
 
-/datum/abilityHolder/flockmind/proc/updateCompute(usedCompute, totalCompute)
+/datum/abilityHolder/flockmind/proc/updateCompute(usedCompute, totalCompute, forceTextUpdate = FALSE)
 	var/mob/living/intangible/flock/F = owner
 	if(!F?.flock)
 		return //someone made a flockmind or flocktrace without a flock, or gave this ability holder to something else.
 	src.points = totalCompute - usedCompute
 	src.totalCompute = totalCompute
+	if (forceTextUpdate)
+		src.updateText()
 
 /datum/abilityHolder/flockmind/onAbilityStat()
 	..()
 	.= list()
 	.["Compute:"] = "[round(src.points)]/[round(src.totalCompute)]"
+	var/mob/living/intangible/flock/F = owner
+	if (!istype(F) || !F.flock)
+		return
+	.["Traces:"] = "[length(F.flock.traces)]/[F.flock.max_trace_count]"
 
 /atom/movable/screen/ability/topBar/flockmind
 	tens_offset_x = 19
@@ -165,13 +171,45 @@
 	if (!flock)
 		return TRUE
 
-	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "designates [constructTarget(M)] as [flock.isEnemy(M) ? "" : "not "]an enemy at [log_loc(src.holder.owner)].")
+	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "designates [constructTarget(M)] as [flock.isEnemy(M) ? "not " : ""]an enemy at [log_loc(src.holder.owner)].")
 
-	if (flock.isEnemy(M))
+	if (flock.isIgnored(M))
+		flock.removeIgnore(M)
+	else if (flock.isEnemy(M))
 		flock.removeEnemy(M)
 		return
 
 	flock.updateEnemy(M)
+
+
+/datum/targetable/flockmindAbility/designateIgnore
+	name = "Designate Ignore"
+	desc = "Designate someone to be ignored by your Flock."
+	icon_state = "designate_ignore"
+	cooldown = 0.1 SECONDS
+
+/datum/targetable/flockmindAbility/designateIgnore/cast(atom/target)
+	if(..())
+		return TRUE
+
+	var/mob/living/intangible/flock/F = holder.owner
+
+	if (!isflockvalidenemy(target))
+		boutput(F, "<span class='alert'>That isn't a valid target.</span>")
+		return TRUE
+
+	if (!F.flock)
+		return TRUE
+
+	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "designates [constructTarget(target)] to [F.flock.isIgnored(target) ? "not " : ""] be ignored by their flock at [log_loc(src.holder.owner)].")
+
+	if (F.flock.isIgnored(target))
+		F.flock.removeIgnore(target)
+		return
+	if (F.flock.isEnemy(target))
+		F.flock.removeEnemy(target)
+	
+	F.flock.addIgnore(target)
 
 /////////////////////////////////////////
 
@@ -184,17 +222,22 @@
 	var/waiting = FALSE
 
 /datum/targetable/flockmindAbility/partitionMind/New()
-	src.desc = "Create a Flocktrace, using [FLOCKTRACE_COMPUTE_COST] compute."
+	src.desc = "Create a Flocktrace. Requires [FLOCKTRACE_COMPUTE_COST] total compute per trace."
 	..()
 
 /datum/targetable/flockmindAbility/partitionMind/cast(atom/target)
 	if(waiting || ..())
 		return TRUE
 
-	if(!holder.pointCheck(FLOCKTRACE_COMPUTE_COST))
+	var/mob/living/intangible/flock/flockmind/F = holder.owner
+
+	if(length(F.flock.traces) >= F.flock.max_trace_count)
+		if (length(F.flock.traces) < round(FLOCK_RELAY_COMPUTE_COST / FLOCKTRACE_COMPUTE_COST))
+			boutput(holder.get_controlling_mob(), "<span class='alert'>You need more compute!</span>")
+		else
+			boutput(holder.get_controlling_mob(), "<span class='alert'>You cannot make any more Flocktraces!</span>")
 		return TRUE
 
-	var/mob/living/intangible/flock/flockmind/F = holder.owner
 	waiting = TRUE
 	SPAWN(0)
 		F.partition()
@@ -335,18 +378,10 @@
 	var/obj/item/device/radio/R
 	var/message
 	if(ismob(target))
-		var/mob/living/M = target
-		if(istype(M.ears, /obj/item/device/radio))
-			R = M.ears
-		else
-			// search for any radio device, starting with hands and then equipment
-			// anything else is arbitrarily too deeply hidden and stowed away to get the signal
-			// (more practically, they won't hear it)
-			R = M.find_type_in_hand(/obj/item/device/radio)
-			if(!R)
-				R = M.find_in_equipment(/obj/item/device/radio)
+		var/mob/mob_target = target
+		R = mob_target.find_radio()
 		if(R)
-			message = html_encode(input("What would you like to transmit to [M.name]?", "Transmission", "") as text)
+			message = html_encode(input("What would you like to transmit to [target.name]?", "Transmission", "") as text)
 			logTheThing(LOG_SAY, usr, "Narrowbeam Transmission to [constructTarget(target,"say")]: [message]")
 			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 			var/flockName = "--.--"
@@ -355,7 +390,7 @@
 			if(flock)
 				flockName = flock.name
 			R.audible_message("<span class='radio' style='color: [R.device_color]'><span class='name'>Unknown</span><b> [bicon(R)]\[[flockName]\]</b> <span class='message'>crackles, \"[message]\"</span></span>")
-			boutput(holder.get_controlling_mob(), "<span class='flocksay'>You transmit to [M.name], \"[message]\"</span>")
+			boutput(holder.get_controlling_mob(), "<span class='flocksay'>You transmit to [target.name], \"[message]\"</span>")
 		else
 			boutput(holder.get_controlling_mob(), "<span class='alert'>They don't have any compatible radio devices that you can find.</span>")
 			return TRUE

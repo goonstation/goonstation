@@ -35,11 +35,11 @@
 	var/list/organ_bounties = list()				// Things that belong to people that are on the inside
 	var/list/photo_bounties = list()				// Photos of people (Operates by text, because that's the only info that photos store)
 
-	var/const/organ_bounty_amt = 4
-	var/const/person_bounty_amt = 4
-	var/const/photo_bounty_amt = 4
-	var/const/station_bounty_amt = 5
-	var/const/big_station_bounty_amt = 3
+	var/organ_bounty_amt = 4
+	var/person_bounty_amt = 4
+	var/photo_bounty_amt = 4
+	var/station_bounty_amt = 5
+	var/big_station_bounty_amt = 3
 
 	var/list/possible_areas = list()
 	var/list/active_bounties = list()
@@ -294,8 +294,9 @@
 
 		//Personal bounties (items that belong to a person)
 		//Pair list, stores job for difficulty lookup
-		if (H.trinket && istype(H.trinket))
-			personal_bounties += list(list(H.trinket, H.job))
+		var/datum/deref = H?.trinket?.deref()
+		if (istype(deref, /obj/item))
+			personal_bounties += list(list(H.trinket.deref(), H.job))
 		if (H.wear_id)
 			personal_bounties += list(list(H.wear_id, H.job))
 

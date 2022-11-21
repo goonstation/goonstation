@@ -1120,7 +1120,7 @@
 /turf/simulated/floor/scorched,
 /area/diner/bathroom)
 "adF" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
 /area/diner/bathroom)
 "adG" = (
@@ -17377,7 +17377,7 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aXH" = (
-/obj/critter/mouse/remy,
+/mob/living/critter/small_animal/mouse/remy,
 /obj/cable{
 	icon_state = "1-4"
 	},
