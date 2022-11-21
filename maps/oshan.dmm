@@ -15999,7 +15999,9 @@
 "aMV" = (
 /obj/machinery/light/incandescent/warm,
 /obj/machinery/shieldgenerator/energy_shield,
-/turf/simulated/floor,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
 /area/station/storage/eeva)
 "aMW" = (
 /obj/cable{
@@ -22453,11 +22455,11 @@
 	pixel_x = 4
 	},
 /obj/item/chem_grenade/metalfoam,
-/turf/simulated/floor,
+/turf/simulated/floor/yellow/side,
 /area/station/storage/eeva)
 "bgF" = (
 /obj/machinery/light/incandescent/warm,
-/turf/simulated/floor,
+/turf/simulated/floor/yellow/side,
 /area/station/storage/eeva)
 "bgG" = (
 /obj/disposalpipe/segment/brig{
@@ -23102,7 +23104,7 @@
 /area/station/storage/eeva)
 "biF" = (
 /obj/machinery/dispenser,
-/turf/simulated/floor,
+/turf/simulated/floor/yellow/side,
 /area/station/storage/eeva)
 "biG" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon15,
@@ -23339,7 +23341,9 @@
 	d2 = 4;
 	icon_state = "4-10"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
 /area/station/storage/eeva)
 "bjp" = (
 /obj/cable{
@@ -23347,7 +23351,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
 /area/station/storage/eeva)
 "bjq" = (
 /obj/table/auto,
@@ -43572,7 +43578,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/yellow/side,
 /area/station/storage/eeva)
 "ckX" = (
 /obj/structure/girder,
@@ -44752,6 +44758,11 @@
 /obj/machinery/conveyor/EW/carousel,
 /turf/space/fluid,
 /area/space)
+"fQl" = (
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/storage/eeva)
 "fQs" = (
 /obj/rack,
 /obj/item/tank/emergency_oxygen,
@@ -45008,6 +45019,15 @@
 	dir = 8
 	},
 /area/station/science/lobby)
+"gsu" = (
+/obj/storage/cart/mechcart,
+/obj/item/rods/steel{
+	amount = 50
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/storage/eeva)
 "gtx" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -46798,6 +46818,9 @@
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"pIK" = (
+/turf/simulated/floor/yellow/side,
+/area/station/storage/eeva)
 "pJY" = (
 /obj/decal/xmas_lights{
 	pixel_y = 32
@@ -47874,7 +47897,7 @@
 	pixel_y = 4
 	},
 /obj/item/clothing/ears/earmuffs,
-/turf/simulated/floor,
+/turf/simulated/floor/yellow/side,
 /area/station/storage/eeva)
 "vUk" = (
 /obj/machinery/light/incandescent/cool,
@@ -102543,13 +102566,13 @@ aDr
 aks
 aks
 bgD
+fQl
 bfW
-bfW
-bfW
-bfW
+pIK
+fQl
 aRn
-bfW
-bfW
+pIK
+fQl
 bfW
 blB
 bnh
@@ -102845,13 +102868,13 @@ aks
 aks
 arD
 vPu
-bfW
+fQl
 gFa
-bfW
+pIK
 bjo
 bfW
-bfW
-bfW
+pIK
+fQl
 bfW
 bmI
 bni
@@ -103146,14 +103169,14 @@ ckM
 aks
 aqo
 bfW
+pIK
+fQl
 bfW
-bfW
-bfW
-bfW
+pIK
 bjp
 bfW
 bgF
-blE
+gsu
 blE
 blB
 bnj
@@ -103449,7 +103472,7 @@ aks
 aqA
 bfW
 bgF
-bfW
+fQl
 bhV
 biF
 bjp
