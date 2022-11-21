@@ -65,6 +65,7 @@
 		station_budget =      0
 		shipping_budget = 30000
 		research_budget = 20000
+		total_stipend = station_budget + shipping_budget + research_budget
 
 		// This is gonna throw up some crazy errors if it isn't done right!
 		// cogwerks - raising all of the paychecks, oh god
