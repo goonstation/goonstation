@@ -4844,7 +4844,7 @@
 /turf/simulated/floor/delivery,
 /area/station/janitor/office)
 "aoV" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "aoY" = (
@@ -21560,7 +21560,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bqF" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bqG" = (
@@ -22128,7 +22128,7 @@
 /area/station/crew_quarters/kitchen)
 "brV" = (
 /obj/machinery/light/small,
-/obj/critter/mouse{
+/mob/living/critter/small_animal/mouse{
 	health = 25;
 	name = "Nils"
 	},
@@ -23751,7 +23751,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/critter/mouse/remy,
+/mob/living/critter/small_animal/mouse/remy,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bvG" = (

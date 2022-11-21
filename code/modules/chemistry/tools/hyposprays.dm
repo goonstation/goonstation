@@ -151,7 +151,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		var/amt_prop = inj_amount == -1 ? src.reagents.total_volume : inj_amount
 		user.visible_message("<span class='notice'><B>[user] injects [M] with [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()].</B></span>",\
 		"<span class='notice'>You inject [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()]. [src] now contains [max(0,(src.reagents.total_volume-amt_prop))] units.</span>")
-		logTheThing(user == M ? LOG_CHEMISTRY : LOG_COMBAT, user, M, "uses a hypospray [log_reagents(src)] to inject [constructTarget(M,"combat")] at [log_loc(user)].")
+		logTheThing(user == M ? LOG_CHEMISTRY : LOG_COMBAT, user, "uses a hypospray [log_reagents(src)] to inject [constructTarget(M,"combat")] at [log_loc(user)].")
 
 		src.reagents.trans_to(M, amt_prop)
 
@@ -163,7 +163,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		UpdateIcon()
 
 	afterattack(obj/target, mob/user, flag)
-		if(istype(target, /obj/reagent_dispensers) && target.reagents)
+		if(is_reagent_dispenser(target) && target.reagents)
 			if (!target.reagents.total_volume)
 				boutput(user, "<span class='alert'>[target] is already empty.</span>")
 				return

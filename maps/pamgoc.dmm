@@ -10465,7 +10465,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "aqC" = (
@@ -10474,7 +10474,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aqD" = (
@@ -15076,19 +15076,19 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "ayg" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "ayh" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
 "ayi" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction2)
 "ayj" = (
-/obj/critter/mouse/remy,
+/mob/living/critter/small_animal/mouse/remy,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "ayk" = (
@@ -15113,23 +15113,23 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aym" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
 /area/station/hydroponics/lobby)
 "ayn" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "ayo" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "ayp" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "ayq" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "ayr" = (

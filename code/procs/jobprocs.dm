@@ -463,11 +463,13 @@
 		// Manifest stuff
 		var/sec_note = ""
 		var/med_note = ""
+		var/synd_int_note = ""
 		if(src.client?.preferences && !src.client.preferences.be_random_name)
 			sec_note = src.client.preferences.security_note
 			med_note = src.client.preferences.medical_note
+			synd_int_note = src.client.preferences.synd_int_note
 		var/obj/item/device/pda2/pda = locate() in src
-		data_core.addManifest(src, sec_note, med_note, pda?.net_id)
+		data_core.addManifest(src, sec_note, med_note, pda?.net_id, synd_int_note)
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -671,8 +673,7 @@
 		trinket = new T(src)
 
 	if (trinket) // rewrote this a little bit so hopefully people will always get their trinket
-		src.trinket = trinket
-		src.trinket.event_handler_flags |= IS_TRINKET
+		src.trinket = get_weakref(trinket)
 		trinket.name = "[src.real_name][pick_string("trinkets.txt", "modifiers")] [trinket.name]"
 		trinket.quality = rand(5,80)
 		var/equipped = 0

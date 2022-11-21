@@ -26,8 +26,10 @@
 	else colored_health = "<span class='alert'>[health_percent]</span>"
 
 	var/optimal_temp = M.base_body_temp
-	var/body_temp_C = round(M.bodytemperature - T0C, M.bodytemperature - T0C < 1000 ? 0.01 : 1)
-	var/body_temp_F = round(M.bodytemperature * 1.8 - T0F, M.bodytemperature * 1.8 - T0F < 1000 ? 0.01 : 1)
+	var/body_temp_C = TO_CELSIUS(M.bodytemperature)
+	body_temp_C = round(body_temp_C, body_temp_C < 1000 ? 0.01 : 1)
+	var/body_temp_F = TO_FAHRENHEIT(M.bodytemperature)
+	body_temp_F = round(body_temp_F, body_temp_F < 1000 ? 0.01 : 1)
 	var/body_temp = "[body_temp_C]&deg;C ([body_temp_F]&deg;F)"
 	var/colored_temp = ""
 	if (M.bodytemperature >= (optimal_temp + 60))

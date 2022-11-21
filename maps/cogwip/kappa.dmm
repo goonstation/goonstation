@@ -6530,7 +6530,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/space)
 "sJ" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/shuttlebay,
 /area/space)
 "sK" = (
