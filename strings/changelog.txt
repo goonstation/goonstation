@@ -1,5 +1,9 @@
 
 (t)mon nov 21 22
+(u)Kubius
+(p)11729
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The Harmonic Siphon's extraction over-charge threshold has been made more intuitive, and the Resonance Calibration Database has been updated with more in-depth and up-to-date guidance on Siphon operation.
 (u)Lord_Earthfire
 (p)11929
 (e)🪲⚖🔄🍝|C-Bug, C-Balance, C-Rework, A-Catering
