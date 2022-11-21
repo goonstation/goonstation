@@ -501,16 +501,12 @@
 		var/mob/user = usr
 		if (src_exists_inside_user_or_user_storage && !istype(src,/obj/item/storage))
 			maptext = make_chat_maptext(src.owner, "[string]", "color: #FFBF00;", alpha = 255)
-			for(var/mob/O in all_hearers(7, src.loc))
-				O.show_message("<span class='game radio' style='color: #FFBF00;'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks",  \
-				"beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",1)
-				O.show_message(assoc_maptext = maptext)
 		else
 			maptext = make_chat_maptext(src.loc, "[string]", "color: #FFBF00;", alpha = 255)
-			for(var/mob/O in all_hearers(7, src.loc))
-				O.show_message("<span class='game radio' style='color: #FFBF00;'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks",  \
-				"beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",1)
-				O.show_message(assoc_maptext = maptext)
+		for(var/mob/O in all_hearers(7, src.loc))
+			O.show_message("<span class='game radio' style='color: #FFBF00;'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks",  \
+			"beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",1)
+			O.show_message(assoc_maptext = maptext)
 		playsound(src.loc, 'sound/machines/reprog.ogg', 45, 2, pitch = 1.4)
 #undef src_exists_inside_user_or_user_storage
 
