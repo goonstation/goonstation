@@ -319,6 +319,9 @@
 						for(var/datum/matfab_part/P in selectedRecipe.required_parts)
 							if(P.assigned)
 								P.assigned.change_stack_amount(-(P.required_amount*howMany))
+								if(QDELETED(P.assigned))
+									P.assigned = null
+
 						tab = "recipes"
 						selectingPart = null
 						selectingPartList.Cut()

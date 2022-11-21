@@ -244,8 +244,6 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			if(varCopy == "type" || varCopy == "id" || varCopy == "parent_type" || varCopy == "tag" || varCopy == "vars") continue
 			if(!issaved(toCopy.vars[varCopy])) continue
 			P.vars[varCopy] = toCopy.vars[varCopy]
-		if(newMat)
-			P.owner = newMat
 
 	for(var/datum/materialProc/A in L2) //Go through second list
 		if((locate(A.type) in newList))	//We already have that trigger type from the other list
@@ -260,8 +258,6 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 				if(varCopy == "type" || varCopy == "id" || varCopy == "parent_type" || varCopy == "tag" || varCopy == "vars") continue
 				if(!issaved(A.vars[varCopy])) continue
 				newProc.vars[varCopy] = A.vars[varCopy]
-			if(newMat)
-				newProc.owner = newMat
 	return newList
 
 /// Merges two materials and returns result as new material.

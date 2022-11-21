@@ -17,9 +17,9 @@
 
 	var/last_sfx = 0
 
-/obj/machinery/crusher/Bumped(atom/AM)
+/obj/machinery/crusher/Bumped(atom/movable/AM)
 	return_if_overlay_or_effect(AM)
-	if(AM.flags & UNCRUSHABLE)
+	if(AM.flags & UNCRUSHABLE || AM.anchored == 2)
 		return
 
 	var/turf/T = get_turf(src)
@@ -31,13 +31,13 @@
 
 /obj/machinery/crusher/Cross(atom/movable/mover)
 	. = ..()
-	if(mover.flags & UNCRUSHABLE)
+	if(mover.flags & UNCRUSHABLE || mover.anchored == 2)
 		. = TRUE
 
 /obj/machinery/crusher/Crossed(atom/movable/AM)
 	. = ..()
 	return_if_overlay_or_effect(AM)
-	if(AM.flags & UNCRUSHABLE)
+	if(AM.flags & UNCRUSHABLE || AM.anchored == 2)
 		return
 
 	var/turf/T = get_turf(src)

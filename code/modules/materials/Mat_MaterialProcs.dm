@@ -18,8 +18,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	var/max_generations = 2
 	/// Optional simple sentence that describes how the traits appears on the material. i.e. "It is shiny."
 	var/desc = ""
-	/// The material that owns this trigger
-	var/datum/material/owner = null
 
 	proc/execute()
 		return
@@ -330,14 +328,14 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/plasmastone
 	var/total_plasma = 500
 
-	execute(var/location) //exp and temp both have the location as first argument so i can use this for both.
+	execute(var/atom/location) //exp and temp both have the location as first argument so i can use this for both.
 		var/turf/T = get_turf(location)
-		if(!T || T.density)
+		if(!T || T.density || !istype(location))
 			return
 		if(total_plasma <= 0)
-			if(prob(2) && src.owner.owner)
-				src.owner.owner.visible_message("<span class='alert>[src.owner.owner] dissipates.</span>")
-				qdel(src.owner.owner)
+			if(prob(2) && location)
+				location.visible_message("<span class='alert>[location] dissipates.</span>")
+				qdel(location)
 			return
 		for (var/turf/simulated/floor/target in range(1,location))
 			if(ON_COOLDOWN(target, "plasmastone_plasma_generate", 10 SECONDS)) continue
@@ -438,7 +436,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/radioactive_add
 	execute(var/atom/location)
 		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
-		location.AddComponent(/datum/component/radioactive, location.material.getProperty("radioactive")*10, FALSE, FALSE, isitem(owner) ? 0 : 1)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty("radioactive")*10, FALSE, FALSE, isitem(location) ? 0 : 1)
 		return
 
 /datum/materialProc/radioactive_remove
@@ -451,7 +449,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/n_radioactive_add
 	execute(var/atom/location)
 		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
-		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive")*10, FALSE, TRUE, isitem(owner) ? 0 : 1)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive")*10, FALSE, TRUE, isitem(location) ? 0 : 1)
 		return
 
 /datum/materialProc/n_radioactive_remove

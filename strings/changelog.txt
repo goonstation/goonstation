@@ -1,4 +1,124 @@
-
+(t)mon nov 21 22
+(u)tarmunora
+(+)powered mining tools have a short delay before they can be repowered after powering down, and a longer one if they completely ran out of charge
+(t)sun nov 20 22
+(u)Kubius
+(p)11878
+(e)🪲🆕🗺🎨🔎💅📄💡|C-Bug, C-Feature, A-Mapping, C-Sprites, C-Code-Quality, C-QoL, A-UI, A-Station-Systems
+(*)Nadir's transception array has been overhauled. It's now equipped with an internal capacitor capable of drawing down excess grid power at a configurable rate, and improved on-device indication of system status.
+(u)LeahTheTech
+(p)12072
+(e)🆕📄⚗|C-Feature, A-UI, A-Chemistry
+(*)Air scrubbers now store the airborne reagents they collect.
+(t)sat nov 19 22
+(u)Mr. Moriarty
+(p)11836
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)AI station minimaps will now display the location of all AI cores and AI eyes.
+(u)Glamurio (Ryou)
+(p)11331
+(e)🎨⚖💅🎩|C-Sprites, C-Balance, C-QoL, A-Clothing
+(*)Janitors now start with a janny pack which contains some custodial supplies.
+(+)They also start with a mop in their hand now.
+(u)Caio029
+(p)11977
+(e)|
+(+)Floor health scanners and health status screens are now mech-scannable. You can switch their IDs to work together with a multi-tool!
+(u)LeahTheTech
+(p)12006
+(e)🆕⚖|C-Feature, C-Balance
+(+)Gunbots will now be pushed backwards by firing their guns in space.
+(u)Zonespace
+(p)12031
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)You can no longer access Syndicate Intelligence via VR uplinks
+(t)fri nov 18 22
+(u)LeahTheTech
+(p)12022
+(e)💅🎩|C-QoL, A-Clothing
+(+)Black lawyer suits are now available in the security clothing vendor.
+(u)Zonespace
+(p)12000
+(e)🆕📄|C-Feature, A-UI
+(*)Mostly RP-focused change: You can now fill out "Syndicate Intelligence" in character setup, which is visible to antagonists.<br>Exploitable information is intended to be things such as character weaknesses or blackmail material, try to lean into it, should you fill it out!<br>Antagonists can find this at the bottom of their uplink traitor item list.
+(u)LeahTheTech
+(p)11760
+(e)🆕🎨🧛|C-Feature, C-Sprites, A-Gamemodes
+(*)Flockminds and traces can now designate people as ignored, preventing them from being automatically marked as enemy for damaging the Flock.
+(u)DrWolfy
+(p)11501
+(e)💅⚗🤖|C-QoL, A-Chemistry, A-Silicons
+(+)Cyborgs can now use their beakers in the reagent extractor.
+(u)Bartimeus973
+(p)11577
+(e)🗺🔄📡|A-Mapping, C-Rework, A-AI
+(+)Turns all mouse into mobs. Go hug Remy today!
+(u)Bartimeus973
+(p)11876
+(e)🪲🎨⚖🔨|C-Bug, C-Sprites, C-Balance, A-Player-Actions
+(*)Wraith-summoned critters recieved some changes! Details in minor notes.
+(+)Skeleton commanders do slightly more damage and have a bit more stamina. Voidhounds heal in the dark and when cloaked. Tentacle fiends stun longer and have a new ability to escape.
+(+)Plaguerat dens now heal more at a reduced range. Plague rats can no longer summon more plague rats. Plague rat summon ability now costs points and has a shorter cooldown. Rats get a bit more health to compensate!
+(u)Bartimeus973
+(p)11537
+(e)🗺🎨🔄📡|A-Mapping, C-Sprites, C-Rework, A-AI
+(+)Roaches are now mob critters.
+(t)thu nov 17 22
+(u)goonstation-enjoyer
+(p)11860
+(e)🆕🤖|C-Feature, A-Silicons
+(+)Mining cyborgs now get Cargo alerts.
+(u)Lizzy
+(p)11854
+(e)🪲⚗|C-Bug, A-Chemistry
+(+)Fix mutini sometimes removing abilities you already have or your mutantrace
+(u)pali
+(+)Skeleton limbs damage for vestigal ballistics has been lowered because they can reuse this ability really easily
+(u)Kubius
+(p)11940
+(e)🆕🗺⚖🔄⛔|C-Feature, A-Mapping, C-Balance, C-Rework, C-Removal
+(+)Nadir fixbatch 8 - including public tool storage, coffee creamer, notice boards and bio suits.
+(u)Kubius
+(p)11986
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)Increased connection range of Nadir's transception pads and interlink computers to 100 tiles, from 20; player-constructed pads should now consistently be operable from QM's interlink computers.
+(t)wed nov 16 22
+(u)Hans
+(p)10758
+(e)⚖💊⚗|C-Balance, A-Medical, A-Chemistry
+(+)You now bleed blood and reagents at the ratio to which you have them on your body. It's also now scaled by how much you are bleeding.
+(u)goonstation-enjoyer
+(p)11973
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Fixes guardbuddies patrolling on Kondaru
+(t)tue nov 15 22
+(u)DrWolfy
+(p)11111
+(e)🔄💨📦⚗|C-Rework, A-Atmospherics, A-Game-Objects, A-Chemistry
+(+)Reagent and atmospheric analyzers report temperature in Kelvin.
+(u)LeahTheTech
+(p)11941
+(e)🪲🔎📄🍝|C-Bug, C-Code-Quality, A-UI, A-Catering
+(*)Pizza vendors now work again and have a new TGUI interface.
+(u)pali
+(+)The APC pinpointer now has a "current room" option.
+(t)mon nov 14 22
+(u)tarmunora
+(+)adjust bilk depletion, overdose
+(t)sun nov 13 22
+(u)NightmarechaMillian
+(p)11683
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Fueltanks, when they blow up, will now have a sprite change. Blown up fueltanks also count as open containers.
+(u)MarkNstein
+(p)11943
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Kondaru: added rancher & normal cameras to rancher area.
+(t)sat nov 12 22
+(u)Amylizzle
+(p)11915
+(e)🆕🧫🧛|C-Feature, C-Experimental, A-Gamemodes
+(+)As flockmind/flocktrace, you can now double-click a drone to take control of it.
 (t)wed nov 09 22
 (u)Bartimeus973
 (p)11880
