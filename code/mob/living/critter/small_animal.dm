@@ -562,7 +562,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_brute = 30
 	health_burn = 30
 	is_annoying = TRUE
-	is_pet = 1
+	is_pet = TRUE
 	var/swiped = 0
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
