@@ -1,5 +1,9 @@
 
 (t)sun nov 20 22
+(u)Kubius
+(p)11878
+(e)🪲🆕🗺🎨🔎💅📄💡|C-Bug, C-Feature, A-Mapping, C-Sprites, C-Code-Quality, C-QoL, A-UI, A-Station-Systems
+(*)Nadir's transception array has been overhauled. It's now equipped with an internal capacitor capable of drawing down excess grid power at a configurable rate, and improved on-device indication of system status.
 (u)LeahTheTech
 (p)12072
 (e)🆕📄⚗|C-Feature, A-UI, A-Chemistry
