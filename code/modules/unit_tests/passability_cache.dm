@@ -1,28 +1,54 @@
 /datum/unit_test/passability_cache
-	var/can_have_cross = list(
-		/turf/simulated/floor, // Cross() is the only consistent way to handle 2x2 pods
-		/turf/simulated/shuttle, // Ditto
-		/turf/unsimulated/floor // Ditto
+	// DO NOT APPROVE CHANGES IF THEY MODIFY THIS LIST WITHOUT A DAMN GOOD REASON
+	/// List of types which are permitted to violate certain stability rules.
+	var/permitted_instability = list(
+		/atom = list("Cross"), // Density check, handled in jpsTurfPassable.
+		/turf = list("Enter", "Exit"), // newloc smuggling, optimizations & vismirrors
+		/turf/simulated/floor = list("Cross"), // 2x2 pod collision handling (handled in /datum/pathfind by disabling cache for pods)
+		/turf/simulated/shuttle = list("Cross"), // ditto
+		/turf/unsimulated/floor = list("Cross") // ditto
 	)
+	/// List of procs that are forbidden to be implemented on stable atoms.
+	var/forbidden_procs = list("Enter", "Exit", "Cross")
 
+/**
+ * JPS Passability cache flag [/atom/var/jpsUnstable] correctness checking.
+ * Issue a failure for every descendent of /atom claiming to be stable, that is itself, or a descendant of, any type that contains an implementation
+ * of a proc listed in forbidden_procs that is not explicitly allowed in permitted_instability.
+ */
 /datum/unit_test/passability_cache/Run()
 	generate_procs_by_type()
-	for(var/type in procs_by_type)
-		if(!ispath(type, /atom))
-			continue
+
+	// var/list/empty_list = list()
+	var/list/unstable_types = list()
+
+	for(var/type in concrete_typesof(/atom))
 		var/atom/atom_type = type
-		if(initial(atom_type.jpsUnstable))
+
+		var/direct_parent_path = type2parent(type)
+		var/atom/direct_parent
+		if(ispath(direct_parent_path, /atom))
+			direct_parent = direct_parent_path
+		var/stable = !initial(atom_type.jpsUnstable)
+
+		// Fail if this type is the first descendant of a unstable lineage to claim to be stable.
+		if(stable && direct_parent && initial(direct_parent.jpsUnstable))
+			var/unstable_parent = predecessor_path_in_list(type, unstable_types)
+			if(unstable_parent)
+				var/list/blocking_procs_list = unstable_types[unstable_parent]
+				var/blocking_procs = istype(blocking_procs_list) ? blocking_procs_list.Join(", ") : "forbidden procs"
+				Fail("[type] cannot possibly be stable because [unstable_parent] implements [blocking_procs]")
+
+		var/procs = procs_by_type[type]
+		if(!procs)
 			continue
+		var/permitted_procs = src.permitted_instability[type]
 
-		var/forbid_cross = TRUE
-		for(var/path in src.can_have_cross)
-			if(ispath(type, path))
-				forbid_cross = FALSE
-				break
-
-		if(procs_by_type[type]["Enter"])
-			Fail("[type] is stable and should not override Enter");
-		if(procs_by_type[type]["Exit"])
-			Fail("[type] is stable and should not override Exit");
-		if(forbid_cross && procs_by_type[type]["Cross"])
-			Fail("[type] is stable and should not override Cross");
+		// Fail if this type claims to be stable but implements forbidden procs.
+		for(var/forbidden_proc in forbidden_procs)
+			if(procs[forbidden_proc])
+				if(forbidden_proc in permitted_procs)
+					continue // Don't track permitted instability
+				LAZYLISTADD(unstable_types[type], forbidden_proc)
+				if(stable)
+					Fail("[type] is stable and must not implement [forbidden_proc]")
