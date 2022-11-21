@@ -403,6 +403,10 @@ SYNDICATE DRONE FACTORY AREAS
 
 
 	proc/melt_away(atom/movable/O)
+		#ifdef RUNTIME_CHECKING
+		if(current_state <= GAME_STATE_WORLD_NEW)
+			CRASH("[O] melted in lava at [log_loc(src)] during world initialization")
+		#endif
 		if (ismob(O))
 			if (isliving(O))
 				var/mob/living/M = O
