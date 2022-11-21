@@ -135,6 +135,10 @@
 	flags = TABLEPASS
 	burn_possible = 0
 
+	dispose(qdel_instead)
+		SHOULD_NOT_OVERRIDE(FALSE)
+		CRASH("Something tried to delete the can_reach dummy!")
+
 /obj/item/rubber_chicken
 	name = "Rubber Chicken"
 	desc = "A rubber chicken, isn't that hilarious?"
