@@ -17,7 +17,7 @@
 	var/animals = list(/obj/critter/cat,
 						/obj/critter/bat,
 						/obj/critter/domestic_bee,
-						/obj/critter/mouse,
+						/mob/living/critter/small_animal/mouse,
 						/obj/critter/opossum,
 						/obj/critter/parrot/eclectus,
 						/obj/critter/pig,

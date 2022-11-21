@@ -6,16 +6,23 @@ import {
   Button,
   Divider,
   Flex,
+  Slider,
   Section,
   Image,
   ProgressBar,
 } from '../components';
+import { formatPower } from '../format';
 
 export const TrscArray = (props, context) => {
   const { act, data } = useBackend(context);
-  const { cellStat, cellDiff, sendsSafe, sendsMax, failsafeThreshold, failsafeStat, arrayImage, arrayHealth } = data;
+  const { apcCellStat, apcCellDiff, arrayCellStat, arrayCellDiff, sendsSafe, sendsMax, failsafeThreshold,
+    failsafeStat, arrayImage, arrayHealth, drawRateTarget, surplusThreshold } = data;
+
+  const setDrawRate = (e, value) => act('set_draw_rate', { drawRateTarget: value });
+  const setSurplus = (e, value) => act('set_surplus', { surplusThreshold: value });
+
   return (
-    <Window width={400} height={440} title="Transception Systems">
+    <Window width={400} height={525} title="Transception Systems">
       <Window.Content>
         <Section title="Array Status" textAlign="center">
           <Box>
@@ -24,14 +31,17 @@ export const TrscArray = (props, context) => {
                 <Flex height={21} direction="column" justify="space-around">
                   <Flex.Item>
                     <strong>Area Cell Power:</strong><br />
-                    <h3>{cellStat}</h3>
-                    <ProgressBar value={cellDiff} color="#f9ae00" />
+                    <h3>{apcCellStat}</h3>
+                    <ProgressBar value={apcCellDiff} color="#f9ae00" />
                   </Flex.Item>
                   <Flex.Item>
-                    <strong>Transceptions Remaining<br />Within Standard Limit<br /></strong><h2>{sendsSafe}</h2>
+                    <strong>Internal Capacitor:</strong><br />
+                    <h3>{arrayCellStat}</h3>
+                    <ProgressBar value={arrayCellDiff} color="#76B9D3" />
                   </Flex.Item>
                   <Flex.Item>
-                    <strong>Maximum Remaining<br />Transceptions<br /></strong><h2>{sendsMax}</h2>
+                    <strong>Transceptions Remaining<br />(Standard / Maximum)<br /></strong>
+                    <h2>{sendsSafe} | {sendsMax}</h2>
                   </Flex.Item>
                 </Flex>
               </Flex.Item>
@@ -68,6 +78,34 @@ export const TrscArray = (props, context) => {
               <Button
                 content="Toggle"
                 onClick={() => act('toggle_failsafe')}
+              />
+            </Flex.Item>
+          </Flex>
+        </Section>
+        <Section title="Internal Capacitor Control" textAlign="center">
+          <Flex justify="space-around">
+            <Flex.Item>
+              <strong>Target Charge Rate:<br /></strong>
+              <Slider
+                value={drawRateTarget}
+                minValue={0}
+                maxValue={50000}
+                step={1000}
+                stepPixelSize={4}
+                format={drawRateTarget => formatPower(drawRateTarget)}
+                onDrag={setDrawRate}
+              />
+            </Flex.Item>
+            <Flex.Item>
+              <strong>Required Surplus:<br /></strong>
+              <Slider
+                value={surplusThreshold}
+                minValue={10000}
+                maxValue={200000}
+                step={5000}
+                stepPixelSize={4}
+                format={surplusThreshold => formatPower(surplusThreshold)}
+                onDrag={setSurplus}
               />
             </Flex.Item>
           </Flex>

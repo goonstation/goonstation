@@ -688,6 +688,7 @@
 		return attack_hand(user)
 
 	ui_interact(mob/user, datum/tgui/ui)
+		remove_distant_beaker()
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "ReagentExtractor", src.name)
@@ -700,35 +701,12 @@
 		var/list/containersData = list()
 		// Container data
 		for(var/container_id in containers)
-			var/obj/item/reagent_containers/glass/thisContainer = containers[container_id]
-			if(thisContainer)
-				var/datum/reagents/R = thisContainer.reagents
-				var/list/thisContainerData = list(
-					name = thisContainer.name,
-					id = container_id,
-					maxVolume = R.maximum_volume,
-					totalVolume = R.total_volume,
-					selected = src.extract_to == thisContainer,
-					contents = list(),
-					finalColor = "#000000"
-				)
-
-				var/list/contents = thisContainerData["contents"]
-				if(istype(R) && R.reagent_list.len>0)
-					thisContainerData["finalColor"] = R.get_average_rgb()
-					// Reagent data
-					for(var/reagent_id in R.reagent_list)
-						var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
-
-						contents.Add(list(list(
-							name = reagents_cache[reagent_id],
-							id = reagent_id,
-							colorR = current_reagent.fluid_r,
-							colorG = current_reagent.fluid_g,
-							colorB = current_reagent.fluid_b,
-							volume = current_reagent.volume
-						)))
-				containersData[container_id] = thisContainerData
+			var/obj/item/reagent_containers/thisContainer = containers[container_id]
+			if (!thisContainer)
+				continue
+			containersData[container_id] = ui_describe_reagents(thisContainer)
+			containersData[container_id]["selected"] = src.extract_to == thisContainer
+			containersData[container_id]["id"] = container_id
 
 		.["containersData"] = containersData
 
@@ -753,15 +731,19 @@
 		. = ..()
 		if(.)
 			return
+		remove_distant_beaker()
 		var/list/containers = src.getContainers()
 		switch(action)
 			if("ejectcontainer")
 				var/obj/item/I = src.inserted
 				if (!I)
 					return
+				if(src.inserted.loc == src)
+					TRANSFER_OR_DROP(src, I) // causes Exited proc to be called
+					usr.put_in_hand_or_eject(I)
 				if (I == src.extract_to) src.extract_to = null
-				TRANSFER_OR_DROP(src, I) // causes Exited proc to be called
-				usr.put_in_hand_or_eject(I)
+				src.inserted = null
+				. = TRUE
 			if("insertcontainer")
 				if (src.inserted)
 					return
@@ -826,18 +808,34 @@
 
 		..()
 
+	proc/remove_distant_beaker()
+		// borgs and people with item arms don't insert the beaker into the machine itself
+		// but whenever something would happen to the dispenser and the beaker is far it should disappear
+		if(src.inserted && BOUNDS_DIST(src.inserted, src) > 0)
+			if (src.inserted == src.extract_to) src.extract_to = null
+			src.inserted = null
+			src.UpdateIcon()
+
 	proc/tryInsert(var/obj/item/W, var/mob/user)
-		if (isrobot(user))
-			boutput(user, "This machine does not accept containers from robots!")
+		remove_distant_beaker()
+
+		if(BOUNDS_DIST(user, src) > 0) // prevent message from appearing in case a borg inserts from afar
 			return
+
 		if(src.inserted)
 			boutput(user, "<span class='alert'>A container is already loaded into the machine.</span>")
 			return
 		src.inserted =  W
-		user.drop_item()
-		W.set_loc(src)
-		if(!src.extract_to) src.extract_to = W
-		boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
+
+		if(!W.cant_drop)
+			user.drop_item()
+			if(!QDELETED(W))
+				W.set_loc(src)
+		if(QDELETED(W))
+			W = null
+		else
+			if(!src.extract_to) src.extract_to = W
+			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
 		src.ui_interact(user)
 
 	Exited(Obj, newloc)
