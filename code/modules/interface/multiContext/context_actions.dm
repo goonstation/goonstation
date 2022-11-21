@@ -1324,3 +1324,48 @@
 		return robospray in user
 	execute(var/obj/item/robospray/robospray, var/mob/user)
 		robospray.change_reagent(src.reagent_id, user)
+
+/datum/contextAction/omnitool
+	icon = 'icons/ui/context16x16.dmi'
+	close_clicked = TRUE
+	close_moved = FALSE
+	desc = ""
+	icon_state = "wrench"
+	var/mode = OMNI_MODE_PRYING
+
+	execute(var/obj/item/tool/omnitool/omnitool, var/mob/user)
+		if (!istype(omnitool))
+			return
+		omnitool.change_mode(src.mode, user)
+
+	checkRequirements(var/obj/item/tool/omnitool/omnitool, var/mob/user)
+		return omnitool in user
+
+	prying
+		name = "Crowbar"
+		icon_state = "bar"
+		mode = OMNI_MODE_PRYING
+	snipping
+		name = "Wirecutters"
+		icon_state = "cut"
+		mode = OMNI_MODE_SNIPPING
+	wrenching
+		name = "Wrench"
+		icon_state = "wrench"
+		mode = OMNI_MODE_WRENCHING
+	screwing
+		name = "Screwdriver"
+		icon_state = "screw"
+		mode = OMNI_MODE_SCREWING
+	pulsing
+		name = "Multitool"
+		icon_state = "pulse"
+		mode = OMNI_MODE_PULSING
+	cutting
+		name = "Knife"
+		icon_state = "beepsky"
+		mode = OMNI_MODE_CUTTING
+	welding
+		name = "Welding tool"
+		icon_state = "weld"
+		mode = OMNI_MODE_WELDING

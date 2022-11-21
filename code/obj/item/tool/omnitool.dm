@@ -11,42 +11,27 @@
 	var/animated_changes = FALSE
 
 	custom_suicide = 1
+	///List of tool settings
+	var/list/modes = list(OMNI_MODE_PRYING, OMNI_MODE_SNIPPING, OMNI_MODE_SCREWING, OMNI_MODE_WRENCHING, OMNI_MODE_PULSING, OMNI_MODE_CUTTING, OMNI_MODE_WELDING)
+	///The current setting
+	var/mode = OMNI_MODE_PRYING
 
-	var/omni_mode = "prying"
+	var/list/datum/contextAction/contexts = list()
 
 	New()
+		contextLayout = new /datum/contextLayout/experimentalcircle
 		..()
-		src.change_mode(omni_mode)
+		src.change_mode(mode)
+		for(var/actionType in childrentypesof(/datum/contextAction/omnitool))
+			var/datum/contextAction/omnitool/action = new actionType()
+			if (action.mode in src.modes)
+				src.contexts += action
 
 	attack_self(var/mob/user)
-		..()
-		// cycle between modes
-		var/new_mode = null
-		switch (src.omni_mode)
-			if ("prying") new_mode = "screwing"
-			if ("screwing") new_mode = "pulsing"
-			if ("pulsing") new_mode = "snipping"
-			if ("snipping") new_mode = "wrenching"
-			if ("wrenching")
-				if(has_cutting)
-					new_mode = "cutting"
-				else if(has_welding)
-					new_mode = "welding"
-				else
-					new_mode = "prying"
-			if("cutting")
-				if(has_welding)
-					new_mode = "welding"
-				else
-					new_mode = "prying"
-			if("welding")
-				new_mode = "prying"
-			else new_mode = "prying"
-		if (new_mode)
-			src.change_mode(new_mode, user)
+		user.showContextActions(src.contexts, src, src.contextLayout)
 
 	attack(mob/living/carbon/M, mob/user)
-		if (src.omni_mode == "prying")
+		if (src.mode == OMNI_MODE_PRYING)
 			if (!pry_surgery(M, user))
 				return ..()
 		else
@@ -54,7 +39,7 @@
 
 	get_desc(var/dist)
 		if (dist < 3)
-			. = "<span class='notice'>It is currently set to [src.omni_mode] mode.</span>"
+			. = "<span class='notice'>It is currently set to [src.mode] mode.</span>"
 
 	suicide(var/mob/user)
 		if (!src.user_can_suicide(user))
@@ -64,11 +49,15 @@
 		user.TakeDamage("head", 160, 0)
 		return 1
 
-	proc/change_mode(var/new_mode, var/mob/holder)
+	dropped(var/mob/user)
+		. = ..()
+		user.closeContextActions()
+
+	proc/change_mode(var/mode, var/mob/holder)
 		tooltip_rebuild = 1
-		switch (new_mode)
-			if ("prying")
-				src.omni_mode = "prying"
+		switch (mode)
+			if (OMNI_MODE_PRYING)
+				src.mode = OMNI_MODE_PRYING
 				// based on /obj/item/crowbar
 				set_icon_state("[prefix]-prying")
 				src.tool_flags = TOOL_PRYING
@@ -87,8 +76,8 @@
 				if(src.animated_changes)
 					flick(("[prefix]-swap-prying"), src)
 
-			if ("pulsing")
-				src.omni_mode = "pulsing"
+			if (OMNI_MODE_PULSING)
+				src.mode = OMNI_MODE_PULSING
 				// based on /obj/item/device/multitool
 				set_icon_state("[prefix]-pulsing")
 				src.tool_flags = TOOL_PULSING
@@ -106,8 +95,8 @@
 				if(src.animated_changes)
 					flick(("[prefix]-swap-pulsing"), src)
 
-			if ("screwing")
-				src.omni_mode = "screwing"
+			if (OMNI_MODE_SCREWING)
+				src.mode = OMNI_MODE_SCREWING
 				// based on /obj/item/screwdriver
 				set_icon_state("[prefix]-screwing")
 				src.tool_flags = TOOL_SCREWING
@@ -126,8 +115,8 @@
 				if(src.animated_changes)
 					flick(("[prefix]-swap-screwing"), src)
 
-			if ("snipping")
-				src.omni_mode = "snipping"
+			if (OMNI_MODE_SNIPPING)
+				src.mode = OMNI_MODE_SNIPPING
 				// based on /obj/item/wirecutters
 				set_icon_state("[prefix]-snipping")
 				src.tool_flags = TOOL_SNIPPING
@@ -146,8 +135,8 @@
 				if(src.animated_changes)
 					flick(("[prefix]-swap-snipping"), src)
 
-			if ("wrenching")
-				src.omni_mode = "wrenching"
+			if (OMNI_MODE_WRENCHING)
+				src.mode = OMNI_MODE_WRENCHING
 				// based on /obj/item/wrench
 				set_icon_state("[prefix]-wrenching")
 				src.tool_flags = TOOL_WRENCHING
@@ -166,8 +155,8 @@
 				if(src.animated_changes)
 					flick(("[prefix]-swap-wrenching"), src)
 
-			if ("cutting")
-				src.omni_mode = "cutting"
+			if (OMNI_MODE_CUTTING)
+				src.mode = OMNI_MODE_CUTTING
 				//based on /obj/item/kitchen/utensil/knife
 				set_icon_state("[prefix]-cutting")
 				src.tool_flags = TOOL_CUTTING
@@ -186,8 +175,8 @@
 				if(src.animated_changes)
 					flick(("[prefix]-swap-cutting"), src)
 
-			if("welding")
-				src.omni_mode = "welding"
+			if(OMNI_MODE_WELDING)
+				src.mode = OMNI_MODE_WELDING
 				// based on /obj/item/weldingtool
 				src.tool_flags = TOOL_WELDING
 				throwforce = 5
@@ -294,7 +283,7 @@
 
 		if(src.welding)
 			if(!(get_fuel() > 0))
-				src.change_mode("welding",user)
+				src.change_mode(OMNI_MODE_WELDING,user)
 
 		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
 			boutput(user, "<span class='hint'>You hide the set of tools inside \the [O]. (Use the flex emote while wearing the clothing item to retrieve it.)</span>")
