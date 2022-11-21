@@ -1,4 +1,6 @@
-
+(t)mon nov 21 22
+(u)tarmunora
+(+)powered mining tools have a short delay before they can be repowered after powering down, and a longer one if they completely ran out of charge
 (t)sun nov 20 22
 (u)Kubius
 (p)11878
