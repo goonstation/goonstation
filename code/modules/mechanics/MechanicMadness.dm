@@ -12,6 +12,7 @@
 #define WIFI_NOISE_VOLUME 30
 #define LIGHT_UP_HOUSING SPAWN(0) src.light_up_housing()
 #define SEND_COOLDOWN_ID "MechComp send cooldown"
+#define src_exists_inside_user_or_user_storage (src.loc == user || (istype(src.loc, /obj/item/storage) && src.loc.loc == user))
 
 // mechanics containers for mechanics components (read: portable horn [read: vuvuzela] honkers! yaaaay!)
 //
@@ -494,7 +495,6 @@
 		SEND_SIGNAL(src,_COMSIG_MECHCOMP_DROPCONNECT,O,usr)
 		return
 
-#define src_exists_inside_user_or_user_storage (src.loc == user || (istype(src.loc, /obj/item/storage) && src.loc.loc == user))
 	proc/componentSay(var/string)
 		string = trim(sanitize(html_encode(string)))
 		var/maptext = null
@@ -508,7 +508,6 @@
 			"beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",1)
 			O.show_message(assoc_maptext = maptext)
 		playsound(src.loc, 'sound/machines/reprog.ogg', 45, 2, pitch = 1.4)
-#undef src_exists_inside_user_or_user_storage
 
 	hide(var/intact)
 		under_floor = (intact && level==1)
@@ -3438,3 +3437,4 @@
 
 #undef IN_CABINET
 #undef LIGHT_UP_HOUSING
+#undef src_exists_inside_user_or_user_storage
