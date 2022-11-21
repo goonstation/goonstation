@@ -89,8 +89,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			var/turf/T = get_turf(src)
 			user.visible_message("[user] cuts [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].", "You cut [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].")
 			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
-			if (src.reagents)
-				src.reagents.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
+			src.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
 			for (var/i in 1 to src.slice_amount)
 				var/obj/item/reagent_containers/food/slice = new src.slice_product(T)
 				src.process_sliced_products(slice, amount_to_transfer)
