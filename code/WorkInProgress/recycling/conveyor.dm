@@ -14,6 +14,7 @@
 #endif
 	name = "conveyor belt"
 	desc = "A conveyor belt."
+	jpsUnstable = TRUE
 	anchored = 1
 	power_usage = 100
 	layer = 2
@@ -547,6 +548,7 @@
 	icon_state = "diverter0"
 	name = "diverter"
 	desc = "A diverter arm for a conveyor belt."
+	jpsUnstable = TRUE
 	anchored = 1
 	layer = FLY_LAYER
 	event_handler_flags = USE_FLUID_ENTER

@@ -52,7 +52,8 @@
 /// the power cable object
 /obj/cable
 	level = 1
-	anchored =1
+	anchored = TRUE
+	jpsUnstable = FALSE
 	var/tmp/netnum = 0
 	name = "power cable"
 	desc = "A flexible power cable."

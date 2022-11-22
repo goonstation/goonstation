@@ -37,6 +37,7 @@
 	desc = "A luxury booth that will exchange genetic upgrades for cash. It automatically bills your account using advanced magnet technology. It's safe!"
 	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "genebooth"
+	jpsUnstable = TRUE
 	pixel_x = -3
 	anchored = 1
 	density = 1
