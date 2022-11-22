@@ -1533,11 +1533,13 @@ var/global/curr_day = null
 	//tell the interface helpers to recompute data
 	src.mapSizeHelper?.update()
 
-/client/verb/autoscreenshot()
+/client/verb/xscreenshot(arg as text|null)
 	set hidden = 1
-	set name = ".autoscreenshot"
+	set name = ".xscreenshot"
 
-	winset(src, null, "command=\".screenshot auto\"")
+	if(!isnull(arg))
+		arg = " [arg]"
+	winset(src, null, "command=\".screenshot[arg]\"")
 	boutput(src, "<B>Screenshot taken!</B>")
 
 /client/verb/test_experimental_intents()
