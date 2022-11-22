@@ -458,7 +458,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 				if (tgui_alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page? Make sure to download the stable release.", "ALERT", list("Yes", "No")) == "Yes")
 					src << link("http://www.byond.com/download/")
 			if (src.byond_version >= 515)
-				if (tgui_alert(src, "Please DOWNGRADE BYOND to version 514.1589! Many things will break otherwise. Would you like to be taken to the correct download page?", "ALERT", list("Yes", "No")) == "Yes")
+				if (alert(src, "Please DOWNGRADE BYOND to version 514.1589! Many things will break otherwise. Would you like to be taken to the correct download page?", "ALERT", "Yes", "No") == "Yes")
 					src << link("http://www.byond.com/download/build/514/514.1589_byond_setup.zip")
 /*
  				else
