@@ -119,6 +119,8 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 
 	FG.add(F, react_volume, guarantee_is_member = fluid_and_group_already_exist)
 	R.trans_to_direct(FG.reagents, react_volume, index=index)
+	if(QDELETED(FG)) // if only a reagent which immediately combusts gets added we rip (see emagged firebot critter's third ability)
+		return
 	/*Normally `amt` isn't set until the fluid group process procs, but we sometimes need it right away for mob reactions etc.
 	  We know the puddle starts as a single tile, so until then just set `amt` as the total reacted reagent volume. */
 	F.amt = FG.reagents.total_volume
