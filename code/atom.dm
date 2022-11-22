@@ -379,6 +379,7 @@
 /atom/movable/overlay
 	var/atom/master = null
 	anchored = 1
+	jpsUnstable = FALSE
 
 /atom/movable/overlay/gibs
 	icon_state = "blank"
