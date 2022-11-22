@@ -12,4 +12,4 @@
 		src.render_target = "*\ref[src]"
 
 /obj/effect/artifact_glowie
-	appearance_flags = KEEP_TOGETHER
+	appearance_flags = PIXEL_SCALE | RESET_COLOR | KEEP_TOGETHER
