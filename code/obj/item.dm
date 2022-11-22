@@ -6,6 +6,7 @@
 	name = "item"
 	icon = 'icons/obj/items/items.dmi'
 	text = ""
+	jpsUnstable = FALSE
 	var/icon_old = null
 	var/uses_multiple_icon_states = 0
 	var/item_state = null
