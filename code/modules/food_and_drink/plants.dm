@@ -107,7 +107,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		var/obj/decal/cleanable/tomatosplat/splat = new /obj/decal/cleanable/tomatosplat(T)
 		if(istype(splat) && src.reagents)
 			splat.reagents = new(10000)
-			src.reagents.trans_to(splat) //could be deleted immediately
+			src.reagents.trans_to(splat, src.reagents.total_volume) //could be deleted immediately
 		qdel(src)
 
 /obj/item/reagent_containers/food/snacks/plant/tomato/incendiary
