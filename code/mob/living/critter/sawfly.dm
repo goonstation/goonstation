@@ -14,7 +14,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	flags = TABLEPASS
 
 	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
-
+	var/static/list/priority_target_jobs = list("Head of Security", "Security Officer", "Nanotrasen Security Consultant")
 	var/obj/item/old_grenade/sawfly/ourgrenade = null
 
 	speechverb_say = "whirrs"
@@ -225,7 +225,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 					boutput(C, "<span class='alert'>[src]'s IFF system silently flags you as an ally! </span>")
 					src.friends += get_weakref(C)
 				continue
-			if(C.job in list( "Head of Security", "Security Officer", "Nanotrasen Security Consultant")) //hopefully this is cheaper than the OR chain I had before
+			if(C.job in priority_target_jobs)
 				. = list(C) //go get em, tiger
 				return
 			. += C //you passed all the checks it, now you get added to the list for consideration
