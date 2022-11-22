@@ -2228,7 +2228,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 /turf/proc/fall_to(var/turf/T, var/atom/movable/A)
 	#ifdef RUNTIME_CHECKING
 	if(current_state <= GAME_STATE_WORLD_NEW)
-		CRASH("[O] ([O.type]) fell into [src] at [src.x],[src.y],[src.z] ([src.loc] [src.loc.type]) during world initialization")
+		CRASH("[A] ([A.type]) fell into [src] at [src.x],[src.y],[src.z] ([src.loc] [src.loc.type]) during world initialization")
 	#endif
 	if(istype(A, /obj/overlay/tile_effect)) //Ok enough light falling places. Fak.
 		return
