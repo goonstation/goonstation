@@ -46,6 +46,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define LOW_SECURITY // Deletes turrets
 //#define NO_CRITTERS // Deletes mob critters
 //#define NO_RANDOM_ROOMS // Don't generate random rooms. Random room areas will be left blank and the landmark will be visible
+//#define I_AM_HACKERMAN // Lets you varedit things you normally couldn't (admin holders, server config)
 
 //#define Z_LOG_ENABLE 1  // Enable additional world.log logging
 
