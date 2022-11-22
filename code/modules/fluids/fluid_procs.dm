@@ -53,7 +53,8 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	return ..()
 
 
-/turf/proc/fluid_react(var/datum/reagents/R, var/react_volume, var/airborne = 0, var/index = 0) //this should happen whenever a liquid reagent hits a simulated tile
+/// this should happen whenever a liquid reagent hits a simulated tile
+/turf/proc/fluid_react(var/datum/reagents/R, var/react_volume, var/airborne = 0, var/index = 0, processing_cleanables=FALSE)
 	if (react_volume <= 0) return
 	if (!IS_VALID_FLUIDREACT_TURF(src)) return
 	if (!index)
@@ -123,7 +124,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	F.amt = FG.reagents.total_volume
 	F.UpdateIcon()
 
-	if (!airborne)
+	if (!airborne && !processing_cleanables)
 		var/turf/simulated/floor/T = src
 		if (istype(T) && T.messy > 0)
 			var/found_cleanable = 0
@@ -136,7 +137,8 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 
 	F.trigger_fluid_enter()
 
-/turf/proc/fluid_react_single(var/reagent_name, var/react_volume, var/airborne = 0) //same as the above, but using a reagent_id instead of a datum
+//s/ ame as the above, but using a reagent_id instead of a datum
+/turf/proc/fluid_react_single(reagent_name, react_volume, airborne = 0, processing_cleanables=FALSE)
 	if (react_volume <= 0) return
 	if (!IS_VALID_FLUIDREACT_TURF(src)) return
 
@@ -191,7 +193,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	F.done_init()
 	.= F
 
-	if (!airborne)
+	if (!airborne && !processing_cleanables)
 		var/turf/simulated/floor/T = src
 		if (istype(T) && T.messy > 0)
 			var/found_cleanable = 0
@@ -268,11 +270,11 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 			var/datum/reagents/R = new(C.reagents.maximum_volume) //Store reagents, delete cleanable, and then fluid react. prevents recursion
 			C.reagents.copy_to(R)
 			C.clean_forensic()
-			src.fluid_react(R, R.total_volume)
+			src.fluid_react(R, R.total_volume, processing_cleanables=TRUE)
 		else if (C?.can_sample && C.sample_reagent)
 			if ((!grab_any_amount && (C.sample_reagent in ban_stacking_into_fluid)) || (C.sample_reagent in ban_from_fluid)) return
 			var/sample = C.sample_reagent
 			var/amt = C.sample_amt
 			C.clean_forensic()
-			src.fluid_react_single(sample, amt)
+			src.fluid_react_single(sample, amt, processing_cleanables=TRUE)
 	return 1
