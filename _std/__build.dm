@@ -152,6 +152,7 @@ o+`        `-` ``..-:yooos-..----------..`
 #define LOW_SECURITY
 #define NO_CRITTERS
 #define NO_RANDOM_ROOMS
+#define I_AM_HACKERMAN
 #endif
 
 var/global/vcs_revision = "1"
