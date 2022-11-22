@@ -1207,6 +1207,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	layer = MOB_LAYER+1
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "cobweb1"
+	anchored = 2
 
 /obj/decal/cleanable/molten_item
 	name = "gooey grey mass"
@@ -1214,6 +1215,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	layer = OBJ_LAYER
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "molten"
+	anchored = 2
 
 /obj/decal/cleanable/cobweb2
 	name = "cobweb"
