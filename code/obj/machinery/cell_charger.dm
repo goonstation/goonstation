@@ -97,4 +97,4 @@
 	. = ..()
 	if(dist > 2 || !charging)
 		return
-	. += "<br><span class='notice'>It is currently charging \the [charging]! Progress: [round(charging.percent())]%, [charging.charge]/[charging.maxcharge]PU </span>"
+	. += "<br><span class='notice'>\The [src] is currently charging \the [charging]! It is [round(charging.percent())]% charged and has [charging.charge]/[charging.maxcharge] PUs. </span>"
