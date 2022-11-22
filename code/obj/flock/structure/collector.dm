@@ -67,6 +67,7 @@
 	for(var/turf/simulated/floor/feather/flocktile as anything in connectedto)
 		flocktile.off()
 	connectedto.len = 0
+	src.area_apc = null
 	..()
 
 /obj/flock_structure/collector/proc/calcconnected()
