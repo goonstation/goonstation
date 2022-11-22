@@ -480,16 +480,17 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 	seek_target(range)
 		. = list()
-		for (var/atom/movable/AM in hearers(range, src))
-			if (istype(AM, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = AM
+		var/list/hearers_list = hearers(range, src)
+		for (var/mob/living/M in hearers_list)
+			if (istype(M, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = M
 				if (ispug(H) && isalive(H) && GET_COOLDOWN(src, "recent_pug_pet"))
 					. += H
 					return
-			if (istype(AM, /mob/living/critter/small_animal/mouse))
-				var/mob/living/critter/small_animal/mouse/M = AM
-				if (isdead(M)) continue
-				. += M
+			if (istype(M, /mob/living/critter/small_animal/mouse))
+				var/mob/living/critter/small_animal/mouse/mouse = M
+				if (isdead(mouse)) continue
+				. += mouse
 		for (var/obj/critter/livingtail/tail in range(src, 3))
 			. += tail
 
