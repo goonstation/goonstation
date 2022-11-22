@@ -534,7 +534,7 @@
 			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
-		if (istype(get_area(M), /area/station/chapel) && M.check_vampire_power(3) != 1)
+		if (istype(get_area(M), /area/station/chapel) && M.check_vampire_power(3) != 1 && !(owner.job == "Chaplain"))
 			boutput(M, "<span class='alert'>Your powers do not work in this holy place!</span>")
 			return 0
 
