@@ -5,9 +5,9 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi'
 	uses_multiple_icon_states = 1
 	var/prefix = "omnitool"
-	var/has_cutting = 0
-	var/has_welding = 0
-	var/welding = 0
+	var/has_cutting = FALSE
+	var/has_welding = FALSE
+	var/welding = FALSE
 	var/animated_changes = FALSE
 
 	custom_suicide = 1
@@ -132,12 +132,10 @@
 					set_icon_state("[prefix]-weldingtool-on")
 					src.force = 15
 					hit_type = DAMAGE_BURN
-					welding = 1
+					welding = TRUE
 				else
 					set_icon_state("[prefix]-weldingtool-off")
-					src.force = 3
-					hit_type = DAMAGE_BLUNT
-					welding = 0
+					welding = FALSE
 		if (holder)
 			holder.update_inhands()
 
@@ -205,8 +203,8 @@
 
 /obj/item/tool/omnitool/syndicate
 	prefix = "syndicate-omnitool"
-	has_cutting = 1
-	has_welding = 1
+	has_cutting = TRUE
+	has_welding = TRUE
 
 	afterattack(obj/O, mob/user)
 
@@ -221,7 +219,7 @@
 
 		if(src.welding)
 			if(!(get_fuel() > 0))
-				src.change_mode(OMNI_MODE_WELDING,user)
+				src.change_mode(OMNI_MODE_WELDING, user, /obj/item/weldingtool)
 
 		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
 			boutput(user, "<span class='hint'>You hide the set of tools inside \the [O]. (Use the flex emote while wearing the clothing item to retrieve it.)</span>")
