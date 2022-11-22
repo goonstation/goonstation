@@ -10,6 +10,7 @@
 	level = 1
 
 	unsimulated
+		jpsUnstable = FALSE
 		var/can_replace_with_stuff = 0	//If ReplaceWith() actually does a thing or not.
 #ifdef RUNTIME_CHECKING
 		can_replace_with_stuff = 1  //Shitty dumb hack bullshit
@@ -30,8 +31,7 @@
 	#undef _UNSIM_TURF_GAS_DEF
 
 	/// Sum of all unstable atoms on the turf.
-	jpsUnstable = FALSE // TODO: Most turfs are stable, except the ones you'd assume are stable. Look into if this is the bst place to mark it.
-	/// Used when turf is fully stable. This cache is wiped when [/atom/set_density], [/turf/Entered] or [/turf/Exited] is called.
+	jpsUnstable = TRUE
 	var/tmp/jpsPassableCache
 
 	//Properties for both
