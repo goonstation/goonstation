@@ -115,18 +115,18 @@
 		..()
 		if (!marker)
 			marker = image('icons/effects/VR.dmi', "lightning_marker")
-			marker.filters= filter(type="outline", size=1)
+			marker.filters = filter(type="outline", size=1)
 		src.ftutorial = src.tutorial
 
 	SetUp()
 		. = ..()
-		for (var/atom/thing in src.highlighted)
+		for (var/atom/thing as anything in src.highlighted)
 			thing.AddComponent(/datum/component/flock_ping/tutorial_highlight)
 
 	TearDown()
 		SHOULD_CALL_PARENT(TRUE)
 		. = ..()
-		for (var/atom/thing in src.highlighted)
+		for (var/atom/thing as anything in src.highlighted)
 			if (QDELETED(thing))
 				continue
 			var/datum/component/flock_ping/tutorial_highlight/ping = thing.GetComponent(/datum/component/flock_ping/tutorial_highlight)
@@ -136,7 +136,7 @@
 	PerformAction(action, context)
 		return FALSE //fuck you, no action
 
-	proc/get_ability_object(var/ability_type)
+	proc/get_ability_object(ability_type)
 		var/datum/targetable/flockmindAbility/ability = src.ftutorial.fowner.abilityHolder.getAbility(ability_type)
 		return ability.object
 
