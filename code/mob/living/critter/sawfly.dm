@@ -205,7 +205,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 
 	Life()
 		..()
-		if(prob(8) && istype(src.loc, /turf)) communalbeep() //beep only when not in a grenade
+		if(prob(8) && isturf(src.loc)) communalbeep() //beep only when not in a grenade
 
 
 	seek_target(range) //ai mob critter targetting behaviour - returns a list of acceptable targets
