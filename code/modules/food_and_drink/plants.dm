@@ -104,10 +104,12 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		..()
 		src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
-		var/obj/decal/cleanable/tomatosplat/splat = new /obj/decal/cleanable/tomatosplat(T)
-		if(istype(splat) && src.reagents)
+		var/obj/decal/cleanable/tomatosplat/splat = new
+		if(src.reagents)
 			splat.reagents = new(10000)
 			src.reagents.trans_to(splat, src.reagents.total_volume) //could be deleted immediately
+		splat.set_loc(T)
+		splat.setup(T)
 		qdel(src)
 
 /obj/item/reagent_containers/food/snacks/plant/tomato/incendiary
