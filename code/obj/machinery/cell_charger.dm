@@ -95,6 +95,6 @@
 
 /obj/machinery/cell_charger/get_desc(dist)
 	. = ..()
-	if(dist > 2 || !charging)
+	if(!charging)
 		return
 	. += "<br><span class='notice'>\The [src] is currently charging \the [charging]! It is [round(charging.percent())]% charged and has [charging.charge]/[charging.maxcharge] PUs. </span>"
