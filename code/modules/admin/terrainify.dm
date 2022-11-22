@@ -546,6 +546,22 @@ ABSTRACT_TYPE(/datum/terrainify)
 			message_admins("[key_name(ui.user)] turned space into a snowscape.")
 
 
+/datum/terrainify/plasma
+	name = "Plasma Station"
+	desc = "Fill space with plasma gas? Warning: this is as bad as it sounds."
+
+	convert_turfs(list/turfs)
+		for (var/turf/T in turfs)
+			T.ReplaceWith(/turf/space/plasma, keep_old_material=FALSE, handle_dir=FALSE, force=TRUE)
+
+	convert_station_level(params, datum/tgui/ui)
+		if (!..())
+			return
+		var/list/turf/space = list()
+		for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+			space += S
+		convert_turfs(space)
+
 /datum/terrainify_editor
 	var/static/list/datum/terrainify/terrains
 	var/datum/terrainify/active_terrain

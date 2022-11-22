@@ -680,7 +680,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 				heal_amt += 4
 			else
 				heal_amt += round((F.heal_amt * F.bites_left)/bites_left) + 1
-			topping_color = F.food_color
+			topping_color = F.get_food_color()
 			if(num < 3)
 				num ++
 				add_topping(src.num)

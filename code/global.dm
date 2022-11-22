@@ -342,6 +342,7 @@ var/global
 		LOG_SIGNALERS	=	list(),
 		LOG_PATHOLOGY	=	list(),
 		LOG_TOPIC		=	list(),
+		LOG_CHEMISTRY	=	list(),
 	)
 	/// The file holding computer ID information
 	savefile/compid_file
@@ -511,6 +512,7 @@ var/global
 	hardRebootFilePath = "data/hard-reboot"
 
 	list/icon/z_level_maps = list()
+	list/minimap_marker_targets = list()
 
 	/// When toggled on creating new /turf/space will be faster but they will be slightly broken
 	/// used when creating new z-levels

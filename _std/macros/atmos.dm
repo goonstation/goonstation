@@ -140,6 +140,17 @@
 /// Hotspot Maximum Temperature to maintain maths works to 1e35-sh in practice)
 #define HOTSPOT_MAX_CAT_TEMPERATURE (INFINITY)
 
+// Radgas properties
+// Rad particles concentration required to contaminate stuff
+#define RADGAS_MINIMUM_CONTAMINATION_MOLES 5
+// how much stuff gets contaminated per tick
+#define RADGAS_MAXIMUM_CONTAMINATION_TICK 5
+// maximum amount stuff can be contaminated by radgas - lower values mean it'll spread out more, higher values mean it'll be more deadly
+#define RADGAS_MAXIMUM_CONTAMINATION 10
+// how much radstrength per mole of contamination is applied - how much radiation per radgas
+#define RADGAS_CONTAMINATION_PER_MOLE 5
+// only apply contamination to atoms on a turf every few seconds, instead of every tick
+#define RADGAS_CONTAMINATION_COOLDOWN 3 SECONDS
 //Gas Reaction Flags
 #define REACTION_ACTIVE (1<<0) 	//! Reaction is Active
 #define COMBUSTION_ACTIVE (1<<1) //! Combustion is Active
@@ -203,11 +214,12 @@ What can break when adding new gases:
 	TEG stats computer will ignore your new gas. Feel free to add it to reactor_stats.dm manually but good luck.
 */
 
-#define SPECIFIC_HEAT_PLASMA		200
+#define SPECIFIC_HEAT_PLASMA	200
 #define SPECIFIC_HEAT_O2		20
 #define SPECIFIC_HEAT_N2		20
 #define SPECIFIC_HEAT_CO2		30
-#define SPECIFIC_HEAT_FARTS 69
+#define SPECIFIC_HEAT_FARTS 	69
+#define SPECIFIC_HEAT_RADGAS 	20
 
 #define _APPLY_TO_GASES(PREF, SUFF, MACRO, ARGS...) \
 	MACRO(PREF ## oxygen ## SUFF, SPECIFIC_HEAT_O2, "O2", ARGS) \
@@ -215,13 +227,15 @@ What can break when adding new gases:
 	MACRO(PREF ## carbon_dioxide ## SUFF, SPECIFIC_HEAT_CO2, "CO2", ARGS) \
 	MACRO(PREF ## toxins ## SUFF, SPECIFIC_HEAT_PLASMA, "Plasma", ARGS) \
 	MACRO(PREF ## farts ## SUFF, SPECIFIC_HEAT_FARTS, "Farts", ARGS) \
+	MACRO(PREF ## radgas ## SUFF, SPECIFIC_HEAT_RADGAS, "Fallout", ARGS) \
 
 #define APPLY_TO_GASES(MACRO, ARGS...) \
 	MACRO(oxygen, SPECIFIC_HEAT_O2, "O2", ARGS) \
 	MACRO(nitrogen, SPECIFIC_HEAT_N2, "N2", ARGS) \
 	MACRO(carbon_dioxide, SPECIFIC_HEAT_CO2, "CO2", ARGS) \
 	MACRO(toxins, SPECIFIC_HEAT_PLASMA, "Plasma", ARGS) \
-	MACRO(farts, SPECIFIC_HEAT_FARTS, "Farts", ARGS)
+	MACRO(farts, SPECIFIC_HEAT_FARTS, "Farts", ARGS) \
+	MACRO(radgas, SPECIFIC_HEAT_RADGAS, "Fallout", ARGS) \
 //	_APPLY_TO_GASES(,, MACRO, ARGS) // replace with this when the langserver gets fixed >:(
 // (the _APPLY_TO_GASES version compiles and works fine but the linter rejects it for now)
 
@@ -248,8 +262,10 @@ proc/gas_text_color(gas_id)
 			return "orange"
 		if("toxins")
 			return "red"
-		if ("farts")
+		if("farts")
 			return "purple"
+		if("radgas")
+			return "green"
 	return "black"
 
 ////////////////////////////

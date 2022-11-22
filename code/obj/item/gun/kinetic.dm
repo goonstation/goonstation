@@ -1484,9 +1484,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	breach
 		default_magazine = /obj/item/ammo/bullets/breach_flashbang/single
 		New()
+			..()
 			ammo = new default_magazine
 			set_current_projectile(new/datum/projectile/bullet/breach_flashbang)
-			..()
 
 //1.58
 // Ported from old, non-gun RPG-7 object class (Convair880).
