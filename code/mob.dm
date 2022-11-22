@@ -220,6 +220,8 @@
 	var/ai_type = null
 	/// AI controller for this mob - only active if is_npc is TRUE, in which case it's called by the mobAI loop at a frequency depending on mob flags
 	var/datum/aiHolder/ai = null
+	///Do we add the special "Toggle AI" ability to this mob?
+	var/use_ai_toggle = TRUE
 	/// used for load balancing mob_ai ticks
 	var/ai_tick_schedule = null
 
@@ -3226,3 +3228,13 @@
 	src.set_loc(get_turf(src.observing))
 	src.observing = null
 	src.ghostize()
+
+/// search for any radio device, starting with hands and then equipment
+/// anything else is arbitrarily too deeply hidden and stowed away to get the signal
+/// (more practically, they won't hear it)
+/mob/proc/find_radio()
+	if(istype(src.ears, /obj/item/device/radio))
+		return src.ears
+	. = src.find_type_in_hand(/obj/item/device/radio)
+	if(!.)
+		. = src.find_in_equipment(/obj/item/device/radio)

@@ -1486,14 +1486,18 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 		if (SEND_SIGNAL(src, COMSIG_CELL_USE, use) & CELL_INSUFFICIENT_CHARGE)
 			src.power_down()
+			OVERRIDE_COOLDOWN(src, "depowered", 8 SECONDS)
 			var/turf/T = get_turf(src)
-			T.visible_message("<span class='alert'>[src] runs out of charge and powers down!</span>")
+			T.visible_message("<span class='alert'>[src] runs out of charge and triggers an emergency shutdown!</span>")
 		return 1
 
 	attack_self(var/mob/user as mob)
 		if (!digcost)
 			return
 		if (src.process_charges(0))
+			if(GET_COOLDOWN(src, "depowered"))
+				boutput(user, "<span class='alert'>[src] was recently power cycled and is still cooling down!</span>")
+				return
 			if (!src.status)
 				boutput(user, "<span class='notice'>You power up [src].</span>")
 				src.power_up()
@@ -1518,6 +1522,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		return
 
 	proc/power_down()
+		ON_COOLDOWN(src, "depowered", 1 SECOND)
 		src.tooltip_rebuild = 1
 		src.status = 0
 		if (powered_overlay)

@@ -39,7 +39,8 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 
 	New(var/loc,var/list/viral_list)
 		..()
-		setup(loc,viral_list)
+		if(loc)
+			setup(loc,viral_list)
 
 	setup(var/L,var/list/viral_list)
 		..()

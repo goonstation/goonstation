@@ -5,9 +5,11 @@ var/global/list/datum/client_image_group/client_image_groups
 	var/list/mob_to_associated_images_lookup
 	var/list/subscribed_mobs_with_subcount
 	var/list/subscribed_minds_with_subcount
+	var/key = null
 
-	New()
+	New(key)
 		. = ..()
+		src.key = key
 		images = list()
 		/// Associative list containing images for a given mob.
 		mob_to_associated_images_lookup = list()
@@ -80,6 +82,21 @@ var/global/list/datum/client_image_group/client_image_groups
 				remove_mob(removed_mind.current)
 				UnregisterSignal(removed_mind, list(COMSIG_PARENT_PRE_DISPOSING, COMSIG_MIND_ATTACH_TO_MOB, COMSIG_MIND_DETACH_FROM_MOB))
 
+	disposing()
+		if(src.key)
+			client_image_groups -= key
+		src.key = null
+		for(var/datum/mind/iterated_mind as anything in subscribed_minds_with_subcount)
+			remove_mind(iterated_mind)
+		for(var/mob/iterated_mob as anything in subscribed_mobs_with_subcount)
+			remove_mob(iterated_mob, TRUE)
+		for(var/image/iterated_image as anything in images)
+			remove_image(iterated_image)
+		subscribed_minds_with_subcount = null
+		subscribed_mobs_with_subcount = null
+		mob_to_associated_images_lookup = null
+		..()
+
 	// private procs for signal purposes:
 
 	/// when a registered mind attaches to a mob
@@ -129,5 +146,5 @@ proc/get_image_group(key)
 	if (isnull(global.client_image_groups))
 		global.client_image_groups = list()
 	if (!(key in client_image_groups))
-		client_image_groups[key] = new /datum/client_image_group()
+		client_image_groups[key] = new /datum/client_image_group(key)
 	return client_image_groups[key]

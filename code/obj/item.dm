@@ -122,6 +122,7 @@
 	var/obj/item/holding = null
 	var/rarity = ITEM_RARITY_COMMON // Just a little thing to indicate item rarity. RPG fluff.
 	pressure_resistance = 50
+	/// This var fucking sucks. It's used for prox sensors and other stuff that when triggered trigger an item they're attached to. Why is this on /item i am so sad
 	var/obj/item/master = null
 	var/acid_survival_time //nadir support: set in minutes to override how long item will stay intact in contact with acid
 
@@ -454,8 +455,7 @@
 	if(src.burning || (src in by_cat[TR_CAT_BURNING_ITEMS]))
 		return
 	START_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
-	src.visible_message("<span class='alert'>[src] catches on fire!</span>")
-	src.burning = 1
+	src.burning = TRUE
 	src.firesource = FIRESOURCE_OPEN_FLAME
 	if (istype(src, /obj/item/plant))
 		if (!GET_COOLDOWN(global, "hotbox_adminlog"))
@@ -1418,7 +1418,7 @@
 
 	if(istype(src.loc, /obj/item/storage))
 		var/obj/item/storage/storage = src.loc
-		src.set_loc(get_turf(src)) // so the storage doesn't add it back >:(
+		src.set_loc(null) // so the storage doesn't add it back >:(
 		storage.hud?.remove_item(src)
 
 	var/turf/T = loc
@@ -1444,10 +1444,6 @@
 	if (!(locate(/obj/table) in T) && !(locate(/obj/rack) in T))
 		Ar.sims_score = min(Ar.sims_score + 4, 100)
 
-	if (event_handler_flags & IS_TRINKET) //slow but fast as i can get for now, rewrite trinket holding later
-		for(var/mob/living/carbon/human/M in mobs)
-			if (M.trinket == src)
-				M.trinket = null
 
 	if (special_grab || chokehold)
 		drop_grab()

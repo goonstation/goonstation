@@ -45,6 +45,12 @@
 	#define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
 	/// get radioactivity level of atom (0 if signal not registered - ie, has no radioactive component) (return_val as a list)
 	#define COMSIG_ATOM_RADIOACTIVITY "atom_get_radioactivity"
+
+// ---- minimap ----
+
+/// When an atom requires to create a single minimap marker for a specific minimap.
+#define COMSIG_NEW_MINIMAP_MARKER "new_minimap_marker"
+
 // ---- atom/movable signals ----
 
 	// ---- generic ----

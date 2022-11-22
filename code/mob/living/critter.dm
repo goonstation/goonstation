@@ -187,7 +187,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 	///enables mob ai that was disabled by a hibernation task
 	proc/wake_from_hibernation()
-		if(src.is_npc)
+		if(src.is_npc && !src.client)
 			src.ai?.enable()
 			src.last_hibernation_wake_tick = TIME
 			src.registered_area?.registered_mob_critters -= src

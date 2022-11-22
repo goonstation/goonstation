@@ -112,7 +112,7 @@
 
 	max_health = 100
 
-	var/obj/item/trinket = null //Used for spy_theft mode - this is an item that is eligible to have a bounty on it
+	var/datum/weakref/trinket = null //Used for spy_theft mode - this is an item that is eligible to have a bounty on it
 
 	//dismemberment stuff
 	var/datum/human_limbs/limbs = null
