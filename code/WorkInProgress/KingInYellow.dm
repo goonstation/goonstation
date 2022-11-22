@@ -9,20 +9,10 @@
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 
 	var/list/readers = list()
-	var/atom/curr_phantom = null
-	var/processing = 0
 
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
-
-	process()
-		..()
-		if(readers.len)
-			var/mob/living/L = pick(readers)
-			var/turf/oovTile = get_oov_tile(L)
-			if(oovTile != null && curr_phantom == null)
-				curr_phantom = new/obj/kingyellow_phantom(oovTile, L)
 
 	get_desc(var/dist, mob/user)
 		if (!lastTooltipContent)
@@ -50,18 +40,6 @@
 				. += "The first act tells of a city named Carcosa, and a mysterious \"King in Yellow\"."
 				. += "The second act seems incomplete, but... it is horrifying."
 
-				for (var/mob/M in readers)
-					// I'm not sure what the point of this is -- it makes it so only one person
-					// can be a target at a time, even though the code clearly handles more than one
-					// and in this case it could just be a simple "last_reader" var with a single mob ref.
-					// That being said I'm not sure what the intent was so I'm just making a note
-					// and leaving it alone. vOv
-					boutput(M, "<span class='alert'>You feel the irresistible urge to read the <em>The King In Yellow</em> again.</span>")
-					readers -= M
-
-				readers += reader
-				if(!processing)
-					processing_items.Add(src)
 			return jointext(., "<br>")
 		else
 			. = "This ancient data storage medium appears to contain data used for entertainment purposes."
