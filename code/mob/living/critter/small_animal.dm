@@ -509,8 +509,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			if(istype(target, /mob/living/critter/small_animal/mouse/weak/mentor) && prob(90))
 				src.visible_message("<span class='combat'><B>[src]</B> tries to bite [target] but \the [target] dodges [pick("nimbly", "effortlessly", "gracefully")]!</span>")
 				return
-			if ((src.catnip || prob(2) ) && (!GET_COOLDOWN(src, "claw_fury")))
-				ON_COOLDOWN(src, "claw_fury", 20 SECONDS)
+			if ((src.catnip || prob(2) ) && (!ON_COOLDOWN(src, "claw_fury", 20 SECONDS)))
 				var/attackCount = rand(5, 9)
 				var/iteration = 0
 				target.setStatus("weakened", 2 SECONDS)
