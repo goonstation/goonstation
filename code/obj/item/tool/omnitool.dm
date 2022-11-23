@@ -12,7 +12,7 @@
 
 	custom_suicide = 1
 	///List of tool settings
-	var/list/modes = list(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING, OMNI_MODE_PULSING, OMNI_MODE_CUTTING, OMNI_MODE_WELDING)
+	var/list/modes = list(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING)
 	///The current setting
 	var/mode = OMNI_MODE_PRYING
 
@@ -205,6 +205,7 @@
 	prefix = "syndicate-omnitool"
 	has_cutting = TRUE
 	has_welding = TRUE
+	modes = list(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING, OMNI_MODE_CUTTING, OMNI_MODE_WELDING)
 
 	afterattack(obj/O, mob/user)
 
