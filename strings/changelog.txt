@@ -1,5 +1,7 @@
 
 (t)wed nov 23 22
+(u)pali
+(+)Armory authorization now plays robotic voiceover saying "ARMORY AUTHORIZED". TEG at high power levels says "WARNING" once a few minutes in the same voice. Let me know if this is neat or sucks on Discord / forums (and suggest other places where this could be appropriate if you like it).
 (u)Cheffie
 (p)12132
 (e)💅📄|C-QoL, A-UI
