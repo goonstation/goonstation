@@ -28,6 +28,6 @@
 		return FALSE
 
 	disposing()
-		REMOVE_ATOM_PROPERTY(src.holder.owner, PROP_MOB_XRAYVISION, src)
-		REMOVE_ATOM_PROPERTY(src.holder.owner, PROP_MOB_CANTSPRINT, src)
+		REMOVE_ATOM_PROPERTY(src?.holder.owner, PROP_MOB_XRAYVISION, src)
+		REMOVE_ATOM_PROPERTY(src?.holder.owner, PROP_MOB_CANTSPRINT, src)
 		. = ..()
