@@ -64,9 +64,7 @@
 /area/dmm_suite/clear_area)
 "V" = (
 /obj/item/cable_coil/black/cut,
-/mob/living/critter/small_animal/mouse{
-	alive = 0
-	},
+/mob/living/critter/small_animal/mouse/dead,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "X" = (

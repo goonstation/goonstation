@@ -236,7 +236,7 @@
 			T = get_step(T, EAST)
 
 		var/singing_italics = singing ? " font-style: italic;" : ""
-		chat_text = make_chat_maptext(src, message, "color: [maptext_color];" + singing_italics)
+		chat_text = make_chat_maptext(src, message, singing_italics)
 
 		if(chat_text)
 			chat_text.measure(src.client)
@@ -244,7 +244,7 @@
 				if(I != chat_text)
 					I.bump_up(chat_text.measured_height)
 
-		oscillate_colors(chat_text, list(maptext_color, "#a530bd"))
+		oscillate_colors(chat_text, list(maptext_color, "#c482d1"))
 
 	message = src.say_quote(message)
 	//logTheThing(LOG_SAY, src, "SAY: [message]")
