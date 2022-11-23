@@ -245,9 +245,9 @@ proc/debug_map_apc_count(delim,zlim)
 
 	jps_unstable
 		name = "jps unstable"
-		help = "Red is unstable, green is stable"
+		help = "Red is unstable, green is stable, purple is illegal value"
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			img.app.color = theTurf.jpsUnstable ? "#f00" : "#0f0"
+			img.app.color = theTurf.jpsUnstable >= 1 ? "#f00" : theTurf.jpsUnstable ? "#70f" : "#0f0"
 
 	jps_cache
 		name = "jps cache"
