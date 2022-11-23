@@ -519,7 +519,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 					while (iteration <= attackCount && (get_dist(src, target) <= 1))
 						random_brute_damage(target, src.attack_damage + 2, 1)
 						playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 60, 1)
-						iteration ++
+						iteration++
 						sleep(0.3 SECONDS)
 			var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
 			if (!pounce.disabled && pounce.cooldowncheck() && prob(50))
