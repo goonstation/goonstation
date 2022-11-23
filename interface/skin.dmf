@@ -46,7 +46,7 @@ menu "menu"
 		command = ".reconnect\n.output browseroutput:output Reconnecting..."
 		category = "&File"
 		saved-params = "is-checked"
-	elem
+	elem "screenshot"
 		name = "&Quick screenshot\tF2"
 		command = ".screenshot auto\n.output browseroutput:output Screenshot taken"
 		category = "&File"
