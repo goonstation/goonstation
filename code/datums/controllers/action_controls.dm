@@ -1408,7 +1408,7 @@ var/datum/action_controller/actions
 /obj/actions/bar
 	icon_state = "bar"
 	layer = 101
-	plane = PLANE_HUD + 1
+	plane = PLANE_HUD
 	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | TILE_BOUND
 	var/image/img
 	New()
