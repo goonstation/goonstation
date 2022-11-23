@@ -39,7 +39,6 @@
 		if (T && heldfly)
 			heldfly.set_loc(T)
 			heldfly.is_npc = TRUE
-			heldfly.dontdolife = FALSE
 			heldfly.ai = new /datum/aiHolder/sawfly(heldfly)
 
 		qdel(src)
