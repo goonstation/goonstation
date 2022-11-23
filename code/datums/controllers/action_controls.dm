@@ -406,6 +406,7 @@ var/datum/action_controller/actions
 			icon_image.pixel_y = icon_y_off
 			icon_image.pixel_x = icon_x_off
 			icon_image.plane = icon_plane
+			icon_image.layer = 10
 			icon_image.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
 			border.UpdateOverlays(icon_image, "action_icon")
 			if (icon_on_target && place_to_put_bar)
@@ -1987,7 +1988,6 @@ var/datum/action_controller/actions
 	var/obj/item/target
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "pickup"
-	icon_plane = PLANE_HUD+2
 
 	New(Target)
 		target = Target
