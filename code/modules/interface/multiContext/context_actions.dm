@@ -1347,16 +1347,6 @@
 		icon_state = "bar"
 		mode = OMNI_MODE_PRYING
 		typepath = /obj/item/crowbar
-	snipping
-		name = "Wirecutters"
-		icon_state = "cut"
-		mode = OMNI_MODE_SNIPPING
-		typepath = /obj/item/wirecutters
-	wrenching
-		name = "Wrench"
-		icon_state = "wrench"
-		mode = OMNI_MODE_WRENCHING
-		typepath = /obj/item/wrench
 	screwing
 		name = "Screwdriver"
 		icon_state = "screw"
@@ -1367,9 +1357,19 @@
 		icon_state = "pulse"
 		mode = OMNI_MODE_PULSING
 		typepath = /obj/item/device/multitool
+	snipping
+		name = "Wirecutters"
+		icon_state = "cut"
+		mode = OMNI_MODE_SNIPPING
+		typepath = /obj/item/wirecutters
+	wrenching
+		name = "Wrench"
+		icon_state = "wrench"
+		mode = OMNI_MODE_WRENCHING
+		typepath = /obj/item/wrench
 	cutting
 		name = "Knife"
-		icon_state = "beepsky"
+		icon_state = "knife"
 		mode = OMNI_MODE_CUTTING
 		typepath = /obj/item/kitchen/utensil/knife
 	welding
