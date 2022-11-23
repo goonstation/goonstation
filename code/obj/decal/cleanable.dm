@@ -39,7 +39,8 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 
 	New(var/loc,var/list/viral_list)
 		..()
-		setup(loc,viral_list)
+		if(loc)
+			setup(loc,viral_list)
 
 	setup(var/L,var/list/viral_list)
 		..()
@@ -763,7 +764,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	get_desc(dist)
 		. = "<br><span class='notice'>It says[src.material ? src.material : src.color_name ? " in [src.color_name]" : null]:</span><br>[words]"
-		if (src.reagents.total_volume)
+		if (src.reagents?.total_volume)
 			. += "<br><span class = 'notice'>It's written in a [get_nearest_color(src.reagents.get_average_color())] substance."
 
 	UpdateName()
@@ -1206,6 +1207,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	layer = MOB_LAYER+1
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "cobweb1"
+	anchored = 2
 
 /obj/decal/cleanable/molten_item
 	name = "gooey grey mass"
@@ -1213,6 +1215,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	layer = OBJ_LAYER
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "molten"
+	anchored = 2
 
 /obj/decal/cleanable/cobweb2
 	name = "cobweb"

@@ -2,6 +2,7 @@ var/list/bad_name_characters = list("_", "'", "\"", "<", ">", ";", "\[", "\]", "
 var/list/removed_jobs = list(
 	// jobs that have been removed or replaced (replaced -> new name, removed -> null)
 	"Barman" = "Bartender",
+	"Mechanic" = "Engineer",
 )
 
 datum/preferences
@@ -22,6 +23,7 @@ datum/preferences
 	// These notes are put in the datacore records on the start of the round
 	var/security_note
 	var/medical_note
+	var/synd_int_note
 	var/employment_note
 
 	var/be_traitor = 0
@@ -107,6 +109,9 @@ datum/preferences
 		return tgui_always_state.can_use_topic(src, user)
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if(!tgui_process)
+			boutput(user, "<span class='alert'>Hold on a moment, stuff is still setting up.</span>")
+			return
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if (!ui)
 			ui = new(user, src, "CharacterPreferences")
@@ -206,6 +211,7 @@ datum/preferences
 			"flavorText" = src.flavor_text,
 			"securityNote" = src.security_note,
 			"medicalNote" = src.medical_note,
+			"syndintNote" = src.synd_int_note,
 			"fartsound" = src.AH.fartsound,
 			"screamsound" = src.AH.screamsound,
 			"chatsound" = src.AH.voicetype,
@@ -567,6 +573,18 @@ datum/preferences
 
 					return TRUE
 
+			if ("update-syndintNote")
+				var/new_text = tgui_input_text(usr, "Please enter new information Syndicate agents have gathered on you (visible to traitors and spies):", "Character Generation", src.synd_int_note, multiline = TRUE)
+				if (!isnull(new_text))
+					new_text = html_encode(new_text)
+					if (length(new_text) > LONG_FLAVOR_CHAR_LIMIT)
+						tgui_alert(usr, "Your flavor text is too long. It must be no more than [LONG_FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
+						new_text = copytext(new_text, 1, LONG_FLAVOR_CHAR_LIMIT+1)
+					src.synd_int_note = new_text
+					src.profile_modified = TRUE
+
+					return TRUE
+
 			if ("update-pdaRingtone")
 				get_all_character_setup_ringtones()
 				if(!length(selectable_ringtones))
@@ -641,8 +659,8 @@ datum/preferences
 			if ("update-specialStyle")
 				var/mob/living/carbon/human/H = src.preview.preview_mob
 				var/typeinfo/datum/mutantrace/typeinfo = H.mutantrace?.get_typeinfo()
-				if (!typeinfo)
-					tgui_alert(usr, "No usable special styles detected.", "Error")
+				if (!typeinfo || !typeinfo.special_styles)
+					tgui_alert(usr, "No usable special styles detected for this mutantrace.", "Error")
 					return
 				var/list/style_list = typeinfo.special_styles
 				var/current_index = style_list.Find(AH.special_style) // do they already have a special style in their prefs

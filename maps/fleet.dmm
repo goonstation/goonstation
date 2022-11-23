@@ -744,8 +744,7 @@
 	})
 "bI" = (
 /obj/lattice,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -905,8 +904,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/tenebrae)
 "bZ" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -1906,8 +1904,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -1949,7 +1946,7 @@
 	name = "Maru Solar Array"
 	})
 "eh" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -2144,7 +2141,7 @@
 /area/space)
 "eD" = (
 /obj/disposalpipe/segment/bent/west,
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "tenebelt";
 	name = "Tenebrae disposal belt"
 	},
@@ -2982,8 +2979,7 @@
 /area/research_outpost/indigo_rye)
 "gq" = (
 /obj/machinery/light/small,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "tenebelt";
 	name = "Tenebrae disposal belt";
 	operating = 1
@@ -2993,8 +2989,7 @@
 	name = "Tenebrae Maintenance"
 	})
 "gr" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "tenebelt";
 	name = "Tenebrae disposal belt";
 	operating = 1
@@ -3011,8 +3006,7 @@
 	})
 "gs" = (
 /obj/machinery/crusher,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "tenebelt";
 	name = "Tenebrae disposal belt";
 	operating = 1
@@ -3217,7 +3211,7 @@
 /turf/simulated/floor,
 /area/station/garden/owlery)
 "gM" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "qmout"
 	},
 /obj/machinery/door/window/southleft,
@@ -3419,8 +3413,7 @@
 	icon_state = "bdoorsingle1";
 	id = "qm_dock"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -3708,7 +3701,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "hW" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "qmout"
 	},
 /obj/machinery/light_switch/west,
@@ -6514,8 +6507,7 @@
 "nB" = (
 /obj/disposaloutlet/east,
 /obj/disposalpipe/trunk/east,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "marubelt";
 	name = "Maru disposal belt";
 	operating = 1
@@ -6526,7 +6518,7 @@
 	})
 "nC" = (
 /obj/disposalpipe/segment/bent/west,
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "marubelt";
 	name = "Maru disposal belt";
 	operating = 1
@@ -6852,8 +6844,7 @@
 	})
 "oi" = (
 /obj/machinery/light/small,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "marubelt";
 	name = "Maru disposal belt";
 	operating = 1
@@ -6869,8 +6860,7 @@
 	id = "maru_crusher";
 	name = "Maru Crusher Door"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "marubelt";
 	name = "Maru disposal belt";
 	operating = 1
@@ -6881,8 +6871,7 @@
 	})
 "ok" = (
 /obj/machinery/crusher,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "marubelt";
 	name = "Maru disposal belt";
 	operating = 1
@@ -7825,8 +7814,7 @@
 "qd" = (
 /obj/disposaloutlet/east,
 /obj/disposalpipe/trunk/east,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "hambelt";
 	name = "Hammer disposal belt";
 	operating = 1
@@ -7835,7 +7823,7 @@
 /area/station/maintenance/inner/hammer)
 "qe" = (
 /obj/disposalpipe/segment/bent/west,
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "hambelt";
 	name = "Hammer disposal belt";
 	operating = 1
@@ -7910,8 +7898,7 @@
 	})
 "qn" = (
 /obj/machinery/light/small,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "hambelt";
 	name = "Hammer disposal belt";
 	operating = 1
@@ -7925,8 +7912,7 @@
 	id = "ham_crusher";
 	name = "Hammer Crusher Door"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "hambelt";
 	name = "Hammer disposal belt";
 	operating = 1
@@ -7935,8 +7921,7 @@
 /area/station/maintenance/inner/hammer)
 "qp" = (
 /obj/machinery/crusher,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "hambelt";
 	name = "Hammer disposal belt";
 	operating = 1
@@ -12357,8 +12342,7 @@
 "yy" = (
 /obj/disposaloutlet/east,
 /obj/disposalpipe/trunk/east,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "ascbelt";
 	name = "Asclepius disposal belt";
 	operating = 1
@@ -12369,7 +12353,7 @@
 	})
 "yz" = (
 /obj/disposalpipe/segment/bent/west,
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "ascbelt";
 	name = "Asclepius disposal belt";
 	operating = 1
@@ -12521,8 +12505,7 @@
 	})
 "yP" = (
 /obj/machinery/light/small,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "ascbelt";
 	name = "Asclepius disposal belt";
 	operating = 1
@@ -12538,8 +12521,7 @@
 	id = "asc_crusher";
 	name = "Asclepius Crusher Door"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "ascbelt";
 	name = "Asclepius disposal belt";
 	operating = 1
@@ -12550,8 +12532,7 @@
 	})
 "yR" = (
 /obj/machinery/crusher,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "ascbelt";
 	name = "Asclepius disposal belt";
 	operating = 1
@@ -12914,8 +12895,7 @@
 "zy" = (
 /obj/disposaloutlet/east,
 /obj/disposalpipe/trunk/east,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "diobelt";
 	name = "Dionysus disposal belt";
 	operating = 1
@@ -12926,7 +12906,7 @@
 	})
 "zz" = (
 /obj/disposalpipe/segment/bent/west,
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "diobelt";
 	name = "Dionysus disposal belt";
 	operating = 1
@@ -13023,8 +13003,7 @@
 	name = "Dionysus Maintenance"
 	})
 "zK" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "diobelt";
 	name = "Dionysus disposal belt";
 	operating = 1
@@ -13044,8 +13023,7 @@
 	id = "dio_crusher";
 	name = "Dionysus Crusher Door"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "diobelt";
 	name = "Dionysus disposal belt";
 	operating = 1
@@ -13056,8 +13034,7 @@
 	})
 "zM" = (
 /obj/machinery/crusher,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "diobelt";
 	name = "Dionysus disposal belt";
 	operating = 1
@@ -22194,8 +22171,7 @@
 "Qx" = (
 /obj/disposaloutlet/east,
 /obj/disposalpipe/trunk/east,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "tenebelt";
 	name = "Tenebrae disposal belt";
 	operating = 1
@@ -22689,8 +22665,7 @@
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "RB" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "ghostdrone_cuba";
 	operating = 1
 	},
@@ -22698,16 +22673,14 @@
 /area/ghostdrone_factory)
 "RC" = (
 /obj/machinery/ghostdrone_factory/part3,
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone_cuba";
 	operating = 1
 	},
 /turf/simulated/floor/circuit/red,
 /area/ghostdrone_factory)
 "RD" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone_cuba";
 	operating = 1
 	},
@@ -22715,8 +22688,7 @@
 /area/ghostdrone_factory)
 "RE" = (
 /obj/machinery/ghostdrone_factory/part2,
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone_cuba";
 	operating = 1
 	},
@@ -22724,8 +22696,7 @@
 /area/ghostdrone_factory)
 "RF" = (
 /obj/machinery/ghostdrone_factory,
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone_cuba";
 	operating = 1
 	},
@@ -22844,8 +22815,7 @@
 	})
 "Se" = (
 /obj/machinery/crusher,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "erebusbelt";
 	name = "Erebus disposal belt";
 	operating = 1
@@ -23181,8 +23151,7 @@
 "Tf" = (
 /obj/disposaloutlet/east,
 /obj/disposalpipe/trunk/east,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "erebusbelt";
 	name = "Erebus disposal belt";
 	operating = 1
@@ -23669,8 +23638,7 @@
 	id = "erebus_crusher";
 	name = "Erebus Crusher Door"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "erebusbelt";
 	name = "Erebus disposal belt";
 	operating = 1
@@ -23891,7 +23859,7 @@
 	})
 "Vm" = (
 /obj/disposalpipe/segment/bent/west,
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "erebusbelt";
 	name = "Erebus disposal belt";
 	operating = 1
@@ -24440,8 +24408,7 @@
 	})
 "WZ" = (
 /obj/machinery/light/small,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "erebusbelt";
 	name = "Erebus disposal belt";
 	operating = 1

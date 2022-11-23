@@ -485,7 +485,11 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			logTheThing(LOG_COMBAT, jerk, "(of type [jerk.type]) was ghosted by a CORDON at [log_loc(jerk)]")
 			setdead(jerk)
 			jerk.remove()
-		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect))
+		else if (isobj(O) && !(istype(O, /obj/overlay/tile_effect) || O.anchored == 2 || istype(O, /obj/landmark)))
+			#ifdef RUNTIME_CHECKING
+			if(current_state <= GAME_STATE_WORLD_NEW)
+				CRASH("[O] ([O.type]) got deleted by a cordon at [O.x],[O.y],[O.z] ([O.loc.loc] [O.loc.type]) during world initialization")
+			#endif
 			qdel(O)
 		return
 
@@ -545,7 +549,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			logTheThing(LOG_COMBAT, jerk, "(of type [jerk.type]) was ghosted by the area that kills you if you enter it at [log_loc(jerk)]")
 			setdead(jerk)
 			jerk.remove()
-		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect) && !istype(O, /obj/landmark))
+		else if (isobj(O) && !(istype(O, /obj/overlay/tile_effect) || O.anchored == 2 || istype(O, /obj/landmark)))
 			qdel(O)
 		. = ..()
 /area/battle_royale_spawn //People entering VR or exiting VR with stupid exploits are jerks.
@@ -1271,6 +1275,36 @@ ABSTRACT_TYPE(/area/diner)
 	name = "Tech Outpost"
 	icon_state = "storage"
 
+/area/pasiphae
+	name = "Pasiphae Primary Zone"
+	icon_state = "hallC"
+	do_not_irradiate = 0
+
+/area/pasiphae/hangar
+	name = "Pasiphae Hangar"
+	icon_state = "hangar"
+
+/area/pasiphae/maint
+	name = "Pasiphae Maintenance"
+	icon_state = "maintcentral"
+	do_not_irradiate = 1
+
+/area/pasiphae/sys
+	name = "Pasiphae Systems Control"
+	icon_state = "engineering"
+
+/area/pasiphae/survey
+	name = "Pasiphae Survey Room"
+	icon_state = "science"
+
+/area/pasiphae/crew
+	name = "Pasiphae Crew Quarters"
+	icon_state = "green"
+
+/area/pasiphae/bridge
+	name = "Pasiphae Command Center"
+	icon_state = "blue"
+
 // Gore's Z5 Space generation areas //
 ABSTRACT_TYPE(/area/prefab)
 /area/prefab
@@ -1541,10 +1575,23 @@ ABSTRACT_TYPE(/area/sim)
 	name = "B-Ball Court"
 	icon_state="vr"
 
+ABSTRACT_TYPE(/area/sim/gunsim)
 /area/sim/gunsim
 	name = "Gun Sim"
 	icon_state = "gunsim"
 
+	arena
+		name = "Gun Sim Arena"
+
+	lobby
+		name = "Gun Sim Lobby"
+		icon_state = "gunsim-lobby"
+		sanctuary = TRUE
+	maintenance
+		name = "Gun Sim Maintenance"
+		force_fullbright = FALSE
+		icon_state = "gunsim-maint"
+		sanctuary = TRUE
 
 /area/sim/test_area
 	name = "Toxin Test Area"
@@ -1596,7 +1643,7 @@ ABSTRACT_TYPE(/area/station)
 	New()
 		..()
 		START_TRACKING
-		SPAWN(10 SECONDS) // wait until world is actually loaded in lmao
+		SPAWN(5 SECONDS) // wait until world is actually loaded in lmao // ZEWAKA/INIT
 			initial_structure_value = calculate_structure_value()
 
 	Del()

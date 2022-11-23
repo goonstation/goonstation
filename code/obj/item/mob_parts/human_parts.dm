@@ -28,7 +28,7 @@
 			hit_twitch(H)
 			if (brute > 30 && prob(brute - 30) && !disallow_limb_loss)
 				src.sever()
-			else if (burn > 30 && prob(burn - 30) && !disallow_limb_loss)
+			else if (burn > 30 && prob(burn) && !disallow_limb_loss)
 				holder.visible_message("<span class='alert'>[holder.name]'s [initial(src.name)] is burnt to ash!</span>")
 				src.remove(FALSE)
 				playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 30)

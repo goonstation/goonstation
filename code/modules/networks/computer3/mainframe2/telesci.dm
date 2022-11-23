@@ -14,22 +14,8 @@
 var/telesci_modifiers_set = 0
 
 proc/is_teleportation_allowed(var/turf/T)
-	for (var/atom in by_cat[TR_CAT_TELEPORT_JAMMERS])
-		if (istype(atom, /obj/machinery/telejam))
-			var/obj/machinery/telejam/TJ = atom
-			if (!TJ.active)
-				continue
-			if(IN_RANGE(TJ, T, TJ.range))
-				return FALSE
-		if (istype(atom, /obj/item/device/flockblocker))
-			var/obj/item/device/flockblocker/F = atom
-			if (!F.active)
-				continue
-			if(IN_RANGE(F, T, F.range))
-				return FALSE
-
-	for_by_tcl(N, /obj/blob/nucleus)
-		if(IN_RANGE(N, T, 3))
+	for (var/atom/A as anything in by_cat[TR_CAT_TELEPORT_JAMMERS])
+		if (IN_RANGE(A, T, GET_ATOM_PROPERTY(A, PROP_ATOM_TELEPORT_JAMMER)))
 			return FALSE
 
 	// first check the always allowed turfs from map landmarks
@@ -747,10 +733,10 @@ proc/is_teleportation_allowed(var/turf/T)
 						new /obj/critter/pig(src.loc)
 					if("mouse")
 						for(var/i = 1 to rand(3,8))
-							new/obj/critter/mouse(src.loc)
+							new/mob/living/critter/small_animal/mouse(src.loc)
 					if("roach")
 						for(var/i = 1 to rand(3,8))
-							new/obj/critter/roach(src.loc)
+							new/mob/living/critter/small_animal/cockroach(src.loc)
 					if("rockworm")
 						for(var/i = 1 to rand(3,8))
 							new/obj/critter/rockworm(src.loc)
@@ -1085,7 +1071,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				boutput(usr, "<span class='alert'>Maximum number of Bookmarks reached.</span>")
 				return
 			var/datum/teleporter_bookmark/bm = new
-			var/title = input(usr,"Enter name:","Name","New Bookmark") as text
+			var/title = tgui_input_text(usr, "Enter name:", "Name", "New Bookmark")
 			title = copytext(adminscrub(title), 1, 128)
 			if(!length(title)) return
 			bm.name = title

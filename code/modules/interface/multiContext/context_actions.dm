@@ -1175,90 +1175,6 @@
 			target.addContextAction(/datum/contextAction/testfour)
 			return 0
 */
-
-/datum/contextAction/flockdrone
-	icon = 'icons/ui/context16x16.dmi'
-	icon_background = "flockbg"
-	name = "Control flockdrone"
-	desc = "You shouldn't be reading this, bug."
-	icon_state = "wrench"
-	close_clicked = TRUE
-	/// The flockdrone aiTask subtype we should switch to upon cast
-	var/task_type = null
-
-	//funny copy paste ability targeting code, someone should really generalize this UPSTREAM
-	execute(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-		//typecasting soup time
-		if (!istype(target) || !istype(user))
-			return
-		var/datum/abilityHolder/flockmind/holder = user.abilityHolder
-		if (!istype(holder))
-			return
-		var/datum/targetable/flockmindAbility/droneControl/ability = holder.drone_controller
-		if (ability.targeted && user.targeting_ability == ability)
-			user.targeting_ability = null
-			user.update_cursor()
-			return
-		if (ability.targeted)
-			if (world.time < ability.last_cast)
-				return
-			ability.drone = target
-			ability.task_type = task_type
-			ability.holder.owner.targeting_ability = ability
-			ability.holder.owner.update_cursor()
-		user.closeContextActions()
-
-	checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-		return istype(target) && istype(user) && !user.targeting_ability
-
-	move
-		name = "Move"
-		desc = "Go somwhere."
-		icon_state = "flock_move"
-		task_type = /datum/aiTask/sequence/goalbased/flock/rally
-
-	convert
-		name = "Convert"
-		desc = "Convert this thing"
-		icon_state = "flock_convert"
-		task_type = /datum/aiTask/sequence/goalbased/flock/build/targetable
-
-		checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-			return ..() && target.resources >= FLOCK_CONVERT_COST
-
-	capture
-		name = "Capture"
-		desc = "Capture this enemy"
-		icon_state = "flock_capture"
-		task_type = /datum/aiTask/sequence/goalbased/flock/flockdrone_capture/targetable
-
-		checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-			return ..()
-
-	barricade
-		name = "Barricade"
-		desc = "Build a barricade"
-		icon_state = "flock_barricade"
-		task_type = /datum/aiTask/sequence/goalbased/flock/barricade/targetable
-
-		checkRequirements(mob/living/critter/flock/drone/target, mob/living/intangible/flock/user)
-			return ..() && target.resources >= FLOCK_BARRICADE_COST
-
-	shoot
-		name = "Shoot"
-		desc = "Shoot this enemy"
-		icon_state = "flock_shoot"
-		task_type = /datum/aiTask/timed/targeted/flockdrone_shoot/targetable
-
-	control
-		name = "Control"
-		desc = "Assume direct control of this endpoint"
-		icon_state = "flock_control"
-
-		execute(mob/living/critter/flock/drone/target, mob/living/intangible/flock/user)
-			if(user.flock && target.flock == user.flock)
-				target.take_control(user)
-
 /datum/contextAction/rcd
 	icon = 'icons/ui/context16x16.dmi'
 	close_clicked = TRUE
@@ -1324,3 +1240,36 @@
 		return robospray in user
 	execute(var/obj/item/robospray/robospray, var/mob/user)
 		robospray.change_reagent(src.reagent_id, user)
+
+/datum/contextAction/prisoner_scanner
+	icon = 'icons/ui/context16x16.dmi'
+	close_clicked = TRUE
+	close_moved = FALSE
+	desc = ""
+	icon_state = "wrench"
+	var/mode = PRISONER_MODE_NONE
+
+	execute(var/obj/item/device/prisoner_scanner/prisoner_scanner, var/mob/user)
+		if(!istype(prisoner_scanner))
+			return
+		prisoner_scanner.switch_mode(src.mode, user)
+
+	checkRequirements(var/obj/item/device/prisoner_scanner/prisoner_scanner, var/mob/user)
+		return prisoner_scanner in user
+
+	none
+		name = "None"
+		icon_state = "none"
+		mode = PRISONER_MODE_NONE
+	Paroled
+		name = "Paroled"
+		icon_state = "paroled"
+		mode = PRISONER_MODE_PAROLED
+	incarcerated
+		name = "Incarcerated"
+		icon_state = "incarcerated"
+		mode = PRISONER_MODE_INCARCERATED
+	released
+		name = "Released"
+		icon_state = "released"
+		mode = PRISONER_MODE_RELEASED
