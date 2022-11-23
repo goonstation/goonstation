@@ -521,7 +521,6 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 						playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 60, 1)
 						iteration ++
 						sleep(0.3 SECONDS)
-					return
 			var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
 			if (!pounce.disabled && pounce.cooldowncheck() && prob(50))
 				src.visible_message("<span class='combat'><B>[src]</B> pounces on [target] and trips them!</span>", "<span class='combat'>You pounce on [target]!</span>")
