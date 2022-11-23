@@ -899,7 +899,7 @@
 	removal
 		name = "Toggle Fitting Removal"
 		desc = "Toggles the manufacturer between removing fittings and replacing lamps."
-		icon_state = "remove"
+		icon_state = "close"
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/lamp_manufacturer/M = target
 			M.removing_toggled = !M.removing_toggled
