@@ -169,6 +169,7 @@
 			flockdronegibs(locate(location.x + x, location.y + y, location.z))
 	explosion_new(src, location, 2000)
 	src.flock.relay_finished = TRUE
+	src.flock.transmit()
 	gib(location)
 	flock_signal_unleashed = TRUE
 	sleep(2 SECONDS) //allow them to hear the explosion before their headsets scream and die

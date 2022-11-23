@@ -71,6 +71,8 @@
 		return 1
 	if (src.client)
 		src.antagonist_overlay_refresh(0, 0)
+	if (src.flock?.relay_finished)
+		return TRUE
 	if (get_turf(src) == src.previous_turf)
 		src.afk_counter += parent.schedule_interval
 	else

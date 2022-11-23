@@ -646,6 +646,15 @@ var/flock_signal_unleashed = FALSE
 	flockmind = null
 	//do not qdel(src), we still need the flock datum for end of round stuff
 
+// END OF ROUND
+/datum/flock/proc/transmit()
+	for (var/pathkey in src.units)
+		for (var/mob/living/critter/flock/F as anything in src.units[pathkey])
+			F.dormantize()
+	src.flockmind.icon_state = "flockmind-radiotrace"
+	for (var/mob/living/intangible/flock/trace/T as anything in src.traces)
+		T.icon_state = "flocktrace-radiotrace"
+
 // TURFS
 
 /datum/flock/proc/reserveTurf(var/turf/simulated/T, var/name)
