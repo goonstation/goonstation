@@ -8,9 +8,16 @@
 import { Loader } from './common/Loader';
 import { InputButtons } from './common/InputButtons';
 import { Button, Input, Section, Stack } from '../components';
-import { KEY_A, KEY_DOWN, KEY_ESCAPE, KEY_ENTER, KEY_UP, KEY_Z, KEY_PAGEUP, KEY_PAGEDOWN, KEY_END, KEY_HOME } from 'common/keycodes';
+import { KEY_A, KEY_DOWN, KEY_ESCAPE, KEY_ENTER, KEY_UP, KEY_Z, KEY_PAGEUP, KEY_PAGEDOWN, KEY_END, KEY_HOME, KEY_TAB } from 'common/keycodes';
 import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
+
+const nextTick
+= typeof Promise !== 'undefined'
+  ? Promise.resolve().then.bind(Promise.resolve())
+  : function (a) {
+    window.setTimeout(a, 0);
+  };
 
  type ListInputData = {
    items: string[];
@@ -18,11 +25,12 @@ import { useBackend, useLocalState } from '../backend';
    init_value: string;
    timeout: number;
    title: string;
+   start_with_search: number;
  };
 
 export const ListInputModal = (_, context) => {
   const { act, data } = useBackend<ListInputData>(context);
-  const { items = [], message, init_value, timeout, title } = data;
+  const { items = [], message, init_value, timeout, title, start_with_search } = data;
   const [selected, setSelected] = useLocalState<number>(
     context,
     'selected',
@@ -31,7 +39,7 @@ export const ListInputModal = (_, context) => {
   const [searchBarVisible, setSearchBarVisible] = useLocalState<boolean>(
     context,
     'searchBarVisible',
-    items.length > 9
+    start_with_search === 1
   );
   const [searchQuery, setSearchQuery] = useLocalState<string>(
     context,
@@ -55,7 +63,7 @@ export const ListInputModal = (_, context) => {
     if (newSelected < 0) newSelected = 0;
     if (newSelected > len) newSelected = len;
     setSelected(newSelected);
-     document!.getElementById(newSelected.toString())?.scrollIntoView();
+     document!.getElementById(newSelected.toString())?.focus();
   };
   // User selects an item with mouse
   const onClick = (index: number) => {
@@ -65,20 +73,26 @@ export const ListInputModal = (_, context) => {
     setSelected(index);
   };
   // User presses a letter key and searchbar is visible
-  const onFocusSearch = () => {
-    setSearchBarVisible(false);
-    setSearchBarVisible(true);
+  const onFocusSearch = (letter) => {
+    let searchBarInput = searchBarVisible ? document.getElementById("search_bar").getElementsByTagName('input')[0] : null;
+    searchBarInput.focus();
+    searchBarInput.value += letter;
+    onSearch(searchBarInput.value);
   };
   // User presses a letter key with no searchbar visible
   const onLetterSearch = (key: number) => {
     const keyChar = String.fromCharCode(key);
-    const foundItem = items.find((item) => {
-      return item?.toLowerCase().startsWith(keyChar?.toLowerCase());
+    let foundIndex = items.findIndex((item, index) => {
+      return item?.toLowerCase().startsWith(keyChar?.toLowerCase()) && index > selected;
     });
-    if (foundItem) {
-      const foundIndex = items.indexOf(foundItem);
+    if (foundIndex === -1) {
+      foundIndex = items.findIndex((item, index) => {
+        return item?.toLowerCase().startsWith(keyChar?.toLowerCase()) && index <= selected;
+      });
+    }
+    if (foundIndex !== -1) {
       setSelected(foundIndex);
-       document!.getElementById(foundIndex.toString())?.scrollIntoView();
+      document!.getElementById(foundIndex.toString())?.focus();
     }
   };
   // User types into search bar
@@ -86,9 +100,19 @@ export const ListInputModal = (_, context) => {
     if (query === searchQuery) {
       return;
     }
+    let currentSelectedText = filteredItems[selected];
+    let newDisplayed = items.filter(val => (
+      val.toLowerCase().search(query.toLowerCase()) !== -1
+    ));
+    let newSelected = newDisplayed.indexOf(currentSelectedText);
+    if (newSelected === -1 && newDisplayed.length > 0) {
+      setSelected(0);
+      document!.getElementById('0')?.scrollIntoView();
+    } else if (newDisplayed.length !== 0) {
+      setSelected(newSelected);
+      document!.getElementById(newSelected.toString())?.scrollIntoView();
+    }
     setSearchQuery(query);
-    setSelected(0);
-     document!.getElementById('0')?.scrollIntoView();
   };
   // User presses the search button
   const onSearchBarToggle = () => {
@@ -106,40 +130,65 @@ export const ListInputModal = (_, context) => {
     setTimeout(() => document!.getElementById(selected.toString())?.focus(), 1);
   }
 
+  const handleKey = (event) => {
+    let searchBarInput = searchBarVisible ? document.getElementById("search_bar").getElementsByTagName('input')[0] : null;
+    let searchBarFocused = document.activeElement === searchBarInput;
+    const len = filteredItems.length - 1;
+    const keyCode = window.event ? event.which : event.keyCode;
+    const charCode = String.fromCharCode(event.keyCode).toLowerCase();
+    if (keyCode === KEY_DOWN || keyCode === KEY_UP || keyCode === KEY_PAGEUP || keyCode === KEY_PAGEDOWN) {
+      event.preventDefault();
+      onArrowKey(keyCode);
+    }
+    else if (charCode === "f" && event.ctrlKey) {
+      if (!searchBarVisible) {
+        nextTick(() => document.getElementById("search_bar").getElementsByTagName('input')[0].focus());
+      }
+      setSearchBarVisible(!searchBarVisible);
+      setSearchQuery('');
+      event.preventDefault();
+      return;
+    }
+    else if (keyCode === KEY_ENTER) {
+      event.preventDefault();
+      act('submit', { entry: filteredItems[selected] });
+    }
+    else if (keyCode === KEY_ESCAPE) {
+      event.preventDefault();
+      act('cancel');
+    }
+    else if (keyCode === KEY_END) {
+      setSelected(len);
+      document!.getElementById(len.toString())?.focus();
+      event.preventDefault();
+    }
+    else if (keyCode === KEY_HOME) {
+      setSelected(0);
+      document!.getElementById('0')?.focus();
+      event.preventDefault();
+    }
+    else if (keyCode === KEY_TAB && searchBarVisible) {
+      let selectedButtonElement = document.getElementById(selected.toString());
+      if (searchBarFocused && selectedButtonElement) {
+        selectedButtonElement.focus();
+      }
+      else if (searchBarInput && !searchBarFocused) {
+        searchBarInput.focus();
+      }
+      event.preventDefault();
+    }
+    else if (!searchBarVisible && keyCode >= KEY_A && keyCode <= KEY_Z && !event.ctrlKey) {
+      event.preventDefault();
+      event.stopPropagation();
+      onLetterSearch(keyCode);
+    }
+  };
+
   return (
     <Window title={title} width={325} height={windowHeight}>
       {timeout && <Loader value={timeout} />}
       <Window.Content
-        onKeyDown={(event) => {
-          const len = filteredItems.length - 1;
-          const keyCode = window.event ? event.which : event.keyCode;
-          if (keyCode === KEY_DOWN || keyCode === KEY_UP || keyCode === KEY_PAGEUP || keyCode === KEY_PAGEDOWN) {
-            event.preventDefault();
-            onArrowKey(keyCode);
-          }
-          if (keyCode === KEY_ENTER) {
-            event.preventDefault();
-            act('submit', { entry: filteredItems[selected] });
-          }
-          if (!searchBarVisible && keyCode >= KEY_A && keyCode <= KEY_Z) {
-            event.preventDefault();
-            onLetterSearch(keyCode);
-          }
-          if (keyCode === KEY_ESCAPE) {
-            event.preventDefault();
-            act('cancel');
-          }
-          if (keyCode === KEY_END) {
-            setSelected(len);
-             document!.getElementById(len.toString())?.scrollIntoView();
-             event.preventDefault();
-          }
-          if (keyCode === KEY_HOME) {
-            setSelected(0);
-             document!.getElementById('0')?.scrollIntoView();
-             event.preventDefault();
-          }
-        }}>
+        onkeydown={handleKey}>
         <Section
           buttons={
             <Button
@@ -208,11 +257,16 @@ const ListDisplay = (props, context) => {
               event.preventDefault();
               act('submit', { entry: filteredItems[selected] });
             }}
-            onKeyDown={(event) => {
+            onkeydown={(event) => {
               const keyCode = window.event ? event.which : event.keyCode;
-              if (searchBarVisible && keyCode >= KEY_A && keyCode <= KEY_Z) {
+              let char = String.fromCharCode(keyCode);
+              if (!event.shiftKey) {
+                char = char.toLowerCase();
+              }
+              if (searchBarVisible && event.key.length === 1) {
                 event.preventDefault();
-                onFocusSearch();
+                event.stopPropagation();
+                onFocusSearch(char);
               }
             }}
             selected={index === selected}
@@ -241,6 +295,7 @@ const SearchBar = (props, context) => {
       autoFocus
       autoSelect
       fluid
+      id="search_bar"
       onEnter={(event) => {
         event.preventDefault();
         act('submit', { entry: filteredItems[selected] });
