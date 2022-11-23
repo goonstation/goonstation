@@ -2378,14 +2378,18 @@ proc/gradientText(var/color1, var/color2, message)
   * Returns given text replaced by nonsense chars, on a 40% or given % basis
   */
 proc/radioGarbleText(var/message, var/per_letter_corruption_chance=40)
-	var/list/corruptedChars = list("@","#","!",",",".","-","=","/","\\","'","\"","`","*","(",")","[","]","_","&")
-	. = ""
-	for(var/i=1 to length(message))
-		if(prob(per_letter_corruption_chance))
-			// corrupt that letter
-			. += pick(corruptedChars)
-		else
-			. += copytext(message, i, i+1)
+  var/non_html_text = splittext(message,  regex("<\[^>\]*>"))
+  var/list/corruptedChars = list("@","#","!",",",".","-","=","/","\\","'","\"","`","*","(",")","[","]","_","&")
+  . = message
+  for(var/text_bit in non_html_text)
+    var/corrupted_bit = ""
+    for(var/i=1 to length(text_bit))
+      if(prob(per_letter_corruption_chance))
+        // corrupt that letter
+        corrupted_bit += pick(corruptedChars)
+      else
+        corrupted_bit += copytext(text_bit, i, i+1)
+    . = replacetext(., text_bit, corrupted_bit)
 
 /**
   * Returns given text replaced entirely by nonsense chars
