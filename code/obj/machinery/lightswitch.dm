@@ -54,7 +54,7 @@
 	var/turf/T = null
 	for (var/dir in cardinal)
 		T = get_step(src,dir)
-		if (istype(T,/turf/simulated/wall) || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))
+		if (T.density || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))
 			src.set_dir(dir)
 			if (dir == EAST)
 				src.pixel_x = 24
