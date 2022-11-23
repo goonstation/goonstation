@@ -46,9 +46,9 @@ ABSTRACT_TYPE(/datum/targetable/brain_slug)
 		var/atom/movable/screen/ability/topBar/B = src.object
 		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
 
-	cast(atom/target)
+	castcheck()
 		if (holder.owner.hasStatus("handcuffed") && !src.while_restrained)
 			boutput(holder.owner, "<span class='alert'>You cannot do this while handcuffed!</span>")
-			return TRUE
-		. = ..()
+			return FALSE
+		return TRUE
 

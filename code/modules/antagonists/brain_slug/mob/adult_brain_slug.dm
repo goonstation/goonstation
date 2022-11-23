@@ -54,8 +54,9 @@
 					return "<span class='emote'><b>[src]</b> lets out a high pitched shriek!</span>"
 
 	death(var/gibbed)
-		if (!gibbed)
-			src.unequip_all()
+		var/turf/T = get_turf(src)
+		if (T && !istype(T, /turf/simulated/shuttle) && !istype(T, /turf/unsimulated) && !istype(T, /turf/space))
+			T.acidify_turf(15 SECONDS)
 		return ..()
 
 	bullet_act(var/obj/projectile/P)

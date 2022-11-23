@@ -511,7 +511,7 @@
 		src.slug.changeStatus("slowed", 10 SECONDS, 2)
 		var/datum/targetable/ability = src.slug.abilityHolder.getAbility(/datum/targetable/brain_slug/infest_host)
 		ability.doCooldown()
-		src.mind.transfer_to(src.slug)
+		src.mind?.transfer_to(src.slug)
 		boutput(src.slug, "<span class='alert'>You manage to quickly slither out of your host!</span>")
 		src.visible_message("<span class='alert'>A horrible slithery slug crawls out of [src]'s remains!</span>", "<span class='alert'>You manage to quickly slither out of your host!</span>")
 
