@@ -6,7 +6,7 @@
 	anchored = 0
 	density = 0
 	var/acidic_range = 1
-	var/acidify_duration = 20 SECONDS
+	var/acidify_duration = 25 SECONDS
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
