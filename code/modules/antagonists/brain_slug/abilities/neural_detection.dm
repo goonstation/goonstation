@@ -1,33 +1,21 @@
 /datum/targetable/brain_slug/neural_detection
 	name = "Neural detection"
-	desc = "Slow yourself down to open your senses and expand your vision."
+	desc = "Use your neural detection to expand your vision and detect brainwaves of living beings for a short moment."
 	icon_state = "neural_detection"
-	cooldown = 2 SECONDS
+	cooldown = 30 SECONDS
 	targeted = 0
 	var/active = FALSE
 
 	cast()
-		active = !active
-		var/mob/living/carbon/human/temp_human = null
-		var/mob/living/critter/small_animal/temp_animal = null
-		//Do those checks to remove the vision if they die with it on.
-		if (istype(holder.owner, /mob/living/carbon/human))
-			temp_human = holder.owner
-		if (istype(holder.owner, /mob/living/critter/small_animal))
-			temp_animal = holder.owner
-		if (active)
-			APPLY_ATOM_PROPERTY(src.holder.owner, PROP_MOB_XRAYVISION, src)
-			APPLY_ATOM_PROPERTY(src.holder.owner, PROP_MOB_CANTSPRINT, src)
-			if (temp_human) temp_human.slug_vision = TRUE
-			if (temp_animal) temp_animal.slug_vision = TRUE
-		else
-			REMOVE_ATOM_PROPERTY(src.holder.owner, PROP_MOB_XRAYVISION, src)
-			REMOVE_ATOM_PROPERTY(src.holder.owner, PROP_MOB_CANTSPRINT, src)
-			if (temp_human) temp_human.slug_vision = FALSE
-			if (temp_animal) temp_animal.slug_vision = FALSE
-		return FALSE
-
-	disposing()
-		REMOVE_ATOM_PROPERTY(src?.holder.owner, PROP_MOB_XRAYVISION, src)
-		REMOVE_ATOM_PROPERTY(src?.holder.owner, PROP_MOB_CANTSPRINT, src)
-		. = ..()
+		if (istype(holder, /datum/abilityHolder/brain_slug))
+			src.pointCost = 5
+		if (!active)
+			active = TRUE
+			var/mob/living/M = src.holder.owner
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_XRAYVISION, src)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTSPRINT, src)
+			SPAWN(30 SECONDS)
+				if (M)
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_XRAYVISION, src)
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTSPRINT, src)
+			return FALSE

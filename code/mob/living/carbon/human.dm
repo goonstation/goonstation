@@ -158,8 +158,6 @@
 
 	/// Keeps track of the brain slug inside us, if any.
 	var/mob/living/critter/brain_slug/slug = null
-	/// Is a brain slug inside us using their expanded vision?
-	var/slug_vision = FALSE
 
 	random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
 	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r")

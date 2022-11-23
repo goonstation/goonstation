@@ -70,10 +70,6 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 	var/is_pet = null // null = autodetect
 
-	///Used when an infesting brain slug uses their expanded vision
-	var/slug_vision = FALSE
-
-
 	New(loc)
 		if(isnull(src.is_pet))
 			src.is_pet = (copytext(src.name, 1, 2) in uppercase_letters)
@@ -137,22 +133,6 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 	canRideMailchutes()
 		return src.fits_under_table
-
-	Life()
-		//For brain slug business
-		if (src.slug_vision)
-			src.setStatus("slowed", 4 SECONDS)
-			if (src.abilityHolder)
-				var/datum/abilityHolder/brain_slug/AH = null
-				if (istype(src.abilityHolder, /datum/abilityHolder/brain_slug))
-					AH = src.abilityHolder
-				else if (istype(src.abilityHolder, /datum/abilityHolder/composite))
-					var/datum/abilityHolder/composite/composite_holder = src.abilityHolder
-					for (var/datum/holder in composite_holder.holders)
-						if (istype(holder, /datum/abilityHolder/brain_slug))
-							AH = holder
-				if (AH) AH.points -= 2
-		..()
 
 	proc/reduce_lifeprocess_on_death() //used for AI mobs we dont give a dang about them after theyre dead
 		remove_lifeprocess(/datum/lifeprocess/blood)
