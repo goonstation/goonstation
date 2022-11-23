@@ -97,4 +97,4 @@
 	. = ..()
 	if(!charging)
 		return
-	. += "<br><span class='notice'>\The [src] is currently charging \the [charging]! It is [round(charging.percent())]% charged and has [charging.charge]/[charging.maxcharge] PUs. </span>"
+	. += "<br><span class='notice'>\The [src] is currently charging \the [src.charging]! It is [round(src.charging.percent())]% charged and has [round(src.charging.charge)]/[src.charging.maxcharge] PUs. </span>"
