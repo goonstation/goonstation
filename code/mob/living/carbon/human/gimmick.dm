@@ -46,6 +46,7 @@
 			ailments.Cut()
 			real_name = name_override
 			name = name_override
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_HIDE_ICONS, "underfloor")
 
 	cluwnegib()
 		return

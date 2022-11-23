@@ -1,4 +1,26 @@
+
+(t)wed nov 23 22
+(u)glowbold
+(p)12063
+(e)🗺|A-Mapping
+(+)Donut3's shield generator now properly protects the CE's aquarium c:
+(u)Cheffie
+(p)12051
+(e)🎨💅|C-Sprites, C-QoL
+(*)The security RecordTrak now uses a context actions menu.
+(u)Bartimeus973
+(p)12052
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Scuttlebots can now birdwell and will beep when they flip.
 (t)mon nov 21 22
+(u)Kubius
+(p)11729
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The Harmonic Siphon's extraction over-charge threshold has been made more intuitive, and the Resonance Calibration Database has been updated with more in-depth and up-to-date guidance on Siphon operation.
+(u)Lord_Earthfire
+(p)11929
+(e)🪲⚖🔄🍝|C-Bug, C-Balance, C-Rework, A-Catering
+(+)Changed how food is sliced. That means melons aren't inert anymore while being sliced and more wedges/slices now keep the name of the spliced produce.
 (u)tarmunora
 (+)powered mining tools have a short delay before they can be repowered after powering down, and a longer one if they completely ran out of charge
 (t)sun nov 20 22
