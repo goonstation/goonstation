@@ -1,5 +1,9 @@
 
 (t)wed nov 23 22
+(u)Cheffie
+(p)12051
+(e)🎨💅|C-Sprites, C-QoL
+(*)The security RecordTrak now uses a context actions menu.
 (u)Bartimeus973
 (p)12052
 (e)🆕🔨|C-Feature, A-Player-Actions
