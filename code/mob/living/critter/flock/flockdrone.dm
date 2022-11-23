@@ -459,6 +459,9 @@
 		return
 	if (!isflockmob(usr))
 		return
+	if (src.selected_by)
+		boutput(usr, "<span class='alert'>This drone is receiving a command!</span>")
+		return
 	var/mob/living/intangible/flock/flock_controller = usr
 	if (istype(usr, /mob/living/critter/flock))
 		var/mob/living/critter/flock/flock_mob = usr
