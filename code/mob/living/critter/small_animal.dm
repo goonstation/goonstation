@@ -79,6 +79,8 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		..()
 
 		src.add_stam_mod_max("small_animal", -(STAMINA_MAX*0.5))
+		if (src.real_name == "critter")
+			src.real_name = src.name
 
 	disposing()
 		if(src.is_pet)
@@ -149,7 +151,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		setup_overlays()
 
 	setup_overlays()
-		if (use_custom_color)
+		if (src.use_custom_color)
 			if (src.client)
 				fur_color = src.client.preferences.AH.customization_first_color
 				eye_color = src.client.preferences.AH.e_color
@@ -162,10 +164,11 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			src.UpdateOverlays(overlay_eyes, "eyes")
 
 	death()
-		src.ClearAllOverlays()
-		var/image/overlay = image('icons/misc/critter.dmi', "mouse_colorkey-dead")
-		overlay.color = fur_color
-		src.UpdateOverlays(overlay, "hair")
+		if (src.use_custom_color)
+			src.ClearAllOverlays()
+			var/image/overlay = image('icons/misc/critter.dmi', "mouse_colorkey-dead")
+			overlay.color = fur_color
+			src.UpdateOverlays(overlay, "hair")
 		..()
 
 	full_heal()
@@ -3244,9 +3247,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	New()
 		..()
-		/*src.fur_color = "#c486ec"
-		src.eye_color = "#000000"
-		src.setup_overlays()*/
 		src.real_name = "[pick_string("mentor_mice_prefixes.txt", "mentor_mouse_prefix")] [src.name]"
 		src.name = src.real_name
 		abilityHolder.addAbility(/datum/targetable/critter/mentordisappear)
@@ -3611,7 +3611,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/gun/spike
+		HH.limb = new /datum/limb/gun/kinetic/spike
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handzap"
 		HH.name = "spikes"

@@ -18,7 +18,11 @@ var/flock_signal_unleashed = FALSE
 	var/list/priority_tiles = list()
 	var/list/deconstruct_targets = list()
 	var/list/traces = list()
+	/// number of zero compute flocktraces the flock has
+	var/free_traces = 0
 	var/queued_trace_deaths = 0
+	/// max number of flocktraces the flock can support
+	var/max_trace_count = 0
 	/// Store a list of all minds who have been flocktraces of this flock at some point, indexed by name
 	var/list/trace_minds = list()
 	/// Store the mind of the current flockmind
@@ -255,15 +259,17 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/proc/can_afford_compute(var/cost)
 	return (cost <= src.total_compute() - src.used_compute)
 
-/datum/flock/proc/update_computes()
+/datum/flock/proc/update_computes(forceTextUpdate = FALSE)
 	var/totalCompute = src.total_compute()
 
 	var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
-	aH?.updateCompute(src.used_compute, totalCompute)
+	aH?.updateCompute(src.used_compute, totalCompute, forceTextUpdate)
 
 	for (var/mob/living/intangible/flock/trace/T as anything in src.traces)
 		aH = T.abilityHolder
-		aH?.updateCompute(src.used_compute, totalCompute)
+		aH?.updateCompute(src.used_compute, totalCompute, forceTextUpdate)
+
+	src.max_trace_count = round(min(src.total_compute(), FLOCK_RELAY_COMPUTE_COST) / FLOCKTRACE_COMPUTE_COST) + src.free_traces
 
 /datum/flock/proc/registerFlockmind(var/mob/living/intangible/flock/flockmind/F)
 	if(!F)
@@ -279,13 +285,7 @@ var/flock_signal_unleashed = FALSE
 	if(!T)
 		return
 	src.traces |= T
-	var/comp_provided = T.compute_provided()
-	if (comp_provided)
-		if (comp_provided < 0)
-			src.used_compute += abs(comp_provided)
-		else
-			src.total_compute += comp_provided
-		src.update_computes()
+	src.update_computes(TRUE)
 
 /datum/flock/proc/removeTrace(var/mob/living/intangible/flock/trace/T)
 	if(!T)
@@ -293,13 +293,7 @@ var/flock_signal_unleashed = FALSE
 	src.traces -= T
 	src.active_names -= T.real_name
 	hideAnnotations(T)
-	var/comp_provided = T.compute_provided()
-	if (comp_provided)
-		if (comp_provided < 0)
-			src.used_compute -= abs(comp_provided)
-		else
-			src.total_compute -= comp_provided
-		src.update_computes()
+	src.update_computes(TRUE)
 
 /datum/flock/proc/ping(var/atom/target, var/mob/living/intangible/flock/pinger)
 	//awful typecheck because turfs and movables have vis_contents defined seperately because god hates us

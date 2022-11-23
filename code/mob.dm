@@ -1252,7 +1252,7 @@
 		if (item)
 			item.layer = initial(item.layer)
 
-/mob/proc/drop_item(obj/item/W)
+/mob/proc/drop_item(obj/item/W, grabs_first)
 	.= 0
 	if (!W) //only pass W if you KNOW that the mob has it
 		W = src.equipped()
@@ -1268,7 +1268,7 @@
 				W = held
 		if (!istype(W) || W.cant_drop) return
 
-		if (W.chokehold != null)
+		if (W.chokehold != null && grabs_first)
 			W.drop_grab()
 			return
 
