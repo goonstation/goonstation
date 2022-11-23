@@ -1,5 +1,9 @@
 
 (t)wed nov 23 22
+(u)ZeWaka
+(p)10388
+(e)🪲🚄🔧🔎🔄❗📄📜|C-Bug, C-Performance, A-Tooling, C-Code-Quality, C-Rework, E-FUCK, A-UI, C-Documentation
+(*)Changed our internal UI systems quite a bit. Remember to report bugs via the button on the top right!
 (u)glowbold
 (p)12063
 (e)🗺|A-Mapping
