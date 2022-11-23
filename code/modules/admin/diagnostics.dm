@@ -243,10 +243,24 @@ proc/debug_map_apc_count(delim,zlim)
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 			img.app.color = is_teleportation_allowed(theTurf) ? "#0f0" : "#f00"
 
+	jps_inconsistent
+		name = "jps inconsistent"
+		help = "Red is turfs with inconsistent jpsUnstable counts to what is really on them"
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			var/trueUnstable = initial(theTurf.jpsUnstable)
+			for(var/atom/A as anything in theTurf.contents)
+				trueUnstable += A.jpsUnstable
+			if(trueUnstable != theTurf.jpsUnstable)
+				img.app.overlays = list(src.makeText(trueUnstable - theTurf.jpsUnstable, RESET_ALPHA | RESET_COLOR))
+				img.app.color = "#f00"
+			else
+				img.app.alpha = 0
+
 	jps_unstable
 		name = "jps unstable"
 		help = "Red is unstable, green is stable, purple is illegal value"
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			img.app.overlays = list(src.makeText(theTurf.jpsUnstable, RESET_ALPHA | RESET_COLOR))
 			img.app.color = theTurf.jpsUnstable >= 1 ? "#f00" : theTurf.jpsUnstable ? "#70f" : "#0f0"
 
 	jps_cache
@@ -255,6 +269,8 @@ proc/debug_map_apc_count(delim,zlim)
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 			if(theTurf.jpsPassableCache != null)
 				img.app.color = theTurf.jpsPassableCache ? "#0f0" : "#f00"
+			else
+				img.app.alpha = 0
 
 	blowout
 		name = "radstorm safezones"
