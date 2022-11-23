@@ -90,7 +90,7 @@ SERVERNAME Goonstation
 #SERVERSUFFIX
 SERVERREGION Development
 
-CDN http://cdn.goonhub.com
+CDN https://cdn.goonhub.com
 RSC http://cdn.goonhub.com/rsc.zip
 ENV dev
 
