@@ -97,6 +97,6 @@
 		user.lastattacked = src
 		hit_twitch(src)
 		user.visible_message("<span class='notice'>[user] Hacks away at the goo!</span>")
-		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
+		playsound(src.loc, pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1)
 		if(src._health <= 0)
 			qdel(src)
