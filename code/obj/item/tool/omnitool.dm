@@ -5,8 +5,6 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi'
 	uses_multiple_icon_states = 1
 	var/prefix = "omnitool"
-	var/has_cutting = FALSE
-	var/has_welding = FALSE
 	var/welding = FALSE
 	var/animated_changes = FALSE
 
@@ -203,8 +201,6 @@
 
 /obj/item/tool/omnitool/syndicate
 	prefix = "syndicate-omnitool"
-	has_cutting = TRUE
-	has_welding = TRUE
 	modes = list(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING, OMNI_MODE_CUTTING, OMNI_MODE_WELDING)
 
 	afterattack(obj/O, mob/user)
