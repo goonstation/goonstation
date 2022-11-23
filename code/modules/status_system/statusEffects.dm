@@ -113,7 +113,7 @@
 		. = 0
 
 	disposing()
-		if (owner)
+		if (owner?.statusEffects)
 			owner.statusEffects -= src
 		src.owner = null
 		..()
@@ -932,6 +932,15 @@
 		maxDuration = 500 SECONDS
 		unique = 1
 		change = 2
+
+	staminaregen/darkness
+		id = "darkness_stam_regen"
+		name = "Dark vigor"
+		desc = "Your stamina regen is increased"
+		icon_state = "stam+"
+		maxDuration = 60 SECONDS
+		unique = TRUE
+		change = 5
 
 	fitness_staminamax
 		id = "fitness_stam_max"
@@ -2072,13 +2081,13 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			M.bioHolder.AddEffect("sims_stinky")
+			M.bioHolder?.AddEffect("sims_stinky")
 
 	onRemove()
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			M.bioHolder.RemoveEffect("sims_stinky")
+			M.bioHolder?.RemoveEffect("sims_stinky")
 
 /datum/statusEffect/flock_absorb
 	id = "flock_absorbing"

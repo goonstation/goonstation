@@ -60,6 +60,9 @@
 	Move(NewLoc, direct)
 		if(!canmove) return
 
+		//Mostly for manifested wraith. Dont move through everything.
+		if (src.density) return ..()
+
 		if (NewLoc && isrestrictedz(src.z) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder))
 			var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (OS)

@@ -56,6 +56,11 @@ const FlockPartitions = (props, context) => {
                       </Stack.Item>
                     )}
                     <Stack.Item>
+                      <Button onClick={() => act('promote_trace', { 'origin': partition.ref })} >
+                        Promote sentience
+                      </Button>
+                    </Stack.Item>
+                    <Stack.Item>
                       <Button onClick={() => act('delete_trace', { 'origin': partition.ref })} >
                         Remove sentience
                       </Button>

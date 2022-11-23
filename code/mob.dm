@@ -220,6 +220,8 @@
 	var/ai_type = null
 	/// AI controller for this mob - only active if is_npc is TRUE, in which case it's called by the mobAI loop at a frequency depending on mob flags
 	var/datum/aiHolder/ai = null
+	///Do we add the special "Toggle AI" ability to this mob?
+	var/use_ai_toggle = TRUE
 	/// used for load balancing mob_ai ticks
 	var/ai_tick_schedule = null
 
@@ -769,6 +771,9 @@
 			hud.add_client(src.client)
 
 /mob/proc/detach_hud(datum/hud/hud)
+	if (!hud) // Can happen if someone dies instantly when entering a z level (i.e. singulo)
+		return
+
 	if (src?.huds) //Wire note: Fix for runtime error: bad list
 		huds -= hud
 
@@ -1102,26 +1107,29 @@
 	if(A == src)
 		return
 
-	if(src.pulling)
+	var/atom/movable/wasPulling = src.pulling
+	if(wasPulling)
 		src.remove_pulling()
+		if(wasPulling == A)
+			return
 
 	if(!can_reach(src, A) || src.restrained())
 		return
 
-	pulling = A
+	src.pulling = A
 
-	if(ismob(pulling))
-		var/mob/M = pulling
+	if(ismob(src.pulling))
+		var/mob/M = src.pulling
 		M.pulled_by = src
 
 	//robust grab : a dirty DIRTY trick on mbc's part. When I am being chokeholded by someone, redirect pulls to the captor.
 	//this is so much simpler than pulling the victim and invoking movment on the captor through that chain of events.
-	if (ishuman(pulling))
-		var/mob/living/carbon/human/H = pulling
+	if (ishuman(src.pulling))
+		var/mob/living/carbon/human/H = src.pulling
 		if (length(H.grabbed_by))
 			for (var/obj/item/grab/G in src.grabbed_by)
 				if (G.state < GRAB_AGGRESSIVE) continue
-				pulling = G.assailant
+				src.pulling = G.assailant
 				G.assailant.pulled_by = src
 
 	pull_particle(src,pulling)
@@ -1244,7 +1252,7 @@
 		if (item)
 			item.layer = initial(item.layer)
 
-/mob/proc/drop_item(obj/item/W)
+/mob/proc/drop_item(obj/item/W, grabs_first)
 	.= 0
 	if (!W) //only pass W if you KNOW that the mob has it
 		W = src.equipped()
@@ -1260,7 +1268,7 @@
 				W = held
 		if (!istype(W) || W.cant_drop) return
 
-		if (W.chokehold != null)
+		if (W.chokehold != null && grabs_first)
 			W.drop_grab()
 			return
 
@@ -2152,7 +2160,7 @@
 			the_butt = new /obj/item/clothing/head/butt(src.loc, organHolder)
 		else if (istype(src, /mob/living/silicon))
 			the_butt = new /obj/item/clothing/head/butt/cyberbutt
-		else if (istype(src, /mob/wraith) || istype(src, /mob/dead))
+		else if (istype(src, /mob/living/intangible/wraith) || istype(src, /mob/dead))
 			the_butt = new /obj/item/clothing/head/butt
 			the_butt.setMaterial(getMaterial("ectoplasm"), appearance = TRUE, setname = TRUE, copy = FALSE)
 		else if (istype(src, /mob/living/intangible/blob_overmind))
@@ -2800,7 +2808,7 @@
 		if(force_instead)
 			newname = default_name
 		else
-			newname = input(src, "[what_you_are ? "You are \a [what_you_are]. " : null]Would you like to change your name to something else?", "Name Change", default_name ? default_name : src.real_name) as null|text
+			newname = tgui_input_text(src, "[what_you_are ? "You are \a [what_you_are]. " : null]Would you like to change your name to something else?", "Name Change", default_name || src.real_name)
 		if (!newname)
 			return
 		else
@@ -3220,3 +3228,13 @@
 	src.set_loc(get_turf(src.observing))
 	src.observing = null
 	src.ghostize()
+
+/// search for any radio device, starting with hands and then equipment
+/// anything else is arbitrarily too deeply hidden and stowed away to get the signal
+/// (more practically, they won't hear it)
+/mob/proc/find_radio()
+	if(istype(src.ears, /obj/item/device/radio))
+		return src.ears
+	. = src.find_type_in_hand(/obj/item/device/radio)
+	if(!.)
+		. = src.find_in_equipment(/obj/item/device/radio)

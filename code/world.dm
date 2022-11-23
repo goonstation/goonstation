@@ -378,6 +378,9 @@ var/f_color_selector_handler/F_Color_Selector
 	//This is used by bans for checking, so we want it very available
 	apiHandler = new()
 
+	participationRecorder = new()
+	//participationRecorder = new(1) //Enable debug
+
 	//This is also used pretty early
 	Z_LOG_DEBUG("World/New", "Setting up powernets...")
 	makepowernets()
@@ -597,9 +600,6 @@ var/f_color_selector_handler/F_Color_Selector
 	if(length(global.region_allocator.free_nodes) == 0)
 		global.region_allocator.add_z_level()
 	#endif
-
-	Z_LOG_DEBUG("World/Init", "Generating AI station map...")
-	ai_station_map = new
 
 	UPDATE_TITLE_STATUS("Ready")
 	current_state = GAME_STATE_PREGAME
@@ -1782,6 +1782,9 @@ var/f_color_selector_handler/F_Color_Selector
 
 
 /world/proc/setMaxZ(new_maxz)
+	// when calling this proc if you don't care about the actual contents of the new z-level you might want to set
+	// global.dont_init_space = TRUE before calling this proc and unset it afterwards. This will speed things up but
+	// the space filling this z-level will be somewhat broken (which you will hopefully replace with whatever it is you want to replace it with).
 	if (!isnum(new_maxz) || new_maxz <= src.maxz)
 		return src.maxz
 	for (var/zlevel = world.maxz+1; zlevel <= new_maxz; zlevel++)

@@ -13,12 +13,12 @@
 #include "defines\_units.dm"		// this has some unit defines that a lot of other macros/defines use, so it needs to go near the start too
 #include "defines\lag.dm"			// the all important LAGCHECK()
 #include "types.dm"					// stuff like childrentypesof()
+#include "datum.dm"					// hasvar()
 #include "defines\access.dm"
 #include "defines\actions.dm"
 #include "defines\admin.dm"
 #include "defines\ai.dm"
 #include "defines\antagonists.dm"
-#include "defines\area.dm"
 #include "defines\announcement_origins.dm"
 #include "defines\artifacts.dm"
 #include "defines\atom.dm"
@@ -62,6 +62,7 @@
 #include "defines\mechanics.dm"
 #include "defines\medals.dm"
 #include "defines\message_lengths.dm"
+#include "defines\minimap.dm"
 #include "defines\mob.dm"
 #include "defines\movement.dm"
 #include "defines\obj.dm"
@@ -75,6 +76,7 @@
 #include "defines\RCD.dm"
 #include "defines\robot.dm"
 #include "defines\roles.dm"
+#include "defines\scanners.dm"
 #include "defines\shuttle.dm"
 #include "defines\sight.dm"
 #include "defines\sims.dm"
@@ -121,6 +123,7 @@
 #include "macros\mob_status.dm"
 #include "macros\movable.dm"
 #include "macros\movement_modifiers.dm"
+#include "macros\process.dm"
 #include "macros\procs.dm"
 #include "macros\qdel.dm"
 #include "macros\spawn.dm"
@@ -134,7 +137,6 @@
 #include "color.dm"
 #include "compare.dm"
 #include "copy.dm"
-#include "datum.dm"
 #include "filesystem.dm"
 #include "filters.dm"
 #include "heap.dm"

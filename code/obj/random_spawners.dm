@@ -20,10 +20,11 @@
 		..()
 		SPAWN(1 DECI SECOND)
 			src.spawn_items()
-			sleep(10 SECONDS)
+			sleep(5 SECONDS) // ZEWAKA/INIT
 			qdel(src)
 
 	proc/spawn_items()
+		SHOULD_NOT_SLEEP(TRUE)
 		if (islist(src.guaranteed) && length(src.guaranteed))
 			for (var/obj/new_item in src.guaranteed)
 				if (!ispath(new_item))
@@ -1106,7 +1107,7 @@
 	max_amt2spawn = 6
 	items2spawn = list(/obj/critter/domestic_bee,
 	/obj/critter/bat,
-	/obj/critter/mouse,
+	/mob/living/critter/small_animal/mouse,
 	/obj/critter/opossum,
 	/obj/critter/dog/george/blair,
 	/obj/critter/dog/george/orwell,
@@ -1868,3 +1869,36 @@
 	one_to_three
 		min_amt2spawn = 1
 		max_amt2spawn = 3
+
+
+/obj/random_item_spawner/armory_breaching_supplies //random
+	spawn_items()
+		new /obj/rack(src.loc)
+		new /obj/item/breaching_charge{
+			pixel_x = 10;
+			pixel_y = 1
+			}(src.loc)
+		new /obj/item/breaching_charge{
+			pixel_x = 4;
+			pixel_y = -2
+			}(src.loc)
+		new /obj/item/breaching_charge{
+			pixel_x = -2;
+			pixel_y = -5
+			}(src.loc)
+		new /obj/item/breaching_hammer{
+			pixel_x = -3;
+			pixel_y = 7
+			}(src.loc)
+		new /obj/item/breaching_hammer{
+			pixel_x = -1;
+			pixel_y = 1
+			}(src.loc)
+		new /obj/item/gun/kinetic/riot40mm/breach{
+			pixel_x = -5;
+			pixel_y = 8
+			}(src.loc)
+		new /obj/item/ammo/bullets/breach_flashbang{
+			pixel_x = -4;
+			pixel_y = 3
+			}(src.loc)
