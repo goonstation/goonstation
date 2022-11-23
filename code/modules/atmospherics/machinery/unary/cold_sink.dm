@@ -33,9 +33,7 @@
 		if(combined_heat_capacity > 0)
 			var/combined_energy = current_temperature*current_heat_capacity + air_heat_capacity*air_contents.temperature
 			air_contents.temperature = combined_energy/combined_heat_capacity
-
-			// more of a fascimile than actually basing it off the work done, but the values feel right
-			use_power(round(air_contents.temperature-src.current_temperature), ENVIRON) // watt per degree kelvin from target temp
+			use_power(round(old_temperature-air_contents.temperature), ENVIRON) // watt per degree kelvin lowered
 
 		if(abs(old_temperature-air_contents.temperature) > 1 && network)
 			network.update = 1
