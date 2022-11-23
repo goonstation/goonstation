@@ -30,6 +30,8 @@
 	var/floorrunning = FALSE
 	var/can_floorrun = TRUE
 
+	var/mob/living/intangible/flock/selected_by = null
+
 	var/glow_color = "#26ffe6a2"
 
 	var/ai_paused = FALSE
@@ -130,6 +132,14 @@
 	if(controller)
 		boutput(pilot, "<span class='alert'>This drone is already being controlled.</span>")
 		return
+	if (src.selected_by)
+		if (src.selected_by != pilot)
+			boutput(pilot, "<span class='alert'>This drone is receiving a command!</span>")
+			return
+		var/mob/living/intangible/flock/selecter = src.selected_by
+		var/datum/abilityHolder/flockmind/AH = selecter.abilityHolder
+		AH.drone_controller.cast(src)
+		selecter.targeting_ability = null
 	src.controller = pilot
 	src.wake_from_ai_pause()
 	src.ai.stop_move()
@@ -428,7 +438,8 @@
 		if(holder?.drone_controller.drone == src) //if click behaviour has highlighted this drone for control
 			holder.drone_controller.cast(src) //deselect it
 			F.targeting_ability = null
-		src.take_control(usr)
+		if (!isdead(src) && !src.controller && !src.selected_by)
+			src.take_control(usr)
 
 /mob/living/critter/flock/drone/MouseDrop_T(mob/living/target, mob/user)
 	if(!target || !user)
@@ -775,6 +786,13 @@
 	remove_lifeprocess(/datum/lifeprocess/statusupdate)
 
 /mob/living/critter/flock/drone/death(var/gibbed)
+	if (src.selected_by)
+		var/mob/living/intangible/flock/selecter = src.selected_by
+		var/datum/abilityHolder/flockmind/AH = selecter.abilityHolder
+		AH.drone_controller.cast(src)
+		selecter.targeting_ability = null
+		selecter.update_cursor()
+
 	if(src.controller)
 		src.release_control()
 	if(!src.dormant)

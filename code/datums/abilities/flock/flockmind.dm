@@ -521,6 +521,8 @@
 	qdel(ping)
 
 	if (target == src.drone)
+		src.drone.selected_by = null
+		src.drone = null
 		return
 	//by default we try to convert the target
 	var/task_type = /datum/aiTask/sequence/goalbased/flock/build/targetable
@@ -551,3 +553,6 @@
 	if(drone.ai_paused)
 		drone.wake_from_ai_pause()
 	drone.ai.interrupt()
+
+	src.drone.selected_by = null
+	src.drone = null
