@@ -134,6 +134,7 @@
 	anchored = 2
 	flags = TABLEPASS | UNCRUSHABLE
 	burn_possible = 0
+	item_function_flags = IMMUNE_TO_ACID
 
 	disposing()
 		disposed = FALSE
