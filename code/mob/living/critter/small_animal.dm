@@ -514,7 +514,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 				var/attackCount = rand(5, 9)
 				var/iteration = 0
 				target.setStatus("weakened", 2 SECONDS)
-				src.visible_message("<span class='combat'>[src] [pick("starts to claw the living <b>shit</b> out of ", "unleashes a flury of claw at ")] [target]!</span>")
+				src.visible_message("<span class='combat'>[src] [pick("starts to claw the living <b>shit</b> out of ", "unleashes a flurry of claw at ")] [target]!</span>")
 				SPAWN(0)
 					while (iteration <= attackCount && (get_dist(src, target) <= 1))
 						random_brute_damage(target, src.attack_damage + 2, 1)
