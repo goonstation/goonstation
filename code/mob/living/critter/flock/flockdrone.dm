@@ -136,10 +136,10 @@
 		if (src.selected_by != pilot)
 			boutput(pilot, "<span class='alert'>This drone is receiving a command!</span>")
 			return
-		var/mob/living/intangible/flock/selecter = src.selected_by
-		var/datum/abilityHolder/flockmind/AH = selecter.abilityHolder
+		var/mob/living/intangible/flock/selector = src.selected_by
+		var/datum/abilityHolder/flockmind/AH = selector.abilityHolder
 		AH.drone_controller.cast(src)
-		selecter.targeting_ability = null
+		selector.targeting_ability = null
 	src.controller = pilot
 	src.wake_from_ai_pause()
 	src.ai.stop_move()
@@ -790,11 +790,11 @@
 
 /mob/living/critter/flock/drone/death(var/gibbed)
 	if (src.selected_by)
-		var/mob/living/intangible/flock/selecter = src.selected_by
-		var/datum/abilityHolder/flockmind/AH = selecter.abilityHolder
+		var/mob/living/intangible/flock/selector = src.selected_by
+		var/datum/abilityHolder/flockmind/AH = selector.abilityHolder
 		AH.drone_controller.cast(src)
-		selecter.targeting_ability = null
-		selecter.update_cursor()
+		selector.targeting_ability = null
+		selector.update_cursor()
 
 	if(src.controller)
 		src.release_control()
