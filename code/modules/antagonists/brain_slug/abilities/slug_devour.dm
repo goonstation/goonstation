@@ -2,7 +2,7 @@
 	name = "Devour"
 	desc = "Eat a human's limb or organs for sustenance."
 	icon_state = "devour"
-	cooldown = 50 SECOND
+	cooldown = 40 SECOND
 	targeted = 1
 
 	cast(atom/target)

@@ -1,10 +1,11 @@
 /datum/targetable/brain_slug/restraining_spit
 	name = "Restraining puddle"
-	desc = "Horfs some movement impairing goo at someone next to you."
+	desc = "Horfs some movement impairing goo at someone next to you. The goo will melt after awhile, or if it is hit too much."
 	icon_state = "restrain_slime"
 	cooldown = 50 SECONDS
 	targeted = 1
 	pointCost = 30
+	while_restrained = FALSE
 
 	onAttach(datum/abilityHolder/holder)
 		if (istype(holder.owner, /mob/living/critter/adult_brain_slug))

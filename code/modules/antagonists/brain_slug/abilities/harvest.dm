@@ -1,9 +1,10 @@
 /datum/targetable/brain_slug/harvest
 	name = "Harvest"
-	desc = "Steal some organs from someone to sustain your body and evolve."
+	desc = "Steal some organs from someone to regain stability and evolve. You and your target must stand still. Stuns after a short delay."
 	icon_state = "harvest"
 	cooldown = 60 SECOND
 	targeted = 1
+	while_restrained = FALSE
 
 	cast(atom/target)
 		if (!isturf(holder.owner.loc))

@@ -1,11 +1,12 @@
 /datum/targetable/brain_slug/acidic_spit
 	name = "Acidic Spit"
-	desc = "Spew a stream of acidic spit at the ground, melting whoever stands in it."
+	desc = "Spew a glob of acidic spit at the ground, splattering and melting whoever stands in it."
 	icon_state = "acid"
 	cooldown = 80 SECONDS
 	targeted = 1
 	target_anything = 1
 	pointCost = 50
+	while_restrained = FALSE
 
 	cast(atom/target)
 		if (!isturf(holder.owner.loc))

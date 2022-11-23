@@ -1,6 +1,6 @@
 /datum/targetable/brain_slug/take_control
 	name = "Assume control"
-	desc = "Take full control of the being you infested along with healing any damage they may have."
+	desc = "Take full control of the being you infested along with healing any superficial damage they may have."
 	icon_state = "take_control"
 	cooldown = 10 SECONDS
 	targeted = 0

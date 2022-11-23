@@ -1,11 +1,12 @@
 /datum/targetable/brain_slug/sling_spit
 	name = "Elastic tether"
-	desc = "Create a string of elastic goo between two points."
+	desc = "Launch a tether at a location that stops anyone near it from moving away from it. Disappears after a short time."
 	icon_state = "slinging_slime"
 	cooldown = 45 SECONDS
 	targeted = 1
 	target_anything = 1
 	pointCost = 30
+	while_restrained = FALSE
 
 	cast(atom/target)
 		if (!isturf(holder.owner.loc))

@@ -10,8 +10,8 @@
 	speechverb_say = "clicks"
 	speechverb_exclaim = "clacks"
 	speechverb_ask = "snips"
-	health_brute = 35
-	health_burn = 20
+	health_brute = 20
+	health_burn = 10
 	ai_type = /datum/aiHolder/broodling
 	add_abilities = list(/datum/targetable/critter/broodling_sting)
 	is_npc = TRUE

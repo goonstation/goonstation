@@ -120,7 +120,7 @@ proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 	//Small animals are fair game except mentormice and adminmice for obvious reasons.
 	if (istype(mob_target, /mob/living/critter/small_animal) && !istype(mob_target, /mob/living/critter/small_animal/mouse/weak/mentor) && !istype(mob_target, /mob/living/critter/small_animal/mouse/weak/mentor/admin))
 		var/mob/living/critter/small_animal/animal_target = mob_target
-		if (!isalive(animal_target))
+		if (isdead(animal_target))
 			boutput(caster, "<span class='notice'>You got here a bit late. [animal_target] is already dead.</span>")
 			return FALSE
 		if (animal_target.mind == null)
@@ -131,7 +131,7 @@ proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 
 	//Human corpses are also prime targets
 	else if (ishuman(mob_target))
-		if (isalive(mob_target))
+		if (!isdead(mob_target))
 			boutput(caster, "<span class='notice'>They are too twitchy to infest. It'd be much easier if they stopped moving. Permanently.</span>")
 			return FALSE
 		var/mob/living/carbon/human/human_target = mob_target

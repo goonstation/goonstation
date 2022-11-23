@@ -39,8 +39,16 @@ ABSTRACT_TYPE(/datum/targetable/brain_slug)
 	icon = 'icons/mob/brainslug_ui.dmi'
 	var/border_icon = 'icons/mob/brainslug_ui.dmi'
 	var/border_state = "brain_slug_frame"
+	var/while_restrained = TRUE
 
 	onAttach(datum/abilityHolder/holder)
 		..()
 		var/atom/movable/screen/ability/topBar/B = src.object
 		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
+
+	cast(atom/target)
+		if (holder.owner.hasStatus("handcuffed") && !src.while_restrained)
+			boutput(holder.owner, "<span class='alert'>You cannot do this while handcuffed!</span>")
+			return TRUE
+		. = ..()
+
