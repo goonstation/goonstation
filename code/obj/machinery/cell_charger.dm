@@ -92,3 +92,9 @@
 	. = ..()
 	if(Obj == src.charging)
 		src.charging = null
+
+/obj/machinery/cell_charger/get_desc(dist)
+	. = ..()
+	if(!charging)
+		return
+	. += "<br><span class='notice'>\The [src] is currently charging \the [src.charging]! It is [round(src.charging.percent())]% charged and has [round(src.charging.charge)]/[src.charging.maxcharge] PUs. </span>"
