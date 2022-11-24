@@ -83,4 +83,3 @@
 							attacked += A
 							playsound(src.loc, 'sound/impact_sounds/Generic_Hit_2.ogg', 80, 1)
 							src.visible_message("<span class='combat'>[src] slams the ground and hits [target_mob]!</b></span>")
-			return
