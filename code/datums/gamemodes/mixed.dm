@@ -3,15 +3,20 @@
 	config_tag = "mixed"
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1, ROLE_WRESTLER = 1, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1)
+	antag_token_support = TRUE
 
 	var/const/traitors_possible = 8 // cogwerks - lowered from 10
 	var/const/werewolf_players_req = 15
 
-	var/has_wizards = 1
-	var/has_werewolves = 1
-	var/has_blobs = 1
+	var/has_wizards = TRUE
+	var/has_werewolves = TRUE
 
 	var/list/traitor_types = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1 , ROLE_SPY_THIEF = 1, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1)
+#if defined(MAP_OVERRIDE_NADIR)
+	var/list/major_threats = list(ROLE_WRAITH = 1, ROLE_FLOCKMIND = 1)
+#else
+	var/list/major_threats = list(ROLE_BLOB = 1, ROLE_WRAITH = 1, ROLE_FLOCKMIND = 1)
+#endif
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -51,18 +56,24 @@
 	var/num_spy_thiefs = 0
 	var/num_werewolves = 0
 	var/num_arcfiends = 0
+	var/num_flockminds = 0
 #if defined(XMAS) && !defined(RP_MODE)
 	src.traitor_types[ROLE_GRINCH] = 1;
 	src.latejoin_antag_roles[ROLE_GRINCH] = 1;
 #endif
 
-	if ((num_enemies >= 4 && prob(20)) || debug_mixed_forced_wraith || debug_mixed_forced_blob)
-		if (prob(50) || debug_mixed_forced_wraith)
+	var/major_threat_chance = length(src.major_threats) * 20
+	if ((num_enemies >= 4 && prob(major_threat_chance)) || debug_mixed_forced_wraith || debug_mixed_forced_blob || debug_mixed_forced_flock)
+		var/chosen = weighted_pick(src.major_threats)
+		if (chosen == ROLE_WRAITH || debug_mixed_forced_wraith)
 			num_enemies = max(num_enemies - 2, 1)
 			num_wraiths = 1
-		else if (has_blobs)
-			num_enemies = max(num_enemies - 4, 1)
+		else if (chosen == ROLE_BLOB || debug_mixed_forced_blob)
+			num_enemies = max(num_enemies - 3, 1)
 			num_blobs = 1
+		else if (chosen == ROLE_FLOCKMIND || debug_mixed_forced_flock)
+			num_enemies = max(num_enemies - 2, 1)
+			num_flockminds = 1
 	for(var/j = 0, j < num_enemies, j++)
 		if(has_wizards && prob(10)) // powerful combat roles
 			num_wizards++
@@ -75,11 +86,7 @@
 				if(ROLE_GRINCH) num_grinches++
 				if(ROLE_SPY_THIEF) num_spy_thiefs++
 				if(ROLE_WEREWOLF) num_werewolves++
-				if(ROLE_ARCFIEND)
-					if(num_arcfiends < 2)
-						num_arcfiends++
-					else
-						num_traitors++
+				if(ROLE_ARCFIEND) num_arcfiends++
 
 	token_players = antag_token_list()
 	for(var/datum/mind/tplayer in token_players)
@@ -130,7 +137,7 @@
 				token_players.Remove(tplayer)
 				tplayer.special_role = ROLE_ARCFIEND
 
-		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 
 	if(num_wizards)
@@ -181,6 +188,14 @@
 			traitors += blob
 			blob.special_role = ROLE_BLOB
 			possible_blobs.Remove(blob)
+
+	if(num_flockminds)
+		var/list/possible_flockminds = get_possible_enemies(ROLE_FLOCKMIND,num_flockminds)
+		var/list/chosen_flockminds = antagWeighter.choose(pool = possible_flockminds, role = ROLE_FLOCKMIND, amount = num_flockminds, recordChosen = 1)
+		for (var/datum/mind/flockmind in chosen_flockminds)
+			traitors += flockmind
+			flockmind.special_role = ROLE_FLOCKMIND
+			possible_flockminds.Remove(flockmind)
 
 	if(num_grinches)
 		var/list/possible_grinches = get_possible_enemies(ROLE_MISC,num_grinches)

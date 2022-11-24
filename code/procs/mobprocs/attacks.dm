@@ -1,5 +1,5 @@
 
-/mob/attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
+/mob/attackby(obj/item/W, mob/user, params, is_special = 0)
 	actions.interrupt(src, INTERRUPT_ATTACKED)
 
 	// why is this not in human/attackby?
@@ -46,7 +46,7 @@
 					if (!W.hide_attack)
 						attack_particle(user,src)
 						attack_twitch(user, anim_mult, anim_mult)
-					else if (W.hide_attack == 2)
+					else if (W.hide_attack == ATTACK_PARTIALLY_HIDDEN)
 						attack_twitch(user, anim_mult, , anim_mult)
 
 

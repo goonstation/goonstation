@@ -7,6 +7,7 @@
 	max_range = 0
 	cooldown = 10
 	pointCost = 0
+	not_when_in_an_object = FALSE
 	when_stunned = 2
 	not_when_handcuffed = 0
 
@@ -36,9 +37,9 @@
 			M.visible_message("<span class='alert'><B>[M] contorts their body and judders upright!</B></span>")
 			playsound(M.loc, 'sound/effects/bones_break.ogg', 60, 1)
 		else if (message_type == 2)
-			boutput(M, __blue("You feel your flesh knitting itself back together."))
+			boutput(M, "<span class='notice'>You feel your flesh knitting itself back together.</span>")
 		else
-			boutput(M, __blue("You feel refreshed and ready to get back into the fight."))
+			boutput(M, "<span class='notice'>You feel refreshed and ready to get back into the fight.</span>")
 
 		M.delStatus("resting")
 		if (ishuman(M))
@@ -48,7 +49,7 @@
 		M.force_laydown_standup()
 
 
-		logTheThing("combat", M, null, "uses cancel stuns at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses cancel stuns at [log_loc(M)].")
 		return
 
 	cast(mob/target)
@@ -66,7 +67,7 @@
 		M.TakeDamage("All", greatest_stun, 0)
 		M.take_oxygen_deprivation(-5)
 		M.losebreath = min(usr.losebreath - 3)
-		boutput(M, __blue("You cancel your stuns and take [greatest_stun] damage in return."))
+		boutput(M, "<span class='notice'>You cancel your stuns and take [greatest_stun] damage in return.</span>")
 
 		src.remove_stuns(3)
 		return 0

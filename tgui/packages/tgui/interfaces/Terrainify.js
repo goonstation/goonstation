@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
 import { Box, Button, Flex, Section } from '../components';
 import { Window } from '../layouts';
@@ -38,8 +37,10 @@ export const TerrainVehicleChoice = props => {
   const {
     fabricator,
     cars,
+    allowVehicles,
     onToggleFabricators,
     onToggleCars,
+    onToggleAllowVehicles,
   } = props;
 
   return (
@@ -54,6 +55,11 @@ export const TerrainVehicleChoice = props => {
           checked={cars}
           content={"Convert some Cars"}
           onClick={() => onToggleCars()}
+        />
+        <Button.Checkbox
+          checked={allowVehicles}
+          content={"Allow Pods"}
+          onClick={() => onToggleAllowVehicles()}
         />
       </Section>
     </Flex.Item>
@@ -123,6 +129,7 @@ export const Terrainify = (props, context) => {
     terrain,
     fabricator,
     cars,
+    allowVehicles,
     locked,
     activeOptions,
     activeToggles,
@@ -134,6 +141,10 @@ export const Terrainify = (props, context) => {
 
   const handleToggleFabs = () => {
     act("fabricator");
+  };
+
+  const handleToggleAllowVehicles = () => {
+    act("allowVehicles");
   };
 
   const handleToggleGeneric = toggle => {
@@ -181,6 +192,8 @@ export const Terrainify = (props, context) => {
               <TerrainVehicleChoice
                 fabricator={fabricator}
                 cars={cars}
+                allowVehicles={allowVehicles}
+                onToggleAllowVehicles={handleToggleAllowVehicles}
                 onToggleFabricators={handleToggleFabs}
                 onToggleCars={handleToggleCars} />
               <TerrainToggles

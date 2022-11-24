@@ -35,7 +35,7 @@
 		HH.set_loc(M.loc)
 		HH.set_dir(get_dir(HH, M))
 
-		SEND_SIGNAL(M, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+		SEND_SIGNAL(M, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 		HH.changeStatus("stunned", 4 SECONDS)
 		M.visible_message("<span class='alert'><B>[M] starts spinning around with [HH]!</B></span>")
@@ -59,7 +59,7 @@
 			if (M && HH)
 				// These are necessary because of the sleep call.
 				if (!G || !istype(G) || G.state == GRAB_PASSIVE)
-					boutput(M, __red("You can't throw the target without a firm grab!"))
+					boutput(M, "<span class='alert'>You can't throw the target without a firm grab!</span>")
 					return 0
 
 				if (src.castcheck() != 1)
@@ -67,7 +67,7 @@
 					return 0
 
 				if (!isturf(M.loc) || !isturf(HH.loc))
-					boutput(M, __red("You can't throw [HH] from here!"))
+					boutput(M, "<span class='alert'>You can't throw [HH] from here!</span>")
 					qdel(G)
 					return 0
 
@@ -94,7 +94,7 @@
 		if (M && HH)
 			// These are necessary because of the sleep call.
 			if (!G || !istype(G) || G.state == GRAB_PASSIVE)
-				boutput(M, __red("You can't throw the target without a firm grab!"))
+				boutput(M, "<span class='alert'>You can't throw the target without a firm grab!</span>")
 				return 0
 
 			if (src.castcheck() != 1)
@@ -102,7 +102,7 @@
 				return 0
 
 			if (!isturf(M.loc) || !isturf(HH.loc))
-				boutput(M, __red("You can't throw [HH] from here!"))
+				boutput(M, "<span class='alert'>You can't throw [HH] from here!</span>")
 				qdel(G)
 				return 0
 
@@ -114,8 +114,6 @@
 
 			var/turf/T = get_edge_target_turf(M, M.dir)
 			if (T && isturf(T))
-				if (!isdead(HH))
-					HH.emote("scream")
 				if (!fake)
 					HH.set_loc(get_turf(M))
 					HH.throw_at(T, 10, 4, bonus_throwforce = 33) // y e e t
@@ -127,7 +125,7 @@
 					HH.throw_at(T, 3, 1)
 
 
-			logTheThing("combat", M, HH, "uses the [fake ? "fake " : ""]throw wrestling move on [constructTarget(HH,"combat")] at [log_loc(M)].")
+			logTheThing(LOG_COMBAT, M, "uses the [fake ? "fake " : ""]throw wrestling move on [constructTarget(HH,"combat")] at [log_loc(M)].")
 
 		if (G && istype(G)) // Target was gibbed before we could throw them, who knows.
 			qdel(G)

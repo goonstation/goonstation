@@ -5,7 +5,7 @@
 	density = 1
 	var/failchance = 5
 	var/obj/item/target = null
-	anchored = 1.0
+	anchored = 1
 	var/portal_lums = 2
 	var/datum/light/light
 	event_handler_flags = USE_FLUID_ENTER
@@ -32,7 +32,7 @@
 	SPAWN(0)
 		src.teleport(AM)
 
-/obj/portal/attack_hand(mob/M as mob)
+/obj/portal/attack_hand(mob/M)
 	SPAWN(0)
 		src.teleport(M)
 
@@ -68,12 +68,12 @@
 
 					return
 				if(ismob(M))
-					logTheThing("combat", M, null, "entered [src] at [log_loc(src)] and teleported to [src.target] at [log_loc(destination)]")
+					logTheThing(LOG_STATION, M, "entered [src] at [log_loc(src)] and teleported to [src.target] at [log_loc(destination)]")
 				do_teleport(M, destination, 1)
 			else return
 		else
 			if(ismob(M))
-				logTheThing("combat", M, null, "entered [src] at [log_loc(src)] and teleported to [log_loc(src.target)]")
+				logTheThing(LOG_STATION, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(src.target)]")
 			do_teleport(M, src.target, 1) ///You will appear adjacent to the beacon
 
 /obj/portal/wormhole
@@ -114,7 +114,7 @@
 				M.ghostize()
 			qdel(src)
 
-	attack_hand(mob/M as mob)
+	attack_hand(mob/M)
 		SPAWN(0)
 			M.ghostize()
 			qdel(src)

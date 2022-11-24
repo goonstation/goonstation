@@ -83,12 +83,12 @@
 			maxlines = 1
 
 		pz.UpdateOverlays(image('icons/obj/zoldorf.dmi',"fortunetelling"),"fortunetelling")
-		fortune_mystical = sortList(fortune_mystical)
-		fortune_nouns = sortList(fortune_nouns)
+		sortList(fortune_mystical, /proc/cmp_text_asc)
+		sortList(fortune_nouns, /proc/cmp_text_asc)
 		fortune_nouns.Add("[holder.owner]")
-		fortune_verbs = sortList(fortune_verbs)
-		fortune_adjectives = sortList(fortune_adjectives)
-		sentencesShort = sortList(sentencesShort)
+		sortList(fortune_verbs, /proc/cmp_text_asc)
+		sortList(fortune_adjectives, /proc/cmp_text_asc)
+		sortList(sentencesShort, /proc/cmp_text_asc)
 
 		pz.visible_message("<span class='notice'>[pz] wakes up!</span>")
 		playsound(pz.loc, 'sound/machines/fortune_riff.ogg', 60, 1)
@@ -172,7 +172,7 @@
 					speechinput = input("[sentence](noun) and (verb) yourself.", "Noun", null) as null|anything in fortune_nouns
 					if(!speechinput) break
 					sentence += "[speechinput] and "
-					speechinput = input("[sentence]and (verb) yourself.", "Verb", null) as null|anything in fortune_verbs
+					speechinput = input("[sentence](verb) yourself.", "Verb", null) as null|anything in fortune_verbs
 					if(!speechinput) break
 					sentence += "[speechinput] yourself."
 				if("Remember to...")
@@ -356,11 +356,11 @@
 			return
 		if(destination == "home")
 			if(user.homebooth)
-				user.set_loc(user.homebooth)
+				user.stopObserving()
 			else
 				return
 		else
-			user.set_loc(destination)
+			user.observeMob(destination)
 
 /datum/targetable/zoldorfAbility/medium
 	name = "Medium"
@@ -515,7 +515,7 @@
 						return
 					note = strip_html(note,MAX_MESSAGE_LEN)
 					note += " - [user.name]"
-					logTheThing("say", user, null, "[user] has created a Zoldorf note: [note]")
+					logTheThing(LOG_SAY, user, "[user] has created a Zoldorf note: [note]")
 					if(pz)
 						pz.notes.Add(note)
 						boutput(user,"<span class='success'><b>Note added!</b></span>")

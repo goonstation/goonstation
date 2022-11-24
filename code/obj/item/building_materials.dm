@@ -8,6 +8,8 @@ MATERIAL
 */
 
 /proc/window_reinforce_callback(var/datum/action/bar/icon/build/B, var/obj/window/reinforced/W)
+	sheet_crafting_callback(B)
+
 	W.ini_dir = 2
 	if (!istype(W) || !usr) //Wire: Fix for Cannot read null.loc (|| !usr)
 		return
@@ -19,6 +21,8 @@ MATERIAL
 			W = new /obj/window/reinforced(usr.loc)
 
 /proc/window_reinforce_full_callback(var/datum/action/bar/icon/build/B, var/obj/window/reinforced/W)
+	sheet_crafting_callback(B)
+
 	W.set_dir(SOUTHWEST)
 	W.ini_dir = SOUTHWEST
 	if (!istype(W))
@@ -32,6 +36,9 @@ MATERIAL
 		else
 			W = new /obj/window/reinforced(usr.loc)
 
+/proc/sheet_crafting_callback(var/datum/action/bar/icon/build/B)
+	tgui_process.update_uis(B.sheet)
+
 /obj/item/sheet
 	name = "sheet"
 	icon = 'icons/obj/metal.dmi'
@@ -40,7 +47,7 @@ MATERIAL
 	var/icon_state_base = "sheet"
 	desc = "Thin sheets of building material. Can be used to build many things."
 	flags = FPRINT | TABLEPASS
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_NORMAL
@@ -72,9 +79,7 @@ MATERIAL
 		. = ..()
 		if (amount < 1)
 			if (isliving(src.loc))
-				var/mob/living/L = src.loc
-				L.Browse(null, "window=met_sheet")
-				onclose(L, "met_sheet")
+				tgui_process.update_uis(src)
 
 	proc/set_reinforcement(var/datum/material/M)
 		if (!istype(M))
@@ -117,7 +122,7 @@ MATERIAL
 
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			if(!in_interact_range(src, user) || !isnum_safe(splitnum))
@@ -132,12 +137,13 @@ MATERIAL
 			user.put_in_hand_or_drop(new_stack)
 			new_stack.add_fingerprint(user)
 			boutput(user, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [src.amount] sheets behind.</span>")
+			tgui_process.update_uis(src)
 		else
 			..(user)
 
 	split_stack(toRemove)
 		. = ..()
-		if(src.reinforcement)
+		if(. && src.reinforcement)
 			var/obj/item/sheet/S = .
 			S.set_reinforcement(src.reinforcement)
 			. = S
@@ -153,7 +159,7 @@ MATERIAL
 						var/a_type = reinf ? /obj/item/furniture_parts/table/glass/reinforced : /obj/item/furniture_parts/table/glass
 						var/a_icon_state = "[reinf ? "r_" : null]table_parts"
 						var/a_name = "[reinf ? "reinforced " : null]glass table parts"
-						actions.start(new /datum/action/bar/icon/build(S, a_type, 2, S.material, 1, 'icons/obj/furniture/table_glass.dmi', a_icon_state, a_name, null, src, 1), user)
+						actions.start(new /datum/action/bar/icon/build(S, a_type, 2, S.material, 1, 'icons/obj/furniture/table_glass.dmi', a_icon_state, a_name, /proc/sheet_crafting_callback, src, 1), user)
 					return
 				else if (src.material.material_flags & MATERIAL_CRYSTAL && S.material.material_flags & MATERIAL_METAL) // we're a glass and they're a metal
 					if (src.amount_check(2,user) && S.amount_check(1,user))
@@ -161,7 +167,7 @@ MATERIAL
 						var/a_type = reinf ? /obj/item/furniture_parts/table/glass/reinforced : /obj/item/furniture_parts/table/glass
 						var/a_icon_state = "[reinf ? "r_" : null]table_parts"
 						var/a_name = "[reinf ? "reinforced " : null]glass table parts"
-						actions.start(new /datum/action/bar/icon/build(src, a_type, 2, src.material, 1, 'icons/obj/furniture/table_glass.dmi', a_icon_state, a_name, null, S, 1), user)
+						actions.start(new /datum/action/bar/icon/build(src, a_type, 2, src.material, 1, 'icons/obj/furniture/table_glass.dmi', a_icon_state, a_name, /proc/sheet_crafting_callback, S, 1), user)
 					return
 
 				else
@@ -180,6 +186,7 @@ MATERIAL
 					boutput(user, "<span class='notice'>You add [success] sheets to the stack. It now has [S.amount] sheets.</span>")
 				else
 					boutput(user, "<span class='notice'>You add [success] sheets to the stack. It now has [src.amount] sheets.</span>")
+				tgui_process.update_uis(src)
 			return
 
 		else if (istype(W,/obj/item/rods))
@@ -250,57 +257,48 @@ MATERIAL
 		. = ..()
 		. += "There [src.amount > 1 ? "are" : "is"] [src.amount] sheet\s on the stack."
 
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "SheetCrafting", "Sheet Crafting")
+			ui.open()
+
 	attack_self(mob/user as mob)
-		var/t1 = text("<HTML><HEAD></HEAD><TT>Amount Left: [] <BR>", src.amount)
-		var/counter = 1
-		var/list/L = list(  )
-		if (src?.material.material_flags & MATERIAL_METAL)
+		ui_interact(user)
+
+	ui_data(mob/user)
+		. = list()
+
+		.["availableAmount"] = src.amount
+		.["labeledAvailableAmount"] = "[src.amount] [src.name]\s"
+
+		var/list/availableRecipes = list()
+		if (src?.material?.material_flags & MATERIAL_METAL)
 			if (istype(src.reinforcement))
-				L["retable"] = "Reinforced Table Parts (2 Sheets)"
-				L["industrialtable"] = "Industrial Table Parts (2 Sheets)"
-				L["remetal"] = "Remove Reinforcement"
+				for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/reinforced_metal))
+					availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
+
+				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(/datum/sheet_crafting_recipe/remetal))
 			else
-				L["fl_tiles"] = "x4 Floor Tile"
-				L["rods"] = "x2 Rods"
-				L["rack"] = "Rack Parts"
-				L["railing"] = "Railing"
-				L["stool"] = "stool"
-				L["chair"] = "chair"
-				L["table"] = "Table Parts (2 Sheets)"
-				L["light"] = "Light Fixture Parts, Tube (2 Sheets)"
-				L["light2"] = "Light Fixture Parts, Bulb (2 Sheets)"
-				L["light3"] = "Light Fixture Parts, floor (2 Sheets)"
-				L["bed"] = "Bed (2 Sheets)"
-				L["closet"] = "Closet (2 Sheets)"
-				L["construct"] = "Wall Girders (2 Sheets)"
-				L["pipef"] = "Pipe Frame (3 Sheets)"
-				L["tcomputer"] = "Computer Terminal Frame (3 Sheets)"
-				L["computer"] = "Console Frame (5 Sheets)"
-				L["hcomputer"] = "Computer Frame (5 Sheets)"
-				L["vending"] = "Vending Machine Frame (3 Sheets)"
-		if (src?.material.material_flags & MATERIAL_CRYSTAL)
-			L["smallwindow"] = "Thin Window"
-			L["bigwindow"] = "Large Window (2 Sheets)"
-			L["displaycase"] = "Display Case (3 Sheets)"
+				for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/metal))
+					availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
+		if (src?.material?.material_flags & MATERIAL_CRYSTAL)
+			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/glass))
+				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
 			if (istype(src.reinforcement))
-				L["remetal"] = "Remove Reinforcement"
-		if (src?.material.mat_id == "cardboard")
-			L["c_box"] = "Cardboard Box (2 Sheets)"
+				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(/datum/sheet_crafting_recipe/remetal/glass))
+		if (src?.material?.mat_id == "cardboard")
+			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/cardboard))
+				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
 
-		for(var/t in L)
-			counter++
-			t1 += text("<A href='?src=\ref[];make=[]'>[]</A>  ", src, t, L[t])
-			if (counter > 2)
-				counter = 1
-			t1 += "<BR>"
+		.["itemList"] = availableRecipes
 
-		t1 += "</TT></HTML>"
-		user.Browse(t1, "window=met_sheet")
-		onclose(user, "met_sheet")
-		return
+	ui_act(action, params)
+		. = ..()
+		if(.)
+			return
 
-	Topic(href, href_list)
-		..()
 		if (usr.restrained() || usr.stat)
 			if(!isrobot(usr))
 				return
@@ -320,20 +318,20 @@ MATERIAL
 			return
 #endif
 
-		if (href_list["make"])
+		if (action == "make")
 			if (src.amount < 1)
 				src.change_stack_amount(0) //Basically "clean up and pool"
 				return
 
+			var/datum/sheet_crafting_recipe/currentRecipe
+
 			var/a_type = null
-			var/a_amount = 1
-			var/a_cost = 1
-			var/a_icon = null
-			var/a_icon_state = null
-			var/a_name = null
+			var/a_amount = null
+			var/a_cost = null
 			var/a_callback = null
 
-			switch(href_list["make"])
+			//When adding a new recipe, consider using the for loop technique used by a recipe like "rack" instead of adding a new if
+			switch(params["recipeID"])
 				if("rods")
 					var/makerods = min(src.amount,25)
 					var/rodsinput = input("Use how many sheets? (Get 2 rods for each sheet used)","Min: 1, Max: [makerods]",1) as num
@@ -343,12 +341,10 @@ MATERIAL
 					if (!in_interact_range(src, usr)) //no walking away
 						return
 
-					a_type = /obj/item/rods
-					a_amount = rodsinput * 2
-					a_cost = rodsinput
-					a_icon = 'icons/obj/metal.dmi'
-					a_icon_state = "rods"
-					a_name = "rods"
+					currentRecipe = /datum/sheet_crafting_recipe/metal/rods
+
+					a_amount = rodsinput * initial(currentRecipe.yield)
+					a_cost = rodsinput * initial(currentRecipe.sheet_cost)
 
 				if("fl_tiles")
 					var/maketiles = min(src.amount,20)
@@ -359,159 +355,11 @@ MATERIAL
 					if (!in_interact_range(src, usr)) //no walking away
 						return
 
-					a_type = /obj/item/tile
-					a_amount = tileinput * 4
-					a_cost = tileinput
-					a_icon = 'icons/obj/metal.dmi'
-					a_icon_state = "tile"
-					a_name = "floor tiles"
+					currentRecipe = /datum/sheet_crafting_recipe/metal/fl_tiles
 
-				if("table")
-					if (!amount_check(2,usr)) return
+					a_amount = tileinput * initial(currentRecipe.yield)
+					a_cost = tileinput * initial(currentRecipe.sheet_cost)
 
-					a_type = /obj/item/furniture_parts/table
-					a_amount = 1
-					a_cost = 2
-					a_icon = 'icons/obj/furniture/table.dmi'
-					a_icon_state = "table_parts"
-					a_name = "table parts"
-
-				if("light")
-					if (!amount_check(2,usr)) return
-
-					a_type = /obj/item/light_parts
-					a_amount = 1
-					a_cost = 2
-					a_icon = 'icons/obj/lighting.dmi'
-					a_icon_state = "tube-fixture"
-					a_name = "a light tube fixture"
-
-				// Added (Convair880).
-				if("light2")
-					if (!amount_check(2,usr)) return
-
-					a_type = /obj/item/light_parts/bulb
-					a_amount = 1
-					a_cost = 2
-					a_icon = 'icons/obj/lighting.dmi'
-					a_icon_state = "bulb-fixture"
-					a_name = "a light bulb fixture"
-
-				// Added (Kyle).
-				if("light3")
-					if (!amount_check(2,usr)) return
-					/obj/machinery/light/small/floor
-					a_type = /obj/item/light_parts/floor
-					a_amount = 1
-					a_cost = 2
-					a_icon = 'icons/obj/lighting.dmi'
-					a_icon_state = "floor-fixture"
-					a_name = "a floor light fixture"
-
-
-				if("stool")
-					a_type = /obj/stool
-					a_amount = 1
-					a_cost = 1
-					a_icon = 'icons/obj/objects.dmi'
-					a_icon_state = "stool"
-					a_name = "a stool"
-
-				if("railing")
-					a_type = /obj/railing
-					a_amount = 1
-					a_cost = 1
-					a_icon = 'icons/obj/objects.dmi'
-					a_icon_state = "railing"
-					a_name = "a railing"
-
-				if("chair")
-					a_type = /obj/stool/chair
-					a_amount = 1
-					a_cost = 1
-					a_icon = 'icons/obj/objects.dmi'
-					a_icon_state = "chair"
-					a_name = "a chair"
-
-				if("rack")
-					a_type = /obj/item/furniture_parts/rack
-					a_amount = 1
-					a_cost = 1
-					a_icon = 'icons/obj/metal.dmi'
-					a_icon_state = "rack_parts"
-					a_name = "rack parts"
-
-				if("closet")
-					if (!amount_check(2,usr)) return
-					a_type = /obj/storage/closet
-					a_amount = 1
-					a_cost = 2
-					a_icon = 'icons/obj/large_storage.dmi'
-					a_icon_state = "closed"
-					a_name = "a closet"
-
-				if("c_box")
-					if (!amount_check(2,usr)) return
-					a_type = /obj/item/clothing/suit/cardboard_box
-					a_amount = 1
-					a_cost = 2
-					a_icon = 'icons/obj/clothing/overcoats/item_suit_cardboard.dmi'
-					a_icon_state = "c_box"
-					a_name = "a cardboard box"
-
-				if("pipef")
-					if (!amount_check(3,usr)) return
-					a_type = /obj/item/pipebomb/frame
-					a_amount = 1
-					a_cost = 3
-					a_icon = 'icons/obj/items/assemblies.dmi'
-					a_icon_state = "Pipe_Frame"
-					a_name = "a pipe frame"
-
-				if("bed")
-					if (!amount_check(2,usr)) return
-					a_type = /obj/stool/bed
-					a_amount = 1
-					a_cost = 2
-					a_icon = 'icons/obj/objects.dmi'
-					a_icon_state = "bed"
-					a_name = "a bed"
-
-				if("computer")
-					if (!amount_check(5,usr)) return
-					a_type = /obj/computerframe
-					a_amount = 1
-					a_cost = 5
-					a_icon = 'icons/obj/computer_frame.dmi'
-					a_icon_state = "0"
-					a_name = "a console frame"
-
-				if("hcomputer")
-					if (!amount_check(5,usr)) return
-					a_type = /obj/computer3frame
-					a_amount = 1
-					a_cost = 5
-					a_icon = 'icons/obj/computer_frame.dmi'
-					a_icon_state = "0"
-					a_name = "a computer frame"
-
-				if("tcomputer")
-					if (!amount_check(3,usr)) return
-					a_type = /obj/computer3frame/terminal
-					a_amount = 1
-					a_cost = 3
-					a_icon = 'icons/obj/terminal_frame.dmi'
-					a_icon_state = "0"
-					a_name = "a terminal frame"
-
-				if("vending")
-					if (!amount_check(3,usr)) return
-					a_type = /obj/machinery/vendingframe
-					a_amount = 1
-					a_cost = 3
-					a_icon = 'icons/obj/vending.dmi'
-					a_icon_state = "standard-frame"
-					a_name = "a vending machine frame"
 				if("construct")
 					var/turf/T = get_turf(usr)
 					var/area/A = get_area (usr)
@@ -523,67 +371,29 @@ MATERIAL
 						boutput(usr, "<span class='alert'>You can't build girders here.</span>")
 						return
 					if (!amount_check(2,usr)) return
-					a_type = /obj/structure/girder
-					a_amount = 1
-					a_cost = 2
-					a_icon = 'icons/obj/structures.dmi'
-					a_icon_state = "girder"
-					a_name = "a girder"
+
+					currentRecipe = /datum/sheet_crafting_recipe/metal/construct
 
 				if("smallwindow")
 					if (src.reinforcement)
 						a_type = map_settings ? map_settings.rwindows_thin : /obj/window/reinforced
 					else
 						a_type = map_settings ? map_settings.windows_thin : /obj/window
-					a_amount = 1
-					a_cost = 1
-					a_icon = 'icons/obj/window.dmi'
-					a_icon_state = "window"
-					a_name = "a one-directional window"
+
+					currentRecipe = /datum/sheet_crafting_recipe/glass/smallwindow
+
 					a_callback = /proc/window_reinforce_callback
 
 				if("bigwindow")
 					if (!amount_check(2,usr)) return
 					if (src.reinforcement)
 						a_type = map_settings ? map_settings.rwindows : /obj/window/reinforced
-
 					else
 						a_type = map_settings ? map_settings.windows : /obj/window
-					a_amount = 1
-					a_cost = 2
-					a_icon = 'icons/obj/window.dmi'
-					a_icon_state = "window"
-					a_name = "a full window"
+
+					currentRecipe = /datum/sheet_crafting_recipe/glass/bigwindow
+
 					a_callback = /proc/window_reinforce_full_callback
-
-				if("displaycase")
-					if (!amount_check(3,usr)) return
-					a_type = /obj/displaycase
-					a_amount = 1
-					a_cost = 3
-					a_icon = 'icons/obj/stationobjs.dmi'
-					a_icon_state = "glassbox0"
-					a_name = "a display case"
-
-				if("retable")
-					if (!amount_check(2,usr)) return
-
-					a_type = /obj/item/furniture_parts/table/reinforced
-					a_amount = 1
-					a_cost = 2
-					a_icon = 'icons/obj/furniture/table_reinforced.dmi'
-					a_icon_state = "table_parts"
-					a_name = "reinforced table parts"
-
-				if("industrialtable")
-					if (!amount_check(2,usr)) return
-
-					a_type = /obj/item/furniture_parts/table/reinforced/industrial
-					a_amount = 1
-					a_cost = 2
-					a_icon = 'icons/obj/furniture/table_industrial.dmi'
-					a_icon_state = "table_parts"
-					a_name = "industrial table parts"
 
 				if("remetal")
 					// what the fuck is this
@@ -603,9 +413,29 @@ MATERIAL
 					C.amount = input
 					R.amount = input
 					src.change_stack_amount(-input)
-			if (a_type)
-				actions.start(new /datum/action/bar/icon/build(src, a_type, a_cost, src.material, a_amount, a_icon, a_icon_state, a_name, a_callback), usr)
+					. = TRUE
 
+				else
+					for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe))
+						var/datum/sheet_crafting_recipe/loopedRecipe = recipePath
+						if (initial(loopedRecipe.recipe_id) == params["recipeID"])
+
+							if (!amount_check(initial(loopedRecipe.sheet_cost),usr)) return
+
+							currentRecipe = loopedRecipe
+
+			if (currentRecipe)
+				if (!a_type)
+					a_type = initial(currentRecipe.craftedType)
+				if (!a_amount)
+					a_amount = initial(currentRecipe.yield)
+				if (!a_cost)
+					a_cost = initial(currentRecipe.sheet_cost)
+				if (!a_callback)
+					a_callback = /proc/sheet_crafting_callback
+
+				actions.start(new /datum/action/bar/icon/build(src, a_type, a_cost, src.material, a_amount, initial(currentRecipe.icon), initial(currentRecipe.icon_state), initial(currentRecipe.name), a_callback), usr)
+				. = TRUE
 
 		return
 
@@ -668,8 +498,8 @@ MATERIAL
 	item_state = "rods"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	w_class = W_CLASS_NORMAL
-	force = 9.0
-	throwforce = 15.0
+	force = 9
+	throwforce = 15
 	throw_speed = 5
 	throw_range = 20
 	m_amt = 1875
@@ -723,7 +553,7 @@ MATERIAL
 		. = ..()
 		. += "There are [src.amount] rod\s on this stack."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many rods do you want to take from the stack?","Stack of [src.amount]",1) as num)
 
@@ -740,7 +570,7 @@ MATERIAL
 		else
 			..(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
 			if(src.amount < 2)
 				boutput(user, "<span class='alert'>You need at least two rods to make a material sheet.</span>")
@@ -834,15 +664,17 @@ MATERIAL
 				boutput(user, "<span class='alert'>You need at least two rods to build a grille.</span>")
 				return
 			user.visible_message("<span class='notice'><b>[user]</b> begins building a grille.</span>")
-			var/turf/T = user.loc
-			SPAWN(1.5 SECONDS)
-				if (T == user.loc && !user.getStatusDuration("weakened") && !user.getStatusDuration("stunned") && src.amount >= 2)
-					var/atom/G = new /obj/grille(user.loc)
-					G.setMaterial(src.material)
-					src.change_stack_amount(-2)
-					logTheThing("station", user, null, "builds a grille (<b>Material:</b> [G.material && G.material.mat_id ? "[G.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(user)].")
+			SETUP_GENERIC_ACTIONBAR(user, src, 1.5 SECONDS, /obj/item/rods/proc/build_grille, user, src.icon, src.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 		src.add_fingerprint(user)
 		return
+
+	proc/build_grille(mob/user)
+		if (src.amount >= 2)
+			var/atom/A = new /obj/grille(user.loc)
+			A.setMaterial(src.material)
+			src.change_stack_amount(-2)
+			logTheThing(LOG_STATION, user, "builds a grille (<b>Material:</b> [A.material?.mat_id || "*UNKNOWN*"]) at [log_loc(user)].")
+			A.add_fingerprint(user)
 
 /obj/head_on_spike
 	name = "head on a spike"
@@ -860,7 +692,7 @@ MATERIAL
 		SPAWN(0) //wait for the head to be added
 			update()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(length(heads))
 			var/obj/item/organ/head/head = heads[length(heads)]
 
@@ -881,7 +713,7 @@ MATERIAL
 		else
 			..(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
 			if(!src.anchored && !istype(src.loc,/turf/simulated/floor) && !istype(src.loc,/turf/unsimulated/floor))
 				boutput(user, "<span class='alert'>There's nothing to weld that to.</span>")
@@ -977,7 +809,7 @@ MATERIAL
 		user.visible_message("<span class='alert'><b>[user] headbutts the spike, impaling [his_or_her(user)] head on it!</b></span>")
 		user.TakeDamage("head", 50, 0)
 		user.changeStatus("stunned", 50 SECONDS)
-		playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 		if(prob(40)) user.emote("scream")
 
 		SPAWN(1 SECOND)
@@ -987,7 +819,7 @@ MATERIAL
 			heads += head
 			src.update()
 			make_cleanable( /obj/decal/cleanable/blood,user.loc)
-			playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 
 		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
@@ -1017,8 +849,8 @@ MATERIAL
 	m_amt = 937.5
 	throw_speed = 3
 	throw_range = 20
-	force = 6.0
-	throwforce = 5.0
+	force = 6
+	throwforce = 5
 	max_stack = 80
 	stamina_damage = 25
 	stamina_cost = 15
@@ -1068,7 +900,7 @@ MATERIAL
 		if (dist <= 3)
 			. += "<br>There are [src.amount] tile[s_es(src.amount)] left on the stack."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 
 		if ((user.r_hand == src || user.l_hand == src))
 			src.add_fingerprint(user)
@@ -1091,8 +923,8 @@ MATERIAL
 			return
 		else
 			var/S = T
-			if (!( istype(S, /turf/space) || istype(S, /turf/simulated/floor/metalfoam)))
-				// If this isn't space or metal foam...
+			if (!( istype(S, /turf/space) || istype(S, /turf/simulated/floor/metalfoam) || istype(S, /turf/simulated/floor/plating/airless/asteroid)))
+				// If this isn't space, metal foam, or an asteroid...
 				if (istype(T, /turf/simulated/floor))
 					// If it's still a floor, attempt to place or replace the floor tile
 					var/turf/simulated/floor/F = T
@@ -1108,20 +940,21 @@ MATERIAL
 		src.add_fingerprint(user)
 		return
 
-	attackby(obj/item/tile/W as obj, mob/user as mob)
+	attackby(obj/item/tile/W, mob/user)
 
 		if (!( istype(W, /obj/item/tile) ))
 			return
 		if (W.material && src.material && !isSameMaterial(W.material, src.material))
 			boutput(user, "<span class='alert'>You can't mix two stacks of different materials!</span>")
 			return
+		var/inMagtractor = istype(W.loc, /obj/item/magtractor)
 		var/success = stack_item(W)
 		if (!success)
 			boutput(user, "<span class='alert'>You can't put any more tiles in this stack!</span>")
 			return
-		if(!user.is_in_hands(src))
+		if(!(user.is_in_hands(src) || inMagtractor))
 			user.put_in_hand(src)
-		if(isrobot(user))
+		if(issilicon(user))
 			boutput(user, "<span class='notice'>You add [success] tiles to the stack. It now has [W.amount] tiles.</span>")
 		else
 			boutput(user, "<span class='notice'>You add [success] tiles to the stack. It now has [src.amount] tiles.</span>")
@@ -1153,7 +986,7 @@ MATERIAL
 			W.to_plating()
 
 		if(ismob(usr) && !istype(src.material, /datum/material/metal/steel))
-			logTheThing("station", usr, null, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(S)].")
+			logTheThing(LOG_STATION, usr, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(S)].")
 		if(src.material)
 			W.setMaterial(src.material)
 		src.change_stack_amount(-1)
@@ -1169,6 +1002,7 @@ MATERIAL
 
 /obj/item/tile/cardboard // for drones
 	desc = "They keep the floor in a good and walkable condition. At least, they would if they were actually made of steel."
+	force = 0
 	New()
 		..()
 		var/datum/material/M = getMaterial("cardboard")
@@ -1206,3 +1040,233 @@ MATERIAL
 	amount = 80
 /obj/item/tile/cardboard/fullstack
 	amount = 100
+
+
+ABSTRACT_TYPE(/datum/sheet_crafting_recipe)
+ABSTRACT_TYPE(/datum/sheet_crafting_recipe/reinforced_metal)
+ABSTRACT_TYPE(/datum/sheet_crafting_recipe/metal)
+ABSTRACT_TYPE(/datum/sheet_crafting_recipe/glass)
+ABSTRACT_TYPE(/datum/sheet_crafting_recipe/cardboard)
+/datum/sheet_crafting_recipe
+	var/recipe_id //The ID of the recipe, used for TGUI act()s
+	var/name
+	var/sheet_cost = 1
+	var/yield = 1
+	var/can_craft_multiples = FALSE
+	var/icon
+	var/icon_state
+	var/craftedType //The type of item the recipe will build
+
+	reinforced_metal
+		retable
+			recipe_id = "retable"
+			craftedType = /obj/item/furniture_parts/table/reinforced
+			name = "Reinforced Table Parts"
+			sheet_cost = 2
+			icon = 'icons/obj/furniture/table_reinforced.dmi'
+			icon_state = "table_parts"
+		industrialtable
+			recipe_id = "industrialtable"
+			craftedType = /obj/item/furniture_parts/table/reinforced/industrial
+			name = "Industrial Table Parts"
+			sheet_cost = 2
+			icon = 'icons/obj/furniture/table_industrial.dmi'
+			icon_state = "table_parts"
+
+	metal
+		fl_tiles
+			recipe_id = "fl_tiles"
+			craftedType = /obj/item/tile
+			name = "Floor Tile"
+			yield = 4
+			can_craft_multiples = TRUE
+			icon = 'icons/obj/metal.dmi'
+			icon_state = "tile_5"
+		rods
+			recipe_id = "rods"
+			craftedType =  /obj/item/rods
+			name = "Rods"
+			yield = 2
+			can_craft_multiples = TRUE
+			icon = 'icons/obj/metal.dmi'
+			icon_state = "rods_5"
+
+		rack
+			recipe_id = "rack"
+			craftedType = /obj/item/furniture_parts/rack
+			name = "Rack Parts"
+			icon = 'icons/obj/metal.dmi'
+			icon_state = "rack_base_parts"
+		railing
+			recipe_id = "railing"
+			craftedType = /obj/railing
+			name = "Railing"
+			icon = 'icons/obj/objects.dmi'
+			icon_state = "railing"
+		stool
+			recipe_id = "stool"
+			craftedType = /obj/stool
+			name = "Stool"
+			icon = 'icons/obj/furniture/chairs.dmi'
+			icon_state = "stool"
+		chair
+			recipe_id = "chair"
+			craftedType = /obj/stool/chair
+			name = "Chair"
+			icon = 'icons/obj/furniture/chairs.dmi'
+			icon_state = "chair"
+
+		table
+			recipe_id = "table"
+			craftedType = /obj/item/furniture_parts/table
+			name = "Table Parts"
+			sheet_cost = 2
+			icon = 'icons/obj/furniture/table.dmi'
+			icon_state = "table_parts"
+		light
+			recipe_id = "light"
+			craftedType = /obj/item/light_parts
+			name = "Light Fixture Parts, Tube"
+			sheet_cost = 2
+			icon = 'icons/obj/lighting.dmi'
+			icon_state = "tube-fixture"
+		light2
+			recipe_id = "light2"
+			craftedType = /obj/item/light_parts/bulb
+			name = "Light Fixture Parts, Bulb"
+			sheet_cost = 2
+			icon = 'icons/obj/lighting.dmi'
+			icon_state = "bulb-fixture"
+		light3
+			recipe_id = "light3"
+			craftedType = /obj/item/light_parts/floor
+			name = "Light Fixture Parts, Floor"
+			sheet_cost = 2
+			icon = 'icons/obj/lighting.dmi'
+			icon_state = "floor-fixture"
+		bed
+			recipe_id = "bed"
+			craftedType = /obj/stool/bed
+			name = "Bed"
+			sheet_cost = 2
+			icon = 'icons/obj/furniture/chairs.dmi'
+			icon_state = "bed"
+		closet
+			recipe_id = "closet"
+			craftedType = /obj/storage/closet
+			name = "Closet"
+			sheet_cost = 2
+			icon = 'icons/obj/large_storage.dmi'
+			icon_state = "closed"
+		construct
+			recipe_id = "construct"
+			craftedType = /obj/structure/girder
+			name = "Wall Girders"
+			sheet_cost = 2
+			icon = 'icons/obj/structures.dmi'
+			icon_state = "girder"
+
+		pipef
+			recipe_id = "pipef"
+			craftedType = /obj/item/pipebomb/frame
+			name = "Pipe Frame"
+			sheet_cost = 3
+			icon = 'icons/obj/items/assemblies.dmi'
+			icon_state = "Pipe_Frame"
+		tcomputer
+			recipe_id = "tcomputer"
+			craftedType = /obj/computer3frame/terminal
+			name = "Computer Terminal Frame"
+			sheet_cost = 3
+			icon = 'icons/obj/terminal_frame.dmi'
+			icon_state = "0"
+		computer
+			recipe_id = "computer"
+			craftedType = /obj/computerframe
+			name = "Console Frame"
+			sheet_cost = 5
+			icon = 'icons/obj/computer_frame.dmi'
+			icon_state = "0"
+		hcomputer
+			recipe_id = "hcomputer"
+			craftedType = /obj/computer3frame
+			name = "Computer Frame"
+			sheet_cost = 5
+			icon = 'icons/obj/computer_frame.dmi'
+			icon_state = "0"
+		vending
+			recipe_id = "vending"
+			craftedType = /obj/machinery/vendingframe
+			name = "Vending Machine Frame"
+			sheet_cost = 3
+			icon = 'icons/obj/vending.dmi'
+			icon_state = "standard-frame"
+
+	glass
+		smallwindow
+			recipe_id = "smallwindow"
+			name = "Thin Window"
+			icon = 'icons/obj/window.dmi'
+			icon_state = "window"
+		bigwindow
+			recipe_id = "bigwindow"
+			name = "Large Window"
+			sheet_cost = 2
+			icon = 'icons/obj/window.dmi'
+			icon_state = "window"
+		displaycase
+			recipe_id = "displaycase"
+			craftedType = /obj/displaycase
+			name = "Display Case"
+			sheet_cost = 3
+			icon = 'icons/obj/stationobjs.dmi'
+			icon_state = "glassbox0"
+
+	cardboard
+		c_box
+			recipe_id = "c_box"
+			craftedType = /obj/item/clothing/suit/cardboard_box
+			name = "Cardboard Box"
+			sheet_cost = 2
+			icon = 'icons/obj/clothing/overcoats/item_suit_cardboard.dmi'
+			icon_state = "c_box"
+
+	//Used for both reinforced metal and glass
+	remetal
+		recipe_id = "remetal"
+		name = "Remove Reinforcement"
+		icon = 'icons/obj/metal.dmi'
+		icon_state = "sheet-m_5"
+		can_craft_multiples = TRUE
+
+		glass
+			icon_state = "sheet-g_5"
+
+
+/proc/sheet_crafting_recipe_get_ui_data(var/recipePath)
+	var/datum/sheet_crafting_recipe/typedRecipePath = recipePath
+	. = list(list(
+		"recipeID" = initial(typedRecipePath.recipe_id),
+		"name" = initial(typedRecipePath.name),
+		"sheetCost" = initial(typedRecipePath.sheet_cost),
+		"itemYield" = initial(typedRecipePath.yield),
+		"canCraftMultiples" = initial(typedRecipePath.can_craft_multiples),
+		"img" = sheet_crafting_recipe_getBase64Img(initial(typedRecipePath.recipe_id), initial(typedRecipePath.icon), initial(typedRecipePath.icon_state))
+	))
+
+/proc/sheet_crafting_recipe_getBase64Img(var/recipeID, var/icon, var/icon_state)
+	var/static/base64_preview_cache = list() // Base64 preview images for item types, for use in ui interfaces.
+
+	. = base64_preview_cache[recipeID]
+	if(isnull(.))
+		var/dir = SOUTH
+		if (recipeID == "bigwindow")
+			dir = 5 //full tile
+
+		var/icon/result_icon = icon(icon, icon_state, dir)
+
+		if(result_icon)
+			. = icon2base64(result_icon)
+		else
+			. = "" // Empty but not null
+		base64_preview_cache[recipeID] = .

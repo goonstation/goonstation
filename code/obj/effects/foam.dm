@@ -43,7 +43,7 @@
 
 	metal = ismetal
 	//NOW WHO THOUGH IT WOULD BE A GOOD IDEA TO PLAY THIS ON EVERY FOAM OBJ
-	//playsound(src, "sound/effects/bubbles2.ogg", 80, 1, -3)
+	//playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
 
 	UpdateIcon()
 	if(metal)
@@ -80,7 +80,7 @@
 				continue
 			if(isliving(A))
 				var/mob/living/L = A
-				logTheThing("combat", L, null, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
+				logTheThing(LOG_CHEMISTRY, L, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
 			if (reagents)
 				reagents.reaction(A, TOUCH, 5, 0)
 		if (reagents)
@@ -164,7 +164,7 @@
 		var/mob/living/carbon/human/M = AM
 
 		if (M.slip())
-			logTheThing("combat", M, null, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
+			logTheThing(LOG_CHEMISTRY, M, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
 			reagents.reaction(M, TOUCH, 5)
 
 			M.show_text("You slip on the foam!", "red")
@@ -173,3 +173,22 @@
 /obj/effects/foam/gas_cross(turf/target)
 	if(src.metal)
 		return 0 //opaque to air
+
+//This should probably be reworked to be a subtype of /obj/effects/foam
+/obj/fire_foam
+	name = "Fire fighting foam"
+	desc = "It's foam."
+	opacity = 0
+	density = 0
+	anchored = 1
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "foam"
+	animate_movement = SLIDE_STEPS
+	mouse_opacity = 0
+	var/my_dir = null
+
+	Move(NewLoc,Dir=0)
+		. = ..(NewLoc,Dir)
+		if(isnull(my_dir))
+			my_dir = pick(alldirs)
+		src.set_dir(my_dir)

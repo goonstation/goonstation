@@ -11,7 +11,7 @@ proc/build_syndi_buylist_cache()
 		if (!LE.cost || !isnum(LE.cost) || LE.cost <= 0)
 			syndi_buylist_cache.Remove(LE)
 
-	syndi_buylist_cache = sortList(syndi_buylist_cache)
+	sortList(syndi_buylist_cache, /proc/cmp_text_asc)
 
 // How to add new items? Pick the correct path (nukeops, traitor, surplus) and go from there. Easy.
 ABSTRACT_TYPE(/datum/syndicate_buylist)
@@ -96,14 +96,21 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/gun/energy/crossbow
 	cost = 3
 	desc = "Crossbow Model C - Now with safer Niobium core. This ranged weapon is great for hitting someone in a dark corridor! They'll never know what hit em! Will slowly recharge between shots."
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/generic/garrote
 	name = "Fibre Wire"
 	item = /obj/item/garrote
 	cost = 3
 	desc = "Commonly used by special forces for silent removal of isolated targets. Ensure you are out of sight, apply to the target's neck from behind with a firm two-hand grip and wait for death to occur."
+
+/datum/syndicate_buylist/generic/bladed_gloves
+	name = "Bladed Gloves"
+	item = /obj/item/clothing/gloves/bladed
+	cost = 3
+	desc = "A pair of transparent gloves with a concealed blade on the back of each hand that cannot be disarmed. Deploy and retract with a finger snap, perfect for the killer-on-the-go!"
 	br_allowed = TRUE
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF
+
 
 /datum/syndicate_buylist/generic/empgrenades
 	name = "EMP Grenades"
@@ -143,7 +150,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/card/emag
 	cost = 6
 	desc = "A sophisticated tool of sabotage and infiltration. Capable of shorting out or otherwise bypassing security on door locks, robot friend/foe identification systems, shuttle control consoles, and more!"
-	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/generic/fimplant
@@ -185,6 +191,21 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 1
 	desc = "A pack of Syndicool Lights exploding trick cigarettes. Due to the use of a military-grade explosive, please do not attempt to smoke these after lighting."
 
+/datum/syndicate_buylist/generic/sawfly
+	name = "Compact Sawfly"
+	item = /obj/item/old_grenade/sawfly/firsttime/withremote
+	cost = 2
+	vr_allowed = FALSE
+	desc = "A small antipersonnel robot that will not attack anyone of syndicate affiliation. It can be folded up after use."
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
+/datum/syndicate_buylist/generic/sawflymany
+	name = "Cluster Sawfly deployer"
+	item = /obj/item/old_grenade/spawner/sawflycluster
+	cost = 5
+	vr_allowed = FALSE
+	desc = "An assembly of five antipersonnel robots that will not attack anyone of syndicate affiliation. They can be individually folded up after use."
+	can_buy = UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 /datum/syndicate_buylist/generic/dnascram
 	name = "DNA Scrambler"
 	item = /obj/item/dna_scrambler
@@ -210,7 +231,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 7
 	desc = "A powerful melee weapon, crafted using the latest in applied photonics! When inactive, it is small enough to fit in a pocket!"
 	not_in_crates = 1
-	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 	run_on_spawn(obj/item/sword/stabby, mob/living/owner, in_surplus_crate=FALSE) //Nukies get red ones
@@ -221,10 +241,9 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 
 /datum/syndicate_buylist/generic/katana
 	name = "Katana"
-	item = /obj/item/katana_sheath
+	item = /obj/item/swords_sheaths/katana
 	cost = 7
 	desc = "A Japanese sword created in the fire of a dying star. Comes with a sheath for easier storage"
-	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/generic/wrestling
@@ -277,7 +296,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/spongecaps/syndicate
 	cost = 3
 	desc = "A pack of sponge capsules that react with water and produce nasty critters."
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/traitor/bomb
 	name = "Syndicates in Pipebomb"
@@ -293,14 +311,12 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/device/chameleon
 	cost = 5
 	desc = "Advanced cloaking device that scans an object and, when activated, makes the bearer look like the object. Slows movement while in use."
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/traitor/holographic_disguiser
 	name = "Holographic Disguiser"
 	item = /obj/item/device/disguiser
 	cost = 2
 	desc = "A device capable of disguising your identity temporarily. Beware of flashes and projectiles!"
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/traitor/areacloak
 	name = "Cloaking Field Generator"
@@ -336,20 +352,20 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
-/datum/syndicate_buylist/traitor/mindslave
-	name = "Mind Slave implant"
-	item = /obj/item/implanter/mindslave
+/datum/syndicate_buylist/traitor/mindhack
+	name = "Mind Hack implant"
+	item = /obj/item/implanter/mindhack
 	cost = 3
 	vr_allowed = 0
 	desc = "Temporarily place an injected victim under your complete control! Faster and more effective than hypnotism! Warning: Implant effects are NOT indefinite."
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
-/datum/syndicate_buylist/traitor/deluxe_mindslave
-	name = "Deluxe Mind Slave implant"
-	item = /obj/item/implanter/super_mindslave
+/datum/syndicate_buylist/traitor/deluxe_mindhack
+	name = "Deluxe Mind Hack implant"
+	item = /obj/item/implanter/super_mindhack
 	cost = 6
 	vr_allowed = 0
-	desc = "Place an injected victim under your complete control! Enhanced neurostimulators make this version last virtually indefinitely!"
+	desc = "Place an injected victim under your complete control! Enhanced cyberneurostimulators make this version last virtually indefinitely!"
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/microbomb
@@ -358,7 +374,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 1
 	vr_allowed = 0
 	desc = "This miniaturized explosive packs a decent punch and will detonate upon the unintentional death of the host. Do not swallow and keep out of reach of children."
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/traitor/lightbreaker
 	name = "Light Breaker"
@@ -380,6 +395,15 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/storage/sonic_grenade_pouch
 	cost = 2
 	desc = "A pouch filled with five sonic grenades, each one packs enough power to shatter reinforced windows and pop eardrums. No more being cornered by an angry mob! Comes with earplugs."
+	br_allowed = TRUE
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
+/datum/syndicate_buylist/traitor/pickpocket
+	name = "Pickpocket Gun"
+	item = /obj/item/gun/energy/pickpocket
+	cost = 3
+	vr_allowed = 0
+	desc = "A stealthy claw gun capable of stealing and planting items, and severely messing with people."
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -577,7 +601,7 @@ This is basically useless for anyone but miners.
 	name = "Hotbox Lighter"
 	item = /obj/item/device/light/zippo/syndicate
 	cost = 1
-	desc = "The unique fuel mixture gives this lighter a unique flame capable of creating a much denser smoke when burning piles of herbs compared to any normal lighter!"
+	desc = "The unique fuel mixture both burns five times hotter than a normal flame and produces a much thicker smoke than normal when burning herbs!"
 	job = list("Botanist")
 	can_buy = UPLINK_TRAITOR
 
@@ -586,7 +610,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/storage/box/wasp_grenade_kit
 	cost = 3
 	desc = "These wasp grenades contain genetically modified extra double large hornets that will surely inspire awe in all your non-botanical friends."
-	br_allowed = TRUE
+	vr_allowed = FALSE
 	job = list("Botanist", "Apiculturist")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -596,7 +620,7 @@ This is basically useless for anyone but miners.
 	cost = 6
 	desc = "Become the member of the Space Cobra Unit you always wanted to be! Spread pain and fear far and wide using this scattershot wasp egg launcher! Through the power of sheer wasp-y fury, this crossbow will slowly recharge between shots and is guaranteed to light up your day with maniacal joy and to bring your enemies no end of sorrow."
 	not_in_crates = 1 //the value of the item goes down significantly for non-botanists since only botanists are treated kindly by wasps
-	br_allowed = TRUE
+	vr_allowed = FALSE
 	job = list("Botanist", "Apiculturist")
 	can_buy = UPLINK_TRAITOR
 
@@ -628,7 +652,6 @@ This is basically useless for anyone but miners.
 	item = /obj/item/caution/traitor
 	cost = 2
 	desc = "This Wet Floor Sign spits out organic superlubricant under everyone nearby unless they are wearing galoshes. That'll teach them to ignore the signs. If you are wearing the long janitor gloves you can click with a bucket (or beaker or drinking glass etc.) to replace the payload."
-	br_allowed = TRUE
 	job = list("Janitor")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_SPY | UPLINK_HEAD_REV
 
@@ -652,7 +675,7 @@ This is basically useless for anyone but miners.
 	cost = 4
 	vr_allowed = 0
 	desc = "The shell of a standard Nanotrasen mechanic's analyzer with cutting-edge Syndicate internals. This baby can scan almost anything!"
-	job = list("Mechanic")
+	job = list("Engineer")
 	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/stimulants
@@ -660,7 +683,6 @@ This is basically useless for anyone but miners.
 	item = /obj/item/storage/box/stimulants
 	cost = 6
 	desc = "When top agents need energy, they turn to our new line of X-Cite 500 stimulants. This 3-pack of all-natural* and worry-free** blend accelerates perception, endurance, and reaction time to superhuman levels! Shrug off even the cruelest of blows without a scratch! <br><br><font size=-1>*Contains less than 0.5 grams unnatural material per 0.49 gram serving.<br>**May cause dizziness, blurred vision, heart failure, renal compaction, adenoid calcification, or death. Users are recommended to take only a single dose at a time, and let withdrawl symptoms play out naturally.</font>"
-	br_allowed = TRUE
 	job = list("Medical Doctor","Medical Director","Scientist","Geneticist","Pathologist","Research Director")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -678,7 +700,7 @@ This is basically useless for anyone but miners.
 	cost = 6
 	desc = "These marvels of modern technology employ nanites and space science to draw energy from nearby cables to zap things. BZZZZT!"
 	not_in_crates = 1
-	job = list("Engineer", "Chief Engineer", "Mechanic")
+	job = list("Engineer", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/zappy_implant
@@ -686,17 +708,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/implanter/zappy
 	cost = 1
 	desc = "This implant turns you into a living (or dying) generator, zapping those around you with a volume of electricity that scales with the number of implants upon your demise."
-	job = list("Engineer", "Chief Engineer", "Mechanic")
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
-
-/datum/syndicate_buylist/traitor/pickpocket
-	name = "Pickpocket Gun"
-	item = /obj/item/gun/energy/pickpocket
-	cost = 3
-	vr_allowed = 0
-	desc = "A stealthy claw gun capable of stealing and planting items, and severely messing with people."
-	br_allowed = TRUE
-	job = list("Engineer", "Chief Engineer", "Mechanic", "Clown", "Staff Assistant")
+	job = list("Engineer", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/poisonbottle
@@ -741,7 +753,7 @@ This is basically useless for anyone but miners.
 	item = /obj/machinery/recharge_station/syndicate
 	cost = 8
 	vr_allowed = 0
-	desc = "A modified standard-issue cyborg recharging station that will automatically convert any human placed inside into a cyborg. Be aware that cyborgs will follow the active lawset in place on-station."
+	desc = "A modified standard-issue cyborg recharging station that will automatically convert any human placed inside into a cyborg. Cyborgs created this way will follow a syndicate lawset making them loyal to you."
 	job = list("Roboticist")
 	not_in_crates = 1
 	can_buy = UPLINK_TRAITOR
@@ -784,7 +796,6 @@ This is basically useless for anyone but miners.
 	item = /obj/item/storage/box/donkpocket_w_kit
 	cost = 2
 	desc = "Ready to eat, no microwave required! The pocket-sandwich station personnel crave, now with added medical agents to heal you up in a pinch! Zero grams trans-fat per serving*!<br><br><font size=1>*Made with partially-hydrogenated wizard blood.</font>"
-	br_allowed = TRUE
 	job = list("Chef")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -794,7 +805,6 @@ This is basically useless for anyone but miners.
 	cost = 7
 	desc = "An extremely sharp knife with a weighted handle for accurate throwing. Caution: May cause extreme bleeding if the cutting edge comes into contact with human flesh."
 	not_in_crates = 1
-	br_allowed = TRUE
 	job = list("Chef")
 	can_buy = UPLINK_TRAITOR
 
@@ -833,7 +843,6 @@ This is basically useless for anyone but miners.
 	item = /obj/item/gun/energy/vuvuzela_gun
 	cost = 3
 	desc = "<b>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ</b>"
-	br_allowed = TRUE
 	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant", "Clown")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -883,7 +892,7 @@ This is basically useless for anyone but miners.
 	cost = 3
 	vr_allowed = 0
 	desc = "A modified cargo transporter which teleports containers to a random spot in space and welds them shut."
-	job = list("Quartermaster","Miner","Engineer")
+	job = list("Quartermaster","Miner","Engineer","Chief Engineer")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/telegun
@@ -911,20 +920,20 @@ This is basically useless for anyone but miners.
 	br_allowed = TRUE
 	job = list("Staff Assistant","Test Subject","Geneticist","Pathologist")
 
-/datum/syndicate_buylist/traitor/mindslave_module
-	name = "Mindslave Cloning Module"
-	item = /obj/item/cloneModule/mindslave_module
+/datum/syndicate_buylist/traitor/mindhack_module
+	name = "Mindhack Cloning Module"
+	item = /obj/item/cloneModule/mindhack_module
 	cost = 6
 	vr_allowed = 0
 	desc = "An add on to the genetics cloning pod that make anyone cloned loyal to whoever installed it."
 	job = list("Geneticist", "Medical Doctor", "Medical Director")
 
-/datum/syndicate_buylist/traitor/deluxe_mindslave_module
-	name = "Deluxe Mindslave Cloning Module Kit"
-	item = /obj/item/storage/box/mindslave_module_kit
+/datum/syndicate_buylist/traitor/deluxe_mindhack_module
+	name = "Deluxe Mindhack Cloning Module Kit"
+	item = /obj/item/storage/box/mindhack_module_kit
 	cost = 10 //  Always leave them 1tc so they can buy the moustache. Style is key.
 	vr_allowed = 0
-	desc = "A Deluxe Mindslave Cloning Kit. Contains a mindslave cloning module and a cloning lab in a box!"
+	desc = "A Deluxe Mindhack Cloning Kit. Contains a mindhack cloning module and a cloning lab in a box!"
 	job = list("Geneticist", "Medical Doctor", "Medical Director")
 
 /datum/syndicate_buylist/traitor/buddy_ammofab
@@ -950,12 +959,40 @@ This is basically useless for anyone but miners.
 	desc = "A roll of duct tape for makeshift handcuffs. Lets you restrain someone 10 times before being used up."
 
 /datum/syndicate_buylist/traitor/scuttlebot
-	name = "Remote controlled Scuttlebot"
+	name = "Controlled Syndicate Scuttlebot"
 	item = /obj/item/clothing/head/det_hat/folded_scuttlebot
 	cost = 2
-	desc = "A sneaky robot armed with a camera disguised as a hat, used to spy on people. Comes with it's own remote controlling glasses."
+	vr_allowed = 0
+	desc = "A sneaky robot armed with a camera disguised as a hat, used to spy on people. Comes with it's own remote controlling glasses. Can lift small items and has a disabling flash."
 	job = list("Detective")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
+/datum/syndicate_buylist/traitor/rose
+	name = "Poison rose"
+	item = /obj/item/plant/flower/rose/poisoned
+	cost = 4
+	desc = "A regular looking rose hiding a poison capable of muting and briefly incapacitating anyone who smells it."
+	job = list("Mime")
+
+/datum/syndicate_buylist/traitor/chicken_grenade
+	name = "Chicken Grenade"
+	item = /obj/item/old_grenade/chicken
+	cost = 1
+	vr_allowed = 0
+	desc = "A grenade that holds up to 5 chicken eggs. Uses syndicate brainwashing to turn the chickens into hardened warriors immediately on detonation. Normally passive chickens will become aggressive. Use a wrench to unload it."
+	job = list("Rancher")
+	not_in_crates = 1
+	can_buy = UPLINK_TRAITOR
+
+/datum/syndicate_buylist/traitor/ai_laser
+	name = "AI Camera Laser Module"
+	item = /obj/item/aiModule/ability_expansion/laser
+	cost = 6
+	vr_allowed = FALSE
+	not_in_crates = TRUE
+	desc = "An AI module that upgrades any AI connected to the installed law rack access to the lasers installed in the cameras."
+	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
+	can_buy = UPLINK_TRAITOR
 
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
@@ -971,7 +1008,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	item = /obj/item/dagger/syndicate
 	cost = 2
 	desc = "An ornamental dagger for stabbing people with."
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/surplus/advanced_laser
 	name = "Laser Rifle"
@@ -1005,14 +1041,19 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	item = /obj/item/gun/kinetic/hunting_rifle
 	cost = 3
 	desc = "An old hunting rifle, comes with only four bullets. Use them wisely."
-	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 	spy
 		cost = 5
 		not_in_crates = TRUE
-		br_allowed = FALSE // Or it shows up twice in loot
 		can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
+
+/datum/syndicate_buylist/surplus/akm
+	name = "AKM Assault Rifle"
+	item = /obj/item/gun/kinetic/akm
+	cost = 12
+	desc = "A Cold War relic, loaded with thirty rounds of 7.62x39."
+	can_buy = null
 
 /datum/syndicate_buylist/surplus/bananagrenades
 	name = "Banana Grenades"
@@ -1021,12 +1062,18 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	desc = "Honk."
 	can_buy = UPLINK_TRAITOR | UPLINK_HEAD_REV | UPLINK_NUKE_OP
 
+/datum/syndicate_buylist/surplus/concussiongrenades
+	name = "Concussion Grenades"
+	item = /obj/item/storage/concussion_grenade_pouch
+	cost = 2
+	desc = "A pouch full of corpo-war surplus concussion grenades."
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
 /datum/syndicate_buylist/surplus/turboflash_box
 	name = "Flash/cell assembly box"
 	item = /obj/item/storage/box/turbo_flash_kit
 	cost = 1
 	desc = "A box full of common stun weapons with power cells hastily wired into them. Looks dangerous."
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/surplus/syndicate_armor
 	name = "Syndicate Command Armor"
@@ -1035,20 +1082,30 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	desc = "A set of syndicate command armor. I guess the last owner must have died."
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
+	run_on_spawn(var/obj/item)
+		new /obj/item/clothing/head/helmet/space/industrial/syndicate/(item.loc)
 
 /datum/syndicate_buylist/surplus/egun_upgrade
-	name = "Energy Gun Upgrade Pack"
-	item = /obj/item/ammo/power_cell/self_charging/disruptor
+	name = "Advanced Energy Cell"
+	item = /obj/item/ammo/power_cell/self_charging/medium
 	cost = 2
-	desc = "An advanced self-charging power cell, the ideal upgrade for an energy gun!"
+	desc = "An advanced self-charging power cell, the ideal upgrade for an energy weapon!"
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 
 // Why not, I guess? Cleaned up the old mine code, might as well use it (Convair880).
 /datum/syndicate_buylist/surplus/landmine
-	name = "Land Mine"
-	item = /obj/random_item_spawner/landmine/surplus // RNG picker.
+	name = "Land Mine Pouch"
+	item = /obj/item/storage/landmine_pouch
 	cost = 1
-	desc = "Some old anti-personnel mine we found in the warehouse."
+	desc = "A pouch of old anti-personnel mines we found in the warehouse."
+	br_allowed = TRUE
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
+
+/datum/syndicate_buylist/surplus/beartrap
+	name = "Bear Trap Pouch"
+	item = /obj/item/storage/beartrap_pouch
+	cost = 1
+	desc = "Just in case you happen to run into some space bears."
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 
@@ -1073,7 +1130,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	item = /obj/item/chem_grenade/sarin
 	cost = 1
 	desc = "A terrifying grenade containing a potent nerve gas. Try not to get caught in the smoke."
-	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 
 /////////////////////////////////////////// Irregular Items //////////////////////////////////////////////////
@@ -1130,6 +1186,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/commander)
 	item = /obj/item/remote/nuke_summon_remote
 	cost = 1
 	desc = "Did you lose the nuke? Have no fear, with this handy one-use remote, you can immediately call it back to you!"
+	category = "Main"
+	vr_allowed = FALSE
+
+/datum/syndicate_buylist/commander/mrl
+	name = "Fomalhaut MRL"
+	item = /obj/item/gun/kinetic/mrl/loaded
+	cost = 3
+	desc = "A  6-barrel multiple rocket launcher armed with guided micro-missiles. Warning: Can and will target other Operatives."
 	category = "Main"
 
 /////////////////////////////////////////// Telecrystals //////////////////////////////////////////////////

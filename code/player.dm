@@ -191,8 +191,12 @@
 	proc/cloud_fetch()
 		var/list/data = cloud_fetch_target_ckey(src.ckey)
 		if (data)
+#ifdef LIVE_SERVER
 			cloudsaves = data["saves"]
 			clouddata = data["cdata"]
+#else
+			clouddata = data
+#endif
 			return TRUE
 
 	/// Refreshes clouddata
@@ -228,12 +232,12 @@
 		var/datum/http_response/response = request.into_response()
 
 		if (response.errored || !response.body)
-			logTheThing("debug", target, null, "failed to have their cloud data loaded: Couldn't reach Goonhub")
+			logTheThing(LOG_DEBUG, target, "failed to have their cloud data loaded: Couldn't reach Goonhub")
 			return
 
 		var/list/ret = json_decode(response.body)
 		if(ret["status"] == "error")
-			logTheThing( "debug", target, null, "failed to have their cloud data loaded: [ret["error"]["error"]]" )
+			logTheThing(LOG_DEBUG, target, "failed to have their cloud data loaded: [ret["error"]["error"]]")
 			return
 		else
 			return ret

@@ -324,7 +324,7 @@ Obsidian Crown
 
 	equipped(var/mob/user, var/slot)
 		..()
-		logTheThing("combat", user, null, "equipped [src].")
+		logTheThing(LOG_COMBAT, user, "equipped [src] at [log_loc(src)].")
 		cant_self_remove = 1
 		cant_other_remove = 1
 		if (!src.processing)
@@ -385,7 +385,7 @@ Obsidian Crown
 						continue
 					randomturfs.Add(T)
 				boutput(host, "<span class='combat'>[that_jerk] is warped away!</span>")
-				playsound(host.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
+				playsound(host.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
 				that_jerk.set_loc(pick(randomturfs))
 
 		if (host.get_damage() < 0)
@@ -431,8 +431,9 @@ Obsidian Crown
 				if(length(randomturfs))
 					boutput(M, "<span class='notice'>You are caught in a magical warp field!</span>")
 					M.visible_message("<span class='combat'>[M] is warped away!</span>")
-					playsound(M.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
+					playsound(M.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
 					M.set_loc(pick(randomturfs))
+					logTheThing(LOG_COMBAT, M, "is warped away by [constructTarget(host,"combat")]'s obsidian crown to [log_loc(M)].")
 
 		if (armor_paired != -1 && prob(50) && host.max_health > 10)
 			host.max_health--
@@ -483,6 +484,7 @@ Obsidian Crown
 			humHost.delStatus("stunned")
 			humHost.delStatus("weakened")
 			humHost.delStatus("radiation")
+			humHost.take_radiation_dose(-INFINITY)
 			humHost.take_eye_damage(-INFINITY)
 			humHost.take_ear_damage(-INFINITY)
 			humHost.take_ear_damage(-INFINITY, 1)
@@ -494,7 +496,7 @@ Obsidian Crown
 
 			humHost.full_heal()
 
-			humHost.decomp_stage = 4
+			humHost.decomp_stage = DECOMP_STAGE_SKELETONIZED
 			humHost.bioHolder.RemoveEffect("eaten")
 			humHost.set_body_icon_dirty()
 			humHost.set_face_icon_dirty()
@@ -513,7 +515,7 @@ Obsidian Crown
 				shake_camera(N, 6, 32)
 				N.show_message("<span class='combat'><b>A blinding light envelops [host]!</b></span>")
 
-		playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
+		playsound(src.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 
 		src.set_loc(get_turf(host))
 		processing_items.Remove(src)

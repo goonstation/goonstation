@@ -423,7 +423,7 @@
 				if (icon_y > 16 || master.in_throw_mode)
 					master.toggle_throw_mode()
 				else
-					master.drop_item()
+					master.drop_item(null, TRUE)
 
 			if ("resist")
 				master.resist()
@@ -476,8 +476,7 @@
 					else
 						to_pull = tgui_input_list(master, "Which do you want to pull? You can also Ctrl+Click on things to pull them.", "Which thing to pull?", pullable)
 					if(!isnull(to_pull) && BOUNDS_DIST(master, to_pull) == 0)
-						usr = master // gross
-						to_pull.pull()
+						to_pull.pull(master)
 
 			if ("rest")
 				if(ON_COOLDOWN(src.master, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
@@ -792,8 +791,9 @@
 		var/newDesc = ""
 		newDesc += "<div><img src='[resource("images/tooltips/heat.png")]' alt='' class='icon' /><span>Total Resistance (Heat): [master.get_heat_protection()]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/cold.png")]' alt='' class='icon' /><span>Total Resistance (Cold): [master.get_cold_protection()]%</span></div>"
-		newDesc += "<div><img src='[resource("images/tooltips/radiation.png")]' alt='' class='icon' /><span>Total Resistance (Radiation): [master.get_rad_protection()]%</span></div>"
+		newDesc += "<div><img src='[resource("images/tooltips/radiation.png")]' alt='' class='icon' /><span>Total Resistance (Radiation): [master.get_rad_protection() * 100]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/disease.png")]' alt='' class='icon' /><span>Total Resistance (Disease): [master.get_disease_protection()]%</span></div>"
+		newDesc += "<div><img src='[resource("images/tooltips/chemical.png")]' alt='' class='icon' /><span>Total Resistance (Chemical): [master.get_chem_protection()]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/explosion.png")]' alt='' class='icon' /><span>Total Resistance (Explosion): [master.get_explosion_resistance() * 100]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/bullet.png")]' alt='' class='icon' /><span>Total Ranged Protection: [master.get_ranged_protection()]</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/melee.png")]' alt='' class='icon' /><span>Total Melee Armor (Body): [master.get_melee_protection("chest")]</span></div>"
@@ -1062,7 +1062,8 @@
 			health.tooltipTheme = "healthDam healthDam[stage]"
 
 	proc/update_blood_indicator()
-		if (!bleeding || isdead(master))
+		if (!src.bleeding) return //doesn't have a hud element to update
+		if (isdead(master))
 			bleeding.icon_state = "blood0"
 			bleeding.tooltipTheme = "healthDam healthDam0"
 			return

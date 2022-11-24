@@ -83,7 +83,7 @@
 	desc = "Welcome to the fantastical and only ... but guaranteed safe ... Clownspider farm in the funny universe! You are entering Honky Gibbersons Clown-Farm! Honk!";
 	name = "Honkys Clownspider Farm"
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	desc = "A free-floating mineral deposit from space. It seems to be very dense.";
 	hardness = 5;
 	name = "dense asteroid"
@@ -122,7 +122,7 @@
 /turf/simulated/floor/airless/solar,
 /area/noGenerate)
 "oz" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	name_old = "hardened"
 	},
 /area/prefab/clown_nest)
@@ -215,7 +215,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/prefab/clown_nest)
 "yb" = (
-/obj/critter/spider/clown,
+/mob/living/critter/spider/clown,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/prefab/clown_nest)
 "zi" = (
@@ -395,7 +395,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "Om" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/noGenerate)
 "Qt" = (
 /obj/item/reagent_containers/food/snacks/candy/peach_ring{
@@ -404,7 +404,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/prefab/clown_nest)
 "Ra" = (
-/obj/critter/spider/clownqueen,
+/mob/living/critter/spider/clownqueen,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/prefab/clown_nest)
 "Rb" = (
@@ -420,7 +420,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/prefab/clown_nest)
 "TB" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	desc = "A free-floating mineral deposit from space. It seems to be very dense.";
 	hardness = 5;
 	name = "dense asteroid"
@@ -458,7 +458,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "floor6"
 	},
-/obj/critter/spider/clownqueen/cluwne,
+/mob/living/critter/spider/clownqueen/cluwne,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/prefab/clown_nest)
 "Zh" = (

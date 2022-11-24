@@ -72,12 +72,18 @@
 			if (trunk)
 				trunk.linked = null
 		trunk = null
+
+		var/turf/T = get_turf(src)
+		for (var/atom in src)
+			var/atom/movable/A = atom
+			A.set_loc(T)
+
 		return ..()
 
 	onDestroy()
 		if (src.powered())
 			elecflash(src, power = 2)
-		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 		. = ..()
 
 	proc/initair()
@@ -91,7 +97,7 @@
 	attackby(var/obj/item/I, var/mob/user)
 		if(status & BROKEN)
 			return
-		if (istype(I,/obj/item/electronics/scanner) || istype(I,/obj/item/deconstructor))
+		if (istype(I,/obj/item/deconstructor))
 			user.visible_message("<span class='alert'><B>[user] hits [src] with [I]!</B></span>")
 			return
 		if (istype(I, /obj/item/handheld_vacuum))
@@ -109,29 +115,31 @@
 				S.UpdateIcon()
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
-		if (istype(I,/obj/item/storage/) && I.contents.len)
-			var/action
-			if (istype(I, /obj/item/storage/mechanics/housing_handheld))
-				action = input(user, "What do you want to do with [I]?") as null|anything in list("Place it in the Chute","Never Mind")
-			else
-				action = input(user, "What do you want to do with [I]?") as null|anything in list("Place it in the Chute","Empty it into the chute","Never Mind")
-			if (!action || action == "Never Mind")
-				return
-			if (!in_interact_range(src, user))
-				boutput(user, "<span class='alert'>You need to be closer to the chute to do that.</span>")
-				return
-			if (action == "Empty it into the chute")
-				var/obj/item/storage/S = I
-				if(istype(S, /obj/item/storage/secure))
-					var/obj/item/storage/secure/secS = S
-					if(secS.locked)
-						boutput("<span class='alert'>You need to unlock the container first.</span>")
-						return
-				for(var/obj/item/O in S)
-					O.set_loc(src)
-					S.hud.remove_object(O)
-				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
-				return
+		//first time they click with a storage, it gets dumped. second time container itself is added
+		if ((istype(I,/obj/item/storage/) && I.contents.len) && user.a_intent == INTENT_HELP) //if they're not on help intent it'll default to placing it in while full
+			var/obj/item/storage/S = I
+
+			if(istype(S, /obj/item/storage/secure))
+				var/obj/item/storage/secure/secS = S
+				if(secS.locked)
+					boutput("<span class='alert'> Unable to open it, you place the whole [secS] into the container.</span>")
+					I.set_loc(src)
+					actions.interrupt(user, INTERRUPT_ACT)
+					return
+			for(var/obj/item/O in S)
+				O.set_loc(src)
+				S.hud.remove_object(O)
+			user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
+			actions.interrupt(user, INTERRUPT_ACT)
+			return
+
+		if (istype(I, /obj/item/storage/mechanics/housing_handheld)) //override to normal activity
+			I.set_loc(src)
+			user.visible_message("[user.name] places \the [I] into \the [src].",\
+			"You place \the [I] into \the [src].")
+			actions.interrupt(user, INTERRUPT_ACT)
+			return
+
 		var/obj/item/magtractor/mag
 		if (istype(I.loc, /obj/item/magtractor))
 			mag = I.loc
@@ -196,47 +204,23 @@
 
 		if(isitem(MO))
 			var/obj/item/I = MO
+			I.set_loc(src)
+			update()
+			src.visible_message("<span class='alert'>\The [I] lands cleanly in \the [src]!</span>")
 
-			if(prob(20)) //It might land!
-				I.set_loc(get_turf(src))
-				if(prob(30)) //It landed cleanly!
-					I.set_loc(src)
-					update()
-					src.visible_message("<span class='alert'>\The [I] lands cleanly in \the [src]!</span>")
-				else	//Aaaa the tension!
-					src.visible_message("<span class='alert'>\The [I] teeters on the edge of \the [src]!</span>")
-					var/delay = rand(5, 15)
-					SPAWN(0)
-						var/in_x = I.pixel_x
-						for(var/d = 0; d < delay; d++)
-							if(I) I.pixel_x = in_x + rand(-1, 1)
-							sleep(0.1 SECONDS)
-						if(I) I.pixel_x = in_x
-					SPAWN(delay)
-						if(I && I.loc == src.loc)
-							if(prob(40)) //It goes in!
-								src.visible_message("<span class='alert'>\The [I] slips into \the [src]!</span>")
-								I.set_loc(src)
-							else
-								src.visible_message("<span class='alert'>\The [I] slips off of the edge of \the [src]!</span>")
-
-		else if (ishuman(MO))
-			var/mob/living/carbon/human/H = MO
-			H.set_loc(get_turf(src))
-			if(prob(30))
-				H.visible_message("<span class='alert'><B>[H] falls into the disposal outlet!</B></span>")
-				logTheThing("combat", H, null, "is thrown into a [src.name] at [log_loc(src)].")
-				H.set_loc(src)
-				if(prob(20))
-					src.visible_message("<span class='alert'><B><I>...accidentally hitting the handle!</I></B></span>")
-					H.show_text("<B><I>...accidentally hitting the handle!</I></B>", "red")
-					flush = 1
-					if (!is_processing)
-						SubscribeToProcess()
-						is_processing = 1
-					update()
-				else
-					update()
+		else if (istype(MO, /mob/living))
+			var/mob/living/H = MO
+			H.visible_message("<span class='alert'><B>[H] falls into the disposal outlet!</B></span>")
+			logTheThing(LOG_COMBAT, H, "is thrown into a [src.name] at [log_loc(src)].")
+			H.set_loc(src)
+			if(prob(10) || H.bioHolder?.HasEffect("clumsy"))
+				src.visible_message("<span class='alert'><B><I>...accidentally hitting the handle!</I></B></span>")
+				H.show_text("<B><I>...accidentally hitting the handle!</I></B>", "red")
+				flush = 1
+				if (!is_processing)
+					SubscribeToProcess()
+					is_processing = 1
+			update()
 		else
 			return ..()
 
@@ -291,7 +275,7 @@
 						SubscribeToProcess()
 						src.is_processing = 1
 				update()
-				playsound(src, "sound/misc/handle_click.ogg", 50, 1)
+				playsound(src, 'sound/misc/handle_click.ogg', 50, 1)
 				. = TRUE
 			if("togglePump")
 				if (src.mode)
@@ -611,7 +595,7 @@
 			boutput(user, "[target] doesn't have anything in it to load!")
 			return
 		src.visible_message("[user] begins depositing [target]'s contents into [src].")
-		playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
+		playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 		for (var/atom/movable/AM in target)
 			if (BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user))
 				break
@@ -647,7 +631,7 @@
 			SubscribeToProcess()
 			is_processing = 1
 
-		playsound(src, "sound/misc/handle_click.ogg", 50, 1)
+		playsound(src, 'sound/misc/handle_click.ogg', 50, 1)
 
 		update()
 		return
@@ -660,7 +644,7 @@
 	attack_ai(mob/user as mob)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return
 
 
@@ -704,7 +688,7 @@
 			else if(target != user && !user.restrained())
 				msg = "[user.name] stuffs [target.name] into the [chute]!"
 				boutput(user, "You stuff [target.name] into the [chute]!")
-				logTheThing("combat", user, target, "places [constructTarget(target,"combat")] into [chute] at [log_loc(chute)].")
+				logTheThing(LOG_COMBAT, user, "places [constructTarget(target,"combat")] into [chute] at [log_loc(chute)].")
 			else
 				..()
 				return

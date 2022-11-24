@@ -7,21 +7,20 @@
 		icon_state = "laser_virtual"
 
 //How much of a punch this has, tends to be seconds/damage before any resist
-	power = 45
+	damage = 45
 //How much ammo this costs
 	cost = 31.25
 //How fast the power goes away
 	dissipation_rate = 5
 //How many tiles till it starts to lose power
 	dissipation_delay = 6
-//Kill/Stun ratio
-	ks_ratio = 1.0
 //name of the projectile setting, used when you change a guns setting
 	sname = "laser"
 //file location for the sound you want it to play
 	shot_sound = 'sound/weapons/Taser.ogg'
 //How many projectiles should be fired, each will cost the full cost
 	shot_number = 1
+	ie_type = "E"
 //What is our damage type
 /*
 kinetic - raw power
@@ -42,7 +41,7 @@ toxic - poisons
 	color_red = 1
 	color_green = 0
 	color_blue = 0
-	icon_turf_hit = "burn1"
+	impact_image_state = "burn1"
 
 	hit_mob_sound = 'sound/impact_sounds/burn_sizzle.ogg'
 	hit_object_sound = 'sound/impact_sounds/burn_sizzle.ogg'
@@ -59,7 +58,7 @@ toxic - poisons
 /datum/projectile/laser/quad
 	name = "4 lasers"
 	icon_state = "laser"
-	power = 240
+	damage = 240
 	cost = 125
 	dissipation_rate = 250
 	dissipation_delay = 0
@@ -86,7 +85,7 @@ toxic - poisons
 /datum/projectile/laser/heavy
 	name = "heavy laser"
 	icon_state = "u_laser"
-	power = 80
+	damage = 80
 	cost = 50
 	dissipation_delay = 10
 	brightness = 0
@@ -99,10 +98,18 @@ toxic - poisons
 /datum/projectile/laser/heavy/law_safe //subclass of heavy laser that can't damage the law rack - for AI turrets
 	name = "heavy laser"
 
+/datum/projectile/laser/diffuse
+	sname = "diffuse laser"
+	cost = 30
+	dissipation_delay = 1
+	dissipation_rate = 8
+	max_range = 7
+	shot_number = 2
+
 /datum/projectile/laser/asslaser // heh
 	name = "assault laser"
 	icon_state = "u_laser"
-	power = 50
+	damage = 50
 	cost = 65
 	dissipation_delay = 5
 	dissipation_rate = 0
@@ -125,18 +132,45 @@ toxic - poisons
 /datum/projectile/laser/light // for the drones
 	name = "phaser bolt"
 	icon_state = "phaser_energy"
-	power = 20
+	damage = 20
 	cost = 25
 	sname = "phaser bolt"
 	dissipation_delay = 5
 	shot_sound = 'sound/weapons/laserlight.ogg'
-	color_red = 1
-	color_green = 0
-	color_blue = 0
+	color_red = 0
+	color_green = 1
+	color_blue = 0.2
+
+	tiny
+		name = "micro phaser bolt"
+		icon_state = "bolt"
+		sname = "micro phaser bolt"
+		damage = 10
+		cost = 10
+		shot_sound = 'sound/weapons/energy/phaser_tiny.ogg'
+		color_red = 0
+		color_green = 1
+		color_blue = 0.2
+
+	huge // yes laser/light/huge is pretty dumb
+		name = "macro phaser blast"
+		icon_state = "crescent"
+		sname = "macro phaser blast"
+		damage = 50
+		cost = 62.5
+		shot_sound = 'sound/weapons/energy/phaser_huge.ogg'
+		color_red = 0
+		color_green = 0.1
+		color_blue = 0.4
+
+		on_hit(atom/hit, dir, obj/projectile/P)
+			hit.ex_act(3, src, 1.5)
+			P.die()
+
 
 	mining
 		name = "mining phaser bolt"
-		power = 3
+		damage = 5
 		cost = 5
 		dissipation_delay = 3
 		icon_state = "blue_spark"
@@ -146,8 +180,8 @@ toxic - poisons
 		color_blue = 1
 
 		on_hit(atom/hit)
-			if (istype(hit, /turf/simulated/wall/asteroid))
-				var/turf/simulated/wall/asteroid/T = hit
+			if (istype(hit, /turf/simulated/wall/auto/asteroid))
+				var/turf/simulated/wall/auto/asteroid/T = hit
 				if (power <= 0)
 					return
 				T.damage_asteroid(0,allow_zero = 1)
@@ -164,10 +198,13 @@ toxic - poisons
 		icon_state = "red_bolt"
 		dissipation_delay = 10
 		shot_sound = 'sound/weapons/laser_b.ogg'
+		color_red = 1
+		color_green = 0.2
+		color_blue = 0.2
 
 	split
 		dissipation_rate = 100
-		power = 120
+		damage = 120
 		dissipation_delay = 2
 
 		on_launch(var/obj/projectile/P)
@@ -213,7 +250,9 @@ toxic - poisons
 		var/count = 1
 
 		on_launch(var/obj/projectile/P)
-			launched.power = power
+			launched.power = src.power
+			launched.ks_ratio = src.ks_ratio
+			launched.generate_inverse_stats()
 			launched.icon_state = icon_state
 			if (count > 1)
 				var/turf/PT = get_turf(P)
@@ -248,29 +287,33 @@ toxic - poisons
 /datum/projectile/laser/glitter // for the russian pod
 	name = "prismatic laser"
 	icon_state = "eyebeam"
-	power = 25
-	cost = 35
+	damage = 25
+	cost = 20
 	sname = "phaser bolt"
 	dissipation_delay = 10
 	shot_sound = 'sound/weapons/TaserOLD.ogg'
 	color_red = 1
 	color_green = 0
 	color_blue = 1
-	icon_turf_hit = "burn2"
+	impact_image_state = "burn2"
 	projectile_speed = 42
 
+	burst
+		cost = 50
+		shot_number = 3
+
 /datum/projectile/laser/precursor // for precursor traps
-	name = "energy bolt"
+	name = "rydberg-matter bolt"
 	icon_state = "disrupt"
-	power = 30
+	damage = 24
+	stun = 6
 	cost = 30
-	sname = "energy bolt"
+	sname = "rydberg-matter bolt"
 	dissipation_delay = 10
 	shot_sound = 'sound/weapons/LaserOLD.ogg'
 	color_red = 0.1
 	color_green = 0.3
 	color_blue = 1
-	ks_ratio = 0.8
 
 /datum/projectile/laser/plasma //mostly just a reskin
 	icon_state = "phaser_med"
@@ -280,7 +323,7 @@ toxic - poisons
 	dissipation_delay = 8
 	dissipation_rate = 5
 	cost = 25
-	power = 35
+	damage = 35
 	color_red = 0.4
 	color_green = 0.5
 	color_blue = 0.7
@@ -296,7 +339,7 @@ toxic - poisons
 	dissipation_delay = 7.5
 	dissipation_rate = 8
 	cost = 40
-	power = 70
+	damage = 70
 	color_red = 1
 	color_green = 0.3
 	color_blue = 0
@@ -309,7 +352,7 @@ toxic - poisons
 	shot_sound = 'sound/weapons/snipershot.ogg'
 	shot_number = 3
 	cost = 100
-	power = 35
+	damage = 35
 	color_red = 0.4
 	color_green = 0
 	color_blue = 0.7
@@ -324,7 +367,7 @@ toxic - poisons
 	dissipation_delay = 8
 	dissipation_rate = 5
 	cost = 5
-	power = 15
+	damage = 15
 	color_red = 0.4
 	color_green = 0.5
 	color_blue = 0.7
@@ -342,15 +385,14 @@ toxic - poisons
 	dissipation_delay = 6
 	dissipation_rate = 5
 	cost = 25
-	power = 33
+	damage = 33
 	color_red = 0
 	color_green = 1
 	color_blue = 0.1
 	shot_number = 1
-	ks_ratio = 1
 
 	burst
-		power = 25
+		damage = 25
 		cost = 50
 		shot_number = 4
 		icon_state = "modproj2"
@@ -358,14 +400,14 @@ toxic - poisons
 
 	blast
 		shot_sound = 'sound/weapons/laser_e.ogg'
-		power = 66
+		damage = 66
 		cost = 100
 		icon_state = "crescent"
 		shot_number = 1
 
 /datum/projectile/laser/blaster/pod_pilot
 	cost = 20
-	power = 33
+	damage = 33
 	color_red = 0
 	color_green = 0
 	color_blue = 0
@@ -399,7 +441,7 @@ toxic - poisons
 
 	turret
 		turret = 1
-		power = 15
+		damage = 15
 
 /datum/projectile/laser/blaster/pod_pilot/red_SY
 	name = "red blaster bolt"
@@ -411,7 +453,7 @@ toxic - poisons
 
 	turret
 		turret = 1
-		power = 15
+		damage = 15
 
 
 // cogwerks- mining laser, first attempt
@@ -422,7 +464,7 @@ toxic - poisons
 /datum/projectile/laser/mining
 	name = "Plasma Cutter Bolt"
 	icon_state = "40mmgatling"
-	power = 40
+	damage = 40
 	cost = 40
 	dissipation_delay = 1
 	dissipation_rate = 8
@@ -437,8 +479,8 @@ toxic - poisons
 	color_blue = 0
 
 	on_hit(atom/hit)
-		if (istype(hit, /turf/simulated/wall/asteroid))
-			var/turf/simulated/wall/asteroid/T = hit
+		if (istype(hit, /turf/simulated/wall/auto/asteroid))
+			var/turf/simulated/wall/auto/asteroid/T = hit
 			if (power <= 0)
 				return
 			T.damage_asteroid(round(power / 5))
@@ -448,22 +490,22 @@ toxic - poisons
 	window_pass = 0
 	icon_state = ""
 	damage_type = D_SLASHING
-	power = 45
+	damage = 45
 	cost = 1
 	brightness = 0
 	sname = "drill bit"
 	shot_sound = 'sound/machines/rock_drill.ogg'
 	shot_volume = 20
 	dissipation_delay = 1
-	dissipation_rate = 35
-	icon_turf_hit = null
+	dissipation_rate = 45
+	impact_image_state = null
 	var/damtype = DAMAGE_STAB
 
-	var/hit_human_sound = "sound/impact_sounds/Slimy_Splat_1.ogg"
+	var/hit_human_sound = 'sound/impact_sounds/Slimy_Splat_1.ogg'
 	on_hit(atom/hit)
-		//playsound(hit.loc, "sound/machines/engine_grump1.ogg", 45, 1)
-		if (istype(hit, /turf/simulated/wall/asteroid))
-			var/turf/simulated/wall/asteroid/T = hit
+		//playsound(hit.loc, 'sound/machines/engine_grump1.ogg', 45, 1)
+		if (istype(hit, /turf/simulated/wall/auto/asteroid))
+			var/turf/simulated/wall/auto/asteroid/T = hit
 			if (power <= 0)
 				return
 			T.damage_asteroid(round(power / 7),1)
@@ -478,17 +520,17 @@ toxic - poisons
 
 	cutter
 		name = "cutter blade"
-		power = 30
+		damage = 30
 		dissipation_rate = 30
 		sname = "scrap cutter"
 
 	saw_teeth
 		name = "saw teeth"
-		power = 5
+		damage = 5
 		dissipation_rate = 5
 		sname = "saw teeth"
 		shot_sound = 'sound/machines/chainsaw.ogg'
-		hit_human_sound = "sound/impact_sounds/Flesh_Tear_1.ogg"
+		hit_human_sound = 'sound/impact_sounds/Flesh_Tear_1.ogg'
 		damtype = DAMAGE_CUT
 
 		on_hit(atom/hit) //do extra damage to pod
@@ -503,12 +545,12 @@ toxic - poisons
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "alastor"
 
-	power = 35
+	damage = 35
 	cost = 25
 	sname = "laser"
 	shot_sound = 'sound/weapons/energy/laser_alastor.ogg'
 	brightness = 1
-	icon_turf_hit = "burn1"
+	impact_image_state = "burn1"
 
 	on_hit(atom/hit)
 		var/mob/living/L = hit
@@ -522,8 +564,8 @@ toxic - poisons
 /datum/projectile/laser/signifer_lethal
 	name = "signifer bolt"
 	icon = 'icons/obj/projectiles.dmi'
-	power = 15
-	cost = 50
+	damage = 15
+	cost = 40
 	sname = "lethal"
 	shot_sound = 'sound/weapons/SigLethal.ogg'
 	hit_ground_chance = 30
@@ -558,3 +600,32 @@ toxic - poisons
 				random_brute_damage(hit, rand(5,10), 0)
 				hit.delStatus("signified")
 			..()
+
+
+/datum/projectile/laser/plasma/auto
+	icon_state = "miniphaser_med"
+	shot_sound = 'sound/weapons/lasersound.ogg'
+	dissipation_delay = 4
+	dissipation_rate = 2
+	cost = 10
+	damage = 18
+	fullauto_valid = 1
+	shot_volume = 75
+
+/datum/projectile/laser/plasma/burst
+	cost = 60
+	damage = 25
+	shot_number = 4
+	shot_delay = 1
+	shot_volume = 75
+	projectile_speed = 42
+
+	on_hit(atom/movable/hit, dir, datum/projectile/P)
+		. = ..()
+		if(hit.hasStatus("cornicened2"))
+			elecflash(get_turf(hit),radius=0, power=6, exclude_center = 0)
+			random_brute_damage(hit, rand(10,20), 0)
+			hit.delStatus("cornicened")
+			hit.delStatus("cornicened2")
+		else
+			hit.setStatus("cornicened")

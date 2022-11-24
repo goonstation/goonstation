@@ -1,8 +1,9 @@
 /obj/machinery/nanofab/refining
 	name = "Nano-fabricator (Refining)"
 	blueprints = list(/datum/matfab_recipe/coilsmall,
-	/datum/matfab_recipe/coillarge,
-	/datum/matfab_recipe/arrowhead,
+#ifdef MAP_OVERRIDE_NADIR
+	/datum/matfab_recipe/catarod,
+#endif
 	/datum/matfab_recipe/spear,
 	/datum/matfab_recipe/arrow,
 	/datum/matfab_recipe/bow,
@@ -21,12 +22,6 @@
 	/datum/matfab_recipe/sheet,
 	/datum/matfab_recipe/cell_small,
 	/datum/matfab_recipe/cell_large,
-	/datum/matfab_recipe/simple/insbody,
-	/datum/matfab_recipe/simple/insneck,
-	/datum/matfab_recipe/simple/insmouth,
-	/datum/matfab_recipe/simple/insbell,
-	/datum/matfab_recipe/simple/insbag,
-	/datum/matfab_recipe/simple/insrod,
 	/datum/matfab_recipe/infusion,
 	/datum/matfab_recipe/spacesuit)
 	/*
@@ -100,7 +95,7 @@
 			recipes.Add(new R())
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.Browse(buildHtml(), "window=nfab;size=550x650;title=Nano-fabricator;fade_in=0;can_resize=0", 1)
 		return
 
@@ -316,6 +311,9 @@
 						for(var/datum/matfab_part/P in selectedRecipe.required_parts)
 							if(P.assigned)
 								P.assigned.change_stack_amount(-(P.required_amount*howMany))
+								if(QDELETED(P.assigned))
+									P.assigned = null
+
 						tab = "recipes"
 						selectingPart = null
 						selectingPartList.Cut()

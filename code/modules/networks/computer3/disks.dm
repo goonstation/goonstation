@@ -79,7 +79,7 @@
 			user.visible_message("<span class='alert'><b>[user] is zapped as the multitool backfires! The [src.name] seems unphased.</b></span>")
 			elecflash(user,0, power=2, exclude_center = 0)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (ispulsingtool(W))
 			user.visible_message("<span class='alert'><b>[user] begins to wipe [src.name]!</b></span>")
 			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/disk/data/proc/wipe_or_zap, list(user), src.icon, src.icon_state, null, null)
@@ -142,7 +142,7 @@
 		. = ..()
 		src.root.gen = 99 //No subfolders!!
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			var/t = input(user, "Enter new tape label", src.name, null) as text
 			t = copytext(strip_html(t), 1, 36)
@@ -276,10 +276,11 @@
 	desc = "Capable of storing entire kilobytes of information, this disk carries activation codes for various secure things that aren't nuclear bombs."
 	icon_state = "nucleardisk"
 	item_state = "card-id"
+	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	mats = 15
 	random_color = 0
-	file_amount = 32.0
+	file_amount = 32
 
 	New()
 		. = ..()

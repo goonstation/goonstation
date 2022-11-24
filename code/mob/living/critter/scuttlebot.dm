@@ -1,4 +1,4 @@
-/mob/living/critter/scuttlebot
+/mob/living/critter/robotic/scuttlebot
 	name = "scuttlebot"
 	desc = "A strangely hat shaped robot looking to spy on your deepest secrets"
 	density = 0
@@ -7,15 +7,22 @@
 	hand_count = 1
 	can_help = 1
 	can_throw = 1
-	can_grab = 1
+	can_grab = 0
 	can_disarm = 1
 	fits_under_table = 1
 	icon_state = "scuttlebot"
 	speechverb_say = "beeps"
-	var/health_brute = 25
-	var/health_brute_vuln = 1
-	var/health_burn = 25
-	var/health_burn_vuln = 0.2
+	speechverb_exclaim = "boops"
+	speechverb_ask = "beeps curiously"
+	add_abilities = list(/datum/targetable/critter/takepicture,
+						/datum/targetable/critter/flash,
+						/datum/targetable/critter/scuttle_scan,
+						/datum/targetable/critter/control_owner)
+	health_brute = 25
+	health_brute_vuln = 1
+	health_burn = 25
+	health_burn_vuln = 0.2
+	var/is_inspector = FALSE
 	var/mob/living/carbon/human/controller = null //Who's controlling us? Lets keep track so we can put them back in their body
 
 	New()
@@ -23,10 +30,6 @@
 		//Comes with the goggles
 		var/obj/item/clothing/glasses/scuttlebot_vr/R = new /obj/item/clothing/glasses/scuttlebot_vr(src.loc)
 		R.connected_scuttlebot = src
-
-		abilityHolder.addAbility(/datum/targetable/critter/takepicture)
-		abilityHolder.addAbility(/datum/targetable/critter/flash)
-		abilityHolder.addAbility(/datum/targetable/critter/control_owner)
 
 	setup_hands()
 		..()
@@ -47,6 +50,31 @@
 		else
 			return ..()
 
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, 'sound/voice/screams/robot_scream.ogg' , 60, 1, pitch=1.3, channel=VOLUME_CHANNEL_EMOTE)
+					return "<b>[src]</b> screams!"
+
+			if ("fart")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, 1, pitch=1.4, channel=VOLUME_CHANNEL_EMOTE)
+					return pick("[src] unleashes the tiniest robotic toot.", "[src] sends out a ridiculously pitched fart.")
+
+			if ("burp")
+				if (src.emote_check(voluntary, 50))
+					playsound(src.loc, 'sound/vox/birdwell.ogg', 40, 1, pitch=1.3, channel=VOLUME_CHANNEL_EMOTE)
+					return "<b>[src]</b> birdwells!"
+
+			if ("flip")
+				if (src.emote_check(voluntary, 50))
+					playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 40, 1, pitch=1.3, channel=VOLUME_CHANNEL_EMOTE)
+					animate_spin(src, pick("L", "R"), 1, 0)
+					return "<b>[src]</b> does a flip!"
+
+		return null
+
 	death(var/gibbed)
 		if (controller != null)//Lets put the person back in their body first to avoid death messages
 			if (!controller.mind)
@@ -60,21 +88,12 @@
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 			src.audible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
 			src.drop_item()
-			playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 			elecflash(src, radius=1, power=3, exclude_center = 0)
 			qdel(src)
 		else
-			playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
-
-	attackby(obj/item/W, mob/M)
-		if(istype(W, /obj/item/clothing/glasses/scuttlebot_vr))
-			new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(src))
-			boutput(M, "You stuff the goggles back into the hat. It powers down with a low whirr.")
-			qdel(W)
-			qdel(src)
-		else
-			..()
 
 	proc/return_to_owner()
 		if (controller != null)
@@ -85,3 +104,17 @@
 			else
 				src.mind.transfer_to(controller)
 			controller = null
+
+/mob/living/critter/robotic/scuttlebot/weak
+
+	add_abilities = list(/datum/targetable/critter/takepicture,
+						/datum/targetable/critter/scuttle_scan,
+						/datum/targetable/critter/control_owner)
+
+	var/obj/item/clothing/head/det_hat/gadget/linked_hat = null
+
+	setup_hands()
+
+	proc/make_inspector()
+		icon_state = "scuttlebot_inspector"
+		src.is_inspector = TRUE

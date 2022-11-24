@@ -71,7 +71,7 @@
 			critter_types = list(/mob/living/critter/spider/baby),
 			drop_tables = list(
 				new /datum/event_item_drop_table(  // several baby spiders crawl out of the corpse like those horror short videos oh no
-					potential_drop_items = list(/obj/critter/spider/baby),
+					potential_drop_items = list(/mob/living/critter/spider/baby),
 					number_of_rolls = 6
 					),
 				new /datum/event_item_drop_table(  // but on the bright side it drops an egg!
@@ -92,7 +92,7 @@
 			)
 		),
 		list(new /datum/eventSpawnedCritter(
-			critter_types = list(/mob/living/critter/gunbot),
+			critter_types = list(/mob/living/critter/robotic/gunbot),
 			drop_tables = list(
 				new /datum/event_item_drop_table(
 					potential_drop_items = list(/obj/item/property_setter/reinforce, /obj/item/property_setter/thermal, /obj/item/property_setter/speedy),
@@ -102,7 +102,7 @@
 			)
 		),
 		list(new /datum/eventSpawnedCritter(
-			critter_types = list(/mob/living/critter/bot/cleanbot/emagged, /mob/living/critter/bot/firebot/emagged),
+			critter_types = list(/mob/living/critter/robotic/bot/cleanbot/emagged, /mob/living/critter/robotic/bot/firebot/emagged),
 			drop_tables = list(
 				new /datum/event_item_drop_table(
 					potential_drop_items = list(/obj/item/property_setter/reinforce, /obj/item/property_setter/thermal, /obj/item/property_setter/speedy),
@@ -126,7 +126,7 @@
 			if ("Random") //random
 				src.critter_type = null
 
-		src.num_critters = input(usr, "How many critter antagonists to spawn?", src.name, 0) as num|null
+		src.num_critters = input(usr, "How many critter antagonists to spawn? ([length(eligible_dead_player_list(allow_dead_antags = TRUE))] players eligible)", src.name, 0) as num|null
 		if (!src.num_critters || src.num_critters < 1)
 			cleanup_event()
 			return

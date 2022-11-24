@@ -30,6 +30,7 @@ Make sure to add new items to this list if you document new components.
     - [`Grid.Column`](#gridcolumn)
     - [`Icon`](#icon)
     - [`Icon.Stack`](#iconstack)
+    - [`Image`](#image)
     - [`Input`](#input)
     - [`Knob`](#knob)
     - [`LabeledControls`](#labeledcontrols)
@@ -40,6 +41,7 @@ Make sure to add new items to this list if you document new components.
     - [`Modal`](#modal)
     - [`NoticeBox`](#noticebox)
     - [`NumberInput`](#numberinput)
+    - [`Popper`](#popper)
     - [`ProgressBar`](#progressbar)
     - [`RoundGauge`](#roundgauge)
     - [`Section`](#section)
@@ -218,6 +220,7 @@ Buttons allow users to take actions, and make choices, with a single click.
 - See inherited props: [Box](#box)
 - `fluid: boolean` - Fill all available horizontal space.
 - `icon: string` - Adds an icon to the button.
+- `iconPosition?: string` - Set to `'right'` to align the icon to the right of the children
 - `color: string` - Button color, as defined in `variables.scss`.
   - There is also a special color `transparent` - makes the button
   transparent and slightly dim when inactive.
@@ -233,6 +236,10 @@ the baseline alignment.
 over the button.
 - `children: any` - Content to render inside the button.
 - `onClick: function` - Called when element is clicked.
+- `verticalAlignContent: string` - Align content vertically using flex. Use lineHeight if the height is static.
+  - `top` - align content to the ceiling of the button box.
+  - `middle` - align content on the middle of the button box.
+  - `bottom` - align content on the ground of the button box.
 
 ### `Button.Checkbox`
 
@@ -522,10 +529,10 @@ Renders one of the FontAwesome icons of your choice.
 <Icon name="plus" />
 ```
 
-To smoothen the transition from v4 to v5, we have added a v4 semantic to
+To smoothen the transition from v4 to v5 to v6 (🙄), we have added a v4 semantic to
 transform names with `-o` suffixes to FA Regular icons. For example:
-- `square` will get transformed to `fas square`
-- `square-o` will get transformed to `far square`
+- `square` will get transformed to `fa-solid square`
+- `square-o` will get transformed to `fa-regular square`
 
 **Props:**
 
@@ -552,6 +559,20 @@ Renders children icons on top of each other in order to make your own icon.
 
 - See inherited props: [Box](#box)
 - `children: Icon` - Icons to stack.
+
+### `Image`
+
+Wrapper for a basic html `<img>` tag. Often used alongside base64 image encoding to render icons from the backend like so:
+```jsx
+<Image
+  pixelated
+  height="32px"
+  width="32px"
+  src={`data:image/png;base64,${img}`}
+/>
+```
+**Props:**
+- `pixelated: boolean` - Whether the icon is rendered with pixelated or fuzzy scaling. Equivalent to `-ms-interpolation-mode: nearest-neighbor`.
 
 ### `Input`
 
@@ -669,7 +690,18 @@ to perform some sort of action), there is a way to do that:
 **Props:**
 
 - `label: string` - Item label.
-- `color: string` - Sets the color of the text.
+- `labelWrap: boolean` - Lets the label wrap and makes it not take the minimum width.
+- `labelColor: string` - Sets the color of the label.
+- `color: string` - Sets the color of the content text.
+- `textAlign: string` - Align the content text.
+  - `left` (default)
+  - `center`
+  - `right`
+- `verticalAlign: string` - Align both the label and the content vertically.
+  - `baseline` (default)
+  - `top`
+  - `middle`
+  - `bottom`
 - `buttons: any` - Buttons to render aside the content.
 - `children: any` - Content of this labeled item.
 
@@ -785,7 +817,11 @@ percentage and how filled the bar is.
 - `maxValue: number` - Highest possible value.
 - `ranges: { color: [from, to] }` - Applies a `color` to the progress bar
 based on whether the value lands in the range between `from` and `to`.
-- `color: string` - Color of the progress bar.
+- `color: string` - Color of the progress bar. Can take any of the following formats:
+  - `#ffffff` - Hex format
+  - `rgb(r,g,b) / rgba(r,g,b,a)` - RGB format
+  - `<name>` - the name of a `color-<name>` CSS class. See `CSS_COLORS` in `constants.js`.
+  - `<name>` - the name of a base CSS color, if not overridden by the definitions above.
 - `children: any` - Content to render inside the progress bar.
 
 ### `RoundGauge`

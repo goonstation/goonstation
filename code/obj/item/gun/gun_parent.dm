@@ -3,14 +3,15 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun
 	name = "gun"
 	icon = 'icons/obj/items/gun.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT | USEDELAY | EXTRADELAY
+	object_flags = NO_GHOSTCRITTER
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
 	special_grab = /obj/item/grab/gunpoint
 
 	item_state = "gun"
 	m_amt = 2000
-	force = 10.0
+	force = 10
 	throwforce = 5
 	health = 7
 	w_class = W_CLASS_NORMAL
@@ -18,7 +19,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	throw_range = 6
 	contraband = 4
 	hide_attack = 2 //Point blanking... gross
-	pickup_sfx = "sound/items/pickup_gun.ogg"
+	pickup_sfx = 'sound/items/pickup_gun.ogg'
 	inventory_counter_enabled = 1
 
 	var/continuous = 0 //If 1, fire pixel based while button is held.
@@ -181,6 +182,31 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		..()
 		ownerGun.shoot(target_turf, user_turf, owner, pox, poy)
 
+/datum/action/bar/icon/guncharge_pointblank
+	duration = 150
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "guncharge"
+	icon = 'icons/obj/items/tools/screwdriver.dmi'
+	icon_state = "screwdriver"
+	var/obj/item/gun/ownerGun
+	var/atom/target
+	var/mob/user
+	var/second_shot
+
+	New(_gun, _target, _user, _second_shot, _time, _icon, _icon_state)
+		ownerGun = _gun
+		target = _target
+		user = _user
+		second_shot = _second_shot
+		icon = _icon
+		icon_state = _icon_state
+		duration = _time
+		..()
+
+	onEnd()
+		..()
+		ownerGun.shoot_point_blank(target, user, second_shot, TRUE)
+
 /obj/item/gun/pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
 	if (reach)
 		return 0
@@ -204,10 +230,11 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			else if(!user.hand && istype(user.l_hand, /obj/item/gun))
 				G = user.l_hand
 
-			if (G && G.can_dual_wield && G.canshoot())
+			if (G && G.can_dual_wield && G.canshoot(user))
 				is_dual_wield = 1
 				if(!ON_COOLDOWN(G, "shoot_delay", G.shoot_delay))
 					SPAWN(0.2 SECONDS)
+						if(!(G in user.equipped_list())) return
 						G.shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2), is_dual_wield)
 
 		else if(ismobcritter(user))
@@ -216,16 +243,17 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			for(var/datum/handHolder/H in M.hands)
 				if(H.item && H.item != src && istype(H.item, /obj/item/gun) && H.item:can_dual_wield)
 					is_dual_wield = 1
-					if (H.item:canshoot())
+					if (H.item:canshoot(user))
 						guns += H.item
 			SPAWN(0)
 				for(var/obj/item/gun/gun in guns)
 					if(!ON_COOLDOWN(gun, "shoot_delay", gun.shoot_delay))
 						sleep(0.2 SECONDS)
+						if(!(gun in user.equipped_list())) return
 						gun.shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2), is_dual_wield)
 
 	if(!ON_COOLDOWN(src, "shoot_delay", src.shoot_delay))
-		if(charge_up && !can_dual_wield && canshoot())
+		if(charge_up && !can_dual_wield && canshoot(user))
 			actions.start(new/datum/action/bar/icon/guncharge(src, pox, poy, user_turf, target_turf, charge_up, icon, icon_state), user)
 		else
 			shoot(target_turf, user_turf, user, pox, poy, is_dual_wield)
@@ -233,7 +261,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	return 1
 
-/obj/item/gun/attack(mob/M as mob, mob/user as mob)
+/obj/item/gun/attack(mob/M, mob/user)
 	if (!M || !ismob(M)) //Wire note: Fix for Cannot modify null.lastattacker
 		return ..()
 
@@ -256,35 +284,45 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 #endif
 		return
 
-/obj/item/gun/proc/shoot_point_blank(atom/target, var/mob/user as mob, var/second_shot = 0)
+/obj/item/gun/proc/shoot_point_blank(atom/target, var/mob/user as mob, var/second_shot = 0, var/skip_charge_up = FALSE)
 	if (!target || !user)
 		return FALSE
 
 	if (isghostdrone(user))
 		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
 		return FALSE
+
+	if (charge_up && !skip_charge_up && !can_dual_wield && canshoot(user))
+		actions.start(new/datum/action/bar/icon/guncharge_pointblank(src, target, user, second_shot, charge_up, icon, icon_state), user)
+		return
+
 	var/is_dual_wield = 0
+	var/obj/item/gun/second_gun
 	//Ok. i know it's kind of dumb to add this param 'second_shot' to the shoot_point_blank proc just to make sure pointblanks don't repeat forever when we could just move these checks somewhere else.
 	//but if we do the double-gun checks here, it makes stuff like double-hold-at-gunpoint-pointblanks easier!
 	if (can_dual_wield && !second_shot)
 		//brutal double-pointblank shots
 		if (ishuman(user))
 			if(user.hand && istype(user.r_hand, /obj/item/gun) && user.r_hand:can_dual_wield)
+				second_gun = user.r_hand
 				var/target_turf = get_turf(target)
 				is_dual_wield = 1
 				SPAWN(0.2 SECONDS)
+					if(user.r_hand != second_gun) return
 					if (BOUNDS_DIST(user, target) == 0)
-						user.r_hand:shoot_point_blank(target,user,second_shot = 1)
+						second_gun.shoot_point_blank(target,user,second_shot = 1)
 					else
-						user.r_hand:shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5), is_dual_wield)
+						second_gun.shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5), is_dual_wield)
 			else if(!user.hand && istype(user.l_hand, /obj/item/gun) && user.l_hand:can_dual_wield)
+				second_gun = user.l_hand
 				var/target_turf = get_turf(target)
 				is_dual_wield = 1
 				SPAWN(0.2 SECONDS)
+					if(user.l_hand != second_gun) return
 					if (BOUNDS_DIST(user, target) == 0)
-						user.l_hand:shoot_point_blank(target,user,second_shot = 11)
+						second_gun.shoot_point_blank(target,user,second_shot = 1)
 					else
-						user.l_hand:shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5), is_dual_wield)
+						second_gun.shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5), is_dual_wield)
 
 
 	if (src.artifact && istype(src.artifact, /datum/artifact))
@@ -292,10 +330,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		if (!art_gun.activated)
 			return
 
-	if (!canshoot())
+	if (!canshoot(user))
 		if (!silenced)
 			target.visible_message("<span class='alert'><B>[user] tries to shoot [user == target ? "[him_or_her(user)]self" : target] with [src] point-blank, but it was empty!</B></span>")
-			playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
 		else
 			user.show_text("*click* *click*", "red")
 		return FALSE
@@ -374,11 +412,11 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (isghostdrone(user))
 		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
 		return FALSE
-	if (!canshoot())
+	if (!canshoot(user))
 		if (ismob(user))
 			user.show_text("*click* *click*", "red") // No more attack messages for empty guns (Convair880).
 			if (!silenced)
-				playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
+				playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
 		return FALSE
 	if (!process_ammo(user))
 		return FALSE
@@ -432,7 +470,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		var/turf/T = target
 		src.log_shoot(user, T, P)
 
-	SEND_SIGNAL(user, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+	SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 	if (ismob(user))
 		var/mob/M = user
@@ -443,11 +481,12 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	src.UpdateIcon()
 	return TRUE
 
-/obj/item/gun/proc/canshoot()
+/// Check if the gun can shoot or not. `user` will be null if the gun is shot by a non-mob (gun component)
+/obj/item/gun/proc/canshoot(mob/user)
 	return 0
 
 /obj/item/gun/proc/log_shoot(mob/user, turf/T, obj/projectile/P)
-	logTheThing("combat", user, null, "fires \a [src] from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, T))]</I>, projectile: <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", [P.proj_data.type]" : null]")
+	logTheThing(LOG_COMBAT, user, "fires \a [src] from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, T))]</I>, projectile: <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", [P.proj_data.type]" : null]")
 
 /obj/item/gun/examine()
 	if (src.artifact)
@@ -457,7 +496,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun/proc/process_ammo(var/mob/user)
 	boutput(user, "<span class='alert'>*click* *click*</span>")
 	if (!src.silenced)
-		playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
+		playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
 	return 0
 
 // Could be useful in certain situations (Convair880).
@@ -466,11 +505,11 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		return
 
 	else if (istype(G, /obj/item/gun/kinetic) && istype(A, /obj/item/ammo/bullets))
-		logTheThing("combat", user, null, "reloads [G] (<b>Ammo type:</b> <i>[G.current_projectile.type]</i>) at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "reloads [G] (<b>Ammo type:</b> <i>[G.current_projectile.type]</i>) at [log_loc(user)].")
 		return
 
 	else if (istype(G, /obj/item/gun/energy) && istype(A, /obj/item/ammo/power_cell))
-		logTheThing("combat", user, null, "reloads [G] (<b>Cell type:</b> <i>[A.type]</i>) at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "reloads [G] (<b>Cell type:</b> <i>[A.type]</i>) at [log_loc(user)].")
 		return
 
 	else return
@@ -479,10 +518,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun/suicide(var/mob/living/carbon/human/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
-	if (!src.canshoot())
+	if (!src.canshoot(user))
 		return 0
 
-	src.process_ammo(user)
 	user.visible_message("<span class='alert'><b>[user] places [src] against [his_or_her(user)] head!</b></span>")
 	var/dmg = user.get_brute_damage() + user.get_burn_damage()
 	src.shoot_point_blank(user, user)

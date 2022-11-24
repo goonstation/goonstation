@@ -50,7 +50,7 @@
 		proj_tracer_on_end(O)
 
 	projectile_speed = 24
-	power = 30
+	damage = 30
 	dissipation_delay = 8
 	dissipation_rate = 5
 
@@ -264,7 +264,7 @@
 		if (health <= 0)
 			die()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		var/damtype = DT_NORMAL
 
 		if (W.hit_type == DAMAGE_BURN)

@@ -25,45 +25,35 @@
 	slots=1
 	var/num_f_icons = 0 // how many fill icons i have
 	var/light_time=0
-	var/datum/light/point/light
+	var/light_color = list(0, 255, 255, 255)
 	var/open=true
 	var/welded=false
 	var/can_be_welded=false
 	var/can_be_anchored=false
 	custom_suicide=true
+	open_to_sound = TRUE
+
 	New()
-		src.light = new /datum/light/point
-		src.light.attach(src)
-		src.light.set_color(1,0,1)
 		processing_items |= src
 		..()
 
-	hear_talk(mob/M as mob, msg, real_name, lang_id) // hack to make microphones work
-		for(var/obj/item/mechanics/miccomp/mic in src.contents)
-			mic.hear_talk(M,msg,real_name,lang_id)
-		return
 	process()
 		if (src.light_time>0)
 			src.light_time--
 			src.UpdateIcon()
 			return
-		if(src.light.enabled) // bluh
-			src.UpdateIcon()
-			return
-		return
+
 	proc/light_up()
-		var/orig_light_time
-		src.light_time+=CONTAINER_LIGHT_TIME
-		src.light_time%=MAX_CONTAINER_LIGHT_TIME
-		if(!orig_light_time)
-			src.UpdateIcon()
-		return
+		src.light_time += CONTAINER_LIGHT_TIME
+		src.light_time = max(src.light_time, MAX_CONTAINER_LIGHT_TIME)
+		src.UpdateIcon()
+
 	ex_act(severity)
 		switch(severity)
-			if (1.0)
+			if (1)
 				src.dispose() // disposing upon being blown up unlike all those decorative rocks on cog2
 				return
-			if (2.0)
+			if (2)
 				if(prob(25))
 					src.dispose()
 					return
@@ -71,7 +61,7 @@
 				src.welded=false
 				src.UpdateIcon()
 				return
-			if (3.0)
+			if (3)
 				if(prob(50) && !src.welded)
 					src.open=true
 					src.UpdateIcon()
@@ -83,7 +73,7 @@
 		user.visible_message("<span class='alert'><b>[user] stares into the [src], trying to make sense of its function!</b></span>")
 		SPAWN(3 SECONDS)
 			user.visible_message("<span class='alert'><b>[user]'s brain melts!</b></span>")
-			playsound(user, "sound/effects/mindkill.ogg", 50)
+			playsound(user, 'sound/effects/mindkill.ogg', 50)
 			user.take_brain_damage(69*420)
 		SPAWN(20 SECONDS)
 			if (user && !isdead(user))
@@ -93,12 +83,12 @@
 		if(!(user in src.users) && istype(user))
 			src.users+=user
 		return ..()
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!(user in src.users) && istype(user))
 			src.users+=user
 		return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			if(src.welded)
 				boutput(user,"<span class='alert'>The [src] is welded shut.</span>")
@@ -123,6 +113,7 @@
 				boutput(user,"<span class='alert'>You cannot anchor a component housing inside something else.</span>")
 				return
 			src.anchored=!src.anchored
+			notify_cabinet_state()
 			playsound(src.loc,'sound/items/Ratchet.ogg',50)
 			boutput(user,"<span class='notice'>You [src.anchored ? "anchor the [src] to" : "unsecure the [src] from"] the ground</span>")
 			if (!src.anchored)
@@ -160,12 +151,11 @@
 				src.icon_state=initial(src.icon_state)
 		else
 			src.icon_state=initial(src.icon_state)+"_closed"
-		if(src.light_time>0)
-			src.icon_state+="_e"
-			if(!src.light.enabled)
-				src.light.enable()
-		else if (src.light.enabled)
-			src.light.disable()
+		if(src.light_time > 0)
+			src.icon_state += "_e"
+			src.add_medium_light("cabinet_light", src.light_color)
+		else
+			src.remove_medium_light("cabinet_light")
 		return
 
 	proc
@@ -175,6 +165,9 @@
 					if(hud.master==src) hud.close.clicked()
 			src.users = list() // gee golly i hope garbage collection does its job
 			return 1
+		notify_cabinet_state()
+			for (var/obj/item/mechanics/comp in src.contents)
+				comp.cabinet_state_change(src)
 		destroy_outside_connections()
 			//called when the cabinet is unanchored
 			var/discons=0
@@ -230,19 +223,20 @@
 		anchored=false
 		icon_state="housing_cabinet"
 		flags = FPRINT | EXTRADELAY | CONDUCT
-		attack_hand(mob/user as mob)
+		light_color = list(0, 179, 255, 255)
+
+		attack_hand(mob/user)
 			if(src.loc==user)
 				src.set_loc(get_turf(src))
 				user.drop_item()
 				return
 			return mouse_drop(user)
-		New()
-			..()
-			src.light.set_color(0,0.7,1)
+
 		attack_self(mob/user as mob)
 			src.set_loc(get_turf(user))
 			user.drop_item()
 			return
+
 		mouse_drop(atom/target)
 		// thanks, whoever hardcoded that pick-up action into obj/item/mouse_drop()!
 			if(istype(target,/atom/movable/screen/hud))
@@ -250,6 +244,7 @@
 			if(target.loc!=get_turf(target) && !isturf(target)) //return if dragged onto an item in another object (i.e backpacks on players)
 				return // you used to be able to pick up cabinets by dragging them to your backpack
 			return ..()
+
 	housing_handheld
 		var/obj/item/mechanics/trigger/trigger/the_trigger
 		slots=HANDHELD_CAPACITY + 1 // One slot used by the permanent button
@@ -263,10 +258,9 @@
 		num_f_icons=1
 		icon_state="housing_handheld"
 		flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | ONBELT
-		New()
-			..()
-			src.light.set_color(0.2,0,0)
+		light_color = list(51, 0, 0, 0)
 		spawn_contents=list(/obj/item/mechanics/trigger/trigger)
+
 		proc/find_trigger() // find the trigger comp, return 1 if found.
 			if (!istype(src.the_trigger))
 				src.the_trigger = (locate(/obj/item/mechanics/trigger/trigger) in src.contents)
@@ -283,7 +277,7 @@
 				return ..() // you can just use the trigger manually from the UI
 			if(src.find_trigger() && !src.open && src.loc==user)
 				return src.the_trigger.Attackhand(user)
-			return
+
 #undef CONTAINER_LIGHT_TIME
 #undef MAX_CONTAINER_LIGHT_TIME
 #undef CABINET_CAPACITY
@@ -301,13 +295,13 @@
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(iswrenchingtool(W)) // prevent unanchoring
 			return 0
 		if(..()) return 1
 		return 1 //attack_hand(user) // was causing issues
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		if (!istype(src.loc,/obj/item/storage/mechanics/housing_handheld))
 			qdel(src) //if outside the gun, delet
@@ -343,11 +337,14 @@
 	icon_state = "comp_unk"
 	item_state = "swat_suit"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	object_flags = NO_GHOSTCRITTER
 	plane = PLANE_NOSHADOW_BELOW
 	w_class = W_CLASS_TINY
 	level = 2
 	/// whether or not this component is prevented from being anchored in cabinets
 	var/cabinet_banned = FALSE
+	/// whether or not this component can only be used in cabinets
+	var/cabinet_only = FALSE
 	/// if true makes it so that only one component can be wrenched on the tile
 	var/one_per_tile = FALSE
 	var/under_floor = 0
@@ -410,7 +407,7 @@
 
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(level == 1) return
 		if(issilicon(user) || isAI(user)) return
 		else return ..(user)
@@ -419,11 +416,12 @@
 		return src.Attackhand(user)
 	proc/secure()
 	proc/loosen()
+	proc/cabinet_state_change(var/obj/item/storage/mechanics/container)
 
 	proc/rotate()
 		src.set_dir(turn(src.dir, -90))
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (ispryingtool(W))
 			if (can_rotate)
 				if (!anchored)
@@ -435,7 +433,7 @@
 			switch(level)
 				if(1) //Level 1 = wrenched into place
 					boutput(user, "You detach the [src] from the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivate it.")
-					logTheThing("station", user, null, "detaches a <b>[src]</b> from the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "detaches a <b>[src]</b> from the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
 					level = 2
 					anchored = 0
 					clear_owner()
@@ -447,6 +445,9 @@
 					if(IN_CABINET && src.cabinet_banned)
 						boutput(user,"<span class='alert'>[src] is not allowed in component housings.</span>")
 						return
+					if(!IN_CABINET && src.cabinet_only)
+						boutput(user,"<span class='alert'>[src] is not allowed outside of component housings.</span>")
+						return
 					if(src.one_per_tile)
 						for(var/obj/item/mechanics/Z in src.loc)
 							if (Z.type == src.type && Z.level == 1)
@@ -456,7 +457,7 @@
 						boutput(user,"<span class='alert'>[src] is already attached to something somehow.</span>")
 						return
 					boutput(user, "You attach the [src] to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
-					logTheThing("station", user, null, "attaches a <b>[src]</b> to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 					level = 1
 					anchored = 1
 					set_owner(user)
@@ -494,7 +495,7 @@
 		return
 
 	proc/componentSay(var/string)
-		string = trim(sanitize(html_encode(string)), 1)
+		string = trim(sanitize(html_encode(string)))
 		for(var/mob/O in all_hearers(7, src.loc))
 			O.show_message("<span class='game radio'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks", "beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",2)
 
@@ -537,7 +538,7 @@
 
 	proc/setPrice(obj/item/W as obj, mob/user as mob)
 		if (code)
-			var/codecheck = strip_html(input(user,"Please enter current code:","Code check","") as text)
+			var/codecheck = strip_html_tags(input(user,"Please enter current code:","Code check","") as text)
 			if (codecheck != code)
 				boutput(user, "<span class='alert'>[bicon(src)]: Incorrect code entered.</span>")
 				return 0
@@ -581,7 +582,7 @@
 
 	proc/checkEjectMoney(obj/item/W as obj, mob/user as mob)
 		if(code)
-			var/codecheck = strip_html(input(user,"Please enter current code:","Code check","") as text)
+			var/codecheck = strip_html_tags(input(user,"Please enter current code:","Code check","") as text)
 			if(!in_interact_range(src, user) || user.stat)
 				return 0
 			if (codecheck != code)
@@ -589,7 +590,7 @@
 				return 0
 		ejectmoney()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		if (istype(W, /obj/item/spacecash) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			LIGHT_UP_HOUSING
@@ -649,7 +650,7 @@
 		trunk = null
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user))
 			if(src.level == 1) //wrenched down
 				trunk = locate() in src.loc
@@ -692,14 +693,14 @@
 
 		flick("comp_flush1", src)
 		sleep(1 SECOND)
-		playsound(src, "sound/machines/disposalflush.ogg", 50, 0, 0)
+		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
 
 		H.start(src) // start the holder processing movement
 
 	proc/expel(var/obj/disposalholder/H)
 
 		var/turf/target
-		playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
+		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
@@ -718,6 +719,8 @@
 	var/paper_name = "thermal paper"
 	cabinet_banned = true
 	plane = PLANE_DEFAULT
+	var/paper_left = 10
+	var/process_cycle = 0
 
 	New()
 		..()
@@ -729,10 +732,15 @@
 		if(input)
 			LIGHT_UP_HOUSING
 			flick("comp_tprint1",src)
-			playsound(src.loc, "sound/machines/printer_thermal.ogg", 60, 0)
-			var/obj/item/paper/thermal/P = new/obj/item/paper/thermal(src.loc)
-			P.info = strip_html(html_decode(input.signal))
-			P.name = paper_name
+			if(paper_left > 0)
+				playsound(src.loc, 'sound/machines/printer_thermal.ogg', 35, 0, -10)
+				var/obj/item/paper/thermal/P = new/obj/item/paper/thermal(src.loc)
+				P.info = strip_html_tags(html_decode(input.signal))
+				P.name = paper_name
+				paper_left--
+				processing_items |= src
+			else
+				playsound(src.loc, 'sound/machines/click.ogg', 35, 1, -10)
 		return
 
 	proc/setPaperName(obj/item/W as obj, mob/user as mob)
@@ -744,11 +752,19 @@
 		return 1
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && get_dist(src, target) == 1)
+		if(level == 2 && GET_DIST(src, target) == 1)
 			if(isturf(target) && target.density)
 				user.drop_item()
 				src.set_loc(target)
 		return
+
+	process()
+		. = ..()
+		var/turf/T = get_turf(src)
+		if(T && !ON_COOLDOWN(T, "ambient_paper_generation", 30 SECONDS))
+			paper_left++
+			if(paper_left >= 10)
+				processing_items -= src
 
 /obj/item/mechanics/pscan
 	name = "Paper scanner"
@@ -763,7 +779,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Thermal Paper Mode",.proc/toggleThermal)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && get_dist(src, target) == 1)
+		if(level == 2 && GET_DIST(src, target) == 1)
 			if(isturf(target) && target.density)
 				user.drop_item()
 				src.set_loc(target)
@@ -778,7 +794,7 @@
 		boutput(user, "[thermal_only ? "Now accepting only thermal paper":"Now accepting any paper"]")
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		else if (istype(W, /obj/item/paper) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			if(thermal_only && !istype(W, /obj/item/paper/thermal))
@@ -786,9 +802,9 @@
 				return 0
 			LIGHT_UP_HOUSING
 			flick("comp_pscan1",src)
-			playsound(src.loc, "sound/machines/twobeep2.ogg", 90, 0)
+			playsound(src.loc, 'sound/machines/twobeep2.ogg', 90, 0)
 			var/obj/item/paper/P = W
-			var/saniStr = strip_html(sanitize(html_encode(P.info)))
+			var/saniStr = strip_html_tags(sanitize(html_encode(P.info)))
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,saniStr)
 			if(del_paper)
 				del(W)
@@ -864,6 +880,7 @@
 		rebeam()
 
 	rotate()
+		..()
 		if(level == 1)
 			rebeam()
 
@@ -876,7 +893,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && get_dist(src, target) == 1)
+		if(level == 2 && GET_DIST(src, target) == 1)
 			if(isturf(target) && target.density)
 				user.drop_item()
 				src.set_loc(target)
@@ -888,7 +905,7 @@
 		beamobjs = list()
 		var/turf/lastturf = get_step(get_turf(src), dir)
 		for(var/i = 1, i<range, i++)
-			if(lastturf.opacity || !lastturf.canpass())
+			if(lastturf.opacity || !lastturf.Enter(src)) // bootlegging src as an Enter arg. shouldn't matter
 				break
 			var/obj/mechbeam/newbeam = new(lastturf, src)
 			newbeam.set_dir(src.dir)
@@ -910,12 +927,12 @@
 		boutput(user, "[send_name ? "Now sending user NAME":"Now sending user FINGERPRINT"]")
 		return 1
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(level != 2 && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			if(ishuman(user) && user.bioHolder)
 				LIGHT_UP_HOUSING
 				flick("comp_hscan1",src)
-				playsound(src.loc, "sound/machines/twobeep2.ogg", 90, 0)
+				playsound(src.loc, 'sound/machines/twobeep2.ogg', 90, 0)
 				var/sendstr = (send_name ? user.real_name : user.bioHolder.fingerprints)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,sendstr)
 			else
@@ -924,7 +941,7 @@
 		else return ..(user)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && get_dist(src, target) == 1)
+		if(level == 2 && GET_DIST(src, target) == 1)
 			if(isturf(target) && target.density)
 				user.drop_item()
 				src.set_loc(target)
@@ -976,7 +993,7 @@
 		if(AM.throwing) return
 		var/atom/target = get_edge_target_turf(AM, src.dir)
 		var/datum/thrown_thing/thr = AM.throw_at(target, 50, 1)
-		thr?.user = (owner || usr)
+		thr?.user = (owner)
 		return
 
 	Crossed(atom/movable/AM as mob|obj)
@@ -1029,7 +1046,7 @@
 		. = ..()
 		var/area/AR = get_area(src)
 		if(!AR.powered(EQUIP) || AR.area_apc?.cell?.percent() < 35)
-			. += " It does not seem to ahve enough power from the APC."
+			. += " It does not seem to have enough power from the APC."
 
 /obj/item/mechanics/pausecomp
 	name = "Delay Component"
@@ -1181,7 +1198,7 @@
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
-			inp = strip_html(html_decode(inp))
+			inp = strip_html_tags(html_decode(inp))
 			triggerSignal = inp
 			boutput(user, "Signal set to [inp]")
 			return 1
@@ -1216,7 +1233,7 @@
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
-			inp = strip_html(html_decode(inp))
+			inp = strip_html_tags(html_decode(inp))
 			triggerSignal = inp
 			boutput(user, "Signal set to [inp]")
 			return 1
@@ -1324,7 +1341,7 @@
 		if(!R) return
 
 		var/mod = R.Replace(input.signal, expressionrepl)
-		mod = strip_html(sanitize(html_encode(mod)))//U G H
+		mod = strip_html_tags(sanitize(html_encode(mod)))//U G H
 
 		if(mod)
 			input.signal = mod
@@ -1496,9 +1513,9 @@
 	New()
 		..()
 		src.outgoing_filters = list()
-		RegisterSignal(src, list(_COMSIG_MECHCOMP_DISPATCH_ADD_FILTER), .proc/addFilter)
-		RegisterSignal(src, list(_COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING), .proc/removeFilter)
-		RegisterSignal(src, list(_COMSIG_MECHCOMP_DISPATCH_VALIDATE), .proc/runFilter)
+		RegisterSignal(src, _COMSIG_MECHCOMP_DISPATCH_ADD_FILTER, .proc/addFilter)
+		RegisterSignal(src, _COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING, .proc/removeFilter)
+		RegisterSignal(src, _COMSIG_MECHCOMP_DISPATCH_VALIDATE, .proc/runFilter)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"dispatch", .proc/dispatch)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle exact matching",.proc/toggleExactMatching)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle single output mode",.proc/toggleSingleOutput)
@@ -1606,7 +1623,7 @@
 		setStartingString(input.signal)
 
 	proc/setStartingString(var/inp)
-		inp = strip_html(inp)
+		inp = strip_html_tags(inp)
 		bstr = inp
 		tooltip_rebuild = 1
 
@@ -1624,7 +1641,7 @@
 		setEndingString(input.signal)
 
 	proc/setEndingString(var/inp)
-		inp = strip_html(inp)
+		inp = strip_html_tags(inp)
 		astr = inp
 		tooltip_rebuild = 1
 
@@ -1647,7 +1664,7 @@
 		if(level == 2) return
 		LIGHT_UP_HOUSING
 		var/finished = "[bstr][buffer][astr]"
-		finished = strip_html(sanitize(finished))
+		finished = strip_html_tags(sanitize(finished))
 		input.signal = finished
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		buffer = ""
@@ -1831,13 +1848,13 @@
 		for(var/X in converted)
 			sendsig.data["[X]"] = "[converted[X]]"
 			if(X == "command" && converted[X] == "text_message")
-				logTheThing("pdamsg", usr, null, "sends a PDA message <b>[input.signal]</b> using a wifi component at [log_loc(src)].")
+				logTheThing(LOG_PDAMSG, usr, "sends a PDA message <b>[input.signal]</b> using a wifi component at [log_loc(src)].")
 		if(input.data_file)
 			sendsig.data_file = input.data_file.copy_file()
 		SPAWN(0)
 			if(src.noise_enabled)
 				src.noise_enabled = false
-				playsound(src, "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
+				playsound(src, 'sound/machines/wifi.ogg', WIFI_NOISE_VOLUME, 0, 0)
 				SPAWN(WIFI_NOISE_COOLDOWN)
 					src.noise_enabled = true
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, sendsig, src.range, "main")
@@ -1863,7 +1880,7 @@
 				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					if(src.noise_enabled)
 						src.noise_enabled = false
-						playsound(src, "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
+						playsound(src, 'sound/machines/wifi.ogg', WIFI_NOISE_VOLUME, 0, 0)
 						SPAWN(WIFI_NOISE_COOLDOWN)
 							src.noise_enabled = true
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, src.range)
@@ -1872,7 +1889,7 @@
 				var/packets = ""
 				for(var/d in signal.data)
 					packets += "[d]=[signal.data[d]]; "
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode("ERR_12939_CORRUPT_PACKET:" + stars(packets, 15)), null)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode("ERR_12939_CORRUPT_PACKET:" + stars(packets, 15))), null)
 				animate_flash_color_fill(src,"#ff0000",2, 2)
 				return
 
@@ -1880,21 +1897,21 @@
 				var/packets = ""
 				for(var/d in signal.data)
 					packets += "[d]=[signal.data[d]]; "
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode("[signal.encryption]" + stars(packets, 15)), null)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode("[signal.encryption]" + stars(packets, 15))), null)
 				animate_flash_color_fill(src,"#ff0000",2, 2)
 				return
 
 			if(forward_all)
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode(list2params(signal.data)), signal.data_file?.copy_file())
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode(list2params(signal.data))), signal.data_file?.copy_file())
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 				return
 
 			else if(signal.data["command"] == "sendmsg" && signal.data["data"])
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode(signal.data["data"]), signal.data_file?.copy_file())
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode(signal.data["data"])), signal.data_file?.copy_file())
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 
 			else if(signal.data["command"] == "text_message" && signal.data["message"])
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode(signal.data["message"]), null)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode(signal.data["message"])), null)
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 
 			else if(signal.data["command"] == "setfreq" && signal.data["data"])
@@ -2310,7 +2327,7 @@
 		LIGHT_UP_HOUSING
 		flick("[under_floor ? "u":""]comp_tele1", src)
 		particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(src.loc))).Run()
-		playsound(src.loc, "sound/mksounds/boost.ogg", 50, 1)
+		playsound(src.loc, 'sound/mksounds/boost.ogg', 50, 1)
 		var/list/destinations = new/list()
 
 		for_by_tcl(T, /obj/item/mechanics/telecomp)
@@ -2332,7 +2349,7 @@
 			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(picked.loc))).Run()
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.invisibility || M.anchored) continue
-				logTheThing("combat", M, null, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
+				logTheThing(LOG_STATION, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
 				M.set_loc(get_turf(picked.loc))
 				count_sent++
 			input.signal = count_sent
@@ -2521,7 +2538,7 @@
 		var/message = msg[2]
 		if (lang_id in list("english", ""))
 			message = msg[1]
-		message = strip_html(html_decode(message))
+		message = strip_html_tags(html_decode(message))
 		var/heardname = null
 		if (isobj(AM))
 			heardname = AM.name
@@ -2535,6 +2552,8 @@
 						heardname = ID.registered
 					else
 						heardname = "Unknown"
+				else if (H.vdisfigured)
+					heardname = "Unknown"
 
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"name=[heardname]&message=[message]")
 		animate_flash_color_fill(src,"#00FF00",2, 2)
@@ -2603,22 +2622,22 @@
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		if(ispulsingtool(W)) return // Don't press the button with a multitool, it brings up the config menu instead
 		return attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(level == 1)
 			flick(icon_down, src)
 			LIGHT_UP_HOUSING
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
-			logTheThing("station", user, null, "presses the mechcomp button at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "presses the mechcomp button at [log_loc(src)].")
 			return 1
 		return ..(user)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && get_dist(src, target) == 1)
+		if(level == 2 && GET_DIST(src, target) == 1)
 			if(isturf(target))
 				user.drop_item()
 				if(isturf(target) && target.density)
@@ -2715,7 +2734,7 @@
 
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (level == 1)
 			if (length(src.active_buttons))
 				var/selected_button = input(user, "Press a button", "Button Panel") in src.active_buttons + "*CANCEL*"
@@ -2723,7 +2742,7 @@
 				LIGHT_UP_HOUSING
 				flick(icon_down, src)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, src.active_buttons[selected_button])
-				logTheThing("station", user, null, "presses the mechcomp button [selected_button] at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "presses the mechcomp button [selected_button] at [log_loc(src)].")
 				return 1
 			else
 				boutput(user, "<span class='alert'>[src] has no active buttons - there's nothing to press!</span>")
@@ -2752,7 +2771,7 @@
 	var/list/compatible_guns = list(/obj/item/gun/kinetic, /obj/item/gun/flamethrower)
 	cabinet_banned = true // non-functional thankfully
 	get_desc()
-		. += "<br><span class='notice'>Current Gun: [Gun ? "[Gun] [Gun.canshoot() ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]</span>"
+		. += "<br><span class='notice'>Current Gun: [Gun ? "[Gun] [Gun.canshoot(null) ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]</span>"
 
 	New()
 		..()
@@ -2761,7 +2780,7 @@
 
 	proc/removeGun(obj/item/W as obj, mob/user as mob)
 		if(Gun)
-			logTheThing("station", user, null, "removes [Gun] from [src] at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "removes [Gun] from [src] at [log_loc(src)].")
 			Gun.set_loc(get_turf(src))
 			Gun = null
 			tooltip_flags &= ~REBUILD_ALWAYS
@@ -2769,7 +2788,7 @@
 		boutput(user, "<span class='alert'>There is no gun inside this component.</span>")
 		return 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		var/gun_fits = 0
 		for(var/I in src.compatible_guns)
@@ -2780,7 +2799,7 @@
 		if(gun_fits)
 			if(!Gun)
 				boutput(user, "You put the [W] inside the [src].")
-				logTheThing("station", user, null, "adds [W] to [src] at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "adds [W] to [src] at [log_loc(src)].")
 				user.drop_item()
 				Gun = W
 				Gun.set_loc(src)
@@ -2806,16 +2825,16 @@
 		if(level == 2) return
 		LIGHT_UP_HOUSING
 		if(input && Gun)
-			if(Gun.canshoot())
+			if(Gun.canshoot(null))
 				var/atom/target = getTarget()
 				if(target)
 					Gun.shoot(target, get_turf(src), src)
 			else
 				src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"The [Gun.name] has no [istype(Gun, /obj/item/gun/energy) ? "charge" : "ammo"] remaining.\"</span>")
-				playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
+				playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 		else
 			src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"No gun installed.\"</span>")
-			playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
+			playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 		return
 
 	update_icon()
@@ -2860,7 +2879,7 @@
 		// Can't recharge the crossbow. Same as the other recharger.
 		if (!(SEND_SIGNAL(E, COMSIG_CELL_CAN_CHARGE) & CELL_CHARGEABLE))
 			src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"This gun cannot be recharged manually.\"</span>")
-			playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
+			playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 			charging = 0
 			tooltip_rebuild = 1
 			UpdateIcon()
@@ -2913,7 +2932,7 @@
 
 	proc/removeInstrument(obj/item/W as obj, mob/user as mob)
 		if(instrument)
-			logTheThing("station", user, null, "removes [instrument] from [src] at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "removes [instrument] from [src] at [log_loc(src)].")
 			instrument.set_loc(get_turf(src))
 			instrument = null
 			tooltip_rebuild = 1
@@ -2922,7 +2941,7 @@
 			boutput(user, "<span class='alert'>There is no instrument inside this component.</span>")
 		return 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (..(W, user)) return 1
 		else if (instrument) // Already got one, chief!
 			boutput(user, "There is already \a [instrument] inside the [src].")
@@ -2954,7 +2973,7 @@
 
 		if (instrument) // You did it, boss. Now log it because someone will figure out a way to abuse it
 			boutput(user, "You put [W] inside [src].")
-			logTheThing("station", user, null, "adds [W] to [src] at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "adds [W] to [src] at [log_loc(src)].")
 			user.drop_item()
 			instrument.set_loc(src)
 			tooltip_rebuild = 1
@@ -3290,7 +3309,121 @@
 		src.display_letter = new_letter
 		src.icon_state = new_icon_state
 
+/// allows cabinets to move around
+/obj/item/mechanics/movement
+	name = "Movement Component"
+	desc = "Allows a cabinet to move around."
+	icon_state = "comp_move"
+	cooldown_time = 1 SECOND
+	cabinet_only = TRUE
+	one_per_tile = TRUE
+	var/move_lag = 10
 
+	New()
+		..()
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "walk", .proc/do_walk)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "step", .proc/do_step)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Set walk delay", .proc/set_speed)
+
+	secure()
+		if (istype(src.loc, /obj/item/storage/mechanics/housing_handheld))
+			src.loc.AddComponent(/datum/component/legs/four)
+		else
+			src.loc.AddComponent(/datum/component/legs/six)
+
+	loosen()
+		var/datum/component/C
+		if (istype(src.loc, /obj/item/storage/mechanics/housing_handheld))
+			C = src.loc.GetComponent(/datum/component/legs/four)
+		else
+			C = src.loc.GetComponent(/datum/component/legs/six)
+		if (C)
+			C.RemoveComponent()
+		src.stop_moving()
+
+	cabinet_state_change(var/obj/item/storage/mechanics/container)
+		if (container.anchored)
+			src.stop_moving()
+
+	proc/do_walk(var/datum/mechanicsMessage/input)
+		if (ON_COOLDOWN(src, "movement_delay", move_lag))
+			return
+		var/direction = text2num_safe(input.signal)
+		if (direction == null)
+			direction = dirname_to_dir(input.signal)
+		if (direction == null)
+			return
+		var/obj/item/storage/S = src.loc
+		if (!walk_check(S))
+			return
+		set_glide_size(S)
+		walk(S, direction, move_lag, (32 / move_lag) * world.tick_lag)
+		set_glide_size(S)
+		if (direction == 0)
+			UnregisterSignal(S, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC))
+			REMOVE_ATOM_PROPERTY(S, PROP_ATOM_FLOATING, "mech-component")
+		else
+			RegisterSignals(S, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), .proc/movement_stuff, TRUE)
+			APPLY_ATOM_PROPERTY(S, PROP_ATOM_FLOATING, "mech-component")
+
+	proc/do_step(var/datum/mechanicsMessage/input)
+		if (ON_COOLDOWN(src, "movement_delay", move_lag))
+			return
+		var/direction = text2num_safe(input.signal)
+		if (!direction)
+			direction = dirname_to_dir(input.signal)
+		if (!direction)
+			return
+		var/obj/item/storage/S = src.loc
+		if (!walk_check(S))
+			return
+		set_glide_size(S)
+		step(S, direction, (32 / move_lag) * world.tick_lag)
+		UnregisterSignal(S, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC))
+
+	/// set our glide size in case it was changed
+	/// check if we are in a container or space and stop in that case
+	proc/movement_stuff()
+		var/obj/item/storage/S = src.loc
+		if (!walk_check(S))
+			stop_moving()
+			return
+		set_glide_size(S)
+
+	proc/set_glide_size(var/obj/item/storage/S)
+		S.glide_size = (32 / move_lag) * world.tick_lag
+		S.animate_movement = FORWARD_STEPS
+
+	/// checks if we may move right now
+	proc/walk_check(var/obj/item/storage/S)
+		if (!istype(S))
+			return FALSE
+		if (S.anchored)
+			return FALSE
+		if (!isturf(S.loc) || (istype(S.loc, /turf/space) && !istype(S.loc, /turf/space/fluid)))
+			return FALSE
+		return TRUE
+
+	proc/stop_moving()
+		var/obj/item/storage/S = src.loc
+		if (!istype(S))
+			return
+		walk(S, 0)
+		UnregisterSignal(S, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC))
+		REMOVE_ATOM_PROPERTY(S, PROP_ATOM_FLOATING, "mech-component")
+
+	proc/set_speed(obj/item/W as obj, mob/user as mob)
+		// as fast as humans, but they can't sprint
+		var/inp = input(user,"Please enter movement delay, lower is faster ([BASE_SPEED] - 20)", "Movement delay", src.move_lag) as num
+		if(!in_interact_range(src, user) || !isalive(user))
+			return 0
+		inp = clamp(inp, BASE_SPEED, 20)
+		move_lag = inp
+		boutput(user, "You set the movement delay set to [inp].")
+		return 1
+
+	update_icon()
+		icon_state = "[under_floor ? "u":""]comp_move"
 
 #undef IN_CABINET
 #undef LIGHT_UP_HOUSING

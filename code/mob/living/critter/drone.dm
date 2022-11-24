@@ -1,4 +1,4 @@
-/mob/living/critter/drone
+/mob/living/critter/robotic/drone
 	name = "Drone"
 	real_name = "Drone"
 	var/drone_designation = "SC"
@@ -55,6 +55,7 @@
 		loot_table = list(/obj/item/device/prox_sensor = 25)
 
 	death(var/gibbed)
+		. = ..()
 		if (dying)
 			return
 		dying = 1
@@ -116,7 +117,7 @@
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/gun/phaser
+		HH.limb = new /datum/limb/gun/energy/phaser
 		HH.name = "S-1 Light Anti-Personnel Energy Sling"
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handphs"

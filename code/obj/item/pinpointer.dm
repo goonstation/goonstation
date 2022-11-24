@@ -135,38 +135,49 @@
 	var/z_locked = null // Z-level number if locked to that Z-level
 	var/include_area_text = TRUE
 
+	proc/get_choices()
+		var/list/trackable
+		if(istext(category))
+			trackable = by_cat[category]
+		else if(ispath(category))
+			trackable = by_type[category]
+		. = list()
+		for(var/atom/A in trackable)
+			var/turf/T = get_turf(A)
+			if(A.disposed || isnull(T))
+				continue
+			if(!isnull(z_locked) && z_locked != T.z)
+				continue
+			var/dist = GET_DIST(A, src)
+			if(!isnull(max_range) && dist > max_range)
+				continue
+			var/in_loc = ""
+			if(!isturf(A.loc))
+				in_loc = " [in_or_on] [A.loc]"
+			var/area_text = include_area_text ? " in [get_area(A)]" : ""
+			.["[A][in_loc][area_text]"] = A
+
+	proc/process_choice(choice, list/choices, mob/user)
+		if(isnull(choice))
+			return null
+		return choices[choice]
+
 	attack_self(mob/user)
 		if(!active)
 			if(isnull(category))
 				user.show_text("No tracking category, cannot activate the pinpointer.", "red")
 				return
-			var/list/trackable
-			if(istext(category))
-				trackable = by_cat[category]
-			else if(ispath(category))
-				trackable = by_type[category]
-			var/list/choices = list()
-			for(var/atom/A in trackable)
-				var/turf/T = get_turf(A)
-				if(A.disposed || isnull(T))
-					continue
-				if(!isnull(z_locked) && z_locked != T.z)
-					continue
-				var/dist = GET_DIST(A, src)
-				if(!isnull(max_range) && dist > max_range)
-					continue
-				var/in_loc = ""
-				if(!isturf(A.loc))
-					in_loc = " [in_or_on] [A.loc]"
-				var/area_text = include_area_text ? " in [get_area(A)]" : ""
-				choices["[A][in_loc][area_text]"] = A
+			var/list/choices = get_choices()
 			if(!length(choices))
 				user.show_text("No [thing_name]s available, cannot activate the pinpointer.", "red")
 				return
 			var/choice = tgui_input_list(user, "Pick a [thing_name] to track.", "[src]", choices)
 			if(isnull(choice))
 				return
-			target = choices[choice]
+			var/atom/potential_target = process_choice(choice, choices, user)
+			if(isnull(potential_target))
+				return
+			target = potential_target
 		. = ..()
 
 /obj/item/pinpointer/category/spysticker
@@ -272,7 +283,7 @@
 			..()
 
 /obj/item/pinpointer/idtracker/spy
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..(user)
 		if (!user.mind || user.mind.special_role != ROLE_SPY_THIEF)
 			boutput(user, "<span class='alert'>The target locator emits a sorrowful ping!</span>")
@@ -381,13 +392,13 @@
 			for (var/x in itemrefs)
 				var/atom/A = locate(x)
 				if (A && (A.type in accepted_types) && !A.qdeled && !A.disposed)
-					choices += A
+					choices[A.name] = A
 
 			if (!length(choices))
 				user.show_text("No track targets exist - possibly destroyed. Cannot activate pinpointer", "red")
 				return
 
-			target = input("Select a card to deal.", "Choose Card") as null|anything in choices
+			target = choices[tgui_input_list(user, "Select a weapon to locate.", "Locate Weapon", choices)]
 
 			if (!target)
 				user.show_text("No target specified. Cannot activate pinpointer.", "red")
@@ -459,6 +470,19 @@
 	name = "\improper APC pinpointer"
 	category = /obj/machinery/power/apc
 	thing_name = "APC"
+
+	get_choices()
+		. = list("-- CURRENT ROOM --") + ..()
+
+	process_choice(choice, list/choices, mob/user)
+		if (choice == "-- CURRENT ROOM --")
+			var/area/AR = get_area(src)
+			if(AR.area_apc)
+				return AR.area_apc
+			else
+				boutput(user, "<span class='alert'>There is no APC in this area!</span>")
+				return null
+		return ..()
 
 /obj/item/pinpointer/category/apcs/station
 	name = "\improper APC pinpointer"

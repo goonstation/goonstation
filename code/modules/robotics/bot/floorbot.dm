@@ -6,24 +6,26 @@
 	name = "tiles and toolbox"
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "toolbox_tiles"
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 2
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
 	flags = TABLEPASS
+	var/color_overlay = null // default blue floorbot
 
 /obj/item/toolbox_tiles_sensor
 	desc = "It's a toolbox with tiles sticking out the top and a sensor attached"
 	name = "tiles, toolbox and sensor arrangement"
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "toolbox_tiles_sensor"
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 2
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
 	flags = TABLEPASS
+	var/color_overlay = null // default blue floorbot
 
 //Floorbot
 /obj/machinery/bot/floorbot
@@ -59,6 +61,7 @@
 	/// and they lag to shit at higher processing levels (i actually fixed that lag, but theyre kinda good at this rate sooo)
 	dynamic_processing = 0
 	PT_idle = PROCESSING_QUARTER
+	var/color_overlay = null // default blue floorbot
 
 	var/static/list/floorbottargets = list()
 
@@ -69,14 +72,22 @@
 
 	var/list/chase_lines = list("Gimme!", "Hey!", "Oi!", "Mine!", "Want!", "Need!")
 
+	proc/update_power_overlay()
+		if(src.on)
+			src.UpdateOverlays(image(src.icon, icon_state = "floorbot_overlay_power_on"), "poweroverlay")
+		else
+			src.UpdateOverlays(image(src.icon, icon_state = "floorbot_overlay_power_off"), "poweroverlay")
+
+
 /obj/machinery/bot/floorbot/New()
 	..()
 	SPAWN(0.5 SECONDS)
 		if (src)
+			src.update_power_overlay()
 			src.UpdateIcon()
 	return
 
-/obj/machinery/bot/floorbot/attack_hand(mob/user as mob, params)
+/obj/machinery/bot/floorbot/attack_hand(mob/user, params)
 	var/dat
 	dat += "<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>"
 	dat += "Status: \[<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>\]<BR>"
@@ -105,6 +116,7 @@
 		src.KillPathAndGiveUp(1)
 		src.emagged = 1
 		src.on = 1
+		src.update_power_overlay()
 		src.icon_state = "floorbot[src.on]"
 		return 1
 	return 0
@@ -125,6 +137,7 @@
 		src.KillPathAndGiveUp(1)
 		src.emagged = 1
 		src.on = 1
+		src.update_power_overlay()
 		src.icon_state = "floorbot[src.on]"
 	else
 		src.explode()
@@ -172,6 +185,7 @@
 	switch(href_list["operation"])
 		if ("start")
 			src.on = !src.on
+			src.update_power_overlay()
 			src.KillPathAndGiveUp(1)
 			src.updateUsrDialog()
 		if ("improve")
@@ -186,6 +200,7 @@
 
 /obj/machinery/bot/floorbot/attack_ai()
 	src.on = !src.on
+	src.update_power_overlay()
 	src.KillPathAndGiveUp(1)
 
 /obj/machinery/bot/floorbot/proc/find_target(var/force = 0)
@@ -424,31 +439,30 @@
 		src.icon_state = "floorbot[src.on]e"
 
 
-/////////////////////////////////////////
-//////Floorbot Construction/////////////
-/////////////////////////////////////////
-/obj/item/storage/toolbox/mechanical/attackby(var/obj/item/tile/T, mob/user as mob)
-	if (!istype(T, /obj/item/tile))
-		..()
-		return
-	if (src.contents.len >= 1)
-		boutput(user, "They wont fit in as there is already stuff inside!")
-		return
-	var/obj/item/toolbox_tiles/B = new /obj/item/toolbox_tiles
-	user.u_equip(T)
-	user.put_in_hand_or_drop(B)
-	boutput(user, "You add the tiles into the empty toolbox. They stick oddly out the top.")
-	qdel(T)
-	qdel(src)
+/////////////////////////////////
+//////Floorbot Construction//////
+/////////////////////////////////
+// Construction begins in /obj/item/storage/toolbox/attackby
+
+/obj/item/toolbox_tiles/attack_self(mob/user)
+	for(var/obj/item/I in src.contents) // toolbox
+		user.put_in_hand_or_drop(I)
+		qdel(src)
+	boutput(user, "You discard the tile and recover the toolbox!")
 
 /obj/item/toolbox_tiles/attackby(var/obj/item/device/prox_sensor/D, mob/user as mob)
 	if (!istype(D, /obj/item/device/prox_sensor))
 		return
 	var/obj/item/toolbox_tiles_sensor/B = new /obj/item/toolbox_tiles_sensor
+	if(src.color_overlay)
+		B.UpdateOverlays(image(B.icon, icon_state = src.color_overlay), "coloroverlay")
+		B.color_overlay = src.color_overlay
+	B.UpdateOverlays(image(B.icon, icon_state = "floorbot_overlay_power_off"), "poweroverlay")
 	B.set_loc(user)
 	user.u_equip(D)
 	user.put_in_hand_or_drop(B)
 	boutput(user, "You add the sensor to the toolbox and tiles!")
+	// No going back now!
 	qdel(D)
 	qdel(src)
 
@@ -456,11 +470,15 @@
 	if (!istype(P, /obj/item/parts/robot_parts/arm/))
 		return
 	var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot
+	if(src.color_overlay)
+		A.UpdateOverlays(image(A.icon, icon_state = src.color_overlay), "coloroverlay")
+		A.color_overlay = src.color_overlay
 	if (user.r_hand == src || user.l_hand == src)
 		A.set_loc(user.loc)
 	else
 		A.set_loc(src.loc)
 	A.on = 1 // let's just pretend they flipped the switch
+	A.update_power_overlay()
 	boutput(user, "You add the robot arm to the odd looking toolbox assembly! Boop beep!")
 	qdel(P)
 	qdel(src)
@@ -470,7 +488,7 @@
 	src.exploding = 1
 	src.on = 0
 	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
-	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 	new /obj/item/tile/steel(src.loc)
 	new /obj/item/device/prox_sensor(src.loc)
@@ -524,7 +542,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		attack_twitch(master)
-		playsound(master, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+		playsound(master, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 
 	onInterrupt()
 		. = ..()
@@ -532,7 +550,9 @@
 
 	onEnd()
 		..()
-		playsound(master, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+		if (!master.target)
+			return
+		playsound(master, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 		if (new_tile)
 			// Make a new tile
 			var/obj/item/tile/T = new /obj/item/tile/steel
@@ -592,7 +612,7 @@
 
 	onEnd()
 		..()
-		playsound(master, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+		playsound(master, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 		var/turf/simulated/floor/T = master.target
 		if(!istype(T))
 			interrupt(INTERRUPT_ALWAYS)

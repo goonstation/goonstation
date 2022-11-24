@@ -3,6 +3,7 @@
 	config_tag = "traitor"
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_TRAITOR)
+	antag_token_support = TRUE
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -42,7 +43,6 @@
 		num_traitors -= 1
 		num_wraiths = 1
 
-
 	var/list/possible_traitors = get_possible_enemies(ROLE_TRAITOR, num_traitors)
 
 	if (!possible_traitors.len)
@@ -53,15 +53,11 @@
 		if (!token_players.len)
 			break
 		if (num_wraiths && !(token_wraith))
-			token_wraith = 1 // only allow 1 wraith to spawn
-			var/datum/mind/twraith = pick(token_players) //Randomly pick from the token list so the first person to ready up doesn't always get it.
-			traitors += twraith
-			token_players.Remove(twraith)
-			twraith.special_role = ROLE_WRAITH
+			add_token_wraith()
 		else
 			traitors += tplayer
 			token_players.Remove(tplayer)
-		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 		/*num_traitors--
 		num_traitors = max(num_traitors, 0)*/
@@ -69,42 +65,21 @@
 	var/list/chosen_traitors = antagWeighter.choose(pool = possible_traitors, role = ROLE_TRAITOR, amount = num_traitors, recordChosen = 1)
 	traitors |= chosen_traitors
 	for (var/datum/mind/traitor in traitors)
+		// although this is assigned by the antagonist datum, we need to do it early in gamemode setup to let the job picker catch it
 		traitor.special_role = ROLE_TRAITOR
 		possible_traitors.Remove(traitor)
 
 	if(num_wraiths)
-		var/list/possible_wraiths = get_possible_enemies(ROLE_WRAITH, num_wraiths)
-		var/list/chosen_wraiths = antagWeighter.choose(pool = possible_wraiths, role = ROLE_WRAITH, amount = num_wraiths, recordChosen = 1)
-		for (var/datum/mind/wraith in chosen_wraiths)
-			traitors += wraith
-			wraith.special_role = ROLE_WRAITH
-			possible_wraiths.Remove(wraith)
+		add_wraith()
 
 	return 1
 
 /datum/game_mode/traitor/post_setup()
-	var/objective_set_path = null
 	for(var/datum/mind/traitor in traitors)
-		objective_set_path = null // Gotta reset this.
-
-		switch(traitor.special_role)
-			if(ROLE_TRAITOR)
-			#ifdef RP_MODE
-				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-			#else
-				objective_set_path = pick(typesof(/datum/objective_set/traitor))
-			#endif
-
-				new objective_set_path(traitor)
-				equip_traitor(traitor.current)
-
-				var/obj_count = 1
-				for(var/datum/objective/objective in traitor.objectives)
-					boutput(traitor.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-					obj_count++
-			if (ROLE_WRAITH)
-				generate_wraith_objectives(traitor)
-
+		if (traitor.special_role == ROLE_WRAITH) // agony.
+			generate_wraith_objectives(traitor)
+		else
+			traitor.add_antagonist(ROLE_TRAITOR)
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 

@@ -47,12 +47,12 @@ var/list/server_toggles_tab_verbs = list(\
 /client/proc/toggle_attack_messages,\
 /client/proc/toggle_ghost_respawns,\
 /client/proc/toggle_adminwho_alerts,\
-/client/proc/toggle_rp_word_filtering,\
 /client/proc/toggle_toggles,\
 /client/proc/toggle_jobban_announcements,\
 /client/proc/toggle_banlogin_announcements,\
 /client/proc/toggle_literal_disarm,\
 /client/proc/toggle_spooky_light_plane,\
+/client/proc/toggle_cloning_with_records,\
 /datum/admins/proc/toggleooc,\
 /datum/admins/proc/togglelooc,\
 /datum/admins/proc/toggleoocdead,\
@@ -75,6 +75,7 @@ var/list/server_toggles_tab_verbs = list(\
 /datum/admins/proc/toggleaprilfools,\
 /datum/admins/proc/togglespeechpopups,\
 /datum/admins/proc/togglemonkeyspeakhuman,\
+/datum/admins/proc/toggletraitorsseeeachother,\
 /datum/admins/proc/togglelatetraitors,\
 /datum/admins/proc/togglesoundwaiting,\
 /datum/admins/proc/adjump,\
@@ -82,6 +83,7 @@ var/list/server_toggles_tab_verbs = list(\
 /datum/admins/proc/toggle_pull_slowing,\
 /client/proc/admin_toggle_nightmode,\
 /client/proc/toggle_camera_network_reciprocity,\
+/datum/admins/proc/toggle_radio_audio,\
 )
 
 /client/proc/toggle_server_toggles_tab()
@@ -157,8 +159,8 @@ var/global/IP_alerts = 1
 	ADMIN_ONLY
 
 	IP_alerts = !IP_alerts
-	logTheThing("admin", usr, null, "has toggled same-IP alerts [(IP_alerts ? "On" : "Off")]")
-	logTheThing("diary", usr, null, "has toggled same-IP alerts [(IP_alerts ? "On" : "Off")]", "admin")
+	logTheThing(LOG_ADMIN, usr, "has toggled same-IP alerts [(IP_alerts ? "On" : "Off")]")
+	logTheThing(LOG_DIARY, usr, "has toggled same-IP alerts [(IP_alerts ? "On" : "Off")]", "admin")
 	message_admins("[key_name(usr)] has toggled same-IP alerts [(IP_alerts ? "On" : "Off")]")
 
 /client/proc/toggle_hearing_all_looc()
@@ -216,10 +218,22 @@ client/proc/toggle_ghost_respawns()
 	ADMIN_ONLY
 	src.holder.rp_word_filtering = !src.holder.rp_word_filtering
 	if(src.holder.rp_word_filtering)
-		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_SUSSY_PHRASE, .proc/message_one_admin)
+		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_SUSSY_PHRASE, .proc/message_one_admin)
 	else
-		src.UnregisterSignal(GLOBAL_SIGNAL, COMSIG_SUSSY_PHRASE)
+		src.UnregisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_SUSSY_PHRASE)
 	boutput(usr, "<span class='notice'>Toggled RP word filter notifications [src.holder.rp_word_filtering ?"on":"off"]!</span>")
+
+/client/proc/toggle_uncool_word_filtering()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle Uncool Word Alerts"
+	set desc = "Toggles notifications for players saying uncool words"
+	ADMIN_ONLY
+	src.holder.uncool_word_filtering = !src.holder.uncool_word_filtering
+	if(src.holder.uncool_word_filtering)
+		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_UNCOOL_PHRASE, .proc/message_one_admin)
+	else
+		src.UnregisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_UNCOOL_PHRASE)
+	boutput(usr, "<span class='notice'>Toggled uncool word filter notifications [src.holder.uncool_word_filtering ?"on":"off"]!</span>")
 
 /client/proc/toggle_hear_prayers()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
@@ -331,8 +345,8 @@ client/proc/toggle_ghost_respawns()
 		if (src.holder && !src.holder.popuptoggle)
 			src.toggle_popup_verbs()
 
-	logTheThing("admin", usr, null, "has set player mode to [(player_mode ? "On" : "Off")]")
-	logTheThing("diary", usr, null, "has set player mode to [(player_mode ? "On" : "Off")]", "admin")
+	logTheThing(LOG_ADMIN, usr, "has set player mode to [(player_mode ? "On" : "Off")]")
+	logTheThing(LOG_DIARY, usr, "has set player mode to [(player_mode ? "On" : "Off")]", "admin")
 	message_admins("[key_name(usr)] has set player mode to [(player_mode ? "On" : "Off")]")
 
 /client/proc/cmd_admin_godmode(mob/M as mob in world)
@@ -346,8 +360,8 @@ client/proc/toggle_ghost_respawns()
 	M.nodamage = !(M.nodamage)
 	boutput(usr, "<span class='notice'><b>[M]'s godmode is now [usr.nodamage ? "ON" : "OFF"]</b></span>")
 
-	logTheThing("admin", usr, M, "has toggled [constructTarget(M,"admin")]'s nodamage to [(M.nodamage ? "On" : "Off")]")
-	logTheThing("diary", usr, M, "has toggled [constructTarget(M,"diary")]'s nodamage to [(M.nodamage ? "On" : "Off")]", "admin")
+	logTheThing(LOG_ADMIN, usr, "has toggled [constructTarget(M,"admin")]'s nodamage to [(M.nodamage ? "On" : "Off")]")
+	logTheThing(LOG_DIARY, usr, "has toggled [constructTarget(M,"diary")]'s nodamage to [(M.nodamage ? "On" : "Off")]", "admin")
 	message_admins("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(M.nodamage ? "On" : "Off")]")
 
 /client/proc/cmd_admin_godmode_self()
@@ -361,8 +375,8 @@ client/proc/toggle_ghost_respawns()
 	usr.nodamage = !(usr.nodamage)
 	boutput(usr, "<span class='notice'><b>Your godmode is now [usr.nodamage ? "ON" : "OFF"]</b></span>")
 
-	logTheThing("admin", usr, null, "has toggled their nodamage to [(usr.nodamage ? "On" : "Off")]")
-	logTheThing("diary", usr, null, "has toggled their nodamage to [(usr.nodamage ? "On" : "Off")]", "admin")
+	logTheThing(LOG_ADMIN, usr, "has toggled their nodamage to [(usr.nodamage ? "On" : "Off")]")
+	logTheThing(LOG_DIARY, usr, "has toggled their nodamage to [(usr.nodamage ? "On" : "Off")]", "admin")
 	message_admins("[key_name(usr)] has toggled their nodamage to [(usr.nodamage ? "On" : "Off")]")
 
 /client/proc/iddqd()
@@ -407,8 +421,8 @@ client/proc/toggle_ghost_respawns()
 		omnipresent = FALSE
 	boutput(usr, "<span class='notice'><b>Your omnipresence is now [omnipresent ? "ON" : "OFF"]</b></span>")
 
-	logTheThing("admin", usr, null, "has toggled their omnipresence to [(omnipresent ? "On" : "Off")]")
-	logTheThing("diary", usr, null, "has toggled their omnipresence to [(omnipresent ? "On" : "Off")]", "admin")
+	logTheThing(LOG_ADMIN, usr, "has toggled their omnipresence to [(omnipresent ? "On" : "Off")]")
+	logTheThing(LOG_DIARY, usr, "has toggled their omnipresence to [(omnipresent ? "On" : "Off")]", "admin")
 	message_admins("[key_name(usr)] has toggled their omnipresence to [(omnipresent ? "On" : "Off")]")
 
 /client/proc/toggle_atom_verbs() // I hate calling them "atom verbs" but wtf else should they be called, fuck
@@ -445,8 +459,8 @@ client/proc/toggle_ghost_respawns()
 		NOT_IF_TOGGLES_ARE_OFF
 
 	toggles_enabled = !toggles_enabled
-	logTheThing("admin", usr, null, "toggled Toggles to [toggles_enabled].")
-	logTheThing("diary", usr, null, "toggled Toggles to [toggles_enabled].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled Toggles to [toggles_enabled].")
+	logTheThing(LOG_DIARY, usr, "toggled Toggles to [toggles_enabled].", "admin")
 	message_admins("[key_name(usr)] toggled Toggles [toggles_enabled ? "on" : "off"].")
 
 /client/proc/toggle_force_mixed_wraith()
@@ -454,8 +468,8 @@ client/proc/toggle_ghost_respawns()
 	set name = "Toggle Force Wraith"
 	set desc = "If turned on, a wraith will always appear in mixed or traitor, regardless of player count or probabilities."
 	debug_mixed_forced_wraith = !debug_mixed_forced_wraith
-	logTheThing("admin", usr, null, "toggled force mixed wraith [debug_mixed_forced_wraith ? "on" : "off"]")
-	logTheThing("diary", usr, null, "toggled force mixed wraith [debug_mixed_forced_wraith ? "on" : "off"]")
+	logTheThing(LOG_ADMIN, usr, "toggled force mixed wraith [debug_mixed_forced_wraith ? "on" : "off"]")
+	logTheThing(LOG_DIARY, usr, "toggled force mixed wraith [debug_mixed_forced_wraith ? "on" : "off"]")
 	message_admins("[key_name(usr)] toggled force mixed wraith [debug_mixed_forced_wraith ? "on" : "off"]")
 
 /client/proc/toggle_force_mixed_blob()
@@ -463,8 +477,8 @@ client/proc/toggle_ghost_respawns()
 	set name = "Toggle Force Blob"
 	set desc = "If turned on, a blob will always appear in mixed, regardless of player count or probabilities."
 	debug_mixed_forced_blob = !debug_mixed_forced_blob
-	logTheThing("admin", usr, null, "toggled force mixed blob [debug_mixed_forced_blob ? "on" : "off"]")
-	logTheThing("diary", usr, null, "toggled force mixed blob [debug_mixed_forced_blob ? "on" : "off"]")
+	logTheThing(LOG_ADMIN, usr, "toggled force mixed blob [debug_mixed_forced_blob ? "on" : "off"]")
+	logTheThing(LOG_DIARY, usr, "toggled force mixed blob [debug_mixed_forced_blob ? "on" : "off"]")
 	message_admins("[key_name(usr)] toggled force mixed blob [debug_mixed_forced_blob ? "on" : "off"]")
 
 /client/proc/toggle_jobban_announcements()
@@ -476,8 +490,8 @@ client/proc/toggle_ghost_respawns()
 
 	if (announce_jobbans == 1) announce_jobbans = 0
 	else announce_jobbans = 1
-	logTheThing("admin", usr, null, "toggled Jobban Alerts to [announce_jobbans].")
-	logTheThing("diary", usr, null, "toggled Jobban Alerts to [announce_jobbans].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled Jobban Alerts to [announce_jobbans].")
+	logTheThing(LOG_DIARY, usr, "toggled Jobban Alerts to [announce_jobbans].", "admin")
 	message_admins("[key_name(usr)] toggled Jobban Alerts [announce_jobbans ? "on" : "off"].")
 
 /client/proc/toggle_banlogin_announcements()
@@ -487,8 +501,8 @@ client/proc/toggle_ghost_respawns()
 	ADMIN_ONLY
 	if (announce_banlogin == 1) announce_banlogin = 0
 	else announce_banlogin = 1
-	logTheThing("admin", usr, null, "toggled Banned User Alerts to [announce_banlogin].")
-	logTheThing("diary", usr, null, "toggled Banned User Alerts to [announce_banlogin].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled Banned User Alerts to [announce_banlogin].")
+	logTheThing(LOG_DIARY, usr, "toggled Banned User Alerts to [announce_banlogin].", "admin")
 	message_admins("[key_name(usr)] toggled Banned User Alerts to [announce_banlogin ? "on" : "off"].")
 
 /client/proc/toggle_literal_disarm()
@@ -498,40 +512,40 @@ client/proc/toggle_ghost_respawns()
 	if(!(src.holder.rank in list("Host", "Coder")))
 		NOT_IF_TOGGLES_ARE_OFF
 	literal_disarm = !literal_disarm
-	logTheThing("admin", usr, null, "toggled literal disarming to [literal_disarm].")
-	logTheThing("diary", usr, null, "toggled literal disarming to [literal_disarm].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled literal disarming to [literal_disarm].")
+	logTheThing(LOG_DIARY, usr, "toggled literal disarming to [literal_disarm].", "admin")
 	message_admins("[key_name(usr)] toggled literal disarming [literal_disarm ? "on" : "off"].")
 
 /datum/admins/proc/toggleooc()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
-	set desc="Toggle dis bitch"
+	set desc="Toggle dis"
 	set name="Toggle OOC"
 	NOT_IF_TOGGLES_ARE_OFF
 	ooc_allowed = !( ooc_allowed )
 	boutput(world, "<B>The OOC channel has been globally [ooc_allowed ? "en" : "dis"]abled!</B>")
-	logTheThing("admin", usr, null, "toggled OOC.")
-	logTheThing("diary", usr, null, "toggled OOC.", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled OOC.")
+	logTheThing(LOG_DIARY, usr, "toggled OOC.", "admin")
 	message_admins("[key_name(usr)] toggled OOC.")
 
 /datum/admins/proc/togglelooc()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
-	set desc="Toggle dis bitch"
+	set desc="Toggle dis"
 	set name="Toggle LOOC"
 	NOT_IF_TOGGLES_ARE_OFF
 	looc_allowed = !( looc_allowed )
 	boutput(world, "<B>The LOOC channel has been globally [looc_allowed ? "en" : "dis"]abled!</B>")
-	logTheThing("admin", usr, null, "toggled LOOC.")
-	logTheThing("diary", usr, null, "toggled LOOC.", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled LOOC.")
+	logTheThing(LOG_DIARY, usr, "toggled LOOC.", "admin")
 	message_admins("[key_name(usr)] toggled LOOC.")
 
 /datum/admins/proc/toggleoocdead()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
-	set desc="Toggle dis bitch"
+	set desc="Toggle dis."
 	set name="Toggle Dead OOC"
 	NOT_IF_TOGGLES_ARE_OFF
 	dooc_allowed = !( dooc_allowed )
-	logTheThing("admin", usr, null, "toggled OOC.")
-	logTheThing("diary", usr, null, "toggled OOC.", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled OOC.")
+	logTheThing(LOG_DIARY, usr, "toggled OOC.", "admin")
 	message_admins("[key_name(usr)] toggled Dead OOC.")
 
 /datum/admins/proc/toggletraitorscaling()
@@ -540,8 +554,8 @@ client/proc/toggle_ghost_respawns()
 	set name="Toggle Traitor Scaling"
 	NOT_IF_TOGGLES_ARE_OFF
 	traitor_scaling = !traitor_scaling
-	logTheThing("admin", usr, null, "toggled Traitor Scaling to [traitor_scaling].")
-	logTheThing("diary", usr, null, "toggled Traitor Scaling to [traitor_scaling].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled Traitor Scaling to [traitor_scaling].")
+	logTheThing(LOG_DIARY, usr, "toggled Traitor Scaling to [traitor_scaling].", "admin")
 	message_admins("[key_name(usr)] toggled Traitor Scaling [traitor_scaling ? "on" : "off"].")
 
 /datum/admins/proc/pcap()
@@ -553,8 +567,8 @@ client/proc/toggle_ghost_respawns()
 		boutput(world, "<B>The global player cap has been enabled at [player_cap] players.</B>")
 	else
 		boutput(world, "<B>The global player cap has been disabled.</B>")
-	logTheThing("admin", usr, null, "toggled player cap to [player_cap].")
-	logTheThing("diary", usr, null, "toggled player cap to [player_cap].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled player cap to [player_cap].")
+	logTheThing(LOG_DIARY, usr, "toggled player cap to [player_cap].", "admin")
 	message_admins("[key_name(usr)] toggled the global player cap [player_cap ? "on" : "off"]")
 
 /datum/admins/proc/toggleenter()
@@ -567,8 +581,8 @@ client/proc/toggle_ghost_respawns()
 		boutput(world, "<B>You may no longer enter the game.</B>")
 	else
 		boutput(world, "<B>You may now enter the game.</B>")
-	logTheThing("admin", usr, null, "toggled new player game entering.")
-	logTheThing("diary", usr, null, "toggled new player game entering.", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled new player game entering.")
+	logTheThing(LOG_DIARY, usr, "toggled new player game entering.", "admin")
 	message_admins("<span class='internal'>[key_name(usr)] toggled new player game entering.</span>")
 	world.update_status()
 
@@ -582,8 +596,8 @@ client/proc/toggle_ghost_respawns()
 		boutput(world, "<B>The AI job is no longer chooseable.</B>")
 	else
 		boutput(world, "<B>The AI job is chooseable now.</B>")
-	logTheThing("admin", usr, null, "toggled AI allowed.")
-	logTheThing("diary", usr, null, "toggled AI allowed.", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled AI allowed.")
+	logTheThing(LOG_DIARY, usr, "toggled AI allowed.", "admin")
 	world.update_status()
 
 /datum/admins/proc/toggle_soundpref_override()
@@ -592,8 +606,8 @@ client/proc/toggle_ghost_respawns()
 	set name = "Toggle SoundPref Override"
 	NOT_IF_TOGGLES_ARE_OFF
 	soundpref_override = !( soundpref_override )
-	logTheThing("admin", usr, null, "toggled Sound Preference Override [soundpref_override ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled Sound Preference Override [soundpref_override ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled Sound Preference Override [soundpref_override ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled Sound Preference Override [soundpref_override ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled Sound Preference Override [soundpref_override ? "on" : "off"]")
 
 /datum/admins/proc/toggle_respawns()
@@ -607,8 +621,8 @@ client/proc/toggle_ghost_respawns()
 	else
 		boutput(world, "<B>You may no longer respawn :(</B>")
 	message_admins("<span class='internal'>[key_name(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].</span>")
-	logTheThing("admin", usr, null, "toggled respawn to [abandon_allowed ? "On" : "Off"].")
-	logTheThing("diary", usr, null, "toggled respawn to [abandon_allowed ? "On" : "Off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled respawn to [abandon_allowed ? "On" : "Off"].")
+	logTheThing(LOG_DIARY, usr, "toggled respawn to [abandon_allowed ? "On" : "Off"].", "admin")
 	world.update_status()
 
 /client/proc/toggle_pray()
@@ -669,8 +683,8 @@ client/proc/toggle_ghost_respawns()
 		boutput(world, "<B>The Deadsay channel has been enabled.</B>")
 	else
 		boutput(world, "<B>The Deadsay channel has been disabled.</B>")
-	logTheThing("admin", usr, null, "toggled Deadchat [deadchat_allowed ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled Deadchat [deadchat_allowed ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled Deadchat [deadchat_allowed ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled Deadchat [deadchat_allowed ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled Deadchat [deadchat_allowed ? "on" : "off"]")
 
 /datum/admins/proc/togglefarting()
@@ -683,8 +697,8 @@ client/proc/toggle_ghost_respawns()
 		boutput(world, "<B>Farting has been enabled.</B>")
 	else
 		boutput(world, "<B>Farting has been disabled.</B>")
-	logTheThing("admin", usr, null, "toggled Farting [farting_allowed ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled Farting [farting_allowed ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled Farting [farting_allowed ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled Farting [farting_allowed ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled Farting [farting_allowed ? "on" : "off"]")
 
 /datum/admins/proc/toggle_emote_cooldowns()
@@ -693,8 +707,8 @@ client/proc/toggle_ghost_respawns()
 	set name="Toggle Emote Cooldowns"
 	NOT_IF_TOGGLES_ARE_OFF
 	no_emote_cooldowns = !( no_emote_cooldowns )
-	logTheThing("admin", usr, null, "toggled emote cooldowns [!no_emote_cooldowns ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled emote cooldowns [!no_emote_cooldowns ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled emote cooldowns [!no_emote_cooldowns ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled emote cooldowns [!no_emote_cooldowns ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled emote cooldowns [!no_emote_cooldowns ? "on" : "off"].")
 
 /datum/admins/proc/toggle_blood_system()
@@ -704,8 +718,8 @@ client/proc/toggle_ghost_respawns()
 	NOT_IF_TOGGLES_ARE_OFF
 	blood_system = !(blood_system)
 	boutput(world, "<B>Blood system has been [blood_system ? "enabled" : "disabled"].</B>")
-	logTheThing("admin", usr, null, "toggled the blood system [blood_system ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled the blood system [blood_system ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled the blood system [blood_system ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled the blood system [blood_system ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled the blood system [blood_system ? "on" : "off"]")
 
 /datum/admins/proc/toggle_bone_system()
@@ -715,8 +729,8 @@ client/proc/toggle_ghost_respawns()
 	NOT_IF_TOGGLES_ARE_OFF
 	bone_system = !(bone_system)
 	boutput(world, "<B>Bone system has been [bone_system ? "enabled" : "disabled"].</B>")
-	logTheThing("admin", usr, null, "toggled the bone system [bone_system ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled the bone system [bone_system ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled the bone system [bone_system ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled the bone system [bone_system ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled the bone system [bone_system ? "on" : "off"]")
 
 /datum/admins/proc/togglesuicide()
@@ -725,8 +739,8 @@ client/proc/toggle_ghost_respawns()
 	set name = "Toggle Suicide"
 	NOT_IF_TOGGLES_ARE_OFF
 	suicide_allowed = !( suicide_allowed )
-	logTheThing("admin", usr, null, "toggled Suicides [suicide_allowed ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled Suicides [suicide_allowed ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled Suicides [suicide_allowed ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled Suicides [suicide_allowed ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled Suicides [suicide_allowed ? "on" : "off"]")
 
 /datum/admins/proc/togglethetoggles()
@@ -791,8 +805,8 @@ client/proc/toggle_ghost_respawns()
 		manualblinking = 0
 		if(priorblinking != manualblinking) boutput(world, "<B>You no longer need to blink manually!</B>")
 
-	logTheThing("admin", usr, null, "turned manual breathing [manualbreathing ? "on" : "off"] and manual blinking [manualblinking ? "on" : "off"].")
-	logTheThing("diary", usr, null, "turned manual breathing [manualbreathing ? "on" : "off"] and manual blinking [manualblinking ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "turned manual breathing [manualbreathing ? "on" : "off"] and manual blinking [manualblinking ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "turned manual breathing [manualbreathing ? "on" : "off"] and manual blinking [manualblinking ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] turned manual breathing [manualbreathing ? "on" : "off"] and manual blinking [manualblinking ? "on" : "off"].")
 
 /datum/admins/proc/togglespeechpopups()
@@ -801,8 +815,8 @@ client/proc/toggle_ghost_respawns()
 	set name = "Toggle Global Flying Chat"
 	NOT_IF_TOGGLES_ARE_OFF
 	speechpopups = !( speechpopups )
-	logTheThing("admin", usr, null, "toggled speech popups [speechpopups ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled speech popups [speechpopups ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled speech popups [speechpopups ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled speech popups [speechpopups ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled speech popups [speechpopups ? "on" : "off"]")
 
 /datum/admins/proc/togglemonkeyspeakhuman()
@@ -815,9 +829,23 @@ client/proc/toggle_ghost_respawns()
 		boutput(world, "<B>Monkeys can now speak to humans.</B>")
 	else
 		boutput(world, "<B>Monkeys can no longer speak to humans.</B>")
-	logTheThing("admin", usr, null, "toggled Monkey/Human communication [monkeysspeakhuman ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled Monkey/Human communication [monkeysspeakhuman ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled Monkey/Human communication [monkeysspeakhuman ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled Monkey/Human communication [monkeysspeakhuman ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled Monkey/Human communication [monkeysspeakhuman ? "on" : "off"]")
+
+/datum/admins/proc/toggletraitorsseeeachother()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	set desc = "Toggle traitors being able to see each other."
+	set name = "Toggle Traitors Seeing Each Other"
+	NOT_IF_TOGGLES_ARE_OFF
+	traitorsseeeachother = !traitorsseeeachother
+	if (traitorsseeeachother)
+		boutput(world, "<B>Traitors can now see each other.</B>")
+	else
+		boutput(world, "<B>Traitors can no longer see each other.</B>")
+	logTheThing(LOG_ADMIN, usr, "toggled traitors seeing each other [traitorsseeeachother ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled traitors seeing each other [traitorsseeeachother ? "on" : "off"].", "admin")
+	message_admins("[key_name(usr)] toggled traitors seeing each other [traitorsseeeachother ? "on" : "off"]")
 
 /datum/admins/proc/toggleautoending()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
@@ -825,8 +853,8 @@ client/proc/toggle_ghost_respawns()
 	set name = "Toggle Automatic Round End"
 	NOT_IF_TOGGLES_ARE_OFF
 	no_automatic_ending = !( no_automatic_ending )
-	logTheThing("admin", usr, null, "toggled Automatic Round End [no_automatic_ending ? "off" : "on"].")
-	logTheThing("diary", usr, null, "toggled Automatic Round End [no_automatic_ending ? "off" : "on"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled Automatic Round End [no_automatic_ending ? "off" : "on"].")
+	logTheThing(LOG_DIARY, usr, "toggled Automatic Round End [no_automatic_ending ? "off" : "on"].", "admin")
 	message_admins("[key_name(usr)] toggled Automatic Round End [no_automatic_ending ? "off" : "on"]")
 
 /datum/admins/proc/togglelatetraitors()
@@ -835,8 +863,8 @@ client/proc/toggle_ghost_respawns()
 	set name = "Toggle Late Antagonists"
 	NOT_IF_TOGGLES_ARE_OFF
 	late_traitors = !( late_traitors )
-	logTheThing("admin", usr, null, "toggled late antagonists [late_traitors ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled late antagonists [late_traitors ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled late antagonists [late_traitors ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled late antagonists [late_traitors ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled late antagonists [late_traitors ? "on" : "off"]")
 
 /datum/admins/proc/togglesoundwaiting()
@@ -845,8 +873,8 @@ client/proc/toggle_ghost_respawns()
 	set name = "Toggle Admin Sound Queue"
 	NOT_IF_TOGGLES_ARE_OFF
 	sound_waiting = !( sound_waiting )
-	logTheThing("admin", usr, null, "toggled admin sound queue [sound_waiting ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled admin sound queue [sound_waiting ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled admin sound queue [sound_waiting ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled admin sound queue [sound_waiting ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled admin sound queue [sound_waiting ? "on" : "off"]")
 
 /datum/admins/proc/adjump()
@@ -885,10 +913,38 @@ client/proc/toggle_ghost_respawns()
 	set name = "Toggle Pull Slowing"
 	NOT_IF_TOGGLES_ARE_OFF
 	pull_slowing = !( pull_slowing )
-	logTheThing("admin", usr, null, "toggled pull slowing [pull_slowing ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled pull slowing [pull_slowing ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled pull slowing [pull_slowing ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled pull slowing [pull_slowing ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled pull slowing [pull_slowing ? "on" : "off"]")
 
+/datum/admins/proc/toggle_radio_audio()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	set desc = "Toggle whether record players and tape decks can play any audio"
+	set name = "Toggle Radio Audio"
+	NOT_IF_TOGGLES_ARE_OFF
+
+	var/oview_phrase
+	switch (radio_audio_enabled)
+		if (FALSE)
+			oview_phrase = "<span class='alert'>A glowing hand appears out of nowhere and rips \"out of order\" sticker on OBJECT_NAME!</span>"
+		if (TRUE)
+			oview_phrase = "<span class='alert'>A glowing hand appears out of nowhere and slaps a \"out of order\" sticker on OBJECT_NAME!</span>"
+
+	for(var/obj/submachine/tape_deck/O in by_type[/obj/submachine/tape_deck])
+		for(var/mob/living/M in oview(5, O))
+			boutput(M, replacetext(oview_phrase, "OBJECT_NAME", "\the [O.name]"))
+		O.can_play_tapes = !radio_audio_enabled
+
+	for(var/obj/submachine/record_player/O in by_type[/obj/submachine/record_player])
+		for(var/mob/living/M in oview(5, O))
+			boutput(M, replacetext(oview_phrase, "OBJECT_NAME", "\the [O.name]"))
+		O.can_play_music = !radio_audio_enabled
+
+	radio_audio_enabled = !radio_audio_enabled
+
+	message_admins("<span class='internal'>[key_name(usr)] [radio_audio_enabled ? "" : "dis"]allowed for radio music/tapes to play.</span>")
+	logTheThing(LOG_DIARY, usr, "[radio_audio_enabled ? "" : "dis"]allowed for radio music/tapes to play.")
+	logTheThing(LOG_ADMIN, usr, "[radio_audio_enabled ? "" : "dis"]allowed for radio music/tapes to play.")
 
 //Dont need this any more? Player controlled now
 /*
@@ -916,8 +972,8 @@ client/proc/toggle_ghost_respawns()
 	ADMIN_ONLY
 
 	disable_next_click = !(disable_next_click)
-	logTheThing("admin", usr, null, "toggled next_click [disable_next_click ? "off" : "on"].")
-	logTheThing("diary", usr, null, "toggled next_click [disable_next_click ? "off" : "on"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled next_click [disable_next_click ? "off" : "on"].")
+	logTheThing(LOG_DIARY, usr, "toggled next_click [disable_next_click ? "off" : "on"].", "admin")
 	message_admins("[key_name(usr)] toggled next_click [disable_next_click ? "off" : "on"]")
 
 /client/proc/narrator_mode()
@@ -928,8 +984,8 @@ client/proc/toggle_ghost_respawns()
 
 	narrator_mode = !(narrator_mode)
 
-	logTheThing("admin", usr, null, "toggled narrator mode [narrator_mode ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled narrator mode [narrator_mode ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled narrator mode [narrator_mode ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled narrator mode [narrator_mode ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled narrator mode [narrator_mode ? "on" : "off"]")
 
 
@@ -944,8 +1000,8 @@ client/proc/toggle_ghost_respawns()
 	// in this case the value is "above 1" or "zero", so it works fine
 	forced_desussification = ( forced_desussification ? 0 : 1 )
 
-	logTheThing("admin", usr, null, "toggled de-sussification [forced_desussification ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled de-sussification [forced_desussification ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled de-sussification [forced_desussification ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled de-sussification [forced_desussification ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled de-sussification [forced_desussification ? "on" : "off"]")
 
 
@@ -957,8 +1013,8 @@ client/proc/toggle_ghost_respawns()
 
 	station_name_changing = !(station_name_changing)
 
-	logTheThing("admin", usr, null, "toggled station name changing [station_name_changing ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled station name changing [station_name_changing ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled station name changing [station_name_changing ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled station name changing [station_name_changing ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled station name changing [station_name_changing ? "on" : "off"]")
 
 /client/proc/toggle_map_voting()
@@ -975,8 +1031,8 @@ client/proc/toggle_ghost_respawns()
 
 	mapSwitcher.votingAllowed = !mapSwitcher.votingAllowed
 
-	logTheThing("admin", usr, null, "toggled map voting [mapSwitcher.votingAllowed ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled map voting [mapSwitcher.votingAllowed ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled map voting [mapSwitcher.votingAllowed ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled map voting [mapSwitcher.votingAllowed ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled map voting [mapSwitcher.votingAllowed ? "on" : "off"]")
 
 /client/proc/waddle_walking()
@@ -987,8 +1043,8 @@ client/proc/toggle_ghost_respawns()
 
 	waddle_walking = !(waddle_walking)
 
-	logTheThing("admin", usr, null, "toggled waddle walking [waddle_walking ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled waddle walking [waddle_walking ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled waddle walking [waddle_walking ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled waddle walking [waddle_walking ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled waddle walking [waddle_walking ? "on" : "off"]")
 
 /client/proc/toggle_respawn_arena()
@@ -998,8 +1054,8 @@ client/proc/toggle_ghost_respawns()
 
 	ADMIN_ONLY
 	respawn_arena_enabled = 1 - respawn_arena_enabled
-	logTheThing("admin", usr, null, "toggled the respawn arena [respawn_arena_enabled ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled the respawn arena [respawn_arena_enabled ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled the respawn arena [respawn_arena_enabled ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled the respawn arena [respawn_arena_enabled ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled the respawn arena [respawn_arena_enabled ? "on" : "off"]")
 	if(respawn_arena_enabled)
 		boutput(world, "<B>The Respawn Arena has been enabled! Use the go_to_respawn_arena verb as a ghost to compete for a new life!</B>")
@@ -1015,8 +1071,8 @@ client/proc/toggle_ghost_respawns()
 #ifdef DO_VPN_CHECKS
 		vpn_blacklist_enabled = !vpn_blacklist_enabled
 
-		logTheThing("admin", src, null, "toggled VPN and proxy blacklisting [vpn_blacklist_enabled ? "on" : "off"].")
-		logTheThing("diary", src, null, "toggled VPN and proxy blacklisting [vpn_blacklist_enabled ? "on" : "off"].", "admin")
+		logTheThing(LOG_ADMIN, src, "toggled VPN and proxy blacklisting [vpn_blacklist_enabled ? "on" : "off"].")
+		logTheThing(LOG_DIARY, src, "toggled VPN and proxy blacklisting [vpn_blacklist_enabled ? "on" : "off"].", "admin")
 		message_admins("[key_name(src)] toggled VPN and proxy blacklisting [vpn_blacklist_enabled ? "on" : "off"]")
 #else
 		boutput(src, "VPN Checks are currently disabled on this server!")
@@ -1040,6 +1096,18 @@ client/proc/toggle_ghost_respawns()
 		animate(plane_parent, time=4 SECONDS, color=spooky_light_mode ? list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2) : null)
 		animate(C, time=4 SECONDS, color=spooky_light_mode ? "#AAAAAA" : null)
 
-	logTheThing("admin", usr, null, "toggled Spooky Light Mode [spooky_light_mode ? "on at threshold [inp]" : "off"]")
-	logTheThing("diary", usr, null, "toggled Spooky Light Mode [spooky_light_mode ? "on at threshold [inp]" : "off"]")
+	logTheThing(LOG_ADMIN, usr, "toggled Spooky Light Mode [spooky_light_mode ? "on at threshold [inp]" : "off"]")
+	logTheThing(LOG_DIARY, usr, "toggled Spooky Light Mode [spooky_light_mode ? "on at threshold [inp]" : "off"]")
 	message_admins("[key_name(usr)] toggled Spooky Light Mode [spooky_light_mode ? "on at threshold [inp]" : "off"]")
+
+/client/proc/toggle_cloning_with_records()
+	set name = "Toggle Cloning With Records"
+	set desc = "toggles the cloning method between record and non-record"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	ADMIN_ONLY
+
+	cloning_with_records = !cloning_with_records
+
+	logTheThing(LOG_ADMIN, usr, "toggled the cloning with records [cloning_with_records ? "on" : "off"]")
+	logTheThing(LOG_DIARY, usr, "toggled the cloning with records [cloning_with_records ? "on" : "off"]")
+	message_admins("[key_name(usr)] toggled the cloning with records [cloning_with_records ? "on" : "off"]")

@@ -323,7 +323,7 @@
 	},
 /area/prefab/raceway)
 "aT" = (
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /obj/shrub{
 	icon_state = "shrub";
 	dir = 6
@@ -379,7 +379,7 @@
 	},
 /area/prefab/raceway)
 "bb" = (
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -482,7 +482,7 @@
 /area/prefab/raceway)
 "br" = (
 /obj/table/auto,
-/obj/item/material_piece/gold,
+/obj/item/stamped_bullion,
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/black,
 /area/prefab/raceway)

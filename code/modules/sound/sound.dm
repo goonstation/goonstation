@@ -61,7 +61,7 @@ var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 var/global/list/falloff_cache = list()
 
 //default volumes
-var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
+var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 
 //volumous hair with l'orial paris
 /client/var/list/volumes
@@ -124,7 +124,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	if( channel == VOLUME_CHANNEL_ADMIN )
 		src.chatOutput.adjustVolumeRaw( getMasterVolume() * volume )
 
-/proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
+/proc/playsound(atom/source, soundin, vol, vary, extrarange, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
 	// don't play if over the per-tick sound limit
 
 	var/turf/source_turf = get_turf(source)
@@ -245,7 +245,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 			C << S
 
 
-/mob/proc/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
+/mob/proc/playsound_local(atom/source, soundin, vol, vary, extrarange, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
 	if(!src.client)
 		return
 
@@ -323,7 +323,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	Plays a sound to some clients without caring about its source location and stuff.
 	`target` can be either a list of clients or a list of mobs or `world` or an area or a z-level number.
 */
-/proc/playsound_global(target, soundin, vol as num, vary, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
+/proc/playsound_global(target, soundin, vol, vary, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
 	// don't play if over the per-tick sound limit
 	if (!limiter || !limiter.canISpawn(/sound))
 		return
@@ -464,7 +464,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 	//yeah that sound outright doesn't exist
 	if (!S)
-		logTheThing("debug", null, null, "<b>Sounds:</b> Unable to find sound: [soundin]")
+		logTheThing(LOG_DEBUG, null, "<b>Sounds:</b> Unable to find sound: [soundin]")
 		return
 
 	S.falloff = 9999//(world.view + extrarange) / 3.5
@@ -532,6 +532,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	sound_playing[ S.channel ][1] = S.volume
 	sound_playing[ S.channel ][2] = VOLUME_CHANNEL_AMBIENT
 	S.volume *= getVolume( VOLUME_CHANNEL_AMBIENT ) / 100
+	S.status = SOUND_STREAM // playing one at a time
 	if (pass_volume != 0)
 		S.volume *= attenuate_for_location(A)
 		EARLY_RETURN_IF_QUIET(S.volume)
@@ -644,38 +645,5 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
  */
 /proc/csound(var/name)
 	return soundCache[name]
-
-sound
-	disposing()
-		//LAGCHECK(LAG_LOW)
-		..()
-/*
-sound
-	disposing()
-		// Haha you cant delete me you fuck
-		if(!qdeled)
-			qdel(src)
-		else
-			//Yes I can
-			..()
-		return
-
-	unpooled()
-		file = initial(file)
-		repeat = initial(repeat)
-		wait = initial(wait)
-		channel = initial(channel)
-		volume = initial(volume)
-		frequency = initial(frequency)
-		pan = initial(pan)
-		priority = initial(priority)
-		status = initial(status)
-		x = initial(x)
-		y = initial(y)
-		z = initial(z)
-		falloff = initial(falloff)
-		environment = initial(environment)
-		echo = initial(echo)
-*/
 
 #undef SOUNDIN_ID

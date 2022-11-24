@@ -6,6 +6,9 @@
 /// built-in isobj returns true for /atom/movable
 #define isobj(A) (istype(A, /obj))
 
+/// This is relevant to atoms so it goes here!!!! do not @ me
+#define opposite_dir_to(dir) (turn(dir, 180))
+
 //temp_flags lol for atoms and im gonna be constantly adding and removing these
 //this doesn't entirely make sense, cause some other flags are temporary too! ok im runnign otu OF FUCKING SPACE
 /// used for removing us from mantapush list when we get deleted
@@ -46,6 +49,7 @@
 #define IS_FARTABLE					(1 << 9)
 /// overrides the click drag mousedrop pickup QOL kinda stuff
 #define NO_MOUSEDROP_QOL			(1 << 10)
+#define MOVE_NOCLIP 				(1 << 11)
 
 
 //THROW flags (what kind of throw, we can have ddifferent kinds of throws ok)

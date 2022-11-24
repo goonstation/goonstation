@@ -52,9 +52,6 @@ Important Procedures
 
 */
 
-/atom/Cross(atom/movable/mover)
-	return (!density)
-
 /atom/proc/gas_cross(turf/target)
 	return !src.gas_impermeable
 
@@ -212,7 +209,7 @@ datum/controller/air_system
 					if (b == test)
 						test.dist_to_space = 1
 						break
-					dist = get_dist(b, test)
+					dist = GET_DIST(b, test)
 					if ((test.dist_to_space == null) || (dist < test.dist_to_space))
 						test.dist_to_space = dist
 

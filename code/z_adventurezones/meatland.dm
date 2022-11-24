@@ -23,85 +23,30 @@ meaty thoughts from cogwerks to his spacepal aibm:
 - add a horrible distorted wet gurgly scream for the cosmonauts when they attack	DONE
 */
 
-/obj/crevice/meatland
-	name = "macabre grotesquerie"
-	density = 1
-	desc = "It keeps pulsing.  Ew.  Probably shouldn't put your hand in the..mouth?"
-	icon = 'icons/misc/meatland.dmi'
-	icon_state = "meatlumps"
-	dir = 4
-
-var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg','sound/ambience/spooky/Meatzone_Gurgle.ogg','sound/ambience/spooky/Meatzone_Howl.ogg','sound/ambience/spooky/Meatzone_Rumble.ogg')
-
 /area/meat_derelict
 	icon_state = "red"
 	force_fullbright = 0
-
-	var/sound/ambientSound = 'sound/ambience/spooky/Meatzone_BreathingSlow.ogg'
-	var/list/fxlist = null
-	var/list/soundSubscribers = null
-	var/use_alarm = 0
 	sound_group = "meat"
+	sound_loop = 'sound/ambience/spooky/Meatzone_BreathingSlow.ogg'
+	sound_loop_vol = 60
 
-	New()
-		..()
-		fxlist = meatland_fx_sounds
-		if (ambientSound)
+/area/meat_derelict/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 
-			SPAWN(6 SECONDS)
-				var/sound/S = new/sound()
-				S.file = ambientSound
-				S.repeat = 0
-				S.wait = 0
-				S.channel = 123
-				S.volume = 60
-				S.priority = 255
-				S.status = SOUND_UPDATE
-				ambientSound = S
+/area/meat_derelict/disposing()
+	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	. = ..()
 
-				soundSubscribers = list()
-				process()
+/area/meat_derelict/area_process()
+	if(prob(20))
+		src.sound_fx_2 = pick('sound/ambience/spooky/Meatzone_Squishy.ogg',\
+			'sound/ambience/spooky/Meatzone_Gurgle.ogg',\
+			'sound/ambience/spooky/Meatzone_Howl.ogg',\
+			'sound/ambience/spooky/Meatzone_Rumble.ogg')
 
-	Entered(atom/movable/Obj,atom/OldLoc)
-		. = ..()
-		if(ambientSound && ismob(Obj))
-			soundSubscribers |= Obj
-
-	proc/process()
-		if (!soundSubscribers)
-			return
-
-		var/sound/S = null
-		var/sound_delay = 0
-
-
-		while(current_state < GAME_STATE_FINISHED)
-			sleep(6 SECONDS)
-
-			if(prob(10) && fxlist)
-				S = sound(file=pick(fxlist), volume=50)
-				sound_delay = rand(0, 50)
-			else
-				S = null
-				continue
-
-			for(var/mob/living/H in soundSubscribers)
-				var/area/mobArea = get_area(H)
-				if (!istype(mobArea) || mobArea.type != src.type)
-					soundSubscribers -= H
-					if (H.client)
-						ambientSound.status = SOUND_PAUSED | SOUND_UPDATE
-						ambientSound.volume = 0
-						H << ambientSound
-					continue
-
-				if(H.client)
-					ambientSound.status = SOUND_UPDATE
-					ambientSound.volume = 60
-					H << ambientSound
-					if(S)
-						SPAWN(sound_delay)
-							H << S
+		for(var/mob/living/carbon/human/H in src)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 60)
 
 /area/meat_derelict/entry
 	name = "Teleportation Lab"
@@ -117,14 +62,13 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 /area/meat_derelict/soviet
 	name = "Samostrel patrol craft"
 	icon_state = "purple"
-	ambientSound = 'sound/ambience/spooky/Meatzone_BreathingAndAnthem.ogg'
+	sound_loop = 'sound/ambience/spooky/Meatzone_BreathingAndAnthem.ogg'
 
 /area/meat_derelict/boss
 	name = "The Heart"
 	icon_state = "security"
-	ambientSound = 'sound/ambience/spooky/Meatzone_BreathingFast.ogg'
+	sound_loop = 'sound/ambience/spooky/Meatzone_BreathingFast.ogg'
 	irradiated = 0.1
-
 
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach
 	name = "acid"
@@ -135,6 +79,14 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	New()
 		..()
 		set_dir(pick(NORTH,SOUTH))
+
+/obj/crevice/meatland
+	name = "macabre grotesquerie"
+	density = 1
+	desc = "It keeps pulsing.  Ew.  Probably shouldn't put your hand in the..mouth?"
+	icon = 'icons/misc/meatland.dmi'
+	icon_state = "meatlumps"
+	dir = 4
 
 /obj/stomachacid
 	name = "acid"
@@ -182,7 +134,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		light.set_brightness(src.brightness / 5)
 		light.enable()
 
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		if (src.alive && O.force)
 			src.health -= O.force / 4
 			src.visible_message("<span class='alert'><b>[user] bops [src] with [O]!</b></span>")
@@ -233,11 +185,11 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			if (src.loc)
 				src.loc.invisibility = INVIS_ALWAYS_ISH //Hide the floor below us so people don't just right click and see two floors.
 
-		attackby(obj/item/O as obj, mob/user as mob)
+		attackby(obj/item/O, mob/user)
 			if (src.alive && ispryingtool(O))
 				user.visible_message("<span class='alert'><b>[user] jabs [src] with [O]!</b></span>", "<span class='alert'>You jab [src] with [O] and begin to pull!  Hold on!</span>")
 				if (do_after(user, 2 SECONDS))
-					playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 					gibs(src.loc)
 					if (src.loc)
 						new /obj/item/tile/steel (src.loc)
@@ -249,7 +201,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			else
 				return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive)
 			if (!attacking)
 				return ai_think()
@@ -263,7 +215,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		if(ismob(M))
 			src.attacking = 1
 			src.visible_message("<span class='alert'><B>[src]</B> chomps down on [M]!</span>")
-			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 			random_brute_damage(M, rand(10,35), 1)
 			SPAWN(1 SECOND)
 				src.attacking = 0
@@ -277,9 +229,9 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 				src.task = "thinking"
 
 			src.icon_state = "[initial(src.icon_state)]-attack"
-			src.opacity = 0
+			src.set_opacity(0)
 			if (target)
-				if (get_dist(src, src.target) <= src.attack_range)
+				if (GET_DIST(src, src.target) <= src.attack_range)
 					var/mob/living/carbon/M = src.target
 					if (M)
 						CritterAttack(M)
@@ -287,7 +239,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 						src.anchored = 1
 						src.target_lastloc = M.loc
 				else
-					if ((get_dist(src, src.target)) >= src.attack_range)
+					if ((GET_DIST(src, src.target)) >= src.attack_range)
 						src.frustration++
 					else
 						src.frustration = 0
@@ -295,11 +247,11 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 				src.task = "thinking"
 		else if (task == "attacking")
 			src.icon_state = "[initial(src.icon_state)]-attack"
-			src.opacity = 0
+			src.set_opacity(0)
 			return ..()
 		else
 			src.icon_state = initial(src.icon_state)
-			src.opacity = initial(src.opacity)
+			src.set_opacity(initial(src.opacity))
 			return ..()
 
 	proc/update_meat_head_dialog(var/new_text)
@@ -353,11 +305,11 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 				src.task = "thinking"
 
 			src.icon_state = "[initial(src.icon_state)]-attack"
-			src.opacity = 0
+			src.set_opacity(0)
 			if (target)
 				if(prob(30))
 					playsound(src.loc, pick(meathead_noises), 40, 1)
-				if (get_dist(src, src.target) <= src.attack_range)
+				if (GET_DIST(src, src.target) <= src.attack_range)
 					var/mob/living/carbon/M = src.target
 					if (M)
 						CritterAttack(M)
@@ -365,7 +317,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 						src.anchored = 1
 						src.target_lastloc = M.loc
 				else
-					if ((get_dist(src, src.target)) >= src.attack_range)
+					if ((GET_DIST(src, src.target)) >= src.attack_range)
 						src.frustration++
 					else
 						src.frustration = 0
@@ -386,7 +338,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 
 		src.attacking = 1
 		src.visible_message("<span class='alert'>[src] slaps [M] with a meaty tendril!</span>")
-		playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 		M.changeStatus("weakened", 10 SECONDS)
 		random_brute_damage(M, 10, 1)
 		M.throw_at(get_edge_target_turf(M, get_dir(src, get_step_away(M, src))), 200, 4)
@@ -436,7 +388,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 
 			return
 
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		if (istype(O, /obj/item/clothing/head))
 			user.visible_message("[user] tosses [O] onto [src]!", "You toss [O] onto [src].")
 
@@ -496,7 +448,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			var/mob/living/carbon/human/H = M
 			src.visible_message("<span class='alert'><b>[src] latches onto [M]'s stump!!</b></span>")
 			boutput(M, "<span class='alert'>OH FUCK OH FUCK GET IT OFF GET IT OFF IT STINGS!</span>")
-			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 			M.emote("scream")
 			M.changeStatus("stunned", 2 SECONDS)
 			random_brute_damage(M, 3)
@@ -519,7 +471,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		else
 			src.visible_message("<span class='alert'><B>[src]</B> smacks against [M]!</span>")
 			src.set_loc(M.loc)
-			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 			if(iscarbon(M))
 				if (prob(25))
 					M.changeStatus("weakened", 1 SECONDS)
@@ -571,7 +523,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 
 	CritterAttack(mob/M)
 		if (prob(20))
-			playsound(src.loc, "sound/misc/meatmonaut1.ogg", 50, 0)
+			playsound(src.loc, 'sound/misc/meatmonaut1.ogg', 50, 0)
 		return ..()
 
 /obj/item/disk/data/fixed_disk/meatland
@@ -922,7 +874,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 
 	explode()
 		. = isturf(src.loc) ? src.loc : get_turf(src)
-		playsound(., "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+		playsound(., 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 		gibs(.)
 		qdel(src)
 
@@ -1131,16 +1083,16 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 					locked = 0
 					src.icon_state = "cheget_unlocked"
 					src.visible_message("<span class='alert'>[src]'s lock mechanism clicks unlocked.</span>")
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 65, 1)
 					if (prob(50))
 						src.visible_message("<span class='alert'>[src] emits a happy bleep.</span>")
-						playsound(src.loc, "sound/machines/cheget_goodbloop.ogg", 30, 1)
+						playsound(src.loc, 'sound/machines/cheget_goodbloop.ogg', 30, 1)
 
 				else
 					locked = 1
 					src.icon_state = "cheget_closed"
 					src.visible_message("<span class='alert'>[src]'s lock mechanism clunks locked.</span>")
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 65, 1)
 			else if (href_list["enter"] == "")
 				if (locked)
 					return
@@ -1148,7 +1100,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 				src.icon_state = "cheget_closed"
 
 				src.visible_message("<span class='alert'>[src]'s lock mechanism clunks locked.</span>")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 65, 1)
 
 			else
 				usr << output("HET!&0", "cheget.browser:updateReadout")
@@ -1159,7 +1111,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 							any_of_them_right++
 
 					src.visible_message("<span class='alert'>[src] emits a[(any_of_them_right > 1) ? "couple" : null] grumpy boop[(any_of_them_right > 1) ? "s" : null].</span>")
-					playsound(src.loc, "sound/machines/cheget_grumpbloop.ogg", 30, 1)
+					playsound(src.loc, 'sound/machines/cheget_grumpbloop.ogg', 30, 1)
 
 /obj/machinery/computer3/luggable/cheget
 	name = "\improper Cheget"
@@ -1241,7 +1193,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		if(href_list["key"] && istype(usr.equipped(), /obj/item/device/key))
 			boutput(usr, "<span class='alert'>It doesn't fit.  Must be the wrong key.</span>")
 			host.visible_message("<span class='alert'>[src.loc] emits a grumpy boop.</span>")
-			playsound(src.loc, "sound/machines/cheget_grumpbloop.ogg", 30, 1)
+			playsound(src.loc, 'sound/machines/cheget_grumpbloop.ogg', 30, 1)
 
 		return
 
@@ -1294,7 +1246,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		else if (href_list["eject_key"])
 			if(src.inserted_key)
 				boutput(usr, "<span class='notice'>You turn the key and pull it out of the lock. The green light turns off.</span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 30, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 30, 1)
 				src.inserted_key.set_loc(get_turf(src.loc))
 				src.inserted_key = null
 				SPAWN(1 SECOND)
@@ -1328,7 +1280,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	density = 1
 	var/opened = 0
 
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		if (istype(O, /obj/item/device/key))
 			if (opened)
 				boutput(user, "<span class='alert'>It's already been used, ok.</span>")
@@ -1337,7 +1289,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			if (findtext(O.name, "onyx"))
 				opened = 1
 				user.visible_message("<span class='alert'><b>[user] inserts [O] into [src]!</b></span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 60, 1)
 				qdel(O)
 
 				src.visible_message("<span class='alert'>Something pops out of [src]!</span>")
@@ -1392,7 +1344,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		if (isrobot(user))
 			return attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0 || !user.can_use_hands())
 			return
 
@@ -1416,7 +1368,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		if (active)
 			return 1
 
-		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 		src.icon_state = "ganglion[++active]"
 		light.enable()
 
@@ -1456,7 +1408,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		if (!active || latching)
 			return 1
 
-		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 		src.icon_state = "ganglion[--active]"
 		light.disable()
 
@@ -1499,7 +1451,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		flick("fangdoorc0",src)
 		src.icon_state = "fangdoor0"
 		set_density(0)
-		opacity = 0
+		set_opacity(0)
 		src.name = "unsealed door"
 		SPAWN(1.3 SECONDS)
 			changing_state = 0
@@ -1515,7 +1467,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		active = (opened != default_state)
 
 		set_density(1)
-		opacity = 1
+		set_opacity(1)
 		flick("fangdoorc1",src)
 		for (var/mob/living/L in src.loc)
 			if (prob(10))
@@ -1528,8 +1480,8 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 					random_brute_damage(L, 25, 1)
 			else
 				L.visible_message("<span class='alert'><b>[L] is gored by [src]!</b></span>", "<span class='alert'><b>OH SHIT</b></span>")
-				playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
-				logTheThing("combat", L, null, "was gibbed by [src] ([src.type]) at [log_loc(L)].")
+				playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
+				logTheThing(LOG_COMBAT, L, "was gibbed by [src] ([src.type]) at [log_loc(L)].")
 				L.gib()
 
 		src.icon_state = "fangdoor1"
@@ -1656,7 +1608,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 
 			theGib.throw_at(target, 8, 2)
 			random_brute_damage(user, rand(5,15))
-			playsound(T, "sound/impact_sounds/Flesh_Break_1.ogg", 40, 1)
+			playsound(T, 'sound/impact_sounds/Flesh_Break_1.ogg', 40, 1)
 
 			user.visible_message("<span class='alert'><b>[user]</b> blasts a lump of flesh at [target]!</span>")
 			if (prob(15))

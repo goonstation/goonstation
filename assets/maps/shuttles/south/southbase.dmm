@@ -144,7 +144,10 @@
 	},
 /area/shuttle/escape/centcom)
 "hY" = (
-/obj/machinery/door/airlock/pyro/glass/command,
+/obj/machinery/door/airlock/pyro/glass/command{
+	hardened = 1
+	},
+/obj/access_spawn/heads,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -273,7 +276,7 @@
 	},
 /area/shuttle/escape/centcom)
 "mr" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "nb" = (
@@ -503,7 +506,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "xT" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -819,7 +822,9 @@
 	},
 /area/centcom)
 "Jb" = (
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/pyro/glass{
+	hardened = 1
+	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor6"
 	},
@@ -919,8 +924,10 @@
 /area/centcom/outside)
 "Mf" = (
 /obj/machinery/door/airlock/pyro/security{
-	name = "Secure Transport"
+	name = "Secure Transport";
+	hardened = 1
 	},
+/obj/access_spawn/security,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
 	},
@@ -1187,7 +1194,9 @@
 /turf/unsimulated/floor/arrival,
 /area/centcom)
 "Xe" = (
-/obj/machinery/door/airlock/pyro/medical/alt,
+/obj/machinery/door/airlock/pyro/glass/med{
+	hardened = 1
+	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
 	},

@@ -168,6 +168,37 @@ To remove:
 	_sightprocess?.Process(); \
 } while(0)
 
+#define PROP_UPDATE_TELEBLOCK_CAT(target, prop, old_val) do { \
+	var/is_teleblocking = GET_ATOM_PROPERTY_RAW(target, prop); \
+	if (isnull(old_val) && !isnull(is_teleblocking)) { \
+		OTHER_START_TRACKING_CAT(target, TR_CAT_TELEPORT_JAMMERS); \
+	} else if (!isnull(old_val) && isnull(is_teleblocking)) { \
+		OTHER_STOP_TRACKING_CAT(target, TR_CAT_TELEPORT_JAMMERS); \
+	}; \
+} while(0)
+
+#define PROP_UPDATE_HIDE_ICONS(target, prop, old_val) do { \
+	var/new_val = GET_ATOM_PROPERTY_RAW(target, prop); \
+	if (old_val != new_val) { \
+		var/icon_alpha = new_val ? 0 : 255; \
+		if(isliving(target)) { \
+			var/mob/living/L = target; \
+			L.name_tag?.set_visibility(!new_val); \
+		} if(ishuman(target)) { \
+			var/mob/living/carbon/human/H = target; \
+			H.arrestIcon?.alpha = icon_alpha; \
+			if (H.implant_icons) { \
+				var/image/I; \
+				for (var/implant in H.implant_icons) { \
+					I = H.implant_icons[implant]; \
+					I.alpha = icon_alpha; \
+				} \
+			} \
+			H.health_mon?.alpha = icon_alpha; \
+		} \
+	}; \
+} while(0)
+
 // Property defines
 //
 // These must be defined as macros in the format PROP_<yourproperty>(x) x("property key name", MACRO TO APPLY THE PROPERTY, MACRO TO REMOVE THE PROPERTY)
@@ -192,13 +223,14 @@ To remove:
 #define PROP_MOB_THERMALVISION_MK2(x) x("thermalvisionmk2", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT) // regular thermal sight + see mobs through walls
 #define PROP_MOB_SPECTRO(x) x("spectrovision", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
 #define PROP_MOB_EXAMINE_ALL_NAMES(x) x("examine_all", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
-
+#define PROP_MOB_EXAMINE_HEALTH(x) x("healthvison", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_MOB_EXAMINE_HEALTH_SYNDICATE(x) x("healthvison_syndicate", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 //movement properties
 #define PROP_MOB_CANTMOVE(x) x("cantmove", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_CANTSPRINT(x) x("cantsprint", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_NO_MOVEMENT_PUFFS(x) x("nomovementpuffs", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_STAMINA_REGEN_BONUS(x) x("stamina_regen", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
-#define PROP_MOB_FAILED_SPRINT_FLOP(x) x("failed_sprint_flop", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) //fall over when you sprint at 0 stamina
+#define PROP_MOB_FAILED_SPRINT_FLOP(x) x("failed_sprint_flop", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) // fall over when you sprint at 0 stamina
 
 #define PROP_MOB_NO_SELF_HARM(x) x("noselfharm", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_NOCLIP(x) x("noclip", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
@@ -209,10 +241,12 @@ To remove:
 #define PROP_MOB_MELEEPROT_HEAD(x) x("meleeprot_head", APPLY_ATOM_PROPERTY_MAX, REMOVE_ATOM_PROPERTY_MAX)
 #define PROP_MOB_MELEEPROT_BODY(x) x("meleeprot_body", APPLY_ATOM_PROPERTY_MAX, REMOVE_ATOM_PROPERTY_MAX)
 #define PROP_MOB_RANGEDPROT(x) x("rangedprot", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
-#define PROP_MOB_RADPROT(x) x("radprot", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
+#define PROP_MOB_RADPROT_EXT(x) x("radprotext", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
+#define PROP_MOB_RADPROT_INT(x) x("radprotint", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
 #define PROP_MOB_COLDPROT(x) x("coldprot", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
 #define PROP_MOB_HEATPROT(x) x("heatprot", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
 #define PROP_MOB_EXPLOPROT(x) x("exploprot", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
+#define PROP_MOB_CHEMPROT(x) x("chemprot", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
 #define PROP_MOB_DISARM_RESIST(x) x("disarm_resist", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
 #define PROP_MOB_REFLECTPROT(x) x("reflection", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_METABOLIC_RATE(x) x("chem_metabolism", APPLY_ATOM_PROPERTY_PRODUCT, REMOVE_ATOM_PROPERTY_PRODUCT)
@@ -221,6 +255,9 @@ To remove:
 #define PROP_MOB_REBREATHING(x) x("rebreathing", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_BREATHLESS(x) x("breathless", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_ENCHANT_ARMOR(x) x("enchant_armor", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
+#define PROP_MOB_EQUIPMENT_MOVESPEED(x) x("equipment_movespeed", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
+#define PROP_MOB_EQUIPMENT_MOVESPEED_SPACE(x) x("equipment_movespeed_space", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
+#define PROP_MOB_EQUIPMENT_MOVESPEED_FLUID(x) x("equipment_movespeed_fluid", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
 
 //disorient_resist props
 #define PROP_MOB_DISORIENT_RESIST_BODY(x) x("disorient_resist_body", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
@@ -238,13 +275,26 @@ To remove:
 #define PROP_MOB_INVISIBILITY(x) x("invisibility", APPLY_ATOM_PROPERTY_MAX, REMOVE_ATOM_PROPERTY_MAX, PROP_UPDATE_INVISIBILITY)
 #define PROP_MOB_PASSIVE_WRESTLE(x) x("wrassler", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_CANTTHROW(x) x("cantthrow", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_MOB_CANT_BE_PINNED(x) x("cantbepinned", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING(x) x("can_build_without_holding", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) //! Mob can bulid furniture without holding them (for borgs)
+#define PROP_MOB_BLOODGIB_IMMUNE(x) x("bloodgib_immune", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) //! Mob won't gib from having 1000+ effective blood
+/// Hides med/sec HUDs and name tags from the mob
+#define PROP_MOB_HIDE_ICONS(x) x("hide_icons", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE, PROP_UPDATE_HIDE_ICONS)
 
 //-------------------- OBJ PROPS ------------------------
+#define PROP_OBJ_GOLFABLE(x) x("golfable", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+
+//-------------------- ITEM PROPS -----------------------
+
 //------------------- MOVABLE PROPS ---------------------
+#define PROP_MOVABLE_CONTRABAND_OVERRIDE(x) x("contraband_pverride", APPLY_ATOM_PROPERTY_MAX, REMOVE_ATOM_PROPERTY_MAX) //! Thing is considered to have this contraband value, takes max if has multiple of these props
 //-------------------- TURF PROPS -----------------------
 //-------------------- ATOM PROPS -----------------------
 #define PROP_ATOM_NEVER_DENSE(x) x("neverdense", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_ATOM_NO_ICON_UPDATES(x) x("no_icon_updates", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_ATOM_TELEPORT_JAMMER(x) x("teleport_jammer", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM, PROP_UPDATE_TELEBLOCK_CAT)
+#define PROP_ATOM_FLOCK_THING(x) x("flock_thing", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_ATOM_FLOATING(x) x("floating", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 
 
 // In lieu of comments, these are the indexes used for list access in the macros below.

@@ -92,22 +92,22 @@ TYPEINFO(/datum/component/mechanics_holder)
 	..()
 
 /datum/component/mechanics_holder/RegisterWithParent()
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_ADD_INPUT), .proc/addInput)
-	RegisterSignal(parent, list(_COMSIG_MECHCOMP_RECEIVE_MSG), .proc/fireInput)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_TRANSMIT_SIGNAL), .proc/fireOutSignal)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_TRANSMIT_MSG), .proc/fireOutgoing)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG), .proc/fireDefault) //Only use this when also using COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL
-	RegisterSignal(parent, list(_COMSIG_MECHCOMP_RM_INCOMING), .proc/removeIncoming)
-	RegisterSignal(parent, list(_COMSIG_MECHCOMP_RM_OUTGOING), .proc/removeOutgoing)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_RM_ALL_CONNECTIONS), .proc/WipeConnections)
-	RegisterSignal(parent, list(_COMSIG_MECHCOMP_GET_OUTGOING), .proc/getOutgoing)
-	RegisterSignal(parent, list(_COMSIG_MECHCOMP_GET_INCOMING), .proc/getIncoming)
-	RegisterSignal(parent, list(_COMSIG_MECHCOMP_DROPCONNECT), .proc/dropConnect)
-	RegisterSignal(parent, list(_COMSIG_MECHCOMP_LINK), .proc/link_devices)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_ADD_CONFIG), .proc/addConfig)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL), .proc/allowManualSingalSetting) //Only use this when also using COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG
-	RegisterSignal(parent, list(COMSIG_ATTACKBY), .proc/attackby)
-	RegisterSignal(parent, list(_COMSIG_MECHCOMP_COMPATIBLE), .proc/compatible)//Better that checking GetComponent()?
+	RegisterSignal(parent, COMSIG_MECHCOMP_ADD_INPUT, .proc/addInput)
+	RegisterSignal(parent, _COMSIG_MECHCOMP_RECEIVE_MSG, .proc/fireInput)
+	RegisterSignal(parent, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, .proc/fireOutSignal)
+	RegisterSignal(parent, COMSIG_MECHCOMP_TRANSMIT_MSG, .proc/fireOutgoing)
+	RegisterSignal(parent, COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, .proc/fireDefault) //Only use this when also using COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL
+	RegisterSignal(parent, _COMSIG_MECHCOMP_RM_INCOMING, .proc/removeIncoming)
+	RegisterSignal(parent, _COMSIG_MECHCOMP_RM_OUTGOING, .proc/removeOutgoing)
+	RegisterSignal(parent, COMSIG_MECHCOMP_RM_ALL_CONNECTIONS, .proc/WipeConnections)
+	RegisterSignal(parent, _COMSIG_MECHCOMP_GET_OUTGOING, .proc/getOutgoing)
+	RegisterSignal(parent, _COMSIG_MECHCOMP_GET_INCOMING, .proc/getIncoming)
+	RegisterSignal(parent, _COMSIG_MECHCOMP_DROPCONNECT, .proc/dropConnect)
+	RegisterSignal(parent, _COMSIG_MECHCOMP_LINK, .proc/link_devices)
+	RegisterSignal(parent, COMSIG_MECHCOMP_ADD_CONFIG, .proc/addConfig)
+	RegisterSignal(parent, COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL, .proc/allowManualSingalSetting) //Only use this when also using COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG
+	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/attackby)
+	RegisterSignal(parent, _COMSIG_MECHCOMP_COMPATIBLE, .proc/compatible)//Better that checking GetComponent()?
 	return  //No need to ..()
 
 /datum/component/mechanics_holder/UnregisterFromParent()
@@ -248,7 +248,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 				boutput(user,"<span class='alert'>Cannot create connection through an unsecured component housing</span>")
 				return
 
-	if(get_dist(parent, A) > SQUARE_TILE_WIDTH)
+	if(GET_DIST(parent, A) > SQUARE_TILE_WIDTH)
 		boutput(user, "<span class='alert'>Components need to be within a range of 14 meters to connect.</span>")
 		return
 
@@ -307,7 +307,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 	trg_outgoing[receiver] = selected_input
 	src.connected_incoming |= trigger //Let's not allow making many of the same connection.
 	boutput(user, "<span class='success'>You connect the [trigger.name] to the [receiver.name].</span>")
-	logTheThing("station", user, null, "connects a <b>[trigger.name]</b> to a <b>[receiver.name]</b>.")
+	logTheThing(LOG_STATION, user, "connects a <b>[trigger.name]</b> to a <b>[receiver.name]</b>.")
 	SEND_SIGNAL(trigger,_COMSIG_MECHCOMP_DISPATCH_ADD_FILTER, receiver, user)
 	return
 
@@ -334,7 +334,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 		return TRUE
 	if(istype(comsig_target, /obj/machinery/door))
 		var/obj/machinery/door/hacked_door = comsig_target
-		if(hacked_door.p_open)
+		if(hacked_door.panel_open)
 			return
 	if(istype(comsig_target, /obj/machinery/vending))
 		var/obj/machinery/vending/hacked_vendor = comsig_target

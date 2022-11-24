@@ -3,7 +3,7 @@
 
 //don't attack mobs in santuary zones. attacking non-mobs there is fine
 //we can only attack people in pods etc if we're also in the pod etc
-#define ATTACK_CHECK(target) ((!(get_area(target)):sanctuary || !ismob(target)) && (isturf(target:loc) || target:loc == src.loc))
+#define ATTACK_CHECK(target) ((!ismob(target) || !((get_area(target))?:sanctuary)) && (isturf(target:loc) || target:loc == src.loc))
 
 /obj/critter/
 	name = "critter"
@@ -11,7 +11,7 @@
 	icon = 'icons/misc/critter.dmi'
 	var/living_state = null
 	var/dead_state = null
-	layer = 5.0
+	layer = 5
 	density = 1
 	anchored = 0
 	flags = FPRINT | CONDUCT | USEDELAY | FLUID_SUBMERGE
@@ -123,16 +123,12 @@
 			report_state = 1
 			if (src in gauntlet_controller.gauntlet)
 				gauntlet_controller.increaseCritters(src)
-			if (src in colosseum_controller.colosseum)
-				colosseum_controller.increaseCritters(src)
 
 	proc/report_death()
 		if (report_state == 1)
 			report_state = 0
 			if (src in gauntlet_controller.gauntlet)
 				gauntlet_controller.decreaseCritters(src)
-			if (src in colosseum_controller.colosseum)
-				colosseum_controller.decreaseCritters(src)
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		..()
@@ -221,11 +217,11 @@
 
 	proc/on_grump()
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		..()
 		if (!src.alive)
 			if (src.skinresult && max_skins)
-				if (istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/raw_material/shard) || istype(W, /obj/item/sword) || istype(W, /obj/item/saw) || issnippingtool(W))
+				if (issawingtool(W) || iscuttingtool(W) || issnippingtool(W))
 
 					for(var/i, i<rand(1, max_skins), i++)
 						new src.skinresult (src.loc)
@@ -363,11 +359,10 @@
 			return 1 // so things can do if (..())
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		..()
 		if (!src.alive)
-			..()
-			return
+			return ..()
 
 		if (src.sleeping)
 			sleeping = 0
@@ -460,12 +455,12 @@
 		on_damaged()
 
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.health -= 200
 				if (src.health <= 0)
 					src.CritterDeath()
 				return
-			if(2.0)
+			if(2)
 				src.health -= 75
 				if (src.health <= 0)
 					src.CritterDeath()
@@ -500,16 +495,16 @@
 			return
 
 		if (src.loc == followed_path_retry_target)
-			logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Critter arrived at target location.")
+			logTheThing(LOG_DEBUG, null, "<B>Marquesas/Critter Astar:</b> Critter arrived at target location.")
 			task = "thinking"
 			followed_path = null
 			followed_path_retries = 0
 			followed_path_retry_target = null
 		else if (!followed_path)
-			logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Critter following empty path.")
+			logTheThing(LOG_DEBUG, null, "<B>Marquesas/Critter Astar:</b> Critter following empty path.")
 			task = "thinking"
 		else if (!followed_path.len)
-			logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Critter path ran out.")
+			logTheThing(LOG_DEBUG, null, "<B>Marquesas/Critter Astar:</b> Critter path ran out.")
 			task = "thinking"
 		else
 			var/turf/nextturf = followed_path[1]
@@ -525,10 +520,10 @@
 				if (!followed_path_retry_target)
 					task = "thinking"
 				else if (followed_path_retries > 10)
-					logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Critter out of retries.")
+					logTheThing(LOG_DEBUG, null, "<B>Marquesas/Critter Astar:</b> Critter out of retries.")
 					task = "thinking"
 				else
-					logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Hit a wall, retrying.")
+					logTheThing(LOG_DEBUG, null, "<B>Marquesas/Critter Astar:</b> Hit a wall, retrying.")
 					followed_path = findPath(src.loc, followed_path_retry_target)
 					return
 			else
@@ -549,15 +544,6 @@
 				if (isliving(M))
 					waking = 1
 					break
-
-		//for(var/mob/living/M in range(10, src))
-		//	if(M.client)
-		//		waking = 1
-		//		break
-
-		if (!waking)
-			if (get_area(src) == colosseum_controller.colosseum)
-				waking = 1
 
 		if(waking)
 			hibernate_check = 20
@@ -649,7 +635,7 @@
 					current_target = src.food_target
 
 				if (current_target)
-					if (get_dist(src, current_target) <= src.attack_range)
+					if (GET_DIST(src, current_target) <= src.attack_range)
 						if (current_target == src.corpse_target)
 							src.task = "scavenging"
 						else if (current_target == src.food_target)
@@ -662,15 +648,15 @@
 							src.target_lastloc = current_target.loc
 					else
 						if (mobile)
-							var/turf/olddist = get_dist(src, current_target)
+							var/turf/olddist = GET_DIST(src, current_target)
 							walk_to(src, current_target,1,4)
-							if ((get_dist(src, current_target)) >= (olddist))
+							if ((GET_DIST(src, current_target)) >= (olddist))
 								src.frustration++
 								step_towards(src, current_target, 4)
 							else
 								src.frustration = 0
 						else
-							if (get_dist(src, current_target) > attack_range)
+							if (GET_DIST(src, current_target) > attack_range)
 								src.frustration++
 							else
 								src.frustration = 0
@@ -681,25 +667,25 @@
 
 				if (!src.chases_food || src.food_target == null)
 					src.task = "thinking"
-				else if (get_dist(src, src.food_target) <= src.attack_range)
+				else if (GET_DIST(src, src.food_target) <= src.attack_range)
 					src.task = "eating"
 				else if (src.mobile)
 					walk_to(src, src.food_target,1,4)
 
 			if ("eating")
 
-				if (get_dist(src, src.food_target) > src.attack_range)
+				if (GET_DIST(src, src.food_target) > src.attack_range)
 					src.task = "chasing"// food"
 				else
 					src.task = "eating2"
 
 			if ("eating2")
 
-				if (get_dist(src, src.food_target) > src.attack_range)
+				if (GET_DIST(src, src.food_target) > src.attack_range)
 					src.task = "chasing"// food"
 				else
 					src.visible_message("<b>[src]</b> [src.eat_text] [src.food_target].")
-					playsound(src.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
+					playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 					if (food_target)
 						if (food_target.bites_left) src.food_target.bites_left-- //ZeWaka: Fix for null. bites_left
 						if (food_target.reagents && food_target.reagents.total_volume > 0 && src.reagents.total_volume < 30)
@@ -716,7 +702,7 @@
 
 				if (!src.scavenger || src.corpse_target == null)
 					src.task = "thinking"
-				else if (get_dist(src, src.corpse_target) <= src.attack_range)
+				else if (GET_DIST(src, src.corpse_target) <= src.attack_range)
 					src.task = "scavenging"
 				else if (src.mobile)
 					walk_to(src, src.corpse_target,1,4)
@@ -725,34 +711,34 @@
 
 				if (!src.scavenger || src.corpse_target == null)
 					src.task = "thinking"
-				if (get_dist(src, src.corpse_target) > src.attack_range)
+				if (GET_DIST(src, src.corpse_target) > src.attack_range)
 					src.task = "chasing"// corpse"
 				var/mob/living/carbon/human/C = src.corpse_target
 				src.visible_message("<b>[src]</b> gnaws some meat off [src.corpse_target]'s body!")
-				playsound(src.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
+				playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 				sleep(rand(20,30))
 				if (prob(20))
 					C.decomp_stage += 1
 					C.update_body()
 					C.update_face()
 					switch (C.decomp_stage)
-						if (4)
+						if (DECOMP_STAGE_SKELETONIZED)
 							src.visible_message("<span class='combat'><b>[src]</b> tears the last piece of meat off [src.corpse_target]!</span>")
 							src.task = "thinking"
 							src.corpse_target = null
-						if (3)
+						if (DECOMP_STAGE_HIGHLY_DECAYED)
 							src.visible_message("<span class='alert'><b>[src]</b> has eaten most of the flesh from [src.corpse_target]'s bones!")
-						if (2)
+						if (DECOMP_STAGE_DECAYED)
 							src.visible_message("<span class='alert'><b>[src]</b> has eaten enough of [src.corpse_target] that their bones are showing!")
 
 			if ("attacking")
 
 				// see if he got away
-				if ((get_dist(src, src.target) > src.attack_range) || ((src.target:loc != src.target_lastloc)))
+				if ((GET_DIST(src, src.target) > src.attack_range) || ((src.target:loc != src.target_lastloc)))
 					src.anchored = initial(src.anchored)
 					src.task = "chasing"
 				else
-					if (get_dist(src, src.target) <= src.attack_range)
+					if (GET_DIST(src, src.target) <= src.attack_range)
 						var/mob/living/carbon/M = src.target
 						if (!src.attacking)
 							if(ATTACK_CHECK(src.target))
@@ -825,7 +811,7 @@
 				return
 			var/list/visible = new()
 			for (var/mob/living/carbon/human/H in view (src.seekrange,src))
-				if (isdead(H) && H.decomp_stage <= 3 && !H.bioHolder?.HasEffect("husk")) //is dead, isn't a skeleton, isn't a grody husk
+				if (isdead(H) && H.decomp_stage <= DECOMP_STAGE_HIGHLY_DECAYED && !H.bioHolder?.HasEffect("husk")) //is dead, isn't a skeleton, isn't a grody husk
 					visible.Add(H)
 				else continue
 			if (src.corpse_target && (src.corpse_target in visible))
@@ -971,15 +957,6 @@
 		if(target == start)
 			return
 
-	//	playsound(user, "mp5gunshot.ogg", 100, 1)
-	/*	if(bullet == 0)
-			A = new /obj/bullet/mpbullet( user:loc )
-		else if(bullet == 1)
-			playsound(user, "sound/weapons/shotgunshot.ogg", 100, 1)
-			A = new /obj/bullet/slug( user:loc )
-		else if(bullet == 2)
-			playsound(user, "fivegunshot.ogg", 100, 1)
-			A = new /obj/bullet/medbullet( user:loc )*/
 		if (!isturf(target))
 			return
 		// FUCK YOU WHOEVER IS USING THIS
@@ -1008,16 +985,16 @@
 		if (src.reagents && src.critter_reagent)
 			src.reagents.add_reagent(src.critter_reagent, 10)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.anchored)
 			return
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			var/t = input(user, "Enter new name", src.name, src.critter_name) as null|text
-			logTheThing("debug", user, null, "names a critter egg \"[t]\"")
+			logTheThing(LOG_DEBUG, user, "names a critter egg \"[t]\"")
 			if (!t)
 				return
 			phrase_log.log_phrase("name-critter", t, no_duplicates=TRUE)
@@ -1057,6 +1034,7 @@
 		if (hatched || anchored)
 			return
 		if (src.warm_count <= 0 || shouldThrow)
+			hatched = TRUE
 			if (shouldThrow && T)
 				make_cleanable( /obj/decal/cleanable/eggsplat,T)
 				src.set_loc(T)
@@ -1067,45 +1045,44 @@
 					user.u_equip(src)
 				src.set_loc(get_turf(src))
 
-			SPAWN(0)
-				if (shouldThrow && T)
-					src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
-					playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			if (shouldThrow && T)
+				src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
+				playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+			else
+				var/hatch_wiggle_counter = rand(3,8)
+				while (hatch_wiggle_counter-- > 0)
+					src.pixel_x++
+					sleep(0.2 SECONDS)
+					src.pixel_x--
+					sleep(1 SECOND)
+				src.visible_message("[src] hatches!")
+
+			if (!ispath(critter_type))
+				if (istext(critter_type))
+					critter_type = text2path(critter_type)
 				else
-					var/hatch_wiggle_counter = rand(3,8)
-					while (hatch_wiggle_counter-- > 0)
-						src.pixel_x++
-						sleep(0.2 SECONDS)
-						src.pixel_x--
-						sleep(1 SECOND)
-					src.visible_message("[src] hatches!")
+					logTheThing(LOG_DEBUG, null, "EGG: [src] has invalid critter path!")
+					src.visible_message("Looks like there wasn't anything inside of [src]!")
+					qdel(src)
+					return
 
-				if (!ispath(critter_type))
-					if (istext(critter_type))
-						critter_type = text2path(critter_type)
-					else
-						logTheThing("debug", null, null, "EGG: [src] has invalid critter path!")
-						src.visible_message("Looks like there wasn't anything inside of [src]!")
-						qdel(src)
-						return
+			var/obj/critter/newCritter = new critter_type(T ? T : get_turf(src), src.parent)
 
-				var/obj/critter/newCritter = new critter_type(T ? T : get_turf(src), src.parent)
+			if (critter_name)
+				newCritter.name = critter_name
 
-				if (critter_name)
-					newCritter.name = critter_name
+			if (shouldThrow && T)
+				newCritter.throw_at(get_edge_target_turf(src, src.dir), 2, 1)
 
-				if (shouldThrow && T)
-					newCritter.throw_at(get_edge_target_turf(src, src.dir), 2, 1)
+			//hack. Clownspider queens keep track of their babies.
+			if (istype(src.parent, /mob/living/critter/spider/clownqueen))
+				var/mob/living/critter/spider/clownqueen/queen = src.parent
+				if (islist(queen.babies))
+					queen.babies += newCritter
 
-				//hack. Clownspider queens keep track of their babies.
-				if (istype(src.parent, /mob/living/critter/spider/clownqueen))
-					var/mob/living/critter/spider/clownqueen/queen = src.parent
-					if (islist(queen.babies))
-						queen.babies += newCritter
-
-				sleep(0.1 SECONDS)
-				qdel(src)
-				return
+			sleep(0.1 SECONDS)
+			qdel(src)
+			return newCritter
 		else
 			return
 
@@ -1123,7 +1100,7 @@
 		C.set_density(initial(C.density))
 		C.on_revive()
 		C.visible_message("<span class='alert'>[C] seems to rise from the dead!</span>")
-		logTheThing("admin", src, null, "revived [C] (critter).")
+		logTheThing(LOG_ADMIN, src, "revived [C] (critter).")
 		message_admins("[key_name(src)] revived [C] (critter)!")
 	else
 		boutput(src, "[C] isn't dead, you goof!")
@@ -1139,7 +1116,7 @@
 	if (C.alive)
 		C.health = 0
 		C.CritterDeath()
-		logTheThing("admin", src, null, "killed [C] (critter).")
+		logTheThing(LOG_ADMIN, src, "killed [C] (critter).")
 		message_admins("[key_name(src)] killed [C] (critter)!")
 	else
 		boutput(src, "[C] isn't alive, you goof!")

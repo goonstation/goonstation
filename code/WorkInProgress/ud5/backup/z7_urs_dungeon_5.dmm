@@ -590,7 +590,7 @@
 /turf/unsimulated/floor/purple,
 /area/adventure/urs_dungeon)
 "be" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/unsimulated/floor/purple,
 /area/adventure/urs_dungeon)
 "bf" = (
@@ -1212,7 +1212,7 @@
 /turf/unsimulated/floor/specialroom/medbay,
 /area/adventure/urs_dungeon)
 "cu" = (
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /turf/unsimulated/floor/grass,
 /area/adventure/urs_dungeon)
 "cv" = (
@@ -4611,7 +4611,7 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/adventure/urs_dungeon)
 "js" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/unsimulated/floor/specialroom/bar,
 /area/adventure/urs_dungeon)
 "jt" = (

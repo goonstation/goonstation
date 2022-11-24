@@ -1,4 +1,4 @@
-/mob/living/critter/drone/glitch
+/mob/living/critter/robotic/drone/glitch
 	name = "D²o-|"
 	drone_designation = "Glitch"
 	desc = "A highly dÄ:;g$r+us $yn§i#a{e $'+~`?? ???? ? ???? ??"
@@ -8,7 +8,7 @@
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/gun/glitch
+		HH.limb = new /datum/limb/gun/kinetic/glitch
 		HH.name = "C&z !!!!!!ERROR!!!!!!!--~$!'S"
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handglitch"

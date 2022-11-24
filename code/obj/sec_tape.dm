@@ -64,7 +64,7 @@
 			make_cleanable(/obj/decal/cleanable/sec_tape, src.loc)
 			qdel(src)
 
-	attack_hand(mob/M as mob)
+	attack_hand(mob/M)
 		if (M.a_intent == INTENT_HELP)
 			src.try_vault(M)
 		else

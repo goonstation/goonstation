@@ -86,6 +86,9 @@
 		if (prob(3))
 			reagents.add_reagent("liquid spacetime", 25)
 			usedCapacity += 25
+		if (prob(3))
+			reagents.add_reagent("rat_spit", 5)
+			usedCapacity += 5
 		if (prob(1))
 			reagents.add_reagent("rat_venom", 5) // THE MOST DANGEROUS
 			usedCapacity += 5
@@ -149,7 +152,7 @@
 		reagents.add_reagent("saltpetre", max((capacity-usedCapacity) / 2, 0))
 		//reagents.add_reagent("water", max((capacity-usedCapacity) / 2, 0)) // Was diluting the fliptonium, can't have that
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.Artifact_attackby(W,user))
 			..()
 

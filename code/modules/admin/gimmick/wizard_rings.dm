@@ -1,4 +1,3 @@
-ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 /obj/item/clothing/gloves/ring/wizard
 	name = "wizard ring"
 	desc = "Parent object for wizadry rings, you shouldn't see this..."
@@ -6,19 +5,29 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 	icon_state = "ring"
 	item_state = "ring"
 	burn_possible = 0
-	var/ability_path = null			//The ability that this ring is linked to.	//When it's null it's either soulguard or the parent. I'm lazy.
 	magical = 1
+	var/ability_path = null			//The ability that this ring is linked to.	//When it's null it's either soulguard or the parent. I'm lazy.
+	var/last_cast = 0
+
+	get_desc()
+		//only works after you've removed the ring. I don't care enough to make examining it while you're wearing it work. The ability button already has that value.
+		if (src.last_cast > world.time)
+			. += "Its ability is on cooldown for [round((src.last_cast - world.time) / 10)] seconds."
 
 	equipped(var/mob/user, var/slot)
 		..()
 		if (istype(user.abilityHolder))
 			var/datum/targetable/ability = user.abilityHolder.addAbility(ability_path)
 			if (istype(ability))
-				ability.doCooldown()
+				ability.last_cast = last_cast
 
 	unequipped(var/mob/user)
 		..()
 		if (ability_path && istype(user.abilityHolder))
+
+			var/datum/targetable/ability = user.abilityHolder.getAbility(ability_path)
+			if (istype(ability))
+				src.last_cast = ability.last_cast
 			user.abilityHolder.removeAbility(ability_path)
 			if (istype(user.abilityHolder, /datum/abilityHolder/wizard))
 				user.abilityHolder = null
@@ -78,7 +87,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 				var/obj/item/staff/cthulhu/staff = new /obj/item/staff/cthulhu(get_turf(user))
 				created_staff = staff
 
-			if (created_staff?.wizard_key != user?.mind.key)
+			if (created_staff?.wizard_key != user?.mind.key && !isvirtual(user))
 				boutput(user, "<span class='notice'><b>You claim [created_staff] as your own!</b></span>")
 				created_staff.wizard_key = user?.mind.key
 
@@ -100,7 +109,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 				var/obj/item/staff/thunder/staff = new /obj/item/staff/thunder(get_turf(user))
 				created_staff = staff
 
-			if (created_staff?.wizard_key != user?.mind.key)
+			if (created_staff?.wizard_key != user?.mind.key && !isvirtual(user))
 				boutput(user, "<span class='notice'><b>You claim [created_staff] as your own!</b></span>")
 				created_staff.wizard_key = user?.mind.key
 
@@ -272,7 +281,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 			var/ring_type = pick(possible_rings)
 			path = text2path("/obj/item/clothing/gloves/ring/wizard/[ring_type]")
 		else
-			path = pick(concrete_typesof(/obj/item/clothing/gloves/ring/wizard))
+			path = pick(typesof(/obj/item/clothing/gloves/ring/wizard) - /obj/item/clothing/gloves/ring/wizard)
 
 		new path(src.loc)
 		possible_rings = null

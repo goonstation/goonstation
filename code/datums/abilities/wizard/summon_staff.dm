@@ -6,9 +6,11 @@
 	targeted = 0
 	cooldown = 600
 	requires_robes = 1
-	voice_grim = "sound/voice/wizard/StaffGrim.ogg"
-	voice_fem = "sound/voice/wizard/StaffFem.ogg"
-	//voice_other = "sound/voice/wizard/notdoneyet.ogg"
+	voice_grim = 'sound/voice/wizard/StaffGrim.ogg'
+	voice_fem = 'sound/voice/wizard/StaffFem.ogg'
+	//voice_other = 'sound/voice/wizard/notdoneyet.ogg'
+	maptext_colors = list("#b320c3", "#5a1d8a")
+
 
 	cast(mob/target)
 		if (!holder)
@@ -21,11 +23,11 @@
 
 		// Ability holder only checks for M.stat and wizard power, we need more than that here.
 		if (M.getStatusDuration("stunned") > 0 || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") > 0 || !isalive(M) || M.restrained())
-			boutput(M, __red("Not when you're incapacitated or restrained."))
+			boutput(M, "<span class='alert'>Not when you're incapacitated or restrained.</span>")
 			return 1
 
 		if(!istype(get_area(M), /area/sim/gunsim)) // Avoid dead chat spam
-			M.say("KOMH HEIRE")
+			M.say("KOHM HEIRE", FALSE, maptext_style, maptext_colors)
 		..()
 
 		var/list/staves = list()
@@ -41,12 +43,13 @@
 		switch (staves.len)
 			if (-INFINITY to 0)
 				if (we_hold_it != 0)
-					boutput(M, __red("You're already holding your staff."))
+					boutput(M, "<span class='alert'>You're already holding your staff.</span>")
 					return 1 // No cooldown.
 				else
-					boutput(M, __red("You summon a new staff to your hands."))
+					boutput(M, "<span class='alert'>You summon a new staff to your hands.</span>")
 					var/obj/item/staff/cthulhu/C = new /obj/item/staff/cthulhu(get_turf(M))
-					C.wizard_key = M.mind?.key
+					if(!isvirtual(M))
+						C.wizard_key = M.mind?.key
 					M.put_in_hand_or_drop(C)
 					return 0
 
@@ -57,7 +60,7 @@
 					break
 
 				if (!S2 || !istype(S2))
-					boutput(M, __red("You were unable to summon your staff."))
+					boutput(M, "<span class='alert'>You were unable to summon your staff.</span>")
 					return 0
 
 				S2.send_staff_to_target_mob(M)
@@ -73,18 +76,18 @@
 				if (!M || !ismob(M))
 					return 0
 				if (!S3 || !istype(S3))
-					boutput(M, __red("You were unable to summon your staff."))
+					boutput(M, "<span class='alert'>You were unable to summon your staff.</span>")
 					return 0
 				if (!isliving(M) || !M.mind || !iswizard(M))
-					boutput(M, __red("You seem to have lost all magical abilities."))
+					boutput(M, "<span class='alert'>You seem to have lost all magical abilities.</span>")
 					return 0
 				if (M.wizard_castcheck(src) == 0)
 					return 0 // Has own user feedback.
 				if (M.getStatusDuration("stunned") > 0 || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") > 0 || !isalive(M) || M.restrained())
-					boutput(M, __red("Not when you're incapacitated or restrained."))
+					boutput(M, "<span class='alert'>Not when you're incapacitated or restrained.</span>")
 					return 0
 				if (M.mind.key != S3.wizard_key)
-					boutput(M, __red("You were unable to summon your staff."))
+					boutput(M, "<span class='alert'>You were unable to summon your staff.</span>")
 					return 0
 
 				S3.send_staff_to_target_mob(M)
@@ -98,17 +101,18 @@
 	targeted = 0
 	cooldown = 20 SECONDS
 	requires_robes = 1
+	maptext_colors = list("#ebb02b", "#fcf574", "#ebb02b", "#fcf574", "#ebf0f2")
 
 	cast(mob/target)
 		var/mob/living/M = holder?.owner
-		if (!ismob(M)) 
+		if (!ismob(M))
 			return 1
 		if (!can_act(M))
 			boutput(M, "<span class='alert'Not when you're incapacitated or restrained.")
 			return 1
 
 		if(!istype(get_area(M), /area/sim/gunsim)) // Avoid dead chat spam
-			M.say("KUH, ABAH'RAH")
+			M.say("KUH, ABAH'RAH", FALSE, maptext_style, maptext_colors)
 		..()
 
 		var/list/staves = list()
@@ -131,7 +135,8 @@
 				else
 					boutput(M, "<span class='alert'You summon a new staff to your hands.")
 					var/obj/item/staff/thunder/C = new /obj/item/staff/thunder(get_turf(M))
-					C.wizard_key = M.mind?.key
+					if(!isvirtual(M))
+						C.wizard_key = M.mind?.key
 					M.put_in_hand_or_drop(C)
 					return 0
 

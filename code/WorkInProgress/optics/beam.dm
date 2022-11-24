@@ -162,7 +162,7 @@
 
 		// remap alpha by intensity gamma
 		if(alpha != 0)
-			alpha = alpha**0.80
+			alpha = alpha**0.8
 
 		var/icon/I = icon('beam.dmi')
 		I.MapColors(red,0,0,0, 0,green,0,0, 0,0,blue,0, 0,0,0,alpha, 0,0,0,0)

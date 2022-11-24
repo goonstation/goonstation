@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2021 Mothblocks
+ * @author Mothblocks
+ * @license MIT
+ */
 
 import { Placement } from '@popperjs/core';
 import { Component, findDOMfromVNode, InfernoNode } from 'inferno';
@@ -7,7 +13,7 @@ const DEFAULT_PLACEMENT = "top";
 
 type TooltipProps = {
   children?: InfernoNode;
-  content: string;
+  content: InfernoNode;
   position?: Placement,
 };
 
@@ -15,14 +21,15 @@ type TooltipState = {
   hovered: boolean;
 };
 
-export class Tooltip extends Component<TooltipProps, TooltipState> {
-  constructor() {
-    super();
+const DISABLE_EVENT_LISTENERS = [{
+  name: "eventListeners",
+  enabled: false,
+}];
 
-    this.state = {
-      hovered: false,
-    };
-  }
+export class Tooltip extends Component<TooltipProps, TooltipState> {
+  state = {
+    hovered: false,
+  };
 
   componentDidMount() {
     // HACK: We don't want to create a wrapper, as it could break the layout
@@ -34,6 +41,10 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
     // Because this component is written in TypeScript, we will know
     // immediately if this internal variable is removed.
     const domNode = findDOMfromVNode(this.$LI, true);
+
+    if (!domNode) {
+      return;
+    }
 
     domNode.addEventListener("mouseenter", () => {
       this.setState({
@@ -53,6 +64,7 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
       <Popper
         options={{
           placement: this.props.position || "auto",
+          modifiers: DISABLE_EVENT_LISTENERS,
         }}
         popperContent={
           <div
@@ -65,6 +77,7 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
         }
         additionalStyles={{
           "pointer-events": "none",
+          "z-index": 2,
         }}>
         {this.props.children}
       </Popper>

@@ -693,6 +693,7 @@
 					return 1
 				else if (istype(M, /obj/item/clothing/under/rank/security))
 					M.icon_state = "security-old"
+					M.item_state = "security-relic"
 					H.set_clothing_icon_dirty()
 					return 1
 
@@ -702,8 +703,8 @@
 		return
 
 /datum/achievementReward/med_labcoat
-	title = "(Skin) Medical Labcoat"
-	desc = "Requires that you wear a labcoat in your suit slot."
+	title = "(Skin) Cool Medical Labcoat"
+	desc = "Requires that you wear a medical labcoat in your suit slot."
 	required_medal = "Patchwork"
 	once_per_round = 0
 
@@ -711,33 +712,20 @@
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
 			if (H.wear_suit)
-				var/obj/item/clothing/suit/labcoat/M = H.wear_suit
+				var/obj/item/clothing/suit/labcoat/medical/M = H.wear_suit
 				if (istype(M))
-					var/prev = M.name
-					M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-					M.inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
-					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
-					M.wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
-					if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
-
 					//change the icon if you've bought the alt jumpsuit thing (so the coat matches the alt medical jumpsuit)
 					if (activator.mind && istype(activator.mind.purchased_bank_item, /datum/bank_purchaseable/altjumpsuit))
-						M.icon_state = findtext(M.icon_state, "_o") ? "MDlabcoat-alt_o" : "MDlabcoat-alt"
-						M.item_state = "MDlabcoat-alt"
-						M.coat_style = "MDlabcoat-alt"
-						M.desc = "A protective laboratory coat with the blue markings of a fancy Medical Doctor. (Base Item: [prev])"
+						M.icon_state = findtext(M.icon_state, "_o") ? "MDlabcoat-coolalt_o" : "MDlabcoat-coolalt"
+						M.coat_style = "MDlabcoat-coolalt"
 					else
-						M.icon_state = findtext(M.icon_state, "_o") ? "MDlabcoat_o" : "MDlabcoat"
-						M.item_state = "MDlabcoat"
-						M.coat_style = "MDlabcoat"
-						M.desc = "A protective laboratory coat with the red markings of a Medical Doctor. (Base Item: [prev])"
+						M.icon_state = findtext(M.icon_state, "_o") ? "MDlabcoat-cool_o" : "MDlabcoat-cool"
+						M.coat_style = "MDlabcoat-cool"
 
-					M.name = "doctor's labcoat"
-					M.real_name = "doctor's labcoat"
 					H.set_clothing_icon_dirty()
 					return 1
 
-			boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing a labcoat.</span>")
+			boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing a medical labcoat.</span>")
 			return
 
 		boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
@@ -819,7 +807,7 @@
 
 /datum/achievementReward/dioclothes
 	title = "(Skin) Strange Vampire Outfit"
-	desc = "Requires that you wear something in your suit slot."
+	desc = "Requires that you wear a vampire cape."
 	required_medal = "Dracula Jr."
 
 	rewardActivate(var/mob/activator)
@@ -827,30 +815,20 @@
 			var/mob/living/carbon/human/H = activator
 			if (H.wear_suit)
 				var/obj/item/clothing/M = H.wear_suit
-				if (istype(M, /obj/item/clothing/suit/wizrobe))
-					boutput(activator, "Your magic-infused robes resist the meta-telelogical energies!")
-					return
-				if (istype(M, /obj/item/clothing/suit/space/industrial/syndicate) || istype(M, /obj/item/clothing/suit/space/syndicate))
-					boutput(activator, "Nyet, comrade.")
-					return
-				var/prev = M.name
-				M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-				M.inhand_image_icon = 'icons/mob/inhand/hand_cl_suit.dmi'
-				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_cl_suit.dmi'
-				M.wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
-				if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
-				M.icon_state = "vclothes"
-				M.item_state = "vclothes"
-				if (istype(M, /obj/item/clothing/suit/labcoat))
-					var/obj/item/clothing/suit/labcoat/L = M
-					L.coat_style = null
-				M.name = "strange vampire outfit"
-				M.real_name = "strange vampire outfit"
-				M.desc = "How many breads <i>have</i> you eaten in your life? It's a good question. (Base Item: [prev])"
-				H.set_clothing_icon_dirty()
-				return 1
+				if (istype(M, /obj/item/clothing/suit/gimmick/vampire))
+					var/prev = M.name
+					M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+					M.inhand_image_icon = 'icons/mob/inhand/hand_cl_suit.dmi'
+					M.wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+					M.icon_state = "vclothes"
+					M.item_state = "vclothes"
+					M.name = "strange vampire outfit"
+					M.real_name = "strange vampire outfit"
+					M.desc = "How many breads <i>have</i> you eaten in your life? It's a good question. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					return 1
 
-		boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
+		boutput(activator, "<span class='alert'>Unable to redeem... you must be wearing a vampire cape. Guess it's the thought that <i>counts<i>. </span>")
 		return
 
 /datum/achievementReward/clown_college
@@ -874,59 +852,100 @@
 
 /datum/achievementReward/inspectorscloths
 	title = "(Skin set) Inspector's Clothes"
-	desc = "Requires that you wear something in your suit and jumpsuit slots."
+	desc = "Will change the skin of a detective's coat, hats, gloves, shoes, jumpsuit, and holster."
 	required_medal = "Neither fashionable noir stylish"
+	once_per_round = FALSE
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
-			var/succ = 0
+			var/succ = FALSE
 			if (H.wear_suit)
 				var/obj/item/clothing/M = H.wear_suit
-				if (istype(M, /obj/item/clothing/suit/wizrobe))
-					boutput(activator, "Your magic-infused robes resist the meta-telelogical energies!")
-					return
-				if (istype(M, /obj/item/clothing/suit/space/industrial/syndicate) || istype(M, /obj/item/clothing/suit/space/syndicate))
-					boutput(activator, "Nyet, comrade.")
-					return
-				var/prev = M.name
-				M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-				M.inhand_image_icon = 'icons/mob/inhand/hand_cl_suit.dmi'
-				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_cl_suit.dmi'
-				M.wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
-				if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
-				if (istype(M, /obj/item/clothing/suit/labcoat))
-					var/obj/item/clothing/suit/labcoat/L = M
-					M.icon_state = findtext(M.icon_state, "_o") ? "inspectorc_o" : "inspectorc"
-					L.coat_style = "inspectorc"
-				else
+				if (istype(M, /obj/item/clothing/suit/det_suit))
+					var/prev = M.name
 					M.icon_state = "inspectorc_o"
-				M.item_state = "inspectorc"
-				M.name = "inspector's short coat"
-				M.real_name = "inspector's short coat"
-				M.desc = "A coat for the modern detective. (Base Item: [prev])"
-				H.set_clothing_icon_dirty()
-				succ = TRUE
+					M.item_state = "inspectorc_o"
+					M.name = "inspector's short coat"
+					M.real_name = "inspector's short coat"
+					M.desc = "A coat for the modern detective. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
 
 			if (H.w_uniform)
 				var/obj/item/clothing/M = H.w_uniform
-				var/prev2 = M.name
-				M.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-				M.inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
-				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
-				M.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
-				if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
-				M.icon_state = "inspectorj"
-				M.item_state = "viceG"
-				M.name = "inspector's uniform"
-				M.real_name = "inspector's uniform"
-				M.desc = "A uniform for the modern detective. (Base Item: [prev2])"
-				H.set_clothing_icon_dirty()
-				succ = TRUE
+				if (istype(M, /obj/item/clothing/under/rank/det))
+					var/prev = M.name
+					M.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+					M.inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
+					M.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
+					M.icon_state = "inspectorj"
+					M.item_state = "viceG"
+					M.name = "inspector's uniform"
+					M.real_name = "inspector's uniform"
+					M.desc = "A uniform for the modern detective. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if (H.head)
+				var/obj/item/clothing/M = H.head
+				var/obj/item/clothing/head/det_hat/gadget/G = H.head
+				if (istype(G))
+					var/prev = M.name
+					G.icon_state = "inspector"
+					G.item_state = "inspector"
+					G.desc = "Detective's special hat you can outfit with various items for easy retrieval! (Base Item: [prev])"
+					G.inspector = TRUE
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+				else if (istype(M, /obj/item/clothing/head/det_hat))
+					var/prev = M.name
+					M.icon_state = "inspector"
+					M.item_state = "inspector"
+					M.name = "inspector's hat"
+					M.real_name = "inspector's hat"
+					M.desc = "A hat for the modern detective. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if (H.belt)
+				var/obj/item/storage/belt/M = H.belt
+				if (istype(M, /obj/item/storage/belt/security/shoulder_holster))
+					var/prev = M.name
+					M.icon_state = "inspector_holster"
+					M.item_state = "inspector_holster"
+					M.name = "inspector's holster"
+					M.real_name = "inspector holster"
+					M.desc = "A shoulder holster for the modern detective. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if (H.shoes)
+				var/obj/item/clothing/M = H.shoes
+				if (istype(M, /obj/item/clothing/shoes/detective))
+					var/prev = M.name
+					M.icon_state = "inspector"
+					M.item_state = "inspector"
+					M.name = "inspector's boots"
+					M.real_name = "inspector's boots"
+					M.desc = "This pair of boots has inspected it's fair share of mysteries. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if (H.gloves)
+				var/obj/item/clothing/M = H.gloves
+				if (istype(M, /obj/item/clothing/gloves/black))
+					var/prev = M.name
+					M.icon_state = "inspector"
+					M.item_state = "inspector"
+					M.name = "inspector's gloves"
+					M.real_name = "inspector's gloves"
+					M.desc = "A pair of gloves for the modern detective. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
 
 			if (!succ)
-				boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing something in your suit/exosuit slots.</span>")
-
+				boutput(activator, "<span class='alert'>Unable to redeem... now that's a case for a real detective, not you.</span>")
 			return succ
 
 		boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
@@ -936,12 +955,12 @@
 	title = "(Skin set) NT-SO Commander Uniform"
 	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, sabres and captain uniforms."
 	required_medal = "Icarus"
-	once_per_round = 0
+	once_per_round = FALSE
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
-			var/succ = 0
+			var/succ = FALSE
 			if (H.w_uniform)
 				var/obj/item/clothing/M = H.w_uniform
 				if (istype(M, /obj/item/clothing/under/rank/captain))
@@ -1026,12 +1045,21 @@
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
+				else if (istype(M, /obj/item/clothing/head/helmet/captain))
+					var/prev = M.name
+					M.name = "commander's helmet"
+					M.desc = "Somewhat protects an important person's head from being bashed in. Comes in a stylish shade of blue befitting of a commander. (Base Item: [prev])"
+					M.icon_state = "helmet-captain-blue"
+					M.item_state = "helmet-captain-blue"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
 			if (H.belt)
 				var/obj/item/M = H.belt
-				if (istype(M, /obj/item/katana_sheath/captain))
+				if (istype(M, /obj/item/swords_sheaths/captain))
 					if (M.item_state == "scabbard-cap1" || M.item_state == "red_scabbard-cap1")
 						qdel(M)
-						H.equip_if_possible(new /obj/item/katana_sheath/captain/blue(H), H.slot_belt)
+						H.equip_if_possible(new /obj/item/swords_sheaths/captain/blue(H), H.slot_belt)
 						succ = TRUE
 
 			if (H.back)
@@ -1067,12 +1095,12 @@
 	title = "(Skin Set) CENTCOM Executive Uniform"
 	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, sabres and captain uniforms."
 	required_medal = "Brown Pants" //Red shirt, brown pants.
-	once_per_round = 0
+	once_per_round = FALSE
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
-			var/succ = 0
+			var/succ = FALSE
 			if (H.w_uniform)
 				var/obj/item/clothing/M = H.w_uniform
 				if (istype(M, /obj/item/clothing/under/rank/captain))
@@ -1148,18 +1176,27 @@
 				else if (istype(M, /obj/item/clothing/head/helmet/space/captain))
 					var/prev = M.name
 					M.name = "\improper CentCom space helmet"
-					M.desc = "Helps protect against vacuum. Comes in a fasionable red befitting an execuitive. (Base Item: [prev])"
+					M.desc = "Helps protect against vacuum. Comes in a fasionable red befitting an executive. (Base Item: [prev])"
 					M.icon_state = "space-captain-red"
 					M.item_state = "space-captain-red"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
+				else if (istype(M, /obj/item/clothing/head/helmet/captain))
+					var/prev = M.name
+					M.name = "\improper CentCom helmet"
+					M.desc = "Somewhat protects an important person's head from being bashed in. Comes in a stylish shade of red befitting an executive. (Base Item: [prev])"
+					M.icon_state = "helmet-captain-red"
+					M.item_state = "helmet-captain-red"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
 			if (H.belt)
 				var/obj/item/M = H.belt
-				if (istype(M, /obj/item/katana_sheath/captain))
+				if (istype(M, /obj/item/swords_sheaths/captain))
 					if (M.item_state == "scabbard-cap1" || M.item_state == "blue_scabbard-cap1")
 						qdel(M)
-						H.equip_if_possible(new /obj/item/katana_sheath/captain/red(H), H.slot_belt)
+						H.equip_if_possible(new /obj/item/swords_sheaths/captain/red(H), H.slot_belt)
 						succ = TRUE
 
 			if (H.back)
@@ -1341,7 +1378,7 @@ datum/achievementReward/ai_dwaine
 	name = "shelterbee"
 	icon = 'icons/mob/64.dmi'
 	icon_state = "shelterbee"
-	anchored = 1.0
+	anchored = 1
 	pixel_x = -16
 	pixel_y = -16
 
@@ -1355,7 +1392,7 @@ datum/achievementReward/ai_dwaine
 		if (!isobserver(activator))
 			boutput(activator, "<span class='alert'>You gotta be dead to use this, you goof!</span>")
 			return
-		var/mob/living/object/O = new /mob/living/object(new /obj/item/sticker/ribbon/participant(get_turf(usr)), usr)
+		var/mob/living/object/O = new /mob/living/object(get_turf(usr), new /obj/item/sticker/ribbon/participant, usr)
 		O.say_language = "animal"
 		O.literate = 0
 		return 1
@@ -1406,7 +1443,7 @@ datum/achievementReward/ai_dwaine
 	name = "smug"
 	icon = 'icons/mob/64.dmi'
 	icon_state = "smug"
-	anchored = 1.0
+	anchored = 1
 	pixel_x = -16
 	pixel_y = -16
 
@@ -1450,47 +1487,15 @@ datum/achievementReward/ai_dwaine
 			blood_mult = blood_mult + 3
 		T.fluid_react_single(blood_id,blood_mult * blood_amount)
 		var/result = world.ClearMedal("Original Sin", activator, config.medal_hub, config.medal_password)
-		logTheThing("combat", activator, null, "Activated the blood flood gib reward thing (Original Sin)")
+		logTheThing(LOG_COMBAT, activator, "Activated the blood flood gib reward thing (Original Sin)")
 		if (result)
 			boutput(activator, "<span class='alert'>You feel your soul cleansed of sin.</span>")
 			playsound(T, 'sound/voice/farts/diarrhea.ogg', 50, 1)
 		activator.gib()
 		return 1
-		/* This is dumb we just gibbed the mob
-		SPAWN(20 SECONDS)
-			if(activator && !isdead(activator))
-				activator.suiciding = 0*/
-/*                                  / Management stuff below. /              */
-/chui/window/contributorrewards
-	name = "Contributor Rewards"
 
-	New()
-		..()
 
-	var/rewardses = list("sillyscream" = "Silly Screams")
-
-	GetBody()
-		var/ret = "<b>Howdy, contributor! These rewards don't revert until you respawn somehow.</b><br/>"
-		for(var/choice in rewardses)
-			ret += "[theme.generateButton( choice, rewardses[choice] )]<br/>"
-		return ret
-
-	OnClick( var/client/who, var/id )
-		if( rewardses[id] )
-			if(call( src, id )(who))
-				Unsubscribe( src )
-		else
-			boutput( who, "<h1>Don't get ahead of yourself, [who.key]</h1>" )//I almost want to log who does this because I know Erik will be one of them
-
-	proc/sillyscream(var/client/c)
-		var/mob/living/living = c.mob
-		if(istype( living ))
-			living.sound_scream = pick('sound/voice/screams/sillyscream1.ogg','sound/voice/screams/sillyscream2.ogg')
-			c << sound( living.sound_scream )
-			return 1
-		else
-			boutput( usr, "<span class='alert'>Hmm.. I can't set the scream sound of that!</span>" )
-			return 0
+// Reward management stuff
 
 /datum/achievementReward/contributor
 	title = "Contributor Rewards"
@@ -1499,18 +1504,57 @@ datum/achievementReward/ai_dwaine
 	once_per_round = 0
 	mobonly = 0
 
-	var/chui/window/contributorrewards/contributorRewardMenu
-	New()
-		..()
+	rewardActivate(mob/user)
+		ui_interact(user)
+		return 1
 
-	rewardActivate(var/mob/activator)
-		if( !contributorRewardMenu )
-			contributorRewardMenu = new
-		contributorRewardMenu.Subscribe( activator.client )
-		return 1 // i guess. who cares.
+	/// [name, desc, callback]
+	var/contrib_rewards = list(
+		list("Silly Screams", "Crazy silly screams for your character!", .proc/sillyscream),
+	)
 
+	ui_state(mob/user)
+		. = tgui_always_state
 
-/datum/player/var/list/claimed_rewards = list() //Keeps track of once-per-round rewards
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "ContributorRewards")
+			ui.open()
+
+	ui_static_data(mob/user)
+		var/titles = list()
+		var/descs = list()
+		for (var/reward in contrib_rewards)
+			titles += reward[1]
+			descs += reward[2]
+		. = list(
+			"rewardTitles" = titles,
+			"rewardDescs" = descs,
+		)
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if (.)
+			return
+
+		switch(action)
+			if("redeem")
+				var/reward_idx = text2num(params["reward_idx"])
+				INVOKE_ASYNC(src, contrib_rewards[reward_idx][3], ui.user)
+
+	proc/sillyscream(mob/M)
+		var/mob/living/living = M
+		if(istype( living ))
+			living.sound_scream = pick('sound/voice/screams/sillyscream1.ogg','sound/voice/screams/sillyscream2.ogg')
+			M.client << sound( living.sound_scream )
+			return 1
+		else
+			boutput( usr, "<span class='alert'>Hmm.. I can't set the scream sound of that!</span>" )
+			return 0
+
+/// Keeps track of once-per-round rewards
+/datum/player/var/list/claimed_rewards = list()
 
 /client/verb/claimreward()
 	set background = 1
@@ -1537,9 +1581,9 @@ datum/achievementReward/ai_dwaine
 			src.verbs += /client/verb/claimreward
 			return
 
-		var/selection = input(usr,"Please select your reward", "VIP Rewards","CANCEL") in (eligible + "CANCEL")
+		var/selection = tgui_input_list(usr,"Please select your reward", "VIP Rewards", (eligible + "CANCEL"))
 
-		if(selection == "CANCEL")
+		if(!selection || selection == "CANCEL")
 			src.verbs += /client/verb/claimreward
 			return
 
@@ -1559,9 +1603,9 @@ datum/achievementReward/ai_dwaine
 			boutput(usr, "<span class='alert'>You already claimed this!</span>")
 			return
 
-		var/M = alert(usr,S.desc + "\n(Earned through the \"[S.required_medal]\" Medal)","Claim this Reward?","Yes","No")
+		var/confirm = tgui_alert(usr, S.desc + "\n(Earned through the \"[S.required_medal]\" Medal)", "Claim this Reward?", list("Yes", "No"))
 		src.verbs += /client/verb/claimreward
-		if(M == "Yes")
+		if(confirm == "Yes")
 			var/worked = S.rewardActivate(src.mob)
 			if (worked)
 				boutput(usr, "<span class='alert'>Successfully claimed \"[S.title]\".</span>")

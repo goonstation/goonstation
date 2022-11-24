@@ -1,8 +1,8 @@
 // why were most of these in gimmick.dm??????  that's a file for clothing.  what??????????????????????????
-
+ABSTRACT_TYPE(/obj/item/device/key)
 /obj/item/device/key
-	name = "skeleton key"
-	desc = "It unlocks or locks doors."
+	name = "abstract key"
+	desc = "This shouldn't be spawned!"
 	icon = 'icons/misc/aprilfools.dmi'
 	icon_state = "key"
 	item_state = "pen"
@@ -11,6 +11,10 @@
 	burn_possible = 0 // too important to burn!
 	var/id = null
 	var/dodgy = 0 //Woe be upon the poor fool who tries to give a dodgy key to the automaton
+
+/obj/item/device/key/generic
+	name = "key"
+	desc = "It unlocks or locks doors."
 
 /obj/item/device/key/cheget
 	name = "old fancy key"
@@ -22,13 +26,18 @@
 	desc = "Unlocks places you'd otherwise need a bone to pick. Proof that you are an awful human being."
 	icon_state = "bloodyskull"
 
+/obj/item/device/key/literal_skeleton
+	name = "literal skeleton key"
+	desc = "It's a key made of bone.  Grody."
+	icon_state = "key_bone"
+
 // The key that unlocks walls.  (please refer to turf.dm)
 /obj/item/device/key/haunted
 	name = "iron key"
 	desc = "An old key of iron."
 	var/last_use = 0
 
-/obj/item/device/key/chompskey
+/obj/item/device/key/generic/chompskey
 	name = "chomps key"
 	desc = "It's gnot what you were expecting..."
 	icon_state = "chompskey"
@@ -94,7 +103,11 @@
 
 /obj/item/device/key/iridium
 	name = "iridium key"
-	desc = "A key made of a fancy, silvery material."
+	desc = "An artifact made of a fancy, silvery material. Arcs of energy repeatedly crawl up the twin shanks of the device."
+
+	icon = 'icons/obj/artifacts/keys.dmi'
+	icon_state = "iridium"
+
 
 	virtual
 		desc = "A key made of a fancy, silvery set of pixels."
@@ -127,9 +140,11 @@
 	name = "lead key"
 
 /obj/item/device/key/onyx
-	desc = "What does this go to?"
+	desc = "A menacing onyx-like scepter with angular hand guards. Shaped a bit like the teeth of a big key, weird."
 	icon_state = "key_onyx"
 	name = "onyx key"
+	icon = 'icons/obj/artifacts/keys.dmi'
+	icon_state = "onyx"
 
 /obj/item/device/key/silver
 	desc = "What does this go to?"
@@ -138,6 +153,10 @@
 /obj/item/device/key/hotiron
 	desc = "What does this go to?"
 	name = "hot iron key"
+
+/obj/item/device/key/generic/coldsteel
+	desc = "What does this go to?"
+	name = "cold steel key"
 
 /obj/item/device/key/hospital
 	desc = "What does this go to?"

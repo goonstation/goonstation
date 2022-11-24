@@ -240,17 +240,17 @@
 	//organs should not perform their functions if they have 100 damage
 	proc/get_working_kidney_amt()
 		var/count = 0
-		if (left_kidney && (!left_kidney.broken && left_kidney.get_damage() <= left_kidney.FAIL_DAMAGE))
+		if (left_kidney && (!left_kidney.broken && left_kidney.get_damage() <= left_kidney.fail_damage))
 			count++
-		if (right_kidney && (!right_kidney.broken && right_kidney.get_damage() <= right_kidney.FAIL_DAMAGE))
+		if (right_kidney && (!right_kidney.broken && right_kidney.get_damage() <= right_kidney.fail_damage))
 			count++
 		return count
 
 	proc/get_working_lung_amt()
 		var/count = 0
-		if (left_lung && (!left_lung.broken && left_lung.get_damage() <= left_lung.FAIL_DAMAGE))
+		if (left_lung && (!left_lung.broken && left_lung.get_damage() <= left_lung.fail_damage))
 			count++
-		if (right_lung && (!right_lung.broken && right_lung.get_damage() <= right_lung.FAIL_DAMAGE))
+		if (right_lung && (!right_lung.broken && right_lung.get_damage() <= right_lung.fail_damage))
 			count++
 		return count
 
@@ -320,7 +320,7 @@
 		if (!src.butt)
 			src.butt = new /obj/item/clothing/head/butt(src.donor, src)
 			organ_list["butt"] = butt
-			src.donor.butt_op_stage = 0.0
+			src.donor.butt_op_stage = 0
 			src.donor.update_body()
 
 		if (!src.left_kidney)
@@ -436,7 +436,7 @@
 				if (!src.head)
 					return 0
 				var/obj/item/organ/head/myHead = src.head
-				if (src.brain)
+				if (src.brain && !isskeleton(src.donor)) // skeletons move their brain elsewhere so they can detach their head without dying
 					myHead.brain = src.drop_organ("brain", myHead)
 				if (src.skull)
 					myHead.skull = src.drop_organ("skull", myHead)
@@ -466,6 +466,11 @@
 						H.u_equip(W)
 						W.set_loc(myHead)
 						myHead.wear_mask = W
+					if (isskeleton(src.donor) && myHead.head_type == HEAD_SKELETON) // must be skeleton AND have skeleton head
+						src.donor.set_eye(myHead)
+						var/datum/mutantrace/skeleton/S = H.mutantrace
+						S.set_head(myHead)
+
 				myHead.set_loc(location)
 				myHead.update_head_image()
 				myHead.on_removal()
@@ -495,10 +500,10 @@
 				if (!myBrain.owner) //Oh no, they have no mind!
 					if (src.donor.ghost)
 						if (src.donor.ghost.mind)
-							logTheThing("debug", null, null, "<b>Mind</b> drop_organ forced to retrieve mind for key \[[src.donor.key]] from ghost.")
+							logTheThing(LOG_DEBUG, null, "<b>Mind</b> drop_organ forced to retrieve mind for key \[[src.donor.key]] from ghost.")
 							myBrain.setOwner(src.donor.ghost.mind)
 						else if (src.donor.ghost.key)
-							logTheThing("debug", null, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]] from ghost.")
+							logTheThing(LOG_DEBUG, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]] from ghost.")
 							var/datum/mind/newmind = new
 							newmind.ckey = src.donor.ghost.ckey
 							newmind.key = src.donor.ghost.key
@@ -506,7 +511,7 @@
 							src.donor.ghost.mind = newmind
 							myBrain.setOwner(newmind)
 					else if (src.donor.key)
-						logTheThing("debug", null, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]]")
+						logTheThing(LOG_DEBUG, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]]")
 						var/datum/mind/newmind = new
 						newmind.ckey = src.donor.ckey
 						newmind.key = src.donor.key
@@ -518,7 +523,8 @@
 				myBrain.holder = null
 				src.brain = null
 				src.organ_list["brain"] = null
-				src.head?.brain = null
+				if (src.head?.brain == myBrain)
+					src.head.brain = null
 				return myBrain
 
 			if ("left_eye")
@@ -605,7 +611,7 @@
 				myButt.set_loc(location)
 				myButt.holder = null
 				src.butt = null
-				src.donor.butt_op_stage = 4.0
+				src.donor.butt_op_stage = 4
 				src.donor.update_body()
 				src.organ_list["butt"] = null
 				return myButt
@@ -765,12 +771,11 @@
 					if (force)
 						qdel(src.head)
 					else
-						return 0
+						return FALSE
 				var/obj/item/organ/head/newHead = I
-				if (src.donor.client)
-					src.donor.client.mob = new /mob/dead/observer(src.donor)
-				if (newHead.brain && newHead.brain.owner)
-					newHead.brain.owner.transfer_to(src.donor)
+				if (src.brain && newHead.brain)
+					boutput(usr, "<span class='alert'>[src.donor] already has a brain! You should remove the brain from [newHead] first before transplanting it.</span>")
+					return FALSE
 				newHead.op_stage = op_stage
 				src.head = newHead
 				newHead.set_loc(src.donor)
@@ -821,7 +826,10 @@
 						H.wear_mask = newHead.wear_mask
 						newHead.wear_mask.set_loc(H)
 						newHead.wear_mask = null
-
+					if (isskeleton(H) && newHead.head_type == HEAD_SKELETON)
+						var/datum/mutantrace/skeleton/S = H.mutantrace
+						S.set_head(newHead)
+					H.set_eye(null)
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()
 				src.donor.update_clothing()
@@ -854,10 +862,18 @@
 				if (!src.skull)
 					return 0
 				var/obj/item/organ/brain/newBrain = I
-				if (src.donor.client)
-					src.donor.client.mob = new /mob/dead/observer(src.donor)
+				boutput(src.donor, "<span class='alert'><b>You feel yourself forcibly ejected from your corporeal form!</b></span>")
+				src.donor.ghostize()
 				if (newBrain.owner)
-					newBrain.owner.transfer_to(src.donor)
+					var/mob/G
+					G = find_ghost_by_key(newBrain?.owner?.key)
+					if (G)
+						if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
+							G.show_text("<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
+							G.ghostize()?.mind?.transfer_to(src.donor)
+						else
+							G.show_text("<span class='alert'>You feel yourself being dragged out of the afterlife!</span>")
+							G.mind?.transfer_to(src.donor)
 				newBrain.op_stage = op_stage
 				src.brain = newBrain
 				src.head.brain = newBrain
@@ -987,6 +1003,7 @@
 				newButt.set_loc(src.donor)
 				newButt.holder = src
 				organ_list["butt"] = newButt
+				src.donor.butt_op_stage = op_stage
 				success = 1
 
 			if ("left_kidney")
@@ -1150,6 +1167,7 @@
 	//change stamina modifies based on amount of working lungs. lungs w/ health > 0
 	//lungs_changed works like this: if lungs_changed is != the num of working lungs, then apply the stamina modifier
 	proc/handle_lungs_stamina(var/mult = 1)
+		if(QDELETED(donor)) return
 		var/working_lungs = src.get_working_lung_amt()
 		switch (working_lungs)
 			if (0)
@@ -1401,11 +1419,11 @@
 			return 1
 		actions.interrupt(holder.owner, INTERRUPT_ACT)
 		if (ismob(target))
-			logTheThing("combat", holder.owner, target, "used ability [src.name] ([src.linked_organ]) on [constructTarget(target,"combat")].")
+			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organ]) on [constructTarget(target,"combat")].")
 		else if (target)
-			logTheThing("combat", holder.owner, null, "used ability [src.name] ([src.linked_organ]) on [target].")
+			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organ]) on [target].")
 		else
-			logTheThing("combat", holder.owner, null, "used ability [src.name] ([src.linked_organ]).")
+			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organ]).")
 		return 0
 
 /datum/targetable/organAbility/eyebeam
@@ -1450,12 +1468,12 @@
 
 /datum/projectile/laser/eyebeams/left
 	icon_state = "eyebeamL"
-	power = 10
+	damage = 10
 	cost = 10
 
 /datum/projectile/laser/eyebeams/right
 	icon_state = "eyebeamR"
-	power = 10
+	damage = 10
 	cost = 10
 
 /datum/targetable/organAbility/meson

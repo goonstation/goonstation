@@ -13,19 +13,17 @@
 
 		if (!A) //manually called outside of BR gamemode
 			A = get_area(pick_landmark(LANDMARK_PESTSTART))
-		logTheThing("admin",null,null,"Supply drop at [A]")
+		logTheThing(LOG_ADMIN, null, "Supply drop at [A]")
 		var/list/turfs = get_area_turfs(A,1)
 		if (!turfs)	DEBUG_MESSAGE("Getting turfs failed for [A]")
 
 		for(var/x=0, x<howMany, x++)
 			SPAWN(rand(0, 20)) //Looks better with a bit of variance
 				new/obj/effect/supplymarker(pick(turfs), preDropTime)
-		for(var/datum/mind/M in battle_pass_holders)
+		for(var/datum/mind/M in ticker.minds)
 			boutput(M.current, "<span class='notice'>A supply drop will happen soon in the [A.name]</span>")
 		SPAWN(20 SECONDS)
 			for(var/datum/mind/M in ticker.minds)
-				if (M in battle_pass_holders)
-					continue
 				boutput(M.current, "<span class='notice'>A supply drop occured in [A.name]</span>!")
 
 /obj/effect/supplymarker
@@ -72,7 +70,7 @@
 				shake_camera(M, 20, 8)
 				if(gib_mobs && M.loc == src.loc && isliving(M) && !isintangible(M))
 					if(isliving(M))
-						logTheThing("combat", M, null, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
+						logTheThing(LOG_COMBAT, M, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
 					M.gib(1, 1)
 			sleep(0.5 SECONDS)
 			if (obj_path && no_lootbox)
@@ -118,7 +116,7 @@
 		obj_path = obj_path_arg
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(used) return
 		used = 1
 		set_density(0)
@@ -137,9 +135,16 @@
 	var/obj/item/I = null
 	var/list/permittedItemPaths = list(/obj/item/clothing)
 	var/pickedClothingPath = pick(typesof(pick(permittedItemPaths)))
+	var/list/obj/murder_supplies = list()
 
-	var/datum/syndicate_buylist/S = pick(syndi_buylist_cache)
-	var/pickedPath = pick(pickedClothingPath, S.item) //50-50 of either clothes or traitor item.
+	for(var/datum/syndicate_buylist/D in syndi_buylist_cache)
+		if(D.item)
+			if(!D.br_allowed)
+				continue
+			murder_supplies.Add(D.item)
+
+	var/datum/syndicate_buylist/S = pick(murder_supplies)
+	var/pickedPath = pick(pickedClothingPath, S) //50-50 of either clothes or traitor item.
 
 	I = new pickedPath()
 
@@ -169,7 +174,7 @@
 			doPaint = 1
 			numStats = 2
 			doMaterial = 1
-			statsMult = 1.50
+			statsMult = 1.5
 			prefix = pick("Dominating", "Incredible", "Awesome", "Super")
 		if(ITEM_RARITY_EPIC)
 			doPaint = 1
@@ -197,7 +202,7 @@
 
 	if(doMaterial)
 		var/list/material = pick(material_cache - list("cerenkite","ohshitium","plasmastone","koshmarite"))
-		I.setMaterial(material_cache[material], appearance = 1, setname = 1, copy = 1)
+		I.setMaterial(material_cache[material], appearance = 1, setname = 1, copy = FALSE)
 
 	I.name_prefix(prefix)
 
@@ -212,7 +217,7 @@
 
 	var/list/possibleStats = list()
 	for(var/x in globalPropList)
-		if(!I.hasProperty(x) && x != "negate_fluid_speed_penalty")
+		if(!I.hasProperty(x) && x != "negate_fluid_speed_penalty" && x != "movespeed")
 			possibleStats += x
 
 	for(var/i=0,i<numStats,i++)
@@ -234,7 +239,6 @@
 	return I
 
 /atom/movable/screen/lootcratepreview
-	icon = null
 	screen_loc = "1,1"
 	name = ""
 	mouse_opacity = 0

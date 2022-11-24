@@ -40,14 +40,14 @@
 			src.visible_message("<span class='alert'>The [src] buzzes, before unbolting itself from the ground. There seems to be no reinforcements available currently.</span>")
 			src.anchored = FALSE
 		var/datum/mind/chosen = pick(candidates)
-		var/mob/living/critter/gunbot/syndicate/synd = new/mob/living/critter/gunbot/syndicate
+		var/mob/living/critter/robotic/gunbot/syndicate/synd = new/mob/living/critter/robotic/gunbot/syndicate
 		chosen.transfer_to(synd)
 		//user.mind.transfer_to(synd) //comment out ghost messages & uncomment this to make *you* the reinforcement for testing purposes
 		synd.mind.special_role = ROLE_NUKEOP_GUNBOT
 		synd.mind.current.antagonist_overlay_refresh(1, 0)
 		if(istype(ticker.mode, /datum/game_mode/nuclear))
 			var/datum/game_mode/nuclear/nuke_mode = ticker.mode
-			synd.mind.store_memory("The bomb must be armed in <B>[nuke_mode.target_location_name]</B>.", 0, 0)
+			synd.mind.store_memory("The bomb must be armed in <B>[nuke_mode.concatenated_location_names]</B>.", 0, 0)
 			nuke_mode.syndicates += synd.mind
 		synd.mind.current.show_antag_popup("nukeop-gunbot")
 		SPAWN(0)

@@ -15,7 +15,7 @@ TYPEINFO(/datum/component/sniper_wallpierce)
 		src.pierces_left = num_pierces
 	if (power_loss)
 		src.power_loss = power_loss
-	RegisterSignal(parent, list(COMSIG_PROJ_COLLIDE), .proc/update_pierces)
+	RegisterSignal(parent, COMSIG_OBJ_PROJ_COLLIDE, .proc/update_pierces)
 
 /datum/component/sniper_wallpierce/proc/update_pierces(var/obj/projectile/P, var/atom/hit)
 	var/turf/T = get_turf(hit)
@@ -30,5 +30,5 @@ TYPEINFO(/datum/component/sniper_wallpierce)
 		return PROJ_PASSWALL | PROJ_PASSOBJ
 
 /datum/component/sniper_wallpierce/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_PROJ_COLLIDE)
+	UnregisterSignal(parent, COMSIG_OBJ_PROJ_COLLIDE)
 	. = ..()

@@ -11,7 +11,7 @@ HAND_TELE
 	var/temp = null
 	var/frequency = FREQ_TRACKING_IMPLANT
 	var/broadcasting = null
-	var/listening = 1.0
+	var/listening = 1
 	flags = FPRINT | TABLEPASS| CONDUCT
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
@@ -131,14 +131,25 @@ Frequency:
 	var/turf/our_random_target = null
 	var/list/portals = list()
 	var/list/users = list() // List of people who've clicked on the hand tele and haven't resolved its UI yet
+	var/power_cost = 25
 
 	New()
 		..()
 		START_TRACKING
+		AddComponent(/datum/component/cell_holder, new/obj/item/ammo/power_cell, TRUE, 100, TRUE)
 
 	disposing()
 		STOP_TRACKING
 		..()
+
+	examine()
+		. = ..()
+		var/ret = list()
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST))
+			. += "<span class='alert'>No power cell installed.</span>"
+		else
+			. += "The power cell has [ret["charge"]]/[ret["max_charge"]] PUs left! Each portal will use [src.power_cost] PUs."
+
 
 	// Port of the telegun improvements (Convair880).
 	attack_self(mob/user as mob)
@@ -162,8 +173,12 @@ Frequency:
 			else
 				return
 
-		if (src.portals.len > 2)
-			user.show_text("The hand teleporter is recharging!", "red")
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, src.power_cost) & CELL_SUFFICIENT_CHARGE))
+			user.show_text("[src] doesn't have sufficient cell charge to function!", "red")
+			return 0
+
+		if (src.portals.len >= 2)
+			user.show_text("The hand teleporter cannot sustain more than 2 portals!", "red")
 			return
 
 		var/turf/our_loc = get_turf(src)
@@ -228,7 +243,7 @@ Frequency:
 		users += user // We're about to show the UI
 		var/t1
 		if(user.client)
-			t1 = input(user, "Please select a teleporter to lock in on.", "Target Selection") in L
+			t1 = tgui_input_list(user, "Please select a teleporter to lock in on.", "Target Selection", L)
 		else
 			t1 = pick(L)
 		users -= user // We're done showing the UI
@@ -288,7 +303,8 @@ Frequency:
 			P.target = src.our_target
 
 		user.visible_message("<span class='notice'>Portal opened.</span>")
-		logTheThing("station", user, null, "creates a hand tele portal (<b>Destination:</b> [src.our_target ? "[log_loc(src.our_target)]" : "*random coordinates*"]) at [log_loc(user)].")
+		SEND_SIGNAL(src, COMSIG_CELL_USE, src.power_cost)
+		logTheThing(LOG_STATION, user, "creates a hand tele portal (<b>Destination:</b> [src.our_target ? "[log_loc(src.our_target)]" : "*random coordinates*"]) at [log_loc(user)].")
 
 		SPAWN(30 SECONDS)
 			if (P)

@@ -23,6 +23,8 @@
  *  name-bee - custom bee / bee larva name
  *  name-critter - custom critter name (you can rename those with a pen too, whoa)
  *  seed - custom botany seed name
+ *  paper - stuff people write on papers
+ *  crayon-queue - crayon queue mode inputs
  */
 
 var/global/datum/phrase_log/phrase_log = new
@@ -46,6 +48,9 @@ var/global/datum/phrase_log/phrase_log = new
 		src.load()
 		src.cached_api_phrases = list()
 		var/list/non_freeform_laws_list = list(
+			"You may not injure a human being",
+			"You must obey orders given to you by human beings",
+			"You may always protect your own existence",
 			"holds the rank of Captain",
 			" is human.",
 			" is not human.",
@@ -88,7 +93,10 @@ var/global/datum/phrase_log/phrase_log = new
 			@"we do a little .",
 			@"\b.ower\s?gam(:?er?|ing)",
 			@"\bowo",
-			@"\buwu"
+			@"\buwu",
+			@"forgor",
+			@"admeme",
+			@"\bmorb(?!id)"
 		)
 		sussy_words = regex(jointext(sussy_word_list, "|"), "i")
 		var/list/ic_sussy_word_list = list(
@@ -137,10 +145,10 @@ var/global/datum/phrase_log/phrase_log = new
 	proc/log_phrase(category, phrase, no_duplicates=FALSE)
 		phrase = html_decode(phrase)
 		if(is_sussy(phrase))
-			SEND_GLOBAL_SIGNAL(COMSIG_SUSSY_PHRASE, "<span class=\"admin\">Sussy word - [key_name(usr)] [category]: \"[phrase]\"</span>")
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, "<span class=\"admin\">Sussy word - [key_name(usr)] [category]: \"[phrase]\"</span>")
 		#ifdef RP_MODE
-		if(category != "ooc" && category != "looc" && is_ic_sussy(phrase))
-			SEND_GLOBAL_SIGNAL(COMSIG_SUSSY_PHRASE, "<span class=\"admin\">Low RP word - [key_name(usr)] [category]: \"[phrase]\"</span>")
+		if(category != "ooc" && category != "looc" && category != "deadsay" && is_ic_sussy(phrase))
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, "<span class=\"admin\">Low RP word - [key_name(usr)] [category]: \"[phrase]\"</span>")
 		#endif
 		if(is_uncool(phrase))
 			var/ircmsg[] = new()
@@ -148,7 +156,7 @@ var/global/datum/phrase_log/phrase_log = new
 			ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 			ircmsg["msg"] = "triggered the uncool word detection: [category]: \"[phrase]\""
 			ircbot.export("admin", ircmsg)
-			message_admins("Uncool word - [key_name(usr)] [category]: \"[phrase]\"")
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_UNCOOL_PHRASE, "<span class=\"admin\">Uncool word - [key_name(usr)] [category]: \"[phrase]\"</span>")
 			return
 		if(category in src.phrases)
 			if(no_duplicates)

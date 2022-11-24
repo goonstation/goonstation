@@ -1,6 +1,6 @@
 /obj/item/barrier
 	name = "barrier"
-	desc = "A personal barrier. Activate this item with both hands free to use it."
+	desc = "A personal barrier. Activate this item inhand to deploy it."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "barrier_0"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
@@ -12,13 +12,17 @@
 	throwforce = 6
 	w_class = W_CLASS_SMALL
 	mats = 8
-	stamina_damage = 40
+	stamina_damage = 20
+	var/stamina_damage_active = 40
 	stamina_cost = 10
+	var/stamina_cost_active = 25
 	stamina_crit_chance = 0
 	hitsound = 0
 
-	can_disarm = 1
+	can_disarm = 0
 	two_handed = 0
+
+	/// Potentially could be used for subtypes; set it to 1 so that the object occupies two hands when activated.
 	var/use_two_handed = 0
 
 	var/status = 0
@@ -55,6 +59,8 @@
 				setProperty("disorient_resist", 65)
 				setProperty("disorient_resist_eye", 65)
 				setProperty("disorient_resist_ear", 50) //idk how lol ok
+				stamina_damage = stamina_damage_active
+				stamina_cost = stamina_cost_active
 				setProperty("deflection", 20)
 				flick("barrier_a",src)
 				c_flags |= BLOCK_TOOLTIP
@@ -71,6 +77,8 @@
 				delProperty("disorient_resist_ear", 0)
 				setProperty("deflection", 0)
 				c_flags &= ~BLOCK_TOOLTIP
+				stamina_damage = initial(stamina_damage)
+				stamina_cost = initial(stamina_cost)
 
 				src.setItemSpecial(/datum/item_special/simple)
 
@@ -87,7 +95,7 @@
 
 		..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		..()
 		playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 0.1, 0, 2)
 

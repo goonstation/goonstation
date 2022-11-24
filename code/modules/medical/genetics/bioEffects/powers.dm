@@ -66,7 +66,7 @@
 		var/turf/T = get_turf(target)
 
 		target.visible_message("<span class='alert'><b>[owner]</b> points at [target]!</span>")
-		playsound(target.loc, "sound/effects/bamf.ogg", 50, 0)
+		playsound(target.loc, 'sound/effects/bamf.ogg', 50, 0)
 		particleMaster.SpawnSystem(new /datum/particleSystem/tele_wand(get_turf(target),"8x8snowflake","#88FFFF"))
 
 		var/obj/decal/icefloor/B
@@ -92,7 +92,7 @@
 			return 1
 
 		owner.visible_message("<span class='alert'><b>[owner]</b> points at [target]!</span>")
-		playsound(owner.loc, "sound/effects/bamf.ogg", 50, 0)
+		playsound(owner.loc, 'sound/effects/bamf.ogg', 50, 0)
 		particleMaster.SpawnSystem(new /datum/particleSystem/tele_wand(get_turf(owner),"8x8snowflake","#88FFFF"))
 
 		if (!linked_power.safety)
@@ -122,7 +122,7 @@
 	blockGaps = 2
 	stability_loss = 5
 	ability_path = /datum/targetable/geneticsAbility/mattereater
-	var/target_path = "/obj/item/"
+	var/target_path = /obj/item/
 
 /datum/targetable/geneticsAbility/mattereater
 	name = "Matter Eater"
@@ -139,14 +139,11 @@
 			return TRUE
 		using = TRUE
 
-		var/datum/bioEffect/power/mattereater/ME = linked_power
-		var/base_path = text2path("[ME.target_path]")
-		if (!ispath(base_path))
-			base_path = /obj/item/
-		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
-		if (ismob(owner.loc) || istype(owner.loc,/obj/))
+		var/datum/bioEffect/power/mattereater/mattereater = linked_power
+		var/list/items = get_filtered_atoms_in_touch_range(owner, mattereater.target_path)
+		if (ismob(owner.loc) || istype(owner.loc, /obj/))
 			for (var/atom/A in owner.loc.contents)
-				if (istype(A,ME.target_path))
+				if (istype(A, mattereater.target_path))
 					items += A
 
 		if (linked_power.power > 1)
@@ -163,8 +160,9 @@
 			using = FALSE
 			return TRUE
 
-		if (!(the_object in get_filtered_atoms_in_touch_range(owner, base_path)) && !istype(the_object, /obj/the_server_ingame_whoa))
+		if (!(the_object in get_filtered_atoms_in_touch_range(owner, mattereater.target_path)) && !istype(the_object, /obj/the_server_ingame_whoa))
 			owner.show_text("<span class='alert'>Man, that thing is long gone, far away, just let it go.</span>")
+			using = FALSE
 			return TRUE
 
 		var/area/cur_area = get_area(owner)
@@ -179,24 +177,45 @@
 			the_server.eaten(owner)
 			using = FALSE
 			return
-		owner.visible_message("<span class='alert'>[owner] eats [the_object].</span>")
-		playsound(owner.loc, "sound/items/eatfood.ogg", 50, FALSE)
 
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
+
+			// First, restore a little hunger, and heal our organs
 			if (isitem(the_object))
 				var/obj/item/the_item = the_object
 				H.sims?.affectMotive("Hunger", (the_item.w_class + 1) * 5) // +1 so tiny items still give a small boost
-			for(var/A in owner.organs)
-				var/obj/item/affecting = null
-				if (!owner.organs[A])    continue
-				affecting = owner.organs[A]
-				if (!isitem(affecting))
-					continue
-				affecting.heal_damage(4, 0)
-			owner.UpdateDamageIcon()
+				for(var/A in owner.organs)
+					var/obj/item/affecting = null
+					if (!owner.organs[A])
+						continue
+					affecting = owner.organs[A]
+					if (!isitem(affecting))
+						continue
+					affecting.heal_damage(4, 0)
+				owner.UpdateDamageIcon()
 
-		qdel(the_object)
+		if (!QDELETED(the_object)) // Finally, ensure that the item is deleted regardless of what it is
+			var/obj/item/I = the_object
+			if(I)
+				if(I.Eat(owner, owner, TRUE)) //eating can return false to indicate it failed
+					// Organs and body parts have special behaviors we need to account for
+					if (ishuman(owner))
+						var/mob/living/carbon/human/H = owner
+						if (istype(the_object, /obj/item/organ))
+							var/obj/item/organ/organ_obj = the_object
+							if (organ_obj.donor)
+								H.organHolder.drop_organ(the_object,H) //hide it inside self so it doesn't hang around until the eating is finished
+						else if (istype(the_object, /obj/item/parts))
+							var/obj/item/parts/part = the_object
+							part.delete()
+							H.hud.update_hands()
+			else //Eat() handles qdel, visible message and sound playing, so only do that when we don't have Eat()
+				owner.visible_message("<span class='alert'>[owner] eats [the_object].</span>")
+				playsound(owner.loc, 'sound/items/eatfood.ogg', 50, FALSE)
+				qdel(the_object)
+
+
 
 		using = FALSE
 
@@ -209,14 +228,11 @@
 			return 1
 		using = 1
 
-		var/datum/bioEffect/power/mattereater/ME = linked_power
-		var/base_path = text2path("[ME.target_path]")
-		if (!ispath(base_path))
-			base_path = /obj/item/
-		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
-		if (ismob(owner.loc) || istype(owner.loc,/obj/))
+		var/datum/bioEffect/power/mattereater/mattereater = linked_power
+		var/list/items = get_filtered_atoms_in_touch_range(owner, mattereater.target_path)
+		if (ismob(owner.loc) || istype(owner.loc, /obj/))
 			for (var/atom/A in owner.loc.contents)
-				if (istype(A,ME.target_path))
+				if (istype(A, mattereater.target_path))
 					items += A
 
 		if (linked_power.power > 1)
@@ -246,8 +262,8 @@
 			using = 0
 			return
 		owner.visible_message("<span class='alert'>[owner] tries to swallow [the_object] whole and nearly chokes on it.</span>")
-		playsound(owner.loc, "sound/items/eatfood.ogg", 50, 0)
-		playsound(owner.loc, "sound/misc/meat_plop.ogg", 50, 0)
+		playsound(owner.loc, 'sound/items/eatfood.ogg', 50, 0)
+		playsound(owner.loc, 'sound/misc/meat_plop.ogg', 50, 0)
 		using = 0
 		return
 
@@ -302,7 +318,7 @@
 
 		if (istype(owner.loc,/turf/))
 			usr.visible_message("<span class='alert'><b>[owner]</b> takes a huge leap!</span>")
-			playsound(owner.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 1)
+			playsound(owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
 			var/prevLayer = owner.layer
 			owner.layer = EFFECTS_LAYER_BASE
 
@@ -330,6 +346,7 @@
 			owner.changeStatus("paralysis", 5 SECONDS)
 			owner.changeStatus("weakened", 5 SECONDS)
 			container.visible_message("<span class='alert'><b>[owner.loc]</b> emits a loud thump and rattles a bit.</span>")
+			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 			animate_storage_thump(container)
 
 		return
@@ -351,8 +368,8 @@
 
 		if (istype(owner.loc,/turf/))
 			usr.visible_message("<span class='alert'><b>[owner]</b> leaps far too high and comes crashing down hard!</span>")
-			playsound(owner.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 1)
-			playsound(owner.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 50, 1)
+			playsound(owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
+			playsound(owner.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)
 			var/prevLayer = owner.layer
 			owner.layer = EFFECTS_LAYER_BASE
 			owner.changeStatus("weakened", 10 SECONDS)
@@ -376,7 +393,7 @@
 			owner.changeStatus("paralysis", 5 SECONDS)
 			owner.changeStatus("weakened", 5 SECONDS)
 			container.visible_message("<span class='alert'><b>[owner.loc]</b> emits a loud thump and rattles a bit.</span>")
-			playsound(owner.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+			playsound(owner.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 			SPAWN(0)
 				var/wiggle = 6
 				while(wiggle > 0)
@@ -439,12 +456,12 @@
 			boutput(owner, "<span class='alert'>Your body doesn't seem to be compatible with this ability.</span>")
 			return 1
 
-		playsound(owner.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
+		playsound(owner.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1)
 		owner.visible_message("<span class='alert'><b>[owner]</b> touches [target], then begins to shifts and contort!</span>")
 
 		SPAWN(1 SECOND)
 			if(H && owner)
-				playsound(owner.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
+				playsound(owner.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 				owner.bioHolder.CopyOther(H.bioHolder, copyAppearance = 1, copyPool = 0, copyEffectBlocks = 0, copyActiveEffects = 0)
 				owner.real_name = H.real_name
 				owner.name = H.name
@@ -476,7 +493,7 @@
 			boutput(owner, "<span class='alert'>You must be within touching distance of [target] for this to work.</span>")
 			return 1
 
-		playsound(owner.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
+		playsound(owner.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1)
 		owner.visible_message("<span class='alert'><b>[owner]</b> touches [target]... and nothing happens. Huh.</span>")
 
 		return
@@ -600,7 +617,7 @@
 		boutput(recipient, "<span style='color: #BD33D9'><b>[psyname]</b> echoes, \"<i>[msg]</i>\"</span>")
 		boutput(owner, "<span style='color: #BD33D9'>You echo \"<i>[msg]</i>\" to <b>[recipient.name]</b>.</span>")
 
-		logTheThing("telepathy", owner, recipient, "TELEPATHY to [constructTarget(recipient,"telepathy")]: [msg]")
+		logTheThing(LOG_TELEPATHY, owner, "TELEPATHY to [constructTarget(recipient,"telepathy")]: [msg]")
 
 		return
 
@@ -641,7 +658,7 @@
 		owner.visible_message("<span class='alert'><b>[owner]</b> puts their fingers to their temples and stares at [target] really hard.</span>")
 		owner.say(msg)
 
-		logTheThing("telepathy", owner, recipient, "TELEPATHY misfire to [constructTarget(recipient,"telepathy")]: [msg]")
+		logTheThing(LOG_TELEPATHY, owner, "TELEPATHY misfire to [constructTarget(recipient,"telepathy")]: [msg]")
 
 		return
 
@@ -790,7 +807,6 @@
 		owner.emote("scream")
 		owner.changeStatus("paralysis", 5 SECONDS)
 		owner.changeStatus("stunned", 7 SECONDS)
-		return
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -820,7 +836,7 @@
 		if (..())
 			return 1
 
-		playsound(owner.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
+		playsound(owner.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 
 		if (linked_power.power > 1)
 			owner.visible_message("<span class='alert'><b>[owner.name]</b> erupts into a huge column of flames! Holy shit!</span>")
@@ -837,7 +853,7 @@
 		if (..())
 			return 1
 
-		playsound(owner.loc, "sound/effects/bamf.ogg", 50, 0)
+		playsound(owner.loc, 'sound/effects/bamf.ogg', 50, 0)
 		owner.show_message("<span class='alert'>You accidentally expunge all heat from your body. Whoops!</span>")
 		owner.bodytemperature = 0
 
@@ -883,7 +899,7 @@
 				owner.unequip_all()
 
 			spell_invisibility(owner, 50)
-			playsound(owner.loc, "sound/effects/mag_phase.ogg", 25, 1, -1)
+			playsound(owner.loc, 'sound/effects/mag_phase.ogg', 25, 1, -1)
 
 
 	cast_misfire()
@@ -913,7 +929,7 @@
 					boutput(owner, "<span class='alert'>\The [I] you were carrying falls away as you dissolve!</span>")
 
 			spell_invisibility(owner, 50)
-			playsound(owner.loc, "sound/effects/mag_phase.ogg", 25, 1, -1)
+			playsound(owner.loc, 'sound/effects/mag_phase.ogg', 25, 1, -1)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -974,14 +990,14 @@
 			if(owner.reagents.has_reagent("anti_fart"))
 				owner.visible_message("<span class='alert'><b>[owner.name]</b> swells up. That can't be good.</span>")
 				boutput(owner, "<span class='alert'><b>Oh god.</b></span>")
-				logTheThing("combat", owner, null, "was gibbed by superfarting while containing anti_fart at [log_loc(owner)].")
+				logTheThing(LOG_COMBAT, owner, "was gibbed by superfarting while containing anti_fart at [log_loc(owner)].")
 				indigestion_gib()
 				return 1
 
 			owner.visible_message("<span class='alert'><b>[owner.name]</b>[fart_string]</span>")
 			while (sound_repeat > 0)
 				sound_repeat--
-				playsound(owner.loc, "sound/voice/farts/superfart.ogg", sound_volume, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(owner.loc, 'sound/voice/farts/superfart.ogg', sound_volume, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 			for(var/mob/living/V in range(get_turf(owner),fart_range))
 				shake_camera(V,10,64)
@@ -1031,12 +1047,12 @@
 		owner.make_jittery(50)
 		sleep(1 SECOND)
 		owner.emote("scream")
-		playsound(owner.loc, "sound/impact_sounds/Flesh_Tear_1.ogg", 100, 1)
+		playsound(owner.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 100, 1)
 		owner.TakeDamage("chest", 25, 0, 0, DAMAGE_BLUNT)
 		owner.make_jittery(250)
 		sleep(1 SECOND)
 		owner.emote("scream")
-		playsound(owner.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 100, 1)
+		playsound(owner.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 100, 1)
 		owner.TakeDamage("chest", 25, 0, 0, DAMAGE_BLUNT)
 		owner.make_jittery(500)
 
@@ -1044,7 +1060,7 @@
 		var/scream_decrement = 0.25
 
 		while(scream_time > 0)
-			playsound(owner.loc, pick("sound/impact_sounds/Flesh_Break_1.ogg","sound/impact_sounds/Flesh_Tear_1.ogg","sound/impact_sounds/Flesh_Tear_2.ogg"), 100, 1)
+			playsound(owner.loc, pick('sound/impact_sounds/Flesh_Break_1.ogg','sound/impact_sounds/Flesh_Tear_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg'), 100, 1)
 			owner.emote("scream")
 			sleep(scream_time SECONDS)
 			scream_time -= scream_decrement
@@ -1130,7 +1146,7 @@
 /datum/projectile/laser/eyebeams
 	name = "optic laser"
 	icon_state = "eyebeam"
-	power = 20
+	damage = 20
 	cost = 20
 	sname = "eye laser"
 	dissipation_delay = 5
@@ -1140,7 +1156,8 @@
 	color_blue = 1
 
 /datum/projectile/laser/eyebeams/stun
-	ks_ratio = 0.0
+	damage = 0
+	stun = 20
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1223,27 +1240,30 @@
 	icon_state = "midas"
 	targeted = FALSE
 
-	cast()
+	cast(atom/target)
 		if (..())
 			return 1
 		if(linked_power.using)
 			return 1
 
-		var/base_path = /obj/item/
-		if (linked_power.power > 1)
-			base_path = /obj/
+		var/obj/the_object = target
 
-		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
-		if (!items.len)
-			boutput(usr, "/red You can't find anything nearby to touch.")
-			return 1
+		if(!target)
+			var/base_path = /obj/item/
+			if (linked_power.power > 1)
+				base_path = /obj/
 
-		linked_power.using = 1
-		var/obj/the_object = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
-		if (!the_object)
-			last_cast = 0
-			linked_power.using = 0
-			return 1
+			var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
+			if (!items.len)
+				boutput(usr, "/red You can't find anything nearby to touch.")
+				return 1
+
+			linked_power.using = 1
+			the_object = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
+			if (!the_object)
+				last_cast = 0
+				linked_power.using = 0
+				return 1
 
 		if(isitem(the_object))
 			var/obj/item/the_item = the_object
@@ -1261,7 +1281,7 @@
 				the_object.setMaterial(getMaterial(linked.transmute_material))
 			else
 				owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to gold!</span>")
-				the_object.setMaterial(getMaterial("gold"))
+				the_object.setMaterial(getMaterial("gold"), copy = FALSE)
 		linked_power.using = 0
 		return
 
@@ -1298,7 +1318,7 @@
 			owner.visible_message("[owner] touches [the_object].")
 		else
 			owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to flesh!</span>")
-			the_object.setMaterial(getMaterial("flesh"))
+			the_object.setMaterial(getMaterial("flesh"), copy = FALSE)
 		linked_power.using = 0
 		return
 
@@ -1415,7 +1435,7 @@
 			last_loc = null
 
 			owner.visible_message("<span class='alert'><b>[owner] appears in a burst of blue light!</b></span>")
-			playsound(owner.loc, "sound/effects/ghost2.ogg", 50, 0)
+			playsound(owner.loc, 'sound/effects/ghost2.ogg', 50, 0)
 			SPAWN(0.7 SECONDS)
 				animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
 				animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
@@ -1457,7 +1477,7 @@
 			owner.canmove = 0
 			owner.restrain_time = TIME + 0.7 SECONDS
 			owner.visible_message("<span class='alert'><b>[owner] vanishes in a burst of blue light!</b></span>")
-			playsound(owner.loc, "sound/effects/ghost2.ogg", 50, 0)
+			playsound(owner.loc, 'sound/effects/ghost2.ogg', 50, 0)
 			animate(owner, color = "#0000FF", time = 5, easing = LINEAR_EASING)
 			animate(alpha = 0, time = 5, easing = LINEAR_EASING)
 			SPAWN(0.7 SECONDS)
@@ -1481,7 +1501,7 @@
 			P.last_loc = null
 
 			owner.visible_message("<span class='alert'><b>[owner] appears in a burst of blue light!</b></span>")
-			playsound(owner.loc, "sound/effects/ghost2.ogg", 50, 0)
+			playsound(owner.loc, 'sound/effects/ghost2.ogg', 50, 0)
 			SPAWN(0.7 SECONDS)
 				animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
 				animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
@@ -1528,7 +1548,7 @@
 
 		var/turf/T = get_turf(target)
 		owner.visible_message("<span class='alert'><b>[owner]</b> raises [his_or_her(owner)] hands into the air!</span>")
-		playsound(owner.loc, "sound/voice/heavenly.ogg", 50, 0)
+		playsound(owner.loc, 'sound/voice/heavenly.ogg', 50, 0)
 		var/strength = 1 + 6 * linked_power.power
 		var/time = 300 * linked_power.power
 		new /obj/photokinesis_light(T,P.red,P.green,P.blue,strength,time)
@@ -1600,7 +1620,7 @@
 
 		var/turf/T = get_turf(target)
 		owner.visible_message("<span class='alert'><b>[owner]</b> raises [his_or_her(owner)] hands into the air!</span>")
-		playsound(owner.loc, "sound/voice/chanting.ogg", 50, 0)
+		playsound(owner.loc, 'sound/voice/chanting.ogg', 50, 0)
 		new /obj/overlay/darkness_field(T, field_time, radius = 0.5 + field_size, max_alpha = 250)
 		new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, field_time, radius = 0.5 + field_size, max_alpha = 250)
 
@@ -1637,7 +1657,7 @@
 		var/range = FB.range * FB.power
 		var/temp = FB.temperature * FB.power ** 2
 		owner.visible_message("<span class='alert'><b>[owner] breathes fire!</b></span>")
-		playsound(owner.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
+		playsound(owner.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 		var/turf/currentturf
 		var/turf/previousturf
 		for(var/turf/F in affected_turfs)
@@ -1649,7 +1669,7 @@
 				break
 			if (F == get_turf(owner))
 				continue
-			if (get_dist(owner,F) > range)
+			if (GET_DIST(owner,F) > range)
 				continue
 			tfireflash(F,0.5,temp)
 
@@ -1658,7 +1678,7 @@
 			return 1
 
 		owner.visible_message("<span class='alert'><b>[owner] manages to set themselves on fire!</b></span>")
-		playsound(owner.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
+		playsound(owner.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 		owner.set_burning(100)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1980,7 +2000,7 @@
 			boutput(usr, "You start using your chameleon cloaking.")
 			CH.last_moved = TIME
 			CH.active = 1
-			CH.RegisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE), /datum/bioEffect/power/chameleon/proc/decloak)
+			CH.RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE), /datum/bioEffect/power/chameleon/proc/decloak)
 		return 0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2019,8 +2039,8 @@
 		var/range = BP.range
 		range *= BP.power
 		owner.visible_message("<span class='alert'><b>[owner] horfs up a huge stream of puke!</b></span>")
-		logTheThing("combat", owner, target, "power-pukes [log_reagents(owner)] at [log_loc(owner)].")
-		playsound(owner.loc, "sound/misc/meat_plop.ogg", 50, 0)
+		logTheThing(LOG_COMBAT, owner, "power-pukes [log_reagents(owner)] at [log_loc(owner)].")
+		playsound(owner.loc, 'sound/misc/meat_plop.ogg', 50, 0)
 		for (var/reagent_id in puke_reagents)
 			owner.reagents.add_reagent(reagent_id, puke_reagents[reagent_id])
 		var/turf/currentturf
@@ -2034,7 +2054,7 @@
 				break
 			if (F == get_turf(owner))
 				continue
-			if (get_dist(owner,F) > range)
+			if (GET_DIST(owner,F) > range)
 				continue
 			affected_turfs += F
 		for(var/turf/F in affected_turfs)
@@ -2084,20 +2104,23 @@
 	has_misfire = FALSE
 	needs_hands = FALSE
 
-	cast()
+	cast(atom/target)
 		if (..())
 			return 1
 
-		var/base_path = /obj
-		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
-		if (!items.len)
-			boutput(usr, "/red You can't find anything nearby to spray ink on.")
-			return 1
+		var/obj/the_object = target
 
-		var/obj/the_object = input("Which item do you want to color?","Ink Glands") as null|obj in items
-		if (!the_object)
-			last_cast = 0
-			return 1
+		if(!the_object)
+			var/base_path = /obj
+			var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
+			if (!items.len)
+				boutput(usr, "/red You can't find anything nearby to spray ink on.")
+				return 1
+
+			the_object = input("Which item do you want to color?","Ink Glands") as null|obj in items
+			if (!the_object)
+				last_cast = 0
+				return 1
 
 		var/datum/bioEffect/power/ink/I = linked_power
 		if (!linked_power)
@@ -2164,8 +2187,8 @@
 
 	proc/hit_callback(var/datum/thrown_thing/thr)
 		for(var/mob/living/carbon/hit in get_turf(thr.thing))
-			hit.changeStatus("weakened", 15 SECONDS)
-			hit.changeStatus("stunned", 5 SECONDS)
+			hit.changeStatus("weakened", 5 SECONDS)
+			hit.force_laydown_standup()
 			break
 		return 0
 
@@ -2199,8 +2222,13 @@
 					if (!linked_power.safety)
 						new thrown_limb.streak_decal(owner.loc)
 						var/damage = rand(5,15)
+						var/do_bleed = TRUE
+						if(thrown_limb.kind_of_limb | LIMB_SKELLY)
+							damage /= 2.5
+							do_bleed = FALSE
 						random_brute_damage(H, damage)
-						take_bleeding_damage(H, null, damage)
+						if(do_bleed)
+							take_bleeding_damage(H, null, damage)
 						if(prob(60)) owner.emote("scream")
 
 						//reset the time until the ability spontaniously fires
@@ -2209,7 +2237,7 @@
 							pwr.count = 0
 
 					owner.visible_message("<span class='alert'><b>[thrown_limb][linked_power.power > 1 ? " violently " : " "]bursts off of its socket and flies towards [target]!</b></span>")
-					logTheThing("combat", owner, target, "shoot_limb [!linked_power.safety ? "Accidently" : ""] at [ismob(target)].")
+					logTheThing(LOG_COMBAT, owner, "shoot_limb [!linked_power.safety ? "Accidently" : ""] at [ismob(target)].")
 					SPAWN(1 SECOND)
 						if (thrown_limb)
 							thrown_limb.throwforce = tmp_force

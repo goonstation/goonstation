@@ -57,15 +57,16 @@
 	desc = "A free-floating mineral deposit from space."
 	icon_base = "adoor"
 	doordir = "single"
-	color = "#cccccc" //To match with asteroid var/stone_color, change if you need it to match something.
+	plane = PLANE_WALL-1 //We don't want depth shadows
+	color = "#D1E6FF" //To match with asteroid var/stone_color, change if you need it to match something.
 
 	flags = FPRINT | IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID //The poddoors aren't inherently fullbright, need a suitable turf or area underneath.
 
 	podbay_autoclose
-		autoclose = 1
+		autoclose = TRUE
 
 		asteroid_horizontal
-			name = "podbay (asteroid)"
+			name = "asteroid"
 			id = "podbay_saferoom"
 			dir = NORTH
 
@@ -156,11 +157,11 @@ obj/item/reagent_containers/iv_drip/dead_exec
 				else
 					M.close()
 
-/obj/machinery/bio_handscanner/attack_hand(mob/user as mob)
+/obj/machinery/bio_handscanner/attack_hand(mob/user)
 	src.add_fingerprint(user)
-	if(ON_COOLDOWN(src, "bio_handscanner_attackhhand", cooldown)) // To reduce chat spam in case of multi-click
+	if(ON_COOLDOWN(src, "bio_handscanner_attackhand", cooldown)) // To reduce chat spam in case of multi-click
 		return
-	playsound(src.loc, "sound/effects/handscan.ogg", 50, 1)
+	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.bioHolder.Uid == allowed_bioHolders) //Are you the authorised bioHolder (for all intents and purposes)?
@@ -193,26 +194,27 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		light.attach(src)
 		light.enable()
 
-		var/mob/living/carbon/human/dead_exec/M //Setting up the puzzle
-		M = new /mob/living/carbon/human/dead_exec(src.loc) //aka Jean
-		var/datum/bioHolder/D = new/datum/bioHolder(null)
-		D.CopyOther(M.bioHolder)
+		SPAWN(5 SECONDS) //give it a sec
+			var/mob/living/carbon/human/dead_exec/M //Setting up the puzzle
+			M = new /mob/living/carbon/human/dead_exec(src.loc) //aka Jean
+			var/datum/bioHolder/D = new/datum/bioHolder(null)
+			D.CopyOther(M.bioHolder)
 
-		for_by_tcl(O, /obj/machinery/bio_handscanner)
-			O.allowed_bioHolders = D.Uid //Copy the Uid only, copying and comparing against all bioHolder data is too prone to error.
+			for_by_tcl(O, /obj/machinery/bio_handscanner)
+				O.allowed_bioHolders = D.Uid //Copy the Uid only, copying and comparing against all bioHolder data is too prone to error.
 
-		for_by_tcl(O, /obj/item/reagent_containers/iv_drip/dead_exec)
-			if(!O.reagents.has_reagent("blood"))
-				return
-			var/datum/reagent/blood/B = O.reagents.reagent_list["blood"]
-			B.data = D //Give the blood Jean's bioHolder info.
+			for_by_tcl(O, /obj/item/reagent_containers/iv_drip/dead_exec)
+				if(!O.reagents.has_reagent("blood"))
+					return
+				var/datum/reagent/blood/B = O.reagents.reagent_list["blood"]
+				B.data = D //Give the blood Jean's bioHolder info.
 
-		SPAWN(5 SECONDS) //Jean's just here to set up the puzzle, we don't want him sticking around.
-		qdel(M)
+			sleep(5 SECONDS) //Jean's just here to set up the puzzle, we don't want him sticking around.
+			qdel(M)
 
-	attack_hand(mob/user as mob)
-		boutput(user, "An advanced cloning pod, designed to be operated automatically through packets. What a great idea!<br>Currently idle.<br><span class='alert'>Biomatter reserves are depleted.</span>")
-		playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
+	attack_hand(mob/user)
+		boutput(user, "An advanced cloning pod, designed to be operated automatically through packets. What a great idea!<br>Currently idle.<br><span class='alert'>Alert: Biomatter reserves are low (5% full).</span>")
+		playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, 1)
 		src.add_fingerprint(user)
 		return
 
@@ -282,7 +284,6 @@ obj/item/reagent_containers/iv_drip/dead_exec
 				var/datum/traitHolder/traits = R["traits"]
 				if(traits.hasTrait("puritan")) //Does the user's clone record have puritan?
 					has_puritan = TRUE
-					boutput(H,"Subject had puritan")
 				if(prob(20) && !has_puritan) //If the scan doesn't have puritan, roll a dice. Too uncommon to weaponise too common for general use.
 					traits.addTrait("puritan") // Signal has degraded. Did the player learn nothing from the prefab??
 
@@ -348,7 +349,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	pixel_x = 0;
 	pixel_y = 26
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "<span class='notice'>You check behind the [src.name] for a hidden safe, but don't find anything.</span>")
 		src.add_fingerprint(user)
 		return
@@ -361,7 +362,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	pixel_x = 0;
 	pixel_y = 10
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "<span class='notice'>You rub the sculpture's bald head for luck.</span>")
 		src.add_fingerprint(user)
 		return
@@ -380,12 +381,12 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	anchored = 1
 	density = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/record))
 			src.visible_message("<span class='notice'><b>[user] attempts to place the 12 inch record on the 7 inch turntable, but it obviously doesn't fit. How embarassing!</b></span>")
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "<span class='notice'>You fiddle with the [src.name] but you can't seem to get it working.</span>")
 		src.add_fingerprint(user)
 		return
@@ -399,7 +400,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	density = 1
 	layer = 3.1 //I mess with layers here & below to help me set-up the clone room. Quite a bit was var-edited in StrongDMM as well.
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "<span class='notice'>You try to activate the [src.name] but nothing happens! Looks like it's jammed</span>")
 		src.add_fingerprint(user)
 		return
@@ -479,7 +480,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		..()
 		light = new/datum/light/point //We want this to stand out in the dark & draw the player to examine it.
 		light.set_brightness(0.3)
-		light.set_color(1, 0.50, 0.50)
+		light.set_color(1, 0.5, 0.5)
 		light.attach(src)
 		light.enable()
 
@@ -668,12 +669,12 @@ obj/item/reagent_containers/iv_drip/dead_exec
 "",
 "Here's your order summary:",
 "",
-"CO2 Filters - 4 off - $1400",
+"CO2 Filters - 4 off - 1400[CREDIT_SIGN]",
 "",
-"Subtotal: $1400",
-"Shipping: $40",
-"Discount $0",
-"Grand Total: $1440",
+"Subtotal: 1400[CREDIT_SIGN]",
+"Shipping: 40[CREDIT_SIGN]",
+"Discount 0[CREDIT_SIGN]",
+"Grand Total: 1440[CREDIT_SIGN]",
 "",
 "If you have any queries about your order please log",
 "on to our customer portal.",

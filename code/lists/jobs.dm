@@ -1,7 +1,6 @@
 var/list/occupations = list(
 
 	"Chief Engineer",
-	"Mechanic","Mechanic",
 	"Engineer","Engineer","Engineer",
 	"Miner","Miner","Miner",
 	"Security Officer", "Security Officer", "Security Officer",
@@ -43,7 +42,6 @@ var/list/job_mailgroup_list = list(
 	"Research Director" = MGD_COMMAND,
 	"Chief Engineer" = MGD_COMMAND,
 	"Quartermaster" = MGD_CARGO,
-	"Mechanic" = MGD_STATIONREPAIR,
 	"Engineer" = MGD_STATIONREPAIR,
 	"Janitor" = MGD_STATIONREPAIR,
 	"Miner" = MGD_MINING,
@@ -80,12 +78,12 @@ var/list/page_departments = list(
 	return all_jobs
 
 var/list/command_jobs = list("Captain", "Medical Director", "Research Director", "Head of Personnel", "Head of Security", "Chief Engineer", "Communications Officer"/*"Clown"*/)
-var/list/security_jobs = list("Head of Security", "Nanotrasen Security Operative", "Security Officer", "Security Assistant", "Detective")
-var/list/engineering_jobs = list("Chief Engineer", "Engineer", "Mechanic", "Miner", "Quartermaster")
+var/list/security_jobs = list("Head of Security", "Nanotrasen Security Consultant", "Nanotrasen Special Operative", "Security Officer", "Security Assistant", "Detective")
+var/list/engineering_jobs = list("Chief Engineer", "Engineer", "Miner", "Quartermaster")
 var/list/medsci_jobs = list("Research Director", "Medical Director", "Medical Doctor", "Scientist", "Roboticist", "Geneticist")
 var/list/service_jobs = list("Head of Personnel", "Bartender", "Chef", "Botanist", "Rancher", "Clown", "Chaplain", "Janitor")
 
-var/list/command_gimmicks = list("Head of Mining", "Nanotrasen Security Operative" /* NTSO isn't a gimmick role, but for the sake of sorting, it practically is*/)
+var/list/command_gimmicks = list("Head of Mining", "Nanotrasen Security Consultant" /* NTSC isn't a gimmick role, but for the sake of sorting, it practically is*/)
 var/list/security_gimmicks = list("Vice Officer", "Part-time Vice Officer", "Forensic Technician")
 var/list/engineering_gimmicks = list("Head of Mining", "Station Builder", "Atmospherish Technician", "Technical Assistant")
 var/list/medsci_gimmicks = list("Medical Specialist", "Toxins Researcher", "Chemist", "Research Assistant", "Medical Assistant", "Test Subject", "Pharmacist", "Psychiatrist", "Psychologist", "Psychotherapist", "Therapist", "Counselor")

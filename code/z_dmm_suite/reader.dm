@@ -21,6 +21,7 @@ dmm_suite
 	default to (1, 1, world.maxz+1)
 	*/
 	read_map(dmm_text as text, coordX as num, coordY as num, coordZ as num, tag as text, flags as num)
+		UNTIL(!air_master?.is_busy)
 		src.flags = flags
 		if(flags & DMM_BESPOKE_AREAS)
 			src.area_cache = list()
@@ -92,12 +93,12 @@ dmm_suite
 			var yMax = yLines.len+(coordY-1)
 			if(world.maxy < yMax)
 				world.maxy = yMax
-				logTheThing( "debug", null, null, "[tag] caused map resize (Y) during prefab placement" )
+				logTheThing(LOG_DEBUG, null, "[tag] caused map resize (Y) during prefab placement")
 			var exampleLine = pick(yLines)
 			var xMax = length(exampleLine)/key_len+(coordX-1)
 			if(world.maxx < xMax)
 				world.maxx = xMax
-				logTheThing( "debug", null, null, "[tag] caused map resize (X) during prefab placement" )
+				logTheThing(LOG_DEBUG, null, "[tag] caused map resize (X) during prefab placement")
 
 			props.maxX = max(length(exampleLine)/key_len, gridLevels.len)+(coordX-1)
 			props.maxY = yMax
@@ -209,7 +210,7 @@ dmm_suite
 			// Cancel if atomPath is a placeholder (DMM_IGNORE flags used to write file)
 			if(ispath(atomPath, /turf/dmm_suite/clear_turf) || ispath(atomPath, /area/dmm_suite/clear_area))
 				return
-			if(ispath(atomPath, /turf/space)) return //Dont load space
+			if((flags & DMM_LOAD_SPACE) && ispath(atomPath, /turf/space)) return //Dont load space
 			// Parse all attributes and create preloader
 			var /list/attributesMirror = list()
 			var /turf/location = locate(xcrd, ycrd, zcrd)

@@ -1,4 +1,4 @@
-/mob/living/critter/gunbot
+/mob/living/critter/robotic/gunbot
 	name = "robot"
 	real_name = "robot"
 	desc = "A Security Robot, something seems a bit off."
@@ -29,19 +29,19 @@
 	death(var/gibbed)
 		..(gibbed, 0)
 		if (!gibbed)
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 			ghostize()
 			qdel(src)
 		else
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/screams/robot_scream.ogg" , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/screams/robot_scream.ogg' , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> screams!"
 		return null
 
@@ -57,7 +57,7 @@
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/gun/arm38
+		HH.limb = new /datum/limb/gun/kinetic/arm38
 		HH.name = ".38 Anti-Personnel Arm"
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "hand38"
@@ -67,7 +67,7 @@
 		HH.can_range_attack = 1
 
 		HH = hands[2]
-		HH.limb = new /datum/limb/gun/abg
+		HH.limb = new /datum/limb/gun/kinetic/abg
 		HH.name = "ABG Riot Suppression Appendage"
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handabg"
@@ -95,6 +95,9 @@
 
 	get_disorient_protection()
 		return max(..(), 80)
+
+	get_disorient_protection_eye()
+		return(50)
 
 	attack_hand(mob/user)
 		user.lastattacked = src
@@ -135,7 +138,7 @@
 					else
 						return ..()
 
-/mob/living/critter/gunbot/syndicate
+/mob/living/critter/robotic/gunbot/syndicate
 	name = "Syndicate robot"
 	real_name = "Syndicate robot"
 	desc = "A retrofitted Syndicate gunbot, it seems angry."
@@ -146,7 +149,7 @@
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/gun/rifle
+		HH.limb = new /datum/limb/gun/kinetic/rifle
 		HH.name = "5.56 Rifle Arm"
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handrifle"

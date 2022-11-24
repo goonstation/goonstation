@@ -99,7 +99,7 @@
 			src.UpdateIcon()
 			return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return
 
 	attack_self(mob/user as mob)
@@ -113,7 +113,7 @@
 		if (can_operate_on(user))
 			user.visible_message("[user] applies [src] to [himself_or_herself(user)].",\
 			"<span class='notice'>You apply [src] to yourself.</span>")
-			logTheThing("combat", user, null, "applies a patch to themself [log_reagents(src)] at [log_loc(user)].")
+			logTheThing(LOG_CHEMISTRY, user, "applies a patch to themself [log_reagents(src)] at [log_loc(user)].")
 			user.Attackby(src, user)
 		return
 
@@ -123,11 +123,11 @@
 			if (prob(30) || good_throw && prob(70))
 				src.in_use = 1
 				M.visible_message("<span class='alert'>[src] lands on [M] sticky side down!</span>")
-				logTheThing("combat", M, usr, "is stuck by a patch [log_reagents(src)] thrown by [constructTarget(usr,"combat")] at [log_loc(M)].")
+				logTheThing(LOG_COMBAT, M, "is stuck by a patch [log_reagents(src)] thrown by [constructTarget(usr,"combat")] at [log_loc(M)].")
 				apply_to(M,usr)
 				attach_sticker_manual(M)
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (src.in_use)
 			//DEBUG_MESSAGE("[src] in use")
 			return
@@ -147,7 +147,7 @@
 				if (medical == 0)
 					user.visible_message("<span class='alert'><b>[user]</b> is trying to stick [src] to [M]'s arm!</span>",\
 					"<span class='alert'>You try to stick [src] to [M]'s arm!</span>")
-					logTheThing("combat", user, M, "tries to apply a patch [log_reagents(src)] to [constructTarget(M,"combat")] at [log_loc(user)].")
+					logTheThing(LOG_COMBAT, user, "tries to apply a patch [log_reagents(src)] to [constructTarget(M,"combat")] at [log_loc(user)].")
 
 					if (!do_mob(user, M))
 						if (user && ismob(user))
@@ -175,7 +175,7 @@
 							H.patchesused ++
 						JOB_XP(user, "Medical Doctor", 1)
 
-			logTheThing("combat", user, M, "applies a patch to [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
+			logTheThing(user == M ? LOG_CHEMISTRY : LOG_COMBAT, user, "applies a patch to [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 
 			src.clamp_reagents()
 
@@ -198,7 +198,7 @@
 					var/mob/living/L = M
 					L.skin_process += src
 			else
-				reagents.reaction(M, TOUCH, paramslist = list("nopenetrate"))
+				reagents.reaction(M, TOUCH, paramslist = list("nopenetrate","ignore_chemprot"))
 
 				var/datum/reagents/R = new
 				reagents.copy_to(R)
@@ -526,14 +526,14 @@
 			src.attack(user,user) //do self operation
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/mender_refill_cartridge))
 			var/obj/item/reagent_containers/mender_refill_cartridge/refill = W
 			refill.do_refill(src, user)
 			return
 		..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (src.borg == 1 && !issilicon(user))
 			user.show_text("This item is not designed with organic users in mind.", "red")
 			return
@@ -548,11 +548,20 @@
 				if (M.health < 90)
 					JOB_XP(user, "Medical Doctor", 2)
 
-			logTheThing("combat", user, M, "begins automending [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
+			logTheThing(user == M ? LOG_CHEMISTRY : LOG_COMBAT, user, "begins automending [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 			begin_application(M,user=user)
 			return 1
 
 		return 0
+
+	afterattack(obj/target, mob/user, flag)
+		if(is_reagent_dispenser(target) && target.reagents)
+			if (!target.reagents.total_volume)
+				boutput(user, "<span class='alert'>[target] is already empty.</span>")
+				return
+			playsound(src.loc, 'sound/items/mender_refill_juice.ogg', 50, 1)
+			target.reagents.trans_to(src, src.reagents.maximum_volume)
+			return
 
 	proc/begin_application(mob/M as mob, mob/user as mob)
 		actions.start(new/datum/action/bar/icon/automender_apply(user,src,M), user)
@@ -563,7 +572,7 @@
 		var/use_volume_adjusted = use_volume * mult
 
 		if (reagents?.total_volume)
-			var/list/params = list("nopenetrate")
+			var/list/params = list("nopenetrate","ignore_chemprot")
 			if (silent)
 				params.Add("silent")
 
@@ -575,10 +584,8 @@
 				var/datum/reagents/R = new
 				reagents.copy_to(R)
 				R.trans_to(M, use_volume_adjusted/2)
-			logTheThing("combat", user, M, " automends [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 
 			playsound(src, pick(sfx), 50, 1)
-
 
 
 /obj/item/reagent_containers/mender/brute
@@ -602,6 +609,10 @@
 		initial_volume = 500
 
 /obj/item/reagent_containers/mender/both
+	initial_reagents = "synthflesh"
+
+/obj/item/reagent_containers/mender/both/mini
+	initial_volume = 50
 	initial_reagents = "synthflesh"
 
 /datum/action/bar/icon/automender_apply
@@ -671,6 +682,10 @@
 
 		looped++
 		src.onRestart()
+
+	onInterrupt(flag)
+		. = ..()
+		logTheThing(user == target ? "chemistry" : "combat", user, " finishes automending [constructTarget(M,"combat")] [log_reagents(M)] after [looped] applications at [log_loc(user)].")
 
 //basically the same as ecig_refill_cartridge, but there's no point subtyping it...
 ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)

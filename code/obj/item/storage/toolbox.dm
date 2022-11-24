@@ -8,12 +8,12 @@
 	icon_state = "red"
 	item_state = "toolbox-red"
 	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
-	force = 6.0
-	throwforce = 10.0
+	force = 6
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 7
 	w_class = W_CLASS_BULKY
-	max_wclass = 3
+	max_wclass = W_CLASS_NORMAL
 
 	//cogwerks - burn vars
 	burn_point = 4500
@@ -41,7 +41,28 @@
 				user.suiciding = 0
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
+	attackby(obj/item/W, mob/user, obj/item/storage/T)
+		if (istype(W, /obj/item/tile) && !length(src.contents) && !isrobot(user)) // we are making a floorbot!
+			var/obj/item/toolbox_tiles/B = new /obj/item/toolbox_tiles
+
+			user.put_in_hand_or_drop(B)
+			W.change_stack_amount(-1)
+
+			if(istype(src, /obj/item/storage/toolbox/emergency))
+				B.color_overlay = "floorbot_overlay_red"
+			else if(istype(src, /obj/item/storage/toolbox/electrical))
+				B.color_overlay = "floorbot_overlay_yellow"
+			else if(istype(src, /obj/item/storage/toolbox/artistic))
+				B.color_overlay = "floorbot_overlay_green"
+
+			if(B.color_overlay)
+				B.UpdateOverlays(image(B.icon, icon_state = B.color_overlay), "coloroverlay")
+
+			user.drop_item(src)
+			src.set_loc(B)
+			boutput(user, "You add the tiles into the empty toolbox. They stick oddly out the top.")
+			return
+
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
 			var/obj/item/storage/S = W
 			for (var/obj/item/I in S.get_contents())
@@ -77,9 +98,9 @@
 		spawn_contents = list(/obj/item/device/analyzer/atmospheric/upgraded,\
 		/obj/item/electronics/soldering,\
 		/obj/item/device/t_scanner,\
+		/obj/item/electronics/scanner,\
 		/obj/item/cable_coil,\
 		/obj/item/reagent_containers/food/snacks/sandwich/pb,\
-		/obj/item/reagent_containers/food/snacks/plant/banana,\
 		/obj/item/reagent_containers/food/drinks/milk)
 
 	yellow_tools
@@ -166,14 +187,14 @@
 			return
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.loc == user)
 			if(!ishuman(user) || !user:find_ailment_by_type(/datum/ailment/disability/memetic_madness))
 				boutput(user, "<span class='alert'>You can't seem to find the latch. Maybe you need to examine it more thoroughly?</span>")
 				return
 		return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(!ishuman(user) || !user:find_ailment_by_type(/datum/ailment/disability/memetic_madness))
 			boutput(user, "<span class='alert'>You can't seem to find the latch to open this. Maybe you need to examine it more thoroughly?</span>")
 			return
@@ -207,7 +228,7 @@
 
 		src.hunger = 0
 		src.hunger_message_level = 0
-		playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
+		playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
 		//Neatly sort everything they have into handy little boxes.
 		var/obj/item/storage/box/per_person = new
 		per_person.set_loc(src)
@@ -256,7 +277,7 @@
 		servantlinks = null
 
 		src.visible_message("<span class='alert'><b>[src]</b> screams!</span>")
-		playsound(src.loc,"sound/effects/screech.ogg", 50, 1)
+		playsound(src.loc, 'sound/effects/screech.ogg', 50, 1)
 
 		..()
 		return
@@ -304,7 +325,7 @@
 		else
 			asize++
 		acount++
-	src.playsound_local(src.loc,"sound/effects/screech.ogg", 50, 1)
+	src.playsound_local(src.loc,'sound/effects/screech.ogg', 50, 1)
 	shake_camera(src, 20, 16)
 	boutput(src, "<font color=red>[screamstring]</font>")
 	boutput(src, "<i><b><font face = Tempus Sans ITC>His Grace accepts thee, spread His will! All who look close to the Enlightened may share His gifts.</font></b></i>")
@@ -386,7 +407,7 @@
 			progenitor.hunger += clamp((progenitor.force / 10), 1, 10) * mult
 
 		else if(D.stage == 4)
-			if(get_dist(get_turf(progenitor),src) <= 7)
+			if(GET_DIST(get_turf(progenitor),src) <= 7)
 				D.stage = 1
 				return
 			if(probmult(4))

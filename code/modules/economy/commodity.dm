@@ -35,14 +35,6 @@
 	upperfluc = 10
 	lowerfluc = 10 */
 
-/datum/commodity/electronics
-	comname = "Electronic Parts"
-	comtype = /obj/item/electronics
-	price = 25
-	baseprice = 25
-	upperfluc = 15
-	lowerfluc = -15
-	onmarket = 1
 
 /datum/commodity/robotics
 	comname = "Robot Parts"
@@ -131,19 +123,19 @@
 	comname = "Mauxite"
 	comtype = /obj/item/raw_material/mauxite
 	onmarket = 1
-/datum/commodity/mat_bar/mauxite
-	comname = "Mauxite Bar"
-	comtype = /obj/item/material_piece/mauxite
-	onmarket = 0
+	price = 40
+	baseprice = 40
+	upperfluc = 60
+	lowerfluc = -20
 
 /datum/commodity/ore/pharosium
 	comname = "Pharosium"
 	comtype = /obj/item/raw_material/pharosium
 	onmarket = 1
-/datum/commodity/mat_bar/pharosium
-	comname = "Pharosium Bar"
-	comtype = /obj/item/material_piece/pharosium
-	onmarket = 0
+	price = 50
+	baseprice = 50
+	upperfluc = 50
+	lowerfluc = -25
 
 /datum/commodity/ore/char
 	comname = "Char"
@@ -153,40 +145,33 @@
 	baseprice = 35
 	upperfluc = 50
 	lowerfluc = -25
-/datum/commodity/mat_bar/char
-	comname = "Char Bar"
-	comtype = /obj/item/material_piece/char
-	onmarket = 0
-	price = 35
-	baseprice = 35
-	upperfluc = 50
-	lowerfluc = -25
 
 /datum/commodity/ore/molitz
 	comname = "Molitz"
 	comtype = /obj/item/raw_material/molitz
 	onmarket = 1
-/datum/commodity/mat_bar/molitz
-	comname = "Molitz Bar"
-	comtype = /obj/item/material_piece/molitz
-	onmarket = 0
+	price = 90
+	baseprice = 90
+	upperfluc = 75
+	lowerfluc = -45
+
+/datum/commodity/ore/gemstone
+	comname = "Gemstone"
+	comtype = /obj/item/raw_material/gemstone
+	onmarket = 1
+	price = 200
+	baseprice = 200
+	upperfluc = 250
+	lowerfluc = -150
 
 /datum/commodity/ore/cobryl
 	comname = "Cobryl"
 	comtype = /obj/item/raw_material/cobryl
 	onmarket = 1
-	price = 200
-	baseprice = 200
-	upperfluc = 200
-	lowerfluc = -100
-/datum/commodity/mat_bar/cobryl
-	comname = "Cobryl Bar"
-	comtype = /obj/item/material_piece/cobryl
-	onmarket = 0
-	price = 200
-	baseprice = 200
-	upperfluc = 200
-	lowerfluc = -100
+	price = 225
+	baseprice = 225
+	upperfluc = 250
+	lowerfluc = -120
 
 /datum/commodity/ore/uqill
 	comname = "Uqill"
@@ -196,73 +181,22 @@
 	baseprice = 750
 	upperfluc = 1000
 	lowerfluc = -500
-/datum/commodity/mat_bar/uqill
-	comname = "Uqill Bar"
-	comtype = /obj/item/material_piece/uqill
-	onmarket = 0
-	price = 750
-	baseprice = 750
-	upperfluc = 1000
-	lowerfluc = -500
-
-/datum/commodity/ore/telecrystal
-	comname = "Telecrystal"
-	comtype = /obj/item/raw_material/telecrystal
-	desc = "A large unprocessed telecrystal, a gemstone with space-warping properties."
-	onmarket = 1
-	price = 1000
-	baseprice = 1000
-	upperfluc = 1000
-	lowerfluc = -500
-/datum/commodity/mat_bar/telecrystal
-	comname = "Telecrystal Block"
-	comtype = /obj/item/material_piece/telecrystal
-	onmarket = 0
-	price = 1000
-	baseprice = 1000
-	upperfluc = 1000
-	lowerfluc = -500
 
 /datum/commodity/ore/fibrilith // why is this worth a ton of money?? dropping the value to further upset QMs
 	comname = "Fibrilith"
 	comtype = /obj/item/raw_material/fibrilith
 	onmarket = 1
-/datum/commodity/mat_bar/fibrilith
-	comname = "Fibrilith Block"
-	comtype = /obj/item/material_piece/fibrilith
-	onmarket = 0
-
-/datum/commodity/ore/koshmarite
-	comname = "Koshmarite"
-	comtype = /obj/item/raw_material/eldritch
-	onmarket = 1
-	price = 100
-	baseprice = 100
-	upperfluc = 100
-	lowerfluc = -50
-/datum/commodity/mat_bar/koshmarite
-	comname = "Koshmarite Block"
-	comtype = /obj/item/material_piece/koshmarite
-	onmarket = 0
-	price = 100
-	baseprice = 100
-	upperfluc = 100
-	lowerfluc = -50
+	price = 60
+	baseprice = 60
+	upperfluc = 50
+	lowerfluc = -30
 
 /datum/commodity/ore/viscerite
 	comname = "Viscerite"
 	comtype = /obj/item/raw_material/martian
 	onmarket = 1
-	price = 100
-	baseprice = 100
-	upperfluc = 100
-	lowerfluc = -50
-/datum/commodity/mat_bar/viscerite
-	comname = "Viscerite Block"
-	comtype = /obj/item/material_piece/viscerite
-	onmarket = 0
-	price = 100
-	baseprice = 100
+	price = 150
+	baseprice = 150
 	upperfluc = 100
 	lowerfluc = -50
 
@@ -270,14 +204,6 @@
 	comname = "Bohrum"
 	comtype = /obj/item/raw_material/bohrum
 	onmarket = 1
-	price = 200
-	baseprice = 200
-	upperfluc = 200
-	lowerfluc = -100
-/datum/commodity/mat_bar/bohrum
-	comname = "Bohrum Bar"
-	comtype = /obj/item/material_piece/bohrum
-	onmarket = 0
 	price = 200
 	baseprice = 200
 	upperfluc = 200
@@ -291,44 +217,29 @@
 	baseprice = 350
 	upperfluc = 200
 	lowerfluc = -200
-/datum/commodity/mat_bar/claretine
-	comname = "Claretine Bar"
-	comtype = /obj/item/material_piece/claretine
-	onmarket = 0
-	price = 350
-	baseprice = 350
-	upperfluc = 200
+
+/datum/commodity/ore/koshmarite
+	comname = "Koshmarite"
+	comtype = /obj/item/raw_material/eldritch
+	onmarket = 1
+	price = 175
+	baseprice = 175
+	upperfluc = 125
+	lowerfluc = -75
+
+/datum/commodity/ore/cerenkite
+	comname = "Cerenkite"
+	comtype = /obj/item/raw_material/cerenkite
+	onmarket = 1
+	price = 500
+	baseprice = 500
+	upperfluc = 250
 	lowerfluc = -200
 
 /datum/commodity/ore/erebite
 	comname = "Erebite"
 	comtype = /obj/item/raw_material/erebite
 	onmarket = 1
-	price = 650
-	baseprice = 650
-	upperfluc = 200
-	lowerfluc = -200
-/datum/commodity/mat_bar/erebite
-	comname = "Erebite Bar"
-	comtype = /obj/item/material_piece/erebite
-	onmarket = 0
-	price = 650
-	baseprice = 650
-	upperfluc = 200
-	lowerfluc = -200
-
-/datum/commodity/ore/cerenkite
-	comname = "Cerenkite"
-	comtype = /obj/item/raw_material/cerenkite
-	onmarket = 1
-	price = 480
-	baseprice = 480
-	upperfluc = 200
-	lowerfluc = -200
-/datum/commodity/mat_bar/cerenkite
-	comname = "Cerenkite Bar"
-	comtype = /obj/item/material_piece/cerenkite
-	onmarket = 0
 	price = 650
 	baseprice = 650
 	upperfluc = 200
@@ -342,27 +253,21 @@
 	baseprice = 550
 	upperfluc = 200
 	lowerfluc = -200
-/datum/commodity/mat_bar/plasmastone
-	comname = "Plasmastone Bar"
-	comtype = /obj/item/material_piece/plasmastone
-	onmarket = 0
-	price = 550
-	baseprice = 550
-	upperfluc = 200
-	lowerfluc = -200
+
+/datum/commodity/ore/telecrystal
+	comname = "Telecrystal"
+	comtype = /obj/item/raw_material/telecrystal
+	desc = "A large unprocessed telecrystal, a gemstone with space-warping properties."
+	onmarket = 1
+	price = 1000
+	baseprice = 1000
+	upperfluc = 1000
+	lowerfluc = -500
 
 /datum/commodity/ore/syreline
 	comname = "Syreline"
 	comtype = /obj/item/raw_material/syreline
 	onmarket = 1
-	price = 800
-	baseprice = 800
-	upperfluc = 1000
-	lowerfluc = -300
-/datum/commodity/mat_bar/syreline
-	comname = "Syreline Bar"
-	comtype = /obj/item/material_piece/syreline
-	onmarket = 0
 	price = 800
 	baseprice = 800
 	upperfluc = 1000
@@ -376,11 +281,10 @@
 	baseprice = 3500
 	upperfluc = 5000
 	lowerfluc = -2500
-	onmarket = 1
 
 /datum/commodity/goldbar
-	comname = "Gold Bullion"
-	comtype = /obj/item/material_piece/gold
+	comname = "Stamped Gold Bullion"
+	comtype = /obj/item/stamped_bullion
 	onmarket = 1
 	price = 35000
 	baseprice = 35000
@@ -2174,6 +2078,15 @@
 	upperfluc = 150
 	lowerfluc = -100
 
+/datum/commodity/costume/vampire
+	comname = "Vampire Costume"
+	comtype = /obj/item/storage/box/costume/vampire
+	desc = "A bunch of clothing that kinda resembles a vampire from some old piece of cienema."
+	price = 600
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
+
 /datum/commodity/costume/abomination
 	comname = "Abomination Costume"
 	comtype = /obj/item/storage/box/costume/abomination
@@ -2241,6 +2154,15 @@
 	comname = "Alternate Mime Clothes."
 	comtype = /obj/item/storage/box/costume/mime/alt
 	desc = "This stuff will give you an edge in charades."
+
+/datum/commodity/costume/jester
+	comname = "Jester Costume Set."
+	comtype = /obj/item/storage/box/costume/jester
+	desc = "Travel back in time and become the medieval version of a clown. (Does not provide time travel)"
+	price = 300 //gotta work for it a little
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
 
 /datum/commodity/backpack/breadpack
 	comname = "Bag-uette"

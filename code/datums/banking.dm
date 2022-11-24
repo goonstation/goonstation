@@ -7,20 +7,20 @@
 /datum/wage_system
 
 	// Stations budget
-	var/station_budget = 0.0
-	var/shipping_budget = 0.0
-	var/research_budget = 0.0
-	var/payroll_stipend = 0.0
+	var/station_budget = 0
+	var/shipping_budget = 0
+	var/research_budget = 0
+	var/payroll_stipend = 0
 
 	var/list/jobs = new/list()
 
 	var/pay_active = 1
 	var/lottery_active = 0		// inactive until someone actually buys a ticket
-	var/time_between_paydays = 0.0
-	var/time_until_payday = 0.0
+	var/time_between_paydays = 0
+	var/time_until_payday = 0
 
-	var/time_between_lotto = 0.0
-	var/time_until_lotto = 0.0
+	var/time_between_lotto = 0
+	var/time_until_lotto = 0
 
 	// We'll start at 0 credits, and increase it in the lotteryday proc
 	var/lotteryJackpot = 0
@@ -33,9 +33,8 @@
 
 	New()
 		..()
-		// 5 minutes = 3000 milliseconds
-		time_between_paydays = 3000
-		time_between_lotto = 5000 // this was way too fuckin high
+		time_between_paydays = 5 MINUTES
+		time_between_lotto = 8 MINUTES
 
 		for(var/occupation in occupations)
 
@@ -44,18 +43,18 @@
 				continue
 
 			// If its not already in the list add it
-			if (!(jobs.Find(occupation)))
+			if (!(occupation in jobs))
 				// 0.0 is the default wage
-				jobs[occupation] = 0.0
+				jobs[occupation] = 0
 
 		for(var/occupation in assistant_occupations)
 			// If its not already in the list add it
-			if (!(jobs.Find(occupation)))
+			if (!(occupation in jobs))
 				// 0.0 is the default wage
-				jobs[occupation] = 0.0
+				jobs[occupation] = 0
 
 		// Captain isn't in the occupation list
-		jobs["Captain"] = 0.0
+		jobs["Captain"] = 0
 
 		default_wages()
 
@@ -71,7 +70,6 @@
 
 		jobs["Engineer"] = PAY_TRADESMAN
 		jobs["Miner"] = PAY_TRADESMAN
-		jobs["Mechanic"] = PAY_DOCTORATE
 //		jobs["Atmospheric Technician"] = PAY_TRADESMAN
 		jobs["Security Officer"] = PAY_TRADESMAN
 //		jobs["Vice Officer"] = PAY_TRADESMAN
@@ -108,28 +106,17 @@
 		src.time_until_lotto = ( ticker ? ticker.round_elapsed_ticks : 0 ) + time_between_lotto
 		src.time_until_payday = ( ticker ? ticker.round_elapsed_ticks : 0 ) + time_between_paydays
 
-	// This returns the time left in seconds
-	proc/timeleft()
+	proc/process()
 		if(!ticker)
-			return 0
+			return
 		var/timeleft = src.time_until_payday - ticker.round_elapsed_ticks
 
-		// TODO move this into process or something, currently it gets checked in mob/Stat
 		if(timeleft <= 0)
 			payday()
 			src.time_until_payday = ticker.round_elapsed_ticks + time_between_paydays
-			return 0
 		if(lottery_active && src.time_until_lotto <= ticker.round_elapsed_ticks)
 			lotteryDay()
 			src.time_until_lotto = ticker.round_elapsed_ticks + time_between_lotto
-
-		return timeleft
-
-	//Returns the time, in MM:SS format
-	proc/get_banking_timeleft()
-		var/timeleft = src.timeleft() / 10
-		if(timeleft)
-			return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
 
 	proc/checkLotteryTime()
 		if(!lottery_active)	return
@@ -164,6 +151,14 @@
 			if(station_budget >= t["wage"])
 				t["current_money"] += t["wage"]
 				station_budget -= t["wage"]
+				if (t["pda_net_id"])
+					var/datum/signal/signal = get_free_signal()
+					signal.data["sender"] = "00000000"
+					signal.data["command"] = "text_message"
+					signal.data["sender_name"] = "PAYROLL-MAILBOT"
+					signal.data["address_1"] = t["pda_net_id"]
+					signal.data["message"] = "[t["wage"]] credits have been deposited into your bank account. You have [t["current_money"]] credits total."
+					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
 			else
 				command_alert("The station budget appears to have run dry. We regret to inform you that no further wage payments are possible until this situation is rectified.","Payroll Announcement", alert_origin = ALERT_STATION)
 				wagesystem.pay_active = 0
@@ -222,7 +217,7 @@
 
 
 	var/pin = null
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/device/pda2) && I:ID_card)
 			I = I:ID_card
 		if(istype(I, /obj/item/card/id))
@@ -258,7 +253,7 @@
 			if(SB.spent == 1)
 				return
 			SB.spent = 1
-			logTheThing("diary",user,null,"deposits a spacebux token worth [SB.amount].")
+			logTheThing(LOG_DIARY, user, "deposits a spacebux token worth [SB.amount].")
 			user.client.add_to_bank(SB.amount)
 			boutput(user, "<span class='alert'>You deposit [SB.amount] spacebux into your account!</span>")
 			qdel(SB)
@@ -298,7 +293,7 @@
 	attack_ai(var/mob/user as mob)
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(..())
 			return
 
@@ -323,7 +318,7 @@
 					dat += "<BR><A HREF='?src=\ref[src];operation=logout'>Logout</A>"
 
 					if (src.scan)
-						dat += "<BR><BR>Your balance is: $ [src.accessed_record["current_money"]]."
+						dat += "<BR><BR>Your balance is: [src.accessed_record["current_money"]][CREDIT_SIGN]."
 						dat += "<BR><A HREF='?src=\ref[src];operation=withdrawcash'>Withdraw Cash</A>"
 						dat += "<BR><BR><A HREF='?src=\ref[src];operation=buy'>Buy Lottery Ticket (100 credits)</A>"
 						dat += "<BR>To claim your winnings you'll need to insert your lottery ticket."
@@ -423,7 +418,7 @@
 					src.updateUsrDialog()
 					return
 				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as anything in clients|null
-				if(alert("You are about to send [amount] to [C]. Are you sure?",,"Yes","No") == "Yes")
+				if(tgui_alert(usr, "You are about to send [amount] to [C]. Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
 					if(!usr.client.bank_can_afford(amount))
 						boutput(usr, "<span class='alert'>Insufficient Funds</span>")
 						return
@@ -431,7 +426,7 @@
 					boutput(C, "<span class='notice'><B>[usr.name] sent you [amount] spacebux!</B></span>")
 					usr.client.add_to_bank(-amount)
 					boutput(usr, "<span class='notice'><B>Transaction successful!</B></span>")
-					logTheThing("diary",usr,null,"sent [amount] spacebux to [C].")
+					logTheThing(LOG_DIARY, usr, "sent [amount] spacebux to [C].")
 					src.updateUsrDialog()
 					return
 				boutput(usr, "<span class='alert'><B>No online player with that ckey found!</B></span>")
@@ -447,7 +442,7 @@
 				if(!usr.client.bank_can_afford(amount))
 					boutput(usr, "<span class='alert'>Insufficient Funds</span>")
 				else
-					logTheThing("diary",usr,null,"withdrew a spacebux token worth [amount].")
+					logTheThing(LOG_DIARY, usr, "withdrew a spacebux token worth [amount].")
 					usr.client.add_to_bank(-amount)
 					var/obj/item/spacebux/newbux = new(src.loc, amount)
 					usr.put_in_hand_or_drop(newbux)
@@ -459,7 +454,8 @@
 	name = "Bank Records"
 	icon_state = "databank"
 	req_access = list(access_heads)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
+	circuit_type = /obj/item/circuitboard/bank_data
 	var/obj/item/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
@@ -473,7 +469,7 @@
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/card/id))
 			if (!src.scan)
 				boutput(user, "<span class='notice'>You insert [I] into the authentication card slot.</span>")
@@ -486,7 +482,7 @@
 		else
 			..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..())
 			return
 		var/list/dat = list()
@@ -514,6 +510,7 @@
 
 			if (src.authenticated)
 
+				var/total_funds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
 				var/payroll = 0
 				for(var/datum/db_record/R as anything in data_core.bank.records)
 					payroll += R["wage"]
@@ -525,17 +522,17 @@
 					<tr><th colspan="2">Budget Status</th></tr>
 				</thead>
 				<tbody>
-					<tr><th>Payroll Budget</th><td class='r'>$[num2text(round(wagesystem.station_budget),50)]</td></tr>
-					<tr><th>Shipping Budget</th><td class='r'>$[num2text(round(wagesystem.shipping_budget),50)]</td></tr>
-					<tr><th>Research Budget</th><td class='r'>$[num2text(round(wagesystem.research_budget),50)]</td></tr>
-					<tr><th>Total Funds</th><th class='r'>$[num2text(round(wagesystem.research_budget),50)]</th></tr>
+					<tr><th>Payroll Budget</th><td class='r'>[num2text(round(wagesystem.station_budget),50)][CREDIT_SIGN]</td></tr>
+					<tr><th>Shipping Budget</th><td class='r'>[num2text(round(wagesystem.shipping_budget),50)][CREDIT_SIGN]</td></tr>
+					<tr><th>Research Budget</th><td class='r'>[num2text(round(wagesystem.research_budget),50)][CREDIT_SIGN]</td></tr>
+					<tr><th>Total Funds</th><th class='r'>[num2text(round(total_funds),50)][CREDIT_SIGN]</th></tr>
 					<tr><th colspan="2" class='second'>Payroll Details</th></tr>
-					<tr><th>Payroll Stipend</th><td class='r'>$[num2text(round(wagesystem.payroll_stipend),50)]</td></tr>
-					<tr><th>Payroll Cost</th><td class='r'>$[num2text(round(payroll),50)]</td></tr>
+					<tr><th>Payroll Stipend</th><td class='r'>[num2text(round(wagesystem.payroll_stipend),50)][CREDIT_SIGN]</td></tr>
+					<tr><th>Payroll Cost</th><td class='r'>[num2text(round(payroll),50)][CREDIT_SIGN]</td></tr>
 					[surplus >= 0 ? {"
-					<tr><th>Surplus</th><th class='r'>+$[num2text(round(surplus),50)]</th></tr>
+					<tr><th>Surplus</th><th class='r'>+[num2text(round(surplus),50)][CREDIT_SIGN]</th></tr>
 					"} : {"
-					<tr><th>Deficit</th><th style="text-align: right; color: red;">-$[num2text(round(surplus * -1),50)]</th></tr>
+					<tr><th>Deficit</th><th style="text-align: right; color: red;">-[num2text(round(surplus * -1),50)][CREDIT_SIGN]</th></tr>
 					"}]
 				</tbody>
 			</table>
@@ -565,8 +562,8 @@
 					<tr>
 						<th class='l'><a href='?src=\ref[src];Fname=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a> [R["name"]]</th>
 						<td><a href='?src=\ref[src];Fjob=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a> [R["job"]]</td>
-						<td class='r'>$[R["wage"]] <a href='?src=\ref[src];Fwage=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a></td>
-						<td style="text-align: right; font-weight: bold;">$[R["current_money"]] <a href='?src=\ref[src];Fmoney=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a></td>
+						<td class='r'>[R["wage"]][CREDIT_SIGN] <a href='?src=\ref[src];Fwage=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a></td>
+						<td style="text-align: right; font-weight: bold;">[R["current_money"]][CREDIT_SIGN] <a href='?src=\ref[src];Fmoney=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a></td>
 					</tr>
 					"}
 
@@ -582,7 +579,7 @@
 		if(..())
 			return
 		var/usr_is_robot = issilicon(usr) || isAIeye(usr)
-		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (usr_is_robot))
+		if (((src in usr.contents) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (usr_is_robot))
 			src.add_dialog(usr)
 			if (href_list["temp"])
 				src.temp = null
@@ -639,8 +636,8 @@
 					if (!t1) t1 = 0
 					if (t1 > 10000)
 						t1 = 10000
-						boutput(usr, "<span class='alert'>Maximum wage is $10,000.</span>")
-					logTheThing("station", usr, null, "sets <b>[R["name"]]</b>'s wage to $[t1].")
+						boutput(usr, "<span class='alert'>Maximum wage is 10,000[CREDIT_SIGN].</span>")
+					logTheThing(LOG_STATION, usr, "sets <b>[R["name"]]</b>'s wage to [t1][CREDIT_SIGN].")
 					R["wage"] = t1
 				else if(href_list["Fmoney"])
 					var/datum/db_record/R = locate(href_list["Fmoney"])
@@ -657,16 +654,16 @@
 						if (t1 < 1) return
 						R["current_money"] -= t1
 						wagesystem.station_budget += t1
-						logTheThing("station", usr, null, "adds $[t1] to the station budget from <b>[R["name"]]</b>'s account.")
-						boutput(usr, "<span class='notice'>$[t1] added to station budget from [R["name"]]'s account.</span>")
+						logTheThing(LOG_STATION, usr, "adds [t1][CREDIT_SIGN] to the station budget from <b>[R["name"]]</b>'s account.")
+						boutput(usr, "<span class='notice'>[t1][CREDIT_SIGN] added to station budget from [R["name"]]'s account.</span>")
 					else if (t2 == "Deposit")
 						avail = wagesystem.station_budget
 						if (t1 > avail) t1 = avail
 						if (t1 < 1) return
 						R["current_money"] += t1
 						wagesystem.station_budget -= t1
-						logTheThing("station", usr, null, "adds $[t1] to <b>[R["name"]]</b>'s account from the station budget.")
-						boutput(usr, "<span class='notice'>$[t1] added to [R["name"]]'s account from station budget.</span>")
+						logTheThing(LOG_STATION, usr, "adds [t1][CREDIT_SIGN] to <b>[R["name"]]</b>'s account from the station budget.")
+						boutput(usr, "<span class='notice'>[t1][CREDIT_SIGN] added to [R["name"]]'s account from station budget.</span>")
 					else boutput(usr, "<span class='alert'>Error selecting withdraw/deposit mode.</span>")
 				else if(href_list["payroll"])
 					if(world.time >= src.payroll_rate_limit_time)
@@ -676,11 +673,11 @@
 						return
 					if (wagesystem.pay_active)
 						wagesystem.pay_active = 0
-						logTheThing("station", usr, null, "suspends the station payroll.")
+						logTheThing(LOG_STATION, usr, "suspends the station payroll.")
 						command_alert("The payroll has been suspended until further notice. No further wages will be paid until the payroll is resumed.","Payroll Announcement", alert_origin = ALERT_STATION)
 					else
 						wagesystem.pay_active = 1
-						logTheThing("station", usr, null, "resumes the station payroll.")
+						logTheThing(LOG_STATION, usr, "resumes the station payroll.")
 						command_alert("The payroll has been resumed. Wages will now be paid into employee accounts normally.","Payroll Announcement", alert_origin = ALERT_STATION)
 				else if(href_list["transfer"])
 					var/transfrom = input("Transfer from which?", "Budgeting", null, null) in list("Payroll", "Shipping", "Research")
@@ -757,7 +754,7 @@
 		STATE_LOGGEDOFF = 1
 		STATE_LOGGEDIN = 2
 
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if(broken)
 			boutput(user, "<span class='alert'>With its money removed and circuitry destroyed, it's unlikely this ATM will be able to do anything of use.</span>")
 			return
@@ -801,7 +798,7 @@
 			if(SB.spent == 1)
 				return
 			SB.spent = 1
-			logTheThing("diary",user,null,"deposits a spacebux token worth [SB.amount].")
+			logTheThing(LOG_DIARY, user, "deposits a spacebux token worth [SB.amount].")
 			user.client.add_to_bank(SB.amount)
 			boutput(user, "<span class='alert'>You deposit [SB.amount] spacebux into your account!</span>")
 			qdel(SB)
@@ -809,18 +806,18 @@
 		if (damage >= 5) //if it has five or more force, it'll do damage. prevents very weak objects from rattling the thing.
 			user.lastattacked = src
 			attack_particle(user,src)
-			playsound(src,"sound/impact_sounds/Glass_Hit_1.ogg",50,1)
+			playsound(src, 'sound/impact_sounds/Glass_Hit_1.ogg', 50,1)
 			src.take_damage(damage, user)
 			user.visible_message("<span class='alert'><b>[user] bashes the [src] with [I]!</b></span>")
 		else
-			playsound(src,"sound/impact_sounds/Generic_Stab_1.ogg",50,1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50,1)
 			user.visible_message("<span class='alert'><b>[user] uselessly bumps the [src] with [I]!</b></span>")
 			return
 
 	attack_ai(var/mob/user as mob)
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(broken)
 			boutput(user, "<span class='alert'>With its money removed and circuitry destroyed, it's unlikely this ATM will be able to do anything of use.</span>")
 			return
@@ -851,7 +848,7 @@
 					dat += "<BR><A HREF='?src=\ref[src];operation=logout'>Logout</A>"
 
 					if (src.scan)
-						dat += "<BR><BR>Your balance is: $ [src.accessed_record["current_money"]]."
+						dat += "<BR><BR>Your balance is: [src.accessed_record["current_money"]][CREDIT_SIGN]."
 						dat += "<BR><A HREF='?src=\ref[src];operation=withdrawcash'>Withdraw Cash</A>"
 						dat += "<BR><BR><A HREF='?src=\ref[src];operation=buy'>Buy Lottery Ticket (100 credits)</A>"
 						dat += "<BR>To claim your winnings you'll need to insert your lottery ticket."
@@ -957,7 +954,7 @@
 					src.updateUsrDialog()
 					return
 				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as anything in clients|null
-				if(alert("You are about to send [amount] to [C]. Are you sure?",,"Yes","No") == "Yes")
+				if(tgui_alert("You are about to send [amount] to [C]. Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
 					if(!usr.client.bank_can_afford(amount))
 						boutput(usr, "<span class='alert'>Insufficient Funds</span>")
 						return
@@ -965,7 +962,7 @@
 					boutput(C, "<span class='notice'><B>[usr.name] sent you [amount] spacebux!</B></span>")
 					usr.client.add_to_bank(-amount)
 					boutput(usr, "<span class='notice'><B>Transaction successful!</B></span>")
-					logTheThing("diary",usr,null,"sent [amount] spacebux to [C].")
+					logTheThing(LOG_DIARY, usr, "sent [amount] spacebux to [C].")
 					src.updateUsrDialog()
 					return
 				boutput(usr, "<span class='alert'><B>No online player with that ckey found!</B></span>")
@@ -981,7 +978,7 @@
 				if(!usr.client.bank_can_afford(amount))
 					boutput(usr, "<span class='alert'>Insufficient Funds</span>")
 				else
-					logTheThing("diary",usr,null,"withdrew a spacebux token worth [amount].")
+					logTheThing(LOG_DIARY, usr, "withdrew a spacebux token worth [amount].")
 					usr.client.add_to_bank(-amount)
 					var/obj/item/spacebux/newbux = new(src.loc, amount)
 					usr.put_in_hand_or_drop(newbux)
