@@ -131,14 +131,21 @@
 /obj/item/dummy
 	name = "dummy"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
-	flags = TABLEPASS
+	anchored = 2
+	flags = TABLEPASS | UNCRUSHABLE
 	burn_possible = 0
+	item_function_flags = IMMUNE_TO_ACID
 
 	disposing()
 		disposed = FALSE
 		..()
 		CRASH("Something tried to delete the can_reach dummy!")
+
+	ex_act()
+		return
+
+	changeHealth(change)
+		return
 
 /obj/item/rubber_chicken
 	name = "Rubber Chicken"

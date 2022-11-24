@@ -23,7 +23,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	/// what product to spawn when sliced
 	var/slice_product = null
 	/// how much product to spawn when sliced
-	var/slice_amount = 0
+	var/slice_amount = 1
+	/// if the produce is inert while being sliced
+	var/slice_inert = FALSE
+	/// When we want to name them slices or wedges or what-have-not. Default is slice
+	var/slice_suffix = "slice"
 	rc_flags = 0
 
 	proc/on_table()
@@ -80,23 +84,33 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			M.HealDamage("All", healing, healing)
 
 	//slicing food can be done here using sliceable == TRUE, slice_amount, and slice_product
-	//there will probably be a good deal of food that can be sliced but use their own slicing mechanisms instead of this, just gonna make a few things sliceable for now (aka just tomatoes, pepperoni, and cheese)
-	//might be a good idea to call a proc in the src obj and carry over the new src.slice_product so the src can fuck with the new obj as necessary?
 	attackby(obj/item/W, mob/user)
 		if (src.sliceable && istool(W, TOOL_CUTTING | TOOL_SAWING))
 			var/turf/T = get_turf(src)
-			user.visible_message("[user] cuts [src] into [src.slice_amount] slices.", "You cut [src] into [src.slice_amount] slices.")
+			user.visible_message("[user] cuts [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].", "You cut [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].")
 			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
+			src.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
 			for (var/i in 1 to src.slice_amount)
 				var/obj/item/reagent_containers/food/slice = new src.slice_product(T)
-				slice.transform = src.transform // for botany crops
-				slice.reagents.clear_reagents() // dont need initial_reagents when you're inheriting reagents of another obj (no cheese duping >:[ )
-				slice.reagents.maximum_volume = amount_to_transfer
-				src.reagents.trans_to(slice, amount_to_transfer)
+				src.process_sliced_products(slice, amount_to_transfer)
 			qdel (src)
 		else
 			..()
 
+	//This proc handles all the actions being done to the produce. use this proc to work with your slices after they were created (looking at all these slice code at plant produce...)
+	proc/process_sliced_products(var/obj/item/reagent_containers/food/slice, var/amount_to_transfer)
+		slice.transform = src.transform // for botany crops
+		slice.reagents.clear_reagents() // dont need initial_reagents when you're inheriting reagents of another obj (no cheese duping >:[ )
+		slice.reagents.maximum_volume = amount_to_transfer
+		if (src.slice_inert)
+			if (!slice.reagents)
+				slice.reagents = new //when the created produce didn't spawned with some reagents in them, we need that
+			var/Temp_Inert = slice.reagents.inert
+			slice.reagents.inert = 1 //when we got produce that shouldn't explode while being cut
+			src.reagents.trans_to(slice, amount_to_transfer)
+			slice.reagents.inert = Temp_Inert
+		else
+			src.reagents.trans_to(slice, amount_to_transfer)
 
 /* ================================================ */
 /* -------------------- Snacks -------------------- */
