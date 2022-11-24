@@ -437,6 +437,8 @@
 				T2.neighcheckinghasproximity++
 		if(src.opacity)
 			T.opaque_atom_count++
+		if(src.jpsUnstable)
+			T.jpsUnstable++
 	if(!isnull(src.loc))
 		src.loc.Entered(src, null)
 		if(isturf(src.loc)) // call it on the area too
@@ -543,12 +545,16 @@
 		return
 
 	if (isturf(last_turf))
+		if(src.jpsUnstable)
+			--last_turf.jpsUnstable
 		if (src.event_handler_flags & USE_PROXIMITY)
 			last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
 			for (var/turf/T2 in range(1, last_turf))
 				T2.neighcheckinghasproximity--
 	if(isturf(src.loc))
 		var/turf/T = src.loc
+		if(src.jpsUnstable)
+			++T.jpsUnstable
 		if (src.event_handler_flags & USE_PROXIMITY)
 			T.checkinghasproximity++
 			for (var/turf/T2 in range(1, T))
@@ -912,6 +918,8 @@
 	oldloc?.Exited(src, newloc)
 
 	if(isturf(oldloc))
+		if(src.jpsUnstable)
+			--oldloc.jpsUnstable
 		for(var/atom/A in oldloc)
 			if(A != src)
 				A.Uncrossed(src)
@@ -923,6 +931,8 @@
 	newloc?.Entered(src, oldloc)
 
 	if(isturf(newloc))
+		if(src.jpsUnstable)
+			++newloc.jpsUnstable
 		for(var/atom/A in newloc)
 			if(A != src)
 				A.Crossed(src)
