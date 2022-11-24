@@ -514,13 +514,19 @@
 	icon = null
 	var/mob/living/critter/flock/drone/drone = null
 
-/datum/targetable/flockmindAbility/droneControl/cast(atom/target)
+/datum/targetable/flockmindAbility/droneControl/cast(atom/target, update_cursor = TRUE)
 	//remove the selected outline component
 	var/datum/component/flock_ping/selected/ping = drone.GetComponent(/datum/component/flock_ping/selected)
 	ping.RemoveComponent()
 	qdel(ping)
 
 	if (target == src.drone)
+		// ability is selected manually so it needs to be removed manually
+		var/mob/living/intangible/flock/selector = holder.owner
+		selector.targeting_ability = null
+		if (update_cursor) // if there's a need, it may reset without this
+			selector.update_cursor()
+
 		src.drone.selected_by = null
 		src.drone = null
 		return
@@ -553,6 +559,11 @@
 	if(drone.ai_paused)
 		drone.wake_from_ai_pause()
 	drone.ai.interrupt()
+
+	var/mob/living/intangible/flock/selector = holder.owner
+	selector.targeting_ability = null
+	if (update_cursor)
+		selector.update_cursor()
 
 	src.drone.selected_by = null
 	src.drone = null

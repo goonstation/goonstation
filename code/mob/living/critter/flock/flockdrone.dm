@@ -136,10 +136,8 @@
 		if (src.selected_by != pilot)
 			boutput(pilot, "<span class='alert'>This drone is receiving a command!</span>")
 			return
-		var/mob/living/intangible/flock/selector = src.selected_by
-		var/datum/abilityHolder/flockmind/AH = selector.abilityHolder
+		var/datum/abilityHolder/flockmind/AH = src.selected_by.abilityHolder
 		AH.drone_controller.cast(src)
-		selector.targeting_ability = null
 	src.controller = pilot
 	src.wake_from_ai_pause()
 	src.ai.stop_move()
@@ -436,8 +434,7 @@
 	if(istype(F) && F.flock && F.flock == src.flock)
 		var/datum/abilityHolder/flockmind/holder = F.abilityHolder
 		if(holder?.drone_controller.drone == src) //if click behaviour has highlighted this drone for control
-			holder.drone_controller.cast(src) //deselect it
-			F.targeting_ability = null
+			holder.drone_controller.cast(src, FALSE) //deselect it
 		if (!isdead(src) && !src.controller && !src.selected_by) // second two checks are used for message spam
 			src.take_control(usr)
 
@@ -793,8 +790,6 @@
 		var/mob/living/intangible/flock/selector = src.selected_by
 		var/datum/abilityHolder/flockmind/AH = selector.abilityHolder
 		AH.drone_controller.cast(src)
-		selector.targeting_ability = null
-		selector.update_cursor()
 
 	if(src.controller)
 		src.release_control()

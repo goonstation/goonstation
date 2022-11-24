@@ -80,8 +80,7 @@
 /mob/living/intangible/flock/death(datum/controller/process/mobs/parent)
 	var/datum/abilityHolder/flockmind/AH = src.abilityHolder
 	if (AH.drone_controller.drone)
-		AH.drone_controller.cast(AH.drone_controller.drone)
-		src.targeting_ability = null
+		AH.drone_controller.cast(AH.drone_controller.drone, FALSE)
 	..()
 
 /mob/living/intangible/flock/is_spacefaring() return 1
