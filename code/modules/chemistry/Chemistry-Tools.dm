@@ -18,7 +18,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	var/initial_volume = 50
 	var/list/initial_reagents = null // can be a list, an associative list (reagent=amt), or a string.  list will add an equal chunk of each reagent, associative list will add amt of reagent, string will add initial_volume of reagent
 	var/incompatible_with_chem_dispensers = 0
-	var/can_mousedrop = 1
 	move_triggered = 1
 	///Types that should be quickly refilled by mousedrop
 	var/static/list/mousedrop_refill = list(
@@ -91,9 +90,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 	mouse_drop(atom/over_object as obj)
 		if (isintangible(usr))
-			return
-		if (!can_mousedrop)
-			boutput(usr, "<span class='alert'>Nope.</span>")
 			return
 		if(usr.restrained())
 			return
@@ -217,7 +213,6 @@ proc/ui_describe_reagents(atom/A)
 					target.visible_message("<span class='alert'><b>[user.name]</b> applies some of the [src.name]'s contents to [target.name].</span>")
 				var/mob/living/MOB = target
 				logTheThing(LOG_COMBAT, user, "splashes [src] onto [constructTarget(MOB,"combat")] [log_reagents(src)] at [log_loc(MOB)].") // Added location (Convair880).
-				can_mousedrop = 0
 				if (src.splash_all_contents)
 					src.reagents.reaction(target,TOUCH)
 					src.reagents.clear_reagents()

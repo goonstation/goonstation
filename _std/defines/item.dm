@@ -1,7 +1,7 @@
 //FLAGS BITMASK
 
-/// can be put in back slot
-#define ONBACK							 (1<<0)
+/// unused
+//#define							 (1<<0)
 /// can pass by a table or rack
 #define TABLEPASS						 (1<<1)
 /// thing doesn't drift in space
@@ -14,8 +14,8 @@
 #define NOSHIELD						 (1<<5)
 /// conducts electricity (metal etc.)
 #define CONDUCT							 (1<<6)
-/// can be put in belt slot
-#define ONBELT							 (1<<7)
+/// unused
+//#define 							 (1<<7)
 /// takes a fingerprint
 #define FPRINT							 (1<<8)
 /// item has priority to check when entering or leaving
