@@ -687,7 +687,7 @@
 
 	New()
 		..()
-		if (!src.name || (src.name in list("N sign switch", "E sign switch", "S sign switch", "W sign switch")))//== "N light switch" || name == "E light switch" || name == "S light switch" || name == "W light switch")
+		if (!src.name || (src.name in list("N sign switch", "E sign switch", "S sign switch", "W sign switch")))
 			src.name = "sign switch"
 		SPAWN(0.5 SECONDS)
 			src.locate_signs()
