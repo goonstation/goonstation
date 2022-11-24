@@ -99,7 +99,8 @@
 		OVERRIDE_COOLDOWN(src, "bolt_gen_time", max(0, GET_COOLDOWN(src, "bolt_gen_time") - 3 SECONDS))
 		src.info_tag.set_info_tag(src.check_bolt_status())
 		SPAWN(10 SECONDS)
-			src?.accepts_sapper_power = TRUE
+			if (!QDELETED(src))
+				src.accepts_sapper_power = TRUE
 		return TRUE
 
 	disposing()

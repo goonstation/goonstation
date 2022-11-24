@@ -129,7 +129,7 @@
 		src.accepts_sapper_power = FALSE
 		src.fluid_gen_amt *= 4
 		SPAWN(10 SECONDS)
-			if (src)
+			if (!QDELETED(src))
 				src.accepts_sapper_power = TRUE
 				src.fluid_gen_amt = initial(src.fluid_gen_amt)
 		return TRUE

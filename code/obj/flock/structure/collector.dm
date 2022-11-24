@@ -53,9 +53,9 @@
 		src.update_flock_compute("apply")
 		src.info_tag.set_info_tag("Compute provided: [src.compute]")
 	if (src.charge_per_cycle)
-		if (!src.area_apc)
+		if (QDELETED(src.area_apc))
 			src.area_apc = get_local_apc(src)
-			if (!src.area_apc)
+			if (QDELETED(src.area_apc))
 				return
 		if (!src.area_apc.cell || src.area_apc.cell.charge >= src.area_apc.cell.maxcharge || src.area_apc.status & BROKEN)
 			return

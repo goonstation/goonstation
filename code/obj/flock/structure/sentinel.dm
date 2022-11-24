@@ -145,7 +145,7 @@
 	src.accepts_sapper_power = FALSE
 	src.extra_chain_range = TRUE
 	SPAWN(10 SECONDS)
-		if (src)
+		if (!QDELETED(src))
 			src.accepts_sapper_power = TRUE
 			src.extra_chain_range = FALSE
 	return TRUE

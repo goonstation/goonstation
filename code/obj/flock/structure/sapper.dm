@@ -37,9 +37,9 @@
 				<br><span class='bold'>Linked power supply charge:</span> [src.linked_apc?.cell ? "[round(src.linked_apc.cell.charge / src.linked_apc.cell.maxcharge * 100)]%": "Not linked"]."}
 
 	process(mult)
-		if (!src.linked_apc)
+		if (QDELETED(src.linked_apc))
 			src.linked_apc = src.try_link_apc()
-			if (!src.linked_apc)
+			if (QDELETED(src.linked_apc))
 				src.icon_state = "sapper-off"
 				return
 		if (!linked_apc.cell || linked_apc.cell.charge <= 0 || linked_apc.status & BROKEN)
