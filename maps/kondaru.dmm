@@ -7115,13 +7115,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"avA" = (
-/obj/machinery/door/airlock/pyro/maintenance{
-	dir = 4
-	},
-/obj/access_spawn/maint,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
 "avB" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
@@ -7413,16 +7406,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
-"awH" = (
-/obj/machinery/door/airlock/pyro/maintenance{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "awI" = (
@@ -47323,6 +47306,13 @@
 	dir = 1
 	},
 /area/station/routing/security)
+"lns" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
+/obj/access_spawn/maint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "lnO" = (
 /obj/machinery/manufacturer/robotics,
 /obj/cable{
@@ -62037,6 +62027,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/research_director)
+"xLL" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/access_spawn/maint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "xLO" = (
 /obj/machinery/plantpot,
 /obj/decal/cleanable/dirt,
@@ -98811,8 +98811,8 @@ arp
 aol
 atK
 ait
-avA
-awH
+afI
+awG
 axJ
 ayL
 azJ
@@ -99113,8 +99113,8 @@ arq
 uGb
 sGz
 ait
-avB
-awJ
+lns
+xLL
 axJ
 dSl
 azK
@@ -100911,7 +100911,7 @@ aaa
 aaa
 aeK
 liJ
-aho
+ahp
 aiu
 oMs
 akp
@@ -101515,7 +101515,7 @@ abZ
 aeK
 aeK
 afI
-ahp
+aho
 ait
 ajp
 wky
