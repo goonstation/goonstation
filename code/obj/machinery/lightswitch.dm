@@ -64,7 +64,7 @@
 				src.pixel_y = 24
 			else
 				src.pixel_y = -24
-		break
+			break
 
 /obj/machinery/light_switch/was_built_from_frame(mob/user, newly_built)
 	. = ..()

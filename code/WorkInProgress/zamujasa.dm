@@ -504,7 +504,8 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "nothing"
 	uses_multiple_icon_states = 1
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	force = 0
 	w_class = W_CLASS_TINY
 	throwforce = 1

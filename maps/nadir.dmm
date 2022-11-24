@@ -20762,14 +20762,11 @@
 	},
 /area/station/hallway/primary/southeast)
 "jFs" = (
-/obj/stool/chair{
-	desc = "";
-	icon_state = "chair_pool"
-	},
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
 /obj/item/device/radio/intercom,
+/obj/stool/chair/pool,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
@@ -30918,13 +30915,10 @@
 /turf/simulated/floor/blue,
 /area/pasiphae/bridge)
 "omm" = (
-/obj/stool/chair{
-	desc = "";
-	icon_state = "chair_pool"
-	},
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
+/obj/stool/chair/pool,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},

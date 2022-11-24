@@ -34,7 +34,8 @@
 	var/doesMapText = FALSE
 	// probably not too resource intensive but I'd be careful using this just in case
 
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	throw_speed = 2
 	throw_range = 9
 	w_class = W_CLASS_SMALL
@@ -762,7 +763,8 @@ var/list/headset_channel_lookup
 	throw_speed = 1
 	throw_range = 3
 	w_class = W_CLASS_HUGE
-	flags = FPRINT | TABLEPASS | ONBACK | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBACK
 	item_state = "electropack"
 	desc = "A device that, when signaled on the correct frequency, causes a disabling electric shock to be sent to the animal (or human) wearing it."
 	cant_self_remove = 1

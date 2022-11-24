@@ -8809,14 +8809,11 @@
 /area/station/engine/substation/north)
 "aGE" = (
 /obj/decal/stage_edge/alt,
-/obj/stool/chair{
-	desc = "";
-	icon_state = "chair_pool"
-	},
 /obj/item/clothing/glasses/sunglasses/tanning,
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
+/obj/stool/chair/pool,
 /turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "aGI" = (
@@ -33299,10 +33296,6 @@
 /area/station/quartermaster/office)
 "iXG" = (
 /obj/decal/stage_edge/alt,
-/obj/stool/chair{
-	desc = "";
-	icon_state = "chair_pool"
-	},
 /obj/item/clothing/glasses/sunglasses/tanning,
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -33315,6 +33308,7 @@
 /obj/disposalpipe/segment{
 	dir = 1
 	},
+/obj/stool/chair/pool,
 /turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "iXI" = (

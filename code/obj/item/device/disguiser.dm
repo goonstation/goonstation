@@ -3,7 +3,8 @@
 	icon_state = "enshield0"
 	uses_multiple_icon_states = 1
 	desc = "Experimental device that projects a hologram of a randomly generated appearance onto the user, hiding their real identity."
-	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY
+	c_flags = ONBELT
 	item_state = "electronic"
 	throwforce = 5
 	throw_speed = 1

@@ -34,6 +34,10 @@
 	for(var/datum/mind/wraith in Agimmicks)
 		wraith.current.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 		generate_wraith_objectives(wraith)
+		var/mob/living/intangible/wraith/W = wraith.current
+		var/datum/targetable/wraithAbility/specialize/SP = W.abilityHolder.getAbility(/datum/targetable/wraithAbility/specialize)
+		SP.pointCost = 0
+		SP?.evolve(2)
 
 	emergency_shuttle.disabled = SHUTTLE_CALL_MANUAL_CALL_DISABLED //Disable the shuttle temporarily.
 
