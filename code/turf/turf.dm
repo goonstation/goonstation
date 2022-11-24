@@ -668,7 +668,7 @@ proc/generate_space_color()
 	//new_turf.RL_OverlayState = rloverlaystate //we actually want these cleared
 	new_turf.RL_Lights = rllights
 	new_turf.opaque_atom_count = old_opaque_atom_count
-  new_turf.jpsUnstable = old_jpsUnstable
+	new_turf.jpsUnstable = old_jpsUnstable
 
 	new_turf.blocked_dirs = old_blocked_dirs
 	new_turf.checkinghasproximity = old_checkinghasproximity
