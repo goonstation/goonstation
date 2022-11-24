@@ -673,6 +673,114 @@
 	name = "W blind switch"
 	pixel_x = -24
 
+
+/obj/sign_switch
+	name = "sign switch"
+	desc = "Connected to an illuminated sign, turning it on or off."
+	icon = 'icons/obj/power.dmi'
+	icon_state = "light1"
+	anchored = 1
+	density = 0
+	var/on = 0
+	var/id = null
+	var/list/paired_signs = list()
+
+	New()
+		..()
+		if (!src.name || (src.name in list("N sign switch", "E sign switch", "S sign switch", "W sign switch")))//== "N light switch" || name == "E light switch" || name == "S light switch" || name == "W light switch")
+			src.name = "sign switch"
+		SPAWN(0.5 SECONDS)
+			src.locate_signs()
+
+	ex_act(var/severity)
+		switch(severity)
+			if(1,2)
+				qdel(src)
+			else
+				if(prob(50))
+					qdel(src)
+
+	proc/locate_signs()
+		for_by_tcl(illumsign, /obj/machinery/illuminated_sign)
+			if (illumsign.id == src.id)
+				if (!(illumsign in src.paired_signs))
+					src.paired_signs += illumsign
+
+	proc/toggle()
+		if(!ON_COOLDOWN(src, "toggle", 1 SECOND))
+			src.on = !(src.on)
+			src.icon_state = "light[src.on]"
+			if (!islist(paired_signs) || !length(paired_signs))
+				return
+			for (var/obj/machinery/illuminated_sign/sign in paired_signs)
+				sign.toggle(src.on)
+
+			playsound(src, 'sound/misc/lightswitch.ogg', 50, 1)
+
+	attack_hand(mob/user)
+		src.toggle()
+
+	attack_ai(mob/user as mob)
+		src.toggle()
+
+	attackby(obj/item/W, mob/user)
+		src.toggle()
+
+/obj/machinery/illuminated_sign
+	name = "illuminated sign"
+	desc = "It's a sign on the wall that does the glowy thing."
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "occupancy-1"
+	anchored = 1
+	density = 0
+	opacity = 0
+	layer = FLY_LAYER+1.01 // just above windows
+	var/base_state = "occupancy"
+	var/on = 0
+	var/id = null
+
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
+
+	ex_act(var/severity)
+		switch(severity)
+			if(1,2)
+				qdel(src)
+			else
+				if(prob(50))
+					qdel(src)
+
+	proc/toggle(var/illum_state as null|num)
+		if (!isnull(illum_state))
+			src.on = illum_state
+			src.UpdateIcon()
+
+	power_change()
+		..()
+		UpdateIcon()
+
+/obj/machinery/illuminated_sign/update_icon()
+	if(!on || status & NOPOWER)
+		icon_state = "[src.base_state]-0"
+		src.UpdateOverlays(null, "light")
+	else
+		icon_state = "[src.base_state]-1"
+		var/mutable_appearance/light_ov = mutable_appearance(src.icon, "[src.base_state]-glow")
+		light_ov.plane = PLANE_LIGHTING
+		light_ov.alpha = 150
+		src.UpdateOverlays(light_ov, "light")
+
+/obj/machinery/illuminated_sign/occupancy
+	name = "occupancy sign"
+	desc = "A convenient illuminated sign to let you know that you're not supposed to butt in."
+	icon_state = "occupancy-1"
+	base_state = "occupancy"
+
 /obj/disco_ball
 	name = "disco ball"
 	icon = 'icons/obj/decoration.dmi'
