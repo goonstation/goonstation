@@ -438,7 +438,7 @@
 		if(holder?.drone_controller.drone == src) //if click behaviour has highlighted this drone for control
 			holder.drone_controller.cast(src) //deselect it
 			F.targeting_ability = null
-		if (!isdead(src) && !src.controller && !src.selected_by)
+		if (!isdead(src) && !src.controller && !src.selected_by) // second two checks are used for message spam
 			src.take_control(usr)
 
 /mob/living/critter/flock/drone/MouseDrop_T(mob/living/target, mob/user)
