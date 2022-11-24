@@ -1,5 +1,9 @@
 
 (t)thu nov 24 22
+(u)goonstation-enjoyer
+(p)12109
+(e)💅📦|C-QoL, A-Game-Objects
+(+)You can now examine a cell charger to see how full the cell is.
 (u)Bartimeus973
 (p)12079
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
