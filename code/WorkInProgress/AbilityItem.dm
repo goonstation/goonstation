@@ -899,3 +899,26 @@
 			src.last_use_time = TIME
 			sleep(src.cooldown)
 			src.on_cooldown()
+
+/obj/ability_button/toggle_bandana
+	name = "Toggle bandana"
+	icon_state = "bandana_down"
+	requires_equip = TRUE
+
+	execute_ability()
+		if(!the_item || !the_mob || !ishuman(the_mob)) return
+		var/obj/item/clothing/mask/bandana/bandana = the_item
+		var/mob/living/carbon/human/H = the_mob
+		bandana.is_pulled_down = !bandana.is_pulled_down
+		if (bandana.is_pulled_down)
+			boutput(H, "<span class='notice'>You pull down [bandana].</span>")
+			bandana.see_face = TRUE
+			src.icon_state = "bandana_up"
+		else
+			boutput(H, "<span class='notice'>You pull up [bandana].</span>")
+			bandana.see_face = FALSE
+			src.icon_state = "bandana_down"
+		bandana.icon_state = "[initial(bandana.icon_state)][bandana.is_pulled_down ? "_down" : ""]"
+		if (H.wear_mask == bandana)
+			H.update_clothing()
+		..()
