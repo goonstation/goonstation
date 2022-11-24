@@ -445,6 +445,7 @@
 /// Returns false if there is a dense atom on the turf, unless a custom hueristic is passed.
 /proc/jpsTurfPassable(turf/T, turf/source, atom/passer, list/options)
 	. = TRUE
+	options ||= list()
 	if(istype(passer,/mob/living/critter/flock/drone) && istype(T, /turf/simulated/wall/auto/feather))
 		var/mob/living/critter/flock/drone/F = passer
 		var/turf/simulated/wall/auto/feather/wall = T
