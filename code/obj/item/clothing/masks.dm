@@ -626,3 +626,16 @@
 	icon_state = "peacock"
 	item_state = "peacock"
 	see_face = 0
+
+//~---------- Winter Scarves ----------~// Sprites by Wivernshy!
+
+/obj/item/clothing/mask/wscarf
+	name = "Winter Scarf"
+	desc = "A cozy way to stay warm and fashionable."
+	icon_state = "wscarf"
+	item_state = "wscarf"
+	c_flags = COVERSMOUTH
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 20)

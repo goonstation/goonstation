@@ -1680,6 +1680,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	name = "Cold Weather Gear"
 	desc = "Warm winter gear to ward off the winter chills."
 	contains = list(/obj/item/clothing/suit/wintercoat = 5,
+					/obj/item/clothing/mask/wscarf = 5,
 					/obj/item/reagent_containers/food/drinks/chickensoup = 2,
 					/obj/item/reagent_containers/food/drinks/coffee = 2)
 	frames = list(/obj/machinery/space_heater = 2)
