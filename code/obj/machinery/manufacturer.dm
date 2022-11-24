@@ -1306,11 +1306,11 @@
 				return
 
 			if ("status")
-				post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "status", "data" = "mode=[src.mode]&speed=[src.speed]&timeleft=[src.time_left]&repeat=[src.repeat]"))
+				post_signal(list("address_1" = sender, "sender" = src.net_id, "data" = "mode=[src.mode]&speed=[src.speed]&timeleft=[src.time_left]&repeat=[src.repeat]"))
 				return
 
 			if ("queue")
-				post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "queue", "data" = src.queue.Join(",")))
+				post_signal(list("address_1" = sender, "sender" = src.net_id, "data" = src.queue.Join(",")))
 				return
 
 			if ("add")
