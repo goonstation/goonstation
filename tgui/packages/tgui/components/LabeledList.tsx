@@ -28,6 +28,7 @@ type LabeledListItemProps = {
   className?: string | BooleanLike;
   label?: string | BooleanLike;
   labelColor?: string | BooleanLike;
+  labelWrap?: boolean;
   color?: string | BooleanLike;
   textAlign?: string | BooleanLike;
   buttons?: InfernoNode,
@@ -42,6 +43,7 @@ const LabeledListItem = (props: LabeledListItemProps) => {
     className,
     label,
     labelColor = 'label',
+    labelWrap,
     color,
     textAlign,
     buttons,
@@ -60,7 +62,8 @@ const LabeledListItem = (props: LabeledListItemProps) => {
         color={labelColor}
         className={classes([
           'LabeledList__cell',
-          'LabeledList__label',
+          // Kinda flipped because we want nowrap as default. Cleaner CSS this way though.
+          !labelWrap && 'LabeledList__label--nowrap',
         ])}
         verticalAlign={verticalAlign}>
         {label ? label + ':' : null}
