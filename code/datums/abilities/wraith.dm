@@ -1605,32 +1605,30 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	cast()
 		if (..())
 			return TRUE
-
+		if(!istype(holder.owner, /mob/living/intangible/wraith))
+			return TRUE
+		var/mob/living/intangible/wraith/W = holder.owner
+		if (W.linked_portal)
+			var/obj/machinery/wraith/vortex_wraith/the_vortex = W.linked_portal
+			the_vortex.ui_interact(W)
+			return TRUE
+		if (!W.density)
+			boutput(holder.owner, "<span class='notice'>Your connection to the physical plane is too weak. You must be manifested to do this.</span>")
+			return TRUE
 		var/turf/T = get_turf(holder.owner)
 		if (isturf(T) && istype(T,/turf/simulated/floor))
-			for (var/turf/simulated/wall/W in T)
-				boutput(holder.owner, "<span class='notice'>You cannot place your portal in a wall!</span>")
-				return TRUE
-			for (var/obj/window/W in T)
-				boutput(holder.owner, "<span class='notice'>You cannot place your portal  in a window!</span>")
-				return TRUE
-			if(istype(holder.owner, /mob/living/intangible/wraith))
-				var/mob/living/intangible/wraith/W = holder.owner
-				if (W.linked_portal)
-					var/obj/machinery/wraith/vortex_wraith/the_vortex = W.linked_portal
-					the_vortex.ui_interact(W)
+			for (var/obj/O in T)
+				if (O.density)
+					boutput(holder.owner, "<span class='notice'>There is something in the way of the portal!</span>")
 					return TRUE
-				if (!W.density)
-					boutput(holder.owner, "<span class='notice'>Your connection to the physical plane is too weak. You must be manifested to do this.</span>")
-					return TRUE
-				boutput(holder.owner, "<span class='notice'>You gather your energy and open a portal. Use the ability again to upgrade it.</span>")
-				var/obj/machinery/wraith/vortex_wraith/V = new /obj/machinery/wraith/vortex_wraith()
-				V.set_loc(W.loc)
-				V.master = W
-				V.alpha = 0
-				animate(V, alpha=255, time = 1 SECONDS)
-				W.linked_portal = V
-				return TRUE
+			boutput(holder.owner, "<span class='notice'>You gather your energy and open a portal. Use the ability again to upgrade it.</span>")
+			var/obj/machinery/wraith/vortex_wraith/V = new /obj/machinery/wraith/vortex_wraith()
+			V.set_loc(W.loc)
+			V.master = W
+			V.alpha = 0
+			animate(V, alpha=255, time = 1 SECONDS)
+			W.linked_portal = V
+			return TRUE
 		else
 			boutput(holder.owner, "<span class='notice'>We cannot open a portal here</span>")
 			return TRUE
@@ -1666,15 +1664,13 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		if (!T || !istype(T,/turf/simulated/floor))
 			boutput(holder.owner, "<span class='notice'>You cannot use this here!</span>")
 			return TRUE
-		for (var/turf/simulated/wall/W in T)
-			boutput(holder.owner, "<span class='notice'>You cannot place a guard in a wall!</span>")
-			return TRUE
-		for (var/obj/window/W in T)
-			boutput(holder.owner, "<span class='notice'>You cannot place a guard in a window!</span>")
-			return TRUE
 		for (var/obj/machinery/wraith/harbinger_guard/G in T)
 			boutput(holder.owner, "<span class='notice'>There is already a guard here!</span>")
 			return TRUE
+		for (var/obj/O in T)
+			if (O.density)
+				boutput(holder.owner, "<span class='notice'>There is something in the way!</span>")
+				return TRUE
 		if (!IN_RANGE(target, the_vortex, (1 + the_vortex.spawn_radius)))
 			boutput(holder.owner, "<span class='notice'>That is too far from the portal! Increase your portal's spawning range to place guards further!</span>")
 			return TRUE

@@ -2228,6 +2228,7 @@
 			H.max_health += max_health
 			health_update_queue |= H
 			H.remove_stam_mod_max("portal_weakness")
+			H = null
 
 	getTooltip()
 		. = "An ominous aura instills fear in you. You feel your grasp on life slipping. Maximum Health and Stamina lowered."
