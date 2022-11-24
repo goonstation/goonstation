@@ -27317,7 +27317,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "hHU" = (
-/obj/machinery/lrteleporter,
+/obj/machinery/lrteleporter/mining,
 /turf/simulated/floor/industrial,
 /area/station/quartermaster/refinery)
 "hHY" = (
