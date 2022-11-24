@@ -5,7 +5,7 @@
 (e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
 (*)Handwashing update for RP: Washing your hands now automatically loops, and is more effective for medical or culinary personnel, but cannot raise your hygiene if it has fallen below half.
 (u)aloe
-(*) String highlighting no longer strips spaces, and now works properly with regex. For example, "(?=\W|^)ai(?:\W|$)" will highlight 'ai' in "ai help" "help ai" and "this ai sucks", without highlighting "hairy" or "aint".
+(*) String highlighting no longer strips spaces, and now works properly with regex. For example, "(?:\W|^)ai(?:\W|$)" will highlight 'ai' in "ai help" "help ai" and "this ai sucks", without highlighting "hairy" or "aint".
 (u)pali
 (+)Armory authorization now plays robotic voiceover saying "ARMORY AUTHORIZED". TEG at high power levels says "WARNING" once a few minutes in the same voice. Let me know if this is neat or sucks on Discord / forums (and suggest other places where this could be appropriate if you like it).
 (u)Cheffie
