@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
+ * Changes: ZeWaka (FA6)
  */
 
 @use '../base.scss';
@@ -66,7 +67,7 @@ $bg-map: colors.$bg-map !default;
   }
 
   .fa, .fa-solid, .fa-regular {
-    margin-left: -0.25em;
+    margin-left: 0em; // ZeWaka: Changed from -0.25em due to FA6 offset
     margin-right: -0.25em;
     min-width: 1.333em;
     text-align: center;
