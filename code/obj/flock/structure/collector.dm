@@ -18,6 +18,8 @@
 	var/list/turf/simulated/floor/feather/connectedto = list()
 	/// the apc it charges
 	var/obj/machinery/power/apc/area_apc = null
+	/// the area the collector is in
+	var/area/src_area = null
 	/// percent charge of connected apc it will charge per cycle
 	var/charge_per_cycle = 0
 	/// charge cycle time
@@ -31,6 +33,7 @@
 	..(location, F)
 	src.info_tag.set_info_tag("Compute provided: [src.compute]")
 	src.area_apc = get_local_apc(src)
+	src.src_area = get_area(src)
 	ON_COOLDOWN(src, "apc_charging", src.charge_cycle)
 
 /obj/flock_structure/collector/building_specific_info()
@@ -53,7 +56,7 @@
 		src.update_flock_compute("apply")
 		src.info_tag.set_info_tag("Compute provided: [src.compute]")
 	if (src.charge_per_cycle)
-		if (QDELETED(src.area_apc))
+		if (QDELETED(src.area_apc) || src.area_apc.area != src.src_area)
 			src.area_apc = get_local_apc(src)
 			if (QDELETED(src.area_apc))
 				return
@@ -63,11 +66,16 @@
 			src.area_apc.cell.give(src.charge_per_cycle / 100 * src.area_apc.cell.maxcharge * mult)
 			src.area_apc.AddComponent(/datum/component/flock_ping/apc_power)
 
+/obj/flock_structure/collector/Move(NewLoc, direct)
+	. = ..()
+	src.src_area = get_area(src)
+
 /obj/flock_structure/collector/disposing()
 	for(var/turf/simulated/floor/feather/flocktile as anything in connectedto)
 		flocktile.off()
 	connectedto.len = 0
 	src.area_apc = null
+	src.src_area = null
 	..()
 
 /obj/flock_structure/collector/proc/calcconnected()

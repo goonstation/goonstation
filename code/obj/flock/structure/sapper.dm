@@ -19,12 +19,14 @@
 	var/mode_cooldowns = list(CHARGING_BITS = 20 SECONDS, CHARGING_DRONES = 30 SECONDS, CHARGING_STRUCTURES = 30 SECONDS)
 
 	var/obj/machinery/power/apc/linked_apc = null
+	var/area/current_area = null
 
 	New(atom/location, datum/flock/F = null)
 		..()
 		src.linked_apc = src.try_link_apc()
 		if (!src.linked_apc)
 			src.icon_state = "sapper-off"
+		src.current_area = get_area(src)
 
 		src.info_tag.set_info_tag("Mode: [src.mode]")
 
@@ -37,7 +39,7 @@
 				<br><span class='bold'>Linked power supply charge:</span> [src.linked_apc?.cell ? "[round(src.linked_apc.cell.charge / src.linked_apc.cell.maxcharge * 100)]%": "Not linked"]."}
 
 	process(mult)
-		if (QDELETED(src.linked_apc))
+		if (QDELETED(src.linked_apc) || src.linked_apc.area != src.current_area)
 			src.linked_apc = src.try_link_apc()
 			if (!src.linked_apc)
 				src.icon_state = "sapper-off"
@@ -135,8 +137,13 @@
 			src.mode = mode_select
 			src.info_tag.set_info_tag("Mode: [src.mode]")
 
+	Move(NewLoc, direct)
+		. = ..()
+		src.current_area = get_area(src)
+
 	disposing()
 		src.linked_apc = null
+		src.current_area = null
 		..()
 
 	proc/try_link_apc()
