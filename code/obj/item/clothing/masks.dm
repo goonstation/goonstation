@@ -646,6 +646,7 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 		return
 	qdel(src)
 	var/obj/item/cloth/handkerchief/the_handkerchief = new src.handkerchief
+	the_handkerchief.color = src.color
 	user.put_in_hand_or_drop(the_handkerchief)
 	boutput(user, "<span class='notice'>You unfold the bandana into [the_handkerchief].</span>")
 
