@@ -1,5 +1,9 @@
 
 (t)thu nov 24 22
+(u)ZWRh3
+(p)11084
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Removed organ damage from the battle royale gamemode.
 (u)Roddy
 (p)12055
 (e)💅⚙|C-QoL, A-Internal
