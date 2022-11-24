@@ -15917,16 +15917,12 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "aMi" = (
-/obj/stool/chair{
-	desc = "";
-	foldable = 0;
-	icon_state = "chair_pool"
-	},
 /obj/item/clothing/under/shorts/blue{
 	desc = "In space?";
 	name = "swimming trunks"
 	},
 /obj/item/clothing/glasses/sunglasses/tanning,
+/obj/stool/chair/pool,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "aMj" = (
@@ -15956,11 +15952,6 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "aMm" = (
-/obj/stool/chair{
-	desc = "";
-	foldable = 0;
-	icon_state = "chair_pool"
-	},
 /obj/machinery/firealarm{
 	pixel_x = 1;
 	pixel_y = 26;
@@ -15971,6 +15962,7 @@
 	name = "swimming trunks"
 	},
 /obj/item/clothing/glasses/sunglasses/tanning,
+/obj/stool/chair/pool,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "aMn" = (

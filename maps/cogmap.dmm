@@ -12048,12 +12048,8 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "aIi" = (
-/obj/stool/chair{
-	desc = "";
-	foldable = 0;
-	icon_state = "chair_pool"
-	},
 /obj/item/clothing/glasses/sunglasses/tanning,
+/obj/stool/chair/pool,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "aIj" = (
@@ -12073,12 +12069,8 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/stool/chair{
-	desc = "";
-	foldable = 0;
-	icon_state = "chair_pool"
-	},
 /obj/item/clothing/glasses/sunglasses/tanning,
+/obj/stool/chair/pool,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "aIl" = (

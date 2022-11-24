@@ -532,7 +532,8 @@
 	var/max_cigs = 6
 	var/cigtype = /obj/item/clothing/mask/cigarette
 	var/package_style = "cigpacket"
-	flags = ONBELT | TABLEPASS | FPRINT
+	flags = TABLEPASS | FPRINT
+	c_flags = ONBELT
 	stamina_damage = 3
 	stamina_cost = 3
 	rand_pos = 1
@@ -655,7 +656,8 @@
 	var/cigcount = 5
 	var/cigtype = /obj/item/clothing/mask/cigarette/cigar
 	var/package_style = "cigarbox"
-	flags = ONBELT | TABLEPASS | FPRINT
+	flags = TABLEPASS | FPRINT
+	c_flags = ONBELT
 	stamina_damage = 3
 	stamina_cost = 3
 	rand_pos = 1
@@ -719,7 +721,8 @@
 	cigcount = 5
 	cigtype = /obj/item/clothing/mask/cigarette/cigar/gold
 	package_style = "cigarbox"
-	flags = ONBELT | TABLEPASS | FPRINT
+	flags = TABLEPASS | FPRINT
+	c_flags = ONBELT
 	stamina_damage = 3
 	stamina_cost = 3
 	rand_pos = 1
@@ -1096,7 +1099,8 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	w_class = W_CLASS_TINY
 	throwforce = 4
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
+	flags = FPRINT | TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	click_delay = 0.7 SECONDS
 	stamina_damage = 5

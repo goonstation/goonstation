@@ -25098,8 +25098,7 @@
 /area/station/janitor/supply)
 "fvT" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/overfloor{
-	dir = 10;
-
+	dir = 10
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/outer/sw)
@@ -41160,11 +41159,6 @@
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
 "nNZ" = (
-/obj/stool/chair{
-	desc = "";
-	foldable = 0;
-	icon_state = "chair_pool"
-	},
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -41177,6 +41171,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/stool/chair/pool,
 /turf/simulated/floor/darkblue,
 /area/station/crew_quarters/pool)
 "nOh" = (
@@ -45668,8 +45663,7 @@
 /area/station/quartermaster/cargobay)
 "qmh" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-
+	dir = 10
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/testchamber)
@@ -49122,11 +49116,6 @@
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "sbo" = (
-/obj/stool/chair{
-	desc = "";
-	foldable = 0;
-	icon_state = "chair_pool"
-	},
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -49135,6 +49124,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/stool/chair/pool,
 /turf/simulated/floor/darkblue,
 /area/station/crew_quarters/pool)
 "sbJ" = (

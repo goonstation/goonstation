@@ -4628,12 +4628,8 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "bhr" = (
-/obj/stool/chair{
-	desc = "";
-	foldable = 0;
-	icon_state = "chair_pool"
-	},
 /obj/item/clothing/glasses/sunglasses,
+/obj/stool/chair/pool,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
@@ -27317,7 +27313,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "hHU" = (
-/obj/machinery/lrteleporter,
+/obj/machinery/lrteleporter/mining,
 /turf/simulated/floor/industrial,
 /area/station/quartermaster/refinery)
 "hHY" = (
@@ -77983,13 +77979,9 @@
 	},
 /area/station/crew_quarters/kitchen)
 "wnK" = (
-/obj/stool/chair{
-	desc = "";
-	foldable = 0;
-	icon_state = "chair_pool"
-	},
 /obj/item/clothing/glasses/sunglasses,
 /obj/machinery/light/incandescent/netural,
+/obj/stool/chair/pool,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
