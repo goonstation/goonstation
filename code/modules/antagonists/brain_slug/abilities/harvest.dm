@@ -25,8 +25,8 @@
 		if (isdead(H))
 			boutput(holder.owner, "<span class='alert'>That one is already dead! You need fresh meat!</span>")
 			return TRUE
-		actions.start(new/datum/action/bar/icon/slug_harvest(H, 2, holder.owner), holder.owner)
-		return FALSE
+		actions.start(new/datum/action/bar/icon/slug_harvest(H, 2, holder.owner, is_first_cast = TRUE), holder.owner)
+		return TRUE
 
 /datum/action/bar/icon/slug_harvest
 	duration = 7 SECONDS
@@ -38,11 +38,13 @@
 	var/mob/living/caster = null
 	var/obj/item/organ/organ_target = null
 	var/recast = 0
+	var/first_cast = FALSE
 
-	New(var/mob/living/carbon/human/M, var/repeats, var/mob/living/host)
+	New(var/mob/living/carbon/human/M, var/repeats, var/mob/living/host, var/is_first_cast = FALSE)
 		src.current_target = M
 		src.caster = host
 		src.recast = repeats
+		src.first_cast = is_first_cast
 		//Get all the organs inside the person
 		if (!src.current_target.organHolder) return
 		else
@@ -87,13 +89,20 @@
 			boutput(src.caster, "<span class='notice'>There isn't anything to steal here!</span>")
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		src.caster.visible_message("<span class='alert'><b>[src.caster] jabs their hands forward into [src.current_target]'s chest and begins grasping inside!</b></span>", "<span class='notice'>You begin to harvest [src.organ_target].</span>")
-		playsound(src.caster.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50)
-		bleed(src.current_target, 10, 5)
-		hit_twitch(src.current_target)
+		if (src.first_cast)
+			src.caster.visible_message("<span class='alert'><b>[src.caster] beings agressively lurching towards [src.current_target]!</b></span>", "<span class='notice'>You approach your target.</span>")
 		SPAWN(3 SECONDS)
-			if (src.caster != null && isalive(src.caster) && can_act(src.caster) && src.current_target != null && BOUNDS_DIST(src.caster, src.current_target) <= 0)
-				src.current_target.setStatus("weakened", 10 SECONDS)
+			if ((src.state != ACTIONSTATE_DELETE) && (src.state != ACTIONSTATE_INTERRUPTED) && (src.state != ACTIONSTATE_STOPPED))
+				if (src.first_cast)
+					src.caster.visible_message("<span class='alert'><b>[src.caster] jabs their hands forward into [src.current_target]'s chest and begins grasping inside!</b></span>", "<span class='notice'>You begin to harvest [src.organ_target].</span>")
+					playsound(src.caster.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50)
+					bleed(src.current_target, 10, 5)
+					hit_twitch(src.current_target)
+				if (src.caster != null && isalive(src.caster) && can_act(src.caster) && src.current_target != null && BOUNDS_DIST(src.caster, src.current_target) <= 0)
+					src.current_target.setStatus("weakened", 10 SECONDS)
+				var/datum/targetable/ability = src.caster.abilityHolder.getAbility(/datum/targetable/brain_slug/harvest)
+				if (ability.cooldowncheck())
+					ability.doCooldown()
 
 	onUpdate()
 		..()
@@ -150,7 +159,7 @@
 					AH.updateButtons()
 
 		if (src.recast > 0)
-			actions.start(new/datum/action/bar/icon/slug_harvest(src.current_target, (src.recast -1), src.caster), src.caster)
+			actions.start(new/datum/action/bar/icon/slug_harvest(src.current_target, (src.recast -1), src.caster, FALSE), src.caster)
 		..()
 
 	onInterrupt()
