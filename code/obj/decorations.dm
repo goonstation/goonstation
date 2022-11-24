@@ -676,7 +676,7 @@
 
 /obj/sign_switch
 	name = "sign switch"
-	desc = "Connected to an illuminated sign, turning it on or off."
+	desc = "Connected to one or more illuminated signs, turning them on or off."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
 	anchored = 1
@@ -725,6 +725,22 @@
 
 	attackby(obj/item/W, mob/user)
 		src.toggle()
+
+/obj/sign_switch/north
+	name = "N sign switch"
+	pixel_y = 24
+
+/obj/sign_switch/east
+	name = "E sign switch"
+	pixel_x = 24
+
+/obj/sign_switch/south
+	name = "S sign switch"
+	pixel_y = -24
+
+/obj/sign_switch/west
+	name = "W sign switch"
+	pixel_x = -24
 
 /obj/machinery/illuminated_sign
 	name = "illuminated sign"
@@ -780,6 +796,20 @@
 	desc = "A convenient illuminated sign to let you know that you're not supposed to butt in."
 	icon_state = "occupancy-1"
 	base_state = "occupancy"
+
+/obj/machinery/illuminated_sign/onair
+	name = "ON AIR sign"
+	desc = "Glows in proximity to pompous radio hosts."
+	icon_state = "onair-1"
+	base_state = "onair"
+	pixel_y = 30
+
+/obj/machinery/illuminated_sign/open_neon
+	name = "open sign"
+	desc = "A fancy neon-style sign, traditionally used to welcome others to an active place of business."
+	icon_state = "opensign-1"
+	base_state = "opensign"
+	pixel_y = 30
 
 /obj/disco_ball
 	name = "disco ball"
