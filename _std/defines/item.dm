@@ -14,8 +14,8 @@
 #define NOSHIELD						 (1<<5)
 /// conducts electricity (metal etc.)
 #define CONDUCT							 (1<<6)
-/// unused
-//#define 							 (1<<7)
+/// can mousedrop reagents into from a reagent_container
+#define ACCEPTS_MOUSEDROP_REAGENTS		 (1<<7)
 /// takes a fingerprint
 #define FPRINT							 (1<<8)
 /// item has priority to check when entering or leaving
