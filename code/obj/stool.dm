@@ -1531,6 +1531,6 @@
 	name = "pool chair"
 	desc = "This chair is perfect for lounging at the side of a pool."
 	icon_state = "chair_pool"
-	rotatable = 0
-	foldable = 0
-	climbable = 0
+	rotatable = FALSE
+	foldable = FALSE
+	climbable = FALSE
