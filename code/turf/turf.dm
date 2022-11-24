@@ -591,6 +591,7 @@ proc/generate_space_color()
 	var/old_aiimage = src.aiImage
 	var/old_cameras = src.cameras
 	var/old_camera_coverage_emitters = src.camera_coverage_emitters
+	var/old_jpsUnstable = src.jpsUnstable
 
 	var/image/old_disposal_image = src.disposal_image
 
@@ -666,7 +667,7 @@ proc/generate_space_color()
 	//new_turf.RL_OverlayState = rloverlaystate //we actually want these cleared
 	new_turf.RL_Lights = rllights
 	new_turf.opaque_atom_count = opaque_atom_count
-
+	new_turf.jpsUnstable = old_jpsUnstable
 
 	new_turf.blocked_dirs = old_blocked_dirs
 	new_turf.checkinghasproximity = old_checkinghasproximity
