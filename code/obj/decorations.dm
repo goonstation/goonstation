@@ -708,7 +708,7 @@
 
 	proc/toggle()
 		if(!ON_COOLDOWN(src, "toggle", 1 SECOND))
-			src.on = !(src.on)
+			src.on = !src.on
 			src.icon_state = "light[src.on]"
 			if (!islist(paired_signs) || !length(paired_signs))
 				return
