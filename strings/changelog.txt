@@ -1,4 +1,9 @@
 
+(t)thu nov 24 22
+(u)Kubius
+(p)11689
+(e)🆕🗺💡|C-Feature, A-Mapping, A-Station-Systems
+(+)Quartermasters on Nadir can now consult their pocket guide for basic transception array guidance. A more in-depth book is available in the array control room.
 (t)wed nov 23 22
 (u)Kubius
 (p)11954
