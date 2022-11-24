@@ -5,7 +5,7 @@
 	icon_state = "ghost"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	plane = PLANE_NOSHADOW_ABOVE
-	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER //maybe?
+	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER | MOVE_NOCLIP
 	density = 0
 	canmove = 1
 	blinded = 0
@@ -502,9 +502,7 @@
 		OnMove()
 		return
 
-	set_dir(direct)
-	set_loc(NewLoc)
-	OnMove()
+	. = ..()
 
 /mob/dead/observer/mouse_drop(atom/A)
 	if (usr != src || isnull(A)) return
