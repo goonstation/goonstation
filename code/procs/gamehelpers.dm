@@ -714,7 +714,7 @@ proc/get_ouija_word_list(atom/movable/source = null, words_min = 5, words_max = 
 
 	// Generic Ouija words
 	for(var/i in 1 to rand(words_min, words_max))
-		var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
+		var/picked = pick(strings(filename, strings_category))
 		words |= picked
 
 	if (prob(include_nearby_mobs_chance))
