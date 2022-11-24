@@ -435,7 +435,7 @@
 		var/datum/abilityHolder/flockmind/holder = F.abilityHolder
 		if(holder?.drone_controller.drone == src) //if click behaviour has highlighted this drone for control
 			holder.drone_controller.cast(src, FALSE) //deselect it
-		if (!isdead(src) && !src.controller && !src.selected_by) // second two checks prevent message spam
+		if (!isdead(src) && !src.controller && !src.selected_by) // second two checks are for preventing message spam
 			src.take_control(usr)
 
 /mob/living/critter/flock/drone/MouseDrop_T(mob/living/target, mob/user)
