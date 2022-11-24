@@ -1583,7 +1583,6 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 					/obj/submachine/chef_sink,
 					/obj/machinery/deep_fryer,
 					/obj/submachine/foodprocessor,
-					/obj/machinery/vending/monkey,
 					/obj/machinery/vending/kitchen,
 					/obj/kitchenspike,
 					/obj/machinery/gibber)
