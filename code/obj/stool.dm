@@ -1533,4 +1533,3 @@
 	icon_state = "chair_pool"
 	rotatable = FALSE
 	foldable = FALSE
-	climbable = FALSE
