@@ -39,7 +39,7 @@
 	process(mult)
 		if (QDELETED(src.linked_apc))
 			src.linked_apc = src.try_link_apc()
-			if (QDELETED(src.linked_apc))
+			if (!src.linked_apc)
 				src.icon_state = "sapper-off"
 				return
 		if (!linked_apc.cell || linked_apc.cell.charge <= 0 || linked_apc.status & BROKEN)
@@ -141,7 +141,7 @@
 
 	proc/try_link_apc()
 		var/obj/machinery/power/apc/apc_to_link = get_local_apc(src)
-		if (!apc_to_link)
+		if (QDELETED(apc_to_link))
 			return null
 		return apc_to_link
 
