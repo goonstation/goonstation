@@ -715,7 +715,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 			if(TRANSCEIVE_BUSY) //connection's fine it's just busy at this particular time
 				return "OK"
 			if(TRANSCEIVE_NOPOWER)
-				return "ERR_ARRAY_APC"
+				return "ERR_ARRAY"
 			if(TRANSCEIVE_POWERWARN)
 				return "ARRAY_POWER_LOW"
 			if(TRANSCEIVE_NOWIRE)

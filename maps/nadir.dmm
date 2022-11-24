@@ -17612,13 +17612,13 @@
 /area/station/medical/robotics)
 "igO" = (
 /obj/table/reinforced/industrial/auto,
-/obj/item/reagent_containers/food/snacks/chips{
-	pixel_x = 7;
-	pixel_y = 5
-	},
 /obj/item/diceholder/dicebox{
 	pixel_x = -10;
 	pixel_y = 3
+	},
+/obj/item/paper/book/from_file/transception_guide{
+	pixel_y = 3;
+	pixel_x = 8
 	},
 /turf/simulated/floor/minitiles/black,
 /area/station/engine/inner{
@@ -43636,17 +43636,18 @@
 /area/station/crew_quarters/courtroom)
 "uqH" = (
 /obj/table/reinforced/industrial/auto,
-/obj/item/device/radio{
-	pixel_x = -10;
-	pixel_y = 5
-	},
 /obj/item/device/light/flashlight{
-	pixel_x = 13;
-	pixel_y = 11
+	pixel_x = 14;
+	pixel_y = 14
 	},
-/obj/item/storage/toolbox/electrical{
-	pixel_x = 7;
-	pixel_y = -2
+/obj/item/sheet/steel{
+	amount = 10;
+	pixel_y = 3;
+	pixel_x = -4
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = -2;
+	pixel_x = 14
 	},
 /turf/simulated/floor/minitiles/black,
 /area/station/engine/inner{
