@@ -220,6 +220,7 @@ Buttons allow users to take actions, and make choices, with a single click.
 - See inherited props: [Box](#box)
 - `fluid: boolean` - Fill all available horizontal space.
 - `icon: string` - Adds an icon to the button.
+- `iconPosition?: string` - Set to `'right'` to align the icon to the right of the children
 - `color: string` - Button color, as defined in `variables.scss`.
   - There is also a special color `transparent` - makes the button
   transparent and slightly dim when inactive.
@@ -235,6 +236,10 @@ the baseline alignment.
 over the button.
 - `children: any` - Content to render inside the button.
 - `onClick: function` - Called when element is clicked.
+- `verticalAlignContent: string` - Align content vertically using flex. Use lineHeight if the height is static.
+  - `top` - align content to the ceiling of the button box.
+  - `middle` - align content on the middle of the button box.
+  - `bottom` - align content on the ground of the button box.
 
 ### `Button.Checkbox`
 
