@@ -1265,7 +1265,6 @@
 				var/list/help = list()
 				help["address_1"] = sender
 				help["sender"] = src.net_id
-				help["command"] = "help"
 				if (!signal.data["topic"])
 					help["description"] = "[src.name] - Allows the manufacturing of various goods"
 					help["topics"] = "status,queue,add,remove,clear,speed,resume,pause,repeat"
