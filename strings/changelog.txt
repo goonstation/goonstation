@@ -1,5 +1,9 @@
 
 (t)thu nov 24 22
+(u)Bartimeus973
+(p)12079
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Adds face-covering bandanas to the game! Use a handkerchief in hand to do your best bandit impression!
 (u)glowbold
 (p)12137
 (e)⚖💨📦|C-Balance, A-Atmospherics, A-Game-Objects
