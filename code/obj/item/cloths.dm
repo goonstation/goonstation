@@ -181,11 +181,13 @@ ABSTRACT_TYPE(/obj/item/cloth/handkerchief)
 /obj/item/cloth/handkerchief/attack_self(mob/user)
 	if (!src.bandana)
 		return
-	qdel(src)
 	var/obj/item/clothing/mask/bandana/the_bandana = new src.bandana
+	the_bandana.setMaterial(src.material)
 	the_bandana.color = src.color
+	src.copy_filters_to(the_bandana)
+	qdel(src)
 	user.put_in_hand_or_drop(the_bandana)
-	boutput(user, "<span class='notice'>You tie the handkerchief together to make [the_bandana].</span>")
+	boutput(user, "<span class='notice'>You tie \the [src] together to make \a [the_bandana].</span>")
 
 /obj/item/cloth/handkerchief/white
 	name = "white handkerchief"
