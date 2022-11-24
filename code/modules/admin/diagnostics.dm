@@ -245,13 +245,13 @@ proc/debug_map_apc_count(delim,zlim)
 
 	jps_inconsistent
 		name = "jps inconsistent"
-		help = "Red is turfs with inconsistent jpsUnstable counts to what is really on them"
+		help = "Uses a slightly expensive check to see whether turf instability is valid. Errors shown in red, number shows error (i.e. -1 is missing 1 atom)"
 		GetInfo(turf/theTurf, image/debugoverlay/img)
 			var/trueUnstable = initial(theTurf.jpsUnstable)
 			for(var/atom/A as anything in theTurf.contents)
 				trueUnstable += A.jpsUnstable
 			if(trueUnstable != theTurf.jpsUnstable)
-				img.app.overlays = list(src.makeText(trueUnstable - theTurf.jpsUnstable, RESET_ALPHA | RESET_COLOR))
+				img.app.overlays = list(src.makeText(theTurf.jpsUnstable - trueUnstable, RESET_ALPHA | RESET_COLOR))
 				img.app.color = "#f00"
 			else
 				img.app.alpha = 0
