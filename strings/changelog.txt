@@ -1,5 +1,9 @@
 
 (t)thu nov 24 22
+(u)Conchuckter
+(p)11923
+(e)🪲🆕📦💡|C-Bug, C-Feature, A-Game-Objects, A-Station-Systems
+(*)Manufacturers are now packet integrated, become a nerd today!
 (u)Kubius
 (p)11689
 (e)🆕🗺💡|C-Feature, A-Mapping, A-Station-Systems
