@@ -1,5 +1,9 @@
 
 (t)thu nov 24 22
+(u)glowbold
+(p)12137
+(e)⚖💨📦|C-Balance, A-Atmospherics, A-Game-Objects
+(+)Freezers now use power based on how many degrees they shift the gas inside.
 (u)LeahTheTech
 (p)12131
 (e)🧛🔨🤖|A-Gamemodes, A-Player-Actions, A-Silicons
