@@ -154,6 +154,10 @@
 			if (!isdead(the_spiker))
 				the_spiker.icon_state = "spiker"
 		return FALSE
+
+	incapacitationCheck()
+		return FALSE
+
 	onAttach(datum/abilityHolder/holder)
 		..()
 		var/atom/movable/screen/ability/topBar/B = src.object

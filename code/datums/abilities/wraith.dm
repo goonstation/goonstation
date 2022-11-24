@@ -872,8 +872,8 @@
 
 			holder.owner.mind.transfer_to(W)
 			var/datum/abilityHolder/wraith/new_holder = W.abilityHolder
-			new_holder.regenRate = AH.regenRate - 2
-			new_holder.corpsecount = AH.corpsecount - 1
+			new_holder.regenRate = max(AH.regenRate - 2, 1)
+			new_holder.corpsecount = max(AH.corpsecount - 1, 0)
 			qdel(holder.owner)
 
 			return W

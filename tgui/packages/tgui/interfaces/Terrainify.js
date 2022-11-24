@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
 import { Box, Button, Flex, Section } from '../components';
 import { Window } from '../layouts';

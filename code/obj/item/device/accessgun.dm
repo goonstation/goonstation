@@ -6,7 +6,8 @@
 	item_state = "accessgun"
 	w_class = W_CLASS_SMALL
 	rand_pos = 0
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	mats = 14
 	var/obj/item/card/id/ID_card = null
 	req_access = list(access_change_ids,access_engineering_chief)
