@@ -1,5 +1,30 @@
 
+(t)thu nov 24 22
+(u)Conchuckter
+(p)11923
+(e)🪲🆕📦💡|C-Bug, C-Feature, A-Game-Objects, A-Station-Systems
+(*)Manufacturers are now packet integrated, become a nerd today!
+(u)Kubius
+(p)11689
+(e)🆕🗺💡|C-Feature, A-Mapping, A-Station-Systems
+(+)Quartermasters on Nadir can now consult their pocket guide for basic transception array guidance. A more in-depth book is available in the array control room.
 (t)wed nov 23 22
+(u)Kubius
+(p)11954
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(*)Handwashing update for RP: Washing your hands now automatically loops, and is more effective for medical or culinary personnel, but cannot raise your hygiene if it has fallen below half.
+(u)aloe
+(*) String highlighting no longer strips spaces, and now works properly with regex. For example, "(?:\W|^)ai(?:\W|$)" will highlight 'ai' in "ai help" "help ai" and "this ai sucks", without highlighting "hairy" or "aint".
+(u)pali
+(+)Armory authorization now plays robotic voiceover saying "ARMORY AUTHORIZED". TEG at high power levels says "WARNING" once a few minutes in the same voice. Let me know if this is neat or sucks on Discord / forums (and suggest other places where this could be appropriate if you like it).
+(u)Cheffie
+(p)12132
+(e)💅📄|C-QoL, A-UI
+(+)Changes how the ExperimentalCircle context layout is created to be more intuitive. Changes current items that use this layout to roughly match how they were before in terms of layout.
+(u)ZeWaka
+(p)10388
+(e)🪲🚄🔧🔎🔄❗📄📜|C-Bug, C-Performance, A-Tooling, C-Code-Quality, C-Rework, E-FUCK, A-UI, C-Documentation
+(*)Changed our internal UI systems quite a bit. Remember to report bugs via the button on the top right!
 (u)glowbold
 (p)12063
 (e)🗺|A-Mapping
