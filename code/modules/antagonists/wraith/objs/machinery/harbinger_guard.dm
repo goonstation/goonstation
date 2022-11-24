@@ -73,7 +73,7 @@
 		var/turf/two = get_step(one, direction)
 		new/obj/decal/guard_attack_marker(two, src.attack_delay)
 		SPAWN(src.attack_delay)
-			if (src)
+			if (!QDELETED(src))
 				for(var/turf/T in list(one, two))
 					for(var/atom/A in T)
 						if(A in attacked) continue
