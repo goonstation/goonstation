@@ -35,9 +35,10 @@
 	// 1 flockmind up to 50 players, then at 50 players get 1 flocktrace, another for every 25 players more
 	var/num_flock = clamp(src.starting_players < 50 ? 1 : round(src.starting_players / 25), roundstart_flock_min, roundstart_flock_max)
 
-	var/list/possible_flock = get_possible_enemies(ROLE_FLOCKTRACE, num_flock)
+	var/list/flockminds_list = num_flock > 0 ? get_possible_enemies(ROLE_FLOCKMIND, 1) : list()
+	var/list/flocktraces_list = num_flock - 1 > 0 ? get_possible_enemies(ROLE_FLOCKTRACE, num_flock - 1) : list()
 
-	if (!length(possible_flock) || length(possible_flock) < roundstart_flock_min)
+	if (length(flockminds_list) + length(flocktraces_list) < roundstart_flock_min)
 		boutput(world, "<span class='alert'><b>ERROR: Couldn't assign any players to the Flock, aborting Flock round pre-setup.</b></span>")
 		return FALSE
 
@@ -46,6 +47,8 @@
 		if (!length(token_players))
 			break
 		traitors += tplayer
+		flockminds_list += tplayer
+		flocktraces_list += tplayer
 		token_players -= tplayer
 		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token for Flock gamemode.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token for Flock gamemode.")
@@ -53,28 +56,28 @@
 		if (num_flock == 0)
 			break
 
-	var/list/chosen_flock = antagWeighter.choose(possible_flock, ROLE_FLOCKTRACE, num_flock, TRUE)
-	traitors |= chosen_flock
-	for (var/datum/mind/flock in traitors)
-		flock.special_role = ROLE_FLOCKTRACE
-		flock.assigned_role = "MODE"
-		possible_flock.Remove(flock)
+	var/datum/mind/chosen_flockmind = pick(antagWeighter.choose(length(flockminds_list) ? flockminds_list : flocktraces_list, ROLE_FLOCKMIND, 1, TRUE))
+	traitors |= chosen_flockmind
+	chosen_flockmind.special_role = ROLE_FLOCKMIND
+	chosen_flockmind.assigned_role = "MODE"
+	flocktraces_list -= chosen_flockmind
 
-	var/list/datum/mind/possible_flockminds = list()
-	for (var/datum/mind/mind as anything in traitors)
-		if (mind.current.client.preferences.be_flockmind)
-			possible_flockminds += mind
-	if (length(possible_flockminds))
-		src.start_flockmind = pick(possible_flockminds)
-	else
-		src.start_flockmind = pick(traitors)
+	if (length(flocktraces_list))
+		var/list/chosen_flocktraces = antagWeighter.choose(flocktraces_list, ROLE_FLOCKTRACE, num_flock - 1, TRUE)
+		traitors |= chosen_flocktraces
+		for (var/datum/mind/flock in chosen_flocktraces)
+			flock.special_role = ROLE_FLOCKTRACE
+			flock.assigned_role = "MODE"
+			flocktraces_list.Remove(flock)
+
+	src.start_flockmind = chosen_flockmind
 
 	return TRUE
 
 /datum/game_mode/flock/post_setup()
 	..()
 	bestow_objective(start_flockmind, /datum/objective/specialist/flock)
-	var/mob/living/intangible/flock/flockmind/flockmind = start_flockmind.current.make_flockmind()
+	var/mob/living/intangible/flock/flockmind/flockmind = start_flockmind.current
 	flockmind.flock.player_mod = max(0, round(src.starting_players / 25) - 2)
 	start_flock = flockmind.flock
 
