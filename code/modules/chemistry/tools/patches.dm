@@ -464,7 +464,8 @@
 	var/tampered = 0
 	var/borg = 0
 	initial_volume = 200
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH | ATTACK_SELF_DELAY
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOSPLASH | ATTACK_SELF_DELAY | ACCEPTS_MOUSEDROP_REAGENTS
+	c_flags = ONBELT
 	click_delay = 0.7 SECONDS
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 
@@ -482,6 +483,8 @@
 			src.reagents.temperature_cap = 330
 			src.reagents.temperature_min = 270
 			src.reagents.temperature_reagents(change_min = 0, change_cap = 0)
+		if(borg)
+			src.flags &= ~ACCEPTS_MOUSEDROP_REAGENTS
 
 	on_reagent_change(add)
 		..()

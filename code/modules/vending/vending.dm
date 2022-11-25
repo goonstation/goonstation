@@ -2978,6 +2978,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/device/pda2/atmos, 2, cost=PAY_TRADESMAN/2)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/engineering, 2)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/engineering, 2)
+		product_list += new/datum/data/vending_product(/obj/item/constructioncone, 12)
 
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/engineer/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/mechanic/april_fools, 2, hidden=1)
