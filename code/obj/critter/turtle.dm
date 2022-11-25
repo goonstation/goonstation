@@ -458,7 +458,6 @@
 		var/obj/item/clothing/head/NTberet/commander/beret = new/obj/item/clothing/head/NTberet/commander(src)
 		//fold it
 		beret.name = "Sylvester's Beret"
-		set_loc(beret)
 		wearing_beret = beret
 
 		START_TRACKING_CAT(TR_CAT_PW_PETS)
