@@ -1,5 +1,10 @@
 
 (t)thu nov 24 22
+(u)Mr. Moriarty
+(p)11793
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(*)The armouries of all in-rotation maps have been standardised as to contain the same essential equipment. Some armouries still retain additional non-essential equipment to vary them from others.
+(+)Standardised the Donut2 Armoury, and added a perimeter defence.
 (u)ZWRh3
 (p)11084
 (e)⚖🧛|C-Balance, A-Gamemodes
