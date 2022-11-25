@@ -164,15 +164,25 @@
 					var/mob/mymaster = ckey_to_mob(M.master)
 					if (mymaster) special = mymaster.real_name
 			if (ROLE_FLOCKMIND)
-				if (M.current)
-					var/relay_successful = FALSE
+				var/relay_successful = FALSE
+				if (isflockmob(M.current))
 					if (!istype(M.current, /mob/living/critter/flock/drone))
 						var/mob/living/intangible/flock/flockmind/flockmind = M.current
 						relay_successful = flockmind.flock.relay_finished
 					else
 						var/mob/living/critter/flock/drone/flockdrone = M.current
 						relay_successful = flockdrone.flock.relay_finished
-					special = "Relay transmission [relay_successful ? "successful" : "unsuccessful"]"
+				special = "Relay transmission [relay_successful ? "successful" : "unsuccessful"]"
+			if (ROLE_FLOCKTRACE)
+				if (isflockmob(M.current))
+					var/datum/flock/flock_joined = null
+					if (!istype(M.current, /mob/living/critter/flock/drone))
+						var/mob/living/intangible/flock/trace/flocktrace = M.current
+						flock_joined = flocktrace.flock
+					else
+						var/mob/living/critter/flock/drone/flockdrone = M.current
+						flock_joined = flockdrone.flock
+					special = "Part of Flock [flock_joined.name]"
 			if (ROLE_NUKEOP)
 				if (istype(ticker.mode, /datum/game_mode/nuclear))
 					special = syndicate_name()
