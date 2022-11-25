@@ -1,5 +1,9 @@
 
 (t)fri nov 25 22
+(u)Azrun
+(p)11771
+(e)🆕🔒⏰|C-Feature, A-Secret, A-Status-Effects
+(+)Adds the ability for a number of critters to traverse disposals.
 (u)Bartimeus973
 (p)12163
 (e)🔎🔨|C-Code-Quality, A-Player-Actions
