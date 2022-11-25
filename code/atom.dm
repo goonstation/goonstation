@@ -913,6 +913,11 @@
 	var/atom/oldloc = loc
 	loc = newloc
 
+#ifdef RUNTIME_CHECKING
+	if(oldloc == loc)
+		stack_trace("loc change in set_loc denied - check for paradoxes")
+#endif
+
 	src.last_move = 0
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, oldloc)

@@ -250,7 +250,8 @@
 	desc = "Looks like one of those fair toys."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "rubber_hammer"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	force = 0
 
 	New()
@@ -284,7 +285,8 @@
 	item_state = "ecig"
 	icon_state = "ecig"
 	mats = 6
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOSPLASH
+	c_flags = ONBELT
 	var/emagged = 0
 	var/last_used = 0
 	var/list/safe_smokables = list("nicotine", "THC", "CBD")
