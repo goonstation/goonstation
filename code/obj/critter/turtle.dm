@@ -445,7 +445,6 @@
 		beret.name = "HoS Beret"
 		beret.icon_state = "hosberet"
 		beret.item_state = "hosberet"
-		set_loc(beret)
 
 		wearing_beret = beret
 
