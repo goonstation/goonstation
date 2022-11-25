@@ -572,47 +572,19 @@
 	desc = "wha"
 	icon_state = "machoglasses"
 	color = "#FF00FF"
-	var/client/assigned = null
-
-	process()
-		if (assigned)
-			assigned.images.Remove(mob_static_icons)
-			addIcons()
-
-			if (loc != assigned.mob)
-				assigned.images.Remove(mob_static_icons)
-				assigned = null
-
-			//sleep(2 SECONDS)
-		else
-			processing_items.Remove(src)
-
-	proc/addIcons()
-		if (assigned)
-			for (var/image/I in mob_static_icons)
-				if (!I || !I.loc || !src)
-					continue
-				if (I.loc.invisibility && I.loc != src.loc)
-					continue
-				else
-					assigned.images.Add(I)
+	var/active = FALSE
 
 	equipped(var/mob/user, var/slot)
 		..()
 		if (slot == SLOT_GLASSES)
-			assigned = user.client
-			SPAWN(-1)
-				//updateIcons()
-				processing_items |= src
-		return
+			get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_mob(user)
+			active = TRUE
 
 	unequipped(var/mob/user)
 		..()
-		if (assigned)
-			assigned.images.Remove(mob_static_icons)
-			assigned = null
-			processing_items.Remove(src)
-		return
+		if (active)
+			get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).remove_mob(user)
+			active = FALSE
 
 /obj/item/clothing/glasses/noir
 	name = "Noir-Tech Glasses"

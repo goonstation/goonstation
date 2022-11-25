@@ -504,7 +504,8 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "nothing"
 	uses_multiple_icon_states = 1
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	force = 0
 	w_class = W_CLASS_TINY
 	throwforce = 1
@@ -740,6 +741,8 @@
 			UnsubscribeProcess()
 			SPAWN(0)
 				while (src.update_delay)
+					if(QDELETED(src))
+						return
 					src.update_monitor()
 					sleep(update_delay)
 
@@ -812,7 +815,7 @@
 			if ("percent")
 				return (val * 100)
 			if ("temperature")
-				return "[val - T0C]&deg;C"
+				return "[TO_CELSIUS(val)]&deg;C"
 			if ("round")
 				return round(val)
 

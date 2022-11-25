@@ -931,7 +931,7 @@
 				damage -= damage_reduced_by
 				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
 
-		if (damage < 1)
+		if (P.proj_data.damage < 1)
 			return
 
 		if (src.material)

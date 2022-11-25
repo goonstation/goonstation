@@ -21,7 +21,7 @@
 			owner.jitteriness = max(0, owner.jitteriness - 2*mult)
 
 		if (owner.mind && isvampire(owner))
-			if (istype(get_area(owner), /area/station/chapel) && owner.check_vampire_power(3) != 1)
+			if (istype(get_area(owner), /area/station/chapel) && owner.check_vampire_power(3) != 1 && !(owner.job == "Chaplain"))
 				if (prob(33))
 					boutput(owner, "<span class='alert'>The holy ground burns you!</span>")
 				owner.TakeDamage("chest", 0, 5 * mult, 0, DAMAGE_BURN)

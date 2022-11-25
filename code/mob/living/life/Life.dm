@@ -421,9 +421,6 @@
 		hud.update_health()
 		hud.update_tools()
 
-	if (src.client)
-		src.updateStatic()
-
 /mob/living/silicon/drone/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return 1

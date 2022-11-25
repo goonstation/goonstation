@@ -4,7 +4,7 @@
 	anchored = 1
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pool"
-	flags = FPRINT | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = FPRINT | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID | FLUID_DENSE
 
 	Cross(atom/movable/mover)
 		ENSURE_TYPE(mover)
