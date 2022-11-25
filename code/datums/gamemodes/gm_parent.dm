@@ -201,7 +201,11 @@
 								var/time = TIME
 								for (var/mob/living/intangible/flock/trace/flocktrace as anything in flock.traces)
 									if (time - flocktrace.creation_time >= 5 MINUTES)
-										flocktrace.unlock_medal("To the stars", TRUE)
+										if (!istype(flocktrace.loc, /mob/living/critter/flock/drone))
+											flocktrace.unlock_medal("To the stars", TRUE)
+										else
+											var/mob/living/critter/flock/drone/flockdrone = flocktrace.loc
+											flockdrone.unlock_medal("To the stars", TRUE)
 
 				for (var/datum/objective/objective in traitor.objectives)
 	#ifdef CREW_OBJECTIVES

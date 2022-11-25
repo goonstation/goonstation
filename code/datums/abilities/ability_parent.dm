@@ -165,12 +165,13 @@
 
 		var/i = 0
 		var/longest_line = 0
-		var/list/stats = src.onAbilityStat()
+		var/list/stats = onAbilityStat()
 		for (var/x in stats)
 			var/line_length = length(x) + 1 + max(length(num2text(stats[x])), length(stats[x]))
 			longest_line = max(longest_line, line_length)
 			lines += "[x] [stats[x]]"
 			i++
+
 		abilitystat.maptext = "<span class='vga l vt ol'>[lines.Join("<br>")]</span>"
 		abilitystat.maptext_width = longest_line * 9 //font size is 9px
 

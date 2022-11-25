@@ -48,11 +48,12 @@ var/global/list/bible_contents = list()
 				//Wraith curses
 				if(prob(75) && ishuman(H))
 					var/mob/living/carbon/human/target = H
-					if(target.bioHolder?.HasEffect("blood_curse") || target.bioHolder?.HasEffect("blind_curse") || target.bioHolder?.HasEffect("weak_curse") || target.bioHolder?.HasEffect("rot_curse"))
+					if(target.bioHolder?.HasEffect("blood_curse") || target.bioHolder?.HasEffect("blind_curse") || target.bioHolder?.HasEffect("weak_curse") || target.bioHolder?.HasEffect("rot_curse") || target.bioHolder?.HasEffect("death_curse"))
 						target.bioHolder.RemoveEffect("blood_curse")
 						target.bioHolder.RemoveEffect("blind_curse")
 						target.bioHolder.RemoveEffect("weak_curse")
 						target.bioHolder.RemoveEffect("rot_curse")
+						target.bioHolder.RemoveEffect("death_curse")
 						target.visible_message("[target] screams as some black smoke exits their body.")
 						target.emote("scream")
 						var/turf/T = get_turf(target)

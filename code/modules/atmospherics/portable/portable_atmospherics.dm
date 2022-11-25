@@ -63,8 +63,6 @@
 			if(new_port.loc != loc)
 				return 0
 
-			//logTheThing(LOG_COMBAT, usr, "attaches [src] to [new_port] at [log_loc(new_port)].")
-
 			add_fingerprint(usr)
 
 			//Perform the connection

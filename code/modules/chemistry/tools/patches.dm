@@ -113,7 +113,7 @@
 		if (can_operate_on(user))
 			user.visible_message("[user] applies [src] to [himself_or_herself(user)].",\
 			"<span class='notice'>You apply [src] to yourself.</span>")
-			logTheThing(LOG_COMBAT, user, "applies a patch to themself [log_reagents(src)] at [log_loc(user)].")
+			logTheThing(LOG_CHEMISTRY, user, "applies a patch to themself [log_reagents(src)] at [log_loc(user)].")
 			user.Attackby(src, user)
 		return
 
@@ -175,7 +175,7 @@
 							H.patchesused ++
 						JOB_XP(user, "Medical Doctor", 1)
 
-			logTheThing(LOG_COMBAT, user, "applies a patch to [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
+			logTheThing(user == M ? LOG_CHEMISTRY : LOG_COMBAT, user, "applies a patch to [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 
 			src.clamp_reagents()
 
@@ -464,7 +464,8 @@
 	var/tampered = 0
 	var/borg = 0
 	initial_volume = 200
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH | ATTACK_SELF_DELAY
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOSPLASH | ATTACK_SELF_DELAY | ACCEPTS_MOUSEDROP_REAGENTS
+	c_flags = ONBELT
 	click_delay = 0.7 SECONDS
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 
@@ -482,6 +483,8 @@
 			src.reagents.temperature_cap = 330
 			src.reagents.temperature_min = 270
 			src.reagents.temperature_reagents(change_min = 0, change_cap = 0)
+		if(borg)
+			src.flags &= ~ACCEPTS_MOUSEDROP_REAGENTS
 
 	on_reagent_change(add)
 		..()
@@ -548,14 +551,14 @@
 				if (M.health < 90)
 					JOB_XP(user, "Medical Doctor", 2)
 
-			logTheThing(LOG_COMBAT, user, "begins automending [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
+			logTheThing(user == M ? LOG_CHEMISTRY : LOG_COMBAT, user, "begins automending [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 			begin_application(M,user=user)
 			return 1
 
 		return 0
 
 	afterattack(obj/target, mob/user, flag)
-		if(istype(target, /obj/reagent_dispensers) && target.reagents)
+		if(is_reagent_dispenser(target) && target.reagents)
 			if (!target.reagents.total_volume)
 				boutput(user, "<span class='alert'>[target] is already empty.</span>")
 				return
@@ -584,10 +587,8 @@
 				var/datum/reagents/R = new
 				reagents.copy_to(R)
 				R.trans_to(M, use_volume_adjusted/2)
-			logTheThing(LOG_COMBAT, user, " automends [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 
 			playsound(src, pick(sfx), 50, 1)
-
 
 
 /obj/item/reagent_containers/mender/brute
@@ -684,6 +685,10 @@
 
 		looped++
 		src.onRestart()
+
+	onInterrupt(flag)
+		. = ..()
+		logTheThing(user == target ? "chemistry" : "combat", user, " finishes automending [constructTarget(M,"combat")] [log_reagents(M)] after [looped] applications at [log_loc(user)].")
 
 //basically the same as ecig_refill_cartridge, but there's no point subtyping it...
 ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)

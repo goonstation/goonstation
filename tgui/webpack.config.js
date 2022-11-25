@@ -91,17 +91,13 @@ module.exports = (env = {}, argv) => {
               options: {
                 esModule: false,
               },
-            }
+            },
           ],
         },
       ],
     },
     optimization: {
       emitOnErrors: false,
-      splitChunks: {
-        chunks: 'initial',
-        name: 'tgui-common',
-      },
     },
     performance: {
       hints: false,

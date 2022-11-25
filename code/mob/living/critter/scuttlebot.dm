@@ -61,6 +61,18 @@
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, 1, pitch=1.4, channel=VOLUME_CHANNEL_EMOTE)
 					return pick("[src] unleashes the tiniest robotic toot.", "[src] sends out a ridiculously pitched fart.")
+
+			if ("burp")
+				if (src.emote_check(voluntary, 50))
+					playsound(src.loc, 'sound/vox/birdwell.ogg', 40, 1, pitch=1.3, channel=VOLUME_CHANNEL_EMOTE)
+					return "<b>[src]</b> birdwells!"
+
+			if ("flip")
+				if (src.emote_check(voluntary, 50))
+					playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 40, 1, pitch=1.3, channel=VOLUME_CHANNEL_EMOTE)
+					animate_spin(src, pick("L", "R"), 1, 0)
+					return "<b>[src]</b> does a flip!"
+
 		return null
 
 	death(var/gibbed)

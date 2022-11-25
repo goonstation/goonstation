@@ -6,7 +6,7 @@ Ctrl + RMB on buildmode button         = Edit projectile variables<br>
 Left Mouse Button                      = FIRE!<br>
 ***********************************************************"}
 	icon_state = "buildmode_zap"
-	var/tmp/datum/projectile/P
+	var/datum/projectile/P
 	var/proj_type = null
 
 	New(datum/buildmode_holder/H)
