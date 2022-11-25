@@ -81,9 +81,13 @@
 	flockmind.flock.player_mod = max(0, round(src.starting_players / 25) - 2)
 	start_flock = flockmind.flock
 
+	var/turf/T = get_turf(flockmind)
+	var/list/turf/spawn_area = block(locate(T.x - 1, T.y - 1, T.z), locate(T.x + 1, T.y + 1, T.z))
 	for (var/datum/mind/flock as anything in traitors)
-		if (flock.special_role != ROLE_FLOCKMIND)
-			flock.current.make_flocktrace(get_turf(flockmind), flockmind.flock, TRUE)
+		if (flock.special_role == ROLE_FLOCKTRACE)
+			T = pick(spawn_area)
+			flock.current.make_flocktrace(T, flockmind.flock, TRUE)
+			spawn_area -= T
 
 	SPAWN(rand(1 MINUTE, 3 MINUTES))
 		src.send_intercept()
