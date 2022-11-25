@@ -27,6 +27,17 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	filler_turf = "/turf/unsimulated/nicegrass/random"
 	is_centcom = 1
 
+	Entered(atom/movable/A, atom/oldloc)
+		. = ..()
+		if (current_state < GAME_STATE_FINISHED)
+			if(istype(A, /mob/living))
+				var/mob/living/M = A
+				if(!M.client)
+					return
+				if(M.client.holder)
+					return
+				logTheThing(LOG_DEBUG, null, "[constructTarget(M)] entered Centcom before round end [log_loc(M)].")
+
 /area/centcom/outside
 	name = "Earth"
 	icon_state = "nothing_earth"
