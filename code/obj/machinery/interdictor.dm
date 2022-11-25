@@ -217,9 +217,10 @@
 			doupdateicon = 0
 			src.stop_interdicting()
 	if(src.cumulative_cost)
-		var/sound_strength = clamp(cumulative_cost/30,5,30)
-		if(src.canInterdict)
-			playsound(src.loc, src.sound_interdict_run, sound_strength, 0)
+		if(src.cumulative_cost > 10) //if the cost was very minor, don't even make a sound
+			var/sound_strength = clamp(cumulative_cost/10,5,30)
+			if(src.canInterdict)
+				playsound(src.loc, src.sound_interdict_run, sound_strength, 0)
 		src.cumulative_cost = 0
 
 	if(doupdateicon)
