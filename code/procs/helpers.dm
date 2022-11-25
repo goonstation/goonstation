@@ -2084,6 +2084,24 @@ proc/countJob(rank)
 				return C.mob
 
 /**
+  * Given a ckey finds a mob with that ckey even if they are not in the game.
+  */
+/proc/ckey_to_mob_maybe_disconnected(target as text, exact=1)
+	if(isnull(target))
+		return
+	target = ckey(target)
+	for(var/mob/M in mobs)
+		if(M.ckey == target)
+			return M
+	if(!exact)
+		for(var/mob/M in mobs) // prefix match second
+			if(copytext(M.ckey, 1, length(target) + 1) == target)
+				return M
+		for(var/mob/M in mobs) // substring match third
+			if (findtext(M.ckey, target))
+				return M
+
+/**
   * Finds whoever's dead.
 	*/
 /proc/whodead()
