@@ -1,5 +1,9 @@
 
 (t)fri nov 25 22
+(u)Bartimeus973
+(p)12163
+(e)🔎🔨|C-Code-Quality, A-Player-Actions
+(+)Wraiths can no longer summon creatures if there is something in the way.
 (u)aloe
 (+)Cigarettes and welding tools now produce a bit of light while on. Bug me if there's anything else that doesn't produce light and you think should!
 (t)thu nov 24 22
