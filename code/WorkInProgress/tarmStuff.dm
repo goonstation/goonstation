@@ -10,8 +10,8 @@
 	force = MELEE_DMG_LARGE
 
 
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 
 	can_dual_wield = 0
 
@@ -212,8 +212,8 @@
 	icon_state = "g11"
 	item_state = "g11"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 	has_empty_state = 1
 	var/shotcount = 0
 	var/last_shot_time = 0
@@ -645,7 +645,8 @@
 	desc = "A device used to passively measure raditation."
 	icon_state = "geiger-0"
 	item_state = "geiger"
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	throwforce = 3
 	w_class = W_CLASS_TINY
 	throw_speed = 5

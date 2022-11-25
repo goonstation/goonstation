@@ -6,8 +6,8 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "barrier0"
 	uses_multiple_icon_states = 1
-	flags = FPRINT | ONBELT | TABLEPASS
-	c_flags = EQUIPPED_WHILE_HELD
+	flags = FPRINT | TABLEPASS
+	c_flags = EQUIPPED_WHILE_HELD | ONBELT
 	force = 2
 	throwforce = 6
 	w_class = W_CLASS_SMALL
@@ -52,7 +52,7 @@
 			playsound(src, "sparks", 75, 1, -1)
 			if (src.status)
 				w_class = W_CLASS_BULKY
-				flags &= ~ONBELT //haha NO
+				c_flags &= ~ONBELT //haha NO
 				setProperty("meleeprot_all", 9)
 				setProperty("rangedprot", 1.5)
 				setProperty("movespeed", 0.3)
@@ -68,7 +68,7 @@
 				src.setItemSpecial(/datum/item_special/barrier)
 			else
 				w_class = W_CLASS_SMALL
-				flags |= ONBELT
+				c_flags |= ONBELT
 				delProperty("meleeprot_all", 0)
 				delProperty("rangedprot", 0)
 				delProperty("movespeed", 0)
@@ -128,8 +128,8 @@
 	icon_state = "metal"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "barrier0"
-	flags = FPRINT | ONBELT | TABLEPASS
-	c_flags = EQUIPPED_WHILE_HELD
+	flags = FPRINT | TABLEPASS
+	c_flags = EQUIPPED_WHILE_HELD | ONBELT
 	force = 2
 	throwforce = 6
 	w_class = W_CLASS_SMALL

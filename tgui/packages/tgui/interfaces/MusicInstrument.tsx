@@ -1,6 +1,6 @@
 import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Flex, Input, Knob, LabeledList } from '../components';
+import { Box, Button, Flex, Input, Knob } from '../components';
 import { Window } from '../layouts';
 
 type MusicInstrumentData = {

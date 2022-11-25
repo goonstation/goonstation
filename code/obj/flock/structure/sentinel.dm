@@ -39,6 +39,7 @@
 
 /obj/flock_structure/sentinel/disposing()
 	qdel(src.rays)
+	src.rays = null
 	..()
 
 /obj/flock_structure/sentinel/building_specific_info()
@@ -103,7 +104,7 @@
 
 			var/atom/last_hit = to_hit
 			var/found_chain_target
-			for(var/i in 1 to rand(5, 6)) // chaining
+			for(var/i in 1 to 3) // chaining
 				found_chain_target = FALSE
 				for(var/atom/A as anything in view(2, last_hit.loc))
 					if(src.flock?.isEnemy(A) && !(A in hit))

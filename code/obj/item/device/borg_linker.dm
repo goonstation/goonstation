@@ -1,7 +1,8 @@
 /obj/item/device/borg_linker
 	name = "cyborg law linker"
 	icon_state = "cyborg_linker"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	force = 5
 	w_class = W_CLASS_SMALL
 	throwforce = 5

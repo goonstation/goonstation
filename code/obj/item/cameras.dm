@@ -18,7 +18,8 @@
 	icon_state = "camera"
 	item_state = "electropack"
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | EXTRADELAY | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | EXTRADELAY | CONDUCT
+	c_flags = ONBELT
 	m_amt = 2000
 	throwforce = 5
 	throw_speed = 4
