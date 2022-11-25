@@ -322,7 +322,7 @@
 		name = "Sigma phase-control rod"
 		desc = "A large, narrow cylinder with a highly conductive core and inbuilt control circuitry. Grants full range to interdictors."
 		icon_state = "interdict-rod-ex"
-		interdist = 7
+		interdist = 6
 
 //interdictor board: power management circuitry and whatnot. alternate boards yield different functionality
 //can be manufactured by installing /obj/item/disk/data/floppy/manudrive/interdictor_parts
