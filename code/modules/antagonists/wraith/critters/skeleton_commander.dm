@@ -27,6 +27,7 @@
 			M.summons += src
 
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
+		src.add_stam_mod_max("commander", 50)
 		abilityHolder.addAbility(/datum/targetable/critter/skeleton_commander/rally)
 		abilityHolder.addAbility(/datum/targetable/critter/skeleton_commander/summon_lesser_skeleton)
 
@@ -35,6 +36,9 @@
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
 	death(var/gibbed)
+		if (src.master)
+			src.master.summons -= src
+			src.master = null
 		if (!gibbed)
 			src.unequip_all()
 			playsound(src, src.deathsound, 50, 0)
@@ -93,7 +97,7 @@
 						if(A in attacked) continue
 						if(ismob(A) && !isobserver(A))
 							var/mob/M = A
-							M.TakeDamageAccountArmor("All", rand(5,7), 0, 0, DAMAGE_CUT)
+							M.TakeDamageAccountArmor("All", rand(7,9), 0, 0, DAMAGE_CUT)
 							attacked += A
 							hit = TRUE
 
@@ -122,7 +126,7 @@
 						if(A in attacked) continue
 						if(ismob(A) && !isobserver(A))
 							var/mob/M = A
-							M.TakeDamageAccountArmor("All", rand(6,7), 0, 0, DAMAGE_STAB)
+							M.TakeDamageAccountArmor("All", rand(8,9), 0, 0, DAMAGE_STAB)
 							attacked += A
 							hit = TRUE
 
@@ -143,7 +147,7 @@
 				for(var/atom/A in turf)
 					if(ismob(A) && !isobserver(A))
 						var/mob/M = A
-						M.TakeDamageAccountArmor("All", rand(5,6), 0, 0, DAMAGE_CUT)
+						M.TakeDamageAccountArmor("All", rand(7,9), 0, 0, DAMAGE_CUT)
 						hit = TRUE
 						break
 

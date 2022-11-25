@@ -15,7 +15,7 @@ obj/item/engivac
 	icon_state = "engivac"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "engivac_"
-	flags = ONBELT | ONBACK //engis & mechs will want to keep their toolbelts on with this, most other crew their backpacks. Hope this doesn't break stuff.
+	c_flags = ONBELT | ONBACK //engis & mechs will want to keep their toolbelts on with this, most other crew their backpacks. Hope this doesn't break stuff.
 	w_class = W_CLASS_BULKY
 
 	//Stuff relating to the particular toolbox we have installed

@@ -1297,7 +1297,7 @@
 			if(unknown_level > 0.01)
 				dat += " OTHER: [round(unknown_level)]%"
 
-		dat += " Temperature: [round(atmostank.air_contents.temperature-T0C)]&deg;C<br>"
+		dat += " Temperature: [round(TO_CELSIUS(atmostank.air_contents.temperature))]&deg;C<br>"
 	else
 		dat += "<font color=red>No tank installed!</font><BR>"
 	dat += "<B>Fuel Status:</B> "
@@ -1320,7 +1320,7 @@
 			if(unknown_level > 0.01)
 				dat += " OTHER: [round(unknown_level)]%"
 
-		dat += " Temperature: [round(fueltank.air_contents.temperature-T0C)]&deg;C<br>"
+		dat += " Temperature: [round(TO_CELSIUS(fueltank.air_contents.temperature))]&deg;C<br>"
 	else
 		dat += "<font color=red>No tank installed!</font><BR>"
 	if(src.engine)

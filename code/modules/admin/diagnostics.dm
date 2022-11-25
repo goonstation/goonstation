@@ -472,7 +472,7 @@ proc/debug_map_apc_count(delim,zlim)
 						else
 							O2_color = "#ff0000"
 
-					switch (air.temperature - T0C)
+					switch (TO_CELSIUS(air.temperature))
 						if (100 to INFINITY)
 							T_color = "#ff0000"
 						if (75 to 100)
@@ -501,7 +501,7 @@ proc/debug_map_apc_count(delim,zlim)
 
 					if (group?.spaced) img.app.overlays += image('icons/misc/air_debug.dmi', icon_state = "spaced")
 
-					img.app.overlays += src.makeText("<span style='color: [O2_color];'>[round(O2_pp, 0.01)]</span>\n[round(pressure, 0.1)]\n<span style='color: [T_color];'>[round(air.temperature - T0C, 1)]</span>")
+					img.app.overlays += src.makeText("<span style='color: [O2_color];'>[round(O2_pp, 0.01)]</span>\n[round(pressure, 0.1)]\n<span style='color: [T_color];'>[round(TO_CELSIUS(air.temperature), 1)]</span>")
 
 
 					if (pressure > ONE_ATMOSPHERE)
@@ -1183,6 +1183,20 @@ proc/debug_map_apc_count(delim,zlim)
 				var/landmark_text = "<span style='font-size:6pt'>[jointext(turf_to_landmark[theTurf], "<br>")]</span>"
 				img.app.overlays = list(src.makeText(landmark_text))
 				img.app.color = debug_color_of(landmark_text)
+
+	opaque_atom_count
+		name = "opaque atom count"
+		help = {"Shows how many opaque atoms are on a turf according to the turf var"}
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			if(theTurf.opaque_atom_count == 0)
+				img.app.alpha = 0
+				return
+			img.app.alpha = 100
+			img.app.overlays = list(src.makeText(theTurf.opaque_atom_count, RESET_ALPHA | RESET_COLOR))
+			if(theTurf.opaque_atom_count > 0)
+				img.app.color = "#55aa55"
+			else
+				img.app.color = "#aa5555"
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay

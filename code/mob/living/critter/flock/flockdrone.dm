@@ -701,8 +701,11 @@
 	if (isflockmob(M)) return
 	if (!isdead(src) && src.flock)
 		if (!src.flock.isEnemy(M))
-			emote("scream")
-			say("[pick_string("flockmind.txt", "flockdrone_enemy")] [M]", TRUE)
+			if (src.flock.isIgnored(M))
+				say("[pick_string("flockmind.txt", "flockdrone_betrayal")] [M]", TRUE)
+			else
+				emote("scream")
+				say("[pick_string("flockmind.txt", "flockdrone_enemy")] [M]", TRUE)
 		src.flock.updateEnemy(M)
 
 /mob/living/critter/flock/drone/bullet_act(var/obj/projectile/P)
