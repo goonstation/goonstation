@@ -1,4 +1,7 @@
 
+(t)fri nov 25 22
+(u)aloe
+(+)Cigarettes and welding tools now produce a bit of light while on. Bug me if there's anything else that doesn't produce light and you think should!
 (t)thu nov 24 22
 (u)Mr. Moriarty
 (p)11793
