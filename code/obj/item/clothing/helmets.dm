@@ -876,6 +876,12 @@
 			..()
 			setProperty("meleeprot_head", 7)
 
+	ntso
+		name = "NT-SO pressurized assault helmet"
+		desc = "A heavily reinforced combat helmet for Nanotrasen special forces."
+		icon_state = "ntso_specialist-heavy"
+		item_state = "ntso_specialist-heavy"
+
 /obj/item/clothing/head/helmet/space/mining_combat
 	name = "mining combat helmet"
 	desc = "Goes with Mining Combat Armor. Now with sweet strawberry-scented visor!"

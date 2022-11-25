@@ -1419,12 +1419,23 @@
 			item_state = "syndie_specialist-heavy"
 
 	ntso
-
-		name = "NT-SO heavy operative combat armor"
+		name = "NT-SO pressurized assault suit"
 		desc = "A Nanotrasen special forces heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
 		is_syndicate = FALSE
 		icon_state = "ntso_specialist-heavy"
 		item_state = "ntso_specialist-heavy"
+
+		setupProperties()
+			..()
+			setProperty("meleeprot", 9)
+			setProperty("rangedprot", 2)
+
+	salvager
+		name = "Salvager juggernaut combat armor"
+		desc = "A heavily modified industrial mining suit, it's been reinforced for greater protection in firefights."
+		is_syndicate = FALSE
+		icon_state = "salvager-heavy"
+		item_state = "salvager-heavy"
 
 		setupProperties()
 			..()
