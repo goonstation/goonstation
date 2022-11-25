@@ -251,6 +251,10 @@
 				if (protection > 0)
 					protection--
 					return 0
+				// Devera-class interdictor: ionizes away the "bodily funk" that would otherwise accumulate
+				for_by_tcl(IX, /obj/machinery/interdictor)
+					if (IX.expend_interdict(round(2*mult),src,TRUE,ITDR_DEVERA))
+						return 0
 				return 1
 
 		onIncrease()

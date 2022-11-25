@@ -8,3 +8,6 @@
 
 //Zephyr interdictor: carbon mobs in range receive heightened stamina recovery
 #define ITDR_ZEPHYR 2
+
+//Devera interdictor: ionizing field that prevents miasma formation and natural hygiene decrement
+#define ITDR_DEVERA 3

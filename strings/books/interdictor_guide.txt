@@ -50,6 +50,8 @@
 	<br>
 	Zephyr Mainboard: Creates a bioelectric field within the standard operating radius, with beneficial* effects on human physiology, primarily reflected as an improvement in stamina.
 	<br>
+	Devera Mainboard: Ionizes atmosphere within field bounds. Has a suppressive effect on exposed bacteria, with particular efficacy at containing miasma.
+	<br>
 	<br>
 	<i>*Please consult station physicians before use.</i>
 	<br>

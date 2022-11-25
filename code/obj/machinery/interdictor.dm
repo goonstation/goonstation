@@ -56,6 +56,9 @@
 				if(ITDR_ZEPHYR)
 					src.name = "Zephyr-class [src.name]"
 					src.desc = "A device that lessens or nullifies the effects of assorted stellar phenomena. This one comes with a second wind."
+				if(ITDR_DEVERA)
+					src.name = "Devera-class [src.name]"
+					src.desc = "A device that lessens or nullifies the effects of assorted stellar phenomena. Smells faintly of ozone."
 			qdel(altboard)
 
 		if(mat)
@@ -150,6 +153,11 @@
 		interdict_class = ITDR_ZEPHYR
 		name = "Zephyr-class spatial interdictor"
 		desc = "A device that lessens or nullifies the effects of assorted stellar phenomena. This one comes with a second wind."
+
+	devera
+		interdict_class = ITDR_DEVERA
+		name = "Devera-class spatial interdictor"
+		desc = "A device that lessens or nullifies the effects of assorted stellar phenomena. Smells fainly of ozone."
 
 
 /obj/machinery/interdictor/update_icon()
@@ -340,6 +348,11 @@
 		name = "Zephyr interdictor mainboard"
 		desc = "A custom-fabricated circuit board with biomimetic coprocessing. Causes interdictors' field to gain beneficial bioelectric properties."
 		interdict_class = ITDR_ZEPHYR
+
+	devera
+		name = "Devera interdictor mainboard"
+		desc = "A custom-fabricated circuit board with an ionization lattice. Causes interdictors' field to suppress some topical and aerosolized microbes."
+		interdict_class = ITDR_DEVERA
 
 //interdictor frame kit: supplies the frame that is the basis for assembling the interdictor (lo and behold)
 //can be manufactured by installing /obj/item/disk/data/floppy/manudrive/interdictor_parts

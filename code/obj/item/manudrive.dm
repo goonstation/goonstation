@@ -56,6 +56,7 @@
 		/datum/manufacture/interdictor_board_standard,
 		/datum/manufacture/interdictor_board_nimbus,
 		/datum/manufacture/interdictor_board_zephyr,
+		/datum/manufacture/interdictor_board_devera,
 		/datum/manufacture/interdictor_rod_lambda,
 		/datum/manufacture/interdictor_rod_sigma)
 
