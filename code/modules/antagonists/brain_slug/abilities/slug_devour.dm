@@ -55,7 +55,7 @@
 					if (src.current_target.limbs.l_leg)
 						src.target = src.current_target.limbs.l_leg
 						src.limb_acronym = "l_leg"
-				if ("chest" || "head")
+				if ("chest", "head")
 					var/list/targets = list()
 					src.target_is_limb = FALSE
 					if (src.current_target.organHolder.left_eye)
