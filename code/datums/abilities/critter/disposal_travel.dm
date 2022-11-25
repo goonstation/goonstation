@@ -65,7 +65,7 @@
 		else
 			holder.owner.show_message("<span class='notice'>You squeeze your way into [P].</span>")
 
-		D = new/obj/dummy/disposalmover(P, holder.owner, src)
+		D = new/obj/dummy/disposalmover(P, holder.owner, src, .proc/deactivate)
 		RegisterSignals(D, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), .proc/handle_move)
 		pointCost = 0
 		var/atom/movable/screen/ability/topBar/B = src.object
@@ -157,17 +157,19 @@
 	var/mob/the_user = null
 	var/obj/disposalpipe/current_pipe
 	var/obj/disposalholder/traveler/T
-	var/datum/targetable/vent_move/A
+	var/datum/callback_datum
+	var/callback_proc
 
-	New(atom/location, mob/target, datum/targetable/vent_move/ability)
+	New(atom/location, mob/target, datum/callback_datum, callback_proc)
 		..()
 		src.set_loc(get_turf(location))
 		T = new(src)
 		T.traveler = target
 		T.set_loc(location)
 		current_pipe = location
+		src.callback_datum = callback_datum
+		src.callback_proc = callback_proc
 		if(target)
-			A = ability
 			the_user = target
 			target.set_loc(src)
 			img = image('icons/effects/effects.dmi',src ,"orb")
@@ -215,7 +217,7 @@
 					if(istype(destination_pipe, /obj/disposalpipe/loafer))
 						var/obj/disposalholder/H = new(destination_pipe)
 						user.set_loc(H)
-						A.deactivate(force=TRUE)
+						call(callback_datum, callback_proc)(TRUE)
 						destination_pipe.transfer(H)
 						return
 
@@ -235,7 +237,7 @@
 					var/obj/disposalholder/H2 = locate() in destination_pipe
 					if(H2 && H2.active)
 						T.merged(H2)
-						A.deactivate(force=TRUE)
+						call(callback_datum, callback_proc)(TRUE)
 					else
 						T.set_loc(destination_pipe)
 
@@ -258,7 +260,7 @@
 					the_user.set_loc(get_turf(src))
 					the_user.visible_message("<span class='alert'><b>[the_user] crawls out of [source_pipe]!</b></span>")
 					step(the_user, direction)
-					A.deactivate(force=TRUE)
+					call(callback_datum, callback_proc)(TRUE)
 
 			else
 				if(!ON_COOLDOWN(src, "vent_bonk", 1 SECOND))
@@ -288,7 +290,7 @@
 	merged(obj/disposalholder/host )
 		..()
 		traveler.set_loc(host)
-		holder.A.deactivate(force=TRUE)
+		call(holder.callback_datum, holder.callback_proc)(TRUE)
 		return
 
 /datum/statusEffect/disposals
