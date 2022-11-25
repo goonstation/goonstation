@@ -1077,13 +1077,13 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 
 /datum/syndicate_buylist/surplus/syndicate_armor
 	name = "Syndicate Command Armor"
-	item = /obj/item/clothing/suit/space/industrial/syndicate
+	item = /obj/item/clothing/suit/space/industrial/combat/syndicate
 	cost = 5
 	desc = "A set of syndicate command armor. I guess the last owner must have died."
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 	run_on_spawn(var/obj/item)
-		new /obj/item/clothing/head/helmet/space/industrial/syndicate/(item.loc)
+		new /obj/item/clothing/head/helmet/space/industrial/combat/syndicate/(item.loc)
 
 /datum/syndicate_buylist/surplus/egun_upgrade
 	name = "Advanced Energy Cell"

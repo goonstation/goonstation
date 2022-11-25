@@ -849,7 +849,7 @@
 
 /datum/commodity/contraband/command_suit
 	comname = "Armored Spacesuit"
-	comtype = /obj/item/clothing/suit/space/industrial/syndicate
+	comtype = /obj/item/clothing/suit/space/industrial/combat/syndicate
 	desc = "An armored spacesuit issued to Syndicate squad leaders."
 	price = 20000
 	baseprice = 20000
@@ -858,7 +858,7 @@
 
 /datum/commodity/contraband/command_helmet
 	comname = "Armored Helmet"
-	comtype = /obj/item/clothing/head/helmet/space/industrial/syndicate/
+	comtype = /obj/item/clothing/head/helmet/space/industrial/combat/syndicate
 	desc = "An armored helmet issued to Syndicate squad leaders."
 	price = 15000
 	baseprice = 15000

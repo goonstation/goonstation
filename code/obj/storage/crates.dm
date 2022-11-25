@@ -485,7 +485,7 @@
 		/obj/item/storage/pouch/lmg,
 		/obj/item/storage/grenade_pouch/high_explosive,
 		/obj/item/storage/fanny/syndie,
-		/obj/item/clothing/suit/space/industrial/syndicate/specialist,
+		/obj/item/clothing/suit/space/industrial/combat/syndicate/specialist,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist)
 
 	assault

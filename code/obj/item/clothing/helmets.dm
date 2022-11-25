@@ -865,22 +865,30 @@
 		setProperty("exploprot", 10)
 		setProperty("space_movespeed", 0)
 
-	syndicate
-		name = "Syndicate Command Helmet"
-		desc = "Ooh, fancy."
-		icon_state = "indusred"
-		item_state = "indusred"
-		is_syndicate = 1
+ABSTRACT_TYPE(/obj/item/clothing/head/helmet/space/industrial/combat)
+/obj/item/clothing/head/helmet/space/industrial/combat
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 7)
 
-		setupProperties()
-			..()
-			setProperty("meleeprot_head", 7)
+/obj/item/clothing/head/helmet/space/industrial/combat/syndicate
+	name = "Syndicate Command Helmet"
+	desc = "Ooh, fancy."
+	icon_state = "indusred"
+	item_state = "indusred"
+	is_syndicate = 1
 
-	ntso
-		name = "NT-SO pressurized assault helmet"
-		desc = "A heavily reinforced combat helmet for Nanotrasen special forces."
-		icon_state = "ntso_specialist-heavy"
-		item_state = "ntso_specialist-heavy"
+/obj/item/clothing/head/helmet/space/industrial/combat/ntso
+	name = "NT-SO pressurized assault helmet"
+	desc = "A heavily reinforced combat helmet for Nanotrasen special forces."
+	icon_state = "ntso_specialist-heavy"
+	item_state = "ntso_specialist-heavy"
+
+/obj/item/clothing/head/helmet/space/industrial/combat/salvager
+	name = "Salvager juggernaut combat helmet"
+	desc = "A heavily modified industrial mining helmet, it's been retrofitted for combat use."
+	icon_state = "salvager-heavy"
+	item_state = "salvager-heavy"
 
 /obj/item/clothing/head/helmet/space/mining_combat
 	name = "mining combat helmet"
