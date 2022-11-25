@@ -41,7 +41,7 @@
 			P = locate(/obj/disposalpipe) in T
 			// Attempt entry via disposal machinery OR a disconnected disposal pipe
 			if (!istype(holder.owner.loc, /obj/machinery/disposal) && (P?.invisibility || !length(P?.disconnected_dirs()) ))
-				boutput(holder.owner, "<span class='alert'>You there isn't anything to climb into here!</span>")
+				boutput(holder.owner, "<span class='alert'>There isn't anything to climb into here!</span>")
 				return TRUE
 
 			if (!P)
@@ -66,7 +66,7 @@
 			holder.owner.show_message("<span class='notice'>You squeeze your way into [P].</span>")
 
 		D = new/obj/dummy/disposalmover(P, holder.owner, src)
-		RegisterSignal(D, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), .proc/handle_move)
+		RegisterSignals(D, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), .proc/handle_move)
 		pointCost = 0
 		var/atom/movable/screen/ability/topBar/B = src.object
 		B.point_overlay.maptext = null
@@ -175,7 +175,7 @@
 			img.plane = PLANE_OVERLAY_EFFECTS
 			img.color = "#111"
 			target << img
-		RegisterSignal(the_user, list(COMSIG_MOB_DROPPED), .proc/handle_dropped_item)
+		RegisterSignal(the_user, COMSIG_MOB_DROPPED, .proc/handle_dropped_item)
 		APPLY_ATOM_PROPERTY(the_user, PROP_MOB_CANTTHROW, src)
 
 	proc/handle_dropped_item(mob/user, atom/movable/AM)
