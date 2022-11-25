@@ -16,7 +16,8 @@ Contains:
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	icon_state = "t-ray0"
 	var/on = 0
-	flags = FPRINT|ONBELT|TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	m_amt = 150
@@ -146,7 +147,8 @@ that cannot be itched
 	icon_state = "fs"
 	w_class = W_CLASS_SMALL // PDA fits in a pocket, so why not the dedicated scanner (Convair880)?
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS | CONDUCT | SUPPRESSATTACK
+	c_flags = ONBELT
 	mats = 3
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	var/active = 0
@@ -284,7 +286,8 @@ that cannot be itched
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "healthanalyzer-no_up" // someone made this sprite and then this was never changed to it for some reason???
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	throwforce = 3
 	w_class = W_CLASS_TINY
 	throw_speed = 5
@@ -432,7 +435,8 @@ that cannot be itched
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "reagentscan"
 	desc = "A hand-held device that scans and lists the chemicals inside the scanned subject."
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	throwforce = 3
 	w_class = W_CLASS_TINY
 	throw_speed = 5
@@ -485,7 +489,8 @@ that cannot be itched
 	icon_state = "atmos-no_up"
 	item_state = "analyzer"
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	throwforce = 5
 	w_class = W_CLASS_SMALL
 	throw_speed = 4
@@ -616,7 +621,8 @@ that cannot be itched
 	var/datum/db_record/active2 = null
 	w_class = W_CLASS_NORMAL
 	item_state = "recordtrak"
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | EXTRADELAY
+	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
+	c_flags = ONBELT
 	mats = 3
 
 
@@ -757,7 +763,8 @@ that cannot be itched
 	item_state = "electronic"
 	w_class = W_CLASS_SMALL
 
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 
 	attack_self(mob/user)
 		var/menuchoice = tgui_alert(user, "What would you like to do?", "Ticket writer", list("Ticket", "Nothing"))
@@ -820,7 +827,8 @@ that cannot be itched
 /obj/item/device/appraisal
 	name = "cargo appraiser"
 	desc = "Handheld scanner hooked up to Cargo's market computers. Estimates sale value of various items."
-	flags = FPRINT|ONBELT|TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	m_amt = 150
 	mats = 5

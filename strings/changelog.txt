@@ -1,4 +1,46 @@
 
+(t)thu nov 24 22
+(u)Mr. Moriarty
+(p)11793
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(*)The armouries of all in-rotation maps have been standardised as to contain the same essential equipment. Some armouries still retain additional non-essential equipment to vary them from others.
+(+)Standardised the Donut2 Armoury, and added a perimeter defence.
+(u)ZWRh3
+(p)11084
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Removed organ damage from the battle royale gamemode.
+(u)Roddy
+(p)12055
+(e)💅⚙|C-QoL, A-Internal
+(+)Nanotrasen has begun hiring from a wider pool of employees. Adds in around 500 new random names.
+(u)Wivernshy
+(p)11352
+(e)|
+(+)Plush toy vocabulary has been improved!
+(u)goonstation-enjoyer
+(p)12109
+(e)💅📦|C-QoL, A-Game-Objects
+(+)You can now examine a cell charger to see how full the cell is.
+(u)Bartimeus973
+(p)12079
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Adds face-covering bandanas to the game! Use a handkerchief in hand to do your best bandit impression!
+(u)glowbold
+(p)12137
+(e)⚖💨📦|C-Balance, A-Atmospherics, A-Game-Objects
+(+)Freezers now use power based on how many degrees they shift the gas inside.
+(u)LeahTheTech
+(p)12131
+(e)🧛🔨🤖|A-Gamemodes, A-Player-Actions, A-Silicons
+(+)Silicons now hear a lot less flock system messages.
+(u)Conchuckter
+(p)11923
+(e)🪲🆕📦💡|C-Bug, C-Feature, A-Game-Objects, A-Station-Systems
+(*)Manufacturers are now packet integrated, become a nerd today!
+(u)Kubius
+(p)11689
+(e)🆕🗺💡|C-Feature, A-Mapping, A-Station-Systems
+(+)Quartermasters on Nadir can now consult their pocket guide for basic transception array guidance. A more in-depth book is available in the array control room.
 (t)wed nov 23 22
 (u)Kubius
 (p)11954

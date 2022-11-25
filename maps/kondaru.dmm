@@ -11723,13 +11723,10 @@
 	name = "autoname - SS13";
 	pixel_y = 20
 	},
-/obj/stool/chair{
-	desc = "";
-	icon_state = "chair_pool"
-	},
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
+/obj/stool/chair/pool,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "aLe" = (
@@ -48620,13 +48617,10 @@
 	},
 /area/station/quartermaster/office)
 "mvx" = (
-/obj/stool/chair{
-	desc = "";
-	icon_state = "chair_pool"
-	},
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
+/obj/stool/chair/pool,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "mwi" = (
@@ -61528,10 +61522,6 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/station/crew_quarters/md)
 "xCS" = (
-/obj/stool/chair{
-	desc = "";
-	icon_state = "chair_pool"
-	},
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -61540,6 +61530,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
+/obj/stool/chair/pool,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "xCW" = (
