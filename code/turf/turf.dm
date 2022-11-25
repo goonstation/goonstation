@@ -578,6 +578,7 @@ proc/generate_space_color()
 	var/list/rllights = RL_Lights
 
 	var/old_opacity = src.opacity
+	var/old_opaque_atom_count = src.opaque_atom_count
 
 	var/old_blocked_dirs = src.blocked_dirs
 	var/old_checkinghasproximity = src.checkinghasproximity
@@ -660,7 +661,7 @@ proc/generate_space_color()
 	new_turf.RL_NeedsAdditive = rlneedsadditive
 	//new_turf.RL_OverlayState = rloverlaystate //we actually want these cleared
 	new_turf.RL_Lights = rllights
-	new_turf.opaque_atom_count = opaque_atom_count
+	new_turf.opaque_atom_count = old_opaque_atom_count
 
 
 	new_turf.blocked_dirs = old_blocked_dirs

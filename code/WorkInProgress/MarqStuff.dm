@@ -481,7 +481,8 @@
 	icon_state = "quiver-0"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	item_state = "quiver"
-	flags = FPRINT | TABLEPASS | ONBACK | ONBELT
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBACK | ONBELT
 	move_triggered = 1
 
 	attackby(var/obj/item/arrow/I, var/mob/user)

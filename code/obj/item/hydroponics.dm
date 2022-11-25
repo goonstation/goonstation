@@ -392,7 +392,7 @@
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "plantanalyzer"
 	w_class = W_CLASS_TINY
-	flags = ONBELT
+	c_flags = ONBELT
 	mats = 4
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
@@ -453,7 +453,8 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/screwdriver.dmi'
 	icon_state = "trowel"
 
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	w_class = W_CLASS_TINY
 
 	force = 5

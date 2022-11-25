@@ -616,7 +616,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	name = "Experimental long-range mining teleporter"
 	desc = "Well this looks somewhat unsafe."
 	icon = 'icons/misc/32x64.dmi'
-	icon_state = "englrt0"
+	icon_state = "englrt"
 	density = 0
 	anchored = 1
 	var/recharging =0
@@ -645,7 +645,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		src.add_dialog(user)
 		add_fingerprint(user)
 		busy = 1
-		flick("englrt1", src)
+		flick("englrt-act", src)
 		playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
 		animate_teleport(user)
 		SPAWN(1 SECOND)

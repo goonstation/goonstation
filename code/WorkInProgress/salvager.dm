@@ -6,7 +6,8 @@
 #ifndef SECRETS_ENABLED
 	icon_state = "broken_egun"
 #endif
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	force = 10.0
 	throwforce = 10.0
 	throw_speed = 1
