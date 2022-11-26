@@ -1523,3 +1523,13 @@
 
 		A.UpdateIcon()
 		return
+
+/* ========================================================= */
+/* ---------------------- Pool Chairs ---------------------- */
+/* ========================================================= */
+/obj/stool/chair/pool
+	name = "pool chair"
+	desc = "This chair is perfect for lounging at the side of a pool."
+	icon_state = "chair_pool"
+	rotatable = FALSE
+	foldable = FALSE

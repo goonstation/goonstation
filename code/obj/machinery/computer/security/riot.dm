@@ -134,6 +134,11 @@
 
 				LAGCHECK(LAG_REALTIME)
 
+		SPAWN(0.5 SECONDS)
+			playsound(src, 'sound/vox/armory.ogg', 50, vary=FALSE, extrarange=10)
+			sleep(0.7 SECONDS)
+			playsound(src, 'sound/vox/authorized.ogg', 50, vary=FALSE, extrarange=10)
+
 	proc/unauthorize()
 		if(src.authed)
 

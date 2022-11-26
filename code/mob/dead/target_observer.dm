@@ -36,21 +36,6 @@
 		if (src.client)
 			src.removeOverlaysClient(src.client)
 
-		var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-		if (target)
-			var/turf/T = get_turf(target)
-			if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && (restricted_z_allowed(src, T) || (src.client && src.client.holder)))))
-				src.ghost.set_loc(T)
-			else
-				if (ASLoc)
-					src.ghost.set_loc(ASLoc)
-				else
-					src.ghost.z = 1
-		else
-			if (ASLoc)
-				src.ghost.set_loc(ASLoc)
-			else
-				src.ghost.z = 1
 		STOP_TRACKING
 		..()
 

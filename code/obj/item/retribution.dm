@@ -3,7 +3,8 @@
 	desc = "An incredibly advanced power core created by the Syndicate."
 	icon = 'icons/misc/retribution/SWORD_loot.dmi'
 	icon_state = "engine_core"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20

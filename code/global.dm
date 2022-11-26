@@ -64,7 +64,6 @@ var/global
 	force_random_looks = 0			// same as above
 
 	list/default_mob_static_icons = list() // new mobs grab copies of these for themselves, or if their chosen type doesn't exist in the list, they generate their own and add it
-	list/mob_static_icons = list() // these are the images that are actually seen by ghostdrones instead of whatever mob
 	list/orbicons = list()
 
 	list/browse_item_icons = list()
@@ -500,9 +499,9 @@ var/global
 
 	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("Credits","Bux","Tokens","Cash","Dollars","Tokens","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees")]"
 
-	list/valid_modes = list("secret","action","intrigue","random","traitor","meteor","extended","monkey",
-		"nuclear","blob","restructuring","wizard","revolution", "revolution_extended","malfunction",
-		"spy","gang","disaster","changeling","vampire","mixed","mixed_rp", "construction","conspiracy","spy_theft",
+	list/valid_modes = list("secret","action","intrigue","random","traitor","extended",
+		"nuclear","blob","wizard","revolution", "revolution_extended","spy","gang","disaster",
+		"changeling","vampire","mixed","mixed_rp", "construction","conspiracy","spy_theft",
 		"battle_royale", "vampire","everyone-is-a-traitor", "football", "flock", "arcfiend"
 #if defined(MAP_OVERRIDE_POD_WARS)
 		,"pod_wars"
