@@ -42,7 +42,9 @@
 	var/list/flocktraces_list = num_flock - 1 > 0 ? get_possible_enemies(ROLE_FLOCKTRACE, num_flock - 1) : list()
 
 	token_players = antag_token_list()
-	if (length(token_players))
+	if (!islist(token_players))
+		token_players = list()
+	else if (length(token_players))
 		shuffle_list(token_players)
 		for (var/datum/mind/tplayer as anything in token_players)
 			traitors += tplayer
@@ -85,7 +87,8 @@
 		if (flock.special_role == ROLE_FLOCKTRACE)
 			T = pick(spawn_area)
 			flock.current.make_flocktrace(T, flockmind.flock, TRUE)
-			spawn_area -= T
+			if (length(traitors <= 10))
+				spawn_area -= T
 
 	SPAWN(rand(1, 3) MINUTES)
 		src.send_intercept()
