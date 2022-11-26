@@ -12,5 +12,11 @@ var/global/list/type_ids = list(
 	/datum = "21"
 )
 
+#define PROC_TYPEID "26"
+
 var/global/list/addr_padding = list("00000", "0000", "000", "00", "0", "")
 #define BUILD_ADDR(TYPE_ID, NUM) "\[0x[TYPE_ID][addr_padding[length(num2text(NUM, 0, 16))]][num2text(NUM, 0, 16)]\]"
+
+#define TYPE_ID_OF_ADDR(ADDR) copytext(ADDR, 4, length(ADDR) - 6)
+
+#define isproc(P) (TYPEID_OF_ADDR(ref(P)) == PROC_TYPEID)
