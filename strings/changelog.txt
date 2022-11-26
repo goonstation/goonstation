@@ -1,5 +1,9 @@
 
 (t)fri nov 25 22
+(u)pali
+(p)12019
+(e)🆕💅🧛|C-Feature, C-QoL, A-Gamemodes
+(+)Ghost respawn events now show what antagonist you would be respawning as
 (u)glowbold
 (p)12104
 (e)⚖💡|C-Balance, A-Station-Systems
