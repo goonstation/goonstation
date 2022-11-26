@@ -57,7 +57,7 @@
 
 	var/datum/mind/chosen_flockmind = pick(antagWeighter.choose(length(flockminds_list) ? flockminds_list : flocktraces_list, ROLE_FLOCKMIND, 1, TRUE) + token_players)
 	src.traitors |= chosen_flockmind
-	chosen_flockmind.special_role = ROLE_FLOCKMIND
+	chosen_flockmind.special_role = ROLE_FLOCKTRACE // using ROLE_FLOCKMIND breaks shift key movement speed
 	chosen_flockmind.assigned_role = "MODE"
 	if (chosen_flockmind in token_players)
 		token_players -= chosen_flockmind
@@ -77,7 +77,7 @@
 /datum/game_mode/flock/post_setup()
 	..()
 	bestow_objective(src.start_flockmind, /datum/objective/specialist/flock)
-	var/mob/living/intangible/flock/flockmind/flockmind = src.start_flockmind.current
+	var/mob/living/intangible/flock/flockmind/flockmind = src.start_flockmind.current.make_flockmind()
 	flockmind.flock.player_mod = max(0, round(src.starting_players / 25) - 2)
 	src.start_flock = flockmind.flock
 
