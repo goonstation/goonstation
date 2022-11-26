@@ -167,7 +167,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		return data
 
 	proc/special_attack(var/mob/target, var/mob/living/user)
-		boutput(usr, "Your gloves do nothing special")
+		boutput(user, "Your gloves do nothing special")
 		return
 
 	proc/setSpecialOverride(var/type = null, master = null, active = 1)

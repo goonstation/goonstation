@@ -707,7 +707,7 @@ proc/get_ouija_word_list(atom/movable/source = null, words_min = 5, words_max = 
 		include_nearby_mobs_chance = 40,
 		include_most_mobs_chance = 20,
 		include_said_phrases_chance = 10,
-		filename = "ouija_words.txt",
+		filename = "ouija_board.txt",
 		strings_category = "ouija_board_words"
 	)
 	var/list/words = list()
