@@ -19793,7 +19793,7 @@
 /turf/simulated/floor/plating,
 /area/station/bridge/united_command)
 "WS" = (
-/obj/machinery/lrteleporter{
+/obj/machinery/lrteleporter/mining{
 	layer = 4
 	},
 /obj/decal/fakeobjects{

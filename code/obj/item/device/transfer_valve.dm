@@ -17,10 +17,10 @@
 	var/signalled = FALSE
 	var/tank_one_icon = null
 	var/tank_two_icon = null
-	var/image/tank1 = null
-	var/image/tank2 = null
-	var/image/tank1_under = null
-	var/image/tank2_under = null
+	var/image/tank_one_image = null
+	var/image/tank_two_image = null
+	var/image/tank_one_image_under = null
+	var/image/tank_two_image_under = null
 
 	w_class = W_CLASS_GIGANTIC /// HEH
 	p_class = 3 /// H E H
@@ -34,7 +34,26 @@
 
 	disposing()
 		processing_items -= src
+		qdel(src.tank_one)
+		src.tank_one = null
+		qdel(src.tank_two)
+		src.tank_two = null
+		qdel(src.attached_device)
+		src.attached_device = null
 		..()
+
+	Exited(thing, newloc)
+		. = ..()
+		if (thing == src.tank_one)
+			src.tank_one = null
+			src.UpdateIcon()
+		else if (thing == src.tank_two)
+			src.tank_two = null
+			src.UpdateIcon()
+		else if (thing == src.attached_device)
+			src.attached_device = null
+			src.UpdateIcon()
+
 
 	attackby(obj/item/item, mob/user)
 		if (isghostdrone(user))
@@ -100,7 +119,7 @@
 			UpdateIcon()
 
 		else if(istype(item, /obj/item/cable_coil)) //make loops for shoulder straps
-			if(flags & ONBACK)
+			if(c_flags & ONBACK)
 				boutput(user, "<span class='alert'>The valve already has shoulder straps!</span>")
 				return
 
@@ -110,7 +129,7 @@
 				return
 			coil.use(2)
 
-			flags |= ONBACK
+			c_flags |= ONBACK
 			boutput(user, "<span class='notice'>You attach two loops of [item] to the transfer valve!</span>")
 			UpdateIcon()
 
@@ -127,7 +146,7 @@
 		<BR> <B> Attachment two:</B> [tank_two] [tank_two ? "<A href='?src=\ref[src];tanktwo=1'>Remove</A>" : ""]
 		<BR> <B> Valve attachment:</B> [attached_device ? "<A href='?src=\ref[src];device=1'>[attached_device]</A>" : "None"] [attached_device ? "<A href='?src=\ref[src];rem_device=1'>Remove</A>" : ""]
 		<BR> <B> Valve status: </B> [ valve_open ? "<A href='?src=\ref[src];open=1'>Closed</A> <B>Open</B>" : "<B>Closed</B> <A href='?src=\ref[src];open=1'>Open</A>"]
-		<BR> [flags & ONBACK ? "<B> Straps: </B> <A href='?src=\ref[src];straps=1'>Remove</A>" : ""]"}
+		<BR> [c_flags & ONBACK ? "<B> Straps: </B> <A href='?src=\ref[src];straps=1'>Remove</A>" : ""]"}
 
 		user.Browse(dat, "window=trans_valve;size=600x300")
 		onclose(user, "trans_valve")
@@ -171,7 +190,7 @@
 				if(usr?.back && usr.back == src)
 					boutput(usr, "<span class='alert'>You can't detach the loops of wire while you're wearing [src]!</span>")
 				else
-					flags &= ~ONBACK
+					c_flags &= ~ONBACK
 					var/turf/location = get_turf(src)
 					var/obj/item/cable_coil/cut/C = new /obj/item/cable_coil/cut(location)
 					C.amount = 2
@@ -206,7 +225,7 @@
 		src.underlays = new/list()
 		src.wear_image = image(wear_image_icon, "valve")
 
-		if(!tank_one && !tank_two && !attached_device && !(flags & ONBACK))
+		if(!tank_one && !tank_two && !attached_device && !(c_flags & ONBACK))
 			icon_state = "valve_1"
 			return
 
@@ -222,10 +241,10 @@
 			//tank_one_overlay.icon_state = tank_one_icon
 			src.overlays += I
 
-			src.tank1 = new(src.wear_image_icon, icon_state = "[tank_one_icon]1")
-			src.tank1_under = new(src.wear_image_icon, icon_state = "[tank_one_icon]_under")
-			src.wear_image.overlays += tank1
-			src.wear_image.underlays += tank1_under
+			src.tank_one_image = new(src.wear_image_icon, icon_state = "[tank_one_icon]1")
+			src.tank_one_image_under = new(src.wear_image_icon, icon_state = "[tank_one_icon]_under")
+			src.wear_image.overlays += tank_one_image
+			src.wear_image.underlays += tank_one_image_under
 
 		if(tank_two)
 			tank_two_icon = tank_two.icon_state
@@ -241,10 +260,10 @@
 			//tank_two_overlay.icon = I
 			src.overlays += J
 
-			src.tank2 = new(src.wear_image_icon, icon_state = "[tank_two_icon]2")
-			src.tank2_under = new(src.wear_image_icon, icon_state = "[tank_two_icon]_under")
-			src.wear_image.overlays += tank2
-			src.wear_image.underlays += tank2_under
+			src.tank_two_image = new(src.wear_image_icon, icon_state = "[tank_two_icon]2")
+			src.tank_two_image_under = new(src.wear_image_icon, icon_state = "[tank_two_icon]_under")
+			src.wear_image.overlays += tank_two_image
+			src.wear_image.underlays += tank_two_image_under
 
 		if(attached_device)
 			device_icon = attached_device.icon_state
@@ -270,17 +289,17 @@
 				K = new(src.icon, icon_state = "[device_icon]")
 			src.overlays += K
 
-		if(flags & ONBACK)
+		if(c_flags & ONBACK)
 			var/image/straps = new(src.icon, icon_state = "wire_straps")
 			src.underlays += straps
 
 	update_wear_image(mob/living/carbon/human/H, override) // Doing above but for mutantraces if they have a special varient.
-		src.tank1 = image(src.wear_image.icon,"[override ? "back-" : ""][tank_one_icon]1")
-		src.tank1_under = image(src.wear_image.icon,"[override ? "back-" : ""][tank_one_icon]_under",)
-		src.tank2 = image(src.wear_image.icon,"[override ? "back-" : ""][tank_two_icon]2")
-		src.tank2_under = image(src.wear_image.icon,"[override ? "back-" : ""][tank_two_icon]_under")
-		src.wear_image.overlays = list(tank1, tank2)
-		src.wear_image.underlays = list(tank1_under, tank2_under)
+		src.tank_one_image = image(src.wear_image.icon,"[override ? "back-" : ""][tank_one_icon]1")
+		src.tank_one_image_under = image(src.wear_image.icon,"[override ? "back-" : ""][tank_one_icon]_under",)
+		src.tank_two_image = image(src.wear_image.icon,"[override ? "back-" : ""][tank_two_icon]2")
+		src.tank_two_image_under = image(src.wear_image.icon,"[override ? "back-" : ""][tank_two_icon]_under")
+		src.wear_image.overlays = list(tank_one_image, tank_two_image)
+		src.wear_image.underlays = list(tank_one_image_under, tank_two_image_under)
 
 		/*
 		Exadv1: I know this isn't how it's going to work, but this was just to check

@@ -5,7 +5,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 	icon = 'icons/obj/robot_parts.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "buildpipe"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	override_attack_hand = 0
 	var/skin_tone = "#FFFFFF"
 	var/slot = null // which part of the person or robot suit does it go on???????

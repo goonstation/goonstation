@@ -4628,12 +4628,8 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "bhr" = (
-/obj/stool/chair{
-	desc = "";
-	foldable = 0;
-	icon_state = "chair_pool"
-	},
 /obj/item/clothing/glasses/sunglasses,
+/obj/stool/chair/pool,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
@@ -12118,8 +12114,7 @@
 "dmU" = (
 /obj/storage/secure/closet/security/armory,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
-	dir = 6;
-	
+	dir = 6
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
@@ -27318,7 +27313,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "hHU" = (
-/obj/machinery/lrteleporter,
+/obj/machinery/lrteleporter/mining,
 /turf/simulated/floor/industrial,
 /area/station/quartermaster/refinery)
 "hHY" = (
@@ -32310,6 +32305,9 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
+"jiU" = (
+/turf/space,
+/area/station/shield_zone)
 "jiY" = (
 /turf/simulated/wall/auto/reinforced/jen/green,
 /area/station/science/lobby)
@@ -32485,8 +32483,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
@@ -35390,8 +35387,7 @@
 /area/station/engine/engineering)
 "kcT" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -77983,13 +77979,9 @@
 	},
 /area/station/crew_quarters/kitchen)
 "wnK" = (
-/obj/stool/chair{
-	desc = "";
-	foldable = 0;
-	icon_state = "chair_pool"
-	},
 /obj/item/clothing/glasses/sunglasses,
 /obj/machinery/light/incandescent/netural,
+/obj/stool/chair/pool,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
@@ -79153,7 +79145,10 @@
 /turf/simulated/wall/auto/jen,
 /area/station/janitor/office)
 "wEM" = (
-/obj/machinery/shield_generator,
+/obj/machinery/shield_generator{
+	name = "aquarium shield generator";
+	desc = "Protects the chief's aquarium from outside threats. Must have pulled some strings for this."
+	},
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -82624,8 +82619,7 @@
 "xDo" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
-	dir = 6;
-	
+	dir = 6
 	},
 /obj/cable{
 	d1 = 1;
@@ -152372,7 +152366,7 @@ rdj
 rdj
 rdj
 rdj
-rdj
+jiU
 rdj
 wCh
 dXs
@@ -152674,7 +152668,7 @@ rdj
 rdj
 rdj
 rdj
-rdj
+jiU
 rdj
 wCh
 qHX
@@ -152976,7 +152970,7 @@ gPb
 rdj
 rdj
 rdj
-rdj
+jiU
 rdj
 wCh
 mfw
@@ -153278,7 +153272,7 @@ rdj
 rdj
 rdj
 rdj
-rdj
+jiU
 rdj
 kTR
 xcQ
@@ -153580,7 +153574,7 @@ rdj
 rdj
 rdj
 rdj
-rdj
+jiU
 rdj
 kTR
 dXs
@@ -153882,7 +153876,7 @@ rdj
 rdj
 rdj
 rdj
-rdj
+jiU
 rdj
 kTR
 mfw
@@ -154184,7 +154178,7 @@ rdj
 rdj
 rdj
 rdj
-rdj
+jiU
 rdj
 kTR
 cPU
@@ -154486,7 +154480,7 @@ rdj
 rdj
 rdj
 rdj
-rdj
+jiU
 rdj
 kTR
 mfw
@@ -154788,7 +154782,7 @@ rdj
 rdj
 rdj
 rdj
-rdj
+jiU
 rdj
 kTR
 xEJ
@@ -155090,7 +155084,7 @@ rdj
 rdj
 rdj
 rdj
-rdj
+jiU
 rdj
 wCh
 mfw
@@ -155392,7 +155386,7 @@ rdj
 rdj
 rdj
 rdj
-rdj
+jiU
 rdj
 wCh
 wCh
@@ -155694,7 +155688,7 @@ rdj
 rdj
 rdj
 rdj
-rdj
+jiU
 rdj
 rdj
 wCh
@@ -155996,8 +155990,8 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
+jiU
+jiU
 rdj
 wCh
 kTR
@@ -156011,7 +156005,7 @@ xcQ
 kTR
 wCh
 rdj
-rdj
+jiU
 rdj
 bBD
 rfz
@@ -156299,9 +156293,9 @@ rdj
 rdj
 rdj
 rdj
+jiU
 rdj
 rdj
-rdj
 iDf
 iDf
 iDf
@@ -156313,7 +156307,7 @@ iDf
 iDf
 rdj
 rdj
-rdj
+jiU
 rdj
 bBD
 bsZ
@@ -156601,6 +156595,8 @@ rdj
 rdj
 rdj
 rdj
+jiU
+jiU
 rdj
 rdj
 rdj
@@ -156612,10 +156608,8 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
+jiU
+jiU
 rdj
 bBD
 kIl
@@ -156904,19 +156898,19 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
+jiU
+jiU
+jiU
+jiU
+jiU
+jiU
+jiU
+jiU
+jiU
+jiU
+jiU
+jiU
+jiU
 rdj
 rdj
 vpj

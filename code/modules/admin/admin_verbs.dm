@@ -341,6 +341,8 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/adjump,
 		/client/proc/find_all_of,
 		/client/proc/respawn_as,
+		/client/proc/whitelist_add_temp,
+		/client/proc/whitelist_toggle,
 
 		/client/proc/general_report,
 		/client/proc/map_debug_panel,
@@ -926,10 +928,10 @@ var/list/fun_images = list()
 	message_admins("[key_name(src)] forced [key_name(M)] to view the rules.")
 	switch(crossness)
 		if ("A bit")
-			M << csound('sound/misc/newsting.ogg')
+			M << 'sound/misc/newsting.ogg'
 			boutput(M, "<span class='alert'><B>Here are the rules, you can read this, you have a good chance of being able to read them too.</B></span>")
 		if ("A lot")
-			M << csound('sound/misc/klaxon.ogg')
+			M << 'sound/misc/klaxon.ogg'
 			boutput(M, "<span class='alert'><B>WARNING: An admin is likely very cross with you and wants you to read the rules right fucking now!</B></span>")
 
 	// M << browse(rules, "window=rules;size=800x1000")
@@ -2307,3 +2309,68 @@ var/list/fun_images = list()
 
 	global.phrase_log?.upload_uncool_words()
 	global.phrase_log?.load()
+
+
+/client/proc/whitelist_add_temp(ckey as text)
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set name = "Whitelist Add Temp"
+	set desc = "Temporarily whitelist a ckey (for this round only)"
+	ADMIN_ONLY
+	DENY_TEMPMIN
+
+	ckey = ckey(ckey)
+	if(!ckey)
+		return
+
+	if(isnull(global.whitelistCkeys))
+		global.whitelistCkeys = list()
+	global.whitelistCkeys += ckey
+
+
+/client/proc/whitelist_toggle()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	set name = "Toggle Whitelist"
+	set desc = "Toggle the server whitelist on or off"
+	ADMIN_ONLY
+	DENY_TEMPMIN
+
+	var/current_status = config.whitelistEnabled ? "ON" : "OFF"
+	if(!config.whitelistEnabled && config.baseWhitelistEnabled)
+		if(config.roundsLeftWithoutWhitelist == 0)
+			current_status += " (will be enabled next round)"
+		else
+			current_status += " (will be enabled in [config.roundsLeftWithoutWhitelist] rounds)"
+
+	if(tgui_alert(src, "The whitelist is currently [current_status]. Are you sure you want to change that?", "Toggle whitelist?", list("Yes", "No")) != "Yes")
+		return
+
+	if(config.whitelistEnabled)
+		var/rounds_duration = 0
+		if(config.baseWhitelistEnabled)
+			rounds_duration = tgui_input_number(src, "How many rounds should the whitelist be disabled for? (0 = just current round)", "Whitelist duration", 0, 10, 0)
+		if(isnull(rounds_duration))
+			return
+		if(rounds_duration)
+			message_admins("[src] has disabled the whitelist for [rounds_duration] round\s.")
+			logTheThing(LOG_ADMIN, src, null, "Disabled the whitelist for [rounds_duration] round\s.")
+			world.save_intra_round_value("whitelist_disabled", rounds_duration)
+		else
+			message_admins("[src] has disabled the whitelist for the rest of the round.")
+			logTheThing(LOG_ADMIN, src, null, "Disabled the whitelist for the rest of the round.")
+		config.whitelistEnabled = FALSE
+		config.roundsLeftWithoutWhitelist = rounds_duration
+	else
+		var/kick_existing = tgui_alert(src, "Do you want to kick all players who are not whitelisted?", "Kick non-whitelisted players?", list("Yes", "No")) == "Yes"
+		config.whitelistEnabled = TRUE
+		config.roundsLeftWithoutWhitelist = 0
+		if(kick_existing)
+			for(var/client/C in clients)
+				if(C.holder || (C in global.whitelistCkeys))
+					continue
+				boutput(C, "<span class='alert' style='font-size: 2.5em;'>You have been kicked from the server because the whitelist got enabled and you are not whitelisted.</span>")
+				del(C)
+		message_admins("[src] has enabled the whitelist [kick_existing ? "and kicked all non-whitelisted players" : ""]")
+		logTheThing(LOG_ADMIN, src, null, "Enabled the whitelist [kick_existing ? "and kicked all non-whitelisted players" : ""]")
+		world.save_intra_round_value("whitelist_disabled", 0)
+
+	set_station_name(src.mob, manual=FALSE, name=station_name)

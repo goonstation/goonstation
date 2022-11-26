@@ -431,6 +431,7 @@
 	name = "cryo"
 	help_message = "Cryos a given ckey."
 	action_name = "cryo"
+	allow_disconnected = TRUE
 
 	perform_action(user, mob/target)
 		if (!length(by_type[/obj/cryotron]))

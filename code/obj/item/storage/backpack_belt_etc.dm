@@ -7,7 +7,8 @@
 	icon_state = "backpack"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "backpack"
-	flags = ONBACK | FPRINT | TABLEPASS | NOSPLASH
+	flags = FPRINT | TABLEPASS | NOSPLASH
+	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
 	max_wclass = W_CLASS_NORMAL
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
@@ -400,7 +401,8 @@
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "fanny"
 	item_state = "fanny"
-	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
+	flags = FPRINT | TABLEPASS | NOSPLASH
+	c_flags = ONBELT
 	w_class = W_CLASS_BULKY
 	slots = 5
 	max_wclass = W_CLASS_NORMAL
@@ -463,7 +465,8 @@
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "belt"
 	item_state = "belt"
-	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
+	flags = FPRINT | TABLEPASS | NOSPLASH
+	c_flags = ONBELT
 	max_wclass = W_CLASS_SMALL
 	does_not_open_in_pocket = 0
 	stamina_damage = 10
@@ -911,7 +914,8 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "pool_ring"
 	item_state = "pool_ring"
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	w_class = W_CLASS_NORMAL
 	mats = 5 // I dunno???
 
