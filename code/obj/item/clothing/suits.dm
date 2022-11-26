@@ -1430,22 +1430,12 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/space/industrial/combat)
 	icon_state = "ntso_specialist-heavy"
 	item_state = "ntso_specialist-heavy"
 
-	setupProperties()
-		..()
-		setProperty("meleeprot", 9)
-		setProperty("rangedprot", 2)
-
 /obj/item/clothing/suit/space/industrial/combat/salvager
 	name = "\improper Salvager juggernaut combat armor"
 	desc = "A heavily modified industrial mining suit, it's been retrofitted for greater protection in firefights."
 	is_syndicate = FALSE
 	icon_state = "salvager-heavy"
 	item_state = "salvager-heavy"
-
-	setupProperties()
-		..()
-		setProperty("meleeprot", 9)
-		setProperty("rangedprot", 2)
 
 //NT pod wars suits
 /obj/item/clothing/suit/space/nanotrasen
