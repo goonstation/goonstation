@@ -1379,7 +1379,9 @@
 		/obj/item/clothing/under/gimmick/eightiesmens,
 		/obj/item/clothing/under/gimmick/eightieswomens,
 		/obj/item/clothing/under/gimmick/ziggy,
-		/obj/item/clothing/under/gimmick/jcdenton)
+		/obj/item/clothing/under/gimmick/jcdenton,
+		/obj/item/clothing/under/misc/mobster,
+		/obj/item/clothing/under/misc/mobster/alt)
 
 	one
 		amt2spawn = 1
