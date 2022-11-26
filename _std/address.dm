@@ -19,4 +19,4 @@ var/global/list/addr_padding = list("00000", "0000", "000", "00", "0", "")
 
 #define TYPE_ID_OF_ADDR(ADDR) copytext(ADDR, 4, length(ADDR) - 6)
 
-#define isproc(P) (TYPEID_OF_ADDR(ref(P)) == PROC_TYPEID)
+#define isproc(P) (TYPE_ID_OF_ADDR(ref(P)) == PROC_TYPEID)
