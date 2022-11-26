@@ -1,5 +1,9 @@
 
 (t)fri nov 25 22
+(u)glowbold
+(p)12159
+(e)⚖💊📦|C-Balance, A-Medical, A-Game-Objects
+(*)Cryogenic healing pods use power, with an increased rate while on and occupied.
 (u)pali
 (p)12019
 (e)🆕💅🧛|C-Feature, C-QoL, A-Gamemodes
