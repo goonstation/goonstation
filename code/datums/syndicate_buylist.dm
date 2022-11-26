@@ -1077,7 +1077,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 
 /datum/syndicate_buylist/surplus/syndicate_armor
 	name = "Syndicate Command Armor"
-	item = /obj/item/clothing/suit/space/industrial/combat/syndicate
+	item = /obj/item/clothing/suit/space/industrial/syndicate
 	cost = 5
 	desc = "A set of syndicate command armor. I guess the last owner must have died."
 	br_allowed = TRUE

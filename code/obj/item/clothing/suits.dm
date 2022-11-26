@@ -1394,20 +1394,18 @@
 		STOP_TRACKING
 		. = ..()
 
-ABSTRACT_TYPE(/obj/item/clothing/suit/space/industrial/combat)
-/obj/item/clothing/suit/space/industrial/combat
-	setupProperties()
-		..()
-		setProperty("meleeprot", 9)
-		setProperty("rangedprot", 2)
-
-/obj/item/clothing/suit/space/industrial/combat/syndicate
+/obj/item/clothing/suit/space/industrial/syndicate
 	name = "\improper Syndicate command armor"
 	desc = "An armored space suit, not for your average expendable chumps. No sir."
 	is_syndicate = TRUE
 	icon_state = "indusred"
 	item_state = "indusred"
 	mats = 45 //should not be cheap to make at mechanics, increased from 15.
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 9)
+		setProperty("rangedprot", 2)
 
 	New()
 		..()
@@ -1423,19 +1421,29 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/space/industrial/combat)
 		icon_state = "syndie_specialist-heavy"
 		item_state = "syndie_specialist-heavy"
 
-/obj/item/clothing/suit/space/industrial/combat/ntso
+/obj/item/clothing/suit/space/industrial/ntso
 	name = "\improper NT-SO pressurized assault suit"
 	desc = "A Nanotrasen special forces heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
 	is_syndicate = FALSE
 	icon_state = "ntso_specialist-heavy"
 	item_state = "ntso_specialist-heavy"
 
-/obj/item/clothing/suit/space/industrial/combat/salvager
+	setupProperties()
+		..()
+		setProperty("meleeprot", 9)
+		setProperty("rangedprot", 2)
+
+/obj/item/clothing/suit/space/industrial/salvager
 	name = "\improper Salvager juggernaut combat armor"
 	desc = "A heavily modified industrial mining suit, it's been retrofitted for greater protection in firefights."
 	is_syndicate = FALSE
 	icon_state = "salvager-heavy"
 	item_state = "salvager-heavy"
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 9)
+		setProperty("rangedprot", 2)
 
 //NT pod wars suits
 /obj/item/clothing/suit/space/nanotrasen
