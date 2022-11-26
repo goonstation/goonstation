@@ -872,23 +872,96 @@ ABSTRACT_TYPE(/obj/item/clothing/head/helmet/space/industrial/combat)
 		setProperty("meleeprot_head", 7)
 
 /obj/item/clothing/head/helmet/space/industrial/combat/syndicate
-	name = "Syndicate Command Helmet"
+	name = "\improper Syndicate Command Helmet"
 	desc = "Ooh, fancy."
 	icon_state = "indusred"
 	item_state = "indusred"
 	is_syndicate = 1
 
-/obj/item/clothing/head/helmet/space/industrial/combat/ntso
-	name = "NT-SO pressurized assault helmet"
+ABSTRACT_TYPE(/obj/item/clothing/head/helmet/space/industrial/combat/thermal_visored)
+/obj/item/clothing/head/helmet/space/industrial/combat/thermal_visored
+	var/visor_color_lst = list(
+		"color_r" = 1,
+		"color_g" = 1,
+		"color_b" = 1,
+	)
+	var/visor_enabled = FALSE
+
+	attack_self(var/mob/user)
+		src.toggle_visor(user)
+
+	proc/toggle_visor(var/mob/user)
+		src.visor_enabled = !src.visor_enabled
+
+		// Update the item & icon states
+		src.item_state = "[initial(src.item_state)][src.visor_enabled ? "-on" : null]"
+		set_icon_state("[initial(src.icon_state)][src.visor_enabled ? "-on" : null]")
+		user.update_clothing()
+		playsound(src, 'sound/items/mesonactivate.ogg', 30, 1)
+
+		// Check that the user is human & the helmet is worn
+		if (!ishuman(user))
+			return
+		var/mob/living/carbon/human/human_user = user
+		if (!istype(human_user.head, /obj/item/clothing/head/helmet/space/industrial/combat/thermal_visored))
+			return
+
+		// User is human & helmet is worn, apply the properties
+		if (src.visor_enabled)
+			src.apply_thermal(human_user)
+		else
+			src.remove_thermal(human_user)
+
+	proc/apply_thermal(var/mob/living/user)
+		src.color_r = src.visor_color_lst["color_r"]
+		src.color_g = src.visor_color_lst["color_g"]
+		src.color_b = src.visor_color_lst["color_b"]
+		user.vision.set_scan(TRUE)
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
+
+	proc/remove_thermal(var/mob/living/user)
+		src.color_r = 1
+		src.color_g = 1
+		src.color_b = 1
+		user.vision.set_scan(FALSE)
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
+
+	equipped(var/mob/living/user, var/slot)
+		..()
+		if(!isliving(user))
+			return
+		if (slot == SLOT_HEAD && src.visor_enabled)
+			src.apply_thermal(user)
+
+	unequipped(var/mob/living/user)
+		..()
+		if(!isliving(user))
+			return
+		src.remove_thermal(user)
+
+/obj/item/clothing/head/helmet/space/industrial/combat/thermal_visored/abilities = list(/obj/ability_button/helmet_thermal_toggle)
+
+/obj/item/clothing/head/helmet/space/industrial/combat/thermal_visored/ntso
+	name = "\improper NT-SO pressurized assault helmet"
 	desc = "A heavily reinforced combat helmet for Nanotrasen special forces."
 	icon_state = "ntso_specialist-heavy"
 	item_state = "ntso_specialist-heavy"
+	visor_color_lst = list(
+		"color_r" = 0.8,
+		"color_g" = 0.8,
+		"color_b" = 1,
+	)
 
-/obj/item/clothing/head/helmet/space/industrial/combat/salvager
-	name = "Salvager juggernaut combat helmet"
+/obj/item/clothing/head/helmet/space/industrial/combat/thermal_visored/salvager
+	name = "\improper Salvager juggernaut combat helmet"
 	desc = "A heavily modified industrial mining helmet, it's been retrofitted for combat use."
 	icon_state = "salvager-heavy"
 	item_state = "salvager-heavy"
+	visor_color_lst = list(
+		"color_r" = 1.0,
+		"color_g" = 0.9,
+		"color_b" = 0.8,
+	)
 
 /obj/item/clothing/head/helmet/space/mining_combat
 	name = "mining combat helmet"

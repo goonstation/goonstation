@@ -265,6 +265,12 @@
 					safety = 2
 				else
 					safety = 0
+			else if (istype(H.head, /obj/item/clothing/head/helmet/space/industrial/combat/thermal_visored))
+				var/obj/item/clothing/head/helmet/space/industrial/combat/thermal_visored/helmet = H.head
+				if (helmet.visor_enabled)
+					safety = -1
+				else
+					safety = 2
 			else if (istype(H.head, /obj/item/clothing/head/helmet/space))
 				safety = 2
 			else if (istype(H.glasses, /obj/item/clothing/glasses/sunglasses) || H.eye_istype(/obj/item/organ/eye/cyber/sunglass))
