@@ -181,7 +181,7 @@
 /obj/submachine/laundry_machine/attack_hand(mob/user)
 	if (!can_act(user))
 		return
-	src.add_fingerprint(usr)
+	src.add_fingerprint(user)
 	ui_interact(user)
 
 /obj/submachine/laundry_machine/proc/force_into_machine(obj/item/grab/W as obj, mob/user as mob)

@@ -644,11 +644,13 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
 	if (!src.handkerchief)
 		return
-	qdel(src)
 	var/obj/item/cloth/handkerchief/the_handkerchief = new src.handkerchief
+	the_handkerchief.setMaterial(src.material)
 	the_handkerchief.color = src.color
+	src.copy_filters_to(the_handkerchief)
+	qdel(src)
 	user.put_in_hand_or_drop(the_handkerchief)
-	boutput(user, "<span class='notice'>You unfold the bandana into [the_handkerchief].</span>")
+	boutput(user, "<span class='notice'>You unfold \the [src] into \a [the_handkerchief].</span>")
 
 /obj/item/clothing/mask/bandana/white
 	icon_state = "bandana_white"

@@ -1900,10 +1900,10 @@ obj/item/clothing/gloves/concussive
 
 	attack_self(mob/user) // Fixed --melon
 		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
-			boutput(usr, "<span class='alert'>The transporter is out of charge.</span>")
+			boutput(user, "<span class='alert'>The transporter is out of charge.</span>")
 			return
 		if (!length(global.cargo_pad_manager.pads))
-			boutput(usr, "<span class='alert'>No receivers available.</span>")
+			boutput(user, "<span class='alert'>No receivers available.</span>")
 		else
 			var/mob/holder = src.loc
 			var/selection = tgui_input_list(user, "Select Cargo Pad Location:", "Cargo Pads", global.cargo_pad_manager.pads, 15 SECONDS)

@@ -1228,7 +1228,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	attack_self(var/mob/user as mob)
 		if (!user && usr)
 			user = usr
-		else if (!user && !usr) // buh?
+		else if (!user)
 			return ..()
 
 		if (!ishuman(user))
