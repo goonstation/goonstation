@@ -254,6 +254,7 @@
 	name_prefix = "Free range "
 	iconmod = "EggplantEggs"
 	crop = /obj/item/reagent_containers/food/snacks/ingredient/egg
+	assoc_reagents = list("egg")
 
 // Wheat Mutations
 
@@ -746,6 +747,7 @@
 	name_suffix = "butter Sandwich"
 	crop = /obj/item/reagent_containers/food/snacks/sandwich/pb
 	iconmod = "PeanutSandwich"
+	assoc_reagents = list("bread")
 
 //Tobacco mutations
 

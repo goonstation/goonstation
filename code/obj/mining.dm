@@ -1451,7 +1451,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	item_state = "pick"
 	health = 8
 	w_class = W_CLASS_NORMAL
-	flags = ONBELT
+	c_flags = ONBELT
 	force = 7
 	var/cell_type = null
 	var/dig_strength = 1
@@ -1486,14 +1486,18 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 		if (SEND_SIGNAL(src, COMSIG_CELL_USE, use) & CELL_INSUFFICIENT_CHARGE)
 			src.power_down()
+			OVERRIDE_COOLDOWN(src, "depowered", 8 SECONDS)
 			var/turf/T = get_turf(src)
-			T.visible_message("<span class='alert'>[src] runs out of charge and powers down!</span>")
+			T.visible_message("<span class='alert'>[src] runs out of charge and triggers an emergency shutdown!</span>")
 		return 1
 
 	attack_self(var/mob/user as mob)
 		if (!digcost)
 			return
 		if (src.process_charges(0))
+			if(GET_COOLDOWN(src, "depowered"))
+				boutput(user, "<span class='alert'>[src] was recently power cycled and is still cooling down!</span>")
+				return
 			if (!src.status)
 				boutput(user, "<span class='notice'>You power up [src].</span>")
 				src.power_up()
@@ -1518,6 +1522,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		return
 
 	proc/power_down()
+		ON_COOLDOWN(src, "depowered", 1 SECOND)
 		src.tooltip_rebuild = 1
 		src.status = 0
 		if (powered_overlay)
@@ -1554,7 +1559,7 @@ obj/item/clothing/gloves/concussive
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "powerpick"
 	item_state = "ppick1"
-	flags = ONBELT
+	c_flags = ONBELT
 	dig_strength = 2
 	digcost = 2
 	cell_type = /obj/item/ammo/power_cell
@@ -1603,7 +1608,7 @@ obj/item/clothing/gloves/concussive
 	icon_state = "lasdrill"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "drill"
-	flags = ONBELT
+	c_flags = ONBELT
 	force = 10
 	mats = 4
 	dig_strength = 2
@@ -1670,7 +1675,7 @@ obj/item/clothing/gloves/concussive
 	icon_state = "powershovel"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "pshovel1"
-	flags = ONBELT
+	c_flags = ONBELT
 	dig_strength = 0
 	digcost = 2
 	cell_type = /obj/item/ammo/power_cell
@@ -1716,7 +1721,7 @@ obj/item/clothing/gloves/concussive
 /obj/item/breaching_charge/mining
 	name = "concussive charge"
 	desc = "It is set to detonate in 5 seconds."
-	flags = ONBELT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	var/emagged = 0
@@ -1857,7 +1862,9 @@ obj/item/clothing/gloves/concussive
 	/// List of types that cargo teles are allowed to send. Built in New, shared across all teles
 	var/static/list/allowed_types = list()
 	w_class = W_CLASS_SMALL
-	flags = ONBELT | FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	c_flags = ONBELT
+
 	mats = 4
 
 	New()
@@ -2026,7 +2033,7 @@ obj/item/clothing/gloves/concussive
 	desc = "A device capable of detecting nearby mineral deposits."
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "minanal"
-	flags = ONBELT
+	c_flags = ONBELT
 	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
@@ -2093,7 +2100,7 @@ obj/item/clothing/gloves/concussive
 	desc = "The scanner doesn't look right somehow."
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "minanal"
-	flags = ONBELT
+	c_flags = ONBELT
 	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
