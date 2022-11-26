@@ -437,9 +437,13 @@
 				T2.neighcheckinghasproximity++
 		if(src.opacity)
 			T.opaque_atom_count++
-		if(src.pass_unstable)
-			T.pass_unstable++
-		T.passability_cache = null
+		if(src.bound_width == 32 && src.bound_width == src.bound_height)
+			T.passability_cache = null
+			T.pass_unstable += src.pass_unstable
+		else
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.pass_unstable += src.pass_unstable
+				covered_turf.passability_cache = null
 	if(!isnull(src.loc))
 		src.loc.Entered(src, null)
 		if(isturf(src.loc)) // call it on the area too
@@ -528,6 +532,7 @@
 		return // this should in turn fire off its own slew of move calls, so don't do anything here
 
 	var/atom/A = src.loc
+	var/list/old_locs = src.locs
 	if(src.event_handler_flags & MOVE_NOCLIP)
 		src.set_loc(NewLoc)
 	else
@@ -549,18 +554,26 @@
 		return
 
 	if (isturf(last_turf))
-		last_turf.passability_cache = null
-		if(src.pass_unstable)
-			last_turf.pass_unstable--
+		if(src.bound_width == 32 && src.bound_width == src.bound_height)
+			last_turf.passability_cache = null
+			last_turf.pass_unstable -= src.pass_unstable
+		else // This is ugly but ~30% faster than just going over old_locs
+			for(var/turf/covered_turf as anything in old_locs)
+				covered_turf.pass_unstable -= src.pass_unstable
+				covered_turf.passability_cache = null
 		if (src.event_handler_flags & USE_PROXIMITY)
 			last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
 			for (var/turf/T2 in range(1, last_turf))
 				T2.neighcheckinghasproximity--
 	if(isturf(src.loc))
 		var/turf/T = src.loc
-		T.passability_cache = null
-		if(src.pass_unstable)
-			T.pass_unstable++
+		if(src.bound_width == 32 && src.bound_width == src.bound_height)
+			T.passability_cache = null
+			T.pass_unstable += src.pass_unstable
+		else // This is ugly but ~30% faster than just going over old_locs
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.pass_unstable += src.pass_unstable
+				covered_turf.passability_cache = null
 		if (src.event_handler_flags & USE_PROXIMITY)
 			T.checkinghasproximity++
 			for (var/turf/T2 in range(1, T))
@@ -914,6 +927,7 @@
 	var/area/new_area = get_area(newloc)
 
 	var/atom/oldloc = loc
+	var/atom/oldlocs = src.locs
 	loc = newloc
 
 #ifdef RUNTIME_CHECKING
@@ -930,9 +944,13 @@
 
 	if(isturf(oldloc))
 		var/turf/oldturf = oldloc
-		oldturf.passability_cache = null
-		if(src.pass_unstable)
-			oldloc.pass_unstable--
+		if(src.bound_width == 32 && src.bound_width == src.bound_height)
+			oldturf.passability_cache = null
+			oldturf.pass_unstable -= src.pass_unstable
+		else
+			for(var/turf/covered_turf as anything in oldlocs)
+				covered_turf.pass_unstable -= src.pass_unstable
+				covered_turf.passability_cache = null
 		for(var/atom/A in oldloc)
 			if(A != src)
 				A.Uncrossed(src)
@@ -945,9 +963,13 @@
 
 	if(isturf(newloc))
 		var/turf/newturf = newloc
-		newturf.passability_cache = null
-		if(src.pass_unstable)
-			++newloc.pass_unstable
+		if(src.bound_width == 32 && src.bound_width == src.bound_height)
+			newturf.passability_cache = null
+			newturf.pass_unstable += src.pass_unstable
+		else
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.pass_unstable += src.pass_unstable
+				covered_turf.passability_cache = null
 		for(var/atom/A in newloc)
 			if(A != src)
 				A.Crossed(src)
