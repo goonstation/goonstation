@@ -39,6 +39,7 @@
 	var/datum/light/light
 	var/brightness = 0.5
 	var/shuttle_departure_delayed = FALSE
+	var/crew_shortage_call_prevented = FALSE
 
 /obj/flock_structure/relay/New()
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, 9)
@@ -57,6 +58,10 @@
 			emergency_shuttle.settimeleft(src.charge_time_length + SHUTTLELEAVETIME)
 			src.shuttle_departure_delayed = TRUE
 			command_alert("Emergency shuttle departure delayed due to anomalous radio signal interference.")
+	if (ticker?.mode.crew_shortage_enabled)
+		var/datum/game_mode/gamemode = ticker.mode
+		gamemode.crew_shortage_enabled = FALSE
+		src.crew_shortage_call_prevented = TRUE
 
 	boutput(src.flock?.flockmind, "<span class='alert'><b>You pull together the collective force of your Flock to transmit the Signal. If the Relay is destroyed, you're dead!</b></span>")
 	flock_speak(null, "RELAY CONSTRUCTED! DEFEND THE RELAY!!", src.flock)
@@ -163,6 +168,9 @@
 			boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
 			boutput(world, "<span class='notice'>- - - <b>Reason:</b> Hostile transmission intercepted. Sending rapid response emergency shuttle.</span>")
 			boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft())] seconds.</B></span>")
+	if (src.crew_shortage_call_prevented)
+		var/datum/game_mode/gamemode = ticker.mode
+		gamemode.crew_shortage_enabled = TRUE
 	sleep(2 SECONDS)
 	for(var/x = -2 to 2)
 		for(var/y = -2 to 2)
