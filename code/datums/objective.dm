@@ -812,10 +812,13 @@ proc/create_fluff(datum/mind/target)
 			return 1
 
 /datum/objective/specialist/flock
-	explanation_text = "Construct the relay and transmit The Signal."
+	explanation_text = "Construct the Relay and transmit the Signal."
 
 	check_completion()
-		return flock_signal_unleashed
+		for (var/datum/flock/flock as anything in flocks)
+			if (flock.flockmind_mind == src.owner && isflockmob(src.owner.current))
+				return flock.relay_finished
+		return FALSE
 
 
 /datum/objective/specialist/wraith
