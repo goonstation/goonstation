@@ -36,7 +36,7 @@
 			src.starting_players++
 
 	// 1 flockmind up to 50 players, then at 50 players get 1 flocktrace, another for every 25 players more
-	var/num_flock = clamp(src.starting_players < 50 ? 2 : round(src.starting_players / 25), src.roundstart_flock_min, src.roundstart_flock_max)
+	var/num_flock = clamp(src.starting_players < 50 ? 1 : round(src.starting_players / 25), src.roundstart_flock_min, src.roundstart_flock_max)
 
 	var/list/flockminds_list = num_flock > 0 ? get_possible_enemies(ROLE_FLOCKMIND, 1) : list()
 	var/list/flocktraces_list = num_flock - 1 > 0 ? get_possible_enemies(ROLE_FLOCKTRACE, num_flock - 1) : list()
@@ -87,7 +87,7 @@
 		if (flock.special_role == ROLE_FLOCKTRACE)
 			T = pick(spawn_area)
 			flock.current.make_flocktrace(T, flockmind.flock, TRUE)
-			if (length(traitors <= 10))
+			if (length(traitors) <= 10)
 				spawn_area -= T
 
 	SPAWN(rand(1, 3) MINUTES)

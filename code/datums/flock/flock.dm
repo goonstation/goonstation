@@ -265,14 +265,14 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/proc/update_computes(forceTextUpdate = FALSE)
 	var/totalCompute = src.total_compute()
 
+	src.max_trace_count = round(min(src.total_compute(), FLOCK_RELAY_COMPUTE_COST) / FLOCKTRACE_COMPUTE_COST) + src.free_traces
+
 	var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
 	aH?.updateCompute(src.used_compute, totalCompute, forceTextUpdate)
 
 	for (var/mob/living/intangible/flock/trace/T as anything in src.traces)
 		aH = T.abilityHolder
 		aH?.updateCompute(src.used_compute, totalCompute, forceTextUpdate)
-
-	src.max_trace_count = round(min(src.total_compute(), FLOCK_RELAY_COMPUTE_COST) / FLOCKTRACE_COMPUTE_COST) + src.free_traces
 
 /datum/flock/proc/registerFlockmind(var/mob/living/intangible/flock/flockmind/F)
 	if(!F)
