@@ -1,5 +1,9 @@
 
 (t)fri nov 25 22
+(u)Bartimeus973
+(p)12080
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)White handkerchiefs can now be printed at hacked clothing manufacturers. You can color the handkerchiefs with paint.
 (u)Wisemonster
 (p)11890
 (e)🗺💅|A-Mapping, C-QoL
