@@ -36,7 +36,7 @@
 			src.starting_players++
 
 	// 1 flockmind up to 50 players, then at 50 players get 1 flocktrace, another for every 25 players more
-	var/num_flock = clamp(src.starting_players < 50 ? 1 : round(src.starting_players / 25), roundstart_flock_min, roundstart_flock_max)
+	var/num_flock = clamp(src.starting_players < 50 ? 2 : round(src.starting_players / 25), src.roundstart_flock_min, src.roundstart_flock_max)
 
 	var/list/flockminds_list = num_flock > 0 ? get_possible_enemies(ROLE_FLOCKMIND, 1) : list()
 	var/list/flocktraces_list = num_flock - 1 > 0 ? get_possible_enemies(ROLE_FLOCKTRACE, num_flock - 1) : list()
@@ -47,16 +47,16 @@
 	else if (length(token_players))
 		shuffle_list(token_players)
 		for (var/datum/mind/tplayer as anything in token_players)
-			traitors += tplayer
+			src.traitors += tplayer
 			logTheThing(LOG_ADMIN, tplayer.current, "redeemed an antag token for Flock gamemode.")
 			message_admins("[key_name(tplayer.current)] redeemed an antag token for Flock gamemode.")
 
-	if (length(flockminds_list) + length(flocktraces_list) + length(token_players) < roundstart_flock_min)
+	if (length(flockminds_list) + length(flocktraces_list) + length(token_players) < src.roundstart_flock_min)
 		boutput(world, "<span class='alert'><b>ERROR: Couldn't assign any players to the Flock, aborting Flock game mode pre-setup.</b></span>")
 		return FALSE
 
 	var/datum/mind/chosen_flockmind = pick(antagWeighter.choose(length(flockminds_list) ? flockminds_list : flocktraces_list, ROLE_FLOCKMIND, 1, TRUE) + token_players)
-	traitors |= chosen_flockmind
+	src.traitors |= chosen_flockmind
 	chosen_flockmind.special_role = ROLE_FLOCKMIND
 	chosen_flockmind.assigned_role = "MODE"
 	if (chosen_flockmind in token_players)
@@ -66,7 +66,7 @@
 	var/list/chosen_flocktraces = ((num_flock - 1 - length(token_players) > 0) ? antagWeighter.choose(flocktraces_list, ROLE_FLOCKTRACE, \
 									num_flock - 1 - length(token_players), TRUE) : list()) + token_players
 	for (var/datum/mind/flock as anything in chosen_flocktraces)
-		traitors |= flock
+		src.traitors |= flock
 		flock.special_role = ROLE_FLOCKTRACE
 		flock.assigned_role = "MODE"
 
@@ -76,14 +76,14 @@
 
 /datum/game_mode/flock/post_setup()
 	..()
-	bestow_objective(start_flockmind, /datum/objective/specialist/flock)
-	var/mob/living/intangible/flock/flockmind/flockmind = start_flockmind.current
+	bestow_objective(src.start_flockmind, /datum/objective/specialist/flock)
+	var/mob/living/intangible/flock/flockmind/flockmind = src.start_flockmind.current
 	flockmind.flock.player_mod = max(0, round(src.starting_players / 25) - 2)
-	start_flock = flockmind.flock
+	src.start_flock = flockmind.flock
 
 	var/turf/T = get_turf(flockmind)
 	var/list/turf/spawn_area = block(locate(T.x - 1, T.y - 1, T.z), locate(T.x + 1, T.y + 1, T.z))
-	for (var/datum/mind/flock as anything in traitors)
+	for (var/datum/mind/flock as anything in src.traitors)
 		if (flock.special_role == ROLE_FLOCKTRACE)
 			T = pick(spawn_area)
 			flock.current.make_flocktrace(T, flockmind.flock, TRUE)
@@ -98,17 +98,17 @@
 		return TRUE
 	if (no_automatic_ending)
 		return FALSE
-	if (start_flock.relay_finished)
+	if (src.start_flock.relay_finished)
 		return TRUE
 	return FALSE
 
 /datum/game_mode/flock/victory_msg()
-	if (start_flock.relay_finished)
+	if (src.start_flock.relay_finished)
 		return "<b style='font-size:20px'>Flock victory!</b><br>The Flock successfully transmitted the Signal, leaving irreparable damage to the station."
 	return "<b style='font-size:20px'>Station victory!</b><br>The crew succeeded in preventing the Flock conversion of the station."
 
 /datum/game_mode/flock/declare_completion()
-	boutput(world, victory_msg())
+	boutput(world, src.victory_msg())
 	..()
 
 /datum/game_mode/flock/send_intercept()
