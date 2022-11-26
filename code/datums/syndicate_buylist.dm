@@ -1083,7 +1083,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 	run_on_spawn(var/obj/item)
-		new /obj/item/clothing/head/helmet/space/industrial/combat/syndicate/(item.loc)
+		new /obj/item/clothing/head/helmet/space/industrial/syndicate/(item.loc)
 
 /datum/syndicate_buylist/surplus/egun_upgrade
 	name = "Advanced Energy Cell"

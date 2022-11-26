@@ -453,12 +453,12 @@
 	icon_state = "meson0"
 
 	execute_ability()
-		var/obj/item/clothing/head/helmet/space/industrial/combat/thermal_visored/J = the_item
-		J.AttackSelf(the_mob)
-		if(J.visor_enabled) icon_state = "meson1"
-		else  icon_state = "meson0"
+		var/obj/item/clothing/head/helmet/space/industrial/J = the_item
+		if(J.has_visor)
+			J.AttackSelf(the_mob)
+			if(J.visor_enabled) icon_state = "meson1"
+			else  icon_state = "meson0"
 		..()
-
 
 ////////////////////////////////////////////////////////////
 
