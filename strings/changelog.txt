@@ -1,5 +1,9 @@
 
 (t)fri nov 25 22
+(u)Lord_Earthfire
+(p)12133
+(e)⚖|C-Balance
+(+)Splices with peanutbutter sandwhich-plants grant the bread-reagent and splices with free-range eggplants now grant the egg-reagent
 (u)Bartimeus973
 (p)12080
 (e)🆕📦|C-Feature, A-Game-Objects
