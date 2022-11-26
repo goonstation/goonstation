@@ -380,6 +380,25 @@ THROWING DARTS
 		source.mind.store_memory("Freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
 		boutput(source, "The implanted freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.")
 
+/obj/item/implant/signaler
+	name = "signaler implant"
+	icon_state = "implant-r"
+	impcolor = "r"
+	scan_category = "syndicate"
+	var/activation_emote = "wink"
+	var/obj/item/device/radio/signaler/signaler = null
+
+	New()
+		..()
+		src.signaler = new(src)
+
+	attack_self(mob/user)
+		return src.signaler.AttackSelf(user)
+
+	trigger(emote, source)
+		if (emote == src.activation_emote)
+			signaler.send_signal()
+
 /obj/item/implant/tracking
 	name = "tracking implant"
 	//life_tick_energy = 0.1
@@ -1483,6 +1502,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		else
 			return ..()
 
+	attack_self(mob/user)
+		. = ..()
+		src.imp?.AttackSelf(user)
+
 /datum/action/bar/icon/implanter
 	duration = 20
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
@@ -1588,6 +1611,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	tooltip_flags = REBUILD_DIST
 	//Whether this is the paper type that goes away when emptied
 	var/disposable = FALSE
+
+/obj/item/implantcase/attack_self(mob/user)
+	. = ..()
+	src.imp?.AttackSelf(user)
 
 /obj/item/implantcase/tracking
 	name = "glass case - 'Tracking'"
