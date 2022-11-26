@@ -1,5 +1,9 @@
 
 (t)fri nov 25 22
+(u)glowbold
+(p)12104
+(e)⚖💡|C-Balance, A-Station-Systems
+(+)Nanotrasen now calculates station profitability based on the station stipend; use the bank records computer to track your progress in-round.
 (u)Kubius
 (p)12146
 (e)🆕🗺|C-Feature, A-Mapping
