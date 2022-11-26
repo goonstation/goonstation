@@ -1,5 +1,9 @@
 
 (t)fri nov 25 22
+(u)Wisemonster
+(p)11890
+(e)🗺💅|A-Mapping, C-QoL
+(+)Connected Oshan's mech lab with engineering eva storage.
 (u)Azrun
 (p)11771
 (e)🆕🔒⏰|C-Feature, A-Secret, A-Status-Effects
