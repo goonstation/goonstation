@@ -125,6 +125,7 @@
 #include "macros\process.dm"
 #include "macros\procs.dm"
 #include "macros\qdel.dm"
+#include "macros\reagents.dm"
 #include "macros\spawn.dm"
 #include "macros\strings.dm"
 #include "macros\time.dm"
