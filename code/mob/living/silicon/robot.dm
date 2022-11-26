@@ -2300,6 +2300,7 @@
 				src.upgrades += new /obj/item/roboupgrade/healthgoggles(src)
 			if("Mining")
 				src.freemodule = 0
+				src.set_module(new /obj/item/robot_module/mining(src))
 			#ifdef UNDERWATER_MAP
 				boutput(src, "<span class='notice'>You chose the Mining module. It comes with a free Meson Vision Upgrade.</span>")
 				src.upgrades += new /obj/item/roboupgrade/opticmeson(src)
@@ -2307,7 +2308,6 @@
 				boutput(src, "<span class='notice'>You chose the Mining module. It comes with a free Propulsion Upgrade.</span>")
 				src.upgrades += new /obj/item/roboupgrade/jetpack(src)
 			#endif
-				src.set_module(new /obj/item/robot_module/mining(src))
 
 			if ("Construction Worker")
 				src.freemodule = 0
