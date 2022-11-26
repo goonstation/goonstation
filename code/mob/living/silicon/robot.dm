@@ -2308,7 +2308,6 @@
 				boutput(src, "<span class='notice'>You chose the Mining module. It comes with a free Propulsion Upgrade.</span>")
 				src.upgrades += new /obj/item/roboupgrade/jetpack(src)
 			#endif
-
 			if ("Construction Worker")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Construction Worker module. It comes with a free Construction Visualizer Upgrade.</span>")
