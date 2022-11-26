@@ -644,7 +644,13 @@ var/flock_signal_unleashed = FALSE
 	active_names = null
 	enemies = null
 	flockmind = null
-	//do not qdel(src), we still need the flock datum for end of round stuff
+	//do not qdel(src), we still need the flock datum for game mode and end of round stuff
+
+	if (istype(ticker?.mode, /datum/game_mode/flock))
+		var/datum/game_mode/flock/gamemode = ticker.mode
+		if (gamemode.start_flock == src)
+			gamemode.process_flock_death()
+
 
 // END OF ROUND
 /datum/flock/proc/transmit()

@@ -3,14 +3,17 @@
 	config_tag = "flock"
 
 	shuttle_available = SHUTTLE_CALL_ENABLED
-	shuttle_available_threshold = 12000 // 20 min
+	shuttle_available_threshold = 12000 // 20 minutes
 
-	antag_token_support = TRUE
+	antag_token_support = TRUE // this can allow the flock to have more members than usual, but should be rare
 	escape_possible = FALSE
 
 	latejoin_antag_compatible = TRUE
 	latejoin_only_if_all_antags_dead = TRUE
 	latejoin_antag_roles = list(ROLE_TRAITOR, ROLE_VAMPIRE, ROLE_CHANGELING, ROLE_ARCFIEND)
+
+	do_random_events = FALSE
+	do_antag_random_spawns = FALSE
 
 	var/starting_players = 0
 	var/datum/mind/start_flockmind = null
@@ -38,37 +41,32 @@
 	var/list/flockminds_list = num_flock > 0 ? get_possible_enemies(ROLE_FLOCKMIND, 1) : list()
 	var/list/flocktraces_list = num_flock - 1 > 0 ? get_possible_enemies(ROLE_FLOCKTRACE, num_flock - 1) : list()
 
-	if (length(flockminds_list) + length(flocktraces_list) < roundstart_flock_min)
-		boutput(world, "<span class='alert'><b>ERROR: Couldn't assign any players to the Flock, aborting Flock round pre-setup.</b></span>")
+	token_players = antag_token_list()
+	if (length(token_players))
+		shuffle_list(token_players)
+		for (var/datum/mind/tplayer as anything in token_players)
+			traitors += tplayer
+			logTheThing(LOG_ADMIN, tplayer.current, "redeemed an antag token for Flock gamemode.")
+			message_admins("[key_name(tplayer.current)] redeemed an antag token for Flock gamemode.")
+
+	if (length(flockminds_list) + length(flocktraces_list) + length(token_players) < roundstart_flock_min)
+		boutput(world, "<span class='alert'><b>ERROR: Couldn't assign any players to the Flock, aborting Flock game mode pre-setup.</b></span>")
 		return FALSE
 
-	token_players = antag_token_list()
-	for (var/datum/mind/tplayer as anything in token_players)
-		if (!length(token_players))
-			break
-		traitors += tplayer
-		flockminds_list += tplayer
-		flocktraces_list += tplayer
-		token_players -= tplayer
-		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token for Flock gamemode.")
-		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token for Flock gamemode.")
-		num_flock--
-		if (num_flock == 0)
-			break
-
-	var/datum/mind/chosen_flockmind = pick(antagWeighter.choose(length(flockminds_list) ? flockminds_list : flocktraces_list, ROLE_FLOCKMIND, 1, TRUE))
+	var/datum/mind/chosen_flockmind = pick(antagWeighter.choose(length(flockminds_list) ? flockminds_list : flocktraces_list, ROLE_FLOCKMIND, 1, TRUE) + token_players)
 	traitors |= chosen_flockmind
 	chosen_flockmind.special_role = ROLE_FLOCKMIND
 	chosen_flockmind.assigned_role = "MODE"
+	if (chosen_flockmind in token_players)
+		token_players -= chosen_flockmind
 	flocktraces_list -= chosen_flockmind
 
-	if (length(flocktraces_list))
-		var/list/chosen_flocktraces = antagWeighter.choose(flocktraces_list, ROLE_FLOCKTRACE, num_flock - 1, TRUE)
-		traitors |= chosen_flocktraces
-		for (var/datum/mind/flock in chosen_flocktraces)
-			flock.special_role = ROLE_FLOCKTRACE
-			flock.assigned_role = "MODE"
-			flocktraces_list.Remove(flock)
+	var/list/chosen_flocktraces = ((num_flock - 1 - length(token_players) > 0) ? antagWeighter.choose(flocktraces_list, ROLE_FLOCKTRACE, \
+									num_flock - 1 - length(token_players), TRUE) : list()) + token_players
+	for (var/datum/mind/flock as anything in chosen_flocktraces)
+		traitors |= flock
+		flock.special_role = ROLE_FLOCKTRACE
+		flock.assigned_role = "MODE"
 
 	src.start_flockmind = chosen_flockmind
 
@@ -89,7 +87,7 @@
 			flock.current.make_flocktrace(T, flockmind.flock, TRUE)
 			spawn_area -= T
 
-	SPAWN(rand(1 MINUTE, 3 MINUTES))
+	SPAWN(rand(1, 3) MINUTES)
 		src.send_intercept()
 
 /datum/game_mode/flock/check_finished()
@@ -108,7 +106,7 @@
 
 /datum/game_mode/flock/declare_completion()
 	boutput(world, victory_msg())
-	. = ..()
+	..()
 
 /datum/game_mode/flock/send_intercept()
 	var/intercepttext = "Cent. Com. Update Requested status information:<BR>"
@@ -116,15 +114,22 @@
 
 	var/list/possible_modes = list()
 	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "changeling")
-	for (var/i = 0 to pick(2, 3))
+	for (var/i = 1 to pick(2, 3))
 		possible_modes -= pick(possible_modes)
-	possible_modes.Insert(rand(possible_modes.len), "[ticker.mode]")
+	possible_modes.Insert(rand(length(possible_modes)), "[ticker.mode]")
 
 	var/datum/intercept_text/i_text = new /datum/intercept_text
-	for(var/A in possible_modes)
-		intercepttext += i_text.build(A, pick(ticker.minds))
+	for(var/mode in possible_modes)
+		intercepttext += i_text.build(mode, pick(ticker.minds))
 
 	for_by_tcl(C, /obj/machinery/communications_dish)
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
+
+/datum/game_mode/flock/proc/process_flock_death()
+	src.escape_possible = TRUE
+	src.do_random_events = TRUE
+	src.do_antag_random_spawns = TRUE
+
+	src.shuttle_available_threshold = 0
