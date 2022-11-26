@@ -570,7 +570,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/rods2
 	name = "Metal Rods (x2)"
-	item_paths = list("MET-2", )
+	item_paths = list("MET-2")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/rods)
 	time = 3 SECONDS
@@ -606,7 +606,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("MET-2", "cobryl")
 	item_amounts = list(6, 9)
 	item_outputs = list(/obj/reagent_dispensers/chemicalbarrel)
-	time = 60 SECONDS
+	time = 30 SECONDS
 	create = 1
 	category = "Machinery"
 

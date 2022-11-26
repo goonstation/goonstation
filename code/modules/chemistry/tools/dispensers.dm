@@ -426,8 +426,6 @@
 			return
 
 	bullet_act()
-		src.reagents.temperature_reagents(4000, 400) //exactly how a igniter works, expect to need a couple shots to make whatever is inside
-		src.reagents.temperature_reagents(4000, 400) //catch fire
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 30, 1)
 
 	red
