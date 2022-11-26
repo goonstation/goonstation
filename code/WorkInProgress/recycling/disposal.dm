@@ -177,7 +177,7 @@
 	desc = "An underfloor disposal pipe."
 	anchored = 1
 	density = FALSE
-	jpsUnstable = FALSE
+	pass_unstable = FALSE
 	text = ""
 
 	level = 1			//! underfloor only

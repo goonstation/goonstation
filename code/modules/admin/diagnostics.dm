@@ -247,11 +247,11 @@ proc/debug_map_apc_count(delim,zlim)
 		name = "jps inconsistent"
 		help = "Uses a slightly expensive check to see whether turf instability is valid. Errors shown in red, number shows error (i.e. -1 is missing 1 atom)"
 		GetInfo(turf/theTurf, image/debugoverlay/img)
-			var/trueUnstable = initial(theTurf.jpsUnstable)
+			var/trueUnstable = initial(theTurf.pass_unstable)
 			for(var/atom/A as anything in theTurf.contents)
-				trueUnstable += A.jpsUnstable
-			if(trueUnstable != theTurf.jpsUnstable)
-				img.app.overlays = list(src.makeText(theTurf.jpsUnstable - trueUnstable, RESET_ALPHA | RESET_COLOR))
+				trueUnstable += A.pass_unstable
+			if(trueUnstable != theTurf.pass_unstable)
+				img.app.overlays = list(src.makeText(theTurf.pass_unstable - trueUnstable, RESET_ALPHA | RESET_COLOR))
 				img.app.color = "#f00"
 			else
 				img.app.alpha = 0
@@ -260,15 +260,15 @@ proc/debug_map_apc_count(delim,zlim)
 		name = "jps unstable"
 		help = "Red is unstable, green is stable, purple is illegal value"
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			img.app.overlays = list(src.makeText(theTurf.jpsUnstable, RESET_ALPHA | RESET_COLOR))
-			img.app.color = theTurf.jpsUnstable >= 1 ? "#f00" : theTurf.jpsUnstable ? "#70f" : "#0f0"
+			img.app.overlays = list(src.makeText(theTurf.pass_unstable, RESET_ALPHA | RESET_COLOR))
+			img.app.color = theTurf.pass_unstable >= 1 ? "#f00" : theTurf.pass_unstable ? "#70f" : "#0f0"
 
 	jps_cache
 		name = "jps cache"
 		help = "Grey is no cache. Green is passable, red is not."
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			if(theTurf.jpsPassableCache != null)
-				img.app.color = theTurf.jpsPassableCache ? "#0f0" : "#f00"
+			if(theTurf.passability_cache != null)
+				img.app.color = theTurf.passability_cache ? "#0f0" : "#f00"
 			else
 				img.app.alpha = 0
 

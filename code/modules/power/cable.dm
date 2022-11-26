@@ -53,7 +53,7 @@
 /obj/cable
 	level = 1
 	anchored = TRUE
-	jpsUnstable = FALSE
+	pass_unstable = FALSE
 	var/tmp/netnum = 0
 	name = "power cable"
 	desc = "A flexible power cable."

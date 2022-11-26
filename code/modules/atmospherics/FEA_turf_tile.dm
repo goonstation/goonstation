@@ -89,7 +89,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 			return TRUE
 
 /turf/simulated
-	jpsUnstable = FALSE
+	pass_unstable = FALSE
 	var/static/list/mutable_appearance/gas_overlays = list(
 			#ifdef ALPHA_GAS_OVERLAYS
 			mutable_appearance('icons/effects/tile_effects.dmi', "plasma-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE),

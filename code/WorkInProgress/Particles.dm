@@ -13,7 +13,7 @@
 	name = ""
 	desc = ""
 	mouse_opacity = 0
-	jpsUnstable = FALSE
+	pass_unstable = FALSE
 	anchored = 1
 	density = 0
 	opacity = 0

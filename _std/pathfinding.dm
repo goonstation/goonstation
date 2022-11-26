@@ -456,9 +456,9 @@
 		if(!wall.broken && (F.floorrunning || (F.can_floorrun && F.resources >= 10))) //greater than 10 to give some wiggle room, actual cost is 1 per wall tile
 			return TRUE // floor running drones can *always* pass through flockwalls
 
-	if(T.jpsPassableCache == null || options[POP_IGNORE_CACHE])
+	if(T.passability_cache == null || options[POP_IGNORE_CACHE])
 	else
-		return T.jpsPassableCache // not anymore
+		return T.passability_cache // not anymore
 	if(T.density || !T.pathable) // simplest case
 		return FALSE
 	var/direction = get_dir(source, T)
@@ -495,11 +495,11 @@
 					else
 						return FALSE
 		if(!A.Cross(passer))
-			if(!T.jpsUnstable)
-				T.jpsPassableCache = FALSE
+			if(!T.pass_unstable)
+				T.passability_cache = FALSE
 			return FALSE
-	if(!T.jpsUnstable) // Only these are cached, the rest are speical cases for unstable interactibles.
-		T.jpsPassableCache = .
+	if(!T.pass_unstable) // Only these are cached, the rest are speical cases for unstable interactibles.
+		T.passability_cache = .
 
 #undef CAN_STEP
 #undef STEP_NOT_HERE_BUT_THERE

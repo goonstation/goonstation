@@ -12,7 +12,7 @@
 	var/forbidden_procs = list("Enter", "Exit", "Cross")
 
 /**
- * JPS Passability cache flag [/atom/var/jpsUnstable] correctness checking.
+ * JPS Passability cache flag [/atom/var/pass_unstable] correctness checking.
  * Issue a failure for every descendent of /atom claiming to be stable, that is itself, or a descendant of, any type that contains an implementation
  * of a proc listed in forbidden_procs that is not explicitly allowed in permitted_instability.
  */
@@ -29,10 +29,10 @@
 		var/atom/direct_parent
 		if(ispath(direct_parent_path, /atom))
 			direct_parent = direct_parent_path
-		var/stable = !initial(atom_type.jpsUnstable)
+		var/stable = !initial(atom_type.pass_unstable)
 
 		// Fail if this type is the first descendant of a unstable lineage to claim to be stable.
-		if(stable && direct_parent && initial(direct_parent.jpsUnstable))
+		if(stable && direct_parent && initial(direct_parent.pass_unstable))
 			var/unstable_parent = predecessor_path_in_list(type, unstable_types)
 			if(unstable_parent)
 				var/list/blocking_procs_list = unstable_types[unstable_parent]

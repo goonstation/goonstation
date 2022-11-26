@@ -2,7 +2,7 @@
 	name = "Operating Table"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "table2-idle"
-	jpsUnstable = TRUE
+	pass_unstable = TRUE
 	desc = "A table that allows qualified professionals to perform delicate surgeries."
 	density = 1
 	anchored = 1

@@ -10,7 +10,7 @@
 	level = 1
 
 	unsimulated
-		jpsUnstable = FALSE
+		pass_unstable = FALSE
 		var/can_replace_with_stuff = 0	//If ReplaceWith() actually does a thing or not.
 #ifdef RUNTIME_CHECKING
 		can_replace_with_stuff = 1  //Shitty dumb hack bullshit
@@ -31,8 +31,9 @@
 	#undef _UNSIM_TURF_GAS_DEF
 
 	/// Sum of all unstable atoms on the turf.
-	jpsUnstable = TRUE
-	var/tmp/jpsPassableCache
+	pass_unstable = TRUE
+	/// Whether this turf is passable. Used in the pathfinding system.
+	var/tmp/passability_cache
 
 	//Properties for both
 	var/temperature = T20C
@@ -192,7 +193,7 @@
 	icon = 'icons/turf/space.dmi'
 	name = "\proper space"
 	icon_state = "placeholder"
-	jpsUnstable = FALSE
+	pass_unstable = FALSE
 	fullbright = TRUE
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
@@ -592,7 +593,7 @@ proc/generate_space_color()
 	var/old_aiimage = src.aiImage
 	var/old_cameras = src.cameras
 	var/old_camera_coverage_emitters = src.camera_coverage_emitters
-	var/old_jpsUnstable = src.jpsUnstable
+	var/old_pass_unstable = src.pass_unstable
 
 	var/image/old_disposal_image = src.disposal_image
 
@@ -668,7 +669,7 @@ proc/generate_space_color()
 	//new_turf.RL_OverlayState = rloverlaystate //we actually want these cleared
 	new_turf.RL_Lights = rllights
 	new_turf.opaque_atom_count = old_opaque_atom_count
-	new_turf.jpsUnstable += old_jpsUnstable
+	new_turf.pass_unstable += old_pass_unstable
 
 	new_turf.blocked_dirs = old_blocked_dirs
 	new_turf.checkinghasproximity = old_checkinghasproximity

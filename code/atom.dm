@@ -38,8 +38,8 @@
 
 	var/list/atom_properties
 
-	/// Whether pathfinding is forbidden from caching the passability of this atom. See [/turf/jpsPassableCache]
-	var/tmp/jpsUnstable = TRUE
+	/// Whether pathfinding is forbidden from caching the passability of this atom. See [/turf/passability_cache]
+	var/tmp/pass_unstable = TRUE
 
 /* -------------------- name stuff -------------------- */
 	/*
@@ -379,7 +379,7 @@
 /atom/movable/overlay
 	var/atom/master = null
 	anchored = 1
-	jpsUnstable = FALSE
+	pass_unstable = FALSE
 
 /atom/movable/overlay/gibs
 	icon_state = "blank"
@@ -437,9 +437,9 @@
 				T2.neighcheckinghasproximity++
 		if(src.opacity)
 			T.opaque_atom_count++
-		if(src.jpsUnstable)
-			T.jpsUnstable++
-		T.jpsPassableCache = null
+		if(src.pass_unstable)
+			T.pass_unstable++
+		T.passability_cache = null
 	if(!isnull(src.loc))
 		src.loc.Entered(src, null)
 		if(isturf(src.loc)) // call it on the area too
@@ -549,18 +549,18 @@
 		return
 
 	if (isturf(last_turf))
-		last_turf.jpsPassableCache = null
-		if(src.jpsUnstable)
-			last_turf.jpsUnstable--
+		last_turf.passability_cache = null
+		if(src.pass_unstable)
+			last_turf.pass_unstable--
 		if (src.event_handler_flags & USE_PROXIMITY)
 			last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
 			for (var/turf/T2 in range(1, last_turf))
 				T2.neighcheckinghasproximity--
 	if(isturf(src.loc))
 		var/turf/T = src.loc
-		T.jpsPassableCache = null
-		if(src.jpsUnstable)
-			T.jpsUnstable++
+		T.passability_cache = null
+		if(src.pass_unstable)
+			T.pass_unstable++
 		if (src.event_handler_flags & USE_PROXIMITY)
 			T.checkinghasproximity++
 			for (var/turf/T2 in range(1, T))
@@ -930,9 +930,9 @@
 
 	if(isturf(oldloc))
 		var/turf/oldturf = oldloc
-		oldturf.jpsPassableCache = null
-		if(src.jpsUnstable)
-			oldloc.jpsUnstable--
+		oldturf.passability_cache = null
+		if(src.pass_unstable)
+			oldloc.pass_unstable--
 		for(var/atom/A in oldloc)
 			if(A != src)
 				A.Uncrossed(src)
@@ -945,9 +945,9 @@
 
 	if(isturf(newloc))
 		var/turf/newturf = newloc
-		newturf.jpsPassableCache = null
-		if(src.jpsUnstable)
-			++newloc.jpsUnstable
+		newturf.passability_cache = null
+		if(src.pass_unstable)
+			++newloc.pass_unstable
 		for(var/atom/A in newloc)
 			if(A != src)
 				A.Crossed(src)
@@ -986,7 +986,7 @@
 	src.density = HAS_ATOM_PROPERTY(src, PROP_ATOM_NEVER_DENSE) ? 0 : newdensity
 	if(src.density != newdensity)
 		var/turf/loc = src.loc // invalidate JPS cache on density changes
-		loc.jpsPassableCache = null
+		loc.passability_cache = null
 
 /atom/proc/set_opacity(var/newopacity)
 	SHOULD_CALL_PARENT(TRUE)
