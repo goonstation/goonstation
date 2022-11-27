@@ -11,6 +11,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	w_class = W_CLASS_BULKY
 
 	var/icon_state_inserted = "base"
+	var/icon_state_cap = "rod_cap"
 	var/ui_image = null
 	var/temperature = T20C //room temp kelvin as default
 	///How much does this component share heat with surrounding components? Basically surface area in contact (m2)
@@ -168,6 +169,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	name = "fuel rod"
 	desc = "A fuel rod for a nuclear reactor."
 	icon_state_inserted = "fuel"
+	icon_state_cap = "fuel_cap"
 	neutron_cross_section = 1.0
 	thermal_cross_section = 0.02
 
@@ -180,6 +182,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	name = "control rod"
 	desc = "A control rod assembly for a nuclear reactor."
 	icon_state_inserted = "control"
+	icon_state_cap = "control_cap"
 	neutron_cross_section = 1.0 //essentially *actual* insertion level
 	var/configured_insertion_level = 1.0 //target insertion level
 	is_control_rod = TRUE
@@ -204,6 +207,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	name = "heat exchanger"
 	desc = "A heat exchanger component for a nuclear reactor."
 	icon_state_inserted = "heat"
+	icon_state_cap = "heat_cap"
 	thermal_cross_section = 0.4
 	neutron_cross_section = 0.1
 
@@ -213,6 +217,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	name = "gas channel"
 	desc = "A gas coolant channel component for a nuclear reactor."
 	icon_state_inserted = "gas"
+	icon_state_cap = "gas_cap"
 	thermal_cross_section = 0.05
 	var/gas_thermal_cross_section = 0.95
 	var/datum/gas_mixture/current_gas

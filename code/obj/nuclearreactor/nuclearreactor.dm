@@ -13,7 +13,7 @@
 //	icon = 'icons/obj/atmospherics/pipes.dmi'
 //	icon_state = "circ1-off"
 	icon = 'icons/misc/nuclearreactor.dmi'
-	icon_state = "reactor_empty"
+	icon_state = "reactor"
 	bound_width = 160
 	bound_height = 160
 	pixel_x = -64
@@ -36,6 +36,8 @@
 	var/net_id = null
 	var/melted = FALSE
 
+	var/_comp_grid_overlay_update = TRUE
+
 	New()
 		. = ..()
 		terminal = new /obj/machinery/power/terminal/netlink(src.loc)
@@ -50,6 +52,50 @@
 
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Control Rods", .proc/_set_controlrods_mechchomp)
+		_comp_grid_overlay_update = TRUE
+		UpdateIcon()
+
+	update_icon()
+		//base
+		src.UpdateOverlays(image(icon, "reactor_empty"), "reactor_grid")
+		//status lights
+		//gas input/output
+		if(air1.total_moles_full() > 100) //more than trace gas
+			src.UpdateOverlays(image(icon, "lights_cool"), "gas_input_lights")
+		else
+			src.UpdateOverlays(null, "gas_input_lights")
+		if(air2.total_moles_full() > 100) //more than trace gas
+			src.UpdateOverlays(image(icon, "lights_heat"), "gas_output_lights")
+		else
+			src.UpdateOverlays(null, "gas_output_lights")
+
+		//temperature & radiation warning
+		if(src.temperature >= REACTOR_TOO_HOT_TEMP || src.radiationLevel > 50)
+			if(temperature >= REACTOR_ON_FIRE_TEMP || src.radiationLevel > 75)
+				src.UpdateOverlays(image(icon, "lights_meltdown"), "temp_warn_lights")
+			else
+				src.UpdateOverlays(image(icon, "lights_warning"), "temp_warn_lights")
+		else
+			src.UpdateOverlays(null, "temp_warn_lights")
+
+		//status lights
+		switch(src.temperature)
+			if(-INFINITY to T20C) src.UpdateOverlays(null, "status_display")
+			if(T20C to REACTOR_TOO_HOT_TEMP) src.UpdateOverlays(image(icon, "status_active"), "status_display")
+			if(REACTOR_TOO_HOT_TEMP to REACTOR_ON_FIRE_TEMP) src.UpdateOverlays(image(icon, "status_overheat"), "status_display")
+			if(REACTOR_ON_FIRE_TEMP to INFINITY) src.UpdateOverlays(image(icon, "status_meltdown"), "status_display")
+
+		//and finally, component grid
+		if(_comp_grid_overlay_update)
+			for(var/x=1 to REACTOR_GRID_WIDTH)
+				for(var/y=1 to REACTOR_GRID_HEIGHT)
+					if(src.component_grid[x][y])
+						src.UpdateOverlays(image(src.component_grid[x][y].icon, src.component_grid[x][y].icon_state_cap, layer=src.layer+0.1, pixel_x=((y-1)*18)+10, pixel_y=(124-x*15)-4), "comp([x],[y])")
+					else
+						src.UpdateOverlays(null, "comp([x],[y])")
+			_comp_grid_overlay_update = FALSE
+
+
 
 	proc/_set_controlrods_mechchomp(var/datum/mechanicsMessage/inp)
 		if(!length(inp.signal)) return
@@ -148,6 +194,7 @@
 		src.network1?.update = TRUE
 		src.network2?.update = TRUE
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"temp=[temperature]&rads=[tmpRads]&flowrate=[total_gas_volume]")
+		UpdateIcon()
 
 	attackby(obj/item/I, mob/user)
 		if(istype(I,/obj/item/reactor_component))
@@ -370,6 +417,8 @@
 		logTheThing("station", user, "[constructName(user)] <b>inserts</b> component into nuclear reactor([src]): [equipped] at slot [x],[y]")
 		user.visible_message("<span class='alert'>[user] slides \a [equipped] into the reactor</span>", "<span class='alert'>You slide the [equipped] into the reactor.</span>")
 		tgui_process.update_uis(src)
+		_comp_grid_overlay_update = TRUE
+		UpdateIcon()
 
 	proc/remove_comp_callback(var/x,var/y,var/mob/user)
 		playsound(src, 'sound/machines/law_remove.ogg', 80)
@@ -378,6 +427,8 @@
 		user.put_in_hand_or_drop(src.component_grid[x][y])
 		src.component_grid[x][y] = null
 		tgui_process.update_uis(src)
+		_comp_grid_overlay_update = TRUE
+		UpdateIcon()
 
 	proc/set_control_rods(var/val)
 		. = FALSE
@@ -409,6 +460,7 @@
 				if(src.component_grid[x][y] && prob(comp_throw_prob))
 					if(severity > 1)
 						logTheThing("station", src, "a [src.component_grid[x][y]] has been removed from the [src] by an explosion")
+						_comp_grid_overlay_update = TRUE
 					if(prob(50))
 						var/obj/item/reactor_component/throwcomp = src.component_grid[x][y]
 						throwcomp.set_loc(epicentre)
@@ -421,6 +473,7 @@
 					src.component_grid[x][y] = null //get rid of the internal ref once we've thrown it out
 		if(severity <= 1)
 			qdel(src)
+		UpdateIcon()
 
 	Exited(var/atom/movable/A)
 		if(istype(A,/obj/item/reactor_component))
@@ -453,10 +506,15 @@
 				if(user.bioHolder && user.bioHolder.HasEffect("radioactive"))
 					meat_rod.material.setProperty("radioactive", 3)
 				meat_rod.setMaterial(meat_rod.material)
-				src.component_grid[chosen_slot[1]][chosen_slot[2]] = meat_rod //hehe
+				if(src.component_grid[chosen_slot[1]][chosen_slot[2]] == null) //double check, just in case
+					src.component_grid[chosen_slot[1]][chosen_slot[2]] = meat_rod //hehe
+				else
+					meat_rod.throw_at(get_ranged_target_turf(get_turf(src),pick(alldirs),rand(1,20)),rand(1,20),rand(1,20))
 				user.visible_message("<span class='alert'><b>The bits of [user] that didn't fit spray everywhere!</b></span>")
 				user.set_loc(get_turf(src))
 				user.gib()
+				_comp_grid_overlay_update = TRUE
+				UpdateIcon()
 			return TRUE
 		else
 			user.visible_message("<span class='alert'>[user] tries to climb into \the [src], but it's full. What a moron!</span>")
