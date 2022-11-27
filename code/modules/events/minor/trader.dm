@@ -95,7 +95,7 @@
 
 		end_location.color = null
 
-		start_location.move_contents_to(end_location, centcom_turf)
+		start_location.move_contents_to(end_location, centcom_turf, turf_to_skip=/turf/unsimulated/outdoors/grass, turf_to_leave=/turf/unsimulated/outdoors/grass)
 
 		return dest_turfs
 
@@ -116,7 +116,7 @@
 			if (istype(O, map_turf))
 				O.ReplaceWith(centcom_turf, FALSE, TRUE, FALSE, TRUE)
 
-		end_location.move_contents_to(start_location, map_turf)
+		end_location.move_contents_to(start_location, map_turf, turf_to_skip=global.map_settings.shuttle_map_turf, turf_to_leave=global.map_settings.shuttle_map_turf)
 
 		#ifdef UNDERWATER_MAP
 		start_location.color = OCEAN_COLOR
