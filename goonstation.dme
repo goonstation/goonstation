@@ -1866,6 +1866,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\blueprints.dm"
 #include "code\WorkInProgress\cabinet.dm"
 #include "code\WorkInProgress\chess.dm"
+#include "code\WorkInProgress\cloner_defects.dm"
 #include "code\WorkInProgress\customcritter.dm"
 #include "code\WorkInProgress\DiscountDans.dm"
 #include "code\WorkInProgress\DrMelonsStuff.dm"

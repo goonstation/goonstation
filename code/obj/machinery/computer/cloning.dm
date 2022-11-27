@@ -283,6 +283,8 @@ var/global/cloning_with_records = TRUE
 	if(!isnull(subject.traitHolder))
 		R["traits"] = subject.traitHolder.copy(null)
 
+	R["defects"] = subject.cloner_defects.copy()
+
 	var/obj/item/implant/cloner/imp = new(subject)
 	imp.implanted = TRUE
 	imp.owner = subject
@@ -376,7 +378,7 @@ var/global/cloning_with_records = TRUE
 			account_credit = Ba["current_money"]
 
 		if ((src.held_credit + account_credit) >= wagesystem.clone_cost)
-			if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"]))
+			if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"], C["defects"]))
 				var/from_account = min(wagesystem.clone_cost, account_credit)
 				if (from_account > 0)
 					Ba["current_money"] -= from_account
@@ -390,7 +392,7 @@ var/global/cloning_with_records = TRUE
 		else
 			show_message("Insufficient funds to begin clone cycle.", "warning")
 
-	else if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"]))
+	else if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"], C["defects"]))
 		show_message("Cloning cycle activated.", "success")
 		src.records.Remove(C)
 		qdel(C)

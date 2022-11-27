@@ -147,7 +147,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			processing_items.Add(src)
 		create_time = world.time
 		if (src.amount != 1)
-			stack_trace("[src] of type [src.type] is spawning with an amount other than 1. That's bad. Ping Aloe.")
+			stack_trace("[src] of type [src.type] is spawning with an amount other than 1. That's bad. Go delete the 'amount' line and replace it with `bites_left = \[whatever the amount var had before\].")
 
 	disposing()
 		if(!made_ants)
@@ -1228,7 +1228,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	attack_self(var/mob/user as mob)
 		if (!user && usr)
 			user = usr
-		else if (!user && !usr) // buh?
+		else if (!user)
 			return ..()
 
 		if (!ishuman(user))

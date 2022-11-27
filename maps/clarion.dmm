@@ -26752,7 +26752,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/power/apc{
-	areastring = "Teleporter";
+	areastring = "Command Teleporter";
 	dir = 1;
 	name = "Teleporter APC";
 	pixel_y = 24
