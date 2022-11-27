@@ -533,29 +533,6 @@
 	else
 		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<span [class? class : ""]>[text]</span>[font_accent ? "</font>" : null][second_quote]"
 
-/mob/proc/emote(var/act, var/voluntary = 0)
-	return
-
-/mob/proc/emote_check(var/voluntary = 1, var/time = 10, var/admin_bypass = 1, var/dead_check = 1)
-	if (src.emote_allowed)
-		if (dead_check && isdead(src))
-			src.emote_allowed = 0
-			return 0
-		if (voluntary && (src.getStatusDuration("paralysis") > 0 || isunconscious(src)))
-			return 0
-		if (world.time >= (src.last_emote_time + src.last_emote_wait))
-			if (!no_emote_cooldowns && !(src.client && (src.client.holder && admin_bypass) && !src.client.player_mode) && voluntary)
-				src.emote_allowed = 0
-				src.last_emote_time = world.time
-				src.last_emote_wait = time
-				SPAWN(time)
-					src.emote_allowed = 1
-			return 1
-		else
-			return 0
-	else
-		return 0
-
 /mob/proc/listen_ooc()
 	set name = "(Un)Mute OOC"
 	set desc = "Mute or Unmute Out Of Character chat."
