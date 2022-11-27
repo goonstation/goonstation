@@ -570,7 +570,7 @@
 		if(src.bound_width == 32 && src.bound_width == src.bound_height)
 			T.passability_cache = null
 			T.pass_unstable += src.pass_unstable
-		else // This is ugly but ~30% faster than just going over old_locs
+		else
 			for(var/turf/covered_turf as anything in src.locs)
 				covered_turf.pass_unstable += src.pass_unstable
 				covered_turf.passability_cache = null
