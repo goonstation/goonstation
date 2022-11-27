@@ -111,6 +111,8 @@
 	//Which server can ghosts join by clicking on an on-screen link
 	var/server_buddy_id = null
 
+	var/already_loaded_once = FALSE
+
 /datum/configuration/New()
 	..()
 	var/list/L = childrentypesof(/datum/game_mode)
@@ -393,11 +395,16 @@
 		config.cdn = ""
 		config.disableResourceCache = 1
 
-	roundsLeftWithoutWhitelist = world.load_intra_round_value("whitelist_disabled")
-	if(roundsLeftWithoutWhitelist)
+	if(!already_loaded_once)
+		roundsLeftWithoutWhitelist = world.load_intra_round_value("whitelist_disabled")
+		if(roundsLeftWithoutWhitelist > 0)
+			roundsLeftWithoutWhitelist--
+			world.save_intra_round_value("whitelist_disabled", roundsLeftWithoutWhitelist)
+
+	if(roundsLeftWithoutWhitelist > 0)
 		config.whitelistEnabled = FALSE
-		roundsLeftWithoutWhitelist--
-		world.save_intra_round_value("whitelist_disabled", roundsLeftWithoutWhitelist)
+
+	already_loaded_once = TRUE
 
 
 /datum/configuration/proc/pick_mode(mode_name)
