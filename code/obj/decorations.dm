@@ -689,8 +689,12 @@
 		..()
 		if (!src.name || (src.name in list("N sign switch", "E sign switch", "S sign switch", "W sign switch")))
 			src.name = "sign switch"
-		SPAWN(0.5 SECONDS)
-			src.locate_signs()
+		if(current_state > GAME_STATE_PREGAME)
+			SPAWN(0.5 SECONDS)
+				src.initialize()
+	
+	initialize()
+		locate_signs()
 
 	ex_act(var/severity)
 		switch(severity)
