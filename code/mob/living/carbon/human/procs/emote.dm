@@ -8,22 +8,22 @@
 /mob/proc/emote_check(voluntary = 1, time = 1 SECOND, admin_bypass = TRUE, dead_check = TRUE)
 	if (src.emote_allowed)
 		if (dead_check && isdead(src))
-			src.emote_allowed = 0
-			return 0
+			src.emote_allowed = FALSE
+			return FALSE
 		if (voluntary && (src.getStatusDuration("paralysis") > 0 || isunconscious(src)))
-			return 0
+			return FALSE
 		if (world.time >= (src.last_emote_time + src.last_emote_wait))
 			if (!no_emote_cooldowns && !(src.client && (src.client.holder && admin_bypass) && !src.client.player_mode) && voluntary)
-				src.emote_allowed = 0
+				src.emote_allowed = FALSE
 				src.last_emote_time = world.time
 				src.last_emote_wait = time
 				SPAWN(time)
-					src.emote_allowed = 1
-			return 1
+					src.emote_allowed = TRUE
+			return TRUE
 		else
-			return 0
+			return FALSE
 	else
-		return 0
+		return FALSE
 
 /mob/living/carbon/human/emote(var/act, var/voluntary = 0, var/emoteTarget = null) //mbc : if voluntary is 2, it's a hotkeyed emote and that means that we can skip the findtext check. I am sorry, cleanup later
 	..()
