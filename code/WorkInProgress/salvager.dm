@@ -272,7 +272,7 @@
 	attack_hand(mob/user)
 		if(istype(src.loc, /obj/item/storage/backpack))
 			if (user.s_active)
-				user.detach_hud(usr.s_active)
+				user.detach_hud(user.s_active)
 				user.s_active = null
 			user.s_active = src.hud
 			hud.update(user)

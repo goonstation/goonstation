@@ -2648,6 +2648,7 @@
 	hidden = list(/datum/manufacture/breathmask,
 		/datum/manufacture/patch,
 		/datum/manufacture/towel,
+		/datum/manufacture/handkerchief,
 		/datum/manufacture/tricolor,
 		/datum/manufacture/hat_ltophat)
 
