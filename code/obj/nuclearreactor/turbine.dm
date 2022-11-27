@@ -37,17 +37,22 @@
 
 	var/_last_rpm_icon_update = 0 //used to determine whether an icon update is required
 	var/list/grump_sound_list = list('sound/machines/engine_grump1.ogg','sound/machines/engine_grump2.ogg','sound/machines/engine_grump3.ogg', 'sound/impact_sounds/Metal_Clang_1.ogg', 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg')
-
+	var/turf/_light_turf //ref to the turf the turbine light is stored on, because you can't center simple lights
 	New()
 		. = ..()
 		terminal = new /obj/machinery/power/terminal/netlink(src.loc)
 		src.net_id = generate_net_id(src)
 		terminal.set_dir(turn(src.dir,-90))
 		terminal.master = src
-		src.add_simple_light("turbine_light", list(255,255,255,255))
+		src._light_turf = get_turf(src)
+		src._light_turf.add_medium_light("turbine_light", list(255,255,255,255))
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Stator Load", .proc/_set_statorload_mechchomp)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Flow Rate", .proc/_set_flowrate_mechchomp)
+
+	disposing()
+		src._light_turf?.remove_medium_light("turbine_light")
+		. = ..()
 
 	proc/_set_statorload_mechchomp(var/datum/mechanicsMessage/inp)
 		if(!length(inp.signal)) return

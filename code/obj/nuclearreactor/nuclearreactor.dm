@@ -37,6 +37,7 @@
 	var/melted = FALSE
 
 	var/_comp_grid_overlay_update = TRUE
+	var/turf/_light_turf //ref to the turf the reactor light is stored on, because you can't center simple lights
 
 	New()
 		. = ..()
@@ -52,19 +53,24 @@
 
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Control Rods", .proc/_set_controlrods_mechchomp)
-		src.add_medium_light("reactor_light", list(255,255,255,255))
+		src._light_turf = get_turf(src)
+		src._light_turf.add_medium_light("reactor_light", list(255,255,255,255))
 		_comp_grid_overlay_update = TRUE
 		UpdateIcon()
+
+	disposing()
+		src._light_turf?.remove_medium_light("reactor_light")
+		. = ..()
 
 	update_icon()
 
 		//status lights
 		//gas input/output
-		if(air1.total_moles_full() > 100) //more than trace gas
+		if(air1?.total_moles_full() > 100) //more than trace gas
 			src.UpdateOverlays(image(icon, "lights_cool"), "gas_input_lights")
 		else
 			src.UpdateOverlays(null, "gas_input_lights")
-		if(air2.total_moles_full() > 100) //more than trace gas
+		if(air2?.total_moles_full() > 100) //more than trace gas
 			src.UpdateOverlays(image(icon, "lights_heat"), "gas_output_lights")
 		else
 			src.UpdateOverlays(null, "gas_output_lights")
@@ -523,6 +529,7 @@
 
 
 
+
 /datum/neutron //this is literally just a tuple
 	var/dir = NORTH
 	var/velocity = 1
@@ -534,35 +541,37 @@
 
 /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled
 	New()
-		src.component_grid[3][1] = new /obj/item/reactor_component/gas_channel("koshmarite")
+		..()
+		src.component_grid[3][1] = new /obj/item/reactor_component/gas_channel("steel")
 		src.component_grid[3][3] = new /obj/item/reactor_component/gas_channel("steel")
-		src.component_grid[3][5] = new /obj/item/reactor_component/gas_channel("cerenkite")
+		src.component_grid[3][5] = new /obj/item/reactor_component/gas_channel("steel")
 		src.component_grid[3][7] = new /obj/item/reactor_component/gas_channel("steel")
 		src.component_grid[5][1] = new /obj/item/reactor_component/gas_channel("steel")
-		src.component_grid[5][3] = new /obj/item/reactor_component/gas_channel("plutonium")
+		src.component_grid[5][3] = new /obj/item/reactor_component/gas_channel("steel")
 		src.component_grid[5][5] = new /obj/item/reactor_component/gas_channel("steel")
 		src.component_grid[5][7] = new /obj/item/reactor_component/gas_channel("steel")
 
-		src.component_grid[3][2] = new /obj/item/reactor_component/heat_exchanger("pizza")
-		src.component_grid[3][4] = new /obj/item/reactor_component/heat_exchanger("pizza")
+		src.component_grid[3][2] = new /obj/item/reactor_component/heat_exchanger("steel")
+		src.component_grid[3][4] = new /obj/item/reactor_component/heat_exchanger("steel")
 		src.component_grid[3][6] = new /obj/item/reactor_component/heat_exchanger("steel")
 		src.component_grid[5][2] = new /obj/item/reactor_component/heat_exchanger("steel")
 		src.component_grid[5][4] = new /obj/item/reactor_component/heat_exchanger("steel")
 		src.component_grid[5][6] = new /obj/item/reactor_component/heat_exchanger("steel")
 
-		src.component_grid[4][1] = new /obj/item/reactor_component/heat_exchanger("erebite")
+		src.component_grid[4][1] = new /obj/item/reactor_component/heat_exchanger("steel")
 		src.component_grid[4][7] = new /obj/item/reactor_component/heat_exchanger("steel")
 
 		src.component_grid[4][3] = new /obj/item/reactor_component/control_rod("bohrum")
 		src.component_grid[4][5] = new /obj/item/reactor_component/control_rod("bohrum")
-		..()
+
 
 /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/meltdown
 	New()
-		for(var/x=1 to REACTOR_GRID_WIDTH)
-			for(var/y=1 to REACTOR_GRID_HEIGHT)
-				src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("plutonium")
 		..()
+		for(var/x=2 to REACTOR_GRID_WIDTH-1)
+			for(var/y=2 to REACTOR_GRID_HEIGHT-1)
+				src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("plutonium")
+
 
 #undef REACTOR_GRID_WIDTH
 #undef REACTOR_GRID_HEIGHT

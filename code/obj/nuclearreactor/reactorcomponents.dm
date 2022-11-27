@@ -63,7 +63,16 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 					CRASH("Invalid color on material")
 				src.cap_icon.Blend(rgb(setcolor[1],setcolor[2],setcolor[3],setcolor[4]), ICON_MULTIPLY)
 				if (mat1.texture)
-					src.cap_icon.Blend(getTexturedIcon(src.cap_icon, mat1.texture), mat1.texture_blend)
+					var/icon_mode = null
+					switch(mat1.texture_blend) //fucking byond...
+						if(BLEND_DEFAULT) icon_mode = ICON_OVERLAY
+						if(BLEND_OVERLAY) icon_mode = ICON_OVERLAY
+						if(BLEND_ADD) icon_mode = ICON_ADD
+						if(BLEND_SUBTRACT) icon_mode = ICON_SUBTRACT
+						if(BLEND_MULTIPLY) icon_mode = ICON_MULTIPLY
+						if(BLEND_INSET_OVERLAY) icon_mode = ICON_OVERLAY
+
+					src.cap_icon.Blend(getTexturedIcon(src.cap_icon, mat1.texture), icon_mode)
 
 
 
