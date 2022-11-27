@@ -289,6 +289,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/maxhealth_down)
 ABSTRACT_TYPE(/datum/cloner_defect/brain_damage)
 /datum/cloner_defect/brain_damage
 	name = "Call Aloe Oh No"
+	stackable = FALSE // until I add some way to remove these, stacking a few (2 of the major ones, even) would kill you instantly
 	description = "Subject has sustained a form of concussion during the cloning process."
 
 	on_add()
