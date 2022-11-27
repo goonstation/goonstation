@@ -68,6 +68,7 @@
 		desc = "A one meter section of regular pipe."
 
 		volume = 70
+		leakgas = TRUE
 
 		dir = SOUTH
 		initialize_directions = SOUTH|NORTH
@@ -82,7 +83,6 @@
 
 		var/can_rupture = FALSE //currently only need red pipes (insulated) to rupture
 		var/ruptured = 0 //oh no it broke and is leaking everywhere
-		var/destroyed = FALSE // it needs to be replaced!
 		var/initial_icon_state = null //what do i change back to when repaired???
 
 		level = 1
@@ -164,10 +164,6 @@
 	var/datum/gas_mixture/hi_side = gas
 	var/datum/gas_mixture/lo_side = environment
 
-	if(destroyed)
-		parent.mingle_with_turf(loc, volume) // maintain network for simplicity but replicate behavior of it being disconnected
-		return
-
 	// vacuum
 	if( MIXTURE_PRESSURE(lo_side) > MIXTURE_PRESSURE(hi_side) )
 		hi_side = environment
@@ -197,16 +193,9 @@
 
 /obj/machinery/atmospherics/pipe/simple/proc/rupture(pressure, destroy=FALSE)
 	var/new_rupture
-	if (src.destroyed || destroy)
-		ruptured = 10
-		src.destroyed = TRUE
-		src.desc = "The remnants of a section of pipe that needs to be replaced.  Perhaps rods would be sufficient?"
-		parent?.mingle_with_turf(loc, volume)
-		node1?.disconnect(src)
-		node2?.disconnect(src)
-		src.leakgas = TRUE
-		UpdateIcon()
-		return
+	if(destroy)
+		src.visible_message("<span class='alert'><B>The pipe explodes!</span>")
+		qdel(src)
 
 	if(pressure && src.fatigue_pressure)
 		var/iterations = clamp(log(pressure/src.fatigue_pressure)/log(2),0,20)
@@ -244,9 +233,6 @@
 		if(!ruptured)
 			boutput(user, "<span class='alert'>That isn't damaged!</span>")
 			return
-		else if(destroyed)
-			boutput(user, "<span class='alert'>This needs more than just a welder. We need to make a new pipe!</span>")
-			return
 
 		if(!W:try_weld(user, 0.8, noisy=2))
 			return
@@ -256,16 +242,6 @@
 		var/positions = src.get_welding_positions()
 		actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/atmospherics/pipe/simple/proc/repair_pipe, \
 				list(user), "<span class='notice'>[user] repairs the [src.name].</span>", positions[1], positions[2]),user)
-
-
-	else if(destroyed && istype(W, /obj/item/rods))
-		var/duration = 15 SECONDS
-		if (user.traitHolder.hasTrait("carpenter") || user.traitHolder.hasTrait("training_engineer"))
-			duration = round(duration / 2)
-		var/obj/item/rods/S = W
-		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, duration, /obj/machinery/atmospherics/pipe/simple/proc/reconstruct_pipe,\
-		list(user, S), W.icon, W.icon_state, "[user] finishes working with \the [src].")
-		actions.start(action_bar, user)
 
 /obj/machinery/atmospherics/pipe/simple/proc/get_welding_positions()
 	var/start
@@ -316,22 +292,6 @@
 	UpdateIcon()
 	ON_COOLDOWN(src, "rupture_protection", 20 SECONDS + rand(10 SECONDS, 220 SECONDS))
 
-/obj/machinery/atmospherics/pipe/simple/proc/reconstruct_pipe(mob/M, obj/item/rods/R)
-	if(istype(R) && istype(M))
-		R.change_stack_amount(-1)
-		src.setMaterial(R.material)
-		src.destroyed = FALSE
-		src.icon_state = "disco"
-		src.desc = "A one meter section of regular pipe has been placed but needs to be welded into place."
-		// create valid edges back to us and rebuild from here out to merge pipeline(s)
-		if(!istype(node1, /obj/machinery/atmospherics/pipe/manifold))
-			node1.dir = node1.initialize_directions
-		node1.initialize()
-		if(!istype(node2, /obj/machinery/atmospherics/pipe/manifold))
-			node2.dir = node2.initialize_directions
-		node2.initialize()
-		src.parent.build_pipeline(src)
-
 /obj/machinery/atmospherics/pipe/simple/disposing()
 	node1?.disconnect(src)
 	node2?.disconnect(src)
@@ -340,13 +300,9 @@
 
 /obj/machinery/atmospherics/pipe/simple/pipeline_expansion()
 	. = list(node1, node2)
-	if(destroyed)
-		. = list(null, null)
 
 /obj/machinery/atmospherics/pipe/simple/update_icon()
-	if(destroyed)
-		icon_state = "destroyed"
-	else if(node1 && node2)
+	if(node1 && node2)
 		if(ruptured)
 			icon_state = "exposed"
 
@@ -377,10 +333,6 @@
 		unconnected = (~connected)&(initialize_directions)
 
 		icon_state = "pipe_[connected]_[unconnected]"
-
-		// Deletion should be added as part of constructable atmos
-		//else
-		//	qdel(src)
 
 /obj/machinery/atmospherics/pipe/simple/initialize()
 	var/connect_directions
