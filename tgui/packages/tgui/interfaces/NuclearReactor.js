@@ -1,11 +1,10 @@
 import { useBackend } from '../backend';
-import { BlockQuote, Button, Knob, Box, Section, Table, RoundGauge } from '../components';
+import { Button, Knob, Box, Section, Table, RoundGauge } from '../components';
 import { Window } from '../layouts';
-import { useLocalState } from '../backend';
-import { Divider, Flex, Stack } from '../components';
-import { capitalize, pluralize } from './common/stringUtils';
-import { freezeTemperature, getTemperatureColor, getTemperatureIcon, getTemperatureChangeName } from './common/temperatureUtils';
-import { clamp, round, toFixed } from 'common/math';
+import { Flex } from '../components';
+import { capitalize } from './common/stringUtils';
+import { getTemperatureColor } from './common/temperatureUtils';
+import { round } from 'common/math';
 const T0C = 273.15;
 
 const ReactorRow = (shape) => {
