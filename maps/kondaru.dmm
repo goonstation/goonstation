@@ -11433,6 +11433,11 @@
 	dir = 1;
 	name = "autoname - SS13"
 	},
+/obj/machinery/door_control{
+	id = "ai_core";
+	name = "AI Core Shield";
+	pixel_y = -26
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "aJW" = (
@@ -11894,14 +11899,6 @@
 "aLQ" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/quarters_east)
-"aLS" = (
-/obj/machinery/door_control{
-	id = "ai_core";
-	name = "AI Core Shield";
-	pixel_y = 6
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/turret_protected/ai)
 "aLV" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/neutral/side,
@@ -129992,7 +129989,7 @@ aDo
 aEE
 aHC
 aJV
-aLS
+anX
 aOq
 aQR
 aSX
