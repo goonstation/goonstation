@@ -162,7 +162,8 @@
 	/obj/item/clothing/suit/labcoat/genetics,\
 	/obj/item/clothing/suit/wintercoat/genetics,\
 	/obj/item/device/radio/headset/medical,\
-	/obj/item/device/pda2/genetics)
+	/obj/item/device/pda2/genetics,
+	/obj/item/device/analyzer/genetic)
 
 /obj/item/storage/box/clothing/roboticist
 	name = "\improper Roboticist's equipment"
