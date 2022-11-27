@@ -539,9 +539,8 @@
 		src.dir = dir
 		src.velocity = velocity
 
-/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled
+/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/normal
 	New()
-		..()
 		src.component_grid[3][1] = new /obj/item/reactor_component/gas_channel("steel")
 		src.component_grid[3][3] = new /obj/item/reactor_component/gas_channel("steel")
 		src.component_grid[3][5] = new /obj/item/reactor_component/gas_channel("steel")
@@ -563,15 +562,14 @@
 
 		src.component_grid[4][3] = new /obj/item/reactor_component/control_rod("bohrum")
 		src.component_grid[4][5] = new /obj/item/reactor_component/control_rod("bohrum")
-
+		..()
 
 /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/meltdown
 	New()
-		..()
 		for(var/x=2 to REACTOR_GRID_WIDTH-1)
 			for(var/y=2 to REACTOR_GRID_HEIGHT-1)
 				src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("plutonium")
-
+		..()
 
 #undef REACTOR_GRID_WIDTH
 #undef REACTOR_GRID_HEIGHT

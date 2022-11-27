@@ -150,4 +150,4 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 
 
 /datum/fishing_spot/nuclear_reactor/prefilled
-	fishing_atom_type = /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled
+	fishing_atom_type = /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/normal

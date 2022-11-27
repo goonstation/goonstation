@@ -46032,7 +46032,7 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "qnY" = (
-/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled,
+/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/normal,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
