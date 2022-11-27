@@ -2696,6 +2696,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Resource"
 
+/datum/manufacture/handkerchief
+	name = "Handkerchief"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/cloth/handkerchief/white)
+	time = 4 SECONDS
+	create = 1
+	category = "Resource"
+
 /////// pod construction components
 
 /datum/manufacture/pod/parts

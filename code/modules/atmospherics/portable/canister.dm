@@ -46,7 +46,7 @@
 				boutput(user, "<span class='alert'>You try to reach the valve with your mouth but the failsafe prevents you from reaching it.<br><i>Looks like priming the bomb might make it accessible to you...?</i></span>")
 				return
 			if (locate(/obj/item/device/analyzer/atmospheric) in src.det.attachments)
-				src.visible_message("<span class='alert'>[usr] opened the valve and triggered the detonation process.</span>")
+				src.visible_message("<span class='alert'>[user] opened the valve and triggered the detonation process.</span>")
 				src.custom_suicide = 0
 				src.det.detonate()
 			return

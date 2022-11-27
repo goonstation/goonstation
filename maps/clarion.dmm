@@ -13869,8 +13869,7 @@
 /area/station/crew_quarters/kitchen)
 "aCH" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -26753,7 +26752,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/power/apc{
-	areastring = "Teleporter";
+	areastring = "Command Teleporter";
 	dir = 1;
 	name = "Teleporter APC";
 	pixel_y = 24
@@ -27262,11 +27261,14 @@
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "bgN" = (
-/obj/disposalpipe/segment,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/disposalpipe/junction{
+	dir = 1;
+	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor/blueblack{
 	dir = 8
@@ -27369,6 +27371,10 @@
 /obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2{
 	dir = 4
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
@@ -44426,10 +44432,6 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
-"gjL" = (
-/obj/machinery/computer/transit_shuttle/mining,
-/turf/simulated/wall/auto/supernorn,
-/area/station/medical/morgue)
 "glL" = (
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -48650,15 +48652,11 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "qms" = (
-/obj/stool/chair{
-	desc = "";
-	foldable = 0;
-	icon_state = "chair_pool"
-	},
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
 /obj/item/clothing/glasses/sunglasses/tanning,
+/obj/stool/chair/pool,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "qpR" = (
@@ -49951,6 +49949,10 @@
 /area/station/hallway/primary/west)
 "txc" = (
 /obj/random_item_spawner/armory_breaching_supplies,
+/obj/disposalpipe/segment/food,
+/turf/simulated/floor/redblack{
+	dir = 10
+	},
 /area/station/ai_monitored/armory)
 "tAi" = (
 /turf/simulated/floor/red/side{
@@ -50029,11 +50031,6 @@
 	name = "Head of Personnel's Quarters"
 	})
 "tFD" = (
-/obj/stool/chair{
-	desc = "";
-	foldable = 0;
-	icon_state = "chair_pool"
-	},
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -50042,6 +50039,7 @@
 	pixel_x = 10
 	},
 /obj/item/clothing/glasses/sunglasses/tanning,
+/obj/stool/chair/pool,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "tJa" = (
@@ -76198,7 +76196,7 @@ bns
 boo
 bpO
 bqP
-gjL
+brX
 brX
 brX
 brX

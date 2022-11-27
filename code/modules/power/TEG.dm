@@ -904,6 +904,9 @@ datum/pump_ui/circulator_ui
 
 		src.transformation_mngr.check_material_transformation()
 
+		if(lastgenlev >= 18 && !ON_COOLDOWN(src, "warning sound", rand(2 MINUTES, 8 MINUTES)))
+			playsound(src, 'sound/vox/warning.ogg', 30, vary=FALSE, extrarange=10, pitch=rand(70, 90))
+
 	proc/get_efficiency_scale(delta_temperature, heat_capacity, cold_capacity)
 		var/efficiency_scale = efficiency_controller
 

@@ -3,7 +3,8 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 	name = "artifact parts"
 	icon = 'icons/obj/artifacts/artifactLimbs.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	skintoned = FALSE
 	decomp_affected = FALSE
 	accepts_normal_human_overlays = FALSE

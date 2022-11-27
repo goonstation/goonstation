@@ -35,6 +35,7 @@
 /datum/eventSpawnedCritter
 	var/list/critter_types // can be a list of just one, if multiple are present then one is picked at random, so similar mobs can be grouped together
 	var/list/datum/event_item_drop_table/drop_tables
+	var/name = null
 
 	proc/roll_for_items()
 		var/list/items_to_drop = list()
@@ -46,8 +47,9 @@
 
 		return items_to_drop
 
-	New(critter_types, drop_tables)
+	New(name, critter_types, drop_tables)
 		..()
+		src.name = name
 		src.critter_types = critter_types
 		src.drop_tables = drop_tables
 
@@ -68,6 +70,7 @@
 
 	var/list/pest_invasion_critter_datums = list(
 		list(new /datum/eventSpawnedCritter(
+			name = "spiders",
 			critter_types = list(/mob/living/critter/spider/baby),
 			drop_tables = list(
 				new /datum/event_item_drop_table(  // several baby spiders crawl out of the corpse like those horror short videos oh no
@@ -83,6 +86,7 @@
 			)
 		),
 		list(new /datum/eventSpawnedCritter(
+			name = "fire elementals",
 			critter_types = list(/mob/living/critter/fire_elemental),
 			drop_tables = list(
 				new /datum/event_item_drop_table(
@@ -92,6 +96,7 @@
 			)
 		),
 		list(new /datum/eventSpawnedCritter(
+			name = "gunbots",
 			critter_types = list(/mob/living/critter/robotic/gunbot),
 			drop_tables = list(
 				new /datum/event_item_drop_table(
@@ -102,6 +107,7 @@
 			)
 		),
 		list(new /datum/eventSpawnedCritter(
+			name = "emagged bots",
 			critter_types = list(/mob/living/critter/robotic/bot/cleanbot/emagged, /mob/living/critter/robotic/bot/firebot/emagged),
 			drop_tables = list(
 				new /datum/event_item_drop_table(
@@ -142,18 +148,38 @@
 	event_effect(var/source)
 		..()
 
-		// 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
-		var/list/text_messages = list()
-		text_messages.Add("Would you like to respawn as a random antagonist critter? You may be randomly selected from the list of candidates.")
-		text_messages.Add("You are eligible to be respawned as a random antagonist critter. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
-		text_messages.Add("You have been added to the list of eligible candidates. Please wait for the game to choose, good luck!")
+		var/critter_name = "unknown mystery critters"
+		var/list/select = null
+		if (src.critter_type)
+			select = src.critter_type
+			var/atom/dummy = src.critter_type
+			critter_name = initial(dummy.name) + "s"
+		else
+			select = pick(src.pest_invasion_critter_datums)
+			var/list/name_list = list()
+			for (var/datum/eventSpawnedCritter/C in select)
+				if(C.name)
+					name_list += C.name
+			if(length(name_list))
+				critter_name = english_list(name_list)
 
-		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
-		message_admins("Sending offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
-		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
+		SPAWN(0)
+			// 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
+			var/list/text_messages = list()
+			text_messages.Add("Would you like to respawn as one of a team of [critter_name] (antagonist critters)? You may be randomly selected from the list of candidates.")
+			text_messages.Add("You are eligible to be respawned as one of the [critter_name] (antagonist critters)?. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
+			text_messages.Add("You have been added to the list of eligible candidates. Please wait for the game to choose, good luck!")
+
+			// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
+			message_admins("Sending offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
+			var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
 
 
-		if (candidates.len)
+			if (!length(candidates))
+				cleanup_event()
+				global.random_events.next_spawn_event = TIME + 1 MINUTE
+				return
+
 			var/list/EV = list()
 			for (var/landmark_type in list(LANDMARK_PESTSTART, LANDMARK_MONKEY, LANDMARK_BLOBSTART, LANDMARK_KUDZUSTART))
 				if (landmarks[landmark_type])
@@ -169,12 +195,6 @@
 					return
 
 			var/atom/pestlandmark = pick(EV)
-
-			var/list/select = null
-			if (src.critter_type)
-				select = src.critter_type
-			else
-				select = pick(src.pest_invasion_critter_datums)
 
 			if (src.num_critters) //custom selected
 				src.num_critters = (min(src.num_critters, candidates.len))
@@ -203,7 +223,7 @@
 				candidates -= M
 
 			command_alert("Our sensors have detected a hostile nonhuman lifeform in the vicinity of the station.", "Hostile Critter", alert_origin = ALERT_GENERAL)
-		cleanup_event()
+			cleanup_event()
 
 	proc/cleanup_event()
 		src.critter_type = null

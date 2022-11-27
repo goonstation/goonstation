@@ -125,12 +125,6 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	req_access = list(access_heads)
 	var/obj/item/clothing/head/hat = null
 
-/*
-	var/datum/game_mode/malfunction/AI_Module/module_picker/malf_picker
-	var/processing_time = 100
-	var/list/datum/game_mode/malfunction/AI_Module/current_modules = list()
-
-*/
 	var/fire_res_on_core = 0
 
 	health = 250

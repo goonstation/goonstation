@@ -147,7 +147,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			processing_items.Add(src)
 		create_time = world.time
 		if (src.amount != 1)
-			stack_trace("[src] of type [src.type] is spawning with an amount other than 1. That's bad. Ping Aloe.")
+			stack_trace("[src] of type [src.type] is spawning with an amount other than 1. That's bad. Go delete the 'amount' line and replace it with `bites_left = \[whatever the amount var had before\].")
 
 	disposing()
 		if(!made_ants)
@@ -475,7 +475,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	icon_state = null
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	var/splash_all_contents = 1
@@ -1228,7 +1228,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	attack_self(var/mob/user as mob)
 		if (!user && usr)
 			user = usr
-		else if (!user && !usr) // buh?
+		else if (!user)
 			return ..()
 
 		if (!ishuman(user))

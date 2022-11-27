@@ -119,7 +119,7 @@
 			UpdateIcon()
 
 		else if(istype(item, /obj/item/cable_coil)) //make loops for shoulder straps
-			if(flags & ONBACK)
+			if(c_flags & ONBACK)
 				boutput(user, "<span class='alert'>The valve already has shoulder straps!</span>")
 				return
 
@@ -129,7 +129,7 @@
 				return
 			coil.use(2)
 
-			flags |= ONBACK
+			c_flags |= ONBACK
 			boutput(user, "<span class='notice'>You attach two loops of [item] to the transfer valve!</span>")
 			UpdateIcon()
 
@@ -146,7 +146,7 @@
 		<BR> <B> Attachment two:</B> [tank_two] [tank_two ? "<A href='?src=\ref[src];tanktwo=1'>Remove</A>" : ""]
 		<BR> <B> Valve attachment:</B> [attached_device ? "<A href='?src=\ref[src];device=1'>[attached_device]</A>" : "None"] [attached_device ? "<A href='?src=\ref[src];rem_device=1'>Remove</A>" : ""]
 		<BR> <B> Valve status: </B> [ valve_open ? "<A href='?src=\ref[src];open=1'>Closed</A> <B>Open</B>" : "<B>Closed</B> <A href='?src=\ref[src];open=1'>Open</A>"]
-		<BR> [flags & ONBACK ? "<B> Straps: </B> <A href='?src=\ref[src];straps=1'>Remove</A>" : ""]"}
+		<BR> [c_flags & ONBACK ? "<B> Straps: </B> <A href='?src=\ref[src];straps=1'>Remove</A>" : ""]"}
 
 		user.Browse(dat, "window=trans_valve;size=600x300")
 		onclose(user, "trans_valve")
@@ -190,7 +190,7 @@
 				if(usr?.back && usr.back == src)
 					boutput(usr, "<span class='alert'>You can't detach the loops of wire while you're wearing [src]!</span>")
 				else
-					flags &= ~ONBACK
+					c_flags &= ~ONBACK
 					var/turf/location = get_turf(src)
 					var/obj/item/cable_coil/cut/C = new /obj/item/cable_coil/cut(location)
 					C.amount = 2
@@ -225,7 +225,7 @@
 		src.underlays = new/list()
 		src.wear_image = image(wear_image_icon, "valve")
 
-		if(!tank_one && !tank_two && !attached_device && !(flags & ONBACK))
+		if(!tank_one && !tank_two && !attached_device && !(c_flags & ONBACK))
 			icon_state = "valve_1"
 			return
 
@@ -289,7 +289,7 @@
 				K = new(src.icon, icon_state = "[device_icon]")
 			src.overlays += K
 
-		if(flags & ONBACK)
+		if(c_flags & ONBACK)
 			var/image/straps = new(src.icon, icon_state = "wire_straps")
 			src.underlays += straps
 
