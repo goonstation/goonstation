@@ -79022,6 +79022,8 @@
 /mob/living/critter/small_animal/mouse,
 /obj/disposalpipe/segment/mail/bent/north,
 /obj/machinery/light_switch/north,
+/obj/table/auto,
+/obj/random_item_spawner/tools,
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/southeast)
 "pbL" = (
@@ -79774,10 +79776,9 @@
 	},
 /area/research_outpost)
 "rJV" = (
-/obj/table/auto,
-/obj/random_item_spawner/tools,
+/obj/storage/closet/fire,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/southeast)
 "rNR" = (
 /obj/rack,
 /obj/item/clothing/suit/space,
@@ -80282,11 +80283,6 @@
 	},
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
-"thC" = (
-/obj/disposalpipe/segment/mail/horizontal,
-/obj/storage/closet/fire,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "tjt" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -141511,7 +141507,7 @@ aaa
 cea
 cea
 cea
-thC
+chY
 vXc
 cSY
 rJV
@@ -141817,7 +141813,7 @@ cky
 vAp
 cie
 cie
-aFb
+cie
 aaI
 aaa
 aaa
