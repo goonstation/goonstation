@@ -44,6 +44,7 @@
 		src.net_id = generate_net_id(src)
 		terminal.set_dir(turn(src.dir,-90))
 		terminal.master = src
+		src.add_simple_light("turbine_light", list(255,255,255,255))
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Stator Load", .proc/_set_statorload_mechchomp)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Flow Rate", .proc/_set_flowrate_mechchomp)

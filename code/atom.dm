@@ -736,7 +736,7 @@
 		worn_material_texture_image = getTexturedWornImage(src, texture, blendMode)
 	return
 
-/proc/getTexturedImage(var/atom/A, var/texture = "damaged", var/blendMode = BLEND_MULTIPLY)//, var/key = "texture")
+/proc/getTexturedIcon(var/atom/A, var/texture = "damaged")//, var/key = "texture")
 	if (!A)
 		return
 	var/icon/tex = null
@@ -768,6 +768,13 @@
 	mask = new(isicon(A) ? A : A.icon)
 	mask.MapColors(1,1,1, 1,1,1, 1,1,1, 1,1,1)
 	mask.Blend(tex, ICON_MULTIPLY)
+	//mask is now a cut-out of the texture shaped like the object.
+	return mask
+
+/proc/getTexturedImage(var/atom/A, var/texture = "damaged", var/blendMode = BLEND_MULTIPLY)//, var/key = "texture")
+	if (!A)
+		return
+	var/mask = getTexturedIcon(A, texture)
 	//mask is now a cut-out of the texture shaped like the object.
 	var/image/finished = image(mask,"")
 	finished.blend_mode = blendMode

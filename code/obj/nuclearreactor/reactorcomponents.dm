@@ -13,6 +13,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	var/icon_state_inserted = "base"
 	var/icon_state_cap = "rod_cap"
 	var/ui_image = null
+	var/icon/cap_icon = null
 	var/temperature = T20C //room temp kelvin as default
 	///How much does this component share heat with surrounding components? Basically surface area in contact (m2)
 	var/thermal_cross_section = 0.01
@@ -39,6 +40,32 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			var/icon/dummy_icon = icon(initial(src.icon), initial(src.icon_state_inserted))
 			src.ui_image = icon2base64(dummy_icon)
 			ui_image_base64_cache[src.type] = src.ui_image
+
+	setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/copy = TRUE, var/use_descriptors = FALSE)
+		. = ..()
+		src.cap_icon = icon(src.icon, src.icon_state_cap)
+		if(appearance) //some mildly cursed code to set material appearance on the end caps
+			if (islist(src.mat_appearances_to_ignore) && length(src.mat_appearances_to_ignore))
+				if (mat1.name in src.mat_appearances_to_ignore)
+					return
+			if (src.mat_changeappearance && mat1.applyColor)
+				var/list/setcolor = mat1.color
+				if(istext(mat1.color))
+					setcolor = rgb2num(mat1.color)
+				if(islist(mat1.color))
+					setcolor = mat1.color
+
+				if(length(setcolor) == 4)
+					setcolor[4] = mat1.alpha
+				else if(length(setcolor) == 3)
+					setcolor += mat1.alpha
+				else
+					CRASH("Invalid color on material")
+				src.cap_icon.Blend(rgb(setcolor[1],setcolor[2],setcolor[3],setcolor[4]), ICON_MULTIPLY)
+				if (mat1.texture)
+					src.cap_icon.Blend(getTexturedIcon(src.cap_icon, mat1.texture), mat1.texture_blend)
+
+
 
 	proc/melt()
 		if(melted)

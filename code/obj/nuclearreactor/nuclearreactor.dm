@@ -52,12 +52,12 @@
 
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Control Rods", .proc/_set_controlrods_mechchomp)
+		src.add_medium_light("reactor_light", list(255,255,255,255))
 		_comp_grid_overlay_update = TRUE
 		UpdateIcon()
 
 	update_icon()
-		//base
-		src.UpdateOverlays(image(icon, "reactor_empty"), "reactor_grid")
+
 		//status lights
 		//gas input/output
 		if(air1.total_moles_full() > 100) //more than trace gas
@@ -87,12 +87,13 @@
 
 		//and finally, component grid
 		if(_comp_grid_overlay_update)
+			//base
+			var/icon/base_grid = icon(icon, "reactor_empty")//image(icon, "reactor_empty")
 			for(var/x=1 to REACTOR_GRID_WIDTH)
 				for(var/y=1 to REACTOR_GRID_HEIGHT)
 					if(src.component_grid[x][y])
-						src.UpdateOverlays(image(src.component_grid[x][y].icon, src.component_grid[x][y].icon_state_cap, layer=src.layer+0.1, pixel_x=((y-1)*18)+10, pixel_y=(124-x*15)-4), "comp([x],[y])")
-					else
-						src.UpdateOverlays(null, "comp([x],[y])")
+						base_grid.Blend(src.component_grid[x][y].cap_icon, ICON_OVERLAY, ((y-1)*18)+11, (124-x*15)-4)
+			src.UpdateOverlays(image(base_grid), "reactor_grid")
 			_comp_grid_overlay_update = FALSE
 
 
@@ -299,14 +300,14 @@
 		var/node2_connect = dir
 		var/node1_connect = turn(dir, 180)
 
-		for(var/obj/machinery/atmospherics/pipe/simple/target in get_steps(src,node1_connect,3))
+		for(var/obj/machinery/atmospherics/pipe/simple/target in get_steps(get_steps(src, node1_connect, 3), SOUTH, 1))
 			if(target.initialize_directions & node2_connect)
 				if(target != src)
 					node1 = target
 					//target.node2 = src
 					break
 
-		for(var/obj/machinery/atmospherics/pipe/simple/target in get_steps(src,node2_connect,3))
+		for(var/obj/machinery/atmospherics/pipe/simple/target in get_steps(get_steps(src, node2_connect, 3), NORTH, 1))
 			if(target.initialize_directions & node1_connect)
 				if(target != src)
 					node2 = target
@@ -533,35 +534,35 @@
 
 /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled
 	New()
-		..()
-		src.component_grid[3][1] = new /obj/item/reactor_component/gas_channel("steel")
+		src.component_grid[3][1] = new /obj/item/reactor_component/gas_channel("koshmarite")
 		src.component_grid[3][3] = new /obj/item/reactor_component/gas_channel("steel")
-		src.component_grid[3][5] = new /obj/item/reactor_component/gas_channel("steel")
+		src.component_grid[3][5] = new /obj/item/reactor_component/gas_channel("cerenkite")
 		src.component_grid[3][7] = new /obj/item/reactor_component/gas_channel("steel")
 		src.component_grid[5][1] = new /obj/item/reactor_component/gas_channel("steel")
-		src.component_grid[5][3] = new /obj/item/reactor_component/gas_channel("steel")
+		src.component_grid[5][3] = new /obj/item/reactor_component/gas_channel("plutonium")
 		src.component_grid[5][5] = new /obj/item/reactor_component/gas_channel("steel")
 		src.component_grid[5][7] = new /obj/item/reactor_component/gas_channel("steel")
 
-		src.component_grid[3][2] = new /obj/item/reactor_component/heat_exchanger("steel")
-		src.component_grid[3][4] = new /obj/item/reactor_component/heat_exchanger("steel")
+		src.component_grid[3][2] = new /obj/item/reactor_component/heat_exchanger("pizza")
+		src.component_grid[3][4] = new /obj/item/reactor_component/heat_exchanger("pizza")
 		src.component_grid[3][6] = new /obj/item/reactor_component/heat_exchanger("steel")
 		src.component_grid[5][2] = new /obj/item/reactor_component/heat_exchanger("steel")
 		src.component_grid[5][4] = new /obj/item/reactor_component/heat_exchanger("steel")
 		src.component_grid[5][6] = new /obj/item/reactor_component/heat_exchanger("steel")
 
-		src.component_grid[4][1] = new /obj/item/reactor_component/heat_exchanger("steel")
+		src.component_grid[4][1] = new /obj/item/reactor_component/heat_exchanger("erebite")
 		src.component_grid[4][7] = new /obj/item/reactor_component/heat_exchanger("steel")
 
 		src.component_grid[4][3] = new /obj/item/reactor_component/control_rod("bohrum")
 		src.component_grid[4][5] = new /obj/item/reactor_component/control_rod("bohrum")
+		..()
 
 /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/meltdown
 	New()
-		..()
 		for(var/x=1 to REACTOR_GRID_WIDTH)
 			for(var/y=1 to REACTOR_GRID_HEIGHT)
 				src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("plutonium")
+		..()
 
 #undef REACTOR_GRID_WIDTH
 #undef REACTOR_GRID_HEIGHT

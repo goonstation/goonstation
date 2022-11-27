@@ -46010,6 +46010,13 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/mining/refinery)
+"qlP" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 5
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "qmr" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/gloves/latex,
@@ -47915,8 +47922,7 @@
 /area/station/ai_monitored/storage/eva)
 "thZ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 4
+	dir = 10
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
@@ -81956,7 +81962,7 @@ vSE
 fOe
 dOv
 thZ
-rWA
+qlP
 rWA
 cbJ
 rWA
@@ -83496,8 +83502,8 @@ sEz
 bwS
 qKC
 lrD
-rWA
 qoa
+eUp
 jrl
 eUp
 rIr
