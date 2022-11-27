@@ -9,7 +9,7 @@
 		/turf/unsimulated/floor = list("Cross") // ditto
 	)
 	/// List of procs that are forbidden to be implemented on stable atoms.
-	var/forbidden_procs = list("Enter", "Exit", "Cross")
+	var/forbidden_procs = list("Enter", "Exit", "Cross", "Uncross")
 
 /**
  * JPS Passability cache flag [/atom/var/pass_unstable] correctness checking.
