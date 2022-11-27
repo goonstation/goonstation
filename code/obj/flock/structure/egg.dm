@@ -7,7 +7,7 @@
 	anchored = FALSE
 	density = FALSE
 	name = "glowing doodad"
-	desc = "Oh god is that a fucking light grenade?!"
+	desc = "Some sort of small machine. It looks like its getting ready for something."
 	flock_desc = "Will soon hatch into a Flockdrone."
 	flock_id = "Second-Stage Assembler"
 	build_time = 6
