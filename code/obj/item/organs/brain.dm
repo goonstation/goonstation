@@ -22,6 +22,8 @@
 			src.AddComponent(/datum/component/consume/food_effects, list("brain_food_ithillid"))
 
 	disposing()
+		logTheThing(LOG_COMBAT, src, "[owner ? "(owner's ckey [owner.ckey]) " : ""]has been destroyed by [usr ? constructTarget(usr,"combat") : "???"] in [!isturf(src.loc) ? src.loc : ""][log_loc(src)]. Brain last touched by [src.fingerprintslast].")
+
 		if (owner && owner.brain == src)
 			owner.brain = null
 		else if (donor && donor.mind && donor.mind.brain == src)
