@@ -2297,7 +2297,6 @@
 // that would be difficult, datumize emotes 2day!
 #ifdef SPACEMAN_DMM
 /mob/living/carbon/human/emote(var/act, var/voluntary = 0, var/emoteTarget = null)
-	..()
 #endif
 
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
