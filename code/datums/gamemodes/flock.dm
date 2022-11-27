@@ -2,8 +2,7 @@
 	name = "flock"
 	config_tag = "flock"
 
-	shuttle_available = SHUTTLE_CALL_ENABLED
-	shuttle_available_threshold = 12000 // 20 minutes
+	shuttle_available = SHUTTLE_CALL_MANUAL_CALL_DISABLED
 
 	antag_token_support = TRUE // this can allow the flock to have more members than usual, but should be rare
 	escape_possible = FALSE
@@ -134,5 +133,3 @@
 	src.escape_possible = TRUE
 	src.do_random_events = TRUE
 	src.do_antag_random_spawns = TRUE
-
-	src.shuttle_available_threshold = 0
