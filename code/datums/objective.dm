@@ -815,7 +815,9 @@ proc/create_fluff(datum/mind/target)
 	explanation_text = "Construct the Relay and transmit the Signal."
 
 	check_completion()
-		for (var/datum/flock/flock as anything in flocks)
+		var/datum/flock/flock = null
+		for (var/flock_name as anything in flocks)
+			flock = flocks[flock_name]
 			if (flock.flockmind_mind == src.owner && isflockmob(src.owner.current))
 				return flock.relay_finished
 		return FALSE
