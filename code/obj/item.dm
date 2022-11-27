@@ -122,6 +122,7 @@
 	var/obj/item/holding = null
 	var/rarity = ITEM_RARITY_COMMON // Just a little thing to indicate item rarity. RPG fluff.
 	pressure_resistance = 50
+	/// This var fucking sucks. It's used for prox sensors and other stuff that when triggered trigger an item they're attached to. Why is this on /item i am so sad
 	var/obj/item/master = null
 	var/acid_survival_time //nadir support: set in minutes to override how long item will stay intact in contact with acid
 

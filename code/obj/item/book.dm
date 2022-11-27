@@ -92,7 +92,11 @@ Custom Books
 	quartermaster
 		name = "Cargo Pocket Guide"
 		icon_state = "cargoguide"
+#ifdef MAP_OVERRIDE_NADIR
+		file_path = "strings/books/cargo_pocket_guide_nadir.txt"
+#else
 		file_path = "strings/books/cargo_pocket_guide.txt"
+#endif
 
 /****MatSci and Mining****/
 
@@ -139,6 +143,12 @@ Custom Books
 	icon_state = "interdictorguide"
 	desc = "A handy guide on proper construction and maintenance of Spatial Interdictors"
 	file_path = "strings/books/interdictor_guide.txt"
+
+/obj/item/paper/book/from_file/transception_guide
+	name = "NT-PROTO: Transception Array"
+	icon_state = "orangebook"
+	desc = "A book detailing behaviors and operations of Nadir's transception array"
+	file_path = "strings/books/transception_guide.txt"
 
 /****Civilian Guides****/
 

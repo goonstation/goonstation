@@ -481,7 +481,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "cliff"
 	desc = "The edge of a cliff."
 	density = 0
-	anchored = 1
+	anchored = 2
 	opacity = 0
 	layer = OBJ_LAYER
 	icon = 'icons/misc/exploration.dmi'
@@ -936,7 +936,7 @@ SYNDICATE DRONE FACTORY AREAS
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shovel"
 	w_class = W_CLASS_NORMAL
-	flags = ONBELT
+	c_flags = ONBELT
 	force = 15
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 

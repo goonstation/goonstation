@@ -1184,6 +1184,20 @@ proc/debug_map_apc_count(delim,zlim)
 				img.app.overlays = list(src.makeText(landmark_text))
 				img.app.color = debug_color_of(landmark_text)
 
+	opaque_atom_count
+		name = "opaque atom count"
+		help = {"Shows how many opaque atoms are on a turf according to the turf var"}
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			if(theTurf.opaque_atom_count == 0)
+				img.app.alpha = 0
+				return
+			img.app.alpha = 100
+			img.app.overlays = list(src.makeText(theTurf.opaque_atom_count, RESET_ALPHA | RESET_COLOR))
+			if(theTurf.opaque_atom_count > 0)
+				img.app.color = "#55aa55"
+			else
+				img.app.color = "#aa5555"
+
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
 

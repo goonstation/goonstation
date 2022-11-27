@@ -1023,7 +1023,7 @@
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "syndicargotele"
 	w_class = W_CLASS_SMALL
-	flags = ONBELT
+	c_flags = ONBELT
 	mats = 4
 
 /obj/decoration/scenario/crate

@@ -23,7 +23,8 @@ PIPE BOMBS + CONSTRUCTION
 	item_state = "banana"
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT | EXTRADELAY
+	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
+	c_flags = ONBELT
 	is_syndicate = 0
 	mats = 6
 	stamina_damage = 0
@@ -1157,7 +1158,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	item_state = "flashbang"
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	var/expl_devas = 0
 	var/expl_heavy = 0
 	var/expl_light = 1
@@ -1275,7 +1277,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 /obj/item/breaching_charge/thermite
 	name = "Thermite Breaching Charge"
 	desc = "When applied to a wall, causes a thermite reaction which totally destroys it."
-	flags = ONBELT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	expl_range = 2

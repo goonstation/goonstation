@@ -3,6 +3,8 @@
 #define WIRE_POWER 2
 #define WIRE_MALF 3
 #define WIRE_SHOCK 4
+#define MAX_SPEED 3
+#define MAX_SPEED_HACKED 5
 
 /obj/machinery/manufacturer
 	name = "manufacturing unit"
@@ -37,6 +39,8 @@
 	var/temp = null //! Used as a cache when outputting messages to users
 	var/frequency = FREQ_PDA
 	var/net_id = null
+	var/device_tag = "PNET_MANUFACTURER"
+	var/obj/machinery/power/data_terminal/link = null
 	var/obj/item/card/id/scan = null //! Used when deducting payment for ores from a Rockbox
 
 	// Printing and queues
@@ -84,8 +88,15 @@
 	New()
 		START_TRACKING
 		..()
-		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, src.frequency)
 		src.net_id = generate_net_id(src)
+
+		if(!src.link)
+			var/turf/T = get_turf(src)
+			var/obj/machinery/power/data_terminal/test_link = locate() in T
+			if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
+				src.link = test_link
+				src.link.master = src
 
 		src.AddComponent(/datum/component/bullet_holes, 15, 5)
 
@@ -129,6 +140,9 @@
 		src.sound_beginwork = null
 		src.sound_damaged = null
 		src.sound_destroyed = null
+		if (src.link)
+			src.link.master = null
+			src.link = null
 
 		for (var/obj/O in src.contents)
 			O.set_loc(src.loc)
@@ -196,7 +210,7 @@
 			if (!src.repeat)
 				src.queue -= src.queue[1]
 
-		if (src.queue.len < 1)
+		if (length(src.queue) < 1)
 			src.manual_stop = 0
 			playsound(src.loc, src.sound_happy, 50, 1)
 			src.visible_message("<span class='notice'>[src] finishes its production queue.</span>")
@@ -603,7 +617,7 @@
 							break
 
 			if (href_list["speed"])
-				var/upperbound = src.hacked ? 5 : 3
+				var/upperbound = src.hacked ? MAX_SPEED_HACKED : MAX_SPEED
 				var/given_speed = text2num(href_list["speed"])
 				if (src.mode == "working")
 					boutput(usr, "<span class='alert'>You cannot alter the speed setting while the unit is working.</span>")
@@ -614,19 +628,26 @@
 					src.speed = clamp(newset, 1, upperbound)
 
 			if (href_list["clearQ"])
-				var/Qcounter = 1
-				for (var/datum/manufacture/M in src.queue)
-					if (Qcounter == 1 && src.mode == "working") continue
-					src.queue -= src.queue[Qcounter]
-				if (src.mode == "halt")
-					src.manual_stop = 0
+				var/Qlength = length(src.queue)
+				if (Qlength < 1) // Nothing in list
+					return
+
+				if (Qlength > 2)
+					src.queue.Cut(2)
+
+				if (src.mode != "working")
+					src.queue -= src.queue[1]
+
+				if (src.mode == "halt") // Set ready if halted
+					src.manual_stop = FALSE
 					src.error = null
 					src.mode = "ready"
+
 					src.build_icon()
 
 			if (href_list["removefromQ"])
 				var/operation = text2num_safe(href_list["removefromQ"])
-				if (!isnum(operation) || src.queue.len < 1 || operation > src.queue.len)
+				if (!isnum(operation) || length(src.queue) < 1 || operation > length(src.queue))
 					boutput(usr, "<span class='alert'>Invalid operation.</span>")
 					return
 
@@ -642,7 +663,7 @@
 				src.repeat = !src.repeat
 
 			if (href_list["continue"])
-				if (src.queue.len < 1)
+				if (length(src.queue) < 1)
 					boutput(usr, "<span class='alert'>Cannot find any items in queue to continue production.</span>")
 					return
 				if (!check_enough_materials(src.queue[1]))
@@ -684,7 +705,7 @@
 
 				if (!check_enough_materials(I))
 					boutput(usr, "<span class='alert'>Insufficient usable materials to manufacture that item.</span>")
-				else if (src.queue.len >= MAX_QUEUE_LENGTH)
+				else if (length(src.queue) >= MAX_QUEUE_LENGTH)
 					boutput(usr, "<span class='alert'>Manufacturer queue length limit reached.</span>")
 				else
 					src.queue += I
@@ -692,7 +713,7 @@
 						src.begin_work(1)
 						src.updateUsrDialog()
 
-				if (src.queue.len > 0 && src.mode == "ready")
+				if (length(src.queue) > 0 && src.mode == "ready")
 					src.begin_work(1)
 					src.updateUsrDialog()
 					return
@@ -1214,6 +1235,217 @@
 
 		src.updateUsrDialog()
 
+	receive_signal(datum/signal/signal)
+		if (!signal || signal.encryption || signal.transmission_method != TRANSMISSION_WIRE)
+			return
+
+		var/sender = signal.data["sender"]
+		if (!sender) // important for replies etc.
+			return
+
+		var/address = signal.data["address_1"]
+		if (address != src.net_id) // ping or they're not talking to us entirely
+			if (address == "ping")
+				var/list/ping_data = list()
+				ping_data["address_1"] = sender
+				ping_data["netid"] = src.net_id
+				ping_data["sender"] = src.net_id
+				ping_data["command"] = "ping_reply"
+				ping_data["device"] = src.device_tag
+				post_signal(ping_data)
+
+			return
+
+		var/command = signal.data["command"]
+		if (!command) // not telling us to do anything
+			return
+
+		switch(command)
+			if ("help")
+				var/list/help = list()
+				help["address_1"] = sender
+				help["sender"] = src.net_id
+				if (!signal.data["topic"])
+					help["description"] = "[src.name] - Allows the manufacturing of various goods"
+					help["topics"] = "status,queue,add,remove,clear,speed,resume,pause,repeat"
+
+				else
+					switch (signal.data["topic"])
+						if ("status")
+							help["description"] = "Returns data about the manufacturers current state."
+
+						if ("queue")
+							help["description"] = "Returns the manufacturers entire queue."
+
+						if ("add")
+							help["description"] = "Appends the item with the corresponding name to the queue."
+							help["args"] = "data"
+
+						if ("remove")
+							help["description"] = "Removes the item at the corresponding index."
+							help["args"] = "data"
+
+						if ("clear")
+							help["description"] = "Clears the entire queue."
+
+						if ("speed")
+							help["description"] = "Sets the manufacturers speed to the included state."
+							help["args"] = "data"
+
+						if ("resume")
+							help["description"] = "Resumes building the current item."
+
+						if ("pause")
+							help["description"] = "Pauses bulding the current item."
+
+						if ("repeat")
+							help["description"] = "Sets whether or not the manufacturer is repeating building the current item based on the included state."
+							help["args"] = "data"
+
+				post_signal(help)
+				return
+
+			if ("status")
+				post_signal(list("address_1" = sender, "sender" = src.net_id, "data" = "mode=[src.mode]&speed=[src.speed]&timeleft=[src.time_left]&repeat=[src.repeat]"))
+				return
+
+			if ("queue")
+				post_signal(list("address_1" = sender, "sender" = src.net_id, "data" = src.queue.Join(",")))
+				return
+
+			if ("add")
+				var/item_name = signal.data["data"]
+				if (!item_name)
+					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#BADITEMNAME"))
+					return
+
+				var/datum/manufacture/item_bp
+				for (var/datum/manufacture/bp in src.available + src.download + src.drive_recipes + (src.hacked ? src.hidden : null))
+					if (bp.name == item_name)
+						item_bp = bp
+						break
+
+				if (!item_bp)
+					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#NOITEMBLUEPRINT"))
+					return
+
+				if (free_resource_amt > 0) // We do this here instead of on New() as a tiny optimization to keep some overhead off of map load - Also required for packets
+					claim_free_resources()
+
+				if (!check_enough_materials(item_bp))
+					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#NOMATERIALS"))
+					return
+
+				else if (length(src.queue) >= MAX_QUEUE_LENGTH)
+					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#QUEUEFULL"))
+					return
+
+				else
+					src.queue += item_bp
+					src.begin_work(1)
+					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#APPENDED"))
+
+			if ("clear")
+				var/Qlength = length(src.queue)
+				if (Qlength < 1) // Nothing in list
+					return
+
+				if (Qlength > 2)
+					src.queue.Cut(2)
+
+				if (src.mode != "working")
+					src.queue -= src.queue[1]
+
+				if (src.mode == "halt") // Set ready if halted
+					src.manual_stop = FALSE
+					src.error = null
+					src.mode = "ready"
+
+					src.build_icon()
+
+				if (length(src.queue) < 1)
+					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#CLEARED"))
+
+				else
+					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#WORKING"))
+
+			if ("remove")
+				var/operation = text2num_safe(signal.data["data"])
+				if (!isnum(operation) || length(src.queue) < 1 || operation > length(src.queue))
+					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#BADOPERATION"))
+					return
+
+				if(TIME < last_queue_op + 5)
+					return
+				else
+					last_queue_op = TIME
+
+				src.queue -= src.queue[operation]
+				begin_work()
+				post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#REMOVED"))
+
+			if ("resume")
+				if (length(src.queue) < 1)
+					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#NOQUEUE"))
+					return
+
+				if (!check_enough_materials(src.queue[1]))
+					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#NOMATERIALS"))
+					return
+
+				else
+					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#RESUMED"))
+					src.begin_work(0)
+
+			if ("pause")
+				src.mode = "halt"
+				src.build_icon()
+				if (src.action_bar)
+					src.action_bar.interrupt(INTERRUPT_ALWAYS)
+
+				post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#PAUSED"))
+
+			if ("repeat")
+				if (!signal.data["data"])
+					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#BADSTATE"))
+					return
+
+				var/state = text2num_safe(signal.data["data"])
+				if (isnull(state))
+					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#BADSTATE"))
+					return
+
+				if (state)
+					src.repeat = TRUE
+					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#REPEAT"))
+
+				else
+					src.repeat = FALSE
+					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#NOREPEAT"))
+
+			if ("speed")
+				var/upperbound = src.hacked ? MAX_SPEED_HACKED : MAX_SPEED
+				var/given_speed = text2num(signal.data["data"])
+				if (src.mode == "working")
+					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#WORKING"))
+					return
+
+				if (isnull(given_speed) || given_speed < 1 || given_speed > upperbound)
+					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#BADSPEED"))
+					return
+
+				src.speed = given_speed
+				post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#SPEEDSET"))
+
+		src.updateUsrDialog()
+
+	proc/post_signal(var/list/data)
+		var/datum/signal/new_signal = get_free_signal()
+		new_signal.source = src
+		new_signal.transmission_method = TRANSMISSION_WIRE
+		new_signal.data = data
+		src.link.post_signal(src, new_signal)
+
 	proc/accept_loading(mob/user,allow_silicon)
 		if (!user)
 			return FALSE
@@ -1443,7 +1675,7 @@
 	proc/begin_work(new_production = TRUE)
 		if (status & NOPOWER || status & BROKEN)
 			return
-		if (!src.queue.len)
+		if (!length(src.queue))
 			src.manual_stop = 0
 			src.mode = "ready"
 			src.build_icon()
@@ -1617,7 +1849,7 @@
 				X.set_loc(src.loc)
 				X.throw_at(pick(src.nearby_turfs), 16, 3)
 				to_throw--
-		if (src.queue.len > 1 && prob(20))
+		if (length(src.queue) > 1 && prob(20))
 			var/list_counter = 0
 			for (var/datum/manufacture/X in src.queue)
 				list_counter++
@@ -1775,10 +2007,10 @@
 		var/list/dat = list()
 
 		var/list/speed_opts = list()
-		for (var/i in 1 to (src.hacked ? 5 : 3))
+		for (var/i in 1 to (src.hacked ? MAX_SPEED_HACKED : MAX_SPEED))
 			speed_opts += "<a href='?src=\ref[src];speed=[i]' class='buttonlink' style='[i == src.speed ? "font-weight: bold; background: #6c6;" : ""]'>[i]</a>"
 
-		if (src.speed > (src.hacked ? 5 : 3))
+		if (src.speed > (src.hacked ? MAX_SPEED_HACKED : MAX_SPEED))
 			// sometimes people get these set to wacky values
 			speed_opts += "<a href='?src=\ref[src];speed=[src.speed]' class='buttonlink' style='font-weight: bold; background: #c66;'>[src.speed]</a>"
 
@@ -2416,6 +2648,7 @@
 	hidden = list(/datum/manufacture/breathmask,
 		/datum/manufacture/patch,
 		/datum/manufacture/towel,
+		/datum/manufacture/handkerchief,
 		/datum/manufacture/tricolor,
 		/datum/manufacture/hat_ltophat)
 
@@ -2731,8 +2964,7 @@
 
 	onInterrupt()
 		..()
-		// Kind of a gross hack to store the time remaining on pause.
-		MA.time_left = (src.started + src.duration) - world.time
+		MA.time_left = src.duration - (TIME - src.started)
 		MA.manual_stop = FALSE
 		MA.error = null
 		MA.mode = "ready"
@@ -2775,3 +3007,5 @@
 #undef WIRE_MALF
 #undef WIRE_SHOCK
 #undef MAX_QUEUE_LENGTH
+#undef MAX_SPEED
+#undef MAX_SPEED_HACKED
