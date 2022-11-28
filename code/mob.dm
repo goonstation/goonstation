@@ -968,7 +968,7 @@
 			tgui_alert(src, "There was an error setting this status. Perhaps you are a ghost?", "Error")
 			return
 	//So that players can leave their team and spectate. Since normal dying get's you instantly cloned.
-	#if defined(MAP_OVERRIDE_POD_WARS)
+#if defined(MAP_OVERRIDE_POD_WARS)
 		if (isliving(src) && !isdead(src))
 			var/double_confirm = tgui_alert(src, "Setting DNR here will kill you and remove you from your team. Do you still want to set DNR?", "Set Do Not Resuscitate", list("Yes", "No"))
 			if (double_confirm != "Yes")
@@ -983,7 +983,7 @@
 			mode.team_NT.members -= src.mind
 			mode.team_SY.members -= src.mind
 			message_admins("[src]([src.ckey]) just set DNR and was removed from their team. which was probably [src.mind.special_role]!")
-	#else
+#else
 
 		src.verbs -= list(/mob/verb/setdnr)
 		src.mind.dnr = 1
