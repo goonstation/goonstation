@@ -707,6 +707,10 @@ var/list/special_pa_observing_verbs = list(
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	ADMIN_ONLY
 	if (src.holder.tempmin)
+		logTheThing(LOG_ADMIN, usr, "tried to access the player panel")
+		logTheThing(LOG_DIARY, usr, "tried to access the player panel", "admin")
+		message_admins("[key_name(usr)] tried to access the player panel but was denied.")
+		alert("You need to be an actual admin to access the player panel.")
 		return
 	if (src.holder.level >= LEVEL_SA)
 		global.player_panel.ui_interact(src.mob)
