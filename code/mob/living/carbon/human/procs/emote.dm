@@ -2293,14 +2293,6 @@
 				for (var/mob/O in A.contents)
 					O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
 
-// I'm very sorry for this but it's to trick the linter into thinking emote doesn't sleep (since it usually doesn't)
-// you see from the important places it's called as emote("scream") etc. which doesn't actually sleep but for the linter to recognize
-// that would be difficult, datumize emotes 2day!
-#ifdef SPACEMAN_DMM
-/mob/living/carbon/human/emote(var/act, var/voluntary = 0, var/emoteTarget = null)
-	. = ..()
-#endif
-
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)
 	var/datum/gas_mixture/gas = new /datum/gas_mixture
