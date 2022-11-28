@@ -14,9 +14,9 @@
 	var/fuel_to_extract = 0
 
 	//thanks portable reclaimer
-	var/sound/sound_load = sound('sound/items/Deconstruct.ogg')
-	var/sound/sound_process = sound('sound/effects/pop.ogg')
-	var/sound/sound_grump = sound('sound/machines/buzz-two.ogg')
+	var/static/sound/sound_load = sound('sound/items/Deconstruct.ogg')
+	var/static/sound/sound_process = sound('sound/effects/pop.ogg')
+	var/static/sound/sound_grump = sound('sound/machines/buzz-two.ogg')
 
 	process()
 		. = ..()
@@ -55,7 +55,7 @@
 			boutput(user, "You load [W] into [src].")
 			playsound(src, sound_load, 40, 1)
 			W.set_loc(src)
-			if (user) user.u_equip(W)
+			user?.u_equip(W)
 			W.dropped(user)
 			fuel_rod = W
 			fuel_to_extract = W.material.getProperty("spent_fuel")

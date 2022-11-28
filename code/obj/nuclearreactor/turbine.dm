@@ -29,14 +29,14 @@
 	var/best_RPM = 600 //most efficient power generation at this value, overspeed at 1.2*this
 	var/flow_rate = 200
 
-	var/sound_stall = 'sound/machines/tractor_running.ogg'
+	var/static/sound_stall = 'sound/machines/tractor_running.ogg'
 
 	var/stalling = FALSE
 	var/overspeed = FALSE
 	var/overtemp = FALSE
 
 	var/_last_rpm_icon_update = 0 //used to determine whether an icon update is required
-	var/list/grump_sound_list = list('sound/machines/engine_grump1.ogg','sound/machines/engine_grump2.ogg','sound/machines/engine_grump3.ogg', 'sound/impact_sounds/Metal_Clang_1.ogg', 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg')
+	var/static/list/grump_sound_list = list('sound/machines/engine_grump1.ogg','sound/machines/engine_grump2.ogg','sound/machines/engine_grump3.ogg', 'sound/impact_sounds/Metal_Clang_1.ogg', 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg')
 	var/turf/_light_turf //ref to the turf the turbine light is stored on, because you can't center simple lights
 	New()
 		. = ..()
