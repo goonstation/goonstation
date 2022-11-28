@@ -1722,17 +1722,20 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 
 	cast(atom/target, params)
 		if (..())
-			return 1
+			return TRUE
 
 		var/turf/T = get_turf(holder.owner)
-		if (isturf(T) && !istype(T, /turf/space))
-			boutput(holder.owner, "You begin to channel power to call a spirit to this realm!")
-			src.doCooldown()
-			make_summon(holder.owner, T)
-			return 0
-		else
-			boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
-			return 1
+		if (!T || !istype(T,/turf/simulated/floor))
+			boutput(holder.owner, "<span class='notice'>You cannot use this here!</span>")
+			return TRUE
+		for (var/obj/O in T)
+			if (O.density)
+				boutput(holder.owner, "<span class='notice'>There is something in the way!</span>")
+				return TRUE
+		boutput(holder.owner, "You begin to channel power to call a spirit to this realm!")
+		src.doCooldown()
+		make_summon(holder.owner, T)
+		return FALSE
 
 	proc/make_summon(var/mob/living/intangible/wraith/W, var/turf/T, var/tries = 0)
 		if (!istype(W))
@@ -1792,7 +1795,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	// cast(turf/target, params)
 	cast(atom/target, params)
 		if (..())
-			return 1
+			return TRUE
 
 		var/total_plague_rats = 0
 		for (var/client/C in clients)
@@ -1805,17 +1808,21 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				total_plague_rats++
 		if(total_plague_rats < (max_allowed_rats + (player_count / 30)))	//Population scaling
 			var/turf/T = get_turf(holder.owner)
-			if (isturf(T) && !istype(T, /turf/space))
-				boutput(holder.owner, "You begin to channel power to summon a plague rat into this realm!")
-				src.doCooldown()
-				make_plague_rat(holder.owner, T)
-				return 0
-			else
-				boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
-				return 1
+			if (!T || !istype(T,/turf/simulated/floor))
+				boutput(holder.owner, "<span class='notice'>You cannot use this here!</span>")
+				return TRUE
+			for (var/obj/O in T)
+				if (O.density)
+					boutput(holder.owner, "<span class='notice'>There is something in the way!</span>")
+					return TRUE
+			boutput(holder.owner, "You begin to channel power to summon a plague rat into this realm!")
+			src.doCooldown()
+			make_plague_rat(holder.owner, T)
+			return FALSE
+
 		else
 			boutput(holder.owner, "<span class='alert'>This [station_or_ship()] is already a rat den, you cannot summon another rat!</span>")
-			return 1
+			return TRUE
 
 	proc/make_plague_rat(var/mob/W, var/turf/T, var/tries = 0)
 		if (!istype(W, /mob/living/intangible/wraith/wraith_decay))
