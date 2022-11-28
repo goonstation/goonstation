@@ -487,6 +487,13 @@
 	icon_state = "grassplug"
 	anchored = 1
 
+/proc/switched_obj_toggle(var/category,var/id,var/new_state = FALSE)
+	if(!category || !id)
+		logTheThing(LOG_DEBUG, null, "Switched object toggle called without full var set. Variables passed: [category] | [id]")
+		return
+	for(var/atom/A in switched_objs[category][id])
+		A:toggle(new_state)
+
 /obj/window_blinds
 	name = "blinds"
 	desc = "Thin strips of plastic that can be angled to prevent light from passing through. There's probably a switch that controls them nearby."
@@ -499,15 +506,22 @@
 	var/base_state = "blindsH"
 	var/open = 1
 	var/id = null
-	var/obj/blind_switch/mySwitch = null
 
 	New()
 		. = ..()
-		START_TRACKING
+		if (current_state > GAME_STATE_PREGAME)
+			SPAWN(0.5 SECONDS)
+				src.initialize()
+
+	initialize()
+		if (!src.id)
+			var/area/blind_area = get_area(src)
+			src.id = blind_area.name
+		ADD_SWITCHED_OBJ(SWOB_BLINDS)
 
 	disposing()
+		REMOVE_SWITCHED_OBJ(SWOB_BLINDS)
 		. = ..()
-		STOP_TRACKING
 
 	ex_act(var/severity)
 		switch(severity)
@@ -516,24 +530,19 @@
 			else
 				if(prob(50))
 					qdel(src)
+
 	attack_hand(mob/user)
-		src.toggle()
 		src.toggle_group()
 
 	attackby(obj/item/W, mob/user)
-		src.toggle()
 		src.toggle_group()
 
-	proc/toggle(var/force_state as null|num)
-		if (!isnull(force_state))
-			src.open = force_state
-		else
-			src.open = !(src.open)
+	proc/toggle(var/new_state)
+		src.open = new_state
 		src.UpdateIcon()
 
 	proc/toggle_group()
-		if (istype(src.mySwitch))
-			src.mySwitch.toggle()
+		switched_obj_toggle(SWOB_BLINDS,src.id,!(src.open))
 
 	update_icon()
 		if (src.open)
@@ -590,14 +599,25 @@
 	density = 0
 	var/on = 0
 	var/id = null
-	var/list/myBlinds = list()
 
 	New()
-		..()
+		. = ..()
+		if (current_state > GAME_STATE_PREGAME)
+			SPAWN(0.5 SECONDS)
+				src.initialize()
+
+	initialize()
 		if (!src.name || (src.name in list("N blind switch", "E blind switch", "S blind switch", "W blind switch")))//== "N light switch" || name == "E light switch" || name == "S light switch" || name == "W light switch")
 			src.name = "blind switch"
-		SPAWN(0.5 SECONDS)
-			src.locate_blinds()
+		if (!src.id)
+			var/area/blind_area = get_area(src)
+			src.id = blind_area.name
+		ADD_SWITCHED_OBJ(SWOB_BLINDS)
+
+	disposing()
+		REMOVE_SWITCHED_OBJ(SWOB_BLINDS)
+		. = ..()
+
 	ex_act(var/severity)
 		switch(severity)
 			if(1,2)
@@ -605,29 +625,23 @@
 			else
 				if(prob(50))
 					qdel(src)
-	proc/locate_blinds()
-		for_by_tcl(blind, /obj/window_blinds)
-			if (blind.id == src.id)
-				if (!(blind in src.myBlinds))
-					src.myBlinds += blind
-					blind.mySwitch = src
 
-	proc/toggle()
-		src.on = !(src.on)
+	proc/toggle(var/new_state)
+		src.on = new_state
 		src.icon_state = "light[!(src.on)]"
-		if (!islist(myBlinds) || !length(myBlinds))
-			return
-		for (var/obj/window_blinds/blind in myBlinds)
-			blind.toggle(src.on)
+		src.UpdateIcon()
+
+	proc/toggle_group()
+		switched_obj_toggle(SWOB_BLINDS,src.id,!(src.on))
 
 	attack_hand(mob/user)
-		src.toggle()
+		src.toggle_group()
 
 	attack_ai(mob/user as mob)
-		src.toggle()
+		src.toggle_group()
 
 	attackby(obj/item/W, mob/user)
-		src.toggle()
+		src.toggle_group()
 
 /obj/blind_switch/north
 	name = "N blind switch"
@@ -645,17 +659,8 @@
 	name = "W blind switch"
 	pixel_x = -24
 
+// left in for existing map compatibility; subsequent update could unify blind and sign switches codewise, and eliminate this subtype
 /obj/blind_switch/area
-	locate_blinds()
-		var/area/A = get_area(src)
-		for_by_tcl(blind, /obj/window_blinds)
-			var/area/blind_area = get_area(blind)
-			if(blind_area != A)
-				continue
-			LAGCHECK(LAG_LOW)
-			if (!(blind in src.myBlinds))
-				src.myBlinds += blind
-				blind.mySwitch = src
 
 /obj/blind_switch/area/north
 	name = "N blind switch"
@@ -673,28 +678,33 @@
 	name = "W blind switch"
 	pixel_x = -24
 
-
 /obj/sign_switch
 	name = "sign switch"
 	desc = "Connected to one or more illuminated signs, turning them on or off."
 	icon = 'icons/obj/power.dmi'
-	icon_state = "light1"
+	icon_state = "light0"
 	anchored = 1
 	density = 0
 	var/on = 0
 	var/id = null
-	var/list/paired_signs = list()
 
 	New()
 		..()
-		if (!src.name || (src.name in list("N sign switch", "E sign switch", "S sign switch", "W sign switch")))
-			src.name = "sign switch"
-		if(current_state > GAME_STATE_PREGAME)
+		if (current_state > GAME_STATE_PREGAME)
 			SPAWN(0.5 SECONDS)
 				src.initialize()
-	
+
 	initialize()
-		locate_signs()
+		if (!src.name || (src.name in list("N sign switch", "E sign switch", "S sign switch", "W sign switch")))
+			src.name = "sign switch"
+		if (!src.id)
+			var/area/sign_area = get_area(src)
+			src.id = sign_area.name
+		ADD_SWITCHED_OBJ(SWOB_SIGNAGE)
+
+	disposing()
+		REMOVE_SWITCHED_OBJ(SWOB_SIGNAGE)
+		. = ..()
 
 	ex_act(var/severity)
 		switch(severity)
@@ -704,31 +714,24 @@
 				if(prob(50))
 					qdel(src)
 
-	proc/locate_signs()
-		for_by_tcl(illumsign, /obj/machinery/illuminated_sign)
-			if (illumsign.id == src.id)
-				if (!(illumsign in src.paired_signs))
-					src.paired_signs += illumsign
+	proc/toggle(var/new_state)
+		src.on = new_state
+		src.icon_state = "light[src.on]"
+		src.UpdateIcon()
 
-	proc/toggle()
+	proc/toggle_group()
 		if(!ON_COOLDOWN(src, "toggle", 1 SECOND))
-			src.on = !src.on
-			src.icon_state = "light[src.on]"
-			if (!islist(paired_signs) || !length(paired_signs))
-				return
-			for (var/obj/machinery/illuminated_sign/sign in paired_signs)
-				sign.toggle(src.on)
-
+			switched_obj_toggle(SWOB_SIGNAGE,src.id,!(src.on))
 			playsound(src, 'sound/misc/lightswitch.ogg', 50, 1)
 
 	attack_hand(mob/user)
-		src.toggle()
+		src.toggle_group()
 
 	attack_ai(mob/user as mob)
-		src.toggle()
+		src.toggle_group()
 
 	attackby(obj/item/W, mob/user)
-		src.toggle()
+		src.toggle_group()
 
 /obj/sign_switch/north
 	name = "N sign switch"
@@ -761,11 +764,19 @@
 
 	New()
 		..()
-		START_TRACKING
+		if (current_state > GAME_STATE_PREGAME)
+			SPAWN(0.5 SECONDS)
+				src.initialize()
+
+	initialize()
+		if (!src.id)
+			var/area/sign_area = get_area(src)
+			src.id = sign_area.name
+		ADD_SWITCHED_OBJ(SWOB_SIGNAGE)
 
 	disposing()
-		STOP_TRACKING
-		..()
+		REMOVE_SWITCHED_OBJ(SWOB_SIGNAGE)
+		. = ..()
 
 	ex_act(var/severity)
 		switch(severity)
@@ -775,10 +786,9 @@
 				if(prob(50))
 					qdel(src)
 
-	proc/toggle(var/illum_state as null|num)
-		if (!isnull(illum_state))
-			src.on = illum_state
-			src.UpdateIcon()
+	proc/toggle(var/new_state)
+		src.on = new_state
+		src.UpdateIcon()
 
 	power_change()
 		..()
@@ -798,22 +808,20 @@
 /obj/machinery/illuminated_sign/occupancy
 	name = "occupancy sign"
 	desc = "A convenient illuminated sign to let you know that you're not supposed to butt in."
-	icon_state = "occupancy-1"
+	icon_state = "occupancy-0"
 	base_state = "occupancy"
 
 /obj/machinery/illuminated_sign/onair
 	name = "ON AIR sign"
 	desc = "Glows in proximity to pompous radio hosts."
-	icon_state = "onair-1"
+	icon_state = "onair-0"
 	base_state = "onair"
-	pixel_y = 30
 
 /obj/machinery/illuminated_sign/open_neon
 	name = "open sign"
 	desc = "A fancy neon-style sign, traditionally used to welcome others to an active place of business."
-	icon_state = "opensign-1"
+	icon_state = "opensign-0"
 	base_state = "opensign"
-	pixel_y = 30
 
 /obj/disco_ball
 	name = "disco ball"

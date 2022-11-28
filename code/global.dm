@@ -88,6 +88,9 @@ var/global
 	/// The station_areas list is up to date. If something changes an area, make sure to set this to 0
 	area_list_is_up_to_date = 0
 
+	/// Contains objects in ID-based switched object groups, such as blinds and their switches
+	list/switched_objs = list()
+
 	already_a_dominic = 0 // no just shut up right now, I don't care
 
 	footstep_extrarange = 0 // lol same (modified hackily in mobs.dm to avoid lag from sound at high player coutns)
