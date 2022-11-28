@@ -69,7 +69,7 @@
 	html += "<table>"
 	html += "<tr><td><b>Current status</b></td><td>[C ? "<span style='color: green;'>Online" : "<span style='color: red;'>Offline"]</span></td></tr>"
 	html += "<tr><td><b>Rounds connected to</b></td><td>[response["seen"]]</td></tr>"
-	html += "<tr><td><b>rounds connected to, RP</b></td><td>[response["seen_rp"]]</td></tr>"
+	html += "<tr><td><b>Rounds connected to, RP</b></td><td>[response["seen_rp"]]</td></tr>"
 	html += "<tr><td><b>Rounds participated in</b></td><td>[response["participated"]]</td></tr>"
 	html += "<tr><td><b>Rounds participated in, RP</b></td><td>[response["participated_rp"]]</td></tr>"
 	html += "<tr><td><b>Last seen</b></td><td>[response["last_seen"]]</td></tr>"
