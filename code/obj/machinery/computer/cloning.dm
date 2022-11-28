@@ -512,7 +512,8 @@ proc/find_ghost_by_key(var/find_key)
 		return
 
 	proc/move_mob_inside(var/mob/M, var/mob/user)
-		if (!can_operate(user) || !ishuman(M)) return
+		if (!can_operate(user) || !ishuman(M) || QDELETED(M))
+			return
 
 		M.remove_pulling()
 		M.set_loc(src)
