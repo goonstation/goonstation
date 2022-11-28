@@ -73,7 +73,7 @@
 			// If the picked defect can stack, pass automatically. If it can't stack, check if we have it already; if not, pass.
 			is_valid = initial(picked:stackable) || !src.has_defect(picked)
 		LAZYLISTADD(src.active_cloner_defects, new picked(src.owner))
-		logTheThing(LOG_COMBAT, src, "gained the [picked] cloner defect.")
+		logTheThing(LOG_COMBAT, src.owner, "gained the [picked] cloner defect.")
 
 	/// Add a cloner defect, rolling severity according to weights
 	proc/add_random_cloner_defect()
@@ -125,7 +125,7 @@ ABSTRACT_TYPE(/datum/cloner_defect)
 	var/name = "" //! Name of this defect for. medical scans or something, I dunno. Maybe let the geneticist's scanner thing see them?
 	var/description = "" //! Same as above- for scans or whatever
 	var/stackable = TRUE //! Can we get this defect multiple times?
-	var/severity //! How severe is this effect? (Currently just major and minor)
+	var/severity = CLONER_DEFECT_SEVERITY_UNUSED //! How severe is this effect? (Currently just major and minor)
 	/// Any data which should be maintained between clonings if the person is cloned multiple times.
 	/// IF YOU WANT DATA TO BE TRANSFERRED BETWEEN BODIES, USE THIS INSTEAD OF MAKING A VAR
 	var/data
@@ -222,13 +222,13 @@ ABSTRACT_TYPE(/datum/cloner_defect/missing_organ)
 	weight = 80
 	name = "Failed Organ Reconstruction"
 	description = "One of the subject's organs was not properly reconstructed, leaving them without it."
-	severity = CLONER_DEFECT_SEVERITY_MINOR
 
 	on_add()
 		. = ..()
 		qdel(src.owner.organHolder.organ_list[data["organ_string"]])
 
 /datum/cloner_defect/missing_organ/minor
+	severity = CLONER_DEFECT_SEVERITY_MINOR
 
 	init()
 		src.data = list("organ_string" = pick("tail", "left_kidney", "right_kidney", "stomach", "intestines", "appendix"))
@@ -237,7 +237,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/missing_organ)
 	severity = CLONER_DEFECT_SEVERITY_MAJOR
 
 	init()
-		src.data = list("organ_string" = pick("heart", "liver", "left_eye", "right_eye", "left_lung", "right_lung")) // no skull, head, brain; instant death sucks
+		src.data = list("organ_string" = pick("liver", "left_eye", "right_eye", "left_lung", "right_lung")) // no skull, head, brain; instant death sucks. also removed heart
 
 /// Set to a random (safe) mutantrace after cloning
 /datum/cloner_defect/random_mutantrace
@@ -257,6 +257,8 @@ ABSTRACT_TYPE(/datum/cloner_defect/missing_organ)
 		src.orig_mutantrace_type = src.owner.mutantrace?.type
 		src.owner.set_mutantrace(data["new_mutantrace_type"])
 
+// TODO abstract status effect defects more
+
 /// Max health decrease
 ABSTRACT_TYPE(/datum/cloner_defect/maxhealth_down)
 /datum/cloner_defect/maxhealth_down
@@ -266,7 +268,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/maxhealth_down)
 		. = ..()
 		var/datum/statusEffect/maxhealth/decreased/existing_status = src.owner.hasStatus("maxhealth-")
 		if (existing_status)
-			existing_status?.change -= data["penalty"]
+			existing_status.change -= data["penalty"]
 		else
 			src.owner.setStatus("maxhealth-", INFINITE_STATUS, -data["penalty"])
 
@@ -285,6 +287,27 @@ ABSTRACT_TYPE(/datum/cloner_defect/maxhealth_down)
 
 	init()
 		src.data = list("penalty" = rand(20, 30))
+
+ABSTRACT_TYPE(/datum/cloner_defect/stamregen_down)
+/datum/cloner_defect/stamregen_down
+	name = "broken"
+	description = "Subject's endurance has been decreased by the cloning process."
+
+	on_add()
+		. = ..()
+		var/datum/statusEffect/staminaregen/clone/existing_status = src.owner.hasStatus("stamclone")
+		if (existing_status)
+			existing_status.change += data["penalty"]
+		else
+			src.owner.setStatus("stamclone", INFINITE_STATUS, data["penalty"])
+
+/datum/cloner_defect/stamregen_down/minor
+	name = "Minor Stamina Decrease"
+
+	init()
+		src.data = list("penalty" = -rand(0, 2))
+
+// no /major currently because a few stacked would be miserable
 
 ABSTRACT_TYPE(/datum/cloner_defect/brain_damage)
 /datum/cloner_defect/brain_damage
@@ -412,12 +435,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 	description = "Subject has sustained nerve damage, resulting in some impairments to motor control."
 	severity = CLONER_DEFECT_SEVERITY_MINOR
 	stackable = FALSE // can be TRUE if I make it so it can't give you the same thing multiple times.
-	var/static/list/effect_type_pool // Pool of effects to pick from (traits and bioeffects)
-
-	New()
-		. = ..()
-		if (!effect_type_pool)
-			effect_type_pool = list(/datum/trait/leftfeet, /datum/trait/clutz, /datum/bioEffect/funky_limb) // should prolly add more
+	var/static/list/effect_type_pool = list(/datum/trait/leftfeet, /datum/trait/clutz, /datum/bioEffect/funky_limb, /datum/bioEffect/clumsy) // Pool of effects to pick from (traits and bioeffects)
 
 	init()
 		src.data = list("trait_id" = null,

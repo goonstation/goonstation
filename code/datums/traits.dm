@@ -638,10 +638,10 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 //Category: Background.
 
-/datum/trait/immigrant
+/datum/trait/stowaway
 	name = "Stowaway"
 	desc = "You spawn hidden away on-station without an ID, PDA, or entry in NT records."
-	id = "immigrant"
+	id = "stowaway"
 	icon_state = "stowaway"
 	category = list("background")
 	points = 1

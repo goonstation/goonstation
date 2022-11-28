@@ -310,7 +310,7 @@ mob/new_player
 					location = pick_landmark(JOB.special_spawn_location)
 				if (!isnull(location))
 					character.set_loc(location)
-			else if (character.traitHolder && character.traitHolder.hasTrait("immigrant"))
+			else if (character.traitHolder && character.traitHolder.hasTrait("stowaway"))
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
 				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
 			else if (character.traitHolder && character.traitHolder.hasTrait("pilot"))
