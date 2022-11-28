@@ -177,22 +177,18 @@ export const ListInputModal = (_, context) => {
       }
       event.preventDefault();
     }
+    else if (!searchBarVisible && keyCode >= KEY_A && keyCode <= KEY_Z && !event.ctrlKey) {
+      event.preventDefault();
+      event.stopPropagation();
+      onLetterSearch(keyCode);
+    }
   };
-
-  window.onkeydown = handleKey;
 
   return (
     <Window title={title} width={325} height={windowHeight}>
       {timeout && <Loader value={timeout} />}
       <Window.Content
-        onkeydown={(event) => {
-          const keyCode = window.event ? event.which : event.keyCode;
-          if (!searchBarVisible && keyCode >= KEY_A && keyCode <= KEY_Z && !event.ctrlKey) {
-            event.preventDefault();
-            event.stopPropagation();
-            onLetterSearch(keyCode);
-          }
-        }}>
+        onkeydown={handleKey}>
         <Section
           buttons={
             <Button

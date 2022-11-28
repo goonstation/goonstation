@@ -87,6 +87,10 @@
 	else
 		return 0.75 + movement_delay_modifier
 
+/mob/living/intangible/flock/Move(NewLoc, direct)
+	src.set_dir(get_dir(src, NewLoc))
+	..()
+
 /mob/living/intangible/flock/attack_hand(mob/user)
 	switch(user.a_intent)
 		if(INTENT_HELP)

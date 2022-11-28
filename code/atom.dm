@@ -521,7 +521,10 @@
 		return // this should in turn fire off its own slew of move calls, so don't do anything here
 
 	var/atom/A = src.loc
-	. = ..()
+	if(src.event_handler_flags & MOVE_NOCLIP)
+		src.set_loc(NewLoc)
+	else
+		. = ..()
 	src.move_speed = TIME - src.l_move_time
 	src.l_move_time = TIME
 	if (A != src.loc && A?.z == src.z)
@@ -899,6 +902,11 @@
 
 	var/atom/oldloc = loc
 	loc = newloc
+
+#ifdef RUNTIME_CHECKING
+	if(oldloc == loc)
+		stack_trace("loc change in set_loc denied - check for paradoxes")
+#endif
 
 	src.last_move = 0
 

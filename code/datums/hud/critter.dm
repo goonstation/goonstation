@@ -261,7 +261,7 @@
 				if (icon_y > 16 || src.master.in_throw_mode)
 					src.master.toggle_throw_mode()
 				else
-					src.master.drop_item()
+					src.master.drop_item(null, TRUE)
 			if ("resist")
 				src.master.resist()
 
