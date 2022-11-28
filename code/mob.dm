@@ -980,9 +980,14 @@
 		mode.team_SY.members -= src.mind
 		message_admins("[src]([src.ckey]) just set DNR and was removed from their team. which was probably [src.mind.special_role]!")
 #else
-	src.verbs -= list(/mob/verb/setdnr)
-	src.mind.dnr = 1
-	boutput(src, "<span class='alert'>DNR status set!</span>")
+
+	if(isadmin(src))
+		src.mind.dnr = !src.mind.dnr
+		boutput(src, "<span class='alert'>DNR status [src.mind.dnr ? "set" : "removed"]!</span>")
+	else
+		src.verbs -= list(/mob/verb/setdnr)
+		src.mind.dnr = 1
+		boutput(src, "<span class='alert'>DNR status set!</span>")
 #endif
 
 /mob/proc/unequip_all(var/delete_stuff=0)
