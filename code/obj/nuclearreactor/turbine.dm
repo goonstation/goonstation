@@ -1,7 +1,7 @@
-/////////////////////////////////////////////////////////////////
+// ----------------------------------------------------- //
 // Defintion for the turbine used by the nuclear reactor
 // This is where the power comes from
-/////////////////////////////////////////////////////////////////
+// ----------------------------------------------------- //
 
 
 /obj/machinery/atmospherics/binary/reactor_turbine

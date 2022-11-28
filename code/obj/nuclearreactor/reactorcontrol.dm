@@ -1,7 +1,7 @@
-/////////////////////////////////////////////////////////////////
+// ----------------------------------------------------- //
 // Defintion for the control consoles of the nuclear reactor engine
 // turbine first, then reactor
-/////////////////////////////////////////////////////////////////
+// ----------------------------------------------------- //
 
 /obj/machinery/power/nuclear/turbine_control
 	name = "Turbine Control Computer"

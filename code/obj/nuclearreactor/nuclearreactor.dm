@@ -10,8 +10,6 @@
 /obj/machinery/atmospherics/binary/nuclear_reactor
 	name = "Model NTBMK Nuclear Reactor"
 	desc = "A nuclear reactor vessel, with slots for fuel rods and other components. Hey wait, didn't one of these explode once?"
-//	icon = 'icons/obj/atmospherics/pipes.dmi'
-//	icon_state = "circ1-off"
 	icon = 'icons/misc/nuclearreactor.dmi'
 	icon_state = "reactor"
 	bound_width = 160
@@ -310,14 +308,12 @@
 			if(target.initialize_directions & node2_connect)
 				if(target != src)
 					node1 = target
-					//target.node2 = src
 					break
 
 		for(var/obj/machinery/atmospherics/pipe/simple/target in get_steps(get_steps(src, node2_connect, 3), NORTH, 1))
 			if(target.initialize_directions & node1_connect)
 				if(target != src)
 					node2 = target
-					//target.node1 = src
 					break
 
 		UpdateIcon()

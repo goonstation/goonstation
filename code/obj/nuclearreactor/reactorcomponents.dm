@@ -1,6 +1,6 @@
-/////////////////////////////////////////////////////////////////
+// ----------------------------------------------------- //
 // Defintion for the nuclear reactor engine internal components
-/////////////////////////////////////////////////////////////////
+// ----------------------------------------------------- //
 
 ABSTRACT_TYPE(/obj/item/reactor_component)
 /obj/item/reactor_component //base component
