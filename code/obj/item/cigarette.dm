@@ -39,6 +39,7 @@
 	New()
 		..()
 		src.create_reagents(60)
+		AddComponent(/datum/component/loctargeting/simple_light, 255, 110, 135, 90, src.on)
 
 		if (src.on) //if we spawned lit, do something about it!
 			src.on = 0
@@ -60,7 +61,6 @@
 			reagents.add_reagent(src.flavor, 40)
 			return
 		START_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
-		AddComponent(/datum/component/loctargeting/simple_light, 255, 110, 135, 90, src.on)
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
