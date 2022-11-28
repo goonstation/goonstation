@@ -66,7 +66,7 @@
 				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 				user.visible_message("<span class='notice'>[user] cleans [his_or_her(user)] gloves.</span>")
 				if (H.sims)
-					user.show_text("If you want to improve your hygine, you need to remove your gloves first.")
+					user.show_text("If you want to improve your hygiene, you need to remove your gloves first.")
 				H.gloves.clean_forensic() // Ditto (Convair880).
 				H.set_clothing_icon_dirty()
 			else
