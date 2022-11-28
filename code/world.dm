@@ -1724,10 +1724,10 @@ var/f_color_selector_handler/F_Color_Selector
 				if(player)
 					response["last_seen"] = player.last_seen
 				if(player.cloud_fetch())
-					for(var/key in player.cloud_data)
-						if(key in list("admin_preferences", "buildmode"))
+					for(var/kkey in player.clouddata)
+						if(kkey in list("admin_preferences", "buildmode"))
 							continue
-						response[key] = player.cloud_data[key]
+						response[kkey] = player.clouddata[kkey]
 					response["cloudsaves"] = player.cloudsaves
 
 				return json_encode(response)
