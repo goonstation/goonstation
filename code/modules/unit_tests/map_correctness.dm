@@ -91,12 +91,23 @@ proc/check_networked_data_terminals()
 		CRASH("Terminal-less machinery:\n" + jointext(log_lines, "\n"))
 
 proc/check_blinds_switches()
-	var/list/blinds_without_switches = list()
-	for_by_tcl(blinds, /obj/window_blinds)
-		if(isnull(blinds.mySwitch))
-			blinds_without_switches += "Blind at [blinds.x], [blinds.y], [blinds.z] in [get_area(blinds)]"
-	if(length(blinds_without_switches))
-		CRASH("Blinds without switches:\n" + jointext(blinds_without_switches, "\n"))
+	var/list/blind_switch_IDs = list()
+	var/list/IDs_without_switches = list()
+	for_by_tcl(blinds, /obj/window_blinds) //get all the blinds
+		var/area/area_of_thing = get_area(blinds)
+		var/new_id = blinds.id ? blinds.id : "[area_of_thing.name]"
+		blind_switch_IDs["[new_id]"] = FALSE //have an entry for each ID that's marked as false
+	for_by_tcl(blind_switch, /obj/blind_switch) //then check for blinds match
+		var/area/area_of_thing = get_area(blind_switch)
+		var/new_id = blind_switch.id ? blind_switch.id : "[area_of_thing.name]"
+		for(var/seek_ID in blind_switch_IDs)
+			if(new_id == seek_ID)
+				blind_switch_IDs[seek_ID] = TRUE //and update ID entries to TRUE if a switch satisfies them
+	for(var/seek_ID in blind_switch_IDs) //once all switches and blinds are iterated over, check for any absences
+		if(blind_switch_IDs[seek_ID] == FALSE)
+			IDs_without_switches += "[seek_ID]"
+	if(length(IDs_without_switches))
+		CRASH("Blinds IDs without switches:\n" + jointext(IDs_without_switches, "\n"))
 
 proc/check_apcless_station_areas()
 	var/list/log_lines = list()
