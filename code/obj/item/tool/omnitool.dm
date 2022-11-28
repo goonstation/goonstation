@@ -9,6 +9,15 @@
 	var/animated_changes = FALSE
 
 	custom_suicide = 1
+
+	#define OMNI_MODE_PRYING 1
+	#define OMNI_MODE_SNIPPING 2
+	#define OMNI_MODE_WRENCHING 3
+	#define OMNI_MODE_SCREWING 4
+	#define OMNI_MODE_PULSING 5
+	#define OMNI_MODE_CUTTING 6
+	#define OMNI_MODE_WELDING 7
+
 	///List of tool settings
 	var/list/modes = list(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING)
 	///The current setting

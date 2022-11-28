@@ -66,7 +66,6 @@
 #include "defines\mob.dm"
 #include "defines\movement.dm"
 #include "defines\obj.dm"
-#include "defines\omnitool.dm"
 #include "defines\pathology.dm"
 #include "defines\pod_door_access_levels.dm"
 #include "defines\preferences.dm"
