@@ -77,15 +77,8 @@
 
 ///Gives a brain slug host transfer and basic abilities as well as an ability holder for them.
 /mob/proc/add_basic_slug_abilities(var/mob/living/critter/brain_slug/slug = null)
-	var/datum/abilityHolder/brain_slug/AH = null
 	//Check if they already have a brain slug holder
-	if (istype(src.abilityHolder, /datum/abilityHolder/brain_slug))
-		AH = src.abilityHolder
-	else if (istype(src.abilityHolder, /datum/abilityHolder/composite))
-		var/datum/abilityHolder/composite/composite_holder = src.abilityHolder
-		for (var/datum/holder in composite_holder.holders)
-			if (istype(holder, /datum/abilityHolder/brain_slug))
-				AH = holder
+	var/datum/abilityHolder/brain_slug/AH = src.get_ability_holder(/datum/abilityHolder/brain_slug)
 	//If they do not, give them one
 	if (!AH)
 		AH = src.add_ability_holder(/datum/abilityHolder/brain_slug)

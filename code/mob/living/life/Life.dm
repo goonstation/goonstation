@@ -597,49 +597,40 @@
 	//Hints towards a parasited host and takes away points on each tick
 	proc/handle_slug_process()
 		//Check if they have slug abilities
-		if (src.abilityHolder)
-			var/datum/abilityHolder/brain_slug/AH = null
-			if(istype(src.abilityHolder, /datum/abilityHolder/brain_slug))
-				AH = src.abilityHolder
-			else if (istype(src.abilityHolder, /datum/abilityHolder/composite))
-				var/datum/abilityHolder/composite/composite_holder = src.abilityHolder
-				for (var/datum/abilityHolder/found_holder in composite_holder.holders)
-					if (istype(found_holder, /datum/abilityHolder/brain_slug))
-						AH = found_holder
-						break
-			//If they do, roll a chance to do some hint
-			if (AH)
-				if (AH.points > 300)
-					if (prob(3))
-						src.emote(pick("drool", "twitch", "groan", "shiver"))
-				else if (AH.points > 150)
-					if (prob(4))
-						if(prob(75))
-							src.emote(pick("drool", "twitch_v", "sneeze", "groan", "shiver"))
+		var/datum/abilityHolder/brain_slug/AH = src.get_ability_holder(/datum/abilityHolder/brain_slug)
+		//If they do, roll a chance to do some hint
+		if (AH)
+			if (AH.points > 300)
+				if (prob(3))
+					src.emote(pick("drool", "twitch", "groan", "shiver"))
+			else if (AH.points > 150)
+				if (prob(4))
+					if(prob(75))
+						src.emote(pick("drool", "twitch_v", "sneeze", "groan", "shiver"))
+					else
+						src.visible_message("<span class='notice'>[src] vomits! It looks slimier than usual</span>")
+						src.vomit()
+			else if (AH.points > 0)
+				if (prob(6))
+					//emote or vomit
+					if(prob(50))
+						src.emote(pick("twitch_v", "gesticulate", "scream", "twitch", "cough"))
+						src.make_jittery(500)
+					else
+						//small vomit or big puke
+						if (prob(70))
+							src.emote("cough")
+							var/turf/T = get_turf(src)
+							src.visible_message("<span class='alert'>[src] coughs up some slimy blood!</span>")
+							make_cleanable(/obj/decal/cleanable/blood,T)
 						else
-							src.visible_message("<span class='notice'>[src] vomits! It looks slimier than usual</span>")
-							src.vomit()
-				else if (AH.points > 0)
-					if (prob(6))
-						//emote or vomit
-						if(prob(50))
-							src.emote(pick("twitch_v", "gesticulate", "scream", "twitch", "cough"))
-							src.make_jittery(500)
-						else
-							//small vomit or big puke
-							if (prob(70))
-								src.emote("cough")
-								var/turf/T = get_turf(src)
-								src.visible_message("<span class='alert'>[src] coughs up some slimy blood!</span>")
-								make_cleanable(/obj/decal/cleanable/blood,T)
-							else
-								src.visible_message("<span class='alert'>[src] vomits a lot of slimy, sticky blood!</span>")
-								playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
-								bleed(src, rand(5,8), 5)
-				//The body is rotting on it's feet, time to go
-				else if (AH.points <= 0)
-					random_brute_damage(src, -(AH.points))
-					src.take_oxygen_deprivation(-(AH.points))
+							src.visible_message("<span class='alert'>[src] vomits a lot of slimy, sticky blood!</span>")
+							playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+							bleed(src, rand(5,8), 5)
+			//The body is rotting on it's feet, time to go
+			else if (AH.points <= 0)
+				random_brute_damage(src, -(AH.points))
+				src.take_oxygen_deprivation(-(AH.points))
 /mob/living/carbon/human
 
 	proc/handle_pathogens()

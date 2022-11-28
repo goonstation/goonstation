@@ -128,14 +128,7 @@
 				var/mob/living/critter/brain_slug/the_slug = H.slug
 				the_slug.abilityHolder.points ++
 				//Add the new tally to our point counter
-				var/datum/abilityHolder/brain_slug/AH = null
-				if (istype(H.abilityHolder, /datum/abilityHolder/brain_slug))
-					AH = H.abilityHolder
-				else if (istype(H.abilityHolder, /datum/abilityHolder/composite))
-					var/datum/abilityHolder/composite/composite_holder = H.abilityHolder
-					for (var/datum/holder in composite_holder.holders)
-						if (istype(holder, /datum/abilityHolder/brain_slug))
-							AH = holder
+				var/datum/abilityHolder/brain_slug/AH = H.get_ability_holder(/datum/abilityHolder/brain_slug)
 				if (AH)
 					AH.harvest_count = the_slug.abilityHolder.points
 				//Then reward abilities if we crossed the threshold

@@ -102,14 +102,7 @@
 			T.slug = the_slug
 			T.add_advanced_slug_abilities(the_slug)
 			//Add abilities to the host on infest if you unlocked them
-			var/datum/abilityHolder/brain_slug/AH = null
-			if (istype(T.abilityHolder, /datum/abilityHolder/brain_slug))
-				AH = T.abilityHolder
-			else if (istype(T.abilityHolder, /datum/abilityHolder/composite))
-				var/datum/abilityHolder/composite/composite_holder = T.abilityHolder
-				for (var/datum/holder in composite_holder.holders)
-					if (istype(holder, /datum/abilityHolder/brain_slug))
-						AH = holder
+			var/datum/abilityHolder/brain_slug/AH = T.get_ability_holder(/datum/abilityHolder/brain_slug)
 			if (AH?.harvest_count >= 1)
 				if (!AH.getAbility(/datum/targetable/brain_slug/acidic_spit))
 					AH.addAbility(/datum/targetable/brain_slug/acidic_spit)
