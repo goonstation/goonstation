@@ -2818,7 +2818,7 @@
 				continue
 			else
 				if (force_instead || tgui_alert(src, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
-					if(!src.traitHolder.hasTrait("immigrant"))// stowaway entertainers shouldn't be on the manifest
+					if(!src.traitHolder.hasTrait("stowaway"))// stowaway entertainers shouldn't be on the manifest
 						for (var/datum/record_database/DB in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
 							var/datum/db_record/R = DB.find_record("id", src.datacore_id)
 							if (R)
