@@ -189,7 +189,7 @@
 	var/list/mail_tag = null //! Tag of mail group for switching pipes
 
 	///If a brain slug has punched through us
-	var/holed_up = FALSE
+	var/punctured = FALSE
 	var/image/pipeimg = null
 
 	// new pipe, set the icon_state as on map
@@ -441,11 +441,11 @@
 		if (isweldingtool(I))
 			if (I:try_weld(user, 3, noisy = 2))
 				var/duration = 0.1 SECONDS
-				if (src.holed_up)
+				if (src.punctured)
 					duration = 5 SECONDS
 				actions.start(new/datum/action/bar/icon/weld_disposal_pipe(src, user, duration), user)
 
-		if (istype(I, /obj/item/sheet) && src.holed_up)
+		if (istype(I, /obj/item/sheet) && src.punctured)
 			var/obj/item/sheet/S = I
 			S.change_stack_amount(-1)
 			src.fix_hole()
@@ -484,12 +484,12 @@
 		qdel(src)
 
 	proc/bust_open()
-		src.holed_up = TRUE
+		src.punctured = TRUE
 		var/image/hole_overlay = image('icons/obj/disposal.dmi', icon_state = pick("disposal_hole_1", "disposal_hole_2"))
 		src.UpdateOverlays(hole_overlay, "hole")
 
 	proc/fix_hole()
-		src.holed_up = FALSE
+		src.punctured = FALSE
 		src.UpdateOverlays(null, "hole")
 
 #undef MISSING_DISPOSAL_IMAGE_COLOR
@@ -514,7 +514,7 @@
 		if (!src.welder || !isalive(src.welder) || !can_act(src.welder) || !src.the_pipe)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (src.the_pipe.holed_up)
+		if (src.the_pipe.punctured)
 			src.welder.visible_message("<span class='notice'>[src.welder] begins slowly welding [src.the_pipe], trying not to cut themselves on any of the broken parts.</span>")
 		else
 			src.welder.visible_message("<span class='notice'>[src.welder] begins welding [src.the_pipe].</span>")

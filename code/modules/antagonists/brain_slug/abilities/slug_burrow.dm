@@ -158,7 +158,7 @@
 		if (caster == null || !isalive(caster) || !can_act(caster) || the_floor == null || the_pipe == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (the_pipe.holed_up)
+		if (the_pipe.punctured)
 			boutput(caster, "<span class=notice>You begin to enter the holed up pipe.</span>")
 			src.duration = src.duration / 2
 		else
@@ -178,7 +178,7 @@
 	onEnd()
 		..()
 		var/mob/living/caster = owner
-		if (the_pipe.holed_up)
+		if (the_pipe.punctured)
 			boutput(caster, "<span class=notice>You come out of the holed up pipe.</span>")
 		else
 			boutput(caster, "<span class=notice>You hole up the pipe and hide inside of it.</span>")
@@ -217,7 +217,7 @@
 		if (caster == null || !isalive(caster) || the_pipe == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (the_pipe.holed_up)
+		if (the_pipe.punctured)
 			boutput(caster, "<span class=notice>You begin to exit the holed up pipe.</span>")
 			src.duration = 2 SECONDS
 		else
@@ -242,7 +242,7 @@
 			var/turf/simulated/floor/floor_turf = T
 			if (floor_turf.intact)
 				floor_turf.pry_tile(null, caster)
-		if (the_pipe.holed_up)
+		if (the_pipe.punctured)
 			boutput(caster, "<span class='notice'>You come out of the bursted pipe</span>")
 		else
 			boutput(caster, "<span class='notice'>You hole up the pipe and burst out of it.</span>")

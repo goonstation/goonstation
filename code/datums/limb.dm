@@ -468,11 +468,10 @@
 			special_attack_silicon(target, user)
 			return
 		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, stamina_damage_mult = stam_damage_mult, can_punch = 0, can_kick = 0)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, base_damage_low = src.dam_low, base_damage_high = src.dam_high, stamina_damage_mult = stam_damage_mult, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, affecting)
 		msgs.base_attack_message = "<b><span class='combat'>[user] bites [target]!</span></b>"
 		msgs.played_sound = src.sound_attack
-		msgs.damage = rand(dam_low, dam_high)
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(0)
 		user.HealDamage("All", 3, 0)

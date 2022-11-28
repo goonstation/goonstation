@@ -29,7 +29,7 @@
 	New(var/atom/A, var/mob/living/caster)
 		START_TRACKING
 		for (var/mob/living/M in viewers(3, src))
-			if (M != caster && !istype(M, /mob/living/critter/brain_slug) && !istype(M, /mob/living/critter/adult_brain_slug))
+			if (M != caster && !istype(M, /mob/living/critter/brain_slug) && !istype(M, /mob/living/critter/adult_brain_slug) && !isintangible(M))
 				var/atom/movable/slime_line = new /atom/movable(src.loc)
 				line_list += slime_line
 				work(M, slime_line)
@@ -72,8 +72,8 @@
 			if (dist > break_range)
 				qdel(src)
 			if ((dist > stretch_range) && ((recent_throw + 2 SECONDS) < TIME))
-				the_mob.force_laydown_standup()
 				the_mob.setStatus("stunned", 2 SECONDS)
+				the_mob.force_laydown_standup()
 				the_mob.throw_at(src, dist, 1)
 				var/the_sound = pick('sound/misc/boing/1.ogg', 'sound/misc/boing/2.ogg', 'sound/misc/boing/3.ogg', 'sound/misc/boing/4.ogg', 'sound/misc/boing/5.ogg', 'sound/misc/boing/6.ogg')
 				playsound(src.loc, the_sound, 80, 1, 1, 1.2)

@@ -619,7 +619,7 @@
 						else
 							src.visible_message("<span class='notice'>[src] vomits! It looks slimier than usual</span>")
 							src.vomit()
-				else if (AH.points > 1)
+				else if (AH.points > 0)
 					if (prob(6))
 						//emote or vomit
 						if(prob(50))

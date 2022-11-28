@@ -12,6 +12,6 @@
 		holder.owner.AddComponent(/datum/component/acid_slime)
 		var/datum/component/C = holder.owner.GetComponent(/datum/component/acid_slime)
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins leaving a trail of acidic slime behind itself!</b></span>", "<span class='notice'>You expel some slime out of your body.</span>")
-		spawn(5 SECONDS)
+		SPAWN(5 SECONDS)
 			C?.RemoveComponent(/datum/component/acid_slime)
 		return FALSE
