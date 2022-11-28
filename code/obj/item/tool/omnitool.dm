@@ -66,7 +66,7 @@
 		. = ..()
 		user.closeContextActions()
 
-	proc/change_mode(var/mode, var/mob/holder, var/typepath)
+	proc/change_mode(var/mode, var/mob/holder, var/obj/item/typepath)
 		tooltip_rebuild = 1
 		var/obj/item/currtype = typepath
 		src.mode = mode
