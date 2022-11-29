@@ -464,7 +464,7 @@ const DisplayGeneticAnalysis = (props, context) => {
 
 const DisplayTitle = (props, context) => {
   const { data } = useBackend(context);
-  let patient_name = "No patient detected";
+  let patient_name = "No Patient Detected";
   let patient_name_color = "grey";
   let patient_health = "--";
   let patient_health_percent = "--";
