@@ -80,7 +80,6 @@
 		.["rad_stage"] = 0
 		.["rad_dose"] = 0
 
-	.["occupied"] = istype(src.victim)
 	.["patient_name"] = src.victim.real_name
 	.["victim_status"] = src.victim.stat
 
