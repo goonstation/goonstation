@@ -931,7 +931,6 @@
 	oldloc?.Exited(src, newloc)
 
 	if(isturf(oldloc))
-		var/turf/oldturf = oldloc
 		for(var/turf/covered_turf as anything in oldlocs)
 			covered_turf.pass_unstable -= src.pass_unstable
 			covered_turf.passability_cache = null
@@ -946,7 +945,6 @@
 	newloc?.Entered(src, oldloc)
 
 	if(isturf(newloc))
-		var/turf/newturf = newloc
 		for(var/turf/covered_turf as anything in src.locs)
 			covered_turf.pass_unstable += src.pass_unstable
 			covered_turf.passability_cache = null
