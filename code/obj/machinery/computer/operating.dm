@@ -99,6 +99,7 @@
 	.["brain_damage_desc"] = calc_brain_damage_severity(src.victim)
 	.["brain_damage_value"] = src.victim.get_brain_damage()
 	.["organ_status"] = vitim_organ_health(src.victim)
+	.["limb_status"] = generate_limb_data(src.victim)
 
 	.["age"] = src.victim.bioHolder.age
 	.["blood_type"] = src.victim.bioHolder.bloodType
@@ -177,3 +178,80 @@
 	if (damage > 0)
 		return "Minor"
 	return "Okay"
+
+/obj/machinery/computer/operating/proc/generate_limb_data(var/mob/living/carbon/human/H)
+	var/list/limb_data = list()
+	var/current_status = ""
+	var/current_limb = ""
+	if (H.limbs)
+
+		current_limb = "Left Arm"
+		current_status = "Okay"
+		if (!H.limbs.l_arm)
+			current_status = "Missing"
+		else
+			if (istype(H.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
+				var/obj/item/parts/human_parts/arm/left/item/I = H.limbs.l_arm
+				current_status = I.remove_object
+			else if (istype(H.limbs.l_arm, /obj/item/parts/robot_parts/arm/left/))
+				current_status = "Cybernetic"
+			else if (istype(H.limbs.l_arm, /obj/item/parts/human_parts/arm/left/synth))
+				current_status = "Synthetic"
+			else if (istype(H.limbs.l_arm, /obj/item/parts/artifact_parts/arm/))
+				current_status = "UNKNOWN"
+		limb_data += list(list(
+			"limb" = current_limb,
+			"status" = current_status,
+		))
+
+		current_limb = "Right Arm"
+		current_status = "Okay"
+		if (!H.limbs.r_arm)
+			current_status = "Missing"
+		else
+			if (istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
+				var/obj/item/parts/human_parts/arm/right/item/I = H.limbs.r_arm
+				current_status = I.remove_object
+			else if (istype(H.limbs.r_arm, /obj/item/parts/robot_parts/arm/right))
+				current_status = "Cybernetic"
+			else if (istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/synth))
+				current_status = "Synthetic"
+			else if (istype(H.limbs.r_arm, /obj/item/parts/artifact_parts/arm/))
+				current_status = "UNKNOWN"
+		limb_data += list(list(
+			"limb" = current_limb,
+			"status" = current_status,
+		))
+
+		current_limb = "Left Leg"
+		current_status = "Okay"
+		if (!H.limbs.l_leg)
+			current_status = "Missing"
+		else
+			if (istype(H.limbs.l_leg, /obj/item/parts/robot_parts/leg/left))
+				current_status = "Cybernetic"
+			else if (istype(H.limbs.l_leg, /obj/item/parts/human_parts/leg/left/synth))
+				current_status = "Synthetic"
+			else if (istype(H.limbs.l_leg, /obj/item/parts/artifact_parts/leg/))
+				current_status = "UNKNOWN"
+		limb_data += list(list(
+			"limb" = current_limb,
+			"status" = current_status,
+		))
+
+		current_limb = "Right Leg"
+		current_status = "Okay"
+		if (!H.limbs.r_leg)
+			current_status = "Missing"
+		else
+			if (istype(H.limbs.r_leg, /obj/item/parts/robot_parts/leg/right))
+				current_status = "Cybernetic"
+			else if (istype(H.limbs.r_leg, /obj/item/parts/human_parts/leg/right/synth))
+				current_status = "Synthetic"
+			else if (istype(H.limbs.r_leg, /obj/item/parts/artifact_parts/leg/))
+				current_status = "UNKNOWN"
+		limb_data += list(list(
+			"limb" = current_limb,
+			"status" = current_status,
+		))
+	return limb_data
