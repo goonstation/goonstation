@@ -473,7 +473,7 @@
 				continue
 			else if (spawner.override_centre_connection == TRUE)
 			// ideally this never gets called lol, no idea if it will work
-			// same as the first if but the other way
+			// same as the first if statement but the other way
 				qdel(src)
 				return
 			else if (src.type == spawner.type)
