@@ -1,3 +1,13 @@
+ABSTRACT_TYPE /datum/targetable/critter/plague_rat
+/datum/targetable/critter/plague_rat
+	var/border_icon = 'icons/mob/wraith_ui.dmi'
+	var/border_state = "plague_frame"
+
+	onAttach(datum/abilityHolder/holder)
+		..()
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
+
 /datum/targetable/critter/plague_rat/eat_filth
 	name = "Eat filth"
 	desc = "Eat some filth, healing you a little bit and slowly growing."
@@ -14,8 +24,6 @@
 	/obj/decal/cleanable/greenpuke,
 	/obj/decal/cleanable/slime,
 	/obj/decal/cleanable/fungus)
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "plague_frame"
 	var/list/found_decals = list()
 
 	cast(atom/target)
@@ -50,11 +58,6 @@
 		else
 			boutput(holder.owner, "<span class='alert'>You can't eat that, it doesnt satisfy your appetite.</span>")
 			return TRUE
-
-	onAttach(datum/abilityHolder/holder)
-		..()
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
 
 /datum/action/bar/private/icon/plaguerat_eat
 	duration = 9 SECONDS
@@ -129,8 +132,6 @@
 	icon_state = "ratbite"
 	cooldown = 5 SECOND
 	targeted = 1
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "plague_frame"
 
 
 	cast(atom/target)
@@ -157,11 +158,6 @@
 		P.venom_bite(MT)
 		return 0
 
-	onAttach(datum/abilityHolder/holder)
-		..()
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
-
 /datum/targetable/critter/plague_rat/spawn_rat_den
 	name = "spawn rat den"
 	desc = "Spawn your rat nest, healing you when in range and summoning some tiny diseased mice."
@@ -169,8 +165,6 @@
 	icon_state = "ratden"
 	cooldown = 120 SECONDS
 	targeted = 0
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "plague_frame"
 
 	cast(atom/target)
 		if (..())
@@ -195,18 +189,6 @@
 			return 0
 		return TRUE
 
-	onAttach(datum/abilityHolder/holder)
-		..()
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
-
 /datum/targetable/critter/slam/rat
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "ratrush"
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "plague_frame"
-
-	onAttach(datum/abilityHolder/holder)
-		..()
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
