@@ -245,7 +245,7 @@ const DisplayOrgan = (props) => {
         <Table.Cell header textAlign="right" width={10}>
           {capitalize(spaceUnderscores(organ_name))}:
         </Table.Cell>
-        <Table.Cell width={10} color={font_color} bold={is_bold}>{organ_state}{organ_special ? <span style={{ "color": special_color }}> - {organ_special}</span> :"" }</Table.Cell>
+        <Table.Cell width={10} color={font_color} bold={is_bold}>{organ_state}{organ_special ? <Box inline color={special_color}>, {organ_special}</Box> :"" }</Table.Cell>
       </Table.Row>
     );
   }
