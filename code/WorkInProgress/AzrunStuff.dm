@@ -801,7 +801,6 @@
 		var/mob/living/M = holder.donor
 		if(!ishuman(M)) // silicon shouldn't have these problems
 			return
-
 		if(M.client && (isnull(M.client.color) || M.client.color == "#FFFFFF") && !ON_COOLDOWN(src,"ghost_eyes", 5 MINUTES))
 			boutput(M,"<span class='alert'>Your vision starts to change as your connection this body wavers.</span>")
 			animate(M.client, color=COLOR_MATRIX_GRAYSCALE, time=5 SECONDS, easing=SINE_EASING)
@@ -818,11 +817,13 @@
 
 	Crossed(atom/movable/AM)
 		..()
-
 		var/mob/dead/observer/O = AM
 		if(!src.owner && !GET_COOLDOWN(src,"ghost_suck") && istype(O))
 			if(jobban_isbanned(O, "Ghostbrain"))
 				boutput(O, "<span class='notice'>Sorry, you are banned from playing a ghostbrain.</span>")
+				return
+			if(O.mind.dnr)
+				boutput(O, "<span class='notice'><b>[src]</b> refuses to process you!</span>")
 				return
 			if(O.can_respawn_as_ghost_critter()) // Azrun TODO New func with more apporpriate verbage?
 				actions.start(new/datum/action/bar/capture_ghost(O), src)
@@ -854,6 +855,10 @@
 	color = "#F99"
 
 	var/revives = 1
+
+	get_desc(dist, mob/user)
+		if (dist > 2)
+			. += "It looks like it has a tiny scalpel!  That can't be good..."
 
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		if(src.owner == user.mind)
@@ -887,7 +892,9 @@
 			. = ..()
 
 	can_attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
-		if(src.owner == user.mind)
+		if(!revives)
+			boutput(O, "<span class='notice'>This ghostbrain has insufficent power to revive this corpse.</span>")
+		else if(src.owner == user.mind)
 			/* Checks if an organ can be attached to a target mob */
 			if (istype(/obj/item/organ/chest/, src))
 				// We can't transplant a chest
@@ -946,7 +953,6 @@
 	onDelete()
 		..()
 		owner.ClearSpecificOverlays(id)
-
 
 /datum/movement_controller/ghost_brain
 	var/next_move = 0
@@ -1123,6 +1129,9 @@ TYPEINFO(/datum/component/controlled_by_mob)
 		I.pixel_x = -3
 		I.pixel_y = 3
 	else if(istype(parent, /mob/living/critter/robotic/bot/firebot ))
+		I.pixel_x = -5
+		I.pixel_y = 2
+	else if(istype(parent, /mob/living/critter/robotic/bot/engibot )) //??
 		I.pixel_x = -5
 		I.pixel_y = 2
 
