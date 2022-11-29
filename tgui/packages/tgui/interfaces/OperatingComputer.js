@@ -9,31 +9,7 @@ import { getStatsMax, processStatsData } from './EngineStats';
 import { capitalize, spaceUnderscores } from './common/stringUtils';
 
 export const OperatingComputer = (props, context) => {
-  const { act, data } = useBackend(context);
   const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', 1);
-  const {
-    patient_name,
-    health,
-    max_health,
-    brute,
-    burn,
-    toxin,
-    oxygen,
-    victim_status,
-    victim_data,
-    age,
-    blood_color_name,
-    blood_color_value,
-    blood_type,
-    dna_id,
-    clone_generation,
-    genetic_stability,
-    blood_pressure,
-    occupied,
-    rad_stage,
-    rad_dose,
-    reagent_container,
-  } = data;
 
   return (
     <Window title="Operating Computer" width="560" height="760">
@@ -56,204 +32,120 @@ export const OperatingComputer = (props, context) => {
   );
 };
 
-const ComputerTabs = (props, context) => {
-  const { act, data } = useBackend(context);
+const ComputerTabs = (props) => {
   const { tabIndex } = props;
-  if (tabIndex === 1) { return (<PatientStatus data={data} />); }
+  if (tabIndex === 1) { return (<PatientTab />); }
 };
 
 // mob.stat & crit parsing
-const VictimStatus = (props) => {
-  const { victim_status, health } = props;
-  if (victim_status === 2) { return <Box color="red">DEAD</Box>; }
-  if (health < 0) { return <Box color="orange">CRIT</Box>; }
-  if (victim_status === 0 || !victim_status) { return <Box color="green">ALIVE</Box>; }
-  if (victim_status === 1) { return <Box color="yellow">UNCON</Box>; }
+const PatientSummary = (props) => {
+  const { occupied, patient_status, health } = props;
+  let text = "NONE";
+  let color = "grey";
+  if (occupied) {
+    if (patient_status === 2) {
+      text = "DEAD";
+      color = "red";
+    }
+    else if (health < 0) {
+      text = "CRIT";
+      color = "orange";
+    }
+    else if (patient_status === 0 || !patient_status) {
+      text = "STABLE";
+      color = "green";
+    }
+    else if (patient_status === 1) {
+      text = "UNCON";
+      color = "yellow";
+    }
+  }
+  return (
+    <Stack.Item width={20} textAlign="right">
+      <Box fontSize={1}>Status</Box>
+      <Box fontSize={1.5}><Box color={color}>{text}</Box>
+      </Box>
+    </Stack.Item>);
+
 };
 
 const HealthSummary = (props) => {
-  const { health, max_health } = props;
-  const health_percent = Math.floor(100 * health / max_health);
-  let display_color = "purple";
-
-  if (max_health <= 0) {
-    return (
-      <Stack.Item width={20} textAlign="right">
-        <Box fontSize={1}>Overall Health</Box>
-        <Box fontSize={1.5} color="purple">???</Box>
-      </Stack.Item>
-    );
-  }
-
-  if (health_percent >= 51 && health_percent <= 100) { display_color = "green"; }
-  else if (health_percent >= 1 && health_percent <= 50) { display_color = "yellow"; }
-  else { display_color="red"; }
+  const { health_text, health_color } = props;
 
   return (
     <Stack.Item width={20} textAlign="right">
       <Box fontSize={1}>Overall Health</Box>
       <Box fontSize={1.5}>
-        <Box color={display_color}>{health_percent}<span style={{ color: "white" }}>%</span></Box>
+        <Box color={health_color}>{health_text}<span style={{ color: "white" }}>%</span></Box>
       </Box>
     </Stack.Item>
   );
 };
 
-const PatientStatus = (props) => {
-  const { tabIndex, data, act } = props;
-  const processedData = processStatsData(data.victim_data);
+const PatientTab = (props, context) => {
+  return (
+    <Section title={<DisplayTitle />}>
+      <DisplayVitals />
+      <DisplayKeyHealthIndicators />
+      <DisplayAnatomicalAnomolies />
+      <DisplayBloodstreamContent />
+      <DisplayGeneticAnalysis />
+    </Section>
+  );
 
-  if (data.occupied === 1) {
-    return (
-      <Section title={
-        <Stack>
-          <Stack.Item width={60}>
-            <Box fontSize={1}>Patient Name</Box>
-            <Box fontSize={1.5} >
-              {data.patient_name}
-            </Box>
-          </Stack.Item>
-          <HealthSummary health={data.health} max_health={data.max_health} />
-          <Stack.Item width={20} textAlign="right">
-            <Box fontSize={1}>Status</Box>
-            <Box fontSize={1.5}><VictimStatus victim_status={data.victim_status} health={data.health} />
-            </Box>
-          </Stack.Item>
-        </Stack>
-      }>
-        <Section title="Vitals">
-          <Stack textAlign="center">
-            <Stack.Item width={25}>
-              <HealthStat type="oxy">Suffocation<br /><Box fontSize={4}>{Math.floor(data.oxygen)}</Box>
-                <Box>
-                  <Chart.Line
-                    mt="5px"
-                    height="5em"
-                    data={processedData["oxygen"]}
-                    rangeX={[0, processedData["oxygen"].length - 1]}
-                    rangeY={[0, Math.max(100, getStatsMax(processedData["oxygen"]))]}
-                    strokeColor={COLORS.damageType["oxy"]}
-                    fillColor="rgba(52, 152, 219, 0.5)"
-                  />
-                </Box>
-              </HealthStat>
-            </Stack.Item>
-            <Stack.Item width={25}>
-              <HealthStat type="toxin">Toxin<br /><Box fontSize={4}>{Math.floor(data.toxin)}</Box>
-                <Box>
-                  <Chart.Line
-                    mt="5px"
-                    height="5em"
-                    data={processedData["toxin"]}
-                    rangeX={[0, processedData["toxin"].length - 1]}
-                    rangeY={[0, Math.max(100, getStatsMax(processedData["toxin"]))]}
-                    strokeColor={COLORS.damageType["toxin"]}
-                    fillColor="rgba(46, 204, 113, 0.5)"
-                  />
-                </Box>
-              </HealthStat>
-            </Stack.Item>
-            <Stack.Item width={25}>
-              <HealthStat type="burn">Burns<br /><Box fontSize={4}>{Math.floor(data.burn)}</Box>
-                <Box>
-                  <Chart.Line
-                    mt="5px"
-                    height="5em"
-                    data={processedData["burn"]}
-                    rangeX={[0, processedData["burn"].length - 1]}
-                    rangeY={[0, Math.max(100, getStatsMax(processedData["burn"]))]}
-                    strokeColor={COLORS.damageType["burn"]}
-                    fillColor="rgba(230, 126, 34, 0.5)"
-                  />
-                </Box>
-              </HealthStat>
-            </Stack.Item>
-            <Stack.Item width={25}>
-              <HealthStat type="brute">
-                <Box>Brute</Box>
-                <Box fontSize={4}>{Math.floor(data.brute)}</Box>
-                <Box>
-                  <Chart.Line
-                    mt="5px"
-                    height="5em"
-                    data={processedData["brute"]}
-                    rangeX={[0, processedData["brute"].length - 1]}
-                    rangeY={[0, Math.max(100, getStatsMax(processedData["brute"]))]}
-                    strokeColor={COLORS.damageType["brute"]}
-                    fillColor="rgba(231, 76, 60, 0.5)"
-                  />
-                </Box>
-              </HealthStat>
-            </Stack.Item>
-          </Stack>
-        </Section>
-        <Section title="Key Health Indicators">
-          <Table>
-            <DisplayBloodPressure blood_pressure={data.blood_pressure} />
-            <DisplayRads rad_stage={data.rad_stage} rad_dose={data.rad_dose} />
-            <DisplayBrain brain_damage={data.brain_damage} />
-            <DisplayOrgans organ_status={data.organ_status} />
-          </Table>
-        </Section>
-        <Section title="Genetic Analysis">
-          <Stack>
-            <Stack.Item width={20}>
-              <Table>
-                <Table.Row>
-                  <Table.Cell header textAlign="right">Age:</Table.Cell>
-                  <Table.Cell >{data.age}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell header textAlign="right">Blood Type:</Table.Cell>
-                  <Table.Cell>{data.blood_type}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell header textAlign="right">Blood Color:</Table.Cell>
-                  <Table.Cell>
-                    <ColorBox backgroundColor={data.blood_color_value} /> <span>{data.blood_color_name}</span>
-                  </Table.Cell>
-                </Table.Row>
-              </Table>
-            </Stack.Item>
-            <Stack.Item width={14}>
-              <Table>
-                <Table.Row>
-                  <Table.Cell header textAlign="right">Clone Generation:</Table.Cell>
-                  <Table.Cell >{data.clone_generation}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell header textAlign="right">Genetic Stability:</Table.Cell>
-                  <Table.Cell>{data.genetic_stability}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell header textAlign="right">Cloner Defects:</Table.Cell>
-                  <Table.Cell>{data.cloner_defects}</Table.Cell>
-                </Table.Row>
-              </Table>
-            </Stack.Item>
-          </Stack>
-        </Section>
-        <Section title="Bloodstream Analysis">
-          <ReagentGraph container={data.reagent_container} />
-        </Section>
-      </Section>
-    );
-  } else {
-    return (
-      <Stack>
-        <Stack.Item>No Patient Detected</Stack.Item>
-      </Stack>);
-  }
 };
 
-const DisplayBloodPressure = (props) => {
-  const { blood_pressure } = props;
+const HealthGraph = (props) => {
+  const { metric, value, metric_data, title } = props;
+  return (
+    <Stack.Item width={25}>
+      <HealthStat type={metric}>{title}<br /><Box fontSize={4}>{value}</Box>
+        <Box>
+          <Chart.Line
+            mt="5px"
+            height="5em"
+            data={metric_data}
+            rangeX={[0, metric_data.length - 1]}
+            rangeY={[0, Math.max(100, getStatsMax(metric_data))]}
+            strokeColor={COLORS.damageType[metric]}
+            fillColor={COLORS.damageTypeFill[metric]}
+          />
+        </Box>
+      </HealthStat>
+    </Stack.Item>
+  );
+};
+
+const DisplayBloodPressure = (props, context) => {
+  const { data } = useBackend(context);
+  let blood_pressure_rendered = "--/--";
+  let blood_pressure_status = "NO PULSE";
+  let blood_pressure_total = "--";
+  let pressure_color = "grey";
+  if (data.occupied) {
+    const blood_pressure = data.blood_pressure;
+    blood_pressure_rendered = blood_pressure["rendered"];
+    blood_pressure_status = blood_pressure["status"];
+    blood_pressure_total = blood_pressure["total"];
+    if (blood_pressure_total <= 299) {
+      pressure_color = "red";
+    } else if (blood_pressure_total <= 414) {
+      pressure_color = "yellow";
+    } else if (blood_pressure_total <= 584) {
+      pressure_color = "green";
+    } else if (blood_pressure_total <=665) {
+      pressure_color = "yellow";
+    } else {
+      pressure_color = "red";
+    }
+  }
+
   return (
     <Table.Row>
       <Table.Cell header textAlign="right" width={10}>Blood Pressure:</Table.Cell>
-      <Table.Cell width={10}>{blood_pressure["rendered"]} ({blood_pressure["status"]})</Table.Cell>
-      <Table.Cell header textAlign="right" width={10}>Blood level:</Table.Cell>
-      <Table.Cell width={10}>{blood_pressure["total"]} units</Table.Cell>
+      <Table.Cell width={10} color={pressure_color}>{blood_pressure_rendered} ({blood_pressure_status})</Table.Cell>
+      <Table.Cell header textAlign="right" width={10}>Blood Volume:</Table.Cell>
+      <Table.Cell width={10} color={pressure_color}>{blood_pressure_total} units</Table.Cell>
     </Table.Row>
   );
 };
@@ -263,7 +155,7 @@ const DisplayRads = (props) => {
   if (rad_stage > 0) {
     return (
       <Table.Row>
-        <Table.Cell header textAlign="right" width={10} color="yellow">Radiation:</Table.Cell>
+        <Table.Cell header textAlign="right" color="yellow" width={10}>Radiation:</Table.Cell>
         <Table.Cell width={10}>Stage {rad_stage}</Table.Cell>
         <Table.Cell header textAlign="right" width={10}>Sieverts:</Table.Cell>
         <Table.Cell width={10}>{rad_dose} units</Table.Cell>
@@ -273,31 +165,45 @@ const DisplayRads = (props) => {
 };
 
 const DisplayBrain = (props) => {
-  const { brain_damage } = props;
-  if (brain_damage !== "Okay") {
+  const { brain_damage_desc, brain_damage_value } = props;
+  if (brain_damage_desc !== "Okay") {
     return (
       <Table.Row>
-        <Table.Cell header textAlign="right" color="pink">
+        <Table.Cell header textAlign="right" color="pink" width={10}>
           Brain Damage:
         </Table.Cell>
-        <Table.Cell>{brain_damage}</Table.Cell>
+        <Table.Cell width={10}>{brain_damage_desc}</Table.Cell>
+        <Table.Cell header textAlign="right" width={10}>Neuron Cohesion:</Table.Cell>
+        <Table.Cell>{((120-brain_damage_value)/120*100).toFixed(2)}%</Table.Cell>
       </Table.Row>
     );
   }
 };
 
-const DisplayOrgans = (props) => {
+const DisplayOrgans = (props, context) => {
   const { organ_status } = props;
-  return (
-    organ_status.map((organ_bundle) => {
-      return (
-        <DisplayOrgan
-          key={organ_bundle["organ_name"]}
-          bundle={organ_bundle}
-        />
-      );
-    })
-  );
+  const { data } = useBackend(context);
+  if (data.occupied) {
+    return (
+      <Stack.Item width={20}>
+        <Table>
+          <Table.Row>
+            <Table.Cell header textAlign="right">Organ</Table.Cell>
+            <Table.Cell header>Status</Table.Cell>
+          </Table.Row>
+          {
+            organ_status.map((organ_bundle) => {
+              return (
+                <DisplayOrgan
+                  key={organ_bundle["organ_name"]}
+                  bundle={organ_bundle}
+                />
+              );
+            })
+          }
+        </Table>
+      </Stack.Item>
+    ); }
 };
 
 const DisplayOrgan = (props) => {
@@ -306,16 +212,11 @@ const DisplayOrgan = (props) => {
   const organ_state = bundle["organ_state"];
   const organ_name = bundle["organ_name"];
 
+  const special_color = organTraitToColor(organ_special);
+
   let font_color = "green";
-  let special_color = "purple";
   let is_bold = false;
 
-  if (organ_special === "Cybernetic") {
-    special_color = "teal";
-  }
-  if (organ_special === "Synthetic") {
-    special_color = "olive";
-  }
   if (organ_state === "Missing") {
     font_color = "red";
     is_bold = true;
@@ -341,12 +242,274 @@ const DisplayOrgan = (props) => {
   if (organ_state !== "Okay" || organ_special) {
     return (
       <Table.Row>
-        <Table.Cell header textAlign="right">
+        <Table.Cell header textAlign="right" width={10}>
           {capitalize(spaceUnderscores(organ_name))}:
         </Table.Cell>
-        <Table.Cell color={font_color} bold={is_bold}>{organ_state}{organ_special ? <span style={{ "color": special_color }}> - {organ_special}</span> :"" }</Table.Cell>
+        <Table.Cell width={10} color={font_color} bold={is_bold}>{organ_state}{organ_special ? <span style={{ "color": special_color }}> - {organ_special}</span> :"" }</Table.Cell>
       </Table.Row>
     );
   }
 
+};
+
+const organTraitToColor = (organ_trait) => {
+  let special_color = "";
+  if (organ_trait) {
+    special_color = "white";
+  }
+  if (organ_trait === "UNKNOWN") {
+    special_color = "purple";
+  }
+  if (organ_trait === "Missing") {
+    special_color = "red";
+  }
+  if (organ_trait === "Cybernetic") {
+    special_color = "teal";
+  }
+  if (organ_trait === "Synthetic") {
+    special_color = "olive";
+  }
+  return special_color;
+};
+
+const DisplayLimbs = (props, context) => {
+  const { limb_status } = props;
+  const { data } = useBackend(context);
+  if (data.occupied) {
+    return (
+      <Stack.Item width={20}>
+        <Table>
+          <Table.Row>
+            <Table.Cell header textAlign="right">Limb</Table.Cell>
+            <Table.Cell header>Status</Table.Cell>
+          </Table.Row>
+          {
+            limb_status.map((limb_bundle) => {
+              return (
+                <DisplayLimb
+                  key={limb_bundle["limb"]}
+                  bundle={limb_bundle}
+                />
+              );
+            })
+          }
+        </Table>
+      </Stack.Item>
+    );
+  }
+};
+
+const DisplayLimb = (props) => {
+  const { bundle } = props;
+  const limb_name = bundle["limb"];
+  const limb_status = bundle["status"];
+  const limb_color = organTraitToColor(bundle["status"]);
+  let is_bold = false;
+
+  if (limb_status === "Missing") {
+    is_bold = true;
+  }
+
+  if (limb_status !== "Okay") {
+    return (
+      <Table.Row>
+        <Table.Cell header textAlign="right" width={10}>
+          {capitalize(spaceUnderscores(limb_name))}:
+        </Table.Cell>
+        <Table.Cell width={10} color={limb_color} bold={is_bold}>{limb_status}</Table.Cell>
+      </Table.Row>
+    );
+  }
+};
+
+const DisplayTemperature = (props, context) => {
+  const { data } = useBackend(context);
+  const { body_temp, optimal_temp } = props;
+  let font_color = "grey";
+  let body_temp_c = "--";
+  let body_temp_f = "--";
+  if (data.occupied) {
+    if (body_temp >= (optimal_temp + 60)) { font_color="red"; }
+    else if (body_temp >= (optimal_temp + 30)) { font_color="yellow"; }
+    else if (body_temp <= (optimal_temp - 60)) { font_color="purple"; }
+    else if (body_temp <= (optimal_temp - 30)) { font_color="blue"; }
+    else { font_color = "green"; }
+    body_temp_c = (body_temp - 273.15).toFixed(2);
+    body_temp_f = (body_temp_c * 1.8 + 32).toFixed(2);
+  }
+
+  return (
+    <Table.Row>
+      <Table.Cell header textAlign="right">
+        Temperature:
+      </Table.Cell>
+      <Table.Cell color={font_color}>
+        { body_temp_c + "°C / " + body_temp_f + "°F"}
+      </Table.Cell>
+    </Table.Row>
+  );
+};
+
+const DisplayVitals = (props, context) => {
+  const { data } = useBackend(context);
+  const processedData = processStatsData(data.victim_data);
+
+  let oxy = "--";
+  let oxy_data = [];
+  let toxin = "--";
+  let toxin_data =[];
+  let burn = "--";
+  let burn_data = [];
+  let brute = "--";
+  let brute_data = [];
+  if (data.occupied) {
+    oxy = Math.floor(data.oxygen);
+    toxin = Math.floor(data.toxin);
+    burn = Math.floor(data.burn);
+    brute = Math.floor(data.brute);
+    oxy_data = processedData["oxygen"];
+    toxin_data = processedData["toxin"];
+    burn_data = processedData["burn"];
+    brute_data = processedData["brute"];
+  }
+
+  return (
+    <Section title="Vitals">
+      <Stack textAlign="center">
+        <HealthGraph title="Suffocation" value={oxy} metric_data={oxy_data} metric="oxy" />
+        <HealthGraph title="Toxin" value={toxin} metric_data={toxin_data} metric="toxin" />
+        <HealthGraph title="Burn" value={burn} metric_data={burn_data} metric="burn" />
+        <HealthGraph title="Brute" value={brute} metric_data={brute_data} metric="brute" />
+      </Stack>
+    </Section>
+  );
+};
+
+const DisplayAnatomicalAnomolies = (props, context) => {
+  const { data } = useBackend(context);
+  if (data.occupied) {
+    return (
+      <Section title="Anatomical Anomalies">
+        <Stack>
+          <DisplayOrgans organ_status={data.organ_status} />
+          <DisplayLimbs limb_status={data.limb_status} />
+        </Stack>
+      </Section>);
+  } else {
+    return (<Section title="Anatomical Anomalies" color="grey">No Patient Detected</Section>);
+  }
+};
+
+const DisplayBloodstreamContent = (props, context) => {
+  const { data } = useBackend(context);
+  if (data.occupied) {
+    return (
+      <Section title="Bloodstream Contents">
+        <ReagentGraph container={data.reagent_container} />
+      </Section>
+    );
+  }
+  else {
+    return (<Section title="Bloodstream Contents" color="grey">No Patient Detected</Section>);
+  }
+};
+
+const DisplayGeneticAnalysis = (props, context) => {
+  const { data } = useBackend(context);
+  if (data.occupied) {
+    return (
+      <Section title="Genetic Analysis">
+        <Stack>
+          <Stack.Item width={20}>
+            <Table>
+              <Table.Row>
+                <Table.Cell header textAlign="right">Age:</Table.Cell>
+                <Table.Cell >{data.age}</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell header textAlign="right">Blood Type:</Table.Cell>
+                <Table.Cell>{data.blood_type}</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell header textAlign="right">Blood Color:</Table.Cell>
+                <Table.Cell>
+                  <ColorBox backgroundColor={data.blood_color_value} /> <span>{data.blood_color_name}</span>
+                </Table.Cell>
+              </Table.Row>
+            </Table>
+          </Stack.Item>
+          <Stack.Item width={14}>
+            <Table>
+              <Table.Row>
+                <Table.Cell header textAlign="right">Clone Generation:</Table.Cell>
+                <Table.Cell >{data.clone_generation}</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell header textAlign="right">Genetic Defects:</Table.Cell>
+                <Table.Cell>{data.cloner_defects}</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell header textAlign="right">Genetic Stability:</Table.Cell>
+                <Table.Cell>{data.genetic_stability}</Table.Cell>
+              </Table.Row>
+            </Table>
+          </Stack.Item>
+        </Stack>
+      </Section>
+    );
+  } else {
+    return (<Section title="Genetic Analysis" color="grey">No Patient Detected</Section>);
+  }
+};
+
+const DisplayTitle = (props, context) => {
+  const { data } = useBackend(context);
+  let patient_name = "No patient detected";
+  let patient_name_color = "grey";
+  let patient_health = "--";
+  let patient_health_percent = "--";
+  let patient_status = "--";
+  let color = "grey";
+  if (data.occupied) {
+    patient_name = data.patient_name;
+    patient_name_color = "white";
+    patient_health_percent = Math.floor(100 * data.health / data.max_health);
+    patient_health = data.health;
+    patient_status = data.victim_status;
+
+    color = "purple";
+
+    if (data.max_health <= 0) {
+      patient_health_percent = "???";
+    }
+
+    if (patient_health_percent >= 51 && patient_health_percent <= 100) { color = "green"; }
+    else if (patient_health_percent >= 1 && patient_health_percent <= 50) { color = "yellow"; }
+    else { color="red"; }
+  }
+  return (
+    <Stack>
+      <Stack.Item width={60}>
+        <Box fontSize={1}>Patient Name</Box>
+        <Box fontSize={1.5} color={patient_name_color} >
+          {patient_name}
+        </Box>
+      </Stack.Item>
+      <HealthSummary health_text={patient_health_percent} health_color={color} />
+      <PatientSummary occupied={data.occupied} patient_status={patient_status} health={patient_health} />
+    </Stack>
+  );
+};
+
+const DisplayKeyHealthIndicators = (props, context) => {
+  const { data } = useBackend(context);
+  return (
+    <Section title="Key Health Indicators">
+      <Table>
+        <DisplayBloodPressure />
+        <DisplayTemperature body_temp={data.body_temp} optimal_temp={data.optimal_temp} />
+        <DisplayRads rad_stage={data.rad_stage} rad_dose={data.rad_dose} />
+        <DisplayBrain brain_damage_desc={data.brain_damage_desc} brain_damage_value={data.brain_damage_value} />
+      </Table>
+    </Section>);
 };
