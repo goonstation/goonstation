@@ -19,6 +19,7 @@
 	/// Set to instantiated material datum ([getMaterial()]) for custom material floors
 	var/plate_mat = null
 	var/reinforced = FALSE
+	//var/cable_supported = FALSE // non-plating turfs that allows cable placement
 	//Stuff for the floor & wall planner undo mode that initial() doesn't resolve.
 	var/tmp/roundstart_icon_state
 	var/tmp/roundstart_dir
@@ -861,10 +862,43 @@ DEFINE_FLOORS(marble/border_wb,
 	mat_appearances_to_ignore = list("steel","synthrubber","glass")
 	step_material = "step_wood"
 	step_priority = STEP_PRIORITY_MED
-	mat_changename = 0
+	mat_changename = FALSE
 
 	New()
+		var/image/I
+		#ifdef UNDERWATER_MAP
+		I = image('icons/turf/outdoors.dmi', "sand_other")
+		#else
+		I = image('icons/turf/space.dmi', "[rand(1, 25)]")
+		#endif
+		I.plane = PLANE_SPACE
+		src.underlays += I
 		plate_mat = getMaterial("glass")
+		..()
+
+	pry_tile(obj/item/C as obj, mob/user as mob, params)
+		boutput(user, "<span class='alert'>This is glass flooring, you can't pry this up!</span>")
+
+	to_plating()
+		return
+
+	break_tile_to_plating()
+		return
+
+	break_tile()
+		return
+
+	restore_tile()
+		src.intact = FALSE // so that a burnt icon can be cleaned by a floorbot
+		..()
+
+	attackby(obj/item/C, mob/user, params)
+		if (istype(C, /obj/item/rods))
+			boutput(user, "<span class='alert'>You can't reinforce this tile.</alert>")
+			return
+		if(istype(C, /obj/item/cable_coil))
+			boutput(user, "<span class='alert'>You can't put cable over this tile, it would be too exposed.</span>")
+			return
 		..()
 
 /turf/simulated/floor/glassblock/large
@@ -2054,7 +2088,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				actions.start(new /datum/action/bar/icon/build(S, map_settings ? map_settings.windows : /obj/window, 2, S.material, 1, 'icons/obj/window.dmi', "window", "a full window", /proc/window_reinforce_full_callback, spot = src), user)
 
 	if(istype(C, /obj/item/cable_coil))
-		if(!intact)
+		if(!intact)// || src.cable_supported)
 			var/obj/item/cable_coil/coil = C
 			coil.turf_place(src, get_turf(user), user)
 		else
