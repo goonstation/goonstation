@@ -1847,7 +1847,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_strip
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/sugar
 	cookbonus = 14
-	output = /obj/item/reagent_containers/food/snacks/churro
+	output = /obj/item/reagent_containers/food/snacks/dippable/churro
 
 /datum/cookingrecipe/zongzi
 	item1 = /obj/item/reagent_containers/food/snacks/plant/bamboo
