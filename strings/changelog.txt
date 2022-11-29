@@ -1,5 +1,9 @@
 
 (t)mon nov 28 22
+(u)Kubius
+(p)12192
+(e)🗺|A-Mapping
+(+)Nadir fixbatch 9: relocated a cyborg dock prone to accidentally blowing up Robotics, reinforced some high-value external windows.
 (u)TDHooligan
 (p)12205
 (e)🔄⚗|C-Rework, A-Chemistry
