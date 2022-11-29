@@ -10,8 +10,8 @@
 			istype(x, /obj/item/clothing) || \
 			istype(x, /obj/item/device/radio/headset) || \
 			istype(x, /obj/item/card/id) || \
-			x.flags & ONBELT || \
-			x.flags & ONBACK \
+			x.c_flags & ONBELT || \
+			x.c_flags & ONBACK \
 		) && !IS_NPC_HATED_ITEM(x) \
 	)
 
@@ -159,7 +159,7 @@
 	ai_attacked = 0
 
 	if(abilityHolder)
-		if(!abilityHolder.getAbility(/datum/targetable/ai_toggle))
+		if(src.use_ai_toggle && !abilityHolder.getAbility(/datum/targetable/ai_toggle))
 			abilityHolder.addAbility(/datum/targetable/ai_toggle)
 
 /mob/living/carbon/human/proc/ai_stop()
@@ -565,7 +565,7 @@
 			src.put_in_hand_or_drop(taken)
 
 	// wear clothes
-	if(src.hand && IS_NPC_CLOTHING(src.equipped()) && prob(80) && (!(src.equipped()?.flags & ONBELT) || prob(0.1)))
+	if(src.hand && IS_NPC_CLOTHING(src.equipped()) && prob(80) && (!(src.equipped()?.c_flags & ONBELT) || prob(0.1)))
 		src.hud.relay_click("invtoggle", src, list())
 		if(src.equipped())
 			throw_equipped |= prob(80)

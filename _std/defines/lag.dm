@@ -58,7 +58,7 @@
 #define TICKLAG_DILATE_INTERVAL 20
 
 /// whether we want to profile in advance of a lagspike every tick to catch relevant lagspike info
-#define PRE_PROFILING_ENABLED
+// #define PRE_PROFILING_ENABLED
 /// what value must world.cpu cross upwards to trigger automatic profiling
 #define CPU_START_PROFILING_THRESHOLD 150
 /// what value must world.cpu cross upwards to trigger automatic profiling but this one ignores CPU_START_PROFILING_COUNT

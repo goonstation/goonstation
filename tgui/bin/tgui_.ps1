@@ -49,7 +49,7 @@ function task-webpack {
 
 ## Runs a development server
 function task-dev-server {
-  yarn node "packages/tgui-dev-server/index.esm.js" @Args
+  yarn node --experimental-modules "packages/tgui-dev-server/index.js" @Args
 }
 
 ## Run a linter through all packages
@@ -66,6 +66,11 @@ function task-test {
 
 ## Mr. Proper
 function task-clean {
+  Remove-Quiet -Recurse -Force ../browserassets/tgui/.tmp
+  Remove-Quiet -Force ../browserassets/tgui/*.map
+  Remove-Quiet -Force ../browserassets/tgui/*.chunk.*
+  Remove-Quiet -Force ../browserassets/tgui/*.bundle.*
+  Remove-Quiet -Force ../browserassets/tgui/*.hot-update.*
   ## Yarn artifacts
   Remove-Quiet -Recurse -Force ".yarn\cache"
   Remove-Quiet -Recurse -Force ".yarn\unplugged"
@@ -73,7 +78,7 @@ function task-clean {
   Remove-Quiet -Force ".yarn\build-state.yml"
   Remove-Quiet -Force ".yarn\install-state.gz"
   Remove-Quiet -Force ".yarn\install-target"
-  Remove-Quiet -Force ".pnp.js"
+  Remove-Quiet -Force ".pnp.*"
   ## NPM artifacts
   Get-ChildItem -Path "." -Include "node_modules" -Recurse -File:$false | Remove-Item -Recurse -Force
   Remove-Quiet -Force "package-lock.json"

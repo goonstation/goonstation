@@ -933,6 +933,15 @@
 		unique = 1
 		change = 2
 
+	staminaregen/darkness
+		id = "darkness_stam_regen"
+		name = "Dark vigor"
+		desc = "Your stamina regen is increased"
+		icon_state = "stam+"
+		maxDuration = 60 SECONDS
+		unique = TRUE
+		change = 5
+
 	fitness_staminamax
 		id = "fitness_stam_max"
 		name = "Buff"
@@ -1576,6 +1585,24 @@
 	duration = INFINITE_STATUS
 	maxDuration = null
 	change = -5
+
+/datum/statusEffect/staminaregen/clone
+	id = "stamclone"
+	name = "Weakened"
+	desc = "You feel a bit weaker than usual."
+	icon_state = "stam-"
+	duration = INFINITE_STATUS
+	maxDuration = null
+
+	onAdd(optional=null)
+		if (!optional)
+			stack_trace("Added /datum/statusEffect/staminaregen/clone with 0/null duration.")
+			qdel(src)
+			return
+
+		src.change = optional
+		. = ..()
+
 
 /datum/statusEffect/miasma
 	id = "miasma"

@@ -1107,7 +1107,7 @@
 	max_amt2spawn = 6
 	items2spawn = list(/obj/critter/domestic_bee,
 	/obj/critter/bat,
-	/obj/critter/mouse,
+	/mob/living/critter/small_animal/mouse,
 	/obj/critter/opossum,
 	/obj/critter/dog/george/blair,
 	/obj/critter/dog/george/orwell,
@@ -1379,7 +1379,10 @@
 		/obj/item/clothing/under/gimmick/eightiesmens,
 		/obj/item/clothing/under/gimmick/eightieswomens,
 		/obj/item/clothing/under/gimmick/ziggy,
-		/obj/item/clothing/under/gimmick/jcdenton)
+		/obj/item/clothing/under/gimmick/jcdenton,
+		/obj/item/clothing/under/misc/mobster,
+		/obj/item/clothing/under/misc/mobster/alt,
+		/obj/item/clothing/under/gimmick/guybrush)
 
 	one
 		amt2spawn = 1

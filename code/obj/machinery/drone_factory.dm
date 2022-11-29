@@ -270,6 +270,10 @@ var/global/list/ghostdrone_candidates = list()
 		src.working = 0
 		src.icon_state = "factory[src.factory_section]0"
 
+		if(QDELETED(src.current_assembly))
+			src.current_assembly = null
+			return
+
 		if (src.current_assembly)
 			src.current_assembly.stage = src.single_system ? 3 : src.factory_section
 			src.current_assembly.icon_state = "drone-stage[src.current_assembly.stage]"
