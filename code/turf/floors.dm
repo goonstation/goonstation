@@ -19,7 +19,6 @@
 	/// Set to instantiated material datum ([getMaterial()]) for custom material floors
 	var/plate_mat = null
 	var/reinforced = FALSE
-	//var/cable_supported = FALSE // non-plating turfs that allows cable placement
 	//Stuff for the floor & wall planner undo mode that initial() doesn't resolve.
 	var/tmp/roundstart_icon_state
 	var/tmp/roundstart_dir
@@ -2088,7 +2087,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				actions.start(new /datum/action/bar/icon/build(S, map_settings ? map_settings.windows : /obj/window, 2, S.material, 1, 'icons/obj/window.dmi', "window", "a full window", /proc/window_reinforce_full_callback, spot = src), user)
 
 	if(istype(C, /obj/item/cable_coil))
-		if(!intact)// || src.cable_supported)
+		if(!intact)
 			var/obj/item/cable_coil/coil = C
 			coil.turf_place(src, get_turf(user), user)
 		else
