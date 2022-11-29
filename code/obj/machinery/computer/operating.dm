@@ -84,6 +84,9 @@
 	.["patient_name"] = src.victim.real_name
 	.["victim_status"] = src.victim.stat
 
+	.["body_temp"] = src.victim.bodytemperature
+	.["optimal_temp"] = src.victim.base_body_temp
+
 	.["victim_data"] = src.victim_data
 
 	.["max_health"] = round(src.victim.max_health)
