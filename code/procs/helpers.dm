@@ -2392,12 +2392,8 @@ proc/gradientText(var/color1, var/color2, message)
     result += "<span style='color:[col]'>[chars]</span>"
   . = result.Join()
 
-/**
-  * Returns given text replaced by nonsense chars, excepting HTML tags, on a 40% or given % basis
-  */
-proc/radioGarbleText(var/message, var/per_letter_corruption_chance=40)
-	var/split_html_text = splittext(message,  regex("<\[^>\]*>"), 1, length(message), TRUE) //I'd love to just use include_delimiters=TRUE, but byond
-	var/list/corruptedChars = list("@","#","!",",",".","-","=","/","\\","'","\"","`","*","(",")","[","]","_","&")
+proc/garbleText(var/message, var/corruptedChars, var/per_letter_corruption_chance = 40)
+	var/split_html_text = splittext(message,  regex("<\[^>\]*>"), 1, length(message) + 1, TRUE) //I'd love to just use include_delimiters=TRUE, but byond
 	. = list()
 	for(var/text_bit in split_html_text)
 		if(findtext(text_bit, regex("<\[^>\]*>")))
@@ -2412,12 +2408,23 @@ proc/radioGarbleText(var/message, var/per_letter_corruption_chance=40)
 		. += corrupted_bit
 	return jointext(.,"")
 
+/**
+  * Returns given text replaced by nonsense chars, excepting HTML tags, on a 40% or given % basis
+  */
+proc/radioGarbleText(var/message, var/per_letter_corruption_chance = 40)
+	return garbleText(message, list("@","#","!",",",".","-","=","/","\\","'","\"","`","*","(",")","[","]","_","&"), per_letter_corruption_chance)
 
 /**
   * Returns given text replaced entirely by nonsense chars
   */
 proc/illiterateGarbleText(var/message)
-	. = radioGarbleText(message, 100)
+	return radioGarbleText(message, 100)
+
+proc/runicText(var/message, var/per_letter_corruption_chance = 20)
+	var/list/runes = list()
+	for (var/character_code in 5792 to 5866) //unicode runes character range
+		runes += ascii2text(character_code)
+	return garbleText(message, runes, per_letter_corruption_chance)
 
 /**
   * Returns the time in seconds since a given timestamp

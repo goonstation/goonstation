@@ -585,7 +585,10 @@ function lineEnter (ev)
 
 	if((href_list["command"]) && src.active_program)
 		usr << output(null, "comp3.browser:input_clear")
-		src.active_program.input_text(href_list["command"])
+		var/text = href_list["command"]
+		if (iswizard(usr))
+			text = runicText(text)
+		src.active_program.input_text(text)
 		playsound(src.loc, "keyboard", 50, 1, -15)
 
 	else if(href_list["disk"])

@@ -15,6 +15,7 @@
 	var/can_swap_cell = 1
 	muzzle_flash = null
 	inventory_counter_enabled = 1
+	wizard_allowed = FALSE
 
 	New()
 		var/cell = null

@@ -1045,41 +1045,43 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		if(!usable(user)) return
 
 		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
-			preUse(user)
-			var/direction = get_dir_pixel(user, target, params)
-			var/list/attacked = list()
+			src.do_effect(target, params, user)
 
-			var/turf/effect = get_step(master, direction)
+	proc/do_effect(atom/target, params, mob/user)
+		preUse(user)
+		var/direction = get_dir_pixel(user, target, params)
+		var/list/attacked = list()
 
-			var/obj/itemspecialeffect/spark/spark = new /obj/itemspecialeffect/spark
-			spark.setup(effect)
-			spark.set_dir(direction)
-			logTheThing(LOG_COMBAT, user, "uses the spark special attack ([src.type]) at [log_loc(user)].")
+		var/turf/effect = get_step(master, direction)
 
-			var/hit = 0
-			for(var/atom/movable/A in effect)
-				if(A in attacked) continue
-				if(isTarget(A))
-					on_hit(A,2)
-					attacked += A
-					hit = 1
-					if (ishuman(user) && master  && istype(master, /obj/item/clothing/gloves))
-						user.unlock_medal("High Five!", 1)
-					break
-			if (!hit)
-				SPAWN(secondhit_delay)
-					step(spark, direction, 2)
-					for(var/atom/movable/A in spark.loc)
-						if(A in attacked) continue
-						if(isTarget(A))
-							on_hit(A, mult)
-							attacked += A
-							hit = 1
-							break
-			afterUse(user)
-			//if (!hit)
-			playsound(master, 'sound/effects/sparks6.ogg', 70, 0)
-		return
+		var/obj/itemspecialeffect/spark/spark = new /obj/itemspecialeffect/spark
+		spark.setup(effect)
+		spark.set_dir(direction)
+		logTheThing(LOG_COMBAT, user, "uses the spark special attack ([src.type]) at [log_loc(user)].")
+
+		var/hit = 0
+		for(var/atom/movable/A in effect)
+			if(A in attacked) continue
+			if(isTarget(A))
+				on_hit(A,2)
+				attacked += A
+				hit = 1
+				if (ishuman(user) && master  && istype(master, /obj/item/clothing/gloves))
+					user.unlock_medal("High Five!", 1)
+				break
+		if (!hit)
+			SPAWN(secondhit_delay)
+				step(spark, direction, 2)
+				for(var/atom/movable/A in spark.loc)
+					if(A in attacked) continue
+					if(isTarget(A))
+						on_hit(A, mult)
+						attacked += A
+						hit = 1
+						break
+		afterUse(user)
+		//if (!hit)
+		playsound(master, 'sound/effects/sparks6.ogg', 70, 0)
 
 
 	proc/on_hit(var/hit, var/mult = 1)

@@ -254,6 +254,14 @@
 			user.show_message("<span class='alert'>[M] seems to be warded from attacks!</span>")
 			return
 
+		if (src.can_stun() && iswizard(user) && M != user)
+			user.visible_message("<span class='alert'>[user] waves [src] in strange arcane patterns, casting sparks flying into the air.</span>",\
+			"<span class='alert'>You wave [src] in strange arcane patterns, casting sparks flying into the air.</span>")
+			var/datum/item_special/spark/special = src.special
+			special.do_effect(M, list("left" = TRUE, "icon-x" = 16, "icon-y" = 16), user) //spoof some params
+			src.process_charges(-1, user)
+			return
+
 		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
 			src.do_stun(user, M, "failed", 1)
 			JOB_XP(user, "Clown", 1)

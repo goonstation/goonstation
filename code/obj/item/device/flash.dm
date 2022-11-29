@@ -90,10 +90,29 @@
 		if(Obj == src.cell)
 			qdel(src) //cannot un-turboflash
 
+/obj/item/device/flash/proc/wizard_check(mob/user)
+	if (src.status && iswizard(user))
+		user.visible_message("<span class='alert'>[user] emits sparks from [his_or_her(user)] fingertips, overloading [src]'s bulb.</span>")
+		playsound(src, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 1, pitch = 2)
+		src.flash_mob(user, user)
+		src.status = 0
+		src.UpdateIcon()
+
+/obj/item/device/flash/update_icon()
+	if (!src.status)
+		if (!src.turboflash)
+			src.set_icon_state("flash3")
+			src.name = "depleted flash" //what if I put side effects in UpdateIcon wouldn't that be wacky and uncharacteristic
+		else
+			src.set_icon_state("turboflash3")
+			src.name = "depleted flash/cell assembly"
+
 //I split attack and flash_mob into seperate procs so the rev_flash code is cleaner
 /obj/item/device/flash/attack(mob/living/M, mob/user)
-	if(isghostcritter(user)) return
+	if (isghostcritter(user))
+		return
 	src.flash_mob(M, user)
+	src.wizard_check(user) //the flash still goes off, but then it blows up in your face
 
 // Tweaked attack and attack_self to reduce the amount of duplicate code. Turboflashes to be precise (Convair880).
 /obj/item/device/flash/proc/flash_mob(mob/living/M as mob, mob/user as mob)
@@ -194,8 +213,7 @@
 		status = 0
 		src.cell.use(min(src.cell.charge, max_flash_power))
 		boutput(user, "<span class='alert'><b>The bulb has burnt out!</b></span>")
-		set_icon_state("turboflash3")
-		src.name = "depleted flash/cell assembly"
+		src.UpdateIcon()
 
 	else
 		src.process_burnout(user)
@@ -208,7 +226,8 @@
 	return
 
 /obj/item/device/flash/attack_self(mob/user as mob)
-	if(isghostcritter(user)) return
+	if (isghostcritter(user))
+		return
 	src.add_fingerprint(user)
 
 	if (user?.bioHolder?.HasEffect("clumsy") && prob(50))
@@ -237,6 +256,8 @@
 				if (src) qdel(src)
 			return
 
+	if (src.wizard_check(user))
+		return
 	// Play animations.
 	playsound(src, 'sound/weapons/flash.ogg', 100, 1)
 	flick(src.animation_type, src)
@@ -276,8 +297,7 @@
 		status = 0
 		src.cell.use(min(src.cell.charge, max_flash_power))
 		boutput(user, "<span class='alert'><b>The bulb has burnt out!</b></span>")
-		set_icon_state("turboflash3")
-		src.name = "depleted flash/cell assembly"
+		src.UpdateIcon()
 	else
 		src.use++
 		src.process_burnout(user)
@@ -325,11 +345,7 @@
 	if (prob(max(0,((use-5)*10) + burn_mod)))
 		status = 0
 		boutput(user, "<span class='alert'><b>The bulb has burnt out!</b></span>")
-		set_icon_state("flash3")
-		name = "depleted flash"
-
-	return
-
+		src.UpdateIcon()
 
 /obj/item/device/flash/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/cell) && !src.secure)
@@ -340,8 +356,8 @@
 		W.set_loc(T)
 
 		if(!src.status)
-			T.set_icon_state("turboflash3")
 			T.status = 0
+			T.UpdateIcon()
 
 		qdel(src)
 		return
@@ -403,7 +419,7 @@
 			var/obj/item/device/flash/F = new /obj/item/device/flash( get_turf(src) )
 			if(!src.status)
 				F.status = 0
-				F.set_icon_state("flash3")
+				F.UpdateIcon()
 			qdel(src)
 		else if (isscrewingtool(W))
 			boutput(user, "<span class='notice'>You [src.secure ? "unscrew" : "secure"] the access panel.</span>")

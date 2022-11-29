@@ -40,6 +40,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/current_projectile_num = 1
 	var/silenced = 0
 	var/can_dual_wield = 1
+	var/wizard_allowed = TRUE
 
 	var/slowdown = 0 //Movement delay attack after attack
 	var/slowdown_time = 10 //For this long
@@ -454,6 +455,11 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				how_drunk = 1
 		how_drunk = max(0, how_drunk - isalcoholresistant(user))
 		spread += 5 * how_drunk
+
+	if (!src.wizard_allowed && iswizard(user))
+		user.show_message("<span class='alert'>Your magical energies interfere with [src], causing it to misfire wildly!</span>")
+		spread = 100
+
 	spread = max(spread, spread_angle)
 
 	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, .proc/alter_projectile))
