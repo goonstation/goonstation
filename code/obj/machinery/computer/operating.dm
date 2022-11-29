@@ -96,7 +96,8 @@
 	.["oxygen"] = round(src.victim.get_oxygen_deprivation())
 
 	.["blood_pressure"] = src.victim.blood_pressure
-	.["brain_damage"] = calc_brain_damage_severity(src.victim)
+	.["brain_damage_desc"] = calc_brain_damage_severity(src.victim)
+	.["brain_damage_value"] = src.victim.get_brain_damage()
 	.["organ_status"] = vitim_organ_health(src.victim)
 
 	.["age"] = src.victim.bioHolder.age
