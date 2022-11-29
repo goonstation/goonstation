@@ -193,6 +193,8 @@
 		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
 
 			for (var/mob/living/L in T)
+				if(ismobcritter(L) && isdead(L)) // we don't care about dead critters
+					break
 				if(!isintangible(L)) //neither blob overmind or AI eye should block this
 					unacceptable = TRUE
 					break
