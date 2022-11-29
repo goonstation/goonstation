@@ -466,6 +466,20 @@
 	// checks for cablespawners around itself
 		var/disx = spawner.x - src.x
 		var/disy = spawner.y - src.y
+		if (disx == 0 && disy == 0)
+			if (src.override_centre_connection == TRUE)
+			// if a node spawner is in the same spot as a regular one, delete the regular one
+				qdel(spawner)
+				continue
+			else if (spawner.override_centre_connection == TRUE)
+			// ideally this never gets called lol, no idea if it will work
+			// same as the first if but the other way
+				qdel(src)
+				return
+			else if (src.type == spawner.type)
+			// if they're duplicates, delete the duplicate
+				qdel(spawner)
+				continue
 		if (disy == 1)
 			if (disx == 1)
 				cable_surr |= NORTHEAST_UNIQUE
