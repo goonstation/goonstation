@@ -784,7 +784,7 @@
 //hearghosts is checked in deadsay.dm and chatprocs.dm
 /mob/living/intangible/wraith/proc/silence_ghosts()
 	set category = "Wraith"
-	name = "Silence ghosts"
+	name = "Silence ghosts/Hear ghosts"
 
 	if (src.hearghosts)
 		src.hearghosts = FALSE
