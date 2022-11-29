@@ -45,13 +45,11 @@
 		. = ..()
 
 	attackby(obj/item/P as obj, mob/living/user as mob)
-		src._health -= P.force
 		attack_particle(user,src)
 		user.lastattacked = src
 		hit_twitch(src)
 		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_3.ogg', 60, 1)
-		if(src._health <= 0)
-			qdel(src)
+		src.changeHealth(-P.force)
 
 	HasProximity(atom/movable/AM)
 		if (GET_COOLDOWN(src, "attack"))
