@@ -16,7 +16,7 @@ import { formatSiUnit } from '../format';
  * @param {*} rawData - [ { foo: v, bar: v2, ... }, { foo: v3, bar: v4, ... }, ... ]
  * @returns - { foo: [[i, v], [i+1, v2], ...], bar: [[i, v3], [i+1, v4], ...], ... }
  */
-const processStatsData = rawData => {
+export const processStatsData = rawData => {
   if ((rawData ?? []).length === 0) {
     return null;
   }
@@ -44,7 +44,7 @@ const processStatsData = rawData => {
  * @param {*} stats - { [i, value], [i+1, value2], ...}
  * @returns float maximum value
  */
-const getStatsMax = stats => {
+export const getStatsMax = stats => {
   let found_maximum = 0; // Chart always starts at 0
   for (const index in stats) {
     const stat = stats[index][1]; // get the value

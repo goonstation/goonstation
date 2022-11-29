@@ -58,7 +58,7 @@
 /obj/machinery/optable/proc/check_victim()
 	if(locate(/mob/living/carbon/human, src.loc))
 		var/mob/M = locate(/mob/living/carbon/human, src.loc)
-		if(M.hasStatus("resting"))
+		if(M.hasStatus("resting") || M.traitHolder.hasTrait("training_medical"))
 			src.victim = M
 			icon_state = "table2-active"
 			return 1
