@@ -61,6 +61,8 @@
 
 /obj/machinery/recharge_station/ex_act(severity)
 	src.go_out()
+	if (severity > 1 && src.conversion_chamber) //syndie version is a little tougher
+		return
 	return ..(severity)
 
 /obj/machinery/recharge_station/attack_hand(mob/user)
