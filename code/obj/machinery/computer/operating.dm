@@ -63,6 +63,7 @@
 
 /obj/machinery/computer/operating/ui_data(mob/user)
 	. = list()
+	.["occupied"] = istype(src.victim)
 	if(!src.victim)
 		return
 	var/datum/color/blood_color_value = new()
