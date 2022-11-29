@@ -51,6 +51,8 @@
 	var/formaldehyde_tolerance = 25
 	///specifiy strong or weak tk powers. Weak for poltergeists.
 	var/weak_tk = FALSE
+	///can the wraith hear ghosts? Toggleable with a verb/proc
+	var/hearghosts = TRUE
 
 	var/datum/movement_controller/movement_controller
 
@@ -113,6 +115,7 @@
 		src.UpdateName()
 
 		get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_mob(src)
+		src.verbs += /mob/living/intangible/wraith/proc/silence_ghosts
 
 	is_spacefaring()
 		return !density
@@ -777,3 +780,15 @@
 			new/datum/objective/specialist/wraith/survive(null, traitor)
 		if(3)
 			new/datum/objective/specialist/wraith/flawless(null, traitor)
+
+//hearghosts is checked in deadsay.dm and chatprocs.dm
+/mob/living/intangible/wraith/proc/silence_ghosts()
+	set category = "Wraith"
+	name = "Silence ghosts"
+
+	if (src.hearghosts)
+		src.hearghosts = FALSE
+		boutput(src, "<span class='notice'>No longer hearing the whispers of the dead</span>")
+	else
+		src.hearghosts = TRUE
+		boutput(src, "<span class='notice'>Now hearing the whispers of the dead</span>")

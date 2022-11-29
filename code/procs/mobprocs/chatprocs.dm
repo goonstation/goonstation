@@ -264,6 +264,10 @@
 
 		if (istype(M,/mob/dead/target_observer/hivemind_observer)) continue
 		if (istype(M,/mob/dead/target_observer/mentor_mouse_observer)) continue
+		if (iswraith(M))
+			var/mob/living/intangible/wraith/the_wraith = M
+			if (!the_wraith.hearghosts)
+				continue
 
 		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/seanceghost))
 			if(chat_text && !M.client.preferences.flying_chat_hidden)
