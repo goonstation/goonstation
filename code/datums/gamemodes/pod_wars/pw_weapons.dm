@@ -16,26 +16,26 @@
 	var/team_num = 0	//1 is NT, 2 is Syndicate
 
 	shoot(var/target,var/start,var/mob/user)
-		if (canshoot())
+		if (canshoot(user))
 			if (team_num)
 				if (team_num == get_pod_wars_team_num(user))
 					return ..(target, start, user)
 				else
 					boutput(user, "<span class='alert'>You don't have to right DNA to fire this weapon!</span><br>")
-					playsound(get_turf(user), "sound/machines/buzz-sigh.ogg", 20, 1)
+					playsound(get_turf(user), 'sound/machines/buzz-sigh.ogg', 20, 1)
 
 					return
 			else
 				return ..(target, start, user)
 
 	shoot_point_blank(atom/target, mob/user, second_shot)
-		if (canshoot())
+		if (canshoot(user))
 			if (team_num)
 				if (team_num == get_pod_wars_team_num(user))
 					return ..(target, user)
 				else
 					boutput(user, "<span class='alert'>You don't have to right DNA to fire this weapon!</span><br>")
-					playsound(get_turf(user), "sound/machines/buzz-sigh.ogg", 20, 1)
+					playsound(get_turf(user), 'sound/machines/buzz-sigh.ogg', 20, 1)
 
 					return
 			else
@@ -148,7 +148,7 @@
 	stamina_damage = 25
 	stamina_cost = 10
 	stamina_crit_chance = 40
-	pickup_sfx = "sound/items/blade_pull.ogg"
+	pickup_sfx = 'sound/items/blade_pull.ogg'
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 
 	New()
@@ -167,7 +167,7 @@
 	alt_det_time = 60
 	item_state = "fragnade"
 	is_syndicate = 0
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "energy_stinger1"
 	var/datum/projectile/custom_projectile_type = /datum/projectile/laser/blaster/blast
 	var/pellets_to_fire = 10
@@ -175,7 +175,7 @@
 	prime()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, "sound/weapons/grenade.ogg", 25, 1)
+			playsound(T, 'sound/weapons/grenade.ogg', 25, 1)
 			var/datum/projectile/special/spreader/uniform_burst/circle/PJ = new(T)
 			PJ.pellets_to_fire = src.pellets_to_fire
 			if(src.custom_projectile_type)
@@ -186,7 +186,7 @@
 			if (istype(L))
 
 				// var/datum/projectile/P = new PJ.spread_projectile_type		//dummy projectile to get power level
-				L.TakeDamage("chest", 0, ((initial(custom_projectile_type.power)/4)*pellets_to_fire)/L.get_ranged_protection(), 0, DAMAGE_BURN)
+				L.TakeDamage("chest", 0, ((initial(custom_projectile_type.damage)/4)*pellets_to_fire)/L.get_ranged_protection(), 0, DAMAGE_BURN)
 				L.emote("twitch_v")
 			else
 				shoot_projectile_ST(get_turf(src), PJ, get_step(src, NORTH))
@@ -211,13 +211,13 @@
 	alt_det_time = 60
 	item_state = "fragnade"
 	is_syndicate = 0
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "concussion1"
 
 	prime()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, "sound/weapons/conc_grenade.ogg", 90, 1)
+			playsound(T, 'sound/weapons/conc_grenade.ogg', 90, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
 			O.anchored = 1
 			O.name = "Explosion"

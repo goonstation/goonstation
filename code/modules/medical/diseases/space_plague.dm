@@ -2,7 +2,7 @@
 	name = "Space Plague"
 	max_stages = 3
 	spread = "Non-Contagious"
-	cure = "Incurable"
+	cure = "Mercury"
 	associated_reagent = "rat_venom"
 	affected_species = list("Human")
 

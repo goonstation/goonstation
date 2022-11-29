@@ -150,7 +150,7 @@
 			"hasPen" = P
 		)
 
-	remove_from_attached()
+	remove_from_attached(do_loc = TRUE)
 		src.removeTypeLabel()
 		. = ..()
 

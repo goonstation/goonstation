@@ -18,7 +18,8 @@
 	icon_state = "camera"
 	item_state = "electropack"
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | EXTRADELAY | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | EXTRADELAY | CONDUCT
+	c_flags = ONBELT
 	m_amt = 2000
 	throwforce = 5
 	throw_speed = 4
@@ -95,11 +96,11 @@
 		if (user.find_in_hand(src) && user.mind && user.mind.special_role == ROLE_SPY_THIEF) // No metagming this
 			if (!src.flash_mode)
 				user.show_text("You use the secret switch to set the camera to flash mode.", "blue")
-				playsound(user, "sound/items/pickup_defib.ogg", 100, 1)
+				playsound(user, 'sound/items/pickup_defib.ogg', 100, 1)
 				src.icon_state = "camera_flash"
 			else
 				user.show_text("You use the secret switch to set the camera to take photos.", "blue")
-				playsound(user, "sound/items/putback_defib.ogg", 100, 1)
+				playsound(user, 'sound/items/putback_defib.ogg', 100, 1)
 				src.icon_state = "camera"
 			src.flash_mode = !src.flash_mode
 			src.UpdateIcon()
@@ -143,7 +144,7 @@
 		var/mob/M = target
 		SEND_SIGNAL(src, COMSIG_CELL_USE, 25)
 		var/blind_success = M.apply_flash(30, 8, 0, 0, 0, rand(0, 1), 0, 0, 100, 70, disorient_time = 30)
-		playsound(src, "sound/weapons/flash.ogg", 100, 1)
+		playsound(src, 'sound/weapons/flash.ogg', 100, 1)
 		flick("camera_flash-anim", src)
 		// Log entry.
 		var/blind_msg_target = "!"

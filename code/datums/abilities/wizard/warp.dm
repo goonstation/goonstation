@@ -9,9 +9,9 @@
 	offensive = 1
 	restricted_area_check = 1
 	sticky = 1
-	voice_grim = "sound/voice/wizard/WarpGrim.ogg"
-	voice_fem = "sound/voice/wizard/WarpFem.ogg"
-	voice_other = "sound/voice/wizard/WarpLoud.ogg"
+	voice_grim = 'sound/voice/wizard/WarpGrim.ogg'
+	voice_fem = 'sound/voice/wizard/WarpFem.ogg'
+	voice_other = 'sound/voice/wizard/WarpLoud.ogg'
 	maptext_colors = list("#5cde24", "#167935", "#084623", "#0167935")
 
 	cast(mob/target)
@@ -33,14 +33,14 @@
 
 		if (target.traitHolder.hasTrait("training_chaplain"))
 			boutput(holder.owner, "<span class='alert'>[target] has divine protection from magic.</span>")
-			playsound(target.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
+			playsound(target.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
 			target.visible_message("<span class='alert'>The spell fails to work on [target]!</span>")
 			JOB_XP(target, "Chaplain", 2)
 			return
 
 		if (iswizard(target))
 			target.visible_message("<span class='alert'>The spell fails to work on [target]!</span>")
-			playsound(target.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
+			playsound(target.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
 			return 1
 
 		var/telerange = 10
@@ -63,7 +63,7 @@
 		boutput(target, "<span class='notice'>You are caught in a magical warp field!</span>")
 		animate_blink(target)
 		target.visible_message("<span class='alert'>[target] is warped away!</span>")
-		playsound(target.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
+		playsound(target.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
 		var/turf/destination = pick(randomturfs)
 		logTheThing(LOG_COMBAT, holder.owner, "warped [constructTarget(target,"combat")] from [log_loc(target)] to [log_loc(destination)].")
 		target.set_loc(destination)

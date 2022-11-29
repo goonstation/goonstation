@@ -123,7 +123,7 @@
 			else if (ishuman(HH))
 				if (isturf(M.loc) && isturf(HH.loc))
 					if (!HH.disease_resistance_check("/datum/ailment/disease/lycanthropy","Lycanthropy"))
-						HH.make_werewolf(1)
+						HH.make_werewolf()
 						HH.full_heal()
 						HH.setStatus("weakened", 15 SECONDS)
 						HH.werewolf_transform() // Not really a fan of this. I wish werewolves all suffered from lycanthropy and that should be how you pass it on, but w/e

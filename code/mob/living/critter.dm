@@ -34,6 +34,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 	var/can_throw = 0
 	var/can_choke = 0
 	var/in_throw_mode = 0
+	var/health_brute = null
+	var/health_burn = null
+	var/health_brute_vuln = null
+	var/health_burn_vuln = null
 
 	var/can_help = 0
 	var/can_grab = 0
@@ -136,6 +140,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 			if (abilityHolder)
 				abilityHolder.updateButtons()
 
+		#ifdef NO_CRITTERS
+		START_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
+
 	disposing()
 		if(organHolder)
 			organHolder.dispose()
@@ -179,8 +187,8 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 	///enables mob ai that was disabled by a hibernation task
 	proc/wake_from_hibernation()
-		if(src.is_npc)
-			src.ai?.enabled = TRUE
+		if(src.is_npc && !src.client)
+			src.ai?.enable()
 			src.last_hibernation_wake_tick = TIME
 			src.registered_area?.registered_mob_critters -= src
 			src.registered_area = null
@@ -1018,7 +1026,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 							src.changeStatus("paralysis", 3 SECONDS)
 							src.changeStatus("weakened", 4 SECONDS)
 							container.visible_message("<span class='alert'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
-							playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+							playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 							var/wiggle = 6
 							while(wiggle > 0)
 								wiggle--
@@ -1205,6 +1213,55 @@ ABSTRACT_TYPE(/mob/living/critter)
 	proc/on_wake()
 		return
 
+	//the following procs are used to make transitioning from /obj/critter to /mob/living/critter easier. If you don't have to use them, you probably shouldn't.
+
+	/// Used for generic critter mobAI - targets returned from this proc will be chased and attacked. Return a list of potential targets, one will be picked based on distance.
+	proc/seek_target(var/range = 5)
+		. = list()
+		//default behaviour, return all alive, tangible, not-our-type mobs in range
+		for (var/mob/living/C in hearers(range, src))
+			if (isintangible(C)) continue
+			if (isdead(C)) continue
+			if (istype(C, src.type)) continue
+			. += C
+
+	/// Used for generic critter mobAI - targets returned from this proc will be chased and scavenged. Return a list of potential targets, one will be picked based on distance.
+	proc/seek_scavenge_target(var/range = 5)
+		. = list()
+		for (var/mob/living/carbon/human/H in view(range, src))
+			if (isdead(H) && H.decomp_stage <= 3 && !H.bioHolder?.HasEffect("husk")) //is dead, isn't a skeleton, isn't a grody husk
+				. += H
+
+	/// Used for generic critter mobAI - targets returned from this proc will be chased and eaten. Return a list of potential targets, one will be picked based on distance.
+	proc/seek_food_target(var/range = 5)
+		. = list()
+		for (var/obj/item/reagent_containers/food/snacks/S in view(range, src))
+			. += S
+
+	/// Used for generic critter mobAI - override if your critter needs special attack behaviour. If you need super special attack behaviour, you'll want to create your own attack aiTask
+	proc/critter_attack(var/mob/target)
+		src.set_a_intent(INTENT_HARM)
+		src.hand_attack(target)
+		return TRUE
+
+	/// Used for generic critter mobAI - override if your critter needs special scavenge behaviour. If you need super special attack behaviour, you'll want to create your own attack aiTask
+	proc/critter_scavenge(var/mob/target)
+		src.set_a_intent(INTENT_HARM)
+		src.hand_attack(target)
+		return TRUE
+
+	/// Used for generic critter mobAI - returns TRUE when the mob is able to attack. For handling cooldowns, or other attack blocking conditions.
+	proc/can_critter_attack()
+		return can_act(src,TRUE)
+
+	/// Used for generic critter mobAI - returns TRUE when the mob is able to scavenge. For handling cooldowns, or other scavenge blocking conditions.
+	proc/can_critter_scavenge()
+		return can_act(src,TRUE)
+
+	/// Used for generic critter mobAI - returns TRUE when the mob is able to eat. For handling cooldowns, or other eat blocking conditions.
+	proc/can_critter_eat()
+		return can_act(src,TRUE)
+
 /mob/living/critter/bump(atom/A)
 	var/atom/movable/AM = A
 	if(issmallanimal(src) && src.ghost_spawned && istype(AM) && !AM.anchored)
@@ -1227,7 +1284,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 			src.set_a_intent(INTENT_HARM )
 			hud.update_intent()
 		if ("drop")
-			src.drop_item()
+			src.drop_item(null, TRUE)
 		if ("swaphand")
 			src.swap_hand()
 		if ("attackself")
@@ -1328,12 +1385,12 @@ ABSTRACT_TYPE(/mob/living/critter)
 /mob/living/critter/Logout()
 	..()
 	if (src.ai && !src.ai.enabled && src.is_npc)
-		ai.enabled = TRUE
+		ai.enable()
 
 /mob/living/critter/Login()
 	..()
 	if (src.ai?.enabled && src.is_npc)
-		ai.enabled = FALSE
+		ai.disable()
 		var/datum/targetable/A = src.abilityHolder?.getAbility(/datum/targetable/ai_toggle)
 		A?.updateObject()
 
@@ -1351,7 +1408,8 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 	New()
 		..()
 		src.reagents = null
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT, src, 100)
+		remove_lifeprocess(/datum/lifeprocess/radiation)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_COLDPROT, src, 100)
 
@@ -1362,3 +1420,6 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 
 	vomit()
 		return
+
+	isBlindImmune()
+		return TRUE

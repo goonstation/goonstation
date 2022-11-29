@@ -5,7 +5,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 	icon = 'icons/obj/robot_parts.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "buildpipe"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	override_attack_hand = 0
 	var/skin_tone = "#FFFFFF"
 	var/slot = null // which part of the person or robot suit does it go on???????
@@ -303,7 +304,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 	proc/surgery(var/obj/item/I) //placeholder
 		return
 
-	proc/getMobIcon(var/lying, var/decomp_stage = 0)
+	proc/getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if(no_icon) return 0
 		var/decomp = ""
 		if (src.decomp_affected && decomp_stage)
@@ -326,12 +327,12 @@ ABSTRACT_TYPE(/obj/item/parts)
 			src.standImage = image(used_icon, "[src.slot][decomp]")
 			return standImage
 
-	proc/getAttachmentIcon(var/decomp_stage = 0)
+	proc/getAttachmentIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.decomp_affected && decomp_stage)
 			return src.partDecompIcon
 		return src.partIcon
 
-	proc/getHandIconState(var/lying, var/decomp_stage = 0)
+	proc/getHandIconState(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		var/decomp = ""
 		if (src.decomp_affected && decomp_stage)
 			decomp = "_decomp[decomp_stage]"
@@ -339,7 +340,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 		//boutput(world, "Attaching standing hand [src.slot][decomp]_s on decomp stage [decomp_stage].")
 		return "[src.handlistPart][decomp]"
 
-	proc/getPartIconState(var/lying, var/decomp_stage = 0)
+	proc/getPartIconState(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		var/decomp = ""
 		if (src.decomp_affected && decomp_stage)
 			decomp = "_decomp[decomp_stage]"

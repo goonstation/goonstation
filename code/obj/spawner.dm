@@ -286,7 +286,7 @@
 			// drsingh for Cannot execute null.ex act()
 			if (!isnull(O)) O.ex_act(rand(1,2))
 		playsound(src.loc, "explosion", 100, 1)
-		playsound(src.loc, "sound/effects/explosionfar.ogg", 100, 1, 14)
+		playsound(src.loc, 'sound/effects/explosionfar.ogg', 100, 1, 14)
 		SPAWN(1 SECOND)
 			animation.dispose()
 			for(var/atom/movable/overlay/A in (boom + boom_tips))

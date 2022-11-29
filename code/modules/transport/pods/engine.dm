@@ -18,6 +18,10 @@
 
 	activate()
 		..()
+		if(ship.fueltank.air_contents.toxins <= 0)
+			boutput(usr, "[ship.ship_message("No plasma located inside of the fuel tank!")]")
+			src.deactivate()
+			return
 		ship.powercapacity = src.powergenerated
 		return
 	////Warp requires recharge time
@@ -73,14 +77,14 @@
 		var/datum/movement_controller/pod/MCP = ship.movement_controller
 		if (MCP.velocity_x != 0 || MCP.velocity_y != 0)
 			boutput(usr, "[ship.ship_message("Ship must have ZERO relative velocity to calculate warp destination!")]")
-			playsound(src, "sound/machines/buzz-sigh.ogg", 50)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
 			// ready = 0
 			return
 	else if (istype(ship.movement_controller, /datum/movement_controller/tank))
 		var/datum/movement_controller/tank/MCT = ship.movement_controller
 		if (MCT.input_x != 0 || MCT.input_y != 0)
 			boutput(usr, "[ship.ship_message("Ship must have ZERO relative velocity (be stopped) to calculate warp destination!")]")
-			playsound(src, "sound/machines/buzz-sigh.ogg", 50)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
 
 	var/list/beacons = list()
 	var/list/count = list() // associative list of number of times names in beacons are used (if possibly occuring more than once)
@@ -93,6 +97,9 @@
 			beacons[W.name] = W
 #else
 	for(var/obj/warp_beacon/W in by_type[/obj/warp_beacon])
+		if(W.encrypted)
+			if(QDELETED(ship.com_system) || !(W.encrypted in ship.com_system.access_type))
+				continue
 		count[W.name]++
 		beacons["[W.name][count[W.name] == 1 ? null : " #[count[W.name]]"]"] = W
 #endif
@@ -101,7 +108,7 @@
 			count[T.name]++
 			beacons["[T.name][count[T.name] == 1 ? null : " #[count[T.name]]"]"] = T
 	wormholeQueued = 1
-	var/obj/target = beacons[tgui_input_list(usr, "Please select a location to warp to.", "Warp Computer", sortList(beacons))]
+	var/obj/target = beacons[tgui_input_list(usr, "Please select a location to warp to.", "Warp Computer", sortList(beacons, /proc/cmp_text_asc))]
 	if(!target)
 		wormholeQueued = 0
 		return
@@ -118,7 +125,7 @@
 		return
 
 	//starting warp
-	playsound(src, "sound/machines/boost.ogg", 75)
+	playsound(src, 'sound/machines/boost.ogg', 75)
 
 	//the chargeup/runway bit
 	var/warp_dir = ship.dir

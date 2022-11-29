@@ -30,8 +30,7 @@
 			if (istype(H)) H.blood_tracking_output(src.pointCost)
 			return 0 // Cooldown because spam is bad.
 
-		//M.emote("scream")
-		playsound(M.loc,"sound/effects/screech_tone.ogg", 90, 1, pitch = 1)
+		playsound(M.loc, 'sound/effects/screech_tone.ogg', 90, 1, pitch = 1)
 
 		var/obj/itemspecialeffect/screech/E = new /obj/itemspecialeffect/screech
 		E.color = "#FFFFFF"

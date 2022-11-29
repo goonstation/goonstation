@@ -11,7 +11,7 @@
 	cast(atom/target)
 		. = ..()
 		src.holder.owner.changeStatus("jamming_field", src.duration)
-		playsound(src.holder.owner, "sound/effects/radio_sweep2.ogg", 30)
+		playsound(src.holder.owner, 'sound/effects/radio_sweep2.ogg', 30)
 
 /datum/statusEffect/jamming_field
 	id = "jamming_field"

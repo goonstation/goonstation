@@ -35,7 +35,8 @@ Broken RCD + Effects
 	anchored = 0
 	var/matter = 0
 	var/max_matter = 50
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	force = 10
 	throwforce = 10
 	throw_speed = 1
@@ -179,7 +180,7 @@ Broken RCD + Effects
 					qdel(R)
 				R.tooltip_rebuild = 1
 				src.UpdateIcon()
-				playsound(src, "sound/machines/click.ogg", 50, 1)
+				playsound(src, 'sound/machines/click.ogg', 50, 1)
 				boutput(user, "\The [src] now holds [src.matter]/[src.max_matter] matter-units.")
 				return
 			else
@@ -192,7 +193,7 @@ Broken RCD + Effects
 		if (!(mode in src.modes))
 			CRASH("RCD [src] tried to switch to a mode not in its modes.")
 
-		playsound(src, "sound/effects/pop.ogg", 50, 0)
+		playsound(src, 'sound/effects/pop.ogg', 50, 0)
 
 		src.mode = mode
 
@@ -497,13 +498,13 @@ Broken RCD + Effects
 			for(var/mob/N in viewers(user, 3))
 				if(N.client && N != user && N != H)
 					N.show_message(text("<span class='alert'><B>[] shoves \the [src] down []'s throat!</B></span>", user, H), 1)
-			playsound(src, "sound/machines/click.ogg", 50, 1)
+			playsound(src, 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 2 SECONDS))
 				elecflash(src)
 				var/mob/living/carbon/wall/W = new(H.loc)
 				W.real_name = H.real_name
-				playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
-				playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				H.mind?.transfer_to(W)
 				H.gib()
 				matter -= 3
@@ -548,12 +549,12 @@ Broken RCD + Effects
 			return 0
 		src.working_on += target
 
-		playsound(src, "sound/machines/click.ogg", 50, 1)
+		playsound(src, 'sound/machines/click.ogg', 50, 1)
 		boutput(user, "You start [what]... ([issilicon(user) ? "[ammo * src.silicon_cost_multiplier] charge" : "[ammo] matter units"][delay ? ", [delay / 10] seconds" : ""])")
 
 		if ((!delay || do_after(user, delay)) && ammo_check(user, ammo))
 			ammo_consume(user, ammo)
-			playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 			shitSparks()
 			src.working_on -= target
 			return 1
@@ -570,7 +571,17 @@ Broken RCD + Effects
 			var/obj/machinery/door/airlock/T = new interim(A)
 			log_construction(user, "builds an airlock ([T])")
 
-			//if(map_setting == "COG2") T.set_dir(user.dir)
+			// makes everything around it look nice
+			T.set_dir(user.dir)
+			for (var/obj/window/auto/O in orange(1,T))
+				O.UpdateIcon()
+			for (var/obj/grille/G in orange(1,T))
+				G.UpdateIcon()
+			for (var/turf/simulated/wall/auto/W in orange(1,T))
+				W.UpdateIcon()
+			for (var/turf/simulated/wall/false_wall/F in orange(1,T))
+				F.UpdateIcon()
+
 			T.autoclose = TRUE
 
 	update_icon() //we got fancy rcds now
@@ -676,15 +687,15 @@ Broken RCD + Effects
 				var /obj/machinery/door/poddoor/blast/B = A
 				if (findtext(B.id, "rcd_built") != 0)
 					boutput(user, "Deconstructing \the [B] ([matter_remove_door])...")
-					playsound(src, "sound/machines/click.ogg", 50, 1)
+					playsound(src, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 5 SECONDS))
 						if (ammo_check(user, matter_remove_door))
-							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
+							playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 							src.shitSparks()
 							ammo_consume(user, matter_remove_door)
 							logTheThing(LOG_STATION, user, "removes a pod door ([B]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
 							qdel(A)
-							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
+							playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 				else
 					boutput(user, "<span class='alert'>You cannot deconstruct that!</span>")
 					return
@@ -692,15 +703,15 @@ Broken RCD + Effects
 				var/obj/machinery/r_door_control/R = A
 				if (findtext(R.id, "rcd_built") != 0)
 					boutput(user, "Deconstructing \the [R] ([matter_remove_door])...")
-					playsound(src, "sound/machines/click.ogg", 50, 1)
+					playsound(src, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 5 SECONDS))
 						if (ammo_check(user, matter_remove_door))
-							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
+							playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 							src.shitSparks()
 							ammo_consume(user, matter_remove_door)
 							logTheThing(LOG_STATION, user, "removes a Door Control ([A]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
 							qdel(A)
-							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
+							playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 				else
 					boutput(user, "<span class='alert'>You cannot deconstruct that!</span>")
 					return
@@ -715,10 +726,10 @@ Broken RCD + Effects
 					boutput(user, "<span class='alert'>You cannot modify that!</span>")
 			else if (istype(A, /turf/simulated/wall) && ammo_check(user, matter_create_door, 500))
 				boutput(user, "Creating Door Control ([matter_create_door])")
-				playsound(src, "sound/machines/click.ogg", 50, 1)
+				playsound(src, 'sound/machines/click.ogg', 50, 1)
 				if(do_after(user, 5 SECONDS))
 					if (ammo_check(user, matter_create_door))
-						playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
+						playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 						src.shitSparks()
 						var/idn = hangar_id_number
 						hangar_id_number++
@@ -735,10 +746,10 @@ Broken RCD + Effects
 		else if (mode == RCD_MODE_PODDOOR)
 			if (istype(A, /turf/simulated/floor) && ammo_check(user, matter_create_door, 500))
 				boutput(user, "Creating Pod Bay Door ([matter_create_door])")
-				playsound(src, "sound/machines/click.ogg", 50, 1)
+				playsound(src, 'sound/machines/click.ogg', 50, 1)
 				if(do_after(user, 5 SECONDS))
 					if (ammo_check(user, matter_create_door))
-						playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
+						playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 						src.shitSparks()
 						var/stepdir = get_dir(src, A)
 						var/poddir = turn(stepdir, 90)
@@ -798,6 +809,15 @@ Broken RCD + Effects
 			else
 				T.req_access = null
 				T.req_access_txt = null
+
+			for (var/obj/window/auto/O in orange(1,T))
+				O.UpdateIcon()
+			for (var/obj/grille/G in orange(1,T))
+				G.UpdateIcon()
+			for (var/turf/simulated/wall/auto/W in orange(1,T))
+				W.UpdateIcon()
+			for (var/turf/simulated/wall/false_wall/F in orange(1,T))
+				F.UpdateIcon()
 
 /obj/item/rcd/material
 
@@ -970,7 +990,8 @@ Broken RCD + Effects
 	opacity = 0
 	density = 0
 	anchored = 0
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	force = 10
 	throwforce = 10
 	throw_speed = 1
@@ -985,7 +1006,8 @@ Broken RCD + Effects
 	icon_state = "bad_rcd0"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "rcd"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	force = 10
 	throwforce = 10
 	throw_speed = 1
@@ -1009,7 +1031,7 @@ Broken RCD + Effects
 			boutput(user, "<span class='alert'>It's broken!</span>")
 			return
 
-		playsound(src.loc, "sound/effects/pop.ogg", 50, 0)
+		playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
 		if (mode)
 			mode = 0
 			boutput(user, "Changed mode to 'Deconstruct'")
@@ -1035,14 +1057,14 @@ Broken RCD + Effects
 
 			boutput(user, "Building [istype(A, /turf/space) ? "Floor (1)" : "Wall (3)"]...")
 
-			playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 2 SECONDS))
 				if (src.broken)
 					return
 
 				src.broken++
 				elecflash(src)
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 				for (var/turf/T in orange(1,user))
 					T.ReplaceWithWall()
@@ -1054,18 +1076,18 @@ Broken RCD + Effects
 		else if (!mode)
 			boutput(user, "Deconstructing ??? ([rand(1,8)])...")
 
-			playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user,50))
 				if (src.broken)
 					return
 
 				src.broken++
 				elecflash(src)
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 100, 1)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 100, 1)
 
 				boutput(user, "<span class='combat'>\the [src] shorts out!</span>")
 
-				logTheThing(LOG_COMBAT, user, "manages to vaporize \[[log_loc(A)]] with a halloween RCD.")
+				logTheThing(LOG_COMBAT, user, "manages to vaporize \[[log_loc(A)]] (and themselves) with a halloween RCD.")
 
 				new /obj/effects/void_break(A)
 				if (user)
@@ -1086,7 +1108,7 @@ Broken RCD + Effects
 			void_loop()
 
 	proc/void_shatter()
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 80, 1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 80, 1)
 		for (var/atom/A in range(lifespan, src))
 			if (istype(A, /turf/simulated))
 				A.pixel_x = rand(-4,4)

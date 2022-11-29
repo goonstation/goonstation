@@ -10,8 +10,8 @@
 	force = MELEE_DMG_LARGE
 
 
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 
 	can_dual_wield = 0
 
@@ -36,7 +36,7 @@
 		icon_state = "lasercannon-anim"
 
 		shoot(target, start, mob/user, POX, POY, is_dual_wield)
-			if(src.canshoot())
+			if(src.canshoot(user))
 				flick("lasercannon-fire", src)
 			. = ..()
 
@@ -78,7 +78,7 @@
 	name = "hardlight bolt"
 	sname = "needle bolt"
 	cost = 20
-	power = 35
+	damage = 35
 	dissipation_delay = 6
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_BURN
@@ -134,7 +134,7 @@
 	dissipation_rate = 0
 	projectile_speed = 12800
 	casing = /obj/item/casing/cannon
-	power = 1
+	damage = 1
 	max_range = 500
 	damage_type = D_SPECIAL
 	shot_sound = null
@@ -176,7 +176,7 @@
 	dissipation_rate = 0
 	projectile_speed = 12800
 	casing = /obj/item/casing/cannon
-	power = 125
+	damage = 125
 	implanted = /obj/item/implant/projectile/rakshasa
 	impact_image_state = "bhole-large"
 	goes_through_walls = 1
@@ -211,6 +211,9 @@
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "g11"
 	item_state = "g11"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 	has_empty_state = 1
 	var/shotcount = 0
 	var/last_shot_time = 0
@@ -267,8 +270,7 @@
 /datum/projectile/bullet/g11
 	name = "\improper Manticore round"
 	cost = 3
-	power = 60
-	ks_ratio = 1
+	damage = 60
 	hit_ground_chance = 100
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
@@ -283,11 +285,11 @@
 	small
 		shot_sound = 'sound/weapons/9x19NATO.ogg'
 		shot_volume = 50
-		power = 15
+		damage = 15
 		hit_ground_chance = 33
 
 	void
-		power = 30
+		damage = 30
 		on_hit(atom/hit, angle, obj/projectile/O)
 			var/turf/T = get_turf(hit)
 			new/obj/decal/implo(T)
@@ -300,7 +302,7 @@
 			..()
 
 	blast
-		power = 15
+		damage = 15
 		damage_type = D_KINETIC
 		hit_type = DAMAGE_BLUNT
 		on_hit(atom/hit, angle, obj/projectile/O)
@@ -387,11 +389,10 @@
 	projectile_speed = 6
 	max_range = 500
 	dissipation_rate = 0
-	power = 10
+	damage = 10
 	precalculated = 0
 	shot_volume = 100
 	shot_sound = 'sound/weapons/gyrojet.ogg'
-	ks_ratio = 1
 	impact_image_state = "bhole-small"
 
 	on_launch(obj/projectile/O)
@@ -450,10 +451,9 @@
 
 /datum/projectile/bullet/deagle50cal
 	name = "bullet"
-	power = 120
+	damage = 120
 	dissipation_delay = 5
 	dissipation_rate = 5
-	ks_ratio = 1
 	implanted = /obj/item/implant/projectile/bullet_50
 	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/deagle
@@ -490,7 +490,7 @@
 			var/msg = text("As [user] slaps the [src] onto the [target], the [target]")
 			var/currentench = I.enchant(incr)
 			var/turf/T = get_turf(target)
-			playsound(T, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
+			playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, 1)
 			if(currentench-incr <= 2 || !rand(0, currentench))
 				user.visible_message("<span class='notice'>[msg] glows with a faint light[(currentench >= 3) ? " and vibrates violently!" : "."]</span>")
 			else
@@ -560,7 +560,7 @@
 				taken_suggestion = 1
 			user.u_equip(P)
 			qdel(P)
-			playsound(src.loc, "sound/machines/paper_shredder.ogg", 90, 1)
+			playsound(src.loc, 'sound/machines/paper_shredder.ogg', 90, 1)
 			var/turf/T = pick(floors)
 			if(T)
 				new /obj/decal/cleanable/paper(T)
@@ -618,11 +618,11 @@
 
 /obj/machinery/door/unpowered/wood/lily/open()
 	if(src.locked) return
-	playsound(src.loc, "sound/voice/screams/fescream3.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+	playsound(src.loc, 'sound/voice/screams/fescream3.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 	. = ..()
 
 /obj/machinery/door/unpowered/wood/lily/close()
-	playsound(src.loc, "sound/voice/screams/robot_scream.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+	playsound(src.loc, 'sound/voice/screams/robot_scream.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 	. = ..()
 
 
@@ -645,7 +645,8 @@
 	desc = "A device used to passively measure raditation."
 	icon_state = "geiger-0"
 	item_state = "geiger"
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	throwforce = 3
 	w_class = W_CLASS_TINY
 	throw_speed = 5
@@ -687,3 +688,20 @@
 			for (var/mob/living/M in view(src, 5))
 				if (M.bioHolder)
 					M.bioHolder.AddEffect("cold_resist", 0, 45)
+
+/obj/item/firebot_deployer
+	name = "compressed firebrand firebot"
+	desc = "Deploys a firebot dedicated to putting out friendly fire(s)"
+	icon = 'icons/obj/bots/aibots.dmi'
+	icon_state = "firebot0"
+
+	New()
+		. = ..()
+		src.SafeScale(0.5, 0.5)
+
+	attack_self(mob/user)
+		if(src == user.equipped())
+			new/obj/machinery/bot/firebot/firebrand(get_turf(src))
+			user.u_equip(src)
+			qdel(src)
+		. = ..()

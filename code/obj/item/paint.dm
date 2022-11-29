@@ -24,6 +24,7 @@
 	desc = "Dispenses paint. Derp."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "paint-vend"
+	icon_fallen = "paint-fallen"
 	var/paint_color = "#ff0000"
 	var/add_orig = 0.2
 	var/paint_intensity = 0.6
@@ -112,7 +113,7 @@
 				if (0)
 					if (isscrewingtool(W))
 						user.visible_message("[user] begins to unscrew the maintenance panel.","You begin to unscrew the maintenance panel.")
-						playsound(user, "sound/items/Screwdriver2.ogg", 65, 1)
+						playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
 						if (!do_after(user, 2 SECONDS) || repair_stage)
 							return
 						repair_stage = 1
@@ -125,7 +126,7 @@
 				if (1)
 					if (ispryingtool(W))
 						user.visible_message("[user] begins to pry off the maintenance panel.","You begin to pry off the maintenance panel.")
-						playsound(user, "sound/items/Crowbar.ogg", 65, 1)
+						playsound(user, 'sound/items/Crowbar.ogg', 65, 1)
 						if (!do_after(user, 2 SECONDS) || (repair_stage != 1))
 							return
 						repair_stage = 2
@@ -142,7 +143,7 @@
 				if (2)
 					if (iswrenchingtool(W))
 						user.visible_message("[user] begins to loosen the service module bolts.","You begin to loosen the service module bolts.")
-						playsound(user, "sound/items/Ratchet.ogg", 65, 1)
+						playsound(user, 'sound/items/Ratchet.ogg', 65, 1)
 						if (!do_after(user, 3 SECONDS) || (repair_stage != 2))
 							return
 						repair_stage = 3
@@ -160,7 +161,7 @@
 							boutput(user, "<span class='alert'>You do not have enough cable to replace all of the burnt wires! (20 units required)</span>")
 							return
 						user.visible_message("[user] begins to replace the burnt wires.","You begin to replace the burnt wires.")
-						playsound(user, "sound/items/Deconstruct.ogg", 65, 1)
+						playsound(user, 'sound/items/Deconstruct.ogg', 65, 1)
 						if (!do_after(user, 100) || (repair_stage != 3))
 							return
 
@@ -177,7 +178,7 @@
 				if (5)
 					if (iswrenchingtool(W))
 						user.visible_message("[user] begins to tighten the service module bolts.","You begin to tighten the service module bolts.")
-						playsound(user, "sound/items/Ratchet.ogg", 65, 1)
+						playsound(user, 'sound/items/Ratchet.ogg', 65, 1)
 						if (!do_after(user, 3 SECONDS) || (repair_stage != 5))
 							return
 						repair_stage = 6
@@ -192,7 +193,7 @@
 				if (6)
 					if (istype(W, /obj/item/tile))
 						user.visible_message("[user] begins to replace the maintenance panel.","You begin to replace the maintenance panel.")
-						playsound(user, "sound/items/Deconstruct.ogg", 65, 1)
+						playsound(user, 'sound/items/Deconstruct.ogg', 65, 1)
 						if (!do_after(user, 5 SECONDS) || (repair_stage != 6))
 							return
 						repair_stage = 7
@@ -208,7 +209,7 @@
 				if (7)
 					if (isscrewingtool(W))
 						user.visible_message("[user] begins to secure the maintenance panel..","You begin to secure the maintenance panel.")
-						playsound(user, "sound/items/Screwdriver2.ogg", 65, 1)
+						playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
 						if (!do_after(user, 100) || (repair_stage != 7))
 							return
 						repair_stage = 8
@@ -227,7 +228,7 @@
 						SPAWN(0.8 SECONDS)
 							src.icon_state = "fallen"
 							sleep(7 SECONDS)
-							playsound(src.loc, "sound/effects/Explosion2.ogg", 100, 1)
+							playsound(src.loc, 'sound/effects/Explosion2.ogg', 100, 1)
 
 							var/obj/effects/explosion/delme = new /obj/effects/explosion(src.loc)
 							delme.fingerprintslast = src.fingerprintslast
@@ -278,7 +279,7 @@ var/list/cached_colors = new/list()
 			return FALSE
 
 		user.visible_message("<span class='notice'>[user] paints \the [target].</span>", "You paint \the [target]", "<span class='notice'>You hear a wet splat.</span>")
-		playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 40, 1)
+		playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 40, 1)
 
 		uses--
 		if(uses <= 0) overlays = null

@@ -53,6 +53,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_attack_messages,
 		/client/proc/toggle_adminwho_alerts,
 		/client/proc/toggle_rp_word_filtering,
+		/client/proc/toggle_uncool_word_filtering,
 		/client/proc/toggle_hear_prayers,
 		/client/proc/cmd_admin_plain_message,
 		/client/proc/cmd_admin_check_vehicle,
@@ -235,6 +236,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_force_mixed_blob,
 		/client/proc/toggle_force_mixed_wraith,
 		/client/proc/toggle_spooky_light_plane,
+		/datum/admins/proc/toggle_radio_audio,
 		///proc/possess,
 		/proc/possessmob,
 		/proc/releasemob,
@@ -339,6 +341,8 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/adjump,
 		/client/proc/find_all_of,
 		/client/proc/respawn_as,
+		/client/proc/whitelist_add_temp,
+		/client/proc/whitelist_toggle,
 
 		/client/proc/general_report,
 		/client/proc/map_debug_panel,
@@ -703,6 +707,10 @@ var/list/special_pa_observing_verbs = list(
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	ADMIN_ONLY
 	if (src.holder.tempmin)
+		logTheThing(LOG_ADMIN, usr, "tried to access the player panel")
+		logTheThing(LOG_DIARY, usr, "tried to access the player panel", "admin")
+		message_admins("[key_name(usr)] tried to access the player panel but was denied.")
+		alert("You need to be an actual admin to access the player panel.")
 		return
 	if (src.holder.level >= LEVEL_SA)
 		global.player_panel.ui_interact(src.mob)
@@ -924,10 +932,10 @@ var/list/fun_images = list()
 	message_admins("[key_name(src)] forced [key_name(M)] to view the rules.")
 	switch(crossness)
 		if ("A bit")
-			M << csound("sound/misc/newsting.ogg")
+			M << 'sound/misc/newsting.ogg'
 			boutput(M, "<span class='alert'><B>Here are the rules, you can read this, you have a good chance of being able to read them too.</B></span>")
 		if ("A lot")
-			M << csound("sound/misc/klaxon.ogg")
+			M << 'sound/misc/klaxon.ogg'
 			boutput(M, "<span class='alert'><B>WARNING: An admin is likely very cross with you and wants you to read the rules right fucking now!</B></span>")
 
 	// M << browse(rules, "window=rules;size=800x1000")
@@ -958,7 +966,7 @@ var/list/fun_images = list()
 	set popup_menu = 0
 	ADMIN_ONLY
 
-	var/list/respawn_types = list("Heavenly", "Demonically")
+	var/list/respawn_types = list("Heavenly", "Demonically", "Beam")
 	var/selection = tgui_input_list(src.mob, "Select Respawn type.", "Cinematic Respawn", respawn_types)
 	switch(selection)
 		if("Heavenly")
@@ -971,6 +979,9 @@ var/list/fun_images = list()
 			var/mob/living/carbon/human/M = src.mob
 			M.bioHolder.AddEffect("hell_fire", magical = 1)
 			demonic_spawn(M)
+		if("Beam")
+			src.respawn_as_self()
+			spawn_beam(src.mob)
 
 /client/proc/respawn_as(var/client/cli in clients)
 	set name = "Respawn As"
@@ -1074,7 +1085,7 @@ var/list/fun_images = list()
 	if (!length(ckeys))
 		return
 	var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
-	SortList(jobs, /proc/compareName)
+	sortList(jobs, /proc/cmp_text_asc)
 	var/datum/job/job = tgui_input_list(usr, "Select job to respawn", "Respawn As", jobs)
 	if (!job)
 		return
@@ -1481,7 +1492,7 @@ var/list/fun_images = list()
 
 	if (!msg)
 		return
-	flock_speak(src.mob, msg, null, 1)
+	flock_speak(src.mob, msg, null, speak_as_admin = TRUE)
 
 
 /client/proc/cmd_dectalk()
@@ -1625,9 +1636,7 @@ var/list/fun_images = list()
 	set desc = "Create a custom object spewing grenade"
 	ADMIN_ONLY
 
-	var/new_grenade = tgui_alert(src.mob, "Use the new thing throwing grenade?", "Cool new grenade?", list("Yes", "No"))
-	if(new_grenade == "No")
-		return
+	var/new_grenade = tgui_alert(src.mob, "Use the new thing throwing grenade?", "Cool new grenade?", list("Yes", "No")) == "Yes"
 	var/obj_input = input("Enter path of the object you want the grenade to have or enter a part of the path to search", "Enter Path") as null|text
 	if (!obj_input)
 		return
@@ -1661,6 +1670,18 @@ var/list/fun_images = list()
 	else
 		var/changelogHtml = grabResource("html/changelog.html")
 		var/data = admin_changelog:html
+		var/fontcssdata = {"
+				<style type="text/css">
+				@font-face {
+					font-family: 'Twemoji';
+					src: url('[resource("css/fonts/Twemoji.eot")]');
+					src: url('[resource("css/fonts/Twemoji.eot")]') format('embedded-opentype'),
+						 url('[resource("css/fonts/Twemoji.ttf")]') format('truetype');
+					text-rendering: optimizeLegibility;
+				}
+				</style>
+		"}
+		changelogHtml = replacetext(changelogHtml, "<!-- CSS INJECT GOES HERE -->", fontcssdata)
 		changelogHtml = replacetext(changelogHtml, "<!-- HTML GOES HERE -->", "[data]")
 		src.Browse(changelogHtml, "window=adminchanges;size=500x650;title=Admin+Changelog;", 1)
 
@@ -2104,18 +2125,18 @@ var/list/fun_images = list()
 
 	if (!client.holder.animtoggle)
 		if (ismob(A))
-			choice = tgui_input_list(src, "What do? (Atom verbs are ON)", "[A]", (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["mob"]))
+			choice = tgui_input_list(src, "What do? (Atom verbs are ON)", "[A]", (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["mob"]), start_with_search=FALSE)
 		else if (isturf(A))
-			choice = tgui_input_list(src, "What do? (Atom verbs are ON)", "[A]", (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["turf"]))
+			choice = tgui_input_list(src, "What do? (Atom verbs are ON)", "[A]", (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["turf"]), start_with_search=FALSE)
 		else
-			choice = tgui_input_list(src, "What do? (Atom verbs are ON)", "[A]", (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["obj"]))
+			choice = tgui_input_list(src, "What do? (Atom verbs are ON)", "[A]", (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["obj"]), start_with_search=FALSE)
 	else
 		if (ismob(A))
-			choice = tgui_input_list(src, "What do?", "[A]", client.holder.admin_interact_verbs["mob"])
+			choice = tgui_input_list(src, "What do?", "[A]", client.holder.admin_interact_verbs["mob"], start_with_search=FALSE)
 		else if (isturf(A))
-			choice = tgui_input_list(src, "What do?", "[A]", client.holder.admin_interact_verbs["turf"])
+			choice = tgui_input_list(src, "What do?", "[A]", client.holder.admin_interact_verbs["turf"], start_with_search=FALSE)
 		else
-			choice = tgui_input_list(src, "What do?", "[A]", client.holder.admin_interact_verbs["obj"])
+			choice = tgui_input_list(src, "What do?", "[A]", client.holder.admin_interact_verbs["obj"], start_with_search=FALSE)
 
 	var/client/C = src.client
 	switch(choice)
@@ -2220,7 +2241,7 @@ var/list/fun_images = list()
 	global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
 	message_admins("Ckey [vpnckey] added to the VPN whitelist by [src.key].")
 	logTheThing(LOG_ADMIN, src, "Ckey [vpnckey] added to the VPN whitelist.")
-	addPlayerNote(vpnckey, src.ckey, "Ckey [ckey] added to the VPN whitelist.")
+	addPlayerNote(vpnckey, src.ckey, "Ckey [vpnckey] added to the VPN whitelist.")
 	return 1
 
 /client/proc/vpn_whitelist_remove(vpnckey as text)
@@ -2289,3 +2310,68 @@ var/list/fun_images = list()
 
 	global.phrase_log?.upload_uncool_words()
 	global.phrase_log?.load()
+
+
+/client/proc/whitelist_add_temp(ckey as text)
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set name = "Whitelist Add Temp"
+	set desc = "Temporarily whitelist a ckey (for this round only)"
+	ADMIN_ONLY
+	DENY_TEMPMIN
+
+	ckey = ckey(ckey)
+	if(!ckey)
+		return
+
+	if(isnull(global.whitelistCkeys))
+		global.whitelistCkeys = list()
+	global.whitelistCkeys += ckey
+
+
+/client/proc/whitelist_toggle()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	set name = "Toggle Whitelist"
+	set desc = "Toggle the server whitelist on or off"
+	ADMIN_ONLY
+	DENY_TEMPMIN
+
+	var/current_status = config.whitelistEnabled ? "ON" : "OFF"
+	if(!config.whitelistEnabled && config.baseWhitelistEnabled)
+		if(config.roundsLeftWithoutWhitelist == 0)
+			current_status += " (will be enabled next round)"
+		else
+			current_status += " (will be enabled in [config.roundsLeftWithoutWhitelist] rounds)"
+
+	if(tgui_alert(src, "The whitelist is currently [current_status]. Are you sure you want to change that?", "Toggle whitelist?", list("Yes", "No")) != "Yes")
+		return
+
+	if(config.whitelistEnabled)
+		var/rounds_duration = 0
+		if(config.baseWhitelistEnabled)
+			rounds_duration = tgui_input_number(src, "How many rounds should the whitelist be disabled for? (0 = just current round)", "Whitelist duration", 0, 10, 0)
+		if(isnull(rounds_duration))
+			return
+		if(rounds_duration)
+			message_admins("[src] has disabled the whitelist for [rounds_duration] round\s.")
+			logTheThing(LOG_ADMIN, src, null, "Disabled the whitelist for [rounds_duration] round\s.")
+			world.save_intra_round_value("whitelist_disabled", rounds_duration)
+		else
+			message_admins("[src] has disabled the whitelist for the rest of the round.")
+			logTheThing(LOG_ADMIN, src, null, "Disabled the whitelist for the rest of the round.")
+		config.whitelistEnabled = FALSE
+		config.roundsLeftWithoutWhitelist = rounds_duration
+	else
+		var/kick_existing = tgui_alert(src, "Do you want to kick all players who are not whitelisted?", "Kick non-whitelisted players?", list("Yes", "No")) == "Yes"
+		config.whitelistEnabled = TRUE
+		config.roundsLeftWithoutWhitelist = 0
+		if(kick_existing)
+			for(var/client/C in clients)
+				if(C.holder || (C in global.whitelistCkeys))
+					continue
+				boutput(C, "<span class='alert' style='font-size: 2.5em;'>You have been kicked from the server because the whitelist got enabled and you are not whitelisted.</span>")
+				del(C)
+		message_admins("[src] has enabled the whitelist [kick_existing ? "and kicked all non-whitelisted players" : ""]")
+		logTheThing(LOG_ADMIN, src, null, "Enabled the whitelist [kick_existing ? "and kicked all non-whitelisted players" : ""]")
+		world.save_intra_round_value("whitelist_disabled", 0)
+
+	set_station_name(src.mob, manual=FALSE, name=station_name)

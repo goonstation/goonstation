@@ -16,7 +16,7 @@
 	if (ON_COOLDOWN(src, "service_bell", 1.5 SECONDS))
 		return
 	src.visible_message("<span class='notice'><b>[user]</b> rings \the [src]!</span>")
-	playsound(src, "sound/effects/bell_ring.ogg", 30, 0)
+	playsound(src, 'sound/effects/bell_ring.ogg', 30, 0)
 
 /obj/item/bell/attack_self(mob/user as mob)
 	src.attack_hand(user)

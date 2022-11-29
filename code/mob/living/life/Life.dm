@@ -2,8 +2,8 @@
 	var/mob/living/owner
 	var/last_process = 0
 
-	var/const/tick_spacing = 20 //This should pretty much *always* stay at 20, for it is the one number that all do-over-time stuff should be balanced around
-	var/const/cap_tick_spacing = 100 //highest TIME allowance between ticks to try to play catchup with realtime thingo
+	var/const/tick_spacing = LIFE_PROCESS_TICK_SPACING //This should pretty much *always* stay at 20, for it is the one number that all do-over-time stuff should be balanced around
+	var/const/cap_tick_spacing = LIFE_PROCESS_CAP_TICK_SPACING //highest TIME allowance between ticks to try to play catchup with realtime thingo
 
 	var/mob/living/carbon/human/human_owner = null
 	var/mob/living/silicon/hivebot/hivebot_owner = null
@@ -98,7 +98,7 @@
 		return thermal_protection
 
 	proc/get_rad_protection()
-		return clamp(GET_ATOM_PROPERTY(src, PROP_MOB_RADPROT), 0, 100)
+		return (tanh(0.02*(GET_ATOM_PROPERTY(src, PROP_MOB_RADPROT_EXT)+GET_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT)))**2)
 
 	proc/get_chem_protection()
 		return clamp(GET_ATOM_PROPERTY(src, PROP_MOB_CHEMPROT), 0, 100)
@@ -137,6 +137,7 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/viruses)
 	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/radiation)
 
 /mob/living/carbon/human/New()
 	..()
@@ -160,6 +161,7 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/viruses)
 	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/radiation)
 
 /mob/living/carbon/cube/New()
 	..()
@@ -172,6 +174,7 @@
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/radiation)
 
 /mob/living/silicon/ai/New()
 	..()
@@ -261,7 +264,7 @@
 		//Regular Trait updates
 		if(src.traitHolder)
 			for(var/id in src.traitHolder.traits)
-				var/obj/trait/O = src.traitHolder.traits[id]
+				var/datum/trait/O = src.traitHolder.traits[id]
 				O.onLife(src, life_mult)
 
 		update_icons_if_needed()
@@ -410,9 +413,6 @@
 		hud.update_environment()
 		hud.update_health()
 		hud.update_tools()
-
-	if (src.client)
-		src.updateStatic()
 
 /mob/living/silicon/drone/Life(datum/controller/process/mobs/parent)
 	if (..(parent))

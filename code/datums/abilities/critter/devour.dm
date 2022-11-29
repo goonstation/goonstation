@@ -39,7 +39,7 @@
 			logTheThing(LOG_COMBAT, ownerMob, "devours [constructTarget(target,"combat")].")
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span class='alert'><B>[owner] devours [target]!</B></span>", 1)
-			playsound(ownerMob, "sound/voice/burp_alien.ogg", 50, 0)
+			playsound(ownerMob, 'sound/voice/burp_alien.ogg', 50, 0)
 			ownerMob.health = ownerMob.max_health
 			if (target == owner)
 				boutput(owner, "<span class='success'>Good. Job.</span>")

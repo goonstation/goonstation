@@ -1,9 +1,11 @@
 
+// aloe wuz here
+
 /*
  * 90 101 87 97 107 97 39 115 83 116 117 102 102
  */
 
-//foo 45: bodacious grandiose bargaloo mambo prime preceed wow github cdn sub jekyll docs rsc ci2 rename profile rat
+//foo 46: bodacious grandiose bargaloo mambo prime preceed wow github cdn sub jekyll docs rsc ci2 rename profile rat tgui
 
 
 /* 514 checklist
@@ -12,6 +14,8 @@
 	particle abuse
 */
 
+// playsound\(([^,]*), "(sound/[^\[]+)"
+// playsound($1, '$2'
 // Greek Adventurezone Thingy
 
 /turf/unsimulated/greek/

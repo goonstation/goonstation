@@ -46,7 +46,7 @@
 			logTheThing(LOG_COMBAT, ownerMob, "zombifies [constructTarget(target,"combat")].")
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span class='alert'><B>[owner] successfully infected [target]!</B></span>", 1)
-			playsound(ownerMob, "sound/impact_sounds/Flesh_Crush_1.ogg", 50, 0)
+			playsound(ownerMob, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, 0)
 			ownerMob.health = ownerMob.max_health
 
 			target.TakeDamageAccountArmor("head", 30, 0, 0, DAMAGE_CRUSH)

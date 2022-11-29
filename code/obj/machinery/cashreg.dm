@@ -18,7 +18,7 @@
 			W = W:ID_card
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [anchored ? "unbolts the [src] from" : "secures the [src] to"] the floor.")
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 80, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 80, 1)
 			src.anchored = !src.anchored
 		if (istype(W, /obj/item/card/id))
 			var/obj/item/card/id/card = W

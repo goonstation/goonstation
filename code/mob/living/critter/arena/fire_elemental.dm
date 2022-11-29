@@ -4,7 +4,7 @@
 	desc = "You can't tell if this person is on fire, or made of it. Or both."
 	density = 1
 	icon_state = "fire_elemental"
-	custom_gib_handler = /proc/gibs
+	custom_gib_handler = /proc/fire_elemental_gibs
 	hand_count = 3
 	can_throw = 1
 	can_grab = 1
@@ -16,7 +16,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 1, pitch = 0.5, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 1, pitch = 0.5, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] wails!</span></b>"
 
 		return null
@@ -36,7 +36,7 @@
 		..()
 		var/datum/handHolder/HH = hands[3]
 		HH.name = "control of fire"
-		HH.limb = new /datum/limb/gun/fire_elemental
+		HH.limb = new /datum/limb/gun/kinetic/fire_elemental
 		HH.icon_state = "fire_essence"
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.limb_name = "fire essence"
@@ -68,9 +68,9 @@
 		return(max(..(), 80))
 
 	death(var/gibbed)
+		playsound(src.loc, 'sound/impact_sounds/burn_sizzle.ogg', 100, 1)
 		..(gibbed, 0)
-		playsound(src.loc, "sound/impact_sounds/burn_sizzle.ogg", 100, 1)
-		make_cleanable(/obj/decal/cleanable/ash,src.loc)
 		if (!gibbed)
+			make_cleanable(/obj/decal/cleanable/ash,src.loc)
 			ghostize()
 			qdel(src)

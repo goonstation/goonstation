@@ -34,7 +34,7 @@
 			var/kicktype = pick("kick", "roundhouse", "thrust")
 			ow.visible_message("<span class='alert'><B>[ow.name] [kickverb] [target] with a powerful [kicktype]!</B></span>")
 
-			playsound(ow.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+			playsound(ow.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 
 			ow.changeStatus("stunned", 1 SECOND)
 			ow.changeStatus("weakened", 1 SECOND)

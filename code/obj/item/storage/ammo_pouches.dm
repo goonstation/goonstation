@@ -56,6 +56,11 @@
 		icon_state = "ammopouch-double"
 		spawn_contents = list(/obj/item/ammo/bullets/nine_mm_NATO = 5)
 
+	veritate
+		name = "PDW magazine pouch"
+		icon_state = "ammopouch-double"
+		spawn_contents = list(/obj/item/ammo/bullets/veritate = 5)
+
 
 	powercell_medium
 		name = "power cell pouch"
@@ -116,8 +121,11 @@
 		spawn_contents = list(/obj/item/old_grenade/stinger = 6)
 
 	incendiary
-		name = "incendiary grenade pouch"
-		spawn_contents = list(/obj/item/chem_grenade/incendiary = 6)
+		name = "incendiary supplies pouch"
+		can_hold = list(/obj/item/old_grenade, /obj/item/chem_grenade, /obj/item/firebot_deployer)
+		spawn_contents = list(/obj/item/chem_grenade/incendiary = 3,
+		/obj/item/chem_grenade/very_incendiary = 2,
+		/obj/item/firebot_deployer = 1)
 
 	high_explosive
 		name = "high explosive grenade pouch"
@@ -257,6 +265,15 @@
 	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/beartrap = 4)
 
+/obj/item/storage/landmine_pouch
+	name = "landmine pouch"
+	desc = "A large pouch for keeping your highly unethical landmines in."
+	icon_state = "ammopouch-large"
+	w_class = W_CLASS_SMALL
+	slots = 3
+	does_not_open_in_pocket = 0
+	spawn_contents = list(/obj/random_item_spawner/landmine/surplus = 3)
+
 /obj/item/storage/pouch/highcap
 	name = "tactical pouch"
 	desc = "A large pouch for carrying multiple miscellaneous things at once."
@@ -275,7 +292,7 @@
 	slots = 4
 	does_not_open_in_pocket = 0
 	spawn_contents = list(
-		/obj/item/old_grenade/sawfly = 3,
+		/obj/item/old_grenade/sawfly/firsttime = 3,
 		/obj/item/remote/sawflyremote
 	)
 

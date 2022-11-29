@@ -8,6 +8,7 @@
 	name = "spy_thief"
 	config_tag = "spy_theft"
 
+	antag_token_support = TRUE
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_TRAITOR)
 	var/const/waittime_l = 600	// Minimum after round start to send threat information to printer
@@ -34,11 +35,11 @@
 	var/list/organ_bounties = list()				// Things that belong to people that are on the inside
 	var/list/photo_bounties = list()				// Photos of people (Operates by text, because that's the only info that photos store)
 
-	var/const/organ_bounty_amt = 4
-	var/const/person_bounty_amt = 4
-	var/const/photo_bounty_amt = 4
-	var/const/station_bounty_amt = 5
-	var/const/big_station_bounty_amt = 3
+	var/organ_bounty_amt = 4
+	var/person_bounty_amt = 4
+	var/photo_bounty_amt = 4
+	var/station_bounty_amt = 5
+	var/big_station_bounty_amt = 3
 
 	var/list/possible_areas = list()
 	var/list/active_bounties = list()
@@ -293,8 +294,9 @@
 
 		//Personal bounties (items that belong to a person)
 		//Pair list, stores job for difficulty lookup
-		if (H.trinket && istype(H.trinket))
-			personal_bounties += list(list(H.trinket, H.job))
+		var/datum/deref = H?.trinket?.deref()
+		if (istype(deref, /obj/item))
+			personal_bounties += list(list(H.trinket.deref(), H.job))
 		if (H.wear_id)
 			personal_bounties += list(list(H.wear_id, H.job))
 
@@ -465,7 +467,6 @@
 	station_bounties[/obj/item/device/radio/headset/clown] = 1
 	station_bounties[/obj/item/device/radio/headset/deaf] = 1
 	station_bounties[/obj/item/device/radio/headset/miner] = 1
-	station_bounties[/obj/item/device/radio/headset/mechanic] = 1
 	station_bounties[/obj/item/device/radio/headset/security] = 2
 	station_bounties[/obj/item/device/radio/headset/command/radio_show_host] = 2
 	station_bounties[/obj/item/device/radio/headset/command/hop] = 2

@@ -13,7 +13,7 @@
 		src.targeting_ability = chair_flip_ability
 		src.update_cursor()
 
-		playsound(src.loc, "sound/effects/chair_step.ogg", 50, 1)
+		playsound(src.loc, 'sound/effects/chair_step.ogg', 50, 1)
 
 /mob/proc/end_chair_flip_targeting()
 	src.targeting_ability = null
@@ -95,7 +95,7 @@
 			var/mob/living/carbon/human/H = M
 			H.on_chair = null
 
-		playsound(M.loc, "sound/effects/flip.ogg", 50, 1)
+		playsound(M.loc, 'sound/effects/flip.ogg', 50, 1)
 		M.throw_at(target, 10, 1, throw_type = THROW_CHAIRFLIP)
 
 
@@ -126,9 +126,7 @@
 			if (check_target_immunity(M, source = src))
 				src.visible_message("<b><span class='alert'>[src] bounces off [M] harmlessly!</span></b>")
 				return
-			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
-			if (prob(25))
-				M.emote("scream")
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 
 			logTheThing(LOG_COMBAT, src, "[src] chairflips into [constructTarget(M,"combat")], [log_loc(M)].")
 			M.lastattacker = src
@@ -183,10 +181,9 @@
 		var/mob/living/M = holder.owner
 		if (M.ai && M.is_npc)
 			if(M.ai.enabled )
-				M.ai.enabled = FALSE
+				M.ai.disable()
 			else
-				M.ai.enabled = TRUE
-				M.ai.interrupt()
+				M.ai.enable()
 		else if( M.is_npc && ishuman(M) )
 			var/mob/living/carbon/human/H = M
 			H.ai_set_active(!H.ai_active)

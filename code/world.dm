@@ -131,17 +131,31 @@ var/f_color_selector_handler/F_Color_Selector
 		renderSourceHolder.render_target = "*renderSourceHolder"
 
 /proc/buildMaterialCache()
-	//material_cache
+	material_cache = list()
 	var/materialList = concrete_typesof(/datum/material)
 	for(var/mat in materialList)
 		var/datum/material/M = new mat()
 		material_cache.Add(M.mat_id)
 		material_cache[M.mat_id] = M
-	return
+
+#ifdef TRACY_PROFILER_HOOK
+/proc/prof_init()
+	var/lib
+	switch(world.system_type)
+		if(MS_WINDOWS) lib = "prof.dll"
+		if(UNIX) lib = "libprof.so"
+		else CRASH("unsupported platform")
+
+	var/init = call(lib, "init")()
+	if("0" != init) CRASH("[lib] init error: [init]")
+#endif
 
 //Called BEFORE the map loads. Useful for objects that require certain things be set during init
 /datum/preMapLoad
 	New()
+#ifdef TRACY_PROFILER_HOOK
+		prof_init()
+#endif
 #ifdef LIVE_SERVER
 		world.log = file("data/errors.log")
 #endif
@@ -164,7 +178,7 @@ var/f_color_selector_handler/F_Color_Selector
 #ifndef RUNTIME_CHECKING
 		world.log << ""
 		world.log << "========================================"
-		world.log << "\[[time2text(world.timeofday,"hh:mm:ss")]] Starting new round"
+		world.log << "\[[time2text(world.timeofday,"hh:mm:ss")]\] Starting new round"
 		world.log << "========================================"
 		world.log << ""
 #endif
@@ -185,7 +199,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 		if (config.allowRotatingFullLogs)
 			roundLog << "========================================<br>"
-			roundLog << "\[[time2text(world.timeofday,"hh:mm:ss")]] <b>Starting new round</b><br>"
+			roundLog << "\[[time2text(world.timeofday,"hh:mm:ss")]\] <b>Starting new round</b><br>"
 			roundLog << "========================================<br>"
 			roundLog << "<br>"
 			logLength += 4
@@ -247,8 +261,6 @@ var/f_color_selector_handler/F_Color_Selector
 		random_events = new /datum/event_controller()
 		Z_LOG_DEBUG("Preload", "  disease_controls")
 		disease_controls = new /datum/disease_controller()
-		Z_LOG_DEBUG("Preload", "  mechanic_controls")
-		mechanic_controls = null //A ruck kit will fill this in
 		Z_LOG_DEBUG("Preload", "  artifact_controls")
 		artifact_controls = new /datum/artifact_controller()
 		Z_LOG_DEBUG("Preload", "  mining_controls")
@@ -265,6 +277,8 @@ var/f_color_selector_handler/F_Color_Selector
 		respawn_controller = new /datum/respawn_controls()
 		Z_LOG_DEBUG("Preload", " cargo_pad_manager")
 		cargo_pad_manager = new /datum/cargo_pad_manager()
+		Z_LOG_DEBUG("Preload", " camera_coverage_controller")
+		camera_coverage_controller = new /datum/controller/camera_coverage()
 
 		Z_LOG_DEBUG("Preload", "hydro_controls set_up")
 		hydro_controls.set_up()
@@ -319,9 +333,9 @@ var/f_color_selector_handler/F_Color_Selector
 			rewardDB.Add(R.type)
 			rewardDB[R.type] = R
 
-		Z_LOG_DEBUG("Preload", "  /obj/trait")
-		for(var/A in concrete_typesof(/obj/trait)) //Creating trait objects. I hate this.
-			var/obj/trait/T = new A( )							//Sentiment shared -G
+		Z_LOG_DEBUG("Preload", "  /datum/trait")
+		for(var/A in concrete_typesof(/datum/trait))
+			var/datum/trait/T = new A()
 			traitList.Add(T.id)
 			traitList[T.id] = T
 
@@ -363,6 +377,9 @@ var/f_color_selector_handler/F_Color_Selector
 
 	//This is used by bans for checking, so we want it very available
 	apiHandler = new()
+
+	participationRecorder = new()
+	//participationRecorder = new(1) //Enable debug
 
 	//This is also used pretty early
 	Z_LOG_DEBUG("World/New", "Setting up powernets...")
@@ -523,9 +540,6 @@ var/f_color_selector_handler/F_Color_Selector
 	build_manufacturer_icons()
 	clothingbooth_setup()
 	initialize_biomes()
-#ifdef SECRETS_ENABLED
-	initialize_gallery_manager()
-#endif
 
 	Z_LOG_DEBUG("World/Init", "Loading fishing spots...")
 	global.initialise_fishing_spots()
@@ -550,6 +564,12 @@ var/f_color_selector_handler/F_Color_Selector
 	makepowernets()
 	#endif
 
+	#ifdef SECRETS_ENABLED
+	UPDATE_TITLE_STATUS("Loading gallery artwork")
+	Z_LOG_DEBUG("World/Init", "Initializing gallery manager...")
+	initialize_gallery_manager()
+	#endif
+
 	UPDATE_TITLE_STATUS("Generating terrain")
 	Z_LOG_DEBUG("World/Init", "Setting perlin noise terrain...")
 	for (var/area/map_gen/A in by_type[/area/map_gen])
@@ -557,7 +577,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 	UPDATE_TITLE_STATUS("Calculating cameras")
 	Z_LOG_DEBUG("World/Init", "Updating camera visibility...")
-	world.updateCameraVisibility(TRUE)
+	camera_coverage_controller.setup()
 
 	UPDATE_TITLE_STATUS("Preloading client data...")
 	Z_LOG_DEBUG("World/Init", "Transferring manuf. icons to clients...")
@@ -567,10 +587,11 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Setting up process scheduler...")
 	processScheduler.setup()
 
-	UPDATE_TITLE_STATUS("Reticulating splines")
+	UPDATE_TITLE_STATUS("Initializing worldgen setup")
 	Z_LOG_DEBUG("World/Init", "Initializing worldgen...")
 	initialize_worldgen()
 
+	UPDATE_TITLE_STATUS("Reticulating splines")
 	Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
 	map_settings.init()
 
@@ -579,9 +600,6 @@ var/f_color_selector_handler/F_Color_Selector
 	if(length(global.region_allocator.free_nodes) == 0)
 		global.region_allocator.add_z_level()
 	#endif
-
-	Z_LOG_DEBUG("World/Init", "Generating AI station map...")
-	ai_station_map = new
 
 	UPDATE_TITLE_STATUS("Ready")
 	current_state = GAME_STATE_PREGAME
@@ -612,7 +630,7 @@ var/f_color_selector_handler/F_Color_Selector
 	bioele_shifts_since_accident++
 	bioele_save_stats()
 
-	AuxSort(by_type[/area], /proc/compareName)
+	sortList(by_type[/area], /proc/cmp_name_asc)
 
 #ifdef PREFAB_CHECKING
 	placeAllPrefabs()
@@ -1339,7 +1357,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 				if (M?.client)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[ckey(nick)]\">[nick]</a> (Discord)</b>: <span class='message'>[game_msg]</span></span>")
-					M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
+					M.playsound_local(M, 'sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					logTheThing(LOG_ADMIN, null, "Discord: [nick] Mentor PM'd [constructTarget(M,"admin")]: [msg]")
 					logTheThing(LOG_DIARY, null, "Discord: [nick] Mentor PM'd [constructTarget(M,"diary")]: [msg]", "admin")
 					for (var/client/C)
@@ -1555,6 +1573,8 @@ var/f_color_selector_handler/F_Color_Selector
 				if (!plist["data"]) return 0
 
 				play_music_remote(json_decode(plist["data"]))
+				// trigger cooldown so radio station doesn't interrupt our cool music
+				EXTEND_COOLDOWN(global, "music", 2 MINUTES) // TODO use plist duration data if available
 				return 1
 
 			if ("delay")
@@ -1700,6 +1720,16 @@ var/f_color_selector_handler/F_Color_Selector
 				if (!playtime_response.errored && playtime_response.body)
 					response["playtime"] = playtime_response.body
 
+				var/datum/player/player = make_player(plist["ckey"])
+				if(player)
+					response["last_seen"] = player.last_seen
+				if(player.cloud_fetch())
+					for(var/kkey in player.clouddata)
+						if(kkey in list("admin_preferences", "buildmode"))
+							continue
+						response[kkey] = player.clouddata[kkey]
+					response["cloudsaves"] = player.cloudsaves
+
 				return json_encode(response)
 
 			if("profile")
@@ -1762,6 +1792,9 @@ var/f_color_selector_handler/F_Color_Selector
 
 
 /world/proc/setMaxZ(new_maxz)
+	// when calling this proc if you don't care about the actual contents of the new z-level you might want to set
+	// global.dont_init_space = TRUE before calling this proc and unset it afterwards. This will speed things up but
+	// the space filling this z-level will be somewhat broken (which you will hopefully replace with whatever it is you want to replace it with).
 	if (!isnum(new_maxz) || new_maxz <= src.maxz)
 		return src.maxz
 	for (var/zlevel = world.maxz+1; zlevel <= new_maxz; zlevel++)

@@ -120,20 +120,28 @@
 
 proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time=2 SECONDS, invisibility=INVIS_NONE, atom/movable/pointer)
 	// note that `target` can also be a turf, but byond sux and I can't declare the var as atom because areas don't have vis_contents
+	if(QDELETED(target)) return
 	var/obj/decal/point/point = new
+	if (!target.pixel_point)
+		pixel_x = target.pixel_x
+		pixel_y = target.pixel_y
+	else
+		pixel_x -= 16 - target.pixel_x
+		pixel_y -= 16 - target.pixel_y
 	point.pixel_x = pixel_x
 	point.pixel_y = pixel_y
 	point.color = color
 	point.invisibility = invisibility
-	target.vis_contents += point
-	if(pointer && GET_DIST(pointer, target) <= 10) // check so that you can't shoot points across the station
+	var/turf/target_turf = get_turf(target)
+	target_turf.vis_contents += point
+	if(pointer && GET_DIST(pointer, target_turf) <= 10) // check so that you can't shoot points across the station
 		var/matrix/M = matrix()
-		M.Translate((pointer.x - target.x)*32 - pixel_x, (pointer.y - target.y)*32 - pixel_y)
+		M.Translate((pointer.x - target_turf.x)*32 - pixel_x, (pointer.y - target_turf.y)*32 - pixel_y)
 		point.transform = M
 		animate(point, transform=null, time=2)
 	SPAWN(time)
-		if(target)
-			target.vis_contents -= point
+		if(target_turf)
+			target_turf.vis_contents -= point
 		qdel(point)
 	return point
 
@@ -147,6 +155,12 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	anchored = 1
 	density = 1
 */
+
+/obj/decal/nav_danger
+	name = "DANGER"
+	desc = "This navigational marker indicates a hazardous zone of space."
+	icon = 'icons/obj/decals/misc.dmi'
+	icon_state = "mule_dropoff"
 
 obj/decal/fakeobjects
 	layer = OBJ_LAYER
@@ -570,7 +584,7 @@ obj/decal/fakeobjects/teleport_pad
 			if (prob(5))
 				M.TakeDamage("head", 5, 0, 0, DAMAGE_BLUNT)
 				M.visible_message("<span class='alert'><b>[M]</b> hits their head on [src]!</span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1)
 
 // These used to be static turfs derived from the standard grey floor tile and thus didn't always blend in very well (Convair880).
 /obj/decal/mule

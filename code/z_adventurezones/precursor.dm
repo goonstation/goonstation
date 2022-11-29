@@ -21,14 +21,14 @@
 	sound_group = "ice_moon"
 
 /area/upper_arctic/pod1
-	name = "Outpost Theta Pod One"
+	name = "Outpost Theta Pod One Upper Level"
 	icon_state = "green"
 	sound_environment = 3
 	skip_sims = 1
 	sims_score = 30
 
 /area/lower_arctic/pod1
-	name = "Outpost Theta Pod One"
+	name = "Outpost Theta Pod One Lower Level"
 	icon_state = "green"
 	sound_environment = 3
 	skip_sims = 1
@@ -59,7 +59,7 @@
 	sims_score = 30
 
 /area/upper_arctic/mining
-	name = "Glacier Access"
+	name = "Glacier Access Upper Level"
 	icon_state = "dk_yellow"
 	sound_environment = 2
 	sound_environment = 2
@@ -67,7 +67,7 @@
 	sims_score = 30
 
 /area/lower_arctic/mining
-	name = "Glacier Access"
+	name = "Glacier Access Lower Level"
 	icon_state = "dk_yellow"
 	sound_environment = 2
 	sound_environment = 2
@@ -263,7 +263,7 @@
 
 	attackby(obj/item/W, mob/user)
 	/*	if (istype(W,/obj/item/skull)) // placeholder
-			playsound(src.loc, "sound/machines/ArtifactPre1.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/ArtifactPre1.ogg', 50, 1)
 			src.visible_message("<span class='notice'><b>Something activates inside [src]!</b></span>")
 
 			if (id)
@@ -360,14 +360,14 @@
 			var/obj/item/chilly_orb/O = W
 			if(O.id == src.id)
 				boutput(user, "<span class='notice'><b>[O] attaches neatly to [src]. Oh dear.</span>")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 60, 1)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 60, 1)
 				user.drop_item(O)
 				O.set_loc(src)
 				src.icon_state = "orb_activated"
 				src.assembled = 1
 				sleep(0.5 SECONDS)
 				src.visible_message("<span class='notice'><b>[src] makes a strange noise!</b></span>")
-				playsound(src.loc, "sound/machines/ArtifactPre1.ogg", 60, 1)
+				playsound(src.loc, 'sound/machines/ArtifactPre1.ogg', 60, 1)
 				src.ready = 1
 				return
 			else
@@ -378,8 +378,8 @@
 			sleep(0.1 SECONDS)
 			user.visible_message("<span class='alert'><b>[W] violently pops! Way to go, jerk!</span>")
 			user.drop_item(W)
-			playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 75, 1)
-			playsound(src.loc, "sound/machines/hiss.ogg", 75, 1)
+			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 75, 1)
+			playsound(src.loc, 'sound/machines/hiss.ogg', 75, 1)
 			explosion(src, src.loc, -1,-1,1,1)
 			user:emote("scream")
 			qdel(W)
@@ -458,12 +458,12 @@
 			opened = 1
 			changing_state = 1
 			active = (opened != default_state)
-			playsound(src.loc, "sound/impact_sounds/Stone_Scrape_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 50, 1)
 			src.visible_message("<b>[src] slides open.</b>")
 			flick("bluedoor_opening",src)
 			src.icon_state = "bluedoor_0"
 			set_density(0)
-			opacity = 0
+			set_opacity(0)
 			SPAWN(1.3 SECONDS)
 				changing_state = 0
 			return
@@ -478,8 +478,8 @@
 			active = (opened != default_state)
 
 			set_density(1)
-			opacity = 1
-			playsound(src.loc,"sound/impact_sounds/Stone_Scrape_1.ogg", 50, 1)
+			set_opacity(1)
+			playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 50, 1)
 			src.visible_message("<b>[src] slides shut.</b>")
 			flick("bluedoor_closing",src)
 			src.icon_state = "bluedoor_1"
@@ -571,10 +571,10 @@
 						return
 					light.enable()
 					src.animate_effect()
-					playsound(src.loc, "sound/effects/warp1.ogg", 65, 1)
+					playsound(src.loc, 'sound/effects/warp1.ogg', 65, 1)
 					src.visible_message("<span class='alert'><b>[src]</b> charges up!</span>")
 					sleep(0.5 SECONDS)
-					playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)
+					playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
 
 					var/list/lineObjs
 					lineObjs = DrawLine(src, linked_object, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
@@ -587,7 +587,7 @@
 						random_burn_damage(poorSoul, 15) // let's not be too mean
 						boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 						poorSoul.unlock_medal("HIGH VOLTAGE", 1)
-						poorSoul:Virus_ShockCure(poorSoul, 100)
+						poorSoul:Virus_ShockCure(100)
 						poorSoul:shock_cyberheart(100)
 						poorSoul:weakened += rand(1,2)*/
 						if (isdead(poorSoul) && prob(15))
@@ -667,13 +667,13 @@
 		src.active = 1
 
 		src.visible_message("<span class='notice'><b>[user] turns [src].</b></span>")
-		playsound(src.loc, "sound/effects/stoneshift.ogg", 60, 1)
+		playsound(src.loc, 'sound/effects/stoneshift.ogg', 60, 1)
 		src.icon = 'icons/obj/artifacts/puzzles.dmi'
 		src.icon_state = "column_spin"
 		sleep(1 SECOND)
 		src.icon = 'icons/obj/artifacts/artifacts.dmi'
 		src.icon_state = "precursor-6"
-		playsound(src.loc, "sound/machines/click.ogg", 60, 1)
+		playsound(src.loc, 'sound/machines/click.ogg', 60, 1)
 
 		switch(src.setting) // roll to next color
 			if("red")
@@ -803,15 +803,15 @@
 			if(src.linked_shields.len)
 				if(setting_red == target_red)
 					src.visible_message("<span class='notice'><b>[src]</b> beeps oddly.</span>")
-					playsound(src.loc,"sound/machines/twobeep.ogg",50,1)
+					playsound(src.loc, 'sound/machines/twobeep.ogg', 50,1)
 					sleep(0.2 SECONDS)
 				if(setting_green == target_green)
 					src.visible_message("<span class='notice'><b>[src]</b> beeps strangely.</span>")
-					playsound(src.loc,"sound/machines/twobeep.ogg",50,1)
+					playsound(src.loc, 'sound/machines/twobeep.ogg', 50,1)
 					sleep(0.2 SECONDS)
 				if(setting_blue == target_blue)
 					src.visible_message("<span class='notice'><b>[src] beeps curiously.</span>")
-					playsound(src.loc,"sound/machines/twobeep.ogg",50,1)
+					playsound(src.loc, 'sound/machines/twobeep.ogg', 50,1)
 					sleep(0.2 SECONDS)
 
 				Z_LOG_INFO("Adventure/Precursor", "Puzzle value: [setting_red] [setting_green] [setting_blue] ([target_red] [target_green] [target_blue])")
@@ -865,7 +865,7 @@
 				src.set_density(1)
 				src.invisibility = INVIS_NONE
 				changing_state = 1
-				playsound(src.loc, "sound/effects/shielddown.ogg", 60, 1)
+				playsound(src.loc, 'sound/effects/shielddown.ogg', 60, 1)
 				src.visible_message("<span class='notice'><b>[src] powers up!</b></span>")
 				light.enable()
 
@@ -880,7 +880,7 @@
 				src.active = 0
 				src.set_density(0)
 				src.invisibility = INVIS_ALWAYS_ISH
-				playsound(src.loc, "sound/effects/shielddown2.ogg", 60, 1)
+				playsound(src.loc, 'sound/effects/shielddown2.ogg', 60, 1)
 				src.visible_message("<span class='notice'><b>[src] powers down!</b></span>")
 				changing_state = 1
 				light.disable()
@@ -937,7 +937,7 @@
 				boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 				return
 
-			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
+			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, shock_damage)
 			boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body sending you flying!</B></span>")
 			user.unlock_medal("HIGH VOLTAGE", 1)
 			user.Virus_ShockCure(100)
@@ -997,7 +997,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (ispryingtool(W))
-			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			boutput(user, "<span class='notice'><b>You pry [src] off the wall, destroying it! You jerk!</b></span>")
 			new /obj/decal/woodclutter(src.loc)
 			new /obj/item/storage/secure/ssafe/martian(src.loc)
@@ -1281,7 +1281,8 @@
 	name = "rydberg-matter sphere"
 	icon = 'icons/obj/artifacts/puzzles.dmi'
 	icon_state = "sphere"
-	power = 75
+	damage = 60
+	stun = 15
 	cost = 75
 	sname = "rydberg-matter sphere"
 	dissipation_delay = 15
@@ -1289,7 +1290,6 @@
 	color_red = 0.1
 	color_green = 0.3
 	color_blue = 1
-	ks_ratio = 0.8
 
 	on_hit(atom/hit)
 		if (istype(hit, /turf))
@@ -1314,7 +1314,7 @@
 		elec_zap()
 
 	proc/elec_zap()
-		playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)
+		playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
 
 		var/list/lineObjs
 		for (var/mob/living/poorSoul in range(src, 5))
@@ -1333,7 +1333,7 @@
 		for (var/obj/machinery/vehicle/poorPod in range(src, 4))
 			lineObjs += DrawLine(src, poorPod, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
-			playsound(poorPod.loc, "sound/effects/elec_bigzap.ogg", 40, 0)
+			playsound(poorPod.loc, 'sound/effects/elec_bigzap.ogg', 40, 0)
 			poorPod.bullet_act(src)
 
 

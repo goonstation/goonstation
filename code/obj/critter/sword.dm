@@ -85,11 +85,11 @@
 		if (!died_already)
 			died_already = true
 			SPAWN(5 SECONDS)
-				command_announcement("<br><b><span class='alert'>The Syndicate Weapon has been eliminated.</span></b>", "Safety Update", "sound/misc/announcement_1.ogg")
+				command_announcement("<br><b><span class='alert'>The Syndicate Weapon has been eliminated.</span></b>", "Safety Update", 'sound/misc/announcement_1.ogg')
 				logTheThing(LOG_COMBAT, src, "has been defeated.")
 				message_admins("The Syndicate Weapon: Orion Retribution Device has been defeated.")
 
-			playsound(src, "sound/effects/ship_engage.ogg", 100, 1)
+			playsound(src, 'sound/effects/ship_engage.ogg', 100, 1)
 
 			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 			var/death_loc = get_center()
@@ -493,7 +493,7 @@
 
 		walk_towards(src, src.target)
 		walk(src,0)
-		playsound(get_center(), "sound/weapons/heavyioncharge.ogg", 75, 1)
+		playsound(get_center(), 'sound/weapons/heavyioncharge.ogg', 75, 1)
 
 		var/increment
 		var/turf/T
@@ -504,7 +504,7 @@
 					T = locate(src.loc.x,src.loc.y + increment,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN(15)
-						playsound(get_center(), "sound/weapons/laserultra.ogg", 100, 1)
+						playsound(get_center(), 'sound/weapons/laserultra.ogg', 100, 1)
 						tile_purge(src.loc.x + 1,src.loc.y + 1 + increment,0)
 
 			if (4)	//E
@@ -512,7 +512,7 @@
 					T = locate(src.loc.x + increment,src.loc.y,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN(15)
-						playsound(get_center(), "sound/weapons/laserultra.ogg", 100, 1)
+						playsound(get_center(), 'sound/weapons/laserultra.ogg', 100, 1)
 						tile_purge(src.loc.x + 1 + increment,src.loc.y + 1,0)
 
 			if (2)	//S
@@ -520,7 +520,7 @@
 					T = locate(src.loc.x,src.loc.y - increment,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN(15)
-						playsound(get_center(), "sound/weapons/laserultra.ogg", 100, 1)
+						playsound(get_center(), 'sound/weapons/laserultra.ogg', 100, 1)
 						tile_purge(src.loc.x + 1,src.loc.y + 1 - increment,0)
 
 			if (8)	//W
@@ -528,7 +528,7 @@
 					T = locate(src.loc.x - increment,src.loc.y,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN(15)
-						playsound(get_center(), "sound/weapons/laserultra.ogg", 100, 1)
+						playsound(get_center(), 'sound/weapons/laserultra.ogg', 100, 1)
 						tile_purge(src.loc.x + 1 - increment,src.loc.y + 1,0)
 
 		SPAWN(10)
@@ -554,7 +554,7 @@
 
 		var/spin_dir = prob(50) ? "L" : "R"
 		animate_spin(src, spin_dir, 5, 0)
-		playsound(get_center(), "sound/effects/flameswoosh.ogg", 60, 1)
+		playsound(get_center(), 'sound/effects/flameswoosh.ogg', 60, 1)
 		if(spin_dir == "L")
 			glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "gyratingEdge_L")
 		else
@@ -597,7 +597,7 @@
 		brutevuln = 0.75
 		miscvuln = 0.15
 		current_ability = "destructive_leap"
-		playsound(get_center(), "sound/effects/flame.ogg", 80, 1)
+		playsound(get_center(), 'sound/effects/flame.ogg', 80, 1)
 
 		SPAWN(2)
 			if(past_destructive_rotation == src.dir)
@@ -646,7 +646,7 @@
 		miscvuln = 0.25
 		current_ability = "heat_reallocation"
 
-		playsound(get_center(), "sound/effects/gust.ogg", 60, 1)
+		playsound(get_center(), 'sound/effects/gust.ogg', 60, 1)
 		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "heatReallocation")
 		glow.plane = PLANE_SELFILLUM
 		src.UpdateOverlays(glow, "glow")
@@ -728,7 +728,7 @@
 		brutevuln = 0.75
 		miscvuln = 0.15
 		current_ability = "destructive_flight"
-		playsound(get_center(), "sound/effects/flame.ogg", 80, 1)
+		playsound(get_center(), 'sound/effects/flame.ogg', 80, 1)
 
 		var/increment
 		var/turf/T
@@ -742,28 +742,28 @@
 						for(increment in -1 to 1)
 							T = locate(src.loc.x + 1 + increment,src.loc.y + 3,src.loc.z)
 							if(T && prob(33))
-								playsound(get_center(), "sound/effects/smoke_tile_spread.ogg", 70, 1)
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
 								tile_purge(src.loc.x + 1 + increment,src.loc.y + 3,0)
 
 					if (EAST)	//E
 						for(increment in -1 to 1)
 							T = locate(src.loc.x + 3,src.loc.y + 1 + increment,src.loc.z)
 							if(T && prob(33))
-								playsound(get_center(), "sound/effects/smoke_tile_spread.ogg", 70, 1)
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
 								tile_purge(src.loc.x + 3,src.loc.y + 1 + increment,0)
 
 					if (SOUTH)	//S
 						for(increment in -1 to 1)
 							T = locate(src.loc.x + 1 + increment,src.loc.y - 1,src.loc.z)
 							if(T && prob(33))
-								playsound(get_center(), "sound/effects/smoke_tile_spread.ogg", 70, 1)
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
 								tile_purge(src.loc.x + 1 + increment,src.loc.y - 1,0)
 
 					if (WEST)	//W
 						for(increment in -1 to 1)
 							T = locate(src.loc.x - 1,src.loc.y + 1 + increment,src.loc.z)
 							if(T && prob(33))
-								playsound(get_center(), "sound/effects/smoke_tile_spread.ogg", 70, 1)
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
 								tile_purge(src.loc.x - 1,src.loc.y + 1 + increment,0)
 				step(src, src.dir)
 				sleep(0.1 SECONDS)
@@ -783,28 +783,28 @@
 						for(increment in -1 to 1)
 							T = locate(src.loc.x + 1,src.loc.y + 3,src.loc.z)
 							if(T)
-								playsound(get_center(), "sound/effects/smoke_tile_spread.ogg", 70, 1)
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
 								tile_purge(src.loc.x + 1 + increment,src.loc.y + 3,0)
 
 					if (EAST)	//E
 						for(increment in -1 to 1)
 							T = locate(src.loc.x + 3,src.loc.y + 1,src.loc.z)
 							if(T)
-								playsound(get_center(), "sound/effects/smoke_tile_spread.ogg", 70, 1)
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
 								tile_purge(src.loc.x + 3,src.loc.y + 1 + increment,0)
 
 					if (SOUTH)	//S
 						for(increment in -1 to 1)
 							T = locate(src.loc.x + 1,src.loc.y - 1,src.loc.z)
 							if(T)
-								playsound(get_center(), "sound/effects/smoke_tile_spread.ogg", 70, 1)
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
 								tile_purge(src.loc.x + 1 + increment,src.loc.y - 1,0)
 
 					if (WEST)	//W
 						for(increment in -1 to 1)
 							T = locate(src.loc.x - 1,src.loc.y + 1,src.loc.z)
 							if(T)
-								playsound(get_center(), "sound/effects/smoke_tile_spread.ogg", 70, 1)
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
 								tile_purge(src.loc.x - 1,src.loc.y + 1 + increment,0)
 				step(src, src.dir)
 				sleep(0.1 SECONDS)
@@ -837,7 +837,7 @@
 					M.health = M.health * rand(0.1, 0.2)
 				else
 					random_burn_damage(M, 80)
-				playsound(M.loc, "sound/impact_sounds/burn_sizzle.ogg", 70, 1)
+				playsound(M.loc, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
 			else
 				if (isrobot(M))
 					M.health = M.health * rand(0.1 / dam_type, 0.2 / dam_type)
@@ -886,9 +886,9 @@
 		glow = image('icons/misc/retribution/SWORD/base_o.dmi', "beacon")
 		glow.plane = PLANE_SELFILLUM
 		src.UpdateOverlays(glow, "glow")
-		command_announcement("<br><b><span class='alert'>An unidentified long-range beacon has been detected near the station. Await further instructions.</span></b>", "Alert", "sound/vox/alert.ogg")
+		command_announcement("<br><b><span class='alert'>An unidentified long-range beacon has been detected near the station. Await further instructions.</span></b>", "Alert", 'sound/vox/alert.ogg')
 		SPAWN(2 MINUTES)
-			command_announcement("<br><b><span class='alert'>The station is under siege by the Syndicate-made object detected earlier. Survive any way possible.</span></b>", "Alert", "sound/vox/alert.ogg")
+			command_announcement("<br><b><span class='alert'>The station is under siege by the Syndicate-made object detected earlier. Survive any way possible.</span></b>", "Alert", 'sound/vox/alert.ogg')
 			transformation(0)
 
 

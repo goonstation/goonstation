@@ -118,19 +118,19 @@
 		logTheThing(LOG_COMBAT, usr, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 		SPAWN(0)
 			boutput(usr,"<span class='alert'><B>You spead the energies of the owl around you.</B></span>")
-			playsound(usr.loc, "sound/voice/animal/hoot.ogg", 100, 1)
+			playsound(usr.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
 			for(var/mob/living/carbon/human/M in range(5, usr))
 				if(M == usr)
 					continue
 				M.flash(60)
 				M.changeStatus("weakened", 5 SECONDS)
-				M.playsound_local(M.loc, "sound/voice/animal/hoot.ogg", 100, 1)
+				M.playsound_local(M.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
 
 				if(prob(1))
 					if(prob(50))
 						M.make_critter(/mob/living/critter/small_animal/bird/owl/large/hooter, M.loc)
 					else
-						playsound(M.loc, "sound/voice/animal/hoot.ogg", 100, 1)
+						playsound(M.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
 						M.gib()
 						new /mob/living/critter/small_animal/bird/owl/large/hooter(M.loc)
 					continue
@@ -166,7 +166,7 @@
 					boutput(M,"<span class='alert'><B>You hear an intense and painful hooting inside your head.</B></span>")
 					var/hooting = 0
 					while(hooting <= rand(8, 12))
-						M.playsound_local(M.loc, "sound/voice/animal/hoot.ogg", 100, 1)
+						M.playsound_local(M.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
 						if(prob(50))
 							random_brute_damage(M, rand(1,5))
 							M.flash(10)
@@ -316,5 +316,5 @@ proc/timeywimey(var/time)
 		L.set_loc(positions[L])
 		L.changeStatus("stunned", 6 SECONDS)
 		elecflash(L,power = 2)
-		playsound(L.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
+		playsound(L.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
 	return 1

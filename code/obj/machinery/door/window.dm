@@ -40,7 +40,7 @@
 		return src.Attackby(null, user)
 
 /obj/machinery/door/window/attackby(obj/item/I, mob/user)
-	if (!can_act(usr))
+	if (!can_act(user))
 		return
 	if (src.isblocked() == 1)
 		return
@@ -103,7 +103,7 @@
 /obj/machinery/door/window/Cross(atom/movable/mover)
 	if (istype(mover, /obj/projectile))
 		var/obj/projectile/P = mover
-		if (P.proj_data.window_pass)
+		if (P.proj_data?.window_pass)
 			return 1
 
 	if (get_dir(loc, mover) & dir) // Check for appropriate border.
@@ -179,14 +179,14 @@
 	src.operating = 1
 
 	flick(text("[]opening", src.base_state), src)
-	playsound(src.loc, "sound/machines/windowdoor.ogg", 100, 1)
+	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
 	src.icon_state = text("[]open", src.base_state)
 
 	SPAWN(0.8 SECONDS)
 		if (src)
 			src.set_density(0)
 			if (ignore_light_or_cam_opacity)
-				src.opacity = 0
+				src.set_opacity(0)
 			else
 				src.RL_SetOpacity(0)
 			src.update_nearby_tiles()
@@ -209,7 +209,7 @@
 	src.operating = 1
 
 	flick(text("[]closing", src.base_state), src)
-	playsound(src.loc, "sound/machines/windowdoor.ogg", 100, 1)
+	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
 	src.icon_state = text("[]", src.base_state)
 
 	src.set_density(1)

@@ -519,7 +519,7 @@ datum
 							.= 0
 				if (volume >= 50)
 					if (I.type == /obj/item/handcuffs)
-						I.setMaterial(getMaterial("silver"))
+						I.setMaterial(getMaterial("silver"), copy = FALSE)
 						holder.remove_reagent(src.id, 50)
 						.= 0
 
@@ -669,7 +669,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.changeStatus("radiation", 3 SECONDS * mult, 1)
+				M.take_radiation_dose(0.05 SIEVERTS * mult, internal=TRUE)
 				..()
 				return
 
@@ -710,7 +710,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1 )
 				if(!M) M = holder.my_atom
-				M.changeStatus("radiation", 3 SECONDS * mult, 1)
+				M.take_radiation_dose(0.075 SIEVERTS * mult, internal=TRUE)
 				..()
 				return
 
@@ -808,7 +808,7 @@ datum
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", -1 * raw_volume SECONDS)
-						playsound(L, "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
+						playsound(L, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1, pitch = 0.8)
 						. = 0
 
 		water/water_holy
@@ -845,7 +845,27 @@ datum
 						if (M.traitHolder?.hasTrait("atheist"))
 							boutput(M, "<span class='notice'>You feel insulted... and wet.</span>")
 						else
-							boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
+							if (ishuman(M))
+								var/mob/living/carbon/human/H = M
+								if(H.bioHolder?.HasEffect("blood_curse") || H.bioHolder?.HasEffect("blind_curse") || H.bioHolder?.HasEffect("weak_curse") || H.bioHolder?.HasEffect("rot_curse") || H.bioHolder?.HasEffect("death_curse"))
+									H.bioHolder.RemoveEffect("blood_curse")
+									H.bioHolder.RemoveEffect("blind_curse")
+									H.bioHolder.RemoveEffect("weak_curse")
+									H.bioHolder.RemoveEffect("rot_curse")
+									H.bioHolder.RemoveEffect("death_curse")
+									H.visible_message("[H] screams as some black smoke exits their body.")
+									H.emote("scream")
+									random_burn_damage(H, 5)
+									var/turf/T = get_turf(H)
+									if (T && isturf(T))
+										var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread/(T)
+										if (S)
+											S.set_up(5, 0, T, null, "#3b3b3b")
+											S.start()
+								else
+									boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
+							else
+								boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
 							M.take_brain_damage(0 - clamp(volume, 0, 10))
 						for (var/datum/ailment_data/disease/V in M.ailments)
 							if(prob(1))

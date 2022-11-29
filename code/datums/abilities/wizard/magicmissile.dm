@@ -7,9 +7,9 @@
 	requires_robes = 1
 	requires_being_on_turf = TRUE
 	offensive = 1
-	voice_grim = "sound/voice/wizard/MagicMissileGrim.ogg"
-	voice_fem = "sound/voice/wizard/MagicMissileFem.ogg"
-	voice_other = "sound/voice/wizard/MagicMissileLoud.ogg"
+	voice_grim = 'sound/voice/wizard/MagicMissileGrim.ogg'
+	voice_fem = 'sound/voice/wizard/MagicMissileFem.ogg'
+	voice_other = 'sound/voice/wizard/MagicMissileLoud.ogg'
 	var/base_shots = 6
 	var/datum/projectile/big_missile = new/datum/projectile/special/homing/magicmissile
 	var/datum/projectile/lil_missile = new/datum/projectile/special/homing/magicmissile/weak
@@ -62,4 +62,4 @@
 					P.mob_shooter = holder.owner
 					P.shooter = holder.owner
 
-		playsound(holder.owner.loc, "sound/effects/mag_magmislaunch.ogg", 25, 1, -1)
+		playsound(holder.owner.loc, 'sound/effects/mag_magmislaunch.ogg', 25, 1, -1)

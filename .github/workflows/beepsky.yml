@@ -5,7 +5,7 @@ name: Beepsky
 
 on:
   pull_request:
-    branches: master
+    branches: [master]
   push:
 
 jobs:
@@ -14,16 +14,16 @@ jobs:
     runs-on: ubuntu-20.04
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Cache SpacemanDMM
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: $HOME/SpacemanDMM
           key: ${{ runner.os }}-spacemandmm
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v1.3.3
+        uses: hecrj/setup-rust-action@v1.4.0
 
       - name: Install Dependencies
         run: |
@@ -51,7 +51,7 @@ jobs:
     runs-on: ubuntu-20.04
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Install Dependencies
         run: |
@@ -61,7 +61,7 @@ jobs:
           sudo apt install -o Acquire::Retries=3 libstdc++6:i386
 
       - name: Cache BYOND
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: $HOME/BYOND
           key: ${{ runner.os }}-byond
@@ -99,7 +99,7 @@ jobs:
     if: |
       ((github.event_name == 'push' && github.repository == 'goonstation/goonstation') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'goonstation/goonstation')) && !contains(github.event.head_commit.message, 'skip ci')
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
           token: '${{ secrets.ROBUDDYBOT_PAT }}'
@@ -112,7 +112,7 @@ jobs:
           sudo apt install -o Acquire::Retries=3 libstdc++6:i386
 
       - name: Cache BYOND
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: $HOME/BYOND
           key: ${{ runner.os }}-byond
@@ -128,13 +128,13 @@ jobs:
           echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
 
       - name: Cache SpacemanDMM
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: $HOME/SpacemanDMM
           key: ${{ runner.os }}-spacemandmm
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v1.3.3
+        uses: hecrj/setup-rust-action@v1.4.0
 
       - name: Install Dependencies
         run: |

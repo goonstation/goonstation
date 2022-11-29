@@ -89,7 +89,7 @@
 		if (!src) return
 		if (burnt) return
 		if (!src.on)
-			logTheThing(LOG_COMBAT, user, "lights the [src] at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "lights the [src] at [log_loc(src)].")
 			src.on = 1
 			src.hit_type = DAMAGE_BURN
 			src.force = 3
@@ -132,7 +132,7 @@
 			else
 				src.open = 1
 				src.icon_state = "sparkler_box-open"
-				playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 20, 1, -2)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 20, 1, -2)
 				boutput(user, "<span class='notice'>You snap open the child-protective safety tape on [src].</span>")
 		else
 			..()
@@ -143,7 +143,7 @@
 		else
 			src.open = 1
 			src.icon_state = "sparkler_box-open"
-			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 20, 1, -2)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 20, 1, -2)
 			boutput(user, "<span class='notice'>You snap open the child-protective safety tape on [src].</span>")
 
 	mouse_drop(atom/over_object, src_location, over_location)

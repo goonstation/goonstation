@@ -5,7 +5,7 @@
 	icon_state = "ghost"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	plane = PLANE_NOSHADOW_ABOVE
-	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER //maybe?
+	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER | MOVE_NOCLIP
 	density = 0
 	canmove = 1
 	blinded = 0
@@ -55,7 +55,7 @@
 /mob/dead/observer/click(atom/target, params, location, control)
 
 	if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
-		src.point(target)
+		src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 		if (src.in_point_mode)
 			src.toggle_point_mode()
 		return
@@ -76,7 +76,7 @@
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "clientless")
 
 
-/mob/dead/observer/point_at(var/atom/target)
+/mob/dead/observer/point_at(atom/target, var/pixel_x, var/pixel_y)
 	if (!isturf(src.loc))
 		return
 
@@ -91,7 +91,7 @@
 		point_invisibility = INVIS_NONE
 #endif
 	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
-		make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y, color="#5c00e6", invisibility=point_invisibility, pointer=src)
+		make_point(target, pixel_x=pixel_x, pixel_y=pixel_y, color="#5c00e6", invisibility=point_invisibility, pointer=src)
 
 
 #define GHOST_LUM	1		// ghost luminosity
@@ -286,7 +286,7 @@
 
 
 /mob/proc/ghostize()
-	RETURN_TYPE(/mob/dead/observer)
+	RETURN_TYPE(/mob/dead)
 	// do nothing for NPCs
 	if(src.key || src.client)
 
@@ -295,7 +295,7 @@
 			return null
 
 		// step 1: either find a ghost or make one
-		var/mob/dead/observer/our_ghost = null
+		var/mob/dead/our_ghost = null
 
 		// if we already have a ghost, just go get that instead
 		if (src.ghost && !src.ghost.disposed)
@@ -309,8 +309,9 @@
 				our_ghost.alpha = 0
 			src.ghost = our_ghost
 
-		if (!isghostrestrictedz(our_ghost.z) || (isghostrestrictedz(our_ghost.z) && (restricted_z_allowed(our_ghost, get_area(our_ghost)) || (src.client && src.client.holder)))) //TODO make restructed_z_allowed handle all of this
-			our_ghost.set_loc(get_turf(src))
+		var/turf/T = get_turf(src)
+		if (T && (!isghostrestrictedz(T.z) || restricted_z_allowed(src, T) || (src.client?.holder && !src.client.holder.tempmin)))
+			our_ghost.set_loc(T)
 		else
 			our_ghost.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 
@@ -325,9 +326,10 @@
 
 		respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[our_ghost.ckey]
-		if(istype(respawnee))
+		if(istype(respawnee) && istype(our_ghost, /mob/dead/observer)) // target observers don't have huds
 			respawnee.update_time_display()
-			our_ghost.hud?.get_join_other() // remind them of the other server
+			//var/mob/dead/observer/our_observer = our_ghost
+			//our_observer.hud?.get_join_other() // remind them of the other server
 
 		our_ghost.update_item_abilities()
 		return our_ghost
@@ -493,32 +495,12 @@
 /mob/dead/observer/Move(NewLoc, direct)
 	if(!canmove) return
 
-	if (NewLoc && isghostrestrictedz(src.z) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder && !src.client.holder.tempmin))
-		var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-		if (OS)
-			src.set_loc(OS)
-		else
-			src.z = 1
-		return OnMove()
-
-	if (!isturf(src.loc))
-		src.set_loc(get_turf(src))
-	if (NewLoc)
-		set_dir(get_dir(loc, NewLoc))
-		src.set_loc(NewLoc)
+	var/turf/NewTurf = get_turf(NewLoc)
+	if (NewLoc && isghostrestrictedz(NewTurf.z) && !restricted_z_allowed(src, NewTurf) && !(src.client && src.client.holder && !src.client.holder.tempmin))
+		var/OS = pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1))
+		src.set_loc(OS)
 		OnMove()
 		return
-
-	set_dir(direct)
-	if((direct & NORTH) && src.y < world.maxy)
-		src.y++
-	if((direct & SOUTH) && src.y > 1)
-		src.y--
-	if((direct & EAST) && src.x < world.maxx)
-		src.x++
-	if((direct & WEST) && src.x > 1)
-		src.x--
-	OnMove()
 
 	. = ..()
 
@@ -639,7 +621,7 @@
 	for (var/client/C in clients)
 		LAGCHECK(LAG_LOW)
 		// not sure how this could happen, but be safe about it
-		if (!C.mob)
+		if (!C?.mob)
 			continue
 		var/mob/M = C.mob
 		// remove some types you cannot observe
@@ -666,7 +648,7 @@
 		creatures[name] = M
 
 	var/eye_name = null
-	creatures = sortList(creatures)
+	sortList(creatures, /proc/cmp_text_asc)
 	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
 
 	if (!eye_name)
@@ -792,7 +774,7 @@
 					creatures -= name
 
 	var/eye_name = null
-	creatures = sortList(creatures)
+	sortList(creatures, /proc/cmp_text_asc)
 	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
 
 	if (!eye_name)

@@ -60,7 +60,7 @@
 	M.layer = EFFECTS_LAYER_BASE
 
 	M.visible_message("<span class='alert'>[M] takes a mighty leap towards the ceiling!</span>")
-	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
+	playsound(M.loc, 'sound/effects/bionic_sound.ogg', 50)
 
 	for(var/i = 0, i < 10, i++)
 		M.pixel_y += 4
@@ -123,7 +123,7 @@
 
 	M.visible_message("<span class='alert'>[M] takes a divine leap towards the ceiling!</span>")
 
-	playsound(M.loc, "sound/voice/heavenly.ogg", 50, 1)
+	playsound(M.loc, 'sound/voice/heavenly.ogg', 50, 1)
 
 	for(var/i = 0, i < 10, i++)
 		M.pixel_y += 4
@@ -146,7 +146,7 @@
 			shake_camera(N, 6, 16)
 			N.show_message("<span class='alert'>[M]'s basketball unleashes a brilliant flash of light!</span>", 1)
 
-	playsound(M.loc, "sound/weapons/flashbang.ogg", 50, 1)
+	playsound(M.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 
 /mob/proc/blitz_slam()
 	set category = "Spells"
@@ -205,7 +205,7 @@
 	M.layer = EFFECTS_LAYER_BASE
 
 	M.visible_message("<span class='alert'>[M] comically leaps towards the ceiling!</span>")
-	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
+	playsound(M.loc, 'sound/effects/bionic_sound.ogg', 50)
 
 	for(var/i = 0, i < 10, i++)
 		M.pixel_y += 4
@@ -231,7 +231,7 @@
 		B.item_state = "bball"
 
 	playsound(target.loc, "explosion", 50, 1)
-	playsound(target.loc, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1)
+	playsound(target.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1)
 
 
 	var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -334,7 +334,7 @@
 	M.layer = EFFECTS_LAYER_BASE
 
 	M.visible_message("<span class='alert'>[M] flies through the ceiling!</span>")
-	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
+	playsound(M.loc, 'sound/effects/bionic_sound.ogg', 50)
 
 	for(var/i = 0, i < 50, i++)
 		M.pixel_y += 6
@@ -362,7 +362,7 @@
 					N.flash(3 SECONDS)
 			sleep(0.5 SECONDS)
 	sleep(30 SECONDS)
-	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
+	playsound(M.loc, 'sound/effects/bionic_sound.ogg', 50)
 	M.layer = EFFECTS_LAYER_BASE
 	for(var/i = 0, i < 20, i++)
 		M.pixel_y -= 12
@@ -429,7 +429,8 @@
 	var/selfdestruct = 0
 	var/traitor_frequency = 0
 	var/obj/item/device/radio/origradio = null
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	item_state = "radio"
 	throwforce = 5
 	w_class = W_CLASS_SMALL

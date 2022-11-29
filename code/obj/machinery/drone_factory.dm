@@ -202,7 +202,7 @@ var/global/list/ghostdrone_candidates = list()
 			if (prob(40))
 				SPAWN(0)
 					src.shake(rand(4,6))
-				playsound(src, pick("sound/impact_sounds/Wood_Hit_1.ogg", "sound/impact_sounds/Metal_Hit_Heavy_1.ogg"), 30, 1, -3)
+				playsound(src, pick('sound/impact_sounds/Wood_Hit_1.ogg', 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'), 30, 1, -3)
 			if (prob(40))
 				var/list/sound_list = pick(ghostly_sounds, sounds_engine, sounds_enginegrump, sounds_sparks)
 				if (!sound_list.len)
@@ -270,11 +270,15 @@ var/global/list/ghostdrone_candidates = list()
 		src.working = 0
 		src.icon_state = "factory[src.factory_section]0"
 
+		if(QDELETED(src.current_assembly))
+			src.current_assembly = null
+			return
+
 		if (src.current_assembly)
 			src.current_assembly.stage = src.single_system ? 3 : src.factory_section
 			src.current_assembly.icon_state = "drone-stage[src.current_assembly.stage]"
 			src.current_assembly.set_loc(get_turf(src))
-			playsound(src, "sound/machines/warning-buzzer.ogg", 50, 1)
+			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 1)
 			src.visible_message("[src] ejects [src.current_assembly]!")
 			src.current_assembly = null
 

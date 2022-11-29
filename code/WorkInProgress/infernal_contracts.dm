@@ -90,7 +90,7 @@ proc/is_weak_rollable_contract(type)
 		H.stuttering = 120
 		H.mind?.assigned_role = "Horse"
 		H.contract_disease(/datum/ailment/disability/clumsy,null,null,1)
-		playsound(H, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, clamp(1.0 + (30 - H.bioHolder.age)/50, 0.7, 1.4))
+		playsound(H, pick('sound/voice/cluwnelaugh1.ogg','sound/voice/cluwnelaugh2.ogg','sound/voice/cluwnelaugh3.ogg'), 35, 0, 0, clamp(1.0 + (30 - H.bioHolder.age)/50, 0.7, 1.4))
 		H.change_misstep_chance(66)
 		animate_clownspell(H)
 		H.drop_from_slot(H.wear_suit)
@@ -161,7 +161,7 @@ proc/is_weak_rollable_contract(type)
 		else
 			asize++
 		acount++
-	src.playsound_local(C.loc,"sound/effects/screech.ogg", 50, 1)
+	src.playsound_local(C.loc,'sound/effects/screech.ogg', 50, 1)
 	if(C.mind)
 		shake_camera(C, 20, 16)
 		boutput(C, "<font color=red>[screamstring]</font>")
@@ -205,7 +205,7 @@ proc/is_weak_rollable_contract(type)
 		..()
 
 	attack(target, mob/user)
-		playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
+		playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			if(!isdead(C))
@@ -579,7 +579,6 @@ obj/item/contract/wrestle
 		if(!..())
 			return 0
 		SPAWN(1 DECI SECOND)
-			user.mind.special_role = "Faustian Wrestler"
 			sleep(0.1 SECONDS)
 			user.make_wrestler(1)
 			user.traitHolder.addTrait("addict") //HEH
@@ -629,7 +628,6 @@ obj/item/contract/genetic
 					user.bioHolder.AddEffect("mutagenic_field_prenerf", 0, 0, 1)
 					SPAWN(0.2 SECONDS)
 						boutput(user, "<span class='success'>You have ascended beyond mere humanity!</span>")
-						user.mind.special_role = "Genetic Demigod"
 
 		return 1
 
@@ -672,7 +670,6 @@ obj/item/contract/horse
 			user.horse()
 			user.traitHolder.addTrait("soggy")
 			boutput(user, "<span class='alert'><font size=6><B>NEIGH</b></font></span>")
-			user.mind.special_role = "Faustian Horse"
 
 		return 1
 
@@ -712,7 +709,6 @@ obj/item/contract/vampire
 		if(!..())
 			return 0
 		SPAWN(1 DECI SECOND)
-			user.mind.special_role = ROLE_VAMPIRE
 			user.make_vampire(1)
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 
@@ -849,7 +845,7 @@ obj/item/contract/greed
 					boutput(user, "<span class='notice'>What, not enough for you? Fine.</span>")
 					var/turf/T = get_turf(user)
 					if (T)
-						playsound(T, "sound/items/coindrop.ogg", 100, 1)
+						playsound(T, 'sound/items/coindrop.ogg', 30, 1)
 						new /obj/item/coin(T)
 						for (var/i = 1; i<= 8; i= i*2)
 							if (istype(get_turf(get_step(T,i)),/turf/simulated/floor))

@@ -178,6 +178,9 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	src.player = make_player(key)
 	src.player.client = src
 
+	if(config.rsc)
+		src.preload_rsc = config.rsc
+
 	if (!isnewplayer(src.mob) && !isnull(src.mob)) //playtime logging stuff
 		src.player.log_join_time()
 
@@ -310,37 +313,12 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 //vpn check (for ban evasion purposes)
 #ifdef DO_VPN_CHECKS
 	if (vpn_blacklist_enabled)
-		var/vpn_kick_string = {"
-						<!doctype html>
-						<html>
-							<head>
-								<title>VPN or Proxy Detected</title>
-							</head>
-							<body>
-								<h1>Warning: VPN or proxy connection detected</h1>
-
-                                Please disable your VPN or proxy, close the game, and rejoin.<br>
-                                <h2>Not using a VPN or proxy / Having trouble connecting?</h2>
-								If you are not using a VPN or proxy please join <a href="https://discord.com/invite/zd8t6pY">our Discord server</a> and and fill out <a href="https://dyno.gg/form/b39d898a">this form</a> for help whitelisting your account.
-							</body>
-						</html>
-					"}
 		var/is_vpn_address = global.vpn_ip_checks["[src.address]"]
 
 		// We have already checked this user this round and they are indeed on a VPN, kick em
 		if (is_vpn_address)
-			logTheThing(LOG_ADMIN, src, "[src.address] is using a vpn that they've already logged in with during this round.")
-			logTheThing(LOG_DIARY, src, "[src.address] is using a vpn that they've already logged in with during this round.", "admin")
-			message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
-			if(do_compid_analysis)
-				do_computerid_test(src) //Will ban yonder fucker in case they are prix
-				check_compid_list(src) //Will analyze their computer ID usage patterns for aberrations
-			if (src)
-				src.mob.Browse(vpn_kick_string, "window=vpnbonked")
-				sleep(3 SECONDS)
-				if (src)
-					del(src)
-				return
+			src.vpn_bonk(repeat_attempt = TRUE)
+			return
 
 		// Client has not been checked for VPN status this round, go do so, but only for relatively new accounts
 		// NOTE: adjust magic numbers here if we approach vpn checker api rate limits
@@ -355,7 +333,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 				// Successful Goonhub API query
 				else
-					var/result = dpi(data)
+					var/result = postscan(data)
 					if (result == 2 || data["whitelisted"])
 						// User is explicitly whitelisted from VPN checks, ignore
 						global.vpn_ip_checks["[src.address]"] = false
@@ -374,23 +352,9 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 						// Successful VPN check
 						// IP is a known VPN, cache locally and kick
-						else if (result || ((data["vpn"] == true || data["tor"] == true) && data["fraud_score"] > 75))
-							global.vpn_ip_checks["[src.address]"] = true
-							addPlayerNote(src.ckey, "VPN Blocker", "[src.address] attempted to connect via vpn or proxy. Info: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
-							logTheThing(LOG_ADMIN, src, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
-							logTheThing(LOG_DIARY, src, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]", "admin")
-							message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked! VPN info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]], fraud score: [data["fraud_score"]]")
-							ircbot.export_async("admin", list(key="VPN Blocker", name="[src.key]", msg="[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]], fraud score: [data["fraud_score"]]"))
-							if(do_compid_analysis)
-								do_computerid_test(src) //Will ban yonder fucker in case they are prix
-								check_compid_list(src) //Will analyze their computer ID usage patterns for aberrations
-							if (src)
-								src.mob.Browse(vpn_kick_string, "window=vpnbonked")
-								sleep(3 SECONDS)
-								if (src)
-									del(src)
-								return
-
+						else if (result || (((data["vpn"] == true) || (data["tor"] == true)) && (data["fraud_score"] > 75)))
+							vpn_bonk(data["host"], data["asn"], data["organization"], data["fraud_score"])
+							return
 						// IP is not a known VPN
 						else
 							global.vpn_ip_checks["[src.address]"] = false
@@ -493,6 +457,9 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			if (src.byond_version < 514 || src.byond_build < 1566)
 				if (tgui_alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page? Make sure to download the stable release.", "ALERT", list("Yes", "No")) == "Yes")
 					src << link("http://www.byond.com/download/")
+			if (src.byond_version >= 515)
+				if (alert(src, "Please DOWNGRADE BYOND to version 514.1589! Many things will break otherwise. Would you like to be taken to the correct download page?", "ALERT", "Yes", "No") == "Yes")
+					src << link("http://www.byond.com/download/build/514/514.1589_byond_setup.zip")
 /*
  				else
 					alert(src, "You won't be able to play without updating, sorry!")
@@ -662,6 +629,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		src.tick_lag = CLIENTSIDE_TICK_LAG_CHUNKY
 	else if (winget( src, "menu.fps_creamy", "is-checked" ) == "true")
 		src.tick_lag = CLIENTSIDE_TICK_LAG_CREAMY
+	else if (winget( src, "menu.fps_velvety", "is-checked" ) == "true")
+		src.tick_lag = CLIENTSIDE_TICK_LAG_VELVETY
 	else
 		src.tick_lag = CLIENTSIDE_TICK_LAG_SMOOTH
 
@@ -713,6 +682,9 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 				if(isnull(message_who))
 					message_admins(message)
 				else
+					var/mob/M = message_who
+					var/client/C = istype(M) ? M.client : message_who
+					message = replacetext(replacetext(message, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]")
 					boutput(message_who, message)
 	if(alert_them)
 		var/list/both_collide = ip_to_ckeys[src.address] & cid_to_ckeys[src.computer_id]
@@ -791,6 +763,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	antag_tokens = amt
 	if( cloud_available() )
 		cloud_put( "antag_tokens", amt )
+		. = TRUE
 	/*
 	var/savefile/AT = LoadSavefile("data/AntagTokens.sav")
 	if (!AT) return
@@ -798,7 +771,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	AT[ckey] << antag_tokens*/
 
 /client/proc/use_antag_token()
-	src.set_antag_tokens(--antag_tokens)
+	if( src.set_antag_tokens(--antag_tokens) )
+		logTheThing(LOG_DEBUG, src, "Antag token used. [antag_tokens] tokens remaining.")
 
 
 /client/proc/load_persistent_bank()
@@ -869,7 +843,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		return 0
 
 /client/proc/is_mentor()
-	return player.mentor
+	return player?.mentor
 
 /client/proc/can_see_mentor_pms()
 	return (src.player?.mentor || src.holder) && src.player?.see_mentor_pms
@@ -997,7 +971,28 @@ var/global/curr_day = null
 		boutput(usr, "You are being redirected to [game_server.name]...")
 		usr << link(game_server.url)
 
-
+/client/verb/download_sprite(atom/A as null|mob|obj|turf in view(1))
+	set name = "Download Sprite"
+	set desc = "Download the sprite of an object for wiki purposes. The object needs to be next to you."
+	set hidden = TRUE
+	if(!A)
+		var/datum/promise/promise = new
+		var/datum/targetable/refpicker/abil = new
+		abil.promise = promise
+		src.mob.targeting_ability = abil
+		src.mob.update_cursor()
+		A = promise.wait_for_value()
+	if(!A)
+		boutput(src, "No target selected.")
+		return
+	if(GET_DIST(src.mob, A) > 1 && !(src.holder || istype(src.mob, /mob/dead)))
+		boutput(src, "Target is too far away (it needs to be next to you).")
+		return
+	if(!src.holder && ON_COOLDOWN(src.player, "download_sprite", 30 SECONDS))
+		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src.player, "download_sprite", 0))].")
+		return
+	var/icon/icon = getFlatIcon(A)
+	src << ftp(icon, "[ckey(A.name)]_[time2text(world.realtime,"YYYY-MM-DD")].png")
 
 
 /*
@@ -1126,15 +1121,15 @@ var/global/curr_day = null
 
 				if (src.holder)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
-					M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
+					M.playsound_local(M, 'sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					boutput(src.mob, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
 				else
 					if (M.client && M.client.holder)
 						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
-						M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
+						M.playsound_local(M, 'sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					else
 						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
-						M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
+						M.playsound_local(M, 'sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					boutput(usr, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
 
 				logTheThing(LOG_MHELP, src.mob, "Mentor PM'd [constructTarget(M,"mentor_help")]: [t]")
@@ -1278,6 +1273,44 @@ var/global/curr_day = null
 
 	C.screen += M
 
+/client/proc/vpn_bonk(host, asn, organization, fraud_score, repeat_attempt = FALSE)
+	var/vpn_kick_string = {"
+				<!doctype html>
+				<html>
+					<head>
+						<title>VPN or Proxy Detected</title>
+					</head>
+					<body>
+						<h1>Warning: VPN or proxy connection detected</h1>
+
+						Please disable your VPN or proxy, close the game, and rejoin.<br>
+						<h2>Not using a VPN or proxy / Having trouble connecting?</h2>
+						If you are not using a VPN or proxy please join <a href="https://discord.com/invite/zd8t6pY">our Discord server</a> and and fill out <a href="https://dyno.gg/form/b39d898a">this form</a> for help whitelisting your account.
+					</body>
+				</html>
+			"}
+
+	if (repeat_attempt)
+		logTheThing(LOG_ADMIN, src, "[src.address] is using a vpn that they've already logged in with during this round.")
+		logTheThing(LOG_DIARY, src, "[src.address] is using a vpn that they've already logged in with during this round.", "admin")
+		message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
+	else
+		global.vpn_ip_checks["[src.address]"] = true
+		var/msg_txt = "[src.address] attempted to connect via vpn or proxy. vpn info:[host ? " host: [host]," : ""] ASN: [asn], org: [organization][fraud_score ? ", fraud score: [fraud_score]" : ""]"
+
+		addPlayerNote(src.ckey, "VPN Blocker", msg_txt)
+		logTheThing(LOG_ADMIN, src, msg_txt)
+		logTheThing(LOG_DIARY, src, msg_txt, "admin")
+		message_admins("[key_name(src)] [msg_txt]")
+		ircbot.export_async("admin", list(key="VPN Blocker", name="[src.key]", msg=msg_txt))
+	if(do_compid_analysis)
+		do_computerid_test(src) //Will ban yonder fucker in case they are prix
+		check_compid_list(src) //Will analyze their computer ID usage patterns for aberrations
+	src.Browse(vpn_kick_string, "window=vpnbonked")
+	sleep(3 SECONDS)
+	if (src)
+		del(src)
+	return
 
 /client/verb/apply_depth_shadow()
 	set hidden = 1
@@ -1290,6 +1323,8 @@ var/global/curr_day = null
 	set name ="apply-view-tint"
 
 	view_tint = !view_tint
+	if (src.mob?.respect_view_tint_settings)
+		src.set_color(length(src.mob.active_color_matrix) ? src.mob.active_color_matrix : COLOR_MATRIX_IDENTITY, src.mob.respect_view_tint_settings)
 
 /client/verb/adjust_saturation()
 	set hidden = TRUE
@@ -1425,6 +1460,8 @@ var/global/curr_day = null
 		src.tick_lag = CLIENTSIDE_TICK_LAG_CHUNKY
 	else if (winget( src, "menu.fps_creamy", "is-checked" ) == "true")
 		src.tick_lag = CLIENTSIDE_TICK_LAG_CREAMY
+	else if (winget( src, "menu.fps_velvety", "is-checked" ) == "true")
+		src.tick_lag = CLIENTSIDE_TICK_LAG_VELVETY
 	else
 		src.tick_lag = CLIENTSIDE_TICK_LAG_SMOOTH
 
@@ -1496,11 +1533,13 @@ var/global/curr_day = null
 	//tell the interface helpers to recompute data
 	src.mapSizeHelper?.update()
 
-/client/verb/autoscreenshot()
+/client/verb/xscreenshot(arg as text|null)
 	set hidden = 1
-	set name = ".autoscreenshot"
+	set name = ".xscreenshot"
 
-	winset(src, null, "command=\".screenshot auto\"")
+	if(!isnull(arg))
+		arg = " [arg]"
+	winset(src, null, "command=\".screenshot[arg]\"")
 	boutput(src, "<B>Screenshot taken!</B>")
 
 /client/verb/test_experimental_intents()
@@ -1578,7 +1617,7 @@ if([removeOnFinish])
 	"}, "window=pregameBrowser")
 
 #ifndef SECRETS_ENABLED
-/client/proc/dpi(list/data)
+/client/proc/postscan(list/data)
 	return
 #endif
 

@@ -55,7 +55,7 @@
 	if (!src.contents.len || !src.on) // somehow there's nothing in the machine or it's turned off somehow, whoops!
 		processing_items.Remove(src)
 		src.visible_message("[src] lets out a grumpy buzz!")
-		playsound(src, "sound/machines/buzz-two.ogg", 50, 1)
+		playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
 		src.on = 0
 		src.UpdateIcon()
 		return
@@ -74,8 +74,8 @@
 			src.cycle = DRY
 			src.cycle_current = 0
 			src.visible_message("[src] lets out a beep and hums as it switches to its drying cycle.")
-			playsound(src, "sound/machines/chime.ogg", 30, 1)
-			playsound(src, "sound/machines/engine_highpower.ogg", 30, 1)
+			playsound(src, 'sound/machines/chime.ogg', 30, 1)
+			playsound(src, 'sound/machines/engine_highpower.ogg', 30, 1)
 			src.UpdateIcon()
 		else // drying is done!
 			processing_items.Remove(src)
@@ -85,7 +85,7 @@
 			src.cycle = POST
 			src.cycle_current = 0
 			src.visible_message("[src] lets out a happy beep!")
-			playsound(src, "sound/machines/ding.ogg", 50, 1)
+			playsound(src, 'sound/machines/ding.ogg', 50, 1)
 			if(src.occupant) // If someone is inside we eject immediatly so as to not keep people hostage
 				H.changeStatus("weakened", 1 SECONDS)
 				H.make_dizzy(15) //Makes you dizzy for fifteen seconds due to the spinning
@@ -104,10 +104,10 @@
 			H.TakeDamage("All", 2, 0, 0, DAMAGE_BLUNT) //Getting washed like that has gotta hurt
 			H.take_oxygen_deprivation(rand(0,3)) //Hard to keep breathing while in the machine
 			src.shake()
-			playsound(src, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+			playsound(src, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 			if (src.cycle_current == 2 && src.cycle == WASH)
 				src.visible_message("[src] groans horribly, some water drips out!")
-				playsound(src, "sound/impact_sounds/Metal_Clang_3.ogg", 100, 1)
+				playsound(src, 'sound/impact_sounds/Metal_Clang_3.ogg', 100, 1)
 			else if (src.cycle_current == 4 && src.cycle == WASH)
 				src.visible_message("[src] is making a horrible ratchet! [H]'s face can be seen pressed against the glass.")
 				if(isliving(H))
@@ -127,15 +127,15 @@
 				H.delStatus("marker_painted")
 			else
 				src.visible_message("[src] clicks locked and sloshes a bit as it starts its washing cycle.")
-			playsound(src, "sound/machines/click.ogg", 50, 1)
-			playsound(src, "sound/impact_sounds/Liquid_Slosh_2.ogg", 100, 1)
+			playsound(src, 'sound/machines/click.ogg', 50, 1)
+			playsound(src, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 100, 1)
 			src.UpdateIcon()
 
 		else if (src.cycle == WASH && prob(40)) // play a washery sound
-			playsound(src, "sound/impact_sounds/Liquid_Slosh_2.ogg", 100, 1)
+			playsound(src, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 100, 1)
 			src.shake()
 		else if (src.cycle == DRY && prob(20)) // play a dryery sound
-			playsound(src, "sound/machines/engine_highpower.ogg", 30, 1)
+			playsound(src, 'sound/machines/engine_highpower.ogg', 30, 1)
 			src.shake()
 
 /obj/submachine/laundry_machine/proc/shake(var/amt = 5)
@@ -181,7 +181,7 @@
 /obj/submachine/laundry_machine/attack_hand(mob/user)
 	if (!can_act(user))
 		return
-	src.add_fingerprint(usr)
+	src.add_fingerprint(user)
 	ui_interact(user)
 
 /obj/submachine/laundry_machine/proc/force_into_machine(obj/item/grab/W as obj, mob/user as mob)

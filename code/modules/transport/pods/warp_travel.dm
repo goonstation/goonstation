@@ -11,6 +11,7 @@
 	var/packable = 0
 	var/obj/deployer = /obj/beacon_deployer
 	var/beaconid //created by kits
+	var/encrypted = FALSE
 
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/machinery/door_control (door_control.dm)
@@ -76,7 +77,7 @@
 				boutput(user,"This beacon's retraction hardware is locked into place and can't be altered.")
 				return
 			src.visible_message("<b>[user.name]</b> undeploys [src].")
-			playsound(src, "sound/items/Ratchet.ogg", 40, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', 40, 1)
 			src.startpack()
 		else if (ispulsingtool(W))
 			if (!packable)
@@ -144,14 +145,16 @@
 		return
 	if (ismob(M))
 		var/mob/T = M
-		boutput(T, "<span class='alert'>You are exposed to some pretty swole strange particles, this can't be good...</span>")
+		if (!issilicon(M)) // Borgs don't care about rads (for the meantime)
+			boutput(T, "<span class='alert'>You are exposed to some pretty swole strange particles, this can't be good...</span>")
+
 		if(prob(1))
 			T.gib()
 			T.unlock_medal("Where we're going, we won't need eyes to see", 1)
 			logTheThing(LOG_COMBAT, T, "entered [src] at [log_loc(src)] and gibbed")
 			return
 		else
-			T.changeStatus("radiation", rand(5,25) SECONDS, 2)
+			T.take_radiation_dose(rand()*1 SIEVERTS)
 			if(ishuman(T))
 				var/mob/living/carbon/human/H = T
 				if (prob(75))
@@ -169,7 +172,7 @@
 	src.icon_state = "beaconpack"
 	SPAWN(14) //wait until packing is complete
 		var/obj/beacon_deployer/packitup = new src.deployer(src.loc)
-		playsound(src, "sound/machines/heater_off.ogg", 20, 1)
+		playsound(src, 'sound/machines/heater_off.ogg', 20, 1)
 		if(src.beaconid)
 			packitup.beaconid = src.beaconid
 			packitup.name = "warp buoy unit [beaconid]"
@@ -202,7 +205,7 @@
 				boutput(user, "<span style=\"color:red\">The beacon can't connect to the warp network.</span>")
 				return
 			src.visible_message("<b>[user.name]</b> deploys [src].")
-			playsound(src, "sound/items/Ratchet.ogg", 40, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', 40, 1)
 			src.deploying = 1
 			src.deploybeacon()
 
@@ -225,7 +228,7 @@
 	src.anchored = 1
 	SPAWN(16) //wait until unpacking is complete
 		var/obj/warp_beacon/depbeac = new /obj/warp_beacon/deployed(src.loc)
-		playsound(src, "sound/machines/heater_off.ogg", 20, 1)
+		playsound(src, 'sound/machines/heater_off.ogg', 20, 1)
 		depbeac.name = "Buoy [src.beaconid]"
 		depbeac.beaconid = src.beaconid
 		depbeac.deployer = src.type
@@ -310,13 +313,13 @@
 	onStart()
 		..()
 		if (beacon.state == 1)
-			playsound(beacon, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(beacon, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins installing rods onto \the [beacon].")
 		if (beacon.state == 2)
-			playsound(beacon, "sound/items/Deconstruct.ogg", 40, 1)
+			playsound(beacon, 'sound/items/Deconstruct.ogg', 40, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins connecting \the [beacon]'s electrical systems.")
 		if (beacon.state == 3)
-			playsound(beacon, "sound/effects/zzzt.ogg", 30, 1)
+			playsound(beacon, 'sound/effects/zzzt.ogg', 30, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins soldering \the [beacon]'s wiring into place.")
 	onEnd()
 		..()
@@ -324,7 +327,7 @@
 			beacon.state = 2
 			beacon.icon_state = "beacframe_2"
 			boutput(owner, "<span class='notice'>You successfully install the framework rods.</span>")
-			playsound(beacon, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(beacon, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 
 			the_tool.change_stack_amount(-4) //the_tool should be rods
 
@@ -334,7 +337,7 @@
 			beacon.state = 3
 			beacon.icon_state = "beaconunit"
 			boutput(owner, "<span class='notice'>You finish wiring together the beacon's electronics.</span>")
-			playsound(beacon, "sound/items/Deconstruct.ogg", 40, 1)
+			playsound(beacon, 'sound/items/Deconstruct.ogg', 40, 1)
 
 			the_tool.amount -= 1
 			if (the_tool.amount < 1)
@@ -348,7 +351,7 @@
 			return
 		if (beacon.state == 3)
 			boutput(owner, "<span class='notice'>You solder the wiring into place, completing the beacon. It's now ready to deploy with a wrench.</span>")
-			playsound(beacon, "sound/effects/zzzt.ogg", 40, 1)
+			playsound(beacon, 'sound/effects/zzzt.ogg', 40, 1)
 			var/turf/T = get_turf(beacon)
 			new /obj/beacon_deployer(T)
 			qdel(beacon)

@@ -20,6 +20,8 @@
 	var/rounds_seen = null
 	/// how many rounds (rp only) theyve joined to at least the lobby in, null to differentiate between not set and not seen
 	var/rounds_seen_rp = null
+	/// timestamp of when they were last seen
+	var/last_seen = null
 	/// a list of cooldowns that has to persist between connections
 	var/list/cooldowns = null
 	/// position of client in in global.clients
@@ -74,14 +76,15 @@
 		src.rounds_participated_rp= text2num(response["participated_rp"])
 		src.rounds_seen = text2num(response["seen"])
 		src.rounds_seen_rp = text2num(response["seen_rp"])
+		src.last_seen = response["last_seen"]
 		return 1
 
 	/// returns an assoc list of cached player stats (please update this proc when adding more player stat vars)
 	proc/get_round_stats()
-		if ((isnull(src.rounds_participated) || isnull(src.rounds_seen) || isnull(src.rounds_participated_rp) || isnull(src.rounds_seen_rp))) //if the stats havent been cached yet
+		if ((isnull(src.rounds_participated) || isnull(src.rounds_seen) || isnull(src.rounds_participated_rp) || isnull(src.rounds_seen_rp) || isnull(src.last_seen))) //if the stats havent been cached yet
 			if (!src.cache_round_stats()) //if trying to set them fails
 				return null
-		return list("participated" = src.rounds_participated, "seen" = src.rounds_seen, "participated_rp" = src.rounds_participated_rp, "seen_rp" = src.rounds_seen_rp)
+		return list("participated" = src.rounds_participated, "seen" = src.rounds_seen, "participated_rp" = src.rounds_participated_rp, "seen_rp" = src.rounds_seen_rp, "last_seen" = src.last_seen)
 
 	/// returns the number of rounds that the player has played by joining in at roundstart
 	proc/get_rounds_participated()
@@ -191,8 +194,12 @@
 	proc/cloud_fetch()
 		var/list/data = cloud_fetch_target_ckey(src.ckey)
 		if (data)
+#ifdef LIVE_SERVER
 			cloudsaves = data["saves"]
 			clouddata = data["cdata"]
+#else
+			clouddata = data
+#endif
 			return TRUE
 
 	/// Refreshes clouddata

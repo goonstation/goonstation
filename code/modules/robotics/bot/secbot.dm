@@ -440,31 +440,33 @@
 			src.explode()
 		return
 
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/device/pda2) && W:ID_card)
-			W = W:ID_card
-		if (istype(W, /obj/item/card/id))
-			if (src.allowed(user))
+	attackby(obj/item/I, mob/M)
+		if (istype(I, /obj/item/device/pda2) && I:ID_card)
+			I = I:ID_card
+		if (istype(I, /obj/item/card/id))
+			if (src.allowed(M))
 				src.locked = !src.locked
-				boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
+				boutput(M, "Controls are now [src.locked ? "locked." : "unlocked."]")
 				src.updateUsrDialog()
 			else
-				boutput(user, "<span class='alert'>Access denied.</span>")
+				boutput(M, "<span class='alert'>Access denied.</span>")
 
-		else if (isscrewingtool(W))
+		else if (isscrewingtool(I))
 			if (src.health < initial(health))
 				src.health = initial(health)
-				src.visible_message("<span class='alert'>[user] repairs [src]!</span>", "<span class='alert'>You repair [src].</span>")
+				src.visible_message("<span class='alert'>[M] repairs [src]!</span>", "<span class='alert'>You repair [src].</span>")
 		else
-			switch(W.hit_type)
+			switch(I.hit_type)
 				if (DAMAGE_BURN)
-					src.health -= W.force * 0.75
+					src.health -= I.force * 0.75
 				else
-					src.health -= W.force * 0.5
+					src.health -= I.force * 0.5
 			if (src.health <= 0)
+				if (src.z == Z_LEVEL_STATION) // I only care about station secbots
+					logTheThing(LOG_COMBAT, M, "destroyed secbot [src.emagged ? "(emagged)" : ""] [src] with [I] at [log_loc(src)]")
 				src.explode()
-			else if (W.force) // Prioritize your safety, cant kill crime if you're dead!
-				src.EngageTarget(user, 1, 1)
+			else if (I.force) // Prioritize your safety, cant kill crime if you're dead!
+				src.EngageTarget(M, 1, 1)
 			..()
 
 	bullet_act(var/obj/projectile/P)
@@ -479,6 +481,10 @@
 			src.health -= damage
 
 		if (src.health <= 0)
+			if (src.z == Z_LEVEL_STATION) // I only care about station secbots
+				if (ismob(P.shooter))
+					var/mob/living/M = P.shooter
+					logTheThing(LOG_COMBAT, M, "destroyed secbot [src.emagged ? "(emagged)" : ""] [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" : ""]")
 			src.explode()
 			return
 
@@ -520,7 +526,7 @@
 
 		if(src.exploding) return
 		src.exploding = 1
-		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 		for(var/mob/O in hearers(src, null))
 			O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
 		var/turf/Tsec = get_turf(src)
@@ -585,7 +591,7 @@
 				stuncount--
 				if (check_target_immunity(M))
 					src.visible_message("<span class='alert'><B>[src] tries to stun [M] with the [src.our_baton] but the attack bounces off uselessly!</B></span>")
-					playsound(src, "sound/impact_sounds/Generic_Swing_1.ogg", 25, 1, -1)
+					playsound(src, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, -1)
 				else
 					src.our_baton.do_stun(src, M, src.stun_type, 2)
 				if (!stuncount && maxstuns-- <= 0)
@@ -760,7 +766,7 @@
 				if(prob(50 + (src.emagged * 15)))
 					for(var/mob/M in hearers(C, null))
 						M.show_text("<font size=[max(0, 5 - GET_DIST(get_turf(src), M))]>THUD, thud!</font>")
-					playsound(C, "sound/impact_sounds/Wood_Hit_1.ogg", 15, 1, -3)
+					playsound(C, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, 1, -3)
 					animate_storage_thump(C)
 				src.container_cool_off_counter++
 				if(src.container_cool_off_counter >= src.container_cool_off_max) // Give him some time to cool off
@@ -890,7 +896,7 @@
 		SPAWN(0)
 			weeooing = 1
 			var/weeoo = 10
-			playsound(src, "sound/machines/siren_police.ogg", 50, 1)
+			playsound(src, 'sound/machines/siren_police.ogg', 50, 1)
 			while (weeoo)
 				add_simple_light("secbot", list(255 * 0.9, 255 * 0.1, 255 * 0.1, 0.8 * 255))
 				sleep(0.3 SECONDS)
@@ -916,6 +922,9 @@
 			var/has_carry_permit = 0
 			var/has_contraband_permit = 0
 
+			if (!has_contraband_permit)
+				threatcount += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_CONTRABAND_OVERRIDE)
+
 			if(perp_id) //Checking for permits
 				if(weapon_access in perp_id.access)
 					has_carry_permit = 1
@@ -925,44 +934,44 @@
 			if (istype(perp.l_hand))
 				if (istype(perp.l_hand, /obj/item/gun/)) // perp is carrying a gun
 					if(!has_carry_permit)
-						threatcount += perp.l_hand.contraband
+						threatcount += perp.l_hand.get_contraband()
 				else // not carrying a gun, but potential contraband?
 					if(!has_contraband_permit)
-						threatcount += perp.l_hand.contraband
+						threatcount += perp.l_hand.get_contraband()
 
 			if (istype(perp.r_hand))
 				if (istype(perp.r_hand, /obj/item/gun/)) // perp is carrying a gun
 					if(!has_carry_permit)
-						threatcount += perp.r_hand.contraband
+						threatcount += perp.r_hand.get_contraband()
 				else // not carrying a gun, but potential contraband?
 					if(!has_contraband_permit)
-						threatcount += perp.r_hand.contraband
+						threatcount += perp.r_hand.get_contraband()
 
 			if (istype(perp.belt))
 				if (istype(perp.belt, /obj/item/gun/))
 					if (!has_carry_permit)
-						threatcount += perp.belt.contraband * 0.5
+						threatcount += perp.belt.get_contraband() * 0.5
 				else
 					if (!has_contraband_permit)
-						threatcount += perp.belt.contraband * 0.5
+						threatcount += perp.belt.get_contraband() * 0.5
 
 			if (istype(perp.wear_suit))
 				if (!has_contraband_permit)
-					threatcount += perp.wear_suit.contraband
+					threatcount += perp.wear_suit.get_contraband()
 
 			if (istype(perp.back))
 				if (istype(perp.back, /obj/item/gun/)) // some weapons can be put on backs
 					if (!has_carry_permit)
-						threatcount += perp.back.contraband * 0.5
+						threatcount += perp.back.get_contraband() * 0.5
 				else // at moment of doing this we don't have other contraband back items, but maybe that'll change
 					if (!has_contraband_permit)
-						threatcount += perp.back.contraband * 0.5
+						threatcount += perp.back.get_contraband() * 0.5
 
 
 		if(istype(perp.mutantrace, /datum/mutantrace/abomination))
 			threatcount += 5
 
-		if(perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird"))
+		if(perp.traitHolder.hasTrait("stowaway") && perp.traitHolder.hasTrait("jailbird"))
 			if(isnull(data_core.security.find_record("name", perp.name)))
 				threatcount += 5
 
@@ -975,15 +984,8 @@
 			return threatcount
 
 		if (src.check_records) // bot is set to actively compare security records
-			var/see_face = 1
-			if (istype(perp.wear_mask) && !perp.wear_mask.see_face)
-				see_face = 0
-			else if (istype(perp.head) && !perp.head.see_face)
-				see_face = 0
-			else if (istype(perp.wear_suit) && !perp.wear_suit.see_face)
-				see_face = 0
+			var/perpname = perp.face_visible() ? perp.real_name : perp.name
 
-			var/perpname = see_face ? perp.real_name : perp.name
 			for (var/datum/db_record/R as anything in data_core.security.find_records("name", perpname))
 				if(R["criminal"] == "*Arrest*")
 					threatcount = 7
@@ -1275,12 +1277,12 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		playsound(master, "sound/weapons/handcuffs.ogg", 30, 1, -2)
+		playsound(master, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 		master.visible_message("<span class='alert'><B>[master] is trying to put handcuffs on [master.target]!</B></span>")
 		if(master.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || master.is_beepsky == IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON)
 			duration = round(duration * 0.75)
 			master.visible_message("<span class='alert'><B>...vigorously!</B></span>")
-			playsound(master, "sound/misc/winding.ogg", 30, 1, -2)
+			playsound(master, 'sound/misc/winding.ogg', 30, 1, -2)
 
 	onInterrupt()
 		..()
@@ -1377,10 +1379,10 @@
 		master.baton_charging = 1
 		master.visible_message("<span class='alert'><B>[master] is energizing its prod, preparing to zap [master.target]!</B></span>")
 		if(master.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || master.is_beepsky == IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON || master.emagged >= 2)
-			playsound(master, "sound/machines/ArtifactBee2.ogg", 30, 1, -2)
+			playsound(master, 'sound/machines/ArtifactBee2.ogg', 30, 1, -2)
 			duration = round(duration * 0.6)
 		else
-			playsound(master, "sound/effects/electric_shock_short.ogg", 30, 1, -2)
+			playsound(master, 'sound/effects/electric_shock_short.ogg', 30, 1, -2)
 
 	onEnd()
 		..()

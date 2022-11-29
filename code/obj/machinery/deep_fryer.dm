@@ -41,9 +41,9 @@
 				boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
 
 			else
-				logTheThing(LOG_COMBAT, user, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
+				logTheThing(LOG_CHEMISTRY, user, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
 				src.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
-				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
 				if (!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
 
@@ -135,6 +135,14 @@
 		else
 			src.cooktime++
 
+		if (src.fryitem.material?.mat_id == "ice" && !ON_COOLDOWN(src, "ice_explosion", 10 SECONDS))
+			qdel(src.fryitem)
+			src.fryitem = null
+			src.visible_message("<span class='alert'>The ice reacts violently with the hot oil!</span>")
+			fireflash(src, 3)
+			UnsubscribeProcess()
+			return
+
 		if (!src.fryitem.reagents)
 			src.fryitem.create_reagents(50)
 
@@ -144,7 +152,7 @@
 		if (src.cooktime < 60)
 
 			if (src.cooktime == 30)
-				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 				src.visible_message("<span class='notice'>[src] dings!</span>")
 			else if (src.cooktime == 60) //Welp!
 				src.visible_message("<span class='alert'>[src] emits an acrid smell!</span>")

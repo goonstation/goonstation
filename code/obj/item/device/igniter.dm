@@ -3,7 +3,8 @@
 	desc = "A small electronic device can be paired with other electronics, or used to heat chemicals directly."
 	icon_state = "igniter"
 	var/status = 1
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT | USEDELAY
+	flags = FPRINT | TABLEPASS| CONDUCT | USEDELAY
+	c_flags = ONBELT
 	item_state = "electronic"
 	m_amt = 100
 	throwforce = 5

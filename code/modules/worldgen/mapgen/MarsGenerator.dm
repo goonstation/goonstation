@@ -119,7 +119,7 @@
 					random_brute_damage(jerk, 20, checkarmor=TRUE) // Allow armor to resist
 					jerk.do_disorient(stamina_damage = 100, weakened = 3 SECONDS, disorient = 5 SECOND)
 					if(prob(50))
-						playsound(src, "sound/impact_sounds/Flesh_Stab_2.ogg", 50, 1)
+						playsound(src, 'sound/impact_sounds/Flesh_Stab_2.ogg', 50, 1)
 						boutput(jerk, pick("Dust gets caught in your eyes!","The wind blows you off course!","Debris pierces through your skin!"))
 
 
@@ -155,6 +155,9 @@
 		var/image/weather = src.GetOverlayImage("weather")
 		..()
 		src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid/mars)
+		src.UpdateIcon()
+		for (var/turf/simulated/wall/auto/asteroid/A in orange(1,src))
+			A.UpdateIcon()
 		src.UpdateOverlays(ambient_light, "ambient")
 		src.UpdateOverlays(weather, "weather")
 

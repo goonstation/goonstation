@@ -39,7 +39,7 @@
 	var/treatment_brute = "saline"
 	var/treatment_oxy = "salbutamol"
 	var/treatment_fire = "saline"
-	var/treatment_tox = "charcoal"
+	var/treatment_tox = "anti_rad"
 	var/treatment_virus = "spaceacillin"
 	/// the stuff the bot injects when emagged
 	var/list/dangerous_stuff = list()
@@ -803,7 +803,7 @@
 	src.exploding = 1
 	src.on = 0
 	src.audible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
-	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/storage/firstaid(Tsec)

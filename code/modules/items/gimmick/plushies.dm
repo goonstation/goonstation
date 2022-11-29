@@ -268,7 +268,7 @@
 	if (!menuchoice)
 		return
 	if (menuchoice == "Awoo" && !ON_COOLDOWN(src, "playsound", 2 SECONDS))
-		playsound(user, "sound/voice/babynoise.ogg", 50, 1)
+		playsound(user, 'sound/voice/babynoise.ogg', 50, 1)
 		src.audible_message("<span class='emote'>[src] awoos!</span>")
 	else if (menuchoice == "Say")
 		src.say_something(user)
@@ -298,7 +298,7 @@
 	if (!menuchoice)
 		return
 	if (menuchoice == "Honk" && !ON_COOLDOWN(src, "playsound", 2 SECONDS))
-		playsound(user, "sound/items/rubberduck.ogg", 50, 1)
+		playsound(user, 'sound/items/rubberduck.ogg', 50, 1)
 		src.audible_message("<span class='emote'>[src] honks!</span>")
 	else if (menuchoice == "Say")
 		src.say_something(user)

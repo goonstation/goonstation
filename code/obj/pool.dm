@@ -4,7 +4,7 @@
 	anchored = 1
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pool"
-	flags = FPRINT | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = FPRINT | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID | FLUID_DENSE
 
 	Cross(atom/movable/mover)
 		ENSURE_TYPE(mover)
@@ -73,21 +73,21 @@
 			user.pixel_x = -9
 			sleep(0.3 SECONDS)
 			user.pixel_x = -12
-			playsound(user, "sound/effects/spring.ogg", 60, 1)
+			playsound(user, 'sound/effects/spring.ogg', 60, 1)
 			sleep(0.3 SECONDS)
 			user.pixel_y = 25
 			sleep(0.5 SECONDS)
 			user.pixel_y = 15
-			playsound(user, "sound/effects/spring.ogg", 60, 1)
+			playsound(user, 'sound/effects/spring.ogg', 60, 1)
 			sleep(0.5 SECONDS)
 			user.pixel_y = 25
 			user.start_chair_flip_targeting(extrarange = 2)
 			sleep(0.5 SECONDS)
 			user.pixel_y = 15
-			playsound(user, "sound/effects/spring.ogg", 60, 1)
+			playsound(user, 'sound/effects/spring.ogg', 60, 1)
 			sleep(0.5 SECONDS)
 			user.pixel_y = 25
-			playsound(user, "sound/effects/brrp.ogg", 15, 1)
+			playsound(user, 'sound/effects/brrp.ogg', 15, 1)
 			sleep(0.2 SECONDS)
 			if(range == 1) boutput(user, "<span class='alert'>You slip...</span>")
 			user.layer = MOB_LAYER
@@ -101,10 +101,10 @@
 				SPAWN(0.3 SECONDS) //give them time to land
 					if (user)
 						user.TakeDamage("head", 200, 0)
-						playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+						playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			user.pixel_y = 0
 			user.pixel_x = 0
-			playsound(user, "sound/impact_sounds/Liquid_Hit_Big_1.ogg", 60, 1)
+			playsound(user, 'sound/impact_sounds/Liquid_Hit_Big_1.ogg', 60, 1)
 			in_use = 0
 			suiciding = 0
 			user.transforming = 0

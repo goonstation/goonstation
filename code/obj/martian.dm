@@ -19,7 +19,7 @@
 		return
 	if(used)
 		return
-	playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+	playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 	boutput(user, "<span class='alert'>You reach your hand into the crevice.</span>")
 
 	if(id)
@@ -34,7 +34,7 @@
 			if(prob(25))
 				boutput(user, "<span class='alert'><B>You fail to break free!</B></span>")
 				sleep(1 SECONDS)
-				playsound(src.loc, "sound/voice/burp_alien.ogg", 50, 1)
+				playsound(src.loc, 'sound/voice/burp_alien.ogg', 50, 1)
 				var/obj/decal/cleanable/blood/gibs/gib =make_cleanable( /obj/decal/cleanable/blood/gibs/core, src.loc )
 				gib.streak_cleanable(src.dir)
 				gib = make_cleanable( /obj/decal/cleanable/blood/gibs, src.loc )

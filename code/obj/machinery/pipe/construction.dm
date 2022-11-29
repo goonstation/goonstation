@@ -160,7 +160,7 @@ Buildable meters
 				if( (M.p_dir & pipedir) || (M.h_dir & pipedir) )	// matches at least one direction on either type of pipe
 					boutput(user, "There is already a pipe at that location.")
 					return
-		playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 
 		// no conflicts found
 
@@ -405,7 +405,7 @@ Buildable meters
 	if (iswrenchingtool(W))
 		if(locate(/obj/machinery/pipes, src.loc))
 			new/obj/machinery/meter( src.loc )
-			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			boutput(user, "You have fastened the meter to the pipe")
 			qdel(src)
 		else

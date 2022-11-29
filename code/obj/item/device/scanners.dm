@@ -16,7 +16,8 @@ Contains:
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	icon_state = "t-ray0"
 	var/on = 0
-	flags = FPRINT|ONBELT|TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	m_amt = 150
@@ -83,13 +84,13 @@ Contains:
 		var/image/main_display = image(null)
 		for(var/turf/T in range(src.scan_range, our_mob))
 			if(T.interesting && find_interesting)
-				our_mob.playsound_local(T, "sound/machines/ping.ogg", 55, 1)
+				our_mob.playsound_local(T, 'sound/machines/ping.ogg', 55, 1)
 
 			var/image/display = new
 
 			for(var/atom/A in T)
 				if(A.interesting && find_interesting)
-					our_mob.playsound_local(A, "sound/machines/ping.ogg", 55, 1)
+					our_mob.playsound_local(A, 'sound/machines/ping.ogg', 55, 1)
 				if(ismob(A))
 					var/mob/M = A
 					if(M?.invisibility != INVIS_CLOAK || !(BOUNDS_DIST(src, M) == 0))
@@ -146,52 +147,65 @@ that cannot be itched
 	icon_state = "fs"
 	w_class = W_CLASS_SMALL // PDA fits in a pocket, so why not the dedicated scanner (Convair880)?
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS | CONDUCT | SUPPRESSATTACK
+	c_flags = ONBELT
 	mats = 3
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	var/active = 0
 	var/distancescan = 0
 	var/target = null
-	var/last_scan = "No scans have been done yet."
+
+	var/list/scans
+	var/maximum_scans = 25
+	var/number_of_scans = 0
+	var/last_scan = "No scans have been performed yet."
+
+	Topic(href, href_list)
+		..()
+		if (href_list["print"])
+			if (!(src in usr.contents))
+				boutput(usr, "<span class='notice'>You must be holding [src] that made the record in order to print it.</span>")
+				return
+			var/scan_number = text2num(href_list["print"])
+			if (scan_number < number_of_scans - maximum_scans)
+				boutput(usr, "<span class='alert'>ERROR: Scanner unable to load report data.</span>")
+				return
+			if(!ON_COOLDOWN(src, "print", 2 SECOND))
+				playsound(src, 'sound/machines/printer_thermal.ogg', 50, 1)
+				SPAWN(1 SECONDS)
+					var/obj/item/paper/P = new /obj/item/paper
+					P.set_loc(get_turf(src))
+
+					var/index = (scan_number % maximum_scans) + 1 // Once a number of scans equal to the maximum number of scans is made, begin to overwrite existing scans, starting from the earliest made.
+					P.info = scans[index]
+					P.name = "forensic readout"
 
 
 	attack_self(mob/user as mob)
 
 		src.add_fingerprint(user)
 
-		var/choice = tgui_alert(user, "What would you like to do with [src]?", "Forensic scanner", list( "Find record", "Print last scan"))
-		switch (choice)
-			if ("Find record")
-				var/holder = src.loc
-				var/search = input(user, "Enter name, fingerprint or blood DNA.", "Find record", "") as null|text
-				if (src.loc != holder || !search || user.stat)
-					return
-				search = copytext(sanitize(search), 1, 200)
-				search = lowertext(search)
+		var/holder = src.loc
+		var/search = tgui_input_text(user, "Enter name, fingerprint or blood DNA.", "Find record")
+		if (src.loc != holder || !search || user.stat)
+			return
+		search = copytext(sanitize(search), 1, 200)
+		search = lowertext(search)
 
-				for (var/datum/db_record/R as anything in data_core.general.records)
-					if (search == lowertext(R["dna"]) || search == lowertext(R["fingerprint"]) || search == lowertext(R["name"]))
+		for (var/datum/db_record/R as anything in data_core.general.records)
+			if (search == lowertext(R["dna"]) || search == lowertext(R["fingerprint"]) || search == lowertext(R["name"]))
 
-						var/data = "--------------------------------<br>\
-						<font color='blue'>Match found in security records:<b> [R["name"]]</b> ([R["rank"]])</font><br>\
-						<br>\
-						<i>Fingerprint:</i><font color='blue'> [R["fingerprint"]]</font><br>\
-						<i>Blood DNA:</i><font color='blue'> [R["dna"]]</font>"
+				var/data = "--------------------------------<br>\
+				<font color='blue'>Match found in security records:<b> [R["name"]]</b> ([R["rank"]])</font><br>\
+				<br>\
+				<i>Fingerprint:</i><font color='blue'> [R["fingerprint"]]</font><br>\
+				<i>Blood DNA:</i><font color='blue'> [R["dna"]]</font>"
 
-						boutput(user, data)
-						return
-
-				user.show_text("No match found in security records.", "red")
+				boutput(user, data)
 				return
-			if("Print last scan")
-				if(!ON_COOLDOWN(src, "print", 2 SECOND))
-					playsound(src, "sound/machines/printer_thermal.ogg", 50, 1)
-					SPAWN(1 SECONDS)
-						var/obj/item/paper/P = new /obj/item/paper
-						P.set_loc(get_turf(src))
 
-						P.info = last_scan
-						P.name = "Forensic readout"
+		user.show_text("No match found in security records.", "red")
+		return
 
 
 	pixelaction(atom/target, params, mob/user, reach)
@@ -208,8 +222,16 @@ that cannot be itched
 			return
 
 		user.visible_message("<span class='alert'><b>[user]</b> has scanned [A].</span>")
+
+		if (scans == null)
+			scans = new/list(maximum_scans)
 		last_scan = scan_forensic(A, visible = 1) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
-		boutput(user, last_scan)
+		var/index = (number_of_scans % maximum_scans) + 1 // Once a number of scans equal to the maximum number of scans is made, begin to overwrite existing scans, starting from the earliest made.
+		scans[index] = last_scan
+		var/scan_output = last_scan + "<br>---- <a href='?src=\ref[src];print=[number_of_scans];'>PRINT REPORT</a> ----"
+		number_of_scans += 1
+
+		boutput(user, scan_output)
 		src.add_fingerprint(user)
 
 		if(!active && istype(A, /obj/decal/cleanable/blood))
@@ -264,7 +286,8 @@ that cannot be itched
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "healthanalyzer-no_up" // someone made this sprite and then this was never changed to it for some reason???
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	throwforce = 3
 	w_class = W_CLASS_TINY
 	throw_speed = 5
@@ -277,7 +300,7 @@ that cannot be itched
 	var/organ_upgrade = 0
 	var/organ_scan = 0
 	var/image/scanner_status
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	New()
 		..()
@@ -412,7 +435,8 @@ that cannot be itched
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "reagentscan"
 	desc = "A hand-held device that scans and lists the chemicals inside the scanned subject."
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	throwforce = 3
 	w_class = W_CLASS_TINY
 	throw_speed = 5
@@ -420,7 +444,7 @@ that cannot be itched
 	m_amt = 200
 	mats = 5
 	var/scan_results = null
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	tooltip_flags = REBUILD_DIST
 
 	attack(mob/M, mob/user)
@@ -465,7 +489,8 @@ that cannot be itched
 	icon_state = "atmos-no_up"
 	item_state = "analyzer"
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	throwforce = 5
 	w_class = W_CLASS_SMALL
 	throw_speed = 4
@@ -581,7 +606,7 @@ that cannot be itched
 			boutput(user, "<span class='alert'>That cartridge won't fit in there!</span>")
 			return
 		boutput(user, "<span class='notice'>Upgrade cartridge installed.</span>")
-		playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
+		playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 		user.u_equip(W)
 		qdel(W)
 
@@ -592,13 +617,29 @@ that cannot be itched
 	name = "security RecordTrak"
 	desc = "A device used to scan in prisoners and update their security records."
 	icon_state = "recordtrak"
-	var/mode = 1
 	var/datum/db_record/active1 = null
 	var/datum/db_record/active2 = null
 	w_class = W_CLASS_NORMAL
 	item_state = "recordtrak"
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | EXTRADELAY
+	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
+	c_flags = ONBELT
 	mats = 3
+
+
+	///List of record settings
+	var/list/modes = list(PRISONER_MODE_NONE, PRISONER_MODE_PAROLED, PRISONER_MODE_INCARCERATED, PRISONER_MODE_RELEASED)
+	///The current setting
+	var/mode = PRISONER_MODE_NONE
+
+	var/list/datum/contextAction/contexts = list()
+
+	New()
+		contextLayout = new /datum/contextLayout/experimentalcircle
+		..()
+		for(var/actionType in childrentypesof(/datum/contextAction/prisoner_scanner))
+			var/datum/contextAction/prisoner_scanner/action = new actionType()
+			if (action.mode in src.modes)
+				src.contexts += action
 
 	attack(mob/living/carbon/human/M, mob/user)
 		if (!istype(M))
@@ -610,8 +651,8 @@ that cannot be itched
 		//if( !istype(get_area(src), /area/security/prison) && !istype(get_area(src), /area/security/main))
 		//	boutput(user, "<span class='alert'>Device only works in designated security areas!</span>")
 		//	return
-		boutput(user, "<span class='notice'>You scan in [M]</span>")
-		boutput(M, "<span class='alert'>[user] scans you with the Securotron-5000</span>")
+		boutput(user, "<span class='notice'>You scan in [M].</span>")
+		boutput(M, "<span class='alert'>[user] scans you with the RecordTrak!</span>")
 		for(var/datum/db_record/R as anything in data_core.general.records)
 			if (lowertext(R["name"]) == lowertext(M.name))
 				//Update Information
@@ -648,27 +689,36 @@ that cannot be itched
 		////Security Records
 		var/datum/db_record/E = data_core.security.find_record("name", src.active1["name"])
 		if(E)
-			if(src.mode == 1)
-				E["criminal"] = "Incarcerated"
-			else if(src.mode == 2)
-				E["criminal"] = "Parolled"
-			else if(src.mode == 3)
-				E["criminal"] = "Released"
-			else
-				E["criminal"] = "None"
+			switch (mode)
+				if(PRISONER_MODE_NONE)
+					E["criminal"] = "None"
+
+				if(PRISONER_MODE_PAROLED)
+					E["criminal"] = "Parolled"
+
+				if(PRISONER_MODE_RELEASED)
+					E["criminal"] = "Released"
+
+				if(PRISONER_MODE_INCARCERATED)
+					E["criminal"] = "Incarcerated"
 			return
 
 		src.active2 = new /datum/db_record()
 		src.active2["name"] = src.active1["name"]
 		src.active2["id"] = src.active1["id"]
-		if(src.mode == 1)
-			src.active2["criminal"] = "Incarcerated"
-		else if(src.mode == 2)
-			src.active2["criminal"] = "Parolled"
-		else if(src.mode == 3)
-			src.active2["criminal"] = "Released"
-		else
-			src.active2["criminal"] = "None"
+		switch (mode)
+			if(PRISONER_MODE_NONE)
+				src.active2["criminal"] = "None"
+
+			if(PRISONER_MODE_PAROLED)
+				src.active2["criminal"] = "Parolled"
+
+			if(PRISONER_MODE_RELEASED)
+				src.active2["criminal"] = "Released"
+
+			if(PRISONER_MODE_INCARCERATED)
+				src.active2["criminal"] = "Incarcerated"
+
 		src.active2["sec_flag"] = "None"
 		src.active2["mi_crim"] = "None"
 		src.active2["mi_crim_d"] = "No minor crime convictions."
@@ -680,22 +730,31 @@ that cannot be itched
 		return
 
 	attack_self(mob/user as mob)
+		user.showContextActions(src.contexts, src, src.contextLayout)
 
-		if (src.mode == 1)
-			src.mode = 2
-			boutput(user, "<span class='notice'>you switch the record mode to Parolled</span>")
-		else if (src.mode == 2)
-			src.mode = 3
-			boutput(user, "<span class='notice'>you switch the record mode to Released</span>")
-		else if (src.mode == 3)
-			src.mode = 4
-			boutput(user, "<span class='notice'>you switch the record mode to None</span>")
-		else
-			src.mode = 1
-			boutput(user, "<span class='notice'>you switch the record mode to Incarcerated</span>")
+	proc/switch_mode(var/mode, var/mob/user)
+
+		src.mode = mode
+
+		switch (mode)
+			if(PRISONER_MODE_NONE)
+				boutput(user, "<span class='notice'>you switch the record mode to None.</span>")
+
+			if(PRISONER_MODE_PAROLED)
+				boutput(user, "<span class='notice'>you switch the record mode to Paroled.</span>")
+
+			if(PRISONER_MODE_RELEASED)
+				boutput(user, "<span class='notice'>you switch the record mode to Released.</span>")
+
+			if(PRISONER_MODE_INCARCERATED)
+				boutput(user, "<span class='notice'>you switch the record mode to Incarcerated.</span>")
 
 		add_fingerprint(user)
 		return
+
+	dropped(var/mob/user)
+		. = ..()
+		user.closeContextActions()
 
 /obj/item/device/ticket_writer
 	name = "Security TicketWriter 2000"
@@ -704,7 +763,8 @@ that cannot be itched
 	item_state = "electronic"
 	w_class = W_CLASS_SMALL
 
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 
 	attack_self(mob/user)
 		var/menuchoice = tgui_alert(user, "What would you like to do?", "Ticket writer", list("Ticket", "Nothing"))
@@ -726,7 +786,7 @@ that cannot be itched
 		if (!I || !(access_security in I.access))
 			boutput(user, "<span class='alert'>Insufficient access.</span>")
 			return
-		playsound(src, "sound/machines/keyboard3.ogg", 30, 1)
+		playsound(src, 'sound/machines/keyboard3.ogg', 30, 1)
 		var/issuer = I.registered
 		var/issuer_job = I.assignment
 		var/ticket_target = input(user, "Ticket recipient:", "Recipient", "Ticket Recipient") as text
@@ -751,7 +811,7 @@ that cannot be itched
 		data_core.tickets += T
 
 		logTheThing(LOG_ADMIN, user, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
-		playsound(src, "sound/machines/printer_thermal.ogg", 50, 1)
+		playsound(src, 'sound/machines/printer_thermal.ogg', 50, 1)
 		SPAWN(3 SECONDS)
 			var/obj/item/paper/p = new /obj/item/paper
 			p.set_loc(get_turf(src))
@@ -767,7 +827,8 @@ that cannot be itched
 /obj/item/device/appraisal
 	name = "cargo appraiser"
 	desc = "Handheld scanner hooked up to Cargo's market computers. Estimates sale value of various items."
-	flags = FPRINT|ONBELT|TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	m_amt = 150
 	mats = 5
@@ -848,11 +909,11 @@ that cannot be itched
 		// replace with boutput
 		boutput(user, "<span class='notice'>[out_text]Estimated value: <strong>[sell_value] credit\s.</strong></span>")
 		if (sell_value > 0)
-			playsound(src, "sound/machines/chime.ogg", 10, 1)
+			playsound(src, 'sound/machines/chime.ogg', 10, 1)
 
 		if (user.client && !user.client.preferences?.flying_chat_hidden)
 			var/image/chat_maptext/chat_text = null
-			var/popup_text = "<span class='ol c pixel'[sell_value == 0 ? " style='color: #bbbbbb;'>No value" : ">$[round(sell_value)]"]</span>"
+			var/popup_text = "<span class='ol c pixel'[sell_value == 0 ? " style='color: #bbbbbb;'>No value" : ">[round(sell_value)][CREDIT_SIGN]"]</span>"
 			chat_text = make_chat_maptext(A, popup_text, alpha = 180, force = 1, time = 1.5 SECONDS)
 			// many of the artifacts are upside down and stuff, it makes text a bit hard to read!
 			chat_text.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA

@@ -74,7 +74,7 @@
 
 	proc/stabilize()
 		src.alpha = 150
-		src.opacity = 0
+		src.set_opacity(0)
 		src.stabilized = 1
 		src.name = "Stabilized Spatial Tear"
 		desc = "A breach in the spatial fabric, partially stabilized by an interdictor. Difficult to pass."

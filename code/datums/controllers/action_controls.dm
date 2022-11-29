@@ -406,6 +406,7 @@ var/datum/action_controller/actions
 			icon_image.pixel_y = icon_y_off
 			icon_image.pixel_x = icon_x_off
 			icon_image.plane = icon_plane
+			icon_image.layer = 10
 			icon_image.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
 			border.UpdateOverlays(icon_image, "action_icon")
 			if (icon_on_target && place_to_put_bar)
@@ -661,12 +662,22 @@ var/datum/action_controller/actions
 		. = ..()
 		if(QDELETED(sheet) || sheet.amount < cost)
 			interrupt(INTERRUPT_ALWAYS)
+		if (ismob(owner))
+			var/mob/M = owner
+			if(!equipped_or_holding(sheet, M))
+				interrupt(INTERRUPT_ALWAYS)
+				return
 
 	onEnd()
 		..()
 		if(QDELETED(sheet) || sheet.amount < cost)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		if (ismob(owner))
+			var/mob/M = owner
+			if(!equipped_or_holding(sheet, M))
+				interrupt(INTERRUPT_ALWAYS)
+				return
 		owner.visible_message("<span class='notice'>[owner] assembles [objname]!</span>")
 		var/obj/item/R = new objtype(get_turf(spot || owner))
 		R.setMaterial(mat)
@@ -1398,7 +1409,7 @@ var/datum/action_controller/actions
 /obj/actions/bar
 	icon_state = "bar"
 	layer = 101
-	plane = PLANE_HUD + 1
+	plane = PLANE_HUD
 	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | TILE_BOUND
 	var/image/img
 	New()
@@ -1412,7 +1423,7 @@ var/datum/action_controller/actions
 /obj/actions/border
 	layer = 100
 	icon_state = "border"
-	plane = PLANE_HUD + 1
+	plane = PLANE_HUD
 	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | TILE_BOUND
 	var/image/img
 	New()
@@ -1453,7 +1464,7 @@ var/datum/action_controller/actions
 			return
 		else
 			picker.working = 1
-			playsound(picker.loc, "sound/machines/whistlebeep.ogg", 50, 1)
+			playsound(picker.loc, 'sound/machines/whistlebeep.ogg', 50, 1)
 			out(owner, "<span class='notice'>\The [picker.name] starts to pick up \the [target].</span>")
 			if (picker.highpower && isghostdrone(owner))
 				var/mob/living/silicon/ghostdrone/our_drone = owner
@@ -1780,6 +1791,9 @@ var/datum/action_controller/actions
 		src.mob_owner = owner
 		syringe_mode = S.mode
 
+		// only created if we're drawing blood from someone else
+		logTheThing(LOG_COMBAT, mob_owner, "starts trying to draw blood from [constructTarget(target)].")
+
 		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || mob_owner.equipped() != S)
 			interrupt(INTERRUPT_ALWAYS)
 			return
@@ -1813,7 +1827,7 @@ var/datum/action_controller/actions
 			P = item
 			duration = round(clamp(P.reagents.total_volume, 30, 90) / 3 + 20)
 		else
-			logTheThing("debug", src, null, "/datum/action/bar/icon/pill called with invalid type [item].")
+			logTheThing(LOG_DEBUG, src, "/datum/action/bar/icon/pill called with invalid type [item].")
 		src.icon = icon
 		src.icon_state = icon_state
 
@@ -1868,7 +1882,7 @@ var/datum/action_controller/actions
 		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		playsound(owner.loc, "sound/machines/click.ogg", 60, 1)
+		playsound(owner.loc, 'sound/machines/click.ogg', 60, 1)
 
 	onEnd()
 		..()
@@ -1974,7 +1988,6 @@ var/datum/action_controller/actions
 	var/obj/item/target
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "pickup"
-	icon_plane = PLANE_HUD+2
 
 	New(Target)
 		target = Target
@@ -2002,6 +2015,7 @@ var/datum/action_controller/actions
 
 	onEnd()
 		..()
+		usr = owner // some stuff still uses usr, like context menus, sigh
 		target.pick_up_by(owner)
 
 
@@ -2084,11 +2098,11 @@ var/datum/action_controller/actions
 	onStart()
 		..()
 		if(iswrenchingtool(tool))
-			playsound(target, "sound/items/Ratchet.ogg", 50, 1)
+			playsound(target, 'sound/items/Ratchet.ogg', 50, 1)
 		else if(isweldingtool(tool))
-			playsound(target, "sound/items/Welder.ogg", 50, 1)
+			playsound(target, 'sound/items/Welder.ogg', 50, 1)
 		else if(isscrewingtool(tool))
-			playsound(target, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(target, 'sound/items/Screwdriver.ogg', 50, 1)
 		owner.visible_message("<span class='notice'>[owner] begins [unanchor ? "un" : ""]anchoring [target].</span>")
 
 	onEnd()

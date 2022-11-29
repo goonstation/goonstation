@@ -8,6 +8,8 @@
 
 	/// The total number of points we've accumulated over our lifetime
 	var/lifetime_energy = 0
+	/// Number of hearts stopped with Jolt
+	var/hearts_stopped = 0
 
 	onAbilityStat()
 		..()
@@ -31,6 +33,13 @@
 		src.updateText()
 		src.updateButtons()
 
+	onLife()
+		..()
+		//failsafe to ensure arcfiends always have SMES human
+		if (!src.owner.bioHolder.HasEffect("resist_electric"))
+			src.owner.bioHolder.AddEffect("resist_electric", power = 2, magical = TRUE)
+			src.owner.ClearSpecificOverlays("resist_electric")
+
 ABSTRACT_TYPE(/datum/targetable/arcfiend)
 /datum/targetable/arcfiend
 	name = "base arcfiend ability (you should never see me)"
@@ -52,7 +61,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 			boutput(holder.owner, "<span class='alert'>Not while incapacitated.</span>")
 			return FALSE
 		return TRUE
-	
+
 	cast(atom/target)
 		. = ..()
 		// updateButtons is already called automatically in the parent ability's tryCast

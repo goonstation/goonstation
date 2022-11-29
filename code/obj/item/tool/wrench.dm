@@ -5,7 +5,8 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/wrench.dmi'
 	icon_state = "wrench"
 
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	tool_flags = TOOL_WRENCHING
 	health = 5
 	w_class = W_CLASS_SMALL
@@ -48,8 +49,8 @@
 	desc = "A heavy industrial wrench that packs a mean punch when used as a bludgeon. Can be applied to the Nuclear bomb to repair it in small increments."
 	icon_state = "wrench-battle" //todo: new sprites
 	item_state = "wrench-battle"
-	force = 10
-	stamina_damage = 35
+	force = 15
+	stamina_damage = 55
 
 	New()
 		..()

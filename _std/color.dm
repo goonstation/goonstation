@@ -4,9 +4,13 @@
 
 #define hex2num(X) text2num(X, 16)
 
+#define hsl2rgb(hue, sat, lum) rgb(h=hue,s=sat,l=lum)
+
 #define hsv2rgb(hue, sat, val) rgb(h=hue,s=sat,v=val)
 
 #define hsv2rgblist(hue, sat, val) rgb2num(hsv2rgb(hue, sat, val))
+
+#define rgb2hsl(r, g, b) rgb2num(rgb(r, g, b), COLORSPACE_HSL)
 
 #define rgb2hsv(r, g, b) rgb2num(rgb(r, g, b), COLORSPACE_HSV)
 
@@ -31,7 +35,7 @@
 	return rgb(22, 210, 22)
 
 /proc/fix_hex(hex)
-	return copytext(hex + "000000", 1, 8)
+	return copytext((startswith(hex, "#") ? hex : "#") + "000000", 1, 8)
 
 #define COLOR_MATRIX_PROTANOPIA_LABEL "protanopia"
 #define COLOR_MATRIX_PROTANOPIA list(0.55, 0.45, 0.00, 0.00,\
@@ -78,7 +82,7 @@
 
 /// Takes two 20-length lists, turns them into 5x4 matrices, multiplies them together, and returns a 20-length list
 /proc/mult_color_matrix(var/list/Mat1, var/list/Mat2) // always 5x4 please
-	if (!Mat1.len || !Mat2.len || Mat1.len != 20 || Mat2.len != 20)
+	if (length(Mat1) != 20 || length(Mat2) != 20)
 		return COLOR_MATRIX_IDENTITY
 
 	var/list/M1[5][5] // turn the input matrix lists into more matrix-y lists
@@ -270,12 +274,44 @@ proc/hsv_transform_color_matrix(h=0.0, s=1.0, v=1.0)
 		0, 0, 0, 0
 	)
 
+/**
+ * Takes an icon and optionally two non-zero Pixel Intervals and returns the average color of the icon.
+ *
+ * The pixel intervals represent the distance between each pixel scanned on the X/Y axes respectively, and default to 4 for performance.
+ * For example, an X interval of 1 and a Y interval of 3 will mean every X coordinate of every 3rd Y coordinate will be scanned.
+ */
+proc/get_average_color(icon/I, xPixelInterval = 4, yPixelInterval = 4)
+	var/rSum  = 0
+	var/gSum  = 0
+	var/bSum  = 0
+	var/total = 0
+	var/icon_width = I.Width()
+	var/icon_height = I.Height()
+	//estimate color
+	for (var/y = 1 to icon_height step yPixelInterval)
+		for (var/x = 1 to icon_width step xPixelInterval)
+			var/pixColor = I.GetPixel(x,y)
+			if (!pixColor)
+				continue
+			var/rgba = rgb2num(pixColor)
+			var/weight = length(rgba) >= 4 ? rgba[4] / 255 : 1
+			total += weight
+			rSum += rgba[1] * weight
+			gSum += rgba[2] * weight
+			bSum += rgba[3] * weight
+	if (total == 0)
+		return "#00000000"
+	return rgb(rSum/total,gSum/total,bSum/total)
+
 /client/proc/set_saturation(s=1)
 	src.saturation_matrix = hsv_transform_color_matrix(1, s, 1)
 	src.color = mult_color_matrix(src.color_matrix, src.saturation_matrix)
 
-/client/proc/set_color(matrix=COLOR_MATRIX_IDENTITY)
-	src.color_matrix = matrix
+/client/proc/set_color(matrix=COLOR_MATRIX_IDENTITY, respect_view_tint_settings = FALSE)
+	if (!respect_view_tint_settings)
+		src.color_matrix = matrix
+	else
+		src.color_matrix = src.view_tint ? matrix : null
 	src.color = mult_color_matrix(src.color_matrix, src.saturation_matrix)
 
 /client/proc/animate_color(matrix=COLOR_MATRIX_IDENTITY, time=5, easing=SINE_EASING)

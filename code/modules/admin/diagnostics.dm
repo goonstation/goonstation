@@ -472,7 +472,7 @@ proc/debug_map_apc_count(delim,zlim)
 						else
 							O2_color = "#ff0000"
 
-					switch (air.temperature - T0C)
+					switch (TO_CELSIUS(air.temperature))
 						if (100 to INFINITY)
 							T_color = "#ff0000"
 						if (75 to 100)
@@ -501,7 +501,7 @@ proc/debug_map_apc_count(delim,zlim)
 
 					if (group?.spaced) img.app.overlays += image('icons/misc/air_debug.dmi', icon_state = "spaced")
 
-					img.app.overlays += src.makeText("<span style='color: [O2_color];'>[round(O2_pp, 0.01)]</span>\n[round(pressure, 0.1)]\n<span style='color: [T_color];'>[round(air.temperature - T0C, 1)]</span>")
+					img.app.overlays += src.makeText("<span style='color: [O2_color];'>[round(O2_pp, 0.01)]</span>\n[round(pressure, 0.1)]\n<span style='color: [T_color];'>[round(TO_CELSIUS(air.temperature), 1)]</span>")
 
 
 					if (pressure > ONE_ATMOSPHERE)
@@ -710,8 +710,8 @@ proc/debug_map_apc_count(delim,zlim)
 		name = "camera coverage"
 		help = {"blue - tile visible by a camera<br>without overlay - tile not visible by a camera<br>number - number of cameras seeing the tile"}
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			if(theTurf.cameras && length(theTurf.cameras))
-				img.app.overlays = list(src.makeText(theTurf.cameras.len))
+			if(theTurf.camera_coverage_emitters && length(theTurf.camera_coverage_emitters))
+				img.app.overlays = list(src.makeText(length(theTurf.camera_coverage_emitters)))
 				img.app.color = "#0000ff"
 			else
 				img.app.alpha = 0
@@ -1155,6 +1155,48 @@ proc/debug_map_apc_count(delim,zlim)
 
 		OnStartRendering(client/C)
 			processed_areas = list()
+
+
+	landmarks
+		name = "landmarks"
+		help = "Displays map landmarks. Does NOT show landmarks that remove themselves."
+		var/list/turf_to_landmark
+
+		OnEnabled(client/C)
+			. = ..()
+			turf_to_landmark = list()
+			for(var/list/landmark_list in list(global.job_start_locations, global.landmarks))
+				for(var/name in landmark_list)
+					for(var/turf/T in landmark_list[name])
+						if(turf_to_landmark[T])
+							turf_to_landmark[T] += name
+						else
+							turf_to_landmark[T] = list(name)
+
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(!turf_to_landmark[theTurf])
+				img.app.alpha = 0
+				return
+			else
+				img.app.alpha = 180
+				img.app.desc = "Landmarks: [jointext(turf_to_landmark[theTurf], ", ")]"
+				var/landmark_text = "<span style='font-size:6pt'>[jointext(turf_to_landmark[theTurf], "<br>")]</span>"
+				img.app.overlays = list(src.makeText(landmark_text))
+				img.app.color = debug_color_of(landmark_text)
+
+	opaque_atom_count
+		name = "opaque atom count"
+		help = {"Shows how many opaque atoms are on a turf according to the turf var"}
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			if(theTurf.opaque_atom_count == 0)
+				img.app.alpha = 0
+				return
+			img.app.alpha = 100
+			img.app.overlays = list(src.makeText(theTurf.opaque_atom_count, RESET_ALPHA | RESET_COLOR))
+			if(theTurf.opaque_atom_count > 0)
+				img.app.color = "#55aa55"
+			else
+				img.app.color = "#aa5555"
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay

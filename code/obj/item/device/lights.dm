@@ -47,7 +47,8 @@
 	icon_off = "flight0"
 	var/icon_broken = "flightbroken"
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	m_amt = 50
 	g_amt = 20
 	mats = 2
@@ -95,7 +96,7 @@
 			return
 
 		src.on = !src.on
-		playsound(src, "sound/items/penclick.ogg", 30, 1)
+		playsound(src, 'sound/items/penclick.ogg', 30, 1)
 		if (src.on)
 			set_icon_state(src.icon_on)
 			if (src.emagged) // Burn them all!
@@ -132,7 +133,8 @@
 	name = "emergency glowstick"
 	desc = "A small tube that reacts chemicals in order to produce a larger radius of illumination than PDA lights. A label on it reads, WARNING: USE IN RAVES, DANCING, OR FUN WILL VOID WARRANTY."// I love the idea of a glowstick having a warranty so I'm leaving the description like this
 	w_class = W_CLASS_SMALL
-	flags = ONBELT | TABLEPASS
+	flags =  TABLEPASS
+	c_flags = ONBELT
 	var/heated = 0
 	col_r = 0
 	col_g = 0.9
@@ -191,12 +193,12 @@
 	attack_self(mob/user as mob)
 		if (!on)
 			boutput(user, "<span class='notice'>You crack [src].</span>")
-			playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+			playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			src.turnon()
 		else
 			if (prob(10) || (heated > 0 && prob(20 + heated * 20)))
 				user.visible_message("<span class='notice'><b>[user]</b> breaks [src]! What [pick("a clutz", "a putz", "a chump", "a doofus", "an oaf", "a jerk")]!</span>")
-				playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+				playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 				if (user.reagents)
 					if (heated > 0)
 						user.reagents.add_reagent("radium", 10, null, T0C + heated * 200)
@@ -440,18 +442,26 @@
 /obj/item/device/light/lava_lamp
 	name = "lava lamp"
 	icon = 'icons/obj/lighting.dmi'
-	icon_state = "lava_lamp0"
-	icon_on = "lava_lamp1"
-	icon_off = "lava_lamp0"
+	icon_state = "lava_lamp-blue0"
+	icon_on = "lava_lamp-blue1"
+	icon_off = "lava_lamp-blue1"
 	w_class = W_CLASS_BULKY
 	desc = "An ancient relic from a simpler, more funky time."
 	col_r = 0.85
 	col_g = 0.45
 	col_b = 0.35
 	brightness = 0.8
+	var/lamp_color
+
+	New()
+		. = ..()
+		lamp_color = pick("blue", "pink", "orange")
+		icon_state = "lava_lamp-[lamp_color]0"
+		icon_on = "lava_lamp-[lamp_color]1"
+		icon_off = "lava_lamp-[lamp_color]0"
 
 	attack_self(mob/user as mob)
-		playsound(src, "sound/items/penclick.ogg", 30, 1)
+		playsound(src, 'sound/items/penclick.ogg', 30, 1)
 		src.on = !src.on
 		user.visible_message("<b>[user]</b> flicks [src.on ? "on" : "off"] the [src].")
 		if (src.on)

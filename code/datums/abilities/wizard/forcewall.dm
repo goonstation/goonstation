@@ -6,9 +6,9 @@
 	cooldown = 20 SECONDS
 	requires_robes = 1
 	requires_being_on_turf = TRUE
-	voice_grim = "sound/voice/wizard/ForcewallGrim.ogg"
-	voice_fem = "sound/voice/wizard/ForcewallFem.ogg"
-	voice_other = "sound/voice/wizard/ForcewallLoud.ogg"
+	voice_grim = 'sound/voice/wizard/ForcewallGrim.ogg'
+	voice_fem = 'sound/voice/wizard/ForcewallFem.ogg'
+	voice_other = 'sound/voice/wizard/ForcewallLoud.ogg'
 	maptext_colors = list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF", "#FF00FF")
 
 	cast()
@@ -20,7 +20,7 @@
 		if(!holder.owner.wizard_spellpower(src))
 			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
 
-		playsound(holder.owner.loc, "sound/effects/mag_forcewall.ogg", 25, 1, -1)
+		playsound(holder.owner.loc, 'sound/effects/mag_forcewall.ogg', 25, 1, -1)
 		var/forcefield1
 		var/forcefield2
 		var/forcefield3
@@ -50,7 +50,6 @@
 				qdel(forcefield5)
 
 /obj/forcefield
-	desc = "A space wizard's magic wall."
 	name = "Forcewall"
 	desc = "An impenetrable magic barrier. Its only flaw is that it cannot last long."
 	icon = 'icons/obj/wizard.dmi'

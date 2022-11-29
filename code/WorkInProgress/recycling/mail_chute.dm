@@ -69,7 +69,6 @@
 		return
 
 	receive_signal(datum/signal/signal)
-
 		if (signal.data["command"] == "mail_reply")
 			if (!src.destinations)
 				src.destinations = new()
@@ -80,7 +79,7 @@
 
 			if (!(destination in src.destinations))
 				src.destinations += destination
-				src.destinations = sortList(src.destinations)
+				sortList(src.destinations, /proc/cmp_text_asc)
 
 		else if (signal.data["command"] == "mail_inquire")
 			src.post_radio_status()
@@ -198,7 +197,7 @@
 	mechanics
 		name = "Mechanics"
 		mail_tag = "mechanics"
-		mailgroup = MGO_MECHANIC
+		mailgroup = MGO_ENGINEER
 		message = 1
 	mining
 		name = "Mining"
@@ -484,7 +483,7 @@
 	mechanics
 		name = "Mechanics"
 		mail_tag = "mechanics"
-		mailgroup = MGO_MECHANIC
+		mailgroup = MGO_ENGINEER
 		message = 1
 
 		north

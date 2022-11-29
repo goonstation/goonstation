@@ -29,6 +29,8 @@
 	var/jetpack = 1 //fuck whoever made this
 	var/jeton = 0
 
+	var/sees_static = TRUE
+
 	//gimmicky things
 	var/obj/item/clothing/head/hat = null
 	var/obj/item/clothing/suit/bedsheet/bedsheet = null
@@ -98,6 +100,9 @@
 		for (var/obj/item/O in src.tools)
 			O.cant_drop = 1
 
+		if(sees_static)
+			get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_mob(src)
+
 		/*SPAWN(0)
 			out(src, "<b>Use \"say ; (message)\" to speak to fellow drones through the spooky power of spirits within machines.</b>")
 			src.show_laws_drone()*/
@@ -124,18 +129,6 @@
 		else
 			src.setFace(faceType, faceColor)
 			src.UpdateOverlays(null, "dizzy")
-
-	proc/updateStatic()
-		if (!src.client)
-			return
-		src.client.images.Remove(mob_static_icons)
-		for (var/image/I in mob_static_icons)
-			if (!I || !I.loc || !src)
-				continue
-			if (I.loc.invisibility && I.loc != src.loc)
-				continue
-			else
-				src.client.images.Add(I)
 
 	death(gibbed)
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
@@ -368,7 +361,7 @@
 			return
 
 		if (src.in_point_mode || src.client?.check_key(KEY_POINT))
-			src.point(target)
+			src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 			if (src.in_point_mode)
 				src.toggle_point_mode()
 			return
@@ -511,7 +504,7 @@
 			C.use(1)
 			src.health = clamp(src.health + 5, 1, src.max_health)
 			user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if (src.health >= 25)
 				boutput(user, "<span class='notice'>The wiring is fully repaired. Now you need to weld the external plating.</span>")
 
@@ -1332,6 +1325,7 @@
 // Same laws, same crap HP, but more useful for just buildin' shit
 /mob/living/silicon/ghostdrone/deluxe
 	robot_talk_understand = 1
+	sees_static = FALSE
 
 	New()
 		..()
@@ -1363,9 +1357,6 @@
 				src.see_invisible = INVIS_CONSTRUCTION
 
 		..()
-
-	updateStatic()
-		return
 
 	say_understands(mob/other, forced_language)
 		return 1

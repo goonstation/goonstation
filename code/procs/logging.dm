@@ -34,23 +34,7 @@ var/global/logLength = 0
 
 	if (disable_log_lists) // lag reduction hack - ONLY print logs to the web versions
 		if (type == LOG_DIARY)
-			switch (diaryType)
-				//These are things we log in the out of game logs (the diary)
-				if (LOG_ADMIN) if (config.log_admin) diaryLogging = 1
-				if (LOG_AHELP) if (config.log_say) diaryLogging = 1
-				if (LOG_MHELP) if (config.log_say) diaryLogging = 1
-				if (LOG_GAME) if (config.log_game) diaryLogging = 1
-				if (LOG_ACCESS) if (config.log_access) diaryLogging = 1
-
-				if (LOG_SAY) if (config.log_say) diaryLogging = 1
-				if (LOG_OOC) if (config.log_ooc) diaryLogging = 1
-				if (LOG_WHISPER) if (config.log_whisper) diaryLogging = 1
-				if (LOG_STATION) if (config.log_station) diaryLogging = 1
-				if (LOG_COMBAT) if (config.log_combat) diaryLogging = 1
-				if (LOG_TELEPATHY) if (config.log_telepathy) diaryLogging = 1
-				if (LOG_DEBUG) if (config.log_debug) diaryLogging = 1
-				if (LOG_VEHICLE) if (config.log_vehicles) diaryLogging = 1
-
+			diaryLogging = should_diary_log(diaryType)
 
 		if (diaryLogging)
 			WRITE_LOG(diary_name, "[diaryType]: [source ? "[source] ": ""][text]")
@@ -88,25 +72,11 @@ var/global/logLength = 0
 			if (LOG_BOMBING) logs[LOG_BOMBING] += ingameLog
 			if (LOG_PATHOLOGY) logs[LOG_PATHOLOGY] += ingameLog
 			if (LOG_VEHICLE) logs[LOG_VEHICLE] += ingameLog
+			if (LOG_GAMEMODE) logs[LOG_GAMEMODE] += ingameLog
 			if (LOG_TOPIC) logs[LOG_TOPIC] += ingameLog
+			if (LOG_CHEMISTRY) logs[LOG_CHEMISTRY] += ingameLog
 			if (LOG_DIARY)
-				switch (diaryType)
-					//These are things we log in the out of game logs (the diary)
-					if (LOG_ADMIN) if (config.log_admin) diaryLogging = 1
-					if (LOG_AHELP) if (config.log_say) diaryLogging = 1
-					if (LOG_MHELP) if (config.log_say) diaryLogging = 1
-					if (LOG_GAME) if (config.log_game) diaryLogging = 1
-					if (LOG_ACCESS) if (config.log_access) diaryLogging = 1
-
-					if (LOG_SAY) if (config.log_say) diaryLogging = 1
-					if (LOG_OOC) if (config.log_ooc) diaryLogging = 1
-					if (LOG_WHISPER) if (config.log_whisper) diaryLogging = 1
-					if (LOG_STATION) if (config.log_station) diaryLogging = 1
-					if (LOG_COMBAT) if (config.log_combat) diaryLogging = 1
-					if (LOG_TELEPATHY) if (config.log_telepathy) diaryLogging = 1
-					if (LOG_DEBUG) if (config.log_debug) diaryLogging = 1
-					if (LOG_VEHICLE) if (config.log_vehicles) diaryLogging = 1
-
+				diaryLogging = should_diary_log(diaryType)
 
 		if (diaryLogging)
 			WRITE_LOG(diary_name, "[diaryType]: [source ? "[source] ": ""][text]")
@@ -116,6 +86,27 @@ var/global/logLength = 0
 			WRITE_LOG(roundLog_name, "\[[type]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
 			logLength++
 	return
+
+///Check config for whether a message should be logged to the diary
+/proc/should_diary_log(diaryType)
+	switch (diaryType)
+		//These are things we log in the out of game logs (the diary)
+		if (LOG_ADMIN) if (config.log_admin) return TRUE
+		if (LOG_AHELP) if (config.log_say) return TRUE
+		if (LOG_MHELP) if (config.log_say) return TRUE
+		if (LOG_GAME) if (config.log_game) return TRUE
+		if (LOG_ACCESS) if (config.log_access) return TRUE
+
+		if (LOG_SAY) if (config.log_say) return TRUE
+		if (LOG_OOC) if (config.log_ooc) return TRUE
+		if (LOG_WHISPER) if (config.log_whisper) return TRUE
+		if (LOG_STATION) if (config.log_station) return TRUE
+		if (LOG_COMBAT) if (config.log_combat) return TRUE
+		if (LOG_TELEPATHY) if (config.log_telepathy) return TRUE
+		if (LOG_DEBUG) if (config.log_debug) return TRUE
+		if (LOG_VEHICLE) if (config.log_vehicles) return TRUE
+		if (LOG_GAMEMODE) if (config.log_gamemode) return TRUE
+	return FALSE
 
 /proc/logDiary(text)
 	WRITE_LOG(diary_name, "[text]")
@@ -427,6 +418,11 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 	if (logType == "alls")
 		for (var/log in logs)
 			if(log == "audit") continue
+			if(log == "topic")
+				if (requesting_admin.tempmin)
+					continue
+				if (!requesting_admin.show_topic_log)
+					continue
 			var/list/logList = logs[log]
 			prettyLogName = replacetext(log, "_", " ")
 			var/list/searchData = list()

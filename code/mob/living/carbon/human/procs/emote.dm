@@ -116,9 +116,9 @@
 
 
 						if (iscluwne(src))
-							playsound(src, "sound/voice/farts/poo.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, 'sound/voice/farts/poo.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 						else if (src.organ_istype("butt", /obj/item/clothing/head/butt/cyberbutt))
-							playsound(src, "sound/voice/farts/poo2_robot.ogg", 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 						else if (src.reagents && src.reagents.has_reagent("honk_fart"))
 							playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
 						else
@@ -637,7 +637,7 @@
 									thing = src.l_hand
 								else if (src.r_hand)
 									thing = src.r_hand
-							if (thing)
+							if (thing && !thing.cant_drop)
 								if (src.juggling())
 									if (prob(src.juggling.len * 5)) // might drop stuff while already juggling things
 										src.drop_juggle()
@@ -1086,7 +1086,7 @@
 				for (var/obj/item/C as anything in src.get_equipped_items())
 					if ((locate(/obj/item/tool/omnitool/syndicate) in C) != null)
 						var/obj/item/tool/omnitool/syndicate/O = (locate(/obj/item/tool/omnitool/syndicate) in C)
-						var/drophand = (src.hand == 0 ? slot_r_hand : slot_l_hand)
+						var/drophand = (src.hand == RIGHT_HAND ? slot_r_hand : slot_l_hand)
 						drop_item()
 						O.set_loc(src)
 						equip_if_possible(O, drophand)
@@ -1361,7 +1361,7 @@
 						if (src.bioHolder.HasEffect("chime_snaps"))
 							src.sound_fingersnap = 'sound/musical_instruments/WeirdChime_5.ogg'
 							src.sound_snap = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
-						if (prob(5))
+						if (prob(5) && !istype(src.gloves, /obj/item/clothing/gloves/bladed))
 							message = "<font color=red><B>[src]</B> snaps [his_or_her(src)] fingers RIGHT OFF!</font>"
 							/*
 							if (src.bioHolder)
@@ -1379,6 +1379,11 @@
 								playsound(src.loc, 'sound/vox/deeoo.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 							else
 								playsound(src.loc, src.sound_fingersnap, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+							if(!ON_COOLDOWN(src, "blade_deploy", 1 SECOND))
+								if(istype(gloves, /obj/item/clothing/gloves/bladed))
+									var/obj/item/clothing/gloves/bladed/blades = src.gloves
+									blades.sheathe_blades_toggle(src)
+									src.update_clothing()
 
 			if ("airquote","airquotes")
 				if (param)
@@ -1490,7 +1495,7 @@
 				for (var/obj/item/C as anything in src.get_equipped_items())
 					if ((locate(/obj/item/gun/kinetic/derringer) in C) != null)
 						var/obj/item/gun/kinetic/derringer/D = (locate(/obj/item/gun/kinetic/derringer) in C)
-						var/drophand = (src.hand == 0 ? slot_r_hand : slot_l_hand)
+						var/drophand = (src.hand == RIGHT_HAND ? slot_r_hand : slot_l_hand)
 						drop_item()
 						D.set_loc(src)
 						equip_if_possible(D, drophand)
@@ -1689,7 +1694,7 @@
 								src.reagents.del_reagent("mutagen")
 								src.reagents.add_reagent("spiders", ant_amt + mut_amt)
 								boutput(src, "<span class='notice'>The ants arachnify.</span>")
-								playsound(src, "sound/effects/bubbles.ogg", 80, 1)
+								playsound(src, 'sound/effects/bubbles.ogg', 80, 1)
 
 			if ("flip")
 				if (src.emote_check(voluntary, 50))
@@ -2171,7 +2176,7 @@
 					// Act 2: Starring Firebarrage
 					else if(!src.reagents.has_reagent("puredabs"))
 						message = "<span class='alert'><B>[src]</B> dabs [his_or_her(src)] arms <B>RIGHT OFF</B>!!!!</span>"
-						playsound(src.loc,"sound/misc/deepfrieddabs.ogg",50,0, channel=VOLUME_CHANNEL_EMOTE)
+						playsound(src.loc, 'sound/misc/deepfrieddabs.ogg', 25,0, channel=VOLUME_CHANNEL_EMOTE)
 						shake_camera(src, 40, 8)
 						if(H)
 							if(H.limbs.l_arm)
@@ -2199,7 +2204,7 @@
 						src.limbs.l_leg?.sever()
 						message = "<span class='alert'>[src] does a sick dab on the bible!</span>"
 						src.visible_message("<span class='alert'>An unseen force smites [src]'s' limbs off</B>!</span>")
-						playsound(src.loc,"sound/misc/deepfrieddabs.ogg",50,0, channel=VOLUME_CHANNEL_EMOTE)
+						playsound(src.loc, 'sound/misc/deepfrieddabs.ogg', 25,0, channel=VOLUME_CHANNEL_EMOTE)
 				else
 					src.show_text("You don't know how to do that but you feel deeply ashamed for trying", "red")
 
@@ -2369,7 +2374,7 @@
 		G.affecting.force_laydown_standup()
 		G.affecting.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
 		src.changeStatus("weakened", 1.5 SECONDS)
-		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 	else
 		src.changeStatus("weakened", 3.9 SECONDS)
 
@@ -2382,7 +2387,7 @@
 			qdel(G)
 
 		G.affecting.TakeDamage("head", 9, 0, 0, DAMAGE_BLUNT)
-		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 	if (istype(tabl, /obj/table/glass))
 		var/obj/table/glass/g_tabl = tabl
 		if (!g_tabl.glass_broken)
@@ -2404,25 +2409,19 @@
 /mob/living/proc/get_targets(range = 1, kind_of_target = "mob")
 	if(!isturf(get_turf(src))) return
 
-	var/list/atom/movable/everything_around = list()
-
-	for(var/atom/movable/AM in view(range, get_turf(src)))
-		if(AM == src)
-			continue
-		everything_around |= AM
-
+	var/list/targets = list()
 	switch(kind_of_target)
 		if("both")
-			return everything_around
+			for(var/atom/movable/AM in view(range, get_turf(src)))
+				if(AM == src)
+					continue
+				targets += AM
 		if("mob")
-			. = list()
-			for(var/mob/M in everything_around)
-				if(M == src)
+			for(var/mob/M in view(range, get_turf(src)))
+				if(M == src || isintangible(M) || isobserver(M))
 					continue
-				. |= M
+				targets += M
 		if("obj")
-			. = list()
-			for(var/obj/O in everything_around)
-				if(O == src)
-					continue
-				. |= O
+			for(var/obj/O in view(range, get_turf(src)))
+				targets += O
+	return targets

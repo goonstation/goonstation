@@ -6,18 +6,20 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "barrier0"
 	uses_multiple_icon_states = 1
-	flags = FPRINT | ONBELT | TABLEPASS
-	c_flags = EQUIPPED_WHILE_HELD
+	flags = FPRINT | TABLEPASS
+	c_flags = EQUIPPED_WHILE_HELD | ONBELT
 	force = 2
 	throwforce = 6
 	w_class = W_CLASS_SMALL
 	mats = 8
-	stamina_damage = 40
+	stamina_damage = 20
+	var/stamina_damage_active = 40
 	stamina_cost = 10
+	var/stamina_cost_active = 25
 	stamina_crit_chance = 0
 	hitsound = 0
 
-	can_disarm = 1
+	can_disarm = 0
 	two_handed = 0
 
 	/// Potentially could be used for subtypes; set it to 1 so that the object occupies two hands when activated.
@@ -50,13 +52,15 @@
 			playsound(src, "sparks", 75, 1, -1)
 			if (src.status)
 				w_class = W_CLASS_BULKY
-				flags &= ~ONBELT //haha NO
+				c_flags &= ~ONBELT //haha NO
 				setProperty("meleeprot_all", 9)
 				setProperty("rangedprot", 1.5)
 				setProperty("movespeed", 0.3)
 				setProperty("disorient_resist", 65)
 				setProperty("disorient_resist_eye", 65)
 				setProperty("disorient_resist_ear", 50) //idk how lol ok
+				stamina_damage = stamina_damage_active
+				stamina_cost = stamina_cost_active
 				setProperty("deflection", 20)
 				flick("barrier_a",src)
 				c_flags |= BLOCK_TOOLTIP
@@ -64,7 +68,7 @@
 				src.setItemSpecial(/datum/item_special/barrier)
 			else
 				w_class = W_CLASS_SMALL
-				flags |= ONBELT
+				c_flags |= ONBELT
 				delProperty("meleeprot_all", 0)
 				delProperty("rangedprot", 0)
 				delProperty("movespeed", 0)
@@ -73,6 +77,8 @@
 				delProperty("disorient_resist_ear", 0)
 				setProperty("deflection", 0)
 				c_flags &= ~BLOCK_TOOLTIP
+				stamina_damage = initial(stamina_damage)
+				stamina_cost = initial(stamina_cost)
 
 				src.setItemSpecial(/datum/item_special/simple)
 
@@ -122,8 +128,8 @@
 	icon_state = "metal"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "barrier0"
-	flags = FPRINT | ONBELT | TABLEPASS
-	c_flags = EQUIPPED_WHILE_HELD
+	flags = FPRINT | TABLEPASS
+	c_flags = EQUIPPED_WHILE_HELD | ONBELT
 	force = 2
 	throwforce = 6
 	w_class = W_CLASS_SMALL

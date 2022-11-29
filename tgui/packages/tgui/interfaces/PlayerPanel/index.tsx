@@ -11,7 +11,7 @@ import { Button, Input, Stack, Table } from '../../components';
 import { Window } from '../../layouts';
 import { Header } from './Header';
 import { Action, SortDirection } from './constant';
-import { CellTemplateConfig, CellValueSelectorConfig, Column, PlayerData, PlayerPanelData, SortConfig, SorterConfig } from './type';
+import { CellTemplateConfig, CellValueSelectorConfig, Column, PlayerData, PlayerPanelData, SortConfig } from './type';
 
 const defaultTemplate = <Row extends object, Value>(config: CellTemplateConfig<Row, Value>) => `${config.value}`;
 const ckeyTemplate = (config: CellTemplateConfig<PlayerData, string>) => {

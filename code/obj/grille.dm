@@ -13,6 +13,7 @@
 	var/corrode_resist = 0
 	var/shock_when_entered = 1
 	var/auto = TRUE
+	//zewaka: typecacheof here
 	var/list/connects_to_turf = list(/turf/simulated/wall/auto, /turf/simulated/wall/auto/reinforced, /turf/simulated/shuttle/wall, /turf/unsimulated/wall)
 	var/list/connects_to_obj = list(/obj/indestructible/shuttle_corner,	/obj/grille/, /obj/machinery/door, /obj/window)
 	text = "<font color=#aaa>+"
@@ -33,6 +34,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		if(src.auto)
 			SPAWN(0) //fix for sometimes not joining on map load
 				if (map_setting && ticker)
@@ -41,6 +43,7 @@
 				src.UpdateIcon()
 
 	disposing()
+		STOP_TRACKING
 		var/list/neighbors = null
 		if (src.auto && src.anchored && map_setting)
 			neighbors = list()
@@ -57,7 +60,7 @@
 		New()
 			..()
 			var/datum/material/M = getMaterial("steel")
-			src.setMaterial(M)
+			src.setMaterial(M, copy=FALSE)
 
 	steel/broken
 		desc = "Looks like its been in this sorry state for quite some time."
@@ -84,6 +87,11 @@
 		connects_to_turf = null
 		connects_to_turf = null
 		event_handler_flags = 0
+
+		New()
+			..()
+			var/datum/material/M = getMaterial("steel")
+			src.setMaterial(M, appearance = FALSE, setname = FALSE, copy = FALSE)
 
 		update_icon(special_icon_state, override_parent = TRUE)
 			if (ruined)
@@ -391,7 +399,7 @@
 					if(win_thin)
 						WI.set_dir(win_dir)
 						WI.ini_dir = win_dir
-					logTheThing(LOG_STATION, usr, "builds a [WI.name] (<b>Material:</b> [WI.material && WI.material.mat_id ? "[WI.material.mat_id]" : "*UNKNOWN*"]) at ([log_loc(usr)] in [usr.loc.loc])")
+					logTheThing(LOG_STATION, user, "builds a [WI.name] (<b>Material:</b> [WI.material && WI.material.mat_id ? "[WI.material.mat_id]" : "*UNKNOWN*"]) at ([log_loc(user)] in [user.loc.loc])")
 				else
 					user.show_text("<b>Error:</b> Couldn't spawn window. Try again and please inform a coder if the problem persists.", "red")
 					return
@@ -418,20 +426,20 @@
 
 		if (can_be_snipped && issnippingtool(W))
 			damage_slashing(src.health_max)
-			src.visible_message("<span class='alert'><b>[usr]</b> cuts apart the [src] with [W].</span>")
+			src.visible_message("<span class='alert'><b>[user]</b> cuts apart the [src] with [W].</span>")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 
 		else if (can_be_unscrewed && (isscrewingtool(W) && (istype(src.loc, /turf/simulated) || src.anchored)))
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			src.anchored = !( src.anchored )
 			src.stops_space_move = !(src.stops_space_move)
-			src.visible_message("<span class='alert'><b>[usr]</b> [src.anchored ? "fastens" : "unfastens"] [src].</span>")
+			src.visible_message("<span class='alert'><b>[user]</b> [src.anchored ? "fastens" : "unfastens"] [src].</span>")
 			return
 
 		else
 			user.lastattacked = src
 			attack_particle(user,src)
-			src.visible_message("<span class='alert'><b>[usr]</b> attacks [src] with [W].</span>")
+			src.visible_message("<span class='alert'><b>[user]</b> attacks [src] with [W].</span>")
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
 
 			switch(W.hit_type)

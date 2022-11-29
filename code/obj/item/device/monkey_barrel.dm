@@ -41,7 +41,7 @@
 				var/turf/location = get_turf(my_barrel.loc)
 				if(location)
 					elecflash(my_barrel,power=3)
-					playsound(my_barrel.loc, "sound/effects/Explosion1.ogg", 75, 1)
+					playsound(my_barrel.loc, 'sound/effects/Explosion1.ogg', 75, 1)
 				logTheThing(LOG_COMBAT, usr, "explodes a barrel of monkeys at [log_loc(src.my_barrel.loc)].")
 				my_barrel.visible_message("<span class='alert'>\The [my_barrel] explodes!</span>")
 				my_barrel.dump_contents()

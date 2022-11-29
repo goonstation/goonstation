@@ -166,8 +166,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 		return data
 
-	proc/special_attack(var/mob/target)
-		boutput(usr, "Your gloves do nothing special")
+	proc/special_attack(var/mob/target, var/mob/living/user)
+		boutput(user, "Your gloves do nothing special")
 		return
 
 	proc/setSpecialOverride(var/type = null, master = null, active = 1)
@@ -193,6 +193,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		var/mob/user = source
 		if(target == user || !istype(user) || user.a_intent == INTENT_HELP || user.a_intent == INTENT_GRAB) return 0
 		if(slot != SLOT_GLOVES || !overridespecial) return 0
+		SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 		specialoverride.pixelaction(target,params,user)
 		user.next_click = world.time + user.combat_click_delay
@@ -367,6 +368,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 /obj/item/clothing/gloves/swat/knight
 	name = "combat gauntlets"
 	desc = "Heavy-duty combat gloves that help you keep hold of your weapon."
+	icon_state = "combatgauntlets"
+	item_state = "swat_syndie"
 
 	setupProperties()
 		..()
@@ -479,6 +482,76 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		..()
 		BLOCK_SETUP(BLOCK_ROPE)
 
+/obj/item/clothing/gloves/bladed
+	desc = "Transparent gloves make it look like the wearer isn't wearing gloves at all. There's a small gap on the back of each glove."
+	name = "transparent gloves"
+	icon_state = "transparent"
+	item_state = "transparent"
+	material_prints = "transparent high-quality synthetic fibers"
+	var/deployed = FALSE
+
+	nodescripition = TRUE
+
+	special_attack(mob/living/target, mob/living/user)
+		if(check_target_immunity( target ))
+			return 0
+		logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with hand blades at [log_loc(user)].")
+		var/obj/item/affecting = target.get_affecting(user)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 16, 16, 0, 0.8, 0, can_punch = 0, can_kick = 0)
+		user.attack_effects(target, affecting)
+		var/action = pick("stab", "slashe")
+		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their hand blades!</span></b>"
+		msgs.played_sound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+		msgs.damage_type = DAMAGE_CUT
+		msgs.flush(SUPPRESS_LOGS)
+		user.lastattacked = target
+
+	proc/sheathe_blades_toggle(mob/living/user)
+		playsound(src.loc, 'sound/effects/sword_unsheath1.ogg', 50, 1)
+
+		if(deployed)
+			deployed = FALSE
+			hit_type = initial(hit_type)
+			force = initial(force)
+			stamina_damage = initial(stamina_damage)
+			stamina_cost = initial(stamina_cost)
+			stamina_crit_chance = initial(stamina_crit_chance)
+
+			hitsound = initial(hitsound)
+			attack_verbs = initial(attack_verbs)
+			activeweapon = initial(activeweapon)
+			setSpecialOverride(null, src)
+
+			name = initial(name)
+			desc = initial(desc)
+			icon_state = initial(icon_state)
+			item_state = initial(item_state)
+
+			nodescripition = initial(nodescripition)
+
+			user.visible_message("<span class='alert'><B>[user]'s hand blades retract!</B></span>")
+		else
+			deployed = TRUE
+			hit_type = DAMAGE_CUT
+			force = 11
+			stamina_damage = 20
+			stamina_cost = 10
+			stamina_crit_chance = 0
+			activeweapon = TRUE
+			setSpecialOverride(/datum/item_special/double, src)
+
+			attack_verbs = "slashes"
+			hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+
+			name = "bladed gloves"
+			desc = "These transparent gloves have blades protruding from them."
+			icon_state = "bladed"
+			item_state = "gloves_bladed"
+
+			nodescripition = FALSE
+
+			user.visible_message("<span class='alert'><B>Blades spring out of [user]'s hands!</B></span>")
+
 /obj/item/clothing/gloves/powergloves
 	desc = "Now I'm playin' with power!"
 	name = "power gloves"
@@ -534,7 +607,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 			var/list/dummies = new/list()
 
-			playsound(user, "sound/effects/elec_bigzap.ogg", 40, 1)
+			playsound(user, 'sound/effects/elec_bigzap.ogg', 40, 1)
 
 			SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
@@ -568,7 +641,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 						if("harm")
 							src.electrocute(victim, 100, netnum)
 							if(uses)
-								victim.shock(src, 1000 * uses, victim.hand == 1 ? "l_arm": "r_arm", 1)
+								victim.shock(src, 1000 * uses, victim.hand == LEFT_HAND ? "l_arm": "r_arm", 1)
 								uses--
 								charges_used = TRUE
 							break

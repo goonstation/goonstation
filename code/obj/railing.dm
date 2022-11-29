@@ -387,13 +387,13 @@
 		switch (interaction)
 			if (RAILING_DISASSEMBLE)
 				verbing = "to disassemble"
-				playsound(the_railing, "sound/items/Welder.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Welder.ogg', 50, 1)
 			if (RAILING_FASTEN)
 				verbing = "fastening"
-				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
 			if (RAILING_UNFASTEN)
 				verbing = "unfastening"
-				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
 		for(var/mob/O in AIviewers(ownerMob))
 			O.show_text("[owner] begins [verbing] [the_railing].", "red")
 
@@ -405,15 +405,15 @@
 				verbens = "disassembles"
 				tool:try_weld(ownerMob, 2)
 				the_railing.railing_deconstruct()
-				playsound(the_railing, "sound/items/Welder.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Welder.ogg', 50, 1)
 			if (RAILING_FASTEN)
 				verbens = "fastens"
 				the_railing.anchored = 1
-				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
 			if (RAILING_UNFASTEN)
 				verbens = "unfastens"
 				the_railing.anchored = 0
-				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
 		for(var/mob/O in AIviewers(ownerMob))
 			O.show_text("[owner] [verbens] [the_railing].", "red")
 			logTheThing(LOG_STATION, ownerMob, "[verbens] [the_railing].")

@@ -8,7 +8,9 @@
 	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 10
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	click_delay = COMBAT_CLICK_DELAY
+	flags = FPRINT | TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	item_state = "electronic"
 	mats = list("MET-1" = 3, "CON-1" = 5, "CRY-1" = 5)
@@ -16,7 +18,6 @@
 	var/status = 1 // Bulb still functional?
 	var/secure = 1 // Access panel still secured?
 	var/use = 0 // Times the flash has been used.
-	var/l_time = 0 // Anti-spam cooldown (in relation to world time).
 	var/emagged = 0 // Booby Trapped?
 
 	var/eye_damage_mod = 0
@@ -84,6 +85,11 @@
 				else
 					. += "\nThe bulb is in terrible condition"
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			qdel(src) //cannot un-turboflash
+
 //I split attack and flash_mob into seperate procs so the rev_flash code is cleaner
 /obj/item/device/flash/attack(mob/living/M, mob/user)
 	if(isghostcritter(user)) return
@@ -142,9 +148,8 @@
 			sleep(0.5 SECONDS)
 			qdel(animation)
 
-	playsound(src, "sound/weapons/flash.ogg", 100, 1)
+	playsound(src, 'sound/weapons/flash.ogg', 100, 1)
 	flick(src.animation_type, src)
-	src.l_time = world.time
 	if (!src.turboflash)
 		src.use++
 
@@ -206,9 +211,6 @@
 	if(isghostcritter(user)) return
 	src.add_fingerprint(user)
 
-	if (src.l_time && world.time < src.l_time + 10)
-		return
-
 	if (user?.bioHolder?.HasEffect("clumsy") && prob(50))
 		user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], but slips and drops it!</span>")
 		user.drop_item()
@@ -236,9 +238,8 @@
 			return
 
 	// Play animations.
-	playsound(src, "sound/weapons/flash.ogg", 100, 1)
+	playsound(src, 'sound/weapons/flash.ogg', 100, 1)
 	flick(src.animation_type, src)
-	src.l_time = world.time
 
 	if (isrobot(user))
 		SPAWN(0)
@@ -288,7 +289,7 @@
 	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 		var/datum/game_mode/revolution/R = ticker.mode
 		if (ishuman(M))
-			//playsound(src, "sound/weapons/rev_flash_startup.ogg", 40, 1 , 0, 0.6) //moved to rev flash only
+			//playsound(src, 'sound/weapons/rev_flash_startup.ogg', 40, 1 , 0, 0.6) //moved to rev flash only
 
 			var/mob/living/carbon/human/H = M
 			var/safety = 0
@@ -443,7 +444,7 @@
 					user.show_text("[src] refuses to flash!", "red") //lol
 					return
 		else if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-			playsound(src, "sound/weapons/rev_flash_startup.ogg", 30, 1 , 0, 0.6)
+			playsound(src, 'sound/weapons/rev_flash_startup.ogg', 30, 1 , 0, 0.6)
 			var/convert_result = convert(M,user)
 			if (convert_result == 0.5)
 				user.show_text("Hold still to override . . . ", "red")

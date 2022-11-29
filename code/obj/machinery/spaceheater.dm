@@ -148,9 +148,9 @@
 
 
 			if (on)
-				playsound(src.loc, "sound/machines/heater_on.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/heater_on.ogg', 50, 1)
 			else
-				playsound(src.loc, "sound/machines/heater_off.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/heater_off.ogg', 50, 1)
 		return
 
 
@@ -179,8 +179,8 @@
 
 				if("cellremove")
 					if(open && cell && !usr.equipped())
-						usr.put_in_hand_or_drop(cell)
 						cell.UpdateIcon()
+						usr.put_in_hand_or_drop(cell)
 						cell = null
 
 						usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
@@ -250,6 +250,11 @@
 
 
 		return
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
 
 /obj/machinery/sauna_stove
 	anchored = 0
@@ -363,9 +368,9 @@
 			UpdateIcon()
 
 			if (on)
-				playsound(src.loc, "sound/machines/heater_on.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/heater_on.ogg', 50, 1)
 			else
-				playsound(src.loc, "sound/machines/heater_off.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/heater_off.ogg', 50, 1)
 		return
 
 
@@ -385,8 +390,8 @@
 
 				if("cellremove")
 					if(open && cell && !usr.equipped())
-						usr.put_in_hand_or_drop(cell)
 						cell.UpdateIcon()
+						usr.put_in_hand_or_drop(cell)
 						cell = null
 
 						usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
@@ -453,3 +458,8 @@
 
 
 		return
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null

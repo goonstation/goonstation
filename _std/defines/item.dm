@@ -1,7 +1,7 @@
 //FLAGS BITMASK
 
-/// can be put in back slot
-#define ONBACK							 (1<<0)
+/// unused
+//#define							 (1<<0)
 /// can pass by a table or rack
 #define TABLEPASS						 (1<<1)
 /// thing doesn't drift in space
@@ -14,8 +14,8 @@
 #define NOSHIELD						 (1<<5)
 /// conducts electricity (metal etc.)
 #define CONDUCT							 (1<<6)
-/// can be put in belt slot
-#define ONBELT							 (1<<7)
+/// can mousedrop reagents into from a reagent_container
+#define ACCEPTS_MOUSEDROP_REAGENTS		 (1<<7)
 /// takes a fingerprint
 #define FPRINT							 (1<<8)
 /// item has priority to check when entering or leaving
@@ -89,7 +89,7 @@
 #define REBUILD_SPECTRO				8
 
 // blood system and item damage things
-#define DAMAGE_BLUNT 1
+#define DAMAGE_BLUNT 1 // 420
 #define DAMAGE_CUT 2
 #define DAMAGE_STAB 4
 #define DAMAGE_BURN 8
@@ -148,6 +148,8 @@
 #define LIMB_WOLF     (1<<15)
 /// Limb is kinda boney
 #define LIMB_SKELLY   (1<<16)
+/// Limb is an artifact limb
+#define LIMB_ARTIFACT (1<<17)
 
 // islimb macros
 #define ismutantlimb(x)   HAS_FLAG(x:kind_of_limb, LIMB_MUTANT)
@@ -192,3 +194,13 @@
 #define FIRESOURCE_OPEN_FLAME 1
 /// Firesource can not cause fires on its own when dropped
 #define FIRESOURCE_IGNITER 2
+
+// for pen reagent dipping
+#define PEN_REAGENT_CAPACITY 4
+
+/// The default, the attack is animated, a message is given, and particles are shown (most items)
+#define ATTACK_VISIBLE 0
+/// The attack is fully hidden. No animation, no message, no particles (sleepy pen, silenced .22)
+#define ATTACK_FULLY_HIDDEN 1
+/// No attack message is shown and no particles are displayed, but the animation of the attacker still plays (genetics analyzer, autoinjectors)
+#define ATTACK_PARTIALLY_HIDDEN 2

@@ -40,9 +40,8 @@
 
 		next(continuous)
 			if (log_line >= messages.len)
-				if (continuous && length(messages))
-					log_line = 1
-				else
+				log_line = 1
+				if (!(continuous && length(messages)))
 					return 0
 
 			log_line++
@@ -68,34 +67,286 @@
 
 			return round((messages.len /  max_lines) * 100)
 
+#define MODE_OFF 0
+#define MODE_RECORDING 1
+#define MODE_PLAYING 2
 
 /obj/item/device/audio_log
 	name = "audio log"
 	desc = "A fairly spartan recording device."
 	icon_state = "recorder"
-	uses_multiple_icon_states = 1
+	uses_multiple_icon_states = TRUE
 	item_state = "electronic"
 	w_class = W_CLASS_SMALL
 	var/obj/item/audio_tape/tape = null
-	var/mode = 0 //1 recording, 2 playing back
+	var/mode = MODE_OFF
 	var/max_lines = 60
-	var/continuous = 1
+	var/text_colour = "#3FCC3F"
+	var/continuous = TRUE
+	var/list/name_colours = list()
 	var/list/audiolog_messages = list()
 	var/list/audiolog_speakers = list()
-	var/self_destruct = 0 //This message will self-destruct in five seconds...
+	var/self_destruct = FALSE
 	mats = 4
 
-	//nuclear mode briefing log
+	wall_mounted
+		name = "Mounted Logger"
+		desc = "A wall-mounted audio log device."
+		max_lines = 30
+
+		attack_hand(mob/user)
+			return attack_self(user)
+
+		updateSelfDialog()
+			return updateUsrDialog()
+
+	New()
+		..()
+		if (!src.chat_text)
+			src.chat_text = new
+		src.vis_contents += src.chat_text
+		SPAWN(1 SECOND)
+			if (!src.tape)
+				src.tape = new /obj/item/audio_tape(src)
+			if (src.audiolog_messages && length(src.audiolog_messages))
+				src.tape.messages = src.audiolog_messages
+				src.audiolog_messages = null
+			if (src.audiolog_speakers && length(src.audiolog_speakers))
+				src.tape.speakers = src.audiolog_speakers
+				src.audiolog_speakers = null
+
+	Topic(href, href_list)
+		..()
+		if (usr.stat || usr.restrained() || usr.lying)
+			return
+		if (((src in usr.contents) || (src.master in usr.contents) || in_interact_range(src, usr) && istype(src.loc, /turf)))
+			src.add_dialog(usr)
+			switch(href_list["command"])
+				if ("rec")
+					if (src.mode != MODE_RECORDING)
+						src.mode = MODE_RECORDING
+					else
+						src.mode = MODE_OFF
+				if ("play")
+					if (src.mode != MODE_PLAYING)
+						play()
+					else
+						src.mode = MODE_OFF
+				if ("stop")
+					stop()
+					if (src.tape)
+						src.tape.log_line = 1
+				if ("clear")
+					src.mode = MODE_OFF
+					if (src.tape)
+						src.tape.reset()
+
+				if ("continuous_mode")
+					continuous = !continuous
+
+				if ("eject")
+					src.mode = MODE_OFF
+					src.icon_state = "[initial(src.icon_state)]-empty"
+
+					src.tape.set_loc(get_turf(src))
+					usr.put_in_hand_or_eject(src.tape) // try to eject it into the users hand, if we can
+
+					playsound(src.loc, 'sound/machines/law_remove.ogg', 40, 0.5)
+
+					src.tape.log_line = 1
+					src.tape = null
+			playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
+			src.add_fingerprint(usr)
+			src.updateSelfDialog()
+		else
+			usr.Browse(null, "window=audiolog")
+			return
+		return
+
+	attack_self(mob/user as mob)
+		..()
+		if (user.stat || user.restrained() || user.lying)
+			return
+		if ((user.contents.Find(src) || user.contents.Find(src.master) || BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf)))
+			src.add_dialog(user)
+
+			var/dat = "<TT><b>Audio Logger</b><br>"
+			if (src.tape)
+				dat += "Memory [src.tape.use_percentage()]% Full -- <a href='byond://?src=\ref[src];command=eject'>Eject</a><br>"
+			else
+				dat += "No Tape Loaded<br>"
+
+			dat += "<table cellspacing=5><tr>"
+			dat += "<td><a href='byond://?src=\ref[src];command=rec'>[src.mode == MODE_RECORDING ? "Recording" : "Not Recording"]</a></td>"
+			dat += "<td><a href='byond://?src=\ref[src];command=play'>[src.mode == MODE_PLAYING ? "Playing" : "Not Playing"]</a></td>"
+			dat += "<td><a href='byond://?src=\ref[src];command=stop'>Stop</a></td>"
+			dat += "<td><a href='byond://?src=\ref[src];command=clear'>Clear Log</a></td>"
+			dat += "<td><a href='byond://?src=\ref[src];command=continuous_mode'>[continuous ? "Looping" : "No Loop"]</a></td></table></tt>"
+
+			user.Browse(dat, "window=audiolog;size=400x140")
+			onclose(user, "audiolog")
+		else
+			user.Browse(null, "window=audiolog")
+			src.remove_dialog(user)
+
+		return
+
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/audio_tape))
+			if (src.tape)
+				boutput(user, "There is already a tape loaded.")
+				return
+
+			user.drop_item(I)
+			I.set_loc(src)
+			src.tape = I
+			src.tape.log_line = 1
+			src.icon_state = initial(src.icon_state)
+			src.updateSelfDialog()
+
+			playsound(src.loc, 'sound/machines/law_insert.ogg', 40, 0.5)
+			user.visible_message("[user] loads a tape into [src].", "You load a tape into [src].")
+
+		else
+			..()
+
+	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/audio_tape) && in_interact_range(src, user) && in_interact_range(W, user))
+			return src.Attackby(W, user)
+		return ..()
+
+	hear_talk(var/mob/living/carbon/speaker, messages, real_name, lang_id)
+		if (src.mode != MODE_RECORDING || !src.tape)
+			return
+
+		if (speaker.mind && speaker.mind.assigned_role == "Captain")
+			speaker.unlock_medal("Captain's Log", 1)
+
+		var/speaker_name = speaker.real_name
+		if (real_name)
+			speaker_name = real_name
+
+		if (speaker.vdisfigured)
+			speaker_name = "Unknown"
+
+		if (ishuman(speaker) && speaker.wear_mask && speaker.wear_mask.vchange)
+			if (speaker:wear_id)
+				speaker_name = speaker:wear_id:registered
+			else
+				speaker_name = "Unknown"
+
+		var/message = (lang_id == "english" || lang_id == "") ? messages[1] : messages[2]
+		if (src.tape.add_message(speaker_name, message, continuous) == 0)
+			src.speak(null, "Memory full. Have a nice day.", TRUE)
+			src.mode = MODE_OFF
+			src.updateSelfDialog()
+
+		return
+
+	proc/play()
+		if (!src.tape)
+			return
+
+		mode = MODE_PLAYING
+		src.create_name_colours(src.tape.speakers)
+		SPAWN(2 SECONDS)
+			while (mode == MODE_PLAYING && src.tape)
+				var/speak_message = tape.get_message(continuous)
+				if (!speak_message)
+					stop()
+					return
+
+				var/separator = findtext(speak_message,"|")
+				if (!separator)
+					stop()
+					return
+
+				var/speaker = copytext(speak_message, 1, separator)
+				speak_message = copytext(speak_message, separator+1)
+
+				speak(speaker, speak_message)
+				sleep(5 SECONDS)
+				if (!tape || !tape.next(continuous))
+					stop()
+
+	proc/stop()
+		src.mode = MODE_OFF
+		src.updateSelfDialog()
+		if (src.self_destruct)
+			SPAWN(2 SECONDS)
+				src.explode()
+
+	proc/speak(speaker, message, show_no_speaker, text_colour_override)
+		if (!message)
+			return
+		var/speaker_colour
+		if (!text_colour_override)
+			speaker_colour = src.text_colour
+			if (speaker && !show_no_speaker && name_colours[speaker])
+				speaker_colour = name_colours[speaker]
+		else
+			speaker_colour = text_colour_override
+		if (!speaker && !show_no_speaker)
+			speaker = "Unknown"
+
+		var/image/chat_maptext/audio_log_text
+		if (istype(src.loc, /turf))
+			audio_log_text = make_chat_maptext(src, message, "color: [speaker_colour];")
+			if (audio_log_text && src.chat_text && length(src.chat_text.lines))
+				audio_log_text.measure(src)
+				for (var/image/chat_maptext/I in src.chat_text.lines)
+					if (I != audio_log_text)
+						I.bump_up(audio_log_text.measured_height)
+		src.audible_message("<span class='game radio' style='color: [speaker_colour]'><span class='name'>[speaker]</span><b> [bicon(src)]\[Log\]</b> <span class='message'>\"[message]\"</span></span>", 2, assoc_maptext = audio_log_text)
+		return
+
+	proc/explode()
+		speak(null, "This message will self-destruct in 5 seconds...", TRUE, "#E00000")
+		sleep(1 SECOND)
+		for (var/i in 1 to 4)
+			speak(null, "[5 - i]", TRUE, "#E00000")
+			sleep(1 SECOND)
+
+		src.blowthefuckup(2)
+		return
+
+	proc/create_name_colours(var/list/names)
+		if (!length(names))
+			return
+
+		var/list/unique_names = list()
+		for (var/i in 1 to length(names))
+			if (!(names[i] in unique_names))
+				unique_names.Add(names[i])
+
+		name_colours = list()
+		if (length(unique_names) == 1)
+			name_colours[unique_names[1]] = text_colour
+			return
+
+		var/list/text_rgb = hex_to_rgb_list(text_colour)
+		var/list/text_hsl = rgb2hsl(text_rgb[1], text_rgb[2], text_rgb[3])
+		var/lightness_part = 60 / (length(unique_names) + 1)
+
+		for (var/i in 1 to length(unique_names))
+			var/lightness = 20 + (lightness_part * i)
+			var/colour = hsl2rgb(text_hsl[1], text_hsl[2], lightness)
+			name_colours[unique_names[i]] = colour
+
+#undef MODE_OFF
+#undef MODE_RECORDING
+#undef MODE_PLAYING
+
+
 	nuke_briefing
 		name = "Mission Briefing"
 		desc = "The standard for covert mission briefing."
 		continuous = 0
-		//self_destruct = 1
 
 		New(newloc, var/nuke_area)
 			..()
-			if(!nuke_area)
-				nuke_area = "an unknown area. I think mission control fucked up somewhere."
+			if (!nuke_area)
+				nuke_area = "an unknown area. I think mission control fucked up somewhere"
 			src.audiolog_messages += "Your mission this time is simple, team."
 			src.audiolog_messages += "NanoTrasen has been causing us significant trouble recently."
 			src.audiolog_messages += "You are to detonate their station with a nuclear device."
@@ -113,7 +364,6 @@
 
 			return
 
-	//researchstat log #1
 	researchstat_log
 		name = "Bloody log"
 		desc = "There's blood on it."
@@ -142,7 +392,7 @@
 								"You weren't there! You didn't see what I-",
 								"Your tone is not appreciated.  If you are unable to control yourself I suggest you leave.",
 								"In fact, I insist.  Our business is concluded-",
-								"Speak with me face to face you son of a bitch!",
+								"Speak with me face to face you son of a gun!",
 								"So you can murder me with whatever plague you have engineered in my labs? Using MY funds?",
 								"If you are not willing to leave I will have security escort you out, with neither suit nor shuttle to shield you.",
 								"Think carefully, Bruce.")
@@ -154,223 +404,6 @@
 								"Willard Jam",
 								"Willard Jam",
 								"Willard Jam")
-
-	wall_mounted
-		name = "Mounted Logger"
-		desc = "A wall-mounted audio log device."
-		max_lines = 30
-
-		attack_hand(mob/user)
-			return attack_self(user)
-
-		updateSelfDialog()
-			return updateUsrDialog()
-
-	attack_self(mob/user as mob)
-		..()
-		if (user.stat || user.restrained() || user.lying)
-			return
-		if ((user.contents.Find(src) || user.contents.Find(src.master) || BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf)))
-			src.add_dialog(user)
-
-			var/dat = "<TT><b>Audio Logger</b><br>"
-			if (src.tape)
-				dat += "Memory [src.tape.use_percentage()]% Full -- <a href='byond://?src=\ref[src];command=eject'>Eject</a><br>"
-			else
-				dat += "No Tape Loaded<br>"
-
-			dat += "<table cellspacing=5><tr>"
-			dat += "<td><a href='byond://?src=\ref[src];command=rec'>[src.mode == 1 ? "Recording" : "Not Recording"]</a></td>"
-			dat += "<td><a href='byond://?src=\ref[src];command=play'>[src.mode == 2 ? "Playing" : "Not Playing"]</a></td>"
-			dat += "<td><a href='byond://?src=\ref[src];command=stop'>Stop</a></td>"
-			dat += "<td><a href='byond://?src=\ref[src];command=clear'>Clear Log</a></td>"
-			dat += "<td><a href='byond://?src=\ref[src];command=continuous_mode'>[continuous ? "Looping" : "No Loop"]</a></td></table></tt>"
-
-			user.Browse(dat, "window=audiolog;size=400x140")
-			onclose(user, "audiolog")
-		else
-			user.Browse(null, "window=audiolog")
-			src.remove_dialog(user)
-
-		return
-
-	attackby(obj/item/I, mob/user)
-		if (istype(I, /obj/item/audio_tape))
-			if (src.tape)
-				boutput(user, "There is already a tape loaded.")
-				return
-
-			user.drop_item(I)
-			I.set_loc(src)
-			src.tape = I
-			src.tape.log_line = 1
-			src.icon_state = initial(src.icon_state)
-			src.updateSelfDialog()
-
-			user.visible_message("[user] loads a tape into [src].", "You load a tape into [src].")
-
-		else
-			..()
-
-	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/audio_tape) && in_interact_range(src, user) && in_interact_range(W, user))
-			return src.Attackby(W, user)
-		return ..()
-
-	New()
-		..()
-		SPAWN(1 SECOND)
-			if (!src.tape)
-				src.tape = new /obj/item/audio_tape(src)
-			if (src.audiolog_messages && length(src.audiolog_messages))
-				src.tape.messages = src.audiolog_messages
-				src.audiolog_messages = null
-			if (src.audiolog_speakers && length(src.audiolog_speakers))
-				src.tape.speakers = src.audiolog_speakers
-				src.audiolog_speakers = null
-
-	Topic(href, href_list)
-		..()
-		if (usr.stat || usr.restrained() || usr.lying)
-			return
-		if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_interact_range(src, usr) && istype(src.loc, /turf)))
-			src.add_dialog(usr)
-			switch(href_list["command"])
-				if("rec")
-					src.mode = 1
-					processing_items.Remove(src)
-				if("play")
-					src.mode = 2
-					processing_items |= src
-				if("stop")
-					src.mode = 0
-					processing_items.Remove(src)
-					if (src.tape)
-						src.tape.log_line = 1
-				if("clear")
-					src.mode = 0
-					processing_items.Remove(src)
-					if (src.tape)
-						src.tape.reset()
-					//src.audiolog_messages = list()
-					//src.audiolog_speakers = list()
-
-				if ("continuous_mode")
-					continuous = !continuous
-
-				if("eject")
-					src.mode = 0
-					processing_items.Remove(src)
-					src.icon_state = "[initial(src.icon_state)]-empty"
-
-					src.tape.set_loc(get_turf(src))
-					usr.put_in_hand_or_eject(src.tape) // try to eject it into the users hand, if we can
-
-					src.tape.log_line = 1
-					src.tape = null
-
-			src.add_fingerprint(usr)
-			src.updateSelfDialog()
-		else
-			usr.Browse(null, "window=audiolog")
-			return
-		return
-
-	hear_talk(var/mob/living/carbon/speaker, messages, real_name, lang_id)
-		if ((src.mode != 1) || !src.tape)
-			return
-
-		if (speaker.mind && speaker.mind.assigned_role == "Captain")
-			speaker.unlock_medal("Captain's Log", 1)
-
-		var/speaker_name = speaker.real_name
-		if (real_name)
-			speaker_name = real_name
-
-		if (speaker.vdisfigured)
-			speaker_name = "Unknown"
-
-		if(ishuman(speaker) && speaker.wear_mask && speaker.wear_mask.vchange)//istype(speaker.wear_mask, /obj/item/clothing/mask/gas/voice))
-			if(speaker:wear_id)
-				speaker_name = speaker:wear_id:registered
-			else
-				speaker_name = "Unknown"
-
-		var/message = (lang_id == "english" || lang_id == "") ? messages[1] : messages[2]
-		if (src.tape.add_message(speaker_name, message, continuous) == 0)
-			src.speak(src.name, "Memory full. Have a nice day.")
-			src.mode = 0
-			processing_items.Remove(src)
-			src.updateSelfDialog()
-
-		return
-
-	process()
-		if((mode != 2) || !src.tape)
-			src.mode = 0
-			processing_items.Remove(src)
-			src.updateSelfDialog()
-			if(src.self_destruct)
-				SPAWN(2 SECONDS)
-					src.explode()
-			return
-
-		var/speak_message = tape.get_message(continuous)
-		if (!speak_message)
-			src.mode = 0
-			processing_items.Remove(src)
-			src.updateSelfDialog()
-			if(src.self_destruct)
-				SPAWN(2 SECONDS)
-					src.explode()
-			return
-		var/separator = findtext(speak_message,"|")
-		if (!separator)
-			src.mode = 0
-			processing_items.Remove(src)
-			src.updateSelfDialog()
-			if(src.self_destruct)
-				SPAWN(2 SECONDS)
-					src.explode()
-			return
-
-		var/speaker = copytext(speak_message, 1, separator)
-		speak_message = copytext(speak_message, separator+1)
-
-		src.speak(speaker, speak_message)
-		if (!src.tape.next(continuous))
-			src.mode = 0
-			processing_items.Remove(src)
-			src.updateSelfDialog()
-		return
-
-
-	proc
-		speak(speaker, message)
-			if(!message)
-				return
-			if(!speaker)
-				speaker = "Unknown"
-
-			for(var/mob/O in all_hearers(5, src.loc))
-				O.show_message("<span class='game radio'><span class='name'>[speaker]</span><b> [bicon(src)]\[Log\]</b> <span class='message'>\"[message]\"</span></span>",2)
-			return
-
-		explode()
-
-			var/turf/T = get_turf(src.loc)
-
-			if (ismob(src.loc))
-				var/mob/M = src.loc
-				M.show_message("<span class='alert'>Your [src] explodes!</span>", 1)
-
-			if(T)
-				T.hotspot_expose(700,125)
-
-				explosion(src, T, -1, -1, 2, 3)
-
-			qdel(src)
-			return
 
 // ########################
 // # z5 prefab audio logs #
@@ -429,3 +462,39 @@
 								"Electronic Voice",
 								"???")
 
+// prefab_water_miraclium_survey.dmm
+// nadir: survey site where the big ol' miraclium deposit was located
+
+/obj/item/device/audio_log/miraclium_survey
+
+		name = "hardened audio log"
+		desc = "A fairly spartan recording device. It seems to be constructed of non-standard materials, with an unfamiliar connector."
+		continuous = 0
+		audiolog_messages = list("Begin log. Technician Reed, survey report, site 2a.",
+								"Deep-crust probe reported improved density over site 1e.",
+								"Anomalous mineral yields estimated-",
+								"*loud clattering noise*",
+								"HARRY! GET YOUR ASS OVER HERE!",
+								"What the hell, Steve? I'm in the middle of a report!",
+								"Dude. We found the big one. Like, the REALLY big one.",
+								"*muffled footsteps*",
+								"Holy shit, you weren't kidding. Gimme one of those.",
+								"*loud thump*",
+								"Goddamn. That's the real deal. Rainbow rocks.",
+								"Let's get the hell back home. I can already taste the burger.",
+								"Shouldn't we grab the log? The tools?",
+								"Nobody's gonna give a shit about those. We found it.")
+		audiolog_speakers = list("gruff male voice",
+								"gruff male voice",
+								"gruff male voice",
+								"???",
+								"young male voice",
+								"gruff male voice",
+								"young male voice",
+								"???",
+								"gruff male voice",
+								"???",
+								"gruff male voice",
+								"gruff male voice",
+								"young male voice",
+								"gruff male voice")

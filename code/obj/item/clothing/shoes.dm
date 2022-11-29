@@ -43,10 +43,10 @@
 					. += "The laces are cut."
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/tank/air) || istype(W, /obj/item/tank/oxygen) || istype(W, /obj/item/tank/emergency_oxygen) || istype(W, /obj/item/tank/jetpack))
+		if (istype(W, /obj/item/tank/air) || istype(W, /obj/item/tank/oxygen) || istype(W, /obj/item/tank/mini_oxygen) || istype(W, /obj/item/tank/jetpack))
 			var/uses = 0
 
-			if(istype(W, /obj/item/tank/emergency_oxygen)) uses = 2
+			if(istype(W, /obj/item/tank/mini_oxygen)) uses = 2
 			else if(istype(W, /obj/item/tank/air)) uses = 4
 			else if(istype(W, /obj/item/tank/oxygen)) uses = 4
 			else if(istype(W, /obj/item/tank/jetpack)) uses = 6
@@ -188,13 +188,13 @@
 		src.setProperty("movespeed", 0.5)
 		src.setProperty("disorient_resist", 10)
 		step_sound = "step_lattice"
-		playsound(src.loc, "sound/items/miningtool_on.ogg", 30, 1)
+		playsound(src.loc, 'sound/items/miningtool_on.ogg', 30, 1)
 	proc/deactivate()
 		src.magnetic = 0
 		src.delProperty("movespeed")
 		src.delProperty("disorient_resist")
 		step_sound = "step_plating"
-		playsound(src.loc, "sound/items/miningtool_off.ogg", 30, 1)
+		playsound(src.loc, 'sound/items/miningtool_off.ogg', 30, 1)
 
 /obj/item/clothing/shoes/hermes
 	name = "sacred sandals" // The ultimate goal of material scientists.
@@ -223,7 +223,7 @@
 	name = "mechanised boots"
 	desc = "Industrial-grade boots fitted with mechanised balancers and stabilisers to increase running speed under a heavy workload."
 #endif
-	mats = 12
+	mats = list("MET-3"= 15,"CON-2" = 10,"POW-3" = 10)
 	burn_possible = 0
 	laces = LACES_NONE
 	kick_bonus = 2
@@ -456,7 +456,7 @@
 /obj/item/clothing/shoes/swat/knight // so heavy you can't get shoved!
 	name = "combat sabatons"
 	desc = "Massive, magnetic, slip-resistant armored footwear for syndicate super-heavies."
-	icon_state = "swatheavy"
+	icon_state = "knightboots"
 	magnetic = 1
 	c_flags = NOSLIP
 	compatible_species = list("cow", "human")
@@ -498,7 +498,7 @@
 
 	New()
 		..()
-		src.tank = new /obj/item/tank/emergency_oxygen(src)
+		src.tank = new /obj/item/tank/mini_oxygen(src)
 
 	setupProperties()
 		..()
@@ -515,7 +515,7 @@
 			if (src.tank)
 				boutput(user, "<span class='alert'>There's already a tank installed!</span>")
 				return
-			if (!istype(W, /obj/item/tank/emergency_oxygen))
+			if (!istype(W, /obj/item/tank/mini_oxygen))
 				boutput(user, "<span class='alert'>[W] doesn't fit!</span>")
 				return
 			boutput(user, "<span class='notice'>You install [W] into [src].</span>")
@@ -593,13 +593,13 @@
 /obj/item/clothing/shoes/scream
 	name = "scream shoes"
 	icon_state = "pink"
-	step_sound = list("sound/voice/screams/male_scream.ogg", "sound/voice/screams/mascream6.ogg", "sound/voice/screams/mascream7.ogg")
+	step_sound = list('sound/voice/screams/male_scream.ogg', 'sound/voice/screams/mascream6.ogg', 'sound/voice/screams/mascream7.ogg')
 	desc = "AAAAAAAAAAAAAAAAAAAAAAA"
 
 /obj/item/clothing/shoes/fart
 	name = "fart-flops"
 	icon_state = "tourist"
-	step_sound = list("sound/voice/farts/poo2.ogg", "sound/voice/farts/fart4.ogg", "sound/voice/farts/poo2_robot.ogg")
+	step_sound = list('sound/voice/farts/poo2.ogg', 'sound/voice/farts/fart4.ogg', 'sound/voice/farts/poo2_robot.ogg')
 	desc = "Do I really need to tell you what these do?"
 
 /obj/item/clothing/shoes/crafted

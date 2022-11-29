@@ -27,10 +27,10 @@
 		if (!..())
 			return 0
 		if (body_side == L_ORGAN)
-			if (src.holder.left_lung && src.holder.left_lung.get_damage() > FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+			if (src.holder.left_lung && src.holder.left_lung.get_damage() > fail_damage && prob(src.get_damage() * 0.2))
 				donor.contract_disease(failure_disease,null,null,1)
 		else
-			if (src.holder.right_lung && src.holder.right_lung.get_damage() > FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+			if (src.holder.right_lung && src.holder.right_lung.get_damage() > fail_damage && prob(src.get_damage() * 0.2))
 				donor.contract_disease(failure_disease,null,null,1)
 		return 1
 
@@ -51,10 +51,10 @@
 
 	// on_broken()
 	// 	if (body_side == L_ORGAN)
-	// 		if (src.holder.left_lung && src.holder.left_lung.get_damage() > FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+	// 		if (src.holder.left_lung && src.holder.left_lung.get_damage() > fail_damage && prob(src.get_damage() * 0.2))
 	// 			donor.contract_disease(failure_disease,null,null,1)
 	// 	else
-	// 		if (src.holder.right_lung && src.holder.right_lung.get_damage() > FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+	// 		if (src.holder.right_lung && src.holder.right_lung.get_damage() > fail_damage && prob(src.get_damage() * 0.2))
 	// 			donor.contract_disease(failure_disease,null,null,1)
 
 	proc/breathe(datum/gas_mixture/breath, underwater, mult, datum/organ/lung/status/update)
@@ -69,6 +69,7 @@
 		// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
 		var/CO2_pp = (breath.carbon_dioxide/breath_moles)*breath_pressure
 		var/FARD_pp = (breath.farts/breath_moles)*breath_pressure
+		var/Radgas_pp = (breath.radgas/breath_moles)*breath_pressure
 		var/oxygen_used
 
 		if(breaths_oxygen)
@@ -95,10 +96,10 @@
 		if (CO2_pp > safe_co2_max)
 			if (!donor.co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
 				donor.co2overloadtime = world.time
-			else if (world.time - donor.co2overloadtime > 120)
+			else if (world.time - donor.co2overloadtime > 12 SECONDS)
 				donor.changeStatus("paralysis", 4 SECONDS * mult/LUNG_COUNT)
 				donor.take_oxygen_deprivation(1.8 * mult/LUNG_COUNT) // Lets hurt em a little, let them know we mean business
-				if (world.time - donor.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
+				if (world.time - donor.co2overloadtime > 30 SECONDS) // They've been in here 30s now, lets start to kill them for their own good!
 					donor.take_oxygen_deprivation(7 * mult/LUNG_COUNT)
 			if (probmult(20)) // Lets give them some chance to know somethings not right though I guess.
 				update.emotes |= "cough"
@@ -109,6 +110,10 @@
 			var/ratio = breath.toxins/safe_toxins_max
 			donor.take_toxin_damage(min(ratio * 125,20) * mult/LUNG_COUNT)
 			update.show_tox_indicator = TRUE
+
+		if (Radgas_pp > 0) //any fallout is too much fallout
+			donor.take_radiation_dose(min(0.03 * Radgas_pp, 0.2) * mult/LUNG_COUNT, internal=TRUE) //not a lethal dose in one second tho
+			breath.radgas *= 0.5 //lets say you keep half of it in your lungs.
 
 		if (length(breath.trace_gases))	// If there's some other shit in the air lets deal with it here.
 			var/datum/gas/sleeping_agent/SA = breath.get_trace_gas_by_type(/datum/gas/sleeping_agent)

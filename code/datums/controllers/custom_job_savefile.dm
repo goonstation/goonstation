@@ -56,12 +56,8 @@ datum/job_controller/proc/savefile_save(client/user, profileNum=1)
 	F["[profileNum]_access"] << src.job_creator.access
 	F["[profileNum]_change_name_on_spawn"] << src.job_creator.change_name_on_spawn
 	F["[profileNum]_special_spawn_location"] << src.job_creator.special_spawn_location
-	F["[profileNum]_spawn_x"] << src.job_creator.spawn_x
-	F["[profileNum]_spawn_y"] << src.job_creator.spawn_y
-	F["[profileNum]_spawn_z"] << src.job_creator.spawn_z
 	F["[profileNum]_bio_effects"] << src.job_creator.bio_effects
 	F["[profileNum]_objective"] << src.job_creator.objective
-	F["[profileNum]_spawn_miscreant"] << src.job_creator.spawn_miscreant
 	F["[profileNum]_receives_implant"] << src.job_creator.receives_implant
 	F["[profileNum]_items_in_backpack"] << src.job_creator.items_in_backpack
 	F["[profileNum]_items_in_belt"] << src.job_creator.items_in_belt
@@ -119,12 +115,8 @@ datum/job_controller/proc/savefile_load(client/user, var/profileNum = 1)
 	F["[profileNum]_access"] >> src.job_creator.access
 	F["[profileNum]_change_name_on_spawn"] >> src.job_creator.change_name_on_spawn
 	F["[profileNum]_special_spawn_location"] >> src.job_creator.special_spawn_location
-	F["[profileNum]_spawn_x"] >> src.job_creator.spawn_x
-	F["[profileNum]_spawn_y"] >> src.job_creator.spawn_y
-	F["[profileNum]_spawn_z"] >> src.job_creator.spawn_z
 	F["[profileNum]_bio_effects"] >> src.job_creator.bio_effects
 	F["[profileNum]_objective"] >> src.job_creator.objective
-	F["[profileNum]_spawn_miscreant"] >> src.job_creator.spawn_miscreant
 	F["[profileNum]_receives_implant"] >> src.job_creator.receives_implant
 	F["[profileNum]_items_in_backpack"] >> src.job_creator.items_in_backpack
 	if(isnull(src.job_creator.items_in_backpack))

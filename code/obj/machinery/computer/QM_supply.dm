@@ -1,3 +1,5 @@
+#define ORDER_LABEL_MAX_LEN 32 // The "order label" refers to the label you can specify when ordering something through cargo.
+
 /datum/rockbox_globals
 	var/const/rockbox_standard_fee = 5
 	var/rockbox_client_fee_min = 1
@@ -144,7 +146,8 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 /obj/machinery/computer/supplycomp/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(!hacked)
 		if(user)
-			boutput(user, "<span class='notice'>Special supplies unlocked.</span>")
+			boutput(user, "<span class='notice'>The intake safety shorts out. Special supplies unlocked.</span>")
+		shippingmarket.launch_distance = 200 // dastardly
 		src.hacked = 1
 		return 1
 	return 0
@@ -529,11 +532,14 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					var/datum/supply_packs/P = O.object
 					shippingmarket.supply_requests -= O
 					if(wagesystem.shipping_budget >= P.cost)
-						wagesystem.shipping_budget -= P.cost
 						O.object = P
 						O.orderedby = usr.name
 						var/default_comment = ""
-						O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment",default_comment)), 1, MAX_MESSAGE_LEN)
+						O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = TRUE, max_length = ORDER_LABEL_MAX_LEN, allowEmpty = TRUE)
+						if (isnull(O.comment))
+							return .("list") // The user cancelled the order
+						O.comment = html_encode(O.comment)
+						wagesystem.shipping_budget -= P.cost
 						var/obj/storage/S = O.create(usr)
 						shippingmarket.receive_crate(S)
 						logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
@@ -561,11 +567,14 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 							return
 
 						if(wagesystem.shipping_budget >= P.cost)
-							wagesystem.shipping_budget -= P.cost
 							O.object = P
 							O.orderedby = usr.name
 							var/default_comment = ""
-							O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment",default_comment)), 1, MAX_MESSAGE_LEN)
+							O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = FALSE, max_length = ORDER_LABEL_MAX_LEN, allowEmpty = TRUE)
+							if (isnull(O.comment))
+								return .("list") // The user cancelled the order
+							O.comment = html_encode(O.comment)
+							wagesystem.shipping_budget -= P.cost
 							var/obj/storage/S = O.create(usr)
 							shippingmarket.receive_crate(S)
 							logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
@@ -615,9 +624,9 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		switch (subaction)
 			if (null, "list")
 				. = {"<h2>Rockbox™ Ore Cloud Storage Service Settings:</h2><ul><br>
-					<B>Rockbox™ Fees:</B> $[!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our <A href='[topicLink("rockbox_controls", "premium_service")]'>Premium Service</A> to remove this fee!)" : ""]<BR>
+					<B>Rockbox™ Fees:</B> [!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0][CREDIT_SIGN] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our <A href='[topicLink("rockbox_controls", "premium_service")]'>Premium Service</A> to remove this fee!)" : ""]<BR>
 					<B>Client Quartermaster Transaction Fee:</B> <A href='[topicLink("rockbox_controls", "fee_pct")]'>[rockbox_globals.rockbox_client_fee_pct]%</A><BR>
-					<B>Client Quartermaster Transaction Fee Per Ore Minimum:</B> <A href='[topicLink("rockbox_controls", "fee_min")]'>$[rockbox_globals.rockbox_client_fee_min]</A><BR>
+					<B>Client Quartermaster Transaction Fee Per Ore Minimum:</B> <A href='[topicLink("rockbox_controls", "fee_min")]'>[rockbox_globals.rockbox_client_fee_min][CREDIT_SIGN]</A><BR>
 					</ul>"}
 
 				return
@@ -646,7 +655,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				fee_min = input(usr,"What fee min would you like to set? (Min 0)","Minimum Fee per Transaction in Credits:",) as num
 				fee_min = max(0,fee_min)
 				rockbox_globals.rockbox_client_fee_min = fee_min
-				. = {"Minimum Fee per Transaction is now $[rockbox_globals.rockbox_client_fee_min]"}
+				. = {"Minimum Fee per Transaction is now [rockbox_globals.rockbox_client_fee_min][CREDIT_SIGN]"}
 
 		return
 
@@ -1088,7 +1097,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 /obj/machinery/computer/supplycomp/proc/print_requisition(var/datum/req_contract/contract)
 	src.printing = 1
-	playsound(src.loc, "sound/machines/printer_thermal.ogg", 60, 0)
+	playsound(src.loc, 'sound/machines/printer_thermal.ogg', 60, 0)
 	SPAWN(2 SECONDS)
 		var/obj/item/paper/thermal/P = new(src.loc)
 		P.info = "<font face='System' size='2'><center>REQUISITION CONTRACT MANIFEST<br>"
@@ -1113,7 +1122,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 	var/topMenu = {"
 		<h2>Trader Communications</h2>
-		<div style='float: right;'><a href='[topicLink("trader_cart", "\ref[T]")]'>🛒 [cart_items] item\s ($[cart_price])</a></div>
+		<div style='float: right;'><a href='[topicLink("trader_cart", "\ref[T]")]'>🛒 [cart_items] item\s ([cart_price][CREDIT_SIGN])</a></div>
 		[T.goods_sell.len ? "<a href='[topicLink("trader_selling", "\ref[T]")]'>Selling ([T.goods_sell.len])</a>" : ""]
 		[T.goods_sell.len && T.goods_buy.len ? " &bull; " : ""]
 		[T.goods_buy.len ? "<a href='[topicLink("trader_buying", "\ref[T]")]'>Buying ([T.goods_buy.len])</a>" : ""]
@@ -1273,5 +1282,8 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	status_signal.source = src
 	status_signal.transmission_method = 1
 	status_signal.data["command"] = command
+	status_signal.data["address_tag"] = "STATDISPLAY"
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal, null, FREQ_STATUS_DISPLAY)
+
+#undef ORDER_LABEL_MAX_LEN

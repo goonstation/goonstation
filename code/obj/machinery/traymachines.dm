@@ -131,7 +131,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 
 ///Tray comes out - probably override this if your tray should move weirdly
 /obj/machinery/traymachine/proc/eject_tray()
-	playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 	var/turf/T_src = get_turf(src)
 	var/turf/T = T_src
@@ -156,7 +156,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 
 ///Tray goes in
 /obj/machinery/traymachine/proc/collect_tray()
-	playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 	for( var/atom/movable/A as mob|obj in my_tray.loc)
 		if (!(A.anchored) && (istype(A, /obj/item) || (istype(A, /mob)))) //note the tray is anchored
 			A.set_loc(src)
@@ -356,7 +356,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 			src.visible_message("<span class='alert'>\The [src.name] finishes and shuts down.</span>")
 			src.locked = FALSE
 			power_usage = initial(power_usage)
-			playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 
 			while (ashes > 0)
 				make_cleanable( /obj/decal/cleanable/ash,src)
@@ -375,6 +375,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	icon_state = "crema_switch"
 	anchored = TRUE
 	req_access = list(access_crematorium)
+	plane = PLANE_NOSHADOW_ABOVE
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	var/area/area = null
 	var/otherarea = null
@@ -417,7 +418,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	icon_state = "tanbed"
 	var/id = 2 //this gets used when the tanning computer links to the bed
 	powerdraw_use = 1000 //power cost while tanning
-	mats = 30
+	//mats = 30
 
 	icon_trayopen = "tanbed"
 	icon_unoccupied = "tanbed"
@@ -461,7 +462,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 			return
 
 		src.visible_message("<span class='alert'>You hear a faint buzz as \the [src] activates.</span>")
-		playsound(src.loc, "sound/machines/shieldup.ogg", 30, 1)
+		playsound(src.loc, 'sound/machines/shieldup.ogg', 30, 1)
 		src.locked = TRUE
 		power_usage = powerdraw_use
 		icon_state = "tanbed_active"
@@ -505,7 +506,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 				src.visible_message("<span class='alert'>The [src.name] finishes and shuts down.</span>")
 				src.locked = FALSE
 				power_usage = initial(power_usage)
-				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 				update() //clear the active sprite
 
 
@@ -594,7 +595,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	name = "tanning computer"
 	desc = "Used to control a tanning bed."
 	icon = 'icons/obj/stationobjs.dmi'
-	mats = 20
+	//mats = 20
 	id = 2
 	icon_state = "tanconsole"
 	var/state_str = ""
@@ -663,14 +664,14 @@ ABSTRACT_TYPE(/obj/machine_tray)
 
 		if (href_list["toggle"])
 			if (linked && !linked.locked && find_tray_tube() && linked.my_tray.loc == linked)
-				playsound(src.loc, "sound/machines/bweep.ogg", 20, 1)
+				playsound(src.loc, 'sound/machines/bweep.ogg', 20, 1)
 				logTheThing(LOG_STATION, usr, "activated the tanning bed at [usr.loc.loc] ([log_loc(usr)])")
 				linked.cremate()
 
 		else if (href_list["timer"])
 			sleep (10 SECONDS)
 			if (linked && !linked.locked && find_tray_tube() && linked.my_tray.loc == linked)
-				playsound(src.loc, "sound/machines/bweep.ogg", 20, 1)
+				playsound(src.loc, 'sound/machines/bweep.ogg', 20, 1)
 				logTheThing(LOG_STATION, usr, "activated the tanning bed at [usr.loc.loc] ([log_loc(usr)])")
 				linked.cremate()
 

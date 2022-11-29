@@ -12,11 +12,18 @@
 	item_state = "brain"
 	var/datum/mind/owner = null
 	edible = 0
-	FAIL_DAMAGE = 120
-	MAX_DAMAGE = 120
+	fail_damage = 120
+	max_damage = 120
 	tooltip_flags = REBUILD_ALWAYS //fuck it, nobody examines brains that often
 
+	New(loc, datum/organHolder/nholder)
+		..()
+		if(made_from == "flesh")
+			src.AddComponent(/datum/component/consume/food_effects, list("brain_food_ithillid"))
+
 	disposing()
+		logTheThing(LOG_COMBAT, src, "[owner ? "(owner's ckey [owner.ckey]) " : ""]has been destroyed by [usr ? constructTarget(usr,"combat") : "???"] in [!isturf(src.loc) ? src.loc : ""][log_loc(src)]. Brain last touched by [src.fingerprintslast].")
+
 		if (owner && owner.brain == src)
 			owner.brain = null
 		else if (donor && donor.mind && donor.mind.brain == src)
@@ -27,6 +34,8 @@
 		..()
 
 	Eat(mob/M, mob/user)
+		if(isghostcritter(M) || isghostcritter(user))
+			return 0
 		if(M == user)
 			if(tgui_alert(user, "Are you sure you want to eat [src]?", "Eat brain?", list("Yes", "No")) == "Yes")
 				logTheThing(LOG_COMBAT, user, "tries to eat [src] (owner's ckey [owner ? owner.ckey : null]).")
@@ -153,11 +162,11 @@
 		if(M.client && (isnull(M.client.color) || M.client.color == "#FFFFFF"))
 			M.client.animate_color(COLOR_MATRIX_FLOCKMANGLED, time=900, easing=SINE_EASING) // ~ 1.5 minutes to complete
 		if(prob(3))
-			var/list/sounds = list("sound/machines/ArtifactFea1.ogg", "sound/machines/ArtifactFea2.ogg", "sound/machines/ArtifactFea3.ogg",
-				"sound/misc/flockmind/flockmind_cast.ogg", "sound/misc/flockmind/flockmind_caw.ogg",
-				"sound/misc/flockmind/flockdrone_beep1.ogg", "sound/misc/flockmind/flockdrone_beep2.ogg", "sound/misc/flockmind/flockdrone_beep3.ogg", "sound/misc/flockmind/flockdrone_beep4.ogg",
-				"sound/misc/flockmind/flockdrone_grump1.ogg", "sound/misc/flockmind/flockdrone_grump2.ogg", "sound/misc/flockmind/flockdrone_grump3.ogg",
-				"sound/effects/radio_sweep1.ogg", "sound/effects/radio_sweep2.ogg", "sound/effects/radio_sweep3.ogg", "sound/effects/radio_sweep4.ogg", "sound/effects/radio_sweep5.ogg")
+			var/list/sounds = list('sound/machines/ArtifactFea1.ogg', 'sound/machines/ArtifactFea2.ogg', 'sound/machines/ArtifactFea3.ogg',
+				'sound/misc/flockmind/flockmind_cast.ogg', 'sound/misc/flockmind/flockmind_caw.ogg',
+				'sound/misc/flockmind/flockdrone_beep1.ogg', 'sound/misc/flockmind/flockdrone_beep2.ogg', 'sound/misc/flockmind/flockdrone_beep3.ogg', 'sound/misc/flockmind/flockdrone_beep4.ogg',
+				'sound/misc/flockmind/flockdrone_grump1.ogg', 'sound/misc/flockmind/flockdrone_grump2.ogg', 'sound/misc/flockmind/flockdrone_grump3.ogg',
+				'sound/effects/radio_sweep1.ogg', 'sound/effects/radio_sweep2.ogg', 'sound/effects/radio_sweep3.ogg', 'sound/effects/radio_sweep4.ogg', 'sound/effects/radio_sweep5.ogg')
 			M.playsound_local(get_turf(M), pick(sounds), 20, 1)
 			boutput(M, "<span class='flocksay italics'><i>... [pick_string("flockmind.txt", "brain")] ...</i></span>")
 

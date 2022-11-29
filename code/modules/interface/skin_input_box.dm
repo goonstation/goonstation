@@ -117,6 +117,7 @@
 var/list/input_window_presets =  list(
 	"say" = list("saywindow", "say \\\"text\\\"", ".say", ".cancel_typing say"),
 	"whisper" = list("whisperwindow", "whisper \\\"text\\\"", ".whisper", ".cancel_typing whisper"),
+	"emote" = list("emotewindow", "Choose an emote to display.", ".emote", ".cancel_typing emote"),
 	"me"  = list("mewindow",  "me (text)",        ".me",  ".cancel_typing me"),
 )
 
@@ -138,6 +139,12 @@ var/list/input_window_presets =  list(
 
 	create_preset_input_window("whisper")
 
+/client/verb/init_emote()
+	set name = ".init_emote"
+	set hidden = TRUE
+
+	create_preset_input_window("emote")
+
 /client/verb/init_me()
 	set name = ".init_me"
 	set hidden = TRUE
@@ -155,11 +162,12 @@ var/list/input_window_presets =  list(
 
 	create_preset_input_window(preset, force=TRUE)
 
-//Create the windows for say, whisper, and me ahead of time
+//Create the windows for say, whisper, emote, and me ahead of time
 /client/New()
 	. = ..()
 
 	if(src) //In case the client was deleted while New was running
 		create_preset_input_window("say", show=FALSE)
 		create_preset_input_window("whisper", show=FALSE)
+		create_preset_input_window("emote", show=FALSE)
 		create_preset_input_window("me", show=FALSE)

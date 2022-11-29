@@ -192,8 +192,7 @@
 
 			// The person trying to use the computer should be inside the scanner, they know what they're doing
 			if(usr == scanner.occupant)
-				// Fuck you, buddy
-				trigger_anti_cheat(usr, "tried to use the genetics scanner on themselves")
+				stack_trace("[usr] (\ref[usr]) is using [src] (\ref [src]) while being inside [scanner] (\ref [src]). That's weird and they might be cheating!")
 
 			scanner.occupant = null
 			scanner.icon_state = "scanner_0"
@@ -355,7 +354,7 @@
 				I.name = "dna activator - [E.name]"
 				I.gene_to_activate = E.id
 				on_ui_interacted(ui.user)
-				playsound(src, "sound/machines/click.ogg", 50, 1)
+				playsound(src, 'sound/machines/click.ogg', 50, 1)
 		if("injector")
 			. = TRUE
 			if (!genResearch.isResearched(/datum/geneticsResearchEntry/injector))
@@ -380,7 +379,7 @@
 			copy_datum_vars(E, NEW)
 			I.BE = NEW
 			on_ui_interacted(ui.user)
-			playsound(src, "sound/machines/click.ogg", 50, 1)
+			playsound(src, 'sound/machines/click.ogg', 50, 1)
 		if("researchmut")
 			. = TRUE
 			var/datum/bioEffect/E = locate(params["ref"])
@@ -561,7 +560,7 @@
 			if (addEffect) // re-mutantify if we would have been able to anyway
 				subject.bioHolder.AddEffect(addEffect)
 			if (genResearch.emitter_radiation > 0)
-				subject.changeStatus("radiation", (genResearch.emitter_radiation) SECONDS, 3)
+				subject.take_radiation_dose((genResearch.emitter_radiation/75) * 0.5 SIEVERTS)
 			src.equipment_cooldown(GENETICS_EMITTERS, 1200)
 			scanner_alert(ui.user, "Genes successfully scrambled.")
 			on_ui_interacted(ui.user)
@@ -580,7 +579,7 @@
 				return
 			src.log_me(subject, "gene scrambled", E)
 			if (genResearch.emitter_radiation > 0)
-				subject.changeStatus("radiation", (genResearch.emitter_radiation) SECONDS, 3)
+				subject.take_radiation_dose((genResearch.emitter_radiation/75) * 0.1 SIEVERTS)
 			subject.bioHolder.RemovePoolEffect(E)
 			subject.bioHolder.AddRandomNewPoolEffect()
 			src.equipment_cooldown(GENETICS_EMITTERS, 600)
@@ -627,7 +626,7 @@
 					copy_datum_vars(E, NEW)
 					GB.offered_genes += new /datum/geneboothproduct(NEW,booth_effect_desc,booth_effect_cost,registered_id)
 					if (GB.offered_genes.len == 1)
-						GB.just_pick_anything()
+						GB.select_product(GB.offered_genes[1])
 					scanner_alert(ui.user, "Sent 5 of '[NEW.name]' to gene booth.")
 					GB.reload_contexts()
 			on_ui_interacted(ui.user)
@@ -699,7 +698,7 @@
 				var/waste = (E.reclaim_mats + genResearch.researchMaterial) - reclamation_cap
 				if (waste >= E.reclaim_mats)
 					scanner_alert(ui.user, "Nothing would be gained from reclamation due to material capacity limit. Reclamation aborted.", error = TRUE)
-					playsound(src, "sound/machines/buzz-two.ogg", 50, 1, -10)
+					playsound(src, 'sound/machines/buzz-two.ogg', 50, 1, -10)
 					return
 				genResearch.researchMaterial = min(genResearch.researchMaterial + E.reclaim_mats, reclamation_cap)
 				if (waste > 0)
@@ -711,7 +710,7 @@
 				E.holder = null
 				saved_mutations -= E
 				qdel(E)
-			playsound(src, "sound/machines/pc_process.ogg", 50, 1)
+			playsound(src, 'sound/machines/pc_process.ogg', 50, 1)
 			src.equipment_cooldown(GENETICS_RECLAIMER, 600)
 		if("save")
 			. = TRUE

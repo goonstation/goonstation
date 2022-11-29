@@ -20,7 +20,7 @@
 			target.set_loc(src)
 			img = image('icons/effects/effects.dmi',src ,"energyorb")
 			target << img
-		RegisterSignal(the_user, list(COMSIG_MOB_DROPPED), .proc/handle_dropped_item)
+		RegisterSignal(the_user, COMSIG_MOB_DROPPED, .proc/handle_dropped_item)
 		APPLY_ATOM_PROPERTY(the_user, PROP_MOB_CANTTHROW, src)
 
 		//SPAWN(0) check() but why
@@ -232,7 +232,7 @@
 		if(D)
 			dummy.invisibility = INVIS_ALWAYS
 
-		playsound(src, "sound/effects/shielddown2.ogg", 40, 1)
+		playsound(src, 'sound/effects/shielddown2.ogg', 40, 1)
 		var/obj/overlay/O = new/obj/overlay(get_turf(target))
 		O.name = "Energy"
 		O.anchored = 1
@@ -266,7 +266,7 @@
 
 			activating = 1
 
-			playsound(src, "sound/effects/singsuck.ogg", 40, 1)
+			playsound(src, 'sound/effects/singsuck.ogg', 40, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(user))
 			O.name = "Energy"
 			O.anchored = 1
@@ -317,10 +317,10 @@
 					return
 				EXIT = PH.parent.linked.handset
 				user.visible_message("[user] enters the phone line using their [src].", "You enter the phone line using your [src].", "You hear a strange sucking noise.")
-				playsound(user.loc, "sound/effects/singsuck.ogg", 40, 1)
+				playsound(user.loc, 'sound/effects/singsuck.ogg', 40, 1)
 				user.drop_item(PH)
 				user.set_loc(target_loc)
-				playsound(user.loc, "sound/effects/singsuck.ogg", 40, 1)
+				playsound(user.loc, 'sound/effects/singsuck.ogg', 40, 1)
 				user.visible_message("[user] suddenly emerges from the [EXIT]. [pick("","What the fuck?")]", "You emerge from the [EXIT].", "You hear a strange sucking noise.")
 			else
 				boutput(user, "<span class='notice'>You activate the [src].</span>")

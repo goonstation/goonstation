@@ -2,7 +2,7 @@
 
 
 /*
-/obj/trait/lizard
+/datum/trait/lizard
 	desc = "You spawn as a lizard. Remember; you have no rights as a human if you choose this trait!"
 	name = "Lizard"
 	id = "lizard"
@@ -17,7 +17,7 @@
 		return
 */
 
-/obj/trait/color_shift
+/datum/trait/color_shift
 	name = "Color Shift"
 	desc = "You are more depressing on the outside but more colorful on the inside."
 	id = "color_shift"
@@ -31,12 +31,12 @@
 
 // Phobias - Undetermined Border
 
-/obj/trait/phobia
+/datum/trait/phobia
 	name = "Phobias suck"
 	desc = "Wow, phobias are no fun! Report this to a coder please."
 	unselectable = TRUE
 
-/obj/trait/phobia/space
+/datum/trait/phobia/space
 	name = "Spacephobia"
 	desc = "Being in space scares you. A lot. While in space you might panic or faint."
 	id = "spacephobia"
@@ -54,14 +54,14 @@
 
 // People use this to identify changelings and people wearing disguises and I can't be bothered
 // to rewrite a whole bunch of stuff for what is essentially something very specific and minor.
-/obj/trait/observant
+/datum/trait/observant
 	name = "Observant"
 	desc = "Examining people will show you their traits."
 	id = "observant"
 	points = -1
 	unselectable = 1
 
-/obj/trait/roboears
+/datum/trait/roboears
 	name = "Robotic ears"
 	desc = "You can hear, understand and speak robotic languages."
 	id = "roboears"
@@ -89,7 +89,7 @@
 		return
 */
 
-/obj/trait/deathwish
+/datum/trait/deathwish
 	name = "Death wish"
 	desc = "You take double damage from most things and have half your normal health."
 	id = "deathwish"
@@ -110,7 +110,7 @@
 			H.max_health = 50
 		return
 
-/obj/trait/glasscannon
+/datum/trait/glasscannon
 	name = "Glass cannon"
 	desc = "You have 1 stamina max. Attacks no longer cost you stamina and\nyou deal double the normal damage with most melee weapons."
 	id = "glasscannon"
@@ -124,21 +124,21 @@
 			H.add_stam_mod_max("trait", -(STAMINA_MAX - 1))
 		return
 
-/obj/trait/soggy
+/datum/trait/soggy
 	name = "Overly soggy"
 	desc = "When you die you explode into gibs and drop everything you were carrying."
 	id = "soggy"
 	points = -1
 	unselectable = 1
 
-/obj/trait/reversal
+/datum/trait/reversal
 	name = "Damage Reversal"
 	desc = "You are now healed by things that would otherwise cause brute, burn, toxin, or brain damage. On the flipside, you are harmed by medicines."
 	id = "reversal" //We can't have oxydamage in there, otherwise they'd immediately start suffocating.
 	points = -1
 	unselectable = 1
 
-/obj/trait/badgenes
+/datum/trait/badgenes
 	name = "Bad Genes"
 	desc = "You spawn with 2 random, permanent, bad mutations."
 	id = "badgenes"
@@ -166,7 +166,7 @@
 			SPAWN(4 SECONDS) owner.add_memory(str) //FUCK THIS SPAWN FUCK FUUUCK
 		return
 
-/obj/trait/goodgenes
+/datum/trait/goodgenes
 	name = "Good Genes"
 	desc = "You spawn with 2 random good mutations."
 	id = "goodgenes"

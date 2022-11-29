@@ -7,6 +7,7 @@
 	anchored = 1
 	layer = EFFECTS_LAYER_BASE//MOB_EFFECT_LAYER
 	flags = NOSPLASH
+	power_usage = 50
 	var/on = FALSE //! Whether the cell is turned on or not
 	var/datum/light/light
 	var/ARCHIVED(temperature)
@@ -16,6 +17,7 @@
 
 	var/current_heat_capacity = 50
 	var/pipe_direction //! Direction of the pipe leading into this, set in New() based on dir
+	var/occupied_power_use = 500 //! Additional power usage when the pod is occupied (and on)
 
 	var/reagent_scan_enabled = 0
 	var/reagent_scan_active = 0
@@ -70,12 +72,12 @@
 				if (!ishuman(occupant))
 					src.go_out() // stop turning into cyborgs thanks
 				if (occupant.health < occupant.max_health || occupant.bioHolder.HasEffect("premature_clone"))
-
+					use_power(occupied_power_use, EQUIP)
 					process_occupant()
 				else
 					if(occupant.mind)
 						src.go_out()
-						playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+						playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 
 		if(air_contents)
 			ARCHIVED(temperature) = air_contents.temperature
@@ -116,11 +118,11 @@
 		src.add_dialog(user)
 		var/temp_text = ""
 		if(air_contents.temperature > T0C)
-			temp_text = "<FONT color=red>[air_contents.temperature - T0C]</FONT>"
+			temp_text = "<FONT color=red>[TO_CELSIUS(air_contents.temperature)]</FONT>"
 		else if(air_contents.temperature > 170)
-			temp_text = "<FONT color=black>[air_contents.temperature - T0C]</FONT>"
+			temp_text = "<FONT color=black>[TO_CELSIUS(air_contents.temperature)]</FONT>"
 		else
-			temp_text = "<FONT color=blue>[air_contents.temperature - T0C]</FONT>"
+			temp_text = "<FONT color=blue>[TO_CELSIUS(air_contents.temperature)]</FONT>"
 
 		var/dat = "<B>Cryo cell control system</B><BR>"
 		dat += "<B>Current cell temperature:</B> [temp_text]&deg;C<BR>"
@@ -191,6 +193,7 @@
 		if(istype(I, /obj/item/reagent_containers/glass))
 			if (I.cant_drop)
 				boutput(user, "<span class='alert'>You can't put that in \the [src] while it's attached to you!")
+				return
 			if(src.beaker)
 				user.show_text("A beaker is already loaded into the machine.", "red")
 				return
@@ -199,7 +202,7 @@
 			user.drop_item()
 			I.set_loc(src)
 			user.visible_message("[user] adds a beaker to \the [src]!", "You add a beaker to the [src]!")
-			logTheThing(LOG_COMBAT, user, "adds a beaker [log_reagents(I)] to [src] at [log_loc(src)].")
+			logTheThing(LOG_CHEMISTRY, user, "adds a beaker [log_reagents(I)] to [src] at [log_loc(src)].") // Rigging cryo is advertised in the 'Tip of the Day' list (Convair880).
 			src.add_fingerprint(user)
 		else if(istype(I, /obj/item/grab))
 			var/obj/item/grab/G = I
@@ -207,7 +210,7 @@
 				qdel(G)
 		else if (istype(I, /obj/item/reagent_containers/syringe))
 			//this is in syringe.dm
-			logTheThing(LOG_COMBAT, user, "injects [log_reagents(I)] to [src] at [log_loc(src)].")
+			logTheThing(LOG_CHEMISTRY, user, "injects [log_reagents(I)] to [src] at [log_loc(src)].")
 			if (!src.beaker)
 				boutput(user, "<span class='alert'>There is no beaker in [src] for you to inject reagents.</span>")
 				return
@@ -225,7 +228,7 @@
 			else
 				reagent_scan_enabled = 1
 				boutput(user, "<span class='notice'>Reagent scan upgrade installed.</span>")
-				playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
+				playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 				user.u_equip(I)
 				qdel(I)
 				return
@@ -238,7 +241,7 @@
 					return
 				src.defib = I
 				boutput(user, "<span class='notice'>Defibrillator installed into [src].</span>")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 80, 0)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 80, 0)
 				user.u_equip(I)
 				I.set_loc(src)
 				build_icon()
@@ -251,7 +254,7 @@
 				src.defib = null
 				src.UpdateIcon()
 				src.visible_message("<span class='alert'>[user] removes the Defibrillator from [src].</span>")
-				playsound(src.loc ,"sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc , 'sound/items/Ratchet.ogg', 50, 1)
 		else if (istype(I, /obj/item/device/analyzer/healthanalyzer))
 			if (!occupant)
 				boutput(user, "<span class='notice'>This Cryo Cell is empty!</span>")

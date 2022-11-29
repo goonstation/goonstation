@@ -13,7 +13,8 @@ There's much less duplicate code here than there used to be, it could probably b
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "injectorbelt_atm"
 	item_state = "injector"
-	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
+	flags = FPRINT | TABLEPASS | NOSPLASH
+	c_flags = ONBELT
 	mats = 10
 
 	var/can_trigger = 1
@@ -98,7 +99,7 @@ There's much less duplicate code here than there used to be, it could probably b
 				src.can_trigger = 0
 				SPAWN(src.min_time) src.can_trigger = 1
 
-				playsound(src,"sound/items/injectorbelt_active.ogg", 33, 0, -5)
+				playsound(src, 'sound/items/injectorbelt_active.ogg', 33, 0, -5)
 				boutput(src.owner, "<span class='notice'>Your Injector belt activates.</span>")
 
 				src.container.reagents.reaction(src.owner, INGEST)
@@ -214,9 +215,9 @@ There's much less duplicate code here than there used to be, it could probably b
 				SPAWN(src.min_time) src.can_trigger = 1
 				var/turf/T = get_turf(src)
 				if(T)
-					playsound(T,"sound/items/injectorbelt_active.ogg", 33, 0, -5)
+					playsound(T, 'sound/items/injectorbelt_active.ogg', 33, 0, -5)
 					SPAWN(0.5 SECONDS)
-						playsound(T,"sound/machines/hiss.ogg", 40, 1, -5)
+						playsound(T, 'sound/machines/hiss.ogg', 40, 1, -5)
 
 				boutput(src.owner, "<span class='notice'>Your [src] activates.</span>")
 
@@ -488,10 +489,10 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 	switch(action)
 		if ("remove_cont")
 			if (current_belt)
-				usr.put_in_hand_or_drop(current_belt.container)
+				user.put_in_hand_or_drop(current_belt.container)
 				current_belt.container = null
 			else if (current_mask)
-				usr.put_in_hand_or_drop(current_mask.container)
+				user.put_in_hand_or_drop(current_mask.container)
 				current_mask.container = null
 			. = TRUE
 
