@@ -42,7 +42,7 @@ export const OperatingComputer = (props, context) => {
           <Tabs.Tab
             selected={tabIndex === 1}
             onClick={() => setTabIndex(1)}>
-            Patient Status
+            Patient Health
           </Tabs.Tab>
           {/* <Tabs.Tab
             selected={tabIndex === 2}
