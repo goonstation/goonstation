@@ -740,7 +740,6 @@
 		unlock()
 			iterations = 0
 			..()
-<<<<<<< HEAD
 
 
 
@@ -1156,5 +1155,3 @@ TYPEINFO(/datum/component/controlled_by_mob)
 		new orig_path(M.loc)
 	qdel(parent)
 	qdel(src)
-=======
->>>>>>> upstream/master
