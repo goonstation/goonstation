@@ -508,8 +508,8 @@ const DisplayKeyHealthIndicators = (props, context) => {
       <Table>
         <DisplayBloodPressure />
         <DisplayTemperature body_temp={data.body_temp} optimal_temp={data.optimal_temp} />
-        <DisplayRads rad_stage={data.rad_stage} rad_dose={data.rad_dose} />
-        <DisplayBrain brain_damage_desc={data.brain_damage_desc} brain_damage_value={data.brain_damage_value} />
+        { data.occupied? <DisplayRads rad_stage={data.rad_stage} rad_dose={data.rad_dose} />: ""}
+        { data.occupied? <DisplayBrain brain_damage_desc={data.brain_damage_desc} brain_damage_value={data.brain_damage_value} />:""}
       </Table>
     </Section>);
 };
