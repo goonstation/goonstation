@@ -2420,11 +2420,16 @@ proc/radioGarbleText(var/message, var/per_letter_corruption_chance = 40)
 proc/illiterateGarbleText(var/message)
 	return radioGarbleText(message, 100)
 
+var/list/runic_symbols = null
+/**
+  * Returns given text replaced randomly by runic symbols
+  */
 proc/runicText(var/message, var/per_letter_corruption_chance = 20)
-	var/list/runes = list()
-	for (var/character_code in 5792 to 5866) //unicode runes character range
-		runes += ascii2text(character_code)
-	return garbleText(message, runes, per_letter_corruption_chance)
+	if (!runic_symbols)
+		runic_symbols = list()
+		for (var/character_code in 5792 to 5866) //unicode runes character range
+			runic_symbols += ascii2text(character_code)
+	return garbleText(message, runic_symbols, per_letter_corruption_chance)
 
 /**
   * Returns the time in seconds since a given timestamp
