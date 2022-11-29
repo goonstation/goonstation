@@ -456,10 +456,9 @@
 		if(!wall.broken && (F.floorrunning || (F.can_floorrun && F.resources >= 10))) //greater than 10 to give some wiggle room, actual cost is 1 per wall tile
 			return TRUE // floor running drones can *always* pass through flockwalls
 
-	if(T.passability_cache == null || options[POP_IGNORE_CACHE])
-	else
-		return T.passability_cache // not anymore
-	if(T.density || !T.pathable) // simplest case
+	if(T.passability_cache != null && !options[POP_IGNORE_CACHE])
+		return T.passability_cache
+	if(T.density || !T.pathable)
 		return FALSE
 	var/direction = get_dir(source, T)
 	if(!direction)
