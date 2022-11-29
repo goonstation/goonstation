@@ -3566,7 +3566,7 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 						break
 				entered_ckeys += M.client.ckey
 				SPAWN(120 SECONDS)
-					entered_ckeys -= M.client.ckey
+					entered_ckeys -= entered_ckeys[1]
 				logTheThing(LOG_DEBUG, M, "entered the Armory [log_loc(M)][armory_auth ? "" : " - Armory unauthorized"].")
 
 // // // // // //
