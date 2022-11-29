@@ -1,5 +1,9 @@
 
 (t)tue nov 29 22
+(u)MitchSmith
+(p)12223
+(e)🎨|C-Sprites
+(*)Credits now use the new ⪽ symbol in their design.
 (u)LeahTheTech
 (p)12209
 (e)⚖🧛📦|C-Balance, A-Gamemodes, A-Game-Objects
