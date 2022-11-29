@@ -62,7 +62,9 @@
 			src.victim = M
 			icon_state = "table2-active"
 			return 1
-	src.victim = null
+	if (src.victim)
+		src.victim = null
+		src.computer?.victim = null
 	icon_state = "table2-idle"
 	return 0
 
