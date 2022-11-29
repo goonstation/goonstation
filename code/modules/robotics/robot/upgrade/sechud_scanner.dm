@@ -1,6 +1,6 @@
 /obj/item/roboupgrade/sechudgoggles
 	name = "cyborg Security HUD upgrade"
-	desc = "An advanced sensor array that allows a cyborg to quickly determine the physical condition of organic life."
+	desc = "A hardened sensor array that indicates the current criminal status of humanoids."
 	icon_state = "up-sechud"
 	drainrate = 5
 

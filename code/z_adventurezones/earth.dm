@@ -26,6 +26,21 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	sound_group = "centcom"
 	filler_turf = "/turf/unsimulated/nicegrass/random"
 	is_centcom = 1
+	var/static/list/entered_ckeys = list()
+
+	Entered(atom/movable/A, atom/oldloc)
+		. = ..()
+		if (current_state < GAME_STATE_FINISHED)
+			if(istype(A, /mob/living))
+				var/mob/living/M = A
+				if(!M.client)
+					return
+				if(M.client.holder)
+					return
+				if(M.client.ckey in entered_ckeys)
+					return
+				entered_ckeys += M.client.ckey
+				logTheThing(LOG_DEBUG, M, "entered Centcom before round end [log_loc(M)].")
 
 /area/centcom/outside
 	name = "Earth"

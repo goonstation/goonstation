@@ -919,13 +919,14 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Janitor"
 	limit = 3
 	wages = PAY_TRADESMAN
-	slot_belt = list(/obj/item/device/pda2/janitor)
+	slot_belt = list(/obj/item/storage/fanny/janny)
 	slot_jump = list(/obj/item/clothing/under/rank/janitor)
 	slot_foot = list(/obj/item/clothing/shoes/galoshes)
 	slot_glov = list(/obj/item/clothing/gloves/long)
+	slot_rhan = list(/obj/item/mop)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	slot_poc1 = list(/obj/item/cloth/towel/janitor)
-	items_in_backpack = list(/obj/item/handheld_vacuum)
+	slot_poc1 = list(/obj/item/device/pda2/janitor)
+	items_in_backpack = list(/obj/item/reagent_containers/glass/bucket)
 
 	New()
 		..()

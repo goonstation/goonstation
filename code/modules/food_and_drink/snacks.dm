@@ -561,6 +561,22 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		else
 			..()
 
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/reagent_containers/food/snacks/churro))
+			if (bites_left <= 1)
+				boutput(user, "You scoop up the last of [src] with the [W.name].")
+			else
+				boutput(user, "You scoop some of [src] with the [W.name].")
+
+			if (src.reagents)
+				src.reagents.trans_to(W, src.reagents.total_volume/bites_left)
+
+			src.bites_left--
+			if (!bites_left)
+				qdel(src)
+		else
+			..()
+
 /obj/item/reagent_containers/food/snacks/soup/tomato
 	name = "tomato soup"
 	desc = "A rich and creamy soup made from tomatoes."

@@ -8897,6 +8897,15 @@
 	dir = 4
 	},
 /area/station/hallway/primary/northeast)
+"enx" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor/engine/caution/east,
+/area/station/quartermaster/storage{
+	name = "Cargo Auxiliary Endpoint"
+	})
 "enC" = (
 /obj/item/storage/toolbox/emergency,
 /obj/item/storage/box/mousetraps,
@@ -15591,6 +15600,18 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/listeningpost/power)
+"hqE" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/access_spawn/engineering,
+/obj/access_spawn/cargo,
+/turf/simulated/floor/black,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
 "hqP" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
@@ -17591,13 +17612,13 @@
 /area/station/medical/robotics)
 "igO" = (
 /obj/table/reinforced/industrial/auto,
-/obj/item/reagent_containers/food/snacks/chips{
-	pixel_x = 7;
-	pixel_y = 5
-	},
 /obj/item/diceholder/dicebox{
 	pixel_x = -10;
 	pixel_y = 3
+	},
+/obj/item/paper/book/from_file/transception_guide{
+	pixel_y = 3;
+	pixel_x = 8
 	},
 /turf/simulated/floor/minitiles/black,
 /area/station/engine/inner{
@@ -18118,6 +18139,23 @@
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
+	})
+"itm" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/machinery/power/apc/autoname_north{
+	cell_type = 5000
+	},
+/turf/simulated/floor/blackwhite{
+	dir = 9
+	},
+/area/station/engine/inner{
+	name = "Transception Array Control"
 	})
 "itp" = (
 /obj/random_item_spawner/junk/some,
@@ -20678,6 +20716,23 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"jDW" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering,
+/obj/access_spawn/cargo,
+/turf/simulated/floor/minitiles/black,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
 "jEk" = (
 /obj/submachine/chef_sink/chem_sink{
 	pixel_y = 15
@@ -20707,14 +20762,11 @@
 	},
 /area/station/hallway/primary/southeast)
 "jFs" = (
-/obj/stool/chair{
-	desc = "";
-	icon_state = "chair_pool"
-	},
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
 /obj/item/device/radio/intercom,
+/obj/stool/chair/pool,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
@@ -28105,22 +28157,6 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
-"mPK" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/obj/item/paper{
-	icon_state = "index_card";
-	info = "NADIR-TRSC-COMM: Cargo personnel are authorized to unlock the Transception Array area power controller. ";
-	name = "printed card";
-	pixel_x = -5;
-	pixel_y = -1
-	},
-/turf/simulated/floor/engine/caution/east,
-/area/station/quartermaster/storage{
-	name = "Cargo Auxiliary Endpoint"
-	})
 "mPS" = (
 /obj/machinery/arc_electroplater,
 /turf/simulated/floor/grey/side{
@@ -30879,13 +30915,10 @@
 /turf/simulated/floor/blue,
 /area/pasiphae/bridge)
 "omm" = (
-/obj/stool/chair{
-	desc = "";
-	icon_state = "chair_pool"
-	},
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
+/obj/stool/chair/pool,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
@@ -31685,17 +31718,6 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
-"oFV" = (
-/obj/machinery/door/airlock/pyro/external,
-/obj/forcefield/energyshield/perma/doorlink,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/access_spawn/engineering,
-/turf/simulated/floor/black,
-/area/station/engine/inner{
-	name = "Transception Array Control"
-	})
 "oGf" = (
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/industrial,
@@ -32431,22 +32453,6 @@
 /turf/simulated/floor/black/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
-	})
-"oWY" = (
-/obj/machinery/door/airlock/pyro/engineering{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	dir = 8
-	},
-/obj/firedoor_spawn,
-/obj/access_spawn/engineering,
-/turf/simulated/floor/minitiles/black,
-/area/station/engine/inner{
-	name = "Transception Array Control"
 	})
 "oXK" = (
 /obj/decal/tile_edge{
@@ -40127,12 +40133,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/listeningpost)
-"sKS" = (
-/obj/machinery/computer/shuttle_bus{
-	dir = 4
-	},
-/turf/simulated/floor/engine,
-/area/station/hallway/secondary/exit)
 "sLf" = (
 /obj/monkeyplant,
 /obj/machinery/firealarm{
@@ -40236,6 +40236,12 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/pasiphae)
+"sNn" = (
+/obj/machinery/computer/transit_shuttle/johnbus{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/hallway/secondary/exit)
 "sNA" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/mechanical{
@@ -43624,17 +43630,18 @@
 /area/station/crew_quarters/courtroom)
 "uqH" = (
 /obj/table/reinforced/industrial/auto,
-/obj/item/device/radio{
-	pixel_x = -10;
-	pixel_y = 5
-	},
 /obj/item/device/light/flashlight{
-	pixel_x = 13;
-	pixel_y = 11
+	pixel_x = 14;
+	pixel_y = 14
 	},
-/obj/item/storage/toolbox/electrical{
-	pixel_x = 7;
-	pixel_y = -2
+/obj/item/sheet/steel{
+	amount = 10;
+	pixel_y = 3;
+	pixel_x = -4
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = -2;
+	pixel_x = 14
 	},
 /turf/simulated/floor/minitiles/black,
 /area/station/engine/inner{
@@ -48275,27 +48282,6 @@
 "wLs" = (
 /turf/simulated/floor/black,
 /area/station/storage/eva)
-"wMe" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc{
-	cell_type = 7500;
-	dir = 1;
-	name = "Transception Antenna APC";
-	pixel_y = 24;
-	req_access = list(43,31)
-	},
-/obj/decal/tile_edge/line/yellow{
-	dir = 1;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/blackwhite{
-	dir = 9
-	},
-/area/station/engine/inner{
-	name = "Transception Array Control"
-	})
 "wMp" = (
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/machinery/door/airlock/pyro/reinforced,
@@ -96411,11 +96397,11 @@ mvA
 mvA
 mvA
 baj
-wMe
+itm
 thj
 baj
 baj
-oWY
+jDW
 baj
 baj
 baj
@@ -97316,7 +97302,7 @@ aPz
 aPz
 yge
 eSp
-oFV
+hqE
 hMP
 bhB
 mvA
@@ -98227,7 +98213,7 @@ abk
 sbd
 baj
 baj
-oWY
+jDW
 baj
 baj
 baj
@@ -100337,7 +100323,7 @@ gEe
 gEe
 gEe
 qoO
-mPK
+enx
 uyk
 oAZ
 fur
@@ -115713,7 +115699,7 @@ hJZ
 pnk
 cEv
 uSe
-sKS
+sNn
 uSe
 bUI
 bUI

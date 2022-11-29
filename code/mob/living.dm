@@ -171,7 +171,7 @@
 		E.cancel_camera()
 
 	if (src.static_image)
-		mob_static_icons.Remove(src.static_image)
+		get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).remove_image(src.static_image)
 		src.static_image = null
 
 	if(src.ai_active)
@@ -1248,7 +1248,7 @@
 	if (!islist(default_mob_static_icons))
 		return
 	if (src.static_image)
-		mob_static_icons.Remove(src.static_image)
+		get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).remove_image(src.static_image)
 	var/checkpath = src.static_type_override ? src.static_type_override : src.type
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -1262,7 +1262,7 @@
 				src.static_image.override = 1
 				src.static_image.loc = src
 				src.static_image.plane = PLANE_LIGHTING
-				mob_static_icons.Add(src.static_image)
+				get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_image(src.static_image)
 				generate_static = 0
 		if (generate_static)
 			if (ispath(checkpath, /datum/mutantrace) && ishuman(src))
@@ -1276,7 +1276,7 @@
 				src.static_image.override = 1
 				src.static_image.loc = src
 				src.static_image.plane = PLANE_LIGHTING
-				mob_static_icons.Add(src.static_image)
+				get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_image(src.static_image)
 		return src.static_image
 
 /proc/check_static_defaults()
