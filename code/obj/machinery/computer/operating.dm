@@ -56,7 +56,6 @@
 
 /obj/machinery/computer/operating/proc/sample_victim()
 	. = list()
-	.["health"] = src.victim?.health
 	.["brute"] = src.victim?.get_brute_damage()
 	.["burn"] = src.victim?.get_burn_damage()
 	.["toxin"] = src.victim?.get_toxin_damage()
