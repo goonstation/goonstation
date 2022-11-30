@@ -512,7 +512,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	attack_hand(mob/user)
 		if(src.on_fire)
 			extinguish()
-		else
+		else if(uses_custom_ornaments)
 			if(user?.client?.ckey in src.got_ornament_kit)
 				boutput(user, "<span class='alert'>You've already gotten an ornament kit this round!</span>")
 				return
