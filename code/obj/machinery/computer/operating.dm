@@ -140,8 +140,6 @@
 				special = "Cybernetic"
 			if (O.unusual)
 				special = "Unusual"
-			if (O.synthetic)
-				special = "Synthetic"
 			dmg_calc = calc_organ_damage_severity(O)
 
 		organ_data += list(list(
@@ -195,8 +193,6 @@
 				current_status = I.remove_object
 			else if (istype(H.limbs.l_arm, /obj/item/parts/robot_parts/arm/left/))
 				current_status = "Cybernetic"
-			else if (istype(H.limbs.l_arm, /obj/item/parts/human_parts/arm/left/synth))
-				current_status = "Synthetic"
 			else if (istype(H.limbs.l_arm, /obj/item/parts/artifact_parts/arm/))
 				current_status = "UNKNOWN"
 		limb_data += list(list(
@@ -214,8 +210,6 @@
 				current_status = I.remove_object
 			else if (istype(H.limbs.r_arm, /obj/item/parts/robot_parts/arm/right))
 				current_status = "Cybernetic"
-			else if (istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/synth))
-				current_status = "Synthetic"
 			else if (istype(H.limbs.r_arm, /obj/item/parts/artifact_parts/arm/))
 				current_status = "UNKNOWN"
 		limb_data += list(list(
@@ -230,8 +224,6 @@
 		else
 			if (istype(H.limbs.l_leg, /obj/item/parts/robot_parts/leg/left))
 				current_status = "Cybernetic"
-			else if (istype(H.limbs.l_leg, /obj/item/parts/human_parts/leg/left/synth))
-				current_status = "Synthetic"
 			else if (istype(H.limbs.l_leg, /obj/item/parts/artifact_parts/leg/))
 				current_status = "UNKNOWN"
 		limb_data += list(list(
@@ -246,8 +238,6 @@
 		else
 			if (istype(H.limbs.r_leg, /obj/item/parts/robot_parts/leg/right))
 				current_status = "Cybernetic"
-			else if (istype(H.limbs.r_leg, /obj/item/parts/human_parts/leg/right/synth))
-				current_status = "Synthetic"
 			else if (istype(H.limbs.r_leg, /obj/item/parts/artifact_parts/leg/))
 				current_status = "UNKNOWN"
 		limb_data += list(list(
