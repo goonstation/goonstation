@@ -390,7 +390,7 @@
 
 /client/MouseDrop(var/over_object, var/src_location, var/over_location, mob/user as mob) //handling click dragging of items within one tile of a zoldorf booth.
 	..()
-	if(!istype(usr,/mob/zoldorf))
+	if(!istype(user,/mob/zoldorf))
 		return
 	var/turf/Tb = get_turf(over_location)
 	var/turf/Ta = get_turf(src_location)
@@ -398,18 +398,18 @@
 	if(!Tb || !Ta || Ta.density || Tb.density)
 		return
 
-	if(istype(over_object,/obj/item) && istype(usr.loc,/obj/machinery/playerzoldorf))
+	if(istype(over_object,/obj/item) && istype(user.loc,/obj/machinery/playerzoldorf))
 		var/obj/item/i = over_object
 		if(i.anchored)
 			return
-		var/obj/machinery/playerzoldorf/pz = usr.loc
-		if((i in range(1,usr.loc)) && (Tb in range(1,Ta)))
+		var/obj/machinery/playerzoldorf/pz = user.loc
+		if((i in range(1,user.loc)) && (Tb in range(1,Ta)))
 			if(!pz.GetOverlayImage("fortunetelling"))
 				pz.UpdateOverlays(image('icons/obj/zoldorf.dmi',"fortunetelling"),"fortunetelling")
 				SPAWN(0.6 SECONDS)
 					if(pz)
 						pz.ClearSpecificOverlays("fortunetelling")
-			if((istype(i,/obj/item/paper/thermal/playerfortune)) && (Ta == get_turf(usr.loc)))
+			if((istype(i,/obj/item/paper/thermal/playerfortune)) && (Ta == get_turf(user.loc)))
 				var/obj/item/paper/thermal/playerfortune/fi = i
 				fi.icon = 'icons/obj/zoldorf.dmi'
 				fi.icon_state = "fortuneburn"

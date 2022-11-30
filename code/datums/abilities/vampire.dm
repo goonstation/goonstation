@@ -342,6 +342,7 @@
 			return
 
 		logTheThing(LOG_DIARY, sender, "(GHOULSPEAK): [message]", "ghoulsay")
+		logTheThing(LOG_SAY, sender, "(GHOULSPEAK): [message]")
 
 		if (sender.client && sender.client.ismuted())
 			boutput(sender, "You are currently muted and may not speak.")
@@ -534,7 +535,7 @@
 			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
-		if (istype(get_area(M), /area/station/chapel) && M.check_vampire_power(3) != 1)
+		if (istype(get_area(M), /area/station/chapel) && M.check_vampire_power(3) != 1 && !(M.job == "Chaplain"))
 			boutput(M, "<span class='alert'>Your powers do not work in this holy place!</span>")
 			return 0
 

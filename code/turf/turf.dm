@@ -222,6 +222,18 @@
 	asteroid
 		icon_state = "aplaceholder"
 
+	plasma
+		temperature = T20C
+		toxins = ONE_ATMOSPHERE/3
+		New()
+			..()
+			var/obj/overlay/tile_gas_effect/gas_icon_overlay = new
+			gas_icon_overlay.icon = 'icons/effects/tile_effects.dmi'
+			gas_icon_overlay.icon_state = "plasma-alpha"
+			gas_icon_overlay.dir = pick(cardinal)
+			gas_icon_overlay.alpha = 100
+			gas_icon_overlay.set_loc(src)
+
 /turf/space/no_replace
 
 /turf/space/New()
@@ -347,6 +359,7 @@ proc/generate_space_color()
 	explosion_resistance = 999999
 	density = 1
 	opacity = 1
+	gas_impermeable = 1
 
 	Enter()
 		return 0 // nope
@@ -564,6 +577,7 @@ proc/generate_space_color()
 	var/list/rllights = RL_Lights
 
 	var/old_opacity = src.opacity
+	var/old_opaque_atom_count = src.opaque_atom_count
 
 	var/old_blocked_dirs = src.blocked_dirs
 	var/old_checkinghasproximity = src.checkinghasproximity
@@ -646,7 +660,7 @@ proc/generate_space_color()
 	new_turf.RL_NeedsAdditive = rlneedsadditive
 	//new_turf.RL_OverlayState = rloverlaystate //we actually want these cleared
 	new_turf.RL_Lights = rllights
-	new_turf.opaque_atom_count = opaque_atom_count
+	new_turf.opaque_atom_count = old_opaque_atom_count
 
 
 	new_turf.blocked_dirs = old_blocked_dirs

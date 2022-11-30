@@ -13,7 +13,8 @@ There's much less duplicate code here than there used to be, it could probably b
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "injectorbelt_atm"
 	item_state = "injector"
-	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
+	flags = FPRINT | TABLEPASS | NOSPLASH
+	c_flags = ONBELT
 	mats = 10
 
 	var/can_trigger = 1
@@ -488,10 +489,10 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 	switch(action)
 		if ("remove_cont")
 			if (current_belt)
-				usr.put_in_hand_or_drop(current_belt.container)
+				user.put_in_hand_or_drop(current_belt.container)
 				current_belt.container = null
 			else if (current_mask)
-				usr.put_in_hand_or_drop(current_mask.container)
+				user.put_in_hand_or_drop(current_mask.container)
 				current_mask.container = null
 			. = TRUE
 

@@ -457,6 +457,9 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			if (src.byond_version < 514 || src.byond_build < 1566)
 				if (tgui_alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page? Make sure to download the stable release.", "ALERT", list("Yes", "No")) == "Yes")
 					src << link("http://www.byond.com/download/")
+			if (src.byond_version >= 515)
+				if (alert(src, "Please DOWNGRADE BYOND to version 514.1589! Many things will break otherwise. Would you like to be taken to the correct download page?", "ALERT", "Yes", "No") == "Yes")
+					src << link("http://www.byond.com/download/build/514/514.1589_byond_setup.zip")
 /*
  				else
 					alert(src, "You won't be able to play without updating, sorry!")
@@ -679,6 +682,9 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 				if(isnull(message_who))
 					message_admins(message)
 				else
+					var/mob/M = message_who
+					var/client/C = istype(M) ? M.client : message_who
+					message = replacetext(replacetext(message, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]")
 					boutput(message_who, message)
 	if(alert_them)
 		var/list/both_collide = ip_to_ckeys[src.address] & cid_to_ckeys[src.computer_id]
@@ -965,7 +971,28 @@ var/global/curr_day = null
 		boutput(usr, "You are being redirected to [game_server.name]...")
 		usr << link(game_server.url)
 
-
+/client/verb/download_sprite(atom/A as null|mob|obj|turf in view(1))
+	set name = "Download Sprite"
+	set desc = "Download the sprite of an object for wiki purposes. The object needs to be next to you."
+	set hidden = TRUE
+	if(!A)
+		var/datum/promise/promise = new
+		var/datum/targetable/refpicker/abil = new
+		abil.promise = promise
+		src.mob.targeting_ability = abil
+		src.mob.update_cursor()
+		A = promise.wait_for_value()
+	if(!A)
+		boutput(src, "No target selected.")
+		return
+	if(GET_DIST(src.mob, A) > 1 && !(src.holder || istype(src.mob, /mob/dead)))
+		boutput(src, "Target is too far away (it needs to be next to you).")
+		return
+	if(!src.holder && ON_COOLDOWN(src.player, "download_sprite", 30 SECONDS))
+		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src.player, "download_sprite", 0))].")
+		return
+	var/icon/icon = getFlatIcon(A)
+	src << ftp(icon, "[ckey(A.name)]_[time2text(world.realtime,"YYYY-MM-DD")].png")
 
 
 /*
@@ -1506,11 +1533,13 @@ var/global/curr_day = null
 	//tell the interface helpers to recompute data
 	src.mapSizeHelper?.update()
 
-/client/verb/autoscreenshot()
+/client/verb/xscreenshot(arg as text|null)
 	set hidden = 1
-	set name = ".autoscreenshot"
+	set name = ".xscreenshot"
 
-	winset(src, null, "command=\".screenshot auto\"")
+	if(!isnull(arg))
+		arg = " [arg]"
+	winset(src, null, "command=\".screenshot[arg]\"")
 	boutput(src, "<B>Screenshot taken!</B>")
 
 /client/verb/test_experimental_intents()

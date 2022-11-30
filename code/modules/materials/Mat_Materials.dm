@@ -127,7 +127,6 @@ ABSTRACT_TYPE(/datum/material)
 	proc/addTrigger(var/list/L, var/datum/materialProc/D)
 		for(var/datum/materialProc/P in L)
 			if(P.type == D.type) return 0
-		D.owner = src
 		L.Add(D)
 		L[D] = 0
 		return
@@ -1219,7 +1218,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	desc = "It's pepperoni pizza. Some would say the best kind of pizza"
 	color = "#FFFFFF"
 	texture = "pizza2"
-	texture_blend = ICON_OVERLAY
+	texture_blend = BLEND_SUBTRACT
 	edible_exact = 1
 	edible = 1
 

@@ -437,7 +437,7 @@
 
 		//remove problem traits from people on pod_wars
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
-			H.traitHolder.removeTrait("immigrant")
+			H.traitHolder.removeTrait("stowaway")
 			H.traitHolder.removeTrait("pilot")
 			H.traitHolder.removeTrait("sleepy")
 			H.traitHolder.removeTrait("puritan")
@@ -458,22 +458,24 @@
 		src = possible_new_mob // let's hope this breaks nothing
 
 
-	if (ishuman(src) && JOB.add_to_manifest && !src.traitHolder.hasTrait("immigrant"))
+	if (ishuman(src) && JOB.add_to_manifest && !src.traitHolder.hasTrait("stowaway"))
 		// Manifest stuff
 		var/sec_note = ""
 		var/med_note = ""
+		var/synd_int_note = ""
 		if(src.client?.preferences && !src.client.preferences.be_random_name)
 			sec_note = src.client.preferences.security_note
 			med_note = src.client.preferences.medical_note
+			synd_int_note = src.client.preferences.synd_int_note
 		var/obj/item/device/pda2/pda = locate() in src
-		data_core.addManifest(src, sec_note, med_note, pda?.net_id)
+		data_core.addManifest(src, sec_note, med_note, pda?.net_id, synd_int_note)
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if (src.traitHolder && !src.traitHolder.hasTrait("immigrant"))
+		if (src.traitHolder && !src.traitHolder.hasTrait("stowaway"))
 			H.spawnId(rank)
-		if (src.traitHolder && src.traitHolder.hasTrait("immigrant"))
-			//Has the immigrant trait - they're hiding in a random locker
+		if (src.traitHolder && src.traitHolder.hasTrait("stowaway"))
+			//Has the stowaway trait - they're hiding in a random locker
 			var/list/obj/storage/SL = list()
 			for_by_tcl(S, /obj/storage)
 				// Only closed, unsecured lockers/crates on Z1 that are not inside the listening post (or the martian ship (on oshan))
@@ -632,7 +634,7 @@
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
 		src.force_equip(GPSDEVICE, slot_in_backpack)
 
-	if (src.traitHolder?.hasTrait("immigrant") || src.traitHolder?.hasTrait("pilot"))
+	if (src.traitHolder?.hasTrait("stowaway") || src.traitHolder?.hasTrait("pilot"))
 		var/obj/item/device/pda2/pda = locate() in src
 		src.u_equip(pda)
 		qdel(pda)
@@ -670,8 +672,7 @@
 		trinket = new T(src)
 
 	if (trinket) // rewrote this a little bit so hopefully people will always get their trinket
-		src.trinket = trinket
-		src.trinket.event_handler_flags |= IS_TRINKET
+		src.trinket = get_weakref(trinket)
 		trinket.name = "[src.real_name][pick_string("trinkets.txt", "modifiers")] [trinket.name]"
 		trinket.quality = rand(5,80)
 		var/equipped = 0
@@ -725,8 +726,6 @@
 	rank = "Captain"
 #endif
 	var/obj/item/card/id/C = null
-	if(istype(get_area(src),/area/afterlife))
-		rank = "Captain"
 	var/datum/job/JOB = find_job_in_controller_by_string(rank)
 	if (!JOB || !JOB.slot_card)
 		return null

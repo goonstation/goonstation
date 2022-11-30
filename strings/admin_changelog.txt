@@ -1,3 +1,9 @@
+(t)tue nov 29 22
+(u)pali
+(*)Players can now make their own Spacemas tree ornaments. If you see a low-qualtiy or rule-breaking ornament you should examine it (that shows you the author's ckey in the description) and then click "Annihilate ornament" in the window to permanently get rid of it.
+(t)fri nov 25 22
+(u)pali
+(*)New Toggle-Whitelist verb which lets you toggle whitelist on or off. And Whitelist-Add-Temp which lets you whitelist a ckey for this round only.<div style='font-size:0.7em;'>If the current server has whitelist turned on by default (i.e. the Dev or Event server) the Toggle-Whitelist command lets you select the number of rounds for which the server will remain open to the public.<br>If the current whitelist status differs from the config status this is displayed in server name as either [CLOSED] or [OPEN] and also with more details in admin status tab.</div>
 (t)sat oct 22 22
 (u)pali
 (*)Radio station music-playing now goes on cooldown when admin music gets played.

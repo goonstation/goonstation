@@ -112,7 +112,8 @@
 	desc = "Used to cut facial hair"
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "razorblade"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
 	force = 7

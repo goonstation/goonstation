@@ -172,7 +172,7 @@
 					speechinput = input("[sentence](noun) and (verb) yourself.", "Noun", null) as null|anything in fortune_nouns
 					if(!speechinput) break
 					sentence += "[speechinput] and "
-					speechinput = input("[sentence]and (verb) yourself.", "Verb", null) as null|anything in fortune_verbs
+					speechinput = input("[sentence](verb) yourself.", "Verb", null) as null|anything in fortune_verbs
 					if(!speechinput) break
 					sentence += "[speechinput] yourself."
 				if("Remember to...")

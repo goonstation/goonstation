@@ -3,7 +3,7 @@
 	desc = "A leather satchel for holding things."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "satchel"
-	flags = ONBELT
+	c_flags = ONBELT
 	health = 6
 	w_class = W_CLASS_TINY
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
@@ -115,7 +115,7 @@
 
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
-		if (!in_interact_range(src, user)  || BOUNDS_DIST(O, user) > 0)
+		if (!in_interact_range(src, user)  || BOUNDS_DIST(O, user) > 0 || !can_act(user))
 			return
 		var/proceed = 0
 		for(var/check_path in src.allowed)

@@ -45,6 +45,12 @@
 	#define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
 	/// get radioactivity level of atom (0 if signal not registered - ie, has no radioactive component) (return_val as a list)
 	#define COMSIG_ATOM_RADIOACTIVITY "atom_get_radioactivity"
+
+// ---- minimap ----
+
+/// When an atom requires to create a single minimap marker for a specific minimap.
+#define COMSIG_NEW_MINIMAP_MARKER "new_minimap_marker"
+
 // ---- atom/movable signals ----
 
 	// ---- generic ----
@@ -114,8 +120,6 @@
 	#define COMSIG_ITEM_CONSUMED "itm_atk_consumed"
 	/// After an item's been eaten, but there's still some left (eater,item)
 	#define COMSIG_ITEM_CONSUMED_PARTIAL "itm_atk_consumed_partial"
-	/// After we've consumed an item (eater,item)
-	#define COMSIG_ITEM_CONSUMED_ALL "itm_atk_consumed_all"
 	/// Called before an attackby that uses this item (target, user)
 	#define COMSIG_ITEM_ATTACKBY_PRE "itm_atkby_pre"
 	/// When an item is used to attack a mob before it actually hurts the mob
