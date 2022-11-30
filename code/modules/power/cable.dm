@@ -539,8 +539,7 @@
 	(this old way made knots whenever there were 3 or more way junctions)
 	else if (length(directions) >= 3)
 		for (var/i in 1 to length(directions))
-			cable_laying(0, directions[i])
-	 */
+			cable_laying(0, directions[i]) */
 	else if (length(directions) >= 3)
 		for (var/i in 1 to length(directions) - 1)
 			cable_laying(directions[i], directions[1+i])
