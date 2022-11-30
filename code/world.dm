@@ -672,6 +672,7 @@ var/f_color_selector_handler/F_Color_Selector
 	processScheduler.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
+	world.save_intra_round_value("tree_ornaments", get_spacemas_ornaments())
 	global.save_noticeboards()
 	for_by_tcl(canvas, /obj/item/canvas/big_persistent)
 		canvas.save()
