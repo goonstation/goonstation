@@ -466,7 +466,7 @@
 	// checks for cablespawners around itself
 		var/declarer = alldirs_unique[alldirs.Find(dir_to_cs)]
 		for (var/obj/cablespawner/spawner in get_step(src, dir_to_cs))
-			if (spawner.type == src.type)
+			if (spawner.cable_type == src.cable_type)
 				cable_surr |= declarer
 	/*
 	Diagonals are ugly. So if the option to connect to a diagonal tile orthogonally presents itself
@@ -496,12 +496,11 @@
 	*/
 	if (cable_surr & EAST)
 	// optimises the outlier case
-		for (var/obj/cablespawner/spawner in orange(1, src))
-			if (spawner.x - src.x == 1 && spawner.y - src.y == 0)
-				spawner.cable_surr |= WEST
+		for (var/obj/cablespawner/spawner in get_step(src, EAST))
+			spawner.cable_surr |= WEST
 
 	for (var/dir_to_c in alldirs)
-	// checks for regular cables
+	// checks for regular cables (these always connect by default)
 		var/declarer = alldirs_unique[alldirs.Find(dir_to_c)]
 		for (var/obj/cable/normal_cable in get_step(src, dir_to_c))
 			if (normal_cable.type == src.cable_type)
