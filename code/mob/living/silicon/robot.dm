@@ -2263,9 +2263,6 @@
 	proc/pick_module()
 		if(src.module) return
 		if(!src.freemodule) return
-		if(length(src.upgrades) >= 3)
-			boutput(src, "<span class='notice'>Your upgrades are full. You must make room for the module to be activated!</span>")
-			return
 		boutput(src, "<span class='notice'>You may choose a starter module.</span>")
 		var/list/starter_modules = list("Brobocop", "Chemistry", "Civilian", "Engineering", "Medical", "Mining")
 		if (ticker?.mode)
@@ -2280,37 +2277,44 @@
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Brobocop module. It comes with a free Security HUD Upgrade.</span>")
 				src.set_module(new /obj/item/robot_module/brobocop(src))
-				src.upgrades += new /obj/item/roboupgrade/sechudgoggles(src)
+				if(length(src.upgrades) < 3)
+					src.upgrades += new /obj/item/roboupgrade/sechudgoggles(src)
 			if("Chemistry")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Chemistry module. It comes with a free Spectroscopic Scanner Upgrade.</span>")
 				src.set_module(new /obj/item/robot_module/chemistry(src))
-				src.upgrades += new /obj/item/roboupgrade/spectro(src)
+				if(length(src.upgrades) < 3)
+					src.upgrades += new /obj/item/roboupgrade/spectro(src)
 			if("Civilian")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Civilian module. It comes with a free Efficiency Upgrade.</span>")
 				src.set_module(new /obj/item/robot_module/civilian(src))
-				src.upgrades += new /obj/item/roboupgrade/efficiency(src)
+				if(length(src.upgrades) < 3)
+					src.upgrades += new /obj/item/roboupgrade/efficiency(src)
 			if("Engineering")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Engineering module. It comes with a free Meson Vision Upgrade.</span>")
 				src.set_module(new /obj/item/robot_module/engineering(src))
-				src.upgrades += new /obj/item/roboupgrade/opticmeson(src)
+				if(length(src.upgrades) < 3)
+					src.upgrades += new /obj/item/roboupgrade/opticmeson(src)
 			if("Medical")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Medical module. It comes with a free ProDoc Healthgoggles Upgrade.</span>")
 				src.set_module(new /obj/item/robot_module/medical(src))
-				src.upgrades += new /obj/item/roboupgrade/healthgoggles(src)
+				if(length(src.upgrades) < 3)
+					src.upgrades += new /obj/item/roboupgrade/healthgoggles(src)
 			if("Mining")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Mining module. It comes with a free Propulsion Upgrade.</span>")
 				src.set_module(new /obj/item/robot_module/mining(src))
-				src.upgrades += new /obj/item/roboupgrade/jetpack(src)
+				if(length(src.upgrades) < 3)
+					src.upgrades += new /obj/item/roboupgrade/jetpack(src)
 			if ("Construction Worker")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Construction Worker module. It comes with a free Construction Visualizer Upgrade.</span>")
 				src.set_module(new /obj/item/robot_module/construction_worker(src))
-				src.upgrades += new /obj/item/roboupgrade/visualizer(src)
+				if(length(src.upgrades) < 3)
+					src.upgrades += new /obj/item/roboupgrade/visualizer(src)
 
 		var/datum/robot_cosmetic/C = null
 		var/datum/robot_cosmetic/M = null
