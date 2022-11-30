@@ -463,55 +463,11 @@
 /// checks around itself for cables, adds up to 8 bits to cable_surr
 /obj/cablespawner/proc/check(var/obj/cable/cable)
 	//gonna change this to use step
-	for (dir_to_cs in alldirs)
-		var/declarer = null
-		if (dir_to_cs in cardinal)
-			declarer = dir_to_cs
-		else
-			if (dir_to_cs == NORTHEAST)
-				declarer = NORTHEAST_UNIQUE
-			else if (dir_to_cs == SOUTHEAST)
-				declarer = SOUTHEAST_UNIQUE
-
+	for (var/dir_to_cs in alldirs)
+		var/declarer = alldirs_unique[alldirs.Find(dir_to_cs)]
 		for (var/obj/cablespawner/spawner in get_step(src, dir_to_cs))
-			if
-	for (var/obj/cablespawner/spawner in orange(1, src))
-	// checks for cablespawners around itself
-		var/disx = spawner.x - src.x
-		var/disy = spawner.y - src.y
-		if (disx == 0 && disy == 0)
-			if (src.override_centre_connection == TRUE)
-			// if a node spawner is in the same spot as a regular one, delete the regular one
-				qdel(spawner)
-				continue
-			else if (spawner.override_centre_connection == TRUE)
-			// ideally this never gets called lol, no idea if it will work
-			// same as the first if statement but the other way
-				qdel(src)
-				return
-			else if (src.type == spawner.type)
-			// if they're duplicates, delete the duplicate
-				qdel(spawner)
-				continue
-		if (disy == 1)
-			if (disx == 1)
-				cable_surr |= NORTHEAST_UNIQUE
-			else if (disx == -1)
-				cable_surr |= NORTHWEST_UNIQUE
-			else
-				cable_surr |= NORTH
-		else if (disy == -1)
-			if (disx == 1)
-				cable_surr |= SOUTHEAST_UNIQUE
-			else if (disx == -1)
-				cable_surr |= SOUTHWEST_UNIQUE
-			else
-				cable_surr |= SOUTH
-		else if (disy == 0)
-			if (disx == 1)
-				cable_surr |= EAST
-			else if (disx == -1)
-				cable_surr |= WEST
+			if (spawner.type == src.type)
+				cable_surr |= declarer
 	/*
 	Diagonals are ugly. So if the option to connect to a diagonal tile orthogonally presents itself
 	we'll get rid of the corners and connect in NESOUTHWEST_UNIQUE directions first.
@@ -542,6 +498,11 @@
 			if (spawner.x - src.x == 1 && spawner.y - src.y == 0)
 				spawner.cable_surr |= WEST
 
+	for (var/dir_to_c in alldirs)
+		var/declarer = alldirs_unique[alldirs.Find(dir_to_cs)]
+		for (var/obj/cable/normal_cable in get_step(src, dir_to_cs))
+			if (normal_cable.type == src.cable_type)
+				cable_surr |= declarer
 	for (var/obj/cable/normal_cable in orange(1, src))
 	// checks normal, prexisting, manually placed cables (must be joined to no matter what)
 	// turns out, since initialize() does cablespawners one by one
