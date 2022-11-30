@@ -463,6 +463,18 @@
 /// checks around itself for cables, adds up to 8 bits to cable_surr
 /obj/cablespawner/proc/check(var/obj/cable/cable)
 	//gonna change this to use step
+	for (dir_to_cs in alldirs)
+		var/declarer = null
+		if (dir_to_cs in cardinal)
+			declarer = dir_to_cs
+		else
+			if (dir_to_cs == NORTHEAST)
+				declarer = NORTHEAST_UNIQUE
+			else if (dir_to_cs == SOUTHEAST)
+				declarer = SOUTHEAST_UNIQUE
+
+		for (var/obj/cablespawner/spawner in get_step(src, dir_to_cs))
+			if
 	for (var/obj/cablespawner/spawner in orange(1, src))
 	// checks for cablespawners around itself
 		var/disx = spawner.x - src.x
