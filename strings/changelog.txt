@@ -1,5 +1,9 @@
 
 (t)tue nov 29 22
+(u)LeahTheTech
+(p)12209
+(e)⚖🧛📦|C-Balance, A-Gamemodes, A-Game-Objects
+(*)The syndicate cyborg conversion chamber is now slightly more resistant to explosions.
 (u)Azrun
 (p)10479
 (e)🪲🆕⚖📄⏰👽🍝|C-Bug, C-Feature, C-Balance, A-UI, A-Status-Effects, A-Mutantraces, A-Catering
