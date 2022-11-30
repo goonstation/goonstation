@@ -67,10 +67,11 @@
 	if(!src.victim)
 		return
 	var/datum/color/blood_color_value = new()
-	blood_color_value.from_hex(DEFAULT_BLOOD_COLOR)
-	if(src.victim.bioHolder.bloodColor != null) {
-		blood_color_value.from_hex(src.victim.bioHolder.bloodColor)
-	}
+	blood_color_value.from_hex(src.victim.blood_color)
+
+	// hack for hemoglyph b/c we don't tint blood color properly
+	if(src.victim.bioHolder.GetEffect("roach"))
+		blood_color_value.from_hex("#009E81") // commented out blood color in `mutantraces.dm`. yep.
 
 	var/datum/statusEffect/simpledot/radiation/R = src.victim.hasStatus("radiation")
 	if (R?.stage)
