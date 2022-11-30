@@ -2,7 +2,8 @@
 /obj/item/device/calibrator
 	name = "harmonic systems calibrator"
 	icon_state = "calibrator"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	force = 5.0
 	w_class = W_CLASS_SMALL
 	throwforce = 5.0
@@ -646,7 +647,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				boutput(user, "The internal wiring doesn't seem to need repair.")
 				return
 		else if(istype(W,/obj/item/device/calibrator))
-			var/scalex = input(usr,"Accepts values 0 through [src.max_intensity]","Adjust Intensity","1") as num
+			var/scalex = input(user,"Accepts values 0 through [src.max_intensity]","Adjust Intensity","1") as num
 			scalex = clamp(scalex,0,src.max_intensity)
 			src.intensity = scalex
 			src.update_fx()

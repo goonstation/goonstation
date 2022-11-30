@@ -1451,7 +1451,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	item_state = "pick"
 	health = 8
 	w_class = W_CLASS_NORMAL
-	flags = ONBELT
+	c_flags = ONBELT
 	force = 7
 	var/cell_type = null
 	var/dig_strength = 1
@@ -1559,7 +1559,7 @@ obj/item/clothing/gloves/concussive
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "powerpick"
 	item_state = "ppick1"
-	flags = ONBELT
+	c_flags = ONBELT
 	dig_strength = 2
 	digcost = 2
 	cell_type = /obj/item/ammo/power_cell
@@ -1608,7 +1608,7 @@ obj/item/clothing/gloves/concussive
 	icon_state = "lasdrill"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "drill"
-	flags = ONBELT
+	c_flags = ONBELT
 	force = 10
 	mats = 4
 	dig_strength = 2
@@ -1675,7 +1675,7 @@ obj/item/clothing/gloves/concussive
 	icon_state = "powershovel"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "pshovel1"
-	flags = ONBELT
+	c_flags = ONBELT
 	dig_strength = 0
 	digcost = 2
 	cell_type = /obj/item/ammo/power_cell
@@ -1721,7 +1721,7 @@ obj/item/clothing/gloves/concussive
 /obj/item/breaching_charge/mining
 	name = "concussive charge"
 	desc = "It is set to detonate in 5 seconds."
-	flags = ONBELT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	var/emagged = 0
@@ -1862,7 +1862,9 @@ obj/item/clothing/gloves/concussive
 	/// List of types that cargo teles are allowed to send. Built in New, shared across all teles
 	var/static/list/allowed_types = list()
 	w_class = W_CLASS_SMALL
-	flags = ONBELT | FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	c_flags = ONBELT
+
 	mats = 4
 
 	New()
@@ -1898,10 +1900,10 @@ obj/item/clothing/gloves/concussive
 
 	attack_self(mob/user) // Fixed --melon
 		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
-			boutput(usr, "<span class='alert'>The transporter is out of charge.</span>")
+			boutput(user, "<span class='alert'>The transporter is out of charge.</span>")
 			return
 		if (!length(global.cargo_pad_manager.pads))
-			boutput(usr, "<span class='alert'>No receivers available.</span>")
+			boutput(user, "<span class='alert'>No receivers available.</span>")
 		else
 			var/mob/holder = src.loc
 			var/selection = tgui_input_list(user, "Select Cargo Pad Location:", "Cargo Pads", global.cargo_pad_manager.pads, 15 SECONDS)
@@ -2031,7 +2033,7 @@ obj/item/clothing/gloves/concussive
 	desc = "A device capable of detecting nearby mineral deposits."
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "minanal"
-	flags = ONBELT
+	c_flags = ONBELT
 	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
@@ -2098,7 +2100,7 @@ obj/item/clothing/gloves/concussive
 	desc = "The scanner doesn't look right somehow."
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "minanal"
-	flags = ONBELT
+	c_flags = ONBELT
 	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)

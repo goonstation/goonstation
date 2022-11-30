@@ -535,7 +535,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shovel"
 	w_class = W_CLASS_NORMAL
-	flags = ONBELT
+	c_flags = ONBELT
 	force = 7 // 15 puts it significantly above most other weapons
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 

@@ -1218,7 +1218,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	desc = "It's pepperoni pizza. Some would say the best kind of pizza"
 	color = "#FFFFFF"
 	texture = "pizza2"
-	texture_blend = ICON_OVERLAY
+	texture_blend = BLEND_SUBTRACT
 	edible_exact = 1
 	edible = 1
 

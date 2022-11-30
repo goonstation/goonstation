@@ -2163,7 +2163,7 @@
 						return FALSE
 				return TRUE
 		if (slot_belt)
-			if ((I.flags & ONBELT) && src.w_uniform)
+			if ((I.c_flags & ONBELT) && src.w_uniform)
 				return TRUE
 		if (slot_wear_id)
 			if (istype(I, /obj/item/card/id) && src.w_uniform)
@@ -2171,7 +2171,7 @@
 			if (istype(I, /obj/item/device/pda2) && src.w_uniform) // removed the check for the ID card in here because tbh it was silly that you could only equip it to the ID slot when it had a card  :I
 				return TRUE
 		if (slot_back)
-			if (I.flags & ONBACK)
+			if (I.c_flags & ONBACK)
 				return TRUE
 		if (slot_wear_mask) // It's not pretty, but the mutantrace check will do for the time being (Convair880).
 			if (!src.organHolder.head)

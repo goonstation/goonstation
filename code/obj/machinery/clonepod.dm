@@ -207,7 +207,7 @@
 	// Start cloning someone (transferring mind + DNA into new body),
 	// starting a new clone cycle if needed
 	// Returns 1 (stated) or 0 (failed to start for some reason)
-	proc/growclone(mob/ghost as mob, var/clonename, var/datum/mind/mindref, var/datum/bioHolder/oldholder, var/datum/abilityHolder/oldabilities, var/datum/traitHolder/traits)
+	proc/growclone(mob/ghost as mob, var/clonename, var/datum/mind/mindref, var/datum/bioHolder/oldholder, var/datum/abilityHolder/oldabilities, var/datum/traitHolder/traits, var/datum/cloner_defect_holder/defects)
 		if (((!ghost) || (!ghost.client)) || src.mess || src.attempting)
 			return 0
 
@@ -257,11 +257,14 @@
 		if(src.occupant.client) // gross hack for resetting tg layout bleh bluh
 			src.occupant.client.set_layout(src.occupant.client.tg_layout)
 
-		if(!src.perfect_clone && src.occupant.bioHolder.clone_generation > 1)
-			var/health_penalty = (src.occupant.bioHolder.clone_generation - 1) * 15
-			src.occupant.setStatus("maxhealth-", null, -health_penalty)
-			if(health_penalty >= 100)
-				src.occupant.unlock_medal("Quit Cloning Around")
+		// Little weird- we only want to apply cloner defects after they're ejected, so we apply it as soon as they change loc instead of right now
+		defects.apply_to_on_move(src.occupant)
+
+		for (var/i in 1 to rand(0, 3)) // uniform chance between 0-3
+			defects.add_random_cloner_defect()
+
+		if (length(defects.active_cloner_defects) > 7)
+			src.occupant.unlock_medal("Quit Cloning Around")
 
 		src.mess = FALSE
 		var/is_puritan = FALSE
