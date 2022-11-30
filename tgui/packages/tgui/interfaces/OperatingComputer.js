@@ -214,8 +214,6 @@ const DisplayOrgan = (props) => {
   const organ_state = bundle["organ_state"];
   const organ_name = bundle["organ_name"];
 
-  const special_color = organTraitToColor(organ_special);
-
   let font_color = "green";
   let is_bold = false;
 
@@ -237,9 +235,6 @@ const DisplayOrgan = (props) => {
   if (organ_state === "Moderate") {
     font_color = "yellow";
   }
-  if (organ_state === "Minor") {
-    font_color = "green";
-  }
 
   if (organ_state !== "Okay" || organ_special) {
     return (
@@ -247,31 +242,13 @@ const DisplayOrgan = (props) => {
         <Table.Cell header textAlign="right" width={10}>
           {capitalize(spaceUnderscores(organ_name))}:
         </Table.Cell>
-        <Table.Cell width={10} color={font_color} bold={is_bold}>{organ_state}{organ_special ? <Box inline color={special_color}>, {organ_special}</Box> :"" }</Table.Cell>
+        <Table.Cell width={10} color={font_color} bold={is_bold}>
+          {organ_state !== "Okay" ? organ_state : "" }
+          {organ_special ? <Box color="white">{organ_special}</Box>: "" }
+        </Table.Cell>
       </Table.Row>
     );
   }
-
-};
-
-const organTraitToColor = (organ_trait) => {
-  let special_color = "";
-  if (organ_trait) {
-    special_color = "white";
-  }
-  if (organ_trait === "UNKNOWN") {
-    special_color = "purple";
-  }
-  if (organ_trait === "Missing") {
-    special_color = "red";
-  }
-  if (organ_trait === "Cybernetic") {
-    special_color = "teal";
-  }
-  if (organ_trait === "Synthetic") {
-    special_color = "olive";
-  }
-  return special_color;
 };
 
 const DisplayLimbs = (props, context) => {
@@ -305,11 +282,12 @@ const DisplayLimb = (props) => {
   const { bundle } = props;
   const limb_name = bundle["limb"];
   const limb_status = bundle["status"];
-  const limb_color = organTraitToColor(bundle["status"]);
+  let limb_color = "white";
   let is_bold = false;
 
   if (limb_status === "Missing") {
     is_bold = true;
+    limb_color = "red";
   }
 
   if (limb_status !== "Okay") {
