@@ -3564,9 +3564,10 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 					if (O.authed)
 						armory_auth = TRUE
 						break
-				entered_ckeys += M.client.ckey
+				var/ckey = M.client.ckey
+				entered_ckeys += ckey
 				SPAWN(120 SECONDS)
-					entered_ckeys -= entered_ckeys[1]
+					entered_ckeys -= ckey
 				logTheThing(LOG_DEBUG, M, "entered the Armory [log_loc(M)][armory_auth ? "" : " - Armory unauthorized"].")
 
 // // // // // //
