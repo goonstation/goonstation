@@ -533,6 +533,32 @@
 	else
 		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<span [class? class : ""]>[text]</span>[font_accent ? "</font>" : null][second_quote]"
 
+//no, voluntary is not a boolean. screm
+/mob/proc/emote(act, voluntary = 0, atom/target)
+	set waitfor = FALSE
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOB_EMOTE, act, voluntary, target)
+
+/mob/proc/emote_check(voluntary = 1, time = 1 SECOND, admin_bypass = TRUE, dead_check = TRUE)
+	if (src.emote_allowed)
+		if (dead_check && isdead(src))
+			src.emote_allowed = FALSE
+			return FALSE
+		if (voluntary && (src.getStatusDuration("paralysis") > 0 || isunconscious(src)))
+			return FALSE
+		if (world.time >= (src.last_emote_time + src.last_emote_wait))
+			if (!no_emote_cooldowns && !(src.client && (src.client.holder && admin_bypass) && !src.client.player_mode) && voluntary)
+				src.emote_allowed = FALSE
+				src.last_emote_time = world.time
+				src.last_emote_wait = time
+				SPAWN(time)
+					src.emote_allowed = TRUE
+			return TRUE
+		else
+			return FALSE
+	else
+		return FALSE
+
 /mob/proc/listen_ooc()
 	set name = "(Un)Mute OOC"
 	set desc = "Mute or Unmute Out Of Character chat."
