@@ -14,6 +14,11 @@
  * Addnl support for granting mob properties? Consider subtype for CE shield - low power but strong environmental resists
  * Req hooking into a process scheduler for passive power drain
  *
+ * 
+ * TODO: sfx
+ * TODO: text feedback
+ * TODO: vfx??
+ * TODO: impl in item/attack, calculate_melee_attack, bullet_act, ex_act
  */
 
 TYPEINFO(/datum/component/wearertargeting/energy_shield)
@@ -110,7 +115,6 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 		src.turn_off()
 	else
 		src.turn_on()
-
 
 /obj/ability_button/toggle_shield //TODO: percentage inventory-counter for remaining power?
 	name = "Toggle Energy Shield"
