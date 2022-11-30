@@ -2263,6 +2263,9 @@
 	proc/pick_module()
 		if(src.module) return
 		if(!src.freemodule) return
+		if(length(src.upgrades) >= 3)
+			boutput(src, "<span class='notice'>Your upgrades are full. You must make room for the module to be activated!</span>")
+			return
 		boutput(src, "<span class='notice'>You may choose a starter module.</span>")
 		var/list/starter_modules = list("Brobocop", "Chemistry", "Civilian", "Engineering", "Medical", "Mining")
 		if (ticker?.mode)
