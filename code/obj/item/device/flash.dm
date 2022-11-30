@@ -92,6 +92,7 @@
 
 /obj/item/device/flash/proc/wizard_check(mob/user)
 	if (src.status && iswizard(user))
+		logTheThing(LOG_COMBAT, user, "burns out [src] due to being a wizard at [log_loc(user)].")
 		user.visible_message("<span class='alert'>[user] emits sparks from [his_or_her(user)] fingertips, overloading [src]'s bulb.</span>")
 		playsound(src, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 1, pitch = 2)
 		src.flash_mob(user, user)

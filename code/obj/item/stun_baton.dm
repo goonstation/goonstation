@@ -255,6 +255,7 @@
 			return
 
 		if (src.can_stun() && iswizard(user) && M != user)
+			logTheThing(LOG_COMBAT, user, "tries to stun [constructTarget(M,"combat")] with the [src.name] at [log_loc(M)] but casts sparks instead due to being a wizard.")
 			user.visible_message("<span class='alert'>[user] waves [src] in strange arcane patterns, casting sparks flying into the air.</span>",\
 			"<span class='alert'>You wave [src] in strange arcane patterns, casting sparks flying into the air.</span>")
 			var/datum/item_special/spark/special = src.special
