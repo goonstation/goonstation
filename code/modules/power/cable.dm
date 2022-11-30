@@ -539,8 +539,7 @@
 	(this old way made knots whenever there were 3 or more way junctions)
 	else if (length(directions) >= 3)
 		for (var/i in 1 to length(directions))
-			cable_laying(0, directions[i])
-	 */
+			cable_laying(0, directions[i]) */
 	else if (length(directions) >= 3)
 		for (var/i in 1 to length(directions) - 1)
 			cable_laying(directions[i], directions[1+i])
@@ -557,10 +556,6 @@
 /// places a cable with d1 and d2
 /obj/cablespawner/proc/cable_laying(var/dir1, var/dir2)
 	var/obj/cable/current = new src.cable_type(src.loc)
-	if (dir1 < dir2)
-		current.d1 = dir1
-		current.d2 = dir2
-	else
-		current.d1 = dir2
-		current.d2 = dir1
+	current.d1 = min(dir1, dir2)
+	current.d2 = max(dir1, dir2)
 	current.UpdateIcon()
