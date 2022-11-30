@@ -656,6 +656,10 @@
 	if(do_armor)
 		//get target armor
 		var/armor_mod = 0
+		var/list/shield_amt = list()
+		SEND_SIGNAL(target, COMSIG_MOB_SHIELD_ACTIVATE, damage, shield_amt)
+		damage *= max(0, (1-shield_amt["shield_strength"]))
+
 		armor_mod = target.get_melee_protection(def_zone, DAMAGE_BLUNT)
 
 		//flat damage reduction by armor

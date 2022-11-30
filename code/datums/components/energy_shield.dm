@@ -15,10 +15,10 @@
  * Req hooking into a process scheduler for passive power drain
  *
  * 
- * TODO: sfx
+ * TODO: better sfx
  * TODO: text feedback
  * TODO: vfx??
- * TODO: impl in item/attack, calculate_melee_attack, bullet_act, ex_act
+ * TODO: impl in item/attack, bullet_act, ex_act
  */
 
 TYPEINFO(/datum/component/wearertargeting/energy_shield)
@@ -83,6 +83,9 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	var/blocked = shield_strength
 	if(cost > charge && bleedthrough)
 		blocked *= charge/cost
+		playsound(current_user, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 30, 0.1, 0, 0.5)
+	else
+		playsound(current_user, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 0.1, 0, 2)
 
 	return_list["shield_strength"] += blocked
 	SEND_SIGNAL(parent, COMSIG_CELL_USE, cost)
@@ -105,10 +108,12 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 		src.active = TRUE
 	else //fail message here?
 		src.active = FALSE
+	playsound(current_user, 'sound/items/miningtool_on.ogg', 30, 1)
 
 /datum/component/wearertargeting/energy_shield/proc/turn_off()
 	processing_items -= src
 	src.active = FALSE
+	playsound(current_user, 'sound/items/miningtool_off.ogg', 30, 1)
 
 /datum/component/wearertargeting/energy_shield/proc/toggle()
 	if(active)
@@ -129,5 +134,6 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	New()
 		. = ..()
 		AddComponent(/datum/component/wearertargeting/energy_shield, list(SLOT_GLOVES), 1, 1, 1, 0)
+		AddComponent(/datum/component/power_cell, 50, 50, 0, 0, 1)
 
 //TODO: Add tooltip/desc info to item
