@@ -85,6 +85,8 @@
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
 	text = ""
+	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | USEDELAY
+
 	var/on = 0 // 1 if on, 0 if off
 	var/brightness = 1.6 // luminosity when on, also used in power calculation
 
@@ -824,6 +826,7 @@
 
 
 		boutput(user, "You stick \the [W.name] into the light socket!")
+		user.lastattacked = src
 		if(has_power() && (W.flags & CONDUCT))
 			if(!user.bioHolder.HasEffect("resist_electric"))
 				src.electrocute(user, 75, null, 20000)
@@ -831,8 +834,7 @@
 
 	// attempt to break the light
 	else if(current_lamp.light_status != LIGHT_BROKEN)
-
-
+		user.lastattacked = src
 		if(prob(1+W.force * 5))
 
 			boutput(user, "You hit the light, and it smashes!")
