@@ -514,30 +514,38 @@
 	var/list/directions = list()
 	if (cable_surr & NORTH)
 		directions += NORTH
-	if (cable_surr & SOUTH)
-		directions += SOUTH
-	if (cable_surr & EAST)
-		directions += EAST
 	if (cable_surr & NORTHEAST_UNIQUE)
 		directions += NORTHEAST
+	if (cable_surr & EAST)
+		directions += EAST
 	if (cable_surr & SOUTHEAST_UNIQUE)
 		directions += SOUTHEAST
+	if (cable_surr & SOUTH)
+		directions += SOUTH
+	if (cable_surr & SOUTHWEST_UNIQUE)
+		directions += SOUTHWEST
 	if (cable_surr & WEST)
 		directions += WEST
 	if (cable_surr & NORTHWEST_UNIQUE)
 		directions += NORTHWEST
-	if (cable_surr & SOUTHWEST_UNIQUE)
-		directions += SOUTHWEST
 
 	if (length(directions) == 0)
 		cable_laying(0,NORTH)
-	// multiple cables, spiral out from the centre
 	else if (src.override_centre_connection)
+	// multiple cables, spiral out from the centre 'knot'
 		for (var/i in 1 to length(directions))
 			cable_laying(0, directions[i])
+	/*
+	(this old way made knots whenever there were 3 or more way junctions)
 	else if (length(directions) >= 3)
 		for (var/i in 1 to length(directions))
 			cable_laying(0, directions[i])
+	 */
+	else if (length(directions) >= 3)
+		for (var/i in 1 to length(directions) - 1)
+			cable_laying(directions[i], directions[1+i])
+		cable_laying(directions[1], directions[length(directions)])
+
 	else if (length(directions) == 1)
 	// end of a cable
 		cable_laying(0, directions[1])
