@@ -106,7 +106,7 @@
 			src.UpdateIcon()
 
 	New()
-		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{recharge_rate = 10}
+		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{recharge_rate = 5}
 		AddComponent(/datum/component/cell_holder,cell, FALSE, 200, FALSE)
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		..()
