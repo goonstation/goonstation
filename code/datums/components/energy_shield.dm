@@ -21,10 +21,9 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 		ARG_INFO("valid_slots", DATA_INPUT_LIST_BUILD, "List of wear slots that the component should function in \[1-19\]"),
 		ARG_INFO("shield_strength", DATA_INPUT_NUM, "Fraction of damage blocked by shield \[0-1\]", 1),
 		ARG_INFO("shield_efficiency", DATA_INPUT_NUM, "Power cost per point of damage blocked", 1),
-		ARG_INFO("power drain", DATA_INPUT_NUM, "Cell power use per process cycle when active", 0),
-		ARG_INFO("bleedthrough", DATA_INPUT_BOOL, "If the shield should only block damage proportional to power left in the cell if it would run out to block the hit", TRUE)
+		ARG_INFO("bleedthrough", DATA_INPUT_BOOL, "If the shield should only block damage proportional to power left in the cell if it would run out to block the hit", TRUE),
+		ARG_INFO("power_drain", DATA_INPUT_NUM, "Cell power use per process cycle when active", 0)
 	)
-
 
 /datum/component/wearertargeting/energy_shield
 	//no transfer, highlander dupe
@@ -43,18 +42,25 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	signals = list(COMSIG_MOB_SHIELD_ACTIVATE)
 	proctype = .proc/activate
 
-/datum/component/wearertargeting/energy_shield/Initialize(_valid_slots, strength, efficiency, bleedthrough, drain)
+/datum/component/wearertargeting/energy_shield/Initialize(_valid_slots, _shield_strength = 1, _shield_efficiency = 1, _bleedthrough = TRUE, _power_drain = 0)
 	. = ..()
-	src.shield_strength = strength
-	src.shield_efficiency = efficiency
-	src.bleedthrough = bleedthrough
-	src.power_drain = drain
+	src.shield_strength = _shield_strength
+	src.shield_efficiency = _shield_efficiency
+	src.bleedthrough = _bleedthrough
+	src.power_drain = _power_drain
+	RegisterSignal(parent, COMSIG_SHIELD_TOGGLE, .proc/toggle)
 
 /datum/component/wearertargeting/energy_shield/on_equip(datum/source, mob/equipper, slot)
+	//Add item ability?????????????????????
+	var/obj/item/I = parent
+	I.add_item_ability(equipper, /obj/ability_button/toggle_shield)
 	. = ..()
 
 /datum/component/wearertargeting/energy_shield/on_unequip(datum/source, mob/user)
-	src.turn_off()
+	var/obj/item/I = parent
+	I.remove_item_ability(user, /obj/ability_button/toggle_shield)
+	if(active)
+		src.turn_off()
 	. = ..()
 
 /datum/component/wearertargeting/energy_shield/proc/activate(datum/source, incoming_damage, list/return_list)
@@ -98,3 +104,26 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 /datum/component/wearertargeting/energy_shield/proc/turn_off()
 	processing_items -= src
 	src.active = FALSE
+
+/datum/component/wearertargeting/energy_shield/proc/toggle()
+	if(active)
+		src.turn_off()
+	else
+		src.turn_on()
+
+
+/obj/ability_button/toggle_shield //TODO: percentage inventory-counter for remaining power?
+	name = "Toggle Energy Shield"
+	icon_state = "shieldceon"
+	desc = "Toggle personal energy shield."
+
+	execute_ability()
+		. = ..()
+		SEND_SIGNAL(the_item, COMSIG_SHIELD_TOGGLE)
+
+/obj/item/clothing/gloves/yellow
+	New()
+		. = ..()
+		AddComponent(/datum/component/wearertargeting/energy_shield, list(SLOT_GLOVES), 1, 1, 1, 0)
+
+//TODO: Add tooltip/desc info to item

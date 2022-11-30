@@ -192,6 +192,8 @@
 	#define COMSIG_MOB_GRABBED "mob_grabbed"
 	/// Sent when a mob is checking for an active energy shield
 	#define COMSIG_MOB_SHIELD_ACTIVATE "mob_shield_activate"
+	/// Sent when a mob is checking for an active energy shield
+	#define COMSIG_SHIELD_TOGGLE "toggs" //TODO: MOVE THIS
 
 	// ---- cloaking device signal ----
 
