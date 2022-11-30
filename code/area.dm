@@ -3553,7 +3553,7 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 				var/mob/living/M = A
 				if(!M.client)
 					return
-				if(!M.client.holder)
+				if(M.client.holder)
 					return
 				if(M.client.ckey in entered_ckeys)
 					return
