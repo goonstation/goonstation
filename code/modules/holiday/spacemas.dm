@@ -694,6 +694,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			return
 
 /obj/decal/garland
+	plane = PLANE_DEFAULT
 	name = "garland"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "garland"
@@ -701,6 +702,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	anchored = 1
 
 /obj/decal/tinsel
+	plane = PLANE_DEFAULT
 	name = "tinsel"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "tinsel-silver"
@@ -708,12 +710,14 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	anchored = 1
 
 /obj/decal/wreath
+	plane = PLANE_DEFAULT
 	name = "wreath"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "wreath"
 	layer = 5
 	anchored = 1
 /obj/decal/mistletoe
+	plane = PLANE_DEFAULT
 	name = "mistletoe"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "mistletoe"
@@ -721,6 +725,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	anchored = 1
 
 /obj/decal/xmas_lights
+	plane = PLANE_DEFAULT
 	name = "spacemas lights"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "lights1"
