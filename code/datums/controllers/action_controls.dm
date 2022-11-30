@@ -74,7 +74,7 @@ var/datum/action_controller/actions
 				if( ((A.duration >= 0 && TIME >= (A.started + A.duration)) && A.state == ACTIONSTATE_RUNNING) || A.state == ACTIONSTATE_FINISH)
 					A.state = ACTIONSTATE_ENDED
 					A.onEnd()
-					A?.promise.fulfill(A)
+					A.promise?.fulfill(A)
 					//continue //If this is not commented out the deletion will take place the tick after the action ends. This will break things like objects being deleted onEnd with progressbars - the bars will be left behind. But it will look better for things that do not do this.
 
 				if(A.state == ACTIONSTATE_DELETE || A.disposed)
