@@ -194,7 +194,7 @@
 
 			for (var/mob/living/L in T)
 				if(ismobcritter(L) && isdead(L)) // we don't care about dead critters
-					break
+					continue
 				if(!isintangible(L)) //neither blob overmind or AI eye should block this
 					unacceptable = TRUE
 					break
