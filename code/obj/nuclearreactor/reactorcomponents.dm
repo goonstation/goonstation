@@ -59,9 +59,12 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 					setcolor[4] = mat1.alpha
 				else if(length(setcolor) == 3)
 					setcolor += mat1.alpha
+
+				if(length(setcolor) > 4) //ie, if it's a color matrix
+					src.cap_icon.MapColors(arglist(setcolor))
 				else
-					CRASH("Invalid color on material")
-				src.cap_icon.Blend(rgb(setcolor[1],setcolor[2],setcolor[3],setcolor[4]), ICON_MULTIPLY)
+					src.cap_icon.Blend(rgb(setcolor[1],setcolor[2],setcolor[3],setcolor[4]), ICON_MULTIPLY)
+
 				if (mat1.texture)
 					var/icon_mode = null
 					switch(mat1.texture_blend) //fucking byond...
@@ -73,6 +76,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 						if(BLEND_INSET_OVERLAY) icon_mode = ICON_OVERLAY
 
 					src.cap_icon.Blend(getTexturedIcon(src.cap_icon, mat1.texture), icon_mode)
+
 
 
 
