@@ -307,3 +307,11 @@
 		icon_state = "weld"
 		mode = OMNI_MODE_WELDING
 		typepath = /obj/item/weldingtool
+
+#undef OMNI_MODE_PRYING
+#undef OMNI_MODE_SNIPPING
+#undef OMNI_MODE_WRENCHING
+#undef OMNI_MODE_SCREWING
+#undef OMNI_MODE_PULSING
+#undef OMNI_MODE_CUTTING
+#undef OMNI_MODE_WELDING
