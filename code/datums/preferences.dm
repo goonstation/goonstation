@@ -1610,7 +1610,7 @@ datum/preferences
 			return
 
 		if (link_tags["resetalljobs"])
-			var/resetwhat = tgui_input_list(usr, "Reset all jobs to which level?", "Job Preferences", list("Medium Priority", "Low Priority", "Unwanted"))
+			var/resetwhat = tgui_input_list(user, "Reset all jobs to which level?", "Job Preferences", list("Medium Priority", "Low Priority", "Unwanted"))
 			switch(resetwhat)
 				if ("Medium Priority")
 					src.ResetAllPrefsToMed(user)

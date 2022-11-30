@@ -47,7 +47,8 @@
 	icon_off = "flight0"
 	var/icon_broken = "flightbroken"
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	m_amt = 50
 	g_amt = 20
 	mats = 2
@@ -132,7 +133,8 @@
 	name = "emergency glowstick"
 	desc = "A small tube that reacts chemicals in order to produce a larger radius of illumination than PDA lights. A label on it reads, WARNING: USE IN RAVES, DANCING, OR FUN WILL VOID WARRANTY."// I love the idea of a glowstick having a warranty so I'm leaving the description like this
 	w_class = W_CLASS_SMALL
-	flags = ONBELT | TABLEPASS
+	flags =  TABLEPASS
+	c_flags = ONBELT
 	var/heated = 0
 	col_r = 0
 	col_g = 0.9

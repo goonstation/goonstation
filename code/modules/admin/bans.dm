@@ -655,6 +655,8 @@ var/global/list/playersSeen = list()
 		src << sound('sound/voice/farts/poo2.ogg')
 		logTheThing(LOG_ADMIN, src, "tried to access the ban panel")
 		logTheThing(LOG_DIARY, src, "tried to access the ban panel", "admin")
+		message_admins("[key_name(src)] tried to access the ban panel but was denied.")
+		del(usr.client)
 	return
 
 
