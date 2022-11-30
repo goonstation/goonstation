@@ -244,4 +244,17 @@
 			"limb" = current_limb,
 			"status" = current_status,
 		))
+
+		current_limb = "Butt" // look. okay. where else do i put it?
+		current_status = "Okay"
+		if(!H.organHolder?.butt)
+			current_status = "Missing"
+		else
+			if (istype(H.organHolder.butt, /obj/item/clothing/head/butt/cyberbutt))
+				current_status = "Cybernetic"
+		limb_data += list(list(
+			"limb" = current_limb,
+			"status" = current_status,
+		))
+
 	return limb_data
