@@ -557,10 +557,6 @@
 /// places a cable with d1 and d2
 /obj/cablespawner/proc/cable_laying(var/dir1, var/dir2)
 	var/obj/cable/current = new src.cable_type(src.loc)
-	if (dir1 < dir2)
-		current.d1 = dir1
-		current.d2 = dir2
-	else
-		current.d1 = dir2
-		current.d2 = dir1
+	current.d1 = min(dir1, dir2)
+	current.d2 = max(dir1, dir2)
 	current.UpdateIcon()
