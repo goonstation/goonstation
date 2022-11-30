@@ -98,6 +98,9 @@
 	.["blood_pressure"] = src.victim.blood_pressure
 	.["brain_damage_desc"] = calc_brain_damage_severity(src.victim)
 	.["brain_damage_value"] = src.victim.get_brain_damage()
+
+	.["embedded_objects"] = check_embedded_objects(src.victim)
+
 	.["organ_status"] = vitim_organ_health(src.victim)
 	.["limb_status"] = generate_limb_data(src.victim)
 
@@ -182,7 +185,6 @@
 	var/current_status = ""
 	var/current_limb = ""
 	if (H.limbs)
-
 		current_limb = "Left Arm"
 		current_status = "Okay"
 		if (!H.limbs.l_arm)
@@ -258,3 +260,29 @@
 		))
 
 	return limb_data
+
+/obj/machinery/computer/operating/proc/check_embedded_objects(var/mob/living/L)
+	var/foreign_object_count = FALSE
+	var/implant_count = FALSE
+	var/has_chest_object = FALSE
+	if (length(L.implant))
+		for (var/obj/item/implant/I in L.implant)
+			if (istype(I, /obj/item/implant/projectile))
+				foreign_object_count++
+				continue
+			if (I.scan_category == "not_shown")
+				continue
+			if (I.scan_category != "syndicate")
+				implant_count++
+
+	if (ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(H.chest_item != null)
+			foreign_object_count++
+			has_chest_object = TRUE
+
+	return list(
+		"foreign_object_count" = foreign_object_count,
+		"implant_count" = implant_count,
+		"has_chest_object" = has_chest_object,
+	)

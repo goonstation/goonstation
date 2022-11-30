@@ -319,14 +319,14 @@ const DisplayTemperature = (props, context) => {
   }
 
   return (
-    <Table.Row>
+    <>
       <Table.Cell header textAlign="right">
         Temperature:
       </Table.Cell>
       <Table.Cell color={font_color}>
         { body_temp_c + "°C / " + body_temp_f + "°F"}
       </Table.Cell>
-    </Table.Row>
+    </>
   );
 };
 
@@ -487,9 +487,48 @@ const DisplayKeyHealthIndicators = (props, context) => {
     <Section title="Key Health Indicators">
       <Table>
         <DisplayBloodPressure />
-        <DisplayTemperature body_temp={data.body_temp} optimal_temp={data.optimal_temp} />
-        { data.occupied? <DisplayRads rad_stage={data.rad_stage} rad_dose={data.rad_dose} />: ""}
-        { data.occupied? <DisplayBrain brain_damage_desc={data.brain_damage_desc} brain_damage_value={data.brain_damage_value} />:""}
+        <DisplayTempImplantRow />
+        { data.occupied ? <DisplayRads rad_stage={data.rad_stage} rad_dose={data.rad_dose} />: ""}
+        { data.occupied ? <DisplayBrain brain_damage_desc={data.brain_damage_desc} brain_damage_value={data.brain_damage_value} />:""}
       </Table>
+      { data.occupied? <DisplayEmbeddedObjects embedded_objects={data.embedded_objects} />: ""}
     </Section>);
+};
+
+const DisplayTempImplantRow = (props, context) => {
+  const { data } = useBackend(context);
+  return (
+    <Table.Row>
+      <DisplayTemperature body_temp={data.body_temp} optimal_temp={data.optimal_temp} />
+      <DisplayImplants occupied={data.occupied} embedded_objects={data.embedded_objects} />
+    </Table.Row>
+  );
+};
+
+const DisplayImplants = (props) => {
+  const { embedded_objects, occupied } = props;
+  let text = "--";
+  let color = "grey";
+  if (occupied) {
+    text = `${embedded_objects["implant_count"]} implant${embedded_objects["implant_count"]===1?"":"s"}`;
+    color = "white";
+  }
+  return (
+    <>
+      <Table.Cell header textAlign="right">Implants:</Table.Cell>
+      <Table.Cell color={color}>
+        {text}
+      </Table.Cell>
+    </>
+  );
+};
+
+const DisplayEmbeddedObjects = (props) => {
+  const { embedded_objects } = props;
+  return (
+    <Box textAlign="center">
+      {embedded_objects["has_chest_object"] ? <Box bold fontSize={1.2} color="red">Sizable foreign object located below sternum!</Box>: ""}
+      {embedded_objects["foreign_object_count"] ? <Box bold fontSize={1.2} color="red">Foreign object{embedded_objects["foreign_object_count"]>1?"s":""} detected!</Box> :""}
+    </Box>
+  );
 };
