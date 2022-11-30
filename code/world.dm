@@ -1720,6 +1720,16 @@ var/f_color_selector_handler/F_Color_Selector
 				if (!playtime_response.errored && playtime_response.body)
 					response["playtime"] = playtime_response.body
 
+				var/datum/player/player = make_player(plist["ckey"])
+				if(player)
+					response["last_seen"] = player.last_seen
+				if(player.cloud_fetch())
+					for(var/kkey in player.clouddata)
+						if(kkey in list("admin_preferences", "buildmode"))
+							continue
+						response[kkey] = player.clouddata[kkey]
+					response["cloudsaves"] = player.cloudsaves
+
 				return json_encode(response)
 
 			if("profile")
