@@ -388,7 +388,7 @@
 
 		var/datum/reagents/target_reagents = null
 		var/msg
-		if (target.reagents && (target.flags & OPENCONTAINER))
+		if (target.reagents && target.is_open_container())
 			target_reagents = target.reagents
 			msg = "<span class='hint'>You slurp some of the liquid from \the [target]. [target_reagents.get_taste_string(user)]</span>"
 		else if (istype(target, /obj/fluid))
