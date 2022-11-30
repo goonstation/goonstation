@@ -9,7 +9,6 @@ var/global/list
 	ordinal_unique = list(NORTHEAST_UNIQUE, SOUTHEAST_UNIQUE, SOUTHWEST_UNIQUE, NORTHWEST_UNIQUE)
 	alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST)
 	alldirs_unique = list(NORTH, SOUTH, EAST, WEST, NORTHEAST_UNIQUE, SOUTHEAST_UNIQUE, SOUTHWEST_UNIQUE, NORTHWEST_UNIQUE)
-	alldirs_inverted = list(SOUTH, NORTH, WEST, EAST, SOUTHWEST, NORTHWEST, NORTHEAST, SOUTHEAST)
 	modulo_angle_to_dir = list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST)
 	dirnames = list("north"=NORTH, "south"=SOUTH, "east"=EAST, "west"=WEST, "northeast"=NORTHEAST, "southeast"=SOUTHEAST, "southwest"=SOUTHWEST, "northwest"=NORTHWEST)
 
@@ -20,6 +19,11 @@ proc/dir_to_dirname(dir)
 
 proc/dirname_to_dir(dir)
 	return global.dirnames[dir]
+
+/// gets the opposite direction of a dir
+proc/invert_dir(dir)
+	var/alldirs_inverted = list(SOUTH, NORTH, WEST, EAST, SOUTHWEST, NORTHWEST, NORTHEAST, SOUTHEAST)
+	return alldirs_inverted[alldirs.Find(dir)]
 
 /// returns true if a direction is cardinal
 #define is_cardinal(DIR) (!((DIR - 1) & DIR))

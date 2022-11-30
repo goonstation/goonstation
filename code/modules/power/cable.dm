@@ -462,18 +462,19 @@
 
 /// checks around itself for cables, adds up to 8 bits to cable_surr
 /obj/cablespawner/proc/check(var/obj/cable/cable)
-	//gonna change this to use step
 	for (var/dir_to_cs in alldirs)
+	// checks for cablespawners around itself
 		var/declarer = alldirs_unique[alldirs.Find(dir_to_cs)]
 		for (var/obj/cablespawner/spawner in get_step(src, dir_to_cs))
 			if (spawner.type == src.type)
 				cable_surr |= declarer
 	/*
 	Diagonals are ugly. So if the option to connect to a diagonal tile orthogonally presents itself
-	we'll get rid of the corners and connect in NESOUTHWEST_UNIQUE directions first.
+	we'll get rid of the corners and connect in cardinal directions first.
 	This gets rid of diagonals in 2x2 and 3x3 grids, and stops small 'L's from becoming triangles.
-	if a diagonal tile is next to a cardinal, we disregard it.
-	This won't work on the manually connected cables.
+	if an ordinal tile is next to a cardinal, we disregard it.
+	This won't work on the manually connected cables, which is why they're considered afterwards.
+	Regular cables are always forcibly connected.
 	*/
 	if (cable_surr & NORTHEAST_UNIQUE)
 		if (cable_surr & NORTH || cable_surr & EAST)
@@ -494,50 +495,18 @@
 	* directions. This if statement fixes that, by making the bottom left alter the bottom right one.
 	*/
 	if (cable_surr & EAST)
+	// optimises the outlier case
 		for (var/obj/cablespawner/spawner in orange(1, src))
 			if (spawner.x - src.x == 1 && spawner.y - src.y == 0)
 				spawner.cable_surr |= WEST
 
 	for (var/dir_to_c in alldirs)
-		var/declarer = alldirs_unique[alldirs.Find(dir_to_cs)]
-		for (var/obj/cable/normal_cable in get_step(src, dir_to_cs))
+	// checks for regular cables
+		var/declarer = alldirs_unique[alldirs.Find(dir_to_c)]
+		for (var/obj/cable/normal_cable in get_step(src, dir_to_c))
 			if (normal_cable.type == src.cable_type)
-				cable_surr |= declarer
-	for (var/obj/cable/normal_cable in orange(1, src))
-	// checks normal, prexisting, manually placed cables (must be joined to no matter what)
-	// turns out, since initialize() does cablespawners one by one
-	// they turn into regular cables and must be considered like that by the system
-	// making this bit MANDATORY
-		var/disx = normal_cable.x - src.x
-		var/disy = normal_cable.y - src.y
-		if (disy == 1)
-			if (disx == 1)
-				if (normal_cable.d1 == SOUTHWEST || normal_cable.d2 == SOUTHWEST)
-					cable_surr |= NORTHEAST_UNIQUE
-			else if (disx == -1)
-				if (normal_cable.d1 == SOUTHEAST || normal_cable.d2 == SOUTHEAST)
-					cable_surr |= NORTHWEST_UNIQUE
-			else if (normal_cable.d1 == SOUTH || normal_cable.d2 == SOUTH)
-				cable_surr |= NORTH
-		else if (disy == -1)
-			if (disx == 1)
-				if (normal_cable.d1 == NORTHWEST || normal_cable.d2 == NORTHWEST)
-					cable_surr |= SOUTHEAST_UNIQUE
-			else if (disx == -1)
-				if (normal_cable.d1 == NORTHEAST || normal_cable.d2 == NORTHEAST)
-					cable_surr |= SOUTHWEST_UNIQUE
-			else if (normal_cable.d1 == NORTH || normal_cable.d2 == NORTH)
-				cable_surr |= SOUTH
-		else if (disy == 0)
-			if (disx == 1)
-				if (normal_cable.d1 == WEST || normal_cable.d2 == WEST)
-					cable_surr |= EAST
-			else if (disx == -1)
-				if (normal_cable.d1 == EAST || normal_cable.d2 == EAST)
-					cable_surr |= WEST
-		// the 'real' wires override and always connect to prevent loose ends
-		// cable_surr is any direction that needs to be connected to at all
-		// this bit does not get optimised
+				if (normal_cable.d1 == invert_dir(dir_to_c) || normal_cable.d2 == invert_dir(dir_to_c))
+					cable_surr |= declarer
 
 /// causes cablespawner to spawn cables (amazing)
 /obj/cablespawner/proc/replace()
