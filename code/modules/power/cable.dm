@@ -421,11 +421,13 @@
 	layer = CABLE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 	color = "#DD0000"
+	anchored = 1
 	// this would make it connect to the centre, for like terminals and whatnot
-	// has to be var edited because lazy
+	// subtype node sets this to true
 	var/override_centre_connection = FALSE
 	var/cable_type = /obj/cable
 	// cable_surr uses the macros NORTHEAST_UNIQUE and such to save directions
+	// as it needs to store up to 8 at once
 	var/cable_surr = 0
 
 /obj/cablespawner/New()
