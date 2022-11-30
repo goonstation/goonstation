@@ -2,6 +2,7 @@
 
 //no, voluntary is not a boolean. screm
 /mob/proc/emote(act, voluntary = 0, atom/target)
+	set waitfor = FALSE
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOB_EMOTE, act, voluntary, target)
 
