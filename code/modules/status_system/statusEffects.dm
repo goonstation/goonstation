@@ -519,11 +519,11 @@
 
 		proc/getStage()
 			. = 1
-			if(min(duration*2, counter) < BURNING_LV2)
-				return
-			else if (min(duration*2, counter) >= BURNING_LV2 && min(duration*2, counter) < BURNING_LV3)
+			if(clamp(counter, duration, duration*2) < BURNING_LV2)
+				return 1
+			else if (clamp(counter, duration, duration*2) >= BURNING_LV2 && min(duration*2, counter) < BURNING_LV3)
 				return 2
-			else if (min(duration*2, counter) >= BURNING_LV3)
+			else if (clamp(counter, duration, duration*2) >= BURNING_LV3)
 				return 3
 
 		proc/switchStage(var/toStage)

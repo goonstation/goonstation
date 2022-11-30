@@ -1,4 +1,26 @@
 
+(t)tue nov 29 22
+(u)MitchSmith
+(p)12223
+(e)🎨|C-Sprites
+(*)Credits now use the new ⪽ symbol in their design.
+(u)LeahTheTech
+(p)12209
+(e)⚖🧛📦|C-Balance, A-Gamemodes, A-Game-Objects
+(*)The syndicate cyborg conversion chamber is now slightly more resistant to explosions.
+(u)Azrun
+(p)10479
+(e)🪲🆕⚖📄⏰👽🍝|C-Bug, C-Feature, C-Balance, A-UI, A-Status-Effects, A-Mutantraces, A-Catering
+(*)Aquatic Genetics gives immunity to Kuru and minor food buff when eating brains.
+(t)mon nov 28 22
+(u)Kubius
+(p)12192
+(e)🗺|A-Mapping
+(+)Nadir fixbatch 9: relocated a cyborg dock prone to accidentally blowing up Robotics, reinforced some high-value external windows.
+(u)TDHooligan
+(p)12205
+(e)🔄⚗|C-Rework, A-Chemistry
+(+)Medibots now use Potassium Iodide as their tox treatment.
 (t)sat nov 26 22
 (u)aloe
 (*)NanoTrasen forgot to order new cloners, and the ones they have right now are kind of janky. Expect more mistakes and aberrations. Would recommend health/genetic analyzing people after they're cloned to make sure they're good to go.
