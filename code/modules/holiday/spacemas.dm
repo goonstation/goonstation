@@ -476,6 +476,7 @@ proc/compare_ornament_score(list/a, list/b)
 	var/uses_custom_ornaments = TRUE
 	var/ornament_sort = "random"
 	var/best_sort_fuzziness = 0
+	var/weighted_sort_flat_bonus = 0
 	var/list/placed_ornaments = null
 	var/list/ckeys_placed_this_round
 	var/list/got_ornament_kit
@@ -492,10 +493,20 @@ proc/compare_ornament_score(list/a, list/b)
 
 	fuzzy_top_ornaments
 		ornament_sort = "best"
-		top_sort_fuzziness = 0.1
+		best_sort_fuzziness = 0.1
 
 	worst_ornaments
 		ornament_sort = "worst"
+
+	random_ornaments
+		ornament_sort = "random"
+
+	weighted_random
+		ornament_sort = "weighted_random"
+
+	weighted_random_flatter
+		ornament_sort = "weighted_random"
+		weighted_sort_flat_bonus = 0.1
 
 	New()
 		..()
@@ -513,8 +524,8 @@ proc/compare_ornament_score(list/a, list/b)
 		. = ((positive + 1.9208) / (positive + negative) - which_bound * \
 			1.96 * sqrt((positive * negative) / (positive + negative) + 0.9604) / \
 			(positive + negative)) / (1 + 3.8416 / (positive + negative))
-		if(top_sort_fuzziness > 0)
-			var/generator/G = generator("num", -top_sort_fuzziness, top_sort_fuzziness, NORMAL_RAND)
+		if(best_sort_fuzziness > 0)
+			var/generator/G = generator("num", -best_sort_fuzziness, best_sort_fuzziness, NORMAL_RAND)
 			. += G.Rand()
 
 	proc/decorate()
@@ -534,6 +545,17 @@ proc/compare_ornament_score(list/a, list/b)
 					var/list/ornament = ornament_list[ornament_name]
 					ornament["score"] = -src.bound_of_wilson_score_confidence_interval_for_a_bernoulli_parameter_of_an_ornament(ornament, which_bound=1)
 				ornament_list = sortList(ornament_list, /proc/compare_ornament_score, associative=TRUE)
+			if("weighted_random")
+				var/list/ornament_weights = list()
+				for(var/ornament_name in ornament_list)
+					var/list/ornament = ornament_list[ornament_name]
+					ornament_weights[ornament_name] = src.weighted_sort_flat_bonus + \
+						src.bound_of_wilson_score_confidence_interval_for_a_bernoulli_parameter_of_an_ornament(ornament)
+				ornament_list = list()
+				while(length(ornament_weights) > 0 && length(ornament_list) < length(src.ornament_positions))
+					var/ornament_name = pickweight(ornament_weights)
+					ornament_list += ornament_name
+					ornament_weights -= ornament_name
 		src.placed_ornaments = list()
 		src.placed_ornaments.len = length(ornament_positions)
 		for(var/i = 1 to length(ornament_positions))
