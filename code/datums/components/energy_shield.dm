@@ -14,7 +14,7 @@
  * Addnl support for granting mob properties? Consider subtype for CE shield - low power but strong environmental resists
  * Req hooking into a process scheduler for passive power drain
  *
- * 
+ *
  * TODO: better sfx
  * TODO: text feedback
  * TODO: vfx??
@@ -56,7 +56,6 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	RegisterSignal(parent, COMSIG_SHIELD_TOGGLE, .proc/toggle)
 
 /datum/component/wearertargeting/energy_shield/on_equip(datum/source, mob/equipper, slot)
-	//Add item ability?????????????????????
 	var/obj/item/I = parent
 	I.add_item_ability(equipper, /obj/ability_button/toggle_shield)
 	. = ..()
@@ -77,13 +76,13 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	if(SEND_SIGNAL(parent, COMSIG_CELL_CHECK_CHARGE, charge_list) & CELL_RETURNED_LIST)
 		charge = charge_list["charge"]
 	else
-		return //what the fuck
+		return
 
 	var/cost = incoming_damage * shield_strength * shield_efficiency
 	var/blocked = shield_strength
 	if(cost > charge && bleedthrough)
 		blocked *= charge/cost
-		playsound(current_user, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 30, 0.1, 0, 0.5)
+		turn_off(TRUE)
 	else
 		playsound(current_user, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 0.1, 0, 2)
 
@@ -110,10 +109,13 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 		src.active = FALSE
 	playsound(current_user, 'sound/items/miningtool_on.ogg', 30, 1)
 
-/datum/component/wearertargeting/energy_shield/proc/turn_off()
+/datum/component/wearertargeting/energy_shield/proc/turn_off(shatter = FALSE)
 	processing_items -= src
 	src.active = FALSE
-	playsound(current_user, 'sound/items/miningtool_off.ogg', 30, 1)
+	if(shatter)
+		playsound(current_user, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 30, 0.1, 0, 0.5)
+	else
+		playsound(current_user, 'sound/items/miningtool_off.ogg', 30, 1)
 
 /datum/component/wearertargeting/energy_shield/proc/toggle()
 	if(active)
@@ -134,6 +136,6 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	New()
 		. = ..()
 		AddComponent(/datum/component/wearertargeting/energy_shield, list(SLOT_GLOVES), 1, 1, 1, 0)
-		AddComponent(/datum/component/power_cell, 50, 50, 0, 0, 1)
+		AddComponent(/datum/component/power_cell, 25, 25, 0, 0, 1)
 
 //TODO: Add tooltip/desc info to item
