@@ -401,6 +401,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if (T.turf_flags & IS_TYPE_SIMULATED)
 				if (istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/plating))
 					var/turf/simulated/floor/F = T
+					if (istype(F, /turf/simulated/floor/glassblock))
+						return
 					if (!F.broken)
 						if (prob(80))
 							F.break_tile_to_plating()
