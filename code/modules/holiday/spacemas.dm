@@ -621,6 +621,9 @@ proc/compare_ornament_score(list/a, list/b)
 				boutput(user, "<span class='alert'>You've already hung an ornament this round!</span>")
 				return
 			var/obj/item/canvas/tree_ornament/ornament = W
+			if(ornament.on_tree)
+				boutput(user, "<span class='alert'>That ornament is already on a tree!</span>")
+				return
 			if(ornament.is_ready(user))
 				if(tgui_alert(user, "Do you want to hang the ornament on the tree? (You can only do so once per round.)", "Hang ornament?", list("Yes", "No")) != "Yes")
 					return
@@ -629,6 +632,9 @@ proc/compare_ornament_score(list/a, list/b)
 					return
 				if(user.ckey in src.ckeys_placed_this_round)
 					boutput(user, "<span class='alert'>You've already hung an ornament this round!</span>")
+					return
+				if(ornament.on_tree)
+					boutput(user, "<span class='alert'>That ornament is already on a tree!</span>")
 					return
 				user.drop_item(ornament)
 				ornament.name = maybe_name
