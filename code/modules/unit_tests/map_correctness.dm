@@ -15,7 +15,9 @@ proc/check_map_correctness()
 	check_unsimulated_station_turfs()
 	check_duplicate_area_names()
 	check_missing_material()
+	#ifndef PREFAB_CHECKING
 	check_xmas_tree()
+	#endif
 
 proc/check_missing_navbeacons()
 	var/list/all_beacons = list()
