@@ -422,12 +422,10 @@
 	plane = PLANE_NOSHADOW_BELOW
 	color = "#DD0000"
 	anchored = 1
-	// this would make it connect to the centre, for like terminals and whatnot
-	// subtype node sets this to true
+	/// this would make it connect to the centre with a knot, for terminals and whatnot
 	var/override_centre_connection = FALSE
 	var/cable_type = /obj/cable
-	// cable_surr uses the macros NORTHEAST_UNIQUE and such to save directions
-	// as it needs to store up to 8 at once
+	/// cable_surr uses the unique ordinal dirs to save directions as it needs to store up to 8 at once
 	var/cable_surr = 0
 
 /obj/cablespawner/New()
@@ -505,8 +503,8 @@
 	// checks for regular cables (these always connect by default)
 		var/declarer = alldirs_unique[alldirs.Find(dir_to_c)]
 		for (var/obj/cable/normal_cable in get_step(src, dir_to_c))
-			if (normal_cable.type == src.cable_type)
-				if (normal_cable.d1 == invert_dir(dir_to_c) || normal_cable.d2 == invert_dir(dir_to_c))
+			if (istype(normal_cable, src) || istype(src, normal_cable))
+				if (normal_cable.d1 == turn(dir_to_c, 180) || normal_cable.d2 == turn(dir_to_c, 180))
 					cable_surr |= declarer
 
 /// causes cablespawner to spawn cables (amazing)
@@ -535,16 +533,11 @@
 	// multiple cables, spiral out from the centre 'knot'
 		for (var/i in 1 to length(directions))
 			cable_laying(0, directions[i])
-	/*
-	(this old way made knots whenever there were 3 or more way junctions)
 	else if (length(directions) >= 3)
-		for (var/i in 1 to length(directions))
-			cable_laying(0, directions[i]) */
-	else if (length(directions) >= 3)
+	// generates multiple cables in a 'away from the centre' pattern.
 		for (var/i in 1 to length(directions) - 1)
 			cable_laying(directions[i], directions[1+i])
 		cable_laying(directions[1], directions[length(directions)])
-
 	else if (length(directions) == 1)
 	// end of a cable
 		cable_laying(0, directions[1])

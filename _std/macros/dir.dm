@@ -20,11 +20,6 @@ proc/dir_to_dirname(dir)
 proc/dirname_to_dir(dir)
 	return global.dirnames[dir]
 
-/// gets the opposite direction of a dir
-proc/invert_dir(dir)
-	var/alldirs_inverted = list(SOUTH, NORTH, WEST, EAST, SOUTHWEST, NORTHWEST, NORTHEAST, SOUTHEAST)
-	return alldirs_inverted[alldirs.Find(dir)]
-
 /// returns true if a direction is cardinal
 #define is_cardinal(DIR) (!((DIR - 1) & DIR))
 
