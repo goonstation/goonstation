@@ -89,7 +89,6 @@
 			playsound(src, 'sound/machines/ding.ogg', 50, 1)
 			if(src.occupant) // If someone is inside we eject immediatly so as to not keep people hostage
 				H.changeStatus("weakened", 1 SECONDS)
-				H.changeStatus("freshly_laundered", rand(2,4) MINUTES)
 				H.make_dizzy(15) //Makes you dizzy for fifteen seconds due to the spinning
 				H.change_misstep_chance(65)
 				src.open = 1

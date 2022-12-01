@@ -2235,9 +2235,6 @@
 			var/obj/item/clothing/C = owner
 			C.add_stain(LAUNDERED_STAIN_TEXT) // we just cleaned them so this is cheeky
 			C.setProperty("coldprot", C.getProperty("coldprot") + LAUNDERED_COLDPROT_AMOUNT)
-		if(ismob(owner))
-			var/mob/M = owner
-			M.bioHolder?.AddEffect("fresh_laundry")
 
 	onRemove()
 		. = ..()
@@ -2245,9 +2242,6 @@
 			var/obj/item/clothing/C = owner
 			C.setProperty("coldprot", C.getProperty("coldprot") - LAUNDERED_COLDPROT_AMOUNT)
 			C.stains -= LAUNDERED_STAIN_TEXT
-		if(ismob(owner))
-			var/mob/M = owner
-			M.bioHolder?.RemoveEffect("fresh_laundry")
 
 #undef LAUNDERED_COLDPROT_AMOUNT
 #undef LAUNDERED_STAIN_TEXT
