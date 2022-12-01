@@ -1298,6 +1298,7 @@
 			stam_power = stam_power / 2 //do the least
 		else
 			stam_power = max(  stam_power / 2, stam_power * ( power / (power + armor_mod) )  )
+		stam_power *= max(0, (1-shield_amt["shield_strength"]))
 
 		//stam_power -= armor_mod
 		msgs.force_stamina_target = 1
