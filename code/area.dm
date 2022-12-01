@@ -3549,7 +3549,7 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 	Entered(atom/movable/A, atom/oldloc)
 		. = ..()
 		if (current_state < GAME_STATE_FINISHED)
-			if(istype(A, /mob/living))
+			if(istype(A, /mob/living) && !istype(A, /mob/living/intangible))
 				var/mob/living/M = A
 				if(!M.client)
 					return
