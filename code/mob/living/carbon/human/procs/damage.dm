@@ -180,11 +180,14 @@
 			reduction += 1
 			break
 
-	if (src.energy_shield) reduction += src.energy_shield.protect()/15
 	if (src.spellshield)
 		reduction += 2
 		shielded = 1
 		boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some blast!</b></span>")
+
+	var/list/shield_amt = list()
+	SEND_SIGNAL(src, COMSIG_MOB_SHIELD_ACTIVATE, power * 30, shield_amt)
+	power *= max(0, (1-shield_amt["shield_strength"]))
 
 	power *= clamp(1-exploprot, 0, 1)
 	power -= reduction
