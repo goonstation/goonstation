@@ -81,7 +81,7 @@
 	damage = 35
 	dissipation_delay = 6
 	damage_type = D_PIERCING
-	hit_type = DAMAGE_BURN
+	hit_type = DAMAGE_STAB
 	icon_state = "laser_white"
 	shot_sound = 'sound/weapons/optio.ogg'
 	implanted = null

@@ -1,5 +1,9 @@
 
 (t)wed nov 30 22
+(u)Mora
+(p)12228
+(e)🪲🎨|C-Bug, C-Sprites
+(+)Added a alternative blue labcoat for the medical director via alternate outfit spacebux purchase, check it out in the PR or in game!
 (u)goonstation-enjoyer
 (p)12171
 (e)💅🤖|C-QoL, A-Silicons
