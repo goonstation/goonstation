@@ -80,8 +80,9 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 
 	var/cost = incoming_damage * shield_strength * shield_efficiency
 	var/blocked = shield_strength
-	if(cost > charge && bleedthrough)
-		blocked *= charge/cost
+	if(cost > charge)
+		if(bleedthrough)
+			blocked *= charge/cost
 		turn_off(TRUE)
 	else
 		playsound(current_user, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 0.1, 0, 2)
@@ -105,17 +106,23 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	if(SEND_SIGNAL(parent, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE)
 		processing_items |= src
 		src.active = TRUE
+		playsound(current_user, 'sound/items/miningtool_on.ogg', 30, 1)
+		boutput(current_user, "You puwer up your energy shield")
 	else //fail message here?
 		src.active = FALSE
-	playsound(current_user, 'sound/items/miningtool_on.ogg', 30, 1)
+		playsound(current_user, "sparks", 75, 1, -1)
+		boutput(current_user, "Your energy shield is depleted!")
 
 /datum/component/wearertargeting/energy_shield/proc/turn_off(shatter = FALSE)
 	processing_items -= src
 	src.active = FALSE
 	if(shatter)
 		playsound(current_user, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 30, 0.1, 0, 0.5)
+		current_user.visible_message("[current_user]'s energy shield violently pops!")
+		elecflash(current_user, 1, 1, 0)
 	else
 		playsound(current_user, 'sound/items/miningtool_off.ogg', 30, 1)
+		boutput(current_user, "Your energy shield powers down.")
 
 /datum/component/wearertargeting/energy_shield/proc/toggle()
 	if(active)
