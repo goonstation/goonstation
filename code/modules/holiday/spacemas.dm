@@ -444,7 +444,7 @@ proc/compare_ornament_score(list/a, list/b)
 	name = "Spacemas tree"
 	desc = "O Spacemas tree, O Spacemas tree, Much p- Huh, there's a bunch of crayons and canvases under it, try clicking it?"
 	icon = 'icons/effects/160x160.dmi'
-	icon_state = "xmastree_2021_orig"
+	icon_state = "xmastree_2022"
 	anchored = 1
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	pixel_x = -64
