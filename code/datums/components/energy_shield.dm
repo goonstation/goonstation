@@ -51,6 +51,8 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 
 /datum/component/wearertargeting/energy_shield/Initialize(_valid_slots, _shield_strength = 1, _shield_efficiency = 1, _bleedthrough = TRUE, _power_drain = 0)
 	. = ..()
+	if(!isitem(parent))
+		return COMPONENT_INCOMPATIBLE
 	src.shield_strength = _shield_strength
 	src.shield_efficiency = _shield_efficiency
 	src.bleedthrough = _bleedthrough
