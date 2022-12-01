@@ -411,11 +411,32 @@ mob/new_player
 				// can you believe all these slot appendages were in one line before using nested ternaries? awful.
 				if (i <= c)
 					if (i == 1 && c > shown)
-						slots += "<div class='latejoin-card latejoin-full' style='border-color: [J.linkcolor]; background-color: [J.linkcolor];' title='Slot filled.'>'+[c - maxslots]'</div>"
+						slots += {"
+						<div 
+						class='latejoin-card latejoin-full' 
+						style='border-color: [J.linkcolor]; background-color: [J.linkcolor];' 
+						title='Slot filled.'
+						>+[c - maxslots]
+						</div>
+						"}
 					else
-						slots += "<div class='latejoin-card latejoin-full' style='border-color: [J.linkcolor]; background-color: [J.linkcolor];' title='Slot filled.'>'&times;'</div>"
+						slots += {"
+						<div 
+						class='latejoin-card latejoin-full' 
+						style='border-color: [J.linkcolor]; background-color: [J.linkcolor];' 
+						title='Slot filled.'
+						>&times;
+						</div>
+						"}
 				else
-					slots += "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' class='latejoin-card' style='border-color: [J.linkcolor];' title='Join the round as [J.name].'>&#x2713;&#xFE0E;</a>"
+					slots += {"
+					<a 
+					href='byond://?src=\ref[src];SelectedJob=\ref[J]' 
+					class='latejoin-card' style='border-color: [J.linkcolor];' 
+					title='Join the round as [J.name].'
+					>&#x2713;&#xFE0E;
+					</a>
+					"}
 			return {"
 				<tr><td class='latejoin-link'>
 					[(limit == -1 || c < limit) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' style='color: [J.linkcolor];' title='Join the round as [J.name].'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is full.'>[J.name]</span>"]
