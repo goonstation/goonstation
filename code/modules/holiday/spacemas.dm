@@ -475,7 +475,7 @@ proc/compare_ornament_score(list/a, list/b)
 	)
 	var/uses_custom_ornaments = TRUE
 	var/ornament_sort = "random"
-	var/top_sort_fuzziness = 0
+	var/best_sort_fuzziness = 0
 	var/list/placed_ornaments = null
 	var/list/ckeys_placed_this_round
 	var/list/got_ornament_kit
@@ -487,12 +487,15 @@ proc/compare_ornament_score(list/a, list/b)
 	latest_ornaments
 		ornament_sort = "latest"
 
-	top_ornaments
-		ornament_sort = "top"
+	best_ornaments
+		ornament_sort = "best"
 
 	fuzzy_top_ornaments
-		ornament_sort = "top"
+		ornament_sort = "best"
 		top_sort_fuzziness = 0.1
+
+	worst_ornaments
+		ornament_sort = "worst"
 
 	New()
 		..()
@@ -501,11 +504,13 @@ proc/compare_ornament_score(list/a, list/b)
 		if(uses_custom_ornaments)
 			src.decorate()
 
-	proc/lower_bound_of_wilson_score_confidence_interval_for_a_bernoulli_parameter_of_an_ornament(list/ornament)
+	/// Calculates the "score" of an ornament based on upvotes and downvotes
+	/// which_bound is -1 if you are sorting by best, 1 if you are sorting by worst
+	proc/bound_of_wilson_score_confidence_interval_for_a_bernoulli_parameter_of_an_ornament(list/ornament, which_bound = -1)
 		var/positive = length(ornament["upvoted"]) + 0.00001
 		var/negative = length(ornament["downvoted"]) + 0.00001
 		// source: https://www.evanmiller.org/how-not-to-sort-by-average-rating.html
-		. = ((positive + 1.9208) / (positive + negative) - \
+		. = ((positive + 1.9208) / (positive + negative) - which_bound * \
 			1.96 * sqrt((positive * negative) / (positive + negative) + 0.9604) / \
 			(positive + negative)) / (1 + 3.8416 / (positive + negative))
 		if(top_sort_fuzziness > 0)
@@ -519,10 +524,15 @@ proc/compare_ornament_score(list/a, list/b)
 				shuffle_list(ornament_list)
 			if("latest")
 				reverse_list(ornament_list)
-			if("top")
+			if("best")
 				for(var/ornament_name in ornament_list)
 					var/list/ornament = ornament_list[ornament_name]
-					ornament["score"] = src.lower_bound_of_wilson_score_confidence_interval_for_a_bernoulli_parameter_of_an_ornament(ornament)
+					ornament["score"] = src.bound_of_wilson_score_confidence_interval_for_a_bernoulli_parameter_of_an_ornament(ornament)
+				ornament_list = sortList(ornament_list, /proc/compare_ornament_score, associative=TRUE)
+			if("worst")
+				for(var/ornament_name in ornament_list)
+					var/list/ornament = ornament_list[ornament_name]
+					ornament["score"] = -src.bound_of_wilson_score_confidence_interval_for_a_bernoulli_parameter_of_an_ornament(ornament, which_bound=1)
 				ornament_list = sortList(ornament_list, /proc/compare_ornament_score, associative=TRUE)
 		src.placed_ornaments = list()
 		src.placed_ornaments.len = length(ornament_positions)
