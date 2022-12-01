@@ -627,6 +627,9 @@ proc/compare_ornament_score(list/a, list/b)
 				var/maybe_name = tgui_input_text(user, "What would you like to name your ornament?", "Name your ornament", ornament.name)
 				if(!maybe_name)
 					return
+				if(user.ckey in src.ckeys_placed_this_round)
+					boutput(user, "<span class='alert'>You've already hung an ornament this round!</span>")
+					return
 				user.drop_item(ornament)
 				ornament.name = maybe_name
 				ornament.main_artist = user.ckey
