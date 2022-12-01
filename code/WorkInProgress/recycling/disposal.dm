@@ -1992,7 +1992,7 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 	var/list/selftile = list()
 	for (var/obj/disposalpipespawner/dupe in range(0, src))
 		if (istype(dupe, src))
-		selftile += dupe
+			selftile += dupe
 	if (length(selftile) > 1)
 		CRASH("Multiple pipespawners on coordinate [src.x] x [src.y] y!")
 	qdel(selftile)
