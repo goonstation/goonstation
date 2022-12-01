@@ -6,10 +6,10 @@
  * Uses power cell in the item - automatically create a cell_holder component if one does not exist?
  *
  * How it blocks damage:
- *  attack code Sends a COMSIG_MOB_SHIELD_ACTIVATE(imcoming_damage, return_list) to the mob, energy shield component responds with a CELL_SUFFICIENT/CELL_INSUFFICIENT return
- *  Addnl: Or send a RETURNED_LIST, in the case of a partial block? Perhaps preceed with a COMSIG_CHECK_SHIELD? unsure
- *  Proc sending the signal decides how to handle the damage - Some way of having shield strength determined by the component?
- *   Bleedthrough? On all hits, or only on shield-break? Or never?
+ *  attack code Sends a COMSIG_MOB_SHIELD_ACTIVATE(imcoming_damage, return_list) to the mob, energy shield component drains power cell of parent item if possible
+ *  Addnl: Send a RETURNED_LIST, in the case of a partial block
+ *  Proc sending the signal decides how to handle the damage
+ *   Bleedthrough? On all hits, or only on shield-break? Determined by initialization var
  *
  * Addnl support for granting mob properties? Consider subtype for CE shield - low power but strong environmental resists
  * Req hooking into a process scheduler for passive power drain
