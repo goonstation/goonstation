@@ -2219,6 +2219,8 @@
 		. = ..()
 		owner.remove_filter("gnesis_tint")
 
+#define LAUNDERED_COLDPROT_AMOUNT 2 /// Amount of coldprot(%) given to each item of wearable clothing
+#define LAUNDERED_STAIN_TEXT "freshly-laundered" /// Name of the "stain" given to wearable clothing
 /datum/statusEffect/freshly_laundered
 	id = "freshly_laundered"
 	name = "Freshly Laundered"
@@ -2226,13 +2228,13 @@
 	visible = FALSE
 	unique = TRUE
 	maxDuration = 5 MINUTES
-	var/amount = 2 // very easy to stack
 
 	onAdd(optional)
 		. = ..()
 		if (istype(owner, /obj/item/clothing/))
 			var/obj/item/clothing/C = owner
-			C.setProperty("coldprot", C.getProperty("coldprot") + amount)
+			C.add_stain(LAUNDERED_STAIN_TEXT) // we just cleaned them so this is cheeky
+			C.setProperty("coldprot", C.getProperty("coldprot") + LAUNDERED_COLDPROT_AMOUNT)
 		if(ismob(owner))
 			var/mob/M = owner
 			M.bioHolder?.AddEffect("fresh_laundry")
@@ -2241,7 +2243,11 @@
 		. = ..()
 		if (istype(owner, /obj/item/clothing/))
 			var/obj/item/clothing/C = owner
-			C.setProperty("coldprot", C.getProperty("coldprot") - amount)
+			C.setProperty("coldprot", C.getProperty("coldprot") - LAUNDERED_COLDPROT_AMOUNT)
+			C.stains -= LAUNDERED_STAIN_TEXT
 		if(ismob(owner))
 			var/mob/M = owner
 			M.bioHolder?.RemoveEffect("fresh_laundry")
+
+#undef LAUNDERED_COLDPROT_AMOUNT
+#undef LAUNDERED_STAIN_TEXT

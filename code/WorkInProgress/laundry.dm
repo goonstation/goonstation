@@ -81,6 +81,7 @@
 			processing_items.Remove(src)
 			for (var/obj/item/clothing/C in src.contents)
 				C.stains = null
+				C.changeStatus("freshly_laundered", rand(2,4) MINUTES)
 				C.UpdateName()
 			src.cycle = POST
 			src.cycle_current = 0
@@ -88,6 +89,7 @@
 			playsound(src, 'sound/machines/ding.ogg', 50, 1)
 			if(src.occupant) // If someone is inside we eject immediatly so as to not keep people hostage
 				H.changeStatus("weakened", 1 SECONDS)
+				H.changeStatus("freshly_laundered", rand(2,4) MINUTES)
 				H.make_dizzy(15) //Makes you dizzy for fifteen seconds due to the spinning
 				H.change_misstep_chance(65)
 				src.open = 1
@@ -224,8 +226,6 @@
 	if (src.contents.len)
 		T = istype(T) ?  T : get_turf(src)
 		for (var/atom/movable/AM in src)
-			if (istype(AM, /obj/item/clothing) || istype(AM, /mob/living/carbon/human))
-				AM.changeStatus("freshly_laundered", rand(2,4) MINUTES)
 			AM.set_loc(T)
 		src.UpdateIcon()
 
