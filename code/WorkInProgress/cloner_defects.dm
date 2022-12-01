@@ -455,3 +455,25 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 			src.owner.bioHolder.AddEffect(data["bioeffect_id"])
 			var/datum/bioEffect/effect = src.owner.bioHolder.GetEffect(data["bioeffect_id"]) // this suuuucks
 			effect.curable_by_mutadone = FALSE
+
+
+/// Sets seen name to 'unknown' (until repaired with synthflesh)
+/datum/cloner_defect/face_disfigured
+	name = "Facial Disfiguration"
+	desc = "Subject's face has been disfigured during the cloning process, rendering them unrecognizable."
+	severity = CLONER_DEFECT_SEVERITY_MAJOR
+
+	on_add()
+		. = ..()
+		src.owner.disfigured = TRUE
+		src.owner.UpdateName()
+
+/// Sets heard voice to 'unknown' (until repaired with synthflesh)
+/datum/cloner_defect/voice_disfigured
+	name = "Vocal Chord Disfiguration"
+	desc = "Subject's vocal chords were improperly reconstructed, making their voice unrecognizable."
+	severity = CLONER_DEFECT_SEVERITY_MINOR
+
+	on_add()
+		. = ..()
+		src.owner.vdisfigured = TRUE
