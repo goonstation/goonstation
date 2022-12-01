@@ -15,7 +15,7 @@
 // * Stockings - from halloween.dm - wtf
 
 // define used for removing spacemas objects when it's not xmas
-#ifdef XMAS
+#if defined(XMAS) || defined(RUNTIME_CHECKING)
 #define EPHEMERAL_XMAS EPHEMERAL_SHOWN
 #else
 #define EPHEMERAL_XMAS EPHEMERAL_HIDDEN
@@ -535,6 +535,7 @@ proc/compare_ornament_score(list/a, list/b)
 			ornament.desc = "A Spacemas ornament by [ornament_artist]."
 			ornament.upvoted = ornament_list[ornament_name]["upvoted"]
 			ornament.downvoted = ornament_list[ornament_name]["downvoted"]
+			ornament.main_artist = ornament_artist
 			src.place_ornament(ornament, i)
 
 	disposing()
@@ -620,14 +621,24 @@ proc/compare_ornament_score(list/a, list/b)
 				boutput(user, "<span class='alert'>You've already hung an ornament this round!</span>")
 				return
 			var/obj/item/canvas/tree_ornament/ornament = W
+			if(ornament.on_tree)
+				boutput(user, "<span class='alert'>That ornament is already on a tree!</span>")
+				return
 			if(ornament.is_ready(user))
 				if(tgui_alert(user, "Do you want to hang the ornament on the tree? (You can only do so once per round.)", "Hang ornament?", list("Yes", "No")) != "Yes")
 					return
 				var/maybe_name = tgui_input_text(user, "What would you like to name your ornament?", "Name your ornament", ornament.name)
 				if(!maybe_name)
 					return
+				if(user.ckey in src.ckeys_placed_this_round)
+					boutput(user, "<span class='alert'>You've already hung an ornament this round!</span>")
+					return
+				if(ornament.on_tree)
+					boutput(user, "<span class='alert'>That ornament is already on a tree!</span>")
+					return
 				user.drop_item(ornament)
 				ornament.name = maybe_name
+				ornament.main_artist = user.ckey
 				ornament.finish(user)
 				var/empty_index = 0
 				for(var/i = 1 to length(src.placed_ornaments))
@@ -1422,10 +1433,10 @@ proc/compare_ornament_score(list/a, list/b)
 	icon_state = "x"
 
 
-proc/get_spacemas_ornaments()
+proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 	RETURN_TYPE(/list)
 	var/static/spacemas_ornament_data = null
-	if(isnull(spacemas_ornament_data))
+	if(isnull(spacemas_ornament_data) && !only_if_loaded)
 		spacemas_ornament_data = world.load_intra_round_value("tree_ornaments") || list()
 	. = spacemas_ornament_data
 
@@ -1439,6 +1450,7 @@ proc/get_spacemas_ornaments()
 	var/list/upvoted
 	var/list/downvoted
 	var/obj/xmastree/on_tree = null
+	var/main_artist = null
 
 	New(atom/loc, icon/art)
 		..()
@@ -1448,7 +1460,8 @@ proc/get_spacemas_ornaments()
 
 	Click(location, control, params)
 		. = ..()
-		pop_open_a_browser_box(usr)
+		if(on_tree)
+			pop_open_a_browser_box(usr)
 
 	get_instructions(mob/user)
 		. = ..()
@@ -1480,6 +1493,12 @@ proc/get_spacemas_ornaments()
 					src.upvoted = list()
 				if(!src.downvoted)
 					src.downvoted = list()
+				if(usr.ckey == src.main_artist)
+					boutput(usr, "<span class='alert'>You can't upvote your own ornament.</span>")
+					return
+				if(usr.client?.player?.rounds_participated <= 10)
+					boutput(usr, "<span class='alert'>You need to play at least 10 rounds to be able to downvote ornaments.</span>")
+					return
 				if(usr.ckey in src.downvoted)
 					src.downvoted.Remove(usr.ckey)
 					src.upvoted += usr.ckey
@@ -1500,6 +1519,12 @@ proc/get_spacemas_ornaments()
 					src.upvoted = list()
 				if(!src.downvoted)
 					src.downvoted = list()
+				if(usr.ckey == src.main_artist)
+					boutput(usr, "<span class='alert'>You can't downvote your own ornament.</span>")
+					return
+				if(usr.client?.player?.rounds_participated <= 10)
+					boutput(usr, "<span class='alert'>You need to play at least 10 rounds to be able to downvote ornaments.</span>")
+					return
 				if(usr.ckey in src.upvoted)
 					src.upvoted.Remove(usr.ckey)
 					src.downvoted += usr.ckey
