@@ -1590,7 +1590,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\device\cloak_gen.dm"
 #include "code\obj\item\device\device_parent.dm"
 #include "code\obj\item\device\disguiser.dm"
-#include "code\obj\item\device\energy_shield_device.dm"
 #include "code\obj\item\device\energy_shield_gen.dm"
 #include "code\obj\item\device\flash.dm"
 #include "code\obj\item\device\flyswatter.dm"
