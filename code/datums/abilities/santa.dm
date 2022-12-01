@@ -218,21 +218,21 @@
 
 	cast()
 		var/list/tele_areas = get_teleareas()
-		var/A = tgui_input_list(src, "Area to jump to", "Teleportation", tele_areas)
+		var/A = tgui_input_list(src.holder.owner, "Area to jump to", "Teleportation", tele_areas)
 		if (isnull(A))
-			boutput(src, "<span class='alert'>Invalid area selected.</span>")
+			boutput(src.holder.owner, "<span class='alert'>Invalid area selected.</span>")
 			return 1
 		var/area/thearea = get_telearea(A)
 		if(thearea.teleport_blocked)
-			boutput(src, "<span class='alert'>That area is blocked from teleportation.</span>")
+			boutput(src.holder.owner, "<span class='alert'>That area is blocked from teleportation.</span>")
 			return 1
 
 		holder.owner.visible_message("<span class='alert'><B>[holder.owner] poofs away in a puff of cold, snowy air!</B></span>")
-		playsound(usr.loc, 'sound/effects/bamf.ogg', 25, 1, -1)
-		playsound(usr.loc, 'sound/machines/fortune_laugh.ogg', 25, 1, -1)
+		playsound(src.holder.owner.loc, 'sound/effects/bamf.ogg', 25, 1, -1)
+		playsound(src.holder.owner.loc, 'sound/machines/fortune_laugh.ogg', 25, 1, -1)
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-		smoke.set_up(1, 0, usr.loc)
-		smoke.attach(usr)
+		smoke.set_up(1, 0, src.holder.owner.loc)
+		smoke.attach(src.holder.owner.loc)
 		smoke.start()
 		var/list/L = list()
 		for(var/turf/T in get_area_turfs(thearea.type))

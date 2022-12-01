@@ -2644,3 +2644,7 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 		return "[locfinder.group[1]][locfinder.group[2]][offset ? ":[offset]":""][locfinder.group[4]]"
 	else
 		return new_screen_loc //regex failed to match, just use what we got
+
+/// For runtime logs- returns the thing's name, type, and ref as a string
+/proc/identify_object(datum/thing)
+	. = "[thing] \[\ref[thing]\] ([thing.type])"
