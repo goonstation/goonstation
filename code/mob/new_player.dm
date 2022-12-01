@@ -397,7 +397,7 @@ mob/new_player
 			// probalby could be a define but dont give a shite
 			var/maxslots = 5
 			var/list/slots = list()
-			var/shown = clamp(c, (limit == -1 ? 99 : limit), maxslots)
+			var/shown = min(max(c, (limit == -1 ? 99 : limit)), maxslots)
 			// if there's still an open space, show a final join link
 			if (limit == -1 || (limit > maxslots && c < limit))
 				slots += {"<a href='byond://?src=\ref[src];
@@ -412,27 +412,27 @@ mob/new_player
 				if (i <= c)
 					if (i == 1 && c > shown)
 						slots += {"
-						<div 
-						class='latejoin-card latejoin-full' 
-						style='border-color: [J.linkcolor]; background-color: [J.linkcolor];' 
+						<div
+						class='latejoin-card latejoin-full'
+						style='border-color: [J.linkcolor]; background-color: [J.linkcolor];'
 						title='Slot filled.'
 						>+[c - maxslots]
 						</div>
 						"}
 					else
 						slots += {"
-						<div 
-						class='latejoin-card latejoin-full' 
-						style='border-color: [J.linkcolor]; background-color: [J.linkcolor];' 
+						<div
+						class='latejoin-card latejoin-full'
+						style='border-color: [J.linkcolor]; background-color: [J.linkcolor];'
 						title='Slot filled.'
 						>&times;
 						</div>
 						"}
 				else
 					slots += {"
-					<a 
-					href='byond://?src=\ref[src];SelectedJob=\ref[J]' 
-					class='latejoin-card' style='border-color: [J.linkcolor];' 
+					<a
+					href='byond://?src=\ref[src];SelectedJob=\ref[J]'
+					class='latejoin-card' style='border-color: [J.linkcolor];'
 					title='Join the round as [J.name].'
 					>&#x2713;&#xFE0E;
 					</a>
