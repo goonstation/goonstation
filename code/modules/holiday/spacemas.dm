@@ -578,6 +578,12 @@ proc/compare_ornament_score(list/a, list/b)
 		else if (!src.on_fire && burning == 1)
 			src.visible_message("<span class='combat'><b>[src] catches on fire! Oh shit!</b></span>")
 			src.on_fire = 1
+			for(var/obj/item/canvas/tree_ornament/ornament in src.placed_ornaments)
+				if(prob(30))
+					ornament.combust()
+				else if(prob(50))
+					var/darkening = rand(0, 255)
+					ornament.color = rgb(darkening, darkening, darkening)
 			SPAWN(1 MINUTE)
 				if (src.on_fire)
 					src.visible_message("<span class='combat'>[src] burns down and collapses into a sad pile of ash. <b><i>Spacemas is ruined!!!</i></b></span>")
@@ -656,7 +662,6 @@ proc/compare_ornament_score(list/a, list/b)
 
 	disposing()
 		for(var/obj/item/canvas/tree_ornament/ornament in placed_ornaments)
-			ornament.on_tree = null
 			qdel(ornament)
 		..()
 
