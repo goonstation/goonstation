@@ -211,6 +211,23 @@
 		holder.owner?.ClearSpecificParticles("stink_lines")
 		. = ..()
 
+/datum/bioEffect/hidden/fresh_laundry
+	name = "Fresh Laundry"
+	desc = "Aww, it's still warm!"
+	id = "fresh_laundry"
+	can_copy = 0
+	curable_by_mutadone = 0
+	occur_in_genepools = 0
+
+	OnLife(var/mult)
+		if(..()) return
+		if (probmult(5))
+			if (istype(holder.owner, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = holder.owner
+				if (H.sims)
+					H.sims.affectMotive("comfort", 0.5) // warm :)
+					H.sims.affectMotive("Hygiene", 0.5) // refreshing protection
+
 // Magnetic Random Event
 
 /datum/bioEffect/hidden/magnetic

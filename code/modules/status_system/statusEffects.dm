@@ -2218,3 +2218,30 @@
 	onRemove()
 		. = ..()
 		owner.remove_filter("gnesis_tint")
+
+/datum/statusEffect/freshly_laundered
+	id = "freshly_laundered"
+	name = "Freshly Laundered"
+
+	visible = FALSE
+	unique = TRUE
+	maxDuration = 5 MINUTES
+	var/amount = 2 // very easy to stack
+
+	onAdd(optional)
+		. = ..()
+		if (istype(owner, /obj/item/clothing/))
+			var/obj/item/clothing/C = owner
+			C.setProperty("coldprot", C.getProperty("coldprot") + amount)
+		if(ismob(owner))
+			var/mob/M = owner
+			M.bioHolder?.AddEffect("fresh_laundry")
+
+	onRemove()
+		. = ..()
+		if (istype(owner, /obj/item/clothing/))
+			var/obj/item/clothing/C = owner
+			C.setProperty("coldprot", C.getProperty("coldprot") - amount)
+		if(ismob(owner))
+			var/mob/M = owner
+			M.bioHolder?.RemoveEffect("fresh_laundry")

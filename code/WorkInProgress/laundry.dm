@@ -224,6 +224,8 @@
 	if (src.contents.len)
 		T = istype(T) ?  T : get_turf(src)
 		for (var/atom/movable/AM in src)
+			if (istype(AM, /obj/item/clothing) || istype(AM, /mob/living/carbon/human))
+				AM.changeStatus("freshly_laundered", rand(2,4) MINUTES)
 			AM.set_loc(T)
 		src.UpdateIcon()
 
