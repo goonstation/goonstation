@@ -1255,6 +1255,10 @@
 	if(user.is_hulk())
 		power *= 1.5
 
+	var/list/shield_amt = list()
+	SEND_SIGNAL(M, COMSIG_MOB_SHIELD_ACTIVATE, power, shield_amt)
+	power *= max(0, (1-shield_amt["shield_strength"]))
+
 	var/pre_armor_power = power
 	power -= armor_mod
 
