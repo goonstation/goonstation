@@ -1990,7 +1990,7 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 
 /obj/disposalpipespawner/initialize()
 	var/list/selftile = list()
-	for (var/disposalpipespawner/dupe in range(0, src))
+	for (var/obj/disposalpipespawner/dupe in range(0, src))
 		if (istype(dupe, src))
 		selftile += dupe
 	if (length(selftile) > 1)
