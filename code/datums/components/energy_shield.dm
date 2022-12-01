@@ -57,6 +57,8 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	src.power_drain = _power_drain
 	overlay = new
 	RegisterSignal(parent, COMSIG_SHIELD_TOGGLE, .proc/toggle)
+	if((SLOT_L_HAND in valid_slots) || (SLOT_R_HAND in valid_slots))
+		parent:c_flags |= EQUIPPED_WHILE_HELD
 
 /datum/component/wearertargeting/energy_shield/on_equip(datum/source, mob/equipper, slot)
 	var/obj/item/I = parent
