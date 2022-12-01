@@ -639,6 +639,7 @@ proc/compare_ornament_score(list/a, list/b)
 				user.drop_item(ornament)
 				ornament.name = maybe_name
 				ornament.main_artist = user.ckey
+				ornament.desc = "A Spacemas ornament by [ornament_artist]."
 				ornament.finish(user)
 				var/empty_index = 0
 				for(var/i = 1 to length(src.placed_ornaments))
@@ -1606,7 +1607,14 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 		var/new_color = input(user, "Choose a color:", "Ornament paintbrush", src.font_color) as color|null
 		if(new_color)
 			src.font_color = new_color
-			boutput(user, "<span class='notice'>You twirl the paintbrush and the Spacemas spirit changes it to this color: <span style='color: [src.font_color]'>[src.font_color]</span>.</span>")
+			boutput(user, "<span class='notice'>You twirl the paintbrush and the Spacemas spirit changes it to this color: <a href='?src=\ref[src];setcolor=[src.font_color]' style='color: [src.font_color]'>[src.font_color]</span>.</span>")
+			src.UpdateIcon()
+
+	Topic(href, href_list)
+		. = ..()
+		if(href_list["setcolor"] && can_reach(usr, src) && can_act(usr, 1))
+			src.font_color = href_list["setcolor"]
+			boutput(user, "<span class='notice'>You twirl the paintbrush and the Spacemas spirit changes it to this color again: <a href='?src=\ref[src];setcolor=[src.font_color]' style='color: [src.font_color]'>[src.font_color]</span>.</span>")
 			src.UpdateIcon()
 
 	afterattack(atom/target, mob/user)
