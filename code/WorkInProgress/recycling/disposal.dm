@@ -1989,10 +1989,17 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 				initialize()
 
 /obj/disposalpipespawner/initialize()
+	var/list/selftile = list()
+	for (var/disposalpipespawner/dupe in range(0, src))
+		if (istype(dupe, src))
+		selftile += dupe
+	if (length(selftile) > 1)
+		CRASH("Multiple pipespawners on coordinate [src.x] x [src.y] y!")
+	qdel(selftile)
 	var/list/directions = list()
 	for(var/dir_to_pipe in cardinal)
 		for(var/obj/disposalpipespawner/maybe_pipe in get_step(src, dir_to_pipe))
-		// checks for other pipe spawners
+		// checks for other pipe spawners of its own type
 			if(istype(maybe_pipe, src) || istype(src, maybe_pipe))
 				dpdir |= dir_to_pipe
 				directions += dir_to_pipe
