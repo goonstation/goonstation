@@ -1992,11 +1992,12 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 	var/list/directions = list()
 	for(var/dir_to_pipe in cardinal)
 		for(var/obj/disposalpipespawner/maybe_pipe in get_step(src, dir_to_pipe))
+		// checks for other pipe spawners
 			if(istype(maybe_pipe, src) || istype(src, maybe_pipe))
 				dpdir |= dir_to_pipe
 				directions += dir_to_pipe
 		for(var/obj/disposalpipe/maybe_pipe in get_step(src, dir_to_pipe))
-		// this checks all the different subtypes of pipe now
+		// this checks all the different subtypes of pipe
 			// the ones which spit out at 90 degrees
 			if (istype(maybe_pipe, /obj/disposalpipe/block_sensing_outlet)
 			|| istype(maybe_pipe, /obj/disposalpipe/type_sensing_outlet)
@@ -2017,7 +2018,9 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 			if(istype(maybe_pipe, src.pipe_type)
 			|| istype(maybe_pipe, src.trunk_type)
 			)
+			// these only connect to their own kind btw
 				if (maybe_pipe.dpdir & get_dir(maybe_pipe, src))
+				// makes sure they're pointing at you
 					dpdir |= dir_to_pipe
 					directions += dir_to_pipe
 
