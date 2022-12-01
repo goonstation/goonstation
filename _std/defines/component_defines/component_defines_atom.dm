@@ -120,8 +120,6 @@
 	#define COMSIG_ITEM_CONSUMED "itm_atk_consumed"
 	/// After an item's been eaten, but there's still some left (eater,item)
 	#define COMSIG_ITEM_CONSUMED_PARTIAL "itm_atk_consumed_partial"
-	/// After we've consumed an item (eater,item)
-	#define COMSIG_ITEM_CONSUMED_ALL "itm_atk_consumed_all"
 	/// Called before an attackby that uses this item (target, user)
 	#define COMSIG_ITEM_ATTACKBY_PRE "itm_atkby_pre"
 	/// When an item is used to attack a mob before it actually hurts the mob
@@ -194,6 +192,8 @@
 	#define COMSIG_MOB_GRABBED "mob_grabbed"
 	/// Sent when a mob emotes (emote, voluntary, emote target)
 	#define COMSIG_MOB_EMOTE "mob_emote"
+	/// Sent when a mob is checking for an active energy shield
+	#define COMSIG_MOB_SHIELD_ACTIVATE "mob_shield_activate"
 
 	// ---- cloaking device signal ----
 
