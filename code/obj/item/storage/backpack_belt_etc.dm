@@ -551,9 +551,9 @@
 	update_icon()
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
+			inventory_counter?.update_percent(ret["charge"], ret["max_charge"])
 		else
-			inventory_counter.update_text("-")
+			inventory_counter?.update_text("-")
 		return 0
 
 /obj/item/storage/belt/utility/prepared
