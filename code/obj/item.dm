@@ -429,7 +429,7 @@
 		eat_twitch(M)
 		SPAWN(1 SECOND)
 			if (!src || !M || !user)
-				return 1
+				return
 			SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED, user, src) //one to the mob
 			SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED, M, src) //one to the item
 			user.u_equip(src)
