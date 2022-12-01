@@ -69,7 +69,7 @@
 		">" = "Greater Than",
 		"[CREDIT_SIGN]" = "Credit"
 	)
-	var/suitable_for_canvas = FALSE
+	var/suitable_for_canvas = TRUE
 
 	New()
 		. = ..()

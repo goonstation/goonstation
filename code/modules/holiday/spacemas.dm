@@ -435,6 +435,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		random_brute_damage(M, rand(4,8),1)
 
 
+proc/compare_ornament_score(list/a, list/b)
+	. = b["score"] - a["score"]
+
 // Throughout December the icon will change!
 /obj/xmastree
 	EPHEMERAL_XMAS
@@ -447,28 +450,30 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	pixel_x = -64
 	plane = PLANE_ABOVE_LIGHTING
 	var/static/list/ornament_positions = list(
-		list(28, 35),
-		list(56, 25),
-		list(99, 25),
-		list(122, 35),
-		list(74, 38),
-		list(109, 47),
-		list(57, 48),
-		list(89, 53),
-		list(116, 56),
-		list(40, 59),
-		list(61, 70),
-		list(84, 72),
-		list(111, 86),
-		list(30, 78),
-		list(48, 90),
-		list(48, 107),
-		list(73, 95),
-		list(95, 101),
-		list(62, 118),
 		list(84, 124),
+		list(62, 118),
+		list(95, 101),
+		list(73, 95),
+		list(48, 107),
+		list(48, 90),
+		list(30, 78),
+		list(111, 86),
+		list(84, 72),
+		list(61, 70),
+		list(40, 59),
+		list(116, 56),
+		list(89, 53),
+		list(57, 48),
+		list(109, 47),
+		list(74, 38),
+		list(122, 35),
+		list(99, 25),
+		list(56, 25),
+		list(28, 35),
 	)
 	var/uses_custom_ornaments = TRUE
+	var/ornament_sort = "random"
+	var/top_sort_fuzziness = 0
 	var/list/placed_ornaments = null
 	var/list/ckeys_placed_this_round
 	var/list/got_ornament_kit
@@ -477,6 +482,16 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	var/on_fire = 0
 	var/image/fire_image = null
 
+	latest_ornaments
+		ornament_sort = "latest"
+
+	top_ornaments
+		ornament_sort = "top"
+
+	fuzzy_top_ornaments
+		ornament_sort = "top"
+		top_sort_fuzziness = 0.1
+
 	New()
 		..()
 		src.fire_image = image('icons/effects/160x160.dmi', "")
@@ -484,9 +499,29 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		if(uses_custom_ornaments)
 			src.decorate()
 
+	proc/lower_bound_of_wilson_score_confidence_interval_for_a_bernoulli_parameter_of_an_ornament(list/ornament)
+		var/positive = length(ornament["upvoted"]) + 0.00001
+		var/negative = length(ornament["downvoted"]) + 0.00001
+		// source: https://www.evanmiller.org/how-not-to-sort-by-average-rating.html
+		. = ((positive + 1.9208) / (positive + negative) - \
+			1.96 * sqrt((positive * negative) / (positive + negative) + 0.9604) / \
+			(positive + negative)) / (1 + 3.8416 / (positive + negative))
+		if(top_sort_fuzziness > 0)
+			var/generator/G = generator("num", -top_sort_fuzziness, top_sort_fuzziness, NORMAL_RAND)
+			. += G.Rand()
+
 	proc/decorate()
 		var/list/ornament_list = get_spacemas_ornaments().Copy()
-		shuffle_list(ornament_list)
+		switch(ornament_sort)
+			if("random")
+				shuffle_list(ornament_list)
+			if("latest")
+				reverse_list(ornament_list)
+			if("top")
+				for(var/ornament_name in ornament_list)
+					var/list/ornament = ornament_list[ornament_name]
+					ornament["score"] = src.lower_bound_of_wilson_score_confidence_interval_for_a_bernoulli_parameter_of_an_ornament(ornament)
+				ornament_list = sortList(ornament_list, /proc/compare_ornament_score, associative=TRUE)
 		src.placed_ornaments = list()
 		src.placed_ornaments.len = length(ornament_positions)
 		for(var/i = 1 to length(ornament_positions))
@@ -498,6 +533,8 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			var/obj/item/canvas/tree_ornament/ornament = new(null, ornament_art)
 			ornament.name = ornament_name
 			ornament.desc = "A Spacemas ornament by [ornament_artist]."
+			ornament.upvoted = ornament_list[ornament_name]["upvoted"]
+			ornament.downvoted = ornament_list[ornament_name]["downvoted"]
 			src.place_ornament(ornament, i)
 
 	disposing()
@@ -694,6 +731,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			return
 
 /obj/decal/garland
+	plane = PLANE_DEFAULT
 	name = "garland"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "garland"
@@ -701,6 +739,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	anchored = 1
 
 /obj/decal/tinsel
+	plane = PLANE_DEFAULT
 	name = "tinsel"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "tinsel-silver"
@@ -708,12 +747,14 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	anchored = 1
 
 /obj/decal/wreath
+	plane = PLANE_DEFAULT
 	name = "wreath"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "wreath"
 	layer = 5
 	anchored = 1
 /obj/decal/mistletoe
+	plane = PLANE_DEFAULT
 	name = "mistletoe"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "mistletoe"
@@ -721,6 +762,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	anchored = 1
 
 /obj/decal/xmas_lights
+	plane = PLANE_DEFAULT
 	name = "spacemas lights"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "lights1"
@@ -1394,6 +1436,8 @@ proc/get_spacemas_ornaments()
 	left = 9
 	bottom = 9
 	instructions = "Paint on this canvas with crayons/pens to make a spacemas tree ornament. Click on the tree with it afterwards. You can make a single ornament per round."
+	var/list/upvoted
+	var/list/downvoted
 	var/obj/xmastree/on_tree = null
 
 	New(atom/loc, icon/art)
@@ -1402,8 +1446,22 @@ proc/get_spacemas_ornaments()
 			src.art = art
 			src.icon = art
 
+	Click(location, control, params)
+		. = ..()
+		pop_open_a_browser_box(usr)
+
 	get_instructions(mob/user)
 		. = ..()
+		if(src.on_tree)
+			var/highlight_up = ""
+			var/highlight_down = ""
+			if(user.ckey in src.upvoted)
+				highlight_up = "font-weight: 900;"
+			if(user.ckey in src.downvoted)
+				highlight_down = "font-weight: 900;"
+			. += {"<br>
+			<a href='?src=\ref[src];upvote=1' style='color:#88ff88;[highlight_up]'>👍 (like)</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href='?src=\ref[src];downvote=1' style='color:#ff8888;[highlight_down]'>👎 (dislike)</a>"}
 		if(src.on_tree && user?.client?.holder?.level >= LEVEL_SA)
 			. += "<br><a href='?src=\ref[src];remove_ornament=1' style='color:red;'>Annihilate ornament</a>"
 
@@ -1413,9 +1471,48 @@ proc/get_spacemas_ornaments()
 				if(tgui_alert(usr, "Are you sure you want to remove \the [src] not only from the tree but also from the ornament database?", "Remove ornament", list("Yes", "No")) != "Yes")
 					return
 				get_spacemas_ornaments().Remove(src.name)
-				world.save_intra_round_value("tree_ornaments", get_spacemas_ornaments())
 				qdel(src)
 				boutput(usr, "<span class='alert'>You removed \the [src] from the tree and the ornament database.</span>")
+			return
+		if(href_list["upvote"])
+			if(src.on_tree)
+				if(!src.upvoted)
+					src.upvoted = list()
+				if(!src.downvoted)
+					src.downvoted = list()
+				if(usr.ckey in src.downvoted)
+					src.downvoted.Remove(usr.ckey)
+					src.upvoted += usr.ckey
+					boutput(usr, "<span class='alert'>You changed your vote to upvote \the [src].</span>")
+				else if(usr.ckey in src.upvoted)
+					src.upvoted.Remove(usr.ckey)
+					boutput(usr, "<span class='alert'>You removed your upvote from \the [src].</span>")
+				else
+					src.upvoted += usr.ckey
+					boutput(usr, "<span class='alert'>You upvoted \the [src].</span>")
+				get_spacemas_ornaments()[src.name]["upvoted"] = src.upvoted
+				get_spacemas_ornaments()[src.name]["downvoted"] = src.downvoted
+				pop_open_a_browser_box(usr)
+			return
+		if(href_list["downvote"])
+			if(src.on_tree)
+				if(!src.upvoted)
+					src.upvoted = list()
+				if(!src.downvoted)
+					src.downvoted = list()
+				if(usr.ckey in src.upvoted)
+					src.upvoted.Remove(usr.ckey)
+					src.downvoted += usr.ckey
+					boutput(usr, "<span class='alert'>You changed your vote to downvote \the [src].</span>")
+				else if(usr.ckey in src.downvoted)
+					src.downvoted.Remove(usr.ckey)
+					boutput(usr, "<span class='alert'>You removed your downvote from \the [src].</span>")
+				else
+					src.downvoted += usr.ckey
+					boutput(usr, "<span class='alert'>You downvoted \the [src].</span>")
+				get_spacemas_ornaments()[src.name]["upvoted"] = src.upvoted
+				get_spacemas_ornaments()[src.name]["downvoted"] = src.downvoted
+				pop_open_a_browser_box(usr)
 			return
 		. = ..()
 
@@ -1449,8 +1546,9 @@ proc/get_spacemas_ornaments()
 		get_spacemas_ornaments()[name] = list(
 			"art" = src.art,
 			"artist" = artist.ckey,
+			"upvoted" = list(),
+			"downvoted" = list(),
 		)
-		world.save_intra_round_value("tree_ornaments", get_spacemas_ornaments())
 
 	disposing()
 		if(on_tree)
@@ -1480,7 +1578,7 @@ proc/get_spacemas_ornaments()
 		if(global.christmas_cheer < 20)
 			boutput(user, "<span class='alert'>The Spacemas cheer is too low, Spacemas spirit doesn't have enough power to change the color of this paintbrush!</span>")
 			return
-		var/new_color = input(user, "Choose a color:", "Ornament paintbrush") as color|null
+		var/new_color = input(user, "Choose a color:", "Ornament paintbrush", src.font_color) as color|null
 		if(new_color)
 			src.font_color = new_color
 			boutput(user, "<span class='notice'>You twirl the paintbrush and the Spacemas spirit changes it to this color: <span style='color: [src.font_color]'>[src.font_color]</span>.</span>")
