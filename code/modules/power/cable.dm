@@ -463,6 +463,12 @@
 
 /// checks around itself for cables, adds up to 8 bits to cable_surr
 /obj/cablespawner/proc/check(var/obj/cable/cable)
+	var/list/selftile = list()
+	for (var/obj/cablespawner/dupe in range(0, src))
+		selftile += dupe
+	if (length(selftile) > 1)
+		CRASH("Multiple cablespawners on coordinate [src.x] x [src.y] y!")
+	qdel(selftile)
 	for (var/dir_to_cs in alldirs)
 	// checks for cablespawners around itself
 		var/declarer = alldirs_unique[alldirs.Find(dir_to_cs)]
@@ -530,6 +536,7 @@
 
 	if (length(directions) == 0)
 		cable_laying(0,NORTH)
+		CRASH("The cable spawner at [src.x] x [src.y] y doesn't connect to anything!")
 	else if (src.override_centre_connection)
 	// multiple cables, spiral out from the centre 'knot'
 		for (var/i in 1 to length(directions))
