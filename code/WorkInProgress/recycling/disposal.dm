@@ -1999,25 +1999,22 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 		for(var/obj/disposalpipe/maybe_pipe in get_step(src, dir_to_pipe))
 		// this checks all the different subtypes of pipe
 			// the ones which spit out at 90 degrees
-			if (istype(maybe_pipe, /obj/disposalpipe/block_sensing_outlet)
-			|| istype(maybe_pipe, /obj/disposalpipe/type_sensing_outlet)
-			)
+			if (istype(maybe_pipe, /obj/disposalpipe/block_sensing_outlet)\
+			|| istype(maybe_pipe, /obj/disposalpipe/type_sensing_outlet))
 				if (turn(maybe_pipe.dir, 90) == dir_to_pipe || turn(maybe_pipe.dir, -90) == dir_to_pipe)
 					dpdir |= dir_to_pipe
 					directions += dir_to_pipe
 
 			// the three ways (they do not check which 3 ways, it connects in all 4 directions)
-			if (istype(maybe_pipe, /obj/disposalpipe/junction)
-			|| istype(maybe_pipe, /obj/disposalpipe/mechanics_switch)
-			|| istype(maybe_pipe, /obj/disposalpipe/switch_junction)
-			)
+			if (istype(maybe_pipe, /obj/disposalpipe/junction)\
+			|| istype(maybe_pipe, /obj/disposalpipe/mechanics_switch)\
+			|| istype(maybe_pipe, /obj/disposalpipe/switch_junction))
 				dpdir |= dir_to_pipe
 				directions += dir_to_pipe
 
 			// regular pipes and trunks
-			if(istype(maybe_pipe, src.pipe_type)
-			|| istype(maybe_pipe, src.trunk_type)
-			)
+			if(istype(maybe_pipe, src.pipe_type)\
+			|| istype(maybe_pipe, src.trunk_type))
 			// these only connect to their own kind btw
 				if (maybe_pipe.dpdir & get_dir(maybe_pipe, src))
 				// makes sure they're pointing at you
