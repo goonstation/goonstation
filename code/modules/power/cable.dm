@@ -421,8 +421,9 @@
 	layer = CABLE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 	color = "#DD0000"
-	anchored = 1
-	/// this would make it connect to the centre with a knot, for terminals and whatnot
+	anchored = TRUE
+	// this would make it connect to the centre, for like terminals and whatnot
+	// subtype node sets this to true
 	var/override_centre_connection = FALSE
 	var/cable_type = /obj/cable
 	/// cable_surr uses the unique ordinal dirs to save directions as it needs to store up to 8 at once
