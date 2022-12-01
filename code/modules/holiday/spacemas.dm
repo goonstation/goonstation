@@ -15,7 +15,7 @@
 // * Stockings - from halloween.dm - wtf
 
 // define used for removing spacemas objects when it's not xmas
-#ifdef XMAS
+#if defined(XMAS) || defined(RUNTIME_CHECKING)
 #define EPHEMERAL_XMAS EPHEMERAL_SHOWN
 #else
 #define EPHEMERAL_XMAS EPHEMERAL_HIDDEN
