@@ -450,8 +450,8 @@ proc/compare_ornament_score(list/a, list/b)
 	pixel_x = -64
 	plane = PLANE_ABOVE_LIGHTING
 	var/static/list/ornament_positions = list(
-		list(84, 124),
 		list(62, 118),
+		list(80, 117),
 		list(95, 101),
 		list(73, 95),
 		list(48, 107),
@@ -460,6 +460,7 @@ proc/compare_ornament_score(list/a, list/b)
 		list(111, 86),
 		list(84, 72),
 		list(61, 70),
+		list(29, 64),
 		list(40, 59),
 		list(116, 56),
 		list(89, 53),
@@ -470,6 +471,7 @@ proc/compare_ornament_score(list/a, list/b)
 		list(99, 25),
 		list(56, 25),
 		list(28, 35),
+		list(33, 20),
 	)
 	var/uses_custom_ornaments = TRUE
 	var/ornament_sort = "random"
@@ -639,7 +641,7 @@ proc/compare_ornament_score(list/a, list/b)
 				user.drop_item(ornament)
 				ornament.name = maybe_name
 				ornament.main_artist = user.ckey
-				ornament.desc = "A Spacemas ornament by [ornament_artist]."
+				ornament.desc = "A Spacemas ornament by [user.ckey]."
 				ornament.finish(user)
 				var/empty_index = 0
 				for(var/i = 1 to length(src.placed_ornaments))
@@ -1443,6 +1445,7 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 
 /obj/item/canvas/tree_ornament
 	name = "spacemas tree ornament"
+	desc = "A canvas where you can paint a spacemas tree ornament and hang it on the tree."
 	canvas_width = 16
 	canvas_height = 16
 	left = 9
@@ -1466,17 +1469,19 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 
 	get_instructions(mob/user)
 		. = ..()
-		if(src.on_tree)
-			var/highlight_up = ""
-			var/highlight_down = ""
-			if(user.ckey in src.upvoted)
-				highlight_up = "font-weight: 900;"
-			if(user.ckey in src.downvoted)
-				highlight_down = "font-weight: 900;"
-			. += {"<br>
-			<a href='?src=\ref[src];upvote=1' style='color:#88ff88;[highlight_up]'>👍 (like)</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href='?src=\ref[src];downvote=1' style='color:#ff8888;[highlight_down]'>👎 (dislike)</a>"}
-		if(src.on_tree && user?.client?.holder?.level >= LEVEL_SA)
+		if(!src.on_tree)
+			return
+		. = "A cool Spacemas ornament drawn by [src.main_artist].<br>"
+		var/highlight_up = ""
+		var/highlight_down = ""
+		if(user.ckey in src.upvoted)
+			highlight_up = "font-weight: 900;"
+		if(user.ckey in src.downvoted)
+			highlight_down = "font-weight: 900;"
+		. += {"<br>
+		<a href='?src=\ref[src];upvote=1' style='color:#88ff88;[highlight_up]'>👍 (like)</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href='?src=\ref[src];downvote=1' style='color:#ff8888;[highlight_down]'>👎 (dislike)</a>"}
+		if(user?.client?.holder?.level >= LEVEL_SA)
 			. += "<br><a href='?src=\ref[src];remove_ornament=1' style='color:red;'>Annihilate ornament</a>"
 
 	Topic(href, href_list)
@@ -1614,7 +1619,7 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 		. = ..()
 		if(href_list["setcolor"] && can_reach(usr, src) && can_act(usr, 1))
 			src.font_color = href_list["setcolor"]
-			boutput(user, "<span class='notice'>You twirl the paintbrush and the Spacemas spirit changes it to this color again: <a href='?src=\ref[src];setcolor=[src.font_color]' style='color: [src.font_color]'>[src.font_color]</span>.</span>")
+			boutput(usr, "<span class='notice'>You twirl the paintbrush and the Spacemas spirit changes it to this color again: <a href='?src=\ref[src];setcolor=[src.font_color]' style='color: [src.font_color]'>[src.font_color]</span>.</span>")
 			src.UpdateIcon()
 
 	afterattack(atom/target, mob/user)
