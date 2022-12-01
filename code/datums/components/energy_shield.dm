@@ -109,17 +109,11 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	. = ..()
 
 /datum/component/wearertargeting/energy_shield/proc/turn_on()
-	//check for cell?
-	if(SEND_SIGNAL(parent, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE)
-		processing_items |= src
-		src.active = TRUE
-		playsound(current_user, 'sound/items/miningtool_on.ogg', 25, 0, -5, 1.5)
-		boutput(current_user, "<span class='notice'>You power up your energy shield.</span>")
-		current_user.vis_contents += overlay
-	else //fail message here?
-		src.active = FALSE
-		playsound(current_user, "sparks", 75, 1, -1)
-		boutput(current_user, "<span class='alert'>Your energy shield is depleted!</span>")
+	processing_items |= src
+	src.active = TRUE
+	playsound(current_user, 'sound/items/miningtool_on.ogg', 25, 0, -5, 1.5)
+	boutput(current_user, "<span class='notice'>You power up your energy shield.</span>")
+	current_user.vis_contents += overlay
 
 /datum/component/wearertargeting/energy_shield/proc/turn_off(shatter = FALSE)
 	processing_items -= src
@@ -137,7 +131,11 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	if(active)
 		src.turn_off()
 	else
-		src.turn_on()
+		if(SEND_SIGNAL(parent, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE)
+			src.turn_on()
+		else
+			playsound(current_user, "sparks", 75, 1, -1)
+			boutput(current_user, "<span class='alert'>Your energy shield is depleted!</span>")
 
 /obj/ability_button/toggle_shield //TODO: percentage inventory-counter for remaining power?
 	name = "Toggle Energy Shield"
@@ -149,3 +147,14 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 		SEND_SIGNAL(the_item, COMSIG_SHIELD_TOGGLE)
 
 //TODO: Add tooltip/desc info to item
+
+
+/datum/component/wearertargeting/energy_shield/ceshield/turn_on()
+	. = ..()
+	APPLY_ATOM_PROPERTY(current_user, PROP_MOB_COLDPROT, src, 100)
+	APPLY_ATOM_PROPERTY(current_user, PROP_MOB_HEATPROT, src, 100)
+
+/datum/component/wearertargeting/energy_shield/ceshield/turn_off(shatter = FALSE)
+	. = ..()
+	REMOVE_ATOM_PROPERTY(current_user, PROP_MOB_COLDPROT, src)
+	REMOVE_ATOM_PROPERTY(current_user, PROP_MOB_HEATPROT, src)
