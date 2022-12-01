@@ -18,7 +18,7 @@
  * TODO: better sfx
  * TODO: text feedback
  * TODO: vfx??
- * TODO: impl in item/attack, bullet_act, ex_act
+ * TODO: Have efficiency coefficients for different damage types defined on the component?
  */
 
 TYPEINFO(/datum/component/wearertargeting/energy_shield)
