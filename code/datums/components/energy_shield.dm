@@ -11,14 +11,14 @@
  *  Proc sending the signal decides how to handle the damage
  *   Bleedthrough? On all hits, or only on shield-break? Determined by initialization var
  *
- * Addnl support for granting mob properties? Consider subtype for CE shield - low power but strong environmental resists
  * Req hooking into a process scheduler for passive power drain
  *
  *
  * TODO: better sfx
- * TODO: text feedback
- * TODO: vfx??
+ * TODO: better text feedback
+ * TODO: not copy-pasted
  * TODO: Have efficiency coefficients for different damage types defined on the component?
+ * TODO: support for granting mob properties? Consider subtype for CE shield - low efficiency but strong environmental resists
  */
 
 TYPEINFO(/datum/component/wearertargeting/energy_shield)
@@ -44,6 +44,8 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	///are we turned on 😳
 	var/active
 
+	var/obj/decal/ceshield/overlay
+
 	signals = list(COMSIG_MOB_SHIELD_ACTIVATE)
 	proctype = .proc/activate
 
@@ -53,6 +55,7 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	src.shield_efficiency = _shield_efficiency
 	src.bleedthrough = _bleedthrough
 	src.power_drain = _power_drain
+	overlay = new
 	RegisterSignal(parent, COMSIG_SHIELD_TOGGLE, .proc/toggle)
 
 /datum/component/wearertargeting/energy_shield/on_equip(datum/source, mob/equipper, slot)
@@ -107,22 +110,24 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 		processing_items |= src
 		src.active = TRUE
 		playsound(current_user, 'sound/items/miningtool_on.ogg', 30, 1)
-		boutput(current_user, "You puwer up your energy shield")
+		boutput(current_user, "<span class='notice'>You power up your energy shield.</span>")
+		current_user.vis_contents += overlay
 	else //fail message here?
 		src.active = FALSE
 		playsound(current_user, "sparks", 75, 1, -1)
-		boutput(current_user, "Your energy shield is depleted!")
+		boutput(current_user, "<span class='alert'>Your energy shield is depleted!</span>")
 
 /datum/component/wearertargeting/energy_shield/proc/turn_off(shatter = FALSE)
 	processing_items -= src
 	src.active = FALSE
+	current_user.vis_contents -= overlay
 	if(shatter)
 		playsound(current_user, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 30, 0.1, 0, 0.5)
-		current_user.visible_message("[current_user]'s energy shield violently pops!")
+		current_user.visible_message("<span class='alert'>[current_user]'s energy shield violently pops!</span>")
 		elecflash(current_user, 1, 1, 0)
 	else
 		playsound(current_user, 'sound/items/miningtool_off.ogg', 30, 1)
-		boutput(current_user, "Your energy shield powers down.")
+		boutput(current_user, "<span class='notice'>Your energy shield powers down.</span>")
 
 /datum/component/wearertargeting/energy_shield/proc/toggle()
 	if(active)
