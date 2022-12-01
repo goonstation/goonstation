@@ -421,7 +421,7 @@
 	layer = CABLE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 	color = "#DD0000"
-	anchored = 1
+	anchored = TRUE
 	// this would make it connect to the centre, for like terminals and whatnot
 	// subtype node sets this to true
 	var/override_centre_connection = FALSE
