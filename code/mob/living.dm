@@ -1882,6 +1882,20 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		else if(rangedprot_base > 1)
 			armor_msg = ", but [P] pierces through your armor!"
 
+
+		var/list/shield_amt = list()
+		var/shield_multiplier = 1
+
+		switch(P.proj_data.damage_type)
+			if(D_KINETIC, D_SLASHING, D_TOXIC)
+				shield_multiplier = 0.5
+			if(D_ENERGY, D_RADIOACTIVE)
+				shield_multiplier = 2
+
+		SEND_SIGNAL(src, COMSIG_MOB_SHIELD_ACTIVATE, P.power * shield_multiplier, shield_amt)
+		damage *= max(0, (1-shield_amt["shield_strength"]))
+		stun *= max(0, (1-shield_amt["shield_strength"]))
+
 		switch(P.proj_data.damage_type)
 			if (D_KINETIC)
 				if (stun > 0) //kinetic weapons don't disorient

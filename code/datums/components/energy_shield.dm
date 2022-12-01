@@ -136,6 +136,6 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	New()
 		. = ..()
 		AddComponent(/datum/component/wearertargeting/energy_shield, list(SLOT_GLOVES), 1, 1, 1, 0)
-		AddComponent(/datum/component/power_cell, 25, 25, 0, 0, 1)
+		AddComponent(/datum/component/power_cell, 50, 50, 0, 0, 1)
 
 //TODO: Add tooltip/desc info to item
