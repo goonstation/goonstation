@@ -236,7 +236,7 @@
 			T = get_step(T, EAST)
 
 		var/singing_italics = singing ? " font-style: italic;" : ""
-		chat_text = make_chat_maptext(src, message, "color: [maptext_color];" + singing_italics)
+		chat_text = make_chat_maptext(src, message, singing_italics)
 
 		if(chat_text)
 			chat_text.measure(src.client)
@@ -244,7 +244,7 @@
 				if(I != chat_text)
 					I.bump_up(chat_text.measured_height)
 
-		oscillate_colors(chat_text, list(maptext_color, "#a530bd"))
+		oscillate_colors(chat_text, list(maptext_color, "#c482d1"))
 
 	message = src.say_quote(message)
 	//logTheThing(LOG_SAY, src, "SAY: [message]")
@@ -1091,7 +1091,7 @@
 
 		if((isflockmob(M)) || (M.client.holder && !M.client.player_mode) || (isobserver(M) && !(istype(M, /mob/dead/target_observer/hivemind_observer))))
 			thisR = rendered
-		if(M.robot_talk_understand || istype(M, /mob/living/intangible/aieye))
+		if((M.robot_talk_understand || istype(M, /mob/living/intangible/aieye)) && (!involuntary && mob_speaking || prob(30)))
 			thisR = siliconrendered
 		if(istype(M, /mob/living/intangible/flock/flockmind) && !(istype(mob_speaking, /mob/living/intangible/flock/flockmind)) && M:flock == flock)
 			thisR = flockmindRendered

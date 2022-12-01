@@ -10,7 +10,7 @@
 	icon_state = "watertank"
 	density = 1
 	anchored = 0
-	flags = FPRINT | FLUID_SUBMERGE
+	flags = FPRINT | FLUID_SUBMERGE | ACCEPTS_MOUSEDROP_REAGENTS
 	object_flags = NO_GHOSTCRITTER
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	p_class = 1.5
@@ -68,7 +68,7 @@
 		..(W, user)
 
 	mouse_drop(atom/over_object as obj)
-		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/machinery/hydro_mister) && !istype(over_object, /obj/item/tank/jetpack/backtank))
+		if (!(over_object.flags & ACCEPTS_MOUSEDROP_REAGENTS))
 			return ..()
 
 		if (BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
@@ -80,6 +80,8 @@
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
 /* =================================================== */
+/obj/reagent_dispensers/cleanable
+	flags = FPRINT | FLUID_SUBMERGE
 
 /obj/reagent_dispensers/cleanable/ants
 	name = "space ants"

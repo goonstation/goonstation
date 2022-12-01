@@ -300,6 +300,10 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				O.reagents.smoke_start(50,1)
 			if(3)
 				location.fluid_react(O.reagents, O.reagents.total_volume)
+				var/datum/fluid_group/FG = location.active_liquid?.group
+				if(FG)
+					FG.base_evaporation_time = 30 SECONDS
+					FG.bonus_evaporation_time = 0 SECONDS
 
 		O.reagents.clear_reagents()
 

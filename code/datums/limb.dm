@@ -276,6 +276,11 @@
 	is_on_cooldown(var/mob/user)
 		return GET_COOLDOWN(user, "\ref[src] reload")
 
+/datum/limb/gun/kinetic
+	shoot(atom/target, var/mob/user, var/pointblank = FALSE, params)
+		if(..() && istype(user.loc, /turf/space) || user.no_gravity)
+			user.inertia_dir = get_dir(target, user)
+			step(user, user.inertia_dir)
 	arm38
 		proj = new/datum/projectile/bullet/revolver_38
 		shots = 3
@@ -292,33 +297,12 @@
 		reload_time = 300
 		muzzle_flash = "muzzle_flash"
 
-	phaser
-		proj = new/datum/projectile/laser/light
-		shots = 1
-		current_shots = 1
-		cooldown = 30
-		reload_time = 30
-
-	cutter
-		proj = new/datum/projectile/laser/drill/cutter
-		shots = 1
-		current_shots = 1
-		cooldown = 30
-		reload_time = 30
-
 	artillery
 		proj = new/datum/projectile/bullet/autocannon
 		shots = 1
 		current_shots = 1
 		cooldown = 50
 		reload_time = 50
-
-	disruptor
-		proj = new/datum/projectile/disruptor/high
-		shots = 1
-		current_shots = 1
-		cooldown = 40
-		reload_time = 40
 
 	glitch
 		proj = new/datum/projectile/bullet/glitch
@@ -354,6 +338,28 @@
 		current_shots = 5
 		cooldown = 1 SECOND
 		reload_time = 20 SECONDS
+
+/datum/limb/gun/energy
+	phaser
+		proj = new/datum/projectile/laser/light
+		shots = 1
+		current_shots = 1
+		cooldown = 30
+		reload_time = 30
+
+	cutter
+		proj = new/datum/projectile/laser/drill/cutter
+		shots = 1
+		current_shots = 1
+		cooldown = 30
+		reload_time = 30
+
+	disruptor
+		proj = new/datum/projectile/disruptor/high
+		shots = 1
+		current_shots = 1
+		cooldown = 40
+		reload_time = 40
 
 /datum/limb/mouth
 	var/sound_attack = 'sound/voice/animal/werewolf_attack1.ogg'
@@ -1521,3 +1527,19 @@
 		src.setDisarmSpecial (/datum/item_special/slam/no_item_attack)
 		src.setHarmSpecial (/datum/item_special/swipe/limb)
 
+//I wanted a claw-like limb but without the random item pickup fail
+/datum/limb/tentacle
+	harm(mob/target, var/mob/living/user)
+		if(check_target_immunity( target ))
+			return FALSE
+		logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
+		var/obj/item/affecting = target.get_affecting(user)
+		user.calculate_melee_attack()
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 8, rand(3, 5), can_punch = FALSE, can_kick = FALSE)
+		user.attack_effects(target, affecting)
+		var/action = pick("maim", "maul", "mangle", "slap", "lacerate", "mutilate")
+		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with [src.holder]!</span></b>"
+		msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_3.ogg'
+		msgs.damage_type = DAMAGE_CUT
+		msgs.flush(SUPPRESS_LOGS)
+		user.lastattacked = target

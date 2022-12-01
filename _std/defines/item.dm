@@ -1,7 +1,7 @@
 //FLAGS BITMASK
 
-/// can be put in back slot
-#define ONBACK							 (1<<0)
+/// unused
+//#define							 (1<<0)
 /// can pass by a table or rack
 #define TABLEPASS						 (1<<1)
 /// thing doesn't drift in space
@@ -14,8 +14,8 @@
 #define NOSHIELD						 (1<<5)
 /// conducts electricity (metal etc.)
 #define CONDUCT							 (1<<6)
-/// can be put in belt slot
-#define ONBELT							 (1<<7)
+/// can mousedrop reagents into from a reagent_container
+#define ACCEPTS_MOUSEDROP_REAGENTS		 (1<<7)
 /// takes a fingerprint
 #define FPRINT							 (1<<8)
 /// item has priority to check when entering or leaving
@@ -24,7 +24,7 @@
 #define DOORPASS						 (1<<10)
 /// automagically talk into this object when a human is holding it (Phone handset!)
 #define TALK_INTO_HAND 			 (1<<11)
-/// is an open container for chemistry purposes
+/// is an open container for chemistry purposes. don't check this flag directly, use obj.is_open_container()
 #define OPENCONTAINER				 (1<<12)
 /// is an atom spawned in an adventure area
 #define ISADVENTURE 				 (1<<13)

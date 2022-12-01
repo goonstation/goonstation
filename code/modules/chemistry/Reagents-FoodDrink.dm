@@ -888,34 +888,50 @@ datum
 			transparency = 155
 			data = null
 			depletion_rate = 1
+			var/datum/mutantrace/orig_mutantrace = null
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				if (!volume_passed)
 					return
-				if (!ishuman(M))
+				if(ishuman(M))
+					src.grantPower(M)
+
+			on_add()
+				if(!ishuman(holder?.my_atom))
 					return
-				if (!islist(mutini_effects) || !length(mutini_effects))
-					return ..()
-				var/power_granted = pick(mutini_effects)
-				var/power_time = rand(1,10)
-				M.bioHolder.AddEffect(power_granted)//, 0, power_time) the timeLeft var either wasn't working here or was grumpy about something so now we manually remove this below
-				SPAWN(power_time*10)
-					if (M?.bioHolder)
-						M.bioHolder.RemoveEffect(power_granted)
+				var/mob/living/carbon/human/M = holder.my_atom
+				if(M.mutantrace && !src.orig_mutantrace)
+					src.orig_mutantrace = M.mutantrace.type
+
+			on_mob_life_complete(var/mob/living/carbon/human/M)
+				if(M && M.bioHolder && src.orig_mutantrace && src.orig_mutantrace != M.mutantrace)
+					M.set_mutantrace(src.orig_mutantrace)
+				src.orig_mutantrace = null
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
 					M = holder.my_atom
-				if (!islist(mutini_effects) || !length(mutini_effects))
-					return ..()
-				var/power_granted = pick(mutini_effects)
-				var/power_time = rand(1,10)
-				M.bioHolder.AddEffect(power_granted)//, 0, power_time)
-				SPAWN(power_time*10)
-					if (M?.bioHolder)
-						M.bioHolder.RemoveEffect(power_granted)
+				if(ishuman(M))
+					src.grantPower(M)
 				..()
 				return
+
+			proc/grantPower(var/mob/living/carbon/human/M)
+				if (!islist(mutini_effects) || !length(mutini_effects) || !M.bioHolder)
+					return
+				var/power_granted = pick(mutini_effects)
+				if (M.bioHolder.HasEffect(power_granted))
+					return
+				var/power_time = rand(1,10)
+				var/is_mutant_race = istype(GetBioeffectFromGlobalListByID(power_granted), /datum/bioEffect/mutantrace)
+
+				M.bioHolder.AddEffect(power_granted)//, 0, power_time) the timeLeft var either wasn't working here or was grumpy about something so now we manually remove this below
+				// Keep whatever mutant races we get until mutini wears off
+				if(!is_mutant_race)
+					SPAWN(power_time*10)
+						if (M.bioHolder)
+							M.bioHolder.RemoveEffect(power_granted)
 
 		fooddrink/alcoholic/Manhattan
 			name = "Manhattan"
@@ -3277,6 +3293,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.wear_mask) return
 						if(H.head) return
+						if(isdead(H)) return //why would a dead person gasp?
 					if(prob(75))
 						M.emote("gasp")
 						boutput(M, "<span class='alert'>Your eyes sting!</span>")
@@ -3313,6 +3330,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.wear_mask) return
 						if(H.head) return
+						if(isdead(H)) return //why would a dead person gasp?
 					if(prob(75))
 						M.emote("gasp")
 						boutput(M, "<span class='alert'>Your eyes sting!</span>")
@@ -3340,6 +3358,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.wear_mask) return
 						if(H.head) return
+						if(isdead(H)) return //why would a dead person gasp?
 					if(prob(75))
 						M.emote("gasp")
 						boutput(M, "<span class='alert'>Your eyes sting!</span>")
@@ -3533,6 +3552,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.wear_mask) return
 						if(H.head) return
+						if(isdead(H)) return //why would a dead person gasp?
 					if(prob(75))
 						M.emote("gasp")
 						boutput(M, "<span class='alert'>Your eyes sting!</span>")
@@ -3774,6 +3794,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.wear_mask) return
 						if(H.head) return
+						if(isdead(H)) return //why would a dead person gasp?
 					if(prob(75))
 						M.emote("gasp")
 						boutput(M, "<span class='alert'>Your eyes sting!</span>")

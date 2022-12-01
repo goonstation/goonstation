@@ -40,7 +40,7 @@
 		return src.Attackby(null, user)
 
 /obj/machinery/door/window/attackby(obj/item/I, mob/user)
-	if (!can_act(usr))
+	if (!can_act(user))
 		return
 	if (src.isblocked() == 1)
 		return

@@ -5,8 +5,8 @@
  * @license MIT
  */
 
-import { useBackend, useSharedState, useLocalState } from "../backend";
-import { Button, Dimmer, Divider, Flex, NumberInput, Section, Box, Dropdown, Tabs, SectionEx, Stack, Table } from '../components';
+import { useBackend, useLocalState } from "../backend";
+import { Button, Dimmer, Divider, Flex, NumberInput, Section, Box, Tabs, SectionEx, Table } from '../components';
 import { Window } from '../layouts';
 import { Fragment } from 'inferno';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';

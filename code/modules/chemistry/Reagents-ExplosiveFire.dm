@@ -89,7 +89,6 @@ datum
 			viscosity = 0.8
 			minimum_reaction_temperature = T0C + 100
 			var/temp_reacted = 0
-			penetrates_skin = 1
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(!temp_reacted)
@@ -108,6 +107,8 @@ datum
 					var/mob/living/L = M
 					var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
 					if(istype(L) && burn)
+						L.changeStatus("burning", 2 * src.volume SECONDS)
+						burn.counter += 10 * src.volume
 						L.TakeDamage("All", 0, (1 - L.get_heat_protection()/100) * clamp(3 * raw_volume * (burn.getStage()-1.25), 0, 35), 0, DAMAGE_BURN)
 						if(!M.stat && !ON_COOLDOWN(M, "napalm_scream", 1 SECOND))
 							M.emote("scream")

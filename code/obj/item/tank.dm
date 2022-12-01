@@ -15,7 +15,8 @@ Contains:
 	icon = 'icons/obj/items/tank.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | TGUI_INTERACTIVE
+	flags = FPRINT | TABLEPASS | CONDUCT | TGUI_INTERACTIVE
+	c_flags = ONBACK
 
 	pressure_resistance = ONE_ATMOSPHERE * 5
 
@@ -205,7 +206,7 @@ Contains:
 	examine(mob/user)
 		. = list()
 		var/can_interact = in_interact_range(src, user) || isobserver(user)
-		var/celsius_temperature = src.air_contents.temperature - T0C
+		var/celsius_temperature = TO_CELSIUS(src.air_contents.temperature)
 		var/descriptive = "buggy. Report this to a coder."
 		switch (celsius_temperature)
 			if (-INFINITY to -1)
@@ -478,7 +479,8 @@ Contains:
 /obj/item/tank/mini_oxygen
 	name = "mini oxygen tank"
 	icon_state = "mini_oxtank"
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	health = 5
 	w_class = W_CLASS_NORMAL
 	force = 3
