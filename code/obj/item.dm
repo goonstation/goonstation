@@ -408,9 +408,9 @@
 		logTheThing(LOG_COMBAT, user, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
 		if (!do_mob(user, M))
-			return 0
+			return 1
 		if (BOUNDS_DIST(user, M) > 0)
-			return 0
+			return 1
 
 		user.tri_message(M, "<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
 			"<span class='alert'>You feed [M] [src]!</span>",\
@@ -1255,6 +1255,10 @@
 	if(user.is_hulk())
 		power *= 1.5
 
+	var/list/shield_amt = list()
+	SEND_SIGNAL(M, COMSIG_MOB_SHIELD_ACTIVATE, power, shield_amt)
+	power *= max(0, (1-shield_amt["shield_strength"]))
+
 	var/pre_armor_power = power
 	power -= armor_mod
 
@@ -1294,6 +1298,7 @@
 			stam_power = stam_power / 2 //do the least
 		else
 			stam_power = max(  stam_power / 2, stam_power * ( power / (power + armor_mod) )  )
+		stam_power *= max(0, (1-shield_amt["shield_strength"]))
 
 		//stam_power -= armor_mod
 		msgs.force_stamina_target = 1
