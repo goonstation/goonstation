@@ -553,7 +553,7 @@ proc/compare_ornament_score(list/a, list/b)
 						src.bound_of_wilson_score_confidence_interval_for_a_bernoulli_parameter_of_an_ornament(ornament)
 				ornament_list = list()
 				while(length(ornament_weights) > 0 && length(ornament_list) < length(src.ornament_positions))
-					var/ornament_name = pickweight(ornament_weights)
+					var/ornament_name = weighted_pick(ornament_weights)
 					ornament_list += ornament_name
 					ornament_weights -= ornament_name
 		src.placed_ornaments = list()
