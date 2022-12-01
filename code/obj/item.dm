@@ -408,9 +408,9 @@
 		logTheThing(LOG_COMBAT, user, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
 		if (!do_mob(user, M))
-			return 0
+			return 1
 		if (BOUNDS_DIST(user, M) > 0)
-			return 0
+			return 1
 
 		user.tri_message(M, "<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
 			"<span class='alert'>You feed [M] [src]!</span>",\
@@ -429,7 +429,7 @@
 		eat_twitch(M)
 		SPAWN(1 SECOND)
 			if (!src || !M || !user)
-				return
+				return 1
 			SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED, user, src) //one to the mob
 			SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED, M, src) //one to the item
 			user.u_equip(src)
