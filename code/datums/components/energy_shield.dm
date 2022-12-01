@@ -16,7 +16,7 @@
  *
  * TODO: better sfx
  * TODO: better text feedback
- * TODO: not copy-pasted
+ * TODO: not copy-pasted vfx
  * TODO: Have efficiency coefficients for different damage types defined on the component?
  * TODO: support for granting mob properties? Consider subtype for CE shield - low efficiency but strong environmental resists
  */
@@ -143,11 +143,5 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	execute_ability()
 		. = ..()
 		SEND_SIGNAL(the_item, COMSIG_SHIELD_TOGGLE)
-
-/obj/item/clothing/gloves/yellow
-	New()
-		. = ..()
-		AddComponent(/datum/component/wearertargeting/energy_shield, list(SLOT_GLOVES), 1, 1, 1, 0)
-		AddComponent(/datum/component/power_cell, 50, 50, 0, 0, 1)
 
 //TODO: Add tooltip/desc info to item
