@@ -80,7 +80,7 @@
 	w_class = W_CLASS_SMALL
 	var/obj/item/audio_tape/tape = null
 	var/mode = MODE_OFF
-	var/max_lines = 60
+	var/max_lines
 	var/text_colour = "#3FCC3F"
 	var/continuous = TRUE
 	var/list/name_colours = list()
@@ -92,13 +92,12 @@
 	wall_mounted
 		name = "Mounted Logger"
 		desc = "A wall-mounted audio log device."
-		max_lines = 30
 
 		attack_hand(mob/user)
 			return attack_self(user)
 
-		updateSelfDialog()
-			return updateUsrDialog()
+		// updateSelfDialog()
+		// 	return updateUsrDialog()
 
 	New()
 		..()
@@ -114,80 +113,107 @@
 			if (src.audiolog_speakers && length(src.audiolog_speakers))
 				src.tape.speakers = src.audiolog_speakers
 				src.audiolog_speakers = null
+			src.max_lines = src.tape.max_lines
 
-	Topic(href, href_list)
-		..()
-		if (usr.stat || usr.restrained() || usr.lying)
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "AudioLog")
+			ui.open()
+
+	ui_static_data()
+		. = list(
+			"name" = src.name,
+		)
+
+	ui_data(mob/user)
+		. = list(
+			"continuous" = src.continuous,
+			// "current_line" ,
+			"memory_capacity" = src.max_lines,
+			"mode" = src.mode,
+			// "occupied_memory" ,
+		)
+
+	ui_act(action, params)
+		. = ..()
+		if (.)
 			return
-		if (((src in usr.contents) || (src.master in usr.contents) || in_interact_range(src, usr) && istype(src.loc, /turf)))
-			src.add_dialog(usr)
-			switch(href_list["command"])
-				if ("rec")
-					if (src.mode != MODE_RECORDING)
-						src.mode = MODE_RECORDING
-					else
-						src.mode = MODE_OFF
-				if ("play")
-					if (src.mode != MODE_PLAYING)
-						play()
-					else
-						src.mode = MODE_OFF
-				if ("stop")
-					stop()
-					if (src.tape)
-						src.tape.log_line = 1
-				if ("clear")
-					src.mode = MODE_OFF
-					if (src.tape)
-						src.tape.reset()
 
-				if ("continuous_mode")
-					continuous = !continuous
+	// Topic(href, href_list)
+	// 	..()
+	// 	if (usr.stat || usr.restrained() || usr.lying)
+	// 		return
+	// 	if (((src in usr.contents) || (src.master in usr.contents) || in_interact_range(src, usr) && istype(src.loc, /turf)))
+	// 		src.add_dialog(usr)
+	// 		switch(href_list["command"])
+	// 			if ("rec")
+	// 				if (src.mode != MODE_RECORDING)
+	// 					src.mode = MODE_RECORDING
+	// 				else
+	// 					src.mode = MODE_OFF
+	// 			if ("play")
+	// 				if (src.mode != MODE_PLAYING)
+	// 					play()
+	// 				else
+	// 					src.mode = MODE_OFF
+	// 			if ("stop")
+	// 				stop()
+	// 				if (src.tape)
+	// 					src.tape.log_line = 1
+	// 			if ("clear")
+	// 				src.mode = MODE_OFF
+	// 				if (src.tape)
+	// 					src.tape.reset()
 
-				if ("eject")
-					src.mode = MODE_OFF
-					src.icon_state = "[initial(src.icon_state)]-empty"
+	// 			if ("continuous_mode")
+	// 				continuous = !continuous
 
-					src.tape.set_loc(get_turf(src))
-					usr.put_in_hand_or_eject(src.tape) // try to eject it into the users hand, if we can
+	// 			if ("eject")
+	// 				src.mode = MODE_OFF
+	// 				src.icon_state = "[initial(src.icon_state)]-empty"
 
-					playsound(src.loc, 'sound/machines/law_remove.ogg', 40, 0.5)
+	// 				src.tape.set_loc(get_turf(src))
+	// 				usr.put_in_hand_or_eject(src.tape) // try to eject it into the users hand, if we can
 
-					src.tape.log_line = 1
-					src.tape = null
-			playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
-			src.add_fingerprint(usr)
-			src.updateSelfDialog()
-		else
-			usr.Browse(null, "window=audiolog")
-			return
-		return
+	// 				playsound(src.loc, 'sound/machines/law_remove.ogg', 40, 0.5)
+
+	// 				src.tape.log_line = 1
+	// 				src.tape = null
+	// 		playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
+	// 		src.add_fingerprint(usr)
+	// 		src.updateSelfDialog()
+	// 	else
+	// 		usr.Browse(null, "window=audiolog")
+	// 		return
+	// 	return
 
 	attack_self(mob/user as mob)
 		..()
 		if (user.stat || user.restrained() || user.lying)
 			return
 		if ((user.contents.Find(src) || user.contents.Find(src.master) || BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf)))
-			src.add_dialog(user)
+			src.ui_interact(user)
+			// src.add_dialog(user)
 
-			var/dat = "<TT><b>Audio Logger</b><br>"
-			if (src.tape)
-				dat += "Memory [src.tape.use_percentage()]% Full -- <a href='byond://?src=\ref[src];command=eject'>Eject</a><br>"
-			else
-				dat += "No Tape Loaded<br>"
+			// var/dat = "<TT><b>Audio Logger</b><br>"
+			// if (src.tape)
+			// 	dat += "Memory [src.tape.use_percentage()]% Full -- <a href='byond://?src=\ref[src];command=eject'>Eject</a><br>"
+			// else
+			// 	dat += "No Tape Loaded<br>"
 
-			dat += "<table cellspacing=5><tr>"
-			dat += "<td><a href='byond://?src=\ref[src];command=rec'>[src.mode == MODE_RECORDING ? "Recording" : "Not Recording"]</a></td>"
-			dat += "<td><a href='byond://?src=\ref[src];command=play'>[src.mode == MODE_PLAYING ? "Playing" : "Not Playing"]</a></td>"
-			dat += "<td><a href='byond://?src=\ref[src];command=stop'>Stop</a></td>"
-			dat += "<td><a href='byond://?src=\ref[src];command=clear'>Clear Log</a></td>"
-			dat += "<td><a href='byond://?src=\ref[src];command=continuous_mode'>[continuous ? "Looping" : "No Loop"]</a></td></table></tt>"
+			// dat += "<table cellspacing=5><tr>"
+			// dat += "<td><a href='byond://?src=\ref[src];command=rec'>[src.mode == MODE_RECORDING ? "Recording" : "Not Recording"]</a></td>"
+			// dat += "<td><a href='byond://?src=\ref[src];command=play'>[src.mode == MODE_PLAYING ? "Playing" : "Not Playing"]</a></td>"
+			// dat += "<td><a href='byond://?src=\ref[src];command=stop'>Stop</a></td>"
+			// dat += "<td><a href='byond://?src=\ref[src];command=clear'>Clear Log</a></td>"
+			// dat += "<td><a href='byond://?src=\ref[src];command=continuous_mode'>[continuous ? "Looping" : "No Loop"]</a></td></table></tt>"
 
-			user.Browse(dat, "window=audiolog;size=400x140")
-			onclose(user, "audiolog")
-		else
-			user.Browse(null, "window=audiolog")
-			src.remove_dialog(user)
+			// user.Browse(dat, "window=audiolog;size=400x140")
+			// onclose(user, "audiolog")
+		// else
+			// user.Browse(null, "window=audiolog")
+			// src.remove_dialog(user)
 
 		return
 
@@ -202,7 +228,7 @@
 			src.tape = I
 			src.tape.log_line = 1
 			src.icon_state = initial(src.icon_state)
-			src.updateSelfDialog()
+			src.ui_interact(user)
 
 			playsound(src.loc, 'sound/machines/law_insert.ogg', 40, 0.5)
 			user.visible_message("[user] loads a tape into [src].", "You load a tape into [src].")
@@ -237,9 +263,8 @@
 
 		var/message = (lang_id == "english" || lang_id == "") ? messages[1] : messages[2]
 		if (src.tape.add_message(speaker_name, message, continuous) == 0)
-			src.speak(null, "Memory full. Have a nice day.", TRUE)
+			src.speak(null, "Memory full. Have a nice day.", TRUE) // have the UI send a ui_act() thing when memory full instead of the DM code
 			src.mode = MODE_OFF
-			src.updateSelfDialog()
 
 		return
 
@@ -271,7 +296,6 @@
 
 	proc/stop()
 		src.mode = MODE_OFF
-		src.updateSelfDialog()
 		if (src.self_destruct)
 			SPAWN(2 SECONDS)
 				src.explode()

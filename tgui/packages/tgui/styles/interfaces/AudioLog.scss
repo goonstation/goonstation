@@ -1,0 +1,72 @@
+@use '../base.scss';
+
+.audiolog__ {
+  &outerwrapper {
+    border-radius: 10px;
+    margin: 10px;
+    padding-top: 20px;
+    background: rgb(15, 15, 15);
+    background: linear-gradient(180deg, rgb(15, 15, 15) 0%, rgb(25, 25, 25) 100%);
+    border-bottom: 5px solid rgb(8, 8, 8);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  &progressbarwrapper {
+    width: 90%;
+    border-radius: 10px;
+    padding: 6px;
+    background: rgb(55, 71, 45);
+    border-top: 5px solid rgb(43, 54, 36);
+  }
+
+  &button {
+
+    &row {
+      display: flex;
+      justify-content: center;
+      width: 90%;
+      padding-top: 20px;
+      margin-bottom: -5px;
+
+      overflow-x: auto;
+    }
+
+    &element {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      flex-grow: 1;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      padding-bottom: 12px;
+      user-select: none;
+      -ms-user-select: none;
+
+      background: rgb(15, 15, 15);
+      background: linear-gradient(0deg, rgb(15, 15, 15) 0%, rgb(25, 25, 25) 100%);
+      border-bottom: 5px solid rgb(8, 8, 8);
+
+      height: 3em;
+      z-index: 1;
+      border-radius: 0 0 5px 5px;
+
+      &-active{
+
+      }
+
+      &-red {
+        background: rgb(170, 29, 41);
+        background: linear-gradient(180deg, rgb(170, 29, 41) 0%, rgb(170, 29, 41) 100%);
+        border-bottom: 5px solid rgb(110, 19, 28);
+
+        &-active{
+
+        }
+      }
+    }
+  }
+}
