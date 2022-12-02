@@ -64,7 +64,7 @@ function task-lint {
 function task-install-git-hooks() {
   Set-Location $basedir
   $git_root = "$(git rev-parse --show-toplevel)"
-  $git_base_dir = "${basedir}/${git_root}/.}"
+  $git_base_dir = "${basedir}/${git_root}"
   git config --replace-all merge.tgui-merge-bundle.driver \
     "${git_base_dir}/bin/tgui --merge=bundle %O %A %B %L %P"
   Write-Output "tgui: Merge drivers have been successfully installed!"
@@ -149,12 +149,6 @@ if ($Args.Length -gt 0) {
   if ($Args[0] -eq "--analyze") {
     task-install
     task-webpack --mode=production --analyze
-    exit 0
-  }
-
-  ## Hook install
-  if ($Args[0] -eq "--install-git-hooks") {
-    task-install-git-hooks
     exit 0
   }
 }
