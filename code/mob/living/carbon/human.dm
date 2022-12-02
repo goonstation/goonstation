@@ -1180,7 +1180,6 @@
 			var/obj/item/organ/temp = src.organs[dam_zone]
 
 			var/reduction = 0
-			if (src.energy_shield) reduction = src.energy_shield.protect()
 			if (src.spellshield)
 				reduction = 30
 				boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some damage!</b></span>")

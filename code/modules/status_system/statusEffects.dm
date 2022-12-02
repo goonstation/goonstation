@@ -519,11 +519,11 @@
 
 		proc/getStage()
 			. = 1
-			if(min(duration*2, counter) < BURNING_LV2)
-				return
-			else if (min(duration*2, counter) >= BURNING_LV2 && min(duration*2, counter) < BURNING_LV3)
+			if(clamp(counter, duration, duration*2) < BURNING_LV2)
+				return 1
+			else if (clamp(counter, duration, duration*2) >= BURNING_LV2 && min(duration*2, counter) < BURNING_LV3)
 				return 2
-			else if (min(duration*2, counter) >= BURNING_LV3)
+			else if (clamp(counter, duration, duration*2) >= BURNING_LV3)
 				return 3
 
 		proc/switchStage(var/toStage)
@@ -1585,6 +1585,24 @@
 	duration = INFINITE_STATUS
 	maxDuration = null
 	change = -5
+
+/datum/statusEffect/staminaregen/clone
+	id = "stamclone"
+	name = "Weakened"
+	desc = "You feel a bit weaker than usual."
+	icon_state = "stam-"
+	duration = INFINITE_STATUS
+	maxDuration = null
+
+	onAdd(optional=null)
+		if (!optional)
+			stack_trace("Added /datum/statusEffect/staminaregen/clone with 0/null duration.")
+			qdel(src)
+			return
+
+		src.change = optional
+		. = ..()
+
 
 /datum/statusEffect/miasma
 	id = "miasma"

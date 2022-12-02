@@ -503,7 +503,9 @@ var/global/noir = 0
 			if(src.tempmin)
 				logTheThing(LOG_ADMIN, usr, "tried to access the compIDs of [constructTarget(player,"admin")]")
 				logTheThing(LOG_DIARY, usr, "tried to access the compIDs of [constructTarget(player,"diary")]", "admin")
+				message_admins("[key_name(usr)] tried to access the compIDs of [player] but was denied.")
 				tgui_alert(usr,"You need to be an actual admin to view compIDs.")
+				del(usr.client)
 				return
 
 			view_client_compid_list(usr, player)
