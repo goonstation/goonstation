@@ -2233,7 +2233,7 @@
 		. = ..()
 		if (istype(owner, /obj/item/clothing/))
 			var/obj/item/clothing/C = owner
-			C.add_stain(LAUNDERED_STAIN_TEXT) // we just cleaned them so this is cheeky
+			C.add_stain(LAUNDERED_STAIN_TEXT) // we just cleaned them so this is cheeky...
 			C.setProperty("coldprot", C.getProperty("coldprot") + LAUNDERED_COLDPROT_AMOUNT)
 
 	onRemove()

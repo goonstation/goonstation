@@ -81,6 +81,7 @@
 			processing_items.Remove(src)
 			for (var/obj/item/clothing/C in src.contents)
 				C.stains = null
+				C.delStatus("freshly_laundered") // ...and this is the price we pay for being cheeky
 				C.changeStatus("freshly_laundered", rand(2,4) MINUTES)
 				C.UpdateName()
 			src.cycle = POST
