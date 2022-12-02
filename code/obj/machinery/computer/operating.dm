@@ -96,7 +96,9 @@
 	.["toxin"] = round(src.victim.get_toxin_damage())
 	.["oxygen"] = round(src.victim.get_oxygen_deprivation())
 
-	.["blood_pressure"] = src.victim.blood_pressure
+	.["blood_volume"] = src.victim.blood_pressure["total"]
+	.["blood_pressure_status"] = src.victim.blood_pressure["status"]
+	.["blood_pressure_rendered"] = src.victim.blood_pressure["rendered"]
 	.["brain_damage_desc"] = calc_brain_damage_severity(src.victim)
 	.["brain_damage_value"] = src.victim.get_brain_damage()
 

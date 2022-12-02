@@ -120,21 +120,20 @@ const DisplayBloodPressure = (props, context) => {
   const { data } = useBackend(context);
   let blood_pressure_rendered = "--/--";
   let blood_pressure_status = "NO PULSE";
-  let blood_pressure_total = "--";
+  let blood_volume = "--";
   let pressure_color = "grey";
   if (data.occupied) {
     if (data.victim_status !== 2) {
-      const blood_pressure = data.blood_pressure;
-      blood_pressure_rendered = blood_pressure["rendered"];
-      blood_pressure_status = blood_pressure["status"];
-      blood_pressure_total = blood_pressure["total"];
-      if (blood_pressure_total <= 299) {
+      blood_pressure_rendered = data.blood_pressure_rendered;
+      blood_pressure_status = data.blood_pressure_status;
+      blood_volume = data.blood_volume;
+      if (blood_volume <= 299) {
         pressure_color = "red";
-      } else if (blood_pressure_total <= 414) {
+      } else if (blood_volume <= 414) {
         pressure_color = "yellow";
-      } else if (blood_pressure_total <= 584) {
+      } else if (blood_volume <= 584) {
         pressure_color = "green";
-      } else if (blood_pressure_total <=665) {
+      } else if (blood_volume <=665) {
         pressure_color = "yellow";
       } else {
         pressure_color = "red";
@@ -147,7 +146,7 @@ const DisplayBloodPressure = (props, context) => {
       <Table.Cell header textAlign="right" width={10}>Blood Pressure:</Table.Cell>
       <Table.Cell width={10} color={pressure_color}>{blood_pressure_rendered} ({blood_pressure_status})</Table.Cell>
       <Table.Cell header textAlign="right" width={10}>Blood Volume:</Table.Cell>
-      <Table.Cell width={10} color={pressure_color}>{blood_pressure_total} units</Table.Cell>
+      <Table.Cell width={10} color={pressure_color}>{blood_volume} units</Table.Cell>
     </Table.Row>
   );
 };
