@@ -373,7 +373,7 @@
 		data += "<b class='alert'>Detected Cloning-Related Defects:</b>"
 		for(var/datum/cloner_defect/defect as anything in H.cloner_defects.active_cloner_defects)
 			data += "<b class='alert'>[defect.name]</b>"
-			data += "<i class='alert'>[defect.description]</i>"
+			data += "<i class='alert'>[defect.desc]</i>"
 	return data.Join("<br>")
 
 /proc/update_medical_record(var/mob/living/carbon/human/M)
