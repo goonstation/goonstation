@@ -299,19 +299,6 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "smoke"
 
-////////////////////////////////////////////////////////////
-
-/obj/ability_button/cebelt_toggle
-	name = "Toggle overshield"
-	icon_state = "shieldceon"
-	requires_equip = TRUE
-
-	execute_ability()
-		var/obj/item/storage/belt/utility/prepared/ceshielded/C = the_item
-		C.toggle()
-		..()
-		//if(C.active) icon_state = "shieldceoff"
-		//else icon_state = "shieldceon"
 
 ////////////////////////////////////////////////////////////
 
