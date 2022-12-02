@@ -2241,7 +2241,8 @@
 		if (istype(owner, /obj/item/clothing/))
 			var/obj/item/clothing/C = owner
 			C.setProperty("coldprot", C.getProperty("coldprot") - LAUNDERED_COLDPROT_AMOUNT)
-			C.stains -= LAUNDERED_STAIN_TEXT
+			if (C.stains)
+				C.stains -= LAUNDERED_STAIN_TEXT
 
 #undef LAUNDERED_COLDPROT_AMOUNT
 #undef LAUNDERED_STAIN_TEXT
