@@ -44120,6 +44120,13 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
+"dyW" = (
+/obj/xmastree/ephemeral,
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fred2"
+	},
+/area/station/chapel/sanctuary)
 "dAu" = (
 /obj/machinery/computer/secure_data/detective_computer,
 /obj/item/device/radio/intercom/security{
@@ -86525,7 +86532,7 @@ amV
 amV
 amV
 amV
-ako
+dyW
 amX
 auH
 auG

@@ -15,6 +15,9 @@ proc/check_map_correctness()
 	check_unsimulated_station_turfs()
 	check_duplicate_area_names()
 	check_missing_material()
+	#ifndef PREFAB_CHECKING
+	check_xmas_tree()
+	#endif
 
 proc/check_missing_navbeacons()
 	var/list/all_beacons = list()
@@ -158,5 +161,9 @@ proc/check_missing_material()
 	if(length(missing))
 		var/missing_text = jointext(missing, "\n")
 		CRASH("Missing materials:\n" + missing_text)
+
+proc/check_xmas_tree()
+	if(length(by_type[/obj/xmastree]) != 1)
+		CRASH("There should be exactly one xmas tree, but there are [length(by_type[/obj/xmastree])]")
 
 #endif
