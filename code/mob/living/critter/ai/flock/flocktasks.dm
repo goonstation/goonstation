@@ -5,11 +5,11 @@
 /*
 replicate
 	-weight 7
-	-precondition: can_afford(FLOCK_LAY_EGG_COST) and less than FLOCK_DRONE_LIMIT drones
+	-precondition: can_afford(flock.current_egg_cost) and less than FLOCK_DRONE_LIMIT drones
 
 nest
 	-weight 6
-	-precondition: can_afford(FLOCK_LAY_EGG_COST) and less than FLOCK_DRONE_LIMIT drones
+	-precondition: can_afford(flock.current_egg_cost) and less than FLOCK_DRONE_LIMIT drones
 
 building
 	-weight 5
@@ -88,12 +88,12 @@ stare
 	src.subtasks = list() //get rid of the move and replace it with flockmove
 	add_task(holder.get_instance(/datum/aiTask/succeedable/move/flock, list(holder)))
 
-///The amount of resources a drone needs to be eligible to lay an egg (eggs still only cost FLOCK_LAY_EGG_COST)
+///The amount of resources a drone needs to be eligible to lay an egg (eggs still only cost flock.current_egg_cost)
 /datum/aiTask/sequence/goalbased/flock/proc/current_egg_cost()
 	var/mob/living/critter/flock/flockcritter = src.holder.owner
 	if (!flockcritter?.flock)
 		return FLOCK_LAY_EGG_COST
-	return FLOCK_LAY_EGG_COST + clamp((flockcritter.flock.getComplexDroneCount() - FLOCK_MIN_DESIRED_POP) * FLOCK_ADDITIONAL_RESOURCE_RESERVATION_PER_DRONE, 0, FLOCK_LAY_EGG_COST * 2)
+	return flockcritter.flock.current_egg_cost + clamp((flockcritter.flock.getComplexDroneCount() - FLOCK_MIN_DESIRED_POP) * FLOCK_ADDITIONAL_RESOURCE_RESERVATION_PER_DRONE, 0, flockcritter.flock.current_egg_cost + FLOCK_LAY_EGG_COST)
 
 
 /datum/aiTask/sequence/goalbased/flock/switched_to()
@@ -127,7 +127,7 @@ stare
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // REPLICATION GOAL
 // targets: valid nesting sites
-// precondition: FLOCK_LAY_EGG_COST resources + 7.5 in reserve for every drone after the first 10 up to a max of 200 extra in reserve
+// precondition: flock.current_egg_cost resources + 7.5 in reserve for every drone after the first 10 up to a max of 200 extra in reserve
 /datum/aiTask/sequence/goalbased/flock/replicate
 	name = "replicating"
 	weight = 7
@@ -160,7 +160,7 @@ stare
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(!F)
 		return TRUE
-	if(F && !F.can_afford(FLOCK_LAY_EGG_COST))
+	if(F && !F.can_afford(F.flock.current_egg_cost))
 		return TRUE
 	var/turf/simulated/floor/feather/N = get_turf(holder.owner)
 	if(!N)
@@ -184,7 +184,7 @@ stare
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // NEST + REPLICATION GOAL
 // targets: valid nesting sites
-// precondition: FLOCK_CONVERT_COST + FLOCK_LAY_EGG_COST resources + 7.5 in reserve for every drone after the first 10 up to a max of 200 extra in reserve, no flocktiles in view
+// precondition: FLOCK_CONVERT_COST + flock.current_egg_cost resources + 7.5 in reserve for every drone after the first 10 up to a max of 200 extra in reserve, no flocktiles in view
 /datum/aiTask/sequence/goalbased/flock/nest
 	name = "nesting"
 	weight = 6
