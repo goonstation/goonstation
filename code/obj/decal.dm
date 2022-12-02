@@ -133,6 +133,8 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	point.color = color
 	point.invisibility = invisibility
 	var/turf/target_turf = get_turf(target)
+	if(isnull(target_turf))
+		target_turf = get_turf(target.vis_locs[1])
 	target_turf.vis_contents += point
 	if(pointer && GET_DIST(pointer, target_turf) <= 10) // check so that you can't shoot points across the station
 		var/matrix/M = matrix()

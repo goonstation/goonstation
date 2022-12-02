@@ -1,5 +1,7 @@
 
 (t)the dec 01 22
+(u)tarmunora
+(+)The Chief Engineer's belt has been modernized to use the new energy shield mechanic.
 (u)pali
 (e)🎄
 (*)Ho ho ho, Spacemas is here. Be sure to click the Spacemas tree and make your own Spacemas tree ornament!
