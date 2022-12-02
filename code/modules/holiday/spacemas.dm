@@ -521,7 +521,7 @@ proc/compare_ornament_score(list/a, list/b)
 		var/positive = length(ornament["upvoted"]) + 0.00001
 		var/negative = length(ornament["downvoted"]) + 0.00001
 		// source: https://www.evanmiller.org/how-not-to-sort-by-average-rating.html
-		. = ((positive + 1.9208) / (positive + negative) - which_bound * \
+		. = ((positive + 1.9208) / (positive + negative) + which_bound * \
 			1.96 * sqrt((positive * negative) / (positive + negative) + 0.9604) / \
 			(positive + negative)) / (1 + 3.8416 / (positive + negative))
 		if(best_sort_fuzziness > 0)
