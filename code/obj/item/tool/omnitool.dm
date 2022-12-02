@@ -254,7 +254,7 @@
 	desc = "A set of tools on telescopic arms. It's the robotic future!"
 	animated_changes = TRUE
 
-////Context Actions
+/// Omnitool context action
 /datum/contextAction/omnitool
 	icon = 'icons/ui/context16x16.dmi'
 	close_clicked = TRUE
