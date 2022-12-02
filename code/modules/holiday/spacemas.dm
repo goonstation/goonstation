@@ -687,6 +687,7 @@ proc/compare_ornament_score(list/a, list/b)
 						empty_index = i
 						break
 				src.place_ornament(ornament, empty_index || rand(1, length(src.placed_ornaments)))
+				logTheThing("station", user, null, "placed an ornament with name '[ornament.name]' on the Spacemas tree.")
 				boutput(user, "<span class='notice'>You hang \the [ornament.name] on the tree.</span>")
 				LAZYLISTADD(src.ckeys_placed_this_round, user.ckey)
 		else
@@ -1527,6 +1528,7 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 				if(tgui_alert(usr, "Are you sure you want to remove \the [src] not only from the tree but also from the ornament database?", "Remove ornament", list("Yes", "No")) != "Yes")
 					return
 				get_spacemas_ornaments().Remove(src.name)
+				logTheThing("admin", usr, null, "Removed ornament '[src.name]' from the tree and the ornament database.")
 				qdel(src)
 				boutput(usr, "<span class='alert'>You removed \the [src] from the tree and the ornament database.</span>")
 			return
