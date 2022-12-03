@@ -23,19 +23,30 @@
 	mat_changename = FALSE
 	dir = EAST
 	custom_suicide = TRUE
+	/// 2D grid of reactor components, or null where there are no components. Size is REACTOR_GRID_WIDTH x REACTOR_GRID_HEIGHT
 	var/list/obj/item/reactor_component/component_grid[REACTOR_GRID_WIDTH][REACTOR_GRID_HEIGHT]
+	/// 2D grid of lists of neutrons in each grid slot of the component grid. Lists can be empty.
 	var/list/list/datum/neutron/flux_grid[REACTOR_GRID_WIDTH][REACTOR_GRID_HEIGHT]
+	/// Number of neutrons that hit the edge of the reactor grid last tick
 	var/radiationLevel = 0
+	/// Current gas mixture to process
 	var/datum/gas_mixture/current_gas = null
+	/// Reactor casing temperature
 	var/temperature = T20C
 
+	/// Volume of gas to process each tick
 	var/reactor_vessel_gas_volume=200
+	/// Reference to the power terminal we use to register onto the pnet
 	var/obj/machinery/power/terminal/terminal = null
+	/// ID of this object on the pnet
 	var/net_id = null
+	/// Flag indicating total meltdown has happened
 	var/melted = FALSE
 
+	/// INTERNAL: Used to detemine whether an icon update is needed for the component grid overlay
 	var/_comp_grid_overlay_update = TRUE
-	var/turf/_light_turf //ref to the turf the reactor light is stored on, because you can't center simple lights
+	/// ref to the turf the reactor light is stored on, because you can't center simple lights
+	var/turf/_light_turf
 
 	New()
 		. = ..()

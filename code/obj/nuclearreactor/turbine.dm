@@ -8,7 +8,7 @@
 	name = "Gas Turbine"
 	desc = "A large turbine used for generating power using hot gas."
 	icon = 'icons/obj/large/96x160.dmi'
-	icon_state = "turbine_main" //TODO make rotated states of this
+	icon_state = "turbine_main"
 	anchored = 1
 	density = 1
 	bound_width = 96
@@ -17,27 +17,40 @@
 	pixel_y = -32
 	bound_x = -32
 	bound_y = -32
-	var/obj/machinery/power/terminal/terminal = null
-	var/net_id = null
-	var/lastgen = 0
 	dir = EAST
 	custom_suicide = TRUE
 
+	/// Reference to the power terminal we use to dump power onto the net
+	var/obj/machinery/power/terminal/terminal = null
+	/// ID of this object on the pnet
+	var/net_id = null
+	/// How much power we generated last tick
+	var/lastgen = 0
+	/// Stator load is basically watts per revolution
 	var/stator_load = 10000
+	/// Current RPM of the turbing
 	var/RPM = 0
+	/// Calibration factor which determines how much inertia the turbine has - ie, resistance to change in RPM
 	var/turbine_mass = 1000
-	var/best_RPM = 600 //most efficient power generation at this value, overspeed at 1.2*this
+	/// most efficient power generation at this value, overspeed at 1.2*this
+	var/best_RPM = 600
+	/// Volume of gas to process per tick for power generation
 	var/flow_rate = 200
 
 	var/static/sound_stall = 'sound/machines/tractor_running.ogg'
-
-	var/stalling = FALSE
-	var/overspeed = FALSE
-	var/overtemp = FALSE
-
-	var/_last_rpm_icon_update = 0 //used to determine whether an icon update is required
 	var/static/list/grump_sound_list = list('sound/machines/engine_grump1.ogg','sound/machines/engine_grump2.ogg','sound/machines/engine_grump3.ogg', 'sound/impact_sounds/Metal_Clang_1.ogg', 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg')
-	var/turf/_light_turf //ref to the turf the turbine light is stored on, because you can't center simple lights
+
+	/// Flag for indicating that energy available is less than needed to turn the turbine
+	var/stalling = FALSE
+	/// Flag for RPM being > best_RPM*1.2
+	var/overspeed = FALSE
+	/// Flag for gas temperature being > 3000K
+	var/overtemp = FALSE
+	/// INTERNAL: used to determine whether an icon update is required
+	var/_last_rpm_icon_update = 0
+	/// INTERNAL: ref to the turf the turbine light is stored on, because you can't center simple lights
+	var/turf/_light_turf
+
 	New()
 		. = ..()
 		terminal = new /obj/machinery/power/terminal/netlink(src.loc)
@@ -80,14 +93,12 @@
 			if(target.initialize_directions & node2_connect)
 				if(target != src)
 					node1 = target
-					//target.node2 = src
 					break
 
 		for(var/obj/machinery/atmospherics/pipe/simple/target in get_steps(src,node2_connect,2))
 			if(target.initialize_directions & node1_connect)
 				if(target != src)
 					node2 = target
-					//target.node1 = src
 					break
 
 		UpdateIcon()

@@ -10,23 +10,33 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	icon_state = "fuel_rod"
 	w_class = W_CLASS_BULKY
 
+	/// Icon that appears in the UI
 	var/icon_state_inserted = "base"
+	/// Icon state that appears on the component grid overlay on the reactor
 	var/icon_state_cap = "rod_cap"
+	/// INTERNAL: Actual UI icon, base64 encoded
 	var/ui_image = null
+	/// INTERNAL: Actual component grid icon, coloured and textured by material
 	var/icon/cap_icon = null
-	var/temperature = T20C //room temp kelvin as default
-	///How much does this component share heat with surrounding components? Basically surface area in contact (m2)
+	/// Temperature of this component, starts at room temp Kelvin by default
+	var/temperature = T20C
+	/// How much does this component share heat with surrounding components? Basically surface area in contact (m2)
 	var/thermal_cross_section = 0.01
-	///How adept is this component at interacting with neutrons - fuel rods are set up to capture them, heat exchangers are set up not to
+	/// How adept is this component at interacting with neutrons - fuel rods are set up to capture them, heat exchangers are set up not to
 	var/neutron_cross_section = 0.5
-	///Control rods don't moderate neutrons, they absorb them.
+	/// Control rods don't moderate neutrons, they absorb them.
 	var/is_control_rod = FALSE
+	/// Max health to set melth_health to on init
 	_max_health = 100
+	/// Essentially indicates how long this component can be at a dangerous temperature before it melts
 	var/melt_health = 100
 	///If this component is melted, you can't take it out of the reactor and it might do some weird stuff
 	var/melted = FALSE
-	var/melting_point = 1700 //1700K is the melting point of steel
+	/// The dangerous temperature above which this component starts to melt. 1700K is the melting point of steel
+	var/melting_point = 1700
+	/// INTERNAL: cache of base64 encoded UI icons, so we don't have to store one copy for every component, just the types
 	var/static/list/ui_image_base64_cache = list()
+	/// How much gas this component can hold, and will be processed per tick
 	var/gas_volume = 0
 
 	New(material_name="steel")
@@ -96,7 +106,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		return null //most components won't touch gas
 
 	proc/processHeat(var/list/obj/item/reactor_component/adjacentComponents)
-		for(var/obj/item/reactor_component/RC in adjacentComponents)
+		for(var/obj/item/reactor_component/RC as anything in adjacentComponents)
 			if(isnull(RC))
 				continue
 			//heat transfer equation = hA(T2-T1)
@@ -130,7 +140,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 
 
 	proc/processNeutrons(var/list/datum/neutron/inNeutrons)
-		for(var/datum/neutron/N in inNeutrons)
+		for(var/datum/neutron/N as anything in inNeutrons)
 			if(prob(src.material.getProperty("density")*10*src.neutron_cross_section)) //dense materials capture neutrons, configuration influences that
 				//if a neutron is captured, we either do fission or we slow it down
 				if(N.velocity <= 1 & prob(src.material.getProperty("n_radioactive")*10)) //neutron stimulated emission
@@ -223,8 +233,10 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	desc = "A control rod assembly for a nuclear reactor."
 	icon_state_inserted = "control"
 	icon_state_cap = "control_cap"
-	neutron_cross_section = 1.0 //essentially *actual* insertion level
-	var/configured_insertion_level = 1.0 //target insertion level
+	/// Control rods have a variable neutron_cross_section, which is essentially *actual* insertion level
+	neutron_cross_section = 1.0
+	/// Target insertion level, will be approached by up to 0.1 per tick
+	var/configured_insertion_level = 1.0
 	is_control_rod = TRUE
 
 	extra_info()
