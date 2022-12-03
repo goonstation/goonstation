@@ -127,7 +127,7 @@ stare
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // REPLICATION GOAL
 // targets: valid nesting sites
-// precondition: flock.current_egg_cost resources + 7.5 in reserve for every drone after the first 10 up to a max of 200 extra in reserve
+// precondition: flock.current_egg_cost resources + 7.5 in reserve for every drone after the first 10 up to a max of (flockcritter.flock.current_egg_cost + FLOCK_LAY_EGG_COST) extra in reserve
 /datum/aiTask/sequence/goalbased/flock/replicate
 	name = "replicating"
 	weight = 7
@@ -184,7 +184,7 @@ stare
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // NEST + REPLICATION GOAL
 // targets: valid nesting sites
-// precondition: FLOCK_CONVERT_COST + flock.current_egg_cost resources + 7.5 in reserve for every drone after the first 10 up to a max of 200 extra in reserve, no flocktiles in view
+// precondition: FLOCK_CONVERT_COST + flock.current_egg_cost resources + 7.5 in reserve for every drone after the first 10 up to a max of (flockcritter.flock.current_egg_cost + FLOCK_LAY_EGG_COST) extra in reserve, no flocktiles in view
 /datum/aiTask/sequence/goalbased/flock/nest
 	name = "nesting"
 	weight = 6
