@@ -1,4 +1,7 @@
 
+(t)sat dec 03 22
+(u)tarmunora
+(*)Wizards now have magic hands, which do not like certain technology. Good thing they packed their EMP-resistant headsets!
 (t)fri dec 02 22
 (u)tarmunora
 (+)AI law captcha returns.
