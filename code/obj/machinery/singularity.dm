@@ -307,6 +307,16 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if (istype(A, /obj/decal/cleanable)) //MBC : this check sucks, but its far better than cleanables doing hard-delete at the whims of the singularity. replace ASAP when i figure out cleanablessssss
 			qdel(A)
 			gain = 2
+		else if (istype(A, /obj/machinery/nuclearbomb))
+			gain = 5000 //ten clowns
+			src.active = TRUE //you fools
+			src.maxradius = INFINITY
+			playsound_global(clients, 'sound/machines/singulo_start.ogg', 50)
+			SPAWN(1 SECOND)
+				for (var/i in 1 to 5)
+					src.grow()
+					sleep(0.5 SECONDS)
+			qdel(A)
 		else
 			var/obj/O = A
 			O.set_loc(src.get_center())
