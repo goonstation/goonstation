@@ -465,7 +465,8 @@
 /obj/cablespawner/proc/check(var/obj/cable/cable)
 	var/list/selftile = list()
 	for (var/obj/cablespawner/dupe in range(0, src))
-		selftile += dupe
+		if (istype(dupe, src))
+			selftile += dupe
 	if (length(selftile) > 1)
 		CRASH("Multiple cablespawners on coordinate [src.x] x [src.y] y!")
 	qdel(selftile)
