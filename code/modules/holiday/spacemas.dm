@@ -1655,14 +1655,14 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 		var/new_color = input(user, "Choose a color:", "Ornament paintbrush", src.font_color) as color|null
 		if(new_color)
 			src.font_color = new_color
-			boutput(user, "<span class='notice'>You twirl the paintbrush and the Spacemas spirit changes it to this color: <a href='?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</span>.</span>")
+			boutput(user, "<span class='notice'>You twirl the paintbrush and the Spacemas spirit changes it to this color: <a href='?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</a>.</span>")
 			src.UpdateIcon()
 
 	Topic(href, href_list)
 		. = ..()
 		if(href_list["setcolor"] && can_reach(usr, src) && can_act(usr, 1))
 			src.font_color = "#" + href_list["setcolor"]
-			boutput(usr, "<span class='notice'>You twirl the paintbrush and the Spacemas spirit changes it to this color again: <a href='?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</span>.</span>")
+			boutput(usr, "<span class='notice'>You twirl the paintbrush and the Spacemas spirit changes it to this color again: <a href='?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</a>.</span>")
 			src.UpdateIcon()
 
 	afterattack(atom/target, mob/user)
