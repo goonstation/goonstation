@@ -56,6 +56,9 @@ ABSTRACT_TYPE(/obj/item/aiModule)
 	proc/input_law_info(var/mob/user, var/title = null, var/text = null, var/default = null)
 		if (!user)
 			return
+		if(!ishuman(user))
+			boutput(user, "<span class='notice'>The law module has a captcha, and you aren't human!<span>")
+			return
 		if(src.glitched)
 			boutput(user,"This module is acting strange, and cannot be modified.")
 			return
@@ -213,7 +216,7 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	highlight_color = rgb(255, 255, 255, 255)
 
 	update_law_text(var/lawTarget)
-		src.lawText = "Only [lawTarget ? lawTarget : "__________"] is/are human."
+		src.lawText = "Only [lawTarget ? lawTarget : "humans"] is/are human."
 		return ..()
 
 	attack_self(var/mob/user)
