@@ -449,6 +449,7 @@ proc/compare_ornament_score(list/a, list/b)
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	pixel_x = -64
 	plane = PLANE_ABOVE_LIGHTING
+	pixel_point = TRUE
 	var/static/list/ornament_positions = list(
 		list(62, 118),
 		list(80, 117),
@@ -521,7 +522,7 @@ proc/compare_ornament_score(list/a, list/b)
 		var/positive = length(ornament["upvoted"]) + 0.00001
 		var/negative = length(ornament["downvoted"]) + 0.00001
 		// source: https://www.evanmiller.org/how-not-to-sort-by-average-rating.html
-		. = ((positive + 1.9208) / (positive + negative) - which_bound * \
+		. = ((positive + 1.9208) / (positive + negative) + which_bound * \
 			1.96 * sqrt((positive * negative) / (positive + negative) + 0.9604) / \
 			(positive + negative)) / (1 + 3.8416 / (positive + negative))
 		if(best_sort_fuzziness > 0)
@@ -554,7 +555,7 @@ proc/compare_ornament_score(list/a, list/b)
 				ornament_list = list()
 				while(length(ornament_weights) > 0 && length(ornament_list) < length(src.ornament_positions))
 					var/ornament_name = weighted_pick(ornament_weights)
-					ornament_list += get_spacemas_ornaments()[ornament_name]
+					ornament_list[ornament_name] = get_spacemas_ornaments()[ornament_name]
 					ornament_weights -= ornament_name
 		src.placed_ornaments = list()
 		src.placed_ornaments.len = length(ornament_positions)
@@ -687,6 +688,7 @@ proc/compare_ornament_score(list/a, list/b)
 						empty_index = i
 						break
 				src.place_ornament(ornament, empty_index || rand(1, length(src.placed_ornaments)))
+				logTheThing("station", user, null, "placed an ornament with name '[ornament.name]' on the Spacemas tree.")
 				boutput(user, "<span class='notice'>You hang \the [ornament.name] on the tree.</span>")
 				LAZYLISTADD(src.ckeys_placed_this_round, user.ckey)
 		else
@@ -1527,6 +1529,7 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 				if(tgui_alert(usr, "Are you sure you want to remove \the [src] not only from the tree but also from the ornament database?", "Remove ornament", list("Yes", "No")) != "Yes")
 					return
 				get_spacemas_ornaments().Remove(src.name)
+				logTheThing("admin", usr, null, "Removed ornament '[src.name]' from the tree and the ornament database.")
 				qdel(src)
 				boutput(usr, "<span class='alert'>You removed \the [src] from the tree and the ornament database.</span>")
 			return
@@ -1649,14 +1652,14 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 		var/new_color = input(user, "Choose a color:", "Ornament paintbrush", src.font_color) as color|null
 		if(new_color)
 			src.font_color = new_color
-			boutput(user, "<span class='notice'>You twirl the paintbrush and the Spacemas spirit changes it to this color: <a href='?src=\ref[src];setcolor=[src.font_color]' style='color: [src.font_color]'>[src.font_color]</span>.</span>")
+			boutput(user, "<span class='notice'>You twirl the paintbrush and the Spacemas spirit changes it to this color: <a href='?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</span>.</span>")
 			src.UpdateIcon()
 
 	Topic(href, href_list)
 		. = ..()
 		if(href_list["setcolor"] && can_reach(usr, src) && can_act(usr, 1))
-			src.font_color = href_list["setcolor"]
-			boutput(usr, "<span class='notice'>You twirl the paintbrush and the Spacemas spirit changes it to this color again: <a href='?src=\ref[src];setcolor=[src.font_color]' style='color: [src.font_color]'>[src.font_color]</span>.</span>")
+			src.font_color = "#" + href_list["setcolor"]
+			boutput(usr, "<span class='notice'>You twirl the paintbrush and the Spacemas spirit changes it to this color again: <a href='?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</span>.</span>")
 			src.UpdateIcon()
 
 	afterattack(atom/target, mob/user)
