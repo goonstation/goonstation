@@ -654,6 +654,7 @@ proc/compare_ornament_score(list/a, list/b)
 		ornament.layer = src.layer + 0.1
 		ornament.plane = src.plane
 		ornament.on_tree = src
+		ornament.anchored = 2
 		ornament.set_loc(null)
 		src.placed_ornaments[slot_number] = ornament
 
