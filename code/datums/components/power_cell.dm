@@ -13,7 +13,7 @@ TYPEINFO(/datum/component/power_cell)
 		ARG_INFO("max", DATA_INPUT_NUM, "Maximum cell charge", 200),
 		ARG_INFO("start_charge", DATA_INPUT_NUM, "Initial cell charge", 200),
 		ARG_INFO("recharge_rate", DATA_INPUT_NUM, "Recharge rate of cell (approx per 2.9 seconds)", 0),
-		ARG_INFO("recharge_delay", DATA_INPUT_NUM, "Minimum time delay (in seconds) after power is used before self-charging resumes", 0),
+		ARG_INFO("recharge_delay", DATA_INPUT_NUM, "Minimum time delay (in deciseconds) after power is used before self-charging resumes", 0),
 		ARG_INFO("rechargable", DATA_INPUT_BOOL, "If the cell can recharged in a recharger", TRUE)
 	)
 
@@ -24,7 +24,7 @@ TYPEINFO(/datum/component/power_cell)
 	src.max_charge = max
 	src.charge = start_charge
 	src.recharge_rate = recharge
-	src.recharge_delay = delay SECONDS
+	src.recharge_delay = delay
 	src.can_be_recharged = rechargable
 	if(charge < max_charge && recharge_rate)
 		processing_items |= parent

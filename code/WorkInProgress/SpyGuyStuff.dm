@@ -201,6 +201,8 @@ proc/Create_Tommyname()
 			hit:tommyize_reshape()
 			playsound(hit.loc, 'sound/voice/tommy_hey-everybody.ogg', 50, 1)
 		else if(ismob(hit))
+			if (issilicon(hit))
+				return
 			hit:tommyize()
 			playsound(hit.loc, 'sound/voice/tommy_hey-everybody.ogg', 50, 1)
 
