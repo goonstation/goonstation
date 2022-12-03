@@ -5925,6 +5925,10 @@
 /obj/machinery/traymachine/morgue{
 	dir = 8
 	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "awN" = (
@@ -6487,10 +6491,6 @@
 /turf/simulated/floor/orangeblack/side,
 /area/station/hangar/main)
 "ays" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
 /obj/disposalpipe/segment,
 /obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2,
