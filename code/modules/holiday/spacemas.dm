@@ -474,7 +474,7 @@ proc/compare_ornament_score(list/a, list/b)
 		list(33, 20),
 	)
 	var/uses_custom_ornaments = TRUE
-	var/ornament_sort = "random"
+	var/ornament_sort = "weighted_random"
 	var/best_sort_fuzziness = 0
 	var/weighted_sort_flat_bonus = 0
 	var/list/placed_ornaments = null
@@ -529,6 +529,7 @@ proc/compare_ornament_score(list/a, list/b)
 			. += G.Rand()
 
 	proc/decorate()
+		remove_all_ornaments()
 		var/list/ornament_list = get_spacemas_ornaments().Copy()
 		switch(ornament_sort)
 			if("random")
@@ -572,10 +573,16 @@ proc/compare_ornament_score(list/a, list/b)
 			ornament.main_artist = ornament_artist
 			src.place_ornament(ornament, i)
 
+	proc/remove_all_ornaments()
+		for(var/obj/item/canvas/tree_ornament/ornament in placed_ornaments)
+			qdel(ornament)
+
 	disposing()
 		#ifdef XMAS
 		STOP_TRACKING
 		#endif
+
+		remove_all_ornaments()
 
 		qdel(src.fire_image)
 		src.fire_image = null
@@ -692,11 +699,6 @@ proc/compare_ornament_score(list/a, list/b)
 				LAZYLISTADD(src.ckeys_placed_this_round, user.ckey)
 		else
 			. = ..()
-
-	disposing()
-		for(var/obj/item/canvas/tree_ornament/ornament in placed_ornaments)
-			qdel(ornament)
-		..()
 
 /obj/item/reagent_containers/food/snacks/snowball
 	name = "snowball"
