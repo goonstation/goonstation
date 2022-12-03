@@ -449,6 +449,7 @@ proc/compare_ornament_score(list/a, list/b)
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	pixel_x = -64
 	plane = PLANE_ABOVE_LIGHTING
+	pixel_point = TRUE
 	var/static/list/ornament_positions = list(
 		list(62, 118),
 		list(80, 117),

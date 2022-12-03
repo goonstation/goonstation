@@ -14,7 +14,7 @@
 	if (M.bioHolder && M.bioHolder.HasEffect("dead_scan"))
 		death_state = 2
 
-	var/health_percent = round(100 * M.health / M.max_health)
+	var/health_percent = round(100 * M.health / (M.max_health||1))
 
 	var/colored_health
 	if(M.max_health <= 0)

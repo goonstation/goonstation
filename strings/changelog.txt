@@ -1,4 +1,22 @@
 
+(t)sat dec 03 22
+(u)Cheffie
+(p)12136
+(e)🎨💅📄|C-Sprites, C-QoL, A-UI
+(*)Omnitools now use a Context Actions menu.
+(u)glowbold
+(p)12252
+(e)🆕⚖📦🎩|C-Feature, C-Balance, A-Game-Objects, A-Clothing
+(+)Freshly laundered clothing stays warm for a bit after coming out of the WashMan.
+(u)Bartimeus973
+(p)12271
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(+)Fake guns that pop out a flag when fired can now be reused.
+(u)tarmunora
+(*)Wizards now have magic hands, which do not like certain technology. Good thing they packed their EMP-resistant headsets!
+(t)fri dec 02 22
+(u)tarmunora
+(+)AI law captcha returns.
 (t)the dec 01 22
 (u)tarmunora
 (+)The Chief Engineer's belt has been modernized to use the new energy shield mechanic.
