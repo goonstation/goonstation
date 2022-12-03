@@ -1,5 +1,9 @@
 
 (t)sat dec 03 22
+(u)Cheffie
+(p)12136
+(e)🎨💅📄|C-Sprites, C-QoL, A-UI
+(*)Omnitools now use a Context Actions menu.
 (u)glowbold
 (p)12252
 (e)🆕⚖📦🎩|C-Feature, C-Balance, A-Game-Objects, A-Clothing
