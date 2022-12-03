@@ -585,7 +585,7 @@
 	New()
 		. = ..()
 		AddComponent(/datum/component/cell_holder, new /obj/item/ammo/power_cell/self_charging/disruptor, TRUE, 100, FALSE)
-		AddComponent(/datum/component/wearertargeting/energy_shield, list(SLOT_BELT, SLOT_L_HAND, SLOT_R_HAND), 0.75, 1, TRUE, 5)
+		AddComponent(/datum/component/wearertargeting/energy_shield, list(SLOT_BELT, SLOT_L_HAND, SLOT_R_HAND), 0.75, 1, TRUE, 5) //blocks 75% of damage taken, up to 100 damage total
 
 
 // Merchant
