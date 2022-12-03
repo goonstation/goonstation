@@ -1,5 +1,9 @@
 
 (t)sat dec 03 22
+(u)glowbold
+(p)12252
+(e)🆕⚖📦🎩|C-Feature, C-Balance, A-Game-Objects, A-Clothing
+(+)Freshly laundered clothing stays warm for a bit after coming out of the WashMan.
 (u)Bartimeus973
 (p)12271
 (e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
