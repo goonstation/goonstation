@@ -465,7 +465,7 @@ var/flock_signal_unleashed = FALSE
 			src.units[D.type] = list()
 		src.units[D.type] |= D
 		if (istype(D, /mob/living/critter/flock/drone))
-			src.current_egg_cost = src.getEggCost()
+			src.updateEggCost()
 		if (check_name_uniqueness && src.active_names[D.real_name])
 			D.real_name = istype(D, /mob/living/critter/flock/drone) ? src.pick_name("flockdrone") : src.pick_name("flockbit")
 		D.AddComponent(/datum/component/flock_interest, src)
@@ -482,7 +482,7 @@ var/flock_signal_unleashed = FALSE
 		src.units[D.type] -= D
 		src.active_names -= D.real_name
 		if (istype(D, /mob/living/critter/flock/drone))
-			src.current_egg_cost = src.getEggCost()
+			src.updateEggCost()
 		D.GetComponent(/datum/component/flock_interest)?.RemoveComponent(/datum/component/flock_interest)
 		if(D.real_name && busy_tiles[D.real_name])
 			src.unreserveTurf(D.real_name)
@@ -548,8 +548,12 @@ var/flock_signal_unleashed = FALSE
 		return 0
 	return length(src.units[/mob/living/critter/flock/drone/])
 
-/datum/flock/proc/getEggCost()
-	return round(FLOCK_LAY_EGG_COST + src.getComplexDroneCount() ** 1.4, 10)
+/datum/flock/proc/updateEggCost()
+	var/egg_count = 0
+	for (var/obj/flock_structure/egg/egg in src.structures)
+		if (!QDELETED(egg))
+			egg_count++
+	src.current_egg_cost = round(FLOCK_LAY_EGG_COST + (src.getComplexDroneCount() + egg_count) ** 1.4, 10)
 
 /datum/flock/proc/toggleDeconstructionFlag(var/atom/target)
 	toggleAnnotation(target, FLOCK_ANNOTATION_DECONSTRUCT)
