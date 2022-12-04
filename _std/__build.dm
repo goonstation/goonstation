@@ -154,6 +154,7 @@ o+`        `-` ``..-:yooos-..----------..`
 #define NO_CRITTERS
 #define NO_RANDOM_ROOMS
 #define I_AM_HACKERMAN
+#define CHECK_MORE_RUNTIMES
 #endif
 
 var/global/vcs_revision = "1"
