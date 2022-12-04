@@ -254,9 +254,7 @@
 /obj/storage/secure/closet/command/research_director
 	name = "\improper Research Director's locker"
 	req_access = list(access_research_director)
-	spawn_contents = list(/obj/item/disk/data/floppy/manudrive/machine_translator,
-	/obj/item/implanter,
-	/obj/item/plant/herb/cannabis/spawnable,
+	spawn_contents = list(/obj/item/plant/herb/cannabis/spawnable,
 	/obj/item/device/light/zippo,
 	/obj/item/storage/box/clothing/research_director,
 	/obj/item/clothing/shoes/brown,
@@ -280,6 +278,7 @@
 	name = "\improper Medical Director's locker"
 	req_access = list(access_medical_director)
 	spawn_contents = list(/obj/item/disk/data/floppy/manudrive/ai,
+	/obj/item/disk/data/floppy/manudrive/machine_translator,
 	/obj/item/storage/box/clothing/medical_director,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/gun/implanter,
