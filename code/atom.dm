@@ -526,7 +526,10 @@
 
 	var/atom/A = src.loc
 	if(src.event_handler_flags & MOVE_NOCLIP)
-		src.set_loc(NewLoc)
+		if(!isturf(NewLoc))
+			NewLoc = get_step(src, direct)
+		if(isturf(NewLoc))
+			src.set_loc(NewLoc)
 	else
 		. = ..()
 	src.move_speed = TIME - src.l_move_time
@@ -907,7 +910,7 @@
 	var/atom/oldloc = loc
 	loc = newloc
 
-#ifdef RUNTIME_CHECKING
+#ifdef CHECK_MORE_RUNTIMES
 	if(oldloc == loc)
 		stack_trace("loc change in set_loc denied - check for paradoxes")
 #endif
