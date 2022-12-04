@@ -31,7 +31,7 @@ A Flamethrower in various states of assembly
 	item_state = "flamethrower0"
 	desc = "You are a firestarter!"
 	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
-	c_flags = NULL
+	c_flags = null
 	force = 3
 	throwforce = 10
 	throw_speed = 1
