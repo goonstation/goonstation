@@ -1836,7 +1836,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		var/obj/item/equipped = src.equipped()
 		var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
 		if (!Q)
-			CRASH("Failed to initialize reflected projectile from original projectile [P] ([P.type]) hitting mob [src] (src.type)")
+			CRASH("Failed to initialize reflected projectile from original projectile [identify_object(P)] hitting mob [identify_object(src)]")
 		else
 			P.die()
 			src.visible_message("<span class='alert'>[src] reflects [Q.name] with [equipped]!</span>")
@@ -2132,5 +2132,5 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		src.TakeDamage("All",0,20*clamp(actual_dose/4.0, 0, 1)) //a 2Sv dose all at once will badly burn you
 		if(!ON_COOLDOWN(src,"radiation_feel_message_burn",5 SECONDS))
 			src.show_message("<span class='alert'>[pick("Your skin blisters!","It hurts!","Oh god, it burns!")]</span>") //definitely get a message for that
-	else if((!src.radiation_dose || prob(10)) && !ON_COOLDOWN(src,"radiation_feel_message",10 SECONDS))
+	else if((actual_dose > 0) && (!src.radiation_dose || prob(10)) && !ON_COOLDOWN(src,"radiation_feel_message",10 SECONDS))
 		src.show_message("<span class='alert'>[pick("Your skin prickles.","You taste iron.","You smell ozone.","You feel a wave of pins and needles.","Is it hot in here?")]</span>")
