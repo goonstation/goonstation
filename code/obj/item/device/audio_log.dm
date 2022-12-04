@@ -65,7 +65,7 @@
 			if (!messages)
 				return 0
 
-			return round((messages.len /  max_lines) * 100)
+			return round((messages.len /  max_lines))
 
 #define MODE_OFF 0
 #define MODE_RECORDING 1
@@ -129,64 +129,53 @@
 	ui_data(mob/user)
 		. = list(
 			"continuous" = src.continuous,
-			// "current_line" ,
-			"memory_capacity" = src.max_lines,
+			"current_line" = src.tape?.log_line,
+			"memory_capacity" = src.tape?.max_lines,
 			"mode" = src.mode,
-			// "occupied_memory" ,
+			"occupied_memory" = src.tape?.messages.len,
+			"tape" = src?.tape,
+			"tape_name" = src.tape?.name,
 		)
 
 	ui_act(action, params)
 		. = ..()
 		if (.)
 			return
+		switch(action)
+			if ("Record")
+				if (src.mode != MODE_RECORDING)
+					src.mode = MODE_RECORDING
+				else
+					src.mode = MODE_OFF
+			if ("Play")
+				if (src.mode != MODE_PLAYING)
+					play()
+				else
+					src.mode = MODE_OFF
+			if ("Stop")
+				stop()
+				if (src.tape)
+					src.tape.log_line = 1
+			if ("Clear")
+				src.mode = MODE_OFF
+				if (src.tape)
+					src.tape.reset()
+			if ("Loop")
+				continuous = !continuous
+			if ("Eject")
+				src.mode = MODE_OFF
+				src.icon_state = "[initial(src.icon_state)]-empty"
 
-	// Topic(href, href_list)
-	// 	..()
-	// 	if (usr.stat || usr.restrained() || usr.lying)
-	// 		return
-	// 	if (((src in usr.contents) || (src.master in usr.contents) || in_interact_range(src, usr) && istype(src.loc, /turf)))
-	// 		src.add_dialog(usr)
-	// 		switch(href_list["command"])
-	// 			if ("rec")
-	// 				if (src.mode != MODE_RECORDING)
-	// 					src.mode = MODE_RECORDING
-	// 				else
-	// 					src.mode = MODE_OFF
-	// 			if ("play")
-	// 				if (src.mode != MODE_PLAYING)
-	// 					play()
-	// 				else
-	// 					src.mode = MODE_OFF
-	// 			if ("stop")
-	// 				stop()
-	// 				if (src.tape)
-	// 					src.tape.log_line = 1
-	// 			if ("clear")
-	// 				src.mode = MODE_OFF
-	// 				if (src.tape)
-	// 					src.tape.reset()
+				src.tape.set_loc(get_turf(src))
+				usr.put_in_hand_or_eject(src.tape) // try to eject it into the users hand, if we can
 
-	// 			if ("continuous_mode")
-	// 				continuous = !continuous
+				playsound(src.loc, 'sound/machines/law_remove.ogg', 40, 0.5)
 
-	// 			if ("eject")
-	// 				src.mode = MODE_OFF
-	// 				src.icon_state = "[initial(src.icon_state)]-empty"
-
-	// 				src.tape.set_loc(get_turf(src))
-	// 				usr.put_in_hand_or_eject(src.tape) // try to eject it into the users hand, if we can
-
-	// 				playsound(src.loc, 'sound/machines/law_remove.ogg', 40, 0.5)
-
-	// 				src.tape.log_line = 1
-	// 				src.tape = null
-	// 		playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
-	// 		src.add_fingerprint(usr)
-	// 		src.updateSelfDialog()
-	// 	else
-	// 		usr.Browse(null, "window=audiolog")
-	// 		return
-	// 	return
+				src.tape.log_line = 1
+				src.tape = null
+		playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
+		src.add_fingerprint(usr)
+		. = TRUE
 
 	attack_self(mob/user as mob)
 		..()

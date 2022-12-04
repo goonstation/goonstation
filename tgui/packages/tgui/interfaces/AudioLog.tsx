@@ -6,42 +6,57 @@ import { Window } from '../layouts';
 type AudioLogData = {
   name: string;
   continuous: BooleanLike;
+  current_line: number;
   memory_capacity: number;
   mode: number;
   occupied_memory: number;
+  tape: any;
+  tape_name: string;
 }
+
+const MODE_OFF = 0;
+const MODE_RECORDING = 1;
+const MODE_PLAYING = 2;
 
 export const AudioLog = (props, context) => {
 
-  const { act, data } = useBackend<AudioLogData>(context);
-  const { continuous, memory_capacity, mode, name, occupied_memory } = data;
+  const { data } = useBackend<AudioLogData>(context);
+  const { continuous, current_line, memory_capacity, mode, name, occupied_memory, tape, tape_name } = data;
 
   return (
-    <Window title={name} width={320} height={200}>
+    <Window title={name} width={320} height={250}>
       <Window.Content>
         <Box className="audiolog__outerwrapper">
-          <Box className="audiolog__progressbarwrapper">
+          <Box className={classes(['audiolog__lcdscreen', 'audiolog__labelscreen'])}>
+            {tape ? <LabelScreenMarquee /> : "INSERT TAPE" }
+          </Box>
+          <Box className="audiolog__lcdscreen">
             <LabeledList>
-              <LabeledList.Item label="Memory" labelColor="white">
+              <LabeledList.Item label="MEMORY" labelColor="white" className="thefuck">
                 <ProgressBar
                   ranges={{
                     good: [0, 0.5],
                     average: [0.5, 0.75],
                     bad: [0.75, 1.0],
                   }}
-                  value={occupied_memory/memory_capacity} />
+                  value={tape ? (occupied_memory/memory_capacity) : 0} />
               </LabeledList.Item>
-              <LabeledList.Item label="Progress" labelColor="white">
-                <Slider />
+              <LabeledList.Item label="PROGRESS" labelColor="white" className="thefuck">
+                <Slider
+                  animated
+                  color="good"
+                  minValue={1}
+                  maxValue={occupied_memory}
+                  value={tape ? current_line : 0} />
               </LabeledList.Item>
             </LabeledList>
           </Box>
           <Box className="audiolog__buttonrow">
-            <PushButton index="Record" isRed iconName="circle" />
+            <PushButton isRed index="Record" iconName="circle" />
             <PushButton index="Play" iconName="play" />
-            <PushButton index="Stop" iconName="square" />
             <PushButton index="Rewind" iconName="backward" />
             <PushButton index="Loop" iconName="repeat" />
+            <PushButton index="Stop" iconName="square" />
             <PushButton index="Clear" iconName="trash" />
             <PushButton index="Eject" iconName="eject" />
           </Box>
@@ -51,19 +66,35 @@ export const AudioLog = (props, context) => {
   );
 };
 
-const PushButton = (props) => {
+const LabelScreenMarquee = (_, context) => {
 
-  const { iconName, index, isRed } = props;
+  const { data } = useBackend<AudioLogData>(context);
+  const { tape_name } = data;
+
+  return (
+    <marquee>
+      LOADED TAPE: {tape_name}
+    </marquee>
+  );
+};
+
+const PushButton = (props, context) => {
+
+  const { act } = useBackend(context);
+
+  const { iconName, index, isRed, keepDown } = props;
 
   const keyColour = isRed && 'audiolog__buttonelement-red';
 
   return (
     <Tooltip content={index} position="top">
-      <Box className={classes([
-        'audiolog__buttonelement',
-        keyColour,
-      ])}>
-        <Icon name={iconName} />
+      <Box
+        className={classes([
+          'audiolog__buttonelement',
+          keyColour,
+        ])}
+        onClick={() => act(index)}>
+        <Icon className="fa-fw" name={iconName} />
       </Box>
     </Tooltip>
   );
