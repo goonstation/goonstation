@@ -148,6 +148,9 @@
 			count++
 		. += "<br><span class='alert'>[src] has [count > 1 ? "arrows" : "an arrow"] stuck in them!</span>"
 
+	if ((issilicon(usr) || isAIeye(usr)) && locate(/obj/item/implant/robotalk) in src.implant)
+		. += "<br><span class='notice'>[src] can listen and talk on silicon radio!</span>"
+
 	if (src.is_jittery)
 		switch(src.jitteriness)
 			if (300 to INFINITY)
