@@ -5,7 +5,7 @@ import { Window } from '../layouts';
 import { HealthStat } from './common/HealthStat';
 import { COLORS } from '../constants';
 import { ReagentGraph } from './common/ReagentInfo';
-import { getStatsMax, processStatsData } from './EngineStats';
+import { processStatsData, getStatsMax } from './common/graphUtils';
 import { capitalize, spaceUnderscores } from './common/stringUtils';
 
 export const OperatingComputer = (props, context) => {
