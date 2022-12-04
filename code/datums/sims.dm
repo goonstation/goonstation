@@ -247,9 +247,6 @@
 		var/protection = 20
 
 		modifyValue(var/amt)
-			if(amt < 0 && holder.owner.hasStatus("perfumed"))
-				holder.owner.changeStatus("perfumed", (amt SECONDS))
-				return 0
 			..()
 
 		mayStandardDeplete()
@@ -263,10 +260,10 @@
 			protection = round(value / 5)
 
 		onLife()
-			if (value < SIMS_HYGIENE_THRESHOLD_FILTHY && prob(33))
+			if ((value < SIMS_HYGIENE_THRESHOLD_FILTHY && prob(33)) && (!holder.owner.hasStatus("perfumed")))
 				if (holder.owner.bioHolder && !(holder.owner.bioHolder.HasEffect("sims_stinky")) && !holder.owner.hasStatus("filthy"))
 					holder.owner.setStatus("filthy", 3 MINUTES)
-			else if ((value >= SIMS_HYGIENE_THRESHOLD_CLEAN ) && holder.owner.hasStatus("rancid"))
+			else if ((value >= SIMS_HYGIENE_THRESHOLD_CLEAN ) && holder.owner.hasStatus("rancid") || (holder.owner.hasStatus("perfumed")))
 				holder.owner.delStatus("rancid")
 			/*
 			if (value < 10 && prob((10 - value) * 1.5))

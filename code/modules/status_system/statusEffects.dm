@@ -1660,16 +1660,12 @@
 /datum/statusEffect/perfumed
 	id = "perfumed"
 	name = "Perfumed"
-	desc = "You have perfume on you and smell wonderful, you feel extra resistant to miasma and other gross things."
+	desc = "You have perfume on you and smell wonderful, you feel like its hard for you to smell bad."
 	icon_state = "perfumed"
 	unique = 1
 	maxDuration = 10 MINUTES
 
 	onUpdate()
-		if(owner.reagents.get_reagent_amount("miasma"))
-			owner.reagents.remove_reagent("miasma", 5)
-			owner.changeStatus("perfumed", -5 SECONDS)
-
 		if(prob(5))
 			for(var/mob/living/carbon/C in view(2,get_turf(owner)))
 				if (C == owner)
