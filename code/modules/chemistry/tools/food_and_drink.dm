@@ -147,7 +147,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			processing_items.Add(src)
 		create_time = world.time
 		if (src.amount != 1)
-			stack_trace("[src] of type [src.type] is spawning with an amount other than 1. That's bad. Go delete the 'amount' line and replace it with `bites_left = \[whatever the amount var had before\].")
+			stack_trace("[identify_object(src)] is spawning with an amount other than 1. That's bad. Go delete the 'amount' line and replace it with `bites_left = \[whatever the amount var had before\].")
 
 	disposing()
 		if(!made_ants)
