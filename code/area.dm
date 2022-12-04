@@ -3544,6 +3544,31 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 	teleport_blocked = 1
 	spy_secure_area = TRUE
 	station_map_colour = MAPC_ARMOURY
+	var/static/list/entered_ckeys = list()
+
+	Entered(atom/movable/A, atom/oldloc)
+		. = ..()
+		if (current_state < GAME_STATE_FINISHED)
+			if(istype(A, /mob/living) && !istype(A, /mob/living/intangible))
+				var/mob/living/M = A
+				if(!M.client)
+					return
+				if(M.client.holder)
+					return
+				if(M.client.ckey in entered_ckeys)
+					return
+				if (M.mind && M.mind.assigned_role == "Head of Security")
+					return
+				var/armory_auth = FALSE
+				for_by_tcl(O, /obj/machinery/computer/riotgear)
+					if (O.authed)
+						armory_auth = TRUE
+						break
+				var/ckey = M.client.ckey
+				entered_ckeys += ckey
+				SPAWN(120 SECONDS)
+					entered_ckeys -= ckey
+				logTheThing(LOG_DEBUG, M, "entered the Armory [log_loc(M)][armory_auth ? "" : " - Armory unauthorized"].")
 
 // // // // // //
 
