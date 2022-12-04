@@ -2647,8 +2647,8 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 
 /// For runtime logs- returns the thing's name, type, and ref as a string
 /proc/identify_object(datum/thing)
-	if (isnull(thing))
+	if (isnull(thing)) // null
 		return "***NULL***"
-	if (!istype(thing))
-		
-	return "[thing] \[\ref[thing]\] ([thing.type])"
+	if (!istype(thing)) //  probably text or a num or something
+		return thing
+	return "[thing] \[\ref[thing]\] ([thing.type])" // actual datum
