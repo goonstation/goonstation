@@ -1,0 +1,32 @@
+@use 'sass:meta';
+
+// The window, everything that isn't components
+
+.boardgame__ {
+  &titlebar {
+    position: fixed;
+    top: 4px;
+    right: 50px;
+    padding: 2px;
+    z-index: 20;
+
+    & > * {
+      margin: 0 4px;
+    }
+  }
+
+  &__panel {
+    height: 30px;
+  }
+}
+
+.boardgame__piecesvg-ignore {
+  pointer-events: none;
+}
+
+// HERE we have the components, the pieces, the board, the notations, etc.
+
+@include meta.load-css('./palettes.scss');
+@include meta.load-css('./notations.scss');
+@include meta.load-css('./board.scss');
+@include meta.load-css('./modal.scss');

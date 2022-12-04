@@ -1,0 +1,13 @@
+@import './setup.scss';
+
+// The board on where the pieces are placed
+
+.boardgame__board {
+  z-index: map-get($boardgame-layers, 'board');
+  &-pieces {
+    z-index: map-get($boardgame-layers, 'pieces');
+  }
+  &-overlay {
+    z-index: map-get($boardgame-layers, 'overlay');
+  }
+}

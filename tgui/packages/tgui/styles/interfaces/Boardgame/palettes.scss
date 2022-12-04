@@ -1,0 +1,43 @@
+@import './setup.scss';
+
+.boardgame__palettes {
+  width: 100px;
+  max-height: 100%;
+  overflow-y: scroll;
+
+  background-color: rgb(206, 206, 206);
+  &-header {
+    font-size: 10px;
+    background-color: rgb(36, 36, 36);
+  }
+
+  &-set {
+    width: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rgb(230, 230, 230);
+
+    &-piece {
+      transition: 0.3s all;
+      padding: 2px;
+      width: 50%;
+      cursor: pointer;
+
+      & > img {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    &-toggle {
+      width: 100%;
+    }
+
+    &-minimized {
+      & .boardgame__palettes-set-piece {
+        width: 25%;
+      }
+    }
+  }
+}
