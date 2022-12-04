@@ -2191,7 +2191,7 @@
 	dir = 4
 	},
 /obj/window/north,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/unsimulated/floor/carpet{
 	dir = 5;
 	icon_state = "blue2"
@@ -7284,7 +7284,7 @@
 	dir = 4;
 	icon_state = "sleeper"
 	},
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/simulated/floor/white,
 /area/space)
 "sU" = (
@@ -7333,7 +7333,7 @@
 /area/space)
 "sY" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/simulated/floor{
 	icon_state = "hive"
 	},

@@ -823,7 +823,7 @@
 "CS" = (
 /obj/machinery/light/incandescent/warm,
 /obj/table/wood/round/auto,
-/obj/item/reagent_containers/food/snacks/chips{
+/obj/item/item_box/chips{
 	pixel_x = -4;
 	pixel_y = 7
 	},

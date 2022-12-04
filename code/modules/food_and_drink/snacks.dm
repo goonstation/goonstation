@@ -1125,15 +1125,28 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 						M.visible_message("<span class='alert'>[M] suddenly and violently vomits!</span>")
 						M.vomit()
 
-/obj/item/reagent_containers/food/snacks/chips
+/obj/item/item_box/chips
 	name = "chips"
 	desc = "Commander Riker's What-The-Crisps"
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	contained_item = /obj/item/reagent_containers/food/snacks/chip
 	icon_state = "chips"
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	item_amount = 8
+	max_item_amount = 8
+	icon_closed = "chips"
+	icon_open = "chips-open"
+	icon_empty = "chips-empty"
+
+/obj/item/reagent_containers/food/snacks/chip
+	name = "Potato Chip"
+	desc = "A plain potato chip."
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "potato-chip"
 	heal_amt = 1
-	doants = 0
+	doants = 1
+	bites_left = 1
 	food_effects = list("food_explosion_resist")
-	meal_time_flags = MEAL_TIME_SNACK
+	initial_volume = 8
 
 /obj/item/reagent_containers/food/snacks/popcorn
 	name = "popcorn"
@@ -2357,16 +2370,28 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		desc = "Ooh, free pickle!"
 		initial_reagents = list("juice_pickle"=5, "yuck"=5, "space_fungus"=5, "spiders"=5)
 
-/obj/item/reagent_containers/food/snacks/onionchips
+/obj/item/item_box/onionchips
 	name = "onion chips"
 	desc = "Scrumpdillyicious."
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	contained_item = /obj/item/reagent_containers/food/snacks/ochip
 	icon_state = "chips-onion"
-	item_state = "chips" // TODO: unique inhand sprite?
-	bites_left = 3
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	item_amount = 8
+	max_item_amount = 8
+	icon_closed = "chips-onion"
+	icon_open = "onion-open"
+	icon_empty = "onion-empty"
+
+/obj/item/reagent_containers/food/snacks/ochip
+	name = "Onion Chip"
+	desc = "A tasty onion chip."
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "onion-chip"
 	heal_amt = 2
+	doants = 1
+	bites_left = 1
 	food_effects = list("food_bad_breath")
-	meal_time_flags = MEAL_TIME_SNACK
+	initial_volume = 8
 
 /obj/item/reagent_containers/food/snacks/goldfish_cracker
 	name = "goldfish cracker"

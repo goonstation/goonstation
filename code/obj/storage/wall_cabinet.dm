@@ -75,7 +75,7 @@
 		var/thing2 = pick(10;/obj/item/device/radio, 4;/obj/item/device/radio/signaler, 30;/obj/item/device/light/glowstick, 15;/obj/item/device/light/flashlight, 1;/obj/item/device/multitool)
 		if (ispath(thing2))
 			new thing2(src)
-		var/thing3 = pick(10;/obj/item/cigpacket/propuffs, 15;/obj/item/reagent_containers/food/snacks/chips, 5;/obj/item/reagent_containers/food/drinks/bottle/hobo_wine, 2;/obj/item/reagent_containers/pill/cyberpunk)
+		var/thing3 = pick(10;/obj/item/cigpacket/propuffs, 15;/obj/item/item_box/chips, 5;/obj/item/reagent_containers/food/drinks/bottle/hobo_wine, 2;/obj/item/reagent_containers/pill/cyberpunk)
 		if (ispath(thing3))
 			new thing3(src)
 		return

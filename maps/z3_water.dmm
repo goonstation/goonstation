@@ -2802,7 +2802,7 @@
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "hx" = (
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/kitchen/chips,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -3130,7 +3130,7 @@
 /area/dank_trench)
 "ik" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /obj/cable{
 	icon_state = "1-2"
 	},

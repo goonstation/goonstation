@@ -2635,7 +2635,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
 "agi" = (
@@ -21563,7 +21563,7 @@
 /obj/stool/chair/couch{
 	dir = 4
 	},
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -68439,7 +68439,7 @@
 	name = "Genetic Research"
 	})
 "cZj" = (
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "cZk" = (
