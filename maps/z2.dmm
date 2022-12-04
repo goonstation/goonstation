@@ -31909,11 +31909,7 @@
 	layer = 2.8;
 	mouse_opacity = 0
 	},
-/obj/machinery/chem_dispenser/chemical{
-	desc = "Unlike other chem dispensers, this one's mostly just made for plants.";
-	dispensable_reagents = list("mutadone","saltpetre","ammonia","potash","poo","space_fungus","weedkiller","mutagen");
-	name = "botany dispenser"
-	},
+/obj/machinery/chem_dispenser/botany,
 /turf/unsimulated/floor/wood/three,
 /area/afterlife/heaven/hydroponics)
 "bUm" = (

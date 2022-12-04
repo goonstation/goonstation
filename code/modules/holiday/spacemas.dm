@@ -475,9 +475,10 @@ proc/compare_ornament_score(list/a, list/b)
 		list(33, 20),
 	)
 	var/uses_custom_ornaments = TRUE
-	var/ornament_sort = "random"
+	var/ornament_sort = "weighted_random"
 	var/best_sort_fuzziness = 0
-	var/weighted_sort_flat_bonus = 0
+	var/weighted_sort_flat_bonus = 0.15
+	var/weighted_sort_reserved_slots_for_new = 8
 	var/list/placed_ornaments = null
 	var/list/ckeys_placed_this_round
 	var/list/got_ornament_kit
@@ -504,10 +505,13 @@ proc/compare_ornament_score(list/a, list/b)
 
 	weighted_random
 		ornament_sort = "weighted_random"
+		weighted_sort_flat_bonus = 0
+		weighted_sort_reserved_slots_for_new = 0
 
 	weighted_random_flatter
 		ornament_sort = "weighted_random"
 		weighted_sort_flat_bonus = 0.1
+		weighted_sort_reserved_slots_for_new = 0
 
 	New()
 		..()
@@ -530,6 +534,7 @@ proc/compare_ornament_score(list/a, list/b)
 			. += G.Rand()
 
 	proc/decorate()
+		remove_all_ornaments()
 		var/list/ornament_list = get_spacemas_ornaments().Copy()
 		switch(ornament_sort)
 			if("random")
@@ -552,11 +557,20 @@ proc/compare_ornament_score(list/a, list/b)
 					var/list/ornament = ornament_list[ornament_name]
 					ornament_weights[ornament_name] = src.weighted_sort_flat_bonus + \
 						src.bound_of_wilson_score_confidence_interval_for_a_bernoulli_parameter_of_an_ornament(ornament)
+				var/list/original_ornament_list = ornament_list
 				ornament_list = list()
-				while(length(ornament_weights) > 0 && length(ornament_list) < length(src.ornament_positions))
+				while(length(ornament_weights) > 0 && length(ornament_list) < length(src.ornament_positions) - weighted_sort_reserved_slots_for_new)
 					var/ornament_name = weighted_pick(ornament_weights)
 					ornament_list[ornament_name] = get_spacemas_ornaments()[ornament_name]
 					ornament_weights -= ornament_name
+				var/list/sorted_by_least_votes = list()
+				for(var/ornament_name in ornament_weights)
+					var/list/ornament = original_ornament_list[ornament_name]
+					var/votes = length(ornament["upvoted"]) + length(ornament["downvoted"])
+					sorted_by_least_votes[ornament_name] = ornament
+					ornament["score"] = -votes
+				sorted_by_least_votes = sortList(sorted_by_least_votes, /proc/compare_ornament_score, associative=TRUE)
+				ornament_list += sorted_by_least_votes
 		src.placed_ornaments = list()
 		src.placed_ornaments.len = length(ornament_positions)
 		for(var/i = 1 to length(ornament_positions))
@@ -573,10 +587,16 @@ proc/compare_ornament_score(list/a, list/b)
 			ornament.main_artist = ornament_artist
 			src.place_ornament(ornament, i)
 
+	proc/remove_all_ornaments()
+		for(var/obj/item/canvas/tree_ornament/ornament in placed_ornaments)
+			qdel(ornament)
+
 	disposing()
 		#ifdef XMAS
 		STOP_TRACKING
 		#endif
+
+		remove_all_ornaments()
 
 		qdel(src.fire_image)
 		src.fire_image = null
@@ -647,6 +667,7 @@ proc/compare_ornament_score(list/a, list/b)
 		ornament.layer = src.layer + 0.1
 		ornament.plane = src.plane
 		ornament.on_tree = src
+		ornament.anchored = 2
 		ornament.set_loc(null)
 		src.placed_ornaments[slot_number] = ornament
 
@@ -693,11 +714,6 @@ proc/compare_ornament_score(list/a, list/b)
 				LAZYLISTADD(src.ckeys_placed_this_round, user.ckey)
 		else
 			. = ..()
-
-	disposing()
-		for(var/obj/item/canvas/tree_ornament/ornament in placed_ornaments)
-			qdel(ornament)
-		..()
 
 /obj/item/reagent_containers/food/snacks/snowball
 	name = "snowball"
@@ -1652,14 +1668,14 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 		var/new_color = input(user, "Choose a color:", "Ornament paintbrush", src.font_color) as color|null
 		if(new_color)
 			src.font_color = new_color
-			boutput(user, "<span class='notice'>You twirl the paintbrush and the Spacemas spirit changes it to this color: <a href='?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</span>.</span>")
+			boutput(user, "<span class='notice'>You twirl the paintbrush and the Spacemas spirit changes it to this color: <a href='?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</a>.</span>")
 			src.UpdateIcon()
 
 	Topic(href, href_list)
 		. = ..()
 		if(href_list["setcolor"] && can_reach(usr, src) && can_act(usr, 1))
 			src.font_color = "#" + href_list["setcolor"]
-			boutput(usr, "<span class='notice'>You twirl the paintbrush and the Spacemas spirit changes it to this color again: <a href='?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</span>.</span>")
+			boutput(usr, "<span class='notice'>You twirl the paintbrush and the Spacemas spirit changes it to this color again: <a href='?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</a>.</span>")
 			src.UpdateIcon()
 
 	afterattack(atom/target, mob/user)
