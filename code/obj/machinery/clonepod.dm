@@ -257,11 +257,16 @@
 		if(src.occupant.client) // gross hack for resetting tg layout bleh bluh
 			src.occupant.client.set_layout(src.occupant.client.tg_layout)
 
+		if (!defects)
+			stack_trace("Clone [identify_object(src.occupant)] generating with a null `defects` holder.")
+			defects = new /datum/cloner_defect_holder
+
 		// Little weird- we only want to apply cloner defects after they're ejected, so we apply it as soon as they change loc instead of right now
 		defects.apply_to_on_move(src.occupant)
 
-		for (var/i in 1 to rand(0, 3)) // uniform chance between 0-3
-			defects.add_random_cloner_defect()
+		if (!src.clonehack) // syndies get good clones
+			for (var/i in 1 to rand(0, (src.emagged ? 6 : 3))) // uniform chance between 0-3, 0-6 if emagged
+				defects.add_random_cloner_defect()
 
 		if (length(defects.active_cloner_defects) > 7)
 			src.occupant.unlock_medal("Quit Cloning Around")

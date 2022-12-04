@@ -85,6 +85,8 @@
 	emp_act()
 		src.is_active = FALSE
 		src.process_charges(-INFINITY)
+		src.visible_message("[src] sparks briefly as it overloads!")
+		playsound(src, "sparks", 75, 1, -1)
 		return
 
 	update_icon()

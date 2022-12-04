@@ -117,18 +117,6 @@ task-validate-build() {
   echo "tgui: build is ok"
 }
 
-## Installs merge drivers and git hooks
-task-install-git-hooks() {
-  cd "${base_dir}"
-  local git_root
-  local git_base_dir
-  git_root="$(git rev-parse --show-toplevel)"
-  git_base_dir="${base_dir/${git_root}/.}"
-  git config --replace-all merge.tgui-merge-bundle.driver \
-    "${git_base_dir}/bin/tgui --merge=bundle %O %A %B %L %P"
-  echo "tgui: Merge drivers have been successfully installed!"
-}
-
 ## Bundle merge driver
 task-merge-bundle() {
   local file_ancestor="${1}"
@@ -156,12 +144,6 @@ if [[ ${1} == "--merge"* ]]; then
   fi
   echo "Unknown merge strategy: ${1}"
   exit 1
-fi
-
-if [[ ${1} == "--install-git-hooks" ]]; then
-  shift 1
-  task-install-git-hooks
-  exit 0
 fi
 
 ## Continuous integration scenario
