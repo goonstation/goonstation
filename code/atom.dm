@@ -460,10 +460,14 @@
 	. = ..()
 
 
-/atom/movable/Move(NewLoc, direct)
+/atom/movable/Move(atom/NewLoc, direct)
 	SHOULD_CALL_PARENT(TRUE)
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_BLOCK_MOVE, NewLoc, direct))
 		return
+	#ifdef RUNTIME_CHECKING
+	if(!istype(src.loc, /turf) || !istype(NewLoc, /turf))
+		CRASH("Move() called with non-turf locs: [src.loc] ([src.loc?:type]) -> [NewLoc] ([NewLoc?:type]) ")
+	#endif
 
 	//mbc disabled for now, i dont think this does too much for visuals i cant hit 40fps anyway argh i cant even tell
 	//tile glide smoothing:
