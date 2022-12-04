@@ -464,7 +464,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_BLOCK_MOVE, NewLoc, direct))
 		return
-	#ifdef RUNTIME_CHECKING
+	#ifdef CHECK_MORE_RUNTIMES
 	if(!istype(src.loc, /turf) || !istype(NewLoc, /turf))
 		CRASH("Move() called with non-turf locs: [src.loc] ([src.loc?:type]) -> [NewLoc] ([NewLoc?:type]) ")
 	#endif

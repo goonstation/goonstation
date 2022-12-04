@@ -486,7 +486,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			setdead(jerk)
 			jerk.remove()
 		else if (isobj(O) && !(istype(O, /obj/overlay/tile_effect) || O.anchored == 2 || istype(O, /obj/landmark)))
-			#ifdef RUNTIME_CHECKING
+			#ifdef CHECK_MORE_RUNTIMES
 			if(current_state <= GAME_STATE_WORLD_NEW)
 				CRASH("[identify_object(O)] got deleted by a cordon at [O.x],[O.y],[O.z] ([O.loc.loc] [O.loc.type]) during world initialization")
 			#endif
