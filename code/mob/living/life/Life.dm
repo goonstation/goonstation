@@ -259,7 +259,7 @@
 					animate(src, transform = matrix(), time = 1)
 				last_no_gravity = src.no_gravity
 
-			// Zephyr-class interdictor: creates an invigorating biofield in range
+			// Zephyr-class interdictor: carbon mobs in range gain a buff to stamina recovery, which can accumulate to linger briefly
 			if (iscarbon(src))
 				for_by_tcl(IX, /obj/machinery/interdictor)
 					if (IX.expend_interdict(10,src,TRUE,ITDR_ZEPHYR))

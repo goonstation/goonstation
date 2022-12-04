@@ -228,29 +228,33 @@
 
 
 
-//call this from an event to determine if sufficient power is remaining to complete an interdiction,
-//passing an amount in cell charge that is required to interdict the event.
-//returns 1 if interdiction was successful, 0 if power was insufficient
-
-//first arg specifies the cell charge required to successfully Do the Thing
-
-//second arg specifies where the interdiction is happening, in the case of localized interdictions; leave null for things like solar flares
-
-//third arg optionally skips immediate visual update (use if potential for very high amounts of individual calls)
-
-//fourth arg optionally specifies an alternate function type the operation requires (used for/by the alternate mainboards)
-
-/obj/machinery/interdictor/proc/expend_interdict(var/stopcost,var/target = null,var/skipanim = FALSE,var/alt_function)
-	if (status & BROKEN || !src.canInterdict || (alt_function && alt_function != src.interdict_class))
+/**
+ * Things capable of being influenced by a spatial interdictor call this proc when iterating over interdictors.
+ * The core function of interdictors is to suppress energy-based random events; other beneficial functions are provided by alternate mainboards.
+ *
+ * The first argument (use_cost) is the cost in cell power units, charged to the interdictor's internal cell on successful expenditure.
+ *
+ * The second argument (target) specifies a range-checking target for localized effect application (i.e. blocking a radiation pulse).
+ * To perform a global interdiction (such as shielding from solar flares), this argument can be skipped entirely.
+ *
+ * The third argument (skipanim), if set to true, skips immediate visual update of the interdictor (instead allowing it to update on machine tick).
+ * For high-volume blocking, such as shielding a large set of tiles from an effect, this should be used.
+ *
+ * The fourth argument (itdr_class) optionally passes in an interdictor class that's required for successful expenditure.
+ * This is used for alternate functionality, such as wireless cyborg charging; random event blocking should not pass a specific class requirement.
+ * These classes are numbers, but should use the defines, such as ITDR_ZEPHYR. Interdictors are given a class by the mainboard used in assembly.
+ */
+/obj/machinery/interdictor/proc/expend_interdict(var/use_cost,var/target = null,var/skipanim = FALSE,var/itdr_class)
+	if (status & BROKEN || !src.canInterdict || (itdr_class && itdr_class != src.interdict_class))
 		return 0
 	if (target && !IN_RANGE(src,target,src.interdict_range))
 		return 0
-	if (!intcap || intcap.charge < stopcost)
+	if (!intcap || intcap.charge < use_cost)
 		src.stop_interdicting()
 		return 0
 	else
-		intcap.use(stopcost)
-		src.cumulative_cost += stopcost
+		intcap.use(use_cost)
+		src.cumulative_cost += use_cost
 		if(!skipanim) src.updatecharge()
 		return 1
 
