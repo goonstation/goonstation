@@ -1665,13 +1665,13 @@
 
 	attack_self(mob/user)
 		if (isliving(user))
-			var/datum/chameleon_outfit_choices/which = tgui_input_list(usr, "Change the chameleon outfit to which set?", "Chameleon Outfit Remote", outfit_choices)
+			var/datum/chameleon_outfit_choices/which = tgui_input_list(user, "Change the chameleon outfit to which set?", "Chameleon Outfit Remote", outfit_choices)
 
 			if(!which)
 				return
 
 			if (which.function == "delete_outfit")
-				var/datum/chameleon_outfit_choices/outfit_to_delete = tgui_input_list(usr, "Delete which chameleon outfit set?", "Chameleon Outfit Remote", outfit_choices)
+				var/datum/chameleon_outfit_choices/outfit_to_delete = tgui_input_list(user, "Delete which chameleon outfit set?", "Chameleon Outfit Remote", outfit_choices)
 
 				if(!outfit_to_delete)
 					return
@@ -1685,7 +1685,7 @@
 				return
 
 			if(which.function == "new_outfit")
-				var/name = tgui_input_text(usr, "Name of new outfit set:", "Chameleon Outfit Remote")
+				var/name = tgui_input_text(user, "Name of new outfit set:", "Chameleon Outfit Remote")
 				if(!name)
 					return
 				for(var/datum/chameleon_outfit_choices/P in src.outfit_choices)

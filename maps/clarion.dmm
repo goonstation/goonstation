@@ -3100,6 +3100,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/xmastree/ephemeral,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -26752,7 +26753,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/power/apc{
-	areastring = "Teleporter";
+	areastring = "Command Teleporter";
 	dir = 1;
 	name = "Teleporter APC";
 	pixel_y = 24

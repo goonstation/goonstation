@@ -118,7 +118,7 @@
 			user.drop_item()
 			SPAWN(1 DECI SECOND)
 				O.Attackhand(user)
-		else if (isitem(O) && !istype(O, /obj/item/storage) && !O.anchored)
+		else if (isitem(O) && !istype(O, /obj/item/storage) && !O.anchored && can_reach(user, O, 1))
 			user.swap_hand()
 			if(user.equipped() == null)
 				O.Attackhand(user)

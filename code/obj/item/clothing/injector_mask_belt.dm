@@ -489,10 +489,10 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 	switch(action)
 		if ("remove_cont")
 			if (current_belt)
-				usr.put_in_hand_or_drop(current_belt.container)
+				user.put_in_hand_or_drop(current_belt.container)
 				current_belt.container = null
 			else if (current_mask)
-				usr.put_in_hand_or_drop(current_mask.container)
+				user.put_in_hand_or_drop(current_mask.container)
 				current_mask.container = null
 			. = TRUE
 

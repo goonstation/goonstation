@@ -50,7 +50,7 @@ You will need these programs to start developing in tgui:
 
 Change your directory to `tgui`.
 
-Run `bin/tgui --install-git-hooks` to install merge drivers which will
+Run `/tools/hooks/install.bat` to install merge drivers which will
 assist you in conflict resolution when rebasing your branches. Only has
 to be done once.
 
