@@ -50,10 +50,10 @@
 
 	machine_translator //Limits how many people can get access to the silicon channel
 		name = "Command ManuDrive: Silicon Binary Translator Implant License"
-		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint protected by NT-approved DRM that permits the user to manufacture five machine translator implants."
+		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint protected by NT-approved DRM that permits the user to manufacture six machine translator implants."
 		icon_state = "datadiskcom"
 		temp_recipe_string = list(/datum/manufacture/implant_robotalk)
-		fablimit = 5
+		fablimit = 6
 
 	interdictor_parts //Compacts the parts into a single manudrive
 		name = "Engineering Manudrive: Spatial Interdictor Assembly Blueprint"
