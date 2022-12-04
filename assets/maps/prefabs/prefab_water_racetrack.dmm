@@ -473,8 +473,8 @@
 "bq" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/cereal_box,
-/obj/item/reagent_containers/food/snacks/chips,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
 /obj/item/reagent_containers/food/snacks/corndog/banana,
 /obj/item/reagent_containers/food/snacks/corndog/banana,
 /obj/item/reagent_containers/food/snacks/corndog/banana,

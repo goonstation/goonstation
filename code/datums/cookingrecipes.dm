@@ -1084,7 +1084,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item2 = /obj/item/reagent_containers/food/snacks/plant/garlic
 	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
 	cookbonus = 15
-	output = /obj/item/reagent_containers/food/snacks/onionchips
+	output = /obj/item/item_box/onionchips
 
 /datum/cookingrecipe/fries
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/chips

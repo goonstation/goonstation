@@ -45249,7 +45249,7 @@
 /area/owlery/office)
 "cGA" = (
 /obj/disposalpipe/segment,
-/obj/item/reagent_containers/food/snacks/onionchips,
+/obj/item/item_box/onionchips,
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cGB" = (
@@ -46745,7 +46745,7 @@
 /obj/machinery/sleeper{
 	dir = 4
 	},
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/simulated/floor/white,
 /area/shuttle/john/owlery)
 "cKi" = (
@@ -47945,7 +47945,7 @@
 	},
 /area/owlery/gangzone)
 "cNw" = (
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "cNx" = (
@@ -67427,7 +67427,7 @@
 	pixel_x = 6
 	},
 /obj/decal/cleanable/generic,
-/obj/item/reagent_containers/food/snacks/chips{
+/obj/item/item_box/chips{
 	name = "crisps"
 	},
 /turf/unsimulated/floor/carpet/grime,

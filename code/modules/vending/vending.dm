@@ -1178,7 +1178,7 @@
 	create_products()
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/candy/chocolate, 10, cost=PAY_UNTRAINED/20)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/chips, 10, cost=PAY_UNTRAINED/15)
+		product_list += new/datum/data/vending_product(/obj/item/item_box/chips, 10, cost=PAY_UNTRAINED/15)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/donut, 10, cost=PAY_TRADESMAN/20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/fries, 10, cost=PAY_TRADESMAN/15)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/noodlecup, 10, cost=PAY_UNTRAINED/8)

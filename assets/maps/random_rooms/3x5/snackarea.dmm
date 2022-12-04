@@ -25,7 +25,7 @@
 /area/dmm_suite/clear_area)
 "S" = (
 /obj/table/glass/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/onionchips{
+/obj/item/item_box/onionchips{
 	pixel_x = -3
 	},
 /obj/item/reagent_containers/food/drinks/cola,
