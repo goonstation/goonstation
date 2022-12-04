@@ -13,7 +13,6 @@
 	var/obj/machinery/optable/table = null
 	id = 0
 	var/list/victim_data[][] = list()
-	var/datum/computer/file/genetics_scan/gene_scan = null
 	var/const/history_max = 25
 
 /obj/machinery/computer/operating/New()
@@ -44,10 +43,8 @@
 		src.victim = src.table.victim
 	else
 		src.victim = null
-		src.gene_scan = null
 		src.victim_data = null
 	if (src.victim)
-		src.gene_scan = create_new_dna_sample_file(src.victim)
 		src.victim_data += list(sample_victim())
 		if (length(src.victim_data) > src.history_max)
 			src.victim_data.Cut(1, 2) //drop the oldest entry
@@ -82,15 +79,15 @@
 		.["rad_dose"] = 0
 
 	.["patient_name"] = src.victim.real_name
-	.["victim_status"] = src.victim.stat
+	.["patient_status"] = src.victim.stat
 
 	.["body_temp"] = src.victim.bodytemperature
 	.["optimal_temp"] = src.victim.base_body_temp
 
-	.["victim_data"] = src.victim_data
+	.["patient_data"] = src.victim_data
 
 	.["max_health"] = round(src.victim.max_health)
-	.["health"] = round(src.victim.health)
+	.["current_health"] = round(src.victim.health)
 	.["brute"] = round(src.victim.get_brute_damage())
 	.["burn"] = round(src.victim.get_burn_damage())
 	.["toxin"] = round(src.victim.get_toxin_damage())

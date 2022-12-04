@@ -1,15 +1,16 @@
 
-import { useBackend, useLocalState } from '../backend';
-import { Box, ColorBox, Chart, Section, Stack, Tabs, Table } from '../components';
-import { Window } from '../layouts';
-import { HealthStat } from './common/HealthStat';
-import { COLORS } from '../constants';
-import { ReagentGraph } from './common/ReagentInfo';
-import { processStatsData, getStatsMax } from './common/graphUtils';
-import { capitalize, spaceUnderscores } from './common/stringUtils';
+import { useBackend, useSharedState } from '../../backend';
+import { Box, ColorBox, Chart, Section, Stack, Tabs, Table } from '../../components';
+import { Window } from '../../layouts';
+import { HealthStat } from '../common/HealthStat';
+import { COLORS } from '../../constants';
+import { ReagentGraph } from '../common/ReagentInfo';
+import { processStatsData, getStatsMax } from '../common/graphUtils';
+import { capitalize, spaceUnderscores } from '../common/stringUtils';
+import { OperatingComputerData, OperatingComputerDisplayTitleProps, PatientSummaryProps } from './type';
 
 export const OperatingComputer = (props, context) => {
-  const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', 1);
+  const [tabIndex, setTabIndex] = useSharedState(context, 'tabIndex', 1);
 
   return (
     <Window title="Operating Computer" width="560" height="760">
@@ -38,8 +39,8 @@ const ComputerTabs = (props) => {
 };
 
 // mob.stat & crit parsing
-const PatientSummary = (props) => {
-  const { occupied, patient_status, health } = props;
+const PatientSummary = (props:PatientSummaryProps) => {
+  const { occupied, patient_status, isCrit } = props;
   let text = "NONE";
   let color = "grey";
   if (occupied) {
@@ -47,7 +48,7 @@ const PatientSummary = (props) => {
       text = "DEAD";
       color = "red";
     }
-    else if (health < 0) {
+    else if (isCrit) {
       text = "CRIT";
       color = "orange";
     }
@@ -83,8 +84,16 @@ const HealthSummary = (props) => {
 };
 
 const PatientTab = (props, context) => {
+  const { data } = useBackend<OperatingComputerData>(context);
   return (
-    <Section title={<DisplayTitle />}>
+    <Section>
+      <DisplayTitle
+        occupied={data.occupied}
+        patient_name={data.patient_name}
+        patient_health={data.current_health}
+        patient_max_health={data.max_health}
+        patient_status={data.patient_status}
+      />
       <DisplayVitals />
       <DisplayKeyHealthIndicators />
       <DisplayAnatomicalAnomolies />
@@ -117,23 +126,23 @@ const HealthGraph = (props) => {
 };
 
 const DisplayBloodPressure = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<OperatingComputerData>(context);
   let blood_pressure_rendered = "--/--";
   let blood_pressure_status = "NO PULSE";
   let blood_volume = "--";
   let pressure_color = "grey";
   if (data.occupied) {
-    if (data.victim_status !== 2) {
+    if (data.patient_status !== 2) {
       blood_pressure_rendered = data.blood_pressure_rendered;
       blood_pressure_status = data.blood_pressure_status;
-      blood_volume = data.blood_volume;
-      if (blood_volume <= 299) {
+      blood_volume = data.blood_volume.toString();
+      if (data.blood_volume <= 299) {
         pressure_color = "red";
-      } else if (blood_volume <= 414) {
+      } else if (data.blood_volume <= 414) {
         pressure_color = "yellow";
-      } else if (blood_volume <= 584) {
+      } else if (data.blood_volume <= 584) {
         pressure_color = "green";
-      } else if (blood_volume <=665) {
+      } else if (data.blood_volume <=665) {
         pressure_color = "yellow";
       } else {
         pressure_color = "red";
@@ -183,7 +192,7 @@ const DisplayBrain = (props) => {
 
 const DisplayOrgans = (props, context) => {
   const { organ_status } = props;
-  const { data } = useBackend(context);
+  const { data } = useBackend<OperatingComputerData>(context);
   if (data.occupied) {
     return (
       <Stack.Item width={20}>
@@ -252,7 +261,7 @@ const DisplayOrgan = (props) => {
 
 const DisplayLimbs = (props, context) => {
   const { limb_status } = props;
-  const { data } = useBackend(context);
+  const { data } = useBackend<OperatingComputerData>(context);
   if (data.occupied) {
     return (
       <Stack.Item width={20}>
@@ -302,7 +311,7 @@ const DisplayLimb = (props) => {
 };
 
 const DisplayTemperature = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<OperatingComputerData>(context);
   const { body_temp, optimal_temp } = props;
   let font_color = "grey";
   let body_temp_c = "--";
@@ -314,7 +323,7 @@ const DisplayTemperature = (props, context) => {
     else if (body_temp <= (optimal_temp - 30)) { font_color="blue"; }
     else { font_color = "green"; }
     body_temp_c = (body_temp - 273.15).toFixed(2);
-    body_temp_f = (body_temp_c * 1.8 + 32).toFixed(2);
+    body_temp_f = ((body_temp - 273.15) * 1.8 + 32).toFixed(2);
   }
 
   return (
@@ -330,27 +339,16 @@ const DisplayTemperature = (props, context) => {
 };
 
 const DisplayVitals = (props, context) => {
-  const { data } = useBackend(context);
-  const processedData = processStatsData(data.victim_data);
-
-  let oxy = "--";
-  let oxy_data = [];
-  let toxin = "--";
-  let toxin_data =[];
-  let burn = "--";
-  let burn_data = [];
-  let brute = "--";
-  let brute_data = [];
-  if (data.occupied) {
-    oxy = Math.floor(data.oxygen);
-    toxin = Math.floor(data.toxin);
-    burn = Math.floor(data.burn);
-    brute = Math.floor(data.brute);
-    oxy_data = processedData["oxygen"];
-    toxin_data = processedData["toxin"];
-    burn_data = processedData["burn"];
-    brute_data = processedData["brute"];
-  }
+  const { data } = useBackend<OperatingComputerData>(context);
+  const processedData = processStatsData(data.patient_data);
+  const oxy = data.occupied ? Math.floor(data.oxygen).toString() : "--";
+  const oxy_data = data.occupied && processedData ? processedData["oxygen"] : [];
+  const toxin = data.occupied ? Math.floor(data.toxin).toString() : "--";
+  const toxin_data = data.occupied && processedData ? processedData["toxin"] : [];
+  const burn = data.occupied ? Math.floor(data.burn).toString() : "--";
+  const burn_data = data.occupied && processedData ? processedData["burn"] : [];
+  const brute = data.occupied ? Math.floor(data.brute).toString() : "--";
+  const brute_data = data.occupied && processedData ? processedData["brute"] : [];
 
   return (
     <Section title="Vitals">
@@ -365,7 +363,7 @@ const DisplayVitals = (props, context) => {
 };
 
 const DisplayAnatomicalAnomolies = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<OperatingComputerData>(context);
   if (data.occupied) {
     return (
       <Section title="Anatomical Anomalies">
@@ -380,7 +378,7 @@ const DisplayAnatomicalAnomolies = (props, context) => {
 };
 
 const DisplayBloodstreamContent = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<OperatingComputerData>(context);
   if (data.occupied) {
     return (
       <Section title="Bloodstream Contents">
@@ -394,7 +392,7 @@ const DisplayBloodstreamContent = (props, context) => {
 };
 
 const DisplayGeneticAnalysis = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<OperatingComputerData>(context);
   if (data.occupied) {
     return (
       <Section title="Genetic Analysis">
@@ -441,47 +439,49 @@ const DisplayGeneticAnalysis = (props, context) => {
   }
 };
 
-const DisplayTitle = (props, context) => {
-  const { data } = useBackend(context);
-  let patient_name = "No Patient Detected";
-  let patient_name_color = "grey";
-  let patient_health = "--";
-  let patient_health_percent = "--";
-  let patient_status = "--";
+const DisplayTitle = (props:OperatingComputerDisplayTitleProps, context) => {
+  const {
+    occupied,
+    patient_name,
+    patient_health,
+    patient_max_health,
+    patient_status,
+  } = props;
+  const patient_name_color = occupied ? "white" : "grey";
+  const is_crit = occupied && patient_health < 0;
+  const patient_health_percent = occupied ? Math.floor(100 * patient_health / patient_max_health) : 0;
+  let patient_health_percent_text = "--";
   let color = "grey";
-  if (data.occupied) {
-    patient_name = data.patient_name;
-    patient_name_color = "white";
-    patient_health_percent = Math.floor(100 * data.health / data.max_health);
-    patient_health = data.health;
-    patient_status = data.victim_status;
 
-    color = "purple";
-
-    if (data.max_health <= 0) {
-      patient_health_percent = "???";
+  if (occupied) {
+    if (patient_max_health <= 0) {
+      color = "purple";
+      patient_health_percent_text = "???";
     }
-
-    if (patient_health_percent >= 51 && patient_health_percent <= 100) { color = "green"; }
-    else if (patient_health_percent >= 1 && patient_health_percent <= 50) { color = "yellow"; }
-    else { color="red"; }
+    else {
+      patient_health_percent_text = patient_health_percent.toString();
+      if (patient_health_percent >= 51 && patient_health_percent <= 100) { color = "green"; }
+      else if (patient_health_percent >= 1 && patient_health_percent <= 50) { color = "yellow"; }
+      else { color="red"; }
+    }
   }
+
   return (
     <Stack>
       <Stack.Item width={60}>
         <Box fontSize={1}>Patient Name</Box>
         <Box fontSize={1.5} color={patient_name_color} >
-          {patient_name}
+          {patient_name ? patient_name : "No Patient Detected"}
         </Box>
       </Stack.Item>
-      <HealthSummary health_text={patient_health_percent} health_color={color} />
-      <PatientSummary occupied={data.occupied} patient_status={patient_status} health={patient_health} />
+      <HealthSummary health_text={patient_health_percent_text} health_color={color} />
+      <PatientSummary occupied={occupied} patient_status={patient_status} isCrit={is_crit} />
     </Stack>
   );
 };
 
 const DisplayKeyHealthIndicators = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<OperatingComputerData>(context);
   return (
     <Section title="Key Health Indicators">
       <Table>
@@ -495,7 +495,7 @@ const DisplayKeyHealthIndicators = (props, context) => {
 };
 
 const DisplayTempImplantRow = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<OperatingComputerData>(context);
   return (
     <Table.Row>
       <DisplayTemperature body_temp={data.body_temp} optimal_temp={data.optimal_temp} />
