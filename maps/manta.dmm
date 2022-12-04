@@ -6435,7 +6435,7 @@
 /area/abandonedship)
 "atm" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/simulated/floor,
 /area/abandonedship)
 "atn" = (

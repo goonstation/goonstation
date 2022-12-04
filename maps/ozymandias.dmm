@@ -6369,7 +6369,7 @@
 /obj/item/reagent_containers/food/snacks/candy/pbcup{
 	pixel_x = 9
 	},
-/obj/item/reagent_containers/food/snacks/chips{
+/obj/item/item_box/chips{
 	pixel_x = -4
 	},
 /obj/machinery/light/small{
@@ -66108,7 +66108,7 @@
 /area/station/chapel/sanctuary)
 "qYl" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/snacks/chips{
+/obj/item/item_box/chips{
 	pixel_y = 2
 	},
 /obj/item/reagent_containers/food/drinks/mug/random_color{
@@ -66146,7 +66146,7 @@
 /area/station/ai_monitored/armory)
 "qZa" = (
 /obj/decal/cleanable/dirt,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/simulated/floor/carpet/green/standard/edge/ne,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -70080,7 +70080,7 @@
 "rXA" = (
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
 /obj/item/plant/herb/cannabis/spawnable,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /obj/storage/crate/packing,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)

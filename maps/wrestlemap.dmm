@@ -424,7 +424,7 @@
 	desc = "A real blow the wrestling community.";
 	name = "Wrestler's corpse"
 	},
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/simulated/floor/airless/white,
 /area/abandonedship{
 	name = "Crashed Limo"
@@ -5687,9 +5687,9 @@
 /area/station/engine/storage)
 "cqQ" = (
 /obj/table/glass/auto,
-/obj/item/reagent_containers/food/snacks/chips,
-/obj/item/reagent_containers/food/snacks/chips,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
 /turf/simulated/floor/black,
 /area/research_outpost/protest)
 "cqV" = (
@@ -31192,7 +31192,7 @@
 /turf/simulated/floor/black,
 /area/station/engine/monitoring)
 "nmA" = (
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/space,
 /area/space)
 "nmD" = (
@@ -31596,7 +31596,7 @@
 /area/station/crew_quarters/kitchen)
 "ntZ" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/crew_quarters/lounge/luxury_seating)
 "nur" = (
@@ -38646,18 +38646,18 @@
 /obj/item/reagent_containers/food/snacks/candy/chocolate,
 /obj/item/reagent_containers/food/snacks/candy/chocolate,
 /obj/item/reagent_containers/food/snacks/candy/chocolate,
-/obj/item/reagent_containers/food/snacks/chips,
-/obj/item/reagent_containers/food/snacks/chips,
-/obj/item/reagent_containers/food/snacks/chips,
-/obj/item/reagent_containers/food/snacks/chips,
-/obj/item/reagent_containers/food/snacks/chips,
-/obj/item/reagent_containers/food/snacks/chips,
-/obj/item/reagent_containers/food/snacks/chips,
-/obj/item/reagent_containers/food/snacks/chips,
-/obj/item/reagent_containers/food/snacks/chips,
-/obj/item/reagent_containers/food/snacks/chips,
-/obj/item/reagent_containers/food/snacks/chips,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "qum" = (
@@ -52884,7 +52884,7 @@
 	},
 /area/station/hallway/primary/west)
 "wxq" = (
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/simulated/floor/green/side{
 	dir = 4
 	},

@@ -2802,7 +2802,7 @@
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "hx" = (
-/obj/item/kitchen/chips,
+/obj/item/item_box/chips,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12

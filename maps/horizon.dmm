@@ -1822,7 +1822,7 @@
 /area/station/crew_quarters/lounge)
 "aeo" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/lounge)
 "aep" = (
@@ -11381,7 +11381,7 @@
 	pixel_x = 11;
 	pixel_y = 10
 	},
-	/obj/item/ammo/bullets/tranq_darts/anti_mutant{
+/obj/item/ammo/bullets/tranq_darts/anti_mutant{
 	pixel_x = -10;
 	pixel_y = -6
 	},
@@ -47191,7 +47191,7 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21

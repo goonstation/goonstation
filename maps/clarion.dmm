@@ -42914,7 +42914,7 @@
 /area/station/solar/east)
 "dap" = (
 /obj/table/wood/round/auto,
-/obj/item/reagent_containers/food/snacks/chips{
+/obj/item/item_box/chips{
 	pixel_x = 3;
 	pixel_y = 5
 	},
