@@ -972,7 +972,6 @@
 			M.dispensing_bulb = /obj/item/light/bulb/cyan
 			..()
 
-
 /datum/contextAction/card
 	icon = 'icons/ui/context16x16.dmi'
 	name = "Card action"
@@ -1175,6 +1174,7 @@
 			target.addContextAction(/datum/contextAction/testfour)
 			return 0
 */
+
 /datum/contextAction/rcd
 	icon = 'icons/ui/context16x16.dmi'
 	close_clicked = TRUE
@@ -1189,7 +1189,6 @@
 
 	checkRequirements(var/obj/item/rcd/rcd, var/mob/user)
 		return rcd in user
-
 
 	deconstruct
 		name = "Deconstruct"
@@ -1270,3 +1269,4 @@
 		name = "Released"
 		icon_state = "released"
 		mode = PRISONER_MODE_RELEASED
+

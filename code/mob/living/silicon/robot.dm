@@ -224,7 +224,7 @@
 				B.icon_state = "borg_brain"
 				if (!B.owner) //Oh no, they have no mind!
 					logTheThing(LOG_DEBUG, null, "<b>Mind</b> Cyborg spawn forced to create new mind for key \[[src.key ? src.key : "INVALID KEY"]]")
-					stack_trace("Cyborg [src] (\ref[src]) was created without a mind, somehow. Mind force-created for key \[[src.key ? src.key : "INVALID KEY"]]. That's bad.")
+					stack_trace("[identify_object(src)] was created without a mind, somehow. Mind force-created for key \[[src.key ? src.key : "INVALID KEY"]]. That's bad.")
 					var/datum/mind/newmind = new
 					newmind.ckey = ckey
 					newmind.key = src.key
@@ -236,7 +236,7 @@
 					src.part_head.brain = B
 				else
 					// how the hell would this happen. oh well
-					stack_trace("Cyborg [src] (\ref[src]) was created without a head, somehow. That's bad.")
+					stack_trace("[identify_object(src)] was created without a head, somehow. That's bad.")
 					var/obj/item/parts/robot_parts/head/standard/H = new /obj/item/parts/robot_parts/head/standard(src)
 					src.part_head = H
 					B.set_loc(H)
