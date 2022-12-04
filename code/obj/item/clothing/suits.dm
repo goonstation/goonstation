@@ -1426,18 +1426,6 @@
 		icon_state = "syndie_specialist-heavy"
 		item_state = "syndie_specialist-heavy"
 
-/obj/item/clothing/suit/space/industrial/ntso
-	name = "\improper NT-SO pressurized assault suit"
-	desc = "A Nanotrasen special forces heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
-	is_syndicate = FALSE
-	icon_state = "ntso_specialist-heavy"
-	item_state = "ntso_specialist-heavy"
-
-	setupProperties()
-		..()
-		setProperty("meleeprot", 9)
-		setProperty("rangedprot", 2)
-
 /obj/item/clothing/suit/space/industrial/salvager
 	name = "\improper Salvager juggernaut combat armor"
 	desc = "A heavily modified industrial mining suit, it's been retrofitted for greater protection in firefights."

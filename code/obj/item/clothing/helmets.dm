@@ -949,22 +949,6 @@
 		..()
 		setProperty("meleeprot_head", 7)
 
-/obj/item/clothing/head/helmet/space/industrial/ntso
-	name = "\improper NT-SO pressurized assault helmet"
-	desc = "A heavily reinforced combat helmet for Nanotrasen special forces."
-	icon_state = "ntso_specialist-heavy"
-	item_state = "ntso_specialist-heavy"
-	has_visor = TRUE
-	visor_color_lst = list(
-		"color_r" = 0.8,
-		"color_g" = 0.8,
-		"color_b" = 1,
-	)
-
-	setupProperties()
-		..()
-		setProperty("meleeprot_head", 7)
-
 /obj/item/clothing/head/helmet/space/industrial/salvager
 	name = "\improper Salvager juggernaut combat helmet"
 	desc = "A heavily modified industrial mining helmet, it's been retrofitted for combat use."
