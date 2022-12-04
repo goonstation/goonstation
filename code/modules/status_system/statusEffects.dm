@@ -1593,7 +1593,7 @@
 	icon_state = "stam+"
 	maxDuration = 9 SECONDS
 	unique = 1
-	change = 5
+	change = 8
 
 	getTooltip()
 		. = "A feeling of invigoration permeates you."
