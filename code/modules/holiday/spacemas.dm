@@ -477,7 +477,8 @@ proc/compare_ornament_score(list/a, list/b)
 	var/uses_custom_ornaments = TRUE
 	var/ornament_sort = "weighted_random"
 	var/best_sort_fuzziness = 0
-	var/weighted_sort_flat_bonus = 0
+	var/weighted_sort_flat_bonus = 0.15
+	var/weighted_sort_reserved_slots_for_new = 8
 	var/list/placed_ornaments = null
 	var/list/ckeys_placed_this_round
 	var/list/got_ornament_kit
@@ -504,10 +505,13 @@ proc/compare_ornament_score(list/a, list/b)
 
 	weighted_random
 		ornament_sort = "weighted_random"
+		weighted_sort_flat_bonus = 0
+		weighted_sort_reserved_slots_for_new = 0
 
 	weighted_random_flatter
 		ornament_sort = "weighted_random"
 		weighted_sort_flat_bonus = 0.1
+		weighted_sort_reserved_slots_for_new = 0
 
 	New()
 		..()
@@ -553,11 +557,20 @@ proc/compare_ornament_score(list/a, list/b)
 					var/list/ornament = ornament_list[ornament_name]
 					ornament_weights[ornament_name] = src.weighted_sort_flat_bonus + \
 						src.bound_of_wilson_score_confidence_interval_for_a_bernoulli_parameter_of_an_ornament(ornament)
+				var/list/original_ornament_list = ornament_list
 				ornament_list = list()
-				while(length(ornament_weights) > 0 && length(ornament_list) < length(src.ornament_positions))
+				while(length(ornament_weights) > 0 && length(ornament_list) < length(src.ornament_positions) - weighted_sort_reserved_slots_for_new)
 					var/ornament_name = weighted_pick(ornament_weights)
 					ornament_list[ornament_name] = get_spacemas_ornaments()[ornament_name]
 					ornament_weights -= ornament_name
+				var/list/sorted_by_least_votes = list()
+				for(var/ornament_name in ornament_weights)
+					var/list/ornament = original_ornament_list[ornament_name]
+					var/votes = length(ornament["upvoted"]) + length(ornament["downvoted"])
+					sorted_by_least_votes[ornament_name] = ornament
+					ornament["score"] = -votes
+				sorted_by_least_votes = sortList(sorted_by_least_votes, /proc/compare_ornament_score, associative=TRUE)
+				ornament_list += sorted_by_least_votes
 		src.placed_ornaments = list()
 		src.placed_ornaments.len = length(ornament_positions)
 		for(var/i = 1 to length(ornament_positions))
