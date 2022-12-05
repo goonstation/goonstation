@@ -18,6 +18,10 @@
 	var/authed = 0
 	var/area/armory_area
 
+	New()
+		..()
+		START_TRACKING
+
 	initialize()
 		armory_area = get_area_by_type(/area/station/ai_monitored/armory)
 
@@ -28,6 +32,10 @@
 			if (D.has_access(access_maxsec))
 				D.no_access = 1
 		*/
+		..()
+
+	disposing()
+		STOP_TRACKING
 		..()
 
 	receive_signal(datum/signal/signal)
@@ -133,6 +141,11 @@
 					O.req_access = list(access_security)
 
 				LAGCHECK(LAG_REALTIME)
+
+		SPAWN(0.5 SECONDS)
+			playsound(src, 'sound/vox/armory.ogg', 50, vary=FALSE, extrarange=10)
+			sleep(0.7 SECONDS)
+			playsound(src, 'sound/vox/authorized.ogg', 50, vary=FALSE, extrarange=10)
 
 	proc/unauthorize()
 		if(src.authed)

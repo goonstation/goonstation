@@ -2688,8 +2688,7 @@
 /obj/item/luggable_computer/personal{
 	c_flags = 94208;
 	pixel_x = 1;
-	pixel_y = 10;
-	
+	pixel_y = 10
 	},
 /obj/table/wood/auto/desk/lily,
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/ne,
@@ -31909,11 +31908,7 @@
 	layer = 2.8;
 	mouse_opacity = 0
 	},
-/obj/machinery/chem_dispenser/chemical{
-	desc = "Unlike other chem dispensers, this one's mostly just made for plants.";
-	dispensable_reagents = list("mutadone","saltpetre","ammonia","potash","poo","space_fungus","weedkiller","mutagen");
-	name = "botany dispenser"
-	},
+/obj/machinery/chem_dispenser/botany,
 /turf/unsimulated/floor/wood/three,
 /area/afterlife/heaven/hydroponics)
 "bUm" = (
@@ -34612,7 +34607,8 @@
 	invisibility = 101;
 	name = "autoname - Entertainment";
 	network = "Zeta";
-	tag = ""
+	tag = "";
+	invuln = 1
 	},
 /turf/unsimulated/floor{
 	icon_state = "0,6"
@@ -39423,7 +39419,7 @@
 "crp" = (
 /obj/decal/fakeobjects/falseladder,
 /turf/unsimulated/floor/black,
-/area/cordon)
+/area/dojo)
 "crq" = (
 /obj/decal/fakeobjects/sealed_door,
 /turf/unsimulated/floor/black,
@@ -69171,7 +69167,7 @@
 /area/crater/biodome/research)
 "hla" = (
 /obj/machinery/light,
-/obj/cauldron/candy/halloween_only,
+/obj/cauldron/candy/ephemeral,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/lobby)
 "hmD" = (
@@ -70084,7 +70080,7 @@
 	},
 /area/diner/cow)
 "iRA" = (
-/obj/cauldron/jellybean/halloween_only,
+/obj/cauldron/jellybean/ephemeral,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -72041,7 +72037,7 @@
 	dir = 8;
 	tag = ""
 	},
-/obj/cauldron/jellybean/halloween_only,
+/obj/cauldron/jellybean/ephemeral,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/lobby)
 "mKe" = (
@@ -76294,7 +76290,8 @@
 	invisibility = 101;
 	name = "autoname - Entertainment";
 	network = "Zeta";
-	tag = ""
+	tag = "";
+	invuln = 1
 	},
 /obj/invisible_teleporter/receive_only{
 	id = "murderbox"
@@ -76646,7 +76643,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/cauldron/candy/halloween_only,
+/obj/cauldron/candy/ephemeral,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/lobby)
 "uEB" = (

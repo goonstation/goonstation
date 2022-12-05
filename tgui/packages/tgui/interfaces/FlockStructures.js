@@ -1,5 +1,5 @@
-import { useBackend, useLocalState } from '../backend';
-import { Button, LabeledList, NumberInput, Section, Box, Image, Stack } from '../components';
+import { useBackend } from '../backend';
+import { Section, Image, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const FlockStructures = (props, context) => {

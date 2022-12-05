@@ -94,7 +94,7 @@
 	if (src.started)
 		if (src.flock.getComplexDroneCount())
 			return
-		for (var/obj/flock_structure/s in src.flock.structures)
+		for (var/obj/flock_structure/s as anything in src.flock.structures)
 			if (istype(s, /obj/flock_structure/egg) || istype(s, /obj/flock_structure/rift))
 				return
 		src.death()

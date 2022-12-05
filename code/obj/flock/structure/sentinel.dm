@@ -40,6 +40,7 @@
 
 /obj/flock_structure/sentinel/disposing()
 	qdel(src.rays)
+	src.rays = null
 	..()
 
 /obj/flock_structure/sentinel/building_specific_info()

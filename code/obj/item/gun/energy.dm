@@ -59,6 +59,8 @@
 
 	emp_act()
 		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY)
+		src.visible_message("[src] sparks briefly as it overloads!")
+		playsound(src, "sparks", 75, 1, -1)
 		src.UpdateIcon()
 		return
 
@@ -928,7 +930,7 @@
 	New()
 		set_current_projectile(new /datum/projectile/special/spreader/uniform_burst/blaster)
 		projectiles = list(current_projectile)
-		flags |= ONBACK
+		c_flags |= ONBACK
 		..()
 
 
@@ -1753,8 +1755,8 @@
 	icon_state = "cornicen_close"
 	item_state = "ntgun2"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 	w_class = W_CLASS_NORMAL		//for clarity
 	two_handed = TRUE
 	force = 9

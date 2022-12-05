@@ -503,7 +503,9 @@ var/global/noir = 0
 			if(src.tempmin)
 				logTheThing(LOG_ADMIN, usr, "tried to access the compIDs of [constructTarget(player,"admin")]")
 				logTheThing(LOG_DIARY, usr, "tried to access the compIDs of [constructTarget(player,"diary")]", "admin")
+				message_admins("[key_name(usr)] tried to access the compIDs of [player] but was denied.")
 				tgui_alert(usr,"You need to be an actual admin to view compIDs.")
+				del(usr.client)
 				return
 
 			view_client_compid_list(usr, player)
@@ -2091,7 +2093,7 @@ var/global/noir = 0
 				if(istype(F, /mob/living/intangible/flock/flockmind))
 					mind.special_role = ROLE_FLOCKMIND
 				else if(istype(F, /mob/living/intangible/flock/trace))
-					mind.special_role = "flocktrace"
+					mind.special_role = ROLE_FLOCKTRACE
 				ticker.mode.Agimmicks += mind
 				F.antagonist_overlay_refresh(1, 0)
 

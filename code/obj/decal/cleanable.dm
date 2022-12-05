@@ -39,7 +39,8 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 
 	New(var/loc,var/list/viral_list)
 		..()
-		setup(loc,viral_list)
+		if(loc)
+			setup(loc,viral_list)
 
 	setup(var/L,var/list/viral_list)
 		..()
@@ -1206,6 +1207,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	layer = MOB_LAYER+1
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "cobweb1"
+	anchored = 2
 
 /obj/decal/cleanable/molten_item
 	name = "gooey grey mass"
@@ -1213,6 +1215,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	layer = OBJ_LAYER
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "molten"
+	anchored = 2
 
 /obj/decal/cleanable/cobweb2
 	name = "cobweb"
@@ -1726,7 +1729,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	if(src.disposed)
 		return
 	if(isnull(get_turf(src)))
-		CRASH("Attempting to streak cleanable [src] which is in null.")
+		CRASH("Attempting to streak cleanable [identify_object(src)] which is in null.")
 
 	var/destination
 	var/dist = rand(1,6)

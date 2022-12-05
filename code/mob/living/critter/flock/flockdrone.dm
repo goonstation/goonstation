@@ -885,8 +885,8 @@
 	if(src.flock.getComplexDroneCount() >= FLOCK_DRONE_LIMIT)
 		boutput(src, "<span class='alert'>Flock complexity too high, unable to support additional drones.</span>")
 		return
-	if(src.resources < FLOCK_LAY_EGG_COST)
-		boutput(src, "<span class='alert'>Not enough resources (you need [FLOCK_LAY_EGG_COST]).</span>")
+	if(src.resources < src.flock.current_egg_cost)
+		boutput(src, "<span class='alert'>Not enough resources (you need [src.flock.current_egg_cost]).</span>")
 		return
 	if(src.floorrunning)
 		boutput(src, "<span class='alert'>You can't do that while floorrunning.</span>")

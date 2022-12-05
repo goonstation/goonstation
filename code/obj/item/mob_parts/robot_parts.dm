@@ -4,7 +4,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 	icon = 'icons/obj/robot_parts.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "buildpipe"
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	streak_decal = /obj/decal/cleanable/oil
 	streak_descriptor = "oily"
 	var/appearanceString = "generic"
@@ -1107,7 +1108,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 		if (!src.head)
 			// how the fuck did you even do this
-			stack_trace("Attempted to finish a cyborg from borg frame [src] (\ref[src]) without a head. That's bad.")
+			stack_trace("Attempted to finish a cyborg from borg frame [identify_object(src)] without a head. That's bad.")
 			borg.death()
 			qdel(src)
 			return
@@ -1143,7 +1144,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			boutput(usr, "<span class='notice'>You activate the frame and a audible beep emanates from the head.</span>")
 			playsound(src, 'sound/weapons/radxbow.ogg', 40, 1)
 		else
-			stack_trace("We finished cyborg [borg] (\ref[borg]) from frame [src] (\ref[src]) with a brain, but somehow lost the brain??? Where did it go")
+			stack_trace("We finished cyborg [identify_object(borg)] from frame [identify_object(src)] with a brain, but somehow lost the brain??? Where did it go")
 			borg.death()
 			qdel(src)
 			return

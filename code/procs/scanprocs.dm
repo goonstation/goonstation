@@ -14,7 +14,7 @@
 	if (M.bioHolder && M.bioHolder.HasEffect("dead_scan"))
 		death_state = 2
 
-	var/health_percent = round(100 * M.health / M.max_health)
+	var/health_percent = round(100 * M.health / (M.max_health||1))
 
 	var/colored_health
 	if(M.max_health <= 0)
@@ -335,14 +335,15 @@
 
 /proc/scan_genetic(mob/M as mob, datum/genetic_prescan/prescan = null, visible = FALSE)
 	if (!M)
-		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
+		return "<b class='alert'>ERROR: NO SUBJECT DETECTED</b>"
 	if (visible)
 		animate_scanning(M, "#9eee80")
 	if (!ishuman(M))
-		return "<span class='alert'>ERROR: UNABLE TO ANALYZE GENETIC STRUCTURE</span>"
+		return "<b class='alert'>ERROR: UNABLE TO ANALYZE GENETIC STRUCTURE</b>"
+	var/mob/living/carbon/human/H = M
 	var/list/data = list()
 	var/datum/bioHolder/BH = M.bioHolder
-	data += "<span class='notice'>Genetic Stability: [BH.genetic_stability]</span>"
+	data += "<b class='notice'>Genetic Stability: [BH.genetic_stability]</b>"
 	var/datum/genetic_prescan/GP = prescan
 	if (!GP)
 		GP = new /datum/genetic_prescan
@@ -353,20 +354,26 @@
 		for (var/bioEffectId in BH.effectPool)
 			GP.poolDna += BH.GetEffect(bioEffectId)
 		GP.generate_known_unknown()
-	data += "<span class='notice'>Potential Genetic Effects:</span>"
+	data += "<b class='notice'>Potential Genetic Effects:</b>"
 	for (var/datum/bioEffect/BE in GP.poolDnaKnown)
 		data += BE.name
 	if (length(GP.poolDnaUnknown))
 		data += "<span class='alert'>Unknown: [length(GP.poolDnaUnknown)]</span>"
 	else if (!length(GP.poolDnaKnown))
 		data += "-- None --"
-	data += "<span class='notice'>Active Genetic Effects:</span>"
+	data += "<b class='notice'>Active Genetic Effects:</b>"
 	for (var/datum/bioEffect/BE in GP.activeDnaKnown)
 		data += BE.name
 	if (length(GP.activeDnaUnknown))
 		data += "<span class='alert'>Unknown: [length(GP.activeDnaUnknown)]</span>"
 	else if (!length(GP.activeDnaKnown))
 		data += "-- None --"
+
+	if (length(H.cloner_defects.active_cloner_defects))
+		data += "<b class='alert'>Detected Cloning-Related Defects:</b>"
+		for(var/datum/cloner_defect/defect as anything in H.cloner_defects.active_cloner_defects)
+			data += "<b class='alert'>[defect.name]</b>"
+			data += "<i class='alert'>[defect.desc]</i>"
 	return data.Join("<br>")
 
 /proc/update_medical_record(var/mob/living/carbon/human/M)

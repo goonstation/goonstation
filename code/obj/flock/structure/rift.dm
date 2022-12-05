@@ -6,7 +6,7 @@
 	icon_state = "rift"
 	density = FALSE
 	name = "glowing portal thingymabob"
-	desc = "Oh god is that a fucking light grenade?!"
+	desc = "That doesn't look human."
 	flock_desc = "The rift through which your Flock will enter this world."
 	flock_id = "Entry Rift"
 	build_time = 10
@@ -58,15 +58,18 @@
 		candidate_turfs = candidate_turfs.Copy(1, 14)
 
 	var/sentinel_count = 2
+	var/sentinels_made = 0
 	for(var/turf/simulated/floor/floor as anything in candidate_turfs)
 		if (src.flock)
 			src.flock.claimTurf(flock_convert_turf(floor))
 		else
 			flock_convert_turf(floor)
-	for (var/i in 1 to min(sentinel_count, length(candidate_turfs)))
-		var/turf/simulated/floor/feather/floor = candidate_turfs[i]
-		if (!flock_is_blocked_turf(floor))
-			new /obj/flock_structure/sentinel(floor, src.flock)
+	for (var/turf/simulated/floor/feather/flocktile as anything in candidate_turfs)
+		if (!flock_is_blocked_turf(flocktile))
+			new /obj/flock_structure/sentinel(flocktile, src.flock)
+			sentinels_made++
+			if (sentinels_made >= sentinel_count)
+				break
 
 	flockdronegibs(src.loc, null, eject) //ejectables ejected here
 	src.flock.flockmind.started = TRUE
