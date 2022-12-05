@@ -841,33 +841,41 @@ var/flock_signal_unleashed = FALSE
 	var/area/area = get_area(T)
 	return !(istype(area, /area/listeningpost) || istype(area, /area/ghostdrone_factory))
 
-/proc/flock_convert_turf(var/turf/T, tutorial = FALSE)
+/proc/flock_convert_turf(var/turf/T, tutorial=FALSE, force=FALSE, fancy=FALSE)
 	if(!T)
 		return
-	if (!flockTurfAllowed(T))
+	if (!force && !flockTurfAllowed(T))
 		return
 
-	if(istype(T, /turf/simulated/floor))
-		T.ReplaceWith("/turf/simulated/floor/feather", FALSE)
+	if(istype(T, /turf/simulated/wall) || force && (T.density || locate(/obj/indestructible/shuttle_corner) in T))
+		if(tutorial)
+			T.ReplaceWith(/turf/simulated/wall/auto/feather{opacity=FALSE}, FALSE, force=force)
+		else
+			T.ReplaceWith(/turf/simulated/wall/auto/feather, FALSE, force=force)
 		animate_flock_convert_complete(T)
+		if(force)
+			for(var/obj/indestructible/shuttle_corner/C in T)
+				qdel(C)
 
-	if(istype(T, /turf/simulated/wall))
-		T.ReplaceWith("/turf/simulated/wall/auto/feather", FALSE)
-		if (tutorial)
-			T.opacity = 0
+	if(istype(T, /turf/simulated/floor) || force && istype(T, /turf/unsimulated/floor))
+		T.ReplaceWith(/turf/simulated/floor/feather, FALSE, force=force)
 		animate_flock_convert_complete(T)
 
 	// regular and flock lattices
 	var/obj/lattice/lat = locate(/obj/lattice) in T
 	if(lat)
-		qdel(lat)
-		T.ReplaceWith("/turf/simulated/floor/feather", FALSE)
-		animate_flock_convert_complete(T)
+		if(istype(lat, /obj/lattice/flock) || !fancy)
+			qdel(lat)
+			T.ReplaceWith(/turf/simulated/floor/feather, FALSE, force=force)
+			animate_flock_convert_complete(T)
+		else
+			qdel(lat)
+			new /obj/lattice/flock(T)
 
 	var/obj/grille/catwalk/catw = locate(/obj/grille/catwalk) in T
 	if(catw)
 		qdel(catw)
-		T.ReplaceWith("/turf/simulated/floor/feather", FALSE)
+		T.ReplaceWith(/turf/simulated/floor/feather, FALSE, force=force)
 		animate_flock_convert_complete(T)
 
 	if(istype(T, /turf/space))
@@ -876,11 +884,14 @@ var/flock_signal_unleashed = FALSE
 			FL = new /obj/lattice/flock(T)
 
 	for(var/obj/O in T)
+		if(istype(O, /obj/effect) || istype(O, /obj/overlay) || istype(O, /obj/particle) || istype(O, /obj/lattice/flock))
+			continue
 		if (istype(O, /obj/machinery/camera))
 			var/obj/machinery/camera/cam = O
 			if (cam.camera_status)
 				cam.break_camera()
 			continue
+		var/success = FALSE
 		for(var/keyPath in flock_conversion_paths)
 			if (!istype(O, keyPath))
 				continue
@@ -891,11 +902,14 @@ var/flock_signal_unleashed = FALSE
 				if (istype(O, /obj/machinery/door))
 					if (istype(O, /obj/machinery/door/firedoor/pyro) || istype(O, /obj/machinery/door/window) || istype(O, /obj/machinery/door/airlock/pyro/glass/windoor) || istype(O, /obj/machinery/door/poddoor/pyro/shutters) || istype(O, /obj/machinery/door/unpowered/wood))
 						qdel(O)
+						success = TRUE
 						break
 				if (istype(O, /obj/machinery/computer))
 					if (istype(O, /obj/machinery/computer/card/portable) || istype(O, /obj/machinery/computer/security/wooden_tv) || istype(O, /obj/machinery/computer/secure_data/detective_computer) || istype(O, /obj/machinery/computer/airbr) || istype(O, /obj/machinery/computer/tanning) || istype(O, /obj/machinery/computer/tour_console) || istype(O, /obj/machinery/computer/arcade) || istype(O, /obj/machinery/computer/tetris))
+						success = TRUE
 						break
 				if (istype(O, /obj/machinery/light/lamp) || istype(O, /obj/machinery/computer3/generic/personal) || istype(O, /obj/machinery/computer3/luggable))
+					success = TRUE
 					break
 			var/dir = O.dir
 			var/replacementPath = flock_conversion_paths[keyPath]
@@ -914,18 +928,21 @@ var/flock_signal_unleashed = FALSE
 			qdel(O)
 			converted.set_dir(dir)
 			animate_flock_convert_complete(converted)
+			success = TRUE
 			break
+		if(!success && fancy)
+			O.color = list(-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.25,-0.2,-0.15,0.368627,0.764706,0.666667)
 	return T
 
-/proc/mass_flock_convert_turf(var/turf/T, datum/flock/F)
+/proc/mass_flock_convert_turf(var/turf/T, datum/flock/F, force=FALSE, radius=15, delay=0.2 SECONDS, fancy=FALSE)
 	if(!T)
 		T = get_turf(usr)
 	if(!T)
 		return
 
-	flock_spiral_conversion(T, F)
+	flock_spiral_conversion(T, F, radius=radius, delay=delay, force=force, fancy=fancy)
 
-/proc/flock_spiral_conversion(turf/T, datum/flock/F, radius = 15, delay = 0.2 SECONDS, tutorial = FALSE)
+/proc/flock_spiral_conversion(turf/T, datum/flock/F, radius = 15, delay = 0.2 SECONDS, tutorial=FALSE, force=FALSE, fancy=FALSE)
 	if(!T) return
 	// spiral algorithm adapted from https://stackoverflow.com/questions/398299/looping-in-a-spiral
 	var/ox = T.x
@@ -938,11 +955,11 @@ var/flock_signal_unleashed = FALSE
 	var/temp = 0
 
 	while(isturf(T) && x <= radius)
-		if(istype(T, /turf/simulated) && !isfeathertile(T))
+		if((istype(T, /turf/simulated) || force) && !isfeathertile(T))
 			if (F)
 				F.claimTurf(flock_convert_turf(T, tutorial))
 			else
-				flock_convert_turf(T, tutorial)
+				flock_convert_turf(T, tutorial, force=force, fancy=fancy)
 			sleep(delay)
 		LAGCHECK(LAG_LOW)
 		// figure out where next turf is
