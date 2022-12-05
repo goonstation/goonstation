@@ -449,6 +449,7 @@
 /obj/overlay
 	name = "overlay"
 	anchored = TRUE
+	pass_unstable = FALSE
 	mat_changename = 0
 	mat_changedesc = 0
 	event_handler_flags = IMMUNE_MANTA_PUSH
