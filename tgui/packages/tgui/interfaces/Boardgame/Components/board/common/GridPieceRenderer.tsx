@@ -95,9 +95,11 @@ const GridPieceRenderer = ({ pieces, interactable }: GridPieceRendererProps, con
                 'left': '50%',
                 'top': '50%',
                 'transform': 'translate(-50%, -50%)',
-                'font-size': '12px',
-                'font-weight': 'bold',
+                'font-size': '14px',
+                'font-weight': 'bolder',
                 'text-shadow': '0 0 2px black',
+                'z-index': 1,
+                'font-family': 'Arial',
               }}>
               {selected}
             </span>
