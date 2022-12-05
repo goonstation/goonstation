@@ -147,7 +147,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			processing_items.Add(src)
 		create_time = world.time
 		if (src.amount != 1)
-			stack_trace("[src] of type [src.type] is spawning with an amount other than 1. That's bad. Go delete the 'amount' line and replace it with `bites_left = \[whatever the amount var had before\].")
+			stack_trace("[identify_object(src)] is spawning with an amount other than 1. That's bad. Go delete the 'amount' line and replace it with `bites_left = \[whatever the amount var had before\].")
 
 	disposing()
 		if(!made_ants)
@@ -591,29 +591,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	///Called when we successfully take a drink of something (or make someone else take a drink of something)
 	proc/take_a_drink(var/mob/consumer, var/mob/feeder)
-		var/tasteMessage
-		if (iscarbon(consumer) || ismobcritter(consumer))
-			if (consumer.mind && consumer.mind.assigned_role == "Bartender")
-				var/reag_list = ""
-				for (var/current_id in reagents.reagent_list)
-					var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
-					if (reagents.reagent_list.len > 1 && reagents.reagent_list[reagents.reagent_list.len] == current_id)
-						reag_list += " and [current_reagent.name]"
-						continue
-					reag_list += ", [current_reagent.name]"
-				reag_list = copytext(reag_list, 3)
-				tasteMessage = "<span class='notice'>Tastes like there might be some [reag_list] in this.</span>"
-			else
-				var/tastes = src.reagents.get_prevalent_tastes(3)
-				switch (length(tastes))
-					if (0)
-						tasteMessage = "<span class='notice'>Tastes pretty bland.</span>"
-					if (1)
-						tasteMessage = "<span class='notice'>Tastes kind of [tastes[1]].</span>"
-					if (2)
-						tasteMessage = "<span class='notice'>Tastes kind of [tastes[1]] and [tastes[2]].</span>"
-					else
-						tasteMessage = "<span class='notice'>Tastes kind of [tastes[1]], [tastes[2]], and a little bit [tastes[3]].</span>"
+		var/tasteMessage = "<span class='notice'>[src.reagents.get_taste_string(consumer)]</span>"
 		if (consumer == feeder)
 			consumer.visible_message("<span class='notice'>[consumer] takes a sip from [src].</span>","<span class='notice'>You take a sip from [src].</span>\n[tasteMessage]", group = "drinkMessages")
 		else

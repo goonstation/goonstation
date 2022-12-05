@@ -341,13 +341,18 @@
 			area_correct = 1
 		if(istype(ticker?.mode, /datum/game_mode/nuclear) && istype(nuke_area, gamemode.target_location_type))
 			area_correct = 1
+			
+		// Don't re-enable the explosion without asking me first -ZeWaka
+		
 		if ((nuke_turf.z != 1 && !area_correct) && (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
 			gamemode.the_bomb = null
 			command_alert("A nuclear explosive has been detonated nearby. The station was not in range of the blast.", "Attention")
-			explosion(src, src.loc, 20, 30, 40, 50)
+			//explosion(src, src.loc, 20, 30, 40, 50)
 			qdel(src)
 			return
-		explosion(src, src.loc, 35, 45, 55, 55)
+		//explosion(src, src.loc, 35, 45, 55, 55)
+		
+		
 #ifdef MAP_OVERRIDE_MANTA
 		world.showCinematic("manta_nukies")
 #else

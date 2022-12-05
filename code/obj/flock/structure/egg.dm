@@ -7,7 +7,7 @@
 	anchored = FALSE
 	density = FALSE
 	name = "glowing doodad"
-	desc = "Oh god is that a fucking light grenade?!"
+	desc = "Some sort of small machine. It looks like its getting ready for something."
 	flock_desc = "Will soon hatch into a Flockdrone."
 	flock_id = "Second-Stage Assembler"
 	build_time = 6
@@ -17,6 +17,7 @@
 
 /obj/flock_structure/egg/New()
 	..()
+	src.flock?.updateEggCost()
 	src.info_tag.set_info_tag("Time left: [src.build_time] seconds")
 
 /obj/flock_structure/egg/building_specific_info()
@@ -45,6 +46,10 @@
 		make_cleanable( /obj/decal/cleanable/flockdrone_debris/fluid,T)
 		decal_made = TRUE
 	..()
+
+/obj/flock_structure/egg/disposing()
+	. = ..()
+	src.flock?.updateEggCost()
 
 /obj/flock_structure/egg/bit
 	flock_id = "Secondary Second-Stage Assembler"

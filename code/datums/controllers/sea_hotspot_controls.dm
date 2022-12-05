@@ -13,12 +13,16 @@
 
 	New()
 		..()
-		#ifdef UPSCALED_MAP
-		groups_to_create *= 4
+		#ifdef HOTSPOTS_ENABLED
+		setup_hotspots()
 		#endif
-		#ifdef UNDERWATER_MAP
+
+	proc/setup_hotspots()
+		#ifdef UPSCALED_MAP
+		src.groups_to_create *= 4
+		#endif
 		var/datum/sea_hotspot/new_hotspot = 0
-		for (var/i = 1, i <= groups_to_create, i++)
+		for (var/i = 1, i <= src.groups_to_create, i++)
 			new_hotspot = new
 			hotspot_groups += new_hotspot
 			var/turf/T = 0
@@ -29,12 +33,6 @@
 				maxsearch--
 
 			new_hotspot.move_center_to(T)
-		#endif
-		//var/image/I = image(icon = 'icons/obj/sealab_power.dmi')
-		//var/obj/item/photo/P = new/obj/item/photo(get_turf(locate(1,1,1)), I, map, "test", "blah")
-
-  		//var/obj/A = new /obj(locate(1,1,1))
-  		//A.icon = map
 
 	#ifdef UNDERWATER_MAP
 	var/list/map_colors = list(

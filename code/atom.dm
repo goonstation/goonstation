@@ -460,10 +460,14 @@
 	. = ..()
 
 
-/atom/movable/Move(NewLoc, direct)
+/atom/movable/Move(atom/NewLoc, direct)
 	SHOULD_CALL_PARENT(TRUE)
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_BLOCK_MOVE, NewLoc, direct))
 		return
+	#ifdef CHECK_MORE_RUNTIMES
+	if(!istype(src.loc, /turf) || !istype(NewLoc, /turf))
+		CRASH("Move() called with non-turf locs: [src.loc] ([src.loc?:type]) -> [NewLoc] ([NewLoc?:type]) ")
+	#endif
 
 	//mbc disabled for now, i dont think this does too much for visuals i cant hit 40fps anyway argh i cant even tell
 	//tile glide smoothing:
@@ -522,7 +526,10 @@
 
 	var/atom/A = src.loc
 	if(src.event_handler_flags & MOVE_NOCLIP)
-		src.set_loc(NewLoc)
+		if(!isturf(NewLoc))
+			NewLoc = get_step(src, direct)
+		if(isturf(NewLoc))
+			src.set_loc(NewLoc)
 	else
 		. = ..()
 	src.move_speed = TIME - src.l_move_time
@@ -886,7 +893,7 @@
 /atom/movable/proc/set_loc(atom/newloc)
 	SHOULD_CALL_PARENT(TRUE)
 	if(QDELETED(src) && !isnull(newloc))
-		CRASH("Tried to call set_loc on [src] (\ref[src] [src.type]) to non-null location: [newloc] (\ref[newloc] [newloc?.type])")
+		CRASH("Tried to call set_loc on [identify_object(src)] to non-null location: [identify_object(newloc)]")
 
 	if (loc == newloc)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, loc)
@@ -903,7 +910,7 @@
 	var/atom/oldloc = loc
 	loc = newloc
 
-#ifdef RUNTIME_CHECKING
+#ifdef CHECK_MORE_RUNTIMES
 	if(oldloc == loc)
 		stack_trace("loc change in set_loc denied - check for paradoxes")
 #endif

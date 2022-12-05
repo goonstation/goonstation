@@ -14,7 +14,7 @@
 	if (M.bioHolder && M.bioHolder.HasEffect("dead_scan"))
 		death_state = 2
 
-	var/health_percent = round(100 * M.health / M.max_health)
+	var/health_percent = round(100 * M.health / (M.max_health||1))
 
 	var/colored_health
 	if(M.max_health <= 0)
@@ -373,7 +373,7 @@
 		data += "<b class='alert'>Detected Cloning-Related Defects:</b>"
 		for(var/datum/cloner_defect/defect as anything in H.cloner_defects.active_cloner_defects)
 			data += "<b class='alert'>[defect.name]</b>"
-			data += "<i class='alert'>[defect.description]</i>"
+			data += "<i class='alert'>[defect.desc]</i>"
 	return data.Join("<br>")
 
 /proc/update_medical_record(var/mob/living/carbon/human/M)
