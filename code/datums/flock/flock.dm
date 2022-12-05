@@ -233,6 +233,17 @@ var/flock_signal_unleashed = FALSE
 	processing_items -= src
 	..()
 
+//stats should probably be on their own datum, but we'll do this for now
+/datum/flock/proc/reset_stats()
+	src.drones_made = 0
+	src.bits_made = 0
+	src.deaths = 0
+	src.resources_gained = 0
+	src.partitions_made = 0
+	src.tiles_converted = 0
+	src.structures_made = 0
+	src.peak_compute = 0
+
 /datum/flock/proc/total_health_percentage()
 	var/hp = 0
 	var/max_hp = 0
@@ -627,8 +638,6 @@ var/flock_signal_unleashed = FALSE
 	for(var/pathkey in src.units)
 		for(var/mob/living/critter/flock/F as anything in src.units[pathkey])
 			F.dormantize()
-	for(var/mob/living/intangible/flock/trace/T as anything in src.traces)
-		T.death()
 	for(var/obj/flock_structure/S as anything in src.structures)
 		S.gib()
 	for(var/turf/T in src.priority_tiles)
@@ -643,6 +652,8 @@ var/flock_signal_unleashed = FALSE
 	if (!real)
 		src.load_structures()
 		return
+	for(var/mob/living/intangible/flock/trace/T as anything in src.traces)
+		T.death()
 	if (src.flockmind)
 		hideAnnotations(src.flockmind)
 	qdel(get_image_group(src))
@@ -674,6 +685,7 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/proc/claimTurf(var/turf/simulated/T)
 	if (!T)
 		return
+	src.flockmind.tutorial?.PerformSilentAction(FLOCK_ACTION_TURF_CLAIM, T)
 	src.all_owned_tiles |= T
 	src.priority_tiles -= T
 	if (isfeathertile(T))
@@ -749,6 +761,13 @@ var/flock_signal_unleashed = FALSE
 	src.claimTurf(flock_convert_turf(T))
 	playsound(T, 'sound/items/Deconstruct.ogg', 30, 1, extrarange = -10)
 
+// Z LEVEL CHECK
+
+/datum/flock/proc/z_level_check(var/atom/A)
+	if (src.flockmind.tutorial || A.z == Z_LEVEL_STATION)
+		return TRUE
+	return FALSE
+
 // ACHIEVEMENTS
 
 ///Unlock an achievement (string) if it isn't already unlocked
@@ -822,7 +841,7 @@ var/flock_signal_unleashed = FALSE
 	var/area/area = get_area(T)
 	return !(istype(area, /area/listeningpost) || istype(area, /area/ghostdrone_factory))
 
-/proc/flock_convert_turf(var/turf/T)
+/proc/flock_convert_turf(var/turf/T, tutorial = FALSE)
 	if(!T)
 		return
 	if (!flockTurfAllowed(T))
@@ -834,6 +853,8 @@ var/flock_signal_unleashed = FALSE
 
 	if(istype(T, /turf/simulated/wall))
 		T.ReplaceWith("/turf/simulated/wall/auto/feather", FALSE)
+		if (tutorial)
+			T.opacity = 0
 		animate_flock_convert_complete(T)
 
 	// regular and flock lattices
@@ -904,7 +925,7 @@ var/flock_signal_unleashed = FALSE
 
 	flock_spiral_conversion(T, F)
 
-/proc/flock_spiral_conversion(var/turf/T, datum/flock/F)
+/proc/flock_spiral_conversion(turf/T, datum/flock/F, radius = 15, delay = 0.2 SECONDS, tutorial = FALSE)
 	if(!T) return
 	// spiral algorithm adapted from https://stackoverflow.com/questions/398299/looping-in-a-spiral
 	var/ox = T.x
@@ -916,13 +937,13 @@ var/flock_signal_unleashed = FALSE
 	var/dy = -1
 	var/temp = 0
 
-	while(isturf(T))
+	while(isturf(T) && x <= radius)
 		if(istype(T, /turf/simulated) && !isfeathertile(T))
 			if (F)
-				F.claimTurf(flock_convert_turf(T))
+				F.claimTurf(flock_convert_turf(T, tutorial))
 			else
-				flock_convert_turf(T)
-			sleep(0.2 SECONDS)
+				flock_convert_turf(T, tutorial)
+			sleep(delay)
 		LAGCHECK(LAG_LOW)
 		// figure out where next turf is
 		if (x == y || (x < 0 && x == -y) || (x > 0 && x == 1-y))

@@ -9,7 +9,7 @@
 	repair_per_resource = 2.5
 	resourcecost = 100
 	passthrough = TRUE
-
+	show_in_tutorial = TRUE
 	compute = 0
 	var/online_compute_cost = 30
 
