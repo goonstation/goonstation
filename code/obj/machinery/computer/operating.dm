@@ -100,12 +100,17 @@
 	.["blood_volume"] = src.victim.blood_pressure["total"]
 	.["blood_pressure_status"] = src.victim.blood_pressure["status"]
 	.["blood_pressure_rendered"] = src.victim.blood_pressure["rendered"]
-	.["brain_damage_desc"] = calc_brain_damage_severity(src.victim)
-	.["brain_damage_value"] = src.victim.get_brain_damage()
+
+	var/list/brain_damage = calc_brain_damage_severity(src.victim)
+	.["brain_damage"] = list (
+		"value" = src.victim.get_brain_damage(),
+		"desc" = brain_damage[1],
+		"color" = brain_damage[2],
+	)
 
 	.["embedded_objects"] = check_embedded_objects(src.victim)
 
-	.["organ_status"] = vitim_organ_health(src.victim)
+	.["organ_status"] = generate_organ_data(src.victim)
 	.["limb_status"] = generate_limb_data(src.victim)
 
 	.["age"] = src.victim.bioHolder.age
@@ -115,16 +120,16 @@
 	.["clone_generation"] = src.victim.bioHolder.clone_generation
 	.["genetic_stability"] = src.victim.bioHolder.genetic_stability
 
-	.["cloner_defects"] = 0
+	.["cloner_defect_count"] = 0
 	if (src.victim.cloner_defects)
 		var/datum/cloner_defect_holder/cloner_defects = src.victim.cloner_defects
 		var/list/datum/cloner_defect/active_cloner_defects = cloner_defects.active_cloner_defects
-		.["cloner_defects"] = length(active_cloner_defects)
+		.["cloner_defect_count"] = length(active_cloner_defects)
 
 	.["reagent_container"] = ui_describe_reagents(src.victim)
 
 
-/obj/machinery/computer/operating/proc/vitim_organ_health(var/mob/living/carbon/human/H)
+/obj/machinery/computer/operating/proc/generate_organ_data(var/mob/living/carbon/human/H)
 	var/list/organ_data = list()
 
 	if (isvampire(H))
@@ -138,20 +143,25 @@
 
 	for (var/organ_name in organs_to_check)
 		var/obj/item/organ/O = H.get_organ(organ_name)
-		var/dmg_calc = null
-		var/special = null
+		var/damage = ""
+		var/color = "grey"
+		var/special = ""
 		if (O == 0 || !O)
-			dmg_calc = "Missing"
+			damage = "Missing"
+			color = "Red"
 		else
 			if (O.robotic)
 				special = "Cybernetic"
 			if (O.unusual)
 				special = "Unusual"
-			dmg_calc = calc_organ_damage_severity(O)
+			var/list/organ_calc = calc_organ_damage_severity(O)
+			damage = organ_calc[1]
+			color = organ_calc[2]
 
 		organ_data += list(list(
-			"organ_name" = organ_name,
-			"organ_state" = dmg_calc,
+			"organ" = organ_name,
+			"state" = damage,
+			"color" = color,
 			"special" = special,
 		))
 
@@ -160,29 +170,29 @@
 /obj/machinery/computer/operating/proc/calc_brain_damage_severity(var/mob/living/carbon/human/H)
 	var/brain = H.get_organ("brain")
 	if (!brain)
-		return "Missing"
+		return list("Missing", "red")
 	var/brain_damage = H.get_brain_damage()
 	if(brain_damage >= 100)
-		return "Braindead"
+		return list("Braindead", "red")
 	if(brain_damage >= 60)
-		return "Severe"
+		return list("Severe", "orange")
 	if(brain_damage >= 10)
-		return "Significant"
-	return "Okay"
+		return list("Significant", "yellow")
+	return list("Okay", "green")
 
 /obj/machinery/computer/operating/proc/calc_organ_damage_severity(var/obj/item/organ/O)
 	var/damage = O.get_damage()
 	if (damage >= O.max_damage)
-		return "Dead"
+		return list("Dead", "red")
 	if (damage >= O.max_damage*0.9)
-		return "Critical"
+		return list("Critical", "orange")
 	if (damage >= O.max_damage*0.65)
-		return "Significant"
+		return list("Significant", "orange")
 	if (damage >= O.max_damage*0.3)
-		return "Moderate"
+		return list("Moderate", "yellow")
 	if (damage > 0)
-		return "Minor"
-	return "Okay"
+		return list("Minor", "green")
+	return list("Okay", "green")
 
 /obj/machinery/computer/operating/proc/generate_limb_data(var/mob/living/carbon/human/H)
 	var/list/limb_data = list()

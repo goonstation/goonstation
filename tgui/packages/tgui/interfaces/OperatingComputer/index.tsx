@@ -7,7 +7,23 @@ import { COLORS } from '../../constants';
 import { ReagentGraph } from '../common/ReagentInfo';
 import { processStatsData, getStatsMax } from '../common/graphUtils';
 import { capitalize, spaceUnderscores } from '../common/stringUtils';
-import { OperatingComputerData, OperatingComputerDisplayTitleProps, PatientSummaryProps } from './type';
+import {
+  OperatingComputerData,
+  OperatingComputerDisplayTitleProps,
+  PatientSummaryProps,
+  DisplayTempImplantRowProps,
+  DisplayBloodstreamContentProps,
+  DisplayAnatomicalAnomoliesProps,
+  DisplayTemperatureProps,
+  DisplayGeneticAnalysisProps,
+  DisplayBloodPressureProps,
+  OrganData,
+  DisplayLimbsProps,
+  DisplayLimbProps,
+  LimbData,
+  DisplayOrgansProps,
+  DisplayBrainProps,
+} from './type';
 
 export const OperatingComputer = (props, context) => {
   const [tabIndex, setTabIndex] = useSharedState(context, 'tabIndex', 1);
@@ -21,11 +37,6 @@ export const OperatingComputer = (props, context) => {
             onClick={() => setTabIndex(1)}>
             Patient Health
           </Tabs.Tab>
-          {/* <Tabs.Tab
-            selected={tabIndex === 2}
-            onClick={() => setTabIndex(2)}>
-            Emergency Medical Helper
-          </Tabs.Tab> */}
         </Tabs>
         <ComputerTabs tabIndex={tabIndex} />
       </Window.Content>
@@ -38,7 +49,7 @@ const ComputerTabs = (props) => {
   if (tabIndex === 1) { return (<PatientTab />); }
 };
 
-// mob.stat & crit parsing
+// mob.stat parsing
 const PatientSummary = (props:PatientSummaryProps) => {
   const { occupied, patient_status, isCrit } = props;
   let text = "NONE";
@@ -57,7 +68,7 @@ const PatientSummary = (props:PatientSummaryProps) => {
       color = "green";
     }
     else if (patient_status === 1) {
-      text = "UNCON";
+      text = "UNCON"; // unconscious
       color = "yellow";
     }
   }
@@ -95,10 +106,48 @@ const PatientTab = (props, context) => {
         patient_status={data.patient_status}
       />
       <DisplayVitals />
-      <DisplayKeyHealthIndicators />
-      <DisplayAnatomicalAnomolies />
-      <DisplayBloodstreamContent />
-      <DisplayGeneticAnalysis />
+      <Section title="Key Health Indicators">
+        <Table>
+          <DisplayBloodPressure
+            occupied={data.occupied}
+            patient_status={data.patient_status}
+            blood_pressure_rendered={data.blood_pressure_rendered}
+            blood_pressure_status={data.blood_pressure_status}
+            blood_volume={data.blood_volume}
+          />
+          <DisplayTempImplantRow
+            occupied={data.occupied}
+            body_temp={data.body_temp}
+            optimal_temp={data.optimal_temp}
+            embedded_objects={data.embedded_objects}
+          />
+          { data.occupied ? <DisplayRads rad_stage={data.rad_stage} rad_dose={data.rad_dose} />: ""}
+          <DisplayBrain
+            occupied={data.occupied}
+            status={data.brain_damage}
+          />
+        </Table>
+        { data.occupied? <DisplayEmbeddedObjects embedded_objects={data.embedded_objects} />: ""}
+      </Section>
+      <DisplayAnatomicalAnomolies
+        occupied={data.occupied}
+        organs={data.organ_status}
+        limbs={data.limb_status}
+      />
+      <DisplayBloodstreamContent
+        occupied={data.occupied}
+        reagent_container={data.reagent_container}
+      />
+      <DisplayGeneticAnalysis
+        occupied={data.occupied}
+        age={data.age}
+        blood_type={data.blood_type}
+        blood_color_value={data.blood_color_value}
+        blood_color_name={data.blood_color_name}
+        clone_generation={data.clone_generation}
+        cloner_defect_count={data.cloner_defect_count}
+        genetic_stability={data.genetic_stability}
+      />
     </Section>
   );
 
@@ -125,37 +174,35 @@ const HealthGraph = (props) => {
   );
 };
 
-const DisplayBloodPressure = (props, context) => {
-  const { data } = useBackend<OperatingComputerData>(context);
-  let blood_pressure_rendered = "--/--";
-  let blood_pressure_status = "NO PULSE";
-  let blood_volume = "--";
+const DisplayBloodPressure = (props:DisplayBloodPressureProps) => {
+  const {
+    occupied,
+    patient_status,
+    blood_pressure_rendered,
+    blood_pressure_status,
+    blood_volume,
+  } = props;
   let pressure_color = "grey";
-  if (data.occupied) {
-    if (data.patient_status !== 2) {
-      blood_pressure_rendered = data.blood_pressure_rendered;
-      blood_pressure_status = data.blood_pressure_status;
-      blood_volume = data.blood_volume.toString();
-      if (data.blood_volume <= 299) {
-        pressure_color = "red";
-      } else if (data.blood_volume <= 414) {
-        pressure_color = "yellow";
-      } else if (data.blood_volume <= 584) {
-        pressure_color = "green";
-      } else if (data.blood_volume <=665) {
-        pressure_color = "yellow";
-      } else {
-        pressure_color = "red";
-      }
+  if (occupied) {
+    if (blood_volume <= 299) {
+      pressure_color = "red";
+    } else if (blood_volume <= 414) {
+      pressure_color = "yellow";
+    } else if (blood_volume <= 584) {
+      pressure_color = "green";
+    } else if (blood_volume <= 665) {
+      pressure_color = "yellow";
+    } else {
+      pressure_color = "red";
     }
   }
 
   return (
     <Table.Row>
       <Table.Cell header textAlign="right" width={10}>Blood Pressure:</Table.Cell>
-      <Table.Cell width={10} color={pressure_color}>{blood_pressure_rendered} ({blood_pressure_status})</Table.Cell>
+      <Table.Cell width={10} color={pressure_color}>{occupied && patient_status !== 2 ? blood_pressure_rendered : "--/--"} ({occupied && patient_status !== 2 ? blood_pressure_status : "NO PULSE"})</Table.Cell>
       <Table.Cell header textAlign="right" width={10}>Blood Volume:</Table.Cell>
-      <Table.Cell width={10} color={pressure_color}>{blood_volume} units</Table.Cell>
+      <Table.Cell width={10} color={pressure_color}>{occupied ? blood_volume.toString() : "--"} units</Table.Cell>
     </Table.Row>
   );
 };
@@ -174,26 +221,26 @@ const DisplayRads = (props) => {
   }
 };
 
-const DisplayBrain = (props) => {
-  const { brain_damage_desc, brain_damage_value } = props;
-  if (brain_damage_desc !== "Okay") {
+const DisplayBrain = (props:DisplayBrainProps) => {
+  const { occupied, status } = props;
+  if (occupied && status.desc !== "Okay" && status.desc !== "Missing") {
     return (
       <Table.Row>
         <Table.Cell header textAlign="right" color="pink" width={10}>
           Brain Damage:
         </Table.Cell>
-        <Table.Cell width={10}>{brain_damage_desc}</Table.Cell>
+        <Table.Cell width={10} color={status.color}>{status.desc}</Table.Cell>
         <Table.Cell header textAlign="right" width={10}>Neuron Cohesion:</Table.Cell>
-        <Table.Cell>{((120-brain_damage_value)/120*100).toFixed(2)}%</Table.Cell>
+        <Table.Cell>{((120-status.value)/120*100).toFixed(2)}%</Table.Cell>
       </Table.Row>
     );
   }
 };
 
-const DisplayOrgans = (props, context) => {
-  const { organ_status } = props;
-  const { data } = useBackend<OperatingComputerData>(context);
-  if (data.occupied) {
+
+const DisplayOrgans = (props: DisplayOrgansProps) => {
+  const { occupied, organs } = props;
+  if (occupied) {
     return (
       <Stack.Item width={20}>
         <Table>
@@ -202,11 +249,14 @@ const DisplayOrgans = (props, context) => {
             <Table.Cell header>Status</Table.Cell>
           </Table.Row>
           {
-            organ_status.map((organ_bundle) => {
+            organs.map((organ_data: OrganData) => {
               return (
                 <DisplayOrgan
-                  key={organ_bundle["organ_name"]}
-                  bundle={organ_bundle}
+                  key={organ_data["organ"]}
+                  organ={organ_data["organ"]}
+                  state={organ_data["state"]}
+                  color={organ_data["color"]}
+                  special={organ_data["special"]}
                 />
               );
             })
@@ -216,53 +266,36 @@ const DisplayOrgans = (props, context) => {
     ); }
 };
 
-const DisplayOrgan = (props) => {
-  const { bundle } = props;
-  const organ_special = bundle["special"];
-  const organ_state = bundle["organ_state"];
-  const organ_name = bundle["organ_name"];
+const DisplayOrgan = (props: OrganData) => {
+  const {
+    organ,
+    state,
+    color,
+    special,
+  } = props;
 
-  let font_color = "green";
-  let is_bold = false;
-
-  if (organ_state === "Missing") {
-    font_color = "red";
-    is_bold = true;
-  }
-  if (organ_state === "Dead") {
-    font_color = "red";
-    is_bold = true;
-  }
-  if (organ_state === "Critical") {
-    font_color = "orange";
-    is_bold = true;
-  }
-  if (organ_state === "Significant") {
-    font_color = "orange";
-  }
-  if (organ_state === "Moderate") {
-    font_color = "yellow";
-  }
-
-  if (organ_state !== "Okay" || organ_special) {
+  if (state !== "Okay" || special) {
     return (
       <Table.Row>
         <Table.Cell header textAlign="right" width={10}>
-          {capitalize(spaceUnderscores(organ_name))}:
+          {capitalize(spaceUnderscores(organ))}:
         </Table.Cell>
-        <Table.Cell width={10} color={font_color} bold={is_bold}>
-          {organ_state !== "Okay" ? organ_state : "" }
-          {organ_special ? <Box color="white">{organ_special}</Box>: "" }
+        <Table.Cell
+          width={10}
+          color={color}
+          bold={state==="Missing" || state === "Dead" || state === "Critical"}
+        >
+          {state !== "Okay" ? state : "" }
+          {special ? <Box color="white">{special}</Box>: "" }
         </Table.Cell>
       </Table.Row>
     );
   }
 };
 
-const DisplayLimbs = (props, context) => {
-  const { limb_status } = props;
-  const { data } = useBackend<OperatingComputerData>(context);
-  if (data.occupied) {
+const DisplayLimbs = (props:DisplayLimbsProps) => {
+  const { occupied, limbs } = props;
+  if (occupied) {
     return (
       <Stack.Item width={20}>
         <Table>
@@ -271,11 +304,12 @@ const DisplayLimbs = (props, context) => {
             <Table.Cell header>Status</Table.Cell>
           </Table.Row>
           {
-            limb_status.map((limb_bundle) => {
+            limbs.map((limb_data: LimbData) => {
               return (
                 <DisplayLimb
-                  key={limb_bundle["limb"]}
-                  bundle={limb_bundle}
+                  key={limb_data["limb"]}
+                  limb={limb_data["limb"]}
+                  status={limb_data["status"]}
                 />
               );
             })
@@ -286,44 +320,33 @@ const DisplayLimbs = (props, context) => {
   }
 };
 
-const DisplayLimb = (props) => {
-  const { bundle } = props;
-  const limb_name = bundle["limb"];
-  const limb_status = bundle["status"];
-  let limb_color = "white";
-  let is_bold = false;
-
-  if (limb_status === "Missing") {
-    is_bold = true;
-    limb_color = "red";
-  }
-
-  if (limb_status !== "Okay") {
+const DisplayLimb = (props:DisplayLimbProps) => {
+  const { limb, status } = props;
+  if (status !== "Okay") {
     return (
       <Table.Row>
         <Table.Cell header textAlign="right" width={10}>
-          {capitalize(spaceUnderscores(limb_name))}:
+          {capitalize(spaceUnderscores(limb))}:
         </Table.Cell>
-        <Table.Cell width={10} color={limb_color} bold={is_bold}>{limb_status}</Table.Cell>
+        <Table.Cell
+          width={10}
+          color={status==="Missing" ? "red" : "white"}
+          bold={status==="Missing"}>{status}
+        </Table.Cell>
       </Table.Row>
     );
   }
 };
 
-const DisplayTemperature = (props, context) => {
-  const { data } = useBackend<OperatingComputerData>(context);
-  const { body_temp, optimal_temp } = props;
+const DisplayTemperature = (props: DisplayTemperatureProps) => {
+  const { occupied, body_temp, optimal_temp } = props;
   let font_color = "grey";
-  let body_temp_c = "--";
-  let body_temp_f = "--";
-  if (data.occupied) {
+  if (occupied) {
     if (body_temp >= (optimal_temp + 60)) { font_color="red"; }
     else if (body_temp >= (optimal_temp + 30)) { font_color="yellow"; }
     else if (body_temp <= (optimal_temp - 60)) { font_color="purple"; }
     else if (body_temp <= (optimal_temp - 30)) { font_color="blue"; }
     else { font_color = "green"; }
-    body_temp_c = (body_temp - 273.15).toFixed(2);
-    body_temp_f = ((body_temp - 273.15) * 1.8 + 32).toFixed(2);
   }
 
   return (
@@ -332,7 +355,7 @@ const DisplayTemperature = (props, context) => {
         Temperature:
       </Table.Cell>
       <Table.Cell color={font_color}>
-        { body_temp_c + "°C / " + body_temp_f + "°F"}
+        {occupied ? (body_temp - 273.15).toFixed(2) : "--"}°C  /  {occupied ?((body_temp - 273.15) * 1.8 + 32).toFixed(2) : "--" }°F
       </Table.Cell>
     </>
   );
@@ -362,14 +385,19 @@ const DisplayVitals = (props, context) => {
   );
 };
 
-const DisplayAnatomicalAnomolies = (props, context) => {
-  const { data } = useBackend<OperatingComputerData>(context);
-  if (data.occupied) {
+const DisplayAnatomicalAnomolies = (props:DisplayAnatomicalAnomoliesProps) => {
+  const {
+    occupied,
+    organs,
+    limbs,
+  } = props;
+
+  if (occupied) {
     return (
       <Section title="Anatomical Anomalies">
         <Stack>
-          <DisplayOrgans organ_status={data.organ_status} />
-          <DisplayLimbs limb_status={data.limb_status} />
+          <DisplayOrgans occupied={occupied} organs={organs} />
+          <DisplayLimbs occupied={occupied} limbs={limbs} />
         </Stack>
       </Section>);
   } else {
@@ -377,12 +405,12 @@ const DisplayAnatomicalAnomolies = (props, context) => {
   }
 };
 
-const DisplayBloodstreamContent = (props, context) => {
-  const { data } = useBackend<OperatingComputerData>(context);
-  if (data.occupied) {
+const DisplayBloodstreamContent = (props:DisplayBloodstreamContentProps) => {
+  const { occupied, reagent_container } = props;
+  if (occupied) {
     return (
       <Section title="Bloodstream Contents">
-        <ReagentGraph container={data.reagent_container} />
+        <ReagentGraph container={reagent_container} />
       </Section>
     );
   }
@@ -391,9 +419,18 @@ const DisplayBloodstreamContent = (props, context) => {
   }
 };
 
-const DisplayGeneticAnalysis = (props, context) => {
-  const { data } = useBackend<OperatingComputerData>(context);
-  if (data.occupied) {
+const DisplayGeneticAnalysis = (props: DisplayGeneticAnalysisProps) => {
+  const {
+    occupied,
+    age,
+    blood_type,
+    blood_color_value,
+    blood_color_name,
+    clone_generation,
+    cloner_defect_count,
+    genetic_stability,
+  } = props;
+  if (occupied) {
     return (
       <Section title="Genetic Analysis">
         <Stack>
@@ -401,16 +438,16 @@ const DisplayGeneticAnalysis = (props, context) => {
             <Table>
               <Table.Row>
                 <Table.Cell header textAlign="right">Age:</Table.Cell>
-                <Table.Cell >{data.age}</Table.Cell>
+                <Table.Cell >{age}</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell header textAlign="right">Blood Type:</Table.Cell>
-                <Table.Cell>{data.blood_type}</Table.Cell>
+                <Table.Cell>{blood_type}</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell header textAlign="right">Blood Color:</Table.Cell>
                 <Table.Cell>
-                  <ColorBox backgroundColor={data.blood_color_value} /> <span>{data.blood_color_name}</span>
+                  <ColorBox backgroundColor={blood_color_value} /> <span>{blood_color_name}</span>
                 </Table.Cell>
               </Table.Row>
             </Table>
@@ -419,15 +456,15 @@ const DisplayGeneticAnalysis = (props, context) => {
             <Table>
               <Table.Row>
                 <Table.Cell header textAlign="right">Clone Generation:</Table.Cell>
-                <Table.Cell >{data.clone_generation}</Table.Cell>
+                <Table.Cell >{clone_generation}</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell header textAlign="right">Genetic Defects:</Table.Cell>
-                <Table.Cell>{data.cloner_defects}</Table.Cell>
+                <Table.Cell>{cloner_defect_count}</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell header textAlign="right">Genetic Stability:</Table.Cell>
-                <Table.Cell>{data.genetic_stability}</Table.Cell>
+                <Table.Cell>{genetic_stability}</Table.Cell>
               </Table.Row>
             </Table>
           </Stack.Item>
@@ -439,7 +476,7 @@ const DisplayGeneticAnalysis = (props, context) => {
   }
 };
 
-const DisplayTitle = (props:OperatingComputerDisplayTitleProps, context) => {
+const DisplayTitle = (props:OperatingComputerDisplayTitleProps) => {
   const {
     occupied,
     patient_name,
@@ -480,43 +517,29 @@ const DisplayTitle = (props:OperatingComputerDisplayTitleProps, context) => {
   );
 };
 
-const DisplayKeyHealthIndicators = (props, context) => {
-  const { data } = useBackend<OperatingComputerData>(context);
-  return (
-    <Section title="Key Health Indicators">
-      <Table>
-        <DisplayBloodPressure />
-        <DisplayTempImplantRow />
-        { data.occupied ? <DisplayRads rad_stage={data.rad_stage} rad_dose={data.rad_dose} />: ""}
-        { data.occupied ? <DisplayBrain brain_damage_desc={data.brain_damage_desc} brain_damage_value={data.brain_damage_value} />:""}
-      </Table>
-      { data.occupied? <DisplayEmbeddedObjects embedded_objects={data.embedded_objects} />: ""}
-    </Section>);
-};
+const DisplayTempImplantRow = (props: DisplayTempImplantRowProps) => {
+  const {
+    occupied,
+    body_temp,
+    optimal_temp,
+    embedded_objects,
+  } = props;
 
-const DisplayTempImplantRow = (props, context) => {
-  const { data } = useBackend<OperatingComputerData>(context);
   return (
     <Table.Row>
-      <DisplayTemperature body_temp={data.body_temp} optimal_temp={data.optimal_temp} />
-      <DisplayImplants occupied={data.occupied} embedded_objects={data.embedded_objects} />
+      <DisplayTemperature occupied={occupied} body_temp={body_temp} optimal_temp={optimal_temp} />
+      <DisplayImplants occupied={occupied} embedded_objects={embedded_objects} />
     </Table.Row>
   );
 };
 
 const DisplayImplants = (props) => {
   const { embedded_objects, occupied } = props;
-  let text = "--";
-  let color = "grey";
-  if (occupied) {
-    text = `${embedded_objects["implant_count"]} implant${embedded_objects["implant_count"]===1?"":"s"}`;
-    color = "white";
-  }
   return (
     <>
       <Table.Cell header textAlign="right">Implants:</Table.Cell>
-      <Table.Cell color={color}>
-        {text}
+      <Table.Cell color={occupied ? "white": "grey"}>
+        {occupied ? `${embedded_objects["implant_count"]} implant${embedded_objects["implant_count"]===1 ? "" : "s"}` : "--"}
       </Table.Cell>
     </>
   );
@@ -527,7 +550,7 @@ const DisplayEmbeddedObjects = (props) => {
   return (
     <Box textAlign="center">
       {embedded_objects["has_chest_object"] ? <Box bold fontSize={1.2} color="red">Sizable foreign object located below sternum!</Box>: ""}
-      {embedded_objects["foreign_object_count"] ? <Box bold fontSize={1.2} color="red">Foreign object{embedded_objects["foreign_object_count"]>1?"s":""} detected!</Box> :""}
+      {embedded_objects["foreign_object_count"] ? <Box bold fontSize={1.2} color="red">Foreign object{embedded_objects["foreign_object_count"] > 1 ?"s" : ""} detected!</Box> : ""}
     </Box>
   );
 };
