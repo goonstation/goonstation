@@ -1,4 +1,9 @@
 
+(t)mon dec 05 22
+(u)LeahTheTech
+(p)12270
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Flockdrone egg cost now scales with the number of active flockdrones.
 (t)sat dec 03 22
 (u)Cheffie
 (p)12136
