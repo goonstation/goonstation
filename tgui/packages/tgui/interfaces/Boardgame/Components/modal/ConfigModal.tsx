@@ -59,6 +59,7 @@ type GenerateSvgBoardProps = {
 
 // Create an svg element with the boardgame specified in the boardInfo
 // The board size is 128x128
+// TODO: Remove this and use a board component instead
 const GenerateSvgBoard = ({ preset, size }: GenerateSvgBoardProps, context) => {
   const { act } = useBackend<BoardgameData>(context);
   const [configModalOpen, setConfigModalOpen] = useLocalState(context, 'configModalOpen', false);

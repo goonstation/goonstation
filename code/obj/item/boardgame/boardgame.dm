@@ -12,7 +12,7 @@
 #define MAP_TEXT_MOVE 0
 #define MAP_TEXT_CAPTURE 1
 
-#define DESIGN_CHECKERBOARD "checkerboard"
+#define BOARDSTYLE_CHECKERBOARD "checkerboard"
 
 #define SOUND_MOVE "move"
 #define SOUND_CAPTURE "capture"
@@ -51,7 +51,7 @@
 
 	var/game = "chess"
 	/// Used by TGUI to render a board design
-	var/design = DESIGN_CHECKERBOARD
+	var/design = BOARDSTYLE_CHECKERBOARD
 
 	/**
 	 * Designate the size of the board
@@ -564,7 +564,7 @@
 #undef MAP_TEXT_MOVE
 #undef MAP_TEXT_CAPTURE
 
-#undef PATTERN_CHECKERBOARD
+#undef BOARDSTYLE_CHECKERBOARD
 
 #undef SOUND_MOVE
 #undef SOUND_CAPTURE
