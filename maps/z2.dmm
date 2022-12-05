@@ -2688,8 +2688,7 @@
 /obj/item/luggable_computer/personal{
 	c_flags = 94208;
 	pixel_x = 1;
-	pixel_y = 10;
-
+	pixel_y = 10
 	},
 /obj/table/wood/auto/desk/lily,
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/ne,
@@ -31909,11 +31908,7 @@
 	layer = 2.8;
 	mouse_opacity = 0
 	},
-/obj/machinery/chem_dispenser/chemical{
-	desc = "Unlike other chem dispensers, this one's mostly just made for plants.";
-	dispensable_reagents = list("mutadone","saltpetre","ammonia","potash","poo","space_fungus","weedkiller","mutagen");
-	name = "botany dispenser"
-	},
+/obj/machinery/chem_dispenser/botany,
 /turf/unsimulated/floor/wood/three,
 /area/afterlife/heaven/hydroponics)
 "bUm" = (
@@ -34612,7 +34607,8 @@
 	invisibility = 101;
 	name = "autoname - Entertainment";
 	network = "Zeta";
-	tag = ""
+	tag = "";
+	invuln = 1
 	},
 /turf/unsimulated/floor{
 	icon_state = "0,6"
@@ -76294,7 +76290,8 @@
 	invisibility = 101;
 	name = "autoname - Entertainment";
 	network = "Zeta";
-	tag = ""
+	tag = "";
+	invuln = 1
 	},
 /obj/invisible_teleporter/receive_only{
 	id = "murderbox"

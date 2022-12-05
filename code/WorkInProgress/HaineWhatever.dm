@@ -1514,7 +1514,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	icon_state = "revolver"
 	desc = "There are 7 bullets left! Each shot will currently use 1 bullets!"
 	flags = FPRINT | TABLEPASS | EXTRADELAY
-	var/bangfired = 0 // Checks if the gun has been fired before or not. If it's been fired, no more firing for you
+	var/bangfired = FALSE // Checks if the gun has been fired before or not. If it's been fired, no more firing for you
 	var/description = "A bang flag pops out of the barrel!" // Used to fuck you and also decide what description is used for the fire text
 	icon = 'icons/obj/items/gun.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
@@ -1523,12 +1523,20 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	pixelaction(atom/target, params, mob/user, reach)
 		if(reach || src.bangfired)
 			..()
-		else
-			src.bangfired = 1
+		else if (!ON_COOLDOWN(src, "recent_fire", 30 SECOND))
+			src.bangfired = TRUE
 			user?.visible_message("<span class='alert'><span class='alert'>[user] fires [src][target ? " at [target]" : null]! [description]</span>")
 			playsound(user, 'sound/musical_instruments/Trombone_Failiure.ogg', 50, 1)
 			icon_state = "bangflag[icon_state]"
 			return
+		else
+			boutput(user, "<span class='notice'>The gun is still cooling down from it's last incredibly powerful shot! Or at least you pretend that it is.</span>")
+
+	attack_self(mob/user)
+		if (src.bangfired)
+			src.bangfired = FALSE
+			icon_state = initial(src.icon_state)
+			boutput(user, "<span class='notice'>You awkwardly jam the tiny flag back into the barrel.</span>")
 
 /obj/item/bang_gun/ak47
 	name = "ak-477"

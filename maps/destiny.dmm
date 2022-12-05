@@ -21925,6 +21925,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/xmastree/ephemeral,
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
 	},

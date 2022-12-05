@@ -17891,6 +17891,10 @@
 	icon_state = "floor2"
 	},
 /area/diner/jucer_trader)
+"eGm" = (
+/obj/landmark/random_room/size3x3,
+/turf/simulated/floor/black/grime,
+/area/diner/hallway/docking)
 "eGS" = (
 /obj/cable,
 /obj/machinery/power/smes{
@@ -85251,7 +85255,7 @@ aaa
 hny
 cyX
 cyX
-cyX
+eGm
 ctJ
 cyX
 gnt

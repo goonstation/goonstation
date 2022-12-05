@@ -647,7 +647,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				boutput(user, "The internal wiring doesn't seem to need repair.")
 				return
 		else if(istype(W,/obj/item/device/calibrator))
-			var/scalex = input(usr,"Accepts values 0 through [src.max_intensity]","Adjust Intensity","1") as num
+			var/scalex = input(user,"Accepts values 0 through [src.max_intensity]","Adjust Intensity","1") as num
 			scalex = clamp(scalex,0,src.max_intensity)
 			src.intensity = scalex
 			src.update_fx()

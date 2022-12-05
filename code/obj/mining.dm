@@ -156,7 +156,9 @@
 				if (!(O.type in mining_controls.magnet_do_not_erase) && !istype(O, /obj/magnet_target_marker))
 					qdel(O)
 			T.ClearAllOverlays()
-
+			for (var/mob/living/L in T)
+				if(ismobcritter(L) && isdead(L)) // we don't care about dead critters
+					qdel(L)
 			if(istype(T,/turf/unsimulated) && ( T.GetComponent(/datum/component/buildable_turf) || (station_repair.station_generator && (origin.z == Z_LEVEL_STATION))))
 				T.ReplaceWith(/turf/space, force=TRUE)
 			else
@@ -193,6 +195,8 @@
 		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
 
 			for (var/mob/living/L in T)
+				if(ismobcritter(L) && isdead(L)) // we don't care about dead critters
+					continue
 				if(!isintangible(L)) //neither blob overmind or AI eye should block this
 					unacceptable = TRUE
 					break
@@ -1467,6 +1471,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if(cell_type)
 			var/cell = new cell_type
 			AddComponent(/datum/component/cell_holder, cell)
+			RegisterSignal(src, COMSIG_CELL_SWAP, .proc/power_down)
 		BLOCK_SETUP(BLOCK_ROD)
 
 	// Seems like a basic bit of user feedback to me (Convair880).
@@ -1900,10 +1905,10 @@ obj/item/clothing/gloves/concussive
 
 	attack_self(mob/user) // Fixed --melon
 		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
-			boutput(usr, "<span class='alert'>The transporter is out of charge.</span>")
+			boutput(user, "<span class='alert'>The transporter is out of charge.</span>")
 			return
 		if (!length(global.cargo_pad_manager.pads))
-			boutput(usr, "<span class='alert'>No receivers available.</span>")
+			boutput(user, "<span class='alert'>No receivers available.</span>")
 		else
 			var/mob/holder = src.loc
 			var/selection = tgui_input_list(user, "Select Cargo Pad Location:", "Cargo Pads", global.cargo_pad_manager.pads, 15 SECONDS)

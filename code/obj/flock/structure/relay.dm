@@ -33,11 +33,6 @@
 	var/charge_time_length = 360 // in seconds
 	var/final_charge_time_length = 18
 	var/finished = FALSE
-	var/col_r = 0.1
-	var/col_g = 0.7
-	var/col_b = 0.6
-	var/datum/light/light
-	var/brightness = 0.5
 	var/shuttle_departure_delayed = FALSE
 
 /obj/flock_structure/relay/New()
@@ -107,27 +102,31 @@
 		src.conversion_radius++
 
 	var/elapsed = getTimeInSecondsSinceTime(src.time_started)
-	src.info_tag.set_info_tag("Completion time: [round(src.charge_time_length - elapsed)] seconds")
+	if (!src.finished)
+		src.info_tag.set_info_tag("Completion time: [round(src.charge_time_length - elapsed)] seconds")
+	else
+		src.info_tag.set_info_tag("Transmitting")
 	if(elapsed >= last_time_sound_played_in_seconds + sound_length_in_seconds)
 		play_sound()
 	if(elapsed >= charge_time_length/2) // halfway point, start doing more
 		if(icon_state == "structure-relay")
 			icon_state = "structure-relay-glow"
-
-		for(var/mob/M in mobs)
-			if(prob(20))
-				M.playsound_local(M, "sound/effects/radio_sweep[rand(1,5)].ogg", 20, 1)
-				if(prob(50))
-					boutput(M, "<span class='flocksay italic'>... [radioGarbleText("the signal will set you free")] ...</span>")
+		SPAWN(0)
+			for(var/mob/M as anything in mobs)
+				if(prob(20))
+					M.playsound_local(M, "sound/effects/radio_sweep[rand(1, 5)].ogg", 20, 1)
+					if(prob(50))
+						boutput(M, "<span class='flocksay italic'>... [radioGarbleText("the signal will set you free")] ...</span>")
 	if(elapsed >= charge_time_length)
 		unleash_the_signal()
 
 /obj/flock_structure/relay/proc/play_sound()
 	src.last_time_sound_played_in_seconds = getTimeInSecondsSinceTime(src.time_started)
 	var/center_loc = get_turf(src)
-	for(var/mob/M in mobs)
-		M.playsound_local(M, 'sound/ambience/spooky/Flock_Reactor.ogg', 35, 0, 2)
-		boutput(M, "<span class='flocksay bold'>You hear something unworldly coming from the <i>[dir2text(get_dir(M, center_loc))]</i>!</span>")
+	SPAWN(0)
+		for(var/mob/M as anything in mobs)
+			M.playsound_local(M, 'sound/ambience/spooky/Flock_Reactor.ogg', 35, 0, 2)
+			boutput(M, "<span class='flocksay bold'>You hear something unworldly coming from the <i>[dir2text(get_dir(M, center_loc))]</i>!</span>")
 
 /obj/flock_structure/relay/proc/convert_turfs()
 	SPAWN(0)
@@ -142,37 +141,38 @@
 	logTheThing(LOG_GAMEMODE, src, "Flock relay[src.flock ? " belonging to flock [src.flock.name]" : ""] unleashes the signal, exploding at [log_loc(src)].")
 	src.finished = TRUE
 	src.flock.relay_finished = TRUE
-	processing_items -= src
 	var/turf/location = get_turf(src)
 	overlays += "structure-relay-sparks"
 	desc = "Your life is flashing before your eyes. Looks like this is the end."
 	flock_speak(null, "!!! TRANSMITTING SIGNAL !!!", src.flock)
 	src.visible_message("<span class='flocksay bold'>[src] begins sparking wildly! The air is charged with static!</span>")
-	for(var/mob/M in mobs)
-		M.playsound_local(M, 'sound/misc/flockmind/flock_broadcast_charge.ogg', 30, 0)
-	sleep(final_charge_time_length SECONDS)
 
-	for(var/mob/M in mobs)
-		M.playsound_local(M, 'sound/misc/flockmind/flock_broadcast_kaboom.ogg', 30, 0)
-		M.flash(3 SECONDS)
-	if (!src.shuttle_departure_delayed)
-		SPAWN(1 SECOND)
-			emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
-			emergency_shuttle.incall()
-			emergency_shuttle.can_recall = FALSE
-			emergency_shuttle.settimeleft(60) // cut the time down to keep some sense of urgency
-			boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
-			boutput(world, "<span class='notice'>- - - <b>Reason:</b> Hostile transmission intercepted. Sending rapid response emergency shuttle.</span>")
-			boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft())] seconds.</B></span>")
-	sleep(2 SECONDS)
-	for(var/x = -2 to 2)
-		for(var/y = -2 to 2)
-			flockdronegibs(locate(location.x + x, location.y + y, location.z))
-	explosion_new(src, location, 2000)
-	gib(location)
-	flock_signal_unleashed = TRUE
-	sleep(2 SECONDS) //allow them to hear the explosion before their headsets scream and die
-	destroy_radios()
+	SPAWN(0)
+		for(var/mob/M as anything in mobs)
+			M.playsound_local(M, 'sound/misc/flockmind/flock_broadcast_charge.ogg', 30, 0)
+		sleep(final_charge_time_length SECONDS)
+
+		for(var/mob/M as anything in mobs)
+			M.playsound_local(M, 'sound/misc/flockmind/flock_broadcast_kaboom.ogg', 30, 0)
+			M.flash(3 SECONDS)
+		if (!src.shuttle_departure_delayed)
+			SPAWN(1 SECOND)
+				emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
+				emergency_shuttle.incall()
+				emergency_shuttle.can_recall = FALSE
+				emergency_shuttle.settimeleft(60) // cut the time down to keep some sense of urgency
+				boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
+				boutput(world, "<span class='notice'>- - - <b>Reason:</b> Hostile transmission intercepted. Sending rapid response emergency shuttle.</span>")
+				boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft())] seconds.</B></span>")
+		sleep(2 SECONDS)
+		for(var/x = -2 to 2)
+			for(var/y = -2 to 2)
+				flockdronegibs(locate(location.x + x, location.y + y, location.z))
+		explosion_new(src, location, 2000)
+		gib(location)
+		flock_signal_unleashed = TRUE
+		sleep(2 SECONDS) //allow them to hear the explosion before their headsets scream and die
+		destroy_radios()
 
 ///Brick every headset noisily
 /obj/flock_structure/relay/proc/destroy_radios()

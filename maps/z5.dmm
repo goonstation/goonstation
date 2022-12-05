@@ -1289,7 +1289,6 @@
 /area/mining/manufacturing)
 "rI" = (
 /obj/table/auto,
-/obj/machinery/recharger,
 /obj/item/device/light/flashlight,
 /turf/simulated/floor/grime,
 /area/tech_outpost)
@@ -3331,8 +3330,8 @@
 	icon_state = "1-4"
 	},
 /obj/storage/crate,
-/obj/item/clothing/under/misc/rusmob,
-/obj/item/clothing/under/misc/colmob,
+/obj/item/clothing/under/misc/mobster,
+/obj/item/clothing/under/misc/mobster/alt,
 /turf/simulated/floor/plating/damaged3,
 /area/spyshack)
 "Ec" = (

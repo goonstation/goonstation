@@ -519,11 +519,11 @@
 
 		proc/getStage()
 			. = 1
-			if(min(duration*2, counter) < BURNING_LV2)
-				return
-			else if (min(duration*2, counter) >= BURNING_LV2 && min(duration*2, counter) < BURNING_LV3)
+			if(clamp(counter, duration, duration*2) < BURNING_LV2)
+				return 1
+			else if (clamp(counter, duration, duration*2) >= BURNING_LV2 && min(duration*2, counter) < BURNING_LV3)
 				return 2
-			else if (min(duration*2, counter) >= BURNING_LV3)
+			else if (clamp(counter, duration, duration*2) >= BURNING_LV3)
 				return 3
 
 		proc/switchStage(var/toStage)
@@ -1586,6 +1586,24 @@
 	maxDuration = null
 	change = -5
 
+/datum/statusEffect/staminaregen/clone
+	id = "stamclone"
+	name = "Weakened"
+	desc = "You feel a bit weaker than usual."
+	icon_state = "stam-"
+	duration = INFINITE_STATUS
+	maxDuration = null
+
+	onAdd(optional=null)
+		if (!optional)
+			stack_trace("Added /datum/statusEffect/staminaregen/clone with 0/null duration.")
+			qdel(src)
+			return
+
+		src.change = optional
+		. = ..()
+
+
 /datum/statusEffect/miasma
 	id = "miasma"
 	name = "Miasma"
@@ -2200,3 +2218,31 @@
 	onRemove()
 		. = ..()
 		owner.remove_filter("gnesis_tint")
+
+#define LAUNDERED_COLDPROT_AMOUNT 2 /// Amount of coldprot(%) given to each item of wearable clothing
+#define LAUNDERED_STAIN_TEXT "freshly-laundered" /// Name of the "stain" given to wearable clothing
+/datum/statusEffect/freshly_laundered
+	id = "freshly_laundered"
+	name = "Freshly Laundered"
+
+	visible = FALSE
+	unique = TRUE
+	maxDuration = 5 MINUTES
+
+	onAdd(optional)
+		. = ..()
+		if (istype(owner, /obj/item/clothing/))
+			var/obj/item/clothing/C = owner
+			C.add_stain(LAUNDERED_STAIN_TEXT) // we just cleaned them so this is cheeky...
+			C.setProperty("coldprot", C.getProperty("coldprot") + LAUNDERED_COLDPROT_AMOUNT)
+
+	onRemove()
+		. = ..()
+		if (istype(owner, /obj/item/clothing/))
+			var/obj/item/clothing/C = owner
+			C.setProperty("coldprot", C.getProperty("coldprot") - LAUNDERED_COLDPROT_AMOUNT)
+			if (C.stains)
+				C.stains -= LAUNDERED_STAIN_TEXT
+
+#undef LAUNDERED_COLDPROT_AMOUNT
+#undef LAUNDERED_STAIN_TEXT

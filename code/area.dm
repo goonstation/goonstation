@@ -486,9 +486,9 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			setdead(jerk)
 			jerk.remove()
 		else if (isobj(O) && !(istype(O, /obj/overlay/tile_effect) || O.anchored == 2 || istype(O, /obj/landmark)))
-			#ifdef RUNTIME_CHECKING
+			#ifdef CHECK_MORE_RUNTIMES
 			if(current_state <= GAME_STATE_WORLD_NEW)
-				CRASH("[O] ([O.type]) got deleted by a cordon at [O.x],[O.y],[O.z] ([O.loc.loc] [O.loc.type]) during world initialization")
+				CRASH("[identify_object(O)] got deleted by a cordon at [O.x],[O.y],[O.z] ([O.loc.loc] [O.loc.type]) during world initialization")
 			#endif
 			qdel(O)
 		return
@@ -2656,7 +2656,7 @@ ABSTRACT_TYPE(/area/station/engine/substation)
 	icon_state = "prototype_engine"
 
 /area/station/engine/thermo
-	name = "Thermoelectric generator"
+	name = "Thermoelectric Generator"
 	icon_state = "prototype_engine"
 
 /area/station/engine/proto_gangway
@@ -2668,7 +2668,7 @@ ABSTRACT_TYPE(/area/station/engine/substation)
 
 
 /area/station/teleporter
-	name = "Teleporter"
+	name = "Command Teleporter"
 	icon_state = "teleporter"
 	sound_environment = 3
 	workplace = 1
@@ -3544,6 +3544,31 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 	teleport_blocked = 1
 	spy_secure_area = TRUE
 	station_map_colour = MAPC_ARMOURY
+	var/static/list/entered_ckeys = list()
+
+	Entered(atom/movable/A, atom/oldloc)
+		. = ..()
+		if (current_state < GAME_STATE_FINISHED)
+			if(istype(A, /mob/living) && !istype(A, /mob/living/intangible))
+				var/mob/living/M = A
+				if(!M.client)
+					return
+				if(M.client.holder)
+					return
+				if(M.client.ckey in entered_ckeys)
+					return
+				if (M.mind && M.mind.assigned_role == "Head of Security")
+					return
+				var/armory_auth = FALSE
+				for_by_tcl(O, /obj/machinery/computer/riotgear)
+					if (O.authed)
+						armory_auth = TRUE
+						break
+				var/ckey = M.client.ckey
+				entered_ckeys += ckey
+				SPAWN(120 SECONDS)
+					entered_ckeys -= ckey
+				logTheThing(LOG_DEBUG, M, "entered the Armory [log_loc(M)][armory_auth ? "" : " - Armory unauthorized"].")
 
 // // // // // //
 

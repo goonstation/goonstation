@@ -625,6 +625,10 @@ that cannot be itched
 	c_flags = ONBELT
 	mats = 3
 
+	#define PRISONER_MODE_NONE 1
+	#define PRISONER_MODE_PAROLED 2
+	#define PRISONER_MODE_RELEASED 3
+	#define PRISONER_MODE_INCARCERATED 4
 
 	///List of record settings
 	var/list/modes = list(PRISONER_MODE_NONE, PRISONER_MODE_PAROLED, PRISONER_MODE_INCARCERATED, PRISONER_MODE_RELEASED)
@@ -755,6 +759,45 @@ that cannot be itched
 	dropped(var/mob/user)
 		. = ..()
 		user.closeContextActions()
+
+//// Prisoner Scanner Context Action
+/datum/contextAction/prisoner_scanner
+	icon = 'icons/ui/context16x16.dmi'
+	close_clicked = TRUE
+	close_moved = FALSE
+	desc = ""
+	icon_state = "wrench"
+	var/mode = PRISONER_MODE_NONE
+
+	execute(var/obj/item/device/prisoner_scanner/prisoner_scanner, var/mob/user)
+		if(!istype(prisoner_scanner))
+			return
+		prisoner_scanner.switch_mode(src.mode, user)
+
+	checkRequirements(var/obj/item/device/prisoner_scanner/prisoner_scanner, var/mob/user)
+		return prisoner_scanner in user
+
+	none
+		name = "None"
+		icon_state = "none"
+		mode = PRISONER_MODE_NONE
+	Paroled
+		name = "Paroled"
+		icon_state = "paroled"
+		mode = PRISONER_MODE_PAROLED
+	incarcerated
+		name = "Incarcerated"
+		icon_state = "incarcerated"
+		mode = PRISONER_MODE_INCARCERATED
+	released
+		name = "Released"
+		icon_state = "released"
+		mode = PRISONER_MODE_RELEASED
+
+#undef PRISONER_MODE_NONE
+#undef PRISONER_MODE_PAROLED
+#undef PRISONER_MODE_RELEASED
+#undef PRISONER_MODE_INCARCERATED
 
 /obj/item/device/ticket_writer
 	name = "Security TicketWriter 2000"

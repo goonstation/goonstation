@@ -46,6 +46,8 @@
 	var/beepsky_held_this = 0 // Did a certain validhunter hold this?
 	var/flipped = false //is it currently rotated so that youre grabbing it by the head?
 
+	var/item_special_path = /datum/item_special/spark/baton
+
 	New()
 		..()
 		var/cell = null
@@ -55,7 +57,7 @@
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		processing_items |= src
 		src.UpdateIcon()
-		src.setItemSpecial(/datum/item_special/spark/baton)
+		src.setItemSpecial(src.item_special_path)
 
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -83,6 +85,8 @@
 	emp_act()
 		src.is_active = FALSE
 		src.process_charges(-INFINITY)
+		src.visible_message("[src] sparks briefly as it overloads!")
+		playsound(src, "sparks", 75, 1, -1)
 		return
 
 	update_icon()
@@ -312,14 +316,14 @@
 			animate(transform = turn(matrix(), 240), time = 0.07 SECONDS) //turn the rest of the way
 			animate(transform = turn(matrix(), 180), time = 0.04 SECONDS) //finish up at the right spot
 			src.transform = null //clear it before updating icon
-			src.setItemSpecial(/datum/item_special/spark/baton)
+			src.setItemSpecial(src.item_special_path)
 			src.UpdateIcon()
 			user.update_inhands()
 			user.show_text("<B>You flip \the [src] and grab it by the base!", "red")
 
 	dropped(mob/user)
 		if (src.flipped)
-			src.setItemSpecial(/datum/item_special/spark/baton)
+			src.setItemSpecial(src.item_special_path)
 			src.flipped = false
 			src.UpdateIcon()
 			user.update_inhands()
@@ -405,12 +409,11 @@
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_baton
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
 	item_function_flags = 0
+
+	item_special_path = /datum/item_special/spark/ntso
+
 	//bascially overriding is_active, but it's kinda hacky in that they both are used jointly
 	var/state = EXTENDO_BATON_CLOSED_AND_OFF
-
-	New()
-		..()
-		src.setItemSpecial(/datum/item_special/spark/ntso) //override spark of parent
 
 	//change for later for more interestings whatsits
 	// can_stun(var/requires_electricity = 0, var/amount = 1, var/mob/user)
