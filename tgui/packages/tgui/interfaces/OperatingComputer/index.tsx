@@ -355,7 +355,7 @@ const DisplayTemperature = (props: DisplayTemperatureProps) => {
         Temperature:
       </Table.Cell>
       <Table.Cell color={font_color}>
-        {occupied ? (body_temp - 273.15).toFixed(2) : "--"}°C  /  {occupied ?((body_temp - 273.15) * 1.8 + 32).toFixed(2) : "--" }°F
+        {occupied ? (body_temp - 273.15).toPrecision(4) : "--"}°C  /  {occupied ?((body_temp - 273.15) * 1.8 + 32).toPrecision(4) : "--" }°F
       </Table.Cell>
     </>
   );
