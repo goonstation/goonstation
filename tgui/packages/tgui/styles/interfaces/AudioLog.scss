@@ -1,6 +1,11 @@
 @use '../base.scss';
 
 .audiolog__ {
+
+  &monospaced {
+    font-family: monospace;
+  }
+
   &outerwrapper {
     border-radius: 10px;
     margin: 10px;
@@ -73,8 +78,4 @@
       }
     }
   }
-}
-
-.thefuck {
-  font-family: monospace;
 }

@@ -28,11 +28,11 @@ export const AudioLog = (props, context) => {
       <Window.Content>
         <Box className="audiolog__outerwrapper">
           <Box className={classes(['audiolog__lcdscreen', 'audiolog__labelscreen'])}>
-            {tape ? <LabelScreenMarquee /> : "INSERT TAPE" }
+            <LabelScreen />
           </Box>
           <Box className="audiolog__lcdscreen">
             <LabeledList>
-              <LabeledList.Item label="MEMORY" labelColor="white" className="thefuck">
+              <LabeledList.Item label="MEMORY" labelColor="white" className="audiolog__monospaced">
                 <ProgressBar
                   ranges={{
                     good: [0, 0.5],
@@ -41,13 +41,25 @@ export const AudioLog = (props, context) => {
                   }}
                   value={tape ? (occupied_memory/memory_capacity) : 0} />
               </LabeledList.Item>
-              <LabeledList.Item label="PROGRESS" labelColor="white" className="thefuck">
-                <Slider
-                  animated
-                  color="good"
-                  minValue={1}
-                  maxValue={occupied_memory}
-                  value={tape ? current_line : 0} />
+              <LabeledList.Item label="LINE" labelColor="white" className="audiolog__monospaced">
+                {(mode === MODE_OFF)
+                  ? (
+                    <Slider
+                      animated
+                      color="good"
+                      minValue={1}
+                      maxValue={occupied_memory}
+                      value={tape ? current_line : 0} />
+                  )
+                  : (
+                    <ProgressBar
+                      color="good"
+                      minValue={1}
+                      maxValue={occupied_memory}
+                      value={tape ? current_line : 0}>
+                      {current_line}
+                    </ProgressBar>
+                  )}
               </LabeledList.Item>
             </LabeledList>
           </Box>
@@ -66,15 +78,26 @@ export const AudioLog = (props, context) => {
   );
 };
 
-const LabelScreenMarquee = (_, context) => {
+const LabelScreen = (_, context) => {
 
   const { data } = useBackend<AudioLogData>(context);
-  const { tape_name } = data;
+  const { mode, tape_name } = data;
+
+  const renderLabel = (value: number) => {
+    switch (value) {
+      case MODE_OFF:
+        return (
+          <marquee>
+            LOADED TAPE: {tape_name}
+          </marquee>
+        );
+      case MODE_RECORDING:
+      case MODE_PLAYING:
+    }
+  };
 
   return (
-    <marquee>
-      LOADED TAPE: {tape_name}
-    </marquee>
+    renderLabel(mode)
   );
 };
 
