@@ -1441,6 +1441,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\critter\zombie.dm"
 #include "code\obj\decal\cleanable.dm"
 #include "code\obj\decal\flock.dm"
+#include "code\obj\decal\misc.dm"
 #include "code\obj\decal\poster.dm"
 #include "code\obj\decal\tile_edge.dm"
 #include "code\obj\effects\bad_smoke.dm"
