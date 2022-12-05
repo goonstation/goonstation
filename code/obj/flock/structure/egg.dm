@@ -17,6 +17,7 @@
 
 /obj/flock_structure/egg/New()
 	..()
+	src.flock?.updateEggCost()
 	src.info_tag.set_info_tag("Time left: [src.build_time] seconds")
 
 /obj/flock_structure/egg/building_specific_info()
@@ -45,6 +46,10 @@
 		make_cleanable( /obj/decal/cleanable/flockdrone_debris/fluid,T)
 		decal_made = TRUE
 	..()
+
+/obj/flock_structure/egg/disposing()
+	. = ..()
+	src.flock?.updateEggCost()
 
 /obj/flock_structure/egg/bit
 	flock_id = "Secondary Second-Stage Assembler"
