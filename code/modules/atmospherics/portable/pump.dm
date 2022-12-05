@@ -124,11 +124,7 @@
 		"direction_out" = src.direction_out
 	)
 
-	.["holding"] = isnull(holding) ? null : list(
-		"name" = src.holding.name,
-		"pressure" = MIXTURE_PRESSURE(src.holding.air_contents),
-		"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
-	)
+	.["holding"] = src.holding.ui_describe()
 
 /obj/machinery/portable_atmospherics/pump/ui_static_data(mob/user)
 	. = list(

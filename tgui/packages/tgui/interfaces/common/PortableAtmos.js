@@ -45,11 +45,12 @@ export const PortableHoldingTank = props => {
   const {
     holding,
     onEjectTank,
+    title,
   } = props;
 
   return (
     <Section
-      title="Holding Tank"
+      title={title || "Holding Tank"}
       minHeight="115px"
       buttons={(
         <Button
