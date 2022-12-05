@@ -3,9 +3,10 @@ import { useActions, useStates } from '../../../../utils/config';
 import { BoardgameData } from '../../../../utils/types';
 import GridGuideRenderer from '../../common/GridGuideRenderer';
 import GridPieceRenderer from '../../common/GridPieceRenderer';
+import { StyleProps } from '../types';
 import CheckerBoardPattern from './CheckerBoardPattern';
 
-export const CheckerBoard = (props, context) => {
+export const CheckerBoard = ({ interactable }: StyleProps, context) => {
   const { act, data } = useBackend<BoardgameData>(context);
   const { pieces, currentUser } = data;
   const { tileSize, isFlipped, mouseCoords } = useStates(context);
@@ -44,15 +45,16 @@ export const CheckerBoard = (props, context) => {
     // Account for the fact that the backend
     // is a bit slow so we need to check if the
     // piece is held by the user before placing it
-    let tries = 10; // 10 tries, 1 second max
+    let tries = 20; // 20 tries, 2 seconds max
 
     const waitForChange = () => {
       if (tries > 0) {
+        piecePlace(currentUser.ckey, boardX, boardY);
         setTimeout(() => {
           if (!currentUser.selected) {
             waitForChange();
           } else {
-            piecePlace(currentUser.ckey, boardX, boardY);
+            return; // Success
           }
         }, 100);
       }
@@ -69,6 +71,7 @@ export const CheckerBoard = (props, context) => {
         height: '100%',
       }}
       onMouseDown={(e) => {
+        if (!interactable) return;
         if (e.button === 0) {
           if (currentUser.palette || currentUser.selected) {
             onPlace(e);
@@ -76,6 +79,7 @@ export const CheckerBoard = (props, context) => {
         }
       }}
       onMouseUp={(e) => {
+        if (!interactable) return;
         if (e.button === 0) {
           if (currentUser.palette) {
             onPlace(e);
@@ -89,14 +93,10 @@ export const CheckerBoard = (props, context) => {
             }
           }
         }
-      }}
-      onDblClick={(e) => {
-        if (currentUser.selected) {
-        }
       }}>
       <CheckerBoardPattern />
       <GridGuideRenderer />
-      <GridPieceRenderer pieces={pieces} />
+      <GridPieceRenderer pieces={pieces} interactable />
     </div>
   );
 };
