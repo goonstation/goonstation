@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
 import { PortableHoldingTank } from './common/PortableAtmos';
 import { Button, Stack, Knob, Box, Icon, AnimatedNumber, Section, NumberInput } from '../components';
-import { ReagentGraph, NoContainer } from './common/ReagentInfo';
+import { ReagentBar } from './common/ReagentInfo';
 import { getTemperatureColor, getTemperatureIcon, freezeTemperature } from './common/temperatureUtils';
 import { Window } from '../layouts';
 
@@ -114,7 +114,8 @@ export const Flamethrower = (props, context) => {
                   onClick={() => act('remove_fuel')} />
               )}
             >
-              <ReagentGraph container={fuelTank || NoContainer} />
+              {fuelTank
+              && <ReagentBar container={fuelTank} height="5em" /> }
             </Section>
           </Stack.Item>
         </Stack>

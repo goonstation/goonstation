@@ -781,7 +781,7 @@ A Flamethrower in various states of assembly
 		"chamberVolume" = src.amt_chem,
 	)
 	var/gastank_in_range = ((src.gastank in src.contents) || (src.gastank in user.get_equipped_items()))
-	var/spraytemp = ""
+	var/spraytemp = "!NAN!"
 	if(istype(src.fueltank) && gastank_in_range)
 		if(src.lit)
 			spraytemp = src.base_temperature

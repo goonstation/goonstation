@@ -5,11 +5,12 @@
  * @license ISC
  */
 
-import { Box, ColorBox, Flex, Icon, NoticeBox, Section, Tooltip } from '../../components';
+import { Box, ColorBox, Flex, Icon, NoticeBox, Section, Tooltip, Stack, ProgressBar } from '../../components';
 import { freezeTemperature } from './temperatureUtils';
 import { BoxProps } from '../../components/Box';
 import { BooleanLike } from 'common/react';
 import { InfernoNode } from 'inferno';
+import { Color } from '../../../common/color';
 
 interface ReagentContainer {
   name?: string;
@@ -218,4 +219,45 @@ ReagentList.defaultHooks = {
   onComponentShouldUpdate: (lastProps: ReagentInfoProps, nextProps: ReagentInfoProps) => {
     return reagentInfoDiffers(lastProps, nextProps);
   },
+};
+
+export const ReagentBar = (props: ReagentInfoProps) => {
+  const {
+    className = '',
+    container,
+    ...rest
+  } = props;
+  const { maxVolume, totalVolume, finalColor } = container;
+  const color : Color = Color.fromHex(finalColor);
+  const lightness = (color['r'] + color['r'] + color['r'])/3;
+  return (
+    <Stack align="center" pb={1}>
+      <Stack.Item>
+        <Box
+          textAlign="right"
+          width="3em"
+        >
+          {`${totalVolume}u`}
+        </Box>
+      </Stack.Item>
+      <Stack.Item grow>
+        <ProgressBar
+          value={totalVolume}
+          minValue={0}
+          maxValue={maxVolume}
+          color={finalColor}
+          textColor={lightness > 255/2 ? "#000000" : "#FFFFFF"}
+          {...rest}
+        />
+      </Stack.Item>
+      <Stack.Item>
+        <Box
+          textAlign="left"
+          width="3em"
+        >
+          {`${maxVolume}u`}
+        </Box>
+      </Stack.Item>
+    </Stack>
+  );
 };
