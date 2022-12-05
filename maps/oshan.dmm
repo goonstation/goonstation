@@ -1427,14 +1427,24 @@
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/disposalpipe/segment/mail,
 /obj/cable{
-	icon_state = "4-8"
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/security/brig)
 "adb" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
-	icon_state = "4-8"
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/security/brig)
@@ -18059,13 +18069,14 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aSB" = (
-/obj/disposalpipe/trunk/mail/north,
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 1;
-	mail_tag = "security processing";
-	pixel_y = 32
+/obj/disposalpipe/segment/mail{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
-/turf/simulated/floor,
+/obj/machinery/navbeacon/mule/security_north{
+	codes_txt = "delivery;dir=8"
+	},
+/turf/simulated/floor/bot,
 /area/station/security/processing)
 "aSC" = (
 /obj/machinery/disposal/mail/autoname{
@@ -21826,7 +21837,6 @@
 /turf/simulated/floor/darkpurple,
 /area/station/crew_quarters/data)
 "beU" = (
-/obj/machinery/light_switch/auto,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	d2 = 2;
@@ -34173,6 +34183,9 @@
 "bKJ" = (
 /obj/disposaloutlet,
 /obj/disposalpipe/trunk/brig,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor,
 /area/station/security/brig)
 "bKK" = (
@@ -35075,9 +35088,6 @@
 /obj/item/clothing/suit/bedsheet/orange,
 /obj/item/instrument/harmonica,
 /obj/item/clothing/glasses/vr/arcade,
-/obj/machinery/status_display{
-	pixel_x = -32
-	},
 /turf/simulated/floor,
 /area/station/security/brig)
 "bNq" = (
@@ -36317,7 +36327,9 @@
 /turf/simulated/floor/grime,
 /area/space)
 "bQA" = (
-/obj/machinery/door_timer/genpop/new_walls/north,
+/obj/machinery/door_timer/genpop/new_walls/north{
+	layer = 29
+	},
 /turf/simulated/floor,
 /area/station/security/processing)
 "bQB" = (
@@ -37397,13 +37409,12 @@
 "bTc" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/bot/guardbot/old/tourguide/oshan,
 /obj/machinery/navbeacon/tour/oshan/tour21,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/darkblue{
 	dir = 10
 	},
@@ -37695,6 +37706,10 @@
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
 	},
 /turf/simulated/floor,
 /area/station/security/processing)
@@ -46268,6 +46283,10 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/delivery,
 /area/station/security/processing)
 "nhW" = (
@@ -46514,10 +46533,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
 /obj/cable{
 	d1 = 1;
 	d2 = 4;
@@ -46526,8 +46541,12 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/navbeacon/mule/security_north,
-/turf/simulated/floor/bot,
+/obj/machinery/disposal/mail/small/autoname{
+	dir = 4;
+	mail_tag = "radio booth"
+	},
+/obj/disposalpipe/trunk/mail/north,
+/turf/simulated/floor,
 /area/station/security/processing)
 "oDh" = (
 /obj/machinery/power/apc/autoname_south,
@@ -47515,6 +47534,11 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost/chamber)
+"tTu" = (
+/obj/machinery/portable_atmospherics/canister/air/large,
+/obj/machinery/light_switch/auto,
+/turf/simulated/floor/yellow,
+/area/station/engine/gas)
 "tVl" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/AI,
@@ -109211,7 +109235,7 @@ aJZ
 aJZ
 aJZ
 aJZ
-aPT
+tTu
 aPT
 aPR
 adS
