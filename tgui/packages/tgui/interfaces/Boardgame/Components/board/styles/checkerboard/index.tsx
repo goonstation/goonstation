@@ -36,6 +36,11 @@ export const CheckerBoard = (props, context) => {
   const onPlace = (e) => {
     const [boardX, boardY] = boardPos(e);
 
+    if (currentUser.palette) {
+      piecePlace(currentUser.ckey, boardX, boardY);
+      return;
+    }
+
     // Account for the fact that the backend
     // is a bit slow so we need to check if the
     // piece is held by the user before placing it
