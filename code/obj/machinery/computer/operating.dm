@@ -276,8 +276,8 @@
 	return limb_data
 
 /obj/machinery/computer/operating/proc/check_embedded_objects(var/mob/living/L)
-	var/foreign_object_count = FALSE
-	var/implant_count = FALSE
+	var/foreign_object_count = 0
+	var/implant_count = 0
 	var/has_chest_object = FALSE
 	if (length(L.implant))
 		for (var/obj/item/implant/I in L.implant)
