@@ -1730,16 +1730,17 @@
 
 //fake lizard stuff
 
-/obj/item/clothing/suit/gimmick/dinosaur
+/obj/item/clothing/suit/hoodie/dinosaur
 	name = "dinosaur pajamas"
 	desc = "It has a little hood you can flip up and down. Rawr!"
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	icon_state = "dinosaur"
 	item_state = "dinosaur"
+	icon_underlay_state = "dinosaur-underlay"
 	hides_from_examine = C_UNIFORM
-
-	New()
-		..()
-		src.AddComponent(/datum/component/toggle_hood, hood_style="dinosaur")
+	color = "#00b122"
+	hood_style = "dinosaur"
 
 	setupProperties()
 		..()

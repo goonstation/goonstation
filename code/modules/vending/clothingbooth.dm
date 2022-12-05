@@ -34,6 +34,7 @@ var/list/clothingbooth_items = list()
 	src.preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace, name=user.real_name)
 	qdel(src.preview_item)
 	src.preview_item = null
+	src.selected_color = null
 	src.preview.remove_all_clients()
 	src.preview.add_client(user.client)
 
@@ -46,6 +47,7 @@ var/list/clothingbooth_items = list()
 /obj/machinery/clothingbooth
 	var/datum/character_preview/multiclient/preview
 	var/obj/item/preview_item = null
+	var/selected_color = null
 	var/money = 0
 	var/open = TRUE
 	name = "Clothing Booth"
@@ -78,11 +80,22 @@ var/list/clothingbooth_items = list()
 		if(!(usr in src.contents))
 			return
 		var/itempath = text2path(href_list["path"])
-		switch(href_list["command"])
+		var/command = href_list["command"]
+
+		if(cb_item.colored)
+			var/newColor = input("Pick a color:","Clothing color", src.selected_color) as null|color
+			if(newColor != src.selected_color)
+				command="render"
+			src.selected_color = newColor
+
+		switch(command)
 			if("spawn")
 				if(text2num_safe(cb_item.cost) <= src.money)
 					money -= text2num_safe(cb_item.cost)
-					usr.put_in_hand_or_drop(new itempath(src))
+					var/obj/item/vended_item = new itempath(src)
+					if(src.selected_color)
+						vended_item.color = src.selected_color
+					usr.put_in_hand_or_drop(vended_item)
 				else
 					boutput(usr, "<span class='alert'>Insufficient funds!</span>")
 					animate_shake(src, 12, 3, 3)
@@ -92,6 +105,8 @@ var/list/clothingbooth_items = list()
 					qdel(src.preview_item)
 					src.preview_item = null
 				src.preview_item = new itempath()
+				if(src.selected_color)
+					src.preview_item.color = src.selected_color
 				src.preview.preview_mob.force_equip(src.preview_item, cb_item.slot)
 
 	Click()
