@@ -159,7 +159,7 @@
 
 /obj/machinery/computer/operating/proc/calc_brain_damage_severity(var/mob/living/carbon/human/H)
 	var/brain = H.get_organ("brain")
-	if (brain == 0)
+	if (!brain)
 		return "Missing"
 	var/brain_damage = H.get_brain_damage()
 	if(brain_damage >= 100)
