@@ -2,7 +2,7 @@ import { Box } from '../../../../components';
 import { BoardgameData } from '../../utils/types';
 import { useBackend } from '../../../../backend';
 import { useStates } from '../../utils/config';
-import { fenCodeRecordFromPieces, fetchPieces } from '../../games';
+import { codeRecordFromPieces, fetchPieces } from '../../games';
 
 export const HeldPieceRenderer = (_, context) => {
   const { act, data } = useBackend<BoardgameData>(context);
@@ -22,7 +22,7 @@ export const HeldPieceRenderer = (_, context) => {
   if (!code) return null;
 
   const pieces = fetchPieces();
-  const piece = fenCodeRecordFromPieces(pieces)[code];
+  const piece = codeRecordFromPieces(pieces)[code];
 
   if (!piece) return null;
 

@@ -34,12 +34,12 @@ export const Board = (props, context) => {
 
 const DesignSelector = (props, context) => {
   const { data } = useBackend<BoardgameData>(context);
-  const { design } = data.boardInfo;
-  switch (design) {
+  const { boardstyle } = data.boardInfo;
+  switch (boardstyle) {
     // Apply new designs here
     case 'checkerboard':
-      return <CheckerBoard />;
+      return <CheckerBoard interactable />;
     default:
-      return <div>Unknown design: {design}</div>;
+      return <div>Unknown design: {boardstyle}</div>;
   }
 };

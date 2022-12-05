@@ -46,30 +46,6 @@ presets.push({
   name: 'Charge of the Light Brigade',
   game: 'chess',
   description: 'Apart from the usual king and pawns, one side has three queens and the other has seven knights.',
-  rules: (
-    <Stack vertical>
-      <Stack.Item>
-        <Box bold>Objective</Box>
-        <Box>Checkmate the opponents king.</Box>
-      </Stack.Item>
-      <Stack.Item>
-        <Box bold>Setup</Box>
-        <Box>
-          Black starts with 3 queens and 7 knights. White starts with 1 king and 8 pawns. The pieces are set up on the
-          back rank, with the pawns on the second rank.
-        </Box>
-      </Stack.Item>
-      <Stack.Item>
-        <Box bold>Gameplay</Box>
-        <Box>
-          Players take turns moving one of their pieces. A move is legal if it does not put the player's king in check.
-          A player can only move a piece if it is their turn. A player can only move a piece if it is their turn. If a
-          player's king is in check, they must move it out of check. If a player's king is in checkmate, they lose. If a
-          player's king is in stalemate, the game is a draw.
-        </Box>
-      </Stack.Item>
-    </Stack>
-  ),
   setup: 'n,n,n,n,k,n,n,n,p,p,p,p,p,p,p,p,32,P,P,P,P,P,P,P,P,1,Q,1,Q,K,1,Q,1',
   boardWidth: 8,
   boardHeight: 8,
