@@ -62,7 +62,7 @@
 
 	proc/make_maptext(atom/target, msg)
 		msg = "<span class=\"ol vga c\" style=\"font-size:9pt\">[msg]</span>"
-		var/obj/dummy = new(get_turf(target))
+		var/obj/dummy/dummy = new(get_turf(target))
 		dummy.mouse_opacity = 0
 		var/image/chat_maptext/text = make_chat_maptext(dummy, msg, force = TRUE, time = INFINITY)
 		var/mob/actual_mob = src.fowner.abilityHolder.get_controlling_mob() //hunt for the client
