@@ -136,6 +136,8 @@
 	src.started = FALSE
 
 /mob/living/intangible/flock/flockmind/death(gibbed, relay_destroyed = FALSE, suicide = FALSE)
+	if (src.tutorial && !suicide)
+		return
 	src.emote("scream")
 	if (src.flock.peak_compute < 200 && src.current_try < src.max_tries)
 		src.reset()
