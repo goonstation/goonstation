@@ -1,6 +1,10 @@
 
 (t)mon dec 05 22
 (u)LeahTheTech
+(p)11796
+(e)🆕🗺🎨🧛|C-Feature, A-Mapping, C-Sprites, A-Gamemodes
+(*)Added an interactive Flock tutorial, so you have a chance at learning what at least half the buttons do before playing.
+(u)LeahTheTech
 (p)12270
 (e)⚖🧛|C-Balance, A-Gamemodes
 (*)Flockdrone egg cost now scales with the number of active flockdrones.
