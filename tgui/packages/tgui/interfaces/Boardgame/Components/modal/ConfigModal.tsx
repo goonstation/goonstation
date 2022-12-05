@@ -1,20 +1,16 @@
-declare const React;
-
 import { useBackend, useLocalState } from '../../../../backend';
 
 import { Box, Button, Flex, Tabs, Tooltip } from '../../../../components';
 
-import { fenCodeRecordFromPieces, fetchPieces, PieceSetupType } from '../../games';
+import { codeRecordFromPieces, fetchPieces, PieceSetupType } from '../../games';
 import { BoardgameData } from '../../utils/types';
 import { PresetType, presetsByGame } from '../../games';
 import { useStates } from '../../utils/config';
-import ConfigTab from './ConfigTab';
+import NotSetup from './NotSetup';
 
 export const ConfigModal = (_props, context) => {
   const { act, data } = useBackend<BoardgameData>(context);
   const { closeModal, isModalOpen, setModalTabIndex, modalTabIndex } = useStates(context);
-
-  const TabElement = modalTabIndex === 0 ? PresetsTab : ConfigTab;
 
   return isModalOpen ? (
     <Box className="boardgame__modal">
@@ -27,9 +23,7 @@ export const ConfigModal = (_props, context) => {
             Notation Setup
           </Tabs.Tab>
         </Tabs>
-        <Box className="boardgame__modal-config">
-          <TabElement />
-        </Box>
+        <Box className="boardgame__modal-config">{modalTabIndex === 0 ? <PresetsTab /> : <NotSetup />}</Box>
       </Box>
     </Box>
   ) : null;
@@ -69,7 +63,7 @@ const GenerateSvgBoard = ({ preset, size }: GenerateSvgBoardProps, context) => {
   const { tileColor1, tileColor2 } = data.styling;
 
   const allPieces = fetchPieces();
-  const codeRecords = fenCodeRecordFromPieces(allPieces);
+  const codeRecords = codeRecordFromPieces(allPieces);
 
   const presetArray = preset.split(',');
   let currentIndex = 0;

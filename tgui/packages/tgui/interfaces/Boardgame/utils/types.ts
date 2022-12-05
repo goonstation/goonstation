@@ -1,7 +1,7 @@
 export type BoardInfo = {
   name: string;
   game: string;
-  design: string;
+  boardstyle: string;
   width: number;
   height: number;
   lock: boolean;

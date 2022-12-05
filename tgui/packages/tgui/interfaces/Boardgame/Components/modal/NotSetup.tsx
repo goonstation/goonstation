@@ -9,7 +9,7 @@ import { useStates } from '../../utils/config';
 import ModalTooltip from './ModalTooltip';
 import { convertBoardToGNot } from '../../utils/notations';
 
-const ConfigTab = (_props, context) => {
+const NotSetup = (_props, context) => {
   const { act, data } = useBackend<BoardgameData>(context);
   const { openModal } = useStates(context);
 
@@ -52,4 +52,4 @@ const ConfigTab = (_props, context) => {
   );
 };
 
-export default ConfigTab;
+export default NotSetup;

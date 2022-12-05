@@ -38,7 +38,7 @@ export const getPiecesByGame = (game: string): PieceSetupType[] => {
   return pieces.filter((piece) => piece.game === game);
 };
 
-export const fenCodeRecordFromPieces = (pieces: PieceSetupType[]): Record<string, PieceSetupType> => {
+export const codeRecordFromPieces = (pieces: PieceSetupType[]): Record<string, PieceSetupType> => {
   return pieces.reduce((map, piece) => {
     map[piece.code] = piece;
     return map;

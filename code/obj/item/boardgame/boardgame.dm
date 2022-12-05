@@ -51,7 +51,8 @@
 
 	var/game = "chess"
 	/// Used by TGUI to render a board design
-	var/design = BOARDSTYLE_CHECKERBOARD
+	var/boardstyle = BOARDSTYLE_CHECKERBOARD
+	var/use_map_text = FALSE
 
 	/**
 	 * Designate the size of the board
@@ -334,6 +335,8 @@
 		playsound(src.loc, src.sounds[SOUND_MOVE], 30, 1)
 
 	proc/speakMapText(piece, newX, newY, oldX, oldY, mapTextType, captured=null)
+		if(!src.use_map_text) return // Don't use map text
+
 		var/map_text = ""
 		if(!piece) return // If the piece doesn't exist, return
 		if(!piece["selected"]) return // If the piece isn't selected, return
@@ -429,7 +432,7 @@
 		.["boardInfo"] = list(
 			"name" = src.name,
 			"game" = src.game,
-			"design" = src.design,
+			"boardstyle" = src.boardstyle,
 			"width" = src.board_width,
 			"height" = src.board_height,
 			"lock" = src.lock_pieces_to_tile

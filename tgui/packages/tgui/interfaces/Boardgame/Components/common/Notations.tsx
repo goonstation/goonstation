@@ -3,6 +3,7 @@ import { Box, Flex } from '../../../../components';
 import { BoardgameData } from '../../utils/types';
 
 import { generateBoardNotationLetters } from '../../utils/notations';
+import { useStates } from '../../utils/config';
 
 export type NotationsProps = {
   direction: 'vertical' | 'horizontal';
@@ -12,10 +13,14 @@ export const HorizontalNotations = (props, context) => {
   const { data } = useBackend<BoardgameData>(context);
   const { width } = data.boardInfo;
   const { border, tileColor2 } = data.styling;
+  const { isFlipped } = useStates(context);
 
   const color = border || tileColor2 || 'black';
 
-  const letters = generateBoardNotationLetters(width);
+  let letters = generateBoardNotationLetters(width);
+  if (isFlipped) {
+    letters = letters.reverse();
+  }
 
   return (
     <Flex
@@ -36,8 +41,14 @@ export const VerticalNotations = (props, context) => {
   const { data } = useBackend<BoardgameData>(context);
   const { height } = data.boardInfo;
   const { border, tileColor2 } = data.styling;
+  const { isFlipped } = useStates(context);
 
   const color = border || tileColor2 || 'black';
+
+  let numbers = Array.from(Array(height).keys());
+  if (isFlipped) {
+    numbers = numbers.reverse();
+  }
 
   return (
     <Flex
@@ -45,9 +56,9 @@ export const VerticalNotations = (props, context) => {
         'background-color': color,
       }}
       className="boardgame__notations boardgame__notations-vertical">
-      {Array.from(Array(height).keys()).map((_, index) => (
+      {numbers.map((_, index) => (
         <Flex.Item className="boardgame__notations-number" key={index} grow={1}>
-          {height - index}
+          {isFlipped ? index + 1 : height - index}
         </Flex.Item>
       ))}
     </Flex>
