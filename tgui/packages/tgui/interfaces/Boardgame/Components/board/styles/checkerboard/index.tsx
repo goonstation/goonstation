@@ -36,7 +36,24 @@ export const CheckerBoard = (props, context) => {
   const onPlace = (e) => {
     const [boardX, boardY] = boardPos(e);
 
-    piecePlace(currentUser.ckey, boardX, boardY);
+    // Account for the fact that the backend
+    // is a bit slow so we need to check if the
+    // piece is held by the user before placing it
+    let tries = 10; // 10 tries, 1 second max
+
+    const waitForChange = () => {
+      if (tries > 0) {
+        setTimeout(() => {
+          if (!currentUser.selected) {
+            waitForChange();
+          } else {
+            piecePlace(currentUser.ckey, boardX, boardY);
+          }
+        }, 100);
+      }
+      tries--;
+    };
+    waitForChange();
   };
 
   return (
