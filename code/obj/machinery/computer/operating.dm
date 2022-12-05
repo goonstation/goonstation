@@ -79,7 +79,11 @@
 		.["rad_dose"] = 0
 
 	.["patient_name"] = src.victim.real_name
-	.["patient_status"] = src.victim.stat
+
+	var/death_state = src.victim.stat
+	if (src.victim.bioHolder && src.victim.bioHolder.HasEffect("dead_scan"))
+		death_state = 2
+	.["patient_status"] = death_state
 
 	.["body_temp"] = src.victim.bodytemperature
 	.["optimal_temp"] = src.victim.base_body_temp
