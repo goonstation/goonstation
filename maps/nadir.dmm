@@ -27061,6 +27061,7 @@
 	name = "Auxiliary Compartment"
 	},
 /obj/access_spawn/maint,
+/obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/ne{
 	name = "Northeast Breach Hull"
@@ -32241,6 +32242,7 @@
 	name = "Auxiliary Compartment"
 	},
 /obj/access_spawn/maint,
+/obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/sw{
 	name = "Southwest Breach Hull"
@@ -49092,6 +49094,7 @@
 	name = "Auxiliary Compartment"
 	},
 /obj/access_spawn/maint,
+/obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se{
 	name = "Southeast Breach Hull"
@@ -50996,6 +50999,7 @@
 	name = "Auxiliary Compartment"
 	},
 /obj/access_spawn/maint,
+/obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
