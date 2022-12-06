@@ -1099,6 +1099,7 @@
 // flock windows
 
 /obj/window/auto/feather
+	default_material = "gnesisglass"
 	var/flock_id = "Fibrewoven window"
 	var/repair_per_resource = 1
 

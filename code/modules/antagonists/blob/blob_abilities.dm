@@ -200,7 +200,7 @@
 			return
 
 		if (!(isadmin(owner) || owner.admin_override)) //admins can spawn wherever. So can AI blobs if we tell them to.
-			if (!istype(T.loc, /area/station/) && !istype(T.loc, /area/blob/))
+			if (!istype(T.loc, /area/station/) && !istype(T.loc, /area/tutorial/blob/))
 				boutput(owner, "<span class='alert'>You need to start on the [station_or_ship()]!</span>")
 				return
 
