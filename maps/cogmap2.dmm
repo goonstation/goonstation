@@ -22564,7 +22564,9 @@
 /obj/stool/chair/office/red{
 	dir = 8
 	},
-/obj/machinery/disposal/mail/small/autoname/checkpoint/chapel/north,
+/obj/machinery/disposal/mail/small/autoname/checkpoint/chapel/north{
+	layer = 3.1
+	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -36419,11 +36421,6 @@
 "bFS" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/decal/poster/wallsign/hazard_caution,
-/turf/simulated/floor/plating,
-/area/station/hangar/main)
-"bFT" = (
-/obj/disposalpipe/segment/transport,
-/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
 "bFU" = (
@@ -112430,7 +112427,7 @@ bgQ
 bAj
 bBW
 bDW
-bFT
+bHS
 bHN
 beT
 bLr
@@ -113030,7 +113027,7 @@ brr
 btc
 buV
 bwU
-bFT
+bHS
 bAl
 bFR
 bDY

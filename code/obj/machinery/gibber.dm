@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/gibber)
+	mats = 15
+
 /obj/machinery/gibber
 	name = "Gibber"
 	desc = "The name isn't descriptive enough?"
@@ -14,7 +17,6 @@
 	var/machine_startup_sound = 'sound/machines/tractorrev.ogg'
 	var/machine_shutdown_sound = 'sound/machines/tractor_running3.ogg'
 	var/rotor_sound = 'sound/machines/lavamoon_rotors_fast_short.ogg'
-	mats = 15
 	deconstruct_flags =  DECON_WRENCH | DECON_WELDER
 
 	output_north

@@ -119,7 +119,8 @@
 			var/datum/computer/file/electronics_scan/theScan = new
 			theScan.scannedName = initial(O.name)
 			theScan.scannedPath = O.mechanics_type_override ? O.mechanics_type_override : O.type
-			theScan.scannedMats = O.mats
+			var/typeinfo/obj/typeinfo = O.get_typeinfo()
+			theScan.scannedMats = typeinfo.mats
 
 			var/datum/signal/signal = get_free_signal()
 			signal.source = src.master

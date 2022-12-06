@@ -18590,8 +18590,7 @@
 /area/built_zone)
 "ciS" = (
 /obj/machinery/manufacturer/general{
-	free_resource_amt = 999;
-	mats = 999
+	free_resource_amt = 999
 	},
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
@@ -18607,8 +18606,7 @@
 /area/built_zone)
 "ciV" = (
 /obj/machinery/manufacturer/mechanic{
-	free_resource_amt = 999;
-	mats = 999
+	free_resource_amt = 999
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";

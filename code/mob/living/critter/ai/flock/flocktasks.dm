@@ -5,11 +5,11 @@
 /*
 replicate
 	-weight 7
-	-precondition: can_afford(flock.current_egg_cost) and less than FLOCK_DRONE_LIMIT drones
+	-precondition: not in tutorial, can_afford(flock.current_egg_cost), and less than FLOCK_DRONE_LIMIT drones
 
 nest
 	-weight 6
-	-precondition: can_afford(flock.current_egg_cost) and less than FLOCK_DRONE_LIMIT drones
+	-precondition: not in tutorial, can_afford(flock.current_egg_cost), and less than FLOCK_DRONE_LIMIT drones
 
 building
 	-weight 5
@@ -127,7 +127,7 @@ stare
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // REPLICATION GOAL
 // targets: valid nesting sites
-// precondition: flock.current_egg_cost resources + 7.5 in reserve for every drone after the first 10 up to a max of (flockcritter.flock.current_egg_cost + FLOCK_LAY_EGG_COST) extra in reserve
+// precondition: Not in tutorial and flock.current_egg_cost resources + 7.5 in reserve for every drone after the first 10 up to a max of (flockcritter.flock.current_egg_cost + FLOCK_LAY_EGG_COST) extra in reserve
 /datum/aiTask/sequence/goalbased/flock/replicate
 	name = "replicating"
 	weight = 7
@@ -139,7 +139,7 @@ stare
 
 /datum/aiTask/sequence/goalbased/flock/replicate/precondition()
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if (!F?.flock)
+	if (!F?.flock || F.flock.flockmind.tutorial)
 		return
 	return F.can_afford(src.current_egg_cost()) && F.flock.getComplexDroneCount() < FLOCK_DRONE_LIMIT
 
@@ -184,7 +184,7 @@ stare
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // NEST + REPLICATION GOAL
 // targets: valid nesting sites
-// precondition: FLOCK_CONVERT_COST + flock.current_egg_cost resources + 7.5 in reserve for every drone after the first 10 up to a max of (flockcritter.flock.current_egg_cost + FLOCK_LAY_EGG_COST) extra in reserve, no flocktiles in view
+// precondition: Not in tutorial and FLOCK_CONVERT_COST + flock.current_egg_cost resources + 7.5 in reserve for every drone after the first 10 up to a max of (flockcritter.flock.current_egg_cost + FLOCK_LAY_EGG_COST) extra in reserve, no flocktiles in view
 /datum/aiTask/sequence/goalbased/flock/nest
 	name = "nesting"
 	weight = 6
@@ -198,7 +198,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/nest/precondition()
 	. = FALSE
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if (!F?.flock)
+	if (!F?.flock || F.flock.flockmind.tutorial)
 		return
 	if(F.can_afford(FLOCK_CONVERT_COST + src.current_egg_cost()) && F.flock.getComplexDroneCount() < FLOCK_DRONE_LIMIT)
 		. = TRUE

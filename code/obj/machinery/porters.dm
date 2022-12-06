@@ -11,6 +11,9 @@
 var/global/list/portable_machinery = list() // stop looping through world for things you SHITMONGERS
 
 // Adapted from the PDA program in portable_machinery_control.dm (Convair880).
+TYPEINFO(/obj/item/remote/porter)
+	mats = 4
+
 /obj/item/remote/porter
 	name = "Remote"
 	icon = 'icons/obj/items/device.dmi'
@@ -20,7 +23,6 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	density = 0
 	anchored = 0
 	w_class = W_CLASS_SMALL
-	mats = 4
 	var/list/machinerylist = list()
 	var/machinery_name = "" // For user prompt stuff.
 	var/anti_spam = 0 // In relation to world time.
@@ -221,6 +223,9 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		return
 
 // I suppose this device would be sorta useless with tele-block checks?
+TYPEINFO(/obj/item/remote/porter/port_a_sci)
+	mats = list("MET-1" = 5, "CON-1" = 5, "telecrystal" = 10)
+
 /obj/item/remote/porter/port_a_sci
 	name = "Port-A-Sci Remote"
 	icon = 'icons/obj/porters.dmi'
@@ -228,7 +233,6 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	item_state = "electronic"
 	desc = "A remote that summons a Port-A-Sci."
 	machinery_name = "Port-a-Sci"
-	mats = list("MET-1" = 5, "CON-1" = 5, "telecrystal" = 10)
 
 	get_machinery()
 		if (!src)
@@ -290,6 +294,9 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 ///////////////////////////////////// Port-a-Brig /////////////////////////////////////
 
+TYPEINFO(/obj/machinery/port_a_brig)
+	mats = 30
+
 /obj/machinery/port_a_brig
 	name = "Port-A-Brig"
 	icon = 'icons/obj/cloning.dmi'
@@ -300,7 +307,6 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	p_class = 1.8
 	req_access = list(access_security)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
-	mats = 30
 	var/mob/occupant = null
 	var/locked = 0
 	var/homeloc = null
@@ -520,6 +526,9 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 ////////////////////////////////////////// Port-a-Medbay /////////////////////////////////////
 /* replaced with an actual sleeper, see sleeper.dm
+TYPEINFO(/obj/machinery/port_a_medbay)
+	mats = 30
+
 /obj/machinery/port_a_medbay
 	name = "Port-A-Medbay"
 	icon = 'icons/obj/porters.dmi'
@@ -529,7 +538,6 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	density = 1
 	anchored = 0
 	p_class = 1.2
-	mats = 30
 	event_handler_flags = USE_FLUID_ENTER
 	var/mob/occupant = null
 	var/homeloc = null
@@ -827,6 +835,9 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 //////////////////////////////////////// Port-a-NanoMed ///////////////////////////////////////////
 
+TYPEINFO(/obj/machinery/vending/port_a_nanomed)
+	mats = null
+
 /obj/machinery/vending/port_a_nanomed
 	name = "Port-A-NanoMed"
 	desc = "A compact and portable version of the NanoMed Plus."
@@ -839,7 +850,6 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	anchored = 0
 	p_class = 1.2
 	can_fall = 0
-	mats = null
 	ai_control_enabled = 1
 	var/homeloc = null
 

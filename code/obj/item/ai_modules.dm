@@ -7,6 +7,9 @@ AI MODULES
 // AI module
 
 ABSTRACT_TYPE(/obj/item/aiModule)
+TYPEINFO(/obj/item/aiModule)
+	mats = 10
+
 /obj/item/aiModule
 	name = "AI Law Module"
 	icon = 'icons/obj/module.dmi'
@@ -21,7 +24,6 @@ ABSTRACT_TYPE(/obj/item/aiModule)
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 15
-	mats = 10
 	var/input_char_limit = 100
 
 	var/glitched = FALSE
