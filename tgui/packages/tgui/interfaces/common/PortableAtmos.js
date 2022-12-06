@@ -85,7 +85,7 @@ export const PortableHoldingTank = props => {
       ) : (
         <Box
           color="average">
-          No holding tank
+          No {title ? title.toLowerCase() : "holding tank"}
         </Box>
       )}
     </Section>
