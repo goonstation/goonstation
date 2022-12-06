@@ -13,7 +13,7 @@ export const CheckerBoard = ({ interactable }: StyleProps, context) => {
   const { width, height } = tileSize;
   const { piecePlace, pieceRemove } = useActions(act);
 
-  const boardPos = (e) => {
+  const boardPos = () => {
     const { x, y } = mouseCoords;
     const mx = x - 20;
     const my = y - 54;
@@ -34,18 +34,14 @@ export const CheckerBoard = ({ interactable }: StyleProps, context) => {
     return [boardX, boardY];
   };
 
-  const onPlace = (e) => {
-    const [boardX, boardY] = boardPos(e);
-
-    if (currentUser.palette) {
-      piecePlace(currentUser.ckey, boardX, boardY);
-      return;
-    }
+  const onSelectedPlace = () => {
+    const [boardX, boardY] = boardPos();
 
     // Account for the fact that the backend
     // is a bit slow so we need to check if the
     // piece is held by the user before placing it
-    let tries = 20; // 20 tries, 2 seconds max
+
+    /* let tries = 20; // 20 tries, 2 seconds max
 
     const waitForChange = () => {
       if (tries > 0) {
@@ -60,7 +56,7 @@ export const CheckerBoard = ({ interactable }: StyleProps, context) => {
       }
       tries--;
     };
-    waitForChange();
+    waitForChange();*/
   };
 
   return (
@@ -73,24 +69,29 @@ export const CheckerBoard = ({ interactable }: StyleProps, context) => {
       onMouseDown={(e) => {
         if (!interactable) return;
         if (e.button === 0) {
+          // Used for placing pieces, click to select, click again to place handling
           if (currentUser.palette || currentUser.selected) {
-            onPlace(e);
+            const [boardX, boardY] = boardPos();
+            piecePlace(currentUser.ckey, boardX, boardY);
           }
         }
       }}
       onMouseUp={(e) => {
         if (!interactable) return;
         if (e.button === 0) {
+          // Used for placing pieces, drag and drop handling
+          const [boardX, boardY] = boardPos();
+
           if (currentUser.palette) {
-            onPlace(e);
+            piecePlace(currentUser.ckey, boardX, boardY);
+            return;
           }
           if (currentUser.selected) {
-            const [boardX, boardY] = boardPos(e);
             const piece = pieces[currentUser.selected];
-            // alert(piece.x + ' ' + piece.y + ' ' + boardX + ' ' + boardY);
-            if (piece.x !== boardX && piece.y !== boardY) {
-              onPlace(e);
+            if (piece.x !== boardX || piece.y !== boardY) {
+              piecePlace(currentUser.ckey, boardX, boardY);
             }
+            // Check if the position is same as the piece's current position, if it's not, place it
           }
         }
       }}>
