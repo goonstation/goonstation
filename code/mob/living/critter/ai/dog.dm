@@ -30,7 +30,7 @@
 /datum/aiTask/succeedable/critter/dog/fetch/failed()
 	var/mob/living/critter/C = holder.owner
 	var/obj/item/I = holder.target
-	if(!C || !I || BOUNDS_DIST(I, C) > 0) //the tasks fails and is re-evaluated if the target is not in range
+	if(!C || !I || BOUNDS_DIST(I, C) > 0 || !istype(I.loc, /turf)) //the tasks fails and is re-evaluated if the target is not in range
 		return TRUE
 
 /datum/aiTask/succeedable/critter/dog/fetch/succeeded()
