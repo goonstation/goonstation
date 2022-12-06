@@ -173,7 +173,6 @@ A Flamethrower in various states of assembly
 				P_special_data["speed_mult"] = 0.6
 				P_special_data["chem_pct_app_tile"] = 0.15
 		inventory_counter?.update_percent(src.fueltank?.reagents?.total_volume, src.fueltank?.reagents?.maximum_volume)
-		src.updateSelfDialog()
 
 /obj/item/gun/flamethrower/assembled
 	name = "flamethrower"
@@ -570,7 +569,7 @@ A Flamethrower in various states of assembly
 
 	src.icon_state = "flamethrower[src.gastank ? "_oxy" : "_no_oxy"][src.fueltank ? "_fuel" : "_no_fuel"]"
 
-	src.updateSelfDialog()
+	tgui_process.update_uis(src)
 	SPAWN(0.5 SECONDS)
 		playsound(src, 'sound/effects/valve_creak.ogg', 40, 1)
 	return TRUE
