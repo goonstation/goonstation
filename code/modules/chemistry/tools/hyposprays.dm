@@ -18,7 +18,8 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 	item_state = "syringe_0"
 	icon_state = "hypo0"
 	amount_per_transfer_from_this = 5
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOSPLASH
+	c_flags = ONBELT
 	var/list/whitelist = list()
 	var/inj_amount = 5
 	var/safe = 1
@@ -163,7 +164,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		UpdateIcon()
 
 	afterattack(obj/target, mob/user, flag)
-		if(istype(target, /obj/reagent_dispensers) && target.reagents)
+		if(is_reagent_dispenser(target) && target.reagents)
 			if (!target.reagents.total_volume)
 				boutput(user, "<span class='alert'>[target] is already empty.</span>")
 				return

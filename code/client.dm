@@ -156,6 +156,32 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	src.player?.log_leave_time() //logs leave time, calculates played time on player datum
 	src.player?.cached_jobbans = null //Invalidate their job ban cache.
 
+	var/list/dc = datum_components
+	if(dc)
+		var/all_components = dc[/datum/component]
+		if(length(all_components))
+			for (var/datum/component/C as anything in all_components)
+				qdel(C, FALSE, TRUE)
+		else
+			var/datum/component/C = all_components
+			qdel(C, FALSE, TRUE)
+		dc.Cut()
+
+	var/list/lookup = comp_lookup
+	if(lookup)
+		for(var/sig in lookup)
+			var/list/comps = lookup[sig]
+			if(length(comps))
+				for (var/datum/component/comp as anything in comps)
+					comp.UnregisterSignal(src, sig)
+			else
+				var/datum/component/comp = comps
+				comp.UnregisterSignal(src, sig)
+		comp_lookup = lookup = null
+
+	for(var/target in signal_procs)
+		UnregisterSignal(target, signal_procs[target])
+
 	return ..()
 
 /client/New()
@@ -457,6 +483,9 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			if (src.byond_version < 514 || src.byond_build < 1566)
 				if (tgui_alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page? Make sure to download the stable release.", "ALERT", list("Yes", "No")) == "Yes")
 					src << link("http://www.byond.com/download/")
+			if (src.byond_version >= 515)
+				if (alert(src, "Please DOWNGRADE BYOND to version 514.1589! Many things will break otherwise. Would you like to be taken to the correct download page?", "ALERT", "Yes", "No") == "Yes")
+					src << link("http://www.byond.com/download/build/514/514.1589_byond_setup.zip")
 /*
  				else
 					alert(src, "You won't be able to play without updating, sorry!")
@@ -679,6 +708,9 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 				if(isnull(message_who))
 					message_admins(message)
 				else
+					var/mob/M = message_who
+					var/client/C = istype(M) ? M.client : message_who
+					message = replacetext(replacetext(message, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]")
 					boutput(message_who, message)
 	if(alert_them)
 		var/list/both_collide = ip_to_ckeys[src.address] & cid_to_ckeys[src.computer_id]
@@ -1527,11 +1559,13 @@ var/global/curr_day = null
 	//tell the interface helpers to recompute data
 	src.mapSizeHelper?.update()
 
-/client/verb/autoscreenshot()
+/client/verb/xscreenshot(arg as text|null)
 	set hidden = 1
-	set name = ".autoscreenshot"
+	set name = ".xscreenshot"
 
-	winset(src, null, "command=\".screenshot auto\"")
+	if(!isnull(arg))
+		arg = " [arg]"
+	winset(src, null, "command=\".screenshot[arg]\"")
 	boutput(src, "<B>Screenshot taken!</B>")
 
 /client/verb/test_experimental_intents()

@@ -1028,7 +1028,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 					HH.maximum_value *= health_multiplier
 					HH.value *= health_multiplier
 			else
-				CRASH("Gauntlet tried to spawn [mob_or_critter ? mob_or_critter.type : "null"], but only /mob/living or /obj/critter are allowed.")
+				CRASH("Gauntlet tried to spawn [identify_object(mob_or_critter)], but only /mob/living or /obj/critter are allowed.")
 			if (ev)
 				ev.onSpawn(mob_or_critter)
 			count--

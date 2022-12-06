@@ -57,6 +57,9 @@
 			set_secure_frequencies(src)
 		..()
 
+/obj/item/device/radio/headset/wizard
+	emp_act()
+		return //hax
 
 /obj/item/device/radio/headset/command
 	name = "command headset"

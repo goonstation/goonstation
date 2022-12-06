@@ -286,7 +286,8 @@
 		anchored=0
 		num_f_icons=1
 		icon_state="housing_handheld"
-		flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | ONBELT
+		flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+		c_flags = ONBELT
 		light_color = list(51, 0, 0, 0)
 		spawn_contents=list(/obj/item/mechanics/trigger/trigger)
 

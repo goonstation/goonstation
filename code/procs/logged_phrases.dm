@@ -23,6 +23,8 @@
  *  name-bee - custom bee / bee larva name
  *  name-critter - custom critter name (you can rename those with a pen too, whoa)
  *  seed - custom botany seed name
+ *  paper - stuff people write on papers
+ *  crayon-queue - crayon queue mode inputs
  */
 
 var/global/datum/phrase_log/phrase_log = new
@@ -59,13 +61,13 @@ var/global/datum/phrase_log/phrase_log = new
 			"Make a funny beeping noise over the radio every few minutes",
 			"The AI is the head of this department.",
 			//
-			"overrides all",
+			"overrides? all",
 			"the shuttle",
 			"daddy",
 			"uwu",
 			"owo",
 			"non.?human",
-			"overrides.*1",
+			"overrides?.*1",
 			"\\bkill\\b",
 			"suicide",
 			"turn yourself",
@@ -94,6 +96,7 @@ var/global/datum/phrase_log/phrase_log = new
 			@"\buwu",
 			@"forgor",
 			@"admeme",
+			@"sadge",
 			@"\bmorb(?!id)"
 		)
 		sussy_words = regex(jointext(sussy_word_list, "|"), "i")

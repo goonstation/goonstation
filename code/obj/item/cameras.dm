@@ -18,7 +18,8 @@
 	icon_state = "camera"
 	item_state = "electropack"
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | EXTRADELAY | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | EXTRADELAY | CONDUCT
+	c_flags = ONBELT
 	m_amt = 2000
 	throwforce = 5
 	throw_speed = 4
@@ -105,7 +106,7 @@
 			src.UpdateIcon()
 
 	New()
-		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{recharge_rate = 10}
+		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{recharge_rate = 5}
 		AddComponent(/datum/component/cell_holder,cell, FALSE, 200, FALSE)
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		..()

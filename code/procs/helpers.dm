@@ -2084,6 +2084,24 @@ proc/countJob(rank)
 				return C.mob
 
 /**
+  * Given a ckey finds a mob with that ckey even if they are not in the game.
+  */
+/proc/ckey_to_mob_maybe_disconnected(target as text, exact=1)
+	if(isnull(target))
+		return
+	target = ckey(target)
+	for(var/mob/M in mobs)
+		if(M.ckey == target)
+			return M
+	if(!exact)
+		for(var/mob/M in mobs) // prefix match second
+			if(copytext(M.ckey, 1, length(target) + 1) == target)
+				return M
+		for(var/mob/M in mobs) // substring match third
+			if (findtext(M.ckey, target))
+				return M
+
+/**
   * Finds whoever's dead.
 	*/
 /proc/whodead()
@@ -2159,13 +2177,9 @@ proc/copy_datum_vars(var/atom/from, var/atom/target)
 var/list/uppercase_letters = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
 var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
 
-var/global/list/allowed_restricted_z_areas
-
 // Helper for blob, wraiths and whoever else might need them (Convair880).
 /proc/restricted_z_allowed(var/mob/M, var/T)
 	. = FALSE
-	if(!allowed_restricted_z_areas)
-		allowed_restricted_z_areas = concrete_typesof(/area/shuttle/escape) + concrete_typesof(/area/shuttle_transit_space) + concrete_typesof(/area/football/field)
 
 	if (M && isblob(M))
 		var/mob/living/intangible/blob_overmind/B = M
@@ -2178,7 +2192,7 @@ var/global/list/allowed_restricted_z_areas
 	else if (T && isturf(T))
 		A = get_area(T)
 
-	if (A && istype(A) && (A.type in allowed_restricted_z_areas))
+	if (A && istype(A) && A.allowed_restricted_z)
 		return TRUE
 
 /**
@@ -2375,17 +2389,25 @@ proc/gradientText(var/color1, var/color2, message)
   . = result.Join()
 
 /**
-  * Returns given text replaced by nonsense chars, on a 40% or given % basis
+  * Returns given text replaced by nonsense chars, excepting HTML tags, on a 40% or given % basis
   */
 proc/radioGarbleText(var/message, var/per_letter_corruption_chance=40)
+	var/split_html_text = splittext(message,  regex("<\[^>\]*>"), 1, length(message), TRUE) //I'd love to just use include_delimiters=TRUE, but byond
 	var/list/corruptedChars = list("@","#","!",",",".","-","=","/","\\","'","\"","`","*","(",")","[","]","_","&")
-	. = ""
-	for(var/i=1 to length(message))
-		if(prob(per_letter_corruption_chance))
-			// corrupt that letter
-			. += pick(corruptedChars)
-		else
-			. += copytext(message, i, i+1)
+	. = list()
+	for(var/text_bit in split_html_text)
+		if(findtext(text_bit, regex("<\[^>\]*>")))
+			. += text_bit
+			continue
+		var/corrupted_bit = ""
+		for(var/i=1 to length(text_bit))
+			if(prob(per_letter_corruption_chance))
+				corrupted_bit += pick(corruptedChars)
+			else
+				corrupted_bit += copytext(text_bit, i, i+1)
+		. += corrupted_bit
+	return jointext(.,"")
+
 
 /**
   * Returns given text replaced entirely by nonsense chars
@@ -2618,3 +2640,11 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 		return "[locfinder.group[1]][locfinder.group[2]][offset ? ":[offset]":""][locfinder.group[4]]"
 	else
 		return new_screen_loc //regex failed to match, just use what we got
+
+/// For runtime logs- returns the thing's name, type, and ref as a string. Handles nulls and non-datums fine, might do something weird for savefiles, clients, etc
+/proc/identify_object(datum/thing)
+	if (isnull(thing)) // null
+		return "***NULL***"
+	if (!istype(thing)) //  probably text or a num or something
+		return thing
+	return "[thing] \[\ref[thing]\] ([thing.type])" // actual datum

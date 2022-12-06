@@ -81,12 +81,20 @@
 			processing_items.Remove(src)
 			for (var/obj/item/clothing/C in src.contents)
 				C.stains = null
+				C.delStatus("freshly_laundered") // ...and this is the price we pay for being cheeky
+				C.changeStatus("freshly_laundered", rand(2,4) MINUTES)
 				C.UpdateName()
 			src.cycle = POST
 			src.cycle_current = 0
 			src.visible_message("[src] lets out a happy beep!")
 			playsound(src, 'sound/machines/ding.ogg', 50, 1)
 			if(src.occupant) // If someone is inside we eject immediatly so as to not keep people hostage
+				H.w_uniform?.changeStatus("freshly_laundered", rand(2,4) MINUTES)
+				H.wear_suit?.changeStatus("freshly_laundered", rand(2,4) MINUTES)
+				H.shoes?.changeStatus("freshly_laundered", rand(2,4) MINUTES)
+				H.gloves?.changeStatus("freshly_laundered", rand(2,4) MINUTES)
+				H.glasses?.changeStatus("freshly_laundered", rand(2,4) MINUTES)
+				H.head?.changeStatus("freshly_laundered", rand(2,4) MINUTES)
 				H.changeStatus("weakened", 1 SECONDS)
 				H.make_dizzy(15) //Makes you dizzy for fifteen seconds due to the spinning
 				H.change_misstep_chance(65)
@@ -181,7 +189,7 @@
 /obj/submachine/laundry_machine/attack_hand(mob/user)
 	if (!can_act(user))
 		return
-	src.add_fingerprint(usr)
+	src.add_fingerprint(user)
 	ui_interact(user)
 
 /obj/submachine/laundry_machine/proc/force_into_machine(obj/item/grab/W as obj, mob/user as mob)

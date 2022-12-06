@@ -35,7 +35,8 @@ Broken RCD + Effects
 	anchored = 0
 	var/matter = 0
 	var/max_matter = 50
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	force = 10
 	throwforce = 10
 	throw_speed = 1
@@ -989,7 +990,8 @@ Broken RCD + Effects
 	opacity = 0
 	density = 0
 	anchored = 0
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	force = 10
 	throwforce = 10
 	throw_speed = 1
@@ -1004,7 +1006,8 @@ Broken RCD + Effects
 	icon_state = "bad_rcd0"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "rcd"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	force = 10
 	throwforce = 10
 	throw_speed = 1

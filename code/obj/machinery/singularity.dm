@@ -273,6 +273,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if (H.unkillable)
 				H.unkillable = 0
 			if (H.mind && H.mind.assigned_role)
+				logTheThing(LOG_COMBAT, H, "is spaghettified by \the [src] at [log_loc(src)].")
 				switch (H.mind.assigned_role)
 					if ("Clown")
 						// Hilarious.
@@ -814,6 +815,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	desc = "An energy field."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Contain_F"
+	pass_unstable = TRUE
 	anchored = 1
 	density = 1
 	event_handler_flags = USE_FLUID_ENTER | IMMUNE_SINGULARITY

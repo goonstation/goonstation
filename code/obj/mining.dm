@@ -156,7 +156,9 @@
 				if (!(O.type in mining_controls.magnet_do_not_erase) && !istype(O, /obj/magnet_target_marker))
 					qdel(O)
 			T.ClearAllOverlays()
-
+			for (var/mob/living/L in T)
+				if(ismobcritter(L) && isdead(L)) // we don't care about dead critters
+					qdel(L)
 			if(istype(T,/turf/unsimulated) && ( T.GetComponent(/datum/component/buildable_turf) || (station_repair.station_generator && (origin.z == Z_LEVEL_STATION))))
 				T.ReplaceWith(/turf/space, force=TRUE)
 			else
@@ -193,6 +195,8 @@
 		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
 
 			for (var/mob/living/L in T)
+				if(ismobcritter(L) && isdead(L)) // we don't care about dead critters
+					continue
 				if(!isintangible(L)) //neither blob overmind or AI eye should block this
 					unacceptable = TRUE
 					break
@@ -1451,7 +1455,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	item_state = "pick"
 	health = 8
 	w_class = W_CLASS_NORMAL
-	flags = ONBELT
+	c_flags = ONBELT
 	force = 7
 	var/cell_type = null
 	var/dig_strength = 1
@@ -1467,6 +1471,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if(cell_type)
 			var/cell = new cell_type
 			AddComponent(/datum/component/cell_holder, cell)
+			RegisterSignal(src, COMSIG_CELL_SWAP, .proc/power_down)
 		BLOCK_SETUP(BLOCK_ROD)
 
 	// Seems like a basic bit of user feedback to me (Convair880).
@@ -1486,14 +1491,18 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 		if (SEND_SIGNAL(src, COMSIG_CELL_USE, use) & CELL_INSUFFICIENT_CHARGE)
 			src.power_down()
+			OVERRIDE_COOLDOWN(src, "depowered", 8 SECONDS)
 			var/turf/T = get_turf(src)
-			T.visible_message("<span class='alert'>[src] runs out of charge and powers down!</span>")
+			T.visible_message("<span class='alert'>[src] runs out of charge and triggers an emergency shutdown!</span>")
 		return 1
 
 	attack_self(var/mob/user as mob)
 		if (!digcost)
 			return
 		if (src.process_charges(0))
+			if(GET_COOLDOWN(src, "depowered"))
+				boutput(user, "<span class='alert'>[src] was recently power cycled and is still cooling down!</span>")
+				return
 			if (!src.status)
 				boutput(user, "<span class='notice'>You power up [src].</span>")
 				src.power_up()
@@ -1518,6 +1527,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		return
 
 	proc/power_down()
+		ON_COOLDOWN(src, "depowered", 1 SECOND)
 		src.tooltip_rebuild = 1
 		src.status = 0
 		if (powered_overlay)
@@ -1554,7 +1564,7 @@ obj/item/clothing/gloves/concussive
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "powerpick"
 	item_state = "ppick1"
-	flags = ONBELT
+	c_flags = ONBELT
 	dig_strength = 2
 	digcost = 2
 	cell_type = /obj/item/ammo/power_cell
@@ -1603,7 +1613,7 @@ obj/item/clothing/gloves/concussive
 	icon_state = "lasdrill"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "drill"
-	flags = ONBELT
+	c_flags = ONBELT
 	force = 10
 	mats = 4
 	dig_strength = 2
@@ -1670,7 +1680,7 @@ obj/item/clothing/gloves/concussive
 	icon_state = "powershovel"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "pshovel1"
-	flags = ONBELT
+	c_flags = ONBELT
 	dig_strength = 0
 	digcost = 2
 	cell_type = /obj/item/ammo/power_cell
@@ -1716,7 +1726,7 @@ obj/item/clothing/gloves/concussive
 /obj/item/breaching_charge/mining
 	name = "concussive charge"
 	desc = "It is set to detonate in 5 seconds."
-	flags = ONBELT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	var/emagged = 0
@@ -1857,7 +1867,9 @@ obj/item/clothing/gloves/concussive
 	/// List of types that cargo teles are allowed to send. Built in New, shared across all teles
 	var/static/list/allowed_types = list()
 	w_class = W_CLASS_SMALL
-	flags = ONBELT | FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	c_flags = ONBELT
+
 	mats = 4
 
 	New()
@@ -1893,10 +1905,10 @@ obj/item/clothing/gloves/concussive
 
 	attack_self(mob/user) // Fixed --melon
 		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
-			boutput(usr, "<span class='alert'>The transporter is out of charge.</span>")
+			boutput(user, "<span class='alert'>The transporter is out of charge.</span>")
 			return
 		if (!length(global.cargo_pad_manager.pads))
-			boutput(usr, "<span class='alert'>No receivers available.</span>")
+			boutput(user, "<span class='alert'>No receivers available.</span>")
 		else
 			var/mob/holder = src.loc
 			var/selection = tgui_input_list(user, "Select Cargo Pad Location:", "Cargo Pads", global.cargo_pad_manager.pads, 15 SECONDS)
@@ -2026,7 +2038,7 @@ obj/item/clothing/gloves/concussive
 	desc = "A device capable of detecting nearby mineral deposits."
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "minanal"
-	flags = ONBELT
+	c_flags = ONBELT
 	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
@@ -2093,7 +2105,7 @@ obj/item/clothing/gloves/concussive
 	desc = "The scanner doesn't look right somehow."
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "minanal"
-	flags = ONBELT
+	c_flags = ONBELT
 	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)

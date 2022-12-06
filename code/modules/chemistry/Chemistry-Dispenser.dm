@@ -518,6 +518,11 @@ ABSTRACT_TYPE(/obj/machinery/chem_dispenser)
 
 	dispense_sound = 'sound/effects/splort.ogg'
 
+/obj/machinery/chem_dispenser/botany
+	name = "botany dispenser"
+	desc = "Unlike other chem dispensers, this one's mostly just made for plants.";
+	dispensable_reagents = list("mutadone","saltpetre","ammonia","potash","poo","space_fungus","weedkiller","mutagen");
+
 // Reagent Groups
 
 /datum/reagent_group_account

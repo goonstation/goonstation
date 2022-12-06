@@ -127,6 +127,7 @@ var/global/list/ghostdrone_candidates = list()
 	density = 0
 	icon = 'icons/mob/ghost_drone.dmi'
 	icon_state = "factory10"
+	pass_unstable = TRUE
 	layer = 5 // above mobs hopefully
 	mats = 0
 	var/factory_section = 1 // can be 1 to 3
@@ -269,6 +270,10 @@ var/global/list/ghostdrone_candidates = list()
 		src.worked_time = 0
 		src.working = 0
 		src.icon_state = "factory[src.factory_section]0"
+
+		if(QDELETED(src.current_assembly))
+			src.current_assembly = null
+			return
 
 		if (src.current_assembly)
 			src.current_assembly.stage = src.single_system ? 3 : src.factory_section

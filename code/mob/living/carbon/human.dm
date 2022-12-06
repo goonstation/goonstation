@@ -112,7 +112,7 @@
 
 	max_health = 100
 
-	var/obj/item/trinket = null //Used for spy_theft mode - this is an item that is eligible to have a bounty on it
+	var/datum/weakref/trinket = null //Used for spy_theft mode - this is an item that is eligible to have a bounty on it
 
 	//dismemberment stuff
 	var/datum/human_limbs/limbs = null
@@ -947,7 +947,7 @@
 			hud.update_intent()
 			check_for_intent_trigger()
 		if ("drop")
-			src.drop_item()
+			src.drop_item(null, TRUE)
 		if ("swaphand")
 			src.swap_hand()
 		if ("attackself")
@@ -1180,7 +1180,6 @@
 			var/obj/item/organ/temp = src.organs[dam_zone]
 
 			var/reduction = 0
-			if (src.energy_shield) reduction = src.energy_shield.protect()
 			if (src.spellshield)
 				reduction = 30
 				boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some damage!</b></span>")
@@ -2163,7 +2162,7 @@
 						return FALSE
 				return TRUE
 		if (slot_belt)
-			if ((I.flags & ONBELT) && src.w_uniform)
+			if ((I.c_flags & ONBELT) && src.w_uniform)
 				return TRUE
 		if (slot_wear_id)
 			if (istype(I, /obj/item/card/id) && src.w_uniform)
@@ -2171,7 +2170,7 @@
 			if (istype(I, /obj/item/device/pda2) && src.w_uniform) // removed the check for the ID card in here because tbh it was silly that you could only equip it to the ID slot when it had a card  :I
 				return TRUE
 		if (slot_back)
-			if (I.flags & ONBACK)
+			if (I.c_flags & ONBACK)
 				return TRUE
 		if (slot_wear_mask) // It's not pretty, but the mutantrace check will do for the time being (Convair880).
 			if (!src.organHolder.head)

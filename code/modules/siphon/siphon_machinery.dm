@@ -2,7 +2,8 @@
 /obj/item/device/calibrator
 	name = "harmonic systems calibrator"
 	icon_state = "calibrator"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	force = 5.0
 	w_class = W_CLASS_SMALL
 	throwforce = 5.0
@@ -223,12 +224,12 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 							yielder.set_loc(get_turf(src))
 
 					//non-shear failures
-					//option 1 - too many extraction ticks buffered at once
+					//option 1 - more extraction ticks left over after conversion than you'd need for the target material
 					//option 2 - running resonators with the panel open is a bad idea
-					if(src.extract_ticks > 20)
+					if(src.extract_ticks > M.tick_req)
 						if(src.extract_overloaded == FALSE) //warn if newly overloaded
 							src.visible_message("<span class='alert'><B>[src]</B> emits an excess accumulated EEU warning.<span>")
-							playsound(src, 'sound/machines/pod_alarm.ogg', 30, 1)
+						playsound(src, 'sound/machines/pod_alarm.ogg', 30, 1)
 						src.extract_overloaded = TRUE
 					else
 						src.extract_overloaded = FALSE
@@ -646,7 +647,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				boutput(user, "The internal wiring doesn't seem to need repair.")
 				return
 		else if(istype(W,/obj/item/device/calibrator))
-			var/scalex = input(usr,"Accepts values 0 through [src.max_intensity]","Adjust Intensity","1") as num
+			var/scalex = input(user,"Accepts values 0 through [src.max_intensity]","Adjust Intensity","1") as num
 			scalex = clamp(scalex,0,src.max_intensity)
 			src.intensity = scalex
 			src.update_fx()
