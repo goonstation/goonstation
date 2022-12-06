@@ -5123,7 +5123,7 @@
 /obj/access_spawn/bar,
 /obj/access_spawn/kitchen,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "apN" = (
@@ -15050,7 +15050,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/maint,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "aPl" = (
@@ -15900,7 +15900,7 @@
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/firedoor_spawn,
 /obj/access_spawn/maint,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "aRv" = (
@@ -33368,7 +33368,7 @@
 "bNM" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/machinery/atmospherics/pipe/simple,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/blue,
 /area/station/storage/warehouse)
 "bNN" = (
@@ -45329,7 +45329,7 @@
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "csF" = (
@@ -47238,7 +47238,7 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "cyf" = (
@@ -49833,7 +49833,7 @@
 	},
 /obj/access_spawn/engineering_engine,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/grime,
 /area/station/engine/gas)
 "dOG" = (
@@ -50381,8 +50381,8 @@
 	name = "Stock Exchange"
 	},
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
-/turf/space,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/crew_quarters/stockex)
 "exJ" = (
 /obj/machinery/navbeacon{
@@ -51089,7 +51089,7 @@
 	},
 /obj/access_spawn/tox,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "fof" = (
@@ -52168,7 +52168,7 @@
 	},
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/brig)
 "guz" = (
@@ -52480,7 +52480,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/pathology,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "gNJ" = (
@@ -52764,7 +52764,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "hoU" = (
@@ -52958,7 +52958,7 @@
 	},
 /obj/access_spawn/ai_upload,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload_foyer)
 "hAi" = (
@@ -53671,7 +53671,7 @@
 	name = "Cafeteria"
 	},
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "iJw" = (
@@ -53819,7 +53819,7 @@
 	},
 /obj/access_spawn/engineering_engine,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/grime,
 /area/station/engine/gas)
 "iWk" = (
@@ -54190,7 +54190,7 @@
 	},
 /obj/access_spawn/artlab,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "jsQ" = (
@@ -54289,7 +54289,7 @@
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "jwL" = (
@@ -54381,7 +54381,7 @@
 /obj/machinery/atmospherics/pipe/simple,
 /obj/firedoor_spawn,
 /obj/access_spawn/medlab,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/blue,
 /area/station/medical/research)
 "jFB" = (
@@ -54663,7 +54663,7 @@
 /obj/machinery/door/airlock/pyro/reinforced/arrivals{
 	dir = 4
 	},
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "jUC" = (
@@ -55409,7 +55409,6 @@
 /area/station/security/main)
 "kZm" = (
 /obj/decal/poster/wallsign/fire,
-/obj/decal/stripe_delivery,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
 "kZy" = (
@@ -55458,7 +55457,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "lce" = (
@@ -55683,7 +55682,7 @@
 	},
 /obj/disposalpipe/segment/transport,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "lxQ" = (
@@ -55735,7 +55734,7 @@
 /area/station/crew_quarters/barber_shop)
 "lBs" = (
 /obj/machinery/door/airlock/pyro/reinforced/arrivals,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "lBu" = (
@@ -55881,7 +55880,7 @@
 	},
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/brig)
 "lJP" = (
@@ -56016,7 +56015,7 @@
 	},
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/main)
 "lWG" = (
@@ -56301,7 +56300,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "mpF" = (
@@ -57211,7 +57210,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "nFE" = (
@@ -57225,7 +57224,7 @@
 	},
 /obj/access_spawn/hos,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/hos)
 "nHu" = (
@@ -57350,7 +57349,7 @@
 /obj/disposalpipe/segment/mail,
 /obj/access_spawn/chemistry,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "nPH" = (
@@ -57491,7 +57490,7 @@
 	},
 /obj/access_spawn/hydro,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
 "nVQ" = (
@@ -57591,7 +57590,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "nZa" = (
@@ -58287,7 +58286,7 @@
 	},
 /obj/access_spawn/engineering_engine,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/engine/coldloop)
 "oTx" = (
@@ -58653,7 +58652,7 @@
 	},
 /obj/access_spawn/tox_storage,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hangar/science)
 "prg" = (
@@ -59419,7 +59418,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/public,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "que" = (
@@ -59799,7 +59798,7 @@
 	},
 /obj/access_spawn/tox,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/white,
 /area/station/science/lobby)
 "qLE" = (
@@ -60857,7 +60856,7 @@
 "scO" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "scX" = (
@@ -61203,8 +61202,8 @@
 	name = "Stock Exchange"
 	},
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
-/turf/space,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/crew_quarters/stockex)
 "spm" = (
 /obj/disposalpipe/segment{
@@ -61370,7 +61369,7 @@
 	},
 /obj/access_spawn/hos,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/hos)
 "svZ" = (
@@ -61839,7 +61838,7 @@
 	},
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/main)
 "sWP" = (
@@ -62016,8 +62015,8 @@
 	},
 /obj/access_spawn/telesci,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
-/turf/space,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/science/teleporter)
 "tjJ" = (
 /obj/disposalpipe/segment/morgue{
@@ -62229,7 +62228,7 @@
 	},
 /obj/access_spawn/heads,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload_foyer)
 "tEf" = (
@@ -62965,7 +62964,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "umE" = (
@@ -63134,7 +63133,7 @@
 /obj/disposalpipe/segment/mail,
 /obj/firedoor_spawn,
 /obj/access_spawn/public,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "uwt" = (
@@ -63711,7 +63710,7 @@
 	},
 /obj/disposalpipe/segment/mail,
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "viK" = (
@@ -63757,7 +63756,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
 "vma" = (
@@ -63902,7 +63901,7 @@
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "vts" = (
@@ -65629,7 +65628,7 @@
 /obj/machinery/door/airlock/pyro/reinforced/arrivals{
 	dir = 8
 	},
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "xzu" = (
@@ -65793,7 +65792,7 @@
 /obj/machinery/door/airlock/pyro/glass/security,
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/checkpoint/cargo)
 "xKG" = (
@@ -66066,12 +66065,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/power)
-"yaP" = (
-/obj/machinery/door/airlock/pyro/reinforced/arrivals,
-/obj/decal/stripe_caution,
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/station/hallway/secondary/entry)
 "ybI" = (
 /obj/storage/cart,
 /turf/simulated/floor/grime,
@@ -114949,7 +114942,7 @@ abv
 abz
 abz
 abL
-yaP
+lBs
 acl
 acR
 adp
