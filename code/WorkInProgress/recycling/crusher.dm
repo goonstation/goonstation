@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/crusher)
+	mats = 20
+
 /obj/machinery/crusher
 	name = "Crusher Unit"
 	desc = "Breaks things down into metal/glass/waste"
@@ -7,7 +10,6 @@
 	icon_state = "Crusher_1"
 	layer = MOB_LAYER - 1
 	anchored = 1
-	mats = 20
 	is_syndicate = 1
 	flags = FLUID_SUBMERGE | UNCRUSHABLE
 	event_handler_flags = USE_FLUID_ENTER

@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
+	mats = 0
+
 /obj/item/device/radio/nukie_studio_monitor
 	name = "Studio Monitor"
 	desc = "An incredibly high quality studio monitor with an uncomfortable number of high voltage stickers. Manufactured by Funk-Tek"
@@ -7,7 +10,6 @@
 
 	anchored = 0
 	speaker_range = 7
-	mats = 0
 	broadcasting = 0
 	listening = 0
 	chat_class = RADIOCL_INTERCOM

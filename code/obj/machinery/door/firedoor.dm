@@ -26,6 +26,9 @@
 		#endif
 		break
 
+TYPEINFO(/obj/machinery/door/firedoor)
+	mats = 30 // maybe a bit high??
+
 /obj/machinery/door/firedoor
 	name = "Firelock"
 	desc = "Thick, fire-proof doors that prevent the spread of fire, they can only be pried open unless the fire alarm is cleared."
@@ -40,7 +43,6 @@
 	var/welded_icon_state = "welded"
 	has_crush = FALSE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_DESTRUCT
-	mats = 30 // maybe a bit high??
 	health = 200
 	health_max = 200
 /obj/machinery/door/firedoor/xmasify()

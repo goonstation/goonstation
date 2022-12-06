@@ -22,6 +22,9 @@
  * 	Allows for input/output of enviromental air and will convert objects made of materials that produce gas to.. gas.
  * 	Once sufficient pressure has been reached it can be released spreading it across the current airgroup with a minor stun explosion.
   */
+TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
+	mats = list("MET-1" = 15, "MET-2" = 3, "INS-1" = 3, "CON-1" = 10)
+
 /obj/machinery/portable_atmospherics/pressurizer
 	name = "Extreme-Pressure Pressurization Device"
 	desc = "Some kind of nightmare contraption to make a lot of noise or pressurize rooms."
@@ -51,7 +54,6 @@
 	var/process_rate = 2
 	var/powconsumption = 0
 	var/emagged = 0
-	mats = list("MET-1" = 15, "MET-2" = 3, "INS-1" = 3, "CON-1" = 10)
 
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
 
