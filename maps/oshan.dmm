@@ -45007,28 +45007,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/machinery/navbeacon/mule/security_north,
-/obj/decal/stripe_caution,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/cable{
 	d1 = 1;
 	d2 = 4;
@@ -45349,23 +45327,7 @@
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
 "lwl" = (
-/obj/machinery/light/incandescent/cool,
-/obj/machinery/power/apc{
-	areastring = "Brig";
-	dir = 8;
-	name = "Brig APC";
-	pixel_x = -24
-	},
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
 /obj/decal/stripe_delivery,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/light/incandescent/cool,
 /obj/machinery/power/apc{
 	areastring = "Brig";
@@ -47086,7 +47048,8 @@
 /obj/machinery/navbeacon/mule/security_north{
 	codes_txt = "delivery;dir=8"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/security/processing)
 "rNm" = (
 /obj/storage/cart/forensic,
