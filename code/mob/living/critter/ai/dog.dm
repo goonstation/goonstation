@@ -71,7 +71,7 @@
 /datum/aiTask/sequence/goalbased/critter/dog/fetch_back/get_targets()
 	var/mob/living/critter/small_animal/dog/the_dog = holder.owner
 	var/mob/living/playmate = the_dog.fetch_playmate
-	if (playmate && get_dist(the_dog, playmate) < 7)
+	if (playmate && get_dist(the_dog, playmate) < max_dist)
 		the_dog.visible_message("<span class='notice'>[the_dog] begins happily running towards [playmate] with their picked up item, wagging their tail furiously!</span>")
 		return list(the_dog.fetch_playmate)
 	else
