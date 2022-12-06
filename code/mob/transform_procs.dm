@@ -903,8 +903,6 @@ var/respawn_arena_enabled = 0
 
 		if (!O.mind.special_role) // Preserve existing antag role (if any).
 			O.mind.special_role = ROLE_FLOCKTRACE
-		if (!(O.mind in ticker.mode.Agimmicks))
-			ticker.mode.Agimmicks += O.mind
 		qdel(src)
 
 		boutput(O, "<span class='bold'>You are a Flocktrace, a partition of the Flock's collective computation!</span>")
