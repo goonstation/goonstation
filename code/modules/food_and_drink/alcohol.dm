@@ -388,14 +388,13 @@
 
 		var/datum/reagents/target_reagents = null
 		var/msg
-		var/fromcontainer = (target.reagents && target.is_open_container() ? TRUE : FALSE)
-		if (fromcontainer)
+		if (target.reagents && target.is_open_container())
 			target_reagents = target.reagents
 		else if (istype(target, /obj/fluid))
 			var/obj/fluid/drank = target
 			target_reagents = drank.group?.reagents
 		if (target_reagents)
-			if (fromcontainer)
+			if (target.reagents && target.is_open_container())
 				msg = "<span class='hint'>You slurp some of the liquid from \the [target]. [target_reagents.get_taste_string(user)]</span>"
 			else if (istype(target, /obj/fluid))
 				msg = "<span class='hint'>You slurp some of \the [drank] off of \the [get_turf(drank)]. [target_reagents.get_taste_string(user)]</span>"
@@ -406,7 +405,6 @@
 			playsound(user.loc,'sound/items/drink.ogg', rand(30,70), vary = TRUE)
 		else
 			msg = "<span class='hint'>There's nothing to slurp!</span>"
-			return ..()
 
 /obj/item/straw/fast
 	cooldown = 0
