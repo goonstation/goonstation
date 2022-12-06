@@ -1191,7 +1191,7 @@ var/zapLimiter = 0
 			return
 	else
 		qdel(src)
-		CRASH("Broken-ass APC @[x],[y],[z] on [map_settings ? map_settings.name : "UNKNOWN"] (ref: \ref[src]")
+		CRASH("Broken-ass APC [identify_object(src)] @[x],[y],[z] on [map_settings ? map_settings.name : "UNKNOWN"]")
 
 
 	/*

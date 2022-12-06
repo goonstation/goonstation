@@ -1,6 +1,7 @@
 /obj/machinery/crusher
 	name = "Crusher Unit"
 	desc = "Breaks things down into metal/glass/waste"
+	pass_unstable = TRUE
 	density = 1
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "Crusher_1"

@@ -169,11 +169,14 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 			O.set_loc(src)
 	else
 		if(!isitem(extra_item)) //Allow one non food item to be added!
-			user.u_equip(O)
-			extra_item = O
-			user.u_equip(O)
-			O.set_loc(src)
-			src.visible_message("<span class='notice'>[user] adds [O] to the microwave.</span>")
+			if(O.w_class <= W_CLASS_NORMAL)
+				user.u_equip(O)
+				extra_item = O
+				user.u_equip(O)
+				O.set_loc(src)
+				src.visible_message("<span class='notice'>[user] adds [O] to the microwave.</span>")
+			else
+				boutput(user, "[O] is too large and bulky to be microwaved.") 
 		else
 			boutput(user, "There already seems to be an unusual item inside, so you don't add this one too.") //Let them know it failed for a reason though
 

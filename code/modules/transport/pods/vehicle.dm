@@ -493,7 +493,7 @@
 		*/
 
 	blob_act(var/power)
-		src.health -= power * 2
+		src.health -= power * 3
 		checkhealth()
 
 	get_desc()

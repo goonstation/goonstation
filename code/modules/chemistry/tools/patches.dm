@@ -527,6 +527,7 @@
 	emp_act()
 		. = ..()
 		src.visible_message("<span class='alert'>[src] malfunctions and identifies all substaces as harmful, removing them!</span>")
+		playsound(src, "sparks", 75, 1, -1)
 		src.reagents?.clear_reagents()
 
 	attack_self(mob/user as mob)
