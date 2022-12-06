@@ -589,7 +589,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 					src.icon_state = src.dogtype
 
 	Life(datum/controller/process/mobs/parent)
-		if (..(parent))
+		if (..())
 			return TRUE
 
 		//Dogs bark sometimes
