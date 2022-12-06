@@ -921,7 +921,8 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/mining/refinery)
 "pK" = (
 /turf/simulated/floor/grime,
@@ -1198,7 +1199,8 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/mining/miningoutpost)
 "rf" = (
 /obj/decal/cleanable/ripped_poster{
@@ -1418,7 +1420,8 @@
 	req_access_txt = "51"
 	},
 /obj/firedoor_spawn,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/mining/power)
 "sB" = (
 /obj/disposalpipe/segment/transport,
@@ -1528,7 +1531,8 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/mining/hangar)
 "te" = (
 /obj/item/rods/steel,
@@ -1744,7 +1748,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/mining/miningoutpost)
 "uA" = (
 /obj/effects/background_objects/regis,
@@ -2012,7 +2017,8 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/mining/manufacturing)
 "we" = (
 /obj/grille/catwalk{
@@ -2060,7 +2066,8 @@
 /area/evilreaver/storage/tools)
 "wo" = (
 /obj/machinery/door/airlock/pyro,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/tech_outpost)
 "wr" = (
 /obj/storage/crate/furnacefuel,
@@ -2322,7 +2329,8 @@
 /area/mining/manufacturing)
 "xL" = (
 /obj/disposalpipe/segment/transport,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/mining/miningoutpost)
 "xM" = (
 /obj/indestructible/shuttle_corner{
@@ -2519,7 +2527,8 @@
 	name = "Mining Outpost Airlock";
 	req_access_txt = "51"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/mining/hangar)
 "yV" = (
 /obj/decal/cleanable/dirt,
@@ -2707,7 +2716,8 @@
 /area/evilreaver/atmospherics)
 "Af" = (
 /obj/disposalpipe/segment/bent/north,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/mining/miningoutpost)
 "Ai" = (
 /turf/simulated/floor/yellow/side{
@@ -3339,7 +3349,8 @@
 	dir = 8
 	},
 /obj/firedoor_spawn,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/mining/dock)
 "Ed" = (
 /turf/simulated/floor/caution/west,
@@ -3432,7 +3443,8 @@
 	name = "N light switch";
 	pixel_y = 24
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/mining/miningoutpost)
 "EM" = (
 /obj/indestructible/shuttle_corner{
@@ -3708,7 +3720,8 @@
 /area/station/solar/small_backup3)
 "Gi" = (
 /obj/machinery/vending/cigarette,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/mining/manufacturing)
 "Gk" = (
 /obj/machinery/light/emergency{
@@ -4533,7 +4546,8 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/mining/miningoutpost)
 "Lw" = (
 /obj/item/rods/steel,
@@ -4683,7 +4697,8 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/mining/hangar)
 "LW" = (
 /turf/simulated/floor/stairs{
@@ -4721,7 +4736,8 @@
 /turf/simulated/floor/grime,
 /area/mining/comms)
 "Mq" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/mining/hangar)
 "Ms" = (
 /obj/table/auto,
@@ -4877,7 +4893,8 @@
 "Nt" = (
 /obj/machinery/manufacturer/hangar,
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/mining/hangar)
 "Ny" = (
 /obj/cable{
@@ -5037,13 +5054,15 @@
 	name = "Mining Outpost Airlock";
 	req_access_txt = "51"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/mining/hangar)
 "Os" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/tech_outpost)
 "Ou" = (
 /obj/npc/trader/martian,
@@ -5385,7 +5404,8 @@
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/mining/comms)
 "Rk" = (
 /obj/indestructible/shuttle_corner{
@@ -5477,7 +5497,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "RF" = (
 /obj/grille/catwalk,
@@ -5552,7 +5573,8 @@
 /area/evilreaver/security)
 "Si" = (
 /obj/machinery/manufacturer/general,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/mining/hangar)
 "Sk" = (
 /obj/lattice{
@@ -5564,7 +5586,8 @@
 /area/noGenerate)
 "Sr" = (
 /obj/machinery/vending/cola/red,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/mining/dock)
 "Ss" = (
 /turf/simulated/floor/grime,
@@ -5587,7 +5610,8 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/mining/miningoutpost)
 "SB" = (
 /obj/decal/cleanable/dirt,
@@ -5829,7 +5853,8 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 8
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/tech_outpost)
 "Ud" = (
 /obj/decal/cleanable/dirt,
@@ -5883,7 +5908,8 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/mining/manufacturing)
 "Uv" = (
 /obj/machinery/door/poddoor{
@@ -6319,7 +6345,8 @@
 /turf/simulated/floor/carpet/office,
 /area/mining/hangar)
 "Xj" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/mining/miningoutpost)
 "Xk" = (
 /turf/simulated/floor/caution/south,
@@ -6442,7 +6469,8 @@
 /area/evilreaver/bridge)
 "Ya" = (
 /obj/machinery/vending/snack,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/mining/dock)
 "Ye" = (
 /obj/machinery/door/airlock/pyro/engineering{
