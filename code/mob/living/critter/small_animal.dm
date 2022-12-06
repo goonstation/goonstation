@@ -589,12 +589,12 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 					src.icon_state = src.dogtype
 
 	Life(datum/controller/process/mobs/parent)
-		if (..(parent))
-			return 1
+		if (..())
+			return TRUE
 
 		//Dogs bark sometimes
 		if (src.ai?.enabled && prob(5))
-			src.emote("scream", 1)
+			src.emote("scream", TRUE)
 
 	critter_attack(var/the_target)
 		if (istype(the_target, /mob))
