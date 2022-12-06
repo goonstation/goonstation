@@ -834,7 +834,7 @@
 		var/mob/dead/observer/O = A
 		if(MC && istype(O) )
 			O.use_movement_controller = src
-			O.setStatus("bound_ghost", duration = 2 MINUTES, optional=list("anchor"=src, "client"=O.client))
+			O.setStatus("bound_ghost", duration = 5 MINUTES, optional=list("anchor"=src, "client"=O.client))
 			if (istype(O.abilityHolder, /datum/abilityHolder/ghost_observer))
 				var/datum/abilityHolder/ghost_observer/GH = O.abilityHolder
 				GH.disable(TRUE)
@@ -893,13 +893,9 @@
 
 	can_attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		if(!revives)
-			boutput(O, "<span class='notice'>This ghostbrain has insufficent power to revive this corpse.</span>")
+			boutput(M, "<span class='notice'>This ghostbrain has insufficent power to revive this corpse.</span>")
 		else if(src.owner == user.mind)
 			/* Checks if an organ can be attached to a target mob */
-			if (istype(/obj/item/organ/chest/, src))
-				// We can't transplant a chest
-				return 0
-
 			if (!in_interact_range(src, user))
 				return 0
 

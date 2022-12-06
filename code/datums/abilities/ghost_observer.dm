@@ -226,8 +226,12 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	display_available()
 		. = ..()
 		var/datum/abilityHolder/ghost_observer/AH = holder
+		var/atom/movable/screen/ability/topBar/abilityIcon = src.object
 		if(istype(AH) && AH.disabled)
-			. = FALSE
+			abilityIcon.darkener.alpha = 200
+			abilityIcon.UpdateOverlays(abilityIcon.darkener, "darkener")
+		else
+			abilityIcon.UpdateOverlays(null, "darkener")
 
 	castcheck(atom/target)
 		. = ..()
