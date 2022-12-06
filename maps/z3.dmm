@@ -592,7 +592,12 @@
 	icon_state = "pod_0";
 	name = "egg generator pod"
 	},
-/turf/unsimulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/grime{
+	carbon_dioxide = 16;
+	name = "warm floor";
+	temperature = 313.15
+	},
 /area/space_hive)
 "abZ" = (
 /turf/unsimulated/floor{
@@ -682,7 +687,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/radiostation/hallway)
 "acl" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/radiostation/hallway)
 "acm" = (
 /obj/table/auto,
@@ -811,11 +817,13 @@
 /obj/machinery/light_switch/north{
 	pixel_y = 30
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/radiostation/hallway)
 "acF" = (
 /obj/machinery/vending/cigarette,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/radiostation/hallway)
 "acG" = (
 /turf/simulated/floor/blue/side{
@@ -852,11 +860,13 @@
 /area/space_hive)
 "acJ" = (
 /obj/machinery/vending/snack,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/radiostation/hallway)
 "acK" = (
 /obj/machinery/vending/cola/blue,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/radiostation/hallway)
 "acL" = (
 /obj/structure/girder/displaced,
@@ -3085,7 +3095,8 @@
 /obj/machinery/light_switch/north{
 	pixel_y = 30
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/radiostation/engineering)
 "aob" = (
 /obj/decal/poster/wallsign/escape_left,
@@ -3886,7 +3897,8 @@
 	icon_state = "tapedrive-p";
 	name = "broken databank"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/buddyfactory/mainframe)
 "arf" = (
 /obj/machinery/power/data_terminal,
@@ -3898,7 +3910,8 @@
 	locked = 0;
 	setup_drive_type = /obj/item/disk/data/tape/tds_journaltape
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/buddyfactory/mainframe)
 "arg" = (
 /turf/simulated/floor/circuit/green,
@@ -4127,7 +4140,8 @@
 /obj/machinery/networked/mainframe/robot_factory{
 	tag = "FACTORY_MAINFRAME"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/buddyfactory/mainframe)
 "arV" = (
 /obj/cable{
@@ -4341,7 +4355,8 @@
 	setup_drive_type = /obj/item/disk/data/tape/tds_replogtape
 	},
 /obj/machinery/light/small,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/buddyfactory/mainframe)
 "asF" = (
 /obj/machinery/power/data_terminal,
@@ -4353,7 +4368,8 @@
 	icon_state = "tapedrive-p";
 	name = "broken databank"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/buddyfactory/mainframe)
 "asG" = (
 /obj/decal/fakeobjects{
@@ -4466,7 +4482,8 @@
 "asV" = (
 /obj/decal/cleanable/dirt,
 /obj/item/storage/toolbox/mechanical,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/radiostation/engineering)
 "asW" = (
 /obj/machinery/espresso_machine,
@@ -4567,7 +4584,8 @@
 /turf/simulated/floor/plating/damaged1,
 /area/salyut)
 "ato" = (
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/radiostation/serverroom)
 "atp" = (
 /obj/decal/fakeobjects{
@@ -6574,7 +6592,8 @@
 /area/abandonedship)
 "aHE" = (
 /obj/decal/fakeobjects/vacuumtape,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/radiostation/serverroom)
 "aHF" = (
 /obj/decal/cleanable/oil,
@@ -7897,7 +7916,8 @@
 	name = "dusty docking station"
 	},
 /obj/machinery/bot/guardbot/bad,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/grime,
 /area/h7/computer_core)
 "aLP" = (
 /obj/decal/cleanable/oil,
@@ -8125,7 +8145,8 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/grime,
 /area/h7/computer_core)
 "aMw" = (
 /obj/cable{
@@ -8873,7 +8894,8 @@
 	name = "mail pipe"
 	},
 /obj/machinery/derelict_aiboss/tower,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/grime,
 /area/derelict_ai_sat/core)
 "aOC" = (
 /obj/disposalpipe/segment{
@@ -8898,7 +8920,8 @@
 	name = "Old Terminal";
 	setup_os_string = "H7_MAINFRAME"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/grime,
 /area/h7/computer_core)
 "aOG" = (
 /obj/decal/cleanable/cobweb2,
@@ -9069,7 +9092,8 @@
 	},
 /obj/item/guardbot_frame,
 /obj/item/guardbot_core,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/grime,
 /area/h7/storage)
 "aPc" = (
 /obj/decal/floatingtiles{
@@ -9200,7 +9224,8 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/networked/radio,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/grime,
 /area/h7/computer_core)
 "aPq" = (
 /obj/cable{
@@ -9303,7 +9328,8 @@
 /area/derelict_ai_sat/core)
 "aPD" = (
 /obj/machinery/derelict_aiboss/tower,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/grime,
 /area/derelict_ai_sat/core)
 "aPE" = (
 /turf/simulated/floor/yellow/side{
@@ -9444,7 +9470,8 @@
 	read_only = 1;
 	setup_drive_type = /obj/item/disk/data/tape/h7_logs
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/grime,
 /area/h7/computer_core)
 "aPY" = (
 /obj/machinery/power/data_terminal,
@@ -9452,7 +9479,8 @@
 /obj/machinery/networked/mainframe/h7{
 	tag = "H7_MAINFRAME"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/h7/computer_core)
 "aQa" = (
 /turf/simulated/floor/stairs{
@@ -9506,7 +9534,8 @@
 	name = "broken databank"
 	},
 /obj/cable,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/grime,
 /area/h7/computer_core)
 "aQk" = (
 /turf/simulated/floor/caution/north{
@@ -9855,7 +9884,8 @@
 	name = "Prisoner Transfer Ship";
 	req_access_txt = "1"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/airless,
 /area/abandonedship)
 "aRv" = (
 /obj/machinery/power/data_terminal,
@@ -10461,7 +10491,8 @@
 	area_access = 99;
 	detector_id = "Living Quarters"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/grime,
 /area/h7/crew)
 "aTc" = (
 /obj/decal/fakeobjects{
@@ -12357,7 +12388,8 @@
 	name = "old machine"
 	},
 /obj/map/light/white,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/iss)
 "aYd" = (
 /turf/simulated/floor/caution/east{
@@ -12945,7 +12977,8 @@
 	frequency = 1089;
 	name = "dusty docking station"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/grime,
 /area/h7/lab)
 "bae" = (
 /obj/machinery/firealarm{
@@ -14362,7 +14395,8 @@
 	name = "Old Terminal";
 	setup_os_string = "H7_MAINFRAME"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/grime,
 /area/h7/lab)
 "bfo" = (
 /obj/cable{
@@ -15168,9 +15202,8 @@
 	pixel_y = -32
 	},
 /obj/disposalpipe/segment,
-/turf/simulated/floor/delivery{
-	dir = 4
-	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/derelict_ai_sat/core)
 "bhX" = (
 /obj/decal/fakeobjects/pipe,
@@ -15382,7 +15415,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/grime,
 /area/derelict_ai_sat/core)
 "biv" = (
 /obj/cable{
@@ -15424,7 +15458,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/grime,
 /area/derelict_ai_sat)
 "biA" = (
 /obj/grille/catwalk{
@@ -15540,7 +15575,8 @@
 	name = "dusty docking station"
 	},
 /obj/machinery/bot/guardbot/bad,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/grime,
 /area/h7/computer_core)
 "biM" = (
 /obj/decal/cleanable/dirt,
@@ -15651,14 +15687,17 @@
 /area/radiostation/bedroom)
 "bjd" = (
 /obj/decal/fakeobjects/operatorconsole,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/radiostation/serverroom)
 "bje" = (
 /obj/decal/fakeobjects/cpucontroller,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/radiostation/serverroom)
 "bjf" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/radiostation/serverroom)
 "bjh" = (
 /obj/table/reinforced/industrial/auto,
@@ -18249,7 +18288,8 @@
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
 /obj/decal/cleanable/molten_item,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/diner/dining)
 "fZa" = (
 /mob/living/critter/small_animal/cockroach,
@@ -18832,7 +18872,8 @@
 /obj/machinery/computer/security/wooden_tv/small{
 	pixel_y = 8
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/diner/dining)
 "hAu" = (
 /obj/decal/cleanable/machine_debris,
@@ -19219,7 +19260,8 @@
 	productset = 2;
 	trader_area = "/area/diner/dining"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/diner/dining)
 "iEV" = (
 /obj/indestructible/shuttle_corner{
@@ -19603,7 +19645,8 @@
 /obj/machinery/cashreg,
 /obj/table/reinforced/bar/auto,
 /obj/machinery/cashreg,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/diner/dining)
 "jFV" = (
 /obj/wingrille_spawn/auto/reinforced,
@@ -19986,7 +20029,8 @@
 	},
 /obj/deskclutter,
 /obj/item/reagent_containers/food/drinks/bowl,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/diner/dining)
 "kRn" = (
 /obj/cable{
@@ -21905,7 +21949,8 @@
 /obj/item/shaker/salt{
 	pixel_x = 1
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/diner/dining)
 "qdj" = (
 /obj/submachine/chef_sink/chem_sink{
@@ -21948,7 +21993,8 @@
 	name = "Prisoner Transfer Ship";
 	req_access_txt = "1"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/airless,
 /area/abandonedship)
 "qhW" = (
 /turf/simulated/floor/pool/no_animate,
@@ -22177,7 +22223,8 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/diner/dining)
 "qTq" = (
 /obj/decal/fakeobjects/shuttleengine{
@@ -23410,7 +23457,8 @@
 "uhA" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grime,
 /area/diner/dining)
 "uhK" = (
 /obj/decal/fakeobjects{
