@@ -2201,7 +2201,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 /turf/proc/fall_to(var/turf/T, var/atom/movable/A)
 	if(istype(A, /obj/overlay) || A.anchored == 2)
 		return
-	#ifdef RUNTIME_CHECKING
+	#ifdef CHECK_MORE_RUNTIMES
 	if(current_state <= GAME_STATE_WORLD_NEW)
 		CRASH("[identify_object(A)] fell into [src] at [src.x],[src.y],[src.z] ([src.loc] [src.loc.type]) during world initialization")
 	#endif

@@ -7,6 +7,7 @@
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_BOTS
+	pass_unstable = TRUE
 	var/obj/item/card/id/botcard // ID card that the bot "holds".
 	var/access_lookup = "Assistant" // For the get_access() proc. Defaults to staff assistant.
 	var/locked = null

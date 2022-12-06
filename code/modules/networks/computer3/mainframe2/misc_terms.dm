@@ -1677,6 +1677,8 @@
 	icon_state = "printer0"
 	device_tag = "PNET_PRINTDEVC"
 	mats = 6
+	power_usage = 200
+	machine_registry_idx = MACHINES_PRINTERS
 	var/print_id = null //Just like databanks.
 	var/temp_msg = "PRINTER OK" //Appears in the interface window.
 	var/printing = 0 //Are we printing RIGHT NOW?
@@ -1684,7 +1686,6 @@
 	var/jam = 0 //Oh no! A jam! I hope somebody unjams us right quick!
 	var/blinking = 0 //Is our indicator light blinking?
 	var/sheets_remaining = 15 //How many blank sheets of paper do we have left?
-	power_usage = 200
 
 #define MAX_SHEETS 20
 #define SETUP_JAM_IGNITION 6 //How jammed do we have to be before we break down?

@@ -156,7 +156,9 @@
 				if (!(O.type in mining_controls.magnet_do_not_erase) && !istype(O, /obj/magnet_target_marker))
 					qdel(O)
 			T.ClearAllOverlays()
-
+			for (var/mob/living/L in T)
+				if(ismobcritter(L) && isdead(L)) // we don't care about dead critters
+					qdel(L)
 			if(istype(T,/turf/unsimulated) && ( T.GetComponent(/datum/component/buildable_turf) || (station_repair.station_generator && (origin.z == Z_LEVEL_STATION))))
 				T.ReplaceWith(/turf/space, force=TRUE)
 			else
@@ -1469,6 +1471,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if(cell_type)
 			var/cell = new cell_type
 			AddComponent(/datum/component/cell_holder, cell)
+			RegisterSignal(src, COMSIG_CELL_SWAP, .proc/power_down)
 		BLOCK_SETUP(BLOCK_ROD)
 
 	// Seems like a basic bit of user feedback to me (Convair880).

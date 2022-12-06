@@ -815,6 +815,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	desc = "An energy field."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Contain_F"
+	pass_unstable = TRUE
 	anchored = 1
 	density = 1
 	event_handler_flags = USE_FLUID_ENTER | IMMUNE_SINGULARITY
