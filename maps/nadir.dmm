@@ -48717,7 +48717,8 @@
 "wWN" = (
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/black,
 /area/station/engine/elect)
 "wWP" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
