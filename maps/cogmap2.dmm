@@ -81240,13 +81240,6 @@
 	dir = 9
 	},
 /area/station/ranch)
-"uUB" = (
-/obj/grille/catwalk{
-	dir = 6
-	},
-/turf/space,
-/turf/space,
-/area/station/mining/magnet)
 "uVv" = (
 /obj/machinery/light/small/floor,
 /obj/decal/stripe_delivery,
@@ -143860,7 +143853,7 @@ cKt
 cKv
 cKv
 qwX
-uUB
+ikQ
 dau
 dbs
 dbs
