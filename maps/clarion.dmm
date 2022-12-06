@@ -21654,6 +21654,7 @@
 /area/station/medical/medbay/cloner)
 "bnx" = (
 /obj/disposalpipe/segment/mail,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/greenwhite{
 	dir = 6
 	},
@@ -32736,7 +32737,6 @@
 /turf/simulated/floor/caution/south,
 /area/station/security/main)
 "epH" = (
-/obj/decal/stripe_caution,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
@@ -32746,6 +32746,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "eqT" = (
@@ -33291,7 +33292,6 @@
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "fcm" = (
-/obj/decal/stripe_caution,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
@@ -33302,6 +33302,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "fcX" = (
@@ -33449,7 +33450,6 @@
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
 "foQ" = (
-/obj/decal/stripe_caution,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
@@ -33463,6 +33463,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "foU" = (
@@ -33944,7 +33945,6 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "fUP" = (
-/obj/decal/stripe_caution,
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
@@ -33958,6 +33958,7 @@
 	dir = 6;
 	icon_state = "line2"
 	},
+/obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "fVW" = (
@@ -34210,7 +34211,6 @@
 	},
 /area/listeningpost/power)
 "grW" = (
-/obj/decal/stripe_caution,
 /obj/disposalpipe/segment/mail{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -34221,6 +34221,7 @@
 	},
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot,
+/obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "gsM" = (
@@ -36851,11 +36852,11 @@
 	},
 /area/station/engine/combustion_chamber)
 "jAA" = (
-/obj/decal/stripe_caution,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/navbeacon/mule/toolstorage_north/south,
+/obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/storage/tools)
 "jAM" = (
@@ -37373,7 +37374,6 @@
 	},
 /area/station/garden/aviary)
 "kcR" = (
-/obj/decal/stripe_caution,
 /obj/disposalpipe/segment/mail,
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -37381,6 +37381,7 @@
 	},
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot/ranger,
+/obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "kdh" = (
@@ -38361,7 +38362,9 @@
 	},
 /obj/machinery/navbeacon/mule/research_north/south,
 /obj/decal/stripe_caution,
-/turf/simulated/floor,
+/turf/simulated/floor/purple/side{
+	dir = 4
+	},
 /area/station/science/lobby)
 "lbG" = (
 /obj/grille/catwalk{
@@ -38407,7 +38410,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "leb" = (
-/obj/decal/stripe_caution,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
@@ -38424,6 +38426,7 @@
 /obj/item/device/radio/intercom/science{
 	dir = 8
 	},
+/obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "leh" = (
@@ -39870,13 +39873,13 @@
 /turf/simulated/floor/grey/whitegrime/other,
 /area/station/storage/primary)
 "mLr" = (
-/obj/decal/stripe_caution,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot/gunner/vaquero,
+/obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "mMA" = (
@@ -40340,7 +40343,9 @@
 	icon_state = "pipe-j2"
 	},
 /obj/decal/stripe_delivery,
-/turf/simulated/floor,
+/turf/simulated/floor/purple/side{
+	dir = 4
+	},
 /area/station/science/lobby)
 "nup" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -42177,7 +42182,6 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/engine/substation/west)
 "pFY" = (
-/obj/decal/stripe_caution,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
@@ -42188,6 +42192,7 @@
 	dir = 10;
 	icon_state = "line2"
 	},
+/obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "pHC" = (
@@ -42264,11 +42269,11 @@
 	},
 /area/space)
 "pOU" = (
-/obj/decal/stripe_caution,
 /obj/cable{
 	icon_state = "1-4"
 	},
 /obj/machinery/navbeacon/mule/podbay_north/south,
+/obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "pPC" = (
@@ -42472,7 +42477,6 @@
 /turf/simulated/floor/black,
 /area/station/storage/primary)
 "pXt" = (
-/obj/decal/stripe_caution,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -42485,6 +42489,7 @@
 	pixel_x = 24
 	},
 /obj/machinery/navbeacon/mule/bridge_north,
+/obj/decal/stripe_caution,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "pYd" = (
@@ -43812,11 +43817,11 @@
 /turf/simulated/floor/circuit,
 /area/station/teleporter)
 "rAC" = (
-/obj/decal/stripe_delivery,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/glass,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/listeningpost)
 "rBd" = (
@@ -46403,13 +46408,13 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "uMi" = (
-/obj/decal/stripe_delivery,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/alt{
 	name = "Control Room"
 	},
+/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/listeningpost/power)
 "uMI" = (
@@ -46530,7 +46535,6 @@
 /turf/simulated/floor/green/checker,
 /area/station/medical/cdc)
 "uTo" = (
-/obj/decal/stripe_caution,
 /obj/machinery/light_switch/east{
 	dir = 4
 	},
@@ -46547,6 +46551,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "uTp" = (
