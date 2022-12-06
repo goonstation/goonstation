@@ -57435,7 +57435,7 @@
 /obj/stool/chair/couch{
 	dir = 8
 	},
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /turf/simulated/floor/arrival{
 	dir = 1
 	},

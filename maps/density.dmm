@@ -3259,7 +3259,7 @@
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "hr" = (
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "hs" = (
@@ -5923,7 +5923,7 @@
 "mx" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
 	dir = 4;
-	
+
 	},
 /turf/simulated/floor/redwhite{
 	dir = 8

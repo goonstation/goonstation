@@ -12286,7 +12286,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "azB" = (
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
@@ -23321,7 +23321,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/critter/dog/george/blair,
+/mob/living/critter/small_animal/dog/george/blair,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fgreen2"

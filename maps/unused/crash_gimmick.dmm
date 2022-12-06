@@ -1298,7 +1298,7 @@
 	},
 /area/russian/radiation)
 "aKr" = (
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /turf/simulated/floor/carpet/grime{
 	desc = " It is made of temp."
 	},
@@ -11717,7 +11717,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /turf/space,
 /area/russian/radiation)
@@ -11979,7 +11979,7 @@
 "bDh" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/storage/closet/emergency,
 /obj/item/clothing/suit/space/emerg,
@@ -13214,7 +13214,7 @@
 "bKc" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -19134,7 +19134,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/decal/tile_edge/line/blue{
 	dir = 1;
@@ -41878,7 +41878,7 @@
 "frr" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/machinery/vending/coffee,
 /obj/disposalpipe/segment/cargo{
@@ -45503,7 +45503,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 10;
-	
+
 	},
 /obj/disposalpipe/segment/cargo{
 	dir = 4
@@ -45813,7 +45813,7 @@
 "gZd" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/cable{
 	d1 = 2;
@@ -47608,7 +47608,7 @@
 "icu" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10;
-	
+
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -48612,7 +48612,7 @@
 "iBS" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/cable{
 	d1 = 2;
@@ -51504,7 +51504,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
 	dir = 10;
-	
+
 	},
 /turf/simulated/floor/wood/two{
 	desc = " It is made of wood.";
@@ -53054,7 +53054,7 @@
 /obj/storage/secure/crate/weapon/armory/pod_weapons,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
 	dir = 10;
-	
+
 	},
 /turf/simulated/floor/black{
 	desc = " It is made of steel.";
@@ -54852,7 +54852,7 @@
 "lrx" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
 	dir = 10;
-	
+
 	},
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/black{
@@ -55801,7 +55801,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
@@ -56356,7 +56356,7 @@
 "lZv" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
 	dir = 10;
-	
+
 	},
 /obj/disposalpipe/segment/brig{
 	dir = 8;
@@ -58668,7 +58668,7 @@
 /obj/item/reagent_containers/food/snacks/burger/moldy,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 10;
-	
+
 	},
 /turf/simulated/floor/white/checker{
 	desc = " It is made of steel.";
@@ -64411,7 +64411,7 @@
 "pRX" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/yellow{
@@ -65127,7 +65127,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
@@ -65288,7 +65288,7 @@
 "qpW" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/cable{
 	d1 = 4;
@@ -65940,7 +65940,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /turf/simulated/floor{
 	desc = " It is made of steel.";
@@ -66946,7 +66946,7 @@
 "qXX" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 10;
-	
+
 	},
 /turf/simulated/wall/auto/reinforced/supernorn{
 	icon_state = "norn-R-15"
@@ -67946,7 +67946,7 @@
 "rwD" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
 	dir = 10;
-	
+
 	},
 /turf/simulated/floor/black{
 	broken = 1;

@@ -17640,7 +17640,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fred4"

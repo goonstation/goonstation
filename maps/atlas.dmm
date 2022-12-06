@@ -20847,7 +20847,7 @@
 /area/station/hallway/primary/east)
 "Zz" = (
 /obj/disposalpipe/segment,
-/obj/critter/dog/george/orwell,
+/mob/living/critter/small_animal/dog/george/orwell,
 /obj/machinery/phone/wall{
 	pixel_y = 33
 	},

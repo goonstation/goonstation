@@ -81141,7 +81141,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/ghostdrone_factory)
 "xcn" = (
-/obj/critter/dog/george{
+/mob/living/critter/small_animal/dog/george{
 	dir = 4
 	},
 /obj/disposalpipe/segment/transport,

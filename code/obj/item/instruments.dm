@@ -77,7 +77,7 @@
 
 		if (prob(5))
 			if (src.dog_bark)
-				for_by_tcl(george, /obj/critter/dog/george)
+				for_by_tcl(george, /mob/living/critter/small_animal/dog/george)
 					if (IN_RANGE(george, T, 6) && prob(60))
 						if(ON_COOLDOWN(george, "george howl", 10 SECONDS))
 							continue

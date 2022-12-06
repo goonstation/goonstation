@@ -1699,14 +1699,6 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		src.change_icon()
 		return
 
-// tOt I ain't agree to no universal corgi ban
-// and no one's gunna get it if they just see George and Blair okay!!
-// and I can't just rename the pug!!!
-/obj/critter/dog/george/orwell
-	name = "Orwell"
-	icon_state = "corgi"
-	doggy = "corgi"
-
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=+KALI-MA+=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 /* '~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~' */

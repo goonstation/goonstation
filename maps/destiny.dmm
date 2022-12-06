@@ -2282,7 +2282,7 @@
 	name = "Head of Personnel's Quarters"
 	})
 "aiU" = (
-/obj/critter/dog/george/blair,
+/mob/living/critter/small_animal/dog/george/blair,
 /obj/machinery/firealarm{
 	dir = 4;
 	layer = 3.5;
@@ -15123,7 +15123,7 @@
 /area/station/janitor/supply)
 "bwQ" = (
 /obj/decal/stage_edge,
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "bwT" = (

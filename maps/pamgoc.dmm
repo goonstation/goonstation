@@ -2372,7 +2372,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fred4"
@@ -12350,7 +12350,7 @@
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
-	
+
 	},
 /obj/cable{
 	d1 = 4;
@@ -34596,7 +34596,7 @@
 "boF" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen{
 	dir = 1;
-	
+
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -63897,7 +63897,7 @@
 	},
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
 	dir = 8;
-	
+
 	},
 /turf/simulated/floor/redwhite{
 	dir = 4

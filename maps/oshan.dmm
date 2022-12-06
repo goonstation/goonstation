@@ -24086,7 +24086,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "blx" = (
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
@@ -28640,7 +28640,7 @@
 	},
 /area/station/bridge/hos)
 "bxa" = (
-/obj/critter/dog/george/blair,
+/mob/living/critter/small_animal/dog/george/blair,
 /obj/cable{
 	icon_state = "1-10"
 	},

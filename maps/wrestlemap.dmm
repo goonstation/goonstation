@@ -54386,7 +54386,7 @@
 /turf/simulated/floor/sand,
 /area/station/bridge)
 "xcv" = (
-/obj/critter/dog/george/blair,
+/mob/living/critter/small_animal/dog/george/blair,
 /turf/simulated/floor/wood,
 /area/station/bridge/hos)
 "xcI" = (

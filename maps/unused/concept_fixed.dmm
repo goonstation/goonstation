@@ -8393,7 +8393,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "aqi" = (
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "aqj" = (

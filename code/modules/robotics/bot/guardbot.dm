@@ -3975,7 +3975,7 @@
 								src.speak_with_maptext("Fun fact: The average weight of a domestic space bee is about [pick("10 pounds","4.54 kilograms", "25600 drams", "1.42857143 cloves", "145.833333 troy ounces")].")
 						END_NEAT
 
-				else if (istype(AM, /obj/critter/dog/george) && !(src.neat_things & NT_GEORGE))
+				else if (istype(AM, /mob/living/critter/small_animal/dog/george) && !(src.neat_things & NT_GEORGE))
 					FOUND_NEAT(NT_GEORGE)
 						src.speak_with_maptext("Why, if it isn't beloved station canine, George!  Who's a good doggy?  You are!  Yes, you!")
 						END_NEAT
