@@ -531,7 +531,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/wearertargeting/energy_shield/ceshield, list(SLOT_BELT), 0.5, 0.2, FALSE, 5) //blocks half of incoming damage, up to 200 points, on a full charge, but loses charge quickly while active
+		AddComponent(/datum/component/wearertargeting/energy_shield/ceshield, list(SLOT_BELT), 0.75, 0.2, FALSE, 5) //blocks 3/4 of incoming damage, up to 200 points, on a full charge, but loses charge quickly while active
 		var/obj/item/ammo/power_cell/self_charging/cell = new/obj/item/ammo/power_cell/self_charging{recharge_rate = 3; recharge_delay = 10 SECONDS}
 		AddComponent(/datum/component/cell_holder, cell, FALSE, 100, FALSE)
 		cell.set_loc(null) //otherwise it takes a slot in the belt. aaaaa

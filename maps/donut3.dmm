@@ -2189,10 +2189,9 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "aux" = (
-/turf/simulated/wall/auto/jen/yellow{
-	icon_state = "12"
-	},
-/area/station/mining/staff_room)
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon2,
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "auB" = (
 /obj/plasticflaps{
 	layer = 3
@@ -2824,6 +2823,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon16,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "aDT" = (
@@ -3820,14 +3820,9 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "aUf" = (
+/obj/disposalpipe/segment,
 /obj/machinery/light/incandescent/harsh{
 	dir = 4
-	},
-/obj/machinery/disposal/small{
-	dir = 8
-	},
-/obj/disposalpipe/trunk{
-	dir = 1
 	},
 /turf/simulated/floor/grey,
 /area/station/science/lab)
@@ -6207,6 +6202,10 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/science/gen_storage)
+"bDJ" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon5,
+/turf/simulated/floor/wood/six,
+/area/station/hallway/primary/west)
 "bDK" = (
 /obj/stool/chair{
 	dir = 1
@@ -8842,9 +8841,14 @@
 /turf/simulated/floor/black,
 /area/station/security/main)
 "cqm" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/mining/staff_room)
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon12,
+/turf/simulated/floor,
+/area/station/crew_quarters/market)
 "cqn" = (
 /obj/shrub{
 	dir = 4;
@@ -12722,6 +12726,10 @@
 "dwz" = (
 /turf/simulated/floor/black,
 /area/station/ai_monitored/storage/eva)
+"dwB" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon4,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "dwH" = (
 /obj/grille/catwalk/jen/side{
 	dir = 1
@@ -14761,6 +14769,10 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
+"ebH" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon10,
+/turf/simulated/floor/carpet/red/fancy/narrow/north,
+/area/station/crew_quarters/cafeteria)
 "ebU" = (
 /obj/cable,
 /obj/cable{
@@ -16399,14 +16411,16 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "eBC" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/cable,
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/black/grime,
 /area/station/routing/depot)
@@ -17867,6 +17881,11 @@
 /area/station/security/main)
 "eXg" = (
 /obj/disposalpipe/segment,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 26;
+	pixel_y = 1
+	},
 /turf/simulated/floor/grey,
 /area/station/science/lab)
 "eXi" = (
@@ -18073,7 +18092,8 @@
 /obj/decal/poster/wallsign/warning3{
 	desc = "'Personnel who enter through this unit will not be able to escape without destruction of Nanotrasen property. Proceed with extreme caution!'";
 	icon_state = "securearea";
-	name = "WARNING - ONE-WAY ENTRY"
+	name = "WARNING - ONE-WAY ENTRY";
+	layer = 2.9
 	},
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
@@ -18414,7 +18434,8 @@
 /obj/decal/poster/wallsign/warning3{
 	desc = "'Personnel who enter through this unit will not be able to escape without destruction of Nanotrasen property. Proceed with extreme caution!'";
 	icon_state = "securearea";
-	name = "WARNING - ONE-WAY ENTRY"
+	name = "WARNING - ONE-WAY ENTRY";
+	layer = 2.9
 	},
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
@@ -18454,6 +18475,14 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit/red,
 /area/station/security/hos)
+"ffS" = (
+/obj/decal/tile_edge/line/green{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon11,
+/turf/simulated/floor,
+/area/station/crew_quarters/garden)
 "ffU" = (
 /obj/table/wood/round/auto,
 /obj/item/storage/box/trackimp_kit2{
@@ -22264,6 +22293,9 @@
 /area/station/medical/medbay/surgery/storage)
 "gmq" = (
 /obj/disposalpipe/segment,
+/obj/machinery/light/incandescent/harsh{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/hangar/science)
 "gmt" = (
@@ -27702,6 +27734,12 @@
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering)
+"hSe" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon14,
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/hallway/primary/east)
 "hSn" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4;
@@ -28685,10 +28723,11 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/lobby)
 "igh" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 26;
-	pixel_y = 1
+/obj/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/machinery/disposal/small{
+	dir = 8
 	},
 /turf/simulated/floor/grey,
 /area/station/science/lab)
@@ -30655,6 +30694,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon6,
 /turf/simulated/floor/carpet/red/decal/innercross,
 /area/station/hallway/primary/west)
 "iJM" = (
@@ -31706,6 +31746,10 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
+"jbD" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon13,
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "jbJ" = (
 /obj/cable{
 	d1 = 1;
@@ -32883,9 +32927,6 @@
 "jus" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor{
 	dir = 10
-	},
-/obj/machinery/light/incandescent/harsh{
-	dir = 4
 	},
 /obj/machinery/disposal/small{
 	dir = 8
@@ -36830,6 +36871,10 @@
 	dir = 4
 	},
 /area/listeningpost)
+"kDl" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon7,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "kDo" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 8;
@@ -38555,6 +38600,12 @@
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/medical/morgue)
+"lgc" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon3,
+/turf/simulated/floor/purple/side{
+	dir = 4
+	},
+/area/station/hallway/primary/south)
 "lgl" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -46047,6 +46098,10 @@
 	dir = 9
 	},
 /area/station/storage/emergency)
+"nnQ" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon15,
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "nnT" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -46600,6 +46655,7 @@
 /obj/stool/chair/wooden{
 	dir = 4
 	},
+/obj/machinery/navbeacon/guardbot_buddytime,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fred2"
@@ -47084,9 +47140,10 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
@@ -48927,6 +48984,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/lobby)
+"oet" = (
+/obj/disposalpipe/segment/brig{
+	dir = 8
+	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon1_start,
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "oeB" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
@@ -60494,8 +60558,8 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "rlA" = (
-/obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
 "rlB" = (
@@ -61985,11 +62049,13 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "rGa" = (
-/obj/disposalpipe/trunk,
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
 	},
-/obj/machinery/disposal/small,
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
 "rGd" = (
@@ -63641,6 +63707,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon9,
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
@@ -70090,6 +70157,17 @@
 	dir = 1
 	},
 /area/station/engine/inner)
+"tZk" = (
+/obj/decal/tile_edge/line/yellow{
+	dir = 6;
+	icon_state = "line2"
+	},
+/obj/machinery/disposal/small,
+/obj/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/mining/staff_room)
 "tZm" = (
 /obj/machinery/status_display{
 	pixel_y = -30
@@ -70369,7 +70447,6 @@
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
 /obj/decal/mule/dropoff,
-/obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/black,
 /area/station/security/quarters)
 "udX" = (
@@ -80263,6 +80340,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon17{
+	codes_txt = "patrol;next_patrol=1"
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/southeast)
 "wRR" = (
@@ -81395,6 +81475,10 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
+"xhs" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon8,
+/turf/simulated/floor/wood/two,
+/area/station/hallway/primary/west)
 "xhu" = (
 /obj/stool/chair/wooden{
 	dir = 8
@@ -113984,7 +114068,7 @@ uJl
 xmF
 kZa
 aOH
-kZa
+bDJ
 oBD
 sAi
 oMM
@@ -114836,7 +114920,7 @@ ylx
 jrD
 onB
 wxW
-oyc
+xhs
 fFx
 fkt
 enV
@@ -114855,7 +114939,7 @@ umn
 umn
 umn
 umn
-umn
+kDl
 wQc
 syK
 rcJ
@@ -117316,7 +117400,7 @@ hSL
 ksd
 lvg
 twW
-umn
+dwB
 pIe
 vNB
 hbD
@@ -122763,7 +122847,7 @@ jBB
 pyL
 hiI
 pfx
-pfx
+lgc
 mZQ
 aZz
 aZz
@@ -127508,7 +127592,7 @@ qHy
 bwk
 gbq
 aca
-aoo
+ebH
 ieb
 nwj
 dGP
@@ -129102,7 +129186,7 @@ gde
 ycK
 uUx
 qgJ
-sUp
+aux
 mZl
 jFY
 jFY
@@ -132941,7 +133025,7 @@ mke
 inC
 txZ
 sfc
-lns
+ffS
 nYk
 nxj
 jiN
@@ -136048,7 +136132,7 @@ leT
 kaI
 cbc
 wEy
-tYp
+oet
 kMC
 vzs
 xeS
@@ -137505,7 +137589,7 @@ gPi
 fLf
 fLf
 jme
-cqm
+mCZ
 fBJ
 rqF
 jwT
@@ -138410,7 +138494,7 @@ vpR
 fLf
 fLf
 uTt
-elE
+tZk
 cxc
 dTC
 mdA
@@ -138713,7 +138797,7 @@ wru
 rWP
 elE
 cRl
-aux
+cxc
 hRN
 dMJ
 pup
@@ -139890,7 +139974,7 @@ dtM
 qQt
 svU
 tdf
-iui
+cqm
 uDq
 wst
 wfJ
@@ -140813,7 +140897,7 @@ rto
 qaW
 prv
 oVh
-xPd
+jbD
 dOa
 jjU
 jht
@@ -141727,7 +141811,7 @@ uqf
 ogO
 ihV
 ihV
-ihV
+hSe
 qaW
 wdp
 gXg
@@ -141741,7 +141825,7 @@ qaW
 ihV
 eve
 oVh
-xPd
+nnQ
 xPd
 vBf
 dpW

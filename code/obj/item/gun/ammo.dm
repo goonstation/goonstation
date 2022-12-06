@@ -461,6 +461,7 @@
 
 	syndicate
 		sname = ".308 Tranquilizer Deluxe"
+		desc = "A stripper clip of sodium thiopental darts. Will weaken and eventually knock out targets."
 		ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate
 
 		pistol
