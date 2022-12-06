@@ -497,7 +497,10 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/redwhite{
+	dir = 9
+	},
 /area/station/hangar/sec)
 "aaZ" = (
 /obj/disposalpipe/segment/transport{
@@ -2631,7 +2634,8 @@
 /obj/disposalpipe/trunk/transport{
 	dir = 8
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hallway/primary/east)
 "aBh" = (
 /obj/cable{
@@ -5541,7 +5545,8 @@
 /area/station/medical/head)
 "bux" = (
 /obj/fitness/speedbag/wizard,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "buA" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
@@ -13513,7 +13518,7 @@
 /obj/disposalpipe/trunk/brig{
 	dir = 8
 	},
-/turf/simulated/floor/delivery,
+/turf/simulated/floor,
 /area/station/hallway/primary/west)
 "dKh" = (
 /obj/disposalpipe/segment{
@@ -14061,7 +14066,8 @@
 	name = "undeliverable mail outlet";
 	pixel_x = 7
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "dSD" = (
 /obj/machinery/light/incandescent/netural{
@@ -14918,7 +14924,8 @@
 /area/station/janitor/office)
 "edP" = (
 /obj/fitness/speedbag/clown,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "edQ" = (
 /obj/cable{
@@ -17646,7 +17653,8 @@
 /obj/disposalpipe/trunk/ejection{
 	dir = 4
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/blue/side,
 /area/station/hallway/primary/west)
 "eTW" = (
 /obj/disposalpipe/segment/mail,
@@ -18702,7 +18710,7 @@
 /area/listeningpost)
 "fjS" = (
 /obj/machinery/portable_reclaimer,
-/obj/decal/mule/beacon,
+/obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "fjT" = (
@@ -21618,7 +21626,8 @@
 /obj/disposalpipe/trunk/transport{
 	dir = 8
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hallway/primary/south)
 "gdA" = (
 /obj/wingrille_spawn/auto,
@@ -30389,7 +30398,7 @@
 /area/station/science/artifact)
 "iGa" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/obj/decal/mule/beacon,
+/obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "iGm" = (
@@ -38776,7 +38785,8 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "lkh" = (
 /obj/decal/mule/dropoff,
@@ -39514,7 +39524,10 @@
 	pixel_x = 10;
 	pixel_y = 23
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
 /area/station/hallway/primary/west)
 "luR" = (
 /obj/disposalpipe/segment{
@@ -46931,7 +46944,8 @@
 	dir = 4
 	},
 /obj/vehicle/segway,
-/turf/simulated/floor/bot/blue,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "nAN" = (
 /obj/disposalpipe/segment/mail,
@@ -53242,7 +53256,8 @@
 	opacity = 0
 	},
 /obj/disposalpipe/segment/mail,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/black/grime,
 /area/station/security/brig/south_side)
 "pqY" = (
 /obj/machinery/camera{
@@ -53298,6 +53313,7 @@
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "psg" = (
@@ -55942,7 +55958,8 @@
 /obj/disposalpipe/trunk/transport{
 	dir = 8
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/medical/medbay)
 "qbc" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
@@ -59870,6 +59887,7 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "rbz" = (
@@ -62157,7 +62175,6 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
 "rIp" = (
-/turf/simulated/floor/delivery,
 /area/space)
 "rIr" = (
 /obj/stool/chair/wooden{
@@ -63469,7 +63486,10 @@
 /area/station/turret_protected/AIsat)
 "scx" = (
 /obj/machinery/door_control/podbay/security/new_walls/west,
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/redwhite{
+	dir = 10
+	},
 /area/station/hangar/sec)
 "scE" = (
 /obj/decal/tile_edge/line/purple{
@@ -68406,7 +68426,8 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/black,
 /area/station/security/checkpoint/customs)
 "tzV" = (
 /obj/cable{
@@ -78555,7 +78576,8 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 4
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hangar/main)
 "wsJ" = (
 /obj/decal/cleanable/dirt/jen,
@@ -79373,7 +79395,10 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 8
 	},
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
 /area/station/hangar/sec)
 "wFq" = (
 /obj/decal/cleanable/dirt/jen,
@@ -79918,7 +79943,7 @@
 	name = "Brig Divider Shutters";
 	opacity = 0
 	},
-/obj/decal/mule/dropoff,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/north_side)
 "wML" = (
@@ -81148,7 +81173,7 @@
 /area/station/maintenance/inner/north)
 "xdw" = (
 /obj/machinery/space_heater,
-/obj/decal/mule/beacon,
+/obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "xdG" = (
@@ -84433,7 +84458,8 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/security/checkpoint/west)
 "xZw" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -85366,7 +85392,8 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 8
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "ymb" = (
 /obj/disposalpipe/segment/mail{
