@@ -42,6 +42,7 @@ proc/buildRandomRooms()
 	add_to_landmarks = FALSE
 	opacity = 1
 	invisibility = 0 // To see landmarks if NO_RANDOM_ROOM is defined
+	plane = PLANE_FLOOR
 
 	New()
 		..()
