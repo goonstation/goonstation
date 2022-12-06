@@ -26,8 +26,6 @@
 #define TALK_INTO_HAND 			 (1<<11)
 /// is an open container for chemistry purposes. don't check this flag directly, use obj.is_open_container()
 #define OPENCONTAINER				 (1<<12)
-/// is an atom spawned in an adventure area
-#define ISADVENTURE 				 (1<<13)
 /// No beaker etc. splashing. For Chem machines etc.
 #define NOSPLASH 						 (1<<13)
 /// No attack when hitting stuff with this item.

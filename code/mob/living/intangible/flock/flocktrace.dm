@@ -67,6 +67,11 @@
 		<br><span class='bold'>Cognition:</span> SYNAPTIC PROCESS
 		<br>###=-</span></span>"}
 
+/mob/living/intangible/flock/trace/select_drone(mob/living/critter/flock/drone/drone)
+	if (src.flock?.flockmind.tutorial)
+		return
+	..()
+
 /mob/living/intangible/flock/trace/proc/promoteToFlockmind(remove_flockmind_from_flock)
 	var/was_in_drone = FALSE
 	var/mob/living/critter/flock/drone/controlled = src.loc
@@ -78,6 +83,7 @@
 	flock_speak(null, "Flocktrace [src.real_name] has been promoted to Flockmind.", src.flock)
 
 	var/mob/living/intangible/flock/flockmind/original = src.flock.flockmind
+	original.tutorial?.Finish()
 	if (remove_flockmind_from_flock)
 		var/mob/living/intangible/flock/flockmind/F = new (get_turf(src), src.flock)
 		src.mind.transfer_to(F)
