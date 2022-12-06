@@ -606,7 +606,7 @@ obj/decal/fakeobjects/teleport_pad
 
 	beacon
 		name = "MULE delivery destination"
-		icon_state = "mule_beacon"
+		icon_state = "hazard_caution"
 		var/auto_dropoff_spawn = 1
 
 		New()
@@ -640,7 +640,7 @@ obj/decal/fakeobjects/teleport_pad
 
 	dropoff
 		name = "MULE cargo dropoff point"
-		icon_state = "mule_dropoff"
+		icon_state = "hazard_delivery"
 
 /obj/decal/ballpit
 	icon = 'icons/obj/stationobjs.dmi'
