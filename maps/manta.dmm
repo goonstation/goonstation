@@ -6455,8 +6455,6 @@
 "atr" = (
 /obj/decal/cleanable/dirt/dirt3,
 /obj/storage/crate,
-/obj/item/clothing/under/misc/colmob,
-/obj/item/clothing/under/misc/rusmob,
 /turf/simulated/floor,
 /area/abandonedship)
 "ats" = (
@@ -25743,9 +25741,6 @@
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
 "bsr" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -26051,9 +26046,6 @@
 	icon_state = "4-8"
 	},
 /obj/access_spawn/maint,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/maintenance/upperstarboard)
@@ -26063,9 +26055,6 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
@@ -26649,10 +26638,6 @@
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "bvv" = (
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
 /obj/juggleplaque/manta,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
@@ -30030,15 +30015,6 @@
 /obj/machinery/vehicle/tank/minisub/secsub,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/security)
-"bFc" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/upperstarboard)
 "bFf" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
@@ -30950,15 +30926,6 @@
 /obj/item/paper_bin,
 /obj/item/device/light/zippo,
 /obj/item/clothing/glasses/sunglasses,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/upperstarboard)
-"bIC" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
 "bIF" = (
@@ -32990,94 +32957,8 @@
 /obj/machinery/manufacturer/mining,
 /turf/unsimulated/floor/orange,
 /area/station/mining/staff_room)
-"bOj" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/upperstarboard)
-"bOs" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/upperstarboard)
-"bOB" = (
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/upperstarboard)
-"bOE" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/upperstarboard)
-"bOM" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/upperstarboard)
-"bOP" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/upperstarboard)
-"bPt" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/upperstarboard)
-"bQx" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/upperstarboard)
-"bQy" = (
-/obj/disposalpipe/segment{
-	dir = 4;
-	level = -1
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/upperstarboard)
-"bQz" = (
-/obj/machinery/plantpot,
-/obj/disposalpipe/segment{
-	dir = 4;
-	level = -1
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/upperstarboard)
 "bQA" = (
 /obj/item/reagent_containers/glass/wateringcan,
-/obj/disposalpipe/segment{
-	dir = 4;
-	level = -1
-	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
 "bQW" = (
@@ -33091,26 +32972,10 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"bRi" = (
-/obj/cable/reinforced{
-	icon_state = "4-8-thick"
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/upperstarboard)
-"bSj" = (
-/obj/stool/chair,
-/obj/disposalpipe/segment,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/upperstarboard)
 "bSu" = (
 /obj/table/auto,
 /obj/item/screwdriver,
 /obj/deskclutter,
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
 "bTc" = (
@@ -33118,25 +32983,11 @@
 /obj/cable/reinforced{
 	icon_state = "1-2-thick"
 	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/disposalpipe/segment{
-	dir = 4;
-	level = -1
-	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
 "bTd" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4;
-	level = -1
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
@@ -33148,36 +32999,11 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
 "bTn" = (
 /obj/machinery/light/incandescent/blueish{
 	nostick = 1
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/upperstarboard)
-"bTo" = (
-/obj/machinery/drainage/big,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4;
-	level = -1
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
@@ -35591,12 +35417,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
-"gYm" = (
-/obj/machinery/computer/shuttle_bus{
-	dir = 8
-	},
-/turf/simulated/floor/grime,
-/area/diner/hangar)
 "hap" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
@@ -35667,18 +35487,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
-"hmS" = (
-/obj/machinery/light/incandescent/blueish{
-	dir = 1;
-	nostick = 1;
-	pixel_y = 20
-	},
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/upperstarboard)
 "hpA" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/ammo/bullets/antisingularity{
@@ -36579,13 +36387,16 @@
 /turf/simulated/floor,
 /area/station/crewquarters/garbagegarbs)
 "juJ" = (
-/obj/disposalpipe/junction/right/west,
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
 	pixel_y = 20
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/special/submarinesdown,
 /area/station/hallway/starboardlowerhallway)
@@ -111566,7 +111377,7 @@ act
 aBr
 pFs
 aBw
-bFc
+aIt
 btx
 buW
 bwv
@@ -111868,7 +111679,7 @@ act
 aBr
 aBr
 rrF
-bFc
+aIt
 btx
 btx
 mbd
@@ -112170,7 +111981,7 @@ act
 act
 aBr
 aEd
-bIC
+aWe
 aPs
 btx
 bwu
@@ -112472,7 +112283,7 @@ aaa
 act
 aBr
 aBr
-bOj
+aBw
 aIt
 btx
 btx
@@ -112774,8 +112585,8 @@ aaa
 act
 act
 aBr
-hmS
-bOs
+pFs
+aWe
 aPs
 btx
 btx
@@ -113078,8 +112889,8 @@ act
 aBr
 aBr
 bvv
-bOE
-bOM
+aWe
+aPs
 btx
 btx
 btx
@@ -113381,12 +113192,12 @@ act
 aBr
 aBr
 ucu
-bOP
-bPt
-bPt
-bPt
-bPt
-bQx
+aWe
+aWs
+aWs
+aWs
+aWs
+aWs
 bGy
 aut
 aBr
@@ -113688,7 +113499,7 @@ aBw
 aBw
 aBw
 aBw
-bQy
+aBw
 bFf
 aWg
 aBr
@@ -113990,7 +113801,7 @@ apR
 aBw
 aBw
 bCL
-bQz
+bCL
 bFf
 aPb
 aBr
@@ -114292,7 +114103,7 @@ aBr
 uKE
 bAB
 aBw
-bQy
+aBw
 bFf
 atS
 aBr
@@ -114896,9 +114707,9 @@ act
 aBr
 aBr
 bCL
-bOB
-bRi
-bSj
+aBw
+bFf
+bHO
 bSu
 aBr
 act
@@ -115201,7 +115012,7 @@ aBr
 ion
 bFf
 aBw
-bQy
+aBw
 aBr
 aor
 aqX
@@ -116410,7 +116221,7 @@ act
 act
 aBr
 aBr
-bTo
+aZA
 bJT
 arb
 arb
@@ -120253,7 +120064,7 @@ adq
 agB
 ahk
 agU
-gYm
+agU
 qSb
 agG
 hGr

@@ -11381,7 +11381,7 @@
 	pixel_x = 11;
 	pixel_y = 10
 	},
-	/obj/item/ammo/bullets/tranq_darts/anti_mutant{
+/obj/item/ammo/bullets/tranq_darts/anti_mutant{
 	pixel_x = -10;
 	pixel_y = -6
 	},
@@ -11865,8 +11865,7 @@
 /area/station/maintenance/northeast)
 "aFQ" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -15768,8 +15767,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/decal/tile_edge/line/blue{
 	dir = 1;
@@ -23816,8 +23814,7 @@
 /obj/item/kitchen/food_box/egg_box,
 /obj/item/reagent_containers/food/snacks/burger/moldy,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/simulated/floor/white/checker{
 	dir = 6
@@ -28949,8 +28946,7 @@
 /area/station/hallway/secondary/east)
 "buw" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/machinery/vending/coffee,
 /obj/disposalpipe/segment/cargo{
@@ -30020,7 +30016,6 @@
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
-/obj/machinery/computer/mining_shuttle,
 /turf/simulated/floor/wood/two,
 /area/station/hallway/secondary/west)
 "bxo" = (
@@ -30038,6 +30033,7 @@
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
+/obj/machinery/computer/transit_shuttle/mining,
 /turf/simulated/floor/wood/two,
 /area/station/hallway/secondary/west)
 "bxp" = (
@@ -31148,8 +31144,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/simulated/floor/carpet/red/fancy/innercorner/nw,
 /area/station/hallway/secondary/east)
@@ -33101,8 +33096,7 @@
 	pixel_y = 21
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -36109,8 +36103,7 @@
 /area/station/maintenance/southwest)
 "bMd" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/cable{
 	d1 = 2;
@@ -36674,8 +36667,7 @@
 "bNG" = (
 /obj/storage/secure/crate/weapon/armory/pod_weapons,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -37836,8 +37828,7 @@
 /area/station/security/main)
 "bQO" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/black,
@@ -38494,8 +38485,7 @@
 /area/station/maintenance/southwest)
 "bSk" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/cable{
 	d1 = 2;
@@ -38889,8 +38879,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
@@ -44076,8 +44065,7 @@
 /area/station/engine/engineering)
 "cfo" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/yellow,
@@ -44495,8 +44483,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
@@ -44604,8 +44591,7 @@
 /area/station/engine/engineering)
 "cgz" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/cable{
 	d1 = 4;
@@ -44938,8 +44924,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
@@ -45353,8 +45338,7 @@
 /area/station/engine/substation/east)
 "chZ" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/coldloop)
@@ -45830,8 +45814,7 @@
 /area/station/engine/substation/east)
 "cje" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/simulated/floor/black,
 /area/station/engine/substation/east)
@@ -56862,8 +56845,7 @@
 /area/station/engine/engineering)
 "jIi" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/disposalpipe/segment/brig{
 	dir = 8;
@@ -58349,8 +58331,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/simulated/floor/wood/two,
 /area/station/security/equipment)
@@ -59921,8 +59902,7 @@
 /area/station/crew_quarters/clown)
 "qgY" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/storage/closet/emergency,
 /obj/item/clothing/suit/space/emerg,
@@ -61135,8 +61115,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/machinery/light{
 	dir = 4;
