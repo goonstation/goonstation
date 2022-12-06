@@ -7,7 +7,7 @@
 	..()
 	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander, list(holder, src))
 
-/// Go fetch!
+// Go fetch!
 /datum/aiTask/sequence/goalbased/critter/dog/fetch
 	name = "fetching"
 	weight = 10
@@ -34,12 +34,6 @@
 		return TRUE
 
 /datum/aiTask/succeedable/critter/dog/fetch/succeeded()
-	if(is_complete)
-		if (prob(20))
-			holder.owner.visible_message("<span class='notice'>[holder.owner] begins to chew on [holder.target]!</span>")
-		else
-			holder.owner.visible_message("<span class='notice'>[holder.owner] picks up [holder.target]!</span>")
-			holder.priority_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/dog/fetch_back, list(holder, holder.default_task))
 	return is_complete
 
 /datum/aiTask/succeedable/critter/dog/fetch/on_tick()
@@ -52,12 +46,17 @@
 			if(C.set_hand(1))
 				C.drop_item()
 				C.hand_attack(I)
+				if (prob(20))
+					holder.owner.visible_message("<span class='notice'>[holder.owner] begins to chew on [holder.target]!</span>")
+				else
+					holder.owner.visible_message("<span class='notice'>[holder.owner] picks up [holder.target]!</span>")
+					holder.priority_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/dog/fetch_back, list(holder, holder.default_task))
 			is_complete = TRUE
 
 /datum/aiTask/succeedable/critter/dog/fetch/on_reset()
 	is_complete = FALSE
 
-/// C'mere boy!
+// C'mere boy!
 /datum/aiTask/sequence/goalbased/critter/dog/fetch_back
 	name = "fetching back"
 	weight = 10

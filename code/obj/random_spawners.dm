@@ -1110,6 +1110,7 @@
 	/mob/living/critter/small_animal/mouse,
 	/obj/critter/opossum,
 	/mob/living/critter/small_animal/dog,
+	/mob/living/critter/small_animal/dog/george,
 	/mob/living/critter/small_animal/dog/blair,
 	/mob/living/critter/small_animal/dog/shiba,
 	/obj/critter/pig,
