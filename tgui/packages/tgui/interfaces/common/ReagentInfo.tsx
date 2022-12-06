@@ -10,7 +10,6 @@ import { freezeTemperature } from './temperatureUtils';
 import { BoxProps } from '../../components/Box';
 import { BooleanLike } from 'common/react';
 import { InfernoNode } from 'inferno';
-import { Color } from '../../../common/color';
 
 interface ReagentContainer {
   name?: string;
@@ -228,8 +227,6 @@ export const ReagentBar = (props: ReagentInfoProps) => {
     ...rest
   } = props;
   const { maxVolume, totalVolume, finalColor } = container;
-  const color : Color = Color.fromHex(finalColor);
-  const lightness = (color['r'] + color['r'] + color['r'])/3;
   return (
     <Stack align="center" pb={1}>
       <Stack.Item>
@@ -246,7 +243,6 @@ export const ReagentBar = (props: ReagentInfoProps) => {
           minValue={0}
           maxValue={maxVolume}
           color={finalColor}
-          textColor={lightness > 255/2 ? "#000000" : "#FFFFFF"}
           {...rest}
         />
       </Stack.Item>
