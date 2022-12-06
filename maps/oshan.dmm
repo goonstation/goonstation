@@ -28640,7 +28640,7 @@
 	},
 /area/station/bridge/hos)
 "bxa" = (
-/mob/living/critter/small_animal/dog/george/blair,
+/mob/living/critter/small_animal/dog/blair,
 /obj/cable{
 	icon_state = "1-10"
 	},
