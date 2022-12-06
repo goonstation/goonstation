@@ -650,7 +650,7 @@ A Flamethrower in various states of assembly
 			A.layer = initial(A.layer)
 			user.put_in_hand_or_drop(A)
 			src.gastank = null
-			lit = 0
+			lit = FALSE
 			force = 3
 			hit_type = DAMAGE_BLUNT
 			var/fuel = "_no_fuel"
@@ -675,7 +675,7 @@ A Flamethrower in various states of assembly
 			A.layer = initial(A.layer)
 			user.put_in_hand_or_drop(A)
 			src.fueltank = null
-			lit = 0
+			lit = FALSE
 			force = 3
 			hit_type = DAMAGE_BLUNT
 			var/oxy = "_no_oxy"
@@ -781,7 +781,7 @@ A Flamethrower in various states of assembly
 		"chamberVolume" = src.amt_chem,
 	)
 	var/gastank_in_range = ((src.gastank in src.contents) || (src.gastank in user.get_equipped_items()))
-	var/spraytemp = "!NAN!"
+	var/spraytemp = 20 + T0C
 	if(istype(src.fueltank) && gastank_in_range)
 		if(src.lit)
 			spraytemp = src.base_temperature
