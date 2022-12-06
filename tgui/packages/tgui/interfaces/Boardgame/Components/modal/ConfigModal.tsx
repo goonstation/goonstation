@@ -20,7 +20,7 @@ export const ConfigModal = (_props, context) => {
             Presets
           </Tabs.Tab>
           <Tabs.Tab className="boardgame__modal-tab" selected={modalTabIndex === 1} onClick={() => setModalTabIndex(1)}>
-            Notation Setup
+            Import/Export Game
           </Tabs.Tab>
         </Tabs>
         <Box className="boardgame__modal-config">{modalTabIndex === 0 ? <PresetsTab /> : <NotSetup />}</Box>

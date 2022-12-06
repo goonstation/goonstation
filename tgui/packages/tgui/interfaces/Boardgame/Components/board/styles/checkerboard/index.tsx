@@ -34,31 +34,6 @@ export const CheckerBoard = ({ interactable }: StyleProps, context) => {
     return [boardX, boardY];
   };
 
-  const onSelectedPlace = () => {
-    const [boardX, boardY] = boardPos();
-
-    // Account for the fact that the backend
-    // is a bit slow so we need to check if the
-    // piece is held by the user before placing it
-
-    /* let tries = 20; // 20 tries, 2 seconds max
-
-    const waitForChange = () => {
-      if (tries > 0) {
-        piecePlace(currentUser.ckey, boardX, boardY);
-        setTimeout(() => {
-          if (!currentUser.selected) {
-            waitForChange();
-          } else {
-            return; // Success
-          }
-        }, 100);
-      }
-      tries--;
-    };
-    waitForChange();*/
-  };
-
   return (
     <div
       style={{
