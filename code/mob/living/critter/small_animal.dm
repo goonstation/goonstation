@@ -590,7 +590,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
-			return 1
+			return TRUE
 
 		//Dogs bark sometimes
 		if (src.ai?.enabled && prob(5))
