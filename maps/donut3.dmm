@@ -12029,12 +12029,15 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "dmD" = (
-/obj/machinery/light/small/floor,
 /obj/cable{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/disposalpipe/segment{
+	dir = 1
+	},
+/obj/machinery/light/small/floor,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "dmT" = (
@@ -41431,10 +41434,10 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "lTz" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/turf/simulated/wall/auto/reinforced/jen/blue,
+/obj/machinery/optable,
+/obj/item/reagent_containers/iv_drip/blood,
+/obj/machinery/light_switch/south,
+/turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
 "lTE" = (
 /obj/decal/cleanable/dirt/jen,
@@ -44617,6 +44620,15 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
+"mSO" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -4
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/station/medical/medbooth)
 "mSU" = (
 /obj/lattice{
 	dir = 6;
@@ -50403,7 +50415,6 @@
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/west)
 "oyi" = (
-/obj/table/glass/reinforced/auto,
 /obj/item/bandage{
 	pixel_x = 2
 	},
@@ -50421,6 +50432,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
+/obj/table/auto,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -52370,14 +52382,16 @@
 /turf/simulated/floor/sanitary/blue,
 /area/station/crew_quarters/bathroom)
 "peK" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 4;
-	pixel_x = -4
+/obj/machinery/disposal/small{
+	dir = 4
 	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/disposalpipe/trunk{
+	dir = 8
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -52930,10 +52944,6 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
 "plv" = (
-/obj/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -52943,6 +52953,7 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
+/obj/disposalpipe/junction/right/north,
 /turf/simulated/floor/greenwhite/other{
 	dir = 1
 	},
@@ -62391,6 +62402,13 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
+"rLa" = (
+/obj/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/wall/auto/reinforced/jen/blue,
+/area/station/medical/medbooth)
 "rLf" = (
 /obj/machinery/computer/security/wooden_tv,
 /obj/machinery/light/emergency{
@@ -67071,6 +67089,14 @@
 /area/station/storage/auxillary{
 	name = "Tool Storage"
 	})
+"tgj" = (
+/obj/machinery/light/incandescent/netural,
+/obj/table/auto,
+/obj/machinery/defib_mount,
+/turf/simulated/floor/bluewhite{
+	dir = 6
+	},
+/area/station/medical/medbooth)
 "tgp" = (
 /obj/cable{
 	d1 = 1;
@@ -67653,11 +67679,10 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "tor" = (
-/obj/machinery/optable,
-/obj/item/reagent_containers/iv_drip/blood,
-/obj/item/robodefibrillator,
-/obj/machinery/light_switch/south,
-/turf/simulated/floor/bluewhite,
+/obj/disposalpipe/segment{
+	dir = 1
+	},
+/turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/medical/medbooth)
 "tou" = (
 /obj/cable,
@@ -79826,9 +79851,8 @@
 /obj/item/hemostat,
 /obj/item/scissors/surgical_scissors,
 /obj/item/surgical_spoon,
-/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/bluewhite{
-	dir = 6
+	dir = 4
 	},
 /area/station/medical/medbooth)
 "wKl" = (
@@ -84142,6 +84166,9 @@
 "xTw" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/disposalpipe/segment{
+	dir = 1
 	},
 /obj/machinery/navbeacon/mule/market_north/west,
 /obj/decal/mule/beacon,
@@ -138466,10 +138493,10 @@ wLV
 plv
 dmD
 xTw
-wst
-wst
-wst
-wst
+tor
+tor
+tor
+rLa
 opR
 fsp
 rdj
@@ -138773,9 +138800,9 @@ mJC
 bWs
 peK
 pou
-lTz
+opR
+fsp
 wst
-rdj
 rdj
 rdj
 rdj
@@ -139075,9 +139102,9 @@ weS
 bMX
 lNp
 keh
+mSO
 lzh
 wst
-tXv
 rdj
 rdj
 rdj
@@ -139376,10 +139403,10 @@ wfJ
 oyi
 bMX
 lNp
+lNp
 jHF
-tor
+lTz
 wst
-rdj
 rdj
 rdj
 rdj
@@ -139680,8 +139707,8 @@ loc
 ivc
 mkJ
 wKj
+tgj
 wst
-rdj
 rdj
 rdj
 rdj
@@ -139982,13 +140009,13 @@ vrJ
 wMx
 cuq
 wst
+wst
 eZY
 oFH
 oFH
 wbv
 wbv
 wbv
-oFH
 oFH
 oFH
 oFH
