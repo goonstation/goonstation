@@ -7,6 +7,9 @@ There's much less duplicate code here than there used to be, it could probably b
 	but I'm not doing that without help on my first pull request in addition to learning TGUI!
 */
 
+TYPEINFO(/obj/item/injector_belt)
+	mats = 10
+
 /obj/item/injector_belt
 	name = "injector belt"
 	desc = "Automated injection system attached to a belt."
@@ -15,7 +18,6 @@ There's much less duplicate code here than there used to be, it could probably b
 	item_state = "injector"
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	c_flags = ONBELT
-	mats = 10
 
 	var/can_trigger = 1
 	var/mob/owner = null
@@ -121,12 +123,14 @@ There's much less duplicate code here than there used to be, it could probably b
 
 //////////////////////////////////////
 
+TYPEINFO(/obj/item/clothing/mask/gas/injector_mask)
+	mats = 10
+
 /obj/item/clothing/mask/gas/injector_mask
 	name = "Vapo-Matic"
 	desc = "Automated chemical vaporizer system built into an old industrial respirator. Doesn't look very safe at all!"
 	flags = FPRINT | TABLEPASS  | NOSPLASH
 	c_flags =  COVERSMOUTH | MASKINTERNALS
-	mats = 10
 	icon_state = "gas_injector"
 	item_state = "gas_injector"
 

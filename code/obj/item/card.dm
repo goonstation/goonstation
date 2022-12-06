@@ -25,6 +25,9 @@ GAUNTLET CARDS
 				B.botcard = null
 		..()
 
+TYPEINFO(/obj/item/card/emag)
+	mats = 8
+
 /obj/item/card/emag
 	desc = "It's a card with a magnetic strip attached to some circuitry. Commonly referred to as an EMAG"
 	name = "Electromagnetic Card"
@@ -33,7 +36,6 @@ GAUNTLET CARDS
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	layer = 6.0 // TODO fix layer
 	is_syndicate = 1
-	mats = 8
 	contraband = 6
 
 	afterattack(var/atom/A, var/mob/user)

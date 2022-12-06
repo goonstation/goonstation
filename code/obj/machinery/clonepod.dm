@@ -7,6 +7,9 @@
 
 #define MAX_FAILED_CLONE_TICKS 200 // vOv
 
+TYPEINFO(/obj/machinery/clonepod)
+	mats = list("MET-1"=35, "honey"=5)
+
 /obj/machinery/clonepod
 	anchored = 1
 	name = "cloning pod"
@@ -15,7 +18,6 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0_lowmeat"
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
-	mats = list("MET-1"=35, "honey"=5)
 	var/meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
 	var/mob/living/occupant
 	var/heal_level = 10 //The clone is released once its health^W damage (maxHP - HP) reaches this level.
@@ -832,6 +834,9 @@
 	*/
 
 //WHAT DO YOU WANT FROM ME(AT)
+TYPEINFO(/obj/machinery/clonegrinder)
+	mats = 10
+
 /obj/machinery/clonegrinder
 	name = "enzymatic reclaimer"
 	desc = "A tank resembling a rather large blender, designed to recover biomatter for use in cloning."
@@ -839,7 +844,6 @@
 	icon_state = "grinder0"
 	anchored = 1
 	density = 1
-	mats = 10
 	var/list/pods = null // cloning pods we're tied to
 	var/id = null // if this isn't null, we'll only look for pods with this ID
 	var/pod_range = 4 // if we don't have an ID, we look for pods in orange(this value)

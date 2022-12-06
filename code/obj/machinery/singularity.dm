@@ -26,14 +26,16 @@ Contains:
 // I'm sorry
 //////////////////////////////////////////////////// Singularity generator /////////////////////
 
-/obj/machinery/the_singularitygen/
+TYPEINFO(/obj/machinery/the_singularitygen)
+	mats = 250
+
+/obj/machinery/the_singularitygen
 	name = "Gravitational Singularity Generator"
 	desc = "An Odd Device which produces a Black Hole when set up."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "TheSingGen"
 	anchored = 0 // so it can be moved around out of crates
 	density = 1
-	mats = 250
 	var/bhole = 0 // it is time. we can trust people to use the singularity For Good - cirr
 
 /obj/machinery/the_singularitygen/process()
@@ -451,6 +453,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 //////////////////////////////////////// Field generator /////////////////////////////////////////
 
+TYPEINFO(/obj/machinery/field_generator)
+	mats = 14
+
 /obj/machinery/field_generator
 	name = "Field Generator"
 	desc = "Projects an energy field when active"
@@ -474,7 +479,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	//Remote control stuff
 	var/net_id = null
 	var/obj/machinery/power/data_terminal/link = null
-	mats = 14
 	var/active_dirs = 0
 	var/shortestlink = 0
 
@@ -945,6 +949,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		shock(AM)
 
 /////////////////////////////////////////// Emitter ///////////////////////////////
+TYPEINFO(/obj/machinery/emitter)
+	mats = 10
+
 /obj/machinery/emitter
 	name = "Emitter"
 	desc = "Shoots a high power laser when active"
@@ -966,7 +973,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/net_id = null
 	var/obj/machinery/power/data_terminal/link = null
 	var/datum/projectile/current_projectile = new/datum/projectile/laser/heavy
-	mats = 10
 
 /obj/machinery/emitter/New()
 	..()
@@ -1225,6 +1231,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	secured = 2
 	icon_state = "dbox"
 
+TYPEINFO(/obj/machinery/power/collector_array)
+	mats = 20
+
 /obj/machinery/power/collector_array
 	name = "Radiation Collector Array"
 	desc = "A device which uses Hawking Radiation and plasma to produce power."
@@ -1238,7 +1247,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/obj/item/tank/plasma/P = null
 	var/obj/machinery/power/collector_control/CU = null
 	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL | DECON_CROWBAR | DECON_WRENCH
-	mats = 20
 
 /obj/machinery/power/collector_array/New()
 	..()
@@ -1344,6 +1352,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	secured = 2
 	icon_state = "dbox"
 
+TYPEINFO(/obj/machinery/power/collector_control)
+	mats = 25
+
 /obj/machinery/power/collector_control
 	name = "Radiation Collector Control"
 	desc = "A device which uses Hawking Radiation and Plasma to produce power."
@@ -1369,7 +1380,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/obj/machinery/power/collector_array/CAW = null
 	var/list/obj/machinery/the_singularity/S = null
 	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL | DECON_CROWBAR | DECON_WRENCH
-	mats = 25
 
 /obj/machinery/power/collector_control/New()
 	..()
@@ -1552,7 +1562,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 ///////////////////////////////////////// Singularity bomb /////////////////////////////
 
 // Thing thing had zero logging despite being overhauled recently. I corrected that oversight (Convair880).
-/obj/machinery/the_singularitybomb/
+TYPEINFO(/obj/machinery/the_singularitybomb)
+	mats = 14
+
+/obj/machinery/the_singularitybomb
 	name = "\improper Singularity Bomb"
 	desc = "A WMD that creates a singularity."
 	icon = 'icons/obj/power.dmi'
@@ -1565,7 +1578,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/last_tick = null
 	var/mob/activator = null // For logging purposes.
 	is_syndicate = 1
-	mats = 14
 	var/bhole = 1
 
 /obj/machinery/the_singularitybomb/attackby(obj/item/W, mob/user)

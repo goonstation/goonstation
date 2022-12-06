@@ -12,6 +12,9 @@
 
 //////////////////////////////////////// Sleeper control console //////////////////////////////
 
+TYPEINFO(/obj/machinery/sleep_console)
+	mats = 8
+
 /obj/machinery/sleep_console
 	name = "sleeper console"
 	desc = "A device that displays the vital signs of the occupant of the sleeper, and can dispense chemicals."
@@ -19,7 +22,6 @@
 	icon_state = "sleeperconsole"
 	anchored = 1
 	density = 1
-	mats = 8
 	deconstruct_flags = DECON_CROWBAR | DECON_MULTITOOL
 	var/timing = 0 // Timer running?
 	var/time = null // In 1/10th seconds.
@@ -229,6 +231,9 @@
 
 ////////////////////////////////////////////// Sleeper ////////////////////////////////////////
 
+TYPEINFO(/obj/machinery/sleeper)
+	mats = 25
+
 /obj/machinery/sleeper
 	name = "sleeper"
 	icon = 'icons/obj/Cryogenic2.dmi'
@@ -236,7 +241,6 @@
 	desc = "An enterable machine that analyzes and stabilizes the vital signs of the occupant."
 	density = 1
 	anchored = 1
-	mats = 25
 	deconstruct_flags = DECON_CROWBAR | DECON_WIRECUTTERS | DECON_MULTITOOL
 	event_handler_flags = USE_FLUID_ENTER
 	var/mob/occupant = null
@@ -665,12 +669,14 @@
 
 		return
 
+TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
+	mats = 30
+
 /obj/machinery/sleeper/port_a_medbay
 	name = "Port-A-Medbay"
 	desc = "A transportation and stabilization device for critically injured patients."
 	icon = 'icons/obj/porters.dmi'
 	anchored = 0
-	mats = 30
 	p_class = 1.2
 	var/homeloc = null
 	allow_self_service = 0
