@@ -15386,7 +15386,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/bot{
+/obj/decal/stripe_caution,
+/turf/simulated/floor{
 	broken = 1;
 	desc = " It is made of steel.";
 	icon_old = "bot";
@@ -15402,7 +15403,8 @@
 	},
 /obj/machinery/door/firedoor/pyro,
 /obj/disposalpipe/segment,
-/turf/simulated/floor/bot{
+/obj/decal/stripe_caution,
+/turf/simulated/floor{
 	broken = 1;
 	desc = " It is made of steel.";
 	icon_old = "bot";
@@ -17641,7 +17643,8 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/bot{
+/obj/decal/stripe_caution,
+/turf/simulated/floor{
 	broken = 1;
 	desc = " It is made of steel.";
 	icon_old = "bot";
@@ -17694,7 +17697,8 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/bot{
+/obj/decal/stripe_caution,
+/turf/simulated/floor{
 	broken = 1;
 	desc = " It is made of steel.";
 	icon_old = "bot";
@@ -20689,7 +20693,8 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/turf/simulated/floor/bot{
+/obj/decal/stripe_caution,
+/turf/simulated/floor{
 	broken = 1;
 	desc = " It is made of steel.";
 	icon_old = "bot";
@@ -20759,7 +20764,8 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/turf/simulated/floor/bot{
+/obj/decal/stripe_caution,
+/turf/simulated/floor{
 	desc = " It is made of steel.";
 	name = "steel floor"
 	},
@@ -20995,7 +21001,8 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
-/turf/simulated/floor/bot{
+/obj/decal/stripe_caution,
+/turf/simulated/floor{
 	desc = " It is made of steel.";
 	name = "steel floor";
 	opaque_atom_count = 1
@@ -22369,7 +22376,8 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/bot{
+/obj/decal/stripe_caution,
+/turf/simulated/floor{
 	broken = 1;
 	desc = " It is made of steel.";
 	icon_old = "bot";
@@ -58029,7 +58037,8 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/bot{
+/obj/decal/stripe_caution,
+/turf/simulated/floor{
 	broken = 1;
 	desc = " It is made of steel.";
 	icon_old = "bot";
@@ -58042,7 +58051,8 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/ejection,
-/turf/simulated/floor/bot{
+/obj/decal/stripe_caution,
+/turf/simulated/floor{
 	broken = 1;
 	desc = " It is made of steel.";
 	icon_old = "bot";
@@ -58062,7 +58072,8 @@
 	dir = 4
 	},
 /obj/access_spawn/engineering,
-/turf/simulated/floor/delivery{
+/obj/decal/stripe_delivery,
+/turf/simulated/floor{
 	broken = 1;
 	desc = " It is made of steel.";
 	icon_old = "delivery";
@@ -58190,7 +58201,8 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/bot{
+/obj/decal/stripe_caution,
+/turf/simulated/floor{
 	broken = 1;
 	desc = " It is made of steel.";
 	icon_old = "bot";
@@ -60982,7 +60994,8 @@
 	dir = 4
 	},
 /obj/access_spawn/engineering,
-/turf/simulated/floor/delivery{
+/obj/decal/stripe_delivery,
+/turf/simulated/floor{
 	broken = 1;
 	desc = " It is made of steel.";
 	icon_old = "delivery";
@@ -60998,7 +61011,8 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/bot{
+/obj/decal/stripe_caution,
+/turf/simulated/floor{
 	desc = " It is made of steel.";
 	name = "steel floor"
 	},
@@ -61008,7 +61022,8 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/ejection,
-/turf/simulated/floor/bot{
+/obj/decal/stripe_caution,
+/turf/simulated/floor{
 	desc = " It is made of steel.";
 	name = "steel floor"
 	},
@@ -61025,7 +61040,8 @@
 	dir = 4
 	},
 /obj/access_spawn/engineering,
-/turf/simulated/floor/delivery{
+/obj/decal/stripe_delivery,
+/turf/simulated/floor{
 	desc = " It is made of steel.";
 	name = "steel floor";
 	opaque_atom_count = 1
@@ -61198,7 +61214,8 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/bot{
+/obj/decal/stripe_caution,
+/turf/simulated/floor{
 	desc = " It is made of steel.";
 	name = "steel floor";
 	opaque_atom_count = 3
@@ -74038,7 +74055,8 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/delivery{
+/obj/decal/stripe_delivery,
+/turf/simulated/floor{
 	desc = " It is made of steel.";
 	name = "steel floor"
 	},
@@ -75594,7 +75612,8 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/bot{
+/obj/decal/stripe_caution,
+/turf/simulated/floor{
 	desc = " It is made of steel.";
 	name = "steel floor"
 	},

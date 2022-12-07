@@ -248,7 +248,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/listeningpost)
 "aaN" = (
 /obj/storage/crate/furnacefuel,
@@ -358,7 +359,8 @@
 /area/space)
 "abh" = (
 /obj/storage/closet/syndicate/personal,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/listeningpost)
 "abi" = (
 /obj/machinery/bot/guardbot/bad{
@@ -2254,7 +2256,8 @@
 /area/shuttle/research/outpost)
 "ain" = (
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/lobby)
 "ait" = (
 /obj/cable{
@@ -2599,7 +2602,8 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "ajS" = (
 /obj/item/chem_grenade/firefighting{
@@ -2744,7 +2748,8 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "aks" = (
 /obj/machinery/atmospherics/valve{
@@ -2840,7 +2845,8 @@
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot,
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "akL" = (
 /obj/cable{
@@ -2861,7 +2867,8 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot/syringe,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "akY" = (
 /obj/stool/chair,
@@ -2883,7 +2890,8 @@
 /obj/item/device/radio/intercom/science{
 	dir = 4
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "alc" = (
 /obj/cable{
@@ -2910,7 +2918,8 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot/gunner,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "alf" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -2951,13 +2960,15 @@
 	name = "Outpost Camera";
 	network = "Zeta"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "alr" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
 /obj/cable,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "als" = (
 /obj/machinery/light/incandescent,
@@ -4035,7 +4046,8 @@
 /obj/vehicle/forklift{
 	dir = 8
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "aqu" = (
 /obj/cable{
@@ -4862,10 +4874,12 @@
 /obj/machinery/bot/mulebot{
 	home_destination = "QM #1"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "asP" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "asR" = (
 /obj/stool/chair/yellow{
@@ -5031,7 +5045,8 @@
 	location = "QM #2"
 	},
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "att" = (
 /obj/cable{
@@ -16110,7 +16125,8 @@
 	},
 /obj/machinery/door/airlock/pyro/external,
 /obj/access_spawn/engineering_power,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/engine/inner)
 "bco" = (
 /obj/wingrille_spawn/auto/reinforced,
@@ -16119,7 +16135,8 @@
 "bcp" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/access_spawn/engineering_power,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/engine/inner)
 "bcq" = (
 /obj/shrub{
@@ -16856,7 +16873,8 @@
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/access_spawn/engineering_power,
 /obj/firedoor_spawn,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/engine/inner)
 "beI" = (
 /turf/simulated/floor/caution/northsouth,
@@ -18137,7 +18155,8 @@
 	icon_state = "airlock_closed"
 	},
 /obj/access_spawn/engineering,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/engine/inner)
 "bju" = (
 /obj/cable{
@@ -18344,7 +18363,8 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/turret_protected/AIbasecore1{
 	name = "Upload Station"
 	})
@@ -18376,7 +18396,8 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/turret_protected/AIbasecore1{
 	name = "Upload Station"
 	})
@@ -18864,7 +18885,8 @@
 /area/station/security/main)
 "bmx" = (
 /obj/storage/secure/closet/security/equipment,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/security/main)
 "bmy" = (
 /obj/machinery/camera{
@@ -20054,7 +20076,8 @@
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/access_spawn/engineering,
 /obj/firedoor_spawn,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/engine/inner)
 "brr" = (
 /obj/machinery/camera{
@@ -21752,7 +21775,8 @@
 	pixel_x = 30
 	},
 /obj/disposalpipe/segment,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hallway/primary/south)
 "bxR" = (
 /obj/cable{
@@ -22011,7 +22035,8 @@
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hangar/sec)
 "byP" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -22851,7 +22876,8 @@
 	codes_txt = "delivery;dir=4";
 	location = "Tool Storage"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/storage/tools)
 "bBU" = (
 /obj/machinery/conveyor/NS{
@@ -26516,7 +26542,8 @@
 	name = "The Owlery"
 	},
 /obj/firedoor_spawn,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/garden/owlery)
 "cWF" = (
 /turf/simulated/floor/grass{
@@ -27127,7 +27154,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/turret_protected/AIbasecore1{
 	name = "Upload Station"
 	})
@@ -28641,7 +28669,8 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/storage/tools)
 "eIT" = (
 /obj/disposalpipe/segment/mail,
@@ -28776,7 +28805,8 @@
 /obj/machinery/vending/pizza{
 	anchored = 1
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "eNH" = (
 /obj/cable{
@@ -29235,7 +29265,8 @@
 /area/station/bridge)
 "fcs" = (
 /obj/machinery/manufacturer/robotics,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/medical/robotics)
 "fcI" = (
 /obj/machinery/door/airlock/pyro,
@@ -30911,7 +30942,8 @@
 "gFD" = (
 /obj/machinery/portable_reclaimer,
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/medical/robotics)
 "gGi" = (
 /obj/item/storage/toilet/random{
@@ -32352,7 +32384,8 @@
 	dir = 4;
 	name = "Listening Post"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/listeningpost)
 "hTz" = (
 /obj/disposalpipe/segment/bent/west,
@@ -33565,7 +33598,8 @@
 /obj/machinery/door/airlock/pyro{
 	dir = 4
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/listeningpost)
 "iXL" = (
 /obj/machinery/light/incandescent,
@@ -35036,7 +35070,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/engine/inner)
 "kof" = (
 /obj/cable{
@@ -40365,7 +40400,8 @@
 /obj/landmark/start{
 	name = "Cyborg"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/medical/robotics)
 "oQR" = (
 /obj/machinery/nanofab/mining,
@@ -40887,7 +40923,8 @@
 /area/station/crew_quarters/baroffice)
 "pmW" = (
 /obj/decal/cleanable/ketchup,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hallway/primary/east)
 "pou" = (
 /turf/simulated/floor/plating,
@@ -41960,7 +41997,8 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/listeningpost)
 "qmQ" = (
 /obj/machinery/conveyor/NS{
@@ -45018,7 +45056,8 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/science/lobby)
 "sDe" = (
 /obj/cable{
@@ -46262,7 +46301,8 @@
 /area/station/chapel/sanctuary)
 "tzz" = (
 /obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/science/lobby)
 "tzL" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
@@ -46391,7 +46431,8 @@
 	pixel_x = 0;
 	pixel_y = 32
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hallway/primary/south)
 "tEL" = (
 /obj/cable{
@@ -46535,7 +46576,8 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/science/lobby)
 "tLe" = (
 /obj/disposalpipe/segment/mail{
@@ -46741,7 +46783,8 @@
 /obj/submachine/ATM{
 	pixel_x = -31
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hallway/primary/south)
 "tVE" = (
 /obj/disposalpipe/segment{
@@ -48476,7 +48519,8 @@
 	name = "Cyborg"
 	},
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/medical/robotics)
 "vtA" = (
 /obj/item/tank/mini_oxygen,
