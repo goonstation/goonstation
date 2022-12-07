@@ -4,13 +4,15 @@
 //T-ray scanner module.
 //Computer 3 Emulator / Associated Bits
 
+TYPEINFO(/obj/item/device/pda_module)
+	mats = 4
+
 /obj/item/device/pda_module
 	name = "PDA module"
 	desc = "A piece of expansion circuitry for PDAs."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "pdamod"
 	w_class = W_CLASS_SMALL
-	mats = 4
 	var/obj/item/device/pda2/host = null
 
 	var/setup_use_menu_badge = 0  //Should we have a line in the main menu?

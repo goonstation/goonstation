@@ -18,6 +18,9 @@ var/zapLimiter = 0
 //NOTE: STUFF STOLEN FROM AIRLOCK.DM thx
 
 
+TYPEINFO(/obj/machinery/power/apc)
+	mats = 10
+
 /obj/machinery/power/apc
 	name = "area power controller"
 	desc = "The smaller, more numerous sibling of the SMES. Controls the power of entire rooms, and if the generator goes offline, can supply electricity from an internal cell."
@@ -68,9 +71,9 @@ var/zapLimiter = 0
 	var/host_id = null
 	var/timeout = 60 //The time until we auto disconnect (if we don't get a refresh ping)
 	var/timeout_alert = 0 //Have we sent a timeout refresh alert?
+
 //	luminosity = 1
 	var/debug = 0
-	mats = 10
 	mechanics_type_override = /obj/machinery/power/apc
 	autoname_north
 		name = "Autoname N APC"

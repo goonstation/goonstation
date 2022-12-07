@@ -640,6 +640,9 @@
 		loved += M
 
 //misc stuffs
+TYPEINFO(/obj/item/device/geiger)
+	mats = 5
+
 /obj/item/device/geiger
 	name = "geiger counter"
 	desc = "A device used to passively measure raditation."
@@ -651,7 +654,6 @@
 	w_class = W_CLASS_TINY
 	throw_speed = 5
 	throw_range = 10
-	mats = 5
 
 	New()
 		. = ..()

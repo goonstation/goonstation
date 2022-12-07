@@ -685,6 +685,9 @@
 
 #define VENT_GENFACTOR 300
 
+TYPEINFO(/obj/item/vent_capture_unbuilt)
+	mats = 8
+
 /obj/item/vent_capture_unbuilt
 	name = "unbuilt vent capture unit"
 	desc = "An unbuilt piece of machinery that converts vent output into electricity."
@@ -692,7 +695,6 @@
 	icon_state = "hydrovent_unbuilt"
 	item_state = "vent"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	mats = 8
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
 	attackby(var/obj/item/W, var/mob/user)
@@ -833,6 +835,9 @@
 				return
 		return*/
 
+TYPEINFO(/obj/machinery/power/stomper)
+	mats = 8
+
 /obj/machinery/power/stomper
 	name = "stomper unit"
 	desc = "This machine is used to disturb the flow of underground magma and redirect it."
@@ -852,7 +857,6 @@
 	var/powerupsfx = 'sound/machines/shieldgen_startup.ogg'
 	var/powerdownsfx = 'sound/machines/engine_alert3.ogg'
 
-	mats = 8
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_DESTRUCT
 	flags = FPRINT
 
@@ -1007,6 +1011,9 @@
 		if(Obj == src.cell)
 			src.cell = null
 
+TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
+	mats = 20
+
 /obj/item/clothing/shoes/stomp_boots
 	name = "Stomper Boots"
 	desc = "A pair of specialized boots for stomping the ground really hard." // TODO add techy explanation I guess
@@ -1015,7 +1022,6 @@
 	step_sound = "step_plating"
 	step_priority = STEP_PRIORITY_LOW
 	laces = LACES_NONE
-	mats = 20
 	burn_possible = 0
 	abilities = list(/obj/ability_button/stomper_boot_stomp)
 
