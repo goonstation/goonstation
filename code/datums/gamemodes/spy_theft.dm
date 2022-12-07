@@ -695,6 +695,7 @@
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/substation)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/singcore)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/combustion_chamber)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/shield_zone)
 	possible_areas -= /area/sim/test_area
 
 	for (var/area/A in possible_areas)
