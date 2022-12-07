@@ -3531,7 +3531,8 @@
 	mail_tag = "pod_fore";
 	name = "north pod bay mail router"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "ahE" = (
 /obj/stool/bed,
@@ -3978,7 +3979,8 @@
 	pixel_x = 10
 	},
 /obj/machinery/navbeacon/mule/hallway_escape_north,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "aig" = (
 /turf/simulated/wall/auto/supernorn,
@@ -11777,7 +11779,8 @@
 /area/station/hydroponics/bay)
 "ayk" = (
 /obj/machinery/navbeacon/mule/hydroponics_north/east,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/hydroponics/bay)
 "ayl" = (
 /obj/disposalpipe/trunk{
@@ -12301,7 +12304,8 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "azE" = (
 /obj/disposalpipe/segment/food{
@@ -12616,7 +12620,8 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/navbeacon/mule/catering_north,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "aAx" = (
 /obj/disposalpipe/segment{
@@ -15958,7 +15963,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/navbeacon/mule/toolstorage_north/south,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/storage/tools)
 "aIG" = (
 /turf/simulated/floor/orangeblack/corner{
@@ -16463,7 +16469,8 @@
 /turf/simulated/floor/orangeblack/side,
 /area/station/storage/tools)
 "aJT" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/storage/tools)
 "aJU" = (
 /obj/cable{
@@ -21899,12 +21906,14 @@
 /area/station/science/lab)
 "aWd" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/lab)
 "aWe" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/window/reinforced/east,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/lab)
 "aWf" = (
 /obj/disposalpipe/segment/mail{
@@ -22364,7 +22373,8 @@
 	},
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot/gunner/vaquero,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "aXi" = (
 /obj/machinery/power/data_terminal,
@@ -22380,7 +22390,8 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "aXj" = (
 /obj/machinery/light/small{
@@ -22397,18 +22408,21 @@
 	pixel_x = -10;
 	pixel_y = -10
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/lab)
 "aXl" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/window/reinforced/south,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/lab)
 "aXm" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/window/reinforced/south,
 /obj/machinery/door/window/eastright,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/lab)
 "aXn" = (
 /obj/cable{
@@ -22677,7 +22691,8 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/bridge)
 "aYe" = (
 /obj/machinery/light_switch/north,
@@ -22867,11 +22882,13 @@
 	name = "autoname  - SS13";
 	pixel_x = -10
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/lab)
 "aYz" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/lab)
 "aYA" = (
 /obj/machinery/disposal/mail/small{
@@ -23521,7 +23538,8 @@
 	},
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "aZN" = (
 /obj/machinery/light_switch/east{
@@ -23540,15 +23558,18 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "aZO" = (
 /obj/machinery/portable_atmospherics/canister/empty,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/lab)
 "aZP" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/lab)
 "aZQ" = (
 /obj/machinery/atmospherics/valve,
@@ -24098,11 +24119,13 @@
 	pixel_x = -10
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/lab)
 "baZ" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/lab)
 "bba" = (
 /obj/machinery/atmospherics/portables_connector{
@@ -24590,7 +24613,8 @@
 	},
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot/ranger,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "bch" = (
 /obj/reagent_dispensers/fueltank,
@@ -24724,7 +24748,8 @@
 	dir = 4
 	},
 /obj/machinery/computer/operating,
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "bcx" = (
 /obj/disposalpipe/segment/morgue{
@@ -25396,7 +25421,8 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "bez" = (
 /obj/disposalpipe/segment,
@@ -25429,7 +25455,8 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "beC" = (
 /obj/disposalpipe/segment{
@@ -25882,7 +25909,8 @@
 	dir = 10;
 	icon_state = "line2"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "bfO" = (
 /obj/machinery/disposal/small,
@@ -25929,7 +25957,8 @@
 	dir = 6;
 	icon_state = "line2"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "bfR" = (
 /obj/disposalpipe/segment,
@@ -28414,7 +28443,8 @@
 	dir = 4
 	},
 /obj/item/paper/book/from_file/medical_surgery_guide,
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "bmE" = (
 /obj/machinery/light,
@@ -28561,7 +28591,8 @@
 	pixel_x = 10
 	},
 /obj/machinery/navbeacon/mule/research_north/south,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/lobby)
 "bmV" = (
 /obj/machinery/networked/test_apparatus/heater,
@@ -28787,7 +28818,8 @@
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
-/turf/simulated/floor/delivery/white,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "bnu" = (
 /turf/simulated/floor/greenwhite{
@@ -28912,7 +28944,8 @@
 /obj/disposalpipe/junction{
 	icon_state = "pipe-j2"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/science/lobby)
 "bnO" = (
 /obj/disposalpipe/segment{
@@ -29189,7 +29222,8 @@
 	},
 /obj/access_spawn/medlab,
 /obj/firedoor_spawn,
-/turf/simulated/floor/delivery/white,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/white,
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
@@ -32561,7 +32595,8 @@
 "buM" = (
 /obj/disposalpipe/segment,
 /obj/machinery/navbeacon/mule/QM1_north/east,
-/turf/simulated/floor/bot/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "buN" = (
 /turf/simulated/floor/orangeblack/side{
@@ -35653,11 +35688,13 @@
 	},
 /obj/tug_cart,
 /obj/vehicle/tug,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/quartermaster/storage)
 "bBJ" = (
 /obj/vehicle/forklift,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/quartermaster/storage)
 "bBK" = (
 /obj/cable{
@@ -36084,7 +36121,8 @@
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "bCQ" = (
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/quartermaster/storage)
 "bCR" = (
 /obj/cable{
@@ -39159,7 +39197,8 @@
 /obj/machinery/door/airlock/pyro/alt{
 	name = "Control Room"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/listeningpost/power)
 "bKC" = (
 /obj/cable,
@@ -39193,7 +39232,8 @@
 	desc = "Seems to be a pretty sturdy door.";
 	name = "Listening Post"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/listeningpost)
 "bKH" = (
 /turf/simulated/floor/stairs{
@@ -39389,7 +39429,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/glass,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/listeningpost)
 "bLi" = (
 /obj/cable{
@@ -42838,7 +42879,8 @@
 	},
 /area/station/science/research_director)
 "gRV" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hangar/main)
 "gSK" = (
 /obj/machinery/firealarm{
@@ -43097,7 +43139,8 @@
 /area/station/maintenance/west)
 "hyV" = (
 /obj/machinery/navbeacon/mule/pool_north/south,
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "hzq" = (
 /obj/disposalpipe/trunk{
@@ -43322,7 +43365,8 @@
 /obj/item/device/radio/intercom/science{
 	dir = 8
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "ieE" = (
 /obj/wingrille_spawn/auto/reinforced,
@@ -44260,7 +44304,8 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/navbeacon/mule/podbay_north/south,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/hangar/main)
 "kna" = (
 /obj/table/wood/auto,
@@ -45070,7 +45115,8 @@
 /area/station/engine/combustion_chamber)
 "mdJ" = (
 /obj/machinery/navbeacon/mule/QM2_north,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "mfF" = (
 /obj/pool/perspective{
@@ -45741,7 +45787,8 @@
 	},
 /area/station/security/main)
 "occ" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "odS" = (
 /obj/disposalpipe/segment{
@@ -46143,7 +46190,8 @@
 	pixel_x = 24
 	},
 /obj/machinery/navbeacon/mule/bridge_north,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/bridge)
 "oQN" = (
 /obj/disposalpipe/segment/mail,
@@ -46335,7 +46383,8 @@
 	},
 /area/station/security/hos)
 "pru" = (
-/turf/simulated/floor/delivery/white,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "psm" = (
 /obj/machinery/conveyor/EW{
@@ -47008,7 +47057,8 @@
 	},
 /area/station/engine/engineering/ce/private)
 "rhb" = (
-/turf/simulated/floor/delivery/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "riT" = (
 /obj/machinery/light/emergency,
@@ -47549,7 +47599,8 @@
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
-/turf/simulated/floor/delivery/white,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "sEB" = (
 /turf/simulated/floor/carpet{
@@ -47763,7 +47814,8 @@
 	},
 /area/station/security/hos)
 "sZi" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hydroponics/bay)
 "sZD" = (
 /obj/cable{
@@ -48485,7 +48537,8 @@
 /area/station/hangar/sec)
 "uRy" = (
 /obj/disposalpipe/segment,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hallway/primary/north)
 "uSc" = (
 /obj/machinery/door_control{
@@ -48772,7 +48825,8 @@
 	pixel_x = -10
 	},
 /obj/machinery/navbeacon/mule/crewA_north,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/hallway/primary/north)
 "vzp" = (
 /obj/storage/secure/closet/security/equipment,

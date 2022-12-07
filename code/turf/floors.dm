@@ -959,33 +959,6 @@ DEFINE_FLOORS(minitiles/black,
 
 /////////////////////////////////////////
 
-/turf/simulated/floor/delivery
-	icon_state = "delivery"
-
-/turf/simulated/floor/delivery/white
-	icon_state = "delivery_white"
-
-/turf/simulated/floor/delivery/caution
-	icon_state = "deliverycaution"
-
-
-/turf/simulated/floor/bot
-	icon_state = "bot"
-
-/turf/simulated/floor/bot/white
-	icon_state = "bot_white"
-
-/turf/simulated/floor/bot/blue
-	icon_state = "bot_blue"
-
-/turf/simulated/floor/bot/darkpurple
-	icon_state = "bot_dpurple"
-
-/turf/simulated/floor/bot/caution
-	icon_state = "botcaution"
-
-/////////////////////////////////////////
-
 /turf/simulated/floor/engine
 	name = "reinforced floor"
 	icon_state = "engine"
