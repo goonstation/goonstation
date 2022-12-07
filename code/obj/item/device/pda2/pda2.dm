@@ -569,11 +569,6 @@
 		return
 
 /obj/item/device/pda2/attackby(obj/item/C, mob/user)
-	if (istype(uplink,/obj/item/uplink/integrated/pda/spy))
-		var/obj/item/uplink/integrated/pda/spy/U = uplink
-		if (U.try_deliver(C, user))
-			return
-
 	if (istype(C, /obj/item/disk/data/cartridge))
 		user.drop_item()
 		C.set_loc(src)
@@ -679,13 +674,6 @@
 		..()
 
 /obj/item/device/pda2/afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-	if (istype(uplink,/obj/item/uplink/integrated/pda/spy))
-		var/obj/item/uplink/integrated/pda/spy/U = uplink
-		var/atom/b_item = U.bounty_is_claimable(A)
-		if (b_item)
-			actions.start(new/datum/action/bar/private/spy_steal(b_item,U), user)
-			return
-
 	var/scan_dat = null
 	if (src.scan_program && istype(src.scan_program))
 		scan_dat = src.scan_program.scan_atom(A)
