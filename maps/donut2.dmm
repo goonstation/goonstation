@@ -2015,6 +2015,19 @@
 	dir = 1
 	},
 /area/station/science/lobby)
+"ahL" = (
+/obj/cable/brown{
+	icon_state = "1-2"
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 26;
+	pixel_y = 1
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/engine/inner)
 "ahM" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -27310,6 +27323,13 @@
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
+"dCo" = (
+/obj/machinery/firealarm{
+	pixel_y = 24;
+	text = "NF"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/engineering)
 "dCE" = (
 /obj/machinery/vending/security,
 /turf/simulated/floor/grime,
@@ -82254,7 +82274,7 @@ bko
 bjv
 itX
 iVT
-bjv
+ahL
 bko
 wJT
 nbY
@@ -82560,7 +82580,7 @@ bck
 bck
 bck
 bck
-rbY
+dCo
 rbY
 sZx
 vmW
