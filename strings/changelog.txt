@@ -1,5 +1,8 @@
 
 (t)wed dec 07 22
+(u)Flaborized
+(e)💎
+(*)New artifact sprites and some tweaking of their visuals!
 (u)tarmunora
 (*)Vampire enthrall has a scaling cost based on number of living thralls.
 (u)tarmunora
