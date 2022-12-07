@@ -29563,6 +29563,8 @@
 /obj/table/reinforced/auto,
 /obj/item/wrapping_paper,
 /obj/item/wirecutters,
+/obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/access_spawn/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bzt" = (
@@ -30609,6 +30611,10 @@
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
 /obj/item/reagent_containers/food/drinks/mug/random_color,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/obj/access_spawn/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bBO" = (
@@ -31023,6 +31029,10 @@
 /obj/item/paper_bin,
 /obj/item/stamp,
 /obj/item/pen,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/obj/access_spawn/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bCX" = (
