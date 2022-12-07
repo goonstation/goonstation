@@ -780,7 +780,7 @@
 			<br>\
 			Pressure: [round(pressure, 0.1)] kPa<br>\
 			Temperature: [round(check_me.temperature)] K<br>\
-			Volume: [round(check_me.volume)] L<br>\
+			Volume: [check_me.volume] L<br>\
 			[CONCENTRATION_REPORT(check_me, "<br>")]"
 
 	else
