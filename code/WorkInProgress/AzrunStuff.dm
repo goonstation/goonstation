@@ -868,7 +868,7 @@
 					setalive(M)
 
 			else if (isdead(M) && M.organHolder.head.scalp_op_stage <= 3.0)
-				playsound(M, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+				playsound(M, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 
 				if (M.organHolder.brain)
 					src.tri_message(M, "<span class='alert'><b>[src]</b> severs [M]'s brain's connection to the spine!</span>",\
@@ -941,7 +941,7 @@
 		if(target.observe_round) return
 		if(B && !B.owner && target.client)
 			B.activated = TRUE
-			playsound(B, "sound/effects/suck.ogg", 20, TRUE, 0, 0.9)
+			playsound(B, 'sound/effects/suck.ogg', 20, TRUE, 0, 0.9)
 			B.old_brain = target.mind.brain
 			B.setOwner(target.mind)
 			target.set_loc(B)
