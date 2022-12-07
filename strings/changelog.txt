@@ -1,6 +1,8 @@
 
 (t)wed dec 07 22
 (u)tarmunora
+(*)Vampire enthrall has a scaling cost based on number of living thralls.
+(u)tarmunora
 (+)Vending machines deal stamina damage instead of auto-stun when falling.
 (t)tue dec 06 22
 (u)Virvatuli

@@ -354,6 +354,7 @@
 	proc/remove_thrall(var/mob/victim)
 		remove_mindhack_status(victim)
 		thralls -= victim
+		src.getAbility(/datum/targetable/vampire/enthrall)?.pointCost = 200 + 100 * length(src.thralls)
 
 	proc/make_thrall(var/mob/victim)
 		if (ishuman(victim))
@@ -406,6 +407,7 @@
 					ticker.mode.Agimmicks += M.mind
 
 			thralls += M
+			src.getAbility(/datum/targetable/vampire/enthrall)?.pointCost = 200 + 100 * length(src.thralls)
 
 			M.decomp_stage = DECOMP_STAGE_NO_ROT
 			M.set_mutantrace(/datum/mutantrace/vampiric_thrall)
