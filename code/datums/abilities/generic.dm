@@ -65,6 +65,7 @@
 	cast(atom/target) //the effect is in throw_impact at the bottom of mob.dm
 		..()
 
+		logTheThing(LOG_COMBAT, user, "chairflips from [log_loc(user)], vector: ([target.x - user.x], [target.y - user.y]), dir: <I>[dir2text(get_dir(user, target))]")
 		var/mob/M = holder.owner
 		check_mutantrace(M)
 		if (GET_DIST(M,target) > dist)
