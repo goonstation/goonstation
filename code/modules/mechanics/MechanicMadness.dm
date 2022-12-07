@@ -644,6 +644,7 @@
 	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		if (istype(W, /obj/item/spacecash) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
+			// Use power and extend the cooldown when no power is available
 			use_power(MECHCOMP_LOW_POWER, extra_cooldown=cooldown_time*5)
 			LIGHT_UP_HOUSING
 			current_buffer += W.amount
@@ -718,6 +719,7 @@
 		var/count = 0
 		if(level == 2) return
 		if(input?.signal && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time) && trunk && !trunk.disposed)
+			// Use power and extend the cooldown when no power is available
 			use_power(MECHCOMP_MED_POWER, extra_cooldown=cooldown_time*5)
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.anchored || isAI(M)) continue
@@ -785,6 +787,7 @@
 			LIGHT_UP_HOUSING
 			flick("comp_tprint1",src)
 			if(paper_left > 0)
+				// Use power and extend the cooldown when no power is available
 				use_power(MECHCOMP_MED_POWER, extra_cooldown=cooldown_time*5)
 				playsound(src.loc, 'sound/machines/printer_thermal.ogg', 35, 0, -10)
 				var/obj/item/paper/thermal/P = new/obj/item/paper/thermal(src.loc)
@@ -854,6 +857,7 @@
 			if(thermal_only && !istype(W, /obj/item/paper/thermal))
 				boutput(user, "<span class='alert'>This scanner only accepts thermal paper.</span>")
 				return 0
+			// Use power and extend the cooldown when no power is available
 			use_power(MECHCOMP_LOW_POWER, extra_cooldown=cooldown_time*5)
 			LIGHT_UP_HOUSING
 			flick("comp_pscan1",src)
@@ -947,6 +951,7 @@
 	process()
 		..()
 		if(active)
+			// Use power if not available or it would drain APC turn laser off
 			if(!use_power(MECHCOMP_LOW_POWER, min_apc_perc=10))
 				toggle()
 
@@ -992,6 +997,7 @@
 	attack_hand(mob/user)
 		if(level != 2 && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			if(ishuman(user) && user.bioHolder)
+				// Use power and extend the cooldown when no power is available
 				use_power(MECHCOMP_MED_POWER, extra_cooldown=cooldown_time*5)
 				LIGHT_UP_HOUSING
 				flick("comp_hscan1",src)
@@ -1031,6 +1037,7 @@
 			if(M.anchored) continue
 			count++
 			if(M == src) continue
+			// Use power and if no power is present or it would rain APC below 35% don't activate
 			if(!use_power(MECHCOMP_MED_POWER, min_apc_perc=35, requires_power=TRUE)) return
 			throwstuff(M)
 			if(count > 50) return
@@ -1149,7 +1156,7 @@
 		if(level == 2) return
 		if(input)
 			if(active) return
-			use_power(MECHCOMP_LOW_POWER)
+			use_power(MECHCOMP_LOW_POWER) // Use power, throttling functionality not necessary for this module
 			LIGHT_UP_HOUSING
 			SPAWN(0)
 				if(src)
@@ -1304,7 +1311,7 @@
 
 	proc/split(var/datum/mechanicsMessage/input)
 		if(level == 2) return
-		use_power(MECHCOMP_LOW_POWER)
+		use_power(MECHCOMP_LOW_POWER) // Use power, throttling functionality not necessary for this module
 		LIGHT_UP_HOUSING
 		var/list/converted = params2list(input.signal)
 		if(length(converted))
@@ -1404,6 +1411,7 @@
 		if(!R || R.flags != expressionflag || R.name != expressionpatt)
 			R = new(expressionpatt, expressionflag)
 		if(!R) return
+		// Use power and extend the cooldown when no power is available or it would bring APC power too low
 		use_power(MECHCOMP_MED_POWER, min_apc_perc=15, extra_cooldown=0.5 SECONDS)
 		LIGHT_UP_HOUSING
 
@@ -1485,6 +1493,7 @@
 		if(!R || R.flags != expressionflag || R.name != expressionpatt)
 			R = new(expressionpatt, expressionflag)
 		if(!R) return
+		// Use power and extend the cooldown when no power is available or it would bring APC power too low
 		use_power(MECHCOMP_MED_POWER, min_apc_perc=15, extra_cooldown=0.5 SECONDS)
 		LIGHT_UP_HOUSING
 		if(R.Find(input.signal))
@@ -1549,6 +1558,7 @@
 		if(level == 2) return
 		var/transmissionStyle = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_MSG
 		if(GET_COOLDOWN(src, SEND_COOLDOWN_ID)) return
+		// Use power and extend the cooldown when no power is available or it would bring APC power too low
 		use_power(MECHCOMP_LOW_POWER, min_apc_perc=15, extra_cooldown=0.5 SECONDS)
 		LIGHT_UP_HOUSING
 		if(findtext(input.signal, triggerSignal))
@@ -1619,7 +1629,7 @@
 
 	proc/dispatch(var/datum/mechanicsMessage/input)
 		if(level == 2) return
-		use_power(MECHCOMP_LOW_POWER)
+		use_power(MECHCOMP_LOW_POWER) // Use power, throttling functionality not necessary for this module
 		LIGHT_UP_HOUSING
 		var/sent = SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		if(sent) animate_flash_color_fill(src,"#00FF00",2, 2)
@@ -1741,7 +1751,7 @@
 		var/finished = "[bstr][buffer][astr]"
 		finished = strip_html_tags(sanitize(finished))
 		input.signal = finished
-		use_power(MECHCOMP_LOW_POWER)
+		use_power(MECHCOMP_LOW_POWER) // Use power, throttling functionality not necessary for this module
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		buffer = ""
 		tooltip_rebuild = 1
@@ -1781,7 +1791,7 @@
 
 	proc/relay(var/datum/mechanicsMessage/input)
 		if(level == 2 || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
-		use_power(MECHCOMP_LOW_POWER)
+		use_power(MECHCOMP_LOW_POWER) // Use power, throttling functionality not necessary for this module
 		LIGHT_UP_HOUSING
 		flick("[under_floor ? "u":""]comp_relay1", src)
 		var/transmissionStyle = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_MSG
@@ -1817,7 +1827,7 @@
 	proc/sendfile(var/datum/mechanicsMessage/input)
 		if (level == 2 || !src.stored_file) return
 		LIGHT_UP_HOUSING
-		use_power(MECHCOMP_LOW_POWER)
+		use_power(MECHCOMP_LOW_POWER) // Use power, throttling functionality not necessary for this module
 		input.data_file = src.stored_file.copy_file()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG,input)
 		animate_flash_color_fill(src,"#00FF00",2, 2)
@@ -1825,7 +1835,7 @@
 	proc/addandsendfile(var/datum/mechanicsMessage/input)
 		if (level == 2 || !src.stored_file) return
 		LIGHT_UP_HOUSING
-		use_power(MECHCOMP_LOW_POWER)
+		use_power(MECHCOMP_LOW_POWER) // Use power, throttling functionality not necessary for this module
 		input.data_file = src.stored_file.copy_file()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		animate_flash_color_fill(src,"#00FF00",2, 2)
@@ -1916,6 +1926,7 @@
 		LIGHT_UP_HOUSING
 		var/list/converted = params2list(input.signal)
 		if(!length(converted) || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
+		// Use power and extend the cooldown when no power is available
 		use_power(MECHCOMP_LOW_POWER, extra_cooldown=cooldown_time*5)
 
 		var/datum/signal/sendsig = get_free_signal()
@@ -1942,7 +1953,7 @@
 			return
 
 		if((only_directed && signal.data["address_1"] == src.net_id) || !only_directed || (signal.data["address_1"] == "ping"))
-			use_power(MECHCOMP_LOW_POWER)
+			use_power(MECHCOMP_LOW_POWER) // Use power, throttling functionality not necessary for this module
 
 			if((signal.data["address_1"] == "ping") && signal.data["sender"])
 				var/datum/signal/pingsignal = get_free_signal()
@@ -2191,7 +2202,7 @@
 	proc/sendCurrent(var/datum/mechanicsMessage/input)
 		if(level == 2 || !input) return 0
 		LIGHT_UP_HOUSING
-		use_power(MECHCOMP_LOW_POWER)
+		use_power(MECHCOMP_LOW_POWER) // Use power, throttling functionality not necessary for this module
 		if(random)
 			input.signal = pick(signals)
 		else if(!current_index || current_index > length(signals) || !length(signals))
@@ -2399,6 +2410,7 @@
 
 	proc/activate(var/datum/mechanicsMessage/input)
 		if(level == 2 || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
+		// Use power if not available or it would drain APC turn do nothing
 		if(use_power(MECHCOMP_HIGH_POWER, min_apc_perc=35))
 			LIGHT_UP_HOUSING
 			flick("[under_floor ? "u":""]comp_tele1", src)
@@ -2534,6 +2546,7 @@
 	process()
 		..()
 		if(active)
+			// Use power... if not available or it would drain APC turn LED off
 			if(!use_power(MECHCOMP_LOW_POWER, min_apc_perc=10))
 				turnoff()
 
@@ -2559,6 +2572,7 @@
 	hear_talk(mob/M as mob, msg, real_name, lang_id)
 		if(level == 2) return
 		if(GET_COOLDOWN(src, SEND_COOLDOWN_ID)) return
+		// Use power and extend the cooldown when no power is available or it would bring APC power too low
 		use_power(MECHCOMP_LOW_POWER, min_apc_perc=10, extra_cooldown=1 SECOND)
 		LIGHT_UP_HOUSING
 		var/message = msg[2]
@@ -2619,6 +2633,7 @@
 	proc/hear_radio(atom/movable/AM, msg, lang_id)
 		if (level == 2) return
 		if(GET_COOLDOWN(src, SEND_COOLDOWN_ID)) return
+		// Use power and extend the cooldown when no power is available or it would bring APC power too low
 		use_power(MECHCOMP_LOW_POWER, min_apc_perc=10, extra_cooldown=1 SECOND)
 		LIGHT_UP_HOUSING
 		var/message = msg[2]
@@ -2662,7 +2677,7 @@
 	proc/fire(var/datum/mechanicsMessage/input)
 		if(level == 2 || !input) return
 		if(ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
-		use_power(MECHCOMP_LOW_POWER)
+		use_power(MECHCOMP_LOW_POWER) // Use power, throttling functionality not necessary for this module
 		LIGHT_UP_HOUSING
 		componentSay("[input.signal]")
 		return
@@ -2909,6 +2924,7 @@
 
 	proc/fire(var/datum/mechanicsMessage/input)
 		if(level == 2) return
+		// Use power... if not available or it would drain APC do nothing
 		if(use_power(MECHCOMP_MED_POWER, min_apc_perc=10))
 			LIGHT_UP_HOUSING
 			if(input && Gun)
@@ -2973,6 +2989,7 @@
 			return
 
 		else
+			// Use power... if not available disable charging
 			if (use_power(MECHCOMP_HIGH_POWER) && SEND_SIGNAL(E, COMSIG_CELL_CHARGE, 15) & CELL_FULL) // Same as other recharger.
 				src.charging = 0
 				tooltip_rebuild = 1
@@ -3087,6 +3104,7 @@
 			ON_COOLDOWN(src, SEND_COOLDOWN_ID, delay)
 			flick("comp_instrument1", src)
 			playsound(src, sounds, volume, 1)
+		// Use power and extend the cooldown when no power is available
 		use_power(MECHCOMP_MED_POWER, extra_cooldown=delay*5)
 
 
@@ -3184,7 +3202,7 @@
 				. = A != B
 			else
 				return
-		use_power(MECHCOMP_LOW_POWER)
+		use_power(MECHCOMP_LOW_POWER) // Use power, throttling functionality not necessary for this module
 		if(. == .)
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
 
@@ -3269,7 +3287,7 @@
 	proc/sendValue(var/datum/mechanicsMessage/input)
 		if (level == 2 || !input) return
 		LIGHT_UP_HOUSING
-		use_power(MECHCOMP_LOW_POWER)
+		use_power(MECHCOMP_LOW_POWER) // Use power, throttling functionality not necessary for this module
 		if (isnull(map[input.signal])) return
 		input.signal = map[input.signal]
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
@@ -3385,6 +3403,7 @@
 
 	proc/display(var/letter as text)
 		letter = uppertext(letter)
+		// Use power, go blank if no power is present
 		if(use_power(MECHCOMP_LOW_POWER))
 			switch(letter)
 				if (" ") src.setDisplayState(" ", "comp_screen_blank")
@@ -3482,6 +3501,7 @@
 		set_glide_size(S)
 
 	proc/set_glide_size(var/obj/item/storage/S)
+		// Use power, move slower if not powered
 		if(use_power(MECHCOMP_MED_POWER))
 			move_lag = initial(move_lag)
 		else

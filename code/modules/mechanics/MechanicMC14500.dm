@@ -80,6 +80,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 		if (..() || !running || !level)
 			return
 
+		// Use power... if not available or it would drain APC do nothing
 		if(!use_power(MECHCOMP_MC14500B_POWER, min_apc_perc=15, requires_power=TRUE))
 			toggleActivate() // Clear registers
 			return
