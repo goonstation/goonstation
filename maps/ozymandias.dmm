@@ -24520,7 +24520,7 @@
 /obj/rack,
 /obj/item/clothing/head/emerg,
 /obj/decal/stripe_caution,
-/turf/simulated/floor/airless@OLD},
+/turf/simulated/floor/airless,
 /area/space)
 "gvp" = (
 /obj/machinery/light{
@@ -39867,7 +39867,7 @@
 /obj/decal/fakeobjects/cargopad,
 /obj/item/a_gift,
 /obj/decal/stripe_caution,
-/turf/simulated/floor/airless@OLD},
+/turf/simulated/floor/airless,
 /area/space)
 "kry" = (
 /obj/storage/crate{
@@ -52944,7 +52944,7 @@
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/decal/stripe_caution,
-/turf/simulated/floor/airless@OLD},
+/turf/simulated/floor/airless,
 /area/space)
 "nIO" = (
 /obj/table/auto,

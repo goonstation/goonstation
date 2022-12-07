@@ -62,7 +62,7 @@
 /obj/decal/fakeobjects/cargopad,
 /obj/item/a_gift,
 /obj/decal/stripe_caution,
-/turf/simulated/floor/airless@OLD},
+/turf/simulated/floor/airless,
 /area/space)
 "aao" = (
 /obj/table/wood/auto,
@@ -168,14 +168,14 @@
 /obj/rack,
 /obj/item/clothing/head/emerg,
 /obj/decal/stripe_caution,
-/turf/simulated/floor/airless@OLD},
+/turf/simulated/floor/airless,
 /area/space)
 "aaB" = (
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/decal/stripe_caution,
-/turf/simulated/floor/airless@OLD},
+/turf/simulated/floor/airless,
 /area/space)
 "aaC" = (
 /obj/decal/fakeobjects{
