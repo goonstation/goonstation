@@ -73,6 +73,9 @@
 //It sends wired /datum/signal information between its master obj and other
 //data terminals in its powernet's nodes.
 
+TYPEINFO(/obj/machinery/power/data_terminal)
+	mats = 5
+
 /obj/machinery/power/data_terminal //The data terminal is remarkably similar to a regular terminal
 	name = "data terminal"
 	icon_state = "dterm"
@@ -83,7 +86,6 @@
 	anchored = 1
 	directwired = 0
 	use_datanet = 1
-	mats = 5
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/obj/master = null //It can be any obj that can use receive_signal
 
@@ -143,11 +145,13 @@
 		invisibility = i ? INVIS_ALWAYS : INVIS_NONE
 		alpha = invisibility ? 128 : 255
 
+TYPEINFO(/obj/machinery/power/data_terminal/cable_tray)
+	mats = 0 // uh no thanks
+
 /obj/machinery/power/data_terminal/cable_tray
 	name = "cable tray"
 	desc = "A connector that goes off into somewhere..."
 	icon_state = "vterm"
-	mats = 0 // uh no thanks
 
 	New()
 		..()

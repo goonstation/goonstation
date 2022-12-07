@@ -96,6 +96,7 @@ var/global/datum/phrase_log/phrase_log = new
 			@"\buwu",
 			@"forgor",
 			@"admeme",
+			@"sadge",
 			@"\bmorb(?!id)"
 		)
 		sussy_words = regex(jointext(sussy_word_list, "|"), "i")

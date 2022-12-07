@@ -49,7 +49,7 @@
 		. = ..()
 		// null owner is fine (detached holder for cloning), human owner is fine (intended case), else error
 		if (!isnull(owner) && !istype(owner))
-			stack_trace("cloner_defect_holder \[\ref[src]\] passed a nonhuman owner ([owner])\[\ref[owner]\], this won't work at all. Deleting.")
+			stack_trace("[identify_object(src)] passed nonhuman owner [identify_object(owner)], this won't work at all. Deleting.")
 			qdel(src)
 			return
 		src.owner = owner // imjava
@@ -99,7 +99,7 @@
 	/// Applies all the defects on this holder (which is assumed to be ownerless) to the target mob
 	proc/apply_to(mob/living/carbon/human/target)
 		if (!istype(target))
-			CRASH("Tried to copy the cloner defect holder \[\ref[src]\] to non-human thing [target] ([target.type]) \[\ref[target]\]")
+			CRASH("Tried to copy [identify_object(src)] to non-human thing [identify_object(target)]")
 		target.cloner_defects = src
 		for (var/datum/cloner_defect/defect as anything in src.active_cloner_defects)
 			defect.apply_to(target)
@@ -141,7 +141,7 @@ ABSTRACT_TYPE(/datum/cloner_defect)
 
 	proc/apply_to(mob/living/carbon/human/target)
 		if (!istype(target))
-			CRASH("Tried to apply the cloner defect \[\ref[src]\] to non-human thing [target] ([target.type]) \[\ref[target]\]")
+			CRASH("Tried to apply [identify_object(src)] to non-human thing [identify_object(target)]")
 		src.owner = target
 		src.on_add()
 

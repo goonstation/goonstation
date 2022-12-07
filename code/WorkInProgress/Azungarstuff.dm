@@ -1017,6 +1017,9 @@
 		..()
 		qdel(src)
 
+TYPEINFO(/obj/item/rpcargotele)
+	mats = 4
+
 /obj/item/rpcargotele
 	name = "special cargo transporter"
 	desc = "A device for teleporting crated goods. There is something really, really shady about this.."
@@ -1024,7 +1027,6 @@
 	icon_state = "syndicargotele"
 	w_class = W_CLASS_SMALL
 	c_flags = ONBELT
-	mats = 4
 
 /obj/decoration/scenario/crate
 	name = "NT vital supplies crate"

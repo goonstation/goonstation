@@ -253,6 +253,9 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 
 // SECURE BRIEFCASE
 
+TYPEINFO(/obj/item/storage/secure/sbriefcase)
+	mats = 8
+
 /obj/item/storage/secure/sbriefcase
 	name = "secure briefcase"
 	icon = 'icons/obj/items/storage.dmi'
@@ -265,9 +268,11 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_BULKY
-	mats = 8
 	spawn_contents = list(/obj/item/paper,\
 	/obj/item/pen)
+
+TYPEINFO(/obj/item/storage/secure/ssafe)
+	mats = 8
 
 /obj/item/storage/secure/ssafe
 	name = "secure safe"
@@ -281,7 +286,6 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 	w_class = W_CLASS_BULKY
 	anchored = 1
 	density = 0
-	mats = 8
 	desc = "A extremely tough secure safe."
 	mechanics_type_override = /obj/item/storage/secure/ssafe
 

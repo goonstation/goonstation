@@ -1030,9 +1030,17 @@ ABSTRACT_TYPE(/datum/material/organic)
 
 
 	butt
+		color = "#ebbd97"
 		mat_id = "butt"
 		name = "butt"
+		texture = "buttgrey"
+		texture_blend = BLEND_OVERLAY
 		desc = "...it's butt flesh. Why is this here. Why do you somehow know it's butt flesh. Fuck."
+
+		New()
+			..()
+			addTrigger(triggersPickup, new /datum/materialProc/onpickup_butt)
+			addTrigger(triggersOnHit, new /datum/materialProc/onpickup_butt)
 
 /datum/material/organic/char
 	mat_id = "char"
