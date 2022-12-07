@@ -1,5 +1,8 @@
 
 (t)wed dec 07 22
+(u)Sord
+(e)🗺💅|A-Mapping, C-QoL
+(+)Donut 2's Engineering Department has received a new coat of paint.
 (u)Flaborized
 (e)💎
 (*)New artifact sprites and some tweaking of their visuals!
