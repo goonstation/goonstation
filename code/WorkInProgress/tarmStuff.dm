@@ -6,6 +6,9 @@
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "lasercannon"
 	item_state = "cannon"
+	var/active_state = "lasercannon"
+	var/collapsed_state = "lasercannon-empty"
+	var/state = TRUE
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_LARGE
 
@@ -28,11 +31,28 @@
 		set_current_projectile(new/datum/projectile/laser/asslaser)
 		..()
 
+	attack_self(mob/user)
+		. = ..()
+		src.swap_state()
+
+	proc/swap_state()
+		if(state)
+			src.icon_state = collapsed_state
+			w_class = W_CLASS_NORMAL
+		else
+			src.icon_state = active_state
+			w_class = W_CLASS_BULKY
+		state = !state
+
+	canshoot(mob/user)
+		. = ..() && state
+
 	setupProperties()
 		..()
 		setProperty("movespeed", 0.3)
 
 	flashy
+		active_state = "lasercannon-anim"
 		icon_state = "lasercannon-anim"
 
 		shoot(target, start, mob/user, POX, POY, is_dual_wield)
