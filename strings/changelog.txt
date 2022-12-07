@@ -1,4 +1,7 @@
 
+(t)wed dec 07 22
+(u)tarmunora
+(+)Vending machines deal stamina damage instead of auto-stun when falling.
 (t)tue dec 06 22
 (u)Virvatuli
 (p)12310

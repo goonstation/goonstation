@@ -895,7 +895,7 @@ TYPEINFO(/obj/machinery/vending)
 //		SPAWN(2 SECONDS)
 //			src.icon_state = "[initial(icon_state)]-fallen"
 	if (istype(victim) && vicTurf && (BOUNDS_DIST(vicTurf, src) == 0))
-		victim.changeStatus("weakened", 5 SECONDS)
+		victim.do_disorient(80, 5 SECONDS, 5 SECONDS, 0, 3 SECONDS, FALSE, DISORIENT_NONE, FALSE)
 		src.visible_message("<b><font color=red>[src.name] tips over onto [victim]!</font></b>")
 		logTheThing(LOG_COMBAT, src, "falls on [constructTarget(victim,"combat")] at [log_loc(vicTurf)].")
 		victim.force_laydown_standup()
