@@ -95,7 +95,7 @@
 /obj/decal/fakeobjects/cargopad,
 /obj/item/a_gift,
 /obj/decal/stripe_caution,
-/turf/simulated/airless/floor,
+/turf/simulated/floor/airless@OLD},
 /area/space)
 "ap" = (
 /obj/table/wood/auto,
@@ -194,14 +194,14 @@
 /obj/rack,
 /obj/item/clothing/head/emerg,
 /obj/decal/stripe_caution,
-/turf/simulated/airless/floor,
+/turf/simulated/floor/airless@OLD},
 /area/space)
 "aB" = (
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/decal/stripe_caution,
-/turf/simulated/airless/floor,
+/turf/simulated/floor/airless@OLD},
 /area/space)
 "aC" = (
 /obj/decal/fakeobjects{
