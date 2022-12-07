@@ -12,7 +12,6 @@
 #endif
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	alpha = 180
-	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 	plane = PLANE_NOSHADOW_ABOVE
 
 	var/deaths = 0

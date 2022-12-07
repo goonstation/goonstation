@@ -14,7 +14,7 @@
 
 /proc/get_dir_alt(var/atom/source, var/atom/target) //Opposite of default get dir, only returns diagonal if target perfectly diagonal
 	if(!source || !target)
-		CRASH("Invalid Params:: Source:[source] Target:[target]")
+		CRASH("Invalid Params for get_dir_alt: Source:[identify_object(source)] Target:[identify_object(target)]")
 	if(abs(source.x-target.x) > abs(source.y-target.y)) //Mostly left/right with a little up or down
 		if(source.x > target.x) //Target left
 			return WEST

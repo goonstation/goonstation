@@ -27,18 +27,16 @@ ABSTRACT_TYPE(/datum/manufacture)
 	New()
 		..()
 		if(isnull(item_paths) && length(item_outputs) == 1) // TODO generalize to multiple outputs (currently no such manufacture recipes exist)
-			// sadly we can't use initial() because it's a list :/
 			var/item_type = item_outputs[1]
-			var/obj/dummy = new item_type
-			if(islist(dummy.mats))
+			var/typeinfo/obj/typeinfo = get_type_typeinfo(item_type)
+			if(istype(typeinfo) && islist(typeinfo.mats))
 				item_paths = list()
-				for(var/mat in dummy.mats)
+				for(var/mat in typeinfo.mats)
 					item_paths += mat
-					var/amt = dummy.mats[mat]
+					var/amt = typeinfo.mats[mat]
 					if(isnull(amt))
 						amt = 1
 					item_amounts += amt
-			qdel(dummy)
 		if(isnull(item_paths))
 			item_paths = list() // a bunch of places expect this to be non-null, like the sanity check
 		if (!sanity_check_exemption)

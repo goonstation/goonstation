@@ -936,7 +936,8 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "ci" = (
 /obj/machinery/camera{
@@ -1738,7 +1739,8 @@
 	id = "cargodock_in";
 	pixel_x = 24
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "dZ" = (
 /obj/decal/cleanable/dirt,
@@ -2220,7 +2222,8 @@
 	id = "cargodock_out";
 	pixel_x = 24
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "fb" = (
 /obj/decal/cleanable/dirt,
@@ -3802,7 +3805,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "it" = (
 /obj/machinery/atmospherics/valve{
@@ -4310,7 +4314,8 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "js" = (
 /obj/cable{
@@ -4626,7 +4631,8 @@
 	req_access = null
 	},
 /obj/access_spawn/heads,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/turret_protected/ai)
 "jV" = (
 /obj/disposalpipe/segment,

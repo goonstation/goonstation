@@ -1,5 +1,69 @@
 
+(t)wed dec 07 22
+(u)tarmunora
+(+)Vending machines deal stamina damage instead of auto-stun when falling.
+(t)tue dec 06 22
+(u)Virvatuli
+(p)12310
+(e)🗺💅|A-Mapping, C-QoL
+(+)Expanded Donut 3's medbooth to be consistent with other maps, no more free defib
+(u)Zaniff
+(p)12302
+(e)🎨|C-Sprites
+(+)Resprited the pod secondary systems.
+(t)mon dec 05 22
+(u)Stonepillar
+(p)11902
+(e)🚄🔧🧫📡⚙📜|C-Performance, A-Tooling, C-Experimental, A-AI, A-Internal, C-Documentation
+(*)Made pathfinding go faster, so that flock doesn't melt the server. This changed some important parts of the game, please report any new weirdness with critters or any movement related bugs!
+(u)LeahTheTech
+(p)11796
+(e)🆕🗺🎨🧛|C-Feature, A-Mapping, C-Sprites, A-Gamemodes
+(*)Added an interactive Flock tutorial, so you have a chance at learning what at least half the buttons do before playing.
+(u)LeahTheTech
+(p)12270
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Flockdrone egg cost now scales with the number of active flockdrones.
+(t)sat dec 03 22
+(u)Cheffie
+(p)12136
+(e)🎨💅📄|C-Sprites, C-QoL, A-UI
+(*)Omnitools now use a Context Actions menu.
+(u)glowbold
+(p)12252
+(e)🆕⚖📦🎩|C-Feature, C-Balance, A-Game-Objects, A-Clothing
+(+)Freshly laundered clothing stays warm for a bit after coming out of the WashMan.
+(u)Bartimeus973
+(p)12271
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(+)Fake guns that pop out a flag when fired can now be reused.
+(u)tarmunora
+(*)Wizards now have magic hands, which do not like certain technology. Good thing they packed their EMP-resistant headsets!
+(t)fri dec 02 22
+(u)tarmunora
+(+)AI law captcha returns.
+(t)the dec 01 22
+(u)tarmunora
+(+)The Chief Engineer's belt has been modernized to use the new energy shield mechanic.
+(u)pali
+(e)🎄
+(*)Ho ho ho, Spacemas is here. Be sure to click the Spacemas tree and make your own Spacemas tree ornament!
+(t)wed nov 30 22
+(u)Mora
+(p)12228
+(e)🪲🎨|C-Bug, C-Sprites
+(+)Added a alternative blue labcoat for the medical director via alternate outfit spacebux purchase, check it out in the PR or in game!
+(u)goonstation-enjoyer
+(p)12171
+(e)💅🤖|C-QoL, A-Silicons
+(+)Mining cyborgs now get mesons instead of a jetpack on ocean maps.
 (t)tue nov 29 22
+(u)aloe
+(*)The bartender now has a couple boxes of straws in their booze vendor. Click things to slurp out of them, real simple.
+(u)MitchSmith
+(p)12223
+(e)🎨|C-Sprites
+(*)Credits now use the new ⪽ symbol in their design.
 (u)LeahTheTech
 (p)12209
 (e)⚖🧛📦|C-Balance, A-Gamemodes, A-Game-Objects
