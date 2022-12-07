@@ -7703,7 +7703,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aCw" = (
-/obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-2"
 	},
