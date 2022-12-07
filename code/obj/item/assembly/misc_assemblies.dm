@@ -81,8 +81,7 @@ Contains:
 
 /obj/item/assembly/time_ignite/receive_signal()
 	if(!src.status)
-		for(var/mob/O in hearers(5, src.loc))
-			O.show_message("The [src] doesn't do anything. Maybe it isn't secured properly?", 3)
+		src.visible_message("\the [src] doesn't do anything. Maybe it isn't secured properly?")
 		return
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
@@ -422,8 +421,7 @@ Contains:
 
 /obj/item/assembly/prox_ignite/receive_signal()
 	if(!src.status)
-		for(var/mob/O in hearers(5, src.loc))
-			O.show_message("The [src] doesn't do anything. Maybe it isn't secured properly?", 3)
+		src.visible_message("\the [src] doesn't do anything. Maybe it isn't secured properly?")
 		return
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
@@ -602,8 +600,7 @@ Contains:
 
 /obj/item/assembly/rad_ignite/receive_signal()
 	if(!src.status)
-		for(var/mob/O in hearers(5, src.loc))
-			O.show_message("The [src] doesn't do anything. Maybe it isn't secured properly?", 3)
+		src.visible_message("\the [src] doesn't do anything. Maybe it isn't secured properly?")
 		return
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
