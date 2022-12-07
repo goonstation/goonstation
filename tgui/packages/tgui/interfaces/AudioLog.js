@@ -1,18 +1,7 @@
-import { BooleanLike, classes } from 'common/react';
+import { classes } from 'common/react';
 import { useBackend } from '../backend';
 import { Box, Icon, LabeledList, ProgressBar, Slider, Tooltip } from '../components';
 import { Window } from '../layouts';
-
-type AudioLogData = {
-  name: string;
-  continuous: BooleanLike;
-  current_line: number;
-  memory_capacity: number;
-  mode: number;
-  occupied_memory: number;
-  tape: any;
-  tape_name: string;
-}
 
 const MODE_OFF = 0;
 const MODE_RECORDING = 1;
@@ -20,8 +9,8 @@ const MODE_PLAYING = 2;
 
 export const AudioLog = (props, context) => {
 
-  const { data } = useBackend<AudioLogData>(context);
-  const { continuous, current_line, memory_capacity, mode, name, occupied_memory, tape, tape_name } = data;
+  const { data } = useBackend(context);
+  const { current_line, memory_capacity, mode, name, occupied_memory, tape } = data;
 
   return (
     <Window title={name} width={320} height={250}>
@@ -80,24 +69,38 @@ export const AudioLog = (props, context) => {
 
 const LabelScreen = (_, context) => {
 
-  const { data } = useBackend<AudioLogData>(context);
-  const { mode, tape_name } = data;
+  const { data } = useBackend(context);
+  const { mode, tape, tape_name } = data;
 
-  const renderLabel = (value: number) => {
-    switch (value) {
-      case MODE_OFF:
-        return (
-          <marquee>
-            LOADED TAPE: {tape_name}
-          </marquee>
-        );
-      case MODE_RECORDING:
-      case MODE_PLAYING:
+  const renderLabel = () => {
+    if (tape) {
+      switch (mode) {
+        case MODE_OFF:
+          return (
+            <marquee>
+              LOADED TAPE: {tape_name}
+            </marquee>
+          );
+        case MODE_RECORDING:
+          return (
+            'RECORDING'
+          );
+        case MODE_PLAYING:
+          return (
+            <marquee>
+              PLAYING: {tape_name}
+            </marquee>
+          );
+      }
+    } else {
+      return (
+        'INSERT TAPE'
+      );
     }
   };
 
   return (
-    renderLabel(mode)
+    renderLabel()
   );
 };
 
