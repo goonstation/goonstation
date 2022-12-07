@@ -14,10 +14,10 @@
 	proc
 		add_message(speaker="Unknown",message, continuous)
 			if (!speaker || !message)
-				return 0
+				return FALSE
 
 			if (!continuous && (log_line >= max_lines))
-				return 0
+				return FALSE
 
 			log_line++
 			messages += "[message]"
@@ -27,25 +27,26 @@
 				speakers.Cut(1,2)
 				log_line = length(messages)
 
-			return 1
+			return TRUE
 
 		get_message(continuous)
-			if (log_line > messages.len)
+			if (log_line > length(messages))
 				if (continuous && length(messages))
 					log_line = 1
 				else
 					return null
 
-			return "[speakers.len < log_line ? "Unknown" : speakers[log_line]]|[messages[log_line]]"
+			return "[length(speakers) < log_line ? "Unknown" : speakers[log_line]]|[messages[log_line]]"
 
 		next(continuous)
-			if (log_line >= messages.len)
+			if (log_line >= length(messages))
 				log_line = 1
 				if (!(continuous && length(messages)))
-					return 0
+					return FALSE
+				return TRUE
 
 			log_line++
-			return 1
+			return TRUE
 
 		reset()
 			if (messages)
@@ -63,9 +64,9 @@
 
 		use_percentage()
 			if (!messages)
-				return 0
+				return FALSE
 
-			return round((messages.len /  max_lines))
+			return round((length(messages) /  max_lines))
 
 #define MODE_OFF 0
 #define MODE_RECORDING 1
@@ -132,7 +133,7 @@
 			"current_line" = src.tape?.log_line,
 			"memory_capacity" = src.tape?.max_lines,
 			"mode" = src.mode,
-			"occupied_memory" = src.tape?.messages.len,
+			"occupied_memory" = length(src.tape?.messages),
 			"tape" = src?.tape,
 			"tape_name" = src.tape?.name,
 		)
