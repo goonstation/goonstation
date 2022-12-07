@@ -602,6 +602,13 @@ ABSTRACT_TYPE(/datum/projectile)
 		. = ..()
 		generate_stats()
 
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		switch(variable)
+			if("damage", "stun")
+				generate_stats()
+			if("power", "ks_ratio")
+				generate_inverse_stats()
 
 	proc
 		generate_stats()
@@ -615,13 +622,6 @@ ABSTRACT_TYPE(/datum/projectile)
 			src.damage = src.power * src.ks_ratio
 			src.stun = src.power * (1-src.ks_ratio)
 
-		onVarChanged(variable, oldval, newval)
-			. = ..()
-			switch(variable)
-				if("damage", "stun")
-					generate_stats()
-				if("power", "ks_ratio")
-					generate_inverse_stats()
 
 		impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)		//3 types, K = Kinetic, E = Energy, T = Taser
 			var/obj/itemspecialeffect/impact/E = null
