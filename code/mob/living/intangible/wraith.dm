@@ -114,7 +114,6 @@
 		src.UpdateName()
 
 		get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_mob(src)
-		src.verbs += /mob/living/intangible/wraith/proc/silence_ghosts
 
 	is_spacefaring()
 		return !density
@@ -580,6 +579,7 @@
 		src.addAbility(/datum/targetable/wraithAbility/whisper)
 		src.addAbility(/datum/targetable/wraithAbility/blood_writing)
 		src.addAbility(/datum/targetable/wraithAbility/haunt)
+		src.addAbility(/datum/targetable/wraithAbility/toggle_deadchat)
 
 	proc/removeAllAbilities()
 		for (var/datum/targetable/wraithAbility/abil in abilityHolder.abilities)
@@ -779,15 +779,3 @@
 			new/datum/objective/specialist/wraith/survive(null, traitor)
 		if(3)
 			new/datum/objective/specialist/wraith/flawless(null, traitor)
-
-//hearghosts is checked in deadsay.dm and chatprocs.dm
-/mob/living/intangible/wraith/proc/silence_ghosts()
-	set category = "Wraith"
-	name = "Silence ghosts/Hear ghosts"
-
-	if (src.hearghosts)
-		src.hearghosts = FALSE
-		boutput(src, "<span class='notice'>No longer hearing the whispers of the dead</span>")
-	else
-		src.hearghosts = TRUE
-		boutput(src, "<span class='notice'>Now hearing the whispers of the dead</span>")
