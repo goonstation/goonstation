@@ -506,7 +506,7 @@ TYPEINFO(/obj/vehicle/segway)
 			var/datum/attackResults/msgs = new(R)
 			msgs.clear(T)
 			msgs.played_sound = joustingTool.hitsound
-			msgs.affecting = pick("chest", "head")
+			msgs.def_zone = pick("chest", "head")
 			msgs.logs = list()
 			msgs.logc("jousts [constructTarget(T,"combat")] with a [joustingTool]")
 			msgs.damage_type = DAMAGE_BLUNT

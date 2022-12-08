@@ -1287,7 +1287,6 @@
 
 	if (ishuman(target))
 		M.unequip_all()
-		for(var/t in M.organs) qdel(M.organs[text("[t]")])
 
 	M.transforming = 1
 	M.canmove = 0
