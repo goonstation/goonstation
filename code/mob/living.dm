@@ -1811,6 +1811,10 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				src.registered_area.wake_critters(M)
 			else
 				src.wake_from_hibernation()
+		// We were harmed, and our ai wants to fight back. Also we don't have anything else really important going on
+		if (src.ai_retaliates && src.ai.enabled && length(src.ai.priority_tasks) <= 0)
+			src.ai.priority_tasks += src.ai.get_instance(/datum/aiTask/sequence/goalbased/retaliate, list(src.ai, src.ai.default_task, M))
+			src.ai.interrupt()
 	..()
 
 /mob/living/bullet_act(var/obj/projectile/P)
