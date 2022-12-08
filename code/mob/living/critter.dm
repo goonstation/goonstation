@@ -88,6 +88,9 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 	var/pull_w_class = W_CLASS_SMALL
 
+	///If the mob has an ai, turn this to TRUE if you want it to fight back upon being attacked
+	var/ai_retaliates = FALSE
+
 	blood_id = "blood"
 
 	New()
@@ -316,6 +319,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 				actions.start(new/datum/action/bar/icon/butcher_living_critter(src,src.butcher_time), M)
 				return
 
+		if (src.ai?.enabled && src.ai_retaliates && I.force > 0)	//We have been attacked and we like to fight back
+			src.ai.priority_tasks += src.ai.get_instance(/datum/aiTask/sequence/goalbased/retaliate, list(src.ai, src.ai.default_task, M))
+			src.ai.interrupt()
+
 		var/rv = 1
 		for (var/T in healthlist)
 			var/datum/healthHolder/HH = healthlist[T]
@@ -324,6 +331,12 @@ ABSTRACT_TYPE(/mob/living/critter)
 			return
 		else
 			..()
+
+	attack_hand(mob/living/M, params, location, control)
+		. = ..()
+		if (M.a_intent == INTENT_HARM && src.ai?.enabled && src.ai_retaliates) //Someone punched us and we like to fight back
+			src.ai.priority_tasks += src.ai.get_instance(/datum/aiTask/sequence/goalbased/retaliate, list(src.ai, src.ai.default_task, M))
+			src.ai.interrupt()
 
 	proc/butcher(var/mob/M, drop_brain = TRUE)
 		var/i = rand(2,4)
@@ -781,6 +794,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 			logTheThing(LOG_COMBAT, src, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
 		if(thr?.user)
 			src.was_harmed(thr.user, AM)
+			//We caught an item with our face and we like to fight back
+			if (src.ai?.enabled && src.ai_retaliates && AM.throwforce > 0)
+				src.ai.priority_tasks += src.ai.get_instance(/datum/aiTask/sequence/goalbased/retaliate, list(src.ai, src.ai.default_task, thr.user))
+				src.ai.interrupt()
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		if (brute > 0 || burn > 0 || tox > 0)

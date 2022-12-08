@@ -229,3 +229,59 @@
 	..()
 	holder.target = null
 	holder.stop_move()
+
+
+/// This one makes the mob move towards a target mob and attack it. Repeats until the target is dead, gone, too far, or we are incapacitated. Called upon being attacked if the ai is set to retaliate
+/datum/aiTask/sequence/goalbased/retaliate
+	name = "retaliating"
+	weight = 3
+	max_dist = 7
+	ai_turbo = TRUE
+	var/mob/targetted_mob = null
+
+/datum/aiTask/sequence/goalbased/retaliate/New(parentHolder, transTask, var/mob/attacker)
+	src.targetted_mob = attacker
+	..(parentHolder, transTask)
+	add_task(holder.get_instance(/datum/aiTask/succeedable/retaliate, list(holder)))
+
+/datum/aiTask/sequence/goalbased/retaliate/get_targets()
+	return list(src.targetted_mob)
+
+////////
+
+/datum/aiTask/succeedable/retaliate
+	name = "retaliate subtask"
+	max_dist = 7
+	var/has_started = FALSE
+
+/datum/aiTask/succeedable/retaliate/failed()
+	var/mob/living/critter/C = holder.owner
+	var/mob/T = holder.target
+	if(!C.can_critter_attack() && !has_started) //if can't attack and we didn't start yet, task fail.
+		return TRUE
+	if(!C || !T || get_dist(C, T) > src.max_dist || !isalive(T)) //the tasks fails if the target is gone, we are gone, they ran too far away or are unconscious/dead.
+		return TRUE
+	if(get_dist(C, T) <= src.max_dist)	//We didnt attack them, but we can still see them! Keep chasing and end the current task!
+		holder.priority_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/retaliate, list(holder, holder.default_task, holder.target))
+		return TRUE
+
+/datum/aiTask/succeedable/retaliate/succeeded()
+	var/mob/living/critter/C = holder.owner
+	if (C.can_critter_attack() && src.has_started)	//Can we attack again and did we already attack them once? Then we succeeded
+		var/mob/M = holder.target
+		if (isalive(M))	//Are they not unconscious or dead? Then we are STILL pissed. Chase them and attack again!
+			holder.priority_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/retaliate, list(holder, holder.default_task, holder.target))
+		return TRUE
+
+/datum/aiTask/succeedable/retaliate/on_tick()
+	if(!has_started)
+		holder.stop_move()
+		var/mob/living/critter/M = holder.owner
+		var/mob/T = holder.target
+		if(M && T && BOUNDS_DIST(M, T) == 0)
+			M.set_dir(get_dir(M, T))
+			M.critter_attack(holder.target)
+			src.has_started = TRUE
+
+/datum/aiTask/succeedable/retaliate/on_reset()
+	src.has_started = FALSE

@@ -140,6 +140,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_burn = 8
 	ai_type = /datum/aiHolder/mouse
 	is_npc = TRUE
+	ai_retaliates = TRUE
 	var/attack_damage = 3
 	var/use_custom_color = TRUE
 
@@ -325,6 +326,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	flags = TABLEPASS
 	fits_under_table = 1
 	add_abilities = list(/datum/targetable/critter/pounce)
+	ai_retaliates = TRUE
 	var/cattype = 1
 	var/randomize_name = 1
 	var/randomize_look = 1
@@ -503,6 +505,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	speechverb_ask = "yips"
 	health_brute = 30
 	health_burn = 30
+	ai_retaliates = TRUE
 	var/dogtype = "pug"
 	var/sound/sound_bark = 'sound/voice/animal/dogbark.ogg'
 	var/gabe = 0 //sniff. bark bork. brork.
