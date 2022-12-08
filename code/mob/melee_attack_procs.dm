@@ -979,15 +979,6 @@
 
 			target.TakeDamage(def_zone, (damage_type != DAMAGE_BURN ? damage : 0), (damage_type == DAMAGE_BURN ? damage : 0), 0, damage_type)
 
-
-			if (istype(affecting))
-				affecting.take_damage((damage_type != DAMAGE_BURN ? damage : 0), (damage_type == DAMAGE_BURN ? damage : 0), 0, damage_type)
-				hit_twitch(target)
-			else if (affecting)
-				target.TakeDamage(affecting, (damage_type != DAMAGE_BURN ? damage : 0), (damage_type == DAMAGE_BURN ? damage : 0), 0, damage_type)
-			else
-				target.TakeDamage("chest", (damage_type != DAMAGE_BURN ? damage : 0), (damage_type == DAMAGE_BURN ? damage : 0), 0, damage_type)
-
 			if ((damage_type & (DAMAGE_CUT | DAMAGE_STAB)) || bleed_always)
 				take_bleeding_damage(target, owner, damage + bleed_bonus, damage_type)
 				target.spread_blood_clothes(target)
