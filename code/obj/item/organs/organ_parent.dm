@@ -152,8 +152,6 @@
 					holder.vars[thing] = null
 
 
-		if (donor?.organs) //not all mobs have organs/organholders (fish)
-			donor.organs -= src
 		donor = null
 
 		if (bones)

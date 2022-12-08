@@ -87,12 +87,6 @@ datum
 					M = holder.my_atom
 				if (M.get_toxin_damage() <= 25)
 					M.take_toxin_damage(-1 * mult)
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					if (bone_system)
-						for (var/obj/item/organ/O in H.organs)
-							if (O.bones)
-								O.bones.repair_damage(1 * mult)
 				flush(M,5 * mult, flushed_reagents)
 				..()
 				return
