@@ -460,6 +460,7 @@ var/global/list/soundCache = list(
  	"sound/items/geiger/geiger-5-1.ogg" = 'sound/items/geiger/geiger-5-1.ogg',\
  	"sound/items/geiger/geiger-5-2.ogg" = 'sound/items/geiger/geiger-5-2.ogg',\
  	"sound/items/geiger/geiger-5-3.ogg" = 'sound/items/geiger/geiger-5-3.ogg',\
+ 	"sound/items/glass_slide.ogg" = 'sound/items/glass_slide.ogg',\
  	"sound/items/glass_wipe.ogg" = 'sound/items/glass_wipe.ogg',\
  	"sound/items/hand_label.ogg" = 'sound/items/hand_label.ogg',\
  	"sound/items/hypo.ogg" = 'sound/items/hypo.ogg',\
