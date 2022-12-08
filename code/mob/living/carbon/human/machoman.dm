@@ -573,7 +573,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			target.changeStatus("stimulants", 7.5 MINUTES)
 			if (ishuman(target))
 				var/mob/living/carbon/human/machoman/H = target
-				H.HealDamage(ALL, 50, 50, 50)
+				H.HealDamage("All", 50, 50, 50)
 				H.UpdateDamageIcon()
 				H.bodytemperature = H.base_body_temp
 		else
