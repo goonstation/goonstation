@@ -1522,7 +1522,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 					holder.owner.transforming = 0
 					holder.owner.bioHolder.AddEffect("fire_resist")
 					holder.owner.transforming = 1
-					playsound(holder.owner.loc, 'sound/voice/heavenly.ogg', 75)
+					playsound(holder.owner.loc, 'sound/voice/heavenly.ogg', 50)
 					holder.owner.visible_message("<span class='alert'><b>[holder.owner] closes [his_or_her(holder.owner)] eyes in silent macho prayer!</b></span>")
 					sleep(4 SECONDS)
 					for (var/mob/N in viewers(holder.owner, null))
