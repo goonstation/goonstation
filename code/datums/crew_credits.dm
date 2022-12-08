@@ -1,5 +1,8 @@
 var/global/crew_creds = null
 
+/// Debug option for filling out the end-game crew credits roster with fake names
+// #define CREDITS_DEBUGGING
+
 /datum/crewCredits
 
 /datum/crewCredits/ui_state(mob/user)
@@ -16,7 +19,8 @@ var/global/crew_creds = null
 		ui.open()
 
 
-/// Testing proc to generate a fake player for the end credits
+#ifdef CREDITS_DEBUGGING
+/// Debug proc to generate a fake crew member data bundle for TGUI
 /datum/crewCredits/proc/generate_fake_crew_member(var/real_name, var/role, var/dead, var/head)
 	. = list(list(
 		"real_name" = real_name,
@@ -27,7 +31,7 @@ var/global/crew_creds = null
 	))
 
 
-/// Testing proc to generate a randomized real_name for carbons
+/// Debug proc to generate a fake carbon crew member name
 /datum/crewCredits/proc/fake_carbon_name()
 	var/name_first = ""
 	var/name_last = ""
@@ -37,8 +41,9 @@ var/global/crew_creds = null
 		name_first = capitalize(pick_string_autokey("names/first_female.txt"))
 	name_last = capitalize(pick_string_autokey("names/last.txt"))
 	return name_first + " " + name_last
+#endif
 
-/// Generate the bundle of data for sharing with TGUI
+/// Generates the crew member data bundle for TGUI use
 /datum/crewCredits/proc/bundle_crew_member_data(var/datum/mind/M)
 	var/is_head = false
 	if(M.special_role)
@@ -70,7 +75,6 @@ var/global/crew_creds = null
 	. = ..()
 	if(crew_creds)
 		logTheThing(LOG_DEBUG, null, "Zamujasa/CREWCREDITS: [world.timeofday] returning already-generated crew credits")
-
 		return crew_creds
 
 	logTheThing(LOG_DEBUG, null, "Zamujasa/CREWCREDITS: [world.timeofday] starting crew credits generation")
@@ -118,13 +122,11 @@ var/global/crew_creds = null
 	logTheThing(LOG_DEBUG, null, "Zamujasa/CREWCREDITS: [world.timeofday] done processing minds. info: A [antagonist.len] C [captain.len] S [security.len] M [medical.len] R [science.len] E [engineering.len] Cv [civilian.len] X [other.len]")
 
 	/* ~ BEGIN FAKE CREW CREDITS GENERATION ~ */
-
-	/// Debug option for filling out the end-game crew credits roster
-	#define CREDITS_DEBUGGING
-
 	#ifdef CREDITS_DEBUGGING
+
 	var/has_head = FALSE
 	var/what_role = ""
+
 	while (antagonist.len < 4)
 		antagonist += src.generate_fake_crew_member(
 			real_name=src.fake_carbon_name(),
@@ -155,7 +157,7 @@ var/global/crew_creds = null
 		if (!has_head)
 			what_role = "Medical Director"
 		else
-			what_role = pick("Medical Doctor", "Medical Doctor", "Roboticist", "Geneticist")
+			what_role = pick("Medical Doctor", "Medical Doctor", "Roboticist", "Geneticist") // weighted (for "realism")
 
 		medical += src.generate_fake_crew_member(
 			real_name=src.fake_carbon_name(),
@@ -182,7 +184,7 @@ var/global/crew_creds = null
 		if (!has_head)
 			what_role = "Chief Engineer"
 		else
-			what_role = pick("Engineer", "Engineer", "Engineer", "Quartermaster", "Miner", "Miner")
+			what_role = pick("Engineer", "Engineer", "Engineer", "Quartermaster", "Miner", "Miner") // weighted (for "realism")
 		engineering += src.generate_fake_crew_member(
 			real_name=src.fake_carbon_name(),
 			role=what_role,
@@ -227,8 +229,8 @@ var/global/crew_creds = null
 		)
 
 	logTheThing(LOG_DEBUG, null, "Zamujasa/CREWCREDITS: [world.timeofday] done adding fake crew. info: A [antagonist.len] C [captain.len] S [security.len] M [medical.len] R [science.len] E [engineering.len] Cv [civilian.len] X [other.len]")
-	#endif
 
+	#endif
 	/* ~ END FAKE CREW CREDITS GENERATOR ~ */
 
 	crew_creds = list(
@@ -242,7 +244,7 @@ var/global/crew_creds = null
 				"crew" = captain,
 			),
 			list(
-				"group" = "Security",
+				"group" = "Security Department",
 				"crew" = security,
 			),
 			list(
