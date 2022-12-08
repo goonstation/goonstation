@@ -87,6 +87,19 @@
 	src.botcard = new /obj/item/card/id(src)
 	src.botcard.access = get_access(src.access_lookup)
 
+/obj/machinery/bot/duckbot/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=60)
+	var/target_turf = get_pathable_turf(the_target)
+	if((get_dist(the_target, src) == 0))
+		return
+	if(src.bot_mover?.the_target == target_turf && frustration == 0)
+		return FALSE
+	if(!target_turf)
+		return FALSE
+
+	src.KillPathAndGiveUp(0)
+	var/datum/robot_mover/mover = new /datum/robot_mover(newmaster = src, _move_delay = move_delay, _target_turf = target_turf, _current_movepath = current_movepath, _adjacent = adjacent, _scanrate = scanrate, _max_dist = max_dist)
+	src.bot_mover = !QDELETED(mover) ? mover : null
+
 /obj/machinery/bot/duckbot/process()
 	. = ..()
 	if(src.on == 1)
