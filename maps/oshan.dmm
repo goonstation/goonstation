@@ -29563,7 +29563,9 @@
 /obj/table/reinforced/auto,
 /obj/item/wrapping_paper,
 /obj/item/wirecutters,
-/obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0
+	},
 /obj/access_spawn/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -30612,7 +30614,8 @@
 /obj/machinery/cashreg,
 /obj/item/reagent_containers/food/drinks/mug/random_color,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 4
+	dir = 4;
+	autoclose = 0
 	},
 /obj/access_spawn/cargo,
 /turf/simulated/floor,
@@ -31030,7 +31033,8 @@
 /obj/item/stamp,
 /obj/item/pen,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 4
+	dir = 4;
+	autoclose = 0
 	},
 /obj/access_spawn/cargo,
 /turf/simulated/floor,
