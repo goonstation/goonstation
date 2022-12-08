@@ -314,8 +314,7 @@
 	//if (target.melee_attack_test(src, null, null, 1) != 1)
 	//	return
 
-	var/obj/item/affecting = target.get_affecting(src)
-	var/datum/attackResults/disarm/msgs = calculate_disarm_attack(target, affecting, 0, 0, extra_damage, is_special)
+	var/datum/attackResults/disarm/msgs = calculate_disarm_attack(target, 0, 0, extra_damage, is_special)
 	msgs.damage_type = damtype
 	msgs.flush(suppress_flags)
 	return
@@ -324,21 +323,16 @@
 // I needed a harm intent-like attack datum for some limbs (Convair880).
 // is_shove flag removes the possibility of slapping the item out of someone's hand. instead there is a chance to shove them backwards. The 'shove to the ground' chance remains unchanged. (mbc)
 // mbc also added disarming_item flag - for when a disarm is performed BY something. Doesn't do anything but change text currently.
-/mob/proc/calculate_disarm_attack(var/mob/target, var/obj/item/affecting, var/base_damage_low = 0, var/base_damage_high = 0, var/extra_damage = 0, var/is_shove = 0, var/obj/item/disarming_item = 0)
+/mob/proc/calculate_disarm_attack(var/mob/target, var/base_damage_low = 0, var/base_damage_high = 0, var/extra_damage = 0, var/is_shove = 0, var/obj/item/disarming_item = 0)
 	var/datum/attackResults/disarm/msgs = new(src)
 	msgs.clear(target)
 	msgs.valid = 1
 	msgs.disarm = 1
 	msgs.disarm_RNG_result = list()
 	var/list/obj/item/items = target.equipped_list()
-	var/def_zone = null
-	if (zone_sel)
-		def_zone = zone_sel.selecting
-		msgs.affecting = def_zone
-	else
-		def_zone = "All"
-		msgs.affecting = def_zone
 
+	var/def_zone = target.get_def_zone(src, src.zone_sel?.selecting)
+	msgs.def_zone = def_zone
 	if(prob(target.get_deflection())) //chance to deflect disarm attempts entirely
 		msgs.played_sound = 'sound/impact_sounds/Generic_Swing_1.ogg'
 		msgs.base_attack_message = "<span class='alert'><B>[src] shoves at [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
@@ -575,13 +569,12 @@
 	if (!target.melee_attack_test(src))
 		return
 
-	var/obj/item/affecting = target.get_affecting(src)
-	var/datum/attackResults/msgs = calculate_melee_attack(target, affecting, 2, 9, extra_damage)
+	var/datum/attackResults/msgs = calculate_melee_attack(target, 2, 9, extra_damage)
 	msgs.damage_type = damtype
-	attack_effects(target, affecting)
+	attack_effects(target, zone_sel?.selecting)
 	msgs.flush(suppress_flags)
 
-/mob/proc/calculate_melee_attack(var/mob/target, var/obj/item/affecting, var/base_damage_low = 2, var/base_damage_high = 9, var/extra_damage = 0, var/stamina_damage_mult = 1, var/can_crit = 1, can_punch = 1, can_kick = 1)
+/mob/proc/calculate_melee_attack(var/mob/target, var/base_damage_low = 2, var/base_damage_high = 9, var/extra_damage = 0, var/stamina_damage_mult = 1, var/can_crit = 1, can_punch = 1, can_kick = 1)
 	var/datum/attackResults/msgs = new(src)
 	var/crit_chance = STAMINA_CRIT_CHANCE
 	var/do_armor = TRUE
@@ -593,21 +586,8 @@
 	SEND_SIGNAL(target, COMSIG_MOB_ATTACKED_PRE, src, null)
 
 	//get defense zone and 'organ' to hit
-	var/def_zone = null
-	if (istype(affecting, /obj/item/organ))
-		var/obj/item/organ/O = affecting
-		def_zone = O.organ_name
-		msgs.affecting = affecting
-	else if (istype(affecting, /obj/item/parts))
-		var/obj/item/parts/P = affecting
-		def_zone = P.slot
-		msgs.affecting = affecting
-	else if (zone_sel)
-		def_zone = zone_sel.selecting
-		msgs.affecting = def_zone
-	else
-		def_zone = "All"
-		msgs.affecting = def_zone
+	var/def_zone = target.get_def_zone(src, src.zone_sel?.selecting)
+	msgs.def_zone = def_zone
 
 	//get damage multiplers based on self and target.
 	var/self_damage_multiplier = get_base_damage_multiplier(def_zone)
@@ -797,6 +777,7 @@
 	var/damage = 0
 	var/damage_type = DAMAGE_BLUNT
 	var/obj/item/affecting = null
+	var/def_zone = null
 	var/valid = 0
 	var/disarm = 0 // Is this a disarm as opposed to harm attack?
 	var/disarm_RNG_result = null // Blocked, shoved down etc.
@@ -996,6 +977,9 @@
 			if (damage_type == DAMAGE_BLUNT && prob(25 + (damage * 2)) && damage >= 8)
 				damage_type = DAMAGE_CRUSH
 
+			target.TakeDamage(def_zone, (damage_type != DAMAGE_BURN ? damage : 0), (damage_type == DAMAGE_BURN ? damage : 0), 0, damage_type)
+
+
 			if (istype(affecting))
 				affecting.take_damage((damage_type != DAMAGE_BURN ? damage : 0), (damage_type == DAMAGE_BURN ? damage : 0), 0, damage_type)
 				hit_twitch(target)
@@ -1086,23 +1070,23 @@
 
 	return 1
 
-/mob/proc/get_affecting(mob/attacker, def_zone = null)
+/mob/proc/get_def_zone(mob/attacker, def_zone = null)
 	if (def_zone)
 		return def_zone
 	var/t = pick("head", "chest")
 	if(attacker.zone_sel)
 		t = attacker.zone_sel.selecting
-	return t
+	return check_target_zone(t)
 
-/mob/living/carbon/human/get_affecting(mob/attacker, def_zone = null)
+/mob/living/carbon/human/get_def_zone(mob/attacker, def_zone = null)
 	var/t = pick("head", "chest")
 	if(def_zone)
 		t = def_zone
 	else if(attacker.zone_sel)
 		t = attacker.zone_sel.selecting
-	var/r_zone = ran_zone(t)
+	t = ran_zone(t)
 
-	return r_zone
+	return check_target_zone(t)
 
 /mob/proc/check_target_zone(var/def_zone)
 	return def_zone
@@ -1256,14 +1240,14 @@
 
 /////////////////////////////////////////////////////////// After attack ////////////////////////////////////////////
 
-/mob/proc/attack_effects(var/target, var/obj/item/affecting)
+/mob/proc/attack_effects(var/target, def_zone)
 	return
 
-/mob/living/carbon/human/attack_effects(var/mob/target, var/obj/item/affecting)
+/mob/living/carbon/human/attack_effects(var/mob/target, def_zone)
 	if (src.bioHolder.HasEffect("revenant"))
 		var/datum/bioEffect/hidden/revenant/R = src.bioHolder.GetEffect("revenant")
 		if (R.ghoulTouchActive)
-			R.ghoulTouch(target, affecting)
+			R.ghoulTouch(target, def_zone)
 
 //variant, using for werewolf pounce, to send mobs in a random direction and 50% chance to weaken them.
 /proc/wrestler_knockdown(var/mob/H, var/mob/T, var/variant)

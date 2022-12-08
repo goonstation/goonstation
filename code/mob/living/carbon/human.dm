@@ -1176,16 +1176,13 @@
 	if (src.nodamage) return
 	if (src.health > 0)
 		var/dam_zone = pick("chest", "head")
-		if (istype(src.organs[dam_zone], /obj/item/organ))
-			var/obj/item/organ/temp = src.organs[dam_zone]
+		var/reduction = 0
+		if (src.spellshield)
+			reduction = 30
+			boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some damage!</b></span>")
 
-			var/reduction = 0
-			if (src.spellshield)
-				reduction = 30
-				boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some damage!</b></span>")
-
-			temp.take_damage((istype(O, /obj/newmeteor/small) ? max(15-reduction,0) : max(25-reduction,0)), max(20-reduction,0))
-			src.UpdateDamageIcon()
+		src.TakeDamage(dam_zone, (istype(O, /obj/newmeteor/small) ? max(15-reduction,0) : max(25-reduction,0)), max(20-reduction,0), 0, DAMAGE_CRUSH)
+		src.UpdateDamageIcon()
 	else if (prob(20))
 		src.gib()
 
