@@ -776,7 +776,6 @@
 	var/stamina_crit = 0
 	var/damage = 0
 	var/damage_type = DAMAGE_BLUNT
-	var/obj/item/affecting = null
 	var/def_zone = null
 	var/valid = 0
 	var/disarm = 0 // Is this a disarm as opposed to harm attack?
@@ -807,12 +806,12 @@
 		stamina_crit = 0
 		damage = 0
 		damage_type = DAMAGE_BLUNT
-		affecting = null
 		valid = 0
 		disarm = 0
 		disarm_RNG_result = null
 		bleed_always = 0 //Will cause bleeding regardless of damage type.
 		bleed_bonus = 0 //bonus to bleed damage specifically.
+		def_zone = null
 
 		after_effects.Cut()
 
@@ -838,15 +837,15 @@
 			logTheThing(LOG_DEBUG, owner, "<b>Marquesas/Melee Attack Refactor:</b> NO TARGET FLUSH! EMERGENCY!")
 			return
 
-		if (!affecting)
+		if (!def_zone)
 			clear(null)
-			logTheThing(LOG_DEBUG, owner, "<b>Marquesas/Melee Attack Refactor:</b> NO AFFECTING FLUSH! WARNING!")
+			logTheThing(LOG_DEBUG, owner, "<b>tarmunora/Melee Attack Refactor2:</b> NO DEF_ZONE FLUSH! WARNING!")
 			return
 
 		var/list/disarm_log = list()
 
 		if (!msg_group)
-			msg_group = "[affecting]_attacks_[target]_with_[disarm ? "disarm" : "harm"]"
+			msg_group = "[owner]_attacks_[target]_with_[disarm ? "disarm" : "harm"]"
 
 		if (!(suppress & SUPPRESS_SOUND) && played_sound)
 			var/obj/item/grab/block/G = target.check_block()
