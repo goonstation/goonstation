@@ -1986,6 +1986,8 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 		pipe_type = /obj/disposalpipe/segment/cargo
 		trunk_type = /obj/disposalpipe/trunk/cargo
 
+ABSTRACT_TYPE(/obj/disposalpipespawner)
+
 /obj/disposalpipespawner/New()
 	..()
 	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
