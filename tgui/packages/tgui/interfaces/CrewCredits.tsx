@@ -67,8 +67,9 @@ const CrewMember = (props: CrewMemberProps) => {
   const { real_name, dead, player, role, head } = props;
   return (
     <>
-      <Box as="span" bold={head}>{real_name} {dead ? <b>(DEAD)</b> : ""} (played by {player}) as {role}</Box>
+      <Box as="span" bold={head}>{real_name} {dead ? "[DEAD]" : ""} (played by {player}) as {role}</Box>
       <br />
+      {head ? <br /> : ""}
     </>
   );
 };
