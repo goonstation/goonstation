@@ -146,15 +146,12 @@
 			if ("Record")
 				if (src.mode != MODE_RECORDING)
 					src.mode = MODE_RECORDING
-				else
-					src.mode = MODE_OFF
 			if ("Play")
 				if (src.mode != MODE_PLAYING)
 					play()
-				else
-					src.mode = MODE_OFF
 			if ("Stop")
 				stop()
+			if ("Rewind")
 				if (src.tape)
 					src.tape.log_line = 1
 			if ("Clear")
