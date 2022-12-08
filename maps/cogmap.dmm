@@ -32123,7 +32123,7 @@
 	dir = 1
 	},
 /obj/decal/tile_edge{
-	icon_state = "mule_beacon"
+	icon_state = "hazard_caution"
 	},
 /turf/simulated/floor/grime,
 /area/station/storage/primary)
@@ -32142,7 +32142,7 @@
 	},
 /obj/machinery/drainage,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /turf/simulated/floor/grime,
 /area/station/storage/primary)
