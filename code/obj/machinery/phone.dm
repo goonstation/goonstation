@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/phone)
+	mats = 25
+
 /obj/machinery/phone
 	name = "phone"
 	icon = 'icons/obj/machines/phones.dmi'
@@ -5,7 +8,6 @@
 	icon_state = "phone"
 	anchored = 1
 	density = 0
-	mats = 25
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	_health = 25
 	color = null
@@ -347,6 +349,9 @@
 		..(user)
 		holder = user
 
+TYPEINFO(/obj/machinery/phone/wall)
+	mats = 25
+
 /obj/machinery/phone/wall
 	name = "wall phone"
 	icon = 'icons/obj/machines/phones.dmi'
@@ -354,7 +359,6 @@
 	icon_state = "wallphone"
 	anchored = 1
 	density = 0
-	mats = 25
 	_health = 50
 	phoneicon = "wallphone"
 	ringingicon = "wallphone_ringing"
@@ -401,9 +405,11 @@
 /obj/machinery/radio_antenna/large
 	range = 40
 
+TYPEINFO(/obj/item/phone/cellphone)
+	mats = 25
+
 /obj/item/phone/cellphone
 	icon_state = "cellphone"
-	mats = 25
 	_health = 20
 	var/can_talk_across_z_levels = 0
 	var/phone_id = null

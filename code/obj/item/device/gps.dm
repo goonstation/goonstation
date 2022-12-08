@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/gps)
+	mats = 2
+
 /obj/item/device/gps
 	name = "space GPS"
 	desc = "A navigation device that can tell you your position, and the position of other GPS devices. Uses coordinate beacons."
@@ -13,7 +16,6 @@
 	w_class = W_CLASS_SMALL
 	m_amt = 50
 	g_amt = 100
-	mats = 2
 	var/frequency = FREQ_GPS
 	var/net_id
 

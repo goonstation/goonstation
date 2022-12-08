@@ -766,6 +766,7 @@
 		/turf/unsimulated/wall/auto/adventure/shuttle,
 		/turf/simulated/wall/auto/marsoutpost,
 		/turf/simulated/wall/false_wall,
+		/turf/simulated/wall/auto/feather,
 	))
 
 	/// Gotta be a typecache list
@@ -1104,7 +1105,6 @@
 	var/repair_per_resource = 1
 
 /obj/window/auto/feather/New()
-	connects_to += /turf/simulated/wall/auto/feather
 	..()
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, TRUE)

@@ -396,7 +396,7 @@
 			target_reagents = drank.group?.reagents
 			msg = "<span class='hint'>You slurp some of \the [drank] off of \the [get_turf(drank)]. [target_reagents.get_taste_string(user)]</span>"
 
-		if (target_reagents)
+		if (target_reagents?.total_volume)
 			target_reagents.reaction(user, INGEST, clamp(target_reagents.total_volume, CHEM_EPSILON, min(src.slurp_size, (user.reagents?.maximum_volume - user.reagents?.total_volume))))
 			target_reagents.trans_to(user, min(target_reagents.total_volume, src.slurp_size))
 			eat_twitch(user)
