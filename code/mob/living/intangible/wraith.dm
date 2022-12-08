@@ -50,7 +50,7 @@
 	var/formaldehyde_tolerance = 25
 	///specifiy strong or weak tk powers. Weak for poltergeists.
 	var/weak_tk = FALSE
-	///can the wraith hear ghosts? Toggleable with a verb/proc
+	///can the wraith hear ghosts? Toggleable with an ability
 	var/hearghosts = TRUE
 
 	var/datum/movement_controller/movement_controller
