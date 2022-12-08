@@ -403,6 +403,7 @@ var/global/list/soundCache = list(
  	"sound/impact_sounds/locker_break.ogg" = 'sound/impact_sounds/locker_break.ogg',\
  	"sound/impact_sounds/locker_hit.ogg" = 'sound/impact_sounds/locker_hit.ogg',\
  	"sound/impact_sounds/Machinery_Break_1.ogg" = 'sound/impact_sounds/Machinery_Break_1.ogg',\
+ 	"sound/impact_sounds/meat_smack.ogg" = 'sound/impact_sounds/meat_smack.ogg',\
  	"sound/impact_sounds/Metal_Clang_1.ogg" = 'sound/impact_sounds/Metal_Clang_1.ogg',\
  	"sound/impact_sounds/Metal_Clang_2.ogg" = 'sound/impact_sounds/Metal_Clang_2.ogg',\
  	"sound/impact_sounds/Metal_Clang_3.ogg" = 'sound/impact_sounds/Metal_Clang_3.ogg',\
