@@ -573,13 +573,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			target.changeStatus("stimulants", 7.5 MINUTES)
 			if (ishuman(target))
 				var/mob/living/carbon/human/machoman/H = target
-				for (var/A in H.organs)
-					var/obj/item/affecting = null
-					if (!H.organs[A])    continue
-					affecting = H.organs[A]
-					if (!isitem(affecting))
-						continue
-					affecting.heal_damage(50, 50) //heals 50 burn, 50 brute from all organs
+				H.HealDamage(ALL, 50, 50, 50)
 				H.UpdateDamageIcon()
 				H.bodytemperature = H.base_body_temp
 		else
@@ -1475,13 +1469,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 					holder.owner.transforming = 0
 					holder.owner.bioHolder.RemoveEffect("fire_resist")
 					holder.owner.verbs += /mob/living/carbon/human/machoman/verb/macho_soulsteal
-					for (var/A in holder.owner.organs)
-						var/obj/item/affecting = null
-						if (!holder.owner.organs[A])    continue
-						affecting = holder.owner.organs[A]
-						if (!isitem(affecting))
-							continue
-						affecting.heal_damage(50, 50) //heals 50 burn, 50 brute from all organs
+					holder.owner.HealDamage("All", 50, 50, 50)
 					holder.owner.take_toxin_damage(-INFINITY)
 					holder.owner.UpdateDamageIcon()
 					if (H)

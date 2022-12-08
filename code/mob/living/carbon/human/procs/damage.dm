@@ -650,9 +650,16 @@
 
 /mob/living/carbon/human/get_valid_target_zones()
 	var/list/ret = list()
-	for (var/organName in src.organs)
-		if (istype(src.organs[organName], /obj/item))
-			ret += organName
+	if(src.limbs.get_limb("l_arm"))
+		ret += "l_arm"
+	if(src.limbs.get_limb("r_arm"))
+		ret += "r_arm"
+	if(src.limbs.get_limb("l_leg"))
+		ret += "l_leg"
+	if(src.limbs.get_limb("r_leg"))
+		ret += "r_leg"
+	if(src.organHolder.get_organ("head"))
+		ret += "head"
 	return ret
 
 /proc/random_brute_damage(var/mob/themob, var/damage, checkarmor=0) // do brute damage to a random organ
