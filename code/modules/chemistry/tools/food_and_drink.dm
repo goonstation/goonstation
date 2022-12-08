@@ -1360,7 +1360,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if("icon-y" in params)
 			src.pixel_y = text2num(params["icon-y"]) - 16
 		user.weapon_attack(source_table, src, TRUE, list())
-		playsound(src, 'sound/items/glass_slide.ogg', 40, 1)
+		playsound(src, 'sound/items/glass_slide.ogg', 25, 1)
 		var/list/turf/path = raytrace(get_turf(source_table), get_turf(target_table))
 		var/turf/last_turf = get_turf(source_table)
 		SPAWN(0)
