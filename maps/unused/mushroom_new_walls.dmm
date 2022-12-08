@@ -2507,7 +2507,8 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/mining/staff_room)
 "akh" = (
 /turf/simulated/floor,
@@ -2749,7 +2750,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/mining/staff_room)
 "alG" = (
 /obj/cable,
@@ -5230,7 +5232,8 @@
 	codes_txt = "delivery;dir=4";
 	location = "QM #1"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "auV" = (
 /obj/machinery/firealarm{
@@ -5238,14 +5241,16 @@
 	text = "NF"
 	},
 /obj/machinery/processor/portable,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "auW" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=2";
 	location = "Market"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/market)
 "auY" = (
 /obj/submachine/slot_machine,
@@ -5491,11 +5496,13 @@
 	codes_txt = "delivery;dir=4";
 	location = "QM #2"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "avV" = (
 /obj/machinery/processor/portable,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "avW" = (
 /obj/machinery/door/window/northleft,
@@ -5533,7 +5540,8 @@
 	tag = "icon-rwindow (WEST)"
 	},
 /obj/machinery/light,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/crew_quarters/market)
 "awd" = (
 /obj/decal/tile_edge/stripe/big{
@@ -6270,7 +6278,8 @@
 	},
 /area/station/hallway/primary/west)
 "ayY" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/mining/staff_room)
 "aza" = (
 /obj/item/storage/box/mousetraps,
@@ -10092,7 +10101,8 @@
 /obj/machinery/turret{
 	dir = 6
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/turret_protected/ai_module_storage)
 "aOy" = (
 /obj/table/reinforced,
@@ -10110,7 +10120,8 @@
 /obj/machinery/turret{
 	dir = 10
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/turret_protected/ai_module_storage)
 "aOG" = (
 /obj/table/auto,
@@ -10825,7 +10836,8 @@
 	codes_txt = "delivery;dir=4";
 	location = "Courtroom"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "aRw" = (
 /obj/table/wood/auto,
@@ -16639,7 +16651,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/listeningpost/power)
 "bly" = (
 /obj/storage/crate/furnacefuel,
@@ -16676,7 +16689,8 @@
 	name = "Listening Post"
 	},
 /obj/access_spawn/syndie_shuttle,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/listeningpost)
 "blE" = (
 /turf/simulated/floor/stairs{
@@ -16749,7 +16763,8 @@
 /area/space)
 "blT" = (
 /obj/storage/closet/syndicate/personal,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/listeningpost)
 "blU" = (
 /obj/machinery/bot/guardbot/bad{
@@ -16800,7 +16815,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/listeningpost)
 "bmh" = (
 /obj/item/device/radio/intercom{
@@ -16881,7 +16897,8 @@
 "bmr" = (
 /obj/machinery/door/airlock,
 /obj/access_spawn/syndie_shuttle,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/listeningpost)
 "bms" = (
 /turf/simulated/floor/grey/side{
@@ -17345,7 +17362,8 @@
 	},
 /obj/access_spawn/mining,
 /obj/firedoor_spawn,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/mining/staff_room)
 "bob" = (
 /obj/cable{
@@ -17553,13 +17571,15 @@
 /obj/item/sheet/steel{
 	amount = 50
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/storage/warehouse)
 "boI" = (
 /obj/item/sheet/glass{
 	amount = 50
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/storage/warehouse)
 "boJ" = (
 /obj/machinery/abcu,
@@ -17764,7 +17784,8 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/mining/staff_room)
 "bpn" = (
 /obj/cable{
@@ -17775,7 +17796,8 @@
 	},
 /obj/access_spawn/mining,
 /obj/firedoor_spawn,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/mining/staff_room)
 "bpo" = (
 /obj/machinery/light,
@@ -18602,7 +18624,8 @@
 /area/station/storage/warehouse)
 "brY" = (
 /obj/storage/crate/abcumarker,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/storage/warehouse)
 "brZ" = (
 /obj/machinery/firealarm{
@@ -18611,7 +18634,8 @@
 	pixel_y = -24
 	},
 /obj/storage/crate/abcumarker,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/storage/warehouse)
 "bsa" = (
 /obj/machinery/abcu,
@@ -19652,7 +19676,8 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail,
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "bUh" = (
 /obj/decal/tile_edge/line/white{
@@ -20050,7 +20075,8 @@
 /area/station/bridge)
 "coE" = (
 /obj/disposalpipe/segment/mail,
-/turf/simulated/floor/delivery/white,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "coN" = (
 /obj/grille/catwalk/cross{
@@ -21935,7 +21961,8 @@
 	dir = 8
 	},
 /obj/access_spawn/research,
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/white,
 /area/station/science/chemistry)
 "eVf" = (
 /obj/stool/chair{
@@ -21944,7 +21971,8 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/white,
 /area/station/science/chemistry)
 "eVp" = (
 /obj/disposalpipe/switch_junction/left/west{
@@ -23754,7 +23782,8 @@
 /area/station/turret_protected/AIsat)
 "hmQ" = (
 /obj/machinery/light,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "hnm" = (
 /obj/machinery/camera{
@@ -25140,7 +25169,8 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/security/main)
 "iSV" = (
 /obj/machinery/light_switch{
@@ -26386,7 +26416,8 @@
 	name = "Interrogation Room"
 	},
 /obj/access_spawn/forensics,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/security/detectives_office)
 "ksY" = (
 /obj/decal/tile_edge/line/blue{

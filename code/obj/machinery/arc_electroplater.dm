@@ -1,6 +1,9 @@
 /** Arc Electroplater
   * Applies materials directly to items
   */
+TYPEINFO(/obj/machinery/arc_electroplater)
+	mats = 20
+
 /obj/machinery/arc_electroplater
 	name = "Arc Electroplater"
 	desc = "An industrial arc electroplater.  It uses strong currents to coat a target object with a provided material."
@@ -9,7 +12,6 @@
 	anchored = 1
 	density = 1
 	flags = NOSPLASH
-	mats = 20
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 	var/obj/target_item = null
 	var/cooktime = 0

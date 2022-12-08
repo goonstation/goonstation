@@ -1743,6 +1743,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 /* ------------------------- Implant Pad ------------------------- */
 /* =============================================================== */
 
+TYPEINFO(/obj/item/implantpad)
+	mats = 5
+
 /obj/item/implantpad
 	name = "implantpad"
 	icon = 'icons/obj/items/items.dmi'
@@ -1754,7 +1757,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
-	mats = 5
 	desc = "A small device for analyzing implants."
 
 /obj/item/implantpad/proc/update()
@@ -1946,11 +1948,13 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 /* ------------------------- Implant Gun ------------------------- */
 /* =============================================================== */
 
+TYPEINFO(/obj/item/gun/implanter)
+	mats = 8
+
 /obj/item/gun/implanter
 	name = "implant gun"
 	desc = "A gun that accepts an implant, that you can then shoot into other people! Or a wall, which certainly wouldn't be too big of a waste, since you'd only be using this to shoot people with things like health monitor implants or machine translators. Right?"
 	icon_state = "implant"
-	mats = 8
 	contraband = 1
 	var/obj/item/implant/my_implant = null
 

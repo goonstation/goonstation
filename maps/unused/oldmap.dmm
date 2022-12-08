@@ -1605,7 +1605,7 @@
 "dI" = (
 /obj/table,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/bridge)
@@ -2996,7 +2996,7 @@
 	name = "Captain"
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/crew_quarters/captain)
@@ -3690,7 +3690,7 @@
 /area/crew_quarters/courtroom)
 "is" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/crew_quarters/courtroom)
@@ -3902,7 +3902,7 @@
 /obj/table,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/white,
 /area/medical/medbay)
@@ -5810,7 +5810,7 @@
 "nl" = (
 /obj/secure_closet/personal,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/crew_quarters/quarters)
@@ -6795,7 +6795,7 @@
 /obj/item/cleaner,
 /obj/item/cleaner,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/janitor)
@@ -6933,7 +6933,7 @@
 	network = "SS13"
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/security/main)
@@ -7052,7 +7052,7 @@
 /area/hallway/secondary/exit)
 "qb" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/hallway/secondary/exit)
@@ -7261,7 +7261,7 @@
 "qF" = (
 /obj/closet/wardrobe/pink,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/crew_quarters/quarters)
@@ -7330,7 +7330,7 @@
 /area/atmos)
 "qO" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/machinery/computer/general_air_control{
 	frequency = 1441;
@@ -8380,7 +8380,7 @@
 	c_tag = "Bar"
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/crew_quarters/bar)
@@ -8429,7 +8429,7 @@
 /area/crew_quarters/cafeteria)
 "tr" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/white,
 /area/crew_quarters/cafeteria)
@@ -10953,7 +10953,8 @@
 /turf/simulated/floor,
 /area/tdome)
 "yU" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/tdome)
 "yV" = (
 /turf/simulated/floor/red/side{
@@ -12423,7 +12424,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/black,
 /area/turret_protected/aisat_interior)
@@ -13273,7 +13274,8 @@
 	desc = "An emergency shower, for decontamination. Sometimes..";
 	name = "Decontamination Shower"
 	},
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/white,
 /area/medical/cdc)
 "Er" = (
 /obj/cable{
@@ -14729,7 +14731,8 @@
 	dir = 8
 	},
 /obj/reagent_dispensers/watertank,
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/white,
 /area/chemistry)
 "Hk" = (
 /obj/machinery/light{
@@ -14961,7 +14964,8 @@
 /area/zeta)
 "HJ" = (
 /obj/reagent_dispensers/fueltank,
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/white,
 /area/chemistry)
 "HK" = (
 /obj/cable{
@@ -16603,7 +16607,8 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/zeta/bot_storage)
 "KH" = (
 /obj/machinery/atmospherics/portables_connector{
@@ -16785,7 +16790,8 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/zeta/bot_storage)
 "La" = (
 /obj/machinery/beacon{
@@ -16817,7 +16823,8 @@
 /obj/machinery/artifact{
 	name = "Test Artifact"
 	},
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/white,
 /area/artifact)
 "Lf" = (
 /obj/cable{
@@ -16859,7 +16866,8 @@
 	},
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/zeta/bot_storage)
 "Ll" = (
 /obj/cable{
@@ -16886,7 +16894,8 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot/syringe,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/zeta/bot_storage)
 "Ln" = (
 /obj/cable{
@@ -16999,7 +17008,8 @@
 	},
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot/gunner,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/zeta/bot_storage)
 "Lx" = (
 /obj/cable{
@@ -17035,7 +17045,8 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot/gunner,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/zeta/bot_storage)
 "LA" = (
 /obj/cable{
@@ -17132,13 +17143,15 @@
 	name = "Outpost Camera";
 	network = "Zeta"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/zeta/bot_storage)
 "LI" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
 /obj/cable,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/zeta/bot_storage)
 "LJ" = (
 /obj/machinery/light,
@@ -17719,7 +17732,8 @@
 /obj/machinery/networked/mainframe/zeta{
 	tag = "ZETA_MAINFRAME"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/turret_protected/Zeta)
 "MJ" = (
 /obj/cable{
@@ -17863,7 +17877,8 @@
 	icon_state = "grey_target_prism";
 	dir = 1
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/turret_protected/Zeta)
 "MV" = (
 /obj/cable{
@@ -19216,7 +19231,8 @@
 	d1 = 1;
 	d2 = 2
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/engine/miningoutpost)
 "Qa" = (
 /obj/machinery/conveyor/WE{

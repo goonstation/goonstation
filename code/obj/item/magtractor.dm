@@ -1,4 +1,7 @@
 
+TYPEINFO(/obj/item/magtractor)
+	mats = 12
+
 /obj/item/magtractor
 	name = "magtractor"
 	desc = "A device used to pick up and hold objects via the mysterious power of magnets."
@@ -15,7 +18,6 @@
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
 	m_amt = 50000
-	mats = 12
 	stamina_damage = 15
 	stamina_cost = 15
 	stamina_crit_chance = 5

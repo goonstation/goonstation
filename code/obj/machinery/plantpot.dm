@@ -85,11 +85,13 @@
 				return ..()
 		..()
 
+TYPEINFO(/obj/machinery/plantpot/bareplant)
+	mats = 0
+
 /obj/machinery/plantpot/bareplant
 	name = "arable soil"
 	desc = "A small mound of arable soil for planting and plant based activities."
 	anchored = 1
-	mats = 0
 	deconstruct_flags = 0
 	icon_state = null
 	power_usage = 0
@@ -198,6 +200,9 @@
 			..()
 
 
+TYPEINFO(/obj/machinery/plantpot)
+	mats = 2
+
 /obj/machinery/plantpot
 	// The central object for Hydroponics. All plant growing and most of everything goes on in
 	// this object - that said you don't want to have too many of them on the map because they
@@ -208,7 +213,6 @@
 	icon_state = "tray"
 	anchored = 0
 	density = 1
-	mats = 2
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
 	flags = NOSPLASH|ACCEPTS_MOUSEDROP_REAGENTS
 	processing_tier = PROCESSING_SIXTEENTH
@@ -1817,6 +1821,9 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 // Machines created specifically to interact with plantpots, kind of abandoned experimental
 // shit for the time being for the most part.
 
+TYPEINFO(/obj/machinery/hydro_growlamp)
+	mats = 6
+
 /obj/machinery/hydro_growlamp
 	name = "\improper UV Grow Lamp"
 	desc = "A special lamp that emits ultraviolet light to help plants grow quicker."
@@ -1824,7 +1831,6 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 	icon_state = "growlamp0" // sprites by Clarks
 	density = 1
 	anchored = 0
-	mats = 6
 	var/active = 0
 	var/datum/light/light
 	power_usage = 100
@@ -1882,6 +1888,9 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			src.anchored = !src.anchored
 
+TYPEINFO(/obj/machinery/hydro_mister)
+	mats = 6
+
 /obj/machinery/hydro_mister
 	name = "\improper Botanical Mister"
 	desc = "A device that constantly sprays small amounts of chemical onto nearby plants."
@@ -1889,7 +1898,6 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 	icon_state = "fogmachine0"
 	density = 1
 	anchored = 0
-	mats = 6
 	var/active = 0
 	var/mode = 1
 
