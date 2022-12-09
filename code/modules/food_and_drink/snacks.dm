@@ -2379,12 +2379,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	item_amount = 8
 	max_item_amount = 8
 	icon_closed = "chips-onion"
+	icon_closed_empty = "onion-empty-closed"
 	icon_open = "onion-open"
 	icon_empty = "onion-empty"
 
 /obj/item/reagent_containers/food/snacks/ochip
 	name = "Onion Chip"
-	desc = "A tasty onion chip."
+	desc = "A tasty chip that resembles a onion ring."
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
 	icon_state = "onion-chip"
 	heal_amt = 2
