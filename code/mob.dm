@@ -1274,7 +1274,7 @@
 		if (W && !W.qdeled)
 			if (istype(src.loc, /obj/vehicle))
 				var/obj/vehicle/V = src.loc
-				if (V.can_eject_items == 1)
+				if (V.can_eject_items)
 					W.set_loc(get_turf(V))
 				else
 					W.set_loc(src.loc)

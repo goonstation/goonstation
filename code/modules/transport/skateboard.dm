@@ -67,7 +67,7 @@
 	icon_state = "skateboard0"
 	layer = MOB_LAYER + 1
 	soundproofing = 0
-	can_eject_items = 1
+	can_eject_items = TRUE
 	var/sickness = 0
 	var/speed_delay = 5
 	var/datum/action/bar/skateboard/runningAction = null

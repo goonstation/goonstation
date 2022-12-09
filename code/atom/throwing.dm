@@ -97,7 +97,7 @@
 
 	if (istype(src.loc, /obj/vehicle))
 		var/obj/vehicle/V = src.loc
-		if (V.can_eject_items == 1)
+		if (V.can_eject_items)
 			src.set_loc(get_turf(V))
 
 	src.last_throw_x = src.x
