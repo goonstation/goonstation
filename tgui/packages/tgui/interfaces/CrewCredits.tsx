@@ -4,13 +4,14 @@ import { Box, Section } from "../components";
 import { Window } from "../layouts";
 
 interface CrewCreditsData {
+  darkMode: BooleanLike,
   groups: GroupBlockProps[]
 }
 
 export const CrewCredits = (props, context) => {
   const { data } = useBackend<CrewCreditsData>(context);
   return (
-    <Window title="Crew Credits" width={600} height={600} theme={"paper"}>
+    <Window title="Crew Credits" width={600} height={600} theme={data["darkMode"] ? "neutral" : "paper"}>
       <Window.Content scrollable>
         {data.groups?.map((group, index) =>
           (!!(data.groups[index].crew.length > 0) && <GroupBlock key={index} group={group.group} crew={group.crew} />)

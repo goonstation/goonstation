@@ -19,6 +19,13 @@ var/global/crew_creds = null
 		ui.open()
 
 
+/datum/crewCredits/ui_data(mob/user)
+	. = ..()
+	if(winget(user.client, "menu.dark_mode", "is-checked") == "true")
+		.["darkMode"] = TRUE
+	else
+		.["darkMode"] = FALSE
+
 #ifdef CREDITS_DEBUGGING
 /// Debug proc to generate a fake crew member data bundle for TGUI
 /datum/crewCredits/proc/generate_fake_crew_member(var/real_name, var/role, var/dead, var/head)
