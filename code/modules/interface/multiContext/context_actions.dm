@@ -489,7 +489,7 @@
 					user.show_text("You flip [omni] to wrenching mode...", "blue")
 					sleep(OMNI_TOOL_WAIT_TIME)
 					user.show_text("...then wrench [target]'s bolts.", "blue")
-					playsound(target, 'sound/items/Crowbar.ogg', 50, 1)
+					playsound(target, 'sound/items/Ratchet.ogg', 50, 1)
 					return ..()
 
 	cut
@@ -511,7 +511,7 @@
 					user.show_text("You flip [omni] to cutting mode...", "blue")
 					sleep(OMNI_TOOL_WAIT_TIME)
 					user.show_text("...then cut some vestigial wires from [target].", "blue")
-					playsound(target, 'sound/items/Crowbar.ogg', 50, 1)
+					playsound(target, 'sound/items/Wirecutter.ogg', 50, 1)
 					return ..()
 	weld
 		name = "Weld"
