@@ -1,4 +1,7 @@
 
+(t)thu dec 08 22
+(u)tarmunora
+(+)emagged segways no longer inexplicably safer than normal ones.
 (t)wed dec 07 22
 (u)Sord
 (e)🗺💅|A-Mapping, C-QoL
@@ -50,7 +53,7 @@
 (t)fri dec 02 22
 (u)tarmunora
 (+)AI law captcha returns.
-(t)the dec 01 22
+(t)thu dec 01 22
 (u)tarmunora
 (+)The Chief Engineer's belt has been modernized to use the new energy shield mechanic.
 (u)pali
