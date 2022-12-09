@@ -13,6 +13,11 @@
 	var/shrunk = 0
 	var/list/cooldowns
 
+	/// The message displayed when the atom is alt+doubleclicked, should contain a description of the atom's functionality.
+	/// You can also override get_help_message() to return a message dynamically (based on atom state or the user etc.)
+	/// Try to highlight the tools used to do stuff with <b></b> tags.
+	var/help_message = null
+
 	/// Override for the texture size used by setTexture.
 	var/texture_size = 0
 
@@ -635,6 +640,10 @@
 		update_mdir_light_visibility(src.dir)
 
 /atom/proc/get_desc(dist, mob/user)
+
+/// Override this if you want the alt+doubleclick help message to be dynamic (for example based on the state of deconstruction)
+/atom/proc/get_help_message(dist, mob/user)
+	. = src.help_message
 
 /**
   * a proc to completely override the standard formatting for examine text

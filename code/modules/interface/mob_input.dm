@@ -106,6 +106,20 @@
 				else if (dir & WEST)
 					set_dir(WEST)
 
+/**
+ * This proc is called when a mob double clicks on something with the left mouse button.
+ * Return TRUE if the click was handled, FALSE otherwise. Handled doubleclicks will suppress the Click() call that follows.
+ * (Note that the Click() call for the *first* click always happens.)
+ */
+/mob/proc/double_click(atom/target, location, control, list/params)
+	if(src.client?.check_key(KEY_EXAMINE))
+		// TODO: Add help message signals so components can add their own help messages
+		// for example in the future ideally unscrewing / screwing / wrenching etc. would be handled like that
+		var/help_message = target.get_help_message(GET_DIST(src, target), src)
+		if (help_message)
+			boutput(src, "<span class='helpmsg'>[help_message]</span>")
+			return TRUE
+
 /mob/proc/hotkey(name) //if this gets laggy, look into adding a small spam cooldown like with resting / eating?
 	switch (name)
 		if ("look_n")

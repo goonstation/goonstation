@@ -5,6 +5,7 @@ var/list/dirty_keystates = list()
 	var/last_keys = 0
 	var/keys_dirty = 0
 	var/keys_modifier = 0
+	var/skip_next_left_click = FALSE
 
 	var/keys_remove_next_process = 0
 
@@ -147,10 +148,21 @@ var/list/dirty_keystates = list()
 
 		return
 
-	Click(atom/object, location, control, params)
-		object.RawClick(location, control, params) //Required since atom/Click is effectively broken for some reason, and sometimes you just need it. If you have a better idea let me know.
+	DblClick(atom/target, location, control, params)
+		var/list/paramslist = params2list(params)
+		if (paramslist["button"] == "left")
+			var/result = src.mob.double_click(target, location, control, paramslist)
+			if(result)
+				src.skip_next_left_click = TRUE
 
+	Click(atom/object, location, control, params)
 		var/list/parameters = params2list(params)
+
+		if(skip_next_left_click && parameters["button"] == "left")
+			skip_next_left_click = FALSE
+			return
+
+		object.RawClick(location, control, params) //Required since atom/Click is effectively broken for some reason, and sometimes you just need it. If you have a better idea let me know.
 
 		if (admin_intent)
 			src.mob.admin_interact(object,parameters)
