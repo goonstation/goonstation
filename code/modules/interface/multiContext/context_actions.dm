@@ -528,7 +528,7 @@
 		omni_mode = OMNI_MODE_WELDING
 		omni_path = /obj/item/weldingtool
 		success_text = "You weld %target% carefully."
-		success_sound = null
+		success_sound = null // sound handled in try_weld
 
 		execute(atom/target, mob/user)
 			for (var/obj/item/I in user.equipped_list())
