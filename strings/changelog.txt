@@ -1,4 +1,9 @@
 
+(t)fri dec 09 22
+(u)Munien
+(p)12311
+(e)🆕🎩|C-Feature, A-Clothing
+(+)Added a few extra items to hacked medical clothing vendors for other medical occupations.
 (t)thu dec 08 22
 (u)tarmunora
 (+)emagged segways no longer inexplicably safer than normal ones.

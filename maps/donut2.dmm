@@ -22533,9 +22533,8 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/disposal)
 "bBd" = (
-/obj/machinery/conveyor/NS{
-	id = "garbage";
-	move_lag = 15
+/obj/machinery/conveyor/WS{
+	id = "garbage"
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -28905,6 +28904,7 @@
 	dir = 8;
 	tag = "icon-xtra_bigstripe-edge (WEST)"
 	},
+/obj/item/clothing/suit/cardboard_box,
 /turf/simulated/floor/grime,
 /area/station/quartermaster/refinery)
 "eOn" = (
