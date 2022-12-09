@@ -1,7 +1,7 @@
 var/global/crew_creds = null
 
 /// Debug option for filling out the end-game crew credits roster with fake names
-#define CREDITS_DEBUGGING
+// #define CREDITS_DEBUGGING
 
 /datum/crewCredits
 
@@ -157,7 +157,7 @@ var/global/crew_creds = null
 		if (!has_head)
 			what_role = "Medical Director"
 		else
-			what_role = pick("Medical Doctor", "Medical Doctor", "Roboticist", "Geneticist") // weighted (for "realism")
+			what_role = pick(200; "Medical Doctor", "Roboticist", "Geneticist") // weighted (for "realism")
 
 		medical += src.generate_fake_crew_member(
 			real_name=src.fake_carbon_name(),
@@ -184,7 +184,7 @@ var/global/crew_creds = null
 		if (!has_head)
 			what_role = "Chief Engineer"
 		else
-			what_role = pick("Engineer", "Engineer", "Engineer", "Quartermaster", "Miner", "Miner") // weighted (for "realism")
+			what_role = pick(300; "Engineer", 200; "Miner", "Quartermaster") // weighted (for "realism")
 		engineering += src.generate_fake_crew_member(
 			real_name=src.fake_carbon_name(),
 			role=what_role,
@@ -225,7 +225,7 @@ var/global/crew_creds = null
 	while(length(other) < 8)
 		other += src.generate_fake_crew_member(
 			real_name = src.fake_carbon_name(),
-			role=pick("Senator", "President", "CEO", "Board Member", "Mayor", "Vice-President", "Governor", "Diplomat" )
+			role=pick("Tourist", "Musician", "Union Rep", "Board Member", "Regional Director", "Inspector", "Governor", "Diplomat" )
 		)
 
 	logTheThing(LOG_DEBUG, null, "Zamujasa/CREWCREDITS: [world.timeofday] done adding fake crew. info: A [length(antagonist)] C [length(captain)] S [length(security)] M [length(medical)] R [length(science)] E [length(engineering)] Cv [length(civilian)] Si [length(silicon)] X [length(other)]")
