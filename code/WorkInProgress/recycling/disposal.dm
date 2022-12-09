@@ -179,7 +179,7 @@
 	density = FALSE
 	pass_unstable = FALSE
 	text = ""
-	help_message = {"You can use a <b>welding tool</b> to detach the pipe to move it around."}
+	HELP_MESSAGE_OVERRIDE({"You can use a <b>welding tool</b> to detach the pipe to move it around."})
 
 	level = 1			//! underfloor only
 	var/dpdir = 0		//! bitmask of pipe directions
