@@ -442,7 +442,14 @@
 		else
 			. = ..()
 
-
+// bodge to support omnitools
+#define OMNI_MODE_PRYING 1
+#define OMNI_MODE_SNIPPING 2
+#define OMNI_MODE_WRENCHING 3
+#define OMNI_MODE_SCREWING 4
+#define OMNI_MODE_PULSING 5
+#define OMNI_MODE_CUTTING 6
+#define OMNI_MODE_WELDING 7
 /datum/contextAction/deconstruction
 	icon = 'icons/ui/context16x16.dmi'
 	name = "Deconstruct with Tool"
@@ -480,6 +487,14 @@
 					user.show_text("You wrench [target]'s bolts.", "blue")
 					playsound(target, 'sound/items/Ratchet.ogg', 50, 1)
 					return ..()
+				if(istype(I, /obj/item/tool/omnitool))
+					var/obj/item/tool/omnitool/omni = I
+					if (!(OMNI_MODE_WRENCHING in omni.modes))
+						return
+					omni.change_mode(OMNI_MODE_WRENCHING, user, /obj/item/wrench)
+					user.show_text("You flip the [omni] to wrenching mode, then wrench [target]'s bolts.", "blue")
+					playsound(target, 'sound/items/Crowbar.ogg', 50, 1)
+					return ..()
 
 	cut
 		name = "Cut"
@@ -492,6 +507,14 @@
 					user.show_text("You cut some vestigial wires from [target].", "blue")
 					playsound(target, 'sound/items/Wirecutter.ogg', 50, 1)
 					return ..()
+				if(istype(I, /obj/item/tool/omnitool))
+					var/obj/item/tool/omnitool/omni = I
+					if (!(OMNI_MODE_SNIPPING in omni.modes))
+						return
+					omni.change_mode(OMNI_MODE_SNIPPING, user, /obj/item/wirecutters)
+					user.show_text("You flip [omni] to cutting mode, then cut some vestigial wires from [target].", "blue")
+					playsound(target, 'sound/items/Crowbar.ogg', 50, 1)
+					return ..()
 	weld
 		name = "Weld"
 		desc = "Welding required to deconstruct."
@@ -503,6 +526,17 @@
 					if (I:try_weld(user, 2))
 						user.show_text("You weld [target] carefully.", "blue")
 						return ..()
+				if(istype(I, /obj/item/tool/omnitool))
+					var/obj/item/tool/omnitool/omni = I
+					if (!(OMNI_MODE_WELDING in omni.modes))
+						continue
+					omni.change_mode(OMNI_MODE_WELDING, user, /obj/item/weldingtool)
+					user.show_text("You flip [omni] to welding mode...", "blue")
+					if (omni:try_weld(user, 2))
+						user.show_text("...then weld [target] carefully.", "blue")
+						return ..()
+					else
+						user.show_text("...but it failed!.", "red")
 
 	pry
 		name = "Pry"
@@ -513,6 +547,14 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (ispryingtool(I))
 					user.show_text("You pry on [target] without remorse.", "blue")
+					playsound(target, 'sound/items/Crowbar.ogg', 50, 1)
+					return ..()
+				if(istype(I, /obj/item/tool/omnitool))
+					var/obj/item/tool/omnitool/omni = I
+					if (!(OMNI_MODE_PRYING in omni.modes))
+						return
+					omni.change_mode(OMNI_MODE_PRYING, user, /obj/item/crowbar)
+					user.show_text("You flip [omni] to prying mode, then pry on [target] without remorse.", "blue")
 					playsound(target, 'sound/items/Crowbar.ogg', 50, 1)
 					return ..()
 
@@ -527,6 +569,14 @@
 					user.show_text("You unscrew some of the screws on [target].", "blue")
 					playsound(target, 'sound/items/Screwdriver.ogg', 50, 1)
 					return ..()
+				if(istype(I, /obj/item/tool/omnitool))
+					var/obj/item/tool/omnitool/omni = I
+					if (!(OMNI_MODE_SCREWING in omni.modes))
+						return
+					omni.change_mode(OMNI_MODE_SCREWING, user, /obj/item/screwdriver)
+					user.show_text("You flip [omni] to screwdriving mode, then unscrew some of the screws on [target].", "blue")
+					playsound(target, 'sound/items/Screwdriver.ogg', 50, 1)
+					return ..()
 
 	pulse
 		name = "Pulse"
@@ -539,6 +589,22 @@
 					user.show_text("You pulse [target]. In a general sense.", "blue")
 					playsound(target, 'sound/items/penclick.ogg', 50, 1)
 					return ..()
+				if(istype(I, /obj/item/tool/omnitool))
+					var/obj/item/tool/omnitool/omni = I
+					if (!(OMNI_MODE_PULSING in omni.modes))
+						return
+					omni.change_mode(OMNI_MODE_PULSING, user, /obj/item/device/multitool)
+					user.show_text("You flip [omni] to pulsing mode, then pulse [target]. In a general sense.", "blue")
+					playsound(target, 'sound/items/penclick.ogg', 50, 1)
+					return ..()
+
+#undef OMNI_MODE_PRYING
+#undef OMNI_MODE_SNIPPING
+#undef OMNI_MODE_WRENCHING
+#undef OMNI_MODE_SCREWING
+#undef OMNI_MODE_PULSING
+#undef OMNI_MODE_CUTTING
+#undef OMNI_MODE_WELDING
 
 /datum/contextAction/vehicle
 	icon = 'icons/ui/context16x16.dmi'
