@@ -3138,6 +3138,40 @@
 	SEND_SIGNAL(A, COMSIG_ATOM_EXAMINE, src, result)
 	boutput(src, result.Join("\n"))
 
+/mob/verb/global_help_verb() // (atom/A = null as null|mob|obj|turf in view(,usr))
+	set name = "Help"
+	set category = "Commands"
+	set popup_menu = FALSE
+
+	// This has no arguments because I want it to be clickable directly from the Commands tab (to show the general help message) and when typed into
+	// the command bar. If we gave this an argument it would always give you an ugly list of things you can see.
+	// But we still do want arguments so we can use it from the right click menu etc.
+	// It's sort of a mess, but it works. Trust me.
+	var/atom/target = length(args) >= 1 ? args[1] : null
+
+	if(target)
+		var/success = src.help_examine(target)
+		if(!success)
+			boutput(src, "Sadly \the [target] has no help message attached.")
+	else
+		boutput(src, {"<span class='helpmsg'>
+			You can use this command by right clicking an object and selecting Help (not all objects support this).<br>
+			You can also do that by alt+doubleclicking on that object.<br>
+			If you are new here consider looking at the <a target='_blank' href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for help.<br>
+			You can also press <b>F3</b> to ask the mentors for help.<br>
+			For reporting rulebreaking or rules questions press <b>F1</b>.<br>
+		</span>"})
+
+/atom/verb/help_verb()
+	set name = "Help"
+	set category = "Local"
+	set popup_menu = FALSE // overriden to TRUE on things which have a help message
+	set hidden = TRUE // ditto
+	set src in view()
+
+	var/success = usr.help_examine(src)
+	if(!success)
+		boutput(usr, "Sadly \the [src] has no help message attached.")
 
 /mob/living/verb/interact_verb(atom/A as mob|obj|turf in oview(1, usr))
 	set name = "Pick Up / Left Click"

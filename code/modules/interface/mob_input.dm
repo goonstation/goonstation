@@ -113,12 +113,16 @@
  */
 /mob/proc/double_click(atom/target, location, control, list/params)
 	if(src.client?.check_key(KEY_EXAMINE))
-		// TODO: Add help message signals so components can add their own help messages
-		// for example in the future ideally unscrewing / screwing / wrenching etc. would be handled like that
-		var/help_message = target.get_help_message(GET_DIST(src, target), src)
-		if (help_message)
-			boutput(src, "<span class='helpmsg'>[help_message]</span>")
+		if(src.help_examine(target))
 			return TRUE
+
+/mob/proc/help_examine(atom/target)
+	// TODO: Add help message signals so components can add their own help messages
+	// for example in the future ideally unscrewing / screwing / wrenching etc. would be handled like that
+	var/help_message = target.get_help_message(GET_DIST(src, target), src)
+	if (help_message)
+		boutput(src, "<span class='helpmsg'>[help_message]</span>")
+		return TRUE
 
 /mob/proc/hotkey(name) //if this gets laggy, look into adding a small spam cooldown like with resting / eating?
 	switch (name)

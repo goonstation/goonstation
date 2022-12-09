@@ -67,3 +67,12 @@
 
 /// Uncross should call this after setting `.` to make sure Bump gets called if needed
 #define UNCROSS_BUMP_CHECK(AM) if(!. && do_bump) AM.Bump(src)
+
+/// Use this to override the help message instead of doing it directly
+#define HELP_MESSAGE_OVERRIDE(HM) \
+	help_message = HM; \
+	help_verb() { \
+		set popup_menu = TRUE; \
+		set hidden = FALSE; \
+		..(); \
+	}
