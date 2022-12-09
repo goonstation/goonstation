@@ -168,7 +168,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	name = "DANGER"
 	desc = "This navigational marker indicates a hazardous zone of space."
 	icon = 'icons/obj/decals/misc.dmi'
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 
 obj/decal/fakeobjects
 	layer = OBJ_LAYER
@@ -640,7 +640,7 @@ obj/decal/fakeobjects/teleport_pad
 
 	dropoff
 		name = "MULE cargo dropoff point"
-		icon_state = "hazard_dropoff"
+		icon_state = "hazard_delivery"
 
 /obj/decal/ballpit
 	icon = 'icons/obj/stationobjs.dmi'

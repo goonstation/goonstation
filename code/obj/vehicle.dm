@@ -354,7 +354,7 @@ TYPEINFO(/obj/vehicle/segway)
 	update()
 	..()
 	in_bump = 1
-	if(isturf(AM) && (rider.bioHolder.HasEffect("clumsy") || (rider.reagents && rider.reagents.has_reagent("ethanol"))))
+	if(isturf(AM) && (src.emagged || rider.bioHolder.HasEffect("clumsy") || (rider.reagents && rider.reagents.has_reagent("ethanol"))))
 		boutput(rider, "<span class='alert'><B>You crash into the wall!</B></span>")
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
@@ -394,11 +394,7 @@ TYPEINFO(/obj/vehicle/segway)
 		if(prob(10))
 			M.visible_message("<span class='alert'><b>[src]</b> beeps out an automated injury report of [M]'s vitals.</span>")
 			M.visible_message(scan_health(M, visible = 1))
-		if (!emagged)
-			eject_rider(2)
-		else
-			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-			src.weeoo()
+		eject_rider(2)
 		in_bump = 0
 
 	if(isitem(AM))
@@ -506,7 +502,7 @@ TYPEINFO(/obj/vehicle/segway)
 			var/datum/attackResults/msgs = new(R)
 			msgs.clear(T)
 			msgs.played_sound = joustingTool.hitsound
-			msgs.affecting = pick("chest", "head")
+			msgs.def_zone = pick("chest", "head")
 			msgs.logs = list()
 			msgs.logc("jousts [constructTarget(T,"combat")] with a [joustingTool]")
 			msgs.damage_type = DAMAGE_BLUNT
