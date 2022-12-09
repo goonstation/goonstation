@@ -395,9 +395,6 @@ TYPEINFO(/obj/vehicle/segway)
 			M.visible_message("<span class='alert'><b>[src]</b> beeps out an automated injury report of [M]'s vitals.</span>")
 			M.visible_message(scan_health(M, visible = 1))
 		eject_rider(2)
-		else
-			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-			src.weeoo()
 		in_bump = 0
 
 	if(isitem(AM))
