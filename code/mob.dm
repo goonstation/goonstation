@@ -3141,6 +3141,7 @@
 /mob/verb/global_help_verb() // (atom/A = null as null|mob|obj|turf in view(,usr))
 	set name = "Help"
 	set category = "Commands"
+	set desc = "Shows you a help message on how to use an object."
 	set popup_menu = FALSE
 
 	// This has no arguments because I want it to be clickable directly from the Commands tab (to show the general help message) and when typed into
@@ -3165,6 +3166,7 @@
 /atom/verb/help_verb()
 	set name = "Help"
 	set category = "Local"
+	set desc = "Shows you a help message on how to use an object."
 	set popup_menu = FALSE // overriden to TRUE on things which have a help message
 	set hidden = TRUE // ditto
 	set src in view()
