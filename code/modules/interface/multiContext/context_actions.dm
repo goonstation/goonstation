@@ -442,14 +442,6 @@
 		else
 			. = ..()
 
-// bodge to support omnitools
-#define OMNI_MODE_PRYING 1
-#define OMNI_MODE_SNIPPING 2
-#define OMNI_MODE_WRENCHING 3
-#define OMNI_MODE_SCREWING 4
-#define OMNI_MODE_PULSING 5
-#define OMNI_MODE_CUTTING 6
-#define OMNI_MODE_WELDING 7
 #define OMNI_TOOL_WAIT_TIME 0.5 SECONDS
 
 /datum/contextAction/deconstruction
@@ -610,15 +602,6 @@
 					user.show_text("...then pulse [target]. In a general sense.", "blue")
 					playsound(target, 'sound/items/penclick.ogg', 50, 1)
 					return ..()
-
-#undef OMNI_MODE_PRYING
-#undef OMNI_MODE_SNIPPING
-#undef OMNI_MODE_WRENCHING
-#undef OMNI_MODE_SCREWING
-#undef OMNI_MODE_PULSING
-#undef OMNI_MODE_CUTTING
-#undef OMNI_MODE_WELDING
-#undef OMNI_TOOL_WAIT_TIME
 
 /datum/contextAction/vehicle
 	icon = 'icons/ui/context16x16.dmi'
