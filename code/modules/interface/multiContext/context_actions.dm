@@ -450,6 +450,8 @@
 #define OMNI_MODE_PULSING 5
 #define OMNI_MODE_CUTTING 6
 #define OMNI_MODE_WELDING 7
+#define OMNI_TOOL_WAIT_TIME 0.5 SECONDS
+
 /datum/contextAction/deconstruction
 	icon = 'icons/ui/context16x16.dmi'
 	name = "Deconstruct with Tool"
@@ -490,9 +492,11 @@
 				if(istype(I, /obj/item/tool/omnitool))
 					var/obj/item/tool/omnitool/omni = I
 					if (!(OMNI_MODE_WRENCHING in omni.modes))
-						return
+						continue
 					omni.change_mode(OMNI_MODE_WRENCHING, user, /obj/item/wrench)
-					user.show_text("You flip the [omni] to wrenching mode, then wrench [target]'s bolts.", "blue")
+					user.show_text("You flip [omni] to wrenching mode...")
+					sleep(OMNI_TOOL_WAIT_TIME)
+					user.show_text("...then wrench [target]'s bolts.", "blue")
 					playsound(target, 'sound/items/Crowbar.ogg', 50, 1)
 					return ..()
 
@@ -510,9 +514,11 @@
 				if(istype(I, /obj/item/tool/omnitool))
 					var/obj/item/tool/omnitool/omni = I
 					if (!(OMNI_MODE_SNIPPING in omni.modes))
-						return
+						continue
 					omni.change_mode(OMNI_MODE_SNIPPING, user, /obj/item/wirecutters)
-					user.show_text("You flip [omni] to cutting mode, then cut some vestigial wires from [target].", "blue")
+					user.show_text("You flip [omni] to cutting mode...")
+					sleep(OMNI_TOOL_WAIT_TIME)
+					user.show_text("...then cut some vestigial wires from [target].", "blue")
 					playsound(target, 'sound/items/Crowbar.ogg', 50, 1)
 					return ..()
 	weld
@@ -532,6 +538,7 @@
 						continue
 					omni.change_mode(OMNI_MODE_WELDING, user, /obj/item/weldingtool)
 					user.show_text("You flip [omni] to welding mode...", "blue")
+					sleep(OMNI_TOOL_WAIT_TIME)
 					if (omni:try_weld(user, 2))
 						user.show_text("...then weld [target] carefully.", "blue")
 						return ..()
@@ -552,9 +559,11 @@
 				if(istype(I, /obj/item/tool/omnitool))
 					var/obj/item/tool/omnitool/omni = I
 					if (!(OMNI_MODE_PRYING in omni.modes))
-						return
+						continue
 					omni.change_mode(OMNI_MODE_PRYING, user, /obj/item/crowbar)
-					user.show_text("You flip [omni] to prying mode, then pry on [target] without remorse.", "blue")
+					user.show_text("You flip [omni] to prying mode...")
+					sleep(OMNI_TOOL_WAIT_TIME)
+					user.show_text("...then pry on [target] without remorse.", "blue")
 					playsound(target, 'sound/items/Crowbar.ogg', 50, 1)
 					return ..()
 
@@ -572,9 +581,11 @@
 				if(istype(I, /obj/item/tool/omnitool))
 					var/obj/item/tool/omnitool/omni = I
 					if (!(OMNI_MODE_SCREWING in omni.modes))
-						return
+						continue
 					omni.change_mode(OMNI_MODE_SCREWING, user, /obj/item/screwdriver)
-					user.show_text("You flip [omni] to screwdriving mode, then unscrew some of the screws on [target].", "blue")
+					user.show_text("You flip [omni] to screwdriving mode...")
+					sleep(OMNI_TOOL_WAIT_TIME)
+					user.show_text("...then unscrew some of the screws on [target].", "blue")
 					playsound(target, 'sound/items/Screwdriver.ogg', 50, 1)
 					return ..()
 
@@ -592,9 +603,11 @@
 				if(istype(I, /obj/item/tool/omnitool))
 					var/obj/item/tool/omnitool/omni = I
 					if (!(OMNI_MODE_PULSING in omni.modes))
-						return
+						continue
 					omni.change_mode(OMNI_MODE_PULSING, user, /obj/item/device/multitool)
-					user.show_text("You flip [omni] to pulsing mode, then pulse [target]. In a general sense.", "blue")
+					user.show_text("You flip [omni] to pulsing mode...", "blue")
+					sleep(OMNI_TOOL_WAIT_TIME)
+					user.show_text("...then pulse [target]. In a general sense.", "blue")
 					playsound(target, 'sound/items/penclick.ogg', 50, 1)
 					return ..()
 
@@ -605,6 +618,7 @@
 #undef OMNI_MODE_PULSING
 #undef OMNI_MODE_CUTTING
 #undef OMNI_MODE_WELDING
+#undef OMNI_TOOL_WAIT_TIME
 
 /datum/contextAction/vehicle
 	icon = 'icons/ui/context16x16.dmi'
