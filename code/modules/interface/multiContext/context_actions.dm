@@ -590,6 +590,9 @@
 						return ..()
 				if (ispulsingtool(I))
 					return ..()
+
+#undef OMNI_TOOL_WAIT_TIME
+
 /datum/contextAction/vehicle
 	icon = 'icons/ui/context16x16.dmi'
 	name = "Vehicle action"
