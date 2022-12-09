@@ -494,7 +494,7 @@
 					if (!(OMNI_MODE_WRENCHING in omni.modes))
 						continue
 					omni.change_mode(OMNI_MODE_WRENCHING, user, /obj/item/wrench)
-					user.show_text("You flip [omni] to wrenching mode...")
+					user.show_text("You flip [omni] to wrenching mode...", "blue")
 					sleep(OMNI_TOOL_WAIT_TIME)
 					user.show_text("...then wrench [target]'s bolts.", "blue")
 					playsound(target, 'sound/items/Crowbar.ogg', 50, 1)
@@ -516,7 +516,7 @@
 					if (!(OMNI_MODE_SNIPPING in omni.modes))
 						continue
 					omni.change_mode(OMNI_MODE_SNIPPING, user, /obj/item/wirecutters)
-					user.show_text("You flip [omni] to cutting mode...")
+					user.show_text("You flip [omni] to cutting mode...", "blue")
 					sleep(OMNI_TOOL_WAIT_TIME)
 					user.show_text("...then cut some vestigial wires from [target].", "blue")
 					playsound(target, 'sound/items/Crowbar.ogg', 50, 1)
@@ -561,7 +561,7 @@
 					if (!(OMNI_MODE_PRYING in omni.modes))
 						continue
 					omni.change_mode(OMNI_MODE_PRYING, user, /obj/item/crowbar)
-					user.show_text("You flip [omni] to prying mode...")
+					user.show_text("You flip [omni] to prying mode...", "blue")
 					sleep(OMNI_TOOL_WAIT_TIME)
 					user.show_text("...then pry on [target] without remorse.", "blue")
 					playsound(target, 'sound/items/Crowbar.ogg', 50, 1)
@@ -583,7 +583,7 @@
 					if (!(OMNI_MODE_SCREWING in omni.modes))
 						continue
 					omni.change_mode(OMNI_MODE_SCREWING, user, /obj/item/screwdriver)
-					user.show_text("You flip [omni] to screwdriving mode...")
+					user.show_text("You flip [omni] to screwdriving mode...", "blue")
 					sleep(OMNI_TOOL_WAIT_TIME)
 					user.show_text("...then unscrew some of the screws on [target].", "blue")
 					playsound(target, 'sound/items/Screwdriver.ogg', 50, 1)
