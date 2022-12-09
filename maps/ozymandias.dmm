@@ -4537,7 +4537,8 @@
 "bnI" = (
 /obj/disposalpipe/segment/transport,
 /obj/landmark/gps_waypoint,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/crew_quarters/catering)
 "bnM" = (
 /obj/machinery/camera{
@@ -7486,7 +7487,8 @@
 "cew" = (
 /obj/machinery/light,
 /obj/machinery/navbeacon/mule/chapel_north/west,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/chapel/sanctuary)
 "ceD" = (
 /obj/cable{
@@ -11026,7 +11028,8 @@
 /area/station/crewquarters/garbagegarbs)
 "cYB" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
-/turf/simulated/floor/bot/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/station/maintenance/solar/west)
 "cYC" = (
 /obj/decal/tile_edge/line/black{
@@ -12529,7 +12532,8 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/simulated/floor/airless/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/airless,
 /area/space)
 "dsy" = (
 /obj/stool/chair/office{
@@ -13105,7 +13109,8 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "dAW" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/routing/medsci{
 	name = "Research Router"
 	})
@@ -13989,7 +13994,8 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "dMq" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hallway/primary/west)
 "dMu" = (
 /obj/machinery/light{
@@ -14643,7 +14649,8 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/security/processing)
 "dUF" = (
 /turf/simulated/floor/sanitary,
@@ -18024,7 +18031,8 @@
 /obj/item/device/radio/intercom/cargo{
 	dir = 8
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/routing{
 	name = "Medical Router"
 	})
@@ -20082,7 +20090,8 @@
 	pixel_y = 21
 	},
 /obj/machinery/navbeacon/mule/crewA_north/east,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/hallway/primary/west)
 "fpD" = (
 /obj/machinery/launcher_loader/east,
@@ -21080,7 +21089,8 @@
 /area/station/turret_protected/ai)
 "fCO" = (
 /obj/machinery/navbeacon/mule/cafeteria_north/west,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/hallway/primary/west)
 "fCP" = (
 /obj/shrub{
@@ -24509,7 +24519,8 @@
 	},
 /obj/rack,
 /obj/item/clothing/head/emerg,
-/turf/simulated/floor/airless/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/airless,
 /area/space)
 "gvp" = (
 /obj/machinery/light{
@@ -32003,7 +32014,8 @@
 	},
 /obj/machinery/navbeacon/mule/QM1_north/west,
 /obj/machinery/bot/mulebot/QM1,
-/turf/simulated/floor/bot/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "isv" = (
 /obj/machinery/atmospherics/valve{
@@ -33381,7 +33393,8 @@
 /area/station/crew_quarters/market)
 "iJJ" = (
 /obj/machinery/navbeacon/mule/hallway_escape_north/south,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "iKe" = (
 /obj/storage/closet/welding_supply,
@@ -33774,7 +33787,8 @@
 /area/station/medical/medbay/treatment2)
 "iOz" = (
 /obj/machinery/navbeacon/mule/QM2_north/south,
-/turf/simulated/floor/bot/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/station/quartermaster/cargobay)
 "iOC" = (
 /obj/cable{
@@ -36739,7 +36753,8 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "jDq" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/chapel/sanctuary)
 "jDr" = (
 /obj/cable{
@@ -39851,7 +39866,8 @@
 "krs" = (
 /obj/decal/fakeobjects/cargopad,
 /obj/item/a_gift,
-/turf/simulated/floor/airless/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/airless,
 /area/space)
 "kry" = (
 /obj/storage/crate{
@@ -48132,7 +48148,8 @@
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
 /obj/machinery/light/small,
-/turf/simulated/floor/bot/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/station/maintenance/solar/west)
 "mtn" = (
 /obj/disposalpipe/segment/horizontal,
@@ -50687,7 +50704,8 @@
 	dir = 4;
 	pixel_x = -8
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/science/lobby)
 "ncg" = (
 /obj/machinery/door/airlock/pyro{
@@ -52925,7 +52943,8 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/turf/simulated/floor/airless/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/airless,
 /area/space)
 "nIO" = (
 /obj/table/auto,
@@ -53237,7 +53256,8 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/east)
 "nNX" = (
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/hangar/qm)
 "nOb" = (
 /obj/machinery/dispenser,
@@ -53362,7 +53382,8 @@
 	dir = 1;
 	pixel_y = 16
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hallway/primary/west)
 "nOZ" = (
 /obj/wingrille_spawn/auto/reinforced,
@@ -56528,7 +56549,8 @@
 /obj/machinery/navbeacon/mule/catering_north,
 /obj/disposalpipe/segment/horizontal,
 /obj/disposalpipe/segment/transport,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/catering)
 "oDj" = (
 /obj/machinery/disposal/mail/autoname/checkpoint/customs{
@@ -58048,7 +58070,8 @@
 /area/station/engine/elect)
 "oYn" = (
 /obj/machinery/light/small,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/routing/catering{
 	name = "Catering Router"
 	})
@@ -60866,7 +60889,8 @@
 	pixel_x = -24;
 	pixel_y = -11
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/routing/engine)
 "pIs" = (
 /obj/machinery/light{
@@ -61914,7 +61938,8 @@
 "pVO" = (
 /obj/machinery/light/small/floor,
 /obj/disposalpipe/segment/morgue,
-/turf/simulated/floor/delivery/white,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "pVS" = (
 /obj/cable{
@@ -66235,7 +66260,8 @@
 /obj/machinery/conveyor/SN{
 	id = "qmswapabout"
 	},
-/turf/simulated/floor/delivery/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "rag" = (
 /obj/machinery/door/airlock/pyro/glass/engineering,
@@ -67289,7 +67315,8 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail/vertical,
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "rqb" = (
 /turf/simulated/floor/redwhite{
@@ -69242,7 +69269,8 @@
 /area/station/atmos/hookups/west)
 "rOX" = (
 /obj/machinery/light,
-/turf/simulated/floor/delivery/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/station/quartermaster/cargobay)
 "rPc" = (
 /obj/shrub{
@@ -71867,7 +71895,8 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hydroponics/lobby{
 	name = "Hydroponics Staff Section"
 	})
@@ -74600,7 +74629,8 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/jazz)
 "tae" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
@@ -75100,7 +75130,8 @@
 /area/station/hallway/primary/north)
 "tgk" = (
 /obj/machinery/navbeacon/mule/toolstorage_north/east,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/storage/tools)
 "tgo" = (
 /obj/stool/chair/office/blue{
@@ -75142,7 +75173,8 @@
 	},
 /area/station/security/brig/genpop)
 "tgL" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/storage/tools)
 "tgQ" = (
 /obj/submachine/seed_manipulator,
@@ -76207,7 +76239,8 @@
 	dir = 1;
 	name = "autoname - SS13"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "tua" = (
 /obj/machinery/atmospherics/valve{
@@ -77579,7 +77612,8 @@
 /area/station/crew_quarters/catering)
 "tMq" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
-/turf/simulated/floor/bot/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/station/maintenance/solar/south)
 "tMz" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -83279,7 +83313,8 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/turf/simulated/floor/bot/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/station/maintenance/solar/south)
 "vds" = (
 /obj/cable{
@@ -86102,7 +86137,8 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hydroponics/bay)
 "vKa" = (
 /obj/machinery/light/emergency{
@@ -86316,7 +86352,8 @@
 /area/station/crew_quarters/lounge/research)
 "vNv" = (
 /obj/machinery/navbeacon/mule/research_north/west,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/lobby)
 "vND" = (
 /obj/machinery/conveyor/EW{
@@ -89432,7 +89469,8 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/mining/refinery)
 "wyF" = (
 /obj/storage/crate,
@@ -93448,7 +93486,8 @@
 	})
 "xuC" = (
 /obj/machinery/navbeacon/mule/engineering_north/east,
-/turf/simulated/floor/bot/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/station/engine/monitoring{
 	name = "Engineering Status Room"
 	})
@@ -93470,7 +93509,8 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment)
 "xuP" = (
-/turf/simulated/floor/delivery/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/station/engine/monitoring{
 	name = "Engineering Status Room"
 	})
@@ -94151,7 +94191,8 @@
 /area/station/storage/eva)
 "xDg" = (
 /obj/machinery/navbeacon/mule/hydroponics_north/east,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/hydroponics/lobby{
 	name = "Hydroponics Staff Section"
 	})
@@ -95574,7 +95615,8 @@
 	})
 "xTN" = (
 /obj/machinery/navbeacon/mule/security_north/south,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/security/processing)
 "xUb" = (
 /obj/wingrille_spawn/auto,

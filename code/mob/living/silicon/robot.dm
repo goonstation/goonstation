@@ -224,7 +224,7 @@
 				B.icon_state = "borg_brain"
 				if (!B.owner) //Oh no, they have no mind!
 					logTheThing(LOG_DEBUG, null, "<b>Mind</b> Cyborg spawn forced to create new mind for key \[[src.key ? src.key : "INVALID KEY"]]")
-					stack_trace("Cyborg [src] (\ref[src]) was created without a mind, somehow. Mind force-created for key \[[src.key ? src.key : "INVALID KEY"]]. That's bad.")
+					stack_trace("[identify_object(src)] was created without a mind, somehow. Mind force-created for key \[[src.key ? src.key : "INVALID KEY"]]. That's bad.")
 					var/datum/mind/newmind = new
 					newmind.ckey = ckey
 					newmind.key = src.key
@@ -236,7 +236,7 @@
 					src.part_head.brain = B
 				else
 					// how the hell would this happen. oh well
-					stack_trace("Cyborg [src] (\ref[src]) was created without a head, somehow. That's bad.")
+					stack_trace("[identify_object(src)] was created without a head, somehow. That's bad.")
 					var/obj/item/parts/robot_parts/head/standard/H = new /obj/item/parts/robot_parts/head/standard(src)
 					src.part_head = H
 					B.set_loc(H)
@@ -2277,37 +2277,50 @@
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Brobocop module. It comes with a free Security HUD Upgrade.</span>")
 				src.set_module(new /obj/item/robot_module/brobocop(src))
-				src.upgrades += new /obj/item/roboupgrade/sechudgoggles(src)
+				if(length(src.upgrades) < src.max_upgrades)
+					src.upgrades += new /obj/item/roboupgrade/sechudgoggles(src)
 			if("Chemistry")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Chemistry module. It comes with a free Spectroscopic Scanner Upgrade.</span>")
 				src.set_module(new /obj/item/robot_module/chemistry(src))
-				src.upgrades += new /obj/item/roboupgrade/spectro(src)
+				if(length(src.upgrades) < src.max_upgrades)
+					src.upgrades += new /obj/item/roboupgrade/spectro(src)
 			if("Civilian")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Civilian module. It comes with a free Efficiency Upgrade.</span>")
 				src.set_module(new /obj/item/robot_module/civilian(src))
-				src.upgrades += new /obj/item/roboupgrade/efficiency(src)
+				if(length(src.upgrades) < src.max_upgrades)
+					src.upgrades += new /obj/item/roboupgrade/efficiency(src)
 			if("Engineering")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Engineering module. It comes with a free Meson Vision Upgrade.</span>")
 				src.set_module(new /obj/item/robot_module/engineering(src))
-				src.upgrades += new /obj/item/roboupgrade/opticmeson(src)
+				if(length(src.upgrades) < src.max_upgrades)
+					src.upgrades += new /obj/item/roboupgrade/opticmeson(src)
 			if("Medical")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Medical module. It comes with a free ProDoc Healthgoggles Upgrade.</span>")
 				src.set_module(new /obj/item/robot_module/medical(src))
-				src.upgrades += new /obj/item/roboupgrade/healthgoggles(src)
+				if(length(src.upgrades) < src.max_upgrades)
+					src.upgrades += new /obj/item/roboupgrade/healthgoggles(src)
 			if("Mining")
 				src.freemodule = 0
-				boutput(src, "<span class='notice'>You chose the Mining module. It comes with a free Propulsion Upgrade.</span>")
 				src.set_module(new /obj/item/robot_module/mining(src))
-				src.upgrades += new /obj/item/roboupgrade/jetpack(src)
+			#ifdef UNDERWATER_MAP
+				boutput(src, "<span class='notice'>You chose the Mining module. It comes with a free Meson Vision Upgrade.</span>")
+				if(length(src.upgrades) < src.max_upgrades)
+					src.upgrades += new /obj/item/roboupgrade/opticmeson(src)
+			#else
+				boutput(src, "<span class='notice'>You chose the Mining module. It comes with a free Propulsion Upgrade.</span>")
+				if(length(src.upgrades) < src.max_upgrades)
+					src.upgrades += new /obj/item/roboupgrade/jetpack(src)
+			#endif
 			if ("Construction Worker")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Construction Worker module. It comes with a free Construction Visualizer Upgrade.</span>")
 				src.set_module(new /obj/item/robot_module/construction_worker(src))
-				src.upgrades += new /obj/item/roboupgrade/visualizer(src)
+				if(length(src.upgrades) < src.max_upgrades)
+					src.upgrades += new /obj/item/roboupgrade/visualizer(src)
 
 		var/datum/robot_cosmetic/C = null
 		var/datum/robot_cosmetic/M = null

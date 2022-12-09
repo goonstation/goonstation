@@ -5711,6 +5711,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
+"cLM" = (
+/obj/xmastree/ephemeral,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 1
+	},
+/area/station/chapel/sanctuary)
 "cLQ" = (
 /obj/grille/catwalk{
 	dir = 10
@@ -18124,10 +18130,6 @@
 /area/station/maintenance/outer/se{
 	name = "Southeast Breach Hull"
 	})
-"isJ" = (
-/obj/item/device/radio/beacon,
-/turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/sanctuary)
 "isK" = (
 /obj/item/storage/wall/fire{
 	dir = 4;
@@ -25446,6 +25448,12 @@
 	},
 /turf/simulated/floor/engine/glow/blue,
 /area/station/communications/centre)
+"lHW" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
 "lIi" = (
 /obj/submachine/laundry_machine,
 /obj/cable{
@@ -48709,7 +48717,8 @@
 "wWN" = (
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/engine/elect)
 "wWP" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
@@ -103893,7 +103902,7 @@ ctc
 ryi
 cOB
 nAw
-cOB
+lHW
 tcn
 rcw
 fRP
@@ -105101,7 +105110,7 @@ cOB
 cSy
 leK
 uen
-leK
+cLM
 iTg
 ahw
 iBC
@@ -105403,7 +105412,7 @@ lYP
 cVV
 cSg
 leK
-isJ
+uen
 adB
 mAa
 adB

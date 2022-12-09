@@ -1,13 +1,15 @@
 //WIP tugs
 
-/obj/tug_cart/
+TYPEINFO(/obj/tug_cart)
+	mats = 10
+
+/obj/tug_cart
 	name = "cargo cart"
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "flatbed"
 	var/atom/movable/load = null
 	var/obj/tug_cart/next_cart = null
 	layer = MOB_LAYER + 1
-	mats = 10
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
 		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
@@ -146,14 +148,18 @@
 		next_cart = null
 		..()
 
+
+TYPEINFO(/obj/vehicle/tug)
+	mats = 10
+
 /obj/vehicle/tug
 	name = "cargo tug"
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "tractor"
-//	rider_visible = 1
+	//	rider_visible = 1
 	layer = MOB_LAYER + 1
-//	sealed_cabin = 0
-	mats = 10
+
+	//	sealed_cabin = 0
 	health = 80
 	health_max = 80
 	var/obj/tug_cart/cart = null

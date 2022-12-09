@@ -116,7 +116,8 @@
 	})
 "dC" = (
 /obj/machinery/light/small/floor/netural,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/shuttle/sea_elevator)
 "dU" = (
 /turf/unsimulated/wall/setpieces/leadwall{
@@ -186,7 +187,8 @@
 /obj/landmark{
 	name = "seafall"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/shuttle/sea_elevator)
 "fy" = (
 /turf/simulated/floor/stairs/wide{

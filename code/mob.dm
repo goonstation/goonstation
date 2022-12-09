@@ -40,8 +40,6 @@
 	var/atom/movable/name_tag/name_tag
 	var/atom/atom_hovered_over = null
 
-	var/obj/item/device/energy_shield/energy_shield = null
-
 	var/custom_gib_handler = null
 	var/obj/decal/cleanable/custom_vomit_type = /obj/decal/cleanable/vomit
 
@@ -128,7 +126,6 @@
 
 	var/obj/hud/hud_used = null
 
-	var/list/organs = null
 	var/list/obj/item/grab/grabbed_by = null
 
 	var/datum/traitHolder/traitHolder = null
@@ -243,7 +240,6 @@
 	src.AH_we_spawned_with = AH_passthru
 	src.loc = loc
 	hallucinations = new
-	organs = new
 	grabbed_by = new
 	resistances = new
 	ailments = new
@@ -416,7 +412,6 @@
 	ckey = null
 	client = null
 	internals = null
-	energy_shield = null
 	hallucinations = null
 	buckled = null
 	handcuffs = null
@@ -427,7 +422,6 @@
 	s_active = null
 	wear_mask = null
 	ears = null
-	organs = null
 	grabbed_by = null
 	oldmob = null
 	oldmind = null

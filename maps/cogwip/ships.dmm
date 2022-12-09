@@ -2646,7 +2646,8 @@
 /turf/space/no_replace,
 /area/space)
 "ho" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/space)
 "hp" = (
 /obj/table/auto,
@@ -2831,11 +2832,13 @@
 /obj/machinery/light_switch/north{
 	pixel_y = 30
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/space)
 "hR" = (
 /obj/machinery/vending/cigarette,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/space)
 "hS" = (
 /turf/simulated/floor/blue/side{
@@ -2857,11 +2860,13 @@
 /area/space)
 "hU" = (
 /obj/machinery/vending/snack,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/space)
 "hV" = (
 /obj/machinery/vending/cola/blue,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/space)
 "hW" = (
 /turf/simulated/floor/shuttlebay,
@@ -2876,7 +2881,8 @@
 /area/space)
 "hZ" = (
 /obj/machinery/door/unpowered/wood,
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/space)
 "ia" = (
 /turf/unsimulated/floor/specialroom/chapel{
@@ -3735,7 +3741,8 @@
 /obj/machinery/light_switch/north{
 	pixel_y = 30
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/space)
 "kp" = (
 /obj/stool/chair{
@@ -3815,10 +3822,12 @@
 "ky" = (
 /obj/decal/cleanable/dirt,
 /obj/item/storage/toolbox/mechanical,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/space)
 "kz" = (
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/space)
 "kA" = (
 /obj/decal/fakeobjects{
@@ -3877,7 +3886,8 @@
 /area/space)
 "kH" = (
 /obj/decal/fakeobjects/vacuumtape,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/space)
 "kI" = (
 /obj/decal/fakeobjects{
@@ -4011,11 +4021,13 @@
 /area/space)
 "kT" = (
 /obj/decal/fakeobjects/operatorconsole,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/space)
 "kU" = (
 /obj/decal/fakeobjects/cpucontroller,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/space)
 "kV" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -5577,7 +5589,8 @@
 	name = "Prisoner Transfer Ship";
 	req_access_txt = "1"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/space)
 "oS" = (
 /obj/decal/cleanable/robot_debris{
@@ -8396,7 +8409,8 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/turf/unsimulated/floor/bot/darkpurple,
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/darkpurple,
 /area/space)
 "vA" = (
 /obj/indestructible/shuttle_corner{
@@ -8474,7 +8488,8 @@
 /area/space)
 "vM" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/unsimulated/floor/bot/darkpurple,
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/darkpurple,
 /area/space)
 "vN" = (
 /obj/machinery/light{
@@ -8646,7 +8661,8 @@
 /obj/item/tank/emergency_oxygen,
 /obj/item/tank/emergency_oxygen,
 /obj/item/tank/emergency_oxygen,
-/turf/unsimulated/floor/bot/darkpurple,
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/darkpurple,
 /area/space)
 "wj" = (
 /obj/cable{

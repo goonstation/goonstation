@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
+	mats = 12
+
 /obj/machinery/portable_atmospherics/scrubber
 	name = "Portable Air Scrubber"
 
@@ -7,7 +10,6 @@
 
 	var/on = FALSE
 	var/inlet_flow = 100 // percentage
-	mats = 12
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER
 	volume = 750
 	desc = "A device which filters out harmful air from an area."

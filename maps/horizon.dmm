@@ -12829,7 +12829,8 @@
 	name = "Research"
 	},
 /obj/firedoor_spawn,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/artifact{
 	name = "Artifact Lounge"
 	})
@@ -13309,7 +13310,8 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/artifact{
 	name = "Artifact Lounge"
 	})
@@ -27492,7 +27494,8 @@
 	},
 /obj/machinery/door/firedoor/pyro,
 /obj/disposalpipe/segment,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/chemistry)
 "bqi" = (
 /obj/lattice{
@@ -39297,7 +39300,8 @@
 /obj/machinery/status_display{
 	pixel_y = 30
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/engine/power{
 	name = "Engineering Control Room"
 	})
@@ -40219,7 +40223,8 @@
 /obj/firedoor_spawn,
 /obj/access_spawn/engineering,
 /obj/access_spawn/cargo,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/engine/engineering)
 "bWw" = (
 /obj/cable{
@@ -40230,14 +40235,16 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/engine/engineering)
 "bWx" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/ejection,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/engine/engineering)
 "bWy" = (
 /obj/cable{
@@ -40249,7 +40256,8 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/engineering,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/engine/power{
 	name = "Engineering Control Room"
 	})
@@ -40365,7 +40373,8 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/engine/power{
 	name = "Engineering Control Room"
 	})
@@ -41348,7 +41357,8 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/engine/power{
 	name = "Engineering Control Room"
 	})
@@ -42161,7 +42171,8 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/engine/engineering)
 "caR" = (
 /obj/cable{
@@ -42256,7 +42267,8 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/engine/power{
 	name = "Engineering Control Room"
 	})
@@ -42962,7 +42974,8 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/engine/power{
 	name = "Engineering Control Room"
 	})
@@ -47228,7 +47241,8 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/crew_quarters/barber_shop)
 "cmC" = (
 /obj/cable{
@@ -48540,7 +48554,8 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/barber_shop)
 "cpz" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -51838,7 +51853,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/chemistry)
 "czK" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -51855,7 +51871,8 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/lobby)
 "czL" = (
 /obj/cable{
@@ -57765,7 +57782,8 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/lobby)
 "lJT" = (
 /obj/cable{
