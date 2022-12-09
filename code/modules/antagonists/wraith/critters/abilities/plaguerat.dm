@@ -1,4 +1,4 @@
-ABSTRACT_TYPE /datum/targetable/critter/plague_rat
+ABSTRACT_TYPE(/datum/targetable/critter/plague_rat)
 /datum/targetable/critter/plague_rat
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = "plague_frame"
