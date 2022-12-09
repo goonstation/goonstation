@@ -1,7 +1,7 @@
 var/global/crew_creds = null
 
 /// Debug option for filling out the end-game crew credits roster with fake names
-// #define CREDITS_DEBUGGING
+#define CREDITS_DEBUGGING
 
 /datum/crewCredits
 
@@ -119,7 +119,7 @@ var/global/crew_creds = null
 		else
 			other += bundle_crew_member_data(M)
 
-	logTheThing(LOG_DEBUG, null, "Zamujasa/CREWCREDITS: [world.timeofday] done processing minds. info: A [antagonist.len] C [captain.len] S [security.len] M [medical.len] R [science.len] E [engineering.len] Cv [civilian.len] X [other.len]")
+	logTheThing(LOG_DEBUG, null, "Zamujasa/CREWCREDITS: [world.timeofday] done processing minds. info: A [length(antagonist)] C [length(captain)] S [length(security)] M [length(medical)] R [length(science)] E [length(engineering)] Cv [length(civilian)] Si [length(silicon)] X [length(other)]")
 
 	/* ~ BEGIN FAKE CREW CREDITS GENERATION ~ */
 	#ifdef CREDITS_DEBUGGING
@@ -127,20 +127,20 @@ var/global/crew_creds = null
 	var/has_head = FALSE
 	var/what_role = ""
 
-	while (antagonist.len < 4)
+	while (length(antagonist) < 4)
 		antagonist += src.generate_fake_crew_member(
 			real_name=src.fake_carbon_name(),
 			role = pick("Vampire", "Werewolf", "Changeling", "Legworm", "Handspider", "Eyespider", "Traitor", "Spy-thief", "Blob", "Flockmind", "Flockbit", "Omnitraitor", "Nuclear Operative", "Hard-mode Traitor"),
 			dead = prob(50),
 		)
-	while (captain.len < 1)
+	while (length(captain) < 1)
 		captain += src.generate_fake_crew_member(
 			real_name=src.fake_carbon_name(),
 			role= "Captain",
 			dead=prob(20),
 			head=TRUE
 		)
-	while (security.len < 8)
+	while (length(security) < 8)
 		if (!has_head)
 			what_role = "Head of Security"
 		else
@@ -153,7 +153,7 @@ var/global/crew_creds = null
 		)
 		has_head=TRUE
 	has_head=FALSE
-	while (medical.len < 8)
+	while (length(medical) < 8)
 		if (!has_head)
 			what_role = "Medical Director"
 		else
@@ -167,7 +167,7 @@ var/global/crew_creds = null
 		)
 		has_head = TRUE
 	has_head = FALSE
-	while (science.len < 4)
+	while (length(science) < 4)
 		if (!has_head)
 			what_role = "Research Director"
 		else
@@ -180,7 +180,7 @@ var/global/crew_creds = null
 		)
 		has_head=TRUE
 	has_head = FALSE
-	while (engineering.len < 8)
+	while (length(engineering) < 8)
 		if (!has_head)
 			what_role = "Chief Engineer"
 		else
@@ -193,7 +193,7 @@ var/global/crew_creds = null
 		)
 		has_head = TRUE
 	has_head = FALSE
-	while (civilian.len < 16)
+	while (length(civilian) < 16)
 		if (!has_head)
 			what_role = "Head of Personnel"
 		else
@@ -206,7 +206,7 @@ var/global/crew_creds = null
 		)
 		has_head = TRUE
 	has_head = FALSE
-	while (silicon.len < 8)
+	while (length(silicon) < 8)
 		var/name_to_use = ""
 		if (!has_head)
 			what_role = "AI"
@@ -222,13 +222,13 @@ var/global/crew_creds = null
 		)
 		has_head=TRUE
 	has_head=FALSE
-	while(other.len < 8)
+	while(length(other) < 8)
 		other += src.generate_fake_crew_member(
 			real_name = src.fake_carbon_name(),
 			role=pick("Senator", "President", "CEO", "Board Member", "Mayor", "Vice-President", "Governor", "Diplomat" )
 		)
 
-	logTheThing(LOG_DEBUG, null, "Zamujasa/CREWCREDITS: [world.timeofday] done adding fake crew. info: A [antagonist.len] C [captain.len] S [security.len] M [medical.len] R [science.len] E [engineering.len] Cv [civilian.len] X [other.len]")
+	logTheThing(LOG_DEBUG, null, "Zamujasa/CREWCREDITS: [world.timeofday] done adding fake crew. info: A [length(antagonist)] C [length(captain)] S [length(security)] M [length(medical)] R [length(science)] E [length(engineering)] Cv [length(civilian)] Si [length(silicon)] X [length(other)]")
 
 	#endif
 	/* ~ END FAKE CREW CREDITS GENERATOR ~ */
@@ -236,11 +236,11 @@ var/global/crew_creds = null
 	crew_creds = list(
 		"groups" = list(
 			list(
-				"group" = "Antagonist" + (antagonist.len==1 ? "" : "s"),
+				"group" = "Antagonist" + (length(antagonist)==1 ? "" : "s"),
 				"crew" = antagonist,
 			),
 			list(
-				"group" = "Captain" + (captain.len==1 ? "" : "s"),
+				"group" = "Captain" + (length(captain)==1 ? "" : "s"),
 				"crew" = captain,
 			),
 			list(
@@ -264,7 +264,7 @@ var/global/crew_creds = null
 				"crew" = civilian,
 			),
 			list(
-				"group" = "Silicon" + (silicon.len==1 ? "": "s"),
+				"group" = "Silicon" + (length(silicon)==1 ? "": "s"),
 				"crew" = silicon,
 			),
 			list(
