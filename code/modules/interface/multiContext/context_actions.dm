@@ -449,11 +449,29 @@
 	name = "Deconstruct with Tool"
 	desc = "You shouldn't be reading this, bug."
 	icon_state = "wrench"
+	var/omni_mode
+	var/omni_path
+	var/success_text
+	var/success_sound
+
+	proc/success_feedback(atom/target, mob/user)
+		user.show_text(replacetext(success_text, "%target%", target), "blue")
+		if (success_sound)
+			playsound(target, success_sound, 50, 1)
+
+	proc/omnitool_swap(atom/target, mob/user, obj/item/tool/omnitool/omni)
+		if (!(omni_mode in omni.modes))
+			return FALSE
+		omni.change_mode(omni_mode, user, omni_path)
+		user.show_text("You flip [omni] to [name] mode.", "blue")
+		sleep(OMNI_TOOL_WAIT_TIME)
+		return TRUE
 
 	execute(atom/target, mob/user)
 		if (isobj(target))
 			var/obj/O = target
 			if (O.decon_contexts)
+				success_feedback(target, user)
 				O.decon_contexts -= src
 				if (O.decon_contexts.len <= 0)
 					user.show_text("Looks like [target] is ready to be deconstructed with the device.", "blue")
@@ -474,135 +492,104 @@
 		name = "Wrench"
 		desc = "Wrenching required to deconstruct."
 		icon_state = "wrench"
+		omni_mode = OMNI_MODE_WRENCHING
+		omni_path = /obj/item/wrench
+		success_text = "You wrench %target%'s bolts."
+		success_sound = 'sound/items/Ratchet.ogg'
 
 		execute(atom/target, mob/user)
 			for (var/obj/item/I in user.equipped_list())
-				if (iswrenchingtool(I))
-					user.show_text("You wrench [target]'s bolts.", "blue")
-					playsound(target, 'sound/items/Ratchet.ogg', 50, 1)
-					return ..()
 				if(istype(I, /obj/item/tool/omnitool))
-					var/obj/item/tool/omnitool/omni = I
-					if (!(OMNI_MODE_WRENCHING in omni.modes))
-						continue
-					omni.change_mode(OMNI_MODE_WRENCHING, user, /obj/item/wrench)
-					user.show_text("You flip [omni] to wrenching mode...", "blue")
-					sleep(OMNI_TOOL_WAIT_TIME)
-					user.show_text("...then wrench [target]'s bolts.", "blue")
-					playsound(target, 'sound/items/Ratchet.ogg', 50, 1)
+					if(omnitool_swap(target, user, I))
+						return ..()
+				if (iswrenchingtool(I))
 					return ..()
 
 	cut
 		name = "Cut"
 		desc = "Cutting required to deconstruct."
 		icon_state = "cut"
+		omni_mode = OMNI_MODE_SNIPPING
+		omni_path = /obj/item/wirecutters
+		success_text = "You cut some vestigial wires from %target%."
+		success_sound = 'sound/items/Wirecutter.ogg'
 
 		execute(atom/target, mob/user)
 			for (var/obj/item/I in user.equipped_list())
-				if (iscuttingtool(I) || issnippingtool(I))
-					user.show_text("You cut some vestigial wires from [target].", "blue")
-					playsound(target, 'sound/items/Wirecutter.ogg', 50, 1)
-					return ..()
 				if(istype(I, /obj/item/tool/omnitool))
-					var/obj/item/tool/omnitool/omni = I
-					if (!(OMNI_MODE_SNIPPING in omni.modes))
-						continue
-					omni.change_mode(OMNI_MODE_SNIPPING, user, /obj/item/wirecutters)
-					user.show_text("You flip [omni] to cutting mode...", "blue")
-					sleep(OMNI_TOOL_WAIT_TIME)
-					user.show_text("...then cut some vestigial wires from [target].", "blue")
-					playsound(target, 'sound/items/Wirecutter.ogg', 50, 1)
+					if(omnitool_swap(target, user,I))
+						return ..()
+				if (iscuttingtool(I) || issnippingtool(I))
 					return ..()
 	weld
 		name = "Weld"
 		desc = "Welding required to deconstruct."
 		icon_state = "weld"
+		omni_mode = OMNI_MODE_WELDING
+		omni_path = /obj/item/weldingtool
+		success_text = "You weld %target% carefully."
+		success_sound = null
 
 		execute(atom/target, mob/user)
 			for (var/obj/item/I in user.equipped_list())
 				if (isweldingtool(I))
 					if (I:try_weld(user, 2))
-						user.show_text("You weld [target] carefully.", "blue")
 						return ..()
 				if(istype(I, /obj/item/tool/omnitool))
 					var/obj/item/tool/omnitool/omni = I
-					if (!(OMNI_MODE_WELDING in omni.modes))
-						continue
-					omni.change_mode(OMNI_MODE_WELDING, user, /obj/item/weldingtool)
-					user.show_text("You flip [omni] to welding mode...", "blue")
-					sleep(OMNI_TOOL_WAIT_TIME)
-					if (omni:try_weld(user, 2))
-						user.show_text("...then weld [target] carefully.", "blue")
-						return ..()
-					else
-						user.show_text("...but it failed!.", "red")
+					if(omnitool_swap(target, user,I))
+						if (omni:try_weld(user, 2))
+							return ..()
 
 	pry
 		name = "Pry"
 		desc = "Prying required to deconstruct. Try a crowbar."
 		icon_state = "bar"
+		omni_mode = OMNI_MODE_PRYING
+		omni_path = /obj/item/crowbar
+		success_text = "You pry on %target% without remorse."
+		success_sound = 'sound/items/Crowbar.ogg'
 
 		execute(atom/target, mob/user)
 			for (var/obj/item/I in user.equipped_list())
-				if (ispryingtool(I))
-					user.show_text("You pry on [target] without remorse.", "blue")
-					playsound(target, 'sound/items/Crowbar.ogg', 50, 1)
-					return ..()
 				if(istype(I, /obj/item/tool/omnitool))
-					var/obj/item/tool/omnitool/omni = I
-					if (!(OMNI_MODE_PRYING in omni.modes))
-						continue
-					omni.change_mode(OMNI_MODE_PRYING, user, /obj/item/crowbar)
-					user.show_text("You flip [omni] to prying mode...", "blue")
-					sleep(OMNI_TOOL_WAIT_TIME)
-					user.show_text("...then pry on [target] without remorse.", "blue")
-					playsound(target, 'sound/items/Crowbar.ogg', 50, 1)
+					if(omnitool_swap(target, user, I))
+						return ..()
+				if (ispryingtool(I))
 					return ..()
-
 	screw
 		name = "Screw"
 		desc = "Screwing required to deconstruct."
 		icon_state = "screw"
+		omni_mode = OMNI_MODE_SCREWING
+		omni_path = /obj/item/screwdriver
+		success_text = "You unscrew some of the screws on %target%."
+		success_sound = 'sound/items/Screwdriver.ogg'
 
 		execute(atom/target, mob/user)
 			for (var/obj/item/I in user.equipped_list())
-				if (isscrewingtool(I))
-					user.show_text("You unscrew some of the screws on [target].", "blue")
-					playsound(target, 'sound/items/Screwdriver.ogg', 50, 1)
-					return ..()
 				if(istype(I, /obj/item/tool/omnitool))
-					var/obj/item/tool/omnitool/omni = I
-					if (!(OMNI_MODE_SCREWING in omni.modes))
-						continue
-					omni.change_mode(OMNI_MODE_SCREWING, user, /obj/item/screwdriver)
-					user.show_text("You flip [omni] to screwdriving mode...", "blue")
-					sleep(OMNI_TOOL_WAIT_TIME)
-					user.show_text("...then unscrew some of the screws on [target].", "blue")
-					playsound(target, 'sound/items/Screwdriver.ogg', 50, 1)
+					if(omnitool_swap(target, user, I))
+						return ..()
+				if (isscrewingtool(I))
 					return ..()
 
 	pulse
 		name = "Pulse"
 		desc = "Pulsing required to deconstruct. Try a multitool."
 		icon_state = "pulse"
+		omni_mode = OMNI_MODE_PULSING
+		omni_path = /obj/item/device/multitool
+		success_text = "You pulse %target%. In a general sense."
+		success_sound = 'sound/items/penclick.ogg'
 
 		execute(atom/target, mob/user)
 			for (var/obj/item/I in user.equipped_list())
-				if (ispulsingtool(I))
-					user.show_text("You pulse [target]. In a general sense.", "blue")
-					playsound(target, 'sound/items/penclick.ogg', 50, 1)
-					return ..()
 				if(istype(I, /obj/item/tool/omnitool))
-					var/obj/item/tool/omnitool/omni = I
-					if (!(OMNI_MODE_PULSING in omni.modes))
-						continue
-					omni.change_mode(OMNI_MODE_PULSING, user, /obj/item/device/multitool)
-					user.show_text("You flip [omni] to pulsing mode...", "blue")
-					sleep(OMNI_TOOL_WAIT_TIME)
-					user.show_text("...then pulse [target]. In a general sense.", "blue")
-					playsound(target, 'sound/items/penclick.ogg', 50, 1)
+					if(omnitool_swap(target, user, I))
+						return ..()
+				if (ispulsingtool(I))
 					return ..()
-
 /datum/contextAction/vehicle
 	icon = 'icons/ui/context16x16.dmi'
 	name = "Vehicle action"
