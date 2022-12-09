@@ -1,5 +1,200 @@
 
+(t)wed dec 07 22
+(u)Sord
+(e)🗺💅|A-Mapping, C-QoL
+(+)Donut 2's Engineering Department has received a new coat of paint.
+(u)Flaborized
+(e)💎
+(*)New artifact sprites and some tweaking of their visuals!
+(u)tarmunora
+(*)Vampire enthrall has a scaling cost based on number of living thralls.
+(u)tarmunora
+(+)Vending machines deal stamina damage instead of auto-stun when falling.
+(t)tue dec 06 22
+(u)Virvatuli
+(p)12310
+(e)🗺💅|A-Mapping, C-QoL
+(+)Expanded Donut 3's medbooth to be consistent with other maps, no more free defib
+(u)Zaniff
+(p)12302
+(e)🎨|C-Sprites
+(+)Resprited the pod secondary systems.
+(t)mon dec 05 22
+(u)Stonepillar
+(p)11902
+(e)🚄🔧🧫📡⚙📜|C-Performance, A-Tooling, C-Experimental, A-AI, A-Internal, C-Documentation
+(*)Made pathfinding go faster, so that flock doesn't melt the server. This changed some important parts of the game, please report any new weirdness with critters or any movement related bugs!
+(u)LeahTheTech
+(p)11796
+(e)🆕🗺🎨🧛|C-Feature, A-Mapping, C-Sprites, A-Gamemodes
+(*)Added an interactive Flock tutorial, so you have a chance at learning what at least half the buttons do before playing.
+(u)LeahTheTech
+(p)12270
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Flockdrone egg cost now scales with the number of active flockdrones.
+(t)sat dec 03 22
+(u)Cheffie
+(p)12136
+(e)🎨💅📄|C-Sprites, C-QoL, A-UI
+(*)Omnitools now use a Context Actions menu.
+(u)glowbold
+(p)12252
+(e)🆕⚖📦🎩|C-Feature, C-Balance, A-Game-Objects, A-Clothing
+(+)Freshly laundered clothing stays warm for a bit after coming out of the WashMan.
+(u)Bartimeus973
+(p)12271
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(+)Fake guns that pop out a flag when fired can now be reused.
+(u)tarmunora
+(*)Wizards now have magic hands, which do not like certain technology. Good thing they packed their EMP-resistant headsets!
+(t)fri dec 02 22
+(u)tarmunora
+(+)AI law captcha returns.
+(t)the dec 01 22
+(u)tarmunora
+(+)The Chief Engineer's belt has been modernized to use the new energy shield mechanic.
+(u)pali
+(e)🎄
+(*)Ho ho ho, Spacemas is here. Be sure to click the Spacemas tree and make your own Spacemas tree ornament!
+(t)wed nov 30 22
+(u)Mora
+(p)12228
+(e)🪲🎨|C-Bug, C-Sprites
+(+)Added a alternative blue labcoat for the medical director via alternate outfit spacebux purchase, check it out in the PR or in game!
+(u)goonstation-enjoyer
+(p)12171
+(e)💅🤖|C-QoL, A-Silicons
+(+)Mining cyborgs now get mesons instead of a jetpack on ocean maps.
+(t)tue nov 29 22
+(u)aloe
+(*)The bartender now has a couple boxes of straws in their booze vendor. Click things to slurp out of them, real simple.
+(u)MitchSmith
+(p)12223
+(e)🎨|C-Sprites
+(*)Credits now use the new ⪽ symbol in their design.
+(u)LeahTheTech
+(p)12209
+(e)⚖🧛📦|C-Balance, A-Gamemodes, A-Game-Objects
+(*)The syndicate cyborg conversion chamber is now slightly more resistant to explosions.
+(u)Azrun
+(p)10479
+(e)🪲🆕⚖📄⏰👽🍝|C-Bug, C-Feature, C-Balance, A-UI, A-Status-Effects, A-Mutantraces, A-Catering
+(*)Aquatic Genetics gives immunity to Kuru and minor food buff when eating brains.
+(t)mon nov 28 22
+(u)Kubius
+(p)12192
+(e)🗺|A-Mapping
+(+)Nadir fixbatch 9: relocated a cyborg dock prone to accidentally blowing up Robotics, reinforced some high-value external windows.
+(u)TDHooligan
+(p)12205
+(e)🔄⚗|C-Rework, A-Chemistry
+(+)Medibots now use Potassium Iodide as their tox treatment.
+(t)sat nov 26 22
+(u)aloe
+(*)NanoTrasen forgot to order new cloners, and the ones they have right now are kind of janky. Expect more mistakes and aberrations. Would recommend health/genetic analyzing people after they're cloned to make sure they're good to go.
+(*)Each big NanoMed has one genetic analyzer.
+(u)Cherman0
+(p)11885
+(e)🗺💅|A-Mapping, C-QoL
+(*)Various QoL changes to Donut3 Mining and Cargo areas. They should be noticeably less cramped.
+(t)fri nov 25 22
+(u)glowbold
+(p)12159
+(e)⚖💊📦|C-Balance, A-Medical, A-Game-Objects
+(*)Cryogenic healing pods use power, with an increased rate while on and occupied.
+(u)pali
+(p)12019
+(e)🆕💅🧛|C-Feature, C-QoL, A-Gamemodes
+(+)Ghost respawn events now show what antagonist you would be respawning as
+(u)glowbold
+(p)12104
+(e)⚖💡|C-Balance, A-Station-Systems
+(+)Nanotrasen now calculates station profitability based on the station stipend; use the bank records computer to track your progress in-round.
+(u)Kubius
+(p)12146
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Kondaru news office's attached bathroom has been expanded, now featuring nicer toilet stalls and a shower room. Did a pass over camera coverage as well.
+(u)Lord_Earthfire
+(p)12133
+(e)⚖|C-Balance
+(+)Splices with peanutbutter sandwhich-plants grant the bread-reagent and splices with free-range eggplants now grant the egg-reagent
+(u)Bartimeus973
+(p)12080
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)White handkerchiefs can now be printed at hacked clothing manufacturers. You can color the handkerchiefs with paint.
+(u)Wisemonster
+(p)11890
+(e)🗺💅|A-Mapping, C-QoL
+(+)Connected Oshan's mech lab with engineering eva storage.
+(u)Azrun
+(p)11771
+(e)🆕🔒⏰|C-Feature, A-Secret, A-Status-Effects
+(+)Adds the ability for a number of critters to traverse disposals.
+(u)Bartimeus973
+(p)12163
+(e)🔎🔨|C-Code-Quality, A-Player-Actions
+(+)Wraiths can no longer summon creatures if there is something in the way.
+(u)aloe
+(+)Cigarettes and welding tools now produce a bit of light while on. Bug me if there's anything else that doesn't produce light and you think should!
+(t)thu nov 24 22
+(u)Mr. Moriarty
+(p)11793
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(*)The armouries of all in-rotation maps have been standardised as to contain the same essential equipment. Some armouries still retain additional non-essential equipment to vary them from others.
+(+)Standardised the Donut2 Armoury, and added a perimeter defence.
+(u)ZWRh3
+(p)11084
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Removed organ damage from the battle royale gamemode.
+(u)Roddy
+(p)12055
+(e)💅⚙|C-QoL, A-Internal
+(+)Nanotrasen has begun hiring from a wider pool of employees. Adds in around 500 new random names.
+(u)Wivernshy
+(p)11352
+(e)|
+(+)Plush toy vocabulary has been improved!
+(u)goonstation-enjoyer
+(p)12109
+(e)💅📦|C-QoL, A-Game-Objects
+(+)You can now examine a cell charger to see how full the cell is.
+(u)Bartimeus973
+(p)12079
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Adds face-covering bandanas to the game! Use a handkerchief in hand to do your best bandit impression!
+(u)glowbold
+(p)12137
+(e)⚖💨📦|C-Balance, A-Atmospherics, A-Game-Objects
+(+)Freezers now use power based on how many degrees they shift the gas inside.
+(u)LeahTheTech
+(p)12131
+(e)🧛🔨🤖|A-Gamemodes, A-Player-Actions, A-Silicons
+(+)Silicons now hear a lot less flock system messages.
+(u)Conchuckter
+(p)11923
+(e)🪲🆕📦💡|C-Bug, C-Feature, A-Game-Objects, A-Station-Systems
+(*)Manufacturers are now packet integrated, become a nerd today!
+(u)Kubius
+(p)11689
+(e)🆕🗺💡|C-Feature, A-Mapping, A-Station-Systems
+(+)Quartermasters on Nadir can now consult their pocket guide for basic transception array guidance. A more in-depth book is available in the array control room.
 (t)wed nov 23 22
+(u)Kubius
+(p)11954
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(*)Handwashing update for RP: Washing your hands now automatically loops, and is more effective for medical or culinary personnel, but cannot raise your hygiene if it has fallen below half.
+(u)aloe
+(*) String highlighting no longer strips spaces, and now works properly with regex. For example, "(?:\W|^)ai(?:\W|$)" will highlight 'ai' in "ai help" "help ai" and "this ai sucks", without highlighting "hairy" or "aint".
+(u)pali
+(+)Armory authorization now plays robotic voiceover saying "ARMORY AUTHORIZED". TEG at high power levels says "WARNING" once a few minutes in the same voice. Let me know if this is neat or sucks on Discord / forums (and suggest other places where this could be appropriate if you like it).
+(u)Cheffie
+(p)12132
+(e)💅📄|C-QoL, A-UI
+(+)Changes how the ExperimentalCircle context layout is created to be more intuitive. Changes current items that use this layout to roughly match how they were before in terms of layout.
+(u)ZeWaka
+(p)10388
+(e)🪲🚄🔧🔎🔄❗📄📜|C-Bug, C-Performance, A-Tooling, C-Code-Quality, C-Rework, E-FUCK, A-UI, C-Documentation
+(*)Changed our internal UI systems quite a bit. Remember to report bugs via the button on the top right!
 (u)glowbold
 (p)12063
 (e)🗺|A-Mapping

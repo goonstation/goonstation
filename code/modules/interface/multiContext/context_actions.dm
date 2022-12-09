@@ -848,28 +848,16 @@
 			M.set_icon_state("[M.prefix]-[M.setting]")
 		M.tooltip_rebuild = 1
 
-	white
-		name = "Set White"
-		desc = "Sets the manufacturer to produce white lamps."
-		icon_state = "white"
+	green
+		name = "Set Green"
+		desc = "Sets the manufacturer to produce green lamps."
+		icon_state = "green"
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "white"
-			M.dispensing_tube = /obj/item/light/tube
-			M.dispensing_bulb = /obj/item/light/bulb
-			..()
-
-	red
-		name = "Set Red"
-		desc = "Sets the manufacturer to produce red lamps."
-		icon_state = "red"
-
-		execute(var/atom/target, var/mob/user)
-			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "red"
-			M.dispensing_tube = /obj/item/light/tube/red
-			M.dispensing_bulb = /obj/item/light/bulb/red
+			M.setting = "green"
+			M.dispensing_tube = /obj/item/light/tube/green
+			M.dispensing_bulb = /obj/item/light/bulb/green
 			..()
 
 	yellow
@@ -884,52 +872,57 @@
 			M.dispensing_bulb = /obj/item/light/bulb/yellow
 			..()
 
-	green
-		name = "Set Green"
-		desc = "Sets the manufacturer to produce green lamps."
-		icon_state = "green"
+	red
+		name = "Set Red"
+		desc = "Sets the manufacturer to produce red lamps."
+		icon_state = "red"
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "green"
-			M.dispensing_tube = /obj/item/light/tube/green
-			M.dispensing_bulb = /obj/item/light/bulb/green
+			M.setting = "red"
+			M.dispensing_tube = /obj/item/light/tube/red
+			M.dispensing_bulb = /obj/item/light/bulb/red
 			..()
 
-	cyan
-		name = "Set Cyan"
-		desc = "Sets the manufacturer to produce cyan lamps."
-		icon_state = "cyan"
+	white
+		name = "Set White"
+		desc = "Sets the manufacturer to produce white lamps."
+		icon_state = "white"
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "cyan"
-			M.dispensing_tube = /obj/item/light/tube/cyan
-			M.dispensing_bulb = /obj/item/light/bulb/cyan
+			M.setting = "white"
+			M.dispensing_tube = /obj/item/light/tube
+			M.dispensing_bulb = /obj/item/light/bulb
 			..()
 
-	blue
-		name = "Set Blue"
-		desc = "Sets the manufacturer to produce blue lamps."
-		icon_state = "blue"
-
+	removal
+		name = "Toggle Fitting Removal"
+		desc = "Toggles the manufacturer between removing fittings and replacing lamps."
+		icon_state = "close"
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "blue"
-			M.dispensing_tube = /obj/item/light/tube/blue
-			M.dispensing_bulb = /obj/item/light/bulb/blue
+			M.removing_toggled = !M.removing_toggled
+			boutput(user, "<span class='notice'>Now set to [M.removing_toggled == TRUE ? "remove fittings" : "replace lamps"].</span>")
 			..()
 
-	purple
-		name = "Set Purple"
-		desc = "Sets the manufacturer to produce purple lamps."
-		icon_state = "purple"
+	bulbs
+		name = "Fitting Production: Bulbs"
+		desc = "Sets the manufacturer to produce bulb wall fittings."
+		icon_state = "bulb"
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/lamp_manufacturer/M = target
+			M.dispensing_fitting = /obj/machinery/light/small
+			..()
+
+	tubes
+		name = "Fitting Production: Tubes"
+		desc = "Sets the manufacturer to produce tube wall fittings."
+		icon_state = "tube"
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "purple"
-			M.dispensing_tube = /obj/item/light/tube/purple
-			M.dispensing_bulb = /obj/item/light/bulb/purple
+			M.dispensing_fitting = /obj/machinery/light
 			..()
 
 	blacklight
@@ -944,33 +937,39 @@
 			M.dispensing_bulb = /obj/item/light/bulb/blacklight
 			..()
 
-	tubes
-		name = "Fitting Production: Tubes"
-		desc = "Sets the manufacturer to produce tube wall fittings."
-		icon_state = "tube"
+	purple
+		name = "Set Purple"
+		desc = "Sets the manufacturer to produce purple lamps."
+		icon_state = "purple"
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/lamp_manufacturer/M = target
-			M.dispensing_fitting = /obj/machinery/light
+			M.setting = "purple"
+			M.dispensing_tube = /obj/item/light/tube/purple
+			M.dispensing_bulb = /obj/item/light/bulb/purple
 			..()
 
-	bulbs
-		name = "Fitting Production: Bulbs"
-		desc = "Sets the manufacturer to produce bulb wall fittings."
-		icon_state = "bulb"
-		execute(var/atom/target, var/mob/user)
-			var/obj/item/lamp_manufacturer/M = target
-			M.dispensing_fitting = /obj/machinery/light/small
-			..()
+	blue
+		name = "Set Blue"
+		desc = "Sets the manufacturer to produce blue lamps."
+		icon_state = "blue"
 
-	removal
-		name = "Toggle Fitting Removal"
-		desc = "Toggles the manufacturer between removing fittings and replacing lamps."
-		icon_state = "remove"
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/lamp_manufacturer/M = target
-			M.removing_toggled = !M.removing_toggled
-			boutput(user, "<span class='notice'>Now set to [M.removing_toggled == TRUE ? "remove fittings" : "replace lamps"].</span>")
+			M.setting = "blue"
+			M.dispensing_tube = /obj/item/light/tube/blue
+			M.dispensing_bulb = /obj/item/light/bulb/blue
+			..()
+	cyan
+		name = "Set Cyan"
+		desc = "Sets the manufacturer to produce cyan lamps."
+		icon_state = "cyan"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/lamp_manufacturer/M = target
+			M.setting = "cyan"
+			M.dispensing_tube = /obj/item/light/tube/cyan
+			M.dispensing_bulb = /obj/item/light/bulb/cyan
 			..()
 
 /datum/contextAction/card
@@ -1175,6 +1174,7 @@
 			target.addContextAction(/datum/contextAction/testfour)
 			return 0
 */
+
 /datum/contextAction/rcd
 	icon = 'icons/ui/context16x16.dmi'
 	close_clicked = TRUE
@@ -1190,34 +1190,30 @@
 	checkRequirements(var/obj/item/rcd/rcd, var/mob/user)
 		return rcd in user
 
-	floorswalls
-		name = "Floors/walls"
-		icon_state = "wall"
-		mode = RCD_MODE_FLOORSWALLS
-	airlock
-		name = "Airlocks"
-		icon_state = "door"
-		mode = RCD_MODE_AIRLOCK
-
 	deconstruct
 		name = "Deconstruct"
 		icon_state = "close"
 		mode = RCD_MODE_DECONSTRUCT
-
-	windows
-		name = "Windows"
-		icon_state = "window"
-		mode = RCD_MODE_WINDOWS
-
-	lightbulbs
-		name = "Lightbulbs"
-		icon_state = "bulb"
-		mode = RCD_MODE_LIGHTBULBS
-
+	airlock
+		name = "Airlocks"
+		icon_state = "door"
+		mode = RCD_MODE_AIRLOCK
+	floorswalls
+		name = "Floors/walls"
+		icon_state = "wall"
+		mode = RCD_MODE_FLOORSWALLS
 	lighttubes
 		name = "Light tubes"
 		icon_state = "tube"
 		mode = RCD_MODE_LIGHTTUBES
+	lightbulbs
+		name = "Lightbulbs"
+		icon_state = "bulb"
+		mode = RCD_MODE_LIGHTBULBS
+	windows
+		name = "Windows"
+		icon_state = "window"
+		mode = RCD_MODE_WINDOWS
 
 /datum/contextAction/reagent
 	icon_background = "whitebg"
@@ -1240,36 +1236,3 @@
 		return robospray in user
 	execute(var/obj/item/robospray/robospray, var/mob/user)
 		robospray.change_reagent(src.reagent_id, user)
-
-/datum/contextAction/prisoner_scanner
-	icon = 'icons/ui/context16x16.dmi'
-	close_clicked = TRUE
-	close_moved = FALSE
-	desc = ""
-	icon_state = "wrench"
-	var/mode = PRISONER_MODE_NONE
-
-	execute(var/obj/item/device/prisoner_scanner/prisoner_scanner, var/mob/user)
-		if(!istype(prisoner_scanner))
-			return
-		prisoner_scanner.switch_mode(src.mode, user)
-
-	checkRequirements(var/obj/item/device/prisoner_scanner/prisoner_scanner, var/mob/user)
-		return prisoner_scanner in user
-
-	none
-		name = "None"
-		icon_state = "none"
-		mode = PRISONER_MODE_NONE
-	Paroled
-		name = "Paroled"
-		icon_state = "paroled"
-		mode = PRISONER_MODE_PAROLED
-	incarcerated
-		name = "Incarcerated"
-		icon_state = "incarcerated"
-		mode = PRISONER_MODE_INCARCERATED
-	released
-		name = "Released"
-		icon_state = "released"
-		mode = PRISONER_MODE_RELEASED

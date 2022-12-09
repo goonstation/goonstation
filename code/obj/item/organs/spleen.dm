@@ -42,6 +42,9 @@
 		..()
 		src.icon_state = pick("plant_spleen", "plant_spleen_bloom")
 
+TYPEINFO(/obj/item/organ/spleen/cyber)
+	mats = 6
+
 /obj/item/organ/spleen/cyber
 	name = "cyberspleen"
 	desc = "A fancy robotic spleen to replace one that someone's lost!"
@@ -50,5 +53,4 @@
 	// item_state = "heart_robo1"
 	robotic = 1
 	edible = 0
-	mats = 6
 	created_decal = /obj/decal/cleanable/oil

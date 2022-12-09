@@ -403,9 +403,9 @@ SYNDICATE DRONE FACTORY AREAS
 
 
 	proc/melt_away(atom/movable/O)
-		#ifdef RUNTIME_CHECKING
+		#ifdef CHECK_MORE_RUNTIMES
 		if(current_state <= GAME_STATE_WORLD_NEW)
-			CRASH("[O] ([O.type]) melted in lava at [src.x],[src.y],[src.z] ([src.loc] [src.loc.type]) during world initialization")
+			CRASH("[identify_object(O)] melted in lava at [src.x],[src.y],[src.z] ([src.loc] [src.loc.type]) during world initialization")
 		#endif
 		if (ismob(O))
 			if (isliving(O))
@@ -936,7 +936,7 @@ SYNDICATE DRONE FACTORY AREAS
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shovel"
 	w_class = W_CLASS_NORMAL
-	flags = ONBELT
+	c_flags = ONBELT
 	force = 15
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 

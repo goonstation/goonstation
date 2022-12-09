@@ -43,7 +43,8 @@ TRAYS
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	stamina_damage = 5
 	stamina_cost = 10
 	stamina_crit_chance = 15
@@ -151,7 +152,8 @@ TRAYS
 /obj/item/kitchen/utensil/knife
 	name = "knife"
 	icon_state = "knife"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER

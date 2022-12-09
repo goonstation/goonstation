@@ -6,12 +6,15 @@
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "lasercannon"
 	item_state = "cannon"
+	var/active_state = "lasercannon"
+	var/collapsed_state = "lasercannon-empty"
+	var/state = TRUE
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_LARGE
 
 
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 
 	can_dual_wield = 0
 
@@ -28,11 +31,28 @@
 		set_current_projectile(new/datum/projectile/laser/asslaser)
 		..()
 
+	attack_self(mob/user)
+		. = ..()
+		src.swap_state()
+
+	proc/swap_state()
+		if(state)
+			src.icon_state = collapsed_state
+			w_class = W_CLASS_NORMAL
+		else
+			src.icon_state = active_state
+			w_class = W_CLASS_BULKY
+		state = !state
+
+	canshoot(mob/user)
+		. = ..() && state
+
 	setupProperties()
 		..()
 		setProperty("movespeed", 0.3)
 
 	flashy
+		active_state = "lasercannon-anim"
 		icon_state = "lasercannon-anim"
 
 		shoot(target, start, mob/user, POX, POY, is_dual_wield)
@@ -81,7 +101,7 @@
 	damage = 35
 	dissipation_delay = 6
 	damage_type = D_PIERCING
-	hit_type = DAMAGE_BURN
+	hit_type = DAMAGE_STAB
 	icon_state = "laser_white"
 	shot_sound = 'sound/weapons/optio.ogg'
 	implanted = null
@@ -212,8 +232,8 @@
 	icon_state = "g11"
 	item_state = "g11"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 	has_empty_state = 1
 	var/shotcount = 0
 	var/last_shot_time = 0
@@ -640,17 +660,20 @@
 		loved += M
 
 //misc stuffs
+TYPEINFO(/obj/item/device/geiger)
+	mats = 5
+
 /obj/item/device/geiger
 	name = "geiger counter"
 	desc = "A device used to passively measure raditation."
 	icon_state = "geiger-0"
 	item_state = "geiger"
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	throwforce = 3
 	w_class = W_CLASS_TINY
 	throw_speed = 5
 	throw_range = 10
-	mats = 5
 
 	New()
 		. = ..()

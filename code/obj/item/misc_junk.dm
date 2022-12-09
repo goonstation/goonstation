@@ -123,10 +123,12 @@
 		user.put_in_hand_or_drop(new /obj/item/clothing/head/party)
 		qdel(src)
 
+TYPEINFO(/obj/item/disk)
+	mats = 8
+
 /obj/item/disk
 	name = "disk"
 	icon = 'icons/obj/items/items.dmi'
-	mats = 8
 
 /obj/item/dummy
 	name = "dummy"
@@ -250,7 +252,8 @@
 	desc = "Looks like one of those fair toys."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "rubber_hammer"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	force = 0
 
 	New()
@@ -274,6 +277,9 @@
 			src.setItemSpecial(/datum/item_special/slam)
 
 
+TYPEINFO(/obj/item/reagent_containers/vape)
+	mats = 6
+
 /obj/item/reagent_containers/vape //yeet
 	name = "e-cigarette"
 	desc = "The pinacle of human technology. An electronic cigarette!"
@@ -283,8 +289,8 @@
 	initial_reagents = "nicotine"
 	item_state = "ecig"
 	icon_state = "ecig"
-	mats = 6
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOSPLASH
+	c_flags = ONBELT
 	var/emagged = 0
 	var/last_used = 0
 	var/list/safe_smokables = list("nicotine", "THC", "CBD")

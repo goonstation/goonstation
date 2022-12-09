@@ -133,6 +133,14 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	point.color = color
 	point.invisibility = invisibility
 	var/turf/target_turf = get_turf(target)
+	if(isnull(target_turf))
+		var/atom/vis_loc = target.vis_locs[1]
+		if(vis_loc)
+			target_turf = get_turf(vis_loc)
+			point.pixel_x += vis_loc.pixel_x
+			point.pixel_y += vis_loc.pixel_y
+		else
+			target_turf = target
 	target_turf.vis_contents += point
 	if(pointer && GET_DIST(pointer, target_turf) <= 10) // check so that you can't shoot points across the station
 		var/matrix/M = matrix()
@@ -160,7 +168,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	name = "DANGER"
 	desc = "This navigational marker indicates a hazardous zone of space."
 	icon = 'icons/obj/decals/misc.dmi'
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 
 obj/decal/fakeobjects
 	layer = OBJ_LAYER
@@ -598,7 +606,7 @@ obj/decal/fakeobjects/teleport_pad
 
 	beacon
 		name = "MULE delivery destination"
-		icon_state = "mule_beacon"
+		icon_state = "hazard_caution"
 		var/auto_dropoff_spawn = 1
 
 		New()
@@ -632,7 +640,7 @@ obj/decal/fakeobjects/teleport_pad
 
 	dropoff
 		name = "MULE cargo dropoff point"
-		icon_state = "mule_dropoff"
+		icon_state = "hazard_delivery"
 
 /obj/decal/ballpit
 	icon = 'icons/obj/stationobjs.dmi'

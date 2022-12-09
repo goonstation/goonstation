@@ -7,7 +7,8 @@
 	icon_state = "backpack"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "backpack"
-	flags = ONBACK | FPRINT | TABLEPASS | NOSPLASH
+	flags = FPRINT | TABLEPASS | NOSPLASH
+	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
 	max_wclass = W_CLASS_NORMAL
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
@@ -400,7 +401,8 @@
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "fanny"
 	item_state = "fanny"
-	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
+	flags = FPRINT | TABLEPASS | NOSPLASH
+	c_flags = ONBELT
 	w_class = W_CLASS_BULKY
 	slots = 5
 	max_wclass = W_CLASS_NORMAL
@@ -463,7 +465,8 @@
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "belt"
 	item_state = "belt"
-	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
+	flags = FPRINT | TABLEPASS | NOSPLASH
+	c_flags = ONBELT
 	max_wclass = W_CLASS_SMALL
 	does_not_open_in_pocket = 0
 	stamina_damage = 10
@@ -520,115 +523,38 @@
 	icon_state = "cebelt"
 	item_state = "cebelt"
 	rarity = 4
-	abilities = list(/obj/ability_button/cebelt_toggle)
-	var/active = 0
-	var/charge = 8
-	var/maxCharge = 8
-	var/obj/decal/ceshield/overlay
-	var/lastTick = 0
-	var/chargeTime = 50 //world.time Ticks per charge increase. 50 works out to be roughly 45 seconds from 0 -> 10 under normal conditions.
 	can_hold = list(/obj/item/rcd,
 	/obj/item/rcd_ammo,
 	/obj/item/deconstructor)
 	in_list_or_max = 1
+	inventory_counter_enabled = 1
 
 	New()
 		..()
-		processing_items.Add(src)
-
-	proc/toggle()
-		if(active)
-			deactivate()
-		else
-			activate()
-		return
-
-	proc/activate()
-		processing_items |= src
-
-		if(charge > 0)
-			charge -= 1
-
-			active = 1
-			setProperty("block", 80)
-			setProperty("rangedprot", 1.5)
-			setProperty("coldprot", 100)
-			setProperty("heatprot", 100)
-
-			if(ishuman(src.loc))
-				var/mob/living/carbon/human/H = src.loc
-				overlay = new(get_turf(src))
-
-				if(H.attached_objs == null)
-					H.attached_objs = list()
-
-				H.attached_objs.Add(overlay)
-
-
-			playsound(src.loc, 'sound/machines/shieldup.ogg', 60, 1)
-		return
-
-	dropped(mob/user as mob)
-		if(active)
-			deactivate()
-		..()
-
-	proc/deactivate()
-		lastTick = (world.time + 20) //Tacking on a little delay before charging starts. Discourage toggling it too often.
-		active = 0
-		setProperty("block", 25)
-		delProperty("rangedprot")
-		delProperty("coldprot")
-		delProperty("heatprot")
-
-		if(overlay)
-			if(ishuman(src.loc))
-				var/mob/living/carbon/human/H = src.loc
-				H.attached_objs.Remove(overlay)
-			qdel(overlay)
-			overlay = null
-
-		playsound(src.loc, 'sound/machines/shielddown.ogg', 60, 1)
-		return
-
-	process()
-		if(active)
-			if(--charge <= 0)
-				deactivate()
-		else
-			var/multiplier = 0
-			var/remainder = 0
-
-			if(world.time >= (lastTick + chargeTime))
-				var/diff = round(world.time - lastTick)
-				remainder = (diff % chargeTime)
-				multiplier = round((diff - remainder) / chargeTime) //Round shouldnt be needed but eh.
-
-			if(multiplier)
-				charge = min(charge+(1*multiplier), maxCharge)
-				lastTick = (world.time - remainder) //Plop in the remainder so we don't just swallow ticks.
-		return
-
-	setupProperties()
-		..()
-		setProperty("block", 25)
-
-	equipped(var/mob/user, var/slot)
-		return ..()
-
-	unequipped(var/mob/user)
-		if(active)
-			deactivate()
-		return ..()
+		AddComponent(/datum/component/wearertargeting/energy_shield/ceshield, list(SLOT_BELT), 0.75, 0.2, FALSE, 5) //blocks 3/4 of incoming damage, up to 200 points, on a full charge, but loses charge quickly while active
+		var/obj/item/ammo/power_cell/self_charging/cell = new/obj/item/ammo/power_cell/self_charging{recharge_rate = 3; recharge_delay = 10 SECONDS}
+		AddComponent(/datum/component/cell_holder, cell, FALSE, 100, FALSE)
+		cell.set_loc(null) //otherwise it takes a slot in the belt. aaaaa
+		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
+		UpdateIcon()
 
 	examine()
 		. = ..()
-		. += "There are [src.charge]/[src.maxCharge] PU left."
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			. += "There are [ret["charge"]]/[ret["max_charge"]] PUs left!"
 
-	buildTooltipContent()
-		. = ..()
-		. += "<br>There are [src.charge]/[src.maxCharge] PU left."
-		lastTooltipContent = .
+	equipped(mob/user, slot)
+		..()
+		inventory_counter?.show_count()
+
+	update_icon()
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			inventory_counter?.update_percent(ret["charge"], ret["max_charge"])
+		else
+			inventory_counter?.update_text("-")
+		return 0
 
 /obj/item/storage/belt/utility/prepared
 	spawn_contents = list(/obj/item/crowbar/yellow,
@@ -878,6 +804,9 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 
 /* -------------------- Wrestling Belt -------------------- */
 
+TYPEINFO(/obj/item/storage/belt/wrestling)
+	mats = list("MET-2"=5, "DEN-2"=10, "FAB-1"=5)
+
 /obj/item/storage/belt/wrestling
 	name = "championship wrestling belt"
 	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past."
@@ -886,7 +815,6 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	contraband = 8
 	is_syndicate = 1
 	item_function_flags = IMMUNE_TO_ACID
-	mats = list("MET-2"=5, "DEN-2"=10, "FAB-1"=5)
 	var/fake = 0		//So the moves are all fake.
 
 	equipped(var/mob/user)
@@ -905,15 +833,18 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	fake = 1
 
 // I dunno where else to put these vOv
+TYPEINFO(/obj/item/inner_tube)
+	mats = 5 // I dunno???
+
 /obj/item/inner_tube
 	name = "inner tube"
 	desc = "An inflatable torus for your waist!"
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "pool_ring"
 	item_state = "pool_ring"
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	w_class = W_CLASS_NORMAL
-	mats = 5 // I dunno???
 
 	New()
 		..()

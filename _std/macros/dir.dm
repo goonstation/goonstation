@@ -102,3 +102,9 @@ proc/angle_to_vector(ang)
 /// turn(dir, turn_needed(dir, dir_to)) = dir_to
 #define turn_needed(dir_from, dir_to) (-(dir_to_angle(dir_to) - dir_to_angle(dir_from)))
 // note that the - is necessary because dir_to_angle returns a clockwise angle, but turn() takes a counter-clockwise angle
+
+/// Overrides the BYOND built-in get_step_rand which is broken
+#define get_step_rand(O) get_step(O, pick(alldirs))
+
+/// Returns a tile in a random cardinal direction
+#define get_step_rand_cardinal(O) get_step(O, pick(cardinal))

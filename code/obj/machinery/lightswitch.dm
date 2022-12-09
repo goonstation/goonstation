@@ -2,6 +2,9 @@
 // can have multiple per area
 // can also operate on non-loc area through "otherarea" var
 
+TYPEINFO(/obj/machinery/light_switch)
+	mats = list("MET-1"=10,"CON-1"=15)
+
 /obj/machinery/light_switch
 	desc = "A light switch"
 	name = null
@@ -14,7 +17,6 @@
 	var/area/area = null
 	var/otherarea = null
 	//	luminosity = 1
-	mats = list("MET-1"=10,"CON-1"=15)
 	var/datum/light/light
 
 
@@ -64,7 +66,7 @@
 				src.pixel_y = 24
 			else
 				src.pixel_y = -24
-		break
+			break
 
 /obj/machinery/light_switch/was_built_from_frame(mob/user, newly_built)
 	. = ..()

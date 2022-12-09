@@ -1,3 +1,6 @@
+TYPEINFO(/obj/submachine/chef_sink)
+	mats = 12
+
 /obj/submachine/chef_sink
 	name = "kitchen sink"
 	desc = "A water-filled unit intended for cookery purposes."
@@ -5,7 +8,6 @@
 	icon_state = "sink"
 	anchored = 1
 	density = 1
-	mats = 12
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
 	flags = NOSPLASH
 
@@ -62,19 +64,84 @@
 		user.lastattacked = src
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 			if (H.gloves)
+				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 				user.visible_message("<span class='notice'>[user] cleans [his_or_her(user)] gloves.</span>")
+				if (H.sims)
+					user.show_text("If you want to improve your hygiene, you need to remove your gloves first.")
 				H.gloves.clean_forensic() // Ditto (Convair880).
 				H.set_clothing_icon_dirty()
 			else
-				user.visible_message("<span class='notice'>[user] washes [his_or_her(user)] hands.</span>")
-				if (H.sims)
-					H.sims.affectMotive("Hygiene", 2)
-				H.blood_DNA = null // Don't want to use it here, though. The sink isn't a shower (Convair880).
-				H.blood_type = null
-				H.set_clothing_icon_dirty()
+				if(H.sims)
+					if (H.sims.getValue("Hygiene") < SIMS_HYGIENE_THRESHOLD_MESSY)
+						playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+						user.show_text("You're too messy for handwashing to be useful. You need a shower or a bath.", "red")
+					else
+						user.visible_message("<span class='notice'>[user] starts washing [his_or_her(user)] hands.</span>")
+						actions.start(new/datum/action/bar/private/handwashing(user,src),user)
+				else //simpler handwashing if hygiene isn't a concern
+					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+					user.visible_message("<span class='notice'>[user] washes [his_or_her(user)] hands.</span>")
+					H.blood_DNA = null
+					H.blood_type = null
+					H.set_clothing_icon_dirty()
 		..()
+
+/datum/action/bar/private/handwashing
+	duration = 1 SECOND //roughly matches the rate of manual clicking
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+	id = "handwashing"
+	var/mob/living/carbon/human/user
+	var/obj/submachine/chef_sink/sink
+
+	New(usermob,sink)
+		user = usermob
+		src.sink = sink
+		..()
+
+	proc/checkStillValid()
+		if(BOUNDS_DIST(user, sink) > 1 || user == null || sink == null || user.l_hand || user.r_hand)
+			interrupt(INTERRUPT_ALWAYS)
+			return FALSE
+		return TRUE
+
+	onUpdate()
+		checkStillValid()
+		..()
+
+	onStart()
+		..()
+		if(BOUNDS_DIST(user, sink) > 1) user.show_text("You're too far from the sink!")
+		if(user.l_hand || user.r_hand) user.show_text("Both your hands need to be free to wash them!")
+		src.loopStart()
+
+
+	loopStart()
+		..()
+		if(!checkStillValid()) return
+		playsound(get_turf(sink), 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+
+	onEnd()
+		if(!checkStillValid())
+			..()
+			return
+
+		var/cleanup_rate = 2
+		if(user.traitHolder.hasTrait("training_medical") || user.traitHolder.hasTrait("training_chef"))
+			cleanup_rate = 3
+		user.sims.affectMotive("Hygiene", cleanup_rate)
+		user.blood_DNA = null
+		user.blood_type = null
+		user.set_clothing_icon_dirty()
+
+		src.onRestart()
+
+	onInterrupt()
+		..()
+
+
+TYPEINFO(/obj/submachine/ice_cream_dispenser)
+	mats = 18
 
 /obj/submachine/ice_cream_dispenser
 	name = "Ice Cream Dispenser"
@@ -83,7 +150,6 @@
 	icon_state = "ice_creamer0"
 	anchored = 1
 	density = 1
-	mats = 18
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = NOSPLASH
 	var/list/flavors = list("chocolate","vanilla","coffee")
@@ -238,6 +304,9 @@
 
 var/list/oven_recipes = list()
 
+TYPEINFO(/obj/submachine/chef_oven)
+	mats = 18
+
 /obj/submachine/chef_oven
 	name = "oven"
 	desc = "A multi-cooking unit featuring a hob, grill, oven and more."
@@ -245,7 +314,6 @@ var/list/oven_recipes = list()
 	icon_state = "oven_off"
 	anchored = 1
 	density = 1
-	mats = 18
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = NOSPLASH
 	var/emagged = 0
@@ -841,6 +909,9 @@ table#cooktime a#start {
 		return 1
 
 #define MIN_FLUID_INGREDIENT_LEVEL 10
+TYPEINFO(/obj/submachine/foodprocessor)
+	mats = 18
+
 /obj/submachine/foodprocessor
 	name = "Processor"
 	desc = "Refines various food substances into different forms."
@@ -848,7 +919,6 @@ table#cooktime a#start {
 	icon_state = "processor-off"
 	anchored = 1
 	density = 1
-	mats = 18
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	var/working = 0
 	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/plant/, /obj/item/organ/brain, /obj/item/clothing/head/butt)
@@ -1103,6 +1173,9 @@ table#cooktime a#start {
 
 var/list/mixer_recipes = list()
 
+TYPEINFO(/obj/submachine/mixer)
+	mats = 15
+
 /obj/submachine/mixer
 	name = "KitchenHelper"
 	desc = "A food Mixer."
@@ -1110,7 +1183,6 @@ var/list/mixer_recipes = list()
 	icon_state = "blender"
 	density = 1
 	anchored = 1
-	mats = 15
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	var/list/recipes = null
 	var/list/to_remove = list()

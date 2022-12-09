@@ -87,12 +87,6 @@ datum
 					M = holder.my_atom
 				if (M.get_toxin_damage() <= 25)
 					M.take_toxin_damage(-1 * mult)
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					if (bone_system)
-						for (var/obj/item/organ/O in H.organs)
-							if (O.bones)
-								O.bones.repair_damage(1 * mult)
 				flush(M,5 * mult, flushed_reagents)
 				..()
 				return
@@ -3293,6 +3287,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.wear_mask) return
 						if(H.head) return
+						if(isdead(H)) return //why would a dead person gasp?
 					if(prob(75))
 						M.emote("gasp")
 						boutput(M, "<span class='alert'>Your eyes sting!</span>")
@@ -3329,6 +3324,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.wear_mask) return
 						if(H.head) return
+						if(isdead(H)) return //why would a dead person gasp?
 					if(prob(75))
 						M.emote("gasp")
 						boutput(M, "<span class='alert'>Your eyes sting!</span>")
@@ -3356,6 +3352,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.wear_mask) return
 						if(H.head) return
+						if(isdead(H)) return //why would a dead person gasp?
 					if(prob(75))
 						M.emote("gasp")
 						boutput(M, "<span class='alert'>Your eyes sting!</span>")
@@ -3549,6 +3546,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.wear_mask) return
 						if(H.head) return
+						if(isdead(H)) return //why would a dead person gasp?
 					if(prob(75))
 						M.emote("gasp")
 						boutput(M, "<span class='alert'>Your eyes sting!</span>")
@@ -3790,6 +3788,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.wear_mask) return
 						if(H.head) return
+						if(isdead(H)) return //why would a dead person gasp?
 					if(prob(75))
 						M.emote("gasp")
 						boutput(M, "<span class='alert'>Your eyes sting!</span>")
