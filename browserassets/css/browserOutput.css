@@ -366,7 +366,7 @@ h1.alert, h2.alert {color: #000000;}
 .blobalert {color: #4c00ff; font-size: 1.5em; font-weight: bold;}
 .lawupdate {color: #6464ff}
 .monospace {font-family: monospace;}
-.helpmsg {color: #334142; border: 1px solid #334142; padding: 2px; margin: 2px 0; display: inline-block;}
+.helpmsg {color: #417c81; border: 1px solid #417c81; padding: 2px; margin: 2px 0; display: inline-block;}
 
 .rstandard {color: #008000;}
 .rintercom {color: #006080;}
@@ -507,6 +507,7 @@ body.theme-dark h2.alert {color: #cfcfcf;}
 body.theme-dark .adminHearing .name[data-ctx] {border-bottom: 1px dotted rgb(219, 219, 219);}
 body.theme-dark .blobalert {color: #9c74fc; }
 body.theme-dark .lawupdate {color: #6464FF; }
+body.theme-dark .helpmsg {color: #98bdc2; border: 1px solid #98bdc2;}
 
 body.theme-dark .connectionClosed {background: rgb(192, 0, 0); color: white;}
 body.theme-dark .fatalError {background: rgb(192, 0, 0); color: white;}
@@ -523,5 +524,3 @@ body.theme-dark .rresearch {color: #bf83e2;}
 body.theme-dark .rcivilian {color: #ce45b2;}
 body.theme-dark .rsyndicate {color: #cf5757;}
 body.theme-dark .rother {color: #E896E5;}
-
-body.theme-dark .helpmsg {color: #98bdc2; border: 1px solid #98bdc2;}
