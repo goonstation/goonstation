@@ -45,7 +45,7 @@
 /mob/living/critter/flock/bit/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return TRUE
-	if (!src.dormant && src.flock && !src.flock?.z_level_check(src) && src.z != Z_LEVEL_NULL)
+	if (!src.dormant && src.flock && !src.flock.z_level_check(src) && src.z != Z_LEVEL_NULL)
 		src.dormantize()
 
 /mob/living/critter/flock/bit/MouseDrop_T(mob/living/target, mob/user)
