@@ -191,9 +191,6 @@
 
 	onUse(var/turf/T)
 		if (..())
-			if (owner)
-				if (tgui_alert(owner,"Would you like to deploy your nucleus?","Deploy Nucleus?",list("Yes","No")) != "Yes")
-					return TRUE
 			return
 		if (!T)
 			T = get_turf(owner)
@@ -229,6 +226,10 @@
 					if (!isdead(M))
 						boutput(owner, "<span class='alert'>You are being watched.</span>")
 						return
+
+		if (owner)
+			if (tgui_alert(owner,"Would you like to deploy your nucleus?","Deploy Nucleus?",list("Yes","No")) != "Yes")
+				return TRUE
 
 		if (!tutorial_check("deploy", T))
 			return
