@@ -191,6 +191,9 @@
 
 	onUse(var/turf/T)
 		if (..())
+			if (owner)
+				if (tgui_alert(owner,"Would you like to deploy your nucleus?","Deploy Nucleus?",list("Yes","No")) != "Yes")
+					return TRUE
 			return
 		if (!T)
 			T = get_turf(owner)
