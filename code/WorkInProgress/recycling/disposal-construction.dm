@@ -11,6 +11,8 @@
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	m_amt = 1850
 	level = 2
+	help_message = {"You can use a <b>wrench</b> to (un)anchor the pipe segment, a <b>crowbar</b> to rotate it, a <b>screwdriver</b> to disassemble it, and a <b>welding tool</b> to turn it into a functional immovable pipe."}
+
 	var/ptype = 0
 	// 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk, 6 & 7=switching junction, 8 & 9=mob filter junction, 10 = loafer, 11 = mechanics controlled junction
 
