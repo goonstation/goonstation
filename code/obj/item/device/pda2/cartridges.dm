@@ -16,6 +16,9 @@
 //Game Carts
 //Ringtone Carts
 
+TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
+	mats = 0
+
 /obj/item/disk/data/cartridge
 	name = "\improper PDA cartridge"
 	desc = "A data cartridge for PDAs."
@@ -346,7 +349,6 @@
 		name = "\improper Detomatix cartridge"
 		desc = "Designed with the latest advancements in blast processing."
 		icon_state = "cart-deto"
-		mats = 0
 
 		New()
 			..()

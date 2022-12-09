@@ -321,6 +321,12 @@
 		beakers += B1
 		beakers += B2
 
+TYPEINFO(/obj/item/chem_grenade/flashbang)
+	mats = 6
+
+TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
+	mats = null
+
 /obj/item/chem_grenade/flashbang
 	name = "flashbang"
 	desc = "A standard stun grenade."
@@ -330,7 +336,6 @@
 	stage = 2
 	is_syndicate = 1
 	is_dangerous = FALSE
-	mats = 6
 
 	New()
 		..()
@@ -352,7 +357,6 @@
 		beakers += B2
 
 	revolution //convertssss
-		mats = null
 		explode()
 			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				var/datum/game_mode/revolution/R = ticker.mode

@@ -220,7 +220,12 @@
 				something = pick(trinket_safelist)
 
 			if (ispath(something))
+				#ifdef XMAS
+				var/obj/item/gift/thing = new/obj/item/gift(src.loc)
+				thing.gift = new something(thing)
+				#else
 				var/thing = new something(src.loc)
+				#endif
 				visible_message("<b><span class='alert'>[user] violently shakes [src] around! \An [thing] falls out!</span></b>", 1)
 				last_use = world.time
 				max_uses--

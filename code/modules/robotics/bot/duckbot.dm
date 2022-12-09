@@ -64,7 +64,7 @@
 						src.navigate_to(get_turf(M), src.bot_move_delay, 0, 20)
 						break
 	else
-		src.navigate_to(get_step_rand(src))
+		src.navigate_to(get_step_rand(get_turf(src)))
 
 /// Sends the duckbot to a random spot on the station
 /obj/machinery/bot/duckbot/proc/mystical_journey()

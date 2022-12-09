@@ -97,7 +97,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 		setup_equipment_slots()
 		setup_reagents()
 		setup_healths()
-		if (!healthlist.len)
+		if (!length(healthlist))
 			stack_trace("Critter [type] ([name]) \[\ref[src]\] does not have health holders.")
 		count_healths()
 

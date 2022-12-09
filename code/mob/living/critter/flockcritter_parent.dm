@@ -427,7 +427,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/drone/F = owner
-		if (!F || isdead(F) || !F.flock || !F.can_afford(FLOCK_LAY_EGG_COST))
+		if (!F || isdead(F) || !F.flock || !F.can_afford(F.flock.current_egg_cost))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(prob(40))
@@ -437,7 +437,7 @@
 	onStart()
 		..()
 		var/mob/living/critter/flock/drone/F = owner
-		if (!F || isdead(F) || !F.flock || !F.can_afford(FLOCK_LAY_EGG_COST))
+		if (!F || isdead(F) || !F.flock || !F.can_afford(F.flock.current_egg_cost))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		boutput(F, "<span class='notice'>Your internal fabricators spring into action. If you move the process will be ruined!</span>")
@@ -451,7 +451,7 @@
 		F.visible_message("<span class='alert'>[owner] deploys some sort of device!</span>", "<span class='notice'>You deploy a second-stage assembler.</span>")
 		new /obj/flock_structure/egg(get_turf(F), F.flock)
 		playsound(F, 'sound/impact_sounds/Metal_Clang_1.ogg', 30, 1, extrarange = -10)
-		F.pay_resources(FLOCK_LAY_EGG_COST)
+		F.pay_resources(F.flock.current_egg_cost)
 
 /////////////////////////////////////////////////////////////////////////////////
 // REPAIR ACTION
@@ -620,6 +620,7 @@
 			return
 
 		var/obj/flock_structure/cage/cage = new /obj/flock_structure/cage(target.loc, target, F.flock)
+		F.flock.flockmind.tutorial?.PerformSilentAction(FLOCK_ACTION_CAGE)
 		cage.visible_message("<span class='alert'>[cage] forms around [target], entombing them completely!</span>")
 		playsound(target, 'sound/misc/flockmind/flockdrone_build_complete.ogg', 70, 1)
 		logTheThing(LOG_COMBAT, owner, "entombs [constructTarget(target)] in a flock cage at [log_loc(owner)]")

@@ -1,10 +1,12 @@
+TYPEINFO(/obj/item/gun/energy)
+	mats = 32
+
 /obj/item/gun/energy
 	name = "energy weapon"
 	icon = 'icons/obj/items/gun.dmi'
 	item_state = "gun"
 	m_amt = 2000
 	g_amt = 1000
-	mats = 32
 	add_residue = 0 // Does this gun add gunshot residue when fired? Energy guns shouldn't.
 	var/rechargeable = 1 // Can we put this gun in a recharger? False should be a very rare exception.
 	var/robocharge = 800
@@ -59,6 +61,8 @@
 
 	emp_act()
 		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY)
+		src.visible_message("[src] sparks briefly as it overloads!")
+		playsound(src, "sparks", 75, 1, -1)
 		src.UpdateIcon()
 		return
 
@@ -276,6 +280,9 @@
 			src.icon_state = "phaser-new[ratio]"
 			return
 
+TYPEINFO(/obj/item/gun/energy/phaser_small)
+	mats = 20
+
 /obj/item/gun/energy/phaser_small
 	name = "RP-3 micro phaser"
 	icon_state = "phaser-tiny"
@@ -286,7 +293,6 @@
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell
 	w_class = W_CLASS_SMALL
-	mats = 20
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/light/tiny)
@@ -302,6 +308,9 @@
 			src.icon_state = "phaser-tiny[ratio]"
 			return
 
+TYPEINFO(/obj/item/gun/energy/phaser_huge)
+	mats = list("MET-1"=15, "MET-2"=10, "CON-2"=10, "POW-2"=15, "CRY-1"=10)
+
 /obj/item/gun/energy/phaser_huge
 	name = "RP-5 macro phaser"
 	icon_state = "phaser-xl"
@@ -315,7 +324,6 @@
 	can_dual_wield = FALSE
 	force = MELEE_DMG_RIFLE
 	two_handed = 1
-	mats = list("MET-1"=15, "MET-2"=10, "CON-2"=10, "POW-2"=15, "CRY-1"=10)
 	New()
 		set_current_projectile(new/datum/projectile/laser/light/huge) // light/huge - whatev!!!! this should probably be refactored
 		projectiles = list(current_projectile)
@@ -331,6 +339,9 @@
 			return
 
 ///////////////////////////////////////Rad Crossbow
+TYPEINFO(/obj/item/gun/energy/crossbow)
+	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
+
 /obj/item/gun/energy/crossbow
 	name = "\improper Wenshen mini rad-poison-crossbow"
 	desc = "The XIANG|GEISEL Wenshen (瘟神) crossbow favored by many of the syndicate's stealth specialists, which does damage over time using a slow-acting radioactive poison. Utilizes a self-recharging atomic power cell from Geisel Radiofabrik."
@@ -346,7 +357,6 @@
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
 	is_syndicate = 1
-	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
 	silenced = 1 // No conspicuous text messages, please (Convair880).
 	hide_attack = ATTACK_FULLY_HIDDEN
 	custom_cell_max_capacity = 100 // Those self-charging ten-shot radbows were a bit overpowered (Convair880)
@@ -371,6 +381,9 @@
 				return
 
 ////////////////////////////////////////EGun
+TYPEINFO(/obj/item/gun/energy/egun)
+	mats = list("MET-1"=15, "CON-1"=5, "POW-1"=5)
+
 /obj/item/gun/energy/egun
 	name = "energy gun"
 	icon_state = "energy"
@@ -379,7 +392,6 @@
 	desc = "The Five Points Armory Energy Gun. Double emitters with switchable fire modes, for stun bolts or lethal laser fire."
 	item_state = "egun"
 	force = 5
-	mats = list("MET-1"=15, "CON-1"=5, "POW-1"=5)
 	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawbringer/sabre AND an egun.
 	muzzle_flash = "muzzle_flash_elec"
 
@@ -415,6 +427,9 @@
 		src.nojobreward = 1
 
 
+TYPEINFO(/obj/item/gun/energy/egun_jr)
+	mats = list("MET-1"=10, "CON-1"=5, "POW-1"=5)
+
 /obj/item/gun/energy/egun_jr
 	name = "energy gun junior"
 	icon_state = "egun-jr"
@@ -423,7 +438,6 @@
 	desc = "A smaller, disposable version of the Five Points Armory energy gun, with dual modes for stun and kill."
 	item_state = "egun"
 	force = 3
-	mats = list("MET-1"=10, "CON-1"=5, "POW-1"=5)
 	muzzle_flash = "muzzle_flash_elec"
 	can_swap_cell = FALSE
 	rechargeable = FALSE
@@ -523,6 +537,9 @@
 
 
 ////////////////////////////////////VUVUV
+TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
+	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
+
 /obj/item/gun/energy/vuvuzela_gun
 	name = "amplified vuvuzela"
 	icon_state = "vuvuzela"
@@ -531,7 +548,6 @@
 	desc = "BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT, *fart*"
 	cell_type = /obj/item/ammo/power_cell/med_power
 	is_syndicate = 1
-	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt_v)
@@ -655,6 +671,9 @@
 	icon = 'icons/effects/VR.dmi'
 
 ///////////////////////////////////////Telegun
+TYPEINFO(/obj/item/gun/energy/teleport)
+	mats = 0
+
 /obj/item/gun/energy/teleport
 	name = "teleport gun"
 	desc = "A hacked together combination of a taser gun and a handheld teleportation unit."
@@ -665,7 +684,6 @@
 	force = 10
 	throw_speed = 2
 	throw_range = 10
-	mats = 0
 	cell_type = /obj/item/ammo/power_cell/med_power
 	var/obj/item/our_target = null
 	var/obj/machinery/computer/teleporter/our_teleporter = null // For checks before firing (Convair880).
@@ -795,6 +813,9 @@
 		return index
 
 ///////////////////////////////////////Ghost Gun
+TYPEINFO(/obj/item/gun/energy/ghost)
+	mats = 0
+
 /obj/item/gun/energy/ghost
 	name = "ectoplasmic destabilizer"
 	desc = "If this had streams, it would be inadvisable to cross them. But no, it fires bolts instead.  Don't throw it into a stream, I guess?"
@@ -804,7 +825,6 @@
 	force = 10
 	throw_speed = 2
 	throw_range = 10
-	mats = 0
 	cell_type = /obj/item/ammo/power_cell/med_power
 	muzzle_flash = "muzzle_flash_waveg"
 
@@ -814,6 +834,9 @@
 		..()
 
 ///////////////////////////////////////Modular Blasters
+TYPEINFO(/obj/item/gun/energy/blaster_pistol)
+	mats = 0
+
 /obj/item/gun/energy/blaster_pistol
 	name = "blaster pistol"
 	desc = "A dangerous-looking blaster pistol. It's self-charging by a radioactive power cell."
@@ -821,7 +844,6 @@
 	icon_state = "pistol"
 	w_class = W_CLASS_NORMAL
 	force = 5
-	mats = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/medium
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
 
@@ -886,6 +908,9 @@
 		if(converter_mod)
 			src.overlays += icon('icons/obj/items/gun_mod.dmi',converter_mod.overlay_name)*/
 
+TYPEINFO(/obj/item/gun/energy/blaster_smg)
+	mats = 0
+
 /obj/item/gun/energy/blaster_smg
 	name = "burst blaster"
 	desc = "A special issue blaster weapon, configured for burst fire. It's self-charging by a radioactive power cell."
@@ -894,7 +919,6 @@
 	can_dual_wield = 0
 	w_class = W_CLASS_NORMAL
 	force = 7
-	mats = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/medium
 
 
@@ -944,6 +968,9 @@
 
 ///////////modular components - putting them here so it's easier to work on for now////////
 
+TYPEINFO(/obj/item/gun_parts)
+	mats = 0
+
 /obj/item/gun_parts
 	name = "gun parts"
 	desc = "Components for building custom sidearms."
@@ -951,7 +978,6 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "frame" // todo: make more item icons
-	mats = 0
 
 /obj/item/gun_parts/emitter
 	name = "optical pulse emitter"
@@ -1134,6 +1160,9 @@
 		return ..(target, start, user)
 
 ///////////////////////////////////////Hunter
+TYPEINFO(/obj/item/gun/energy/plasma_gun)
+	mats = list("MET-3"=7, "CRY-1"=13, "POW-2"=10)
+
 /obj/item/gun/energy/plasma_gun/ // Made use of a spare sprite here (Convair880).
 	name = "plasma rifle"
 	desc = "This advanced bullpup rifle contains a self-recharging power cell."
@@ -1144,7 +1173,6 @@
 	force = 5
 	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
 	muzzle_flash = "muzzle_flash_plaser"
-	mats = list("MET-3"=7, "CRY-1"=13, "POW-2"=10)
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/plasma)
@@ -1170,6 +1198,9 @@
 
 		return
 
+TYPEINFO(/obj/item/gun/energy/plasma_gun/hunter)
+	mats = null
+
 /obj/item/gun/energy/plasma_gun/hunter
 	name = "Hunter's plasma rifle"
 	desc = "This unusual looking rifle contains a self-recharging power cell."
@@ -1177,7 +1208,6 @@
 	item_state = "hunter"
 	base_item_state = "hunter"
 	var/hunter_key = "" // The owner of this rifle.
-	mats = null
 
 	New()
 		..()
@@ -1195,6 +1225,9 @@
 			STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
 
 /////////////////////////////////////// Pickpocket Grapple, Grayshift's grif gun
+TYPEINFO(/obj/item/gun/energy/pickpocket)
+	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
+
 /obj/item/gun/energy/pickpocket
 	name = "pickpocket grapple gun" // absurdly shitty name
 	desc = "A complicated, camoflaged claw device on a tether capable of complex and stealthy interactions. It steals shit."
@@ -1209,10 +1242,8 @@
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
 	is_syndicate = 1
-	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
 	silenced = 1
 	hide_attack = ATTACK_FULLY_HIDDEN
-	mats = 100 //yeah no, you can do it if you REALLY want to
 	custom_cell_max_capacity = 100
 	var/obj/item/heldItem = null
 	tooltip_flags = REBUILD_DIST
@@ -1300,6 +1331,9 @@
 /obj/item/gun/energy/pickpocket/testing // has a beefier cell in it
 	cell_type = /obj/item/ammo/power_cell/self_charging/big
 
+TYPEINFO(/obj/item/gun/energy/alastor)
+	mats = list("MET-2"=15, "CON-2"=10, "POW-2"=10)
+
 /obj/item/gun/energy/alastor
 	name = "\improper Alastor pattern laser rifle"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
@@ -1314,7 +1348,6 @@
 	desc = "A gun that produces a harmful laser, causing substantial damage."
 	muzzle_flash = "muzzle_flash_laser"
 	is_syndicate = 1
-	mats = list("MET-2"=15, "CON-2"=10, "POW-2"=10)
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/alastor)
@@ -1331,6 +1364,9 @@
 			return
 
 ///////////////////////////////////////////////////
+TYPEINFO(/obj/item/gun/energy/lawbringer)
+	mats = list("MET-1"=15, "CON-2"=5, "POW-2"=5)
+
 /obj/item/gun/energy/lawbringer
 	name = "\improper Lawbringer"
 	icon = 'icons/obj/items/gun.dmi'
@@ -1342,7 +1378,6 @@
 	g_amt = 2000
 	cell_type = /obj/item/ammo/power_cell/self_charging/lawbringer
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/lawbringer/bad
-	mats = list("MET-1"=15, "CON-2"=5, "POW-2"=5)
 	var/owner_prints = null
 	var/image/indicator_display = null
 	rechargeable = 0
@@ -1630,6 +1665,9 @@
 
 
 ///////////////////////////////////////Wasp Gun
+TYPEINFO(/obj/item/gun/energy/wasp)
+	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
+
 /obj/item/gun/energy/wasp
 	name = "mini wasp-egg-crossbow"
 	desc = "A weapon favored by many of the syndicate's stealth apiarists, which does damage over time using swarms of angry wasps. Utilizes a self-recharging atomic power cell to synthesize more wasp eggs. Somehow."
@@ -1644,7 +1682,6 @@
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
 	is_syndicate = 1
-	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
 	silenced = 1
 	custom_cell_max_capacity = 100
 

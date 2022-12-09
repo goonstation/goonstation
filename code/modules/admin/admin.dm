@@ -2093,7 +2093,7 @@ var/global/noir = 0
 				if(istype(F, /mob/living/intangible/flock/flockmind))
 					mind.special_role = ROLE_FLOCKMIND
 				else if(istype(F, /mob/living/intangible/flock/trace))
-					mind.special_role = "flocktrace"
+					mind.special_role = ROLE_FLOCKTRACE
 				ticker.mode.Agimmicks += mind
 				F.antagonist_overlay_refresh(1, 0)
 

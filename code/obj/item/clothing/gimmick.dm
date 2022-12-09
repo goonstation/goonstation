@@ -568,38 +568,25 @@
 		..()
 		setProperty("coldprot", 40)
 
+
 /obj/item/device/energy_shield/viking
 	name = "TN-FIDEI Energy Shield"
 	desc = "A handheld projected energy barrier for personal protection, bearing the insignia of the Terra Nivium company."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "viking_shield"
 	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	item_state = "vshield"
 	throwforce = 7
+	throw_speed = 1
+	throw_range = 5
 	w_class = W_CLASS_NORMAL
 
-	turn_off()
-		if(user)
-			user.underlays -= shield_overlay
-			user.energy_shield = null
-			shield_overlay = null
-		user = null
-		active = 0
+	New()
+		. = ..()
+		AddComponent(/datum/component/cell_holder, new /obj/item/ammo/power_cell/self_charging/disruptor, TRUE, 100, FALSE)
+		AddComponent(/datum/component/wearertargeting/energy_shield, list(SLOT_BELT, SLOT_L_HAND, SLOT_R_HAND), 0.75, 1, TRUE, 5) //blocks 75% of damage taken, up to 100 damage total
 
-	turn_on(var/mob/user2)
-
-		if(user2.energy_shield)
-			boutput(user2, "<span class='alert'>Cannot activate more than one shield.</span>")
-			return
-
-		user = user2
-		if(!can_use())
-			turn_off()
-			return
-		user.energy_shield = src
-		shield_overlay = image('icons/effects/effects.dmi',user,"enshield",MOB_LAYER+1)
-		user.underlays += shield_overlay
-		active = 1
 
 // Merchant
 
