@@ -900,7 +900,6 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			if (istype(delivery,/obj/item/parts) && ishuman(M))
 				var/mob/living/carbon/human/H = M
 				var/obj/item/parts/HP = delivery
-			//	var/limb_name = HP.holder.real_name + "'s " + HP.name
 				if(HP == bounty.item && HP.holder == M) //Is this the right limb and is it attached?
 					HP.remove()
 					take_bleeding_damage(H, null, 10)
