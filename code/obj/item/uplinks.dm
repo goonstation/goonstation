@@ -789,6 +789,11 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		src.bounty = bounty
 		src.delivery = delivery
 
+	disposing()
+		src.bounty = null
+		src.delivery = null
+		..()
+
 /obj/item/uplink/integrated/pda/spy
 	uses = 5 //amount of times that we can deliver items
 			//When uses hits 0, the spawn will be an ID tracker
