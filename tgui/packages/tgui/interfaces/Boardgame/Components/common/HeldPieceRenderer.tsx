@@ -1,7 +1,7 @@
 import { Box } from '../../../../components';
-import { BoardgameData } from '../../utils/types';
+import { BoardgameData } from '../../utils';
 import { useBackend } from '../../../../backend';
-import { useStates } from '../../utils/config';
+import { useStates } from '../../utils';
 import { codeRecordFromPieces, fetchPieces } from '../../games';
 
 export const HeldPieceRenderer = (_, context) => {

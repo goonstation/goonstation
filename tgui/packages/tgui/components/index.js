@@ -14,6 +14,7 @@ export { ByondUi } from './ByondUi';
 export { Chart } from './Chart';
 export { Collapsible } from './Collapsible';
 export { ColorBox } from './ColorBox';
+export { ConfirmButton } from './goonstation/ConfirmButton';
 export { ColorButton } from './goonstation/ColorButton';
 export { Dimmer } from './Dimmer';
 export { Divider } from './Divider';

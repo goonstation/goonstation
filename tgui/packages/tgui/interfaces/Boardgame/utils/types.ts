@@ -1,4 +1,4 @@
-export type BoardInfo = {
+export type BoardInfoType = {
   name: string;
   game: string;
   boardstyle: string;
@@ -7,7 +7,7 @@ export type BoardInfo = {
   lock: boolean;
 };
 
-export type Styling = {
+export type StylingType = {
   tileColor1: string;
   tileColor2: string;
   oldTileColor1: string;
@@ -19,16 +19,16 @@ export type Styling = {
 };
 
 export type BoardgameData = {
-  boardInfo: BoardInfo;
-  styling: Styling;
+  boardInfo: BoardInfoType;
+  styling: StylingType;
   board: string[];
-  pieces: PieceData[];
-  users: UserData[];
-  currentUser: UserData;
+  pieces: PieceDataType[];
+  users: UserDataType[];
+  currentUser: UserDataType;
   lastMovedPiece: string;
 };
 
-export type PieceData = {
+export type PieceDataType = {
   id: number;
   code: string;
   x: number;
@@ -40,14 +40,23 @@ export type PieceData = {
   palette: string;
 };
 
-export type UserData = {
+export type UserDataType = {
   ckey: string;
   name: string;
   selected?: string;
   palette?: string;
 };
 
-export type TileSizeData = {
+export type TileSizeType = {
+  width: number;
+  height: number;
+};
+
+export type XYType = {
+  x: number;
+  y: number;
+};
+export type SizeType = {
   width: number;
   height: number;
 };

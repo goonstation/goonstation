@@ -1,4 +1,4 @@
-import { PieceData } from './types';
+import { PieceDataType } from './types';
 
 export const numToBoardNotation = (num: number) => {
   // 1 -> A, 2 -> B, 26 -> Z, 27 -> AA, 28 -> AB, etc.
@@ -57,7 +57,7 @@ export const convertFenCodeToBoardArray = (fenCode: string) => {
   return boardArray;
 };
 
-export const convertBoardToGNot = (width: number, height: number, pieces: PieceData[]) => {
+export const convertBoardToGNot = (width: number, height: number, pieces: PieceDataType[]) => {
   // Convert the pieces on a board into a GNot string, comma separated
   // For example, if the board is 8x8 a string could formatted like this:
   // r,n,b,q,k,b,n,r,p,p,p,p,p,p,p,p,32,P,P,P,P,P,P,P,P,R,N,B,Q,K,B,N,R

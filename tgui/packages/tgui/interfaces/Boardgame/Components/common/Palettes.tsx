@@ -1,8 +1,7 @@
-import { BoardgameData } from '../../utils/types';
-import { Piece } from '..';
+import { BoardgameData } from '../../utils';
 import { useBackend } from '../../../../backend';
 import { fetchPalettes, PieceSetupType } from '../../games';
-import { useActions, useStates } from '../../utils/config';
+import { useActions, useStates } from '../../utils';
 import { Box, Button, Flex } from '../../../../components';
 
 export const Palettes = (props, context) => {
@@ -42,7 +41,7 @@ const Palette = ({ piece }: PaletteProps, context) => {
       className="boardgame__palettes-set-piece"
       key={piece.name}
       onMouseDown={() => paletteSet(currentUser.ckey, piece.code)}>
-      <Piece piece={piece} isPresetPiece />
+      <img src={piece.image} />
     </Flex.Item>
   );
 };

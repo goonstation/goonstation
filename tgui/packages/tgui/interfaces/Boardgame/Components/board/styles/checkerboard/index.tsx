@@ -1,6 +1,6 @@
 import { useBackend } from '../../../../../../backend';
-import { useActions, useStates } from '../../../../utils/config';
-import { BoardgameData } from '../../../../utils/types';
+import { useActions, useStates } from '../../../../utils';
+import { BoardgameData } from '../../../../utils';
 import GridGuideRenderer from '../../common/GridGuideRenderer';
 import GridPieceRenderer from '../../common/GridPieceRenderer';
 import { StyleProps } from '../types';

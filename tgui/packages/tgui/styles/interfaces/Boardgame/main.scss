@@ -6,7 +6,7 @@
   &titlebar {
     position: fixed;
     top: 4px;
-    right: 50px;
+    right: 80px;
     padding: 2px;
     z-index: 2;
 
@@ -25,4 +25,3 @@
 @include meta.load-css('./palettes.scss');
 @include meta.load-css('./notations.scss');
 @include meta.load-css('./board.scss');
-@include meta.load-css('./modal.scss');

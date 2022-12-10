@@ -1,11 +1,11 @@
 import { useBackend } from '../../../../../backend';
 import { codeRecordFromPieces, fetchPieces } from '../../../games';
-import { useActions, useStates } from '../../../utils/config';
-import { BoardgameData, PieceData } from '../../../utils/types';
+import { useActions, useStates } from '../../../utils';
+import { BoardgameData, PieceDataType } from '../../../utils';
 import { Box } from '../../../../../components';
 
 type GridPieceRendererProps = {
-  pieces: PieceData[];
+  pieces: PieceDataType[];
   interactable: boolean; // Used for previewing pieces, not for actual gameplay
 };
 

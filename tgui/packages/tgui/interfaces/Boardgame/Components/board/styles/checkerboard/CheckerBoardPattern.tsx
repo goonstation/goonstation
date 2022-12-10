@@ -1,5 +1,5 @@
 import { useBackend } from '../../../../../../backend';
-import { BoardgameData } from '../../../../utils/types';
+import { BoardgameData } from '../../../../utils';
 
 const CheckerBoardPattern = (props, context) => {
   const { data, act } = useBackend<BoardgameData>(context);

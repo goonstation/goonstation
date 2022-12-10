@@ -1,6 +1,6 @@
 import { useBackend } from '../../../../../backend';
-import { useStates } from '../../../utils/config';
-import { BoardgameData } from '../../../utils/types';
+import { useStates } from '../../../utils';
+import { BoardgameData } from '../../../utils';
 
 /**
  * Renders help overlay for the board

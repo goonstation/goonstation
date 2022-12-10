@@ -1,9 +1,9 @@
 import { useBackend } from '../../../../backend';
 import { Box, Flex } from '../../../../components';
-import { BoardgameData } from '../../utils/types';
+import { BoardgameData } from '../../utils';
 
 import { generateBoardNotationLetters } from '../../utils/notations';
-import { useStates } from '../../utils/config';
+import { useStates } from '../../utils';
 
 export type NotationsProps = {
   direction: 'vertical' | 'horizontal';
