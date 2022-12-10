@@ -2923,6 +2923,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
     food_effects = list("food_refreshed","food_warm")
 
 // Dippable food
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)
 /obj/item/reagent_containers/food/snacks/dippable
 	name = "dippable food"
 	desc = "YOU'RE NOT MEANT TO SEE THIS GO AWAY"
