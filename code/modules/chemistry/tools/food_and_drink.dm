@@ -1969,5 +1969,5 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	icon_state = "creamer"
 	item_state = "creamer"
 	initial_volume = 50
-	initial_reagents = list("milk"=50)
+	initial_reagents = list("milk"=40, "sugar"=10)
 	can_recycle = 0
