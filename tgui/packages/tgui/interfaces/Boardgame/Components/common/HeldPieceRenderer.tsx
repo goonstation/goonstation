@@ -12,7 +12,7 @@ export const HeldPieceRenderer = (_, context) => {
   const { mouseCoords, paletteLastElement } = useStates(context);
   const { x, y } = mouseCoords;
 
-  let code;
+  let code = null;
   if (data.currentUser.palette) {
     code = data.currentUser.palette;
   } else if (data.currentUser.selected) {
