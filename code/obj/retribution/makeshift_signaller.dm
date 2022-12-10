@@ -1,6 +1,9 @@
 #define MINUTES_TO_SWORD_LINK 30										//Feel free to tweak this number as you see fit. After all, my strong suit is originality, not balance.
 var/sword_summoned_before = false
 
+TYPEINFO(/obj/item/makeshift_signaller_frame)
+	mats = 4
+
 /obj/item/makeshift_signaller_frame
 	name = "makeshift signaller frame"
 	icon = 'icons/misc/retribution/makeshift_signaller.dmi'
@@ -13,7 +16,6 @@ var/sword_summoned_before = false
 	m_amt = 500
 	burn_type = 1
 	var/build_stage = 0
-	mats = 4
 	desc = "A disemboweled remote signaller, ready for further modifications."
 	stamina_damage = 0
 	stamina_cost = 0
@@ -60,6 +62,9 @@ var/sword_summoned_before = false
 			return
 		return
 
+TYPEINFO(/obj/item/makeshift_syndicate_signaller)
+	mats = 4
+
 /obj/item/makeshift_syndicate_signaller
 	name = "makeshift syndicate signaller"
 	icon = 'icons/misc/retribution/makeshift_signaller.dmi'
@@ -74,7 +79,6 @@ var/sword_summoned_before = false
 	var/was_emagged = false
 	var/is_exploding = false
 	is_syndicate = 1
-	mats = 4
 	desc = "This device has a menacing aura around it. It requires 8 nodes of metadata to properly send and encrypt it's signal."
 	contraband = 5
 

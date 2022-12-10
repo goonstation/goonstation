@@ -1394,6 +1394,7 @@ datum/preferences
 			HTML += "</td>"
 
 		HTML += "<td valign='top' class='antagprefs'>"
+#ifdef LIVE_SERVER
 		if (user?.client?.player.get_rounds_participated() < TEAM_BASED_ROUND_REQUIREMENT)
 			HTML += "You need to play at least [TEAM_BASED_ROUND_REQUIREMENT] rounds to play group-based antagonists."
 			src.be_syndicate = FALSE
@@ -1401,6 +1402,7 @@ datum/preferences
 			src.be_gangleader = FALSE
 			src.be_revhead = FALSE
 			src.be_conspirator = FALSE
+#endif
 		if (jobban_isbanned(user, "Syndicate"))
 			HTML += "You are banned from playing antagonist roles."
 			src.be_traitor = FALSE

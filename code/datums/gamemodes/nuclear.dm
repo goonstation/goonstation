@@ -215,7 +215,7 @@
 			to_output = "We have identified several major structural weaknesses in the [station_or_ship()]'s rickety excuse of a design. To obliterate [station_name(1)], arm the bomb in one of the following: <B>[concatenated_location_names]</B>."
 
 	for(var/datum/mind/synd_mind in syndicates)
-		bestow_objective(synd_mind,/datum/objective/specialist/nuclear)
+		bestow_objective(synd_mind, /datum/objective/specialist/nuclear)
 
 		var/obj_count = 1
 		boutput(synd_mind.current, "<span class='notice'>You are a [syndicate_name()] agent!</span>")

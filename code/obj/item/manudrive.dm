@@ -12,10 +12,12 @@
 /datum/computer/file/manudrive/restricted // This is for manudrives that actually have a fabrication limit. Only difference is there file cant be copied.
 	name = "Restricted Manufacturer Recipes"
 	dont_copy = 1
+TYPEINFO(/obj/item/disk/data/floppy/manudrive)
+	mats = 0 // These things arent intended to be reproducible (god I butchered that) due to things like fablimits.
+
 /obj/item/disk/data/floppy/manudrive // This one should be the parent of manudrives that dont have a fabrication limit.
 	name = "Standard ManuDrive: Empty"
 	desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer."
-	mats = 0 // These things arent intended to be reproducible (god I butchered that) due to things like fablimits.
 	random_color = 0
 	icon_state = "datadiskwhi"
 	/// Put the recipe string here and itll make em into instances.

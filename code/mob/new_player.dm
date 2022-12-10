@@ -397,16 +397,46 @@ mob/new_player
 			// probalby could be a define but dont give a shite
 			var/maxslots = 5
 			var/list/slots = list()
-			var/shown = clamp(c, (limit == -1 ? 99 : limit), maxslots)
+			var/shown = clamp(c, (limit == -1 ? maxslots : limit), maxslots)
 			// if there's still an open space, show a final join link
 			if (limit == -1 || (limit > maxslots && c < limit))
-				slots += "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' class='latejoin-card' style='border-color: [J.linkcolor];' title='Join the round as [J.name].'>&#x2713;&#xFE0E;</a>"
-
+				slots += {"<a href='byond://?src=\ref[src];
+				SelectedJob=\ref[J]' class='latejoin-card' style='border-color: [J.linkcolor];
+				' title='Join the round as [J.name].'>&#x2713;
+				&#xFE0E;
+				</a>"}
 			// show slots up to the limit
-			// extra people beyond the limit will be shown as a [+X] card
+			// extra people beyond the limit will be shown as a [+X] card, supposedly
 			for (var/i = shown, i > 0, i--)
-				slots += (i <= c ? "<div class='latejoin-card latejoin-full' style='border-color: [J.linkcolor]; background-color: [J.linkcolor];' title='Slot filled.'>[(i == 1 && c > shown) ? "+[c - maxslots]" : "&times;"]</div>" : "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' class='latejoin-card' style='border-color: [J.linkcolor];' title='Join the round as [J.name].'>&#x2713;&#xFE0E;</a>")
-
+				// can you believe all these slot appendages were in one line before using nested ternaries? awful.
+				if (i <= c)
+					if (i == 1 && c > shown)
+						slots += {"
+						<div
+						class='latejoin-card latejoin-full'
+						style='border-color: [J.linkcolor]; background-color: [J.linkcolor];'
+						title='Slot filled.'
+						>+[c - maxslots]
+						</div>
+						"}
+					else
+						slots += {"
+						<div
+						class='latejoin-card latejoin-full'
+						style='border-color: [J.linkcolor]; background-color: [J.linkcolor];'
+						title='Slot filled.'
+						>&times;
+						</div>
+						"}
+				else
+					slots += {"
+					<a
+					href='byond://?src=\ref[src];SelectedJob=\ref[J]'
+					class='latejoin-card' style='border-color: [J.linkcolor];'
+					title='Join the round as [J.name].'
+					>&#x2713;&#xFE0E;
+					</a>
+					"}
 			return {"
 				<tr><td class='latejoin-link'>
 					[(limit == -1 || c < limit) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' style='color: [J.linkcolor];' title='Join the round as [J.name].'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is full.'>[J.name]</span>"]
