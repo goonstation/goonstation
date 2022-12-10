@@ -549,7 +549,8 @@ var/global/list/atomTooltips = new()
 			qdel(t)
 
 		atomTooltips.Remove(src)
-	ClearAllOverlays()
+	if(!ismob(src)) // I want centcom cloner to look good, sue me
+		ClearAllOverlays()
 	. = ..()
 
 
