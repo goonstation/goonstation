@@ -227,12 +227,12 @@
 						boutput(owner, "<span class='alert'>You are being watched.</span>")
 						return
 
+		if (!tutorial_check("deploy", T))
+			return
+
 		if (owner)
 			if (tgui_alert(owner,"Would you like to deploy your nucleus?","Deploy Nucleus?",list("Yes","No")) != "Yes")
 				return TRUE
-
-		if (!tutorial_check("deploy", T))
-			return
 
 		var/turf/startTurf = get_turf(owner)
 		var/obj/blob/nucleus/C = new /obj/blob/nucleus(startTurf)

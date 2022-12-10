@@ -92,10 +92,6 @@
 
 	var/turf/T = get_turf(F)
 
-	if (F)
-		if (tgui_alert(F,"Would you like to spawn a rift?","Spawn Rift?",list("Yes","No")) != "Yes")
-			return TRUE
-
 	if (!isadmin(F))
 		if (istype(T, /turf/space/) || istype(T.loc, /area/station/solar) || istype(T.loc, /area/station/mining/magnet))
 			boutput(F, "<span class='alert'>Space and exposed areas are unsuitable for rift placement!</span>")
@@ -121,6 +117,11 @@
 			if (O.density)
 				boutput(F, "<span class='alert'>That tile is blocked by [O].</span>")
 				return TRUE
+
+	if (F)
+		if (tgui_alert(F,"Would you like to spawn a rift?","Spawn Rift?",list("Yes","No")) != "Yes")
+			return TRUE
+
 	logTheThing(LOG_GAMEMODE, holder.get_controlling_mob(), "spawns a rift at [log_loc(src.holder.owner)].")
 	F.spawnEgg()
 
