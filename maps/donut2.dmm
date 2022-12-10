@@ -46309,7 +46309,7 @@
 /obj/storage/crate{
 	name = "Hibernation Crate"
 	},
-/obj/item/clothing/suit/gimmick/dinosaur,
+/obj/item/clothing/suit/hoodie/dinosaur,
 /obj/item/clothing/shoes/tourist,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
