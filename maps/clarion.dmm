@@ -21598,6 +21598,7 @@
 /obj/item/device/radio/intercom/cargo{
 	dir = 4
 	},
+/obj/storage/crate/radio,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aVu" = (

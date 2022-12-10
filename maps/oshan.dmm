@@ -27858,21 +27858,11 @@
 	},
 /area/station/bridge)
 "bvd" = (
-/obj/storage/crate,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/medical,
-/obj/item/device/radio/headset/medical,
-/obj/item/device/radio/headset/engineer,
-/obj/item/device/radio/headset/engineer,
-/obj/item/device/radio/headset/research,
-/obj/item/device/radio/headset/research,
-/obj/item/device/radio/headset/command,
-/obj/item/device/radio/headset/command,
 /obj/decal/tile_edge/line/purple{
 	dir = 9;
 	icon_state = "line1"
 	},
+/obj/storage/crate/radio,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "blue2"
