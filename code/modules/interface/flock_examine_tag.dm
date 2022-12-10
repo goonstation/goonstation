@@ -5,7 +5,6 @@
 	alpha = 180
 	icon = null
 	mouse_opacity = 0
-	var/name_tag = null
 
 	New()
 		..()

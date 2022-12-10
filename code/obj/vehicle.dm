@@ -266,6 +266,9 @@ ABSTRACT_TYPE(/obj/vehicle)
 
 //////////////////////////////////////////////////////////// Segway ///////////////////////////////////////////
 
+TYPEINFO(/obj/vehicle/segway)
+	mats = 8
+
 /obj/vehicle/segway
 	name = "\improper Space Segway"
 	desc = "Now you too can look like a complete tool in space!"
@@ -274,7 +277,6 @@ ABSTRACT_TYPE(/obj/vehicle)
 	var/icon_rider_state = 1
 	var/image/image_under = null
 	layer = MOB_LAYER + 1
-	mats = 8
 	health = 30
 	health_max = 30
 	var/weeoo_in_progress = 0
@@ -352,7 +354,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	update()
 	..()
 	in_bump = 1
-	if(isturf(AM) && (rider.bioHolder.HasEffect("clumsy") || (rider.reagents && rider.reagents.has_reagent("ethanol"))))
+	if(isturf(AM) && (src.emagged || rider.bioHolder.HasEffect("clumsy") || (rider.reagents && rider.reagents.has_reagent("ethanol"))))
 		boutput(rider, "<span class='alert'><B>You crash into the wall!</B></span>")
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
@@ -392,11 +394,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		if(prob(10))
 			M.visible_message("<span class='alert'><b>[src]</b> beeps out an automated injury report of [M]'s vitals.</span>")
 			M.visible_message(scan_health(M, visible = 1))
-		if (!emagged)
-			eject_rider(2)
-		else
-			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-			src.weeoo()
+		eject_rider(2)
 		in_bump = 0
 
 	if(isitem(AM))
@@ -504,7 +502,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			var/datum/attackResults/msgs = new(R)
 			msgs.clear(T)
 			msgs.played_sound = joustingTool.hitsound
-			msgs.affecting = pick("chest", "head")
+			msgs.def_zone = pick("chest", "head")
 			msgs.logs = list()
 			msgs.logc("jousts [constructTarget(T,"combat")] with a [joustingTool]")
 			msgs.damage_type = DAMAGE_BLUNT
@@ -656,13 +654,15 @@ ABSTRACT_TYPE(/obj/vehicle)
 
 ////////////////////////////////////////////////////// Floor buffer /////////////////////////////////////
 
+TYPEINFO(/obj/vehicle/floorbuffer)
+	mats = 8
+
 /obj/vehicle/floorbuffer
 	name = "\improper Buff-R-Matic 3000"
 	desc = "A snazzy ridable floor buffer with a holding tank for cleaning agents."
 	icon_state = "floorbuffer"
 	layer = MOB_LAYER + 1
 	is_syndicate = 1
-	mats = 8
 	health = 80
 	health_max = 80
 	var/low_reagents_warning = 0
@@ -990,6 +990,9 @@ ABSTRACT_TYPE(/obj/vehicle)
 
 /////////////////////////////////////////////////////// Clown car ////////////////////////////////////////
 
+TYPEINFO(/obj/vehicle/clowncar)
+	mats = 15
+
 /obj/vehicle/clowncar
 	name = "Clown Car"
 	desc = "A funny-looking car designed for circus events. Seats 30, very roomy!"
@@ -998,7 +1001,6 @@ ABSTRACT_TYPE(/obj/vehicle)
 	var/moving = 0
 	rider_visible = 0
 	is_syndicate = 1
-	mats = 15
 	ability_buttons_to_initialize = list(/obj/ability_button/loudhorn/clowncar, /obj/ability_button/stopthebus/clowncar)
 	soundproofing = 5
 	var/second_icon = "clowncar2" //animated jiggling for the clowncar
@@ -1578,6 +1580,9 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 ////////////////////////////////////////////////// Admin bus /////////////////////////////////////
 
+TYPEINFO(/obj/vehicle/adminbus)
+	mats = 15
+
 /obj/vehicle/adminbus
 	name = "Admin Bus"
 	desc = "A short yellow bus that looks reinforced."
@@ -1590,7 +1595,6 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	var/badmin_nonmoving_state = "badminbus"
 	var/antispam = 0
 	is_syndicate = 1
-	mats = 15
 	sealed_cabin = 1
 	rider_visible = 0
 	ability_buttons_to_initialize = list(/obj/ability_button/loudhorn, /obj/ability_button/stopthebus, /obj/ability_button/togglespook)
@@ -2183,12 +2187,14 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 //////////////////////////////////////////////////////////////// Forklift //////////////////////////
 
+TYPEINFO(/obj/vehicle/forklift)
+	mats = 12
+
 /obj/vehicle/forklift
 	name = "forklift"
 	desc = "A vehicle used to transport crates."
 	icon_state = "forklift"
 	anchored = 1
-	mats = 12
 	health = 80
 	health_max = 80
 	var/list/helditems = list()	//Items being held by the forklift

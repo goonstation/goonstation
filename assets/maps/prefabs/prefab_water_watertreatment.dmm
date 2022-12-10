@@ -553,7 +553,8 @@
 /obj/decal/cleanable/blood/drip/high{
 	icon_state = "gibbl1"
 	},
-/turf/simulated/floor/delivery/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/prefab/water_treatment)
 "xE" = (
 /obj/map/light/dimred,
@@ -688,7 +689,8 @@
 /area/prefab/water_treatment)
 "JO" = (
 /obj/forcefield/energyshield/perma,
-/turf/simulated/floor/delivery/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/prefab/water_treatment)
 "Kk" = (
 /obj/decal/cleanable/blood/tracks{
@@ -780,7 +782,8 @@
 /area/prefab/water_treatment)
 "PJ" = (
 /obj/wingrille_spawn/auto/crystal,
-/turf/simulated/floor/delivery/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/prefab/water_treatment)
 "QW" = (
 /obj/decal/fakeobjects{
@@ -865,7 +868,8 @@
 	name = "Permanent Liquid Forcefield";
 	powerlevel = 4
 	},
-/turf/simulated/floor/delivery/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/prefab/water_treatment)
 "WR" = (
 /obj/machinery/door_control{

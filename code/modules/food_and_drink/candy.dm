@@ -29,10 +29,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 	heal(var/mob/M)
 		if(src.razor_blade && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/obj/item/affecting = H.organs["head"]
 			boutput(H, "<span class='alert'>You bite down into a razor blade!</span>")
+			H.TakeDamage("head", 10, 0, 0, DAMAGE_STAB)
 			H.changeStatus("weakened", 3 SECONDS)
-			affecting.take_damage(10, 0)
 			H.UpdateDamageIcon()
 			src.razor_blade = 0
 			new /obj/item/razor_blade( get_turf(src) )

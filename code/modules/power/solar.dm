@@ -9,6 +9,9 @@
 //Machine that tracks the sun and reports it's direction to the solar controllers
 //As long as this is working, solar panels on same powernet will track automatically
 
+TYPEINFO(/obj/machinery/power/tracker)
+	mats = list("CRY-1"=15, "CON-1"=20)
+
 /obj/machinery/power/tracker
 	name = "Houyi stellar tracker"
 	desc = "The XIANG|GIESEL model '后羿' star tracker, used to set the alignment of accompanying photo-electric generator panels."
@@ -20,7 +23,6 @@
 	var/id = 1 // nolonger used, kept for map compatibility
 	var/sun_angle = 0		// sun angle as set by sun datum
 	var/obj/machinery/computer/solar_control/control
-	mats = list("CRY-1"=15, "CON-1"=20)
 
 	north
 		id = "north"
@@ -81,6 +83,9 @@
 
 /////////////////////////////////////////////// Solar panel /////////////////////////////////////////////////////
 
+TYPEINFO(/obj/machinery/power/solar)
+	mats = list("MET-2"=15, "CON-1"=15)
+
 /obj/machinery/power/solar
 	name = "Kuafu photoelectric panel"
 	desc = "The XIANG|GIESEL model '夸父' photo electrical generator. commonly known as a solar panel."
@@ -99,7 +104,6 @@
 	var/ndir = SOUTH
 	var/turn_angle = 0
 	var/obj/machinery/computer/solar_control/control
-	mats = list("MET-2"=15, "CON-1"=15)
 
 
 	north
@@ -448,9 +452,11 @@
 
 // solar panels which ignore occlusion
 
+TYPEINFO(/obj/machinery/power/solar/owl_cheat)
+	mats = 0
+
 /obj/machinery/power/solar/owl_cheat
 	id = "owl"
-	mats = 0
 
 	update_solar_exposure()
 		if(isnull(sun))	return

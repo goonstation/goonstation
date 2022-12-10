@@ -38,6 +38,9 @@
 
 	var/list/atom_properties
 
+	/// Whether pathfinding is forbidden from caching the passability of this atom. See [/turf/passability_cache]
+	var/tmp/pass_unstable = TRUE
+
 /* -------------------- name stuff -------------------- */
 	/*
 	to change names: either add or remove something with the appropriate proc(s) and then call atom.UpdateName()
@@ -376,6 +379,7 @@
 /atom/movable/overlay
 	var/atom/master = null
 	anchored = 1
+	pass_unstable = FALSE
 
 /atom/movable/overlay/gibs
 	icon_state = "blank"
@@ -433,6 +437,9 @@
 				T2.neighcheckinghasproximity++
 		if(src.opacity)
 			T.opaque_atom_count++
+		for(var/turf/covered_turf as anything in src.locs)
+			covered_turf.pass_unstable += src.pass_unstable
+			covered_turf.passability_cache = null
 	if(!isnull(src.loc))
 		src.loc.Entered(src, null)
 		if(isturf(src.loc)) // call it on the area too
@@ -525,6 +532,7 @@
 		return // this should in turn fire off its own slew of move calls, so don't do anything here
 
 	var/atom/A = src.loc
+	var/list/old_locs = src.locs
 	if(src.event_handler_flags & MOVE_NOCLIP)
 		if(!isturf(NewLoc))
 			NewLoc = get_step(src, direct)
@@ -549,12 +557,18 @@
 		return
 
 	if (isturf(last_turf))
+		for(var/turf/covered_turf as anything in old_locs)
+			covered_turf.pass_unstable -= src.pass_unstable
+			covered_turf.passability_cache = null
 		if (src.event_handler_flags & USE_PROXIMITY)
 			last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
 			for (var/turf/T2 in range(1, last_turf))
 				T2.neighcheckinghasproximity--
 	if(isturf(src.loc))
 		var/turf/T = src.loc
+		for(var/turf/covered_turf as anything in src.locs)
+			covered_turf.pass_unstable += src.pass_unstable
+			covered_turf.passability_cache = null
 		if (src.event_handler_flags & USE_PROXIMITY)
 			T.checkinghasproximity++
 			for (var/turf/T2 in range(1, T))
@@ -620,7 +634,7 @@
 	if (src.mdir_lights)
 		update_mdir_light_visibility(src.dir)
 
-/atom/proc/get_desc(dist)
+/atom/proc/get_desc(dist, mob/user)
 
 /**
   * a proc to completely override the standard formatting for examine text
@@ -908,6 +922,7 @@
 	var/area/new_area = get_area(newloc)
 
 	var/atom/oldloc = loc
+	var/atom/oldlocs = src.locs
 	loc = newloc
 
 #ifdef CHECK_MORE_RUNTIMES
@@ -923,6 +938,9 @@
 	oldloc?.Exited(src, newloc)
 
 	if(isturf(oldloc))
+		for(var/turf/covered_turf as anything in oldlocs)
+			covered_turf.pass_unstable -= src.pass_unstable
+			covered_turf.passability_cache = null
 		for(var/atom/A in oldloc)
 			if(A != src)
 				A.Uncrossed(src)
@@ -934,6 +952,9 @@
 	newloc?.Entered(src, oldloc)
 
 	if(isturf(newloc))
+		for(var/turf/covered_turf as anything in src.locs)
+			covered_turf.pass_unstable += src.pass_unstable
+			covered_turf.passability_cache = null
 		for(var/atom/A in newloc)
 			if(A != src)
 				A.Crossed(src)
@@ -970,6 +991,9 @@
 //reason for having this proc is explained below
 /atom/proc/set_density(var/newdensity)
 	src.density = HAS_ATOM_PROPERTY(src, PROP_ATOM_NEVER_DENSE) ? 0 : newdensity
+	if(src.density != newdensity)
+		var/turf/loc = src.loc // invalidate JPS cache on density changes
+		loc.passability_cache = null
 
 /atom/proc/set_opacity(var/newopacity)
 	SHOULD_CALL_PARENT(TRUE)

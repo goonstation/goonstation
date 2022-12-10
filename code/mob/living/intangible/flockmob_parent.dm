@@ -14,6 +14,7 @@
 	anchored = 1
 	use_stamina = 0//no puff tomfuckery
 	respect_view_tint_settings = TRUE
+	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	var/compute = 0
 	var/datum/flock/flock = null
 	var/wear_id = null // to prevent runtimes from AIs tracking down radio signals
@@ -29,7 +30,6 @@
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_FLOCK)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
-	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	src.see_invisible = INVIS_FLOCK
 	src.see_in_dark = SEE_DARK_FULL
 	/// funk that color matrix up, my friend
@@ -64,6 +64,12 @@
 		plane = src.client.get_plane(PLANE_FLOCKVISION)
 		if (plane)
 			plane.alpha = 0
+	..()
+
+
+/mob/living/intangible/flock/Move(NewLoc, direct)
+	if (istype(NewLoc, /turf/cordon))
+		return FALSE
 	..()
 
 /mob/living/intangible/flock/Life(datum/controller/process/mobs/parent)
@@ -131,6 +137,13 @@
 	// HAAAAA
 	src.visible_message("<span class='alert'>[src] is not a ghost, and is therefore unaffected by [P]!</span>","<span class='notice'>You feel a little [pick("less", "more")] [pick("fuzzy", "spooky", "glowy", "flappy", "bouncy")].</span>")
 
+/mob/living/intangible/flock/proc/select_drone(mob/living/critter/flock/drone/drone)
+	var/datum/abilityHolder/flockmind/holder = src.abilityHolder
+	holder.drone_controller.drone = drone
+	drone.AddComponent(/datum/component/flock_ping/selected)
+	src.targeting_ability = holder.drone_controller
+	src.update_cursor()
+
 /mob/living/intangible/flock/click(atom/target, params)
 	if (targeting_ability)
 		..()
@@ -147,17 +160,13 @@
 		return
 
 	if (istype(target, /mob/living/critter/flock/drone))
-		var/datum/abilityHolder/flockmind/holder = src.abilityHolder
-		holder.drone_controller.drone = target
-		target.AddComponent(/datum/component/flock_ping/selected)
-		src.targeting_ability = holder.drone_controller
-		src.update_cursor()
+		src.select_drone(target)
 		return
 
 	//moved from flock_structure_ghost for interfering with ability targeting
 	if (istype(target, /obj/flock_structure/ghost))
-		if (tgui_alert(usr, "Cancel tealprint construction?", "Tealprint", list("Yes", "No")) == "Yes")
-			var/obj/flock_structure/ghost/tealprint = target
+		var/obj/flock_structure/ghost/tealprint = target
+		if (!tealprint.fake && tgui_alert(usr, "Cancel tealprint construction?", "Tealprint", list("Yes", "No")) == "Yes")
 			tealprint.cancelBuild()
 		return
 

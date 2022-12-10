@@ -671,12 +671,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 				if (ishuman(user) && prob(10))
 					var/mob/living/carbon/human/M = user
 					boutput(user, "<span class='alert'>You stub your toe! Ouch!</span>")
-					var/obj/item/organ/foot = null
-					if(M.hand)
-						foot = M.organs["r_leg"]
-					else
-						foot = M.organs["l_leg"]
-					foot.take_damage(3, 0)
+					M.TakeDamage(M.hand ? "r_leg" : "l_leg", 3, 0, 0, DAMAGE_BLUNT)
 					user.changeStatus("weakened", 2 SECONDS)
 		user.lastattacked = src
 	src.update_appearance()

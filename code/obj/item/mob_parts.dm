@@ -103,8 +103,6 @@ ABSTRACT_TYPE(/obj/item/parts)
 					if(holder.organHolder.organ_list[thing] == src)
 						holder.organHolder.organ_list[thing] = null
 
-			if (holder?.organs?[src.slot] == src)
-				holder.organs[src.slot] = null
 		holder = null
 
 		if (bones)
@@ -119,7 +117,6 @@ ABSTRACT_TYPE(/obj/item/parts)
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder
 			H.limbs.vars[src.slot] = null
-			H.organs[src.slot] = null
 			if(remove_object)
 				if (H.l_hand == remove_object)
 					H.l_hand = null
