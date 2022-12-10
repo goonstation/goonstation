@@ -102,6 +102,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 		M.dnr = 1
 		M.transfer_to(L)
+		M.assigned_role = "Santa Claus"
 		boutput(L, "<span class='notice'><b>You have been respawned as Santa Claus!</b></span>")
 		boutput(L, "Go to the station and reward the crew for their high faith in Spacemas. Use your Spacemas magic!")
 		boutput(L, "<b>Do not reference anything that happened during your past life!</b>")
