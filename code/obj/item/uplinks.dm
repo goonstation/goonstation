@@ -898,14 +898,13 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			return FALSE
 		var/datum/bounty_item/bounty = claim.bounty
 		delivery = claim.delivery
-		user.removeGpsPath(doText = 0)
+		user.removeGpsPath(doText = FALSE)
 		bounty.claimed = TRUE
 		if (istype(delivery.loc, /mob))
 			var/mob/M = delivery.loc
 			if (istype(delivery,/obj/item/parts) && ishuman(M))
 				var/mob/living/carbon/human/H = M
 				var/obj/item/parts/HP = delivery
-			//	var/limb_name = HP.holder.real_name + "'s " + HP.name
 				if(HP == bounty.item && HP.holder == M) //Is this the right limb and is it attached?
 					HP.remove()
 					take_bleeding_damage(H, null, 10)
