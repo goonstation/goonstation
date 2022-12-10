@@ -6460,8 +6460,8 @@
 "atr" = (
 /obj/decal/cleanable/dirt/dirt3,
 /obj/storage/crate,
-/obj/item/clothing/under/misc/colmob,
-/obj/item/clothing/under/misc/rusmob,
+/obj/item/clothing/under/misc/mobster,
+/obj/item/clothing/under/misc/mobster/alt,
 /turf/simulated/floor,
 /area/abandonedship)
 "ats" = (
@@ -35649,7 +35649,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "gYm" = (
-/obj/machinery/computer/shuttle_bus{
+/obj/machinery/computer/transit_shuttle/johnbus{
 	dir = 8
 	},
 /turf/simulated/floor/grime,
