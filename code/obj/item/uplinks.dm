@@ -893,7 +893,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			return FALSE
 		var/datum/bounty_item/bounty = claim.bounty
 		delivery = claim.delivery
-		user.removeGpsPath(doText = 0)
+		user.removeGpsPath(doText = FALSE)
 		bounty.claimed = TRUE
 		if (istype(delivery.loc, /mob))
 			var/mob/M = delivery.loc
