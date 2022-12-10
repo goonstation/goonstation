@@ -375,18 +375,18 @@
 	var/opcount = 0
 	var/opdeathcount = 0
 	for(var/datum/mind/M in syndicates)
-	 	opcount++
-	 	if(!M.current || isdead(M.current) || inafterlife(M.current) || isVRghost(M.current) || issilicon(M.current) || isghostcritter(M.current))
+		opcount++
+		if(!M.current || isdead(M.current) || inafterlife(M.current) || isVRghost(M.current) || issilicon(M.current) || isghostcritter(M.current))
 			opdeathcount++ // If they're dead
-	 		continue
+			continue
 
-	 	var/turf/T = get_turf(M.current)
-	 	if (!T)
-	 		continue
-	 	if (istype(T.loc, /area/station/security/brig))
-	 		if(M.current.hasStatus("handcuffed"))
-	 			opdeathcount++
-	 			// If they're in a brig cell and cuffed
+		var/turf/T = get_turf(M.current)
+		if (!T)
+			continue
+		if (istype(T.loc, /area/station/security/brig))
+			if(M.current.hasStatus("handcuffed"))
+				opdeathcount++
+				// If they're in a brig cell and cuffed
 
 	if (opcount == opdeathcount) return 1
 	else return 0
