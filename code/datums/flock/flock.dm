@@ -431,6 +431,8 @@ var/flock_signal_unleashed = FALSE
 		get_image_group(src).remove_image(image)
 		active -= annotation
 		qdel(image)
+	if (!length(active))
+		src.annotations -= target
 
 /datum/flock/proc/showAnnotations(var/mob/M)
 	get_image_group(src).add_mob(M)
