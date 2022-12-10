@@ -849,7 +849,7 @@ var/flock_signal_unleashed = FALSE
 
 	if(istype(T, /turf/simulated/wall) || force && (T.density || locate(/obj/indestructible/shuttle_corner) in T))
 		if(tutorial)
-			T.ReplaceWith(/turf/simulated/wall/auto/feather{opacity=FALSE}, FALSE, force=force)
+			T.ReplaceWith(/turf/simulated/wall/auto/feather/tutorial, FALSE, force=force)
 		else
 			T.ReplaceWith(/turf/simulated/wall/auto/feather, FALSE, force=force)
 		animate_flock_convert_complete(T)
@@ -957,7 +957,7 @@ var/flock_signal_unleashed = FALSE
 			if (F)
 				F.claimTurf(flock_convert_turf(T, tutorial))
 			else
-				flock_convert_turf(T, tutorial, force=force, fancy=fancy)
+				flock_convert_turf(T, tutorial=tutorial, force=force, fancy=fancy)
 			sleep(delay)
 		LAGCHECK(LAG_LOW)
 		// figure out where next turf is
