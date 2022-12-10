@@ -215,7 +215,7 @@
 			to_output = "We have identified several major structural weaknesses in the [station_or_ship()]'s rickety excuse of a design. To obliterate [station_name(1)], arm the bomb in one of the following: <B>[concatenated_location_names]</B>."
 
 	for(var/datum/mind/synd_mind in syndicates)
-		bestow_objective(synd_mind,/datum/objective/specialist/nuclear)
+		bestow_objective(synd_mind, /datum/objective/specialist/nuclear)
 
 		var/obj_count = 1
 		boutput(synd_mind.current, "<span class='notice'>You are a [syndicate_name()] agent!</span>")
@@ -372,24 +372,25 @@
 	..() //Listing custom antagonists.
 
 /datum/game_mode/nuclear/proc/all_operatives_dead()
-	var/opcount = 0
-	var/opdeathcount = 0
-	for(var/datum/mind/M in syndicates)
-		opcount++
-		if(!M.current || isdead(M.current) || inafterlife(M.current) || isVRghost(M.current) || issilicon(M.current) || isghostcritter(M.current))
-			opdeathcount++ // If they're dead
-			continue
+	return FALSE
+	// var/opcount = 0
+	// var/opdeathcount = 0
+	// for(var/datum/mind/M in syndicates)
+	// 	opcount++
+	// 	if(!M.current || isdead(M.current) || inafterlife(M.current) || isVRghost(M.current) || issilicon(M.current) || isghostcritter(M.current))
+	// 		opdeathcount++ // If they're dead
+	// 		continue
 
-		var/turf/T = get_turf(M.current)
-		if (!T)
-			continue
-		if (istype(T.loc, /area/station/security/brig))
-			if(M.current.hasStatus("handcuffed"))
-				opdeathcount++
-				// If they're in a brig cell and cuffed
+	// 	var/turf/T = get_turf(M.current)
+	// 	if (!T)
+	// 		continue
+	// 	if (istype(T.loc, /area/station/security/brig))
+	// 		if(M.current.hasStatus("handcuffed"))
+	// 			opdeathcount++
+	// 			// If they're in a brig cell and cuffed
 
-	if (opcount == opdeathcount) return 1
-	else return 0
+	// if (opcount == opdeathcount) return 1
+	// else return 0
 
 /datum/game_mode/nuclear/send_intercept()
 	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"
