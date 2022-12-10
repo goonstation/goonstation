@@ -6,7 +6,7 @@ import { HealthStat } from '../common/HealthStat';
 import { COLORS } from '../../constants';
 import { ReagentGraph } from '../common/ReagentInfo';
 import { processStatsData, getStatsMax } from '../common/graphUtils';
-import { capitalize, spaceUnderscores } from '../common/stringUtils';
+import { capitalize, pluralize, spaceUnderscores } from '../common/stringUtils';
 import {
   OperatingComputerData,
   OperatingComputerDisplayTitleProps,
@@ -88,7 +88,7 @@ const HealthSummary = (props) => {
     <Stack.Item width={20} textAlign="right">
       <Box fontSize={1}>Overall Health</Box>
       <Box fontSize={1.5}>
-        <Box color={health_color}>{health_text}<span style={{ color: "white" }}>%</span></Box>
+        <Box color={health_color}>{health_text}<Box as="span" color="white">%</Box></Box>
       </Box>
     </Stack.Item>
   );
@@ -121,13 +121,13 @@ const PatientTab = (props, context) => {
             optimal_temp={data.optimal_temp}
             embedded_objects={data.embedded_objects}
           />
-          { data.occupied ? <DisplayRads rad_stage={data.rad_stage} rad_dose={data.rad_dose} />: ""}
+          { !!data.occupied && <DisplayRads rad_stage={data.rad_stage} rad_dose={data.rad_dose} />}
           <DisplayBrain
             occupied={data.occupied}
             status={data.brain_damage}
           />
         </Table>
-        { data.occupied? <DisplayEmbeddedObjects embedded_objects={data.embedded_objects} />: ""}
+        { !!data.occupied && <DisplayEmbeddedObjects embedded_objects={data.embedded_objects} />}
       </Section>
       <DisplayAnatomicalAnomolies
         occupied={data.occupied}
@@ -200,7 +200,10 @@ const DisplayBloodPressure = (props:DisplayBloodPressureProps) => {
   return (
     <Table.Row>
       <Table.Cell header textAlign="right" width={10}>Blood Pressure:</Table.Cell>
-      <Table.Cell width={10} color={pressure_color}>{occupied && patient_status !== 2 ? blood_pressure_rendered : "--/--"} ({occupied && patient_status !== 2 ? blood_pressure_status : "NO PULSE"})</Table.Cell>
+      <Table.Cell width={10} color={pressure_color}>
+        { !!occupied && patient_status !== 2 && `${blood_pressure_rendered} (${blood_pressure_status})`}
+        { !occupied && "--/--"}
+      </Table.Cell>
       <Table.Cell header textAlign="right" width={10}>Blood Volume:</Table.Cell>
       <Table.Cell width={10} color={pressure_color}>{occupied ? blood_volume.toString() : "--"} units</Table.Cell>
     </Table.Row>
@@ -283,10 +286,10 @@ const DisplayOrgan = (props: OrganData) => {
         <Table.Cell
           width={10}
           color={color}
-          bold={state==="Missing" || state === "Dead" || state === "Critical"}
+          bold={state === "Missing" || state === "Dead" || state === "Critical"}
         >
-          {state !== "Okay" ? state : "" }
-          {special ? <Box color="white">{special}</Box>: "" }
+          {state !== "Okay" && state}
+          {special && <Box color="white">{special}</Box> }
         </Table.Cell>
       </Table.Row>
     );
@@ -330,8 +333,8 @@ const DisplayLimb = (props:DisplayLimbProps) => {
         </Table.Cell>
         <Table.Cell
           width={10}
-          color={status==="Missing" ? "red" : "white"}
-          bold={status==="Missing"}>{status}
+          color={status === "Missing" ? "red" : "white"}
+          bold={status === "Missing"}>{status}
         </Table.Cell>
       </Table.Row>
     );
@@ -355,7 +358,8 @@ const DisplayTemperature = (props: DisplayTemperatureProps) => {
         Temperature:
       </Table.Cell>
       <Table.Cell color={font_color}>
-        {occupied ? (body_temp - 273.15).toPrecision(4) : "--"}°C  /  {occupied ?((body_temp - 273.15) * 1.8 + 32).toPrecision(4) : "--" }°F
+        {!!occupied && (body_temp - 273.15).toPrecision(4) + "°C / " + ((body_temp - 273.15) * 1.8 + 32).toPrecision(4) + "°F"}
+        {!occupied && "--°C / --°F"}
       </Table.Cell>
     </>
   );
@@ -391,32 +395,23 @@ const DisplayAnatomicalAnomolies = (props:DisplayAnatomicalAnomoliesProps) => {
     organs,
     limbs,
   } = props;
-
-  if (occupied) {
-    return (
-      <Section title="Anatomical Anomalies">
-        <Stack>
-          <DisplayOrgans occupied={occupied} organs={organs} />
-          <DisplayLimbs occupied={occupied} limbs={limbs} />
-        </Stack>
-      </Section>);
-  } else {
-    return (<Section title="Anatomical Anomalies" color="grey">No Patient Detected</Section>);
-  }
+  return (
+    <Section title="Anatomical Anomalies" color={!occupied && "grey"}>
+      <Stack>
+        { !!occupied && <DisplayOrgans occupied={occupied} organs={organs} /> }
+        { !!occupied && <DisplayLimbs occupied={occupied} limbs={limbs} />}
+        { !occupied && "No Patient Detected"}
+      </Stack>
+    </Section>);
 };
 
 const DisplayBloodstreamContent = (props:DisplayBloodstreamContentProps) => {
   const { occupied, reagent_container } = props;
-  if (occupied) {
-    return (
-      <Section title="Bloodstream Contents">
-        <ReagentGraph container={reagent_container} />
-      </Section>
-    );
-  }
-  else {
-    return (<Section title="Bloodstream Contents" color="grey">No Patient Detected</Section>);
-  }
+  return (
+    <Section title="Bloodstream Contents">
+      {!!occupied && <ReagentGraph container={reagent_container} /> }
+      {!occupied && "No Patient Detected" }
+    </Section>);
 };
 
 const DisplayGeneticAnalysis = (props: DisplayGeneticAnalysisProps) => {
@@ -508,7 +503,8 @@ const DisplayTitle = (props:OperatingComputerDisplayTitleProps) => {
       <Stack.Item width={60}>
         <Box fontSize={1}>Patient Name</Box>
         <Box fontSize={1.5} color={patient_name_color} >
-          {patient_name ? patient_name : "No Patient Detected"}
+          {!!patient_name && patient_name }
+          {!patient_name && "No Patient Detected"}
         </Box>
       </Stack.Item>
       <HealthSummary health_text={patient_health_percent_text} health_color={color} />
@@ -539,7 +535,8 @@ const DisplayImplants = (props) => {
     <>
       <Table.Cell header textAlign="right">Implants:</Table.Cell>
       <Table.Cell color={occupied ? "white": "grey"}>
-        {occupied ? `${embedded_objects["implant_count"]} implant${embedded_objects["implant_count"]===1 ? "" : "s"}` : "--"}
+        {!!occupied && `${embedded_objects["implant_count"]} ${pluralize("implant", embedded_objects["implant_count"])}` }
+        {!occupied && "--"}
       </Table.Cell>
     </>
   );
@@ -549,8 +546,8 @@ const DisplayEmbeddedObjects = (props) => {
   const { embedded_objects } = props;
   return (
     <Box textAlign="center">
-      {embedded_objects["has_chest_object"] ? <Box bold fontSize={1.2} color="red">Sizable foreign object located below sternum!</Box>: ""}
-      {embedded_objects["foreign_object_count"] ? <Box bold fontSize={1.2} color="red">Foreign object{embedded_objects["foreign_object_count"] > 1 ?"s" : ""} detected!</Box> : ""}
+      {!!embedded_objects["has_chest_object"] && <Box bold fontSize={1.2} color="red">Sizable foreign object located below sternum!</Box>}
+      {!!embedded_objects["foreign_object_count"] && <Box bold fontSize={1.2} color="red">Foreign {`${pluralize("object", embedded_objects["foreign_object_count"])}`} detected!</Box>}
     </Box>
   );
 };
