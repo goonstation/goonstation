@@ -25,7 +25,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	var/rider_visible =	1 //can we see the driver from outside of the vehicle? (used for overlays)
 	var/list/ability_buttons = null //storage for the ability buttons after initialization
 	var/list/ability_buttons_to_initialize = null //list of types of ability buttons to be initialized
-	var/can_eject_items = FALSE // See /mob/proc/drop_item() in mob.dm and /atom/movable/proc/throw_at in throwing.dm
+	var/can_eject_items = FALSE //! See /mob/proc/drop_item() in mob.dm and /atom/movable/proc/throw_at in throwing.dm
 	var/attacks_fast_eject = 1 //whether any attack with an item that has a force vallue will immediately eject the rider (only works if rider_visible is true)
 	layer = MOB_LAYER
 	var/delay = 2 //speed, lower is faster, minimum of MINIMUM_EFFECTIVE_DELAY
