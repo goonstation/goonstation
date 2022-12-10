@@ -146,8 +146,6 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	/// set to TRUE to inhibit entrance into this area, may not work completely yet.
 	var/blocked = 0
 
-	/// if set and a blocked person makes their way into here via Bad Ways, they'll be teleported here instead of nullspace. use a path!
-	var/blocked_waypoint
 	var/list/blockedTimers
 
 	/// for Battle Royale gamemode
@@ -217,9 +215,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 						if( !CanEnter( enteringM ) )
 
 							var/target = get_turf(oldloc)
-							if( !target && blocked_waypoint )
-								target = get_turf(locate(blocked_waypoint) in world)
-							enteringM.loc = target
+							enteringM.set_loc(target)
 						var/area/oldarea = get_area(oldloc)
 						if( sanctuary && !blocked && !(oldarea.sanctuary))
 							boutput( enteringM, "<b style='color:#31BAE8'>You are entering a sanctuary zone. You cannot be harmed by other players here.</b>" )
@@ -3486,14 +3482,14 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	sound_environment = 4
 	teleport_blocked = 1
 
-	CanEnter( var/atom/movable/A )
+	CanEnter(atom/movable/A)
 		var/mob/living/M = A
-		if( istype(M) && M.mind && M.mind.special_role != ROLE_WIZARD && isliving(M) )
+		if(istype(M) && M.mind && !(M.mind.special_role == ROLE_WIZARD || M.mind.assigned_role == "Santa Claus)"))
 			if(M.client && M.client.holder)
-				return 1
-			boutput( M, "<span class='alert'>A magical barrier prevents you from entering!</span>" ) //or something
-			return 0
-		return 1
+				return TRUE
+			boutput(M, "<span class='alert'>A magical barrier prevents you from entering!</span>") //or something
+			return FALSE
+		return TRUE
 
 ABSTRACT_TYPE(/area/station/ai_monitored)
 /area/station/ai_monitored
