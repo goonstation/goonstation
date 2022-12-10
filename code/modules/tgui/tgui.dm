@@ -93,6 +93,7 @@
 		with_data = TRUE,
 		with_static_data = TRUE))
 	tgui_process.on_open(src)
+	SEND_SIGNAL(user, COMSIG_TGUI_WINDOW_OPEN, src)
 
 /**
  * public
