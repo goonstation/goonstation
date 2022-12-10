@@ -309,11 +309,13 @@ Contains:
 
 ////////////////////////////////////////////////////////////
 
+TYPEINFO(/obj/item/tank/jetpack)
+	mats = 16
+
 /obj/item/tank/jetpack
 	name = "jetpack (oxygen)"
 	uses_multiple_icon_states = TRUE
 	w_class = W_CLASS_BULKY
-	mats = 16
 	force = 8
 	desc = "A jetpack that can use oxygen as a propellant, allowing the wearer to maneuver freely in space. It can also be used as a gas source for internals like a regular tank."
 	distribute_pressure = 17
@@ -409,13 +411,15 @@ Contains:
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
+TYPEINFO(/obj/item/tank/jetpack/micro)
+	mats = 8
+
 /obj/item/tank/jetpack/micro
 	name = "micro-lite jetpack (oxygen)"
 	icon_state = "microjetpack0"
 	item_state = "microjetpack0"
 	base_icon_state = "microjetpack"
 	extra_desc = "This one is the smaller variant, suiable for shorter ranged activities."
-	mats = 8
 	force = 6
 
 	New()

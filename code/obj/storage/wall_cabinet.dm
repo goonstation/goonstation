@@ -1,4 +1,7 @@
 
+TYPEINFO(/obj/item/storage/wall)
+	mats = 8
+
 /obj/item/storage/wall
 	name = "cabinet"
 	desc = "It's basically a big box attached to the wall."
@@ -10,7 +13,6 @@
 	w_class = W_CLASS_BULKY
 	anchored = 1
 	density = 0
-	mats = 8
 	deconstruct_flags = DECON_SIMPLE
 	burn_possible = FALSE
 	max_wclass = W_CLASS_BULKY

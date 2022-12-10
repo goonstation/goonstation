@@ -4,6 +4,9 @@
 
 ////////////////////////////////////////// Stun baton parent //////////////////////////////////////////////////
 // Completely refactored the ca. 2009-era code here. Powered batons also use power cells now (Convair880).
+TYPEINFO(/obj/item/baton)
+	mats = list("MET-3"=10, "CON-2"=10)
+
 /obj/item/baton
 	name = "stun baton"
 	desc = "A standard issue baton for stunning people with."
@@ -18,7 +21,6 @@
 	throwforce = 7
 	health = 7
 	w_class = W_CLASS_NORMAL
-	mats = list("MET-3"=10, "CON-2"=10)
 	contraband = 4
 	stamina_damage = 15
 	stamina_cost = 21
@@ -334,13 +336,18 @@
 /obj/item/baton/secbot
 	cost_normal = 0
 
+TYPEINFO(/obj/item/baton/beepsky)
+	mats = 0 //no
+
 /obj/item/baton/beepsky
 	name = "securitron stun baton"
 	desc = "A stun baton that's been modified to be used more effectively by security robots. There's a small parallel port on the bottom of the handle."
 	can_swap_cell = 0
 	rechargable = 0
 	cell_type = /obj/item/ammo/power_cell
-	mats = 0 //no
+
+TYPEINFO(/obj/item/baton/cane)
+	mats = list("MET-3"=10, "CON-2"=10, "gem"=1, "gold"=1)
 
 /obj/item/baton/cane
 	name = "stun cane"
@@ -354,7 +361,9 @@
 	cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
 	can_swap_cell = 0
 	rechargable = 0
-	mats = list("MET-3"=10, "CON-2"=10, "gem"=1, "gold"=1)
+
+TYPEINFO(/obj/item/baton/classic)
+	mats = 0
 
 /obj/item/baton/classic
 	name = "police baton"
@@ -362,7 +371,6 @@
 	icon_state = "baton"
 	item_state = "classic_baton"
 	force = 15
-	mats = 0
 	contraband = 6
 	icon_on = "baton"
 	icon_off = "baton"
@@ -386,13 +394,15 @@
 			user.remove_stamina(src.stamina_cost)
 
 
+TYPEINFO(/obj/item/baton/ntso)
+	mats = list("MET-3"=10, "CON-2"=10, "POW-1"=5)
+
 /obj/item/baton/ntso
 	name = "extendable stun baton"
 	desc = "An extendable stun baton for NT Security Consultants in sleek NanoTrasen blue."
 	icon_state = "ntso_baton-c"
 	item_state = "ntso-baton-c"
 	force = 7
-	mats = list("MET-3"=10, "CON-2"=10, "POW-1"=5)
 	icon_on = "ntso-baton-a-1"
 	icon_off = "ntso-baton-c"
 	var/icon_off_open = "ntso-baton-a-0"

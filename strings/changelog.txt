@@ -1,4 +1,53 @@
 
+(t)sat dec 10 22
+(u)glowbold
+(p)12355
+(e)🪲🆕📦|C-Bug, C-Feature, A-Game-Objects
+(+)You can throw items from certain rideables, like segways and skateboards.
+(t)fri dec 09 22
+(u)Sord
+(e)⚖|C-Balance
+(+)Containment fields now stun you for significantly less time.
+(u)Munien
+(p)12311
+(e)🆕🎩|C-Feature, A-Clothing
+(+)Added a few extra items to hacked medical clothing vendors for other medical occupations.
+(t)thu dec 08 22
+(u)tarmunora
+(+)emagged segways no longer inexplicably safer than normal ones.
+(t)wed dec 07 22
+(u)Sord
+(e)🗺💅|A-Mapping, C-QoL
+(+)Donut 2's Engineering Department has received a new coat of paint.
+(u)Flaborized
+(e)💎
+(*)New artifact sprites and some tweaking of their visuals!
+(u)tarmunora
+(*)Vampire enthrall has a scaling cost based on number of living thralls.
+(u)tarmunora
+(+)Vending machines deal stamina damage instead of auto-stun when falling.
+(t)tue dec 06 22
+(u)Virvatuli
+(p)12310
+(e)🗺💅|A-Mapping, C-QoL
+(+)Expanded Donut 3's medbooth to be consistent with other maps, no more free defib
+(u)Zaniff
+(p)12302
+(e)🎨|C-Sprites
+(+)Resprited the pod secondary systems.
+(t)mon dec 05 22
+(u)Stonepillar
+(p)11902
+(e)🚄🔧🧫📡⚙📜|C-Performance, A-Tooling, C-Experimental, A-AI, A-Internal, C-Documentation
+(*)Made pathfinding go faster, so that flock doesn't melt the server. This changed some important parts of the game, please report any new weirdness with critters or any movement related bugs!
+(u)LeahTheTech
+(p)11796
+(e)🆕🗺🎨🧛|C-Feature, A-Mapping, C-Sprites, A-Gamemodes
+(*)Added an interactive Flock tutorial, so you have a chance at learning what at least half the buttons do before playing.
+(u)LeahTheTech
+(p)12270
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Flockdrone egg cost now scales with the number of active flockdrones.
 (t)sat dec 03 22
 (u)Cheffie
 (p)12136
@@ -17,7 +66,7 @@
 (t)fri dec 02 22
 (u)tarmunora
 (+)AI law captcha returns.
-(t)the dec 01 22
+(t)thu dec 01 22
 (u)tarmunora
 (+)The Chief Engineer's belt has been modernized to use the new energy shield mechanic.
 (u)pali

@@ -232,6 +232,8 @@
 			return
 		if (!blobs.len && state != 1)
 			return
+		if(!isturf(src.loc))
+			return
 		ai_ticks_queued_up++
 		src.ai_process()
 		SPAWN(0)

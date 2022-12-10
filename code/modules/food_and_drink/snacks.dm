@@ -830,10 +830,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 		if(src.hasPrize && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/obj/item/affecting = H.organs["head"]
 			boutput(H, "<span class='alert'>You slash your mouth and tongue open on a piece of jagged rusty metal! Looks like you found the prize inside!</span>")
 			H.changeStatus("weakened", 3 SECONDS)
-			affecting.take_damage(10, 0)
+			H.TakeDamage("head", 10, 0, 0, DAMAGE_STAB)
 			take_bleeding_damage(H, null, 0, DAMAGE_STAB, 0)
 			bleed(H, rand(10,30), rand(1,3))
 			H.UpdateDamageIcon()

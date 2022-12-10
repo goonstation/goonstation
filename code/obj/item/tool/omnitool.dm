@@ -28,7 +28,7 @@
 	New()
 		contextLayout = new /datum/contextLayout/experimentalcircle
 		..()
-		src.change_mode(mode)
+		src.change_mode(mode, null, /obj/item/crowbar)
 		for(var/actionType in childrentypesof(/datum/contextAction/omnitool))
 			var/datum/contextAction/omnitool/action = new actionType()
 			if (action.mode in src.modes)

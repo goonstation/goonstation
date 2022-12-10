@@ -4,7 +4,7 @@
 
 	var/duration = 5 SECOND
 	var/end_time = -1
-	var/obj/dummy = null
+	var/obj/dummy/dummy = null
 	var/outline_color = "#00ff9d"
 	var/outline_thickness = 1
 	var/animate = TRUE
@@ -68,4 +68,8 @@
 /datum/component/flock_ping/selected
 	animate = FALSE
 	outline_thickness = 3
+	duration = INFINITY
+
+/datum/component/flock_ping/tutorial_highlight
+	outline_thickness = 2
 	duration = INFINITY

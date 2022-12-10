@@ -839,6 +839,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	desc = "A rare complex crystalline matrix with a lazily shifting internal structure. Not to be confused with gneiss, a metamorphic rock."
 	color = "#1bdebd"
 	texture = "flock"
+	texture_blend = BLEND_OVERLAY
 
 	transparent
 		mat_id = "gnesisglass"
@@ -1030,9 +1031,17 @@ ABSTRACT_TYPE(/datum/material/organic)
 
 
 	butt
+		color = "#ebbd97"
 		mat_id = "butt"
 		name = "butt"
+		texture = "buttgrey"
+		texture_blend = BLEND_OVERLAY
 		desc = "...it's butt flesh. Why is this here. Why do you somehow know it's butt flesh. Fuck."
+
+		New()
+			..()
+			addTrigger(triggersPickup, new /datum/materialProc/onpickup_butt)
+			addTrigger(triggersOnHit, new /datum/materialProc/onpickup_butt)
 
 /datum/material/organic/char
 	mat_id = "char"
