@@ -230,7 +230,7 @@
 	src.see_invisible = INVIS_SPOOKY
 	src.see_in_dark = SEE_DARK_FULL
 	animate_bumble(src) // floaty ghosts  c:
-
+	src.verbs += /mob/dead/observer/proc/toggle_tgui_auto_open
 	if (ismob(corpse))
 		src.corpse = corpse
 		src.set_loc(get_turf(corpse))
@@ -520,6 +520,16 @@
 
 /mob/dead/observer/can_use_hands()	return 0
 /mob/dead/observer/is_active()		return 0
+
+/mob/dead/observer/proc/toggle_tgui_auto_open()
+	set category = "Ghost"
+	set name = "Toggle TGUI auto-observing"
+	if(src.auto_tgui_open)
+		boutput(src, "No longer auto-opening TGUI windows of observed mobs.")
+		src.auto_tgui_open = FALSE
+	else
+		boutput(src, "Observed mob's TGUI windows will now auto-open")
+		src.auto_tgui_open = TRUE
 
 /mob/dead/observer/proc/reenter_corpse()
 	set category = null
