@@ -67,6 +67,14 @@ var/global/datum/ui_state/tgui_default_state/tgui_default_state = new /datum/ui_
 	// The AI can interact with anything it can see.
 	return UI_INTERACTIVE
 
+/mob/living/silicon/hologram/default_can_use_topic(src_object)
+	. = shared_ui_interaction(src_object)
+	if(. < UI_INTERACTIVE)
+		return
+
+	// Holograms are an extension of the AI.
+	return UI_INTERACTIVE
+
 /mob/living/critter/default_can_use_topic(src_object)
 	. = shared_ui_interaction(src_object)
 	if(. > UI_CLOSE)

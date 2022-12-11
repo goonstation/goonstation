@@ -51,8 +51,39 @@
 			boutput(src, "Deploy to an AI Eye first to create a hologram.")
 			return
 
-		var/turf/T = get_turf(src.eyecam)
-		src.show_hologram_context(T)
+		var/choice = tgui_input_list(usr, "What would you like to do?", "Choice", list("Make floor hologram", "Pick holographic projector form", "Deploy to holo-projector"))
+		switch(choice)
+			if("Make floor hologram")
+				var/turf/T = get_turf(src.eyecam)
+				src.show_hologram_context(T)
+			if ("Pick holographic projector form")
+				//todo add forms
+				return
+			if ("Deploy to holo-projector")
+				var/list/obj/machinery/holo_projector/holo_list = list()
+				var/list/holo_list_named = list()
+				for_by_tcl(pad, /obj/machinery/holo_projector)
+					holo_list += pad
+					holo_list_named += ("[pad.name] ([get_area(pad)])")
+					boutput(src, get_area(pad))
+					boutput(src, get_area_name(get_area(pad)))
+				if (length(holo_list) <= 0)
+					boutput(src, "<span class='notice'>No available holo-projectors.</span>")
+					return
+				var/holo_choice = tgui_input_list(usr, "Which holo-projector do you want to deploy to?", "holographic projector", holo_list_named)
+				var/obj/machinery/holo_projector/target_holo = holo_list[holo_list_named.Find(holo_choice)]
+				boutput(src, holo_list_named.Find(holo_choice))
+				if (src.deployed_to_eyecam)
+					src.eyecam.return_mainframe()
+				if (src.mind)
+					var/mob/living/silicon/hologram/new_hologram = new/mob/living/silicon/hologram(get_turf(target_holo), src)
+					new_hologram.dependent = 1
+					new_hologram.projector_master = target_holo
+					src.deployed_shell = new_hologram
+					src.mind.transfer_to(new_hologram)
+					target_holo.visible_message("<span class='notice'>[target_holo] lights up and creates an hologram.</span>")
+					return
+
 
 	proc/create_hologram_at_turf(turf/T, holo_type)
 		if (!deployed_to_eyecam)
