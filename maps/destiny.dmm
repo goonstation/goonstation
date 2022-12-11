@@ -2011,7 +2011,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "ahF" = (
-/obj/critter/cat/jones,
+/mob/living/critter/small_animal/cat/jones,
 /obj/cable{
 	icon_state = "1-8"
 	},
