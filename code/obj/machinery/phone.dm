@@ -72,8 +72,6 @@ TYPEINFO(/obj/machinery/phone)
 
 		START_TRACKING
 
-		return
-
 	update_icon()
 		. = ..()
 		src.UpdateOverlays(src.SafeGetOverlayImage("stripe", 'icons/obj/machines/phones.dmi',"[src.icon_state]-stripe"), "stripe")
@@ -94,19 +92,23 @@ TYPEINFO(/obj/machinery/phone)
 	// Attempt to pick up the handset
 	attack_hand(mob/living/user)
 		..(user)
-		if(src.answered == 1)
+		if (src.answered)
+			return
+
+		if (src.emagged)
+			src.explode()
 			return
 
 		src.handset = new /obj/item/phone_handset(src,user)
 		user.put_in_hand_or_drop(src.handset)
-		src.answered = 1
+		src.answered = TRUE
 
 		src.icon_state = "[answeredicon]"
 		UpdateIcon()
 		playsound(user, 'sound/machines/phones/pick_up.ogg', 50, 0)
 
-		if(src.ringing == 0) // we are making an outgoing call
-			if(src.connected == 1)
+		if(!src.ringing) // we are making an outgoing call
+			if(src.connected)
 				if(user)
 					if(!src.phonebook)
 						src.phonebook = new /chui/window/phonecall(src)
@@ -115,11 +117,10 @@ TYPEINFO(/obj/machinery/phone)
 				if(user)
 					boutput(user,"<span class='alert'>As you pick up the phone you notice that the cord has been cut!</span>")
 		else
-			src.ringing = 0
-			src.linked.ringing = 0
+			src.ringing = FALSE
+			src.linked.ringing = FALSE
 			if(src.linked.handset.holder)
 				src.linked.handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_answer.ogg',50,0)
-		return
 
 	attack_ai(mob/user as mob)
 		return
@@ -163,7 +164,10 @@ TYPEINFO(/obj/machinery/phone)
 		if(src._health <= 0)
 			if(src.linked)
 				hang_up()
-			src.gib(src.loc)
+			if (src.emagged)
+				src.explode()
+			else
+				src.gib(src.loc)
 			qdel(src)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -173,18 +177,18 @@ TYPEINFO(/obj/machinery/phone)
 			if(user)
 				boutput(user, "<span class='alert'>You short out the ringer circuit on the [src].</span>")
 			src.emagged = 1
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 
 	process()
-		if(src.emagged == 1)
+		if(src.emagged)
 			playsound(src.loc,'sound/machines/phones/ring_incoming.ogg' ,100,1)
-			if(src.answered == 0)
+			if(!src.answered)
 				src.icon_state = "[ringingicon]"
 				UpdateIcon()
 			return
 
-		if(src.connected == 0)
+		if(!src.connected)
 			return
 
 		src.last_ring++
@@ -203,6 +207,9 @@ TYPEINFO(/obj/machinery/phone)
 					src.icon_state = "[ringingicon]"
 					UpdateIcon()
 					src.last_ring = 0
+
+	proc/explode()
+		src.blowthefuckup(strength = 2.5, delete = TRUE)
 
 
 	proc/hang_up()

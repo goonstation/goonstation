@@ -546,6 +546,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/cheesetoast(src)
 			src.recipes += new /datum/cookingrecipe/bacontoast(src)
 			src.recipes += new /datum/cookingrecipe/eggtoast(src)
+			src.recipes += new /datum/cookingrecipe/churro(src)
 			src.recipes += new /datum/cookingrecipe/nougat(src)
 			src.recipes += new /datum/cookingrecipe/candy_cane(src)
 			src.recipes += new /datum/cookingrecipe/cereal_honey(src)

@@ -463,21 +463,20 @@
 		src.swap_hand()
 		return
 
-	if (location != "map")
-		if (src.hibernating && istype(src.loc, /obj/cryotron))
-			var/obj/cryotron/cryo = src.loc
-			if (cryo.exit_prompt(src))
-				return
-
-		if (src.client && src.client.check_key(KEY_EXAMINE))
-			src.examine_verb(target)
+	if (src.hibernating && istype(src.loc, /obj/cryotron))
+		var/obj/cryotron/cryo = src.loc
+		if (cryo.exit_prompt(src))
 			return
 
-		if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
-			src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
-			if (src.in_point_mode)
-				src.toggle_point_mode()
-			return
+	if (src.client && src.client.check_key(KEY_EXAMINE))
+		src.examine_verb(target)
+		return
+
+	if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
+		src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
+		if (src.in_point_mode)
+			src.toggle_point_mode()
+		return
 
 	if (src.restrained())
 		if (src.hasStatus("handcuffed"))

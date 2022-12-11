@@ -2021,7 +2021,7 @@
 /turf/simulated/floor,
 /area/bridge)
 "eA" = (
-/obj/critter/cat{
+/mob/living/critter/small_animal/cat{
 	desc = "Head of mouse-catching and tuna taste-testing.";
 	health = 15;
 	name = "Jones"
