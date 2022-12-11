@@ -858,6 +858,8 @@
 		. = ..()
 		if(!ismob(A))
 			return
+		if(get_area(A) == src)
+			return
 		var/mob/user = A
 		src.ship.unsubscribe_interior(user)
 		user.set_eye(null)

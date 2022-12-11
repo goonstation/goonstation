@@ -206,7 +206,7 @@
 
 // why this isn't further up the tree i have no idea
 /mob/living/intangible/flock/emote(var/act, var/voluntary = 0)
-
+	..()
 	if (findtext(act, " ", 1, null))
 		var/t1 = findtext(act, " ", 1, null)
 		act = copytext(act, 1, t1)

@@ -70,6 +70,7 @@
 		return 1
 
 	emote(var/act, var/voluntary = 1)
+		..()
 		var/param = null
 
 		if (findtext(act, " ", 1, null))

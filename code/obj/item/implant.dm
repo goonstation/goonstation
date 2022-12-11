@@ -55,9 +55,6 @@ THROWING DARTS
 	proc/can_implant(mob/target, mob/user)
 		return 1
 
-	proc/trigger(emote, source as mob)
-		return
-
 	// called when an implant is implanted into M by I
 	proc/implanted(mob/M, mob/I)
 		logTheThing(LOG_COMBAT, I, "has implanted [constructTarget(M,"combat")] with a [src] implant ([src.type]) at [log_loc(M)].")
@@ -198,6 +195,27 @@ THROWING DARTS
 		else
 			return ..()
 
+/obj/item/implant/emote_triggered
+	var/activation_emote = "wink"
+	var/list/compatible_emotes = list()
+
+	implanted(mob/M, mob/I)
+		. = ..()
+		//try not to conflict with other emote triggers
+		src.activation_emote = pick(src.compatible_emotes - M.trigger_emotes) || pick(src.compatible_emotes)
+		LAZYLISTADD(M.trigger_emotes, src.activation_emote)
+		src.RegisterSignal(M, COMSIG_MOB_EMOTE, .proc/trigger)
+		M.mind.store_memory("[src] can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
+		boutput(M, "The implanted [src.name] can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.")
+
+	on_remove(mob/M)
+		. = ..()
+		M.trigger_emotes -= src.activation_emote
+		src.UnregisterSignal(M, COMSIG_MOB_EMOTE)
+
+	proc/trigger(mob/source, emote, voluntary, atom/target)
+		return
+
 /* ============================================================ */
 /* ------------------------- Implants ------------------------- */
 /* ============================================================ */
@@ -334,21 +352,21 @@ THROWING DARTS
 	icon_state = "implant-b"
 	impcolor = "b"
 
-/obj/item/implant/freedom
+/obj/item/implant/emote_triggered/freedom
 	name = "freedom implant"
 	icon_state = "implant-r"
 	var/uses = 1
 	impcolor = "r"
 	scan_category = "syndicate"
-	var/activation_emote = "shrug"
+	activation_emote = "shrug"
+	compatible_emotes = list("eyebrow", "nod", "shrug", "smile", "yawn", "flex", "snap")
 
 	New()
-		src.activation_emote = pick("eyebrow", "nod", "shrug", "smile", "yawn", "flex", "snap")
 		src.uses = rand(3, 5)
 		..()
 		return
 
-	trigger(emote, mob/source as mob)
+	trigger(mob/source, emote)
 		if (src.uses < 1)
 			return 0
 
@@ -374,11 +392,6 @@ THROWING DARTS
 			if (activated)
 				src.uses--
 				boutput(source, "You feel a faint click.")
-
-	implanted(mob/source as mob)
-		..()
-		source.mind.store_memory("Freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
-		boutput(source, "The implanted freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.")
 
 /obj/item/implant/tracking
 	name = "tracking implant"
@@ -1525,7 +1538,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 /obj/item/implanter/freedom
 	icon_state = "implanter1-g"
 	New()
-		src.imp = new /obj/item/implant/freedom( src )
+		src.imp = new /obj/item/implant/emote_triggered/freedom( src )
 		..()
 
 /obj/item/implanter/mindhack
@@ -1610,7 +1623,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 */
 /obj/item/implantcase/freedom
 	name = "glass case - 'Freedom'"
-	implant_type = /obj/item/implant/freedom
+	implant_type = /obj/item/implant/emote_triggered/freedom
 
 /obj/item/implantcase/counterrev
 	name = "glass case - 'Counter-Rev'"
@@ -1743,6 +1756,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 /* ------------------------- Implant Pad ------------------------- */
 /* =============================================================== */
 
+TYPEINFO(/obj/item/implantpad)
+	mats = 5
+
 /obj/item/implantpad
 	name = "implantpad"
 	icon = 'icons/obj/items/items.dmi'
@@ -1754,7 +1770,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
-	mats = 5
 	desc = "A small device for analyzing implants."
 
 /obj/item/implantpad/proc/update()
@@ -1829,7 +1844,7 @@ ID (1-100):
 <A href='byond://?src=\ref[src];id=-1'>-</A> [T.id]
 <A href='byond://?src=\ref[src];id=1'>+</A>
 <A href='byond://?src=\ref[src];id=10'>+</A><BR>"}
-			else if (istype(src.case.imp, /obj/item/implant/freedom))
+			else if (istype(src.case.imp, /obj/item/implant/emote_triggered/freedom))
 				dat += {"
 <b>Implant Specifications:</b><BR>
 <b>Name:</b> Freedom Beacon<BR>
@@ -1946,11 +1961,13 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 /* ------------------------- Implant Gun ------------------------- */
 /* =============================================================== */
 
+TYPEINFO(/obj/item/gun/implanter)
+	mats = 8
+
 /obj/item/gun/implanter
 	name = "implant gun"
 	desc = "A gun that accepts an implant, that you can then shoot into other people! Or a wall, which certainly wouldn't be too big of a waste, since you'd only be using this to shoot people with things like health monitor implants or machine translators. Right?"
 	icon_state = "implant"
-	mats = 8
 	contraband = 1
 	var/obj/item/implant/my_implant = null
 

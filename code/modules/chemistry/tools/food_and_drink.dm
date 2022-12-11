@@ -762,7 +762,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 			qdel(src)
 
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/tortilla_chip))
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/dippable))
 			if (reagents.total_volume)
 				boutput(user, "You dip [W] into the bowl.")
 				reagents.trans_to(W, 10)
@@ -1340,7 +1340,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		..()
 		src.smash(A)
 
-	pixelaction(atom/target, list/params, mob/living/user, reach)
+	pixelaction(atom/target, list/params, mob/living/user, reach)  //sliding glasses down the bar
 		if(!istype(target, /obj/table) || src.cant_drop)
 			return ..()
 		var/obj/table/target_table = target
@@ -1360,6 +1360,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if("icon-y" in params)
 			src.pixel_y = text2num(params["icon-y"]) - 16
 		user.weapon_attack(source_table, src, TRUE, list())
+		playsound(src, 'sound/items/glass_slide.ogg', 25, 1)
 		var/list/turf/path = raytrace(get_turf(source_table), get_turf(target_table))
 		var/turf/last_turf = get_turf(source_table)
 		SPAWN(0)
@@ -1968,5 +1969,5 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	icon_state = "creamer"
 	item_state = "creamer"
 	initial_volume = 50
-	initial_reagents = list("milk"=50)
+	initial_reagents = list("milk"=40, "sugar"=10)
 	can_recycle = 0

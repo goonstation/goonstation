@@ -138,7 +138,7 @@
 	cooldown = 1 MINUTES
 
 	cast()
-		playsound(holder.owner.loc, 'sound/voice/heavenly.ogg', 100, 1, 0)
+		playsound(holder.owner.loc, 'sound/voice/heavenly.ogg', 50, 1, 0)
 		holder.owner.visible_message("<span class='alert'><B>[holder.owner] calls on the power of Spacemas to heal everyone!</B></span>")
 		for (var/mob/living/M in view(holder.owner,5))
 			M.HealDamage("All", 30, 30)
@@ -203,7 +203,7 @@
 	cooldown = 80 SECONDS
 
 	cast()
-		playsound(holder.owner.loc, 'sound/effects/MagShieldUp.ogg', 100, 1, 0)
+		playsound(holder.owner.loc, 'sound/effects/MagShieldUp.ogg', 60, 1, 0)
 		holder.owner.visible_message("<span class='alert'><B>[holder.owner] summons the warmth of a nice toasty fireplace!</B></span>")
 		for (var/mob/living/M in view(holder.owner,5))
 			if (M.bioHolder)
