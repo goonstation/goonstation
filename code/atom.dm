@@ -165,6 +165,8 @@
 			src.statusEffects = null
 		ClearAllParticles()
 		atom_properties = null
+		if(!ismob(src)) // I want centcom cloner to look good, sue me
+			ClearAllOverlays()
 		..()
 
 	proc/Turn(var/rot)
