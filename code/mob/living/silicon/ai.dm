@@ -125,12 +125,6 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	req_access = list(access_heads)
 	var/obj/item/clothing/head/hat = null
 
-/*
-	var/datum/game_mode/malfunction/AI_Module/module_picker/malf_picker
-	var/processing_time = 100
-	var/list/datum/game_mode/malfunction/AI_Module/current_modules = list()
-
-*/
 	var/fire_res_on_core = 0
 
 	health = 250
@@ -677,12 +671,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 				if (ishuman(user) && prob(10))
 					var/mob/living/carbon/human/M = user
 					boutput(user, "<span class='alert'>You stub your toe! Ouch!</span>")
-					var/obj/item/organ/foot = null
-					if(M.hand)
-						foot = M.organs["r_leg"]
-					else
-						foot = M.organs["l_leg"]
-					foot.take_damage(3, 0)
+					M.TakeDamage(M.hand ? "r_leg" : "l_leg", 3, 0, 0, DAMAGE_BLUNT)
 					user.changeStatus("weakened", 2 SECONDS)
 		user.lastattacked = src
 	src.update_appearance()
@@ -965,6 +954,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 			. += "[src.name] follows the same laws you do.<br>"
 
 /mob/living/silicon/ai/emote(var/act, var/voluntary = 0)
+	..()
 	var/param = null
 	if (findtext(act, " ", 1, null))
 		var/t1 = findtext(act, " ", 1, null)

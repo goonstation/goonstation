@@ -94,8 +94,12 @@
 		var/obj/item/I = src
 		I.item_state = appearance.name
 
-	A.fx_image = image(src.icon, src.icon_state + "fx")
+	A.fx_image = new
+	A.fx_image.icon = src.icon
+	A.fx_image.icon_state = src.icon_state + "fx"
 	A.fx_image.color = rgb(rand(AO.fx_red_min,AO.fx_red_max),rand(AO.fx_green_min,AO.fx_green_max),rand(AO.fx_blue_min,AO.fx_blue_max))
+	A.fx_image.alpha = rand(AO.fx_alpha_min, AO.fx_alpha_max)
+	A.fx_image.plane = PLANE_ABOVE_LIGHTING
 
 	A.react_mpct[1] = AO.impact_reaction_one
 	A.react_mpct[2] = AO.impact_reaction_two
@@ -127,7 +131,7 @@
 
 /obj/proc/ArtifactActivated()
 	if (!src)
-		return
+		return 1
 	if (!src.ArtifactSanityCheck())
 		return 1
 	var/datum/artifact/A = src.artifact
@@ -146,7 +150,7 @@
 	if (A.nofx)
 		src.icon_state = src.icon_state + "fx"
 	else
-		src.UpdateOverlays(A.fx_image, "activated")
+		src.vis_contents += A.fx_image
 	A.effect_activate(src)
 
 /obj/proc/ArtifactDeactivated()
@@ -164,7 +168,7 @@
 	if (A.nofx)
 		src.icon_state = src.icon_state - "fx"
 	else
-		src.UpdateOverlays(null, "activated")
+		src.vis_contents -= A.fx_image
 	A.effect_deactivate(src)
 
 /obj/proc/Artifact_emp_act()

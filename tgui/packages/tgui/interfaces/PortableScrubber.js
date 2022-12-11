@@ -1,8 +1,8 @@
 import { useBackend } from '../backend';
-import { Flex, Section, Button, NumberInput, LabeledList, Divider } from '../components';
+import { Button, NumberInput, LabeledList, Divider, Section } from '../components';
 import { Window } from '../layouts';
 import { PortableBasicInfo, PortableHoldingTank } from './common/PortableAtmos';
-import { NoContainer, ReagentGraph } from './common/ReagentInfo';
+import { ReagentGraph } from './common/ReagentInfo';
 
 export const PortableScrubber = (props, context) => {
   const { act, data } = useBackend(context);

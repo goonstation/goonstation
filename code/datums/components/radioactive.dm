@@ -43,7 +43,7 @@ TYPEINFO(/datum/component/radioactive)
 			COMSIG_MOB_GRABBED,
 			COMSIG_ITEM_ATTACK_POST,
 		), .proc/touched)
-		RegisterSignals(parent, list(COMSIG_ITEM_CONSUMED, COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL), .proc/eaten)
+		RegisterSignals(parent, list(COMSIG_ITEM_CONSUMED, COMSIG_ITEM_CONSUMED_PARTIAL), .proc/eaten)
 
 		if(isitem(parent))
 			RegisterSignal(parent, COMSIG_ITEM_PROCESS, .proc/ticked)
@@ -90,7 +90,7 @@ TYPEINFO(/datum/component/radioactive)
 			COMSIG_MOB_GRABBED,
 			COMSIG_ITEM_ATTACK_POST,
 		))
-		UnregisterSignal(parent, list(COMSIG_ITEM_CONSUMED, COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL))
+		UnregisterSignal(parent, list(COMSIG_ITEM_CONSUMED, COMSIG_ITEM_CONSUMED_PARTIAL))
 		if(isitem(parent))
 			UnregisterSignal(parent, list(COMSIG_ITEM_PROCESS))
 		else if(ismob(parent))

@@ -37,12 +37,12 @@ to translate concepts between old and new tgui, read this
 
 You will need these programs to start developing in tgui:
 
-- [Node v12.18.3+](https://nodejs.org/en/download/)
+- [Node v16.13+](https://nodejs.org/en/download/)
+  - **LTS** release is recommended instead of latest
+  - **DO NOT install Chocolatey if Node installer asks you to!**
 - [Yarn v2.2.1+](https://yarnpkg.com/getting-started/install) (optional)
 - [Git Bash](https://git-scm.com/downloads)
   or [MSys2](https://www.msys2.org/) (optional)
-
-**DO NOT install Chocolatey if Node installer asks you to!**
 
 ## Usage
 
@@ -50,7 +50,7 @@ You will need these programs to start developing in tgui:
 
 Change your directory to `tgui`.
 
-Run `bin/tgui --install-git-hooks` to install merge drivers which will
+Run `/tools/hooks/install.bat` to install merge drivers which will
 assist you in conflict resolution when rebasing your branches. Only has
 to be done once.
 

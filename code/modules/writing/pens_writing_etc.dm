@@ -19,7 +19,8 @@
 	icon = 'icons/obj/writing.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "pen"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	throwforce = 0
 	w_class = W_CLASS_TINY
 	throw_speed = 7
@@ -68,6 +69,7 @@
 		">" = "Greater Than",
 		"[CREDIT_SIGN]" = "Credit"
 	)
+	var/suitable_for_canvas = TRUE
 
 	New()
 		. = ..()
@@ -484,6 +486,12 @@
 		font_color = "#FF00FF"
 		color_name = "pink"
 
+	transparent
+		name = "transparent crayon"
+		color = "#aaaaaa"
+		font_color = "#00000000"
+		color_name = "transparent"
+
 	golden // HoP's crayon
 		name = "golden crayon"
 		desc = "The result of years of bribes and extreme bureaucracy."
@@ -596,6 +604,7 @@
 		if(. == "queue input")
 			var/inp = tgui_input_text(user, "Type letters you want to write.", "Crayon Letter Queue")
 			inp = uppertext(inp)
+			phrase_log.log_phrase("crayon-queue", inp, no_duplicates=TRUE)
 			. = list()
 			for(var/i = 1 to min(length(inp), 100))
 				var/c = copytext(inp, i, i + 1)
@@ -859,7 +868,8 @@
 	desc = "Make things seem more important than they really are with the hand labeler!<br/>Can also name your fancy new area by naming the fancy new APC you created for it."
 	var/label = null
 	var/labels_left = 10
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | ONBELT
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	c_flags = ONBELT
 	rand_pos = 1
 
 	get_desc()
@@ -965,10 +975,7 @@
 		src.label = "DEAD"
 		Label(user,user,1)
 
-		user.TakeDamage("chest", 300, 0) //they have to die fast or it'd make even less sense
-		SPAWN(50 SECONDS)
-			if (user && !isdead(user))
-				user.suiciding = 0
+		user.death()
 		return 1
 
 /* =============== CLIPBOARDS =============== */
@@ -1397,7 +1404,8 @@
 	desc = "A portable typewriter, whoa!"
 	icon_state = "portable_typewriter"
 	icon = 'icons/obj/writing.dmi'
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	throwforce = 0
 	w_class = W_CLASS_TINY
 	var/paper_creation_cooldown = 1 MINUTE

@@ -1,4 +1,7 @@
 /// This serves as a bridge between old materials pieces and new ones. Eventually old ones should just be updated.
+TYPEINFO(/obj/machinery/processor)
+	mats = 20
+
 /obj/machinery/processor
 	name = "Material processor"
 	desc = "Turns raw materials, and objects containing materials, into processed pieces."
@@ -7,7 +10,6 @@
 	anchored = 1
 	density = 1
 	layer = FLOOR_EQUIP_LAYER1
-	mats = 20
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
@@ -535,7 +537,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shovel"
 	w_class = W_CLASS_NORMAL
-	flags = ONBELT
+	c_flags = ONBELT
 	force = 7 // 15 puts it significantly above most other weapons
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 

@@ -98,12 +98,14 @@
 			src.onRestart()
 
 // portable fishing portal currently found in a prefab in space
+TYPEINFO(/obj/item/fish_portal)
+	mats = 11
+
 /obj/item/fish_portal
 	name = "Fishing Portal Generator"
 	desc = "A small device that creates a portal you can fish in."
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	icon_state = "fish_portal"
-	mats = 11
 
 	attack_self(mob/user as mob)
 		new /obj/machinery/active_fish_portal(get_turf(user))

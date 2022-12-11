@@ -582,8 +582,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/akm
 	fire_animation = TRUE
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK | EXTRADELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 	w_class = W_CLASS_BULKY
 	ammobag_magazines = list(/obj/item/ammo/bullets/akm)
 	ammobag_restock_cost = 3
@@ -602,8 +602,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	item_state = "ohr"
 	wear_state = "ohr" // prevent empty state from breaking the worn image
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 8
 	ammo_cats = list(AMMO_RIFLE_308)
@@ -628,8 +628,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	icon_state = "tranq"
 	item_state = "tranq"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 	force = MELEE_DMG_RIFLE
 	//contraband = 8
 	ammo_cats = list(AMMO_TRANQ_308)
@@ -811,7 +811,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	object_flags = NO_ARM_ATTACH
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBELT
 
 	spread_angle = 2
 	can_dual_wield = 0
@@ -1211,8 +1211,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	item_state = "shotty"
 	wear_state = "shotty" // prevent empty state from breaking the worn image
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 5
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
@@ -1291,8 +1291,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "mts255"
 	item_state = "mts255"
-	flags =  FPRINT | TABLEPASS | CONDUCT | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 5
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
@@ -1499,7 +1499,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	uses_multiple_icon_states = 1
 	item_state = "rpg7"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags = ONBACK
+	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 4
@@ -1552,7 +1552,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	icon_state = "mrls"
 	item_state = "mrls"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags = ONBACK
+	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 4
@@ -1593,8 +1593,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	icon_state = "ntlauncher"
 	item_state = "ntlauncher"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 	w_class = W_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 4
@@ -1679,7 +1679,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		..()
 
 	afterattack(atom/A, mob/user as mob)
-		if(src.ammo.amount_left < max_ammo_capacity && istype(A, /obj/critter/cat))
+		if(src.ammo.amount_left < max_ammo_capacity && istype(A, /mob/living/critter/small_animal/cat))
 			src.ammo.amount_left += 1
 			user.visible_message("<span class='alert'>[user] loads \the [A] into \the [src].</span>", "<span class='alert'>You load \the [A] into \the [src].</span>")
 			src.current_projectile.icon_state = A.icon_state //match the cat sprite that we load
@@ -1844,8 +1844,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	icon_state = "assault_rifle"
 	item_state = "assault_rifle"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 8
 	ammo_cats = list(AMMO_AUTO_556)
@@ -1914,8 +1914,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	max_ammo_capacity = 100
 	auto_eject = 0
 
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 
 	spread_angle = 8
 	can_dual_wield = 0
@@ -1951,8 +1951,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	auto_eject = 1
 	fire_animation = TRUE
 
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 
 	can_dual_wield = 0
 
@@ -1988,8 +1988,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	ammo_cats = list(AMMO_HOWITZER)
 	max_ammo_capacity = 1
 	auto_eject = 1
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 
 	can_dual_wield = 0
 
@@ -2022,8 +2022,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	icon_state = "grenade_launcher"
 	item_state = "grenade_launcher"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 7
 	ammo_cats = list(AMMO_GRENADE_ALL)
@@ -2081,8 +2081,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	ammo_cats = list(AMMO_RIFLE_308)
 	max_ammo_capacity = 6
 	auto_eject = 1
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 	slowdown = 7
 	slowdown_time = 5
 
@@ -2183,8 +2183,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	max_ammo_capacity = 5
 	auto_eject = 1
 
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 
 	can_dual_wield = 0
 

@@ -621,11 +621,13 @@
 
 /obj/item/clothing/head/helmet/hardhat/abilities = list(/obj/ability_button/flashlight_hardhat)
 
+TYPEINFO(/obj/item/clothing/head/helmet/camera)
+	mats = list("MET-1"=4, "CRY-1"=2, "CON-1"=2)
+
 /obj/item/clothing/head/helmet/camera
 	name = "camera helmet"
 	desc = "A helmet with a built in camera."
 	icon_state = "camhat"
-	mats = list("MET-1"=4, "CRY-1"=2, "CON-1"=2)
 	item_state = "camhat"
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Helmet Cam"
@@ -753,13 +755,15 @@
 		setProperty("exploprot", 20)
 		setProperty("movespeed", 0.15)
 
+TYPEINFO(/obj/item/clothing/head/helmet/siren)
+	mats = 8
+
 /obj/item/clothing/head/helmet/siren
 	name = "siren helmet"
 	desc = "A big flashing light that you put on your head. It also plays a siren for when you need to arrest someone!"
 	icon_state = "siren0"
 	uses_multiple_icon_states = 1
 	item_state = "siren"
-	mats = 8
 	abilities = list(/obj/ability_button/weeoo) // is near segway code in vehicle.dm
 	var/weeoo_in_progress = 0
 	var/datum/light/light
@@ -843,8 +847,10 @@
 		setProperty("meleeprot_head", 8)
 		setProperty("disorient_resist_eye", 15)
 
-/obj/item/clothing/head/helmet/space/industrial
+TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 	mats = 7
+
+/obj/item/clothing/head/helmet/space/industrial
 #ifdef UNDERWATER_MAP
 	icon_state = "diving_suit-industrial"
 	item_state = "diving_suit-industrial"
@@ -876,12 +882,14 @@
 			..()
 			setProperty("meleeprot_head", 7)
 
+TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
+	mats = 10
+
 /obj/item/clothing/head/helmet/space/mining_combat
 	name = "mining combat helmet"
 	desc = "Goes with Mining Combat Armor. Now with sweet strawberry-scented visor!"
 	icon_state = "mining_combat"
 	item_state = "mining_combat"
-	mats = 10
 
 	setupProperties()
 		..()

@@ -16,7 +16,7 @@
 				var/criminal = record["criminal"]
 				if(criminal == "*Arrest*" || criminal == "Parolled" || criminal == "Incarcerated" || criminal == "Released" || criminal == "Clown")
 					arrestState = criminal
-			else if(H.traitHolder.hasTrait("immigrant") && H.traitHolder.hasTrait("jailbird"))
+			else if(H.traitHolder.hasTrait("stowaway") && H.traitHolder.hasTrait("jailbird"))
 				arrestState = "*Arrest*"
 
 			if (arrestState != "*Arrest*") // Contraband overrides non-arrest statuses, now check for contraband

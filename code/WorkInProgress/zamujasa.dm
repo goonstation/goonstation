@@ -504,7 +504,8 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "nothing"
 	uses_multiple_icon_states = 1
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	force = 0
 	w_class = W_CLASS_TINY
 	throwforce = 1
@@ -561,6 +562,7 @@
 	name = "Space American Football Field"
 	icon_state = "green"
 	dont_log_combat = TRUE
+	allowed_restricted_z = TRUE
 
 	endzone
 		icon_state = "yellow"
