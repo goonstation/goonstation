@@ -51,12 +51,12 @@
 			boutput(src, "Deploy to an AI Eye first to create a hologram.")
 			return
 
-		var/choice = tgui_input_list(usr, "What would you like to do?", "Choice", list("Make floor hologram", "Pick holographic projector form", "Deploy to holo-projector"))
+		var/choice = tgui_input_list(usr, "What would you like to do?", "Choice", list("Make floor hologram", "Pick personal hologram appearance", "Deploy to holo-projector"))
 		switch(choice)
 			if("Make floor hologram")
 				var/turf/T = get_turf(src.eyecam)
 				src.show_hologram_context(T)
-			if ("Pick holographic projector form")
+			if ("Pick personal hologram appearance")
 				var/holo_choice = tgui_input_list(usr, "What form would you like your hologram to take?", "Choice", list("eye", "bee", "persona"))
 				src.hologram_icon = holo_choice
 				return
@@ -64,18 +64,15 @@
 				var/list/obj/machinery/holo_projector/holo_list = list()
 				var/list/holo_list_named = list()
 				for_by_tcl(pad, /obj/machinery/holo_projector)
-					if (pad.z != Z_LEVEL_STATION || pad.broken || pad.status & (NOPOWER))
+					if (pad.z != Z_LEVEL_STATION || pad.broken || pad.status & (NOPOWER) || istype(get_turf(pad), /turf/space))
 						continue
 					holo_list += pad
 					holo_list_named += ("[pad.name] ([get_area(pad)])")
-					boutput(src, get_area(pad))
-					boutput(src, get_area_name(get_area(pad)))
 				if (length(holo_list) <= 0)
 					boutput(src, "<span class='notice'>No available holo-projectors.</span>")
 					return
 				var/holo_choice = tgui_input_list(usr, "Which holo-projector do you want to deploy to?", "holographic projector", holo_list_named)
 				var/obj/machinery/holo_projector/target_holo = holo_list[holo_list_named.Find(holo_choice)]
-				boutput(src, holo_list_named.Find(holo_choice))
 				if (src.deployed_to_eyecam)
 					src.eyecam.return_mainframe()
 				if (src.mind)

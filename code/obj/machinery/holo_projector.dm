@@ -66,6 +66,13 @@ TYPEINFO(/obj/machinery/holo_projector)
 		else
 			src.icon_state = "projector_off"
 
+	ex_act(severity)
+		. = ..()
+		if (severity <= 2)
+			src.broken = TRUE
+			src.kill_holograms()
+			src.UpdateIcon()
+
 	proc/kill_holograms()
 		for (var/mob/living/silicon/hologram/M in linked_holograms)
 			M.become_eye()

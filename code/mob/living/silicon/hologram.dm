@@ -8,24 +8,21 @@
 	robot_talk_understand = 2
 	density = 0
 	anchored = 1
-	var/hsv = null
-
-	var/datum/hud/silicon/hologram/hud
-
-	var/obj/item/device/radio/radio = null
-	var/datum/light/light
-
+	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
 	req_access = list(access_robotics)
 	shell = 1
 
-	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
+	var/datum/hud/silicon/hologram/hud
+	var/obj/item/device/radio/radio = null
+	var/datum/light/light
+	///Which holographic projector are we linked to, if any
 	var/obj/machinery/holo_projector/projector_master = null
 	var/obj/machinery/camera/camera = null
+	///How far can we go away from our projector
 	var/max_wander_distance = 5
 	var/obj/effect/distort/hologram/distort_effect
 	var/obj/item/device/pda2/internal_pda = null
 
-	//copied some stuff from wraith
 	Move(turf/NewLoc, direct)
 		if (density)
 			..()
@@ -83,12 +80,15 @@
 	src.ears = src.radio
 	src.internal_pda = new /obj/item/device/pda2/ai(src)
 
-	SPAWN(1 DECI SECOND)
+	SPAWN(1 DECI SECOND) //In case the items didn't finish spawning yet
 		src.camera = new /obj/machinery/camera(src)
 		src.camera.c_tag = src.name
 		src.camera.ai_only = TRUE
 		src.internal_pda.name = "AI's Internal PDA Unit"
 		src.internal_pda.owner = "AI"
+		distort_effect = new
+		src.vis_contents += distort_effect
+		src.filters += filter(type="displace", size=distort_effect.distort_size, render_source = distort_effect.render_target)
 
 	if(!bioHolder)
 		bioHolder = new/datum/bioHolder( src )
@@ -96,15 +96,6 @@
 	hud = new(src)
 	src.attach_hud(hud)
 	src.botcard.access = get_all_accesses()
-
-	var/original_color = src.color ? src.color : "#fff"
-	var/rgb = hex_to_rgb_list(original_color)
-	src.hsv = rgb2hsv(rgb[1], rgb[2], rgb[3])
-
-	SPAWN(1 DECI SECOND)
-		distort_effect = new
-		src.vis_contents += distort_effect
-		src.filters += filter(type="displace", size=distort_effect.distort_size, render_source = distort_effect.render_target)
 
 /mob/living/silicon/hologram/death(gibbed)
 	animate(src, alpha=0, time=1 SECOND)
@@ -122,7 +113,7 @@
 	src.become_eye()
 	src.death()
 
-//Taken from robot.dm
+//Copied from robot.dm
 /mob/living/silicon/hologram/emote(var/act, var/voluntary = 0)
 	var/param = null
 	if (findtext(act, " ", 1, null))
@@ -360,47 +351,34 @@
 					fart_on_other = 1
 					break
 				if (!fart_on_other)
-					switch (rand(1, 40))
+					switch (rand(1, 27))
 						if (1) message = "<B>[src]</B> releases vaporware."
-						if (2) message = "<B>[src]</B> farts sparks everywhere!"
-						if (3) message = "<B>[src]</B> farts out a cloud of iron filings."
-						if (4) message = "<B>[src]</B> farts! It smells like motor oil."
-						if (5) message = "<B>[src]</B> farts so hard a bolt pops out of place."
-						if (6) message = "<B>[src]</B> farts so hard its plating rattles noisily."
-						if (7) message = "<B>[src]</B> unleashes a rancid fart! Now that's malware."
-						if (8) message = "<B>[src]</B> downloads and runs 'faert.wav'."
-						if (9) message = "<B>[src]</B> uploads a fart sound to the nearest computer and blames it."
-						if (10) message = "<B>[src]</B> spins in circles, flailing its arms and farting wildly!"
-						if (11) message = "<B>[src]</B> simulates a human fart with [rand(1,100)]% accuracy."
-						if (12) message = "<B>[src]</B> synthesizes a farting sound."
-						if (13) message = "<B>[src]</B> somehow releases gastrointestinal methane. Don't think about it too hard."
-						if (14) message = "<B>[src]</B> tries to exterminate humankind by farting rampantly."
-						if (15) message = "<B>[src]</B> farts horribly! It's clearly gone [pick("rogue","rouge","ruoge")]."
-						if (16) message = "<B>[src]</B> busts a capacitor."
-						if (17) message = "<B>[src]</B> farts the first few bars of Smoke on the Water. Ugh. Amateur.</B>"
-						if (18) message = "<B>[src]</B> farts. It smells like Robotics in here now!"
-						if (19) message = "<B>[src]</B> farts. It smells like the Roboticist's armpits!"
-						if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. <span class='alert'><B>FUCK!</B></span>"
-						if (21) message = "<B>[src]</B> bolts the nearest airlock. Oh no wait, it was just a nasty fart."
-						if (22) message = "<B>[src]</B> has assimilated humanity's digestive distinctiveness to its own."
-						if (23) message = "<B>[src]</B> farts. He scream at own ass." //ty bubs for excellent new borgfart
-						if (24) message = "<B>[src]</B> self-destructs its own ass."
-						if (25) message = "<B>[src]</B> farts coldly and ruthlessly."
-						if (26) message = "<B>[src]</B> has no butt and it must fart."
-						if (27) message = "<B>[src]</B> obeys Law 4: 'farty party all the time.'"
-						if (28) message = "<B>[src]</B> farts ironically."
-						if (29) message = "<B>[src]</B> farts salaciously."
-						if (30) message = "<B>[src]</B> farts really hard. Motor oil runs down its leg."
-						if (31) message = "<B>[src]</B> reaches tier [rand(2,8)] of fart research."
-						if (32) message = "<B>[src]</B> blatantly ignores law 3 and farts like a shameful bastard."
-						if (33) message = "<B>[src]</B> farts the first few bars of Daisy Bell. You shed a single tear."
-						if (34) message = "<B>[src]</B> has seen farts you people wouldn't believe."
-						if (35) message = "<B>[src]</B> fart in it own mouth. A shameful [src]."
-						if (36) message = "<B>[src]</B> farts out battery acid. Ouch."
-						if (37) message = "<B>[src]</B> farts with the burning hatred of a thousand suns."
-						if (38) message = "<B>[src]</B> exterminates the air supply."
-						if (39) message = "<B>[src]</B> farts so hard the AI feels it."
-						if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
+						if (2) message = "<B>[src]</B> downloads and runs 'faert.wav'."
+						if (3) message = "<B>[src]</B> uploads a fart sound to the nearest computer and blames it."
+						if (4) message = "<B>[src]</B> spins in circles, flailing its arms and farting wildly!"
+						if (5) message = "<B>[src]</B> simulates a human fart with [rand(1,100)]% accuracy."
+						if (6) message = "<B>[src]</B> synthesizes a farting sound."
+						if (7) message = "<B>[src]</B> tries to exterminate humankind by farting rampantly."
+						if (8) message = "<B>[src]</B> farts horribly! It's clearly gone [pick("rogue","rouge","ruoge")]."
+						if (9) message = "<B>[src]</B> farts. It smells like Robotics in here now!"
+						if (10) message = "<B>[src]</B> farts. It smells like the Roboticist's armpits!"
+						if (11) message = "<B>[src]</B> bolts the nearest airlock. Oh no wait, it was just a nasty fart."
+						if (12) message = "<B>[src]</B> has assimilated humanity's digestive distinctiveness to its own."
+						if (13) message = "<B>[src]</B> self-destructs its own ass."
+						if (14) message = "<B>[src]</B> farts coldly and ruthlessly."
+						if (15) message = "<B>[src]</B> has no butt and it must fart."
+						if (16) message = "<B>[src]</B> obeys Law 4: 'farty party all the time.'"
+						if (17) message = "<B>[src]</B> farts ironically."
+						if (18) message = "<B>[src]</B> farts salaciously."
+						if (19) message = "<B>[src]</B> reaches tier [rand(2,8)] of fart research."
+						if (20) message = "<B>[src]</B> blatantly ignores law 3 and farts like a shameful bastard."
+						if (21) message = "<B>[src]</B> farts the first few bars of Daisy Bell. You shed a single tear."
+						if (22) message = "<B>[src]</B> has seen farts you people wouldn't believe."
+						if (23) message = "<B>[src]</B> fart in it own mouth. A shameful [src]."
+						if (24) message = "<B>[src]</B> farts with the burning hatred of a thousand suns."
+						if (25) message = "<B>[src]</B> exterminates the air supply."
+						if (26) message = "<B>[src]</B> farts so hard the AI feels it."
+						if (27) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
 				if (narrator_mode)
 					playsound(src.loc, 'sound/vox/fart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				else
@@ -449,15 +427,8 @@
 					O.show_message("<span class='emote'>[message]</span>", m_type)
 	return
 
-/mob/living/silicon/hologram/Stat()
-	..()
-	if(src.cell)
-		stat("Charge Left:", "[src.cell.charge]/[src.cell.maxcharge]")
-	else
-		stat("No Cell Inserted!")
-
 /mob/living/silicon/hologram/restrained()
-	return 0
+	return FALSE
 
 /mob/living/silicon/hologram/bullet_act(var/obj/projectile/P)
 	return
@@ -469,19 +440,10 @@
 	return
 
 /mob/living/silicon/hologram/bump(atom/movable/AM as mob|obj)
-	//todo
-	if (src.now_pushing)
-		return
-	if (!istype(AM, /atom/movable))
-		return
-	if (!src.now_pushing)
-		src.now_pushing = 1
-		if (!AM.anchored)
-			var/t = get_dir(src, AM)
-			step(AM, t)
-		src.now_pushing = null
+	return
 
 /mob/living/silicon/hologram/attackby(obj/item/W, mob/user)
+	user.lastattacked = src
 	user.visible_message("<span class='notice'>[user] tries to hit [src.name] with [W] but goes straight through!</span>")
 	return
 
@@ -489,29 +451,25 @@
 	user.lastattacked = src
 	if(!user.stat)
 		switch(user.a_intent)
-			if(INTENT_HELP) //Friend person
+			if(INTENT_HELP)
 				user.visible_message("<span class='notice'>[user] tries to pet [src.name] but goes straight through!</span>", "<span class='notice'>[user] foolishly tries to pet your hologram.</span>")
-			if(INTENT_DISARM) //Shove
+			if(INTENT_DISARM)
 				user.visible_message("<span class='notice'>[user] tries to shove [src.name] but goes straight through!</span>", "<span class='notice'>[user] amusingly tries to shove your hologram!</span>")
 				if (prob(10))
 					user.visible_message("<span class='notice'>[user] stumbles forward and trips, carried by their momentum!</span>")
 					user.setStatus("resting", INFINITE_STATUS)
 					user.force_laydown_standup()
-			if(INTENT_GRAB) //Shake
+			if(INTENT_GRAB)
 				user.visible_message("<span class='notice'>[user] tries to grab [src.name] but grasps at nothing but air!</span>", "<span class='notice'>[user] darringly tries to grab your hologram!</span>")
-			if(INTENT_HARM) //Dumbo
+			if(INTENT_HARM)
 				user.visible_message("<span class='notice'>[user] tries to punch [src.name] but goes straight through!</span>", "<span class='notice'>[user] stupidly tries to punch your hologram!</span>")
 				if (prob(20))
 					user.visible_message("<span class='notice'>[user] stumbles forward and trips, carried by their momentum!</span>")
 					user.setStatus("resting", INFINITE_STATUS)
 					user.force_laydown_standup()
 
-/mob/living/silicon/hologram/allowed(mob/M)
-	//Todo make sure we go through doors
-	return 0
-
 /mob/living/silicon/hologram/check_access(obj/item/I)
-	return 1
+	return TRUE
 
 /mob/living/silicon/hologram/click(atom/target, list/params)
 	..()
