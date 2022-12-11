@@ -1,6 +1,10 @@
 
 (t)sun dec 11 22
 (u)LeahTheTech
+(p)12235
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Coagulated gnesis gib chance now scales with volume.
+(u)LeahTheTech
 (p)12317
 (e)⚖💅|C-Balance, C-QoL
 (+)Stunned people can now be shoved up/down ladders using grabs (previously only people capable of climbing ladders could be shoved down them).
