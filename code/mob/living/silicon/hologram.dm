@@ -10,8 +10,6 @@
 	var/glitchy_speak = 0
 	var/hsv = null
 
-	var/datum/hud/hologram/hud
-
 	var/obj/item/device/radio/radio = null
 
 	req_access = list(access_robotics)
@@ -75,9 +73,6 @@
 	src.ears = src.radio
 	if (projector_master)
 		projector_master.linked_holograms += src
-
-	hud = new(src)
-	src.attach_hud(hud)
 
 	SPAWN(1 SECOND)
 	/*
