@@ -3,7 +3,7 @@
  * Maps this doesn't apply to is stuff that uses non TEG/singulos
  * i.e. Nadir and Oshan
  * Only maps in the list prefabbed_engineering will undergo the process
- * The associated list mapenginesizes tells the game how big engineering is on that map
+ *
  *
  */
 // some overrides which i am putting here while i test it
@@ -13,7 +13,6 @@
 
 var/map = "cogmap"
 var/list/prefabbed_engineering = list("cogmap")
-var/list/mapenginesizes = list("cogmap" = list(30,19))
 
 TYPEINFO(/datum/mapPrefab/engineering_room)
 	folder = "engine_rooms"
@@ -21,11 +20,12 @@ TYPEINFO(/datum/mapPrefab/engineering_room)
 /datum/mapPrefab/engineering_room
 	maxNum = 1
 	required = TRUE
-
+	var/width = null
+	var/height = null
 	post_init()
 		for(var/tag in src.tags)
-			src.prefabSizeX = mapenginesizes[map[1]]
-			src.prefabSizeY = mapenginesizes[map[2]]
+			src.prefabSizeX = mapenginesizes[width]
+			src.prefabSizeY = mapenginesizes[height]
 
 		var/filename = filename_from_path(src.prefabPath)
 		var/regex/engine_type = regex(@"^.*_(\d+)\.dmm$")
@@ -60,6 +60,8 @@ proc/build_Engineering()
 
 /obj/landmark/engineering_room
 	var/map = null
+	var/width = null
+	var/height = null
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "landmark"
 	deleted_on_start = FALSE
@@ -76,8 +78,10 @@ proc/build_Engineering()
 		STOP_TRACKING
 		..()
 
-	proc/apply()
+	proc/apply(width, height)
 		var/datum/mapPrefab/engineering_room/room_prefab = pick_map_prefab(/datum/mapPrefab/engineering_room, list(map))
+		room_prefab.width = width
+		room_prefab.height = height
 		if(isnull(room_prefab))
 			CRASH("No engine room prefab found for map: " + map)
 		room_prefab.applyTo(src.loc)
