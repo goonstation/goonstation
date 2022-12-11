@@ -63,6 +63,8 @@
 				var/list/obj/machinery/holo_projector/holo_list = list()
 				var/list/holo_list_named = list()
 				for_by_tcl(pad, /obj/machinery/holo_projector)
+					if (pad.z != Z_LEVEL_STATION || pad.broken || pad.status & (NOPOWER))
+						continue
 					holo_list += pad
 					holo_list_named += ("[pad.name] ([get_area(pad)])")
 					boutput(src, get_area(pad))
