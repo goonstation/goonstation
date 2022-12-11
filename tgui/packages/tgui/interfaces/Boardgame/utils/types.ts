@@ -60,3 +60,7 @@ export type SizeType = {
   width: number;
   height: number;
 };
+
+export type PalleteExpandType = {
+  [key: string]: boolean;
+};

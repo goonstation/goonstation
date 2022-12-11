@@ -9,4 +9,6 @@ export {
   TileSizeType,
   XYType,
   SizeType,
+  PalleteExpandType,
 } from './types';
+export { numToBoardNotation, generateBoardNotationLetters } from './notations';

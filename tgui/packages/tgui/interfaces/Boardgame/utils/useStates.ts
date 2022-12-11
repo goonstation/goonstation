@@ -1,7 +1,8 @@
 import { useLocalState } from '../../../backend';
-import { XYType, TileSizeType } from '.';
+import { XYType, TileSizeType, PalleteExpandType } from '.';
 
 export const DEFAULT_STATES = {
+  // TODO: add more default states here
   FLIP: false,
   ZOOM: 1,
   MOUSE_COORDS: { x: 0, y: 0 },
@@ -9,7 +10,7 @@ export const DEFAULT_STATES = {
 
 export const STATES = (context) => {
   return {
-    // Board game
+    // TODO: add more states here
     flip: useLocalState<boolean>(context, 'flip', DEFAULT_STATES.FLIP),
     zoom: useLocalState<number>(context, 'zoom', DEFAULT_STATES.ZOOM),
     mouseCoords: useLocalState<XYType>(context, 'mouseCoords', DEFAULT_STATES.MOUSE_COORDS),

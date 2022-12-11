@@ -1,4 +1,4 @@
-import { PieceDataType, SizeType, UserDataType } from '.';
+import { PieceDataType, UserDataType } from '.';
 
 /**
  *
@@ -43,13 +43,8 @@ export const useActions = (act) => {
         ckey,
       });
     },
-    boardClear: (size?: SizeType) => {
+    boardClear: () => {
       let gnot = '';
-      if (size) {
-        const { width, height } = size;
-        gnot = (width * height).toString();
-      }
-
       act('applyGNot', { gnot: gnot });
     },
   };

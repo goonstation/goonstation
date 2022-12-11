@@ -14,5 +14,18 @@
   // Styles
 
   &-checkerboard {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  // Common styles for the board
+
+  // Grid Guide renderer
+  &-ggrenderer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
   }
 }

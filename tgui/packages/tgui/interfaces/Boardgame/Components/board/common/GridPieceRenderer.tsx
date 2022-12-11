@@ -6,10 +6,9 @@ import { Box } from '../../../../../components';
 
 type GridPieceRendererProps = {
   pieces: PieceDataType[];
-  interactable: boolean; // Used for previewing pieces, not for actual gameplay
 };
 
-const GridPieceRenderer = ({ pieces, interactable }: GridPieceRendererProps, context) => {
+const GridPieceRenderer = ({ pieces }: GridPieceRendererProps, context) => {
   const { act, data } = useBackend<BoardgameData>(context);
 
   const { currentUser, lastMovedPiece } = data;
@@ -44,7 +43,6 @@ const GridPieceRenderer = ({ pieces, interactable }: GridPieceRendererProps, con
         return (
           <div
             onmousedown={(e) => {
-              if (!interactable) return;
               if (e.button === 0 && !selected) {
                 if (currentUser.palette) {
                   piecePlace(currentUser.ckey, x, y);
@@ -65,7 +63,6 @@ const GridPieceRenderer = ({ pieces, interactable }: GridPieceRendererProps, con
               }
             }}
             onmouseup={(e) => {
-              if (!interactable) return;
               if (currentUser.palette) {
                 piecePlace(currentUser.ckey, x, y);
               }
