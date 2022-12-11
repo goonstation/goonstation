@@ -6,11 +6,13 @@
 // light_status values shared between lighting fixtures and items
 // defines moved to _setup.dm by ZeWaka
 
+TYPEINFO(/obj/item/light_parts)
+	mats = 4
+
 /obj/item/light_parts
 	name = "fixture parts"
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-fixture"
-	mats = 4
 	material_amt = 0.2
 
 	var/installed_icon_state = "tube-empty"
@@ -1026,6 +1028,9 @@
 // can be tube or bulb subtypes
 // will fit into empty /obj/machinery/light of the corresponding type
 
+TYPEINFO(/obj/item/light)
+	mats = 1
+
 /obj/item/light
 	icon = 'icons/obj/lighting.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
@@ -1039,7 +1044,6 @@
 	m_amt = 60
 	var/rigged = 0		// true if rigged to explode
 	var/mob/rigger = null // mob responsible
-	mats = 1
 	var/color_r = 1
 	var/color_g = 1
 	var/color_b = 1

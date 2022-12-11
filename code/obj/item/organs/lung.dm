@@ -223,6 +223,9 @@
 	body_side = R_ORGAN
 	failure_disease = /datum/ailment/disease/respiratory_failure/right
 
+TYPEINFO(/obj/item/organ/lung/cyber)
+	mats = 6
+
 /obj/item/organ/lung/cyber
 	name = "cyberlungs"
 	desc = "Fancy robotic lungs!"
@@ -231,7 +234,6 @@
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
-	mats = 6
 	temp_tolerance = T0C+500
 	var/overloading = 0
 	var/grace_period = 30

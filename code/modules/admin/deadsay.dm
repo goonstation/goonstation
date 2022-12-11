@@ -32,6 +32,10 @@
 			continue
 		if (istype(M,/mob/dead/target_observer/slasher_ghost))
 			continue
+		if (iswraith(M))
+			var/mob/living/intangible/wraith/the_wraith = M
+			if (!the_wraith.hearghosts)
+				continue
 
 		//admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above
 		if (isdead(M) || iswraith(M) || (M.client && M.client.holder && M.client.deadchat && !M.client.player_mode) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M))

@@ -1,7 +1,10 @@
 /* ==================================================== */
 /* --------------------- Machine ---------------------- */
 /* ==================================================== */
-/obj/machinery/espresso_machine/
+TYPEINFO(/obj/machinery/espresso_machine)
+	mats = 30
+
+/obj/machinery/espresso_machine
 	name = "espresso machine"
 	desc = "It's top of the line NanoTrasen espresso technology! Featuring 100% Organic Locally-Grown espresso beans!" //haha no
 	icon = 'icons/obj/foodNdrink/espresso.dmi'
@@ -10,7 +13,6 @@
 	anchored = 1
 	flags = FPRINT | NOSPLASH | TGUI_INTERACTIVE
 	event_handler_flags = NO_MOUSEDROP_QOL
-	mats = 30
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 	var/cupslimit = 2
 	var/cupsinside = 0
@@ -182,6 +184,9 @@
 /* ===================================================== */
 //Sorry for budging in here, whoever made the espresso machine. Lets just rename this to coffee.dm?
 
+TYPEINFO(/obj/machinery/coffeemaker)
+	mats = 30
+
 /obj/machinery/coffeemaker
 	name = "coffeemaker"
 	desc = "It's top of the line NanoTrasen espresso technology! Featuring 100% Organic Locally-Grown espresso beans!" //haha no
@@ -190,7 +195,6 @@
 	density = 1
 	anchored = 1
 	flags = FPRINT | NOSPLASH
-	mats = 30
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 	var/carafe_name = "coffee carafe"
 	var/image/image_top = null
