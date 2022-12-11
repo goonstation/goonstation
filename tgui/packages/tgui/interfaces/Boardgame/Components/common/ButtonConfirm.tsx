@@ -6,9 +6,9 @@
  */
 
 import { Component } from 'inferno';
-import { Button } from '..';
+import { Button } from '../../../../components';
 
-type ConfirmButtonProps = {
+type ButtonConfirmProps = {
   icon?: string;
   color?: string;
   onConfirm?: () => void;
@@ -16,11 +16,11 @@ type ConfirmButtonProps = {
   confirmText?: string;
 };
 
-type ConfirmButtonState = {
+type ButtonConfirmState = {
   confirmState: boolean;
 };
 
-export class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
+export class ButtonConfirm extends Component<ButtonConfirmProps, ButtonConfirmState> {
   state = {
     confirmState: false,
   };
