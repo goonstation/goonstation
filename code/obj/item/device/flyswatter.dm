@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/flyswatter)
+	mats = 15
+
 /obj/item/device/flyswatter
 	name = "fly swatter"
 	desc = "It's one of those fancy electric types, so you can hear that satisfying zap, zap, <i>zap</i>!"
@@ -11,7 +14,6 @@
 	throw_range = 10
 	throw_speed = 2
 	m_amt = 100
-	mats = 15
 
 	New()
 		..()

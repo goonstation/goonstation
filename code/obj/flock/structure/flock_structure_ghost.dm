@@ -5,6 +5,7 @@
 	var/goal = 0 //mats needed to make the thing actually build
 	var/obj/flock_structure/building = null //thing thats being built
 	var/currentmats = 0 //mats currently in the thing.
+	var/fake = FALSE
 	flock_id = "Construction Tealprint"
 	density = FALSE
 
@@ -77,6 +78,8 @@
 	alpha = lerp(104, 255, currentmats / goal)
 
 /obj/flock_structure/ghost/proc/add_mats(mats)
+	if (src.fake)
+		return
 	src.currentmats += mats
 
 	if(currentmats > goal)
@@ -94,8 +97,9 @@
 
 /obj/flock_structure/ghost/proc/completebuild()
 	if(src.building)
-		new building(get_turf(src), src.flock)
+		var/obj/flock_structure/structure = new src.building(get_turf(src), src.flock)
 		src.flock?.structures_made++
+		src.flock?.flockmind?.tutorial?.PerformSilentAction(FLOCK_ACTION_TEALPRINT_COMPLETE, structure)
 	qdel(src)
 
 /obj/flock_structure/ghost/proc/cancelBuild()

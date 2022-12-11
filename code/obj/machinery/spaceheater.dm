@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/space_heater)
+	mats = 8
+
 /obj/machinery/space_heater
 	anchored = 0
 	density = 1
@@ -13,7 +16,6 @@
 	var/set_temperature = 50		// in celcius, add T0C for kelvin
 	var/heating_power = 40000
 	var/cooling_power = -30000
-	mats = 8
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
 	flags = FPRINT
 
@@ -256,6 +258,9 @@
 		if(Obj == src.cell)
 			src.cell = null
 
+TYPEINFO(/obj/machinery/sauna_stove)
+	mats = 8
+
 /obj/machinery/sauna_stove
 	anchored = 0
 	density = 1
@@ -270,7 +275,6 @@
 	var/set_temperature = 50		// in celcius, add T0C for kelvin
 	var/heating_power = 40000
 	var/cooling_power = -30000
-	mats = 8
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = FPRINT
 

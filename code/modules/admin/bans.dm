@@ -103,7 +103,7 @@ var/global/list/playersSeen = list()
 		var/remaining = (timestamp > 0 ? timestamp - CMinutes : timestamp)
 		var/addData[] = new()
 		addData["ckey"] = ckey
-		addData["compID"] = compID
+		addData["compID"] = row["compID"] || null // don't record CID if the original ban doesn't have one down
 		addData["ip"] = ip
 		addData["reason"] = row["reason"]
 		addData["oakey"] = row["oakey"]
@@ -655,6 +655,8 @@ var/global/list/playersSeen = list()
 		src << sound('sound/voice/farts/poo2.ogg')
 		logTheThing(LOG_ADMIN, src, "tried to access the ban panel")
 		logTheThing(LOG_DIARY, src, "tried to access the ban panel", "admin")
+		message_admins("[key_name(src)] tried to access the ban panel but was denied.")
+		del(usr.client)
 	return
 
 

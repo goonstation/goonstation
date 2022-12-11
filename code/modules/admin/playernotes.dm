@@ -6,7 +6,9 @@
 	if(src.tempmin)
 		logTheThing(LOG_ADMIN, usr, "tried to access the notes of [constructTarget(player,"admin")]")
 		logTheThing(LOG_DIARY, usr, "tried to access the notes of [constructTarget(player,"diary")]", "admin")
+		message_admins("[key_name(usr)] tried to access the notes of [player] but was denied.")
 		alert("You need to be an actual admin to view player notes.")
+		del(usr.client)
 		return
 
 	if (!config.player_notes_baseurl || !config.player_notes_auth)

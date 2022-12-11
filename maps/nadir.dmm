@@ -5405,7 +5405,10 @@
 	},
 /area/station/hallway/primary/northwest)
 "cCn" = (
-/obj/storage/crate/robotparts,
+/obj/machinery/recharge_station,
+/obj/landmark/start{
+	name = "Cyborg"
+	},
 /turf/simulated/floor/blueblack,
 /area/station/medical/robotics)
 "cCs" = (
@@ -5610,7 +5613,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/catering)
 "cIM" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
@@ -5708,6 +5711,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
+"cLM" = (
+/obj/xmastree/ephemeral,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 1
+	},
+/area/station/chapel/sanctuary)
 "cLQ" = (
 /obj/grille/catwalk{
 	dir = 10
@@ -11663,6 +11672,12 @@
 	dir = 1
 	},
 /area/station/crew_quarters/pool)
+"fDm" = (
+/obj/wingrille_spawn/auto/crystal/reinforced,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/entry{
+	name = "Arrival Shuttle Hallway"
+	})
 "fDs" = (
 /obj/table/reinforced/auto,
 /obj/machinery/microwave,
@@ -14209,7 +14224,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "gLY" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
@@ -15248,6 +15263,12 @@
 /obj/item/sponge,
 /turf/simulated/floor/darkblue,
 /area/station/janitor/office)
+"hiW" = (
+/obj/wingrille_spawn/auto/crystal/reinforced,
+/turf/simulated/floor/plating,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
 "hiY" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/window_blinds/cog2/right,
@@ -15495,10 +15516,7 @@
 /area/station/crew_quarters/fitness)
 "hmT" = (
 /obj/machinery/light_switch/west,
-/obj/machinery/recharge_station,
-/obj/landmark/start{
-	name = "Cyborg"
-	},
+/obj/storage/crate/robotparts,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -18112,10 +18130,6 @@
 /area/station/maintenance/outer/se{
 	name = "Southeast Breach Hull"
 	})
-"isJ" = (
-/obj/item/device/radio/beacon,
-/turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/sanctuary)
 "isK" = (
 /obj/item/storage/wall/fire{
 	dir = 4;
@@ -23979,7 +23993,7 @@
 	name = "Head of Personnel's Quarters"
 	})
 "laQ" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
@@ -25001,6 +25015,10 @@
 /obj/item/storage/toilet/goldentoilet,
 /turf/simulated/floor/sanitary,
 /area/station/bridge/captain)
+"lxn" = (
+/obj/wingrille_spawn/auto/crystal/reinforced,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/exit)
 "lxp" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
@@ -25430,6 +25448,12 @@
 	},
 /turf/simulated/floor/engine/glow/blue,
 /area/station/communications/centre)
+"lHW" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
 "lIi" = (
 /obj/submachine/laundry_machine,
 /obj/cable{
@@ -32009,12 +32033,6 @@
 /turf/simulated/floor/carpet/purple/fancy/innercorner/ne_sw,
 /area/station/science/lobby{
 	name = "Science Lounge"
-	})
-"oNU" = (
-/obj/wingrille_spawn/auto/crystal,
-/turf/simulated/floor/black,
-/area/station/hallway/secondary/entry{
-	name = "Arrival Shuttle Hallway"
 	})
 "oOu" = (
 /obj/table/round/auto,
@@ -48699,7 +48717,8 @@
 "wWN" = (
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/engine/elect)
 "wWP" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
@@ -78224,7 +78243,7 @@ rSM
 mSi
 gbL
 fzq
-gbL
+fDm
 tEn
 tEn
 xYB
@@ -78244,7 +78263,7 @@ plY
 xYB
 tEn
 tEn
-gbL
+fDm
 oPO
 gbL
 ncz
@@ -79122,7 +79141,7 @@ rJg
 rJg
 rJg
 rJg
-gbL
+fDm
 gfS
 gbL
 hXZ
@@ -79130,7 +79149,7 @@ eMn
 jQa
 gbL
 gfS
-gbL
+fDm
 rJg
 rJg
 xYB
@@ -79150,7 +79169,7 @@ umD
 xYB
 rJg
 rJg
-gbL
+fDm
 gfS
 gbL
 hxY
@@ -79158,7 +79177,7 @@ eMn
 jQa
 gbL
 gfS
-gbL
+fDm
 rJg
 rJg
 rJg
@@ -79424,7 +79443,7 @@ bzS
 bzS
 rJg
 rJg
-gbL
+fDm
 gfS
 gbL
 tNU
@@ -79432,7 +79451,7 @@ eMn
 eTW
 gbL
 gfS
-gbL
+fDm
 rJg
 rJg
 bJL
@@ -79452,7 +79471,7 @@ mDc
 cMR
 rJg
 rJg
-gbL
+fDm
 gfS
 gbL
 kIs
@@ -79460,7 +79479,7 @@ eMn
 mSi
 gbL
 gfS
-gbL
+fDm
 rJg
 rJg
 bzS
@@ -79726,7 +79745,7 @@ bzS
 bzS
 bzS
 rJg
-gbL
+fDm
 gfS
 gbL
 hXZ
@@ -79734,7 +79753,7 @@ eMn
 jQa
 gbL
 gfS
-gbL
+fDm
 rJg
 rJg
 shh
@@ -79754,7 +79773,7 @@ dDw
 mfr
 rJg
 rJg
-gbL
+fDm
 gfS
 gbL
 hxY
@@ -79762,7 +79781,7 @@ eMn
 jQa
 gbL
 gfS
-gbL
+fDm
 rJg
 bzS
 bzS
@@ -80338,7 +80357,7 @@ eMn
 jQa
 gbL
 gfS
-gbL
+fDm
 rJg
 rJg
 rJg
@@ -80358,7 +80377,7 @@ rJg
 rJg
 rJg
 rJg
-gbL
+fDm
 gfS
 gbL
 hxY
@@ -80640,7 +80659,7 @@ eMn
 mSi
 gbL
 gfS
-gbL
+fDm
 rJg
 rJg
 rJg
@@ -80660,7 +80679,7 @@ rJg
 rJg
 rJg
 rJg
-gbL
+fDm
 gfS
 gbL
 ncz
@@ -80942,7 +80961,7 @@ eMn
 jQa
 gbL
 gfS
-gbL
+fDm
 rJg
 rJg
 rJg
@@ -80962,7 +80981,7 @@ rJg
 rJg
 rJg
 rJg
-gbL
+fDm
 gfS
 gbL
 hxY
@@ -81245,25 +81264,25 @@ jSC
 dqY
 tCM
 dqY
-gbL
-gbL
-gbL
+fDm
+fDm
+fDm
 dqY
-gbL
-gbL
-gbL
+fDm
+fDm
+fDm
 dqY
-gbL
-gbL
-gbL
+fDm
+fDm
+fDm
 dqY
-gbL
-gbL
-gbL
+fDm
+fDm
+fDm
 dqY
-oNU
-oNU
-oNU
+fDm
+fDm
+fDm
 dqY
 tCM
 dqY
@@ -96391,11 +96410,11 @@ iPe
 baj
 baj
 baj
-mvA
-mvA
-mvA
-mvA
-mvA
+hiW
+hiW
+hiW
+hiW
+hiW
 baj
 itm
 thj
@@ -96692,13 +96711,13 @@ fBi
 mxa
 gUK
 kST
-mvA
+hiW
 ijH
 auM
 aPz
 yge
 knN
-mvA
+hiW
 xxN
 gti
 mvA
@@ -96994,14 +97013,14 @@ gUd
 eKF
 ukt
 kST
-mvA
+hiW
 aPz
 aPz
 nKt
 mzq
 rld
-mvA
-mvA
+hiW
+hiW
 gfC
 mvA
 jyU
@@ -97296,7 +97315,7 @@ dzl
 tpy
 fjZ
 kST
-mvA
+hiW
 mjt
 aPz
 aPz
@@ -97598,14 +97617,14 @@ nmv
 oln
 ukt
 kST
-mvA
+hiW
 aPz
 aPz
 uob
 aWU
 ijH
-mvA
-mvA
+hiW
+hiW
 gfC
 mvA
 sOI
@@ -97900,13 +97919,13 @@ nQa
 cMA
 dbA
 kST
-mvA
+hiW
 ijH
 nlC
 aPz
 yge
 knN
-mvA
+hiW
 rYl
 vgL
 mvA
@@ -98203,11 +98222,11 @@ ykm
 baj
 baj
 baj
-mvA
-mvA
-mvA
-mvA
-mvA
+hiW
+hiW
+hiW
+hiW
+hiW
 baj
 abk
 sbd
@@ -103883,7 +103902,7 @@ ctc
 ryi
 cOB
 nAw
-cOB
+lHW
 tcn
 rcw
 fRP
@@ -105091,7 +105110,7 @@ cOB
 cSy
 leK
 uen
-leK
+cLM
 iTg
 ahw
 iBC
@@ -105393,7 +105412,7 @@ lYP
 cVV
 cSg
 leK
-isJ
+uen
 adB
 mAa
 adB
@@ -113257,25 +113276,25 @@ pFB
 uSe
 ndB
 uSe
-nxE
-nxE
-nxE
+lxn
+lxn
+lxn
 uSe
-nxE
-nxE
-nxE
+lxn
+lxn
+lxn
 uSe
-nxE
-nxE
-nxE
+lxn
+lxn
+lxn
 uSe
-nxE
-nxE
-nxE
+lxn
+lxn
+lxn
 uSe
-nxE
-nxE
-nxE
+lxn
+lxn
+lxn
 uSe
 ndB
 uSe
@@ -113558,7 +113577,7 @@ udE
 mbi
 nxE
 wXk
-nxE
+lxn
 rJg
 rJg
 rJg
@@ -113578,7 +113597,7 @@ rJg
 rJg
 rJg
 rJg
-nxE
+lxn
 wXk
 nxE
 mtw
@@ -113860,7 +113879,7 @@ udE
 cEv
 nxE
 wXk
-nxE
+lxn
 rJg
 rJg
 iMT
@@ -113880,7 +113899,7 @@ iMT
 iMT
 rJg
 rJg
-nxE
+lxn
 wXk
 nxE
 hJZ
@@ -114162,7 +114181,7 @@ udE
 mbi
 nxE
 wXk
-nxE
+lxn
 rJg
 rJg
 iMT
@@ -114182,7 +114201,7 @@ iMT
 iMT
 rJg
 rJg
-nxE
+lxn
 wXk
 nxE
 mtw
@@ -114758,7 +114777,7 @@ bzS
 bzS
 bzS
 rJg
-nxE
+lxn
 wXk
 nxE
 ftp
@@ -114766,7 +114785,7 @@ udE
 mbi
 nxE
 wXk
-nxE
+lxn
 rJg
 rJg
 iMT
@@ -114786,7 +114805,7 @@ iMT
 iMT
 rJg
 rJg
-nxE
+lxn
 wXk
 nxE
 mtw
@@ -114794,7 +114813,7 @@ udE
 mbi
 nxE
 wXk
-nxE
+lxn
 bUI
 bUI
 bUI
@@ -115060,7 +115079,7 @@ bzS
 bzS
 bzS
 rJg
-nxE
+lxn
 wXk
 nxE
 fwT
@@ -115068,7 +115087,7 @@ udE
 hpn
 nxE
 wXk
-nxE
+lxn
 rJg
 rJg
 iMT
@@ -115088,7 +115107,7 @@ iMT
 iMT
 rJg
 rJg
-nxE
+lxn
 wXk
 nxE
 rie
@@ -115096,7 +115115,7 @@ udE
 cEv
 nxE
 wXk
-nxE
+lxn
 bUI
 bUI
 bUI
@@ -115362,7 +115381,7 @@ bzS
 bzS
 bzS
 rJg
-nxE
+lxn
 wXk
 nxE
 ftp
@@ -115370,7 +115389,7 @@ udE
 mbi
 nxE
 wXk
-nxE
+lxn
 rJg
 rJg
 iMT
@@ -115390,7 +115409,7 @@ iMT
 iMT
 rJg
 rJg
-nxE
+lxn
 wXk
 nxE
 mtw
@@ -116276,7 +116295,7 @@ nOs
 cEv
 nxE
 kUk
-nxE
+lxn
 uvq
 hpk
 iMT
@@ -116296,7 +116315,7 @@ iMT
 iMT
 hpk
 uvq
-nxE
+lxn
 rSA
 nxE
 hJZ

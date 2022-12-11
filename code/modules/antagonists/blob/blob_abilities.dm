@@ -200,7 +200,7 @@
 			return
 
 		if (!(isadmin(owner) || owner.admin_override)) //admins can spawn wherever. So can AI blobs if we tell them to.
-			if (!istype(T.loc, /area/station/) && !istype(T.loc, /area/blob/))
+			if (!istype(T.loc, /area/station/) && !istype(T.loc, /area/tutorial/blob/))
 				boutput(owner, "<span class='alert'>You need to start on the [station_or_ship()]!</span>")
 				return
 
@@ -229,6 +229,10 @@
 
 		if (!tutorial_check("deploy", T))
 			return
+
+		if (owner)
+			if (tgui_alert(owner,"Would you like to deploy your nucleus?","Deploy Nucleus?",list("Yes","No")) != "Yes")
+				return TRUE
 
 		var/turf/startTurf = get_turf(owner)
 		var/obj/blob/nucleus/C = new /obj/blob/nucleus(startTurf)

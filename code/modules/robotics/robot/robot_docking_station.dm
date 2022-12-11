@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/recharge_station)
+	mats = 10
+
 /obj/machinery/recharge_station
 	name = "cyborg docking station"
 	icon = 'icons/obj/robot_parts.dmi'
@@ -5,7 +8,6 @@
 	icon_state = "station"
 	density = 1
 	anchored = 1
-	mats = 10
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	allow_stunned_dragndrop = 1
@@ -61,6 +63,8 @@
 
 /obj/machinery/recharge_station/ex_act(severity)
 	src.go_out()
+	if (severity > 1 && src.conversion_chamber) //syndie version is a little tougher
+		return
 	return ..(severity)
 
 /obj/machinery/recharge_station/attack_hand(mob/user)
@@ -174,10 +178,12 @@
 /obj/machinery/recharge_station/MouseDrop_T(atom/movable/AM as mob|obj, mob/user as mob)
 	if (BOUNDS_DIST(AM, user) > 0 || BOUNDS_DIST(src, user) > 0)
 		return
+	if (!isturf(AM.loc) && !(AM in user))
+		return
 	if (!isliving(user) || isAI(user))
 		return
 
-	if (isitem(AM) && !user.stat)
+	if (isitem(AM) && can_act(user))
 		src.Attackby(AM, user)
 		return
 
