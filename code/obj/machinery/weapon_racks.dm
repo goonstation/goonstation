@@ -18,29 +18,46 @@
 	desc = "A stand which can hold a weapon. This one is a little generic looking."
 	icon = 'icons/obj/weapon_rack.dmi'
 	icon_state = "swordstand1"
-	var/amount = 1
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
+
+	/// used to generate iconstates
 	var/stand_type = "katanastand"
+
+	/// path to a weapon
 	var/contained_weapon = /obj/item/swords_sheaths/katana
+
+	/// name of contained weapons
 	var/contained_weapon_name = "katana"
-	var/recharges_contents = 0
+
+	/// do we reacharge our contents
+	var/recharges_contents = FALSE
+
+	/// how many weapons are we currently holding
+	var/amount = 1
+
+	/// what's the maximum number of weapons we can hold
 	var/max_amount = 1
 
+	/// controls whether the weapon stand is hackable
 	var/hackable = FALSE
-	var/hacked = 0
-	var/panelopen = 0
 
+	/// is the weapon stand emagged
+	var/emagged = FALSE
+
+	/// is the access panel open
+	var/panelopen = FALSE
+
+	/// our wire hacking component defintion
 	var/static/datum/wireDefinition/wire_definition = new /datum/wireDefinition(
-		functions=list(WIRE_INERT, WIRE_POWER_A, WIRE_MALFUNCTION, WIRE_ID_SCAN),
+		effects=list(WIRE_INERT, WIRE_POWER_A, WIRE_GROUND, WIRE_ID_SCAN),
 		colors=list("Puce", "Mauve", "Ochre", "Slate")
 	)
 
 	New()
 		..()
-		if (hackable)
-			AddComponent(/datum/component/wireStatus, src.wire_definition)
+		AddComponent(/datum/component/wireStatus, src.wire_definition)
 
 		if(!recharges_contents)
 			UnsubscribeProcess()
@@ -95,39 +112,50 @@
 				return ..()
 */
 
+	proc/show_panel(mob/user)
+		var/datum/component/wireStatus/status = src.LoadComponent(/datum/component/wireStatus) // TODO: excise this when TGUI
+		var/pdat = "<B>[src.name] Maintenance Panel</B><hr>"
+		for(var/i in 1 to length(status.cut_wires))
+			pdat += "[wire_definition.wire_color[i]] wire: "
+			if (status.cut_wires[i])
+				pdat += "<a href='?src=\ref[src];cutwire=[i]'>Mend</a>"
+			else
+				pdat += "<a href='?src=\ref[src];cutwire=[i]'>Cut</a> "
+				pdat += "<a href='?src=\ref[src];pulsewire=[i]'>Pulse</a> "
+			pdat += "<br>"
+
+		pdat += "<br>"
+		// TODO: excise this when TGUI VVVVV gross
+		pdat += "The yellow light is [HAS_FLAG(SEND_SIGNAL(src, COMSIG_WIRE_HACK_FLAGS), WIRE_POWER_A) ? "off" : "on"].<BR>"
+		pdat += "The blue light is [HAS_FLAG(SEND_SIGNAL(src, COMSIG_WIRE_HACK_FLAGS), WIRE_GROUND) ? "flashing" : "on"].<BR>"
+		pdat += "The white light is [HAS_FLAG(SEND_SIGNAL(src, COMSIG_WIRE_HACK_FLAGS), WIRE_ID_SCAN) ? "on" : "off"].<BR>"
+
+		user.Browse(pdat, "window=rackpanel")
+		onclose(user, "rackpanel")
 
 	attack_hand(mob/user)
-		var/datum/component/wireStatus/status = src.LoadComponent(/datum/component/wireStatus)
-		if (src.panelopen || isAI(user))
-			var/pdat = "<B>[src.name] Maintenance Panel</B><hr>"
-			for(var/i in 1 to length(status.cut_wires))
-				pdat += "[wire_definition.wire_color[i]] wire: "
-				if (status.cut_wires[i])
-					pdat += "<a href='?src=\ref[src];cutwire=[i]'>Mend</a>"
-				else
-					pdat += "<a href='?src=\ref[src];cutwire=[i]'>Cut</a> "
-					pdat += "<a href='?src=\ref[src];pulsewire=[i]'>Pulse</a> "
-				pdat += "<br>"
-
-			pdat += "<br>"
-			pdat += "The yellow light is [status.wire_flags & WIRE_POWER_A ? "off" : "on"].<BR>"
-			pdat += "The blue light is [status.wire_flags & WIRE_MALFUNCTION ? "flashing" : "on"].<BR>"
-			pdat += "The white light is [status.wire_flags & WIRE_ID_SCAN ? "on" : "off"].<BR>"
-
-			user.Browse(pdat, "window=rackpanel")
-			onclose(user, "rackpanel")
+		if (hackable && (src.panelopen || isAI(user)))
+			show_panel(user)
 
 		if(!ishuman(user) || !isliving(user))
 			return
 
-		if (status.wire_flags & WIRE_MALFUNCTION)
+		src.add_fingerprint(user)
+
+		// no power
+		if (HAS_FLAG(SEND_SIGNAL(src, COMSIG_WIRE_HACK_FLAGS), WIRE_POWER_A)) // no power
+			boutput(user, "<span class='alert'>Without power, the locks can't disengage!</span>")
+			return
+
+		// ground cut
+		if (HAS_FLAG(SEND_SIGNAL(src, COMSIG_WIRE_HACK_FLAGS), WIRE_GROUND))
 			user.shock(src, 7500, user.hand == LEFT_HAND ? "l_arm" : "r_arm", 1, 0)
 
-		if (!src.allowed(user) && !(status.wire_flags & WIRE_ID_SCAN))
+		// do we not have access (legit, emag, wires)
+		if (!src.allowed(user) && !emagged && !HAS_FLAG(SEND_SIGNAL(src, COMSIG_WIRE_HACK_FLAGS), WIRE_ID_SCAN))
 			boutput(user, "<span class='alert'>Access denied.</span>")
 			return
 
-		src.add_fingerprint(user)
 		var/obj/item/myWeapon = locate(src.contained_weapon) in src
 		if (myWeapon)
 			if (src.amount >= 1)
@@ -163,19 +191,19 @@
 
 		if ((href_list["cutwire"]) && (src.panelopen || isAI(usr)))
 			var/twire = text2num_safe(href_list["cutwire"])
-			SEND_SIGNAL(src, COMSIG_WIRE_HACK_CUT, twire)
+			SEND_SIGNAL(src, COMSIG_WIRE_HACK_MOB_SNIP, twire, usr)
 			src.updateUsrDialog()
 
 		if ((href_list["pulsewire"]) && (src.panelopen || isAI(usr)))
 			var/twire = text2num_safe(href_list["pulsewire"])
-			SEND_SIGNAL(src, COMSIG_WIRE_HACK_PULSE, twire)
+			SEND_SIGNAL(src, COMSIG_WIRE_HACK_MOB_PULSE, twire, usr)
 			src.updateUsrDialog()
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		if (!src.hacked)
+		if (!src.emagged)
 			if(user)
 				boutput(user, "<span class='notice'>You disable the [src]'s cardlock!</span>")
-			src.hacked = 1
+			src.emagged = 1
 			src.updateUsrDialog()
 			return 1
 		else

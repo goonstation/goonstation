@@ -15,16 +15,16 @@
 /// At which alpha do opague objects become see-through?
 #define MATERIAL_ALPHA_OPACITY 190
 
-// Machinery Wire Hacking - different things wires can do
-#define WIRE_INERT 1 //! Inert wire; does nothing
+// Wire Hack Component - What do Wires Control
+#define WIRE_INERT 1 //! Inert wire; no effect
 #define WIRE_POWER_A 2 //! primary power wire
 #define WIRE_POWER_B 4 //! Airlock - secondary power
 #define WIRE_BACKUP_POWER_A 8 //! Airlock - backup power
 #define WIRE_BACKUP_POWER_B 16 //! Airlock - secondary backup power
-#define WIRE_CAN_SHOCK 32 //! Can shock users // TODO: rename to WIRE_SHOCK after integration
-#define WIRE_ID_SCAN 64 //! Remove ID restrictions
+#define WIRE_GROUND 32 //! Power grounding
+#define WIRE_ID_SCAN 64 //! ID restrictions
 #define WIRE_BOLTS 128 //! Airlock - door bolts
 #define WIRE_SAFETY 256 //! Airlock - safety (crush) sensor
-#define WIRE_EXTEND_INVENTORY 512 //! Has extended inventory selection
+#define WIRE_EXTEND_INVENTORY 512 //! Extended inventory selection
 #define WIRE_MALFUNCTION 1024 //! Is malfunctining - how depends on machine
 #define WIRE_SILICON_CONTROL 2048 //! Can silicons control it

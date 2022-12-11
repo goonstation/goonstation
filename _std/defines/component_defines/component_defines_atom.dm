@@ -220,5 +220,7 @@
 
 // ---- wire hacking signals ----
 	#define COMSIG_WIRE_HACK_CUT "wire_hack_cut"
-	#define COMSIG_WIRE_HACK_PULSE "wire_hack_pulse"
-	#define COMSIG_WIRE_HACK_BITE "wire_hack_bite"
+	#define COMSIG_WIRE_HACK_MEND "wire_hack_mend"
+	#define COMSIG_WIRE_HACK_MOB_SNIP "wire_hack_mob_snip"
+	#define COMSIG_WIRE_HACK_MOB_PULSE "wire_hack_mob_pulse"
+	#define COMSIG_WIRE_HACK_FLAGS "wire_hack_flags"
