@@ -1,5 +1,9 @@
 
 (t)sun dec 11 22
+(u)Kubius
+(p)12307
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Nadir's breach hull now includes four auxiliary compartments.
 (u)Roddy, Meow Meow, DisturbHerb
 (p)11135
 (e)🎨🍝|C-Sprites, A-Catering
