@@ -1,5 +1,9 @@
 
 (t)sun dec 11 22
+(u)Roddy, Meow Meow, DisturbHerb
+(p)11135
+(e)🎨🍝|C-Sprites, A-Catering
+(*)Adds churros to the game. Combine a dough strip and sugar in the oven for 6 seconds, on high. Dip one into your favorite soup based items!
 (u)Bartimeus973
 (p)12218
 (e)🆕🎨💅🔨|C-Feature, C-Sprites, C-QoL, A-Player-Actions
