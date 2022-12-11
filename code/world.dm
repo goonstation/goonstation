@@ -564,6 +564,10 @@ var/f_color_selector_handler/F_Color_Selector
 	makepowernets()
 	#endif
 
+	UPDATE_TITLE_STATUS("Building engineering")
+	Z_LOG_DEBUG("World/Init", "Setting up engineering...")
+	build_Engineering()
+
 	#ifdef SECRETS_ENABLED
 	UPDATE_TITLE_STATUS("Loading gallery artwork")
 	Z_LOG_DEBUG("World/Init", "Initializing gallery manager...")

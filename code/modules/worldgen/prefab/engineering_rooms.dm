@@ -2,6 +2,8 @@
  * So this file is basically about swappable Engineering departements.
  * Maps this doesn't apply to is stuff that uses non TEG/singulos
  * i.e. Nadir and Oshan
+ * Only maps in the list prefabbed_engineering will undergo the process
+ * The associated list mapenginesizes tells the game how big engineering is on that map
  *
  */
 // some overrides which i am putting here while i test it
@@ -9,6 +11,8 @@
 #define SINGULO_OVERRIDE
 #define NUCLEAR_OVERRIDE
 
+var/map = "cogmap"
+var/list/prefabbed_engineering = list("cogmap")
 var/list/mapenginesizes = list("cogmap" = list(30,19))
 
 TYPEINFO(/datum/mapPrefab/engineering_room)
@@ -20,31 +24,31 @@ TYPEINFO(/datum/mapPrefab/engineering_room)
 
 	post_init()
 		for(var/tag in src.tags)
-			src.prefabSizeX = mapenginesizes["cogmap"[1]]
-			src.prefabSizeY = mapenginesizes["cogmap"[2]]
+			src.prefabSizeX = mapenginesizes[map[1]]
+			src.prefabSizeY = mapenginesizes[map[2]]
 
 		var/filename = filename_from_path(src.prefabPath)
 		var/regex/engine_type = regex(@"^.*_(\d+)\.dmm$")
 		#ifdef TEG_OVERRIDE
-			if (engine_type == "TEG")
-				src.probability = 100
-			else
-				src.probability = 0
-			return
+		if (engine_type == "TEG")
+			src.probability = 100
+		else
+			src.probability = 0
+		return
 		#endif
 		#ifdef SINGULO_OVERRIDE
-			if (engine_type == "SINGULO")
-				src.probability = 100
-			else
-				src.probability = 0
-			return
+		if (engine_type == "SINGULO")
+			src.probability = 100
+		else
+			src.probability = 0
+		return
 		#endif
 		#ifdef NUCLEAR_OVERRIDE
-			if (engine_type == "NUKE")
-				src.probability = 100
-			else
-				src.probability = 0
-			return
+		if (engine_type == "NUKE")
+			src.probability = 100
+		else
+			src.probability = 0
+		return
 		#endif
 		src.probability = 100
 
