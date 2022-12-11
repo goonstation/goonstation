@@ -533,6 +533,7 @@
 	emote(var/act)
 		if (!density)
 			return
+		..()
 		var/acts = null
 		switch (act)
 			if ("hiss")

@@ -230,6 +230,8 @@
 	var/radiation_dose_decay = 0.02 //at this rate, assuming no lag, it will take 40 life ticks, or ~80 seconds to recover naturally from 1st stage radiation posioning,
 	/// set to observed mob if you're currently observing a mob, otherwise null
 	var/mob/observing = null
+	/// A list of emotes that trigger a special action for this mob
+	var/list/trigger_emotes = null
 
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
