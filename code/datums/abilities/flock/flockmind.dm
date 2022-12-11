@@ -130,8 +130,14 @@
 			if (O.density)
 				boutput(F, "<span class='alert'>That tile is blocked by [O].</span>")
 				return TRUE
+
 	if (!src.tutorial_check(FLOCK_ACTION_RIFT_SPAWN, T))
 		return TRUE
+
+	if (F)
+		if (tgui_alert(F,"Would you like to spawn a rift?","Spawn Rift?",list("Yes","No")) != "Yes")
+			return TRUE
+
 	logTheThing(LOG_GAMEMODE, holder.get_controlling_mob(), "spawns a rift at [log_loc(src.holder.owner)].")
 	F.spawnEgg()
 
