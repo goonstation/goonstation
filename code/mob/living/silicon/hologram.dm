@@ -1,16 +1,19 @@
 /mob/living/silicon/hologram
 	name = "Hologram"
 	voice_name = "synthesized voice"
-	icon = 'icons/mob/hivebot.dmi'
-	icon_state = "vegas"
+	icon = 'icons/misc/holograms.dmi'
+	icon_state = "eye"
 	health = 10
 	max_health = 10
 	robot_talk_understand = 2
 	density = 0
-	var/glitchy_speak = 0
+	anchored = 1
 	var/hsv = null
 
+	var/datum/hud/silicon/hologram/hud
+
 	var/obj/item/device/radio/radio = null
+	var/datum/light/light
 
 	req_access = list(access_robotics)
 	shell = 1
@@ -18,39 +21,35 @@
 	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
 	var/obj/machinery/holo_projector/projector_master = null
 	var/obj/machinery/camera/camera = null
-	var/max_wander_distance = 7
+	var/max_wander_distance = 5
 	var/obj/effect/distort/hologram/distort_effect
+	var/obj/item/device/pda2/internal_pda = null
 
 	//copied some stuff from wraith
 	Move(turf/NewLoc, direct)
+		if (density)
+			..()
+			return
 		if (!loc)
+			src.become_eye()
 			src.death()
 		if(!canmove) return
 		//We go through anything and everything except walls
 		if (NewLoc)
-			if ((isghostrestrictedz(NewLoc.z) || ((NewLoc.z != Z_LEVEL_STATION) && (NewLoc.z != Z_LEVEL_ADVENTURE) && (NewLoc.z != 7))) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder))
+			if ((isghostrestrictedz(NewLoc.z) || (NewLoc.z != Z_LEVEL_STATION)) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder))
+				src.become_eye()
 				src.death()
 		if (istype(NewLoc, /turf/unsimulated/wall) || istype(NewLoc, /turf/simulated/wall))
 			return
 		src.set_loc(NewLoc)
-		//Z level boundary stuff
-		//todo, check this
-/*
-		if((direct & NORTH) && src.y < world.maxy)
-			src.y--
-		if((direct & SOUTH) && src.y > 1)
-			src.y++
-		if((direct & EAST) && src.x < world.maxx)
-			src.x--
-		if((direct & WEST) && src.x > 1)
-			src.x++
-*/
 		OnMove()
 
 		if (!src.projector_master)
+			src.become_eye()
 			src.death()
 		if (get_dist(src, src.projector_master) > src.max_wander_distance)
 			boutput(src, "<span class='notice'>Your hologram strayed too far from the holo-projector and dissolves away</span>")
+			src.become_eye()
 			src.death()
 
 
@@ -58,34 +57,44 @@
 	return
 
 /mob/living/silicon/hologram/New(loc, mainframe)
-	UpdateIcon()
+	var/particles/floating_code/new_particles = new/particles/floating_code
+	new_particles.color = src.color
+	UpdateParticles(new_particles, "floatingcode")
 	src.alpha = 0
 	animate(src, alpha=255, time=1 SECONDS)
 
+	light = new /datum/light/point
+	light.set_brightness(0.2)
+	light.set_color(0.8, 0.8, 0.8)
+	light.attach(src)
+	light.enable()
+
 	if (mainframe)
+		var/mob/living/silicon/ai/ai_mainframe = mainframe
 		dependent = 1
 		src.name = "[mainframe:name] Hologram"
+		src.color = ai_mainframe.faceColor
 	else
 		src.real_name = "AI Hologram [copytext("\ref[src]", 6, 11)]"
 		src.name = src.real_name
+		src.color = "#66B2F2"
 	src.mainframe = mainframe
 	src.radio = new /obj/item/device/radio/headset/command/ai(src)
 	src.ears = src.radio
-	if (projector_master)
-		projector_master.linked_holograms += src
+	src.internal_pda = new /obj/item/device/pda2/ai(src)
 
-	SPAWN(1 SECOND)
-	/*
-		if (!src.cell)
-			src.cell = new /obj/item/cell/shell_cell/charged (src)
-			*/
+	SPAWN(1 DECI SECOND)
 		src.camera = new /obj/machinery/camera(src)
 		src.camera.c_tag = src.name
 		src.camera.ai_only = TRUE
+		src.internal_pda.name = "AI's Internal PDA Unit"
+		src.internal_pda.owner = "AI"
 
 	if(!bioHolder)
 		bioHolder = new/datum/bioHolder( src )
 	..()
+	hud = new(src)
+	src.attach_hud(hud)
 	src.botcard.access = get_all_accesses()
 
 	var/original_color = src.color ? src.color : "#fff"
@@ -98,30 +107,19 @@
 		src.filters += filter(type="displace", size=distort_effect.distort_size, render_source = distort_effect.render_target)
 
 /mob/living/silicon/hologram/death(gibbed)
-	animate(src, alpha=0, time=1 SECONDS)
-	src.become_eye()
-	if (src.camera)
-		src.camera.set_camera_status(FALSE)
+	animate(src, alpha=0, time=1 SECOND)
 	src.visible_message("<span class='notice'>[src] dissolves away.</span>")
-	SPAWN(1 SECONDS)
-
-		src.projector_master.linked_holograms -= src
-		setdead(src)
-
-		vision.set_color_mod("#ffffff") // reset any blindness
-		src.sight |= SEE_TURFS
-		src.sight |= SEE_MOBS
-		src.sight |= SEE_OBJS
-
-		src.see_in_dark = SEE_DARK_FULL
-		src.see_invisible = INVIS_CLOAK
-		src.UpdateIcon()
-
-		src.mind?.register_death()
-		..()
+	..()
+	SPAWN(1 SECOND)
 		qdel(src)
 
+/mob/living/silicon/hologram/disposing()
+	src.projector_master.linked_holograms -= src
+	src.projector_master.update_icon()
+	. = ..()
+
 /mob/living/silicon/hologram/emp_act()
+	src.become_eye()
 	src.death()
 
 //Taken from robot.dm
@@ -334,16 +332,6 @@
 					playsound(src, src.sound_scream, 80, 0, 0, 1, channel=VOLUME_CHANNEL_EMOTE) // vocal pitch added
 				message = "<b>[src]</b> screams!"
 
-		if ("johnny")
-			var/M
-			if (param)
-				M = adminscrub(param)
-			if (!M)
-				param = null
-			else
-				message = "<B>[src]</B> says, \"[M], please. He had a family.\" [src.name] takes a drag from a cigarette and blows its name out in smoke."
-				m_type = 2
-
 		if ("flip")
 			if (src.emote_check(voluntary, 50))
 				if (narrator_mode)
@@ -525,14 +513,6 @@
 /mob/living/silicon/hologram/check_access(obj/item/I)
 	return 1
 
-/mob/living/silicon/hologram/update_icon()
-	src.overlays = null
-
-	if (isalive(src))
-		src.icon_state = "[initial(icon_state)][src.client ? null : "-logout"]"
-	else
-		src.icon_state = "[initial(icon_state)]-dead"
-
 /mob/living/silicon/hologram/click(atom/target, list/params)
 	..()
 
@@ -578,19 +558,7 @@ Frequency:
 
 /mob/living/silicon/hologram/return_mainframe()
 	..()
-	src.UpdateIcon()
-
-/mob/living/silicon/hologram/Login()
-	..()
-
-	update_clothing()
-	UpdateIcon()
-	return
-
-/mob/living/silicon/hologram/Logout()
-	..()
-	UpdateIcon()
-	return
+	src.death()
 
 /mob/living/silicon/hologram/say_understands(var/other)
 	if (isAI(other))
@@ -606,8 +574,6 @@ Frequency:
 	return ..()
 
 /mob/living/silicon/hologram/say_quote(var/text)
-	if (src.mainframe && src.mainframe.glitchy_speak)
-		text = voidSpeak(text)
 	var/ending = copytext(text, length(text))
 
 	if (ending == "?")
@@ -631,3 +597,19 @@ Frequency:
 		src.mainframe.return_to(src)
 	else
 		return ..()
+
+/mob/living/silicon/hologram/verb/access_internal_pda()
+	set category = "Robot Commands"
+	set name = "AI PDA"
+	set desc = "Access your internal PDA device."
+
+	if (!src || isdead(src))
+		return
+
+	if (istype(src.internal_pda,/obj/item/device/pda2/))
+		src.internal_pda.AttackSelf(src)
+	else
+		boutput(usr, "<span class='alert'><b>Internal PDA not found!</span>")
+
+/mob/living/silicon/hologram/projCanHit(datum/projectile/P)
+	return FALSE

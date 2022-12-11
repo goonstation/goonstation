@@ -84,6 +84,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	var/moustache_mode = 0
 	var/status_message = null
 	var/mob/living/silicon/deployed_shell = null
+	var/hologram_icon = "eye"
 
 	var/faceEmotion = "ai_happy"
 	var/faceColor = "#66B2F2"

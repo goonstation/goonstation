@@ -425,6 +425,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\hud\funimage.dm"
 #include "code\datums\hud\ghost_observer.dm"
 #include "code\datums\hud\ghostdrone.dm"
+#include "code\datums\hud\hologram.dm"
 #include "code\datums\hud\human.dm"
 #include "code\datums\hud\nukewires.dm"
 #include "code\datums\hud\object.dm"

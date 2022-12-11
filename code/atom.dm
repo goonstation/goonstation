@@ -615,6 +615,10 @@
 			boutput(user,"<span class='alert'><b>[src] is too heavy for you pull in your half-spectral state!</b></span>")
 			return 1
 
+	// Holograms arent physical
+	if (istype(user, /mob/living/silicon/hologram))
+		return 1
+
 	if (iscarbon(user) || issilicon(user))
 		add_fingerprint(user)
 

@@ -57,7 +57,8 @@
 				var/turf/T = get_turf(src.eyecam)
 				src.show_hologram_context(T)
 			if ("Pick holographic projector form")
-				//todo add forms
+				var/holo_choice = tgui_input_list(usr, "What form would you like your hologram to take?", "Choice", list("eye", "bee", "persona"))
+				src.hologram_icon = holo_choice
 				return
 			if ("Deploy to holo-projector")
 				var/list/obj/machinery/holo_projector/holo_list = list()
@@ -81,6 +82,12 @@
 					var/mob/living/silicon/hologram/new_hologram = new/mob/living/silicon/hologram(get_turf(target_holo), src)
 					new_hologram.dependent = 1
 					new_hologram.projector_master = target_holo
+					new_hologram.icon_state = src.hologram_icon
+					if (src.hologram_icon == "bee")
+						animate_bumble(new_hologram)
+					new_hologram.projector_master = target_holo
+					target_holo.linked_holograms += new_hologram
+					target_holo.update_icon()
 					src.deployed_shell = new_hologram
 					src.mind.transfer_to(new_hologram)
 					target_holo.visible_message("<span class='notice'>[target_holo] lights up and creates an hologram.</span>")

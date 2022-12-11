@@ -184,3 +184,16 @@
 
 /particles/healing/flock
 	color = generator("color", "#89e2b8", "#5aeeb0", UNIFORM_RAND)
+
+/// floating futuristic code for ai holograms
+/particles/floating_code
+	icon = 'icons/effects/particles.dmi'
+	icon_state = list("zero", "line")
+	color = "#8effff"
+	spawning = 0.05
+	count = 10
+	lifespan = 30
+	fade = 25
+	position = generator("vector", list(-8,0,0), list(8,5,0), NORMAL_RAND)
+	gravity = list(0, 0.2, 0)
+	friction = 0.2

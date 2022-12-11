@@ -3,8 +3,8 @@ TYPEINFO(/obj/machinery/holo_projector)
 
 /obj/machinery/holo_projector
 	name = "Holographic projector"
-	icon = 'icons/obj/cloning.dmi'
-	icon_state = "puke_0"
+	icon = 'icons/misc/holograms.dmi'
+	icon_state = "projector_off"
 	desc = "A pad that allows the on-station ai to make an hologram."
 	density = 0
 	anchored = 1
@@ -18,13 +18,16 @@ TYPEINFO(/obj/machinery/holo_projector)
 		..()
 
 	disposing()
-		for (var/mob/living/silicon/hologram/M in linked_holograms)
-			M.death()
+		src.kill_holograms()
 		STOP_TRACKING
 		. = ..()
 
-	//todo emag act
-	//todo power usage
+	process(mult)
+		. = ..()
+		if (status & NOPOWER && length(src.linked_holograms) > 0)
+			src.visible_message("<span class='notice'>[src] shuts down.</span>")
+			src.kill_holograms()
+			return
 
 	attackby(obj/item/P, mob/living/user)
 		if (istype(P, /obj/item/weldingtool))
@@ -32,6 +35,18 @@ TYPEINFO(/obj/machinery/holo_projector)
 			if (welder.try_weld(user, 3, 3))
 				user.visible_message("<span class='notice'>[user] fixes the holographic projector.</span>")
 				src.broken = FALSE
+				src.UpdateIcon()
+				return
+		if (src.broken)
+			return
+		if (istype(P, /obj/item/wrench))
+			if (src.anchored)
+				src.anchored = FALSE
+				user.visible_message("<span class='notice'>[user] unbolts [src] from the floor.</span>")
+				return
+			else
+				src.anchored = TRUE
+				user.visible_message("<span class='notice'>[user] bolts [src] to the floor.</span>")
 				return
 		attack_particle(user,src)
 		user.lastattacked = src
@@ -40,6 +55,18 @@ TYPEINFO(/obj/machinery/holo_projector)
 		if (src._health <= 0)
 			src.visible_message("<span class='notice'>[src] breaks!</span>")
 			src.broken = TRUE
+			src.kill_holograms()
+			src.UpdateIcon()
 
-/obj/item/holo_projector
-	//todo battery life
+	update_icon()
+		if (src.broken)
+			src.icon_state = "projector_broken"
+		if (length(linked_holograms) > 0)
+			src.icon_state = "projector_on"
+		else
+			src.icon_state = "projector_off"
+
+	proc/kill_holograms()
+		for (var/mob/living/silicon/hologram/M in linked_holograms)
+			M.become_eye()
+			M.death()
