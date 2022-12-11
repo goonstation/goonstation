@@ -1755,6 +1755,9 @@
 		else
 			hud.set_active_tool(null)
 
+	equipped_list(var/check_for_magtractor=1)
+		. = src.module_states
+
 	click(atom/target, params)
 		if (istype(target, /obj/item/roboupgrade) && (target in src.upgrades)) // ugh
 			src.activate_upgrade(target)
