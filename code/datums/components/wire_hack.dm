@@ -7,14 +7,13 @@
  *
  * Parents are responsible for what they do with that state
  *
- *
- * TODO: state - keep track of panel open state?
+ * TODO: state - keep track of panel open state / isAI / isSilicon?
  * TODO: state - manage hint light data?
- * TODO: state -mapping support for preset cut wires (azones?)
+ * TODO: state -mapping support for preset cut wires (azones?)?
  * TODO: ui - pass in color map instead of list to support TGUI
  * TODO: ui - standardize output for TGUI
  * TODO: ui - write TGUI data component ala ReagentStatus
- * TODO: implementation - cut down on defines by allowing duplicate entries in effects list?
+ * TODO: implementation - cut down on flag count by handling duplicate entries in effects list?
  */
 
 /// Debug - Do not randomize wire color or function
@@ -170,7 +169,7 @@ TYPEINFO(/datum/component/wireStatus)
 	return TRUE
 
 /**
- * Returns a list of all active flags
+ * Returns all active flags
  */
 /datum/component/wireStatus/proc/flags()
 	return wire_effect_flags

@@ -51,7 +51,7 @@
 
 	/// our wire hacking component defintion
 	var/static/datum/wireDefinition/wire_definition = new /datum/wireDefinition(
-		effects=list(WIRE_INERT, WIRE_POWER_A, WIRE_GROUND, WIRE_ID_SCAN),
+		effects=list(WIRE_NONE, WIRE_POWER_A, WIRE_GROUND, WIRE_ID_SCAN),
 		colors=list("Puce", "Mauve", "Ochre", "Slate")
 	)
 

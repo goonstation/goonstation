@@ -16,7 +16,7 @@
 #define MATERIAL_ALPHA_OPACITY 190
 
 // Wire Hack Component - What do Wires Control
-#define WIRE_INERT 1 //! Inert wire; no effect
+#define WIRE_NONE 1 //! Inert wire; no effect //TODO: WIRE_INERT is better but it's in use
 #define WIRE_POWER_A 2 //! primary power wire
 #define WIRE_POWER_B 4 //! Airlock - secondary power
 #define WIRE_BACKUP_POWER_A 8 //! Airlock - backup power
