@@ -1,7 +1,7 @@
 import { Box } from '../../../../components';
-import { BoardgameData } from '../../utils/types';
+import { BoardgameData } from '../../utils';
 import { useBackend } from '../../../../backend';
-import { useStates } from '../../utils/config';
+import { useStates } from '../../utils';
 import { codeRecordFromPieces, fetchPieces } from '../../games';
 
 export const HeldPieceRenderer = (_, context) => {
@@ -12,7 +12,7 @@ export const HeldPieceRenderer = (_, context) => {
   const { mouseCoords, paletteLastElement } = useStates(context);
   const { x, y } = mouseCoords;
 
-  let code;
+  let code = null;
   if (data.currentUser.palette) {
     code = data.currentUser.palette;
   } else if (data.currentUser.selected) {

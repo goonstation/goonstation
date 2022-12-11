@@ -1,24 +1,30 @@
+import { createRef } from 'inferno';
 import { useBackend } from '../../../../../../backend';
-import { useActions, useStates } from '../../../../utils/config';
-import { BoardgameData } from '../../../../utils/types';
+import { useActions, useStates } from '../../../../utils';
+import { BoardgameData } from '../../../../utils';
 import GridGuideRenderer from '../../common/GridGuideRenderer';
 import GridPieceRenderer from '../../common/GridPieceRenderer';
-import { StyleProps } from '../types';
 import CheckerBoardPattern from './CheckerBoardPattern';
 
-export const CheckerBoard = ({ interactable }: StyleProps, context) => {
+export const CheckerBoard = (props, context) => {
   const { act, data } = useBackend<BoardgameData>(context);
   const { pieces, currentUser } = data;
   const { tileSize, isFlipped, mouseCoords } = useStates(context);
   const { width, height } = tileSize;
-  const { piecePlace, pieceRemove } = useActions(act);
+  const { piecePlace } = useActions(act);
+
+  const boardRef = createRef<HTMLDivElement>();
 
   const boardPos = () => {
     const { x, y } = mouseCoords;
-    const mx = x - 20;
-    const my = y - 54;
-    // alert(mx + ' ' + width);
-    // alert(Math.floor(mx / width));
+
+    // Out of bounds cancels the placement
+    if (!boardRef) return [-1, -1];
+
+    const rect = boardRef.current.getBoundingClientRect();
+
+    const mx = x - rect.left;
+    const my = y - rect.top;
 
     let boardX = Math.floor(mx / width);
     let boardY = Math.floor(my / height);
@@ -34,40 +40,11 @@ export const CheckerBoard = ({ interactable }: StyleProps, context) => {
     return [boardX, boardY];
   };
 
-  const onSelectedPlace = () => {
-    const [boardX, boardY] = boardPos();
-
-    // Account for the fact that the backend
-    // is a bit slow so we need to check if the
-    // piece is held by the user before placing it
-
-    /* let tries = 20; // 20 tries, 2 seconds max
-
-    const waitForChange = () => {
-      if (tries > 0) {
-        piecePlace(currentUser.ckey, boardX, boardY);
-        setTimeout(() => {
-          if (!currentUser.selected) {
-            waitForChange();
-          } else {
-            return; // Success
-          }
-        }, 100);
-      }
-      tries--;
-    };
-    waitForChange();*/
-  };
-
   return (
     <div
-      style={{
-        position: 'relative',
-        width: '100%',
-        height: '100%',
-      }}
+      ref={boardRef}
+      className="boardgame__board-checkerboard"
       onMouseDown={(e) => {
-        if (!interactable) return;
         if (e.button === 0) {
           // Used for placing pieces, click to select, click again to place handling
           if (currentUser.palette || currentUser.selected) {
@@ -77,7 +54,6 @@ export const CheckerBoard = ({ interactable }: StyleProps, context) => {
         }
       }}
       onMouseUp={(e) => {
-        if (!interactable) return;
         if (e.button === 0) {
           // Used for placing pieces, drag and drop handling
           const [boardX, boardY] = boardPos();
@@ -97,7 +73,7 @@ export const CheckerBoard = ({ interactable }: StyleProps, context) => {
       }}>
       <CheckerBoardPattern />
       <GridGuideRenderer />
-      <GridPieceRenderer pieces={pieces} interactable />
+      <GridPieceRenderer pieces={pieces} />
     </div>
   );
 };

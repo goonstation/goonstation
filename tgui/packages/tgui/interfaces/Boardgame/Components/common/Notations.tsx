@@ -1,9 +1,9 @@
 import { useBackend } from '../../../../backend';
 import { Box, Flex } from '../../../../components';
-import { BoardgameData } from '../../utils/types';
+import { BoardgameData } from '../../utils';
 
-import { generateBoardNotationLetters } from '../../utils/notations';
-import { useStates } from '../../utils/config';
+import { generateBoardNotationLetters } from '../../utils';
+import { useStates } from '../../utils';
 
 export type NotationsProps = {
   direction: 'vertical' | 'horizontal';
@@ -12,10 +12,11 @@ export type NotationsProps = {
 export const HorizontalNotations = (props, context) => {
   const { data } = useBackend<BoardgameData>(context);
   const { width } = data.boardInfo;
-  const { border, tileColor2 } = data.styling;
+  const { border, tileColor1, tileColor2 } = data.styling;
   const { isFlipped } = useStates(context);
 
-  const color = border || tileColor2 || 'black';
+  const bgcolor = border || tileColor2 || 'black';
+  const color = tileColor1 || 'white';
 
   let letters = generateBoardNotationLetters(width);
   if (isFlipped) {
@@ -25,7 +26,8 @@ export const HorizontalNotations = (props, context) => {
   return (
     <Flex
       style={{
-        'background-color': color,
+        'background-color': bgcolor,
+        color,
       }}
       className="boardgame__notations boardgame__notations-horizontal">
       {letters.map((letter, index) => (
@@ -40,10 +42,11 @@ export const HorizontalNotations = (props, context) => {
 export const VerticalNotations = (props, context) => {
   const { data } = useBackend<BoardgameData>(context);
   const { height } = data.boardInfo;
-  const { border, tileColor2 } = data.styling;
+  const { border, tileColor1, tileColor2 } = data.styling;
   const { isFlipped } = useStates(context);
 
-  const color = border || tileColor2 || 'black';
+  const bgcolor = border || tileColor2 || 'black';
+  const color = tileColor1 || 'white';
 
   let numbers = Array.from(Array(height).keys());
   if (isFlipped) {
@@ -53,7 +56,8 @@ export const VerticalNotations = (props, context) => {
   return (
     <Flex
       style={{
-        'background-color': color,
+        'background-color': bgcolor,
+        color,
       }}
       className="boardgame__notations boardgame__notations-vertical">
       {numbers.map((_, index) => (

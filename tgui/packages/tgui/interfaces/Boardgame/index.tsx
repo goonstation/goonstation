@@ -1,12 +1,10 @@
 import { Window } from '../../layouts';
 import { useBackend } from '../../backend';
-import { BoardgameData } from './utils/types';
 import { adjustSizes, handleEvents } from './utils/window';
 import { Component } from 'inferno';
 
 import { Icon, Box, Modal } from '../../components';
-import { useStates } from './utils/config';
-import { ConfigModal } from './Components/modal/ConfigModal';
+import { useStates, BoardgameData } from './utils';
 import { TitleBar } from './Components/common/TitleBar';
 import { HeldPieceRenderer } from './Components/common/HeldPieceRenderer';
 import { BoardgameContents } from './Components/common/BoardgameContents';
@@ -18,8 +16,6 @@ export class Boardgame extends Component<BoardgameData, any> {
 
   componentDidUpdate() {
     handleEvents(this.context);
-
-    // Adjust window size
     adjustSizes(this.context);
   }
 
@@ -29,7 +25,6 @@ export class Boardgame extends Component<BoardgameData, any> {
 
     return (
       <Window title={name} width={580} height={512}>
-        <ConfigModal />
         <HelpModal />
         <TitleBar />
         <HeldPieceRenderer />
@@ -40,11 +35,7 @@ export class Boardgame extends Component<BoardgameData, any> {
 }
 
 const HelpModal = (props, context) => {
-  const { mouseCoords, helpModalClose, isHelpModalOpen } = useStates(context);
-
-  // If mouse > window height/2, render above mouse
-  const winHeight = window.innerHeight;
-  const topValue = mouseCoords.y > winHeight / 2 ? 20 : winHeight - 100;
+  const { helpModalClose, isHelpModalOpen } = useStates(context);
 
   if (!isHelpModalOpen) return null;
 

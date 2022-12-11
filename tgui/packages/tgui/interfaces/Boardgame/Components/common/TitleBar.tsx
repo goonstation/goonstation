@@ -1,71 +1,46 @@
-import { useBackend, useLocalState } from '../../../../backend';
-import { Box, Button } from '../../../../components';
-import { useActions, useStates } from '../../utils/config';
-import { BoardgameData } from '../../utils/types';
+import { useBackend } from '../../../../backend';
+import { Box, Button, ConfirmButton } from '../../../../components';
+import { useActions, useStates } from '../../utils';
+import { BoardgameData } from '../../utils';
 
 export const TitleBar = (props, context) => {
-  const { act, data } = useBackend<BoardgameData>(context);
-  const { width, height } = data.boardInfo;
+  const { act } = useBackend<BoardgameData>(context);
   const { isFlipped, toggleFlip, helpModalOpen, isHelpModalOpen } = useStates(context);
-  const { boardClear } = useActions(act);
-
-  const [clearConfirm, setClearConfirm] = useLocalState(context, 'clearConfirm', false);
+  const { boardClear, applyGNot } = useActions(act);
 
   return (
     <Box className="boardgame__titlebar">
-      <Button color={isHelpModalOpen ? 'orange' : 'default'} icon="question" onClick={() => helpModalOpen()}>
-        Help
-      </Button>
-      <Button color={isFlipped ? 'orange' : 'default'} icon="repeat" onClick={toggleFlip}>
-        Flip board
-      </Button>
       <Button
-        onMouseOut={() => setClearConfirm(false)}
-        color={clearConfirm ? 'orange' : 'default'}
+        tooltip="Help"
+        color={isHelpModalOpen ? 'orange' : 'default'}
+        icon="question"
+        onClick={() => helpModalOpen()}
+      />
+      <Button tooltip="Flip board" color={isFlipped ? 'orange' : 'default'} icon="repeat" onClick={toggleFlip} />
+
+      <ConfirmButton
+        tooltipContent="Clear board"
         icon="trash"
-        onClick={() => {
-          if (clearConfirm) {
-            boardClear({ width, height });
-            setClearConfirm(false);
-          } else {
-            setClearConfirm(true);
-          }
-        }}>
-        {clearConfirm ? 'Confirm' : 'Clear board'}
-      </Button>
-      <SetupButton />
+        onConfirm={() => {
+          boardClear();
+        }}
+      />
+      <ConfirmButton
+        tooltipContent="Load Chess Preset"
+        icon="chess"
+        onConfirm={() => {
+          applyGNot('r,n,b,q,k,b,n,r,p,p,p,p,p,p,p,p,32,P,P,P,P,P,P,P,P,R,N,B,Q,K,B,N,R');
+        }}
+      />
+      <ConfirmButton
+        tooltipContent="Load Draughts Preset"
+        icon="ring"
+        onConfirm={() => {
+          applyGNot('1,d,1,d,1,d,1,d,d,1,d,1,d,1,d,2,d,1,d,1,d,1,d,16,D,1,D,1,D,1,D,2,D,1,D,1,D,1,D,D,1,D,1,D,1,D');
+        }}
+      />
     </Box>
   );
 };
-
-type SetupButtonProps = {};
-const SetupButton = (props, context) => {
-  const { openModal, closeModal, isModalOpen } = useStates(context);
-
-  const bgColor = isModalOpen ? '#f2711c' : 'default';
-  const textColor = isModalOpen ? 'white' : 'white';
-
-  return (
-    <Button
-      icon={'cog'}
-      onClick={() => {
-        if (isModalOpen) {
-          closeModal();
-        } else {
-          openModal();
-        }
-      }}
-      style={{
-        'background-color': bgColor,
-        'color': textColor,
-      }}>
-      {isModalOpen ? 'Close' : 'Setup'}
-    </Button>
-  );
-};
-
-/* SetupButton.defaultHooks = {
-  shouldComponentUpdate: () => false,
-};*/
 
 export default TitleBar;

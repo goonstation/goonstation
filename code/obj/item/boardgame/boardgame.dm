@@ -5,8 +5,6 @@
  * Most of these values are shared by both dm and tgui, so check both
  * areas when changing them.
  *
- *
- * A note from Github Copilot:
  */
 
 #define MAP_TEXT_MOVE 0
@@ -83,8 +81,6 @@
 		* [STYLING_TILECOLOR2] = "#FFFFFF" or rgb(255, 255, 255)
 		* ```
 		*
-
-		*
 		* ```dm
 		* // Sets color of the border
 		* [STYLING_BORDER] = "#FFFFFF" or rgb(255, 255, 255)
@@ -114,9 +110,9 @@
 		*/
 	var/list/styling = list(
 		STYLING_TILECOLOR1 = rgb(240, 217, 181),
+		STYLING_TILECOLOR2 = rgb(181, 136, 99),
 		STYLING_OLDTILECOLOR1 = rgb(240, 217, 181),
 		STYLING_OLDTILECOLOR2 = rgb(181, 136, 99),
-		STYLING_TILECOLOR2 = rgb(181, 136, 99),
 		STYLING_BORDER = rgb(131, 100, 74),
 		STYLING_ASPECT = 1,
 		STYLING_NOTATIONS = TRUE,

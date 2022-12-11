@@ -1,17 +1,17 @@
 declare const Byond, window;
 
 import { useBackend } from '../../../backend';
-import { useActions, useStates } from './config';
+import { useActions, useStates } from '.';
 import { BoardgameData } from './types';
 
 export const adjustSizes = (context) => {
-  adjustTileSize(context);
+  adjustTileSizeType(context);
   adjustWindowSize(context);
 };
 
-const adjustTileSize = (context) => {
+const adjustTileSizeType = (context) => {
   const { data } = useBackend<BoardgameData>(context);
-  const { setTileSize, tileSize } = useStates(context);
+  const { setTileSizeType, tileSize } = useStates(context);
 
   const board = document.getElementsByClassName('boardgame__board-inner')[0];
   let tileWidth: number = 0;
@@ -29,7 +29,7 @@ const adjustTileSize = (context) => {
 
   // Compare old tile size to new tile size
   if (tileWidth !== tileSize.width || tileHeight !== tileSize.height) {
-    setTileSize({ width: tileWidth, height: tileHeight });
+    setTileSizeType({ width: tileWidth, height: tileHeight });
   }
 };
 
