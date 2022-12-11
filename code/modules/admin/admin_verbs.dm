@@ -380,6 +380,11 @@ var/list/admin_verbs = list(
 		/client/proc/showPregameHTML,
 		/client/proc/dbg_radio_controller,
 		/client/proc/test_mass_flock_convert,
+		/client/proc/BK_finance_debug,
+		/client/proc/BK_alter_funds,
+		/client/proc/debug_variables,
+		/client/proc/cmd_randomize_look,
+		/client/proc/flock_cheat,
 
 		/client/proc/call_proc,
 		/client/proc/call_proc_all,
@@ -399,11 +404,7 @@ var/list/admin_verbs = list(
 		// LEVEL_CODER, coder
 		/client/proc/cmd_job_controls,
 		/client/proc/cmd_modify_market_variables,
-		/client/proc/BK_finance_debug,
-		/client/proc/BK_alter_funds,
-		/client/proc/TestMarketReq,
 		/client/proc/debug_pools,
-		/client/proc/debug_variables,
 		/client/proc/debug_global_variable,
 		/client/proc/get_admin_state,
 		/client/proc/call_proc,
@@ -411,11 +412,7 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/adsound,
 		/datum/admins/proc/pcap,
 		/client/proc/toggle_extra_verbs,
-		/client/proc/cmd_randomize_look,
 		/client/proc/toggle_numbers_station_messages,
-		// /client/proc/export_async_banlist,
-		// /client/proc/import_banlist,
-		/client/proc/flock_cheat,
 
 		/client/proc/ticklag,
 		/client/proc/cmd_debug_vox,
@@ -458,6 +455,7 @@ var/list/admin_verbs = list(
 		/client/proc/set_pod_wars_deaths,
 		/client/proc/clear_nukeop_uplink_purchases,
 		/client/proc/upload_uncool_words,
+		/client/proc/TestMarketReq,
 
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,
