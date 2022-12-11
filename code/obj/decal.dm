@@ -3,6 +3,7 @@
 	plane = PLANE_NOSHADOW_BELOW
 	var/list/random_icon_states = list()
 	var/random_dir = 0
+	pass_unstable = FALSE
 
 	New()
 		..()
