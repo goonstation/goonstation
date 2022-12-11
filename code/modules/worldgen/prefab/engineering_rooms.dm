@@ -41,21 +41,12 @@ TYPEINFO(/datum/mapPrefab/engineering_room)
 		if ("Random" == engine_override_status)
 			src.probability = 100
 			return
-		else if ("TEG" == engine_override_status)
-			if (engine_type == "TEG")
+		else
+			if (engine_type == engine_override_status)
 				src.probability = 100
 			else
 				src.probability = 0
-		else if ("SINGULO" == engine_override_status)
-			if (engine_type == "SINGULO")
-				src.probability = 100
-			else
-				src.probability = 0
-		else if ("NUKE" == engine_override_status)
-			if (engine_type == "NUKE")
-				src.probability = 100
-			else
-				src.probability = 0
+			return
 
 proc/build_Engineering()
 	shuffle_list(by_type[/obj/landmark/engineering_room])
