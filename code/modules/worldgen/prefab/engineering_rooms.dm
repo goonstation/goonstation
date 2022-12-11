@@ -5,12 +5,13 @@
  *
  */
 // some overrides which i am putting here while i test it
-// #define TEG_OVERRIDE
-// #define SINGULO_OVERRIDE
+#define TEG_OVERRIDE
+#define SINGULO_OVERRIDE
+#define NUCLEAR_OVERRIDE
 
 var/list/mapenginesizes = list("cogmap" = list(30,19))
 
-TYPEINFO(/datum/mapPrefab/random_room)
+TYPEINFO(/datum/mapPrefab/engineering_room)
 	folder = "engine_rooms"
 
 /datum/mapPrefab/engineering_room
@@ -18,34 +19,45 @@ TYPEINFO(/datum/mapPrefab/random_room)
 	required = TRUE
 
 	post_init()
-		var/regex/size_regex = regex(@"^(\d+)x(\d+)$")
 		for(var/tag in src.tags)
-			if(size_regex.Find(tag))
-				src.prefabSizeX = mapenginesizes["cogmap"[1]]
-				src.prefabSizeY = mapenginesizes["cogmap"[2]]
+			src.prefabSizeX = mapenginesizes["cogmap"[1]]
+			src.prefabSizeY = mapenginesizes["cogmap"[2]]
 
 		var/filename = filename_from_path(src.prefabPath)
-		var/regex/probability_regex = regex(@"^.*_(\d+)\.dmm$")
-		if(probability_regex.Find(filename))
-			src.probability = text2num(probability_regex.group[1])
+		var/regex/engine_type = regex(@"^.*_(\d+)\.dmm$")
+		#ifdef TEG_OVERRIDE
+			if (engine_type == "TEG")
+				src.probability = 100
+			else
+				src.probability = 0
+			return
+		#endif
+		#ifdef SINGULO_OVERRIDE
+			if (engine_type == "SINGULO")
+				src.probability = 100
+			else
+				src.probability = 0
+			return
+		#endif
+		#ifdef NUCLEAR_OVERRIDE
+			if (engine_type == "NUKE")
+				src.probability = 100
+			else
+				src.probability = 0
+			return
+		#endif
+		src.probability = 100
 
 proc/build_Engineering()
-	#ifdef TEG_OVERRIDE
-
-		return
-	#endif
-
-	#ifdef SINGULO_OVERRIDE
-		return
-	#endif
-	null == null
-	return
+	shuffle_list(by_type[/obj/landmark/engineering_room])
+	for_by_tcl(landmark, /obj/landmark/engineering_room)
+		landmark.apply()
 
 
 /obj/landmark/engineering_room
-	var/size = null
+	var/map = null
 	icon = 'icons/effects/mapeditor.dmi'
-	icon_state = "random_room"
+	icon_state = "engine"
 	deleted_on_start = FALSE
 	add_to_landmarks = FALSE
 	opacity = 1
@@ -61,21 +73,14 @@ proc/build_Engineering()
 		..()
 
 	proc/apply()
-		var/datum/mapPrefab/random_room/room_prefab = pick_map_prefab(/datum/mapPrefab/random_room, list(size))
+		var/datum/mapPrefab/engineering_room/room_prefab = pick_map_prefab(/datum/mapPrefab/engineering_room, list(size))
 		if(isnull(room_prefab))
-			CRASH("No random room prefab found for size: " + size)
+			CRASH("No engine room prefab found for map: " + map)
 		room_prefab.applyTo(src.loc)
-		logTheThing(LOG_DEBUG, null, "Applied random room prefab: [room_prefab] to [log_loc(src)]")
+		logTheThing(LOG_DEBUG, null, "Applied engine room prefab: [room_prefab] to [log_loc(src)]")
 		qdel(src)
 
-	size3x3
-		size = "3x3"
-		icon = 'icons/effects/mapeditor/3x3tiles.dmi'
+	cogmap1
+		map = "Cogmap 1"
+		icon_state = 'engine'
 
-	size3x5
-		size = "3x5"
-		icon = 'icons/effects/mapeditor/3x5tiles.dmi'
-
-	size5x3
-		size = "5x3"
-		icon = 'icons/effects/mapeditor/5x3tiles.dmi'
