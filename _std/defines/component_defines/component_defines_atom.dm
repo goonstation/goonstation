@@ -217,3 +217,8 @@
 		#define COMSIG_LIVING_LIFE_TICK "mob_life_tick"
 
 // ---- human signals ----
+
+// ---- wire hacking signals ----
+	#define COMSIG_WIRE_HACK_CUT "wire_hack_cut"
+	#define COMSIG_WIRE_HACK_PULSE "wire_hack_pulse"
+	#define COMSIG_WIRE_HACK_BITE "wire_hack_bite"

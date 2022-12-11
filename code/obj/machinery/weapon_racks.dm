@@ -28,105 +28,19 @@
 	var/recharges_contents = 0
 	var/max_amount = 1
 
+	var/hackable = FALSE
 	var/hacked = 0
 	var/panelopen = 0
-	var/malfunction = 0
-	var/working = 1
-	var/wires = 15
-	var/const
-		WIRE_EXTEND = 1
-		WIRE_MALF = 2
-		WIRE_POWER = 3
-		WIRE_INERT = 4
 
-	//MELEE WEAPONS//
-
-	katana_stand
-		name = "katana stand"
-		desc = "A wooden stand for holding a katana in it's sheath."
-/*
-	csaber_stand
-		name = "cyalume saber stand"
-		desc = "A stand that can hold a cyalume saber."
-		icon_state = "swordstand1"
-		stand_type = "csaberstand"
-		contained_weapon = /obj/item/sword
-		contained_weapon_name = "cyalume saber"
-*/
-
-	//RANGED WEAPONS//
-
-	taser_rack
-		name = "taser rack"
-		desc = "A storage rack that fits 4 taser guns. Efficient!"
-		icon_state = "taser_rack"
-		amount = 4
-		max_amount = 4
-		stand_type = "taser_rack"
-		contained_weapon = /obj/item/gun/energy/taser_gun
-		contained_weapon_name = "taser gun"
-		req_access = list(access_security)
-
-		recharger
-			name = "taser recharger rack"
-			desc = "A taser rack that can charge up to 3 taser guns. Handy!"
-			icon_state = "taser_charge_rack"
-			amount = 3
-			max_amount = 3
-			stand_type = "taser_charge_rack"
-			recharges_contents = 1
-
-			empty
-				icon_state = "taser_rack0"
-				amount = 0
-
-	egun_rack
-		name = "energy gun rack"
-		desc = "A storage rack that fits 4 energy guns. Tidy!"
-		amount = 4
-		max_amount = 4
-		icon_state = "egun_rack"
-		stand_type = "egun_rack"
-		contained_weapon = /obj/item/gun/energy/egun
-		contained_weapon_name = "energy gun"
-		req_access = list(access_security)
-
-		recharger
-			name = "energy gun recharger rack"
-			desc = "An energy gun rack that will recharge 3 energy guns."
-			icon_state = "egun_charge_rack"
-			amount = 3
-			max_amount = 3
-			stand_type = "egun_charge_rack"
-			recharges_contents = 1
-
-	shotgun_rack
-		name = "shotgun rack"
-		desc = "A rack for holding 3 shotguns."
-		icon_state = "shotgun_rack"
-		amount = 3
-		max_amount = 3
-		stand_type = "shotgun_rack"
-		contained_weapon = /obj/item/gun/kinetic/riotgun
-		contained_weapon_name = "riot shotgun"
-		req_access = list(access_security)
-
-	rifle_rack
-		name = "pulse rifle rack"
-		desc = "A rack that charges up to 3 pulse rifles."
-		icon_state = "pulserifle_rack"
-		amount = 3
-		max_amount = 3
-		stand_type = "pulserifle_rack"
-		contained_weapon = /obj/item/gun/energy/pulse_rifle
-		contained_weapon_name = "pulse rifle"
-		req_access = list(access_security)
-
-		recharger
-			recharges_contents = 1
+	var/static/datum/wireDefinition/wire_definition = new /datum/wireDefinition(
+		functions=list(WIRE_INERT, WIRE_POWER_A, WIRE_MALFUNCTION, WIRE_ID_SCAN),
+		colors=list("Puce", "Mauve", "Ochre", "Slate")
+	)
 
 	New()
 		..()
+		if (hackable)
+			AddComponent(/datum/component/wireStatus, src.wire_definition)
 
 		if(!recharges_contents)
 			UnsubscribeProcess()
@@ -183,28 +97,22 @@
 
 
 	attack_hand(mob/user)
+		var/datum/component/wireStatus/status = src.LoadComponent(/datum/component/wireStatus)
 		if (src.panelopen || isAI(user))
-			var/list/rackwires = list(
-			"Puce" = 1,
-			"Mauve" = 2,
-			"Ochre" = 3,
-			"Slate" = 4,
-			)
 			var/pdat = "<B>[src.name] Maintenance Panel</B><hr>"
-			for(var/wiredesc in rackwires)
-				var/is_uncut = src.wires & APCWireColorToFlag[rackwires[wiredesc]]
-				pdat += "[wiredesc] wire: "
-				if(!is_uncut)
-					pdat += "<a href='?src=\ref[src];cutwire=[rackwires[wiredesc]]'>Mend</a>"
+			for(var/i in 1 to length(status.cut_wires))
+				pdat += "[wire_definition.wire_color[i]] wire: "
+				if (status.cut_wires[i])
+					pdat += "<a href='?src=\ref[src];cutwire=[i]'>Mend</a>"
 				else
-					pdat += "<a href='?src=\ref[src];cutwire=[rackwires[wiredesc]]'>Cut</a> "
-					pdat += "<a href='?src=\ref[src];pulsewire=[rackwires[wiredesc]]'>Pulse</a> "
+					pdat += "<a href='?src=\ref[src];cutwire=[i]'>Cut</a> "
+					pdat += "<a href='?src=\ref[src];pulsewire=[i]'>Pulse</a> "
 				pdat += "<br>"
 
 			pdat += "<br>"
-			pdat += "The yellow light is [(src.working == 0) ? "off" : "on"].<BR>"
-			pdat += "The blue light is [src.malfunction ? "flashing" : "on"].<BR>"
-			pdat += "The white light is [src.hacked ? "on" : "off"].<BR>"
+			pdat += "The yellow light is [status.wire_flags & WIRE_POWER_A ? "off" : "on"].<BR>"
+			pdat += "The blue light is [status.wire_flags & WIRE_MALFUNCTION ? "flashing" : "on"].<BR>"
+			pdat += "The white light is [status.wire_flags & WIRE_ID_SCAN ? "on" : "off"].<BR>"
 
 			user.Browse(pdat, "window=rackpanel")
 			onclose(user, "rackpanel")
@@ -212,10 +120,10 @@
 		if(!ishuman(user) || !isliving(user))
 			return
 
-		if (src.malfunction)
+		if (status.wire_flags & WIRE_MALFUNCTION)
 			user.shock(src, 7500, user.hand == LEFT_HAND ? "l_arm" : "r_arm", 1, 0)
 
-		if (!src.allowed(user) && !hacked)
+		if (!src.allowed(user) && !(status.wire_flags & WIRE_ID_SCAN))
 			boutput(user, "<span class='alert'>Access denied.</span>")
 			return
 
@@ -255,63 +163,13 @@
 
 		if ((href_list["cutwire"]) && (src.panelopen || isAI(usr)))
 			var/twire = text2num_safe(href_list["cutwire"])
-			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
-				boutput(usr, "You need a snipping tool!")
-				return
-			else if (src.isWireColorCut(twire)) src.mend(twire)
-			else src.cut(twire)
+			SEND_SIGNAL(src, COMSIG_WIRE_HACK_CUT, twire)
 			src.updateUsrDialog()
 
 		if ((href_list["pulsewire"]) && (src.panelopen || isAI(usr)))
 			var/twire = text2num_safe(href_list["pulsewire"])
-			if (!usr.find_tool_in_hand(TOOL_PULSING) && !isAI(usr))
-				boutput(usr, "You need a multitool or similar!")
-				return
-			else if (src.isWireColorCut(twire))
-				boutput(usr, "You can't pulse a cut wire.")
-				return
-			else src.pulse(twire)
+			SEND_SIGNAL(src, COMSIG_WIRE_HACK_PULSE, twire)
 			src.updateUsrDialog()
-
-	proc/isWireColorCut(var/wireColor)
-		var/wireFlag = APCWireColorToFlag[wireColor]
-		return ((src.wires & wireFlag) == 0)
-
-	proc/isWireCut(var/wireIndex)
-		var/wireFlag = APCIndexToFlag[wireIndex]
-		return ((src.wires & wireFlag) == 0)
-
-	proc/cut(var/wireColor)
-		var/wireFlag = APCWireColorToFlag[wireColor]
-		var/wireIndex = APCWireColorToIndex[wireColor]
-		src.wires &= ~wireFlag
-		switch(wireIndex)
-			if(WIRE_EXTEND)
-				src.hacked = 0
-			if(WIRE_MALF) src.malfunction = 1
-			if(WIRE_POWER) src.working = 0
-
-	proc/mend(var/wireColor)
-		var/wireFlag = APCWireColorToFlag[wireColor]
-		var/wireIndex = APCWireColorToIndex[wireColor]
-		src.wires |= wireFlag
-		switch(wireIndex)
-			if(WIRE_MALF) src.malfunction = 0
-
-	proc/pulse(var/wireColor)
-		var/wireIndex = APCWireColorToIndex[wireColor]
-		switch(wireIndex)
-			if(WIRE_EXTEND)
-				if (src.hacked)
-					src.hacked = 0
-				else
-					src.hacked = 1
-			if (WIRE_MALF)
-				if (src.malfunction) src.malfunction = 0
-				else src.malfunction = 1
-			if (WIRE_POWER)
-				if (src.working) src.working = 0
-				else src.working = 1
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.hacked)
@@ -324,3 +182,91 @@
 			if(user)
 				boutput(user, "The [src] is already unlocked!")
 			return 0
+
+//MELEE WEAPONS//
+
+/obj/machinery/weapon_stand/katana_stand
+	name = "katana stand"
+	desc = "A wooden stand for holding a katana in it's sheath."
+/*
+	csaber_stand
+		name = "cyalume saber stand"
+		desc = "A stand that can hold a cyalume saber."
+		icon_state = "swordstand1"
+		stand_type = "csaberstand"
+		contained_weapon = /obj/item/sword
+		contained_weapon_name = "cyalume saber"
+*/
+
+//RANGED WEAPONS//
+
+/obj/machinery/weapon_stand/taser_rack
+	name = "taser rack"
+	desc = "A storage rack that fits 4 taser guns. Efficient!"
+	icon_state = "taser_rack"
+	amount = 4
+	max_amount = 4
+	stand_type = "taser_rack"
+	contained_weapon = /obj/item/gun/energy/taser_gun
+	contained_weapon_name = "taser gun"
+	req_access = list(access_security)
+
+/obj/machinery/weapon_stand/taser_rack/recharger
+	name = "taser recharger rack"
+	desc = "A taser rack that can charge up to 3 taser guns. Handy!"
+	icon_state = "taser_charge_rack"
+	amount = 3
+	max_amount = 3
+	stand_type = "taser_charge_rack"
+	recharges_contents = 1
+
+	empty
+		icon_state = "taser_rack0"
+		amount = 0
+
+/obj/machinery/weapon_stand/egun_rack
+	name = "energy gun rack"
+	desc = "A storage rack that fits 4 energy guns. Tidy!"
+	amount = 4
+	max_amount = 4
+	icon_state = "egun_rack"
+	stand_type = "egun_rack"
+	contained_weapon = /obj/item/gun/energy/egun
+	contained_weapon_name = "energy gun"
+	req_access = list(access_security)
+
+/obj/machinery/weapon_stand/egun_rack/recharger
+	name = "energy gun recharger rack"
+	desc = "An energy gun rack that will recharge 3 energy guns."
+	icon_state = "egun_charge_rack"
+	amount = 3
+	max_amount = 3
+	stand_type = "egun_charge_rack"
+	recharges_contents = 1
+
+/obj/machinery/weapon_stand/shotgun_rack
+	name = "shotgun rack"
+	desc = "A rack for holding 3 shotguns."
+	icon_state = "shotgun_rack"
+	amount = 3
+	max_amount = 3
+	stand_type = "shotgun_rack"
+	contained_weapon = /obj/item/gun/kinetic/riotgun
+	contained_weapon_name = "riot shotgun"
+	req_access = list(access_security)
+	hackable = TRUE
+
+/obj/machinery/weapon_stand/rifle_rack
+	name = "pulse rifle rack"
+	desc = "A rack that charges up to 3 pulse rifles."
+	icon_state = "pulserifle_rack"
+	amount = 3
+	max_amount = 3
+	stand_type = "pulserifle_rack"
+	contained_weapon = /obj/item/gun/energy/pulse_rifle
+	contained_weapon_name = "pulse rifle"
+	req_access = list(access_security)
+	hackable = TRUE
+
+/obj/machinery/weapon_stand/rifle_rack/recharger
+	recharges_contents = 1
