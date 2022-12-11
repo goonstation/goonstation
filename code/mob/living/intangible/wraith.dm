@@ -50,6 +50,8 @@
 	var/formaldehyde_tolerance = 25
 	///specifiy strong or weak tk powers. Weak for poltergeists.
 	var/weak_tk = FALSE
+	///can the wraith hear ghosts? Toggleable with an ability
+	var/hearghosts = TRUE
 
 	var/datum/movement_controller/movement_controller
 
@@ -578,6 +580,7 @@
 		src.addAbility(/datum/targetable/wraithAbility/whisper)
 		src.addAbility(/datum/targetable/wraithAbility/blood_writing)
 		src.addAbility(/datum/targetable/wraithAbility/haunt)
+		src.addAbility(/datum/targetable/wraithAbility/toggle_deadchat)
 
 	proc/removeAllAbilities()
 		for (var/datum/targetable/wraithAbility/abil in abilityHolder.abilities)
