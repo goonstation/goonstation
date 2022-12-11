@@ -1814,6 +1814,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = ""
 	anchored = 1
+	pass_unstable = FALSE
 	layer = EFFECTS_LAYER_1
 	pixel_x = -64
 	pixel_y = -64
