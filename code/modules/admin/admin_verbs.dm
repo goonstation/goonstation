@@ -379,6 +379,7 @@ var/list/admin_verbs = list(
 		/client/proc/ghostdroneAll,
 		/client/proc/showPregameHTML,
 		/client/proc/dbg_radio_controller,
+		/client/proc/test_mass_flock_convert,
 
 		/client/proc/call_proc,
 		/client/proc/call_proc_all,
@@ -446,7 +447,6 @@ var/list/admin_verbs = list(
 		/client/proc/random_color_matrix,
 		/client/proc/clear_string_cache,
 		/client/proc/edit_color_matrix,
-		/client/proc/test_mass_flock_convert,
 		/client/proc/test_flock_panel,
 		/client/proc/temporary_deadmin_self,
 		/verb/rebuild_flow_networks,
