@@ -1,5 +1,8 @@
 
 (t)sun dec 11 22
+(u)tarmunora
+(e)⚖|C-Balance
+(+)humans that are not in crit are slighly more resistant to gibbing from explosions
 (u)Kubius
 (p)12307
 (e)🆕🗺|C-Feature, A-Mapping

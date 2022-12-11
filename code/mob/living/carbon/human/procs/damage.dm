@@ -214,7 +214,7 @@
 		if (-INFINITY to 0) //blocked
 			boutput(src, "<span class='alert'><b>You are shielded from the blast!</b></span>")
 			return
-		if (6 to INFINITY) //gib
+		if ((6 + (src.health > 0)) to INFINITY) //gib
 			SPAWN(1 DECI SECOND)
 				src.gib(1)
 			return
