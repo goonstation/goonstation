@@ -26,5 +26,5 @@
 #define WIRE_BOLTS 128 //! Airlock - door bolts
 #define WIRE_SAFETY 256 //! Airlock - safety (crush) sensor
 #define WIRE_EXTEND_INVENTORY 512 //! Extended inventory selection
-#define WIRE_MALFUNCTION 1024 //! Is malfunctining - how depends on machine
+#define WIRE_MALFUNCTION 1024 //! Causes malfunctions
 #define WIRE_SILICON_CONTROL 2048 //! Can silicons control it

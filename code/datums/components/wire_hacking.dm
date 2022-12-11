@@ -166,10 +166,10 @@ TYPEINFO(/datum/component/wireStatus)
 		return TRUE
 	if (!HAS_FLAG(wire_definition.require_mend, wire_definition.wire_effect[wire]))
 		REMOVE_FLAG(wire_effect_flags, wire_definition.wire_effect[wire])
-	return TRUE
+		return TRUE
 
 /**
- * Returns all active flags
+ * Return all active flags
  */
 /datum/component/wireStatus/proc/flags()
 	return wire_effect_flags
