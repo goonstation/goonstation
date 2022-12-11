@@ -38,7 +38,8 @@
 /area/prefab/sea_prison)
 "aj" = (
 /obj/fitness/speedbag/captain,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/prefab/sea_prison)
 "ak" = (
 /obj/machinery/light/incandescent/cool,
@@ -121,11 +122,13 @@
 "az" = (
 /obj/fitness/weightlifter,
 /obj/item/reagent_containers/emergency_injector/synaptizine,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/prefab/sea_prison)
 "aA" = (
 /obj/fitness/weightlifter,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/prefab/sea_prison)
 "aB" = (
 /obj/machinery/drainage/big,
@@ -187,7 +190,8 @@
 /area/prefab/sea_prison)
 "aK" = (
 /obj/fitness/stacklifter,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/prefab/sea_prison)
 "aL" = (
 /obj/machinery/door/airlock/pyro/glass,

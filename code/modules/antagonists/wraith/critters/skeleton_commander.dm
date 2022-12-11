@@ -160,9 +160,8 @@
 		if(check_target_immunity( target ))
 			return 0
 		logTheThing(LOG_COMBAT, user, "stabs [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
-		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 9, rand(5,7), can_punch = 0, can_kick = 0)
-		user.attack_effects(target, affecting)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 9, rand(5,7), can_punch = 0, can_kick = 0)
+		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("slashes", "stabs", "pierces")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action] [target] with their [src.holder]!</span></b>"
 		msgs.played_sound = "sound/impact_sounds/Flesh_Stab_3.ogg"

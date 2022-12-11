@@ -574,6 +574,11 @@
 	item_state = "MDlonglabcoat"
 	coat_style = "MDlonglabcoat"
 
+	april_fools
+		icon_state = "MDlonglabcoat-alt"
+		item_state = "MDlonglabcoat-alt"
+		coat_style = "MDlonglabcoat-alt"
+
 /obj/item/clothing/suit/labcoat/pathology
 	name = "pathologist's labcoat"
 	desc = "A protective laboratory coat with the orange markings of a Pathologist."
@@ -1356,6 +1361,9 @@
 		icon_state = "diving_suit-eng"
 		item_state = "diving_suit-eng"
 
+TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
+	mats = 45 //should not be cheap to make at mechanics, increased from 15.
+
 /obj/item/clothing/suit/space/industrial
 #ifdef MAP_OVERRIDE_NADIR
 	desc = "Armored, immersion-tight suit. Protects from a wide gamut of environmental hazards, including radiation and explosions."
@@ -1400,7 +1408,6 @@
 		is_syndicate = TRUE
 		icon_state = "indusred"
 		item_state = "indusred"
-		mats = 45 //should not be cheap to make at mechanics, increased from 15.
 
 		New()
 			..()

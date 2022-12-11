@@ -240,7 +240,7 @@
 		src.UpdateName()
 		src.verbs += /mob/dead/observer/proc/reenter_corpse
 	else
-		stack_trace("Observer New() called with non-mob thing [corpse] (\ref [corpse]) as a corpse.")
+		stack_trace("Observer New() called with non-mob thing [identify_object(corpse)] (\ref [corpse]) as a corpse.")
 
 	hud = new(src)
 	src.attach_hud(hud)

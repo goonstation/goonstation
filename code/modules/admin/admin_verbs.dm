@@ -160,6 +160,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_mute_temp,
 		/client/proc/respawn_as_self,
 		/client/proc/respawn_as_new_self,
+		/client/proc/respawn_as_job,
 		/datum/admins/proc/toggletraitorscaling,
 		/client/proc/toggle_flourish,
 
@@ -378,6 +379,7 @@ var/list/admin_verbs = list(
 		/client/proc/ghostdroneAll,
 		/client/proc/showPregameHTML,
 		/client/proc/dbg_radio_controller,
+		/client/proc/test_mass_flock_convert,
 
 		/client/proc/call_proc,
 		/client/proc/call_proc_all,
@@ -445,7 +447,6 @@ var/list/admin_verbs = list(
 		/client/proc/random_color_matrix,
 		/client/proc/clear_string_cache,
 		/client/proc/edit_color_matrix,
-		/client/proc/test_mass_flock_convert,
 		/client/proc/test_flock_panel,
 		/client/proc/temporary_deadmin_self,
 		/verb/rebuild_flow_networks,
@@ -707,6 +708,10 @@ var/list/special_pa_observing_verbs = list(
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	ADMIN_ONLY
 	if (src.holder.tempmin)
+		logTheThing(LOG_ADMIN, usr, "tried to access the player panel")
+		logTheThing(LOG_DIARY, usr, "tried to access the player panel", "admin")
+		message_admins("[key_name(usr)] tried to access the player panel but was denied.")
+		alert("You need to be an actual admin to access the player panel.")
 		return
 	if (src.holder.level >= LEVEL_SA)
 		global.player_panel.ui_interact(src.mob)
@@ -1007,6 +1012,15 @@ var/list/fun_images = list()
 	H.JobEquipSpawned("Staff Assistant", 1)
 	H.update_colorful_parts()
 
+/client/proc/respawn_as_job(var/datum/job/J in (job_controls.staple_jobs|job_controls.special_jobs|job_controls.hidden_jobs))
+	set name = "Respawn As Job"
+	set desc = "Respawn yourself as a given job. Instantly. Right where you stand."
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set popup_menu = 0
+	ADMIN_ONLY
+
+	respawn_as_self_internal(new_self=TRUE, jobstring = initial(J.name))
+
 /client/proc/respawn_as_new_self()
 	set name = "Respawn As New Self"
 	set desc = "Respawn yourself as your currenly loaded character. Instantly. Right where you stand."
@@ -1027,7 +1041,7 @@ var/list/fun_images = list()
 	respawn_as_self_internal(new_self=FALSE)
 
 
-/client/proc/respawn_as_self_internal(new_self=FALSE)
+/client/proc/respawn_as_self_internal(new_self=FALSE, jobstring = "Staff Assistant")
 	ADMIN_ONLY
 
 	if (!src.preferences)
@@ -1063,7 +1077,7 @@ var/list/fun_images = list()
 		ticker.minds += mymob.mind
 	mymob.mind.transfer_to(H)
 	if(new_mob)
-		H.Equip_Rank("Staff Assistant", 2) //ZeWaka: joined_late is 2 so you don't get announced.
+		H.Equip_Rank(jobstring, 2) //ZeWaka: joined_late is 2 so you don't get announced.
 		H.update_colorful_parts()
 	qdel(mymob)
 	if (flourish)
@@ -1542,7 +1556,7 @@ var/list/fun_images = list()
 		M = tgui_input_list(src.mob, "Choose a target.", "Selection", mobs)
 		if (!M)
 			return
-	var/pet_input = input("Enter path of the thing you want to give as a pet or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random", "/obj/critter/cat")) as null|text
+	var/pet_input = input("Enter path of the thing you want to give as a pet or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random")) as null|text
 	if (!pet_input)
 		return
 	var/pet_path = get_one_match(pet_input, /obj)
@@ -1570,7 +1584,7 @@ var/list/fun_images = list()
 	ADMIN_ONLY
 
 	if(isnull(pet_input))
-		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random", "/obj/critter/cat")) as null|text
+		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random")) as null|text
 	if (!pet_input)
 		return
 	var/pet_path = get_one_match(pet_input, /obj)
@@ -1602,7 +1616,7 @@ var/list/fun_images = list()
 	ADMIN_ONLY
 
 	if(isnull(pet_input))
-		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random", "/obj/critter/cat")) as null|text
+		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random")) as null|text
 	if (!pet_input)
 		return
 	var/pet_path = get_one_match(pet_input, /obj)

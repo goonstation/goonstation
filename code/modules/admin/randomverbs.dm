@@ -1525,7 +1525,7 @@
 		for(var/mob/M in mobs)
 			if(M)
 				M.playsound_local(M.loc, 'sound/voice/animal/cat.ogg', 30, 30)
-				if(I==1 && !isobserver(M)) new /obj/critter/cat(M.loc)
+				if(I==1 && !isobserver(M)) new /mob/living/critter/small_animal/cat(M.loc)
 		sleep(rand(10,20))
 
 /client/proc/revive_all_bees()
@@ -1564,14 +1564,11 @@
 	ADMIN_ONLY
 
 	var/revived = 0
-	for (var/obj/critter/cat/Cat in world)
+	for (var/mob/living/critter/small_animal/cat/Cat in world)
 		LAGCHECK(LAG_LOW)
-		if (!Cat.alive)
-			Cat.health = initial(Cat.health)
-			Cat.alive = 1
+		if (isdead(Cat))
+			Cat.full_heal()
 			Cat.icon_state = initial(Cat.icon_state)
-			Cat.set_density(initial(Cat.density))
-			Cat.on_revive()
 			Cat.visible_message("<span class='alert'>[Cat] seems to rise from the dead!</span>")
 			revived ++
 	logTheThing(LOG_ADMIN, src, "revived [revived] cat[revived == 1 ? "" : "s"].")

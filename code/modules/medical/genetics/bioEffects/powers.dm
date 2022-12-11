@@ -185,14 +185,7 @@
 			if (isitem(the_object))
 				var/obj/item/the_item = the_object
 				H.sims?.affectMotive("Hunger", (the_item.w_class + 1) * 5) // +1 so tiny items still give a small boost
-				for(var/A in owner.organs)
-					var/obj/item/affecting = null
-					if (!owner.organs[A])
-						continue
-					affecting = owner.organs[A]
-					if (!isitem(affecting))
-						continue
-					affecting.heal_damage(4, 0)
+				owner.HealDamage("All", 5, 0)
 				owner.UpdateDamageIcon()
 
 		if (!QDELETED(the_object)) // Finally, ensure that the item is deleted regardless of what it is

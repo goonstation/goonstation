@@ -19,6 +19,8 @@
 #define POP_CARDINAL_ONLY "cardinal_only"
 /// Pathfind option key; Whether or not to check if doors are blocked (welded, out of power, locked, etc...)
 #define POP_DOOR_CHECK "do_doorcheck"
+/// Pathfind option key; Whether to ignore passability caching (for extremely weird cases; like pods.)
+#define POP_IGNORE_CACHE "ignore_cache"
 
 /**
  * This is the proc you use whenever you want to have pathfinding more complex than "try stepping towards the thing".
@@ -60,6 +62,8 @@
 	if(istype(caller, /obj/machinery/bot) && isnull(id)) // Stonepillar: remove this when amy finishes mob-ifying /obj/machinery/bot
 		var/obj/machinery/bot/bot = caller
 		options[POP_ID] = bot.botcard
+	if(istype(caller, /obj/machinery/vehicle))
+		options[POP_IGNORE_CACHE] = TRUE
 
 	var/datum/pathfind/pathfind_datum = new(caller, ends, options)
 	if(!isnull(required_goals))
@@ -452,7 +456,9 @@
 		if(!wall.broken && (F.floorrunning || (F.can_floorrun && F.resources >= 10))) //greater than 10 to give some wiggle room, actual cost is 1 per wall tile
 			return TRUE // floor running drones can *always* pass through flockwalls
 
-	if(T.density || !T.pathable) // simplest case
+	if(T.passability_cache != null && !options[POP_IGNORE_CACHE])
+		return T.passability_cache
+	if(T.density || !T.pathable)
 		return FALSE
 	var/direction = get_dir(source, T)
 	if(!direction)
@@ -488,7 +494,11 @@
 					else
 						return FALSE
 		if(!A.Cross(passer))
+			if(!T.pass_unstable)
+				T.passability_cache = FALSE
 			return FALSE
+	if(!T.pass_unstable) // Only these are cached, the rest are speical cases for unstable interactibles.
+		T.passability_cache = .
 
 #undef CAN_STEP
 #undef STEP_NOT_HERE_BUT_THERE

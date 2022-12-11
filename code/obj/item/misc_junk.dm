@@ -24,7 +24,7 @@
 
 /obj/item/gnomechompski
 	name = "Gnome Chompski"
-	desc = "what"
+	desc = "What."
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "gnome"
 	w_class = W_CLASS_BULKY
@@ -123,10 +123,12 @@
 		user.put_in_hand_or_drop(new /obj/item/clothing/head/party)
 		qdel(src)
 
+TYPEINFO(/obj/item/disk)
+	mats = 8
+
 /obj/item/disk
 	name = "disk"
 	icon = 'icons/obj/items/items.dmi'
-	mats = 8
 
 /obj/item/dummy
 	name = "dummy"
@@ -275,6 +277,9 @@
 			src.setItemSpecial(/datum/item_special/slam)
 
 
+TYPEINFO(/obj/item/reagent_containers/vape)
+	mats = 6
+
 /obj/item/reagent_containers/vape //yeet
 	name = "e-cigarette"
 	desc = "The pinacle of human technology. An electronic cigarette!"
@@ -284,7 +289,6 @@
 	initial_reagents = "nicotine"
 	item_state = "ecig"
 	icon_state = "ecig"
-	mats = 6
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOSPLASH
 	c_flags = ONBELT
 	var/emagged = 0

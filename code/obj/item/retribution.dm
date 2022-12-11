@@ -11,6 +11,9 @@
 	is_syndicate = 1
 	contraband = 5
 
+TYPEINFO(/obj/item/syndicate_destruction_system)
+	mats = 18
+
 /obj/item/syndicate_destruction_system
 	name = "Syndicate Destruction System"
 	desc = "An unfinished melee weapon, the blueprints for which have been plundered from a raid on a now-destroyed Syndicate base. Requires a unique power source to function."
@@ -27,7 +30,6 @@
 	w_class = W_CLASS_SMALL	//Becomes 5.0 when the core is inserted.
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING  | TOOL_CHOPPING | TOOL_SAWING
-	mats = 18
 	is_syndicate = 1
 	contraband = 10
 	two_handed = 1

@@ -107,8 +107,8 @@
 
 		// 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
 		var/list/text_messages = list()
-		text_messages.Add("Would you like to respawn as a random event antagonist? Your name will be added to the list of eligible candidates and may be selected at random by the game.") // Don't disclose which type it is. You know, metagaming.
-		text_messages.Add("You are eligible to be respawned as a random event antagonist. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
+		text_messages.Add("Would you like to respawn as a [src.antagonist_type] antagonist? Your name will be added to the list of eligible candidates and may be selected at random by the game.") // Do disclose which type it is. You know, ghosts can already metagame in a myriad of ways.
+		text_messages.Add("You are eligible to be respawned as a [src.antagonist_type] antagonist. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
 		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
@@ -119,6 +119,7 @@
 			message_admins("Couldn't set up Antagonist Spawn ([src.antagonist_type]); no ghosts responded. Source: [source ? "[source]" : "random"]")
 			logTheThing(LOG_ADMIN, null, "Couldn't set up Antagonist Spawn ([src.antagonist_type]); no ghosts responded. Source: [source ? "[source]" : "random"]")
 			src.post_event()
+			global.random_events.next_spawn_event = TIME + 1 MINUTE
 			return
 
 		for(var/antag_idx in 1 to src.antag_count)
