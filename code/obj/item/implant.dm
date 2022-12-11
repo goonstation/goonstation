@@ -393,6 +393,31 @@ THROWING DARTS
 				src.uses--
 				boutput(source, "You feel a faint click.")
 
+/obj/item/implant/emote_triggered/signaler
+	name = "signaler implant"
+	icon_state = "implant-r"
+	impcolor = "r"
+	scan_category = "syndicate"
+	activation_emote = "wink"
+	compatible_emotes = list("eyebrow", "nod", "shrug", "smile", "yawn", "flex", "snap")
+	var/obj/item/device/radio/signaler/signaler = null
+
+	New()
+		..()
+		src.signaler = new(src)
+
+	implanted(mob/M, mob/I)
+		. = ..()
+		tgui_process.close_uis(src.signaler)
+
+	attack_self(mob/user)
+		return src.signaler.AttackSelf(user)
+
+	trigger(mob/source, emote)
+		if (emote == src.activation_emote)
+			boutput(source, "You hear a faint beep.")
+			signaler.send_signal()
+
 /obj/item/implant/tracking
 	name = "tracking implant"
 	//life_tick_energy = 0.1
@@ -1496,6 +1521,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		else
 			return ..()
 
+	attack_self(mob/user)
+		. = ..()
+		src.imp?.AttackSelf(user)
+
 /datum/action/bar/icon/implanter
 	duration = 20
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
@@ -1539,6 +1568,12 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	icon_state = "implanter1-g"
 	New()
 		src.imp = new /obj/item/implant/emote_triggered/freedom( src )
+		..()
+
+/obj/item/implanter/signaler
+	icon_state = "implanter1-g"
+	New()
+		src.imp = new /obj/item/implant/emote_triggered/signaler( src )
 		..()
 
 /obj/item/implanter/mindhack
@@ -1602,6 +1637,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	//Whether this is the paper type that goes away when emptied
 	var/disposable = FALSE
 
+/obj/item/implantcase/attack_self(mob/user)
+	. = ..()
+	src.imp?.AttackSelf(user)
+
 /obj/item/implantcase/tracking
 	name = "glass case - 'Tracking'"
 
@@ -1624,6 +1663,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 /obj/item/implantcase/freedom
 	name = "glass case - 'Freedom'"
 	implant_type = /obj/item/implant/emote_triggered/freedom
+
+/obj/item/implantcase/signaler
+	name = "glass case - 'Signaler'"
+	implant_type = /obj/item/implant/emote_triggered/signaler
 
 /obj/item/implantcase/counterrev
 	name = "glass case - 'Counter-Rev'"
@@ -1917,6 +1960,31 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 <b>Zone:</b> Brain Stem<br>
 <b>Power Source:</b> Nervous System Ion Withdrawl Gradient<br>
 <b>Important Notes:</b> Injects an electrical signal directly into the brain that compels obedience in human subjects for a short time. Most minds fight off the effects after approx. 25 minutes.<BR>"}
+			else if (istype(src.case.imp, /obj/item/implant/emote_triggered/signaler))
+				var/obj/item/implant/emote_triggered/signaler/implant = src.case.imp
+				dat += {"
+<b>Implant Specifications:</b><br>
+<b>Name:</b> Remote Signaler<br>
+<b>Zone:</b> Left hand near wrist<br>
+<b>Power Source:</b> Nervous System Ion Withdrawl Gradient<br>
+<HR>
+<b>Implant Details:</b> <BR>
+<b>Function:</b> Transmits a radio signal on a configurable frequency.
+<b>Special Features:</b><BR>
+<i>Neuro-Scan</i>- Analyzes certain shadow signals in the nervous system<BR>
+<HR>
+Implant Specifics:<BR>
+Frequency (144.1-148.9):
+<A href='byond://?src=\ref[src];freq=-10'>-</A>
+<A href='byond://?src=\ref[src];freq=-2'>-</A> [format_frequency(implant.signaler.frequency)]
+<A href='byond://?src=\ref[src];freq=2'>+</A>
+<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+
+ID (1-100):
+<A href='byond://?src=\ref[src];id=-10'>-</A>
+<A href='byond://?src=\ref[src];id=-1'>-</A> [implant.signaler.code]
+<A href='byond://?src=\ref[src];id=1'>+</A>
+<A href='byond://?src=\ref[src];id=10'>+</A><BR>"}
 			else
 				dat += "Implant ID not in database"
 		else
@@ -1933,17 +2001,28 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 		return
 	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
+		if (!istype(src.case, /obj/item/implantcase))
+			return
 		if (href_list["freq"])
-			if ((istype(src.case, /obj/item/implantcase) && istype(src.case.imp, /obj/item/implant/tracking)))
-				var/obj/item/implant/tracking/T = src.case.imp
-				T.frequency += text2num_safe(href_list["freq"])
-				T.frequency = sanitize_frequency(T.frequency)
+			var/frequency_change = text2num_safe(href_list["freq"])
+			if (istype(src.case.imp, /obj/item/implant/tracking))
+				var/obj/item/implant/tracking/implant = src.case.imp
+				implant.frequency += frequency_change
+				implant.frequency = sanitize_frequency(implant.frequency)
+			else if (istype(src.case.imp, /obj/item/implant/emote_triggered/signaler))
+				var/obj/item/implant/emote_triggered/signaler/implant = src.case.imp
+				implant.signaler.frequency += frequency_change
+				implant.signaler.frequency = sanitize_frequency(implant.signaler.frequency)
 		if (href_list["id"])
-			if ((istype(src.case, /obj/item/implantcase) && istype(src.case.imp, /obj/item/implant/tracking)))
-				var/obj/item/implant/tracking/T = src.case.imp
-				T.id += text2num_safe(href_list["id"])
-				T.id = min(100, T.id)
-				T.id = max(1, T.id)
+			var/id_change = text2num_safe(href_list["id"])
+			if (istype(src.case.imp, /obj/item/implant/tracking))
+				var/obj/item/implant/tracking/implant = src.case.imp
+				implant.id += id_change
+				implant.id = clamp(implant.id, 1, 100)
+			else if (istype(src.case.imp, /obj/item/implant/emote_triggered/signaler))
+				var/obj/item/implant/emote_triggered/signaler/implant = src.case.imp
+				implant.signaler.code += id_change
+				implant.signaler.code = clamp(implant.signaler.code, 1, 100)
 		if (ismob(src.loc))
 			attack_self(src.loc)
 		else
