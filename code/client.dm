@@ -1066,7 +1066,7 @@ var/global/curr_day = null
 				return
 			var/target = href_list["nick"]
 			var/t = input("Message:", text("Private message to [target] (Discord)")) as null|text
-			if(!(src.holder && src.holder.level >= LEVEL_ADMIN)))
+			if(!(src.holder && src.holder.level >= LEVEL_ADMIN))
 				t = strip_html(t,500)
 			if (!( t ))
 				return
