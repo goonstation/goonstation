@@ -40,8 +40,6 @@
 	var/atom/movable/name_tag/name_tag
 	var/atom/atom_hovered_over = null
 
-	var/obj/item/device/energy_shield/energy_shield = null
-
 	var/custom_gib_handler = null
 	var/obj/decal/cleanable/custom_vomit_type = /obj/decal/cleanable/vomit
 
@@ -416,7 +414,6 @@
 	ckey = null
 	client = null
 	internals = null
-	energy_shield = null
 	hallucinations = null
 	buckled = null
 	handcuffs = null

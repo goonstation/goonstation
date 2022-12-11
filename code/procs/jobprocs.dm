@@ -693,33 +693,34 @@
 			if (!equipped) // we've tried most available storage solutions here now so uh just put it on the ground
 				trinket.set_loc(get_turf(src))
 
-	if (src.traitHolder && src.traitHolder.hasTrait("onearmed"))
-		if (src.limbs)
-			SPAWN(6 SECONDS)
-				if (prob(50))
-					if (src.limbs.l_arm)
-						qdel(src.limbs.l_arm.remove(0))
-				else
-					if (src.limbs.r_arm)
-						qdel(src.limbs.r_arm.remove(0))
-				boutput(src, "<b>Your singular arm makes you feel responsible for crimes you couldn't possibly have committed.</b>" )
+	if (ishuman(src))
+		if (src.traitHolder && src.traitHolder.hasTrait("onearmed"))
+			if (src.limbs)
+				SPAWN(6 SECONDS)
+					if (prob(50))
+						if (src.limbs.l_arm)
+							qdel(src.limbs.l_arm.remove(0))
+					else
+						if (src.limbs.r_arm)
+							qdel(src.limbs.r_arm.remove(0))
+					boutput(src, "<b>Your singular arm makes you feel responsible for crimes you couldn't possibly have committed.</b>" )
 
-	if (src.traitHolder && src.traitHolder.hasTrait("nolegs"))
-		if (src.limbs)
-			SPAWN(6 SECONDS)
-				if (src.limbs.l_leg)
-					src.limbs.l_leg.delete()
-				if (src.limbs.r_leg)
-					src.limbs.r_leg.delete()
-			new /obj/stool/chair/comfy/wheelchair(get_turf(src))
+		if (src.traitHolder && src.traitHolder.hasTrait("nolegs"))
+			if (src.limbs)
+				SPAWN(6 SECONDS)
+					if (src.limbs.l_leg)
+						src.limbs.l_leg.delete()
+					if (src.limbs.r_leg)
+						src.limbs.r_leg.delete()
+				new /obj/stool/chair/comfy/wheelchair(get_turf(src))
 
-	// Special mutantrace items
-	if (src.traitHolder && src.traitHolder.hasTrait("pug"))
-		src.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
-	else if (src.traitHolder && src.traitHolder.hasTrait("skeleton"))
-		src.put_in_hand_or_drop(new /obj/item/joint_wax)
+		// Special mutantrace items
+		if (src.traitHolder && src.traitHolder.hasTrait("pug"))
+			src.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
+		else if (src.traitHolder && src.traitHolder.hasTrait("skeleton"))
+			src.put_in_hand_or_drop(new /obj/item/joint_wax)
 
-	src.equip_sensory_items()
+		src.equip_sensory_items()
 
 /mob/living/carbon/human/proc/spawnId(rank)
 #ifdef DEBUG_EVERYONE_GETS_CAPTAIN_ID

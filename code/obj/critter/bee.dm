@@ -840,8 +840,10 @@
 		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT, .proc/save_upgraded_tier)
 		heisentier_hat()
 		..()
+		START_TRACKING
 
 	disposing()
+		STOP_TRACKING
 		UnregisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT)
 		..()
 

@@ -2644,3 +2644,11 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 		return "[locfinder.group[1]][locfinder.group[2]][offset ? ":[offset]":""][locfinder.group[4]]"
 	else
 		return new_screen_loc //regex failed to match, just use what we got
+
+/// For runtime logs- returns the thing's name, type, and ref as a string. Handles nulls and non-datums fine, might do something weird for savefiles, clients, etc
+/proc/identify_object(datum/thing)
+	if (isnull(thing)) // null
+		return "***NULL***"
+	if (!istype(thing)) //  probably text or a num or something
+		return thing
+	return "[thing] \[\ref[thing]\] ([thing.type])" // actual datum

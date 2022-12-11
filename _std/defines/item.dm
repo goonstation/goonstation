@@ -24,7 +24,7 @@
 #define DOORPASS						 (1<<10)
 /// automagically talk into this object when a human is holding it (Phone handset!)
 #define TALK_INTO_HAND 			 (1<<11)
-/// is an open container for chemistry purposes
+/// is an open container for chemistry purposes. don't check this flag directly, use obj.is_open_container()
 #define OPENCONTAINER				 (1<<12)
 /// is an atom spawned in an adventure area
 #define ISADVENTURE 				 (1<<13)

@@ -2230,7 +2230,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		return
 	#ifdef RUNTIME_CHECKING
 	if(current_state <= GAME_STATE_WORLD_NEW)
-		CRASH("[A] ([A.type]) fell into [src] at [src.x],[src.y],[src.z] ([src.loc] [src.loc.type]) during world initialization")
+		CRASH("[identify_object(A)] fell into [src] at [src.x],[src.y],[src.z] ([src.loc] [src.loc.type]) during world initialization")
 	#endif
 	if (isturf(T))
 		visible_message("<span class='alert'>[A] falls into [src]!</span>")

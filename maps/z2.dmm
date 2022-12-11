@@ -31904,18 +31904,6 @@
 	icon_state = "corner_east"
 	},
 /area/crypt/sigma)
-"bUl" = (
-/obj/decal/stage_edge{
-	layer = 2.8;
-	mouse_opacity = 0
-	},
-/obj/machinery/chem_dispenser/chemical{
-	desc = "Unlike other chem dispensers, this one's mostly just made for plants.";
-	dispensable_reagents = list("mutadone","saltpetre","ammonia","potash","poo","space_fungus","weedkiller","mutagen");
-	name = "botany dispenser"
-	},
-/turf/unsimulated/floor/wood/three,
-/area/afterlife/heaven/hydroponics)
 "bUm" = (
 /turf/unsimulated/wall/other{
 	icon = 'icons/misc/racing.dmi';
@@ -45247,11 +45235,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/owlery/office)
-"cGA" = (
-/obj/disposalpipe/segment,
-/obj/item/item_box/onionchips,
-/turf/unsimulated/floor/white,
-/area/owlery/owleryhall)
 "cGB" = (
 /obj/stool/bench/green/auto,
 /obj/cable{
@@ -46741,13 +46724,6 @@
 	dir = 4
 	},
 /area/syndicate_station/battlecruiser)
-"cKh" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
-/obj/item/item_box/chips,
-/turf/simulated/floor/white,
-/area/shuttle/john/owlery)
 "cKi" = (
 /obj/machinery/light/emergency{
 	dir = 8
@@ -47944,10 +47920,6 @@
 	dir = 1
 	},
 /area/owlery/gangzone)
-"cNw" = (
-/obj/item/item_box/chips,
-/turf/unsimulated/grass,
-/area/owlery/owllock)
 "cNx" = (
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -67415,23 +67387,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/lobby)
-"eaz" = (
-/obj/storage/crate/classcrate{
-	desc = "A crate for XIANG|GIESEL training materials.";
-	name = "shielded crate"
-	},
-/obj/item/reagent_containers/emergency_injector/anti_rad{
-	pixel_x = -3
-	},
-/obj/item/cloth/towel/yellow{
-	pixel_x = 6
-	},
-/obj/decal/cleanable/generic,
-/obj/item/item_box/chips{
-	name = "crisps"
-	},
-/turf/unsimulated/floor/carpet/grime,
-/area/iomoon/base)
 "ebm" = (
 /obj/item/nature/flower/daisy{
 	anchored = 1;
@@ -68001,6 +67956,11 @@
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/edge/south,
 /area/centcom/offices/virvatuli)
+"fbG" = (
+/obj/disposalpipe/segment,
+/obj/item/item_box/onionchips,
+/turf/unsimulated/floor/white,
+/area/owlery/owleryhall)
 "fbJ" = (
 /obj/storage/cart/trash{
 	desc = "You would expect them to take this out before starting construction work, but..."
@@ -70174,6 +70134,14 @@
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base)
+"jan" = (
+/obj/decal/stage_edge{
+	layer = 2.8;
+	mouse_opacity = 0
+	},
+/obj/machinery/chem_dispenser/botany,
+/turf/unsimulated/floor/wood/three,
+/area/afterlife/heaven/hydroponics)
 "jbA" = (
 /obj/storage/secure/closet/civilian/hydro{
 	desc = "The only PDAs you'll find in this locker are Plant Data Analyzers. Heh.";
@@ -76603,6 +76571,23 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"uBc" = (
+/obj/storage/crate/classcrate{
+	desc = "A crate for XIANG|GIESEL training materials.";
+	name = "shielded crate"
+	},
+/obj/item/reagent_containers/emergency_injector/anti_rad{
+	pixel_x = -3
+	},
+/obj/item/cloth/towel/yellow{
+	pixel_x = 6
+	},
+/obj/decal/cleanable/generic,
+/obj/item/item_box/chips{
+	name = "crisps"
+	},
+/turf/unsimulated/floor/carpet/grime,
+/area/iomoon/base)
 "uBv" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -76829,6 +76814,13 @@
 /obj/machinery/computer3/generic/personal,
 /turf/unsimulated/floor/wood/seven,
 /area/centcom/offices/sovexe)
+"uTT" = (
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/obj/item/item_box/chips,
+/turf/simulated/floor/white,
+/area/shuttle/john/owlery)
 "uVv" = (
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/cow)
@@ -78678,6 +78670,10 @@
 /obj/submachine/ice_cream_dispenser,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"ygW" = (
+/obj/item/item_box/chips,
+/turf/unsimulated/grass,
+/area/owlery/owllock)
 "yhG" = (
 /obj/decal/exhibit/highend{
 	exhibit_id = "ex_centcom_highend_2";
@@ -81771,7 +81767,7 @@ cIf
 btO
 cJA
 cJD
-cKh
+uTT
 cic
 aBL
 cHy
@@ -87501,7 +87497,7 @@ cEj
 cES
 cFs
 cFY
-cGA
+fbG
 cHe
 cHe
 cHe
@@ -91741,7 +91737,7 @@ cnw
 cnw
 cnw
 cNf
-cNw
+ygW
 cNz
 cNx
 cNx
@@ -97321,7 +97317,7 @@ bpD
 izT
 izT
 izT
-eaz
+uBc
 oko
 izT
 izT
@@ -134835,7 +134831,7 @@ aXt
 bkT
 bkT
 bmX
-bUl
+jan
 bNP
 bPA
 bQI
