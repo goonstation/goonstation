@@ -425,6 +425,7 @@
 			else
 				for (var/mob/O in hearers(src, null))
 					O.show_message("<span class='emote'>[message]</span>", m_type)
+	..()
 	return
 
 /mob/living/silicon/hologram/restrained()
