@@ -1,6 +1,10 @@
 
 (t)sun dec 11 22
 (u)Bartimeus973
+(p)12218
+(e)🆕🎨💅🔨|C-Feature, C-Sprites, C-QoL, A-Player-Actions
+(+)Wraiths can now toggle their ghost chat with the "toggle_deadchat" ability.
+(u)Bartimeus973
 (p)12024
 (e)🗺🔄📡|A-Mapping, C-Rework, A-AI
 (+)Cats are now mobs! Try and see if jones can defeat the captain in a drinking contest!
