@@ -1,5 +1,9 @@
 
 (t)sun dec 11 22
+(u)LeahTheTech
+(p)12317
+(e)⚖💅|C-Balance, C-QoL
+(+)Stunned people can now be shoved up/down ladders using grabs (previously only people capable of climbing ladders could be shoved down them).
 (u)glowbold
 (p)12356
 (e)🪲🆕📦|C-Bug, C-Feature, A-Game-Objects
