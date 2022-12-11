@@ -1,5 +1,9 @@
 
 (t)sun dec 11 22
+(u)Kubius
+(p)12172
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Spatial interdictors may now be constructed with alternate control boards that grant them new functionality, such as wireless cyborg recharge. Their efficacy against mass radiation events has also dramatically increased.
 (u)LeahTheTech
 (p)12235
 (e)⚖🧛|C-Balance, A-Gamemodes
