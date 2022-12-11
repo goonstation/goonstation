@@ -1,5 +1,9 @@
 
 (t)sun dec 11 22
+(u)LeahTheTech
+(p)12380
+(e)🆕⚖🧛📦|C-Feature, C-Balance, A-Gamemodes, A-Game-Objects
+(*)Added a new 1TC traitor purchase: the signaler implant, which sends configurable signals on emote triggers.
 (u)Kubius
 (p)12307
 (e)🆕🗺|C-Feature, A-Mapping
