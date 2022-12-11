@@ -28,7 +28,7 @@
 		processing_items -= src
 		..()
 
-	Cross(atom/movable/mover)
+	Crossed(atom/movable/mover)
 		if(istype(mover, /mob))
 			var/mob/M = mover
 			M.setStatus(statusId = "slowed", duration = 0.5 SECONDS, optional = 4)

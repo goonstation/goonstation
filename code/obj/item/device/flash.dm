@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/flash)
+	mats = list("MET-1" = 3, "CON-1" = 5, "CRY-1" = 5)
+
 /obj/item/device/flash
 	name = "flash"
 	desc = "A device that emits a complicated strobe when used, causing disorientation. Useful for stunning people or starting a dance party."
@@ -9,10 +12,10 @@
 	throw_speed = 4
 	throw_range = 10
 	click_delay = COMBAT_CLICK_DELAY
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT | ATTACK_SELF_DELAY
+	flags = FPRINT | TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	item_state = "electronic"
-	mats = list("MET-1" = 3, "CON-1" = 5, "CRY-1" = 5)
 
 	var/status = 1 // Bulb still functional?
 	var/secure = 1 // Access panel still secured?
@@ -374,11 +377,13 @@
 	return
 
 // The Turboflash - A flash combined with a charged energy cell to make a bigger, meaner flash (That dies after one use).
+TYPEINFO(/obj/item/device/flash/turbo)
+	mats = 0
+
 /obj/item/device/flash/turbo
 	name = "flash/cell assembly"
 	desc = "A common stun weapon with a power cell hastily wired into it. Looks dangerous."
 	icon_state = "turboflash"
-	mats = 0
 	animation_type = "turboflash2"
 	turboflash = 1
 	max_flash_power = 5000

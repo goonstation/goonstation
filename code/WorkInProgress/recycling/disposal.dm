@@ -176,7 +176,8 @@
 	name = "disposal pipe"
 	desc = "An underfloor disposal pipe."
 	anchored = 1
-	density = 0
+	density = FALSE
+	pass_unstable = FALSE
 	text = ""
 
 	level = 1			//! underfloor only
@@ -854,11 +855,13 @@
 
 		qdel(src)
 
+TYPEINFO(/obj/disposalpipe/loafer)
+	mats = 100
+
 /obj/disposalpipe/loafer
 	name = "disciplinary loaf processor"
 	desc = "A pipe segment designed to convert detritus into a nutritionally-complete meal for inmates."
 	icon_state = "pipe-loaf0"
-	mats = 100
 	is_syndicate = 1
 	var/is_doing_stuff = FALSE
 
@@ -1697,6 +1700,9 @@
 
 // the disposal outlet machine
 
+TYPEINFO(/obj/disposaloutlet)
+	mats = 12
+
 /obj/disposaloutlet
 	name = "disposal outlet"
 	desc = "An outlet for the pneumatic disposal system."
@@ -1706,7 +1712,6 @@
 	anchored = 1
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
-	mats = 12
 	var/range = 10
 
 	var/message = null

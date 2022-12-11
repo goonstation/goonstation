@@ -31,6 +31,7 @@ A Flamethrower in various states of assembly
 	item_state = "flamethrower0"
 	desc = "You are a firestarter!"
 	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
+	c_flags = null
 	force = 3
 	throwforce = 10
 	throw_speed = 1
@@ -85,7 +86,7 @@ A Flamethrower in various states of assembly
 
 	/// allow refilling the fuel tank by simply clicking the reagent dispensers
 	afterattack(atom/target, mob/user, flag)
-		if(istype(target, /obj/reagent_dispensers) && in_interact_range(src,target))
+		if(is_reagent_dispenser(target)&& in_interact_range(src,target))
 			if(src.fueltank?.reagents)
 				var/obj/tank = target
 				tank.reagents.trans_to(src.fueltank, (src.fueltank.reagents.maximum_volume - (src.fueltank.reagents.total_volume)))
@@ -195,7 +196,8 @@ A Flamethrower in various states of assembly
 	icon_state = "syndflametank0"
 	base_icon_state = "syndflametank"
 	desc = "A back mounted fueltank/jetpack system for use with a tactical flamethrower."
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | OPENCONTAINER
+	flags = FPRINT | TABLEPASS | CONDUCT | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
+	c_flags = ONBACK
 	var/obj/item/gun/flamethrower/backtank/linkedflamer
 	inventory_counter_enabled = 1
 	move_triggered = 1

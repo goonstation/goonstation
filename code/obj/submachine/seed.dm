@@ -1,9 +1,11 @@
-/obj/submachine/seed_manipulator/
+TYPEINFO(/obj/submachine/seed_manipulator)
+	mats = 10
+
+/obj/submachine/seed_manipulator
 	name = "PlantMaster Mk4"
 	desc = "An advanced machine used for manipulating the genes of plant seeds. It also features an inbuilt seed extractor."
 	density = TRUE
 	anchored = TRUE
-	mats = 10
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "geneman-on"
 	flags = NOSPLASH | TGUI_INTERACTIVE | FPRINT
@@ -652,12 +654,14 @@
 
 ////// Reagent Extractor
 
-/obj/submachine/chem_extractor/
+TYPEINFO(/obj/submachine/chem_extractor)
+	mats = 6
+
+/obj/submachine/chem_extractor
 	name = "reagent extractor"
 	desc = "A machine which can extract reagents from matter. Has a slot for a beaker and a chute to put things into."
 	density = 1
 	anchored = 1
-	mats = 6
 	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	icon = 'icons/obj/objects.dmi'
@@ -701,35 +705,12 @@
 		var/list/containersData = list()
 		// Container data
 		for(var/container_id in containers)
-			var/obj/item/reagent_containers/glass/thisContainer = containers[container_id]
-			if(thisContainer)
-				var/datum/reagents/R = thisContainer.reagents
-				var/list/thisContainerData = list(
-					name = thisContainer.name,
-					id = container_id,
-					maxVolume = R.maximum_volume,
-					totalVolume = R.total_volume,
-					selected = src.extract_to == thisContainer,
-					contents = list(),
-					finalColor = "#000000"
-				)
-
-				var/list/contents = thisContainerData["contents"]
-				if(istype(R) && R.reagent_list.len>0)
-					thisContainerData["finalColor"] = R.get_average_rgb()
-					// Reagent data
-					for(var/reagent_id in R.reagent_list)
-						var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
-
-						contents.Add(list(list(
-							name = reagents_cache[reagent_id],
-							id = reagent_id,
-							colorR = current_reagent.fluid_r,
-							colorG = current_reagent.fluid_g,
-							colorB = current_reagent.fluid_b,
-							volume = current_reagent.volume
-						)))
-				containersData[container_id] = thisContainerData
+			var/obj/item/reagent_containers/thisContainer = containers[container_id]
+			if (!thisContainer)
+				continue
+			containersData[container_id] = ui_describe_reagents(thisContainer)
+			containersData[container_id]["selected"] = src.extract_to == thisContainer
+			containersData[container_id]["id"] = container_id
 
 		.["containersData"] = containersData
 
@@ -904,6 +885,9 @@
 		src.UpdateIcon()
 
 
+TYPEINFO(/obj/submachine/seed_vendor)
+	mats = 6
+
 /obj/submachine/seed_vendor
 	name = "Seed Fabricator"
 	desc = "Fabricates basic plant seeds."
@@ -911,7 +895,6 @@
 	icon_state = "seeds"
 	density = 1
 	anchored = 1
-	mats = 6
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	flags = TGUI_INTERACTIVE
 	var/hacked = 0
@@ -1141,10 +1124,12 @@
 				else src.working = 1
 
 
+TYPEINFO(/obj/submachine/seed_manipulator/kudzu)
+	mats = 0
+
 /obj/submachine/seed_manipulator/kudzu
 	name = "KudzuMaster V1"
 	desc = "A strange \"machine\" that seems to function via fluids and plant fibers."
-	mats = 0
 	deconstruct_flags = null
 	icon = 'icons/misc/kudzu_plus.dmi'
 	icon_state = "seed-gene-console"

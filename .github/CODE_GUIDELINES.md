@@ -581,12 +581,14 @@ To track a group of things which don't share the same type, define a tracking ca
 
 
 <span style="color: red">VERY VERY BAD:</span>
+
 ```javascript
 for (var/mob/living/jellyfish in world)
     ...
 ```
 
 <span style="color: green">Good:</span>
+
 ```javascript
 /mob/living/jellyfish
     
@@ -602,3 +604,42 @@ for (var/mob/living/jellyfish/jelly in by_type[/mob/living/jellyfish])
         ...
 ```
 
+# Unit Test Woes
+
+## Passability Cache
+
+The passability cache unit test enforces rules associated with `pass_unstable`, a variable that is used to optimize pathfinding. It prevents the implementation of `Cross` and other collision-based callbacks for all types that declare `pass_unstable = FALSE`.
+
+```
+FAIL: /datum/unit_test/passability_cache 1.9s
+	REASON #1: /obj/machinery/silly_doodad is stable and must not implement Cross
+```
+
+In this situation, the unit test detected a forbidden proc `Cross` on `/obj/machinery/silly_doodad`. Because `/obj/machinery` declares `pass_unstable = FALSE`, your subtype must also follow the rules. In this situation, you have two options:
+
+- Remove the `Cross` implementation, or
+- Set `pass_unstable = TRUE`, which may cause performance degredation, especially if the atom in question frequently appears in-game.
+
+The same rules apply to any procs the test detects. For example, if it says `must not implement Enter`, then replace `Cross` with `Enter` in the above section.
+
+### Cross vs. Crossed, etc.
+
+These two procs do two similar but distinct things. `Cross` *returns* whether or not a given movable can cross `src`, while `Crossed` is called *whenever* a given movable crosses `src`.
+
+If you only need to cause something (i.e. your machine heals people when someone steps on it), then you want to use `Crossed` instead.
+
+Here's a quick list of all the side-effect versions of movement callbacks.
+- `Cross` -> `Crossed`
+- `Enter` -> `Entered`
+- `Exit` -> `Exited`
+- `Uncross` -> `Uncrossed`
+
+
+### Cannot Possibly Be Stable
+
+```
+FAIL: /datum/unit_test/passability_cache 3.9s
+	REASON #1: /obj/machinery/unstable_thingy/silly_doodad cannot possibly be stable because /obj/machinery/unstable_thingy implements Cross
+```
+
+This failure happens when you set `pass_unstable = FALSE` on a subtype of something that implements a forbidden proc. In most cases, there's nothing you can do except follow the section above for the offending parent type. In this case, you would look at `/obj/machinery/unstable_thingy` to see if you can make it stable.

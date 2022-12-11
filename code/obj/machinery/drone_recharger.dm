@@ -1,4 +1,7 @@
 
+TYPEINFO(/obj/machinery/drone_recharger)
+	mats = 10
+
 /obj/machinery/drone_recharger
 	name = "Drone Recharger"
 	icon = 'icons/obj/large/32x64.dmi'
@@ -6,7 +9,6 @@
 	icon_state = "drone-charger-idle"
 	density = 0
 	anchored = 1
-	mats = 10
 	power_usage = 50
 	machine_registry_idx = MACHINES_DRONERECHARGERS
 	var/chargerate = 400
@@ -142,9 +144,11 @@
 	attackby(obj/item/W, mob/user)
 
 
+TYPEINFO(/obj/machinery/drone_recharger/factory)
+	mats = 0
+
 /obj/machinery/drone_recharger/factory
 	var/id = "ghostdrone"
-	mats = 0
 	event_handler_flags = USE_FLUID_ENTER
 
 	Crossed(atom/movable/AM as mob|obj)

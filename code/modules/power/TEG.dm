@@ -904,6 +904,9 @@ datum/pump_ui/circulator_ui
 
 		src.transformation_mngr.check_material_transformation()
 
+		if(lastgenlev >= 18 && !ON_COOLDOWN(src, "warning sound", rand(2 MINUTES, 8 MINUTES)))
+			playsound(src, 'sound/vox/warning.ogg', 30, vary=FALSE, extrarange=10, pitch=rand(70, 90))
+
 	proc/get_efficiency_scale(delta_temperature, heat_capacity, cold_capacity)
 		var/efficiency_scale = efficiency_controller
 
@@ -1408,13 +1411,15 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 				network.update = 1
 		return 1
 
+TYPEINFO(/obj/machinery/power/furnace/thermo)
+	mats = 20
+
 /obj/machinery/power/furnace/thermo
 	name = "Zaojun-1 Furnace"
 	desc = "The venerable XIANG|GIESEL model '灶君' combustion furnace. This version lacks the thermocouple and is designed to heat larger thermo-electric gas circulator systems."
 	icon_state = "furnace"
 	anchored = 1
 	density = 1
-	mats = 20
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
 	var/obj/machinery/atmospherics/unary/furnace_connector/f_connector = null

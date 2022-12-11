@@ -30,6 +30,21 @@
 // This is where the actual behaviour is defined.
 //--------------------------------------------------------------------------------------------------------------------------------------------------//
 
+
+///This is standard wander behaviour with frequent checks for nearby enemies, which will interrupt the wandering.
+/datum/aiTask/timed/wander/critter/aggressive
+	name = "aggressive wander"
+
+/datum/aiTask/timed/wander/critter/aggressive/on_tick()
+	var/mob/living/critter/C = holder.owner
+	if(istype(holder.owner) && length(C.seek_target()))
+		src.holder.owner.ai.interrupt()
+	else
+		..()
+
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------//
+
 /// This one makes the critter move towards a target returned from holder.owner.seek_target()
 /datum/aiTask/sequence/goalbased/critter/attack
 	name = "attacking"
@@ -189,7 +204,7 @@
 			T.Eat(C, C, TRUE)
 			has_started = TRUE
 
-/datum/aiTask/succeedable/critter/scavenge/on_reset()
+/datum/aiTask/succeedable/critter/eat/on_reset()
 	has_started = FALSE
 
 // Don't worry about this, we need to enable unsimulated turf pathing for the critter gauntlet

@@ -294,21 +294,22 @@
 
 		//Personal bounties (items that belong to a person)
 		//Pair list, stores job for difficulty lookup
-		if (H.trinket && istype(H.trinket))
-			personal_bounties += list(list(H.trinket, H.job))
+		var/datum/deref = H?.trinket?.deref()
+		if (istype(deref, /obj/item))
+			personal_bounties += list(list(H.trinket.deref(), H.job))
 		if (H.wear_id)
 			personal_bounties += list(list(H.wear_id, H.job))
 
 
-		if (H.client && length(H.organs))
-			if (H.organs["l_arm"])
-				organ_bounties += list(list(H.organs["l_arm"], H.job))
-			if (H.organs["r_arm"])
-				organ_bounties += list(list(H.organs["r_arm"], H.job))
-			if (H.organs["l_leg"])
-				organ_bounties += list(list(H.organs["l_leg"], H.job))
-			if (H.organs["r_leg"])
-				organ_bounties += list(list(H.organs["r_leg"], H.job))
+		if (H.client)
+			if (H.limbs.get_limb("l_arm"))
+				organ_bounties += list(list(H.limbs.get_limb("l_arm"), H.job))
+			if (H.limbs.get_limb("r_arm"))
+				organ_bounties += list(list(H.limbs.get_limb("r_arm"), H.job))
+			if (H.limbs.get_limb("l_leg"))
+				organ_bounties += list(list(H.limbs.get_limb("l_leg"), H.job))
+			if (H.limbs.get_limb("r_leg"))
+				organ_bounties += list(list(H.limbs.get_limb("r_leg"), H.job))
 
 
 		//Add photographs of the crew
@@ -694,6 +695,7 @@
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/substation)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/singcore)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/combustion_chamber)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/shield_zone)
 	possible_areas -= /area/sim/test_area
 
 	for (var/area/A in possible_areas)

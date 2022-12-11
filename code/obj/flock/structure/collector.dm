@@ -8,6 +8,7 @@
 	flock_id = "Collector"
 	health = 60
 	resourcecost = 200
+	show_in_tutorial = TRUE
 	/// does it draw from the local apc if its strong enough.
 	var/drawfromgrid = FALSE
 	/// is it active?

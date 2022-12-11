@@ -9,8 +9,8 @@
 	repair_per_resource = 2.5
 	resourcecost = 100
 	passthrough = TRUE
+	show_in_tutorial = TRUE
 	accepts_sapper_power = TRUE
-
 	compute = 0
 	var/online_compute_cost = 30
 
@@ -106,6 +106,8 @@
 	disposing()
 		for (var/obj/interceptor_projectile_checker/checker as anything in src.projectile_checkers)
 			qdel(checker)
+			checker.connected_structure = null
+		src.projectile_checkers = null
 		..()
 
 

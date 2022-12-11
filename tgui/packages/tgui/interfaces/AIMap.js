@@ -1,5 +1,4 @@
-import { useBackend, useLocalState } from '../backend';
-import { Button, ByondUi } from '../components';
+import { ByondUi } from '../components';
 import { Window } from '../layouts';
 
 export const AIMap = (params, context) => {

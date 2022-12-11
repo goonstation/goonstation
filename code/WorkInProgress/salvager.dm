@@ -6,7 +6,8 @@
 #ifndef SECRETS_ENABLED
 	icon_state = "broken_egun"
 #endif
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	force = 10.0
 	throwforce = 10.0
 	throw_speed = 1
@@ -271,7 +272,7 @@
 	attack_hand(mob/user)
 		if(istype(src.loc, /obj/item/storage/backpack))
 			if (user.s_active)
-				user.detach_hud(usr.s_active)
+				user.detach_hud(user.s_active)
 				user.s_active = null
 			user.s_active = src.hud
 			hud.update(user)
@@ -322,10 +323,9 @@
 
 /obj/item/shipcomponent/communications/salvager
 		name = "Salvager Communication Array"
-		desc = "An rats nest of cables and extra parts fashioned into a shipboard communicator."
+		desc = "A rats nest of cables and extra parts fashioned into a shipboard communicator."
 		color = "#91681c"
 		access_type = list(POD_ACCESS_SALVAGER)
-
 
 /obj/npc/trader/salvager
 	name = "M4GP13 Salvage and Barter System"
