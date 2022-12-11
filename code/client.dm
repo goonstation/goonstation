@@ -557,7 +557,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	src.reputations = new(src)
 
-	if(src.holder && src.holder.level >= LEVEL_CODER)
+	if(src.holder && src.holder.level >= LEVEL_ADMIN)
 		src.control_freak = 0
 
 	if (browse_item_initial_done)
