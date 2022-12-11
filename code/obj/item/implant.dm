@@ -406,6 +406,10 @@ THROWING DARTS
 		..()
 		src.signaler = new(src)
 
+	implanted(mob/M, mob/I)
+		. = ..()
+		tgui_process.close_uis(src.signaler)
+
 	attack_self(mob/user)
 		return src.signaler.AttackSelf(user)
 
@@ -1566,6 +1570,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		src.imp = new /obj/item/implant/emote_triggered/freedom( src )
 		..()
 
+/obj/item/implanter/signaler
+	icon_state = "implanter1-g"
+	New()
+		src.imp = new /obj/item/implant/emote_triggered/signaler( src )
+		..()
 
 /obj/item/implanter/mindhack
 	icon_state = "implanter1-g"
