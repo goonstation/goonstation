@@ -57,7 +57,7 @@ proc/build_Engineering()
 /obj/landmark/engineering_room
 	var/map = null
 	icon = 'icons/effects/mapeditor.dmi'
-	icon_state = "engine"
+	icon_state = "landmark"
 	deleted_on_start = FALSE
 	add_to_landmarks = FALSE
 	opacity = 1
@@ -73,7 +73,7 @@ proc/build_Engineering()
 		..()
 
 	proc/apply()
-		var/datum/mapPrefab/engineering_room/room_prefab = pick_map_prefab(/datum/mapPrefab/engineering_room, list(size))
+		var/datum/mapPrefab/engineering_room/room_prefab = pick_map_prefab(/datum/mapPrefab/engineering_room, list(map))
 		if(isnull(room_prefab))
 			CRASH("No engine room prefab found for map: " + map)
 		room_prefab.applyTo(src.loc)
@@ -81,6 +81,7 @@ proc/build_Engineering()
 		qdel(src)
 
 	cogmap1
+		name = "Cogmap 1 Engine room"
 		map = "Cogmap 1"
 		icon_state = 'engine'
 
