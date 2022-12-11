@@ -200,7 +200,7 @@ Contains:
 		var/list/extras = list()
 		if (extra_desc)
 			extras += extra_desc
-		extras += ..()
+		extras += " It is labeled to have a volume of [src.air_contents.volume] litres. " + ..()
 		return extras.Join(" ")
 
 	examine(mob/user)
