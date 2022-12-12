@@ -46833,7 +46833,7 @@
 	icon_state = "beebed";
 	name = "cat bed"
 	},
-/obj/critter/cat/jones{
+/mob/living/critter/small_animal/cat/jones{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/green/fancy/edge{

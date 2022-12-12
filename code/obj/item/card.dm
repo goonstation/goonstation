@@ -159,14 +159,9 @@ TYPEINFO(/obj/item/card/emag)
 	keep_icon = TRUE
 	var/touched = FALSE
 	New()
-		access = get_access("Captain")
 		..()
-
-	pickup(mob/user)
-		. = ..()
-		if(!touched && user.job != "Captain")
-			touched = TRUE
-			logTheThing(LOG_STATION, user, "is the first non-Captain to pick up [src] at [log_loc(src)]")
+		access = get_access("Captain")
+		src.AddComponent(/datum/component/log_item_pickup, "Captain")
 
 //ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
 /obj/item/card/id/pod_wars

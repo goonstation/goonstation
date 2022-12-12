@@ -254,7 +254,7 @@
 		var/mob/living/critter/flock/drone/first_drone = src.ftutorial.fowner.flock.units[/mob/living/critter/flock/drone/][1] // lol
 		first_drone.set_tutorial_ai(FALSE)
 		SPAWN(1 SECOND)
-			flock_spiral_conversion(src.ftutorial.center, ftutorial.fowner.flock, 10, 0.1 SECONDS, TRUE)
+			flock_spiral_conversion(src.ftutorial.center, ftutorial.fowner.flock, 10, 0.1 SECONDS, tutorial=TRUE)
 		for (var/i = 1 to 4)
 			var/mob/living/critter/flock/drone/flockdrone = new(locate(src.ftutorial.center.x + rand(-3, 3), src.ftutorial.center.y + rand(-3, 3), src.ftutorial.center.z), ftutorial.fowner.flock)
 			spawn_animation1(flockdrone)
