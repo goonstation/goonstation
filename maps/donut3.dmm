@@ -34687,6 +34687,20 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
+"jTm" = (
+/obj/stool{
+	desc = "Though it was made to suit him, Jones still seems to sleep in every spot that is NOT this little bed.";
+	icon = 'icons/misc/critter.dmi';
+	icon_state = "beebed";
+	name = "cat bed"
+	},
+/mob/living/critter/small_animal/cat/jones{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/green/fancy/edge{
+	dir = 8
+	},
+/area/station/bridge/captain)
 "jTw" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'Fire Hazard'";
@@ -46826,20 +46840,6 @@
 	},
 /turf/simulated/floor/sand,
 /area/station/engine/engineering/ce)
-"nxU" = (
-/obj/stool{
-	desc = "Though it was made to suit him, Jones still seems to sleep in every spot that is NOT this little bed.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "cat bed"
-	},
-/obj/critter/cat/jones{
-	dir = 8
-	},
-/turf/simulated/floor/carpet/green/fancy/edge{
-	dir = 8
-	},
-/area/station/bridge/captain)
 "nyj" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable,
@@ -51819,6 +51819,17 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
+"oTw" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/obj/item/item_box/chips{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/table/glass/reinforced/auto,
+/turf/simulated/floor/wood,
+/area/station/science/lobby)
 "oTz" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -75355,17 +75366,6 @@
 /obj/item/storage/pill_bottle/salicylic_acid,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
-"vyp" = (
-/obj/decal/tile_edge/line/black{
-	icon_state = "line1"
-	},
-/obj/item/item_box/chips{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/table/glass/reinforced/auto,
-/turf/simulated/floor/wood,
-/area/station/science/lobby)
 "vyr" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -120165,7 +120165,7 @@ usg
 nOG
 cEO
 drM
-nxU
+jTm
 mDt
 nOG
 nOG
@@ -130775,7 +130775,7 @@ dkC
 efW
 oEZ
 uHV
-vyp
+oTw
 lKW
 wVP
 hAg

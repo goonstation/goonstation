@@ -1820,11 +1820,6 @@
 /obj/stool/bar,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge)
-"aeo" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/item_box/chips,
-/turf/simulated/floor/wood/two,
-/area/station/crew_quarters/lounge)
 "aep" = (
 /obj/cable{
 	icon_state = "1-10"
@@ -16542,25 +16537,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/carpet/blue/fancy,
-/area/station/bridge/captain)
-"aRb" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "5-8"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "6-8"
-	},
-/obj/critter/cat/jones,
 /turf/simulated/floor/carpet/blue/fancy,
 /area/station/bridge/captain)
 "aRc" = (
@@ -47198,19 +47174,6 @@
 /obj/item/storage/pill_bottle/hairgrownium,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/barber_shop)
-"cmy" = (
-/obj/stool/chair/couch{
-	dir = 4;
-	icon_state = "chair_couch-blue";
-	name = "ratty blue couch"
-	},
-/obj/item/item_box/chips,
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/plating/random,
-/area/station/crew_quarters/barber_shop)
 "cmz" = (
 /obj/decal/cleanable/generic,
 /obj/decal/cleanable/gangtag{
@@ -55735,6 +55698,25 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"hww" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "5-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "6-8"
+	},
+/mob/living/critter/small_animal/cat/jones,
+/turf/simulated/floor/carpet/blue/fancy,
+/area/station/bridge/captain)
 "hwS" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	autoclose = 1;
@@ -60385,6 +60367,11 @@
 	},
 /turf/simulated/floor/caution/east,
 /area/station/engine/elect)
+"rnf" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/item_box/chips,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/lounge)
 "rnI" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
@@ -62201,6 +62188,19 @@
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"vhm" = (
+/obj/stool/chair/couch{
+	dir = 4;
+	icon_state = "chair_couch-blue";
+	name = "ratty blue couch"
+	},
+/obj/item/item_box/chips,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/plating/random,
+/area/station/crew_quarters/barber_shop)
 "vhL" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -100893,7 +100893,7 @@ aaa
 aYA
 aaa
 clP
-cmy
+vhm
 cnv
 cow
 cpp
@@ -111125,7 +111125,7 @@ aIp
 aJW
 aMi
 aOw
-aRb
+hww
 aTX
 aWU
 ban
@@ -149062,7 +149062,7 @@ aaa
 aba
 acH
 ady
-aeo
+rnf
 aba
 aef
 acB

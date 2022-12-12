@@ -417,18 +417,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"aeC" = (
-/obj/item/raw_material/scrap_metal,
-/obj/decal/cleanable/rust,
-/obj/decoration/syndcorpse10{
-	desc = "A real blow the wrestling community.";
-	name = "Wrestler's corpse"
-	},
-/obj/item/item_box/chips,
-/turf/simulated/floor/airless/white,
-/area/abandonedship{
-	name = "Crashed Limo"
-	})
 "aeH" = (
 /obj/decal/tile_edge/stripe{
 	dir = 5;
@@ -1975,6 +1963,18 @@
 /obj/machinery/light_switch/south,
 /turf/simulated/grass,
 /area/station/garden/owlery)
+"aMO" = (
+/obj/item/raw_material/scrap_metal,
+/obj/decal/cleanable/rust,
+/obj/decoration/syndcorpse10{
+	desc = "A real blow the wrestling community.";
+	name = "Wrestler's corpse"
+	},
+/obj/item/item_box/chips,
+/turf/simulated/floor/airless/white,
+/area/abandonedship{
+	name = "Crashed Limo"
+	})
 "aMS" = (
 /obj/machinery/atmospherics/pipe/tank/air_repressurization{
 	dir = 4
@@ -5693,13 +5693,6 @@
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/caution,
 /area/station/engine/storage)
-"cqQ" = (
-/obj/table/glass/auto,
-/obj/item/item_box/chips,
-/obj/item/item_box/chips,
-/obj/item/item_box/chips,
-/turf/simulated/floor/black,
-/area/research_outpost/protest)
 "cqV" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/atmospherics/pipe/simple{
@@ -17898,18 +17891,6 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/engine/engineering/ce)
-"hyS" = (
-/obj/critter/cat/jones,
-/obj/cable{
-	icon_state = "6-8"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "5-8"
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/captain)
 "hzk" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
@@ -18773,6 +18754,11 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"hSN" = (
+/obj/table/wood/auto,
+/obj/item/item_box/chips,
+/turf/simulated/floor/carpet/red/fancy,
+/area/station/crew_quarters/lounge/luxury_seating)
 "hSR" = (
 /obj/player_piano,
 /turf/simulated/floor/carpet/red/fancy/edge/north,
@@ -24924,6 +24910,12 @@
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
+"kyo" = (
+/obj/item/item_box/chips,
+/turf/simulated/floor/green/side{
+	dir = 4
+	},
+/area/research_outpost/protest)
 "kyZ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -31229,10 +31221,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/monitoring)
-"nmA" = (
-/obj/item/item_box/chips,
-/turf/space,
-/area/space)
 "nmD" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/locker{
@@ -31632,11 +31620,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen)
-"ntZ" = (
-/obj/table/wood/auto,
-/obj/item/item_box/chips,
-/turf/simulated/floor/carpet/red/fancy,
-/area/station/crew_quarters/lounge/luxury_seating)
 "nur" = (
 /obj/machinery/door/airlock/pyro/command{
 	name = "Research Director's Office";
@@ -35444,6 +35427,49 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/grey,
 /area/station/storage/warehouse)
+"pcA" = (
+/obj/storage/crate,
+/obj/item/reagent_containers/food/drinks/noodlecup,
+/obj/item/reagent_containers/food/drinks/noodlecup,
+/obj/item/reagent_containers/food/drinks/noodlecup,
+/obj/item/reagent_containers/food/drinks/noodlecup,
+/obj/item/reagent_containers/food/drinks/noodlecup,
+/obj/item/reagent_containers/food/drinks/noodlecup,
+/obj/item/reagent_containers/food/drinks/noodlecup,
+/obj/item/reagent_containers/food/drinks/noodlecup,
+/obj/item/reagent_containers/food/drinks/noodlecup,
+/obj/item/reagent_containers/food/drinks/noodlecup,
+/obj/item/reagent_containers/food/drinks/noodlecup,
+/obj/item/reagent_containers/food/drinks/noodlecup,
+/obj/item/reagent_containers/food/drinks/noodlecup,
+/obj/item/reagent_containers/food/drinks/noodlecup,
+/obj/item/reagent_containers/food/drinks/noodlecup,
+/obj/item/reagent_containers/food/drinks/noodlecup,
+/obj/item/reagent_containers/food/snacks/candy/chocolate,
+/obj/item/reagent_containers/food/snacks/candy/chocolate,
+/obj/item/reagent_containers/food/snacks/candy/chocolate,
+/obj/item/reagent_containers/food/snacks/candy/chocolate,
+/obj/item/reagent_containers/food/snacks/candy/chocolate,
+/obj/item/reagent_containers/food/snacks/candy/chocolate,
+/obj/item/reagent_containers/food/snacks/candy/chocolate,
+/obj/item/reagent_containers/food/snacks/candy/chocolate,
+/obj/item/reagent_containers/food/snacks/candy/chocolate,
+/obj/item/reagent_containers/food/snacks/candy/chocolate,
+/obj/item/reagent_containers/food/snacks/candy/chocolate,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "pcB" = (
 /obj/machinery/light/emergency,
 /turf/simulated/floor,
@@ -38663,49 +38689,6 @@
 /area/station/hallway/primary/north{
 	name = "The Ring Entrance"
 	})
-"qul" = (
-/obj/storage/crate,
-/obj/item/reagent_containers/food/drinks/noodlecup,
-/obj/item/reagent_containers/food/drinks/noodlecup,
-/obj/item/reagent_containers/food/drinks/noodlecup,
-/obj/item/reagent_containers/food/drinks/noodlecup,
-/obj/item/reagent_containers/food/drinks/noodlecup,
-/obj/item/reagent_containers/food/drinks/noodlecup,
-/obj/item/reagent_containers/food/drinks/noodlecup,
-/obj/item/reagent_containers/food/drinks/noodlecup,
-/obj/item/reagent_containers/food/drinks/noodlecup,
-/obj/item/reagent_containers/food/drinks/noodlecup,
-/obj/item/reagent_containers/food/drinks/noodlecup,
-/obj/item/reagent_containers/food/drinks/noodlecup,
-/obj/item/reagent_containers/food/drinks/noodlecup,
-/obj/item/reagent_containers/food/drinks/noodlecup,
-/obj/item/reagent_containers/food/drinks/noodlecup,
-/obj/item/reagent_containers/food/drinks/noodlecup,
-/obj/item/reagent_containers/food/snacks/candy/chocolate,
-/obj/item/reagent_containers/food/snacks/candy/chocolate,
-/obj/item/reagent_containers/food/snacks/candy/chocolate,
-/obj/item/reagent_containers/food/snacks/candy/chocolate,
-/obj/item/reagent_containers/food/snacks/candy/chocolate,
-/obj/item/reagent_containers/food/snacks/candy/chocolate,
-/obj/item/reagent_containers/food/snacks/candy/chocolate,
-/obj/item/reagent_containers/food/snacks/candy/chocolate,
-/obj/item/reagent_containers/food/snacks/candy/chocolate,
-/obj/item/reagent_containers/food/snacks/candy/chocolate,
-/obj/item/reagent_containers/food/snacks/candy/chocolate,
-/obj/item/item_box/chips,
-/obj/item/item_box/chips,
-/obj/item/item_box/chips,
-/obj/item/item_box/chips,
-/obj/item/item_box/chips,
-/obj/item/item_box/chips,
-/obj/item/item_box/chips,
-/obj/item/item_box/chips,
-/obj/item/item_box/chips,
-/obj/item/item_box/chips,
-/obj/item/item_box/chips,
-/obj/item/item_box/chips,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "qum" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail/horizontal,
@@ -39650,6 +39633,18 @@
 /obj/decal/poster/wallsign/engineering,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/solar/east)
+"qOj" = (
+/mob/living/critter/small_animal/cat/jones,
+/obj/cable{
+	icon_state = "6-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "5-8"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/captain)
 "qOm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -39671,6 +39666,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"qOE" = (
+/obj/table/glass/auto,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/obj/item/item_box/chips,
+/turf/simulated/floor/black,
+/area/research_outpost/protest)
 "qOH" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 1
@@ -52949,12 +52951,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
-"wxq" = (
-/obj/item/item_box/chips,
-/turf/simulated/floor/green/side{
-	dir = 4
-	},
-/area/research_outpost/protest)
 "wxr" = (
 /obj/noticeboard,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -57155,6 +57151,10 @@
 /obj/disposalpipe/junction/left/east,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge)
+"yiw" = (
+/obj/item/item_box/chips,
+/turf/space,
+/area/space)
 "yiD" = (
 /obj/disposalpipe/junction/middle/east,
 /obj/machinery/atmospherics/pipe/simple{
@@ -67550,7 +67550,7 @@ jGe
 kGR
 lnz
 vBG
-qul
+pcA
 jGe
 jGe
 jGe
@@ -91191,7 +91191,7 @@ mhR
 lwE
 mhR
 tsm
-cqQ
+qOE
 apR
 apR
 vnX
@@ -93302,7 +93302,7 @@ adM
 adM
 rmG
 bZu
-wxq
+kyo
 xtG
 aRl
 adM
@@ -109397,7 +109397,7 @@ dNw
 suU
 iyq
 pFf
-ntZ
+hSN
 cuK
 oAr
 wAi
@@ -110953,7 +110953,7 @@ qcY
 syO
 yeN
 edo
-hyS
+qOj
 nvR
 cKT
 rgb
@@ -135306,7 +135306,7 @@ vnX
 vnX
 vnX
 vnX
-nmA
+yiw
 vnX
 vnX
 vnX
@@ -136515,7 +136515,7 @@ oWH
 nsG
 uUQ
 xrH
-aeC
+aMO
 imG
 hMA
 jGe
@@ -137712,7 +137712,7 @@ cVC
 ebT
 vnX
 vnX
-nmA
+yiw
 vnX
 vnX
 lnz

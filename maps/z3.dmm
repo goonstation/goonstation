@@ -3499,15 +3499,6 @@
 	},
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
-"apX" = (
-/obj/critter/cat{
-	desc = "How long has this cat been here?";
-	icon_state = "cat6";
-	name = "jons the catte";
-	randomize_cat = 0
-	},
-/turf/simulated/floor/specialroom/bar,
-/area/diner/dining)
 "apY" = (
 /obj/stool/chair,
 /turf/simulated/floor/carpet{
@@ -17407,13 +17398,6 @@
 	},
 /turf/space,
 /area/space)
-"cUp" = (
-/obj/table/wood/auto,
-/obj/item/item_box/chips,
-/turf/simulated/floor{
-	icon_state = "hive"
-	},
-/area/bee_trader)
 "cWa" = (
 /obj/machinery/power/apc/autoname_north/nopoweralert,
 /obj/cable{
@@ -20168,6 +20152,16 @@
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/plating/damaged1,
 /area/diner/kitchen)
+"lhx" = (
+/mob/living/critter/small_animal/cat{
+	desc = "How long has this cat been here?";
+	icon_state = "cat6";
+	name = "jons the catte";
+	randomize_name = 0;
+	randomize_look = 0
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/diner/dining)
 "lhC" = (
 /obj/cable,
 /obj/cable{
@@ -22375,6 +22369,13 @@
 /obj/item/device/audio_log/timewarp_00,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
+"rkt" = (
+/obj/table/wood/auto,
+/obj/item/item_box/chips,
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/bee_trader)
 "rkO" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
@@ -73218,7 +73219,7 @@ alo
 aje
 aic
 hGO
-cUp
+rkt
 wvT
 aaa
 iDu
@@ -75346,7 +75347,7 @@ apE
 alb
 tYQ
 wli
-apX
+lhx
 cZx
 alc
 hkh

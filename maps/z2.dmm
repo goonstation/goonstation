@@ -45339,11 +45339,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/owlery/office)
-"cGA" = (
-/obj/disposalpipe/segment,
-/obj/item/item_box/onionchips,
-/turf/unsimulated/floor/white,
-/area/owlery/owleryhall)
 "cGB" = (
 /obj/stool/bench/green/auto,
 /obj/cable{
@@ -46833,13 +46828,6 @@
 	dir = 4
 	},
 /area/syndicate_station/battlecruiser)
-"cKh" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
-/obj/item/item_box/chips,
-/turf/simulated/floor/white,
-/area/shuttle/john/owlery)
 "cKi" = (
 /obj/machinery/light/emergency{
 	dir = 8
@@ -48036,10 +48024,6 @@
 	dir = 1
 	},
 /area/owlery/gangzone)
-"cNw" = (
-/obj/item/item_box/chips,
-/turf/unsimulated/grass,
-/area/owlery/owllock)
 "cNx" = (
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -67510,23 +67494,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/lobby)
-"eaz" = (
-/obj/storage/crate/classcrate{
-	desc = "A crate for XIANG|GIESEL training materials.";
-	name = "shielded crate"
-	},
-/obj/item/reagent_containers/emergency_injector/anti_rad{
-	pixel_x = -3
-	},
-/obj/item/cloth/towel/yellow{
-	pixel_x = 6
-	},
-/obj/decal/cleanable/generic,
-/obj/item/item_box/chips{
-	name = "crisps"
-	},
-/turf/unsimulated/floor/carpet/grime,
-/area/iomoon/base)
 "ebm" = (
 /obj/item/nature/flower/daisy{
 	anchored = 1;
@@ -69335,6 +69302,23 @@
 	},
 /turf/unsimulated/floor/terrazzo/black,
 /area/centcom/offices/walpvrgis)
+"hsv" = (
+/mob/living/critter/small_animal/cat{
+	icon_state = "cat2";
+	name = "Moo";
+	randomize_name = 0;
+	randomize_look = 0
+	},
+/obj/decal/stage_edge{
+	layer = 2.8;
+	mouse_opacity = 0
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/adventure_gannets.dmi';
+	icon_state = "sand";
+	name = "sand"
+	},
+/area/centcom/offices/enakai)
 "huE" = (
 /obj/cable{
 	d1 = 1;
@@ -70893,10 +70877,6 @@
 /obj/range_target,
 /turf/unsimulated/floor/plating/random,
 /area/syndicate_station/firing_range)
-"kmS" = (
-/obj/critter/cat,
-/turf/unsimulated/floor/carpet/wizard/standard/edge/nw,
-/area/wizard_station)
 "kmZ" = (
 /obj/decal/fakeobjects/skeleton,
 /turf/unsimulated/floor/wood/two,
@@ -71024,6 +71004,11 @@
 	icon_state = "shore-22"
 	},
 /area/titlescreen)
+"kDk" = (
+/obj/disposalpipe/segment,
+/obj/item/item_box/onionchips,
+/turf/unsimulated/floor/white,
+/area/owlery/owleryhall)
 "kEn" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 4;
@@ -71695,6 +71680,10 @@
 /obj/machinery/chem_dispenser/alcohol,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"lQD" = (
+/mob/living/critter/small_animal/cat,
+/turf/unsimulated/floor/carpet/wizard/standard/edge/nw,
+/area/wizard_station)
 "lRg" = (
 /obj/stool/chair/office/syndie,
 /turf/unsimulated/floor/wood/two,
@@ -72348,6 +72337,13 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
+"nep" = (
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/obj/item/item_box/chips,
+/turf/simulated/floor/white,
+/area/shuttle/john/owlery)
 "ney" = (
 /obj/machinery/light{
 	dir = 8;
@@ -74487,6 +74483,23 @@
 /obj/decal/lightshaft,
 /turf/unsimulated/floor/carpet/darkcarpet,
 /area/centcom/gallery)
+"qBj" = (
+/obj/storage/crate/classcrate{
+	desc = "A crate for XIANG|GIESEL training materials.";
+	name = "shielded crate"
+	},
+/obj/item/reagent_containers/emergency_injector/anti_rad{
+	pixel_x = -3
+	},
+/obj/item/cloth/towel/yellow{
+	pixel_x = 6
+	},
+/obj/decal/cleanable/generic,
+/obj/item/item_box/chips{
+	name = "crisps"
+	},
+/turf/unsimulated/floor/carpet/grime,
+/area/iomoon/base)
 "qBZ" = (
 /obj/table/wood/round/auto,
 /turf/unsimulated/floor{
@@ -74961,6 +74974,10 @@
 /obj/machinery/light,
 /turf/unsimulated/floor/carpet/grime,
 /area/centcom/offices/flaborized)
+"rps" = (
+/obj/item/item_box/chips,
+/turf/unsimulated/grass,
+/area/owlery/owllock)
 "rpG" = (
 /turf/unsimulated/floor/setpieces/rootfloor{
 	icon_state = "rootfloor_2"
@@ -76185,6 +76202,15 @@
 "txF" = (
 /turf/unsimulated/floor/plating/random,
 /area/sim/gunsim/maintenance)
+"txP" = (
+/obj/stool/chair/office/green{
+	desc = "This is a very cool gamer chair, and definitely not just a green office chair.";
+	dir = 1;
+	name = "epic gamer chair"
+	},
+/mob/living/critter/small_animal/cat/cathara,
+/turf/unsimulated/floor/carpet/office/other,
+/area/centcom/offices/adhara)
 "tyn" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/bottle/mead{
@@ -77043,15 +77069,6 @@
 	name = "Fleshy Floor"
 	},
 /area/meat_derelict/guts)
-"vhA" = (
-/obj/stool/chair/office/green{
-	desc = "This is a very cool gamer chair, and definitely not just a green office chair.";
-	dir = 1;
-	name = "epic gamer chair"
-	},
-/obj/critter/cat/cathara,
-/turf/unsimulated/floor/carpet/office/other,
-/area/centcom/offices/adhara)
 "vij" = (
 /turf/unsimulated/floor/grey/side,
 /area/centcom/offices{
@@ -77815,23 +77832,6 @@
 	icon_state = "shuttlecock_mining"
 	},
 /area/shuttle/john/owlery)
-"wAT" = (
-/obj/critter/cat{
-	generic = 0;
-	icon_state = "cat2";
-	name = "Moo";
-	randomize_cat = 0
-	},
-/obj/decal/stage_edge{
-	layer = 2.8;
-	mouse_opacity = 0
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/adventure_gannets.dmi';
-	icon_state = "sand";
-	name = "sand"
-	},
-/area/centcom/offices/enakai)
 "wCN" = (
 /turf/unsimulated/wall/auto/sengoku{
 	icon_state = "6";
@@ -81305,7 +81305,7 @@ djV
 djX
 iNm
 dkm
-kmS
+lQD
 dkw
 dkC
 lRx
@@ -81869,7 +81869,7 @@ cIf
 btO
 cJA
 cJD
-cKh
+nep
 cic
 aBL
 cHy
@@ -87599,7 +87599,7 @@ cEj
 cES
 cFs
 cFY
-cGA
+kDk
 cHe
 cHe
 cHe
@@ -91839,7 +91839,7 @@ cnw
 cnw
 cnw
 cNf
-cNw
+rps
 cNz
 cNx
 cNx
@@ -97419,7 +97419,7 @@ bpD
 izT
 izT
 izT
-eaz
+qBj
 oko
 izT
 izT
@@ -150192,7 +150192,7 @@ dQz
 dvy
 wel
 hcG
-vhA
+txP
 ngq
 wel
 dAW
@@ -150820,7 +150820,7 @@ eiT
 rcQ
 wel
 vEe
-wAT
+hsv
 vbL
 wel
 dvW

@@ -15331,14 +15331,6 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
-"aLd" = (
-/obj/table/glass/reinforced/auto,
-/obj/item/item_box/onionchips{
-	pixel_x = -3
-	},
-/obj/item/reagent_containers/food/drinks/cola,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest)
 "aLe" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -29393,10 +29385,6 @@
 "byI" = (
 /turf/simulated/floor/carpet/blue/fancy/innercorner/ne,
 /area/station/bridge)
-"byJ" = (
-/obj/critter/cat/jones,
-/turf/simulated/floor/carpet/blue/fancy/innercorner/nw,
-/area/station/bridge)
 "byK" = (
 /obj/item/device/radio/beacon,
 /obj/landmark/gps_waypoint,
@@ -40401,15 +40389,6 @@
 /obj/machinery/light/incandescent/warm/very,
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
-"cbk" = (
-/obj/critter/cat{
-	desc = "How long has this cat been here?";
-	icon_state = "cat6";
-	name = "jons the catte";
-	randomize_cat = 0
-	},
-/turf/simulated/floor/specialroom/bar,
-/area/diner/dining)
 "cbl" = (
 /obj/table/wood/round/auto,
 /obj/item/plate,
@@ -44079,17 +44058,6 @@
 "cHP" = (
 /turf/simulated/floor/caution/south,
 /area/research_outpost/hangar)
-"cId" = (
-/obj/table/reinforced/auto,
-/obj/item/item_box/chips,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname  - SS13";
-	pixel_y = 20
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/southwest)
 "cIx" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
@@ -44712,6 +44680,10 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
+"fDq" = (
+/mob/living/critter/small_animal/cat/jones,
+/turf/simulated/floor/carpet/blue/fancy/innercorner/nw,
+/area/station/bridge)
 "fHM" = (
 /obj/cable{
 	d1 = 1;
@@ -44763,6 +44735,16 @@
 	dir = 5
 	},
 /area/station/medical/medbay/cloner)
+"fLq" = (
+/mob/living/critter/small_animal/cat{
+	desc = "How long has this cat been here?";
+	icon_state = "cat6";
+	name = "jons the catte";
+	randomize_name = 0;
+	randomize_look = 0
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/diner/dining)
 "fML" = (
 /obj/lattice,
 /obj/machinery/conveyor/EW/carousel,
@@ -45068,6 +45050,17 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/shuttlebay,
 /area/research_outpost/hangar)
+"gAQ" = (
+/obj/table/reinforced/auto,
+/obj/item/item_box/chips,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname  - SS13";
+	pixel_y = 20
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/southwest)
 "gCF" = (
 /obj/storage/crate,
 /obj/item/storage/box/beakerbox,
@@ -45239,6 +45232,14 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
+"hlU" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/item_box/onionchips{
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/food/drinks/cola,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northwest)
 "hzx" = (
 /obj/wingrille_spawn/auto,
 /obj/barber_pole{
@@ -77678,7 +77679,7 @@ aqn
 aqn
 aqn
 ahb
-aLd
+hlU
 bWp
 aPY
 aia
@@ -77727,7 +77728,7 @@ btZ
 btZ
 btZ
 chZ
-cId
+gAQ
 cin
 btZ
 cij
@@ -94934,7 +94935,7 @@ bvG
 bwl
 bwT
 bxR
-byJ
+fDq
 bzF
 btK
 bCn
@@ -122800,7 +122801,7 @@ aPB
 caH
 caV
 caJ
-cbk
+fLq
 cbd
 caJ
 cbE

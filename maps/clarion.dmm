@@ -24484,10 +24484,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
-"bbS" = (
-/obj/critter/cat/jones,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
 "bbT" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -41218,21 +41214,6 @@
 	name = "solar paneling"
 	},
 /area/station/solar/east)
-"dap" = (
-/obj/table/wood/round/auto,
-/obj/item/item_box/chips{
-	pixel_x = 3;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	pixel_x = -6;
-	pixel_y = 3
-	},
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fgreen1"
-	},
-/area/station/garden/aviary)
 "dei" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -44888,6 +44869,10 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/southwest)
+"lvX" = (
+/mob/living/critter/small_animal/cat/jones,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
 "lyy" = (
 /obj/machinery/conveyor/NS{
 	id = "disposals";
@@ -46783,6 +46768,21 @@
 	dir = 4
 	},
 /area/station/ai_monitored/armory)
+"qyz" = (
+/obj/table/wood/round/auto,
+/obj/item/item_box/chips{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/drinks/cola{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fgreen1"
+	},
+/area/station/garden/aviary)
 "qAY" = (
 /obj/disposalpipe/segment/food,
 /obj/machinery/weapon_stand/shotgun_rack,
@@ -82002,7 +82002,7 @@ aas
 aav
 aaD
 oyz
-dap
+qyz
 abp
 aby
 abW
@@ -85927,7 +85927,7 @@ aWW
 bcL
 aWW
 baI
-bbS
+lvX
 iqI
 bep
 bfC

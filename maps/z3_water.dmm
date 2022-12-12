@@ -2801,14 +2801,6 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
-"hx" = (
-/obj/item/item_box/chips,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/unsimulated/floor/grime,
-/area/dank_trench)
 "hy" = (
 /obj/item/device/light/glowstick{
 	pixel_x = -13;
@@ -3128,14 +3120,6 @@
 	},
 /turf/unsimulated/floor/damaged3,
 /area/dank_trench)
-"ik" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/item/item_box/chips,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/plating,
-/area/dank_trench)
 "il" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/decal/cleanable/dirt/jen,
@@ -3325,6 +3309,14 @@
 /obj/decoration/ntcratesmall,
 /turf/unsimulated/floor/longtile/black,
 /area/mantavault)
+"jZ" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/item/item_box/chips,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
 "AE" = (
 /turf/space,
 /turf/unsimulated/wall/trench,
@@ -3362,6 +3354,24 @@
 /turf/space,
 /turf/space,
 /area/space)
+"GD" = (
+/obj/item/item_box/chips,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/item/item_box/chips,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
 "Ip" = (
 /turf/unsimulated/wall/trench,
 /area/dank_trench)
@@ -14252,7 +14262,7 @@ gV
 hc
 ax
 hr
-hx
+GD
 hF
 ax
 Ip
@@ -17579,7 +17589,7 @@ hL
 hR
 hZ
 ih
-ik
+jZ
 ip
 iw
 Ip

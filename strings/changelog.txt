@@ -1,5 +1,61 @@
 
+(t)sun dec 11 22
+(u)Cheffie
+(p)12325
+(e)💅💨|C-QoL, A-Atmospherics
+(+)You can now see the volume of various atmospherics objects by examining them for portable objects or with the atmospherics scanner for pipes.
+(u)tarmunora
+(e)⚖|C-Balance
+(+)humans that are not in crit are slighly more resistant to gibbing from explosions
+(u)LeahTheTech
+(p)12380
+(e)🆕⚖🧛📦|C-Feature, C-Balance, A-Gamemodes, A-Game-Objects
+(*)Added a new 1TC traitor purchase: the signaler implant, which sends configurable signals on emote triggers.
+(u)Kubius
+(p)12307
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Nadir's breach hull now includes four auxiliary compartments.
+(u)Roddy, Meow Meow, DisturbHerb
+(p)11135
+(e)🎨🍝|C-Sprites, A-Catering
+(*)Adds churros to the game. Combine a dough strip and sugar in the oven for 6 seconds, on high. Dip one into your favorite soup based items!
+(u)Bartimeus973
+(p)12218
+(e)🆕🎨💅🔨|C-Feature, C-Sprites, C-QoL, A-Player-Actions
+(+)Wraiths can now toggle their ghost chat with the "toggle_deadchat" ability.
+(u)Bartimeus973
+(p)12024
+(e)🗺🔄📡|A-Mapping, C-Rework, A-AI
+(+)Cats are now mobs! Try and see if jones can defeat the captain in a drinking contest!
+(u)Kubius
+(p)12172
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Spatial interdictors may now be constructed with alternate control boards that grant them new functionality, such as wireless cyborg recharge. Their efficacy against mass radiation events has also dramatically increased.
+(u)LeahTheTech
+(p)12235
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Coagulated gnesis gib chance now scales with volume.
+(u)LeahTheTech
+(p)12317
+(e)⚖💅|C-Balance, C-QoL
+(+)Stunned people can now be shoved up/down ladders using grabs (previously only people capable of climbing ladders could be shoved down them).
+(u)glowbold
+(p)12356
+(e)🪲🆕📦|C-Bug, C-Feature, A-Game-Objects
+(*)Omnitools auto-swap to the needed tool when using the deconstruction tool context menu.
+(t)sat dec 10 22
+(u)Bartimeus973
+(p)12222
+(e)🆕🧛🔨|C-Feature, A-Gamemodes, A-Player-Actions
+(+)Plaguerats now have an ability to move through disposal pipes.
+(u)glowbold
+(p)12355
+(e)🪲🆕📦|C-Bug, C-Feature, A-Game-Objects
+(+)You can throw items from certain rideables, like segways and skateboards.
 (t)fri dec 09 22
+(u)Sord
+(e)⚖|C-Balance
+(+)Containment fields now stun you for significantly less time.
 (u)Munien
 (p)12311
 (e)🆕🎩|C-Feature, A-Clothing

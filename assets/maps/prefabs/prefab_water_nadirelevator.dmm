@@ -473,6 +473,15 @@
 /area/diner/hallway{
 	name = "Space Diner Backhall"
 	})
+"qB" = (
+/obj/machinery/light/incandescent/warm,
+/obj/table/wood/round/auto,
+/obj/item/item_box/chips{
+	pixel_x = -4;
+	pixel_y = 7
+	},
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
 "qS" = (
 /obj/machinery/vending/alcohol,
 /obj/decal/cleanable/dirt/dirt5,
@@ -822,15 +831,6 @@
 /area/diner/hallway{
 	name = "Space Diner Backhall"
 	})
-"CS" = (
-/obj/machinery/light/incandescent/warm,
-/obj/table/wood/round/auto,
-/obj/item/item_box/chips{
-	pixel_x = -4;
-	pixel_y = 7
-	},
-/turf/simulated/floor/black/grime,
-/area/diner/dining)
 "Dc" = (
 /obj/stool/chair/comfy{
 	dir = 4;
@@ -2803,7 +2803,7 @@ Uw
 uP
 Dc
 ga
-CS
+qB
 uP
 XP
 XP

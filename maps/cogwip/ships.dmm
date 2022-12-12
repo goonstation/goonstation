@@ -1845,13 +1845,6 @@
 	icon_state = "green2"
 	},
 /area/space)
-"fh" = (
-/obj/critter/cat,
-/turf/unsimulated/floor/carpet{
-	dir = 3;
-	icon_state = "green2"
-	},
-/area/space)
 "fi" = (
 /turf/unsimulated/floor/carpet{
 	dir = 10;
@@ -2183,17 +2176,6 @@
 /obj/window/north,
 /turf/unsimulated/floor/carpet{
 	dir = 1;
-	icon_state = "blue2"
-	},
-/area/space)
-"gf" = (
-/obj/stool/chair/couch{
-	dir = 4
-	},
-/obj/window/north,
-/obj/item/item_box/chips,
-/turf/unsimulated/floor/carpet{
-	dir = 5;
 	icon_state = "blue2"
 	},
 /area/space)
@@ -7292,14 +7274,6 @@
 	},
 /turf/simulated/floor/white,
 /area/space)
-"sT" = (
-/obj/machinery/sleeper{
-	dir = 4;
-	icon_state = "sleeper"
-	},
-/obj/item/item_box/chips,
-/turf/simulated/floor/white,
-/area/space)
 "sU" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 5;
@@ -7344,13 +7318,6 @@
 	icon_state = "floor2"
 	},
 /area/space)
-"sY" = (
-/obj/table/wood/auto,
-/obj/item/item_box/chips,
-/turf/simulated/floor{
-	icon_state = "hive"
-	},
-/area/noGenerate)
 "sZ" = (
 /obj/table/wood/auto,
 /obj/item/paper/postcard/owlery,
@@ -10977,6 +10944,39 @@
 /obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor/shuttlebay,
 /area/space)
+"KF" = (
+/obj/stool/chair/couch{
+	dir = 4
+	},
+/obj/window/north,
+/obj/item/item_box/chips,
+/turf/unsimulated/floor/carpet{
+	dir = 5;
+	icon_state = "blue2"
+	},
+/area/space)
+"Qi" = (
+/obj/machinery/sleeper{
+	dir = 4;
+	icon_state = "sleeper"
+	},
+/obj/item/item_box/chips,
+/turf/simulated/floor/white,
+/area/space)
+"TB" = (
+/obj/table/wood/auto,
+/obj/item/item_box/chips,
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/noGenerate)
+"Yh" = (
+/mob/living/critter/small_animal/cat,
+/turf/unsimulated/floor/carpet{
+	dir = 3;
+	icon_state = "green2"
+	},
+/area/space)
 
 (1,1,1) = {"
 aa
@@ -13358,7 +13358,7 @@ eu
 gt
 hW
 lm
-sY
+TB
 aW
 aa
 aa
@@ -20204,7 +20204,7 @@ aa
 aa
 aW
 fb
-fh
+Yh
 fm
 fy
 fy
@@ -20665,7 +20665,7 @@ fp
 fA
 fy
 fy
-gf
+KF
 gr
 gB
 aq
@@ -24157,7 +24157,7 @@ sA
 sF
 sL
 sN
-sT
+Qi
 sV
 ee
 te

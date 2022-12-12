@@ -21660,16 +21660,6 @@
 	dir = 9
 	},
 /area/space)
-"bfI" = (
-/obj/critter/cat/jones,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "fred5"
-	},
-/area/station/crew_quarters/captain)
 "bfJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -22277,11 +22267,6 @@
 "bhj" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/disposal)
-"bhk" = (
-/obj/item/storage/toolbox/mechanical,
-/obj/item/item_box/chips,
-/turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bhl" = (
 /obj/item/device/light/candle/small,
@@ -52290,6 +52275,16 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/hotloop)
+"gFp" = (
+/mob/living/critter/small_animal/cat/jones,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fred5"
+	},
+/area/station/crew_quarters/captain)
 "gFR" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
@@ -53001,22 +52996,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
-"hIJ" = (
-/obj/table/wood/auto,
-/obj/item/item_box/chips{
-	pixel_x = 11;
-	pixel_y = -4
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	pixel_x = -6;
-	pixel_y = 2
-	},
-/obj/item/dice/magic8ball{
-	pixel_x = 7;
-	pixel_y = 9
-	},
-/turf/simulated/floor/carpet,
-/area/station/chapel/sanctuary)
 "hJn" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -61321,6 +61300,11 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/medical/research)
+"sBs" = (
+/obj/item/storage/toolbox/mechanical,
+/obj/item/item_box/chips,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "sBK" = (
 /obj/cable/yellow{
 	icon_state = "0-2"
@@ -62485,6 +62469,22 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
+"tXO" = (
+/obj/table/wood/auto,
+/obj/item/item_box/chips{
+	pixel_x = 11;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/drinks/cola{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/dice/magic8ball{
+	pixel_x = 7;
+	pixel_y = 9
+	},
+/turf/simulated/floor/carpet,
+/area/station/chapel/sanctuary)
 "tYJ" = (
 /obj/railing/orange/reinforced{
 	dir = 8
@@ -91645,7 +91645,7 @@ bbP
 bcS
 bdR
 beL
-bfI
+gFp
 rYO
 bhp
 biv
@@ -122450,7 +122450,7 @@ bdJ
 beI
 bfB
 bgA
-bhk
+sBs
 bio
 bjt
 bjx
@@ -123950,7 +123950,7 @@ aOF
 aTP
 iqw
 xfX
-hIJ
+tXO
 bdS
 aZJ
 baH

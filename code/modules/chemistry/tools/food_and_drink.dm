@@ -762,7 +762,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 			qdel(src)
 
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/tortilla_chip))
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/dippable))
 			if (reagents.total_volume)
 				boutput(user, "You dip [W] into the bowl.")
 				reagents.trans_to(W, 10)
@@ -1969,5 +1969,5 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	icon_state = "creamer"
 	item_state = "creamer"
 	initial_volume = 50
-	initial_reagents = list("milk"=50)
+	initial_reagents = list("milk"=40, "sugar"=10)
 	can_recycle = 0

@@ -2634,19 +2634,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
-"agh" = (
-/obj/stool/chair/couch{
-	dir = 4;
-	icon_state = "chair_couch-blue";
-	name = "ratty blue couch"
-	},
-/obj/decal/cleanable/dirt,
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/obj/item/item_box/chips,
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/quartersB)
 "agi" = (
 /obj/item/instrument/large/jukebox{
 	pixel_x = 2
@@ -21666,17 +21653,6 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/arrivals)
-"aZm" = (
-/obj/stool/chair/couch{
-	dir = 4
-	},
-/obj/item/item_box/chips,
-/obj/disposalpipe/segment/mail/bent/north,
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "blue5"
-	},
-/area/station/crew_quarters/arcade/dungeon)
 "aZn" = (
 /obj/stool/chair{
 	dir = 8
@@ -38891,18 +38867,6 @@
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fblue3"
-	},
-/area/station/bridge)
-"bJH" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/critter/cat/jones,
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fblue6"
 	},
 /area/station/bridge)
 "bJI" = (
@@ -68910,10 +68874,6 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
-"cZj" = (
-/obj/item/item_box/chips,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "cZk" = (
 /obj/table/auto,
 /obj/random_item_spawner/med_tool,
@@ -76558,6 +76518,17 @@
 	dir = 6
 	},
 /area/research_outpost)
+"fgV" = (
+/obj/stool/chair/couch{
+	dir = 4
+	},
+/obj/item/item_box/chips,
+/obj/disposalpipe/segment/mail/bent/north,
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "blue5"
+	},
+/area/station/crew_quarters/arcade/dungeon)
 "fjg" = (
 /obj/random_item_spawner/armory_breaching_supplies,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
@@ -77591,6 +77562,10 @@
 /obj/machinery/camera/ranch,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"iTj" = (
+/obj/item/item_box/chips,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "iYX" = (
 /obj/cable{
 	d1 = 1;
@@ -77608,6 +77583,19 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
+"jaa" = (
+/obj/stool/chair/couch{
+	dir = 4;
+	icon_state = "chair_couch-blue";
+	name = "ratty blue couch"
+	},
+/obj/decal/cleanable/dirt,
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
+/obj/item/item_box/chips,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/quartersB)
 "jcc" = (
 /obj/item/device/radio/intercom/catering,
 /obj/cable{
@@ -77657,6 +77645,18 @@
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/research/outpost)
+"jiY" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/mob/living/critter/small_animal/cat/jones,
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fblue6"
+	},
+/area/station/bridge)
 "jjF" = (
 /obj/disposalpipe/segment,
 /obj/submachine/weapon_vendor/security,
@@ -109027,7 +109027,7 @@ aKy
 aTp
 aUM
 aWh
-aZm
+fgV
 baI
 bbt
 xfw
@@ -121676,7 +121676,7 @@ adj
 bYU
 biF
 afe
-agh
+jaa
 aha
 aha
 aij
@@ -132970,7 +132970,7 @@ qQb
 cfi
 vUy
 cfi
-cZj
+iTj
 cea
 aah
 aah
@@ -151033,7 +151033,7 @@ bBS
 bDM
 bFL
 bHJ
-bJH
+jiY
 bHJ
 bFL
 bOC

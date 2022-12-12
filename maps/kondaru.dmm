@@ -8641,23 +8641,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"aAP" = (
-/obj/table/wood/auto,
-/obj/item/reagent_containers/patch/mini/synthflesh{
-	desc = "Smells a bit funny, but gets the job done.";
-	name = "mending patch";
-	pixel_x = -1;
-	pixel_y = 4
-	},
-/obj/item/item_box/chips{
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/food/drinks/mug/random_color{
-	pixel_x = 4;
-	pixel_y = 1
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "aAQ" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
@@ -38481,6 +38464,10 @@
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"dPx" = (
+/mob/living/critter/small_animal/cat/jones,
+/turf/simulated/floor/carpet/blue/fancy/edge/east,
+/area/station/bridge)
 "dPz" = (
 /obj/disposalpipe/junction/right/north,
 /obj/cable{
@@ -44813,6 +44800,23 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/maintenance/southeast)
+"jbo" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/patch/mini/synthflesh{
+	desc = "Smells a bit funny, but gets the job done.";
+	name = "mending patch";
+	pixel_x = -1;
+	pixel_y = 4
+	},
+/obj/item/item_box/chips{
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/drinks/mug/random_color{
+	pixel_x = 4;
+	pixel_y = 1
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "jbN" = (
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/radio/bathroom{
@@ -55970,10 +55974,6 @@
 /obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor/neutral/corner,
 /area/station/hallway/primary/east)
-"sNg" = (
-/obj/critter/cat/jones,
-/turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/station/bridge)
 "sNq" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
@@ -102171,7 +102171,7 @@ ngs
 axQ
 ayN
 azR
-aAP
+jbo
 aBK
 ayN
 aHl
@@ -126391,7 +126391,7 @@ xwf
 xQK
 oGn
 dPf
-sNg
+dPx
 wht
 cKV
 nVl

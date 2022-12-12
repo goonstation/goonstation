@@ -15108,18 +15108,6 @@
 	icon_state = "fred4"
 	},
 /area/station/crew_quarters/jazz)
-"ayd" = (
-/obj/critter/cat/jones,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "fred5"
-	},
-/area/station/crew_quarters/captain)
 "aye" = (
 /obj/critter/meatslinky/monkey,
 /turf/simulated/floor,
@@ -29860,11 +29848,6 @@
 	},
 /turf/simulated/floor/plating/damaged2,
 /area/station/hallway/secondary/construction)
-"bdp" = (
-/obj/item/storage/toolbox/mechanical,
-/obj/item/item_box/chips,
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "bdq" = (
 /obj/item/storage/toolbox/mechanical,
 /obj/machinery/door_control{
@@ -63282,22 +63265,6 @@
 	icon_state = "fred2"
 	},
 /area/listeningpost)
-"cnO" = (
-/obj/table/wood/auto,
-/obj/item/item_box/chips{
-	pixel_x = -11;
-	pixel_y = -4
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	pixel_x = 6;
-	pixel_y = 2
-	},
-/obj/item/dice/magic8ball{
-	pixel_x = -7;
-	pixel_y = 9
-	},
-/turf/simulated/floor/carpet,
-/area/station/chapel/sanctuary)
 "cnP" = (
 /obj/table/wood/auto,
 /obj/item/plate{
@@ -68640,6 +68607,22 @@
 /obj/machinery/phone/wall,
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/elect)
+"jeZ" = (
+/obj/table/wood/auto,
+/obj/item/item_box/chips{
+	pixel_x = -11;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/drinks/cola{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/item/dice/magic8ball{
+	pixel_x = -7;
+	pixel_y = 9
+	},
+/turf/simulated/floor/carpet,
+/area/station/chapel/sanctuary)
 "jgU" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 8
@@ -70467,6 +70450,18 @@
 	},
 /turf/simulated/floor/green,
 /area/station/turret_protected/Zeta)
+"vEA" = (
+/mob/living/critter/small_animal/cat/jones,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fred5"
+	},
+/area/station/crew_quarters/captain)
 "vGg" = (
 /obj/machinery/power/terminal,
 /obj/cable/brown{
@@ -70682,6 +70677,11 @@
 /obj/item/device/light/zippo,
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
+"xDQ" = (
+/obj/item/storage/toolbox/mechanical,
+/obj/item/item_box/chips,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "xKM" = (
 /obj/decal/poster/wallsign/danger_highvolt,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -103593,7 +103593,7 @@ cxt
 bCr
 cnL
 cnk
-cnO
+jeZ
 cni
 azC
 cgX
@@ -105113,7 +105113,7 @@ bye
 cuT
 ayW
 aFU
-bdp
+xDQ
 cfO
 bsq
 bap
@@ -135916,7 +135916,7 @@ czq
 cfq
 avU
 css
-ayd
+vEA
 fdV
 coJ
 cix

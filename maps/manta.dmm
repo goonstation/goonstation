@@ -6438,11 +6438,6 @@
 /obj/item/reagent_containers/food/snacks/strudel,
 /turf/simulated/floor,
 /area/abandonedship)
-"atm" = (
-/obj/table/auto,
-/obj/item/item_box/chips,
-/turf/simulated/floor,
-/area/abandonedship)
 "atn" = (
 /obj/item/furniture_parts/table,
 /obj/item/reagent_containers/food/snacks/surstromming,
@@ -6455,13 +6450,6 @@
 /area/abandonedship)
 "atq" = (
 /obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor,
-/area/abandonedship)
-"atr" = (
-/obj/decal/cleanable/dirt/dirt3,
-/obj/storage/crate,
-/obj/item/clothing/under/misc/colmob,
-/obj/item/clothing/under/misc/rusmob,
 /turf/simulated/floor,
 /area/abandonedship)
 "ats" = (
@@ -10087,14 +10075,6 @@
 /obj/machinery/drainage/big,
 /turf/simulated/floor,
 /area/station/hallway/portupperhallway)
-"aCY" = (
-/obj/critter/cat/jones,
-/obj/machinery/power/apc/autoname_east,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
 "aCZ" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -34949,6 +34929,14 @@
 	},
 /turf/space/fluid/manta,
 /area/diner/hangar)
+"fym" = (
+/mob/living/critter/small_animal/cat/jones,
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
 "fyN" = (
 /obj/lattice{
 	dir = 9;
@@ -35648,12 +35636,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
-"gYm" = (
-/obj/machinery/computer/shuttle_bus{
-	dir = 8
-	},
-/turf/simulated/floor/grime,
-/area/diner/hangar)
 "hap" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
@@ -40601,6 +40583,13 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
+"tFU" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/storage/crate,
+/obj/item/clothing/under/misc/mobster,
+/obj/item/clothing/under/misc/mobster/alt,
+/turf/simulated/floor,
+/area/abandonedship)
 "tHn" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
@@ -41689,6 +41678,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/brig/cell_block_control)
+"wkR" = (
+/obj/machinery/computer/transit_shuttle/johnbus{
+	dir = 8
+	},
+/turf/simulated/floor/grime,
+/area/diner/hangar)
 "wlq" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -42017,6 +42012,11 @@
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/communications/office)
+"wZP" = (
+/obj/table/auto,
+/obj/item/item_box/chips,
+/turf/simulated/floor,
+/area/abandonedship)
 "xaf" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/secondary/construction)
@@ -93783,7 +93783,7 @@ aIt
 aQW
 aQW
 aCR
-aCY
+fym
 aDj
 aDl
 aTh
@@ -117770,7 +117770,7 @@ ata
 atg
 asM
 atj
-atm
+wZP
 asM
 asI
 aaa
@@ -119278,7 +119278,7 @@ akJ
 asZ
 dNP
 akJ
-atr
+tFU
 asM
 rnN
 asM
@@ -120321,7 +120321,7 @@ adq
 agB
 ahk
 agU
-gYm
+wkR
 qSb
 agG
 hGr
