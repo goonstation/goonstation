@@ -2690,9 +2690,10 @@ datum
 			reagent_state = LIQUID
 			taste = "purrplexing"
 
-			reaction_obj(var/obj/O, var/volume)
-				if (istype(O, /obj/critter/cat))
-					var/obj/critter/cat/theCat = O
+			reaction_mob(var/mob/M, var/method=INGEST, var/volume)
+				. = ..()
+				if (istype(M, /mob/living/critter/small_animal/cat))
+					var/mob/living/critter/small_animal/cat/theCat = M
 					theCat.catnip_effect()
 
 		fooddrink/vanilla
