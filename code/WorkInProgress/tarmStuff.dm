@@ -5,6 +5,7 @@
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "lasercannon"
 	item_state = "vexillifer"
+	wear_state = "vexillifer"
 	var/active_state = "lasercannon"
 	var/collapsed_state = "lasercannon-empty"
 	var/state = TRUE
