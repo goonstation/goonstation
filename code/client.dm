@@ -557,7 +557,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	src.reputations = new(src)
 
-	if(src.holder && src.holder.level >= LEVEL_CODER)
+	if(src.holder && src.holder.level >= LEVEL_ADMIN)
 		src.control_freak = 0
 
 	if (browse_item_initial_done)
@@ -1066,7 +1066,7 @@ var/global/curr_day = null
 				return
 			var/target = href_list["nick"]
 			var/t = input("Message:", text("Private message to [target] (Discord)")) as null|text
-			if(!(src.holder && (src.holder.rank in list("Host", "Coder"))))
+			if(!(src.holder && src.holder.level >= LEVEL_ADMIN))
 				t = strip_html(t,500)
 			if (!( t ))
 				return
@@ -1100,7 +1100,7 @@ var/global/curr_day = null
 				return
 			var/target = href_list["nick"]
 			var/t = input("Message:", text("Mentor Message")) as null|text
-			if(!(src.holder && (src.holder.rank in list("Host", "Coder"))))
+			if(!(src.holder && src.holder.level >= LEVEL_ADMIN))
 				t = strip_html(t, 1500)
 			if (!( t ))
 				return
@@ -1138,7 +1138,7 @@ var/global/curr_day = null
 				var/t = input("Message:", text("Mentor Message")) as null|text
 				if (href_list["target"])
 					M = ckey_to_mob(href_list["target"])
-				if (!(src.holder && (src.holder.rank in list("Host", "Coder"))))
+				if (!(src.holder && src.holder.level >= LEVEL_ADMIN))
 					t = strip_html(t, 1500)
 				if (!( t ))
 					return

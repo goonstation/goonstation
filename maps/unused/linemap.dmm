@@ -13099,7 +13099,7 @@
 "aDX" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -14338,7 +14338,7 @@
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -17608,7 +17608,7 @@
 "aOO" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
@@ -18434,7 +18434,7 @@
 "aQz" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
-	
+
 	},
 /obj/machinery/light/emergency{
 	icon_state = "ebulb1";
@@ -19932,7 +19932,7 @@
 "aUo" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -20789,7 +20789,7 @@
 "aVT" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -21918,7 +21918,7 @@
 "aXX" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -31873,7 +31873,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
@@ -32979,7 +32979,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/customs)
@@ -33611,7 +33611,7 @@
 	icon_state = "beebed";
 	name = "cat bed"
 	},
-/obj/critter/cat/jones,
+/mob/living/critter/small_animal/cat/jones,
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
 "byD" = (
@@ -33708,7 +33708,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-	
+
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2";

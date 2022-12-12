@@ -2577,7 +2577,7 @@
 	},
 /area/wizard_station)
 "afC" = (
-/obj/critter/cat,
+/mob/living/critter/small_animal/cat,
 /turf/simulated/floor/carpet{
 	dir = 3;
 	icon_state = "green2"
@@ -4066,7 +4066,7 @@
 /turf/simulated/floor,
 /area/station/bridge)
 "aiV" = (
-/obj/critter/cat,
+/mob/living/critter/small_animal/cat,
 /turf/simulated/floor,
 /area/station/bridge)
 "aiW" = (
@@ -7262,7 +7262,7 @@
 "apZ" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8;
-	
+
 	},
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -7644,7 +7644,7 @@
 "aqY" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8;
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
