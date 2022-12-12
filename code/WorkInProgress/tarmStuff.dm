@@ -1,4 +1,3 @@
-//bot go brr?
 //GUNS GUNS GUNS
 /obj/item/gun/energy/cannon
 	name = "Vexillifer IV"
