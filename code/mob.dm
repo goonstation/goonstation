@@ -444,6 +444,8 @@
 	..()
 
 /mob/Login()
+	if (!src.client)
+		stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
 	if(src.skipped_mobs_list)
 		var/area/AR = get_area(src)
 		AR?.mobs_not_in_global_mobs_list?.Remove(src)
@@ -821,7 +823,7 @@
 
 /mob/proc/apply_camera(client/C)
 	if (!C)
-		stack_trace("mob/apply_camera called without a client, something likely went wrong during mind transfer.")
+		stack_trace("mob/apply_camera called without a client for mob [identify_object(src)], something likely went wrong during mind transfer.")
 	if (src.eye)
 		C.eye = src.eye
 		C.pixel_x = src.eye_pixel_x
