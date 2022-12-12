@@ -1563,7 +1563,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\boardgame\boardgame.dm"
 #include "code\obj\item\boardgame\gameclock.dm"
 #include "code\obj\item\boardgame\boards\chessboard.dm"
-#include "code\obj\item\boardgame\boards\testboard.dm"
 #include "code\obj\item\clothing\armor.dm"
 #include "code\obj\item\clothing\cardboard.dm"
 #include "code\obj\item\clothing\chameleon_js.dm"
