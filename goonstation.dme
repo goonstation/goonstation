@@ -1317,7 +1317,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\worldgen\mapgen\biomes\_biome.dm"
 #include "code\modules\worldgen\mapgen\biomes\VoidGenerator.dm"
 #include "code\modules\worldgen\prefab\allocated.dm"
-#include "code\modules\worldgen\prefab\engineering_rooms.dm"
+#include "code\modules\worldgen\prefab\department_rooms.dm"
 #include "code\modules\worldgen\prefab\mapPrefab.dm"
 #include "code\modules\worldgen\prefab\mining.dm"
 #include "code\modules\worldgen\prefab\random_rooms.dm"

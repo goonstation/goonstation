@@ -1,37 +1,16 @@
 /**
- * So this file is basically about swappable Engineering departements.
+ * So this file is basically about swappable departments.
  * Maps this doesn't apply to is stuff that uses non TEG/singulos
- * i.e. Nadir and Oshan
- * Only maps in the list prefabbed_engineering will undergo the process
- * In order to use:
- * place in folder /assets/maps/engine_rooms/ a file by the name of MAPNAME_ENGINETYPE
- * where enginetype is either "TEG" "SINGULO" or "NUKE"
  *
  */
 
-// some overrides which i am putting here while i test it
-// they can go somewhere else later
-#define TEG_OVERRIDE
-#define SINGULO_OVERRIDE
-#define NUCLEAR_OVERRIDE
-
-// puttin it in a macro called engine_override_status because idk what happens if i define a variable outside a proc / type
-var/engine_override_status = "Random"
-#ifdef TEG_OVERRIDE
-engine_override_status = "TEG"
-#elif defined(SINGULO_OVERRIDE)
-engine_override_status = "SINGULO"
-#elif defined(NUCLEAR_OVERRIDE)
-engine_override_status = "NUKE"
-#endif
-
-var/map = "cogmap" // this is supposed to be detected somehow
+var/map = lowertext(/datum/map_settings.name)
 var/list/prefabbed_engineering = list("cogmap")
 
 TYPEINFO(/datum/mapPrefab/engineering_room)
 	folder = "engine_rooms"
 
-/datum/mapPrefab/engineering_room
+/datum/mapPrefab/department_room/engineering_room
 	maxNum = 1
 	required = TRUE
 	post_init()
