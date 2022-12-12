@@ -954,6 +954,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 			. += "[src.name] follows the same laws you do.<br>"
 
 /mob/living/silicon/ai/emote(var/act, var/voluntary = 0)
+	..()
 	var/param = null
 	if (findtext(act, " ", 1, null))
 		var/t1 = findtext(act, " ", 1, null)

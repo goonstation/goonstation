@@ -70894,7 +70894,7 @@
 /turf/unsimulated/floor/plating/random,
 /area/syndicate_station/firing_range)
 "kmS" = (
-/obj/critter/cat,
+/mob/living/critter/small_animal/cat,
 /turf/unsimulated/floor/carpet/wizard/standard/edge/nw,
 /area/wizard_station)
 "kmZ" = (
@@ -77049,7 +77049,7 @@
 	dir = 1;
 	name = "epic gamer chair"
 	},
-/obj/critter/cat/cathara,
+/mob/living/critter/small_animal/cat/cathara,
 /turf/unsimulated/floor/carpet/office/other,
 /area/centcom/offices/adhara)
 "vij" = (
@@ -77816,11 +77816,11 @@
 	},
 /area/shuttle/john/owlery)
 "wAT" = (
-/obj/critter/cat{
-	generic = 0;
+/mob/living/critter/small_animal/cat{
 	icon_state = "cat2";
 	name = "Moo";
-	randomize_cat = 0
+	randomize_name = 0;
+	randomize_look = 0
 	},
 /obj/decal/stage_edge{
 	layer = 2.8;

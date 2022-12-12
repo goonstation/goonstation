@@ -38899,7 +38899,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/critter/cat/jones,
+/mob/living/critter/small_animal/cat/jones,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fblue6"

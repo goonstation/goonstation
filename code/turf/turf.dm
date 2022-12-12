@@ -1276,4 +1276,7 @@ proc/generate_space_color()
 	Entered(atom/movable/mover, atom/forget)
 		. = ..()
 		if(!mover.anchored)
-			mover.set_loc(null)
+			if(istype(mover, /obj/centcom_clone_wrapper))
+				qdel(mover) // so the mob inside can GC in case references got freed up since qdel
+			else
+				mover.set_loc(null)
