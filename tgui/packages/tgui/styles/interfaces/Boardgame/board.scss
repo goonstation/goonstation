@@ -4,11 +4,18 @@
 
 .boardgame__board {
   z-index: map-get($boardgame-layers, 'board');
+  flex-grow: 1;
   &-pieces {
     z-index: map-get($boardgame-layers, 'pieces');
   }
   &-overlay {
     z-index: map-get($boardgame-layers, 'overlay');
+  }
+  &-inner {
+    transition: 1s all;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
   }
 
   // Styles

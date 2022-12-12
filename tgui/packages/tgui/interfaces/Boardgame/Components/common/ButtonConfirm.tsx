@@ -1,14 +1,7 @@
-/**
- * @file
- * @copyright 2022
- * @author Grokberg (https://github.com/ruben-svensson)
- * @license ISC
- */
-
 import { Component } from 'inferno';
-import { Button } from '..';
+import { Button } from '../../../../components';
 
-type ConfirmButtonProps = {
+type ButtonConfirmProps = {
   icon?: string;
   color?: string;
   onConfirm?: () => void;
@@ -16,11 +9,12 @@ type ConfirmButtonProps = {
   confirmText?: string;
 };
 
-type ConfirmButtonState = {
+type ButtonConfirmState = {
   confirmState: boolean;
 };
 
-export class ConfirmButton extends Component<ConfirmButtonProps, ConfirmButtonState> {
+// I know there is Button.Confirm, but mine does what I want it to do better
+export class ButtonConfirm extends Component<ButtonConfirmProps, ButtonConfirmState> {
   state = {
     confirmState: false,
   };

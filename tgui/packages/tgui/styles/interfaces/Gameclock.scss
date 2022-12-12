@@ -20,10 +20,6 @@
     height: 20px;
     width: 20px;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
     & > i {
       display: flex;
       justify-content: center;
@@ -63,7 +59,7 @@
     height: 100%;
     text-align: center;
 
-    & > i {
+    & > div {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -72,13 +68,13 @@
   }
 
   &timeflex {
-      flex-direction: column;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      font-size: 2em;
-    }
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: 2em;
+  }
 
   &mid {
     padding: 5px;
@@ -89,18 +85,20 @@
   }
 
   &utilbutton {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
     height: 30px;
     width: 30px;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    & > i {
+    & > div {
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100%;
+      padding-right: 2px;
     }
   }
 }

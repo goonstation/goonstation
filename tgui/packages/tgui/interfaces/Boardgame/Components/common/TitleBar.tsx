@@ -1,7 +1,7 @@
 import { useBackend } from '../../../../backend';
-import { Box, Button, ConfirmButton } from '../../../../components';
-import { useActions, useStates } from '../../utils';
-import { BoardgameData } from '../../utils';
+import { Box, Button } from '../../../../components';
+import { ButtonConfirm } from './ButtonConfirm';
+import { useActions, useStates, BoardgameData } from '../../utils';
 
 export const TitleBar = (props, context) => {
   const { act } = useBackend<BoardgameData>(context);
@@ -18,21 +18,21 @@ export const TitleBar = (props, context) => {
       />
       <Button tooltip="Flip board" color={isFlipped ? 'orange' : 'default'} icon="repeat" onClick={toggleFlip} />
 
-      <ConfirmButton
+      <ButtonConfirm
         tooltipContent="Clear board"
         icon="trash"
         onConfirm={() => {
           boardClear();
         }}
       />
-      <ConfirmButton
+      <ButtonConfirm
         tooltipContent="Load Chess Preset"
         icon="chess"
         onConfirm={() => {
           applyGNot('r,n,b,q,k,b,n,r,p,p,p,p,p,p,p,p,32,P,P,P,P,P,P,P,P,R,N,B,Q,K,B,N,R');
         }}
       />
-      <ConfirmButton
+      <ButtonConfirm
         tooltipContent="Load Draughts Preset"
         icon="ring"
         onConfirm={() => {

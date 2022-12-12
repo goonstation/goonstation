@@ -15,40 +15,32 @@
       margin: 0 4px;
     }
   }
-}
 
-.boardgame__window {
-  display: flex;
-  flex-direction: row;
-  background-color: darken(rgb(131, 100, 74), 30%);
-}
+  &window {
+    display: flex;
+    flex-direction: row;
+    background-color: darken(rgb(131, 100, 74), 30%);
 
-.boardgame__window * {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Old versions of Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently
-                                supported by Chrome, Edge, Opera and Firefox */
-}
+    &* {
+      -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+      -khtml-user-select: none; /* Konqueror HTML */
+      -moz-user-select: none; /* Old versions of Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+      user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+    }
+  }
 
-.boardgame__modal-inner {
-  height: auto;
-  background-color: base.$color-bg;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-  overflow-y: hidden;
-}
+  &wrapper {
+    width: 100%;
+  }
 
-.boardgame__wrapper {
-  width: 100%;
-  background-color: red;
-}
-
-.boardgame__piecesvg-ignore {
-  pointer-events: none;
+  &heldpiece {
+    position: fixed;
+    z-index: 4;
+    pointer-events: none;
+  }
 }
 
 // HERE we have the components, the pieces, the board, the notations, etc.
