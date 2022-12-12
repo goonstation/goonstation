@@ -214,10 +214,11 @@
 		if (-INFINITY to 0) //blocked
 			boutput(src, "<span class='alert'><b>You are shielded from the blast!</b></span>")
 			return
-		if (6 to INFINITY) //gib
-			SPAWN(1 DECI SECOND)
-				src.gib(1)
-			return
+		if (6 to INFINITY) //gib?
+			if(src.health < 0 || power >= 7)
+				SPAWN(1 DECI SECOND)
+					src.gib(1)
+				return
 	src.apply_sonic_stun(0, 0, 0, 0, 0, round(power*7), round(power*7), power*40)
 
 	if (prob(b_loss) && !shielded && !reduction)
