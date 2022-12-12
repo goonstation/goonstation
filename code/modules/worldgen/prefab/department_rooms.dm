@@ -10,13 +10,13 @@ var/list/prefabbed_engineering = list("cogmap")
 TYPEINFO(/datum/mapPrefab/engineering_room)
 	folder = "engine_rooms"
 
-/datum/mapPrefab/department_room/engineering_room
+/datum/mapPrefab/department_room/
 	maxNum = 1
 	required = TRUE
 	post_init()
 
 		var/filename = filename_from_path(src.prefabPath)
-		var/regex/engine_type = regex(@"^.*_(\d+)\.dmm$")
+		var/regex/room_type = regex(@"^.*_(\d+)\.dmm$")
 		if ("Random" == engine_override_status)
 			src.probability = 100
 			return
@@ -67,3 +67,20 @@ proc/build_Engineering()
 		name = "Cogmap 1 Engine room"
 		map = "Cogmap 1"
 		icon_state = 'engine'
+
+/datum/mapPrefab/department_room/engineering_room
+	maxNum = 1
+	required = TRUE
+	post_init()
+
+		var/filename = filename_from_path(src.prefabPath)
+		var/regex/engine_type = regex(@"^.*_(\d+)\.dmm$")
+		if ("Random" == engine_override_status)
+			src.probability = 100
+			return
+		else
+			if (engine_type == engine_override_status)
+				src.probability = 100
+			else
+				src.probability = 0
+			return
