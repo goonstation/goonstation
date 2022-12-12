@@ -1,10 +1,3 @@
-/**
- * @file
- * @copyright 2022
- * @author Grokberg (https://github.com/ruben-svensson)
- * @license ISC
- */
-
 import { Component } from 'inferno';
 import { Button } from '../../../../components';
 
@@ -20,6 +13,7 @@ type ButtonConfirmState = {
   confirmState: boolean;
 };
 
+// I know there is Button.Confirm, but mine does what I want it to do better
 export class ButtonConfirm extends Component<ButtonConfirmProps, ButtonConfirmState> {
   state = {
     confirmState: false,

@@ -7,25 +7,26 @@ import { codeRecordFromPieces, fetchPieces } from '../../games';
 export const HeldPieceRenderer = (_, context) => {
   const { act, data } = useBackend<BoardgameData>(context);
 
+  // Exit early if there is no current user
   if (!data.currentUser) return null;
 
-  const { mouseCoords, paletteLastElement } = useStates(context);
+  const { mouseCoords } = useStates(context);
   const { x, y } = mouseCoords;
 
-  let code = null;
-  if (data.currentUser.palette) {
-    code = data.currentUser.palette;
-  } else if (data.currentUser.selected) {
-    code = data.currentUser.selected;
-  }
+  // Get the piece code
+  const code = data.currentUser.palette || data.currentUser.selected;
 
+  // Exit early if no piece code was found
   if (!code) return null;
 
+  // Get the piece record from the code
   const pieces = fetchPieces();
   const piece = codeRecordFromPieces(pieces)[code];
 
+  // Exit early if no piece record was found
   if (!piece) return null;
 
+  // Render the piece
   return (
     <Box
       className={`boardgame__heldpiece`}

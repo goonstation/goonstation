@@ -17,8 +17,8 @@ const GridGuideRenderer = (props, context) => {
   const piece = data.pieces[currentUser.selected];
   if (!piece) return null;
 
-  const px = piece.x * tileSize.width + tileSize.width / 2;
-  const py = piece.y * tileSize.height + tileSize.height / 2;
+  let px = piece.x * tileSize.width + tileSize.width / 2;
+  let py = piece.y * tileSize.height + tileSize.height / 2;
 
   const mx = mouseCoords.x - 20;
   const my = mouseCoords.y - 54;
@@ -44,8 +44,8 @@ const GridGuideRenderer = (props, context) => {
     <svg className={'boardgame__board-ggrenderer'} width="100%" height="100%">
       <rect x={rectX} y={rectY} width={tileSize.width} height={tileSize.height} fill="red" fill-opacity="0.4" />
       <rect
-        x={px - tileSize.width / 2}
-        y={py - tileSize.height / 2}
+        x={isFlipped ? width * tileSize.width - px - tileSize.width / 2 : px - tileSize.width / 2}
+        y={isFlipped ? height * tileSize.height - py - tileSize.height / 2 : py - tileSize.height / 2}
         // Remove 10 from edge
         width={tileSize.width}
         height={tileSize.height}
