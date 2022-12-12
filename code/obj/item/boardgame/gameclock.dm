@@ -31,12 +31,6 @@
 			seconds = "0[seconds]"
 		return "[minutes]:[seconds]"
 
-	proc/returnMaxOfTimeOrZero()
-		if (src.turn)
-			src.whiteTime = max(src.whiteTime, 0)
-		else
-			src.blackTime = max(src.blackTime, 0)
-
 	proc/setTime(var/newWhiteTime as num, var/newBlackTime as num)
 		src.whiteTime = clamp(newWhiteTime, src.minTime, src.maxTime)
 		src.blackTime = clamp(newBlackTime, src.minTime, src.maxTime)
@@ -86,7 +80,10 @@
 		else
 			processing_items.Remove(src)
 			src.lastTick = 0
-		src.returnMaxOfTimeOrZero()
+		if (src.turn)
+			src.whiteTime = max(src.whiteTime, 0)
+		else
+			src.blackTime = max(src.blackTime, 0
 
 	can_access_remotely(mob/user)
 		. = can_access_remotely_default(user)
