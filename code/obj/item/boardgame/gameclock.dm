@@ -83,7 +83,7 @@
 		if (src.turn)
 			src.whiteTime = max(src.whiteTime, 0)
 		else
-			src.blackTime = max(src.blackTime, 0
+			src.blackTime = max(src.blackTime, 0)
 
 	can_access_remotely(mob/user)
 		. = can_access_remotely_default(user)
