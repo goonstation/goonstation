@@ -1302,7 +1302,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 	else if (burn > 25)
 		burn_state = 1
 
-	var/obj/item/organ/head/HO = organHolder.get_organ("head")
+	var/obj/item/organ/head/HO = organHolder?.get_organ("head")
 	var/head_damage = null
 	if (HO && organHolder?.head)
 		var/head_brute = min(3,round(HO.brute_dam/10))
