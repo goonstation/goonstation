@@ -2891,7 +2891,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	blueprint = /datum/manufacture/alastor
 
 /obj/item/paper/manufacturer_blueprint/interdictor_kit
-	name = "Interdictor Assembly Kit"
+	name = "Interdictor Frame Kit"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "interdictor_blueprint"
 	blueprint = /datum/manufacture/interdictor_kit

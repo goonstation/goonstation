@@ -470,7 +470,7 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 		/obj/item/reagent_containers/food/snacks/donkpocket_w,
 		/obj/item/reagent_containers/food/snacks/surstromming,
 		/obj/item/reagent_containers/food/snacks/hotdog/syndicate,
-		/obj/item/reagent_containers/food/snacks/tortilla_chip_spawner,
+		/obj/item/reagent_containers/food/snacks/dippable/tortilla_chip_spawner,
 		/obj/item/reagent_containers/food/snacks/pancake/classic,
 		/obj/item/reagent_containers/food/snacks/wonton_spawner,
 		/obj/item/reagent_containers/food/snacks/agar_block,

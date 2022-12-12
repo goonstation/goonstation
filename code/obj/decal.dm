@@ -3,6 +3,7 @@
 	plane = PLANE_NOSHADOW_BELOW
 	var/list/random_icon_states = list()
 	var/random_dir = 0
+	pass_unstable = FALSE
 
 	New()
 		..()
@@ -463,6 +464,7 @@ obj/decal/fakeobjects/teleport_pad
 	plane = PLANE_DEFAULT
 	layer = OBJ_LAYER
 	event_handler_flags = USE_FLUID_ENTER
+	pass_unstable = TRUE
 
 	Cross(atom/movable/mover) // stolen from window.dm
 		if (mover && mover.throwing & THROW_CHAIRFLIP)
@@ -493,6 +495,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon_state = "ringrope"
 	layer = OBJ_LAYER
 	event_handler_flags = USE_FLUID_ENTER
+	pass_unstable = TRUE
 
 	rotatable = 0
 	foldable = 0
