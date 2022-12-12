@@ -4,7 +4,7 @@
 /obj/item/gameclock
 	name = "game clock"
 	desc = "A set of clocks used to track time for two player board games. Fancy!"
-	icon = 'icons/obj/items/gameboard.dmi'
+	icon = 'icons/obj/items/boardgame.dmi'
 	icon_state = "chessclock"
 	flags = TGUI_INTERACTIVE
 	var/timing = FALSE

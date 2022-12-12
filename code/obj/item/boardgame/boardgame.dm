@@ -32,7 +32,7 @@
 /obj/item/boardgame
 	name = "board game"
 	desc = "A generic board game?"
-	icon = 'icons/obj/items/gameboard.dmi'
+	icon = 'icons/obj/items/boardgame.dmi'
 	icon_state = "chessboard"
 
 	flags = TGUI_INTERACTIVE
