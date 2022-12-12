@@ -849,6 +849,8 @@ var/flock_signal_unleashed = FALSE
 	if (!force && !flockTurfAllowed(T))
 		return
 
+	var/static/list/fancy_flock_matrix = list(-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.25,-0.2,-0.15,0.368627,0.764706,0.666667)
+
 	if(istype(T, /turf/simulated/wall) || force && (T.density || locate(/obj/indestructible/shuttle_corner) in T))
 		if(tutorial)
 			T.ReplaceWith(/turf/simulated/wall/auto/feather/tutorial, FALSE, force=force)
@@ -923,6 +925,8 @@ var/flock_signal_unleashed = FALSE
 			// if the object has contents, move them over!!
 			for (var/obj/stored_obj in O)
 				stored_obj.set_loc(converted)
+				if(fancy)
+					stored_obj.color = fancy_flock_matrix
 			for (var/mob/M in O)
 				M.set_loc(converted)
 			qdel(O)
@@ -931,7 +935,7 @@ var/flock_signal_unleashed = FALSE
 			success = TRUE
 			break
 		if(!success && fancy)
-			O.color = list(-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.25,-0.2,-0.15,0.368627,0.764706,0.666667)
+			O.color = fancy_flock_matrix
 	return T
 
 /proc/mass_flock_convert_turf(var/turf/T, datum/flock/F, force=FALSE, radius=15, delay=0.2 SECONDS, fancy=FALSE)
