@@ -94,6 +94,36 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	var/maptext = generateMapText(msg, textLoc, style = "color:[color];", alpha = 255)
 	target.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
 
+/obj/item/device/radio/intercom/receive_silicon_hotkey(var/mob/user)
+	..()
+
+	if (!isAI(user))
+		return
+
+	if (!isAIeye(user))
+		boutput("Deploy to an AI Eye first to override intercoms.")
+
+	var/original_src_frequency = src.frequency
+	var/original_src_broadcasting = src.broadcasting
+	var/original_src_listening = src.listening
+
+	if(user.client.check_key(KEY_BOLT))
+		if (src.locked_frequency)
+			return
+
+		src.locked_frequency = TRUE // lockdown; saves us from clickspam
+		set_frequency(R_FREQ_INTERCOM_AI)
+		src.broadcasting = TRUE
+		src.listening = TRUE
+
+		boutput(user, "<span class='alert'>Temporary override to AI Intercom frequency enabled on [src]!</span>")
+
+		SPAWN(1 MINUTE)
+			src.locked_frequency = FALSE // safe as long as we can't control locked frequencies in the first place
+			set_frequency(original_src_frequency)
+			src.broadcasting = original_src_broadcasting
+			src.listening = original_src_listening
+
 // -------------------- VR --------------------
 /obj/item/device/radio/intercom/virtual
 	desc = "Virtual radio for all your beeps and bops."
