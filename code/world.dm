@@ -481,7 +481,8 @@ var/f_color_selector_handler/F_Color_Selector
 		"[R_FREQ_COMMAND]" = "Command",
 		"[R_FREQ_SECURITY]" = "Security",
 		"[R_FREQ_CIVILIAN]" = "Civilian",
-		"[R_FREQ_DEFAULT]" = "General"
+		"[R_FREQ_DEFAULT]" = "General",
+		"[R_FREQ_INTERCOM_AI]" = "AI Intercom",
 		)
 
 	UPDATE_TITLE_STATUS("Starting processes")
