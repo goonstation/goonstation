@@ -17,6 +17,8 @@
   }
 
   &window {
+    height: calc(100% - 0.25px);
+
     display: flex;
     flex-direction: row;
     background-color: darken(rgb(131, 100, 74), 30%);
@@ -34,6 +36,8 @@
 
   &wrapper {
     width: 100%;
+
+    overflow: hidden;
   }
 
   &heldpiece {

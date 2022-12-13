@@ -38,7 +38,7 @@ const adjustWindowSize = (context) => {
   const { aspectRatio } = data.styling;
 
   const PaletteSetPadding = 100; // Add 100 pixels to the width
-  const titlebarHeightPadding = 32;
+  const titlebarHeightPadding = 32 + 0.25;
   let width = 500;
   let height = 400;
   // Fetch boardgame__wrapper element and get its width and height

@@ -11,7 +11,7 @@ type GridPieceRendererProps = {
 const GridPieceRenderer = ({ pieces }: GridPieceRendererProps, context) => {
   const { act, data } = useBackend<BoardgameData>(context);
 
-  const { currentUser, lastMovedPiece } = data;
+  const { currentUser, users } = data;
   const { isFlipped, tileSize } = useStates(context);
   const { pieceSelect, pieceRemove, piecePlace } = useActions(act);
   const { width, height } = data.boardInfo;
@@ -21,7 +21,7 @@ const GridPieceRenderer = ({ pieces }: GridPieceRendererProps, context) => {
   // Draw the pieces
   // Offset by 20px to left and top
   return (
-    <Box>
+    <Box className="boardgame__board-gprenderer">
       {Object.keys(pieces).map((val, index) => {
         const { x, y, prevX, prevY, code, selected } = pieces[val];
         const pieceType = pieceRecords[code];
@@ -40,8 +40,11 @@ const GridPieceRenderer = ({ pieces }: GridPieceRendererProps, context) => {
           top = (height - y - 1) * tileSize.height;
         }
 
+        const selectedName = users[selected]?.name || '';
+
         return (
           <div
+            className="boardgame__board-gprenderer-piece"
             onmousedown={(e) => {
               if (e.button === 0 && !selected) {
                 if (currentUser.palette) {
@@ -71,7 +74,6 @@ const GridPieceRenderer = ({ pieces }: GridPieceRendererProps, context) => {
               }
             }}
             style={{
-              position: 'absolute',
               left: left + 'px',
               top: top + 'px',
               width: tileSize.width + 'px',
@@ -85,21 +87,7 @@ const GridPieceRenderer = ({ pieces }: GridPieceRendererProps, context) => {
               }}
               src={pieceType.image}
             />
-            <span
-              // Center text bellow img
-              style={{
-                'position': 'absolute',
-                'left': '50%',
-                'top': '50%',
-                'transform': 'translate(-50%, -50%)',
-                'font-size': '14px',
-                'font-weight': 'bolder',
-                'text-shadow': '0 0 2px black',
-                'z-index': 1,
-                'font-family': 'Arial',
-              }}>
-              {selected}
-            </span>
+            {selected && <span>{selectedName}</span>}
           </div>
         );
       })}

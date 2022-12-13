@@ -2,9 +2,6 @@
 
 .boardgame__palettes {
   width: 100px;
-  max-height: 100%;
-  overflow-y: scroll;
-
   background-color: rgb(206, 206, 206);
   &-header {
     font-size: 10px;

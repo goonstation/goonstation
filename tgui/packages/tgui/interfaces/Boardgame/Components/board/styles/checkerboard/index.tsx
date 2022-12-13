@@ -9,6 +9,7 @@ import CheckerBoardPattern from './CheckerBoardPattern';
 export const CheckerBoard = (props, context) => {
   const { act, data } = useBackend<BoardgameData>(context);
   const { pieces, currentUser } = data;
+  const { tileColor2 } = data.styling;
   const { tileSize, isFlipped, mouseCoords } = useStates(context);
   const { width, height } = tileSize;
   const { piecePlace } = useActions(act);
@@ -42,6 +43,9 @@ export const CheckerBoard = (props, context) => {
 
   return (
     <div
+      style={{
+        'background-color': tileColor2,
+      }}
       ref={boardRef}
       className="boardgame__board-checkerboard"
       onMouseDown={(e) => {

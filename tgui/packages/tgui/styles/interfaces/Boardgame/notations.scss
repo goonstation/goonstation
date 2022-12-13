@@ -8,6 +8,7 @@
   justify-content: center;
   align-items: center;
   z-index: map-get($boardgame-layers, 'notations');
+
   &-horizontal {
     height: $notations-size;
     padding-left: $notations-size;
