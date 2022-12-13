@@ -50,7 +50,7 @@ const HelpModal = (props, context) => {
         </p>
         <p>Pieces may also be click-dragged to a target tile.</p>
         <p>
-          Moving a piece onto a tile occupied by another piece will<br />
+          Moving a piece onto a tile occupied by another piece will
           replace/capture the piece already on that tile.
         </p>
         <p>Right click a piece to delete it.</p>
