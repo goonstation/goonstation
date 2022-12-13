@@ -507,7 +507,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					JOB_XP(user, "Bartender", 1)
 			if (istype(src, /obj/item/reagent_containers/food/drinks/cola))
 				var/obj/item/reagent_containers/food/drinks/cola/soda_can = src
-				if (soda_can.is_sealed && soda_can.reagents.has_reagent("cola", 5))
+				if (soda_can.is_sealed && (soda_can.reagents.has_reagent("cola", 5) || soda_can.reagents.has_reagent("tonic", 5) || soda_can.reagents.has_reagent("sodawater", 5)))
 					soda_can.shaken = TRUE
 					return
 			else
