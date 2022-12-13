@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Divider, Icon, Input, LabeledList, NoticeBox, Section, Tabs } from '../../components';
+import { Box, Button, Divider, Input, LabeledList, NoticeBox, Section, Tabs } from '../../components';
 import { Window } from '../../layouts';
 import { AtmData, AtmTabKeys } from './types';
 
