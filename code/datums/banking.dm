@@ -1011,61 +1011,61 @@
 	ex_act(severity)
 		src.take_damage(70)
 
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "Atm", name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = list(
+			"scannedCard" = src.scan,
+			"cardname" = src.scan?.name,
+			"loggedIn" = src.state
+		)
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if (.)
+			return
+		switch(action)
+			if ("insert_card")
+				if (src.scan)
+					return TRUE
+				var/obj/O = usr.equipped()
+				if (istype(O, /obj/item/card/id))
+					boutput(usr, "<span class='notice'>You swipe your ID card.</span>")
+					src.scan = O
+					. = TRUE
+			if("logout")
+				if(!src.scan)
+					. = FALSE
+					return
+				boutput(usr, "<span class='notice'>You log out of the ATM.</span>")
+				src.scan = null
+				src.state = STATE_LOGGEDOFF
+				. = TRUE
+			if("login_attempt")
+				if(!src.scan)
+					return FALSE
+				var/userPin
+				if (usr.mind?.remembered_pin)
+					userPin = usr.mind?.remembered_pin
+				var/enteredPIN = text2num(tgui_input_text(usr, "Enter your PIN", src.name, userPin, 4))
+				if (enteredPIN == src.scan.pin)
+					if(TryToFindRecord())
+						src.state = STATE_LOGGEDIN
+						. = TRUE
+					else
+						boutput(usr, "<span class='alert'>Cannot find a bank record for this card.</span>")
+				else
+					boutput(usr, "<span class='alert'>Incorrect or invalid PIN number.</span>")
+		src.add_fingerprint(usr)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "machineUsed")
+
 	atm_alt
 		icon_state = "atm_alt"
 		layer = EFFECTS_LAYER_UNDER_1
-
-/obj/submachine/ATM/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if (!ui)
-		ui = new(user, src, "Atm", name)
-		ui.open()
-
-/obj/submachine/ATM/ui_data(mob/user)
-	. = list(
-		"scannedCard" = src.scan,
-		"cardname" = src.scan?.name,
-		"loggedIn" = src.state
-	)
-
-/obj/submachine/ATM/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if (.)
-		return
-	switch(action)
-		if ("insert_card")
-			if (src.scan)
-				return TRUE
-			var/obj/O = usr.equipped()
-			if (istype(O, /obj/item/card/id))
-				boutput(usr, "<span class='notice'>You insert your ID card.</span>")
-				usr.drop_item()
-				O.set_loc(src)
-				src.scan = O
-				. = TRUE
-		if("eject")
-			if(!src.scan)
-				. = FALSE
-				return
-			boutput(usr, "<span class='notice'>You eject your ID card.</span>")
-			usr.put_in_hand_or_eject(src.scan)
-			src.scan = null
-			src.state = STATE_LOGGEDOFF
-			. = TRUE
-		if("login_attempt")
-			if(!src.scan)
-				return TRUE
-			var/enteredPIN = text2num(params["entered_PIN"])
-			if (enteredPIN == src.scan.pin)
-				if(TryToFindRecord())
-					src.state = STATE_LOGGEDIN
-					. = TRUE
-				else
-					boutput(usr, "<span class='alert'>Cannot find a bank record for this card.</span>")
-			else
-				boutput(usr, "<span class='alert'>Incorrect pin number.</span>")
-	src.add_fingerprint(usr)
-	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "machineUsed")
 
 /obj/submachine/ATM/afterlife
 	afterlife = 1

@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Divider, Input, LabeledList, NoticeBox, Section, Tabs } from '../../components';
+import { Box, Button, Divider, LabeledList, NoticeBox, Section, Tabs } from '../../components';
 import { Window } from '../../layouts';
 import { AtmData, AtmTabKeys } from './types';
 
@@ -13,9 +13,9 @@ export const Atm = (props, context) => {
     <Window
       title="Automatic Teller Machine"
       width={375}
-      height={525}>
+      height={375}>
       <Window.Content>
-        <Tabs fluid textAlign={'center'}>
+        <Tabs fluid>
           <Tabs.Tab
             icon="money-bills"
             selected={tabIndex === AtmTabKeys.Teller}
@@ -43,9 +43,12 @@ const Teller = (props, context) => {
   return (
     <Box>
       <Section title="Automatic Teller Machine">
-        <NoticeBox info>
-          Please insert card and enter PIN to access your account.
-        </NoticeBox>
+        { !scannedCard
+          && (
+            <NoticeBox info>
+              Please insert card and enter PIN to access your account.
+            </NoticeBox>
+          )}
         <Box>
           { !scannedCard ? (
             <InsertCard />
@@ -65,7 +68,7 @@ const InsertCard = (props, context) => {
     <Box>
       <Button
         icon="id-card"
-        content={'Insert ID'}
+        content={'Swipe ID'}
         onClick={() => act('insert_card')} />
     </Box>
   );
@@ -79,7 +82,7 @@ const InsertedCard = (props, context) => {
       <Button
         icon="eject"
         content={scannedCard}
-        onClick={() => act('eject')} />
+        onClick={() => act('logout')} />
       <Divider />
       <Box>
         { loggedIn === 2 ? <LoggedIn /> : <InputPIN /> }
@@ -93,18 +96,11 @@ const InputPIN = (props, context) => {
   const [enteredPIN, setEnteredPIN] = useLocalState(context, "enteredPIN", null);
   return (
     <Box>
-      <Divider />
-      <LabeledList>
-        <LabeledList.Item label="Enter your PIN">
-          <Input
-            placeholder="4 Digit Number"
-            onInput={(e, value) => setEnteredPIN(value)} />
-          <Button
-            icon="sign-out-alt"
-            content={'Login'}
-            onClick={() => act('login_attempt', { entered_PIN: enteredPIN })} />
-        </LabeledList.Item>
-      </LabeledList>
+      <Button
+        icon="sign-out-alt"
+        content={'Enter PIN'}
+        onClick={() => act('login_attempt')}
+      />
     </Box>
   );
 };
@@ -116,14 +112,13 @@ const LoggedIn = (props, context) => {
       <Box>
         Welcome, <strong>USR</strong>.
       </Box>
+      <Divider />
       <LabeledList>
         <LabeledList.Item label="Account Balance">
           <strong>$0</strong>
         </LabeledList.Item>
-        <LabeledList.Item label="Withdrawal amount:">
-          <Input placeholder="Amount" />
-        </LabeledList.Item>
       </LabeledList>
+      <Divider />
       <Box>
         <Button
           icon="dollar-sign"
@@ -156,12 +151,10 @@ const SpacebuxMenu = (props, context) => {
   const { act, data } = useBackend(context);
   return (
     <Box>
-      <NoticeBox info>
-        This menu is only here for you. Other players cannot access your Spacebux!
-      </NoticeBox>
       <Section title="Spacebux Menu">
         <NoticeBox info>
-          Deposit Spacebux at any time by inserting a token. It will always go to <strong>your</strong> account!
+          This menu is only here for you. Deposit Spacebux at any time by inserting a token.
+          It will always go to <strong>your</strong> account!
         </NoticeBox>
         <Divider />
         <Box>
