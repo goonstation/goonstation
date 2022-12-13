@@ -24,7 +24,7 @@
 	var/throw_speed = 1
 	/// particle reference, just used to toggle the effects on and off
 	var/particles/P
-	///	the distance our attack reaches from us at the center
+	/// the distance our attack reaches from us at the center
 	var/area_of_effect = 2
 	/// power of our elecflash, this maxes out at 6
 	var/elec_flash_power = 4
