@@ -432,7 +432,7 @@
 			if ("custom")
 				if (src.client)
 					if (IS_TWITCH_CONTROLLED(src)) return
-					var/input = sanitize(html_encode(input("Choose an emote to display.")))
+					var/input = copytext(sanitize(html_encode(input("Choose an emote to display."))), 1, MAX_MESSAGE_LEN)
 					var/input2 = input("Is this a visible or audible emote?") in list("Visible","Audible")
 					if (input2 == "Visible") m_type = 1
 					else if (input2 == "Audible") m_type = 2
@@ -450,7 +450,7 @@
 					param = input("Choose an emote to display.")
 					if(!param) return
 
-				param = sanitize(html_encode(param))
+				param = copytext(sanitize(html_encode(param)), 1, MAX_MESSAGE_LEN)
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
 				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
@@ -462,7 +462,7 @@
 				if (!param)
 					param = input("Choose an emote to display.")
 					if(!param) return
-				param = sanitize(html_encode(param))
+				param = copytext(sanitize(html_encode(param)), 1, MAX_MESSAGE_LEN)
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
 				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
@@ -473,7 +473,7 @@
 				if (IS_TWITCH_CONTROLLED(src)) return
 				if (!param)
 					return
-				param = sanitize(html_encode(param))
+				param = copytext(sanitize(html_encode(param)), 1, MAX_MESSAGE_LEN)
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
 				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
