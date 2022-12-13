@@ -10,14 +10,6 @@
 
 	custom_suicide = 1
 
-	#define OMNI_MODE_PRYING 1
-	#define OMNI_MODE_SNIPPING 2
-	#define OMNI_MODE_WRENCHING 3
-	#define OMNI_MODE_SCREWING 4
-	#define OMNI_MODE_PULSING 5
-	#define OMNI_MODE_CUTTING 6
-	#define OMNI_MODE_WELDING 7
-
 	///List of tool settings
 	var/list/modes = list(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING)
 	///The current setting
@@ -28,7 +20,7 @@
 	New()
 		contextLayout = new /datum/contextLayout/experimentalcircle
 		..()
-		src.change_mode(mode)
+		src.change_mode(mode, null, /obj/item/crowbar)
 		for(var/actionType in childrentypesof(/datum/contextAction/omnitool))
 			var/datum/contextAction/omnitool/action = new actionType()
 			if (action.mode in src.modes)
@@ -307,11 +299,3 @@
 		icon_state = "weld"
 		mode = OMNI_MODE_WELDING
 		typepath = /obj/item/weldingtool
-
-#undef OMNI_MODE_PRYING
-#undef OMNI_MODE_SNIPPING
-#undef OMNI_MODE_WRENCHING
-#undef OMNI_MODE_SCREWING
-#undef OMNI_MODE_PULSING
-#undef OMNI_MODE_CUTTING
-#undef OMNI_MODE_WELDING

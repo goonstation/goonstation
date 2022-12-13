@@ -804,6 +804,9 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 
 /* -------------------- Wrestling Belt -------------------- */
 
+TYPEINFO(/obj/item/storage/belt/wrestling)
+	mats = list("MET-2"=5, "DEN-2"=10, "FAB-1"=5)
+
 /obj/item/storage/belt/wrestling
 	name = "championship wrestling belt"
 	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past."
@@ -812,7 +815,6 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	contraband = 8
 	is_syndicate = 1
 	item_function_flags = IMMUNE_TO_ACID
-	mats = list("MET-2"=5, "DEN-2"=10, "FAB-1"=5)
 	var/fake = 0		//So the moves are all fake.
 
 	equipped(var/mob/user)
@@ -831,6 +833,9 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	fake = 1
 
 // I dunno where else to put these vOv
+TYPEINFO(/obj/item/inner_tube)
+	mats = 5 // I dunno???
+
 /obj/item/inner_tube
 	name = "inner tube"
 	desc = "An inflatable torus for your waist!"
@@ -840,7 +845,6 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	w_class = W_CLASS_NORMAL
-	mats = 5 // I dunno???
 
 	New()
 		..()

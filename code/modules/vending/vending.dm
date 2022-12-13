@@ -50,6 +50,9 @@
 			product_base64_cache[path] = .
 
 
+TYPEINFO(/obj/machinery/vending)
+	mats = 20
+
 /obj/machinery/vending
 	name = "Vendomat"
 	desc = "A generic vending machine."
@@ -57,7 +60,6 @@
 	icon_state = "generic"
 	anchored = 1
 	density = 1
-	mats = 20
 	layer = OBJ_LAYER - 0.1 // so items get spawned at 3, don't @ me
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
@@ -893,7 +895,7 @@
 //		SPAWN(2 SECONDS)
 //			src.icon_state = "[initial(icon_state)]-fallen"
 	if (istype(victim) && vicTurf && (BOUNDS_DIST(vicTurf, src) == 0))
-		victim.changeStatus("weakened", 5 SECONDS)
+		victim.do_disorient(80, 5 SECONDS, 5 SECONDS, 0, 3 SECONDS, FALSE, DISORIENT_NONE, FALSE)
 		src.visible_message("<b><font color=red>[src.name] tips over onto [victim]!</font></b>")
 		logTheThing(LOG_COMBAT, src, "falls on [constructTarget(victim,"combat")] at [log_loc(vicTurf)].")
 		victim.force_laydown_standup()
@@ -1225,6 +1227,9 @@
 		product_list += new/datum/data/vending_product(/obj/item/cigpacket/random, rand(0, 1), hidden=1, cost=420)
 		product_list += new/datum/data/vending_product(/obj/item/cigpacket/cigarillo/juicer, rand(6, 9), hidden=1, cost=69)
 
+TYPEINFO(/obj/machinery/vending/medical)
+	mats = 10
+
 /obj/machinery/vending/medical
 	name = "NanoMed Plus"
 	desc = "An ID-selective dispenser for drugs and medical equipment"
@@ -1232,7 +1237,6 @@
 	icon_panel = "standard-panel"
 	icon_deny = "med-deny"
 	req_access_txt = "5"
-	mats = 10
 	acceptcard = 0
 	light_r =1
 	light_g = 0.88
@@ -1781,12 +1785,14 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		contents += product
 		product_cost = price
 
+TYPEINFO(/obj/item/machineboard)
+	mats = 2
+
 /obj/item/machineboard
 	name = "machine module"
 	desc = "A circuit board assembly used in the construction of machinery."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "board1"
-	mats = 2
 	var/machinepath = null
 
 /obj/item/machineboard/vending
@@ -1799,11 +1805,13 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 /obj/item/machineboard/vending/player
 	icon_state = "player-module"
 
+TYPEINFO(/obj/item/machineboard/vending/monkeys)
+	mats = 0 //No!!
+
 /obj/item/machineboard/vending/monkeys
 	name = "Valuchimp module"
 	machinepath = "/obj/machinery/vending/monkey"
 	icon_state = "monkey-module"
-	mats = 0 //No!!
 
 /obj/machinery/vendingframe
 	name = "vending machine frame"
@@ -2198,6 +2206,9 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		. = ..()
 		src.fall()
 
+TYPEINFO(/obj/machinery/vending/monkey)
+	mats = 0 // >:I
+
 /obj/machinery/vending/monkey
 	name = "ValuChimp"
 	desc = "More fun than a barrel of monkeys! Monkeys may or may not be synthflesh replicas, may or may not contain partially-hydrogenated banana oil."
@@ -2205,7 +2216,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	icon_panel = "standard-panel"
 	// monkey vendor has slightly special broken/etc sprites so it doesn't just inherit the standard set  :)
 	acceptcard = 0
-	mats = 0 // >:I
 	slogan_list = list("My monkeys are too strong for you, traveler!")
 	slogan_chance = 1
 
@@ -2540,6 +2550,9 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff, 1, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 2, cost=PAY_TRADESMAN, hidden=1)
 
+TYPEINFO(/obj/machinery/vending/chem)
+	mats = null
+
 /obj/machinery/vending/chem
 	name = "ChemDepot"
 	desc = "Some odd machine that dispenses little vials and packets of chemicals for exorbitant amounts of money. Is this thing even working right?"
@@ -2551,7 +2564,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	glitchy_slogans = 1
 	pay = 1
 	acceptcard = 1
-	mats = null
 	slogan_list = list("Hello!",
 	"Please state the item you wish to purchase.",
 	"Many goods at reasonable prices.",
@@ -2688,6 +2700,9 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/dress_shoes, 1, cost=PAY_IMPORTANT/5, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/ring/gold, 2, cost=PAY_IMPORTANT, hidden=1)
 
+TYPEINFO(/obj/machinery/vending/janitor)
+	mats = 10
+
 /obj/machinery/vending/janitor
 	name = "JaniTech Vendor"
 	desc = "One stop shop for all your custodial needs."
@@ -2698,7 +2713,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	icon_fallen = "janitor-fallen"
 	pay = 1
 	acceptcard = 1
-	mats = 10
 
 	create_products()
 		..()
@@ -2940,6 +2954,10 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/medical/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/medical/april_fools, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/roboticist/april_fools, 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/robotics/april_fools, 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/geneticist/april_fools, 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/genetics/april_fools, 1, hidden=1)
 
 /obj/machinery/vending/jobclothing/engineering
 	name = "Engineering Apparel"

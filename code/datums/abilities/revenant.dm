@@ -103,15 +103,15 @@
 			owner.detach_hud(hud)
 		..()
 
-	proc/ghoulTouch(var/mob/living/carbon/human/poorSob, var/obj/item/affecting)
+	proc/ghoulTouch(var/mob/living/carbon/human/poorSob, var/def_zone)
 		if (poorSob.traitHolder.hasTrait("training_chaplain"))
 			poorSob.visible_message("<span class='alert'>[poorSob]'s faith shields them from [owner]'s ethereal force!", "<span class='notice'>Your faith protects you from [owner]'s ethereal force!</span>")
 			JOB_XP(poorSob, "Chaplain", 2)
 			return
 		else
 			poorSob.visible_message("<span class='alert'>[poorSob] is hit by [owner]'s ethereal force!</span>", "<span class='alert'>You are hit by [owner]'s ethereal force!</span>")
-			if (istype(affecting))
-				affecting.take_damage(4, 4, 0, DAMAGE_BLUNT)
+			if (def_zone)
+				poorSob.TakeDamage(def_zone, 4, 4, 0, DAMAGE_BLUNT)
 			else
 				poorSob.TakeDamage("All", 4, 4, 0, DAMAGE_BLUNT)
 			poorSob.changeStatus("weakened", 2 SECONDS)

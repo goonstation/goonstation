@@ -7,6 +7,9 @@ var/list/basic_elements = list(
 	)
 
 ABSTRACT_TYPE(/obj/machinery/chem_dispenser)
+TYPEINFO(/obj/machinery/chem_dispenser)
+	mats = list("MET-2" = 10, "CON-2" = 10, "miracle" = 20)
+
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
 	desc = "A complicated, soda fountain-like machine that allows the user to dispense basic chemicals for use in recipies."
@@ -18,7 +21,6 @@ ABSTRACT_TYPE(/obj/machinery/chem_dispenser)
 	flags = NOSPLASH | TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER
 	var/health = 400
-	mats = list("MET-2" = 10, "CON-2" = 10, "miracle" = 20)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/obj/item/beaker = null
 	var/list/dispensable_reagents = null

@@ -40,6 +40,9 @@
 
 		src.product_cost = cost
 
+TYPEINFO(/obj/machinery/glass_recycler)
+	mats = 10
+
 /obj/machinery/glass_recycler
 	name = "glass recycler"//"Kitchenware Recycler"
 	desc = "A machine that recycles glass shards into drinking glasses, beakers, or other glass things."
@@ -49,7 +52,6 @@
 	density = 0
 	var/glass_amt = 0
 	var/list/product_list = list()
-	mats = 10
 	flags = NOSPLASH | FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
 	event_handler_flags = NO_MOUSEDROP_QOL
 

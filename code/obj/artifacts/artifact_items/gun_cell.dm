@@ -44,7 +44,7 @@
 	ArtifactActivated()
 		. = ..()
 		processing_items |= src
-		AddComponent(/datum/component/power_cell, max_charge, null, 0, recharge_rate)
+		AddComponent(/datum/component/power_cell, max_charge, null, recharge_rate, 0)
 
 	ArtifactDeactivated()
 		. = ..()

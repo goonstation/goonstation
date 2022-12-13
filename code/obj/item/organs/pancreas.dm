@@ -43,6 +43,9 @@
 		..()
 		src.icon_state = pick("plant_pancreas", "plant_pancreas_bloom")
 
+TYPEINFO(/obj/item/organ/pancreas/cyber)
+	mats = 6
+
 /obj/item/organ/pancreas/cyber
 	name = "cyberpancreas"
 	desc = "A fancy robotic pancreas to replace one that someone's lost!"
@@ -52,7 +55,6 @@
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
-	mats = 6
 
 	on_life(var/mult = 1)
 		if (!..())

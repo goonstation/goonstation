@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/recharge_station)
+	mats = 10
+
 /obj/machinery/recharge_station
 	name = "cyborg docking station"
 	icon = 'icons/obj/robot_parts.dmi'
@@ -5,7 +8,6 @@
 	icon_state = "station"
 	density = 1
 	anchored = 1
-	mats = 10
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	allow_stunned_dragndrop = 1

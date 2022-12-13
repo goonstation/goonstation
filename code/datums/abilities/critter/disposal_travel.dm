@@ -145,6 +145,10 @@
 	border_icon = 'icons/mob/spell_buttons.dmi'
 	border_state = "changeling-template"
 
+/datum/targetable/vent_move/plaguerat
+	border_icon = 'icons/mob/wraith_ui.dmi'
+	border_state = "plague_frame"
+
 /obj/dummy/disposalmover
 	icon = null
 	name = "???"
