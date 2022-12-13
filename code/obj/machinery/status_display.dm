@@ -306,6 +306,7 @@ TYPEINFO(/obj/machinery/ai_status_display)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 
 	machine_registry_idx = MACHINES_STATUSDISPLAYS
+	_health = 25
 	var/is_on = FALSE //Distinct from being powered
 
 	var/image/face_image = null //AI expression, optionally the entire screen for the red & BSOD faces
@@ -318,6 +319,8 @@ TYPEINFO(/obj/machinery/ai_status_display)
 	var/message = null //displays on examine
 	var/face_color = null
 
+	var/list/mob/living/silicon/hologram/linked_holograms = list()
+	var/broken = FALSE
 	var/datum/light/screen_glow
 
 	New()
@@ -341,6 +344,7 @@ TYPEINFO(/obj/machinery/ai_status_display)
 	disposing()
 		if (screen_glow)
 			screen_glow.dispose()
+		src.kill_holograms()
 		..()
 
 	process()
@@ -349,6 +353,8 @@ TYPEINFO(/obj/machinery/ai_status_display)
 			UpdateOverlays(null, "back_img")
 			UpdateOverlays(null, "glow_img")
 			screen_glow.disable()
+			if (length(src.linked_holograms))
+				src.kill_holograms()
 			return
 		update()
 		use_power(200)
@@ -403,3 +409,32 @@ TYPEINFO(/obj/machinery/ai_status_display)
 		is_on = TRUE
 		if (!(status & NOPOWER))
 			update()
+
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/sheet/glass) && src.broken)
+			boutput(user, "<span class='notice'>You replace the broken glass on [src].</span>")
+			var/obj/item/sheet/glass/G = I
+			G.change_stack_amount(-1)
+			src.broken = FALSE
+			src._health = 25
+			src.face_image.icon_state = owner.faceEmotion
+			UpdateOverlays(face_image, "emotion_img")
+			return
+		if (src._health >= 0)
+			attack_particle(user,src)
+			user.lastattacked = src
+			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
+			src._health = src._health - I.force
+			if (src._health <= 0)
+				src.visible_message("<span class='notice'>[src] breaks!</span>")
+				src.broken = TRUE
+				src.kill_holograms()
+				src.face_image.icon_state = "ai_broken"
+				UpdateOverlays(face_image, "emotion_img")
+				return
+		. = ..()
+
+	proc/kill_holograms()
+		for (var/mob/living/silicon/hologram/M in linked_holograms)
+			M.become_eye()
+			M.death()

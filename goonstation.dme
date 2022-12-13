@@ -1715,7 +1715,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\machinery\floorflusher.dm"
 #include "code\obj\machinery\gibber.dm"
 #include "code\obj\machinery\glass_recycler.dm"
-#include "code\obj\machinery\holo_projector.dm"
 #include "code\obj\machinery\hologram.dm"
 #include "code\obj\machinery\igniter.dm"
 #include "code\obj\machinery\implantchair.dm"

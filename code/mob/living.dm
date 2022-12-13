@@ -1058,6 +1058,10 @@
 		var/datum/mutantrace/skeleton/S = H.mutantrace
 		if (S.head_tracker)
 			say_location = S.head_tracker
+	if (istype(src, /mob/living/silicon/hologram))
+		var/mob/living/silicon/hologram/the_hologram = src
+		if (the_hologram.status_master)
+			say_location = the_hologram.status_master
 	if (isturf(say_location.loc))
 		listening = all_hearers(message_range, say_location)
 	else

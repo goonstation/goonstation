@@ -51,7 +51,7 @@
 			boutput(src, "Deploy to an AI Eye first to create a hologram.")
 			return
 
-		var/choice = tgui_input_list(usr, "What would you like to do?", "Choice", list("Make floor hologram", "Pick personal hologram appearance", "Deploy to holo-projector"))
+		var/choice = tgui_input_list(usr, "What would you like to do?", "Choice", list("Make floor hologram", "Pick personal hologram appearance", "Deploy to AI status display"))
 		switch(choice)
 			if("Make floor hologram")
 				var/turf/T = get_turf(src.eyecam)
@@ -60,31 +60,34 @@
 				var/holo_choice = tgui_input_list(usr, "What form would you like your hologram to take?", "Choice", list("eye", "bee", "persona"))
 				src.hologram_icon = holo_choice
 				return
-			if ("Deploy to holo-projector")
-				var/list/obj/machinery/holo_projector/holo_list = list()
-				var/list/holo_list_named = list()
-				for_by_tcl(pad, /obj/machinery/holo_projector)
-					if (pad.z != Z_LEVEL_STATION || pad.broken || pad.status & (NOPOWER) || istype(get_turf(pad), /turf/space))
+			if ("Deploy to AI status display")
+				var/list/obj/machinery/ai_status_display/display_list = list()
+				var/list/display_list_named = list()
+				for(var/obj/machinery/ai_status_display/display in machine_registry[MACHINES_STATUSDISPLAYS])
+					if (display.z != Z_LEVEL_STATION || display.broken || display.status & (NOPOWER) || istype(get_turf(display), /turf/space))
 						continue
-					holo_list += pad
-					holo_list_named += ("[pad.name] ([get_area(pad)])")
-				if (length(holo_list) <= 0)
-					boutput(src, "<span class='notice'>No available holo-projectors.</span>")
+					display_list += display
+					display_list_named += ("[display.name] ([get_area(display)])")
+				if (length(display_list) <= 0)
+					boutput(src, "<span class='notice'>No available AI status display.</span>")
 					return
-				var/holo_choice = tgui_input_list(usr, "Which holo-projector do you want to deploy to?", "holographic projector", holo_list_named)
-				var/obj/machinery/holo_projector/target_holo = holo_list[holo_list_named.Find(holo_choice)]
+				var/holo_choice = tgui_input_list(usr, "Which AI status display do you want to deploy to?", "status display", display_list_named)
+				var/obj/machinery/ai_status_display/target_holo = display_list[display_list_named.Find(holo_choice)]
 				if (src.deployed_to_eyecam)
 					src.eyecam.return_mainframe()
 				if (src.mind)
-					var/mob/living/silicon/hologram/new_hologram = new/mob/living/silicon/hologram(get_turf(target_holo), src)
+					var/turf/spawn_turf = get_turf(target_holo)
+					//Ai status displays are one step north
+					if ((spawn_turf.y + 1) < world.maxy)
+						spawn_turf = get_step(spawn_turf, NORTH)
+					var/mob/living/silicon/hologram/new_hologram = new/mob/living/silicon/hologram(spawn_turf, src)
 					new_hologram.dependent = 1
-					new_hologram.projector_master = target_holo
+					new_hologram.status_master = target_holo
 					new_hologram.icon_state = src.hologram_icon
 					if (src.hologram_icon == "bee")
 						animate_bumble(new_hologram)
-					new_hologram.projector_master = target_holo
+					new_hologram.status_master = target_holo
 					target_holo.linked_holograms += new_hologram
-					target_holo.update_icon()
 					src.deployed_shell = new_hologram
 					src.mind.transfer_to(new_hologram)
 					target_holo.visible_message("<span class='notice'>[target_holo] lights up and creates an hologram.</span>")

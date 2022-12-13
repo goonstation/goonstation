@@ -16,7 +16,7 @@
 	var/obj/item/device/radio/radio = null
 	var/datum/light/light
 	///Which holographic projector are we linked to, if any
-	var/obj/machinery/holo_projector/projector_master = null
+	var/obj/machinery/ai_status_display/status_master = null
 	var/obj/machinery/camera/camera = null
 	///How far can we go away from our projector
 	var/max_wander_distance = 5
@@ -36,16 +36,14 @@
 			if ((isghostrestrictedz(NewLoc.z) || (NewLoc.z != Z_LEVEL_STATION)) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder))
 				src.become_eye()
 				src.death()
-		if (istype(NewLoc, /turf/unsimulated/wall) || istype(NewLoc, /turf/simulated/wall))
-			return
 		src.set_loc(NewLoc)
 		OnMove()
 
-		if (!src.projector_master)
+		if (!src.status_master)
 			src.become_eye()
 			src.death()
-		if (get_dist(src, src.projector_master) > src.max_wander_distance)
-			boutput(src, "<span class='notice'>Your hologram strayed too far from the holo-projector and dissolves away</span>")
+		if (get_dist(src, src.status_master) > src.max_wander_distance)
+			boutput(src, "<span class='notice'>Your hologram strayed too far from the status display and dissolves away</span>")
 			src.become_eye()
 			src.death()
 
@@ -105,8 +103,8 @@
 		qdel(src)
 
 /mob/living/silicon/hologram/disposing()
-	src.projector_master.linked_holograms -= src
-	src.projector_master.update_icon()
+	src.status_master.linked_holograms -= src
+	src.status_master.update_icon()
 	. = ..()
 
 /mob/living/silicon/hologram/emp_act()
