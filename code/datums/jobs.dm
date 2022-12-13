@@ -381,10 +381,10 @@ ABSTRACT_TYPE(/datum/job/command)
 		if (!M)
 			return
 
-		var/obj/critter/domestic_bee/heisenbee/heisenbee = locate() in range(M, 7)
-		if (istype(heisenbee) && !heisenbee.beeMom)
-			heisenbee.beeMom = M
-			heisenbee.beeMomCkey = M.ckey
+		for_by_tcl(heisenbee, /obj/critter/domestic_bee/heisenbee)
+			if (!heisenbee.beeMom)
+				heisenbee.beeMom = M
+				heisenbee.beeMomCkey = M.ckey
 
 /datum/job/command/medical_director
 	name = "Medical Director"
@@ -919,13 +919,14 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Janitor"
 	limit = 3
 	wages = PAY_TRADESMAN
-	slot_belt = list(/obj/item/device/pda2/janitor)
+	slot_belt = list(/obj/item/storage/fanny/janny)
 	slot_jump = list(/obj/item/clothing/under/rank/janitor)
 	slot_foot = list(/obj/item/clothing/shoes/galoshes)
 	slot_glov = list(/obj/item/clothing/gloves/long)
+	slot_rhan = list(/obj/item/mop)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	slot_poc1 = list(/obj/item/cloth/towel/janitor)
-	items_in_backpack = list(/obj/item/handheld_vacuum)
+	slot_poc1 = list(/obj/item/device/pda2/janitor)
+	items_in_backpack = list(/obj/item/reagent_containers/glass/bucket)
 
 	New()
 		..()
@@ -2268,7 +2269,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		else
 			M.real_name = "Syndicate Operative [M.real_name]"
 
-		antagify(M, ROLE_NUKEOP, 0)
+		antagify(M, ROLE_NUKEOP, do_objectives = FALSE)
 		equip_syndicate(M, leader)
 		return
 

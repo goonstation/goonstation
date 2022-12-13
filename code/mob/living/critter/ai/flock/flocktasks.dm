@@ -5,11 +5,11 @@
 /*
 replicate
 	-weight 7
-	-precondition: can_afford(FLOCK_LAY_EGG_COST) and less than FLOCK_DRONE_LIMIT drones
+	-precondition: not in tutorial, can_afford(flock.current_egg_cost), and less than FLOCK_DRONE_LIMIT drones
 
 nest
 	-weight 6
-	-precondition: can_afford(FLOCK_LAY_EGG_COST) and less than FLOCK_DRONE_LIMIT drones
+	-precondition: not in tutorial, can_afford(flock.current_egg_cost), and less than FLOCK_DRONE_LIMIT drones
 
 building
 	-weight 5
@@ -76,25 +76,24 @@ stare
 
 //this whole AI thing was built for flock, and even so, flock just has to be special
 /datum/aiTask/succeedable/move/flock/succeeded()
-	if(move_target)
-		. = (GET_DIST(holder.owner, src.move_target) == 0)
-		if(.)
-			var/mob/living/critter/flock/drone/F = holder.owner
-			if(istype(F) && F.floorrunning)
-				F.end_floorrunning(TRUE)
-		return
+	. = ..()
+	if(.)
+		var/mob/living/critter/flock/drone/F = holder.owner
+		if(istype(F) && F.floorrunning)
+			F.end_floorrunning(TRUE)
+	return
 
 /datum/aiTask/sequence/goalbased/flock/New(parentHolder, transTask)
 	..(parentHolder, transTask)
 	src.subtasks = list() //get rid of the move and replace it with flockmove
 	add_task(holder.get_instance(/datum/aiTask/succeedable/move/flock, list(holder)))
 
-///The amount of resources a drone needs to be eligible to lay an egg (eggs still only cost FLOCK_LAY_EGG_COST)
+///The amount of resources a drone needs to be eligible to lay an egg (eggs still only cost flock.current_egg_cost)
 /datum/aiTask/sequence/goalbased/flock/proc/current_egg_cost()
 	var/mob/living/critter/flock/flockcritter = src.holder.owner
 	if (!flockcritter?.flock)
 		return FLOCK_LAY_EGG_COST
-	return FLOCK_LAY_EGG_COST + clamp((flockcritter.flock.getComplexDroneCount() - FLOCK_MIN_DESIRED_POP) * FLOCK_ADDITIONAL_RESOURCE_RESERVATION_PER_DRONE, 0, FLOCK_LAY_EGG_COST * 2)
+	return flockcritter.flock.current_egg_cost + clamp((flockcritter.flock.getComplexDroneCount() - FLOCK_MIN_DESIRED_POP) * FLOCK_ADDITIONAL_RESOURCE_RESERVATION_PER_DRONE, 0, flockcritter.flock.current_egg_cost + FLOCK_LAY_EGG_COST)
 
 
 /datum/aiTask/sequence/goalbased/flock/switched_to()
@@ -128,7 +127,7 @@ stare
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // REPLICATION GOAL
 // targets: valid nesting sites
-// precondition: FLOCK_LAY_EGG_COST resources + 7.5 in reserve for every drone after the first 10 up to a max of 200 extra in reserve
+// precondition: Not in tutorial and flock.current_egg_cost resources + 7.5 in reserve for every drone after the first 10 up to a max of (flockcritter.flock.current_egg_cost + FLOCK_LAY_EGG_COST) extra in reserve
 /datum/aiTask/sequence/goalbased/flock/replicate
 	name = "replicating"
 	weight = 7
@@ -140,7 +139,7 @@ stare
 
 /datum/aiTask/sequence/goalbased/flock/replicate/precondition()
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if (!F?.flock)
+	if (!F?.flock || F.flock.flockmind.tutorial)
 		return
 	return F.can_afford(src.current_egg_cost()) && F.flock.getComplexDroneCount() < FLOCK_DRONE_LIMIT
 
@@ -149,8 +148,7 @@ stare
 	for(var/turf/simulated/floor/feather/F in view(max_dist, holder.owner))
 		// let's not spam eggs all the time
 		if(!is_blocked_turf(F) && isnull(locate(/obj/flock_structure/egg) in F))
-			. = get_path_to(holder.owner, list(F), max_dist*2, can_be_adjacent_to_target)
-			if (length(.)) return
+			. += F
 
 ////////
 
@@ -162,7 +160,7 @@ stare
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(!F)
 		return TRUE
-	if(F && !F.can_afford(FLOCK_LAY_EGG_COST))
+	if(F && !F.can_afford(F.flock.current_egg_cost))
 		return TRUE
 	var/turf/simulated/floor/feather/N = get_turf(holder.owner)
 	if(!N)
@@ -186,7 +184,7 @@ stare
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // NEST + REPLICATION GOAL
 // targets: valid nesting sites
-// precondition: FLOCK_CONVERT_COST + FLOCK_LAY_EGG_COST resources + 7.5 in reserve for every drone after the first 10 up to a max of 200 extra in reserve, no flocktiles in view
+// precondition: Not in tutorial and FLOCK_CONVERT_COST + flock.current_egg_cost resources + 7.5 in reserve for every drone after the first 10 up to a max of (flockcritter.flock.current_egg_cost + FLOCK_LAY_EGG_COST) extra in reserve, no flocktiles in view
 /datum/aiTask/sequence/goalbased/flock/nest
 	name = "nesting"
 	weight = 6
@@ -200,7 +198,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/nest/precondition()
 	. = FALSE
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if (!F?.flock)
+	if (!F?.flock || F.flock.flockmind.tutorial)
 		return
 	if(F.can_afford(FLOCK_CONVERT_COST + src.current_egg_cost()) && F.flock.getComplexDroneCount() < FLOCK_DRONE_LIMIT)
 		. = TRUE
@@ -215,9 +213,7 @@ stare
 			continue
 		if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
 			continue
-		. = get_path_to(holder.owner, list(T), max_dist*2, 1)
-		if (length(.))
-			return
+		. += T
 
 ////////
 
@@ -257,33 +253,34 @@ stare
 
 /datum/aiTask/sequence/goalbased/flock/build/get_targets()
 	var/mob/living/critter/flock/F = holder.owner
-
+	. = list()
 	if(F?.flock)
 		// if we can go for a tile we already have reserved, go for it
 		var/turf/simulated/reserved = F.flock.busy_tiles[F.real_name]
 		if(istype(reserved) && !isfeathertile(reserved))
-			. = get_path_to(holder.owner, reserved, max_dist, 1)
-			if(length(.)) //if we got a valid path
-				return
-			//unreserve the turf if we can't get at it
-			F.flock.busy_tiles[F.real_name] = null
+			//unreserve the turf - it will either be reserved again if it's valid, or a new target will be selected - can only reserve one turf per name anyway
+			F.flock.unreserveTurf(F.real_name)
+			return list(reserved)
+		else if (!isnull(reserved))
+			F.flock.unreserveTurf(F.real_name)	//clean up the reservation if it's not a valid tile anymore
 
 		// if there's a priority tile we can go for, do it
 		var/list/priority_turfs = F.flock.getPriorityTurfs(F)
 		if(length(priority_turfs))
-			. = get_path_to(holder.owner, priority_turfs, max_dist, 1)
-			if(length(.))
-				return
+			. += priority_turfs
 
-	. = list()
 	// else just go for one nearby
 	for(var/turf/simulated/T in view(max_dist, holder.owner))
 		if (!valid_target(T))
 			continue // this tile's been claimed by someone else
-		. = get_path_to(holder.owner, list(T), max_dist*2, 1)
-		if(length(.))
-			return
+		. += T
 
+/datum/aiTask/sequence/goalbased/flock/build/score_target(atom/target)
+	. = ..()
+	var/mob/living/critter/flock/F = holder.owner
+	if(length(F?.flock?.priority_tiles))
+		if(target in F.flock.priority_tiles)
+			. += 200 //because the result of scoring is based on max distance, the score of any given tile is -100 to 0, with 0 being best. Adding 200 basically allows a tile at twice the max distance to be considered.
 ////////
 
 /datum/aiTask/succeedable/build
@@ -341,26 +338,23 @@ stare
 
 /datum/aiTask/sequence/goalbased/flock/build/drone/get_targets()
 	var/mob/living/critter/flock/F = holder.owner
-
+	. = list()
 	if(F?.flock)
 		// if we can go for a tile we already have reserved, go for it
 		var/turf/simulated/reserved = F.flock.busy_tiles[F.real_name]
 		if(istype(reserved) && !isfeathertile(reserved))
-			. = get_path_to(holder.owner, reserved, max_dist, 1)
-			if(length(.))
-				return
-			else
-				//unreserve the turf if we can't get at it
-				F.flock.busy_tiles[F.real_name] = null
+			//unreserve the turf - it will either be reserved again if it's valid, or a new target will be selected - can only reserve one turf per name anyway
+			F.flock.unreserveTurf(F.real_name)
+			return list(reserved)
+		else if (!isnull(reserved))
+			F.flock.unreserveTurf(F.real_name)	//clean up the reservation if it's not a valid tile anymore
 
 		// if there's a priority tile we can go for, do it
 		var/list/priority_turfs = F.flock.getPriorityTurfs(F)
 		if(length(priority_turfs))
-			. = get_path_to(holder.owner, priority_turfs, max_dist, 1)
-			if(length(.))
-				return
+			. += priority_turfs
 
-	. = list()
+	var/doorflag = FALSE
 	//as drone, we want to prioritise converting doors and walls and containers
 	for(var/turf/simulated/T in view(max_dist, holder.owner))
 		if(!isfeathertile(T) && flockTurfAllowed(T) && (
@@ -369,20 +363,23 @@ stare
 			locate(/obj/storage) in T))
 			if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
 				continue
-			. = get_path_to(holder.owner, list(T), max_dist, 1)
-			if(length(.))
-				return
+			. += T
+			doorflag = TRUE
 
 	// if there are absolutely no walls/doors/closets in view, and no reserved tiles, then fine, you can have a floor tile
-	if(!length(.))
+	if(!doorflag)
 		for(var/turf/simulated/T in view(max_dist, holder.owner))
 			if(!isfeathertile(T) && flockTurfAllowed(T))
 				if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
 					continue
-				. = get_path_to(holder.owner, list(T), max_dist, 1)
-				if(length(.))
-					return
+				. += T
 
+/datum/aiTask/sequence/goalbased/flock/build/drone/score_target(atom/target)
+	. = ..()
+	var/mob/living/critter/flock/F = holder.owner
+	if(length(F?.flock?.priority_tiles))
+		if(target in F.flock.priority_tiles)
+			. += 200 //because the result of scoring is based on max distance, the score of any given tile is -100 to 0, with 0 being best. Adding 200 basically allows a tile at twice the max distance to be considered.
 ////////
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -427,7 +424,7 @@ stare
 			continue
 		if(src.valid_target(F) && F.get_health_percentage() < 0.66)
 			. += F
-	. = get_path_to(holder.owner, ., max_dist*2, 1)
+
 
 ////////
 
@@ -499,7 +496,6 @@ stare
 	for (var/obj/flock_structure/ghost/O as anything in by_type[/obj/flock_structure/ghost])
 		if (src.valid_target(O) && IN_RANGE(holder.owner, O, max_dist))
 			. += O
-	. = get_path_to(holder.owner, ., max_dist*2, 1)
 
 ////////
 
@@ -556,7 +552,6 @@ stare
 	for(var/obj/storage/S in view(max_dist, holder.owner))
 		if(!S.open && !S.welded && !S.locked)
 			. += S
-	. = get_path_to(holder.owner, ., max_dist*2, 1)
 
 ////////
 
@@ -614,7 +609,7 @@ stare
 	for(var/obj/item/storage/I in view(max_dist, holder.owner))
 		if(length(I.contents) && I.loc != holder.owner && I.does_not_open_in_pocket)
 			. += I
-	. = get_path_to(holder.owner, ., max_dist*2, 1)
+
 
 ////////
 
@@ -701,9 +696,7 @@ stare
 	for(var/obj/item/I in view(max_dist, holder.owner))
 		if (!src.valid_target(I))
 			continue
-		. = get_path_to(holder.owner, list(I), max_dist, 1)
-		if(length(.))
-			return
+		. += I
 
 ////////
 
@@ -771,7 +764,7 @@ stare
 	name = "shooting"
 	minimum_task_ticks = 10
 	maximum_task_ticks = 25
-	var/weight = 10
+	weight = 10
 	target_range = 12
 	var/shoot_range = 6
 	var/run_range = 3
@@ -913,7 +906,6 @@ stare
 				if (valid_target(T))
 					. += T
 					F.flock.updateEnemy(T)
-	. = get_path_to(holder.owner, ., max_dist*2, 1)
 
 /datum/aiTask/succeedable/capture
 	name = "capture subtask"
@@ -993,7 +985,6 @@ stare
 			continue
 		if(src.valid_target(F))
 			. += F
-	. = get_path_to(holder.owner, ., max_dist*2, 1)
 
 ////////
 
@@ -1115,7 +1106,6 @@ stare
 	for(var/atom/S in F?.flock?.deconstruct_targets)
 		if(IN_RANGE(S,holder.owner,max_dist))
 			. += S
-	. = get_path_to(holder.owner, ., max_dist*2, 1)
 
 ////////
 
@@ -1176,7 +1166,6 @@ stare
 	for(var/mob/living/critter/C in view(max_dist, holder.owner))
 		if(istype(C,/mob/living/critter/small_animal/bird) || istype(C,/mob/living/critter/small_animal/ranch_base/chicken))
 			. += C
-	. = get_path_to(holder.owner, ., max_dist*2, 1)
 
 /datum/aiTask/sequence/goalbased/flock/stare/reset()
 	return ..()

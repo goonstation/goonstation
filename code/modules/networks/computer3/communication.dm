@@ -259,7 +259,7 @@
 			if(MENU_TRANSMIT_MESSAGE)
 				menu = MENU_MAIN
 
-				if(isnull(game_servers.get_buddy()))
+				if(isnull(game_servers.get_buddy()) && transmit_type == "station")
 					src.print_text("No partner station detected. Unable to send message.")
 					return
 

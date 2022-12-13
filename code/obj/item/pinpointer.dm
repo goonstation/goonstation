@@ -1,8 +1,12 @@
+TYPEINFO(/obj/item/pinpointer)
+	mats = 4
+
 /obj/item/pinpointer
 	name = "pinpointer"
 	icon = 'icons/obj/items/pinpointers.dmi'
 	icon_state = "disk_pinoff"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	throw_speed = 4
@@ -15,7 +19,6 @@
 	var/target_ref = null
 	var/active = 0
 	var/icon_type = "disk"
-	mats = 4
 	desc = "An extremely advanced scanning device used to locate things. It displays this with an extremely technicalogically advanced arrow."
 	stamina_damage = 0
 	stamina_cost = 0
@@ -135,38 +138,49 @@
 	var/z_locked = null // Z-level number if locked to that Z-level
 	var/include_area_text = TRUE
 
+	proc/get_choices()
+		var/list/trackable
+		if(istext(category))
+			trackable = by_cat[category]
+		else if(ispath(category))
+			trackable = by_type[category]
+		. = list()
+		for(var/atom/A in trackable)
+			var/turf/T = get_turf(A)
+			if(A.disposed || isnull(T))
+				continue
+			if(!isnull(z_locked) && z_locked != T.z)
+				continue
+			var/dist = GET_DIST(A, src)
+			if(!isnull(max_range) && dist > max_range)
+				continue
+			var/in_loc = ""
+			if(!isturf(A.loc))
+				in_loc = " [in_or_on] [A.loc]"
+			var/area_text = include_area_text ? " in [get_area(A)]" : ""
+			.["[A][in_loc][area_text]"] = A
+
+	proc/process_choice(choice, list/choices, mob/user)
+		if(isnull(choice))
+			return null
+		return choices[choice]
+
 	attack_self(mob/user)
 		if(!active)
 			if(isnull(category))
 				user.show_text("No tracking category, cannot activate the pinpointer.", "red")
 				return
-			var/list/trackable
-			if(istext(category))
-				trackable = by_cat[category]
-			else if(ispath(category))
-				trackable = by_type[category]
-			var/list/choices = list()
-			for(var/atom/A in trackable)
-				var/turf/T = get_turf(A)
-				if(A.disposed || isnull(T))
-					continue
-				if(!isnull(z_locked) && z_locked != T.z)
-					continue
-				var/dist = GET_DIST(A, src)
-				if(!isnull(max_range) && dist > max_range)
-					continue
-				var/in_loc = ""
-				if(!isturf(A.loc))
-					in_loc = " [in_or_on] [A.loc]"
-				var/area_text = include_area_text ? " in [get_area(A)]" : ""
-				choices["[A][in_loc][area_text]"] = A
+			var/list/choices = get_choices()
 			if(!length(choices))
 				user.show_text("No [thing_name]s available, cannot activate the pinpointer.", "red")
 				return
 			var/choice = tgui_input_list(user, "Pick a [thing_name] to track.", "[src]", choices)
 			if(isnull(choice))
 				return
-			target = choices[choice]
+			var/atom/potential_target = process_choice(choice, choices, user)
+			if(isnull(potential_target))
+				return
+			target = potential_target
 		. = ..()
 
 /obj/item/pinpointer/category/spysticker
@@ -357,6 +371,9 @@
 			if(ismob(src.loc))
 				boutput(src.loc, "<span class='alert'>[src] shuts down because the blood in it became too dry!</span>")
 
+TYPEINFO(/obj/item/pinpointer/secweapons)
+	mats = null
+
 /obj/item/pinpointer/secweapons
 	name = "security weapon pinpointer"
 	icon_state = "sec_pinoff"
@@ -364,7 +381,6 @@
 	var/list/itemrefs
 	var/list/accepted_types
 	hudarrow_color = "#ee4444"
-	mats = null
 	desc = "An extremely advanced scanning device used to locate lost security tools. It displays this with an extremely technicalogically advanced arrow."
 
 	proc/track(var/list/L)
@@ -459,6 +475,19 @@
 	name = "\improper APC pinpointer"
 	category = /obj/machinery/power/apc
 	thing_name = "APC"
+
+	get_choices()
+		. = list("-- CURRENT ROOM --") + ..()
+
+	process_choice(choice, list/choices, mob/user)
+		if (choice == "-- CURRENT ROOM --")
+			var/area/AR = get_area(src)
+			if(AR.area_apc)
+				return AR.area_apc
+			else
+				boutput(user, "<span class='alert'>There is no APC in this area!</span>")
+				return null
+		return ..()
 
 /obj/item/pinpointer/category/apcs/station
 	name = "\improper APC pinpointer"

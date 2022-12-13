@@ -243,6 +243,35 @@ proc/debug_map_apc_count(delim,zlim)
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 			img.app.color = is_teleportation_allowed(theTurf) ? "#0f0" : "#f00"
 
+	jps_inconsistent
+		name = "jps inconsistent"
+		help = "Uses a slightly expensive check to see whether turf instability is valid. Errors shown in red, number shows error (i.e. -1 is missing 1 atom)"
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			var/trueUnstable = initial(theTurf.pass_unstable)
+			for(var/atom/A as anything in theTurf.contents)
+				trueUnstable += A.pass_unstable
+			if(trueUnstable != theTurf.pass_unstable)
+				img.app.overlays = list(src.makeText(theTurf.pass_unstable - trueUnstable, RESET_ALPHA | RESET_COLOR))
+				img.app.color = "#f00"
+			else
+				img.app.alpha = 0
+
+	jps_unstable
+		name = "jps unstable"
+		help = "Red is unstable, green is stable, purple is illegal value"
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			img.app.overlays = list(src.makeText(theTurf.pass_unstable, RESET_ALPHA | RESET_COLOR))
+			img.app.color = theTurf.pass_unstable >= 1 ? "#f00" : theTurf.pass_unstable ? "#70f" : "#0f0"
+
+	jps_cache
+		name = "jps cache"
+		help = "Grey is no cache. Green is passable, red is not."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(theTurf.passability_cache != null)
+				img.app.color = theTurf.passability_cache ? "#0f0" : "#f00"
+			else
+				img.app.alpha = 0
+
 	blowout
 		name = "radstorm safezones"
 		help = "Green tiles are safe from irradiation, red tiles are ones that are not."
@@ -472,7 +501,7 @@ proc/debug_map_apc_count(delim,zlim)
 						else
 							O2_color = "#ff0000"
 
-					switch (air.temperature - T0C)
+					switch (TO_CELSIUS(air.temperature))
 						if (100 to INFINITY)
 							T_color = "#ff0000"
 						if (75 to 100)
@@ -501,7 +530,7 @@ proc/debug_map_apc_count(delim,zlim)
 
 					if (group?.spaced) img.app.overlays += image('icons/misc/air_debug.dmi', icon_state = "spaced")
 
-					img.app.overlays += src.makeText("<span style='color: [O2_color];'>[round(O2_pp, 0.01)]</span>\n[round(pressure, 0.1)]\n<span style='color: [T_color];'>[round(air.temperature - T0C, 1)]</span>")
+					img.app.overlays += src.makeText("<span style='color: [O2_color];'>[round(O2_pp, 0.01)]</span>\n[round(pressure, 0.1)]\n<span style='color: [T_color];'>[round(TO_CELSIUS(air.temperature), 1)]</span>")
 
 
 					if (pressure > ONE_ATMOSPHERE)
@@ -1183,6 +1212,20 @@ proc/debug_map_apc_count(delim,zlim)
 				var/landmark_text = "<span style='font-size:6pt'>[jointext(turf_to_landmark[theTurf], "<br>")]</span>"
 				img.app.overlays = list(src.makeText(landmark_text))
 				img.app.color = debug_color_of(landmark_text)
+
+	opaque_atom_count
+		name = "opaque atom count"
+		help = {"Shows how many opaque atoms are on a turf according to the turf var"}
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			if(theTurf.opaque_atom_count == 0)
+				img.app.alpha = 0
+				return
+			img.app.alpha = 100
+			img.app.overlays = list(src.makeText(theTurf.opaque_atom_count, RESET_ALPHA | RESET_COLOR))
+			if(theTurf.opaque_atom_count > 0)
+				img.app.color = "#55aa55"
+			else
+				img.app.color = "#aa5555"
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay

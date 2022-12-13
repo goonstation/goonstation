@@ -593,8 +593,6 @@ datum
 
 					return 0
 
-			src.handle_reactions() // trigger inhibited reactions
-
 			return 1
 
 		proc/update_total()
@@ -1053,6 +1051,33 @@ datum
 			. = list()
 			for (var/i in 1 to num_val)
 				.[result_name[i]] = result_amount[i]
+
+		/// Gets a string of what something tastes like (as shown to the drinker/eater/whatever)
+		proc/get_taste_string(mob/taster)
+			if (iscarbon(taster) || ismobcritter(taster))
+				if (taster.mind && taster.mind.assigned_role == "Bartender")
+					var/reag_list = ""
+					for (var/current_id in src.reagent_list)
+						var/datum/reagent/current_reagent = src.reagent_list[current_id]
+						if (src.reagent_list.len > 1 && src.reagent_list[src.reagent_list.len] == current_id)
+							reag_list += " and [current_reagent.name]"
+							continue
+						reag_list += ", [current_reagent.name]"
+					reag_list = copytext(reag_list, 3)
+					. = "Tastes like there might be some [reag_list] in this."
+				else
+					var/tastes = src.get_prevalent_tastes(3)
+					switch (length(tastes))
+						if (0)
+							. = "Tastes pretty bland."
+						if (1)
+							. = "Tastes kind of [tastes[1]]."
+						if (2)
+							. = "Tastes kind of [tastes[1]] and [tastes[2]]."
+						else
+							. = "Tastes kind of [tastes[1]], [tastes[2]], and a little bit [tastes[3]]."
+			else
+				CRASH("Called get_taste_string for illegal mob [identify_object(taster)]")
 
 		//returns whether reagents are solid, liquid, gas, or mixture
 		proc/get_state_description()

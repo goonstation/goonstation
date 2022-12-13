@@ -6,11 +6,13 @@
 // light_status values shared between lighting fixtures and items
 // defines moved to _setup.dm by ZeWaka
 
+TYPEINFO(/obj/item/light_parts)
+	mats = 4
+
 /obj/item/light_parts
 	name = "fixture parts"
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-fixture"
-	mats = 4
 	material_amt = 0.2
 
 	var/installed_icon_state = "tube-empty"
@@ -85,6 +87,8 @@
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
 	text = ""
+	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | USEDELAY
+
 	var/on = 0 // 1 if on, 0 if off
 	var/brightness = 1.6 // luminosity when on, also used in power calculation
 
@@ -824,6 +828,7 @@
 
 
 		boutput(user, "You stick \the [W.name] into the light socket!")
+		user.lastattacked = src
 		if(has_power() && (W.flags & CONDUCT))
 			if(!user.bioHolder.HasEffect("resist_electric"))
 				src.electrocute(user, 75, null, 20000)
@@ -831,8 +836,7 @@
 
 	// attempt to break the light
 	else if(current_lamp.light_status != LIGHT_BROKEN)
-
-
+		user.lastattacked = src
 		if(prob(1+W.force * 5))
 
 			boutput(user, "You hit the light, and it smashes!")
@@ -1024,6 +1028,9 @@
 // can be tube or bulb subtypes
 // will fit into empty /obj/machinery/light of the corresponding type
 
+TYPEINFO(/obj/item/light)
+	mats = 1
+
 /obj/item/light
 	icon = 'icons/obj/lighting.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
@@ -1037,7 +1044,6 @@
 	m_amt = 60
 	var/rigged = 0		// true if rigged to explode
 	var/mob/rigger = null // mob responsible
-	mats = 1
 	var/color_r = 1
 	var/color_g = 1
 	var/color_b = 1

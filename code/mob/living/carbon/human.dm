@@ -109,10 +109,12 @@
 	var/ai_calm_down = 0 // do we chill out after a while?
 	var/ai_picking_pocket = 0
 	var/ai_offhand_pickup_chance = 50
+	var/bruteloss
+	var/burnloss
 
 	max_health = 100
 
-	var/obj/item/trinket = null //Used for spy_theft mode - this is an item that is eligible to have a bounty on it
+	var/datum/weakref/trinket = null //Used for spy_theft mode - this is an item that is eligible to have a bounty on it
 
 	//dismemberment stuff
 	var/datum/human_limbs/limbs = null
@@ -219,15 +221,6 @@
 		return
 
 	src.limbs = new /datum/human_limbs(src)
-
-	if (src.organHolder)
-		src.organs["chest"] = src.organHolder.chest
-		src.organs["head"] = src.organHolder.head
-	if (src.limbs)
-		src.organs["l_arm"] = src.limbs.l_arm
-		src.organs["r_arm"] = src.limbs.r_arm
-		src.organs["l_leg"] = src.limbs.l_leg
-		src.organs["r_leg"] = src.limbs.r_leg
 
 	src.update_body()
 	src.update_face()
@@ -413,7 +406,6 @@
 					if (src.l_arm)
 						src.l_arm.delete()
 					src.l_arm = new /obj/item/parts/human_parts/arm/left/item(src.holder, new new_type(src.holder))
-				src.holder.organs["l_arm"] = src.l_arm
 				src.holder.hud.update_hands()
 				if (show_message)
 					src.holder.show_message("<span class='notice'><b>Your left arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_arm]!</b></span>")
@@ -435,7 +427,6 @@
 					if (src.r_arm)
 						src.r_arm.delete()
 					src.r_arm = new /obj/item/parts/human_parts/arm/right/item(src.holder, new new_type(src.holder))
-				src.holder.organs["r_arm"] = src.r_arm
 				src.holder.hud.update_hands()
 				if (show_message)
 					src.holder.show_message("<span class='notice'><b>Your right arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_arm]!</b></span>")
@@ -447,7 +438,6 @@
 				if (ispath(new_type, /obj/item/parts/human_parts/leg) || ispath(new_type, /obj/item/parts/robot_parts/leg) || ispath(new_type, /obj/item/parts/artifact_parts/leg))
 					qdel(src.l_leg)
 					src.l_leg = new new_type(src.holder)
-					src.holder.organs["l_leg"] = src.l_leg
 					if (show_message)
 						src.holder.show_message("<span class='notice'><b>Your left leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_leg]!</b></span>")
 					if (user)
@@ -458,7 +448,6 @@
 				if (ispath(new_type, /obj/item/parts/human_parts/leg) || ispath(new_type, /obj/item/parts/robot_parts/leg) || ispath(new_type, /obj/item/parts/artifact_parts/leg))
 					qdel(src.r_leg)
 					src.r_leg = new new_type(src.holder)
-					src.holder.organs["r_leg"] = src.r_leg
 					if (show_message)
 						src.holder.show_message("<span class='notice'><b>Your right leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_leg]!</b></span>")
 					if (user)
@@ -537,9 +526,6 @@
 		arrestIcon = null
 
 	src.chest_item = null
-
-	src.organs?.len = 0
-	src.organs = null
 
 	if (mutantrace)
 		mutantrace.dispose()
@@ -947,7 +933,7 @@
 			hud.update_intent()
 			check_for_intent_trigger()
 		if ("drop")
-			src.drop_item()
+			src.drop_item(null, TRUE)
 		if ("swaphand")
 			src.swap_hand()
 		if ("attackself")
@@ -1176,17 +1162,13 @@
 	if (src.nodamage) return
 	if (src.health > 0)
 		var/dam_zone = pick("chest", "head")
-		if (istype(src.organs[dam_zone], /obj/item/organ))
-			var/obj/item/organ/temp = src.organs[dam_zone]
+		var/reduction = 0
+		if (src.spellshield)
+			reduction = 30
+			boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some damage!</b></span>")
 
-			var/reduction = 0
-			if (src.energy_shield) reduction = src.energy_shield.protect()
-			if (src.spellshield)
-				reduction = 30
-				boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some damage!</b></span>")
-
-			temp.take_damage((istype(O, /obj/newmeteor/small) ? max(15-reduction,0) : max(25-reduction,0)), max(20-reduction,0))
-			src.UpdateDamageIcon()
+		src.TakeDamage(dam_zone, (istype(O, /obj/newmeteor/small) ? max(15-reduction,0) : max(25-reduction,0)), max(20-reduction,0), 0, DAMAGE_CRUSH)
+		src.UpdateDamageIcon()
 	else if (prob(20))
 		src.gib()
 
@@ -2163,7 +2145,7 @@
 						return FALSE
 				return TRUE
 		if (slot_belt)
-			if ((I.flags & ONBELT) && src.w_uniform)
+			if ((I.c_flags & ONBELT) && src.w_uniform)
 				return TRUE
 		if (slot_wear_id)
 			if (istype(I, /obj/item/card/id) && src.w_uniform)
@@ -2171,7 +2153,7 @@
 			if (istype(I, /obj/item/device/pda2) && src.w_uniform) // removed the check for the ID card in here because tbh it was silly that you could only equip it to the ID slot when it had a card  :I
 				return TRUE
 		if (slot_back)
-			if (I.flags & ONBACK)
+			if (I.c_flags & ONBACK)
 				return TRUE
 		if (slot_wear_mask) // It's not pretty, but the mutantrace check will do for the time being (Convair880).
 			if (!src.organHolder.head)

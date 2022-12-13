@@ -22,7 +22,7 @@
 					A.reagents.remove_any(waste_volume/2)
 				else
 					if (A.disposed)
-						stack_trace("Disposed patch [A] ([A.type]) was in mob [owner] ([owner.type])'s skin process. Removing.")
+						stack_trace("Disposed patch [identify_object(A)] was in mob [identify_object(owner)]'s skin process. Removing.")
 						A.set_loc(null)
 					else
 						qdel(A)

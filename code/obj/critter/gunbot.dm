@@ -1,3 +1,6 @@
+TYPEINFO(/obj/critter/gunbot)
+	mats = 8
+
 /obj/critter/gunbot
 	name = "Robot"
 	desc = "A Security Robot, something seems a bit off."
@@ -15,7 +18,6 @@
 	firevuln = 0.5
 	brutevuln = 1
 	is_syndicate = 1
-	mats = 8
 	deconstruct_flags = DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 	seek_target()

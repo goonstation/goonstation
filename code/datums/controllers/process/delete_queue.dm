@@ -78,6 +78,7 @@ var/global/harddel_count = 0
 				else if(istype(D, /atom))
 					var/atom/A = D
 					logTheThing(LOG_DEBUG, text="[harddel_msg] [D.type] -- name [A.name], iconstate [A.icon_state], icon [A.icon]")
+					//boutput(world, "[harddel_msg] [D.type] -- name [A.name], iconstate [A.icon_state], icon [A.icon]")
 				else
 					logTheThing(LOG_DEBUG, text="[harddel_msg] [D.type]")
 #ifdef LOG_HARD_DELETE_REFERENCES

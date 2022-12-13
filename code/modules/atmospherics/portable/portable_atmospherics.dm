@@ -53,6 +53,9 @@
 
 		..()
 
+	get_desc()
+		. = " It is labeled to have a volume of [src.volume] litres."
+
 	proc
 		connect(obj/machinery/atmospherics/portables_connector/new_port)
 			//Make sure not already connected to something else

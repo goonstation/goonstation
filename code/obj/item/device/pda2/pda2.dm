@@ -8,7 +8,8 @@
 	item_state = "pda"
 	w_class = W_CLASS_SMALL
 	rand_pos = 0
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	wear_layer = MOB_BELT_LAYER
 	var/obj/item/card/id/ID_card = null // slap an ID card into that thang
 	var/obj/item/pen = null // slap a pen into that thang

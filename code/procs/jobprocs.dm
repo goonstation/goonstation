@@ -437,7 +437,7 @@
 
 		//remove problem traits from people on pod_wars
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
-			H.traitHolder.removeTrait("immigrant")
+			H.traitHolder.removeTrait("stowaway")
 			H.traitHolder.removeTrait("pilot")
 			H.traitHolder.removeTrait("sleepy")
 			H.traitHolder.removeTrait("puritan")
@@ -458,22 +458,24 @@
 		src = possible_new_mob // let's hope this breaks nothing
 
 
-	if (ishuman(src) && JOB.add_to_manifest && !src.traitHolder.hasTrait("immigrant"))
+	if (ishuman(src) && JOB.add_to_manifest && !src.traitHolder.hasTrait("stowaway"))
 		// Manifest stuff
 		var/sec_note = ""
 		var/med_note = ""
+		var/synd_int_note = ""
 		if(src.client?.preferences && !src.client.preferences.be_random_name)
 			sec_note = src.client.preferences.security_note
 			med_note = src.client.preferences.medical_note
+			synd_int_note = src.client.preferences.synd_int_note
 		var/obj/item/device/pda2/pda = locate() in src
-		data_core.addManifest(src, sec_note, med_note, pda?.net_id)
+		data_core.addManifest(src, sec_note, med_note, pda?.net_id, synd_int_note)
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if (src.traitHolder && !src.traitHolder.hasTrait("immigrant"))
+		if (src.traitHolder && !src.traitHolder.hasTrait("stowaway"))
 			H.spawnId(rank)
-		if (src.traitHolder && src.traitHolder.hasTrait("immigrant"))
-			//Has the immigrant trait - they're hiding in a random locker
+		if (src.traitHolder && src.traitHolder.hasTrait("stowaway"))
+			//Has the stowaway trait - they're hiding in a random locker
 			var/list/obj/storage/SL = list()
 			for_by_tcl(S, /obj/storage)
 				// Only closed, unsecured lockers/crates on Z1 that are not inside the listening post (or the martian ship (on oshan))
@@ -592,6 +594,8 @@
 					var/datum/abilityHolder/A = src.abilityHolder.deepCopy()
 					R.fields["abilities"] = A
 
+				R.fields["defects"] = src.cloner_defects.copy()
+
 				SPAWN(0)
 					if(!isnull(src.traitHolder))
 						R.fields["traits"] = src.traitHolder.copy()
@@ -632,7 +636,7 @@
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
 		src.force_equip(GPSDEVICE, slot_in_backpack)
 
-	if (src.traitHolder?.hasTrait("immigrant") || src.traitHolder?.hasTrait("pilot"))
+	if (src.traitHolder?.hasTrait("stowaway") || src.traitHolder?.hasTrait("pilot"))
 		var/obj/item/device/pda2/pda = locate() in src
 		src.u_equip(pda)
 		qdel(pda)
@@ -670,8 +674,7 @@
 		trinket = new T(src)
 
 	if (trinket) // rewrote this a little bit so hopefully people will always get their trinket
-		src.trinket = trinket
-		src.trinket.event_handler_flags |= IS_TRINKET
+		src.trinket = get_weakref(trinket)
 		trinket.name = "[src.real_name][pick_string("trinkets.txt", "modifiers")] [trinket.name]"
 		trinket.quality = rand(5,80)
 		var/equipped = 0
@@ -692,41 +695,40 @@
 			if (!equipped) // we've tried most available storage solutions here now so uh just put it on the ground
 				trinket.set_loc(get_turf(src))
 
-	if (src.traitHolder && src.traitHolder.hasTrait("onearmed"))
-		if (src.limbs)
-			SPAWN(6 SECONDS)
-				if (prob(50))
-					if (src.limbs.l_arm)
-						qdel(src.limbs.l_arm.remove(0))
-				else
-					if (src.limbs.r_arm)
-						qdel(src.limbs.r_arm.remove(0))
-				boutput(src, "<b>Your singular arm makes you feel responsible for crimes you couldn't possibly have committed.</b>" )
+	if (ishuman(src))
+		if (src.traitHolder && src.traitHolder.hasTrait("onearmed"))
+			if (src.limbs)
+				SPAWN(6 SECONDS)
+					if (prob(50))
+						if (src.limbs.l_arm)
+							qdel(src.limbs.l_arm.remove(0))
+					else
+						if (src.limbs.r_arm)
+							qdel(src.limbs.r_arm.remove(0))
+					boutput(src, "<b>Your singular arm makes you feel responsible for crimes you couldn't possibly have committed.</b>" )
 
-	if (src.traitHolder && src.traitHolder.hasTrait("nolegs"))
-		if (src.limbs)
-			SPAWN(6 SECONDS)
-				if (src.limbs.l_leg)
-					src.limbs.l_leg.delete()
-				if (src.limbs.r_leg)
-					src.limbs.r_leg.delete()
-			new /obj/stool/chair/comfy/wheelchair(get_turf(src))
+		if (src.traitHolder && src.traitHolder.hasTrait("nolegs"))
+			if (src.limbs)
+				SPAWN(6 SECONDS)
+					if (src.limbs.l_leg)
+						src.limbs.l_leg.delete()
+					if (src.limbs.r_leg)
+						src.limbs.r_leg.delete()
+				new /obj/stool/chair/comfy/wheelchair(get_turf(src))
 
-	// Special mutantrace items
-	if (src.traitHolder && src.traitHolder.hasTrait("pug"))
-		src.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
-	else if (src.traitHolder && src.traitHolder.hasTrait("skeleton"))
-		src.put_in_hand_or_drop(new /obj/item/joint_wax)
+		// Special mutantrace items
+		if (src.traitHolder && src.traitHolder.hasTrait("pug"))
+			src.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
+		else if (src.traitHolder && src.traitHolder.hasTrait("skeleton"))
+			src.put_in_hand_or_drop(new /obj/item/joint_wax)
 
-	src.equip_sensory_items()
+		src.equip_sensory_items()
 
 /mob/living/carbon/human/proc/spawnId(rank)
 #ifdef DEBUG_EVERYONE_GETS_CAPTAIN_ID
 	rank = "Captain"
 #endif
 	var/obj/item/card/id/C = null
-	if(istype(get_area(src),/area/afterlife))
-		rank = "Captain"
 	var/datum/job/JOB = find_job_in_controller_by_string(rank)
 	if (!JOB || !JOB.slot_card)
 		return null
@@ -812,19 +814,20 @@
 	return
 
 // Convert mob to generic hard mode traitor or alternatively agimmick
-proc/antagify(mob/H, var/traitor_role, var/agimmick)
+proc/antagify(mob/H, var/traitor_role, var/agimmick, var/do_objectives)
 	if (!(H.mind))
 		message_admins("Attempted to antagify [H] but could not find mind")
 		logTheThing(LOG_DEBUG, H, "Attempted to antagify [H] but could not find mind.")
 		return
 	if (!agimmick)
-		var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
-		var/num_objectives = rand(1,3)
-		for(var/i = 0, i < num_objectives, i++)
-			var/select_objective = pick(eligible_objectives)
-			new select_objective(null, H.mind)
-			H.show_antag_popup("traitorhard")
-			ticker.mode.traitors |= H.mind
+		if (do_objectives)
+			var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
+			var/num_objectives = rand(1,3)
+			for(var/i = 0, i < num_objectives, i++)
+				var/select_objective = pick(eligible_objectives)
+				new select_objective(null, H.mind)
+				H.show_antag_popup("traitorhard")
+				ticker.mode.traitors |= H.mind
 	else
 		ticker.mode.Agimmicks |= H.mind
 		H.show_antag_popup("traitorgeneric")
