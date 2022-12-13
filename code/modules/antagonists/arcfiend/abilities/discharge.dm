@@ -1,15 +1,18 @@
 /// Melee attack. Shocks a targeted mob, or can be used on an airlock to temporarily cut its power.
 /datum/targetable/arcfiend/discharge
 	name = "Discharge"
-	desc = "Run a powerful current through a target in melee range. Mobs will be shocked, while airlocks will be briefly depowered."
+	desc = "Run a powerful current through a target in melee range. Mobs will be shocked and knocked back a short distance, while airlocks will be briefly depowered."
 	icon_state = "discharge"
 	cooldown = 15 SECONDS
 	target_anything = TRUE
 	targeted = TRUE
 	pointCost = 25
-
+	///how far to knock mobs away from ourselves
+	var/target_dist = 3
+	///how fast to throw affected mobs away
+	var/throw_speed = 1
 	/// This is the amount of power considered to be in use when we're shocking a mob.
-	var/wattage = 750 KILO WATTS
+	var/wattage = 7500 WATTS
 
 	cast(atom/target)
 		. = ..()
@@ -21,6 +24,10 @@
 			var/mob/M = target
 			M.shock(src.holder.owner, src.wattage, ignore_gloves = TRUE)
 			target.add_fingerprint(src.holder.owner)
+			var/turf/T = get_ranged_target_turf(M, get_dir(holder.owner, M), target_dist)
+			if (T)
+				var/falloff = GET_DIST(holder.owner, M)
+				M.throw_at(T, target_dist - falloff, throw_speed)
 			logTheThing(LOG_COMBAT, src.holder.owner, "[key_name(src.holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(src.holder.owner)].")
 		else if (istype(target, /obj/machinery/door/airlock))
 			var/obj/machinery/door/airlock/airlock = target
