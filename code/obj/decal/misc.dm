@@ -5,6 +5,7 @@
 	mouse_opacity = 0
 	anchored = 1
 	density = 0
+	plane = PLANE_FLOOR
 
 /obj/decal/stripe_delivery
 	name = ""
@@ -13,3 +14,4 @@
 	mouse_opacity = 0
 	anchored = 1
 	density = 0
+	plane = PLANE_FLOOR

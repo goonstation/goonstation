@@ -165,6 +165,8 @@
 			src.statusEffects = null
 		ClearAllParticles()
 		atom_properties = null
+		if(!ismob(src)) // I want centcom cloner to look good, sue me
+			ClearAllOverlays()
 		..()
 
 	proc/Turn(var/rot)
@@ -634,7 +636,7 @@
 	if (src.mdir_lights)
 		update_mdir_light_visibility(src.dir)
 
-/atom/proc/get_desc(dist)
+/atom/proc/get_desc(dist, mob/user)
 
 /**
   * a proc to completely override the standard formatting for examine text

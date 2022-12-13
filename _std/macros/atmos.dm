@@ -27,7 +27,7 @@
 
 
 /// in kPa * L/(K * mol)
-#define R_IDEAL_GAS_EQUATION	8.31
+#define R_IDEAL_GAS_EQUATION	8.3144626
 /// 1atm, now in kPa
 #define ONE_ATMOSPHERE		101.325
 

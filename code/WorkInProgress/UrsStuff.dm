@@ -53,11 +53,13 @@
 
 /mob/living/critter/robotic/bot/engibot
 
-ABSTRACT_TYPE(/obj/overlay/simple_light/disco_lighting)
-
 /obj/overlay/simple_light/disco_lighting
 	var/randomize_start = 0
 	name = "disco_overlay"
+
+#ifdef IN_MAP_EDITOR
+	icon_state = "simp"
+#endif
 
 /obj/overlay/simple_light/disco_lighting/rainbow
 	New()

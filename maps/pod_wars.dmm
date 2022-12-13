@@ -640,7 +640,7 @@
 "cE" = (
 /obj/machinery/nanofab/mining,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/miningoutpost)
@@ -878,7 +878,7 @@
 "dE" = (
 /obj/machinery/manufacturer/qm,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /turf/unsimulated/floor/yellow/side{
 	dir = 1
@@ -1581,7 +1581,7 @@
 "fU" = (
 /obj/machinery/manufacturer/pod_wars/syndicate,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
@@ -1829,7 +1829,7 @@
 "gN" = (
 /obj/machinery/light/incandescent/netural,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /obj/machinery/manufacturer/general/pod_wars,
 /turf/unsimulated/floor/yellow/side{
@@ -2107,7 +2107,7 @@
 	},
 /obj/cable,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /turf/simulated/floor/yellow,
 /area/pod_wars/spacejunk/miningoutpost)
@@ -2160,7 +2160,7 @@
 "hW" = (
 /obj/machinery/light/incandescent/netural,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /obj/machinery/manufacturer/general/pod_wars,
 /turf/unsimulated/floor/blue/side{
@@ -5816,7 +5816,7 @@
 /area/pod_wars/team1/bridge)
 "vH" = (
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /obj/machinery/manufacturer/mining/pod_wars/nanotrasen,
 /turf/unsimulated/floor{
@@ -6268,7 +6268,7 @@
 	output = 5000
 	},
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /turf/simulated/floor/yellow,
 /area/pod_wars/spacejunk/miningoutpost)
@@ -6366,7 +6366,7 @@
 "xv" = (
 /obj/machinery/light/incandescent/netural,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /obj/machinery/manufacturer/mining/pod_wars/syndicate,
 /turf/unsimulated/floor/yellow/side{
@@ -6477,7 +6477,7 @@
 "xM" = (
 /obj/machinery/manufacturer/pod_wars/syndicate,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /turf/unsimulated/floor/red/side{
 	dir = 1
@@ -6572,7 +6572,7 @@
 /area/pod_wars/team2/hangar)
 "yj" = (
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /obj/machinery/manufacturer/general/pod_wars,
 /turf/unsimulated/floor/yellow/side{
@@ -7197,7 +7197,7 @@
 "AL" = (
 /obj/machinery/light/incandescent/netural,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /obj/machinery/manufacturer/mining/pod_wars/syndicate,
 /turf/unsimulated/floor/yellow/side{
@@ -8058,7 +8058,7 @@
 "Ee" = (
 /obj/machinery/light/incandescent/netural,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /obj/machinery/manufacturer/general/pod_wars,
 /turf/unsimulated/floor/blue/side{
@@ -8533,7 +8533,7 @@
 /obj/machinery/light/small/floor/netural,
 /obj/machinery/manufacturer/pod_wars/nanotrasen,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor{
@@ -9278,7 +9278,7 @@
 "IN" = (
 /obj/machinery/processor,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /turf/simulated/floor/yellow,
 /area/pod_wars/spacejunk/miningoutpost)
@@ -11004,7 +11004,7 @@
 "PE" = (
 /obj/machinery/manufacturer/pod_wars/nanotrasen,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -12242,7 +12242,7 @@
 "Uq" = (
 /obj/machinery/manufacturer/mining/pod_wars,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /turf/simulated/floor/yellow,
 /area/pod_wars/spacejunk/miningoutpost)
@@ -13141,7 +13141,7 @@
 "XM" = (
 /obj/machinery/nanofab/refining,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/miningoutpost)
@@ -13569,7 +13569,7 @@
 "Zk" = (
 /obj/machinery/manufacturer/pod_wars/syndicate,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9

@@ -232,6 +232,7 @@
 			return
 		if(src.emoting)
 			return
+		..()
 		var/icon/soulcache
 		var/icon/blendic
 		switch (lowertext(act))

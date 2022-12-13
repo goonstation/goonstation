@@ -6,8 +6,8 @@
 		if (..())
 			return
 
-		if (usr.client.holder.level < LEVEL_CODER)
-			alert("You must be at least a Coder to mess with this.")
+		if (usr.client.holder.level < LEVEL_ADMIN)
+			alert("You must be at least an Administrator to mess with this.")
 			return
 		var/total = 0
 		var/foamsize = input(usr, "How much foam?", "Foam Amount") as null|num

@@ -371,10 +371,12 @@
 	},
 /area/space)
 "aT" = (
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/space)
 "aU" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/space)
 "aV" = (
 /obj/grille/steel,
@@ -647,7 +649,8 @@
 "bI" = (
 /obj/disposalpipe/trunk,
 /obj/machinery/disposal,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/space)
 "bJ" = (
 /obj/grille/steel,
@@ -1360,7 +1363,8 @@
 	icon_state = "outlet";
 	dir = 1
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/space)
 "dk" = (
 /obj/item/wrench,
@@ -1734,7 +1738,8 @@
 	},
 /area/sim/tdome)
 "eh" = (
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/sim/tdome)
 "ei" = (
 /turf/unsimulated/floor/red/side{
@@ -1877,7 +1882,8 @@
 	dir = 1
 	},
 /obj/machinery/disposal,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/space)
 "eB" = (
 /obj/decal/cleanable/blood/splatter{
