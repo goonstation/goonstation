@@ -21,7 +21,3 @@
 			if (T)
 				var/falloff = GET_DIST(holder.owner, L)
 				L.throw_at(T, target_dist - falloff, throw_speed)
-/* 				if (falloff == 1 || (falloff == 2 && prob(50))) // if they were adjacent they get knocked down too
-					L.changeStatus("weakened", 1.5 SECOND)
-					L.force_laydown_standup() */
-
