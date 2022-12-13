@@ -37,12 +37,12 @@ export const Gameclock = (_props, context) => {
         <Box className="gameclock__help">
           <Button
             className="gameclock__helpbutton"
-            tooltip="Toggle Help"
+            tooltip={helpModalOpen ? "Close" : "Help"}
             icon={helpModalOpen ? 'xmark' : 'question'}
             color={helpModalOpen && 'orange'}
-            onClick={() => {
-              setHelpModalOpen(!helpModalOpen);
-            }}
+            onClick={!configModalOpen && (
+              () => { setHelpModalOpen(!helpModalOpen); }
+            )}
           />
         </Box>
         <TeamIcon team={swap ? 'white' : 'black'} />
@@ -103,6 +103,7 @@ const ConfigModal = (_, context) => {
 };
 
 const HelpModal = () => {
+
   return (
     <Dimmer>
       <Section>

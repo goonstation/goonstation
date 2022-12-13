@@ -3,7 +3,7 @@ import { useBackend } from '../../backend';
 import { adjustSizes, handleEvents } from './utils/window';
 import { Component } from 'inferno';
 
-import { Icon, Box, Modal } from '../../components';
+import { Icon, Box, Dimmer } from '../../components';
 import { useStates, BoardgameData } from './utils';
 import { TitleBar } from './Components/common/TitleBar';
 import { HeldPieceRenderer } from './Components/common/HeldPieceRenderer';
@@ -40,18 +40,21 @@ const HelpModal = (props, context) => {
   if (!isHelpModalOpen) return null;
 
   return (
-    <Modal onClick={helpModalClose}>
+    <Dimmer className="boardgame__helpmodal" onClick={helpModalClose}>
       <Box>
         <p>
-          <Icon name="mouse" /> Click on a piece to select, click on a tile to move it there.
+          <strong>Help</strong>
         </p>
         <p>
-          <i>or</i>
+          <Icon name="mouse" /> Click on a piece to select it, click on a tile to move it there.
         </p>
-        <p>Hold the piece, and drop it at the tile to move it.</p>
+        <p>Pieces may also be click-dragged to a target tile.</p>
+        <p>
+          Moving a piece onto a tile occupied by another piece will<br />
+          replace/capture the piece already on that tile.
+        </p>
         <p>Right click a piece to delete it.</p>
-        <i>Click here to close this panel.</i>
       </Box>
-    </Modal>
+    </Dimmer>
   );
 };
