@@ -1,5 +1,5 @@
 import { HorizontalNotations, VerticalNotations } from '../';
-import { Flex } from '../../../../components';
+import { Flex, Box } from '../../../../components';
 import { BoardgameData } from '../../utils';
 import { useBackend } from '../../../../backend';
 import { useActions } from '../../utils';
@@ -11,7 +11,7 @@ export const Board = (props, context) => {
 
   return (
     <Flex className="boardgame__wrapper">
-      <div className={`boardgame__board-inner`}>
+      <Box className={`boardgame__board-inner`}>
         <HorizontalNotations />
         <Flex className={`boardgame__board`}>
           <VerticalNotations />
@@ -27,7 +27,7 @@ export const Board = (props, context) => {
           <VerticalNotations />
         </Flex>
         <HorizontalNotations />
-      </div>
+      </Box>
     </Flex>
   );
 };

@@ -520,7 +520,7 @@
 	examine(mob/user)
 		. = ..()
 		if(IN_RANGE(src, user, 10))
-			return src.ui_interact(user)
+			src.ui_interact(user)
 
 	mouse_drop(var/mob/user)
 		if(user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))

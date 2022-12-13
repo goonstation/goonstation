@@ -5,16 +5,16 @@ import { useActions, useStates, BoardgameData } from '../../utils';
 
 export const TitleBar = (props, context) => {
   const { act } = useBackend<BoardgameData>(context);
-  const { isFlipped, toggleFlip, helpModalOpen, isHelpModalOpen } = useStates(context);
+  const { isFlipped, toggleFlip, helpModalOpen, helpModalClose, isHelpModalOpen } = useStates(context);
   const { boardClear, applyGNot } = useActions(act);
 
   return (
     <Box className="boardgame__titlebar">
       <Button
-        tooltip="Help"
+        tooltip={isHelpModalOpen ? 'Close' : 'Help'}
         color={isHelpModalOpen ? 'orange' : 'default'}
-        icon="question"
-        onClick={() => helpModalOpen()}
+        icon={isHelpModalOpen ? 'times' : 'question'}
+        onClick={() => (isHelpModalOpen ? helpModalClose() : helpModalOpen())}
       />
       <Button tooltip="Flip board" color={isFlipped ? 'orange' : 'default'} icon="repeat" onClick={toggleFlip} />
 

@@ -50,7 +50,7 @@ const HelpModal = (props, context) => {
         </p>
         <p>Hold the piece, and drop it at the tile to move it.</p>
         <p>Right click a piece to delete it.</p>
-        <i>Click anywhere to hide this panel.</i>
+        <i>Click here to close this panel.</i>
       </Box>
     </Modal>
   );
