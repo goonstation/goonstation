@@ -519,11 +519,11 @@
 
 		proc/getStage()
 			. = 1
-			if(clamp(counter, duration, duration*2) < BURNING_LV2)
+			if(min(duration, counter) + duration/2 < BURNING_LV2)
 				return 1
-			else if (clamp(counter, duration, duration*2) >= BURNING_LV2 && min(duration*2, counter) < BURNING_LV3)
+			else if (min(duration, counter) + duration/2 >= BURNING_LV2 && min(duration, counter) + duration/2 < BURNING_LV3)
 				return 2
-			else if (clamp(counter, duration, duration*2) >= BURNING_LV3)
+			else if (min(duration, counter) + duration/2 >= BURNING_LV3)
 				return 3
 
 		proc/switchStage(var/toStage)
@@ -1585,6 +1585,18 @@
 	duration = INFINITE_STATUS
 	maxDuration = null
 	change = -5
+
+/datum/statusEffect/staminaregen/zephyr_field
+	id = "zephyr_field"
+	name = "Zephyr Field"
+	desc = "A bioelectric field is invigorating you."
+	icon_state = "stam+"
+	maxDuration = 9 SECONDS
+	unique = 1
+	change = 8
+
+	getTooltip()
+		. = "A feeling of invigoration permeates you."
 
 /datum/statusEffect/staminaregen/clone
 	id = "stamclone"

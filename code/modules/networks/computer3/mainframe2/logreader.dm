@@ -8,6 +8,9 @@
 		..()
 		fields = list("logdir" = DEFAULT_LOG_PATH)
 
+TYPEINFO(/obj/machinery/networked/logreader)
+	mats = 14
+
 /obj/machinery/networked/logreader
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
@@ -16,7 +19,6 @@
 	anchored = 1
 	device_tag = "PNET_LOGREADER"
 	timeout = 10
-	mats = 14
 	power_usage = 100
 	var/static/list/required_fields = list("card_name", "door_name", "time_t", "timestamp", "door_id", "action")
 	var/filter_name = null

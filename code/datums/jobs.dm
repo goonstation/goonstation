@@ -2269,7 +2269,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		else
 			M.real_name = "Syndicate Operative [M.real_name]"
 
-		antagify(M, ROLE_NUKEOP, 0)
+		antagify(M, ROLE_NUKEOP, do_objectives = FALSE)
 		equip_syndicate(M, leader)
 		return
 

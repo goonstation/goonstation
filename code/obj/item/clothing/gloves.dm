@@ -496,9 +496,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		if(check_target_immunity( target ))
 			return 0
 		logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with hand blades at [log_loc(user)].")
-		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 16, 16, 0, 0.8, 0, can_punch = 0, can_kick = 0)
-		user.attack_effects(target, affecting)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 16, 16, 0, 0.8, 0, can_punch = 0, can_kick = 0)
+		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("stab", "slashe")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their hand blades!</span></b>"
 		msgs.played_sound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'

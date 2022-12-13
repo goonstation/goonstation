@@ -195,6 +195,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/feather)
 		//else
 		//	icon_state = icon_state + (src.on ? "on" : "")
 
+/turf/simulated/wall/auto/feather/tutorial
+	opacity = FALSE
+
 /turf/simulated/wall/auto/feather/New()
 	..()
 	setMaterial(getMaterial("gnesis"), copy = FALSE)

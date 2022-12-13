@@ -783,6 +783,9 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	var/list/nums_black = list("2","4","6","8","10","11","13","15","17","20","22","24","26","28","29","31","33","35")
 	var/list/nums_snake = list("1","5","9","12","14","16","19","23","27","30","32","34")
 /*
+TYPEINFO(/obj/submachine/blackjack)
+	mats = 9
+
 /obj/submachine/blackjack
 	name = "blackjack machine"
 	desc = "Gambling for the antisocial."
@@ -790,7 +793,6 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	icon_state = "BJ1"
 	anchored = 1
 	density = 1
-	mats = 9
 	var/on = 1
 	var/plays = 0
 	var/working = 0
@@ -1152,7 +1154,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 				usagi.set_dir(turn(usagi.dir, -90))
 				sleep(0.2 SECONDS)
 			usagi.sailormoon_reshape()
-			var/obj/critter/cat/luna = new /obj/critter/cat (usagi.loc)
+			var/mob/living/critter/small_animal/cat/luna = new /mob/living/critter/small_animal/cat (usagi.loc)
 			luna.name = "Luna"
 			luna.desc = "A cat with a little crescent moon on her forehead."
 			luna.cattype = 3
@@ -1629,6 +1631,9 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		else
 			return ..()
 
+TYPEINFO(/obj/item/space_thing)
+	mats = 50
+
 /obj/item/space_thing
 	name = "space thing"
 	desc = "Some kinda thing, from space. In space. A space thing."
@@ -1638,7 +1643,6 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	w_class = W_CLASS_TINY
 	force = 10
 	throwforce = 7
-	mats = 50
 	contraband = 1
 	stamina_damage = 40
 	stamina_cost = 23

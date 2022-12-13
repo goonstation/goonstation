@@ -2188,7 +2188,7 @@ datum
 						//make it obvious that you are about to die horribly
 						M.addOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 						// oh no
-						if(probmult(1)) // i hate you all, players
+						if(probmult(max(2, (src.volume - gib_threshold)/5))) // i hate you more, players
 							H.flockbit_gib()
 							logTheThing(LOG_COMBAT, H, "was gibbed by reagent [name] at [log_loc(H)].")
 							return

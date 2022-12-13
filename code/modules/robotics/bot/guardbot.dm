@@ -2023,12 +2023,14 @@
 			return 1
 
 //Robot tools.  Flash boards, batons, etc
+TYPEINFO(/obj/item/device/guardbot_tool)
+	mats = 6
+
 /obj/item/device/guardbot_tool
 	name = "Tool module"
 	desc = "A generic module for a PR-6S Guardbuddy."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "tool_generic"
-	mats = 6
 	w_class = W_CLASS_SMALL
 	var/is_stun = 0 //Can it be non-lethal?
 	var/is_lethal = 0 //Can it be lethal?
@@ -2318,12 +2320,14 @@
 
 	//xmas -- See spacemas.dm
 
+TYPEINFO(/obj/item/device/guardbot_module)
+	mats = 6
+
 /obj/item/device/guardbot_module
 	name = "Add-on module"
 	desc = "A generic expansion pack for a PR-6S Guardbuddy."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "tool_generic"
-	mats = 6
 	w_class = W_CLASS_SMALL
 	var/tool_id = "MOD"
 	is_syndicate = 1
@@ -3938,10 +3942,10 @@
 							END_NEAT
 						return
 
-				else if (!(src.neat_things & NT_JONES) && istype(AM, /obj/critter/cat) && AM.name == "Jones")
+				else if (!(src.neat_things & NT_JONES) && istype(AM, /mob/living/critter/small_animal/cat) && AM.name == "Jones")
 					FOUND_NEAT(NT_JONES)
-						var/obj/critter/cat/jones = AM
-						src.speak_with_maptext("And over here is the ship's cat, J[jones.alive ? "ones! No spacecraft is complete without a cat!" : "-oh mercy, MOVING ON, MOVING ON"]")
+						var/mob/living/critter/small_animal/cat/jones = AM
+						src.speak_with_maptext("And over here is the ship's cat, J[isalive(jones) ? "ones! No spacecraft is complete without a cat!" : "-oh mercy, MOVING ON, MOVING ON"]")
 						END_NEAT
 					return
 
@@ -4203,12 +4207,14 @@
  *	Guardbot Parts
  */
 
+TYPEINFO(/obj/item/guardbot_core)
+	mats = 6
+
 /obj/item/guardbot_core
 	name = "Guardbuddy mainboard"
 	desc = "The primary circuitry of a PR-6S Guardbuddy."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddy_core-6"
-	mats = 6
 	w_class = W_CLASS_SMALL
 	var/created_default_task = null //Default task path of result
 	var/datum/computer/file/guardbot_task/created_model_task = null
@@ -4234,12 +4240,14 @@
 		else
 			..()
 
+TYPEINFO(/obj/item/guardbot_frame)
+	mats = 5
+
 /obj/item/guardbot_frame
 	name = "Guardbuddy frame"
 	desc = "The external casing of a PR-6S Guardbuddy."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddy_frame-6-1"
-	mats = 5
 	var/stage = 1
 	var/created_name = "Guardbuddy" //Still the name of resulting guardbot
 	var/created_default_task = null //Default task path of result
@@ -4330,12 +4338,14 @@
 
 
 //The Docking Station.  Recharge here!
+TYPEINFO(/obj/machinery/guardbot_dock)
+	mats = 8
+
 /obj/machinery/guardbot_dock
 	name = "docking station"
 	desc = "A recharging and command station for PR-6S Guardbuddies."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddycharger0"
-	mats = 8
 	anchored = 1
 	var/panel_open = 0
 	var/autoeject = 0 //1: Eject fully charged robots automatically. 2: Eject robot when living carbon mob is in view.

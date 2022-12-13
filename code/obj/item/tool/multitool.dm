@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/multitool)
+	mats = 6
+
 /obj/item/device/multitool
 	name = "multitool"
 	desc = "You can use this on airlocks or APCs to try to hack them without cutting wires."
@@ -17,7 +20,6 @@
 
 	m_amt = 50
 	g_amt = 20
-	mats = 6
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)

@@ -1,4 +1,7 @@
 ///////////////////////////////////////PW Blasters
+TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
+	mats = 0
+
 /obj/item/gun/energy/blaster_pod_wars
 	name = "blaster pistol"
 	desc = "A dangerous-looking blaster pistol. It's self-charging by a radioactive power cell."
@@ -7,7 +10,6 @@
 	item_state = "pw_pistol_nt"
 	w_class = W_CLASS_NORMAL
 	force = 8
-	mats = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/pod_wars_basic
 
 	var/image/indicator_display = null

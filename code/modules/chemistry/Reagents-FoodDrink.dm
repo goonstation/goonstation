@@ -87,12 +87,6 @@ datum
 					M = holder.my_atom
 				if (M.get_toxin_damage() <= 25)
 					M.take_toxin_damage(-1 * mult)
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					if (bone_system)
-						for (var/obj/item/organ/O in H.organs)
-							if (O.bones)
-								O.bones.repair_damage(1 * mult)
 				flush(M,5 * mult, flushed_reagents)
 				..()
 				return
@@ -2395,7 +2389,7 @@ datum
 			addiction_prob = 4
 			addiction_prob2 = 10
 			var/tickcounter = 0
-			thirst_value = 0.055
+			thirst_value = -0.2
 			bladder_value = 0.04
 			energy_value = 1
 			stun_resist = 25
@@ -2484,7 +2478,7 @@ datum
 			fluid_b = 52
 			taste = "delicate"
 			transparency = 232
-			thirst_value = 0.075
+			thirst_value = 0.75
 			bladder_value = 0.04
 			energy_value = 0.04
 			addiction_prob = 1
@@ -2536,7 +2530,7 @@ datum
 			fluid_b = 127
 			transparency = 160
 			taste = "fizzy"
-			thirst_value = 0.078
+			thirst_value = 0.78
 			bladder_value = 0.05
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -2705,9 +2699,10 @@ datum
 			reagent_state = LIQUID
 			taste = "purrplexing"
 
-			reaction_obj(var/obj/O, var/volume)
-				if (istype(O, /obj/critter/cat))
-					var/obj/critter/cat/theCat = O
+			reaction_mob(var/mob/M, var/method=INGEST, var/volume)
+				. = ..()
+				if (istype(M, /mob/living/critter/small_animal/cat))
+					var/mob/living/critter/small_animal/cat/theCat = M
 					theCat.catnip_effect()
 
 		fooddrink/vanilla
