@@ -1,7 +1,7 @@
 /// Applies a magnetic aura to nearby humans, as with the bio-magnetic fields random event. All auras will be of the same polarity.
 /datum/targetable/arcfiend/polarize
 	name = "Polarize"
-	desc = "Unleash a wave of charged particles, polarizing nearby mobs and giving them identical magnetic auras."
+	desc = "Unleash a wave of charged particles, polarizing nearby mobs and giving them a random magnetic aura."
 	icon_state = "polarize"
 	cooldown = 12 SECONDS
 	pointCost = 50
@@ -11,9 +11,8 @@
 
 	cast(atom/target)
 		. = ..()
-		var/charge = pick("magnets_pos", "magnets_neg")
 		playsound(src.holder.owner, 'sound/impact_sounds/Energy_Hit_2.ogg', 65, TRUE)
 		for (var/mob/living/carbon/human/H in range(src.range, get_turf(src.holder.owner)))
 			if (H == src.holder.owner)
 				continue
-			H.changeStatus("magnetized", src.duration, charge)
+			H.changeStatus("magnetized", src.duration, pick("magnets_pos", "magnets_neg"))
