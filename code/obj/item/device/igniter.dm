@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/igniter)
+	mats = 2
+
 /obj/item/device/igniter
 	name = "igniter"
 	desc = "A small electronic device can be paired with other electronics, or used to heat chemicals directly."
@@ -11,7 +14,6 @@
 	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 10
-	mats = 2
 	firesource = FIRESOURCE_IGNITER
 
 	//blcok spamming shit because inventory uncaps click speed and kinda makes this an exploit

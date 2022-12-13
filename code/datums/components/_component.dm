@@ -223,7 +223,7 @@ var/datum/signal_holder/global_signal_holder
 		return // exit early since we're done
 
 	if(!override && target_procs[signal_type])
-		stack_trace("[signal_type] overridden. Use override = TRUE to suppress this warning.\nTarget: [target] ([target.type]) Proc: [proctype]")
+		stack_trace("[signal_type] overridden. Use override = TRUE to suppress this warning.\nTarget: [identify_object(target)] Proc: [proctype]")
 
 	target_procs[signal_type] = proctype
 	var/list/looked_up = lookup[signal_type]
@@ -277,7 +277,7 @@ var/datum/signal_holder/global_signal_holder
 			if(2)
 				lookup[sig] = (lookup[sig]-src)[1]
 			if(1)
-				stack_trace("[target] ([target.type]) somehow has single length list inside comp_lookup")
+				stack_trace("[identify_object(target)] somehow has single length list inside comp_lookup")
 				if(src in lookup[sig])
 					lookup -= sig
 					if(!length(lookup))

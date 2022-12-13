@@ -15,7 +15,7 @@
 // * Stockings - from halloween.dm - wtf
 
 // define used for removing spacemas objects when it's not xmas
-#ifdef XMAS
+#if defined(XMAS) || defined(RUNTIME_CHECKING)
 #define EPHEMERAL_XMAS EPHEMERAL_SHOWN
 #else
 #define EPHEMERAL_XMAS EPHEMERAL_HIDDEN
@@ -102,6 +102,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 		M.dnr = 1
 		M.transfer_to(L)
+		M.assigned_role = "Santa Claus"
 		boutput(L, "<span class='notice'><b>You have been respawned as Santa Claus!</b></span>")
 		boutput(L, "Go to the station and reward the crew for their high faith in Spacemas. Use your Spacemas magic!")
 		boutput(L, "<b>Do not reference anything that happened during your past life!</b>")
@@ -435,38 +436,184 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		random_brute_damage(M, rand(4,8),1)
 
 
+proc/compare_ornament_score(list/a, list/b)
+	. = b["score"] - a["score"]
+
 // Throughout December the icon will change!
 /obj/xmastree
 	EPHEMERAL_XMAS
 	name = "Spacemas tree"
-	desc = "O Spacemas tree, O Spacemas tree, Much p- Huh, there's a note here with <a target='_blank' href='https://forum.ss13.co/showthread.php?tid=17615'>'https://forum.ss13.co/showthread.php?tid=17615'</a> written on it."
+	desc = "O Spacemas tree, O Spacemas tree, Much p- Huh, there's a bunch of crayons and canvases under it, try clicking it?"
 	icon = 'icons/effects/160x160.dmi'
-	icon_state = "xmastree_2021"
+	icon_state = "xmastree_2022"
 	anchored = 1
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	pixel_x = -64
 	plane = PLANE_ABOVE_LIGHTING
+	pixel_point = TRUE
+	var/static/list/ornament_positions = list(
+		list(62, 118),
+		list(80, 117),
+		list(95, 101),
+		list(73, 95),
+		list(48, 107),
+		list(48, 90),
+		list(30, 78),
+		list(111, 86),
+		list(84, 72),
+		list(61, 70),
+		list(29, 64),
+		list(40, 59),
+		list(116, 56),
+		list(89, 53),
+		list(57, 48),
+		list(109, 47),
+		list(74, 38),
+		list(122, 35),
+		list(99, 25),
+		list(56, 25),
+		list(28, 35),
+		list(33, 20),
+	)
+	var/uses_custom_ornaments = TRUE
+	var/ornament_sort = "weighted_random"
+	var/best_sort_fuzziness = 0
+	var/weighted_sort_flat_bonus = 0.15
+	var/weighted_sort_reserved_slots_for_new = 8
+	var/list/placed_ornaments = null
+	var/list/ckeys_placed_this_round
+	var/list/got_ornament_kit
 
 	density = 1
 	var/on_fire = 0
 	var/image/fire_image = null
 
+	latest_ornaments
+		ornament_sort = "latest"
+
+	best_ornaments
+		ornament_sort = "best"
+
+	fuzzy_top_ornaments
+		ornament_sort = "best"
+		best_sort_fuzziness = 0.1
+
+	worst_ornaments
+		ornament_sort = "worst"
+
+	random_ornaments
+		ornament_sort = "random"
+
+	weighted_random
+		ornament_sort = "weighted_random"
+		weighted_sort_flat_bonus = 0
+		weighted_sort_reserved_slots_for_new = 0
+
+	weighted_random_flatter
+		ornament_sort = "weighted_random"
+		weighted_sort_flat_bonus = 0.1
+		weighted_sort_reserved_slots_for_new = 0
+
 	New()
 		..()
 		src.fire_image = image('icons/effects/160x160.dmi', "")
 		START_TRACKING
+		if(uses_custom_ornaments)
+			src.decorate()
+
+	/// Calculates the "score" of an ornament based on upvotes and downvotes
+	/// which_bound is -1 if you are sorting by best, 1 if you are sorting by worst
+	proc/bound_of_wilson_score_confidence_interval_for_a_bernoulli_parameter_of_an_ornament(list/ornament, which_bound = -1)
+		var/positive = length(ornament["upvoted"]) + 0.00001
+		var/negative = length(ornament["downvoted"]) + 0.00001
+		// source: https://www.evanmiller.org/how-not-to-sort-by-average-rating.html
+		. = ((positive + 1.9208) / (positive + negative) + which_bound * \
+			1.96 * sqrt((positive * negative) / (positive + negative) + 0.9604) / \
+			(positive + negative)) / (1 + 3.8416 / (positive + negative))
+		if(best_sort_fuzziness > 0)
+			var/generator/G = generator("num", -best_sort_fuzziness, best_sort_fuzziness, NORMAL_RAND)
+			. += G.Rand()
+
+	proc/decorate()
+		remove_all_ornaments()
+		var/list/ornament_list = get_spacemas_ornaments().Copy()
+		switch(ornament_sort)
+			if("random")
+				shuffle_list(ornament_list)
+			if("latest")
+				reverse_list(ornament_list)
+			if("best")
+				for(var/ornament_name in ornament_list)
+					var/list/ornament = ornament_list[ornament_name]
+					ornament["score"] = src.bound_of_wilson_score_confidence_interval_for_a_bernoulli_parameter_of_an_ornament(ornament)
+				ornament_list = sortList(ornament_list, /proc/compare_ornament_score, associative=TRUE)
+			if("worst")
+				for(var/ornament_name in ornament_list)
+					var/list/ornament = ornament_list[ornament_name]
+					ornament["score"] = -src.bound_of_wilson_score_confidence_interval_for_a_bernoulli_parameter_of_an_ornament(ornament, which_bound=1)
+				ornament_list = sortList(ornament_list, /proc/compare_ornament_score, associative=TRUE)
+			if("weighted_random")
+				var/list/ornament_weights = list()
+				for(var/ornament_name in ornament_list)
+					var/list/ornament = ornament_list[ornament_name]
+					ornament_weights[ornament_name] = src.weighted_sort_flat_bonus + \
+						src.bound_of_wilson_score_confidence_interval_for_a_bernoulli_parameter_of_an_ornament(ornament)
+				var/list/original_ornament_list = ornament_list
+				ornament_list = list()
+				while(length(ornament_weights) > 0 && length(ornament_list) < length(src.ornament_positions) - weighted_sort_reserved_slots_for_new)
+					var/ornament_name = weighted_pick(ornament_weights)
+					ornament_list[ornament_name] = get_spacemas_ornaments()[ornament_name]
+					ornament_weights -= ornament_name
+				var/list/sorted_by_least_votes = list()
+				for(var/ornament_name in ornament_weights)
+					var/list/ornament = original_ornament_list[ornament_name]
+					var/votes = length(ornament["upvoted"]) + length(ornament["downvoted"])
+					sorted_by_least_votes[ornament_name] = ornament
+					ornament["score"] = -votes
+				sorted_by_least_votes = sortList(sorted_by_least_votes, /proc/compare_ornament_score, associative=TRUE)
+				ornament_list += sorted_by_least_votes
+		src.placed_ornaments = list()
+		src.placed_ornaments.len = length(ornament_positions)
+		for(var/i = 1 to length(ornament_positions))
+			if (length(ornament_list) < i)
+				break
+			var/ornament_name = ornament_list[i]
+			var/ornament_art = ornament_list[ornament_name]["art"]
+			var/ornament_artist = ornament_list[ornament_name]["artist"]
+			var/obj/item/canvas/tree_ornament/ornament = new(null, ornament_art)
+			ornament.name = ornament_name
+			ornament.desc = "A Spacemas ornament by [ornament_artist]."
+			ornament.upvoted = ornament_list[ornament_name]["upvoted"]
+			ornament.downvoted = ornament_list[ornament_name]["downvoted"]
+			ornament.main_artist = ornament_artist
+			src.place_ornament(ornament, i)
+
+	proc/remove_all_ornaments()
+		for(var/obj/item/canvas/tree_ornament/ornament in placed_ornaments)
+			qdel(ornament)
 
 	disposing()
 		#ifdef XMAS
 		STOP_TRACKING
 		#endif
 
+		remove_all_ornaments()
+
 		qdel(src.fire_image)
 		src.fire_image = null
 		..()
 
 	attack_hand(mob/user)
-		extinguish()
+		if(src.on_fire)
+			extinguish()
+		else if(uses_custom_ornaments)
+			if(user?.client?.ckey in src.got_ornament_kit)
+				boutput(user, "<span class='alert'>You've already gotten an ornament kit this round!</span>")
+				return
+			var/obj/item/storage/box/ornament_kit/kit = new(user)
+			user.put_in_hand_or_drop(kit)
+			LAZYLISTADD(src.got_ornament_kit, user.client?.ckey)
+			boutput(user, "<span class='notice'>You take an ornament kit from under the tree.</span>")
 		..()
 
 	proc/extinguish()
@@ -485,6 +632,12 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		else if (!src.on_fire && burning == 1)
 			src.visible_message("<span class='combat'><b>[src] catches on fire! Oh shit!</b></span>")
 			src.on_fire = 1
+			for(var/obj/item/canvas/tree_ornament/ornament in src.placed_ornaments)
+				if(prob(30))
+					ornament.combust()
+				else if(prob(50))
+					var/darkening = rand(0, 255)
+					ornament.color = rgb(darkening, darkening, darkening)
 			SPAWN(1 MINUTE)
 				if (src.on_fire)
 					src.visible_message("<span class='combat'>[src] burns down and collapses into a sad pile of ash. <b><i>Spacemas is ruined!!!</i></b></span>")
@@ -503,6 +656,65 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			src.UpdateOverlays(src.fire_image, "fire")
 		else
 			src.UpdateOverlays(null, "fire")
+
+	proc/place_ornament(obj/item/canvas/tree_ornament/ornament, slot_number)
+		if(src.placed_ornaments[slot_number])
+			src.vis_contents -= src.placed_ornaments[slot_number]
+			qdel(src.placed_ornaments[slot_number])
+		ornament.underlays = null // remove the frame
+		ornament.pixel_x = ornament_positions[slot_number][1]
+		ornament.pixel_y = ornament_positions[slot_number][2]
+		src.vis_contents += ornament
+		ornament.layer = src.layer + 0.1
+		ornament.plane = src.plane
+		ornament.on_tree = src
+		ornament.anchored = 2
+		ornament.set_loc(null)
+		src.placed_ornaments[slot_number] = ornament
+
+	attackby(obj/item/W, mob/user)
+		if(istype(W, /obj/item/canvas/tree_ornament) && uses_custom_ornaments)
+			if(src.on_fire)
+				boutput(user, "<span class='alert'>The tree is on fire! You can't put an ornament on it!</span>")
+				return
+			if(global.christmas_cheer < 20)
+				boutput(user, "<span class='alert'>The atmosphere just isn't festive enough. Try increasing the Spacemas cheer!</span>")
+				return
+			if(user.ckey in src.ckeys_placed_this_round)
+				boutput(user, "<span class='alert'>You've already hung an ornament this round!</span>")
+				return
+			var/obj/item/canvas/tree_ornament/ornament = W
+			if(ornament.on_tree)
+				boutput(user, "<span class='alert'>That ornament is already on a tree!</span>")
+				return
+			if(ornament.is_ready(user))
+				if(tgui_alert(user, "Do you want to hang the ornament on the tree? (You can only do so once per round.)", "Hang ornament?", list("Yes", "No")) != "Yes")
+					return
+				var/maybe_name = tgui_input_text(user, "What would you like to name your ornament?", "Name your ornament", ornament.name)
+				if(!maybe_name)
+					return
+				if(user.ckey in src.ckeys_placed_this_round)
+					boutput(user, "<span class='alert'>You've already hung an ornament this round!</span>")
+					return
+				if(ornament.on_tree)
+					boutput(user, "<span class='alert'>That ornament is already on a tree!</span>")
+					return
+				user.drop_item(ornament)
+				ornament.name = maybe_name
+				ornament.main_artist = user.ckey
+				ornament.desc = "A Spacemas ornament by [user.ckey]."
+				ornament.finish(user)
+				var/empty_index = 0
+				for(var/i = 1 to length(src.placed_ornaments))
+					if(isnull(src.placed_ornaments[i]))
+						empty_index = i
+						break
+				src.place_ornament(ornament, empty_index || rand(1, length(src.placed_ornaments)))
+				logTheThing("station", user, null, "placed an ornament with name '[ornament.name]' on the Spacemas tree.")
+				boutput(user, "<span class='notice'>You hang \the [ornament.name] on the tree.</span>")
+				LAZYLISTADD(src.ckeys_placed_this_round, user.ckey)
+		else
+			. = ..()
 
 /obj/item/reagent_containers/food/snacks/snowball
 	name = "snowball"
@@ -589,6 +801,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			return
 
 /obj/decal/garland
+	plane = PLANE_DEFAULT
 	name = "garland"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "garland"
@@ -596,6 +809,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	anchored = 1
 
 /obj/decal/tinsel
+	plane = PLANE_DEFAULT
 	name = "tinsel"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "tinsel-silver"
@@ -603,12 +817,14 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	anchored = 1
 
 /obj/decal/wreath
+	plane = PLANE_DEFAULT
 	name = "wreath"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "wreath"
 	layer = 5
 	anchored = 1
 /obj/decal/mistletoe
+	plane = PLANE_DEFAULT
 	name = "mistletoe"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "mistletoe"
@@ -616,6 +832,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	anchored = 1
 
 /obj/decal/xmas_lights
+	plane = PLANE_DEFAULT
 	name = "spacemas lights"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "lights1"
@@ -718,168 +935,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	disposing()
 		modify_christmas_cheer(-30)
 		..()
-	verb
-		santa_heal()
-			set name = "Holiday Healing"
-			set desc = "Heal everyone around you."
-			set category = "Festive Fun"
-
-			if (src.stat || src.transforming)
-				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
-				return 1
-
-			src.verbs -= /mob/living/carbon/human/santa/verb/santa_heal
-			playsound(src.loc, 'sound/voice/heavenly.ogg', 100, 1, 0)
-			src.visible_message("<span class='alert'><B>[src] calls on the power of Spacemas to heal everyone!</B></span>")
-			for (var/mob/living/M in view(src,5))
-				M.HealDamage("All", 30, 30)
-			SPAWN(1 MINUTE)
-				boutput(src, "<span class='notice'>You may now use your healing spell again.</span>")
-				src.verbs += /mob/living/carbon/human/santa/verb/santa_heal
-
-		santa_gifts()
-			set name = "Spacemas Presents"
-			set desc = "Summon a whole bunch of Spacemas presents!"
-			set category = "Festive Fun"
-
-			if (src.stat || src.transforming)
-				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
-				return 1
-
-			src.verbs -= /mob/living/carbon/human/santa/verb/santa_gifts
-			src.visible_message("<span class='alert'><B>[src] throws out a bunch of Spacemas presents from nowhere!</B></span>")
-			playsound(usr.loc, 'sound/machines/fortune_laugh.ogg', 25, 1, -1)
-			src.transforming = 1
-			var/to_throw = rand(3,12)
-
-			var/list/nearby_turfs = list()
-
-			for (var/turf/T in view(5,src))
-				nearby_turfs += T
-
-			while(to_throw > 0)
-				var/obj/item/a_gift/festive/X = new /obj/item/a_gift/festive(src.loc)
-				X.throw_at(pick(nearby_turfs), 16, 3)
-				to_throw--
-				sleep(0.2 SECONDS)
-			src.transforming = 0
-
-			SPAWN(2 MINUTES)
-				boutput(src, "<span class='notice'>You may now summon gifts again.</span>")
-				src.verbs += /mob/living/carbon/human/santa/verb/santa_gifts
-
-		santa_food()
-			set name = "Spacemas Goodies"
-			set desc = "Summon a whole bunch of festive snacks!"
-			set category = "Festive Fun"
-
-			if (src.stat || src.transforming)
-				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
-				return 1
-
-			src.verbs -= /mob/living/carbon/human/santa/verb/santa_food
-			src.visible_message("<span class='alert'><B>[src] casts out a whole shitload of snacks from nowhere!</B></span>")
-			playsound(usr.loc, 'sound/machines/fortune_laugh.ogg', 25, 1, -1)
-			src.transforming = 1
-			var/to_throw = rand(6,18)
-
-			var/list/nearby_turfs = list()
-
-			for (var/turf/T in view(5,src))
-				nearby_turfs += T
-
-			var/snack
-			while(to_throw > 0)
-				snack = pick(santa_snacks)
-				var/obj/item/X = new snack(src.loc)
-				X.throw_at(pick(nearby_turfs), 16, 3)
-				to_throw--
-				sleep(0.1 SECONDS)
-			src.transforming = 0
-
-			SPAWN(80 SECONDS)
-				boutput(src, "<span class='notice'>You may now summon snacks again.</span>")
-				src.verbs += /mob/living/carbon/human/santa/verb/santa_food
-
-		santa_warmth()
-			set name = "Winter Hearth"
-			set desc = "Gives everyone near you temporary cold resistance."
-			set category = "Festive Fun"
-
-			if (src.stat || src.transforming)
-				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
-				return 1
-
-			src.verbs -= /mob/living/carbon/human/santa/verb/santa_warmth
-			playsound(src.loc, 'sound/effects/MagShieldUp.ogg', 100, 1, 0)
-			src.visible_message("<span class='alert'><B>[src] summons the warmth of a nice toasty fireplace!</B></span>")
-			for (var/mob/living/M in view(src,5))
-				if (M.bioHolder)
-					M.bioHolder.AddEffect("cold_resist", 0, 60)
-			SPAWN(80 SECONDS)
-				boutput(src, "<span class='notice'>You may now use your warmth spell again.</span>")
-				src.verbs += /mob/living/carbon/human/santa/verb/santa_warmth
-
-		santa_teleport()
-			set name = "Spacemas Warp"
-			set desc = "Warp to somewhere else via the power of Christmas."
-			set category = "Festive Fun"
-
-			if (src.stat || src.transforming)
-				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
-				return 1
-
-			src.verbs -= /mob/living/carbon/human/santa/verb/santa_teleport
-			var/A
-			A = input("Area to jump to", "TELEPORTATION", A) in get_teleareas()
-			var/area/thearea = get_telearea(A)
-			if(thearea.teleport_blocked)
-				boutput(src, "<span class='alert'>That area is blocked from teleportation.</span>")
-				return 1
-
-			src.visible_message("<span class='alert'><B>[src] poofs away in a puff of cold, snowy air!</B></span>")
-			playsound(usr.loc, 'sound/effects/bamf.ogg', 25, 1, -1)
-			playsound(usr.loc, 'sound/machines/fortune_laugh.ogg', 25, 1, -1)
-			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-			smoke.set_up(1, 0, usr.loc)
-			smoke.attach(usr)
-			smoke.start()
-			var/list/L = list()
-			for(var/turf/T in get_area_turfs(thearea.type))
-				if(!T.density)
-					var/clear = 1
-					for(var/obj/O in T)
-						if(O.density)
-							clear = 0
-							break
-					if(clear)
-						L+=T
-			src.set_loc(pick(L))
-
-			SPAWN(30 SECONDS)
-				boutput(src, "<span class='notice'>You may now teleport again.</span>")
-				src.verbs += /mob/living/carbon/human/santa/verb/santa_teleport
-
-		santa_banish()
-			set name = "Banish Krampus"
-			set desc = "Get rid of Krampus. He may return if Christmas Cheer goes too low again though."
-			set category = "Festive Fun"
-
-			if (src.stat || src.transforming)
-				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
-				return 1
-
-			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-			for (var/mob/living/carbon/cube/meat/krampus/K in view(7,src))
-				src.visible_message("<span class='alert'><B>[src] makes a stern gesture at [K]!</B></span>")
-				boutput(K, "<span class='alert'>You have been banished by Santa Claus!</span>")
-				playsound(usr.loc, 'sound/effects/bamf.ogg', 25, 1, -1)
-				smoke.set_up(1, 0, K.loc)
-				smoke.attach(K)
-				smoke.start()
-				K.gib()
-				krampus_spawned = 0
-
 
 // Krampus Stuff
 
@@ -1273,3 +1328,219 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	add_to_landmarks = TRUE
 	desc = "All of Santa's mail gets spawned here."
 	icon_state = "x"
+
+
+proc/get_spacemas_ornaments(only_if_loaded=FALSE)
+	RETURN_TYPE(/list)
+	var/static/spacemas_ornament_data = null
+	if(isnull(spacemas_ornament_data) && !only_if_loaded)
+		spacemas_ornament_data = world.load_intra_round_value("tree_ornaments") || list()
+	. = spacemas_ornament_data
+
+/obj/item/canvas/tree_ornament
+	name = "spacemas tree ornament"
+	desc = "A canvas where you can paint a spacemas tree ornament and hang it on the tree."
+	canvas_width = 16
+	canvas_height = 16
+	left = 9
+	bottom = 9
+	instructions = "Paint on this canvas with crayons/pens to make a spacemas tree ornament. Click on the tree with it afterwards. You can make a single ornament per round."
+	var/list/upvoted
+	var/list/downvoted
+	var/obj/xmastree/on_tree = null
+	var/main_artist = null
+
+	New(atom/loc, icon/art)
+		..()
+		if(art)
+			src.art = art
+			src.icon = art
+
+	Click(location, control, params)
+		. = ..()
+		if(on_tree)
+			pop_open_a_browser_box(usr)
+
+	get_instructions(mob/user)
+		. = ..()
+		if(!src.on_tree)
+			return
+		. = "A cool Spacemas ornament drawn by [src.main_artist].<br>"
+		var/highlight_up = ""
+		var/highlight_down = ""
+		if(user.ckey in src.upvoted)
+			highlight_up = "font-weight: 900;"
+		if(user.ckey in src.downvoted)
+			highlight_down = "font-weight: 900;"
+		. += {"<br>
+		<a href='?src=\ref[src];upvote=1' style='color:#88ff88;[highlight_up]'>👍 (like)</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href='?src=\ref[src];downvote=1' style='color:#ff8888;[highlight_down]'>👎 (dislike)</a>"}
+		if(user?.client?.holder?.level >= LEVEL_SA)
+			. += "<br><a href='?src=\ref[src];remove_ornament=1' style='color:red;'>Annihilate ornament</a>"
+
+	Topic(href, href_list)
+		if(href_list["remove_ornament"])
+			if(src.on_tree && usr?.client?.holder?.level >= LEVEL_SA)
+				if(tgui_alert(usr, "Are you sure you want to remove \the [src] not only from the tree but also from the ornament database?", "Remove ornament", list("Yes", "No")) != "Yes")
+					return
+				get_spacemas_ornaments().Remove(src.name)
+				logTheThing("admin", usr, null, "Removed ornament '[src.name]' from the tree and the ornament database.")
+				qdel(src)
+				boutput(usr, "<span class='alert'>You removed \the [src] from the tree and the ornament database.</span>")
+			return
+		if(href_list["upvote"])
+			if(src.on_tree)
+				if(!src.upvoted)
+					src.upvoted = list()
+				if(!src.downvoted)
+					src.downvoted = list()
+				if(usr.ckey == src.main_artist)
+					boutput(usr, "<span class='alert'>You can't upvote your own ornament.</span>")
+					return
+				if(usr.client?.player?.rounds_participated <= 10)
+					boutput(usr, "<span class='alert'>You need to play at least 10 rounds to be able to downvote ornaments.</span>")
+					return
+				if(usr.ckey in src.downvoted)
+					src.downvoted.Remove(usr.ckey)
+					src.upvoted += usr.ckey
+					boutput(usr, "<span class='alert'>You changed your vote to upvote \the [src].</span>")
+				else if(usr.ckey in src.upvoted)
+					src.upvoted.Remove(usr.ckey)
+					boutput(usr, "<span class='alert'>You removed your upvote from \the [src].</span>")
+				else
+					src.upvoted += usr.ckey
+					boutput(usr, "<span class='alert'>You upvoted \the [src].</span>")
+				get_spacemas_ornaments()[src.name]["upvoted"] = src.upvoted
+				get_spacemas_ornaments()[src.name]["downvoted"] = src.downvoted
+				pop_open_a_browser_box(usr)
+			return
+		if(href_list["downvote"])
+			if(src.on_tree)
+				if(!src.upvoted)
+					src.upvoted = list()
+				if(!src.downvoted)
+					src.downvoted = list()
+				if(usr.ckey == src.main_artist)
+					boutput(usr, "<span class='alert'>You can't downvote your own ornament.</span>")
+					return
+				if(usr.client?.player?.rounds_participated <= 10)
+					boutput(usr, "<span class='alert'>You need to play at least 10 rounds to be able to downvote ornaments.</span>")
+					return
+				if(usr.ckey in src.upvoted)
+					src.upvoted.Remove(usr.ckey)
+					src.downvoted += usr.ckey
+					boutput(usr, "<span class='alert'>You changed your vote to downvote \the [src].</span>")
+				else if(usr.ckey in src.downvoted)
+					src.downvoted.Remove(usr.ckey)
+					boutput(usr, "<span class='alert'>You removed your downvote from \the [src].</span>")
+				else
+					src.downvoted += usr.ckey
+					boutput(usr, "<span class='alert'>You downvoted \the [src].</span>")
+				get_spacemas_ornaments()[src.name]["upvoted"] = src.upvoted
+				get_spacemas_ornaments()[src.name]["downvoted"] = src.downvoted
+				pop_open_a_browser_box(usr)
+			return
+		. = ..()
+
+	init_canvas()
+		base = icon(src.icon, icon_state = "ornament_base")
+		art = icon(src.icon, icon_state = "ornament_blank")
+
+		underlays += base
+		icon = art
+		pixel_artists = list()
+
+	is_writing_implament_valid(obj/item/W, mob/user)
+		if(istype(W, /obj/item/pen/ornament_paintbrush) || istype(W, /obj/item/pen/ornament_eraser))
+			return TRUE
+		. = ..()
+
+	proc/is_ready(mob/send_errors_to_this_guy)
+		if(length(pixel_artists) < 30)
+			if(send_errors_to_this_guy)
+				boutput(send_errors_to_this_guy, "<span class='alert'>You need at least 30 pixels to finish this ornament!</span>")
+			return FALSE
+		return TRUE
+
+	proc/finish(mob/artist)
+		src.icon = src.art
+		var/name = src.name
+		var/i = 1
+		while(name in get_spacemas_ornaments())
+			name = "[src.name] ([i])"
+			i++
+		get_spacemas_ornaments()[name] = list(
+			"art" = src.art,
+			"artist" = artist.ckey,
+			"upvoted" = list(),
+			"downvoted" = list(),
+		)
+
+	disposing()
+		if(on_tree)
+			var/index = on_tree.placed_ornaments.Find(src)
+			if(index)
+				on_tree.placed_ornaments[index] = null
+			on_tree = null
+		..()
+
+
+/obj/item/pen/ornament_paintbrush
+	name = "ornament paintbrush"
+	desc = "A paintbrush for painting ornaments. It's a bit small for painting on much else. You can use it in your hand to change its color."
+	font_color = "#ffffff"
+	icon_state = "brush"
+	clicknoise = FALSE
+	suitable_for_canvas = FALSE
+
+	update_icon()
+		. = ..()
+		var/image/color_overlay = SafeGetOverlayImage("color", src.icon, "brush-paint")
+		color_overlay.color = font_color
+		src.UpdateOverlays(color_overlay, "color")
+
+	attack_self(mob/user)
+		..()
+		if(global.christmas_cheer < 20)
+			boutput(user, "<span class='alert'>The Spacemas cheer is too low, Spacemas spirit doesn't have enough power to change the color of this paintbrush!</span>")
+			return
+		var/new_color = input(user, "Choose a color:", "Ornament paintbrush", src.font_color) as color|null
+		if(new_color)
+			src.font_color = new_color
+			boutput(user, "<span class='notice'>You twirl the paintbrush and the Spacemas spirit changes it to this color: <a href='?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</a>.</span>")
+			src.UpdateIcon()
+
+	Topic(href, href_list)
+		. = ..()
+		if(href_list["setcolor"] && can_reach(usr, src) && can_act(usr, 1))
+			src.font_color = "#" + href_list["setcolor"]
+			boutput(usr, "<span class='notice'>You twirl the paintbrush and the Spacemas spirit changes it to this color again: <a href='?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</a>.</span>")
+			src.UpdateIcon()
+
+	afterattack(atom/target, mob/user)
+		return
+
+	write_on_turf(turf/T, mob/user, params)
+		return
+
+
+/obj/item/pen/ornament_eraser
+	name = "ornament eraser"
+	desc = "An eraser for erasing stuff from ornaments. It's a bit small for erasing much else."
+	icon_state = "eraser"
+	clicknoise = FALSE
+	suitable_for_canvas = FALSE
+	font_color = "#00000000"
+
+	write_on_turf(turf/T, mob/user, params)
+		return
+
+
+/obj/item/storage/box/ornament_kit
+	name = "ornament kit"
+	desc = "A kit for making ornaments. Comes with a paintbrush, an eraser, and a canvas."
+	icon_state = "box_snowflake"
+	slots = 3
+	max_wclass = 1
+	can_hold = list(/obj/item/canvas/tree_ornament, /obj/item/pen/ornament_paintbrush, /obj/item/pen/ornament_eraser)
+	spawn_contents = list(/obj/item/canvas/tree_ornament, /obj/item/pen/ornament_paintbrush, /obj/item/pen/ornament_eraser)

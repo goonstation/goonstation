@@ -1,3 +1,6 @@
+TYPEINFO(/obj/submachine/chef_sink)
+	mats = 12
+
 /obj/submachine/chef_sink
 	name = "kitchen sink"
 	desc = "A water-filled unit intended for cookery purposes."
@@ -5,7 +8,6 @@
 	icon_state = "sink"
 	anchored = 1
 	density = 1
-	mats = 12
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
 	flags = NOSPLASH
 
@@ -138,6 +140,9 @@
 		..()
 
 
+TYPEINFO(/obj/submachine/ice_cream_dispenser)
+	mats = 18
+
 /obj/submachine/ice_cream_dispenser
 	name = "Ice Cream Dispenser"
 	desc = "A machine designed to dispense space ice cream."
@@ -145,7 +150,6 @@
 	icon_state = "ice_creamer0"
 	anchored = 1
 	density = 1
-	mats = 18
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = NOSPLASH
 	var/list/flavors = list("chocolate","vanilla","coffee")
@@ -300,6 +304,9 @@
 
 var/list/oven_recipes = list()
 
+TYPEINFO(/obj/submachine/chef_oven)
+	mats = 18
+
 /obj/submachine/chef_oven
 	name = "oven"
 	desc = "A multi-cooking unit featuring a hob, grill, oven and more."
@@ -307,7 +314,6 @@ var/list/oven_recipes = list()
 	icon_state = "oven_off"
 	anchored = 1
 	density = 1
-	mats = 18
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = NOSPLASH
 	var/emagged = 0
@@ -540,6 +546,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/cheesetoast(src)
 			src.recipes += new /datum/cookingrecipe/bacontoast(src)
 			src.recipes += new /datum/cookingrecipe/eggtoast(src)
+			src.recipes += new /datum/cookingrecipe/churro(src)
 			src.recipes += new /datum/cookingrecipe/nougat(src)
 			src.recipes += new /datum/cookingrecipe/candy_cane(src)
 			src.recipes += new /datum/cookingrecipe/cereal_honey(src)
@@ -903,6 +910,9 @@ table#cooktime a#start {
 		return 1
 
 #define MIN_FLUID_INGREDIENT_LEVEL 10
+TYPEINFO(/obj/submachine/foodprocessor)
+	mats = 18
+
 /obj/submachine/foodprocessor
 	name = "Processor"
 	desc = "Refines various food substances into different forms."
@@ -910,7 +920,6 @@ table#cooktime a#start {
 	icon_state = "processor-off"
 	anchored = 1
 	density = 1
-	mats = 18
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	var/working = 0
 	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/plant/, /obj/item/organ/brain, /obj/item/clothing/head/butt)
@@ -1165,6 +1174,9 @@ table#cooktime a#start {
 
 var/list/mixer_recipes = list()
 
+TYPEINFO(/obj/submachine/mixer)
+	mats = 15
+
 /obj/submachine/mixer
 	name = "KitchenHelper"
 	desc = "A food Mixer."
@@ -1172,7 +1184,6 @@ var/list/mixer_recipes = list()
 	icon_state = "blender"
 	density = 1
 	anchored = 1
-	mats = 15
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	var/list/recipes = null
 	var/list/to_remove = list()

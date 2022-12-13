@@ -2011,7 +2011,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "ahF" = (
-/obj/critter/cat/jones,
+/mob/living/critter/small_animal/cat/jones,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -12886,7 +12886,8 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bia" = (
 /obj/cable{
@@ -12937,7 +12938,8 @@
 	dir = 4
 	},
 /obj/vehicle/forklift,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bin" = (
 /obj/cable{
@@ -13057,7 +13059,8 @@
 	nostick = 1;
 	pixel_x = -11
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "bjj" = (
 /obj/cable{
@@ -13401,7 +13404,8 @@
 /obj/decal/poster/wallsign/research_sign{
 	pixel_y = 32
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/science/lobby)
 "blN" = (
 /obj/machinery/navbeacon{
@@ -13416,7 +13420,8 @@
 	nostick = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/lobby)
 "blS" = (
 /obj/cable{
@@ -15707,7 +15712,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/listeningpost)
 "bAg" = (
 /obj/storage/crate/furnacefuel,
@@ -15731,7 +15737,8 @@
 	desc = "Seems to be a pretty sturdy door.";
 	name = "Listening Post"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/listeningpost)
 "bAl" = (
 /turf/simulated/floor/stairs{
@@ -15802,7 +15809,8 @@
 /area/listeningpost)
 "bAA" = (
 /obj/storage/closet/syndicate/personal,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/listeningpost)
 "bAB" = (
 /obj/machinery/bot/guardbot/bad{
@@ -15858,7 +15866,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/glass,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/listeningpost)
 "bAJ" = (
 /obj/cable{
@@ -15958,7 +15967,8 @@
 /area/listeningpost)
 "bAW" = (
 /obj/machinery/door/airlock,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/listeningpost)
 "bAX" = (
 /turf/simulated/floor/grey/side{
@@ -16555,7 +16565,8 @@
 	location = "QM #2"
 	},
 /obj/machinery/bot/mulebot/QM2,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bJY" = (
 /obj/disposalpipe/segment{
@@ -18363,7 +18374,8 @@
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/storage/tools)
 "cBI" = (
 /obj/cable{
@@ -18976,7 +18988,8 @@
 /obj/potted_plant/potted_plant2{
 	dir = 8
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "cRv" = (
 /obj/disposalpipe/segment/morgue{
@@ -20348,7 +20361,8 @@
 	pixel_x = -8;
 	pixel_y = 28
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "duK" = (
 /obj/decal/poster/wallsign/medbay{
@@ -21925,6 +21939,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/xmastree/ephemeral,
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
 	},
@@ -24613,7 +24628,8 @@
 	codes_txt = "delivery;dir=4";
 	location = "QM #1"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "fkF" = (
 /obj/submachine/ranch_feed_grinder,
@@ -26650,7 +26666,8 @@
 	icon_state = "line1"
 	},
 /obj/machinery/portable_reclaimer,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "ghA" = (
 /obj/machinery/computer/security/wooden_tv,
@@ -26702,7 +26719,8 @@
 	icon_state = "line2"
 	},
 /obj/machinery/portable_reclaimer,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "giG" = (
 /obj/storage/crate,
@@ -32717,7 +32735,8 @@
 	codes_txt = "delivery;dir=4";
 	location = "Medbay Lobby"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/medical/medbay/lobby)
 "jwc" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -32765,7 +32784,8 @@
 	nostick = 1;
 	pixel_x = 11
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/medical/medbay/lobby)
 "jwB" = (
 /obj/machinery/teleport/portal_generator,
@@ -34230,7 +34250,8 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "klI" = (
 /obj/cable{
@@ -35945,7 +35966,8 @@
 	codes_txt = "delivery;dir=4";
 	location = "Tool Storage"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/storage/tools)
 "lfI" = (
 /obj/cable{
@@ -42713,7 +42735,8 @@
 	},
 /obj/machinery/bot/guardbot/bootleg,
 /obj/cable,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "oDl" = (
 /obj/landmark/halloween,
@@ -43031,7 +43054,8 @@
 	icon_state = "0-2"
 	},
 /obj/disposalpipe/segment,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/medical/robotics)
 "oPl" = (
 /obj/cable{
@@ -44139,7 +44163,8 @@
 /obj/machinery/guardbot_dock,
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "psH" = (
 /obj/disposalpipe/segment/mail{
@@ -44612,7 +44637,8 @@
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/machinery/bot/guardbot/gunner,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "pGY" = (
 /obj/cable{
@@ -45040,7 +45066,8 @@
 /turf/space,
 /area/station/com_dish/auxdish)
 "pSU" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "pSX" = (
 /obj/decal/tile_edge/line/white{
@@ -46278,7 +46305,8 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "qDc" = (
 /obj/decal/tile_edge/line/black{
@@ -47787,7 +47815,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/crew_quarters/lounge/port)
 "rpz" = (
 /obj/cable{
@@ -52962,7 +52991,8 @@
 /obj/disposalpipe/segment/mineral{
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "uig" = (
 /obj/cable{
@@ -53670,7 +53700,8 @@
 	},
 /obj/cable,
 /obj/machinery/bot/guardbot/mail,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/science/bot_storage)
 "uAP" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -54546,7 +54577,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/lounge/port)
 "uQP" = (
 /obj/disposalpipe/segment,
@@ -54622,7 +54654,8 @@
 	nostick = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/hallway/primary/southeast)
 "uSg" = (
 /obj/decal/tile_edge/line/white{
@@ -55542,7 +55575,8 @@
 /obj/decal/poster/wallsign/botany_sign{
 	pixel_y = 32
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/hallway/primary/southeast)
 "voE" = (
 /obj/machinery/power/apc/autoname_north,
@@ -58593,7 +58627,8 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/quartermaster/office)
 "wQR" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -61102,7 +61137,8 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "yii" = (
 /obj/disposalpipe/segment,

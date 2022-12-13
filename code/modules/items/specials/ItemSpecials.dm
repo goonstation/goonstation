@@ -14,7 +14,7 @@
 
 /proc/get_dir_alt(var/atom/source, var/atom/target) //Opposite of default get dir, only returns diagonal if target perfectly diagonal
 	if(!source || !target)
-		CRASH("Invalid Params:: Source:[source] Target:[target]")
+		CRASH("Invalid Params for get_dir_alt: Source:[identify_object(source)] Target:[identify_object(target)]")
 	if(abs(source.x-target.x) > abs(source.y-target.y)) //Mostly left/right with a little up or down
 		if(source.x > target.x) //Target left
 			return WEST
@@ -1814,6 +1814,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = ""
 	anchored = 1
+	pass_unstable = FALSE
 	layer = EFFECTS_LAYER_1
 	pixel_x = -64
 	pixel_y = -64

@@ -218,6 +218,8 @@ var/datum/artifact_controller/artifact_controls
 	var/fx_green_max = 255
 	var/fx_blue_min = 0
 	var/fx_blue_max = 255
+	var/fx_alpha_min = 200
+	var/fx_alpha_max = 255
 	var/nofx = 0 // If set to 1, does not apply an overlay but a flat icon_state change.
 	var/scramblechance = 10 //probability to have "fake" artifact with altered appearance
 	var/list/activation_sounds = list()
@@ -240,6 +242,8 @@ var/datum/artifact_controller/artifact_controls
 			artifact.transform = matrix(artifact.transform, -1, 1, MATRIX_SCALE)
 		if(prob(20 * rarityMod))
 			artifact.transform = matrix(artifact.transform, 1, -1, MATRIX_SCALE)
+		if(prob(3*rarityMod))
+			artifact.blend_mode = pick(BLEND_ADD, BLEND_MULTIPLY, BLEND_SUBTRACT)
 
 	proc/generate_name()
 		return "unknown object"
@@ -279,11 +283,16 @@ var/datum/artifact_controller/artifact_controls
 		var/datum/artifact/AD = artifact.artifact
 		var/rarityMod = AD.get_rarity_modifier()
 		if(prob(50 * rarityMod))
-			var/scaling = 1.1 + rand() * 0.2
+			var/scaling = randfloat(1.1, 1.3)
+			while(prob(min(60 * rarityMod, 95)))
+				scaling *= 1.1
 			artifact.transform = matrix(artifact.transform, scaling, scaling, MATRIX_SCALE)
 		if(prob(100 * rarityMod))
 			var/col = rand(100, 230)
 			artifact.color = rgb(col, col, col)
+		else if(prob(100 * rarityMod))
+			var/bright = randfloat(1.1, 1.5)
+			artifact.color = list(bright, 0, 0, 0, bright, 0, 0, 0, bright)
 
 	generate_name()
 		return "unit [pick("alpha","sigma","tau","phi","gamma","epsilon")]-[pick("x","z","d","e","k")] [rand(100,999)]"
@@ -397,6 +406,8 @@ var/datum/artifact_controller/artifact_controls
 	fx_green_max = 255
 	fx_blue_min = 125
 	fx_blue_max = 255
+	fx_alpha_min = 125
+	fx_alpha_max = 200
 	adjectives = list("ornate","regal","imposing","fancy","elaborate","elegant","ostentatious")
 	nouns_large = list("jewel","crystal","sculpture","statue","brazier","ornament","edifice")
 	nouns_small = list("wand","scepter","staff","rod","cane","crozier","trophy")
@@ -410,22 +421,39 @@ var/datum/artifact_controller/artifact_controls
 		var/datum/artifact/AD = artifact.artifact
 		var/rarityMod = AD.get_rarity_modifier()
 		if(prob(300*rarityMod))
-			var/hue1 = prob(100*rarityMod) ? rand(360) : (55 + rand(-10, 10))
-			var/list/col1
-			if(prob(150*rarityMod))
-				col1 = hsv2rgblist(hue1, rand() * 20 + 50, rand() * 20 + 60)
-			else
-				col1 = list(255, 168, 0)
-			var/hue2 = 180 + hue1 + rand(-135, 135)
-			if(prob(100*rarityMod))
-				hue2 = rand(360)
-			var/list/col2 = hsv2rgblist(hue2, rand() * 30 + 70, rand() * 10 + 90)
-			artifact.color = affine_color_mapping_matrix(
-				list("#000000", "#ffa800", "#ae2300", "#0000ff"),
-				list(random_color(), col1, col2, "#0000ff")
-			)
+			if(startswith(artifact.icon_state, "wizard"))
+				var/gem_icon_state = "[artifact.icon_state]-gem"
+				var/image/gem_image = image(artifact.icon, gem_icon_state)
+				var/metal_hue = 360 * 0.1098039215686274 // gold metal yellow
+				var/metal_color = null
+				if(prob(60 * rarityMod))
+					if(prob(60 * rarityMod))
+						metal_color = pick(list(
+							list(200, 200, 200), // silver
+							list(205, 127, 50) // bronze
+						))
+					else
+						metal_hue = rand(360)
+						metal_color = hsv2rgblist(metal_hue, randfloat(50, 70), randfloat(60, 80))
+				var/gem_hue = 180 + metal_hue + rand(-135, 135)
+				if(prob(200 * rarityMod))
+					gem_hue = rand(360)
+				var/gem_color = hsv2rgb(gem_hue, randfloat(70, 100), randfloat(90, 100))
+				gem_image.appearance_flags = RESET_COLOR | PIXEL_SCALE
+				gem_image.color = gem_color
+				if(prob(15 * rarityMod))
+					var/scale = randfloat(1.5, 2.5)
+					gem_image.transform = matrix(null, scale, scale, MATRIX_SCALE)
+					gem_image.alpha = rand(50, 100)
+					gem_image.layer = artifact.layer - 0.1
+				artifact.UpdateOverlays(gem_image, "gem")
+				if(metal_color)
+					artifact.color = color_mapping_matrix(
+						list("#ffa800", "#ae2300", "#0000ff"),
+						list(metal_color, "#ae2300", "#0000ff")
+					)
 		if(prob(50*rarityMod))
-			artifact.alpha = rand(200, 255)
+			artifact.alpha = rand(50, 150)
 
 	generate_name()
 		var/namestring = ""
