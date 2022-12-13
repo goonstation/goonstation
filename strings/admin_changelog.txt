@@ -1,3 +1,6 @@
+(t)sun dec 11 22
+(u)pali
+(*)I moved some things from coder rank to admin rank:<br>announcements and admin PMs no longer strip HTML when sent by admins<br>clicking on the window icon in the very top left corner now lets you access some misc stuff but namely the profiler when you want to know what's causing the lag<br>the detergent event is no longer locker to coders<br>The verbs financial-info, adjust-budget, randomize-appearance, mass-flock-convert and flock-cheats are now on the admin rank
 (t)fri dec 9 22
 (u)aloe
 (*)You can now make people nukeops during nuclear rounds through the normal make-antag menu. It'll handle the overlays and the gear and the renaming and whatever, and even deletes all their old gear. There will probably be some bugs but it's mostly functional.
