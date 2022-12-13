@@ -147,24 +147,24 @@ TYPEINFO(/obj/item/device/audio_log)
 		if (.)
 			return
 		switch(action)
-			if ("Record")
+			if ("record")
 				if (src.mode != MODE_RECORDING)
 					src.mode = MODE_RECORDING
-			if ("Play")
+			if ("play")
 				if (src.mode != MODE_PLAYING)
 					play()
-			if ("Stop")
+			if ("stop")
 				stop()
-			if ("Rewind")
+			if ("rewind")
 				if (src.tape)
 					src.tape.log_line = 1
-			if ("Clear")
+			if ("clear")
 				src.mode = MODE_OFF
 				if (src.tape)
 					src.tape.reset()
-			if ("Loop")
+			if ("loop")
 				continuous = !continuous
-			if ("Eject")
+			if ("eject")
 				src.mode = MODE_OFF
 				src.icon_state = "[initial(src.icon_state)]-empty"
 
@@ -181,10 +181,10 @@ TYPEINFO(/obj/item/device/audio_log)
 
 	attack_self(mob/user as mob)
 		..()
-		if (user.stat || user.restrained() || user.lying)
-			return
-		if ((user.contents.Find(src) || user.contents.Find(src.master) || BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf)))
-			src.ui_interact(user)
+		src.ui_interact(user)
+		// if (user.stat || user.restrained() || user.lying)
+		// 	return
+		// if ((user.contents.Find(src) || user.contents.Find(src.master) || BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf)))
 			// src.add_dialog(user)
 
 			// var/dat = "<TT><b>Audio Logger</b><br>"
@@ -206,7 +206,7 @@ TYPEINFO(/obj/item/device/audio_log)
 			// user.Browse(null, "window=audiolog")
 			// src.remove_dialog(user)
 
-		return
+		// return
 
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/audio_tape))

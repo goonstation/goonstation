@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author disturbherb (https://github.com/disturbherb)
+ * @license MIT
+ */
+
 import { classes } from 'common/react';
 import { useBackend } from '../backend';
 import { Box, Icon, LabeledList, ProgressBar, Slider, Tooltip } from '../components';
@@ -53,13 +60,13 @@ export const AudioLog = (props, context) => {
             </LabeledList>
           </Box>
           <Box className="audiolog__buttonrow">
-            <PushButton isRed index="Record" iconName="circle" />
-            <PushButton index="Play" iconName="play" />
-            <PushButton index="Rewind" iconName="backward" />
-            <PushButton index="Loop" iconName="repeat" />
-            <PushButton index="Stop" iconName="square" />
-            <PushButton index="Clear" iconName="trash" />
-            <PushButton index="Eject" iconName="eject" />
+            <PushButton isRed index="record" tooltip="Record" iconName="circle" />
+            <PushButton index="play" tooltip="Play" iconName="play" />
+            <PushButton index="rewind" tooltip="Rewind" iconName="backward" />
+            <PushButton index="loop" tooltip="Loop" iconName="repeat" />
+            <PushButton index="stop" tooltip="Stop" iconName="square" />
+            <PushButton index="clear" tooltip="Clear" iconName="trash" />
+            <PushButton index="eject" tooltip="Eject" iconName="eject" />
           </Box>
         </Box>
       </Window.Content>
@@ -108,18 +115,31 @@ const PushButton = (props, context) => {
 
   const { act } = useBackend(context);
 
-  const { iconName, index, isRed, keepDown } = props;
+  const { iconName, index, isRed, keepDown, tooltip } = props;
 
   const keyColour = isRed && 'audiolog__buttonelement-red';
 
+  const buttonPress = () => {
+
+  };
+
+  const buttonRelease = () => {
+
+  };
+
   return (
-    <Tooltip content={index} position="top">
+    <Tooltip content={tooltip} position="top">
       <Box
         className={classes([
           'audiolog__buttonelement',
           keyColour,
+          keyActive
+            ? 'audiolog__buttonelement-active'
+            : 'audiolog__buttonelement-red-active',
         ])}
-        onClick={() => act(index)}>
+        onMouseDown={buttonPress()}
+        onMouseLeave={!keepDown && buttonRelease()}
+        onMouseUp={!keepDown && buttonRelease()}>
         <Icon className="fa-fw" name={iconName} />
       </Box>
     </Tooltip>
