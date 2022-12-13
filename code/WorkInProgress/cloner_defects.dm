@@ -486,7 +486,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 
 	on_add()
 		. = ..()
-		APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_FAILED_SPRINT_FLOP, src)
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_FAILED_SPRINT_FLOP, src)
 
 /datum/cloner_defect/overdose_weakness
 	name = "Chemical Weakness"
@@ -495,4 +495,4 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 
 	on_add()
 		. = ..()
-		APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_OVERDOSE_WEAKNESS, src)
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_OVERDOSE_WEAKNESS, src)
