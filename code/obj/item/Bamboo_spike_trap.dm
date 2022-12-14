@@ -185,7 +185,7 @@
 		if (!src || !victim)
 			return
 		var/target = "All"
-		if (victim.organs[src.target_zone])
+		if (victim.organHolder[src.target_zone])
 			target = src.target_zone
 		// we need this to calculate how much chems get transfered
 		// This means damage against the zone, reduced by melee protection, multiplied by transfer multiplier and then rounded
