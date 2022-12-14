@@ -33,7 +33,7 @@
 		. = ..()
 		P = owner.GetParticles("arcfiend")
 		if (!P) // only need to create this on the mob once
-			P = owner.UpdateParticles(new/particles/arcfiend, "arcfiend")
+			owner.UpdateParticles(new/particles/arcfiend, "arcfiend")
 			P = owner.GetParticles("arcfiend")
 		P.spawning = initial(P.spawning)
 
