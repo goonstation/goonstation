@@ -906,7 +906,7 @@ proc/compare_ornament_score(list/a, list/b)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/black, slot_shoes)
 		src.equip_new_if_possible(/obj/item/clothing/glasses/regular, slot_glasses)
 		src.equip_new_if_possible(/obj/item/clothing/head/helmet/space/santahat, slot_head)
-		src.equip_new_if_possible(/obj/item/storage/backpack, slot_back)
+		src.equip_new_if_possible(/obj/item/storage/backpack/red, slot_back)
 		src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
 		src.equip_new_if_possible(/obj/item/card/id/captains_spare/santa, slot_wear_id)
 
