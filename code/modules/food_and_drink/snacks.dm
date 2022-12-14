@@ -541,7 +541,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 			src.bites_left--
 			if (!bites_left)
-				new/obj/item/reagent_containers/food/drinks/bowl(src.loc)
+				new src.dropped_item(src.loc)
 				qdel(src)
 		else
 			..()
