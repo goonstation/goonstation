@@ -71,7 +71,12 @@
 	var/mob/living/critter/small_animal/dog/the_dog = holder.owner
 	var/mob/living/playmate = the_dog.fetch_playmate
 	if (playmate && get_dist(the_dog, playmate) < max_dist)
-		the_dog.visible_message("<span class='notice'>[the_dog] begins happily running towards [playmate] with their picked up item, wagging their tail furiously!</span>")
+		var/obj/item/the_item = the_dog.fetch_item
+		//If the item is too tiny, you cannot clearly see it in the dog's mouth
+		var/seen_item = "the item"
+		if (the_item.w_class > W_CLASS_TINY)
+			seen_item = the_item
+		the_dog.visible_message("<span class='notice'>[the_dog] begins happily running towards [playmate] with [seen_item] in their mouth, wagging their tail furiously!</span>")
 		return list(the_dog.fetch_playmate)
 	else
 		return list()

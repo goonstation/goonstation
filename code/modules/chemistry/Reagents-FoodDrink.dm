@@ -2551,6 +2551,8 @@ datum
 			thirst_value = 0.5
 			hunger_value = 1
 			viscosity = 0.5
+			var/ticks = 0
+
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
@@ -2558,14 +2560,18 @@ datum
 				if (ispug(M))
 					M.changeStatus("poisoned", 8 SECONDS * mult)
 				if (istype(M, /mob/living/critter/small_animal/dog))
-					if (prob(5))
-						M.visible_message("<span class='notice'>[M] looks horribly sick! What did they eat?!</span>")
-					if (prob(5))
-						M.visible_message("<span class='notice'>[M] suddenly vomits everywhere! They are clearly unwell.</span>")
-						M.vomit()
-					if (prob(1))
-						M.visible_message("<span class='notice'>[M] flops on their side and stops moving, letting out a tiny whimper.</span>")
-						M.death()
+					ticks += mult
+					switch (ticks)
+						if (1 to 15)
+							if (prob(5))
+								M.visible_message("<span class='notice'>[M] looks horribly sick! What did they eat?!</span>")
+						if (11 to 40)
+							if (prob(10))
+								M.visible_message("<span class='notice'>[M] suddenly vomits everywhere! They are clearly unwell.</span>")
+								M.vomit()
+						if (40 to INFINITY)
+							M.visible_message("<span class='notice'>[M] flops on their side and stops moving, letting out a tiny whimper.</span>")
+							M.death()
 				..()
 
 			reaction_turf(var/turf/T, var/volume)

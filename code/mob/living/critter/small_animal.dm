@@ -714,7 +714,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 	proc/throw_response(target, item, thrower)
 		// Only ai dogs should play fetch
-		if (src == thrower || is_incapacitated(src) || !istype(item, /obj/item) || !src.ai?.enabled || prob(30))
+		if (src == thrower || is_incapacitated(src) || !istype(item, /obj/item) || !src.ai?.enabled || prob(30) || length(src.ai.priority_tasks) > 0)
 			return
 		var/obj/item/the_item = item
 		if (the_item.w_class >= W_CLASS_NORMAL)
