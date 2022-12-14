@@ -34692,10 +34692,10 @@
 	c_tag = "autotag";
 	dir = 9;
 	invisibility = 101;
+	invuln = 1;
 	name = "autoname - Entertainment";
 	network = "Zeta";
-	tag = "";
-	invuln = 1
+	tag = ""
 	},
 /turf/unsimulated/floor{
 	icon_state = "0,6"
@@ -67487,9 +67487,11 @@
 	},
 /area/iomoon/caves)
 "dXN" = (
-/obj/table/wood/auto/desk,
-/obj/machinery/light/lamp/black,
-/turf/unsimulated/floor/wood/seven,
+/obj/item/gun/kinetic/meowitzer/inert{
+	pixel_y = 6
+	},
+/obj/table/nanotrasen/auto,
+/turf/unsimulated/floor/industrial,
 /area/centcom/offices/sovexe)
 "dYf" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/floor3{
@@ -68135,15 +68137,16 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "fhy" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "A photo of Sov and his spacemen friends!";
-	icon = 'icons/misc/lunar.dmi';
-	icon_state = "photo";
-	name = "crew photo";
-	pixel_y = 28
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
 	},
-/turf/unsimulated/floor/carpet/red/fancy/narrow/ne,
+/obj/stool/chair/couch/red{
+	dir = 4
+	},
+/obj/decal/poster/wallsign/no_smoking{
+	pixel_y = 31
+	},
+/turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
 "fiv" = (
 /obj/table/auto,
@@ -68527,8 +68530,8 @@
 	name = "john_bill"
 	},
 /obj/machinery/computer/transit_shuttle/johnbus{
-	icon_state = "shuttle-embed";
 	embed = 1;
+	icon_state = "shuttle-embed";
 	pixel_y = -25
 	},
 /turf/simulated/floor/shuttle{
@@ -69279,7 +69282,7 @@
 	},
 /area/meat_derelict/guts)
 "hnB" = (
-/turf/unsimulated/floor/carpet/red/fancy/narrow/northsouth,
+/turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
 "hnO" = (
 /turf/unsimulated/floor/wood/two,
@@ -69552,15 +69555,9 @@
 /turf/unsimulated/floor/carpet/red/fancy/edge/north,
 /area/iomoon/base)
 "hQa" = (
-/obj/table/wood/auto/desk,
-/obj/item/paper{
-	icon_state = "paper";
-	info = "Approval for one basement";
-	name = "basement construction permit";
-	pixel_x = -4;
-	pixel_y = -2
-	},
-/turf/unsimulated/floor/wood/seven,
+/obj/table/nanotrasen/auto,
+/obj/item/staff/monkey_staff,
+/turf/unsimulated/floor/industrial,
 /area/centcom/offices/sovexe)
 "hQy" = (
 /obj/item/instrument/saxophone,
@@ -71660,13 +71657,10 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/wizard_station)
 "lNZ" = (
-/obj/critter/frog{
-	dead_state = "frog-space-dead";
-	generic = 0;
-	icon_state = "frog-space";
-	name = "secret frog"
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
 	},
-/turf/unsimulated/floor/carpet/red/fancy/narrow/northsouth,
+/turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
 "lPc" = (
 /obj/stool/bench/blue/auto,
@@ -72965,7 +72959,12 @@
 	},
 /area/centcom/lounge)
 "nTj" = (
-/turf/unsimulated/floor/carpet/red/fancy/narrow/se,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/coffeemaker,
+/obj/table/wood/auto,
+/turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
 "nTv" = (
 /obj/machinery/door/airlock/pyro{
@@ -76388,10 +76387,10 @@
 	c_tag = "autotag";
 	dir = 9;
 	invisibility = 101;
+	invuln = 1;
 	name = "autoname - Entertainment";
 	network = "Zeta";
-	tag = "";
-	invuln = 1
+	tag = ""
 	},
 /obj/invisible_teleporter/receive_only{
 	id = "murderbox"
@@ -76407,10 +76406,15 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/kyle)
 "tXu" = (
-/obj/stool/chair/comfy/purple{
-	dir = 4
+/obj/stool/chair/office/syndie{
+	dir = 4;
+	l_move_time = 300876;
+	last_move = 4;
+	move_speed = 13;
+	name = "cosy chair";
+	p_class = 2
 	},
-/turf/unsimulated/floor/wood/seven,
+/turf/unsimulated/floor/industrial,
 /area/centcom/offices/sovexe)
 "tZb" = (
 /obj/cable{
@@ -76568,8 +76572,26 @@
 	},
 /area/titlescreen)
 "ulB" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/snacks/ingredient/sugar{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/milk{
+	canberandom = 0;
+	pixel_x = 8;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 5
+	},
 /obj/machinery/light,
-/turf/unsimulated/floor/carpet/red/fancy/narrow/sw,
+/obj/drink_rack/mug{
+	pixel_x = -30;
+	pixel_y = 5
+	},
+/turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
 "umf" = (
 /obj/decal/cleanable/dirt,
@@ -76671,11 +76693,18 @@
 	},
 /area/titlescreen)
 "uzz" = (
-/obj/table/wood/auto/desk,
-/obj/item/gun/kinetic/meowitzer/inert{
+/obj/table/nanotrasen/auto,
+/obj/item/gimmickbomb/grenyanda/inert{
+	pixel_x = -6
+	},
+/obj/item/gimmickbomb/grenyanda/inert{
+	pixel_y = 3
+	},
+/obj/item/gimmickbomb/grenyanda/inert{
+	pixel_x = 6;
 	pixel_y = 6
 	},
-/turf/unsimulated/floor/wood/seven,
+/turf/unsimulated/floor/industrial,
 /area/centcom/offices/sovexe)
 "uAi" = (
 /obj/stool/chair/couch/yellow{
@@ -76922,9 +76951,11 @@
 /turf/unsimulated/floor,
 /area/drone/office)
 "uTj" = (
-/obj/table/wood/auto/desk,
-/obj/machinery/computer3/generic/personal,
-/turf/unsimulated/floor/wood/seven,
+/obj/table/nanotrasen/auto,
+/obj/machinery/computer3/generic/personal/meatland{
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/industrial,
 /area/centcom/offices/sovexe)
 "uVv" = (
 /turf/simulated/wall/auto/reinforced/old,
@@ -77759,7 +77790,13 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/katzen)
 "wvy" = (
-/turf/unsimulated/floor/carpet/red/fancy/narrow/nw,
+/obj/stool/chair/couch/red{
+	dir = 8
+	},
+/obj/decal/poster/wallsign/poster_nt{
+	pixel_y = 30
+	},
+/turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
 "wvB" = (
 /obj/machinery/door/airlock/pyro/command/centcom{
@@ -77819,8 +77856,8 @@
 /mob/living/critter/small_animal/cat{
 	icon_state = "cat2";
 	name = "Moo";
-	randomize_name = 0;
-	randomize_look = 0
+	randomize_look = 0;
+	randomize_name = 0
 	},
 /obj/decal/stage_edge{
 	layer = 2.8;
@@ -78235,13 +78272,20 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station/assault_pod)
 "xoF" = (
-/obj/machinery/light{
-	dir = 1
+/obj/table/wood/auto,
+/obj/item/reagent_containers/glass/water_pipe/filled{
+	pixel_x = -5;
+	pixel_y = 15
 	},
-/obj/table/wood/auto/desk,
-/obj/item/gimmickbomb/grenyanda/inert,
-/obj/item/staff/monkey_staff,
-/turf/unsimulated/floor/wood/seven,
+/obj/item/plant/herb/cannabis/mega/spawnable,
+/obj/item/plant/herb/cannabis/mega/spawnable,
+/obj/item/plant/herb/cannabis/mega/spawnable,
+/obj/item/device/light/zippo/syndicate{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/table/nanotrasen/auto,
+/turf/unsimulated/floor/industrial,
 /area/centcom/offices/sovexe)
 "xoW" = (
 /turf/unsimulated/floor/dream/beach{
