@@ -49,7 +49,7 @@
 						//boutput(world, "\b LOG: ADDED HEART FAILURE TO [src].")
 					if (probmult(6))
 						boutput(owner, "<span class='alert'><b>You feel [pick("horrible pain", "awful", "like shit", "absolutely awful", "like death", "like you are dying", "nothing", "warm", "really sweaty", "tingly", "really, really bad", "horrible")]</b>!</span>")
-						owner.setStatusMin("weakened", 3 SECONDS * mult)
+						owner.setStatusMin("weakened", 3 SECONDS)
 					if (probmult(3))
 						owner.changeStatus("paralysis", 2 SECONDS)
 				if (-50 to 0)
