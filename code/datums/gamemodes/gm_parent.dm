@@ -188,7 +188,7 @@
 					for (var/flockname in flocks)
 						var/datum/flock/flock = flocks[flockname]
 						if (flock.flockmind_mind == traitor)
-							stuff_to_output += "Peak total compute value reached: [flock.peak_compute]"
+							stuff_to_output += "Peak total compute value reached: [flock.stats.peak_compute]"
 							if(length(flock.trace_minds))
 								stuff_to_output += "Flocktraces:"
 								for (var/trace_name in flock.trace_minds)

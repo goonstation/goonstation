@@ -80,7 +80,7 @@
 		return TRUE
 	if (!src.flock)
 		return
-	src.flock.peak_compute = max(src.flock.peak_compute, src.flock.total_compute())
+	src.flock.stats.peak_compute = max(src.flock.stats.peak_compute, src.flock.total_compute())
 	if (src.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD * 3 / 4)
 		if (!ON_COOLDOWN(src, "afk_message", FLOCK_AFK_COUNTER_THRESHOLD))
 			boutput(src, "<span class='flocksay'><b>\[SYSTEM: Sentience pause detected. Preparing promotion routines.\]</b></span>")
@@ -139,7 +139,7 @@
 	if (src.tutorial && !suicide)
 		return
 	src.emote("scream")
-	if (src.flock.peak_compute < 200 && src.current_try < src.max_tries)
+	if (src.flock.stats.peak_compute < 200 && src.current_try < src.max_tries)
 		src.reset()
 		src.flock?.perish(FALSE)
 		src.current_try++
