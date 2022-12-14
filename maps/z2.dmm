@@ -78285,6 +78285,10 @@
 	pixel_y = 4
 	},
 /obj/table/nanotrasen/auto,
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/unsimulated/floor/industrial,
 /area/centcom/offices/sovexe)
 "xoW" = (
