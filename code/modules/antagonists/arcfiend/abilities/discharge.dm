@@ -8,11 +8,13 @@
 	targeted = TRUE
 	pointCost = 25
 	///how far to knock mobs away from ourselves
-	var/target_dist = 3
+	var/target_dist = 4
 	///how fast to throw affected mobs away
 	var/throw_speed = 1
 	/// This is the amount of power considered to be in use when we're shocking a mob.
 	var/wattage = 7500 WATTS
+	/// how much direct burn damage this attack deals, on top of any damage from the shock itself
+	var/direct_burn_damage = 15
 
 	cast(atom/target)
 		. = ..()
@@ -23,6 +25,11 @@
 		if (ismob(target))
 			var/mob/M = target
 			M.shock(src.holder.owner, src.wattage, ignore_gloves = TRUE)
+			if (issilicon(M))
+				M.TakeDamage("All", 0, direct_burn_damage*3, 0, DAMAGE_BURN)
+				playsound(src.holder.owner, 'sound/effects/electric_shock.ogg', 50, TRUE) // needed for borgs hit to play the sound
+			else
+				M.TakeDamage("All", 0, direct_burn_damage, 0, DAMAGE_BURN)
 			target.add_fingerprint(src.holder.owner)
 			var/turf/T = get_ranged_target_turf(M, get_dir(holder.owner, M), target_dist)
 			if (T)

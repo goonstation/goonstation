@@ -16,7 +16,7 @@
 
 
 /datum/action/bar/private/flash
-	duration = 1 SECONDS
+	duration = 0.75 SECONDS
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ACT
 	///how far to knock mobs away from ourselves
 	var/target_dist = 7
