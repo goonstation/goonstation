@@ -25,6 +25,12 @@
 				if(!A.Cross(src))
 					src.throw_impact(A, thr)
 					. = TRUE
+			//Would be an idea to move all these checks into its own proc so non-humans don't need to check for this
+			if(ishuman(src) && istype(A, /obj/item/bamboo_spike_trap))
+				var/obj/item/bamboo_spike_trap/M = A
+				if(M.armed)
+					src.throw_impact(M, thr)
+					. = TRUE
 
 /atom/movable/proc/throw_begin(atom/target, turf/thrown_from, mob/thrown_by)
 

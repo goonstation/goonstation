@@ -1471,6 +1471,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\flock\structure\rift.dm"
 #include "code\obj\flock\structure\sentinel.dm"
 #include "code\obj\item\ai_modules.dm"
+#include "code\obj\item\Bamboo_spike_trap.dm"
 #include "code\obj\item\barrier.dm"
 #include "code\obj\item\basketball.dm"
 #include "code\obj\item\beartrap.dm"
