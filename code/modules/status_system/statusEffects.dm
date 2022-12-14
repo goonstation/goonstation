@@ -2258,3 +2258,54 @@
 
 #undef LAUNDERED_COLDPROT_AMOUNT
 #undef LAUNDERED_STAIN_TEXT
+
+/datum/statusEffect/criticalcondition
+	id = "critical condition"
+	name = "Critical Condition"
+	icon_state = "heart-"
+	maxDuration = 10 SECONDS
+	var/mob/living/carbon/human/H
+
+	getTooltip()
+		. = "You are in very bad shape. Max stamina reduced by 100 and stamina regen reduced by 5."
+
+	onAdd(optional=null)
+		. = ..()
+		if (ishuman(owner))
+			H = owner
+		else
+			owner.delStatus("critical condition")
+		APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "critical condition", -5)
+		H.add_stam_mod_max("critical condition", -100)
+
+	onRemove()
+		. = ..()
+		REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "critical condition")
+		H.remove_stam_mod_max("critical condition")
+		H.changeStatus("recent trauma", 90 SECONDS)
+
+
+/datum/statusEffect/recenttrauma
+	id = "recent trauma"
+	name = "Recent Trauma"
+	icon_state = "-"
+	maxDuration = 90 SECONDS
+	var/mob/living/carbon/human/H
+
+	getTooltip()
+		. = "You are recovering from being in critical condition. Max stamina reduced by 50 and stamina regen reduced by 2."
+
+	onAdd(optional=null)
+		. = ..()
+		if (ishuman(owner))
+			H = owner
+		else
+			owner.delStatus("recent trauma")
+		APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "recent trauma", -2)
+		H.add_stam_mod_max("recent trauma", -50)
+
+	onRemove()
+		. = ..()
+		REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "recent trauma")
+		H.remove_stam_mod_max("recent trauma")
+

@@ -1,5 +1,9 @@
 
 (t)wed dec 14 22
+(u)Sord
+(e)⚖|C-Balance
+(*)Going into Critical Condition now grants a large negative debuff to stamina and stamina regen. Once you leave crit you will receive a smaller "Recent Trauma" debuff.
+(*)Recent Trauma can be reduced by having painkillers (salicylic acid, morphine) in your system.
 (u)Sovexe
 (p)12394
 (e)⚖🧫🔊🔨|C-Balance, C-Experimental, C-Sound, A-Player-Actions
