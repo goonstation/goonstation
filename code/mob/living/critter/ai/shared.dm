@@ -240,6 +240,8 @@
 	var/mob/targetted_mob = null
 
 /datum/aiTask/sequence/goalbased/retaliate/New(parentHolder, transTask, var/mob/attacker)
+	if(isnull(attacker))
+		CRASH("Tried to instantiate a retaliate task without a target. This task should not be added to your ai's tasks")
 	src.targetted_mob = attacker
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/retaliate, list(holder)))
