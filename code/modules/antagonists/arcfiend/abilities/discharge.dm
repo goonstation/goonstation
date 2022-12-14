@@ -26,10 +26,10 @@
 			var/mob/M = target
 			M.shock(src.holder.owner, src.wattage, ignore_gloves = TRUE)
 			if (issilicon(M))
-				M.TakeDamage("All", 0, direct_burn_damage*3, 0, DAMAGE_BURN)
+				random_burn_damage(M, direct_burn_damage*2)
 				playsound(src.holder.owner, 'sound/effects/electric_shock.ogg', 50, TRUE) // needed for borgs hit to play the sound
 			else
-				M.TakeDamage("All", 0, direct_burn_damage, 0, DAMAGE_BURN)
+				random_burn_damage(M, direct_burn_damage)
 			target.add_fingerprint(src.holder.owner)
 			var/turf/T = get_ranged_target_turf(M, get_dir(holder.owner, M), target_dist)
 			if (T)
