@@ -2557,7 +2557,7 @@ datum
 				M.reagents.add_reagent("sugar", 0.8 * mult)
 				if (ispug(M))
 					M.changeStatus("poisoned", 8 SECONDS * mult)
-				if (istype(M, /mob/living/critter/small_animal/dog))
+				else if (istype(M, /mob/living/critter/small_animal/dog))
 					if (prob(5))
 						M.visible_message("<span class='notice'>[M] looks horribly sick! What did they eat?!</span>")
 					if (prob(5))
