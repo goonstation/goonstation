@@ -234,7 +234,7 @@
 /// This one makes the mob move towards a target mob and attack it. Repeats until the target is dead, gone, too far, or we are incapacitated. Called upon being attacked if the ai is set to retaliate
 /datum/aiTask/sequence/goalbased/retaliate
 	name = "retaliating"
-	weight = 3
+	weight = -100
 	max_dist = 7
 	ai_turbo = TRUE
 	var/mob/targetted_mob = null
