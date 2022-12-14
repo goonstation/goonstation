@@ -1,177 +1,136 @@
+/**
+ * @copyright 2022
+ * @author DisturbHerb (https://github.com/DisturbHerb/)
+ * @license MIT
+ */
+
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Divider, LabeledList, NoticeBox, Section, Tabs } from '../../components';
+import { Box, Button, Divider, Icon, NoticeBox, Section, Tabs } from '../../components';
 import { Window } from '../../layouts';
 import { AtmData, AtmTabKeys } from './types';
 
-export const Atm = (props, context) => {
-  const { data } = useBackend<AtmData>(context);
-  const { loggedIn } = data;
-
+export const Atm = (_, context) => {
   const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', AtmTabKeys.Teller);
-
   return (
-    <Window
-      title="Automatic Teller Machine"
-      width={375}
-      height={375}>
+    <Window title="Automatic Teller Machine" width={375} height={375}>
       <Window.Content>
         <Tabs fluid>
-          <Tabs.Tab
-            icon="money-bills"
-            selected={tabIndex === AtmTabKeys.Teller}
-            onClick={() => setTabIndex(AtmTabKeys.Teller)}>
+          <Tabs.Tab icon="money-bills" selected={tabIndex === AtmTabKeys.Teller} onClick={() => setTabIndex(AtmTabKeys.Teller)}>
             ATM
           </Tabs.Tab>
-          <Tabs.Tab
-            icon="coins"
-            selected={tabIndex === AtmTabKeys.Spacebux}
-            onClick={() => setTabIndex(AtmTabKeys.Spacebux)}>
+          <Tabs.Tab icon="coins" selected={tabIndex === AtmTabKeys.Spacebux} onClick={() => setTabIndex(AtmTabKeys.Spacebux)}>
             Spacebux
           </Tabs.Tab>
         </Tabs>
-        { tabIndex === AtmTabKeys.Teller && <Teller />}
-        { tabIndex === AtmTabKeys.Spacebux && <SpacebuxMenu />}
+        {tabIndex === AtmTabKeys.Teller && <Teller />}
+        {tabIndex === AtmTabKeys.Spacebux && <SpacebuxMenu />}
       </Window.Content>
     </Window>
   );
 };
 
-const Teller = (props, context) => {
+const Teller = (_, context) => {
   const { data } = useBackend<AtmData>(context);
   const { loggedIn, scannedCard } = data;
 
   return (
     <Box>
       <Section title="Automatic Teller Machine">
-        { !scannedCard
-          && (
-            <NoticeBox info>
-              Please insert card and enter PIN to access your account.
-            </NoticeBox>
-          )}
+        {!scannedCard && <NoticeBox info>Please swipe card and enter PIN to access your account.</NoticeBox>}
         <Box>
-          { !scannedCard ? (
-            <InsertCard />
-          ) : (
-            <InsertedCard />
-          )}
+          {!scannedCard ? <InsertCard /> : <InsertedCard />}
         </Box>
       </Section>
-      { loggedIn === 2 && <Lottery /> }
+      {loggedIn === 2 && <Lottery />}
     </Box>
   );
 };
 
-const InsertCard = (props, context) => {
+const InsertCard = (_, context) => {
   const { act } = useBackend(context);
   return (
     <Box>
-      <Button
-        icon="id-card"
-        content={'Swipe ID'}
-        onClick={() => act('insert_card')} />
+      <Button icon="id-card" content={'Swipe ID'} onClick={() => act('insert_card')} />
     </Box>
   );
 };
 
-const InsertedCard = (props, context) => {
+const InsertedCard = (_, context) => {
   const { act, data } = useBackend<AtmData>(context);
   const { loggedIn, scannedCard } = data;
   return (
     <Box>
-      <Button
-        icon="eject"
-        content={scannedCard}
-        onClick={() => act('logout')} />
+      <Button icon="eject" content={scannedCard} onClick={() => act('logout')} />
       <Divider />
-      <Box>
-        { loggedIn === 2 ? <LoggedIn /> : <InputPIN /> }
-      </Box>
+      <Box>{loggedIn === 2 ? <LoggedIn /> : <InputPIN />}</Box>
     </Box>
   );
 };
 
-const InputPIN = (props, context) => {
+const InputPIN = (_, context) => {
   const { act } = useBackend(context);
-  const [enteredPIN, setEnteredPIN] = useLocalState(context, "enteredPIN", null);
   return (
     <Box>
-      <Button
-        icon="sign-out-alt"
-        content={'Enter PIN'}
-        onClick={() => act('login_attempt')}
-      />
+      <Button icon="sign-out-alt" content={'Enter PIN'} onClick={() => act('login_attempt')} />
     </Box>
   );
 };
 
-const LoggedIn = (props, context) => {
-  const { act, data } = useBackend(context);
+const LoggedIn = (_, context) => {
+  const { act, data } = useBackend<AtmData>(context);
+  const { accountBalance, accountName } = data;
   return (
-    <Section>
+    <Box>
       <Box>
-        Welcome, <strong>USR</strong>.
+        <p>
+          Welcome, <strong>{accountName}.</strong>
+        </p>
+        <p>
+          Your account balance is <strong>{accountBalance}⪽.</strong>
+        </p>
       </Box>
       <Divider />
-      <LabeledList>
-        <LabeledList.Item label="Account Balance">
-          <strong>$0</strong>
-        </LabeledList.Item>
-      </LabeledList>
-      <Divider />
-      <Box>
-        <Button
-          icon="dollar-sign"
-          content={'Withdraw cash'}
-          onClick={() => act('withdrawal_attempt')} />
-      </Box>
-    </Section>
+      <Button
+        icon="money-bill" content={'Withdraw cash'} onClick={() => act('withdrawcash')} />
+    </Box>
   );
 };
 
-const Lottery = (props, context) => {
+const Lottery = (_, context) => {
   const { act } = useBackend(context);
   return (
     <Section title="Lottery">
-      <NoticeBox info>
-        To claim your winnings, you must insert your lottery ticket.
-      </NoticeBox>
+      <NoticeBox info>To claim your winnings, you must insert your lottery ticket.</NoticeBox>
       <Divider />
       <Box>
-        <Button
-          icon="ticket-alt"
-          content={'Purchase Lottery Ticket (100 credits)'}
-          onClick={() => act('purchase_lottery')} />
+        <Button icon="ticket-alt" content={'Purchase Lottery Ticket (100⪽)'} onClick={() => act('buy')} />
       </Box>
     </Section>
   );
 };
 
-const SpacebuxMenu = (props, context) => {
-  const { act, data } = useBackend(context);
+const SpacebuxMenu = (_, context) => {
+  const { act, data } = useBackend<AtmData>(context);
+  const { spacebuxBalance } = data;
   return (
     <Box>
       <Section title="Spacebux Menu">
         <NoticeBox info>
-          This menu is only here for you. Deposit Spacebux at any time by inserting a token.
-          It will always go to <strong>your</strong> account!
+          This menu is only visible to you. Deposit Spacebux into your account at any time by inserting a token.
         </NoticeBox>
         <Divider />
         <Box>
-          Current balance: <strong>0</strong> Spacebux
+          Your Spacebux balance is currently{' '}
+          <strong>
+            {spacebuxBalance} <Icon name="fa-solid fa-coins" />
+          </strong>
         </Box>
         <Divider />
         <Box>
-          <Button
-            icon="coins"
-            content={'Withdraw Spacebux'}
-            onClick={() => act('withdraw_spacebux')} />
+          <Button icon="coins" content={'Withdraw Spacebux'} onClick={() => act('withdraw_spacebux')} />
         </Box>
         <Box>
-          <Button
-            icon="envelope"
-            content={'Securely send Spacebux'}
-            onClick={() => act('send_spacebux')} />
+          <Button icon="envelope" content={'Securely send Spacebux'} onClick={() => act('transfer_spacebux')} />
         </Box>
       </Section>
     </Box>
