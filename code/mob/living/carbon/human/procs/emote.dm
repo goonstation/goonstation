@@ -1,8 +1,8 @@
 // emote
 
-
-
 /mob/living/carbon/human/emote(var/act, var/voluntary = 0, var/emoteTarget = null) //mbc : if voluntary is 2, it's a hotkeyed emote and that means that we can skip the findtext check. I am sorry, cleanup later
+	set waitfor = FALSE
+	..()
 	var/param = null
 
 	if (!bioHolder) bioHolder = new/datum/bioHolder( src )
@@ -26,10 +26,6 @@
 		var/datum/pathogen/P = src.pathogens[uid]
 		if (P.onemote(act, voluntary, param))
 			return
-
-	for (var/obj/item/implant/I in src.implant)
-		if (I.implanted)
-			I.trigger(act, src)
 
 	var/muzzled = (src.wear_mask && src.wear_mask.is_muzzle)
 	var/m_type = 1 //1 is visible, 2 is audible
@@ -432,7 +428,7 @@
 			if ("custom")
 				if (src.client)
 					if (IS_TWITCH_CONTROLLED(src)) return
-					var/input = sanitize(html_encode(input("Choose an emote to display.")))
+					var/input = copytext(sanitize(html_encode(input("Choose an emote to display."))), 1, MAX_MESSAGE_LEN)
 					var/input2 = input("Is this a visible or audible emote?") in list("Visible","Audible")
 					if (input2 == "Visible") m_type = 1
 					else if (input2 == "Audible") m_type = 2
@@ -450,7 +446,7 @@
 					param = input("Choose an emote to display.")
 					if(!param) return
 
-				param = sanitize(html_encode(param))
+				param = copytext(sanitize(html_encode(param)), 1, MAX_MESSAGE_LEN)
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
 				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
@@ -462,7 +458,7 @@
 				if (!param)
 					param = input("Choose an emote to display.")
 					if(!param) return
-				param = sanitize(html_encode(param))
+				param = copytext(sanitize(html_encode(param)), 1, MAX_MESSAGE_LEN)
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
 				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
@@ -473,7 +469,7 @@
 				if (IS_TWITCH_CONTROLLED(src)) return
 				if (!param)
 					return
-				param = sanitize(html_encode(param))
+				param = copytext(sanitize(html_encode(param)), 1, MAX_MESSAGE_LEN)
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
 				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
@@ -2272,13 +2268,6 @@
 				for (var/mob/O in A.contents)
 					O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
 
-// I'm very sorry for this but it's to trick the linter into thinking emote doesn't sleep (since it usually doesn't)
-// you see from the important places it's called as emote("scream") etc. which doesn't actually sleep but for the linter to recognize
-// that would be difficult, datumize emotes 2day!
-#ifdef SPACEMAN_DMM
-/mob/living/carbon/human/emote(var/act, var/voluntary = 0, var/emoteTarget = null)
-#endif
-
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)
 	var/datum/gas_mixture/gas = new /datum/gas_mixture
@@ -2409,25 +2398,19 @@
 /mob/living/proc/get_targets(range = 1, kind_of_target = "mob")
 	if(!isturf(get_turf(src))) return
 
-	var/list/atom/movable/everything_around = list()
-
-	for(var/atom/movable/AM in view(range, get_turf(src)))
-		if(AM == src)
-			continue
-		everything_around |= AM
-
+	var/list/targets = list()
 	switch(kind_of_target)
 		if("both")
-			return everything_around
+			for(var/atom/movable/AM in view(range, get_turf(src)))
+				if(AM == src)
+					continue
+				targets += AM
 		if("mob")
-			. = list()
-			for(var/mob/M in everything_around)
-				if(M == src)
+			for(var/mob/M in view(range, get_turf(src)))
+				if(M == src || isintangible(M) || isobserver(M))
 					continue
-				. |= M
+				targets += M
 		if("obj")
-			. = list()
-			for(var/obj/O in everything_around)
-				if(O == src)
-					continue
-				. |= O
+			for(var/obj/O in view(range, get_turf(src)))
+				targets += O
+	return targets

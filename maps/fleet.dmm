@@ -94,7 +94,8 @@
 "ao" = (
 /obj/decal/fakeobjects/cargopad,
 /obj/item/a_gift,
-/turf/simulated/floor/airless/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/airless,
 /area/space)
 "ap" = (
 /obj/table/wood/auto,
@@ -192,13 +193,15 @@
 	},
 /obj/rack,
 /obj/item/clothing/head/emerg,
-/turf/simulated/floor/airless/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/airless,
 /area/space)
 "aB" = (
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/turf/simulated/floor/airless/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/airless,
 /area/space)
 "aC" = (
 /obj/decal/fakeobjects{
@@ -3353,7 +3356,8 @@
 	name = "Erebus transportation unit"
 	},
 /obj/disposalpipe/trunk/south,
-/turf/simulated/floor/delivery/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/station/engine/engineering{
 	name = "Maru Primary Zone"
 	})
@@ -17581,7 +17585,8 @@
 	name = "Erebus transportation unit"
 	},
 /obj/disposalpipe/trunk/north,
-/turf/simulated/floor/delivery/caution,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/orangeblack,
 /area/station/science/tenebrae)
 "Iz" = (
 /obj/item/storage/wall/emergency{
@@ -18202,7 +18207,8 @@
 	desc = "Seems to be a pretty sturdy door.";
 	name = "Listening Post"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/listeningpost)
 "JU" = (
 /obj/machinery/light/small{
@@ -20254,12 +20260,14 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/bot/darkpurple,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/darkpurple,
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
 	})
 "Oc" = (
-/turf/simulated/floor/bot/darkpurple,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/darkpurple,
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
 	})
@@ -23749,7 +23757,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/bot/darkpurple,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/darkpurple,
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
 	})

@@ -7,6 +7,9 @@
 
 #define MAX_FAILED_CLONE_TICKS 200 // vOv
 
+TYPEINFO(/obj/machinery/clonepod)
+	mats = list("MET-1"=35, "honey"=5)
+
 /obj/machinery/clonepod
 	anchored = 1
 	name = "cloning pod"
@@ -15,7 +18,6 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0_lowmeat"
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
-	mats = list("MET-1"=35, "honey"=5)
 	var/meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
 	var/mob/living/occupant
 	var/heal_level = 10 //The clone is released once its health^W damage (maxHP - HP) reaches this level.
@@ -207,7 +209,7 @@
 	// Start cloning someone (transferring mind + DNA into new body),
 	// starting a new clone cycle if needed
 	// Returns 1 (stated) or 0 (failed to start for some reason)
-	proc/growclone(mob/ghost as mob, var/clonename, var/datum/mind/mindref, var/datum/bioHolder/oldholder, var/datum/abilityHolder/oldabilities, var/datum/traitHolder/traits)
+	proc/growclone(mob/ghost as mob, var/clonename, var/datum/mind/mindref, var/datum/bioHolder/oldholder, var/datum/abilityHolder/oldabilities, var/datum/traitHolder/traits, var/datum/cloner_defect_holder/defects)
 		if (((!ghost) || (!ghost.client)) || src.mess || src.attempting)
 			return 0
 
@@ -257,11 +259,19 @@
 		if(src.occupant.client) // gross hack for resetting tg layout bleh bluh
 			src.occupant.client.set_layout(src.occupant.client.tg_layout)
 
-		if(!src.perfect_clone && src.occupant.bioHolder.clone_generation > 1)
-			var/health_penalty = (src.occupant.bioHolder.clone_generation - 1) * 15
-			src.occupant.setStatus("maxhealth-", null, -health_penalty)
-			if(health_penalty >= 100)
-				src.occupant.unlock_medal("Quit Cloning Around")
+		if (!defects)
+			stack_trace("Clone [identify_object(src.occupant)] generating with a null `defects` holder.")
+			defects = new /datum/cloner_defect_holder
+
+		// Little weird- we only want to apply cloner defects after they're ejected, so we apply it as soon as they change loc instead of right now
+		defects.apply_to_on_move(src.occupant)
+
+		if (!src.clonehack) // syndies get good clones
+			for (var/i in 1 to rand(0, (src.emagged ? 6 : 3))) // uniform chance between 0-3, 0-6 if emagged
+				defects.add_random_cloner_defect()
+
+		if (length(defects.active_cloner_defects) > 7)
+			src.occupant.unlock_medal("Quit Cloning Around")
 
 		src.mess = FALSE
 		var/is_puritan = FALSE
@@ -824,6 +834,9 @@
 	*/
 
 //WHAT DO YOU WANT FROM ME(AT)
+TYPEINFO(/obj/machinery/clonegrinder)
+	mats = 10
+
 /obj/machinery/clonegrinder
 	name = "enzymatic reclaimer"
 	desc = "A tank resembling a rather large blender, designed to recover biomatter for use in cloning."
@@ -831,7 +844,6 @@
 	icon_state = "grinder0"
 	anchored = 1
 	density = 1
-	mats = 10
 	var/list/pods = null // cloning pods we're tied to
 	var/id = null // if this isn't null, we'll only look for pods with this ID
 	var/pod_range = 4 // if we don't have an ID, we look for pods in orange(this value)

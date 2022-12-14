@@ -156,6 +156,32 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	src.player?.log_leave_time() //logs leave time, calculates played time on player datum
 	src.player?.cached_jobbans = null //Invalidate their job ban cache.
 
+	var/list/dc = datum_components
+	if(dc)
+		var/all_components = dc[/datum/component]
+		if(length(all_components))
+			for (var/datum/component/C as anything in all_components)
+				qdel(C, FALSE, TRUE)
+		else
+			var/datum/component/C = all_components
+			qdel(C, FALSE, TRUE)
+		dc.Cut()
+
+	var/list/lookup = comp_lookup
+	if(lookup)
+		for(var/sig in lookup)
+			var/list/comps = lookup[sig]
+			if(length(comps))
+				for (var/datum/component/comp as anything in comps)
+					comp.UnregisterSignal(src, sig)
+			else
+				var/datum/component/comp = comps
+				comp.UnregisterSignal(src, sig)
+		comp_lookup = lookup = null
+
+	for(var/target in signal_procs)
+		UnregisterSignal(target, signal_procs[target])
+
 	return ..()
 
 /client/New()
@@ -531,7 +557,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	src.reputations = new(src)
 
-	if(src.holder && src.holder.level >= LEVEL_CODER)
+	if(src.holder && src.holder.level >= LEVEL_ADMIN)
 		src.control_freak = 0
 
 	if (browse_item_initial_done)
@@ -1040,7 +1066,7 @@ var/global/curr_day = null
 				return
 			var/target = href_list["nick"]
 			var/t = input("Message:", text("Private message to [target] (Discord)")) as null|text
-			if(!(src.holder && (src.holder.rank in list("Host", "Coder"))))
+			if(!(src.holder && src.holder.level >= LEVEL_ADMIN))
 				t = strip_html(t,500)
 			if (!( t ))
 				return
@@ -1074,7 +1100,7 @@ var/global/curr_day = null
 				return
 			var/target = href_list["nick"]
 			var/t = input("Message:", text("Mentor Message")) as null|text
-			if(!(src.holder && (src.holder.rank in list("Host", "Coder"))))
+			if(!(src.holder && src.holder.level >= LEVEL_ADMIN))
 				t = strip_html(t, 1500)
 			if (!( t ))
 				return
@@ -1112,7 +1138,7 @@ var/global/curr_day = null
 				var/t = input("Message:", text("Mentor Message")) as null|text
 				if (href_list["target"])
 					M = ckey_to_mob(href_list["target"])
-				if (!(src.holder && (src.holder.rank in list("Host", "Coder"))))
+				if (!(src.holder && src.holder.level >= LEVEL_ADMIN))
 					t = strip_html(t, 1500)
 				if (!( t ))
 					return

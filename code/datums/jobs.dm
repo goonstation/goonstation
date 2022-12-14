@@ -381,10 +381,10 @@ ABSTRACT_TYPE(/datum/job/command)
 		if (!M)
 			return
 
-		var/obj/critter/domestic_bee/heisenbee/heisenbee = locate() in range(M, 7)
-		if (istype(heisenbee) && !heisenbee.beeMom)
-			heisenbee.beeMom = M
-			heisenbee.beeMomCkey = M.ckey
+		for_by_tcl(heisenbee, /obj/critter/domestic_bee/heisenbee)
+			if (!heisenbee.beeMom)
+				heisenbee.beeMom = M
+				heisenbee.beeMomCkey = M.ckey
 
 /datum/job/command/medical_director
 	name = "Medical Director"
@@ -2269,7 +2269,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		else
 			M.real_name = "Syndicate Operative [M.real_name]"
 
-		antagify(M, ROLE_NUKEOP, 0)
+		antagify(M, ROLE_NUKEOP, do_objectives = FALSE)
 		equip_syndicate(M, leader)
 		return
 

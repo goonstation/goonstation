@@ -443,11 +443,12 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 //adhara office
 
 //adhara herself....?
-/obj/critter/cat/cathara
+/mob/living/critter/small_animal/cat/cathara
 	name = "Cathara"
 	desc = "...is this really her?? Do they let cats be admins??"
 	icon_state = "cat1"
-	randomize_cat = 0
+	randomize_name = FALSE
+	randomize_look = FALSE
 
 	New()
 		..()
@@ -660,7 +661,7 @@ proc/put_mob_in_centcom_cloner(mob/living/L, indirect=FALSE)
 	if(!istype(AR, /area/centcom/reconstitutioncenter))
 		clone.set_loc(get_centcom_mob_cloner_spawn_loc())
 	if(!indirect)
-		L.density = TRUE
+		L.set_density(TRUE)
 		L.set_a_intent(INTENT_HARM)
 		L.dir_locked = TRUE
 	playsound(clone, 'sound/machines/ding.ogg', 50, 1)

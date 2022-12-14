@@ -101,6 +101,11 @@
 			var/mob/M = src
 			M.force_laydown_standup()
 
+	if (istype(src.loc, /obj/vehicle))
+		var/obj/vehicle/V = src.loc
+		if (V.can_eject_items)
+			src.set_loc(get_turf(V))
+
 	src.last_throw_x = src.x
 	src.last_throw_y = src.y
 	src.throw_begin(target, thrown_from, thrown_by)

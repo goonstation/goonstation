@@ -14,6 +14,9 @@
 //	weight = 1.0E8
 
 ABSTRACT_TYPE(/obj/item/circuitboard)
+TYPEINFO(/obj/item/circuitboard)
+	mats = 6
+
 /obj/item/circuitboard
 	density = 0
 	anchored = 0
@@ -28,7 +31,6 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 	var/computertype = null
 	var/powernet = null
 	var/list/records = null
-	mats = 6
 
 	New()
 		. = ..()
