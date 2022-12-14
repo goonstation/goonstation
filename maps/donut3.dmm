@@ -9289,7 +9289,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/computer/chem_requester/science{
-	area_name = "Quarter Master's office"
+	area_name = "Quartermaster's office"
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)

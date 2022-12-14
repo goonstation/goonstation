@@ -3878,7 +3878,7 @@
 "bPw" = (
 /obj/machinery/computer/chem_requester/science{
 	dir = 8;
-	area_name = "Quarter Master's office"
+	area_name = "Quartermaster's office"
 	},
 /turf/simulated/floor/orangeblack/side,
 /area/station/quartermaster/cargooffice)
