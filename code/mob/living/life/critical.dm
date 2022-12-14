@@ -9,7 +9,7 @@
 			return ..()
 
 		if (owner.health < 0 && !isdead(owner))
-			owner.changeStatus("critical condition", 10 SECONDS) // Always receive this when in crit
+			owner.changeStatus("critical_condition", 10 SECONDS) // Always receive this when in crit
 			if (probmult(5))
 				owner.emote(pick("faint", "collapse", "cry","moan","gasp","shudder","shiver"))
 			if (owner.stuttering <= 5)

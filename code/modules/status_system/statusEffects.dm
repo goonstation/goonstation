@@ -2260,7 +2260,7 @@
 #undef LAUNDERED_STAIN_TEXT
 
 /datum/statusEffect/criticalcondition
-	id = "critical condition"
+	id = "critical_condition"
 	name = "Critical Condition"
 	icon_state = "heart-"
 	maxDuration = 10 SECONDS
@@ -2274,19 +2274,20 @@
 		if (ishuman(owner))
 			H = owner
 		else
-			owner.delStatus("critical condition")
-		APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "critical condition", -5)
-		H.add_stam_mod_max("critical condition", -100)
+			owner.delStatus("critical_condition")
+		H.delStatus("recent_trauma") // Cancel out recent trauma, you is back in trauma, baybeee
+		APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "critical_condition", -5)
+		H.add_stam_mod_max("critical_condition", -100)
 
 	onRemove()
 		. = ..()
-		REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "critical condition")
-		H.remove_stam_mod_max("critical condition")
-		H.changeStatus("recent trauma", 90 SECONDS)
+		REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "critical_condition")
+		H.remove_stam_mod_max("critical_condition")
+		H.changeStatus("recent_trauma", 90 SECONDS)
 
 
 /datum/statusEffect/recenttrauma
-	id = "recent trauma"
+	id = "recent_trauma"
 	name = "Recent Trauma"
 	icon_state = "-"
 	maxDuration = 90 SECONDS
@@ -2300,12 +2301,12 @@
 		if (ishuman(owner))
 			H = owner
 		else
-			owner.delStatus("recent trauma")
-		APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "recent trauma", -2)
-		H.add_stam_mod_max("recent trauma", -50)
+			owner.delStatus("recent_trauma")
+		APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "recent_trauma", -2)
+		H.add_stam_mod_max("recent_trauma", -50)
 
 	onRemove()
 		. = ..()
-		REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "recent trauma")
-		H.remove_stam_mod_max("recent trauma")
+		REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "recent_trauma")
+		H.remove_stam_mod_max("recent_trauma")
 
