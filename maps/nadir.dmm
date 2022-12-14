@@ -3876,7 +3876,10 @@
 /turf/simulated/floor/purpleblack,
 /area/station/science/hall)
 "bPw" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/computer/chem_requester/science{
+	dir = 8;
+	area_name = "Quarter Master's office"
+	},
 /turf/simulated/floor/orangeblack/side,
 /area/station/quartermaster/cargooffice)
 "bQh" = (
@@ -34558,6 +34561,10 @@
 	},
 /turf/simulated/floor/redblack/corner,
 /area/station/security/main)
+"pYn" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/black/grime,
+/area/station/storage/warehouse)
 "pYx" = (
 /obj/surgery_tray,
 /turf/simulated/floor/black,
@@ -101010,7 +101017,7 @@ bsb
 fQh
 sWo
 liG
-nes
+pYn
 vsG
 pJt
 xHa

@@ -34513,6 +34513,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/computer/chem_requester/science{
+	dir = 4;
+	area_name = "Quarter Master's office"
+	},
 /turf/simulated/floor/neutral/side{
 	dir = 10
 	},

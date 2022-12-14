@@ -25615,7 +25615,9 @@
 	},
 /area/station/quartermaster/office)
 "bHS" = (
-/obj/shrub,
+/obj/machinery/computer/chem_requester/science{
+	area_name = "Quarter Master's office"
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},

@@ -62005,6 +62005,10 @@
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "cJR" = (
+/obj/machinery/computer/chem_requester/science{
+	dir = 4;
+	area_name = "Quarter Master's office"
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "red2"

@@ -4431,6 +4431,10 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/machinery/computer/chem_requester/science{
+	dir = 8;
+	area_name = "Quarter Master's office"
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "arx" = (
