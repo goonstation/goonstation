@@ -10,15 +10,24 @@ import { Window } from '../../layouts';
 import { AtmData, AtmTabKeys } from './types';
 
 export const Atm = (_, context) => {
+  const { data } = useBackend<AtmData>(context);
+  const { name } = data;
+
   const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', AtmTabKeys.Teller);
   return (
-    <Window title="Automatic Teller Machine" width={375} height={375}>
+    <Window title={name} width={375} height={450}>
       <Window.Content>
         <Tabs fluid>
-          <Tabs.Tab icon="money-bills" selected={tabIndex === AtmTabKeys.Teller} onClick={() => setTabIndex(AtmTabKeys.Teller)}>
+          <Tabs.Tab
+            icon="money-bills"
+            selected={tabIndex === AtmTabKeys.Teller}
+            onClick={() => setTabIndex(AtmTabKeys.Teller)}>
             ATM
           </Tabs.Tab>
-          <Tabs.Tab icon="coins" selected={tabIndex === AtmTabKeys.Spacebux} onClick={() => setTabIndex(AtmTabKeys.Spacebux)}>
+          <Tabs.Tab
+            icon="coins"
+            selected={tabIndex === AtmTabKeys.Spacebux}
+            onClick={() => setTabIndex(AtmTabKeys.Spacebux)}>
             Spacebux
           </Tabs.Tab>
         </Tabs>
@@ -29,6 +38,25 @@ export const Atm = (_, context) => {
   );
 };
 
+const Types = {
+  Danger: 'danger',
+  Info: 'info',
+  Success: 'success',
+};
+
+const TypedNoticeBox = (props) => {
+  const {
+    type,
+    ...rest
+  } = props;
+  const typeProps = {
+    ...(type === Types.Danger ? { danger: true } : {}),
+    ...(type === Types.Info ? { info: true } : {}),
+    ...(type === Types.Success ? { success: true } : {}),
+  };
+  return <NoticeBox {...typeProps} {...rest} />;
+};
+
 const Teller = (_, context) => {
   const { data } = useBackend<AtmData>(context);
   const { loggedIn, scannedCard } = data;
@@ -37,9 +65,7 @@ const Teller = (_, context) => {
     <Box>
       <Section title="Automatic Teller Machine">
         {!scannedCard && <NoticeBox info>Please swipe card and enter PIN to access your account.</NoticeBox>}
-        <Box>
-          {!scannedCard ? <InsertCard /> : <InsertedCard />}
-        </Box>
+        <Box>{!scannedCard ? <InsertCard /> : <InsertedCard />}</Box>
       </Section>
       {loggedIn === 2 && <Lottery />}
     </Box>
@@ -79,6 +105,7 @@ const InputPIN = (_, context) => {
 const LoggedIn = (_, context) => {
   const { act, data } = useBackend<AtmData>(context);
   const { accountBalance, accountName } = data;
+  const message = data.message || { text: '', status: '', position: '' };
   return (
     <Box>
       <Box>
@@ -90,14 +117,22 @@ const LoggedIn = (_, context) => {
         </p>
       </Box>
       <Divider />
-      <Button
-        icon="money-bill" content={'Withdraw cash'} onClick={() => act('withdrawcash')} />
+      <Button icon="money-bill" content={'Withdraw cash'} onClick={() => act('withdraw_cash')} />
+      {message.text && (message.position === 'atm') && (
+        <Box>
+          <Divider />
+          <TypedNoticeBox type={message.status}>
+            {message.text}
+          </TypedNoticeBox>
+        </Box>
+      )}
     </Box>
   );
 };
 
 const Lottery = (_, context) => {
-  const { act } = useBackend(context);
+  const { act, data } = useBackend<AtmData>(context);
+  const message = data.message || { text: '', status: '', position: '' };
   return (
     <Section title="Lottery">
       <NoticeBox info>To claim your winnings, you must insert your lottery ticket.</NoticeBox>
@@ -105,16 +140,24 @@ const Lottery = (_, context) => {
       <Box>
         <Button icon="ticket-alt" content={'Purchase Lottery Ticket (100⪽)'} onClick={() => act('buy')} />
       </Box>
+      {message.text && (message.position === 'lottery') && (
+        <Box>
+          <Divider />
+          <TypedNoticeBox type={message.status}>
+            {message.text}
+          </TypedNoticeBox>
+        </Box>
+      )}
     </Section>
   );
 };
 
 const SpacebuxMenu = (_, context) => {
   const { act, data } = useBackend<AtmData>(context);
-  const { spacebuxBalance } = data;
+  const { clientKey, spacebuxBalance } = data;
   return (
     <Box>
-      <Section title="Spacebux Menu">
+      <Section title={clientKey + "'s Spacebux Menu"}>
         <NoticeBox info>
           This menu is only visible to you. Deposit Spacebux into your account at any time by inserting a token.
         </NoticeBox>

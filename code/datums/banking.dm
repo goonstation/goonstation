@@ -752,6 +752,8 @@
 
 	var/datum/db_record/accessed_record = null
 	var/obj/item/card/id/scan = null
+	var/current_status_message = list()
+	var/current_message_number = 0
 	var/health = 70
 	var/broken = 0
 	var/afterlife = 0
@@ -852,7 +854,10 @@
 			"accountBalance" = src.accessed_record ? src.accessed_record["current_money"] : 0,
 			"accountName" = src.scan?.registered,
 			"cardname" = src.scan?.name,
+			"clientKey" = user.client?.key,
 			"loggedIn" = src.state,
+			"message" = src.current_status_message,
+			"name" = src.name,
 			"scannedCard" = src.scan,
 			"spacebuxBalance" = user.client?.persistent_bank,
 		)
@@ -868,9 +873,11 @@
 					boutput(usr, "<span class='alert'>Ticket being dispensed. Good luck!</span>")
 					usr.put_in_hand_or_eject(new /obj/item/lotteryTicket(src.loc))
 					wagesystem.start_lottery()
+					src.show_message("Lottery ticket purchased.", "success", "lottery")
 					. = TRUE
 				else
 					boutput(usr, "<span class='alert'>Insufficient Funds</span>")
+					src.show_message("Insufficient funds in account.", "danger", "lottery")
 			if ("insert_card")
 				if (src.scan)
 					return TRUE
@@ -924,21 +931,24 @@
 					boutput(usr, "<span class='notice'><B>Transaction successful!</B></span>")
 					logTheThing(LOG_DIARY, usr, "sent [amount] spacebux to [C].")
 				. = TRUE
-			if("withdrawcash")
+			if("withdraw_cash")
 				if (scan.registered in FrozenAccounts)
 					boutput(usr, "<span class='alert'>This account is frozen!</span>")
 					return
 				var/amount = round(text2num(tgui_input_text(usr, "How much would you like to withdraw?", "Withdrawal")))
 				if( amount < 1)
 					boutput(usr, "<span class='alert'>Invalid amount!</span>")
+					src.show_message("Invalid withdrawal amount.", "danger", "atm")
 					return
 				if(amount > src.accessed_record["current_money"])
 					boutput(usr, "<span class='alert'>Insufficient funds in account.</span>")
+					src.show_message("Insufficient funds in account.", "danger", "atm")
 				else
 					src.accessed_record["current_money"] -= amount
 					var/obj/item/spacecash/S = new /obj/item/spacecash
 					S.setup(src.loc, amount)
 					usr.put_in_hand_or_drop(S)
+					src.show_message("Withdrawal successful.", "success", "atm")
 					. = TRUE
 			if("withdraw_spacebux")
 				var/amount = round(text2num(tgui_input_text(usr, "You have [usr.client.persistent_bank] Spacebux.\nHow much would you like to withdraw?", "How much?")))
@@ -979,6 +989,24 @@
 			if (user)
 				C.throw_at(user, 20, 3)
 
+	#define MESSAGE_SHOW_TIME 5 SECONDS
+
+	proc/show_message(message = "", status = "info", position = "") //blatantly stole this proc from thepotato's cloner rework thanks bud - disturbherb
+		src.current_status_message["text"] = message
+		src.current_status_message["status"] = status
+		src.current_status_message["position"] = position
+		tgui_process?.update_uis(src)
+		//prevents us from overwriting the wrong message
+		current_message_number += 1
+		var/messageNumber = current_message_number
+		SPAWN(MESSAGE_SHOW_TIME)
+		if(src.current_message_number == messageNumber)
+			src.current_status_message["text"] = ""
+			src.current_status_message["status"] = ""
+			src.current_status_message["position"] = ""
+			tgui_process?.update_uis(src)
+
+	#undef MESSAGE_SHOW_TIME
 
 	atm_alt
 		icon_state = "atm_alt"
