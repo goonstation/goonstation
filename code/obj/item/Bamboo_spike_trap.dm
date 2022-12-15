@@ -10,9 +10,9 @@
 	throwforce = 5
 	var/armed = FALSE ///This determinates if the trap is armed or not
 	var/armed_force = 9 ///how much damage the trap does when stepped upon
-	var/armed_weakened = 3 SECONDS ///how long you are weakened after stepping into the trap
+	var/armed_weakened = 2 SECONDS ///how long you are weakened after stepping into the trap
 	var/crashed_force = 20 ///how much damage the trap does when crashed into
-	var/crashed_stun = 3 SECONDS ///how long you are stunned if you crash into the trap
+	var/crashed_weakened = 3 SECONDS ///how long you are stunned if you crash into the trap
 	var/reagent_storage = 15 ///How much the max amount of chems is the trap should be able to hold
 	var/transfer_multiplier = 0.5 ///Multiplier to damage to calculate the amount of chems tranferred
 	var/target_zone = "chest" ///which zone the trap tries to target and calculate the damage resist from
@@ -173,7 +173,7 @@
 		if (!src || !victim || !src.armed)
 			return
 		logTheThing(LOG_COMBAT, victim, "crashed into [src] at [log_loc(src)].")
-		victim.changeStatus("stunned", src.crashed_stun)
+		victim.changeStatus("weakened", src.crashed_weakened)
 		victim.force_laydown_standup()
 		src.trap_damage(victim, src.crashed_force)
 		playsound(victim.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 80, 1)
