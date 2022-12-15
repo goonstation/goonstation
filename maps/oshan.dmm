@@ -29394,7 +29394,7 @@
 /turf/simulated/floor/carpet/blue/fancy/innercorner/ne,
 /area/station/bridge)
 "byJ" = (
-/obj/critter/cat/jones,
+/mob/living/critter/small_animal/cat/jones,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/nw,
 /area/station/bridge)
 "byK" = (
@@ -40402,11 +40402,12 @@
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
 "cbk" = (
-/obj/critter/cat{
+/mob/living/critter/small_animal/cat{
 	desc = "How long has this cat been here?";
 	icon_state = "cat6";
 	name = "jons the catte";
-	randomize_cat = 0
+	randomize_name = 0;
+	randomize_look = 0
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)

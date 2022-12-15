@@ -1,11 +1,11 @@
-//bot go brr?
 //GUNS GUNS GUNS
 /obj/item/gun/energy/cannon
 	name = "Vexillifer IV"
 	desc = "It's a cannon? A laser gun? You can't tell."
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "lasercannon"
-	item_state = "cannon"
+	item_state = "vexillifer"
+	wear_state = "vexillifer"
 	var/active_state = "lasercannon"
 	var/collapsed_state = "lasercannon-empty"
 	var/state = TRUE

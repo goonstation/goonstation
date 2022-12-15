@@ -3546,6 +3546,22 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 	spy_secure_area = TRUE
 	station_map_colour = MAPC_ARMOURY
 	var/static/list/entered_ckeys = list()
+	var/armory_auth = FALSE
+
+	proc/authorize()
+		armory_auth = TRUE
+
+	proc/unauthorize()
+		armory_auth = FALSE
+
+	New()
+		..()
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_AUTH, .proc/authorize)
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_UNAUTH, .proc/unauthorize)
+		SPAWN(5 SECONDS)
+			var/area/A = locate(/area/station/ai_monitored/armory)
+			for(var/obj/item/O in A)
+				O.AddComponent(/datum/component/log_item_pickup, "")
 
 	Entered(atom/movable/A, atom/oldloc)
 		. = ..()
@@ -3558,18 +3574,11 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 					return
 				if(M.client.ckey in entered_ckeys)
 					return
-				if (M.mind && M.mind.assigned_role == "Head of Security")
-					return
-				var/armory_auth = FALSE
-				for_by_tcl(O, /obj/machinery/computer/riotgear)
-					if (O.authed)
-						armory_auth = TRUE
-						break
 				var/ckey = M.client.ckey
 				entered_ckeys += ckey
 				SPAWN(120 SECONDS)
 					entered_ckeys -= ckey
-				logTheThing(LOG_DEBUG, M, "entered the Armory [log_loc(M)][armory_auth ? "" : " - Armory unauthorized"].")
+				logTheThing(LOG_STATION, M, "entered the Armory [log_loc(M)].[armory_auth ? "" : " - Armory unauthorized."]")
 
 // // // // // //
 

@@ -1,6 +1,7 @@
 #define ROBOT_BATTERY_DISTRESS_INACTIVE 0
 #define ROBOT_BATTERY_DISTRESS_ACTIVE 1
 #define ROBOT_BATTERY_DISTRESS_THRESHOLD 100
+#define ROBOT_BATTERY_WIRELESS_CHARGERATE 75
 
 /datum/robot_cosmetic
 	var/head_mod = null
@@ -297,6 +298,7 @@
 		return ..(gibbed)
 
 	emote(var/act, var/voluntary = 1)
+		..()
 		var/param = null
 		if (findtext(act, " ", 1, null))
 			var/t1 = findtext(act, " ", 1, null)
@@ -1755,6 +1757,9 @@
 		else
 			hud.set_active_tool(null)
 
+	equipped_list(var/check_for_magtractor=1)
+		. = src.module_states
+
 	click(atom/target, params)
 		if (istype(target, /obj/item/roboupgrade) && (target in src.upgrades)) // ugh
 			src.activate_upgrade(target)
@@ -2478,6 +2483,13 @@
 
 				src.cell.use(power_use_tally)
 
+				// Nimbus-class interdictor: wirelessly charge cyborgs
+				if(src.cell.charge < (src.cell.maxcharge - ROBOT_BATTERY_WIRELESS_CHARGERATE))
+					for_by_tcl(IX, /obj/machinery/interdictor)
+						if (IX.expend_interdict(ROBOT_BATTERY_WIRELESS_CHARGERATE,src,TRUE,ITDR_NIMBUS))
+							src.cell.give(ROBOT_BATTERY_WIRELESS_CHARGERATE)
+							break
+
 				if (fix)
 					HealDamage("All", 6, 6)
 
@@ -2966,7 +2978,18 @@
 		return max(part_chest.ropart_get_damage_percentage(2), part_head.ropart_get_damage_percentage(2)) // return the most significant damage to the vital bits
 
 	get_valid_target_zones()
-		return list("head", "chest", "l_leg", "r_leg", "l_arm", "r_arm")
+		var/list/ret = list("chest")
+		if(src.part_arm_l)
+			ret += "l_arm"
+		if(src.part_arm_r)
+			ret += "r_arm"
+		if(src.part_leg_l)
+			ret += "l_leg"
+		if(src.part_leg_r)
+			ret += "r_leg"
+		if(src.part_head)
+			ret += "head"
+		return ret
 
 	disposing()
 		if (src.shell)

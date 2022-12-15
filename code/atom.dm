@@ -165,6 +165,8 @@
 			src.statusEffects = null
 		ClearAllParticles()
 		atom_properties = null
+		if(!ismob(src)) // I want centcom cloner to look good, sue me
+			ClearAllOverlays()
 		..()
 
 	proc/Turn(var/rot)
@@ -990,8 +992,9 @@
 
 //reason for having this proc is explained below
 /atom/proc/set_density(var/newdensity)
+	var/old_density = src.density
 	src.density = HAS_ATOM_PROPERTY(src, PROP_ATOM_NEVER_DENSE) ? 0 : newdensity
-	if(src.density != newdensity)
+	if(old_density != src.density && isturf(src.loc))
 		var/turf/loc = src.loc // invalidate JPS cache on density changes
 		loc.passability_cache = null
 
