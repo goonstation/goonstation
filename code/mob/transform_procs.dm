@@ -89,9 +89,6 @@
 	src.canmove = 0
 	src.icon = null
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
-	for(var/t in src.organs)
-		qdel(src.organs[t])
-		src.organs[t] = null
 
 	return ..()
 
@@ -214,7 +211,6 @@
 	src.canmove = 0
 	src.icon = null
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
-	for(var/t in src.organs) qdel(src.organs[text("[t]")])
 
 	var/mob/living/silicon/robot/cyborg = new /mob/living/silicon/robot/(src.loc, null, 1, syndie = syndicate)
 
@@ -268,8 +264,6 @@
 	src.canmove = 0
 	src.icon = null
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
-	for(var/t in src.organs)
-		qdel(src.organs[text("[t]")])
 
 	if(!mainframe)
 		var/mob/living/silicon/hivebot/O = new /mob/living/silicon/hivebot( src.loc )
@@ -480,7 +474,6 @@
 	src.canmove = 0
 	src.icon = null
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
-	for(var/t in src.organs) qdel(src.organs[text("[t]")])
 
 	var/mob/living/critter/mechmonstrosity/suffering/O = new /mob/living/critter/mechmonstrosity/suffering/(src.loc,null,null,1)
 
@@ -630,6 +623,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	C.say_language = "animal"
 	C.literate = 0
 	C.original_name = selfmob.real_name
+	C.is_npc = FALSE
 
 	if (traitor)
 		C.show_antag_popup("ghostcritter_antag")
@@ -672,6 +666,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	C.say_language = "animal"
 	C.literate = 0
 	C.original_name = selfmob.real_name
+	C.is_npc = FALSE
 
 	C.show_antag_popup("ghostcritter_mentor")
 	logTheThing(LOG_ADMIN, C, "respawned as a mentor mouse at [log_loc(C)].")
@@ -710,9 +705,9 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	src = null
 	var/mob/living/critter/C = selfmob.make_critter(/mob/living/critter/small_animal/mouse/weak/mentor/admin, spawnpoint, ghost_spawned=TRUE)
 	C.mind.assigned_role = "Animal"
-	// C.say_language = "animal"
 	C.literate = 1
 	C.original_name = selfmob.real_name
+	C.is_npc = FALSE
 
 	//hacky fix : qdel brain to prevent reviving
 	if (C.organHolder)
@@ -731,12 +726,12 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if(!isdead(src) || !src.mind || !ticker || !ticker.mode)
 		return
 	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
-		boutput(src, "Sorry, respawn options aren't availbale during football mode.")
+		boutput(src, "Sorry, respawn options aren't available during football mode.")
 		return
 	var/turf/target_turf = pick(get_area_turfs(/area/afterlife/bar/barspawn))
 
 	if (!src.client) return //ZeWaka: fix for null.preferences
-	var/mob/living/carbon/human/newbody = new(null, null, src.client.preferences, TRUE)
+	var/mob/living/carbon/human/newbody = new(target_turf, null, src.client.preferences, TRUE)
 	newbody.real_name = src.real_name
 	newbody.ghost = src //preserve your original ghost
 	if(!src.mind.assigned_role || iswraith(src) || isblob(src) || src.mind.assigned_role == "Cyborg" || src.mind.assigned_role == "AI")
@@ -776,10 +771,10 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	// 	newbody.abilityHolder.transferOwnership(newbody)
 	// src.abilityHolder = null
 
+	// There are some traits removed in the afterlife bar, these have afterlife_blacklist set to TRUE.
 
 	newbody.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
 	newbody.set_clothing_icon_dirty()
-	newbody.set_loc(target_turf)
 
 	if (src.mind) //Mind transfer also handles key transfer.
 		src.mind.transfer_to(newbody)
@@ -901,8 +896,6 @@ var/respawn_arena_enabled = 0
 
 		if (!O.mind.special_role) // Preserve existing antag role (if any).
 			O.mind.special_role = ROLE_FLOCKTRACE
-		if (!(O.mind in ticker.mode.Agimmicks))
-			ticker.mode.Agimmicks += O.mind
 		qdel(src)
 
 		boutput(O, "<span class='bold'>You are a Flocktrace, a partition of the Flock's collective computation!</span>")

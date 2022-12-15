@@ -12,7 +12,6 @@
 #endif
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	alpha = 180
-	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 	plane = PLANE_NOSHADOW_ABOVE
 
 	var/deaths = 0
@@ -51,6 +50,8 @@
 	var/formaldehyde_tolerance = 25
 	///specifiy strong or weak tk powers. Weak for poltergeists.
 	var/weak_tk = FALSE
+	///can the wraith hear ghosts? Toggleable with an ability
+	var/hearghosts = TRUE
 
 	var/datum/movement_controller/movement_controller
 
@@ -534,6 +535,7 @@
 	emote(var/act)
 		if (!density)
 			return
+		..()
 		var/acts = null
 		switch (act)
 			if ("hiss")
@@ -578,6 +580,7 @@
 		src.addAbility(/datum/targetable/wraithAbility/whisper)
 		src.addAbility(/datum/targetable/wraithAbility/blood_writing)
 		src.addAbility(/datum/targetable/wraithAbility/haunt)
+		src.addAbility(/datum/targetable/wraithAbility/toggle_deadchat)
 
 	proc/removeAllAbilities()
 		for (var/datum/targetable/wraithAbility/abil in abilityHolder.abilities)
@@ -680,8 +683,10 @@
 	var/points_to_possess = 50
 	/// Steal someone's appearance and use it during haunt
 	var/mutable_appearance/copied_appearance = null
-	/// Steal their descriptions too
+	/// Steal their descriptions and name too
 	var/copied_desc = null
+	var/copied_name = null
+	var/copied_real_name = null
 	var/traps_laid = 0
 
 	New(var/mob/M)

@@ -384,12 +384,14 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	icon = 'icons/obj/decals/posters.dmi'
 	icon_state = "wall_poster_nt-rip2"
 
+TYPEINFO(/obj/submachine/poster_creator)
+	mats = 6
+
 /obj/submachine/poster_creator
 	name = "wanted poster station"
 	desc = "A machine that can design and print out wanted posters."
 	density = 1
 	anchored = 1
-	mats = 6
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "poster_printer"

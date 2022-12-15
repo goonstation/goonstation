@@ -6,6 +6,7 @@
 	name = "item"
 	icon = 'icons/obj/items/items.dmi'
 	text = ""
+	pass_unstable = FALSE
 	var/icon_old = null
 	var/uses_multiple_icon_states = 0
 	var/item_state = null
@@ -122,6 +123,7 @@
 	var/obj/item/holding = null
 	var/rarity = ITEM_RARITY_COMMON // Just a little thing to indicate item rarity. RPG fluff.
 	pressure_resistance = 50
+	/// This var fucking sucks. It's used for prox sensors and other stuff that when triggered trigger an item they're attached to. Why is this on /item i am so sad
 	var/obj/item/master = null
 	var/acid_survival_time //nadir support: set in minutes to override how long item will stay intact in contact with acid
 
@@ -407,9 +409,9 @@
 		logTheThing(LOG_COMBAT, user, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
 		if (!do_mob(user, M))
-			return 0
+			return 1
 		if (BOUNDS_DIST(user, M) > 0)
-			return 0
+			return 1
 
 		user.tri_message(M, "<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
 			"<span class='alert'>You feed [M] [src]!</span>",\
@@ -1156,11 +1158,10 @@
 			src.try_grab(M, user)
 			return
 
-	var/obj/item/affecting = M.get_affecting(user, def_zone)
-	var/hit_area = parse_zone(affecting)
-	var/d_zone = affecting
+	def_zone = M.get_def_zone(user, def_zone)
+	var/hit_area = parse_zone(def_zone)
 
-	if (!M.melee_attack_test(user, src, d_zone))
+	if (!M.melee_attack_test(user, src, def_zone))
 		logTheThing(LOG_COMBAT, user, "attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]) but the attack is blocked!")
 		return
 
@@ -1194,7 +1195,7 @@
 
 	var/datum/attackResults/msgs = new(user)
 	msgs.clear(M)
-	msgs.affecting = affecting
+	msgs.def_zone = def_zone
 	msgs.logs = list()
 	msgs.logc("attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)])")
 
@@ -1231,10 +1232,10 @@
 		msgs.bleed_bonus = getProperty("vorpal")
 
 	var/armor_mod = 0
-	armor_mod = M.get_melee_protection(d_zone, src.hit_type)
+	armor_mod = M.get_melee_protection(def_zone, src.hit_type)
 
 	var/pierce_prot = 0
-	if (d_zone == "head")
+	if (def_zone == "head")
 		pierce_prot = M.get_head_pierce_prot()
 	else
 		pierce_prot = M.get_chest_pierce_prot()
@@ -1253,6 +1254,10 @@
 
 	if(user.is_hulk())
 		power *= 1.5
+
+	var/list/shield_amt = list()
+	SEND_SIGNAL(M, COMSIG_MOB_SHIELD_ACTIVATE, power, shield_amt)
+	power *= max(0, (1-shield_amt["shield_strength"]))
 
 	var/pre_armor_power = power
 	power -= armor_mod
@@ -1275,7 +1280,7 @@
 			armor_blocked = 1
 
 	if (src.can_disarm && !((src.temp_flags & IS_LIMB_ITEM) && user == M))
-		msgs = user.calculate_disarm_attack(M, M.get_affecting(user), 0, 0, 0, is_shove = 1, disarming_item = src)
+		msgs = user.calculate_disarm_attack(M, 0, 0, 0, is_shove = 1, disarming_item = src)
 	else
 		msgs.msg_group = "[usr]_attacks_[M]_with_[src]"
 		msgs.visible_message_target(user.item_attack_message(M, src, hit_area, msgs.stamina_crit, armor_blocked))
@@ -1293,6 +1298,7 @@
 			stam_power = stam_power / 2 //do the least
 		else
 			stam_power = max(  stam_power / 2, stam_power * ( power / (power + armor_mod) )  )
+		stam_power *= max(0, (1-shield_amt["shield_strength"]))
 
 		//stam_power -= armor_mod
 		msgs.force_stamina_target = 1
@@ -1443,10 +1449,6 @@
 	if (!(locate(/obj/table) in T) && !(locate(/obj/rack) in T))
 		Ar.sims_score = min(Ar.sims_score + 4, 100)
 
-	if (event_handler_flags & IS_TRINKET) //slow but fast as i can get for now, rewrite trinket holding later
-		for(var/mob/living/carbon/human/M in mobs)
-			if (M.trinket == src)
-				M.trinket = null
 
 	if (special_grab || chokehold)
 		drop_grab()

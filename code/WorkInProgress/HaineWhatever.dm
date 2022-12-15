@@ -783,6 +783,9 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	var/list/nums_black = list("2","4","6","8","10","11","13","15","17","20","22","24","26","28","29","31","33","35")
 	var/list/nums_snake = list("1","5","9","12","14","16","19","23","27","30","32","34")
 /*
+TYPEINFO(/obj/submachine/blackjack)
+	mats = 9
+
 /obj/submachine/blackjack
 	name = "blackjack machine"
 	desc = "Gambling for the antisocial."
@@ -790,7 +793,6 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	icon_state = "BJ1"
 	anchored = 1
 	density = 1
-	mats = 9
 	var/on = 1
 	var/plays = 0
 	var/working = 0
@@ -1152,7 +1154,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 				usagi.set_dir(turn(usagi.dir, -90))
 				sleep(0.2 SECONDS)
 			usagi.sailormoon_reshape()
-			var/obj/critter/cat/luna = new /obj/critter/cat (usagi.loc)
+			var/mob/living/critter/small_animal/cat/luna = new /mob/living/critter/small_animal/cat (usagi.loc)
 			luna.name = "Luna"
 			luna.desc = "A cat with a little crescent moon on her forehead."
 			luna.cattype = 3
@@ -1168,7 +1170,8 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	icon_state = "moonstick"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "moonstick"
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	force = 2
 	w_class = W_CLASS_SMALL
 	throwforce = 2
@@ -1255,7 +1258,8 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	icon_state = "null_scalpel"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "scalpel"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
@@ -1512,7 +1516,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	icon_state = "revolver"
 	desc = "There are 7 bullets left! Each shot will currently use 1 bullets!"
 	flags = FPRINT | TABLEPASS | EXTRADELAY
-	var/bangfired = 0 // Checks if the gun has been fired before or not. If it's been fired, no more firing for you
+	var/bangfired = FALSE // Checks if the gun has been fired before or not. If it's been fired, no more firing for you
 	var/description = "A bang flag pops out of the barrel!" // Used to fuck you and also decide what description is used for the fire text
 	icon = 'icons/obj/items/gun.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
@@ -1521,12 +1525,20 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	pixelaction(atom/target, params, mob/user, reach)
 		if(reach || src.bangfired)
 			..()
-		else
-			src.bangfired = 1
+		else if (!ON_COOLDOWN(src, "recent_fire", 30 SECOND))
+			src.bangfired = TRUE
 			user?.visible_message("<span class='alert'><span class='alert'>[user] fires [src][target ? " at [target]" : null]! [description]</span>")
 			playsound(user, 'sound/musical_instruments/Trombone_Failiure.ogg', 50, 1)
 			icon_state = "bangflag[icon_state]"
 			return
+		else
+			boutput(user, "<span class='notice'>The gun is still cooling down from it's last incredibly powerful shot! Or at least you pretend that it is.</span>")
+
+	attack_self(mob/user)
+		if (src.bangfired)
+			src.bangfired = FALSE
+			icon_state = initial(src.icon_state)
+			boutput(user, "<span class='notice'>You awkwardly jam the tiny flag back into the barrel.</span>")
 
 /obj/item/bang_gun/ak47
 	name = "ak-477"
@@ -1619,6 +1631,9 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		else
 			return ..()
 
+TYPEINFO(/obj/item/space_thing)
+	mats = 50
+
 /obj/item/space_thing
 	name = "space thing"
 	desc = "Some kinda thing, from space. In space. A space thing."
@@ -1628,7 +1643,6 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	w_class = W_CLASS_TINY
 	force = 10
 	throwforce = 7
-	mats = 50
 	contraband = 1
 	stamina_damage = 40
 	stamina_cost = 23

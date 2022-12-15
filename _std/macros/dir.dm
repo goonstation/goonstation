@@ -1,3 +1,8 @@
+#define SOUTHWEST_UNIQUE (1<<6)
+#define NORTHWEST_UNIQUE (1<<7)
+#define SOUTHEAST_UNIQUE (1<<8)
+#define NORTHEAST_UNIQUE (1<<9)
+
 var/global/list
 	cardinal = list(NORTH, SOUTH, EAST, WEST)
 	ordinal = list(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST)
@@ -97,3 +102,10 @@ proc/angle_to_vector(ang)
 /// turn(dir, turn_needed(dir, dir_to)) = dir_to
 #define turn_needed(dir_from, dir_to) (-(dir_to_angle(dir_to) - dir_to_angle(dir_from)))
 // note that the - is necessary because dir_to_angle returns a clockwise angle, but turn() takes a counter-clockwise angle
+
+/// BYOND's default get_step_rand() is not actually uniformly random (heavily biased towards dir).
+/// This is a replacement that is actually uniformly random.
+#define get_step_truly_rand(O) get_step(O, pick(alldirs))
+
+/// Returns a tile in a random cardinal direction
+#define get_step_rand_cardinal(O) get_step(O, pick(cardinal))

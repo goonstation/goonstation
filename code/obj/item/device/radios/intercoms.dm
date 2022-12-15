@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/radio/intercom)
+	mats = 3
+
 /obj/item/device/radio/intercom
 	name = "Station Intercom (Radio)"
 #ifndef IN_MAP_EDITOR
@@ -7,7 +10,6 @@
 #endif
 	anchored = 1
 	plane = PLANE_NOSHADOW_ABOVE
-	mats = 3
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 	chat_class = RADIOCL_INTERCOM
 	var/number = 0

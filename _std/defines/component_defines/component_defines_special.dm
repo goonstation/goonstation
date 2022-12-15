@@ -67,6 +67,9 @@
 		/// Cell is fully charged
 		#define CELL_FULL 32
 
+// ---- energy shield thing ----
+	/// Sent by the itemability to toggle the energyshield component
+	#define COMSIG_SHIELD_TOGGLE "energy_shield_toggle"
 
 // ---- atom property signals ----
 
@@ -121,3 +124,11 @@
 
 		/// The diner trading area
 		#define COMSIG_DOCK_TRADER_DINER "trader_diner"
+
+
+
+// ---- Light stuff, used by /datum/component/loctargeting/simple_light, .../sm_light, and .../medium_light ----
+/// Send to a thing to enable component lights on it
+#define COMSIG_LIGHT_ENABLE "enable_light"
+/// Send to a thing to disable component lights on it
+#define COMSIG_LIGHT_DISABLE "disable_light"

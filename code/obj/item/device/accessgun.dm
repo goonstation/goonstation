@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/accessgun)
+	mats = 14
+
 /obj/item/device/accessgun
 	name = "Access Pro"
 	desc = "This device can reprogram electronic access requirements. It will copy the permissions of any inserted ID. Activate it in-hand while empty to change between AND/OR modes"
@@ -6,8 +9,8 @@
 	item_state = "accessgun"
 	w_class = W_CLASS_SMALL
 	rand_pos = 0
-	flags = FPRINT | TABLEPASS | ONBELT
-	mats = 14
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	var/obj/item/card/id/ID_card = null
 	req_access = list(access_change_ids,access_engineering_chief)
 	var/mode = 0 //0 AND, 1 OR

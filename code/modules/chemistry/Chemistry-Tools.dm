@@ -18,22 +18,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	var/initial_volume = 50
 	var/list/initial_reagents = null // can be a list, an associative list (reagent=amt), or a string.  list will add an equal chunk of each reagent, associative list will add amt of reagent, string will add initial_volume of reagent
 	var/incompatible_with_chem_dispensers = 0
-	var/can_mousedrop = 1
 	move_triggered = 1
-	///Types that should be quickly refilled by mousedrop
-	var/static/list/mousedrop_refill = list(
-		/obj/item/reagent_containers/glass,
-		/obj/item/reagent_containers/food/drinks,
-		/obj/reagent_dispensers,
-		/obj/item/spraybottle,
-		/obj/machinery/plantpot,
-		/obj/mopbucket,
-		/obj/item/reagent_containers/mender,
-		/obj/item/tank/jetpack/backtank,
-		/obj/item/reagent_containers/syringe/baster,
-		/obj/machinery/bathtub
-	)
-
 	var/last_new_initial_reagents = 0 //fuck
 
 	New(loc, new_initial_reagents)
@@ -92,9 +77,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	mouse_drop(atom/over_object as obj)
 		if (isintangible(usr))
 			return
-		if (!can_mousedrop)
-			boutput(usr, "<span class='alert'>Nope.</span>")
-			return
 		if(usr.restrained())
 			return
 		if(!istype(usr.loc, /turf))
@@ -112,14 +94,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 					ok = 0
 			if(!ok)
 				return
-		// First filter out everything we don't want to refill or empty quickly.
-		// feels like there should be a macro for this or something
-		var/type_found = FALSE
-		for (var/type in mousedrop_refill)
-			if (istype(over_object, type))
-				type_found = TRUE
-				break
-		if (!type_found)
+
+		if (!(over_object.flags & ACCEPTS_MOUSEDROP_REAGENTS))
 			return ..()
 
 		if (!istype(src, /obj/item/reagent_containers/glass) && !istype(src, /obj/item/reagent_containers/food/drinks))
@@ -130,6 +106,35 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			return
 
 		src.transfer_all_reagents(over_object, usr)
+
+///Returns a serialized representation of the reagents of an atom for use with the ReagentInfo TGUI components
+///Note that this is not a built in TGUI proc
+proc/ui_describe_reagents(atom/A)
+	var/datum/reagents/R = A.reagents
+	var/list/thisContainerData = list(
+		name = A.name,
+		maxVolume = R.maximum_volume,
+		totalVolume = R.total_volume,
+		contents = list(),
+		finalColor = "#000000"
+	)
+
+	var/list/contents = thisContainerData["contents"]
+	if(istype(R) && R.reagent_list.len>0)
+		thisContainerData["finalColor"] = R.get_average_rgb()
+		// Reagent data
+		for(var/reagent_id in R.reagent_list)
+			var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
+
+			contents.Add(list(list(
+				name = reagents_cache[reagent_id],
+				id = reagent_id,
+				colorR = current_reagent.fluid_r,
+				colorG = current_reagent.fluid_g,
+				colorB = current_reagent.fluid_b,
+				volume = current_reagent.volume
+			)))
+	return thisContainerData
 
 /* ====================================================== */
 /* -------------------- Glass Parent -------------------- */
@@ -145,7 +150,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	amount_per_transfer_from_this = 10
 	var/can_recycle = TRUE //can this be put in a glass recycler?
 	var/splash_all_contents = 1
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
 
 	// this proc is a mess ow
 	afterattack(obj/target, mob/user , flag)
@@ -188,7 +193,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 					target.visible_message("<span class='alert'><b>[user.name]</b> applies some of the [src.name]'s contents to [target.name].</span>")
 				var/mob/living/MOB = target
 				logTheThing(LOG_COMBAT, user, "splashes [src] onto [constructTarget(MOB,"combat")] [log_reagents(src)] at [log_loc(MOB)].") // Added location (Convair880).
-				can_mousedrop = 0
 				if (src.splash_all_contents)
 					src.reagents.reaction(target,TOUCH)
 					src.reagents.clear_reagents()
@@ -222,7 +226,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1, 0.3)
 
-		else if (istype(target, /obj/reagent_dispensers) || (target.is_open_container() == -1 && target.reagents) || ((istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) && !src.reagents.total_volume)) //A dispenser. Transfer FROM it TO us.
+		else if (is_reagent_dispenser(target) || (target.is_open_container() == -1 && target.reagents) || ((istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) && !src.reagents.total_volume)) //A dispenser. Transfer FROM it TO us.
 			if (target.reagents && !target.reagents.total_volume)
 				boutput(user, "<span class='alert'>[target] is empty.</span>")
 				return
@@ -289,7 +293,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				splash_volume = src.amount_per_transfer_from_this
 			splash_volume = min(splash_volume, src.reagents.total_volume) // cap the reaction at the amount of reagents we have
 
-			src.reagents.reaction(target, TOUCH, splash_volume)
+			var/datum/reagents/splash = new(splash_volume) // temp reagents of the splash so we can make changes between the first and second splashes
+			src.reagents.trans_to_direct(splash, splash_volume) // this removes reagents from this container so we don't need to do that below
+
+			var/reacted_reagents = splash.reaction(target, TOUCH, splash_volume)
 
 			var/turf/T
 			if (!isturf(target) && !target.density) // if we splashed on something other than a turf or a dense obj, it goes on the floor as well
@@ -299,9 +306,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				T = get_turf(user)
 
 			if (T && !T.density) // if the user AND the target are on dense turfs or the user is on a dense turf and the target is a dense obj then just give up. otherwise pour on the floor
-				src.reagents.reaction(T, TOUCH, splash_volume)
-
-			src.reagents.remove_any(splash_volume)
+				// first remove everything that reacted in the first reaction
+				for(var/id in reacted_reagents)
+					splash.del_reagent(id)
+				splash.reaction(T, TOUCH, splash.total_volume)
 
 
 	attackby(obj/item/I, mob/user)
