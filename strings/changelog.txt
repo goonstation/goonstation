@@ -1,5 +1,14 @@
 
 (t)wed dec 14 22
+(u)aloe
+(*)Clicking on an item someone has equipped in the human inventory menu (the one where you strip people/put items on them) while holding an item now clicks that equipped item with your held one. Paint people's clothes! Stuff grenades in people's backpacks! Melt people's shoes!<br>This WILL have jank, and I'll revert it if the jank becomes too much to handle.
+(u)tarmunora
+(e)⚖|C-Balance
+(+)genetic stability starts at 100%
+(u)Sord
+(e)⚖|C-Balance
+(*)Going into Critical Condition now grants a large negative debuff to stamina and stamina regen. Once you leave crit you will receive a smaller "Recent Trauma" debuff.
+(*)Recent Trauma can be reduced by having painkillers (salicylic acid, morphine) in your system.
 (u)Sovexe
 (p)12394
 (e)⚖🧫🔊🔨|C-Balance, C-Experimental, C-Sound, A-Player-Actions

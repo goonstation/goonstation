@@ -575,7 +575,7 @@
 		//Modify stamina.
 		var/stam_time_passed = max(tick_spacing, TIME - last_stam_change)
 
-		var/final_mod = (src.stamina_regen + GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS)) * (stam_time_passed / tick_spacing)
+		var/final_mod = (max(1, src.stamina_regen + GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS))) * (stam_time_passed / tick_spacing)
 		if (final_mod > 0)
 			src.add_stamina(abs(final_mod))
 		else if (final_mod < 0)
