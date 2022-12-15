@@ -168,7 +168,7 @@ const SpacebuxMenu = (_, context) => {
     <Box>
       <Section title={clientKey + "'s Spacebux Menu"}>
         <NoticeBox info>
-          This menu is only visible to you. Deposit Spacebux into your account at any time by inserting a token.
+          This menu is only visible to you. Deposit Spacebux into your account by inserting a token.
         </NoticeBox>
         <Divider />
         <Box>
