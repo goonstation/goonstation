@@ -23,6 +23,7 @@ jobs:
 
     - name: Perform Merge
       run: |
+        sudo apt-get install -y libgit2-dev
         bash tools/hooks/install.sh
         bash tools/ci/install_build_tools.sh
         bash tgui/bin/tgui --install-git-hooks
