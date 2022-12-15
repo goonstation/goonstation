@@ -49,7 +49,7 @@
 		. = ..()
 		// null owner is fine (detached holder for cloning), human owner is fine (intended case), else error
 		if (!isnull(owner) && !istype(owner))
-			stack_trace("cloner_defect_holder \[\ref[src]\] passed a nonhuman owner ([owner])\[\ref[owner]\], this won't work at all. Deleting.")
+			stack_trace("[identify_object(src)] passed nonhuman owner [identify_object(owner)], this won't work at all. Deleting.")
 			qdel(src)
 			return
 		src.owner = owner // imjava
@@ -99,7 +99,7 @@
 	/// Applies all the defects on this holder (which is assumed to be ownerless) to the target mob
 	proc/apply_to(mob/living/carbon/human/target)
 		if (!istype(target))
-			CRASH("Tried to copy the cloner defect holder \[\ref[src]\] to non-human thing [target] ([target.type]) \[\ref[target]\]")
+			CRASH("Tried to copy [identify_object(src)] to non-human thing [identify_object(target)]")
 		target.cloner_defects = src
 		for (var/datum/cloner_defect/defect as anything in src.active_cloner_defects)
 			defect.apply_to(target)
@@ -141,7 +141,7 @@ ABSTRACT_TYPE(/datum/cloner_defect)
 
 	proc/apply_to(mob/living/carbon/human/target)
 		if (!istype(target))
-			CRASH("Tried to apply the cloner defect \[\ref[src]\] to non-human thing [target] ([target.type]) \[\ref[target]\]")
+			CRASH("Tried to apply [identify_object(src)] to non-human thing [identify_object(target)]")
 		src.owner = target
 		src.on_add()
 
@@ -477,3 +477,22 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 	on_add()
 		. = ..()
 		src.owner.vdisfigured = TRUE
+
+/// Makes you fall over when you sprint too hard (pug thing)
+/datum/cloner_defect/sprint_flop
+	name = "Poor Muscular Regulation"
+	desc = "Certain nerves within the legs have failed, making the subject prone to running until they fall on their face."
+	severity = CLONER_DEFECT_SEVERITY_MINOR
+
+	on_add()
+		. = ..()
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_FAILED_SPRINT_FLOP, src)
+
+/datum/cloner_defect/overdose_weakness
+	name = "Chemical Weakness"
+	desc = "Subject's renal system has been weakened by the cloning process, making them more vulnerable to chemical overdoses."
+	severity = CLONER_DEFECT_SEVERITY_MINOR
+
+	on_add()
+		. = ..()
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_OVERDOSE_WEAKNESS, src)

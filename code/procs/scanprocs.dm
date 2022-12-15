@@ -14,7 +14,7 @@
 	if (M.bioHolder && M.bioHolder.HasEffect("dead_scan"))
 		death_state = 2
 
-	var/health_percent = round(100 * M.health / M.max_health)
+	var/health_percent = round(100 * M.health / (M.max_health||1))
 
 	var/colored_health
 	if(M.max_health <= 0)
@@ -763,8 +763,8 @@
 	if (total_moles > 0)
 		if (pda_readout == 1) // Output goes into PDA interface, not the user's chatbox.
 			data = "Air Pressure: [round(pressure, 0.1)] kPa<br>\
-			[CONCENTRATION_REPORT(check_me, "<br>")]\
-			Temperature: [round(check_me.temperature)] K<br>"
+			Temperature: [round(check_me.temperature)] K<br>\
+			[CONCENTRATION_REPORT(check_me, "<br>")]"
 
 		else if (simple_output) // For the log_atmos() proc.
 			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature)] K</i>\
@@ -779,8 +779,9 @@
 			<span class='notice'>Atmospheric analysis of <b>[A]</b></span><br>\
 			<br>\
 			Pressure: [round(pressure, 0.1)] kPa<br>\
-			[CONCENTRATION_REPORT(check_me, "<br>")]\
-			Temperature: [round(check_me.temperature)] K<br>"
+			Temperature: [round(check_me.temperature)] K<br>\
+			Volume: [check_me.volume] L<br>\
+			[CONCENTRATION_REPORT(check_me, "<br>")]"
 
 	else
 		// Only used for "Atmospheric Scan" accessible through the PDA interface, which targets the turf
