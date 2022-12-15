@@ -309,7 +309,7 @@ proc/ui_describe_reagents(atom/A)
 				// first remove everything that reacted in the first reaction
 				for(var/id in reacted_reagents)
 					splash.del_reagent(id)
-				splash.reaction(T, TOUCH, splash_volume)
+				splash.reaction(T, TOUCH, splash.total_volume)
 
 
 	attackby(obj/item/I, mob/user)
