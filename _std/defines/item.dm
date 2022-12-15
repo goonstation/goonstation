@@ -211,3 +211,6 @@
 #define ATTACK_FULLY_HIDDEN 1
 /// No attack message is shown and no particles are displayed, but the animation of the attacker still plays (genetics analyzer, autoinjectors)
 #define ATTACK_PARTIALLY_HIDDEN 2
+
+/// Returns TRUE if item is worn by a human other than `user`, FALSE otherwise
+#define IS_WORN_BY_SOMEONE_ELSE(user, item) (istype(item.loc, /mob/living/carbon/human) && user != item.loc)
