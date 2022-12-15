@@ -866,6 +866,8 @@
 		. = ..()
 		if (.)
 			return
+		if (src.broken)
+			return
 		switch(action)
 			if("buy")
 				if(accessed_record["current_money"] >= 100)
@@ -873,10 +875,10 @@
 					boutput(usr, "<span class='alert'>Ticket being dispensed. Good luck!</span>")
 					usr.put_in_hand_or_eject(new /obj/item/lotteryTicket(src.loc))
 					wagesystem.start_lottery()
-					src.show_message("Lottery ticket purchased.", "success", "lottery")
+					src.show_message("Lottery ticket purchased. Good luck.", "success", "lottery")
 					. = TRUE
 				else
-					boutput(usr, "<span class='alert'>Insufficient Funds</span>")
+					boutput(usr, "<span class='alert'>Insufficient funds.</span>")
 					src.show_message("Insufficient funds in account.", "danger", "lottery")
 			if ("insert_card")
 				if (src.scan)
@@ -892,27 +894,30 @@
 				var/userPin
 				if (usr.mind?.remembered_pin)
 					userPin = usr.mind?.remembered_pin
-				var/enteredPIN = text2num(tgui_input_text(usr, "Enter your PIN", src.name, userPin, 4))
+				var/enteredPIN = text2num(tgui_input_text(usr, "Enter your PIN.", src.name, userPin, 4))
 				if (enteredPIN == src.scan.pin)
 					if(TryToFindRecord())
 						src.state = STATE_LOGGEDIN
 						. = TRUE
 					else
 						boutput(usr, "<span class='alert'>Cannot find a bank record for this card.</span>")
+						src.show_message("Cannot find a bank record for this card.", "danger", "login")
 				else
 					boutput(usr, "<span class='alert'>Incorrect or invalid PIN number.</span>")
+					src.show_message("Incorrect or invalid PIN number entered. Please try again.", "danger", "login")
 			if("logout")
 				if(!src.scan)
 					. = FALSE
 					return
 				boutput(usr, "<span class='notice'>You log out of the ATM.</span>")
+				src.show_message("Log out successful. Have a secure day.", "success", "login")
 				src.scan = null
 				src.state = STATE_LOGGEDOFF
 				. = TRUE
 			if("transfer_spacebux")
 				if(!usr.client)
 					boutput(usr, "<span class='alert'>Banking system offline. Welp.</span>")
-				var/amount = text2num(tgui_input_text(usr, "How much do you wish to transfer? You have [usr.client.persistent_bank] spacebux", "Spacebux Transfer"))
+				var/amount = text2num(tgui_input_text(usr, "How much do you wish to transfer? You have [usr.client.persistent_bank] spacebux.", "Spacebux Transfer"))
 				if(!amount)
 					return
 				if(amount <= 0)
@@ -923,7 +928,7 @@
 					boutput(usr, "<span class='alert'><B>No online player with that ckey found!</B></span>")
 				if(tgui_alert(usr, "You are about to send [amount] to [C]. Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
 					if(!usr.client.bank_can_afford(amount))
-						boutput(usr, "<span class='alert'>Insufficient Funds</span>")
+						boutput(usr, "<span class='alert'>Insufficient funds.</span>")
 						return
 					C.add_to_bank(amount)
 					boutput(C, "<span class='notice'><B>[usr.name] sent you [amount] spacebux!</B></span>")
@@ -934,6 +939,7 @@
 			if("withdraw_cash")
 				if (scan.registered in FrozenAccounts)
 					boutput(usr, "<span class='alert'>This account is frozen!</span>")
+					src.show_message("Cannot withdraw from a frozen account.", "danger", "atm")
 					return
 				var/amount = round(text2num(tgui_input_text(usr, "How much would you like to withdraw?", "Withdrawal")))
 				if( amount < 1)
@@ -958,7 +964,7 @@
 					src.updateUsrDialog()
 					return
 				if(!usr.client.bank_can_afford(amount))
-					boutput(usr, "<span class='alert'>Insufficient Funds</span>")
+					boutput(usr, "<span class='alert'>Insufficient funds.</span>")
 				else
 					logTheThing(LOG_DIARY, usr, "withdrew a spacebux token worth [amount].")
 					usr.client.add_to_bank(-amount)

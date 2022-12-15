@@ -94,10 +94,19 @@ const InsertedCard = (_, context) => {
 };
 
 const InputPIN = (_, context) => {
-  const { act } = useBackend(context);
+  const { act, data } = useBackend<AtmData>(context);
+  const message = data.message || { text: '', status: '', position: '' };
   return (
     <Box>
       <Button icon="sign-out-alt" content={'Enter PIN'} onClick={() => act('login_attempt')} />
+      {message.text && (message.position === 'login') && (
+        <Box>
+          <Divider />
+          <TypedNoticeBox type={message.status}>
+            {message.text}
+          </TypedNoticeBox>
+        </Box>
+      )}
     </Box>
   );
 };
