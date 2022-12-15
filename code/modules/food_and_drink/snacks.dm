@@ -1126,24 +1126,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 						M.vomit()
 
 /obj/item/item_box/chips
-/obj/item/item_box/chips
 	name = "chips"
 	desc = "Commander Riker's What-The-Crisps"
 	contained_item = /obj/item/reagent_containers/food/snacks/chip
-	contained_item = /obj/item/reagent_containers/food/snacks/chip
 	icon_state = "chips"
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	item_amount = 8
-	max_item_amount = 8
-	icon_closed = "chips"
-	icon_open = "chips-open"
-	icon_empty = "chips-empty"
-
-/obj/item/reagent_containers/food/snacks/chip
-	name = "Potato Chip"
-	desc = "A plain potato chip."
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	icon_state = "potato-chip"
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
 	item_amount = 8
 	max_item_amount = 8
@@ -1159,10 +1145,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal_amt = 1
 	doants = 1
 	bites_left = 1
-	doants = 1
-	bites_left = 1
 	food_effects = list("food_explosion_resist")
-	initial_volume = 8
 	initial_volume = 8
 
 /obj/item/reagent_containers/food/snacks/popcorn
@@ -2365,10 +2348,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		initial_reagents = list("juice_pickle"=5, "yuck"=5, "space_fungus"=5, "spiders"=5)
 
 /obj/item/item_box/onionchips
-/obj/item/item_box/onionchips
 	name = "onion chips"
 	desc = "Scrumpdillyicious."
-	contained_item = /obj/item/reagent_containers/food/snacks/ochip
 	contained_item = /obj/item/reagent_containers/food/snacks/ochip
 	icon_state = "chips-onion"
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
@@ -2387,10 +2368,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal_amt = 2
 	doants = 1
 	bites_left = 1
-	doants = 1
-	bites_left = 1
 	food_effects = list("food_bad_breath")
-	initial_volume = 8
 	initial_volume = 8
 
 /obj/item/reagent_containers/food/snacks/goldfish_cracker
