@@ -3362,8 +3362,30 @@
 /turf/space,
 /turf/space,
 /area/space)
+"HK" = (
+/obj/item/item_box/chips,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/merge_conflict_marker{
+/obj/item/item_box/chips,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
 "Ip" = (
 /turf/unsimulated/wall/trench,
+/area/dank_trench)
+"Nb" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/item/item_box/chips,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/plating,
 /area/dank_trench)
 
 (1,1,1) = {"
@@ -14252,7 +14274,7 @@ gV
 hc
 ax
 hr
-hx
+HK
 hF
 ax
 Ip
@@ -17579,7 +17601,7 @@ hL
 hR
 hZ
 ih
-ik
+Nb
 ip
 iw
 Ip

@@ -190,6 +190,10 @@
 	#define COMSIG_MOB_MOUSEUP "mob_mouseup"
 	/// Sent when a mob is grabbed by another mob (grab object)
 	#define COMSIG_MOB_GRABBED "mob_grabbed"
+	/// Sent when a mob emotes (emote, voluntary, emote target)
+	#define COMSIG_MOB_EMOTE "mob_emote"
+	/// Sent when a mob is checking for an active energy shield
+	#define COMSIG_MOB_SHIELD_ACTIVATE "mob_shield_activate"
 
 	// ---- cloaking device signal ----
 

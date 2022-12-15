@@ -1237,6 +1237,12 @@
 	dir = 1
 	},
 /area/station/science/hall)
+"aAh" = (
+/obj/xmastree/ephemeral,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 1
+	},
+/area/station/chapel/sanctuary)
 "aAs" = (
 /turf/simulated/floor/greenblack/corner,
 /area/station/hallway/primary/northwest)
@@ -1864,6 +1870,16 @@
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
+"aTx" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	name = "Auxiliary Compartment"
+	},
+/obj/access_spawn/maint,
+/obj/forcefield/energyshield/perma/doorlink,
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/se{
+	name = "Southeast Breach Hull"
+	})
 "aTK" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7157,6 +7173,13 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
+"dyt" = (
+/obj/item/item_box/chips,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/carpet/grime,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "dyy" = (
 /obj/disposalpipe/segment/bent/south,
 /obj/item/instrument/large/organ,
@@ -9121,6 +9144,16 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"etr" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	name = "Auxiliary Compartment"
+	},
+/obj/access_spawn/maint,
+/obj/forcefield/energyshield/perma/doorlink,
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/ne{
+	name = "Northeast Breach Hull"
+	})
 "etI" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
@@ -10027,6 +10060,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northeast)
+"eOt" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	name = "Auxiliary Compartment"
+	},
+/obj/access_spawn/maint,
+/obj/forcefield/energyshield/perma/doorlink,
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/nw{
+	name = "Northwest Breach Hull"
+	})
 "eOx" = (
 /obj/shrub/dead{
 	pixel_x = -9;
@@ -11491,6 +11534,12 @@
 "fxR" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/garden/owlery)
+"fxU" = (
+/obj/storage/cart/trash,
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/ne{
+	name = "Northeast Breach Hull"
+	})
 "fyb" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2,
 /area/abandonedmedicalship/robot_trader)
@@ -13920,6 +13969,12 @@
 	dir = 8
 	},
 /area/station/crew_quarters/courtroom)
+"gFe" = (
+/obj/landmark/random_room/size5x3,
+/turf/simulated/floor/plating,
+/area/station/maintenance/outer/se{
+	name = "Southeast Breach Hull"
+	})
 "gFk" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -15603,6 +15658,12 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/bridge/captain)
+"hqr" = (
+/obj/landmark/random_room/size5x3,
+/turf/simulated/floor/plating,
+/area/station/maintenance/outer/ne{
+	name = "Northeast Breach Hull"
+	})
 "hqD" = (
 /obj/machinery/computer/power_monitor{
 	dir = 4
@@ -18124,10 +18185,6 @@
 /area/station/maintenance/outer/se{
 	name = "Southeast Breach Hull"
 	})
-"isJ" = (
-/obj/item/device/radio/beacon,
-/turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/sanctuary)
 "isK" = (
 /obj/item/storage/wall/fire{
 	dir = 4;
@@ -21092,6 +21149,12 @@
 	dir = 8
 	},
 /area/station/science/bot_storage)
+"jOo" = (
+/obj/landmark/random_room/size5x3,
+/turf/simulated/floor/plating,
+/area/station/maintenance/outer/nw{
+	name = "Northwest Breach Hull"
+	})
 "jOs" = (
 /obj/machinery/computer3/generic/secure_data,
 /obj/cable{
@@ -22991,6 +23054,22 @@
 	dir = 1
 	},
 /area/station/security/main)
+"kCf" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/se{
+	name = "Southeast Breach Hull"
+	})
 "kCh" = (
 /obj/machinery/light/small,
 /obj/stool/chair{
@@ -24683,13 +24762,6 @@
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
-"lqD" = (
-/obj/item/item_box/chips,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/carpet/grime,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "lqF" = (
 /turf/simulated/floor/engine,
 /area/listeningpost/power)
@@ -24959,6 +25031,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/escape)
+"lvX" = (
+/obj/storage/closet/emergency,
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/sw{
+	name = "Southwest Breach Hull"
+	})
 "lwb" = (
 /obj/decal/cleanable/machine_debris,
 /turf/simulated/floor/shuttlebay,
@@ -25656,6 +25734,28 @@
 /area/station/quartermaster/cargobay{
 	name = "Cargo Primary Endpoint"
 	})
+"lLV" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/patch/mini/synthflesh{
+	desc = "Smells a bit funny, but gets the job done.";
+	name = "mending patch";
+	pixel_x = -1;
+	pixel_y = -2
+	},
+/obj/item/item_box/chips{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/shrub/dead{
+	pixel_x = -7;
+	pixel_y = 21
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/black,
+/area/station/security/detectives_office)
 "lLZ" = (
 /obj/stool/chair{
 	dir = 4
@@ -30253,6 +30353,12 @@
 	dir = 1
 	},
 /area/station/engine/storage)
+"nRV" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
 "nRY" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/chapel/sanctuary)
@@ -33023,6 +33129,12 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"pos" = (
+/obj/cable,
+/obj/machinery/power/data_terminal,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/station/engine/elect)
 "pov" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -41855,6 +41967,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig/genpop)
+"twI" = (
+/obj/storage/closet/emergency,
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/nw{
+	name = "Northwest Breach Hull"
+	})
 "twP" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -46936,18 +47054,6 @@
 /area/station/crew_quarters/clown{
 	name = "Honkington's Abode"
 	})
-"vXR" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 3;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/floor/industrial,
-/area/station/maintenance/outer/nw{
-	name = "Northwest Breach Hull"
-	})
 "vXS" = (
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/yellowblack,
@@ -47105,18 +47211,6 @@
 	dir = 4
 	},
 /area/station/security/interrogation)
-"weq" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/floor/industrial,
-/area/station/maintenance/outer/ne{
-	name = "Northeast Breach Hull"
-	})
 "wer" = (
 /obj/machinery/light/small,
 /obj/stool/chair{
@@ -47489,6 +47583,16 @@
 /area/station/hydroponics{
 	do_not_irradiate = 1;
 	name = "Hydroponics Storage"
+	})
+"wqf" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	name = "Auxiliary Compartment"
+	},
+/obj/access_spawn/maint,
+/obj/forcefield/energyshield/perma/doorlink,
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/sw{
+	name = "Southwest Breach Hull"
 	})
 "wqj" = (
 /turf/simulated/floor/specialroom/gym/alt,
@@ -48706,11 +48810,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
-"wWN" = (
-/obj/cable,
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/bot,
-/area/station/engine/elect)
 "wWP" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
 /obj/cable{
@@ -49259,6 +49358,12 @@
 /turf/simulated/floor/engine/caution/north,
 /area/station/quartermaster/storage{
 	name = "Cargo Auxiliary Endpoint"
+	})
+"xjK" = (
+/obj/landmark/random_room/size5x3,
+/turf/simulated/floor/plating,
+/area/station/maintenance/outer/sw{
+	name = "Southwest Breach Hull"
 	})
 "xjR" = (
 /obj/cable{
@@ -50201,6 +50306,12 @@
 	},
 /turf/space/fluid/acid/clear,
 /area/space)
+"xHC" = (
+/obj/storage/cart,
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/se{
+	name = "Southeast Breach Hull"
+	})
 "xHG" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
@@ -50940,28 +51051,6 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
-"xWg" = (
-/obj/table/wood/auto,
-/obj/item/reagent_containers/patch/mini/synthflesh{
-	desc = "Smells a bit funny, but gets the job done.";
-	name = "mending patch";
-	pixel_x = -1;
-	pixel_y = -2
-	},
-/obj/item/item_box/chips{
-	pixel_x = 6;
-	pixel_y = 5
-	},
-/obj/shrub/dead{
-	pixel_x = -7;
-	pixel_y = 21
-	},
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/black,
-/area/station/security/detectives_office)
 "xWn" = (
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
@@ -81223,12 +81312,12 @@ bzS
 bzS
 bzS
 bzS
-bzS
-bzS
-bzS
-bzS
-bzS
-bzS
+xQv
+xQv
+inI
+xQv
+xQv
+iXj
 xQv
 kAj
 xQv
@@ -81300,12 +81389,12 @@ eqq
 jjE
 eqq
 jjE
-bzS
-bzS
-bzS
-bzS
-bzS
-bzS
+iXj
+jjE
+jjE
+kSY
+jjE
+jjE
 bzS
 bzS
 bzS
@@ -81525,12 +81614,12 @@ bzS
 bzS
 bzS
 bzS
-bzS
-bzS
-bzS
-bzS
-bzS
-bzS
+xQv
+cPu
+cPu
+jOo
+xQv
+inI
 xQv
 bRa
 bRa
@@ -81602,12 +81691,12 @@ tZe
 uqC
 uqC
 jjE
-bzS
-bzS
-bzS
-bzS
-bzS
-bzS
+kSY
+jjE
+rfZ
+rfZ
+xjK
+jjE
 bzS
 bzS
 bzS
@@ -81827,14 +81916,14 @@ bzS
 bzS
 bzS
 bzS
-bzS
-bzS
-bzS
-bzS
-bzS
 xQv
+cPu
+cPu
+cPu
 xQv
-vXR
+twI
+bRa
+bRa
 bRa
 nmp
 nmp
@@ -81902,14 +81991,14 @@ rfM
 ewN
 ewN
 uqC
-dKj
+uqC
+uqC
+lvX
 jjE
+rfZ
+rfZ
+rfZ
 jjE
-bzS
-bzS
-bzS
-bzS
-bzS
 bzS
 bzS
 bzS
@@ -82129,13 +82218,13 @@ bzS
 bzS
 bzS
 bzS
-bzS
-bzS
-bzS
-bzS
-bzS
 inI
-xOU
+cPu
+cPu
+cPu
+eOt
+bRa
+bRa
 bRa
 bRa
 nmp
@@ -82205,13 +82294,13 @@ uoR
 ewN
 uqC
 uqC
-wuT
+uqC
+uqC
+wqf
+rfZ
+rfZ
+rfZ
 kSY
-bzS
-bzS
-bzS
-bzS
-bzS
 bzS
 bzS
 bzS
@@ -82431,14 +82520,14 @@ bzS
 bzS
 bzS
 bzS
-bzS
-bzS
-bzS
-bzS
 xQv
+cPu
+cPu
+cPu
 xQv
 bRa
 bRa
+czO
 nmp
 nmp
 xcu
@@ -82508,12 +82597,12 @@ ewN
 uqC
 uqC
 uqC
+uqC
 jjE
+rfZ
+rfZ
+rfZ
 jjE
-bzS
-bzS
-bzS
-bzS
 bzS
 bzS
 bzS
@@ -82733,10 +82822,10 @@ bzS
 bzS
 bzS
 bzS
-bzS
-bzS
-bzS
-bzS
+xQv
+cPu
+cPu
+cPu
 xQv
 bRa
 bRa
@@ -82808,14 +82897,14 @@ ewN
 ewN
 ewN
 tZe
-uqC
+dif
 uqC
 uqC
 jjE
-bzS
-bzS
-bzS
-bzS
+rfZ
+rfZ
+rfZ
+jjE
 bzS
 bzS
 bzS
@@ -83035,9 +83124,9 @@ bzS
 bzS
 bzS
 bzS
-bzS
-bzS
-bzS
+xQv
+xQv
+xQv
 xQv
 xQv
 kAj
@@ -83115,9 +83204,9 @@ eqq
 eqq
 jjE
 jjE
-bzS
-bzS
-bzS
+jjE
+jjE
+jjE
 bzS
 bzS
 bzS
@@ -83338,8 +83427,8 @@ bzS
 bzS
 bzS
 bzS
-bzS
-bzS
+hnw
+rJg
 inI
 fEU
 bRa
@@ -83417,8 +83506,8 @@ uqC
 uqC
 wuT
 kSY
-bzS
-bzS
+rJg
+hnw
 bzS
 bzS
 bzS
@@ -83640,7 +83729,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+lAH
 xQv
 xQv
 bRa
@@ -83720,7 +83809,7 @@ uqC
 uqC
 jjE
 jjE
-bzS
+vnv
 bzS
 bzS
 bzS
@@ -83942,7 +84031,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+lAH
 xQv
 bRa
 bRa
@@ -84022,7 +84111,7 @@ uqC
 uqC
 uqC
 jjE
-bzS
+vnv
 bzS
 bzS
 bzS
@@ -84906,7 +84995,7 @@ rNa
 eGA
 tIC
 omG
-xWg
+lLV
 gmQ
 mEp
 kkZ
@@ -103637,7 +103726,7 @@ dun
 dun
 dun
 hiE
-wWN
+pos
 hWH
 egQ
 ggN
@@ -103893,7 +103982,7 @@ ctc
 ryi
 cOB
 nAw
-cOB
+nRV
 tcn
 rcw
 fRP
@@ -103939,7 +104028,7 @@ mFb
 dun
 dun
 hiE
-wWN
+pos
 hWH
 pvo
 xFU
@@ -105101,7 +105190,7 @@ cOB
 cSy
 leK
 uen
-leK
+aAh
 iTg
 ahw
 iBC
@@ -105403,7 +105492,7 @@ lYP
 cVV
 cSg
 leK
-isJ
+uen
 adB
 mAa
 adB
@@ -106370,7 +106459,7 @@ giN
 kRh
 tkJ
 ayE
-lqD
+dyt
 mip
 cBV
 neB
@@ -110518,7 +110607,7 @@ bzS
 bzS
 bzS
 rJg
-rJg
+lAH
 rne
 uNU
 uNU
@@ -110598,7 +110687,7 @@ lCi
 neB
 neB
 dAB
-bzS
+vnv
 bzS
 bzS
 bzS
@@ -110820,7 +110909,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+lAH
 rne
 rne
 uNU
@@ -110900,7 +110989,7 @@ neB
 neB
 dAB
 dAB
-bzS
+vnv
 bzS
 bzS
 bzS
@@ -111122,8 +111211,8 @@ bzS
 bzS
 bzS
 bzS
-bzS
-bzS
+hnw
+rJg
 mDA
 nhc
 uNU
@@ -111201,8 +111290,8 @@ neB
 neB
 hOA
 rEP
-bzS
-bzS
+rJg
+hnw
 bzS
 bzS
 bzS
@@ -111423,9 +111512,9 @@ bzS
 bzS
 bzS
 bzS
-bzS
-bzS
-bzS
+rne
+rne
+rne
 rne
 rne
 uNU
@@ -111503,9 +111592,9 @@ fxH
 fxH
 dAB
 dAB
-bzS
-bzS
-bzS
+dAB
+dAB
+dAB
 bzS
 bzS
 bzS
@@ -111725,10 +111814,10 @@ bzS
 bzS
 bzS
 bzS
-bzS
-bzS
-bzS
-bzS
+rne
+bmX
+bmX
+hqr
 rne
 uNU
 uNU
@@ -111800,14 +111889,14 @@ pfe
 mTx
 gYB
 cBV
-lCi
+kCf
 neB
 neB
 dAB
-bzS
-bzS
-bzS
-bzS
+dqn
+dqn
+gFe
+dAB
 bzS
 bzS
 bzS
@@ -112027,14 +112116,14 @@ bzS
 bzS
 bzS
 bzS
-bzS
-bzS
-bzS
-bzS
 rne
+bmX
+bmX
+bmX
 rne
 uNU
 uNU
+hPc
 rne
 rne
 rne
@@ -112104,12 +112193,12 @@ cBV
 cBV
 neB
 neB
+neB
 dAB
+dqn
+dqn
+dqn
 dAB
-bzS
-bzS
-bzS
-bzS
 bzS
 bzS
 bzS
@@ -112329,13 +112418,13 @@ bzS
 bzS
 bzS
 bzS
-bzS
-bzS
-bzS
-bzS
-bzS
 nHe
-nhc
+bmX
+bmX
+bmX
+etr
+uNU
+uNU
 uNU
 uNU
 rne
@@ -112403,15 +112492,15 @@ kRh
 sFr
 wqN
 eOn
-lCi
 neB
-hOA
+neB
+neB
+neB
+aTx
+dqn
+dqn
+dqn
 rEP
-bzS
-bzS
-bzS
-bzS
-bzS
 bzS
 bzS
 bzS
@@ -112631,14 +112720,14 @@ bzS
 bzS
 bzS
 bzS
-bzS
-bzS
-bzS
-bzS
-bzS
 rne
+bmX
+bmX
+bmX
 rne
-weq
+fxU
+uNU
+uNU
 uNU
 rne
 rne
@@ -112706,14 +112795,14 @@ kRh
 cBV
 cBV
 neB
-phU
+neB
+neB
+xHC
 dAB
+dqn
+dqn
+dqn
 dAB
-bzS
-bzS
-bzS
-bzS
-bzS
 bzS
 bzS
 bzS
@@ -112933,12 +113022,12 @@ bzS
 bzS
 bzS
 bzS
-bzS
-bzS
-bzS
-bzS
-bzS
-bzS
+rne
+bmX
+bmX
+bmX
+rne
+nHe
 rne
 uNU
 uNU
@@ -113010,12 +113099,12 @@ lCi
 neB
 neB
 dAB
-bzS
-bzS
-bzS
-bzS
-bzS
-bzS
+rEP
+dAB
+dqn
+dqn
+dqn
+dAB
 bzS
 bzS
 bzS
@@ -113235,12 +113324,12 @@ bzS
 bzS
 bzS
 bzS
-bzS
-bzS
-bzS
-bzS
-bzS
-bzS
+rne
+rne
+nHe
+rne
+rne
+iXj
 rne
 wjl
 rne
@@ -113312,12 +113401,12 @@ fxH
 dAB
 fxH
 dAB
-bzS
-bzS
-bzS
-bzS
-bzS
-bzS
+iXj
+dAB
+dAB
+rEP
+dAB
+dAB
 bzS
 bzS
 bzS

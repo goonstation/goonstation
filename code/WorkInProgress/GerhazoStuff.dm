@@ -789,7 +789,7 @@
 			var/obj/effects/heavenly_light/lightbeam = new /obj/effects/heavenly_light
 			lightbeam.set_loc(T)
 			lightbeam.alpha = 0
-			playsound(T, 'sound/voice/heavenly.ogg', 100, 1, 0)
+			playsound(T, 'sound/voice/heavenly.ogg', 50, 1, 0)
 			animate(lightbeam, alpha=255, time=3.5 SECONDS)
 			SPAWN(30)
 				animate(lightbeam,alpha = 0, time=3.5 SECONDS)

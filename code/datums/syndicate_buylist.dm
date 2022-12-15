@@ -158,6 +158,12 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 1
 	desc = "An implant that allows instant escape from handcuffs and shackles. Multiple uses possible but not guaranteed."
 
+/datum/syndicate_buylist/generic/signaler_implant
+	name = "Signaler Implant"
+	item = /obj/item/implanter/signaler
+	cost = 1
+	desc = "An implant that can send configurable signals. Can be used while stunned or handcuffed."
+
 /datum/syndicate_buylist/generic/spen
 	name = "Sleepy Pen"
 	item = /obj/item/pen/sleepypen

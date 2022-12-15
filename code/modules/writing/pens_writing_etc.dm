@@ -69,7 +69,7 @@
 		">" = "Greater Than",
 		"[CREDIT_SIGN]" = "Credit"
 	)
-	var/suitable_for_canvas = FALSE
+	var/suitable_for_canvas = TRUE
 
 	New()
 		. = ..()
@@ -975,10 +975,7 @@
 		src.label = "DEAD"
 		Label(user,user,1)
 
-		user.TakeDamage("chest", 300, 0) //they have to die fast or it'd make even less sense
-		SPAWN(50 SECONDS)
-			if (user && !isdead(user))
-				user.suiciding = 0
+		user.death()
 		return 1
 
 /* =============== CLIPBOARDS =============== */

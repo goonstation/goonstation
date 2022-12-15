@@ -583,17 +583,6 @@
 	dir = 8
 	},
 /area/space_hive)
-"abY" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "An older biopod for the creation of space bee eggs.";
-	icon = 'icons/obj/cloning.dmi';
-	icon_state = "pod_0";
-	name = "egg generator pod"
-	},
-/turf/unsimulated/floor/bot,
-/area/space_hive)
 "abZ" = (
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -680,9 +669,6 @@
 /area/radiostation/bridge)
 "ack" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/radiostation/hallway)
-"acl" = (
-/turf/simulated/floor/delivery,
 /area/radiostation/hallway)
 "acm" = (
 /obj/table/auto,
@@ -806,17 +792,6 @@
 "acD" = (
 /turf/simulated/floor/orangeblack,
 /area/radiostation/hallway)
-"acE" = (
-/obj/machinery/vending/coffee,
-/obj/machinery/light_switch/north{
-	pixel_y = 30
-	},
-/turf/simulated/floor/bot,
-/area/radiostation/hallway)
-"acF" = (
-/obj/machinery/vending/cigarette,
-/turf/simulated/floor/delivery,
-/area/radiostation/hallway)
 "acG" = (
 /turf/simulated/floor/blue/side{
 	dir = 1
@@ -850,14 +825,6 @@
 	},
 /turf/unsimulated/floor,
 /area/space_hive)
-"acJ" = (
-/obj/machinery/vending/snack,
-/turf/simulated/floor/delivery,
-/area/radiostation/hallway)
-"acK" = (
-/obj/machinery/vending/cola/blue,
-/turf/simulated/floor/bot,
-/area/radiostation/hallway)
 "acL" = (
 /obj/structure/girder/displaced,
 /turf/unsimulated/floor/setpieces/hivefloor,
@@ -3079,14 +3046,6 @@
 /obj/item/cable_coil/cut/small,
 /turf/simulated/floor/grime,
 /area/radiostation/engineering)
-"aoa" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/decal/cleanable/cobweb2,
-/obj/machinery/light_switch/north{
-	pixel_y = 30
-	},
-/turf/simulated/floor/delivery,
-/area/radiostation/engineering)
 "aob" = (
 /obj/decal/poster/wallsign/escape_left,
 /turf/simulated/wall/auto/reinforced/old,
@@ -3492,15 +3451,6 @@
 	},
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
-"apX" = (
-/obj/critter/cat{
-	desc = "How long has this cat been here?";
-	icon_state = "cat6";
-	name = "jons the catte";
-	randomize_cat = 0
-	},
-/turf/simulated/floor/specialroom/bar,
-/area/diner/dining)
 "apY" = (
 /obj/stool/chair,
 /turf/simulated/floor/carpet{
@@ -3870,36 +3820,6 @@
 	},
 /turf/simulated/floor/circuit/green,
 /area/buddyfactory/mainframe)
-"are" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/overlay{
-	density = 1;
-	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
-	icon = 'icons/obj/networked.dmi';
-	icon_state = "tapedrive-p";
-	name = "broken databank"
-	},
-/turf/simulated/floor/bot,
-/area/buddyfactory/mainframe)
-"arf" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/networked/storage/tape_drive{
-	bank_id = "USR";
-	locked = 0;
-	setup_drive_type = /obj/item/disk/data/tape/tds_journaltape
-	},
-/turf/simulated/floor/bot,
-/area/buddyfactory/mainframe)
 "arg" = (
 /turf/simulated/floor/circuit/green,
 /area/buddyfactory/mainframe)
@@ -4113,22 +4033,6 @@
 /obj/submachine/chem_extractor,
 /turf/simulated/floor/plating/damaged1,
 /area/salyut)
-"arU" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable,
-/obj/machinery/networked/mainframe/robot_factory{
-	tag = "FACTORY_MAINFRAME"
-	},
-/turf/simulated/floor/delivery,
-/area/buddyfactory/mainframe)
 "arV" = (
 /obj/cable{
 	d1 = 4;
@@ -4332,29 +4236,6 @@
 /obj/storage/secure/closet/research/chemical,
 /turf/simulated/floor/plating/damaged1,
 /area/salyut)
-"asE" = (
-/obj/machinery/power/data_terminal,
-/obj/cable,
-/obj/machinery/networked/storage/tape_drive{
-	bank_id = "Maint";
-	locked = 0;
-	setup_drive_type = /obj/item/disk/data/tape/tds_replogtape
-	},
-/obj/machinery/light/small,
-/turf/simulated/floor/bot,
-/area/buddyfactory/mainframe)
-"asF" = (
-/obj/machinery/power/data_terminal,
-/obj/cable,
-/obj/overlay{
-	density = 1;
-	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
-	icon = 'icons/obj/networked.dmi';
-	icon_state = "tapedrive-p";
-	name = "broken databank"
-	},
-/turf/simulated/floor/bot,
-/area/buddyfactory/mainframe)
 "asG" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -4463,11 +4344,6 @@
 	},
 /turf/simulated/floor,
 /area/radiostation/engineering)
-"asV" = (
-/obj/decal/cleanable/dirt,
-/obj/item/storage/toolbox/mechanical,
-/turf/simulated/floor/bot,
-/area/radiostation/engineering)
 "asW" = (
 /obj/machinery/espresso_machine,
 /obj/item/reagent_containers/food/drinks/espressocup,
@@ -4566,9 +4442,6 @@
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/plating/damaged1,
 /area/salyut)
-"ato" = (
-/turf/simulated/floor/bot,
-/area/radiostation/serverroom)
 "atp" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -6572,10 +6445,6 @@
 	icon_state = "wall_space"
 	},
 /area/abandonedship)
-"aHE" = (
-/obj/decal/fakeobjects/vacuumtape,
-/turf/simulated/floor/delivery,
-/area/radiostation/serverroom)
 "aHF" = (
 /obj/decal/cleanable/oil,
 /obj/decal/cleanable/dirt,
@@ -7885,20 +7754,6 @@
 	dir = 4
 	},
 /area/h7/computer_core)
-"aLO" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/guardbot_dock{
-	desc = "A recharging and command station for PR-6S Guardbuddies. It looks rather worn.";
-	frequency = 1089;
-	name = "dusty docking station"
-	},
-/obj/machinery/bot/guardbot/bad,
-/turf/simulated/floor/bot,
-/area/h7/computer_core)
 "aLP" = (
 /obj/decal/cleanable/oil,
 /obj/item/skull,
@@ -8113,20 +7968,6 @@
 "aMu" = (
 /turf/simulated/floor,
 /area/h7)
-"aMv" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/guardbot_dock{
-	desc = "A recharging and command station for PR-6S Guardbuddies. It looks rather worn.";
-	frequency = 1089;
-	name = "dusty docking station"
-	},
-/obj/machinery/bot/guardbot/bad,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/bot,
-/area/h7/computer_core)
 "aMw" = (
 /obj/cable{
 	d1 = 2;
@@ -8865,16 +8706,6 @@
 	},
 /turf/simulated/floor,
 /area/h7)
-"aOB" = (
-/obj/disposalpipe/segment{
-	desc = "An underfloor mail pipe.";
-	dir = 1;
-	icon_state = "pipe-c";
-	name = "mail pipe"
-	},
-/obj/machinery/derelict_aiboss/tower,
-/turf/simulated/floor/bot,
-/area/derelict_ai_sat/core)
 "aOC" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -8888,18 +8719,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/derelict_ai_sat/core)
-"aOE" = (
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer3/terminal/zeta{
-	name = "Old Terminal";
-	setup_os_string = "H7_MAINFRAME"
-	},
-/turf/simulated/floor/bot,
-/area/h7/computer_core)
 "aOG" = (
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/damaged2,
@@ -9056,21 +8875,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat/core)
-"aPb" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable,
-/obj/machinery/power/data_terminal,
-/obj/machinery/guardbot_dock{
-	desc = "A recharging and command station for PR-6S Guardbuddies. It looks rather worn.";
-	frequency = 1089;
-	name = "dusty docking station"
-	},
-/obj/item/guardbot_frame,
-/obj/item/guardbot_core,
-/turf/simulated/floor/bot,
-/area/h7/storage)
 "aPc" = (
 /obj/decal/floatingtiles{
 	dir = 1;
@@ -9194,14 +8998,6 @@
 	dir = 6
 	},
 /area/h7/computer_core)
-"aPp" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/networked/radio,
-/turf/simulated/floor/bot,
-/area/h7/computer_core)
 "aPq" = (
 /obj/cable{
 	d1 = 2;
@@ -9300,10 +9096,6 @@
 /turf/simulated/floor/caution/corner/misc{
 	dir = 8
 	},
-/area/derelict_ai_sat/core)
-"aPD" = (
-/obj/machinery/derelict_aiboss/tower,
-/turf/simulated/floor/bot,
 /area/derelict_ai_sat/core)
 "aPE" = (
 /turf/simulated/floor/yellow/side{
@@ -9435,25 +9227,6 @@
 /obj/decal/floatingtiles,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/space)
-"aPX" = (
-/obj/machinery/power/data_terminal,
-/obj/cable,
-/obj/machinery/networked/storage/tape_drive{
-	bank_id = "Main";
-	locked = 0;
-	read_only = 1;
-	setup_drive_type = /obj/item/disk/data/tape/h7_logs
-	},
-/turf/simulated/floor/bot,
-/area/h7/computer_core)
-"aPY" = (
-/obj/machinery/power/data_terminal,
-/obj/cable,
-/obj/machinery/networked/mainframe/h7{
-	tag = "H7_MAINFRAME"
-	},
-/turf/simulated/floor/delivery,
-/area/h7/computer_core)
 "aQa" = (
 /turf/simulated/floor/stairs{
 	dir = 0
@@ -9496,18 +9269,6 @@
 	},
 /turf/space,
 /area/space)
-"aQj" = (
-/obj/machinery/power/data_terminal,
-/obj/overlay{
-	density = 1;
-	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
-	icon = 'icons/obj/networked.dmi';
-	icon_state = "tapedrive-p";
-	name = "broken databank"
-	},
-/obj/cable,
-/turf/simulated/floor/bot,
-/area/h7/computer_core)
 "aQk" = (
 /turf/simulated/floor/caution/north{
 	dir = 8
@@ -9850,13 +9611,6 @@
 	},
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
-"aRu" = (
-/obj/machinery/door/airlock/pyro/security{
-	name = "Prisoner Transfer Ship";
-	req_access_txt = "1"
-	},
-/turf/simulated/floor/delivery,
-/area/abandonedship)
 "aRv" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -10448,20 +10202,6 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/h7/crew)
-"aTb" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "Living Quarters"
-	},
-/turf/simulated/floor/bot,
 /area/h7/crew)
 "aTc" = (
 /obj/decal/fakeobjects{
@@ -12347,18 +12087,6 @@
 "aYb" = (
 /turf/simulated/floor/caution/west,
 /area/iss)
-"aYc" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "It's some sort of electrical machine thing.";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "neutinj";
-	name = "old machine"
-	},
-/obj/map/light/white,
-/turf/simulated/floor/delivery,
-/area/iss)
 "aYd" = (
 /turf/simulated/floor/caution/east{
 	dir = 8
@@ -12933,19 +12661,6 @@
 	icon_state = "floattiles3"
 	},
 /turf/simulated/floor/plating,
-/area/h7/lab)
-"bad" = (
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/guardbot_dock{
-	desc = "A recharging and command station for PR-6S Guardbuddies. It looks rather worn.";
-	frequency = 1089;
-	name = "dusty docking station"
-	},
-/turf/simulated/floor/bot,
 /area/h7/lab)
 "bae" = (
 /obj/machinery/firealarm{
@@ -14352,18 +14067,6 @@
 /turf/space,
 /turf/simulated/wall/auto/asteroid,
 /area/h7/asteroid)
-"bfn" = (
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer3/terminal/zeta{
-	name = "Old Terminal";
-	setup_os_string = "H7_MAINFRAME"
-	},
-/turf/simulated/floor/bot,
-/area/h7/lab)
 "bfo" = (
 /obj/cable{
 	d1 = 1;
@@ -15151,27 +14854,6 @@
 	dir = 4
 	},
 /area/derelict_ai_sat/core)
-"bhW" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/derelict_aiboss/ai,
-/obj/decal{
-	anchored = 1;
-	desc = "VOEFS";
-	icon = 'icons/effects/96x96.dmi';
-	icon_state = "oldai_base";
-	name = "floor";
-	pixel_x = -32;
-	pixel_y = -32
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/floor/delivery{
-	dir = 4
-	},
-/area/derelict_ai_sat/core)
 "bhX" = (
 /obj/decal/fakeobjects/pipe,
 /obj/cable{
@@ -15374,16 +15056,6 @@
 "bit" = (
 /turf/simulated/floor/damaged5,
 /area/derelict_ai_sat/core)
-"biu" = (
-/obj/disposalpipe/segment,
-/obj/machinery/derelict_aiboss/tower,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/bot,
-/area/derelict_ai_sat/core)
 "biv" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -15414,18 +15086,6 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/derelict_ai_sat/core)
-"biz" = (
-/obj/decal/fakeobjects/firelock_broken{
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "bloodydoor";
-	name = "rusted airlock"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/bot,
-/area/derelict_ai_sat)
 "biA" = (
 /obj/grille/catwalk{
 	dir = 6
@@ -15524,24 +15184,6 @@
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/grime,
 /area/derelict_ai_sat)
-"biL" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/guardbot_dock{
-	desc = "A recharging and command station for PR-6S Guardbuddies. It looks rather worn.";
-	frequency = 1089;
-	name = "dusty docking station"
-	},
-/obj/machinery/bot/guardbot/bad,
-/turf/simulated/floor/bot,
-/area/h7/computer_core)
 "biM" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/crate,
@@ -15649,17 +15291,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/sanitary,
 /area/radiostation/bedroom)
-"bjd" = (
-/obj/decal/fakeobjects/operatorconsole,
-/turf/simulated/floor/bot,
-/area/radiostation/serverroom)
-"bje" = (
-/obj/decal/fakeobjects/cpucontroller,
-/turf/simulated/floor/delivery,
-/area/radiostation/serverroom)
-"bjf" = (
-/turf/simulated/floor/delivery,
-/area/radiostation/serverroom)
 "bjh" = (
 /obj/table/reinforced/industrial/auto,
 /obj/machinery/glass_recycler,
@@ -16814,6 +16445,25 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/jucer_trader)
+"btx" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/guardbot_dock{
+	desc = "A recharging and command station for PR-6S Guardbuddies. It looks rather worn.";
+	frequency = 1089;
+	name = "dusty docking station"
+	},
+/obj/machinery/bot/guardbot/bad,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/h7/computer_core)
 "buU" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 6;
@@ -17370,13 +17020,6 @@
 	},
 /turf/space,
 /area/space)
-"cUp" = (
-/obj/table/wood/auto,
-/obj/item/item_box/chips,
-/turf/simulated/floor{
-	icon_state = "hive"
-	},
-/area/bee_trader)
 "cWa" = (
 /obj/machinery/power/apc/autoname_north/nopoweralert,
 /obj/cable{
@@ -17508,6 +17151,12 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/bee_trader)
+"dni" = (
+/obj/decal/cleanable/dirt,
+/obj/item/storage/toolbox/mechanical,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/radiostation/engineering)
 "doJ" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -17553,6 +17202,18 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
+"dpB" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/shaker/pepper{
+	pixel_x = -8;
+	pixel_y = 3
+	},
+/obj/item/shaker/salt{
+	pixel_x = 1
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/diner/dining)
 "dqw" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -17569,6 +17230,19 @@
 "duy" = (
 /turf/simulated/floor/longtile/black,
 /area/space)
+"dvA" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/networked/storage/tape_drive{
+	bank_id = "USR";
+	locked = 0;
+	setup_drive_type = /obj/item/disk/data/tape/tds_journaltape
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/buddyfactory/mainframe)
 "dvU" = (
 /obj/machinery/vehicle/miniputt/armed,
 /turf/simulated/floor/shuttlebay,
@@ -17759,6 +17433,19 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/hallway/docking)
+"efI" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/terminal/zeta{
+	name = "Old Terminal";
+	setup_os_string = "H7_MAINFRAME"
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/h7/lab)
 "eha" = (
 /obj/lattice{
 	dir = 9;
@@ -17847,6 +17534,19 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/shuttlebay,
 /area/bee_trader)
+"euH" = (
+/obj/machinery/power/data_terminal,
+/obj/overlay{
+	density = 1;
+	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "tapedrive-p";
+	name = "broken databank"
+	},
+/obj/cable,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/h7/computer_core)
 "exM" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/plating/damaged2,
@@ -17916,6 +17616,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/diner/hallway)
+"eOr" = (
+/obj/disposalpipe/segment,
+/obj/machinery/derelict_aiboss/tower,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/derelict_ai_sat/core)
 "eSU" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -18111,6 +17822,12 @@
 	icon_state = "floor2"
 	},
 /area/diner/jucer_trader)
+"fzI" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/diner/dining)
 "fAl" = (
 /obj/decal/poster/wallsign/stencil/left/c{
 	pixel_x = -5
@@ -18188,6 +17905,21 @@
 /obj/decal/cleanable/oil,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
+"fJm" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/guardbot_dock{
+	desc = "A recharging and command station for PR-6S Guardbuddies. It looks rather worn.";
+	frequency = 1089;
+	name = "dusty docking station"
+	},
+/obj/machinery/bot/guardbot/bad,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/h7/computer_core)
 "fLF" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -18245,11 +17977,21 @@
 /obj/machinery/space_heater,
 /turf/simulated/floor/airless/caution/northsouth,
 /area/space)
-"fXs" = (
+"fXg" = (
+/obj/machinery/door/airlock/pyro/security{
+	dir = 4;
+	name = "Prisoner Transfer Ship";
+	req_access_txt = "1"
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/abandonedship)
+"fYm" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
 /obj/decal/cleanable/molten_item,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/diner/dining)
 "fZa" = (
 /mob/living/critter/small_animal/cockroach,
@@ -18298,6 +18040,11 @@
 /obj/critter/ancient_repairbot/helldrone_guard,
 /turf/simulated/floor/plating,
 /area/helldrone)
+"gck" = (
+/obj/machinery/vending/cola/blue,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/radiostation/hallway)
 "ggh" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 2;
@@ -18655,6 +18402,17 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/hallway/docking)
+"hdr" = (
+/obj/npc/trader/robot{
+	desc = "The robot proprieter of the Diner. Deals in food that's to dine for!";
+	name = "B.I.F.F.";
+	picture = "loungebuddy.png";
+	productset = 2;
+	trader_area = "/area/diner/dining"
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/diner/dining)
 "hdU" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/space,
@@ -18698,6 +18456,14 @@
 	icon_state = "floor6"
 	},
 /area/diner/jucer_trader)
+"hjb" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_y = 8
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/diner/dining)
 "hkh" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -18757,6 +18523,19 @@
 	},
 /turf/space,
 /area/diner/jucer_trader)
+"hoL" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's some sort of electrical machine thing.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "neutinj";
+	name = "old machine"
+	},
+/obj/map/light/white,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/iss)
 "hpN" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
@@ -18827,13 +18606,28 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/hallway)
-"hwS" = (
-/obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
+"hyp" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/delivery,
-/area/diner/dining)
+/obj/machinery/derelict_aiboss/ai,
+/obj/decal{
+	anchored = 1;
+	desc = "VOEFS";
+	icon = 'icons/effects/96x96.dmi';
+	icon_state = "oldai_base";
+	name = "floor";
+	pixel_x = -32;
+	pixel_y = -32
+	},
+/obj/disposalpipe/segment,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor{
+	dir = 4
+	},
+/area/derelict_ai_sat/core)
 "hAu" = (
 /obj/decal/cleanable/machine_debris,
 /turf/simulated/shuttle/wall{
@@ -19211,16 +19005,6 @@
 "iDu" = (
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/kitchen)
-"iDz" = (
-/obj/npc/trader/robot{
-	desc = "The robot proprieter of the Diner. Deals in food that's to dine for!";
-	name = "B.I.F.F.";
-	picture = "loungebuddy.png";
-	productset = 2;
-	trader_area = "/area/diner/dining"
-	},
-/turf/simulated/floor/delivery,
-/area/diner/dining)
 "iEV" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -19294,6 +19078,11 @@
 	name = "reinforced plating"
 	},
 /area/diner/motel/chemstorage)
+"iTc" = (
+/obj/decal/fakeobjects/cpucontroller,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/radiostation/serverroom)
 "iTg" = (
 /obj/decal/cleanable/dirt,
 /obj/stool/chair/couch{
@@ -19420,6 +19209,23 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/diner/tug)
+"jfl" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable,
+/obj/machinery/networked/mainframe/robot_factory{
+	tag = "FACTORY_MAINFRAME"
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/buddyfactory/mainframe)
 "jfE" = (
 /obj/table/wood/auto,
 /obj/item/staple_gun/red,
@@ -19599,16 +19405,26 @@
 	},
 /turf/space,
 /area/timewarp)
-"jCr" = (
-/obj/machinery/cashreg,
-/obj/table/reinforced/bar/auto,
-/obj/machinery/cashreg,
-/turf/simulated/floor/delivery,
-/area/diner/dining)
 "jFV" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
 /area/radiostation/bedroom)
+"jGa" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/machinery/power/data_terminal,
+/obj/machinery/guardbot_dock{
+	desc = "A recharging and command station for PR-6S Guardbuddies. It looks rather worn.";
+	frequency = 1089;
+	name = "dusty docking station"
+	},
+/obj/item/guardbot_frame,
+/obj/item/guardbot_core,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/h7/storage)
 "jGV" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9
@@ -19979,15 +19795,6 @@
 	name = "space"
 	},
 /area/diner/jucer_trader)
-"kPm" = (
-/obj/table/reinforced/bar/auto,
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/deskclutter,
-/obj/item/reagent_containers/food/drinks/bowl,
-/turf/simulated/floor/delivery,
-/area/diner/dining)
 "kRn" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -20164,6 +19971,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
+"lrc" = (
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/obj/overlay{
+	density = 1;
+	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "tapedrive-p";
+	name = "broken databank"
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/buddyfactory/mainframe)
 "lsq" = (
 /obj/machinery/door/airlock/pyro/command{
 	aiControlDisabled = 1;
@@ -20474,6 +20294,18 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
+"lZs" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "An older biopod for the creation of space bee eggs.";
+	icon = 'icons/obj/cloning.dmi';
+	icon_state = "pod_0";
+	name = "egg generator pod"
+	},
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor,
+/area/space_hive)
 "lZu" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It won't budge.";
@@ -20608,6 +20440,15 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/hallway/docking)
+"mtm" = (
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/obj/machinery/networked/mainframe/h7{
+	tag = "H7_MAINFRAME"
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/h7/computer_core)
 "mtR" = (
 /obj/decal/timeplug{
 	dir = 1
@@ -20866,6 +20707,10 @@
 	icon_state = "floor2"
 	},
 /area/diner/jucer_trader)
+"neU" = (
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/radiostation/serverroom)
 "nfg" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -20910,6 +20755,11 @@
 	icon_state = "floor2"
 	},
 /area/diner/tug)
+"nhQ" = (
+/obj/machinery/vending/cigarette,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/radiostation/hallway)
 "niK" = (
 /obj/machinery/vending/standard,
 /turf/simulated/floor/plating/damaged1,
@@ -21084,6 +20934,19 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedship)
+"nGe" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/terminal/zeta{
+	name = "Old Terminal";
+	setup_os_string = "H7_MAINFRAME"
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/h7/computer_core)
 "nIX" = (
 /obj/reagent_dispensers/fueltank,
 /obj/machinery/door_control/podbay/diner1/new_walls/south{
@@ -21254,6 +21117,21 @@
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
+"ooG" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "Living Quarters"
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/h7/crew)
 "oqh" = (
 /turf/simulated/shuttle/wall{
 	dir = 6;
@@ -21356,6 +21234,13 @@
 "oEP" = (
 /turf/simulated/floor/carpet/green/standard/edge/se,
 /area/diner/jucer_trader)
+"oGJ" = (
+/obj/table/wood/auto,
+/obj/item/item_box/chips,
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/bee_trader)
 "oHs" = (
 /turf/simulated/floor/caution/west,
 /area/diner/hangar)
@@ -21689,6 +21574,11 @@
 	},
 /turf/space,
 /area/timewarp)
+"pxf" = (
+/obj/decal/fakeobjects/vacuumtape,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/radiostation/serverroom)
 "pxo" = (
 /obj/cable{
 	d1 = 2;
@@ -21768,6 +21658,14 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
+"pJd" = (
+/obj/machinery/door/airlock/pyro/security{
+	name = "Prisoner Transfer Ship";
+	req_access_txt = "1"
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/abandonedship)
 "pKb" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
@@ -21855,6 +21753,10 @@
 /obj/item/reagent_containers/glass/petridish,
 /turf/simulated/floor/black/grime,
 /area/diner/motel/chemstorage)
+"pYB" = (
+/obj/landmark/random_room/size3x3,
+/turf/simulated/floor/black/grime,
+/area/diner/hallway/docking)
 "pYW" = (
 /obj/grille/catwalk{
 	dir = 6;
@@ -21896,17 +21798,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/hallway)
-"qcP" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/shaker/pepper{
-	pixel_x = -8;
-	pixel_y = 3
-	},
-/obj/item/shaker/salt{
-	pixel_x = 1
-	},
-/turf/simulated/floor/delivery,
-/area/diner/dining)
 "qdj" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
@@ -21942,14 +21833,6 @@
 "qhp" = (
 /turf/simulated/floor/grime,
 /area/space)
-"qhA" = (
-/obj/machinery/door/airlock/pyro/security{
-	dir = 4;
-	name = "Prisoner Transfer Ship";
-	req_access_txt = "1"
-	},
-/turf/simulated/floor/delivery,
-/area/abandonedship)
 "qhW" = (
 /turf/simulated/floor/pool/no_animate,
 /area/diner/motel/pool)
@@ -22062,6 +21945,20 @@
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
+"qwH" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/guardbot_dock{
+	desc = "A recharging and command station for PR-6S Guardbuddies. It looks rather worn.";
+	frequency = 1089;
+	name = "dusty docking station"
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/h7/lab)
 "qyC" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -22171,14 +22068,6 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/h7/crew)
-"qSL" = (
-/obj/table/reinforced/bar/auto,
-/obj/machinery/glass_recycler,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/floor/delivery,
-/area/diner/dining)
 "qTq" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 4;
@@ -22463,6 +22352,15 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/diner/motel/observatory)
+"rGp" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/networked/radio,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/h7/computer_core)
 "rGA" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 8;
@@ -22470,6 +22368,11 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedmedicalship)
+"rGI" = (
+/obj/machinery/vending/snack,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/radiostation/hallway)
 "rHP" = (
 /obj/pool/perspective{
 	dir = 4;
@@ -22502,6 +22405,21 @@
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
 /area/space)
+"rOx" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/guardbot_dock{
+	desc = "A recharging and command station for PR-6S Guardbuddies. It looks rather worn.";
+	frequency = 1089;
+	name = "dusty docking station"
+	},
+/obj/machinery/bot/guardbot/bad,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/h7/computer_core)
 "rPb" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 8;
@@ -22696,6 +22614,10 @@
 /obj/machinery/light/runway_light/delay5,
 /turf/space,
 /area/diner/jucer_trader)
+"sjx" = (
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/radiostation/serverroom)
 "skq" = (
 /obj/decal/poster/wallsign/poster_rand,
 /turf/simulated/wall/auto/reinforced/old,
@@ -22720,6 +22642,15 @@
 /obj/machinery/door_control/podbay/diner2/new_walls/north,
 /turf/simulated/floor/caution/west,
 /area/diner/hangar)
+"snR" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/decal/cleanable/cobweb2,
+/obj/machinery/light_switch/north{
+	pixel_y = 30
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/radiostation/engineering)
 "soj" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/window{
@@ -22756,6 +22687,17 @@
 	dir = 4
 	},
 /area/timewarp/ship)
+"sqx" = (
+/obj/disposalpipe/segment{
+	desc = "An underfloor mail pipe.";
+	dir = 1;
+	icon_state = "pipe-c";
+	name = "mail pipe"
+	},
+/obj/machinery/derelict_aiboss/tower,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/derelict_ai_sat/core)
 "srt" = (
 /obj/decal/tile_edge/line/green{
 	dir = 8;
@@ -22955,6 +22897,13 @@
 /obj/decal/timeplug,
 /turf/space,
 /area/timewarp)
+"sXb" = (
+/obj/machinery/cashreg,
+/obj/table/reinforced/bar/auto,
+/obj/machinery/cashreg,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/diner/dining)
 "sXp" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/shuttlebay,
@@ -23063,6 +23012,18 @@
 	icon_state = "floor2"
 	},
 /area/diner/tug)
+"teV" = (
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/obj/machinery/networked/storage/tape_drive{
+	bank_id = "Main";
+	locked = 0;
+	read_only = 1;
+	setup_drive_type = /obj/item/disk/data/tape/h7_logs
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/h7/computer_core)
 "tfx" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -23407,11 +23368,6 @@
 /obj/item/tank/oxygen,
 /turf/simulated/floor/plating,
 /area/helldrone)
-"uhA" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/reagent_containers/food/drinks/drinkingglass,
-/turf/simulated/floor/delivery,
-/area/diner/dining)
 "uhK" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -23612,6 +23568,11 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
 /area/space)
+"uGZ" = (
+/obj/machinery/derelict_aiboss/tower,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/derelict_ai_sat/core)
 "uIh" = (
 /turf/simulated/wall/auto/asteroid{
 	name = "weak compacted stone";
@@ -23843,6 +23804,10 @@
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/plating,
 /area/buddyfactory)
+"vlP" = (
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/radiostation/hallway)
 "vnG" = (
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
@@ -23852,6 +23817,16 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/scorched2,
 /area/diner/kitchen)
+"vpn" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/deskclutter,
+/obj/item/reagent_containers/food/drinks/bowl,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/diner/dining)
 "vpt" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 1;
@@ -23859,6 +23834,14 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
+"vqS" = (
+/obj/machinery/vending/coffee,
+/obj/machinery/light_switch/north{
+	pixel_y = 30
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/radiostation/hallway)
 "vrP" = (
 /obj/grille/catwalk,
 /obj/decal/fakeobjects/cargopad,
@@ -23889,6 +23872,11 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
+"vvF" = (
+/obj/decal/fakeobjects/operatorconsole,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/radiostation/serverroom)
 "vws" = (
 /obj/map/light/cyan,
 /turf/unsimulated/floor/black,
@@ -24001,6 +23989,18 @@
 	},
 /turf/space,
 /area/abandonedmedicalship)
+"vPE" = (
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/obj/machinery/networked/storage/tape_drive{
+	bank_id = "Maint";
+	locked = 0;
+	setup_drive_type = /obj/item/disk/data/tape/tds_replogtape
+	},
+/obj/machinery/light/small,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/buddyfactory/mainframe)
 "vPY" = (
 /obj/item/poster/titled_photo/bee,
 /turf/simulated/wall/auto/reinforced/old,
@@ -24101,6 +24101,25 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
+"wcN" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/overlay{
+	density = 1;
+	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "tapedrive-p";
+	name = "broken databank"
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/buddyfactory/mainframe)
 "weF" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'COLLISION HAZARD'";
@@ -24336,6 +24355,15 @@
 "wFJ" = (
 /turf/simulated/floor/black,
 /area/helldrone)
+"wGI" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/glass_recycler,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/diner/dining)
 "wIg" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/snacks/condiment/syrup,
@@ -24413,6 +24441,19 @@
 /obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
+"xcO" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "bloodydoor";
+	name = "rusted airlock"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/derelict_ai_sat)
 "xdk" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -24552,6 +24593,16 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
 /area/space)
+"xvt" = (
+/mob/living/critter/small_animal/cat{
+	desc = "How long has this cat been here?";
+	icon_state = "cat6";
+	name = "jons the catte";
+	randomize_name = 0;
+	randomize_look = 0
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/diner/dining)
 "xvz" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 4;
@@ -26973,7 +27024,7 @@ aaa
 aki
 ard
 aru
-arU
+jfl
 arg
 arg
 akj
@@ -27273,11 +27324,11 @@ aaa
 aaa
 aaa
 aki
-are
+wcN
 arv
 arV
 asm
-asE
+vPE
 akj
 aqV
 atQ
@@ -27575,11 +27626,11 @@ ajC
 ajC
 ajC
 aki
-arf
+dvA
 arv
 arV
 asm
-asF
+lrc
 akj
 atB
 arx
@@ -33358,7 +33409,7 @@ aaa
 aaa
 aaa
 aOU
-aTb
+ooG
 aTM
 aUK
 aTM
@@ -36104,7 +36155,7 @@ bdz
 aXK
 bdF
 bdH
-bfn
+efI
 aXj
 aXj
 aan
@@ -37988,11 +38039,11 @@ aQy
 aQE
 aQE
 aQE
-aRu
+pJd
 aRJ
 aSe
 aSK
-aRu
+pJd
 aMo
 aSf
 aTE
@@ -38292,7 +38343,7 @@ nsI
 aQE
 iYn
 aRK
-qhA
+fXg
 aRK
 iYn
 aTk
@@ -39393,7 +39444,7 @@ aLC
 aMn
 aNK
 aNK
-aPb
+jGa
 aFW
 aFW
 aQr
@@ -39413,7 +39464,7 @@ aXW
 aYK
 aZB
 aXk
-bad
+qwH
 baB
 baX
 bbP
@@ -41202,11 +41253,11 @@ aGz
 biE
 aFX
 aLL
-aMv
+fJm
 aOd
-aOE
+nGe
 aPl
-aPX
+teV
 aLU
 aRv
 aRY
@@ -41508,7 +41559,7 @@ aMy
 aOe
 aLL
 aPn
-aPY
+mtm
 aLU
 aQr
 aOL
@@ -41810,7 +41861,7 @@ aMB
 aOg
 aOg
 aPo
-aQj
+euH
 aLU
 aQr
 aOL
@@ -42107,11 +42158,11 @@ bdu
 aGG
 bdu
 aFX
-aLO
-biL
+rOx
+btx
 aOm
 aOI
-aPp
+rGp
 aLU
 aLU
 aQr
@@ -42337,7 +42388,7 @@ aaW
 jcK
 aaW
 abH
-abY
+lZs
 abZ
 abZ
 abk
@@ -42943,7 +42994,7 @@ aaW
 abH
 aca
 abZ
-abY
+lZs
 adi
 abk
 gaf
@@ -65460,7 +65511,7 @@ bhH
 aOz
 aOX
 aOz
-aPD
+uGZ
 aOz
 aOX
 aOz
@@ -66059,7 +66110,7 @@ aNB
 aNL
 bhu
 aOp
-aOB
+sqx
 aOK
 aOR
 aOR
@@ -66970,12 +67021,12 @@ bhJ
 aPU
 aPU
 aPU
-bhW
+hyp
 big
 aPU
 aPU
 aQo
-biu
+eOr
 biy
 biD
 aRc
@@ -67871,7 +67922,7 @@ bhp
 aNR
 amV
 aQv
-aPD
+uGZ
 aOK
 aOR
 aOR
@@ -68480,7 +68531,7 @@ aOz
 aOz
 aOX
 aOz
-aPD
+uGZ
 aOz
 aOX
 aQc
@@ -69090,7 +69141,7 @@ amV
 amV
 amV
 biv
-biz
+xcO
 biF
 biK
 amR
@@ -72877,7 +72928,7 @@ iDu
 uXi
 azq
 ieG
-kPm
+vpn
 spm
 wli
 tkr
@@ -73168,7 +73219,7 @@ alo
 aje
 aic
 hGO
-cUp
+oGJ
 wvT
 aaa
 iDu
@@ -73179,7 +73230,7 @@ iDu
 vpl
 azq
 asW
-hwS
+hjb
 iZr
 wli
 tkr
@@ -73481,7 +73532,7 @@ cLy
 apj
 azq
 azq
-fXs
+fYm
 hro
 wli
 tkr
@@ -73783,7 +73834,7 @@ cLy
 akc
 pbd
 azq
-uhA
+fzI
 iZr
 wli
 tkr
@@ -74085,7 +74136,7 @@ iDu
 aks
 pdj
 azq
-qcP
+dpB
 mea
 wli
 tkr
@@ -74387,7 +74438,7 @@ iDu
 smF
 pdj
 bmX
-iDz
+hdr
 tkr
 wli
 tkr
@@ -74689,7 +74740,7 @@ iDu
 xZp
 ijr
 azq
-jCr
+sXb
 dtB
 wli
 tkr
@@ -74991,7 +75042,7 @@ iDu
 uJM
 azq
 fZa
-qSL
+wGI
 tkr
 wli
 tkr
@@ -75296,7 +75347,7 @@ apE
 alb
 tYQ
 wli
-apX
+xvt
 cZx
 alc
 hkh
@@ -85250,7 +85301,7 @@ aaa
 hny
 cyX
 cyX
-cyX
+pYB
 ctJ
 cyX
 gnt
@@ -92690,7 +92741,7 @@ aUq
 aXi
 aXn
 aXE
-aYc
+hoL
 aYt
 aYG
 aYX
@@ -106966,7 +107017,7 @@ aaa
 aaa
 aaS
 abT
-acl
+vlP
 abT
 acD
 acY
@@ -107270,7 +107321,7 @@ uiy
 aaN
 aaN
 acp
-acE
+vqS
 acY
 adg
 bYk
@@ -107281,8 +107332,8 @@ adg
 adg
 adg
 aga
-aoa
-asV
+snR
+dni
 aHy
 biT
 pEP
@@ -107572,7 +107623,7 @@ abr
 abU
 acm
 acp
-acF
+nhQ
 acZ
 fWG
 oSY
@@ -107886,10 +107937,10 @@ aeE
 adg
 agb
 aon
-ato
-aHE
-aHE
-bjd
+neU
+pxf
+pxf
+vvF
 rTq
 bjD
 aaa
@@ -108191,7 +108242,7 @@ aoY
 atp
 aHY
 biU
-bje
+iTc
 rTq
 bjE
 bjF
@@ -108490,10 +108541,10 @@ adL
 aeY
 agz
 arb
-ato
-aHE
-aHE
-bjf
+neU
+pxf
+pxf
+sjx
 rTq
 aeH
 aaa
@@ -108780,7 +108831,7 @@ abQ
 acj
 aco
 acp
-acJ
+rGI
 kag
 tFT
 ady
@@ -109082,7 +109133,7 @@ uiy
 aaN
 aaN
 acp
-acK
+gck
 acY
 adg
 uBo
@@ -109382,7 +109433,7 @@ aaa
 aaa
 abR
 abT
-acl
+vlP
 abT
 acD
 acY

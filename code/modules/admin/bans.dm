@@ -103,7 +103,7 @@ var/global/list/playersSeen = list()
 		var/remaining = (timestamp > 0 ? timestamp - CMinutes : timestamp)
 		var/addData[] = new()
 		addData["ckey"] = ckey
-		addData["compID"] = compID
+		addData["compID"] = row["compID"] || null // don't record CID if the original ban doesn't have one down
 		addData["ip"] = ip
 		addData["reason"] = row["reason"]
 		addData["oakey"] = row["oakey"]
@@ -174,7 +174,7 @@ var/global/list/playersSeen = list()
 
 		var/replacement_text
 		if (targetC)
-			targetC.mob.unlock_medal("Banned", 1)
+			targetC.mob.unlock_medal("Banned", FALSE)
 			boutput(targetC, "<span class='alert'><BIG><B>You have been banned by [row["akey"]].<br>Reason: [row["reason"]]</B></BIG></span>")
 			boutput(targetC, "<span class='alert'>To try to resolve this matter head to https://forum.ss13.co</span>")
 		else

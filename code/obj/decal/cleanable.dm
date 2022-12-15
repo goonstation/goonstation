@@ -1232,7 +1232,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon_state = "cobweb_floor-c"
 
 
-	Cross(atom/A)
+	Crossed(atom/A)
 		if (ismob(A))
 			A.changeStatus("slowed", 0.2 SECONDS)
 			SPAWN(-1)
@@ -1729,7 +1729,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	if(src.disposed)
 		return
 	if(isnull(get_turf(src)))
-		CRASH("Attempting to streak cleanable [src] which is in null.")
+		CRASH("Attempting to streak cleanable [identify_object(src)] which is in null.")
 
 	var/destination
 	var/dist = rand(1,6)

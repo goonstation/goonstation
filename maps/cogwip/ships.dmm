@@ -1845,13 +1845,6 @@
 	icon_state = "green2"
 	},
 /area/space)
-"fh" = (
-/obj/critter/cat,
-/turf/unsimulated/floor/carpet{
-	dir = 3;
-	icon_state = "green2"
-	},
-/area/space)
 "fi" = (
 /turf/unsimulated/floor/carpet{
 	dir = 10;
@@ -2183,17 +2176,6 @@
 /obj/window/north,
 /turf/unsimulated/floor/carpet{
 	dir = 1;
-	icon_state = "blue2"
-	},
-/area/space)
-"gf" = (
-/obj/stool/chair/couch{
-	dir = 4
-	},
-/obj/window/north,
-/obj/item/item_box/chips,
-/turf/unsimulated/floor/carpet{
-	dir = 5;
 	icon_state = "blue2"
 	},
 /area/space)
@@ -2645,9 +2627,6 @@
 	},
 /turf/space/no_replace,
 /area/space)
-"ho" = (
-/turf/simulated/floor/delivery,
-/area/space)
 "hp" = (
 /obj/table/auto,
 /obj/machinery/networked/printer,
@@ -2826,17 +2805,6 @@
 "hP" = (
 /turf/simulated/floor/orangeblack,
 /area/space)
-"hQ" = (
-/obj/machinery/vending/coffee,
-/obj/machinery/light_switch/north{
-	pixel_y = 30
-	},
-/turf/simulated/floor/bot,
-/area/space)
-"hR" = (
-/obj/machinery/vending/cigarette,
-/turf/simulated/floor/delivery,
-/area/space)
 "hS" = (
 /turf/simulated/floor/blue/side{
 	dir = 1
@@ -2855,14 +2823,6 @@
 	dir = 1
 	},
 /area/space)
-"hU" = (
-/obj/machinery/vending/snack,
-/turf/simulated/floor/delivery,
-/area/space)
-"hV" = (
-/obj/machinery/vending/cola/blue,
-/turf/simulated/floor/bot,
-/area/space)
 "hW" = (
 /turf/simulated/floor/shuttlebay,
 /area/diner/tug)
@@ -2873,10 +2833,6 @@
 "hY" = (
 /obj/machinery/emitter,
 /turf/unsimulated/floor,
-/area/space)
-"hZ" = (
-/obj/machinery/door/unpowered/wood,
-/turf/unsimulated/floor/delivery,
 /area/space)
 "ia" = (
 /turf/unsimulated/floor/specialroom/chapel{
@@ -3729,14 +3685,6 @@
 /obj/item/cable_coil/cut/small,
 /turf/simulated/floor/grime,
 /area/space)
-"ko" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/decal/cleanable/cobweb2,
-/obj/machinery/light_switch/north{
-	pixel_y = 30
-	},
-/turf/simulated/floor/delivery,
-/area/space)
 "kp" = (
 /obj/stool/chair{
 	dir = 1
@@ -3812,14 +3760,6 @@
 /obj/decal/cleanable/oil/streak,
 /turf/simulated/floor,
 /area/space)
-"ky" = (
-/obj/decal/cleanable/dirt,
-/obj/item/storage/toolbox/mechanical,
-/turf/simulated/floor/bot,
-/area/space)
-"kz" = (
-/turf/simulated/floor/bot,
-/area/space)
 "kA" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -3874,10 +3814,6 @@
 /obj/item/screwdriver,
 /obj/item/cigbutt,
 /turf/simulated/floor/black,
-/area/space)
-"kH" = (
-/obj/decal/fakeobjects/vacuumtape,
-/turf/simulated/floor/delivery,
 /area/space)
 "kI" = (
 /obj/decal/fakeobjects{
@@ -4008,14 +3944,6 @@
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/sanitary,
-/area/space)
-"kT" = (
-/obj/decal/fakeobjects/operatorconsole,
-/turf/simulated/floor/bot,
-/area/space)
-"kU" = (
-/obj/decal/fakeobjects/cpucontroller,
-/turf/simulated/floor/delivery,
 /area/space)
 "kV" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -5571,13 +5499,6 @@
 	dir = 4;
 	icon_state = "wall_space"
 	},
-/area/space)
-"oR" = (
-/obj/machinery/door/airlock/security{
-	name = "Prisoner Transfer Ship";
-	req_access_txt = "1"
-	},
-/turf/simulated/floor/delivery,
 /area/space)
 "oS" = (
 /obj/decal/cleanable/robot_debris{
@@ -7279,14 +7200,6 @@
 	},
 /turf/simulated/floor/white,
 /area/space)
-"sT" = (
-/obj/machinery/sleeper{
-	dir = 4;
-	icon_state = "sleeper"
-	},
-/obj/item/item_box/chips,
-/turf/simulated/floor/white,
-/area/space)
 "sU" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 5;
@@ -7331,13 +7244,6 @@
 	icon_state = "floor2"
 	},
 /area/space)
-"sY" = (
-/obj/table/wood/auto,
-/obj/item/item_box/chips,
-/turf/simulated/floor{
-	icon_state = "hive"
-	},
-/area/noGenerate)
 "sZ" = (
 /obj/table/wood/auto,
 /obj/item/paper/postcard/owlery,
@@ -8389,15 +8295,6 @@
 	},
 /turf/unsimulated/floor/darkpurple,
 /area/space)
-"vz" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/unsimulated/floor/bot/darkpurple,
-/area/space)
 "vA" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -8471,10 +8368,6 @@
 	icon_state = "delivery2"
 	},
 /turf/unsimulated/floor/darkpurple,
-/area/space)
-"vM" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/unsimulated/floor/bot/darkpurple,
 /area/space)
 "vN" = (
 /obj/machinery/light{
@@ -8635,18 +8528,6 @@
 "wh" = (
 /obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/black,
-/area/space)
-"wi" = (
-/obj/rack,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/turf/unsimulated/floor/bot/darkpurple,
 /area/space)
 "wj" = (
 /obj/cable{
@@ -10929,12 +10810,69 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/space)
+"Cn" = (
+/obj/stool/chair/couch{
+	dir = 4
+	},
+/obj/window/north,
+/obj/item/item_box/chips,
+/turf/unsimulated/floor/carpet{
+	dir = 5;
+	icon_state = "blue2"
+	},
+/area/space)
 "Da" = (
 /obj/table/reinforced/auto,
 /obj/item/camera/large,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
+/area/space)
+"DY" = (
+/obj/machinery/door/airlock/security{
+	name = "Prisoner Transfer Ship";
+	req_access_txt = "1"
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/space)
+"Gc" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/darkpurple,
+/area/space)
+"GF" = (
+/obj/decal/cleanable/dirt,
+/obj/item/storage/toolbox/mechanical,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/space)
+"Ik" = (
+/mob/living/critter/small_animal/cat,
+/turf/unsimulated/floor/carpet{
+	dir = 3;
+	icon_state = "green2"
+	},
+/area/space)
+"Iv" = (
+/obj/decal/fakeobjects/operatorconsole,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/space)
+"IT" = (
+/obj/machinery/vending/cola/blue,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/space)
+"Ju" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/darkpurple,
 /area/space)
 "Jv" = (
 /obj/decal/fakeobjects/pipe{
@@ -10960,6 +10898,84 @@
 /obj/item/reagent_containers/food/drinks/cola/random,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor/shuttlebay,
+/area/space)
+"Lj" = (
+/obj/table/wood/auto,
+/obj/item/item_box/chips,
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/noGenerate)
+"Lx" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/decal/cleanable/cobweb2,
+/obj/machinery/light_switch/north{
+	pixel_y = 30
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/space)
+"LC" = (
+/obj/decal/fakeobjects/cpucontroller,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/space)
+"NI" = (
+/obj/machinery/vending/cigarette,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/space)
+"OO" = (
+/obj/machinery/sleeper{
+	dir = 4;
+	icon_state = "sleeper"
+	},
+/obj/item/item_box/chips,
+/turf/simulated/floor/white,
+/area/space)
+"QY" = (
+/obj/decal/fakeobjects/vacuumtape,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/space)
+"St" = (
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/space)
+"SU" = (
+/obj/machinery/door/unpowered/wood,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
+/area/space)
+"Up" = (
+/obj/machinery/vending/snack,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/space)
+"Wy" = (
+/obj/rack,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/darkpurple,
+/area/space)
+"Zq" = (
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/space)
+"ZQ" = (
+/obj/machinery/vending/coffee,
+/obj/machinery/light_switch/north{
+	pixel_y = 30
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/space)
 
 (1,1,1) = {"
@@ -11902,7 +11918,7 @@ ai
 vy
 vK
 vX
-wi
+Wy
 wu
 ai
 wP
@@ -13115,8 +13131,8 @@ ai
 ai
 ai
 ai
-vz
-vM
+Ju
+Gc
 tF
 tF
 tF
@@ -13342,7 +13358,7 @@ eu
 gt
 hW
 lm
-sY
+Lj
 aW
 aa
 aa
@@ -20188,7 +20204,7 @@ aa
 aa
 aW
 fb
-fh
+Ik
 fm
 fy
 fy
@@ -20649,7 +20665,7 @@ fp
 fA
 fy
 fy
-gf
+Cn
 gr
 gB
 aq
@@ -22954,11 +22970,11 @@ od
 jm
 jm
 jm
-oR
+DY
 he
 pq
 pG
-oR
+DY
 ik
 ik
 ik
@@ -23029,7 +23045,7 @@ aa
 aa
 gQ
 hc
-ho
+St
 hc
 hP
 ik
@@ -23108,7 +23124,7 @@ oy
 jm
 ai
 pe
-oR
+DY
 pe
 ai
 ik
@@ -23183,7 +23199,7 @@ gI
 gO
 gO
 hA
-hQ
+ZQ
 ik
 hA
 iM
@@ -23194,8 +23210,8 @@ hA
 hA
 hA
 gO
-ko
-ky
+Lx
+GF
 kG
 kO
 gI
@@ -23210,9 +23226,9 @@ gY
 hj
 hw
 hE
-hZ
+SU
 id
-hZ
+SU
 iW
 iW
 hj
@@ -23335,7 +23351,7 @@ gR
 hd
 hp
 hA
-hR
+NI
 il
 iA
 iN
@@ -23499,10 +23515,10 @@ jN
 hA
 ke
 kp
-kz
-kH
-kH
-kT
+Zq
+QY
+QY
+Iv
 gI
 li
 aa
@@ -23654,7 +23670,7 @@ kq
 kA
 kI
 kP
-kU
+LC
 gI
 lj
 lo
@@ -23803,10 +23819,10 @@ jm
 jX
 kg
 kr
-kz
-kH
-kH
-ho
+Zq
+QY
+QY
+St
 gI
 yA
 aa
@@ -23943,7 +23959,7 @@ gV
 hh
 hs
 hA
-hU
+Up
 il
 iC
 iR
@@ -24095,7 +24111,7 @@ gI
 gO
 gO
 hA
-hV
+IT
 ik
 hA
 iS
@@ -24141,7 +24157,7 @@ sA
 sF
 sL
 sN
-sT
+OO
 sV
 ee
 te
@@ -24245,7 +24261,7 @@ aa
 aa
 gW
 hc
-ho
+St
 hc
 hP
 ik
@@ -24474,11 +24490,11 @@ od
 jm
 jm
 jm
-oR
+DY
 he
 pq
 pG
-oR
+DY
 pY
 pr
 qW
@@ -24628,7 +24644,7 @@ oy
 jm
 ai
 pe
-oR
+DY
 pe
 ai
 qp
