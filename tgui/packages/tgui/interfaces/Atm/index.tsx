@@ -45,10 +45,7 @@ const Types = {
 };
 
 const TypedNoticeBox = (props) => {
-  const {
-    type,
-    ...rest
-  } = props;
+  const { type, ...rest } = props;
   const typeProps = {
     ...(type === Types.Danger ? { danger: true } : {}),
     ...(type === Types.Info ? { info: true } : {}),
@@ -99,12 +96,10 @@ const InputPIN = (_, context) => {
   return (
     <Box>
       <Button icon="sign-out-alt" content={'Enter PIN'} onClick={() => act('login_attempt')} />
-      {message.text && (message.position === 'login') && (
+      {message.text && message.position === 'login' && (
         <Box>
           <Divider />
-          <TypedNoticeBox type={message.status}>
-            {message.text}
-          </TypedNoticeBox>
+          <TypedNoticeBox type={message.status}>{message.text}</TypedNoticeBox>
         </Box>
       )}
     </Box>
@@ -127,12 +122,10 @@ const LoggedIn = (_, context) => {
       </Box>
       <Divider />
       <Button icon="money-bill" content={'Withdraw cash'} onClick={() => act('withdraw_cash')} />
-      {message.text && (message.position === 'atm') && (
+      {message.text && message.position === 'atm' && (
         <Box>
           <Divider />
-          <TypedNoticeBox type={message.status}>
-            {message.text}
-          </TypedNoticeBox>
+          <TypedNoticeBox type={message.status}>{message.text}</TypedNoticeBox>
         </Box>
       )}
     </Box>
@@ -149,12 +142,10 @@ const Lottery = (_, context) => {
       <Box>
         <Button icon="ticket-alt" content={'Purchase Lottery Ticket (100⪽)'} onClick={() => act('buy')} />
       </Box>
-      {message.text && (message.position === 'lottery') && (
+      {message.text && message.position === 'lottery' && (
         <Box>
           <Divider />
-          <TypedNoticeBox type={message.status}>
-            {message.text}
-          </TypedNoticeBox>
+          <TypedNoticeBox type={message.status}>{message.text}</TypedNoticeBox>
         </Box>
       )}
     </Section>
