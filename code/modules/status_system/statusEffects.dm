@@ -113,7 +113,7 @@
 		. = 0
 
 	disposing()
-		if (owner)
+		if (owner?.statusEffects)
 			owner.statusEffects -= src
 		src.owner = null
 		..()
@@ -345,22 +345,24 @@
 				tickCount -= (round(times) * tickSpacing)
 				for(var/i in 1 to times)
 					var/mob/M = owner
-					M.TakeDamage("All", damage_brute, damage_burn, damage_tox, damage_type)
+					if(damage_brute || damage_burn || damage_tox) //only hittwitch if you're really taking damage
+						M.TakeDamage("All", damage_brute, damage_burn, damage_tox, damage_type)
 
 	simpledot/radiation
 		id = "radiation"
 		name = "Irradiated"
 		desc = ""
-		icon_state = "radiation1"
+		icon_state = "trefoil"
 		unique = 1
 		visible = 0
 
 		tickSpacing = 3 SECONDS
 
 		damage_tox = 0
+		damage_burn = 0
 		damage_type = DAMAGE_BURN
 
-		maxDuration = 4 MINUTES
+		duration = null
 
 		var/howMuch = ""
 		var/stage = 1
@@ -368,186 +370,82 @@
 		modify_change(change)
 			. = change
 
-			if (owner && ismob(owner) && change > 0)
-				var/mob/M = owner
-				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, get_stage(duration + change))
-				var/percent_protection = clamp(GET_ATOM_PROPERTY(M, PROP_MOB_RADPROT), 0, 100)
-				percent_protection = 1 - (percent_protection/100) //scale from 0 to 1
-				. *= percent_protection
-
 		getTooltip()
-			. = "You are [howMuch]irradiated.<br>Taking [round(damage_tox, 0.1)] toxin damage every [tickSpacing/(1 SECOND)] sec.<br>Damage reduced by radiation resistance on gear."
+			. = "You are [howMuch]irradiated."
 
 		preCheck(var/atom/A)
-			. = 1
+			. = TRUE
 			if(issilicon(A) || isobserver(A) || isintangible(A))
-				. = 0
+				. = FALSE
 
 		proc/get_stage(val)
-			. = 1
-			switch(val/(1 SECOND))
-				if(0 to 10)
-					. = 1
-				if(10 to 20)
-					. = 2
-				if(20 to 45)
-					. = 3
-				if(45 to 90)
-					. = 4
-				if(90 to INFINITY)
-					. = 5
+			. = 0
+			switch(val) //0.4 Sv is radiation poisoning, 2 Sv is fatal in some cases, 4 Sv is fatal without treatment
+				if(0 to 0.35)
+					. = 0
+				if(0.35 to 0.6)
+					. = 1 //you might feel sick
+				if(0.6 to 1.2)
+					. = 2 //you're getting into dangerous teritory
+				if(1.2 to 2)
+					. = 3 //you're at a 50/50 of kicking it
+				if(2 to 3)
+					. = 4 //more like 70/30 now
+				if(3 to 4)
+					. = 5 //you will die without treatment
+				if(4 to INFINITY)
+					. = 6 //you will die.
 
 		onUpdate(timePassed)
-			if(locate(/obj/item/implant/health) in owner)
-				src.visible = 1
-			else
-				src.visible = 0
-
 			var/mob/M = null
 			if(ismob(owner))
 				M = owner
-			if(!ismobcritter(M))
-				damage_tox = (sqrt(min(duration, 2 MINUTES)/20 + 5) - 1)
-			stage = get_stage(duration)
-			switch(stage)
-				if(1)
-					howMuch = ""
-				if(2)
-					howMuch = "significantly "
-				if(3)
-					howMuch = "very much "
-				if(4)
-					howMuch = "extremely "
-				if(5)
-					howMuch = "horribly "
+			else
+				return ..(timePassed)
+			damage_tox = 0
+			damage_burn = 0
 
-			if(M)
-				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, stage)
-				if(locate(/obj/item/implant/health) in M)
-					src.visible = 1
-				else
-					src.visible = 0
-				if (prob(stage - 2 - !!(M.traitHolder?.hasTrait("stablegenes"))) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
+			stage = get_stage(M.radiation_dose)
+			switch(stage)
+				if(0)
+					howMuch = ""
+				if(1)
+					howMuch = "barely " //you'll be fine
+				if(2)
+					howMuch = "slightly " //you don't feel so good
+				if(3)
+					howMuch = "moderately " // not great, not terrible
+				if(4)
+					howMuch = "extremely " //oh no, you're very sick
+				if(5)
+					howMuch = "fatally " //congrats, you're dead in a minute
+				if(6)
+					howMuch = "totally " // you are literally dying in seconds
+
+			if(isdead(M))
+				return ..(timePassed) //no mutations or damage for the dead
+
+			if(stage > 0)
+				visible = TRUE
+				var/damage_total = 5 * (M.radiation_dose**1.4 - tanh(M.radiation_dose**1.6))
+				damage_tox = prob(70) * damage_total
+				damage_burn = prob(30) * damage_total
+			else
+				visible = FALSE
+
+
+			if(stage > 0 && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
+				if(!ON_COOLDOWN(M,"radiation_mutation_check", 3 SECONDS) && prob(((stage - 1) - M.traitHolder?.hasTrait("stablegenes"))**2))
 					boutput(M, "<span class='alert'>You mutate!</span>")
 					M.bioHolder.RandomEffect("either")
-				if(!ON_COOLDOWN(M, "radiation_stun_check", 1 SECOND) && prob(stage - 1) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
+				if(!ON_COOLDOWN(M, "radiation_stun_check", 1 SECONDS) && prob((stage-1)**2))
 					M.changeStatus("weakened", 3 SECONDS)
 					boutput(M, "<span class='alert'>You feel weak.</span>")
 					M.emote("collapse")
-
-			icon_state = "radiation[stage]"
-
-			return ..(timePassed)
-
-	simpledot/n_radiation
-		id = "n_radiation"
-		name = "Neutron Irradiated"
-		desc = ""
-		icon_state = "nradiation1"
-		unique = 1
-		visible = 0
-
-		tickSpacing = 2 SECONDS
-
-		damage_tox = 2
-		damage_brute = 2
-		damage_type = DAMAGE_STAB | DAMAGE_BURN
-
-		maxDuration = 4 MINUTES
-
-		var/howMuch = ""
-		var/stage = 1
-
-		getTooltip()
-			. = "You are [howMuch]irradiated by neutrons.<br>Taking [round(damage_tox, 0.1)] toxin damage every [tickSpacing/(1 SECOND)] sec and [round(damage_brute, 0.1)] brute damage every [tickSpacing/(1 SECOND)] sec.<br>Damage reduced by radiation resistance on gear."
-
-		preCheck(var/atom/A)
-			. = 1
-			if(issilicon(A) || isobserver(A) || isintangible(A))
-				. = 0
-		proc/get_stage(val)
-			. = 1
-			switch(val/(1 SECOND))
-				if(0 to 10)
-					. = 1
-				if(10 to 20)
-					. = 2
-				if(20 to 30)
-					. = 3
-				if(30 to 60)
-					. = 4
-				if(60 to INFINITY)
-					. = 5
-
-		modify_change(change)
-			. = change
-
-			if (owner && ismob(owner) && change > 0)
-				var/mob/M = owner
-				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, get_stage(duration + change))
-				var/percent_protection = clamp(GET_ATOM_PROPERTY(M, PROP_MOB_RADPROT), 0, 100)
-				percent_protection = 1 - (percent_protection/100) //scale from 0 to 1
-				. *= percent_protection
-
-		proc/update_lights(add = 1)
-			owner.remove_simple_light("neutron_rad")
-			owner.remove_medium_light("neutron_rad")
-			if(add)
-				if(stage < 4)
-					owner.add_simple_light("neutron_rad", list(4, 62, 155, stage * 50))
-				else
-					owner.add_medium_light("neutron_rad", list(4, 62, 155, stage * 50))
-
-		onAdd(optional=null)
-			. = ..()
-			update_lights()
-
-		onRemove()
-			update_lights(0)
-			. = ..()
-
-		onChange(optional=null)
-			. = ..()
-			update_lights()
-
-		onUpdate(timePassed)
-
-			var/mob/M = null
-			if(ismob(owner))
-				M = owner
-
-
-			damage_tox = (sqrt(min(duration, 2 MINUTES)/20 + 5) - 0.5)
-			damage_brute = damage_tox/2
-
-			stage = get_stage(duration)
-			switch(stage)
-				if(1)
-					howMuch = ""
-				if(2)
-					howMuch = "significantly "
-				if(3)
-					howMuch = "very much "
-				if(4)
-					howMuch = "extremely "
-				if(5)
-					howMuch = "horribly "
-
-			if(M)
-				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, stage)
-				if(locate(/obj/item/implant/health) in M)
-					src.visible = 1
-				else
-					src.visible = 0
-				if (prob(stage - !!(M.traitHolder?.hasTrait("stablegenes"))) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-					boutput(M, "<span class='alert'>You mutate!</span>")
-					M.bioHolder.RandomEffect("either")
-				if(!ON_COOLDOWN(M, "n_radiation_stun_check", 1 SECOND) && prob(stage-1) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
-					M.changeStatus("weakened", 5 SECONDS)
-					boutput(M, "<span class='alert'>You feel weak.</span>")
-					M.emote("collapse")
-			update_lights()
-			icon_state = "nradiation[stage]"
+				if(!ON_COOLDOWN(M, "radiation_vomit_check", 5 SECONDS) && prob(stage**2))
+					M.changeStatus("weakened", 3 SECONDS)
+					boutput(M, "<span class='alert'>You feel sick.</span>")
+					M.vomit()
 
 			return ..(timePassed)
 
@@ -591,7 +489,7 @@
 			switchStage(getStage())
 			owner.delStatus("shivering")
 
-			logTheThing("combat", owner, null, "gains the burning status effect at [log_loc(owner)]")
+			logTheThing(LOG_COMBAT, owner, "gains the burning status effect at [log_loc(owner)]")
 
 			if(istype(owner, /mob/living))
 				var/mob/living/L = owner
@@ -621,11 +519,11 @@
 
 		proc/getStage()
 			. = 1
-			if(min(duration*2, counter) < BURNING_LV2)
-				return
-			else if (min(duration*2, counter) >= BURNING_LV2 && min(duration*2, counter) < BURNING_LV3)
+			if(min(duration, counter) + duration/2 < BURNING_LV2)
+				return 1
+			else if (min(duration, counter) + duration/2 >= BURNING_LV2 && min(duration, counter) + duration/2 < BURNING_LV3)
 				return 2
-			else if (min(duration*2, counter) >= BURNING_LV3)
+			else if (min(duration, counter) + duration/2 >= BURNING_LV3)
 				return 3
 
 		proc/switchStage(var/toStage)
@@ -668,13 +566,13 @@
 
 			switch(stage)
 				if(1)
-					damage_burn = 1 * prot
+					damage_burn = 1.5 * prot
 					howMuch = ""
 				if(2)
-					damage_burn = 2 * prot
+					damage_burn = 2.5 * prot
 					howMuch = "very much "
 				if(3)
-					damage_burn = 4 * prot
+					damage_burn = 5 * prot
 					howMuch = "extremely "
 
 			return ..(timePassed)
@@ -920,7 +818,7 @@
 		unique = 1
 		maxDuration = 15 SECONDS
 		var/counter = 0
-		var/sound = "sound/effects/electric_shock_short.ogg"
+		var/sound = 'sound/effects/electric_shock_short.ogg'
 		var/count = 7
 		movement_modifier = /datum/movement_modifier/disoriented
 
@@ -942,7 +840,7 @@
 		unique = 1
 		maxDuration = 30 SECONDS
 		var/counter = 0
-		var/sound = "sound/effects/electric_shock_short.ogg"
+		var/sound = 'sound/effects/electric_shock_short.ogg'
 		var/count = 7
 
 		onUpdate(timePassed)
@@ -986,7 +884,7 @@
 				icon_state = "drunk[how_drunk]"
 
 		getTooltip()
-			. =  "You are [how_drunk == 2 ? "very": ""][how_drunk == 3 ? ", very" : ""] drunk."
+			. =  "You are [how_drunk >= 2 ? "very": ""][how_drunk >= 3 ? ", very" : ""] drunk."
 
 	blinded
 		id = "blinded"
@@ -1034,6 +932,15 @@
 		maxDuration = 500 SECONDS
 		unique = 1
 		change = 2
+
+	staminaregen/darkness
+		id = "darkness_stam_regen"
+		name = "Dark vigor"
+		desc = "Your stamina regen is increased"
+		icon_state = "stam+"
+		maxDuration = 60 SECONDS
+		unique = TRUE
+		change = 5
 
 	fitness_staminamax
 		id = "fitness_stam_max"
@@ -1213,7 +1120,7 @@
 				ON_COOLDOWN(owner, "unlying_speed_cheesy", 0.3 SECONDS)
 
 		clicked(list/params)
-			if(ON_COOLDOWN(src.owner, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
+			if(!owner || ON_COOLDOWN(src.owner, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
 			L.delStatus("resting")
 			L.force_laydown_standup()
 			if (ishuman(L))
@@ -1265,7 +1172,7 @@
 				on_turf = 1
 
 				//get distance divided by max distance and invert it. Result will be between 0 and 1
-				var/buff_mult = round(1-(min(get_dist(owner,gang.locker), max_dist) / max_dist), 0.1)
+				var/buff_mult = round(1-(min(GET_DIST(owner,gang.locker), max_dist) / max_dist), 0.1)
 				if (buff_mult <=0)
 					buff_mult = 0.1
 
@@ -1431,6 +1338,27 @@
 		getTooltip()
 			. = "Your max stamina and stamina regen have been increased slightly."
 
+	newcause
+		id = "newcause"
+		name = "Newfound cause"
+		desc = "Your newfound purpose in life has encouraged you to toughen up a little!"
+		icon_state = "revspirit"
+		unique = 1
+		maxDuration = 5 SECONDS
+		onAdd(optional = 8)
+			. = ..()
+			if(ismob(owner))
+				var/mob/M = owner
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_BODY, src, optional)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src, optional)
+
+	onRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_BODY, src)
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src)
+
 	patho_oxy_speed
 		id = "patho_oxy_speed"
 		name = "Oxygen Storage"
@@ -1529,7 +1457,7 @@
 			var/damage = rand(1,5)
 			var/bleed = rand(3,5)
 			H.visible_message("<span class='alert'>[H] [damage > 3 ? "vomits" : "coughs up"] blood!</span>", "<span class='alert'>You [damage > 3 ? "vomit" : "cough up"] blood!</span>")
-			playsound(H.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 			H.TakeDamage(zone="All", brute=damage)
 			bleed(H, damage, bleed)
 
@@ -1649,6 +1577,45 @@
 	maxDuration = null
 	change = -5
 
+/datum/statusEffect/staminaregen/cursed
+	id = "weakcurse"
+	name = "Enfeebled"
+	desc = "You feel really weak"
+	icon_state = "stam-"
+	duration = INFINITE_STATUS
+	maxDuration = null
+	change = -5
+
+/datum/statusEffect/staminaregen/zephyr_field
+	id = "zephyr_field"
+	name = "Zephyr Field"
+	desc = "A bioelectric field is invigorating you."
+	icon_state = "stam+"
+	maxDuration = 9 SECONDS
+	unique = 1
+	change = 8
+
+	getTooltip()
+		. = "A feeling of invigoration permeates you."
+
+/datum/statusEffect/staminaregen/clone
+	id = "stamclone"
+	name = "Weakened"
+	desc = "You feel a bit weaker than usual."
+	icon_state = "stam-"
+	duration = INFINITE_STATUS
+	maxDuration = null
+
+	onAdd(optional=null)
+		if (!optional)
+			stack_trace("Added /datum/statusEffect/staminaregen/clone with 0/null duration.")
+			qdel(src)
+			return
+
+		src.change = optional
+		. = ..()
+
+
 /datum/statusEffect/miasma
 	id = "miasma"
 	name = "Miasma"
@@ -1684,17 +1651,17 @@
 				tox = 0.05
 			if(3)
 				puke_prob = 0.5
-				tox = 0.20
+				tox = 0.2
 			if(4)
 				puke_prob = 1
 				tox = 0.45
 			if(5)
 				puke_prob = 2
-				tox = 0.70
+				tox = 0.7
 		if(ismobcritter(L))
 			var/mob/living/critter/critter = L
 			if(critter.ghost_spawned)
-				tox = 0.00
+				tox = 0
 				weighted_average = 0
 		L.take_toxin_damage(tox * mult)
 		if(weighted_average > 4)
@@ -1738,14 +1705,7 @@
 
 	onAdd(optional)
 		. = ..()
-		var/color2 = list(
-			0.5, 0, 0,
-			0, 0.5, 0,
-			0, 0, 0.5,
-			0.5, 0.25, 0.0625)
-		var/oldcol = owner.color
-		owner.color = color2
-		owner.onVarChanged("color", oldcol, color2)
+		owner.add_filter("paint_color", 1, color_matrix_filter(normalize_color_to_matrix("#ff8820")))
 		if(istype(owner, /mob/living))
 			RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/track_paint)
 
@@ -2151,13 +2111,13 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			M.bioHolder.AddEffect("sims_stinky")
+			M.bioHolder?.AddEffect("sims_stinky")
 
 	onRemove()
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			M.bioHolder.RemoveEffect("sims_stinky")
+			M.bioHolder?.RemoveEffect("sims_stinky")
 
 /datum/statusEffect/flock_absorb
 	id = "flock_absorbing"
@@ -2206,3 +2166,147 @@
 	maxDuration = 3 MINUTES
 	unique = TRUE
 	movement_modifier = /datum/movement_modifier/spry
+
+/datum/statusEffect/mindhack
+	id = "mindhack"
+	name = "Mindhack"
+	desc = "You've been mindhacked."
+	icon_state = "mindhack"
+	unique = TRUE
+
+	onAdd(mob/hacker, custom_orders)
+		. = ..()
+		desc = "You've been mindhacked by [hacker.real_name] and feel an unwavering loyalty towards [him_or_her(hacker)]."
+		var/mob/M = owner
+		if (M.mind && ticker.mode)
+			if (!M.mind.special_role)
+				M.mind.special_role = ROLE_MINDHACK
+			if (!(M.mind in ticker.mode.Agimmicks))
+				ticker.mode.Agimmicks += M.mind
+			M.mind.master = hacker.ckey
+
+		boutput(M, "<h2><span class='alert'>You feel an unwavering loyalty to [hacker.real_name]! You feel you must obey [his_or_her(hacker)] every order! Do not tell anyone about this unless [hacker.real_name] tells you to!</span></h2>")
+		M.show_antag_popup("mindhack")
+
+		if (custom_orders)
+			boutput(M, "<h2><span class='alert'>[hacker.real_name]'s will consumes your mind! <b>\"[custom_orders]\"</b> It <b>must</b> be done!</span></h2>")
+
+	onRemove()
+		..()
+		var/mob/M = owner
+		if (M.mind?.special_role == ROLE_MINDHACK)
+			remove_mindhack_status(M, "mindhack", "expired")
+		else if (M.mind?.master)
+			remove_mindhack_status(M, "otherhack", "expired")
+
+/datum/statusEffect/defib_charged
+	id = "defib_charged"
+	visible = FALSE
+	unique = TRUE
+
+	onAdd(optional)
+		. = ..()
+		if(istype(owner, /obj/item/robodefibrillator))
+			var/obj/item/robodefibrillator/defib = owner
+			defib.set_icon_state("[defib.icon_base]-on")
+
+	onRemove()
+		. = ..()
+		if(istype(owner, /obj/item/robodefibrillator))
+			var/obj/item/robodefibrillator/defib = owner
+			defib.set_icon_state("[defib.icon_base]-off")
+		if(duration <= 0)//timed out
+			playsound(owner, "sparks", 50, 1, -10)
+
+/datum/statusEffect/gnesis_tint
+	id = "gnesis_tint"
+	visible = FALSE
+	unique = TRUE
+
+	onAdd(optional)
+		. = ..()
+		owner.add_filter("gnesis_tint", 1, color_matrix_filter(normalize_color_to_matrix("#309179")))
+
+	onRemove()
+		. = ..()
+		owner.remove_filter("gnesis_tint")
+
+#define LAUNDERED_COLDPROT_AMOUNT 2 /// Amount of coldprot(%) given to each item of wearable clothing
+#define LAUNDERED_STAIN_TEXT "freshly-laundered" /// Name of the "stain" given to wearable clothing
+/datum/statusEffect/freshly_laundered
+	id = "freshly_laundered"
+	name = "Freshly Laundered"
+
+	visible = FALSE
+	unique = TRUE
+	maxDuration = 5 MINUTES
+
+	onAdd(optional)
+		. = ..()
+		if (istype(owner, /obj/item/clothing/))
+			var/obj/item/clothing/C = owner
+			C.add_stain(LAUNDERED_STAIN_TEXT) // we just cleaned them so this is cheeky...
+			C.setProperty("coldprot", C.getProperty("coldprot") + LAUNDERED_COLDPROT_AMOUNT)
+
+	onRemove()
+		. = ..()
+		if (istype(owner, /obj/item/clothing/))
+			var/obj/item/clothing/C = owner
+			C.setProperty("coldprot", C.getProperty("coldprot") - LAUNDERED_COLDPROT_AMOUNT)
+			if (C.stains)
+				C.stains -= LAUNDERED_STAIN_TEXT
+
+#undef LAUNDERED_COLDPROT_AMOUNT
+#undef LAUNDERED_STAIN_TEXT
+
+/datum/statusEffect/criticalcondition
+	id = "critical_condition"
+	name = "Critical Condition"
+	icon_state = "heart-"
+	maxDuration = 10 SECONDS
+	var/mob/living/carbon/human/H
+
+	getTooltip()
+		. = "You are in very bad shape. Max stamina reduced by 100 and stamina regen reduced by 5."
+
+	onAdd(optional=null)
+		. = ..()
+		if (ishuman(owner))
+			H = owner
+		else
+			owner.delStatus("critical_condition")
+		H.delStatus("recent_trauma") // Cancel out recent trauma, you is back in trauma, baybeee
+		APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "critical_condition", -5)
+		H.add_stam_mod_max("critical_condition", -100)
+
+	onRemove()
+		. = ..()
+		REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "critical_condition")
+		H.remove_stam_mod_max("critical_condition")
+		H.changeStatus("recent_trauma", 90 SECONDS)
+
+
+/datum/statusEffect/recenttrauma
+	id = "recent_trauma"
+	name = "Recent Trauma"
+	icon_state = "-"
+	maxDuration = 90 SECONDS
+	var/mob/living/carbon/human/H
+
+	getTooltip()
+		. = "You are recovering from being in critical condition. Max stamina reduced by 50 and stamina regen reduced by 2."
+
+	onAdd(optional=null)
+		. = ..()
+		if (ishuman(owner))
+			H = owner
+		else
+			owner.delStatus("recent_trauma")
+		APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "recent_trauma", -2)
+		H.add_stam_mod_max("recent_trauma", -50)
+
+	onRemove()
+		. = ..()
+		REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "recent_trauma")
+		H.remove_stam_mod_max("recent_trauma")
+

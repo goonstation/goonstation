@@ -85,11 +85,13 @@
 				return ..()
 		..()
 
+TYPEINFO(/obj/machinery/plantpot/bareplant)
+	mats = 0
+
 /obj/machinery/plantpot/bareplant
 	name = "arable soil"
 	desc = "A small mound of arable soil for planting and plant based activities."
 	anchored = 1
-	mats = 0
 	deconstruct_flags = 0
 	icon_state = null
 	power_usage = 0
@@ -184,7 +186,7 @@
 
 	crop
 		New()
-			spawn_plant = pick(/datum/plant/crop/cotton, /datum/plant/crop/oat, /datum/plant/crop/peanut, /datum/plant/crop/soy)
+			spawn_plant = pick(/datum/plant/crop/cotton, /datum/plant/crop/oat, /datum/plant/crop/peanut, /datum/plant/veg/soy)
 			..()
 
 	tree
@@ -198,6 +200,9 @@
 			..()
 
 
+TYPEINFO(/obj/machinery/plantpot)
+	mats = 2
+
 /obj/machinery/plantpot
 	// The central object for Hydroponics. All plant growing and most of everything goes on in
 	// this object - that said you don't want to have too many of them on the map because they
@@ -208,9 +213,8 @@
 	icon_state = "tray"
 	anchored = 0
 	density = 1
-	mats = 2
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
-	flags = NOSPLASH
+	flags = NOSPLASH|ACCEPTS_MOUSEDROP_REAGENTS
 	processing_tier = PROCESSING_SIXTEENTH
 	machine_registry_idx = MACHINES_PLANTPOTS
 	power_usage = 25
@@ -473,7 +477,7 @@
 						// It doesn't make much sense to feed a full man to a dinky little plant.
 					var/mob/living/carbon/C = W:affecting
 					user.visible_message("<span class='alert'>[user] starts to feed [C] to the plant!</span>")
-					logTheThing("combat", user, (C), "attempts to feed [constructTarget(C,"combat")] to a man-eater at [log_loc(src)].") // Some logging would be nice (Convair880).
+					logTheThing(LOG_COMBAT, user, "attempts to feed [constructTarget(C,"combat")] to a man-eater at [log_loc(src)].") // Some logging would be nice (Convair880).
 					message_admins("[key_name(user)] attempts to feed [key_name(C, 1)] ([isdead(C) ? "dead" : "alive"]) to a man-eater at [log_loc(src)].")
 					src.add_fingerprint(user)
 					if(!(user in src.contributors))
@@ -481,18 +485,18 @@
 					if(do_after(user, 3 SECONDS)) // Same as the gibber and reclaimer. Was 20 (Convair880).
 						if(src && W && W.loc == user && C)
 							user.visible_message("<span class='alert'>[src.name] grabs [C] and devours them ravenously!</span>")
-							logTheThing("combat", user, (C), "feeds [constructTarget(C,"combat")] to a man-eater at [log_loc(src)].")
+							logTheThing(LOG_COMBAT, user, "feeds [constructTarget(C,"combat")] to a man-eater at [log_loc(src)].")
 							message_admins("[key_name(user)] feeds [key_name(C, 1)] ([isdead(C) ? "dead" : "alive"]) to a man-eater at [log_loc(src)].")
 							if(C.mind)
 								C.ghostize()
 								qdel(C)
 							else
 								qdel(C)
-							playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
+							playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
 							src.reagents.add_reagent("blood", 120)
 							SPAWN(2.5 SECONDS)
 								if(src)
-									playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
+									playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
 							return
 						else
 							user.show_text("You were interrupted!", "red")
@@ -522,11 +526,11 @@
 			// These allow you to unanchor the plantpots to move them around, or re-anchor them.
 			if(src.anchored)
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor.")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				src.anchored = 0
 			else
 				user.visible_message("<b>[user]</b> secures the [src] to the floor.")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				src.anchored = 1
 
 		else if(isweldingtool(W) || istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/device/igniter))
@@ -611,7 +615,7 @@
 			if(SEED.planttype)
 				src.HYPnewplant(SEED)
 				if(SEED && istype(SEED.planttype,/datum/plant/maneater)) // Logging for man-eaters, since they can't be harvested (Convair880).
-					logTheThing("combat", user, null, "plants a [SEED.planttype] seed at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "plants a [SEED.planttype] seed at [log_loc(src)].")
 				if(!(user in src.contributors))
 					src.contributors += user
 			else
@@ -638,7 +642,7 @@
 			if(SEED.planttype)
 				src.HYPnewplant(SEED)
 				if(SEED && istype(SEED.planttype,/datum/plant/maneater)) // Logging for man-eaters, since they can't be harvested (Convair880).
-					logTheThing("combat", user, null, "plants a [SEED.planttype] seed at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "plants a [SEED.planttype] seed at [log_loc(src)].")
 				if(!(user in src.contributors))
 					src.contributors += user
 			else
@@ -652,7 +656,7 @@
 				return
 			else
 				user.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
-				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
 				if(!(user in src.contributors))
 					src.contributors += user
@@ -778,25 +782,28 @@
 
 			if(growing.growthmode == "weed")
 				if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
-					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
-					boutput(usr, "<span class='alert'>Weeds still infest the tray. You'll need something a bit more thorough to get rid of them.</span>")
-					src.growth = 0
-					src.reagents.clear_reagents()
-					// The idea here is you gotta use weedkiller or something else to get rid of the
-					// weeds since you can't just clear them out by hand.
+					if(!QDELETED(src))
+						usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
+						boutput(usr, "<span class='alert'>Weeds still infest the tray. You'll need something a bit more thorough to get rid of them.</span>")
+						src.growth = 0
+						src.reagents.clear_reagents()
+						// The idea here is you gotta use weedkiller or something else to get rid of the
+						// weeds since you can't just clear them out by hand.
 			else
 				if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
-					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
-					src.reagents.clear_reagents()
-					logTheThing("combat", usr, null, "cleared a hydroponics tray containing [current.name] at [log_loc(src)]")
-					HYPdestroyplant()
+					if(!QDELETED(current) && !QDELETED(src))
+						usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
+						src.reagents.clear_reagents()
+						logTheThing(LOG_COMBAT, usr, "cleared a hydroponics tray containing [current.name] at [log_loc(src)]")
+						HYPdestroyplant()
 		else
 			if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
-				usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
-				src.reagents.clear_reagents()
-				UpdateIcon()
-				update_name()
-		return
+				if(!QDELETED(src))
+					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
+					logTheThing(LOG_STATION, usr, "cleared a hydroponics tray containing [current.name] at [log_loc(src)]")
+					src.reagents.clear_reagents()
+					UpdateIcon()
+					update_name()
 
 	MouseDrop_T(atom/over_object as obj, mob/user as mob) // ty to Razage for the initial code
 		if(BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, over_object) > 0 || is_incapacitated(user) || isAI(user))
@@ -965,7 +972,7 @@
 		var/datum/plantgenes/DNA = src.plantgenes
 		var/datum/plantmutation/MUT = DNA.mutation
 		if(!growing)
-			logTheThing("debug", null, null, "<b>Hydro Controls</b>: Plant pot at \[[x],[y],[z]] used by ([user]) attempted a harvest without having a current plant.")
+			logTheThing(LOG_DEBUG, null, "<b>Hydro Controls</b>: Plant pot at \[[x],[y],[z]] used by ([user]) attempted a harvest without having a current plant.")
 			return
 
 		if(growing.harvested_proc)
@@ -980,7 +987,7 @@
 			SPAWN(hydro_controls.delay_between_harvests)
 				src.recently_harvested = 0
 		else
-			logTheThing("debug", null, null, "<b>Hydro Controls</b>: Could not access Hydroponics Controller to get Delay cap.")
+			logTheThing(LOG_DEBUG, null, "<b>Hydro Controls</b>: Could not access Hydroponics Controller to get Delay cap.")
 
 		var/base_quality_score = 1
 		// This is a modular thing suggested by Cogwerks that can affect the final quality
@@ -990,7 +997,7 @@
 		if(hydro_controls)
 			harvest_cap = hydro_controls.max_harvest_cap
 		else
-			logTheThing("debug", null, null, "<b>Hydro Controls</b>: Could not access Hydroponics Controller to get Harvest cap.")
+			logTheThing(LOG_DEBUG, null, "<b>Hydro Controls</b>: Could not access Hydroponics Controller to get Harvest cap.")
 
 		src.growth = max(0, growing.growtime - DNA.growtime)
 		// Reset the growth back to the beginning of maturation so we can wait out the
@@ -1024,7 +1031,7 @@
 					getitem = MUT.crop
 					dont_rename_crop = MUT.dont_rename_crop
 				else
-					logTheThing("debug", null, null, "<b>I Said No/Hydroponics:</b> Plant mutation [MUT] crop is not properly configured")
+					logTheThing(LOG_DEBUG, null, "<b>I Said No/Hydroponics:</b> Plant mutation [MUT] crop is not properly configured")
 					getitem = growing.crop
 			else
 				getitem = growing.crop
@@ -1250,9 +1257,12 @@
 					var/obj/critter/C = CROP
 					C.friends = C.friends | src.contributors
 
-				else if(istype(CROP,/obj/item/organ/heart))
-					var/obj/item/organ/heart/H = CROP
-					H.quality = quality_score
+				else if (istype(CROP,/obj/item/organ))
+					var/obj/item/organ/O = CROP
+					if(istype(CROP,/obj/item/organ/heart))
+						O.quality = quality_score
+					O.max_damage += DNA.endurance
+					O.fail_damage += DNA.endurance
 
 				else if(istype(CROP,/obj/item/reagent_containers/balloon))
 					var/obj/item/reagent_containers/balloon/B = CROP
@@ -1263,7 +1273,13 @@
 					var/obj/item/spacecash/S = CROP
 					S.amount = max(1, DNA.potency * rand(2,4))
 					S.update_stack_appearance()
-
+				else if (istype(CROP,/obj/item/device/light/glowstick))
+					var/type = pick(concrete_typesof(/obj/item/device/light/glowstick/))
+					var/obj/item/device/light/glowstick/newstick = new type(CROP.loc)
+					newstick.light_c.a = clamp(DNA.potency/60, 0.33, 1) * 255
+					newstick.turnon()
+					qdel(CROP)
+					CROP = newstick
 				if(((growing.isgrass || growing.force_seed_on_harvest) && prob(80)) && !istype(CROP,/obj/item/seed/) && !HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless))
 					// Same shit again. This isn't so much the crop as it is giving you seeds
 					// incase you couldn't get them otherwise, though.
@@ -1323,9 +1339,9 @@
 
 			// Mostly for dangerous produce (explosive tomatoes etc) that should show up somewhere in the logs (Convair880).
 			if(istype(MUT,/datum/plantmutation/))
-				logTheThing("combat", user, null, "harvests [cropcount] items from a [MUT.name] plant ([MUT.type]) at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "harvests [cropcount] items from a [MUT.name] plant ([MUT.type]) at [log_loc(src)].")
 			else
-				logTheThing("combat", user, null, "harvests [cropcount] items from a [growing.name] plant ([growing.type]) at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "harvests [cropcount] items from a [growing.name] plant ([growing.type]) at [log_loc(src)].")
 
 			// At this point all the harvested items are inside the plant pot, and this is the
 			// part where we decide where they're going and get them out.
@@ -1783,14 +1799,15 @@ proc/HYPmutationcheck_full(var/datum/plant/growing,var/datum/plantgenes/DNA,var/
 	// have to appear, and if all of them are matchedit gives the green light to go ahead and
 	// add it - though there's still a % chance involved after this check passes which is handled
 	// where this check is called, usually.
-	if(!HYPmutationcheck_sub(MUT.GTrange[1],MUT.GTrange[2],DNA.growtime)) return 0
-	if(!HYPmutationcheck_sub(MUT.HTrange[1],MUT.HTrange[2],DNA.harvtime)) return 0
-	if(!HYPmutationcheck_sub(MUT.HVrange[1],MUT.HVrange[2],DNA.harvests)) return 0
-	if(!HYPmutationcheck_sub(MUT.CZrange[1],MUT.CZrange[2],DNA.cropsize)) return 0
-	if(!HYPmutationcheck_sub(MUT.PTrange[1],MUT.PTrange[2],DNA.potency)) return 0
-	if(!HYPmutationcheck_sub(MUT.ENrange[1],MUT.ENrange[2],DNA.endurance)) return 0
-	if(MUT.commut && !HYPCheckCommut(DNA,MUT.commut)) return 0
-	return 1
+	if(!HYPmutationcheck_sub(MUT.GTrange[1],MUT.GTrange[2],DNA.growtime)) return FALSE
+	if(!HYPmutationcheck_sub(MUT.HTrange[1],MUT.HTrange[2],DNA.harvtime)) return FALSE
+	if(!HYPmutationcheck_sub(MUT.HVrange[1],MUT.HVrange[2],DNA.harvests)) return FALSE
+	if(!HYPmutationcheck_sub(MUT.CZrange[1],MUT.CZrange[2],DNA.cropsize)) return FALSE
+	if(!HYPmutationcheck_sub(MUT.PTrange[1],MUT.PTrange[2],DNA.potency)) return FALSE
+	if(!HYPmutationcheck_sub(MUT.ENrange[1],MUT.ENrange[2],DNA.endurance)) return FALSE
+	if(MUT.commut && !HYPCheckCommut(DNA,MUT.commut)) return FALSE
+	if(MUT.required_mutation && !istype(DNA.mutation, MUT.required_mutation)) return FALSE
+	return TRUE
 
 proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 	// Part of mutationcheck_full. Just a simple mathematical check to keep the prior proc
@@ -1804,6 +1821,9 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 // Machines created specifically to interact with plantpots, kind of abandoned experimental
 // shit for the time being for the most part.
 
+TYPEINFO(/obj/machinery/hydro_growlamp)
+	mats = 6
+
 /obj/machinery/hydro_growlamp
 	name = "\improper UV Grow Lamp"
 	desc = "A special lamp that emits ultraviolet light to help plants grow quicker."
@@ -1811,7 +1831,6 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 	icon_state = "growlamp0" // sprites by Clarks
 	density = 1
 	anchored = 0
-	mats = 6
 	var/active = 0
 	var/datum/light/light
 	power_usage = 100
@@ -1866,8 +1885,11 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
 			else
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			src.anchored = !src.anchored
+
+TYPEINFO(/obj/machinery/hydro_mister)
+	mats = 6
 
 /obj/machinery/hydro_mister
 	name = "\improper Botanical Mister"
@@ -1876,7 +1898,6 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 	icon_state = "fogmachine0"
 	density = 1
 	anchored = 0
-	mats = 6
 	var/active = 0
 	var/mode = 1
 
@@ -1912,7 +1933,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 				return
 			else
 				user.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
-				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
 				if(!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
 
@@ -1936,7 +1957,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 				src.visible_message("\The [src] goes quiet.")
 
 		src.icon_state = "fogmachine[src.active]"
-		playsound(src, "sound/misc/lightswitch.ogg", 50, 1)
+		playsound(src, 'sound/misc/lightswitch.ogg', 50, 1)
 
 	is_open_container()
 		return 1 // :I

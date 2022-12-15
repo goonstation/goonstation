@@ -21,12 +21,14 @@
 	3) Done.
 */
 
-obj/machinery/recharger
-	anchored = 1.0
+TYPEINFO(/obj/machinery/recharger)
+	mats = 16
+
+/obj/machinery/recharger
+	anchored = 1
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "recharger0"
 	name = "recharger"
-	mats = 16
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_MULTITOOL
 	desc = "An anchored minature recharging device, used to recharge small, hand-held objects that don't require much electrical charge."
 	power_usage = 50

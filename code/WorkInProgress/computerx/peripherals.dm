@@ -35,6 +35,9 @@
 
 //TO-DO: Major rewrite in communication method between peripherals and the host system.
 
+TYPEINFO(/obj/item/peripheralx)
+	mats = 8
+
 /obj/item/peripheralx
 	name = "Peripheral card"
 	desc = "A computer circuit board."
@@ -47,7 +50,6 @@
 	var/id = null
 	var/func_tag = "GENERIC" //What kind of peripheral is this, huh??
 	var/setup_has_badge = 0 //IF this is set, present return_badge() in the host's browse window
-	mats = 8
 
 	New(location)
 		..()
@@ -773,7 +775,7 @@
 
 		switch(command)
 			if("beep")
-				playsound(src.host.loc, "sound/machines/twobeep.ogg", 50, 1)
+				playsound(src.host.loc, 'sound/machines/twobeep.ogg', 50, 1)
 				for (var/mob/O in hearers(3, src.host.loc))
 					O.show_message(text("[bicon(src.host)] *beep*"))
 
@@ -1071,7 +1073,7 @@
 						if(M.client)
 							M.show_message(text("<span class='alert'><B>The [src.host.name] catches on fire!</B></span>"), 1)
 						fireflash(src.host.loc, 0)
-						playsound(src.host.loc, "sound/items/Welder2.ogg", 50, 1)
+						playsound(src.host.loc, 'sound/items/Welder2.ogg', 50, 1)
 						src.host.set_broken()
 						qdel(src)
 						return

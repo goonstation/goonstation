@@ -307,11 +307,14 @@
 	replenishment_time = 18000
 	supply_packs = list(/datum/supply_packs/complex/manufacturer_kit)
 
+//Nadir is not intended to have station pods/submarines
+#ifndef MAP_OVERRIDE_NADIR
 /datum/supply_control/pod_kit
 	maximum_stock = 2
 	replenishment_time = 9000
 	supply_packs = list(/datum/supply_packs/complex/pod_kit)
 	workstation_grade = 2
+#endif
 
 /datum/supply_control/ai_kit
 	maximum_stock = 2
@@ -500,8 +503,8 @@
 /obj/supply_pad
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pad0"
-	name = "supply pad"
-	desc = "A pad used to teleport goods between Central Command and a survey outpost. Requires a telecrystal to function."
+	name = "supply telepad"
+	desc = "It's a Nanotrasen 'Waterloo 1.0' cargo teleportation pad used to teleport goods instantly between distant locations. Requires a telecrystal to function."
 	density = 0
 	anchored = 1
 	opacity = 0
@@ -545,15 +548,19 @@
 	bullet_act()
 		return
 
+TYPEINFO(/obj/supply_pad/incoming)
+	mats = 10
+
 /obj/supply_pad/incoming
 	name = "Incoming supply pad"
 	direction = 0
+
+TYPEINFO(/obj/supply_pad/outgoing)
 	mats = 10
 
 /obj/supply_pad/outgoing
 	name = "Outgoing supply pad"
 	direction = 1
-	mats = 10
 
 /obj/machinery/computer/special_supply
 	// This is a grade 1 workstation. Contains bare-bones supplies.

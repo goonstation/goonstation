@@ -22,7 +22,8 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	w_class = W_CLASS_TINY
 	throw_speed = 2
 	throw_range = 5
-	flags = TABLEPASS|EXTRADELAY|FPRINT|CONDUCT|ONBELT
+	flags = TABLEPASS|EXTRADELAY|FPRINT|CONDUCT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	stamina_damage = 5
 	stamina_cost = 5
@@ -63,7 +64,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] wraps the cable around \his neck and tightens it.</b></span>")
+		user.visible_message("<span class='alert'><b>[user] wraps the cable around [his_or_her(user)] neck and tightens it.</b></span>")
 		user.take_oxygen_deprivation(160)
 		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
@@ -186,12 +187,14 @@ obj/item/cable_coil/dropped(mob/user)
 		if (!C.d1 && C.d2 != ignore_dir)
 			return C
 
-/obj/item/cable_coil/move_callback(var/mob/living/M, var/turf/target)
+/obj/item/cable_coil/move_callback(var/mob/living/M, var/turf/target, var/direction, var/turf/source)
 	if (!istype(M))
 		return
 	if (!isturf(M.loc))
 		return
-	var/turf/source = M.loc //the signal doesn't give the source location but it gets sent before the mob actually transfers turfs so this works fine
+
+	if(!source)
+		source = M.loc //the signal doesn't give the source location but it gets sent before the mob actually transfers turfs so this works fine
 
 	var/obj/cable/C = find_half_cable(source, get_dir(source, target))
 	if (C)
@@ -252,7 +255,7 @@ obj/item/cable_coil/dropped(mob/user)
 		return
 	if (!(istype(source,/turf/simulated/floor) || istype(source,/turf/space/fluid)))
 		return
-	if (get_dist(target, source) > 1)
+	if (GET_DIST(target, source) > 1)
 		boutput(user, "You can't lay cable at a place that far away.")
 		return
 
@@ -274,7 +277,7 @@ obj/item/cable_coil/dropped(mob/user)
 	var/turf/target = C.loc
 	if (!isturf(target) || target.intact)		// sanity checks, also stop use interacting with T-scanner revealed cable
 		return
-	if (get_dist(C, user) > 1)		// make sure it's close enough
+	if (GET_DIST(C, user) > 1)		// make sure it's close enough
 		boutput(user, "You can't lay cable at a place that far away.")
 		return
 	if (source == target)		// do nothing if we clicked a cable we're standing on

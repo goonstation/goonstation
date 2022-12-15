@@ -270,7 +270,6 @@ Turfs and decal for the space rift
 		bioHolder.AddEffect("psy_resist") // Heh
 		src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
 		src.equip_new_if_possible(/obj/item/clothing/under/color/white, slot_w_uniform)
-		src.equip_new_if_possible(/obj/item/device/key {name = "futuristic key"; desc = "It appears to be made of some kind of space-age material.  Like really fancy aluminium or something.";} , slot_l_store)
 
 	initializeBioholder()
 		bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/tramp

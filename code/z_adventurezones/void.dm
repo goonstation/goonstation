@@ -318,7 +318,7 @@ CONTENTS:
 		if(activating) return
 		activating = 1
 		src.updateUsrDialog()
-		playsound(src.loc, "sound/machines/computerboot_pc_start.ogg", 50, 0)
+		playsound(src.loc, 'sound/machines/computerboot_pc_start.ogg', 50, 0)
 
 		sleep(boot_duration / 2)
 		activating = 2
@@ -344,7 +344,7 @@ CONTENTS:
 
 	proc/make_some_noise()
 		do
-			playsound(src.loc, "sound/machines/computerboot_pc_loop.ogg", 50, 0)
+			playsound(src.loc, 'sound/machines/computerboot_pc_loop.ogg', 50, 0)
 			sleep(loop_duration)
 		while(active && !activating && remain_active-- > 0) //So it will shut itself down after a while
 
@@ -357,7 +357,7 @@ CONTENTS:
 	proc/deactivate()
 		if(!active || activating || operating) return
 		activating = 1
-		playsound(src.loc, "sound/machines/computerboot_pc_end.ogg", 50, 0)
+		playsound(src.loc, 'sound/machines/computerboot_pc_end.ogg', 50, 0)
 		sleep(2 SECONDS)
 		activating = 0
 		active = 0
@@ -393,7 +393,7 @@ CONTENTS:
 			var/mob/living/critter/C = M
 			if(C.dormant || C.ghost_spawned)
 				. = 0
-		if(istype(M, /mob/living/critter/small_animal/mouse/weak/mentor) || istype(M, /mob/living/critter/flock) || istype(M, /mob/living/intangible))
+		if(istype(M, /mob/living/critter/small_animal/mouse/weak/mentor) || istype(M, /mob/living/critter/robotic) || istype(M, /mob/living/critter/flock) || istype(M, /mob/living/intangible))
 			. = 0
 
 	proc/do_swap()

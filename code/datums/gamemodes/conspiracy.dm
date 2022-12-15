@@ -3,6 +3,7 @@
 	config_tag = "conspiracy"
 	latejoin_antag_compatible = 1
 	latejoin_only_if_all_antags_dead = 1 // No hunters until the conspiracy is dead, thanks
+	antag_token_support = TRUE
 
 	var/maxConspirators = 6
 	var/agent_radiofreq = 1401
@@ -44,7 +45,7 @@
 		else
 			traitors += tplayer
 		token_players.Remove(tplayer)
-		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 
 	var/antag_role = pick(other_antag_roles)

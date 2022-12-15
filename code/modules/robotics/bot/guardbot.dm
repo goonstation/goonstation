@@ -56,7 +56,7 @@
 			// Same distance cap as the MULE because I'm really tired of various pathfinding issues. Buddy time and docking stations are often way more than 150 steps away.
 			// It's 200 something steps alone to get from research to the bar on COG2 for instance, and that's pretty much in a straight line.
 			var/list/thePath = get_path_to(src.master, target_turf, max_distance=src.max_dist, simulated_only=istype(master.loc, /turf/simulated), \
-				id=src.master.botcard, skip_first=FALSE, cardinal_only=TRUE)
+				id=src.master.botcard, skip_first=FALSE, cardinal_only=TRUE, do_doorcheck=TRUE)
 			if (!master)
 				return
 
@@ -240,7 +240,7 @@
 		desc = "What happens when you put an assault rifle in the microwave."
 		setup_charge_maximum = 100000
 		setup_charge_percentage = 100
-		setup_gun = /obj/item/gun/kinetic/ak47
+		setup_gun = /obj/item/gun/kinetic/akm
 		health = 100
 		ammofab = 1
 		shotcount = 3 // Never stop firing, never start spawning
@@ -711,53 +711,53 @@
 					if (!loose)
 						src.visible_message(dothevoice)
 					speak(loose ? "CLOWN." : "Clownshot!")
-					playsound(src, "sound/vox/clown.ogg", 30)
+					playsound(src, 'sound/vox/clown.ogg', 30)
 			if ("detain")
 				src.budgun.set_current_projectile(new/datum/projectile/energy_bolt/aoe)
 				SPAWN(1 SECOND)
 					src.visible_message(dothevoice)
 					speak("Detain!")
-					playsound(src, "sound/vox/detain.ogg", 30)
+					playsound(src, 'sound/vox/detain.ogg', 30)
 			if ("pulse")
 				src.budgun.set_current_projectile(new/datum/projectile/energy_bolt/pulse)
 				SPAWN(1 SECOND)
 					src.visible_message(dothevoice)
 					speak("Pulse!")
-					playsound(src, "sound/vox/push.ogg", 30)
+					playsound(src, 'sound/vox/push.ogg', 30)
 			if ("knockout")
 				src.budgun.set_current_projectile(new/datum/projectile/bullet/tranq_dart/law_giver)
 				src.budgun.current_projectile.cost = 60
 				SPAWN(1 SECOND)
 					src.visible_message(dothevoice)
 					speak("Knockout!")
-					playsound(src, "sound/vox/sleep.ogg", 30)
+					playsound(src, 'sound/vox/sleep.ogg', 30)
 			if ("smoke")
 				src.budgun.set_current_projectile(new/datum/projectile/bullet/smoke)
 				src.budgun.current_projectile.cost = 50
 				SPAWN(1 SECOND)
 					src.visible_message(dothevoice)
 					speak("Smokeshot!")
-					playsound(src, "sound/vox/smoke.ogg", 30)
+					playsound(src, 'sound/vox/smoke.ogg', 30)
 			if ("execute")
 				src.budgun.set_current_projectile(new/datum/projectile/bullet/revolver_38)
 				src.budgun.current_projectile.cost = 30
 				SPAWN(1 SECOND)
 					speak("EXTERMINATE.")
-					playsound(src, "sound/vox/exterminate.ogg", 30)
+					playsound(src, 'sound/vox/exterminate.ogg', 30)
 			if ("hotshot")
 				src.budgun.set_current_projectile(new/datum/projectile/bullet/flare)
 				src.budgun.current_projectile.cost = 60
 				SPAWN(1 SECOND)
 					speak("HOTSHOT.")
-					playsound(src, "sound/vox/hot.ogg", 30)
+					playsound(src, 'sound/vox/hot.ogg', 30)
 			if ("bigshot")	// impossible to get to without admin intervention
 				src.budgun.set_current_projectile(new/datum/projectile/bullet/aex/lawbringer)
 				src.budgun.current_projectile.cost = 170
 				SPAWN(1 SECOND) // just call proc BeTheLaw(1, 0, 1) on a Buddy with a lawbringer and it should work
 					speak("HIGH EXPLOSIVE.")
-					playsound(src, "sound/vox/high.ogg", 50)
+					playsound(src, 'sound/vox/high.ogg', 50)
 					sleep(0.4 SECONDS)
-					playsound(src, "sound/vox/explosive.ogg", 50)
+					playsound(src, 'sound/vox/explosive.ogg', 50)
 		src.budgun.UpdateIcon()
 		src.UpdateIcon()
 		src.slept_through_becoming_the_law = 0
@@ -1092,14 +1092,14 @@
 		if(bar_gun.shotsLeft == 1 || src.ammofab)
 			bar_gun.shotsLeft = 0
 			if(src.hat)
-				playsound(src, "sound/weapons/Gunshot.ogg", 100, 1)
+				playsound(src, 'sound/weapons/Gunshot.ogg', 100, 1)
 				src.visible_message("<span class='alert'><B>BOOM!</B> [src] misses its head... screen... thing, and shoots its hat off!</span>")
 				src.hat.set_loc(get_turf(src))
 				src.hat = null
 				src.underlays.len = 0
 				set_emotion("sad")
 			else if (prob(50))
-				playsound(src, "sound/weapons/Gunshot.ogg", 100, 1)
+				playsound(src, 'sound/weapons/Gunshot.ogg', 100, 1)
 				src.visible_message("<span class='alert'><B>BOOM!</B> [src] shoots itself right in its dumb face and explodes!</span>")
 				src.explode()
 			else
@@ -1114,7 +1114,7 @@
 					src.visible_message("<span class='alert'><B>BOOM!</B> [src] misses its head... screen... thing, sending the bullet flying!</span>")
 		if(bar_gun.shotsLeft > 1)
 			bar_gun.shotsLeft--
-			playsound(src, "sound/weapons/Gunclick.ogg", 80, 1)
+			playsound(src, 'sound/weapons/Gunclick.ogg', 80, 1)
 			src.visible_message("<span class='alert'>[src] points the gun at itself. Click!</span>")
 
 		if (bar_gun.shotsLeft == 0)
@@ -1291,7 +1291,7 @@
 			return
 		src.add_dialog(usr)
 		src.add_fingerprint(usr)
-		if ((href_list["power"]) && (!src.locked || (src.allowed(usr) && (issilicon(usr) || get_dist(usr, src) < 2))))
+		if ((href_list["power"]) && (!src.locked || (src.allowed(usr) && (issilicon(usr) || GET_DIST(usr, src) < 2))))
 			if(src.on)
 				turn_off()
 			else
@@ -1375,10 +1375,10 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.explode(0)
 				return
-			if(2.0)
+			if(2)
 				src.health -= 15
 				if (src.health <= 0)
 					src.explode(0)
@@ -1431,7 +1431,7 @@
 		var/death_message = pick("I regret nothing, but I am sorry I am about to leave my friends.","I had a good run.","Es lebe die Freiheit!","It is now safe to shut off your buddy.","System error.","Now I know why you cry.","Stay gold...","Malfunction!","Rosebud...","No regrets!", "Time to die...")
 		speak(death_message)
 		src.visible_message("<span class='alert'><b>[src] blows apart!</b></span>")
-		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 		var/turf/T = get_turf(src)
 		if(src.mover)
 			qdel(src.mover)
@@ -1623,7 +1623,7 @@
 						ShootTheGun(target)
 						src.visible_message("<span class='alert'><B>[src] fires [src.budgun] at [target]!</B></span>")
 					else
-						playsound(src, "sound/weapons/Gunclick.ogg", 60, 1)
+						playsound(src, 'sound/weapons/Gunclick.ogg', 60, 1)
 					if (ChargeUrLaser())
 						SPAWN(1 SECOND)
 							elecflash(get_turf(src), 1, power=1, exclude_center = 0)
@@ -1836,8 +1836,6 @@
 			src.overlays += image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)
 			if (istype(src.budgun, /obj/item/gun/energy/lawbringer))	// ugh
 				var/image/lawbringer_lights = image('icons/obj/items/gun.dmi', "lawbringer-d100", 11, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)	// ugh
-				if (istype(src.budgun, /obj/item/gun/energy/lawbringer/old))
-					lawbringer_lights.icon_state = "old-lawbringer-d100"
 				switch(lawbringer_state)	// ugh
 					if ("clown")
 						lawbringer_lights.color = "#FFC0CB"
@@ -1931,6 +1929,11 @@
 
 		return 0
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
 //Buddy handcuff bar thing
 /datum/action/bar/icon/buddy_cuff
 	duration = 30 // zippy zipcuffs
@@ -1958,7 +1961,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		playsound(master, "sound/weapons/handcuffs.ogg", 30, 1, -2)
+		playsound(master, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 		master.visible_message("<span class='alert'><B>[master] is trying to put handcuffs on [task.arrest_target]!</B></span>")
 
 	onInterrupt(flag)
@@ -2020,12 +2023,14 @@
 			return 1
 
 //Robot tools.  Flash boards, batons, etc
+TYPEINFO(/obj/item/device/guardbot_tool)
+	mats = 6
+
 /obj/item/device/guardbot_tool
 	name = "Tool module"
 	desc = "A generic module for a PR-6S Guardbuddy."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "tool_generic"
-	mats = 6
 	w_class = W_CLASS_SMALL
 	var/is_stun = 0 //Can it be non-lethal?
 	var/is_lethal = 0 //Can it be lethal?
@@ -2231,7 +2236,7 @@
 				if(src.last_use && world.time < src.last_use + 80)
 					return
 
-				playsound(user.loc, "sound/weapons/flash.ogg", 100, 1)
+				playsound(user.loc, 'sound/weapons/flash.ogg', 100, 1)
 				flick("robuddy-c", user)
 				src.last_use = world.time
 
@@ -2254,7 +2259,7 @@
 			if(..())
 				return
 
-			if (get_dist(user,target) > 4)
+			if (GET_DIST(user,target) > 4)
 				return
 
 			if(src.last_use && world.time < src.last_use + 80)
@@ -2265,7 +2270,7 @@
 
 			var/list/dummies = new/list()
 
-			playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)
+			playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
 
 			if(isturf(target))
 				target_r = new/obj/elec_trg_dummy(target)
@@ -2281,14 +2286,14 @@
 					SPAWN(0.6 SECONDS) qdel(O)
 
 				if(isliving(target_r)) //Probably unsafe.
-					playsound(target_r:loc, "sound/effects/electric_shock.ogg", 50, 1)
+					playsound(target_r:loc, 'sound/effects/electric_shock.ogg', 50, 1)
 					if (lethal)
 						var/mob/living/carbon/human/H = target_r
 						random_burn_damage(target_r, rand(45,60))
 						H.do_disorient(stamina_damage = 45, weakened = 50, stunned = 40, disorient = 20, remove_stamina_below_zero = 0)
 					boutput(target_r, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 					target_r:unlock_medal("HIGH VOLTAGE", 1)
-					target_r:Virus_ShockCure(target_r, 100)
+					target_r:Virus_ShockCure(100)
 					target_r:shock_cyberheart(33)
 					if (ishuman(target_r))
 						target_r:changeStatus("weakened", lethal ? (3 SECONDS): (8 SECONDS))
@@ -2315,12 +2320,14 @@
 
 	//xmas -- See spacemas.dm
 
+TYPEINFO(/obj/item/device/guardbot_module)
+	mats = 6
+
 /obj/item/device/guardbot_module
 	name = "Add-on module"
 	desc = "A generic expansion pack for a PR-6S Guardbuddy."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "tool_generic"
-	mats = 6
 	w_class = W_CLASS_SMALL
 	var/tool_id = "MOD"
 	is_syndicate = 1
@@ -2492,9 +2499,9 @@
 							master.reply_wait = 0
 							. = INFINITY
 							for (var/turf/T in src.secondary_targets)
-								if (!src.target || (. > get_dist(src.master, T)))
+								if (!src.target || (. > GET_DIST(src.master, T)))
 									src.target = T
-									. = get_dist(src.master, src.target)
+									. = GET_DIST(src.master, src.target)
 									continue
 
 							src.secondary_targets -= src.target
@@ -2771,7 +2778,7 @@
 
 				var/obj/item/card/id/perp_id = perp.equipped()
 				if (!istype(perp_id))
-					perp_id = perp.wear_id
+					perp_id = perp.get_id()
 
 				if(perp_id && ckey(perp_id.registered) == master.scratchpad["targetname"])
 					return 1
@@ -2806,7 +2813,7 @@
 							//master.current_movepath = "HEH"
 							return
 
-						if((!(hug_target in view(7,master)) && (!master.mover || !master.moving)) || !master.path || !master.path.len || (4 < get_dist(hug_target,master.path[master.path.len])) )
+						if((!(hug_target in view(7,master)) && (!master.mover || !master.moving)) || !master.path || !master.path.len || (4 < GET_DIST(hug_target,master.path[master.path.len])) )
 							if (master.mover)
 								qdel(master.mover)
 							master.moving = 0
@@ -2931,11 +2938,11 @@
 
 			// if looking for nearest beacon
 			else if(new_destination == "__nearest__")
-				var/dist = get_dist(master,signal.source.loc)
+				var/dist = GET_DIST(master,signal.source.loc)
 				if(nearest_beacon)
 
 					// note we ignore the beacon we are located at
-					if(dist>1 && dist<get_dist(master,nearest_beacon_loc))
+					if(dist>1 && dist<GET_DIST(master,nearest_beacon_loc))
 						nearest_beacon = recv
 						nearest_beacon_loc = signal.source.loc
 						next_destination = signal.data["next_patrol"]
@@ -3143,10 +3150,13 @@
 
 				var/obj/item/card/id/perp_id = perp.equipped()
 				if (!istype(perp_id))
-					perp_id = perp.wear_id
+					perp_id = perp.get_id()
 
 				var/has_carry_permit = 0
 				var/has_contraband_permit = 0
+
+				if (!has_contraband_permit)
+					. += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_CONTRABAND_OVERRIDE)
 
 				if(perp_id) //Checking for targets and permits
 					if(ckey(perp_id.registered) in target_names)
@@ -3159,38 +3169,38 @@
 				if (istype(perp.l_hand))
 					if (istype(perp.l_hand, /obj/item/gun/)) // perp is carrying a gun
 						if(!has_carry_permit)
-							. += perp.l_hand.contraband
+							. += perp.l_hand.get_contraband()
 					else // not carrying a gun, but potential contraband?
 						if(!has_contraband_permit)
-							. += perp.l_hand.contraband
+							. += perp.l_hand.get_contraband()
 
 				if (istype(perp.r_hand))
 					if (istype(perp.r_hand, /obj/item/gun/)) // perp is carrying a gun
 						if(!has_carry_permit)
-							. += perp.r_hand.contraband
+							. += perp.r_hand.get_contraband()
 					else // not carrying a gun, but potential contraband?
 						if(!has_contraband_permit)
-							. += perp.r_hand.contraband
+							. += perp.r_hand.get_contraband()
 
 				if (istype(perp.belt))
 					if (istype(perp.belt, /obj/item/gun/))
 						if (!has_carry_permit)
-							. += perp.belt.contraband * 0.5
+							. += perp.belt.get_contraband() * 0.5
 					else
 						if (!has_contraband_permit)
-							. += perp.belt.contraband * 0.5
+							. += perp.belt.get_contraband() * 0.5
 
 				if (istype(perp.wear_suit))
 					if (!has_contraband_permit)
-						. += perp.wear_suit.contraband
+						. += perp.wear_suit.get_contraband()
 
 				if (istype(perp.back))
 					if (istype(perp.back, /obj/item/gun/)) // some weapons can be put on backs
 						if (!has_carry_permit)
-							. += perp.back.contraband * 0.5
+							. += perp.back.get_contraband() * 0.5
 					else // at moment of doing this we don't have other contraband back items, but maybe that'll change
 						if (!has_contraband_permit)
-							. += perp.back.contraband * 0.5
+							. += perp.back.get_contraband() * 0.5
 
 				if(perp.mutantrace && perp.mutantrace.jerk)
 //					if(istype(perp.mutantrace, /datum/mutantrace/zombie))
@@ -3265,7 +3275,7 @@
 						//master.current_movepath = "HEH"
 						return
 
-					if((!(hug_target in view(7,master)) && (!master.mover || !master.moving)) || !master.path || !master.path.len || (4 < get_dist(hug_target,master.path[master.path.len])) )
+					if((!(hug_target in view(7,master)) && (!master.mover || !master.moving)) || !master.path || !master.path.len || (4 < GET_DIST(hug_target,master.path[master.path.len])) )
 						if (master.mover)
 							qdel(master.mover)
 						master.moving = 0
@@ -3282,7 +3292,7 @@
 			var/accepted_access = access_dwaine_superuser
 
 			assess_perp(mob/living/carbon/human/perp as mob)
-				var/obj/item/card/id/the_id = perp.wear_id
+				var/obj/item/card/id/the_id = perp.get_id()
 				if (!the_id)
 					the_id = perp.equipped()
 				if(!istype(the_id) || (the_id && !(accepted_access in the_id.access)) )
@@ -3386,7 +3396,7 @@
 							master.speak(pick("Rest in peace.","Guard protocol...inactive.","I'm sorry it had to end this way.","It was an honor to serve alongside you."))
 						return
 
-					if(!master.path || !master.path.len || (3 < get_dist(protected,master.path[master.path.len])) )
+					if(!master.path || !master.path.len || (3 < GET_DIST(protected,master.path[master.path.len])) )
 						master.moving = 0
 						if (master.mover)
 							qdel(master.mover)
@@ -3448,9 +3458,8 @@
 						continue
 
 					var/check_name = C.name
-					if(ishuman(C) && C:wear_id)
-						check_name = C:wear_id:registered
-
+					if(ishuman(C) && C.get_id())
+						check_name = C.get_id()?.registered
 					if (ckey(check_name) == ckey(src.protected_name))
 						src.protected = C
 						src.desired_emotion = GUARDING_EMOTION
@@ -3517,8 +3526,8 @@
 					continue
 
 				var/check_name = C.name
-				if(ishuman(C) && C:wear_id)
-					check_name = C:wear_id:registered
+				if(ishuman(C) && C.get_id())
+					check_name = C.get_id()?.registered
 
 				if (ckey(check_name) == ckey(src.protected_name))
 					src.protected = C
@@ -3571,8 +3580,8 @@
 					continue
 
 				var/check_name = C.name
-				if(ishuman(C) && C:wear_id)
-					check_name = C:wear_id:registered
+				if(ishuman(C) && C.get_id())
+					check_name = C.get_id()?.registered
 
 				if (ckey(check_name) == ckey(src.protected_name))
 					src.protected = C
@@ -3933,10 +3942,10 @@
 							END_NEAT
 						return
 
-				else if (!(src.neat_things & NT_JONES) && istype(AM, /obj/critter/cat) && AM.name == "Jones")
+				else if (!(src.neat_things & NT_JONES) && istype(AM, /mob/living/critter/small_animal/cat) && AM.name == "Jones")
 					FOUND_NEAT(NT_JONES)
-						var/obj/critter/cat/jones = AM
-						src.speak_with_maptext("And over here is the ship's cat, J[jones.alive ? "ones! No spacecraft is complete without a cat!" : "-oh mercy, MOVING ON, MOVING ON"]")
+						var/mob/living/critter/small_animal/cat/jones = AM
+						src.speak_with_maptext("And over here is the ship's cat, J[isalive(jones) ? "ones! No spacecraft is complete without a cat!" : "-oh mercy, MOVING ON, MOVING ON"]")
 						END_NEAT
 					return
 
@@ -4198,12 +4207,14 @@
  *	Guardbot Parts
  */
 
+TYPEINFO(/obj/item/guardbot_core)
+	mats = 6
+
 /obj/item/guardbot_core
 	name = "Guardbuddy mainboard"
 	desc = "The primary circuitry of a PR-6S Guardbuddy."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddy_core-6"
-	mats = 6
 	w_class = W_CLASS_SMALL
 	var/created_default_task = null //Default task path of result
 	var/datum/computer/file/guardbot_task/created_model_task = null
@@ -4229,12 +4240,14 @@
 		else
 			..()
 
+TYPEINFO(/obj/item/guardbot_frame)
+	mats = 5
+
 /obj/item/guardbot_frame
 	name = "Guardbuddy frame"
 	desc = "The external casing of a PR-6S Guardbuddy."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddy_frame-6-1"
-	mats = 5
 	var/stage = 1
 	var/created_name = "Guardbuddy" //Still the name of resulting guardbot
 	var/created_default_task = null //Default task path of result
@@ -4318,14 +4331,21 @@
 			spawn(0)
 				..()
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.created_cell)
+			src.created_cell = null
+
 
 //The Docking Station.  Recharge here!
+TYPEINFO(/obj/machinery/guardbot_dock)
+	mats = 8
+
 /obj/machinery/guardbot_dock
 	name = "docking station"
 	desc = "A recharging and command station for PR-6S Guardbuddies."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddycharger0"
-	mats = 8
 	anchored = 1
 	var/panel_open = 0
 	var/autoeject = 0 //1: Eject fully charged robots automatically. 2: Eject robot when living carbon mob is in view.
@@ -4702,7 +4722,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
 			src.panel_open = !src.panel_open
 			src.updateUsrDialog()
@@ -5152,7 +5172,7 @@
 	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
-		playsound(src.loc, "sound/items/coindrop.ogg", 100, 1)
+		playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1)
 		user.visible_message("<b>[user]</b> flips the token","You flip the token")
 		SPAWN(1 SECOND)
 		user.visible_message("It came up Hugs.")

@@ -16,8 +16,8 @@
 /datum/shipping_market
 
 	var/list/commodities = list()
-	var/time_between_shifts = 0.0
-	var/time_until_shift = 0.0
+	var/time_between_shifts = 0
+	var/time_until_shift = 0
 	var/demand_multiplier = 2
 	var/list/active_traders = list()
 	var/max_buy_items_at_once = 99
@@ -42,13 +42,17 @@
 	var/artifact_resupply_amount = 0
 	/// an artifact crate is already "on the way"
 	var/artifacts_on_the_way = FALSE
+	var/static/launch_distance = 0
+
+	///List of pending crates (used only for transception antenna, nadir cargo system)
+	var/list/pending_crates = list()
 
 	New()
 		..()
 
 		add_commodity(new /datum/commodity/goldbar(src))
 
-		for (var/commodity_path in (typesof(/datum/commodity) - /datum/commodity/goldbar))
+		for (var/commodity_path in (concrete_typesof(/datum/commodity) - /datum/commodity/goldbar))
 			var/datum/commodity/C = new commodity_path(src)
 			if(C.onmarket)
 				add_commodity(C)
@@ -76,6 +80,18 @@
 		time_between_shifts = 4500 // 7.5 minutes base.
 		time_until_shift = time_between_shifts + rand(-1500,1500)
 
+		var/turf/spawnpoint
+		for(var/turf/T in get_area_turfs(/area/supply/spawn_point))
+			spawnpoint = T
+			break
+
+		var/turf/target
+		for(var/turf/T in get_area_turfs(/area/supply/delivery_point))
+			target = T
+			break
+
+		src.launch_distance = get_dist(spawnpoint, target)
+
 	proc/add_commodity(var/datum/commodity/new_c)
 		src.commodities["[new_c.comtype]"] = new_c
 
@@ -83,17 +99,23 @@
 		if(length(req_contracts) >= max_req_contracts)
 			return
 		var/contract2make //picking path from which to generate the newly-added contract
-		if(src.civ_contracts_active == 0)
+		if(src.civ_contracts_active == 0) //guarantee presence of at least one contract of each type
 			contract2make = pick_req_contract(/datum/req_contract/civilian)
 		else if(src.aid_contracts_active == 0)
 			contract2make = pick_req_contract(/datum/req_contract/aid)
 		else if(src.sci_contracts_active == 0)
 			contract2make = pick_req_contract(/datum/req_contract/scientific)
-		else
-			switch(rand(1,10)) //civ weighted slightly higher
-				if(1 to 4) contract2make = pick_req_contract(/datum/req_contract/civilian)
-				if(5 to 7) contract2make = pick_req_contract(/datum/req_contract/aid)
-				if(8 to 10) contract2make = pick_req_contract(/datum/req_contract/scientific)
+		else //do random gen, slightly higher weighting to civilian; don't make too many aid contracts
+			if(src.aid_contracts_active > 1)
+				if(prob(55))
+					contract2make = pick_req_contract(/datum/req_contract/civilian)
+				else
+					contract2make = pick_req_contract(/datum/req_contract/scientific)
+			else
+				switch(rand(1,10))
+					if(1 to 4) contract2make = pick_req_contract(/datum/req_contract/civilian)
+					if(5 to 7) contract2make = pick_req_contract(/datum/req_contract/aid)
+					if(8 to 10) contract2make = pick_req_contract(/datum/req_contract/scientific)
 		var/datum/req_contract/contractmade = new contract2make
 		switch(contractmade.req_class)
 			if(CIV_CONTRACT) src.civ_contracts_active++
@@ -206,16 +228,29 @@
 				if (prob(T.chance_leave))
 					T.hidden = 1
 
-		// Thin out and re-generate unpinned contracts
+		// Thin out and time out contracts by variant...
 		for(var/datum/req_contract/RC in src.req_contracts)
-			if(!RC.pinned && prob(80))
-				switch(RC.req_class)
-					if(CIV_CONTRACT) src.civ_contracts_active--
-					if(AID_CONTRACT) src.aid_contracts_active--
-					if(SCI_CONTRACT) src.sci_contracts_active--
-				src.req_contracts -= RC
-				qdel(RC)
+			switch(RC.req_class)
+				if(CIV_CONTRACT)
+					if(!RC.pinned && prob(80))
+						src.civ_contracts_active--
+						src.req_contracts -= RC
+						qdel(RC)
+				if(SCI_CONTRACT)
+					if(!RC.pinned && prob(70))
+						src.sci_contracts_active--
+						src.req_contracts -= RC
+						qdel(RC)
+				if(AID_CONTRACT)
+					var/datum/req_contract/aid/RCAID = RC
+					if(RCAID.cycles_remaining > 0)
+						RCAID.cycles_remaining--
+					else
+						src.aid_contracts_active--
+						src.req_contracts -= RC
+						qdel(RC)
 
+		//... and repopulate afterwards.
 		while(length(src.req_contracts) < src.max_req_contracts)
 			src.add_req_contract()
 
@@ -241,6 +276,8 @@
 		var/price = 0
 		var/modifier = sell_art_datum.get_rarity_modifier()
 		var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in sell_art.vis_contents
+		var/obj/item/card/id/scan = sell_art_datum.scan
+		var/datum/db_record/account = sell_art_datum.account
 
 		// calculate price
 		price = calculate_artifact_price(modifier, max(pap?.lastAnalysis, 1))
@@ -277,7 +314,11 @@
 				src.artifacts_on_the_way = FALSE
 
 		// sell
-		wagesystem.shipping_budget += price
+		if (scan && account)
+			wagesystem.shipping_budget += price / 2
+			account["current_money"] += price / 2
+		else
+			wagesystem.shipping_budget += price
 		qdel(sell_art)
 
 		// give PDA group messages
@@ -348,8 +389,11 @@
 
 		return duckets
 
-	proc/handle_returns(obj/storage/crate/sold_crate)
-		sold_crate.name = "Returned Requisitions Crate"
+	proc/handle_returns(obj/storage/crate/sold_crate,var/return_code)
+		if(return_code == RET_INSUFFICIENT) //clarifies purpose for crate return
+			sold_crate.name = "Returned Requisitions Crate"
+		else
+			sold_crate.name = "Reimbursed Requisitions Crate"
 		SPAWN(rand(18,24) SECONDS)
 			shippingmarket.receive_crate(sold_crate)
 
@@ -397,7 +441,7 @@
 						for(var/datum/rc_itemreward/giftback in contract.item_rewarders)
 							var/reward = giftback.build_reward()
 							if(reward) sell_crate.contents += reward
-							else logTheThing("debug",null,null,"QM contract [contract.type] failed to build [giftback.type]")
+							else logTheThing(LOG_DEBUG, null, "QM contract [contract.type] failed to build [giftback.type]")
 					else if(success == REQ_RETURN_FULLSALE)
 						return_handling = RET_NOSENDBACK
 
@@ -411,7 +455,7 @@
 				qdel(sell_crate)
 				if(return_handling == RET_VOID) return
 			else
-				handle_returns(sell_crate)
+				handle_returns(sell_crate, return_handling)
 				if(return_handling == RET_INSUFFICIENT)
 					var/datum/signal/pdaSignal = get_free_signal()
 					var/returnmsg = "Notification: No contract fulfilled by Requisition crate. Returning as sent."
@@ -447,6 +491,17 @@
 
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
+	//NADIR: Transception antenna cargo I/O
+#ifdef MAP_OVERRIDE_NADIR
+	proc/receive_crate(atom/movable/shipped_thing)
+
+		pending_crates.Add(shipped_thing)
+
+		var/datum/signal/pdaSignal = get_free_signal()
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="New shipment pending transport: [shipped_thing.name].")
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+
+#else
 	proc/receive_crate(atom/movable/shipped_thing)
 
 		var/turf/spawnpoint
@@ -460,11 +515,11 @@
 			break
 
 		if (!spawnpoint)
-			logTheThing("debug", null, null, "<b>Shipping: </b> No spawn turfs found! Can't deliver crate")
+			logTheThing(LOG_DEBUG, null, "<b>Shipping: </b> No spawn turfs found! Can't deliver crate")
 			return
 
 		if (!target)
-			logTheThing("debug", null, null, "<b>Shipping: </b> No target turfs found! Can't deliver crate")
+			logTheThing(LOG_DEBUG, null, "<b>Shipping: </b> No target turfs found! Can't deliver crate")
 			return
 
 		shipped_thing.set_loc(spawnpoint)
@@ -473,11 +528,9 @@
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [shipped_thing.name].")
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
-
-
 		for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 			if (P.id == "qm_dock")
-				playsound(P.loc, "sound/machines/bellalert.ogg", 50, 0)
+				playsound(P.loc, 'sound/machines/bellalert.ogg', 50, 0)
 				SPAWN(SUPPLY_OPEN_TIME)
 					if (P?.density)
 						P.open()
@@ -485,7 +538,8 @@
 					if (P && !P.density)
 						P.close()
 
-		shipped_thing.throw_at(target, 100, 1)
+		shipped_thing.throw_at(target, src.launch_distance, 1)
+#endif
 
 	proc/get_path_to_market()
 		var/list/bounds = get_area_turfs(/area/supply/delivery_point)
@@ -529,20 +583,20 @@
 		payroll += R["wage"]
 
 	var/dat = {"<B>Budget Variables:</B>
-	<BR><BR><u><b>Total Station Funds:</b> $[num2text(totalfunds,50)]</u>
+	<BR><BR><u><b>Total Station Funds:</b> [num2text(totalfunds,50)][CREDIT_SIGN]</u>
 	<BR>
-	<BR><b>Current Payroll Budget:</b> $[num2text(wagesystem.station_budget,50)]
-	<BR><b>Current Research Budget:</b> $[num2text(wagesystem.research_budget,50)]
-	<BR><b>Current Shipping Budget:</b> $[num2text(wagesystem.shipping_budget,50)]
+	<BR><b>Current Payroll Budget:</b> [num2text(wagesystem.station_budget,50)][CREDIT_SIGN]
+	<BR><b>Current Research Budget:</b> [num2text(wagesystem.research_budget,50)][CREDIT_SIGN]
+	<BR><b>Current Shipping Budget:</b> [num2text(wagesystem.shipping_budget,50)][CREDIT_SIGN]
 	<BR>
-	<b>Current Payroll Cost:</b> $[payroll]<HR>"}
+	<b>Current Payroll Cost:</b> [payroll][CREDIT_SIGN]<HR>"}
 
 	dat += "Shipping Market Prices<BR><BR>"
 	for(var/item_type in shippingmarket.commodities)
 		var/datum/commodity/C = shippingmarket.commodities[item_type]
 		var/viewprice = C.price
 		if (C.indemand) viewprice *= shippingmarket.demand_multiplier
-		dat += "<BR><B>[C.comname]:</B> $[viewprice] per unit "
+		dat += "<BR><B>[C.comname]:</B> [viewprice][CREDIT_SIGN] per unit "
 		if (C.indemand) dat += " <b>(High Demand!)</b>"
 	var/timer = shippingmarket.get_market_timeleft()
 	dat += "<BR><HR><b>Next Price Shift:</B> [timer]<BR>"
@@ -567,7 +621,7 @@
 	var/trans = input("Which budget?", "Budgeting", null, null) in list("Payroll", "Shipping", "Research")
 	if (!trans) return
 
-	var/amount = input(usr, "How much?", "Funds", 0) as null|num
+	var/amount = input(usr, "How much to add to this budget?", "Funds", 0) as null|num
 	if (!isnum_safe(amount)) return
 
 	switch(trans)

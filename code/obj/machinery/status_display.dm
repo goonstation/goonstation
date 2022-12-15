@@ -10,13 +10,16 @@
 // // And arbitrary messages set by comms computer
 
 #define MAX_LEN 5
+TYPEINFO(/obj/machinery/status_display)
+	mats = 14
+
 /obj/machinery/status_display
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
 	name = "status display"
 	anchored = 1
 	density = 0
-	mats = 14
+	plane = PLANE_NOSHADOW_ABOVE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/glow_in_dark_screen = TRUE
 	var/image/screen_image
@@ -39,7 +42,8 @@
 	var/lastdisplayline1 = ""		// the cached last displays
 	var/lastdisplayline2 = ""
 
-	var/frequency = 1435		// radio frequency
+	var/net_id = null
+	var/frequency = FREQ_STATUS_DISPLAY		// radio frequency
 
 	var/display_type = 0		// bitmask of messages types to display: 0=normal  1=supply shuttle  2=reseach stn destruct
 
@@ -60,7 +64,16 @@
 		crt_image.mouse_opacity = 0
 		UpdateOverlays(crt_image, "crt")
 
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		src.AddComponent( \
+			/datum/component/packet_connected/radio, \
+			null, \
+			src.frequency, \
+			src.net_id, \
+			"receive_signal", \
+			FALSE, \
+			"STATDISPLAY", \
+			FALSE \
+		)
 
 		if(glow_in_dark_screen)
 			src.screen_image = image('icons/obj/status_display.dmi', src.icon_state, -1)
@@ -70,6 +83,8 @@
 			screen_image.color = list(0.66,0.66,0.66, 0.66,0.66,0.66, 0.66,0.66,0.66)
 			src.UpdateOverlays(screen_image, "screen_image")
 
+		if(!src.net_id)
+			src.net_id = generate_net_id(src)
 
 	// timed process
 	process()
@@ -178,7 +193,7 @@
 			message2 = null
 			index2 = 0
 		repeat_update = TRUE
-		desc = "[message1] [message2]"
+		desc = "[message1]<br>[message2]" // multiline messages
 		lastdisplayline1 = null
 		lastdisplayline2 = null
 
@@ -186,9 +201,9 @@
 
 	proc/set_maptext(var/line1, var/line2)
 		if(!line2)
-			src.maptext = {"<span class='vm c' style="font-family: StatusDisp; font-size: 5px;  color: #09f">[line1]</span>"}
+			src.maptext = {"<span class='vm c' style="font-family: StatusDisp; font-size: 6px;  color: #09f">[line1]</span>"}
 		else
-			src.maptext = {"<span class='vm c' style="font-family: StatusDisp; font-size: 5px;  color: #09f">[line1]<BR/>[line2]</span>"}
+			src.maptext = {"<span class='vm c' style="font-family: StatusDisp; font-size: 6px;  color: #09f">[line1]<BR/>[line2]</span>"}
 
 	proc/set_picture(var/state)
 		var/image/previous = GetOverlayImage("picture")
@@ -234,6 +249,11 @@
 		return ""
 
 	receive_signal(datum/signal/signal)
+		if (!signal || (!signal.data["address_tag"] && !signal.data["address_1"]))
+			return
+
+		if (signal.data["address_tag"] != "STATDISPLAY" && signal.data["address_1"] != src.net_id)
+			return
 
 		switch(signal.data["command"])
 			if("blank")
@@ -245,7 +265,7 @@
 
 			if("message")
 				mode = 2
-				set_message(signal.data["msg1"], signal.data["msg2"])
+				set_message(strip_html(signal.data["msg1"]), strip_html(signal.data["msg2"]))
 
 			if("alert")
 				mode = 3
@@ -274,13 +294,15 @@
 	name = "mining display"
 	mode = 6
 
+TYPEINFO(/obj/machinery/ai_status_display)
+	mats = list("MET-1"=2, "CON-1"=6, "CRY-1"=6)
+
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "ai_frame"
 	name = "\improper AI display"
 	anchored = 1
 	density = 0
-	mats = list("MET-1"=2, "CON-1"=6, "CRY-1"=6)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 
 	machine_registry_idx = MACHINES_STATUSDISPLAYS

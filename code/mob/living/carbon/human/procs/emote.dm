@@ -1,8 +1,8 @@
 // emote
 
-
-
 /mob/living/carbon/human/emote(var/act, var/voluntary = 0, var/emoteTarget = null) //mbc : if voluntary is 2, it's a hotkeyed emote and that means that we can skip the findtext check. I am sorry, cleanup later
+	set waitfor = FALSE
+	..()
 	var/param = null
 
 	if (!bioHolder) bioHolder = new/datum/bioHolder( src )
@@ -26,10 +26,6 @@
 		var/datum/pathogen/P = src.pathogens[uid]
 		if (P.onemote(act, voluntary, param))
 			return
-
-	for (var/obj/item/implant/I in src.implant)
-		if (I.implanted)
-			I.trigger(act, src)
 
 	var/muzzled = (src.wear_mask && src.wear_mask.is_muzzle)
 	var/m_type = 1 //1 is visible, 2 is audible
@@ -116,9 +112,9 @@
 
 
 						if (iscluwne(src))
-							playsound(src, "sound/voice/farts/poo.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, 'sound/voice/farts/poo.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 						else if (src.organ_istype("butt", /obj/item/clothing/head/butt/cyberbutt))
-							playsound(src, "sound/voice/farts/poo2_robot.ogg", 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 						else if (src.reagents && src.reagents.has_reagent("honk_fart"))
 							playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
 						else
@@ -432,7 +428,7 @@
 			if ("custom")
 				if (src.client)
 					if (IS_TWITCH_CONTROLLED(src)) return
-					var/input = sanitize(html_encode(input("Choose an emote to display.")))
+					var/input = copytext(sanitize(html_encode(input("Choose an emote to display."))), 1, MAX_MESSAGE_LEN)
 					var/input2 = input("Is this a visible or audible emote?") in list("Visible","Audible")
 					if (input2 == "Visible") m_type = 1
 					else if (input2 == "Audible") m_type = 2
@@ -450,7 +446,7 @@
 					param = input("Choose an emote to display.")
 					if(!param) return
 
-				param = sanitize(html_encode(param))
+				param = copytext(sanitize(html_encode(param)), 1, MAX_MESSAGE_LEN)
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
 				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
@@ -462,7 +458,7 @@
 				if (!param)
 					param = input("Choose an emote to display.")
 					if(!param) return
-				param = sanitize(html_encode(param))
+				param = copytext(sanitize(html_encode(param)), 1, MAX_MESSAGE_LEN)
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
 				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
@@ -473,7 +469,7 @@
 				if (IS_TWITCH_CONTROLLED(src)) return
 				if (!param)
 					return
-				param = sanitize(html_encode(param))
+				param = copytext(sanitize(html_encode(param)), 1, MAX_MESSAGE_LEN)
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
 				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
@@ -619,7 +615,7 @@
 					SPAWN(1 SECOND)
 						src.wear_mask.set_loc(src.loc)
 						src.wear_mask = null
-						logTheThing("combat", src, null, "was gibbed by emoting uguu at [log_loc(src)].")
+						logTheThing(LOG_COMBAT, src, "was gibbed by emoting uguu at [log_loc(src)].")
 						src.gib()
 						return
 				else
@@ -637,7 +633,7 @@
 									thing = src.l_hand
 								else if (src.r_hand)
 									thing = src.r_hand
-							if (thing)
+							if (thing && !thing.cant_drop)
 								if (src.juggling())
 									if (prob(src.juggling.len * 5)) // might drop stuff while already juggling things
 										src.drop_juggle()
@@ -682,7 +678,7 @@
 						src.say ("M'lady")
 						SPAWN(1 SECOND)
 							src.add_karma(-10)
-							logTheThing("combat", src, null, "was gibbed by emoting fedora tipping at [log_loc(src)].")
+							logTheThing(LOG_COMBAT, src, "was gibbed by emoting fedora tipping at [log_loc(src)].")
 							src.gib()
 
 			if ("hatstomp", "stomphat")
@@ -1086,7 +1082,7 @@
 				for (var/obj/item/C as anything in src.get_equipped_items())
 					if ((locate(/obj/item/tool/omnitool/syndicate) in C) != null)
 						var/obj/item/tool/omnitool/syndicate/O = (locate(/obj/item/tool/omnitool/syndicate) in C)
-						var/drophand = (src.hand == 0 ? slot_r_hand : slot_l_hand)
+						var/drophand = (src.hand == RIGHT_HAND ? slot_r_hand : slot_l_hand)
 						drop_item()
 						O.set_loc(src)
 						equip_if_possible(O, drophand)
@@ -1361,7 +1357,7 @@
 						if (src.bioHolder.HasEffect("chime_snaps"))
 							src.sound_fingersnap = 'sound/musical_instruments/WeirdChime_5.ogg'
 							src.sound_snap = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
-						if (prob(5))
+						if (prob(5) && !istype(src.gloves, /obj/item/clothing/gloves/bladed))
 							message = "<font color=red><B>[src]</B> snaps [his_or_her(src)] fingers RIGHT OFF!</font>"
 							/*
 							if (src.bioHolder)
@@ -1379,6 +1375,11 @@
 								playsound(src.loc, 'sound/vox/deeoo.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 							else
 								playsound(src.loc, src.sound_fingersnap, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+							if(!ON_COOLDOWN(src, "blade_deploy", 1 SECOND))
+								if(istype(gloves, /obj/item/clothing/gloves/bladed))
+									var/obj/item/clothing/gloves/bladed/blades = src.gloves
+									blades.sheathe_blades_toggle(src)
+									src.update_clothing()
 
 			if ("airquote","airquotes")
 				if (param)
@@ -1490,7 +1491,7 @@
 				for (var/obj/item/C as anything in src.get_equipped_items())
 					if ((locate(/obj/item/gun/kinetic/derringer) in C) != null)
 						var/obj/item/gun/kinetic/derringer/D = (locate(/obj/item/gun/kinetic/derringer) in C)
-						var/drophand = (src.hand == 0 ? slot_r_hand : slot_l_hand)
+						var/drophand = (src.hand == RIGHT_HAND ? slot_r_hand : slot_l_hand)
 						drop_item()
 						D.set_loc(src)
 						equip_if_possible(D, drophand)
@@ -1518,7 +1519,7 @@
 					else
 						if (iswizard(src) && prob(10))
 							message = pick("<span class='alert'><B>[src]</B> breaks out the most unreal dance move you've ever seen!</span>", "<span class='alert'><B>[src]'s</B> dance move borders on the goddamn diabolical!</span>")
-							src.say("GHEIT DAUN!")
+							src.say("GHEIT DAUN!", FALSE, "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;", list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF", "#FF00FF"))
 							animate_flash_color_fill(src,"#5C0E80", 1, 10)
 							animate_levitate(src, 1, 10)
 							SPAWN(0) // some movement to make it look cooler
@@ -1689,7 +1690,7 @@
 								src.reagents.del_reagent("mutagen")
 								src.reagents.add_reagent("spiders", ant_amt + mut_amt)
 								boutput(src, "<span class='notice'>The ants arachnify.</span>")
-								playsound(src, "sound/effects/bubbles.ogg", 80, 1)
+								playsound(src, 'sound/effects/bubbles.ogg', 80, 1)
 
 			if ("flip")
 				if (src.emote_check(voluntary, 50))
@@ -1740,7 +1741,7 @@
 								animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 							//TACTICOOL FLOPOUT
 							if (src.traitHolder.hasTrait("matrixflopout") && src.stance != "dodge")
-								src.remove_stamina(STAMINA_FLIP_COST * 2.0)
+								src.remove_stamina(STAMINA_FLIP_COST * 2)
 								message = "<B>[src]</B> does a tactical flip!"
 								src.stance = "dodge"
 								SPAWN(0.2 SECONDS) //I'm sorry for my transgressions there's probably a way better way to do this
@@ -1822,7 +1823,7 @@
 											src.stamina_stun()
 										combatflipped |= M
 										message = "<span class='alert'><B>[src]</B> flips into [M]!</span>"
-										logTheThing("combat", src, M, "flips into [constructTarget(M,"combat")]")
+										logTheThing(LOG_COMBAT, src, "flips into [constructTarget(M,"combat")]")
 										src.changeStatus("weakened", 6 SECONDS)
 										src.TakeDamage("head", 4, 0, 0, DAMAGE_BLUNT)
 										M.changeStatus("weakened", 2 SECONDS)
@@ -1899,7 +1900,7 @@
 									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
 								else
 									message = "<B>[src]</B> pees in the toilet."
-								toilet.clogged += 0.10
+								toilet.clogged += 0.1
 								sims.affectMotive("Bladder", 100)
 								sims.affectMotive("Hygiene", -5)
 							else if(beaker)
@@ -1915,7 +1916,7 @@
 									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
 								else
 									message = "<B>[src]</B> pees in the toilet."
-								toilet.clogged += 0.10
+								toilet.clogged += 0.1
 								sims.affectMotive("Bladder", 100)
 								sims.affectMotive("Hygiene", -5)
 							else if(beaker)
@@ -1940,7 +1941,7 @@
 									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
 								else
 									message = "<B>[src]</B> pees in the toilet."
-								toilet.clogged += 0.10
+								toilet.clogged += 0.1
 								sims.affectMotive("Bladder", 100)
 								sims.affectMotive("Hygiene", -5)
 							else if(beaker)
@@ -1973,7 +1974,7 @@
 								for (var/obj/item/storage/toilet/T in src.loc)
 									message = pick("<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet.", "<B>[src]</B> empties [his_or_her(src)] bladder.", "<span class='notice'>Ahhh, sweet relief.</span>")
 									src.urine = 0
-									T.clogged += 0.10
+									T.clogged += 0.1
 									break
 							else
 								message = "<B>[src]</B> unzips [his_or_her(src)] pants but, try as [he_or_she(src)] might, [he_or_she(src)] can't pee in the toilet!"
@@ -2171,7 +2172,7 @@
 					// Act 2: Starring Firebarrage
 					else if(!src.reagents.has_reagent("puredabs"))
 						message = "<span class='alert'><B>[src]</B> dabs [his_or_her(src)] arms <B>RIGHT OFF</B>!!!!</span>"
-						playsound(src.loc,"sound/misc/deepfrieddabs.ogg",50,0, channel=VOLUME_CHANNEL_EMOTE)
+						playsound(src.loc, 'sound/misc/deepfrieddabs.ogg', 25,0, channel=VOLUME_CHANNEL_EMOTE)
 						shake_camera(src, 40, 8)
 						if(H)
 							if(H.limbs.l_arm)
@@ -2199,7 +2200,7 @@
 						src.limbs.l_leg?.sever()
 						message = "<span class='alert'>[src] does a sick dab on the bible!</span>"
 						src.visible_message("<span class='alert'>An unseen force smites [src]'s' limbs off</B>!</span>")
-						playsound(src.loc,"sound/misc/deepfrieddabs.ogg",50,0, channel=VOLUME_CHANNEL_EMOTE)
+						playsound(src.loc, 'sound/misc/deepfrieddabs.ogg', 25,0, channel=VOLUME_CHANNEL_EMOTE)
 				else
 					src.show_text("You don't know how to do that but you feel deeply ashamed for trying", "red")
 
@@ -2237,7 +2238,7 @@
 							I.bump_up(chat_text.measured_height)
 
 			if (message)
-				logTheThing("say", src, null, "EMOTE: [message]")
+				logTheThing(LOG_SAY, src, "EMOTE: [message]")
 				act = lowertext(act)
 				if (m_type & 1)
 					for (var/mob/O in viewers(src, null))
@@ -2254,7 +2255,7 @@
 	else
 
 		if (message)
-			logTheThing("say", src, null, "EMOTE: [message]")
+			logTheThing(LOG_SAY, src, "EMOTE: [message]")
 			act = lowertext(act)
 			if (m_type & 1)
 				for (var/mob/O in viewers(src, null))
@@ -2266,13 +2267,6 @@
 				var/atom/A = src.loc
 				for (var/mob/O in A.contents)
 					O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
-
-// I'm very sorry for this but it's to trick the linter into thinking emote doesn't sleep (since it usually doesn't)
-// you see from the important places it's called as emote("scream") etc. which doesn't actually sleep but for the linter to recognize
-// that would be difficult, datumize emotes 2day!
-#ifdef SPACEMAN_DMM
-/mob/living/carbon/human/emote(var/act, var/voluntary = 0, var/emoteTarget = null)
-#endif
 
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)
@@ -2361,7 +2355,7 @@
 
 	src.emote("scream")
 	. = "<span class='alert'><B>[src] suplexes [G.affecting][tabl ? " into [tabl]" : null]!</B></span>"
-	logTheThing("combat", src, G.affecting, "suplexes [constructTarget(G.affecting,"combat")][tabl ? " into \an [tabl]" : null] [log_loc(src)]")
+	logTheThing(LOG_COMBAT, src, "suplexes [constructTarget(G.affecting,"combat")][tabl ? " into \an [tabl]" : null] [log_loc(src)]")
 	G.affecting.lastattacker = src
 	G.affecting.lastattackertime = world.time
 	if (iswrestler(src))
@@ -2369,7 +2363,7 @@
 		G.affecting.force_laydown_standup()
 		G.affecting.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
 		src.changeStatus("weakened", 1.5 SECONDS)
-		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 	else
 		src.changeStatus("weakened", 3.9 SECONDS)
 
@@ -2382,7 +2376,7 @@
 			qdel(G)
 
 		G.affecting.TakeDamage("head", 9, 0, 0, DAMAGE_BLUNT)
-		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 	if (istype(tabl, /obj/table/glass))
 		var/obj/table/glass/g_tabl = tabl
 		if (!g_tabl.glass_broken)
@@ -2404,25 +2398,19 @@
 /mob/living/proc/get_targets(range = 1, kind_of_target = "mob")
 	if(!isturf(get_turf(src))) return
 
-	var/list/atom/movable/everything_around = list()
-
-	for(var/atom/movable/AM in view(range, get_turf(src)))
-		if(AM == src)
-			continue
-		everything_around |= AM
-
+	var/list/targets = list()
 	switch(kind_of_target)
 		if("both")
-			return everything_around
+			for(var/atom/movable/AM in view(range, get_turf(src)))
+				if(AM == src)
+					continue
+				targets += AM
 		if("mob")
-			. = list()
-			for(var/mob/M in everything_around)
-				if(M == src)
+			for(var/mob/M in view(range, get_turf(src)))
+				if(M == src || isintangible(M) || isobserver(M))
 					continue
-				. |= M
+				targets += M
 		if("obj")
-			. = list()
-			for(var/obj/O in everything_around)
-				if(O == src)
-					continue
-				. |= O
+			for(var/obj/O in view(range, get_turf(src)))
+				targets += O
+	return targets

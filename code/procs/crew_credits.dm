@@ -5,11 +5,11 @@ var/global/crew_creds = null
 	windowSize = "500x500"
 	GetBody()
 		if(crew_creds)
-			logTheThing("debug", null, null, "Zamujasa/CREWCREDITS: [world.timeofday] returning already-generated crew credits")
+			logTheThing(LOG_DEBUG, null, "Zamujasa/CREWCREDITS: [world.timeofday] returning already-generated crew credits")
 
 			return crew_creds
 
-		logTheThing("debug", null, null, "Zamujasa/CREWCREDITS: [world.timeofday] starting crew credits generation")
+		logTheThing(LOG_DEBUG, null, "Zamujasa/CREWCREDITS: [world.timeofday] starting crew credits generation")
 
 		var/list/datum/mind/round_antags = list()
 		var/list/datum/mind/round_captains = list()
@@ -20,11 +20,11 @@ var/global/crew_creds = null
 		var/list/datum/mind/round_civilian = list()
 		var/list/datum/mind/round_other = list()
 
-		logTheThing("debug", null, null, "Zamujasa/CREWCREDITS: [world.timeofday] processing all minds...")
+		logTheThing(LOG_DEBUG, null, "Zamujasa/CREWCREDITS: [world.timeofday] processing all minds...")
 		for(var/datum/mind/M in ticker.minds)
 
 			// Antagonist?
-			if(M.special_role && !("Faustian" in M.special_role))
+			if(M.special_role)
 				round_antags.Add(M)
 				continue
 			if(!M.assigned_role)
@@ -59,7 +59,7 @@ var/global/crew_creds = null
 					#endif
 
 				// Engineering?
-				if("Chief Engineer","Engineer","Quartermaster","Miner","Mechanic","Construction Worker")
+				if("Chief Engineer","Engineer","Quartermaster","Miner","Construction Worker")
 					round_engineering.Add(M)
 					continue
 
@@ -71,9 +71,9 @@ var/global/crew_creds = null
 				else // IDK who the fuck you are so just go here
 					round_other.Add(M)
 
-		logTheThing("debug", null, null, "Zamujasa/CREWCREDITS: [world.timeofday] done processing minds. info: A [round_antags.len] C [round_captains.len] S [round_security.len] M [round_medical.len] R [round_science.len] E [round_engineering.len] Cv [round_civilian.len] X [round_other.len]")
+		logTheThing(LOG_DEBUG, null, "Zamujasa/CREWCREDITS: [world.timeofday] done processing minds. info: A [round_antags.len] C [round_captains.len] S [round_security.len] M [round_medical.len] R [round_science.len] E [round_engineering.len] Cv [round_civilian.len] X [round_other.len]")
 
-		logTheThing("debug", null, null, "Zamujasa/CREWCREDITS: [world.timeofday] generating crew list")
+		logTheThing(LOG_DEBUG, null, "Zamujasa/CREWCREDITS: [world.timeofday] generating crew list")
 
 
 		crew_creds = {"<B>Round Credits</B><BR>"}
@@ -88,7 +88,7 @@ var/global/crew_creds = null
 				crew_creds += "[M.current.real_name][isdead(M.current) ? " \[["<span class='alert'>DEAD</span>"]\] " : ""] (played by [M.displayed_key]) as \an [M.special_role]<BR>"
 			crew_creds += "<HR>"
 
-		logTheThing("debug", null, null, "Zamujasa/CREWCREDITS: [world.timeofday] done antags")
+		logTheThing(LOG_DEBUG, null, "Zamujasa/CREWCREDITS: [world.timeofday] done antags")
 
 		// Captain
 		if(round_captains.len > 0)
@@ -100,7 +100,7 @@ var/global/crew_creds = null
 			//crew_creds += "<img style=\"-ms-interpolation-mode:nearest-neighbor;\" src=captain_photo.png>"
 			crew_creds += "<HR>"
 
-		logTheThing("debug", null, null, "Zamujasa/CREWCREDITS: [world.timeofday] done captains")
+		logTheThing(LOG_DEBUG, null, "Zamujasa/CREWCREDITS: [world.timeofday] done captains")
 
 		// Security Department
 		if(round_security.len > 0)
@@ -116,7 +116,7 @@ var/global/crew_creds = null
 				crew_creds += "[M.current.real_name][isdead(M.current) ? " \[["<span class='alert'>DEAD</span>"]\] " : ""] (played by [M.displayed_key]) as [M.assigned_role]<BR>"
 			crew_creds += "<HR>"
 
-		logTheThing("debug", null, null, "Zamujasa/CREWCREDITS: [world.timeofday] done security")
+		logTheThing(LOG_DEBUG, null, "Zamujasa/CREWCREDITS: [world.timeofday] done security")
 
 		// Medical Department
 		if(round_medical.len > 0)
@@ -132,7 +132,7 @@ var/global/crew_creds = null
 				crew_creds += "[M.current.real_name][isdead(M.current) ? " \[["<span class='alert'>DEAD</span>"]\] " : ""] (played by [M.displayed_key]) as [M.assigned_role]<BR>"
 			crew_creds += "<HR>"
 
-		logTheThing("debug", null, null, "Zamujasa/CREWCREDITS: [world.timeofday] done medical")
+		logTheThing(LOG_DEBUG, null, "Zamujasa/CREWCREDITS: [world.timeofday] done medical")
 
 		// Science Department
 		if(round_science.len > 0)
@@ -148,7 +148,7 @@ var/global/crew_creds = null
 				crew_creds += "[M.current.real_name][isdead(M.current) ? " \[["<span class='alert'>DEAD</span>"]\] " : ""] (played by [M.displayed_key]) as [M.assigned_role]<BR>"
 			crew_creds += "<HR>"
 
-		logTheThing("debug", null, null, "Zamujasa/CREWCREDITS: [world.timeofday] done science")
+		logTheThing(LOG_DEBUG, null, "Zamujasa/CREWCREDITS: [world.timeofday] done science")
 
 
 		// Engineering Department
@@ -165,7 +165,7 @@ var/global/crew_creds = null
 				crew_creds += "[M.current.real_name][isdead(M.current) ? " \[["<span class='alert'>DEAD</span>"]\] " : ""] (played by [M.displayed_key]) as [M.assigned_role]<BR>"
 			crew_creds += "<HR>"
 
-		logTheThing("debug", null, null, "Zamujasa/CREWCREDITS: [world.timeofday] done engineering")
+		logTheThing(LOG_DEBUG, null, "Zamujasa/CREWCREDITS: [world.timeofday] done engineering")
 
 
 		// Civilian Department
@@ -182,7 +182,7 @@ var/global/crew_creds = null
 				crew_creds += "[M.current.real_name][isdead(M.current) ? " \[["<span class='alert'>DEAD</span>"]\] " : ""] (played by [M.displayed_key]) as [M.assigned_role]<BR>"
 			crew_creds += "<HR>"
 
-		logTheThing("debug", null, null, "Zamujasa/CREWCREDITS: [world.timeofday] done civilian")
+		logTheThing(LOG_DEBUG, null, "Zamujasa/CREWCREDITS: [world.timeofday] done civilian")
 
 		// Weirdoes
 		if(round_other.len > 0)
@@ -192,7 +192,7 @@ var/global/crew_creds = null
 				crew_creds += "[M.current.real_name][isdead(M.current) ? " \[["<span class='alert'>DEAD</span>"]\] " : ""] (played by [M.displayed_key]) as [M.assigned_role]<BR>"
 			crew_creds += "<HR>"
 
-		logTheThing("debug", null, null, "Zamujasa/CREWCREDITS: [world.timeofday] done other - all finished")
+		logTheThing(LOG_DEBUG, null, "Zamujasa/CREWCREDITS: [world.timeofday] done other - all finished")
 		return crew_creds
 
 proc/generate_crew_photo(var/background_icon, var/background_icon_state, var/list/datum/mind/chars, var/photo_name)

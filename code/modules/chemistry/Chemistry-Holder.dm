@@ -387,6 +387,7 @@ datum
 
 			var/mult_per_reagent = 1
 			for (var/current_id in reagent_list)
+				if(QDELETED(src)) return
 				var/datum/reagent/current_reagent = reagent_list[current_id]
 				if (current_reagent)
 					mult_per_reagent = min(multiplier,current_reagent.how_many_depletions(target)) //limit the multiplier by how many depletions we have left
@@ -443,7 +444,7 @@ datum
 								var/datum/reagent/current_reagent = reagent_list[B]
 								amount = current_reagent.volume
 						catch (var/e)
-							logTheThing("debug", usr, null, "CRASH: reagent holder / handle_reactions: [C.name] reaction, reagent checked: '[B]', required = '[B_required_volume]', reagents in thing: [log_reagents(my_atom)].")
+							logTheThing(LOG_DEBUG, usr, "CRASH: reagent holder / handle_reactions: [C.name] reaction, reagent checked: '[B]', required = '[B_required_volume]', reagents in thing: [log_reagents(my_atom)].")
 							CRASH("reagent holder / handle_reactions: tried to get reagent list '[B]' from '[reagent_list]' / [e]")
 						//end my copy+paste
 
@@ -472,11 +473,11 @@ datum
 
 							// Ideally, we'd like to know the contents of chemical smoke and foam (Convair880).
 							if (C.special_log_handling)
-								logTheThing("combat", usr, null, "[C.name] chemical reaction [log_reagents(my_atom)] at [T ? "[log_loc(T)]" : "null"].")
+								logTheThing(LOG_CHEMISTRY, usr, "[C.name] chemical reaction [log_reagents(my_atom)] at [T ? "[log_loc(T)]" : "null"].")
 								if(istype(src.my_atom, /obj/item/reagent_containers) && !locate(/obj/machinery/chem_dispenser) in get_turf(src.my_atom))
 									message_admins("[key_name(usr)] caused a [C.name] reaction [log_reagents(my_atom)] at [T ? "[log_loc(T)]" : "null"].")
 							else
-								logTheThing("combat", usr, null, "[C.name] chemical reaction at [T ? "[log_loc(T)]" : "null"].")
+								logTheThing(LOG_CHEMISTRY, usr, "[C.name] chemical reaction at [T ? "[log_loc(T)]" : "null"].")
 
 						if (C.instant)
 							//MBC : Cache covered turfs right before the reagents are deleted.
@@ -564,9 +565,10 @@ datum
 					del_reagent(current_id)
 					update_total()
 
-		/// deletes a reagent from a container
-		/// the first argument is the reagent id
-		/// the second whether or not the total volume of the container should update, which may be undesirable in the update_total proc
+		/**	Deletes a reagent from a container.
+			The first argument is the reagent id, the second whether or not the total volume of the container should update,
+			which may be undesirable in the update_total proc.
+			*/
 		proc/del_reagent(var/reagent, var/update_total = TRUE)
 			if(src.disposed)
 				CRASH("Attempting to delete [reagent] from disposed /datum/reagents.")
@@ -590,8 +592,6 @@ datum
 					qdel(current_reagent)
 
 					return 0
-
-			src.handle_reactions() // trigger inhibited reactions
 
 			return 1
 
@@ -625,6 +625,8 @@ datum
 																				//	paramslist thingy can override the can_burn oh god im sorry		paramslist only used for mobs for now, feeel free to paste in for turfs objs
 		proc/reaction(var/atom/A, var/method=TOUCH, var/react_volume, var/can_spawn_fluid = 1, var/minimum_react = 0.01, var/can_burn = 1, var/list/paramslist = 0)
 			if (src.total_volume <= 0)
+				return
+			if (isintangible(A))
 				return
 			if (isobserver(A)) // errrr
 				return
@@ -681,7 +683,7 @@ datum
 						//mbc : I put in a check to stop extremely distilled things in fluids from reacting
 						if(current_reagent != null && current_reagent.volume > minimum_react) // Don't put spawn(0) in the below three lines it breaks foam! - IM
 							if(ismob(A) && !isobserver(A))
-								if (!current_reagent.reaction_mob(A, TOUCH, current_reagent.volume*volume_fraction, paramslist))
+								if (!current_reagent.reaction_mob_chemprot_layer(A, TOUCH, current_reagent.volume*volume_fraction, paramslist))
 									.+= current_id
 							if(isturf(A))
 								if (!current_reagent.reaction_turf(A, current_reagent.volume*volume_fraction))
@@ -909,7 +911,6 @@ datum
 
 			else
 				. += "<span class='notice'>Nothing in it.</span>"
-			return
 
 
 		proc/get_exact_description(mob/user)
@@ -994,7 +995,7 @@ datum
 
 				// weigh contribution of each reagent to the average color by amount present and it's transparency
 
-				var/weight = current_reagent.volume * current_reagent.transparency / 255.0
+				var/weight = current_reagent.volume * current_reagent.transparency / 255
 				total_weight += weight
 
 				average.r += weight * current_reagent.fluid_r
@@ -1050,6 +1051,31 @@ datum
 			. = list()
 			for (var/i in 1 to num_val)
 				.[result_name[i]] = result_amount[i]
+
+		/// Gets a string of what something tastes like (as shown to the drinker/eater/whatever)
+		proc/get_taste_string(mob/taster)
+			if (iscarbon(taster) || ismobcritter(taster))
+				if (taster.mind && taster.mind.assigned_role == "Bartender")
+					var/reag_list = ""
+					for (var/current_id in src.reagent_list)
+						var/datum/reagent/current_reagent = src.reagent_list[current_id]
+						if (src.reagent_list.len > 1 && src.reagent_list[src.reagent_list.len] == current_id)
+							reag_list += " and [current_reagent.name]"
+							continue
+						reag_list += ", [current_reagent.name]"
+					reag_list = copytext(reag_list, 3)
+					. = "Tastes like there might be some [reag_list] in this."
+				else
+					var/tastes = src.get_prevalent_tastes(3)
+					switch (length(tastes))
+						if (0)
+							. = "Tastes pretty bland."
+						if (1)
+							. = "Tastes kind of [tastes[1]]."
+						if (2)
+							. = "Tastes kind of [tastes[1]] and [tastes[2]]."
+						else
+							. = "Tastes kind of [tastes[1]], [tastes[2]], and a little bit [tastes[3]]."
 
 		//returns whether reagents are solid, liquid, gas, or mixture
 		proc/get_state_description()
@@ -1124,11 +1150,11 @@ datum
 
 			//DEBUG_MESSAGE("Heat-triggered smoke powder reaction: our user is [our_user ? "[our_user]" : "*null*"].[our_fingerprints ? " Fingerprints: [our_fingerprints]" : ""]")
 			if (our_user && ismob(our_user))
-				logTheThing("combat", our_user, null, "Smoke reaction ([my_atom ? log_reagents(my_atom) : log_reagents(src)]) at [T ? "[log_loc(T)]" : "null"].")
+				logTheThing(LOG_CHEMISTRY, our_user, "Smoke reaction ([my_atom ? log_reagents(my_atom) : log_reagents(src)]) at [T ? "[log_loc(T)]" : "null"].")
 				if(istype(src.my_atom, /obj/item/reagent_containers) && !locate(/obj/machinery/chem_dispenser) in get_turf(src.my_atom))
 					message_admins("[key_name(our_user)] caused a smoke reaction [my_atom ? log_reagents(my_atom) : log_reagents(src)] at [T ? "[log_loc(T)]" : "null"].")
 			else
-				logTheThing("combat", our_user, null, "Smoke reaction ([my_atom ? log_reagents(my_atom) : log_reagents(src)]) at [T ? "[log_loc(T)]" : "null"].[our_fingerprints ? " Container last touched by: [our_fingerprints]." : ""]")
+				logTheThing(LOG_CHEMISTRY, our_user, "Smoke reaction ([my_atom ? log_reagents(my_atom) : log_reagents(src)]) at [T ? "[log_loc(T)]" : "null"].[our_fingerprints ? " Container last touched by: [our_fingerprints]." : ""]")
 				if(our_fingerprints && istype(src.my_atom, /obj/item/reagent_containers) && !locate(/obj/machinery/chem_dispenser) in get_turf(src.my_atom))
 					message_admins("Smoke reaction [my_atom ? log_reagents(my_atom) : log_reagents(src)] at [T ? "[log_loc(T)]" : "null"]. Container last touched by: [key_name(our_fingerprints)].")
 

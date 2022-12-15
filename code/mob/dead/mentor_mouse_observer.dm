@@ -84,9 +84,9 @@
 			return
 
 		if(src.is_admin)
-			logTheThing("diary", src, null, "(ADMINMOUSE): [message]", "say")
+			logTheThing(LOG_DIARY, src, "(ADMINMOUSE): [message]", "say")
 		else
-			logTheThing("diary", src, null, "(MENTORMOUSE): [message]", "say")
+			logTheThing(LOG_DIARY, src, "(MENTORMOUSE): [message]", "say")
 
 		if (src.client && src.client.ismuted())
 			boutput(src, "You are currently muted and may not speak.")
@@ -118,6 +118,7 @@
 		boutput(src.the_guy, rendered)
 
 	emote(act, voluntary=0)
+		..()
 		src.my_mouse.emote(act, voluntary)
 
 	stop_observing()

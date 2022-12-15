@@ -37,12 +37,12 @@ to translate concepts between old and new tgui, read this
 
 You will need these programs to start developing in tgui:
 
-- [Node v12.18.3+](https://nodejs.org/en/download/)
+- [Node v16.13+](https://nodejs.org/en/download/)
+  - **LTS** release is recommended instead of latest
+  - **DO NOT install Chocolatey if Node installer asks you to!**
 - [Yarn v2.2.1+](https://yarnpkg.com/getting-started/install) (optional)
 - [Git Bash](https://git-scm.com/downloads)
   or [MSys2](https://www.msys2.org/) (optional)
-
-**DO NOT install Chocolatey if Node installer asks you to!**
 
 ## Usage
 
@@ -50,7 +50,7 @@ You will need these programs to start developing in tgui:
 
 Change your directory to `tgui`.
 
-Run `bin/tgui --install-git-hooks` to install merge drivers which will
+Run `/tools/hooks/install.bat` to install merge drivers which will
 assist you in conflict resolution when rebasing your branches. Only has
 to be done once.
 
@@ -173,12 +173,13 @@ together, and can reveal certain layout bugs which are not normally visible.
 ## Browser Developer Tools
 
 To debug TGUI interfaces with browser-style developer tools, there exists a utility
-that Microsoft bundles with Windows to debug any Internet Explorer/Trident-using interface,
+that Microsoft bundles with Windows called IEChooser/F12 to debug any Internet Explorer/Trident-using interface,
 which BYOND uses.
 
 This provides invaluable tools such as a local console, a DOM viewer, an interactive debugger, and more.
 
-The 64-bit version that we use is located at `%windir%\SysWOW64\F12\IEChooser.exe`.
+You can access the `IEChooser.exe` by pressing <kbd>Win + R</kbd>, then typing `f12`, then pressing enter.
+To manually go there: 64-bit version that we use is located at `%windir%\SysWOW64\F12\IEChooser.exe`.
 There's also a 32-bit one in `system32\`.
 
 Simply launch the application after you've opened a TGUI window, and choose the .html name.
@@ -205,6 +206,7 @@ pull and render.
 window elements, like the titlebar, buttons, resize handlers. Calls
 `routes.js` to decide which component to render.
 - `/packages/tgui/styles/main.scss` - CSS entry point.
+**Important:** If you want to add a .scss file for an interface, you must import it here!
 - `/packages/tgui/styles/functions.scss` - Useful SASS functions.
 Stuff like `lighten`, `darken`, `luminance` are defined here.
 - `/packages/tgui/styles/atomic` - Atomic CSS classes.
@@ -225,7 +227,9 @@ See: [Component Reference](docs/component-reference.md).
 
 ## FontAwesome Icon
 
-For a list of all the icons you can use, see the [FontAwesome website](https://fontawesome.com/v5/search?m=free&s=regular%2Csolid)
+For a list of all the icons you can use, see the [FontAwesome website](https://fontawesome.com/v6/search?o=r&m=free&s=solid%2Cregular)
+
+For additional font styles you can use, see the [FontAwesome Docs](https://fontawesome.com/v6/docs/web/style/style-cheatsheet#contentHeader)
 
 ## License
 

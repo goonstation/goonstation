@@ -810,9 +810,9 @@ Returns:
 
 	handleCast(var/atom/selected)
 		var/mob/M = usr
-		var/dur = (get_dist(selected, M)*5)
+		var/dur = (GET_DIST(selected, M)*5)
 		var/ease = pick(LINEAR_EASING,SINE_EASING,CIRCULAR_EASING,QUAD_EASING,CUBIC_EASING,BOUNCE_EASING,ELASTIC_EASING,BACK_EASING)
-		boutput(world, "dur [dur] , ease : [ease] , dist : [get_dist(selected, M)] , selected : [selected]")
+		boutput(world, "dur [dur] , ease : [ease] , dist : [GET_DIST(selected, M)] , selected : [selected]")
 		cinLookAt(M, selected, dur, ease, 1, 1, 1)
 		sleep(dur+3)
 		cinShake(M,20,0.5,0,32,ease,1,1,1)
@@ -1055,7 +1055,7 @@ Returns:
 					last = get_turf(over_object)
 					beam.set_loc(get_turf(src))
 					animate(beam, transform=beam.transform, time=1)//, flags=ANIMATION_LINEAR_TRANSFORM)
-					animate(transform=getLineMatrix(get_turf(src),get_turf(over_object)), time= max(7-get_dist(get_turf(src),get_turf(over_object)), 2))
+					animate(transform=getLineMatrix(get_turf(src),get_turf(over_object)), time= max(7-GET_DIST(get_turf(src),get_turf(over_object)), 2))
 		return
 
 	onMouseDown(atom/target,location,control,params)
@@ -1189,7 +1189,7 @@ Returns:
 		for(var/mob/O in AIviewers(owner))
 			if(!seen.Find(O))
 				var/canSee = 0
-				switch(get_dist(O, user))
+				switch(GET_DIST(O, user))
 					if(0 to 1)
 						if(O.dir == turn(user.dir, 180)) //Only visible if looking directly at them in close range.
 							canSee = 1
@@ -1255,7 +1255,7 @@ Returns:
 			if((ismob(A) || A.density || istype(A, /obj/critter)) && !istype(A, /obj/table))
 				force = stabbyness
 
-				if(ismob(A) && get_dist(A, user) == 1 && (A.dir == user.dir || A:lying)) //It's a person and they are facing away from us. Bonus damage.
+				if(ismob(A) && GET_DIST(A, user) == 1 && (A.dir == user.dir || A:lying)) //It's a person and they are facing away from us. Bonus damage.
 					force = round(stabbyness * 2)
 					bloody = 1
 
@@ -1520,7 +1520,7 @@ Returns:
 		var/partgreen = GetGreenPart(src.color) / 255
 		var/partblue  = GetBluePart(src.color) / 255
 
-		var/color_new = list(partred*2.5,0.30,0.30, 0.30,partgreen*2.5,0.30, 0.30,0.30,partblue*2.5, 0,0,0)
+		var/color_new = list(partred*2.5,0.30,0.30, 0.30,partgreen*2.5,0.30, 0.30,0.3,partblue*2.5, 0,0,0)
 		var/atom/effectLoc = null
 		var/obj/meleeeffect/M
 		switch(direction)
@@ -1560,11 +1560,11 @@ Returns:
 	New()
 		..()
 		setMaterial(getMaterial("slag"))
+		AddComponent(/datum/component/radioactive,20,FALSE,FALSE)
 		name = "Statue of Dr.Floorpills"
 
 	attack_hand(mob/user)
-		boutput(user, "[src] feels oddly warm ...")
-		user.changeStatus("radiation", 5 SECONDS)
+		boutput(user, "[src] feels oddly warm...")
 		return
 
 	attackby(obj/item/W, mob/user)
@@ -2215,7 +2215,7 @@ Returns:
 	w_class = W_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 10
-	force = 5.0
+	force = 5
 	flags = FPRINT | TABLEPASS | CONDUCT
 	var/state = 0
 	var/yo = null
@@ -2296,7 +2296,7 @@ Returns:
 		var/turf/fire_target_tile = get_step(get_step(get_step(get_step(src, src.dir), src.dir), direction), direction)
 
 		SPAWN(1 DECI SECOND)
-			playsound(src, "sound/weapons/rocket.ogg", 50, 1)
+			playsound(src, 'sound/weapons/rocket.ogg', 50, 1)
 
 			var/obj/item/rpg_rocket/R = new
 
@@ -2606,34 +2606,34 @@ Returns:
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		icon_state = "boomerang"
-		var/mob/user = thr.user
-		if(hit_atom == user)
-			if(prob(prob_clonk))
-				user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
-				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
-				user.changeStatus("stunned", 5 SECONDS)
-				user.changeStatus("weakened", 3 SECONDS)
-				user.changeStatus("paralysis", 2 SECONDS)
-				user.force_laydown_standup()
+		if(ishuman(thr.user))
+			var/mob/living/carbon/human/user = thr.user
+			if(hit_atom == user)
+				if(prob(prob_clonk))
+					user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
+					playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
+					user.changeStatus("stunned", 5 SECONDS)
+					user.changeStatus("weakened", 3 SECONDS)
+					user.changeStatus("paralysis", 2 SECONDS)
+					user.force_laydown_standup()
+				else
+					src.Attackhand(user)
+				return
 			else
-				src.Attackhand(user)
-			return
-		else
-			if(ishuman(hit_atom))
-				var/mob/living/carbon/human/H = hit_atom
-				var/safari = (istype(H.w_uniform, /obj/item/clothing/under/gimmick/safari) && istype(H.head, /obj/item/clothing/head/safari))
-				if(safari)
-					H.changeStatus("stunned", 4 SECONDS)
-					H.changeStatus("weakened", 2 SECONDS)
-					H.force_laydown_standup()
-					//H.paralysis++
-					playsound(H.loc, "swing_hit", 50, 1)
+				if(ishuman(hit_atom))
+					var/mob/living/carbon/human/H = hit_atom
+					if(istype(user?.w_uniform, /obj/item/clothing/under/gimmick/safari) && istype(user?.head, /obj/item/clothing/head/safari))
+						H.changeStatus("stunned", 4 SECONDS)
+						H.changeStatus("weakened", 2 SECONDS)
+						H.force_laydown_standup()
+						//H.paralysis++
+						playsound(H.loc, "swing_hit", 50, 1)
 
-				prob_clonk = min(prob_clonk + 5, 40)
-				SPAWN(2 SECONDS)
-					prob_clonk = max(prob_clonk - 5, 0)
+					prob_clonk = min(prob_clonk + 5, 40)
+					SPAWN(2 SECONDS)
+						prob_clonk = max(prob_clonk - 5, 0)
 
-		return ..(hit_atom)
+			return ..(hit_atom)
 
 /proc/mod_color(var/atom/A)
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
@@ -2685,8 +2685,8 @@ Returns:
 			P.setTarget(target)
 			var/targetThing = isturf(target) ? "" : "[target] in "
 			targetThing += "[get_area(target)]"
-			logTheThing("admin", usr, null, "created a portal at [log_loc(selected)] ([get_area(selected)]) pointing to [log_loc(target)] ([targetThing])")
-			logTheThing("diary", usr, null, "created a portal at [selected.x], [selected.y], [selected.z] ([get_area(selected)]) pointing to [target.x], [target.y], [target.z] ([targetThing])", "admin")
+			logTheThing(LOG_ADMIN, usr, "created a portal at [log_loc(selected)] ([get_area(selected)]) pointing to [log_loc(target)] ([targetThing])")
+			logTheThing(LOG_DIARY, usr, "created a portal at [selected.x], [selected.y], [selected.z] ([get_area(selected)]) pointing to [target.x], [target.y], [target.z] ([targetThing])", "admin")
 			message_admins("[key_name(usr)] created a portal at [log_loc(selected)] ([get_area(selected)]) pointing to [log_loc(target)] ([targetThing])")
 		else if (alert == "No")
 			var/mob/M = usr
@@ -2766,7 +2766,7 @@ Returns:
 	Bumped(atom/movable/AM)
 		if(target && istype(target))
 			if(ismob(AM))
-				logTheThing("combat", AM, null, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)]")
+				logTheThing(LOG_STATION, AM, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)]")
 			AM.set_loc(target)
 		else
 			src.visible_message("<span style='color: red; font-weight: bold'>The portal collapses in on itself!</span>")
@@ -2809,7 +2809,7 @@ Returns:
 				M.nutrition += src.heal_amt * 10
 				M.poo += 1
 				src.heal(M)
-				playsound(M.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
+				playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 				boutput(user, "<span class='alert'>You eat the raisin and shed a single tear as you realise that you now have no raisin.</span>")
 				qdel(src)
 				return 1
@@ -2823,7 +2823,7 @@ Returns:
 				M.nutrition += src.heal_amt * 10
 				M.poo += 1
 				src.heal(M)
-				playsound(M.loc, "sound/items/eatfood.ogg", rand(10,50), 1)
+				playsound(M.loc, 'sound/items/eatfood.ogg', rand(10,50), 1)
 				boutput(user, "<span class='alert'>[M] eats the raisin.</span>")
 				qdel(src)
 				return 1
@@ -2847,13 +2847,13 @@ var/list/lag_list = new/list()
 	if(lag_list.len >= lag_average_size) average_tenth = (tempnum / lag_list.len)
 
 	switch( ((average_tenth * world.cpu) / 100) )
-		if(0 to 0.100)
+		if(0 to 0.1)
 			lag_string = "Minimal"
-		if(0.101 to 0.180)
+		if(0.101 to 0.18)
 			lag_string = "Normal"
-		if(0.181 to 0.350)
+		if(0.181 to 0.35)
 			lag_string = "High"
-		if(0.351 to 0.500)
+		if(0.351 to 0.5)
 			lag_string = "Very High"
 		if(0.501 to INFINITY)
 			lag_string = "Oh Sh*t"
@@ -2868,7 +2868,7 @@ var/list/lag_list = new/list()
 	boutput(usr, "<span class='success'>[average_tenth] at [lag_list.len] samples.</span>")
 
 
-/obj/spook
+/obj/item/spook
 	var/active = 0
 	invisibility = INVIS_ALWAYS_ISH
 	anchored = 1
@@ -2881,21 +2881,20 @@ var/list/lag_list = new/list()
 
 	New()
 		startloc = get_turf(src)
-		loop()
-		return ..()
+		processing_items.Add(src)
+		. = ..()
 
-	proc/loop()
+	disposing()
+		processing_items.Remove(src)
+		. = ..()
 
-		if(active)
-			SPAWN(3 SECONDS) loop()
-			return
-
-
-		for(var/mob/living/L in hearers(world.view, src))
-			if(prob(20)) spook(L)
-			break
-
-		SPAWN(2 SECONDS) loop()
+	process()
+		if(!active)
+			for(var/mob/living/L in hearers(world.view, src))
+				if(prob(20))
+					SPAWN(0)
+						spook(L)
+				break
 
 	proc/spook(var/mob/living/L)
 		if (narrator_mode)
@@ -2911,8 +2910,8 @@ var/list/lag_list = new/list()
 		src.invisibility = INVIS_ALWAYS_ISH
 		src.set_loc(startloc)
 		walk(src,0)
-		SPAWN(10 SECONDS) active = 0
-
+		SPAWN(10 SECONDS)
+			active = 0
 
 /datum/engibox_mode
 	var/name = ""
@@ -3064,8 +3063,8 @@ var/list/lag_list = new/list()
 	desc = "Places a Conveyor belt - facing the direction you are facing."
 	used(atom/user, atom/target)
 		var/obj/machinery/conveyor/L = new/obj/machinery/conveyor(get_turf(target))
-		L.set_dir(user:dir)
-		L.basedir = L.dir
+		L.dir_in = user.dir
+		L.dir_out = turn(user.dir, 180)
 		return
 
 /datum/engibox_mode/poddoor
@@ -3163,7 +3162,7 @@ var/list/lag_list = new/list()
 	name = "Toggle opacity"
 	desc = "Toggles the opacity of an object."
 	used(atom/user, atom/target)
-		target.opacity = !target.opacity
+		target.set_opacity(!target.opacity)
 		boutput(usr, "<span class='notice'>Target opacity now: [target.opacity]</span>")
 		return
 

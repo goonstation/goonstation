@@ -4,7 +4,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "itemspawn"
 	density = 0
-	anchored = 1.0
+	anchored = 1
 	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/amt2spawn = 0
@@ -20,14 +20,15 @@
 		..()
 		SPAWN(1 DECI SECOND)
 			src.spawn_items()
-			sleep(10 SECONDS)
+			sleep(5 SECONDS) // ZEWAKA/INIT
 			qdel(src)
 
 	proc/spawn_items()
+		SHOULD_NOT_SLEEP(TRUE)
 		if (islist(src.guaranteed) && length(src.guaranteed))
 			for (var/obj/new_item in src.guaranteed)
 				if (!ispath(new_item))
-					logTheThing("debug", src, null, "has a non-path item in its guaranteed list, [new_item]")
+					logTheThing(LOG_DEBUG, src, "has a non-path item in its guaranteed list, [new_item]")
 					DEBUG_MESSAGE("[src] has a non-path item in its guaranteed list, [new_item]")
 					continue
 				var/amt = 1
@@ -37,11 +38,11 @@
 					closet_check_spawn(new_item)
 
 		if (!islist(src.items2spawn) || !length(src.items2spawn))
-			logTheThing("debug", src, null, "has an invalid items2spawn list")
+			logTheThing(LOG_DEBUG, src, "has an invalid items2spawn list")
 			return
 		if (rare_chance)
 			if (!islist(src.rare_items2spawn) || !length(src.rare_items2spawn))
-				logTheThing("debug", src, null, "has an invalid rare_items2spawn list")
+				logTheThing(LOG_DEBUG, src, "has an invalid rare_items2spawn list")
 				return
 		if (amt2spawn == 0)
 			amt2spawn = rand(min_amt2spawn, max_amt2spawn)
@@ -54,14 +55,14 @@
 				if (rare_items2spawn)
 					item_list = rare_items2spawn
 				else
-					logTheThing("debug", src, null, "has an invalid rare spawn list, [rare_items2spawn]")
+					logTheThing(LOG_DEBUG, src, "has an invalid rare spawn list, [rare_items2spawn]")
 					DEBUG_MESSAGE("[src] has an invalid rare spawn list, [rare_items2spawn]")
 					continue
 			else
 				item_list = items2spawn
 			var/obj/new_item = pick(item_list)
 			if (!ispath(new_item))
-				logTheThing("debug", src, null, "has a non-path item in its spawn list, [new_item]")
+				logTheThing(LOG_DEBUG, src, "has a non-path item in its spawn list, [new_item]")
 				DEBUG_MESSAGE("[src] has a non-path item in its spawn list, [new_item]")
 				continue
 
@@ -840,6 +841,7 @@
 	/obj/item/storage/toolbox/emergency,
 	/obj/item/tank/air,
 	/obj/item/tank/emergency_oxygen,
+	/obj/item/tank/mini_oxygen,
 	/obj/item/weldingtool,
 	/obj/item/wrench)
 
@@ -920,7 +922,7 @@
 		/obj/item/material_piece/plasmastone,
 		/obj/item/material_piece/uqill,
 		/obj/item/material_piece/koshmarite,
-		/obj/item/material_piece/gold,
+		/obj/item/stamped_bullion,
 		/obj/item/raw_material/cotton,
 		/obj/item/raw_material/miracle,
 		/obj/item/raw_material/uqill,
@@ -935,7 +937,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "podspawn"
 	density = 0
-	anchored = 1.0
+	anchored = 1
 	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/obj/machinery/vehicle/pod2spawn = null
@@ -1105,7 +1107,7 @@
 	max_amt2spawn = 6
 	items2spawn = list(/obj/critter/domestic_bee,
 	/obj/critter/bat,
-	/obj/critter/mouse,
+	/mob/living/critter/small_animal/mouse,
 	/obj/critter/opossum,
 	/obj/critter/dog/george/blair,
 	/obj/critter/dog/george/orwell,
@@ -1114,7 +1116,7 @@
 	/obj/critter/seagull/gannet,
 	/obj/critter/crow,
 	/obj/critter/seagull,
-	/obj/critter/nicespider,
+	/mob/living/critter/spider/nice,
 	/obj/critter/goose,
 	/obj/critter/goose/swan)
 
@@ -1376,7 +1378,11 @@
 		/obj/item/clothing/under/gimmick/hakama/random,
 		/obj/item/clothing/under/gimmick/eightiesmens,
 		/obj/item/clothing/under/gimmick/eightieswomens,
-		/obj/item/clothing/under/gimmick/ziggy)
+		/obj/item/clothing/under/gimmick/ziggy,
+		/obj/item/clothing/under/gimmick/jcdenton,
+		/obj/item/clothing/under/misc/mobster,
+		/obj/item/clothing/under/misc/mobster/alt,
+		/obj/item/clothing/under/gimmick/guybrush)
 
 	one
 		amt2spawn = 1
@@ -1822,7 +1828,7 @@
 			closet_check_spawn()
 
 	closet_check_spawn(var/new_x,var/new_y)
-		var/obj/item/K = new /obj/item/device/key/chompskey
+		var/obj/item/K = new /obj/item/device/key/generic/chompskey
 
 		if(new_x && new_y)
 			K.set_loc(locate(new_x,new_y,src.z))
@@ -1866,3 +1872,36 @@
 	one_to_three
 		min_amt2spawn = 1
 		max_amt2spawn = 3
+
+
+/obj/random_item_spawner/armory_breaching_supplies //random
+	spawn_items()
+		new /obj/rack(src.loc)
+		new /obj/item/breaching_charge{
+			pixel_x = 10;
+			pixel_y = 1
+			}(src.loc)
+		new /obj/item/breaching_charge{
+			pixel_x = 4;
+			pixel_y = -2
+			}(src.loc)
+		new /obj/item/breaching_charge{
+			pixel_x = -2;
+			pixel_y = -5
+			}(src.loc)
+		new /obj/item/breaching_hammer{
+			pixel_x = -3;
+			pixel_y = 7
+			}(src.loc)
+		new /obj/item/breaching_hammer{
+			pixel_x = -1;
+			pixel_y = 1
+			}(src.loc)
+		new /obj/item/gun/kinetic/riot40mm/breach{
+			pixel_x = -5;
+			pixel_y = 8
+			}(src.loc)
+		new /obj/item/ammo/bullets/breach_flashbang{
+			pixel_x = -4;
+			pixel_y = 3
+			}(src.loc)

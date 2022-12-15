@@ -9,27 +9,32 @@
 //////Drainage/////
 ///////////////////
 
+TYPEINFO(/obj/machinery/drainage)
+	mats = 8
+
+TYPEINFO(/obj/machinery/drainage/big)
+	mats = 12
+
 /obj/machinery/drainage
+	name = "drain"
+	desc = "A drainage pipe embedded in the floor to prevent flooding. Where does the drain go? Nobody knows."
 	anchored = 1
 	density = 0
 	icon = 'icons/obj/fluid.dmi'
 	var/base_icon = "drain"
 	icon_state = "drain"
 	plane = PLANE_FLOOR //They're supposed to be embedded in the floor.
-	name = "drain"
-	desc = "A drainage pipe embedded in the floor to prevent flooding. Where does the drain go? Nobody knows."
+	flags = FPRINT | FLUID_SUBMERGE | NOSPLASH
 	var/clogged = 0 //temporary block
 	var/welded = 0 //permanent block
 	var/drain_min = 2
 	var/drain_max = 7
-	mats = 8
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
 
 	big
 		base_icon = "bigdrain"
 		icon_state = "bigdrain"
-		mats = 12
 		drain_min = 6
 		drain_max = 14
 
@@ -59,7 +64,7 @@
 				if (!F.group.draining)
 					F.group.add_drain_process()
 
-				playsound(src.loc, "sound/misc/drain_glug.ogg", 50, 1)
+				playsound(src.loc, 'sound/misc/drain_glug.ogg', 50, 1)
 
 				//moved to fluid process
 				//F.group.reagents.skip_next_update = 1
@@ -74,10 +79,10 @@
 
 			if (!src.welded)
 				src.welded = 1
-				logTheThing("station", user, null, "welded [name] shut at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "welded [name] shut at [log_loc(user)].")
 				user.show_text("You weld the drain shut.")
 			else
-				logTheThing("station", user, null, "un-welded [name] at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "un-welded [name] at [log_loc(user)].")
 				src.welded = 0
 				user.show_text("You unseal the drain with your welder.")
 
@@ -91,9 +96,14 @@
 			var/obj/item/material_piece/cloth/C = I
 			src.clogged += (20 * C.amount) //One piece of cloth clogs for about 1 minute. (cause the machine loop updates ~3 second interval)
 			user.show_text("You stuff [I] into the drain.")
-			logTheThing("station", user, null, "clogs [name] shut temporarily at [log_loc(user)].")
+			logTheThing(LOG_STATION, user, "clogs [name] shut temporarily at [log_loc(user)].")
 			qdel(I)
 			src.UpdateIcon()
+			return
+
+		if (I.is_open_container() && I.reagents)
+			boutput(user, "<span class='alert'>You dump all the reagents into the drain.</span>") // we add NOSPLASH so the default beaker/glass-splash doesn't occur
+			I.reagents.remove_any(I.reagents.total_volume) // just dump it all out
 			return
 
 		return ..()
@@ -211,6 +221,9 @@
 ///////////////////
 
 
+TYPEINFO(/obj/machinery/fluid_canister)
+	mats = 20
+
 /obj/machinery/fluid_canister
 	anchored = 0
 	density = 1
@@ -222,7 +235,6 @@
 	var/bladder = 20000 //how much I can hold
 	var/slurp = 10 //tiles of fluid to drain per tick
 	var/piss = 500 //amt of reagents to piss out per tick
-	mats = 20
 	deconstruct_flags = DECON_CROWBAR | DECON_WELDER
 
 	var/slurping = 0
@@ -268,7 +280,7 @@
 				if (T.active_liquid && T.active_liquid.group && T.active_liquid.group.reagents)
 					T.active_liquid.group.drain(T.active_liquid,slurp,src)
 					if (prob(80))
-						playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 0.1, 0.7)
+						playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 0.1, 0.7)
 				UpdateIcon()
 
 		else if (pissing)
@@ -413,6 +425,9 @@
 			user.show_text("You climb [src].")
 
 
+TYPEINFO(/obj/item/sea_ladder)
+	mats = 7
+
 /obj/item/sea_ladder
 	name = "sea ladder"
 	desc = "A deployable sea ladder that will allow you to descend to and ascend from the trench."
@@ -427,7 +442,6 @@
 	stamina_cost = 20
 	stamina_crit_chance = 6
 	var/c_color = null
-	mats = 7
 
 	New()
 		..()
@@ -452,7 +466,7 @@
 
 	proc/deploy_ladder(turf/source, turf/dest, mob/user)
 		user.show_text("You deploy [src].")
-		playsound(src.loc, "sound/effects/airbridge_dpl.ogg", 60, 1)
+		playsound(src.loc, 'sound/effects/airbridge_dpl.ogg', 60, 1)
 
 		var/obj/sea_ladder_deployed/L = new /obj/sea_ladder_deployed(source)
 		L.linked_ladder = new /obj/sea_ladder_deployed(dest)
@@ -463,6 +477,9 @@
 		L.og_ladder_item = src
 		L.linked_ladder.og_ladder_item = src
 
+TYPEINFO(/obj/naval_mine)
+	mats = 16
+
 /obj/naval_mine
 	name = "naval mine"
 	desc = "This looks explosive!"
@@ -471,7 +488,6 @@
 	density = 1
 	anchored = 0
 
-	mats = 16
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
 	flags = FPRINT
 
@@ -495,7 +511,7 @@
 
 	proc/boom()
 		if (src.active)
-			logTheThing("bombing", src.fingerprintslast, null, "A naval mine explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
+			logTheThing(LOG_BOMBING, src.fingerprintslast, "A naval mine explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
 			src.blowthefuckup(boom_str)
 
 

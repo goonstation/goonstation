@@ -385,7 +385,7 @@
 		else if(href_list["edit"])
 			var/codekey = href_list["code"]
 
-			var/newkey = copytext(ckeyEx( input("Enter Packet Key", "Packet Sender", codekey) as text|null ), 1, 16)
+			var/newkey = copytext(ckeyEx( input("Enter Packet Key", "Packet Sender", codekey) as text|null ), 1, 255)
 			if(!newkey)
 				return
 
@@ -433,7 +433,7 @@
 			if(keyval && (keyval.len >= MAX_PACKET_KEYS))
 				return
 
-			var/newkey = copytext(ckeyEx( input("Enter Packet Key", "Packet Sender") as text|null ), 1, 16)
+			var/newkey = copytext(ckeyEx( input("Enter Packet Key", "Packet Sender") as text|null ), 1, 255)
 			if(!newkey)
 				return
 
@@ -471,7 +471,7 @@
 					signal.data[key] = keyval[key]
 
 				if ((send_freq == FREQ_PDA) && (!isnull(signal.data["message"])) && (signal.data["command"] == "text_message"))
-					logTheThing("pdamsg", null, null, "<i><b>[src.master.owner]'s PDA used by [src.master.loc.name] ([src.master.fingerprintslast]) (as [isnull(signal.data["sender_name"]) ? "Nobody" : signal.data["sender_name"]]) &rarr; [isnull(signal.data["address_1"]) ? "Everybody" : "[signal.data["address_1"]]"]:</b></i> [signal.data["message"]]")
+					logTheThing(LOG_PDAMSG, null, "<i><b>[src.master.owner]'s PDA used by [src.master.loc.name] ([src.master.fingerprintslast]) (as [isnull(signal.data["sender_name"]) ? "Nobody" : signal.data["sender_name"]]) &rarr; [isnull(signal.data["address_1"]) ? "Everybody" : "[signal.data["address_1"]]"]:</b></i> [signal.data["message"]]")
 
 				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "sender")
 				master.updateSelfDialog()
@@ -644,7 +644,7 @@
 					signal.data[buttonc[1][i]] = value
 
 				if ((send_freq == FREQ_PDA) && (!isnull(signal.data["message"])) && (signal.data["command"] == "text_message"))
-					logTheThing("pdamsg", null, null, "<i><b>[src.master.owner]'s PDA used by [src.master.loc.name] ([src.master.fingerprintslast]) (as [isnull(signal.data["sender_name"]) ? "Nobody" : signal.data["sender_name"]]) &rarr; [isnull(signal.data["address_1"]) ? "Everybody" : "[signal.data["address_1"]]"]:</b></i> [signal.data["message"]]")
+					logTheThing(LOG_PDAMSG, null, "<i><b>[src.master.owner]'s PDA used by [src.master.loc.name] ([src.master.fingerprintslast]) (as [isnull(signal.data["sender_name"]) ? "Nobody" : signal.data["sender_name"]]) &rarr; [isnull(signal.data["address_1"]) ? "Everybody" : "[signal.data["address_1"]]"]:</b></i> [signal.data["message"]]")
 
 				get_radio_connection_by_id(src.master, "builtprog").update_frequency(send_freq)
 				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "builtprog")

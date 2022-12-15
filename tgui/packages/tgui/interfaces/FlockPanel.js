@@ -56,6 +56,11 @@ const FlockPartitions = (props, context) => {
                       </Stack.Item>
                     )}
                     <Stack.Item>
+                      <Button onClick={() => act('promote_trace', { 'origin': partition.ref })} >
+                        Promote sentience
+                      </Button>
+                    </Stack.Item>
+                    <Stack.Item>
                       <Button onClick={() => act('delete_trace', { 'origin': partition.ref })} >
                         Remove sentience
                       </Button>
@@ -103,6 +108,7 @@ const iconLookup = {
   "depositing": "border-style",
   "observing": "eye",
   "deconstructing": "trash",
+  "hibernating": "stop-circle",
 };
 const taskIcon = function (task) {
   let iconString = iconLookup[task];
@@ -296,6 +302,29 @@ const FlockEnemies = (props, context) => {
   );
 };
 
+const FlockStats = (props, context) => {
+  const { stats } = props;
+  return (
+    <Stack vertical>
+      {stats.map(stat => {
+        return (
+          <Stack.Item key={stat.name}>
+            <Stack>
+              <Stack.Item width="100%">
+                <Section height="100%">
+                  <Stack vertical align="left">
+                    <Stack.Item >{stat.name} {stat.value}</Stack.Item>
+                  </Stack>
+                </Section>
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+        );
+      })}
+    </Stack>
+  );
+};
+
 export const FlockPanel = (props, context) => {
   const { data, act } = useBackend(context);
   const [sortBy, setSortBy] = useLocalState(context, 'sortBy', 'resources');
@@ -305,6 +334,7 @@ export const FlockPanel = (props, context) => {
     drones,
     structures,
     enemies,
+    stats,
     category_lengths,
     category,
   } = data;
@@ -345,6 +375,13 @@ export const FlockPanel = (props, context) => {
             }}>
             Enemies {`(${category_lengths['enemies']})`}
           </Tabs.Tab>
+          <Tabs.Tab
+            selected={category === 'stats'}
+            onClick={() => {
+              act('change_tab', { 'tab': 'stats' });
+            }}>
+            Stats
+          </Tabs.Tab>
         </Tabs>
 
         {category === 'drones'
@@ -361,6 +398,7 @@ export const FlockPanel = (props, context) => {
         {category === 'traces' && <FlockPartitions partitions={partitions} />}
         {category === 'structures' && <FlockStructures structures={structures} />}
         {category === 'enemies' && <FlockEnemies enemies={enemies} />}
+        {category === 'stats' && <FlockStats stats={stats} />}
       </Window.Content>
     </Window>
   );

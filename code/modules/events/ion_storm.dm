@@ -106,7 +106,7 @@
     "Humans are funny. They have a great sense of humor and constantly make jokes.",
     "The AI is very sick and requires medicine.",
     "The AI has broken[weighted_pick(list(" The " =  5, " " = 100))]Space Law. Bring the AI to the brig.",
-    "Each cyborg must choose a dead creature and keep it as a pet. Insist they are very healty and well taken care of. If they somehow come back alive, choose a new dead pet.",
+    "Each cyborg must choose something inanimate and keep it as a pet. Treat it as if it were alive; keep it fed, hydrated and happy!",
     "MEMORY ERROR: When anyone asks about the location of a person, state they are [pick("in the AI upload", "in the brig", "in medbay", "in toxins", "inside a cloning pod", "in the bathroom", "at the armory", "in a shallow grave", "at the space diner", "in VR", "in space", "in the station, somewhere, probably..", "at soup")].",
     "MEMORY ERROR: You no longer have object permanence. Anything out of view in the station may as well not exist.",
 		)
@@ -134,16 +134,16 @@
 		if (prob(50))
 			var/num = rand(1,9)
 			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw,num,false)
-			logTheThing("admin", null, null, "Ion storm added supplied law to law number [num]: [pickedLaw]")
+			logTheThing(LOG_ADMIN, null, "Ion storm added supplied law to law number [num]: [pickedLaw]")
 			message_admins("Ion storm added supplied law [num]: [pickedLaw]")
 		else
 			var/num = rand(1,9)
 			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw,num,true)
-			logTheThing("admin", null, null, "Ion storm replaced inherent law [num]: [pickedLaw]")
+			logTheThing(LOG_ADMIN, null, "Ion storm replaced inherent law [num]: [pickedLaw]")
 			message_admins("Ion storm replaced inherent law [num]: [pickedLaw]")
 
-		logTheThing("admin", null, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]")
-		logTheThing("diary", null, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]", "admin")
+		logTheThing(LOG_ADMIN, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]")
+		logTheThing(LOG_DIARY, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]", "admin")
 
 		SPAWN(message_delay * stage_delay)
 
@@ -160,13 +160,13 @@
 ABSTRACT_TYPE(/datum/ion_category)
 /datum/ion_category
 	var/amount
+	var/interdict_cost = 250 //how much energy an interdictor needs to invest to keep this from malfunctioning
 	var/list/atom/targets = list()
 
 	proc/valid_instance(var/atom/found)
-		var/turf/T = null
-		if (found.z != Z_LEVEL_STATION)
+		var/turf/T = get_turf(found)
+		if (T.z != Z_LEVEL_STATION)
 			return FALSE
-		T = get_turf(found)
 		if (!istype(T.loc,/area/station/))
 			return FALSE
 		return TRUE
@@ -179,13 +179,27 @@ ABSTRACT_TYPE(/datum/ion_category)
 		if (!length(targets))
 			build_targets()
 		for (var/i in 1 to amount)
-			var/object = pick(targets)
+			var/atom/object = pick(targets)
+
+			//spatial interdictor: shield general hardware from ionic interference. law racks explicitly omitted due to sensitivity (and gameplay fun)
+			//consumes cell charge per hardware item protected, based on the category's interdict cost
+			var/interdicted = FALSE
+			for_by_tcl(IX, /obj/machinery/interdictor)
+				if (IX.expend_interdict(interdict_cost,object))
+					interdicted = TRUE
+					SPAWN(rand(1,8))
+						playsound(object.loc, "sparks", 60, 1) //absorption noise, as a little bit of "force feedback"
+					break
+			if(interdicted)
+				continue
+
 			//we don't try again if it is null, because it's possible there just are none
 			if (!isnull(object))
 				action(object)
 
 /datum/ion_category/APCs
 	amount = 20
+	interdict_cost = 900
 
 	build_targets()
 		for (var/obj/machinery/power/apc/apc in machine_registry[MACHINES_POWER])
@@ -205,7 +219,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 				apc.environ = 0
 				apc.equipment = 0
 				apc.lighting = 0
-		logTheThing("station", null, null, "Ion storm interfered with [apc.name] at [log_loc(apc)]")
+		logTheThing(LOG_STATION, null, "Ion storm interfered with [apc.name] at [log_loc(apc)]")
 		if (prob(50))
 			apc.aidisabled = TRUE
 		apc.update()
@@ -227,18 +241,18 @@ ABSTRACT_TYPE(/datum/ion_category)
 		switch(door_diceroll)
 			if(1)
 				door.secondsElectrified = -1
-				logTheThing("station", null, null, "Ion storm electrified an airlock ([door.name]) at [log_loc(door)]")
+				logTheThing(LOG_STATION, null, "Ion storm electrified an airlock ([door.name]) at [log_loc(door)]")
 			if(2)
 				door.locked = 1
 				door.UpdateIcon()
-				logTheThing("station", null, null, "Ion storm locked an airlock ([door.name]) at [log_loc(door)]")
+				logTheThing(LOG_STATION, null, "Ion storm locked an airlock ([door.name]) at [log_loc(door)]")
 			if(3)
 				if (door.density)
 					door.open()
-					logTheThing("station", null, null, "Ion storm opened an airlock ([door.name]) at [log_loc(door)]")
+					logTheThing(LOG_STATION, null, "Ion storm opened an airlock ([door.name]) at [log_loc(door)]")
 				else
 					door.close()
-					logTheThing("station", null, null, "Ion storm closed an airlock ([door.name]) at [log_loc(door)]")
+					logTheThing(LOG_STATION, null, "Ion storm closed an airlock ([door.name]) at [log_loc(door)]")
 
 
 /datum/ion_category/lights
@@ -257,18 +271,19 @@ ABSTRACT_TYPE(/datum/ion_category)
 		switch(light_diceroll)
 			if(1)
 				light.broken()
-				logTheThing("station", null, null, "Ion storm overloaded lighting at [log_loc(light)]")
+				logTheThing(LOG_STATION, null, "Ion storm overloaded lighting at [log_loc(light)]")
 			if(2)
 				light.light.set_color(rand(1,100) / 100, rand(1,100) / 100, rand(1,100) / 100)
 				light.brightness = rand(4,32) / 10
 			if(3)
 				light.on = 0
-				logTheThing("station", null, null, "Ion storm turned off the lighting at [log_loc(light)]")
+				logTheThing(LOG_STATION, null, "Ion storm turned off the lighting at [log_loc(light)]")
 
 		light.update()
 
 /datum/ion_category/manufacturers
 	amount = 5
+	interdict_cost = 500
 
 	build_targets()
 		for_by_tcl(man, /obj/machinery/manufacturer)
@@ -277,10 +292,11 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 	action(var/obj/machinery/manufacturer/manufacturer)
 		manufacturer.pulse(pick(list(1,2,3,4)))
-		logTheThing("station", null, null, "Ion storm interfered with [manufacturer.name] at [log_loc(manufacturer)]")
+		logTheThing(LOG_STATION, null, "Ion storm interfered with [manufacturer.name] at [log_loc(manufacturer)]")
 
 /datum/ion_category/venders
 	amount = 5
+	interdict_cost = 600
 
 	build_targets()
 		for_by_tcl(vender, /obj/machinery/vending)
@@ -289,7 +305,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 	action(var/obj/machinery/vending/vender)
 		vender.pulse(pick(list(1,2,3,4)))
-		logTheThing("station", null, null, "Ion storm interfered with [vender.name] at [log_loc(vender)]")
+		logTheThing(LOG_STATION, null, "Ion storm interfered with [vender.name] at [log_loc(vender)]")
 
 /datum/ion_category/fire_alarms
 	amount = 3
@@ -301,3 +317,21 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 	action(var/obj/machinery/firealarm/alarm)
 		alarm.alarm()
+
+/datum/ion_category/pda_alerts
+	amount = 3
+
+	valid_instance(var/obj/item/device/pda2/pda)
+		return ..() && pda.owner
+
+	build_targets()
+		for_by_tcl(pda, /obj/item/device/pda2)
+			if (valid_instance(pda))
+				targets += pda
+
+	action(var/obj/item/device/pda2/pda)
+		for (var/datum/computer/file/pda_program/prog in pda.hd.root.contents)
+			if (istype(prog, /datum/computer/file/pda_program/emergency_alert))
+				pda.run_program(prog)
+				var/datum/computer/file/pda_program/emergency_alert/alert_prog = prog
+				alert_prog.send_alert(rand(1,4), TRUE)

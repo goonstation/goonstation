@@ -57,7 +57,7 @@
 				if (H in mobs_messaged)
 					continue
 				var/U = H.say_understands(M, lang_id)
-				H.show_text("<font size=[clamp(speakers - round(get_dist(H, S) / 2), 0, src.max_font)]><b>[M.get_heard_name()]</b> [U ? stuff : stuff_b]</font>")
+				H.show_text("<font size=[clamp(speakers - round(GET_DIST(H, S) / 2), 0, src.max_font)]><b>[M.get_heard_name()]</b> [U ? stuff : stuff_b]</font>")
 				mobs_messaged += H
 		if (prob(10) && locate(/obj/loudspeaker) in range(2, T))
 			for_by_tcl(S, /obj/loudspeaker)
@@ -65,11 +65,13 @@
 				S.visible_message("<span class='alert'>[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!</span>")
 				playsound(S.loc, 'sound/items/mic_feedback.ogg', 30, 1)
 
+TYPEINFO(/obj/mic_stand)
+	mats = 10
+
 /obj/mic_stand
 	name = "microphone stand"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "micstand"
-	mats = 10
 	layer = FLY_LAYER
 	var/obj/item/device/microphone/myMic = null
 
@@ -119,13 +121,15 @@
 		else
 			src.icon_state = "micstand-empty"
 
+TYPEINFO(/obj/loudspeaker)
+	mats = 15
+
 /obj/loudspeaker
 	name = "loudspeaker"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "loudspeaker"
 	anchored = 1
 	density = 1
-	mats = 15
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 
 	New()

@@ -68,7 +68,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	attack_hand(mob/user)
 		if (src.stance == "defensive")
 			src.visible_message("<span class='alert'><B>[user] attempts to attack [src]!</B></span>")
-			playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1)
 			SPAWN(0.2 SECONDS)
 				macho_parry(user)
 			return
@@ -78,7 +78,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	attackby(obj/item/W, mob/user)
 		if (src.stance == "defensive")
 			src.visible_message("<span class='alert'><B>[user] swings at [src] with the [W.name]!</B></span>")
-			playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1)
 			sleep(0.2 SECONDS)
 			macho_parry(user, W)
 			return
@@ -104,7 +104,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			else if (isobj(AM))
 				var/obj/O = AM
 				if (O.density)
-					playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+					playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 					if (istype(O, /obj/machinery/door))
 						var/obj/machinery/door/D = O
 						if (D.open())
@@ -147,7 +147,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			else
 				src.visible_message("<span class='alert'><B>[src] parries [M]'s attack, knocking them to the ground!</B></span>")
 			M.changeStatus("weakened", 10 SECONDS)
-			playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 65, 1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 65, 1)
 			SPAWN(2 SECONDS)
 				playsound(src.loc, pick(snd_macho_rage), 60, 0, 0, src.get_age_pitch())
 		return
@@ -268,14 +268,14 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			src.bioHolder.AddEffect("fire_resist")
 			src.transforming = 1
 			src.visible_message("<span class='alert'><B>[src] begins glowing with ominous power!</B></span>")
-			playsound(src.loc, "sound/voice/chanting.ogg", 75, 0, 0, src.get_age_pitch())
+			playsound(src.loc, 'sound/voice/chanting.ogg', 75, 0, 0, src.get_age_pitch())
 			sleep(4 SECONDS)
 			for (var/mob/N in viewers(src, null))
 				N.flash(3 SECONDS)
 				if (N.client)
 					shake_camera(N, 6, 16)
 					N.show_message(text("<span class='alert'><b>A blinding light envelops [src]!</b></span>"), 1)
-			playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
+			playsound(src.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 			src.visible_message("<span class='alert'><B>A group of micro men suddenly materializes!</B></span>")
 			var/made_minions = 0
 			for (var/turf/T in orange(1))
@@ -358,11 +358,11 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			src.mouse_opacity = 0
 			src.verbs -= /mob/living/carbon/human/machoman/verb/macho_meteor
 			src.visible_message("<span class='alert'>[src] pauses and curses for a moment.</span>")
-			playsound(src.loc, "sound/voice/macho/macho_alert26.ogg", 50)
+			playsound(src.loc, 'sound/voice/macho/macho_alert26.ogg', 50)
 			sleep(4 SECONDS)
 			src.visible_message("<span class='alert'>[src] begins to hover mysteriously above the ground!</span>")
-			playsound(src.loc, "sound/effects/bionic_sound.ogg", 50)
-			playsound(src.loc, "sound/voice/macho/macho_moan07.ogg", 50)
+			playsound(src.loc, 'sound/effects/bionic_sound.ogg', 50)
+			playsound(src.loc, 'sound/voice/macho/macho_moan07.ogg', 50)
 			src.layer = 10
 			src.set_density(0)
 			for (var/i = 0, i < 20, i++)
@@ -505,7 +505,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			random_brute_damage(M, rand(1,2))
 	CritterDeath()
 		..()
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 75, 1)
 		var/obj/decal/cleanable/blood/gibs/gib = null
 		gib = make_cleanable(/obj/decal/cleanable/blood/gibs,src.loc)
 		gib.streak_cleanable(NORTH)
@@ -547,7 +547,8 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "machobelt"
 	item_state = "machobelt"
-	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
+	flags = FPRINT | TABLEPASS | NOSPLASH
+	c_flags = ONBELT
 
 /obj/item/clothing/shoes/macho
 	name = "Wrestling boots"
@@ -564,25 +565,19 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 
 	attack(mob/target)
 		if (istype(target, /mob/living/carbon/human/machoman))
-			target.visible_message("<span class='alert'>[target] shoves \his face deep into [src] and breathes deeply!</span>")
-			playsound(target.loc, "sound/voice/macho/macho_breathing02.ogg", 50, 1)
+			target.visible_message("<span class='alert'>[target] shoves [his_or_her(target)] face deep into [src] and breathes deeply!</span>")
+			playsound(target.loc, 'sound/voice/macho/macho_breathing02.ogg', 50, 1)
 			sleep(2.5 SECONDS)
-			playsound(target.loc, "sound/voice/macho/macho_freakout.ogg", 50, 1)
+			playsound(target.loc, 'sound/voice/macho/macho_freakout.ogg', 50, 1)
 			target.visible_message("<span class='alert'>[target] appears visibly stronger!</span>")
 			target.changeStatus("stimulants", 7.5 MINUTES)
 			if (ishuman(target))
 				var/mob/living/carbon/human/machoman/H = target
-				for (var/A in H.organs)
-					var/obj/item/affecting = null
-					if (!H.organs[A])    continue
-					affecting = H.organs[A]
-					if (!isitem(affecting))
-						continue
-					affecting.heal_damage(50, 50) //heals 50 burn, 50 brute from all organs
+				H.HealDamage("All", 50, 50, 50)
 				H.UpdateDamageIcon()
 				H.bodytemperature = H.base_body_temp
 		else
-			target.visible_message("<span class='alert'>[target] shoves \his face deep into [src]!</span>")
+			target.visible_message("<span class='alert'>[target] shoves [his_or_her(target)] face deep into [src]!</span>")
 			SPAWN(2.5 SECONDS)
 			target.visible_message("<span class='alert'>[target]'s pupils dilate.</span>")
 			target.changeStatus("stunned", 10 SECONDS)
@@ -600,8 +595,8 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 
 	attack(var/mob/M, var/mob/user, def_zone)
 		if (istype(M, /mob/living/carbon/human/machoman) && M == user)
-			playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 75, 1)
-			playsound(user.loc, "sound/voice/macho/macho_slimjim.ogg", 60)
+			playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 75, 1)
+			playsound(user.loc, 'sound/voice/macho/macho_slimjim.ogg', 60)
 			for (var/mob/O in viewers(user))
 				O.show_message("<span class='alert'><B>[user] snaps into a Space Jim!!</B></span>", 1)
 			sleep(rand(10,20))
@@ -695,7 +690,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 				H.set_loc(holder.owner.loc)
 			else
 				holder.owner.visible_message("<span class='alert'>[holder.owner] closes his eyes for a moment.</span>")
-				playsound(holder.owner.loc, "sound/voice/macho/macho_breathing18.ogg", 50, 0, 0, holder.owner.get_age_pitch())
+				playsound(holder.owner.loc, 'sound/voice/macho/macho_breathing18.ogg', 50, 0, 0, holder.owner.get_age_pitch())
 				sleep(4 SECONDS)
 			holder.owner.set_density(0)
 			if (H)
@@ -716,8 +711,8 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 				holder.owner.visible_message("<span class='alert'><B>[holder.owner] grabs [H] and flies through the ceiling!</B></span>")
 			else
 				holder.owner.visible_message("<span class='alert'>[holder.owner] flies through the ceiling!</span>")
-			playsound(holder.owner.loc, "sound/effects/bionic_sound.ogg", 50)
-			playsound(holder.owner.loc, "sound/voice/macho/macho_become_enraged01.ogg", 50, 0, 0, holder.owner.get_age_pitch())
+			playsound(holder.owner.loc, 'sound/effects/bionic_sound.ogg', 50)
+			playsound(holder.owner.loc, 'sound/voice/macho/macho_become_enraged01.ogg', 50, 0, 0, holder.owner.get_age_pitch())
 			for (var/i = 0, i < 20, i++)
 				holder.owner.pixel_y += 15
 				holder.owner.set_dir(turn(holder.owner.dir, 90))
@@ -744,7 +739,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 				H.set_loc(holder.owner.loc)
 			else
 				holder.owner.visible_message("<span class='alert'>[holder.owner] suddenly descends from the ceiling!</span>")
-			playsound(holder.owner.loc, "sound/effects/bionic_sound.ogg", 50)
+			playsound(holder.owner.loc, 'sound/effects/bionic_sound.ogg', 50)
 			for (var/i = 0, i < 20, i++)
 				holder.owner.pixel_y -= 15
 				holder.owner.set_dir(turn(holder.owner.dir, 90))
@@ -852,7 +847,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 			G.state = GRAB_AGGRESSIVE
 			G.UpdateIcon()
 			holder.owner.set_dir(get_dir(holder.owner, M))
-			playsound(holder.owner.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 65, 1)
+			playsound(holder.owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 65, 1)
 
 /datum/targetable/macho/macho_grasp/macho_headcrunch
 	name = "Grapple - Headcruncher"
@@ -864,17 +859,16 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 			for (var/obj/item/grab/G in holder.owner)
 				if (ishuman(G.affecting))
 					var/mob/living/carbon/human/H = G.affecting
-					var/obj/item/affecting = H.organs["head"]
-					playsound(holder.owner.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+					playsound(holder.owner.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 					holder.owner.visible_message("<span class='alert'><B>[holder.owner] crushes [H]'s skull like a grape!</B></span>")
-					affecting.take_damage(50, 0)
 					H.take_brain_damage(60)
+					H.TakeDamage("head", 50, 0, 0, DAMAGE_CRUSH)
 					H.changeStatus("stunned", 8 SECONDS)
 					H.changeStatus("weakened", 5 SECONDS)
 					H.UpdateDamageIcon()
 					qdel(G)
 				else
-					playsound(holder.owner.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
+					playsound(holder.owner.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 75, 1)
 					holder.owner.visible_message("<span class='alert'><B>[holder.owner] crushes [G.affecting]'s body into bits!</B></span>")
 					G.affecting.gib()
 					qdel(G)
@@ -893,16 +887,15 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 			for (var/obj/item/grab/G in holder.owner)
 				if (ishuman(G.affecting))
 					var/mob/living/carbon/human/H = G.affecting
-					var/obj/item/affecting = H.organs["chest"]
-					playsound(holder.owner.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+					playsound(holder.owner.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 					holder.owner.visible_message("<span class='alert'><B>[holder.owner] crushes [H]'s ribcage open like a bag of chips!</B></span>")
-					affecting.take_damage(500, 0)
+					H.TakeDamage("chest", 500, 0, 0, DAMAGE_CRUSH)
 					H.changeStatus("stunned", 8 SECONDS)
 					H.changeStatus("weakened", 5 SECONDS)
 					H.UpdateDamageIcon()
 					qdel(G)
 				else
-					playsound(holder.owner.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
+					playsound(holder.owner.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 75, 1)
 					holder.owner.visible_message("<span class='alert'><B>[holder.owner] crushes [G.affecting]'s body into bits!</B></span>")
 					G.affecting.gib()
 					qdel(G)
@@ -955,25 +948,25 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 						var/original_age = HU.bioHolder.age
 						if (HU.limbs.l_arm)
 							HU.limbs.l_arm.sever()
-							playsound(holder.owner.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 75)
+							playsound(holder.owner.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 75)
 							HU.emote("scream")
 							HU.bioHolder.age += 10
 							sleep(1 SECOND)
 						if (HU.limbs.r_arm)
 							HU.limbs.r_arm.sever()
-							playsound(holder.owner.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 75)
+							playsound(holder.owner.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 75)
 							HU.emote("scream")
 							HU.bioHolder.age += 10
 							sleep(1 SECOND)
 						if (HU.limbs.l_leg)
 							HU.limbs.l_leg.sever()
-							playsound(holder.owner.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 75)
+							playsound(holder.owner.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 75)
 							HU.emote("scream")
 							HU.bioHolder.age += 10
 							sleep(1 SECOND)
 						if (HU.limbs.r_leg)
 							HU.limbs.r_leg.sever()
-							playsound(holder.owner.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 75)
+							playsound(holder.owner.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 75)
 							HU.emote("scream")
 							sleep(1 SECOND)
 						HU.bioHolder.age = original_age
@@ -1019,7 +1012,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 						return
 				//var/arena_time = 45 SECONDS
 				holder.owner.verbs -= /mob/living/carbon/human/machoman/verb/macho_summon_arena
-				playsound(holder.owner.loc, "sound/voice/chanting.ogg", 75, 0, 0, holder.owner.get_age_pitch())
+				playsound(holder.owner.loc, 'sound/voice/chanting.ogg', 75, 0, 0, holder.owner.get_age_pitch())
 				holder.owner.visible_message("<span class='alert'><B>[holder.owner] begins summoning a wrestling ring!</B></span>", "<span class='alert'><B>You begin summoning a wrestling ring!</B></span>")
 				for (var/mob/living/M in oviewers(ring_radius + 4, get_turf(holder.owner)))
 					M.apply_sonic_stun(6, 3, stamina_damage = 0)
@@ -1037,7 +1030,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 							new_turf.alpha = 0
 							arenaropes += new_turf
 					*/
-					if(get_dist(Aloc,T) == ring_radius) // boundaries
+					if(GET_DIST(Aloc,T) == ring_radius) // boundaries
 						if(abs(Aloc.x - T.x) == ring_radius && abs(Aloc.y - T.y) == ring_radius) // arena corners
 							var/obj/stool/chair/boxingrope_corner/FF = new/obj/stool/chair/boxingrope_corner(T)
 							FF.alpha = 0
@@ -1057,7 +1050,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 								spawn_animation1(FF)
 								sleep(10) // animation, also to simulate them coming in and slamming into the ground
 								FF.visible_message("<span class='alert'><B>[FF] slams and anchors itself into the ground!</B></span>")
-								playsound(T, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+								playsound(T, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 								for (var/mob/living/M in oviewers(ring_radius * 2, T))
 									shake_camera(M, 8, 24)
 						else // arena ropes
@@ -1144,7 +1137,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 						H.pixel_y += 2
 						sleep(0.3 SECONDS)
 
-					playsound(holder.owner.loc, "sound/voice/macho/macho_slimjim.ogg", 75) // SNAP INTO A SLIM JIM!
+					playsound(holder.owner.loc, 'sound/voice/macho/macho_slimjim.ogg', 75) // SNAP INTO A SLIM JIM!
 					sleep(0.5 SECONDS)
 					if (ishuman(H))
 						var/mob/living/carbon/human/HU = H
@@ -1152,7 +1145,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 						var/number_of_snaps = 5
 						var/i
 						for(i = 0; i < number_of_snaps; i++)
-							playsound(HU.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+							playsound(HU.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 							HU.emote("scream")
 							take_bleeding_damage(HU, holder.owner, 5, DAMAGE_STAB)
 							HU.Scale(1 + (rand(-30, 20) * 0.01), 1 + (rand(-20, 30) * 0.01))
@@ -1160,7 +1153,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 							HU.bioHolder.age += 10
 							sleep(1 SECOND)
 
-						playsound(holder.owner.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 100, 1)
+						playsound(holder.owner.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 100, 1)
 						var/obj/victimjim = new /obj/item/reagent_containers/food/snacks/slimjim(HU.loc)
 						HU.visible_message("<span class='alert'><B>The only thing that remains after [H] is a Slim Jim!</B></span>", "<span class='alert'><B>Your body is snapped into a Slim Jim!</B></span>")
 						victimjim.setMaterial(getMaterial("flesh"))
@@ -1169,7 +1162,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 						qdel(HU)
 					else
 						H.visible_message("<span class='alert'><B>[holder.owner] snaps [H] into a Slim Jim with his bare hands!</B></span>", "<span class='alert'><B>Your body is snapped into a Slim Jim!</B></span>")
-						playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 100, 1)
+						playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 100, 1)
 						var/obj/victimjim = new /obj/item/reagent_containers/food/snacks/slimjim(H.loc)
 						victimjim.setMaterial(getMaterial("flesh"))
 						victimjim.name = "Slim [H.real_name]"
@@ -1222,7 +1215,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 					holder.owner.transforming = 0
 					holder.owner.bioHolder.AddEffect("fire_resist")
 					holder.owner.transforming = 1
-					playsound(holder.owner.loc, "sound/voice/chanting.ogg", 75, 0, 0, holder.owner.get_age_pitch())
+					playsound(holder.owner.loc, 'sound/voice/chanting.ogg', 75, 0, 0, holder.owner.get_age_pitch())
 					holder.owner.visible_message("<span class='alert'>[holder.owner] begins radiating with dark energy!</span>")
 					sleep(4 SECONDS)
 					for (var/mob/N in viewers(holder.owner, null))
@@ -1231,7 +1224,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 							shake_camera(N, 6, 16)
 							N.show_message(text("<span class='alert'><b>A blinding light envelops [holder.owner]!</b></span>"), 1)
 
-					playsound(holder.owner.loc, "sound/weapons/flashbang.ogg", 50, 1)
+					playsound(holder.owner.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 					qdel(G)
 					holder.owner.transforming = 0
 					holder.owner.bioHolder.RemoveEffect("fire_resist")
@@ -1251,14 +1244,14 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 			holder.owner.bioHolder.AddEffect("fire_resist")
 			holder.owner.transforming = 1
 			holder.owner.visible_message("<span class='alert'><B>[holder.owner] begins glowing with ominous power!</B></span>")
-			playsound(holder.owner.loc, "sound/voice/chanting.ogg", 75, 0, 0, holder.owner.get_age_pitch())
+			playsound(holder.owner.loc, 'sound/voice/chanting.ogg', 75, 0, 0, holder.owner.get_age_pitch())
 			sleep(4 SECONDS)
 			for (var/mob/N in viewers(holder.owner, null))
 				N.flash(3 SECONDS)
 				if (N.client)
 					shake_camera(N, 6, 16)
 					N.show_message(text("<span class='alert'><b>A blinding light envelops [holder.owner]!</b></span>"), 1)
-			playsound(holder.owner.loc, "sound/weapons/flashbang.ogg", 50, 1)
+			playsound(holder.owner.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 			holder.owner.visible_message("<span class='alert'><B>A group of micro men suddenly materializes!</B></span>")
 			var/made_minions = 0
 			for (var/turf/T in orange(1))
@@ -1297,19 +1290,8 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 					holder.owner.set_dir(get_dir(holder.owner, H))
 					H.set_dir(get_dir(H, holder.owner))
 					animate_flip(H, 3)
-					/*
-					var/icon/composite = icon(H.icon, H.icon_state, null, 1)
-					composite.Turn(180)
-					for (var/O in H.overlays)
-						var/image/I = O
-						var/icon/Ic = icon(I.icon, I.icon_state)
-						Ic.Turn(180)
-						composite.Blend(Ic, ICON_OVERLAY)
-					H.overlays = null
-					H.icon = composite
-					*/
 					holder.owner.visible_message("<span class='alert'><B>[holder.owner] grabs [H] and spins in the air!</B></span>")
-					playsound(holder.owner.loc, "sound/effects/bionic_sound.ogg", 50)
+					playsound(holder.owner.loc, 'sound/effects/bionic_sound.ogg', 50)
 					for (var/i = 0, i < 15, i++)
 						holder.owner.pixel_y += 6
 						H.pixel_y += 6
@@ -1376,7 +1358,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 					step(H, holder.owner.dir)
 					H.set_dir(get_dir(H, holder.owner))
 					holder.owner.visible_message("<span class='alert'><B>[holder.owner] starts spinning around [H]!</B></span>")
-					playsound(holder.owner.loc, "sound/effects/bionic_sound.ogg", 50)
+					playsound(holder.owner.loc, 'sound/effects/bionic_sound.ogg', 50)
 					for (var/i = 0, i < 80, i++)
 						var/delay = 5
 						switch(i)
@@ -1401,7 +1383,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 					H.pixel_y = 0
 					holder.owner.set_density(1)
 					qdel(G)
-					playsound(holder.owner.loc, "sound/weapons/rocket.ogg", 50)
+					playsound(holder.owner.loc, 'sound/weapons/rocket.ogg', 50)
 					holder.owner.visible_message("<span class='alert'><B>[holder.owner] flings [H] with all of his might!</B></span>")
 					var/target_dir = get_dir(holder.owner, H)
 					SPAWN(0)
@@ -1473,7 +1455,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 				//		composite.Blend(Ic, ICON_OVERLAY)
 				//	holder.owner.overlays = null
 				//	holder.owner.icon = composite
-					playsound(holder.owner.loc, "sound/voice/chanting.ogg", 75, 0, 0, holder.owner.get_age_pitch())
+					playsound(holder.owner.loc, 'sound/voice/chanting.ogg', 75, 0, 0, holder.owner.get_age_pitch())
 					holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins radiating with evil energies!</b></span>")
 					sleep(4 SECONDS)
 					for (var/mob/N in viewers(holder.owner, null))
@@ -1482,18 +1464,12 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 							shake_camera(N, 6, 16)
 							N.show_message(text("<span class='alert'><b>A blinding light envelops [holder.owner]!</b></span>"), 1)
 
-					playsound(holder.owner.loc, "sound/weapons/flashbang.ogg", 50, 1)
+					playsound(holder.owner.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 					qdel(G)
 					holder.owner.transforming = 0
 					holder.owner.bioHolder.RemoveEffect("fire_resist")
 					holder.owner.verbs += /mob/living/carbon/human/machoman/verb/macho_soulsteal
-					for (var/A in holder.owner.organs)
-						var/obj/item/affecting = null
-						if (!holder.owner.organs[A])    continue
-						affecting = holder.owner.organs[A]
-						if (!isitem(affecting))
-							continue
-						affecting.heal_damage(50, 50) //heals 50 burn, 50 brute from all organs
+					holder.owner.HealDamage("All", 50, 50, 50)
 					holder.owner.take_toxin_damage(-INFINITY)
 					holder.owner.UpdateDamageIcon()
 					if (H)
@@ -1546,8 +1522,8 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 					holder.owner.transforming = 0
 					holder.owner.bioHolder.AddEffect("fire_resist")
 					holder.owner.transforming = 1
-					playsound(holder.owner.loc, "sound/voice/heavenly.ogg", 75)
-					holder.owner.visible_message("<span class='alert'><b>[holder.owner] closes \his eyes in silent macho prayer!</b></span>")
+					playsound(holder.owner.loc, 'sound/voice/heavenly.ogg', 50)
+					holder.owner.visible_message("<span class='alert'><b>[holder.owner] closes [his_or_her(holder.owner)] eyes in silent macho prayer!</b></span>")
 					sleep(4 SECONDS)
 					for (var/mob/N in viewers(holder.owner, null))
 						N.flash(3 SECONDS)
@@ -1555,7 +1531,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 							shake_camera(N, 6, 16)
 							N.show_message(text("<span class='alert'><b>A blinding light envelops [holder.owner]!</b></span>"), 1)
 
-					playsound(holder.owner.loc, "sound/weapons/flashbang.ogg", 50, 1)
+					playsound(holder.owner.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 					qdel(G)
 					holder.owner.transforming = 0
 					holder.owner.bioHolder.RemoveEffect("fire_resist")
@@ -1611,14 +1587,14 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 					holder.owner.transforming = 0
 					holder.owner.bioHolder.AddEffect("fire_resist")
 					holder.owner.transforming = 1
-					playsound(holder.owner.loc, "sound/effects/mindkill.ogg", 50)
+					playsound(holder.owner.loc, 'sound/effects/mindkill.ogg', 50)
 					holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins intensely staring [H] in the eyes!</b></span>")
 					boutput(H, "<span class='alert'>You feel a horrible pain in your head!</span>")
 					sleep(0.5 SECONDS)
 					H.make_jittery(1000)
 					H.visible_message("<span class='alert'><b>[H] starts violently convulsing!</b></span>")
 					sleep(4 SECONDS)
-					playsound(holder.owner.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+					playsound(holder.owner.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 					qdel(G)
 					var/location = get_turf(H)
 					holder.owner.transforming = 0

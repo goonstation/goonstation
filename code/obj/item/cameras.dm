@@ -11,6 +11,12 @@
 
 	return ..()
 
+TYPEINFO(/obj/item/camera)
+	mats = 15
+
+TYPEINFO(/obj/item/camera/large)
+	mats = 25
+
 /obj/item/camera
 	name = "camera"
 	icon = 'icons/obj/items/device.dmi'
@@ -18,12 +24,12 @@
 	icon_state = "camera"
 	item_state = "electropack"
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | EXTRADELAY | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | EXTRADELAY | CONDUCT
+	c_flags = ONBELT
 	m_amt = 2000
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 10
-	mats = 15
 	var/pictures_left = 10 // set to a negative to take INFINITE PICTURES
 	var/pictures_max = 30
 	var/can_use = 1
@@ -35,7 +41,6 @@
 		src.setItemSpecial(null)
 
 	large
-		mats = 25
 		pictures_left = 30
 
 
@@ -95,17 +100,17 @@
 		if (user.find_in_hand(src) && user.mind && user.mind.special_role == ROLE_SPY_THIEF) // No metagming this
 			if (!src.flash_mode)
 				user.show_text("You use the secret switch to set the camera to flash mode.", "blue")
-				playsound(user, "sound/items/pickup_defib.ogg", 100, 1)
+				playsound(user, 'sound/items/pickup_defib.ogg', 100, 1)
 				src.icon_state = "camera_flash"
 			else
 				user.show_text("You use the secret switch to set the camera to take photos.", "blue")
-				playsound(user, "sound/items/putback_defib.ogg", 100, 1)
+				playsound(user, 'sound/items/putback_defib.ogg', 100, 1)
 				src.icon_state = "camera"
 			src.flash_mode = !src.flash_mode
 			src.UpdateIcon()
 
 	New()
-		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{recharge_rate = 10}
+		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{recharge_rate = 5}
 		AddComponent(/datum/component/cell_holder,cell, FALSE, 200, FALSE)
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		..()
@@ -143,7 +148,7 @@
 		var/mob/M = target
 		SEND_SIGNAL(src, COMSIG_CELL_USE, 25)
 		var/blind_success = M.apply_flash(30, 8, 0, 0, 0, rand(0, 1), 0, 0, 100, 70, disorient_time = 30)
-		playsound(src, "sound/weapons/flash.ogg", 100, 1)
+		playsound(src, 'sound/weapons/flash.ogg', 100, 1)
 		flick("camera_flash-anim", src)
 		// Log entry.
 		var/blind_msg_target = "!"
@@ -152,7 +157,7 @@
 			blind_msg_target = " but your eyes are protected!"
 			blind_msg_others = " but [his_or_her(M)] eyes are protected!"
 		M.visible_message("<span class='alert'>[user] blinds [M] with the flash[blind_msg_others]</span>", "<span class='alert'>You are blinded by the flash[blind_msg_target]</span>") // Pretend to be a flash
-		logTheThing("combat", user, M, "blinds [constructTarget(M,"combat")] with spy [src] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "blinds [constructTarget(M,"combat")] with spy [src] at [log_loc(user)].")
 	else
 		. = ..()
 
@@ -164,6 +169,12 @@
 	else
 		. = ..() 	// Call /obj/item/camera/spy/afterattack() for photo mode
 
+TYPEINFO(/obj/item/camera_film)
+	mats = 10
+
+TYPEINFO(/obj/item/camera_film/large)
+	mats = 15
+
 /obj/item/camera_film
 	name = "film cartridge"
 	desc = "A replacement film cartridge for an instant camera."
@@ -172,13 +183,11 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box"
 	w_class = W_CLASS_SMALL
-	mats = 10
 	var/pictures = 10
 
 	large
 		name = "film cartridge (large)"
 		pictures = 30
-		mats = 15
 
 	examine()
 		. = ..()

@@ -1,3 +1,6 @@
+TYPEINFO(/obj/critter/gunbot)
+	mats = 8
+
 /obj/critter/gunbot
 	name = "Robot"
 	desc = "A Security Robot, something seems a bit off."
@@ -15,7 +18,6 @@
 	firevuln = 0.5
 	brutevuln = 1
 	is_syndicate = 1
-	mats = 8
 	deconstruct_flags = DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 	seek_target()
@@ -35,7 +37,7 @@
 				src.visible_message("<span class='alert'><b>[src]</b> fires at [src.target]!</span>")
 
 
-				playsound(src.loc, "sound/weapons/Gunshot.ogg", 50, 1)
+				playsound(src.loc, 'sound/weapons/Gunshot.ogg', 50, 1)
 				var/tturf = get_turf(target)
 				SPAWN(1 DECI SECOND)
 					Shoot(tturf, src.loc, src)
@@ -62,7 +64,7 @@
 
 				src.visible_message("<span class='alert'><b>[src]</b> fires at [src.target]!</span>")
 
-				playsound(src.loc, "sound/weapons/Gunshot.ogg", 50, 1)
+				playsound(src.loc, 'sound/weapons/Gunshot.ogg', 50, 1)
 				var/tturf = get_turf(target)
 				SPAWN(1 DECI SECOND)
 					Shoot(tturf, src.loc, src)
@@ -79,16 +81,16 @@
 	CritterDeath()
 		if (!src.alive) return
 		..()
-		if (get_area(src) != colosseum_controller.colosseum)
-			var/turf/Ts = get_turf(src)
-			var/obj/item/drop1 = pick(/obj/item/electronics/battery,/obj/item/electronics/board,/obj/item/electronics/buzzer,/obj/item/electronics/frame,/obj/item/electronics/resistor,/obj/item/electronics/screen,/obj/item/electronics/relay, /obj/item/parts/robot_parts/arm/left/standard, /obj/item/parts/robot_parts/arm/right/standard)
-			var/obj/item/drop2 = pick(/obj/item/electronics/battery,/obj/item/electronics/board,/obj/item/electronics/buzzer,/obj/item/electronics/frame,/obj/item/electronics/resistor,/obj/item/electronics/screen,/obj/item/electronics/relay, /obj/item/parts/robot_parts/arm/left/standard, /obj/item/parts/robot_parts/arm/right/standard)
 
-			make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
-			new drop1(Ts)
-			make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
-			new drop2(Ts)
-			make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
+		var/turf/Ts = get_turf(src)
+		var/obj/item/drop1 = pick(/obj/item/electronics/battery,/obj/item/electronics/board,/obj/item/electronics/buzzer,/obj/item/electronics/frame,/obj/item/electronics/resistor,/obj/item/electronics/screen,/obj/item/electronics/relay, /obj/item/parts/robot_parts/arm/left/standard, /obj/item/parts/robot_parts/arm/right/standard)
+		var/obj/item/drop2 = pick(/obj/item/electronics/battery,/obj/item/electronics/board,/obj/item/electronics/buzzer,/obj/item/electronics/frame,/obj/item/electronics/resistor,/obj/item/electronics/screen,/obj/item/electronics/relay, /obj/item/parts/robot_parts/arm/left/standard, /obj/item/parts/robot_parts/arm/right/standard)
+
+		make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
+		new drop1(Ts)
+		make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
+		new drop2(Ts)
+		make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
 
 		SPAWN(0)
 			elecflash(src,2)

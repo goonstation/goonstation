@@ -33,7 +33,7 @@
 		attack_hand(mob/user)
 			if(user.mind.karma <= 49)
 				boutput(user,"<span class='alert'><B>You are not a Just enough being. The stone finds you unworthy.</B></span>")
-				logTheThing("combat", user, null, "is gibbed by [src] at [log_loc(user)]")
+				logTheThing(LOG_COMBAT, user, "is gibbed by [src] at [log_loc(user)]")
 				user.gib()
 			else
 				return ..(user)
@@ -70,8 +70,8 @@
 					return ..(user)
 				else
 					boutput(user,"<span class='alert'><B>The stone finds you unworthy.</B></span>")
-					playsound(user.loc, "sound/voice/animal/hoot.ogg", 100, 1)
-					logTheThing("combat", user, null, "is owlgibbed by [src] at [log_loc(user)]")
+					playsound(user.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
+					logTheThing(LOG_COMBAT, user, "is owlgibbed by [src] at [log_loc(user)]")
 					user.owlgib()
 
 	//Gall

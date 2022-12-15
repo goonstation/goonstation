@@ -21,11 +21,11 @@
 	<a href='?src=\ref[src];action=traitorgeneric'>Generic</a> |
 	<a href='?src=\ref[src];action=sleeper'>Sleeper agent</a>
 </div>
-<div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Mindslave</b>
-	<a href='?src=\ref[src];action=mindslave'>Implanted</a> |
-	<a href='?src=\ref[src];action=mindslavedeath'>Death</a> |
-	<a href='?src=\ref[src];action=mindslaveoverride'>Overriden</a> |
-	<a href='?src=\ref[src];action=mindslaveexpired'>Expired</a>
+<div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Mindhack</b>
+	<a href='?src=\ref[src];action=mindhack'>Implanted</a> |
+	<a href='?src=\ref[src];action=mindhackdeath'>Death</a> |
+	<a href='?src=\ref[src];action=mindhackoverride'>Overriden</a> |
+	<a href='?src=\ref[src];action=mindhackexpired'>Expired</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Wizard</b>
 	<a href='?src=\ref[src];action=wizard'>Wizard</a> |
@@ -70,7 +70,12 @@
 	<a href='?src=\ref[src];action=martian'>Martian</a> |
 	<a href='?src=\ref[src];action=kudzu'>Kudzu Person</a> |
 	<a href='?src=\ref[src];action=slasher'>The Slasher</a> |
-	<a href='?src=\ref[src];action=arcfiend'>Arcfiend Person</a>
+	<a href='?src=\ref[src];action=salvager'>Salvagers</a> |
+	<a href='?src=\ref[src];action=arcfiend'>Arcfiend Person</a> |
+	<a href='?src=\ref[src];action=plaguebringer'>Plaguebringer wraith</a> |
+	<a href='?src=\ref[src];action=harbinger'>Harbinger wraith</a> |
+	<a href='?src=\ref[src];action=trickster'>Trickster wraith</a> |
+	<a href='?src=\ref[src];action=plaguerat'>Plague rat</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Ghost roles</b>
 	<a href='?src=\ref[src];action=ghostdrone'>Ghostdrone</a> |
@@ -133,19 +138,19 @@
 				window_title = "Sleeper Agent Tips"
 				filename = "html/traitorTips/traitorsleeperTips.html"
 
-			// mindslave
-			if ("mindslave")
-				window_title = "You've been mindslaved!"
-				filename = "html/mindslave/implanted.html"
-			if ("mindslavedeath")
-				window_title = "Mindslaved Status Removed!"
-				filename = "html/mindslave/death.html"
-			if ("mindslaveoverride")
-				window_title = "Mindslave Master Changed!"
-				filename = "html/mindslave/override.html"
-			if ("mindslaveexpired")
-				window_title = "Mindslave Implant Expired!"
-				filename = "html/mindslave/expire.html"
+			// mindhack
+			if ("mindhack")
+				window_title = "You've been mindhacked!"
+				filename = "html/notice/implanted.html"
+			if ("mindhackdeath")
+				window_title = "Mindhack Status Removed!"
+				filename = "html/notice/death.html"
+			if ("mindhackoverride")
+				window_title = "Mindhack Master Changed!"
+				filename = "html/notice/override.html"
+			if ("mindhackexpired")
+				window_title = "Mindhack Implant Expired!"
+				filename = "html/notice/expire.html"
 
 			// wizard
 			if ("wizard")
@@ -206,22 +211,22 @@
 				filename = "html/traitorTips/changelingTips.html"
 			if ("changeling_absorbed")
 				window_title = "You've been absorbed into the Hivemind!"
-				filename = "html/mindslave/changelingEaten.html"
+				filename = "html/notice/changelingEaten.html"
 			if ("changeling_leave")
 				window_title = "Leaving the Hivemind"
-				filename = "html/mindslave/changelingLeave.html"
+				filename = "html/notice/changelingLeave.html"
 			if ("handspider")
 				window_title = "Handspider Expectations"
-				filename = "html/mindslave/handspider.html"
+				filename = "html/notice/handspider.html"
 			if ("eyespider")
 				window_title = "Eyespider Expectations"
-				filename = "html/mindslave/eyespider.html"
+				filename = "html/notice/eyespider.html"
 			if ("legworm")
 				window_title = "LegWorm Expectations"
-				filename = "html/mindslave/legworm.html"
+				filename = "html/notice/legworm.html"
 			if ("buttcrab")
 				window_title = "Buttcrab Expectations"
-				filename = "html/mindslave/buttcrab.html"
+				filename = "html/notice/buttcrab.html"
 
 			//flock
 			if("flocktrace")
@@ -249,22 +254,32 @@
 				filename = "html/traitorTips/battleTips.html"
 			if ("martian")
 				window_title = "Being a Martian 101!"
-				filename = "html/traitorTips/martianInfiltrator.html"
+				filename = "html/traitorTips/martianInfiltratorTips.html"
 			if ("kudzu")
 				window_title = "You've been absorbed into the Kudzu!"
-				filename = "html/traitorTips/kudzu.html"
+				filename = "html/traitorTips/kudzuTips.html"
+			if ("salvager")
+				filename = "html/traitorTips/salvager.html"
 			if ("slasher")
 				window_title = "You've been made a Slasher!"
 				filename = "html/traitorTips/slasherTips.html"
 			if ("arcfiend")
 				window_title = "Arcfiend Tips!"
 				filename = "html/traitorTips/arcfiendTips.html"
+			if ("plaguebringer")
+				filename = "html/traitorTips/plaguebringerTips.html"
+			if ("plaguerat")
+				filename = "html/traitorTips/plagueratTips.html"
+			if ("trickster")
+				filename = "html/traitorTips/tricksterTips.html"
+			if ("harbinger")
+				filename = "html/traitorTips/harbingerTips.html"
 			if ("football")
 				window_title = "Go for the endzone!"
-				filename = "html/traitorTips/football.html"
+				filename = "html/traitorTips/footballTips.html"
 			if ("podwars")
 				window_title = "Fight for your team!"
-				filename = "html/traitorTips/pod_wars.html"
+				filename = "html/traitorTips/pod_warsTips.html"
 			if ("zombie")
 				window_title = "Zombie Basics"
 				filename = "html/traitorTips/zombieTips.html"

@@ -26,8 +26,8 @@ datum/mind
 	/// A list of every antagonist datum that we have.
 	var/list/datum/antagonist/antagonists = list()
 
-	// This used for dead/released/etc mindslaves and rogue robots we still want them to show up
-	// in the game over stats. It's a list because former mindslaves could also end up as an emagged
+	// This used for dead/released/etc mindhacks and rogue robots we still want them to show up
+	// in the game over stats. It's a list because former mindhacks could also end up as an emagged
 	// cyborg or something. Use strings here, just like special_role (Convair880).
 	var/list/former_antagonist_roles = list()
 
@@ -45,8 +45,8 @@ datum/mind
 
 	var/list/intrinsic_verbs = list()
 
-	// For mindslave/vampthrall/spyslave master references, which are now tracked by ckey.
-	// Mob references are not very reliable and did cause trouble with automated mindslave status removal
+	// For mindhack/vampthrall/spyminion master references, which are now tracked by ckey.
+	// Mob references are not very reliable and did cause trouble with automated mindhack status removal
 	// The relevant code snippets call a ckey -> mob reference lookup proc where necessary,
 	// namely ckey_to_mob(mob.mind.master) (Convair880).
 	var/master = null
@@ -111,10 +111,8 @@ datum/mind
 				current.removeOverlaysClient(current.client)
 				tgui_process.on_transfer(current, new_character)
 				new_character.lastKnownIP = current.client.address
-				if(isghostdrone(src.current)) //clear the static overlays on death, qdel, being cloned, etc.
-					current.client.images.Remove(mob_static_icons)
 			current.mind = null
-			SEND_SIGNAL(src, COMSIG_MIND_DETACH_FROM_MOB, current)
+			SEND_SIGNAL(src, COMSIG_MIND_DETACH_FROM_MOB, current, new_character)
 
 		new_character.mind = src
 		current = new_character
@@ -217,7 +215,7 @@ datum/mind
 		src.store_memory("Time of death: [tod]", 0)
 		// stuff for critter respawns
 		src.last_death_time = world.timeofday
-	
+
 	/// Gets an existing antagonist datum of the provided ID role_id.
 	proc/get_antagonist(role_id)
 		for (var/datum/antagonist/A as anything in src.antagonists)
@@ -226,9 +224,9 @@ datum/mind
 		return null
 
 	/// Attempts to add the antagonist datum of ID role_id to this mind.
-	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, respect_mutual_exclusives = TRUE)
-		// Check for mutual exclusivity
-		if (respect_mutual_exclusives && length(src.antagonists))
+	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, late_setup = FALSE)
+		// Check for mutual exclusivity for real antagonists
+		if (respect_mutual_exclusives && !do_pseudo && length(src.antagonists))
 			for (var/datum/antagonist/A as anything in src.antagonists)
 				if (A.mutually_exclusive)
 					return FALSE
@@ -238,9 +236,9 @@ datum/mind
 		for (var/V in concrete_typesof(/datum/antagonist))
 			var/datum/antagonist/A = V
 			if (initial(A.id) == role_id)
-				src.antagonists.Add(new A(src, do_equip, do_objectives, do_relocate, silent, source))
+				src.antagonists.Add(new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, late_setup))
 				src.current.antagonist_overlay_refresh(TRUE, FALSE)
-				return TRUE
+				return !isnull(src.get_antagonist(role_id))
 		return FALSE
 
 	/// Attempts to remove existing antagonist datums of ID role_id from this mind.
@@ -248,21 +246,26 @@ datum/mind
 		for (var/datum/antagonist/A as anything in src.antagonists)
 			if (A.id == role_id)
 				A.remove_self(TRUE, FALSE)
-				antagonists.Remove(A)
+				src.antagonists.Remove(A)
+				if (!length(src.antagonists) && src.special_role == A.id)
+					src.special_role = null
+					ticker.mode.traitors.Remove(src)
 				qdel(A)
 				return TRUE
 		return FALSE
-	
+
 	/// Removes ALL antagonists from this mind. Use with caution!
 	proc/wipe_antagonists()
 		for (var/datum/antagonist/A as anything in src.antagonists)
 			A.remove_self(TRUE, FALSE)
 			src.antagonists.Remove(A)
 			qdel(A)
+		src.special_role = null
+		ticker.mode.traitors.Remove(src)
 		return length(src.antagonists) <= 0
 
 	disposing()
-		logTheThing("debug", null, null, "<b>Mind</b> Mind for \[[src.key ? src.key : "NO KEY"]] deleted!")
+		logTheThing(LOG_DEBUG, null, "<b>Mind</b> Mind for \[[src.key ? src.key : "NO KEY"]] deleted!")
 		Z_LOG_DEBUG("Mind/Disposing", "Mind \ref[src] [src.key ? "([src.key])" : ""] deleted")
 		src.brain?.owner = null
 		if(src.current)
@@ -273,7 +276,7 @@ datum/mind
 	proc/on_ticker_add_log()
 		var/list/traits = list()
 		for(var/trait_id in src.current.traitHolder.traits)
-			var/obj/trait/trait = src.current.traitHolder.traits[trait_id]
+			var/datum/trait/trait = src.current.traitHolder.traits[trait_id]
 			traits += trait.name
 		. = "<br>Traits: [jointext(traits, ", ")]"
 

@@ -1,17 +1,19 @@
 var/list/genescanner_addresses = list()
 var/list/genetek_hair_styles = list()
 
+TYPEINFO(/obj/machinery/genetics_scanner)
+	mats = 15
+
 /obj/machinery/genetics_scanner
 	name = "GeneTek scanner"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "scanner_0"
 	density = 1
-	mats = 15
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/mob/occupant = null
 	var/datum/character_preview/multiclient/occupant_preview = null
 	var/locked = 0
-	anchored = 1.0
+	anchored = 1
 	soundproofing = 10
 
 	var/net_id = null
@@ -193,7 +195,7 @@ var/list/genetek_hair_styles = list()
 		return
 
 	proc/togglelock(var/forceunlock = 0)
-		playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		if (src.locked || forceunlock)
 			src.locked = 0
 			usr.visible_message("<b>[usr]</b> unlocks the scanner.")
@@ -207,7 +209,7 @@ var/list/genetek_hair_styles = list()
 
 		// Added (Convair880).
 		if (src.occupant)
-			logTheThing("station", usr, src.occupant, "[src.locked ? "locks" : "unlocks"] the [src.name] with [constructTarget(src.occupant,"station")] inside at [log_loc(src)].")
+			logTheThing(LOG_STATION, usr, "[src.locked ? "locks" : "unlocks"] the [src.name] with [constructTarget(src.occupant,"station")] inside at [log_loc(src)].")
 
 		return
 
@@ -228,7 +230,7 @@ var/list/genetek_hair_styles = list()
 		if (istype(C))
 			C.ui_interact(M, null)
 
-		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/sleeper_close.ogg', 50, 1)
 		return
 
 	proc/go_out()
@@ -248,7 +250,7 @@ var/list/genetek_hair_styles = list()
 
 		src.icon_state = "scanner_0"
 
-		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/sleeper_open.ogg', 50, 1)
 		return
 
 

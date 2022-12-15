@@ -10,6 +10,7 @@
 	icon = 'icons/obj/large/64x96.dmi'
 	icon_state = "cryotron_up"
 	event_handler_flags = IMMUNE_SINGULARITY
+	pass_unstable = FALSE
 	bound_width = 96
 	bound_x = -32
 	bound_height = 64
@@ -145,7 +146,7 @@
 				for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
 					if (!A.status && A.announces_arrivals)
 						A.announce_departure(L)
-				logTheThing("station", L, null, "entered cryogenic storage at [log_loc(src)].")
+				logTheThing(LOG_STATION, L, "entered cryogenic storage at [log_loc(src)].")
 				return 1
 
 		stored_mobs += L
@@ -171,7 +172,7 @@
 		var/datum/db_record/crew_record = data_core.general.find_record("id", L.datacore_id)
 		if (!isnull(crew_record))
 			crew_record["p_stat"] = "In Cryogenic Storage"
-		logTheThing("station", L, null, "entered cryogenic storage at [log_loc(src)].")
+		logTheThing(LOG_STATION, L, "entered cryogenic storage at [log_loc(src)].")
 		return 1
 
 	proc/enter_prompt(var/mob/living/user as mob)

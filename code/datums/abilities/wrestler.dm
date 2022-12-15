@@ -227,12 +227,12 @@
 		// The HUD autoequip code doesn't call unequipped() when it should, naturally.
 		if (ishuman(M) && (istype(H) && H.is_inherent != 1))
 			var/mob/living/carbon/human/HH = M
-			if (!(HH.belt && istype(HH.belt, /obj/item/storage/belt/wrestling)))
+			if (!(HH.belt && istype(HH.belt, /obj/item/storage/belt/wrestling)) && !HAS_ATOM_PROPERTY(M, PROP_MOB_PASSIVE_WRESTLE))
 				boutput(HH, "<span class='alert'>You have to wear the wrestling belt for this.</span>")
 				HH.make_wrestler(0, 1, 1)
 				return 0
 
-		if (fake && !istype(get_turf(M), /turf/simulated/floor/specialroom/gym))
+		if (fake && !(istype(get_turf(M), /turf/simulated/floor/specialroom/gym) || istype(get_turf(M), /turf/unsimulated/floor/specialroom/gym)))
 			boutput(M, "<span class='alert'>You cannot use your \"powers\" outside of The Ring!</span>")
 			return 0
 

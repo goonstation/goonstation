@@ -1,3 +1,29 @@
+(t)sun dec 11 22
+(u)pali
+(*)I moved some things from coder rank to admin rank:<br>announcements and admin PMs no longer strip HTML when sent by admins<br>clicking on the window icon in the very top left corner now lets you access some misc stuff but namely the profiler when you want to know what's causing the lag<br>the detergent event is no longer locker to coders<br>The verbs financial-info, adjust-budget, randomize-appearance, mass-flock-convert and flock-cheats are now on the admin rank
+(t)fri dec 9 22
+(u)aloe
+(*)You can now make people nukeops during nuclear rounds through the normal make-antag menu. It'll handle the overlays and the gear and the renaming and whatever, and even deletes all their old gear. There will probably be some bugs but it's mostly functional.
+(t)tue nov 29 22
+(u)pali
+(*)Players can now make their own Spacemas tree ornaments. If you see a low-qualtiy or rule-breaking ornament you should examine it (that shows you the author's ckey in the description) and then click "Annihilate ornament" in the window to permanently get rid of it.
+(t)fri nov 25 22
+(u)pali
+(*)New Toggle-Whitelist verb which lets you toggle whitelist on or off. And Whitelist-Add-Temp which lets you whitelist a ckey for this round only.<div style='font-size:0.7em;'>If the current server has whitelist turned on by default (i.e. the Dev or Event server) the Toggle-Whitelist command lets you select the number of rounds for which the server will remain open to the public.<br>If the current whitelist status differs from the config status this is displayed in server name as either [CLOSED] or [OPEN] and also with more details in admin status tab.</div>
+(t)sat oct 22 22
+(u)pali
+(*)Radio station music-playing now goes on cooldown when admin music gets played.
+(u)Gerhazo
+(*)Added save/load functionality to the particool UI. Supports saving the particle set properties as well as the set icons.
+(t)wed sep 07 22
+(u)Sord
+(+)Added new "Summon vortexes" random event for admin spawning. This spawns the disaster portals which summons critters. Has an option to use void critters or non-void critters.
+(t)tue aug 30 22
+(u)Sovexe
+(*)The Topic log is now hidden by default. This behavior can be toggled in your admin preferences.
+(t)tue jul 19 22
+(u)Ilysen
+(*)Started integrating the new antagonist system with the player panel. Development is still ongoing, but at bare minimum admins should be able to add and remove traitor status from people now.
 (t)tue jun 14 22
 (u)LeahTheTech
 (*)Added flockgib verb and player option

@@ -1,4 +1,7 @@
 
+TYPEINFO(/obj/health_scanner)
+	mats = list("CON-1" = 5, "CRY" = "2")
+
 /obj/health_scanner
 	icon = 'icons/obj/items/device.dmi'
 	anchored = 1
@@ -110,7 +113,7 @@
 				scan_health_overhead(H, H)
 				if (alert && H.health < 0)
 					src.crit_alert(H)
-			playsound(src.loc, "sound/machines/scan2.ogg", 30, 0)
+			playsound(src.loc, 'sound/machines/scan2.ogg', 30, 0)
 		return data
 
 	proc/crit_alert(var/mob/living/carbon/human/H)

@@ -353,7 +353,6 @@ proc/create_fluff(datum/mind/target)
 		"Become a vigilante and violently harass people over the slightest suspicion.",
 		"Seek out any non-security vigilantes on the station and make their life utter hell.",
 		"Find another crew member's pet project and subvert it to a more violent purpose.",
-		"FUCK THE POLICE.",
 		"Try to become a supervillain by using costumes, treachery, and a lot of bluster and bravado.",
 		"Spy on the crew and uncover their deepest secrets.",
 		"Kidnap George and hold him for ransom.",
@@ -512,7 +511,7 @@ proc/create_fluff(datum/mind/target)
 
 	set_up()
 		var/list/targets = list("Staff Assistant","Medical Doctor","Engineer","Security Officer",
-		"Geneticist","Scientist","Roboticist","Mechanic","Quartermaster","Miner","Botanist")
+		"Geneticist","Scientist","Roboticist","Quartermaster","Miner","Botanist")
 		target_job = pick(targets)
 		explanation_text = "Kill every [target_job] on the station. You do not need to kill yourself if you are a [target_job]."
 

@@ -1,10 +1,10 @@
-#define Z_LEVEL_NULL 0 				//Nullspace/Z0/The Darkness
-#define Z_LEVEL_STATION 1           //The station Z-level.
-#define Z_LEVEL_ADVENTURE 2         //The Z-level used for Adventure Zones.
-#define Z_LEVEL_DEBRIS 3            //The debris Z-level. Blank on underwater maps.
-#define Z_LEVEL_SECRET 4            //The Z-level used for secret things.
-#define Z_LEVEL_MINING 5            //The mining Z-level.
-#define Z_LEVEL_FOOTBALL 6          //The Z-level used for football.
+#define Z_LEVEL_NULL 0 		//! Nullspace/Z0/The Darkness
+#define Z_LEVEL_STATION 1	//! The station Z-level.
+#define Z_LEVEL_ADVENTURE 2	//! The Z-level used for Adventure Zones.
+#define Z_LEVEL_DEBRIS 3	//! The debris Z-level. Blank on underwater maps.
+#define Z_LEVEL_SECRET 4	//! The Z-level used for secret things.
+#define Z_LEVEL_MINING 5	//! The mining Z-level.
+#define Z_LEVEL_FOOTBALL 6	//! The Z-level used for football.
 
 ///Map generation defines
 #define PERLIN_LAYER_HEIGHT "perlin_height"
@@ -24,6 +24,9 @@
 #define MAPGEN_IGNORE_FLORA (1 << 0)
 #define MAPGEN_IGNORE_FAUNA (1 << 1)
 #define MAPGEN_IGNORE_BUILDABLE (1 << 2)
+#define MAPGEN_ALLOW_VEHICLES (1 << 3)
+
+#define MAPGEN_TURF_ONLY ( MAPGEN_IGNORE_FLORA | MAPGEN_IGNORE_FAUNA )
 
 // map region allocator defines
 

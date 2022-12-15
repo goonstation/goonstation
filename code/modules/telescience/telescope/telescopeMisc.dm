@@ -59,7 +59,7 @@ var/list/magnet_locations = list()
 			if (!target) //we didnt find a turf to send to
 				return 0
 			src.busy = 1
-			flick("lrport1", src)
+			flick("[src.icon_state]-act", src)
 			playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
 			for(var/atom/movable/M in src.loc)
 				if(M.anchored)
@@ -84,7 +84,7 @@ var/list/magnet_locations = list()
 			if (!target) //we didnt find a turf to send to
 				return 0
 			src.busy = 1
-			flick("lrport1", src)
+			flick("[src.icon_state]-act", src)
 			playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
 			for(var/atom/movable/M in target)
 				if(M.anchored)
@@ -137,6 +137,9 @@ var/list/magnet_locations = list()
 		if("receive")
 			var/place = params["name"]
 			src.lrtreceive(place)
+
+/obj/machinery/lrteleporter/mining
+	icon_state = "englrt"
 
 //////////////////////////////////////////////////
 /datum/telescope_manager
@@ -237,7 +240,7 @@ var/list/magnet_locations = list()
 	CritterAttack(atom/M)
 		if(target && !attacking)
 			attacking = 1
-			//playsound(src.loc, "sound/machines/whistlebeep.ogg", 55, 1)
+			//playsound(src.loc, 'sound/machines/whistlebeep.ogg', 55, 1)
 			src.visible_message("<span class='alert'><b>[src]</b> shreds [M]!</span>")
 
 			var/tturf = get_turf(M)

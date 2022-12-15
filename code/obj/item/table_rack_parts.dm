@@ -42,7 +42,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 		if (ispath(src.furniture_type))
 			newThing = new src.furniture_type(T, src.contained_storage ? src.contained_storage : null)
 		else
-			stack_trace("[user] tries to build a piece of furniture from [src] ([src.type]) but its furniture_type is null and it is being deleted.")
+			stack_trace("[user] tries to build a piece of furniture from [identify_object(src)] but its furniture_type is null and it is being deleted.")
 			user.u_equip(src)
 			qdel(src)
 			return
@@ -52,7 +52,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 				newThing.setMaterial(src.material)
 			if (user)
 				newThing.add_fingerprint(user)
-				logTheThing("station", user, null, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
+				logTheThing(LOG_STATION, user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
 				user.u_equip(src)
 		qdel(src)
 		return newThing
@@ -86,12 +86,17 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 			return ..()
 
 	afterattack(atom/target, mob/user)
-		if (!isturf(target) || target:density)
+		if (!isturf(target) || target.density)
 			return ..()
 		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration, target), user)
 
 	attack_self(mob/user as mob)
 		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration, get_turf(user)), user)
+
+	mouse_drop(atom/movable/target)
+		. = ..()
+		if (HAS_ATOM_PROPERTY(usr, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING) && isturf(target))
+			actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration, target), usr)
 
 	disposing()
 		if (src.contained_storage && length(src.contained_storage.contents))
@@ -302,7 +307,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 			if (!do_after(user, 2 SECONDS))
 				return
 			user.visible_message("[user] reinforces \the [src] with wood.",  "You reinforce \the [src] with wood.")
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			new /obj/item/furniture_parts/bookshelf(get_turf(src))
 			qdel(src)
 			qdel(W)
@@ -621,7 +626,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 			return
 		var/mob/source = owner
 		// cirrfix: ghost drones should be able to build furniture now
-		if(istype(source))
+		if(istype(source) && !HAS_ATOM_PROPERTY(source, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING))
 			if(istype(source.equipped(), /obj/item/magtractor))
 				// check to see it's holding the right thing
 				var/obj/item/magtractor/M = source.equipped()
@@ -696,11 +701,11 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 
 	onStart()
 		..()
-		playsound(the_furniture, "sound/items/Ratchet.ogg", 50, 1)
+		playsound(the_furniture, 'sound/items/Ratchet.ogg', 50, 1)
 		owner.visible_message("<span class='notice'>[owner] begins disassembling [the_furniture].</span>")
 
 	onEnd()
 		..()
-		playsound(the_furniture, "sound/items/Deconstruct.ogg", 50, 1)
+		playsound(the_furniture, 'sound/items/Deconstruct.ogg', 50, 1)
 		the_furniture:deconstruct() // yes a colon, bite me
 		owner.visible_message("<span class='notice'>[owner] disassembles [the_furniture].</span>")

@@ -4,6 +4,24 @@
 
 {%hackmd @ZeWaka/dark-theme %}
 
+## Personal Information
+Git history is (more-or-less) immutable. For your own safety, make sure that you don't have any personal information in your git username or email (check with `git config user.name` and `git config user.email`) and think very hard before using an account you also use for professional work/etc. Github offers a `noreply` email that you can [enable](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address) and use for your git email.
+
+## Triage Team
+Have you contributed to the game and want to get more involved? Join our triage team!
+
+These people can close and label issues/PRs but do not have merge rights or any special authority within the community.
+
+Here's the general criteria for people to apply:
+* Have actively engaged with Goonstation development (Example: making or reviewing a PR).
+* Have demonstrated themselves to be polite and welcoming representatives of the project.
+* Are comfortable with following the [Triage Team Guidelines](https://bit.ly/goontriageguidelines).
+
+If you think these apply to (likely so if you're reading this), feel free to fill out the [Triage Team Form](https://bit.ly/goontriageform).
+It's __very very basic__, and we accept basically anyone who asks, so don't hesitate if you are interested!
+
+Note: If you don't use Discord, contact a dev about being added, as the form requires a Discord account.
+
 ## Making PRs (read before making a PR)
 Aside from the actual changes to the repo that you make, opening a PR has some required sections in the initial PR comment. Here are the general guidelines for filling out each section.
 
@@ -14,7 +32,7 @@ Aside from the actual changes to the repo that you make, opening a PR has some r
 - Give your reasoning or opinion why you think your change is needed or would improve things.
 
 ### Changelog (Optional)
-* Use the markdown and text`## Changelog` to denote this section. Be sure to use the code block with `‍```changelog`.
+* Use the markdown and text `## Changelog` to denote this section. Be sure to use the code block with `‍```changelog`.
 * This section is **not required** for small changes such as: code cleanup, small sprite updates, small code changes that don't result in balance issues, small map changes.
 * Use the **minor tag**, `(+)` for things like multiple sprite changes or updates, adding a small feature, making a small change to an existing object/process.
 * Use the **major tag**, `(*)` for things that are large changes. Things that affect game balance in any modest way, adding a new feature, updating a whole large suite of sprites, making a large change to a current map such as changing a department layout or moving critical systems or door access.

@@ -24,6 +24,7 @@
 	hud_state = "cloak"
 	f_active = 1
 	var/image/shield = null
+	icon_state = "medusa"
 
 	Use(mob/user as mob)
 		if(!active)
@@ -67,6 +68,7 @@
 	var/capacity = 300
 	hud_state = "cargo"
 	f_active = 1
+	icon_state = "ore_hold"
 
 	Use(mob/user as mob)
 		activate()
@@ -126,7 +128,7 @@
 
 /obj/item/shipcomponent/secondary_system/cargo
 	name = "Cargo Hold"
-	desc = "Allows the ship to load crates and transport them."
+	desc = "Allows the ship to load crates and transport them. One of Tradecraft Seneca's best sellers."
 	var/list/load = list() //Current crates inside
 	var/maxcap = 3 //how many crates it can hold
 	var/list/acceptable = list(/obj/storage/crate,
@@ -255,7 +257,7 @@
 
 /obj/item/shipcomponent/secondary_system/cargo/proc/load(var/atom/movable/C)
 	if(length(src.load) >= maxcap)
-		playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 0)
+		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 		boutput(usr, "[ship.ship_message("Cargo hold is full!")]")
 		return 2
 
@@ -282,12 +284,12 @@
 		if(isdead(L))
 			acceptable_cargo = 1
 	if (!acceptable_cargo)
-		playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 0)
+		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 		return 1 // invalid cargo
 
 	C.set_loc(src)
 	load += C
-	playsound(src.loc, "sound/machines/ping.ogg", 50, 0)
+	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 	return 0
 
 /obj/item/shipcomponent/secondary_system/cargo/proc/unload(var/atom/movable/C,var/turf/T)
@@ -322,6 +324,7 @@
 	f_active = 1
 	power_used = 80
 	hud_state = "tractor_beam"
+	icon_state = "trac_beam"
 
 	run_component()
 		if(settingup)
@@ -400,15 +403,15 @@
 					return
 				var/turf/T = get_turf(get_step(ship.loc, ship.dir))
 				if (istype(T, /turf/space) && ammo >= 1)
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					T:ReplaceWithFloor()
 					ammo--
 					return
 				if (istype(T, /turf/simulated/floor) && ammo >= 3)
-					playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(after_time(20))
 						T:ReplaceWithWall()
-						playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						ammo -= 3
 					return
 
@@ -417,7 +420,7 @@
 					var/turf/T = get_turf(G.loc)
 					qdel(G)
 					T:ReplaceWithWall()
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					break
 				return
 
@@ -425,26 +428,26 @@
 			if("Deconstruct")
 				var/turf/T = get_turf(get_step(ship.loc, ship.dir))
 				if (istype(T, /turf/simulated/wall) && ammo >= 5)
-					playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(after_time(50))
 						ammo -= 5
 						T:ReplaceWithFloor()
-						playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					return
 				if ((istype(T, /turf/simulated/wall/r_wall) || istype(T, /turf/simulated/wall/auto/reinforced) ) && ammo >= 5)
-					playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(after_time(50))
 						ammo -= 5
 						T:ReplaceWithWall()
-						playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 					return
 				if (istype(T, /turf/simulated/floor) && ammo >= 5)
-					playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(after_time(50))
 						ammo -= 5
 						T:ReplaceWithSpace()
-						playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					return
 
 	opencomputer(mob/user as mob)
@@ -466,6 +469,7 @@
 	desc = "A useful navigation device for those lost in space."
 	f_active = 1
 	power_used = 50
+	icon_state = "ship_gps"
 
 	Use(mob/user as mob)
 		opencomputer(user)
@@ -789,6 +793,7 @@
 	var/crashhits = 10
 	var/in_bump = 0
 	hud_state = "seed"
+	icon_state = "pod_seed"
 
 	Use(mob/user as mob)
 		activate()
@@ -800,7 +805,7 @@
 
 	activate()
 		if (crashable == 0) // To avoid spam. SEEDs can't be deactivated (Convair880).
-			logTheThing("vehicle", usr, null, "activates a SEED, turning [src.ship] into a flying bomb at [log_loc(src.ship)]. Direction: [dir2text(src.ship.dir)].")
+			logTheThing(LOG_VEHICLE, usr, "activates a SEED, turning [src.ship] into a flying bomb at [log_loc(src.ship)]. Direction: [dir2text(src.ship.dir)].")
 		crashable = 1
 		return
 
@@ -819,20 +824,6 @@
 	SPAWN(0) //???? otherwise we runtime
 		qdel(ship)
 
-/obj/item/shipcomponent/secondary_system/crash/proc/crashtime(atom/A)
-	var/tempstate = ship.icon_state
-	ship.icon_state = "flaming"
-	if(!istype(A, /obj/critter/gunbot/drone))
-		A.meteorhit(ship)
-	playsound(ship.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
-	ship.icon_state = tempstate
-	crashhits --
-	if (crashhits <= 0)
-		explosion(ship, ship.loc, 1, 2, 2, 3)
-		playsound(ship.loc, "explosion", 50, 1)
-		dispense()
-	return
-
 /obj/item/shipcomponent/secondary_system/crash/proc/crashtime2(atom/A as mob|obj|turf)
 	if (in_bump)
 		return
@@ -848,8 +839,8 @@
 		if(istype(A, /turf/simulated/wall))
 			var/turf/simulated/wall/T = A
 			T.dismantle_wall(1)
-			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
-			playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 			boutput(ship.pilot, "<span class='alert'><B>You crash through the wall!</B></span>")
 			in_bump = 0
 		if(istype(A, /turf/simulated/floor))
@@ -858,6 +849,13 @@
 				T.ReplaceWithLattice()
 			else
 				T.ReplaceWithSpace()
+			if(prob(50))
+				for (var/mob/M in src)
+					shake_camera(M, 6, 8)
+			if(prob(30))
+				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+				boutput(ship.pilot, "<span class='alert'><B>You plow through the floor!</B></span>")
 	if(ismob(A))
 		var/mob/M = A
 		boutput(ship.pilot, "<span class='alert'><B>You crash into [M]!</B></span>")
@@ -868,8 +866,8 @@
 		M.TakeDamageAccountArmor("chest", 20, damage_type = DAMAGE_BLUNT)
 		var/turf/target = get_edge_target_turf(ship, ship.dir)
 		M.throw_at(target, 4, 2)
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
-		playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 		in_bump = 0
 	if(isobj(A))
 		var/obj/O = A
@@ -877,8 +875,8 @@
 			boutput(ship.pilot, "<span class='alert'><B>You crash into [O]!</B></span>")
 			boutput(O, "<span class='alert'><B>[ship] crashes into you!</B></span>")
 			var/turf/target = get_edge_target_turf(ship, ship.dir)
-			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
-			playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 			O.throw_at(target, 4, 2)
 			O.anchored = 0
 			if (istype(O, /obj/machinery/vehicle))
@@ -938,7 +936,7 @@
 			return
 		else
 			boutput(ship.pilot, "<span class='alert'><B>Snapshot created!</B></span>")
-			playsound(ship.loc, "sound/machines/reprog.ogg", 75, 1)
+			playsound(ship.loc, 'sound/machines/reprog.ogg', 75, 1)
 			cooldown = 20 SECONDS + TIME
 			health_snapshot = ship.health
 			if(ship.capacity == 1 || istype(/obj/machinery/vehicle/miniputt, ship) || istype(/obj/machinery/vehicle/recon, ship) || istype(/obj/machinery/vehicle/cargo, ship))
@@ -951,7 +949,7 @@
 			spawn(5 SECONDS)
 				spawn(1 SECONDS)
 					src.ship.UpdateOverlays(null, "rewind")
-				playsound(ship.loc, "sound/machines/bweep.ogg", 75, 1)
+				playsound(ship.loc, 'sound/machines/bweep.ogg', 75, 1)
 				if(ship.health < health_snapshot)
 					ship.health = health_snapshot
 					boutput(ship.pilot, "<span class='alert'><B>Snapshot applied!</B></span>")

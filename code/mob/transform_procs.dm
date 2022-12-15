@@ -1,5 +1,5 @@
 // Added an option to send them to the arrival shuttle. Also runtime checks (Convair880).
-/mob/proc/humanize(var/tele_to_arrival_shuttle = 0, var/equip_rank = 1)
+/mob/proc/humanize(var/tele_to_arrival_shuttle = FALSE, var/equip_rank = TRUE, var/random_human = TRUE)
 	if (src.transforming)
 		return
 
@@ -13,7 +13,11 @@
 		else
 			tele_to_arrival_shuttle = 1
 
-	var/mob/living/carbon/human/normal/character = new /mob/living/carbon/human/normal(currentLoc)
+	var/mob/living/carbon/human/character
+	if (random_human)
+		character = new /mob/living/carbon/human/normal(currentLoc)
+	else
+		character = new /mob/living/carbon/human(currentLoc, src.client.preferences.AH, src.client.preferences)
 
 	if (character && istype(character))
 
@@ -57,7 +61,7 @@
 
 		qdel(src)
 
-		logTheThing("debug", respawned, null, "Humanize() failed. Player was respawned instead.")
+		logTheThing(LOG_DEBUG, respawned, "Humanize() failed. Player was respawned instead.")
 		message_admins("Humanize() failed. [key_name(respawned)] was respawned instead.")
 		respawned.show_text("Humanize: an error occurred and you have been respawned instead. Please report this to a coder.", "red")
 
@@ -85,9 +89,6 @@
 	src.canmove = 0
 	src.icon = null
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
-	for(var/t in src.organs)
-		qdel(src.organs[t])
-		src.organs[t] = null
 
 	return ..()
 
@@ -114,8 +115,8 @@
 	boutput(O, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
 	boutput(O, "<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>")
 	boutput(O, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
-	boutput(O, "To use something, simply double-click it.")
-	boutput(O, "Currently right-click functions will not work for the AI (except examine), and will either be replaced with dialogs or won't be usable by the AI.")
+	boutput(O, "To use something, simply click it.")
+	boutput(O, "Use the prefix <B>:s</B> to speak to fellow silicons through binary.")
 
 	O.show_laws()
 	boutput(O, "<b>These laws may be changed by other players.</b>")
@@ -162,7 +163,7 @@
 /mob/proc/critterize(var/CT)
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a critter ([CT]).")
-		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a critter ([CT]).")
+		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a critter ([CT]).")
 
 		return make_critter(CT, get_turf(src))
 	return 0
@@ -171,6 +172,9 @@
 	var/mob/living/critter/newmob = new critter_type()
 	if(ghost_spawned)
 		newmob.ghost_spawned = ghost_spawned
+		if(!istype(newmob, /mob/living/critter/small_animal/mouse/weak/mentor))
+			newmob.name_prefix("ethereal")
+			newmob.UpdateName()
 	if (!T || !isturf(T))
 		T = get_turf(src)
 	newmob.set_loc(T)
@@ -207,7 +211,6 @@
 	src.canmove = 0
 	src.icon = null
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
-	for(var/t in src.organs) qdel(src.organs[text("[t]")])
 
 	var/mob/living/silicon/robot/cyborg = new /mob/living/silicon/robot/(src.loc, null, 1, syndie = syndicate)
 
@@ -261,8 +264,6 @@
 	src.canmove = 0
 	src.icon = null
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
-	for(var/t in src.organs)
-		qdel(src.organs[text("[t]")])
 
 	if(!mainframe)
 		var/mob/living/silicon/hivebot/O = new /mob/living/silicon/hivebot( src.loc )
@@ -307,7 +308,7 @@
 /mob/proc/blobize()
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a blob.")
-		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a blob.")
+		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a blob.")
 
 		return make_blob()
 	return 0
@@ -344,10 +345,10 @@
 	if (src.mind || src.client)
 		if (shitty)
 			message_admins("[key_name(src)] has been made a faustian macho man.")
-			logTheThing("admin", null, src, "[constructTarget(src,"admin")] has been made a faustian macho man.")
+			logTheThing(LOG_ADMIN, null, "[constructTarget(src,"admin")] has been made a faustian macho man.")
 		else
 			message_admins("[key_name(usr)] made [key_name(src)] a macho man.")
-			logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a macho man.")
+			logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a macho man.")
 		var/mob/living/carbon/human/machoman/W = new/mob/living/carbon/human/machoman(src, shitty)
 
 		var/turf/T = get_turf(src)
@@ -424,7 +425,7 @@
 
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a cube ([CT]) with a lifetime of [life].")
-		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a cube ([CT]) with a lifetime of [life].")
+		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a cube ([CT]) with a lifetime of [life].")
 
 		return make_cube(CT, life)
 	return 0
@@ -473,9 +474,8 @@
 	src.canmove = 0
 	src.icon = null
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
-	for(var/t in src.organs) qdel(src.organs[text("[t]")])
 
-	var/mob/living/critter/mechmonstrosity/suffering/O = new /mob/living/critter/mechmonstrosity/suffering/(src.loc,null,1)
+	var/mob/living/critter/mechmonstrosity/suffering/O = new /mob/living/critter/mechmonstrosity/suffering/(src.loc,null,null,1)
 
 
 	O.gender = src.gender
@@ -623,6 +623,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	C.say_language = "animal"
 	C.literate = 0
 	C.original_name = selfmob.real_name
+	C.is_npc = FALSE
 
 	if (traitor)
 		C.show_antag_popup("ghostcritter_antag")
@@ -665,9 +666,10 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	C.say_language = "animal"
 	C.literate = 0
 	C.original_name = selfmob.real_name
+	C.is_npc = FALSE
 
 	C.show_antag_popup("ghostcritter_mentor")
-	logTheThing("admin", C, null, "respawned as a mentor mouse at [log_loc(C)].")
+	logTheThing(LOG_ADMIN, C, "respawned as a mentor mouse at [log_loc(C)].")
 
 	//hacky fix : qdel brain to prevent reviving
 	if (C.organHolder)
@@ -703,9 +705,9 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	src = null
 	var/mob/living/critter/C = selfmob.make_critter(/mob/living/critter/small_animal/mouse/weak/mentor/admin, spawnpoint, ghost_spawned=TRUE)
 	C.mind.assigned_role = "Animal"
-	// C.say_language = "animal"
 	C.literate = 1
 	C.original_name = selfmob.real_name
+	C.is_npc = FALSE
 
 	//hacky fix : qdel brain to prevent reviving
 	if (C.organHolder)
@@ -724,13 +726,14 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if(!isdead(src) || !src.mind || !ticker || !ticker.mode)
 		return
 	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
-		boutput(src, "Sorry, respawn options aren't availbale during football mode.")
+		boutput(src, "Sorry, respawn options aren't available during football mode.")
 		return
 	var/turf/target_turf = pick(get_area_turfs(/area/afterlife/bar/barspawn))
 
 	if (!src.client) return //ZeWaka: fix for null.preferences
-	var/mob/living/carbon/human/newbody = new(null, null, src.client.preferences, TRUE)
+	var/mob/living/carbon/human/newbody = new(target_turf, null, src.client.preferences, TRUE)
 	newbody.real_name = src.real_name
+	newbody.ghost = src //preserve your original ghost
 	if(!src.mind.assigned_role || iswraith(src) || isblob(src) || src.mind.assigned_role == "Cyborg" || src.mind.assigned_role == "AI")
 		src.mind.assigned_role = "Staff Assistant"
 	newbody.JobEquipSpawned(src.mind.assigned_role, no_special_spawn = 1)
@@ -768,10 +771,10 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	// 	newbody.abilityHolder.transferOwnership(newbody)
 	// src.abilityHolder = null
 
+	// There are some traits removed in the afterlife bar, these have afterlife_blacklist set to TRUE.
 
 	newbody.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
 	newbody.set_clothing_icon_dirty()
-	newbody.set_loc(target_turf)
 
 	if (src.mind) //Mind transfer also handles key transfer.
 		src.mind.transfer_to(newbody)
@@ -824,12 +827,12 @@ var/respawn_arena_enabled = 0
 		if(flock == null)
 			// no flocks given, make flockmind
 			message_admins("[key_name(usr)] made [key_name(src)] a flockmind ([src.real_name]).")
-			logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a flockmind ([src.real_name]).")
+			logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a flockmind ([src.real_name]).")
 			return make_flockmind()
 		else
 			// make flocktrace of existing flock
 			message_admins("[key_name(usr)] made [key_name(src)] a flocktrace of flock [flock.name].")
-			logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a flocktrace ([flock.name]).")
+			logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a flocktrace ([flock.name]).")
 			return make_flocktrace(get_turf(src), flock)
 	return null
 
@@ -870,14 +873,14 @@ var/respawn_arena_enabled = 0
 	return O
 
 // flocktraces are made by flockminds
-/mob/proc/make_flocktrace(var/atom/spawnloc, var/datum/flock/flock)
+/mob/proc/make_flocktrace(var/atom/spawnloc, var/datum/flock/flock, var/free = FALSE)
 	if (src.mind || src.client)
 		if(!spawnloc)
 			spawnloc = get_turf(src)
 		if(!flock)
 			flock = new/datum/flock()
 
-		var/mob/living/intangible/flock/trace/O = new/mob/living/intangible/flock/trace(spawnloc, flock)
+		var/mob/living/intangible/flock/trace/O = new/mob/living/intangible/flock/trace(spawnloc, flock, free)
 		if (src.mind)
 			src.mind.transfer_to(O)
 			flock.trace_minds[O.name] = O.mind
@@ -893,8 +896,6 @@ var/respawn_arena_enabled = 0
 
 		if (!O.mind.special_role) // Preserve existing antag role (if any).
 			O.mind.special_role = ROLE_FLOCKTRACE
-		if (!(O.mind in ticker.mode.Agimmicks))
-			ticker.mode.Agimmicks += O.mind
 		qdel(src)
 
 		boutput(O, "<span class='bold'>You are a Flocktrace, a partition of the Flock's collective computation!</span>")

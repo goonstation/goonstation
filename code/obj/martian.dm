@@ -19,7 +19,7 @@
 		return
 	if(used)
 		return
-	playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+	playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 	boutput(user, "<span class='alert'>You reach your hand into the crevice.</span>")
 
 	if(id)
@@ -34,7 +34,7 @@
 			if(prob(25))
 				boutput(user, "<span class='alert'><B>You fail to break free!</B></span>")
 				sleep(1 SECONDS)
-				playsound(src.loc, "sound/voice/burp_alien.ogg", 50, 1)
+				playsound(src.loc, 'sound/voice/burp_alien.ogg', 50, 1)
 				var/obj/decal/cleanable/blood/gibs/gib =make_cleanable( /obj/decal/cleanable/blood/gibs/core, src.loc )
 				gib.streak_cleanable(src.dir)
 				gib = make_cleanable( /obj/decal/cleanable/blood/gibs, src.loc )
@@ -44,7 +44,7 @@
 					var/datum/human_limbs/HL = H.limbs
 					HL.sever("both_arms", user)
 				else
-					logTheThing("user", user, null, "was gibbed by [src] ([src.type]) at [log_loc(user)].")
+					logTheThing(LOG_COMBAT, user, "was gibbed by [src] ([src.type]) at [log_loc(user)].")
 					user.gib()
 				icon_state = "crevice1"
 				desc = "The crevice has closed"
@@ -59,7 +59,7 @@
 
 	else if(prob(60))
 		boutput(user, "<span class='alert'>You pull something out!</span>")
-		var/itemtype = pick(/obj/item/reagent_containers/glass/wateringcan/artifact,/obj/item/artifact/forcewall_wand,/obj/item/strange_candle,/obj/critter/cat,/obj/item/skull,/obj/item/gnomechompski,/obj/item/bat,/obj/critter/meatslinky,/obj/item/paint_can,/obj/item/mine/stun)
+		var/itemtype = pick(/obj/item/reagent_containers/glass/wateringcan/artifact,/obj/item/artifact/forcewall_wand,/obj/item/strange_candle,/mob/living/critter/small_animal/cat,/obj/item/skull,/obj/item/gnomechompski,/obj/item/bat,/obj/critter/meatslinky,/obj/item/paint_can,/obj/item/mine/stun)
 		new itemtype(src.loc)
 		var/obj/decal/cleanable/blood/gibs/gib =make_cleanable( /obj/decal/cleanable/blood/gibs, src.loc )
 		gib.streak_cleanable(user.dir)

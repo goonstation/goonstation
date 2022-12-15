@@ -61,14 +61,14 @@
 
 	w_class = W_CLASS_BULKY
 	two_handed = 1
-	throwforce = 4.0
+	throwforce = 4
 	throw_range = 4
 	stamina_crit_chance = 2
 
 	//these combat variables will change depending on the guard
-	force = 6.0
+	force = 6
 	stamina_damage = 10
-	stamina_cost = 5.0
+	stamina_cost = 5
 
 	hit_type = DAMAGE_BLUNT
 	flags = FPRINT | TABLEPASS | USEDELAY
@@ -155,6 +155,8 @@
 
 			if((attacker.a_intent=="disarm") && prob(20) && defender.equipped())
 				var/obj/item/I = defender.equipped()
+				if (I.cant_drop)
+					return
 				defender.u_equip(I)
 				I.set_loc(defender.loc)
 				var/target_turf = get_offset_target_turf(I.loc,rand(5)-rand(5),rand(5)-rand(5))
@@ -182,7 +184,8 @@
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "shinaibag-closed"
 	item_state = "shinaibag-closed"
-	flags = ONBACK | FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
 	var/open = 0
 	var/shinai = 2

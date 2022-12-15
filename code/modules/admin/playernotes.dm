@@ -4,9 +4,11 @@
 		return
 
 	if(src.tempmin)
-		logTheThing("admin", usr, player, "tried to access the notes of [constructTarget(player,"admin")]")
-		logTheThing("diary", usr, player, "tried to access the notes of [constructTarget(player,"diary")]", "admin")
+		logTheThing(LOG_ADMIN, usr, "tried to access the notes of [constructTarget(player,"admin")]")
+		logTheThing(LOG_DIARY, usr, "tried to access the notes of [constructTarget(player,"diary")]", "admin")
+		message_admins("[key_name(usr)] tried to access the notes of [player] but was denied.")
 		alert("You need to be an actual admin to view player notes.")
+		del(usr.client)
 		return
 
 	if (!config.player_notes_baseurl || !config.player_notes_auth)
@@ -27,7 +29,7 @@
 	var/datum/http_response/response = request.into_response()
 
 	if (response.errored || !response.body)
-		logTheThing("debug", null, null, "viewPlayerNotes: Failed to fetch notes of player: [player].")
+		logTheThing(LOG_DEBUG, null, "viewPlayerNotes: Failed to fetch notes of player: [player].")
 		return
 
 	var/content = response.body

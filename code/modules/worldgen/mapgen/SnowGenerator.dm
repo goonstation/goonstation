@@ -65,9 +65,9 @@
 				if(0.9 to 1)
 					heat_level = BIOME_HIGH_HEAT
 			switch(humidity)
-				if(0 to 0.20)
+				if(0 to 0.2)
 					humidity_level = BIOME_LOW_HUMIDITY
-				if(0.20 to 0.5)
+				if(0.2 to 0.5)
 					humidity_level = BIOME_LOWMEDIUM_HUMIDITY
 				if(0.5 to 0.75)
 					humidity_level = BIOME_HIGHMEDIUM_HUMIDITY

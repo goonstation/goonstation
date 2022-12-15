@@ -25,8 +25,7 @@
 /datum/projectile/bullet/battle_rifle
 	name = "bullet"
 	shot_sound = 'sound/weapons/ak47shot.ogg'
-	power = 50
-	ks_ratio = 1.0
+	damage = 50
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	impact_image_state = "bhole-small"
@@ -39,7 +38,7 @@
 	desc = "A polymer magazine capable of holding 20 rounds of 7.62×51mm"
 	ammo_type = new/datum/projectile/bullet/battle_rifle
 	icon_state = "battle_mag"
-	amount_left = 20.0
-	max_amount = 20.0
+	amount_left = 20
+	max_amount = 20
 	ammo_cat = AMMO_AUTO_308
 	sound_load = 'sound/weapons/gunload_heavy.ogg'

@@ -43,7 +43,7 @@
 
 	metal = ismetal
 	//NOW WHO THOUGH IT WOULD BE A GOOD IDEA TO PLAY THIS ON EVERY FOAM OBJ
-	//playsound(src, "sound/effects/bubbles2.ogg", 80, 1, -3)
+	//playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
 
 	UpdateIcon()
 	if(metal)
@@ -80,7 +80,7 @@
 				continue
 			if(isliving(A))
 				var/mob/living/L = A
-				logTheThing("combat", L, null, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
+				logTheThing(LOG_CHEMISTRY, L, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
 			if (reagents)
 				reagents.reaction(A, TOUCH, 5, 0)
 		if (reagents)
@@ -164,7 +164,7 @@
 		var/mob/living/carbon/human/M = AM
 
 		if (M.slip())
-			logTheThing("combat", M, null, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
+			logTheThing(LOG_CHEMISTRY, M, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
 			reagents.reaction(M, TOUCH, 5)
 
 			M.show_text("You slip on the foam!", "red")

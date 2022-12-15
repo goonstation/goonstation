@@ -2,9 +2,9 @@
 	name = "artifact energy gun power cell"
 	icon = 'icons/obj/artifacts/artifactsitemS.dmi'
 	artifact = 1
-	charge = 400.0
-	max_charge = 400.0
-	recharge_rate = 0.0
+	charge = 400
+	max_charge = 400
+	recharge_rate = 0
 	mat_changename = 0
 	mat_changedesc = 0
 
@@ -13,7 +13,7 @@
 		src.max_charge = rand(5,100)
 		src.max_charge *= 10
 		src.max_charge = max(min_charge, max_charge)
-		src.recharge_rate = rand(5,60)
+		src.recharge_rate = rand(3,30)
 
 
 		var/datum/artifact/energyammo/A = new /datum/artifact/energyammo(src)
@@ -44,11 +44,11 @@
 	ArtifactActivated()
 		. = ..()
 		processing_items |= src
-		AddComponent(/datum/component/power_cell, max_charge, null, recharge_rate)
+		AddComponent(/datum/component/power_cell, max_charge, null, recharge_rate, 0)
 
 	ArtifactDeactivated()
 		. = ..()
-		AddComponent(/datum/component/power_cell, 1, 1, 0)
+		AddComponent(/datum/component/power_cell, 1, 1, 0, 0)
 
 	reagent_act(reagent_id,volume)
 		if (..())

@@ -1,7 +1,9 @@
 
+TYPEINFO(/obj/item/machinery/phone/cellphone)
+	mats = 25
+
 /obj/item/machinery/phone/cellphone
 	icon_state = "cellphone"
-	mats = 25
 	_health = 20
 	var/phone_id = null
 	var/ringmode = 0 // 0 for silent, 1 for vibrate, 2 for ring (For future use)
@@ -15,7 +17,7 @@
 	var/answeredicon = "cellphone_answered"
 	var/obj/item/cell/cell = new
 	var/activated = 0
-	var/ringsound = "sound/machines/phones/ring_incoming.ogg"
+	var/ringsound = 'sound/machines/phones/ring_incoming.ogg'
 
 
 	New()
@@ -68,7 +70,7 @@
 			src.ringing = 0
 			src.linked.ringing = 0
 			if(!istype(src.linked,/obj/item/machinery/phone/cellphone) && src.linked.handset.holder)
-				src.linked.handset.holder.playsound_local(src.linked.handset.holder,"sound/machines/phones/remote_answer.ogg",50,0)
+				src.linked.handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_answer.ogg',50,0)
 		return
 
 
@@ -84,7 +86,7 @@
 			return
 
 		if(src.emagged == 1)
-			playsound(src.loc,"sound/machines/phones/ring_incoming.ogg" ,100,1)
+			playsound(src.loc,'sound/machines/phones/ring_incoming.ogg' ,100,1)
 			if(src.answered == 0)
 				src.icon_state = "[ringingicon]"
 			return
@@ -94,7 +96,7 @@
 			if(src.linked && src.linked.answered == 0)
 				if(src.last_ring >= 2)
 					src.last_ring = 0
-					src.playsound_local(src.handset.holder,"sound/machines/phones/ring_outgoing.ogg" ,40,0)
+					src.playsound_local(src.handset.holder,'sound/machines/phones/ring_outgoing.ogg' ,40,0)
 			else
 				if(src.last_ring >= 2)
 					if(ringmode > 0)
@@ -110,7 +112,7 @@
 			src.linked.hang_up()
 		ringing = 0
 		icon_state = phoneicon
-		playsound(src.loc,"sound/machines/phones/hang_up.ogg" ,50,0)
+		playsound(src.loc,'sound/machines/phones/hang_up.ogg' ,50,0)
 
 
 	proc/find_nearest_radio_tower()
@@ -122,6 +124,11 @@
 			if(max(abs(tower.x - src.x),abs(tower.y - src.y)) < nearest_tower)
 				nearest_tower = tower
 		return nearest_tower
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
 
 
 /obj/item/machinery/phone/cellphone/bananaphone

@@ -1,16 +1,19 @@
+TYPEINFO(/obj/item/device/igniter)
+	mats = 2
+
 /obj/item/device/igniter
 	name = "igniter"
 	desc = "A small electronic device can be paired with other electronics, or used to heat chemicals directly."
 	icon_state = "igniter"
-	var/status = 1.0
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT | USEDELAY
+	var/status = 1
+	flags = FPRINT | TABLEPASS| CONDUCT | USEDELAY
+	c_flags = ONBELT
 	item_state = "electronic"
 	m_amt = 100
 	throwforce = 5
 	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 10
-	mats = 2
 	firesource = FIRESOURCE_IGNITER
 
 	//blcok spamming shit because inventory uncaps click speed and kinda makes this an exploit

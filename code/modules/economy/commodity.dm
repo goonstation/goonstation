@@ -155,6 +155,15 @@
 	upperfluc = 75
 	lowerfluc = -45
 
+/datum/commodity/ore/gemstone
+	comname = "Gemstone"
+	comtype = /obj/item/raw_material/gemstone
+	onmarket = 1
+	price = 200
+	baseprice = 200
+	upperfluc = 250
+	lowerfluc = -150
+
 /datum/commodity/ore/cobryl
 	comname = "Cobryl"
 	comtype = /obj/item/raw_material/cobryl
@@ -274,8 +283,8 @@
 	lowerfluc = -2500
 
 /datum/commodity/goldbar
-	comname = "Gold Bullion"
-	comtype = /obj/item/material_piece/gold
+	comname = "Stamped Gold Bullion"
+	comtype = /obj/item/stamped_bullion
 	onmarket = 1
 	price = 35000
 	baseprice = 35000

@@ -382,6 +382,7 @@
 	pixel_y = 11
 	},
 /obj/item/cigarbox/gold,
+/obj/blind_switch/area/east,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fgreen2"
@@ -628,7 +629,7 @@
 	pixel_y = 11
 	},
 /obj/item/spacecash/bag,
-/obj/item/material_piece/gold,
+/obj/item/stamped_bullion,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fgreen2"

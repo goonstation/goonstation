@@ -76,7 +76,7 @@
 				S.satchel.UpdateIcon()
 				if (S.satchel.contents.len >= S.satchel.maxitems)
 					boutput(H, "<span class='alert'>Your ore scoop's satchel is full!</span>")
-					playsound(H, "sound/machines/chime.ogg", 20, 1)
+					playsound(H, 'sound/machines/chime.ogg', 20, 1)
 		else if (istype(AM,/obj/machinery/vehicle/))
 			var/obj/machinery/vehicle/V = AM
 			if (istype(V.sec_system,/obj/item/shipcomponent/secondary_system/orescoop))
@@ -86,7 +86,7 @@
 				src.set_loc(SCOOP)
 				if (SCOOP.contents.len >= SCOOP.capacity)
 					boutput(V.pilot, "<span class='alert'>Your pod's ore scoop hold is full!</span>")
-					playsound(V.loc, "sound/machines/chime.ogg", 20, 1)
+					playsound(V.loc, 'sound/machines/chime.ogg', 20, 1)
 			return
 		else
 			return
@@ -201,6 +201,23 @@
 		src.setMaterial(getMaterial("molitz"), appearance = 0, setname = 0)
 		return ..()
 
+	get_desc()
+		if(!istype(src.material, /datum/material/crystal/molitz))
+			return
+		var/datum/material/crystal/molitz/molitz = src.material
+		if(molitz.iterations == 2 && molitz.unexploded == 0)
+			. += " Fracture lines dash to the small bubbles of gas, getting close to them but not quite reaching them. You fail to spot any large bubbles of gas that havent imploded on themselves."
+		else if(molitz.iterations == 1 && molitz.unexploded == 0)
+			. += " All of the large bubbles of gas and a chunk of the small bubbles of gas are imploded, with fracture lines getting close to the small bubbles that remain."
+		else if(molitz.iterations == 0 && molitz.unexploded == 0)
+			. += " You fail to notice any non collapsed bubbles of gas in the structure."
+		else if(molitz.iterations >= 3)
+			. += " Both large and small bubbles of gas are highly prevalent throughout the crystal."
+		else if(molitz.iterations >= 1)
+			. += " Nearly all of the large bubbles of gas have collapsed, however small bubbles of gas remain embeded in the structure."
+		else if(molitz.iterations == 0)
+			. += " You fail to spot any large bubbles of gas that havent imploded on themselves, the crystal is lodged full with small bubbles of gas."
+
 /obj/item/raw_material/molitz_beta
 	name = "molitz crystal"
 	desc = "An unusual crystal of Molitz."
@@ -212,6 +229,23 @@
 		src.setMaterial(getMaterial("molitz_b"), appearance = 1, setname = 0)
 		src.pressure_resistance = INFINITY //has to be after material setup. REASONS
 		return ..()
+
+	get_desc()
+		if(!istype(src.material, /datum/material/crystal/molitz))
+			return
+		var/datum/material/crystal/molitz/molitz = src.material
+		if(molitz.iterations == 2 && molitz.unexploded == 0)
+			. += " Fracture lines dash to the small bubbles of gas, getting close to them but not quite reaching them. You fail to spot any large bubbles of gas that havent imploded on themselves."
+		else if(molitz.iterations == 1 && molitz.unexploded == 0)
+			. += " All of the large bubbles of gas and a chunk of the small bubbles of gas are imploded, with fracture lines getting close to the small bubbles that remain."
+		else if(molitz.iterations == 0 && molitz.unexploded == 0)
+			. += " You fail to notice any non collapsed bubbles of gas in the structure."
+		else if(molitz.iterations >= 3)
+			. += " Both large and small bubbles of gas are highly prevalent throughout the crystal."
+		else if(molitz.iterations >= 1)
+			. += " Nearly all of the large bubbles of gas have collapsed, however small bubbles of gas remain embeded in the structure."
+		else if(molitz.iterations == 0)
+			. += " You fail to spot any large bubbles of gas that havent imploded on themselves, the crystal is lodged full with small bubbles of gas."
 
 /obj/item/raw_material/pharosium
 	name = "pharosium ore"
@@ -323,7 +357,7 @@
 			var/turf/bombturf = get_turf(src)
 			if (bombturf)
 				var/bombarea = bombturf.loc.name
-				logTheThing("combat", null, null, "Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [src.fingerprintslast]")
+				logTheThing(LOG_BOMBING, null, "Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [src.fingerprintslast]")
 				if (src.fingerprintslast && !istype(get_area(bombturf), /area/mining/magnet))
 					message_admins("Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [key_name(src.fingerprintslast)]")
 
@@ -338,7 +372,7 @@
 			var/turf/bombturf = get_turf(src)
 			var/bombarea = istype(bombturf) ? bombturf.loc.name : "a blank, featureless void populated only by your own abandoned dreams and wasted potential"
 
-			logTheThing("combat", null, null, "Erebite detonated by heat in [bombarea]. Last touched by: [src.fingerprintslast]")
+			logTheThing(LOG_BOMBING, null, "Erebite detonated by heat in [bombarea]. Last touched by: [src.fingerprintslast]")
 			if(src.fingerprintslast && !istype(get_area(bombturf), /area/mining/magnet))
 				message_admins("Erebite detonated by heat in [bombarea]. Last touched by: [key_name(src.fingerprintslast)]")
 
@@ -576,8 +610,8 @@
 	w_class = W_CLASS_NORMAL
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	g_amt = 3750
 	burn_type = 1
 	stamina_damage = 5
@@ -608,11 +642,10 @@
 				boutput(H, "<span class='alert'><B>You crawl on [src]! Ouch!</B></span>")
 				step_on(H)
 			else
-				//Can't step on stuff if you have no legs, and it can't hurt if they're robolegs.
-
+				//Can't step on stuff if you have no legs, and it can't hurt if they're protected or not human parts.
 				if (H.mutantrace?.can_walk_on_shards)
 					return
-				if (!istype(H.limbs.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs.r_leg, /obj/item/parts/human_parts))
+				if (!istype(H.limbs?.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs?.r_leg, /obj/item/parts/human_parts))
 					return
 				if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 7))
 					boutput(H, "<span class='alert'><B>You step on [src]! Ouch!</B></span>")
@@ -647,10 +680,8 @@
 	playsound(src.loc, src.sound_stepped, 50, 1)
 	H.changeStatus("weakened", 3 SECONDS)
 	H.force_laydown_standup()
-	var/obj/item/affecting = H.organs[pick("l_leg", "r_leg")]
-	affecting?.take_damage(force, 0)
-	H.UpdateDamageIcon()
-
+	var/zone = pick("l_leg", "r_leg")
+	H.TakeDamage(zone, force, 0, 0, DAMAGE_CUT)
 
 /obj/item/raw_material/chitin
 	name = "chitin chunk"
@@ -746,11 +777,6 @@
 	desc = "A cut block of Erebite."
 	default_material = "erebite"
 	icon_state = "martian-bar"
-
-/obj/item/material_piece/gold
-	name = "stamped bullion"
-	desc = "Oh wow! This stuff's got to be worth a lot of money!"
-	default_material = "gold"
 
 /obj/item/material_piece/ice
 	desc = "Uh. What's the point in this? Is someone planning to make an igloo?"
@@ -915,12 +941,12 @@
 			if (.)
 				user.visible_message("<b>[user.name]</b> loads [W] into [src].")
 				playsound(src, sound_load, 40, 1)
+		else if (W?.cant_drop)
+			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
+			return ..()
 		else if (load_reclaim(W, user))
 			boutput(user, "You load [W] into [src].")
 			playsound(src, sound_load, 40, 1)
-		else if (W.cant_drop)
-			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
-			return ..()
 		else
 			. = ..()
 

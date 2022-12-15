@@ -1,111 +1,155 @@
 /* ==================================================== */
 /* --------------------- Machine ---------------------- */
 /* ==================================================== */
-/obj/machinery/espresso_machine/
+TYPEINFO(/obj/machinery/espresso_machine)
+	mats = 30
+
+/obj/machinery/espresso_machine
 	name = "espresso machine"
 	desc = "It's top of the line NanoTrasen espresso technology! Featuring 100% Organic Locally-Grown espresso beans!" //haha no
 	icon = 'icons/obj/foodNdrink/espresso.dmi'
 	icon_state = "espresso_machine"
 	density = 1
 	anchored = 1
-	flags = FPRINT | NOSPLASH
-	mats = 30
+	flags = FPRINT | NOSPLASH | TGUI_INTERACTIVE
+	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
-	var/cupinside = 0 //true or false
+	var/cupslimit = 2
+	var/cupsinside = 0
 	var/top_on = 1 //screwed on or screwed off
 	var/cup_name = "espresso cup"
 	var/image/image_top = null
 	var/image/image_cup = null
+	var/list/drink_options = list("Americano", "Cappuchino", "Decaf", "Espresso", "Flat White", "Latte", "Mocha")
 
 	New()
 		..()
 		UnsubscribeProcess()
 		src.update()
 
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "EspressoMachine")
+			ui.open()
+
+	ui_static_data(mob/user)
+		. = list(
+			"drinks" = drink_options
+		)
+
+	ui_data(mob/user)
+		var/cups = list()
+		var/cup_index = 1
+		for(var/obj/item/reagent_containers/C in src.contents)
+			var/cup = list()
+			cup["capacity"] = C.initial_volume
+			cup["reagents"] = list()
+			cup["index"] = cup_index
+			for(var/reagent_id in C.reagents.reagent_list)
+				var/datum/reagent/R = C.reagents.reagent_list[reagent_id]
+				cup["reagents"] += list(list(R.name, R.volume, R.fluid_r, R.fluid_g, R.fluid_b))
+			cups += list(cup)
+			cup_index += 1
+
+		. = list(
+			"containers" = cups
+		)
+
+	ui_act(action, params)
+		. = ..()
+		if (.)
+			return
+		switch(action)
+			if("eject")
+				var/cup_index = params["cup_index"]
+				var/obj/item/target = src.contents[cup_index]
+				if (target)
+					if((BOUNDS_DIST(usr, src) == 0))
+						usr.put_in_hand_or_drop(target)
+					else
+						target.set_loc(src.loc)
+				usr.show_text("You have removed the [src.cup_name] from [src].")
+				src.cupsinside -= 1
+				src.update()
+				. = TRUE
+			if("flush")
+				var/cup_index = params["cup_index"]
+				var/obj/item/reagent_containers/target = src.contents[cup_index]
+				if (target)
+					target.reagents.clear_reagents()
+					. = TRUE
+			if("pour")
+				. = TRUE
+				var/drink_choice = params["drink_name"]
+				switch (drink_choice)  //finds cup in contents and adds chosen drink to it
+					if ("Espresso")
+						for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
+							C.reagents.add_reagent("espresso",10)
+					if ("Latte") // 5:1 milk:espresso
+						for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
+							C.reagents.add_reagent("espresso", 1.6)
+							C.reagents.add_reagent("milk", 8.4)
+					if ("Mocha") // 3:1:3 espresso:milk:chocolate
+						for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
+							C.reagents.add_reagent("espresso", 4.3)
+							C.reagents.add_reagent("milk", 1.4)
+							C.reagents.add_reagent("chocolate", 4.3)
+					if ("Cappuchino") // 1:1:1 milk foam:milk:espresso
+						for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
+							C.reagents.add_reagent("espresso", 3.5)
+							C.reagents.add_reagent("milk", 6.5)
+					if ("Americano") // 3:2 water:espresso
+						for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
+							C.reagents.add_reagent("espresso", 4)
+							C.reagents.add_reagent("water", 6)
+					if ("Decaf") // 1 decaf espresso
+						for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
+							C.reagents.add_reagent("decafespresso", 10)
+					if ("Flat White") // 3:2 milk:espresso
+						for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
+							C.reagents.add_reagent("espresso", 4)
+							C.reagents.add_reagent("milk", 6)
+				playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
+
 	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/drinks/espressocup))
-			if (src.cupinside == 1)
-				user.show_text("The [src] can't hold any more [src.cup_name]s, doofus!")
+			if (cupsinside >= src.cupslimit)
+				user.show_text("The [src.name] can't hold any more [src.cup_name]s, doofus!")
 				return ..()
-			if (src.cupinside == 0)
+			else
+				src.cupsinside += 1
 				user.drop_item()
-				src.cupinside = 1
 				W.set_loc(src)
-				user.show_text ("You place the [src.cup_name] into the [src].")
+				user.show_text ("You place the [src.cup_name] into [src].")
 				src.update()
+				tgui_process.update_uis(src)
 				return ..()
 
+	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
+		if (!istype(O, /obj/item/reagent_containers/food/drinks/espressocup))
+			return
+
+		if (!isliving(user))
+			boutput(user, "<span class='alert'>How are you planning on drinking coffee as a ghost!?</span>")
+			return
+
+		if (isAI(user) || !can_reach(user, O) || BOUNDS_DIST(user, src) > 1 || !can_act(user) )
+			return
+
+		src.attackby(O, user)
+
 	attack_hand(mob/user)
-		if (can_reach(user,src))
+		if (can_reach(user,src) && !(status & (NOPOWER|BROKEN)))
 			src.add_fingerprint(user)
-			if (src.cupinside == 1) //freaking spacing errors made me waste hours on this
-				if(!(status & (NOPOWER|BROKEN)))
-					switch(tgui_alert(user, "What would you like to do with [src]?", "Espresso machine", list("Make espresso", "Remove cup", "Nothing")))
-						if ("Make espresso")
-							var/drink_choice = tgui_input_list(user, "What kind of espresso do you want to make?", "Selection", list("Americano", "Cappuchino", "Decaf", "Espresso", "Flat White", "Latte", "Mocha"))
-							if (!drink_choice)
-								return
-							switch (drink_choice)  //finds cup in contents and adds chosen drink to it
-								if ("Espresso")
-									for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
-										C.reagents.add_reagent("espresso",10)
-										playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
-									return
-								if ("Latte") // 5:1 milk:espresso
-									for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
-										C.reagents.add_reagent("espresso", 1.6)
-										C.reagents.add_reagent("milk", 8.4)
-										playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
-									return
-								if ("Mocha") // 3:1:3 espresso:milk:chocolate
-									for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
-										C.reagents.add_reagent("espresso", 4.3)
-										C.reagents.add_reagent("milk", 1.4)
-										C.reagents.add_reagent("chocolate", 4.3)
-										playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
-									return
-								if ("Cappuchino") // 1:1:1 milk foam:milk:espresso
-									for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
-										C.reagents.add_reagent("espresso", 3.5)
-										C.reagents.add_reagent("milk", 6.5)
-										playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
-									return
-								if ("Americano") // 3:2 water:espresso
-									for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
-										C.reagents.add_reagent("espresso", 4)
-										C.reagents.add_reagent("water", 6)
-										playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
-									return
-								if ("Decaf") // 1 decaf espresso
-									for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
-										C.reagents.add_reagent("decafespresso", 10)
-										playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
-									return
-								if ("Flat White") // 3:2 milk:espresso
-									for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
-										C.reagents.add_reagent("espresso", 4)
-										C.reagents.add_reagent("milk", 6)
-										playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
-									return
-						if ("Remove cup")
-							if (BOUNDS_DIST(src, user) > 0 || isAI(user))
-								user.show_text("You can not do that remotely.")
-								return
-							src.cupinside = 0
-							for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents) //removes cup from contents and ejects
-								C:set_loc(src.loc)
-							user.show_text("You have removed the [src.cup_name] from the [src].")
-							src.update()
-						if ("Nothing")
-							return
-			else return ..()
+			return ..()
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					qdel(src)
 					return
@@ -119,12 +163,14 @@
 		return
 
 	proc/update()
-		if (src.cupinside == 1)
-			if (!src.image_cup)
-				src.image_cup = image(src.icon, icon_state = "cupoverlay")
-			src.UpdateOverlays(src.image_cup, "cup")
+		if (src.cupsinside == 1)
+			src.image_cup = image(src.icon, icon_state = "cupoverlay")
+		else if(src.cupsinside == 2)
+			src.image_cup = image(src.icon, icon_state = "cupoverlay2")
 		else
-			src.UpdateOverlays(null, "cup")
+			src.image_cup = null
+		src.UpdateOverlays(src.image_cup, "cup")
+
 		if (src.top_on == 1)
 			if (!src.image_top)
 				src.image_top = image(src.icon, icon_state = "coffeetopoverlay")
@@ -138,6 +184,9 @@
 /* ===================================================== */
 //Sorry for budging in here, whoever made the espresso machine. Lets just rename this to coffee.dm?
 
+TYPEINFO(/obj/machinery/coffeemaker)
+	mats = 30
+
 /obj/machinery/coffeemaker
 	name = "coffeemaker"
 	desc = "It's top of the line NanoTrasen espresso technology! Featuring 100% Organic Locally-Grown espresso beans!" //haha no
@@ -146,7 +195,6 @@
 	density = 1
 	anchored = 1
 	flags = FPRINT | NOSPLASH
-	mats = 30
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 	var/carafe_name = "coffee carafe"
 	var/image/image_top = null
@@ -219,10 +267,10 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					qdel(src)
 					return

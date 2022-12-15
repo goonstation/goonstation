@@ -2,6 +2,7 @@
 	name = "wizard"
 	config_tag = "wizard"
 	shuttle_available = 2
+	antag_token_support = TRUE
 	latejoin_antag_compatible = 1
 	latejoin_only_if_all_antags_dead = 1
 	latejoin_antag_roles = list(ROLE_CHANGELING, ROLE_VAMPIRE)
@@ -39,7 +40,7 @@
 			break
 		src.traitors += tplayer
 		token_players.Remove(tplayer)
-		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 		/*--num_wizards
 		num_wizards = max(num_wizards, 0)*/
@@ -86,7 +87,7 @@
 		if (wizard.current.gender == "female") randomname = pick_string_autokey("names/wizard_female.txt")
 		else randomname = pick_string_autokey("names/wizard_male.txt")
 		SPAWN(0)
-			var/newname = adminscrub(input(wizard.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname) as text)
+			var/newname = adminscrub(tgui_input_text(wizard.current, "You are a Wizard. Would you like to change your name to something else?", "Name change", randomname))
 			if(newname && newname != randomname)
 				phrase_log.log_phrase("name-wizard", newname, no_duplicates=TRUE)
 			if (length(ckey(newname)) == 0)

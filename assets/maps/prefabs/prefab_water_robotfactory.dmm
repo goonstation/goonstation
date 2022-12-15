@@ -432,10 +432,6 @@
 /obj/item/device/flash,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)
-"bo" = (
-/obj/decal/cleanable/robot_debris,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/prefab/replicant_lab)
 "bp" = (
 /obj/decal/fakeobjects/robot,
 /obj/decal/cleanable/robot_debris{
@@ -1247,7 +1243,7 @@ aJ
 aT
 ba
 bg
-bo
+aa
 bx
 bf
 ad

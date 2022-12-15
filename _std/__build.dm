@@ -34,6 +34,8 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the map Atlas, no other zlevels. Boots way faster
 
 //////////// CONVENIENCE OPTIONS FOR TESTING ETC
+//#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
+
 //#define STOP_DISTRACTING_ME //All of the below
 
 //#define I_AM_ABOVE_THE_LAW // Prevents all secbots and guardbuddies from spawning, useful for gun testing
@@ -42,15 +44,20 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define CLONING_IS_A_SIN // Don't prebake clones
 //#define I_KNOW_WHAT_IM_DOING_PROBABLY // Suppresses gottagofast warning about only using one z-level.
 //#define LOW_SECURITY // Deletes turrets
+//#define NO_CRITTERS // Deletes mob critters
+//#define NO_RANDOM_ROOMS // Don't generate random rooms. Random room areas will be left blank and the landmark will be visible
+//#define I_AM_HACKERMAN // Lets you varedit things you normally couldn't (admin holders, server config)
+//#define CHECK_MORE_RUNTIMES // Enables checking for some additional errors which might be too costly on live server
 
 //#define Z_LOG_ENABLE 1  // Enable additional world.log logging
 
 //////////// PROFILING OPTIONS
 
+//#define TRACY_PROFILER_HOOK // Enables the hook for the DM Tracy profiler in world/init(), read the code guide
+
 //#define SERVER_SIDE_PROFILING_FULL_ROUND 1 // Generate and save profiler data for the entire round
 //#define SERVER_SIDE_PROFILING_PREGAME 1	// Generate and save profiler data for pregame work (before "Welcome to pregame lobby")
 //#define SERVER_SIDE_PROFILING_INGAME_ONLY 1 // Generate and save profiler data for post-pregame work
-
 
 //////////// DEBUGGING TOGGLES
 
@@ -112,6 +119,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_DENSITY
 //#define MAP_OVERRIDE_KONDARU
 //#define MAP_OVERRIDE_OZYMANDIAS
+//#define MAP_OVERRIDE_NADIR
 //#define MAP_OVERRIDE_FLEET
 //#define MAP_OVERRIDE_ICARUS
 //#define MAP_OVERRIDE_GEHENNA			// Warcrimes WIP do not use
@@ -129,6 +137,7 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //#define RP_MODE 1
 //#define HALLOWEEN 1
+//#define AUTUMN 1
 //#define XMAS 1
 //#define CANADADAY 1
 //#define FOOTBALL_MODE 1
@@ -142,6 +151,10 @@ o+`        `-` ``..-:yooos-..----------..`
 #define CLONING_IS_A_SIN
 #define I_KNOW_WHAT_IM_DOING_PROBABLY
 #define LOW_SECURITY
+#define NO_CRITTERS
+#define NO_RANDOM_ROOMS
+#define I_AM_HACKERMAN
+#define CHECK_MORE_RUNTIMES
 #endif
 
 var/global/vcs_revision = "1"

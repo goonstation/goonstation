@@ -26,8 +26,8 @@ var/global/haine_blood_debug = 0
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set hidden = 1
 	haine_blood_debug = !( haine_blood_debug )
-	logTheThing("admin", usr, null, "toggled blood debug messages [haine_blood_debug ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled blood debug messages [haine_blood_debug ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled blood debug messages [haine_blood_debug ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled blood debug messages [haine_blood_debug ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled blood debug messages [haine_blood_debug ? "on" : "off"]")
 
 // for logging purposes
@@ -385,7 +385,9 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	var/mob/living/H = some_idiot
 
-	var/blood_color_to_pass = DEFAULT_BLOOD_COLOR
+	var/blood_color_to_pass = DEFAULT_BLOOD_COLOR //this makes it so the amounts of chemicals you bleed scales nonlinearly with the amount of chemicals in you compared to the amount of blood
+	var/reagents_to_transfer = min(num_amount * (0.2 + (0.8 * (H.reagents?.total_volume**(5/4)/(H.reagents?.total_volume**(5/4) + H.blood_volume)))), H.reagents.total_volume)
+	var/blood_to_transfer = num_amount - reagents_to_transfer
 
 	if (istype(H))
 		blood_color_to_pass = H.blood_color
@@ -441,6 +443,12 @@ this is already used where it needs to be used, you can probably ignore it.
 		var/obj/decal/cleanable/blood/dynamic/B = null
 		if (T.messy > 0)
 			B = locate(/obj/decal/cleanable/blood/dynamic) in T
+			if(istype(B, /obj/decal/cleanable/blood/dynamic/tracks))
+				B = null
+				for(var/obj/decal/cleanable/blood/dynamic/blood in T)
+					if(!istype(blood, /obj/decal/cleanable/blood/dynamic/tracks))
+						B = blood
+						break
 
 		if (!B) // look for an existing dynamic blood decal and add to it if you find one
 			B = make_cleanable( /obj/decal/cleanable/blood/dynamic,T)
@@ -459,8 +467,8 @@ this is already used where it needs to be used, you can probably ignore it.
 			H.change_vampire_blood(-5) //num_amount // gunna go with a set number as a test
 			//BLOOD_DEBUG("[H] bleeds -5 from vamp_blood_remaining and their vamp_blood_remaining becomes [H.get_vampire_blood()]")
 		else
-			H.blood_volume -= num_amount // time to bleed
-			//BLOOD_DEBUG("[H] bleeds [num_amount] and their blood level becomes [H.blood_volume]")
+			H.blood_volume -= blood_to_transfer // time to bleed
+			//BLOOD_DEBUG("[H] bleeds [blood_to_transfer] and their blood level becomes [H.blood_volume]")
 
 			if (H.blood_volume < 0) // you shouldn't have negative blood okay
 				H.blood_volume = 0
@@ -470,13 +478,12 @@ this is already used where it needs to be used, you can probably ignore it.
 		bloodHolder.CopyOther(some_idiot.bioHolder)
 		bloodHolder.ownerName = some_idiot.real_name
 
-		B.add_volume(blood_color_to_pass, H.blood_id, num_amount, vis_amount, blood_reagent_data=bloodHolder)
+		B.add_volume(blood_color_to_pass, H.blood_id, blood_to_transfer, vis_amount, blood_reagent_data=bloodHolder)
 		//BLOOD_DEBUG("[H] adds volume to existing blood decal")
 
 		if (B.reagents && H.reagents?.total_volume)
 			//BLOOD_DEBUG("[H] transfers reagents to blood decal [log_reagents(H)]")
-			H.reagents.trans_to(B, min(round(num_amount / 2, 1), 5))
-	else
+			H.reagents.trans_to(B, (num_amount - blood_to_transfer))
 		return
 
 /* ====================================== */
@@ -496,8 +503,8 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	if (isvampire(some_idiot) && (some_idiot.get_vampire_blood() <= 0) || (!isvampire(some_idiot) && !some_idiot.reagents && !some_idiot.blood_volume))
 		return 0
-
-	var/reagents_to_transfer = (amount / 5) * 2
+								//this makes it so the amounts of chemicals you extract scales nonlinearly with the amount of chemicals in you compared to the amount of blood
+	var/reagents_to_transfer = (amount * (0.2 + (0.8 * (some_idiot.reagents.total_volume**(5/4)/(some_idiot.reagents.total_volume**(5/4) + some_idiot.blood_volume)))))
 	var/blood_to_transfer = (amount - min(reagents_to_transfer, some_idiot.reagents.total_volume))
 
 	var/datum/bioHolder/bloodHolder = null
@@ -534,7 +541,8 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	// Vampires can't use this trick to inflate their blood count, because they can't get more than ~30% of it back (Convair880).
 	if (blood_system && (isvampire(some_idiot) && (some_idiot.get_vampire_blood() >= blood_to_transfer)))
-		some_idiot.change_vampire_blood(-blood_to_transfer)
+		some_idiot.change_vampire_blood(-blood_to_transfer, total_blood=FALSE)
+		some_idiot.change_vampire_blood(-blood_to_transfer, total_blood=TRUE)
 
 	// Ignore that second container of blood entirely if it's a vampire (Convair880).
 	if (blood_system && !isvampire(some_idiot) && (some_idiot.blood_volume >= blood_to_transfer))
@@ -719,10 +727,10 @@ this is already used where it needs to be used, you can probably ignore it.
 	if (!blood_system)
 		return
 
-	if (haine_blood_debug) logTheThing("debug", some_idiot, null, "<b>HAINE BLOOD DEBUG: [some_idiot] begins internal bleed damage proc</b>")
+	if (haine_blood_debug) logTheThing(LOG_DEBUG, some_idiot, "<b>HAINE BLOOD DEBUG: [some_idiot] begins internal bleed damage proc</b>")
 
 	if (!isliving(some_idiot))
-		if (haine_blood_debug) logTheThing("debug", some_idiot, null, "<b>HAINE BLOOD DEBUG: [some_idiot] is not living so internal bleed damage was canceled</b>")
+		if (haine_blood_debug) logTheThing(LOG_DEBUG, some_idiot, "<b>HAINE BLOOD DEBUG: [some_idiot] is not living so internal bleed damage was canceled</b>")
 		return
 
 	var/mob/living/H = some_idiot
@@ -731,60 +739,60 @@ this is already used where it needs to be used, you can probably ignore it.
 		if (H.bleeding)
 			H.bleeding = 0
 			H.bleeding_internal = 0
-		if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG: [H] is dead/immortal/a vampire/otherwise not supposed to bleed, so their bleeding has been set to 0 and internal bleed damage was canceled</b>")
+		if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG: [H] is dead/immortal/a vampire/otherwise not supposed to bleed, so their bleeding has been set to 0 and internal bleed damage was canceled</b>")
 		return
 
 	if (!(H.blood_volume > 0)) // make sure we have blood to bleed
 		H.bleeding = 0 // if we don't have any blood to bleed, just stop okay, just stop.
 		H.bleeding_internal = 0
-		if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG: [H] has no blood and their bleeding has been set to 0 and internal bleed damage was canceled</b>")
+		if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG: [H] has no blood and their bleeding has been set to 0 and internal bleed damage was canceled</b>")
 		return
 
 	if (H.bleeding_internal >= 10) // don't bleed more if you're already at bleeding 10 tia
-		if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG: [H]'s internal bleeding was [H.bleeding_internal] and has been set to 10 and internal bleed damage was canceled</b>")
+		if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG: [H]'s internal bleeding was [H.bleeding_internal] and has been set to 10 and internal bleed damage was canceled</b>")
 		H.bleeding_internal = 10
 		return
 
 	var/increase_chance = rand(30, 50)
-	if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H]'s initial increase chance is [increase_chance]")
+	if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG:</b> [H]'s initial increase chance is [increase_chance]")
 
-	if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H]'s initial internal bleeding is [H.bleeding_internal]")
+	if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG:</b> [H]'s initial internal bleeding is [H.bleeding_internal]")
 	switch (H.bleeding_internal)
 		if (-INFINITY to 1)
 			increase_chance += rand(30, 50)
-			if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H]'s increase chance increased to [increase_chance]")
+			if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG:</b> [H]'s increase chance increased to [increase_chance]")
 		if (2)
 			increase_chance += rand(20, 30)
-			if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H]'s increase chance increased to [increase_chance]")
+			if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG:</b> [H]'s increase chance increased to [increase_chance]")
 		if (3)
 			increase_chance += rand(5, 20)
-			if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H]'s increase chance increased to [increase_chance]")
+			if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG:</b> [H]'s increase chance increased to [increase_chance]")
 		if (4)
 			increase_chance += rand(0, 5)
-			if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H]'s increase chance increased to [increase_chance]")
+			if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG:</b> [H]'s increase chance increased to [increase_chance]")
 		if (5 to INFINITY)
-			if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H]'s internal bleeding was already high and chance was not increased")
+			if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG:</b> [H]'s internal bleeding was already high and chance was not increased")
 
 	if (some_jerk?.zone_sel?.selecting)
-		if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [some_jerk]'s target zone is [some_jerk.zone_sel.selecting]")
+		if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG:</b> [some_jerk]'s target zone is [some_jerk.zone_sel.selecting]")
 		switch (some_jerk.zone_sel.selecting)
 			if ("head")
 				increase_chance += rand(0, 10)
-				if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H]'s increase chance increased to [increase_chance]")
+				if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG:</b> [H]'s increase chance increased to [increase_chance]")
 
 	if (ischangeling(H))
 		increase_chance -= rand(10, 20)
-		if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H] is a changeling - [H]'s increase chance decreased to [increase_chance]")
+		if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG:</b> [H] is a changeling - [H]'s increase chance decreased to [increase_chance]")
 
 	var/final_increase_chance = min(increase_chance, 100)
-	if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H]'s final increase chance is [final_increase_chance]")
+	if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG:</b> [H]'s final increase chance is [final_increase_chance]")
 	if (prob(final_increase_chance))
 		H.bleeding_internal ++
-		if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG: [H] rolls internal bleeding increase, internal bleeding is now [H.bleeding_internal]</b>")
+		if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG: [H] rolls internal bleeding increase, internal bleeding is now [H.bleeding_internal]</b>")
 	else
-		if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG: [H]'s internal bleeding does not increase</b>")
+		if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG: [H]'s internal bleeding does not increase</b>")
 	H.bleeding_internal = clamp(H.bleeding_internal, 0, 5)
-	if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG: [H]'s internal bleeding is [H.bleeding_internal] after clamp</b>")
+	if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG: [H]'s internal bleeding is [H.bleeding_internal] after clamp</b>")
 
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
 /*-=-=-=-=-=-=-=-=-=-=-=MEDICAL-EQUIPMENT=-=-=-=-=-=-=-=-=-=-=-*/
@@ -841,8 +849,8 @@ this is already used where it needs to be used, you can probably ignore it.
 	icon_state = "dagger"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "knife"
-	force = 0.0
-	throwforce = 0.0
+	force = 0
+	throwforce = 0
 	throw_range = 16
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	burn_type = 1

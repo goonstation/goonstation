@@ -6,6 +6,9 @@
 #define TOTAL_O2_TANKS (o2tanks + length(inserted_o2))
 #define TOTAL_PL_TANKS (pltanks + length(inserted_pl))
 
+TYPEINFO(/obj/machinery/dispenser)
+	mats = 24
+
 /obj/machinery/dispenser
 	desc = "A storage device for gas tanks. Holds 10 plasma and 10 oxygen tanks."
 	name = "Tank Storage Unit"
@@ -15,8 +18,7 @@
 	status = REQ_PHYSICAL_ACCESS
 	var/o2tanks = 10
 	var/pltanks = 10
-	anchored = 1.0
-	mats = 24
+	anchored = 1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
 	//These keep track of tanks that people have inserted back into the machine (for shenanigans!)
@@ -25,14 +27,14 @@
 
 /obj/machinery/dispenser/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				qdel(src)
 				return
-		if(3.0)
+		if(3)
 			if (prob(25))
 				while(TOTAL_O2_TANKS > 0)
 					pop_o2()

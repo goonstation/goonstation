@@ -620,7 +620,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 			if (src.id == "pmix_control")
 				if (((src.last_change + src.message_delay) <= world.time))
 					src.last_change = world.time
-					logTheThing("atmos", usr, null, "has just edited the plasma mixer at [log_loc(src)].")
+					logTheThing(LOG_STATION, usr, "has just edited the plasma mixer at [log_loc(src)].")
 					message_admins("[key_name(usr)] has just edited the plasma mixer at at [log_loc(src)].")
 
 		if (href_list["refresh_status"])

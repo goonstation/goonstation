@@ -3,7 +3,7 @@
 	desc = "My best friend plank!"
 	icon = 'icons/obj/materials.dmi'
 	icon_state = "plank"
-	force = 4.0
+	force = 4
 	//cogwerks - burn vars
 	burn_point = 400
 	burn_output = 1500
@@ -41,7 +41,7 @@
 			if (user)
 				newWall.add_fingerprint(user)
 				newWall.builtby = user.real_name
-				logTheThing("station", user, null, "builds \a [newWall] (<b>Material:</b> [newWall.material && newWall.material.mat_id ? "[newWall.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
+				logTheThing(LOG_STATION, user, "builds \a [newWall] (<b>Material:</b> [newWall.material && newWall.material.mat_id ? "[newWall.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
 				user.u_equip(src)
 		qdel(src)
 		return
@@ -79,7 +79,7 @@
 			if (user)
 				newWall.add_fingerprint(user)
 				newWall.builtby = user.real_name
-				logTheThing("station", user, null, "builds \a [newWall] (<b>Material:</b> [newWall.material && newWall.material.mat_id ? "[newWall.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
+				logTheThing(LOG_STATION, user, "builds \a [newWall] (<b>Material:</b> [newWall.material && newWall.material.mat_id ? "[newWall.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
 				user.u_equip(src)
 		qdel(src)
 		return
@@ -203,17 +203,17 @@
 		if (istype(source) && plank != source.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 		if (prob(20))
-			playsound(wall.loc, "sound/impact_sounds/Wood_Hit_1.ogg", rand(50,90), 1)
+			playsound(wall.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', rand(50,90), 1)
 
 	onStart()
 		..()
-		playsound(wall.loc, "sound/impact_sounds/Wood_Hit_1.ogg", rand(50,90), 1)
+		playsound(wall.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', rand(50,90), 1)
 		owner.visible_message("<span class='notice'>[owner] begins repairing [wall]!</span>")
 
 	onEnd()
 		..()
 		owner.visible_message("<span class='notice'>[owner] uses a [plank] to completely repair the [wall]!</span>")
-		playsound(wall.loc, "sound/impact_sounds/Wood_Hit_1.ogg", rand(50,90), 1)
+		playsound(wall.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', rand(50,90), 1)
 		//do repair shit.
 		wall.health = wall.health_max
 		wall.checkhealth()

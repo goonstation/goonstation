@@ -1227,7 +1227,7 @@
 								logUser = "Terminal \[[src.useracc.user_id]]"
 
 						message_admins("NUKE: Research Sector nuclear charge activated by [key_name(logUser)].")
-						logTheThing("combat", logUser, null, "Activated the Research Sector nuclear charge.")
+						logTheThing(LOG_COMBAT, logUser, "Activated the Research Sector nuclear charge.")
 
 						message_user("!Transmitting Activation Code!")
 					if (ESIG_USR1)

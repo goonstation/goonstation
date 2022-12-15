@@ -1,5 +1,1989 @@
 
+(t)wed dec 14 22
+(u)aloe
+(*)Clicking on an item someone has equipped in the human inventory menu (the one where you strip people/put items on them) while holding an item now clicks that equipped item with your held one. Paint people's clothes! Stuff grenades in people's backpacks! Melt people's shoes!<br>This WILL have jank, and I'll revert it if the jank becomes too much to handle.
+(u)tarmunora
+(e)⚖|C-Balance
+(+)genetic stability starts at 100%
+(u)Sord
+(e)⚖|C-Balance
+(*)Going into Critical Condition now grants a large negative debuff to stamina and stamina regen. Once you leave crit you will receive a smaller "Recent Trauma" debuff.
+(*)Recent Trauma can be reduced by having painkillers (salicylic acid, morphine) in your system.
+(u)Sovexe
+(p)12394
+(e)⚖🧫🔊🔨|C-Balance, C-Experimental, C-Sound, A-Player-Actions
+(*)Arcfiend now deals less direct stamina damage but has knock backs to take advantage of various environmental hazards, see minor changes section for full details.
+(+)Arc Flash - cooldown reduced 15 > 12
+(+)Flash - now has a 0.75 second charge up before it applies knock back to all foes within 3 tiles, pushing them out to a distance 7 tiles away. Direct stamina damage from elecflash reduced 63 > 47
+(+)Discharge - knocks back the target back 4 tiles. Direct stamina damage reduced 130 > 115. Half (15) of direct burn damage is now always applied even to targets with electrical immunity. Cyborg targets now randomly receive 30 damage to either a random limb or distributed across their various parts
+(+)Ride the Lightning - reduced cost per step 3 > 2
+(t)sun dec 11 22
+(u)Cheffie
+(p)12325
+(e)💅💨|C-QoL, A-Atmospherics
+(+)You can now see the volume of various atmospherics objects by examining them for portable objects or with the atmospherics scanner for pipes.
+(u)tarmunora
+(e)⚖|C-Balance
+(+)humans that are not in crit are slighly more resistant to gibbing from explosions
+(u)LeahTheTech
+(p)12380
+(e)🆕⚖🧛📦|C-Feature, C-Balance, A-Gamemodes, A-Game-Objects
+(*)Added a new 1TC traitor purchase: the signaler implant, which sends configurable signals on emote triggers.
+(u)Kubius
+(p)12307
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Nadir's breach hull now includes four auxiliary compartments.
+(u)Roddy, Meow Meow, DisturbHerb
+(p)11135
+(e)🎨🍝|C-Sprites, A-Catering
+(*)Adds churros to the game. Combine a dough strip and sugar in the oven for 6 seconds, on high. Dip one into your favorite soup based items!
+(u)Bartimeus973
+(p)12218
+(e)🆕🎨💅🔨|C-Feature, C-Sprites, C-QoL, A-Player-Actions
+(+)Wraiths can now toggle their ghost chat with the "toggle_deadchat" ability.
+(u)Bartimeus973
+(p)12024
+(e)🗺🔄📡|A-Mapping, C-Rework, A-AI
+(+)Cats are now mobs! Try and see if jones can defeat the captain in a drinking contest!
+(u)Kubius
+(p)12172
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Spatial interdictors may now be constructed with alternate control boards that grant them new functionality, such as wireless cyborg recharge. Their efficacy against mass radiation events has also dramatically increased.
+(u)LeahTheTech
+(p)12235
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Coagulated gnesis gib chance now scales with volume.
+(u)LeahTheTech
+(p)12317
+(e)⚖💅|C-Balance, C-QoL
+(+)Stunned people can now be shoved up/down ladders using grabs (previously only people capable of climbing ladders could be shoved down them).
+(u)glowbold
+(p)12356
+(e)🪲🆕📦|C-Bug, C-Feature, A-Game-Objects
+(*)Omnitools auto-swap to the needed tool when using the deconstruction tool context menu.
+(t)sat dec 10 22
+(u)Bartimeus973
+(p)12222
+(e)🆕🧛🔨|C-Feature, A-Gamemodes, A-Player-Actions
+(+)Plaguerats now have an ability to move through disposal pipes.
+(u)glowbold
+(p)12355
+(e)🪲🆕📦|C-Bug, C-Feature, A-Game-Objects
+(+)You can throw items from certain rideables, like segways and skateboards.
+(t)fri dec 09 22
+(u)Sord
+(e)⚖|C-Balance
+(+)Containment fields now stun you for significantly less time.
+(u)Munien
+(p)12311
+(e)🆕🎩|C-Feature, A-Clothing
+(+)Added a few extra items to hacked medical clothing vendors for other medical occupations.
+(t)thu dec 08 22
+(u)tarmunora
+(+)emagged segways no longer inexplicably safer than normal ones.
+(t)wed dec 07 22
+(u)Sord
+(e)🗺💅|A-Mapping, C-QoL
+(+)Donut 2's Engineering Department has received a new coat of paint.
+(u)Flaborized
+(e)💎
+(*)New artifact sprites and some tweaking of their visuals!
+(u)tarmunora
+(*)Vampire enthrall has a scaling cost based on number of living thralls.
+(u)tarmunora
+(+)Vending machines deal stamina damage instead of auto-stun when falling.
+(t)tue dec 06 22
+(u)Virvatuli
+(p)12310
+(e)🗺💅|A-Mapping, C-QoL
+(+)Expanded Donut 3's medbooth to be consistent with other maps, no more free defib
+(u)Zaniff
+(p)12302
+(e)🎨|C-Sprites
+(+)Resprited the pod secondary systems.
+(t)mon dec 05 22
+(u)Stonepillar
+(p)11902
+(e)🚄🔧🧫📡⚙📜|C-Performance, A-Tooling, C-Experimental, A-AI, A-Internal, C-Documentation
+(*)Made pathfinding go faster, so that flock doesn't melt the server. This changed some important parts of the game, please report any new weirdness with critters or any movement related bugs!
+(u)LeahTheTech
+(p)11796
+(e)🆕🗺🎨🧛|C-Feature, A-Mapping, C-Sprites, A-Gamemodes
+(*)Added an interactive Flock tutorial, so you have a chance at learning what at least half the buttons do before playing.
+(u)LeahTheTech
+(p)12270
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Flockdrone egg cost now scales with the number of active flockdrones.
+(t)sat dec 03 22
+(u)Cheffie
+(p)12136
+(e)🎨💅📄|C-Sprites, C-QoL, A-UI
+(*)Omnitools now use a Context Actions menu.
+(u)glowbold
+(p)12252
+(e)🆕⚖📦🎩|C-Feature, C-Balance, A-Game-Objects, A-Clothing
+(+)Freshly laundered clothing stays warm for a bit after coming out of the WashMan.
+(u)Bartimeus973
+(p)12271
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(+)Fake guns that pop out a flag when fired can now be reused.
+(u)tarmunora
+(*)Wizards now have magic hands, which do not like certain technology. Good thing they packed their EMP-resistant headsets!
+(t)fri dec 02 22
+(u)tarmunora
+(+)AI law captcha returns.
+(t)thu dec 01 22
+(u)tarmunora
+(+)The Chief Engineer's belt has been modernized to use the new energy shield mechanic.
+(u)pali
+(e)🎄
+(*)Ho ho ho, Spacemas is here. Be sure to click the Spacemas tree and make your own Spacemas tree ornament!
+(t)wed nov 30 22
+(u)Mora
+(p)12228
+(e)🪲🎨|C-Bug, C-Sprites
+(+)Added a alternative blue labcoat for the medical director via alternate outfit spacebux purchase, check it out in the PR or in game!
+(u)goonstation-enjoyer
+(p)12171
+(e)💅🤖|C-QoL, A-Silicons
+(+)Mining cyborgs now get mesons instead of a jetpack on ocean maps.
+(t)tue nov 29 22
+(u)aloe
+(*)The bartender now has a couple boxes of straws in their booze vendor. Click things to slurp out of them, real simple.
+(u)MitchSmith
+(p)12223
+(e)🎨|C-Sprites
+(*)Credits now use the new ⪽ symbol in their design.
+(u)LeahTheTech
+(p)12209
+(e)⚖🧛📦|C-Balance, A-Gamemodes, A-Game-Objects
+(*)The syndicate cyborg conversion chamber is now slightly more resistant to explosions.
+(u)Azrun
+(p)10479
+(e)🪲🆕⚖📄⏰👽🍝|C-Bug, C-Feature, C-Balance, A-UI, A-Status-Effects, A-Mutantraces, A-Catering
+(*)Aquatic Genetics gives immunity to Kuru and minor food buff when eating brains.
+(t)mon nov 28 22
+(u)Kubius
+(p)12192
+(e)🗺|A-Mapping
+(+)Nadir fixbatch 9: relocated a cyborg dock prone to accidentally blowing up Robotics, reinforced some high-value external windows.
+(u)TDHooligan
+(p)12205
+(e)🔄⚗|C-Rework, A-Chemistry
+(+)Medibots now use Potassium Iodide as their tox treatment.
+(t)sat nov 26 22
+(u)aloe
+(*)NanoTrasen forgot to order new cloners, and the ones they have right now are kind of janky. Expect more mistakes and aberrations. Would recommend health/genetic analyzing people after they're cloned to make sure they're good to go.
+(*)Each big NanoMed has one genetic analyzer.
+(u)Cherman0
+(p)11885
+(e)🗺💅|A-Mapping, C-QoL
+(*)Various QoL changes to Donut3 Mining and Cargo areas. They should be noticeably less cramped.
+(t)fri nov 25 22
+(u)glowbold
+(p)12159
+(e)⚖💊📦|C-Balance, A-Medical, A-Game-Objects
+(*)Cryogenic healing pods use power, with an increased rate while on and occupied.
+(u)pali
+(p)12019
+(e)🆕💅🧛|C-Feature, C-QoL, A-Gamemodes
+(+)Ghost respawn events now show what antagonist you would be respawning as
+(u)glowbold
+(p)12104
+(e)⚖💡|C-Balance, A-Station-Systems
+(+)Nanotrasen now calculates station profitability based on the station stipend; use the bank records computer to track your progress in-round.
+(u)Kubius
+(p)12146
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Kondaru news office's attached bathroom has been expanded, now featuring nicer toilet stalls and a shower room. Did a pass over camera coverage as well.
+(u)Lord_Earthfire
+(p)12133
+(e)⚖|C-Balance
+(+)Splices with peanutbutter sandwhich-plants grant the bread-reagent and splices with free-range eggplants now grant the egg-reagent
+(u)Bartimeus973
+(p)12080
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)White handkerchiefs can now be printed at hacked clothing manufacturers. You can color the handkerchiefs with paint.
+(u)Wisemonster
+(p)11890
+(e)🗺💅|A-Mapping, C-QoL
+(+)Connected Oshan's mech lab with engineering eva storage.
+(u)Azrun
+(p)11771
+(e)🆕🔒⏰|C-Feature, A-Secret, A-Status-Effects
+(+)Adds the ability for a number of critters to traverse disposals.
+(u)Bartimeus973
+(p)12163
+(e)🔎🔨|C-Code-Quality, A-Player-Actions
+(+)Wraiths can no longer summon creatures if there is something in the way.
+(u)aloe
+(+)Cigarettes and welding tools now produce a bit of light while on. Bug me if there's anything else that doesn't produce light and you think should!
+(t)thu nov 24 22
+(u)Mr. Moriarty
+(p)11793
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(*)The armouries of all in-rotation maps have been standardised as to contain the same essential equipment. Some armouries still retain additional non-essential equipment to vary them from others.
+(+)Standardised the Donut2 Armoury, and added a perimeter defence.
+(u)ZWRh3
+(p)11084
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Removed organ damage from the battle royale gamemode.
+(u)Roddy
+(p)12055
+(e)💅⚙|C-QoL, A-Internal
+(+)Nanotrasen has begun hiring from a wider pool of employees. Adds in around 500 new random names.
+(u)Wivernshy
+(p)11352
+(e)|
+(+)Plush toy vocabulary has been improved!
+(u)goonstation-enjoyer
+(p)12109
+(e)💅📦|C-QoL, A-Game-Objects
+(+)You can now examine a cell charger to see how full the cell is.
+(u)Bartimeus973
+(p)12079
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Adds face-covering bandanas to the game! Use a handkerchief in hand to do your best bandit impression!
+(u)glowbold
+(p)12137
+(e)⚖💨📦|C-Balance, A-Atmospherics, A-Game-Objects
+(+)Freezers now use power based on how many degrees they shift the gas inside.
+(u)LeahTheTech
+(p)12131
+(e)🧛🔨🤖|A-Gamemodes, A-Player-Actions, A-Silicons
+(+)Silicons now hear a lot less flock system messages.
+(u)Conchuckter
+(p)11923
+(e)🪲🆕📦💡|C-Bug, C-Feature, A-Game-Objects, A-Station-Systems
+(*)Manufacturers are now packet integrated, become a nerd today!
+(u)Kubius
+(p)11689
+(e)🆕🗺💡|C-Feature, A-Mapping, A-Station-Systems
+(+)Quartermasters on Nadir can now consult their pocket guide for basic transception array guidance. A more in-depth book is available in the array control room.
+(t)wed nov 23 22
+(u)Kubius
+(p)11954
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(*)Handwashing update for RP: Washing your hands now automatically loops, and is more effective for medical or culinary personnel, but cannot raise your hygiene if it has fallen below half.
+(u)aloe
+(*) String highlighting no longer strips spaces, and now works properly with regex. For example, "(?:\W|^)ai(?:\W|$)" will highlight 'ai' in "ai help" "help ai" and "this ai sucks", without highlighting "hairy" or "aint".
+(u)pali
+(+)Armory authorization now plays robotic voiceover saying "ARMORY AUTHORIZED". TEG at high power levels says "WARNING" once a few minutes in the same voice. Let me know if this is neat or sucks on Discord / forums (and suggest other places where this could be appropriate if you like it).
+(u)Cheffie
+(p)12132
+(e)💅📄|C-QoL, A-UI
+(+)Changes how the ExperimentalCircle context layout is created to be more intuitive. Changes current items that use this layout to roughly match how they were before in terms of layout.
+(u)ZeWaka
+(p)10388
+(e)🪲🚄🔧🔎🔄❗📄📜|C-Bug, C-Performance, A-Tooling, C-Code-Quality, C-Rework, E-FUCK, A-UI, C-Documentation
+(*)Changed our internal UI systems quite a bit. Remember to report bugs via the button on the top right!
+(u)glowbold
+(p)12063
+(e)🗺|A-Mapping
+(+)Donut3's shield generator now properly protects the CE's aquarium c:
+(u)Cheffie
+(p)12051
+(e)🎨💅|C-Sprites, C-QoL
+(*)The security RecordTrak now uses a context actions menu.
+(u)Bartimeus973
+(p)12052
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Scuttlebots can now birdwell and will beep when they flip.
+(t)mon nov 21 22
+(u)Kubius
+(p)11729
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The Harmonic Siphon's extraction over-charge threshold has been made more intuitive, and the Resonance Calibration Database has been updated with more in-depth and up-to-date guidance on Siphon operation.
+(u)Lord_Earthfire
+(p)11929
+(e)🪲⚖🔄🍝|C-Bug, C-Balance, C-Rework, A-Catering
+(+)Changed how food is sliced. That means melons aren't inert anymore while being sliced and more wedges/slices now keep the name of the spliced produce.
+(u)tarmunora
+(+)powered mining tools have a short delay before they can be repowered after powering down, and a longer one if they completely ran out of charge
+(t)sun nov 20 22
+(u)Kubius
+(p)11878
+(e)🪲🆕🗺🎨🔎💅📄💡|C-Bug, C-Feature, A-Mapping, C-Sprites, C-Code-Quality, C-QoL, A-UI, A-Station-Systems
+(*)Nadir's transception array has been overhauled. It's now equipped with an internal capacitor capable of drawing down excess grid power at a configurable rate, and improved on-device indication of system status.
+(u)LeahTheTech
+(p)12072
+(e)🆕📄⚗|C-Feature, A-UI, A-Chemistry
+(*)Air scrubbers now store the airborne reagents they collect.
+(t)sat nov 19 22
+(u)Mr. Moriarty
+(p)11836
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)AI station minimaps will now display the location of all AI cores and AI eyes.
+(u)Glamurio (Ryou)
+(p)11331
+(e)🎨⚖💅🎩|C-Sprites, C-Balance, C-QoL, A-Clothing
+(*)Janitors now start with a janny pack which contains some custodial supplies.
+(+)They also start with a mop in their hand now.
+(u)Caio029
+(p)11977
+(e)|
+(+)Floor health scanners and health status screens are now mech-scannable. You can switch their IDs to work together with a multi-tool!
+(u)LeahTheTech
+(p)12006
+(e)🆕⚖|C-Feature, C-Balance
+(+)Gunbots will now be pushed backwards by firing their guns in space.
+(u)Zonespace
+(p)12031
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)You can no longer access Syndicate Intelligence via VR uplinks
+(t)fri nov 18 22
+(u)LeahTheTech
+(p)12022
+(e)💅🎩|C-QoL, A-Clothing
+(+)Black lawyer suits are now available in the security clothing vendor.
+(u)Zonespace
+(p)12000
+(e)🆕📄|C-Feature, A-UI
+(*)Mostly RP-focused change: You can now fill out "Syndicate Intelligence" in character setup, which is visible to antagonists.<br>Exploitable information is intended to be things such as character weaknesses or blackmail material, try to lean into it, should you fill it out!<br>Antagonists can find this at the bottom of their uplink traitor item list.
+(u)LeahTheTech
+(p)11760
+(e)🆕🎨🧛|C-Feature, C-Sprites, A-Gamemodes
+(*)Flockminds and traces can now designate people as ignored, preventing them from being automatically marked as enemy for damaging the Flock.
+(u)DrWolfy
+(p)11501
+(e)💅⚗🤖|C-QoL, A-Chemistry, A-Silicons
+(+)Cyborgs can now use their beakers in the reagent extractor.
+(u)Bartimeus973
+(p)11577
+(e)🗺🔄📡|A-Mapping, C-Rework, A-AI
+(+)Turns all mouse into mobs. Go hug Remy today!
+(u)Bartimeus973
+(p)11876
+(e)🪲🎨⚖🔨|C-Bug, C-Sprites, C-Balance, A-Player-Actions
+(*)Wraith-summoned critters recieved some changes! Details in minor notes.
+(+)Skeleton commanders do slightly more damage and have a bit more stamina. Voidhounds heal in the dark and when cloaked. Tentacle fiends stun longer and have a new ability to escape.
+(+)Plaguerat dens now heal more at a reduced range. Plague rats can no longer summon more plague rats. Plague rat summon ability now costs points and has a shorter cooldown. Rats get a bit more health to compensate!
+(u)Bartimeus973
+(p)11537
+(e)🗺🎨🔄📡|A-Mapping, C-Sprites, C-Rework, A-AI
+(+)Roaches are now mob critters.
+(t)thu nov 17 22
+(u)goonstation-enjoyer
+(p)11860
+(e)🆕🤖|C-Feature, A-Silicons
+(+)Mining cyborgs now get Cargo alerts.
+(u)Lizzy
+(p)11854
+(e)🪲⚗|C-Bug, A-Chemistry
+(+)Fix mutini sometimes removing abilities you already have or your mutantrace
+(u)pali
+(+)Skeleton limbs damage for vestigal ballistics has been lowered because they can reuse this ability really easily
+(u)Kubius
+(p)11940
+(e)🆕🗺⚖🔄⛔|C-Feature, A-Mapping, C-Balance, C-Rework, C-Removal
+(+)Nadir fixbatch 8 - including public tool storage, coffee creamer, notice boards and bio suits.
+(u)Kubius
+(p)11986
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)Increased connection range of Nadir's transception pads and interlink computers to 100 tiles, from 20; player-constructed pads should now consistently be operable from QM's interlink computers.
+(t)wed nov 16 22
+(u)Hans
+(p)10758
+(e)⚖💊⚗|C-Balance, A-Medical, A-Chemistry
+(+)You now bleed blood and reagents at the ratio to which you have them on your body. It's also now scaled by how much you are bleeding.
+(u)goonstation-enjoyer
+(p)11973
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Fixes guardbuddies patrolling on Kondaru
+(t)tue nov 15 22
+(u)DrWolfy
+(p)11111
+(e)🔄💨📦⚗|C-Rework, A-Atmospherics, A-Game-Objects, A-Chemistry
+(+)Reagent and atmospheric analyzers report temperature in Kelvin.
+(u)LeahTheTech
+(p)11941
+(e)🪲🔎📄🍝|C-Bug, C-Code-Quality, A-UI, A-Catering
+(*)Pizza vendors now work again and have a new TGUI interface.
+(u)pali
+(+)The APC pinpointer now has a "current room" option.
+(t)mon nov 14 22
+(u)tarmunora
+(+)adjust bilk depletion, overdose
+(t)sun nov 13 22
+(u)NightmarechaMillian
+(p)11683
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Fueltanks, when they blow up, will now have a sprite change. Blown up fueltanks also count as open containers.
+(u)MarkNstein
+(p)11943
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Kondaru: added rancher & normal cameras to rancher area.
+(t)sat nov 12 22
+(u)Amylizzle
+(p)11915
+(e)🆕🧫🧛|C-Feature, C-Experimental, A-Gamemodes
+(+)As flockmind/flocktrace, you can now double-click a drone to take control of it.
+(t)wed nov 09 22
+(u)Bartimeus973
+(p)11880
+(e)⚖🔨|C-Balance, A-Player-Actions
+(*)Plaguebringer's curse of death can now be cancelled by holy water or a chaplain's bible beatings, like other curses. Trickster's creeping dread is faster.
+(u)LeahTheTech
+(p)11654
+(e)🔄📄🧛|C-Rework, A-UI, A-Gamemodes
+(*)Greatly simplified Flockdrone manual control. Drones now infer orders from the target given.
+(u)Roddy
+(p)11849
+(e)🗺💅💊|A-Mapping, C-QoL, A-Medical
+(+)Minor Donut 2 changes: Beepsky is no longer homeless, notably.
+(u)Amylizzle
+(p)11755
+(e)🆕🎨💨|C-Feature, C-Sprites, A-Atmospherics
+(+)Adds nuclear fallout gas. Don't breathe the glowy green stuff.
+(u)Waffleloffle & Azrun
+(p)11804
+(e)🆕🎨🚨|C-Feature, C-Sprites, A-Admin
+(+)Adds Iguanas! Maybe you'll see one in a tree!
+(u)Kubius
+(p)11870
+(e)⚖📦🌠|C-Balance, A-Game-Objects, A-Events
+(+)Spatial interdictors can now protect most devices from ion storms if the affected device is within interdiction range. Law racks are an exception, due to the sensitive nature of involved components.
+(t)tue nov 08 22
+(u)Mora
+(p)11823
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Adds Security clothing vendor to clarion
+(u)Roddy
+(p)11785
+(e)🗺💅💊|A-Mapping, C-QoL, A-Medical
+(*)Updated Wrestlemap's medbay.
+(u)tarmunora
+(e)🆕|C-Feature
+(+)Added new 40mm door-breaching flashbang rounds to the armory.
+(u)Lizzy
+(p)11856
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Made ctrl+click on dragging object stop dragging the object.
+(t)mon nov 07 22
+(u)goonstation-enjoyer
+(p)11862
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)You can now rotate Trip Lasers with a crowbar again.
+(u)Kubius
+(p)11513
+(e)🆕⚖💅📦|C-Feature, C-Balance, C-QoL, A-Game-Objects
+(*)Spatial interdictors are now quicker to assemble, require fewer secondary assembly steps and consume much fewer materials.
+(+)Spatial interdictor mainboards are now part of the kit created at manufacturers, and no longer need to be separately scanned and reproduced.
+(u)Kubius
+(p)11766
+(e)🪲🆕🗺|C-Bug, C-Feature, A-Mapping
+(*)A wrecked vessel has been located southeast of the Nadir Extraction Site. Personnel are advised to approach with caution.
+(u)thegrb93
+(p)11514
+(e)🪲🍝|C-Bug, A-Catering
+(+)Terrible food that gives you food poisoning no longer fills hunger
+(t)sun nov 06 22
+(u)FlameArrow57
+(p)11509
+(e)🆕🏅🧛|C-Feature, A-Medal, A-Gamemodes
+(+)Added medals for Arcfiend and Spy Thief!
+(t)sat nov 05 22
+(u)zjdtmkhzt
+(p)11722
+(e)🆕🎨⚖📦|C-Feature, C-Sprites, C-Balance, A-Game-Objects
+(+)Added a new mechanics component that lets device frames move around. You can read about it in the ingame mechanics book.
+(u)FlameArrow57
+(p)11664
+(e)🆕🏅🧛|C-Feature, A-Medal, A-Gamemodes
+(+)Added a medal for Flock, unlocked by transmitting the Signal!
+(u)Kubius
+(p)11806
+(e)🪲🔄📦|C-Bug, C-Rework, A-Game-Objects
+(+)Station forcefields that aren't solid to objects should now be transparent to clicks.
+(t)fri nov 04 22
+(u)Tarmunora
+(p)262
+(e)🔒⚖🔄|A-Secret, C-Balance, C-Rework
+(+)Changed misc gun balance
+(u)zjdtmkhzt
+(p)11668
+(e)🆕🗺🎨🔎📦💡|C-Feature, A-Mapping, C-Sprites, C-Code-Quality, A-Game-Objects, A-Station-Systems
+(+)Conveyors can now turn corners. Thanks to Arthur Holiday for helping me with the bendy conveyor sprites!
+(t)thu nov 03 22
+(u)Emily
+(+)Fally and Holly Dolly
+(u)tarmunora
+(+)If you have an antag-ineligible role as favourite, you will not roll captain/HoP/detective on antag rounds.
+(u)Bartimeus973
+(p)11723
+(e)🪲|C-Bug
+(+)Wraiths now inherit point regen rate and corpse counts when they evolve.
+(u)DrWolfy
+(p)11350
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Floorbots now have color based on the toolbox used and use only one floor tile to be created.
+(+)Players can now put floor tiles inside toolboxes, as long as the toolbox is not empty.
+(+)Floorbots in the first stage of construction can now be deconstructed with an empty hand. The floor tile will be lost.
+(u)RSG250
+(p)11653
+(e)⚖🌠|C-Balance, A-Events
+(*)Certain Major Random Events are now able to appear earlier in a round in Classic
+(t)wed nov 02 22
+(u)Bartimeus
+(p)11065
+(e)🆕🧛|C-Feature, A-Gamemodes
+(+)A manifested wraith/poltergeist cannot be immediately re-manifested after a spirit candle was used on them anymore.
+(u)pali
+(p)11753
+(e)🆕🏅🚨|C-Feature, A-Medal, A-Admin
+(*)If you manage to make our code error-out you now get a medal, you monster.
+(u)Amylizzle
+(p)11767
+(e)⚖💊|C-Balance, A-Medical
+(*)Too much burn damage to a limb can now incinerate that limb.
+(u)Kubius
+(p)11706
+(e)⚖🧛⚗|C-Balance, A-Gamemodes, A-Chemistry
+(*)Changelings' biology has adapted to the unique variety of acid surrounding Nadir. Be watchful.
+(t)tue nov 01 22
+(u)Lord_Earthfire
+(p)11754
+(e)🪲|C-Bug
+(+)fixes carrot splices having no occuline or carrot juice
+(u)Kubius
+(p)11646
+(e)🗺🎨⚖|A-Mapping, C-Sprites, C-Balance
+(+)Emergency suits' Nadir acid survival time has been doubled from 90 seconds to 3 minutes. As before, they are guaranteed for Nadir personnel.
+(t)mon oct 31 22
+(u)Kubius
+(p)11614
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Kondaru's engine is now atmospherically gapped from the station, connected by two airbridges and a conveyor belt. This should result in significantly fewer instances of adjacent departments being barbequed by ambitious TEG setups.
+(t)sun oct 30 22
+(u)KolisDumb, DeadMan164
+(p)11727
+(e)🎨|C-Sprites
+(*)Added the tall chef hat to the game - a chef job reward available at chef level 2.
+(u)Kubius
+(p)11701
+(e)🆕|C-Feature
+(+)Filling bowls of soup on trays, including kitchen islands, should no longer detach the bowl from the tray.
+(t)sat oct 29 22
+(u)Ikea
+(p)11260
+(e)🪲⚖🔊💨|C-Bug, C-Balance, C-Sound, A-Atmospherics
+(*)Molitz crystals now come with unique examination text relating to how much gas is left inside of them
+(u)pali
+(p)8395
+(e)|
+(*)Credits symbol has been changed from $ to ⪽
+(u)Hans
+(p)11095
+(e)🆕🎨🌱|C-Feature, C-Sprites, A-Hydroponics
+(*)Added stinging nettle to the list of plants botany can make! (More info in minor changes)
+(+)Stinging nettle will periodically inject anyone close with histamine and the chemicals spliced with it, similar to rafflesia but without the smoke.
+(+)Stinging nettle can be circumvented by wearing chemical protection, and the frequency of injecting people depends on it's endurance, while the amount of chemicals varies upon potency.
+(+)Leaf sprite provided by Clover.
+(u)Kubius
+(p)11642
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Nadir's listening post has been overhauled and reflavored. It has moved to the southwest of its predecessor.
+(u)DrWolfy
+(p)11666
+(e)🆕💅|C-Feature, C-QoL
+(+)Hyposprays and menders can now refill from reagent dispensers (foamtanks, welding tanks, etc)
+(u)Kubius
+(p)11578
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(+)Substantially increased the extraction rate of Nadir's Harmonic Siphon and removed the cap of one yield per machine tick. Most mineral targets extract two to three times faster; energetic materials received a smaller buff, while gold received a larger one.
+(u)Kubius
+(p)11665
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Overhauled Nadir's kitchen to significantly improve workflow for Chefs.
+(u)lofijuno
+(p)11507
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(+)Added a western dress costume to the clothing booth.
+(u)Shiiba
+(p)11499
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)New sprite for Genetics PDA cartridge.
+(t)fri oct 28 22
+(u)LeahTheTech
+(p)11388
+(e)🆕🎨⚖🧛|C-Feature, C-Sprites, C-Balance, A-Gamemodes
+(*)Reworked the Flockmind heal ability to be an AOE.
+(u)Kubius
+(p)11643
+(e)🆕|C-Feature
+(+)You can now make flippers for 5 rubber. Uniform manufacturers always have the ability to make them, and underwater maps also allow making them at general manufacturers and mining fabricators.
+(u)Bartimeus973
+(p)11599
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Flipping coins has been made more dramatic.
+(u)Jan.antilles
+(p)11600
+(e)🆕🎨📦🍝|C-Feature, C-Sprites, A-Game-Objects, A-Catering
+(+)Pies can now be sliced!
+(u)LeahTheTech
+(p)11613
+(e)🆕🔄🧛⚗|C-Feature, C-Rework, A-Gamemodes, A-Chemistry
+(+)LSD hallucinations are now a little more realistic.
+(t)thu oct 27 22
+(u)aloe
+(*)Security's contraband locker now contains a box of 10 stickers which can be applied to an item to change that item's contraband value. The stickers can be adjusted from 0 to 10 contraband.
+(u)LeahTheTech
+(p)11621
+(e)🆕🍝|C-Feature, A-Catering
+(+)Putting ice in a deep fryer will now cause... predictable results.
+(u)Flaborized
+(p)11598
+(e)🎨🔬|C-Sprites, A-Science
+(+)Resprited long range teleporter.
+(u)pali
+(p)11616
+(e)💅📄|C-QoL, A-UI
+(+)Vendor UI is now more compact
+(t)wed oct 26 22
+(u)Kubius
+(p)11608
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Aqua tenebrae, Nadir's sea acid, will no longer vaporize your loose items if somebody smokes it.
+(u)ZWRh3
+(p)11605
+(e)🪲⚖📦|C-Bug, C-Balance, A-Game-Objects
+(+)Fixed an exploit which allowed flashes to stun at twice the intended speed.
+(u)TDHooligan
+(p)11607
+(e)🎨📦🍝|C-Sprites, A-Game-Objects, A-Catering
+(+)X Cakes and similar recipes will now more closely match the color of their ingredients, rather than being bright red.
+(u)Wisemonster
+(p)11553
+(e)🗺💅|A-Mapping, C-QoL
+(+)Mechanics storage has been modified on cog1 to now be merged with the engineering power room.
+(u)Kubius
+(p)11551
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(*)Mining fabricators are now capable of manufacturing dive suits while on an underwater map.
+(u)Kubius
+(p)11564
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Fifth fixbatch for Nadir, prominently including a third Janitor slot, removal of a nonstandard Security slot, and inner maintenance camera coverage adjustment. The Research hall is no longer radstorm immune.
+(t)tue oct 25 22
+(u)aloe
+(+)Gave the brobocop module a foam dart gun. It fires biodegradable bullets synthesized from the borg's battery.
+(u)Waffleloffle & amylizzle
+(p)11585
+(e)🎨|C-Sprites
+(+)Added a capybara to the game.
+(t)mon oct 24 22
+(u)tarmunora
+(+)Thermal printers now have a limited stock of paper that slowly replenishes.
+(u)Sord
+(+)Jobs with clothing vendors now have less clothing in their secure lockers.
+(+)This will be the standard going forward for any jobs that receive clothing vendors.
+(u)Kubius
+(p)11482
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Added two new trench prefabs to explore, a Martian remnant for all underwater maps and a Nadir-exclusive piece of history.
+(u)Mr. Moriarty
+(p)11412
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(+)Standardised the Atlas Armoury.
+(u)DrWolfy
+(p)11332
+(e)💅🤖|C-QoL, A-Silicons
+(+)Engineering cyborgs now have an APC pinpointer to find APCs.
+(u)DrWolfy
+(p)11345
+(e)🗺|A-Mapping
+(+)Add a light switch to Kondaru HoP quarters.
+(u)DrWolfy
+(p)11361
+(e)🗺🔬|A-Mapping, A-Science
+(+)Added science fabricator to Atlas science.
+(t)sun oct 23 22
+(u)Flourish
+(*)RP servers only - motives now have an individual 1/5 chance of starting at a random value between 50-100.
+(+)Motive warning messages now only happen when you're below 50 (previously 75). Their frequency has also been reduced.
+(u)Bartimeus973
+(p)11550
+(e)🎨🔎💅📄|C-Sprites, C-Code-Quality, C-QoL, A-UI
+(+)Being forcefully summoned as a wraith is more obvious. You can now use abilities while summoning things as a wraith. Harbinger portal visibility improved.
+(u)Mr. Moriarty
+(p)11448
+(e)🆕🔎💅📦|C-Feature, C-Code-Quality, C-QoL, A-Game-Objects
+(+)Audio logs now display maptext. This is accompanied by some internal code changes; please report any bugs that you may encounter.
+(u)Ikea
+(p)11015
+(e)⚖🧫🧛|C-Balance, C-Experimental, A-Gamemodes
+(*)27-30 minutes into a rev round everyone recieves a tracker for revheads/heads on their pda.
+(u)Kubius
+(p)11541
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Widened Nadir by two tiles to improve foot traffic flow in secondary hallways.
+(u)Momoberry
+(p)10909
+(e)⚖💅🧛|C-Balance, C-QoL, A-Gamemodes
+(+)Wraiths blood writing no longer has a cooldown and costs 2 points, instead of 10.
+(t)sat oct 22 22
+(u)Sord
+(+)There is a new Engineering clothing vendor, found in most Eng storage rooms or common areas.
+(u)pali
+(+)Radio station sound playing cooldowns are now shared so you can't interrupt music with an ad etc.
+(u)Kubius
+(p)11475
+(e)🪲🆕🗺|C-Bug, C-Feature, A-Mapping
+(+)Third batch of Nadir improvements, including a new tour guide, Janitor gear adjustments, and catalytic generator support in the Power Checker PDA program.
+(u)Bartimeus973
+(p)11476
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(+)You can now record sentences in audiologs if it is in your hand/pocket and talk into a microphone is someone is holding it close to you.
+(t)fri oct 21 22
+(u)Ikea
+(p)11374
+(e)⚖🔄💡|C-Balance, C-Rework, A-Station-Systems
+(*)The Mechanic job and their traitor items have been merged into the Engineer job, and the Engineer job has been upped to 8 slots. The contents of the mechanics locker remains the same.
+(u)MetricDuck
+(p)11506
+(e)🪲⚖🍝|C-Bug, C-Balance, A-Catering
+(+)Pizza slices sharpened with the syndicate pizza cutter can no longer be caught mid-throw.
+(u)Shiiba
+(p)11466
+(e)🔄🌱|C-Rework, A-Hydroponics
+(+)Moves bean, corn, peas and soybean to the vegetable category and cucumber to the fruit category in the seed fabricator.
+(t)thu oct 20 22
+(u)DrWolfy
+(p)11431
+(e)💅📦|C-QoL, A-Game-Objects
+(+)You can now see the destination set when examining or using a cargo transporter.
+(t)wed oct 19 22
+(u)LeahTheTech
+(p)11441
+(e)💅🧛|C-QoL, A-Gamemodes
+(+)Coagulated gnesis tinting now wears off after 3 minutes.
+(u)Kubius
+(p)7730
+(e)🆕🎨🗺|C-Feature, C-Sprites, A-Mapping
+(*)Added a new map, the Nadir Extraction Site. Located on the caustic planet of Magus, Nadir is nestled deep within an acid sea to escape the corrosive sleetstorms that ravage its surface.
+(*)The Site was constructed over a vast deposit of Miraclium, and its unique circumstances necessitate prototype machinery; extract and transmute Miraclium with the cutting-edge Harmonic Siphon, harness the acid's unique properties for power with catalytic generators, and "safely" transport goods on- and off-site with the Transception Array.
+(*)Thank you to the community testers who tried the map in early test sessions, and the devs who adopted it for the iteration to come. This was kind of a wacky idea, and I'm amazed that it has come to fruition.
+(u)Caro
+(*)Removes Destiny from the map rotation.
+(u)Caro
+(+)Adjusted player caps for Nadir and Clarion, max player cap is now 60.
+(u)Shiiba
+(p)11414
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Ghost Busters now have their own headset and radio icon
+(t)tue oct 18 22
+(u)Kubius
+(p)11362
+(e)🆕🗺⚖|C-Feature, A-Mapping, C-Balance
+(+)Oshan's refinery now includes an unstocked general manufacturer.
+(u)DrWolfy
+(p)11337
+(e)🗺🔬|A-Mapping, A-Science
+(+)Added a science fabricator to Oshan's research and two cargo transporters and a recharger to Oshan's artifact lab.
+(u)DrWolfy
+(p)11433
+(e)🤖|A-Silicons
+(+)Adds a hand labeler to chemistry cyborgs.
+(u)LeahTheTech
+(p)11418
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Firing a kinetic gun in space now pushes you backwards.
+(t)mon oct 17 22
+(u)DrWolfy
+(p)11309
+(e)💅🤖|C-QoL, A-Silicons
+(+)Enables drag and drop QoL feature to glass recycler for silicon usage.
+(u)Garash
+(p)11400
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Added a syndicate backpack (regular 7-slots) to the listening post gear closet so you get to ditch your old grey backpack and look extra evil.
+(u)Ikea
+(p)11383
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)The price of manufacturing RCD cartridges has been reduced
+(u)LeahTheTech
+(p)11391
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)Ion storms can now cause PDA alert systems to malfunction.
+(u)What/SgtManGuy
+(p)10254
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Updated most vending machine sprites with directionals.
+(u)tarmunora
+(p)11406
+(e)🔎⚖🔨⚙|C-Code-Quality, C-Balance, A-Player-Actions, A-Internal
+(+)Hulk/etc no longer stack with bear/etc arms, bladed gloves, etc
+(+)Can no longer kick with a bear/etc arm, bladed gloves, etc
+(u)Gannets
+(p)11359
+(e)🆕🎨⚖🧛📦|C-Feature, C-Sprites, C-Balance, A-Gamemodes, A-Game-Objects
+(*)Added the Veritate PDW to nuke ops Field Medic class crates.
+(t)sun oct 16 22
+(u)Glamurio (Ryou)
+(p)11386
+(e)🗺|A-Mapping
+(+)Added three new random rooms, a 5x3 and two 3x3s.
+(u)LeahTheTech
+(p)11377
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Turned down the misstep applied by Flockmind radio stun ability.
+(u)Sord
+(*)Most standard shuttle interior doors are now not hackable, boltable, or weldable. We'll see if this stays.
+(u)LeahTheTech
+(p)9724
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(*)Added a new traitor item for mimes: a poisoned rose.
+(+)The poisoned rose temporarily mutes anyone who smells it and adds a small amount of capulettium to their system.
+(t)fri oct 14 22
+(u)Sord
+(+)The Discount Superhero has had their job title changed, and their gear is now contraband to reflect they're not on the side of security, only JUSTICE!
+(u)LeahTheTech
+(p)11189
+(e)🆕🎨💅📄🤖|C-Feature, C-Sprites, C-QoL, A-UI, A-Silicons
+(*)The Cybernetic hypospray now uses a shiny new context action menu.
+(u)glowbold
+(p)11317
+(e)🆕💅🍝|C-Feature, C-QoL, A-Catering
+(+)Zongzi can now be made with a bamboo shoot, rice ball, and any meat. Yum!
+(t)thu oct 13 22
+(u)LeahTheTech
+(p)11318
+(e)🆕|C-Feature
+(+)Coconuts and pumpkins now keep their reagents when made into drinks.
+(u)LeahTheTech
+(p)11330
+(e)🆕🗺💅⚗|C-Feature, A-Mapping, C-QoL, A-Chemistry
+(+)Added basic chemicals to the chemical request console.
+(u)DrWolfy
+(p)11344
+(e)💅🤖|C-QoL, A-Silicons
+(+)Remove fabricator range limit for cyborgs.
+(t)wed oct 12 22
+(u)Skeletonman0
+(p)11039
+(e)🪲🗺💅📦|C-Bug, A-Mapping, C-QoL, A-Game-Objects
+(*)New breakthroughs allow multiple mining magnets to operate at the same time. Please report any bugs you find
+(t)tue oct 11 22
+(u)Ryou
+(p)11308
+(e)🪲🔎|C-Bug, C-Code-Quality
+(+)Fixed a bug that allowed Kleptomaniacs to pick up items while lying down.
+(u)LeahTheTech
+(p)11300
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Robotics consoles on Kondaru and Donut 2 have had their safety screws removed due to budget cuts.
+(u)Ryou
+(p)11297
+(e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
+(+)Added espresso machine and cups to the bar in Oshan Laboratory.
+(u)Garash
+(p)9963
+(e)🆕💅📄|C-Feature, C-QoL, A-UI
+(+)New UI for the material sheet's in-hand construction menu.
+(t)mon oct 10 22
+(u)DrWolfy
+(p)11266
+(e)🆕🎨💅📄🤖🍝|C-Feature, C-Sprites, C-QoL, A-UI, A-Silicons, A-Catering
+(*)Add some features to the espresso machine and given it a TGUI.
+(+)Two cups can be put in the espresso machine and filled at the same time.
+(+)The espresso cups can now be dragged into the machine for silicon usage.
+(u)Mr. Moriarty
+(p)11285
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(+)Expanded and standardised the Destiny Armoury.
+(u)Zelda4040404
+(p)11201
+(e)🗺|A-Mapping
+(+)Added a new space prefab, an adrift cargo router.
+(u)LeahTheTech
+(p)11229
+(e)🆕|C-Feature
+(*)Most tree mutations now require reagent infusions.
+(t)sun oct 09 22
+(u)aloe
+(*) You can now use the 'analyze' button on the ChemMaster to view the recipes of (non-secret) reagents.
+(u)Mr. Moriarty
+(p)11277
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(+)Standardised the Oshan Armoury.
+(u)Mr. Moriarty
+(p)11192
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(+)Standardised the Cogmap2 Armoury.
+(u)LeahTheTech
+(p)11031
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Flock are now capped at 75 flockdrones per flock.
+(t)sat oct 08 22
+(u)Ikea
+(p)11231
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Pods now require some plasma in the fuel tank in order for the engine to run.
+(u)112358sam
+(p)11258
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Made changes to the Donut 2 mail system to allow the station and Zeta to send mail to any room on the other
+(u)Flourish
+(*)The Remy, bumblespider, and crow Spooktober jobs are now restricted to mentors only. Please ahelp if you see people still being griefy.
+(u)Bartimeus
+(p)11195
+(e)🆕⚖🧛|C-Feature, C-Balance, A-Gamemodes
+(+)Trickster wraiths now have access to a slippery trap.
+(u)Waffleloffle
+(p)11233
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Renamed the red space suit to the syndicate space suit.
+(u)ZeWaka
+(p)11223
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)Quick-loading from crates into furnaces has been fixed.
+(u)LeahTheTech
+(p)11197
+(e)⚖💅🤖|C-Balance, C-QoL, A-Silicons
+(+)Cyborgs can now rename themselves in docking stations.
+(t)fri oct 07 22
+(u)Bartimeus
+(p)11063
+(e)🆕🧛|C-Feature, A-Gamemodes
+(+)The harbinger wraith's summons now see in the dark and so does the trickster wraith.
+(u)Sord
+(+)Med and Sec clothing vendors now sell PDAs and headsets for those departments. They also have shoes for free.
+(u)DrWolfy
+(p)11218
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Disable roundstart AI Control in Donut2 and Oshan armory doors.
+(u)Azrun
+(p)10536
+(e)⚖🧫📄💊⚗🔬|C-Balance, C-Experimental, A-UI, A-Medical, A-Chemistry, A-Science
+(*)Chem groups have been reworked to be recordings of actions performed.
+(u)Flourish
+(*)The Remy, bumblespider, and crow Spooktober jobs are now available for anyone who has played over 50 rounds. If people are consistently griefy they'll get removed.
+(u)Ikea
+(p)10898
+(e)💅📦|C-QoL, A-Game-Objects
+(*)Medical doctors, directors and specialists now come with a belt filled with automenders, one empty hypospray, a health analyzer and a defib.
+(t)thu oct 06 22
+(u)ZWRh3
+(p)11076
+(e)🪲🗺💅|C-Bug, A-Mapping, C-QoL
+(+)The main ring on wrestlemap is no longer damageable (mostly).
+(t)wed oct 05 22
+(u)Ikea & Mr. Moriarty
+(p)11088
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprited pulse rifles and pulse rifle racks.
+(u)Bartimeus973
+(p)10990
+(e)🆕⚖🤖|C-Feature, C-Balance, A-Silicons
+(+)Cyborgs now drop their clothing on death.
+(u)ithebinman
+(p)11075
+(e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
+(+)Replaced and added piano samples with new A0 to C8 keys so that a full high quality 88 key range is possible!
+(u)Roddy, Meow Meow
+(p)11108
+(e)🆕🎨🌱|C-Feature, C-Sprites, A-Hydroponics
+(*)Adds a new pumpkin spice latte mutation to the pumpkin. Infuse capsaicin to see it in action, and use a spoon on the finished product for a cute, drinkable pumpkin version.
+(t)tue oct 04 22
+(u)Sovexe
+(p)11093
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The botanist traitor exclusive hotbox lighter now burns 5 times hotter than a normal zippo in addition to it's normal effect of improved hotboxing.
+(t)mon oct 03 22
+(u)Amylizzle
+(p)10296
+(e)🪲📄📦|C-Bug, A-UI, A-Game-Objects
+(*)TGUI'd the Plantmaster. Now with multi-agent infusion!
+(u)Amylizzle
+(p)11129
+(e)🗺🔎📦📡⚙|A-Mapping, C-Code-Quality, A-Game-Objects, A-AI, A-Internal
+(+)Sticks-to-snakes spell snakes are mobs now. You can set them on fire and poison them.
+(u)Wisemonster
+(p)11157
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Disaster round wraiths can now evolve without having to absorb any corpses.
+(u)LeahTheTech
+(p)11090
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Mixed "major threat" antagonists (Blob, Flock and Wraith) are now twice as common and replace fewer normal antagonists.
+(u)LeahTheTech
+(p)11140
+(e)🪲⚖🧛|C-Bug, C-Balance, A-Gamemodes
+(+)Flockdrone corpses no longer block 100% of shots
+(t)sun oct 02 22
+(u)Sord
+(e)⚙|C-Bug
+(+)Mineral magnetizer device on mining z-level spawns loaded with plasmastone again
+(u)callaghanrs
+(p)11116
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)The coachgun can now be gilded with the appropriate medal.
+(u)tarmunora
+(+)Drinking glasses shatter when thrown, but reagent contents are not preserved.
+(u)Herbert
+(p)11038
+(e)🗺💅|A-Mapping, C-QoL
+(+)The botanical mister has been added to maps previously missing it. Hooray!
+(u)Grokberg
+(p)11079
+(e)🔊|C-Sound
+(+)Updates the fiddle with the new interface and new sounds.
+(t)sat oct 01 22
+(u)DrWolfy
+(p)11120
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Add maintenance access to Cogmap1 North-East maintenance doors.
+(u)glowbold
+(p)10805
+(e)🆕🗺|C-Feature, A-Mapping
+(+)The mining magnet can rarely pull in a chunk of rock from the depths of Abzu.
+(u)LeahTheTech
+(p)10992
+(e)💅📦🤖|C-QoL, A-Game-Objects, A-Silicons
+(*)Silicons can now use space GPSs
+(u)glowbold
+(p)10907
+(e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
+(*)Destiny and Clarion's airbridges now extend, pressurize, and retract automatically for traders
+(+)Cogmap2's trader docks now light up when traders are set to arrive and depart
+(u)Sord
+(e)⚙|C-Bug
+(+)The Security and Medical job clothing vendors can now be accessed by anyone who has access to those departments.
+(u)Amylizzle
+(p)11071
+(e)🪲⚖🧛📦|C-Bug, C-Balance, A-Gamemodes, A-Game-Objects
+(+)Substantially buffed the Flock's Gnesis Turret.
+(u)ZWRh3
+(p)11101
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Removed vuvuzela gun from the battle royale gamemode.
+(u)FlameArrow57 and DimWhat
+(p)9043
+(e)🆕🎨🔬|C-Feature, C-Sprites, A-Science
+(*)Added an artifact limb variant to the surgery machine artifact, with six types of artifact limbs!
+(t)fri sep 30 22
+(u)aloe
+(*)You can now write.... <span style='color:#FF0000;'>IN BLOOD!</span> and also any other reagent. Just dip your pen or crayon into some reagents. Only coats the pen in enough for one piece of writing per dip.
+(u)Mr. Moriarty
+(p)11086
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(+)Standardised the Clarion Armoury's equipment.
+(u)Mr. Moriarty
+(p)10628
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(+)Chameleon outfits now have the option to create new and delete existing outfit sets.
+(u)Sord
+(+)Security and Medical have had their clothing lockers replaced with new clothing vendors.
+(u)LeahTheTech
+(p)11064
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The flock relay now takes the correct amount of explosion damage.
+(u)tarmunora
+(+)Drinking glasses no longer shatter when thrown.
+(+)Balloons need to be tied off before being thrown.
+(u)LeahTheTech
+(p)11077
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)The Hydra smart pistol is now slightly smarter and no longer targets sawflies or nukeop gunbots.
+(t)thu sep 29 22
+(u)LeahTheTech
+(p)11066
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Moved some strangely placed space diner APCs from inside the walls to more normal locations.
+(u)Mr. Moriarty
+(p)11073
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(+)Standardized Cogmap1 armory equipment. External perimeter cameras have also been added.
+(t)wed sep 28 22
+(u)Sord
+(e)⚙
+(*)Sords, errr, Swords have received some backend changes. Please make a bug report if any common swords (katanas, captains sword, etc) behave strangely.
+(u)Walpvrgis
+(p)11058
+(e)🎨|C-Sprites
+(*)Added a few extra hair options intended for layering; Ignite: Shaved, Bangs: Flat Shorter, Bangs: Short Wavy, Bangs: Sides and Bangs: Mysterious.
+(u)Mr. Moriarty
+(p)11019
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(+)Added two additional night vision goggles to the Donut3 Armoury, alongside making the riot gas pipe visible overfloor.
+(t)tue sep 27 22
+(u)Roddy
+(p)10736
+(e)🆕🎨🍝|C-Feature, C-Sprites, A-Catering
+(+)Adds in ratatouille to the game. Combine eggplant, cucumber, garlic, and tomato in the oven.
+(t)mon sep 26 22
+(u)Walpvrgis
+(p)11024
+(e)🎨|C-Sprites
+(*)Added several new hairstyles + layering parts and hair fades for some existing hairstyles. Check minor changes for a list of style names.
+(+)New hairstyles: Pompom Pigtails, Untidy Ponytail, Long Twin Tails, Scruffy, Sparks, Wavy, Lionsmane, Pinion, Breezy. New Layering parts: Flat bangs and Long Wavy Bangs. New fades: Wavy Faded, Lionsmane Faded, Breezy Faded, Ripley Faded, Violet Faded, Willow Faded, Flick Faded, Rock Ponytail Faded and Afro Faded.
+(t)sat sep 24 22
+(u)Sovexe
+(p)10967
+(e)🆕⚖🤖|C-Feature, C-Balance, A-Silicons
+(+)Playable emagged firebots now how have a new skill to spray burning welding fuel, and come in less ugly colors.
+(u)Mr. Moriarty
+(p)10917
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(+)Redesigned the Kondaru Armory, adding a phaser crate, two more night vision goggles, one additional breaching sledgehammer, and a box of flashbangs. The communications console has been moved back inside of the Armory.
+(u)Caro
+(*)Arrivals airlocks can no longer be tampered with by welding or hacking them.
+(u)ZeWaka
+(+)Added a clientside 90fps option to the top menu bar.
+(u)Mr. Moriarty & Arthur Holiday
+(p)10864
+(e)|
+(+)Resprited scalpels, circular saws, hemostats, surgical scissors, enucleation spoons, and sutures. The wonderful circular saw sprite was kindly provided by Arthur!
+(u)DrWolfy
+(p)10926
+(e)|
+(+)Equipping a cyborg module in the cyborg docking station while already having one installed will swap the two.
+(u)Ikea
+(p)10903
+(e)|
+(*)MD now spawns with an unique labcoat
+(u)Caio029
+(p)10905
+(e)|
+(*)NanoTrasen has developed a new hi-tech storage box for the containment of disc-shaped foods. Theses new boxes are available at FoodTech vendors.
+(u)Caio029
+(p)10581
+(e)|
+(+)Makes General Manufacturers capable of printing instruments.
+(u)Hans
+(p)10759
+(e)|
+(*)Suit and Head slot items now stop you from seeing what they obscure in examines.
+(t)fri sep 23 22
+(u)Grokberg
+(p)10974
+(e)|
+(+)Fixed so that the first key on the new music instrument interfaces can be pressed using the keyboard.
+(u)Emily
+(e)|
+(*)Cleaned up a bunch of Key Stuff. Look in #imspoiler for the details.
+(u)ZeWaka
+(e)🚨📡💨🍝⚗🎩📦🧛🏗🌱⚙🗺🧱🏅💊👽🔨🔬🔒🤖💡⏰🔧💪📄⚖🪲🔎📜🧫🆕🚄💅⛔↩🔄🐛🔊🎨🎉|All of the possible emoji
+(*)The Changelog now has full color Emoji support, and is expanded for the new PR labels. Contribute on GitHub today!
+(u)LeahTheTech
+(p)10956
+(e)|
+(*)Vampiric thralls no longer have "thrall" added to their name, and instead have a gurgling speech effect.
+(u)Wisemonster
+(p)10690
+(e)|
+(+)Custodial supply lockers now come with a cleaner grenade manudrive.
+(u)LeahTheTech
+(p)10943
+(e)|
+(*)Flockdrones are now slowed whenever they would have been stunned.
+(*)Flockdrones now EMP any item they pick up.
+(u)Grokberg, pali6, glowbolt/pgmzeta
+(p)6679
+(e)|
+(*)Re-redesigned the musical instrument interface for the piano and saxophone
+(t)thu sep 22 22
+(u)tarnunora
+(*)miscreants removed.
+(u)glowbold
+(p)10780
+(e)|
+(+)Cargo orders now consistently land on intake belts.
+(+)Using an EMAG on a QM supply console removes intake targeting.
+(u)Rodimus and LeahTheTech
+(p)10754
+(e)|
+(*)Added pumpkin bowls, made by hollowing out a pumpkin.
+(u)LeahTheTech
+(p)10843
+(e)|
+(*)Reworked flockdrone incapacitors to use a recharge mechanic.
+(+)AI controlled flockdrones are now more evasive.
+(u)Ikea
+(p)10886
+(e)|
+(*)Stun cane is now unswappable and no longer fits into rechargers, however it now has a disruptor power cell.
+(u)Hans
+(p)10861
+(e)|
+(*)You can now tame rattlesnakes by giving them food, try not to get bit too many times trying.
+(u)flappybat & CloverOfCrystal
+(*)Adds special skulls for vampires. Sprite by CloverOfCrystal.
+(t)wed sep 21 22
+(u)zjdtmkhzt
+(p)10801
+(e)|
+(+)infusion-related plant mutations are now obtainable
+(u)CrystalClover
+(p)10912
+(e)|
+(+)Added Skull and Eye expressions to the cyborg screen head.
+(u)Gannets
+(p)10938
+(e)|
+(+)Added Fomalhaut MRL to the nuke ops commander uplink for a cost of 3 points.
+(t)tue sep 20 22
+(u)aloe
+(*)Cyborgs can now construct furniture parts into furniture by click dragging to the floor.
+(u)aloe
+(*)Engineers on Oshan now get Stomper Boots, and there's an extra pair in engi lockers. They act kinda like a stomper, but they're boots. You'll figure it out.
+(u)Ikea
+(p)10902
+(e)|
+(+)Freeze now cools you down 20 k per lifeloop
+(u)golferjoe
+(p)10913
+(e)|
+(+)Buttcrabs are now immune to tox damage.
+(u)Sord
+(*)Every map in rotation now has 3 oxygen vending machines on station, with one always being in Escape. Buy your life 2day
+(u)CrystalClover
+(p)10914
+(e)|
+(+)Adds Skull to Crayon options and Blood Writing options.
+(u)Emily
+(e)|
+(*)Baby ranch animals now follow Momma (You are Momma).
+(*)Puritans can no longer be revived with Strange Reagent
+(*)"Monkey Cloning" no longer circumvents Puritan
+(+)Inserting someone's old brain in a corpse no longer kills them
+(u)Sord
+(e)|
+(+)Added a new hyper capacity power cell to manufacturers. Requires expensive mats and has capacity of 25000. Also increased erebite cell's power capacity.
+(u)golferjoe
+(p)10895
+(e)|
+(+)Moved "stumped" trait from uncategorized to body
+(u)Gannets
+(p)10888
+(e)|
+(*)Added the currently unattainable Fomalhaut MRL, 6-shot homing missile launcher. Homing projectile code by Zjdtmkhzt!
+(t)mon sep 19 22
+(u)Sovexe
+(p)10893
+(e)|
+(+)The cog1 medbay has had some alterations made to its layout
+(u)Blackrep
+(p)10874
+(e)|
+(+)Two new (old?) Soviet firearms have been added. The PM Pistol, and the MTs-255 Revolver Shotgun
+(u)DimWhat & aloe
+(p)10803
+(e)|
+(+)A number of 2-handed guns (common ones being the tranq rifle and riot shotgun) no longer fit on the belt, but do fit on the back. They also have neat sprites when you wear them.
+(t)sun sep 18 22
+(u)Roddy
+(p)10844
+(e)|
+(+)Donut 2 Barbershop moved to crew quarters, new nerd dungeon in maint behind arcade. Made other small fixes and tweaks
+(t)sat sep 17 22
+(u)BotchKing
+(p)10825
+(e)|
+(+)Changes criminal status to "released" upon being flushed
+(u)Ikea, tarmunora
+(p)10505
+(e)|
+(*)Cryoxadone brute/burn healing has been reduced from 12 to 2, oxy healing also reduced to 2, however it now can combat losebreath, counters radiation, and provides some protection from random death rolls in crit while in effect. Cryoxadone will no longer work when body temp is below -240C or so
+(u)ZWRh3
+(p)10858
+(e)|
+(*)Thralls are now immune to all diseases and maladies
+(u)Flappybat
+(+)Nerfed sawfly. Damage now reduced by armor, less bleed. A security officer batoning sawfly now loses half health instead of reaching crit.
+(t)fri sep 16 22
+(u)Mr. Moriarty
+(p)10641
+(e)|
+(+)Conspirator headsets now have a removable private radio channel upgrade, instead of their immutable radio channel.
+(+)Wiretap radio upgrades (alongside the Conspirators' private radio channel upgrades) may now be removed with a snipping tool.
+(u)LeahTheTech
+(p)10685
+(e)|
+(+)Flock can no longer break into the listening post or convert the ghostdrone factory. Bad radio pigeons.
+(u)NightmarechaMillian
+(p)10661
+(e)|
+(*)New pipeshot subtype: Plasmaglass! See minor changes for more details.
+(+)Plasmaglass pipeshot shoots like a middle ground between scrap and glass (fires 4 projectiles at a 15 degree spread), but has armor piercing properties.
+(u)BatElite
+(p)10819
+(e)|
+(*)Nuclear operative teams now have 2 options for where to plant the nuke.
+(u)Amylizzle
+(p)10818
+(e)|
+(*)Ghosts can shoulder surf your TGUI windows now. You're always being watched.
+(*)As an observer, when you're observing someone, click on the machine they're using to open the window they see.
+(u)ZWRh3
+(p)10542
+(e)|
+(+)following items were removed from battle royale: makeshift armor, microbomb, holographic disguiser, syndicate sponge capsules and turboflash box
+(u)glowbold
+(p)10552
+(e)|
+(*)Cyborg Docking Stations have a new interface.
+(u)Virvatuli & Dimwhat
+(e)🔄🎨|rework, sprites
+(*)The AK is back and has been added exclusively to the traitor surplus crate! The gun has been overhauled codewise and features new gunfire sounds, as well as both new inhand and worn back sprites by Dimwhat. This is a 12TC item which is randomly rolled in the crate, and comes with 1 thirty round magazine. This rifle cannot fit in a backpack, but can be slung in your back slot, so there is no being sneaky with it equipped!
+(t)thu sep 15 22
+(u)LeahTheTech
+(p)10378
+(e)|
+(+)Changed Flock relay compute cost 1000 -> 500, resource cost 1000 -> 750.
+(u)tamuonra
+(+)Hydra smart pistol now tracks targets without needing to hold LMB, fires on click. Locks decay after a couple seconds.
+(u)aloe
+(+)Pouring reagents onto objects or walls will now pool the reagents on the floor. Pouring on dense objects and walls will pool the reagents on your tile; otherwise the reagents will pool on the object's tile.
+(t)wed sep 14 22
+(u)Bartimeus973
+(p)10773
+(e)|
+(*)Overhaul to the wraith. Wraiths can now pick from three paths upon consuming enough bodies, each with their unique abilities. Sprites done in collaboration with: Swinglow, CalliopeSoups, Mora and Shiiba!
+(*)Adds a new item to counter wraith: the spirit candle. Created by combining a skull and a candle. While lit in hand it reveals wraiths in the surrounding area and using it in hand will manifest the wraith. One time use.
+(u)Idiot
+(p)10806
+(e)|
+(+)Lowers chance of falling down stairs on a wheelchair heavily, and reduces duration of the stuns that come from it.
+(t)tue sep 13 22
+(u)Kubius
+(p)10797
+(e)|
+(+)Kondaru's ranch has been expanded to accommodate additional ranchers.
+(u)Idiot
+(p)10714
+(e)|
+(+)Adds Stumped trait that spawns you with no legs and a free wheelchair.
+(t)mon sep 12 22
+(u)DimWhat
+(p)10786
+(e)|
+(+)Resprited the riot helmet's object sprite.
+(u)Amylizzle
+(p)10688
+(e)|
+(+)Fire elementals explode into flame when gibbed now.
+(u)Hans
+(p)10576
+(e)|
+(*)Adds bladed transparent gloves as a 3TC traitor purchase. Snap your fingers to deploy/retract the blades!
+(u)DimWhat
+(p)10785
+(e)|
+(+)Removed the antique lawbringer skin
+(t)sun sep 11 22
+(u)Emily
+(+)Buff to Plant Chicken eggs; give feedback on the usual places
+(u)Moberry
+(p)10731
+(e)|
+(*)Radiation Collectors can now be deconstructed and scanned by mechanics!
+(u)Mr. Moriarty
+(p)10734
+(e)|
+(+)Added an announcement for when the Armoury is deauthorised.
+(u)Sord
+(*)The emergency shuttle can no longer be called on blob rounds until 20 minutes have passed
+(t)sat sep 10 22
+(u)glowbold
+(p)10737
+(e)|
+(+)Vampire's bat form no longer works on restricted z levels.
+(t)fri sep 09 22
+(u)tarmunora
+(+)fixed bug where the rate at which internals were used wasn't consistent across server population values (i.e.: tanks should no longer drain significantly slower on highpop than on lowpop)
+(u)Sord
+(e)|
+(+)Raw gemstones now have their own value on the shipping market
+(u)LeahTheTech
+(p)10460
+(e)|
+(+)Cyborgs now also get a killswitch warning overlay.
+(u)Conchuckter
+(p)10527
+(e)|
+(+)Tranquilizer darts and old hunting rifle clips have been resprited, they now look like stripper clips.
+(u)glowbold
+(p)10713
+(e)|
+(+)Donut3's taxi/mining shuttle can now be boarded through a new maintenance dock, south of nerd lounge.
+(u)aloe
+(+)You can now click through the cloaking field generator hologram floor things. Still can't see through them though.
+(u)Mr. Moriarty
+(p)10573
+(e)|
+(*)Custom emotes now have a typing indicator.
+(t)thu sep 08 22
+(u)NightmarechaMillian
+(p)10658
+(e)|
+(+)??? pills have been updated with some new chems.
+(u)aloe
+(e)|
+(+)Cyborgs are now faster when missing arms. Previously light arms were faster than no arms.
+(t)wed sep 07 22
+(u)Ikea, Zonespace, and Yellow/Myco
+(p)9898
+(e)|
+(*)Pressing the PDA crisis or security alert now alerts people nearby through the use of a sound effect, chatbox message, and overhead text.
+(u)Sord
+(*)Donut 2's Research Outpost now has a public telescience pad. No research access required.
+(u)Stonepillar
+(p)10537
+(e)|
+(*)Fixed syndicate drones not dropping their loot (including sharkdrones!)
+(t)tue sep 06 22
+(u)Sord
+(*)The Mining Outpost and Diner have swapped places.
+(u)Sord
+(e)|
+(+)The mining shuttle, now renamed, also stops at all three locations. Station, Diner, and Mining Outpost.
+(t)mon sep 05 22
+(u)LeahTheTech
+(p)10656
+(e)|
+(+)Silicons can now use the chemical request console.
+(u)FlameArrow57
+(p)10621
+(e)|
+(+)A Head of Security can now be picked from medium and low priority job selections.
+(u)LeahTheTech
+(p)10631
+(e)|
+(+)Canvases now support pixel-precise pointing.
+(u)ZeWaka
+(p)10589
+(e)|
+(+)Made some large internal changes to how our walls smooth out and look pretty. Be sure to report any bugs!
+(u)Wisemonster
+(p)10554
+(e)|
+(+)The interdictor blueprints are now on a single manudrive.
+(u)Ikea
+(p)10625
+(e)|
+(+)Nukies now come with a bit more explosion protection
+(u)NightmarechaMillian
+(p)10645
+(e)|
+(+)Windows and doors will now tell you roughly how damaged they are on examine!
+(u)Caio029
+(p)10380
+(e)|
+(+)Allows health analyzers with organ scan upgrade to scan for eye health as well.
+(u)glowbold
+(p)10652
+(e)|
+(*)Shambling abominations can no longer be pinned.
+(u)ZWRh3
+(p)10660
+(e)|
+(*)Werewolves no longer forcibly transform.
+(u)glowbold
+(p)10653
+(e)|
+(*)While pinned, using movement keys resists against the pin.
+(+)You can still use IKJL to flail uselessly while pinned.
+(t)sun sep 04 22
+(u)Roddy
+(p)10639
+(e)|
+(+)QoL changes to Donut 2.
+(+)Adds a new wreck to Donut 2.
+(u)tarmunora
+(+)firebrands get a little firebot buddie that puts out (mostly) only allies.
+(u)LeahTheTech
+(p)10361
+(e)|
+(+)Messages from sentient elements of the flock are now much easier to pick out.
+(t)sat sep 03 22
+(u)LeahTheTech and JulyJade
+(p)10564
+(e)|
+(*)Added a glowstick tree mutation, obtained from infusion with radium.
+(u)Amylizzle
+(p)10610
+(e)|
+(+)Space suits provide a little bit of radiation protection.
+(u)Ikea
+(p)10622
+(e)|
+(*)Changed how slips work: you will no longer slip, as long as you won't exceed the "default" movespeed (running with full health). However, for example, sprinting, taking meth or having mechboots will make you vulnerable to slips again.
+(u)Emily
+(*)Floating Chat for Ghosts! OooOOooO! Yeah this will probably be buggy.
+(*)New Chicken Grenade sprite by Walpvrgis!
+(*)Fixed bug with cluwne-ified henks dying of old age before they can lay any cluwne eggs.
+(+)Fixed bug with dream chicken eggs where lag could interrupt your rest before you even started.
+(u)LeahTheTech
+(p)10517
+(e)|
+(*)Added chemical request consoles for requesting chemicals. Find them outside science and in medbay, with another terminal in chemistry to let scientists decide whether to fulfil or deny the clown's request for 200u of space lube.
+(u)TheTrueMunchkin
+(p)10561
+(e)|
+(+)Artist is now a playable gimmick job. Go paint your dreams!
+(u)Wisemonster
+(p)10557
+(e)|
+(+)The detomax bomb program has be renamed to self-destruct.
+(t)fri sep 02 22
+(u)Ikea
+(p)10405
+(e)|
+(+)You now have to be able to see the singulo in order to get irradiated by the singulo.
+(u)NightmarechaMillian
+(p)10568
+(e)|
+(+)Drinking glasses now have a 33% chance to break when shot at - spectate a bar fight today!
+(u)LeahTheTech
+(p)10563
+(e)|
+(+)The nuke ops combat engineer battle wrench now hits a lot harder.
+(t)thu sep 01 22
+(u)LeahTheTech
+(p)10577
+(e)|
+(+)Cows can now walk on mousetraps without hurting their hooves.
+(u)Emily & Walpvrgis
+(*)Dragon Chickens' new favorite food is now gold. Thank you Walp for the BEAUTIFUL dragon sprite!
+(u)CrystalClover
+(p)10551
+(e)|
+(+)Restructured Donut 2 Janitorial, added biohazard locker and removed redundant disposal chute.
+(t)wed aug 31 22
+(u)Wisemonster
+(p)10549
+(e)|
+(+)Forklifts are no longer being haunted by ghost crates
+(u)Wisemonster
+(p)10550
+(e)|
+(+)Destiny qm can now print barcodes to the shipping market.
+(u)Sovexe & Emily
+(*)New Rancher exclusive traitor item: Chicken grenade. Load with 5 chicken eggs to instantly deploy an aggressive horde syndicate-brainwashed chickens, even if the chickens would normally not be aggressive.
+(u)Emily
+(*)Wizard Chickens now accept credits to fund their education. They will gain more powerful spells with more funding.
+(u)Sord
+(*)Added new pocket sized oxygen tank. All backpacks/boxes will now spawn with these.
+(*)Pocket tanks hold roughly 3 minutes worth of air on spawn, more if filled up to maximum.
+(*)The old emergency oxygen tanks are now "mini oxygen tanks", found where you'd find them normally. They hold more volume, but no longer fit in your pocket, only on your belt slot.
+(u)RubberRats
+(p)10490
+(e)|
+(+)Captains now always spawn with an emergency oxygen tank in their bag.
+(u)ZWRh3
+(p)10529
+(e)|
+(+)On the battle royale gamemode people will now start with armory/HOS office access.
+(u)Sord
+(*)Added new micro jetpack to all maps, standard size jetpack can be produced by the miners at greater cost
+(t)tue aug 30 22
+(u)Cherman0
+(p)10534
+(e)|
+(+)Made jetpack ability icons properly reflect whether the jetpack is on or off.
+(u)Amylizzle
+(p)9741
+(e)|
+(*)Changes how radiation works. All radiation sources are now visible, with a green or blue highlight and a glowing light!
+(*)You now have an accumulated dose, which starts to make you sick over time.
+(*)Radiation protection now stacks and approaches 100% but never reaches it. Better not hang on to those radioactive ores!
+(*)Radiation resistance is now split into two forms: Internal and external. Wearing a rad suit will no longer protect you from eating radium.
+(t)mon aug 29 22
+(u)Sord
+(*)Added 4 new Research accesses, view minor changes for details
+(u)Sord
+(e)|
+(+)New Research accesses are "Research Foyer", "Telescience", "Artifact Lab", and "Robot Depot"
+(u)Roddy
+(p)9442
+(e)|
+(+)Adds a cheese wheel to the game.
+(u)Azrun
+(p)10499
+(e)|
+(+)Head Access no longer required to deconstruct fabricators and Genetics booth.
+(t)sun aug 28 22
+(u)zjdtmkhzt
+(p)10442
+(e)|
+(+)Terminals should now respect font size settings.
+(u)LeahTheTech
+(p)10494
+(e)|
+(+)AIs can no longer track Wraiths
+(u)CrystalClover
+(p)10469
+(e)|
+(+)Fixed custom pizzas so that Pepperoni, Meatball and Mushroom can be added alongside other toppings
+(u)flappybat
+(e)⚖|balance
+(+)Upgrade the single landmine given by the surplus crate to a landmine pouch with three random mines.
+(+)Add beartrap pouch to the surplus crate loot table.
+(+)Add 25% chance of a random extra weapon to the Battle Royale syndicate lockers.
+(+)Add 33% chance of a mini synthflesh healing patch to Battle Royale chests.
+(+)Add Micro Phaser, Macro Phaser, Optio 1 and Heavy Ion to Battle Royale.
+(+)Remove Butcher Knife, Dagger, Hunter Spear, Garotte, EMAG, Sawflys, Wasp bow, Wasp grenades, Radbow, Chameleon Projector, Slip and Sign from Battle Royale for being useless or overpowered.
+(+)Remove Light Machine Gun, Assault Rifle, Laser Gun from Battle Royale for being comparitvely strong.
+(+)Remove belts from Battle Royale.
+(+)Remove  Medical vendors and Port-A-NanoMed from Battle Royale.
+(+)Battlers start with an empty backpack.
+(+)Nerf the Battle Royale shotgun spawn to the Nukie engineer version.
+(+)Remove chemistry equipment from BR. It's Battle Royale not Nerd Royale!
+(t)sat aug 27 22
+(u)Mr. Moriarty
+(p)10476
+(e)|
+(+)The Armoury's stinger grenades have been moved to the special grenades crate.
+(u)ZeWaka
+(p)10484
+(e)|
+(*)Reworked internal list sorting code - be sure to report any bugs you see (hopefully less, as this fixed a lot)
+(u)Mr. Moriarty
+(p)10461
+(e)|
+(+)Moved the forensic scanner's print option to the text window, alongside adding the ability to print previously made scans.
+(u)LeahTheTech
+(p)10325
+(e)|
+(+)Gunbots no longer take eye damage from welding
+(u)flappybat
+(e)⚖|balance
+(+)Remove turrets and firelocks from Battle Royale.
+(+)Remove Syndicate Donk Pockets box from Battle Royale.
+(+)Battlers start with a mini synthflesh mender (50u) instead of a Donk.
+(t)thu aug 25 22
+(u)Mr. Moriarty
+(p)10462
+(e)|
+(+)Removed the sunglasses, NVGs, and 12ga rubber slugs from the special equipment locker in the Armoury.
+(u)ZWRh3
+(p)9518
+(e)|
+(*)Cyborg prodoc upgrade now acts like upgraded prodoc glasses and can scan people on examine.
+(+)You now only need one prodoc eye for it to work.
+(u)Sord
+(*)Security can now buy Night Vision SecHUD Goggles from the vendor
+(t)wed aug 24 22
+(u)Mr. Moriarty
+(p)9908
+(e)|
+(*)Added Ctrl-I as the *twirl hotkey.
+(u)Amylizzle
+(p)10383
+(e)|
+(+)Flock response emergency shuttle now comes in 60 seconds (down from 3 minutes).
+(t)tue aug 23 22
+(u)Sovexe
+(p)10439
+(e)|
+(*)The Nanotrasen Applied Paints art gallery has opened its doors at Centcom and welcomes submissions from artists throughout the frontier
+(u)Sord
+(e)|
+(+)Donut 2 now has a public refinery near mining
+(u)Mr. Moriarty
+(p)10403
+(e)|
+(+)Clowns will now always spawn with the comic sans accent mutation.
+(u)uwumacaronitime
+(p)10433
+(e)|
+(+)Adds ability sprites to the hunter.
+(u)LeahTheTech
+(p)10421
+(e)|
+(+)Stammering now applies when whispering
+(u)CrystalClover
+(p)10398
+(e)|
+(+)Increased Cleaner bottle base reagent size to 100u (these are the refills in janitorial closets).
+(t)sun aug 21 22
+(u)tarmunora
+(+)captain's antique laser gun now fires glitter-lasers by default, upgrades to standard lasers with better materials
+(t)fri aug 19 22
+(u)RichardGere
+(p)10307
+(e)|
+(+)Capped space movement at base speed.
+(u)Wisemonster
+(p)9792
+(e)|
+(*)Capsaicin (the stuff in crowd dispersal grenades and peppers) now requires chem smoke protection (or internals) and glasses to be protected from it.
+(t)thu aug 18 22
+(u)Roddy
+(p)10340
+(e)|
+(*)Updated the Donut 2 Pool/Arcade/Gym area.
+(u)Sovexe
+(p)10334
+(e)|
+(+)Arcfiend Jolt now has reduced cost (500 -> 200) and cast time (18 -> 12 seconds)
+(u)Cogwerks
+(e)|
+(*)Added orderable crates for the Micro and Macro Phasers
+(+)All three classes of phasers are encouraged for use in Player vs Environment adventures
+(+)Ask security to open the crates if you wanna use them for telesci or space exploration
+(+)Added Egun-Jr. More like a holdout blaster than the full-size egun
+(+)Egun Jr crate and Huge Phaser crate will require armory access to open
+(+)Updated naming scheme and descriptions for rad crossbow and phasers.
+(t)wed aug 17 22
+(u)MylieDaniels
+(p)9902
+(e)|
+(*)Forcefeeding pills has an action bar, and time to forcefeed scales with size of pill, from 3 seconds at 30u to 5 seconds at 90u.
+(u)tarmunora
+(*)Defibs must now be primed (used in-hand) before being used, and will discharge themselves 3 seconds after being primed.
+(u)Kubius
+(p)9904
+(e)|
+(*)Chem protection on gear now properly factors into most chemical touch effects. Menders and patches are exempt.
+(u)LeahTheTech
+(p)10186
+(e)|
+(+)Flockdrones now do ~40 damage per shot to pods, up from 4 (yes really)
+(t)tue aug 16 22
+(u)Jan.antilles
+(p)10282
+(e)|
+(*)Resprited and rebalanced lunchboxes.
+(u)LeahTheTech
+(p)10163
+(e)|
+(+)Vampire bite action bars are now only visible to the vampire, and biting a victim will now cause a little of their blood to drip to the floor at your feet.
+(u)Amylizzle
+(p)10234
+(e)|
+(+)Removed the broken pod colosseum
+(u)ZeWaka
+(+)Stickers now have fingerprints
+(t)mon aug 15 22
+(u)zjdtmkhzt
+(p)10144
+(e)|
+(+)Lost your tray of artifact forms in a terrible accident? You can now make a new one at the Science Fabricator!
+(u)Roddy
+(p)10136
+(e)|
+(*)Updates Donut 2 Crew Quarters
+(u)Roddy
+(p)10260
+(e)|
+(+)Moved several Cog2 pest starts.
+(u)Gannets
+(p)10262
+(e)|
+(+)Redrew the syndicate combat knife & amended the description to mention it's throw-stun utility.
+(t)sun aug 14 22
+(u)Roddy
+(p)10259
+(e)|
+(+)Moved some pest spawns on Oshan.
+(u)Amylizzle
+(p)10185
+(e)|
+(+)Non-hostile flock actions are now much quieter, and can be heard from less far away.
+(u)ZWRh3
+(p)10081
+(e)|
+(+)Cyborg teleport upgrade no longer works while stunned
+(u)glowbold
+(p)10226
+(e)|
+(+)Engineering cyborgs can no longer insert their material stacks into a reclaimer.
+(u)Amylizze
+(p)10237
+(e)|
+(+)You can now clean up paint with a wet sponge.
+(t)sat aug 06 22
+(u)tarnunora
+(e)⚖|balance
+(*)taser shotgun singlefire now energy "slug" with high (30) power and high (33) cost, round up spread pellet power (17.5 -> 18)
+(+)taser shotgun fire delay 6ds -> 8ds
+(+)taser shotgun force 8 -> 12
+(u)Flourish
+(p)10071
+(e)|
+(*)You can now adjust the game's saturation through Game > Effects > Saturation in the upper left corner.
+(u)DisturbHerb
+(p)10103
+(e)🐛|bug
+(+)Removed the variability of CheMaster bottle styles.
+(t)wed aug 03 22
+(u)TTerc
+(e)🆕|feature
+(+)Russian revolver suicide is now WAY more brutal. Give it a try!
+(u)NightmarechaMillian
+(p)9794
+(e)🎨⚖|sprites, balance
+(+)Glass pipeshot now requires 2 shards instead of 1.
+(u)ZWRh3
+(p)10026
+(e)⚖|balance
+(+)Civilian cyborg cleaning spray bottles refill speed has been increased from 1u to 5u, maximum volume changed from 25 to 100.
+(u)Chatauscours
+(p)9761
+(e)🆕|feature
+(+)Forensic scanners can now print the copy of the last report.
+(t)tue aug 02 22
+(u)LeahTheTech, Amylizzle, FlameArrow57, Stonepillar
+(p)9915
+(e)🆕⚖|feature, balance
+(*)Flockminds can now spawn in the (non RP) mixed gamemode and as random event antags.
+(u)Wisemonster
+(p)9958
+(e)⚖|balance
+(+)The fire orb no longer gives fire damage immunity.
+(+)The fire jewel's heat protection has been reduced to 50%, down from 100%.
+(u)Ikea
+(p)9835
+(e)⚖|balance
+(*)Upon being converted through counterrev implants or beatings, you now gain 5 seconds of additional melee protection.
+(u)Munien & Avimour
+(p)9892
+(e)🆕🎨|feature, sprites
+(*)Added a new Rose mutation: Holo-Roses. Give one to your favourite silicons today!
+(u)Hans
+(p)9856
+(e)⚖|balance
+(+)You can now shoot rattlesnakes, scorpions have a longer special ability delay, and viper venom's bleeding isn't as RNG dependant and can't hit as hard as fast now.
+(u)Ilysen
+(p)9966
+(e)|
+(*)Arcfiends and mid-round/mixed gamemode traitors have been moved onto the new system. Please keep an eye out for bugs and report them on GitHub if something comes up!
+(t)mon aug 01 22
+(u)Flourish
+(e)🔄|rework
+(*)The "time until payday" countdown has been removed from the status panel. Now, every payday you get a PDA message informing you how much has been deposited into your account and how many credits you have total. (You may block PAYROLL-MAILBOT if you wish.)
+(u)Flourish
+(e)🆕|feature
+(+)Clowns can now stow a single tiny item in their clown towel. This is compatible with eating and vomiting back out the towel.
+(t)sun jul 31 22
+(u)Roddy
+(p)9982
+(e)🗺|mapping
+(*)Updates Donut2 civilian sector (bar, kitchen, botany) to modern standards.
+(u)LeahTheTech
+(p)9790
+(e)🐛📄|bug, tgui
+(+)Timers and proximity sensors now use TGUI
+(u)Amylizzle
+(p)9986
+(e)🐛⚖📄|bug, balance, tgui
+(+)Genetics reclaimer can now only reclaim active genes.
+(u)Amylizzle
+(p)9976
+(e)🐛|bug
+(+)Eyespider mark ability is now more accurate, and points at the marked target.
+(t)sat jul 30 22
+(u)Luxizzle
+(p)9571
+(e)📄|tgui
+(+)Traits have been moved into the main character setup window
+(t)fri jul 29 22
+(u)DisturbHerb
+(p)9770
+(e)🎨|sprites
+(+)Chemical bottles have been resprited.
+(u)NightmareChamillian
+(p)9350
+(e)🐛|bug
+(+)Sawflies have had their targeting AI reworked, and should be much more responsive now! Ping me if this breaks anything.
+(u)Blackrep
+(p)9776
+(e)📄|tgui
+(+)Safes have a fancy new UI
+(t)thu jul 28 22
+(u)Flourish
+(p)9868
+(e)🆕⚖|feature, balance
+(*)"Mindslave" implants and cloning modules have now been renamed to "mindhack". Additionally, when you are mindhacked, you now receive a special status effect that tells you your mindhacker's name and how long you are mindhacked for.
+(u)Roddy
+(p)9727
+(e)🆕|feature
+(*)Added in five new drink recipes for the bartender; Iced Coconut Milk Espresso, Iced Pineapple Matcha, Thai Iced Coffee, Peppermint Hot Chocolate, and Mexican Hot Chocolate!
+(u)Garash
+(p)9875
+(e)🆕🗺🎨📄|feature, mapping, sprites, tgui
+(+)Vapo-Matics and Injector belts have a new UI menu, go ask the HoP to transfer tens of thousands of credit into your account to buy one and check them out!
+(t)wed jul 27 22
+(u)TemThrush
+(p)9834
+(e)🆕|feature
+(*)Added three hairstyles, Combed Front, Combed Front Short, and Longfront.
+(u)ZWRh3
+(p)9903
+(e)🐛⚖|bug, balance
+(+)Most wizard spells have no longer work while phase shifting.
+(u)Ikea
+(p)9833
+(e)|
+(+)You can no longer plate implants with the arc electroplater.
+(u)Luxizzle
+(p)9758
+(e)🆕|feature
+(+)Silicons can now surround parts of their messages with ` to display it in a monospace font.
+(u)LeahTheTech
+(p)9785
+(e)🐛📄|bug, tgui
+(+)Remote signalers are now tgui
+(u)ZWRh3
+(p)9877
+(e)🐛⚖|bug, balance
+(*)Fire no longer clips trough walls
+(u)Zonespace
+(p)9848
+(e)⚖|balance
+(+)Nukeop laser designator now fires faster and has a more powerful explosion
+(u)maybeserendipitous
+(p)9759
+(e)🆕|feature
+(*)Synthorgan max health and failure threshold increase with Endurance.
+(u)Moberry
+(p)9682
+(e)⚖|balance
+(+)Changed the blob recycling ability to cost 0 biopoints. Increased the cooldown to five seconds.
+(t)tue jul 26 22
+(u)Amylizzle
+(p)9720
+(e)🆕📄|feature, tgui
+(+)Flockdrones with nothing to do will now hibernate, providing 5 extra compute. They will wake from hibernation when given orders or an enemy is detected.
+(u)Gannets
+(p)9852
+(e)⚖|balance
+(+)Added high-capacity fire extinguisher to Nuclear Operative Field Medic class crate.
+(t)mon jul 25 22
+(u)Ikea
+(p)9850
+(e)|
+(+)The medborg inventory has been shuffled around a bit.
+(u)Flourish
+(+)Reduced number of loot crate spawners in the debris field. Increased frequency of loot crates while mining asteroids (including mineral magnet).
+(u)Luxizzle
+(p)9842
+(e)🐛🗺|bug, mapping
+(+)Artifact paper dispensers now act like paper bins. You can pick them up and put artifact papers back in.
+(u)Luxizzle
+(p)9841
+(e)🐛🗺|bug, mapping
+(+)Cogmap2's Artifact Lab now includes a thinktape.
+(t)sat jul 23 22
+(u)Flaborized
+(p)9718
+(e)🆕|feature
+(+)Wizard incantations are now a bit more magical looking.
 (t)fri jul 22 22
+(u)NightmarechaMillian
+(p)9579
+(e)|
+(*)Clicking a disposal chute with a storage object (toolbox, backpack, boxes, etc) will now place the object in if it's empty and dump contents if it's full. To place the full object in, use non-help intent.
+(u)ZWRh3
+(p)9793
+(e)⚖|balance
+(+)Clown cars now make people who they run over fall to the ground instantly.
+(u)Kubius
+(p)9546
+(e)🆕|feature
+(*)Aid contracts in the quartermasters' requisitions market now last for a fixed amount of cycles, instead of having a chance to rotate out.
 (u)Amylizzle
 (p)9743
 (e)|
@@ -135,7 +2119,7 @@
 (u)Moberry
 (p)9376
 (e)⚖⛔|balance, removal
-(+)Changes QM Ore values and removes the electronics commodity.
+(+)Changed QM Ore values and removed the electronics commodity.
 (u)TTerc
 (e)🗺|mapping
 (+)Changed the layout of Donut 3 QM pipeline. The pipes should no longer break each time a welderbomb goes off in the tool storage.
@@ -297,7 +2281,7 @@
 (u)Moberry
 (p)9377
 (e)⚖|balance
-(*)Changes the shipping market timer from 12-9 minutes to 10-5 minutes.
+(*)Changed the shipping market timer from 12-9 minutes to 10-5 minutes.
 (+)Artifact Resupply is now a flat one minute delay.
 (u)ZWRh3
 (p)9409
@@ -751,1710 +2735,5 @@
 (+)You can now obtain changeling meat by either butchering changeling critters (buttcrabs, legworms, etc) or tossing a changeling in the gibber. This meat can either be cooked into a steak, or cooked with dough for an aburgination, which is very unsafe to eat. Otherwise, it's like mystery meat.
 (+)Sprites and ideas by fwll, code by aloe
 (t)tue may 31 22
-(u)aloe
-(+)Changeling control transfers should be fixed (usually wouldn't put this in the changelog but it seems important)
-(u)aloe
-(+)Cyborgs now have text for determining if they're connected on examine; the 3 states are operational (has a player connected), hibernating (has a brain but player is disconnected), and dormant (no brain or inactive SICC)
-(u)aloe
-(e)⚖|balance
-(*)The swooshy cloaking device effect is now only visible to the user, not people with thermals and the AI and whatever else. You can still see the person with thermal vision, you just can't immediately tell they're using a cloaker.
-(t)mon may 30 22
-(u)Bartimeus973
-(p)8651
-(e)🎨|sprites
-(*)Detectives now have a weak scuttlebot of their own! It has taken the shape of the detgadget hat in their locker.
-(u)tarmunora
-(+)chlorine, acetaldehyde, fluorine splash multipler reduced to 0.33, formaldehyde splash multiplier reduced to 0.5, skin penetration removed from nitrogen dioxide
-(+)chorine, acetaldehyde depletion rates 0.4 -> 0.6
-(+)fluorine damage burn/tox damage reduced 1 -> 0.75
-(u)tarmunora
-(*)sec token crate now gets sec assistant token instead and made cheaper
-(t)sun may 29 22
-(u)Wisemonster
-(p)8762
-(e)🗺|mapping
-(+)Added status displays to Kondaru, Horizon, and Destiny.
-(u)DimWhat
-(p)8809
-(e)|
-(+)Increased the material cost of flashes
-(u)TTerc
-(e)|
-(*)Clicking doors with open panel via empty hand or bumping into them will now open them, as long as you have proper access. Hacking UI panel will open only if you have hacking tools/remote signaller in any hand.
-(u)Zonespace
-(p)6811
-(e)⚖|balance
-(+)Synthrubber conductivity 20 -> 30
-(u)TTerc
-(e)⚖|balance
-(+)Cleaning gloves conductivity 10% -> 30%
-(u)MomoBerry
-(p)8697
-(e)|
-(+)Removed Atmospherish Crate from Cargo. Added crates for pipe dispenser, portable fuel tanks, and a two piece scrubber/airtank set.
-(t)thu may 26 22
-(u)tarmunora
-(+)welderspecial blocked by things that block gas. rangedstab special blocked by things that would not permit the item to pass.
-(u)Azrun
-(p)8735
-(e)🆕|feature
-(+)Atmos pipes will take some time to rupture after being repaired.
-(t)wed may 25 22
-(u)C.Clover
-(p)8739
-(e)|
-(+)Added option to print Freezer Crate from Crate manufacturer
-(u)CodeJester
-(p)8554
-(e)🗺📄|mapping, tgui
-(+)Hyposprays have a new UI menu, making it easy to administer proper doses of methamphetamine.
-(u)MomoBerry
-(p)8680
-(e)|
-(+)Adjusted the tail regrowth ability cooldown from five minutes down to two minutes.
-(t)tue may 24 22
-(u)tarmunora
-(+)burst taser has slight spread
-(t)mon may 23 22
-(u)Wisemonster
-(p)8607
-(e)🆕🗺|feature, mapping
-(+)The VR murderbox has been upgraded with an arcfiend simulation.
-(u)Flappybat
-(p)8662
-(e)⛔|removal
-(+)The noise_maker artifact has been removed, reducing incidents of exploding speakers by 57%.
-(t)sun may 22 22
-(u)Azrun
-(e)🚽🎣
-(+)Toilet Fishing
-(u)Flappybat
-(p)8671
-(e)🗺|mapping
-(*)Some layout changes have been made to Cogmap2 security, in particular the Solitary cell controls have moved north from the tables to the wall outside the cell.
-(u)Wisemonster
-(p)8693
-(e)⚖|balance
-(+)The med/hydro restock cartridges purchase from qm has been split into two separate purchases.
-(u)Blackrep
-(p)8162
-(e)📄|tgui
-(+)The mechanical dropper has been updated to a fancy new UI!
-(u)KubeRoot, Kapu1178
-(p)8056
-(e)🆕|feature
-(*)The 'say' verb and typing indicators should now be much more responsive
-(t)sat may 21 22
-(u)FlameArrow57
-(p)7498
-(e)🆕🎨|feature, sprites
-(*)Added the implanter artifact, complete with nine new alien implants!
-(u)Flappybat & Dimwhat
-(p)8582
-(e)🗺🎨⚖|mapping, sprites, balance
-(*)Due to increasing number of monkey uprisings the Valuchimp vending machines are now access restricted according to their station area.
-(u)Azrun
-(p)8560
-(e)🎨⚖|sprites, balance
-(*)Adds visual indicator of pipe gas leaks. Gas leaks more and will scale with insanity pressures.
-(t)wed may 18 22
-(u)Wisemonster
-(p)8610
-(e)|
-(+)Status display screens' now glow in the dark!
-(u)DimWhat
-(p)8628
-(e)🎨|sprites
-(+)Respriited the captain's antique lasergun
-(u)Virvatuli
-(e)🆕|feature
-(*)New addition to surplus crates and spy bounties: energy-based concussion grenades! Those who have played Pod Wars should be familiar with them. These stick grenades let loose a forceful energy wave upon detonation, similar to being hit by a pulse rifle. They work best in tight spaces where you can disarm your targets when they are flung into a wall.
-(t)tue may 17 22
-(u)Sovexe
-(p)8615
-(e)🎨|sprites
-(*)New spacebux purchasable, the Pixel Pass. Can be redeemed at the Centcom canvas to place an additional pixel. Keep it safe until you get there!
-(u)aloe
-(*)Dart and syringe projectiles (lawbringer dart, syringe gun, tranq rifle, tranq pistol, etc) now apply their reagents slowly rather than instantly, and stop applying their reagents after pulled out. As a reminder, you can pull a dart out of yourself or someone else by clicking them on help intent. Syndicate darts (nukie pistol, traitor syringe gun) are barbed and require surgery to remove.
-(*)The reagents added by darts are no longer reduced by armor.
-(t)mon may 16 22
-(u)Wisemonster
-(p)8591
-(e)🗺|mapping
-(+)Added status displays to Donut 3
-(t)sun may 15 22
-(u)Pali + Sord
-(e)🆕🗺|feature, mapping
-(+)Added randomized rooms to Oshan!
-(u)Flappybat
-(p)8586
-(e)🎨⚖|sprites, balance
-(+)Nuclear Operative pistol belt sprites show if they contain a pistol.
-(u)FlameArrow57
-(p)8478
-(e)🆕🎨⚖🔄|feature, sprites, balance, rework
-(*)Health analyzers will now show non-syndicate type implants in those scanned. The Nuclear Operative Field Medic helmet is exempt from that restriction.
-(*)ProDoc health goggles now show an orange indicator on health icons for those with an implant in them other than a health or cloner record implant.
-(u)Roddy
-(p)8506
-(e)🎨|sprites
-(+)Resprited the nurse dress and added a new hat to go with it.
-(t)sat may 14 22
-(u)Flaborized
-(p)8499
-(e)|
-(+)Throwing things into disposal chutes isn't luck based anymore, and you can throw more mobs into chutes. Clumsy people will always set the chute off when thrown in.
-(u)Wisemonster
-(p)8550
-(e)🆕|feature
-(*)Add a new objective for Arcfiends!
-(u)LeahTheTech
-(p)8512
-(e)🗺⚖|mapping, balance
-(+)Donut 3's AI upload chamber has been redesigned slightly to remove a safespot.
-(u)Emily
-(*)Dungeon Master 2.0 has completed its takeover of the VR Dungeon. It has gone through extensive remodelling, and there is now a new prize for completing it. Enjoy!
-(t)fri may 13 22
-(u)Flourish
-(+)Vampires and their thralls can now identify each other through small V icons.
-(t)thu may 12 22
-(u)Wisemonster
-(p)8549
-(e)⚖|balance
-(*)Arcfiend's Jolt ability will now apply burn damage to a target's heart throughout the ability if they do not have a gene resistant to electricity.
-(u)aloe
-(+)You can now meat spike monkeys by throwing them at the spike. You can also scan the spikes with a device analyzer.
-(t)wed may 11 22
-(u)BatElite
-(p)8484
-(e)|
-(+)Ghostdrones can now auto-pry floors when placing tiles, provided they left their omnitool on prying
-(u)Nexusuxen
-(p)8502
-(e)|
-(+)AI plating kits can now be applied to existing AIs that have the default skin!
-(u)zcrow
-(p)8493
-(e)|
-(*)Added "Change vocal pitch" verb to Robot Commands. Borgs can now modify their voices to better express themselves.
-(u)Wisemonster
-(p)8489
-(e)🗺|mapping
-(+)Added status displays to Atlas.
-(t)mon may 09 22
-(u)Wisemonster
-(p)8474
-(e)🗺|mapping
-(+)Mr. Rathens has been rescued from the singularity generator area on Donut 3 and safely moved to the engineering break room.
-(t)sun may 08 22
-(u)aloe
-(p)8303
-(e)|
-(+)Things which animate objects now make the living objects act like the objects they came from; batons will stun you, food will feed itself to people, etc.
-(u)LeahTheTech
-(p)8378
-(e)📄|tgui
-(+)The control panels for AI chamber and armoury turrets have been upgraded to TGUI.
-(u)ImJustAStrangeMan
-(e)🎨|sprites
-(+)Resprited the traitor cloaking field generator.
-(t)sat may 07 22
-(u)LeahTheTech
-(p)8486
-(e)|
-(+)Added round victory messages to the scorescreen popup, will hopefully reduce "OOC: who won tho" by up to 12%!
-(u)Arborinus, ZeWaka, & skeletonman0
-(p)7514
-(e)🗺🎨|mapping, sprites
-(*)Asteroid and trench walls/floors have new perspective sprites and ways of displaying ore/algae.
-(t)fri may 06 22
-(u)SgtManGuy
-(p)8356
-(e)🎨|sprites
-(*)Added a sushi chef outfit as a chef job award (Level 0).
-(u)Bartimeus973
-(p)8234
-(e)|
-(+)You can now stuff people directly into washing machines for efficient cleaning.
-(t)thu may 05 22
-(u)Boussard's Bargains Budget Bot
-(p)8460
-(e)|
-(+)Civilian cyborg modules now have three product satchels.
-(u)Wisemonster
-(p)8210
-(e)🆕🗺|feature, mapping
-(+)NanoTrasen Has added the proper systems to Donut 3 to allow mulebots to function. (Mule bot included)
-(t)wed may 04 22
-(u)Wisemonster
-(p)8464
-(e)🗺|mapping
-(+)Status Displays have been added to Oshan for the captain/HoP/AI to use from their pdas.
-(u)Chatauscours
-(p)8399
-(e)🗺|mapping
-(+)Removed reinforced walls from under windows in horizon robotics.
-(u)Bartimeus973
-(p)8430
-(e)🎨|sprites
-(*)The detective and spy thieves now have access to a new item: The scuttlebot! A strangely hat-shaped robot that is eager to spy on everything and everyone.
-(u)Flappybat
-(p)8410
-(e)🗺|mapping
-(*)The Horizon Listening Post has been reinforced with stronger walls, a podbay blast door and backup power furnace.
-(u)Flappybat
-(p)8415
-(e)⚖|balance
-(*)RP shuttles have been fitted with the newly developed hotbox shields to reduce complaints.
-(u)zjdtmkhzt
-(p)8422
-(e)⚖|balance
-(*)Cowpeople can now wear cowboy boots.
-(u)Wisemonster
-(p)8459
-(e)🗺|mapping
-(*)Adds status displays to cog1 that the captain/head of personell/AI can use through their pda.
-(u)Amylizzle
-(p)8432
-(e)|
-(+)Carbon and silicon touch artifacts can be activated with appropriate life-related and robot-related chems now.
-(u)NightmareChamillian
-(p)8434
-(e)🎨|sprites
-(*)Added a 6-slot tactical pouch utility for nukies to use
-(u)Flappybat
-(p)8427
-(e)⚖|balance
-(+)Football cleats now have extra grip.
-(t)tue may 03 22
-(u)Shiiba
-(p)8420
-(e)🎨|sprites
-(+)A new sprite for the compost bag!
-(t)mon may 02 22
-(u)Hans
-(p)8374
-(e)🆕🎨|feature, sprites
-(*)Adds yerba mate and mate gourds to the game, available through the coffee vendors.
-(u)Flappybat
-(p)8398
-(e)🆕|feature
-(*)Forcing another to drink now uses an action bar.
-(u)LeahTheTech
-(p)8040
-(e)🆕⚖|feature, balance
-(*)Conspirators are now joined by a single lone antagonist.
-(u)Virvatuli
-(e)⚖|balance
-(*)Reduced shotsound volume of the Gwydion tranquilizer pistol, and it now acts like a suppressed gun.
-(*)Drastically reduced volume and range of melee range vampire bloodsucking sounds.
-(t)sun may 01 22
-(u)NightmareChamillian
-(p)8383
-(e)|
-(+)Drones now get a more inbuilt floor tiles. 500 more, to be precise.
-(u)Bartimeus973
-(p)8371
-(e)|
-(+)An apple a day will keep doctors away if you throw it hard enough
-(u)Chatauscours
-(p)8396
-(e)|
-(*)Added mining headset. Spawns on miners and in miner equimpent boxes.
-(u)Chatauscours
-(p)8405
-(e)⚖|balance
-(*)Changed the chameleon suit to the chameleon outfit in the infiltrator class crate.
-(u)Bartimeus973
-(p)8262
-(e)🎨|sprites
-(*)Using the "regrow tail" ability as a reptilian will now make the tail twitchy for a bit!
-(u)Flaborized & TheMightyAltroll
-(p)8315
-(e)🆕🎨|feature, sprites
-(*)Added a new wizard spell, 'Stave Of Thunder'. It can summon three lightning bolts to strike your foes with lingering disorientating electricity before needing to be recharged by recalling it. Awesome lightning bolt sound effect from TheMightyAltroll!
-(u)Chatauscours
-(p)8387
-(e)🗺|mapping
-(+)Redesined bridge lockdown on Atlas
-(t)sat apr 30 22
-(u)Flourish + Waffleoffle
-(p)8385
-(e)🆕🎨|feature, sprites
-(*)Added towels and handkerchiefs, sprites by Waffleoffle. Bartenders, janitors, and clowns spawn with a special towel. Handkerchiefs are available as a spacebux purchase. Check out the <a href="https://github.com/goonstation/goonstation/pull/8385" target="_blank">PR page</a> to learn more about what you can do with these cool pieces of cloth!
-(t)fri apr 29 22
-(u)pali
-(*)GardenGear vending machines in hydroponics now have two brand new smoke-shield generators to contain your hotboxing into a safe area! Hotbox responsibly!
-(u)Flappybat
-(p)8369
-(e)🗺|mapping
-(+)Donut3 telescience has been provided with a camera helmet for safe exploration.
-(t)thu apr 28 22
-(u)FlameArrow57
-(p)7804
-(e)🆕🗺🎨⚖|feature, mapping, sprites, balance
-(+)Tranquilizer darts and syringe projectiles can now stick into your body! Along with throwing darts, these items can be pulled out using the help intent, except for the syndicate fired variety, which must be cut out using a scalpel.
-(u)LeahTheTech
-(p)7673
-(e)🆕🎨⚖|feature, sprites, balance
-(*)Added a kitchen baster for adding pois- DELICIOUS INGREDIENTS to food. Find it in the kitchen vending machine.
-(u)Bartimeus973
-(p)8336
-(e)🎨|sprites
-(*)Security can now put down crime scene tape to show that business is being done! Find it in sectechs! Sprites made in collaboration with shiiba!
-(u)Bartimeus973
-(p)8333
-(e)|
-(+)You can now use an RCD on deconstruction mode for limb surgery!
-(t)wed apr 27 22
-(u)Hans
-(p)8342
-(e)⚖|balance
-(+)Reduces the rattlesnakes's health and makes the bite cooldown bigger.
-(u)BatElite
-(p)8264
-(e)🆕|feature
-(+)You can now re-insert oxygen/plasma tanks into tank storage units, which you definitely shouldn't misuse for the purpose of crime.
-(u)Shiiba
-(p)8340
-(e)|
-(+)Removes oculine from sunrise venne.
-(+)Adds oculine to carrots.
-(u)DisturbHerb & Waffleoffle
-(p)8014
-(e)🆕🎨|feature, sprites
-(*)In an effort to introduce greater diversity into the crew's diets, NanoTrasen has officially sanctioned the preparation of several new non-pasta noodle dishes. These include ramen, udon, and curry udon; available at the cafeteria today!
-(u)NightmareChamillian
-(p)7986
-(e)|
-(*)Gives ghostdrones three new tools for maintenance: A sponge, cleaner bottle, and stack of floor tiles.
-(u)Flappybat
-(p)8351
-(e)⚖|balance
-(+)Thermite breaching charges now destroy any doors on the same tile.
-(u)Hans
-(p)8005
-(e)⚖|balance
-(+)Makes ricin induce food poisoning instead of custom emotes.
-(+)Adds a potency requirement for ricin rice.
-(u)Ikea
-(p)8324
-(e)⚖|balance
-(+)Pawnstar now costs 0 trait points
-(t)mon apr 25 22
-(u)LeahTheTech
-(p)8170
-(e)🐛|bug
-(+)Added a new verb to re-open closed antag popups.
-(t)sun apr 24 22
-(u)zjdtmkhzt
-(p)8207
-(e)🆕|feature
-(+)Player pianos now have mechcomp integration.
-(t)fri apr 22 22
-(u)pali
-(+)Satchels now distinguish between seeds based on their plant types and mutations
-(t)thu apr 21 22
-(u)Hans
-(p)8274
-(e)🆕|feature
-(+)Rattlesnakes now wander about and are butcherable.
-(u)glowbold
-(p)8101
-(e)|
-(+)AI units can now change their name via a new AI Command: "Change Designation"
-(u)Hans
-(p)8276
-(e)🆕|feature
-(+)Now once tamed, scorpions can be made docile by clicking them with help intent, or aggressive by clicking them with disarm or grab intent, now you can show your friends your new dog without fear of it killing them.
-(u)Flaborized
-(p)8233
-(e)🗺🎨|mapping, sprites
-(*)Changed DNA scramblers. On first injection, it will randomize appearance like normal. On the second shot, it'll give the appearance of the person first injected by it, and become expended and unusable. It's also now instant when using it on other people.
-(u)Nexusuxen
-(p)6684
-(e)🗺🎨|mapping, sprites
-(*)Catering maintenance on Cogmap1 has been expanded. Check it out!
-(u)Sord
-(p)7946
-(e)🎨|sprites
-(+)New jellyfish critters added to water maps
-(t)wed apr 20 22
-(u)Flappybat
-(p)8097
-(e)⚖|balance
-(+)Many Battle Royale changes. Shuttle call moved to 10 players left. Cloaking device, Wrestling Belt, Red Saw removed. Whole load of mostly useless Syndicate items removed. More weapon and armor variety added. Loot chests now always hold a weapon and 50% chance of also some armor. Vehicles removed except escape pods.
-(t)sat apr 16 22
-(u)Yellow/Myco
-(p)8168
-(e)|
-(*)Adds names to where the announcements for anomalies/weather events/command updates are coming from.
-(u)Kubius
-(p)8193
-(e)🆕|feature
-(*)QM requisitions have received a buff / balancing pass, and a new civilian contract variant.
-(u)Bartimeus973
-(p)8197
-(e)|
-(+)Some bulky cargo orders now come as frames.
-(u)RSG250
-(p)7048
-(e)⚖|balance
-(+)Buffed Matsci shoes and Cleats Kick bonus. Cleats are now stronger than cow feet. FOOTBALL.
-(u)UrsulaMajor
-(e)🐛|bug
-(+)Martian Psychics will properly gib you again.
-(u)BatElite
-(p)8029
-(e)🆕|feature
-(+)EMPs now delete some of a cloner's records.
-(u)glowbold
-(p)7853
-(e)🆕🎨|feature, sprites
-(*)Bathtubs now apply reagents to occupants as turf fluid puddles would - but you can only drown while laying.
-(+)Bathtubs now have a tap, visually fill up over time, and occupants now appear under the fluid.
-(u)NightmarechaMillian
-(p)7367
-(e)🆕🎨⚖|feature, sprites, balance
-(*)Matsci spacesuits have been given a massive facelift and their properties have been heavily reworked. See minor changes for a full list of how this is determined.
-(+)Helmet melee protection is based off the density of the visor's crystal
-(+)Suit bullet protection is based off the density of the fabric's material
-(+)Suit melee protection is based off the density of the reinforcement's material starting at -2, but cannot go above -6 damage
-(+)Suit movespeed is dependent on the reinforcement's density, but cannot exceed the range of 0.3-0.7
-(u)Flourish
-(e)🆕|feature
-(+)You can now make dog biscuits; granola bar + meat paste + peanut butter, 6 seconds on low in the oven.
-(u)Flourish
-(e)🆕|feature
-(+)Statues can now be destroyed with large explosions.
-(u)Flourish
-(e)⛔|removal
-(+)Removed corpse Spacebux purchase.
-(u)Azrun and Jan.antilles
-(p)5797
-(e)🆕🎨|feature, sprites
-(+)Graphical assets for sand experiences and future desert planets...
-(t)fri apr 15 22
-(u)Wisemonster
-(p)8218
-(e)🆕🗺|feature, mapping
-(*)NanoTrasen has added the proper systems to Clarion to allow mule bot to function. Cargo will now have a use for that mule bot they have in storage.
-(u)Ikea
-(p)8183
-(e)|
-(*)Adjusted blob scaling so 4 should hopefully be seen. If something is bad please yell or something k thanks.
-(u)Flappybat
-(p)8198
-(e)|
-(+)Lockers, fridges and coffins now have unique opening and closing sounds.
-(u)TheMightyAltroll
-(p)8203
-(e)|
-(+)Added a new sound to flamethrowers to make them sound properly terrifying.
-(t)thu apr 14 22
-(u)Wisemonster
-(p)8152
-(e)🆕🗺|feature, mapping
-(+)Horizon has recently been fitted with the proper systems to allow mule bots to function. Additionally, a mule bot was found in storage and added to cargo. (Some assembly required).
-(u)Wisemonster
-(p)7797
-(e)🗺|mapping
-(+)Nanotrasen has added the necessary systems to Oshan for mulebots to function! (Mulebot included)
-(u)Flappybat
-(p)8071
-(e)🆕⚖|feature, balance
-(*)Closets and lockers can now be broken open by hitting them with items or shooting with projectiles. Lockers have between 100HP and 300HP depending on their security. Energy weapons and low damage items are less effective against them.
-(*)HoS, Armory and Confiscated item lockers are reinforced and can only be broken open with explosives and higher damage kinetics.
-(*)Secure lockers started bolted to the floor. They must be unbolted with a wrench to be moved.
-(u)Flaborized
-(p)7469
-(e)🆕🎨|feature, sprites
-(*)The traitor chameleon jumpsuit is now a full chameleon outfit, allowing you to further your diabolical disguises! It comes with a remote that lets you quickly swap the costume to all match a particular job.
-(u)pali
-(p)8204
-(e)|
-(*)Fingerprint IDs should now be slightly easier to remember
-(u)Gannets
-(p)8185
-(e)⚖|balance
-(*)Nuclear Operatives now spawn wearing Hi-grip Assault Boots. They have also been removed from the Syndicate Weapons Vendor purchase list.
-(t)tue apr 12 22
-(u)Sovexe
-(p)7984
-(e)🆕🎨|feature, sprites
-(*)The trench can now spawn patches of vibrantly colored bioluminescent algae on its walls. Sprite by Waffleloffle
-(u)None
-(p)8166
-(e)|
-(*)Revhead scaling has been adjusted to where you should actually see more then 3 revheads on higherpops. Please yell or something if there's you believe theres an imbalance of revheads.
-(u)glowbold
-(p)8110
-(e)🆕|feature
-(+)You can now mine for buttcoin.
-(u)Amylizzle
-(p)8142
-(e)📄|tgui
-(*)Spacebux purchase menu is all nice and shiny now. With icons!
-(t)mon apr 11 22
-(u)aloe
-(+)Flyzapper implants have had their range lowered but should be generally stronger
-(u)aloe
-(+)Dead emagged/syndicate borgs now drop emagged/syndicate frames
-(u)pali
-(*)You can now pin canvases onto noticeboards. These should persist across rounds just like other pinned stuff. I recommend using a labeller to give them descriptive names first.
-(u)tarmunora
-(e)⚖|balance
-(*)Most power-cell using guns and stun batons deployed from frames (i.e.: mechscanned) come with a smaller (and initially empty) power cell.
-(t)sun apr 10 22
-(u)Walpvrgis
-(p)8161
-(e)|
-(+)You can now buy ashtrays at cigarette vending machines.
-(u)TTerc
-(e)🆕|feature
-(*)Airlocks, lockers and crates now have new fancy welding animations and actionbars! They also take 2 seconds to weld/unweld now.
-(t)sat apr 09 22
-(u)LeahTheTech
-(p)7489
-(e)🔄⛔|rework, removal
-(*)Reworked conspiracy objectives.
-(u)Ikea
-(p)7912
-(e)🗺|mapping
-(+)The vault prefab has had its contents nerfed, and has undergone minor changes.
-(u)NightmareChamillian
-(p)8081
-(e)🎨|sprites
-(+)Roboticists now spawn with a stocked toolbelt
-(u)NightmareChamillian
-(p)8117
-(e)🆕|feature
-(*)Roach people (and some bug critters for that matter) now bleed hemolymph instead of normal blood
-(+)Hemolymph can be broken down with space cleaner, acetone, and some heat.
-(u)NightmareChamillian
-(p)8087
-(e)🎨|sprites
-(+)Added purple jumpsuits and hats to uniform manufacturers
-(+)Sorted jumpsuits and hats in manufacturers by the rainbow
-(u)Flappybat
-(p)8149
-(e)🐛⚖|bug, balance
-(+)Added protection to nodamage/spellshield from force drinking, flash and Securitron batons.
-(t)thu apr 07 22
-(u)tarmunora
-(+)Ammo cell in security pouch replaced with donut.
-(+)Distruptor cell utility purchase in sec vendors removed, tokens now give a "ammo" credit that can be used to acquire either a spare 200u cell or the distruptor cell.
-(+)Distruptor cell self-charge rate reduced back down to 5.
-(u)aloe
-(+)Werewolf/abomination/zombie arms now prevent you from moving while they grab you. You can still resist out it's just a bit harder than a passive grab. Will tweak the percentages as needed.
-(+)Fiber wire should work now
-(u)Ikea
-(p)7914
-(e)🗺|mapping
-(+)The records contained within the radio station are now randomized.
-(t)tue apr 05 22
-(u)aloe
-(*)Taking items off people now takes 30 stamina when starting the action.
-(*)Some timings for taking items off people have been slightly adjusted. See minor changes for a list.
-(+)INCREASED: Backpacks, jumpsuits, helmets, space suits<br>DECREASED: Radios, gloves, non-helmet hats, glasses<br>Exact timings vary, but most are 1 second increase/decreases. Space suits take significantly longer.
-(+)Grenades can be put in people's pockets very fast. If you're into that.
-(u)aloe
-(*)You can now construct furniture on adjacent tiles by clicking those tiles.
-(*)You can now walk on tables as long as you're also on a table. However, you can no longer build tables on the same tile you're standing on.
-(+)Furniture can no longer be built on the same tile as impassable objects- e.g. no stacking multiple tables, no building chairs on the same tile as a vending machine.
-(u)Sovexe
-(p)8111
-(e)🆕|feature
-(+)Hovering over a pixel in the canvas editor now displays its coordinates.
-(t)mon apr 04 22
-(u)pali
-(*)CentCom dance floor has been covered by some kind of a canvas, huh. <s>r/place don't sue me pls</s>
-(u)Flaborized
-(p)8062
-(e)|
-(+)The Adamantium Skeleton trait now outputs a message in the chat when it prevents you from losing a limb.
-(u)RubberRats
-(p)7796
-(e)🆕|feature
-(*)Added a new negative trait: Frail Constitution. Taking this trait greatly increases the amount of damage that your internal organs take from all sources.
-(u)Flaborized
-(p)8060
-(e)🔄|rework
-(*)The human torch trait is now worth two points, but totally prevents the burning status counter from decrementing on its own.
-(t)sun apr 03 22
-(u)ThyOverlord
-(p)8072
-(e)🎨|sprites
-(+)Resprited Mono cards and their respective stacks/hands. Also updated MonoRules.txt to
-(u)LeahTheTech
-(p)8058
-(e)🆕|feature
-(*)AI law changes are now highlighted and display removed laws
-(t)sat apr 02 22
-(u)aloe
-(+)Pods now "eject" you on exploding. This also applies to the SEED.
-(u)Cogwerks
-(e)🗺🎨|mapping, sprites
-(*)Revising positions of stuff in the debris field and the dining level
-(*)Hemera, zombie-roid, drone carrier, time ship, and flock ship moved around
-(*)Martian derelict moved to dining level
-(*)Added more background space planets and moons to the imagined plasma giant orbits
-(u)Flappybat
-(p)7950
-(e)🆕|feature
-(*)Battle Royale now forces a shuttle when five players remain. A deadly storm will hit the entire station, finish everyone else off or escape on the shuttle to survive!
-(+)Battle Royale now prevents you leaving the station level edges, be careful spacing players as they may return.
-(u)NightmareChamillian
-(p)7694
-(e)⚖|balance
-(*)Deconstruction devices can now be used in surgeries- at your own personal risk
-(u)Flaborized
-(p)7952
-(e)|
-(*)LSD now has a different, unique color-changing animation when in your system.
-(u)Flappybat
-(p)7929
-(e)⚖|balance
-(+)Spellshield now protects wizards from the syndicate saw, butcher knife and katana.
-(t)thu mar 31 22
-(u)Laboredih123 & glowbold
-(p)7928
-(e)🎨|sprites
-(+)Nanotrasen has now made windows fully connected, removing seams.
-(t)wed mar 30 22
-(u)Yellow/Myco
-(p)7983
-(e)🎨|sprites
-(+)Changes the sprite of almost every beard, along with Hogan and Vandyke
-(u)zjdtmkhzt
-(p)8026
-(e)🆕⚖|feature, balance
-(+)The nukeops heavy energy sword can now reflect projectiles like a csaber can. (This was always there, it just didn't work because it was bugged until now.)
-(u)Hans
-(p)7563
-(e)🆕🎨|feature, sprites
-(*)Added space rattlesnakes to the game. Beware!
-(u)CodeJester
-(p)7822
-(e)📄|tgui
-(*)The Reagent Heater/Cooler has a new UI menu. Enjoy the blazing red color of setting the temperature to 1000 K every time.
-(u)aloe
-(*)Macrobombs have been removed. You can still just buy 12 micros, though.
-(*)Engineers get a flyzapper implant- costs 1 TC, acts sort of like a micro except you shock the shit out of people when you die instead of exploding. Stacks. Probably a bit weak (when compared to micros) currently, will do a numbers pass soon.
-(u)Amylizzle
-(p)8019
-(e)|
-(*)Hologram expansion modules now work properly with AI Law Racks.
-(t)tue mar 29 22
-(u)Wisemonster
-(p)7956
-(e)|
-(*)Engineering cyborg modules now come with a battery-hungry power shovel, to help with the Oshan engine. (Shovel is restricted to modules on Oshan)
-(t)mon mar 28 22
-(u)Yellow
-(p)7547
-(e)⚖|balance
-(*)Changes up Research Assistant, Medical Assistant, and Technical Assistant to make them more applicable for those who want to learn
-(+)Gives both Barbers and Musicians civilian headsets
-(t)sun mar 27 22
-(u)Amylizzle
-(p)7992
-(e)|
-(+)Adds a hint to the AI Law Module description telling users they can reset it with a multitool if it's glitchy.
-(u)NightmareChamillian
-(p)7443
-(e)⚖|balance
-(*)Weird and stupid material properties' numbers have been made less weird and stupid
-(t)sat mar 26 22
-(u)aloe
-(+)Spaceacillin cures food poisoning. This is medically dubious but a guy in an alleyway told me it works so uh.
-(u)glowbold
-(p)7955
-(e)|
-(+)Crowbars can now stand up and lay down dowsing rods.
-(u)glowbold
-(p)7932
-(e)🐛|bug
-(+)Chocolate pie is now made from sweet dough and chocolate.
-(u)Flappybat
-(p)7907
-(e)🗺⚖|mapping, balance
-(*)Kondaru armory has changed, it now has a NARCS instead of an interior turret, it has interior/exterior logical areas so the exterior turrets no longer attempt to shoot through the walls and the turret control panel has moved inside and now controls the exterior turrets (HoS access).
-(u)Gannets
-(p)7951
-(e)|
-(*)Syndicate requisition tokens now award players 2 utility credits instead of 1.
-(*)Hi-grip Assault Boots now cost 2 utility credits.
-(*)Adds a pouch of 4 beartraps as a new 1 cost utility purchase.
-(u)Amylizzle
-(p)7961
-(e)🗺|mapping
-(+)Adds a blueprint for the AI Law Rack to the Chief Engineer's locker on all maps in rotation. Don't use it for crime!
-(u)Amylizzle
-(p)7973
-(e)🐛|bug
-(+)Bank account balance now counts towards richest escapee.
-(u)Flaborized
-(p)7962
-(e)🎨|sprites
-(+)Resprited cargo loaders.
-(u)NightmareChamillian
-(p)7833
-(e)|
-(*)The mini-syndies from the syndicate pipe bomb now have more ammo and health, but shoot .22 rounds instead of .375
-(t)fri mar 25 22
-(u)NightmareChamillian
-(p)7778
-(e)🎨|sprites
-(*)Adds seven new faces for ghostdrones to choose from! See minor changes for a list
-(+)Faces are as follows: sleepy, exclamation mark, question mark, lopsy, kitty, and eye
-(+)Furthermore, drones can now nod (Ctrl+N) and shake (Ctrl+X) their heads to respond to basic yes-no questions
-(t)thu mar 24 22
-(u)tarmunora
-(e)⚖|balance
-(*)Wrestler changes: suplexes have a brief self-stun and will never be "explosive" (that's what your powers are for); throw power now knocks people around after the first second of spinning; all powers cd reduced by 10s and stun duration increased by 1s; cooldowns no longer scale with stamina buffs
-(+)You can only suplex once per person per flip
-(u)tarmunora
-(e)⚖|balance
-(+)Power cell sec utility purchase cost raised to 2 credits, only-a-baton loadout comes with an additional utility token.
-(u)aloe
-(+)The nuke op sniper has been changed a bit- it no longer disorients people (still does stamina damage), loses some damage when shooting through obstacles, and doesn't throw people back as far. The class gets an extra mag in their pouch to offset this a bit.
-(t)wed mar 23 22
-(u)Hans
-(p)7636
-(e)🆕|feature
-(*)Added ricin to the game as a slow stealth poison.
-(u)Flappybat
-(p)7777
-(e)⚖|balance
-(+)Nuclear operative assault pods are detected much later when there are more than 70 players.
-(u)Eagle
-(p)7677
-(e)🗺⚖|mapping, balance
-(+)The blueprint for a certain gun has been swapped out with some examples of it.
-(t)tue mar 22 22
-(u)Amylizzle
-(p)7904
-(e)🐛🆕🗺🎨|bug, feature, mapping, sprites
-(*)The Syndicate get their own rack now, which all Syndicate borgs and AI will be connected to. It's on the Cairngorm.
-(*)Emagged borgs can no longer be connected to a new law rack.
-(+)Welding the module on the law rack now has a nice animation which shows others what module you're welding.
-(+)Borgs/AI can now see if a rack they are examining is the one they are connected to.
-(u)nefarious6th
-(p)7886
-(e)|
-(+)you can now break firelocks down by hitting them repeatedly, just like airlocks
-(t)sun mar 20 22
-(u)Amylizzle
-(p)7881
-(e)⚖|balance
-(*)The Linker tool can now overwrite the connection on a cyborg/AI without needing to be emagged first.
-(u)BatElite
-(p)7827
-(e)🆕|feature
-(+)Added the Slipping Hazard trait, for people who'd like to slip worse.
-(t)sat mar 19 22
-(u)Sovexe
-(p)7861
-(e)🆕🗺|feature, mapping
-(*)The Cog1 ranch has been redesigned.
-(t)fri mar 18 22
-(u)tarmunora
-(e)⚖|balance
-(+)adjust blob firewall and reflector health - firewall 30 -> 40, reflector 85 -> 40
-(u)Amylizzle
-(p)7555
-(e)🗺🎨⚖📄|mapping, sprites, balance, tgui
-(*)Replaces the AI upload computer with a rack of law modules. These law modules are physical objects each containing a law, which can be removed, rearranged, and added to the law rack to change the AI's laws.
-(*)Multiple Law Racks can exist, and be connected to different AIs and borgs, giving them different law sets.
-(*)If the original law rack is destroyed, building a new one will reconnect all non-emagged borgs to the new one.
-(+)The roboticists get a new tool called the Linker to connect cyborgs to law racks, if they've lost their existing connection.
-(+)Roboticists can now print off new law sets, in case something happens to the original Asimov laws.
-(+)Cyborgs and AIs can examine one another to see if they are following the same law set.
-(+)Using the linker tool on a connected borg will tell the user where the rack they are connected to is.
-(+)Ion storms cause law modules to malfunction, and they must be ejected from the law rack and reset before the module will return to normal.
-(t)wed mar 16 22
-(u)tarmunora
-(e)⚖|balance
-(+)wizard gear now takes 4x normal duration to remove, instead of an RNG 25% chance to succeed.
-(u)Flappybat
-(p)7785
-(e)⚖|balance
-(+)The nuclear bomb has improved armor plating against energy and kinetic projectiles, taking roughly half the damage of the previous model.
-(u)Carsontheking
-(p)7377
-(e)🗺|mapping
-(+)Adds a new prefab to explore!
-(u)zjdtmkhzt
-(p)7809
-(e)🆕|feature
-(+)Cargo appraisers can now be used on artifacts. They need to have a form attached, and the analysis will only be correct if you've filled out the form correctly. Due to artifacts being unique items, the price may vary quite a bit from what the appraiser says (mostly upwards).
-(t)tue mar 15 22
-(u)Cogwerks
-(e)🎨🗺|sprites, mapping
-(+)Made some more background art for a bunch of orbital objects
-(+)Slightly rearranged solar control rooms on Cogmaps 1 & 2 for view of stars
-(t)mon mar 14 22
-(u)Conchuckter
-(p)7784
-(e)🆕🎨|feature, sprites
-(+)Ampoules now change colour based on what is inside them.
-(u)Zamujasa
-(+)The adminhelp and mentorhelp dialog boxes now mention that your requests are sent via Discord.
-(t)sun mar 13 22
-(u)glowbold
-(p)7686
-(e)🎨|sprites
-(+)AI players now have a `Map` and `Core` button in their interface for easier station traversal.
-(u)Kubius and Sord
-(p)7803
-(e)🆕🗺|feature, mapping
-(+)Added randomized rooms to Kondaru.
-(u)Pali and Sord
-(p)7801
-(e)🗺|mapping
-(+)Added some new randomized rooms to Cogmap1
-(u)Pali and Sord
-(p)7800
-(e)🗺|mapping
-(*)Added some new randomized rooms, coming soon to a station near you!
-(u)Gonzako
-(p)7462
-(e)⚖|balance
-(*)How intrigue chooses game mode has been tweaked, traitors should be slightly more common while aliens should invade the station a bit less frequently.
-(u)Hans
-(p)7499
-(e)🆕|feature
-(+)Made scorpions "tamable" with food offerings.
-(+)Slightly nerfed critter scorpions via adding a delay to their special attacks.
-(u)LeahTheTech
-(p)7507
-(e)🔄|rework
-(+)Ion storms now mess with a small number of vendors, manufacturers and fire alarms.
-(u)Wisemonster
-(p)7593
-(e)🗺|mapping
-(*)NanoTrasen has added the proper systems to Kondaru to allow mule bots to work! (mule bot included!)
-(u)Flappybat
-(p)7774
-(e)🆕🗺|feature, mapping
-(+)Nuclear operatives now have an ammo bag on their shooting range.
-(u)Gonzako, DisturbHerb
-(p)7656
-(e)🎨|sprites
-(+)Created a brand new, completely original card-game. Come play MONO!
-(u)112358sam
-(p)7637
-(e)🎨|sprites
-(+)Cryo pods now show the defibrillator on their sprite if they have one.
-(u)LeahTheTech
-(p)7680
-(e)|
-(+)Robotic talk, thrallspeak, and blob hivemind communication got a facelift and should now be much more noticeable.
-(u)Jan.antilles
-(p)7776
-(e)🎨|sprites
-(*)Added two new hair/beard styles: Shaved Head and Five O'Clock Shadow.
-(u)Amylizzle
-(p)7701
-(e)|
-(+)It is no longer possible to accidentally say a slur due to speech mutations.
-(u)LeahTheTech
-(p)7693
-(e)🆕|feature
-(+)Changeling hivemind members can now point, visible only to their master and other members of the hivemind.
-(u)Flappybat
-(p)7775
-(e)|
-(+)Battle Royale loot amount scales with player counts.
-(u)zjdtmkhzt
-(p)7719
-(e)|
-(+)Artifact analysis forms should look a little bit neater.
-(t)sat mar 12 22
-(u)Sovexe
-(p)7782
-(e)🐛|bug
-(+)Fixed a bug that prevented players from calming down angered and frightened chickens by hand feeding.
-(t)wed mar 09 22
-(u)Amylizzle
-(p)7736
-(e)🐛|bug
-(+)Transposed Particle Field now warns you that it's killing you with a big flashing icon.
-(u)Fwll
-(p)7708
-(e)🆕|feature
-(+)Mocha Coffee and Latte Coffee beans can now be processed in the food processor
-(u)Amylizzle
-(p)7718
-(e)🐛|bug
-(+)Missile Arrival and other Spacebux purchases are now available and working as Cyborg and AI!
-(u)Spell Tech
-(p)7697
-(e)|
-(+)The controls for the Tetris arcade are smoother and less laggy.
-(t)tue mar 08 22
-(u)Flourish
-(e)🆕|feature
-(*)Cloning consoles now update every minute or so and display a distinct animation when there is someone in the records who can be cloned. Let me know what you think.
-(u)Sovexe
-(e)🐛|bug
-(+)Fixed bugs that made Ixworth and Shieldmaidhen chickens unobtainable.
-(t)mon mar 07 22
-(u)aloe
-(+)Did you know grilles are immune to bullets? now they aren't
-(u)zamujasa
-(+)Fixed a bug involving the mineral magnet not clearing itself out properly on destruction that prevented the mineral magnet from being repaired if the magnet itself reached critical damage.
-(+)Fabricate replacement magnet parts and click the empty chassis with them to install a new magnet. Or just don't break it in the first place.
-(t)sun mar 06 22
-(u)pali
-(+)Character flavour text no longer appears in the examine text if their face is hidden.
-(u)pali
-(*)The glue reagent can now coat items in glue which lets you stick them to other stuff.<br><sup>This is highly experimental, likely unavoidably buggy despite my best attempts and subject to change or very likely to a revert.</sup>
-(u)aloe
-(+) The syndicate cargo trasporter now welds crates and lockers at the start of the teleport rather than the end.
-(+) Also I reworked how cargo pads and transporters work. Nothing should be noticeable (other than QoL stuff), but report any bugs you find thanks
-(u)AmazingDragons
-(p)7579
-(e)🆕|feature
-(+)Nanotrasen has updated your favorite guardbuddies to include more insults for pranking your co-workers!
-(u)Juggernaut2442
-(p)7692
-(e)🐛|bug
-(+)Fixes some antique lawbringer bug and cleans up how iconstates are called.
-(t)sat mar 05 22
-(u)Hans
-(p)7527
-(e)🆕🎨|feature, sprites
-(*)Added space glue to the game.
-(u)NightmareChamillian
-(p)7631
-(e)🎨|sprites
-(+)Resprites the SMG magazine
-(u)Fwll
-(p)7688
-(e)🎨|sprites
-(+)Added Chip Butties and Innitium
-(u)Nemiko
-(p)7588
-(e)|
-(+)Added nine new drink recipes, a mostly non-alcoholic.
-(u)Sovexe
-(p)7689
-(e)🆕🗺|feature, mapping
-(*)The Donut3 Ranch now has space to grow your crops and a kitchen freezer chute.
-(t)fri mar 04 22
-(u)LeahTheTech
-(p)7685
-(e)|
-(+)The merchant shuttle will now announce its arrival shortly BEFORE instantly gibbing anything in its way.
-(t)thu mar 03 22
-(u)glowbold
-(p)7666
-(e)🆕|feature
-(*)As a changeling victim, your pleas for help/mercy/death/JOIN US are now audible when your master goes into horror form!
-(t)wed mar 02 22
-(u)Jimmyl
-(p)7657
-(e)🐛|bug
-(+)Fixed the bug of the PDA Packet senders Delete button not working
-(t)tue mar 01 22
-(u)Sovexe
-(p)7663
-(e)🆕|feature
-(+)Ranchers now start with a pair of rancher boots. Rancher boots grant their wearer the ability to vault railings more quickly.
-(t)mon feb 28 22
-(u)LeahTheTech
-(p)7602
-(e)🆕⚖|feature, balance
-(+)Arcfiend's Jolt ability will now cure cardiac arrest in people with SMES human and can now be self cast.
-(u)Sovexe
-(p)7658
-(e)🆕|feature
-(+)Produce satchels may now hold feathers.
-(u)Ikea
-(p)7600
-(e)|
-(*)The syndicates have noticed an overstocking of nanotrasen stations and has decided to increase the max amount of revolutionary heads it will send to a station to 5.
-(u)LeahTheTech
-(p)7577
-(e)🆕🎨📄|feature, sprites, tgui
-(*)Added a map for the AI to move around with. Open with the "Open station map" verb and click to teleport.
-(t)sun feb 27 22
-(u)Jimmyl
-(p)6973
-(e)🆕|feature
-(+)The Packet Sender PDA program can now make (simple) programs with the packets
-(u)LeahTheTech
-(p)7468
-(e)🐛|bug
-(+)Microwaves are now able to be emagged again.
-(u)Jimmyl
-(p)6907
-(e)🆕|feature
-(*)Added 3 new artifacts -- Emote Forcer Field,Warper and Heat Surge
-(u)Conchuckter
-(p)7496
-(e)🆕⚖|feature, balance
-(+)Added MechComp functionality to ChemiCompilers
-(u)CodeJester
-(p)7615
-(e)🆕|feature
-(+)You can now dump the contents of a hypospray back into a beaker or other reagent container.
-(u)TTerc
-(*)Clicking a vehicle that has a pilot as a ghost now makes you observe the pilot. Works for all kinds of vehicles: pods, segways, clown cars, minisubs.
-(u)Conchuckter
-(p)7626
-(e)|
-(+)Fixes being able to dump handheld MechComp cabinets into chutes
-(u)Walpvrgis
-(p)7641
-(e)🆕🎨|feature, sprites
-(*)Added 11 new hairstyles accessible in the character creation screen; check minor changes for a list of their names, or the PR for names + preview images!
-(+)You can find the new hair options under the names; Flick, Ignite, Mysterious, Ripley, Violet, Willow, Bun Undercut, Glam Ponytail, Rock Ponytail, Spiky Ponytail, Messy ponytail
-(t)sat feb 26 22
-(u)TTerc
-(+)Arc plater now automatically ejects the item when it finishes working. You can now also eject the material you inserted into it manually by clicking the plater with empty hand.
-(u)NightmareChamillian
-(p)7580
-(e)🎨|sprites
-(+)Resprited the gas extractor and disposal pipe dispenser
-(t)thu feb 24 22
-(u)tamunora
-(+)microdosing ( <1 depletion) stam boosting/etc chems doesn't work anymore
-(t)wed feb 23 22
-(u)aloe
-(*)The Head Surgeon got too fucked up and is, once again, fired. They've been replaced with a medical specialist- NT doesn't really understand what they do, but it sure sounds important. (Realistically they're just the HS but without command radio/access. Also they can get revved.)
-(u)aloe
-(+)You no longer need to remove all of a cyborg's limbs to take off their chest or head. Do note that they'll fall apart if you remove either of these.
-(t)tue feb 22 22
-(u)Amylizzle
-(p)7583
-(e)|
-(*)Enzymatic Reclaimers no longer destroy item arms, the item will now drop.
-(t)mon feb 21 22
-(u)Flappybat
-(p)7574
-(e)|
-(+)Cluwnes have been trained to make a less ear blasting horn sound.
-(u)CodeJester
-(p)7438
-(e)📄|tgui
-(*)The seed fabricator has a new UI, allowing you to find and dispense cannabis seeds easier.
-(u)CodeJester
-(p)7523
-(e)🆕📄|feature, tgui
-(+)Added Isolate button for reagents in the Reagent Extractor.
-(t)sun feb 20 22
-(u)aloe
-(+)you digest 3x as hard
-(u)AmazingDragons
-(p)7437
-(e)🆕|feature
-(*)Added a new morale-boosting problem to the mainframe for control of your favorite guardbuddies!
-(u)Yellow/Myco
-(p)7545
-(e)⚖|balance
-(+)Staff Assistants now spawn with a Civilian Headset, giving them access to the civilian channel
-(u)FlameArrow57
-(p)7413
-(e)🆕|feature
-(*)Security computers now provide a SecHUD flag that can be set for someone. If a person has an active arrest status, the flag will appear in their examine report for anyone wearing SecHUDs.
-(t)sat feb 19 22
-(u)Flappybat
-(p)7373
-(e)🗺|mapping
-(+)Renamed Loyalty implants to Counter-Revolutionary implants to make their purpose clearer.
-(t)fri feb 18 22
-(u)tarmunora
-(+)blob poisoning change:
-(+)mitochondria individually less vulnerable to poison, suck poison out of nearby non-mitochondria/non-lipid tiles, store up to 50 poison in adjacent lipid tiles
-(+)lipids slightly more flammable and no longer have increased poison spread on death
-(t)thu feb 17 22
-(u)aloe
-(*)Genetics computers now require genetics access to operate.
-(u)Danger Noodle
-(p)7471
-(e)🗺|mapping
-(*)A new art themed prefab has been added to space maps.
-(u)Flappybat
-(p)7522
-(e)|
-(+)Tracking beacons start anchored. You can unanchor them with a screwdriver.
-(u)TTerc
-(+)Fish now deal 0 damage. Invite your friends for a fish slap fight!
-(u)pali
-(*)Persistent pickle jars now spawn on the station. You can put things into the jar and leave the jar somewhere and next round the jar will be on the same place (if it's the same map) and contain the things you put there but pickled and edible!
-(t)wed feb 16 22
-(u)TTerc
-(e)🆕|feature
-(+)You can now show off your security badge to people by clicking them with it.
-(t)tue feb 15 22
-(u)Kyle
-(+)One Armed Spaceman trait now costs 0 points.
-(u)Conchuckter
-(p)7511
-(e)🐛|bug
-(+)Fixes computer frames always giving 5 sheets instead of their proper amount
-(t)mon feb 14 22
-(u)Flaborized
-(p)7502
-(e)🎨|sprites
-(+)Updated the sprites for shuttle and airbridge floors.
-(u)Kyle
-(*)You can now handcuff people that have only one arm. (If they're cuffed and lose an arm, they'll still be uncuffed like normal)
-(t)sun feb 13 22
-(u)Sovexe
-(p)7486
-(e)🐛🆕🎨|bug, feature, sprites
-(+)Added stink lines for smelly RP players
-(u)Vantatrauma
-(p)7442
-(e)🆕🎨|feature, sprites
-(+)Added a genetics-themed winter coat to the game, findable in geneticists equipment boxes!
-(t)sat feb 12 22
-(u)aloe
-(*)The cyborg converter (syndicate item) has had its price increased to 8 Baddie Bux. It now makes <b>Syndicate Cyborgs</b>. It also works faster, comes with a wrench, is a little less noisy, and you stuff other people in it by agressively grabbing them and clicking it.
-(u)Flappybat
-(p)7372
-(e)🎨⚖|sprites, balance
-(*)Red chainsaw gets an ability to chop off your arm and attach with no surgery
-(*)Added start/stop sound to the red chainsaw.
-(*)Made the green chainsaws electric and gave them a new, less abrasive sound.
-(+)Chainsaws now have animated inhands.
-(u)Zonespace
-(p)6794
-(e)🆕⚖|feature, balance
-(*)Antagonists can buy Syndicate headsets from CARL, and the wiretap upgrade grants access to the Syndicate channel.
-(u)MetricDuck
-(p)7336
-(e)🐛⚖|bug, balance
-(+)Spaceacillin is much less effective at treating cluwnes and will no longer outright cure wizard cluwnes.
-(u)Zonespace
-(p)6816
-(e)⚖|balance
-(+)SWAT gloves now are insulated against most regular forms of shocking (such as doors).
-(u)Danger Noodle
-(p)7470
-(e)🗺|mapping
-(+)Added artistic toolboxes to all maps in rotation.
-(u)Flaborized
-(p)7452
-(e)🎨|sprites
-(+)Resprited gas canisters.
-(u)FlameArrow57
-(p)7460
-(e)🆕|feature
-(+)Civilian headsets and staff assistant jumpsuits can now be printed from uniform manufacturers.
-(u)FlameArrow57
-(p)7458
-(e)🆕|feature
-(+)Sleepy pens can now appear as fancy pens.
-(u)Amylizzle
-(p)7476
-(e)|
-(+)Adds  an additional check to secscanner to prevent scanning intangible living mobs.
-(t)fri feb 11 22
-(u)FlameArrow57
-(p)7071
-(e)🆕⚖|feature, balance
-(*)The AI now has a "Reset All APCs" command, which will attempt to reset all APCs to their default settings.
-(+)Ion storms may now disable AI control on some APCs.
-(t)thu feb 10 22
-(u)avimour
-(p)7459
-(e)🎨|sprites
-(+)Stethoscopes have had their speakers removed and given a new appearance.
-(t)tue feb 08 22
-(u)Josephin23
-(p)7374
-(e)🗺|mapping
-(+)Added a stove to the kitchen in Destiny, also moved the intercom.
-(u)Ikea
-(p)7316
-(e)⚖|balance
-(+)Due to a shortage in cotton supply, the price of cotton and the price traders purchase jumpsuits for has increased.
-(u)Flaborized
-(p)7429
-(e)🗺🎨|mapping, sprites
-(*)Updated the wizard shuttle.
-(u)Wisemonster
-(p)7441
-(e)🗺|mapping
-(+)Donut 3's medical morgue now comes with a bottle of embalming fluid.
-(u)TTerc
-(e)|
-(+)Fire extinguishers no longer automatically switch safety to off when used on another mob on help intent. Being on help intent and using an extinguisher while safety is off still doesn't perform the attack.
-(u)Danger Noodle
-(p)7439
-(e)🗺|mapping
-(+)Horizon's genetics department has been blessed with a gene power module. Enjoy!
-(t)mon feb 07 22
-(u)aloe
-(*)QM Requisition payouts have been significantly increased.
-(u)aloe
-(+)The sponge capsule crate from QM now only comes with 1 pack of capsules. That's still 12 animals.
-(u)aloe
-(+)AI eyebots (the shells you start with) can pull things now via... magnets or something. Their health has been reduced to accommodate this.
-(u)aloe
-(+)Traitor chefs can now buy a hotdog cart that crunches people similar to the janitor's trash compactor cart. I didn't make it, I just found it. It's also a little tastier.
-(u)avimour
-(p)7426
-(e)|
-(+)Medical fabricators can now create stress balls.
-(t)sun feb 06 22
-(u)pali
-(+)Nukies now have a unique radio record on their battlecruiser.
-(u)NightmareChamillian
-(p)7354
-(e)🎨|sprites
-(+)Added unique sprites for the syndicate tranquilizer darts, meowtizer, and .22 smartgun magazines.
-(u)NightmareChamillian
-(p)7236
-(e)🎨|sprites
-(+)The sweatshop that produces NT's pride wardrobe now manufacturers reversible jumpsuits for the MLM sexuality
-(u)Flappybat and Flaborized
-(p)7269
-(e)🆕🎨|feature, sprites
-(*)Added a Recover Gear ability to Hunters. Use it to teleport your rifle, spear or cloak back to your position if you lose them. Animations by Flaborized.
-(*)New Hunting spear sprite and inhands by Flaborized!
-(u)Flaborized
-(p)7412
-(e)🎨|sprites
-(+)Resprited cloning upgrade modules.
-(u)Colossusqw
-(p)7315
-(e)🆕🎨|feature, sprites
-(+)Made so you can play as a scorpion if an admin wants it.
-(u)Flappybat
-(p)7347
-(e)🆕|feature
-(+)When you die in Battle Royale you are now vaporized and drop your gear.
-(u)Flaborized
-(p)7397
-(e)🎨|sprites
-(+)Resprited the comms dish.
-(u)zjdtmkhzt
-(p)7167
-(e)|
-(+)Added a new option for mechcomponents to connect them without clickdrag.
-(t)sat feb 05 22
-(u)Stonepillar
-(p)7411
-(e)⚖|balance
-(+)Reduced the damage of high-level loaves.
-(u)ThyOverlord
-(p)7378
-(e)🎨|sprites
-(+)Resprited the fish you see around the station.
-(t)fri feb 04 22
-(u)Adhara in Space
-(p)7398
-(e)|
-(*)Clicking on a desk (or any table with built in storage) with an empty hand opens the storage now.
-(u)NightmareChamillian
-(p)7392
-(e)|
-(+)Light switches are now too high for ghost critters
-(u)TTerc
-(e)🗺|mapping
-(+)Donut 3 engine room now has a blast shield you can (and should!) use to protect the crew from bigulo setups.
-(u)Emily
-(p)7390
-(e)|
-(*)You can no longer struggle out of grabs while stunned
-(t)thu feb 03 22
-(u)Flappybat
-(p)7382
-(e)⚖|balance
-(+)Hunter mask now self destructs on death.
-(t)wed feb 02 22
-(u)LeahTheTech
-(p)7306
-(e)📄|tgui
-(*)The barcode computer now has a new UI, this one shows the scanned ID card clearly so you can keep track of how rich the other QM is getting.
-(u)Emily
-(+)The Retention Center no longer has a sequence break to getting to Dino Jason's early. If you go to Dino Jason's, don't forget to thank the bus driver!
-(u)pali
-(+)The prompt to change your ring message on a PDA now has pre-typed traitor code for your convenience (if you are the owner of the uplink in the PDA).
-(t)tue feb 01 22
-(u)tarmunora
-(+)chainsaw no fall apart
-(u)Nexusuxen
-(p)6844
-(e)🆕🎨|feature, sprites
-(*)AIs will now produce flying text above intercoms when speaking through them, provided they're not tuned to 145.9.
-(u)Mr. Moriarty
-(p)7180
-(e)🆕📄|feature, tgui
-(+)Added 'Open/Close Floor Flusher' brig door timer buttons.
-(t)mon jan 31 22
-(u)Keiya
-(p)7339
-(e)🆕📄|feature, tgui
-(+)Colorful paper should now work better, and maintain its colors on persistent noticeboards.
-(t)sun jan 30 22
-(u)Keiya
-(p)7356
-(e)|
-(+)The apiculturist's suit now stops small bees. It still doesn't do shit against Space Bees.
-(u)Arborinus
-(p)7184
-(e)🎨|sprites
-(+)New sprites for certain burgers and burger-esque sandwiches.
-(u)CodeJester
-(p)7265
-(e)📄|tgui
-(*)The reagent extractor has a fancy new UI, with changes to allow for quick extraction and transference!
-(u)Flaborized
-(p)7346
-(e)🎨|sprites
-(+)Added unique burning sprites for the changeling horror form.
-(u)Keiya
-(p)7323
-(e)🎨|sprites
-(*)New "Bee Exposition Extravaganza" book, now available at Books4U vendors system-wide! Your local apiculturist might have a copy, too.
-(t)sat jan 29 22
-(u)pali
-(*)Slipping on banana peels has been changed a bit and it now has fancy comedic animation
-(+)MechComp tesla coils now use up a bit of APC power.
-(u)NightmareChamillian
-(p)7258
-(e)🐛🗺|bug, mapping
-(+)After losing a lawsuit, NanoTrasen has now added adequate warning labels to some medicine bottles.
-(t)fri jan 28 22
-(u)pali
-(+)Head of Security now feels a disturbance in the force when Sylvester gets rigged with plasma.
-(u)Flaborized
-(p)7324
-(e)🎨|sprites
-(+)Resprited katanas.
-(u)DisturbHerb
-(p)7283
-(e)|
-(+)Head Surgeons now have their own headset (Med, Command) and radio icon.
-(t)thu jan 27 22
-(u)aloe
-(+)New 0 point trait- Heavy Sleeper. You spawn in a random bed, asleep (for 10 seconds). Can't be taken with stowaway etc.
-(u)AnguishedEnglish
-(p)7295
-(e)🎨|sprites
-(*)Added a Nun Robe and Nun Hood to the Chaplain's lockers.
-(u)112358sam
-(p)7308
-(e)|
-(+)Floorbots now yell at you if you have tiles or sheets they want.
-(t)tue jan 25 22
-(u)Flaborized
-(p)7293
-(e)🎨|sprites
-(*)Resprited the blob UI buttons.
-(u)zjdtmkhzt
-(p)7230
-(e)⚖|balance
-(+)Navbeacons are now mechanics scannable.
-(u)colossusqw
-(p)7244
-(e)🆕🎨|feature, sprites
-(*)Added scorpions to random pest events.
-(u)LeahTheTech
-(p)7261
-(e)🆕|feature
-(+)Added a button to AI shells to eject in place, no more scrolling across half the map to find your shell again.
-(u)Stonepillar
-(p)7297
-(e)🐛|bug
-(*)The space convention centers have re-opened. The stock market has events again. Go and gamble your money.
-(t)mon jan 24 22
-(u)BatElite
-(p)7285
-(e)🐛🗺|bug, mapping
-(+)Donut3's brig piping has been fixed.
-(u)Mr. Moriarty
-(p)7007
-(e)|
-(+)The Radio Show Host and the Communications Officer now have unique radio icons.
-(u)DimWhat
-(p)7035
-(e)⚖|balance
-(*)Made choking with sharp objects, like knives, deal much more bleed and a small amount of brute damage.
-(t)sun jan 23 22
-(u)adharainspace
-(p)7272
-(e)|
-(+)Changed bookshelf sprites.
-(u)DimWhat
-(p)7176
-(e)🎨|sprites
-(*)Added a new hat and apron for the Head Surgeon role.
-(u)Azrun
-(p)7246
-(e)🆕🎨⚖|feature, sprites, balance
-(+)Welding actionbars will only be seen by welder, but new animations for everyone to see!
-(t)sat jan 22 22
-(u)BatElite
-(p)7256
-(e)🐛|bug
-(*)AIs can also use normal radio prefixes now (though the :3 prefixes still work too)
-(u)Flaborized
-(p)7245
-(e)🎨|sprites
-(+)"Port-a" machines now have a teleporting animation.
-(u)Flaborized
-(p)7217
-(e)🎨|sprites
-(+)Added an animation for opening and closing zippo lighters.
-(t)fri jan 21 22
-(u)glowbold
-(p)7238
-(e)|
-(+)Fixed scanners breaking the dwarfism gene effect
-(u)TTerc & Azrun
-(p)7173
-(e)🆕⚖|feature, balance
-(*)Weedkiller (atrazine) can now affect kudzu tiles.
-(+)Atrazine will reduce the amount a tile of kudzu can spread and inhibit it from becoming more dense.
-(u)Zonespace
-(p)7241
-(e)🐛|bug
-(+)Syndicate Specialist ammobags now work with all nukeop guns again.
-(t)thu jan 20 22
-(u)zjdtmkhzt
-(p)7188
-(e)⚖|balance
-(+)Martian diplomats should now be able to use vocal translators.
-(u)Zonespace
-(p)7225
-(e)🗺🎨|mapping, sprites
-(+)There is now a manifest in the Cairngorm's storage room, containing stats on what's been purchased from the Nuclear Commander's uplink across rounds.
-(+)Nukeop Commander uplink has been resprited (thank you Dimwhat!)
-(t)wed jan 19 22
-(u)pali
-(*)The bug report button (in the top right corner) works again and has a new UI!
-(u)Flappybat and Flaborized and Virvatuli.
-(p)7130
-(e)🎨⚖|sprites, balance
-(*)Hunter laser rifle, spear and cloaking device self destruct on the hunter's death. These items have been renamed to make them stand out more.
-(*)Hunter's laser rifle and cloaking device have new sprites by Flaborized!
-(*)Laser rifles are renamed to plasma rifle to reflect their projectile and have a new sound by Virvatuli.
-(u)Flaborized
-(p)7209
-(e)🎨|sprites
-(+)Resprited and animated bullet casings.
-(u)Cogwerks
-(e)🗺🎨|mapping, sprites
-(+)Replaced my older drawn background assets with some fancier new 3D-rendered plasma giant, a couple moons, and stars
-(u)DimWhat
-(p)6997
-(e)🗺🎨|mapping, sprites
-(+)Added an ability button for some hooded clothing.
-(u)LeahTheTech
-(p)6805
-(e)🆕🎨|feature, sprites
-(+)The Inspector's report will now be displayed at the end of the round. The contents of that ominous clipboard are now much more important.
-(t)tue jan 18 22
-(u)Zonespace
-(p)6276
-(e)🆕🗺🎨⚖📄|feature, mapping, sprites, balance, tgui
-(*)Nuclear Operative Commanders now have a specialized uplink! More info in Minor Changes. Nuclear bomb remote has been moved to the uplink.
-(+)The commander's uplink uses "points" versus the traditional TC, and gains 1 point for every 20 people online (minimum of 2 points)
-(+)The uplink has 6 items, being the Nuclear bomb teleporter, reinforcement beacon, ammo bag, specialist ammo bag, laser designator, and rapid deployment remote, the new ones described in further changelog entries.
-(+)First is a reinforcement beacon for 2 points to summon a syndicate gunbot to assist the nuclear team.
-(+)Second is the Ammo Bag and its specialist version (2/3 points, respectively), which both allow the nuclear operatives to fabricate more ammunition for their guns.
-(+)Third is the laser designator for 3 points, which allows the commander to call in two high-explosive airstrikes from the Cairngorm to hit anywhere they designate!
-(+)Finally is the Rapid Deployment Remote, costing a whole 4 points, which allows the commander to send the nuclear team in through drop pods onto anywhere on station!
-(+)Thank you to Cogwerks for the 152mm gun sprites, Waffleoffle for the laser designator/ammobag sprites, and Dimwhat for the gunbot/drop pod sprites!
-(t)mon jan 17 22
-(u)DimWhat
-(p)7117
-(e)🎨|sprites
-(*)Added backpacks, belts, radio, and a couple special helmet sprites for monkeys!
-(u)CrystalClover
-(p)7162
-(e)🎨|sprites
-(*)Added Bald clown mask variants and the ability to swap to and from them
-(u)Flaborized
-(p)7153
-(e)|
-(+)Resprited stools.
-(u)Flaborized
-(p)7190
-(e)🎨|sprites
-(+)Resprited the Amusing Duck and the easter eggs it lays.
-(u)zjdtmkhzt
-(p)7026
-(e)|
-(+)Removed buggy "State Laws (Advanced)" verb from AIs and instead added the new "Set Fake Laws" and "State Fake Laws" verbs as replacements.
-(t)sun jan 16 22
-(u)TDHooligan
-(p)7101
-(e)🎨|sprites
-(+)Soda cans can now be printed in the CheMaster 3000, start a brand!
-(u)aloe
-(+)Sutures and bandages are now quite a bit faster, and are capped at 5 seconds. I'm reasonably sure the old behavior was a bug.
-(u)Nexusuxen
-(p)6871
-(e)🐛🆕|bug, feature
-(+)AI Cores will now properly disconnect and reconnect from data terminals when you screwdriver them or gib them.
-(u)Flaborized
-(p)7182
-(e)🎨|sprites
-(+)Many more kinetic weapons will animated while firing.
-(t)sat jan 15 22
-(u)Flappybat
-(p)7040
-(e)🗺|mapping
-(+)Donut3 security corridor to the armory is now part of the main security area.
-(t)fri jan 14 22
-(u)Nexusuxen
-(p)6428
-(e)🎨|sprites
-(+)Adds sliced cheese & tomatoes, and a couple recipe fixes. 1 cheese wedge = 4 slices, 1 tomato = 3 slices. Cheese slice sprites by Erinexx.
-(+)Multiple recipes now use cheese slices instead of whole wedges. BLTs and Weird Cheeseburgers added. Minor recipe tweaks.
-(t)thu jan 13 22
-(u)Zonespace
-(p)6981
-(e)⚖|balance
-(+)The Part-Time Vice Officers that appeared on saturdays have been fired and replaced with some musicians instead.
-(u)BatElite
-(p)7086
-(e)🆕🗺|feature, mapping
-(*)Morgues, crematoria and tanning beds have been reworked internally with several accompanying QOL changes and minor bugfixes. Most important additions are that they require power to operate properly and silicons can operate the trays now.
-(+)Specifically, tanning beds and crematoria will not activate and morgues will not prevent decomposition without power
-(u)Mr. Moriarty & End
-(p)7111
-(e)🎨|sprites
-(+)Resprited the Cargo Transporter.
-(u)Flaborized
-(p)7163
-(e)🎨|sprites
-(*)Resprited stunbatons.
-(u)Colossusqw
-(p)7120
-(e)🆕🎨⚖|feature, sprites, balance
-(+)Makes you aware of your surroundings instead of asleep during the capulettium effect, but still unable to speak or move.
-(t)tue jan 11 22
-(u)Emily
-(e)🆕|feature
-(*)🌭🛀
-(u)Flaborized
-(p)7144
-(e)🎨|sprites
-(+)Resprited botanical seeds.
-(u)Flaborized
-(p)7145
-(e)🎨|sprites
-(+)Resprited vomit.
-(u)DimWhat
-(p)7136
-(e)🎨|sprites
-(*)Added several unique sprites for worn IDs
-(t)mon jan 10 22
-(u)Nexusuxen
-(p)7113
-(e)🐛🗺|bug, mapping
-(+)Cargo router doors on Cog1 should now stay open for the correct amount of time; belt hell should be operational now.
-(u)Waffleloffle
-(p)7133
-(e)|
-(+)Various foods and drinks are now more flavorful.
-(u)Nexusuxen
-(p)7129
-(e)🗺🎨|mapping, sprites
-(*)Added skins for the AI core! 4 new appearances for AIs are now obtainable in-game. See the PR for more details!
-(u)Flappybat
-(p)7125
-(e)🐛🗺|bug, mapping
-(+)Battleroyale storms now start out less dangerous and scale up over the round. Removed some consoles and machinery that could be used for disruptive purposes, added a special AI law and blocked shuttle calls.
-(u)DimWhat
-(p)7134
-(e)|
-(+)Increased the disarm resistance of nuke ops knight gloves.
-(t)sun jan 09 22
-(u)Flaborized
-(p)7122
-(e)🎨|sprites
-(+)Resprited eyes and eyespiders.
-(t)sat jan 08 22
-(u)ZeWaka
-(e)🆕|feature
-(*)When block-sliding, you now 'kick' items on the tile you enter in the direction of your movement.
-(u)ZWRh3
-(p)6774
-(e)🆕⚖|feature, balance
-(+)Extinguishers with the safety on will no longer count as an open container.
-(u)Waffleloffle
-(p)7112
-(e)🆕🎨|feature, sprites
-(*)Added a couple new coffee mutations.
-(u)Zonespace
-(p)6933
-(e)🆕|feature
-(*)Players need at least 5 rounds to play team-based antagonist roles.
-(u)CrystalClover
-(p)7097
-(e)|
-(*)Added mugs to the glass recycler
-(t)fri jan 07 22
-(u)Colossusqw
-(p)7102
-(e)⚖|balance
-(+)Changed the heparin recipe from needing meat slurry to needing blood.
-(u)Yellow/Myco
-(p)7029
-(e)|
-(*)Voices and Emotes now go over the blindness layers
-(u)Zonespace
-(p)6735
-(e)⚖|balance
-(+)With security training, you can remove handcuffs from other people twice as fast.
-(u)Nexusuxen
-(p)6718
-(e)🐛|bug
-(+)Firedoors and a couple other things can now be deconstructed. Telepads and Teleconsoles will also connect to data terminals when you redeploy them instead of bricking.
-(u)TTerc
-(e)⚖|balance
-(+)Furnaces no longer accept alive mobs (similarly to gibbers).
-(t)wed jan 05 22
-(u)FlameArrow57
-(p)7064
-(e)🗺|mapping
-(*)Additional air scrubbers have been added to Horizon.
-(u)Flaborized
-(p)7077
-(e)🎨|sprites
-(+)Resprited the device analyzer, device frames, ruckingenur kit and blueprints.
-(u)Flaborized
-(p)7076
-(e)🎨|sprites
-(+)Resprited basic knives, forks, spoons and bowls, as well as food that goes inside bowls.
-(u)Nexusuxen
-(p)6670
-(e)🗺|mapping
-(+)Cog1 now has a mail sorting room in Northeast maintenance, check it out! Also, where did Chompsky go...?
-(u)eX.n0x
-(p)7083
-(e)🐛🎨|bug, sprites
-(+)A large chunk of clothing items fit better on/with lizard heads.
-(t)tue jan 04 22
-(u)Flappybat
-(p)7051
-(e)|
-(+)Football pitch gets cleaned between rounds, slightly longer delaybefore rounds.
-(u)Flappybat
-(p)7060
-(e)⚖|balance
-(*)A number of changes have been made to Battle Royale. 40% of lockers and crates are randomly removed each round with the remainder replaced with Syndicate gear lockers and treasure chests. More armor and weapons are available with less useless items. Going off Z1 will now deal constant damage, stay battling!
-(t)mon jan 03 22
-(u)DimWhat
-(p)7044
-(e)🎨|sprites
-(*)Added glasses sprites for lizardssss.
-(t)sat jan 01 22
-(u)Flaborized
-(p)7036
-(e)🎨|sprites
-(+)Resprited ampoules.
-(t)fri dec 31 21
-(u)Goonstation
+(u)Goonstation Contributors
 (*)<a target="_blank" href="https://wiki.ss13.co/Changelog">Older changelog entries are available on the wiki</a>

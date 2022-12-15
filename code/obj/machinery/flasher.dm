@@ -209,13 +209,13 @@
 	if (src.disable)
 		return
 
-	playsound(src.loc, "sound/weapons/flash.ogg", 100, 1)
+	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
 	flick("[base_state]_flash", src)
 	ON_COOLDOWN(src, "flash", cooldown_flash)
 	use_power(1000)
 
 	for (var/mob/O in viewers(src, null))
-		if (get_dist(src, O) > src.range)
+		if (GET_DIST(src, O) > src.range)
 			continue
 
 		// Heavy-duty flashers should be capable of disrupting cloaks in a reliable fashion, hence the 100% at the end.

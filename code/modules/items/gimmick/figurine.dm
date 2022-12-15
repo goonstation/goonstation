@@ -62,10 +62,10 @@
 			if (prob(1)) // VERY rarely give a super-fancy material
 				var/list/rare_material_varieties = list("gold", "spacelag", "diamond", "ruby", "garnet", "topaz", "citrine", "peridot", "emerald", "jade", "aquamarine",
 				"sapphire", "iolite", "amethyst", "alexandrite", "uqill", "uqillglass", "telecrystal", "miracle", "starstone", "flesh", "blob", "bone", "beeswax", "carbonfibre")
-				src.setMaterial(getMaterial(pick(rare_material_varieties)))
+				src.setMaterial(getMaterial(pick(rare_material_varieties)), copy = FALSE)
 			else // silly basic "rare" varieties of things that should probably just be fancy paintjobs or plastics, but whoever made these things are idiots and just made them out of the actual stuff.  I guess.
 				var/list/material_varieties = list("steel", "glass", "silver", "quartz", "rosequartz", "plasmaglass", "onyx", "jasper", "malachite", "lapislazuli")
-				src.setMaterial(getMaterial(pick(material_varieties)))
+				src.setMaterial(getMaterial(pick(material_varieties)), copy = FALSE)
 
 		if (src.icon_state == "fig-floorpills")
 			src.create_reagents(30)
@@ -96,16 +96,16 @@
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/toy/figure))
 			if(user:a_intent == INTENT_HELP)
-				playsound(src, "sound/items/toys/figure-kiss.ogg", 15, 1)
+				playsound(src, 'sound/items/toys/figure-kiss.ogg', 15, 1)
 				user.visible_message("<span class='alert'>[user] makes the [W.name] and the [src.name] kiss and kiss and kiss!</span>")
 			else if(user:a_intent == INTENT_DISARM)
-				playsound(src, "sound/items/toys/figure-knock.ogg", 15, 1)
+				playsound(src, 'sound/items/toys/figure-knock.ogg', 15, 1)
 				user.visible_message("<span class='alert'>[user] makes the [W.name] knock over and fart on the [src.name]!</span>")
 			else if(user:a_intent == INTENT_GRAB)
-				playsound(src, "sound/items/toys/figure-headlock.ogg", 15, 1)
+				playsound(src, 'sound/items/toys/figure-headlock.ogg', 15, 1)
 				user.visible_message("<span class='alert'>[user] has [W.name] put the [src.name] in a headlock!</span>")
 			else if(user:a_intent == INTENT_HARM)
-				playsound(src, "sound/impact_sounds/Flesh_Break_1.ogg", 15, 1, 0.1, 2.5)
+				playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 15, 1, 0.1, 2.5)
 				user.visible_message("<span class='alert'>[user] bangs the [W.name] into the [src.name] over and over!</span>")
 		else if (W.force > 1 && src.icon_state == "fig-shelterfrog" || src.icon_state == "fig-shelterfrog-dead")
 			playsound(src.loc, W.hitsound, 50, 1, -1)
@@ -122,7 +122,7 @@
 		message = trim(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
 		if (!message || BOUNDS_DIST(src, user) > 0)
 			return
-		logTheThing("say", user, null, "makes [src] say,  \"[message]\"")
+		logTheThing(LOG_SAY, user, "makes [src] say,  \"[message]\"")
 		user.audible_message("<span class='emote'>[src] says, \"[message]\"</span>")
 		var/mob/living/carbon/human/H = user
 		if (H.sims)
@@ -828,9 +828,89 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		ckey = "ihaveteeth"
 
 	walpvrgis
-		name = "\improper Cygnus Lyedelle"
+		name = "\improper Cygnus Gwyllion"
 		icon_state = "cygnus"
 		ckey = "walpvrgis"
+
+	froggitdogget
+		name = "\improper Investigangster Klutz"
+		icon_state = "froggit"
+		ckey = "froggitdogget"
+
+	munien
+		name = "\improper Elijah Retluoc"
+		icon_state = "elijahretluoc"
+		ckey = "munien"
+
+	calliopesoups
+		name = "\improper Grup Guppy"
+		icon_state = "grupguppy"
+		ckey = "calliopesoups"
+
+	eggcereal
+		name = "\improper Litol Guy"
+		icon_state = "litol"
+		ckey = "eggcereal"
+
+	yourdadthesquid
+		name = "\improper Roxy"
+		icon_state = "roxy"
+		ckey = "yourdadthesquid"
+
+	dumbnewguy
+		name = "\improper Cackles Maniacally"
+		icon_state = "cackles"
+		ckey = "dumbnewguy"
+
+	avimour
+		name = "\improper Siva Fata"
+		icon_state = "sivafata"
+		ckey = "avimour"
+
+	aft2001
+		name = "\improper NEX-13"
+		icon_state = "nex"
+		ckey = "aft2001"
+
+	improvedname
+		name = "\improper Latex Lizard"
+		icon_state = "latexlizard"
+		ckey = "improvedname"
+
+	haydus
+		name = "\improper Sonya Azazel"
+		icon_state = "sonyaazazel"
+		ckey = "haydus"
+
+	largeamountsofscreaming
+		name = "\improper Mavis Moovenheimer"
+		icon_state = "mavis"
+		ckey = "largeamountsofscreaming"
+
+	rockinend
+		name = "\improper Rooke Ennen"
+		icon_state = "rookeennen"
+		ckey = "rockingend"
+
+	rycool
+		name = "\improper Neo Politan"
+		icon_state = "neopolitan"
+		ckey = "rycool"
+
+	konamaco
+		name = "\improper Johnathan Pepper"
+		icon_state = "jonathanpepper"
+		ckey = "konamaco"
+
+	coolcrow420
+		name = "\improper Niko Balthazar"
+		icon_state = "nikobalthazar"
+		ckey = "coolcrow420"
+
+	comradeinput
+		name = "\improper Ezra Callison"
+		icon_state = "ezracallison"
+		ckey = "comradeinput"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"
@@ -869,8 +949,10 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 			src.UpdateOverlays(src.cap_image, "cap")
 
 	attack_self(mob/user as mob)
-		if (open && item_amount == 0)
-			user.playsound_local(user, "sound/items/can_crush-3.ogg", 50, 1)
+		if (!ON_COOLDOWN(user, "capsule_pop", 1 SECOND) && open == 0)
+			playsound(user.loc, 'sound/items/capsule_pop.ogg', 30, 1)
+		else if (open && item_amount == 0)
+			user.playsound_local(user, 'sound/items/can_crush-3.ogg', 50, 1)
 			boutput(user, "<span class='notice'>You crush the empty capsule into an insignificant speck.</span>")
 			qdel(src)
 			return
@@ -888,7 +970,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	var/image/capsule_image = null
 
 	create_products()
-		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule, 26, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule, 35, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/satchel/figurines, 2, cost=PAY_UNTRAINED*3)
 		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule/gaming_capsule, rand(4,10), cost=PAY_UNTRAINED/3, hidden=1)
 		src.icon_state = "machine[rand(1,6)]"

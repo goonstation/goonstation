@@ -17,7 +17,7 @@
 	var/icon_filled = "dropper1"
 	var/image/fluid_image
 	var/customizable_settings_available = 0
-	var/transfer_amount = 5.0
+	var/transfer_amount = 5
 	var/transfer_mode = TO_SELF
 
 	on_reagent_change()
@@ -53,7 +53,7 @@
 			t = min(src.transfer_amount, src.reagents.maximum_volume - src.reagents.total_volume)
 			if (t <= 0) return
 
-			if (target.is_open_container() != 1 && !istype(target, /obj/reagent_dispensers))
+			if (target.is_open_container() != 1 && !is_reagent_dispenser(target))
 				boutput(user, "<span class='alert'>You cannot directly remove reagents from [target].</span>")
 				return
 			if (!target.reagents.total_volume)
@@ -109,7 +109,7 @@
 		if (!src || !istype(src) || !user|| !target)
 			return
 
-		logTheThing("combat", user, target, "[delayed == 0 ? "drips" : "tries to drip"] chemicals [log_reagents(src)] from a dropper onto [constructTarget(target,"combat")] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "[delayed == 0 ? "drips" : "tries to drip"] chemicals [log_reagents(src)] from a dropper onto [constructTarget(target,"combat")] at [log_loc(user)].")
 		return
 
 /* ============================================================ */
@@ -138,6 +138,12 @@
 	on_reagent_change()
 		if (src.reagents.total_volume && !src.fluid_image)
 			src.fluid_image = image(src.icon, "ppipette-fluid")
+
+		if (src.reagents.is_full() && src.transfer_mode == TO_SELF)
+			src.transfer_mode = TO_TARGET
+		else if (!src.reagents.total_volume && src.transfer_mode == TO_TARGET)
+			src.transfer_mode = TO_SELF
+		src.UpdateIcon()
 		..()
 
 	ui_interact(mob/user, datum/tgui/ui)

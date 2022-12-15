@@ -373,7 +373,7 @@
 	if (!src || !T)
 		return
 	var/turf/TT = getlineopaqueblocked(src,T)
-	var/dist = get_dist(src,TT)-1
+	var/dist = GET_DIST(src,TT)-1
 
 	for (var/obj/overlay/simple_light/medium/directional/light as anything in src.mdir_lights)
 		if(light.icon_state == "medium_center" && light.dist == 0)

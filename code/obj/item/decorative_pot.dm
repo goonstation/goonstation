@@ -1,3 +1,6 @@
+TYPEINFO(/obj/decorative_pot)
+	mats = list("ALL" = 1)
+
 /obj/decorative_pot
 		name = "plant pot"
 		desc = "A decorative plant pot, sans the Hydroponic Tray's fancy hypergrowth tech."
@@ -5,17 +8,16 @@
 		icon_state = "plantpot"
 		anchored = 0
 		density = 1
-		mats = list("ALL" = 1)
 
 		attackby(obj/item/weapon, mob/user)
 				if((iswrenchingtool(weapon)) || isscrewingtool(weapon))
 						if(!src.anchored)
 								user.visible_message("<b>[user]</b> secures the [src] to the floor!")
-								playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+								playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 								src.anchored = 1
 						else
 								user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
-								playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+								playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 								src.anchored = 0
 						return
 				else if(istype(weapon,/obj/item/gardentrowel))

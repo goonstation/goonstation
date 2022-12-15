@@ -67,6 +67,7 @@
 				traitor_mob.equip_if_possible(H, traitor_mob.slot_in_backpack)
 			else
 				traitor_mob.put_in_hand_or_drop(H)
+		H.wiretap = new /obj/item/device/radio_upgrade/conspirator
 		H.secure_classes["z"] = RADIOCL_SYNDICATE
 		H.set_secure_frequency("z",the_frequency)
 
@@ -267,7 +268,7 @@
 		synd_mob.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/commissar_cap(synd_mob), synd_mob.slot_head)
 		synd_mob.equip_if_possible(new /obj/item/clothing/suit/space/syndicate/commissar_greatcoat(synd_mob), synd_mob.slot_wear_suit)
 		synd_mob.equip_if_possible(new /obj/item/device/radio/headset/syndicate/leader(synd_mob), synd_mob.slot_ears)
-		synd_mob.equip_if_possible(new /obj/item/katana_sheath/nukeop(synd_mob), synd_mob.slot_r_hand)
+		synd_mob.equip_if_possible(new /obj/item/swords_sheaths/nukeop(synd_mob), synd_mob.slot_r_hand)
 		synd_mob.equip_if_possible(new /obj/item/device/nukeop_commander_uplink(synd_mob), synd_mob.slot_l_hand)
 	else
 		synd_mob.equip_if_possible(new /obj/item/device/radio/headset/syndicate(synd_mob), synd_mob.slot_ears)
@@ -279,7 +280,9 @@
 	synd_mob.equip_if_possible(new /obj/item/clothing/mask/gas/swat/syndicate(synd_mob), synd_mob.slot_wear_mask)
 	synd_mob.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(synd_mob), synd_mob.slot_glasses)
 	synd_mob.equip_if_possible(new /obj/item/requisition_token/syndicate(synd_mob), synd_mob.slot_r_store)
-	synd_mob.equip_if_possible(new /obj/item/tank/emergency_oxygen(synd_mob), synd_mob.slot_l_store)
+	synd_mob.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(synd_mob), synd_mob.slot_l_store)
+
+	synd_mob.equip_sensory_items()
 
 	var/obj/item/card/id/syndicate/I = new /obj/item/card/id/syndicate(synd_mob) // for whatever reason, this is neccessary
 	if(leader)
@@ -293,9 +296,18 @@
 	synd_mob.implant.Add(M)
 	M.implanted(synd_mob)
 
+/proc/alive_player_count()
+	. = 0
+	for(var/client/C)
+		var/mob/M = C.mob
+		if(!M || istype(M, /mob/new_player))
+			continue
+		if (!isdead(M) && isliving(M))
+			.++
+
 /// returns a decimal representing the percentage of alive crew that are also antags
 /proc/get_alive_antags_percentage()
-	var/alive = 0
+	var/alive = alive_player_count()
 	var/alive_antags = ticker.mode.traitors.len + length(ticker.mode.Agimmicks)
 
 	for (var/datum/mind/antag in ticker.mode.traitors)
@@ -308,12 +320,6 @@
 		if (!M) continue
 		if (!M.client || isdead(M))
 			alive_antags--
-
-	for(var/client/C)
-		var/mob/M = C.mob
-		if(!M) continue
-		if (!isdead(M) && isliving(M))
-			alive++
 
 	if (!alive)
 		return 0

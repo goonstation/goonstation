@@ -6,11 +6,13 @@
 // light_status values shared between lighting fixtures and items
 // defines moved to _setup.dm by ZeWaka
 
+TYPEINFO(/obj/item/light_parts)
+	mats = 4
+
 /obj/item/light_parts
 	name = "fixture parts"
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-fixture"
-	mats = 4
 	material_amt = 0.2
 
 	var/installed_icon_state = "tube-empty"
@@ -85,6 +87,8 @@
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
 	text = ""
+	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | USEDELAY
+
 	var/on = 0 // 1 if on, 0 if off
 	var/brightness = 1.6 // luminosity when on, also used in power calculation
 
@@ -385,6 +389,86 @@
 		icon_state = "runway50"
 		base_state = "runway5"
 
+/obj/machinery/light/traffic_light
+	name = "warning light"
+	desc = "A small light used to warn when shuttle traffic is expected."
+	icon_state = "runway10"
+	base_state = "runway1"
+	fitting = "bulb"
+	brightness = 0.5
+	light_type = /obj/item/light/bulb
+	allowed_type = /obj/item/light/bulb
+	plane = PLANE_NOSHADOW_BELOW
+	on = 0
+	wallmounted = 0
+	removable_bulb = 0
+	var/static/warning_color = "#da9b49"
+	var/connected_dock = null
+
+	New()
+		..()
+		if(src.connected_dock)
+			RegisterSignal(GLOBAL_SIGNAL, src.connected_dock, .proc/dock_signal_handler)
+
+	proc/dock_signal_handler(datum/holder, var/signal)
+		switch(signal)
+			if(DOCK_EVENT_INCOMING)
+				src.activate()
+			if(DOCK_EVENT_ARRIVED)
+				src.deactivate()
+			if(DOCK_EVENT_OUTGOING)
+				src.activate()
+			if(DOCK_EVENT_DEPARTED)
+				src.deactivate()
+
+	proc/activate()
+		color = warning_color
+		on = 1
+		update()
+
+	proc/deactivate()
+		color = null
+		on = 0
+		update()
+
+	trader_left // matching mapping area convensions
+		connected_dock = COMSIG_DOCK_TRADER_WEST
+
+		delay2
+			icon_state = "runway20"
+			base_state = "runway2"
+		delay3
+			icon_state = "runway30"
+			base_state = "runway3"
+		delay4
+			icon_state = "runway40"
+			base_state = "runway4"
+		delay5
+			icon_state = "runway50"
+			base_state = "runway5"
+
+	trader_right
+		connected_dock = COMSIG_DOCK_TRADER_EAST
+		delay2
+			icon_state = "runway20"
+			base_state = "runway2"
+		delay3
+			icon_state = "runway30"
+			base_state = "runway3"
+		delay4
+			icon_state = "runway40"
+			base_state = "runway4"
+		delay5
+			icon_state = "runway50"
+			base_state = "runway5"
+
+// Traffic lights on/off is signal controlled; light switches should not affect us.
+/obj/machinery/light/traffic_light/power_change()
+	if(src.loc)
+		var/area/A = get_area(src)
+		var/state = src.on && A.power_light
+		seton(state)
+
 /obj/machinery/light/beacon
 	name = "tripod light"
 	desc = "A large portable light tripod."
@@ -404,7 +488,7 @@
 		if (issilicon(user))
 			return
 
-		if (istype(W, /obj/item/wrench))
+		if (iswrenchingtool(W))
 
 			add_fingerprint(user)
 			src.anchored = !src.anchored
@@ -597,7 +681,7 @@
 			if(on && current_lamp.rigged)
 				if (current_lamp.rigger)
 					message_admins("[key_name(current_lamp.rigger)]'s rigged bulb exploded in [src.loc.loc], [log_loc(src)].")
-					logTheThing("combat", current_lamp.rigger, null, "'s rigged bulb exploded in [current_lamp.rigger.loc.loc] ([log_loc(src)])")
+					logTheThing(LOG_COMBAT, current_lamp.rigger, "'s rigged bulb exploded in [current_lamp.rigger.loc.loc] ([log_loc(src)])")
 				explode()
 			if(on && prob(current_lamp.breakprob))
 				current_lamp.light_status = LIGHT_BURNED
@@ -605,7 +689,7 @@
 				on = 0
 				light.disable()
 				elecflash(src,radius = 1, power = 2, exclude_center = 0)
-				logTheThing("station", null, null, "Light '[name]' burnt out (breakprob: [current_lamp.breakprob]) at ([log_loc(src)])")
+				logTheThing(LOG_STATION, null, "Light '[name]' burnt out (breakprob: [current_lamp.breakprob]) at ([log_loc(src)])")
 
 
 // attempt to set the light's on/off status
@@ -731,7 +815,7 @@
 				return
 			if (candismantle)
 				boutput(user, "You begin to unscrew the fixture from the wall...")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				if (!do_after(user, 2 SECONDS))
 					return
 				boutput(user, "You unscrew the fixture from the wall.")
@@ -744,6 +828,7 @@
 
 
 		boutput(user, "You stick \the [W.name] into the light socket!")
+		user.lastattacked = src
 		if(has_power() && (W.flags & CONDUCT))
 			if(!user.bioHolder.HasEffect("resist_electric"))
 				src.electrocute(user, 75, null, 20000)
@@ -751,12 +836,11 @@
 
 	// attempt to break the light
 	else if(current_lamp.light_status != LIGHT_BROKEN)
-
-
+		user.lastattacked = src
 		if(prob(1+W.force * 5))
 
 			boutput(user, "You hit the light, and it smashes!")
-			logTheThing("station", user, null, "smashes a light at [log_loc(src)]")
+			logTheThing(LOG_STATION, user, "smashes a light at [log_loc(src)]")
 			for(var/mob/M in AIviewers(src))
 				if(M == user)
 					continue
@@ -832,7 +916,7 @@
 				return
 			boutput(user, "You try to remove the light [fitting], but you burn your hand on it!")
 			H.UpdateDamageIcon()
-			H.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, 5)
+			H.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, 5)
 			return				// if burned, don't remove the light
 
 	// create a light tube/bulb item and put it in the user's hand
@@ -845,11 +929,11 @@
 		return
 
 	if(current_lamp.light_status == LIGHT_OK || current_lamp.light_status == LIGHT_BURNED)
-		playsound(src.loc, "sound/impact_sounds/Glass_Hit_1.ogg", 75, 1)
+		playsound(src.loc, 'sound/impact_sounds/Glass_Hit_1.ogg', 75, 1)
 
 	if(!nospark)
 		if(on)
-			logTheThing("station", null, null, "Light '[name]' was on and has been broken, spewing sparks everywhere ([log_loc(src)])")
+			logTheThing(LOG_STATION, null, "Light '[name]' was on and has been broken, spewing sparks everywhere ([log_loc(src)])")
 			elecflash(src,radius = 1, power = 2, exclude_center = 0)
 	current_lamp.light_status = LIGHT_BROKEN
 	current_lamp.update()
@@ -861,13 +945,13 @@
 
 /obj/machinery/light/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(75))
 				broken()
-		if(3.0)
+		if(3)
 			if (prob(50))
 				broken()
 	return
@@ -889,14 +973,14 @@
 			if(prob(1))
 				if (rigger)
 					message_admins("[key_name(rigger)]'s rigged bulb exploded in [src.loc.loc], [log_loc(src)].")
-					logTheThing("combat", rigger, null, "'s rigged bulb exploded in [rigger.loc.loc] ([log_loc(src)])")
+					logTheThing(LOG_COMBAT, rigger, "'s rigged bulb exploded in [rigger.loc.loc] ([log_loc(src)])")
 				explode()
 				rigged = 0
 				rigger = null
 			else if(prob(2))
 				if (rigger)
 					message_admins("[key_name(rigger)]'s rigged bulb tried to explode but failed in [src.loc.loc], [log_loc(src)].")
-					logTheThing("combat", rigger, null, "'s rigged bulb tried to explode but failed in [rigger.loc.loc] ([log_loc(src)])")
+					logTheThing(LOG_COMBAT, rigger, "'s rigged bulb tried to explode but failed in [rigger.loc.loc] ([log_loc(src)])")
 				rigged = 0
 				rigger = null
 */
@@ -944,6 +1028,9 @@
 // can be tube or bulb subtypes
 // will fit into empty /obj/machinery/light of the corresponding type
 
+TYPEINFO(/obj/item/light)
+	mats = 1
+
 /obj/item/light
 	icon = 'icons/obj/lighting.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
@@ -957,7 +1044,6 @@
 	m_amt = 60
 	var/rigged = 0		// true if rigged to explode
 	var/mob/rigger = null // mob responsible
-	mats = 1
 	var/color_r = 1
 	var/color_g = 1
 	var/color_b = 1
@@ -1100,7 +1186,7 @@
 		icon_state = "itube-purple"
 		base_state = "itube-purple"
 		color_r = 0.42
-		color_g = 0.20
+		color_g = 0.2
 		color_b = 0.58
 
 	cool
@@ -1266,7 +1352,7 @@
 		icon_state = "ibulb-purple"
 		base_state = "ibulb-purple"
 		color_r = 0.42
-		color_g = 0.20
+		color_g = 0.2
 		color_b = 0.58
 
 	cool
@@ -1343,7 +1429,7 @@
 		boutput(user, "You inject the solution into the [src].")
 
 		if(S.reagents.has_reagent("plasma", 1))
-			logTheThing("combat", user, null, "rigged [src] to explode in [user.loc.loc] ([log_loc(user)])")
+			logTheThing(LOG_COMBAT, user, "rigged [src] to explode in [user.loc.loc] ([log_loc(user)])")
 			rigged = 1
 			rigger = user
 
@@ -1366,7 +1452,7 @@
 		boutput(user, "The [name] shatters!")
 		light_status = LIGHT_BROKEN
 		force = 5
-		playsound(src.loc, "sound/impact_sounds/Glass_Hit_1.ogg", 75, 1)
+		playsound(src.loc, 'sound/impact_sounds/Glass_Hit_1.ogg', 75, 1)
 		update()
 
 /obj/machinery/light/get_power_wire()

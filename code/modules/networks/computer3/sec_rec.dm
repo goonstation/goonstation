@@ -430,6 +430,10 @@
 							src.menu = MENU_IN_RECORD
 							return
 
+						if (lowertext(command) == "clown")
+							src.active_secure["criminal"] = "Clown"
+							return
+
 						switch (round( max( text2num_safe(command), 0) ))
 							if (1)
 								if (src.active_secure["criminal"] != "*Arrest*")
@@ -769,7 +773,7 @@
 				return
 
 			if (usr)
-				logTheThing("station", usr, null, "[perp_name] is set to arrest by [usr] (using the ID card of [src.authenticated]) [log_loc(src.master)]")
+				logTheThing(LOG_STATION, usr, "[perp_name] is set to arrest by [usr] (using the ID card of [src.authenticated]) [log_loc(src.master)]")
 
 			//Unlikely that this would be a problem but OH WELL
 			if(last_arrest_report && world.time < (last_arrest_report + 10))

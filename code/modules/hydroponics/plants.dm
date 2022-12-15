@@ -130,7 +130,7 @@ ABSTRACT_TYPE(/datum/plant)
 		if (!POT) lasterr = 101
 		if (POT.dead || !POT.current) lasterr = 102
 		if (lasterr)
-			logTheThing("debug", null, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
+			logTheThing(LOG_DEBUG, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
 			special_proc = 0
 		return lasterr
 
@@ -140,7 +140,7 @@ ABSTRACT_TYPE(/datum/plant)
 		if (!POT || !user) lasterr = 201
 		if (POT.dead || !POT.current) lasterr = 202
 		if (lasterr)
-			logTheThing("debug", null, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
+			logTheThing(LOG_DEBUG, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
 			attacked_proc = 0
 		return lasterr
 
@@ -150,7 +150,7 @@ ABSTRACT_TYPE(/datum/plant)
 		if (POT.dead || !POT.current) return 302
 		if (!src.harvestable || !src.crop) return 303
 		if (lasterr)
-			logTheThing("debug", null, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
+			logTheThing(LOG_DEBUG, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
 			harvested_proc = 0
 		return lasterr
 
@@ -191,19 +191,19 @@ ABSTRACT_TYPE(/datum/plant)
 				HYPnewcommutcheck(src,DNA, 2)
 				HYPnewmutationcheck(src,DNA,null,1,S)
 				if (prob(2))
-					HYPaddCommut(DNA,/datum/plant_gene_strain/unstable)
+					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/unstable)
 			if ("mutagen")
 				HYPmutateDNA(DNA,2)
 				HYPnewcommutcheck(src,DNA, 3)
 				HYPnewmutationcheck(src,DNA,null,1,S)
 				if (prob(5))
-					HYPaddCommut(DNA,/datum/plant_gene_strain/unstable)
+					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/unstable)
 			if ("ammonia")
 				damage_amt = rand(10,20)
 				DNA.growtime += rand(5,10)
 				DNA.harvtime += rand(2,5)
 				if (prob(5))
-					HYPaddCommut(DNA,/datum/plant_gene_strain/accelerator)
+					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/accelerator)
 			if ("potash")
 				DNA.cropsize += rand(1,4)
 				DNA.harvests -= rand(0,2)
@@ -213,7 +213,7 @@ ABSTRACT_TYPE(/datum/plant)
 			if ("space_fungus")
 				DNA.endurance += rand(1,3)
 				if (prob(3))
-					HYPaddCommut(DNA,/datum/plant_gene_strain/damage_res)
+					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/damage_res)
 			if ("mutadone")
 				if (DNA.growtime < 0)
 					DNA.growtime++

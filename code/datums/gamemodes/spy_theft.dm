@@ -8,6 +8,7 @@
 	name = "spy_thief"
 	config_tag = "spy_theft"
 
+	antag_token_support = TRUE
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_TRAITOR)
 	var/const/waittime_l = 600	// Minimum after round start to send threat information to printer
@@ -34,11 +35,11 @@
 	var/list/organ_bounties = list()				// Things that belong to people that are on the inside
 	var/list/photo_bounties = list()				// Photos of people (Operates by text, because that's the only info that photos store)
 
-	var/const/organ_bounty_amt = 4
-	var/const/person_bounty_amt = 4
-	var/const/photo_bounty_amt = 4
-	var/const/station_bounty_amt = 5
-	var/const/big_station_bounty_amt = 3
+	var/organ_bounty_amt = 4
+	var/person_bounty_amt = 4
+	var/photo_bounty_amt = 4
+	var/station_bounty_amt = 5
+	var/big_station_bounty_amt = 3
 
 	var/list/possible_areas = list()
 	var/list/active_bounties = list()
@@ -120,7 +121,7 @@
 
 		if (reward.item)
 			var/obj/item = new reward.item(pda_turf)
-			logTheThing("debug", user, null, "spy thief reward spawned: [item] at [log_loc(user)]")
+			logTheThing(LOG_DEBUG, user, "spy thief reward spawned: [item] at [log_loc(user)]")
 			user.show_text("Your PDA accepts the bounty and spits out [reward] in exchange.", "red")
 			reward.run_on_spawn(item, user, FALSE, hostpda.uplink)
 			user.put_in_hand_or_drop(item)
@@ -169,7 +170,7 @@
 			break
 		traitors += tplayer
 		token_players.Remove(tplayer)
-		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 
 	var/list/chosen_spy_thieves = antagWeighter.choose(pool = possible_spies, role = ROLE_SPY_THIEF, amount = num_spies, recordChosen = 1)
@@ -293,21 +294,22 @@
 
 		//Personal bounties (items that belong to a person)
 		//Pair list, stores job for difficulty lookup
-		if (H.trinket && istype(H.trinket))
-			personal_bounties += list(list(H.trinket, H.job))
+		var/datum/deref = H?.trinket?.deref()
+		if (istype(deref, /obj/item))
+			personal_bounties += list(list(H.trinket.deref(), H.job))
 		if (H.wear_id)
 			personal_bounties += list(list(H.wear_id, H.job))
 
 
-		if (H.client && length(H.organs))
-			if (H.organs["l_arm"])
-				organ_bounties += list(list(H.organs["l_arm"], H.job))
-			if (H.organs["r_arm"])
-				organ_bounties += list(list(H.organs["r_arm"], H.job))
-			if (H.organs["l_leg"])
-				organ_bounties += list(list(H.organs["l_leg"], H.job))
-			if (H.organs["r_leg"])
-				organ_bounties += list(list(H.organs["r_leg"], H.job))
+		if (H.client)
+			if (H.limbs.get_limb("l_arm"))
+				organ_bounties += list(list(H.limbs.get_limb("l_arm"), H.job))
+			if (H.limbs.get_limb("r_arm"))
+				organ_bounties += list(list(H.limbs.get_limb("r_arm"), H.job))
+			if (H.limbs.get_limb("l_leg"))
+				organ_bounties += list(list(H.limbs.get_limb("l_leg"), H.job))
+			if (H.limbs.get_limb("r_leg"))
+				organ_bounties += list(list(H.limbs.get_limb("r_leg"), H.job))
 
 
 		//Add photographs of the crew
@@ -465,7 +467,6 @@
 	station_bounties[/obj/item/device/radio/headset/clown] = 1
 	station_bounties[/obj/item/device/radio/headset/deaf] = 1
 	station_bounties[/obj/item/device/radio/headset/miner] = 1
-	station_bounties[/obj/item/device/radio/headset/mechanic] = 1
 	station_bounties[/obj/item/device/radio/headset/security] = 2
 	station_bounties[/obj/item/device/radio/headset/command/radio_show_host] = 2
 	station_bounties[/obj/item/device/radio/headset/command/hop] = 2
@@ -618,7 +619,7 @@
 	var/big_picked=1
 	while(big_picked<=big_station_bounty_amt)
 		if (big_station_bounties.len <= 0)
-			logTheThing( "debug", src, null, "spy_theft.dm was unable to create enough big station bounties." )
+			logTheThing(LOG_DEBUG, src, "spy_theft.dm was unable to create enough big station bounties.")
 			message_admins("Spy bounty logic was unable to create enough big station bounties.")
 			break
 		// Pick an item type then check if it is valid
@@ -657,7 +658,7 @@
 	var/item_picked=1
 	while(item_picked<=station_bounty_amt)
 		if (station_bounties.len <= 0)
-			logTheThing( "debug", src, null, "spy_theft.dm was unable to create enough item bounties." )
+			logTheThing(LOG_DEBUG, src, "spy_theft.dm was unable to create enough item bounties.")
 			message_admins("Spy bounty logic was unable to create enough item bounties.")
 			break
 		// Pick an item type then check if it is valid
@@ -694,6 +695,7 @@
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/substation)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/singcore)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/combustion_chamber)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/shield_zone)
 	possible_areas -= /area/sim/test_area
 
 	for (var/area/A in possible_areas)

@@ -62,11 +62,11 @@
 					robot_owner.sight |= SEE_TURFS
 					robot_owner.render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (owner.client?.widescreen))
 					robot_owner.vision.set_scan(1)
-					robot_owner.client.color = "#c2ffc2"
+					robot_owner.client.set_color(normalize_color_to_matrix("#c2ffc2"))
 				else
 					robot_owner.sight |= SEE_BLACKNESS
 					robot_owner.sight &= ~SEE_TURFS
-					robot_owner.client.color = null
+					robot_owner.client.set_color()
 					robot_owner.vision.set_scan(0)
 				//if (sight_therm)
 				//	src.sight |= SEE_MOBS //todo make borg thermals have a purpose again

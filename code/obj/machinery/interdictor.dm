@@ -18,28 +18,49 @@
 	var/canInterdict = 0 // indication of operability
 	//if 0, whether from depletion or new installation, battery charge must reach 100% to set to 1 and activate interdiction
 
-	var/hasInterdicted = 0 // indication of operation in progress
-	//if 1, play interdiction active sound on next machine tick
+	var/cumulative_cost = 0 // keeps a tally of used power per tick
+	//used to play interdiction noise / modulate its volume
 
-	var/interdict_range = 7 // range of the interdictor's field
+	var/interdict_range = 5 // range of the interdictor's field
 	//for effects that are wide-band interdicted, such as solar flares, this should dictate the response strength
+
+	var/interdict_class = ITDR_STANDARD // type of interdictor
+	//standard interdictors provide only the stellar phenomena protection; alternate variants unlock new functionality
 
 	var/list/deployed_fields = list()
 
-	var/sound/sound_interdict_on = "sound/machines/interdictor_activate.ogg"
-	var/sound/sound_interdict_off = "sound/machines/interdictor_deactivate.ogg"
-	var/sound/sound_interdict_run = "sound/machines/interdictor_operate.ogg"
-	var/sound/sound_togglebolts = "sound/machines/click.ogg"
+	var/sound/sound_interdict_on = 'sound/machines/interdictor_activate.ogg'
+	var/sound/sound_interdict_off = 'sound/machines/interdictor_deactivate.ogg'
+	var/sound/sound_interdict_run = 'sound/machines/interdictor_operate.ogg'
+	var/sound/sound_togglebolts = 'sound/machines/click.ogg'
 
-	New(spawnlocation,var/obj/item/cell/altcap,var/obj/item/interdictor_rod/altrod,var/datum/material/mat)
+	New(spawnlocation,var/obj/item/cell/altcap,var/obj/item/interdictor_rod/altrod,var/obj/item/interdictor_board/altboard,var/datum/material/mat)
 		if(altcap)
 			altcap.set_loc(src)
 			src.intcap = altcap
 		else
-			src.intcap = new /obj/item/cell/supercell(src) //deliberately not charged
+			src.intcap = new /obj/item/cell/supercell/charged(src)
+
 		if(altrod)
 			src.interdict_range = altrod.interdist
 			qdel(altrod)
+
+		if(altboard)
+			src.interdict_class = altboard.interdict_class
+			switch(src.interdict_class)
+				if(ITDR_STANDARD)
+					src.interdict_range++
+				if(ITDR_NIMBUS)
+					src.name = "Nimbus-class [src.name]"
+					src.desc = "A device that lessens or nullifies the effects of assorted stellar phenomena. This one charges cyborgs, too!"
+				if(ITDR_ZEPHYR)
+					src.name = "Zephyr-class [src.name]"
+					src.desc = "A device that lessens or nullifies the effects of assorted stellar phenomena. This one comes with a second wind."
+				if(ITDR_DEVERA)
+					src.name = "Devera-class [src.name]"
+					src.desc = "A device that lessens or nullifies the effects of assorted stellar phenomena. Smells faintly of ozone."
+			qdel(altboard)
+
 		if(mat)
 			src.setMaterial(mat)
 		else
@@ -116,6 +137,28 @@
 		else
 			..()
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.intcap)
+			src.intcap = null
+
+	// Typed variants for manual spawning
+
+	nimbus
+		interdict_class = ITDR_NIMBUS
+		name = "Nimbus-class spatial interdictor"
+		desc = "A device that lessens or nullifies the effects of assorted stellar phenomena. This one charges cyborgs, too!"
+
+	zephyr
+		interdict_class = ITDR_ZEPHYR
+		name = "Zephyr-class spatial interdictor"
+		desc = "A device that lessens or nullifies the effects of assorted stellar phenomena. This one comes with a second wind."
+
+	devera
+		interdict_class = ITDR_DEVERA
+		name = "Devera-class spatial interdictor"
+		desc = "A device that lessens or nullifies the effects of assorted stellar phenomena. Smells fainly of ozone."
+
 
 /obj/machinery/interdictor/update_icon()
 	var/ratio = max(0, src.intcap.charge / src.intcap.maxcharge)
@@ -173,29 +216,45 @@
 		if(src.canInterdict)
 			doupdateicon = 0
 			src.stop_interdicting()
-	if(src.hasInterdicted)
-		src.hasInterdicted = 0
-		if(src.canInterdict)
-			playsound(src.loc, src.sound_interdict_run, 30, 0)
+	if(src.cumulative_cost)
+		if(src.cumulative_cost >= 50) //if the cost was very minor, don't even make a sound
+			var/sound_strength = clamp(cumulative_cost/10,5,30)
+			if(src.canInterdict)
+				playsound(src.loc, src.sound_interdict_run, sound_strength, 0)
+		src.cumulative_cost = 0
 
 	if(doupdateicon)
 		src.UpdateIcon()
 
 
 
-//call this from an event to determine if sufficient power is remaining to complete an interdiction,
-//passing an amount in cell charge that is required to interdict the event.
-//returns 1 if interdiction was successful, 0 if power was insufficient
-//second arg skips immediate visual update (use if potential for very high amounts of individual calls)
-/obj/machinery/interdictor/proc/expend_interdict(var/stopcost,var/skipanim)
-	if (status & BROKEN || !src.canInterdict)
+/**
+ * Things capable of being influenced by a spatial interdictor call this proc when iterating over interdictors.
+ * The core function of interdictors is to suppress energy-based random events; other beneficial functions are provided by alternate mainboards.
+ *
+ * The first argument (use_cost) is the cost in cell power units, charged to the interdictor's internal cell on successful expenditure.
+ *
+ * The second argument (target) specifies a range-checking target for localized effect application (i.e. blocking a radiation pulse).
+ * To perform a global interdiction (such as shielding from solar flares), this argument can be skipped entirely.
+ *
+ * The third argument (skipanim), if set to true, skips immediate visual update of the interdictor (instead allowing it to update on machine tick).
+ * For high-volume blocking, such as shielding a large set of tiles from an effect, this should be used.
+ *
+ * The fourth argument (itdr_class) optionally passes in an interdictor class that's required for successful expenditure.
+ * This is used for alternate functionality, such as wireless cyborg charging; random event blocking should not pass a specific class requirement.
+ * These classes are numbers, but should use the defines, such as ITDR_ZEPHYR. Interdictors are given a class by the mainboard used in assembly.
+ */
+/obj/machinery/interdictor/proc/expend_interdict(var/use_cost,var/target = null,var/skipanim = FALSE,var/itdr_class)
+	if (status & BROKEN || !src.canInterdict || (itdr_class && itdr_class != src.interdict_class))
 		return 0
-	if (!intcap || intcap.charge < stopcost)
+	if (target && !IN_RANGE(src,target,src.interdict_range))
+		return 0
+	if (!intcap || intcap.charge < use_cost)
 		src.stop_interdicting()
 		return 0
 	else
-		intcap.use(stopcost)
-		src.hasInterdicted = 1
+		intcap.use(use_cost)
+		src.cumulative_cost += use_cost
 		if(!skipanim) src.updatecharge()
 		return 1
 
@@ -203,7 +262,7 @@
 //initalizes interdiction, including visual depiction of range
 /obj/machinery/interdictor/proc/start_interdicting()
 	for(var/turf/T in orange(src.interdict_range,src))
-		if (get_dist(T,src) != src.interdict_range)
+		if (GET_DIST(T,src) != src.interdict_range)
 			continue
 		var/obj/interdict_edge/YEE = new /obj/interdict_edge(T)
 		src.deployed_fields += YEE
@@ -214,7 +273,7 @@
 		if(src.canInterdict)
 			for (var/obj/forcefield/event/tear in by_type[/obj/forcefield/event])
 				SPAWN(rand(8,22)) //stagger stabilizations, since it's getting stabilized post-formation
-					if (!tear.stabilized && IN_RANGE(src,tear,src.interdict_range) && src.expend_interdict(800))
+					if (!tear.stabilized && src.expend_interdict(800,tear))
 						tear.stabilize()
 	src.UpdateIcon()
 
@@ -244,9 +303,8 @@
 //assembly zone
 
 //interdictor rod: the doohickey that lets the interdictor do its thing
-//the blueprint to create this should be in engineering along with guide, frame blueprint and mainboards
-//these are the primary factor for scarcity as they require several materials to manufacture
-//blueprint paths: /obj/item/paper/manufacturer_blueprint/interdictor_rod_lambda & /obj/item/paper/manufacturer_blueprint/interdictor_rod_sigma
+//these are a primary factor for scarcity as they require several materials to manufacture, alongside the power cells
+//can be manufactured by installing /obj/item/disk/data/floppy/manudrive/interdictor_parts
 
 /obj/item/interdictor_rod
 	name = "Lambda phase-control rod"
@@ -268,12 +326,13 @@
 		name = "Sigma phase-control rod"
 		desc = "A large, narrow cylinder with a highly conductive core and inbuilt control circuitry. Grants full range to interdictors."
 		icon_state = "interdict-rod-ex"
-		interdist = 7
+		interdist = 6
 
-//interdictor board: power management circuitry and whatnot
-//engineering should start with about three of these,
-//adjacent to the rod/frame blueprint and the interdictor assembly and use guide.
-//mechanics can scan to reproduce
+//interdictor board: power management circuitry and whatnot. alternate boards yield different functionality
+//can be manufactured by installing /obj/item/disk/data/floppy/manudrive/interdictor_parts
+
+TYPEINFO(/obj/item/interdictor_board)
+	mats = 6
 
 /obj/item/interdictor_board
 	name = "spatial interdictor mainboard"
@@ -282,16 +341,30 @@
 	icon_state = "interdict-board"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "electronic"
-	mats = 6
 	health = 6
 	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS | CONDUCT
+	var/interdict_class = ITDR_STANDARD
 
-//interdictor frame: main framework for assembling the interdictor (lo and behold)
-//the blueprint to create this should be in engineering along with guide, rod blueprint and mainboards
-//blueprint path is /obj/item/paper/manufacturer_blueprint/interdictor_frame
+	nimbus
+		name = "Nimbus interdictor mainboard"
+		desc = "A custom-fabricated circuit board with additional micro-transformers. Grants interdictors the ability to wirelessly charge cyborgs."
+		interdict_class = ITDR_NIMBUS
 
-/obj/item/interdictor_frame_kit
+	zephyr
+		name = "Zephyr interdictor mainboard"
+		desc = "A custom-fabricated circuit board with biomimetic coprocessing. Causes interdictors' field to gain beneficial bioelectric properties."
+		interdict_class = ITDR_ZEPHYR
+
+	devera
+		name = "Devera interdictor mainboard"
+		desc = "A custom-fabricated circuit board with an ionization lattice. Causes interdictors' field to suppress some topical and aerosolized microbes."
+		interdict_class = ITDR_DEVERA
+
+//interdictor frame kit: supplies the frame that is the basis for assembling the interdictor (lo and behold)
+//can be manufactured by installing /obj/item/disk/data/floppy/manudrive/interdictor_parts
+
+/obj/item/interdictor_kit
 	name = "spatial interdictor frame kit"
 	desc = "You can hear an awful lot of junk rattling around in this box."
 	icon = 'icons/obj/machines/interdictor.dmi'
@@ -315,10 +388,12 @@
 
 		if (canbuild)
 			boutput(user, "<span class='notice'>You empty the box of parts onto the floor.</span>")
-			var/obj/O = new /obj/interdictor_frame( get_turf(user) )
-			O.fingerprints = src.fingerprints
-			O.fingerprints_full = src.fingerprints_full
+			var/obj/frame = new /obj/interdictor_frame( get_turf(user) )
+			frame.fingerprints = src.fingerprints
+			frame.fingerprints_full = src.fingerprints_full
 			qdel(src)
+
+//unconstructed interdictor, where the assembly procedure happens
 
 /obj/interdictor_frame
 	name = "spatial interdictor frame"
@@ -329,13 +404,14 @@
 	var/state = 0
 	var/obj/intcap = null
 	var/obj/introd = null
+	var/obj/intboard = null
 
 	attack_hand(mob/user)
 		if(state == 4) //permit removal of cell before you install wires
 			src.state = 3
 			src.icon_state = "interframe-3"
 			boutput(user, "<span class='notice'>You remove \the [intcap] from the interdictor's cell compartment.</span>")
-			playsound(src, "sound/items/Deconstruct.ogg", 40, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
 
 			user.put_in_hand_or_drop(src.intcap)
 			src.intcap = null
@@ -347,17 +423,17 @@
 		switch(state)
 			if(0)
 				if (iswrenchingtool(I))
-					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 4 SECONDS), user)
+					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 2 SECONDS), user)
 				else
 					..()
 			if(1)
 				if (istype(I, /obj/item/interdictor_board))
-					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 2 SECONDS), user)
+					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 1 SECOND), user)
 				else
 					..()
 			if(2)
 				if (istype(I, /obj/item/interdictor_rod))
-					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 2 SECONDS), user)
+					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 1 SECOND), user)
 				else
 					..()
 			if(3)
@@ -365,7 +441,7 @@
 					src.state = 4
 					src.icon_state = "interframe-4"
 					boutput(user, "<span class='notice'>You install \the [I] into the interdictor's cell compartment.</span>")
-					playsound(src, "sound/items/Deconstruct.ogg", 40, 1)
+					playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
 
 					user.u_equip(I)
 					I.set_loc(src)
@@ -380,12 +456,12 @@
 					if (I.amount < 4)
 						boutput(user, "<span style=\"color:red\">You don't have enough cable to connect the components (4 required).</span>")
 					else
-						actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 4 SECONDS), user)
+						actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 1 SECOND), user)
 				else
 					..()
 			if(5)
 				if (istype(I, /obj/item/electronics/soldering))
-					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 2 SECONDS), user)
+					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 1 SECOND), user)
 				else
 					..()
 			if(6)
@@ -445,41 +521,36 @@
 	onStart()
 		..()
 		if (itdr.state == 0)
-			playsound(itdr, "sound/items/Ratchet.ogg", 40, 1)
-			owner.visible_message("<span class='bold'>[owner]</span> begins assembling \the [itdr].")
+			playsound(itdr, 'sound/items/Ratchet.ogg', 40, 1)
 		if (itdr.state == 1)
-			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
-			owner.visible_message("<span class='bold'>[owner]</span> begins installing a mainboard into \the [itdr].")
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 		if (itdr.state == 2)
-			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
-			owner.visible_message("<span class='bold'>[owner]</span> begins installing a phase-control rod into \the [itdr].")
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 		if (itdr.state == 4)
-			playsound(itdr, "sound/items/Deconstruct.ogg", 40, 1)
-			owner.visible_message("<span class='bold'>[owner]</span> begins connecting \the [itdr]'s electrical systems.")
+			playsound(itdr, 'sound/items/Deconstruct.ogg', 40, 1)
 		if (itdr.state == 5)
-			playsound(itdr, "sound/effects/zzzt.ogg", 30, 1)
-			owner.visible_message("<span class='bold'>[owner]</span> begins soldering \the [itdr]'s wiring into place.")
+			playsound(itdr, 'sound/effects/zzzt.ogg', 30, 1)
 		if (itdr.state == 6)
-			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
-			owner.visible_message("<span class='bold'>[owner]</span> begins installing a casing onto \the [itdr].")
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 	onEnd()
 		..()
 		if (itdr.state == 0) //unassembled > no components
 			itdr.state = 1
 			itdr.icon_state = "interframe-1"
 			boutput(owner, "<span class='notice'>You assemble and secure the frame components.</span>")
-			playsound(itdr, "sound/items/Ratchet.ogg", 40, 1)
+			playsound(itdr, 'sound/items/Ratchet.ogg', 40, 1)
 			itdr.desc = "A frame for a spatial interdictor. It's missing its mainboard."
 			return
 		if (itdr.state == 1) //no components > mainboard
 			itdr.state = 2
 			itdr.icon_state = "interframe-2"
 			boutput(owner, "<span class='notice'>You install the interdictor mainboard.</span>")
-			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 
 			var/mob/source = owner
 			source.u_equip(the_tool)
-			qdel(the_tool)
+			the_tool.set_loc(itdr)
+			itdr.intboard = the_tool
 
 			itdr.desc = "A frame for a spatial interdictor. It's missing a phase-control rod."
 			return
@@ -487,7 +558,7 @@
 			itdr.state = 3
 			itdr.icon_state = "interframe-3"
 			boutput(owner, "<span class='notice'>You install the phase-control rod.</span>")
-			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 
 			var/mob/source = owner
 			source.u_equip(the_tool)
@@ -500,7 +571,7 @@
 			itdr.state = 5
 			itdr.icon_state = "interframe-5"
 			boutput(owner, "<span class='notice'>You finish wiring together the interdictor's systems.</span>")
-			playsound(itdr, "sound/items/Deconstruct.ogg", 40, 1)
+			playsound(itdr, 'sound/items/Deconstruct.ogg', 40, 1)
 
 			the_tool.amount -= 4
 			if (the_tool.amount < 1)
@@ -516,12 +587,12 @@
 			itdr.state = 6
 			itdr.icon_state = "interframe-5"
 			boutput(owner, "<span class='notice'>You solder the wiring into place. The internal systems are now fully installed.</span>")
-			playsound(itdr, "sound/effects/zzzt.ogg", 40, 1)
+			playsound(itdr, 'sound/effects/zzzt.ogg', 40, 1)
 			itdr.desc = "A nearly-complete frame for a spatial interdictor. It's missing a casing."
 			return
 		if (itdr.state == 6)
 			boutput(owner, "<span class='notice'>You install a metal casing onto the interdictor, completing its construction.</span>")
-			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 
 			//setting up for custom interdictor casing
 			var/obj/item/sheet/S = the_tool
@@ -538,7 +609,7 @@
 				the_tool.inventory_counter.update_number(the_tool.amount)
 
 			var/turf/T = get_turf(itdr)
-			var/obj/llama = new /obj/machinery/interdictor(T,itdr.intcap,itdr.introd,mat)
+			var/obj/llama = new /obj/machinery/interdictor(T,itdr.intcap,itdr.introd,itdr.intboard,mat)
 			itdr.intcap.set_loc(llama) //this may not be necessary but I feel like it'll stop something from randomly breaking due to timing
 			qdel(itdr)
 			return

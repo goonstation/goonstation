@@ -271,6 +271,9 @@
 		src.read_only = 1
 #endif
 
+TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
+	mats = 15
+
 /obj/item/disk/data/floppy/read_only/authentication
 	name = "Authentication Disk"
 	desc = "Capable of storing entire kilobytes of information, this disk carries activation codes for various secure things that aren't nuclear bombs."
@@ -278,9 +281,8 @@
 	item_state = "card-id"
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
-	mats = 15
 	random_color = 0
-	file_amount = 32.0
+	file_amount = 32
 
 	New()
 		. = ..()

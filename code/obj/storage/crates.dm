@@ -313,7 +313,7 @@
 						T.surplus_crate_items.Add(item_datum)
 				telecrystals += item_datum.cost
 			var/str_contents = kText.list2text(crate_contents, ", ")
-			logTheThing("debug", owner, null, "surplus crate contains: [str_contents] at [log_loc(src)]")
+			logTheThing(LOG_DEBUG, owner, "surplus crate contains: [str_contents] at [log_loc(src)]")
 		#undef NESTED_SCALING_FACTOR
 
 /obj/storage/crate/syndicate_surplus/spawnable
@@ -321,19 +321,6 @@
 	New()
 		..()
 		spawn_items() //null owner/uplink, so pulls from all possible items
-
-/obj/storage/crate/pizza
-	name = "pizza box"
-	desc = "A pizza box."
-	icon_state = "pizzabox"
-	icon_opened = "pizzabox_open"
-	icon_closed = "pizzabox"
-	icon_welded = "welded-short-horizontal"
-	weld_image_offset_Y = -10
-
-	New()
-		..()
-		src.setMaterial(getMaterial("cardboard"), appearance = 0, setname = 0)
 
 /obj/storage/crate/bee
 	name = "Bee crate"
@@ -569,7 +556,8 @@
 	medic_rework
 		name = "Class Crate - Field Medic"
 		desc = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies."
-		spawn_contents = list(/obj/item/clothing/glasses/healthgoggles/upgraded,
+		spawn_contents = list(/obj/item/gun/kinetic/veritate,
+		/obj/item/storage/pouch/veritate,
 		/obj/item/device/analyzer/healthanalyzer/upgraded,
 		/obj/item/storage/medical_pouch,
 		/obj/item/storage/belt/syndicate_medic_belt,
@@ -587,7 +575,6 @@
 		/obj/item/storage/pouch/shotgun/weak,
 		/obj/item/weldingtool/high_cap,
 		/obj/item/storage/belt/utility/prepared,
-		/obj/item/clothing/glasses/meson,
 		/obj/item/clothing/suit/space/syndicate/specialist/engineer,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)
 

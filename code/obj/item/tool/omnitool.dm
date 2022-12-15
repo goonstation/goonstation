@@ -5,58 +5,57 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi'
 	uses_multiple_icon_states = 1
 	var/prefix = "omnitool"
-	var/has_cutting = 0
-	var/has_welding = 0
-	var/welding = 0
+	var/welding = FALSE
 	var/animated_changes = FALSE
 
 	custom_suicide = 1
 
-	var/omni_mode = "prying"
+	///List of tool settings
+	var/list/modes = list(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING)
+	///The current setting
+	var/mode = OMNI_MODE_PRYING
+
+	var/list/datum/contextAction/contexts = list()
 
 	New()
+		contextLayout = new /datum/contextLayout/experimentalcircle
 		..()
-		src.change_mode(omni_mode)
+		src.change_mode(mode, null, /obj/item/crowbar)
+		for(var/actionType in childrentypesof(/datum/contextAction/omnitool))
+			var/datum/contextAction/omnitool/action = new actionType()
+			if (action.mode in src.modes)
+				src.contexts += action
 
-	attack_self(var/mob/user as mob)
-		..()
-		// cycle between modes
-		var/new_mode = null
-		switch (src.omni_mode)
-			if ("prying") new_mode = "screwing"
-			if ("screwing") new_mode = "pulsing"
-			if ("pulsing") new_mode = "snipping"
-			if ("snipping") new_mode = "wrenching"
-			if ("wrenching")
-				if(has_cutting)
-					new_mode = "cutting"
-				else if(has_welding)
-					new_mode = "welding"
-				else
-					new_mode = "prying"
-			if("cutting")
-				if(has_welding)
-					new_mode = "welding"
-				else
-					new_mode = "prying"
-			if("welding")
-				new_mode = "prying"
-			else new_mode = "prying"
-		if (new_mode)
-			src.change_mode(new_mode, user)
+	attack_self(var/mob/user)
+		user.showContextActions(src.contexts, src, src.contextLayout)
 
 	attack(mob/living/carbon/M, mob/user)
-		if (src.omni_mode == "prying")
+		if (src.mode == OMNI_MODE_PRYING)
 			if (!pry_surgery(M, user))
 				return ..()
 		else
 			..()
 
-	get_desc(var/dist)
-		if (dist < 3)
-			. = "<span class='notice'>It is currently set to [src.omni_mode] mode.</span>"
+	get_desc()
+		. += "It is currently set to "
+		switch(src.mode)
+			if(OMNI_MODE_PRYING)
+				. += "prying"
+			if(OMNI_MODE_SNIPPING)
+				. += "snipping"
+			if(OMNI_MODE_WRENCHING)
+				. += "wrenching"
+			if(OMNI_MODE_SCREWING)
+				. += "screwing"
+			if(OMNI_MODE_PULSING)
+				. += "pulsing"
+			if(OMNI_MODE_CUTTING)
+				. += "cutting"
+			if(OMNI_MODE_WELDING)
+				. += "welding"
+		. += " mode."
 
-	suicide(var/mob/user as mob)
+	suicide(var/mob/user)
 		if (!src.user_can_suicide(user))
 			return 0
 		user.visible_message("<span class='alert'><b>[user] stabs and beats [himself_or_herself(user)] with each tool in the [src] in rapid succession.</b></span>")
@@ -64,146 +63,78 @@
 		user.TakeDamage("head", 160, 0)
 		return 1
 
-	proc/change_mode(var/new_mode, var/mob/holder)
+	dropped(var/mob/user)
+		. = ..()
+		user.closeContextActions()
+
+	proc/change_mode(var/mode, var/mob/holder, var/obj/item/typepath)
 		tooltip_rebuild = 1
-		switch (new_mode)
-			if ("prying")
-				src.omni_mode = "prying"
-				// based on /obj/item/crowbar
+		var/obj/item/currtype = typepath
+		src.mode = mode
+		src.force = initial(currtype.force)
+		src.tool_flags = initial(currtype.tool_flags)
+		src.throwforce = initial(currtype.throwforce)
+		src.throw_range = initial(currtype.throw_range)
+		src.throw_speed = initial(currtype.throw_speed)
+		src.stamina_damage = initial(currtype.stamina_damage)
+		src.stamina_cost = initial(currtype.stamina_cost)
+		src.stamina_crit_chance = initial(currtype.stamina_crit_chance)
+		src.hit_type = initial(currtype.hit_type)
+		src.hitsound = initial(currtype.hitsound)
+		switch (mode)
+			if (OMNI_MODE_PRYING)
 				set_icon_state("[prefix]-prying")
-				src.tool_flags = TOOL_PRYING
-				src.force = 5.0
-				src.throwforce = 7.0
-				src.throw_range = 7
-				src.throw_speed = 2
-				// using relative amounts in case the default changes
-				src.stamina_damage = STAMINA_ITEM_DMG * 33/20
-				src.stamina_cost = STAMINA_ITEM_COST * 25/18
-				src.stamina_crit_chance = STAMINA_CRIT_CHANCE * 10/25
-				src.hit_type = DAMAGE_BLUNT
-				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+				src.setItemSpecial(/datum/item_special/tile_fling)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-prying"), src)
 
-			if ("pulsing")
-				src.omni_mode = "pulsing"
-				// based on /obj/item/device/multitool
+			if (OMNI_MODE_PULSING)
 				set_icon_state("[prefix]-pulsing")
-				src.tool_flags = TOOL_PULSING
-				src.force = 5.0
-				src.throwforce = 5.0
-				src.throw_range = 15
-				src.throw_speed = 3
-				// using relative amounts in case the default changes
-				src.stamina_damage = STAMINA_ITEM_DMG * 5/20
-				src.stamina_cost = STAMINA_ITEM_COST * 5/18
-				src.stamina_crit_chance = STAMINA_CRIT_CHANCE * 1/25
-				src.hit_type = DAMAGE_BLUNT
-				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+				src.setItemSpecial(/datum/item_special/elecflash)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-pulsing"), src)
 
-			if ("screwing")
-				src.omni_mode = "screwing"
-				// based on /obj/item/screwdriver
+			if (OMNI_MODE_SCREWING)
 				set_icon_state("[prefix]-screwing")
-				src.tool_flags = TOOL_SCREWING
-				src.force = 5.0
-				src.throwforce = 5.0
-				src.throw_range = 5
-				src.throw_speed = 3
-				// using relative amounts in case the default changes
-				src.stamina_damage = STAMINA_ITEM_DMG * 10/20
-				src.stamina_cost = STAMINA_ITEM_COST * 10/18
-				src.stamina_crit_chance = min(STAMINA_CRIT_CHANCE * 30/25, 100)
-				src.hit_type = DAMAGE_STAB
-				src.hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+				src.setItemSpecial(/datum/item_special/simple)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-screwing"), src)
 
-			if ("snipping")
-				src.omni_mode = "snipping"
-				// based on /obj/item/wirecutters
+			if (OMNI_MODE_SNIPPING)
 				set_icon_state("[prefix]-snipping")
-				src.tool_flags = TOOL_SNIPPING
-				src.force = 6.0
-				src.throwforce = 1.0
-				src.throw_range = 9
-				src.throw_speed = 2
-				// using relative amounts in case the default changes
-				src.stamina_damage = STAMINA_ITEM_DMG * 5/20
-				src.stamina_cost = STAMINA_ITEM_COST * 10/18
-				src.stamina_crit_chance = min(STAMINA_CRIT_CHANCE * 30/25, 100)
-				src.hit_type = DAMAGE_STAB
-				src.hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+				src.setItemSpecial(/datum/item_special/simple)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-snipping"), src)
 
-			if ("wrenching")
-				src.omni_mode = "wrenching"
-				// based on /obj/item/wrench
+			if (OMNI_MODE_WRENCHING)
 				set_icon_state("[prefix]-wrenching")
-				src.tool_flags = TOOL_WRENCHING
-				src.force = 5.0
-				src.throwforce = 7.0
-				src.throw_range = 7
-				src.throw_speed = 2
-				// using relative amounts in case the default changes
-				src.stamina_damage = STAMINA_ITEM_DMG * 25/20
-				src.stamina_cost = STAMINA_ITEM_COST * 20/18
-				src.stamina_crit_chance = STAMINA_CRIT_CHANCE * 15/25
-				src.hit_type = DAMAGE_BLUNT
-				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+				src.setItemSpecial(/datum/item_special/simple)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-wrenching"), src)
 
-			if ("cutting")
-				src.omni_mode = "cutting"
-				//based on /obj/item/kitchen/utensil/knife
+			if (OMNI_MODE_CUTTING)
 				set_icon_state("[prefix]-cutting")
-				src.tool_flags = TOOL_CUTTING
-				src.force = 7
-				src.throwforce = 10
-				src.throw_range = 5
-				src.throw_speed = 2
-				// taken from wirecutters because I don't know what's going on here
-				src.stamina_damage = STAMINA_ITEM_DMG * 5/20
-				src.stamina_cost = STAMINA_ITEM_COST * 10/18
-				src.stamina_crit_chance = min(STAMINA_CRIT_CHANCE * 30/25, 100)
-				src.hit_type = DAMAGE_CUT
-				src.hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
+				src.setItemSpecial(/datum/item_special/double)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-cutting"), src)
 
-			if("welding")
-				src.omni_mode = "welding"
-				// based on /obj/item/weldingtool
-				src.tool_flags = TOOL_WELDING
-				throwforce = 5.0
-				throw_speed = 1
-				throw_range = 5
-				// using relative amounts in case the default changes
-				src.stamina_damage = STAMINA_ITEM_DMG * 30/20
-				src.stamina_cost = STAMINA_ITEM_COST * 30/18
-				src.stamina_crit_chance = STAMINA_CRIT_CHANCE * 5/25
-				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+			if(OMNI_MODE_WELDING)
+				src.setItemSpecial(/datum/item_special/flame)
+
 				if(get_fuel())
 					set_icon_state("[prefix]-weldingtool-on")
 					src.force = 15
 					hit_type = DAMAGE_BURN
-					welding = 1
+					welding = TRUE
 				else
 					set_icon_state("[prefix]-weldingtool-off")
-					src.force = 3
-					hit_type = DAMAGE_BLUNT
-					welding = 0
-
+					welding = FALSE
 		if (holder)
 			holder.update_inhands()
 
@@ -220,7 +151,7 @@
 			reagents.remove_reagent("fuel", amount)
 		return
 
-	proc/eyecheck(mob/user as mob)
+	proc/eyecheck(mob/user)
 		if(user.isBlindImmune())
 			return
 		//check eye protection
@@ -271,23 +202,22 @@
 
 /obj/item/tool/omnitool/syndicate
 	prefix = "syndicate-omnitool"
-	has_cutting = 1
-	has_welding = 1
+	modes = list(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING, OMNI_MODE_CUTTING, OMNI_MODE_WELDING)
 
-	afterattack(obj/O as obj, mob/user as mob)
+	afterattack(obj/O, mob/user)
 
 		if ((istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && BOUNDS_DIST(src, O) == 0)
 			if (O.reagents.total_volume)
 				O.reagents.trans_to(src, 20)
 				boutput(user, "<span class='notice'>Welder refueled</span>")
-				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+				playsound(src.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
 			else
 				boutput(user, "<span class='alert'>The [O.name] is empty!</span>")
 			return
 
 		if(src.welding)
 			if(!(get_fuel() > 0))
-				src.change_mode("welding",user)
+				src.change_mode(OMNI_MODE_WELDING, user, /obj/item/weldingtool)
 
 		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
 			boutput(user, "<span class='hint'>You hide the set of tools inside \the [O]. (Use the flex emote while wearing the clothing item to retrieve it.)</span>")
@@ -315,3 +245,57 @@
 	prefix = "silicon-omnitool"
 	desc = "A set of tools on telescopic arms. It's the robotic future!"
 	animated_changes = TRUE
+
+/// Omnitool context action
+/datum/contextAction/omnitool
+	icon = 'icons/ui/context16x16.dmi'
+	close_clicked = TRUE
+	close_moved = FALSE
+	desc = ""
+	icon_state = "wrench"
+	var/mode = OMNI_MODE_PRYING
+	var/typepath = /obj/item/crowbar
+
+	execute(var/obj/item/tool/omnitool/omnitool, var/mob/user)
+		if (!istype(omnitool))
+			return
+		omnitool.change_mode(src.mode, user, src.typepath)
+
+	checkRequirements(var/obj/item/tool/omnitool/omnitool, var/mob/user)
+		return omnitool in user
+
+	prying
+		name = "Crowbar"
+		icon_state = "bar"
+		mode = OMNI_MODE_PRYING
+		typepath = /obj/item/crowbar
+	screwing
+		name = "Screwdriver"
+		icon_state = "screw"
+		mode = OMNI_MODE_SCREWING
+		typepath = /obj/item/screwdriver
+	pulsing
+		name = "Multitool"
+		icon_state = "pulse"
+		mode = OMNI_MODE_PULSING
+		typepath = /obj/item/device/multitool
+	snipping
+		name = "Wirecutters"
+		icon_state = "cut"
+		mode = OMNI_MODE_SNIPPING
+		typepath = /obj/item/wirecutters
+	wrenching
+		name = "Wrench"
+		icon_state = "wrench"
+		mode = OMNI_MODE_WRENCHING
+		typepath = /obj/item/wrench
+	cutting
+		name = "Knife"
+		icon_state = "knife"
+		mode = OMNI_MODE_CUTTING
+		typepath = /obj/item/kitchen/utensil/knife
+	welding
+		name = "Welding tool"
+		icon_state = "weld"
+		mode = OMNI_MODE_WELDING
+		typepath = /obj/item/weldingtool

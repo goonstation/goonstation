@@ -51,12 +51,14 @@
 				src.max_health = 100
 				src.health = 100
 			else
-				stack_trace("Tried to create a possessed object from invalid thing [src.possessed_thing] of type [src.possessed_thing.type]!")
+				stack_trace("Tried to create a possessed object from invalid thing [identify_object(src)]!")
 				boutput(controller, "<h3 class='alert'>Uh oh, you tried to possess something illegal! Here's a toolbox instead!</h3>")
 				src.possessed_thing = new /obj/item/storage/toolbox/artistic
 
-
-		set_loc(get_turf(src.possessed_thing))
+		if(loc)
+			set_loc(loc)
+		else
+			set_loc(get_turf(src.possessed_thing))
 		possessed_thing.set_loc(src)
 
 		//Appearance Stuff
@@ -93,6 +95,7 @@
 		remove_lifeprocess(/datum/lifeprocess/viruses)
 		remove_lifeprocess(/datum/lifeprocess/blood)
 		remove_lifeprocess(/datum/lifeprocess/breath)
+		remove_lifeprocess(/datum/lifeprocess/radiation)
 
 	// Relay these procs
 
@@ -172,7 +175,7 @@
 			if (D_KINETIC)
 				src.TakeDamage(null, damage, 0)
 			if (D_PIERCING)
-				src.TakeDamage(null, damage / 2.0, 0)
+				src.TakeDamage(null, damage / 2, 0)
 			if (D_SLASHING)
 				src.TakeDamage(null, damage, 0)
 			if (D_BURNING)
@@ -184,7 +187,7 @@
 			src.visible_message("<span class='alert'>[src] is hit by the [P]!</span>")
 
 	blob_act(var/power)
-		logTheThing("combat", src, null, "is hit by a blob")
+		logTheThing(LOG_COMBAT, src, "is hit by a blob")
 		if (isdead(src) || src.nodamage)
 			return
 
@@ -261,11 +264,11 @@
 				mind.transfer_to(src.owner)
 			else if (src.client)
 				src.client.mob = src.owner
-			else
+			else if (src.key) //This can be null in situations where owner.key is not!
 				src.owner.key = src.key
 		else
 			if(src.mind || src.client)
-				var/mob/dead/observer/O = new/mob/dead/observer()
+				var/mob/dead/observer/O = new/mob/dead/observer(src)
 				O.set_loc(get_turf(src))
 				if (isrestrictedz(src.z) && !restricted_z_allowed(src, get_turf(src)) && !(src.client && src.client.holder))
 					var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
@@ -280,7 +283,7 @@
 				if (src.mind)
 					src.mind.transfer_to(O)
 
-		playsound(src.loc, "sound/voice/wraith/wraithleaveobject.ogg", 40, 1, -1, 0.6)
+		playsound(src.loc, 'sound/voice/wraith/wraithleaveobject.ogg', 40, 1, -1, 0.6)
 
 		for (var/atom/movable/AM in src.contents)
 			AM.set_loc(src.loc)
@@ -367,7 +370,7 @@
 /datum/aiTask/timed/targeted/living_object/get_targets()
 	var/list/humans = list() // Only care about humans since that's all wraiths eat. TODO maybe borgs too?
 	for (var/mob/living/carbon/human/H in view(src.target_range, src.holder.owner))
-		if (isalive(H) && !H.nodamage)
+		if (isalive(H) && !H.nodamage && !H.bioHolder.HasEffect("Revenant"))
 			humans += H
 	return humans
 
@@ -440,13 +443,13 @@
 			spooker.set_a_intent(INTENT_HARM)
 		else if (istype(item, /obj/item/gun))
 			var/obj/item/gun/pew = item
-			if (pew.canshoot())
+			if (pew.canshoot(holder.owner))
 				spooker.set_a_intent(INTENT_HARM) // we can shoot, so... shoot
 			else
 				spooker.set_a_intent(INTENT_HELP) // otherwise go on help for gun whipping
 		else if (istype(item, /obj/item/old_grenade) || istype(item, /obj/item/chem_grenade || istype(item, /obj/item/pipebomb))) //cool paths tHANKS
 			spooker.self_interact() // arm grenades
-		else if (istype(item, /obj/item/katana)) 		// this will also apply for non-limb-slicey katanas but it shouldn't really matter
+		else if (istype(item, /obj/item/swords)) 		// this will also apply for non-limb-slicey katanas but it shouldn't really matter
 			if (ishuman(holder.target))
 				var/mob/living/carbon/human/H = holder.target
 				var/limbless = TRUE

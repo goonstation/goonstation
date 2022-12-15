@@ -10,12 +10,13 @@
 	var/icon_state_variant_suffix = null
 	var/item_state_variant_suffix = null
 
-	var/welding = 0.0
+	var/welding = 0
 	var/status = 0 // flamethrower construction :shobon:
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	tool_flags = TOOL_WELDING
-	force = 3.0
-	throwforce = 5.0
+	force = 3
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	health = 5
@@ -36,7 +37,8 @@
 		src.inventory_counter.update_number(get_fuel())
 
 		src.setItemSpecial(/datum/item_special/flame)
-		return
+
+		AddComponent(/datum/component/loctargeting/simple_light, 255, 110, 135, 125, src.welding)
 
 	examine()
 		. = ..()
@@ -151,7 +153,7 @@
 				O.reagents.trans_to(src, capacity, 1, 1, O.reagents.reagent_list.Find("fuel"))
 				src.inventory_counter.update_number(get_fuel())
 				boutput(user, "<span class='notice'>Welder refueled</span>")
-				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+				playsound(src.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
 				return
 		if (src.welding)
 			use_fuel((ismob(O) || istype(O, /obj/blob) || istype(O, /obj/critter)) ? 2 : 0.2)
@@ -188,13 +190,16 @@
 			src.item_state = "weldingtool-on" + src.item_state_variant_suffix
 			processing_items |= src
 			if(user && !ON_COOLDOWN(src, "playsound", 1.3 SECONDS))
-				playsound(src.loc, "sound/effects/welder_ignite.ogg", 65, 1)
+				playsound(src.loc, 'sound/effects/welder_ignite.ogg', 65, 1)
+			SEND_SIGNAL(src, COMSIG_LIGHT_ENABLE)
+
 		else
 			boutput(user, "<span class='notice'>Not welding anymore.</span>")
 			src.force = 3
 			hit_type = DAMAGE_BLUNT
 			set_icon_state("weldingtool-off" + src.icon_state_variant_suffix)
 			src.item_state = "weldingtool-off" + src.item_state_variant_suffix
+			SEND_SIGNAL(src, COMSIG_LIGHT_DISABLE)
 		user.update_inhands()
 		return
 
@@ -341,6 +346,12 @@
 				src.eyecheck(user)
 			return 1 //welding, has fuel
 		return 0 //not welding
+
+/obj/item/weldingtool/yellow
+	icon_state = "weldingtool-off-yellow"
+	item_state = "weldingtool-off-yellow"
+	icon_state_variant_suffix = "-yellow"
+	uses_multiple_icon_states = 1
 
 /obj/item/weldingtool/vr
 	icon_state = "weldingtool-off-vr"

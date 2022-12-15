@@ -1,15 +1,20 @@
+TYPEINFO(/obj/item/device/prox_sensor)
+	mats = 2
+
 /obj/item/device/prox_sensor
 	name = "Proximity Sensor"
 	icon_state = "motion0"
-	var/armed = 0.0
-	var/timing = 0.0
-	var/time = null
+	var/armed = FALSE
+	var/timing = FALSE
+	var/time = 0
+	var/last_tick = null
+	var/const/max_time = 600 SECONDS
+	var/const/min_time = 0
 	flags = FPRINT | TABLEPASS| CONDUCT
 	event_handler_flags = USE_FLUID_ENTER
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	m_amt = 300
-	mats = 2
 	desc = "A device which transmits a signal when it detects movement nearby."
 
 /obj/item/device/prox_sensor/dropped()
@@ -27,8 +32,6 @@
 	if(src.master)
 		src.master:c_state(n)
 
-	return
-
 /obj/item/device/prox_sensor/proc/sense()
 	if (src.armed == 1)
 		if (src.master)
@@ -41,32 +44,32 @@
 		else
 			for(var/mob/O in hearers(null, null))
 				O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
-	return
 
 /obj/item/device/prox_sensor/process()
 	if (src.timing)
+		if (!src.last_tick)
+			src.last_tick = TIME
+		var/passed_time = TIME - src.last_tick
+
 		if (src.time > 0)
-			if(src.armed != 1)
+			if(!src.armed)
 				src.UpdateIcon()
-				src.time = round(src.time) - 1
-			else src.timing = 0
+				src.time -= passed_time
+			else src.timing = FALSE
 		else
-			src.armed = 1
+			src.armed = TRUE
 			src.time = 0
-			src.timing = 0
+			src.timing = FALSE
+			src.last_tick = 0
 			setup_use_proximity()
 			src.UpdateIcon()
 
-
-		if (!src.master)
-			src.updateSelfDialog()
-		else
-			src.master.updateSelfDialog()
+		src.last_tick = TIME
 
 	else
+		src.last_tick = 0
 		processing_items.Remove(src)
-		return
-	return
+	src.time = max(src.time, 0)
 
 /obj/item/device/prox_sensor/HasProximity(atom/movable/AM as mob|obj)
 	if (isobserver(AM) || iswraith(AM) || isintangible(AM) || istype(AM, /obj/projectile) || AM.invisibility > INVIS_CLOAK)
@@ -92,41 +95,38 @@
 	R.part2 = src
 	R.set_dir(src.dir)
 	src.add_fingerprint(user)
-	return
 
 /obj/item/device/prox_sensor/attack_self(mob/user as mob)
-	if (user.stat || user.restrained() || user.lying)
-		return
-	if ((src in user) || (src.master && (src.master in user)) || BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf))
-		if (!src.master)
-			src.add_dialog(user)
-		else
-			src.master.add_dialog(user)
-		var/second = src.time % 60
-		var/minute = (src.time - second) / 60
-		var/dat = text("<TT><B>Proximity Sensor</B><br>[] []:[]<br><A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A><br></TT>", (src.timing ? text("<A href='?src=\ref[];time=0'>Timing</A>", src) : text("<A href='?src=\ref[];time=1'>Not Timing</A>", src)), minute, second, src, src, src, src)
-		dat += "<BR><A href='?src=\ref[src];arm=1'>[src.armed ? "Armed":"Not Armed"]</A> (Movement sensor active when armed!)"
-		dat += "<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"
-		user.Browse(dat, "window=prox")
-		onclose(user, "prox")
-	else
-		user.Browse(null, "window=prox")
-		if (!src.master)
-			src.remove_dialog(user)
-		else
-			src.master.remove_dialog(user)
-		return
+	src.ui_interact(user)
 
-/obj/item/device/prox_sensor/Topic(href, href_list)
-	..()
-	if (usr.stat || usr.restrained() || usr.lying)
-		return
-	if ((src in usr) || (src.master && (src.master in usr)) || ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf)))
-		if (!src.master)
-			src.add_dialog(usr)
-		else
-			src.master.add_dialog(usr)
-		if (href_list["arm"])
+/obj/item/device/prox_sensor/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Timer")
+		ui.open()
+
+/obj/item/device/prox_sensor/ui_data(mob/user)
+	src.process() //ehhhhh
+	. = list(
+		"time" = round(src.time / 10),
+		"timing" = src.timing,
+		"armed" = src.armed,
+	)
+
+/obj/item/device/prox_sensor/ui_static_data(mob/user)
+	return list(
+		"minTime" = round(src.min_time / 10),
+		"name" = src.name,
+		"armButton" = TRUE,
+	)
+
+/obj/item/device/prox_sensor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	switch (action)
+		if ("set-time")
+			var/time = text2num_safe(params["value"])
+			src.time = clamp(round(time), src.min_time, src.max_time)
+			. = TRUE
+		if ("toggle-armed")
 			src.armed = !src.armed
 			if (src.armed)
 				setup_use_proximity()
@@ -137,63 +137,46 @@
 
 			var/turf/T = get_turf(src)
 			if (master && istype(master, /obj/item/device/transfer_valve))
-				logTheThing("bombing", usr, null, "[armed ? "armed" : "disarmed"] a proximity device on a transfer valve at [log_loc(T)].")
+				logTheThing(LOG_BOMBING, usr, "[armed ? "armed" : "disarmed"] a proximity device on a transfer valve at [log_loc(T)].")
 				message_admins("[key_name(usr)] [armed ? "armed" : "disarmed"] a proximity device on a transfer valve at [log_loc(T)].")
 				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
 			else if (src.master && istype(src.master, /obj/item/assembly/prox_ignite)) //Prox-detonated beaker assemblies
 				var/obj/item/assembly/rad_ignite/RI = src.master
-				logTheThing("bombing", usr, null, "[armed ? "armed" : "disarmed"] a proximity device on a radio-igniter assembly at [T ? log_loc(T) : "horrible no-loc nowhere void"]. Contents: [log_reagents(RI.part3)]")
+				logTheThing(LOG_BOMBING, usr, "[armed ? "armed" : "disarmed"] a proximity device on a radio-igniter assembly at [T ? log_loc(T) : "horrible no-loc nowhere void"]. Contents: [log_reagents(RI.part3)]")
 				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
 
 			else if(src.master && istype(src.master, /obj/item/assembly/proximity_bomb))	//Prox-detonated single-tank bombs
-				logTheThing("bombing", usr, null, "[armed ? "armed" : "disarmed"] a proximity device on a single-tank bomb at [T ? log_loc(T) : "horrible no-loc nowhere void"].")
+				logTheThing(LOG_BOMBING, usr, "[armed ? "armed" : "disarmed"] a proximity device on a single-tank bomb at [T ? log_loc(T) : "horrible no-loc nowhere void"].")
 				message_admins("[key_name(usr)] [armed ? "armed" : "disarmed"] a proximity device on a single-tank bomb at [T ? showCoords(T.x, T.y, T.z) : "horrible no-loc nowhere void"].")
 				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
 
-		if (href_list["time"])
-			src.timing = text2num_safe(href_list["time"])
+			. = TRUE
+
+		if ("toggle-timing")
+			src.timing = !src.timing
 			src.UpdateIcon()
 			if(timing || armed) processing_items |= src
 
 			var/turf/T = get_turf(src)
 			if (master && istype(master, /obj/item/device/transfer_valve))
-				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a prox-arming timer on a transfer valve at [log_loc(T)].")
+				logTheThing(LOG_BOMBING, usr, "[timing ? "initiated" : "defused"] a prox-arming timer on a transfer valve at [log_loc(T)].")
 				message_admins("[key_name(usr)] [timing ? "initiated" : "defused"] a prox-arming timer on a transfer valve at [log_loc(T)].")
 				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
 			else if (src.master && istype(src.master, /obj/item/assembly/prox_ignite)) //Proximity-detonated beaker assemblies
 				var/obj/item/assembly/rad_ignite/RI = src.master
-				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a prox-arming timer on a radio-igniter assembly at [T ? log_loc(T) : "horrible no-loc nowhere void"]. Contents: [log_reagents(RI.part3)]")
+				logTheThing(LOG_BOMBING, usr, "[timing ? "initiated" : "defused"] a prox-arming timer on a radio-igniter assembly at [T ? log_loc(T) : "horrible no-loc nowhere void"]. Contents: [log_reagents(RI.part3)]")
 				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
 
 			else if(src.master && istype(src.master, /obj/item/assembly/proximity_bomb))	//Radio-detonated single-tank bombs
-				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a prox-arming timer on a single-tank bomb at [T ? log_loc(T) : "horrible no-loc nowhere void"].")
+				logTheThing(LOG_BOMBING, usr, "[timing ? "initiated" : "defused"] a prox-arming timer on a single-tank bomb at [T ? log_loc(T) : "horrible no-loc nowhere void"].")
 				message_admins("[key_name(usr)] [timing ? "initiated" : "defused"] a prox-arming timer on a single-tank bomb at [T ? showCoords(T.x, T.y, T.z) : "horrible no-loc nowhere void"].")
 				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
 
-		if (href_list["tp"])
-			var/tp = text2num_safe(href_list["tp"])
-			src.time += tp
-			src.time = clamp(round(src.time), 0, 600)
+			. = TRUE
 
-		if (href_list["close"])
-			usr.Browse(null, "window=prox")
-			if (!src.master)
-				src.remove_dialog(usr)
-			else
-				src.master.remove_dialog(usr)
-			return
-
-		if (!src.master)
-			src.updateSelfDialog()
-		else
-			src.master.updateSelfDialog()
-
-	else
-		usr.Browse(null, "window=prox")
-		return
-	return
+	if (src.master)
+		src.master.updateSelfDialog()
 
 /obj/item/device/prox_sensor/Move()
 	. = ..()
 	src.sense()
-	return

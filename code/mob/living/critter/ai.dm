@@ -4,6 +4,8 @@ var/list/ai_move_scheduled = list()
 	var/mob/living/owner = null
 	var/mob/living/carbon/human/ownhuman = null // for use when you would normally cast holder.owner as human for a proc.
 	var/atom/target = null // the simplest blackboard ever
+	/// Stores most recently generated path to target - if null, it needs regenerating, or a new target selected
+	var/list/target_path = null
 	///What the critter is currently doing. Do not set directly, use switch_to
 	var/datum/aiTask/current_task = null
 	var/datum/aiTask/default_task = null  // what behavior the critter will fall back on
@@ -39,11 +41,10 @@ var/list/ai_move_scheduled = list()
 			LAZYLISTADDUNIQUE(AR.mobs_not_in_global_mobs_list, M)
 
 		if(owner?.abilityHolder)
-			if(!owner.abilityHolder.getAbility(/datum/targetable/ai_toggle))
+			if(src.owner.use_ai_toggle && !owner.abilityHolder.getAbility(/datum/targetable/ai_toggle))
 				owner.abilityHolder.addAbility(/datum/targetable/ai_toggle)
 
 	disposing()
-		..()
 		stop_move()
 		if (owner)
 			if (owner.mob_flags & LIGHTWEIGHT_AI_MOB)
@@ -73,11 +74,9 @@ var/list/ai_move_scheduled = list()
 		task?.switched_to()
 
 	proc/tick()
-		if(isdead(owner))
-			enabled = 0
+		if(isdead(owner) && enabled)
+			src.disable()
 		if(!enabled)
-			stop_move()
-			walk(owner, 0)
 			return
 		if (!current_task)
 			switch_to(default_task)
@@ -112,9 +111,7 @@ var/list/ai_move_scheduled = list()
 			tick()
 
 	proc/die()
-		src.enabled = 0
-		stop_move()
-		switch_to(null)
+		src.disable()
 
 	//store a path and move to it with speed - useful for going fast but using smarter pathfinding
 	proc/move_to_with_path(var/A, var/list/path = null, var/dist = 1)
@@ -161,12 +158,12 @@ var/list/ai_move_scheduled = list()
 
 	proc/move_step()
 		if (src.move_side)
-			if (get_dist(src.owner,get_turf(src.move_target)) > src.move_dist)
+			if (GET_DIST(src.owner,get_turf(src.move_target)) > src.move_dist)
 				var/turn = src.move_reverse?90:-90
 				src.owner.move_dir = turn( get_dir(src.owner,get_turf(src.move_target)),turn )
 				src.owner.process_move()
 		else if (src.move_reverse)
-			if (get_dist(src.owner,get_turf(src.move_target)) < src.move_dist)
+			if (GET_DIST(src.owner,get_turf(src.move_target)) < src.move_dist)
 				var/turn = 180
 				if (prob(50)) //fudge walk away behavior
 					if (prob(50))
@@ -185,11 +182,11 @@ var/list/ai_move_scheduled = list()
 			else
 				next = src.move_target
 
-			if (get_dist(src.owner,get_turf(next)) > src.move_dist)
+			if (GET_DIST(src.owner,get_turf(next)) > src.move_dist)
 				src.owner.move_dir = get_dir(src.owner,get_turf(next))
 				src.owner.process_move()
 		else
-			if (get_dist(src.owner,get_turf(src.move_target)) > src.move_dist)
+			if (GET_DIST(src.owner,get_turf(src.move_target)) > src.move_dist)
 				src.owner.move_dir = get_dir(src.owner,get_turf(src.move_target))
 				src.owner.process_move()
 
@@ -197,12 +194,29 @@ var/list/ai_move_scheduled = list()
 	proc/was_harmed(obj/item/W, mob/M)
 		.=0
 
+	proc/disable()
+		src.enabled = FALSE
+		src.stop_move()
+
+	proc/enable()
+		src.enabled = TRUE
+		src.interrupt()
+
 /datum/aiTask
 	var/name = "task"
 	var/datum/aiHolder/holder = null
 	var/atom/target = null
+	/// The maximum tile distance that we look for targets
+	var/max_dist = 5
 	/// if this is set, temporarily give this mob the HEAVYWEIGHT_AI mob flag for the duration of this task
 	var/ai_turbo = FALSE
+	/// If this task allows pathing through space
+	var/move_through_space = FALSE
+	/// for weighting the importance of the goal this sequence is in charge of
+	var/weight = 1
+	/// do we need to be AT the target specifically, or is being in 1 tile of it fine?
+	var/can_be_adjacent_to_target = 1
+
 
 	New(parentHolder)
 		..()
@@ -214,19 +228,50 @@ var/list/ai_move_scheduled = list()
 		holder = null
 		..()
 
-	///Called when the task is switched to by the holder
+	/// Called when the task is switched to by the holder
 	proc/switched_to()
 
+	/// Called on every mobAI tick - this tick rate is determined by mobAI priority
 	proc/on_tick()
 
+	/// Called on every mobAI tick - returns a task to switch to, ending this task, or null to continue
 	proc/next_task()
 		return null
 
+	/// Called whenever the task is started or ended. Override this instead of reset()
 	proc/on_reset()
 		holder.target = null
 
-	proc/evaluate() // evaluate the current environment and assign priority to switching to this task
+	/// Evaluate the current environment and assign priority to switching to this task
+	proc/evaluate()
 		return 0
+
+	/// Returns a list of atoms that are potential targets for this task
+	proc/get_targets()
+		return list()
+
+	/// Takes a list of atoms which are then evaluated, before setting the holder's target. Note this checks a path exists to each target. The list of
+	/// targets is expected (but not required) to be ordered from best to worst - by default view() will do this if score_target() is based on distance
+	proc/get_best_target(list/atom/targets)
+		. = null
+		var/best_score = -INFINITY
+		var/list/best_path = null
+		if(length(targets))
+			for(var/atom/A as anything in targets)
+				var/score = src.score_target(A)
+				if(score > best_score)
+					var/tmp_best_path = get_path_to(holder.owner, A, max_dist*2, can_be_adjacent_to_target, null, !move_through_space)
+					if(length(tmp_best_path))
+						best_score = score
+						best_path = tmp_best_path
+					. = A
+		holder.target = .
+		holder.target_path = best_path
+
+	proc/score_target(atom/target)
+		. = 0
+		if(target)
+			return 100*(max_dist - GET_MANHATTAN_DIST(get_turf(holder.owner), get_turf(target)))/max_dist //normalize distance weighting
 
 	//     do not override procs below this line
 	// --------------------------------------------

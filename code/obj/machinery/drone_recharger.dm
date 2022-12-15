@@ -1,4 +1,7 @@
 
+TYPEINFO(/obj/machinery/drone_recharger)
+	mats = 10
+
 /obj/machinery/drone_recharger
 	name = "Drone Recharger"
 	icon = 'icons/obj/large/32x64.dmi'
@@ -6,7 +9,6 @@
 	icon_state = "drone-charger-idle"
 	density = 0
 	anchored = 1
-	mats = 10
 	power_usage = 50
 	machine_registry_idx = MACHINES_DRONERECHARGERS
 	var/chargerate = 400
@@ -42,12 +44,13 @@
 				return
 			if (!occupant.cell)
 				return
-			else if (occupant.cell.charge >= occupant.cell.maxcharge) //fully charged yo
+			else if (occupant.cell.charge >= occupant.cell.maxcharge && !src.occupant.newDrone) //fully charged yo
 				occupant.cell.charge = occupant.cell.maxcharge
 				src.turnOff("fullcharge")
 				return
-			else
+			else if (occupant.cell.charge < occupant.cell.maxcharge)
 				occupant.cell.charge += src.chargerate
+				occupant.cell.charge = min(occupant.cell.maxcharge, occupant.cell.charge)
 				use_power(50)
 				return
 		return 1
@@ -87,21 +90,20 @@
 		return 1
 
 	proc/turnOff(reason)
-		if (!src.occupant || src.occupant.newDrone) return 0
+		if (src.occupant)
+			var/list/msg = list("<span class='notice'>")
+			if (reason == "nopower")
+				msg += "The [src] spits you out seconds before running out of power."
+			else if (reason == "fullcharge")
+				msg += "The [src] beeps happily and disengages. You are full."
+			else
+				msg += "The [src] disengages, allowing you to float [pick("serenely", "hurriedly", "briskly", "lazily")] away."
+			boutput(src.occupant, "[msg.Join()]</span>")
 
-		var/list/msg = list("<span class='notice'>")
-		if (reason == "nopower")
-			msg += "The [src] spits you out seconds before running out of power."
-		else if (reason == "fullcharge")
-			msg += "The [src] beeps happily and disengages. You are full."
-		else
-			msg += "The [src] disengages, allowing you to float [pick("serenely", "hurriedly", "briskly", "lazily")] away."
-		boutput(src.occupant, "[msg.Join()]</span>")
-
-		src.occupant.charging = 0
-		src.occupant.setFace(src.occupant.faceType, src.occupant.faceColor)
-		src.occupant.updateHoverDiscs(src.occupant.faceColor)
-		src.occupant.updateSprite()
+			src.occupant.charging = 0
+			src.occupant.setFace(src.occupant.faceType, src.occupant.faceColor)
+			src.occupant.updateHoverDiscs(src.occupant.faceColor)
+			src.occupant.updateSprite()
 		src.occupant = null
 
 		//Do closing thing
@@ -142,9 +144,11 @@
 	attackby(obj/item/W, mob/user)
 
 
+TYPEINFO(/obj/machinery/drone_recharger/factory)
+	mats = 0
+
 /obj/machinery/drone_recharger/factory
 	var/id = "ghostdrone"
-	mats = 0
 	event_handler_flags = USE_FLUID_ENTER
 
 	Crossed(atom/movable/AM as mob|obj)

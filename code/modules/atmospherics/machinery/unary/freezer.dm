@@ -3,7 +3,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "freezer_0"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	current_heat_capacity = 1000
 	var/pipe_direction = 1
 
@@ -73,54 +73,34 @@
 			icon_state = "freezer_0"
 		return
 
-	attack_ai(mob/user as mob)
-		return src.Attackhand(user)
-
-	attack_hand(mob/user)
-		src.add_dialog(user)
-		var/temp_text = ""
-		if(air_contents.temperature > (T0C - 20))
-			temp_text = "<FONT color=red>[air_contents.temperature - T0C]</FONT>"
-		else if(air_contents.temperature < (T0C - 20) && air_contents.temperature > (T0C - 100))
-			temp_text = "<FONT color=black>[air_contents.temperature - T0C]</FONT>"
-		else
-			temp_text = "<FONT color=blue>[air_contents.temperature - T0C]</FONT>"
-
-		var/dat = {"<B>Cryo gas cooling system</B><BR>
-		Current status: [ on ? "<A href='?src=\ref[src];start=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];start=1'>On</A>"]<BR>
-		Current gas temperature: [temp_text]&deg;C<BR>
-		Current air pressure: [MIXTURE_PRESSURE(air_contents)] kPa<BR>
-		Target gas temperature: <A href='?src=\ref[src];temp=-10'>-</A> <A href='?src=\ref[src];temp=-1'>-</A> <A href='?src=\ref[src];settemp=1'>[current_temperature - T0C]&deg;C</A> <A href='?src=\ref[src];temp=1'>+</A> <A href='?src=\ref[src];temp=10'>+</A><BR>
-		"}
-
-		user.Browse(dat, "window=freezer;size=400x500")
-		onclose(user, "freezer")
-
-	Topic(href, href_list)
-		if ((usr.contents.Find(src) || ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))) || (isAI(usr)))
-			src.add_dialog(usr)
-			if (href_list["start"])
-				src.on = !src.on
-				UpdateIcon()
-			if(href_list["temp"])
-				var/amount = text2num_safe(href_list["temp"])
-				if(amount > 0)
-					src.current_temperature = min(T20C, src.current_temperature+amount)
-				else
-					src.current_temperature = max((T0C - 200), src.current_temperature+amount)
-			if (href_list["settemp"])
-				var/change = input(usr,"Target Temperature (-200 C - 20 C):","Enter target temperature",current_temperature - T0C) as num
-				if(!isnum_safe(change)) return
-				current_temperature = clamp(change + T0C, 73.15, 293.15)
-				src.updateUsrDialog()
-				return
-
-		src.updateUsrDialog()
-		src.add_fingerprint(usr)
-		return
-
 	process()
 		..()
-		src.updateUsrDialog()
 		if(prob(5) && src.on)
 			playsound(src.loc, ambience_atmospherics, 30, 1)
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if(.)
+			return
+		switch(action)
+			if("active_toggle")
+				src.on = !src.on
+				UpdateIcon()
+				. = TRUE
+			if("set_target_temperature")
+				src.current_temperature = clamp(params["value"], 73.15, 293.15)
+				. = TRUE
+
+	ui_data(mob/user)
+		. = ..()
+		.["active"] = src.on
+		.["target_temperature"] = src.current_temperature
+		.["air_temperature"] = air_contents.temperature
+		.["air_pressure"] = MIXTURE_PRESSURE(air_contents)
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "Freezer")
+			ui.set_autoupdate(TRUE)
+			ui.open()

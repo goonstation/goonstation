@@ -48,7 +48,7 @@
 		if(_health <= 0)
 			_health = 0
 			if (isnull(P))
-				logTheThing("combat", src, null, "is hit and broken open by a projectile at [log_loc(src)]. No projectile data.]")
+				logTheThing(LOG_COMBAT, src, "is hit and broken open by a projectile at [log_loc(src)]. No projectile data.]")
 			else
 				var/shooter_data = null
 				var/vehicle
@@ -64,9 +64,9 @@
 						shooter_data = V.pilot
 					vehicle = 1
 				if(shooter_data)
-					logTheThing("combat", shooter_data, src, "[vehicle ? "driving [V.name] " : ""]shoots and breaks open [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+					logTheThing(LOG_COMBAT, shooter_data, "[vehicle ? "driving [V.name] " : ""]shoots and breaks open [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 				else
-					logTheThing("combat", src, null, "is hit and broken open by a projectile at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+					logTheThing(LOG_COMBAT, src, "is hit and broken open by a projectile at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 			break_open()
 
 	proc/break_open()
@@ -98,8 +98,9 @@
 			if (prob(2))
 				new /obj/item/clothing/mask/gas/emergency(src)
 			for (var/i=rand(2,3), i>0, i--)
+				new /obj/item/tank/emergency_oxygen(src)
 				if (prob(40))
-					new /obj/item/tank/emergency_oxygen(src)
+					new /obj/item/tank/mini_oxygen(src)
 				if (prob(40))
 					new /obj/item/clothing/mask/breath(src)
 
@@ -217,7 +218,8 @@
 #endif
 	/obj/item/crowbar,
 	/obj/item/cell/supercell/charged,
-	/obj/item/device/multitool)
+	/obj/item/device/multitool,
+	/obj/item/storage/backpack/syndie)
 
 /obj/storage/closet/syndicate/nuclear
 	desc = "Nuclear preperations closet."
@@ -475,7 +477,7 @@
 			entangled.open(1)
 
 		src.UpdateIcon()
-		playsound(src.loc, "sound/effects/cargodoor.ogg", 15, 1, -3)
+		playsound(src.loc, 'sound/effects/cargodoor.ogg', 15, 1, -3)
 		SEND_SIGNAL(src, COMSIG_OBJ_STORAGE_CLOSED)
 		return 1
 

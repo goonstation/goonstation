@@ -219,7 +219,7 @@ var/list/globalPropList = null
 		tooltipImg = "conduct.png"
 		defaultValue = 0.1
 		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "[propVal * 100]% [propVal <= 0.2 ? "(Safe)":""]"
+			return "[propVal * 100]% [propVal <= 0.29 ? "(Safe)":""]"
 
 	stammax
 		name = "Max. Stamina"
@@ -420,13 +420,13 @@ to say if there's demand for that.
 /datum/objectProperty/equipment/radiationprot
 	name = "Resistance (Radiation)"
 	id = "radprot"
-	desc = "Protects from harmful radiation." //Value is % protection.
+	desc = "Protects from harmful radiation." //Value is vaguely related to % protection.
 	tooltipImg = "radiation.png"
 	defaultValue = 10
 	getTooltipDesc(var/obj/propOwner, var/propVal)
-		return "[propVal]%"
+		return "[propVal] radOhms"
 
-	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_RADPROT)
+	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_RADPROT_EXT)
 
 /datum/objectProperty/equipment/coldprot
 	name = "Resistance (Cold)"

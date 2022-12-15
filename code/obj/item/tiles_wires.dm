@@ -18,8 +18,8 @@ TILES
 	m_amt = 937.5
 	throw_speed = 5
 	throw_range = 20
-	force = 6.0
-	throwforce = 7.0
+	force = 6
+	throwforce = 7
 	max_stack = 80
 	stamina_damage = 25
 	stamina_cost = 25

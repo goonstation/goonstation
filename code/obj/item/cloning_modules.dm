@@ -28,21 +28,21 @@ Modules to do things with cloning modules
 	name = "Prototype Rehabilitation Module #17"
 	desc = "An experimental treatment device meant for only the worst of criminals. Fires a barrage of electrical signals to the brain during medical procedues. It looks like it has some cloning goop and blood smeared on it - yuck."
 
-/obj/item/cloneModule/mindslave_module
+/obj/item/cloneModule/mindhack_module
 	icon = 'icons/obj/cloning.dmi'
-	icon_state = "slavemodule"
-	name = "Mindslave cloning module"
+	icon_state = "mindhack"
+	name = "Mindhack cloning module"
 	desc = "A powerful device that remaps people's brains when they get cloned to make them completely loyal to the owner of this module"
 
 
-/obj/item/storage/box/mindslave_module_kit
-	name = "Mindslave module kit"
+/obj/item/storage/box/mindhack_module_kit
+	name = "Mindhack module kit"
 	icon_state = "box"
-	desc = "A box with a mindslave cloning module and a cloning lab. Yes, a whole cloning lab. In a box. Somehow."
+	desc = "A box with a mindhack cloning module and a cloning lab. Yes, a whole cloning lab. In a box. Somehow."
 
 	make_my_stuff()
 		..()
-		new /obj/item/cloneModule/mindslave_module(src)
+		new /obj/item/cloneModule/mindhack_module(src)
 		new /obj/item/electronics/soldering(src)
 
 

@@ -39,9 +39,9 @@
 
 /obj/machinery/computer/communications/special_deconstruct(obj/computerframe/frame as obj)
 	if(src.status & BROKEN)
-		logTheThing("station", usr, null, "disassembles [src] (broken) [log_loc(src)]")
+		logTheThing(LOG_STATION, usr, "disassembles [src] (broken) [log_loc(src)]")
 	else
-		logTheThing("station", usr, null, "disassembles [src] [log_loc(src)]")
+		logTheThing(LOG_STATION, usr, "disassembles [src] [log_loc(src)]")
 
 
 /obj/machinery/computer/communications/process()
@@ -316,7 +316,7 @@
 	set category = "AI Commands"
 	set name = "Call Emergency Shuttle"
 
-	var/call_reason = input("Please state the nature of your current emergency.", "Emergency Shuttle Call Reason", "") as text|null
+	var/call_reason = tgui_input_text(usr, "Please state the nature of your current emergency.", "Emergency Shuttle Call Reason", allowEmpty = TRUE)
 
 	if (isnull(call_reason)) // Cancel
 		return
@@ -324,8 +324,8 @@
 		boutput(usr, "You can't call the shuttle because you are dead!")
 		return
 
-	logTheThing("admin", usr, null,  "called the Emergency Shuttle (reason: [call_reason])")
-	logTheThing("diary", usr, null, "called the Emergency Shuttle (reason: [call_reason])", "admin")
+	logTheThing(LOG_ADMIN, usr,  "called the Emergency Shuttle (reason: [call_reason])")
+	logTheThing(LOG_DIARY, usr, "called the Emergency Shuttle (reason: [call_reason])", "admin")
 	message_admins("<span class='internal'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
 	call_shuttle_proc(usr, call_reason)
 
@@ -374,7 +374,7 @@
 		call_reason = "No reason given."
 
 	message_admins("<span class='internal'>[key_name(user)] called the Emergency Shuttle to the station</span>")
-	logTheThing("station", null, null, "[key_name(user)] called the Emergency Shuttle to the station")
+	logTheThing(LOG_STATION, null, "[key_name(user)] called the Emergency Shuttle to the station")
 
 	emergency_shuttle.incall()
 	command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
@@ -394,7 +394,7 @@
 
 	boutput(world, "<span class='notice'><B>Alert: The shuttle is going back!</B></span>") //marker4
 
-	logTheThing("station", user, null, "recalled the Emergency Shuttle")
+	logTheThing(LOG_STATION, user, "recalled the Emergency Shuttle")
 	message_admins("<span class='internal'>[key_name(user)] recalled the Emergency Shuttle</span>")
 	emergency_shuttle.recall()
 
@@ -405,6 +405,7 @@
 	status_signal.source = src
 	status_signal.transmission_method = 1
 	status_signal.data["command"] = command
+	status_signal.data["address_tag"] = "STATDISPLAY"
 
 	switch(command)
 		if("message")

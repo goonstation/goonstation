@@ -88,6 +88,13 @@ We need to add the main Goonstation repository as a remote now. :satellite:
 
 If you haven't already relaunched VSCode, make sure to do this now; otherwise you'll have troubles on this step. To do this, open the command palette (<kbd>Ctrl + Shift + P</kbd>) and type `Git: Add Remote`. It'll prompt you for a name, which should be `upstream`. Then, put https://github.com/goonstation/goonstation as the URL. Now, you'll have the main Goonstation repository as a remote named upstream: This will let you easily send your pull requests there later.
 
+It's useful to have your local master track the main Goonstation master branch, so you can keep in sync with all the new changes automatically. To do this press (<kbd>Ctrl + \`</kbd>) to open the terminal and then run
+```
+git checkout master
+git branch -u upstream/master
+```
+After doing this you can synchronize your master branch with the main Goonstation one simply by pressing the ![](https://i.imgur.com/WFbG8w3.png) button at the bottom left.
+
 You're just about done with that! Just one last thing you need to manually do.
 
 ### Step 6: Fixing Up :wrench: 

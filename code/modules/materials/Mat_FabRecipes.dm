@@ -1,47 +1,5 @@
 //See bottom of file for valid materials in /simple recipes.
 
-/datum/matfab_recipe/simple/insbody
-	name = "Instrument body"
-	desc = "The body of an instrument."
-	category = "Miscellaneous"
-	materials = list("!any"=4)
-	result = /obj/item/musicpart/body
-
-/datum/matfab_recipe/simple/insneck
-	name = "Instrument neck"
-	desc = "The neck of an instrument."
-	category = "Miscellaneous"
-	materials = list("!any"=3)
-	result = /obj/item/musicpart/neck
-
-/datum/matfab_recipe/simple/insmouth
-	name = "Instrument mouthpiece"
-	desc = "The mouthpiece of an instrument."
-	category = "Miscellaneous"
-	materials = list("!any"=2)
-	result = /obj/item/musicpart/mouth
-
-/datum/matfab_recipe/simple/insbell
-	name = "Instrument bell"
-	desc = "The bell of an instrument. Not an actual bell."
-	category = "Miscellaneous"
-	materials = list("!metalcrystal"=4)
-	result = /obj/item/musicpart/bell
-
-/datum/matfab_recipe/simple/insbag
-	name = "Instrument bag"
-	desc = "The bag of an instrument."
-	category = "Miscellaneous"
-	materials = list("!clothorganic"=4)
-	result = /obj/item/musicpart/bag
-
-/datum/matfab_recipe/simple/insrod
-	name = "Instrument rod"
-	desc = "A plain old hollowed out rod."
-	category = "Miscellaneous"
-	materials = list("!metalcrystal"=3)
-	result = /obj/item/musicpart/h_rod
-
 /datum/matfab_recipe/spacesuit
 	name = "Space Suit Set"
 	desc = "A complete space suit."
@@ -56,18 +14,16 @@
 	build(amount, var/obj/machinery/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/clothing/suit/space/custom/suit = new()
-			var/obj/item/clothing/head/helmet/space/custom/helmet = new()
-			suit.set_loc(getOutputLocation(owner))
-			helmet.set_loc(getOutputLocation(owner))
+			var/obj/item/clothing/head/helmet/space/custom/helm = new()
 			var/obj/item/fabr = getObjectByPartName("Fabric")
 			var/obj/item/visr = getObjectByPartName("Visor")
 			var/obj/item/renf = getObjectByPartName("Reinforcement")
-			suit.setMaterial(fabr.material) // suit stuff
-			suit.setupReinforcement(renf.material)
-			suit.UpdateName()
-			helmet.setMaterial(fabr.material) // helmet stuff
-			helmet.setupVisorMat(visr.material)// sets color to match the suit, keeps protectiveness from visor
-			helmet.UpdateName()
+
+			suit.set_custom_mats(fabr.material, renf.material)
+			helm.set_custom_mats(fabr.material, visr.material)
+
+			suit.set_loc(getOutputLocation(owner))
+			helm.set_loc(getOutputLocation(owner))
 		return
 
 /datum/matfab_recipe/mining_mod_conc
@@ -831,7 +787,7 @@
 						P.part_name = "[isFinish?"(Main) ":""]Any Material"
 						P.required_amount = numReq
 					else
-						logTheThing("debug", null, null, "Invalid material parameter in [type] : [A]")
+						logTheThing(LOG_DEBUG, null, "Invalid material parameter in [type] : [A]")
 				if(P)
 					if(isFinish)
 						finishMaterial = P

@@ -24,7 +24,7 @@
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, "<span class='alert'>A slave cannot release a sub-form!.</span>")
+			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot release a sub-form!.</span>")
 			return 1
 
 		var/list/eligible = list()
@@ -36,7 +36,7 @@
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability. We need to absorb another.</span>")
 			return 1
 
-		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the handspider:", "Select Mind", sortList(eligible))
+		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the handspider:", "Select Mind", sortList(eligible, /proc/cmp_text_asc))
 		if (!use_mob_name)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
@@ -64,7 +64,7 @@
 			owner.changeStatus("c_regrow-r_arm", 75 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s arm falls off and starts moving!</B></span>"))
-		logTheThing("combat", holder.owner, use_mob, "drops a handspider [use_mob] as a changeling [log_loc(holder.owner)].")
+		logTheThing(LOG_COMBAT, holder.owner, "drops a handspider [use_mob] as a changeling [log_loc(holder.owner)].")
 
 		var/mob/living/critter/changeling/handspider/spider = new /mob/living/critter/changeling/handspider(get_turf(owner.loc), original_arm)
 		if (use_mob.mind)
@@ -124,7 +124,7 @@
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, "<span class='alert'>A slave cannot release a sub-form!.</span>")
+			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot release a sub-form!.</span>")
 			return 1
 
 		var/list/eligible = list()
@@ -136,7 +136,7 @@
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability. We need to absorb another.</span>")
 			return 1
 
-		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the eyespider:", "Select Mind", sortList(eligible))
+		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the eyespider:", "Select Mind", sortList(eligible, /proc/cmp_text_asc))
 		if (!use_mob_name)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
@@ -164,7 +164,7 @@
 			owner.changeStatus("c_regrow-r_eye", 40 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s eye shoots out and starts moving!</B></span>"))
-		logTheThing("combat", holder.owner, use_mob, "drops an eyespider [use_mob] as a changeling [log_loc(holder.owner)].")
+		logTheThing(LOG_COMBAT, holder.owner, "drops an eyespider [use_mob] as a changeling [log_loc(holder.owner)].")
 
 		var/mob/living/critter/changeling/eyespider/spider = new /mob/living/critter/changeling/eyespider(get_turf(owner.loc), original_eye)
 
@@ -222,7 +222,7 @@
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, "<span class='alert'>A slave cannot release a sub-form!.</span>")
+			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot release a sub-form!.</span>")
 			return 1
 
 		var/list/eligible = list()
@@ -234,7 +234,7 @@
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability. We need to absorb another.</span>")
 			return 1
 
-		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the legworm:", "Select Mind", sortList(eligible))
+		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the legworm:", "Select Mind", sortList(eligible, /proc/cmp_text_asc))
 		if (!use_mob_name)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
@@ -263,7 +263,7 @@
 			owner.changeStatus("c_regrow-r_leg", 75 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s leg falls off and starts moving!</B></span>"))
-		logTheThing("combat", holder.owner, use_mob, "drops a legworm [use_mob] as a changeling [log_loc(holder.owner)].")
+		logTheThing(LOG_COMBAT, holder.owner, "drops a legworm [use_mob] as a changeling [log_loc(holder.owner)].")
 
 		var/mob/living/critter/changeling/legworm/spider = new /mob/living/critter/changeling/legworm(get_turf(owner.loc), original_leg)
 		if (use_mob.mind)
@@ -319,7 +319,7 @@
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, "<span class='alert'>A slave cannot release a sub-form!.</span>")
+			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot release a sub-form!.</span>")
 			return 1
 
 		var/list/eligible = list()
@@ -331,7 +331,7 @@
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability. We need to absorb another.</span>")
 			return 1
 
-		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the buttspider:", "Select Mind", sortList(eligible))
+		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the buttspider:", "Select Mind", sortList(eligible, /proc/cmp_text_asc))
 		if (!use_mob_name)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
@@ -346,7 +346,7 @@
 		owner.changeStatus("c_regrow-butt", 40 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s butt falls off and starts moving!</B></span>"))
-		logTheThing("combat", holder.owner, use_mob, "drops a buttcrab [use_mob] as a changeling [log_loc(holder.owner)].")
+		logTheThing(LOG_COMBAT, holder.owner, "drops a buttcrab [use_mob] as a changeling [log_loc(holder.owner)].")
 
 		var/mob/living/critter/changeling/buttcrab/crab = new /mob/living/critter/changeling/buttcrab(get_turf(owner.loc), original_butt)
 
@@ -395,11 +395,11 @@
 		if (..())
 			return 1
 
-		var/message = html_encode(input("Choose something to say:","Enter Message.","") as null|text)
+		var/message = html_encode(tgui_input_text(usr, "Choose something to say:", "Enter Message."))
 		if (!message)
 			return
-		logTheThing("say", holder.owner, holder.owner.name, "<b>(HIVESAY):</b> [message]")
-		//logTheThing("diary", holder.owner, null, "(HIVEMIND): [message]", "hivesay")
+		logTheThing(LOG_SAY, holder.owner, "<b>(HIVESAY):</b> [message]")
+		//logTheThing(LOG_DIARY, holder.owner, "(HIVEMIND): [message]", "hivesay")
 		.= holder.owner.say_hive(message, holder)
 
 		return 0
@@ -431,7 +431,7 @@
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, "<span class='alert'>A slave cannot boot other members of the hivemind!.</span>")
+			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot boot other members of the hivemind!.</span>")
 			return 1
 
 		var/list/eligible = list()
@@ -442,7 +442,7 @@
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability.</span>")
 			return 1
 
-		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to silence:", "Select Mind", sortList(eligible))
+		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to silence:", "Select Mind", sortList(eligible, /proc/cmp_text_asc))
 		if (!use_mob_name)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
@@ -483,7 +483,7 @@
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, "<span class='alert'>A slave cannot relinquish control of the shared form!.</span>")
+			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot relinquish control of the shared form!.</span>")
 			return 1
 
 		var/list/eligible = list()
@@ -495,7 +495,7 @@
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability.</span>")
 			return 1
 
-		var/mob/dead/target_observer/hivemind_observer/HO = tgui_input_list(holder.owner, "Select the mind to grant control:", "Select Mind", sortList(eligible))
+		var/mob/dead/target_observer/hivemind_observer/HO = tgui_input_list(holder.owner, "Select the mind to grant control:", "Select Mind", sortList(eligible, /proc/cmp_text_asc))
 		if(!HO)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return TRUE
@@ -505,7 +505,7 @@
 			return TRUE
 
 		//Do the actual control-granting here.
-		logTheThing("combat", holder.owner, HO, "granted control of their body to [constructTarget(HO,"combat")] as a changeling!")
+		logTheThing(LOG_COMBAT, holder.owner, "granted control of their body to [constructTarget(HO,"combat")] as a changeling!")
 		//Transfer the owner's mind into a hivemind observer and grant it the recovery verb
 		var/mob/dead/target_observer/hivemind_observer/master = H.insert_into_hivemind(H.owner)
 		master.verbs += /mob/dead/target_observer/hivemind_observer/proc/regain_control

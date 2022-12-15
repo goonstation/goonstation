@@ -8,7 +8,7 @@ proc/pick_landmark(name, default=null)
 
 /obj/landmark
 	name = "landmark"
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/map-editing/landmarks.dmi'
 	icon_state = "x2"
 	anchored = 1
 	invisibility = INVIS_ALWAYS
@@ -22,6 +22,8 @@ proc/pick_landmark(name, default=null)
 
 /obj/landmark/proc/init(delay_qdel=FALSE)
 	if(src.add_to_landmarks)
+		if(src.name == "landmark")
+			CRASH("Landmark [src] at [log_loc(src)] has no name override!")
 		if(!landmarks)
 			landmarks = list()
 		var/name = src.name_override ? src.name_override : src.name
@@ -36,22 +38,25 @@ proc/pick_landmark(name, default=null)
 			qdel(src)
 
 /obj/landmark/New()
+	..()
 	if(current_state > GAME_STATE_MAP_LOAD)
 		src.init(delay_qdel=TRUE)
-		..()
 	else
 		src.init()
-		if(!src.disposed)
-			..()
 
 var/global/list/job_start_locations = list()
 
 /obj/landmark/start
 	name = "start"
-	icon_state = "x"
+	icon_state = "player-start"
 	add_to_landmarks = FALSE
+	var/static/list/aliases = list(
+		"Mechanic" = "Engineer"
+	)
 
-	New()
+	init(delay_qdel=FALSE)
+		if(src.name in src.aliases)
+			src.name = src.aliases[src.name]
 		if (job_start_locations)
 			if (!islist(job_start_locations[src.name]))
 				job_start_locations[src.name] = list(src.loc)
@@ -63,6 +68,7 @@ var/global/list/job_start_locations = list()
 // most of these are here just for backwards compatibility
 
 /obj/landmark/start/latejoin
+	icon_state = "latejoin"
 	name = LANDMARK_LATEJOIN
 	add_to_landmarks = TRUE
 
@@ -95,6 +101,9 @@ var/global/list/job_start_locations = list()
 /obj/landmark/tutorial_start
 	name = LANDMARK_TUTORIAL_START
 
+/obj/landmark/shuttle_transit
+	name= LANDMARK_SHUTTLE_TRANSIT
+
 /obj/landmark/halloween
 	name = LANDMARK_HALLOWEEN_SPAWN
 
@@ -106,11 +115,21 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/magnet_center
 	name = LANDMARK_MAGNET_CENTER
-	icon_state = "x"
+	icon_state = "magnet-center"
+	var/width = 15
+	var/height = 15
+	var/obj/machinery/mining_magnet/magnet
+
+	New()
+		var/turf/T = locate(src.x-round(width/2), src.y-round(height/2), src.z)
+		var/obj/magnet_target_marker/M = new /obj/magnet_target_marker(T)
+		M.width = src.width
+		M.height = src.height
+		..()
 
 /obj/landmark/magnet_shield
 	name = LANDMARK_MAGNET_SHIELD
-	icon_state = "x"
+	icon_state = "magnet-shield"
 
 /obj/landmark/latejoin_missile
 	name = "missile latejoin spawn marker"
@@ -143,7 +162,7 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/artifact
 	name = LANDMARK_ARTIFACT_SPAWN
-	icon_state = "x3"
+	icon_state = "artifact-spawn"
 	var/spawnchance = 100 // prob chance out of 100 to spawn artifact at game start
 	New()
 		src.data = src.spawnchance
@@ -253,6 +272,9 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/character_preview_spawn
 	name = LANDMARK_CHARACTER_PREVIEW_SPAWN
+
+/obj/landmark/tutorial/flock_conversion
+	name = LANDMARK_TUTORIAL_FLOCK_CONVERSION
 
 /obj/landmark/viscontents_spawn
 	name = "visual mirror spawn"

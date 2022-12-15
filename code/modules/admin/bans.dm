@@ -44,8 +44,8 @@ var/global/list/playersSeen = list()
 /proc/checkBan(ckey, compID, ip, record = 0)
 	set background = 1
 	if (!ckey && !compID && !ip)
-		logTheThing("debug", null, null, "<b>Bans Error</b>: No details passed to <b>checkBan</b>")
-		logTheThing("diary", null, null, "Bans Error: No details passed to checkBan", "debug")
+		logTheThing(LOG_DEBUG, null, "<b>Bans Error</b>: No details passed to <b>checkBan</b>")
+		logTheThing(LOG_DIARY, null, "Bans Error: No details passed to checkBan", "debug")
 		return 0
 
 	if(!ip || ip == "127.0.0.1") return 0 //Ignore if localhost
@@ -75,8 +75,8 @@ var/global/list/playersSeen = list()
 	if (!data || data["none"] || data["exception"])
 		return 0
 	if (data["error"]) //Error returned from the API welp
-		logTheThing("debug", null, null, "<b>Bans Error</b>: Error returned in <b>checkBan</b> for <b>[ckey]</b>: [data["error"]]")
-		logTheThing("diary", null, null, "Bans Error: Error returned in checkBan for [ckey]: [data["error"]]", "debug")
+		logTheThing(LOG_DEBUG, null, "<b>Bans Error</b>: Error returned in <b>checkBan</b> for <b>[ckey]</b>: [data["error"]]")
+		logTheThing(LOG_DIARY, null, "Bans Error: Error returned in checkBan for [ckey]: [data["error"]]", "debug")
 		return 0
 
 	//We only care about the latest match for this (so far)
@@ -103,7 +103,7 @@ var/global/list/playersSeen = list()
 		var/remaining = (timestamp > 0 ? timestamp - CMinutes : timestamp)
 		var/addData[] = new()
 		addData["ckey"] = ckey
-		addData["compID"] = compID
+		addData["compID"] = row["compID"] || null // don't record CID if the original ban doesn't have one down
 		addData["ip"] = ip
 		addData["reason"] = row["reason"]
 		addData["oakey"] = row["oakey"]
@@ -116,8 +116,8 @@ var/global/list/playersSeen = list()
 		addData["addTime"] = timeAdded
 		var/rVal = addBan(addData)
 		if (rVal)
-			logTheThing("debug", null, null, "<b>Bans Error</b>: Add ban in checkBan failed with message <b>[rVal]</b>")
-			logTheThing("diary", null, null, "Bans Error: Add ban in checkBan failed with message [rVal]", "debug")
+			logTheThing(LOG_DEBUG, null, "<b>Bans Error</b>: Add ban in checkBan failed with message <b>[rVal]</b>")
+			logTheThing(LOG_DIARY, null, "Bans Error: Add ban in checkBan failed with message [rVal]", "debug")
 
 	var/oakey = (row["oakey"] == "N/A" ? row["akey"] : row["oakey"])
 	if (timestamp > 0) //Temp ban found, determine if it should expire or not
@@ -130,8 +130,8 @@ var/global/list/playersSeen = list()
 			deleteData["akey"] = "Auto Unbanner"
 			var/rVal = deleteBan(deleteData)
 			if (rVal)
-				logTheThing("debug", null, null, "<b>Bans Error</b>: Delete temp ban in checkBan failed with message <b>[rVal]</b>")
-				logTheThing("diary", null, null, "Bans Error: Delete temp ban in checkBan failed with message [rVal]", "debug")
+				logTheThing(LOG_DEBUG, null, "<b>Bans Error</b>: Delete temp ban in checkBan failed with message <b>[rVal]</b>")
+				logTheThing(LOG_DIARY, null, "Bans Error: Delete temp ban in checkBan failed with message [rVal]", "debug")
 			return 0
 		else //Temp ban still in effect. DENIED
 			var/details = "[row["reason"]]<br>"
@@ -174,7 +174,7 @@ var/global/list/playersSeen = list()
 
 		var/replacement_text
 		if (targetC)
-			targetC.mob.unlock_medal("Banned", 1)
+			targetC.mob.unlock_medal("Banned", FALSE)
 			boutput(targetC, "<span class='alert'><BIG><B>You have been banned by [row["akey"]].<br>Reason: [row["reason"]]</B></BIG></span>")
 			boutput(targetC, "<span class='alert'>To try to resolve this matter head to https://forum.ss13.co</span>")
 		else
@@ -196,16 +196,16 @@ var/global/list/playersSeen = list()
 					boutput(targetC, "<span class='alert'>You have received a ban. Make an <a href='https://forum.ss13.co/forumdisplay.php?fid=54'>appeal on the forums</a> to have it lifted.</span>")
 				else
 					boutput(targetC, "<span class='alert'>You have received a ban. Duration: [duration]</span>")
-			logTheThing("admin", adminC, targetC, "has banned [targetC ? "[constructTarget(targetC,"admin")]" : replacement_text] [serverLogSnippet]. duration: [duration] Reason: [row["reason"]].")
-			logTheThing("diary", adminC, targetC, "has banned [targetC ? "[constructTarget(targetC,"diary")]" : replacement_text] [serverLogSnippet]. duration: [duration] Reason: [row["reason"]].", "admin")
+			logTheThing(LOG_ADMIN, adminC, "has banned [targetC ? "[constructTarget(targetC,"admin")]" : replacement_text] [serverLogSnippet]. duration: [duration] Reason: [row["reason"]].")
+			logTheThing(LOG_DIARY, adminC, "has banned [targetC ? "[constructTarget(targetC,"diary")]" : replacement_text] [serverLogSnippet]. duration: [duration] Reason: [row["reason"]].", "admin")
 			var/adminMsg = "<span class='notice'>"
 			adminMsg += (isclient(adminC) ? key_name(adminC) : adminC)
 			adminMsg += " has banned [targetC ? targetC : replacement_text] [serverLogSnippet].<br>Reason: [row["reason"]]</span>"
 			message_admins(adminMsg)
 		else
 			if (targetC) boutput(targetC, "<span class='alert'>This is a temporary ban, it will be removed in [expiry].</span>")
-			logTheThing("admin", adminC, targetC, "has banned [targetC ? "[constructTarget(targetC,"admin")]" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This will be removed in [expiry].")
-			logTheThing("diary", adminC, targetC, "has banned [targetC ? "[constructTarget(targetC,"diary")]" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This will be removed in [expiry].", "admin")
+			logTheThing(LOG_ADMIN, adminC, "has banned [targetC ? "[constructTarget(targetC,"admin")]" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This will be removed in [expiry].")
+			logTheThing(LOG_DIARY, adminC, "has banned [targetC ? "[constructTarget(targetC,"diary")]" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This will be removed in [expiry].", "admin")
 			var/adminMsg = "<span class='notice'>"
 			adminMsg += (isclient(adminC) ? key_name(adminC) : adminC)
 			adminMsg += " has banned [targetC ? targetC : replacement_text] [serverLogSnippet].<br>Reason: [row["reason"]]<br>This will be removed in [expiry].</span>"
@@ -227,11 +227,11 @@ var/global/list/playersSeen = list()
 		if (targetC)
 			del(targetC)
 		else
-			logTheThing("debug", null, null, "<b>Bans:</b> Unable to find client with ckey '[row["ckey"]]' during banning.")
+			logTheThing(LOG_DEBUG, null, "<b>Bans:</b> Unable to find client with ckey '[row["ckey"]]' during banning.")
 
 		targetC = find_player(row["ckey"])?.client
 		if (targetC)
-			logTheThing("debug", null, null, "<b>Bans:</b> Client with ckey '[row["ckey"]]' somehow survived banning, retrying kick.")
+			logTheThing(LOG_DEBUG, null, "<b>Bans:</b> Client with ckey '[row["ckey"]]' somehow survived banning, retrying kick.")
 			del(targetC)
 
 		return 0
@@ -399,8 +399,8 @@ var/global/list/playersSeen = list()
 
 		var/duration = expiry == 0 ? data["text_ban_length"] : expiry
 
-		logTheThing("admin", adminC, target, "edited [constructTarget(target,"admin")]'s ban. Reason: [row["reason"]] Duration: [duration] [serverLogSnippet]")
-		logTheThing("diary", adminC, target, "edited [constructTarget(target,"diary")]'s ban. Reason: [row["reason"]] Duration: [duration] [serverLogSnippet]", "admin")
+		logTheThing(LOG_ADMIN, adminC, "edited [constructTarget(target,"admin")]'s ban. Reason: [row["reason"]] Duration: [duration] [serverLogSnippet]")
+		logTheThing(LOG_DIARY, adminC, "edited [constructTarget(target,"diary")]'s ban. Reason: [row["reason"]] Duration: [duration] [serverLogSnippet]", "admin")
 		message_admins("<span class='internal'>[key_name(adminC)] edited [target]'s ban. Reason: [row["reason"]] Duration: [duration] [serverLogSnippet]</span>")
 
 		var/ircmsg[] = new()
@@ -524,12 +524,12 @@ var/global/list/playersSeen = list()
 		var/expired = (row["akey"] == "Auto Unbanner" ? 1 : 0)
 
 		if (expired)
-			logTheThing("admin", null, null, "[row["ckey"]]'s ban expired.")
-			logTheThing("diary", null, null, "[row["ckey"]]'s ban expired.", "admin")
+			logTheThing(LOG_ADMIN, null, "[row["ckey"]]'s ban expired.")
+			logTheThing(LOG_DIARY, null, "[row["ckey"]]'s ban expired.", "admin")
 			message_admins("<span class='internal'>Ban expired for [target]</span>")
 		else
-			logTheThing("admin", adminC, null, "unbanned [row["ckey"]]")
-			logTheThing("diary", adminC, null, "unbanned [row["ckey"]]", "admin")
+			logTheThing(LOG_ADMIN, adminC, "unbanned [row["ckey"]]")
+			logTheThing(LOG_DIARY, adminC, "unbanned [row["ckey"]]", "admin")
 			message_admins("<span class='internal'>[key_name(adminC)] unbanned [target]</span>")
 
 		var/ircmsg[] = new()
@@ -595,12 +595,12 @@ var/global/list/playersSeen = list()
 		var/expired = (row["akey"] == "Auto Unbanner" ? 1 : 0)
 
 		if (expired)
-			logTheThing("admin", null, null, "[row["ckey"]]'s ban expired.")
-			logTheThing("diary", null, null, "[row["ckey"]]'s ban expired.", "admin")
+			logTheThing(LOG_ADMIN, null, "[row["ckey"]]'s ban expired.")
+			logTheThing(LOG_DIARY, null, "[row["ckey"]]'s ban expired.", "admin")
 			message_admins("<span class='internal'>Ban expired for [target]</span>")
 		else
-			logTheThing("admin", adminC, null, "unbanned [row["ckey"]]")
-			logTheThing("diary", adminC, null, "unbanned [row["ckey"]]", "admin")
+			logTheThing(LOG_ADMIN, adminC, "unbanned [row["ckey"]]")
+			logTheThing(LOG_DIARY, adminC, "unbanned [row["ckey"]]", "admin")
 			message_admins("<span class='internal'>[key_name(adminC)] unbanned [target]</span>")
 
 		var/ircmsg[] = new()
@@ -653,8 +653,10 @@ var/global/list/playersSeen = list()
 	else
 		alert("UM, EXCUSE ME??  YOU AREN'T AN ADMIN, GET DOWN FROM THERE!")
 		src << sound('sound/voice/farts/poo2.ogg')
-		logTheThing("admin", src, null, "tried to access the ban panel")
-		logTheThing("diary", src, null, "tried to access the ban panel", "admin")
+		logTheThing(LOG_ADMIN, src, "tried to access the ban panel")
+		logTheThing(LOG_DIARY, src, "tried to access the ban panel", "admin")
+		message_admins("[key_name(src)] tried to access the ban panel but was denied.")
+		del(usr.client)
 	return
 
 
@@ -724,19 +726,19 @@ var/global/list/playersSeen = list()
 	if (!data) return 0
 
 	if (data["error"]) //Error returned from the API welp
-		logTheThing("debug", null, null, "<b>Bans Error</b>: Error returned in <b>forceUpdateLocalBans</b>: [data["error"]]")
-		logTheThing("diary", null, null, "Bans Error: Error returned in forceUpdateLocalBans: [data["error"]]", "debug")
+		logTheThing(LOG_DEBUG, null, "<b>Bans Error</b>: Error returned in <b>forceUpdateLocalBans</b>: [data["error"]]")
+		logTheThing(LOG_DIARY, null, "Bans Error: Error returned in forceUpdateLocalBans: [data["error"]]", "debug")
 		return 0
 
-	logTheThing("debug", null, null, "UPDATE LOCAL DEBUG: data: [list2params(data)]")
+	logTheThing(LOG_DEBUG, null, "UPDATE LOCAL DEBUG: data: [list2params(data)]")
 
 	//Loop through the bans we were given
 	for (var/row in data)
 		var/logID = row
 		if (!row) break
-		logTheThing("debug", null, null, "UPDATE LOCAL DEBUG: logID: [logID]")
+		logTheThing(LOG_DEBUG, null, "UPDATE LOCAL DEBUG: logID: [logID]")
 		var/list/details = json_decode(row[logID])
-		logTheThing("debug", null, null, "UPDATE LOCAL DEBUG: details: [list2params(details)]")
+		logTheThing(LOG_DEBUG, null, "UPDATE LOCAL DEBUG: details: [list2params(details)]")
 		var/type = details["type"]
 		details.Remove(details["type"])
 
@@ -750,8 +752,8 @@ var/global/list/playersSeen = list()
 			returnData = deleteBanApiFallback(details)
 
 		if (returnData["error"]) //Error returned from the local db jeeeeez aint nothing going our way
-			logTheThing("debug", null, null, "<b>Local API Error</b> - Callback failed in <b>[type]BanApiFallback</b> with message: <b>[returnData["error"]]</b>")
-			logTheThing("diary", null, null, "<b>Local API Error</b> - Callback failed in [type]BanApiFallback with message: [returnData["error"]]", "debug")
+			logTheThing(LOG_DEBUG, null, "<b>Local API Error</b> - Callback failed in <b>[type]BanApiFallback</b> with message: <b>[returnData["error"]]</b>")
+			logTheThing(LOG_DIARY, null, "<b>Local API Error</b> - Callback failed in [type]BanApiFallback with message: [returnData["error"]]", "debug")
 			if (returnData["showAdmins"])
 				message_admins("<span class='internal'><b>Failed for route [type]BanApiFallback</b>: [returnData["error"]]</span>")
 
@@ -760,9 +762,9 @@ var/global/list/playersSeen = list()
 	/*
 	for (var/e = 1, e <= data.len, e++) //each ban
 		var/logID = data[e]
-		logTheThing("debug", null, null, "UPDATE LOCAL DEBUG: logID: [logID]")
+		logTheThing(LOG_DEBUG, null, "UPDATE LOCAL DEBUG: logID: [logID]")
 		var/list/details = json_decode(data[logID])
-		logTheThing("debug", null, null, "UPDATE LOCAL DEBUG: details: [list2params(details)]")
+		logTheThing(LOG_DEBUG, null, "UPDATE LOCAL DEBUG: details: [list2params(details)]")
 		var/type = details["type"]
 		details.Remove(details["type"])
 
@@ -776,8 +778,8 @@ var/global/list/playersSeen = list()
 			returnData = deleteBanApiFallback(details)
 
 		if (returnData["error"]) //Error returned from the local db jeeeeez aint nothing going our way
-			logTheThing("debug", null, null, "<b>Local API Error</b> - Callback failed in <b>[type]BanApiFallback</b> with message: <b>[returnData["error"]]</b>")
-			logTheThing("diary", null, null, "<b>Local API Error</b> - Callback failed in [type]BanApiFallback with message: [returnData["error"]]", "debug")
+			logTheThing(LOG_DEBUG, null, "<b>Local API Error</b> - Callback failed in <b>[type]BanApiFallback</b> with message: <b>[returnData["error"]]</b>")
+			logTheThing(LOG_DIARY, null, "<b>Local API Error</b> - Callback failed in [type]BanApiFallback with message: [returnData["error"]]", "debug")
 			if (returnData["showAdmins"])
 				message_admins("<span class='internal'><b>Failed for route [type]BanApiFallback</b>: [returnData[</span>"error"]]")
 
@@ -788,14 +790,14 @@ var/global/list/playersSeen = list()
 
 
 /proc/forceUpdateRemoteBans(latestLocalID, latestRemoteID)
-	logTheThing("debug", null, null, "UPDATE REMOTE DEBUG: latestLocalID: [latestLocalID]")
-	logTheThing("debug", null, null, "UPDATE REMOTE DEBUG: latestRemoteID: [latestRemoteID]")
+	logTheThing(LOG_DEBUG, null, "UPDATE REMOTE DEBUG: latestLocalID: [latestLocalID]")
+	logTheThing(LOG_DEBUG, null, "UPDATE REMOTE DEBUG: latestRemoteID: [latestRemoteID]")
 	//Construct the log IDs the remote is missing
 	var/sendBans[] = new()
 	for (var/id = latestRemoteID + 1, id <= latestLocalID, id++)
 		sendBans.Add(id)
 
-	logTheThing("debug", null, null, "UPDATE REMOTE DEBUG: sendBans: [list2params(sendBans)]")
+	logTheThing(LOG_DEBUG, null, "UPDATE REMOTE DEBUG: sendBans: [list2params(sendBans)]")
 
 	var/list/log = dd_file2list("data/banLog.log")
 
@@ -803,19 +805,19 @@ var/global/list/playersSeen = list()
 	var/parsedLog[] = new()
 	for (var/i = 1, i <= log.len, i++)
 		var/row = log[i]
-		logTheThing("debug", null, null, "UPDATE REMOTE DEBUG: row: [row]")
+		logTheThing(LOG_DEBUG, null, "UPDATE REMOTE DEBUG: row: [row]")
 		var/list/rowDetails = splittext(row, ":")
-		logTheThing("debug", null, null, "UPDATE REMOTE DEBUG: rowDetails: [list2params(rowDetails)]")
+		logTheThing(LOG_DEBUG, null, "UPDATE REMOTE DEBUG: rowDetails: [list2params(rowDetails)]")
 		var/logID = rowDetails[1]
 		logID = text2num(logID)
-		logTheThing("debug", null, null, "UPDATE REMOTE DEBUG: logID: [logID]")
+		logTheThing(LOG_DEBUG, null, "UPDATE REMOTE DEBUG: logID: [logID]")
 		if (logID in sendBans)
 			var/lengthToCut = length(logID)+3 //+1 for the colon, +2 for copytext being a shitass
 			var/details = copytext(row, lengthToCut)
-			logTheThing("debug", null, null, "UPDATE REMOTE DEBUG: details: [details]")
+			logTheThing(LOG_DEBUG, null, "UPDATE REMOTE DEBUG: details: [details]")
 			parsedLog["[logID]"] = details
 
-	logTheThing("debug", null, null, "UPDATE REMOTE DEBUG: parsedLog: [json_encode(parsedLog)]")
+	logTheThing(LOG_DEBUG, null, "UPDATE REMOTE DEBUG: parsedLog: [json_encode(parsedLog)]")
 
 	//Send it to the remote so it can update
 	var/query[] = new()

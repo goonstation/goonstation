@@ -150,7 +150,7 @@
 			"hasPen" = P
 		)
 
-	remove_from_attached()
+	remove_from_attached(do_loc = TRUE)
 		src.removeTypeLabel()
 		. = ..()
 
@@ -171,12 +171,3 @@
 			var/obj/O = src.attached
 			O.remove_suffixes("\[[src.artifactType]\]")
 			O.UpdateName()
-
-/obj/artifact_paper_dispenser
-	name = "artifact analysis form tray"
-	icon = 'icons/obj/writing.dmi'
-	icon_state = "artifact_form_tray"
-	desc = "A tray full of forms for classifying alien artifacts."
-
-	attack_hand(mob/user)
-		user.put_in_hand_or_drop(new /obj/item/sticker/postit/artifact_paper())

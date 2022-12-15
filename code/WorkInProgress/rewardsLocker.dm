@@ -693,6 +693,7 @@
 					return 1
 				else if (istype(M, /obj/item/clothing/under/rank/security))
 					M.icon_state = "security-old"
+					M.item_state = "security-relic"
 					H.set_clothing_icon_dirty()
 					return 1
 
@@ -825,7 +826,7 @@
 					M.real_name = "strange vampire outfit"
 					M.desc = "How many breads <i>have</i> you eaten in your life? It's a good question. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
-				return 1
+					return 1
 
 		boutput(activator, "<span class='alert'>Unable to redeem... you must be wearing a vampire cape. Guess it's the thought that <i>counts<i>. </span>")
 		return
@@ -1055,10 +1056,10 @@
 
 			if (H.belt)
 				var/obj/item/M = H.belt
-				if (istype(M, /obj/item/katana_sheath/captain))
+				if (istype(M, /obj/item/swords_sheaths/captain))
 					if (M.item_state == "scabbard-cap1" || M.item_state == "red_scabbard-cap1")
 						qdel(M)
-						H.equip_if_possible(new /obj/item/katana_sheath/captain/blue(H), H.slot_belt)
+						H.equip_if_possible(new /obj/item/swords_sheaths/captain/blue(H), H.slot_belt)
 						succ = TRUE
 
 			if (H.back)
@@ -1192,10 +1193,10 @@
 
 			if (H.belt)
 				var/obj/item/M = H.belt
-				if (istype(M, /obj/item/katana_sheath/captain))
+				if (istype(M, /obj/item/swords_sheaths/captain))
 					if (M.item_state == "scabbard-cap1" || M.item_state == "blue_scabbard-cap1")
 						qdel(M)
-						H.equip_if_possible(new /obj/item/katana_sheath/captain/red(H), H.slot_belt)
+						H.equip_if_possible(new /obj/item/swords_sheaths/captain/red(H), H.slot_belt)
 						succ = TRUE
 
 			if (H.back)
@@ -1377,7 +1378,7 @@ datum/achievementReward/ai_dwaine
 	name = "shelterbee"
 	icon = 'icons/mob/64.dmi'
 	icon_state = "shelterbee"
-	anchored = 1.0
+	anchored = 1
 	pixel_x = -16
 	pixel_y = -16
 
@@ -1442,7 +1443,7 @@ datum/achievementReward/ai_dwaine
 	name = "smug"
 	icon = 'icons/mob/64.dmi'
 	icon_state = "smug"
-	anchored = 1.0
+	anchored = 1
 	pixel_x = -16
 	pixel_y = -16
 
@@ -1486,7 +1487,7 @@ datum/achievementReward/ai_dwaine
 			blood_mult = blood_mult + 3
 		T.fluid_react_single(blood_id,blood_mult * blood_amount)
 		var/result = world.ClearMedal("Original Sin", activator, config.medal_hub, config.medal_password)
-		logTheThing("combat", activator, null, "Activated the blood flood gib reward thing (Original Sin)")
+		logTheThing(LOG_COMBAT, activator, "Activated the blood flood gib reward thing (Original Sin)")
 		if (result)
 			boutput(activator, "<span class='alert'>You feel your soul cleansed of sin.</span>")
 			playsound(T, 'sound/voice/farts/diarrhea.ogg', 50, 1)

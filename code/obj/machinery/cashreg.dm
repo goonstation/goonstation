@@ -1,10 +1,12 @@
+TYPEINFO(/obj/machinery/cashreg)
+	mats = 6
+
 /obj/machinery/cashreg
 	name = "credit transfer device"
 	desc = "Sends funds directly to a host ID."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "scanner"
 	anchored = 1
-	mats = 6
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 	var/datum/db_record/mainaccount = null
 
@@ -18,7 +20,7 @@
 			W = W:ID_card
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [anchored ? "unbolts the [src] from" : "secures the [src] to"] the floor.")
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 80, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 80, 1)
 			src.anchored = !src.anchored
 		if (istype(W, /obj/item/card/id))
 			var/obj/item/card/id/card = W
@@ -69,7 +71,7 @@
 		if (!mainaccount)
 			boutput(user, "<span class='alert'>You press the reset button, but nothing happens.</span>")
 			return
-		if (tgui_alert(user, "Reset the reader?", "Reset reader", list("Yes", "No") == "Yes"))
+		if (tgui_alert(user, "Reset the reader?", "Reset reader", list("Yes", "No")) == "Yes")
 			boutput(user, "<span class='alert'>Reader reset.</span>")
 			user.visible_message("<span class='alert'><B>[user]</B> resets [src].</span>")
 			mainaccount = null

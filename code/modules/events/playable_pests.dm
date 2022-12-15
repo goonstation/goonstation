@@ -73,7 +73,7 @@
 				EV += landmarks[LANDMARK_LATEJOIN]
 				if (!EV.len)
 					message_admins("Pests event couldn't find any valid landmarks!")
-					logTheThing( "debug", null, null, "Failed to find any valid landmarks for a Pests event!" )
+					logTheThing(LOG_DEBUG, null, "Failed to find any valid landmarks for a Pests event!")
 					cleanup_event()
 					return
 

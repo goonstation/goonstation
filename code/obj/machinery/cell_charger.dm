@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/cell_charger)
+	mats = 8
+
 /obj/machinery/cell_charger
 	name = "cell charger"
 	desc = "A charging unit for power cells."
@@ -7,7 +10,6 @@
 	var/chargerate = 250 // power per tick
 	var/chargelevel = -1
 	anchored = 1
-	mats = 8
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	power_usage = 50
 
@@ -54,12 +56,12 @@
 		return
 
 	if(charging)
+		charging.add_fingerprint(user)
+		charging.UpdateIcon()
 		if(iscarbon(user))
 			user.put_in_hand_or_drop(charging)
 		else
 			charging.set_loc(src.loc)
-		charging.add_fingerprint(user)
-		charging.UpdateIcon()
 		src.charging = null
 		user.visible_message("[user] removes the cell from the charger.", "You remove the cell from the charger.")
 		chargelevel = -1
@@ -86,3 +88,15 @@
 	use_power(added / CELLRATE)
 
 	src.UpdateIcon()
+
+
+/obj/machinery/cell_charger/Exited(Obj, newloc)
+	. = ..()
+	if(Obj == src.charging)
+		src.charging = null
+
+/obj/machinery/cell_charger/get_desc(dist)
+	. = ..()
+	if(!charging)
+		return
+	. += "<br><span class='notice'>\The [src] is currently charging \the [src.charging]! It is [round(src.charging.percent())]% charged and has [round(src.charging.charge)]/[src.charging.maxcharge] PUs. </span>"

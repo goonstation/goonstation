@@ -5,9 +5,12 @@ var/global/list/datum/client_image_group/client_image_groups
 	var/list/mob_to_associated_images_lookup
 	var/list/subscribed_mobs_with_subcount
 	var/list/subscribed_minds_with_subcount
+	var/key = null
+	var/always_visible = FALSE //! If true this image is always visible ignoring loc's invisibiltiy etc
 
-	New()
+	New(key, always_visible)
 		. = ..()
+		src.key = key
 		images = list()
 		/// Associative list containing images for a given mob.
 		mob_to_associated_images_lookup = list()
@@ -15,6 +18,7 @@ var/global/list/datum/client_image_group/client_image_groups
 		subscribed_mobs_with_subcount = list()
 		/// Associative list containing subscribed minds with counts.
 		subscribed_minds_with_subcount = list()
+		src.always_visible = always_visible
 
 	/// Adds an image to the image list and adds it to all mobs' clients directly where appropriate. Registers signal to track mob invisibility changes.
 	proc/add_image(image/img)
@@ -26,7 +30,7 @@ var/global/list/datum/client_image_group/client_image_groups
 			RegisterSignal(img.loc, COMSIG_ATOM_PROP_MOB_INVISIBILITY, .proc/on_mob_invisibility_changed)
 
 		for (var/mob/iterated_mob as() in subscribed_mobs_with_subcount)
-			if (!img.loc.invisibility || (img.loc == iterated_mob) || istype(iterated_mob, /mob/dead/observer))
+			if (src.always_visible || !img.loc.invisibility || (img.loc == iterated_mob) || istype(iterated_mob, /mob/dead/observer))
 				iterated_mob.client?.images.Add(img)
 
 	/// Removes an image from the image list and from mobs' clients.
@@ -44,16 +48,19 @@ var/global/list/datum/client_image_group/client_image_groups
 		subscribed_mobs_with_subcount[added_mob] += 1
 		if (subscribed_mobs_with_subcount[added_mob] == 1) // mob added for the first time, adding images to client and registering signals
 			for (var/image/I as() in images)
-				if (I.loc && !I.loc.invisibility || (I.loc == added_mob) || istype(added_mob, /mob/dead/observer))
+				if (src.always_visible || I.loc && !I.loc.invisibility || (I.loc == added_mob) || istype(added_mob, /mob/dead/observer))
 					added_mob.client?.images.Add(I)
 
 			RegisterSignal(added_mob, COMSIG_MOB_LOGIN, .proc/add_images_to_client_of_mob)
 			RegisterSignal(added_mob, COMSIG_MOB_LOGOUT, .proc/remove_images_from_client_of_mob)
 			RegisterSignal(added_mob, COMSIG_PARENT_PRE_DISPOSING, .proc/remove_mob_forced)
 
-	/// Removes a mob from the mob list, removes the images from its client and unregisters signals on it.
-	proc/remove_mob(mob/removed_mob) // same just reverse, and unregisters signals
-		subscribed_mobs_with_subcount[removed_mob] -= 1
+	/// Removes a mob from the mob list, removes the images from its client and unregisters signals on it. Force overrides subcount and removes it no matter what.
+	proc/remove_mob(mob/removed_mob, force = FALSE) // same just reverse, and unregisters signals
+		if (force)
+			subscribed_mobs_with_subcount[removed_mob] = 0
+		else
+			subscribed_mobs_with_subcount[removed_mob] -= 1
 		if (subscribed_mobs_with_subcount[removed_mob] <= 0) // mob no longer subscribed, removing images from client and unregistering signals
 			subscribed_mobs_with_subcount.Remove(removed_mob)
 			removed_mob.client?.images.Remove(images)
@@ -76,6 +83,21 @@ var/global/list/datum/client_image_group/client_image_groups
 			if(removed_mind.current)
 				remove_mob(removed_mind.current)
 				UnregisterSignal(removed_mind, list(COMSIG_PARENT_PRE_DISPOSING, COMSIG_MIND_ATTACH_TO_MOB, COMSIG_MIND_DETACH_FROM_MOB))
+
+	disposing()
+		if(src.key)
+			client_image_groups -= key
+		src.key = null
+		for(var/datum/mind/iterated_mind as anything in subscribed_minds_with_subcount)
+			remove_mind(iterated_mind)
+		for(var/mob/iterated_mob as anything in subscribed_mobs_with_subcount)
+			remove_mob(iterated_mob, TRUE)
+		for(var/image/iterated_image as anything in images)
+			remove_image(iterated_image)
+		subscribed_minds_with_subcount = null
+		subscribed_mobs_with_subcount = null
+		mob_to_associated_images_lookup = null
+		..()
 
 	// private procs for signal purposes:
 
@@ -121,10 +143,10 @@ var/global/list/datum/client_image_group/client_image_groups
 						iterated_mob.client?.images.Add(I)
 
 /// Returns the client image group for a given "key" argument. If one doesn't yet exist, creates it.
-proc/get_image_group(key)
+proc/get_image_group(key, always_visible=FALSE)
 	RETURN_TYPE(/datum/client_image_group)
 	if (isnull(global.client_image_groups))
 		global.client_image_groups = list()
 	if (!(key in client_image_groups))
-		client_image_groups[key] = new /datum/client_image_group()
+		client_image_groups[key] = new /datum/client_image_group(key, always_visible=always_visible)
 	return client_image_groups[key]

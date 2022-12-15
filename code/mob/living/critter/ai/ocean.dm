@@ -28,7 +28,7 @@
 	name = "attack"
 	minimum_task_ticks = 7
 	maximum_task_ticks = 20
-	var/weight = 15
+	weight = 15
 	target_range = 8
 	frustration_threshold = 3
 	var/last_seek = 0
@@ -72,7 +72,7 @@
 			holder.target = get_best_target(get_targets())
 			if(!holder.target)
 				return ..() // try again next tick
-		var/dist = get_dist(owncritter, M)
+		var/dist = GET_DIST(owncritter, M)
 		if (dist > 2)
 			holder.move_to(M)
 		else
@@ -166,7 +166,7 @@
 	name = "attack"
 	minimum_task_ticks = 7
 	maximum_task_ticks = 20
-	var/weight = 15
+	weight = 15
 	target_range = 7
 	frustration_threshold = 3
 	var/last_seek
@@ -204,7 +204,7 @@
 				if(!holder.target)
 					return ..() // try again next tick
 
-		var/dist = get_dist(owncritter, holder.target)
+		var/dist = GET_DIST(owncritter, holder.target)
 		if (dist > target_range)
 			holder.target = null
 			return ..()
@@ -266,7 +266,7 @@
 	name = "attack"
 	minimum_task_ticks = 7
 	maximum_task_ticks = 26
-	var/weight = 15
+	weight = 15
 	target_range = 8
 	frustration_threshold = 5
 	var/last_seek = 0
@@ -301,7 +301,7 @@
 			if (possible.len)
 				holder.target = pick(possible)
 	if(holder.target && holder.target.z == owncritter.z)
-		var/dist = get_dist(owncritter, holder.target)
+		var/dist = GET_DIST(owncritter, holder.target)
 		if (dist >= 1)
 			if (prob(80))
 				holder.move_to(holder.target,0)

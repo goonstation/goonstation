@@ -13,6 +13,8 @@ import { RadioData, RadioWires } from './type';
 
 const MIN_FREQ = 1441;
 const MAX_FREQ = 1489;
+const MIN_CODE = 1;
+const MAX_CODE = 100;
 
 export const Radio = (_props, context) => {
   const { data, act } = useBackend<RadioData>(context);
@@ -20,6 +22,10 @@ export const Radio = (_props, context) => {
   const setFrequency = (value: number, finish: boolean) => {
     act('set-frequency', { value, finish });
   };
+  const setCode = (value: number, finish: boolean) => {
+    act('set-code', { value, finish });
+  };
+
 
   return (
     <Window width="280" height="400" title={data.name}>
@@ -28,11 +34,13 @@ export const Radio = (_props, context) => {
           <Stack.Item>
             <Section>
               <LabeledList>
-                <LabeledList.Item label="Microphone">
-                  <Button.Checkbox checked={data.broadcasting} onClick={() => act('toggle-broadcasting')}>
-                    {data.broadcasting ? 'Engaged' : 'Disengaged'}
-                  </Button.Checkbox>
-                </LabeledList.Item>
+                {!!data.hasMicrophone && (
+                  <LabeledList.Item label="Microphone">
+                    <Button.Checkbox checked={data.broadcasting} onClick={() => act('toggle-broadcasting')}>
+                      {data.broadcasting ? 'Engaged' : 'Disengaged'}
+                    </Button.Checkbox>
+                  </LabeledList.Item>
+                )}
                 <LabeledList.Item label="Speaker">
                   <Button.Checkbox checked={data.listening} onClick={() => act('toggle-listening')}>
                     {data.listening ? 'Engaged' : 'Disengaged'}
@@ -59,6 +67,31 @@ export const Radio = (_props, context) => {
                     </Stack.Item>
                   </Stack>
                 </LabeledList.Item>
+                {!!data.code && (
+                  <LabeledList.Item label="Code">
+                    <Stack align="center">
+                      <Stack.Item>
+                        <Knob
+                          animated
+                          value={data.code}
+                          minValue={MIN_CODE}
+                          maxValue={MAX_CODE}
+                          stepPixelSize={1}
+                          onDrag={(_e: any, value: number) => setCode(value, false)}
+                          onChange={(_e: any, value: number) => setCode(value, true)}
+                        />
+                      </Stack.Item>
+                      <Stack.Item>
+                        <AnimatedNumber value={data.code} />
+                      </Stack.Item>
+                    </Stack>
+                  </LabeledList.Item>
+                )}
+                {!!data.sendButton && (
+                  <LabeledList.Item>
+                    <Button align="center" onClick={() => { act("send"); }}>Send signal</Button>
+                  </LabeledList.Item>
+                )}
               </LabeledList>
             </Section>
           </Stack.Item>

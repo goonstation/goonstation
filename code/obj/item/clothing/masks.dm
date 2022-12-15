@@ -90,12 +90,12 @@
 
 		//Commence owie
 		take_bleeding_damage(target, null, rand(8, 16), DAMAGE_BLUNT)	//My
-		playsound(target, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1) //head,
+		playsound(target, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1) //head,
 		target.emote("scream") 									//FUCKING
 		target.TakeDamage("head", rand(12, 18), 0) 				//OW!
 		target.changeStatus("weakened", 4 SECONDS)
 
-		logTheThing("combat", source, target, "rips out the staples on [constructTarget(target,"combat")]'s [src]") //Crime
+		logTheThing(LOG_COMBAT, source, "rips out the staples on [constructTarget(target,"combat")]'s [src]") //Crime
 
 /obj/item/clothing/mask/gas
 	name = "gas mask"
@@ -103,7 +103,7 @@
 	icon_state = "gas_mask"
 	c_flags =  COVERSMOUTH | COVERSEYES | MASKINTERNALS | BLOCKSMOKE
 	w_class = W_CLASS_NORMAL
-	see_face = 0.0
+	see_face = 0
 	item_state = "gas_mask"
 	color_r = 0.8 // green tint
 	color_g = 1
@@ -129,15 +129,17 @@
 		..()
 		setProperty("disorient_resist_eye", 20)
 
+TYPEINFO(/obj/item/clothing/mask/moustache)
+	mats = 2
+
 /obj/item/clothing/mask/moustache
 	name = "fake moustache"
 	desc = "Nobody will know who you are if you put this on. Nobody."
 	icon_state = "moustache"
 	item_state = "moustache"
-	see_face = 0.0
+	see_face = 0
 	w_class = W_CLASS_TINY
 	is_syndicate = 1
-	mats = 2
 
 	setupProperties()
 		..()
@@ -172,7 +174,7 @@
 		icon_state = "slasher_mask"
 		item_state = "slasher_mask"
 		item_function_flags = IMMUNE_TO_ACID
-		see_face = 1.0
+		see_face = 1
 		setupProperties()
 			..()
 			setProperty("meleeprot_head", 6)
@@ -193,7 +195,7 @@
 		desc = "A close-fitting sealed gas mask, from the looks of it, it's well over a hundred years old."
 		icon_state = "slasher_mask"
 		item_state = "slasher_mask"
-		see_face = 1.0
+		see_face = 1
 		setupProperties()
 			..()
 			setProperty("movespeed", 0.2)
@@ -219,6 +221,9 @@
 			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 			..()
 
+TYPEINFO(/obj/item/clothing/mask/gas/voice)
+	mats = 6
+
 /obj/item/clothing/mask/gas/voice
 	name = "gas mask"
 	desc = "A close-fitting mask that can filter some environmental toxins or be connected to an air supply."
@@ -226,18 +231,22 @@
 	item_state = "gas_alt"
 	//vchange = 1
 	is_syndicate = 1
-	mats = 6
 
 	New()
 		..()
 		src.vchange = new(src)
+
+TYPEINFO(/obj/item/voice_changer)
+	mats = 6
 
 /obj/item/voice_changer
 	name = "voice changer"
 	desc = "This voice-modulation device will dynamically disguise your voice to that of whoever is listed on your identification card, via incredibly complex algorithms. Discretely fits inside most masks, and can be removed with wirecutters."
 	icon_state = "voicechanger"
 	is_syndicate = 1
-	mats = 6
+
+TYPEINFO(/obj/item/clothing/mask/monkey_translator)
+	mats = 12	// 2x voice changer cost. It's complicated ok
 
 /obj/item/clothing/mask/monkey_translator
 	name = "vocal translator"
@@ -245,7 +254,6 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "voicechanger"
 	item_state = "muzzle"			// @TODO new sprite ok
-	mats = 12	// 2x voice changer cost. It's complicated ok
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH	// NOT usable for internals.
 	compatible_species = list("human", "cow", "werewolf", "martian")
@@ -308,7 +316,7 @@
 	desc = "A mask depicting the grinning facial expression of a prototypical clown. There's a place to tuck the attached wig in if you don't want it interfering with your own hair."
 	icon_state = "clown"
 	item_state = "clown_hat"
-	see_face = 0.0
+	see_face = 0
 
 	var/spam_flag = 0
 	var/spam_timer = 100
@@ -352,9 +360,9 @@
 	item_state = "clown_hat"
 	item_function_flags = IMMUNE_TO_ACID
 	burn_possible = 0
-	color_r = 1.0
-	color_g = 1.0
-	color_b = 1.0
+	color_r = 1
+	color_g = 1
+	color_b = 1
 	w_class = W_CLASS_SMALL
 	var/mob/living/carbon/human/victim
 
@@ -363,13 +371,13 @@
 		var/mob/living/carbon/human/H = user
 		if(istype(H) && slot == SLOT_WEAR_MASK)
 			if ( user.mind && user.mind.assigned_role=="Clown" && istraitor(user) )
-				src.cant_other_remove = 1.0
-				src.cant_self_remove = 0.0
+				src.cant_other_remove = 1
+				src.cant_self_remove = 0
 			else
 				boutput (user, "<span class='alert'>[src] latches onto your face! It burns!</span>")
 				src.victim = H
-				src.cant_other_remove = 0.0
-				src.cant_self_remove = 1.0
+				src.cant_other_remove = 0
+				src.cant_self_remove = 1
 				src.victim.change_misstep_chance(25)
 				src.victim.emote("scream")
 				src.victim.TakeDamage("head",0,15,0,DAMAGE_BURN)
@@ -407,7 +415,7 @@
 			var/mob/living/carbon/human/T = target
 			if ( U.a_intent != INTENT_HELP && U.zone_sel.selecting == "head" && T.can_equip(src,T.slot_wear_mask) )
 				U.visible_message("<span class='alert'>[src] latches onto [T]'s face!</span>","<span class='alert'>You slap [src] onto [T]'s face!'</span>")
-				logTheThing("combat",user,target,"forces [T] to wear [src] (cursed clown mask) at [log_loc(T)].")
+				logTheThing(LOG_COMBAT, user, "forces [T] to wear [src] (cursed clown mask) at [log_loc(T)].")
 				U.u_equip(src)
 
 				// If we don't empty out that slot first, it could blip the mask out of existence
@@ -530,7 +538,7 @@
 	desc = "A little mask, made of paper."
 	icon_state = "domino"
 	item_state = "domino"
-	see_face = 0.0
+	see_face = 0
 	burn_point = 220
 	burn_output = 900
 	burn_possible = 1
@@ -547,14 +555,14 @@
 	desc = "Haven't seen that fellow in a while."
 	icon_state = "melons"
 	item_state = "melons"
-	see_face = 0.0
+	see_face = 0
 
 /obj/item/clothing/mask/wrestling
 	name = "wrestling mask"
 	desc = "A mask that will greatly enhance your wrestling prowess! Not, like, <i>physically</i>, but mentally. In your heart. In your soul. Something like that."
 	icon_state = "silvermask"
 	item_state = "silvermask"
-	see_face = 0.0
+	see_face = 0
 
 	black
 		icon_state = "blackmask"
@@ -573,7 +581,7 @@
 	desc = "Looking at this thing gives you the heebie-jeebies. And a weird urge to go rob a bank, for some reason."
 	icon_state = "anime"
 	item_state = "anime"
-	see_face = 0.0
+	see_face = 0
 
 /obj/item/clothing/mask/gas/plague
 	name = "plague doctor mask"
@@ -626,3 +634,99 @@
 	icon_state = "peacock"
 	item_state = "peacock"
 	see_face = 0
+
+ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
+/obj/item/clothing/mask/bandana
+	name = "bandana"
+	desc = "The desperado's choice."
+	see_face = 0
+	var/is_pulled_down = FALSE
+	var/obj/item/cloth/handkerchief/handkerchief = null
+
+	show_buttons()	//Hide the button from non-human mobs
+		if (ishuman(the_mob))
+			..()
+
+/obj/item/clothing/mask/bandana/abilities = list(/obj/ability_button/toggle_bandana)
+
+/obj/item/clothing/mask/bandana/attack_self(mob/user)
+	if (!src.handkerchief)
+		return
+	var/obj/item/cloth/handkerchief/the_handkerchief = new src.handkerchief
+	the_handkerchief.setMaterial(src.material)
+	the_handkerchief.color = src.color
+	src.copy_filters_to(the_handkerchief)
+	qdel(src)
+	user.put_in_hand_or_drop(the_handkerchief)
+	boutput(user, "<span class='notice'>You unfold \the [src] into \a [the_handkerchief].</span>")
+
+/obj/item/clothing/mask/bandana/white
+	icon_state = "bandana_white"
+	item_state = "bandana_white"
+	handkerchief = /obj/item/cloth/handkerchief/white
+
+/obj/item/clothing/mask/bandana/yellow
+	name = "yellow bandana"
+	item_state = "bandana_yellow"
+	icon_state = "bandana_yellow"
+	handkerchief = /obj/item/cloth/handkerchief/yellow
+
+/obj/item/clothing/mask/bandana/red
+	name = "red bandana"
+	item_state = "bandana_red"
+	icon_state = "bandana_red"
+	handkerchief = /obj/item/cloth/handkerchief/red
+
+/obj/item/clothing/mask/bandana/purple
+	name = "purple bandana"
+	item_state = "bandana_purple"
+	icon_state = "bandana_purple"
+	handkerchief = /obj/item/cloth/handkerchief/purple
+
+/obj/item/clothing/mask/bandana/pink
+	name = "pink bandana"
+	item_state = "bandana_pink"
+	icon_state = "bandana_pink"
+	desc = "The fashionable bandit's choice."
+	handkerchief = /obj/item/cloth/handkerchief/pink
+
+/obj/item/clothing/mask/bandana/orange
+	name = "orange bandana"
+	item_state = "bandana_orange"
+	icon_state = "bandana_orange"
+	handkerchief = /obj/item/cloth/handkerchief/orange
+
+/obj/item/clothing/mask/bandana/nt
+	name = "nt bandana"
+	item_state = "bandana_nt"
+	icon_state = "bandana_nt"
+	desc = "The rebel outlaw's choice."
+	handkerchief = /obj/item/cloth/handkerchief/nt
+
+/obj/item/clothing/mask/bandana/green
+	name = "green bandana"
+	item_state = "bandana_green"
+	icon_state = "bandana_green"
+	handkerchief = /obj/item/cloth/handkerchief/green
+
+/obj/item/clothing/mask/bandana/blue
+	name = "blue bandana"
+	item_state = "bandana_blue"
+	icon_state = "bandana_blue"
+	handkerchief = /obj/item/cloth/handkerchief/blue
+
+/obj/item/clothing/mask/bandana/random
+	var/list/possible_bandana = list(/obj/item/clothing/mask/bandana/white,
+										/obj/item/clothing/mask/bandana/yellow,
+										/obj/item/clothing/mask/bandana/red,
+										/obj/item/clothing/mask/bandana/purple,
+										/obj/item/clothing/mask/bandana/pink,
+										/obj/item/clothing/mask/bandana/orange,
+										/obj/item/clothing/mask/bandana/green,
+										/obj/item/clothing/mask/bandana/blue)
+
+/obj/item/clothing/mask/bandana/random/New()
+	..()
+	var/obj/item/clothing/mask/bandana/bandana_to_spawn = pick(possible_bandana)
+	new bandana_to_spawn(src.loc)
+	qdel(src)

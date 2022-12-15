@@ -18,7 +18,7 @@
 	compatible_species = list("human", "cow", "werewolf", "flubber")
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/cloth/handkerchief))
+		if (istype(W, /obj/item/cloth))
 			user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [src] with [W].</span>")
 			return
 		return ..()
@@ -59,12 +59,14 @@
 			return
 		..() //if not selecting the head of a human or monkey, just do normal attack.
 
+TYPEINFO(/obj/item/clothing/glasses/meson)
+	mats = 6
+
 /obj/item/clothing/glasses/meson
 	name = "meson goggles"
 	icon_state = "meson"
 	var/base_state = "meson"
 	item_state = "glasses"
-	mats = 6
 	desc = "Goggles that allow you to see the structure of the station through walls."
 	color_r = 0.92
 	color_g = 1
@@ -84,7 +86,7 @@
 		src.item_state = "[src.base_state][src.on ? null : "-off"]"
 		set_icon_state("[src.base_state][src.on ? null : "-off"]")
 		toggler.update_clothing()
-		playsound(src, "sound/items/mesonactivate.ogg", 30, 1)
+		playsound(src, 'sound/items/mesonactivate.ogg', 30, 1)
 		if (ishuman(toggler))
 			var/mob/living/carbon/human/H = toggler
 			if (istype(H.glasses, /obj/item/clothing/glasses/meson)) //hamdling of the rest is done in life.dm
@@ -168,14 +170,16 @@
 		if(H.mind)
 			if(H.mind.assigned_role == "Detective" && !src.already_worn)
 				src.already_worn = 1
-				playsound(user, "sound/voice/yeaaahhh.ogg", 100, 0)
+				playsound(user, 'sound/voice/yeaaahhh.ogg', 100, 0)
 				user.visible_message("<span class='alert'><B><font size=3>YEAAAAAAAAAAAAAAAH!</font></B></span>")
 	..()
 	return
 
+TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
+	mats = 4
+
 /obj/item/clothing/glasses/sunglasses/tanning
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. This pair has a label that says: \"For tanning use only.\""
-	mats = 4
 	color_b = 0.95
 
 	setupProperties()
@@ -219,12 +223,15 @@
 	color_r = 1
 	color_g = 1
 	color_b = 1
+	contraband = 4 // illegal (stolen) crimefighting vigilante gear
+
+TYPEINFO(/obj/item/clothing/glasses/thermal)
+	mats = 8
 
 /obj/item/clothing/glasses/thermal
 	name = "optical thermal scanner"
 	icon_state = "thermal"
 	item_state = "glasses"
-	mats = 8
 	desc = "High-tech glasses that can see through cloaking technology. Also helps you see further in the dark."
 	color_r = 1
 	color_g = 0.8 // red tint
@@ -283,11 +290,13 @@
 	color_g = 0.9 // orange tint?
 	color_b = 0.8
 
+TYPEINFO(/obj/item/clothing/glasses/visor)
+	mats = 4
+
 /obj/item/clothing/glasses/visor
 	name = "\improper VISOR goggles"
 	icon_state = "visor"
 	item_state = "glasses"
-	mats = 4
 	desc = "VIS-tech Optical Rejuvinator goggles allow the blind to see while worn."
 	allow_blind_sight = 1
 	color_r = 0.92
@@ -473,6 +482,9 @@
 /obj/item/clothing/glasses/vr/bomb
 	network = LANDMARK_VR_BOMBTEST
 
+TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
+	mats = 8
+
 /obj/item/clothing/glasses/healthgoggles
 	name = "\improper ProDoc Healthgoggles"
 	desc = "Fitted with an advanced miniature sensor array that allows the user to quickly determine the physical condition of others."
@@ -480,7 +492,6 @@
 	uses_multiple_icon_states = 1
 	var/scan_upgrade = 0
 	var/health_scan = 0
-	mats = 8
 	color_r = 0.85
 	color_g = 1
 	color_b = 0.87
@@ -493,9 +504,12 @@
 		..()
 		if (slot == SLOT_GLASSES)
 			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(user)
+			if (src.health_scan)
+				APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
 
 	unequipped(var/mob/user)
 		if(src.equipped_in_slot == SLOT_GLASSES)
+			REMOVE_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
 			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(user)
 		..()
 
@@ -507,9 +521,12 @@
 			else
 				src.scan_upgrade = 1
 				src.health_scan = 1
+				var/mob/living/carbon/human/human_user = user
+				if (istype(human_user) && human_user.glasses == src)
+					APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
 				src.icon_state = "prodocs-upgraded"
 				boutput(user, "<span class='notice'>Health scan upgrade installed.</span>")
-				playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
+				playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 				user.u_equip(W)
 				qdel(W)
 				return
@@ -531,11 +548,13 @@
 	health_scan = 1
 
 // Glasses that allow the wearer to get a full reagent report for containers
+TYPEINFO(/obj/item/clothing/glasses/spectro)
+	mats = 6
+
 /obj/item/clothing/glasses/spectro
 	name = "spectroscopic scanner goggles"
 	icon_state = "spectro"
 	item_state = "glasses"
-	mats = 6
 	desc = "Goggles with an integrated minature Raman spectroscope for easy qualitative and quantitative analysis of chemical samples."
 	color_r = 1 // pink tint?
 	color_g = 0.8
@@ -565,53 +584,27 @@
 	desc = "wha"
 	icon_state = "machoglasses"
 	color = "#FF00FF"
-	var/client/assigned = null
-
-	process()
-		if (assigned)
-			assigned.images.Remove(mob_static_icons)
-			addIcons()
-
-			if (loc != assigned.mob)
-				assigned.images.Remove(mob_static_icons)
-				assigned = null
-
-			//sleep(2 SECONDS)
-		else
-			processing_items.Remove(src)
-
-	proc/addIcons()
-		if (assigned)
-			for (var/image/I in mob_static_icons)
-				if (!I || !I.loc || !src)
-					continue
-				if (I.loc.invisibility && I.loc != src.loc)
-					continue
-				else
-					assigned.images.Add(I)
+	var/active = FALSE
 
 	equipped(var/mob/user, var/slot)
 		..()
 		if (slot == SLOT_GLASSES)
-			assigned = user.client
-			SPAWN(-1)
-				//updateIcons()
-				processing_items |= src
-		return
+			get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_mob(user)
+			active = TRUE
 
 	unequipped(var/mob/user)
 		..()
-		if (assigned)
-			assigned.images.Remove(mob_static_icons)
-			assigned = null
-			processing_items.Remove(src)
-		return
+		if (active)
+			get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).remove_mob(user)
+			active = FALSE
+
+TYPEINFO(/obj/item/clothing/glasses/noir)
+	mats = 4
 
 /obj/item/clothing/glasses/noir
 	name = "Noir-Tech Glasses"
 	desc = "A pair of glasses that simulate what the world looked like before the invention of color."
 	icon_state = "noir"
-	mats = 4
 	equipped(var/mob/user, var/slot)
 		..()
 		var/mob/living/carbon/human/H = user
@@ -625,11 +618,19 @@
 			if (H.client)
 				animate_fade_from_grayscale(H.client, 5)
 
+TYPEINFO(/obj/item/clothing/glasses/nightvision)
+	mats = 8
+
+TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud)
+	mats = 12
+
+TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
+	mats = 25 //expensive if someone scans them because I can do what I want
+
 /obj/item/clothing/glasses/nightvision
 	name = "night vision goggles"
 	icon_state = "nightvision"
 	item_state = "glasses"
-	mats = 8
 	desc = "Goggles with separate built-in image-intensifier tubes to allow vision in the dark. Keep away from bright lights."
 	color_r = 0.5
 	color_g = 1
@@ -655,6 +656,31 @@
 				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 
+	sechud
+		name = "night vision sechud goggles"
+		icon_state = "nightvisionsechud"
+		desc = "Goggles with separate built-in image-intensifier tubes to allow vision in the dark. Keep away from bright lights. This version also has built in SecHUD functionality."
+		color_r = 1
+		color_g = 0.5
+		color_b = 0.5
+
+		equipped(var/mob/user, var/slot)
+			..()
+			if (slot == SLOT_GLASSES)
+				get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(user)
+
+		unequipped(var/mob/user)
+			if(src.equipped_in_slot == SLOT_GLASSES)
+				get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(user)
+			..()
+
+		flashblocking //Admin or gimmick spawn option
+			name = "SUPER night vision sechud goggles"
+			desc = "Goggles with separate built-in image-intensifier tubes to allow vision in the dark AND SecHUDs AND with darkened lenses? Wowee!"
+
+			setupProperties()
+				..()
+				setProperty("disorient_resist_eye", 100)
 
 
 /obj/item/clothing/glasses/packetvision
@@ -664,7 +690,7 @@
 	icon_state = "glasses"
 	color = "#a0ffa0"
 	color_r = 0.9
-	color_g = 1.0
+	color_g = 1
 	color_b = 0.9
 
 	equipped(var/mob/user, var/slot)

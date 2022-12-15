@@ -54,13 +54,13 @@
 			var/humidity_level  //Type of humidity zone we're in LOW-MEDIUM-HIGH
 
 			switch(heat)
-				if(0 to 0.10)
+				if(0 to 0.1)
 					heat_level = BIOME_LOW_HEAT
-				if(0.10 to 0.45)
+				if(0.1 to 0.45)
 					heat_level = BIOME_LOWMEDIUM_HEAT
-				if(0.45 to 0.80)
+				if(0.45 to 0.8)
 					heat_level = BIOME_HIGHMEDIUM_HEAT
-				if(0.80 to 1)
+				if(0.8 to 1)
 					heat_level = BIOME_HIGH_HEAT
 			switch(humidity)
 				if(0 to 0.35)
@@ -101,11 +101,12 @@
 		var/image/ambient = GetOverlayImage("ambient")
 
 		src.RL_SetOpacity(0)
-		for (var/turf/simulated/floor/plating/airless/asteroid/A in range(src,1))
-			A.UpdateIcon()
 		src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid/desert)
+		src.UpdateIcon()
+		for (var/turf/simulated/wall/auto/asteroid/A in orange(1,src))
+			A.UpdateIcon()
 		src.color = new_color
-		src.opacity = 0
+		src.set_opacity(0)
 		src.levelupdate()
 
 		if(weather)

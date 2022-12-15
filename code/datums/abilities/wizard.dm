@@ -9,6 +9,9 @@
 
 	var/datum/abilityHolder/H = wizard_mob.add_ability_holder(/datum/abilityHolder/wizard)
 
+	wizard_mob.RegisterSignal(wizard_mob, COMSIG_MOB_PICKUP, /mob/proc/emp_touchy)
+	wizard_mob.RegisterSignal(wizard_mob, COMSIG_LIVING_LIFE_TICK, /mob/proc/emp_hands)
+
 	if (!vr)
 		// normal spells for normal wizards
 		H.addAbility(/datum/targetable/spell/phaseshift)
@@ -45,7 +48,7 @@
 		if(wizard_mob.traitHolder && wizard_mob.traitHolder.hasTrait("deaf"))
 			wizard_mob.equip_if_possible(new /obj/item/device/radio/headset/deaf(wizard_mob), wizard_mob.slot_ears)
 		else
-			wizard_mob.equip_if_possible(new /obj/item/device/radio/headset(wizard_mob), wizard_mob.slot_ears)
+			wizard_mob.equip_if_possible(new /obj/item/device/radio/headset/wizard(wizard_mob), wizard_mob.slot_ears)
 	wizard_mob.equip_if_possible(new /obj/item/storage/backpack(wizard_mob), wizard_mob.slot_back)
 	wizard_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal/wizard(wizard_mob), wizard_mob.slot_shoes)
 	wizard_mob.equip_if_possible(new /obj/item/staff(wizard_mob), wizard_mob.slot_r_hand)
@@ -58,12 +61,20 @@
 
 	wizard_mob.set_clothing_icon_dirty()
 
+	wizard_mob.equip_sensory_items()
+
 	boutput(wizard_mob, "You're a wizard now. You have a few starting spells; use the [SB] to choose the rest!")
 	if (!vr)
 		wizard_mob.show_antag_popup("wizard")
-	return
 
 ////////////////////////////////////////////// Helper procs ////////////////////////////////////////////////////
+
+/mob/proc/emp_touchy(source, obj/item/I)
+	I.emp_act()
+
+/mob/proc/emp_hands(source)
+	for(var/obj/item/I in src.equipped_list())
+		I.emp_act()
 
 /mob/proc/wizard_spellpower(var/datum/targetable/spell/spell = null)
 	return 0
@@ -212,15 +223,17 @@
 
 /datum/targetable/spell
 	preferred_holder_type = /datum/abilityHolder/wizard
-	var
-		requires_robes = 0
-		offensive = 0
-		cooldown_staff = 0
-		prepared_count = 0
-		casting_time = 0
-		voice_grim = null
-		voice_fem = null
-		voice_other = null
+	var/requires_being_on_turf = FALSE
+	var/requires_robes = 0
+	var/offensive = 0
+	var/cooldown_staff = 0
+	var/prepared_count = 0
+	var/casting_time = 0
+	var/voice_grim = null
+	var/voice_fem = null
+	var/voice_other = null
+	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
+	var/maptext_colors = null
 
 	proc/calculate_cooldown()
 		var/cool = src.cooldown
@@ -265,6 +278,9 @@
 			return 999
 		if (!istype(src, /datum/targetable/spell/prismatic_spray/admin) && !H.owner.wizard_castcheck(src)) // oh god this is ugly but it's technically not duplicating code so it fixes to problem with the move to ability buttons
 			src.holder.locked = 0
+			return 999
+		if (src.requires_being_on_turf && !isturf(holder.owner.loc))
+			boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
 			return 999
 		var/turf/T = get_turf(holder.owner)
 		if( offensive && T.loc:sanctuary )
@@ -343,4 +359,4 @@
 				playsound(O.loc, src.voice_other, 50, 0, -1)
 
 		var/log_target = constructTarget(target,"combat")
-		logTheThing("combat", holder.owner, target, "casts [src.name] from [log_loc(holder.owner)][targeted ? ", at [log_target]" : ""].")
+		logTheThing(LOG_COMBAT, holder.owner, "casts [src.name] from [log_loc(holder.owner)][targeted ? ", at [log_target]" : ""].")

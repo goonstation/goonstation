@@ -7,12 +7,12 @@
 	desc = "It's a butt. It goes on your head."
 	var/organ_holder_name = "butt"
 	var/organ_holder_location = "chest"
-	var/organ_holder_required_op_stage = 4.0
+	var/organ_holder_required_op_stage = 4
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "butt-nc"
-	force = 1.0
+	force = 1
 	w_class = W_CLASS_TINY
-	throwforce = 1.0
+	throwforce = 1
 	throw_speed = 3
 	throw_range = 5
 	c_flags = COVERSEYES
@@ -20,7 +20,7 @@
 	var/s_tone = "#FAD7D0"
 	var/stapled = 0
 	var/allow_staple = 1
-	var/op_stage = 0.0
+	var/op_stage = 0
 	rand_pos = 1
 	var/mob/living/carbon/human/donor = null
 	var/donor_name = null
@@ -30,8 +30,6 @@
 	var/made_from = "butt"
 
 	disposing()
-		if (donor?.organs)
-			donor.organs -= src
 		if (holder)
 			holder.butt = null
 
@@ -103,7 +101,7 @@
 			if (user.find_in_hand(src))
 				user.u_equip(src)
 			H.organHolder.receive_organ(src, "butt", 3.0)
-			H.butt_op_stage = 3.0
+			H.butt_op_stage = 3
 			return 1
 		else if (H.butt_op_stage == 5.0)
 			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[his_or_her(H)]" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
@@ -146,11 +144,11 @@
 
 			//Commence owie
 			take_bleeding_damage(target, null, rand(4, 8), DAMAGE_BLUNT)	//My
-			playsound(target, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1) //head,
+			playsound(target, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1) //head,
 			target.emote("scream") 									//FUCKING
 			target.TakeDamage("head", rand(8, 16), 0) 				//OW!
 
-			logTheThing("combat", source, target, "rips out the staples on [constructTarget(target,"combat")]'s butt hat") //Crime
+			logTheThing(LOG_COMBAT, source, "rips out the staples on [constructTarget(target,"combat")]'s butt hat") //Crime
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/timer))
@@ -183,7 +181,7 @@
 	allow_staple = 0
 	toned = 0
 	made_from = "pharosium"
-	sound_fart = "sound/voice/farts/poo2_robot.ogg"
+	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
 // no this is not done and I dunno when it will be done
 // I am a bad person who accepts bribes of freaky macho butt drawings and then doesn't prioritize the request the bribe was for
 

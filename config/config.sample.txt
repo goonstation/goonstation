@@ -18,22 +18,20 @@ LOG_ACCESS
 # log game actions (start of round, results, etc.)
 LOG_GAME
 
+# log gamemode actions (relay, nuke etc.)
+LOG_GAMEMODE
+
 # probabilities for game modes chosen in "secret" and "random" modes
 #
 # default probability is 1, increase to make that mode more likely to be picked
 # set to 0 to disable that mode
-PROBABILITY ALIEN 0
 PROBABILITY BLOB 4
 PROBABILITY CHANGELING 6
 PROBABILITY DISASTER 0
 PROBABILITY EXTENDED 0
-PROBABILITY MALFUNCTION 0
-PROBABILITY METEOR 0
-PROBABILITY MONKEY 0
 PROBABILITY MIXED 4
 PROBABILITY MIXED_RP 4
 PROBABILITY NUCLEAR 6
-PROBABILITY RESTRUCTURING 0
 PROBABILITY REVOLUTION 5
 PROBABILITY SANDBOX 0
 PROBABILITY TRAITOR 20
@@ -50,7 +48,6 @@ PROBABILITY SPY_THEFT 5
 # so for example, TRAITOR 10 means "players should be chosen for traitor in 10% of their traitor-eligible rounds played"
 # note that the antag name maps directly to special_role in code, uppercased
 # please keep this alphabetically sorted
-PLAY_ANTAG ALIEN 10
 PLAY_ANTAG BLOB 10
 PLAY_ANTAG CHANGELING 10
 PLAY_ANTAG CONSPIRATOR 10
@@ -87,7 +84,8 @@ SERVERNAME Goonstation
 #SERVERSUFFIX
 SERVERREGION Development
 
-CDN http://cdn.goonhub.com
+CDN https://cdn.goonhub.com
+RSC http://cdn.goonhub.com/rsc.zip
 ENV dev
 
 # Spacebee API

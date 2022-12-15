@@ -65,7 +65,7 @@
 
 		if (istype(owner.loc, /obj/))
 			var/obj/location_as_object = owner.loc
-			location_as_object.handle_internal_lifeform(owner, 0)
+			location_as_object.handle_internal_lifeform(owner, 0, get_multiplier())
 		..()
 
 	proc/breathe(datum/gas_mixture/environment)
@@ -143,7 +143,7 @@
 			owner.losebreath += (0.7 * mult)
 
 		if (owner.grabbed_by && length(owner.grabbed_by))
-			breath = get_breath_grabbed_by(BREATH_VOLUME)
+			breath = get_breath_grabbed_by(BREATH_VOLUME * mult)
 
 		if (!breath)
 			if (owner.losebreath>0) //Suffocating so do not take a breath
@@ -156,20 +156,20 @@
 						owner.emote("gasp")
 				if (isobj(owner.loc))
 					var/obj/location_as_object = owner.loc
-					location_as_object.handle_internal_lifeform(owner, 0)
+					location_as_object.handle_internal_lifeform(owner, 0, mult)
 				if (owner.losebreath <= 0)
 					boutput(owner, "<span class='notice'>You catch your breath.</span>")
 			else
 				//First, check for air from internal atmosphere (using an air tank and mask generally)
-				breath = get_breath_from_internal(BREATH_VOLUME)
+				breath = get_breath_from_internal(BREATH_VOLUME * mult)
 
 				//No breath from internal atmosphere so get breath from location
 				if (!breath)
 					if (isobj(owner.loc))
 						var/obj/location_as_object = owner.loc
-						breath = location_as_object.handle_internal_lifeform(owner, BREATH_VOLUME)
+						breath = location_as_object.handle_internal_lifeform(owner, BREATH_VOLUME, mult)
 					else if (isturf(owner.loc))
-						var/breath_moles = (TOTAL_MOLES(environment)*BREATH_PERCENTAGE)
+						var/breath_moles = (TOTAL_MOLES(environment) * BREATH_PERCENTAGE * mult)
 
 						breath = owner.loc.remove_air(breath_moles)
 
@@ -177,9 +177,9 @@
 					underwater = 0 // internals override underwater state
 					if (isobj(owner.loc))
 						var/obj/location_as_object = owner.loc
-						location_as_object.handle_internal_lifeform(owner, 0)
+						location_as_object.handle_internal_lifeform(owner, 0, mult)
 
-		breath?.volume = BREATH_VOLUME
+		breath?.volume = BREATH_VOLUME * mult
 		handle_breath(breath, underwater, mult = mult)
 
 		if (breath)
@@ -243,7 +243,7 @@
 		var/datum/organ/lung/status/status_updates = new
 
 		var/datum/gas_mixture/left_breath = breath.remove_ratio(0.5)
-		var/datum/gas_mixture/right_breath = breath.remove_ratio(1.0) // the rest
+		var/datum/gas_mixture/right_breath = breath.remove_ratio(1) // the rest
 		left_breath.volume = breath.volume / 2
 		right_breath.volume = breath.volume / 2
 

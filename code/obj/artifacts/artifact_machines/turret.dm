@@ -82,6 +82,6 @@
 			return FALSE
 		if (M == friend)
 			return FALSE
-		if (get_dist(M,O) > shot_range)
+		if (GET_DIST(M,O) > shot_range)
 			return FALSE
 		return TRUE

@@ -1338,7 +1338,7 @@
 	attackby(obj/item/W, mob/user)
 		/*
 		if (isscrewingtool(W))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			src.panel_open = !src.panel_open
 			boutput(user, "You [src.panel_open ? "unscrew" : "secure"] the cover.")
 			src.updateUsrDialog()

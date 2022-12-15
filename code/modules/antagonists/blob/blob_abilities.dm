@@ -91,7 +91,7 @@
 				if (currentTurfs > maxTurfs)
 					return
 
-				if (T.can_blob_spread_here(null, null, isadmin(owner)))
+				if (T.can_blob_spread_here(null, null, (isadmin(owner) || owner.admin_override)))
 					var/obj/blob/B
 					if (prob(5))
 						B = new /obj/blob/lipid(T)
@@ -199,8 +199,8 @@
 			boutput(owner, "<span class='alert'>You can't start in space!</span>")
 			return
 
-		if (!isadmin(owner)) //admins can spawn wherever
-			if (!istype(T.loc, /area/station/) && !istype(T.loc, /area/blob/))
+		if (!(isadmin(owner) || owner.admin_override)) //admins can spawn wherever. So can AI blobs if we tell them to.
+			if (!istype(T.loc, /area/station/) && !istype(T.loc, /area/tutorial/blob/))
 				boutput(owner, "<span class='alert'>You need to start on the [station_or_ship()]!</span>")
 				return
 
@@ -230,8 +230,13 @@
 		if (!tutorial_check("deploy", T))
 			return
 
+		if (owner && owner.client)
+			if (tgui_alert(owner,"Would you like to deploy your nucleus?","Deploy Nucleus?",list("Yes","No")) != "Yes")
+				return TRUE
+
 		var/turf/startTurf = get_turf(owner)
 		var/obj/blob/nucleus/C = new /obj/blob/nucleus(startTurf)
+		logTheThing(LOG_GAMEMODE, owner, "plants their start nucleus at [log_loc(startTurf)].")
 		C.layer++
 		owner.total_placed++
 		C.setOvermind(owner)
@@ -256,7 +261,7 @@
 			//do a little "blobsplosion"
 			var/amount = rand(20, 30)
 			src.auto_spread(startTurf, maxRange = 3, maxTurfs = amount)
-		owner.playsound_local(owner.loc, "sound/voice/blob/blobdeploy.ogg", 50, 1)
+		owner.playsound_local(owner.loc, 'sound/voice/blob/blobdeploy.ogg', 50, 1)
 		owner.remove_ability(/datum/blob_ability/set_color)
 		owner.remove_ability(/datum/blob_ability/tutorial)
 		owner.remove_ability(/datum/blob_ability/plant_nucleus)
@@ -337,7 +342,7 @@
 
 				return 1
 
-		var/obj/blob/B1 = T.can_blob_spread_here(owner, null, isadmin(owner))
+		var/obj/blob/B1 = T.can_blob_spread_here(owner, null, (isadmin(owner) || owner.admin_override))
 		if (!istype(B1))
 			return 1
 
@@ -351,7 +356,7 @@
 		var/mindist = 127
 		for_by_tcl(nucleus, /obj/blob/nucleus)
 			if(nucleus.overmind == owner)
-				mindist = min(mindist, get_dist(T, get_turf(nucleus)))
+				mindist = min(mindist, GET_DIST(T, get_turf(nucleus)))
 
 		mindist *= max((length(owner.blobs) * 0.005) - 2, 1)
 
@@ -364,7 +369,7 @@
 			for (var/turf/simulated/floor/Q in view(7, owner))
 				if (locate(/obj/blob) in Q)
 					continue
-				var/obj/blob/B3 = Q.can_blob_spread_here(null, null, isadmin(owner))
+				var/obj/blob/B3 = Q.can_blob_spread_here(null, null, (isadmin(owner) || owner.admin_override))
 				if (B3)
 					spreadability += Q
 
@@ -417,7 +422,7 @@
 		N.setMaterial(B.material)
 		B.material = null
 		qdel(B)
-		owner.playsound_local(owner.loc, "sound/voice/blob/blobdeploy.ogg", 50, 1)
+		owner.playsound_local(owner.loc, 'sound/voice/blob/blobdeploy.ogg', 50, 1)
 		deduct_bio_points()
 		do_cooldown()
 		using = 0
@@ -426,8 +431,8 @@
 	name = "Consume"
 	icon_state = "blob-consume"
 	desc = "This ability can be used to remove an existing blob tile for biopoints. Any blob tile you own can be consumed."
-	bio_point_cost = 10
-	cooldown_time = 20
+	bio_point_cost = 0
+	cooldown_time = 50
 
 	onUse(var/turf/T)
 		if (..())
@@ -558,7 +563,7 @@
 			if (check_target_immunity(A))
 				continue
 			if (ishuman(A))
-				if (A:decomp_stage != 4)
+				if (A:decomp_stage != DECOMP_STAGE_SKELETONIZED)
 					M = A
 					break
 			if (ismobcritter(A))
@@ -579,7 +584,7 @@
 
 
 //The owner is the blob tile object...
-/datum/action/bar/blob_absorb //This is used when you try to set someones internals
+/datum/action/bar/blob_absorb
 	bar_icon_state = "bar-blob"
 	border_icon_state = "border-blob"
 	color_active = "#d73715"
@@ -587,11 +592,8 @@
 	color_failure = "#8d1422"
 	duration = 10 SECONDS
 
-	// interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	interrupt_flags = 0
-	id = "internalsother"
-	// icon = 'icons/obj/clothing/item_masks.dmi'
-	// icon_state = "breath"
+	id = "blobabsorb"
 	var/mob/living/target
 	var/mob/living/intangible/blob_overmind/blob_o
 
@@ -604,14 +606,19 @@
 			return
 		src.blob_o = blob_o
 
-	onInterrupt(var/flag)
+	onStart()
 		..()
-	onUpdate()
-		..()
-		if(!target || !owner || get_dist(owner, target) > 0 || !blob_o)
+		if(!target || !owner || GET_DIST(owner, target) > 0 || !blob_o)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (ishuman(target) && target:decomp_stage == 4)
+		actions.interrupt(target, INTERRUPT_ATTACKED)
+
+	onUpdate()
+		..()
+		if(!target || !owner || GET_DIST(owner, target) > 0 || !blob_o)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (ishuman(target) && target:decomp_stage == DECOMP_STAGE_SKELETONIZED)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		//damage thing a bit
@@ -621,7 +628,7 @@
 	onEnd()
 		..()
 		//owner type actually matters here. But it should never not be this anyway...
-		if(!target || !owner || get_dist(owner, target) > 0 || !istype (blob_o, /mob/living/intangible/blob_overmind))
+		if(!target || !owner || GET_DIST(owner, target) > 0 || !istype (blob_o, /mob/living/intangible/blob_overmind))
 			return
 
 		//This whole first bit is all still pretty ugly cause this ability works on both critters and humans. I didn't have it in me to rewrite the whole thing - kyle
@@ -638,15 +645,13 @@
 			return
 
 		var/mob/living/carbon/human/H = target
-		if (H?.decomp_stage == 4)
-			H.decomp_stage = 4
 
 		if (blob_o?.mind) //ahem ahem AI blobs exist
 			blob_o.mind.blob_absorb_victims += H
 
 		if (!isnpcmonkey(H) || prob(50))
 			blob_o.evo_points += 2
-			playsound(H.loc, "sound/voice/blob/blobsucced.ogg", 100, 1)
+			playsound(H.loc, 'sound/voice/blob/blobsucced.ogg', 100, 1)
 		//This is all the animation and stuff making the effect look good crap. Not much to see here.
 
 		H.visible_message("<span class='alert'><b>[H.name] is absorbed by the blob!</b></span>")
@@ -831,6 +836,7 @@
 			return 1
 
 		var/obj/blob/L = new build_path(T)
+		logTheThing(LOG_STATION, owner, "builds [L] at [T] ([log_loc(T)])")
 		L.setOvermind(owner)
 		L.setMaterial(B.material)
 		B.material = null
@@ -998,11 +1004,11 @@
 		if (repeatable == 0)
 			owner.available_upgrades -= src
 		if (prob(80))
-			owner.playsound_local(owner.loc, "sound/voice/blob/blobup1.ogg", 50, 1)
+			owner.playsound_local(owner.loc, 'sound/voice/blob/blobup1.ogg', 50, 1)
 		else if (prob(50))
-			owner.playsound_local(owner.loc, "sound/voice/blob/blobup2.ogg", 50, 1)
+			owner.playsound_local(owner.loc, 'sound/voice/blob/blobup2.ogg', 50, 1)
 		else
-			owner.playsound_local(owner.loc, "sound/voice/blob/blobup3.ogg", 50, 1)
+			owner.playsound_local(owner.loc, 'sound/voice/blob/blobup3.ogg', 50, 1)
 
 		owner.update_buttons()
 

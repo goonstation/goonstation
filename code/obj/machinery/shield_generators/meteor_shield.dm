@@ -23,7 +23,7 @@
 
 	proc/generate_shield()
 		for(var/turf/space/T in orange(src.range,src))
-			if (get_dist(T,src) != src.range)
+			if (GET_DIST(T,src) != src.range)
 				continue
 			var/obj/forcefield/meteorshield/S = new /obj/forcefield/meteorshield(T)
 			S.deployer = src

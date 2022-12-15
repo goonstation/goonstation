@@ -27,7 +27,7 @@
 			boutput(M, "<span class='alert'>Why would you want to poison yourself?</span>")
 			return 1
 
-		if (get_dist(M, target) > src.max_range)
+		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
@@ -68,7 +68,7 @@
 
 		if (attempt_success == 1)
 			boutput(M, "<span class='notice'>You successfully poisoned [target].</span>")
-			logTheThing("combat", M, null, "poisons [target] [log_reagents(target)] at [log_loc(M)].")
+			logTheThing(LOG_COMBAT, M, "poisons [target] [log_reagents(target)] at [log_loc(M)].")
 			return 0
 		else
 			boutput(M, "<span class='alert'>You failed to poison [target].</span>")

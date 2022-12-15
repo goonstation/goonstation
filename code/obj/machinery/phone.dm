@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/phone)
+	mats = 25
+
 /obj/machinery/phone
 	name = "phone"
 	icon = 'icons/obj/machines/phones.dmi'
@@ -5,7 +8,6 @@
 	icon_state = "phone"
 	anchored = 1
 	density = 0
-	mats = 25
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	_health = 25
 	color = null
@@ -70,8 +72,6 @@
 
 		START_TRACKING
 
-		return
-
 	update_icon()
 		. = ..()
 		src.UpdateOverlays(src.SafeGetOverlayImage("stripe", 'icons/obj/machines/phones.dmi',"[src.icon_state]-stripe"), "stripe")
@@ -92,32 +92,36 @@
 	// Attempt to pick up the handset
 	attack_hand(mob/living/user)
 		..(user)
-		if(src.answered == 1)
+		if (src.answered)
+			return
+
+		if (src.emagged)
+			src.explode()
 			return
 
 		src.handset = new /obj/item/phone_handset(src,user)
 		user.put_in_hand_or_drop(src.handset)
-		src.answered = 1
+		src.answered = TRUE
 
 		src.icon_state = "[answeredicon]"
 		UpdateIcon()
-		playsound(user, "sound/machines/phones/pick_up.ogg", 50, 0)
+		playsound(user, 'sound/machines/phones/pick_up.ogg', 50, 0)
 
 		if(src.ringing == 0) // we are making an outgoing call
-			if(user)
-				if(src.connected == 1)
+			if(src.connected == 1)
+				if(user)
 					// if(!src.phonebook)
 					// 	src.phonebook = new /chui/window/phonecall(src)
 					// phonebook.Subscribe(user.client)
 					ui_interact(user)
-				else
+			else
+				if(user)
 					boutput(user,"<span class='alert'>As you pick up the phone you notice that the cord has been cut!</span>")
 		else
-			src.ringing = 0
-			src.linked.ringing = 0
+			src.ringing = FALSE
+			src.linked.ringing = FALSE
 			if(src.linked.handset.holder)
-				src.linked.handset.holder.playsound_local(src.linked.handset.holder,"sound/machines/phones/remote_answer.ogg",50,0)
-		return
+				src.linked.handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_answer.ogg',50,0)
 
 	attack_ai(mob/user as mob)
 		return
@@ -130,7 +134,7 @@
 				qdel(PH)
 				hang_up()
 			return
-		if(istype(P,/obj/item/wirecutters))
+		if(issnippingtool(P))
 			if(src.connected == 1)
 				if(user)
 					boutput(user,"You cut the phone line leading to the phone.")
@@ -140,7 +144,7 @@
 					boutput(user,"You repair the line leading to the phone.")
 				src.connected = 1
 			return
-		if(istype(P,/obj/item/device/multitool))
+		if(ispulsingtool(P))
 			if(src.labelling == 1)
 				return
 			src.labelling = 1
@@ -161,7 +165,10 @@
 		if(src._health <= 0)
 			if(src.linked)
 				hang_up()
-			src.gib(src.loc)
+			if (src.emagged)
+				src.explode()
+			else
+				src.gib(src.loc)
 			qdel(src)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -171,18 +178,18 @@
 			if(user)
 				boutput(user, "<span class='alert'>You short out the ringer circuit on the [src].</span>")
 			src.emagged = 1
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 
 	process()
-		if(src.emagged == 1)
-			playsound(src.loc,"sound/machines/phones/ring_incoming.ogg" ,100,1)
-			if(src.answered == 0)
+		if(src.emagged)
+			playsound(src.loc,'sound/machines/phones/ring_incoming.ogg' ,100,1)
+			if(!src.answered)
 				src.icon_state = "[ringingicon]"
 				UpdateIcon()
 			return
 
-		if(src.connected == 0)
+		if(!src.connected)
 			return
 
 		src.last_ring++
@@ -194,13 +201,16 @@
 				if(src.last_ring >= 2)
 					src.last_ring = 0
 					if(src.handset && src.handset.holder)
-						src.handset.holder.playsound_local(src.handset.holder,"sound/machines/phones/ring_outgoing.ogg" ,40,0)
+						src.handset.holder.playsound_local(src.handset.holder,'sound/machines/phones/ring_outgoing.ogg' ,40,0)
 			else
 				if(src.last_ring >= 2)
-					playsound(src.loc,"sound/machines/phones/ring_incoming.ogg" ,40,0)
+					playsound(src.loc,'sound/machines/phones/ring_incoming.ogg' ,40,0)
 					src.icon_state = "[ringingicon]"
 					UpdateIcon()
 					src.last_ring = 0
+
+	proc/explode()
+		src.blowthefuckup(strength = 2.5, delete = TRUE)
 
 
 	proc/hang_up()
@@ -210,7 +220,7 @@
 				src.linked.icon_state = "[src.linked.phoneicon]"
 				src.linked.UpdateIcon()
 			else if(src.linked.handset && src.linked.handset.holder)
-				src.linked.handset.holder.playsound_local(src.linked.handset.holder,"sound/machines/phones/remote_hangup.ogg",50,0)
+				src.linked.handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_hangup.ogg',50,0)
 			src.linked.ringing = 0
 			src.linked.linked = null
 			src.linked = null
@@ -218,7 +228,7 @@
 		src.handset = null
 		src.icon_state = "[phoneicon]"
 		UpdateIcon()
-		playsound(src.loc,"sound/machines/phones/hang_up.ogg" ,50,0)
+		playsound(src.loc,'sound/machines/phones/hang_up.ogg' ,50,0)
 
 	// This makes phones do that thing that phones do
 	proc/call_other(var/obj/machinery/phone/target)
@@ -226,11 +236,11 @@
 		if(!src.handset)
 			return
 		src.dialing = 1
-		src.handset.holder?.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
+		src.handset.holder?.playsound_local(src.handset.holder,'sound/machines/phones/dial.ogg' ,50,0)
 		SPAWN(4 SECONDS)
 			// Is it busy?
 			if(target.answered || target.linked || target.connected == 0)
-				playsound(src.loc,"sound/machines/phones/phone_busy.ogg" ,50,0)
+				playsound(src.loc,'sound/machines/phones/phone_busy.ogg' ,50,0)
 				src.dialing = 0
 				return
 
@@ -346,7 +356,7 @@
 
 	talk_into(mob/M as mob, text, secure, real_name, lang_id)
 		..()
-		if(get_dist(src,holder) > 0 || !src.parent.linked || !src.parent.linked.handset) // Guess they dropped it? *shrug
+		if(GET_DIST(src,holder) > 0 || !src.parent.linked || !src.parent.linked.handset) // Guess they dropped it? *shrug
 			return
 		var/processed = "<span class='game say'><span class='bold'>[M.name] \[<span style=\"color:[src.color]\"> [bicon(src)] [src.parent.phone_id]</span>\] says, </span> <span class='message'>\"[text[1]]\"</span></span>"
 		var/mob/T = src.parent.linked.handset.holder
@@ -362,6 +372,9 @@
 		..(user)
 		holder = user
 
+TYPEINFO(/obj/machinery/phone/wall)
+	mats = 25
+
 /obj/machinery/phone/wall
 	name = "wall phone"
 	icon = 'icons/obj/machines/phones.dmi'
@@ -369,7 +382,6 @@
 	icon_state = "wallphone"
 	anchored = 1
 	density = 0
-	mats = 25
 	_health = 50
 	phoneicon = "wallphone"
 	ringingicon = "wallphone_ringing"
@@ -416,9 +428,11 @@
 /obj/machinery/radio_antenna/large
 	range = 40
 
+TYPEINFO(/obj/item/phone/cellphone)
+	mats = 25
+
 /obj/item/phone/cellphone
 	icon_state = "cellphone"
-	mats = 25
 	_health = 20
 	var/can_talk_across_z_levels = 0
 	var/phone_id = null

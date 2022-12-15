@@ -13,7 +13,7 @@
 
 		if (!A) //manually called outside of BR gamemode
 			A = get_area(pick_landmark(LANDMARK_PESTSTART))
-		logTheThing("admin",null,null,"Supply drop at [A]")
+		logTheThing(LOG_ADMIN, null, "Supply drop at [A]")
 		var/list/turfs = get_area_turfs(A,1)
 		if (!turfs)	DEBUG_MESSAGE("Getting turfs failed for [A]")
 
@@ -70,7 +70,7 @@
 				shake_camera(M, 20, 8)
 				if(gib_mobs && M.loc == src.loc && isliving(M) && !isintangible(M))
 					if(isliving(M))
-						logTheThing("combat", M, null, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
+						logTheThing(LOG_COMBAT, M, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
 					M.gib(1, 1)
 			sleep(0.5 SECONDS)
 			if (obj_path && no_lootbox)
@@ -174,7 +174,7 @@
 			doPaint = 1
 			numStats = 2
 			doMaterial = 1
-			statsMult = 1.50
+			statsMult = 1.5
 			prefix = pick("Dominating", "Incredible", "Awesome", "Super")
 		if(ITEM_RARITY_EPIC)
 			doPaint = 1
@@ -202,7 +202,7 @@
 
 	if(doMaterial)
 		var/list/material = pick(material_cache - list("cerenkite","ohshitium","plasmastone","koshmarite"))
-		I.setMaterial(material_cache[material], appearance = 1, setname = 1, copy = 1)
+		I.setMaterial(material_cache[material], appearance = 1, setname = 1, copy = FALSE)
 
 	I.name_prefix(prefix)
 
@@ -239,7 +239,6 @@
 	return I
 
 /atom/movable/screen/lootcratepreview
-	icon = null
 	screen_loc = "1,1"
 	name = ""
 	mouse_opacity = 0

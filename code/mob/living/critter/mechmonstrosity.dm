@@ -38,13 +38,13 @@
 
 	death(var/gibbed)
 		if (!gibbed)
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 			gibs(src.loc)
 			ghostize()
 			qdel(src)
 		else
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 			..()
 
@@ -52,7 +52,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/screams/robot_scream.ogg" , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/screams/robot_scream.ogg' , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> screams!"
 		return null
 
@@ -84,7 +84,7 @@
 		switch (act)
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/killme.ogg", 70, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/killme.ogg', 70, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> begs for mercy!"
 
 /mob/living/critter/mechmonstrosity/medical
@@ -105,7 +105,7 @@
 		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
 		HH.icon_state = "syringegun"				// the icon state of the hand UI background
 		HH.limb_name = "Injector"					// name for the dummy holder
-		HH.limb = new /datum/limb/gun/syringe	// if not null, the special limb to use when attack_handing
+		HH.limb = new /datum/limb/gun/kinetic/syringe	// if not null, the special limb to use when attack_handing
 		HH.can_hold_items = 0
 		HH.can_attack = 0
 		HH.can_range_attack = 1
@@ -166,7 +166,7 @@
 		switch (act)
 			if ("laugh")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/mechmonstrositylaugh.ogg" , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/mechmonstrositylaugh.ogg' , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 /datum/targetable/critter/inject
 	name = "Inject Corrupted Nanites"
@@ -227,7 +227,7 @@
 			boutput(M, "<span class='alert'>Why would you want to stun yourself?</span>")
 			return 1
 
-		if (get_dist(M, target) > src.max_range)
+		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
@@ -240,7 +240,7 @@
 		boutput(target, "<span class='alert'>You can feel a chill running down your spine as [M] glares at you with hatred burning in their  mechanical eyes.</span>")
 		target.emote("shiver")
 
-		logTheThing("combat", M, target, "uses glare on [constructTarget(target,"combat")] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses glare on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0
 
 /datum/action/bar/icon/mechanimateAbility
@@ -277,10 +277,10 @@
 		..()
 		var/mob/ownerMob = owner
 		if(ownerMob && target && (BOUNDS_DIST(owner, target) == 0) && mechanimate?.cooldowncheck())
-			logTheThing("combat", ownerMob, target, "injects [constructTarget(target,"combat")]. Crawler transformation")
+			logTheThing(LOG_COMBAT, ownerMob, "injects [constructTarget(target,"combat")]. Crawler transformation")
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span class='alert'><B>[owner] successfully injected [target]!</B></span>", 1)
-			playsound(ownerMob, "sound/items/hypo.ogg", 80, 0)
+			playsound(ownerMob, 'sound/items/hypo.ogg', 80, 0)
 
 			var/obj/critter/mechmonstrositycrawler/FUCK = new /obj/critter/mechmonstrositycrawler(get_turf(target))
 			FUCK.CustomizeMechMon(target.real_name, ismonkey(target))
@@ -319,7 +319,7 @@
 			boutput(M, "<span class='alert'>You can't do that to yourself.</span>")
 			return 1
 
-		if (get_dist(M, target) > src.max_range)
+		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 		holder.owner.say("Transformation protocol engaged. Please stand clear of the recipient.")
@@ -349,7 +349,7 @@
 			boutput(M, "<span class='alert'>Why would you want to dissect yourself?</span>")
 			return 1
 
-		if (get_dist(M, target) > src.max_range)
+		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
@@ -361,7 +361,7 @@
 		playsound(M.loc, 'sound/effects/sawhit.ogg', 90,1)
 		boutput(target, "<span class='alert'>All of your limbs were severed by [M]!</span>")
 
-		logTheThing("combat", M, target, "uses dissect on [constructTarget(target,"combat")] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses dissect on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0
 
 /datum/projectile/syringefilled
@@ -370,9 +370,8 @@
 	icon_state = "syringeproj"
 	dissipation_rate = 1
 	dissipation_delay = 7
-	power = 1
+	damage = 1
 	hit_ground_chance = 10
-	ks_ratio = 1.0
 	shot_sound = 'sound/effects/syringeproj.ogg'
 	var/venom_id = "corruptnanites"
 	var/inject_amount = 15
@@ -451,11 +450,7 @@
 
 	New()
 		..()
-		playsound(src.loc, "sound/effects/glitchy1.ogg", 50, 0)
-
-	Move()
-		playsound(src.loc, "sound/machines/glitch4.ogg", 50, 0)
-		. = ..()
+		playsound(src.loc, 'sound/effects/glitchy1.ogg', 50, 0)
 
 	seek_target()
 
@@ -475,7 +470,7 @@
 			src.target = Cc
 			src.oldtarget_name = Cc.name
 			src.visible_message("<span class='combat'><b>[src]</b> crawls towards [Cc.name]!</span>")
-			playsound(src.loc, "sound/effects/glitchy1.ogg", 50, 0)
+			playsound(src.loc, 'sound/effects/glitchy1.ogg', 50, 0)
 			src.task = "chasing"
 			return
 
@@ -504,7 +499,7 @@
 		src.attacking = 1
 		if(!M.stat)
 			M.visible_message("<span class='combat'><B>[src]</B> scratches [src.target] mercilessly!</span>")
-			playsound(src.loc, "sound/impact_sounds/Blade_Small.ogg", 50, 1, -1)
+			playsound(src.loc, 'sound/impact_sounds/Blade_Small.ogg', 50, 1, -1)
 			if(prob(10)) // lowered probability slightly
 				M.visible_message("<span class='combat'><B>[M]</B> staggers!</span>")
 				M.changeStatus("stunned", 2 SECONDS)

@@ -30,7 +30,7 @@
 	desc = "A breach in the spatial fabric. Extremely difficult to pass."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "spat-h"
-	anchored = 1.0
+	anchored = 1
 	opacity = 1
 	density = 1
 	var/stabilized = 0
@@ -42,8 +42,8 @@
 		//spatial interdictor: mitigate spatial tears
 		//consumes 800 units of charge per tear segment weakened
 		//weakened tears can be traversed, but inflict minor brute damage
-		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-			if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(800))
+		for_by_tcl(IX, /obj/machinery/interdictor)
+			if (IX.expend_interdict(800,src))
 				src.stabilize()
 				break
 		SPAWN(duration)
@@ -74,7 +74,7 @@
 
 	proc/stabilize()
 		src.alpha = 150
-		src.opacity = 0
+		src.set_opacity(0)
 		src.stabilized = 1
 		src.name = "Stabilized Spatial Tear"
 		desc = "A breach in the spatial fabric, partially stabilized by an interdictor. Difficult to pass."
@@ -163,4 +163,4 @@
 		ownerMob.show_text("You take some damage from pushing through the tear.", "red")
 		ownerMob.TakeDamage("chest", rand(4,6), 0, 0, DAMAGE_BLUNT)
 		playsound(spatialtear, 'sound/impact_sounds/Flesh_Tear_3.ogg', 20, 1, -1)
-		logTheThing("combat", ownerMob, spatialtear, "pushes through [spatialtear].")
+		logTheThing(LOG_COMBAT, ownerMob, "pushes through [spatialtear].")

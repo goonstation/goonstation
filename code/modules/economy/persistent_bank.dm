@@ -101,7 +101,7 @@
 					c.persistent_bank_item = 0
 
 		if (c.bank_can_afford(p.cost))
-			c << sound( 'sound/misc/cashregister.ogg' )
+			usr.playsound_local(usr, 'sound/misc/cashregister.ogg', 50, 0)
 			boutput( usr, "<span class='notice'><b>You purchased [p.name] for the round!</b></span>" )
 			if (istype(c.mob,/mob/new_player))
 				var/mob/new_player/playermob = c.mob
@@ -118,7 +118,7 @@
 
 			return TRUE
 		else
-			c << sound( 'sound/items/penclick.ogg' )
+			usr.playsound_local(usr, 'sound/items/penclick.ogg', 80, 0)
 			boutput( usr, "<span class='notice'><b>You can't afford [p.name]!</b></span>" )
 			return FALSE
 

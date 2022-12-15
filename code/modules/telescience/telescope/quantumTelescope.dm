@@ -79,7 +79,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 		if(href_list["close"])
 			using = null
 
-		else if(href_list["jscall"])
+		else if(href_list["jscall"] && using)
 			switch(href_list["jscall"])
 				if("track")
 					var/id = href_list["id"]
@@ -118,7 +118,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 							var/disty = abs(vY - E.loc_y)
 							var/dist = (distx * distx + disty * disty) ** 0.5
 							if (dist <= E.size)
-								using.playsound_local(src.loc, "sound/machines/found.ogg", 50, 1)
+								using.playsound_local(src.loc, 'sound/machines/found.ogg', 50, 1)
 								E.onDiscover(src)
 								tele_man.events_active.Remove(tracking_id)
 								tele_man.events_found.Add(tracking_id)
@@ -127,7 +127,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 								rebuildEventList(using)
 								callJsFunc(using, "byondFound", list(E.loc_x, E.loc_y, E.size, E.id))
 							else
-								using.playsound_local(src.loc, "sound/machines/sweep.ogg", 50, 1)
+								using.playsound_local(src.loc, 'sound/machines/sweep.ogg', 50, 1)
 								//callJsFunc(using, "showFooterMsg", list("dist [(distx + disty)]"))
 								rebuildEventList(using)
 

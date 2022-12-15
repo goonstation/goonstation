@@ -117,7 +117,7 @@
 			return 1
 		var/mob/MT = target
 		MT.apply_flash(10, 10, stamina_damage = 100, eyes_blurry = 5, eyes_damage = 5)
-		playsound(holder.owner, "sound/weapons/flash.ogg", 100, 1)
+		playsound(holder.owner, 'sound/weapons/flash.ogg', 100, 1)
 
 /datum/targetable/critter/control_owner
 	name = "Return to body"
@@ -141,6 +141,9 @@
 		else //In case this ability is put on another mob
 			boutput(holder.owner, "<span class='alert'>You dont have a body to go back to!</span>")
 			return 1
+
+	incapacitationCheck()
+		return FALSE
 
 /datum/targetable/critter/scuttle_scan
 	name = "Robotic scan"

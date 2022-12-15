@@ -237,17 +237,17 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 	icon_state = "energyorb"
 	vis_flags = VIS_INHERIT_ID
 	mouse_opacity = 0
-	var/list/color_on = list(1.0, 0.0, 0.0, -0.5, \
-					 0.0, 1.0, 0.0, -0.5, \
-					 0.0, 0.0, 1.0,  1.0, \
-					 0.0, 0.0, 0.0,  0.0, \
-					 0.0, 0.0, 0.0,  0.0 )
+	var/list/color_on = list(1.0, 0.0, 0.0, -0.5,
+					0.0, 1.0, 0.0, -0.5,
+					0.0, 0.0, 1.0,  1.0,
+					0.0, 0.0, 0.0,  0.0,
+					0.0, 0.0, 0.0,  0.0 )
 
-	var/list/color_off = list(1.0, 0.0, 0.0, -0.5, \
-					 0.0, 1.0, 0.0, -0.5, \
-					 0.0, 0.0, 1.0,  0.0, \
-					 0.0, 0.0, 0.0,  0.0, \
-					 0.0, 0.0, 0.0,  0.0 )
+	var/list/color_off = list(1.0, 0.0, 0.0, -0.5,
+					0.0, 1.0, 0.0, -0.5,
+					0.0, 0.0, 1.0,  0.0,
+					0.0, 0.0, 0.0,  0.0,
+					0.0, 0.0, 0.0,  0.0 )
 
 	New(newLoc)
 		..()
@@ -293,7 +293,7 @@ TYPEINFO(/mob/living/critter/small_animal/dragonfly)
 	flags = TABLEPASS
 	fits_under_table = 1
 	base_move_delay = 1.3
-	base_walk_delay = 2.0
+	base_walk_delay = 2
 	health_brute = 10
 	health_burn = 10
 	isFlying = 1
@@ -332,10 +332,10 @@ TYPEINFO(/datum/component/bug_capture)
 
 /datum/component/bug_capture/Initialize(atom/A, mob/living/critter/B, mob/living/carbon/human/user)
 	if(add_bug(A, B, user))
-		RegisterSignal(parent, list(COMSIG_ITEM_PICKUP), .proc/pickup)
-		RegisterSignal(parent, list(COMSIG_ITEM_DROPPED), .proc/dropped)
-		RegisterSignal(parent, list(COMSIG_ATOM_POST_UPDATE_ICON), .proc/update_icon)
-		RegisterSignal(parent, list(COMSIG_ATOM_REAGENT_CHANGE, COMSIG_ITEM_ATTACK_SELF), .proc/bye_bugs)
+		RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/pickup)
+		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/dropped)
+		RegisterSignal(parent, COMSIG_ATOM_POST_UPDATE_ICON, .proc/update_icon)
+		RegisterSignals(parent, list(COMSIG_ATOM_REAGENT_CHANGE, COMSIG_ITEM_ATTACK_SELF), .proc/bye_bugs)
 
 		update_jar(A,user)
 	else

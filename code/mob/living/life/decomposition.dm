@@ -30,7 +30,7 @@
 			if (!(suspend_rot || istype(owner.loc, /obj/item/body_bag) || (istype(owner.loc, /obj/storage) && owner.loc:welded) || istype(owner.loc, /obj/statue)))
 				icky_icky_miasma(T)
 
-			if (H.decomp_stage >= 4)
+			if (H.decomp_stage >= DECOMP_STAGE_SKELETONIZED)
 				return ..()
 
 			var/env_temp = 0
@@ -44,7 +44,7 @@
 				H.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
 				if (suspend_rot)
 					return ..()
-				H.decomp_stage = min(H.decomp_stage + 1, 4)
+				H.decomp_stage = min(H.decomp_stage + 1, DECOMP_STAGE_SKELETONIZED)
 				owner.update_body()
 				owner.update_face()
 		..()
@@ -58,4 +58,12 @@
 				max_produce_miasma = 0
 
 		if (max_produce_miasma)
-			T.fluid_react_single("miasma", 3, airborne = 1)
+			// Devera-class interdictor: prohibit miasma formation
+			var/miasma_blocked = FALSE
+			for_by_tcl(IX, /obj/machinery/interdictor)
+				if (IX.expend_interdict(30,src,TRUE,ITDR_DEVERA))
+					miasma_blocked = TRUE
+					break
+
+			if(!miasma_blocked)
+				T.fluid_react_single("miasma", 3, airborne = 1)

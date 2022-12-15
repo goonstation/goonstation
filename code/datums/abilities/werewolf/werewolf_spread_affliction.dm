@@ -19,7 +19,7 @@
 		if (M == target)
 			boutput(M, "<span class='alert'>How could you afflict yourself with your own affliction?</span>")
 			return 1
-		if (get_dist(M, target) > src.max_range)
+		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 		if (!ishuman(target)) // Critter mobs include robots and combat drones. There's not a lot of meat on them.
@@ -31,7 +31,7 @@
 		if (target.canmove)
 			boutput(M, "<span class='alert'>[target] is moving around too much.</span>")
 			return 1
-		logTheThing("combat", M, target, "starts to afflict [constructTarget(target,"combat")] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "starts to afflict [constructTarget(target,"combat")] at [log_loc(M)].")
 		actions.start(new/datum/action/bar/private/icon/werewolf_spread_affliction(target, src), M)
 		return 0
 /datum/action/bar/private/icon/werewolf_spread_affliction
@@ -51,7 +51,7 @@
 		..()
 		var/mob/living/M = owner
 		var/datum/abilityHolder/A = spread.holder
-		if (!spread || get_dist(M, target) > spread.max_range || target == null || M == null || !ishuman(target) || !ishuman(M) || !A || !istype(A))
+		if (!spread || GET_DIST(M, target) > spread.max_range || target == null || M == null || !ishuman(target) || !ishuman(M) || !A || !istype(A))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		// It's okay when the victim expired half-way through the spread, we're interrupted, find a new "victim"
@@ -65,7 +65,7 @@
 		..()
 		var/mob/living/M = owner
 		var/datum/abilityHolder/A = spread.holder
-		if (!spread || get_dist(M, target) > spread.max_range || target == null || M == null || !ishuman(target) || !ishuman(M) || !A || !istype(A))
+		if (!spread || GET_DIST(M, target) > spread.max_range || target == null || M == null || !ishuman(target) || !ishuman(M) || !A || !istype(A))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/done = TIME - started
@@ -123,13 +123,13 @@
 			else if (ishuman(HH))
 				if (isturf(M.loc) && isturf(HH.loc))
 					if (!HH.disease_resistance_check("/datum/ailment/disease/lycanthropy","Lycanthropy"))
-						HH.make_werewolf(1)
+						HH.make_werewolf()
 						HH.full_heal()
 						HH.setStatus("weakened", 15 SECONDS)
 						HH.werewolf_transform() // Not really a fan of this. I wish werewolves all suffered from lycanthropy and that should be how you pass it on, but w/e
 						remove_antag(M, null, 0, 1)
 						boutput(W, "<span class='alert'>You passed your terribly affliction onto [HH]! You are no longer a werewolf!</span>")
-						logTheThing("combat", M, target, "turns [constructTarget(target,"combat")] into a werewolf at [log_loc(M)].")
+						logTheThing(LOG_COMBAT, M, "turns [constructTarget(target,"combat")] into a werewolf at [log_loc(M)].")
 		if (A && istype(A))
 			A.locked = 0
 	onInterrupt()

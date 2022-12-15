@@ -24,7 +24,7 @@
 
 /obj/item/gnomechompski
 	name = "Gnome Chompski"
-	desc = "what"
+	desc = "What."
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "gnome"
 	w_class = W_CLASS_BULKY
@@ -46,7 +46,7 @@
 	attack_self(mob/user as mob)
 		if(last_laugh + 50 < world.time)
 			user.visible_message("<span class='notice'><b>[user]</b> hugs [src]!</span>","<span class='notice'>You hug [src]!</span>")
-			playsound(src.loc,"sound/misc/gnomegiggle.ogg", 50, 1)
+			playsound(src.loc, 'sound/misc/gnomegiggle.ogg', 50, 1)
 			last_laugh = world.time
 
 	process()
@@ -71,7 +71,7 @@
 			return
 		container = pick(eligible_containers)
 
-		playsound(src.loc,"sound/misc/gnomegiggle.ogg", 50, 1)
+		playsound(src.loc, 'sound/misc/gnomegiggle.ogg', 50, 1)
 		src.set_loc(container)
 
 /obj/item/c_tube
@@ -123,17 +123,31 @@
 		user.put_in_hand_or_drop(new /obj/item/clothing/head/party)
 		qdel(src)
 
+TYPEINFO(/obj/item/disk)
+	mats = 8
+
 /obj/item/disk
 	name = "disk"
 	icon = 'icons/obj/items/items.dmi'
-	mats = 8
 
 /obj/item/dummy
 	name = "dummy"
 	invisibility = INVIS_ALWAYS
-	anchored = 1.0
-	flags = TABLEPASS
+	anchored = 2
+	flags = TABLEPASS | UNCRUSHABLE
 	burn_possible = 0
+	item_function_flags = IMMUNE_TO_ACID
+
+	disposing()
+		disposed = FALSE
+		..()
+		CRASH("Something tried to delete the can_reach dummy!")
+
+	ex_act()
+		return
+
+	changeHealth(change)
+		return
 
 /obj/item/rubber_chicken
 	name = "Rubber Chicken"
@@ -238,7 +252,8 @@
 	desc = "Looks like one of those fair toys."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "rubber_hammer"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	force = 0
 
 	New()
@@ -248,7 +263,7 @@
 	attack(mob/M, mob/user)
 		src.add_fingerprint(user)
 
-		playsound(M, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1, -1)
+		playsound(M, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
 		playsound(M, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
 		user.visible_message("<span class='alert'><B>[user] bonks [M] on the head with [src]!</B></span>",\
 							"<span class='alert'><B>You bonk [M] on the head with [src]!</B></span>",\
@@ -262,6 +277,9 @@
 			src.setItemSpecial(/datum/item_special/slam)
 
 
+TYPEINFO(/obj/item/reagent_containers/vape)
+	mats = 6
+
 /obj/item/reagent_containers/vape //yeet
 	name = "e-cigarette"
 	desc = "The pinacle of human technology. An electronic cigarette!"
@@ -271,8 +289,8 @@
 	initial_reagents = "nicotine"
 	item_state = "ecig"
 	icon_state = "ecig"
-	mats = 6
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOSPLASH
+	c_flags = ONBELT
 	var/emagged = 0
 	var/last_used = 0
 	var/list/safe_smokables = list("nicotine", "THC", "CBD")
@@ -381,7 +399,7 @@
 				if(PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.holder)
 					boutput(PH.parent.linked.handset.holder,"<span class='alert'><B>[usr] blows a cloud of smoke right through the phone! What a total [pick("dork","loser","dweeb","nerd","useless piece of shit","dumbass")]!</B></span>")
 
-			logTheThing("combat", usr, null, "vapes a cloud of [log_reagents(src)] at [log_loc(target_loc)].")
+			logTheThing(LOG_COMBAT, usr, "vapes a cloud of [log_reagents(src)] at [log_loc(target_loc)].")
 			last_used = world.time
 
 /obj/item/reagent_containers/vape/medical //medical cannabis got nothing on this!!
@@ -432,7 +450,7 @@
 			return
 		else
 			last_ring = world.time
-			playsound(src.loc,"sound/misc/Boxingbell.ogg",50,1)
+			playsound(src.loc, 'sound/misc/Boxingbell.ogg', 50,1)
 
 /obj/item/trophy
 	name = "trophy"
@@ -524,7 +542,7 @@
 			qdel(W)
 			src.icon_state = "sarc_2"
 			src.gnome = 1
-		else if(istype(W,/obj/item/device/key/chompskey) && (src.icon_state == "sarc_0"))
+		else if(istype(W,/obj/item/device/key/generic/chompskey) && (src.icon_state == "sarc_0"))
 			user.u_equip(W)
 			qdel(W)
 			src.icon_state = "sarc_key"

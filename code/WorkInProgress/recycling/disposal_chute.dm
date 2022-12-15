@@ -9,6 +9,9 @@
 #define DISPOSAL_CHUTE_CHARGING 1
 #define DISPOSAL_CHUTE_CHARGED 2
 
+TYPEINFO(/obj/machinery/disposal)
+	mats = 20			// whats the point of letting people build trunk pipes if they cant build new disposals?
+
 /obj/machinery/disposal
 	name = "disposal unit"
 	desc = "A pressurized trashcan that flushes things you put into it through pipes, usually to disposals."
@@ -27,7 +30,6 @@
 	var/light_style = "disposal" // for the lights and stuff
 	var/image/handle_image = null
 	var/destination_tag = null
-	mats = 20			// whats the point of letting people build trunk pipes if they cant build new disposals?
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER
 	power_usage = 100
 
@@ -83,7 +85,7 @@
 	onDestroy()
 		if (src.powered())
 			elecflash(src, power = 2)
-		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 		. = ..()
 
 	proc/initair()
@@ -115,29 +117,31 @@
 				S.UpdateIcon()
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
-		if (istype(I,/obj/item/storage/) && I.contents.len)
-			var/action
-			if (istype(I, /obj/item/storage/mechanics/housing_handheld))
-				action = input(user, "What do you want to do with [I]?") as null|anything in list("Place it in the Chute","Never Mind")
-			else
-				action = input(user, "What do you want to do with [I]?") as null|anything in list("Place it in the Chute","Empty it into the chute","Never Mind")
-			if (!action || action == "Never Mind")
-				return
-			if (!in_interact_range(src, user))
-				boutput(user, "<span class='alert'>You need to be closer to the chute to do that.</span>")
-				return
-			if (action == "Empty it into the chute")
-				var/obj/item/storage/S = I
-				if(istype(S, /obj/item/storage/secure))
-					var/obj/item/storage/secure/secS = S
-					if(secS.locked)
-						boutput("<span class='alert'>You need to unlock the container first.</span>")
-						return
-				for(var/obj/item/O in S)
-					O.set_loc(src)
-					S.hud.remove_object(O)
-				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
-				return
+		//first time they click with a storage, it gets dumped. second time container itself is added
+		if ((istype(I,/obj/item/storage/) && I.contents.len) && user.a_intent == INTENT_HELP) //if they're not on help intent it'll default to placing it in while full
+			var/obj/item/storage/S = I
+
+			if(istype(S, /obj/item/storage/secure))
+				var/obj/item/storage/secure/secS = S
+				if(secS.locked)
+					boutput("<span class='alert'> Unable to open it, you place the whole [secS] into the container.</span>")
+					I.set_loc(src)
+					actions.interrupt(user, INTERRUPT_ACT)
+					return
+			for(var/obj/item/O in S)
+				O.set_loc(src)
+				S.hud.remove_object(O)
+			user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
+			actions.interrupt(user, INTERRUPT_ACT)
+			return
+
+		if (istype(I, /obj/item/storage/mechanics/housing_handheld)) //override to normal activity
+			I.set_loc(src)
+			user.visible_message("[user.name] places \the [I] into \the [src].",\
+			"You place \the [I] into \the [src].")
+			actions.interrupt(user, INTERRUPT_ACT)
+			return
+
 		var/obj/item/magtractor/mag
 		if (istype(I.loc, /obj/item/magtractor))
 			mag = I.loc
@@ -209,7 +213,7 @@
 		else if (istype(MO, /mob/living))
 			var/mob/living/H = MO
 			H.visible_message("<span class='alert'><B>[H] falls into the disposal outlet!</B></span>")
-			logTheThing("combat", H, null, "is thrown into a [src.name] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, H, "is thrown into a [src.name] at [log_loc(src)].")
 			H.set_loc(src)
 			if(prob(10) || H.bioHolder?.HasEffect("clumsy"))
 				src.visible_message("<span class='alert'><B><I>...accidentally hitting the handle!</I></B></span>")
@@ -273,7 +277,7 @@
 						SubscribeToProcess()
 						src.is_processing = 1
 				update()
-				playsound(src, "sound/misc/handle_click.ogg", 50, 1)
+				playsound(src, 'sound/misc/handle_click.ogg', 50, 1)
 				. = TRUE
 			if("togglePump")
 				if (src.mode)
@@ -593,7 +597,7 @@
 			boutput(user, "[target] doesn't have anything in it to load!")
 			return
 		src.visible_message("[user] begins depositing [target]'s contents into [src].")
-		playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
+		playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 		for (var/atom/movable/AM in target)
 			if (BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user))
 				break
@@ -629,7 +633,7 @@
 			SubscribeToProcess()
 			is_processing = 1
 
-		playsound(src, "sound/misc/handle_click.ogg", 50, 1)
+		playsound(src, 'sound/misc/handle_click.ogg', 50, 1)
 
 		update()
 		return
@@ -686,7 +690,7 @@
 			else if(target != user && !user.restrained())
 				msg = "[user.name] stuffs [target.name] into the [chute]!"
 				boutput(user, "You stuff [target.name] into the [chute]!")
-				logTheThing("combat", user, target, "places [constructTarget(target,"combat")] into [chute] at [log_loc(chute)].")
+				logTheThing(LOG_COMBAT, user, "places [constructTarget(target,"combat")] into [chute] at [log_loc(chute)].")
 			else
 				..()
 				return

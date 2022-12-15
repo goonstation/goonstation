@@ -34,6 +34,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 	var/can_throw = 0
 	var/can_choke = 0
 	var/in_throw_mode = 0
+	var/health_brute = null
+	var/health_burn = null
+	var/health_brute_vuln = null
+	var/health_burn_vuln = null
 
 	var/can_help = 0
 	var/can_grab = 0
@@ -93,7 +97,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 		setup_equipment_slots()
 		setup_reagents()
 		setup_healths()
-		if (!healthlist.len)
+		if (!length(healthlist))
 			stack_trace("Critter [type] ([name]) \[\ref[src]\] does not have health holders.")
 		count_healths()
 
@@ -135,6 +139,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 		SPAWN(0.5 SECONDS) //if i don't spawn, no abilities even show up
 			if (abilityHolder)
 				abilityHolder.updateButtons()
+
+		#ifdef NO_CRITTERS
+		START_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
 
 	disposing()
 		if(organHolder)
@@ -179,8 +187,8 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 	///enables mob ai that was disabled by a hibernation task
 	proc/wake_from_hibernation()
-		if(src.is_npc)
-			src.ai?.enabled = TRUE
+		if(src.is_npc && !src.client)
+			src.ai?.enable()
 			src.last_hibernation_wake_tick = TIME
 			src.registered_area?.registered_mob_critters -= src
 			src.registered_area = null
@@ -297,14 +305,14 @@ ABSTRACT_TYPE(/mob/living/critter)
 	attackby(var/obj/item/I, var/mob/M)
 		if (isdead(src)) 	//Just copied from pets_small_animals.dm with only small modifications. yep!
 			if (src.skinresult && max_skins)
-				if (istype(I, /obj/item/circular_saw) || istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/scalpel) || istype(I, /obj/item/raw_material/shard) || istype(I, /obj/item/sword) || istype(I, /obj/item/saw) || istype(I, /obj/item/wirecutters))
+				if (issawingtool(I) || iscuttingtool(I))
 					for (var/i, i<rand(1, max_skins), i++)
 						var/obj/item/S = new src.skinresult
 						S.set_loc(src.loc)
 					src.skinresult = null
 					M.visible_message("<span class='alert'>[M] skins [src].</span>","You skin [src].")
 					return
-			if (src.butcherable && (istype(I, /obj/item/circular_saw) || istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/scalpel) || istype(I, /obj/item/raw_material/shard) || istype(I, /obj/item/sword) || istype(I, /obj/item/saw) || istype(I, /obj/item/wirecutters)))
+			if (issawingtool(I) || iscuttingtool(I))
 				actions.start(new/datum/action/bar/icon/butcher_living_critter(src,src.butcher_time), M)
 				return
 
@@ -388,24 +396,25 @@ ABSTRACT_TYPE(/mob/living/critter)
 		//actually throw it!
 		if (I)
 			I.layer = initial(I.layer)
+			var/throw_dir = get_dir(src, target)
 			if(prob(yeet_chance))
 				src.visible_message("<span class='alert'>[src] yeets [I].</span>")
 			else
 				src.visible_message("<span class='alert'>[src] throws [I].</span>")
 			if (iscarbon(I))
 				var/mob/living/carbon/C = I
-				logTheThing("combat", src, C, "throws [constructTarget(C,"combat")] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, src, "throws [constructTarget(C,"combat")] [dir2text(throw_dir)] at [log_loc(src)].")
 				if ( ishuman(C) )
 					C.changeStatus("weakened", 1 SECOND)
 			else
 				// Added log_reagents() call for drinking glasses. Also the location (Convair880).
-				logTheThing("combat", src, null, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
 			if (istype(src.loc, /turf/space)) //they're in space, move em one space in the opposite direction
-				src.inertia_dir = get_dir(target, src)
+				src.inertia_dir = throw_dir
 				step(src, inertia_dir)
 			if (istype(I.loc, /turf/space) && ismob(I))
 				var/mob/M = I
-				M.inertia_dir = get_dir(src,target)
+				M.inertia_dir = throw_dir
 			I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src)
 
 			playsound(src.loc, 'sound/effects/throw.ogg', 50, 1, 0.1)
@@ -769,7 +778,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 		src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
 		random_brute_damage(src, AM.throwforce, TRUE)
 		if (src.client)
-			logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
+			logTheThing(LOG_COMBAT, src, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
 		if(thr?.user)
 			src.was_harmed(thr.user, AM)
 
@@ -937,6 +946,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 				EH.drop(1)
 
 	emote(var/act, var/voluntary = 0)
+		..()
 		var/param = null
 
 		if (findtext(act, " ", 1, null))
@@ -1017,7 +1027,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 							src.changeStatus("paralysis", 3 SECONDS)
 							src.changeStatus("weakened", 4 SECONDS)
 							container.visible_message("<span class='alert'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
-							playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+							playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 							var/wiggle = 6
 							while(wiggle > 0)
 								wiggle--
@@ -1036,7 +1046,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 							message = "<b>[src]</B> does a flip!"
 							animate_spin(src, pick("L", "R"), 1, 0)
 		if (message)
-			logTheThing("say", src, null, "EMOTE: [message]")
+			logTheThing(LOG_SAY, src, "EMOTE: [message]")
 			if (m_type & 1)
 				for (var/mob/O in viewers(src, null))
 					O.show_message("<span class='emote'>[message]</span>", m_type)
@@ -1146,21 +1156,12 @@ ABSTRACT_TYPE(/mob/living/critter)
 			return 1
 		return 0
 
-	get_explosion_resistance()
-		var/ret = explosion_resistance
-		for (var/datum/equipmentHolder/EH in equipment)
-			if (EH.armor_coverage & TORSO)
-				var/obj/item/clothing/suit/S = EH.item
-				if (istype(S))
-					ret += S.getProperty("exploprot")
-		return ret/100
-
 	ex_act(var/severity)
 		..() // Logs.
 		var/ex_res = get_explosion_resistance()
 		if (ex_res >= 0.35 && prob(ex_res * 100))
 			severity++
-		if (ex_res >= 0.80 && prob(ex_res * 75))
+		if (ex_res >= 0.8 && prob(ex_res * 75))
 			severity++
 		switch(severity)
 			if (1)
@@ -1213,6 +1214,55 @@ ABSTRACT_TYPE(/mob/living/critter)
 	proc/on_wake()
 		return
 
+	//the following procs are used to make transitioning from /obj/critter to /mob/living/critter easier. If you don't have to use them, you probably shouldn't.
+
+	/// Used for generic critter mobAI - targets returned from this proc will be chased and attacked. Return a list of potential targets, one will be picked based on distance.
+	proc/seek_target(var/range = 5)
+		. = list()
+		//default behaviour, return all alive, tangible, not-our-type mobs in range
+		for (var/mob/living/C in hearers(range, src))
+			if (isintangible(C)) continue
+			if (isdead(C)) continue
+			if (istype(C, src.type)) continue
+			. += C
+
+	/// Used for generic critter mobAI - targets returned from this proc will be chased and scavenged. Return a list of potential targets, one will be picked based on distance.
+	proc/seek_scavenge_target(var/range = 5)
+		. = list()
+		for (var/mob/living/carbon/human/H in view(range, src))
+			if (isdead(H) && H.decomp_stage <= 3 && !H.bioHolder?.HasEffect("husk")) //is dead, isn't a skeleton, isn't a grody husk
+				. += H
+
+	/// Used for generic critter mobAI - targets returned from this proc will be chased and eaten. Return a list of potential targets, one will be picked based on distance.
+	proc/seek_food_target(var/range = 5)
+		. = list()
+		for (var/obj/item/reagent_containers/food/snacks/S in view(range, src))
+			. += S
+
+	/// Used for generic critter mobAI - override if your critter needs special attack behaviour. If you need super special attack behaviour, you'll want to create your own attack aiTask
+	proc/critter_attack(var/mob/target)
+		src.set_a_intent(INTENT_HARM)
+		src.hand_attack(target)
+		return TRUE
+
+	/// Used for generic critter mobAI - override if your critter needs special scavenge behaviour. If you need super special attack behaviour, you'll want to create your own attack aiTask
+	proc/critter_scavenge(var/mob/target)
+		src.set_a_intent(INTENT_HARM)
+		src.hand_attack(target)
+		return TRUE
+
+	/// Used for generic critter mobAI - returns TRUE when the mob is able to attack. For handling cooldowns, or other attack blocking conditions.
+	proc/can_critter_attack()
+		return can_act(src,TRUE)
+
+	/// Used for generic critter mobAI - returns TRUE when the mob is able to scavenge. For handling cooldowns, or other scavenge blocking conditions.
+	proc/can_critter_scavenge()
+		return can_act(src,TRUE)
+
+	/// Used for generic critter mobAI - returns TRUE when the mob is able to eat. For handling cooldowns, or other eat blocking conditions.
+	proc/can_critter_eat()
+		return can_act(src,TRUE)
+
 /mob/living/critter/bump(atom/A)
 	var/atom/movable/AM = A
 	if(issmallanimal(src) && src.ghost_spawned && istype(AM) && !AM.anchored)
@@ -1235,7 +1285,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 			src.set_a_intent(INTENT_HARM )
 			hud.update_intent()
 		if ("drop")
-			src.drop_item()
+			src.drop_item(null, TRUE)
 		if ("swaphand")
 			src.swap_hand()
 		if ("attackself")
@@ -1294,7 +1344,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 	..()
 
 /mob/living/critter/blob_act(var/power)
-	logTheThing("combat", src, null, "is hit by a blob")
+	logTheThing(LOG_COMBAT, src, "is hit by a blob")
 
 	if (isdead(src) || src.nodamage)
 		return
@@ -1336,12 +1386,12 @@ ABSTRACT_TYPE(/mob/living/critter)
 /mob/living/critter/Logout()
 	..()
 	if (src.ai && !src.ai.enabled && src.is_npc)
-		ai.enabled = TRUE
+		ai.enable()
 
 /mob/living/critter/Login()
 	..()
 	if (src.ai?.enabled && src.is_npc)
-		ai.enabled = FALSE
+		ai.disable()
 		var/datum/targetable/A = src.abilityHolder?.getAbility(/datum/targetable/ai_toggle)
 		A?.updateObject()
 
@@ -1359,7 +1409,8 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 	New()
 		..()
 		src.reagents = null
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT, src, 100)
+		remove_lifeprocess(/datum/lifeprocess/radiation)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_COLDPROT, src, 100)
 
@@ -1370,3 +1421,6 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 
 	vomit()
 		return
+
+	isBlindImmune()
+		return TRUE

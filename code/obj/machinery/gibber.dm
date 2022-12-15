@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/gibber)
+	mats = 15
+
 /obj/machinery/gibber
 	name = "Gibber"
 	desc = "The name isn't descriptive enough?"
@@ -10,11 +13,10 @@
 	var/mob/occupant // Mob who has been put inside
 	var/atom/movable/proxy // a proxy object containing the occupant in its vis_contents for easier manipulation
 	var/output_direction = WEST // Spray gibs and meat in that direction.
-	var/list/meat_grinding_sounds = list("sound/impact_sounds/Flesh_Crush_1.ogg", "sound/impact_sounds/Flesh_Tear_1.ogg", "sound/impact_sounds/Flesh_Tear_2.ogg", "sound/impact_sounds/Flesh_Tear_3.ogg")
-	var/machine_startup_sound = "sound/machines/tractorrev.ogg"
-	var/machine_shutdown_sound = "sound/machines/tractor_running3.ogg"
-	var/rotor_sound = "sound/machines/lavamoon_rotors_fast_short.ogg"
-	mats = 15
+	var/list/meat_grinding_sounds = list('sound/impact_sounds/Flesh_Crush_1.ogg', 'sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg', 'sound/impact_sounds/Flesh_Tear_3.ogg')
+	var/machine_startup_sound = 'sound/machines/tractorrev.ogg'
+	var/machine_shutdown_sound = 'sound/machines/tractor_running3.ogg'
+	var/rotor_sound = 'sound/machines/lavamoon_rotors_fast_short.ogg'
 	deconstruct_flags =  DECON_WRENCH | DECON_WELDER
 
 	output_north
@@ -81,7 +83,7 @@
 /obj/machinery/gibber/proc/gibber_action(obj/item/grab/G as obj, mob/user as mob)
 	if(G?.affecting && (BOUNDS_DIST(user, src) == 0))
 		user.visible_message("<span class='alert'>[user] shoves [G.affecting] on top of the gibber!</span>")
-		logTheThing("combat", user, G.affecting, "forced [constructTarget(G.affecting,"combat")] into a gibber at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, user, "forced [constructTarget(G.affecting,"combat")] into a gibber at [log_loc(src)].")
 		var/mob/M = G.affecting
 		enter_gibber(M)
 		qdel(G)
@@ -150,7 +152,7 @@
 			btype = src.occupant.bioHolder.bloodType
 
 		if(user != src.occupant) //for suiciding with gibber
-			logTheThing("combat", user, src.occupant, "grinds [constructTarget(src.occupant,"combat")] in a gibber at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "grinds [constructTarget(src.occupant,"combat")] in a gibber at [log_loc(src)].")
 			if(src.occupant.client)
 				message_admins("[key_name(src.occupant, 1)] is ground up in a gibber by [key_name(user)] at [log_loc(src)].")
 		src.occupant.death(TRUE)
@@ -208,9 +210,9 @@
 		generated_meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling(spawn_location)
 	else
 		if(decomposed_level < 3) // fresh or fresh enough
-			generated_meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(spawn_location,meat_source)
+			generated_meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(spawn_location, meat_source)
 		else // rotten yucky mess
 			generated_meat = new /obj/item/reagent_containers/food/snacks/yuck(spawn_location)
-			generated_meat.name = meat_source.real_name + " meat-related substance"
+			generated_meat.name = (meat_source.disfigured ? meat_source.real_name : "Unknown") + " meat-related substance"
 
 	return generated_meat

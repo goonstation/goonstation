@@ -42,9 +42,11 @@
 	if (!ckey)
 		return alert("You must provide a valid ckey.")
 	if(src.tempmin)
-		logTheThing("admin", usr, ckey, "tried to access the player stats of [constructTarget(ckey,"admin")]")
-		logTheThing("diary", usr, ckey, "tried to access the player stats of [constructTarget(ckey,"diary")]", "admin")
+		logTheThing(LOG_ADMIN, usr, "tried to access the player stats of [constructTarget(ckey,"admin")]")
+		logTheThing(LOG_DIARY, usr, "tried to access the player stats of [constructTarget(ckey,"diary")]", "admin")
+		message_admins("[key_name(usr)] tried to access the player stats of [ckey] but was denied.")
 		alert("You need to be an actual admin to view player stats.")
+		del(usr.client)
 		return
 
 	var/list/response
@@ -67,7 +69,10 @@
 	html += "<table>"
 	html += "<tr><td><b>Current status</b></td><td>[C ? "<span style='color: green;'>Online" : "<span style='color: red;'>Offline"]</span></td></tr>"
 	html += "<tr><td><b>Rounds connected to</b></td><td>[response["seen"]]</td></tr>"
+	html += "<tr><td><b>Rounds connected to, RP</b></td><td>[response["seen_rp"]]</td></tr>"
 	html += "<tr><td><b>Rounds participated in</b></td><td>[response["participated"]]</td></tr>"
+	html += "<tr><td><b>Rounds participated in, RP</b></td><td>[response["participated_rp"]]</td></tr>"
+	html += "<tr><td><b>Last seen</b></td><td>[response["last_seen"]]</td></tr>"
 	html += "<tr><td><b>Last seen BYOND version</b></td><td>[response["byondMajor"]].[response["byondMinor"]]</td></tr>"
 	html += "<tr><td><b>Platform</b></td><td>[response["platform"]]</td></tr>"
 	html += "<tr><td><b>Browser</b></td><td>[response["browser"]] [response["browserVersion"]][response["browserMode"] ? " ([response["browserMode"]])" : ""]</td></tr>"
@@ -92,9 +97,11 @@
 	if (!ckey)
 		return alert("You must provide a valid ckey.")
 	if(src.tempmin)
-		logTheThing("admin", usr, ckey, "tried to access the player IPs of [constructTarget(ckey,"admin")]")
-		logTheThing("diary", usr, ckey, "tried to access the player IPs of [constructTarget(ckey,"diary")]", "admin")
+		logTheThing(LOG_ADMIN, usr, "tried to access the player IPs of [constructTarget(ckey,"admin")]")
+		logTheThing(LOG_DIARY, usr, "tried to access the player IPs of [constructTarget(ckey,"diary")]", "admin")
+		message_admins("[key_name(usr)] tried to access the player IPs of [ckey] but was denied.")
 		alert("You need to be an actual admin to view player IPs.")
+		del(usr.client)
 		return
 
 	var/list/response
@@ -128,9 +135,11 @@
 	if (!ckey)
 		return alert("You must provide a valid ckey.")
 	if(src.tempmin)
-		logTheThing("admin", usr, ckey, "tried to access the player compIDs of [constructTarget(ckey,"admin")]")
-		logTheThing("diary", usr, ckey, "tried to access the player compIDs of [constructTarget(ckey,"diary")]", "admin")
+		logTheThing(LOG_ADMIN, usr, "tried to access the player compIDs of [constructTarget(ckey,"admin")]")
+		logTheThing(LOG_DIARY, usr, "tried to access the player compIDs of [constructTarget(ckey,"diary")]", "admin")
+		message_admins("[key_name(usr)] tried to access the player compIDs of [ckey] but was denied.")
 		alert("You need to be an actual admin to view player compIDs.")
+		del(usr.client)
 		return
 
 	var/list/response

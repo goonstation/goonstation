@@ -30,8 +30,7 @@
 			if (istype(H)) H.blood_tracking_output(src.pointCost)
 			return 0 // Cooldown because spam is bad.
 
-		//M.emote("scream")
-		playsound(M.loc,"sound/effects/screech_tone.ogg", 90, 1, pitch = 1)
+		playsound(M.loc, 'sound/effects/screech_tone.ogg', 90, 1, pitch = 1)
 
 		var/obj/itemspecialeffect/screech/E = new /obj/itemspecialeffect/screech
 		E.color = "#FFFFFF"
@@ -80,7 +79,7 @@
 		sonic_attack_environmental_effect(M, 2, list("light", "window", "r_window"))
 
 		if (istype(H)) H.blood_tracking_output(src.pointCost)
-		logTheThing("combat", M, null, "uses chiropteran screech at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses chiropteran screech at [log_loc(M)].")
 		return 0
 
 /datum/targetable/vampire/vampire_scream/mk2

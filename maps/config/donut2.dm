@@ -1,4 +1,4 @@
-INCLUDE_MAP("../unused/donut2_new_walls.dmm")
+INCLUDE_MAP("../donut2.dmm")
 INCLUDE_MAP("../z2.dmm")
 INCLUDE_MAP("../z3.dmm")
 #include "z4.dm"

@@ -4,7 +4,7 @@
 	var/mob/living/carbon/human/H = src
 
 	message_admins("[key_name(usr)] made [key_name(H)] a floor goblin.")
-	logTheThing("admin", usr, H, "made [constructTarget(H,"admin")] a floor goblin.")
+	logTheThing(LOG_ADMIN, usr, "made [constructTarget(H,"admin")] a floor goblin.")
 
 	var/datum/abilityHolder/floor_goblin/abilityHolder = H.add_ability_holder(/datum/abilityHolder/floor_goblin)
 	H.bioHolder.age = -200
@@ -28,7 +28,7 @@
 	H.equip_new_if_possible(/obj/item/clothing/head/helmet/viking, SLOT_HEAD)
 	H.equip_new_if_possible(/obj/item/storage/backpack/, SLOT_BACK)
 	H.equip_new_if_possible(/obj/item/card/id/syndicate, SLOT_WEAR_ID)
-	H.equip_new_if_possible(/obj/item/tank/emergency_oxygen, SLOT_R_STORE)
+	H.equip_new_if_possible(/obj/item/tank/emergency_oxygen/extended, SLOT_R_STORE)
 	H.equip_new_if_possible(/obj/item/device/radio/headset/command, SLOT_EARS)
 	H.equip_new_if_possible(/obj/item/storage/fanny, SLOT_BELT)
 	H.equip_new_if_possible(/obj/item/shoethief_bag, SLOT_IN_BELT)
@@ -100,6 +100,7 @@
 		var/slide_amount = 22 // around 20-25 is just wide enough to show most of the person hiding underneath
 
 		if(M.layer == BETWEEN_FLOORS_LAYER)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_HIDE_ICONS, "underfloor")
 			M.flags &= ~(NODRIFT | DOORPASS | TABLEPASS)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "floorswitching")
 			REMOVE_ATOM_PROPERTY(M, PROP_MOB_NO_MOVEMENT_PUFFS, "floorswitching")
@@ -116,6 +117,7 @@
 					animate_slide(floorturf, 0, 0, 4)
 
 		else
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_HIDE_ICONS, "underfloor")
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "floorswitching")
 			if (floorturf.intact)
 				animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
@@ -170,7 +172,7 @@
 			APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_CANTMOVE, "floorbiting")
 			SPAWN(0.4 SECONDS)
 				if(holder.owner && target_human && (BOUNDS_DIST(holder.owner, target) == 0))
-					playsound(floorturf, "sound/impact_sounds/Flesh_Tear_3.ogg", 50, 1, pitch = 1.3)
+					playsound(floorturf, 'sound/impact_sounds/Flesh_Tear_3.ogg', 50, 1, pitch = 1.3)
 					target_human.changeStatus("weakened", 2 SECONDS)
 					target_human.force_laydown_standup()
 					holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites at [target_human]'s ankles!</b></span>",\
@@ -183,7 +185,7 @@
 				if(floorturf)
 					animate_slide(floorturf, 0, 0, 4)
 		else
-			playsound(floorturf, "sound/impact_sounds/Flesh_Tear_3.ogg", 50, 1, pitch = 1.3)
+			playsound(floorturf, 'sound/impact_sounds/Flesh_Tear_3.ogg', 50, 1, pitch = 1.3)
 			target_human.changeStatus("weakened", 2 SECONDS)
 			target_human.force_laydown_standup()
 			holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites at [target_human]'s ankles!</b></span>",\
@@ -265,7 +267,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		logTheThing("combat", source, target, "tries to remove \an [shoes] from [constructTarget(target,"combat")] at [log_loc(target)].")
+		logTheThing(LOG_COMBAT, source, "tries to remove \an [shoes] from [constructTarget(target,"combat")] at [log_loc(target)].")
 		var/name = "something"
 		icon = shoes.icon
 		icon_state = shoes.icon_state
@@ -286,7 +288,7 @@
 
 		if(shoes)
 			if(shoes.handle_other_remove(source, target))
-				logTheThing("combat", source, target, "successfully removes \an [shoes] from [constructTarget(target,"combat")] at [log_loc(target)].")
+				logTheThing(LOG_COMBAT, source, "successfully removes \an [shoes] from [constructTarget(target,"combat")] at [log_loc(target)].")
 				for(var/mob/O in AIviewers(owner))
 					O.show_message("<span class='alert'><B>[source] removes [shoes] from [target]!</B></span>", 1)
 

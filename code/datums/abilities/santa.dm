@@ -138,7 +138,7 @@
 	cooldown = 1 MINUTES
 
 	cast()
-		playsound(holder.owner.loc, "sound/voice/heavenly.ogg", 100, 1, 0)
+		playsound(holder.owner.loc, 'sound/voice/heavenly.ogg', 50, 1, 0)
 		holder.owner.visible_message("<span class='alert'><B>[holder.owner] calls on the power of Spacemas to heal everyone!</B></span>")
 		for (var/mob/living/M in view(holder.owner,5))
 			M.HealDamage("All", 30, 30)
@@ -152,7 +152,7 @@
 
 	cast()
 		holder.owner.visible_message("<span class='alert'><B>[holder.owner] throws out a bunch of Spacemas presents from nowhere!</B></span>")
-		playsound(usr.loc, "sound/machines/fortune_laugh.ogg", 25, 1, -1)
+		playsound(usr.loc, 'sound/machines/fortune_laugh.ogg', 25, 1, -1)
 		holder.owner.transforming = 1
 		var/to_throw = rand(3,12)
 
@@ -177,7 +177,7 @@
 
 	cast()
 		holder.owner.visible_message("<span class='alert'><B>[holder.owner] casts out a whole shitload of snacks from nowhere!</B></span>")
-		playsound(holder.owner.loc, "sound/machines/fortune_laugh.ogg", 25, 1, -1)
+		playsound(holder.owner.loc, 'sound/machines/fortune_laugh.ogg', 25, 1, -1)
 		holder.owner.transforming = 1
 		var/to_throw = rand(6,18)
 
@@ -203,11 +203,11 @@
 	cooldown = 80 SECONDS
 
 	cast()
-		playsound(holder.owner.loc, "sound/effects/MagShieldUp.ogg", 100, 1, 0)
+		playsound(holder.owner.loc, 'sound/effects/MagShieldUp.ogg', 60, 1, 0)
 		holder.owner.visible_message("<span class='alert'><B>[holder.owner] summons the warmth of a nice toasty fireplace!</B></span>")
 		for (var/mob/living/M in view(holder.owner,5))
-			if (M.bioHolder)
-				M.bioHolder.AddEffect("cold_resist", 0, 60)
+			if (M.bioHolder && !M.bioHolder.HasOneOfTheseEffects("fire_resist", "cold_resist", "thermal_resist"))
+				M.bioHolder.AddEffect("cold_resist", 0, 60) // this will wipe `thermal_vuln` still vOv
 
 /datum/targetable/santa/teleport
 	name = "Spacemas Warp"
@@ -218,21 +218,21 @@
 
 	cast()
 		var/list/tele_areas = get_teleareas()
-		var/A = tgui_input_list(src, "Area to jump to", "Teleportation", tele_areas)
+		var/A = tgui_input_list(src.holder.owner, "Area to jump to", "Teleportation", tele_areas)
 		if (isnull(A))
-			boutput(src, "<span class='alert'>Invalid area selected.</span>")
+			boutput(src.holder.owner, "<span class='alert'>Invalid area selected.</span>")
 			return 1
 		var/area/thearea = get_telearea(A)
 		if(thearea.teleport_blocked)
-			boutput(src, "<span class='alert'>That area is blocked from teleportation.</span>")
+			boutput(src.holder.owner, "<span class='alert'>That area is blocked from teleportation.</span>")
 			return 1
 
 		holder.owner.visible_message("<span class='alert'><B>[holder.owner] poofs away in a puff of cold, snowy air!</B></span>")
-		playsound(usr.loc, "sound/effects/bamf.ogg", 25, 1, -1)
-		playsound(usr.loc, "sound/machines/fortune_laugh.ogg", 25, 1, -1)
+		playsound(src.holder.owner.loc, 'sound/effects/bamf.ogg', 25, 1, -1)
+		playsound(src.holder.owner.loc, 'sound/machines/fortune_laugh.ogg', 25, 1, -1)
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-		smoke.set_up(1, 0, usr.loc)
-		smoke.attach(usr)
+		smoke.set_up(1, 0, src.holder.owner.loc)
+		smoke.attach(src.holder.owner.loc)
 		smoke.start()
 		var/list/L = list()
 		for(var/turf/T in get_area_turfs(thearea.type))
@@ -258,7 +258,7 @@
 		for (var/mob/living/carbon/cube/meat/krampus/K in view(7,holder.owner))
 			holder.owner.visible_message("<span class='alert'><B>[holder.owner] makes a stern gesture at [K]!</B></span>")
 			boutput(K, "<span class='alert'>You have been banished by Santa Claus!</span>")
-			playsound(usr.loc, "sound/effects/bamf.ogg", 25, 1, -1)
+			playsound(usr.loc, 'sound/effects/bamf.ogg', 25, 1, -1)
 			smoke.set_up(1, 0, K.loc)
 			smoke.attach(K)
 			smoke.start()

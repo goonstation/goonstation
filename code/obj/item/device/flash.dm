@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/flash)
+	mats = list("MET-1" = 3, "CON-1" = 5, "CRY-1" = 5)
+
 /obj/item/device/flash
 	name = "flash"
 	desc = "A device that emits a complicated strobe when used, causing disorientation. Useful for stunning people or starting a dance party."
@@ -8,15 +11,15 @@
 	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 10
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	click_delay = COMBAT_CLICK_DELAY
+	flags = FPRINT | TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	item_state = "electronic"
-	mats = list("MET-1" = 3, "CON-1" = 5, "CRY-1" = 5)
 
 	var/status = 1 // Bulb still functional?
 	var/secure = 1 // Access panel still secured?
 	var/use = 0 // Times the flash has been used.
-	var/l_time = 0 // Anti-spam cooldown (in relation to world time).
 	var/emagged = 0 // Booby Trapped?
 
 	var/eye_damage_mod = 0
@@ -84,6 +87,11 @@
 				else
 					. += "\nThe bulb is in terrible condition"
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			qdel(src) //cannot un-turboflash
+
 //I split attack and flash_mob into seperate procs so the rev_flash code is cleaner
 /obj/item/device/flash/attack(mob/living/M, mob/user)
 	if(isghostcritter(user)) return
@@ -112,7 +120,7 @@
 			return
 		if (src.cell && istype(src.cell,/obj/item/cell/erebite))
 			user.visible_message("<span class='alert'>[user]'s flash/cell assembly violently explodes!</span>")
-			logTheThing("combat", user, M, "tries to blind [constructTarget(M,"combat")] with [src] (erebite power cell) at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "tries to blind [constructTarget(M,"combat")] with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
 			SPAWN(0.1 SECONDS)
@@ -142,9 +150,8 @@
 			sleep(0.5 SECONDS)
 			qdel(animation)
 
-	playsound(src, "sound/weapons/flash.ogg", 100, 1)
+	playsound(src, 'sound/weapons/flash.ogg', 100, 1)
 	flick(src.animation_type, src)
-	src.l_time = world.time
 	if (!src.turboflash)
 		src.use++
 
@@ -180,9 +187,9 @@
 		blind_msg_target = " but your eyes are protected!"
 		blind_msg_others = " but [his_or_her(M)] eyes are protected!"
 	M.visible_message("<span class='alert'>[user] blinds [M] with \the [src][blind_msg_others]</span>", "<span class='alert'>[user] blinds you with \the [src][blind_msg_target]</span>")
-	logTheThing("combat", user, M, "blinds [constructTarget(M,"combat")] with [src] at [log_loc(user)].")
+	logTheThing(LOG_COMBAT, user, "blinds [constructTarget(M,"combat")] with [src] at [log_loc(user)].")
 	if (src.emagged)
-		logTheThing("combat", user, user, "blinds themself with [src] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "blinds themself with [src] at [log_loc(user)].")
 
 	// Handle bulb wear.
 	if (src.turboflash)
@@ -206,9 +213,6 @@
 	if(isghostcritter(user)) return
 	src.add_fingerprint(user)
 
-	if (src.l_time && world.time < src.l_time + 10)
-		return
-
 	if (user?.bioHolder?.HasEffect("clumsy") && prob(50))
 		user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], but slips and drops it!</span>")
 		user.drop_item()
@@ -228,7 +232,7 @@
 			return
 		if (src.cell && istype(src.cell,/obj/item/cell/erebite))
 			user.visible_message("<span class='alert'>[user]'s flash/cell assembly violently explodes!</span>")
-			logTheThing("combat", user, null, "tries to area-flash with [src] (erebite power cell) at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "tries to area-flash with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
 			SPAWN(0.1 SECONDS)
@@ -236,9 +240,8 @@
 			return
 
 	// Play animations.
-	playsound(src, "sound/weapons/flash.ogg", 100, 1)
+	playsound(src, 'sound/weapons/flash.ogg', 100, 1)
 	flick(src.animation_type, src)
-	src.l_time = world.time
 
 	if (isrobot(user))
 		SPAWN(0)
@@ -264,7 +267,7 @@
 			if (src.turboflash)
 				M.apply_flash(35, 0, 0, 25)
 			else
-				var/dist = get_dist(get_turf(src),M)
+				var/dist = GET_DIST(get_turf(src),M)
 				dist = min(dist,4)
 				dist = max(dist,1)
 				M.apply_flash(20, weak = 2, uncloak_prob = 100, stamina_damage = (35 / dist), disorient_time = 3)
@@ -288,7 +291,7 @@
 	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 		var/datum/game_mode/revolution/R = ticker.mode
 		if (ishuman(M))
-			//playsound(src, "sound/weapons/rev_flash_startup.ogg", 40, 1 , 0, 0.6) //moved to rev flash only
+			//playsound(src, 'sound/weapons/rev_flash_startup.ogg', 40, 1 , 0, 0.6) //moved to rev flash only
 
 			var/mob/living/carbon/human/H = M
 			var/safety = 0
@@ -374,11 +377,13 @@
 	return
 
 // The Turboflash - A flash combined with a charged energy cell to make a bigger, meaner flash (That dies after one use).
+TYPEINFO(/obj/item/device/flash/turbo)
+	mats = 0
+
 /obj/item/device/flash/turbo
 	name = "flash/cell assembly"
 	desc = "A common stun weapon with a power cell hastily wired into it. Looks dangerous."
 	icon_state = "turboflash"
-	mats = 0
 	animation_type = "turboflash2"
 	turboflash = 1
 	max_flash_power = 5000
@@ -443,7 +448,7 @@
 					user.show_text("[src] refuses to flash!", "red") //lol
 					return
 		else if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-			playsound(src, "sound/weapons/rev_flash_startup.ogg", 30, 1 , 0, 0.6)
+			playsound(src, 'sound/weapons/rev_flash_startup.ogg', 30, 1 , 0, 0.6)
 			var/convert_result = convert(M,user)
 			if (convert_result == 0.5)
 				user.show_text("Hold still to override . . . ", "red")

@@ -21,11 +21,11 @@
 			owner.jitteriness = max(0, owner.jitteriness - 2*mult)
 
 		if (owner.mind && isvampire(owner))
-			if (istype(get_area(owner), /area/station/chapel) && owner.check_vampire_power(3) != 1)
+			if (istype(get_area(owner), /area/station/chapel) && owner.check_vampire_power(3) != 1 && !(owner.job == "Chaplain"))
 				if (prob(33))
 					boutput(owner, "<span class='alert'>The holy ground burns you!</span>")
 				owner.TakeDamage("chest", 0, 5 * mult, 0, DAMAGE_BURN)
-			if (owner.loc && istype(owner.loc, /turf/space))
+			if (owner.loc && istype(owner.loc, /turf/space) || (istype(owner.loc, /obj/dummy/spell_batpoof) && istype(get_turf(owner.loc), /turf/space)))
 				if (prob(33))
 					boutput(owner, "<span class='alert'>The starlight burns you!</span>")
 				owner.TakeDamage("chest", 0, 2 * mult, 0, DAMAGE_BURN)
@@ -34,14 +34,15 @@
 			var/area/A = owner.loc.loc
 			if (A.irradiated)
 				//spatial interdictor: mitigate effect of radiation
-				//consumes 250 units of charge per person per life tick
+				//consumes 30 units of charge per person per second
+				var/multdraw = round(60 * mult)
 				var/interdictor_influence = 0
-				for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-					if (IN_RANGE(IX,owner,IX.interdict_range) && IX.expend_interdict(250))
+				for_by_tcl(IX, /obj/machinery/interdictor)
+					if (IX.expend_interdict(multdraw,owner))
 						interdictor_influence = 1
 						break
 				if(!interdictor_influence)
-					owner.changeStatus("radiation", (A.irradiated * 10 * mult) SECONDS)
+					owner.take_radiation_dose((rand() * 0.5 SIEVERTS * A.irradiated * mult))
 
 		if (owner.bioHolder)
 			var/total_stability = owner.bioHolder.genetic_stability

@@ -16,7 +16,7 @@
 				if (M.client)
 					M.show_message("<span class='notice'>You slipped on the floor!</span>")
 
-				playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
+				playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
 			SPAWN(0.1)
 				step(M, M.dir)

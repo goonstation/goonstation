@@ -6,9 +6,11 @@
 	targeted = 0
 	cooldown = 600
 	requires_robes = 1
-	voice_grim = "sound/voice/wizard/StaffGrim.ogg"
-	voice_fem = "sound/voice/wizard/StaffFem.ogg"
-	//voice_other = "sound/voice/wizard/notdoneyet.ogg"
+	voice_grim = 'sound/voice/wizard/StaffGrim.ogg'
+	voice_fem = 'sound/voice/wizard/StaffFem.ogg'
+	//voice_other = 'sound/voice/wizard/notdoneyet.ogg'
+	maptext_colors = list("#b320c3", "#5a1d8a")
+
 
 	cast(mob/target)
 		if (!holder)
@@ -25,7 +27,7 @@
 			return 1
 
 		if(!istype(get_area(M), /area/sim/gunsim)) // Avoid dead chat spam
-			M.say("KOMH HEIRE")
+			M.say("KOHM HEIRE", FALSE, maptext_style, maptext_colors)
 		..()
 
 		var/list/staves = list()
@@ -99,6 +101,7 @@
 	targeted = 0
 	cooldown = 20 SECONDS
 	requires_robes = 1
+	maptext_colors = list("#ebb02b", "#fcf574", "#ebb02b", "#fcf574", "#ebf0f2")
 
 	cast(mob/target)
 		var/mob/living/M = holder?.owner
@@ -109,7 +112,7 @@
 			return 1
 
 		if(!istype(get_area(M), /area/sim/gunsim)) // Avoid dead chat spam
-			M.say("KUH, ABAH'RAH")
+			M.say("KUH, ABAH'RAH", FALSE, maptext_style, maptext_colors)
 		..()
 
 		var/list/staves = list()

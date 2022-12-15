@@ -15,6 +15,7 @@
 	material_amt = 0.1
 	var/broken = 0
 	var/is_reinforced = 0
+	var/can_reinforce = TRUE
 
 	proc/layerify()
 		if (dir == SOUTH)
@@ -31,13 +32,13 @@
 	proc/railing_break(obj/railing/The_Railing)
 		if(!(railing_is_broken(The_Railing)))
 			The_Railing.broken = 1
-			The_Railing.density = 0
+			The_Railing.set_density(FALSE)
 			var/random_sprite = rand(1, 4)
 			The_Railing.icon_state = "railing-broken-" + "[random_sprite]"
 
 	proc/railing_fix(obj/railing/The_Railing)
 		if(railing_is_broken(The_Railing))
-			The_Railing.density = 1
+			The_Railing.set_density(TRUE)
 			The_Railing.broken = 0
 
 
@@ -59,14 +60,14 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					railing_deconstruct(src)
 					return
-			if(3.0)
+			if(3)
 				if (prob(25))
 					railing_break(src)
 					return
@@ -137,7 +138,7 @@
 			else
 				user.show_text("There's no reinforcment on [src] to cut off!", "blue")
 		else if (istype(W,/obj/item/rods))
-			if(!src.is_reinforced)
+			if(!src.is_reinforced && can_reinforce)
 				var/obj/item/rods/R = W
 				if(R.change_stack_amount(-1))
 					user.show_text("You reinforce [src] with the rods.", "blue")
@@ -207,6 +208,11 @@
 			is_reinforced = 1
 			icon_state = "railing-reinforced"
 
+	velvet
+		icon = 'icons/obj/velvetrope.dmi'
+		icon_state = "velvetrope"
+		desc = "A cushy red velvet rope strewn between two golden poles."
+		can_reinforce = FALSE
 
 /datum/action/bar/icon/railing_jump
 	duration = 1 SECOND
@@ -245,7 +251,7 @@
 			jump_target = getLandingLoc()
 
 	proc/getLandingLoc()
-		if (get_dist(ownerMob, the_railing) == 0)
+		if (GET_DIST(ownerMob, the_railing) == 0)
 			if (use_owner_dir)
 				// for handling the multiple ways top hop a corner railing
 				return get_step(the_railing, owner.dir)
@@ -375,19 +381,19 @@
 			return
 		if (!tool)
 			interrupt(INTERRUPT_ALWAYS)
-			logTheThing("debug", src, the_railing, "tried to interact with [the_railing] using a null tool... somehow.")
+			logTheThing(LOG_DEBUG, src, "tried to interact with [the_railing] using a null tool... somehow.")
 			return
 		var/verbing = "doing something to"
 		switch (interaction)
 			if (RAILING_DISASSEMBLE)
 				verbing = "to disassemble"
-				playsound(the_railing, "sound/items/Welder.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Welder.ogg', 50, 1)
 			if (RAILING_FASTEN)
 				verbing = "fastening"
-				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
 			if (RAILING_UNFASTEN)
 				verbing = "unfastening"
-				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
 		for(var/mob/O in AIviewers(ownerMob))
 			O.show_text("[owner] begins [verbing] [the_railing].", "red")
 
@@ -399,16 +405,16 @@
 				verbens = "disassembles"
 				tool:try_weld(ownerMob, 2)
 				the_railing.railing_deconstruct()
-				playsound(the_railing, "sound/items/Welder.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Welder.ogg', 50, 1)
 			if (RAILING_FASTEN)
 				verbens = "fastens"
 				the_railing.anchored = 1
-				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
 			if (RAILING_UNFASTEN)
 				verbens = "unfastens"
 				the_railing.anchored = 0
-				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
 		for(var/mob/O in AIviewers(ownerMob))
 			O.show_text("[owner] [verbens] [the_railing].", "red")
-			logTheThing("station", ownerMob, the_railing, "[verbens] [the_railing].")
+			logTheThing(LOG_STATION, ownerMob, "[verbens] [the_railing].")
 

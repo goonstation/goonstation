@@ -2,6 +2,9 @@
 /*-=-=-=-=-=-=-=-=-=-=-=-=-GHOST-DRONE-=-=-=-=-=-=-=-=-=-=-=-=-*/
 /* '~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~' */
 
+TYPEINFO(/obj/machinery/ghost_catcher)
+	mats = 0
+
 /obj/machinery/ghost_catcher
 	name = "ghost catcher"
 	desc = "It catches ghosts! Read the name gosh I shouldn't have to explain everything to you."
@@ -9,7 +12,6 @@
 	density = 1
 	icon = 'icons/mob/ghost_drone.dmi'
 	icon_state = "ghostcatcher0"
-	mats = 0
 	//var/id = "ghostdrone"
 	event_handler_flags = USE_FLUID_ENTER
 
@@ -120,6 +122,9 @@ var/global/last_ghostdrone_build_time = 0
 var/global/list/available_ghostdrones = list()
 var/global/list/ghostdrone_candidates = list()
 
+TYPEINFO(/obj/machinery/ghostdrone_factory)
+	mats = 0
+
 /obj/machinery/ghostdrone_factory
 	name = "drone factory"
 	desc = "A slightly mysterious looking factory that spits out weird looking drones every so often. Why not."
@@ -127,8 +132,8 @@ var/global/list/ghostdrone_candidates = list()
 	density = 0
 	icon = 'icons/mob/ghost_drone.dmi'
 	icon_state = "factory10"
+	pass_unstable = TRUE
 	layer = 5 // above mobs hopefully
-	mats = 0
 	var/factory_section = 1 // can be 1 to 3
 	var/id = "ghostdrone" // the belts through the factory should be set to the same as the factory pieces so they can control them
 	var/obj/item/ghostdrone_assembly/current_assembly = null
@@ -202,7 +207,7 @@ var/global/list/ghostdrone_candidates = list()
 			if (prob(40))
 				SPAWN(0)
 					src.shake(rand(4,6))
-				playsound(src, pick("sound/impact_sounds/Wood_Hit_1.ogg", "sound/impact_sounds/Metal_Hit_Heavy_1.ogg"), 30, 1, -3)
+				playsound(src, pick('sound/impact_sounds/Wood_Hit_1.ogg', 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'), 30, 1, -3)
 			if (prob(40))
 				var/list/sound_list = pick(ghostly_sounds, sounds_engine, sounds_enginegrump, sounds_sparks)
 				if (!sound_list.len)
@@ -270,11 +275,15 @@ var/global/list/ghostdrone_candidates = list()
 		src.working = 0
 		src.icon_state = "factory[src.factory_section]0"
 
+		if(QDELETED(src.current_assembly))
+			src.current_assembly = null
+			return
+
 		if (src.current_assembly)
 			src.current_assembly.stage = src.single_system ? 3 : src.factory_section
 			src.current_assembly.icon_state = "drone-stage[src.current_assembly.stage]"
 			src.current_assembly.set_loc(get_turf(src))
-			playsound(src, "sound/machines/warning-buzzer.ogg", 50, 1)
+			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 1)
 			src.visible_message("[src] ejects [src.current_assembly]!")
 			src.current_assembly = null
 
@@ -309,12 +318,14 @@ var/global/list/ghostdrone_candidates = list()
 	icon_state = "factory30"
 	factory_section = 3
 
+TYPEINFO(/obj/item/ghostdrone_assembly)
+	mats = 0
+
 /obj/item/ghostdrone_assembly
 	name = "drone assembly"
 	desc = "an incomplete floaty robot"
 	icon = 'icons/mob/ghost_drone.dmi'
 	icon_state = "drone-stage1"
-	mats = 0
 	var/stage = 1
 
 	New()
@@ -326,6 +337,9 @@ var/global/list/ghostdrone_candidates = list()
 			ghostdrone_factory_working = null
 		..()
 
+TYPEINFO(/obj/machinery/ghostdrone_conveyor_sensor)
+	mats = 0
+
 /obj/machinery/ghostdrone_conveyor_sensor
 	name = "conveyor sensor"
 	desc = "A small sensor that pauses the conveyors it's attached to until it receives a signal to start them again."
@@ -333,7 +347,6 @@ var/global/list/ghostdrone_candidates = list()
 	density = 0
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "stopper1"
-	mats = 0
 	var/id_belt = "ghostdrone_lower"
 	var/id_recharger = "ghostdrone"
 	var/list/obj/machinery/conveyor/conveyors = list()

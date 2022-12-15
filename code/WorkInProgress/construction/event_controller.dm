@@ -369,7 +369,7 @@
 /datum/construction_event/siege/animals
 	name = "Animal Siege"
 	warning_text = "A pack of animals have been teleported on board our station!"
-	attacker_types = list(/obj/critter/wasp, /obj/critter/mouse, /obj/critter/goose, /obj/critter/goose/swan, /obj/critter/owl, /obj/critter/bat/buff, /obj/critter/cat, /obj/critter/nicespider, /obj/critter/spider/spacerachnid)
+	attacker_types = list(/obj/critter/wasp, /mob/living/critter/small_animal/mouse, /obj/critter/goose, /obj/critter/goose/swan, /obj/critter/owl, /obj/critter/bat/buff, /mob/living/critter/small_animal/cat, /mob/living/critter/spider/nice, /mob/living/critter/spider/spacerachnid)
 	bosses = list(/obj/critter/lion, /obj/critter/bear)
 	original_size = 30
 	original_bosses = 5

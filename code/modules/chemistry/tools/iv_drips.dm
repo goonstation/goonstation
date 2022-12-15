@@ -108,9 +108,9 @@
 					return
 
 			H.tri_message(user, "<span class='notice'><b>[user]</b> begins inserting [src]'s needle into [H == user ? "[his_or_her(H)]" : "[H]'s"] arm.</span>",\
-				"<span class='notice'>You begin inserting [src]'s needle into [H == user ? "your" : "[H]'s"] arm.</span>",\
-				"<span class='notice'>[H == user ? "You begin" : "<b>[user]</b> begins"] inserting [src]'s needle into your arm.</span>")
-			logTheThing("combat", user, H, "tries to hook up an IV drip [log_reagents(src)] to [constructTarget(H,"combat")] at [log_loc(user)].")
+				"<span class='notice'>[H == user ? "You begin" : "<b>[user]</b> begins"] inserting [src]'s needle into your arm.</span>",\
+				"<span class='notice'>You begin inserting [src]'s needle into [H == user ? "your" : "[H]'s"] arm.</span>")
+			logTheThing(LOG_COMBAT, user, "tries to hook up an IV drip [log_reagents(src)] to [constructTarget(H,"combat")] at [log_loc(user)].")
 			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/reagent_containers/iv_drip/proc/insert_needle, list(H, user), src.icon, src.icon_state, null, null)
 			return
 
@@ -173,9 +173,9 @@
 	proc/insert_needle(var/mob/living/carbon/human/H as mob, mob/living/carbon/user as mob)
 		src.patient = H
 		H.tri_message(user, "<span class='notice'><b>[user]</b> inserts [src]'s needle into [H == user ? "[his_or_her(H)]" : "[H]'s"] arm.</span>",\
-			"<span class='notice'>You insert [src]'s needle into [H == user ? "your" : "[H]'s"] arm.</span>",\
-			"<span class='notice'>[H == user ? "You insert" : "<b>[user]</b> inserts"] [src]'s needle into your arm.</span>")
-		logTheThing("combat", user, H, "connects an IV drip [log_reagents(src)] to [constructTarget(H,"combat")] at [log_loc(user)].")
+			"<span class='notice'>[H == user ? "You insert" : "<b>[user]</b> inserts"] [src]'s needle into your arm.</span>",\
+			"<span class='notice'>You insert [src]'s needle into [H == user ? "your" : "[H]'s"] arm.</span>")
+		logTheThing(LOG_COMBAT, user, "connects an IV drip [log_reagents(src)] to [constructTarget(H,"combat")] at [log_loc(user)].")
 		src.start_transfusion()
 
 	proc/start_transfusion()
@@ -209,6 +209,9 @@
 /* -------------------- IV Stand -------------------- */
 /* ================================================== */
 
+TYPEINFO(/obj/iv_stand)
+	mats = 10
+
 /obj/iv_stand
 	name = "\improper IV stand"
 	desc = "A metal pole that you can hang IV bags on, which is useful since we aren't animals that go leaving our sanitized medical equipment all over the ground or anything!"
@@ -220,7 +223,6 @@
 	var/image/bag_image = null
 	var/obj/item/reagent_containers/iv_drip/IV = null
 	var/obj/paired_obj = null
-	mats = 10
 
 	get_desc()
 		if (src.IV)

@@ -1,3 +1,6 @@
+TYPEINFO(/obj/submachine/claw_machine)
+	mats = list("MET-1"=5, "CON-1"=5, "CRY-1"=5, "FAB-1"=5)
+
 /obj/submachine/claw_machine
 	name = "claw machine"
 	desc = "Sure we got our health insurance benefits cut, and yeah we don't get any overtime on holidays, but hey - free to play claw machines!"
@@ -5,7 +8,6 @@
 	icon_state = "claw"
 	anchored = 1
 	density = 1
-	mats = list("MET-1"=5, "CON-1"=5, "CRY-1"=5, "FAB-1"=5)
 	deconstruct_flags = DECON_MULTITOOL | DECON_WRENCH | DECON_CROWBAR
 	var/busy = 0
 	var/list/prizes = list(/obj/item/toy/plush/small/bee,\
@@ -157,7 +159,7 @@
 		if (!message || BOUNDS_DIST(src, user) > 0)
 			return
 		phrase_log.log_phrase("plushie", message)
-		logTheThing("say", user, null, "makes [src] say, \"[message]\"")
+		logTheThing(LOG_SAY, user, "makes [src] say, \"[message]\"")
 		user.audible_message("<span class='emote'>[src] says, \"[message]\"</span>")
 		var/mob/living/carbon/human/H = user
 		if (H.sims)
@@ -268,7 +270,7 @@
 	if (!menuchoice)
 		return
 	if (menuchoice == "Awoo" && !ON_COOLDOWN(src, "playsound", 2 SECONDS))
-		playsound(user, "sound/voice/babynoise.ogg", 50, 1)
+		playsound(user, 'sound/voice/babynoise.ogg', 50, 1)
 		src.audible_message("<span class='emote'>[src] awoos!</span>")
 	else if (menuchoice == "Say")
 		src.say_something(user)
@@ -298,7 +300,7 @@
 	if (!menuchoice)
 		return
 	if (menuchoice == "Honk" && !ON_COOLDOWN(src, "playsound", 2 SECONDS))
-		playsound(user, "sound/items/rubberduck.ogg", 50, 1)
+		playsound(user, 'sound/items/rubberduck.ogg', 50, 1)
 		src.audible_message("<span class='emote'>[src] honks!</span>")
 	else if (menuchoice == "Say")
 		src.say_something(user)

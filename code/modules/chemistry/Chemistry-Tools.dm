@@ -18,22 +18,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	var/initial_volume = 50
 	var/list/initial_reagents = null // can be a list, an associative list (reagent=amt), or a string.  list will add an equal chunk of each reagent, associative list will add amt of reagent, string will add initial_volume of reagent
 	var/incompatible_with_chem_dispensers = 0
-	var/can_mousedrop = 1
 	move_triggered = 1
-	///Types that should be quickly refilled by mousedrop
-	var/static/list/mousedrop_refill = list(
-		/obj/item/reagent_containers/glass,
-		/obj/item/reagent_containers/food/drinks,
-		/obj/reagent_dispensers,
-		/obj/item/spraybottle,
-		/obj/machinery/plantpot,
-		/obj/mopbucket,
-		/obj/item/reagent_containers/mender,
-		/obj/item/tank/jetpack/backtank,
-		/obj/item/reagent_containers/syringe/baster,
-		/obj/machinery/bathtub
-	)
-
 	var/last_new_initial_reagents = 0 //fuck
 
 	New(loc, new_initial_reagents)
@@ -88,13 +73,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		if (!reagents)
 			return
 		. = "<br><span class='notice'>[reagents.get_description(user,rc_flags)]</span>"
-		return
 
 	mouse_drop(atom/over_object as obj)
 		if (isintangible(usr))
-			return
-		if (!can_mousedrop)
-			boutput(usr, "<span class='alert'>Nope.</span>")
 			return
 		if(usr.restrained())
 			return
@@ -113,14 +94,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 					ok = 0
 			if(!ok)
 				return
-		// First filter out everything we don't want to refill or empty quickly.
-		// feels like there should be a macro for this or something
-		var/type_found = FALSE
-		for (var/type in mousedrop_refill)
-			if (istype(over_object, type))
-				type_found = TRUE
-				break
-		if (!type_found)
+
+		if (!(over_object.flags & ACCEPTS_MOUSEDROP_REAGENTS))
 			return ..()
 
 		if (!istype(src, /obj/item/reagent_containers/glass) && !istype(src, /obj/item/reagent_containers/food/drinks))
@@ -131,6 +106,35 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			return
 
 		src.transfer_all_reagents(over_object, usr)
+
+///Returns a serialized representation of the reagents of an atom for use with the ReagentInfo TGUI components
+///Note that this is not a built in TGUI proc
+proc/ui_describe_reagents(atom/A)
+	var/datum/reagents/R = A.reagents
+	var/list/thisContainerData = list(
+		name = A.name,
+		maxVolume = R.maximum_volume,
+		totalVolume = R.total_volume,
+		contents = list(),
+		finalColor = "#000000"
+	)
+
+	var/list/contents = thisContainerData["contents"]
+	if(istype(R) && R.reagent_list.len>0)
+		thisContainerData["finalColor"] = R.get_average_rgb()
+		// Reagent data
+		for(var/reagent_id in R.reagent_list)
+			var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
+
+			contents.Add(list(list(
+				name = reagents_cache[reagent_id],
+				id = reagent_id,
+				colorR = current_reagent.fluid_r,
+				colorG = current_reagent.fluid_g,
+				colorB = current_reagent.fluid_b,
+				volume = current_reagent.volume
+			)))
+	return thisContainerData
 
 /* ====================================================== */
 /* -------------------- Glass Parent -------------------- */
@@ -146,11 +150,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	amount_per_transfer_from_this = 10
 	var/can_recycle = TRUE //can this be put in a glass recycler?
 	var/splash_all_contents = 1
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
 
+	// this proc is a mess ow
 	afterattack(obj/target, mob/user , flag)
 		user.lastattacked = target
-		if (ismob(target))
+		if (ismob(target) && !target.is_open_container()) // pour reagents down their neck (if possible)
 			if (!src.reagents.total_volume)
 				boutput(user, "<span class='alert'>Your [src.name] is empty!</span>")
 				return
@@ -159,13 +164,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 			if (ishuman(T))
 				var/mob/living/carbon/human/H = T
-				if (H.hand == 1)
-					if (istype(H.l_hand,/obj/item/reagent_containers/glass/)) G = H.l_hand
+				if (H.hand == LEFT_HAND)
+					if (istype(H.l_hand, /obj/item/reagent_containers/glass/)) G = H.l_hand
 				else
-					if (istype(H.r_hand,/obj/item/reagent_containers/glass/)) G = H.r_hand
+					if (istype(H.r_hand, /obj/item/reagent_containers/glass/)) G = H.r_hand
+
 			else if (isrobot(T))
 				var/mob/living/silicon/robot/R = T
-				if (istype(R.module_active,/obj/item/reagent_containers/glass/)) G = R.module_active
+				if (istype(R.module_active, /obj/item/reagent_containers/glass/))
+					G = R.module_active
 
 			if (G && user.a_intent == "help" && T.a_intent == "help" && user != T)
 				if (G.reagents.total_volume >= G.reagents.maximum_volume)
@@ -174,7 +181,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 					return
 				src.reagents.trans_to(G, src.amount_per_transfer_from_this)
 				user.visible_message("<b>[user.name]</b> pours some of the [src.name] into [T.name]'s [G.name].")
-				return
+
 			else
 				if (reagents)
 					reagents.physical_shock(14)
@@ -185,17 +192,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 					boutput(user, "<span class='notice'>You apply [min(src.amount_per_transfer_from_this,src.reagents.total_volume)] units of the solution to [target].</span>")
 					target.visible_message("<span class='alert'><b>[user.name]</b> applies some of the [src.name]'s contents to [target.name].</span>")
 				var/mob/living/MOB = target
-				logTheThing("combat", user, MOB, "splashes [src] onto [constructTarget(MOB,"combat")] [log_reagents(src)] at [log_loc(MOB)].") // Added location (Convair880).
-				can_mousedrop = 0
+				logTheThing(LOG_COMBAT, user, "splashes [src] onto [constructTarget(MOB,"combat")] [log_reagents(src)] at [log_loc(MOB)].") // Added location (Convair880).
 				if (src.splash_all_contents)
 					src.reagents.reaction(target,TOUCH)
+					src.reagents.clear_reagents()
 				else
-					src.reagents.reaction(target, TOUCH, min(src.amount_per_transfer_from_this,src.reagents.total_volume))
-				SPAWN(0.5 SECONDS)
-					if (src.splash_all_contents) src.reagents.clear_reagents()
-					else src.reagents.remove_any(src.amount_per_transfer_from_this)
-					can_mousedrop = 1
-				return
+					src.reagents.reaction(target, TOUCH, min(src.amount_per_transfer_from_this, src.reagents.total_volume))
+					src.reagents.remove_any(src.amount_per_transfer_from_this)
+
 		else if (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
 			var/obj/fluid/F = target
 			if (!src.reagents.total_volume)
@@ -216,13 +220,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				F.group.drain(F, amt / F.group.amt_per_tile, src) // drain uses weird units
 			else //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids
 				var/turf/T = get_turf(F)
-				logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [F] at [log_loc(user)].") // Added reagents (Convair880).
+				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [F] at [log_loc(user)].") // Added reagents (Convair880).
 				var/trans = src.reagents.trans_to(T, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
 				boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [T].</span>")
 
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1, 0.3)
 
-		else if (istype(target, /obj/reagent_dispensers) || (target.is_open_container() == -1 && target.reagents) || ((istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) && !src.reagents.total_volume)) //A dispenser. Transfer FROM it TO us.
+		else if (is_reagent_dispenser(target) || (target.is_open_container() == -1 && target.reagents) || ((istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) && !src.reagents.total_volume)) //A dispenser. Transfer FROM it TO us.
 			if (target.reagents && !target.reagents.total_volume)
 				boutput(user, "<span class='alert'>[target] is empty.</span>")
 				return
@@ -246,7 +250,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				boutput(user, "<span class='alert'>[target] is full.</span>")
 				return
 
-			logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].") // Added reagents (Convair880).
+			logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].") // Added reagents (Convair880).
 			var/trans = src.reagents.trans_to(target, 10)
 			boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 
@@ -261,7 +265,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				boutput(user, "<span class='alert'>[target] is full.</span>")
 				return
 
-			logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].")
+			logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].")
 			var/trans = src.reagents.trans_to(target, 10)
 			boutput(user, "<span class='notice'>You dump [trans] units of the solution to [target].</span>")
 
@@ -272,43 +276,45 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			else
 				src.reagents.add_reagent("silicon_dioxide", src.reagents.maximum_volume - src.reagents.total_volume) //should add like, 100 - 85 sand or something
 			boutput(user, "<span class='notice'>You scoop some of the sand into [src].</span>")
-			return
 
 		else if (reagents.total_volume)
+			if (isobj(target) && (target:flags & NOSPLASH))
+				return
 
-			if (isobj(target)) //Have to do this in 2 lines because byond is shit.
-				if (target:flags & NOSPLASH) return
-			can_mousedrop = 0
 			boutput(user, "<span class='notice'>You [src.splash_all_contents ? "splash all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target].</span>")
-			logTheThing("combat", user, target, "splashes [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
+			logTheThing(LOG_COMBAT, user, "splashes [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
 			if (reagents)
 				reagents.physical_shock(14)
 
-			if (src.splash_all_contents) src.reagents.reaction(target,TOUCH)
-			else src.reagents.reaction(target, TOUCH, min(src.amount_per_transfer_from_this,src.reagents.total_volume))
-			SPAWN(0.5 SECONDS)
-				if (src.splash_all_contents) src.reagents.clear_reagents()
-				else src.reagents.remove_any(src.amount_per_transfer_from_this)
-				can_mousedrop = 1
-			return
+			var/splash_volume
+			if (src.splash_all_contents)
+				splash_volume = src.reagents.maximum_volume
+			else
+				splash_volume = src.amount_per_transfer_from_this
+			splash_volume = min(splash_volume, src.reagents.total_volume) // cap the reaction at the amount of reagents we have
+
+			var/datum/reagents/splash = new(splash_volume) // temp reagents of the splash so we can make changes between the first and second splashes
+			src.reagents.trans_to_direct(splash, splash_volume) // this removes reagents from this container so we don't need to do that below
+
+			var/reacted_reagents = splash.reaction(target, TOUCH, splash_volume)
+
+			var/turf/T
+			if (!isturf(target) && !target.density) // if we splashed on something other than a turf or a dense obj, it goes on the floor as well
+				T = get_turf(target)
+			else if (target.density)
+				// if we splashed on a wall or a dense obj, we still want to flow out onto the floor we're pouring from (avoid pouring under windows and on walls)
+				T = get_turf(user)
+
+			if (T && !T.density) // if the user AND the target are on dense turfs or the user is on a dense turf and the target is a dense obj then just give up. otherwise pour on the floor
+				// first remove everything that reacted in the first reaction
+				for(var/id in reacted_reagents)
+					splash.del_reagent(id)
+				splash.reaction(T, TOUCH, splash.total_volume)
+
 
 	attackby(obj/item/I, mob/user)
-		/*if (istype(I, /obj/item/reagent_containers/pill))
 
-			if (!I.reagents || !I.reagents.total_volume)
-				boutput(user, "<span class='alert'>[src] is empty.</span>")
-				return
-
-			if (src.reagents.total_volume >= src.reagents.maximum_volume)
-				boutput(user, "<span class='alert'>[src] is full.</span>")
-				return
-
-			boutput(user, "<span class='notice'>You dissolve the [I] in [src].</span>")
-
-			I.reagents.trans_to(src, I.reagents.total_volume)
-			qdel(I)
-
-		else */if (istype(I, /obj/item/reagent_containers/food/snacks/ingredient/egg))
+		if (istype(I, /obj/item/reagent_containers/food/snacks/ingredient/egg))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
 				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
@@ -364,9 +370,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 		else if (istype(I, /obj/item/scalpel) || istype(I, /obj/item/circular_saw) || istype(I, /obj/item/surgical_spoon) || istype(I, /obj/item/scissors/surgical_scissors))
 			if (src.reagents && I.reagents)
-				I:Poisoner = user
 				src.reagents.trans_to(I, 5)
-				logTheThing("combat", user, null, "poisoned [I] [log_reagents(I)] with reagents from [src] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
+				logTheThing(LOG_CHEMISTRY, user, "poisoned [I] [log_reagents(I)] with reagents from [src] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
 				user.visible_message("<span class='alert'><b>[user]</b> dips the blade of [I] into [src]!</span>")
 				return
 
@@ -489,6 +494,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	attack_self(mob/user as mob)
 		if (isrobot(user))
 			boutput(user, "<span class='alert'>Why would you wanna flip over your precious bucket? Silly.</span>")
+			return
+		if (src.cant_drop || src.cant_self_remove)
+			boutput(user, "<span class='alert'>You can't flip that, it's stuck on.</span>")
 			return
 		if (src.reagents.total_volume)
 			user.show_text("<b>You turn the bucket upside down, causing it to spill!</b>", "red")

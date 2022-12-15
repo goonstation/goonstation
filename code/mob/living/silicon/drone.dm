@@ -129,7 +129,7 @@
 			C.use(1)
 			src.health = clamp(src.health + 10, 1, src.health_max)
 			user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if (src.health >= 50)
 				boutput(user, "<span class='notice'>The wiring is fully repaired. Now you need to weld the external plating.</span>")
 
@@ -184,7 +184,7 @@
 		if (use_delay && world.time < src.next_click)
 			return src.next_click - world.time
 
-		if (get_dist(src, target) > 0)
+		if (GET_DIST(src, target) > 0)
 			set_dir(get_dir(src, target))
 
 		var/reach = can_reach(target, src)
@@ -239,6 +239,7 @@
 			playsound(src.loc, beeps_n_boops[1], 30, 1)
 
 	emote(var/act)
+		..()
 		//var/param = null
 		if (findtext(act, " ", 1, null))
 			var/t1 = findtext(act, " ", 1, null)

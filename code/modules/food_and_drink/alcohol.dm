@@ -46,7 +46,7 @@
 
 /obj/item/reagent_containers/food/drinks/bottle/wine
 	name = "wine"
-	desc = "Not to be confused with pubbie tears."
+	desc = "Not to be confused with high-pitched crying."
 	icon_state = "bottle-wine"
 	heal_amt = 1
 	g_amt = 40
@@ -131,7 +131,7 @@
 			if (isnull(new_name) || !length(new_name) || new_name == " ")
 				return
 			phrase_log.log_phrase("vehicle", new_name, no_duplicates=TRUE)
-			logTheThing("station", user, null, "renamed [O] to [new_name] in [get_area(user)] ([log_loc(user)])")
+			logTheThing(LOG_STATION, user, "renamed [O] to [new_name] in [get_area(user)] ([log_loc(user)])")
 			new_name = copytext(strip_html(new_name), 1, 32)
 			O.name = new_name
 			return
@@ -366,6 +366,53 @@
 		desc = "A stick of celery. Does not feature ants. Unless you leave it on the floor, but those would probably not be very tasty. I dunno, though, I've never eaten an ant. They might be delicious."
 		icon_state = "celery"
 		edible = 1
+
+// idk where to put this so here
+/obj/item/straw
+	name = "drinking straw"
+	desc = "A straw, for drinking from."
+	icon = 'icons/obj/foodNdrink/drinks.dmi'
+	icon_state = "straw"
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	w_class = W_CLASS_TINY
+	var/cooldown = 1 SECOND
+	var/slurp_size = 5
+
+	New()
+		..()
+		src.color = rgb(rand(150,255), rand(150,255), rand(150,255))
+
+	afterattack(atom/target, mob/user)
+		if (ON_COOLDOWN(user, "straw_slurp", cooldown)) // done like this so I can varedit the cooldown to 0 rather than having to go through click delay
+			return ..()
+
+		var/datum/reagents/target_reagents = null
+		var/msg
+		if (target.reagents && target.is_open_container())
+			target_reagents = target.reagents
+			msg = "<span class='hint'>You slurp some of the liquid from \the [target]. [target_reagents.get_taste_string(user)]</span>"
+		else if (istype(target, /obj/fluid))
+			var/obj/fluid/drank = target
+			target_reagents = drank.group?.reagents
+			msg = "<span class='hint'>You slurp some of \the [drank] off of \the [get_turf(drank)]. [target_reagents.get_taste_string(user)]</span>"
+
+		if (target_reagents?.total_volume)
+			target_reagents.reaction(user, INGEST, clamp(target_reagents.total_volume, CHEM_EPSILON, min(src.slurp_size, (user.reagents?.maximum_volume - user.reagents?.total_volume))))
+			target_reagents.trans_to(user, min(target_reagents.total_volume, src.slurp_size))
+			eat_twitch(user)
+			boutput(user, msg)
+			playsound(user.loc,'sound/items/drink.ogg', rand(30,70), vary = TRUE)
+		else
+			return ..()
+
+/obj/item/straw/fast
+	cooldown = 0
+
+/obj/item/storage/box/straws
+	name = "box of straws"
+	icon_state = "straws"
+	spawn_contents = list(/obj/item/straw = 7)
+
 
 // empty bottles
 

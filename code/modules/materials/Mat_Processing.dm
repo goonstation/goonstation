@@ -1,4 +1,7 @@
 /// This serves as a bridge between old materials pieces and new ones. Eventually old ones should just be updated.
+TYPEINFO(/obj/machinery/processor)
+	mats = 20
+
 /obj/machinery/processor
 	name = "Material processor"
 	desc = "Turns raw materials, and objects containing materials, into processed pieces."
@@ -7,7 +10,6 @@
 	anchored = 1
 	density = 1
 	layer = FLOOR_EQUIP_LAYER1
-	mats = 20
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
@@ -108,10 +110,10 @@
 				D = null
 
 			if (out_amount > 0)//No animation and beep if nothing processed
-				playsound(src.loc, "sound/effects/pop.ogg", 40, 1)
+				playsound(src.loc, 'sound/effects/pop.ogg', 40, 1)
 				flick("fab3-work",src)
 			else
-				playsound(src.loc, "sound/machines/buzz-two.ogg", 40, 1)
+				playsound(src.loc, 'sound/machines/buzz-two.ogg', 40, 1)
 		return
 
 	attackby(var/obj/item/W, mob/user)
@@ -272,7 +274,7 @@
 				//	continue
 
 			M.set_loc(src)
-			playsound(src, "sound/items/Deconstruct.ogg", 40, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
 			sleep(0.5)
 			if (user.loc != staystill) break
 		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
@@ -507,7 +509,7 @@
 	w_class = W_CLASS_SMALL
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(get_dist(src, target) <= world.view)
+		if(GET_DIST(src, target) <= world.view)
 			animate_scanning(target, "#597B6D")
 			var/atom/W = target
 			if(!W.material)
@@ -535,7 +537,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shovel"
 	w_class = W_CLASS_NORMAL
-	flags = ONBELT
+	c_flags = ONBELT
 	force = 7 // 15 puts it significantly above most other weapons
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 

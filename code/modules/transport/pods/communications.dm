@@ -1,6 +1,6 @@
 /obj/item/device/radio/intercom/ship
 	name = "Communication Panel"
-	anchored = 1.0
+	anchored = 1
 
 /obj/item/device/radio/intercom/ship/send_hear()
 	if (src.listening)
@@ -14,7 +14,6 @@
 	active = 0
 	name = "Robustco Communication Array"
 	desc = "Enables long-distance communications and interfacing with pod bay door controls."
-	power_used = 10
 	system = "Communications"
 	icon_state = "com"
 	color = "#16CC77"
@@ -100,7 +99,7 @@
 		var/broadcast = copytext(html_encode(input(usr, "Please enter what you want to say over the external speaker.", "[src.name]")), 1, MAX_MESSAGE_LEN)
 		if(!broadcast)
 			return
-		logTheThing("diary", usr, null, "(POD) : [broadcast]", "say")
+		logTheThing(LOG_DIARY, usr, "(POD) : [broadcast]", "say")
 		if (ishuman(usr))//istype(usr:wear_mask, /obj/item/clothing/mask/gas/voice))
 			var/mob/living/carbon/human/H = usr
 			if (H.wear_mask && H.wear_mask.vchange && H.wear_id)

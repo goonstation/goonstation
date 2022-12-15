@@ -678,9 +678,6 @@
 							if (explodedString.len + stack.len > MAX_STACK_DEPTH)
 								return ERR_STACK_OVER
 
-							// reverselist is getting removed because it didnt actually do anything other than copy the list, if this line actually intended to reverse it, use reverse_list
-							//explodedString = reverselist(explodedString)
-
 							stack.len -= 2
 							stack += explodedString
 
