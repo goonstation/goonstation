@@ -757,6 +757,8 @@
 	var/health = 70
 	var/broken = 0
 	var/afterlife = 0
+	var/sound_interact = 'sound/machines/keypress.ogg'
+	var/sound_insert_cash = 'sound/machines/scan.ogg'
 
 	var/state = STATE_LOGGEDOFF
 	var/const
@@ -780,6 +782,9 @@
 				return
 			if (src.accessed_record)
 				boutput(user, "<span class='notice'>You insert the cash into the ATM.</span>")
+				src.show_message("Deposit successful.", "success", "atm")
+				if (!ON_COOLDOWN(src, "sound_insertcash", 2 SECONDS))
+					playsound(src.loc, sound_insert_cash, 50, 1)
 				src.accessed_record["current_money"] += I.amount
 				I.amount = 0
 				qdel(I)
@@ -789,8 +794,11 @@
 		if(istype(I, /obj/item/lotteryTicket))
 			if (src.accessed_record)
 				boutput(user, "<span class='notice'>You insert the lottery ticket into the ATM.</span>")
+				if (!ON_COOLDOWN(src, "sound_insertcash", 2 SECONDS))
+					playsound(src.loc, sound_insert_cash, 50, 1)
 				if(I:winner)
 					boutput(user, "<span class='notice'>Congratulations, this ticket is a winner netting you [I:winner] credits</span>")
+					src.show_message("Your ticket is a winner. Congratulations.", "success", "lottery")
 					src.accessed_record["current_money"] += I:winner
 
 					if(wagesystem.lotteryJackpot > I:winner)
@@ -800,6 +808,7 @@
 					attack_hand(user)
 				else
 					boutput(user, "<span class='alert'>This ticket isn't a winner. Better luck next time!</span>")
+					src.show_message("Your ticket is not a winner. Commiserations.", "danger", "lottery")
 				qdel(I)
 			else boutput(user, "<span class='alert'>You need to log in before inserting a ticket!</span>")
 			return
@@ -811,8 +820,12 @@
 			logTheThing(LOG_DIARY, user, "deposits a spacebux token worth [SB.amount].")
 			user.client.add_to_bank(SB.amount)
 			boutput(user, "<span class='alert'>You deposit [SB.amount] spacebux into your account!</span>")
+			if (!ON_COOLDOWN(src, "sound_inserttoken", 2 SECONDS))
+				playsound(src.loc, 'sound/machines/capsulebuy.ogg', 50, 1)
+			user.drop_item(SB)
 			qdel(SB)
 			attack_hand(user)
+			return
 		var/damage = I.force
 		if (damage >= 5) //if it has five or more force, it'll do damage. prevents very weak objects from rattling the thing.
 			user.lastattacked = src
@@ -849,6 +862,11 @@
 			ui = new(user, src, "Atm", name)
 			ui.open()
 
+	ui_status(mob/user, datum/ui_state/state)
+		. = ..()
+		if(. <= UI_CLOSE || src.broken)
+			return UI_CLOSE
+
 	ui_data(mob/user)
 		. = list(
 			"accountBalance" = src.accessed_record ? src.accessed_record["current_money"] : 0,
@@ -876,6 +894,8 @@
 					usr.put_in_hand_or_eject(new /obj/item/lotteryTicket(src.loc))
 					wagesystem.start_lottery()
 					src.show_message("Lottery ticket purchased. Good luck.", "success", "lottery")
+					if (!ON_COOLDOWN(src, "sound_buylottery", 2 SECONDS))
+						playsound(src.loc, 'sound/machines/printer_cargo.ogg', 50, 1)
 					. = TRUE
 				else
 					boutput(usr, "<span class='alert'>Insufficient funds.</span>")
@@ -894,7 +914,8 @@
 				var/userPin
 				if (usr.mind?.remembered_pin)
 					userPin = usr.mind?.remembered_pin
-				var/enteredPIN = text2num(tgui_input_text(usr, "Enter your PIN.", src.name, userPin, 4))
+				var/enteredPIN = text2num(tgui_input_text(usr, "Enter your PIN.", src.name, userPin, 4)) // before anyone asks, yes i know tgui_input_number() exists
+				playsound(src.loc, sound_interact, 50, 1)
 				if (enteredPIN == src.scan.pin)
 					if(TryToFindRecord())
 						src.state = STATE_LOGGEDIN
@@ -911,6 +932,7 @@
 					return
 				boutput(usr, "<span class='notice'>You log out of the ATM.</span>")
 				src.show_message("Log out successful. Have a secure day.", "success", "login")
+				playsound(src.loc, sound_interact, 50, 1)
 				src.scan = null
 				src.state = STATE_LOGGEDOFF
 				. = TRUE
@@ -955,6 +977,7 @@
 					S.setup(src.loc, amount)
 					usr.put_in_hand_or_drop(S)
 					src.show_message("Withdrawal successful.", "success", "atm")
+					playsound(src.loc, sound_interact, 50, 1)
 					. = TRUE
 			if("withdraw_spacebux")
 				var/amount = round(text2num(tgui_input_text(usr, "You have [usr.client.persistent_bank] Spacebux.\nHow much would you like to withdraw?", "How much?")))
