@@ -125,7 +125,6 @@
 			"<span class='alert'><B>You crash into the spike trap!</B></span>")
 			crash_into(victim)
 			qdel(src) //if crashed into, destroys the trap
-			return
 
 	attack_self(mob/User as mob)
 		if (!src.armed)
