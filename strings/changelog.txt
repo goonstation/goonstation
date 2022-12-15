@@ -1,4 +1,20 @@
 
+(t)wed dec 14 22
+(u)tarmunora
+(e)⚖|C-Balance
+(+)genetic stability starts at 100%
+(u)Sord
+(e)⚖|C-Balance
+(*)Going into Critical Condition now grants a large negative debuff to stamina and stamina regen. Once you leave crit you will receive a smaller "Recent Trauma" debuff.
+(*)Recent Trauma can be reduced by having painkillers (salicylic acid, morphine) in your system.
+(u)Sovexe
+(p)12394
+(e)⚖🧫🔊🔨|C-Balance, C-Experimental, C-Sound, A-Player-Actions
+(*)Arcfiend now deals less direct stamina damage but has knock backs to take advantage of various environmental hazards, see minor changes section for full details.
+(+)Arc Flash - cooldown reduced 15 > 12
+(+)Flash - now has a 0.75 second charge up before it applies knock back to all foes within 3 tiles, pushing them out to a distance 7 tiles away. Direct stamina damage from elecflash reduced 63 > 47
+(+)Discharge - knocks back the target back 4 tiles. Direct stamina damage reduced 130 > 115. Half (15) of direct burn damage is now always applied even to targets with electrical immunity. Cyborg targets now randomly receive 30 damage to either a random limb or distributed across their various parts
+(+)Ride the Lightning - reduced cost per step 3 > 2
 (t)sun dec 11 22
 (u)Cheffie
 (p)12325
