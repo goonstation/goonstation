@@ -2647,4 +2647,11 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 		return "***NULL***"
 	if (!istype(thing)) //  probably text or a num or something
 		return thing
-	return "\"[thing]\" \ref[thing] ([thing.type])" // actual datum
+	return "\"[thing]\" ([thing.type]) \ref[thing]" // actual datum
+
+/proc/log_object(datum/thing)
+	if (isnull(thing))
+		return "***NULL***"
+	if (!istype(thing))
+		return thing
+	return "\"[thing]\" ([thing.type])"
