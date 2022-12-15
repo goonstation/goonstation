@@ -212,13 +212,36 @@ const DisplayBloodPressure = (props:DisplayBloodPressureProps) => {
 
 const DisplayRads = (props) => {
   const { rad_stage, rad_dose } = props;
+  let color = null;
+  let bold = false;
   if (rad_stage > 0) {
+    switch (rad_stage) {
+      case 1:
+        color = "yellow";
+        break;
+      case 2:
+        color = "orange";
+        break;
+      case 3:
+        color = "orange";
+        bold = true;
+        break;
+      case 4:
+      case 5:
+      case 6:
+        color = "red";
+        bold = true;
+        break;
+      default:
+        break;
+    }
+
     return (
       <Table.Row>
         <Table.Cell header textAlign="right" color="yellow" width={10}>Radiation:</Table.Cell>
-        <Table.Cell width={10}>Stage {rad_stage}</Table.Cell>
-        <Table.Cell header textAlign="right" width={10}>Sieverts:</Table.Cell>
-        <Table.Cell width={10}>{rad_dose} units</Table.Cell>
+        <Table.Cell width={10} color={color} bold={bold}>Stage {rad_stage}</Table.Cell>
+        <Table.Cell header textAlign="right" width={10}>Effective Dose:</Table.Cell>
+        <Table.Cell width={10}>{rad_dose.toPrecision(6)} Sv</Table.Cell>
       </Table.Row>
     );
   }
