@@ -594,6 +594,8 @@
 					var/datum/abilityHolder/A = src.abilityHolder.deepCopy()
 					R.fields["abilities"] = A
 
+				R.fields["defects"] = src.cloner_defects.copy()
+
 				SPAWN(0)
 					if(!isnull(src.traitHolder))
 						R.fields["traits"] = src.traitHolder.copy()
@@ -693,33 +695,34 @@
 			if (!equipped) // we've tried most available storage solutions here now so uh just put it on the ground
 				trinket.set_loc(get_turf(src))
 
-	if (src.traitHolder && src.traitHolder.hasTrait("onearmed"))
-		if (src.limbs)
-			SPAWN(6 SECONDS)
-				if (prob(50))
-					if (src.limbs.l_arm)
-						qdel(src.limbs.l_arm.remove(0))
-				else
-					if (src.limbs.r_arm)
-						qdel(src.limbs.r_arm.remove(0))
-				boutput(src, "<b>Your singular arm makes you feel responsible for crimes you couldn't possibly have committed.</b>" )
+	if (ishuman(src))
+		if (src.traitHolder && src.traitHolder.hasTrait("onearmed"))
+			if (src.limbs)
+				SPAWN(6 SECONDS)
+					if (prob(50))
+						if (src.limbs.l_arm)
+							qdel(src.limbs.l_arm.remove(0))
+					else
+						if (src.limbs.r_arm)
+							qdel(src.limbs.r_arm.remove(0))
+					boutput(src, "<b>Your singular arm makes you feel responsible for crimes you couldn't possibly have committed.</b>" )
 
-	if (src.traitHolder && src.traitHolder.hasTrait("nolegs"))
-		if (src.limbs)
-			SPAWN(6 SECONDS)
-				if (src.limbs.l_leg)
-					src.limbs.l_leg.delete()
-				if (src.limbs.r_leg)
-					src.limbs.r_leg.delete()
-			new /obj/stool/chair/comfy/wheelchair(get_turf(src))
+		if (src.traitHolder && src.traitHolder.hasTrait("nolegs"))
+			if (src.limbs)
+				SPAWN(6 SECONDS)
+					if (src.limbs.l_leg)
+						src.limbs.l_leg.delete()
+					if (src.limbs.r_leg)
+						src.limbs.r_leg.delete()
+				new /obj/stool/chair/comfy/wheelchair(get_turf(src))
 
-	// Special mutantrace items
-	if (src.traitHolder && src.traitHolder.hasTrait("pug"))
-		src.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
-	else if (src.traitHolder && src.traitHolder.hasTrait("skeleton"))
-		src.put_in_hand_or_drop(new /obj/item/joint_wax)
+		// Special mutantrace items
+		if (src.traitHolder && src.traitHolder.hasTrait("pug"))
+			src.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
+		else if (src.traitHolder && src.traitHolder.hasTrait("skeleton"))
+			src.put_in_hand_or_drop(new /obj/item/joint_wax)
 
-	src.equip_sensory_items()
+		src.equip_sensory_items()
 
 /mob/living/carbon/human/proc/spawnId(rank)
 #ifdef DEBUG_EVERYONE_GETS_CAPTAIN_ID
@@ -811,19 +814,20 @@
 	return
 
 // Convert mob to generic hard mode traitor or alternatively agimmick
-proc/antagify(mob/H, var/traitor_role, var/agimmick)
+proc/antagify(mob/H, var/traitor_role, var/agimmick, var/do_objectives)
 	if (!(H.mind))
 		message_admins("Attempted to antagify [H] but could not find mind")
 		logTheThing(LOG_DEBUG, H, "Attempted to antagify [H] but could not find mind.")
 		return
 	if (!agimmick)
-		var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
-		var/num_objectives = rand(1,3)
-		for(var/i = 0, i < num_objectives, i++)
-			var/select_objective = pick(eligible_objectives)
-			new select_objective(null, H.mind)
-			H.show_antag_popup("traitorhard")
-			ticker.mode.traitors |= H.mind
+		if (do_objectives)
+			var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
+			var/num_objectives = rand(1,3)
+			for(var/i = 0, i < num_objectives, i++)
+				var/select_objective = pick(eligible_objectives)
+				new select_objective(null, H.mind)
+				H.show_antag_popup("traitorhard")
+				ticker.mode.traitors |= H.mind
 	else
 		ticker.mode.Agimmicks |= H.mind
 		H.show_antag_popup("traitorgeneric")

@@ -58,4 +58,12 @@
 				max_produce_miasma = 0
 
 		if (max_produce_miasma)
-			T.fluid_react_single("miasma", 3, airborne = 1)
+			// Devera-class interdictor: prohibit miasma formation
+			var/miasma_blocked = FALSE
+			for_by_tcl(IX, /obj/machinery/interdictor)
+				if (IX.expend_interdict(30,src,TRUE,ITDR_DEVERA))
+					miasma_blocked = TRUE
+					break
+
+			if(!miasma_blocked)
+				T.fluid_react_single("miasma", 3, airborne = 1)

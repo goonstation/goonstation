@@ -24,20 +24,6 @@
 		src.burn_dam += burn
 		//src.tox_dam += tox
 
-		if (ishuman(holder))
-			var/mob/living/carbon/human/H = holder
-			hit_twitch(H)
-			if (brute > 30 && prob(brute - 30) && !disallow_limb_loss)
-				src.sever()
-			else if (burn > 30 && prob(burn) && !disallow_limb_loss)
-				holder.visible_message("<span class='alert'>[holder.name]'s [initial(src.name)] is burnt to ash!</span>")
-				src.remove(FALSE)
-				playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 30)
-				if(prob(20))
-					make_cleanable(/obj/decal/cleanable/ash, get_turf(holder))
-				qdel(src)
-			else if (bone_system && src.bones && brute && prob(brute * 2))
-				src.bones.take_damage(damage_type)
 		health_update_queue |= holder
 		return 1
 

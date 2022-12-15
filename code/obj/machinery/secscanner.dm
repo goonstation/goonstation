@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/secscanner)
+	mats = 18
+
 /obj/machinery/secscanner
 	name = "security scanner"
 	desc = "The latest innovation in invasive imagery, the programmable NT-X100 will scan anyone who walks through it with fans to simulate being patted down. <em>Nanotrasen is not to be held responsible for any deaths caused by the results the machine gives, or the machine itself.</em>"
@@ -7,7 +10,6 @@
 	opacity = 0
 	anchored = 1
 	layer = 2
-	mats = 18
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	var/timeBetweenUses = 20//I can see this being fun

@@ -34,10 +34,11 @@
 			var/area/A = owner.loc.loc
 			if (A.irradiated)
 				//spatial interdictor: mitigate effect of radiation
-				//consumes 250 units of charge per person per life tick
+				//consumes 30 units of charge per person per second
+				var/multdraw = round(60 * mult)
 				var/interdictor_influence = 0
-				for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-					if (IN_RANGE(IX,owner,IX.interdict_range) && IX.expend_interdict(250))
+				for_by_tcl(IX, /obj/machinery/interdictor)
+					if (IX.expend_interdict(multdraw,owner))
 						interdictor_influence = 1
 						break
 				if(!interdictor_influence)
