@@ -959,33 +959,6 @@ DEFINE_FLOORS(minitiles/black,
 
 /////////////////////////////////////////
 
-/turf/simulated/floor/delivery
-	icon_state = "delivery"
-
-/turf/simulated/floor/delivery/white
-	icon_state = "delivery_white"
-
-/turf/simulated/floor/delivery/caution
-	icon_state = "deliverycaution"
-
-
-/turf/simulated/floor/bot
-	icon_state = "bot"
-
-/turf/simulated/floor/bot/white
-	icon_state = "bot_white"
-
-/turf/simulated/floor/bot/blue
-	icon_state = "bot_blue"
-
-/turf/simulated/floor/bot/darkpurple
-	icon_state = "bot_dpurple"
-
-/turf/simulated/floor/bot/caution
-	icon_state = "botcaution"
-
-/////////////////////////////////////////
-
 /turf/simulated/floor/engine
 	name = "reinforced floor"
 	icon_state = "engine"
@@ -2228,9 +2201,9 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 /turf/proc/fall_to(var/turf/T, var/atom/movable/A)
 	if(istype(A, /obj/overlay) || A.anchored == 2)
 		return
-	#ifdef RUNTIME_CHECKING
+	#ifdef CHECK_MORE_RUNTIMES
 	if(current_state <= GAME_STATE_WORLD_NEW)
-		CRASH("[A] ([A.type]) fell into [src] at [src.x],[src.y],[src.z] ([src.loc] [src.loc.type]) during world initialization")
+		CRASH("[identify_object(A)] fell into [src] at [src.x],[src.y],[src.z] ([src.loc] [src.loc.type]) during world initialization")
 	#endif
 	if (isturf(T))
 		visible_message("<span class='alert'>[A] falls into [src]!</span>")

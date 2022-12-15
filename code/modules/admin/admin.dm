@@ -2093,7 +2093,7 @@ var/global/noir = 0
 				if(istype(F, /mob/living/intangible/flock/flockmind))
 					mind.special_role = ROLE_FLOCKMIND
 				else if(istype(F, /mob/living/intangible/flock/trace))
-					mind.special_role = "flocktrace"
+					mind.special_role = ROLE_FLOCKTRACE
 				ticker.mode.Agimmicks += mind
 				F.antagonist_overlay_refresh(1, 0)
 
@@ -2211,12 +2211,12 @@ var/global/noir = 0
 								evilize(M, ROLE_TRAITOR, "hardmode")
 							else
 								evilize(M, selection)
-						/*	else
-								SPAWN(0) tgui_alert(usr,"An error occurred, please try again.")*/
 					else
 						var/list/traitor_types = list(ROLE_TRAITOR, ROLE_WIZARD, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WEREWOLF, ROLE_HUNTER, ROLE_WRESTLER, ROLE_GRINCH, ROLE_OMNITRAITOR, ROLE_SPY_THIEF, ROLE_ARCFIEND)
 						if(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang))
 							traitor_types += ROLE_GANG_LEADER
+						if(ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear) && ishuman(M))
+							traitor_types += ROLE_NUKEOP
 						var/selection = input(usr, "Select traitor type.", "Traitorize", ROLE_TRAITOR) as null|anything in traitor_types
 						switch(selection)
 							if(ROLE_TRAITOR)
@@ -2224,10 +2224,13 @@ var/global/noir = 0
 									evilize(M, ROLE_TRAITOR, "hardmode")
 								else
 									evilize(M, ROLE_TRAITOR)
+							if(ROLE_NUKEOP)
+								if (tgui_alert(usr,"Commander?","Hierarchy",list("Yes", "No")) == "Yes")
+									evilize(M, ROLE_NUKEOP, "commander", do_objectives = FALSE)
+								else
+									evilize(M, ROLE_NUKEOP, do_objectives = FALSE)
 							else
 								evilize(M, selection)
-							/*else
-								SPAWN(0) tgui_alert(usr,"An error occurred, please try again.")*/
 			//they're a ghost/hivebotthing/etc
 			else
 				tgui_alert(usr,"Cannot make this mob a traitor")
@@ -4591,7 +4594,7 @@ var/global/noir = 0
 
 	return 0
 
-/datum/admins/proc/evilize(mob/M as mob, var/traitor_type, var/special = null, var/mass_traitor_obj = null, var/mass_traitor_esc = null)
+/datum/admins/proc/evilize(mob/M as mob, var/traitor_type, var/special = null, var/mass_traitor_obj = null, var/mass_traitor_esc = null, do_objectives = TRUE)
 	if (!M || !traitor_type)
 		boutput(usr, "<span class='alert'>No mob or traitor type specified.</span>")
 		return
@@ -4617,56 +4620,57 @@ var/global/noir = 0
 	traitor_type = lowertext(traitor_type)
 	special = lowertext(special)
 
-	if(mass_traitor_obj)
-		new /datum/objective(mass_traitor_obj, M.mind)
+	if (do_objectives)
+		if(mass_traitor_obj)
+			new /datum/objective(mass_traitor_obj, M.mind)
 
-		if(mass_traitor_esc)
-			new mass_traitor_esc(null, M.mind)
-	else
-		var/list/eligible_objectives = list()
-		if (ishuman(M) || ismobcritter(M))
-			eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/)
-		else if (issilicon(M))
-			eligible_objectives = list(/datum/objective/regular,/datum/objective/regular/assassinate,
-			/datum/objective/regular/force_evac_time,/datum/objective/regular/gimmick,/datum/objective/escape,/datum/objective/escape/hijack,
-			/datum/objective/escape/survive,/datum/objective/escape/kamikaze)
-			/*if (isrobot(M))
-				eligible_objectives += /datum/objective/regular/borgdeath*/
-			traitor_type = ROLE_TRAITOR
-		switch(traitor_type)
-			if (ROLE_CHANGELING)
-				eligible_objectives += /datum/objective/specialist/absorb
-			if (ROLE_WEREWOLF)
-				eligible_objectives += /datum/objective/specialist/werewolf/feed
-			if (ROLE_VAMPIRE)
-				eligible_objectives += /datum/objective/specialist/drinkblood
-			if (ROLE_HUNTER)
-				eligible_objectives += /datum/objective/specialist/hunter/trophy
-			if (ROLE_GRINCH)
-				eligible_objectives += /datum/objective/specialist/ruin_xmas
-			if (ROLE_GANG_LEADER)
-				new /datum/objective/specialist/gang(null, M.mind)
-				M.mind.special_role = ROLE_GANG_LEADER
-		var/done = 0
-		var/select_objective = null
-		var/custom_text = "Go hog wild!"
-		while (done != 1)
-			select_objective = input(usr, "Add a new objective. Hit cancel when finished adding.", "Traitor Objectives") as null|anything in eligible_objectives
-			if (!select_objective)
-				done = 1
-				break
-			if (select_objective == /datum/objective/regular)
-				custom_text = input(usr,"Enter custom objective text.","Traitor Objectives","Go hog wild!") as null|text
-				if (custom_text)
-					new select_objective(custom_text, M.mind)
+			if(mass_traitor_esc)
+				new mass_traitor_esc(null, M.mind)
+		else
+			var/list/eligible_objectives = list()
+			if (ishuman(M) || ismobcritter(M))
+				eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/)
+			else if (issilicon(M))
+				eligible_objectives = list(/datum/objective/regular,/datum/objective/regular/assassinate,
+				/datum/objective/regular/force_evac_time,/datum/objective/regular/gimmick,/datum/objective/escape,/datum/objective/escape/hijack,
+				/datum/objective/escape/survive,/datum/objective/escape/kamikaze)
+				/*if (isrobot(M))
+					eligible_objectives += /datum/objective/regular/borgdeath*/
+				traitor_type = ROLE_TRAITOR
+			switch(traitor_type)
+				if (ROLE_CHANGELING)
+					eligible_objectives += /datum/objective/specialist/absorb
+				if (ROLE_WEREWOLF)
+					eligible_objectives += /datum/objective/specialist/werewolf/feed
+				if (ROLE_VAMPIRE)
+					eligible_objectives += /datum/objective/specialist/drinkblood
+				if (ROLE_HUNTER)
+					eligible_objectives += /datum/objective/specialist/hunter/trophy
+				if (ROLE_GRINCH)
+					eligible_objectives += /datum/objective/specialist/ruin_xmas
+				if (ROLE_GANG_LEADER)
+					new /datum/objective/specialist/gang(null, M.mind)
+					M.mind.special_role = ROLE_GANG_LEADER
+			var/done = 0
+			var/select_objective = null
+			var/custom_text = "Go hog wild!"
+			while (done != 1)
+				select_objective = input(usr, "Add a new objective. Hit cancel when finished adding.", "Traitor Objectives") as null|anything in eligible_objectives
+				if (!select_objective)
+					done = 1
+					break
+				if (select_objective == /datum/objective/regular)
+					custom_text = input(usr,"Enter custom objective text.","Traitor Objectives","Go hog wild!") as null|text
+					if (custom_text)
+						new select_objective(custom_text, M.mind)
+					else
+						boutput(usr, "<span class='alert'>No text was entered. Objective not given.</span>")
 				else
-					boutput(usr, "<span class='alert'>No text was entered. Objective not given.</span>")
-			else
-				new select_objective(null, M.mind)
+					new select_objective(null, M.mind)
 
-		if (M.mind.objectives.len < 1)
-			boutput(usr, "<span class='alert'>Not enough objectives specified.</span>")
-			return
+			if (M.mind.objectives.len < 1)
+				boutput(usr, "<span class='alert'>Not enough objectives specified.</span>")
+				return
 
 	if (isAI(M))
 		var/mob/living/silicon/ai/A = M
@@ -4769,6 +4773,15 @@ var/global/noir = 0
 				var/objective_set_path = /datum/objective_set/spy_theft
 				new objective_set_path(M.mind)
 				equip_spy_theft(tmob)
+			if(ROLE_NUKEOP)
+				M.show_text("<h1><font color=red><B>You have been chosen as a nuclear operative! And you have accepted! Because you would be silly not to!</B></font></h1>", "red")
+				var/mob/living/carbon/human/H = M
+				var/rank = (special == "commander" ? "Syndicate Operative Commander" : "Syndicate Operative")
+				H.unequip_all(delete_stuff = TRUE)
+				H.JobEquipSpawned(rank)
+				var/datum/game_mode/nuclear/nukemode = ticker.mode
+				nukemode.syndicates += H.mind
+				nukemode.bestow_objective(H.mind, /datum/objective/specialist/nuclear)
 
 	else
 		M.show_text("<h2><font color=red><B>You have become evil and are now an antagonist!</B></font></h2>", "red")

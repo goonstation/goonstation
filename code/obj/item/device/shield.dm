@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/shield)
+	mats = 10
+
 /obj/item/device/shield
 	name = "shield"
 	icon_state = "shield0"
@@ -8,7 +11,6 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
-	mats = 10
 
 /obj/item/device/shield/attack_self(mob/user as mob)
 	src.active = !( src.active )

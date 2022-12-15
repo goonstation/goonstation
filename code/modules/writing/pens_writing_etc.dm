@@ -69,6 +69,7 @@
 		">" = "Greater Than",
 		"[CREDIT_SIGN]" = "Credit"
 	)
+	var/suitable_for_canvas = TRUE
 
 	New()
 		. = ..()
@@ -484,6 +485,12 @@
 		color = "#FF00FF"
 		font_color = "#FF00FF"
 		color_name = "pink"
+
+	transparent
+		name = "transparent crayon"
+		color = "#aaaaaa"
+		font_color = "#00000000"
+		color_name = "transparent"
 
 	golden // HoP's crayon
 		name = "golden crayon"
@@ -968,10 +975,7 @@
 		src.label = "DEAD"
 		Label(user,user,1)
 
-		user.TakeDamage("chest", 300, 0) //they have to die fast or it'd make even less sense
-		SPAWN(50 SECONDS)
-			if (user && !isdead(user))
-				user.suiciding = 0
+		user.death()
 		return 1
 
 /* =============== CLIPBOARDS =============== */

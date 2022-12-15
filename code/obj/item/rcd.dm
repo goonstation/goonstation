@@ -23,6 +23,9 @@ Broken RCD + Effects
 	also maybe an assoc list instead of matter_shit_fuck
 */
 
+TYPEINFO(/obj/item/rcd)
+	mats = list("MET-3"=20, "CRY-2" = 10, "CON-2" = 10, "POW-2" = 10)
+
 /obj/item/rcd
 	name = "rapid construction device"
 	desc = "Also known as an RCD, this is capable of rapidly constructing walls, flooring, windows, and doors."
@@ -45,7 +48,6 @@ Broken RCD + Effects
 	w_class = W_CLASS_NORMAL
 	m_amt = 50000
 
-	mats = list("MET-3"=20, "CRY-2" = 10, "CON-2" = 10, "POW-2" = 10)
 	stamina_damage = 15
 	stamina_cost = 15
 	stamina_crit_chance = 5
@@ -636,6 +638,9 @@ Broken RCD + Effects
 /obj/item/rcd/cyborg
 	material_name = "electrum"
 
+TYPEINFO(/obj/item/rcd/construction)
+	mats = list("MET-3"=100, "CRY-2" = 50, "CON-2"=50, "POW-3"=50, "starstone"=10)
+
 /obj/item/rcd/construction
 	name = "rapid construction device deluxe"
 	desc = "Also known as an RCD, this is capable of rapidly constructing walls, flooring, windows, and doors. The deluxe edition features a much higher matter capacity and enhanced feature set."
@@ -651,7 +656,6 @@ Broken RCD + Effects
 	var/door_access = 0
 	var/door_access_name_cache = null
 	var/door_type_name_cache = null
-	mats = list("MET-3"=100, "CRY-2" = 50, "CON-2"=50, "POW-3"=50, "starstone"=10)
 	var/static/list/access_names = list() //ditto the above????
 	var/door_type = null
 
@@ -663,11 +667,13 @@ Broken RCD + Effects
 	shits_sparks = 0
 
 ///Chief Engineer RCD has fancy door functions and a mild discount, but no capacity increase
+TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
+	mats = list("MET-3"=20, "CRY-2" = 10, "CON-2" = 10, "POW-2" = 10)
+
 /obj/item/rcd/construction/chiefEngineer
 	name = "rapid construction device custom"
 	desc = "Also known as an RCD, this is capable of rapidly constructing walls, flooring, windows, and doors. This device was customized by the Chief Engineer to have an enhanced feature set and work more efficiently."
 	icon_state = "base_CE"
-	mats = list("MET-3"=20, "CRY-2" = 10, "CON-2" = 10, "POW-2" = 10)
 
 	max_matter = 50
 	matter_create_wall = 1
@@ -860,11 +866,13 @@ Broken RCD + Effects
 
 
 
+TYPEINFO(/obj/item/rcd/material/cardboard)
+	mats = list("CRY-2" = 10, "POW-2" = 10, "cardboard" = 30)
+
 /obj/item/rcd/material/cardboard
 	name = "cardboard rapid construction Device"
 	icon_state = "base_cardboard"
 	desc = "Also known as a C-RCD, this device is able to rapidly construct cardboard props."
-	mats = list("CRY-2" = 10, "POW-2" = 10, "cardboard" = 30)
 	force = 0
 	matter_create_floor = 0.5
 	time_create_floor = 0 SECONDS

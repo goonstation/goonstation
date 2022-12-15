@@ -777,6 +777,7 @@
 	hit_ground_chance = 50
 	window_pass = 0
 	override_color = 1
+	disruption = 33
 
 	on_hit(atom/hit, angle, var/obj/projectile/O)
 		..()

@@ -180,11 +180,14 @@
 			reduction += 1
 			break
 
-	if (src.energy_shield) reduction += src.energy_shield.protect()/15
 	if (src.spellshield)
 		reduction += 2
 		shielded = 1
 		boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some blast!</b></span>")
+
+	var/list/shield_amt = list()
+	SEND_SIGNAL(src, COMSIG_MOB_SHIELD_ACTIVATE, power * 30, shield_amt)
+	power *= max(0, (1-shield_amt["shield_strength"]))
 
 	power *= clamp(1-exploprot, 0, 1)
 	power -= reduction
@@ -211,10 +214,11 @@
 		if (-INFINITY to 0) //blocked
 			boutput(src, "<span class='alert'><b>You are shielded from the blast!</b></span>")
 			return
-		if (6 to INFINITY) //gib
-			SPAWN(1 DECI SECOND)
-				src.gib(1)
-			return
+		if (6 to INFINITY) //gib?
+			if(src.health < 0 || power >= 7)
+				SPAWN(1 DECI SECOND)
+					src.gib(1)
+				return
 	src.apply_sonic_stun(0, 0, 0, 0, 0, round(power*7), round(power*7), power*40)
 
 	if (prob(b_loss) && !shielded && !reduction)
@@ -254,13 +258,11 @@
 
 	var/zone = pick(zones)
 
-	var/obj/item/temp = src.organs[zone]
-
 	switch(zone)
 		if ("head")
 			if ((((src.head && src.head.body_parts_covered & HEAD) || (src.wear_mask && src.wear_mask.body_parts_covered & HEAD)) && prob(99)))
-				if (temp && prob(45))
-					temp.take_damage(damage, 0)
+				if (prob(45))
+					src.TakeDamage("head", damage, 0, 0, DAMAGE_BLUNT)
 				else
 					src.show_message("<span class='alert'>You have been protected from a hit to the head.</span>")
 				return
@@ -268,8 +270,7 @@
 				changeStatus("weakened", 2 SECONDS)
 				for (var/mob/O in viewers(src, null))
 					O.show_message("<span class='alert'><B>The blob has weakened [src]!</B></span>", 1, "<span class='alert'>You hear someone fall.</span>", 2)
-			if (temp)
-				temp.take_damage(damage, 0)
+			src.TakeDamage("head", damage, 0, 0, DAMAGE_BLUNT)
 		if ("chest")
 			if ((((src.wear_suit && src.wear_suit.body_parts_covered & TORSO) || (src.w_uniform && src.w_uniform.body_parts_covered & TORSO)) && prob(70)))
 				src.show_message("<span class='alert'>You have been protected from a hit to the chest.</span>")
@@ -285,32 +286,27 @@
 						if (O.client)	O.show_message("<span class='alert'><B>The blob has stunned [src]!</B></span>", 1)
 				if (isalive(src))
 					src.lastgasp() // calling lastgasp() here because we just got knocked out
-			if (temp)
-				temp.take_damage(damage, 0)
+			src.TakeDamage("chest", damage, 0, 0, DAMAGE_BLUNT)
 
 		if ("l_arm")
-			if (temp)
-				temp.take_damage(damage, 0)
+			src.TakeDamage("l_arm", damage, 0, 0, DAMAGE_BLUNT)
 			if (prob(20) && equipped())
 				visible_message("<span class='alert'><b>The blob has knocked [equipped()] out of [src]'s hand!</b></span>")
 				drop_item()
 		if ("r_arm")
-			if (temp)
-				temp.take_damage(damage, 0)
+			src.TakeDamage("r_arm", damage, 0, 0, DAMAGE_BLUNT)
 			if (prob(20) && equipped())
 				visible_message("<span class='alert'><b>The blob has knocked [equipped()] out of [src]'s hand!</b></span>")
 				drop_item()
 		if ("l_leg")
-			if (temp)
-				temp.take_damage(damage, 0)
+			src.TakeDamage("l_leg", damage, 0, 0, DAMAGE_BLUNT)
 			if (prob(5))
 				visible_message("<span class='alert'><b>The blob has knocked [src] off-balance!</b></span>")
 				drop_item()
 				if (prob(50))
 					src.changeStatus("weakened", 1 SECOND)
 		if ("r_leg")
-			if (temp)
-				temp.take_damage(damage, 0)
+			src.TakeDamage("r_leg", damage, 0, 0, DAMAGE_BLUNT)
 			if (prob(5))
 				visible_message("<span class='alert'><b>The blob has knocked [src] off-balance!</b></span>")
 				drop_item()
@@ -372,40 +368,32 @@
 		tox = max(0, tox)
 		take_toxin_damage(tox)
 
-	if (zone == "All")
-		var/organCount = 0
-		for (var/organName in src.organs)
-			var/obj/item/extOrgan = src.organs["[organName]"]
-			if (istype(extOrgan))
-				organCount++
-		if (!organCount)
-			return
-		brute = brute / organCount
-		burn = burn / organCount
-		var/update = 0
-		for (var/organName in src.organs)
-			var/obj/item/extOrgan = src.organs["[organName]"]
-			if (istype(extOrgan))
-				if (extOrgan.take_damage(brute, burn, 0/*tox*/, damage_type))
-					update = 1
 
-		if (update)
-			src.UpdateDamageIcon()
-			health_update_queue |= src
-	else
-		var/obj/item/E = null
-		try
-			E = src.organs[zone]
-		catch
-			logTheThing(LOG_DEBUG, null, "<b>ORGAN/INDEX_DMG</b> Invalid index: [zone]")
-			return 0
-		if (isitem(E))
-			if (E.take_damage(brute, burn, 0/*tox*/, damage_type))
-				src.UpdateDamageIcon()
-				health_update_queue |= src
-		else
-			return 0
-		return
+	switch(zone)
+		if ("All", "chest")
+			if (brute > 5 && organHolder)
+				if(prob(60))
+					src.organHolder.damage_organs(brute/5, 0, 0, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","appendix", "pancreas", "tail"), 30)
+				else if (prob(30))
+					src.organHolder.damage_organs(brute/10, 0, 0, list("spleen", "left_lung", "right_lung"), 50)
+		if("l_leg", "l_arm", "r_leg", "r_arm")
+			var/obj/item/parts/P = src.limbs?.get_limb(zone)
+			if(istype(P))
+				if (brute > 30 && prob(brute - 30) && !disallow_limb_loss)
+					P.sever()
+				else if (burn > 30 && prob(burn) && !disallow_limb_loss)
+					src.visible_message("<span class='alert'>[src.name]'s [initial(P.name)] is burnt to ash!</span>")
+					P.remove(FALSE)
+					playsound(P, 'sound/impact_sounds/burn_sizzle.ogg', 30)
+					if(prob(20))
+						make_cleanable(/obj/decal/cleanable/ash, get_turf(src))
+					qdel(P)
+
+	src.bruteloss += brute
+	src.burnloss += burn
+
+	src.UpdateDamageIcon()
+	health_update_queue |= src
 
 /mob/living/carbon/human/TakeDamageAccountArmor(zone, brute, burn, tox, damage_type)
 	var/armor_mod = 0
@@ -441,6 +429,8 @@
 		src.TakeDamage(zone, brute, burn, tox, null, FALSE, TRUE)
 
 	src.take_toxin_damage(-tox)
+	src.bruteloss = max(bruteloss - brute, 0)
+	src.burnloss = max(burnloss - burn, 0)
 
 	if (burn > 0)
 		if (burn >= 10 || src.get_burn_damage() <= 5)
@@ -448,79 +438,9 @@
 		else if (prob(10))
 			src.heal_laser_wound("single")
 
-	if (zone == "All")
-		var/bruteOrganCount = 0.0 		//How many organs have brute damage?
-		var/burnOrganCount = 0.0		//How many organs have burn damage?
-		var/toxOrganCount = 0.0			// gurbage
-
-		//Let's find out
-		for (var/organName in src.organs)
-			var/obj/item/extOrgan = src.organs["[organName]"]
-			if (istype(extOrgan, /obj/item/organ))
-				var/obj/item/organ/O = extOrgan
-				if (O.brute_dam > 0)
-					bruteOrganCount ++
-				if (O.burn_dam > 0)
-					burnOrganCount ++
-				if (O.tox_dam > 0)
-					toxOrganCount ++
-			else if (istype(extOrgan, /obj/item/parts))
-				var/obj/item/parts/O = extOrgan
-				if (O.brute_dam > 0)
-					bruteOrganCount ++
-				if (O.burn_dam > 0)
-					burnOrganCount ++
-				if (O.tox_dam > 0)
-					toxOrganCount ++
-
-		if (!bruteOrganCount && !burnOrganCount && !toxOrganCount) //No damage
-			return
-
-		//This is ugly, but necessary
-		if (bruteOrganCount > 0)
-			brute = brute / bruteOrganCount
-		else
-			brute = 0
-
-		if (burnOrganCount > 0)
-			burn = burn / burnOrganCount
-		else
-			burn = 0
-
-		if (toxOrganCount > 0)
-			tox = tox / toxOrganCount
-		else
-			tox = 0
-
-
-		var/update = 0
-		for (var/organName in src.organs)
-			var/obj/item/extOrgan = src.organs["[organName]"]
-			if (istype(extOrgan, /obj/item/organ))
-				var/obj/item/organ/O = extOrgan
-				if ((O.brute_dam > 0 && brute > 0) || (O.burn_dam > 0 && burn > 0) || (O.tox_dam > 0 && tox > 0))
-					if (O.heal_damage(brute, burn, tox))
-						update = 1
-			else if (istype(extOrgan, /obj/item/parts))
-				var/obj/item/parts/O = extOrgan
-				if ((O.brute_dam > 0 && brute > 0) || (O.burn_dam > 0 && burn > 0) || (O.tox_dam > 0 && tox > 0))
-					if (O.heal_damage(brute, burn, tox))
-						update = 1
-
-		if (update)
-			src.UpdateDamageIcon()
-			health_update_queue |= src
-		return 1
-	else
-		var/obj/item/E = src.organs["[zone]"]
-		if (isitem(E))
-			if (E.heal_damage(brute, burn, tox))
-				src.UpdateDamageIcon()
-				health_update_queue |= src
-				return 1
-		else
-			return 0
-	return
+	src.UpdateDamageIcon()
+	health_update_queue |= src
+	return 1
 
 /mob/living/carbon/human/proc/heal_laser_wound(type)
 	if (type == "single")
@@ -602,40 +522,13 @@
 	return 1
 
 /mob/living/carbon/human/get_brute_damage()
-	var/brute = 0
-	for (var/organName in src.organs)
-		var/obj/item/externalOrgan = src.organs["[organName]"]
-		if (istype(externalOrgan, /obj/item/organ))
-			var/obj/item/organ/O = externalOrgan
-			brute += O.brute_dam
-		else if (istype(externalOrgan, /obj/item/parts))
-			var/obj/item/parts/O = externalOrgan
-			brute += O.brute_dam
-	return brute
+	return bruteloss
 
 /mob/living/carbon/human/get_burn_damage()
-	var/burn = 0
-	for (var/organName in src.organs)
-		var/obj/item/externalOrgan = src.organs["[organName]"]
-		if (istype(externalOrgan, /obj/item/organ))
-			var/obj/item/organ/O = externalOrgan
-			burn += O.burn_dam
-		else if (istype(externalOrgan, /obj/item/parts))
-			var/obj/item/parts/O = externalOrgan
-			burn += O.burn_dam
-	return burn
+	return burnloss
 
 /mob/living/carbon/human/get_toxin_damage()
-	var/tox = src.toxloss
-	for (var/organName in src.organs)
-		var/obj/item/externalOrgan = src.organs["[organName]"]
-		if (istype(externalOrgan, /obj/item/organ))
-			var/obj/item/organ/O = externalOrgan
-			tox += O.tox_dam
-		else if (istype(externalOrgan, /obj/item/parts))
-			var/obj/item/parts/O = externalOrgan
-			tox += O.tox_dam
-	return tox
+	return toxloss
 
 /mob/living/carbon/human/get_eye_damage(var/tempblind = 0, var/side)
 	if (tempblind == 0)
@@ -654,10 +547,17 @@
 		return src.eye_blind
 
 /mob/living/carbon/human/get_valid_target_zones()
-	var/list/ret = list()
-	for (var/organName in src.organs)
-		if (istype(src.organs[organName], /obj/item))
-			ret += organName
+	var/list/ret = list("chest")
+	if(src.limbs.get_limb("l_arm"))
+		ret += "l_arm"
+	if(src.limbs.get_limb("r_arm"))
+		ret += "r_arm"
+	if(src.limbs.get_limb("l_leg"))
+		ret += "l_leg"
+	if(src.limbs.get_limb("r_leg"))
+		ret += "r_leg"
+	if(src.organHolder.get_organ("head"))
+		ret += "head"
 	return ret
 
 /proc/random_brute_damage(var/mob/themob, var/damage, checkarmor=0) // do brute damage to a random organ

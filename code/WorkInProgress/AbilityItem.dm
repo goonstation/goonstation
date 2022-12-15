@@ -299,19 +299,6 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "smoke"
 
-////////////////////////////////////////////////////////////
-
-/obj/ability_button/cebelt_toggle
-	name = "Toggle overshield"
-	icon_state = "shieldceon"
-	requires_equip = TRUE
-
-	execute_ability()
-		var/obj/item/storage/belt/utility/prepared/ceshielded/C = the_item
-		C.toggle()
-		..()
-		//if(C.active) icon_state = "shieldceoff"
-		//else icon_state = "shieldceon"
 
 ////////////////////////////////////////////////////////////
 
@@ -777,6 +764,37 @@
 		the_mob.item_abilities?.Remove(ability_buttons)
 		the_mob.need_update_item_abilities = 1
 		the_mob.update_item_abilities()
+
+	proc/add_item_ability(mob/user, obj/ability_button/ability)
+		if(!ispath(ability))
+			return
+		LAZYLISTADD(src.abilities, ability)
+		var/obj/ability_button/AB = new ability
+		LAZYLISTADD(src.ability_buttons, AB)
+		AB.the_item = src
+		AB.name = AB.name + " ([src.name])"
+		if(user)
+			AB.the_mob = user
+			src.the_mob = user
+			the_mob.item_abilities |= AB
+			the_mob.need_update_item_abilities = 1
+			the_mob.update_item_abilities()
+
+
+
+	proc/remove_item_ability(mob/user, obj/ability_button/ability)
+		if(!ispath(ability))
+			return
+		LAZYLISTREMOVE(src.abilities, ability)
+		var/obj/ability_button/AB = (locate(ability) in src.ability_buttons)
+		LAZYLISTREMOVE(src.ability_buttons, AB)
+		if(user)
+			user.need_update_item_abilities = 1
+			user.item_abilities?.Remove(AB)
+			user.update_item_abilities()
+		qdel(AB)
+
+
 /*
 	proc/check_abilities()
 		if (!(src in heh))

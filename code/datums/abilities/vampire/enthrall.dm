@@ -6,7 +6,7 @@
 	target_nodamage_check = 1
 	max_range = 1
 	cooldown = 300
-	pointCost = 100 //copy pasted below. sorry.
+	pointCost = 200 //copy pasted below. sorry.
 	when_stunned = 0
 	not_when_handcuffed = 1
 	restricted_area_check = 2
@@ -33,7 +33,7 @@
 		if (!ishuman(target))
 			return 1
 
-		actions.start(new/datum/action/bar/private/icon/vampire_enthrall_thrall(target, src), M)
+		actions.start(new/datum/action/bar/private/icon/vampire_enthrall_thrall(target, src, pointCost), M)
 		return 1 //not 0, we dont awnna deduct points until cast finishes
 
 /datum/targetable/vampire/speak_thrall
@@ -82,10 +82,12 @@
 	color_failure = "#8d1422"
 	var/mob/living/carbon/human/target
 	var/datum/targetable/vampire/enthrall/enthrall
+	var/cost = 200
 
-	New(Target, Enthrall)
+	New(Target, Enthrall, pointCost)
 		target = Target
 		enthrall = Enthrall
+		cost = pointCost
 		..()
 
 	onStart()
@@ -134,9 +136,9 @@
 			if (V)
 				V.blood_points += 200
 
-			H.blood_tracking_output(100)
+			H.blood_tracking_output(cost)
 
-			H.deductPoints(100)
+			H.deductPoints(cost)
 
 			boutput(M, "<span class='notice'>You donate 200 blood points to [target].</span>")
 			boutput(target, "<span class='notice'>[M] has donated you 200 blood points. Your health is temporarily increased.</span>")
