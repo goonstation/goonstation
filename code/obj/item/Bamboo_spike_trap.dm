@@ -103,7 +103,6 @@
 			logTheThing(LOG_COMBAT, User, "disarmed a spike trap at [src.loc]")
 			src.armed = FALSE
 			src.anchored = FALSE
-		return
 
 	proc/break_down(mob/User)
 		//breaks down into multiple bamboo parts
