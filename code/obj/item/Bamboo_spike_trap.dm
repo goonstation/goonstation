@@ -89,8 +89,7 @@
 		if (!src.armed)
 			logTheThing(LOG_COMBAT, User, "armed a spike trap at [src.loc]")
 			set_icon_state("Bamboo_Spike_Trap-Assembled")
-			if (User)
-				User.drop_item(src)
+			User?.drop_item(src)
 			src.armed = TRUE
 			src.anchored = TRUE
 		return
