@@ -1,4 +1,7 @@
 
+(t)thu dec 15 22
+(u)tarmunora
+(+)glass tables chain-react when broken
 (t)wed dec 14 22
 (u)aloe
 (*)Clicking on an item someone has equipped in the human inventory menu (the one where you strip people/put items on them) while holding an item now clicks that equipped item with your held one. Paint people's clothes! Stuff grenades in people's backpacks! Melt people's shoes!<br>This WILL have jank, and I'll revert it if the jank becomes too much to handle.
