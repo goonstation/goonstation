@@ -156,9 +156,13 @@
 	ai_offhand_pickup_chance = 5 // your base monkey
 	New()
 		..()
-		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/head/paper_hat, slot_head)
-
+		SPAWN(1 SECOND) // okay this all ought to actually make tanhony spawn in their proper court attire
+			if (istype(get_area(src), /area/station/crew_quarters/courtroom))
+				src.equip_new_if_possible(/obj/item/clothing/head/powdered_wig, slot_head)
+				src.equip_new_if_possible(/obj/item/clothing/suit/judgerobe, slot_wear_suit)
+				src.equip_new_if_possible(/obj/item/toy/judge_gavel, slot_r_hand)
+			else
+				src.equip_new_if_possible(/obj/item/clothing/head/paper_hat, slot_head)
 /mob/living/carbon/human/npc/monkey/krimpus
 	name = "Krimpus"
 	real_name = "Krimpus"
