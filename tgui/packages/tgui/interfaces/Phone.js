@@ -3,6 +3,7 @@ import { Button, Collapsible } from '../components';
 import { Window } from '../layouts';
 
 export const Phone = (props, context) => {
+  const { act, data } = useBackend(context);
   return (
     <Window
       title="Phonebook"
