@@ -211,6 +211,6 @@
 		if(!M)
 			return
 		var/slip_delay = BASE_SPEED_SUSTAINED + WALK_DELAY_ADD
-		var/movement_delay_real = max(M.movement_delay(get_step(M,M.move_dir), 0),world.tick_lag)
+		var/movement_delay_real = max(M.movement_delay(get_step(M,M.move_dir), (M.client?.check_key(KEY_RUN) && M.get_stamina() > STAMINA_SPRINT)),world.tick_lag)
 		if (movement_delay_real < slip_delay)
 			return TRUE
