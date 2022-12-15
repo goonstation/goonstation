@@ -41,8 +41,14 @@
 					return
 				playsound(src.loc, 'sound/items/Scissor.ogg', 60)
 				user.visible_message("[user] starts disarming [src]...")
-				var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, src.disarming_time,
-				/obj/item/bamboo_spike_trap/proc/disarm,\list(user), W.icon, W.icon_state, "[user] finishes disarming [src]")
+				var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(
+					user,
+					src,
+					src.disarming_time,
+					/obj/item/bamboo_spike_trap/proc/disarm,\list(user),
+					W.icon,
+					W.icon_state,
+					"[user] finishes disarming [src]")
 				actions.start(action_bar, user)
 				return
 			else
@@ -50,8 +56,15 @@
 					return
 				playsound(src.loc, 'sound/items/Scissor.ogg', 60)
 				user.visible_message("[user] starts breaking down [src]...")
-				var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, src.break_down_time,
-				/obj/item/bamboo_spike_trap/proc/break_down,\list(user), W.icon, W.icon_state, "[user] finishes breaking down [src]")
+				var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(
+					user,
+					src,
+					src.break_down_time,
+					/obj/item/bamboo_spike_trap/proc/break_down,
+					\list(user),
+					W.icon,
+					W.icon_state,
+					"[user] finishes breaking down [src]")
 				actions.start(action_bar, user)
 				return
 		if(istype(W, /obj/item/reagent_containers/glass/))
@@ -73,43 +86,39 @@
 		//no reuseable explosive chem traps, sorry
 		qdel(src)
 
-	proc/arm(mob/User)
+	proc/arm(mob/user)
 		if (!src)
 			return
-		var/trap_occupied = 0
 		for(var/obj/item/B in get_turf(src))
 			if (istype(B, /obj/item/bamboo_spike_trap))
 				var/obj/item/bamboo_spike_trap/BM = B
 				if (BM.armed)
-					trap_occupied = 1
-		if (trap_occupied)
-			if (User)
-				boutput(User, "<span class='alert'>A trap is already placed here!</span>")
-			return
+					boutput(user, "<span class='alert'>A trap is already placed here!</span>")
+					return
 		if (!src.armed)
-			logTheThing(LOG_COMBAT, User, "armed a spike trap at [src.loc]")
+			logTheThing(LOG_COMBAT, user, "armed a spike trap at [src.loc]")
 			set_icon_state("Bamboo_Spike_Trap-Assembled")
-			User?.drop_item(src)
+			user?.drop_item(src)
 			src.armed = TRUE
 			src.anchored = TRUE
 
-	proc/disarm(mob/User)
+	proc/disarm(mob/user)
 		if (!src)
 			return
 		if (src.armed)
 			set_icon_state("Bamboo_Spike_Trap-Packet")
-			logTheThing(LOG_COMBAT, User, "disarmed a spike trap at [src.loc]")
+			logTheThing(LOG_COMBAT, user, "disarmed a spike trap at [src.loc]")
 			src.armed = FALSE
 			src.anchored = FALSE
 
-	proc/break_down(mob/User)
+	proc/break_down(mob/user)
 		//breaks down into multiple bamboo parts
 		if (!src)
 			return
 		var/obj/item/material_piece/organic/bamboo/A = new /obj/item/material_piece/organic/bamboo(get_turf(src))
 		if (src.break_down_amount > 1)
 			A.change_stack_amount(src.break_down_amount - 1)
-		A.add_fingerprint(User)
+		A.add_fingerprint(user)
 		qdel(src)
 
 
@@ -124,22 +133,26 @@
 			crash_into(victim)
 			qdel(src) //if crashed into, destroys the trap
 
-	attack_self(mob/User as mob)
+	attack_self(mob/user as mob)
 		if (!src.armed)
-			var/trap_occupied = 0
 			for(var/obj/item/B in get_turf(src))
 				if (istype(B, /obj/item/bamboo_spike_trap))
 					var/obj/item/bamboo_spike_trap/BM = B
 					if (BM.armed)
-						trap_occupied = 1
-			if (!trap_occupied)
-				User.show_text("You start to arm the trap...", "blue")
-				var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(User, src, src.arming_time,
-				/obj/item/bamboo_spike_trap/proc/arm,\list(User), src.icon, src.icon_state, "[User] finishes arming [src]")
-				actions.start(action_bar, User)
-				return
-			else
-				boutput(User, "<span class='alert'>A trap is already placed here!</span>")
+						boutput(user, "<span class='alert'>A trap is already placed here!</span>")
+						return
+			user.show_text("You start to arm the trap...", "blue")
+			var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(
+				user,
+				src,
+				src.arming_time,
+				/obj/item/bamboo_spike_trap/proc/arm,
+				\list(user),
+				src.icon,
+				src.icon_state,
+				"[user] finishes arming [src]")
+			actions.start(action_bar, user)
+			return
 		..()
 
 
