@@ -11,6 +11,9 @@
 */
 
 // -------------------grenades-------------
+TYPEINFO(/obj/item/old_grenade/sawfly)
+	mats = list("MET-2"=7, "CON-1"=7, "POW-1"=5)
+
 /obj/item/old_grenade/sawfly
 
 	name = "Compact sawfly"
@@ -25,7 +28,6 @@
 	is_dangerous = TRUE
 	is_syndicate = TRUE
 	issawfly = TRUE //used to tell the sawfly remote if it can or can't prime() the grenade
-	mats = list("MET-2"=7, "CON-1"=7, "POW-1"=5)
 	contraband = 2
 	overlays = null
 	state = 0

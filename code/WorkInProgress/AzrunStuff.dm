@@ -740,7 +740,3 @@
 		unlock()
 			iterations = 0
 			..()
-
-
-
-

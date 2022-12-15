@@ -146,8 +146,6 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	/// set to TRUE to inhibit entrance into this area, may not work completely yet.
 	var/blocked = 0
 
-	/// if set and a blocked person makes their way into here via Bad Ways, they'll be teleported here instead of nullspace. use a path!
-	var/blocked_waypoint
 	var/list/blockedTimers
 
 	/// for Battle Royale gamemode
@@ -160,6 +158,9 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 
 	///This datum, if set, allows terrain generation behavior to be ran on world/proc/init()
 	var/datum/map_generator/map_generator
+
+	/// Are mobs normally excluded from restricted Z levels allowed to exist here even on restricted Z levels?
+	var/allowed_restricted_z = FALSE
 
 	proc/CanEnter(var/atom/movable/A)
 		if( blocked )
@@ -214,9 +215,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 						if( !CanEnter( enteringM ) )
 
 							var/target = get_turf(oldloc)
-							if( !target && blocked_waypoint )
-								target = get_turf(locate(blocked_waypoint) in world)
-							enteringM.loc = target
+							enteringM.set_loc(target)
 						var/area/oldarea = get_area(oldloc)
 						if( sanctuary && !blocked && !(oldarea.sanctuary))
 							boutput( enteringM, "<b style='color:#31BAE8'>You are entering a sanctuary zone. You cannot be harmed by other players here.</b>" )
@@ -473,7 +472,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 
 	Entered(atom/movable/O) // TODO: make this better and not copy n pasted from area_that_kills_you_if_you_enter_it
 		..()
-		if (isobserver(O))
+		if (isobserver(O) || istype(O, /obj/arrival_missile))
 			return
 		if (isintangible(O) || iswraith(O))
 			O.set_loc(pick_landmark(LANDMARK_LATEJOIN))
@@ -486,9 +485,9 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			setdead(jerk)
 			jerk.remove()
 		else if (isobj(O) && !(istype(O, /obj/overlay/tile_effect) || O.anchored == 2 || istype(O, /obj/landmark)))
-			#ifdef RUNTIME_CHECKING
+			#ifdef CHECK_MORE_RUNTIMES
 			if(current_state <= GAME_STATE_WORLD_NEW)
-				CRASH("[O] ([O.type]) got deleted by a cordon at [O.x],[O.y],[O.z] ([O.loc.loc] [O.loc.type]) during world initialization")
+				CRASH("[identify_object(O)] got deleted by a cordon at [O.x],[O.y],[O.z] ([O.loc.loc] [O.loc.type]) during world initialization")
 			#endif
 			qdel(O)
 		return
@@ -644,6 +643,7 @@ ABSTRACT_TYPE(/area/shuttle)
 	flags = ALWAYS_SOLID_FLUID
 
 /area/shuttle/escape
+	allowed_restricted_z = TRUE
 	name = "Emergency Shuttle"
 
 /area/shuttle/escape/station
@@ -824,6 +824,7 @@ ABSTRACT_TYPE(/area/shuttle_transit_space)
 	teleport_blocked = 1
 	var/throw_dir = NORTH // goddamnit x2
 	expandable = 0
+	allowed_restricted_z = TRUE
 
 	Entered(atom/movable/Obj,atom/OldLoc)
 		..()
@@ -2656,7 +2657,7 @@ ABSTRACT_TYPE(/area/station/engine/substation)
 	icon_state = "prototype_engine"
 
 /area/station/engine/thermo
-	name = "Thermoelectric generator"
+	name = "Thermoelectric Generator"
 	icon_state = "prototype_engine"
 
 /area/station/engine/proto_gangway
@@ -2668,7 +2669,7 @@ ABSTRACT_TYPE(/area/station/engine/substation)
 
 
 /area/station/teleporter
-	name = "Teleporter"
+	name = "Command Teleporter"
 	icon_state = "teleporter"
 	sound_environment = 3
 	workplace = 1
@@ -3481,14 +3482,14 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	sound_environment = 4
 	teleport_blocked = 1
 
-	CanEnter( var/atom/movable/A )
+	CanEnter(atom/movable/A)
 		var/mob/living/M = A
-		if( istype(M) && M.mind && M.mind.special_role != ROLE_WIZARD && isliving(M) )
+		if(istype(M) && M.mind && !(M.mind.special_role == ROLE_WIZARD || M.mind.assigned_role == "Santa Claus)"))
 			if(M.client && M.client.holder)
-				return 1
-			boutput( M, "<span class='alert'>A magical barrier prevents you from entering!</span>" ) //or something
-			return 0
-		return 1
+				return TRUE
+			boutput(M, "<span class='alert'>A magical barrier prevents you from entering!</span>") //or something
+			return FALSE
+		return TRUE
 
 ABSTRACT_TYPE(/area/station/ai_monitored)
 /area/station/ai_monitored
@@ -3544,6 +3545,40 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 	teleport_blocked = 1
 	spy_secure_area = TRUE
 	station_map_colour = MAPC_ARMOURY
+	var/static/list/entered_ckeys = list()
+	var/armory_auth = FALSE
+
+	proc/authorize()
+		armory_auth = TRUE
+
+	proc/unauthorize()
+		armory_auth = FALSE
+
+	New()
+		..()
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_AUTH, .proc/authorize)
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_UNAUTH, .proc/unauthorize)
+		SPAWN(5 SECONDS)
+			var/area/A = locate(/area/station/ai_monitored/armory)
+			for(var/obj/item/O in A)
+				O.AddComponent(/datum/component/log_item_pickup, "")
+
+	Entered(atom/movable/A, atom/oldloc)
+		. = ..()
+		if (current_state < GAME_STATE_FINISHED)
+			if(istype(A, /mob/living) && !istype(A, /mob/living/intangible))
+				var/mob/living/M = A
+				if(!M.client)
+					return
+				if(M.client.holder)
+					return
+				if(M.client.ckey in entered_ckeys)
+					return
+				var/ckey = M.client.ckey
+				entered_ckeys += ckey
+				SPAWN(120 SECONDS)
+					entered_ckeys -= ckey
+				logTheThing(LOG_STATION, M, "entered the Armory [log_loc(M)].[armory_auth ? "" : " - Armory unauthorized."]")
 
 // // // // // //
 

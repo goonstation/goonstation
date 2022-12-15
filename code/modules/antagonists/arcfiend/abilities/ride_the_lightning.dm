@@ -15,7 +15,7 @@
 	/// Whether or not we're using this ability.
 	var/active = FALSE
 	/// Each tile traveled will cost this many units of energy.
-	var/step_cost = 3
+	var/step_cost = 2
 	/// The user will be able to see all cables within this many tiles of their location.
 	var/view_range = 2
 	/// A cache of images for each cable.

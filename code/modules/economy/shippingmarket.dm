@@ -621,7 +621,7 @@
 	var/trans = input("Which budget?", "Budgeting", null, null) in list("Payroll", "Shipping", "Research")
 	if (!trans) return
 
-	var/amount = input(usr, "How much?", "Funds", 0) as null|num
+	var/amount = input(usr, "How much to add to this budget?", "Funds", 0) as null|num
 	if (!isnum_safe(amount)) return
 
 	switch(trans)

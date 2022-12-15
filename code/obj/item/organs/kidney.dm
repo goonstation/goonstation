@@ -131,6 +131,9 @@
 		..()
 		src.icon_state = pick("plant_appendix", "plant_appendix_bloom")
 
+TYPEINFO(/obj/item/organ/kidney/cyber)
+	mats = 6
+
 /obj/item/organ/kidney/cyber
 	name = "cyberkidney"
 	desc = "A fancy robotic kidney to replace one that someone's lost!"
@@ -140,7 +143,6 @@
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
-	mats = 6
 	min_chem_metabolism_modifier = 75
 	max_chem_metabolism_modifier = 150
 

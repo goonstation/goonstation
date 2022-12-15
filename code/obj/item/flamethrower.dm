@@ -31,6 +31,7 @@ A Flamethrower in various states of assembly
 	item_state = "flamethrower0"
 	desc = "You are a firestarter!"
 	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
+	c_flags = null
 	force = 3
 	throwforce = 10
 	throw_speed = 1
@@ -195,7 +196,8 @@ A Flamethrower in various states of assembly
 	icon_state = "syndflametank0"
 	base_icon_state = "syndflametank"
 	desc = "A back mounted fueltank/jetpack system for use with a tactical flamethrower."
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | OPENCONTAINER
+	flags = FPRINT | TABLEPASS | CONDUCT | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
+	c_flags = ONBACK
 	var/obj/item/gun/flamethrower/backtank/linkedflamer
 	inventory_counter_enabled = 1
 	move_triggered = 1

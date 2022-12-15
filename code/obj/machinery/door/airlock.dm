@@ -273,6 +273,9 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	visible = 0
 	operation_time = 10
 
+TYPEINFO(/obj/machinery/door/airlock/syndicate)
+	mats = 0
+
 /obj/machinery/door/airlock/syndicate // fuck our players for making us (or at least me) need this
 	name = "reinforced external airlock"
 	desc = "Looks pretty tough. I wouldn't take this door on in a fight."
@@ -283,13 +286,15 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	hardened = TRUE
 	aiControlDisabled = TRUE
 	object_flags = BOTS_DIRBLOCK
-	mats = 0
 
 /obj/machinery/door/airlock/syndicate/meteorhit()
 	return
 
 /obj/machinery/door/airlock/syndicate/ex_act()
 	return
+
+TYPEINFO(/obj/machinery/door/airlock/centcom)
+	mats = 0
 
 /obj/machinery/door/airlock/centcom
 	icon = 'icons/obj/doors/Doorcom.dmi'
@@ -299,7 +304,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	hardened = TRUE
 	aiControlDisabled = TRUE
 	object_flags = BOTS_DIRBLOCK
-	mats = 0
 
 /obj/machinery/door/airlock/centcom/meteorhit()
 	return
@@ -356,6 +360,9 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	health = 800
 	health_max = 800
 
+TYPEINFO(/obj/machinery/door/airlock/pyro/command/centcom)
+	mats = 0
+
 /obj/machinery/door/airlock/pyro/command/centcom
 	req_access_txt = "57"
 	cant_emag = TRUE
@@ -363,7 +370,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	hardened = TRUE
 	aiControlDisabled = TRUE
 	object_flags = BOTS_DIRBLOCK
-	mats = 0
 
 /obj/machinery/door/airlock/pyro/command/alt
 	icon_state = "com2_closed"
@@ -372,9 +378,11 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	welded_icon_state = "2_welded"
 	req_access = null
 
+TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
+	mats = 0
+
 /obj/machinery/door/airlock/pyro/command/syndicate
 	req_access = list(access_syndicate_commander)
-	mats = 0
 
 /obj/machinery/door/airlock/pyro/weapons
 	icon_state = "manta_closed"
@@ -479,6 +487,9 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	visible = 0
 	operation_time = 10
 
+TYPEINFO(/obj/machinery/door/airlock/pyro/reinforced)
+	mats = 0
+
 /obj/machinery/door/airlock/pyro/reinforced
 	name = "reinforced external airlock"
 	desc = "Looks pretty tough. I wouldn't take this door on in a fight."
@@ -491,7 +502,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	cant_emag = TRUE
 	hardened = TRUE
 	aiControlDisabled = TRUE
-	mats = 0
 
 /obj/machinery/door/airlock/pyro/reinforced/meteorhit()
 	return
@@ -519,6 +529,9 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	opacity = 0
 	visible = 0
 
+TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
+	mats = 0
+
 /obj/machinery/door/airlock/pyro/glass/reinforced
 	name = "reinforced glass airlock"
 	desc = "Looks pretty tough. I wouldn't take this door on in a fight."
@@ -526,7 +539,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	cant_emag = TRUE
 	hardened = TRUE
 	aiControlDisabled = TRUE
-	mats = 0
 
 /obj/machinery/door/airlock/pyro/glass/reinforced/meteorhit()
 	return
@@ -1711,13 +1723,15 @@ About the new airlock wires panel:
 		..()
 	return
 
+TYPEINFO(/obj/machinery/door/airlock)
+	mats = 18
+
 // This code allows for airlocks to be controlled externally by setting an id_tag and comm frequency (disables ID access)
-obj/machinery/door/airlock
+/obj/machinery/door/airlock
 	var/id_tag
 	var/frequency = FREQ_AIRLOCK
 	var/last_update_time = 0
 	var/last_radio_login = 0
-	mats = 18
 
 
 	receive_signal(datum/signal/signal)

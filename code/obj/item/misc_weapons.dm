@@ -16,6 +16,9 @@
 
 
 /// Cyalume saber/esword, famed traitor item
+TYPEINFO(/obj/item/sword)
+	mats = list("MET-1"=5, "CON-2"=5, "POW-3"=10)
+
 /obj/item/sword
 	name = "cyalume saber"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -40,7 +43,6 @@
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	is_syndicate = 1
-	mats = list("MET-1"=5, "CON-2"=5, "POW-3"=10)
 	contraband = 5
 	desc = "An illegal, recalled Super Protector Friend glow sword. When activated, uses energized cyalume to create an extremely dangerous saber. Can be concealed when deactivated."
 	stamina_damage = 35 // This gets applied by obj/item/attack, regardless of if the saber is active.
@@ -871,7 +873,8 @@
 	icon_state = "fireaxe"
 	item_state = "fireaxe"
 	hitsound = null
-	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY | ONBELT
+	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY
+	c_flags = ONBELT
 	object_flags = NO_ARM_ATTACH
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING //TOOL_CHOPPING flagged items do 4 times as much damage to doors.
 	hit_type = DAMAGE_CUT
@@ -938,6 +941,9 @@
 
 ///////////////////////////////// Baseball Bat ////////////////////////////////////////////////////////////
 
+TYPEINFO(/obj/item/bat)
+	mats = list("wood" = 8)
+
 /obj/item/bat
 	name = "Baseball Bat"
 	desc = "Play ball! Note: Batter is responsible for any injuries sustained due to ball-hitting."
@@ -951,7 +957,6 @@
 	stamina_damage = 24
 	stamina_cost = 30
 	stamina_crit_chance = 15
-	mats = list("wood" = 8)
 
 	attack(mob/M, mob/user, def_zone, is_special)
 		. = ..()
@@ -1115,12 +1120,14 @@
 			target.organHolder.drop_and_throw_organ("butt", dist = 5, speed = 1, showtext = 1)
 
 //PS the description can be shortened if you find it annoying and you are a jerk.
+TYPEINFO(/obj/item/swords/katana)
+	mats = list("MET-3"=20, "FAB-1"=5)
+
 /obj/item/swords/katana
 	name = "katana"
 	desc = "That's it. I'm sick of all this 'Masterwork Cyalume Saber' bullshit that's going on in the SS13 system right now. Katanas deserve much better than that. Much, much better than that. I should know what I'm talking about. I myself commissioned a genuine katana in Space Japan for 2,400,000 Nuyen (that's about 20,000 credits) and have been practicing with it for almost 2 years now. I can even cut slabs of solid mauxite with my katana. Space Japanese smiths spend light-years working on a single katana and fold it up to a million times to produce the finest blades known to space mankind. Katanas are thrice as sharp as Syndicate sabers and thrice as hard for that matter too. Anything a c-saber can cut through, a katana can cut through better. I'm pretty sure a katana could easily bisect a drunk captain wearing full captain's armor with a simple tap. Ever wonder why the Syndicate never bothered conquering Space Japan? That's right, they were too scared to fight the disciplined Space Samurai and their space katanas of destruction. Even in World War 72, Nanotrasen soldiers targeted the men with the katanas first because their killing power was feared and respected."
 	icon_state = "katana"
 	force = 15 //Was at 5, but that felt far too weak. C-swords are at 60 in comparison. 15 is still quite a bit of damage, but just not insta-crit levels.
-	mats = list("MET-3"=20, "FAB-1"=5)
 	contraband = 7 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
 
 
@@ -1179,11 +1186,13 @@
 		..()
 		src.setItemSpecial(/datum/item_special/katana_dash/reverse)
 
+TYPEINFO(/obj/item/swords/captain)
+	mats = list("MET-2"=15)
+
 /obj/item/swords/captain
 	icon_state = "cap_sword"
 	name = "Commander's Sabre"
 	desc = ""
-	mats = list("MET-2"=15)
 	force = 16 //not awful but not amazing
 	contraband = 4
 	tooltip_flags = REBUILD_USER
@@ -1248,7 +1257,8 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY | ONBELT
+	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	c_flags = ONBELT
 	var/obj/item/swords/sword_inside = 1
 	var/sheathed_state = "katana_sheathed"
 	var/sheath_state = "katana_sheath"
@@ -1413,7 +1423,7 @@
 	wear_image_icon = 'icons/mob/clothing/back.dmi' //todo back sprites
 	icon_state = "claymore"
 	item_state = "longsword"
-	flags = ONBACK
+	c_flags = ONBACK
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
 	contraband = 5
@@ -1523,7 +1533,8 @@ obj/item/whetstone
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "hadar_sword2"
 	item_state = "hadar_sword2"
-	flags = ONBACK | FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBACK
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
 	contraband = 5
@@ -1653,7 +1664,8 @@ obj/item/whetstone
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	force = 15.0 //damage increases by 2.5 for every soul they take
 	throwforce = 15 //damage goes up by 2.5 for every soul they take
-	flags = FPRINT | CONDUCT | TABLEPASS | ONBELT
+	flags = FPRINT | CONDUCT | TABLEPASS
+	c_flags = ONBELT
 	item_function_flags = IMMUNE_TO_ACID
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING
@@ -1751,8 +1763,8 @@ obj/item/whetstone
 	var/guard = null //! used to keep track of what melee properties we're using
 
 	hit_type = DAMAGE_CUT
-	flags = FPRINT | TABLEPASS | USEDELAY | ONBACK
-	c_flags = EQUIPPED_WHILE_HELD
+	flags = FPRINT | TABLEPASS | USEDELAY
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 	item_function_flags = USE_INTENT_SWITCH_TRIGGER | USE_SPECIALS_ON_ALL_INTENTS
 
 	New()

@@ -3,7 +3,7 @@
 	desc = "A leather satchel for holding things."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "satchel"
-	flags = ONBELT
+	c_flags = ONBELT
 	health = 6
 	w_class = W_CLASS_TINY
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
@@ -132,7 +132,7 @@
 			var/staystill = user.loc
 			var/interval = 0
 			for(var/obj/item/I in view(1,user))
-				if (!matches(I, O)) continue
+				if (!matches(I, O) || QDELETED(I)) continue
 				if (I in user)
 					continue
 				I.set_loc(src)

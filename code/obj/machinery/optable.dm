@@ -1,11 +1,14 @@
+TYPEINFO(/obj/machinery/optable)
+	mats = 25
+
 /obj/machinery/optable
 	name = "Operating Table"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "table2-idle"
+	pass_unstable = TRUE
 	desc = "A table that allows qualified professionals to perform delicate surgeries."
 	density = 1
 	anchored = 1
-	mats = 25
 	event_handler_flags = USE_FLUID_ENTER
 	var/mob/living/carbon/human/victim = null
 	var/strapped = 0

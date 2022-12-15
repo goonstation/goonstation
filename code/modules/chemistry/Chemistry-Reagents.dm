@@ -132,10 +132,9 @@ datum
 		proc/reaction_blob(var/obj/blob/B, var/volume)
 			SHOULD_CALL_PARENT(TRUE)
 			if (!blob_damage)
-				return 1
-			src.holder.remove_reagent(src.id, volume)
+				return TRUE
 			B.take_damage(blob_damage, volume, "poison")
-			return 0
+			return TRUE
 
 		//Proc to check a mob's chemical protection in advance of reaction.
 		//Modifies the effective volume applied to the mob, but preserves the raw volume so it can be accessed for special behaviors.
@@ -267,6 +266,8 @@ datum
 				var/mob/living/carbon/human/H = M
 				if(H.traitHolder.hasTrait("chemresist"))
 					amount *= (0.65)
+				if(HAS_ATOM_PROPERTY(H, PROP_MOB_OVERDOSE_WEAKNESS))
+					amount *= 2
 			if (amount >= src.overdose * 2)
 				return do_overdose(2, M, mult)
 			else if (amount >= src.overdose)

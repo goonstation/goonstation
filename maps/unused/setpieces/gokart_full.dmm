@@ -302,7 +302,8 @@
 	name = "broken door";
 	tag = "icon-eng-open"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/racing_track)
 "aU" = (
 /turf/unsimulated/floor/damaged2,
@@ -1510,7 +1511,8 @@
 /obj/machinery/disposal{
 	name = "GREEN TEAM CHUTE"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
@@ -1553,7 +1555,8 @@
 /obj/machinery/computer/security/wooden_tv/small{
 	pixel_y = 8
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
@@ -1572,7 +1575,8 @@
 	layer = 7;
 	name = "Thunderdome Intercom"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
@@ -1593,7 +1597,8 @@
 /obj/machinery/disposal{
 	name = "RED TEAM CHUTE"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})

@@ -1,5 +1,257 @@
 
+(t)wed dec 14 22
+(u)aloe
+(*)Clicking on an item someone has equipped in the human inventory menu (the one where you strip people/put items on them) while holding an item now clicks that equipped item with your held one. Paint people's clothes! Stuff grenades in people's backpacks! Melt people's shoes!<br>This WILL have jank, and I'll revert it if the jank becomes too much to handle.
+(u)tarmunora
+(e)⚖|C-Balance
+(+)genetic stability starts at 100%
+(u)Sord
+(e)⚖|C-Balance
+(*)Going into Critical Condition now grants a large negative debuff to stamina and stamina regen. Once you leave crit you will receive a smaller "Recent Trauma" debuff.
+(*)Recent Trauma can be reduced by having painkillers (salicylic acid, morphine) in your system.
+(u)Sovexe
+(p)12394
+(e)⚖🧫🔊🔨|C-Balance, C-Experimental, C-Sound, A-Player-Actions
+(*)Arcfiend now deals less direct stamina damage but has knock backs to take advantage of various environmental hazards, see minor changes section for full details.
+(+)Arc Flash - cooldown reduced 15 > 12
+(+)Flash - now has a 0.75 second charge up before it applies knock back to all foes within 3 tiles, pushing them out to a distance 7 tiles away. Direct stamina damage from elecflash reduced 63 > 47
+(+)Discharge - knocks back the target back 4 tiles. Direct stamina damage reduced 130 > 115. Half (15) of direct burn damage is now always applied even to targets with electrical immunity. Cyborg targets now randomly receive 30 damage to either a random limb or distributed across their various parts
+(+)Ride the Lightning - reduced cost per step 3 > 2
+(t)sun dec 11 22
+(u)Cheffie
+(p)12325
+(e)💅💨|C-QoL, A-Atmospherics
+(+)You can now see the volume of various atmospherics objects by examining them for portable objects or with the atmospherics scanner for pipes.
+(u)tarmunora
+(e)⚖|C-Balance
+(+)humans that are not in crit are slighly more resistant to gibbing from explosions
+(u)LeahTheTech
+(p)12380
+(e)🆕⚖🧛📦|C-Feature, C-Balance, A-Gamemodes, A-Game-Objects
+(*)Added a new 1TC traitor purchase: the signaler implant, which sends configurable signals on emote triggers.
+(u)Kubius
+(p)12307
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Nadir's breach hull now includes four auxiliary compartments.
+(u)Roddy, Meow Meow, DisturbHerb
+(p)11135
+(e)🎨🍝|C-Sprites, A-Catering
+(*)Adds churros to the game. Combine a dough strip and sugar in the oven for 6 seconds, on high. Dip one into your favorite soup based items!
+(u)Bartimeus973
+(p)12218
+(e)🆕🎨💅🔨|C-Feature, C-Sprites, C-QoL, A-Player-Actions
+(+)Wraiths can now toggle their ghost chat with the "toggle_deadchat" ability.
+(u)Bartimeus973
+(p)12024
+(e)🗺🔄📡|A-Mapping, C-Rework, A-AI
+(+)Cats are now mobs! Try and see if jones can defeat the captain in a drinking contest!
+(u)Kubius
+(p)12172
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Spatial interdictors may now be constructed with alternate control boards that grant them new functionality, such as wireless cyborg recharge. Their efficacy against mass radiation events has also dramatically increased.
+(u)LeahTheTech
+(p)12235
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Coagulated gnesis gib chance now scales with volume.
+(u)LeahTheTech
+(p)12317
+(e)⚖💅|C-Balance, C-QoL
+(+)Stunned people can now be shoved up/down ladders using grabs (previously only people capable of climbing ladders could be shoved down them).
+(u)glowbold
+(p)12356
+(e)🪲🆕📦|C-Bug, C-Feature, A-Game-Objects
+(*)Omnitools auto-swap to the needed tool when using the deconstruction tool context menu.
+(t)sat dec 10 22
+(u)Bartimeus973
+(p)12222
+(e)🆕🧛🔨|C-Feature, A-Gamemodes, A-Player-Actions
+(+)Plaguerats now have an ability to move through disposal pipes.
+(u)glowbold
+(p)12355
+(e)🪲🆕📦|C-Bug, C-Feature, A-Game-Objects
+(+)You can throw items from certain rideables, like segways and skateboards.
+(t)fri dec 09 22
+(u)Sord
+(e)⚖|C-Balance
+(+)Containment fields now stun you for significantly less time.
+(u)Munien
+(p)12311
+(e)🆕🎩|C-Feature, A-Clothing
+(+)Added a few extra items to hacked medical clothing vendors for other medical occupations.
+(t)thu dec 08 22
+(u)tarmunora
+(+)emagged segways no longer inexplicably safer than normal ones.
+(t)wed dec 07 22
+(u)Sord
+(e)🗺💅|A-Mapping, C-QoL
+(+)Donut 2's Engineering Department has received a new coat of paint.
+(u)Flaborized
+(e)💎
+(*)New artifact sprites and some tweaking of their visuals!
+(u)tarmunora
+(*)Vampire enthrall has a scaling cost based on number of living thralls.
+(u)tarmunora
+(+)Vending machines deal stamina damage instead of auto-stun when falling.
+(t)tue dec 06 22
+(u)Virvatuli
+(p)12310
+(e)🗺💅|A-Mapping, C-QoL
+(+)Expanded Donut 3's medbooth to be consistent with other maps, no more free defib
+(u)Zaniff
+(p)12302
+(e)🎨|C-Sprites
+(+)Resprited the pod secondary systems.
+(t)mon dec 05 22
+(u)Stonepillar
+(p)11902
+(e)🚄🔧🧫📡⚙📜|C-Performance, A-Tooling, C-Experimental, A-AI, A-Internal, C-Documentation
+(*)Made pathfinding go faster, so that flock doesn't melt the server. This changed some important parts of the game, please report any new weirdness with critters or any movement related bugs!
+(u)LeahTheTech
+(p)11796
+(e)🆕🗺🎨🧛|C-Feature, A-Mapping, C-Sprites, A-Gamemodes
+(*)Added an interactive Flock tutorial, so you have a chance at learning what at least half the buttons do before playing.
+(u)LeahTheTech
+(p)12270
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Flockdrone egg cost now scales with the number of active flockdrones.
+(t)sat dec 03 22
+(u)Cheffie
+(p)12136
+(e)🎨💅📄|C-Sprites, C-QoL, A-UI
+(*)Omnitools now use a Context Actions menu.
+(u)glowbold
+(p)12252
+(e)🆕⚖📦🎩|C-Feature, C-Balance, A-Game-Objects, A-Clothing
+(+)Freshly laundered clothing stays warm for a bit after coming out of the WashMan.
+(u)Bartimeus973
+(p)12271
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(+)Fake guns that pop out a flag when fired can now be reused.
+(u)tarmunora
+(*)Wizards now have magic hands, which do not like certain technology. Good thing they packed their EMP-resistant headsets!
+(t)fri dec 02 22
+(u)tarmunora
+(+)AI law captcha returns.
+(t)thu dec 01 22
+(u)tarmunora
+(+)The Chief Engineer's belt has been modernized to use the new energy shield mechanic.
+(u)pali
+(e)🎄
+(*)Ho ho ho, Spacemas is here. Be sure to click the Spacemas tree and make your own Spacemas tree ornament!
+(t)wed nov 30 22
+(u)Mora
+(p)12228
+(e)🪲🎨|C-Bug, C-Sprites
+(+)Added a alternative blue labcoat for the medical director via alternate outfit spacebux purchase, check it out in the PR or in game!
+(u)goonstation-enjoyer
+(p)12171
+(e)💅🤖|C-QoL, A-Silicons
+(+)Mining cyborgs now get mesons instead of a jetpack on ocean maps.
+(t)tue nov 29 22
+(u)aloe
+(*)The bartender now has a couple boxes of straws in their booze vendor. Click things to slurp out of them, real simple.
+(u)MitchSmith
+(p)12223
+(e)🎨|C-Sprites
+(*)Credits now use the new ⪽ symbol in their design.
+(u)LeahTheTech
+(p)12209
+(e)⚖🧛📦|C-Balance, A-Gamemodes, A-Game-Objects
+(*)The syndicate cyborg conversion chamber is now slightly more resistant to explosions.
+(u)Azrun
+(p)10479
+(e)🪲🆕⚖📄⏰👽🍝|C-Bug, C-Feature, C-Balance, A-UI, A-Status-Effects, A-Mutantraces, A-Catering
+(*)Aquatic Genetics gives immunity to Kuru and minor food buff when eating brains.
+(t)mon nov 28 22
+(u)Kubius
+(p)12192
+(e)🗺|A-Mapping
+(+)Nadir fixbatch 9: relocated a cyborg dock prone to accidentally blowing up Robotics, reinforced some high-value external windows.
+(u)TDHooligan
+(p)12205
+(e)🔄⚗|C-Rework, A-Chemistry
+(+)Medibots now use Potassium Iodide as their tox treatment.
+(t)sat nov 26 22
+(u)aloe
+(*)NanoTrasen forgot to order new cloners, and the ones they have right now are kind of janky. Expect more mistakes and aberrations. Would recommend health/genetic analyzing people after they're cloned to make sure they're good to go.
+(*)Each big NanoMed has one genetic analyzer.
+(u)Cherman0
+(p)11885
+(e)🗺💅|A-Mapping, C-QoL
+(*)Various QoL changes to Donut3 Mining and Cargo areas. They should be noticeably less cramped.
+(t)fri nov 25 22
+(u)glowbold
+(p)12159
+(e)⚖💊📦|C-Balance, A-Medical, A-Game-Objects
+(*)Cryogenic healing pods use power, with an increased rate while on and occupied.
+(u)pali
+(p)12019
+(e)🆕💅🧛|C-Feature, C-QoL, A-Gamemodes
+(+)Ghost respawn events now show what antagonist you would be respawning as
+(u)glowbold
+(p)12104
+(e)⚖💡|C-Balance, A-Station-Systems
+(+)Nanotrasen now calculates station profitability based on the station stipend; use the bank records computer to track your progress in-round.
+(u)Kubius
+(p)12146
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Kondaru news office's attached bathroom has been expanded, now featuring nicer toilet stalls and a shower room. Did a pass over camera coverage as well.
+(u)Lord_Earthfire
+(p)12133
+(e)⚖|C-Balance
+(+)Splices with peanutbutter sandwhich-plants grant the bread-reagent and splices with free-range eggplants now grant the egg-reagent
+(u)Bartimeus973
+(p)12080
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)White handkerchiefs can now be printed at hacked clothing manufacturers. You can color the handkerchiefs with paint.
+(u)Wisemonster
+(p)11890
+(e)🗺💅|A-Mapping, C-QoL
+(+)Connected Oshan's mech lab with engineering eva storage.
+(u)Azrun
+(p)11771
+(e)🆕🔒⏰|C-Feature, A-Secret, A-Status-Effects
+(+)Adds the ability for a number of critters to traverse disposals.
+(u)Bartimeus973
+(p)12163
+(e)🔎🔨|C-Code-Quality, A-Player-Actions
+(+)Wraiths can no longer summon creatures if there is something in the way.
+(u)aloe
+(+)Cigarettes and welding tools now produce a bit of light while on. Bug me if there's anything else that doesn't produce light and you think should!
 (t)thu nov 24 22
+(u)Mr. Moriarty
+(p)11793
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(*)The armouries of all in-rotation maps have been standardised as to contain the same essential equipment. Some armouries still retain additional non-essential equipment to vary them from others.
+(+)Standardised the Donut2 Armoury, and added a perimeter defence.
+(u)ZWRh3
+(p)11084
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Removed organ damage from the battle royale gamemode.
+(u)Roddy
+(p)12055
+(e)💅⚙|C-QoL, A-Internal
+(+)Nanotrasen has begun hiring from a wider pool of employees. Adds in around 500 new random names.
+(u)Wivernshy
+(p)11352
+(e)|
+(+)Plush toy vocabulary has been improved!
+(u)goonstation-enjoyer
+(p)12109
+(e)💅📦|C-QoL, A-Game-Objects
+(+)You can now examine a cell charger to see how full the cell is.
+(u)Bartimeus973
+(p)12079
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Adds face-covering bandanas to the game! Use a handkerchief in hand to do your best bandit impression!
+(u)glowbold
+(p)12137
+(e)⚖💨📦|C-Balance, A-Atmospherics, A-Game-Objects
+(+)Freezers now use power based on how many degrees they shift the gas inside.
+(u)LeahTheTech
+(p)12131
+(e)🧛🔨🤖|A-Gamemodes, A-Player-Actions, A-Silicons
+(+)Silicons now hear a lot less flock system messages.
 (u)Conchuckter
 (p)11923
 (e)🪲🆕📦💡|C-Bug, C-Feature, A-Game-Objects, A-Station-Systems

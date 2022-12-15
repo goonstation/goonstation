@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/cell_charger)
+	mats = 8
+
 /obj/machinery/cell_charger
 	name = "cell charger"
 	desc = "A charging unit for power cells."
@@ -7,7 +10,6 @@
 	var/chargerate = 250 // power per tick
 	var/chargelevel = -1
 	anchored = 1
-	mats = 8
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	power_usage = 50
 
@@ -92,3 +94,9 @@
 	. = ..()
 	if(Obj == src.charging)
 		src.charging = null
+
+/obj/machinery/cell_charger/get_desc(dist)
+	. = ..()
+	if(!charging)
+		return
+	. += "<br><span class='notice'>\The [src] is currently charging \the [src.charging]! It is [round(src.charging.percent())]% charged and has [round(src.charging.charge)]/[src.charging.maxcharge] PUs. </span>"

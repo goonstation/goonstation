@@ -264,6 +264,10 @@
 
 		if (istype(M,/mob/dead/target_observer/hivemind_observer)) continue
 		if (istype(M,/mob/dead/target_observer/mentor_mouse_observer)) continue
+		if (iswraith(M))
+			var/mob/living/intangible/wraith/the_wraith = M
+			if (!the_wraith.hearghosts)
+				continue
 
 		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/seanceghost))
 			if(chat_text && !M.client.preferences.flying_chat_hidden)
@@ -533,28 +537,31 @@
 	else
 		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<span [class? class : ""]>[text]</span>[font_accent ? "</font>" : null][second_quote]"
 
-/mob/proc/emote(var/act, var/voluntary = 0)
-	return
+//no, voluntary is not a boolean. screm
+/mob/proc/emote(act, voluntary = 0, atom/target)
+	set waitfor = FALSE
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOB_EMOTE, act, voluntary, target)
 
-/mob/proc/emote_check(var/voluntary = 1, var/time = 10, var/admin_bypass = 1, var/dead_check = 1)
+/mob/proc/emote_check(voluntary = 1, time = 1 SECOND, admin_bypass = TRUE, dead_check = TRUE)
 	if (src.emote_allowed)
 		if (dead_check && isdead(src))
-			src.emote_allowed = 0
-			return 0
+			src.emote_allowed = FALSE
+			return FALSE
 		if (voluntary && (src.getStatusDuration("paralysis") > 0 || isunconscious(src)))
-			return 0
+			return FALSE
 		if (world.time >= (src.last_emote_time + src.last_emote_wait))
 			if (!no_emote_cooldowns && !(src.client && (src.client.holder && admin_bypass) && !src.client.player_mode) && voluntary)
-				src.emote_allowed = 0
+				src.emote_allowed = FALSE
 				src.last_emote_time = world.time
 				src.last_emote_wait = time
 				SPAWN(time)
-					src.emote_allowed = 1
-			return 1
+					src.emote_allowed = TRUE
+			return TRUE
 		else
-			return 0
+			return FALSE
 	else
-		return 0
+		return FALSE
 
 /mob/proc/listen_ooc()
 	set name = "(Un)Mute OOC"
@@ -1091,7 +1098,7 @@
 
 		if((isflockmob(M)) || (M.client.holder && !M.client.player_mode) || (isobserver(M) && !(istype(M, /mob/dead/target_observer/hivemind_observer))))
 			thisR = rendered
-		if(M.robot_talk_understand || istype(M, /mob/living/intangible/aieye))
+		if((M.robot_talk_understand || istype(M, /mob/living/intangible/aieye)) && (!involuntary && mob_speaking || prob(30)))
 			thisR = siliconrendered
 		if(istype(M, /mob/living/intangible/flock/flockmind) && !(istype(mob_speaking, /mob/living/intangible/flock/flockmind)) && M:flock == flock)
 			thisR = flockmindRendered
