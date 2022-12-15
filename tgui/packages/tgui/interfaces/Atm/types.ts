@@ -8,7 +8,7 @@
 export interface AtmData {
   accountName: string;
   accountBalance: number;
-	cardname: string;
+  cardname: string;
   clientKey: string;
   loggedIn: number;
   message: any;
