@@ -16,7 +16,7 @@ export const Atm = (_, context) => {
 
   const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', AtmTabKeys.Teller);
   return (
-    <Window title={name} width={375} height={450}>
+    <Window title={name} width={375} height={420}>
       <Window.Content>
         <Tabs fluid>
           <Tabs.Tab

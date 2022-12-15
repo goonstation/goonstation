@@ -914,7 +914,7 @@
 				var/userPin
 				if (usr.mind?.remembered_pin)
 					userPin = usr.mind?.remembered_pin
-				var/enteredPIN = text2num(tgui_input_text(usr, "Enter your PIN.", src.name, userPin, 4)) // before anyone asks, yes i know tgui_input_number() exists
+				var/enteredPIN = tgui_input_number(usr, "Enter your PIN.", src.name, userPin, 9999)
 				playsound(src.loc, sound_interact, 50, 1)
 				if (enteredPIN == src.scan.pin)
 					if(TryToFindRecord())
@@ -939,7 +939,7 @@
 			if("transfer_spacebux")
 				if(!usr.client)
 					boutput(usr, "<span class='alert'>Banking system offline. Welp.</span>")
-				var/amount = text2num(tgui_input_text(usr, "How much do you wish to transfer? You have [usr.client.persistent_bank] spacebux.", "Spacebux Transfer"))
+				var/amount = tgui_input_number(usr, "How much do you wish to transfer? You have [usr.client.persistent_bank] spacebux.", "Spacebux Transfer", 0, usr.client?.persistent_bank)
 				if(!amount)
 					return
 				if(amount <= 0)
@@ -963,7 +963,7 @@
 					boutput(usr, "<span class='alert'>This account is frozen!</span>")
 					src.show_message("Cannot withdraw from a frozen account.", "danger", "atm")
 					return
-				var/amount = round(text2num(tgui_input_text(usr, "How much would you like to withdraw?", "Withdrawal")))
+				var/amount = tgui_input_number(usr, "How much would you like to withdraw?", "Withdrawal", 0, src.accessed_record["current_money"])
 				if( amount < 1)
 					boutput(usr, "<span class='alert'>Invalid amount!</span>")
 					src.show_message("Invalid withdrawal amount.", "danger", "atm")
@@ -977,11 +977,10 @@
 					S.setup(src.loc, amount)
 					usr.put_in_hand_or_drop(S)
 					src.show_message("Withdrawal successful.", "success", "atm")
-					playsound(src.loc, sound_interact, 50, 1)
+					playsound(src.loc, 'sound/machines/printer_cargo.ogg', 50, 1)
 					. = TRUE
 			if("withdraw_spacebux")
-				var/amount = round(text2num(tgui_input_text(usr, "You have [usr.client.persistent_bank] Spacebux.\nHow much would you like to withdraw?", "How much?")))
-				amount = clamp(amount, 0, 1000000)
+				var/amount = round(tgui_input_number(usr, "You have [usr.client.persistent_bank] Spacebux.\nHow much would you like to withdraw?", "How much?", 0, 1000000))
 				if(amount <= 0)
 					boutput(usr, "<span class='alert'>No.</span>")
 					src.updateUsrDialog()
