@@ -92,7 +92,6 @@
 			User?.drop_item(src)
 			src.armed = TRUE
 			src.anchored = TRUE
-		return
 
 	proc/disarm(mob/User)
 		if (!src)
