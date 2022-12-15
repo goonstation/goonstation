@@ -15,7 +15,6 @@ const MODE_RECORDING = 1;
 const MODE_PLAYING = 2;
 
 export const AudioLog = (props, context) => {
-
   const { data } = useBackend(context);
   const { current_line, memory_capacity, mode, name, occupied_memory, tape } = data;
 
@@ -35,27 +34,23 @@ export const AudioLog = (props, context) => {
                     average: [0.5, 0.75],
                     bad: [0.75, 1.0],
                   }}
-                  value={tape ? (occupied_memory/memory_capacity) : 0} />
+                  value={tape ? occupied_memory / memory_capacity : 0}
+                />
               </LabeledList.Item>
               <LabeledList.Item label="LINE" labelColor="white" className="audiolog__monospaced">
-                {(mode === MODE_OFF)
-                  ? (
-                    <Slider
-                      animated
-                      color="good"
-                      minValue={1}
-                      maxValue={occupied_memory}
-                      value={tape ? current_line : 0} />
-                  )
-                  : (
-                    <ProgressBar
-                      color="good"
-                      minValue={1}
-                      maxValue={occupied_memory}
-                      value={tape ? current_line : 0}>
-                      {current_line}
-                    </ProgressBar>
-                  )}
+                {mode === MODE_OFF ? (
+                  <Slider
+                    animated
+                    color="good"
+                    minValue={1}
+                    maxValue={occupied_memory}
+                    value={tape ? current_line : 0}
+                  />
+                ) : (
+                  <ProgressBar color="good" minValue={1} maxValue={occupied_memory} value={tape ? current_line : 0}>
+                    {current_line}
+                  </ProgressBar>
+                )}
               </LabeledList.Item>
             </LabeledList>
           </Box>
@@ -75,7 +70,6 @@ export const AudioLog = (props, context) => {
 };
 
 const LabelScreen = (_, context) => {
-
   const { data } = useBackend(context);
   const { mode, tape, tape_name } = data;
 
@@ -83,49 +77,26 @@ const LabelScreen = (_, context) => {
     if (tape) {
       switch (mode) {
         case MODE_OFF:
-          return (
-            <marquee>
-              LOADED TAPE: {tape_name}
-            </marquee>
-          );
+          return <marquee>LOADED TAPE: {tape_name}</marquee>;
         case MODE_RECORDING:
-          return (
-            'RECORDING'
-          );
+          return 'RECORDING';
         case MODE_PLAYING:
-          return (
-            <marquee>
-              PLAYING: {tape_name}
-            </marquee>
-          );
+          return <marquee>PLAYING: {tape_name}</marquee>;
       }
     } else {
-      return (
-        'INSERT TAPE'
-      );
+      return 'INSERT TAPE';
     }
   };
 
-  return (
-    renderLabel()
-  );
+  return renderLabel();
 };
 
 const PushButton = (props, context) => {
-
   const { act } = useBackend(context);
 
   const { iconName, index, isRed, keepDown, tooltip } = props;
 
   const keyColour = isRed && 'audiolog__buttonelement-red';
-
-  const buttonPress = () => {
-
-  };
-
-  const buttonRelease = () => {
-
-  };
 
   return (
     <Tooltip content={tooltip} position="top">
@@ -133,13 +104,8 @@ const PushButton = (props, context) => {
         className={classes([
           'audiolog__buttonelement',
           keyColour,
-          keyActive
-            ? 'audiolog__buttonelement-active'
-            : 'audiolog__buttonelement-red-active',
         ])}
-        onMouseDown={buttonPress()}
-        onMouseLeave={!keepDown && buttonRelease()}
-        onMouseUp={!keepDown && buttonRelease()}>
+        onMouseDown={() => act(index)}>
         <Icon className="fa-fw" name={iconName} />
       </Box>
     </Tooltip>
