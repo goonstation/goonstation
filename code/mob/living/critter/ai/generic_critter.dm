@@ -204,7 +204,7 @@
 			T.Eat(C, C, TRUE)
 			has_started = TRUE
 
-/datum/aiTask/succeedable/critter/scavenge/on_reset()
+/datum/aiTask/succeedable/critter/eat/on_reset()
 	has_started = FALSE
 
 // Don't worry about this, we need to enable unsimulated turf pathing for the critter gauntlet

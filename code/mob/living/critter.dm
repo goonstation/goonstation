@@ -97,7 +97,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 		setup_equipment_slots()
 		setup_reagents()
 		setup_healths()
-		if (!healthlist.len)
+		if (!length(healthlist))
 			stack_trace("Critter [type] ([name]) \[\ref[src]\] does not have health holders.")
 		count_healths()
 
@@ -946,6 +946,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 				EH.drop(1)
 
 	emote(var/act, var/voluntary = 0)
+		..()
 		var/param = null
 
 		if (findtext(act, " ", 1, null))

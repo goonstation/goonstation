@@ -77,6 +77,9 @@
 		..()
 		src.icon_state = pick("plant_stomach", "plant_stomach_bloom")
 
+TYPEINFO(/obj/item/organ/stomach/cyber)
+	mats = 6
+
 /obj/item/organ/stomach/cyber
 	name = "cyberstomach"
 	desc = "A fancy robotic stomach to replace one that someone's lost!"
@@ -86,7 +89,6 @@
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
-	mats = 6
 
 	on_transplant(mob/M)
 		. = ..()

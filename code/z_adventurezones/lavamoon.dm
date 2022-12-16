@@ -1354,10 +1354,12 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	attackby(obj/item/W, mob/user)
 		if (src.broken) return
 		if (istype(W, /obj/item/grab))
-			if (!W:affecting) return
+			var/obj/item/grab/grab = W
+			if (!grab.affecting || BOUNDS_DIST(grab.affecting, src) > 0)
+				return
 			user.lastattacked = src
-			src.visible_message("<span class='alert'><b>[user] is trying to shove [W:affecting] [icon_state == "ladder"?"down":"up"] [src]!</b></span>")
-			return attack_hand(W:affecting)
+			src.visible_message("<span class='alert'><b>[user] is trying to shove [grab.affecting] [icon_state == "ladder"?"down":"up"] [src]!</b></span>")
+			return climb(grab.affecting)
 
 	proc/climb(mob/user as mob)
 		var/obj/ladder/otherLadder = src.get_other_ladder()

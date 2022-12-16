@@ -74,7 +74,7 @@ var/datum/action_controller/actions
 				if( ((A.duration >= 0 && TIME >= (A.started + A.duration)) && A.state == ACTIONSTATE_RUNNING) || A.state == ACTIONSTATE_FINISH)
 					A.state = ACTIONSTATE_ENDED
 					A.onEnd()
-					A?.promise.fulfill(A)
+					A.promise?.fulfill(A)
 					//continue //If this is not commented out the deletion will take place the tick after the action ends. This will break things like objects being deleted onEnd with progressbars - the bars will be left behind. But it will look better for things that do not do this.
 
 				if(A.state == ACTIONSTATE_DELETE || A.disposed)
@@ -950,6 +950,13 @@ var/datum/action_controller/actions
 		source.remove_stamina(STAM_COST)
 
 		if(item)
+			var/obj/item/existing_item = target.get_slot(slot)
+			if(existing_item) // if they have something there, smack it with held item
+				logTheThing(LOG_COMBAT, source, "uses the inventory menu while holding [log_object(item)] to interact with \
+													[log_object(existing_item)] equipped by [log_object(target)].")
+				source.click(existing_item, list()) // this is a bit messy
+				interrupt(INTERRUPT_ALWAYS)
+				return
 			if(!target.can_equip(item, slot))
 				boutput(source, "<span class='alert'>[item] can not be put there.</span>")
 				interrupt(INTERRUPT_ALWAYS)

@@ -67,6 +67,9 @@
 		/// Cell is fully charged
 		#define CELL_FULL 32
 
+// ---- energy shield thing ----
+	/// Sent by the itemability to toggle the energyshield component
+	#define COMSIG_SHIELD_TOGGLE "energy_shield_toggle"
 
 // ---- atom property signals ----
 

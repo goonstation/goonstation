@@ -1285,6 +1285,18 @@
 		..()
 		setProperty("space_movespeed", 0)  // ntso space suits don't suffer from slowdown
 
+/obj/item/clothing/suit/space/ntso/bellona
+	name = "NTSO combat dress"
+	desc = "A modernized NTSO combat suit, with an integrated energy shield."
+	icon_state = "ntso_bellona"
+	item_state = "ntso_bellona"
+
+	New()
+		. = ..()
+		var/obj/item/ammo/power_cell/self_charging/cell = new/obj/item/ammo/power_cell/self_charging{max_charge = 100; recharge_rate = 25; recharge_delay = 10 SECONDS}
+		AddComponent(/datum/component/cell_holder, cell, FALSE, 100, FALSE)
+		AddComponent(/datum/component/wearertargeting/energy_shield, list(SLOT_WEAR_SUIT), 1, 1, TRUE, 0) //blocks 100% of damage taken, up to 100 damage total. No drain
+
 /obj/item/clothing/suit/space/engineer
 	name = "engineering space suit"
 	desc = "An overly bulky space suit designed mainly for maintenance and mining."
@@ -1361,6 +1373,9 @@
 		icon_state = "diving_suit-eng"
 		item_state = "diving_suit-eng"
 
+TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
+	mats = 45 //should not be cheap to make at mechanics, increased from 15.
+
 /obj/item/clothing/suit/space/industrial
 #ifdef MAP_OVERRIDE_NADIR
 	desc = "Armored, immersion-tight suit. Protects from a wide gamut of environmental hazards, including radiation and explosions."
@@ -1405,7 +1420,6 @@
 		is_syndicate = TRUE
 		icon_state = "indusred"
 		item_state = "indusred"
-		mats = 45 //should not be cheap to make at mechanics, increased from 15.
 
 		New()
 			..()
