@@ -56,26 +56,37 @@
       user-select: none;
       -ms-user-select: none;
 
-      background: rgb(25, 25, 25);
-      box-shadow: -1px 0 0 rgba(0, 0, 0, 0.6) inset, 0 -5px rgba(0, 0, 0, 0.6) inset,
-        0 2px 12px rgba(0, 0, 0, 0.5);
-
       height: 3em;
       z-index: 1;
       border-radius: 0 0 5px 5px;
 
-      &:active{
-        background: red;
-      }
-
       &-red {
         background: rgb(170, 29, 41);
-        background: linear-gradient(180deg, rgb(170, 29, 41) 0%, rgb(170, 29, 41) 100%);
+        box-shadow: -1px 0 0 rgb(99, 13, 20) inset, 0 -5px rgb(99, 13, 20) inset,
+          0 2px 12px rgb(99, 13, 20);
 
-        &-active{
-
+        &:active, &-active{
+          background: rgb(107, 10, 10);
+          box-shadow: -1px 0 0 rgb(59, 4, 4) inset, 0 -5px rgb(59, 4, 4) inset,
+            0 2px 12px rgb(59, 4, 4);
         }
       }
+
+      &-black {
+        background: rgb(25, 25, 25);
+        box-shadow: -1px 0 0 rgb(8, 8, 8) inset, 0 -5px rgb(8, 8, 8) inset,
+          0 2px 12px rgb(8, 8, 8);
+
+        &:active, &-active{
+          background: rgb(15, 15, 15);
+          box-shadow: -1px 0 0 rgb(4, 4, 4) inset, 0 -5px rgb(4, 4, 4) inset,
+            0 2px 12px rgb(4, 4, 4);
+        }
+      }
+    }
+
+    &element > * {
+      pointer-events: none
     }
   }
 }

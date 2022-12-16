@@ -15,7 +15,7 @@ const MODE_RECORDING = 1;
 const MODE_PLAYING = 2;
 
 export const AudioLog = (props, context) => {
-  const { data } = useBackend(context);
+  const { act, data } = useBackend(context);
   const { current_line, memory_capacity, mode, name, occupied_memory, tape } = data;
 
   return (
@@ -44,7 +44,8 @@ export const AudioLog = (props, context) => {
                     color="good"
                     minValue={1}
                     maxValue={occupied_memory}
-                    value={tape ? current_line : 0}
+                    value={tape ? current_line : 1}
+                    onChange={(value) => act('scrub_to', { line: value })}
                   />
                 ) : (
                   <ProgressBar color="good" minValue={1} maxValue={occupied_memory} value={tape ? current_line : 0}>
@@ -55,10 +56,10 @@ export const AudioLog = (props, context) => {
             </LabeledList>
           </Box>
           <Box className="audiolog__buttonrow">
-            <PushButton isRed index="record" tooltip="Record" iconName="circle" />
-            <PushButton index="play" tooltip="Play" iconName="play" />
+            <PushButton isRed index="record" tooltip="Record" iconName="circle" keepDown={mode === MODE_RECORDING ? true : false} />
+            <PushButton index="play" tooltip="Play" iconName="play" keepDown={mode === MODE_PLAYING ? true : false} />
             <PushButton index="rewind" tooltip="Rewind" iconName="backward" />
-            <PushButton index="loop" tooltip="Loop" iconName="repeat" />
+            {/* <PushButton index="loop" tooltip="Loop" iconName="repeat" /> */}
             <PushButton index="stop" tooltip="Stop" iconName="square" />
             <PushButton index="clear" tooltip="Clear" iconName="trash" />
             <PushButton index="eject" tooltip="Eject" iconName="eject" />
@@ -96,7 +97,7 @@ const PushButton = (props, context) => {
 
   const { iconName, index, isRed, keepDown, tooltip } = props;
 
-  const keyColour = isRed && 'audiolog__buttonelement-red';
+  const keyColour = isRed ? 'audiolog__buttonelement-red' : 'audiolog__buttonelement-black';
 
   return (
     <Tooltip content={tooltip} position="top">
@@ -104,9 +105,12 @@ const PushButton = (props, context) => {
         className={classes([
           'audiolog__buttonelement',
           keyColour,
+          (keepDown && (
+            isRed ? 'audiolog__buttonelement-red-active'
+              : 'audiolog__buttonelement-black-active')),
         ])}
-        onMouseDown={() => act(index)}>
-        <Icon className="fa-fw" name={iconName} />
+        onMouseDown={!keepDown && (() => act(index))}>
+        <Icon className="fa-fw" name={iconName} color={keepDown && "gray"} />
       </Box>
     </Tooltip>
   );

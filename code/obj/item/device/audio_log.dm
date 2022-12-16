@@ -122,7 +122,7 @@ TYPEINFO(/obj/item/device/audio_log)
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
-		if(!ui)
+		if (!ui)
 			ui = new(user, src, "AudioLog")
 			ui.open()
 
@@ -147,23 +147,11 @@ TYPEINFO(/obj/item/device/audio_log)
 		if (.)
 			return
 		switch(action)
-			if ("record")
-				if (src.mode != MODE_RECORDING)
-					src.mode = MODE_RECORDING
-			if ("play")
-				if (src.mode != MODE_PLAYING)
-					play()
-			if ("stop")
-				stop()
-			if ("rewind")
-				if (src.tape)
-					src.tape.log_line = 1
 			if ("clear")
 				src.mode = MODE_OFF
 				if (src.tape)
 					src.tape.reset()
-			if ("loop")
-				continuous = !continuous
+				. = TRUE
 			if ("eject")
 				src.mode = MODE_OFF
 				src.icon_state = "[initial(src.icon_state)]-empty"
@@ -175,6 +163,30 @@ TYPEINFO(/obj/item/device/audio_log)
 
 				src.tape.log_line = 1
 				src.tape = null
+				. = TRUE
+			if ("loop")
+				continuous = !continuous
+				. = TRUE
+			if ("play")
+				if (src.mode != MODE_PLAYING)
+					play()
+					. = TRUE
+			if ("record")
+				if (src.mode != MODE_RECORDING)
+					src.mode = MODE_RECORDING
+					. = TRUE
+			if ("rewind")
+				if (src.tape && src.mode == MODE_OFF)
+					src.tape.log_line = 1
+					src.audible_message("<span class='notice'>\The [src.name] whirrs and makes a dull clunk as it rewinds.</span>")
+					. = TRUE
+			if ("scrub_to")
+				if (src.tape && src.mode == MODE_OFF)
+					src.tape.log_line = text2numsafe(params["line"])
+					src.audible_message("<span class='notice'>\The [src.name] whirrs momentarily before coming to a sudden stop.</span>")
+					. = TRUE
+			if ("stop")
+				stop()
 		playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
 		src.add_fingerprint(usr)
 		. = TRUE
@@ -182,31 +194,6 @@ TYPEINFO(/obj/item/device/audio_log)
 	attack_self(mob/user as mob)
 		..()
 		src.ui_interact(user)
-		// if (user.stat || user.restrained() || user.lying)
-		// 	return
-		// if ((user.contents.Find(src) || user.contents.Find(src.master) || BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf)))
-			// src.add_dialog(user)
-
-			// var/dat = "<TT><b>Audio Logger</b><br>"
-			// if (src.tape)
-			// 	dat += "Memory [src.tape.use_percentage()]% Full -- <a href='byond://?src=\ref[src];command=eject'>Eject</a><br>"
-			// else
-			// 	dat += "No Tape Loaded<br>"
-
-			// dat += "<table cellspacing=5><tr>"
-			// dat += "<td><a href='byond://?src=\ref[src];command=rec'>[src.mode == MODE_RECORDING ? "Recording" : "Not Recording"]</a></td>"
-			// dat += "<td><a href='byond://?src=\ref[src];command=play'>[src.mode == MODE_PLAYING ? "Playing" : "Not Playing"]</a></td>"
-			// dat += "<td><a href='byond://?src=\ref[src];command=stop'>Stop</a></td>"
-			// dat += "<td><a href='byond://?src=\ref[src];command=clear'>Clear Log</a></td>"
-			// dat += "<td><a href='byond://?src=\ref[src];command=continuous_mode'>[continuous ? "Looping" : "No Loop"]</a></td></table></tt>"
-
-			// user.Browse(dat, "window=audiolog;size=400x140")
-			// onclose(user, "audiolog")
-		// else
-			// user.Browse(null, "window=audiolog")
-			// src.remove_dialog(user)
-
-		// return
 
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/audio_tape))
@@ -254,9 +241,9 @@ TYPEINFO(/obj/item/device/audio_log)
 
 		var/message = (lang_id == "english" || lang_id == "") ? messages[1] : messages[2]
 		if (src.tape.add_message(speaker_name, message, continuous) == 0)
-			src.speak(null, "Memory full. Have a nice day.", TRUE) // have the UI send a ui_act() thing when memory full instead of the DM code
+			src.audible_message("<span class='notice'>\The [src.name] comes to a sudden stop as it runs out of memory.</span>")
 			src.mode = MODE_OFF
-
+		tgui_process.update_uis(src)
 		return
 
 	proc/play()
@@ -264,6 +251,7 @@ TYPEINFO(/obj/item/device/audio_log)
 			return
 
 		mode = MODE_PLAYING
+		src.audible_message("<span class='notice'>\The [src.name] whirrs to life as it starts to play.</span>")
 		src.create_name_colours(src.tape.speakers)
 		SPAWN(2 SECONDS)
 			while (mode == MODE_PLAYING && src.tape)
@@ -281,12 +269,15 @@ TYPEINFO(/obj/item/device/audio_log)
 				speak_message = copytext(speak_message, separator+1)
 
 				speak(speaker, speak_message)
+				tgui_process.update_uis(src)
 				sleep(5 SECONDS)
 				if (!tape || !tape.next(continuous))
 					stop()
 
 	proc/stop()
 		src.mode = MODE_OFF
+		tgui_process.update_uis(src)
+		src.audible_message("<span class='notice'>A dull clunk emanates from \the [src.name] as it ceases playing.</span>")
 		if (src.self_destruct)
 			SPAWN(2 SECONDS)
 				src.explode()
