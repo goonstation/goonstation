@@ -541,6 +541,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 			src.bites_left--
 			if (!bites_left)
+				new src.dropped_item(get_turf(src))
 				qdel(src)
 		else
 			..()

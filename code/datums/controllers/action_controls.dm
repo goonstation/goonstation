@@ -950,6 +950,13 @@ var/datum/action_controller/actions
 		source.remove_stamina(STAM_COST)
 
 		if(item)
+			var/obj/item/existing_item = target.get_slot(slot)
+			if(existing_item) // if they have something there, smack it with held item
+				logTheThing(LOG_COMBAT, source, "uses the inventory menu while holding [log_object(item)] to interact with \
+													[log_object(existing_item)] equipped by [log_object(target)].")
+				source.click(existing_item, list()) // this is a bit messy
+				interrupt(INTERRUPT_ALWAYS)
+				return
 			if(!target.can_equip(item, slot))
 				boutput(source, "<span class='alert'>[item] can not be put there.</span>")
 				interrupt(INTERRUPT_ALWAYS)

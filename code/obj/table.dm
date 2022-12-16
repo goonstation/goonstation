@@ -830,6 +830,11 @@ TYPEINFO_NEW(/obj/table/glass)
 			src.set_density(0)
 			src.set_up()
 
+		for(var/i_dir in cardinal)
+			var/turf/T = get_step(src, i_dir)
+			for(var/obj/table/glass/G in T)
+				G.smash()
+
 	proc/gnesis_smash()
 		var/color = "#fff"
 		if(src.color)
