@@ -115,6 +115,20 @@
 		return 0
 	return 1
 
+/mob/proc/running_check(walking_matters = 0, running = 0, ignore_actual_delay = 0)
+
+	var/check_delay = BASE_SPEED_SUSTAINED //we need to fall under this movedelay value in order for the check to suceed
+
+	if (walking_matters)
+		check_delay = BASE_SPEED_SUSTAINED + WALK_DELAY_ADD
+	var/movement_delay_real = max(src.movement_delay(get_step(src,src.move_dir), running),world.tick_lag)
+	var/movedelay = clamp(world.time - src.next_move, movement_delay_real, world.time - src.last_pulled_time)
+	if (ignore_actual_delay)
+		movedelay = movement_delay_real
+	return (movedelay < check_delay)
+
+/mob/living/carbon/human/running_check(walking_matters = 0, running = 0, ignore_actual_delay = 0)
+	. = ..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT), ignore_actual_delay)
 
 /mob/proc/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0, throw_type=THROW_SLIP, list/params=null)
 	. = null

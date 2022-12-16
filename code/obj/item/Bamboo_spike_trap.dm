@@ -162,7 +162,7 @@
 			var/mob/living/carbon/human/victim = AM
 			//crawling or just walking between the sticks is a viable counter
 			//getting thrown at the trap has a different effect we want to check seperately
-			if(victim.lying || victim.throwing || !src.checkRun(victim))
+			if(victim.lying || victim.throwing || !victim.running_check(walking_matters = 1, ignore_actual_delay = 1))
 				return
 			//If any checks failed, well, you step into the trap
 			victim.visible_message("<span class='alert'><B>[victim] steps into the spike trap!</B></span>",\
@@ -204,13 +204,3 @@
 		if (src.reagents && src.reagents.total_volume && injected_amount > 0)
 			logTheThing(LOG_COMBAT, src, "injected [victim] at [log_loc(src)] with [min(injected_amount, src.reagents.total_volume)]u of reagents.")
 			src.reagents.trans_to(victim, injected_amount)
-
-	//This is copied out of runetrap.dm and modified to work with like the banana peel
-	//So, if you can slip over a banana peel (it has ignore_actual_delay checked), you should normally get impaled by the trap
-	proc/checkRun(var/mob/M)	//If we are above walking speed, this triggers
-		if(!M)
-			return
-		var/slip_delay = BASE_SPEED_SUSTAINED + WALK_DELAY_ADD
-		var/movement_delay_real = max(M.movement_delay(get_step(M,M.move_dir), (M.client?.check_key(KEY_RUN) && M.get_stamina() > STAMINA_SPRINT)),world.tick_lag)
-		if (movement_delay_real < slip_delay)
-			return TRUE
