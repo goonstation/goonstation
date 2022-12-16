@@ -215,7 +215,7 @@
 	icon_state = "barberchair"
 	anchored = 1
 	arm_icon_state = "arm-barber"
-
+	parts_type = /obj/item/furniture_parts/barber_chair
 
 /obj/barber_pole
 	name = "barber pole"
