@@ -1111,3 +1111,14 @@ client/proc/toggle_ghost_respawns()
 	logTheThing(LOG_ADMIN, usr, "toggled the cloning with records [cloning_with_records ? "on" : "off"]")
 	logTheThing(LOG_DIARY, usr, "toggled the cloning with records [cloning_with_records ? "on" : "off"]")
 	message_admins("[key_name(usr)] toggled the cloning with records [cloning_with_records ? "on" : "off"]")
+
+/client/proc/toggle_random_job_selection()
+	set name = "Toggle Random Job Selection"
+	set desc = "toggles random job rolling at the start of the round; preferences will be ignored. Has no effect on latejoins."
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	ADMIN_ONLY
+
+	global.totally_random_jobs = !global.totally_random_jobs
+	logTheThing(LOG_ADMIN, usr, "toggled random job selection [global.totally_random_jobs ? "on" : "off"]")
+	logTheThing(LOG_DIARY, usr, "toggled random job selection [global.totally_random_jobs ? "on" : "off"]")
+	message_admins("[key_name(usr)] toggled random job selection [global.totally_random_jobs ? "on" : "off"]")
