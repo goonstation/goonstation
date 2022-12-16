@@ -22280,7 +22280,7 @@
 /area/station/maintenance/disposal)
 "bhk" = (
 /obj/item/storage/toolbox/mechanical,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bhl" = (
@@ -53003,7 +53003,7 @@
 /area/station/security/hos)
 "hIJ" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/snacks/chips{
+/obj/item/item_box/chips{
 	pixel_x = 11;
 	pixel_y = -4
 	},

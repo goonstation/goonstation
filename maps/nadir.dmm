@@ -24738,7 +24738,7 @@
 	name = "South Catalytic Substation"
 	})
 "lqD" = (
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/grime,
 /area/station/hallway/secondary/construction{
@@ -51031,7 +51031,7 @@
 	pixel_x = -1;
 	pixel_y = -2
 	},
-/obj/item/reagent_containers/food/snacks/chips{
+/obj/item/item_box/chips{
 	pixel_x = 6;
 	pixel_y = 5
 	},

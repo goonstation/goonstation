@@ -13455,7 +13455,7 @@
 /area/station/hangar/arrivals)
 "aDz" = (
 /obj/item/storage/toolbox/mechanical,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/simulated/floor/plating,
 /area/station/hangar/arrivals)
 "aDA" = (
@@ -18637,7 +18637,7 @@
 /turf/simulated/wall/false_wall,
 /area/station/maintenance/central)
 "aOY" = (
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/simulated/floor/plating/damaged3,
 /area/station/maintenance/central)
 "aOZ" = (
@@ -49039,7 +49039,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_south)
 "cdG" = (

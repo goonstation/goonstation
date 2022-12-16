@@ -12382,7 +12382,7 @@
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
-
+	
 	},
 /obj/cable{
 	d1 = 4;
@@ -29862,7 +29862,7 @@
 /area/station/hallway/secondary/construction)
 "bdp" = (
 /obj/item/storage/toolbox/mechanical,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bdq" = (
@@ -34700,7 +34700,7 @@
 "boF" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen{
 	dir = 1;
-
+	
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -63284,7 +63284,7 @@
 /area/listeningpost)
 "cnO" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/snacks/chips{
+/obj/item/item_box/chips{
 	pixel_x = -11;
 	pixel_y = -4
 	},
@@ -64225,7 +64225,7 @@
 	},
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
 	dir = 8;
-
+	
 	},
 /turf/simulated/floor/redwhite{
 	dir = 4

@@ -6591,7 +6591,7 @@
 /area/space)
 "sQ" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/simulated/floor,
 /area/space)
 "sR" = (

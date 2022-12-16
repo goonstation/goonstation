@@ -12673,7 +12673,7 @@
 /area/station/crew_quarters/kitchen)
 "ayu" = (
 /obj/item/storage/toolbox/mechanical,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/barber_shop)
 "ayv" = (

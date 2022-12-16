@@ -20,7 +20,7 @@
 /area/dmm_suite/clear_area)
 "m" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/simulated/floor/plating/random,
 /area/dmm_suite/clear_area)
 "u" = (

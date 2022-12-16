@@ -15333,7 +15333,7 @@
 /area/research_outpost/toxins)
 "aLd" = (
 /obj/table/glass/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/onionchips{
+/obj/item/item_box/onionchips{
 	pixel_x = -3
 	},
 /obj/item/reagent_containers/food/drinks/cola,
@@ -44082,7 +44082,7 @@
 /area/research_outpost/hangar)
 "cId" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;

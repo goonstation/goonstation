@@ -742,7 +742,7 @@
 	icon_state = "tabledir";
 	dir = 10
 	},
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/unsimulated/floor{
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "sand";
