@@ -60,11 +60,11 @@ TYPEINFO(/datum/component/barber)
 	initialization_args = list()
 
 /datum/component/barber
+	var/datum/appearanceHolder/new_AH
+	var/datum/character_preview/preview
 	var/mob/living/carbon/human/barbee
 	var/mob/barber
-	var/datum/character_preview/preview
-	var/datum/appearanceHolder/new_AH
-	var/hair_portion = BOTTOM_DETAIL
+	var/hair_portion = "bottom"
 
 /datum/component/barber/Initialize()
 	if(!istype(parent, /obj/item))
@@ -106,27 +106,11 @@ TYPEINFO(/datum/component/barber)
 			return 0
 
 	SPAWN(0)
-		var/list/region = list(
-			"Top Detail ([M.bioHolder.mobAppearance.customization_third.name])" = TOP_DETAIL,
-			"Middle Detail ([M.bioHolder.mobAppearance.customization_second.name])" = MIDDLE_DETAIL,
-			"Bottom Detail ([M.bioHolder.mobAppearance.customization_first.name])" = BOTTOM_DETAIL,
-			"Create Wig" = ALL_HAIR)
+		src.barber = user
+		src.barbee = M
 
-		var/which_part = input(user, "Which clump of hair?", "Clump") as null|anything in region
+		src.ui_interact(user)
 
-		if (!which_part)
-			return
-
-		if(region[which_part] != ALL_HAIR)
-			var/list/customization_types = list(/datum/customization_style/none) + concrete_typesof(/datum/customization_style/hair) + concrete_typesof(/datum/customization_style/eyebrows)
-			var/new_style = select_custom_style(customization_types, user)
-
-			if (!new_style)
-				return
-
-			actions.start(new/datum/action/bar/barber/haircut(M, user, get_barbery_conditions(M, user), new_style, region[which_part]), user)
-		else
-			actions.start(new/datum/action/bar/barber/haircut(M, user, get_barbery_conditions(M, user), null, region[which_part]), user)
 	return ATTACK_PRE_DONT_ATTACK
 
 /datum/component/barber/proc/do_shave(var/obj/item/thing, mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
@@ -185,28 +169,7 @@ TYPEINFO(/datum/component/barber)
 		src.barbee = M
 
 		src.ui_interact(user)
-		/*
-		var/list/region = list(
-			"Top Detail ([M.bioHolder.mobAppearance.customization_third.name])" = TOP_DETAIL,
-			"Middle Detail ([M.bioHolder.mobAppearance.customization_second.name])" = MIDDLE_DETAIL,
-			"Bottom Detail ([M.bioHolder.mobAppearance.customization_first.name])" = BOTTOM_DETAIL,
-			"Create Wig" = ALL_HAIR)
 
-		var/which_part = input(user, "Which clump of hair?", "Clump") as null|anything in region
-
-		if (!which_part)
-			return
-
-		if (region[which_part] != ALL_HAIR)
-			var/list/facehair = list(/datum/customization_style/none) + concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns)
-			var/new_style = select_custom_style(facehair, user)
-
-			if (!new_style)
-				return
-			actions.start(new/datum/action/bar/barber/shave(M, user, get_barbery_conditions(M, user), new_style, region[which_part]), user)
-		else
-			actions.start(new/datum/action/bar/barber/shave(M, user, get_barbery_conditions(M, user), null, region[which_part]), user)
-		*/
 	return ATTACK_PRE_DONT_ATTACK
 
 /datum/component/barber/proc/get_barbery_conditions(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
@@ -464,21 +427,18 @@ TYPEINFO(/datum/component/barber)
 		ui.open()
 
 /datum/component/barber/ui_data(mob/user)
+	if (isnull(src.new_AH))
+		src.new_AH = new /datum/appearanceHolder/()
+		src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
+
 	if (isnull(src.preview))
-		src.preview = new /datum/character_preview(src.barbee.client, "barber", "barber_[src.barbee.name]")
+		var/preview_id = src.barber.name + "_" + src.barbee.name + "_" + (istype(src, /datum/component/barber/shave) ? "shave" : "cut") // To avoid mixing up preview IDs, we gotta be *really* specific
+		src.preview = new /datum/character_preview(src.barbee.client, "barber", preview_id)
 		src.preview.add_background("#242424")
-		src.preview.preview_mob.w_uniform = barbee.w_uniform
-		src.preview.preview_mob.shoes = barbee.shoes
-		src.preview.preview_mob.wear_suit = barbee.wear_suit
-		src.preview.preview_mob.belt = barbee.belt
-		src.preview.preview_mob.gloves = barbee.gloves
+		src.preview.mirror_items(barbee)
 		src.preview.update_appearance(src.barbee.bioHolder.mobAppearance, direction=SOUTH, name=src.barbee.name)
 
-	if (isnull(src.new_AH))
-		src.new_AH = new
-		src.new_AH.CopyOtherHeadAppearance(src.barbee.bioHolder.mobAppearance)
-
-	var/list/current_hair_style = list(new_AH.customization_first.name, new_AH.customization_second.name, new_AH.customization_third.name)
+	var/list/current_hair_style = list("bottom" = new_AH.customization_first.name, "middle" = new_AH.customization_second.name, "top" = new_AH.customization_third.name)
 	. = list("preview" = src.preview.preview_id, "selected_hair_portion" = hair_portion, "current_hair_style" = current_hair_style)
 
 /datum/component/barber/ui_static_data(mob/user)
@@ -486,7 +446,7 @@ TYPEINFO(/datum/component/barber)
 	var/all_styles = null
 
 	if (istype(src, /datum/component/barber/shave))
-		all_styles = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns)
+		all_styles = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns) + concrete_typesof(/datum/customization_style/eyebrows)
 	else
 		all_styles = concrete_typesof(/datum/customization_style/hair)
 
@@ -495,7 +455,7 @@ TYPEINFO(/datum/component/barber)
 
 	for (var/datum/customization_style/styles as anything in all_styles)
 		var/datum/customization_style/style = new styles
-		var/hair_icon = "data:image/png;base64," + icon2base64(icon('icons/mob/human_hair.dmi', style.id, SOUTH)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
+		var/hair_icon = "data:image/png;base64," + icon2base64(icon('icons/mob/human_hair.dmi', style.id, SOUTH, 1)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
 		all_hairs += list(style.name = list("hair_id" = style.id, "hair_icon" = hair_icon))
 
 	. = list("available_styles" = all_hairs)
@@ -508,22 +468,28 @@ TYPEINFO(/datum/component/barber)
 	switch(action)
 
 		if("change_hair_portion")
-
 			src.hair_portion = params["new_portion"]
 			return TRUE
 
 		if("do_hair")
-			var/datum/promise/wait_until_cut = new
 			if (isnull(params["style_id"])) // It means we are making a wig
 				if (istype(src, /datum/component/barber/shave))
-					actions.start(new/datum/action/bar/barber/shave(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), null, ALL_HAIR, promise=wait_until_cut), src.barber)
+					actions.start_and_wait(new/datum/action/bar/barber/shave(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), null, ALL_HAIR), src.barber)
 				else
-					actions.start(new/datum/action/bar/barber/haircut(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), null, ALL_HAIR, promise=wait_until_cut), src.barber)
-				wait_until_cut.sleep() // wait until it's finished cutting, because actionbars are asynced, and we want to wait until this is done
+					actions.start_and_wait(new/datum/action/bar/barber/haircut(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), null, ALL_HAIR), src.barber)
 
-				src.new_AH.CopyOtherHeadAppearance(src.barbee.bioHolder.mobAppearance)
+				src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
+				src.preview.mirror_items(barbee)
+				src.preview.update_appearance(new_AH)
 				return TRUE
 
+			var/hair_portion_list = list(
+				"bottom" = BOTTOM_DETAIL,
+				"middle" = MIDDLE_DETAIL,
+				"top" = TOP_DETAIL
+			)
+
+			var/hair_portion_selected = hair_portion_list[src.hair_portion]
 			var/datum/customization_style/new_hairstyle = null
 			var/all_hairs = concrete_typesof(/datum/customization_style/hair) + concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns)
 			for (var/datum/customization_style/iteration as anything in all_hairs)
@@ -532,12 +498,11 @@ TYPEINFO(/datum/component/barber)
 					new_hairstyle = style
 
 			if(istype(src, /datum/component/barber/shave))
-				actions.start(new/datum/action/bar/barber/shave(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), new_hairstyle, src.hair_portion, promise=wait_until_cut), src.barber)
+				actions.start_and_wait(new/datum/action/bar/barber/shave(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), new_hairstyle, hair_portion_selected), src.barber)
 			else
-				actions.start(new/datum/action/bar/barber/haircut(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), new_hairstyle, src.hair_portion, promise=wait_until_cut), src.barber)
+				actions.start_and_wait(new/datum/action/bar/barber/haircut(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), new_hairstyle, hair_portion_selected), src.barber)
 
-			wait_until_cut.sleep() // wait until it's finished cutting, because actionbars are asynced, and we want to wait until this is done
-			src.new_AH.CopyOtherHeadAppearance(src.barbee.bioHolder.mobAppearance)
+			src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
 			return TRUE
 
 		if("update_preview")
@@ -550,17 +515,18 @@ TYPEINFO(/datum/component/barber)
 							new_hairstyle = new iteration
 							break
 
-					src.new_AH.CopyOtherHeadAppearance(src.barbee.bioHolder.mobAppearance) // To avoid confusion and kind of nerf this feature, let's completely reset the hair when the client tries to view another style.
+					src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance) // To avoid confusion and kind of nerf this feature, let's completely reset the hair when the client tries to view another style.
 
 					switch (src.hair_portion)
-						if (BOTTOM_DETAIL)
+						if ("bottom")
 							src.new_AH.customization_first = new_hairstyle
-						if (MIDDLE_DETAIL)
+						if ("middle")
 							src.new_AH.customization_second = new_hairstyle
-						if (TOP_DETAIL)
+						if ("top")
 							src.new_AH.customization_third = new_hairstyle
 
-					preview.update_appearance(src.new_AH)
+					src.preview.mirror_items(barbee)
+					src.preview.update_appearance(src.new_AH)
 
 				if("change_direction")
 					// This is so we don't have to deal with numbers in the TGUI part.
@@ -574,10 +540,22 @@ TYPEINFO(/datum/component/barber)
 					src.preview.update_appearance(src.new_AH, direction=map_of_directions[params["direction"]])
 
 				if("reset")
-					src.new_AH.CopyOtherHeadAppearance(src.barbee.bioHolder.mobAppearance)
+					src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
+					src.preview.mirror_items(barbee)
 					src.preview.update_appearance(src.new_AH)
 
 			return TRUE
+
+/datum/component/barber/ui_status(mob/user, datum/ui_state/state)
+	. = user.find_in_hand(src.parent) ? UI_INTERACTIVE : UI_CLOSE // If our parent is on the barber's hands, then the barber can still cut hair, otherwise, close the window immediately.
+
+/datum/component/barber/ui_close(mob/user) // Gotta reset some left-over values on the component
+	qdel(src.new_AH)
+	qdel(src.preview)
+	src.new_AH = null
+	src.preview = null
+	src.barber = null
+	src.barbee = null
 
 /datum/component/barber/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOB_ATTACKED_PRE)
@@ -593,7 +571,6 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 	var/degree_of_success
 	var/datum/customization_style/new_style
 	var/which_part
-	var/datum/promise/preview
 	// for text output
 	var/cut = "cut"
 	var/cuts = "cuts"
@@ -602,13 +579,12 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 	proc/getHairStyles()
 		return list()
 
-	New(var/mob/living/carbon/human/barbee, var/mob/living/carbon/human/barber, var/succ, var/nustyle, var/whichp, var/datum/promise/promise = null)
+	New(var/mob/living/carbon/human/barbee, var/mob/living/carbon/human/barber, var/succ, var/nustyle, var/whichp)
 		src.M = barbee
 		src.user = barber
 		src.degree_of_success = succ
 		src.new_style = nustyle
 		src.which_part = whichp
-		src.promise = promise
 		M.tri_message(user, "[user] begins [cutting] [M]'s hair.",\
 			"<span class='notice'>[user] begins [cutting] your hair.</span>",\
 			"<span class='notice'>You begin [cutting] [M]'s hair.</span>")
@@ -698,8 +674,6 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 
 		M.set_clothing_icon_dirty() // why the fuck is hair updated in clothing
 		M.update_colorful_parts()
-		if (src.promise)
-			src.promise.fulfilled = TRUE
 		..()
 
 	onInterrupt()
@@ -713,7 +687,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 	cutting = "cutting"
 
 	getHairStyles()
-		return concrete_typesof(/datum/customization_style/hair) + concrete_typesof(/datum/customization_style/eyebrows)
+		return concrete_typesof(/datum/customization_style/hair)
 
 /datum/action/bar/barber/shave
 	id = "shave"
@@ -722,7 +696,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 	cutting = "shaving"
 
 	getHairStyles()
-		return concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns)
+		return concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns)  + concrete_typesof(/datum/customization_style/eyebrows)
 
 #undef HAIRCUT
 #undef SHAVE
