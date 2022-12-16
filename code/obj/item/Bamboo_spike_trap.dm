@@ -14,7 +14,8 @@
 	var/crashed_force = 20 ///how much damage the trap does when crashed into
 	var/crashed_weakened = 3 SECONDS ///how long you are stunned if you crash into the trap
 	var/reagent_storage = 15 ///How much the max amount of chems is the trap should be able to hold
-	var/transfer_multiplier = 0.5 ///Multiplier to damage to calculate the amount of chems tranferred
+	var/stepon_transfer_multiplier = 0.5 ///Multiplier to damage to calculate the amount of chems tranferred when stepped into
+	var/crash_transfer_multiplier = 0.5 ///Multiplier to damage to calculate the amount of chems tranferred when crashed into
 	var/target_zone = "chest" ///which zone the trap tries to target and calculate the damage resist from
 	var/disarming_time = 2 SECONDS ///how long disarming with a wrench should take
 	var/arming_time = 2 SECONDS ///how long arming should take
@@ -175,7 +176,7 @@
 		logTheThing(LOG_COMBAT, victim, "crashed into [src] at [log_loc(src)].")
 		victim.changeStatus("weakened", src.crashed_weakened)
 		victim.force_laydown_standup()
-		src.trap_damage(victim, src.crashed_force)
+		src.trap_damage(victim, src.crashed_force, src.crash_transfer_multiplier)
 		playsound(victim.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 80, 1)
 		victim.UpdateDamageIcon()
 
@@ -186,11 +187,11 @@
 		logTheThing(LOG_COMBAT, victim, "stepped into [src] at [log_loc(src)].")
 		victim.changeStatus("weakened", src.armed_weakened)
 		victim.force_laydown_standup()
-		src.trap_damage(victim, src.armed_force)
+		src.trap_damage(victim, src.armed_force, src.stepon_transfer_multiplier)
 		playsound(victim.loc, 'sound/impact_sounds/Flesh_stab_1.ogg', 80, 1)
 		victim.UpdateDamageIcon()
 
-	proc/trap_damage(mob/living/carbon/human/victim as mob, damage)
+	proc/trap_damage(mob/living/carbon/human/victim as mob, damage, transfer_multiplier)
 		if (!src || !victim)
 			return
 		var/target = "All"
@@ -198,7 +199,7 @@
 			target = src.target_zone
 		// we need this to calculate how much chems get transfered
 		// This means damage against the zone, reduced by melee protection, multiplied by transfer multiplier and then rounded
-		var/injected_amount = max(0, round((damage - victim.get_melee_protection(target, DAMAGE_STAB))*src.transfer_multiplier))
+		var/injected_amount = max(0, round((damage - victim.get_melee_protection(target, DAMAGE_STAB))*transfer_multiplier))
 		victim.TakeDamageAccountArmor(target, damage, 0, 0, DAMAGE_STAB)
 		// If injected_amount is greater than 0 and there are reagents in the trap, inject the victim
 		if (src.reagents && src.reagents.total_volume && injected_amount > 0)
