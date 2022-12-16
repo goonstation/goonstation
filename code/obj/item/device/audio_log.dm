@@ -163,28 +163,24 @@ TYPEINFO(/obj/item/device/audio_log)
 
 				src.tape.log_line = 1
 				src.tape = null
-				. = TRUE
 			if ("loop")
 				continuous = !continuous
-				. = TRUE
 			if ("play")
 				if (src.mode != MODE_PLAYING)
 					play()
-					. = TRUE
 			if ("record")
 				if (src.mode != MODE_RECORDING)
 					src.mode = MODE_RECORDING
-					. = TRUE
 			if ("rewind")
 				if (src.tape && src.mode == MODE_OFF)
 					src.tape.log_line = 1
 					src.audible_message("<span class='notice'>\The [src.name] whirrs and makes a dull clunk as it rewinds.</span>")
-					. = TRUE
 			if ("scrub_to")
 				if (src.tape && src.mode == MODE_OFF)
-					src.tape.log_line = text2numsafe(params["line"])
+					src.tape.log_line = params["line"]
 					src.audible_message("<span class='notice'>\The [src.name] whirrs momentarily before coming to a sudden stop.</span>")
 					. = TRUE
+					return
 			if ("stop")
 				stop()
 		playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)

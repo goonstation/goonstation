@@ -45,7 +45,7 @@ export const AudioLog = (props, context) => {
                     minValue={1}
                     maxValue={occupied_memory}
                     value={tape ? current_line : 1}
-                    onChange={(value) => act('scrub_to', { line: value })}
+                    onChange={(e, value) => act('scrub_to', { line: value })}
                   />
                 ) : (
                   <ProgressBar color="good" minValue={1} maxValue={occupied_memory} value={tape ? current_line : 0}>
