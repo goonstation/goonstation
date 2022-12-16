@@ -491,7 +491,13 @@ TYPEINFO(/datum/component/barber)
 
 			var/hair_portion_selected = hair_portion_list[src.hair_portion]
 			var/datum/customization_style/new_hairstyle = null
-			var/all_hairs = concrete_typesof(/datum/customization_style/hair) + concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns)
+			var/all_hairs = null
+
+			if (istype(src, /datum/component/barber/shave))
+				all_hairs = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns) + concrete_typesof(/datum/customization_style/eyebrows)
+			else
+				all_hairs = concrete_typesof(/datum/customization_style/hair)
+
 			for (var/datum/customization_style/iteration as anything in all_hairs)
 				var/datum/customization_style/style = new iteration
 				if (style.id == params["style_id"])
@@ -511,9 +517,9 @@ TYPEINFO(/datum/component/barber)
 					var/datum/customization_style/new_hairstyle = new /datum/customization_style/none // If we don't find any styles, we are probably trying to use the "none" style.
 					var/all_hairs = null
 					if (istype(src, /datum/component/barber/shave))
-						all_styles = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns) + concrete_typesof(/datum/customization_style/eyebrows)
+						all_hairs = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns) + concrete_typesof(/datum/customization_style/eyebrows)
 					else
-						all_styles = concrete_typesof(/datum/customization_style/hair)
+						all_hairs = concrete_typesof(/datum/customization_style/hair)
 
 					for (var/datum/customization_style/iteration as anything in all_hairs)
 						if (initial(iteration.id) == params["style_id"])
