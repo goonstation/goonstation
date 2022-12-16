@@ -1076,8 +1076,6 @@ datum
 							. = "Tastes kind of [tastes[1]] and [tastes[2]]."
 						else
 							. = "Tastes kind of [tastes[1]], [tastes[2]], and a little bit [tastes[3]]."
-			else
-				CRASH("Called get_taste_string for illegal mob [identify_object(taster)]")
 
 		//returns whether reagents are solid, liquid, gas, or mixture
 		proc/get_state_description()
