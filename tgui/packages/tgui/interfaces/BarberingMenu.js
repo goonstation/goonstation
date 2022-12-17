@@ -1,12 +1,14 @@
-import { useBackend } from '../backend';
-import { Box, Button, Section, Image, Stack, ByondUi } from '../components';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, Section, Image, Stack, ByondUi, Input, Icon } from '../components';
 import { Window } from '../layouts';
 
 export const BarberingMenu = (props, context) => {
   const { data } = useBackend(context);
   const { available_styles } = data;
+  const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
 
   const styles_keys = Object.keys(available_styles);
+
   return (
     <Window
       width={700}
@@ -19,10 +21,14 @@ export const BarberingMenu = (props, context) => {
         <Stack>
           <Stack.Item width="65%">
             <Stack wrap="wrap" justify="space-around">
-              {styles_keys.map((value, index) => (<HairPreview
-                key={index}
-                hair_style={available_styles[value]}
-                hair_name={value} />))}
+              <Stack width="100%" inline justify="space-around">
+                <Icon name="magnifying-glass" />
+                <Input width="90%" onInput={(e, value) => setSearchText(value)} />
+              </Stack>
+              <Box width="100%" height="10px" />
+              <HairPreviewList search_text={searchText}
+                all_hair_names={styles_keys}
+                all_hair_styles={available_styles} />
             </Stack>
           </Stack.Item>
           <Stack.Item width="2%">
@@ -35,6 +41,16 @@ export const BarberingMenu = (props, context) => {
       </Window.Content>
     </Window>
   );
+};
+
+const HairPreviewList = function (props, context) {
+  const { search_text, all_hair_names, all_hair_styles } = props;
+
+  const filtered_list = all_hair_names.filter((x) => x.toLowerCase().includes(search_text.toLowerCase()));
+  return filtered_list.map((value, index) => (<HairPreview
+    key={index}
+    hair_style={all_hair_styles[value]}
+    hair_name={value} />));
 };
 
 const HairOptions = (props, context) => {

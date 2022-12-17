@@ -435,7 +435,7 @@ TYPEINFO(/datum/component/barber)
 		var/preview_id = src.barber.name + "_" + src.barbee.name + "_" + (istype(src, /datum/component/barber/shave) ? "shave" : "cut") // To avoid mixing up preview IDs, we gotta be *really* specific
 		src.preview = new /datum/character_preview(src.barbee.client, "barber", preview_id)
 		src.preview.add_background("#242424")
-		src.preview.mirror_items(barbee)
+		src.preview.mirror_appearance(barbee)
 		src.preview.update_appearance(src.barbee.bioHolder.mobAppearance, direction=SOUTH, name=src.barbee.name)
 
 	var/list/current_hair_style = list("bottom" = new_AH.customization_first.name, "middle" = new_AH.customization_second.name, "top" = new_AH.customization_third.name)
@@ -479,7 +479,7 @@ TYPEINFO(/datum/component/barber)
 					actions.start_and_wait(new/datum/action/bar/barber/haircut(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), null, ALL_HAIR), src.barber)
 
 				src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
-				src.preview.mirror_items(barbee)
+				src.preview.mirror_appearance(barbee)
 				src.preview.update_appearance(new_AH)
 				return TRUE
 
@@ -536,7 +536,7 @@ TYPEINFO(/datum/component/barber)
 						if ("top")
 							src.new_AH.customization_third = new_hairstyle
 
-					src.preview.mirror_items(barbee)
+					src.preview.mirror_appearance(barbee)
 					src.preview.update_appearance(src.new_AH)
 
 				if("change_direction")
@@ -548,11 +548,12 @@ TYPEINFO(/datum/component/barber)
 						"north" = NORTH
 					)
 
+					src.preview.mirror_appearance(barbee)
 					src.preview.update_appearance(src.new_AH, direction=map_of_directions[params["direction"]])
 
 				if("reset")
 					src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
-					src.preview.mirror_items(barbee)
+					src.preview.mirror_appearance(barbee)
 					src.preview.update_appearance(src.new_AH)
 
 			return TRUE
