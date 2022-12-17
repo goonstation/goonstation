@@ -1,4 +1,7 @@
 
+(t)fri dec 16 22
+(u)tarmunora
+(+)cyborg expansion modules properly add exponential power drain
 (t)thu dec 15 22
 (u)tarmunora
 (+)glass tables chain-react when broken
