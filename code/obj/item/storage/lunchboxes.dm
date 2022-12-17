@@ -105,7 +105,7 @@
 
 	food12
 		spawn_contents = list(/obj/item/reagent_containers/food/snacks/corndog,\
-		/obj/item/reagent_containers/food/snacks/chips,\
+		/obj/item/item_box/chips,\
 		/obj/item/reagent_containers/food/snacks/plant/grape/green,\
 		/obj/item/reagent_containers/food/drinks/water,\
 		/obj/item/paper/lunchbox_note)

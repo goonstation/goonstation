@@ -242,7 +242,7 @@
 /obj/storage/crate/packing{
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/item_box/chips,
 /turf/simulated/floor/plating,
 /area/prefab/dreamplaza)
 "gV" = (

@@ -147,7 +147,7 @@
 		/obj/item/electronics/soldering,\
 		/obj/item/device/t_scanner,\
 		/obj/item/reagent_containers/food/snacks/sandwich/cheese,\
-		/obj/item/reagent_containers/food/snacks/chips,\
+		/obj/item/item_box/chips,\
 		/obj/item/reagent_containers/food/drinks/coffee)
 
 /obj/item/storage/toolbox/artistic
