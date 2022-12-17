@@ -6,6 +6,7 @@
 	var/obj/minimap
 
 	var/datum/minimap/minimap_datum
+	var/list/minimap_markers_list
 	var/markers_visible = TRUE
 
 	New(parent, control_id = null, obj/minimap)
@@ -49,24 +50,18 @@
 
 	ui_data(mob/user)
 		src.add_client(user?.client)
-		var/list/minimap_markers_list = list()
+		minimap_markers_list = list()
 		for (var/atom/target in src.minimap_datum.minimap_markers)
-			var/visible = FALSE
-			var/on_z_level = FALSE
-			if (target.z == minimap_datum.z_level)
-				on_z_level = TRUE
-
 			var/datum/minimap_marker/marker = src.minimap_datum.minimap_markers[target]
-			if (marker.marker.alpha == 255)
-				visible = TRUE
-
-			minimap_markers_list[target] = list(
-				"name" = target.name,
-				"target" = target,
-				"pos" = "[target.x], [target.y]",
-				"visible" = visible,
-				"on_z_level" = on_z_level
-			)
+			minimap_markers_list.Add(list(list(
+				"name" = marker.name,
+				"pos" = "[target.x], [target.y], [target.z]",
+				"visible" = marker.visible,
+				"on_z_level" = marker.on_minimap_z_level,
+				"can_be_deleted" = marker.can_be_deleted_by_player,
+				"marker" = marker,
+				"index" = length(minimap_markers_list) + 1
+			)))
 
 		. = list(
 			"markers_visible" = markers_visible,
@@ -97,8 +92,10 @@
 					var/datum/minimap_marker/marker = src.minimap_datum.minimap_markers[target]
 					if (markers_visible == TRUE)
 						marker.marker.alpha = 0
+						marker.visible = FALSE
 					else
 						marker.marker.alpha = 255
+						marker.visible = TRUE
 
 				if (markers_visible == TRUE)
 					markers_visible = FALSE
@@ -106,14 +103,19 @@
 					markers_visible = TRUE
 
 			if ("toggle_visibility")
-				var/datum/minimap_marker/marker = src.minimap_datum.minimap_markers[params["target"]]
+				var/list/list_entry = src.minimap_markers_list[params["index"]]
+				var/datum/minimap_marker/marker = list_entry["marker"]
 				if (marker.marker.alpha == 255)
 					marker.marker.alpha = 0
+					marker.visible = FALSE
 				else
 					marker.marker.alpha = 255
+					marker.visible = TRUE
 
-			// if ("delete_marker")
-			// 	var/datum/minimap_marker/marker = src.minimap_datum.minimap_markers[params["target"]]
+			if ("delete_marker")
+				var/list/list_entry = src.minimap_markers_list[params["index"]]
+				var/datum/minimap_marker/marker = list_entry["marker"]
+				src.minimap_datum.remove_minimap_marker(marker.target)
 
 		return TRUE
 

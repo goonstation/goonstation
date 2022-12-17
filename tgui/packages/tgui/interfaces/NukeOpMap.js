@@ -13,7 +13,7 @@ export const NukeOpMap = (params, context) => {
     <Window
       theme="syndicate"
       title="Atrium Station Map Controller"
-      width={700}
+      width={750}
       height={390}
     >
       <Window.Content>
@@ -30,7 +30,7 @@ export const NukeOpMap = (params, context) => {
                   onClick={() => act('reset_scale')} />
               )}>
               <Flex>
-                <Flex.Item grow={0} shrink={0}>
+                <Flex.Item>
                   <ByondUi
                     params={{
                       id: "nukeop_map",
@@ -66,8 +66,8 @@ export const NukeOpMap = (params, context) => {
                 <Flex direction="column">
                   <Flex.Item>
                     <Flex.Item>
-                      {Object.keys(minimap_markers).map(target => (
-                        <Flex key={data.minimap_markers[target]}
+                      {Object.keys(minimap_markers).map(marker => (
+                        <Flex key={data.minimap_markers[marker]}
                           backgroundColor={"rgba(30, 0, 0, 0.4)"}
                           justify="space-between"
                           p="5px"
@@ -78,28 +78,29 @@ export const NukeOpMap = (params, context) => {
                             <Flex.Item
                               fontSize={1.1}
                               bold
-                            >{capitalize(data.minimap_markers[target].name)}
+                            >{capitalize(data.minimap_markers[marker].name)}
                             </Flex.Item>
                             <Flex.Item
                               inline
                               lineHeight={1.7}
-                            >{data.minimap_markers[target].pos}
+                            >{data.minimap_markers[marker].pos}
                             </Flex.Item>
                           </Flex.Item>
                           <Flex.Item
                             inline
                           >
                             <Button
-                              icon={data.minimap_markers[target].visible ? "eye" : "eye-slash"}
-                              color={data.minimap_markers[target].visible ? "green" : "red"}
+                              icon={data.minimap_markers[marker].visible ? "eye" : "eye-slash"}
+                              color={data.minimap_markers[marker].visible ? "green" : "red"}
                               fontSize={1.7}
-                              onClick={() => act('toggle_visibility', { target: data.minimap_markers[target].target })}
+                              onClick={() => act('toggle_visibility', { index: data.minimap_markers[marker].index })}
                             />
                             <Button
                               icon="trash-alt"
                               color="red"
+                              disabled={!data.minimap_markers[marker].can_be_deleted}
                               fontSize={1.7}
-                              onClick={() => act('delete_marker', { target: data.minimap_markers[target].target })}
+                              onClick={() => act('delete_marker', { index: data.minimap_markers[marker].index })}
                             />
                           </Flex.Item>
                         </Flex>

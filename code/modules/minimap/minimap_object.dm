@@ -141,7 +141,8 @@
 	proc/create_plant_location_markers()
 		if (length(plant_locations) > 0)
 			for (var/turf/plant_location in plant_locations)
-				map.create_minimap_marker(FALSE, plant_location, 'icons/obj/minimap/minimap_markers.dmi', "nuclear_bomb")
+				var/area/A = plant_location.loc
+				map.create_minimap_marker(plant_location, 'icons/obj/minimap/minimap_markers.dmi', "nuclear_bomb", "[capitalize(A.name)] Plant Site")
 			return
 
 		src.plant_locations = list()
@@ -172,7 +173,8 @@
 
 			var/turf/plant_location = locate(target_x, target_y, Z_LEVEL_STATION)
 			src.plant_locations += plant_location
-			map.create_minimap_marker(FALSE, plant_location, 'icons/obj/minimap/minimap_markers.dmi', "nuclear_bomb")
+			var/area/A = plant_location.loc
+			map.create_minimap_marker(plant_location, 'icons/obj/minimap/minimap_markers.dmi', "nuclear_bomb", "[capitalize(A.name)] Plant Site")
 
 /obj/minimap_controller
 	name = "Map Controller"
@@ -224,7 +226,7 @@
 			var/map_y = round((y - minimap.minimap_render.pixel_y) / (minimap.zoom_coefficient * minimap.map_scale))
 
 			var/turf/T = locate(map_x, map_y, minimap.z_level)
-			minimap.create_minimap_marker(FALSE, T, 'icons/obj/minimap/minimap_markers.dmi', "[marker_to_be_placed]")
+			minimap.create_minimap_marker(T, 'icons/obj/minimap/minimap_markers.dmi', "[marker_to_be_placed]")
 			src.marker_to_be_placed = null
 		else
 			src.start_click_pos_x = x

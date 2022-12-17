@@ -83,11 +83,11 @@
 		src.minimap_render.add_filter("map_cutoff", 1, alpha_mask_filter(offset, offset, mask_icon))
 
 	///Creates a minimap marker from a specified target, icon, and icon state.
-	proc/create_minimap_marker(var/atom/target, var/icon, var/icon_state)
+	proc/create_minimap_marker(var/atom/target, var/icon, var/icon_state, var/marker_name, var/can_be_deleted_by_player)
 		if (target in src.minimap_markers)
 			return
 
-		var/datum/minimap_marker/marker = new /datum/minimap_marker(target)
+		var/datum/minimap_marker/marker = new /datum/minimap_marker(target, marker_name, can_be_deleted_by_player)
 		marker.map = src
 		marker.marker.icon = icon(icon, icon_state)
 
@@ -100,8 +100,12 @@
 	proc/set_marker_position(var/datum/minimap_marker/map_marker, var/x, var/y, var/z)
 		if (z != src.z_level)
 			map_marker.marker.alpha = 0
+			map_marker.visible = FALSE
+			map_marker.on_minimap_z_level = FALSE
 		else
-			map_marker.marker.alpha = 255
+			if (map_marker.visible == TRUE)
+				map_marker.marker.alpha = 255
+			map_marker.on_minimap_z_level = TRUE
 			map_marker.marker.pixel_x = (x * src.zoom_coefficient * src.map_scale) - 16
 			map_marker.marker.pixel_y = (y * src.zoom_coefficient * src.map_scale) - 16
 
