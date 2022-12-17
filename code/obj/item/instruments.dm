@@ -62,7 +62,6 @@
 				contextActions += newcontext
 
 	proc/play_note(var/note, var/mob/user)
-		logTheThing(LOG_COMBAT, user, "plays instrument [src]")
 		if (note != clamp(note, 1, length(sounds_instrument)))
 			return FALSE
 		var/atom/player = user || src
