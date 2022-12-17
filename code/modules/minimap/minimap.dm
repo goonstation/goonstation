@@ -40,13 +40,13 @@
 		else
 			src.map.icon = z_level_maps["[src.z_level]"]
 
-		src.map_render.vis_flags = VIS_INHERIT_LAYER
-		src.map_render.appearance_flags = KEEP_TOGETHER
-		src.map_render.mouse_opacity = 0
+		src.minimap_render.vis_flags = VIS_INHERIT_LAYER
+		src.minimap_render.appearance_flags = KEEP_TOGETHER
+		src.minimap_render.mouse_opacity = 0
 		src.map.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_LAYER
 		src.map.mouse_opacity = 0
 
-		src.map_render.vis_contents += src.map
+		src.minimap_render.vis_contents += src.map
 
 	///Renders the map within the boundaries defined by x_max, x_min, y_max, and y_min.
 	proc/render_minimap()
@@ -80,7 +80,7 @@
 		var/icon/mask_icon = icon('icons/obj/minimap/minimap.dmi', "blank")
 		mask_icon.Scale(300 * src.map_scale, 300 * src.map_scale)
 		var/offset = ((300 * src.map_scale) / 2) - 16
-		src.map_render.add_filter("map_cutoff", 1, alpha_mask_filter(offset, offset, mask_icon))
+		src.minimap_render.add_filter("map_cutoff", 1, alpha_mask_filter(offset, offset, mask_icon))
 
 	///Creates a minimap marker from a specified target, icon, and icon state.
 	proc/create_minimap_marker(var/atom/target, var/icon, var/icon_state)
@@ -97,13 +97,13 @@
 		src.set_marker_position(marker, target.x, target.y, target.z)
 
 	///Sets the x and y position of a specified minimap marker, in world coordinates.
-	proc/set_marker_position(var/datum/minimap_marker/marker, var/x, var/y, var/z)
+	proc/set_marker_position(var/datum/minimap_marker/map_marker, var/x, var/y, var/z)
 		if (z != src.z_level)
-			marker.marker.alpha = 0
+			map_marker.marker.alpha = 0
 		else
-			marker.marker.alpha = 255
-			marker.marker.pixel_x = ((x - src.zoom_x_offset) * src.zoom_coefficient) - 16
-			marker.marker.pixel_y = ((y - src.zoom_y_offset) * src.zoom_coefficient) - 16
+			map_marker.marker.alpha = 255
+			map_marker.marker.pixel_x = (x * src.zoom_coefficient * src.map_scale) - 16
+			map_marker.marker.pixel_y = (y * src.zoom_coefficient * src.map_scale) - 16
 
 	proc/remove_minimap_marker(var/atom/target)
 		if (!(target in src.minimap_markers))
@@ -129,7 +129,7 @@
 		y_max = world.maxy
 
 		. = ..()
-		src.initial_map_icon = src.map.icon
+		src.initial_minimap_icon = src.map.icon
 
 		if (scale)
 			src.scale_map(scale)
@@ -162,12 +162,8 @@
 
 	///Zooms the minimap by the zoom coefficient while moving the minimap so that the specified point lies at the same position on the displayed minimap as it did prior to the zoom. The alpha mask takes care of any map area scaled outside of the map boundaries.
 	proc/zoom_on_point(var/zoom, var/map_x, var/map_y)
-		if (!zoom || zoom == 0)
+		if (!zoom || zoom == 0 || !map_x || !map_y)
 			return
-		if (!map_x)
-			map_x = src.focus_x
-		if (!map_y)
-			map_y = src.focus_y
 
 		var/zoom_factor = (zoom / src.zoom_coefficient)
 		src.map.Scale(zoom_factor, zoom_factor)
@@ -177,19 +173,19 @@
 		var/y_align_offset = ((300 - (300 * zoom * src.map_scale)) / 2) + src.map.pixel_y
 		src.map.pixel_x -= x_align_offset
 		src.map.pixel_y -= y_align_offset
-		src.map_render.pixel_x += x_align_offset
-		src.map_render.pixel_y += y_align_offset
+		src.minimap_render.pixel_x += x_align_offset
+		src.minimap_render.pixel_y += y_align_offset
 
 		// Account for the number of pixels moved due to scaling.
 		var/x_offset = ((((300 * src.zoom_coefficient) - (300 * zoom)) * src.map_scale) / 2) * clamp((150 - map_x) / 150, -1, 1)
 		var/y_offset = ((((300 * src.zoom_coefficient) - (300 * zoom)) * src.map_scale) / 2) * clamp((150 - map_y) / 150, -1, 1)
-		src.map_render.pixel_x -= x_offset
-		src.map_render.pixel_y -= y_offset
+		src.minimap_render.pixel_x -= x_offset
+		src.minimap_render.pixel_y -= y_offset
 
 		// Reset the alpha mask's position to the bottom left corner.
-		var/filter = src.map_render.filters[length(src.map_render.filters)]
-		filter:x = ((300 * src.map_scale) / 2) - 16 - src.map_render.pixel_x
-		filter:y = ((300 * src.map_scale) / 2) - 16 - src.map_render.pixel_y
+		var/filter = src.minimap_render.filters[length(src.minimap_render.filters)]
+		filter:x = ((300 * src.map_scale) / 2) - 16 - src.minimap_render.pixel_x
+		filter:y = ((300 * src.map_scale) / 2) - 16 - src.minimap_render.pixel_y
 
 		src.zoom_coefficient = zoom
 
@@ -199,12 +195,8 @@
 
 	///Zooms the minimap by the zoom coefficient while moving the minimap so that the specified point lies at the centre of the displayed minimap. The alpha mask takes care of any map area scaled outside of the map boundaries.
 	proc/centre_on_point(var/zoom, var/focus_x, var/focus_y)
-		if (!zoom || zoom == 0)
+		if (!zoom || zoom == 0 || !focus_x || !focus_y)
 			return
-		if (!focus_x)
-			focus_x = src.focus_x
-		if (!focus_y)
-			focus_y = src.focus_y
 
 		var/zoom_factor = (zoom / src.zoom_coefficient)
 		src.map.Scale(zoom_factor, zoom_factor)
@@ -214,23 +206,21 @@
 		var/y_align_offset = ((300 - (300 * zoom * src.map_scale)) / 2) + src.map.pixel_y
 		src.map.pixel_x -= x_align_offset
 		src.map.pixel_y -= y_align_offset
-		src.map_render.pixel_x += x_align_offset
-		src.map_render.pixel_y += y_align_offset
+		src.minimap_render.pixel_x += x_align_offset
+		src.minimap_render.pixel_y += y_align_offset
 
 		// Offset so that the focal point is at the centre of the map boundaries.
-		var/x_offset = (150 * src.map_scale) - (focus_x * zoom * src.map_scale) - src.map_render.pixel_x
-		var/y_offset = (150 * src.map_scale) - (focus_y * zoom * src.map_scale) - src.map_render.pixel_y
-		src.map_render.pixel_x += x_offset
-		src.map_render.pixel_y += y_offset
+		var/x_offset = (150 * src.map_scale) - (focus_x * zoom * src.map_scale) - src.minimap_render.pixel_x
+		var/y_offset = (150 * src.map_scale) - (focus_y * zoom * src.map_scale) - src.minimap_render.pixel_y
+		src.minimap_render.pixel_x += x_offset
+		src.minimap_render.pixel_y += y_offset
 
 		// Reset the alpha mask's position to the bottom left corner.
-		var/filter = src.map_render.filters[length(src.map_render.filters)]
-		filter:x = ((300 * src.map_scale) / 2) - 16 - src.map_render.pixel_x
-		filter:y = ((300 * src.map_scale) / 2) - 16 - src.map_render.pixel_y
+		var/filter = src.minimap_render.filters[length(src.minimap_render.filters)]
+		filter:x = ((300 * src.map_scale) / 2) - 16 - src.minimap_render.pixel_x
+		filter:y = ((300 * src.map_scale) / 2) - 16 - src.minimap_render.pixel_y
 
 		src.zoom_coefficient = zoom
-		src.focus_x = focus_x
-		src.focus_y = focus_y
 
 		for (var/atom/target in src.minimap_markers)
 			var/datum/minimap_marker/minimap_marker = src.minimap_markers[target]

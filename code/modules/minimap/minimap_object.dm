@@ -18,11 +18,10 @@
 		src.map = new map_path(src.map_type, src.map_scale)
 
 		src.vis_contents += src.minimap_holder
-		src.minimap_holder.vis_contents += src.map.map_render
+		src.minimap_holder.vis_contents += src.map.minimap_render
 
 		for (var/atom/movable/marker_object in minimap_marker_targets)
-			if (src.map_type & marker_object.minimaps_to_display_on)
-				src.map.create_map_marker(marker_object.tracked_map_marker, marker_object, marker_object.map_marker_icon, marker_object.map_marker_icon_state)
+			SEND_SIGNAL(marker_object, COMSIG_NEW_MINIMAP_MARKER, src)
 
 		// As the minimap render is transparent to clicks, the minimap will require an overlay which clicks may register on.
 		if (!icon || !icon_state)
@@ -31,9 +30,6 @@
 			click_overlay_icon.ChangeOpacity(0)
 			src.icon = click_overlay_icon
 			src.mouse_opacity = 2
-
-		for (var/atom/movable/marker_object in minimap_marker_targets)
-			SEND_SIGNAL(marker_object, COMSIG_NEW_MINIMAP_MARKER, src)
 
 	disposing()
 		STOP_TRACKING
@@ -50,8 +46,8 @@
 		var/list/param_list = params2list(params)
 		var/datum/minimap/z_level/ai_map = map
 		if ("left" in param_list)
-			var/x = round((text2num(param_list["icon-x"]) - ai_map.map_render.pixel_x) / (ai_map.zoom_coefficient * ai_map.map_scale))
-			var/y = round((text2num(param_list["icon-y"]) - ai_map.map_render.pixel_y) / (ai_map.zoom_coefficient * ai_map.map_scale))
+			var/x = round((text2num(param_list["icon-x"]) - ai_map.minimap_render.pixel_x) / (ai_map.zoom_coefficient * ai_map.map_scale))
+			var/y = round((text2num(param_list["icon-y"]) - ai_map.minimap_render.pixel_y) / (ai_map.zoom_coefficient * ai_map.map_scale))
 			var/turf/clicked = locate(x, y, map.z_level)
 			if (isAIeye(usr))
 				usr.set_loc(clicked)
@@ -145,7 +141,7 @@
 	proc/create_plant_location_markers()
 		if (length(plant_locations) > 0)
 			for (var/turf/plant_location in plant_locations)
-				map.create_map_marker(FALSE, plant_location, 'icons/obj/minimap/minimap_markers.dmi', "nuclear_bomb")
+				map.create_minimap_marker(FALSE, plant_location, 'icons/obj/minimap/minimap_markers.dmi', "nuclear_bomb")
 			return
 
 		src.plant_locations = list()
@@ -176,7 +172,7 @@
 
 			var/turf/plant_location = locate(target_x, target_y, Z_LEVEL_STATION)
 			src.plant_locations += plant_location
-			map.create_map_marker(FALSE, plant_location, 'icons/obj/minimap/minimap_markers.dmi', "nuclear_bomb")
+			map.create_minimap_marker(FALSE, plant_location, 'icons/obj/minimap/minimap_markers.dmi', "nuclear_bomb")
 
 /obj/minimap_controller
 	name = "Map Controller"
@@ -195,8 +191,8 @@
 
 		. = ..()
 		src.controlled_minimap = minimap
-		src.vis_contents += src.controlled_minimap.map.map_render
-		src.filter = src.controlled_minimap.map.map_render.filters[length(src.controlled_minimap.map.map_render.filters)]
+		src.vis_contents += src.controlled_minimap.map.minimap_render
+		src.filter = src.controlled_minimap.map.minimap_render.filters[length(src.controlled_minimap.map.minimap_render.filters)]
 
 		// As the minimap render is transparent to clicks, the minimap will require an overlay which clicks may register on.
 		if (!icon || !icon_state)
@@ -209,8 +205,8 @@
 	MouseWheel(dx, dy, loc, ctrl, params)
 		var/list/param_list = params2list(params)
 		var/datum/minimap/z_level/minimap = src.controlled_minimap.map
-		var/x = round((text2num(param_list["icon-x"]) - minimap.map_render.pixel_x) / (minimap.zoom_coefficient * minimap.map_scale))
-		var/y = round((text2num(param_list["icon-y"]) - minimap.map_render.pixel_y) / (minimap.zoom_coefficient * minimap.map_scale))
+		var/x = round((text2num(param_list["icon-x"]) - minimap.minimap_render.pixel_x) / (minimap.zoom_coefficient * minimap.map_scale))
+		var/y = round((text2num(param_list["icon-y"]) - minimap.minimap_render.pixel_y) / (minimap.zoom_coefficient * minimap.map_scale))
 		if (dy > 1 && minimap.zoom_coefficient < 20)
 			minimap.zoom_on_point(minimap.zoom_coefficient * 1.1, x, y)
 		else if (dy < 1 && minimap.zoom_coefficient > 1)
@@ -224,11 +220,11 @@
 		if (src.marker_to_be_placed)
 			src.dragging = FALSE
 			var/datum/minimap/minimap = src.controlled_minimap.map
-			var/map_x = round((x - minimap.map_render.pixel_x) / (minimap.zoom_coefficient * minimap.map_scale))
-			var/map_y = round((y - minimap.map_render.pixel_y) / (minimap.zoom_coefficient * minimap.map_scale))
+			var/map_x = round((x - minimap.minimap_render.pixel_x) / (minimap.zoom_coefficient * minimap.map_scale))
+			var/map_y = round((y - minimap.minimap_render.pixel_y) / (minimap.zoom_coefficient * minimap.map_scale))
 
 			var/turf/T = locate(map_x, map_y, minimap.z_level)
-			minimap.create_map_marker(FALSE, T, 'icons/obj/minimap/minimap_markers.dmi', "[marker_to_be_placed]")
+			minimap.create_minimap_marker(FALSE, T, 'icons/obj/minimap/minimap_markers.dmi', "[marker_to_be_placed]")
 			src.marker_to_be_placed = null
 		else
 			src.start_click_pos_x = x
@@ -248,8 +244,8 @@
 		src.start_click_pos_y = y
 
 	proc/pan_map(var/x, var/y)
-		src.controlled_minimap.map.map_render.pixel_x += x
-		src.controlled_minimap.map.map_render.pixel_y += y
+		src.controlled_minimap.map.minimap_render.pixel_x += x
+		src.controlled_minimap.map.minimap_render.pixel_y += y
 		filter:x -= x
 		filter:y -= y
 

@@ -1,4 +1,4 @@
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import { Box, Button, ByondUi, Flex, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { capitalize } from './common/stringUtils';

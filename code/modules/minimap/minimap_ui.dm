@@ -54,7 +54,7 @@
 			var/visible = FALSE
 			var/on_z_level = FALSE
 			if (target.z == minimap_datum.z_level)
-				on_z_level == TRUE
+				on_z_level = TRUE
 
 			var/datum/minimap_marker/marker = src.minimap_datum.minimap_markers[target]
 			if (marker.marker.alpha == 255)
