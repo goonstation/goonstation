@@ -1458,7 +1458,7 @@ datum
 			fluid_g = 145
 			fluid_b = 135
 			depletion_rate = 0.2
-			addiction_prob = 10
+			addiction_prob = 5
 			var/counter = 1
 			blob_damage = 1
 
