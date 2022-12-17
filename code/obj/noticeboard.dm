@@ -17,7 +17,7 @@
 
 /obj/noticeboard/attackby(var/obj/item/O, var/mob/user)
 	if (istype(O, /obj/item/paper) || istype(O, /obj/item/canvas))
-		if (src.notices < 15)
+		if (src.notices < 15 || istype(O, /obj/item/paper/flockstatsnote)) //you can always put the flockstats note back
 			O.add_fingerprint(user)
 			src.add_fingerprint(user)
 			user.drop_item()
@@ -128,13 +128,15 @@
 					continue
 				item.name = info["name"]
 				item.fingerprintslast = info["fingerprintslast"]
-
+	new /obj/item/paper/flockstatsnote(src)
 	src.notices = length(src.contents)
 	src.UpdateIcon()
 
 /obj/noticeboard/persistent/proc/save_stuff()
 	src.data[src.persistent_id] = list("things" = list())
 	for(var/obj/item/paper/paper in src)
+		if(istype(paper, /obj/item/paper/flockstatsnote))
+			continue //don't need to save this, it gets created at runtime
 		src.data[src.persistent_id]["things"] += list(list(
 			"type" = "paper",
 			"name" = paper.name,
