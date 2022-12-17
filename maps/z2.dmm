@@ -10315,6 +10315,8 @@
 /area/marsoutpost)
 "aIn" = (
 /obj/table/syndicate/auto,
+/obj/item/cigpacket,
+/obj/item/matchbook,
 /turf/unsimulated/floor/carpet/red/decal/outercross,
 /area/syndicate_station/battlecruiser)
 "aIo" = (
@@ -45735,9 +45737,8 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "cHA" = (
-/obj/item/cigpacket,
-/obj/item/matchbook,
 /obj/table/syndicate/auto,
+/obj/item/nukeop_minimap_controller,
 /turf/unsimulated/floor/carpet/red/decal/innercross,
 /area/syndicate_station/battlecruiser)
 "cHB" = (
@@ -56462,6 +56463,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/minimap/map_computer/nukeop,
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "dgG" = (
