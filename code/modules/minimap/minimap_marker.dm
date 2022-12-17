@@ -8,7 +8,7 @@
 		src.marker = new /atom/movable
 		src.target = target
 
-		src.marker.vis_flags = VIS_INHERIT_ID
+		src.marker.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_LAYER
 		src.marker.mouse_opacity = 0
 
 		if (target && istype(target, /atom/movable))
