@@ -133,6 +133,7 @@
 #include "macros\turf.dm"
 #include "macros\twitch_sbill.dm"
 #include "macros\vehicles.dm"
+#include "macros\wire_panel.dm"
 #include "address.dm"
 #include "color.dm"
 #include "compare.dm"

@@ -906,6 +906,57 @@ TYPEINFO(/obj/submachine/seed_vendor)
 	var/seedcount = 0
 	var/maxseed = 25
 	var/list/available = list()
+	var/static/datum/wirePanel/panelDefintion/wire_def = new /datum/wirePanel/panelDefintion(
+		controls=list(WIRE_RESTRICT_TODO, WIRE_SAFETY_TODO, WIRE_POWER_1_TODO, WIRE_INERT_TODO),
+		color_pool=list("dandelion", "cherry", "pistachio", "blueberry"),
+		custom_acts=list(
+			WPANEL_CUSTOM_ACT(WIRE_RESTRICT_TODO, WIRE_ACT_PULSE, ~WIRE_ACT_MEND),
+			WPANEL_CUSTOM_ACT(WIRE_SAFETY_TODO, WIRE_ACT_PULSE, ~WIRE_ACT_MEND),
+			WPANEL_CUSTOM_ACT(WIRE_POWER_1_TODO, WIRE_ACT_PULSE, ~WIRE_ACT_MEND),
+		)
+
+	)
+
+/*
+	proc/cut(var/wireColor, var/mob/user as mob)
+		var/wireFlag = APCWireColorToFlag[wireColor]
+		var/wireIndex = APCWireColorToIndex[wireColor]
+		src.wires &= ~wireFlag
+		switch(wireIndex)
+			if(WIRE_EXTEND)
+				src.hacked = 0
+				src.name = "Seed Fabricator"
+				update_static_data(user)
+			if(WIRE_MALF) src.malfunction = 1
+			if(WIRE_POWER) src.working = 0
+
+	proc/mend(var/wireColor, var/mob/user as mob)
+		var/wireFlag = APCWireColorToFlag[wireColor]
+		var/wireIndex = APCWireColorToIndex[wireColor]
+		src.wires |= wireFlag
+		switch(wireIndex)
+			if(WIRE_MALF) src.malfunction = 0
+
+	proc/pulse(var/wireColor, var/mob/user as mob)
+		var/wireIndex = APCWireColorToIndex[wireColor]
+		switch(wireIndex)
+			if(WIRE_EXTEND)
+				if (src.hacked)
+					src.hacked = 0
+					src.name = "Seed Fabricator"
+				else
+					src.hacked = 1
+					src.name = "Feed Sabricator"
+				update_static_data(user)
+			if (WIRE_MALF)
+				if (src.malfunction) src.malfunction = 0
+				else src.malfunction = 1
+			if (WIRE_POWER)
+				if (src.working) src.working = 0
+				else src.working = 1
+*/
+
+
 	var/const
 		WIRE_EXTEND = 1
 		WIRE_MALF = 2
@@ -915,6 +966,22 @@ TYPEINFO(/obj/submachine/seed_vendor)
 	New()
 		..()
 		for (var/A in concrete_typesof(/datum/plant)) src.available += new A(src)
+		AddComponent(/datum/component/wirePanel, src.wire_def)
+		RegisterSignal(src, COMSIG_WPANEL_SET_CONTROL, .proc/set_control)
+		RegisterSignal(src, COMSIG_WPANEL_SET_COVER, .proc/set_cover)
+
+	disposing()
+		. = ..()
+		UnregisterSignal(src, COMSIG_WPANEL_SET_CONTROL)
+		UnregisterSignal(src, COMSIG_WPANEL_SET_COVER)
+
+	proc/set_control(obj/parent, control, new_status, mob/user)
+		if (control == WIRE_RESTRICT_TODO)
+			if (new_status)
+				src.name = "Seed Fabricator"
+			else
+				src.name = "Feed Sabricator"
+			update_static_data(user)
 
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
@@ -930,6 +997,7 @@ TYPEINFO(/obj/submachine/seed_vendor)
 		.["seedCount"] = src.seedcount
 		.["canVend"] = src.can_vend
 		.["isWorking"] = src.working
+		SEND_SIGNAL(src, COMSIG_WPANEL_UI_DATA, .)
 
 	ui_static_data(mob/user)
 		. = list()
@@ -957,10 +1025,11 @@ TYPEINFO(/obj/submachine/seed_vendor)
 				seeds = category
 			))
 		.["seedCategories"] = categoriesArray
+		SEND_SIGNAL(src, COMSIG_WPANEL_UI_STATIC_DATA, .)
 
-
-	ui_act(action, params)
+	ui_act(action, list/params, datum/tgui/ui)
 		. = ..()
+		SEND_SIGNAL(src, COMSIG_WPANEL_UI_ACT, action, params, ui)
 		if(. || action != "disp" || !src.can_vend || !src.working)
 			return
 		var/datum/plant/I = locate(text2path(params["path"])) in src.available
@@ -969,7 +1038,7 @@ TYPEINFO(/obj/submachine/seed_vendor)
 			return
 
 		if(!I.vending)
-			trigger_anti_cheat(usr, "tried to href exploit vend forbidden seed [I] on [src]")
+			trigger_anti_cheat(ui.user, "tried to href exploit vend forbidden seed [I] on [src]")
 			return
 
 		var/vend = clamp(params["amount"], 1, 10)
@@ -994,62 +1063,6 @@ TYPEINFO(/obj/submachine/seed_vendor)
 				src.seedcount = 0
 		. = TRUE
 
-
-	attack_hand(var/mob/user)
-		. = ..()
-
-		if (src.panelopen || isAI(user))
-			src.add_dialog(user)
-			var/list/fabwires = list(
-			"Puce" = 1,
-			"Mauve" = 2,
-			"Ochre" = 3,
-			"Slate" = 4,
-			)
-			var/pdat = "<B>[src.name] Maintenance Panel</B><hr>"
-			for(var/wiredesc in fabwires)
-				var/is_uncut = src.wires & APCWireColorToFlag[fabwires[wiredesc]]
-				pdat += "[wiredesc] wire: "
-				if(!is_uncut)
-					pdat += "<a href='?src=\ref[src];cutwire=[fabwires[wiredesc]]'>Mend</a>"
-				else
-					pdat += "<a href='?src=\ref[src];cutwire=[fabwires[wiredesc]]'>Cut</a> "
-					pdat += "<a href='?src=\ref[src];pulsewire=[fabwires[wiredesc]]'>Pulse</a> "
-				pdat += "<br>"
-
-			pdat += "<br>"
-			pdat += "The yellow light is [(src.working == 0) ? "off" : "on"].<BR>"
-			pdat += "The blue light is [src.malfunction ? "flashing" : "on"].<BR>"
-			pdat += "The white light is [src.hacked ? "on" : "off"].<BR>"
-
-			user.Browse(pdat, "window=fabpanel")
-			onclose(user, "fabpanel")
-
-	Topic(href, href_list)
-		if(BOUNDS_DIST(usr, src) > 0 && !issilicon(usr) && !isAI(usr))
-			boutput(usr, "<span class='alert'>You need to be closer to the vendor to do that!</span>")
-			return
-
-		if ((href_list["cutwire"]) && (src.panelopen || isAI(usr)))
-			var/twire = text2num_safe(href_list["cutwire"])
-			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
-				boutput(usr, "You need a snipping tool!")
-				return
-			else if (src.isWireColorCut(twire)) src.mend(twire, usr)
-			else src.cut(twire, usr)
-			src.updateUsrDialog()
-
-		if ((href_list["pulsewire"]) && (src.panelopen || isAI(usr)))
-			var/twire = text2num_safe(href_list["pulsewire"])
-			if (!usr.find_tool_in_hand(TOOL_PULSING) && !isAI(usr))
-				boutput(usr, "You need a multitool or similar!")
-				return
-			else if (src.isWireColorCut(twire))
-				boutput(usr, "You can't pulse a cut wire.")
-				return
-			else src.pulse(twire, usr)
-			src.updateUsrDialog()
-
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.hacked)
 			if(user)
@@ -1064,19 +1077,12 @@ TYPEINFO(/obj/submachine/seed_vendor)
 				boutput(user, "The [src] is already unlocked!")
 			return 0
 
-	attackby(obj/item/W, mob/user)
-		if (isscrewingtool(W))
-			if (!src.panelopen)
+	proc/set_cover(obj/parent, status, mob/user)
+		switch(status)
+			if (PANEL_COVER_OPEN)
 				src.overlays += image('icons/obj/vending.dmi', "grife-panel")
-				src.panelopen = 1
-			else
+			if (PANEL_COVER_CLOSED)
 				src.overlays = null
-				src.panelopen = 0
-			boutput(user, "You [src.panelopen ? "open" : "close"] the maintenance panel.")
-			src.updateUsrDialog()
-		else if (src.panelopen && (issnippingtool(W) || ispulsingtool(W)))
-			src.Attackhand(user)
-		else ..()
 
 	proc/isWireColorCut(var/wireColor)
 		var/wireFlag = APCWireColorToFlag[wireColor]

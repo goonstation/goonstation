@@ -52,6 +52,11 @@ proc/get_nearest_color_datum(var/datum/color/c)
 
 	return nearest
 
+proc/get_color_by_name(var/color_name)
+	for(var/datum/named_color/C in named_colors)
+		if (C.name == color_name)
+			return C
+
 /// adds a named color to the global list
 /// given name and RGB color
 proc/add_color(var/name, var/red, var/green, var/blue)

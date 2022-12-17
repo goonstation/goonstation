@@ -9,6 +9,7 @@ import { useBackend, useLocalState } from '../backend';
 import { Blink, Box, Button, Collapsible, Flex, Icon, Modal, NumberInput, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 import { pluralize } from './common/stringUtils';
+import { WirePanelButtons } from './common/WirePanel';
 
 const DefaultSort = {
   Fruit: 1,
@@ -38,6 +39,7 @@ export const SeedFabricator = (_props, context) => {
       width={500}
       height={600}>
       <Window.Content>
+        <WirePanelButtons />
         {!isWorking && (
           <Modal textAlign="center"
             width={35}
