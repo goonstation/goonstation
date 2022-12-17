@@ -125,19 +125,20 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 			if (params["dest"])
 				src.endlocation = locate(text2path(params["dest"]))
 				if(src.announce_move(endlocation))
+					src.active = TRUE
 					SPAWN(src.transit_delay)
-						src.active = TRUE
 						src.call_shuttle(endlocation)
 
 /obj/machinery/computer/transit_shuttle/proc/announce_move(area/end_location)
-	if (!src.transit_delay) return (currentlocation && end_location) // dont bother sending a message
 	for(var/obj/machinery/computer/transit_shuttle/Console in machine_registry[MACHINES_SHUTTLECOMPS])
 		if (Console.shuttlename != src.shuttlename) continue
 		if(!currentlocation || !end_location)
-			Console.visible_message("<span class='alert'>[src.shuttlename] cant seem to move! Uh Oh.</span>")
+			if (src.transit_delay)
+				Console.visible_message("<span class='alert'>[src.shuttlename] cant seem to move! Uh Oh.</span>")
 		else
 			Console.active = TRUE
-			Console.visible_message("<span class='alert'>[src.shuttlename] is moving to [end_location]!</span>")
+			if (src.transit_delay)
+				Console.visible_message("<span class='alert'>[src.shuttlename] is moving to [end_location]!</span>")
 	return (currentlocation && end_location)
 
 /obj/machinery/computer/transit_shuttle/proc/call_shuttle(area/end_location)
