@@ -106,17 +106,17 @@ datum/character_preview
 		src.preview_mob.real_name = "clone of " + name
 		src.preview_mob.name = "clone of " + name
 
-	proc/mirror_items(mob/living/carbon/human/to_copy)
-		src.preview_mob.wear_suit = to_copy.wear_suit
-		src.preview_mob.w_uniform = to_copy.w_uniform
-		src.preview_mob.shoes = to_copy.shoes
-		src.preview_mob.belt = to_copy.belt
-		src.preview_mob.gloves = to_copy.gloves
-		src.preview_mob.glasses = to_copy.glasses
-		src.preview_mob.head = to_copy.head
-		src.preview_mob.wear_id = to_copy.wear_id
-		src.preview_mob.l_store = to_copy.l_store
-		src.preview_mob.r_store = to_copy.r_store
+	proc/lossily_copy_items(mob/living/carbon/human/to_copy)
+		if (to_copy.wear_suit) src.preview_mob.wear_suit = to_copy.wear_suit.New()
+		if (to_copy.w_uniform) src.preview_mob.w_uniform = to_copy.w_uniform.New()
+		if (to_copy.shoes)     src.preview_mob.shoes = to_copy.shoes.New()
+		if (to_copy.belt)      src.preview_mob.belt = to_copy.belt.New()
+		if (to_copy.gloves)    src.preview_mob.gloves = to_copy.gloves.New()
+		if (to_copy.glasses)   src.preview_mob.glasses = to_copy.glasses.New()
+		if (to_copy.head)      src.preview_mob.head = to_copy.head
+		if (to_copy.wear_id)   src.preview_mob.wear_id = to_copy.wear_id
+		if (to_copy.l_store)   src.preview_mob.l_store = to_copy.l_store
+		if (to_copy.r_store)   src.preview_mob.r_store = to_copy.r_store
 
 /// Manages its own window.
 /// Basically a simplified version for when you don't need to put other stuff in the preview window.
