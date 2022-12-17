@@ -27,7 +27,8 @@
 	src.flock_name_tag.set_name(src.real_name)
 	src.vis_contents += src.flock_name_tag
 
-	src.flock?.stats.bits_made++
+	if (src.flock) //can't do flock?.stats due to http://www.byond.com/forum/post/2841585
+		src.flock.stats.bits_made++
 
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection)
