@@ -18,32 +18,36 @@ TYPEINFO(/obj/item/audio_tape)
 			if (!speaker || !message)
 				return FALSE
 
-			if (!continuous && (log_line >= max_lines))
+			if (!continuous && (src.log_line >= src.max_lines))
 				return FALSE
 
-			log_line++
-			messages += "[message]"
-			speakers += "[speaker]"
-			if (continuous && (log_line > max_lines))
-				messages.Cut(1,2)
-				speakers.Cut(1,2)
-				log_line = length(messages)
+			if (src.log_line >= length(src.messages))
+				src.messages.len++
+				src.speakers.len++
+
+			src.messages[log_line] = "[message]"
+			src.speakers[log_line] = "[speaker]"
+			src.log_line++
+
+			if (continuous && (src.log_line > src.max_lines))
+				src.messages.Cut(1,2)
+				src.speakers.Cut(1,2)
+				src.log_line = length(src.messages)
 
 			return TRUE
 
 		get_message(continuous)
-			if (log_line > length(messages))
-				if (continuous && length(messages))
-					log_line = 1
+			if (src.log_line > length(src.messages))
+				if (continuous && length(src.messages))
+					src.log_line = 1
 				else
 					return null
 
-			return "[length(speakers) < log_line ? "Unknown" : speakers[log_line]]|[messages[log_line]]"
+			return "[length(src.speakers) < src.log_line ? "Unknown" : src.speakers[src.log_line]]|[src.messages[src.log_line]]"
 
 		next(continuous)
-			if (log_line >= length(messages))
-				log_line = 1
-				if (!(continuous && length(messages)))
+			if (src.log_line >= length(src.messages))
+				if (!(continuous && length(src.messages)))
 					return FALSE
 				return TRUE
 
@@ -51,24 +55,18 @@ TYPEINFO(/obj/item/audio_tape)
 			return TRUE
 
 		reset()
-			if (messages)
-				messages.len = 0
+			if (src.messages)
+				src.messages.len = 0
 			else
-				messages = list()
+				src.messages = list()
 
 			if (speakers)
-				speakers.len = 0
+				src.speakers.len = 0
 			else
-				speakers = list()
+				src.speakers = list()
 
 			src.log_line = 1
 			return
-
-		use_percentage()
-			if (!messages)
-				return FALSE
-
-			return round((length(messages) /  max_lines))
 
 #define MODE_OFF 0
 #define MODE_RECORDING 1
@@ -88,7 +86,7 @@ TYPEINFO(/obj/item/device/audio_log)
 	var/mode = MODE_OFF
 	var/max_lines
 	var/text_colour = "#3FCC3F"
-	var/continuous = TRUE
+	var/continuous = FALSE
 	var/list/name_colours = list()
 	var/list/audiolog_messages = list()
 	var/list/audiolog_speakers = list()
@@ -100,9 +98,6 @@ TYPEINFO(/obj/item/device/audio_log)
 
 		attack_hand(mob/user)
 			return attack_self(user)
-
-		// updateSelfDialog()
-		// 	return updateUsrDialog()
 
 	New()
 		..()
@@ -148,11 +143,14 @@ TYPEINFO(/obj/item/device/audio_log)
 			return
 		switch(action)
 			if ("clear")
+				playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
 				src.mode = MODE_OFF
 				if (src.tape)
 					src.tape.reset()
 				. = TRUE
 			if ("eject")
+				playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
+
 				src.mode = MODE_OFF
 				src.icon_state = "[initial(src.icon_state)]-empty"
 
@@ -166,12 +164,18 @@ TYPEINFO(/obj/item/device/audio_log)
 			if ("loop")
 				continuous = !continuous
 			if ("play")
+				playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
 				if (src.mode != MODE_PLAYING)
-					play()
+					if (src.tape.log_line > length(src.tape.messages))
+						src.audible_message("<span class='notice'>\The [src.name] refuses to play, as it has reached the end of the tape.</span>")
+					else
+						play()
 			if ("record")
+				playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
 				if (src.mode != MODE_RECORDING)
 					src.mode = MODE_RECORDING
 			if ("rewind")
+				playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
 				if (src.tape && src.mode == MODE_OFF)
 					src.tape.log_line = 1
 					src.audible_message("<span class='notice'>\The [src.name] whirrs and makes a dull clunk as it rewinds.</span>")
@@ -180,10 +184,9 @@ TYPEINFO(/obj/item/device/audio_log)
 					src.tape.log_line = params["line"]
 					src.audible_message("<span class='notice'>\The [src.name] whirrs momentarily before coming to a sudden stop.</span>")
 					. = TRUE
-					return
 			if ("stop")
+				playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
 				stop()
-		playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
 		src.add_fingerprint(usr)
 		. = TRUE
 
@@ -246,12 +249,12 @@ TYPEINFO(/obj/item/device/audio_log)
 		if (!src.tape)
 			return
 
-		mode = MODE_PLAYING
+		src.mode = MODE_PLAYING
 		src.audible_message("<span class='notice'>\The [src.name] whirrs to life as it starts to play.</span>")
 		src.create_name_colours(src.tape.speakers)
 		SPAWN(2 SECONDS)
-			while (mode == MODE_PLAYING && src.tape)
-				var/speak_message = tape.get_message(continuous)
+			while (src.mode == MODE_PLAYING && src.tape)
+				var/speak_message = src.tape.get_message(continuous)
 				if (!speak_message)
 					stop()
 					return
@@ -267,7 +270,7 @@ TYPEINFO(/obj/item/device/audio_log)
 				speak(speaker, speak_message)
 				tgui_process.update_uis(src)
 				sleep(5 SECONDS)
-				if (!tape || !tape.next(continuous))
+				if (!src.tape || !src.tape.next(continuous))
 					stop()
 
 	proc/stop()

@@ -34,8 +34,9 @@ export const AudioLog = (props, context) => {
                     average: [0.5, 0.75],
                     bad: [0.75, 1.0],
                   }}
-                  value={tape ? occupied_memory / memory_capacity : 0}
-                />
+                  value={tape ? occupied_memory / memory_capacity : 0}>
+                  {tape ? (occupied_memory + "/" + memory_capacity) : 0}
+                </ProgressBar>
               </LabeledList.Item>
               <LabeledList.Item label="LINE" labelColor="white" className="audiolog__monospaced">
                 {mode === MODE_OFF ? (
@@ -43,9 +44,10 @@ export const AudioLog = (props, context) => {
                     animated
                     color="good"
                     minValue={1}
-                    maxValue={occupied_memory}
-                    value={tape ? current_line : 1}
+                    maxValue={tape ? (occupied_memory + 1) : 0}
+                    value={tape ? current_line : 0}
                     onChange={(e, value) => act('scrub_to', { line: value })}
+                    stepPixelSize={10}
                   />
                 ) : (
                   <ProgressBar color="good" minValue={1} maxValue={occupied_memory} value={tape ? current_line : 0}>
