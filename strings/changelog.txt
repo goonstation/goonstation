@@ -1,5 +1,9 @@
 
 (t)sun dec 18 22
+(u)Lord_Earthfire
+(p)12446
+(e)🪲|C-Bug
+(*)Fixes seeds being able to be damaged by over 100%. Prepare to have your phlog infusions to fail more often!
 (u)Tyrant
 (p)12366
 (e)🪲🗺📦|C-Bug, A-Mapping, A-Game-Objects
