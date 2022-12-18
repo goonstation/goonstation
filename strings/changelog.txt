@@ -1,4 +1,9 @@
 
+(t)sun dec 18 22
+(u)LeahTheTech
+(p)12278
+(e)🆕🧛|C-Feature, A-Gamemodes
+(+)The singularity will now react violently to being fed nuclear warheads.
 (t)fri dec 16 22
 (u)tarmunora
 (+)cyborg expansion modules properly add exponential power drain, recharge packs restore 15k cell power
