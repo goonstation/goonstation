@@ -14,8 +14,11 @@
 #endif
 	static_type_override = /datum/mutantrace/monkey
 
+	var/static/datum/zone_sel_offsets/static_monkey_zone_sel_offsets = new(list(0,4),list(0,0),list(-6,-3),list(6,-3),list(-6,-10),list(6,-10))
+
 	New()
 		..()
+		src.zone_sel_offsets = static_monkey_zone_sel_offsets
 		SPAWN(0.5 SECONDS)
 			if (!src.disposed)
 				src.bioHolder.AddEffect("monkey")

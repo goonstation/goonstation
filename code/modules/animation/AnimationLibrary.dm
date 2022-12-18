@@ -243,15 +243,19 @@
 //	..()
 /proc/attack_particle(var/mob/M, var/atom/target)
 	if (!M || !target || !M.attack_particle) return
-	var/diff_x = target.x - M.x
-	var/diff_y = target.y - M.y
+
+	// For targeting specific body areas
+	var/zone_x = 0
+	var/zone_y = 0
+	if (M.zone_sel_offsets)
+		var/list/offset = M.zone_sel_offsets.getOffset(M)
+		zone_x = offset[1]
+		zone_y = offset[2]
+
+	var/diff_x = zone_x + (target.x - M.x)*32
+	var/diff_y = zone_y + (target.y - M.y)*32
 
 	M.attack_particle.invisibility = M.invisibility
-
-	if (target) //I want these to be recent, but sometimes they can be deleted during course of a spawn
-		diff_x = target.x - M.x
-		diff_y = target.y - M.y
-
 	M.last_interact_particle = world.time
 
 	var/obj/item/I = M.equipped()
@@ -275,11 +279,11 @@
 
 	//animate(M.attack_particle, alpha = 200, time = 1, easing = SINE_EASING)
 
-	//animate(M.attack_particle, pixel_x = diff_x*32, pixel_y = diff_y*32, time = 2, easing = CUBIC_EASING)
+	//animate(M.attack_particle, pixel_x = diff_x, pixel_y = diff_y, time = 2, easing = CUBIC_EASING)
 	//animate(transform = t_size, time = 6, easing = BOUNCE_EASING,  flags = ANIMATION_PARALLEL)
 
 	animate(M.attack_particle, transform = t_size, time = 6, easing = BOUNCE_EASING)
-	animate(pixel_x = diff_x*32, pixel_y = diff_y*32, time = 2, easing = BOUNCE_EASING,  flags = ANIMATION_PARALLEL)
+	animate(pixel_x = diff_x, pixel_y = diff_y, time = 2, easing = BOUNCE_EASING,  flags = ANIMATION_PARALLEL)
 	SPAWN(0.5 SECONDS)
 		//animate(M.attack_particle, alpha = 0, time = 2, flags = ANIMATION_PARALLEL)
 		M.attack_particle?.alpha = 0

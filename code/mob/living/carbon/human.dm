@@ -99,6 +99,7 @@
 
 	var/datum/hud/human/hud
 	var/mini_health_hud = 0
+	var/static/datum/zone_sel_offsets/static_zone_sel_offsets = new(list(0,10),list(0,0),list(-6,0),list(6,0),list(-6,-10),list(6,-10))
 
 	//The spooky UNKILLABLE MAN
 	var/unkillable = 0
@@ -184,6 +185,7 @@
 	src.attach_hud(hud)
 	src.zone_sel = new(src)
 	src.attach_hud(zone_sel)
+	src.zone_sel_offsets = static_zone_sel_offsets
 
 	if (src.stamina_bar)
 		hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")
