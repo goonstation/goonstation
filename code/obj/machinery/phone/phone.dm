@@ -29,6 +29,7 @@ TYPEINFO(/obj/machinery/phone)
 	var/answeredicon = "phone_answered"
 	var/dialicon = "phone_dial"
 	var/stripe_color = null
+	var/phone_category = null
 
 	New()
 		..() // Set up power usage, subscribe to loop, yada yada yada
@@ -39,16 +40,24 @@ TYPEINFO(/obj/machinery/phone)
 		if(isnull(stripe_color)) // maps can override it now
 			if(istype(location,/area/station/security))
 				stripe_color = "#ff0000"
+				phone_category = "security"
 			else if(istype(location,/area/station/bridge))
 				stripe_color = "#00ff00"
+				phone_category = "bridge"
 			else if(istype(location, /area/station/engine) || istype(location, /area/station/quartermaster) || istype(location, /area/station/mining))
 				stripe_color = "#ffff00"
+				phone_category = "engineering"
 			else if(istype(location, /area/station/science))
 				stripe_color = "#8409ff"
+				phone_category = "research"
 			else if(istype(location, /area/station/medical))
 				stripe_color = "#3838ff"
+				phone_category = "medical"
 			else
 				stripe_color = "#b65f08"
+				phone_category = "uncategorized"
+		else
+			phone_category = "uncategorized"
 		src.UpdateOverlays(image('icons/obj/machines/phones.dmi',"[dialicon]"), "dial")
 		var/image/stripe_image = image('icons/obj/machines/phones.dmi',"[src.icon_state]-stripe")
 		stripe_image.color = stripe_color
@@ -209,9 +218,36 @@ TYPEINFO(/obj/machinery/phone)
 					UpdateIcon()
 					src.last_ring = 0
 
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "Phone")
+			ui.open()
+
+	ui_data(mob/user)
+		var/list/phonebook = list()
+		for_by_tcl(P, /obj/machinery/phone)
+			if (P.unlisted) continue
+			var/list/this_phone_data = list(
+				"category" = P.phone_category,
+				"id" = P.phone_id
+			)
+			phonebook += list(this_phone_data)
+		sortList(phonebook, /proc/cmp_phone_data)
+
+		. = list(
+			"name" = src.name,
+			"phonebook" = phonebook,
+		)
+
+	ui_act(action, params)
+		. = ..()
+		if (.)
+			return
+		src.UpdateIcon()
+
 	proc/explode()
 		src.blowthefuckup(strength = 2.5, delete = TRUE)
-
 
 	proc/hang_up()
 		src.answered = 0
@@ -261,23 +297,6 @@ TYPEINFO(/obj/machinery/phone)
 		user.visible_message("<span class='alert'><b>[user] bashes the [src] into their head repeatedly!</b></span>")
 		user.TakeDamage("head", 150, 0)
 		return 1
-
-/obj/machinery/phone/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "Phone")
-		ui.open()
-
-// /obj/machinery/phone/ui_data(mob/user)
-// 	. = list(
-// 		"var" = var
-// 	)
-
-/obj/machinery/phone/ui_act(action, params)
-	. = ..()
-	if (.)
-		return
-	src.UpdateIcon()
 
 // Interface for placing a call
 // /chui/window/phonecall

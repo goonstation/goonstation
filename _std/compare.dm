@@ -52,3 +52,6 @@
 /proc/cmp_chemical_reaction_priotity(datum/chemical_reaction/a, datum/chemical_reaction/b)
 	return a.priority > b.priority
 #endif
+
+/proc/cmp_phone_data(list/a, list/b)
+	return sorttext(b["id"], a["id"])
