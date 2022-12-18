@@ -170,9 +170,9 @@
 	make_my_stuff() //Let's spawn the backpack/satchel in random colours!
 		. = ..()
 		if (. == 1 && length(spawn_contents)) //if we've not spawned stuff before (also empty lockers get no backpack)
-			var/backwear = pick(/obj/item/storage/backpack,/obj/item/storage/backpack/blue,/obj/item/storage/backpack/red,/obj/item/storage/backpack/green)
+			var/backwear = pick(/obj/item/storage/backpack/withO2,/obj/item/storage/backpack/withO2/blue,/obj/item/storage/backpack/withO2/red,/obj/item/storage/backpack/withO2/green)
 			new backwear(src)
-			backwear = pick(/obj/item/storage/backpack/satchel,/obj/item/storage/backpack/satchel/blue,/obj/item/storage/backpack/satchel/red,/obj/item/storage/backpack/satchel/green)
+			backwear = pick(/obj/item/storage/backpack/satchel/withO2,/obj/item/storage/backpack/satchel/withO2/blue,/obj/item/storage/backpack/satchel/withO2/red,/obj/item/storage/backpack/satchel/withO2/green)
 			new backwear(src)
 
 /obj/storage/secure/closet/personal/empty

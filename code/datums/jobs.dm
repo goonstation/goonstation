@@ -211,14 +211,14 @@ ABSTRACT_TYPE(/datum/job/command)
 
 #ifdef SUBMARINE_MAP
 	slot_suit = list(/obj/item/clothing/suit/armor/hopcoat)
-	slot_back = list(/obj/item/storage/backpack/withO2)
+	slot_back = list(/obj/item/storage/backpack)
 	slot_belt = list(/obj/item/device/pda2/heads)
 	slot_jump = list(/obj/item/clothing/under/suit/hop)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_ears = list(/obj/item/device/radio/headset/command/hop)
 	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash,/obj/item/storage/box/accessimp_kit)
 #else
-	slot_back = list(/obj/item/storage/backpack/withO2)
+	slot_back = list(/obj/item/storage/backpack)
 	slot_belt = list(/obj/item/device/pda2/heads)
 	slot_jump = list(/obj/item/clothing/under/suit/hop)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
@@ -361,7 +361,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 
-	slot_back = list(/obj/item/storage/backpack/withO2)
+	slot_back = list(/obj/item/storage/backpack)
 	slot_belt = list(/obj/item/device/pda2/research_director)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_jump = list(/obj/item/clothing/under/rank/research_director)
@@ -394,7 +394,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 
-	slot_back = list(/obj/item/storage/backpack/withO2)
+	slot_back = list(/obj/item/storage/backpack)
 	slot_glov = list(/obj/item/clothing/gloves/latex)
 	slot_belt = list(/obj/item/storage/belt/medical/prepared)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
@@ -537,7 +537,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	receives_badge = 1
 	cant_spawn_as_rev = 1
 	allow_antag_fallthrough = FALSE
-	slot_back = list(/obj/item/storage/backpack/withO2)
+	slot_back = list(/obj/item/storage/backpack)
 	slot_belt = list(/obj/item/storage/belt/security/shoulder_holster)
 	slot_poc1 = list(/obj/item/device/pda2/forensic)
 	slot_jump = list(/obj/item/clothing/under/rank/det)
@@ -1452,7 +1452,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	receives_miranda = 1
 	cant_spawn_as_rev = 1
 	receives_badge = 1
-	slot_back = list(/obj/item/storage/backpack/withO2)
+	slot_back = list(/obj/item/storage/backpack)
 	slot_belt = list(/obj/item/device/pda2/heads)
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer/black) // so they can slam tables
 	slot_foot = list(/obj/item/clothing/shoes/brown)
@@ -1488,7 +1488,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	cant_spawn_as_rev = 1
 	wages = PAY_EXECUTIVE
 
-	slot_back = list(/obj/item/storage/backpack/withO2)
+	slot_back = list(/obj/item/storage/backpack)
 	slot_belt = list(/obj/item/device/pda2/heads)
 	slot_jump = list(/obj/item/clothing/under/misc/NT)
 	slot_foot = list(/obj/item/clothing/shoes/brown)

@@ -13,7 +13,7 @@
 	max_wclass = W_CLASS_NORMAL
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	does_not_open_in_pocket = 0
-	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+	spawn_contents = list(/obj/item/storage/box/starter)
 	duration_remove = 3 SECONDS
 	duration_put = 3 SECONDS
 
@@ -45,29 +45,69 @@
 /obj/item/storage/backpack/empty
 	spawn_contents = list()
 
+	blue
+		icon_state = "backpackb"
+		item_state = "backpackb"
+		desc = "A thick, wearable container made of synthetic fibers. The blue variation is similar in shade to Abzu's ocean."
+
+	red
+		icon_state = "backpackr"
+		item_state = "backpackr"
+		desc = "A thick, wearable container made of synthetic fibers. The red variation is striking and slightly suspicious."
+
+	brown
+		icon_state = "backpackbr"
+		item_state = "backpackbr"
+		desc = "A thick, wearable container made of synthetic fibers. The brown variation is both rustic and adventurous!"
+
+	green
+		icon_state = "backpackg"
+		item_state = "backpackg"
+		desc = "A thick, wearable container made of synthetic fibers. The green variation reminds you of a botanist's garden..."
+
 /obj/item/storage/backpack/withO2
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+
+	blue
+		icon_state = "backpackb"
+		item_state = "backpackb"
+		desc = "A thick, wearable container made of synthetic fibers. The blue variation is similar in shade to Abzu's ocean."
+
+	red
+		icon_state = "backpackr"
+		item_state = "backpackr"
+		desc = "A thick, wearable container made of synthetic fibers. The red variation is striking and slightly suspicious."
+
+	brown
+		icon_state = "backpackbr"
+		item_state = "backpackbr"
+		desc = "A thick, wearable container made of synthetic fibers. The brown variation is both rustic and adventurous!"
+
+	green
+		icon_state = "backpackg"
+		item_state = "backpackg"
+		desc = "A thick, wearable container made of synthetic fibers. The green variation reminds you of a botanist's garden..."
 
 /obj/item/storage/backpack/NT
 	name = "\improper NT backpack"
 	desc = "A stylish blue, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back."
 	icon_state = "NTbackpack"
 	item_state = "NTbackpack"
-	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+	spawn_contents = list(/obj/item/storage/box/starter)
 
 /obj/item/storage/backpack/syndie
 	name = "\improper Syndicate backpack"
 	desc = "A stylish red, evil, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on an operative's back."
 	icon_state = "Syndiebackpack"
 	item_state = "Syndiebackpack"
-	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+	spawn_contents = list(/obj/item/storage/box/starter)
 
 /obj/item/storage/backpack/captain
 	name = "Captain's Backpack"
 	desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold."
 	icon_state = "capbackpack"
 	item_state = "capbackpack"
-	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+	spawn_contents = list(/obj/item/storage/box/starter)
 
 	blue
 		desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold."
@@ -83,7 +123,7 @@
 	name = "tactical assault rucksack"
 	desc = "A military backpack made of high density fabric, designed to fit a wide array of tools for comprehensive storage support."
 	icon_state = "tactical_backpack"
-	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+	spawn_contents = list(/obj/item/storage/box/starter)
 	slots = 10
 
 /obj/item/storage/backpack/medic
@@ -91,35 +131,35 @@
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a Medical Doctor's back."
 	icon_state = "bp_medic" //im doing inhands, im not getting baited into refactoring every icon state to use hyphens instead of underscores right now
 	item_state = "bp-medic"
-	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+	spawn_contents = list(/obj/item/storage/box/starter)
 
 /obj/item/storage/backpack/security
 	name = "security backpack"
 	desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects adequately on the back of security personnel."
 	icon_state = "bp_security"
 	item_state = "bp_security"
-	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+	spawn_contents = list(/obj/item/storage/box/starter)
 
 /obj/item/storage/backpack/robotics
 	name = "robotics backpack"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects monochromaticly on the back of roboticists."
 	icon_state = "bp_robotics"
 	item_state = "bp_robotics"
-	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+	spawn_contents = list(/obj/item/storage/box/starter)
 
 /obj/item/storage/backpack/genetics
 	name = "genetics backpack"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects safely on the back of geneticists."
 	icon_state = "bp_genetics"
 	item_state = "bp_genetics"
-	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+	spawn_contents = list(/obj/item/storage/box/starter)
 
 /obj/item/storage/backpack/engineering
 	name = "engineering backpack"
 	desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects effectively on the back of engineering personnel."
 	icon_state = "bp_engineering"
 	item_state = "bp_engineering"
-	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+	spawn_contents = list(/obj/item/storage/box/starter)
 
 /obj/item/storage/backpack/research
 	name = "research backpack"
@@ -239,12 +279,50 @@
 		icon_state = "satchelg"
 		item_state = "satchelg"
 
+/obj/item/storage/backpack/satchel/empty
+	spawn_contents = list()
+
+	blue
+		icon_state = "satchelb"
+		item_state = "satchelb"
+
+	red
+		icon_state = "satchelr"
+		item_state = "satchelr"
+
+	brown
+		icon_state = "satchelbr"
+		item_state = "satchelbr"
+
+	green
+		icon_state = "satchelg"
+		item_state = "satchelg"
+
+/obj/item/storage/backpack/satchel/withO2
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+
+	blue
+		icon_state = "satchelb"
+		item_state = "satchelb"
+
+	red
+		icon_state = "satchelr"
+		item_state = "satchelr"
+
+	brown
+		icon_state = "satchelbr"
+		item_state = "satchelbr"
+
+	green
+		icon_state = "satchelg"
+		item_state = "satchelg"
+
 /obj/item/storage/backpack/satchel/syndie
 	name = "\improper Syndicate Satchel"
 	desc = "A stylish red, evil, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on an operative's shoulder."
 	icon_state = "Syndiesatchel"
 	item_state = "Syndiesatchel"
-	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+	spawn_contents = list(/obj/item/storage/box/starter)
 
 	New()
 		..()
@@ -259,7 +337,7 @@
 	desc = "A stylish blue, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder."
 	icon_state = "NTsatchel"
 	item_state = "NTsatchel"
-	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+	spawn_contents = list(/obj/item/storage/box/starter)
 
 /obj/item/storage/backpack/satchel/captain
 	name = "Captain's Satchel"
@@ -284,28 +362,28 @@
 	desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects stylishly on the shoulder of security personnel."
 	icon_state = "satchel_security"
 	item_state = "satchel_security"
-	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+	spawn_contents = list(/obj/item/storage/box/starter)
 
 /obj/item/storage/backpack/satchel/robotics
 	name = "robotics satchel"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects monochromaticly on the shoulder of roboticists."
 	icon_state = "satchel_robotics"
 	item_state = "satchel_robotics"
-	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+	spawn_contents = list(/obj/item/storage/box/starter)
 
 /obj/item/storage/backpack/satchel/genetics
 	name = "genetics satchel"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects safely on the shoulder of geneticists."
 	icon_state = "satchel_genetics"
 	item_state = "satchel_genetics"
-	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+	spawn_contents = list(/obj/item/storage/box/starter)
 
 /obj/item/storage/backpack/satchel/engineering
 	name = "engineering satchel"
 	desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects effectively on the shoulder of engineering personnel."
 	icon_state = "satchel_engineering"
 	item_state = "satchel_engineering"
-	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+	spawn_contents = list(/obj/item/storage/box/starter)
 
 /obj/item/storage/backpack/satchel/research
 	name = "research satchel"
