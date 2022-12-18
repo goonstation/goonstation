@@ -9,5 +9,5 @@
 	if (..())
 		return
 	var/obj/item/cell/C = user.cell
-	C.charge = C.maxcharge
+	C.charge = min(C.maxcharge, C.charge + 15000)
 	boutput(user, "<span class='notice'>Cell has been recharged to [user.cell.charge]!</span>")
