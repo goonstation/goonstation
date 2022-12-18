@@ -310,7 +310,8 @@
 	name = "bamboo stalk"
 	desc = "Keep away from Space Pandas."
 	icon_state = "bamboo"
-	var/spike_trap_required = 3 ///How much bamboo is required to make a spike trap
+	var/spike_trap_bamboo_required = 3 ///How much bamboo is required to make a spike trap
+	var/spike_trap_coil_required = 4 ///How much amount of cable coil is required to make a spike trap
 	var/spike_trap_building_time = 5 SECONDS ///How long you need to make a spike trap
 	setup_material()
 		src.setMaterial(getMaterial("bamboo"), appearance = 0, setname = 0)
@@ -326,7 +327,11 @@
 			return
 		//Spike trap creation
 		if (istype(W, /obj/item/cable_coil))
-			if (src.amount >= src.spike_trap_required)
+			var/obj/item/cable_coil/used_coil = W
+			if (used_coil.amount < src.spike_trap_coil_required)
+				boutput(user, "<span class='alert'>You need [src.spike_trap_coil_required - used_coil.amount] more cable coil to create a spike trap!</span>")
+				return
+			if (src.amount >= src.spike_trap_bamboo_required)
 				if (ON_COOLDOWN(user, "assemble_spike_trap", user.combat_click_delay))
 					return
 				var/obj/item/bamboo_spike_trap/to_create = /obj/item/bamboo_spike_trap
@@ -339,20 +344,20 @@
 					src,
 					src.spike_trap_building_time,
 					/obj/item/material_piece/organic/bamboo/proc/create_bamboo_spike_trap,
-					\list(user),
+					\list(user, used_coil),
 					to_create_icon,
 					to_create_icon_state,
 					"[user] finishes creating a spike trap.")
 				actions.start(action_bar, user)
 				return
 			else
-				boutput(user, "<span class='alert'>You need [src.spike_trap_required - src.amount] more bamboo stalks to create a spike trap!</span>")
+				boutput(user, "<span class='alert'>You need [src.spike_trap_bamboo_required - src.amount] more bamboo stalks to create a spike trap!</span>")
 				return
 		..()
 
-	proc/create_bamboo_spike_trap(mob/User)
+	proc/create_bamboo_spike_trap(mob/User, obj/item/cable_coil/used_coil)
 		//make a new bamboo spike trap
-		if (!src || src.amount < src.spike_trap_required)
+		if (!src || !used_coil || used_coil.amount < src.spike_trap_coil_required || src.amount < src.spike_trap_bamboo_required)
 			return
 		var/obj/item/bamboo_spike_trap/A = new /obj/item/bamboo_spike_trap(get_turf(src))
 		A.add_fingerprint(User)
@@ -361,10 +366,16 @@
 			A.setMaterial(src.material, appearance = FALSE, setname = FALSE)
 		else
 			A.setMaterial(src.material)
-		if (src.amount > src.spike_trap_required)
-			change_stack_amount(-1 * src.spike_trap_required)
+		//now we deduct the required amount of cable from the coil used
+		if (used_coil.amount > src.spike_trap_coil_required)
+			used_coil.change_stack_amount(-1 * src.spike_trap_coil_required)
 		else
-			qdel (src)
+			qdel(used_coil)
+		//now we deduct the required amount of bamboo from the stack used
+		if (src.amount > src.spike_trap_bamboo_required)
+			src.change_stack_amount(-1 * src.spike_trap_bamboo_required)
+		else
+			qdel(src)
 
 /obj/item/material_piece/cloth/spidersilk
 	name = "space spider silk"
