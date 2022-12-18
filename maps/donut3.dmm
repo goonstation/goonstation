@@ -54145,6 +54145,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/storage/crate/radio,
 /turf/simulated/floor/wood/two,
 /area/station/bridge)
 "pBG" = (
