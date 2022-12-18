@@ -143,8 +143,6 @@
 
 	var/spellshield = 0
 
-	var/bomberman = 0
-
 	var/voice_name = "unidentifiable voice"
 	var/voice_message = null
 	var/oldname = null
@@ -230,6 +228,8 @@
 	var/radiation_dose_decay = 0.02 //at this rate, assuming no lag, it will take 40 life ticks, or ~80 seconds to recover naturally from 1st stage radiation posioning,
 	/// set to observed mob if you're currently observing a mob, otherwise null
 	var/mob/observing = null
+	/// A list of emotes that trigger a special action for this mob
+	var/list/trigger_emotes = null
 
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
@@ -442,6 +442,8 @@
 	..()
 
 /mob/Login()
+	if (!src.client)
+		stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
 	if(src.skipped_mobs_list)
 		var/area/AR = get_area(src)
 		AR?.mobs_not_in_global_mobs_list?.Remove(src)
@@ -579,8 +581,8 @@
 					tmob_effect.update_charge(-1)
 					//spatial interdictor: mitigate biomagnetic discharges
 					//consumes 300 units of charge to interdict a repulsion, permitting safe discharge of the fields
-					for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-						if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(300))
+					for_by_tcl(IX, /obj/machinery/interdictor)
+						if (IX.expend_interdict(300,src))
 							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
 							var/atom/source = get_turf(tmob)
 							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
@@ -621,8 +623,8 @@
 					//spatial interdictor: mitigate biomagnetic discharges
 					//consumes 600 units of charge to interdict an attraction, permitting safe discharge of the fields
 
-					for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-						if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(300))
+					for_by_tcl(IX, /obj/machinery/interdictor)
+						if (IX.expend_interdict(300,src))
 							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
 							var/atom/source = get_turf(tmob)
 							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
@@ -818,6 +820,8 @@
 		apply_camera(src.client)
 
 /mob/proc/apply_camera(client/C)
+	if (!C)
+		stack_trace("mob/apply_camera called without a client for mob [identify_object(src)], something likely went wrong during mind transfer.")
 	if (src.eye)
 		C.eye = src.eye
 		C.pixel_x = src.eye_pixel_x

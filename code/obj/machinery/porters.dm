@@ -507,8 +507,8 @@ TYPEINFO(/obj/machinery/port_a_brig)
 		if (!(BOUNDS_DIST(src.owner, src.brig) == 0) || !(BOUNDS_DIST(src.victim, src.brig) == 0))
 			interrupt(INTERRUPT_ALWAYS)
 		src.brig.visible_message("<span class='alert'>[owner] shoves [victim] into [src.brig]!</span>")
-		victim.set_loc(src.brig)
 		src.brig.occupant = victim
+		victim.set_loc(src.brig)
 		for(var/obj/O in src.brig)
 			O.set_loc(src.brig.loc)
 		src.brig.build_icon()
@@ -700,7 +700,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 
 		src.homeloc = src.loc
 
-		possible_new_friend = typesof(/obj/critter/bear) + typesof(/mob/living/critter/spider/ice) + typesof(/obj/critter/cat) + typesof(/obj/critter/parrot)\
+		possible_new_friend = typesof(/obj/critter/bear) + typesof(/mob/living/critter/spider/ice) + typesof(/mob/living/critter/small_animal/cat) + typesof(/obj/critter/parrot)\
 						+ list(/obj/critter/aberration, /obj/critter/domestic_bee, /obj/critter/domestic_bee/chef, /obj/critter/bat/buff, /obj/critter/bat, /obj/critter/bloodling, /obj/critter/wraithskeleton, /obj/critter/magiczombie, /obj/critter/brullbar)\
 						- list(/mob/living/critter/spider/ice/queen)
 
@@ -821,7 +821,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 							M.throw_at(T,100, 2)
 
 					if(3 to 10) //Hitchhiker friend!
-						var/obj/critter/C = pick(possible_new_friend)
+						var/C = pick(possible_new_friend)
 						new C(src)
 
 						for(var/mob/M in src.contents)

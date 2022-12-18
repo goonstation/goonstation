@@ -58,7 +58,6 @@
 			/obj/critter/shade,
 			/obj/critter/shade,
 			/obj/critter/shade,
-			/obj/critter/gunbot/drone/buzzdrone,
 			/obj/critter/crunched,
 			/obj/critter/crunched,
 			/obj/critter/crunched,
@@ -72,6 +71,8 @@
 			/obj/critter/gunbot/heavy,
 			/obj/machinery/bot/medbot/terrifying,
 			/obj/machinery/bot/medbot/terrifying)
+			if(prob(3))
+				horror_path = pick(/obj/critter/gunbot/drone/buzzdrone,/obj/critter/gunbot/drone/buzzdrone, /obj/critter/aberration)
 			if (was_eaten && prob(15))
 				horror_path = /obj/critter/blobman/meaty_martha
 		else

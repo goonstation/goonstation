@@ -13677,7 +13677,8 @@
 	icon_state = "pdoor0";
 	id = "chemistry";
 	name = "Chemistry Privacy Shutters";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
@@ -13701,7 +13702,8 @@
 	icon_state = "pdoor0";
 	id = "chemistry";
 	name = "Chemistry Privacy Shutters";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /turf/simulated/floor/plating/random,
 /area/station/science/chemistry)
@@ -27858,21 +27860,11 @@
 	},
 /area/station/bridge)
 "bvd" = (
-/obj/storage/crate,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/medical,
-/obj/item/device/radio/headset/medical,
-/obj/item/device/radio/headset/engineer,
-/obj/item/device/radio/headset/engineer,
-/obj/item/device/radio/headset/research,
-/obj/item/device/radio/headset/research,
-/obj/item/device/radio/headset/command,
-/obj/item/device/radio/headset/command,
 /obj/decal/tile_edge/line/purple{
 	dir = 9;
 	icon_state = "line1"
 	},
+/obj/storage/crate/radio,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "blue2"
@@ -29394,7 +29386,7 @@
 /turf/simulated/floor/carpet/blue/fancy/innercorner/ne,
 /area/station/bridge)
 "byJ" = (
-/obj/critter/cat/jones,
+/mob/living/critter/small_animal/cat/jones,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/nw,
 /area/station/bridge)
 "byK" = (
@@ -40402,11 +40394,12 @@
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
 "cbk" = (
-/obj/critter/cat{
+/mob/living/critter/small_animal/cat{
 	desc = "How long has this cat been here?";
 	icon_state = "cat6";
 	name = "jons the catte";
-	randomize_cat = 0
+	randomize_name = 0;
+	randomize_look = 0
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)

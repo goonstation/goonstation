@@ -130,6 +130,7 @@ var/list/admin_verbs = list(
 		/client/proc/admin_toggle_lighting,
 		/client/proc/cmd_admin_managebioeffect,
 		/client/proc/toggle_cloning_with_records,
+		/client/proc/toggle_random_job_selection,
 
 		/client/proc/debug_deletions,
 
@@ -379,6 +380,12 @@ var/list/admin_verbs = list(
 		/client/proc/ghostdroneAll,
 		/client/proc/showPregameHTML,
 		/client/proc/dbg_radio_controller,
+		/client/proc/test_mass_flock_convert,
+		/client/proc/BK_finance_debug,
+		/client/proc/BK_alter_funds,
+		/client/proc/debug_variables,
+		/client/proc/cmd_randomize_look,
+		/client/proc/flock_cheat,
 
 		/client/proc/call_proc,
 		/client/proc/call_proc_all,
@@ -398,11 +405,7 @@ var/list/admin_verbs = list(
 		// LEVEL_CODER, coder
 		/client/proc/cmd_job_controls,
 		/client/proc/cmd_modify_market_variables,
-		/client/proc/BK_finance_debug,
-		/client/proc/BK_alter_funds,
-		/client/proc/TestMarketReq,
 		/client/proc/debug_pools,
-		/client/proc/debug_variables,
 		/client/proc/debug_global_variable,
 		/client/proc/get_admin_state,
 		/client/proc/call_proc,
@@ -410,11 +413,7 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/adsound,
 		/datum/admins/proc/pcap,
 		/client/proc/toggle_extra_verbs,
-		/client/proc/cmd_randomize_look,
 		/client/proc/toggle_numbers_station_messages,
-		// /client/proc/export_async_banlist,
-		// /client/proc/import_banlist,
-		/client/proc/flock_cheat,
 
 		/client/proc/ticklag,
 		/client/proc/cmd_debug_vox,
@@ -446,7 +445,6 @@ var/list/admin_verbs = list(
 		/client/proc/random_color_matrix,
 		/client/proc/clear_string_cache,
 		/client/proc/edit_color_matrix,
-		/client/proc/test_mass_flock_convert,
 		/client/proc/test_flock_panel,
 		/client/proc/temporary_deadmin_self,
 		/verb/rebuild_flow_networks,
@@ -458,6 +456,7 @@ var/list/admin_verbs = list(
 		/client/proc/set_pod_wars_deaths,
 		/client/proc/clear_nukeop_uplink_purchases,
 		/client/proc/upload_uncool_words,
+		/client/proc/TestMarketReq,
 
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,
@@ -664,7 +663,8 @@ var/list/special_pa_observing_verbs = list(
 		update_admins(rank)
 
 	if(!istype(src.mob, /mob/dead/observer) && !istype(src.mob, /mob/dead/target_observer))
-		src.mob.mind?.damned = 0
+		src.mob.mind?.damned = FALSE
+		src.mob.mind?.dnr = TRUE
 		src.mob.ghostize()
 		boutput(src, "<span class='notice'>You are now observing</span>")
 	else
@@ -1019,7 +1019,7 @@ var/list/fun_images = list()
 	set popup_menu = 0
 	ADMIN_ONLY
 
-	respawn_as_self_internal(new_self=TRUE, jobstring = initial(J.name))
+	respawn_as_self_internal(new_self=TRUE, jobstring = J.name)
 
 /client/proc/respawn_as_new_self()
 	set name = "Respawn As New Self"
@@ -1553,7 +1553,7 @@ var/list/fun_images = list()
 		M = tgui_input_list(src.mob, "Choose a target.", "Selection", mobs)
 		if (!M)
 			return
-	var/pet_input = input("Enter path of the thing you want to give as a pet or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random", "/obj/critter/cat")) as null|text
+	var/pet_input = input("Enter path of the thing you want to give as a pet or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random")) as null|text
 	if (!pet_input)
 		return
 	var/pet_path = get_one_match(pet_input, /obj)
@@ -1581,7 +1581,7 @@ var/list/fun_images = list()
 	ADMIN_ONLY
 
 	if(isnull(pet_input))
-		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random", "/obj/critter/cat")) as null|text
+		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random")) as null|text
 	if (!pet_input)
 		return
 	var/pet_path = get_one_match(pet_input, /obj)
@@ -1613,7 +1613,7 @@ var/list/fun_images = list()
 	ADMIN_ONLY
 
 	if(isnull(pet_input))
-		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random", "/obj/critter/cat")) as null|text
+		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random")) as null|text
 	if (!pet_input)
 		return
 	var/pet_path = get_one_match(pet_input, /obj)

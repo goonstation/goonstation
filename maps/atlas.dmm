@@ -7092,6 +7092,7 @@
 	pixel_x = -24;
 	pixel_y = -8
 	},
+/obj/storage/crate/radio,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fblue2"
