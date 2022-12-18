@@ -73,25 +73,38 @@
 
 /datum/zone_sel_offsets
 	var/list/offsets
+	var/isRotated = false
 
-	New(var/list/headpos, var/list/chestpos, var/list/larmpos, var/list/rarmpos, var/list/llegpos, var/list/rlegpos)
+	New(var/list/headpos, var/list/chestpos, var/list/larmpos, var/list/rarmpos, var/list/llegpos, var/list/rlegpos, var/isRotated = false)
 		..()
-		offsets = list("head" = headpos, "chest" = chestpos, "l_arm" = larmpos, "r_arm" = rarmpos, "l_leg" = llegpos, "r_leg" = rlegpos)
+		src.offsets = list("head" = headpos, "chest" = chestpos, "l_arm" = larmpos, "r_arm" = rarmpos, "l_leg" = llegpos, "r_leg" = rlegpos)
+		src.isRotated = isRotated
 
-	proc/getOffset(var/mob/M)
-		if(M.zone_sel && offsets)
-			var/list/r = src.offsets[M.zone_sel.selecting]
+	proc/getOffset(var/datum/hud/zone_sel/zone_sel, var/mob/target)
+		if(src.offsets)
+			var/list/r = src.offsets[zone_sel.selecting]
 			if(r)
 				var/x = r[1]
 				var/y = r[2]
-				switch(M.dir)
-					if (2)
-						x = -x
-					if (4)
-						x = 0
-					if (8)
-						x = 0
-				var/matrix/mat = M.transform * matrix(1,0,x,0,1,y)
+				// Critters flip x in left/right movement
+				if (isRotated)
+					switch(target.dir)
+						if (1)
+							x = 0
+						if (2)
+							x = 0
+						if (8)
+							x = -x
+				// Humans flip x in up/down movement
+				else
+					switch(target.dir)
+						if (2)
+							x = -x
+						if (4)
+							x = 0
+						if (8)
+							x = 0
+				var/matrix/mat = matrix(1,0,x,0,1,y)*target.transform
 				return list(mat.c, mat.f)
 
 		return list(0, 0)

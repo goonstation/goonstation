@@ -247,10 +247,12 @@
 	// For targeting specific body areas
 	var/zone_x = 0
 	var/zone_y = 0
-	if (M.zone_sel_offsets)
-		var/list/offset = M.zone_sel_offsets.getOffset(M)
-		zone_x = offset[1]
-		zone_y = offset[2]
+	if (istype(target, /mob) && M.zone_sel)
+		var/mob/targetMob = target
+		if (targetMob.zone_sel_offsets)
+			var/list/offset = targetMob.zone_sel_offsets.getOffset(M.zone_sel, targetMob)
+			zone_x = offset[1]
+			zone_y = offset[2]
 
 	var/diff_x = zone_x + (target.x - M.x)*32
 	var/diff_y = zone_y + (target.y - M.y)*32
