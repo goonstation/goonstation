@@ -189,6 +189,8 @@
 		victim.force_laydown_standup()
 		src.trap_damage(victim, src.armed_force, src.stepon_transfer_multiplier)
 		playsound(victim.loc, 'sound/impact_sounds/Flesh_stab_1.ogg', 80, 1)
+		if (src.material)
+			src.material.triggerOnAttack(src, null, victim)
 		victim.UpdateDamageIcon()
 
 	proc/trap_damage(mob/living/carbon/human/victim as mob, damage, transfer_multiplier)

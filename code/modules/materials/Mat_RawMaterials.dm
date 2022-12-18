@@ -334,9 +334,15 @@
 				var/to_create_icon_state = initial(to_create.icon_state)
 				user.visible_message("[user] uses the wires to create a spike trap.",
 				"You bind and cut together some stalks, creating a makeshift spike trap.")
-				var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, src.spike_trap_building_time,
-				/obj/item/material_piece/organic/bamboo/proc/create_bamboo_spike_trap,\list(user), to_create_icon,
-				to_create_icon_state, "[user] finishes creating a spike trap.")
+				var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(
+					user,
+					src,
+					src.spike_trap_building_time,
+					/obj/item/material_piece/organic/bamboo/proc/create_bamboo_spike_trap,
+					\list(user),
+					to_create_icon,
+					to_create_icon_state,
+					"[user] finishes creating a spike trap.")
 				actions.start(action_bar, user)
 				return
 			else
@@ -350,6 +356,11 @@
 			return
 		var/obj/item/bamboo_spike_trap/A = new /obj/item/bamboo_spike_trap(get_turf(src))
 		A.add_fingerprint(User)
+		//if we use bamboo, we dont want to alter the traps appearance
+		if (isSameMaterial(src.material, getMaterial("bamboo")))
+			A.setMaterial(src.material, appearance = FALSE, setname = FALSE)
+		else
+			A.setMaterial(src.material)
 		if (src.amount > src.spike_trap_required)
 			change_stack_amount(-1 * src.spike_trap_required)
 		else
