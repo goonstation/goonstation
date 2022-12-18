@@ -159,14 +159,9 @@ TYPEINFO(/obj/item/card/emag)
 	keep_icon = TRUE
 	var/touched = FALSE
 	New()
-		access = get_access("Captain")
 		..()
-
-	pickup(mob/user)
-		. = ..()
-		if(!touched && user.job != "Captain")
-			touched = TRUE
-			logTheThing(LOG_STATION, user, "is the first non-Captain to pick up [src] at [log_loc(src)]")
+		access = get_access("Captain")
+		src.AddComponent(/datum/component/log_item_pickup, "Captain")
 
 //ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
 /obj/item/card/id/pod_wars
@@ -442,6 +437,7 @@ TYPEINFO(/obj/item/card/emag)
 			logTheThing(LOG_COMBAT, owner, "dropped their license to kill")
 			logTheThing(LOG_ADMIN, owner, "dropped their license to kill")
 			message_admins("[key_name(owner)] dropped their license to kill")
+			owner.mind?.remove_antagonist(ROLE_LICENSED)
 			owner = null
 
 	pickup(mob/user as mob)
@@ -450,10 +446,12 @@ TYPEINFO(/obj/item/card/emag)
 			logTheThing(LOG_ADMIN, user, "picked up a license to kill")
 			message_admins("[key_name(user)] picked up a license to kill")
 			boutput(user, "<h3><span class='alert'>You now have a license to kill!</span></h3>")
+			user.mind?.add_antagonist(ROLE_LICENSED)
 			if(owner)
 				boutput(owner, "<h2>You have lost your license to kill!</h2>")
 				logTheThing(LOG_COMBAT, user, "dropped their license to kill")
 				logTheThing(LOG_ADMIN, user, "dropped their license to kill")
 				message_admins("[key_name(user)] dropped their license to kill")
+				owner.mind?.remove_antagonist(ROLE_LICENSED)
 			owner = user
 		..()

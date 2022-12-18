@@ -477,3 +477,22 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 	on_add()
 		. = ..()
 		src.owner.vdisfigured = TRUE
+
+/// Makes you fall over when you sprint too hard (pug thing)
+/datum/cloner_defect/sprint_flop
+	name = "Poor Muscular Regulation"
+	desc = "Certain nerves within the legs have failed, making the subject prone to running until they fall on their face."
+	severity = CLONER_DEFECT_SEVERITY_MINOR
+
+	on_add()
+		. = ..()
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_FAILED_SPRINT_FLOP, src)
+
+/datum/cloner_defect/overdose_weakness
+	name = "Chemical Weakness"
+	desc = "Subject's renal system has been weakened by the cloning process, making them more vulnerable to chemical overdoses."
+	severity = CLONER_DEFECT_SEVERITY_MINOR
+
+	on_add()
+		. = ..()
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_OVERDOSE_WEAKNESS, src)

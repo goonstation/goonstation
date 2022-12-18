@@ -3500,11 +3500,12 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "apX" = (
-/obj/critter/cat{
+/mob/living/critter/small_animal/cat{
 	desc = "How long has this cat been here?";
 	icon_state = "cat6";
 	name = "jons the catte";
-	randomize_cat = 0
+	randomize_name = 0;
+	randomize_look = 0
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)

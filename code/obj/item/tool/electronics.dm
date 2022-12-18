@@ -924,6 +924,9 @@
 			qdel(O)
 		else
 			F.deconstructed_thing = target
+			if(ismob(O.loc))
+				var/mob/M = O.loc
+				M.u_equip(O)
 			O.set_loc(F)
 		// move frame to the location after object is gone, so crushers do not crusher themselves
 		F.set_loc(target_loc)

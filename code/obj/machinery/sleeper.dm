@@ -41,7 +41,6 @@ TYPEINFO(/obj/machinery/sleep_console)
 					our_sleeper = locate() in orange(src,1)
 		else if (!our_sleeper && istype(src.loc, /obj/machinery/sleeper))
 			our_sleeper = src.loc
-		return
 
 	ex_act(severity)
 		switch (severity)
@@ -53,7 +52,6 @@ TYPEINFO(/obj/machinery/sleep_console)
 					qdel(src)
 					return
 			else
-		return
 
 	// Just relay emag_act() here.
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -77,7 +75,6 @@ TYPEINFO(/obj/machinery/sleep_console)
 					boutput(O, "<span class='notice'> [bicon(src)] *beep* *beep*</span>")
 			src.visible_message("<span class='notice'>The [src.name]'s occupant alarm clock dings!</span>")
 			playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
-		return
 
 	process()
 		if (!src)
@@ -115,7 +112,6 @@ TYPEINFO(/obj/machinery/sleep_console)
 				src.time_started = 0
 
 			src.updateDialog()
-		return
 
 	// Makes sense, I suppose. They're on the shuttles too.
 	powered()
@@ -290,7 +286,6 @@ TYPEINFO(/obj/machinery/sleeper)
 	update_icon()
 		ENSURE_IMAGE(src.image_lid, src.icon, "sleeperlid[!isnull(occupant)]")
 		src.UpdateOverlays(src.image_lid, "lid")
-		return
 
 	ex_act(severity)
 		switch (severity)
@@ -299,43 +294,39 @@ TYPEINFO(/obj/machinery/sleeper)
 					A.set_loc(src.loc)
 					A.ex_act(severity)
 				qdel(src)
-				return
 			if (2)
 				if (prob(50))
 					for (var/atom/movable/A as mob|obj in src)
 						A.set_loc(src.loc)
 						A.ex_act(severity)
 					qdel(src)
-					return
 			if (3)
 				if (prob(25))
 					for (var/atom/movable/A as mob|obj in src)
 						A.set_loc(src.loc)
 						A.ex_act(severity)
 					qdel(src)
-					return
-		return
 
 	// Let's get us some poisons.
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		src.add_fingerprint(user)
-		if (src.emagged == 1)
-			return 0
+		if (src.emagged)
+			return FALSE
 		else
-			src.emagged = 1
+			src.emagged = TRUE
 			if (user && ismob(user))
 				user.show_text("You short out [src]'s reagent synthesis safety protocols.", "blue")
 			src.visible_message("<span class='alert'><b>[src] buzzes oddly!</b></span>")
 			logTheThing(LOG_STATION, user, "emags \a [src] [src.occupant ? "with [constructTarget(src.occupant,"station")] inside " : ""](setting it to inject poisons) at [log_loc(src)].")
-			return 1
+			return TRUE
 
 	demag(var/mob/user)
 		if (!src.emagged)
-			return 0
+			return FALSE
 		if (user)
 			user.show_text("You repair [src]'s reagent synthesis safety protocols.", "blue")
-		src.emagged = 0
-		return 1
+		src.emagged = FALSE
+		return TRUE
 
 	blob_act(var/power)
 		if (prob(power * 3.75))
@@ -346,7 +337,7 @@ TYPEINFO(/obj/machinery/sleeper)
 		return
 
 	allow_drop()
-		return 0
+		return FALSE
 
 	attackby(obj/item/grab/G, mob/user)
 		src.add_fingerprint(user)
@@ -437,7 +428,6 @@ TYPEINFO(/obj/machinery/sleeper)
 			playsound(src.loc, 'sound/items/hypo.ogg', 25, 1)
 
 		src.no_med_spam = world.time // So they can't combine this with manual injections.
-		return
 
 	// Called by sleeper console when injecting stuff manually.
 	proc/inject(mob/user_feedback as mob, var/manual_injection = 0)
@@ -480,7 +470,7 @@ TYPEINFO(/obj/machinery/sleeper)
 					src.occupant.reagents.add_reagent(our_poison, inject_p)
 					// don't set injected_anything (the poison uses a sneaky silent injector)
 					//DEBUG_MESSAGE("Injected occupant with [inject_p] units of [our_poison] at [log_loc(src)].")
-					if (manual_injection == 1)
+					if (manual_injection)
 						logTheThing(LOG_STATION, user_feedback, "manually injects [constructTarget(src.occupant,"station")] with [our_poison] ([inject_p]) from an emagged sleeper at [log_loc(src)].")
 			else
 				if (src.occupant.health < src.crit_threshold && crit < src.maximum_reagent)
@@ -508,8 +498,6 @@ TYPEINFO(/obj/machinery/sleeper)
 
 			if (injected_anything)
 				playsound(src.loc, 'sound/items/hypo.ogg', manual_injection ? 50 : 25, 1)
-
-		return
 
 
 	proc/go_out()
@@ -576,7 +564,7 @@ TYPEINFO(/obj/machinery/sleeper)
 			usr.show_text("The [src.name] is already occupied!", "red")
 			return FALSE
 
-		.= TRUE
+		. = TRUE
 
 	verb/move_inside()
 		set src in oview(1)
@@ -595,7 +583,6 @@ TYPEINFO(/obj/machinery/sleeper)
 				continue
 			O.set_loc(src.loc)
 		playsound(src.loc, 'sound/machines/sleeper_close.ogg', 50, 1)
-		return
 
 	attack_hand(mob/user)
 		..()
@@ -612,7 +599,6 @@ TYPEINFO(/obj/machinery/sleeper)
 		set category = "Local"
 
 		eject_occupant(usr)
-		return
 
 	verb/eject_occupant(var/mob/user)
 		if (!isalive(user) || iswraith(user) || isintangible(user)) return
@@ -667,7 +653,6 @@ TYPEINFO(/obj/machinery/sleeper)
 			if("inject")
 				src.inject(null, 1)
 
-		return
 
 TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 	mats = 30
@@ -773,7 +758,7 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 	desc = "Has the same air supply and stabilization capabilites as your usual model, but compact this time. Wow!"
 	icon = 'icons/obj/compact_machines.dmi'
 	icon_state = "compact_sleeper"
-	anchored = 1
+	anchored = TRUE
 
 	New()
 		..()

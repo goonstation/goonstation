@@ -633,6 +633,9 @@
 			src.updateSelfDialog()
 		else
 			if (src.ID_card)
+				if (IS_WORN_BY_SOMEONE_OTHER_THAN(src, user))
+					boutput(user, "<span class='alert'>There's already an ID card in [src].</span>")
+					return
 				boutput(user, "<span class='notice'>You swap [ID] and [src.ID_card].</span>")
 				src.eject_id_card(user)
 				src.insert_id_card(ID, user)

@@ -839,6 +839,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	desc = "A rare complex crystalline matrix with a lazily shifting internal structure. Not to be confused with gneiss, a metamorphic rock."
 	color = "#1bdebd"
 	texture = "flock"
+	texture_blend = BLEND_OVERLAY
 
 	transparent
 		mat_id = "gnesisglass"

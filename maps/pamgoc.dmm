@@ -12382,7 +12382,7 @@
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
-	
+
 	},
 /obj/cable{
 	d1 = 4;
@@ -15109,7 +15109,7 @@
 	},
 /area/station/crew_quarters/jazz)
 "ayd" = (
-/obj/critter/cat/jones,
+/mob/living/critter/small_animal/cat/jones,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -34700,7 +34700,7 @@
 "boF" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen{
 	dir = 1;
-	
+
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -44925,7 +44925,7 @@
 	dir = 1
 	},
 /obj/decal/tile_edge{
-	icon_state = "mule_beacon"
+	icon_state = "hazard_caution"
 	},
 /turf/simulated/floor/grime,
 /area/station/storage/primary)
@@ -64225,7 +64225,7 @@
 	},
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
 	dir = 8;
-	
+
 	},
 /turf/simulated/floor/redwhite{
 	dir = 4
@@ -64685,7 +64685,7 @@
 	},
 /obj/machinery/drainage,
 /obj/decal/tile_edge{
-	icon_state = "mule_dropoff"
+	icon_state = "hazard_delivery"
 	},
 /turf/simulated/floor/grime,
 /area/station/storage/primary)

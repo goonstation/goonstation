@@ -20585,6 +20585,7 @@
 /obj/item/device/radio/intercom/cargo{
 	dir = 4
 	},
+/obj/storage/crate/radio,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aVu" = (
@@ -23348,7 +23349,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "bbS" = (
-/obj/critter/cat/jones,
+/mob/living/critter/small_animal/cat/jones,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "bbT" = (
@@ -30238,7 +30239,7 @@
 	dir = 4
 	},
 /obj/machinery/conveyor_switch{
-	id = "mining2qm"
+	id = "qm2hall"
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
@@ -30251,7 +30252,7 @@
 	pixel_y = 21
 	},
 /obj/machinery/door_control{
-	id = "mining2qm_sec_door";
+	id = "qm2hall_door";
 	name = "QM - Mining Security Doors";
 	pixel_y = 24
 	},
@@ -32478,6 +32479,14 @@
 /area/station/quartermaster/office)
 "bzu" = (
 /obj/machinery/light,
+/obj/machinery/conveyor_switch{
+	id = "mining2qm"
+	},
+/obj/machinery/door_control{
+	id = "mining2qm_sec_door";
+	name = "QM - Mining Transfer Shutters";
+	pixel_y = -22
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/quartermaster/office)
 "bzv" = (
@@ -37743,7 +37752,8 @@
 	},
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
-	operating = 1
+	operating = 1;
+	id = "qm2hall"
 	},
 /turf/simulated/floor/caution/misc,
 /area/station/quartermaster/office)
@@ -37792,7 +37802,7 @@
 /area/station/security/hos)
 "eeM" = (
 /obj/machinery/conveyor/NS{
-	id = "cargo_out"
+	id = "mining2qm"
 	},
 /obj/plasticflaps,
 /obj/machinery/door/poddoor/blast/single{
@@ -45616,12 +45626,13 @@
 /obj/disposalpipe/segment/mail,
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
-	operating = 1
+	operating = 1;
+	id = "qm2hall"
 	},
 /obj/machinery/door/poddoor/blast/single{
 	doordir = "noblasts";
 	icon_state = "bdoornoblasts1";
-	id = "mining2qm_sec_door";
+	id = "qm2hall_door";
 	layer = 4;
 	name = "QM Security Door"
 	},
@@ -48031,7 +48042,7 @@
 	pixel_x = 24
 	},
 /obj/machinery/conveyor/NS{
-	id = "cargo_out"
+	id = "mining2qm"
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/storage)

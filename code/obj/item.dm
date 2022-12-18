@@ -1158,11 +1158,10 @@
 			src.try_grab(M, user)
 			return
 
-	var/obj/item/affecting = M.get_affecting(user, def_zone)
-	var/hit_area = parse_zone(affecting)
-	var/d_zone = affecting
+	def_zone = M.get_def_zone(user, def_zone)
+	var/hit_area = parse_zone(def_zone)
 
-	if (!M.melee_attack_test(user, src, d_zone))
+	if (!M.melee_attack_test(user, src, def_zone))
 		logTheThing(LOG_COMBAT, user, "attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]) but the attack is blocked!")
 		return
 
@@ -1196,7 +1195,7 @@
 
 	var/datum/attackResults/msgs = new(user)
 	msgs.clear(M)
-	msgs.affecting = affecting
+	msgs.def_zone = def_zone
 	msgs.logs = list()
 	msgs.logc("attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)])")
 
@@ -1233,10 +1232,10 @@
 		msgs.bleed_bonus = getProperty("vorpal")
 
 	var/armor_mod = 0
-	armor_mod = M.get_melee_protection(d_zone, src.hit_type)
+	armor_mod = M.get_melee_protection(def_zone, src.hit_type)
 
 	var/pierce_prot = 0
-	if (d_zone == "head")
+	if (def_zone == "head")
 		pierce_prot = M.get_head_pierce_prot()
 	else
 		pierce_prot = M.get_chest_pierce_prot()
@@ -1281,7 +1280,7 @@
 			armor_blocked = 1
 
 	if (src.can_disarm && !((src.temp_flags & IS_LIMB_ITEM) && user == M))
-		msgs = user.calculate_disarm_attack(M, M.get_affecting(user), 0, 0, 0, is_shove = 1, disarming_item = src)
+		msgs = user.calculate_disarm_attack(M, 0, 0, 0, is_shove = 1, disarming_item = src)
 	else
 		msgs.msg_group = "[usr]_attacks_[M]_with_[src]"
 		msgs.visible_message_target(user.item_attack_message(M, src, hit_area, msgs.stamina_crit, armor_blocked))

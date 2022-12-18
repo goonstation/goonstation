@@ -104,7 +104,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/mob/living/carbon/human/npc/monkey/extremely_fast = 1,\
 #endif
 	/obj/critter/aberration = 1,\
-	/obj/critter/cat = 2,\
+	/mob/living/critter/small_animal/cat = 2,\
 	/obj/item/clothing/head/void_crown = 1,\
 	/obj/item/record/spacebux = 4,\
 	/obj/critter/domestic_bee/trauma = 20)

@@ -694,7 +694,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 			splash_volume = min(splash_volume, src.reagents.total_volume)
 
-			src.reagents.reaction(target, TOUCH, splash_volume)
+			var/datum/reagents/splash = new(splash_volume) // temp reagents of the splash so we can make changes between the first and second splashes
+			src.reagents.trans_to_direct(splash, splash_volume) // this removes reagents from this container so we don't need to do that below
+
+			var/reacted_reagents = splash.reaction(target, TOUCH, splash_volume)
 
 			var/turf/T
 			if (!isturf(target) && !target.density) // if we splashed on something other than a turf or a dense obj, it goes on the floor as well
@@ -704,9 +707,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				T = get_turf(user)
 
 			if (T && !T.density) // if the user AND the target are on dense turfs or the user is on a dense turf and the target is a dense obj then just give up. otherwise pour on the floor
-				src.reagents.reaction(T, TOUCH, splash_volume)
-
-			src.reagents.remove_any(splash_volume)
+				// first remove everything that reacted in the first reaction
+				for(var/id in reacted_reagents)
+					splash.del_reagent(id)
+				splash.reaction(T, TOUCH, splash.total_volume)
 
 /* =============================================== */
 /* -------------------- Bowls -------------------- */
@@ -762,7 +766,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 			qdel(src)
 
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/tortilla_chip))
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/dippable))
 			if (reagents.total_volume)
 				boutput(user, "You dip [W] into the bowl.")
 				reagents.trans_to(W, 10)
@@ -1340,7 +1344,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		..()
 		src.smash(A)
 
-	pixelaction(atom/target, list/params, mob/living/user, reach)
+	pixelaction(atom/target, list/params, mob/living/user, reach)  //sliding glasses down the bar
 		if(!istype(target, /obj/table) || src.cant_drop)
 			return ..()
 		var/obj/table/target_table = target
@@ -1360,6 +1364,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if("icon-y" in params)
 			src.pixel_y = text2num(params["icon-y"]) - 16
 		user.weapon_attack(source_table, src, TRUE, list())
+		playsound(src, 'sound/items/glass_slide.ogg', 25, 1)
 		var/list/turf/path = raytrace(get_turf(source_table), get_turf(target_table))
 		var/turf/last_turf = get_turf(source_table)
 		SPAWN(0)
@@ -1968,5 +1973,5 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	icon_state = "creamer"
 	item_state = "creamer"
 	initial_volume = 50
-	initial_reagents = list("milk"=50)
+	initial_reagents = list("milk"=40, "sugar"=10)
 	can_recycle = 0
