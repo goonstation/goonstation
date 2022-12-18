@@ -240,11 +240,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if (selfmove)
 		var/dir = pick(cardinal)
 
-		var/checkloc = get_step(src.get_center(), dir)
-		for (var/dist = 0, dist < max(2,radius+1), dist ++)
+		for (var/dist = max(0,radius-1), dist <= radius+1, dist++)
+			var/turf/checkloc = get_ranged_target_turf(src.get_center(), dir, dist)
 			if (locate(/obj/machinery/containment_field) in checkloc)
 				return
-			checkloc = get_step(checkloc, dir)
 
 		step(src, dir)
 
@@ -311,10 +310,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			gain = 2
 		else if (istype(A, /obj/machinery/nuclearbomb))
 			gain = 5000 //ten clowns
-			src.active = TRUE //you fools
-			src.maxradius = INFINITY
 			playsound_global(clients, 'sound/machines/singulo_start.ogg', 50)
 			SPAWN(1 SECOND)
+				src.maxradius += 5
 				for (var/i in 1 to 5)
 					src.grow()
 					sleep(0.5 SECONDS)
@@ -340,7 +338,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/proc/get_center()
 	return src.loc
-
 
 /obj/machinery/the_singularity/attackby(var/obj/item/I, var/mob/user)
 	if (istype(I, /obj/item/clothing/mask/cigarette))
@@ -496,9 +493,9 @@ TYPEINFO(/obj/machinery/field_generator)
 		if (src.active != act)
 			src.active = act
 			if (src.active)
-				event_handler_flags |= IMMUNE_SINGULARITY
+				event_handler_flags |= IMMUNE_SINGULARITY_INACTIVE
 			else
-				event_handler_flags &= ~IMMUNE_SINGULARITY
+				event_handler_flags &= ~IMMUNE_SINGULARITY_INACTIVE
 
 /obj/machinery/field_generator/attack_hand(mob/user)
 	if(state == WELDED)
