@@ -28878,19 +28878,8 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "bqj" = (
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/medical,
-/obj/item/device/radio/headset/medical,
-/obj/item/device/radio/headset/security,
-/obj/item/device/radio/headset/security,
-/obj/item/device/radio/headset/engineer,
-/obj/item/device/radio/headset/engineer,
-/obj/item/device/radio/headset/research,
-/obj/item/device/radio/headset/research,
 /obj/item/device/radio/intercom/science,
-/obj/storage/crate,
-/obj/item/storage/box/PDAbox,
+/obj/storage/crate/radio,
 /turf/simulated/floor/circuit,
 /area/station/bridge)
 "bqk" = (

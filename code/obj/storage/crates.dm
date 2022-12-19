@@ -253,7 +253,23 @@
 	name = "building materials crate"
 	spawn_contents = list(/obj/item/sheet/steel/fullstack,
 	/obj/item/sheet/glass/fullstack)
-
+/obj/storage/crate/radio
+	name = "radio headsets crate"
+	spawn_contents = list(
+		/obj/item/storage/box/PDAbox,
+		/obj/item/device/radio/headset/multifreq,
+		/obj/item/device/radio/headset/multifreq,
+		/obj/item/device/radio/headset/medical,
+		/obj/item/device/radio/headset/medical,
+		/obj/item/device/radio/headset/security,
+		/obj/item/device/radio/headset/security,
+		/obj/item/device/radio/headset/engineer,
+		/obj/item/device/radio/headset/engineer,
+		/obj/item/device/radio/headset/command,
+		/obj/item/device/radio/headset/command,
+		/obj/item/device/radio/headset/research,
+		/obj/item/device/radio/headset/research,
+	)
 /*
  *	SPOOKY haunted crate!
  */
