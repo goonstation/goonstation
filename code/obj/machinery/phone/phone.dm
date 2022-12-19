@@ -23,7 +23,6 @@ TYPEINFO(/obj/machinery/phone)
 	var/labelling = 0
 	var/unlisted = FALSE
 	var/obj/item/phone_handset/handset = null
-	//var/chui/window/phonecall/phonebook
 	var/phoneicon = "phone"
 	var/ringingicon = "phone_ringing"
 	var/answeredicon = "phone_answered"
@@ -119,9 +118,6 @@ TYPEINFO(/obj/machinery/phone)
 		if(src.ringing == 0) // we are making an outgoing call
 			if(src.connected == 1)
 				if(user)
-					// if(!src.phonebook)
-					// 	src.phonebook = new /chui/window/phonecall(src)
-					// phonebook.Subscribe(user.client)
 					ui_interact(user)
 			else
 				if(user)
@@ -236,6 +232,8 @@ TYPEINFO(/obj/machinery/phone)
 		sortList(phonebook, /proc/cmp_phone_data)
 
 		. = list(
+			"answered" = src.answered,
+			"dialing" = src.dialing,
 			"name" = src.name,
 			"phonebook" = phonebook,
 		)
@@ -244,7 +242,18 @@ TYPEINFO(/obj/machinery/phone)
 		. = ..()
 		if (.)
 			return
-		src.UpdateIcon()
+		switch (action)
+			if ("call")
+				if(src.dialing == 1 || src.linked)
+					return
+				var/id = params["target"]
+				for_by_tcl(P, /obj/machinery/phone)
+					if(P.phone_id == id)
+						src.call_other(P)
+						. = TRUE
+						return
+				boutput(usr, "<span class='alert'>Unable to connect!</span>")
+		src.add_fingerprint(usr)
 
 	proc/explode()
 		src.blowthefuckup(strength = 2.5, delete = TRUE)
@@ -297,34 +306,6 @@ TYPEINFO(/obj/machinery/phone)
 		user.visible_message("<span class='alert'><b>[user] bashes the [src] into their head repeatedly!</b></span>")
 		user.TakeDamage("head", 150, 0)
 		return 1
-
-// Interface for placing a call
-// /chui/window/phonecall
-// 	name = "phonebook"
-// 	windowSize = "250x500"
-// 	var/obj/machinery/phone/owner = null
-
-// 	New(var/obj/machinery/phone/creator)
-// 		..()
-// 		src.owner = creator
-
-// 	GetBody()
-// 		var/html = ""
-// 		for_by_tcl(P, /obj/machinery/phone)
-// 			if (P.unlisted) continue
-// 			html += "[theme.generateButton(P.phone_id, "[P.phone_id]")] <br/>"
-// 		return html
-
-// 	OnClick(var/client/who, var/id, var/data)
-// 		if(src.owner.dialing == 1 || src.owner.linked)
-// 			return
-// 		if(owner)
-// 			for_by_tcl(P, /obj/machinery/phone)
-// 				if(P.phone_id == id)
-// 					owner.call_other(P)
-// 					return
-// 		Unsubscribe(who)
-
 
 // Item generated when someone picks up a phone
 /obj/item/phone_handset
