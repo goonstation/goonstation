@@ -410,7 +410,7 @@
 /obj/item/raw_material/gemstone
 	name = "gem"
 	desc = "A gemstone. It's probably pretty valuable!"
-	icon_state = "gem"
+	icon_state = "gem1"
 	material_name = "Gem"
 	force = 1
 	throwforce = 3
@@ -430,7 +430,8 @@
 				picklist = list("onyx","rosequartz","citrine","jade","aquamarine","iolite")
 
 		var/datum/material/M = getMaterial(pick(picklist))
-		src.setMaterial(M)//, appearance = 0, setname = 0) // why was this set to not update the name/appearance??
+		src.setMaterial(M)
+		src.icon_state = pick("gem1","gem2","gem3")
 
 /obj/item/raw_material/uqill // relate this to ancients
 	name = "uqill nugget"
@@ -700,47 +701,47 @@
 /obj/item/material_piece/mauxite
 	desc = "A processed bar of Mauxite, a sturdy common metal."
 	default_material = "mauxite"
-	icon_state = "mauxite-bar"
+	icon_state = "bar"
 
 /obj/item/material_piece/molitz
 	desc = "A cut block of Molitz, a common crystalline substance."
 	default_material = "molitz"
-	icon_state = "molitz-bar"
+	icon_state = "bar"
 
 /obj/item/material_piece/pharosium
 	desc = "A processed bar of Pharosium, a conductive metal."
 	default_material = "pharosium"
-	icon_state = "pharosium-bar"
+	icon_state = "bar"
 
 /obj/item/material_piece/cobryl
 	desc = "A processed bar of Cobryl, a somewhat valuable metal."
 	default_material = "cobryl"
-	icon_state = "cobryl-bar"
+	icon_state = "bar"
 
 /obj/item/material_piece/claretine
 	desc = "A compressed Claretine, a highly conductive salt."
 	default_material = "claretine"
-	icon_state = "claretine-bar"
+	icon_state = "bar"
 
 /obj/item/material_piece/bohrum
 	desc = "A processed bar of Bohrum, a heavy and highly durable metal."
 	default_material = "bohrum"
-	icon_state = "bohrum-bar"
+	icon_state = "bar"
 
 /obj/item/material_piece/syreline
 	desc = "A processed bar of Syreline, an extremely valuable and coveted metal."
 	default_material = "syreline"
-	icon_state = "syreline-bar"
+	icon_state = "bar"
 
 /obj/item/material_piece/plasmastone
 	desc = "A cut block of Plasmastone."
 	default_material = "plasmastone"
-	icon_state = "plasmastone-bar"
+	icon_state = "bar"
 
 /obj/item/material_piece/uqill
 	desc = "A cut block of Uqill. It is quite heavy."
 	default_material = "uqill"
-	icon_state = "uqill-bar"
+	icon_state = "bar"
 
 /obj/item/material_piece/koshmarite
 	desc = "A cut block of an unusual dense stone. It seems similar to obsidian."

@@ -61,6 +61,9 @@
 	var/num_allowed_suffixes = 5
 	var/image/worn_material_texture_image = null
 
+	/// Icon states that exist for a given icon ref. Format is valid_icon_states[ref icon] = list(). Populated by is_valid_icon_state(), used for caching.
+	var/static/list/valid_icon_states = list()
+
 	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)
 		if( !name_prefixes ) name_prefixes = list()
 		var/prefix = ""

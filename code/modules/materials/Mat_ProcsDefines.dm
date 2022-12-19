@@ -109,9 +109,8 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 	src.alpha = initial(src.alpha)
 	src.color = initial(src.color)
-
-	src.UpdateOverlays(null, "material")
-
+	src.icon = initial(src.icon)
+	src.icon_state = initial(src.icon_state)
 	src.material = null
 
 //Time for some super verbose proc names.
@@ -190,19 +189,34 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	src.onMaterialChanged()
 
 /// sets the *appearance* of a material, but does not trigger any tiggerOnAdd or onMaterialChanged behaviour
+/// Order of precedence is as follows:
+/// if the material is in the list of appearences to ignore, do nothing
+/// If an iconstate exists in the icon for materialID-iconstate, that is chosen
+/// If the material has mat_changeappaerance set, then first texture is applied, then color (including alpha)
 /atom/proc/setMaterialAppearance(var/datum/material/mat1)
-	var/set_color_alpha = TRUE
 	src.alpha = 255
 	src.color = null
-	src.UpdateOverlays(null, "material")
-	if (islist(src.mat_appearances_to_ignore) && length(src.mat_appearances_to_ignore))
-		if (mat1.name in src.mat_appearances_to_ignore)
-			set_color_alpha = FALSE
-	if (set_color_alpha && src.mat_changeappearance && mat1.applyColor)
+	if (length(src.mat_appearances_to_ignore) && (mat1.name in src.mat_appearances_to_ignore))
+		return
+
+	var/potential_new_icon_state = "[mat1.mat_id]-[initial(src.icon_state)]"
+	if(src.is_valid_icon_state(potential_new_icon_state))
+		src.icon_state = potential_new_icon_state
+		return
+
+	if (src.mat_changeappearance)
 		if (mat1.texture)
 			src.setTexture(mat1.texture, mat1.texture_blend, "material")
-		src.alpha = mat1.alpha
-		src.color = mat1.color
+		if(mat1.applyColor)
+			src.alpha = mat1.alpha
+			src.color = mat1.color
+
+/atom/proc/is_valid_icon_state(var/state)
+	if(isnull(src.valid_icon_states["\ref[src.icon]"]))
+		src.valid_icon_states["\ref[src.icon]"] = list()
+		for(var/icon_state in icon_states(src.icon))
+			src.valid_icon_states["\ref[src.icon]"][icon_state] = 1
+	return state in src.valid_icon_states["\ref[src.icon]"]
 
 /proc/getProcessedMaterialForm(var/datum/material/MAT)
 	if (!istype(MAT))
