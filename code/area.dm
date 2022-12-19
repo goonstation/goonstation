@@ -3549,17 +3549,19 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 	var/armory_auth = FALSE
 
 	proc/authorize()
-		message_admins("Armory authorized")
 		armory_auth = TRUE
 
 	proc/unauthorize()
-		message_admins("Armory unauthorized")
 		armory_auth = FALSE
 
 	New()
 		..()
 		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_AUTH, .proc/authorize)
 		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_UNAUTH, .proc/unauthorize)
+		SPAWN(5 SECONDS)
+			var/area/A = locate(/area/station/ai_monitored/armory)
+			for(var/obj/item/O in A)
+				O.AddComponent(/datum/component/log_item_pickup, "")
 
 	Entered(atom/movable/A, atom/oldloc)
 		. = ..()
@@ -3880,6 +3882,14 @@ ABSTRACT_TYPE(/area/mining)
 	sound_environment = 2
 	teleport_blocked = 1
 
+/// Areas That Walp Uses For Gimmick Maps To Load In
+
+/area/pawnshop
+	name = "Very Legitimate Pawn Shop"
+	requires_power = 0
+	sound_environment = 2
+	teleport_blocked = 1
+	icon_state = "purple"
 
 /* ================================================== */
 

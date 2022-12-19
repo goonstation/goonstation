@@ -52,6 +52,7 @@
 #include "defines\infernal.dm"
 #include "defines\input.dm"
 #include "defines\item.dm"
+#include "defines\interdictor.dm"
 #include "defines\invisibility.dm"
 #include "defines\jobs.dm"
 #include "defines\landmarks.dm"

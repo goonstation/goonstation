@@ -314,6 +314,7 @@
 	initial_reagents = list("cola"=20,"VHFCS"=10)
 	var/is_sealed = 1 //can you drink out of it?
 	var/standard_override //is this a random cola or a standard cola (for crushed icons)
+	var/shaken = FALSE //sets to TRUE on *twirl emote
 
 	New()
 		..()
@@ -328,10 +329,16 @@
 	attack_self(mob/user as mob)
 		var/drop_this_shit = 0 //i promise this is useful
 		if (src.is_sealed)
-			user.visible_message("[user] pops the tab on \the [src]!", "You pop \the [src] open!")
 			is_sealed = 0
 			can_chug = 1
 			playsound(src.loc, 'sound/items/can_open.ogg', 50, 1)
+			if (src.shaken)
+				src.reagents.reaction(user)
+				src.reagents.clear_reagents()
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+				user.visible_message("<span class='notice'>[user] pops the tab on \the [src] and is sprayed with the contents!</span>", "<span class='notice'>You pop \the [src] open and are immediatly sprayed with it's contents. [pick("FUCK", "DAMMIT", "SHIT")]!</span>")
+			else
+				user.visible_message("[user] pops the tab on \the [src]!", "You pop \the [src] open!")
 			return
 		if (!src.reagents || !src.reagents.total_volume)
 			var/zone = user.zone_sel.selecting
