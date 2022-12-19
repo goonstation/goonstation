@@ -148,14 +148,6 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 15 SECONDS
 	create = 1
 
-/******************** Portable Combustion Generator *******************/
-
-/datum/manufacture/mechanics/combustion_generator
-	name = "Portable Combustion Generator"
-	time = 30 SECONDS
-	create = 1
-	frame_path = /obj/machinery/power/combustion_generator
-
 /*
 /datum/manufacture/iron
 	// purely a test

@@ -1474,15 +1474,15 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 /datum/computer/file/pda_program/power_controller
 	name = "Power Controller v1.0" // you should totally increment this if you make changes
 	size = 4
-	var/list/generator_statuses = list()
-	var/list/generator_messages = list()
+	var/list/device_statuses = list()
+	var/list/device_messages = list()
 	var/list/cooldowns = list()
 
 	var/freq = FREQ_POWER_SYSTEMS
 
 	on_activated(obj/item/device/pda2/pda)
 		src.master.AddComponent(/datum/component/packet_connected/radio, \
-			"generator",\
+			"power_control",\
 			src.freq, \
 			src.master.net_id, \
 			null, \
@@ -1491,7 +1491,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			FALSE \
 		)
 		RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, .proc/receive_signal)
-		src.get_generators()
+		src.get_devices()
 
 	on_deactivated(obj/item/device/pda2/pda)
 		qdel(get_radio_connection_by_id(pda, null))
@@ -1505,10 +1505,10 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		dat += "<h4>Power Controller</h4>"
 		dat += "<a href='byond://?src=\ref[src];scan=1'>Scan</a>"
 		dat += "<hr>"
-		for (var/gen in src.generator_statuses)
-			var/list/data = params2list(src.generator_statuses[gen]["data"])
-			var/list/variables = params2list(src.generator_statuses[gen]["vars"])
-			var/device = src.generator_statuses[gen]["device"]
+		for (var/gen in src.device_statuses)
+			var/list/data = params2list(src.device_statuses[gen]["data"])
+			var/list/variables = params2list(src.device_statuses[gen]["vars"])
+			var/device = src.device_statuses[gen]["device"]
 
 			dat += "<b>[strip_html(gen)]\> [device ? strip_html(device) : ""]</b><ul>"
 
@@ -1524,8 +1524,8 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 			dat += "</ul>"
 
-			if (gen in src.generator_messages)
-				dat += "<b>Last Message:</b> [src.generator_messages[gen]]"
+			if (gen in src.device_messages)
+				dat += "<b>Last Message:</b> [src.device_messages[gen]]"
 
 			dat += "<hr>"
 
@@ -1539,7 +1539,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			if (ON_COOLDOWN(src, "scan", 1 SECOND))
 				return
 
-			src.get_generators()
+			src.get_devices()
 
 		else if (href_list["set_var"])
 			if (!href_list["netid"])
@@ -1554,7 +1554,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 			signal.data["data"] = strip_html(input("Please enter the selected variable's new value.", "Remote Variable Editor") as text) // better safe than sorry!
 
-			SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "generator")
+			SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "power_control")
 
 		src.master.add_fingerprint(usr)
 
@@ -1567,37 +1567,37 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			return
 
 		if (signal.data["command"] == "ping_reply")
-			src.get_generator_status(sender)
+			src.get_device_status(sender)
 			return
 
-		if (!signal.data["address_tag"] || signal.data["address_tag"] != ADDRESS_TAG_POWER) // we can assume we are not talking to a generator
-			return
+		if (!signal.data["address_tag"] || signal.data["address_tag"] != ADDRESS_TAG_POWER)
+			return // we can assume we are not talking to a viable device
 
 		switch (signal.data["command"])
 			if ("status")
 				if (!signal.data["data"] && !signal.data["vars"])
 					return
 
-				src.generator_statuses[sender] = signal.data // this packet should contain all the data we need
+				src.device_statuses[sender] = signal.data // this packet should contain all the data we need
 				src.master.updateSelfDialog()
 				return
 
 			if ("error")
-				if (!(sender in src.generator_statuses))
-					src.get_generator_status()
+				if (!(sender in src.device_statuses))
+					src.get_device_status()
 					return
 
 				if (!signal.data["data"])
 					return
 
-				if (!(sender in src.generator_messages))
-					src.generator_messages.Add(sender)
+				if (!(sender in src.device_messages))
+					src.device_messages.Add(sender)
 
-				src.generator_messages[sender] = signal.data["data"]
+				src.device_messages[sender] = signal.data["data"]
 				src.master.updateSelfDialog()
 				return
 
-	proc/get_generator_status(var/target_id)
+	proc/get_device_status(var/target_id)
 		if (!target_id)
 			return
 
@@ -1607,11 +1607,11 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		signal.data["sender"] = src.master.net_id
 		signal.data["command"] = "status"
 
-		SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "generator")
+		SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "power_control")
 
-	proc/get_generators() // ping all devices
-		src.generator_statuses.Cut()
-		src.generator_messages.Cut()
+	proc/get_devices() // ping all devices
+		src.device_statuses.Cut()
+		src.device_messages.Cut()
 		src.master.updateSelfDialog()
 
 		var/datum/signal/signal = get_free_signal()
@@ -1619,4 +1619,4 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		signal.data["address_1"] = "ping"
 		signal.data["sender"] = src.master.net_id
 
-		SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "generator")
+		SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "power_control")

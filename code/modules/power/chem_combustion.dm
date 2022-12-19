@@ -586,10 +586,11 @@
 			else
 				return FALSE
 
-		if (!T.air || T.air.oxygen <= 0)
+		var/datum/gas_mixture/G = T.return_air()
+		if (G.oxygen <= 0)
 			return FALSE
 
-		return T.air.oxygen / TOTAL_MOLES(T.air)
+		return G.oxygen / TOTAL_MOLES(G)
 
 	proc/check_tank_oxygen(obj/item/tank/T)
 		if (!src || !T || !T.air_contents)
