@@ -5,14 +5,15 @@
 	var/atom/movable/screen/handler
 	var/obj/minimap
 
-	var/datum/minimap/minimap_datum
-	var/list/minimap_markers_list
-	var/markers_visible = TRUE
+	var/tgui_title
+	var/tgui_theme
 
-	New(parent, control_id = null, obj/minimap)
+	New(parent, control_id = null, obj/minimap, tgui_title, tgui_theme)
 		. = ..()
 		START_TRACKING
 		src.loc = parent
+		src.tgui_title = tgui_title
+		src.tgui_theme = tgui_theme
 
 		if (isnull(control_id))
 			control_id = "minimap_ui_[max_minimap_id++]"
@@ -27,13 +28,6 @@
 		src.minimap.screen_loc = "[src.minimap_id]:1,1"
 		src.handler.vis_contents += src.minimap
 
-		if (istype(src.minimap, /obj/minimap))
-			var/obj/minimap/map = minimap
-			src.minimap_datum = map.map
-		else if (istype(src.minimap, /obj/minimap_controller))
-			var/obj/minimap_controller/map = minimap
-			src.minimap_datum = map.controlled_minimap.map
-
 	disposing()
 		STOP_TRACKING
 		for (var/client/viewer in src.viewers)
@@ -45,10 +39,57 @@
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
-			ui = new(user, src, "NukeOpMap")
+			ui = new(user, src, "Minimap")
 			ui.open()
 
 	ui_static_data(mob/user)
+		. = list(
+			"title" = src.tgui_title,
+			"theme" = src.tgui_theme,
+			"minimap_id"= src.minimap_id
+		)
+
+	ui_data(mob/user)
+		src.add_client(user?.client)
+
+	ui_close(mob/user)
+		src.remove_client(user?.client)
+		. = ..()
+
+	///Adds a subscribed client.
+	proc/add_client(client/viewer)
+		if (viewer && !(viewer in src.viewers))
+			src.viewers += viewer
+			viewer.screen += src.handler
+			viewer.screen += src.minimap
+
+	///Removes a subscribed client.
+	proc/remove_client(client/viewer)
+		if (viewer && (viewer in src.viewers))
+			src.viewers -= viewer
+			viewer.screen -= src.handler
+			viewer.screen -= src.minimap
+
+
+/atom/movable/minimap_ui_handler/minimap_controller
+	var/obj/minimap_controller/minimap_controller
+	var/datum/minimap/minimap_datum
+	var/list/minimap_markers_list
+	var/markers_visible = TRUE
+
+	New(parent, control_id = null, obj/minimap_controller/minimap_controller, tgui_title, tgui_theme)
+		..(parent, control_id, minimap_controller, tgui_title, tgui_theme)
+		src.minimap_controller = minimap_controller
+		src.minimap_datum = minimap_controller.controlled_minimap.map
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "MinimapController")
+			ui.open()
+
+	ui_static_data(mob/user)
+		. = ..()
 		var/list/placable_marker_states = list()
 		var/list/placable_marker_images = list()
 		for(var/icon_state in icon_states('icons/obj/minimap/minimap_markers.dmi'))
@@ -56,7 +97,7 @@
 			var/icon/marker_icon = icon('icons/obj/minimap/minimap_markers.dmi', icon_state)
 			placable_marker_images[icon_state] = icon2base64(marker_icon)
 
-		. = list(
+		. += list(
 			"placable_marker_states" = placable_marker_states,
 			"placable_marker_images" = placable_marker_images,
 			"x" = 1,
@@ -64,7 +105,7 @@
 		)
 
 	ui_data(mob/user)
-		src.add_client(user?.client)
+		..()
 		minimap_markers_list = list()
 		for (var/atom/target in src.minimap_datum.minimap_markers)
 			var/datum/minimap_marker/marker = src.minimap_datum.minimap_markers[target]
@@ -82,17 +123,17 @@
 
 		. = list(
 			"markers_visible" = markers_visible,
-			"selecting_coordinates" = src.minimap:selecting_coordinates,
+			"selecting_coordinates" = src.minimap_controller.selecting_coordinates,
 			"minimap_markers" = minimap_markers_list
 		)
 
-		if (src.minimap:selected_x && src.minimap:selected_y)
+		if (src.minimap_controller.selected_x && src.minimap_controller.selected_y)
 			. += list(
-				"x" = src.minimap:selected_x,
-				"y" = src.minimap:selected_y
+				"x" = src.minimap_controller.selected_x,
+				"y" = src.minimap_controller.selected_y
 			)
-			src.minimap:selected_x = null
-			src.minimap:selected_y = null
+			src.minimap_controller.selected_x = null
+			src.minimap_controller.selected_y = null
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		var/mob/user
@@ -137,10 +178,7 @@
 					marker.visible = TRUE
 
 			if ("location_from_minimap")
-				if (!istype(src.minimap, /obj/minimap_controller))
-					return
-				var/obj/minimap_controller/map = minimap
-				map.selecting_coordinates = TRUE
+				minimap_controller.selecting_coordinates = TRUE
 
 			if ("new_marker")
 				var/name = params["name"]
@@ -161,21 +199,3 @@
 				src.minimap_datum.remove_minimap_marker(marker.target)
 
 		return TRUE
-
-	ui_close(mob/user)
-		src.remove_client(user?.client)
-		. = ..()
-
-	///Adds a subscribed client.
-	proc/add_client(client/viewer)
-		if (viewer && !(viewer in src.viewers))
-			src.viewers += viewer
-			viewer.screen += src.handler
-			viewer.screen += src.minimap
-
-	///Removes a subscribed client.
-	proc/remove_client(client/viewer)
-		if (viewer && (viewer in src.viewers))
-			src.viewers -= viewer
-			viewer.screen -= src.handler
-			viewer.screen -= src.minimap

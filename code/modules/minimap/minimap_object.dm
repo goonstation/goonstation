@@ -263,7 +263,7 @@
 	throw_range = 20
 
 	var/obj/minimap_controller/minimap_controller
-	var/atom/movable/minimap_ui_handler/minimap_ui
+	var/atom/movable/minimap_ui_handler/minimap_controller/minimap_ui
 
 	New()
 		. = ..()
@@ -284,4 +284,4 @@
 
 		if (minimap)
 			src.minimap_controller = new(minimap)
-			src.minimap_ui = new(src, "nukeop_map", src.minimap_controller)
+			src.minimap_ui = new(src, "nukeop_map", src.minimap_controller, "Atrium Station Map Controller", "syndicate")

@@ -1,5 +1,5 @@
 var/global/list/available_ai_shells = list()
-var/datum/tgui/map_ui
+var/atom/movable/minimap_ui_handler/ai_minimap_ui
 var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	"Very Happy" = "ai_veryhappy",\
 	"Neutral" = "ai_neutral",\
@@ -1960,25 +1960,10 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	var/mob/message_mob = src.get_message_mob()
 	if (!src || !message_mob.client || isdead(src))
 		return
+	if (!ai_minimap_ui)
+		ai_minimap_ui = new(src, "ai_map", src.ai_station_map, "AI Station Map", "ntos")
 
-	map_ui = tgui_process.try_update_ui(usr, message_mob, map_ui)
-	if (!map_ui)
-		if (!winexists(usr, "ai_map"))
-			winset(message_mob.client, "ai_map", list2params(list(
-				"type" = "map",
-				"size" = "300,300",
-			)))
-			var/atom/movable/screen/handler = new
-			handler.plane = 0
-			handler.mouse_opacity = 0
-			handler.screen_loc = "ai_map:1,1"
-			message_mob.client.screen += handler
-
-			ai_station_map.screen_loc = "ai_map;1,1"
-			handler.vis_contents += ai_station_map
-			message_mob.client.screen += ai_station_map
-		map_ui = new(usr, message_mob, "AIMap")
-		map_ui.open()
+	ai_minimap_ui.ui_interact(message_mob)
 
 /mob/living/silicon/ai/verb/rename_self()
 	set category = "AI Commands"

@@ -100,7 +100,6 @@
 	proc/set_marker_position(var/datum/minimap_marker/map_marker, var/x, var/y, var/z)
 		if (z != src.z_level)
 			map_marker.marker.alpha = 0
-			map_marker.visible = FALSE
 			map_marker.on_minimap_z_level = FALSE
 		else
 			if (map_marker.visible == TRUE)

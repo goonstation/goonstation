@@ -3,9 +3,12 @@ import { Box, Button, ByondUi, Dropdown, Flex, Image, Input, Modal, NumberInput,
 import { Window } from '../layouts';
 import { capitalize } from './common/stringUtils';
 
-export const NukeOpMap = (params, context) => {
+export const MinimapController = (params, context) => {
   const { act, data } = useBackend(context);
   const {
+    title,
+    theme,
+    minimap_id,
     markers_visible,
     selecting_coordinates,
     minimap_markers,
@@ -49,8 +52,8 @@ export const NukeOpMap = (params, context) => {
 
   return (
     <Window
-      theme="syndicate"
-      title="Atrium Station Map Controller"
+      title={title}
+      theme={theme}
       width={750}
       height={390}
     >
@@ -72,7 +75,7 @@ export const NukeOpMap = (params, context) => {
                 <Flex.Item>
                   <ByondUi
                     params={{
-                      id: 'nukeop_map',
+                      id: minimap_id,
                       type: 'map',
                     }}
                     style={{
@@ -106,9 +109,7 @@ export const NukeOpMap = (params, context) => {
               )}>
               {(!!showNewMarkerMenu) && (
                 <Modal
-                  backgroundColor="#470202"
-                  mr={2}
-                  p={3}>
+                  mr={2}>
                   <Box>
                     <Flex>
                       <Flex.Item backgroundColor="black">
@@ -166,6 +167,7 @@ export const NukeOpMap = (params, context) => {
                           <Flex.Item>
                             <Button
                               icon="check"
+                              color="green"
                               content="Confirm"
                               onClick={() => newMarker()}
                             />
@@ -190,7 +192,7 @@ export const NukeOpMap = (params, context) => {
                     <Flex.Item>
                       {Object.keys(minimap_markers).map(marker => (
                         <Flex key={data.minimap_markers[marker]}
-                          backgroundColor={"rgba(30, 0, 0, 0.4)"}
+                          backgroundColor={"rgba(0, 0, 0, 0.3)"}
                           justify="space-between"
                           p="5px"
                           pb="1px"
