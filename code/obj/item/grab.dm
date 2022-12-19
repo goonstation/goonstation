@@ -519,7 +519,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (!G || !istype(G) || G.affecting != target)
+		if (!G || !istype(G) || G.affecting != target || G.state == GRAB_PIN)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -529,10 +529,15 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		if (!G || !istype(G) || G.affecting != target || G.state == GRAB_PIN)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && G && BOUNDS_DIST(owner, target) == 0 && BOUNDS_DIST(owner, T) == 0 || !GET_ATOM_PROPERTY(target, PROP_MOB_CANT_BE_PINNED))
+		if(owner && ownerMob && target && G && G.state != GRAB_PIN && BOUNDS_DIST(owner, target) == 0 && BOUNDS_DIST(owner, T) == 0 && !GET_ATOM_PROPERTY(target, PROP_MOB_CANT_BE_PINNED))
 			G.upgrade_to_pin(T)
 		else
 			interrupt(INTERRUPT_ALWAYS)

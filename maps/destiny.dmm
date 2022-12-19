@@ -20281,6 +20281,12 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
+"dtq" = (
+/obj/storage/crate/radio,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/bridge)
 "dtt" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -106471,7 +106477,7 @@ aBz
 qUX
 dHO
 erq
-tab
+dtq
 sPM
 bqy
 tab

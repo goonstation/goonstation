@@ -143,8 +143,6 @@
 
 	var/spellshield = 0
 
-	var/bomberman = 0
-
 	var/voice_name = "unidentifiable voice"
 	var/voice_message = null
 	var/oldname = null

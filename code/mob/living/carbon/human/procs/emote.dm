@@ -445,6 +445,8 @@
 				if (!param)
 					param = input("Choose an emote to display.")
 					if(!param) return
+				else //hack to fix double encoding of custom emotes when using hotkey, speech code is a knotted mess
+					param = html_decode(param)
 
 				param = copytext(sanitize(html_encode(param)), 1, MAX_MESSAGE_LEN)
 				phrase_log.log_phrase("emote", param)
