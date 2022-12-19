@@ -202,7 +202,7 @@ var/mutable_appearance/fluid_ma
 			return
 
 		//floor overrides some construction clicks
-		if (istype(W,/obj/item/rcd) || istype(W,/obj/item/tile) || istype(W,/obj/item/sheet) || ispryingtool(W) || istype(W,/obj/item/pen))
+		if (istype(W,/obj/item/rcd) || istype(W,/obj/item/tile) || istype(W,/obj/item/sheet) || ispryingtool(W))
 			var/turf/T = get_turf(src)
 			T.Attackby(W,user)
 			W.AfterAttack(T,user)
@@ -762,7 +762,7 @@ var/mutable_appearance/fluid_ma
 
 
 	//Possibility to consume reagents. (Each reagent should return 0 in its reaction_[type]() proc if reagents should be removed from fluid)
-	if (do_reagent_reaction && F.group.reagents && F.group.reagents.reagent_list)
+	if (do_reagent_reaction && F.group.reagents && F.group.reagents.reagent_list && F.amt > CHEM_EPSILON)
 		F.group.last_reacted = F
 		var/react_volume = F.amt > 10 ? (F.amt / 2) : (F.amt)
 		react_volume = min(react_volume,100) //capping the react amt
@@ -809,10 +809,15 @@ var/mutable_appearance/fluid_ma
 			//	M.add_blood(F)
 			//	if (!M.anchored)
 			//		F.add_tracked_blood(M)
+	var/do_reagent_reaction = 1
+
+	if (F.my_depth_level == 1)
+		if(!src.lying && src.shoes && src.shoes.hasProperty ("chemprot") && (src.shoes.getProperty("chemprot") >= 5)) //sandals do not help
+			do_reagent_reaction = 0
 
 	if (entered_group) //if entered_group == 1, it may not have been set yet
 		if (isturf(oldloc))
 			if (T.active_liquid)
 				entered_group = 0
 
-	..(F, oldloc)
+	..(F, oldloc, do_reagent_reaction)

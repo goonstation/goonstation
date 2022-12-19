@@ -91,9 +91,9 @@
 			var/turf/T = get_turf(src)
 			return T.remove_air(amount)
 
-	handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
+	handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
 		if (breath_request>0)
-			return remove_air(breath_request)
+			return remove_air(breath_request * mult)
 		else
 			return null
 
@@ -398,6 +398,7 @@
 					W.set_loc(src)
 					src.fueltank = W
 					src.updateDialog()
+					src.engine.activate()
 				else
 					boutput(usr, "<span class='alert'>That doesn't fit there.</span>")
 					return
@@ -408,6 +409,7 @@
 					fueltank.set_loc(src.loc)
 					fueltank = null
 					src.updateDialog()
+					src.engine.deactivate()
 				else
 					boutput(usr, "<span class='alert'>There's no tank in the slot.</span>")
 					return
@@ -491,7 +493,7 @@
 		*/
 
 	blob_act(var/power)
-		src.health -= power * 2
+		src.health -= power * 3
 		checkhealth()
 
 	get_desc()
@@ -832,6 +834,7 @@
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 0)
 	S.set_loc(src)
 	myhud.update_systems()
+	myhud.update_states()
 	return
 
 /////////////////////////////////////////////////////////////////////////////
@@ -908,9 +911,7 @@
 	if(passengers)
 		find_pilot()
 	else
-		src.ion_trail.stop()
-
-
+		src.ion_trail?.stop()
 
 	logTheThing(LOG_VEHICLE, ejectee, "exits pod: <b>[constructTarget(src.name,"vehicle")]</b>")
 
@@ -1296,7 +1297,7 @@
 			if(unknown_level > 0.01)
 				dat += " OTHER: [round(unknown_level)]%"
 
-		dat += " Temperature: [round(atmostank.air_contents.temperature-T0C)]&deg;C<br>"
+		dat += " Temperature: [round(TO_CELSIUS(atmostank.air_contents.temperature))]&deg;C<br>"
 	else
 		dat += "<font color=red>No tank installed!</font><BR>"
 	dat += "<B>Fuel Status:</B> "
@@ -1319,7 +1320,7 @@
 			if(unknown_level > 0.01)
 				dat += " OTHER: [round(unknown_level)]%"
 
-		dat += " Temperature: [round(fueltank.air_contents.temperature-T0C)]&deg;C<br>"
+		dat += " Temperature: [round(TO_CELSIUS(fueltank.air_contents.temperature))]&deg;C<br>"
 	else
 		dat += "<font color=red>No tank installed!</font><BR>"
 	if(src.engine)
@@ -1447,7 +1448,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/vehicle/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if (!user.client || !isliving(user) || isintangible(usr))
+	if (!user.client || !isliving(user) || isintangible(user))
 		return
 	if (is_incapacitated(user))
 		user.show_text("Not when you're incapacitated.", "red")
@@ -1668,6 +1669,9 @@
 			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
 	else
 		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
+
+/obj/machinery/vehicle/proc/go_home()
+	return null
 
 
 

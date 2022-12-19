@@ -2,8 +2,8 @@
 	var/mob/living/owner
 	var/last_process = 0
 
-	var/const/tick_spacing = 20 //This should pretty much *always* stay at 20, for it is the one number that all do-over-time stuff should be balanced around
-	var/const/cap_tick_spacing = 100 //highest TIME allowance between ticks to try to play catchup with realtime thingo
+	var/const/tick_spacing = LIFE_PROCESS_TICK_SPACING //This should pretty much *always* stay at 20, for it is the one number that all do-over-time stuff should be balanced around
+	var/const/cap_tick_spacing = LIFE_PROCESS_CAP_TICK_SPACING //highest TIME allowance between ticks to try to play catchup with realtime thingo
 
 	var/mob/living/carbon/human/human_owner = null
 	var/mob/living/silicon/hivebot/hivebot_owner = null
@@ -259,6 +259,13 @@
 					animate(src, transform = matrix(), time = 1)
 				last_no_gravity = src.no_gravity
 
+			// Zephyr-class interdictor: carbon mobs in range gain a buff to stamina recovery, which can accumulate to linger briefly
+			if (iscarbon(src))
+				for_by_tcl(IX, /obj/machinery/interdictor)
+					if (IX.expend_interdict(10,src,TRUE,ITDR_ZEPHYR))
+						src.changeStatus("zephyr_field", 3 SECONDS * life_mult)
+						break
+
 		clamp_values()
 
 		//Regular Trait updates
@@ -414,9 +421,6 @@
 		hud.update_health()
 		hud.update_tools()
 
-	if (src.client)
-		src.updateStatic()
-
 /mob/living/silicon/drone/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return 1
@@ -571,7 +575,7 @@
 		//Modify stamina.
 		var/stam_time_passed = max(tick_spacing, TIME - last_stam_change)
 
-		var/final_mod = (src.stamina_regen + GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS)) * (stam_time_passed / tick_spacing)
+		var/final_mod = (max(1, src.stamina_regen + GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS))) * (stam_time_passed / tick_spacing)
 		if (final_mod > 0)
 			src.add_stamina(abs(final_mod))
 		else if (final_mod < 0)

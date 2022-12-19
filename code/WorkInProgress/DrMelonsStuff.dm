@@ -94,7 +94,7 @@
 	desc = "Now, that looks cosy!"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bathtub"
-	flags = OPENCONTAINER
+	flags = OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
 	var/mob/living/carbon/human/occupant = null
 	var/default_reagent = "water"
 	var/on = FALSE
@@ -122,14 +122,14 @@
 		else
 			..()
 
-	handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
+	handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
 		var/mob/M = lifeform_inside_me
 		if (breath_request > 0 && M.lying && src.reagents.total_volume > suffocation_volume) // drowning
 			// mimics `force_mob_to_ingest` in fluid_core.dm
 			// we can skip some checks due to obj handling in breath.dm
 			if (M.get_oxygen_deprivation() > 40)
 				var/react_volume = src.reagents.total_volume > 10 ? (src.reagents.total_volume / 2) : (src.reagents.total_volume)
-				react_volume = min(react_volume, 20)
+				react_volume = min(react_volume, 20) * mult
 				if (M.reagents)
 					react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
 				src.reagents.reaction(M, INGEST, react_volume, 1, src.reagents.reagent_list.len)
@@ -145,7 +145,7 @@
 		else if (istype(over_object, /turf))
 			drain_bathtub(usr)
 			return
-		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/reagent_dispensers) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/item/reagent_containers/mender) && !istype(over_object, /obj/item/tank/jetpack/backtank) && !istype(over_object, /obj/machinery/bathtub))
+		if (!(over_object.flags & ACCEPTS_MOUSEDROP_REAGENTS))
 			return ..()
 		if (usr.stat || usr.getStatusDuration("weakened") || BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
 			boutput(usr, "<span class='alert'>That's too far!</span>")
@@ -228,11 +228,11 @@
 
 	proc/drain_bathtub(mob/user)
 		src.add_fingerprint(user)
-		if (GET_DIST(usr, src) <= 1 && !is_incapacitated(usr))
+		if (GET_DIST(user, src) <= 1 && !is_incapacitated(user))
 			if (src.reagents.total_volume)
 				user.visible_message("<span class='notice'>[user] reaches into the bath and pulls the plug.", "<span class='notice'>You reach into the bath and pull the plug.</span>")
-				if (ishuman(usr))
-					var/mob/living/carbon/human/H = usr
+				if (ishuman(user))
+					var/mob/living/carbon/human/H = user
 					if(!H.gloves)
 						reagents.reaction(H, TOUCH, 5)
 				playsound(src.loc, 'sound/misc/drain_glug.ogg', 70, 1)
@@ -246,7 +246,7 @@
 				if (count > 0)
 					user.visible_message("<span class='alert'>...and something flushes down the drain. Damn!", "<span class='alert'>...and flush something down the drain. Damn!</span>")
 			else
-				boutput(usr, "<span class='notice'>The bathtub's already empty.</span>")
+				boutput(user, "<span class='notice'>The bathtub's already empty.</span>")
 
 	relaymove(mob/user)
 		user.set_loc(src.loc)

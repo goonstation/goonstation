@@ -3,7 +3,7 @@
 //#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1 //Uncomment this to just skip everything possible and get into the game asap.
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1 // uncomment this to use atlas as the single map and disable all other z levels. Speeds up compile/boot times but will mess up anything relying on other z-levels
 
-#ifdef RUNTIME_CHECKING
+#ifdef CHECK_MORE_RUNTIMES
 #define ABSTRACT_VIOLATION_CRASH
 #endif
 
@@ -52,8 +52,6 @@
 
 #define CREW_OBJECTIVES
 
-#define MISCREANTS
-
 //#define RESTART_WHEN_ALL_DEAD 1
 
 //#define PLAYSOUND_LIMITER
@@ -64,6 +62,8 @@
 
 #if (BUILD_TIME_MONTH == 10)
 #define HALLOWEEN 1
+#elif (BUILD_TIME_MONTH == 9) || (BUILD_TIME_MONTH == 10) || (BUILD_TIME_MONTH == 11)
+#define AUTUMN 1
 #elif (BUILD_TIME_MONTH == 12)
 #define XMAS 1
 #elif (BUILD_TIME_MONTH == 7) && (BUILD_TIME_DAY == 1)

@@ -167,7 +167,7 @@ var/global/cloning_with_records = TRUE
 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
 		src.allow_dead_scanning = 1
 		user.drop_item()
-		logTheThing(LOG_COMBAT, src, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
+		logTheThing(LOG_STATION, src, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
 		qdel(W)
 
 	else if (istype(W, /obj/item/cloneModule/minderaser))
@@ -177,7 +177,7 @@ var/global/cloning_with_records = TRUE
 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
 		src.allow_mind_erasure = 1
 		user.drop_item()
-		logTheThing(LOG_COMBAT, src, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
+		logTheThing(LOG_STATION, src, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
 		qdel(W)
 	else if (istype(W, /obj/item/cloneModule/genepowermodule))
 		var/obj/item/cloneModule/genepowermodule/module = W
@@ -190,7 +190,7 @@ var/global/cloning_with_records = TRUE
 		src.BE = module.BE
 		user.drop_item()
 		user.visible_message("[user] installs [module] into [src].", "You install [module] into [src].")
-		logTheThing(LOG_COMBAT, src, "[user] has added clone module ([W] - [module.BE]) to ([src]) at [log_loc(user)].")
+		logTheThing(LOG_STATION, src, "[user] has added clone module ([W] - [module.BE]) to ([src]) at [log_loc(user)].")
 		qdel(module)
 
 
@@ -282,6 +282,8 @@ var/global/cloning_with_records = TRUE
 	R["traits"] = null
 	if(!isnull(subject.traitHolder))
 		R["traits"] = subject.traitHolder.copy(null)
+
+	R["defects"] = subject.cloner_defects.copy()
 
 	var/obj/item/implant/cloner/imp = new(subject)
 	imp.implanted = TRUE
@@ -376,7 +378,7 @@ var/global/cloning_with_records = TRUE
 			account_credit = Ba["current_money"]
 
 		if ((src.held_credit + account_credit) >= wagesystem.clone_cost)
-			if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"]))
+			if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"], C["defects"]))
 				var/from_account = min(wagesystem.clone_cost, account_credit)
 				if (from_account > 0)
 					Ba["current_money"] -= from_account
@@ -390,7 +392,7 @@ var/global/cloning_with_records = TRUE
 		else
 			show_message("Insufficient funds to begin clone cycle.", "warning")
 
-	else if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"]))
+	else if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"], C["defects"]))
 		show_message("Cloning cycle activated.", "success")
 		src.records.Remove(C)
 		qdel(C)
@@ -416,13 +418,15 @@ proc/find_ghost_by_key(var/find_key)
 #define PROCESS_STRIP 1
 #define PROCESS_MINCE 2
 
+TYPEINFO(/obj/machinery/clone_scanner)
+	mats = 15
+
 /obj/machinery/clone_scanner
 	name = "cloning machine scanner"
 	desc = "A machine that you stuff living, and freshly not-so-living people into in order to scan them for cloning"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "scanner_0"
 	density = 1
-	mats = 15
 	var/locked = 0
 	var/mob/occupant = null
 	anchored = 1
@@ -512,7 +516,8 @@ proc/find_ghost_by_key(var/find_key)
 		return
 
 	proc/move_mob_inside(var/mob/M, var/mob/user)
-		if (!can_operate(user) || !ishuman(M)) return
+		if (!can_operate(user) || !ishuman(M) || QDELETED(M))
+			return
 
 		M.remove_pulling()
 		M.set_loc(src)
@@ -565,20 +570,22 @@ proc/find_ghost_by_key(var/find_key)
 	proc/go_out()
 		if ((!( src.occupant ) || src.locked))
 			return
-
 		if(!src.occupant.disposed)
 			src.occupant.set_loc(get_turf(src))
-
-		src.occupant = null
-
-		for(var/atom/movable/A in src)
-			A.set_loc(src.loc)
-
-		src.icon_state = "scanner_0"
-
-		playsound(src.loc, 'sound/machines/sleeper_open.ogg', 50, 1)
-
 		return
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.occupant)
+			src.occupant = null
+
+			for(var/atom/movable/A in src)
+				if(!QDELETED(A))
+					A.set_loc(src.loc)
+
+			src.icon_state = "scanner_0"
+
+			playsound(src.loc, 'sound/machines/sleeper_open.ogg', 50, 1)
 
 	was_deconstructed_to_frame(mob/user)
 		src.go_out()
@@ -587,11 +594,11 @@ proc/find_ghost_by_key(var/find_key)
 		if(lock_status && !locked)
 			locked = 1
 			playsound(src, 'sound/machines/click.ogg', 50, 1)
-			bo(occupant, "<span class='alert'>\The [src] locks shut!</span>")
+			boutput(occupant, "<span class='alert'>\The [src] locks shut!</span>")
 		else if(!lock_status && locked)
 			locked = 0
 			playsound(src, 'sound/machines/click.ogg', 50, 1)
-			bo(occupant, "<span class='notice'>\The [src] unlocks!</span>")
+			boutput(occupant, "<span class='notice'>\The [src] unlocks!</span>")
 
 	// Meat grinder functionality.
 	proc/find_pods()
@@ -633,14 +640,14 @@ proc/find_ghost_by_key(var/find_key)
 		timer_length = 15 + rand(-5, 5)
 		process_timer = timer_length
 		set_lock(1)
-		bo(occupant, "<span style='color:red;font-weight:bold'>A whirling blade slowly begins descending upon you!</span>")
+		boutput(occupant, "<span style='color:red;font-weight:bold'>A whirling blade slowly begins descending upon you!</span>")
 		playsound(src, 'sound/machines/mixer.ogg', 50, 1)
 		SubscribeToProcess()
 
 	proc/start_strip()
 		active_process = PROCESS_STRIP
 		set_lock(1)
-		bo(occupant, "<span class='alert'>Hatches open and tiny, grabby claws emerge!</span>")
+		boutput(occupant, "<span class='alert'>Hatches open and tiny, grabby claws emerge!</span>")
 
 		SubscribeToProcess()
 
@@ -692,7 +699,7 @@ proc/find_ghost_by_key(var/find_key)
 
 		if(to_remove)
 			if(prob(70))
-				bo(occupant, "<span class='alert'>\The arms [pick("snatch", "grab", "steal", "remove", "nick", "blag")] your [to_remove.name]!</span>")
+				boutput(occupant, "<span class='alert'>\The arms [pick("snatch", "grab", "steal", "remove", "nick", "blag")] your [to_remove.name]!</span>")
 				playsound(src, "sound/misc/rustle[rand(1,5)].ogg", 50, 1)
 			to_remove.set_loc(src.loc)
 		else

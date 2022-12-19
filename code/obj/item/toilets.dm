@@ -3,12 +3,14 @@ CONTAINS:
 TOILET
 */
 
+TYPEINFO(/obj/item/storage/toilet)
+	mats = 5
+
 /obj/item/storage/toilet
 	name = "toilet"
 	w_class = W_CLASS_BULKY
 	anchored = 1
 	density = 0
-	mats = 5
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
 	var/status = 0
 	var/clogged = 0
@@ -35,8 +37,18 @@ TOILET
 		return
 	if (istype(W, /obj/item/grab))
 		var/obj/item/grab/G = W
+
+		if (ishuman(G.affecting))
+			var/mob/living/carbon/human/H = G.affecting
+			if (!H.organHolder?.head)
+				user.visible_message("<span class='notice'>[user] fruitlessly tries to dunk [G.affecting]'s headless body into the toilet.</span>", "<span class='notice'>You struggle trying to swirlie [G.affecting] but they dont have a head! You feel silly for even attempting it.</span>")
+				return
+			else
+				user.visible_message("<span class='notice'>[user] gives [G.affecting] a swirlie!</span>", "<span class='notice'>You give [G.affecting] a swirlie. It's like Middle School all over again!</span>")
+		else
+			user.visible_message("<span class='notice'>[user] gives [G.affecting] a swirlie!</span>", "<span class='notice'>You give [G.affecting] a swirlie. It's like Middle School all over again!</span>")
+
 		playsound(src, 'sound/effects/toilet_flush.ogg', 50, 1)
-		user.visible_message("<span class='notice'>[user] gives [G.affecting] a swirlie!</span>", "<span class='notice'>You give [G.affecting] a swirlie. It's like Middle School all over again!</span>")
 		if (G.affecting.hasStatus("burning"))
 			G.affecting.changeStatus("burning", -2 SECONDS)
 			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)

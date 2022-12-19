@@ -277,6 +277,8 @@ var/f_color_selector_handler/F_Color_Selector
 		respawn_controller = new /datum/respawn_controls()
 		Z_LOG_DEBUG("Preload", " cargo_pad_manager")
 		cargo_pad_manager = new /datum/cargo_pad_manager()
+		Z_LOG_DEBUG("Preload", " camera_coverage_controller")
+		camera_coverage_controller = new /datum/controller/camera_coverage()
 
 		Z_LOG_DEBUG("Preload", "hydro_controls set_up")
 		hydro_controls.set_up()
@@ -375,6 +377,9 @@ var/f_color_selector_handler/F_Color_Selector
 
 	//This is used by bans for checking, so we want it very available
 	apiHandler = new()
+
+	participationRecorder = new()
+	//participationRecorder = new(1) //Enable debug
 
 	//This is also used pretty early
 	Z_LOG_DEBUG("World/New", "Setting up powernets...")
@@ -535,9 +540,6 @@ var/f_color_selector_handler/F_Color_Selector
 	build_manufacturer_icons()
 	clothingbooth_setup()
 	initialize_biomes()
-#ifdef SECRETS_ENABLED
-	initialize_gallery_manager()
-#endif
 
 	Z_LOG_DEBUG("World/Init", "Loading fishing spots...")
 	global.initialise_fishing_spots()
@@ -562,6 +564,12 @@ var/f_color_selector_handler/F_Color_Selector
 	makepowernets()
 	#endif
 
+	#ifdef SECRETS_ENABLED
+	UPDATE_TITLE_STATUS("Loading gallery artwork")
+	Z_LOG_DEBUG("World/Init", "Initializing gallery manager...")
+	initialize_gallery_manager()
+	#endif
+
 	UPDATE_TITLE_STATUS("Generating terrain")
 	Z_LOG_DEBUG("World/Init", "Setting perlin noise terrain...")
 	for (var/area/map_gen/A in by_type[/area/map_gen])
@@ -569,7 +577,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 	UPDATE_TITLE_STATUS("Calculating cameras")
 	Z_LOG_DEBUG("World/Init", "Updating camera visibility...")
-	world.updateCameraVisibility(TRUE)
+	camera_coverage_controller.setup()
 
 	UPDATE_TITLE_STATUS("Preloading client data...")
 	Z_LOG_DEBUG("World/Init", "Transferring manuf. icons to clients...")
@@ -592,9 +600,6 @@ var/f_color_selector_handler/F_Color_Selector
 	if(length(global.region_allocator.free_nodes) == 0)
 		global.region_allocator.add_z_level()
 	#endif
-
-	Z_LOG_DEBUG("World/Init", "Generating AI station map...")
-	ai_station_map = new
 
 	UPDATE_TITLE_STATUS("Ready")
 	current_state = GAME_STATE_PREGAME
@@ -667,6 +672,8 @@ var/f_color_selector_handler/F_Color_Selector
 	processScheduler.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
+	var/list/spacemas_ornaments = get_spacemas_ornaments(only_if_loaded=TRUE)
+	if(spacemas_ornaments) world.save_intra_round_value("tree_ornaments", spacemas_ornaments)
 	global.save_noticeboards()
 	for_by_tcl(canvas, /obj/item/canvas/big_persistent)
 		canvas.save()
@@ -1568,6 +1575,8 @@ var/f_color_selector_handler/F_Color_Selector
 				if (!plist["data"]) return 0
 
 				play_music_remote(json_decode(plist["data"]))
+				// trigger cooldown so radio station doesn't interrupt our cool music
+				EXTEND_COOLDOWN(global, "music", 2 MINUTES) // TODO use plist duration data if available
 				return 1
 
 			if ("delay")
@@ -1713,6 +1722,16 @@ var/f_color_selector_handler/F_Color_Selector
 				if (!playtime_response.errored && playtime_response.body)
 					response["playtime"] = playtime_response.body
 
+				var/datum/player/player = make_player(plist["ckey"])
+				if(player)
+					response["last_seen"] = player.last_seen
+				if(player.cloud_fetch())
+					for(var/kkey in player.clouddata)
+						if(kkey in list("admin_preferences", "buildmode"))
+							continue
+						response[kkey] = player.clouddata[kkey]
+					response["cloudsaves"] = player.cloudsaves
+
 				return json_encode(response)
 
 			if("profile")
@@ -1775,6 +1794,9 @@ var/f_color_selector_handler/F_Color_Selector
 
 
 /world/proc/setMaxZ(new_maxz)
+	// when calling this proc if you don't care about the actual contents of the new z-level you might want to set
+	// global.dont_init_space = TRUE before calling this proc and unset it afterwards. This will speed things up but
+	// the space filling this z-level will be somewhat broken (which you will hopefully replace with whatever it is you want to replace it with).
 	if (!isnum(new_maxz) || new_maxz <= src.maxz)
 		return src.maxz
 	for (var/zlevel = world.maxz+1; zlevel <= new_maxz; zlevel++)

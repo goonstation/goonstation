@@ -253,6 +253,9 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 
 // SECURE BRIEFCASE
 
+TYPEINFO(/obj/item/storage/secure/sbriefcase)
+	mats = 8
+
 /obj/item/storage/secure/sbriefcase
 	name = "secure briefcase"
 	icon = 'icons/obj/items/storage.dmi'
@@ -265,9 +268,11 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_BULKY
-	mats = 8
 	spawn_contents = list(/obj/item/paper,\
 	/obj/item/pen)
+
+TYPEINFO(/obj/item/storage/secure/ssafe)
+	mats = 8
 
 /obj/item/storage/secure/ssafe
 	name = "secure safe"
@@ -281,7 +286,6 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 	w_class = W_CLASS_BULKY
 	anchored = 1
 	density = 0
-	mats = 8
 	desc = "A extremely tough secure safe."
 	mechanics_type_override = /obj/item/storage/secure/ssafe
 
@@ -330,8 +334,8 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 					S.setup(src)
 			if (7)
-				new /obj/item/gun/kinetic/riotgun(src)
-				new /obj/item/ammo/bullets/abg(src)
+				new /obj/item/gun/kinetic/single_action/mts_255(src)
+				new /obj/item/ammo/bullets/pipeshot/scrap/five(src)
 				for (var/i=3, i>0, i--)
 					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 					S.setup(src)
@@ -359,7 +363,7 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 				/obj/item/raw_material/miracle,\
 				/obj/item/raw_material/uqill,\
 				/obj/item/rcd = /obj/item/rcd_ammo/big,\
-				/obj/item/gun/kinetic/riotgun = /obj/item/ammo/bullets/abg,\
+				/obj/item/gun/kinetic/single_action/mts_255 = /obj/item/ammo/bullets/pipeshot/scrap/five,\
 				/obj/item/gun/energy/taser_gun,\
 				/obj/item/gun/energy/phaser_gun,\
 				/obj/item/gun/energy/egun_jr,\
@@ -392,7 +396,7 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 			iou_name = pick("L Alliman", "J Antonsson") // we're stealin all ur stuff >:D
 		var/iou_thing = pick("gold bar", "telecrystal", "skull", "football", "human arm", "human arm", "human leg", "human leg", "[pick("pile", "wad")] of cash",\
 		"piece of scrap", "bottle of questionable drugs", "vial of some mysterious chemical", "bag of some mysterious chemical", "bee egg", "parrot egg", "owl egg",\
-		"gem", "miracle matter", "uqill nugget", "RCD", "riot shotgun", "taser", "phaser", "laser", "weird old key", "IOU note")
+		"gem", "miracle matter", "uqill nugget", "RCD", "shotgun", "taser", "phaser", "laser", "weird old key", "IOU note")
 		src.desc = "Looks like \"[iou_name]\" got here first. Hope you didn't want that [iou_thing] too bad, cause unless you find whoever that is, you're probably never gunna see that thing."
 		src.info = {"I owe you one (1):
 		<u>[iou_thing]</u>
@@ -505,8 +509,8 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 				var/obj/item/spacecash/random/tourist/S = new /obj/item/spacecash/random/tourist
 				S.setup(src)
 			if (3)
-				new /obj/item/gun/kinetic/riotgun(src)
-				new /obj/item/ammo/bullets/abg(src)
+				new /obj/item/gun/kinetic/single_action/mts_255(src)
+				new /obj/item/ammo/bullets/pipeshot/scrap/five(src)
 			if (4)
 				new /obj/item/paper/freeze(src)
 

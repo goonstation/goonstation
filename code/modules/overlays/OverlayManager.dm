@@ -447,15 +447,20 @@
 	warp_dir = "warp_ew"
 
 /datum/overlayComposition/flockmindcircuit
+	var/alpha = 140
+
 	New()
 		var/datum/overlayDefinition/flockmindcircuit = new()
 		flockmindcircuit.d_icon = 'icons/effects/overlays/flockmindcircuit.dmi'
 		flockmindcircuit.d_icon_state = "flockmindcircuit"
 		flockmindcircuit.d_blend_mode = BLEND_DEFAULT
-		flockmindcircuit.d_alpha = 140
+		flockmindcircuit.d_alpha = src.alpha
 		definitions.Add(flockmindcircuit)
 
 		return ..()
+
+	flocktrace_death
+		alpha = 40
 
 /datum/overlayComposition/sniper_scope
 	New()
@@ -479,3 +484,17 @@
 		definitions.Add(insanity)
 
 		return ..()
+
+/datum/overlayComposition/insanity_light
+	New()
+		var/datum/overlayDefinition/insanity = new()
+		insanity.d_icon = 'icons/effects/overlays/insanity.dmi'
+		insanity.d_icon_state = "insanity"
+		insanity.d_blend_mode = 2
+		insanity.do_wide_fill = 0
+		insanity.d_alpha = 120
+		insanity.d_screen_loc = "CENTER-10,CENTER-7"
+		definitions.Add(insanity)
+
+		return ..()
+

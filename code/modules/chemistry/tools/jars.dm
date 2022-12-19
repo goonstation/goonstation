@@ -132,7 +132,7 @@
 		src.UpdateIcon()
 		return 1
 
-	handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
+	handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
 		// no air inside
 		return new/datum/gas_mixture
 

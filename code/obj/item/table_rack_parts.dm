@@ -42,7 +42,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 		if (ispath(src.furniture_type))
 			newThing = new src.furniture_type(T, src.contained_storage ? src.contained_storage : null)
 		else
-			stack_trace("[user] tries to build a piece of furniture from [src] ([src.type]) but its furniture_type is null and it is being deleted.")
+			stack_trace("[user] tries to build a piece of furniture from [identify_object(src)] but its furniture_type is null and it is being deleted.")
 			user.u_equip(src)
 			qdel(src)
 			return
@@ -86,12 +86,17 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 			return ..()
 
 	afterattack(atom/target, mob/user)
-		if (!isturf(target) || target:density)
+		if (!isturf(target) || target.density)
 			return ..()
 		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration, target), user)
 
 	attack_self(mob/user as mob)
 		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration, get_turf(user)), user)
+
+	mouse_drop(atom/movable/target)
+		. = ..()
+		if (HAS_ATOM_PROPERTY(usr, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING) && isturf(target))
+			actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration, target), usr)
 
 	disposing()
 		if (src.contained_storage && length(src.contained_storage.contents))
@@ -621,7 +626,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 			return
 		var/mob/source = owner
 		// cirrfix: ghost drones should be able to build furniture now
-		if(istype(source))
+		if(istype(source) && !HAS_ATOM_PROPERTY(source, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING))
 			if(istype(source.equipped(), /obj/item/magtractor))
 				// check to see it's holding the right thing
 				var/obj/item/magtractor/M = source.equipped()

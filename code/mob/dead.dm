@@ -81,7 +81,7 @@
 	if (!deadchat_allowed)
 		src.show_text("<b>Deadchat is currently disabled.</b>")
 		return
-
+	..()
 	var/message = null
 	switch (lowertext(act))
 

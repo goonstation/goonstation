@@ -77,11 +77,11 @@
 /turf/simulated/floor/grass,
 /area/prefab/ghost_house)
 "ar" = (
-/obj/critter/spider/spacerachnid,
+/mob/living/critter/spider/spacerachnid,
 /turf/simulated/floor/grey,
 /area/prefab/ghost_house)
 "as" = (
-/obj/critter/spider/baby,
+/mob/living/critter/spider/baby,
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/grass,
 /area/prefab/ghost_house)
@@ -94,11 +94,11 @@
 /turf/simulated/floor/grass,
 /area/prefab/ghost_house)
 "av" = (
-/obj/critter/spider/baby,
+/mob/living/critter/spider/baby,
 /turf/simulated/floor/grass,
 /area/prefab/ghost_house)
 "aw" = (
-/obj/critter/spider/spacerachnid,
+/mob/living/critter/spider/spacerachnid,
 /turf/simulated/floor/grass,
 /area/prefab/ghost_house)
 "ax" = (
@@ -119,7 +119,7 @@
 /turf/simulated/floor/grass,
 /area/prefab/ghost_house)
 "aA" = (
-/obj/critter/spider/spacerachnid,
+/mob/living/critter/spider/spacerachnid,
 /obj/decal/cleanable/cobweb{
 	dir = 4;
 	icon_state = "cobweb"
@@ -249,7 +249,7 @@
 /turf/simulated/floor/carpet/red/standard/narrow/east,
 /area/prefab/ghost_house)
 "aY" = (
-/obj/critter/spider/baby,
+/mob/living/critter/spider/baby,
 /turf/simulated/floor/wood,
 /area/prefab/ghost_house)
 "aZ" = (

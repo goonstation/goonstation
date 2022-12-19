@@ -220,7 +220,12 @@
 				something = pick(trinket_safelist)
 
 			if (ispath(something))
+				#ifdef XMAS
+				var/obj/item/gift/thing = new/obj/item/gift(src.loc)
+				thing.gift = new something(thing)
+				#else
 				var/thing = new something(src.loc)
+				#endif
 				visible_message("<b><span class='alert'>[user] violently shakes [src] around! \An [thing] falls out!</span></b>", 1)
 				last_use = world.time
 				max_uses--
@@ -245,32 +250,12 @@
 	Crossed(atom/movable/AM)
 		. = ..()
 		if(isliving(AM))
-			var/mob/living/L = AM
-			L.name_tag?.set_visibility(FALSE)
-		if(ishuman(AM))
-			var/mob/living/carbon/human/H = AM
-			H.arrestIcon?.alpha = 0
-			if (H.implant_icons)
-				var/image/I
-				for (var/implant in H.implant_icons)
-					I = H.implant_icons[implant]
-					I.alpha = 0
-			H.health_mon?.alpha = 0
+			APPLY_ATOM_PROPERTY(AM, PROP_MOB_HIDE_ICONS, src)
 
 	Uncrossed(atom/movable/AM)
 		. = ..()
 		if(isliving(AM))
-			var/mob/living/L = AM
-			L.name_tag?.set_visibility(TRUE)
-		if(ishuman(AM))
-			var/mob/living/carbon/human/H = AM
-			H.arrestIcon?.alpha = 255
-			if (H.implant_icons)
-				var/image/I
-				for (var/implant in H.implant_icons)
-					I = H.implant_icons[implant]
-					I.alpha = 255
-			H.health_mon?.alpha = 255
+			REMOVE_ATOM_PROPERTY(AM, PROP_MOB_HIDE_ICONS, src)
 
 	attackby(var/obj/item/W, mob/user)
 		user.lastattacked = src
@@ -402,7 +387,7 @@
 		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
 			src.destroy()
 			boutput(user, "<span class='alert'>I don't think the Captain is going to be too happy about this...</span>")
-			src.visible_message("<b><span class='alert'>[user] ravages the [src] with [W].</span></b>", 1)
+			src.visible_message("<b><span class='alert'>[user] ravages [src] with [W].</span></b>", 1)
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
 		return
 
@@ -848,6 +833,13 @@
 		pixel_x = -256
 		pixel_y = -256
 
+	regina
+		icon = 'icons/obj/large/320x320.dmi'
+		icon_state = "regina"
+		name = "Regina"
+		pixel_x = -110
+		pixel_y = -170
+
 	amantes
 		icon_state = "amantes"
 		name = "Amantes"
@@ -857,6 +849,12 @@
 	antistes
 		icon_state = "antistes"
 		name = "Antistes"
+		pixel_x = -256
+		pixel_y = -256
+
+	mors
+		icon_state = "mors"
+		name = "Mors"
 		pixel_x = -256
 		pixel_y = -256
 
@@ -1255,7 +1253,7 @@ obj/decoration/gibberBroken
 	icon = 'icons/obj/decoration.dmi'
 	desc = "A terribly cheap and discontinued old model of laser pistol."
 	icon_state = "laser_pistol"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "protopistol"
 	stamina_damage = 0
 	stamina_cost = 4
@@ -1292,7 +1290,6 @@ obj/decoration/gibberBroken
 	stamina_damage = 0
 	stamina_cost = 4
 	stamina_crit_chance = 0
-	var/list/proj_impacts = list()
 	var/image/proj_image = null
 	var/last_proj_update_time = null
 

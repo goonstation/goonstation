@@ -127,13 +127,17 @@ proc/Create_Tommyname()
 
 /mob/living/carbon/human/proc/tommyize_reshape()
 	//Set up the new appearance
-	var/datum/appearanceHolder/AH = new
-	AH.gender = "male"
-	AH.customization_first = new /datum/customization_style/hair/long/dreads
-	AH.gender = "male"
-	AH.s_tone = "#FAD7D0"
-	AH.owner = src
-	AH.parentHolder = src.bioHolder
+	if(src.bioHolder)
+		src.bioHolder.AddEffect("accent_tommy")
+		if(src.bioHolder.mobAppearance)
+			var/datum/appearanceHolder/AH = src.bioHolder.mobAppearance
+			AH.gender = "male"
+			AH.customization_first = new /datum/customization_style/hair/long/dreads
+			AH.customization_first_color = "#101010"
+			AH.customization_second = new /datum/customization_style/none
+			AH.customization_third = new /datum/customization_style/none
+			AH.s_tone = "#FAD7D0"
+			src.bioHolder.AddEffect("accent_tommy")
 
 	src.gender = "male"
 	src.real_name = Create_Tommyname()
@@ -161,9 +165,6 @@ proc/Create_Tommyname()
 	src.sound_scream = 'sound/voice/tommy_you-are-tearing-me-apart-lisauh.ogg'
 	src.sound_fingersnap = 'sound/voice/tommy_did-not-hit-hehr.ogg'
 
-	if(src.bioHolder)
-		src.bioHolder.mobAppearance = AH
-		src.bioHolder.AddEffect("accent_tommy")
 	src.update_colorful_parts()
 
 //------------------------//
@@ -175,15 +176,13 @@ proc/Create_Tommyname()
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "random_thing"
 //How much of a punch this has, tends to be seconds/damage before any resist
-	power = 10
+	stun = 10
 //How much ammo this costs
 	cost = 10
 //How fast the power goes away
 	dissipation_rate = 1
 //How many tiles till it starts to lose power
 	dissipation_delay = 10
-//Kill/Stun ratio
-	ks_ratio = 0
 //name of the projectile setting, used when you change a guns setting
 	sname = "Tommify"
 //file location for the sound you want it to play
@@ -202,6 +201,8 @@ proc/Create_Tommyname()
 			hit:tommyize_reshape()
 			playsound(hit.loc, 'sound/voice/tommy_hey-everybody.ogg', 50, 1)
 		else if(ismob(hit))
+			if (issilicon(hit))
+				return
 			hit:tommyize()
 			playsound(hit.loc, 'sound/voice/tommy_hey-everybody.ogg', 50, 1)
 
@@ -1042,7 +1043,7 @@ proc/Create_Tommyname()
 // Special grab obj that doesn't care if it's in someone's hands
 /obj/item/grab/garrote_grab
 	// No breaking out under own power
-	prob_mod = 0
+	irresistible = 1
 	var/extra_deadly = 0
 	check()
 		if(!assailant || !affecting)

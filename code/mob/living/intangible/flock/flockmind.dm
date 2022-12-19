@@ -14,11 +14,12 @@
 	///Pity respawn max
 	var/max_tries = 3
 
+	var/datum/tutorial_base/regional/flock/tutorial = null
+
 
 /mob/living/intangible/flock/flockmind/New(turf/newLoc, datum/flock/F = null)
 	..()
 
-	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 	src.abilityHolder = new /datum/abilityHolder/flockmind(src)
 
 	src.flock = F || new /datum/flock()
@@ -29,9 +30,27 @@
 	if (!F)
 		src.addAbility(/datum/targetable/flockmindAbility/spawnEgg)
 		src.addAbility(/datum/targetable/flockmindAbility/ping)
+		src.addAbility(/datum/targetable/flockmindAbility/tutorial)
 	else
 		src.started = TRUE
 		src.addAllAbilities()
+
+
+/mob/living/intangible/flock/flockmind/proc/start_tutorial()
+	if (src.tutorial)
+		return
+	src.tutorial = new(src)
+	if (src.tutorial.initial_turf)
+		src.tutorial.Start()
+	else
+		boutput(src, "<span class='alert'>Could not start tutorial! Please try again later or call Wire.</span>")
+		logTheThing(LOG_GAMEMODE, src, "Failed to set up flock tutorial, something went very wrong.")
+		src.tutorial = null
+
+/mob/living/intangible/flock/flockmind/select_drone(mob/living/critter/flock/drone/drone)
+	if(src.tutorial && !src.tutorial.PerformAction(FLOCK_ACTION_DRONE_SELECT))
+		return
+	..()
 
 /mob/living/intangible/flock/flockmind/special_desc(dist, mob/user)
 	if (!isflockmob(user))
@@ -59,11 +78,23 @@
 /mob/living/intangible/flock/flockmind/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return TRUE
+	if (!src.flock)
+		return
 	src.flock.peak_compute = max(src.flock.peak_compute, src.flock.total_compute())
-	if (src.started && src.flock)
+	if (src.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD * 3 / 4)
+		if (!ON_COOLDOWN(src, "afk_message", FLOCK_AFK_COUNTER_THRESHOLD))
+			boutput(src, "<span class='flocksay'><b>\[SYSTEM: Sentience pause detected. Preparing promotion routines.\]</b></span>")
+		if (src.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD)
+			var/list/traces = src.flock.getActiveTraces()
+			if (length(traces))
+				boutput(src, "<span class='flocksay'><b>\[SYSTEM: Lack of sentience confirmed. Self-programmed routines promoting new Flockmind.\]</b></span>")
+				var/mob/living/intangible/flock/trace/chosen_trace = pick(traces)
+				chosen_trace.promoteToFlockmind(FALSE)
+			src.afk_counter = 0
+	if (src.started)
 		if (src.flock.getComplexDroneCount())
 			return
-		for (var/obj/flock_structure/s in src.flock.structures)
+		for (var/obj/flock_structure/s as anything in src.flock.structures)
 			if (istype(s, /obj/flock_structure/egg) || istype(s, /obj/flock_structure/rift))
 				return
 		src.death()
@@ -76,12 +107,14 @@
 		boutput(src, "<span class='alert'>You don't have a flock, it's not going to listen to you! Also call a coder, this should be impossible!</span>")
 		return
 	src.removeAbility(/datum/targetable/flockmindAbility/spawnEgg)
+	src.removeAbility(/datum/targetable/flockmindAbility/tutorial)
 	src.addAllAbilities()
 
 /mob/living/intangible/flock/flockmind/proc/addAllAbilities()
 	src.addAbility(/datum/targetable/flockmindAbility/controlPanel)
 	src.addAbility(/datum/targetable/flockmindAbility/designateTile)
 	src.addAbility(/datum/targetable/flockmindAbility/designateEnemy)
+	src.addAbility(/datum/targetable/flockmindAbility/designateIgnore)
 	src.addAbility(/datum/targetable/flockmindAbility/partitionMind)
 	src.addAbility(/datum/targetable/flockmindAbility/splitDrone)
 	src.addAbility(/datum/targetable/flockmindAbility/healDrone)
@@ -99,9 +132,12 @@
 		src.abilityHolder.removeAbilityInstance(ability)
 	src.addAbility(/datum/targetable/flockmindAbility/spawnEgg)
 	src.addAbility(/datum/targetable/flockmindAbility/ping)
+	src.addAbility(/datum/targetable/flockmindAbility/tutorial)
 	src.started = FALSE
 
 /mob/living/intangible/flock/flockmind/death(gibbed, relay_destroyed = FALSE, suicide = FALSE)
+	if (src.tutorial && !suicide)
+		return
 	src.emote("scream")
 	if (src.flock.peak_compute < 200 && src.current_try < src.max_tries)
 		src.reset()

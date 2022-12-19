@@ -22,6 +22,8 @@
 	var/list/PTrange = list(null,null)
 	var/list/ENrange = list(null,null)
 	var/commut = null // is a paticular common mutation required for this? (keeping it to 1 for now)
+	/// Is a particular other mutation required for this? (type not instance)
+	var/datum/plantmutation/required_mutation = null
 	var/chance = 8 // How likely out of 100% is this mutation to appear when conditions are met?
 	var/list/assoc_reagents = list() // Used for extractions, harvesting, etc
 
@@ -235,6 +237,15 @@
 	chance = 10
 	assoc_reagents = list("ghostchilijuice")
 
+// Pumpkin Mutations
+
+/datum/plantmutation/pumpkin/latte
+	name = "Spice Pumpkin"
+	name_prefix = "Spiced "
+	iconmod = "PumpkinLatte"
+	crop = /obj/item/reagent_containers/food/snacks/plant/pumpkinlatte
+	assoc_reagents = list("pumpkinspicelatte")
+
 // Eggplant Mutations
 
 /datum/plantmutation/eggplant/literal
@@ -243,6 +254,7 @@
 	name_prefix = "Free range "
 	iconmod = "EggplantEggs"
 	crop = /obj/item/reagent_containers/food/snacks/ingredient/egg
+	assoc_reagents = list("egg")
 
 // Wheat Mutations
 
@@ -664,7 +676,9 @@
 	name_prefix = "Money "
 	iconmod = "TreeCash"
 	crop = /obj/item/spacecash
-	chance = 20
+	required_mutation = /datum/plantmutation/tree/paper
+	PTrange = list(30, null)
+	chance = 50
 
 /datum/plantmutation/tree/paper
 	name = "Paper Tree"
@@ -672,7 +686,6 @@
 	name_prefix = "Paper "
 	iconmod = "TreePaper"
 	crop = /obj/item/paper
-	chance = 20
 
 /datum/plantmutation/tree/dog
 	name = "Dogwood Tree"
@@ -711,7 +724,6 @@
 	name_prefix = "Rubber "
 	iconmod = "TreeRubber"
 	crop = /obj/item/material_piece/rubber/latex
-	chance = 20
 
 /datum/plantmutation/tree/sassafras
 	name = "Sassafras Tree"
@@ -735,6 +747,7 @@
 	name_suffix = "butter Sandwich"
 	crop = /obj/item/reagent_containers/food/snacks/sandwich/pb
 	iconmod = "PeanutSandwich"
+	assoc_reagents = list("bread")
 
 //Tobacco mutations
 

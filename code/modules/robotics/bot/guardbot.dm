@@ -56,7 +56,7 @@
 			// Same distance cap as the MULE because I'm really tired of various pathfinding issues. Buddy time and docking stations are often way more than 150 steps away.
 			// It's 200 something steps alone to get from research to the bar on COG2 for instance, and that's pretty much in a straight line.
 			var/list/thePath = get_path_to(src.master, target_turf, max_distance=src.max_dist, simulated_only=istype(master.loc, /turf/simulated), \
-				id=src.master.botcard, skip_first=FALSE, cardinal_only=TRUE)
+				id=src.master.botcard, skip_first=FALSE, cardinal_only=TRUE, do_doorcheck=TRUE)
 			if (!master)
 				return
 
@@ -240,7 +240,7 @@
 		desc = "What happens when you put an assault rifle in the microwave."
 		setup_charge_maximum = 100000
 		setup_charge_percentage = 100
-		setup_gun = /obj/item/gun/kinetic/ak47
+		setup_gun = /obj/item/gun/kinetic/akm
 		health = 100
 		ammofab = 1
 		shotcount = 3 // Never stop firing, never start spawning
@@ -1836,8 +1836,6 @@
 			src.overlays += image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)
 			if (istype(src.budgun, /obj/item/gun/energy/lawbringer))	// ugh
 				var/image/lawbringer_lights = image('icons/obj/items/gun.dmi', "lawbringer-d100", 11, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)	// ugh
-				if (istype(src.budgun, /obj/item/gun/energy/lawbringer/old))
-					lawbringer_lights.icon_state = "old-lawbringer-d100"
 				switch(lawbringer_state)	// ugh
 					if ("clown")
 						lawbringer_lights.color = "#FFC0CB"
@@ -1931,6 +1929,11 @@
 
 		return 0
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
 //Buddy handcuff bar thing
 /datum/action/bar/icon/buddy_cuff
 	duration = 30 // zippy zipcuffs
@@ -2020,12 +2023,14 @@
 			return 1
 
 //Robot tools.  Flash boards, batons, etc
+TYPEINFO(/obj/item/device/guardbot_tool)
+	mats = 6
+
 /obj/item/device/guardbot_tool
 	name = "Tool module"
 	desc = "A generic module for a PR-6S Guardbuddy."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "tool_generic"
-	mats = 6
 	w_class = W_CLASS_SMALL
 	var/is_stun = 0 //Can it be non-lethal?
 	var/is_lethal = 0 //Can it be lethal?
@@ -2315,12 +2320,14 @@
 
 	//xmas -- See spacemas.dm
 
+TYPEINFO(/obj/item/device/guardbot_module)
+	mats = 6
+
 /obj/item/device/guardbot_module
 	name = "Add-on module"
 	desc = "A generic expansion pack for a PR-6S Guardbuddy."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "tool_generic"
-	mats = 6
 	w_class = W_CLASS_SMALL
 	var/tool_id = "MOD"
 	is_syndicate = 1
@@ -3148,6 +3155,9 @@
 				var/has_carry_permit = 0
 				var/has_contraband_permit = 0
 
+				if (!has_contraband_permit)
+					. += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_CONTRABAND_OVERRIDE)
+
 				if(perp_id) //Checking for targets and permits
 					if(ckey(perp_id.registered) in target_names)
 						return 7
@@ -3159,38 +3169,38 @@
 				if (istype(perp.l_hand))
 					if (istype(perp.l_hand, /obj/item/gun/)) // perp is carrying a gun
 						if(!has_carry_permit)
-							. += perp.l_hand.contraband
+							. += perp.l_hand.get_contraband()
 					else // not carrying a gun, but potential contraband?
 						if(!has_contraband_permit)
-							. += perp.l_hand.contraband
+							. += perp.l_hand.get_contraband()
 
 				if (istype(perp.r_hand))
 					if (istype(perp.r_hand, /obj/item/gun/)) // perp is carrying a gun
 						if(!has_carry_permit)
-							. += perp.r_hand.contraband
+							. += perp.r_hand.get_contraband()
 					else // not carrying a gun, but potential contraband?
 						if(!has_contraband_permit)
-							. += perp.r_hand.contraband
+							. += perp.r_hand.get_contraband()
 
 				if (istype(perp.belt))
 					if (istype(perp.belt, /obj/item/gun/))
 						if (!has_carry_permit)
-							. += perp.belt.contraband * 0.5
+							. += perp.belt.get_contraband() * 0.5
 					else
 						if (!has_contraband_permit)
-							. += perp.belt.contraband * 0.5
+							. += perp.belt.get_contraband() * 0.5
 
 				if (istype(perp.wear_suit))
 					if (!has_contraband_permit)
-						. += perp.wear_suit.contraband
+						. += perp.wear_suit.get_contraband()
 
 				if (istype(perp.back))
 					if (istype(perp.back, /obj/item/gun/)) // some weapons can be put on backs
 						if (!has_carry_permit)
-							. += perp.back.contraband * 0.5
+							. += perp.back.get_contraband() * 0.5
 					else // at moment of doing this we don't have other contraband back items, but maybe that'll change
 						if (!has_contraband_permit)
-							. += perp.back.contraband * 0.5
+							. += perp.back.get_contraband() * 0.5
 
 				if(perp.mutantrace && perp.mutantrace.jerk)
 //					if(istype(perp.mutantrace, /datum/mutantrace/zombie))
@@ -3932,10 +3942,10 @@
 							END_NEAT
 						return
 
-				else if (!(src.neat_things & NT_JONES) && istype(AM, /obj/critter/cat) && AM.name == "Jones")
+				else if (!(src.neat_things & NT_JONES) && istype(AM, /mob/living/critter/small_animal/cat) && AM.name == "Jones")
 					FOUND_NEAT(NT_JONES)
-						var/obj/critter/cat/jones = AM
-						src.speak_with_maptext("And over here is the ship's cat, J[jones.alive ? "ones! No spacecraft is complete without a cat!" : "-oh mercy, MOVING ON, MOVING ON"]")
+						var/mob/living/critter/small_animal/cat/jones = AM
+						src.speak_with_maptext("And over here is the ship's cat, J[isalive(jones) ? "ones! No spacecraft is complete without a cat!" : "-oh mercy, MOVING ON, MOVING ON"]")
 						END_NEAT
 					return
 
@@ -4197,12 +4207,14 @@
  *	Guardbot Parts
  */
 
+TYPEINFO(/obj/item/guardbot_core)
+	mats = 6
+
 /obj/item/guardbot_core
 	name = "Guardbuddy mainboard"
 	desc = "The primary circuitry of a PR-6S Guardbuddy."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddy_core-6"
-	mats = 6
 	w_class = W_CLASS_SMALL
 	var/created_default_task = null //Default task path of result
 	var/datum/computer/file/guardbot_task/created_model_task = null
@@ -4228,12 +4240,14 @@
 		else
 			..()
 
+TYPEINFO(/obj/item/guardbot_frame)
+	mats = 5
+
 /obj/item/guardbot_frame
 	name = "Guardbuddy frame"
 	desc = "The external casing of a PR-6S Guardbuddy."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddy_frame-6-1"
-	mats = 5
 	var/stage = 1
 	var/created_name = "Guardbuddy" //Still the name of resulting guardbot
 	var/created_default_task = null //Default task path of result
@@ -4317,14 +4331,21 @@
 			spawn(0)
 				..()
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.created_cell)
+			src.created_cell = null
+
 
 //The Docking Station.  Recharge here!
+TYPEINFO(/obj/machinery/guardbot_dock)
+	mats = 8
+
 /obj/machinery/guardbot_dock
 	name = "docking station"
 	desc = "A recharging and command station for PR-6S Guardbuddies."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddycharger0"
-	mats = 8
 	anchored = 1
 	var/panel_open = 0
 	var/autoeject = 0 //1: Eject fully charged robots automatically. 2: Eject robot when living carbon mob is in view.
@@ -5151,7 +5172,7 @@
 	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
-		playsound(src.loc, 'sound/items/coindrop.ogg', 100, 1)
+		playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1)
 		user.visible_message("<b>[user]</b> flips the token","You flip the token")
 		SPAWN(1 SECOND)
 		user.visible_message("It came up Hugs.")

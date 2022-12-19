@@ -83,8 +83,7 @@
 		window.initialize(
 			fancy = user.client.preferences.tgui_fancy,
 			inline_assets = list(
-				get_assets(/datum/asset/basic/tgui_common),
-				get_assets(/datum/asset/group/base_tgui)
+				get_assets(/datum/asset/group/base_tgui),
 			))
 	else
 		window.send_message("ping")
@@ -106,6 +105,10 @@
 	if(closing)
 		return
 	closing = TRUE
+	for(var/mob/dead/target_observer/ghost in src.user.observers)
+		for(var/datum/tgui/ghost_win in ghost.tgui_open_uis)
+			if(ghost_win.src_object == src.src_object)
+				ghost_win.close()
 	// If we don't have window_id, open proc did not have the opportunity
 	// to finish, therefore it's safe to skip this whole block.
 	if(window)

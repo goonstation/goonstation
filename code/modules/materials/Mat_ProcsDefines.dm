@@ -48,7 +48,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		var/datum/material/M = new base.type()
 		M.properties = mergeProperties(base.properties, rightBias = 0)
 		for(var/X in base.vars)
-			if(X == "type" || X == "parent_type" || X == "tag" || X == "vars" || X == "properties" || X == "datum_components" || X == "comp_lookup" || X == "signal_procs" || X == "signal_enabled") continue
+			if(X == "type" || X == "parent_type" || X == "tag" || X == "vars" || X == "properties" || X == "datum_components" || X == "comp_lookup" || X == "signal_procs") continue
 
 			if(X in triggerVars)
 				M.vars[X] = getFusedTriggers(base.vars[X], list(), M) //Pass in an empty list to basically copy the first one.
@@ -88,8 +88,8 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 /// Called AFTER the material of the object was changed.
 /atom/proc/onMaterialChanged()
 	if(istype(src.material))
-		explosion_resistance = material.hasProperty("density") ? round(material.getProperty("density") / 3) : explosion_resistance
-		explosion_protection = material.hasProperty("density") ? round(material.getProperty("density") / 3) : explosion_protection
+		explosion_resistance = material.hasProperty("density") ? sqrt(round(max(4, material.getProperty("density")) - 4)) : explosion_resistance
+		explosion_protection = material.hasProperty("density") ? sqrt(round(max(4, material.getProperty("density")) - 4)) : explosion_protection
 		if( !(flags & CONDUCT) && (src.material.getProperty("electrical") >= 5)) flags |= CONDUCT
 
 
@@ -133,24 +133,26 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 /proc/getMaterialPrefixList(datum/material/base)
 	. = list()
 
-	for(var/datum/material_property/P in base.properties)
+	for(var/datum/material_property/P as anything in base.properties)
 		if(base.properties[P] >= P.prefix_high_min)
 			. |= P.getAdjective(base)
-			continue
 		else if(base.properties[P] <= P.prefix_low_max)
 			. |= P.getAdjective(base)
-			continue
 
 /// Sets the material of an object. PLEASE USE THIS TO SET MATERIALS UNLESS YOU KNOW WHAT YOU'RE DOING.
-/atom/proc/setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/copy = TRUE, var/use_descriptors = FALSE)
-	if(!mat1 ||!istype(mat1, /datum/material)) return
-	if(copy) mat1 = copyMaterial(mat1)
+/atom/proc/setMaterial(datum/material/mat1, appearance = TRUE, setname = TRUE, copy = TRUE, use_descriptors = FALSE)
+	if(istext(mat1))
+		CRASH("setMaterial() called with a string instead of a material datum.")
+	if(!mat1 ||!istype(mat1, /datum/material))
+		return
+	if(copy)
+		mat1 = copyMaterial(mat1)
+
 	var/traitDesc = get_material_trait_desc(mat1)
 	var/strPrefix = jointext(mat1.prefixes, " ")
 	var/strSuffix = jointext(mat1.suffixes, " ")
 
-	if(src.material)
-		src.material.UnregisterSignal(src, COMSIG_ATOM_CROSSED)
+	src.material?.UnregisterSignal(src, COMSIG_ATOM_CROSSED)
 
 	if(length(mat1?.triggersOnEntered))
 		mat1.RegisterSignal(src, COMSIG_ATOM_CROSSED, /datum/material/proc/triggerOnEntered)
@@ -242,8 +244,6 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			if(varCopy == "type" || varCopy == "id" || varCopy == "parent_type" || varCopy == "tag" || varCopy == "vars") continue
 			if(!issaved(toCopy.vars[varCopy])) continue
 			P.vars[varCopy] = toCopy.vars[varCopy]
-		if(newMat)
-			P.owner = newMat
 
 	for(var/datum/materialProc/A in L2) //Go through second list
 		if((locate(A.type) in newList))	//We already have that trigger type from the other list
@@ -258,8 +258,6 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 				if(varCopy == "type" || varCopy == "id" || varCopy == "parent_type" || varCopy == "tag" || varCopy == "vars") continue
 				if(!issaved(A.vars[varCopy])) continue
 				newProc.vars[varCopy] = A.vars[varCopy]
-			if(newMat)
-				newProc.owner = newMat
 	return newList
 
 /// Merges two materials and returns result as new material.
@@ -495,7 +493,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	return null
 
 /// Yes hello apparently we need a proc for this because theres a million types of different wires and cables.
-/proc/applyCableMaterials(var/atom/C, var/datum/material/insulator, var/datum/material/conductor)
+/proc/applyCableMaterials(atom/C, datum/material/insulator, datum/material/conductor, copy_material = TRUE)
 	if(!conductor) return // silly
 
 	if(istype(C, /obj/cable))
@@ -504,24 +502,24 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		cable.conductor = conductor
 
 		if (cable.insulator)
-			cable.setMaterial(cable.insulator)
+			cable.setMaterial(cable.insulator, copy = copy_material)
 			cable.name = "[cable.insulator.name]-insulated [cable.conductor.name]-cable"
 			cable.color = cable.insulator.color
 		else
-			cable.setMaterial(cable.conductor)
+			cable.setMaterial(cable.conductor, copy = copy_material)
 			cable.name = "uninsulated [cable.conductor.name]-cable"
 			cable.color = cable.conductor.color
 
-	if(istype(C, /obj/item/cable_coil))
+	else if(istype(C, /obj/item/cable_coil))
 		var/obj/item/cable_coil/coil = C
 
 		coil.insulator = insulator
 		coil.conductor = conductor
 
 		if (coil.insulator)
-			coil.setMaterial(coil.insulator)
+			coil.setMaterial(coil.insulator, copy = copy_material)
 			coil.color = coil.insulator.color
 		else
-			coil.setMaterial(coil.conductor)
+			coil.setMaterial(coil.conductor, copy = copy_material)
 			coil.color = coil.conductor.color
 		coil.updateName()

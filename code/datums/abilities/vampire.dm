@@ -201,6 +201,11 @@
 			the_coffin = null
 			if (isdead(owner))
 				owner.full_heal()
+				if (ishuman(owner)) // oof
+					var/mob/living/carbon/human/owner_human = owner
+					owner_human.decomp_stage = DECOMP_STAGE_NO_ROT
+					owner_human.update_face()
+					owner_human.update_body()
 			else
 				changeling_super_heal_step(healed = owner, mult = mult*2, changer = 0)
 
@@ -337,6 +342,7 @@
 			return
 
 		logTheThing(LOG_DIARY, sender, "(GHOULSPEAK): [message]", "ghoulsay")
+		logTheThing(LOG_SAY, sender, "(GHOULSPEAK): [message]")
 
 		if (sender.client && sender.client.ismuted())
 			boutput(sender, "You are currently muted and may not speak.")
@@ -348,11 +354,12 @@
 	proc/remove_thrall(var/mob/victim)
 		remove_mindhack_status(victim)
 		thralls -= victim
+		src.getAbility(/datum/targetable/vampire/enthrall)?.pointCost = 200 + 100 * length(src.thralls)
 
 	proc/make_thrall(var/mob/victim)
 		if (ishuman(victim))
 
-			var/mob/living/M = victim
+			var/mob/living/carbon/human/M = victim
 
 
 			if (!M.mind && !M.client)
@@ -390,8 +397,6 @@
 					owner.TakeDamage("chest", 0, 30)
 					return
 
-
-			M.real_name = "thrall [M.real_name]"
 			if (M.mind)
 				M.mind.special_role = ROLE_VAMPTHRALL
 				if(ismob(owner))
@@ -402,14 +407,15 @@
 					ticker.mode.Agimmicks += M.mind
 
 			thralls += M
+			src.getAbility(/datum/targetable/vampire/enthrall)?.pointCost = 200 + 100 * length(src.thralls)
 
+			M.decomp_stage = DECOMP_STAGE_NO_ROT
 			M.set_mutantrace(/datum/mutantrace/vampiric_thrall)
 			var/datum/abilityHolder/vampiric_thrall/VZ = M.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 			if (VZ && istype(VZ))
 				VZ.master = src
 
 			boutput(M, "<span class='alert'><b>You awaken filled with purpose - you must serve your master vampire, [owner.real_name]!</B></span>")
-			M.show_antag_popup("mindhack")
 			M.antagonist_overlay_refresh(1)
 			owner.antagonist_overlay_refresh(1)
 
@@ -531,7 +537,7 @@
 			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
-		if (istype(get_area(M), /area/station/chapel) && M.check_vampire_power(3) != 1)
+		if (istype(get_area(M), /area/station/chapel) && M.check_vampire_power(3) != 1 && !(M.job == "Chaplain"))
 			boutput(M, "<span class='alert'>Your powers do not work in this holy place!</span>")
 			return 0
 

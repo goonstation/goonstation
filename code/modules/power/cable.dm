@@ -13,14 +13,11 @@
 
 	elecflash(src)
 
-	return user.shock(src, PN ? PN.avail : 0, user.hand == 1 ? "l_arm": "r_arm", 1, ignore_gloves ? 1 : 0)
+	return user.shock(src, PN ? PN.avail : 0, user.hand == LEFT_HAND ? "l_arm": "r_arm", 1, ignore_gloves ? 1 : 0)
 
-// attach a wire to a power machine - leads from the turf you are standing on
-
+/// attach a wire to a power machine - leads from the turf you are standing on
 /obj/machinery/power/attackby(obj/item/W, mob/user)
-
 	if(istype(W, /obj/item/cable_coil))
-
 		var/obj/item/cable_coil/coil = W
 
 		var/turf/T = user.loc
@@ -36,7 +33,6 @@
 
 		var/dirn = get_dir(user, src)
 
-
 		for(var/obj/cable/LC in T)
 			if(LC.d1 == dirn || LC.d2 == dirn)
 				boutput(user, "There's already a cable at that position.")
@@ -50,16 +46,14 @@
 		NC.UpdateIcon()
 		NC.update_network()
 		coil.use(1)
-		return
 	else
 		..()
-	return
 
-
-// the power cable object
+/// the power cable object
 /obj/cable
 	level = 1
-	anchored =1
+	anchored = TRUE
+	pass_unstable = FALSE
 	var/tmp/netnum = 0
 	name = "power cable"
 	desc = "A flexible power cable."
@@ -131,12 +125,20 @@
 
 	d2 = text2num( copytext( icon_state, findtext(icon_state, "-")+1 ) )
 
-	if (source) src.iconmod = source.iconmod
+	if (source)
+		src.iconmod = source.iconmod
 
-	var/turf/T = src.loc			// hide if turf is not intact
-									// but show if in space
-	if(istype(T, /turf/space) && !istype(T,/turf/space/fluid)) hide(0)
-	else if(level==1) hide(T.intact)
+	var/turf/T = src.loc
+
+	if (isnull(T)) // we are getting immediately deleted? lol
+		return
+
+	// hide if turf is not intact
+	// but show if in space
+	if(istype(T, /turf/space) && !istype(T,/turf/space/fluid))
+		hide(0)
+	else if(level==1)
+		hide(T.intact)
 
 	//cableimg = image(src.icon, src.loc, src.icon_state)
 	//cableimg.layer = OBJ_LAYER
@@ -144,21 +146,19 @@
 	if (istype(source))
 		applyCableMaterials(src, source.insulator, source.conductor)
 	else
-		applyCableMaterials(src, getMaterial(insulator_default), getMaterial(condcutor_default))
+		applyCableMaterials(src, getMaterial(insulator_default), getMaterial(condcutor_default), copy_material = FALSE)
 
 	START_TRACKING
 
 /obj/cable/disposing()		// called when a cable is deleted
-
 	if(!defer_powernet_rebuild)	// set if network will be rebuilt manually
-
-		if(netnum && powernets && powernets.len >= netnum)		// make sure cable & powernet data is valid
+		if(netnum && powernets && length(powernets) >= netnum)		// make sure cable & powernet data is valid
 			var/datum/powernet/PN = powernets[netnum]
 			PN.cut_cable(src)									// updated the powernets
 	else
 		defer_powernet_rebuild = 2
 
-		if(netnum && powernets && powernets.len >= netnum) //NEED FOR CLEAN GC IN EXPLOSIONS
+		if(netnum && powernets && length(powernets) >= netnum) //NEED FOR CLEAN GC IN EXPLOSIONS
 			powernets[netnum].cables -= src
 
 	insulator.owner = null
@@ -169,7 +169,6 @@
 	..()													// then go ahead and delete the cable
 
 /obj/cable/hide(var/i)
-
 	if(level == 1)// && istype(loc, /turf/simulated))
 		invisibility = i ? INVIS_ALWAYS : INVIS_NONE
 	UpdateIcon()
@@ -181,7 +180,7 @@
 	//	cableimg.icon_state = icon_state
 	//	cableimg.alpha = invisibility ? 128 : 255
 
-// returns the powernet this cable belongs to
+/// returns the powernet this cable belongs to
 /obj/cable/proc/get_powernet()
 	var/datum/powernet/PN			// find the powernet
 	if(netnum && powernets && powernets.len >= netnum)
@@ -281,9 +280,6 @@
 // 1. Isolated cable (or only connects to isolated machine) -> create new powernet
 // 2. Joins to end or bridges loop of a single network (may also connect isolated machine) -> add to old network
 // 3. Bridges gap between 2 networks -> merge the networks (must rebuild lists also) (currently just calls makepowernets. welp)
-
-
-
 /obj/cable/proc/update_network()
 	if(makingpowernets) // this might cause local issues but prevents a big global race condition that breaks everything
 		return
@@ -417,3 +413,185 @@
 		logTheThing(LOG_STATION, user, "lays a cable[powered == 1 ? " (powered when connected)" : ""] at [log_loc(src)].")
 
 	return
+
+/// a cable spawner which can spawn multiple cables to connect to other cables around it.
+/obj/cablespawner
+	name = "power cable spawner"
+	icon = 'icons/obj/power_cond.dmi'
+	icon_state = "superstate"
+	layer = CABLE_LAYER
+	plane = PLANE_NOSHADOW_BELOW
+	color = "#DD0000"
+	// this would make it connect to the centre, for like terminals and whatnot
+	// has to be var edited because lazy
+	var/override_centre_connection = FALSE
+	var/cable_type = /obj/cable
+	// cable_surr uses the macros NORTHEAST_UNIQUE and such to save directions
+	var/cable_surr = 0
+
+/obj/cablespawner/New()
+	..()
+	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
+		SPAWN(1 SECONDS)
+			if(!src.disposed)
+				initialize()
+
+/obj/cablespawner/node
+	name = "node cable spawner"
+	override_centre_connection = TRUE
+	icon_state = "superstate-node"
+
+/// reinforced, thick cables. They should also connect to the regular kind.
+/obj/cablespawner/reinforced
+	name = "reinforced power cable spawner"
+	icon = 'icons/obj/power_cond.dmi'
+	icon_state = "superstate-thick"
+	cable_type = /obj/cable/reinforced
+	color = "#075C90"
+
+/obj/cablespawner/reinforced/node
+	name = "node reinforced cable spawner"
+	override_centre_connection = TRUE
+	icon_state = "superstate-thick-node"
+
+
+/// makes the cable spawners actually spawn cables and delete themselves
+/obj/cablespawner/initialize()
+	. = ..()
+	src.check()
+	src.replace()
+
+/// checks around itself for cables, adds up to 8 bits to cable_surr
+/obj/cablespawner/proc/check(var/obj/cable/cable)
+	for (var/obj/cablespawner/spawner in orange(1, src))
+	// checks for cablespawners around itself
+		var/disx = spawner.x - src.x
+		var/disy = spawner.y - src.y
+		if (disy == 1)
+			if (disx == 1)
+				cable_surr |= NORTHEAST_UNIQUE
+			else if (disx == -1)
+				cable_surr |= NORTHWEST_UNIQUE
+			else
+				cable_surr |= NORTH
+		else if (disy == -1)
+			if (disx == 1)
+				cable_surr |= SOUTHEAST_UNIQUE
+			else if (disx == -1)
+				cable_surr |= SOUTHWEST_UNIQUE
+			else
+				cable_surr |= SOUTH
+		else if (disy == 0)
+			if (disx == 1)
+				cable_surr |= EAST
+			else if (disx == -1)
+				cable_surr |= WEST
+	/*
+	Diagonals are ugly. So if the option to connect to a diagonal tile orthogonally presents itself
+	we'll get rid of the corners and connect in NESOUTHWEST_UNIQUE directions first.
+	This gets rid of diagonals in 2x2 and 3x3 grids, and stops small 'L's from becoming triangles.
+	if a diagonal tile is next to a cardinal, we disregard it.
+	This won't work on the manually connected cables.
+	*/
+	if (cable_surr & NORTHEAST_UNIQUE)
+		if (cable_surr & NORTH || cable_surr & EAST)
+			cable_surr &= ~NORTHEAST_UNIQUE
+	if (cable_surr & NORTHWEST_UNIQUE)
+		if (cable_surr & NORTH || cable_surr & WEST)
+			cable_surr &= ~NORTHWEST_UNIQUE
+	if (cable_surr & SOUTHEAST_UNIQUE)
+		if (cable_surr & SOUTH || cable_surr & EAST)
+			cable_surr &= ~SOUTHEAST_UNIQUE
+	if (cable_surr & SOUTHWEST_UNIQUE)
+		if (cable_surr & SOUTH || cable_surr & WEST)
+			cable_surr &= ~SOUTHWEST_UNIQUE
+	/* there is exactly one case where this code breaks
+	* consider a grid of: X
+	*                     X X
+	* The bottom left spawns in, connects to its two neighbours, and the bottom right connects in 2
+	* directions. This if statement fixes that, by making the bottom left alter the bottom right one.
+	*/
+	if (cable_surr & EAST)
+		for (var/obj/cablespawner/spawner in orange(1, src))
+			if (spawner.x - src.x == 1 && spawner.y - src.y == 0)
+				spawner.cable_surr |= WEST
+
+	for (var/obj/cable/normal_cable in orange(1, src))
+	// checks normal, prexisting, manually placed cables (must be joined to no matter what)
+	// turns out, since initialize() does cablespawners one by one
+	// they turn into regular cables and must be considered like that by the system
+	// making this bit MANDATORY
+		var/disx = normal_cable.x - src.x
+		var/disy = normal_cable.y - src.y
+		if (disy == 1)
+			if (disx == 1)
+				if (normal_cable.d1 == SOUTHWEST || normal_cable.d2 == SOUTHWEST)
+					cable_surr |= NORTHEAST_UNIQUE
+			else if (disx == -1)
+				if (normal_cable.d1 == SOUTHEAST || normal_cable.d2 == SOUTHEAST)
+					cable_surr |= NORTHWEST_UNIQUE
+			else if (normal_cable.d1 == SOUTH || normal_cable.d2 == SOUTH)
+				cable_surr |= NORTH
+		else if (disy == -1)
+			if (disx == 1)
+				if (normal_cable.d1 == NORTHWEST || normal_cable.d2 == NORTHWEST)
+					cable_surr |= SOUTHEAST_UNIQUE
+			else if (disx == -1)
+				if (normal_cable.d1 == NORTHEAST || normal_cable.d2 == NORTHEAST)
+					cable_surr |= SOUTHWEST_UNIQUE
+			else if (normal_cable.d1 == NORTH || normal_cable.d2 == NORTH)
+				cable_surr |= SOUTH
+		else if (disy == 0)
+			if (disx == 1)
+				if (normal_cable.d1 == WEST || normal_cable.d2 == WEST)
+					cable_surr |= EAST
+			else if (disx == -1)
+				if (normal_cable.d1 == EAST || normal_cable.d2 == EAST)
+					cable_surr |= WEST
+		// the 'real' wires override and always connect to prevent loose ends
+		// cable_surr is any direction that needs to be connected to at all
+		// this bit does not get optimised
+
+/// causes cablespawner to spawn cables (amazing)
+/obj/cablespawner/proc/replace()
+	var/list/directions = list()
+	if (cable_surr & NORTH)
+		directions += NORTH
+	if (cable_surr & SOUTH)
+		directions += SOUTH
+	if (cable_surr & EAST)
+		directions += EAST
+	if (cable_surr & NORTHEAST_UNIQUE)
+		directions += NORTHEAST
+	if (cable_surr & SOUTHEAST_UNIQUE)
+		directions += SOUTHEAST
+	if (cable_surr & WEST)
+		directions += WEST
+	if (cable_surr & NORTHWEST_UNIQUE)
+		directions += NORTHWEST
+	if (cable_surr & SOUTHWEST_UNIQUE)
+		directions += SOUTHWEST
+
+	if (length(directions) == 0)
+		cable_laying(0,NORTH)
+	// multiple cables, spiral out from the centre
+	else if (src.override_centre_connection)
+		for (var/i in 1 to length(directions))
+			cable_laying(0, directions[i])
+	else if (length(directions) >= 3)
+		for (var/i in 1 to length(directions))
+			cable_laying(0, directions[i])
+	else if (length(directions) == 1)
+	// end of a cable
+		cable_laying(0, directions[1])
+	else if (length(directions) == 2)
+	// a normal, single cable
+		cable_laying(directions[1], directions[2])
+	qdel(src)
+
+/// places a cable with d1 and d2
+/obj/cablespawner/proc/cable_laying(var/dir1, var/dir2)
+	var/obj/cable/current = new src.cable_type(src.loc)
+	current.d1 = dir1
+	current.d2 = dir2
+	current.UpdateIcon()

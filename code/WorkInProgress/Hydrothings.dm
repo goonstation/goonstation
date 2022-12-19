@@ -626,9 +626,8 @@ obj/item/gnomechompski/elf
 
 /datum/projectile/wonk
 	power = 10
-	cost = 20
+	stun = 20
 	dissipation_rate = 1
-	ks_ratio = 0
 	shot_sound = 'sound/vox/wonk.ogg'
 	sname = "Wonkonize"
 	shot_number = 1
@@ -1323,7 +1322,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	sound_group = "owl_banjo"
 
 /area/owlery/solars
-	name = "Listening Post Solar Array"
+	name = "Owlery Solar Array"
 	icon_state = "yellow"
 	requires_power = 0
 	luminosity = 1

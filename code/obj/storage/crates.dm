@@ -253,7 +253,23 @@
 	name = "building materials crate"
 	spawn_contents = list(/obj/item/sheet/steel/fullstack,
 	/obj/item/sheet/glass/fullstack)
-
+/obj/storage/crate/radio
+	name = "radio headsets crate"
+	spawn_contents = list(
+		/obj/item/storage/box/PDAbox,
+		/obj/item/device/radio/headset/multifreq,
+		/obj/item/device/radio/headset/multifreq,
+		/obj/item/device/radio/headset/medical,
+		/obj/item/device/radio/headset/medical,
+		/obj/item/device/radio/headset/security,
+		/obj/item/device/radio/headset/security,
+		/obj/item/device/radio/headset/engineer,
+		/obj/item/device/radio/headset/engineer,
+		/obj/item/device/radio/headset/command,
+		/obj/item/device/radio/headset/command,
+		/obj/item/device/radio/headset/research,
+		/obj/item/device/radio/headset/research,
+	)
 /*
  *	SPOOKY haunted crate!
  */
@@ -321,19 +337,6 @@
 	New()
 		..()
 		spawn_items() //null owner/uplink, so pulls from all possible items
-
-/obj/storage/crate/pizza
-	name = "pizza box"
-	desc = "A pizza box."
-	icon_state = "pizzabox"
-	icon_opened = "pizzabox_open"
-	icon_closed = "pizzabox"
-	icon_welded = "welded-short-horizontal"
-	weld_image_offset_Y = -10
-
-	New()
-		..()
-		src.setMaterial(getMaterial("cardboard"), appearance = 0, setname = 0)
 
 /obj/storage/crate/bee
 	name = "Bee crate"
@@ -569,7 +572,9 @@
 	medic_rework
 		name = "Class Crate - Field Medic"
 		desc = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies."
-		spawn_contents = list(/obj/item/device/analyzer/healthanalyzer/upgraded,
+		spawn_contents = list(/obj/item/gun/kinetic/veritate,
+		/obj/item/storage/pouch/veritate,
+		/obj/item/device/analyzer/healthanalyzer/upgraded,
 		/obj/item/storage/medical_pouch,
 		/obj/item/storage/belt/syndicate_medic_belt,
 		/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel,

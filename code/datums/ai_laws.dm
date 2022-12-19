@@ -112,7 +112,7 @@
 				R.law_rack_connection = null
 				R.playsound_local(R, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
 				R.show_text("<h3>ERROR: Lost connection to law rack. No laws detected!</h3>", "red")
-				logTheThing(LOG_STATION,  R, null, "[R.name] loses connection to the rack [constructName(dead_rack)] and now has no laws")
+				logTheThing(LOG_STATION,  R, "[R.name] loses connection to the rack [constructName(dead_rack)] and now has no laws")
 
 		for (var/mob/living/intangible/aieye/E in mobs)
 			if(E.mainframe?.law_rack_connection == dead_rack)

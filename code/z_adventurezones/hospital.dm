@@ -47,7 +47,7 @@
 	sound_group = "samostrel"
 
 /area/adventure/channel
-	name = "The Channel"
+	name = "Channel"
 	desc = "Better not try and change it!"
 	icon_state = "purple"
 	requires_power = 0
@@ -55,6 +55,8 @@
 	force_fullbright = 1
 
 	flingy
+		name = "Unstable Channel"
+
 		Entered(atom/movable/Obj,atom/OldLoc)
 			..()
 
@@ -64,6 +66,8 @@
 			return
 
 	teleport
+		name = "Extremely Unstable Channel"
+
 		Entered(atom/movable/Obj, atom/OldLoc)
 			..()
 
@@ -372,7 +376,7 @@
 			var/obj/item/device/key/hospital/theKey = new (src)
 			keySpawned = 1
 			var/image/O = image(icon = 'icons/misc/aprilfools.dmi', loc = theKey, icon_state = "key", layer = 20)
-			usr << O
+			user << O
 
 
 		..()

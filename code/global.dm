@@ -64,7 +64,6 @@ var/global
 	force_random_looks = 0			// same as above
 
 	list/default_mob_static_icons = list() // new mobs grab copies of these for themselves, or if their chosen type doesn't exist in the list, they generate their own and add it
-	list/mob_static_icons = list() // these are the images that are actually seen by ghostdrones instead of whatever mob
 	list/orbicons = list()
 
 	list/browse_item_icons = list()
@@ -290,6 +289,7 @@ var/global
 	toggles_enabled = 1
 	announce_banlogin = 1
 	announce_jobbans = 0
+	radio_audio_enabled = 1
 
 
 	outpost_destroyed = 0
@@ -341,6 +341,7 @@ var/global
 		LOG_SIGNALERS	=	list(),
 		LOG_PATHOLOGY	=	list(),
 		LOG_TOPIC		=	list(),
+		LOG_CHEMISTRY	=	list(),
 	)
 	/// The file holding computer ID information
 	savefile/compid_file
@@ -408,13 +409,11 @@ var/global
 
 	// SpyGuy global reaction structure to further recuce cpu usage in handle_reactions (Chemistry-Structure.dm)
 	list/total_chem_reactions = list()
-	list/chem_reactions_by_id = list() //This sure beats processing the monster above if I want a particular reaction. =I
+	list/datum/chemical_reaction/chem_reactions_by_id = list() //This sure beats processing the monster above if I want a particular reaction. =I
+	list/list/datum/chemical_reaction/chem_reactions_by_result = list() // Chemical reactions indexed by result ID
 
 	//SpyGuy: The reagents cache is now an associative list
 	list/reagents_cache = list()
-
-	// list of miscreants since mode is irrelevant
-	list/miscreants = list()
 
 	// Antag overlays for admin ghosts, Syndieborgs and the like (Convair880).
 	antag_generic = image('icons/mob/antag_overlays.dmi', icon_state = "generic")
@@ -444,6 +443,7 @@ var/global
 	antag_wrestler = image('icons/mob/antag_overlays.dmi', icon_state = "wrestler")
 	antag_spy_theft = image('icons/mob/antag_overlays.dmi', icon_state = "spy_thief")
 	antag_arcfiend = image('icons/mob/antag_overlays.dmi', icon_state = "arcfiend")
+	antag_salvager = image('icons/mob/antag_overlays.dmi', icon_state = "salvager")
 
 	pod_wars_NT = image('icons/mob/antag_overlays.dmi', icon_state = "nanotrasen")
 	pod_wars_NT_CMDR = image('icons/mob/antag_overlays.dmi', icon_state = "nanocomm")
@@ -499,9 +499,9 @@ var/global
 
 	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("Credits","Bux","Tokens","Cash","Dollars","Tokens","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees")]"
 
-	list/valid_modes = list("secret","action","intrigue","random","traitor","meteor","extended","monkey",
-		"nuclear","blob","restructuring","wizard","revolution", "revolution_extended","malfunction",
-		"spy","gang","disaster","changeling","vampire","mixed","mixed_rp", "construction","conspiracy","spy_theft",
+	list/valid_modes = list("secret","action","intrigue","random","traitor","extended",
+		"nuclear","blob","wizard","revolution", "revolution_extended","spy","gang","disaster",
+		"changeling","vampire","mixed","mixed_rp", "construction","conspiracy","spy_theft",
 		"battle_royale", "vampire","everyone-is-a-traitor", "football", "flock", "arcfiend"
 #if defined(MAP_OVERRIDE_POD_WARS)
 		,"pod_wars"
@@ -510,8 +510,12 @@ var/global
 
 	hardRebootFilePath = "data/hard-reboot"
 
-	/// The map object used to display the AI station map
-	obj/station_map/ai_station_map
+	list/icon/z_level_maps = list()
+	list/minimap_marker_targets = list()
+
+	/// When toggled on creating new /turf/space will be faster but they will be slightly broken
+	/// used when creating new z-levels
+	dont_init_space = FALSE
 
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])

@@ -1,6 +1,9 @@
 // Overhauled the generator to incorporate APC.cell charging.
 // It used to in the past, but that feature was reverted for reasons unknown.
 // However, it's not a C&P job of the old code (Convair880).
+TYPEINFO(/obj/machinery/power/lgenerator)
+	mats = 10
+
 /obj/machinery/power/lgenerator
 	name = "Experimental Local Generator"
 	desc = "This machine generates power through the combustion of plasma, charging either the local APC or an inserted power cell."
@@ -8,7 +11,6 @@
 	anchored = 0
 	density = 1
 	//layer = FLOOR_EQUIP_LAYER1 //why was this set to this
-	mats = 10
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
 	var/mode = 1 // 1 = charge APC, 2 = charge inserted power cell.
 	var/active = 0
@@ -122,10 +124,11 @@
 		if (!src)
 			return
 		if (src.CL)
+			var/obj/item/cell/_CL = src.CL
 			src.CL.set_loc(get_turf(src))
 
 			if (istype(user))
-				user.put_in_hand_or_eject(src.CL) // try to eject it into the users hand, if we can
+				user.put_in_hand_or_eject(_CL) // try to eject it into the users hand, if we can
 
 			src.CL = null
 			if (src.mode == 2) // Generator doesn't need to shut down when in APC mode.
@@ -355,3 +358,8 @@
 
 		src.updateUsrDialog()
 		return
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.CL)
+			src.CL = null

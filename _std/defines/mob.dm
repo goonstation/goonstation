@@ -31,6 +31,10 @@
 #define LIMB_LEFT_LEG 4
 #define LIMB_RIGHT_LEG 8
 
+//hand values
+#define LEFT_HAND 1
+#define RIGHT_HAND 0
+
 // ---- mob damage ----
 
 /**
@@ -47,9 +51,9 @@
 /// Burning Lv1 starts at this duration.
 #define BURNING_LV1 0
 /// Burning Lv2 starts at this duration.
-#define BURNING_LV2 200
+#define BURNING_LV2 30 SECONDS
 /// Burning Lv3 starts at this duration.
-#define BURNING_LV3 400
+#define BURNING_LV3 60 SECONDS
 
 //hearing
 #define HEARING_NORMAL 0

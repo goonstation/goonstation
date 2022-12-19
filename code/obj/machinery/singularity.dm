@@ -26,14 +26,16 @@ Contains:
 // I'm sorry
 //////////////////////////////////////////////////// Singularity generator /////////////////////
 
-/obj/machinery/the_singularitygen/
+TYPEINFO(/obj/machinery/the_singularitygen)
+	mats = 250
+
+/obj/machinery/the_singularitygen
 	name = "Gravitational Singularity Generator"
 	desc = "An Odd Device which produces a Black Hole when set up."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "TheSingGen"
 	anchored = 0 // so it can be moved around out of crates
 	density = 1
-	mats = 250
 	var/bhole = 0 // it is time. we can trust people to use the singularity For Good - cirr
 
 /obj/machinery/the_singularitygen/process()
@@ -44,10 +46,9 @@ Contains:
 		if(GET_DIST(gen,loc)<(SINGULARITY_MAX_DIMENSION/2)+1)
 			if(gen.active_dirs >= 2)
 				goodgenerators++
-				smallestdimension = min(smallestdimension, gen.shortestlink)
+				smallestdimension = clamp(gen.shortestlink, 1, smallestdimension)
 
 	if (goodgenerators>=4)
-
 		// Did you know this thing still works? And wasn't logged (Convair880)?
 		logTheThing(LOG_BOMBING, src.fingerprintslast, "A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
 		message_admins("A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [key_name(src.fingerprintslast)]")
@@ -102,7 +103,6 @@ Contains:
 	pixel_x = -64
 	pixel_y = -64
 
-	var/maxboom = 0
 	var/has_moved
 	var/active = 0 //determines if the singularity is contained
 	var/energy = 10
@@ -114,6 +114,7 @@ Contains:
 	var/grav_pull = 6
 	var/radius = 0 //the variable used for all calculations involving size.this is the current size
 	var/maxradius = INFINITY//the maximum size the singularity can grow to
+	var/restricted_z_allowed = FALSE
 
 
 
@@ -149,7 +150,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/process()
 	var/turf/T = get_turf(src)
-	if(isrestrictedz(T?.z))
+	if(isrestrictedz(T?.z) && !src.restricted_z_allowed)
 		src.visible_message("<span class='notice'>Something about this place makes [src] wither and implode.</span>")
 		qdel(src)
 	eat()
@@ -171,7 +172,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if (prob(20))//Chance for it to run a special event
 		event()
-
+	var/containment_min = max(MIN_TO_CONTAIN,(radius*8))
 	if (active == 1)
 		move()
 		SPAWN(1.1 SECONDS) // slowing this baby down a little -drsingh
@@ -182,23 +183,24 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				var/checkpointC = 0
 				for (var/obj/machinery/containment_field/X in orange(radius+2,src))
 					checkpointC++
-				if (checkpointC > max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
+				if (checkpointC >= containment_min)//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
 					src.active = FALSE
 					animate(get_filter("loose rays"), size=1, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
 					maxradius = radius + 1
-					logTheThing(LOG_STATION, null, "[src] has been contained at [log_loc(src)]")
-					message_admins("[src] has been contained at [log_loc(src)]")
+					logTheThing(LOG_STATION, null, "[src] has been contained ([checkpointC] >= [containment_min] fields) at [log_loc(src)]")
+					message_admins("[src] has been contained ([checkpointC] >= [containment_min] fields) at [log_loc(src)]")
 
 	else//this should probably be modified to use the enclosed test of the generator
 		var/checkpointC = 0
 		for (var/obj/machinery/containment_field/X in orange(maxradius+2,src))
 			checkpointC ++
-		if (checkpointC < max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
+
+		if (checkpointC < containment_min)//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
 			src.active = TRUE
 			animate(get_filter("loose rays"), size=100, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
 			maxradius = INFINITY
-			logTheThing(LOG_STATION, null, "[src] has become loose at [log_loc(src)]")
-			message_admins("[src] has become loose at [log_loc(src)]")
+			logTheThing(LOG_STATION, null, "[src] has become loose ([checkpointC] < [containment_min] fields) at [log_loc(src)]")
+			message_admins("[src] has become loose ([checkpointC] < [containment_min] fields) at [log_loc(src)]")
 
 
 /obj/machinery/the_singularity/emp_act()
@@ -238,22 +240,17 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if (selfmove)
 		var/dir = pick(cardinal)
 
-		var/checkloc = get_step(src.get_center(), dir)
-		for (var/dist = 0, dist < max(2,radius+1), dist ++)
+		for (var/dist = max(0,radius-1), dist <= radius+1, dist++)
+			var/turf/checkloc = get_ranged_target_turf(src.get_center(), dir, dist)
 			if (locate(/obj/machinery/containment_field) in checkloc)
 				return
-			checkloc = get_step(checkloc, dir)
 
 		step(src, dir)
 
 
 /obj/machinery/the_singularity/ex_act(severity, last_touched, power)
-	if(!maxboom)
-		SPAWN(0.1 SECONDS)
-			if(severity == 1 && (maxboom ? prob(maxboom*5) : prob(30))) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
-				qdel(src)
-			maxboom = 0
-	maxboom = max(power, maxboom)
+	if (severity == 1 && prob(power * 5)) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
+		qdel(src)
 
 /obj/machinery/the_singularity/Bumped(atom/A)
 	var/gain = 0
@@ -277,6 +274,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if (H.unkillable)
 				H.unkillable = 0
 			if (H.mind && H.mind.assigned_role)
+				logTheThing(LOG_COMBAT, H, "is spaghettified by \the [src] at [log_loc(src)].")
 				switch (H.mind.assigned_role)
 					if ("Clown")
 						// Hilarious.
@@ -291,7 +289,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					if ("Chief Engineer")
 						// Hubris
 						gain = 150
-					if ("Engineer", "Mechanic")
+					if ("Engineer")
 						// More hubris
 						gain = 100
 					if ("Staff Assistant", "Captain")
@@ -310,6 +308,15 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if (istype(A, /obj/decal/cleanable)) //MBC : this check sucks, but its far better than cleanables doing hard-delete at the whims of the singularity. replace ASAP when i figure out cleanablessssss
 			qdel(A)
 			gain = 2
+		else if (istype(A, /obj/machinery/nuclearbomb))
+			gain = 5000 //ten clowns
+			playsound_global(clients, 'sound/machines/singulo_start.ogg', 50)
+			SPAWN(1 SECOND)
+				src.maxradius += 5
+				for (var/i in 1 to 5)
+					src.grow()
+					sleep(0.5 SECONDS)
+			qdel(A)
 		else
 			var/obj/O = A
 			O.set_loc(src.get_center())
@@ -331,7 +338,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/proc/get_center()
 	return src.loc
-
 
 /obj/machinery/the_singularity/attackby(var/obj/item/I, var/mob/user)
 	if (istype(I, /obj/item/clothing/mask/cigarette))
@@ -430,6 +436,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	return
 #endif
 
+/// Singularity that can exist on restricted z levels
+/obj/machinery/the_singularity/admin
+	restricted_z_allowed = TRUE
+
+
 /particles/singularity
 	transform = list(1, 0, 0, 0,
 	                 0, 1, 0, 0,
@@ -448,6 +459,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	friction = 0.2
 
 //////////////////////////////////////// Field generator /////////////////////////////////////////
+
+TYPEINFO(/obj/machinery/field_generator)
+	mats = 14
 
 /obj/machinery/field_generator
 	name = "Field Generator"
@@ -472,7 +486,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	//Remote control stuff
 	var/net_id = null
 	var/obj/machinery/power/data_terminal/link = null
-	mats = 14
 	var/active_dirs = 0
 	var/shortestlink = 0
 
@@ -480,9 +493,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if (src.active != act)
 			src.active = act
 			if (src.active)
-				event_handler_flags |= IMMUNE_SINGULARITY
+				event_handler_flags |= IMMUNE_SINGULARITY_INACTIVE
 			else
-				event_handler_flags &= ~IMMUNE_SINGULARITY
+				event_handler_flags &= ~IMMUNE_SINGULARITY_INACTIVE
 
 /obj/machinery/field_generator/attack_hand(mob/user)
 	if(state == WELDED)
@@ -813,6 +826,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	desc = "An energy field."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Contain_F"
+	pass_unstable = TRUE
 	anchored = 1
 	density = 1
 	event_handler_flags = USE_FLUID_ENTER | IMMUNE_SINGULARITY
@@ -879,7 +893,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		shock_damage = min(rand(10,20),rand(10,20))*prot
 
 	// Added (Convair880).
-	logTheThing(LOG_COMBAT, user, "was shocked by a containment field at [log_loc(src)].")
+	logTheThing(LOG_COMBAT, user, "was shocked by a containment field at [log_loc(src)] and received [shock_damage] damage.")
 
 	if (user?.bioHolder)
 		if (user.bioHolder.HasEffect("resist_electric_heal"))
@@ -894,15 +908,15 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 			return
 
-	user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
+	user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, shock_damage)
 	boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body sending you flying!</B></span>")
 	user.unlock_medal("HIGH VOLTAGE", 1)
 	if (isliving(user))
 		var/mob/living/L = user
 		L.Virus_ShockCure(100)
 		L.shock_cyberheart(100)
-	if(user.getStatusDuration("stunned") < shock_damage * 10)	user.changeStatus("stunned", shock_damage SECONDS)
-	if(user.getStatusDuration("weakened") < shock_damage * 10)	user.changeStatus("weakened", shock_damage SECONDS)
+	if(user.getStatusDuration("stunned") < shock_damage * 10)	user.changeStatus("stunned", shock_damage/4 SECONDS)
+	if(user.getStatusDuration("weakened") < shock_damage * 10)	user.changeStatus("weakened", shock_damage/4 SECONDS)
 
 	if(user.get_burn_damage() >= 500) //This person has way too much BURN, they've probably been shocked a lot! Let's destroy them!
 		user.visible_message("<span style=\"color:red;font-weight:bold;\">[user.name] was disintegrated by the [src.name]!</span>")
@@ -942,6 +956,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		shock(AM)
 
 /////////////////////////////////////////// Emitter ///////////////////////////////
+TYPEINFO(/obj/machinery/emitter)
+	mats = 10
+
 /obj/machinery/emitter
 	name = "Emitter"
 	desc = "Shoots a high power laser when active"
@@ -963,7 +980,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/net_id = null
 	var/obj/machinery/power/data_terminal/link = null
 	var/datum/projectile/current_projectile = new/datum/projectile/laser/heavy
-	mats = 10
 
 /obj/machinery/emitter/New()
 	..()
@@ -1222,6 +1238,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	secured = 2
 	icon_state = "dbox"
 
+TYPEINFO(/obj/machinery/power/collector_array)
+	mats = 20
+
 /obj/machinery/power/collector_array
 	name = "Radiation Collector Array"
 	desc = "A device which uses Hawking Radiation and plasma to produce power."
@@ -1234,6 +1253,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/active = 0
 	var/obj/item/tank/plasma/P = null
 	var/obj/machinery/power/collector_control/CU = null
+	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL | DECON_CROWBAR | DECON_WRENCH
 
 /obj/machinery/power/collector_array/New()
 	..()
@@ -1339,6 +1359,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	secured = 2
 	icon_state = "dbox"
 
+TYPEINFO(/obj/machinery/power/collector_control)
+	mats = 25
+
 /obj/machinery/power/collector_control
 	name = "Radiation Collector Control"
 	desc = "A device which uses Hawking Radiation and Plasma to produce power."
@@ -1363,6 +1386,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/obj/machinery/power/collector_array/CAE = null
 	var/obj/machinery/power/collector_array/CAW = null
 	var/list/obj/machinery/the_singularity/S = null
+	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL | DECON_CROWBAR | DECON_WRENCH
 
 /obj/machinery/power/collector_control/New()
 	..()
@@ -1545,7 +1569,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 ///////////////////////////////////////// Singularity bomb /////////////////////////////
 
 // Thing thing had zero logging despite being overhauled recently. I corrected that oversight (Convair880).
-/obj/machinery/the_singularitybomb/
+TYPEINFO(/obj/machinery/the_singularitybomb)
+	mats = 14
+
+/obj/machinery/the_singularitybomb
 	name = "\improper Singularity Bomb"
 	desc = "A WMD that creates a singularity."
 	icon = 'icons/obj/power.dmi'
@@ -1558,7 +1585,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/last_tick = null
 	var/mob/activator = null // For logging purposes.
 	is_syndicate = 1
-	mats = 14
 	var/bhole = 1
 
 /obj/machinery/the_singularitybomb/attackby(obj/item/W, mob/user)

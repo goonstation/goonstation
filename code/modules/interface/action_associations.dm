@@ -94,7 +94,6 @@ var/list/action_names = list(
 ///Used for literal input of actions
 var/list/action_verbs = list(
 	"say_radio" = "say_radio",
-	"emote" = "say *customv",
 	"salute" = "me_hotkey salute",
 	"burp" = "me_hotkey burp",
 	"dab" = "me_hotkey dab",
@@ -117,8 +116,8 @@ var/list/action_verbs = list(
 	"pickup" = "pick-up",
 	"adminhelp" = "adminhelp",
 	"mentorhelp" = "mentorhelp",
-	"autoscreenshot" = ".autoscreenshot",
-	"screenshot" = ".screenshot",
+	"autoscreenshot" = ".xscreenshot auto",
+	"screenshot" = ".xscreenshot",
 	"togglepoint" = "togglepoint",
 	"refocus"   = ".winset \\\"mainwindow.input.focus=true;mainwindow.input.text=\\\"\\\"\\\"",
 	"mainfocus" = ".winset \"mainwindow.input.focus=false;mapwindow.map.focus=true;mainwindow.input.text=\"\"\"",
@@ -130,6 +129,7 @@ var/list/action_macros = list(
 	"asay" = "asaymacro",
 	"dsay" = "dsaymacro",
 	"say" = "startsay",
+	"emote" = "startemote",
 	"say_main_radio" = "radiosay",
 	"ooc" = "ooc",
 	"looc" = "looc",

@@ -511,7 +511,8 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/turf/unsimulated/floor/delivery/caution,
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/orangeblack,
 /area/prefab/bee_sanctuary)
 "rD" = (
 /obj/machinery/door/airlock/pyro/classic{

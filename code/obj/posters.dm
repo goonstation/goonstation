@@ -291,12 +291,12 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			return ..()
 
 	attack(mob/M, mob/user)
-		if (src.popup_win && (src.no_spam + 25) <= ticker.round_elapsed_ticks)
+		if (src.popup_win && !ON_COOLDOWN(M, "poster_spam", 8 SECONDS))
 			user.tri_message(M, "<span class='alert'><b>[user]</b> shoves [src] in [user == M ? "[his_or_her(user)] own" : "[M]'s"] face!</span>",\
 				"<span class='alert'>You shove [src] in [user == M ? "your own" : "[M]'s"] face!</span>",\
 				"<span class='alert'>[M == user ? "You shove" : "<b>[user]</b> shoves"] [src] in your[M == user ? " own" : null] face!</span>")
 			if (M.client)
-				src.show_popup_win(M.client)
+				SETUP_GENERIC_ACTIONBAR(user, M, 2 SECONDS, .proc/show_popup_win, M.client, src.icon, src.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED)
 			src.no_spam = ticker.round_elapsed_ticks
 		else
 			return // don't attack people with the poster thanks
@@ -384,12 +384,14 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	icon = 'icons/obj/decals/posters.dmi'
 	icon_state = "wall_poster_nt-rip2"
 
+TYPEINFO(/obj/submachine/poster_creator)
+	mats = 6
+
 /obj/submachine/poster_creator
 	name = "wanted poster station"
 	desc = "A machine that can design and print out wanted posters."
 	density = 1
 	anchored = 1
-	mats = 6
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "poster_printer"

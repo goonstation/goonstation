@@ -11,6 +11,7 @@
 	var/packable = 0
 	var/obj/deployer = /obj/beacon_deployer
 	var/beaconid //created by kits
+	var/encrypted = FALSE
 
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/machinery/door_control (door_control.dm)
@@ -82,7 +83,7 @@
 			if (!packable)
 				boutput(user,"This beacon's designation circuits are hard-wired and can't be altered.")
 				return
-			var/str = input(user,"Set designation","Re-Designate Buoy","") as null|text
+			var/str = html_encode(input(user,"Set designation","Re-Designate Buoy","") as null|text)
 			if (!str || !length(str))
 				boutput(user, "<span style=\"color:red\">No valid input detected.</span>")
 				return
@@ -209,7 +210,7 @@
 			src.deploybeacon()
 
 		else if (ispulsingtool(W) && !src.deploying)
-			var/str = input(user,"Set designation","Re-Designate Buoy","") as null|text
+			var/str = html_encode(input(user,"Set designation","Re-Designate Buoy","") as null|text)
 			if (!str || !length(str))
 				boutput(user, "<span style=\"color:red\">No valid input detected.</span>")
 				return

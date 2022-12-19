@@ -18,6 +18,8 @@
 //Ticket writer
 //Cargo request
 //Station Namer
+//Revhead tracker
+//Head tracker
 
 //Banking
 /datum/computer/file/pda_program/banking
@@ -141,6 +143,7 @@
 		status_signal.source = src.master
 		status_signal.transmission_method = 1
 		status_signal.data["command"] = command
+		status_signal.data["address_tag"] = "STATDISPLAY"
 
 		switch(command)
 			if("message")
@@ -421,7 +424,7 @@ Code:
 
 		dat += "<h4>DoorMaster 5.1.9 Pod-Door Control System</h4>"
 		dat += "<a href='?src=\ref[src];toggle=1'>Toggle Doors</a><br><br>"
-		dat += "<font size=1><i>Like this program? Send $9.95 to SPACETREND MICROSYSTEMS in Neo Toronto, Ontario for more bargain software!</i></font>"
+		dat += "<font size=1><i>Like this program? Send 9.95[CREDIT_SIGN] to SPACETREND MICROSYSTEMS in Neo Toronto, Ontario for more bargain software!</i></font>"
 
 		return dat
 
@@ -547,7 +550,7 @@ Code:
 //PDA program for displaying engine data and laser output. By FishDance
 //Note: Could display weird results if there is more than one engine or PTL around.
 /datum/computer/file/pda_program/power_checker
-	name = "Power Checker 0.14"
+	name = "Power Checker 0.15"
 	size = 4
 
 	var/obj/machinery/atmospherics/binary/circulatorTemp/circ1
@@ -611,6 +614,25 @@ Code:
 					if(C.CA2?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P2 ? round(MIXTURE_PRESSURE(C.P2.air_contents), 0.1) : "ERR"] kPa<BR>"
 					if(C.CA3?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P3 ? round(MIXTURE_PRESSURE(C.P3.air_contents), 0.1) : "ERR"] kPa<BR>"
 					if(C.CA4?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P4 ? round(MIXTURE_PRESSURE(C.P4.air_contents), 0.1) : "ERR"] kPa<BR>"
+					. += "<BR>"
+
+		if(length(by_type[/obj/machinery/power/catalytic_generator]))
+			var/generator_index = 1
+			for_by_tcl(C, /obj/machinery/power/catalytic_generator)
+				if(C.z == 1)
+					engine_found = TRUE
+					. += "<BR><h4>Catalytic Generator [generator_index++] Status</h4>"
+					. += "Output: [engineering_notation(C.gen_rate)]W<BR>"
+					if(C.anode_unit?.contained_rod)
+						. += "Anode Rod Condition: [round(C.anode_unit.contained_rod.condition)]%<BR>"
+						. += "Anode Rod Efficacy: [round(C.anode_unit.contained_rod.anode_efficacy)]% Base - [C.anode_unit.report_efficacy()]% Current<BR>"
+					else
+						. += "No Anode Rod Installed<BR>"
+					if(C.cathode_unit?.contained_rod)
+						. += "Cathode Rod Condition: [round(C.cathode_unit.contained_rod.condition)]%<BR>"
+						. += "Cathode Rod Efficacy: [round(C.cathode_unit.contained_rod.cathode_efficacy)]% Base - [C.cathode_unit.report_efficacy()]% Current<BR>"
+					else
+						. += "No Cathode Rod Installed<BR>"
 					. += "<BR>"
 
 		if(length(by_type[/obj/machinery/power/vent_capture]))
@@ -767,7 +789,7 @@ Code:
 		src.master.updateSelfDialog()
 		return
 
-	proc/send_alert(var/mailgroupNum=0)
+	proc/send_alert(var/mailgroupNum=0, var/remote = FALSE)
 		if(!src.master || !isnum(mailgroupNum) || (last_transmission && (last_transmission + 3000 > ticker.round_elapsed_ticks)))
 			return
 
@@ -793,12 +815,22 @@ Code:
 
 		if (isAIeye(usr))
 			var/turf/eye_loc = get_turf(usr)
-			if (!(eye_loc.cameras && length(eye_loc.cameras)))
+			if (!(eye_loc.camera_coverage_emitters && length(eye_loc.camera_coverage_emitters)))
 				an_area = get_area(eye_loc)
 
 		signal.data["message"] = "<b><span class='alert'>***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</span></b>"
 
 		src.post_signal(signal)
+
+		if(isliving(usr) && !remote)
+			playsound(src.master, 'sound/items/security_alert.ogg', 60)
+			var/map_text = null
+			map_text = make_chat_maptext(usr, "Emergency alert sent.", "font-family: 'Helvetica'; color: #D30000; font-size: 7px;", alpha = 215)
+			for (var/mob/O in hearers(usr))
+				O.show_message(assoc_maptext = map_text)
+			usr.visible_message("<span class='alert'>[usr] presses a red button on the side of their [src.master].</span>",
+			"<span class='notice'>You press the \"Alert\" button on the side of your [src.master].</span>",
+			"<span class='alert'>You see [usr] press a button on the side of their [src.master].</span>")
 
 //Whoever runs this gets to explode.
 /datum/computer/file/pda_program/bomb
@@ -1312,6 +1344,126 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			src.x = T.x
 			src.y = T.y
 			src.z = T.z
+
+		src.master.add_fingerprint(usr)
+		src.master.updateSelfDialog()
+		return
+
+/datum/computer/file/pda_program/revheadtracker
+	name = "Revolutionary Leader Locater"
+	size = 0
+	var/turf/nearest_head_location = null
+	var/direction
+	var/distance
+	var/pressed
+
+	return_text()
+		if(..())
+			return
+
+		var/dat = src.return_text_header()
+
+		if (!istype(ticker.mode, /datum/game_mode/revolution))
+			dat += "<h4>Watchful Eye infrared tracking not available at this time</h4>"
+			return dat
+
+		dat += "<h4>Watchful Eye Revolutionary Leader Tracker</h4>"
+
+		dat += "<a href='byond://?src=\ref[src];gethead=1'>Track nearest revolutionary leader</a>"
+		if(nearest_head_location == null && pressed) // Makes it so it doesnt show up by default
+			dat += "<BR>No alive revolutionary leaders located in this station's sector."
+		if(nearest_head_location != null)
+			dat += "<BR>Direction = [src.direction], Distance = [src.distance]"
+		return dat
+
+	Topic(href, href_list)
+		if(..())
+			return
+
+		if (href_list["gethead"])
+			pressed = 1
+			if (istype(ticker.mode, /datum/game_mode/revolution))
+				var/datum/game_mode/revolution/R = ticker.mode
+				var/list/datum/mind/heads = R.head_revolutionaries
+				var/turf/Turf = get_turf(usr)
+				nearest_head_location = null
+
+				for (var/datum/mind/Mind in heads)
+					if(!Mind.current)
+						continue
+					if(!istype(Mind.current, /mob/living/carbon/human))
+						continue
+					var/MindMob = Mind.current
+					var/turf/MindTurf = get_turf(MindMob)
+					if(!isalive(Mind.current) || MindTurf.z != 1)
+						continue
+					if(GET_DIST(Turf, MindTurf) <= GET_DIST(Turf, nearest_head_location))
+						nearest_head_location = MindTurf
+
+				if(nearest_head_location != null)
+					direction = dir2text(get_dir(Turf, nearest_head_location))
+					distance = GET_DIST(Turf, nearest_head_location)
+
+
+		src.master.add_fingerprint(usr)
+		src.master.updateSelfDialog()
+		return
+
+/datum/computer/file/pda_program/headtracker
+	name = "Nanotrasen Command Tracker"
+	size = 0
+	var/turf/nearest_head_location = null
+	var/direction
+	var/distance
+	var/pressed
+
+	return_text()
+		if(..())
+			return
+
+		var/dat = src.return_text_header()
+
+		if (!istype(ticker.mode, /datum/game_mode/revolution))
+			dat += "<h4>Egeria Providence Array infrared tracking not available at this time</h4>"
+			return dat
+
+		dat += "<h4>Egeria Providence Array Command Tracker</h4>"
+
+		dat += "<a href='byond://?src=\ref[src];gethead=1'>Track nearest head</a>"
+
+		if(nearest_head_location == null && pressed) // Makes it so it doesnt show up by default
+			dat += "<BR>No alive command members located in this station's sector."
+		if(nearest_head_location != null)
+			dat += "<BR>Direction = [src.direction], Distance = [src.distance]"
+		return dat
+
+	Topic(href, href_list)
+		if(..())
+			return
+
+		if (href_list["gethead"])
+			pressed = 1
+			if (istype(ticker.mode, /datum/game_mode/revolution))
+				var/datum/game_mode/revolution/R = ticker.mode
+				var/list/datum/mind/heads = R.get_all_heads()
+				var/turf/Turf = get_turf(usr)
+				nearest_head_location = null
+
+				for (var/datum/mind/Mind in heads)
+					if(!Mind.current)
+						continue
+					if(!istype(Mind.current, /mob/living/carbon/human))
+						continue
+					var/MindMob = Mind.current
+					var/turf/MindTurf = get_turf(MindMob)
+					if(!isalive(Mind.current) || MindTurf.z != 1)
+						continue
+					if(GET_DIST(Turf, MindTurf) <= GET_DIST(Turf, nearest_head_location))
+						nearest_head_location = MindTurf
+
+				if(nearest_head_location != null)
+					direction = dir2text(get_dir(Turf, nearest_head_location))
+					distance = GET_DIST(Turf, nearest_head_location)
 
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()

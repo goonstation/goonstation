@@ -122,7 +122,7 @@
 	blockGaps = 2
 	stability_loss = 5
 	ability_path = /datum/targetable/geneticsAbility/mattereater
-	var/target_path = "/obj/item/"
+	var/target_path = /obj/item/
 
 /datum/targetable/geneticsAbility/mattereater
 	name = "Matter Eater"
@@ -139,14 +139,11 @@
 			return TRUE
 		using = TRUE
 
-		var/datum/bioEffect/power/mattereater/ME = linked_power
-		var/base_path = text2path("[ME.target_path]")
-		if (!ispath(base_path))
-			base_path = /obj/item/
-		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
-		if (ismob(owner.loc) || istype(owner.loc,/obj/))
+		var/datum/bioEffect/power/mattereater/mattereater = linked_power
+		var/list/items = get_filtered_atoms_in_touch_range(owner, mattereater.target_path)
+		if (ismob(owner.loc) || istype(owner.loc, /obj/))
 			for (var/atom/A in owner.loc.contents)
-				if (istype(A,ME.target_path))
+				if (istype(A, mattereater.target_path))
 					items += A
 
 		if (linked_power.power > 1)
@@ -163,8 +160,9 @@
 			using = FALSE
 			return TRUE
 
-		if (!(the_object in get_filtered_atoms_in_touch_range(owner, base_path)) && !istype(the_object, /obj/the_server_ingame_whoa))
+		if (!(the_object in get_filtered_atoms_in_touch_range(owner, mattereater.target_path)) && !istype(the_object, /obj/the_server_ingame_whoa))
 			owner.show_text("<span class='alert'>Man, that thing is long gone, far away, just let it go.</span>")
+			using = FALSE
 			return TRUE
 
 		var/area/cur_area = get_area(owner)
@@ -187,14 +185,7 @@
 			if (isitem(the_object))
 				var/obj/item/the_item = the_object
 				H.sims?.affectMotive("Hunger", (the_item.w_class + 1) * 5) // +1 so tiny items still give a small boost
-				for(var/A in owner.organs)
-					var/obj/item/affecting = null
-					if (!owner.organs[A])
-						continue
-					affecting = owner.organs[A]
-					if (!isitem(affecting))
-						continue
-					affecting.heal_damage(4, 0)
+				owner.HealDamage("All", 5, 0)
 				owner.UpdateDamageIcon()
 
 		if (!QDELETED(the_object)) // Finally, ensure that the item is deleted regardless of what it is
@@ -230,14 +221,11 @@
 			return 1
 		using = 1
 
-		var/datum/bioEffect/power/mattereater/ME = linked_power
-		var/base_path = text2path("[ME.target_path]")
-		if (!ispath(base_path))
-			base_path = /obj/item/
-		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
-		if (ismob(owner.loc) || istype(owner.loc,/obj/))
+		var/datum/bioEffect/power/mattereater/mattereater = linked_power
+		var/list/items = get_filtered_atoms_in_touch_range(owner, mattereater.target_path)
+		if (ismob(owner.loc) || istype(owner.loc, /obj/))
 			for (var/atom/A in owner.loc.contents)
-				if (istype(A,ME.target_path))
+				if (istype(A, mattereater.target_path))
 					items += A
 
 		if (linked_power.power > 1)
@@ -812,7 +800,6 @@
 		owner.emote("scream")
 		owner.changeStatus("paralysis", 5 SECONDS)
 		owner.changeStatus("stunned", 7 SECONDS)
-		return
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1152,7 +1139,7 @@
 /datum/projectile/laser/eyebeams
 	name = "optic laser"
 	icon_state = "eyebeam"
-	power = 20
+	damage = 20
 	cost = 20
 	sname = "eye laser"
 	dissipation_delay = 5
@@ -1162,7 +1149,8 @@
 	color_blue = 1
 
 /datum/projectile/laser/eyebeams/stun
-	ks_ratio = 0
+	damage = 0
+	stun = 20
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1245,27 +1233,30 @@
 	icon_state = "midas"
 	targeted = FALSE
 
-	cast()
+	cast(atom/target)
 		if (..())
 			return 1
 		if(linked_power.using)
 			return 1
 
-		var/base_path = /obj/item/
-		if (linked_power.power > 1)
-			base_path = /obj/
+		var/obj/the_object = target
 
-		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
-		if (!items.len)
-			boutput(usr, "/red You can't find anything nearby to touch.")
-			return 1
+		if(!target)
+			var/base_path = /obj/item/
+			if (linked_power.power > 1)
+				base_path = /obj/
 
-		linked_power.using = 1
-		var/obj/the_object = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
-		if (!the_object)
-			last_cast = 0
-			linked_power.using = 0
-			return 1
+			var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
+			if (!items.len)
+				boutput(usr, "/red You can't find anything nearby to touch.")
+				return 1
+
+			linked_power.using = 1
+			the_object = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
+			if (!the_object)
+				last_cast = 0
+				linked_power.using = 0
+				return 1
 
 		if(isitem(the_object))
 			var/obj/item/the_item = the_object
@@ -1283,7 +1274,7 @@
 				the_object.setMaterial(getMaterial(linked.transmute_material))
 			else
 				owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to gold!</span>")
-				the_object.setMaterial(getMaterial("gold"))
+				the_object.setMaterial(getMaterial("gold"), copy = FALSE)
 		linked_power.using = 0
 		return
 
@@ -1320,7 +1311,7 @@
 			owner.visible_message("[owner] touches [the_object].")
 		else
 			owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to flesh!</span>")
-			the_object.setMaterial(getMaterial("flesh"))
+			the_object.setMaterial(getMaterial("flesh"), copy = FALSE)
 		linked_power.using = 0
 		return
 
@@ -2002,7 +1993,7 @@
 			boutput(usr, "You start using your chameleon cloaking.")
 			CH.last_moved = TIME
 			CH.active = 1
-			CH.RegisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE), /datum/bioEffect/power/chameleon/proc/decloak)
+			CH.RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE), /datum/bioEffect/power/chameleon/proc/decloak)
 		return 0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2106,20 +2097,23 @@
 	has_misfire = FALSE
 	needs_hands = FALSE
 
-	cast()
+	cast(atom/target)
 		if (..())
 			return 1
 
-		var/base_path = /obj
-		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
-		if (!items.len)
-			boutput(usr, "/red You can't find anything nearby to spray ink on.")
-			return 1
+		var/obj/the_object = target
 
-		var/obj/the_object = input("Which item do you want to color?","Ink Glands") as null|obj in items
-		if (!the_object)
-			last_cast = 0
-			return 1
+		if(!the_object)
+			var/base_path = /obj
+			var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
+			if (!items.len)
+				boutput(usr, "/red You can't find anything nearby to spray ink on.")
+				return 1
+
+			the_object = input("Which item do you want to color?","Ink Glands") as null|obj in items
+			if (!the_object)
+				last_cast = 0
+				return 1
 
 		var/datum/bioEffect/power/ink/I = linked_power
 		if (!linked_power)
@@ -2186,8 +2180,8 @@
 
 	proc/hit_callback(var/datum/thrown_thing/thr)
 		for(var/mob/living/carbon/hit in get_turf(thr.thing))
-			hit.changeStatus("weakened", 15 SECONDS)
-			hit.changeStatus("stunned", 5 SECONDS)
+			hit.changeStatus("weakened", 5 SECONDS)
+			hit.force_laydown_standup()
 			break
 		return 0
 
@@ -2221,8 +2215,13 @@
 					if (!linked_power.safety)
 						new thrown_limb.streak_decal(owner.loc)
 						var/damage = rand(5,15)
+						var/do_bleed = TRUE
+						if(thrown_limb.kind_of_limb | LIMB_SKELLY)
+							damage /= 2.5
+							do_bleed = FALSE
 						random_brute_damage(H, damage)
-						take_bleeding_damage(H, null, damage)
+						if(do_bleed)
+							take_bleeding_damage(H, null, damage)
 						if(prob(60)) owner.emote("scream")
 
 						//reset the time until the ability spontaniously fires

@@ -413,7 +413,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 		playsound(holder.loc, 'sound/machines/engine_grump1.ogg', 60, 1)
 
 		for (var/obj/I in holder.contents)
-			if (istype(I,/obj/critter/cat/))
+			if (istype(I,/mob/living/critter/small_animal/cat))
 				continue // absolutely fucking not >=I
 			new /obj/item/scrap(holder)
 			qdel(I)

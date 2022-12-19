@@ -75,8 +75,9 @@
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "cd" = (
-/obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 8
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4;
+	hardened = 1
 	},
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
@@ -115,9 +116,7 @@
 	dir = 8;
 	icon_state = "alt_heater"
 	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "12"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/escape/centcom)
 "dC" = (
 /obj/shrub{
@@ -165,9 +164,7 @@
 	dir = 8;
 	icon_state = "alt_heater-R"
 	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "7"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/escape/centcom)
 "gL" = (
 /obj/decal/poster/wallsign/danger_highvolt{
@@ -339,15 +336,6 @@
 "oC" = (
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
-"pj" = (
-/obj/decal/fakeobjects/shuttleengine{
-	dir = 8;
-	icon_state = "alt_heater-L"
-	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "7"
-	},
-/area/shuttle/escape/centcom)
 "pm" = (
 /obj/decal/poster/wallsign/hazard_caution,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -357,15 +345,6 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/circuit/red,
-/area/shuttle/escape/centcom)
-"qb" = (
-/obj/decal/fakeobjects/shuttleengine{
-	dir = 8;
-	icon_state = "alt_heater-R"
-	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "3"
-	},
 /area/shuttle/escape/centcom)
 "qx" = (
 /obj/decal/tile_edge/line/black{
@@ -669,8 +648,10 @@
 /area/centcom/outside)
 "CK" = (
 /obj/machinery/door/airlock/pyro/glass/command{
-	dir = 4
+	dir = 4;
+	hardened = 1
 	},
+/obj/access_spawn/heads,
 /turf/unsimulated/floor/circuit/red,
 /area/shuttle/escape/centcom)
 "Da" = (
@@ -679,8 +660,10 @@
 "DC" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
-	name = "Secure Transport"
+	name = "Secure Transport";
+	hardened = 1
 	},
+/obj/access_spawn/security,
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "DH" = (
@@ -764,9 +747,7 @@
 	dir = 8;
 	icon_state = "alt_heater-M"
 	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/escape/centcom)
 "Gc" = (
 /obj/machinery/light/small/floor,
@@ -843,7 +824,8 @@
 /area/centcom)
 "Jd" = (
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 4
+	dir = 4;
+	hardened = 1
 	},
 /turf/unsimulated/floor/redblack,
 /area/shuttle/escape/centcom)
@@ -879,9 +861,7 @@
 	dir = 8;
 	icon_state = "alt_heater-L"
 	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/escape/centcom)
 "LN" = (
 /obj/decal/fakeobjects{
@@ -978,7 +958,8 @@
 /area/centcom/outside)
 "OD" = (
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 4
+	dir = 4;
+	hardened = 1
 	},
 /turf/unsimulated/floor/redblack{
 	dir = 1
@@ -1021,10 +1002,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "Sp" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3";
-	opacity = 0
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/escape/centcom)
 "Te" = (
 /obj/decal/tile_edge/line/orange{
@@ -1158,9 +1136,6 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "YN" = (
-/obj/decoration/syndiepc/syndiepc3,
-/obj/decoration/syndiepc/syndiepc13,
-/obj/decoration/syndiepc/syndiepc7,
 /obj/decoration/syndiepc/syndiepc11{
 	icon_state = "syndiepc3"
 	},
@@ -1300,9 +1275,9 @@ rR
 CC
 Ti
 Sp
-pj
+Ls
 Gb
-qb
+gG
 Sp
 zy
 cl

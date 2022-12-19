@@ -55,9 +55,6 @@ THROWING DARTS
 	proc/can_implant(mob/target, mob/user)
 		return 1
 
-	proc/trigger(emote, source as mob)
-		return
-
 	// called when an implant is implanted into M by I
 	proc/implanted(mob/M, mob/I)
 		logTheThing(LOG_COMBAT, I, "has implanted [constructTarget(M,"combat")] with a [src] implant ([src.type]) at [log_loc(M)].")
@@ -198,6 +195,27 @@ THROWING DARTS
 		else
 			return ..()
 
+/obj/item/implant/emote_triggered
+	var/activation_emote = "wink"
+	var/list/compatible_emotes = list()
+
+	implanted(mob/M, mob/I)
+		. = ..()
+		//try not to conflict with other emote triggers
+		src.activation_emote = pick(src.compatible_emotes - M.trigger_emotes) || pick(src.compatible_emotes)
+		LAZYLISTADD(M.trigger_emotes, src.activation_emote)
+		src.RegisterSignal(M, COMSIG_MOB_EMOTE, .proc/trigger)
+		M.mind.store_memory("[src] can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
+		boutput(M, "The implanted [src.name] can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.")
+
+	on_remove(mob/M)
+		. = ..()
+		M.trigger_emotes -= src.activation_emote
+		src.UnregisterSignal(M, COMSIG_MOB_EMOTE)
+
+	proc/trigger(mob/source, emote, voluntary, atom/target)
+		return
+
 /* ============================================================ */
 /* ------------------------- Implants ------------------------- */
 /* ============================================================ */
@@ -334,21 +352,21 @@ THROWING DARTS
 	icon_state = "implant-b"
 	impcolor = "b"
 
-/obj/item/implant/freedom
+/obj/item/implant/emote_triggered/freedom
 	name = "freedom implant"
 	icon_state = "implant-r"
 	var/uses = 1
 	impcolor = "r"
 	scan_category = "syndicate"
-	var/activation_emote = "shrug"
+	activation_emote = "shrug"
+	compatible_emotes = list("eyebrow", "nod", "shrug", "smile", "yawn", "flex", "snap")
 
 	New()
-		src.activation_emote = pick("eyebrow", "nod", "shrug", "smile", "yawn", "flex", "snap")
 		src.uses = rand(3, 5)
 		..()
 		return
 
-	trigger(emote, mob/source as mob)
+	trigger(mob/source, emote)
 		if (src.uses < 1)
 			return 0
 
@@ -375,10 +393,30 @@ THROWING DARTS
 				src.uses--
 				boutput(source, "You feel a faint click.")
 
-	implanted(mob/source as mob)
+/obj/item/implant/emote_triggered/signaler
+	name = "signaler implant"
+	icon_state = "implant-r"
+	impcolor = "r"
+	scan_category = "syndicate"
+	activation_emote = "wink"
+	compatible_emotes = list("eyebrow", "nod", "shrug", "smile", "yawn", "flex", "snap")
+	var/obj/item/device/radio/signaler/signaler = null
+
+	New()
 		..()
-		source.mind.store_memory("Freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
-		boutput(source, "The implanted freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.")
+		src.signaler = new(src)
+
+	implanted(mob/M, mob/I)
+		. = ..()
+		tgui_process.close_uis(src.signaler)
+
+	attack_self(mob/user)
+		return src.signaler.AttackSelf(user)
+
+	trigger(mob/source, emote)
+		if (emote == src.activation_emote)
+			boutput(source, "You hear a faint beep.")
+			signaler.send_signal()
 
 /obj/item/implant/tracking
 	name = "tracking implant"
@@ -761,9 +799,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		name = ".38 AP round"
 		desc = "A more powerful armor-piercing .38 round. Huh. Aren't these illegal?"
 
-	bullet_nine_mm_NATO
-		name = "9mm NATO round"
-		desc = "A reliable bullet, used ubiquitously in law enforcement and armed forces a century ago."
+	bullet_9mm
+		name = "9mm round"
+		desc = "An extremely common bullet fired by a myriad of different cartridges."
 
 	ninemmplastic
 		name = "9mm Plastic round"
@@ -1385,7 +1423,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	var/sneaky = 0
 	tooltip_flags = REBUILD_DIST
 
@@ -1483,6 +1521,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		else
 			return ..()
 
+	attack_self(mob/user)
+		. = ..()
+		src.imp?.AttackSelf(user)
+
 /datum/action/bar/icon/implanter
 	duration = 20
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
@@ -1525,7 +1567,13 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 /obj/item/implanter/freedom
 	icon_state = "implanter1-g"
 	New()
-		src.imp = new /obj/item/implant/freedom( src )
+		src.imp = new /obj/item/implant/emote_triggered/freedom( src )
+		..()
+
+/obj/item/implanter/signaler
+	icon_state = "implanter1-g"
+	New()
+		src.imp = new /obj/item/implant/emote_triggered/signaler( src )
 		..()
 
 /obj/item/implanter/mindhack
@@ -1589,64 +1637,72 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	//Whether this is the paper type that goes away when emptied
 	var/disposable = FALSE
 
+/obj/item/implantcase/attack_self(mob/user)
+	. = ..()
+	src.imp?.AttackSelf(user)
+
 /obj/item/implantcase/tracking
 	name = "glass case - 'Tracking'"
 
 /obj/item/implantcase/health
 	name = "glass case - 'Health'"
-	implant_type = "/obj/item/implant/health"
+	implant_type = /obj/item/implant/health
 
 /obj/item/implantcase/sec
 	name = "glass case - 'Security Access'"
-	implant_type = "/obj/item/implant/sec"
+	implant_type = /obj/item/implant/sec
 /*
 /obj/item/implantcase/nt
 	name = "glass case - 'Weapon Auth 2'"
-	implant_type = "/obj/item/implant/nt"
+	implant_type = /obj/item/implant/nt
 
 /obj/item/implantcase/ntc
 	name = "glass case - 'Weapon Auth 3'"
-	implant_type = "/obj/item/implant/ntc"
+	implant_type = /obj/item/implant/ntc
 */
 /obj/item/implantcase/freedom
 	name = "glass case - 'Freedom'"
-	implant_type = "/obj/item/implant/freedom"
+	implant_type = /obj/item/implant/emote_triggered/freedom
+
+/obj/item/implantcase/signaler
+	name = "glass case - 'Signaler'"
+	implant_type = /obj/item/implant/emote_triggered/signaler
 
 /obj/item/implantcase/counterrev
 	name = "glass case - 'Counter-Rev'"
-	implant_type = "/obj/item/implant/counterrev"
+	implant_type = /obj/item/implant/counterrev
 
 /obj/item/implantcase/microbomb
 	name = "glass case - 'Microbomb'"
-	implant_type = "/obj/item/implant/revenge/microbomb"
+	implant_type = /obj/item/implant/revenge/microbomb
 
 /obj/item/implantcase/robotalk
 	name = "glass case - 'Machine Translator'"
-	implant_type = "/obj/item/implant/robotalk"
+	implant_type = /obj/item/implant/robotalk
 
 /obj/item/implantcase/bloodmonitor
 	name = "glass case - 'Blood Monitor'"
-	implant_type = "/obj/item/implant/bloodmonitor"
+	implant_type = /obj/item/implant/bloodmonitor
 
 /obj/item/implantcase/mindhack
 	name = "glass case - 'Mindhack'"
-	implant_type = "/obj/item/implant/mindhack"
+	implant_type = /obj/item/implant/mindhack
 
 /obj/item/implantcase/super_mindhack
 	name = "glass case - 'Mindhack DELUXE'"
-	implant_type = "/obj/item/implant/mindhack/super"
+	implant_type = /obj/item/implant/mindhack/super
 
 /obj/item/implantcase/robust
 	name = "glass case - 'Robusttec'"
-	implant_type = "/obj/item/implant/robust"
+	implant_type = /obj/item/implant/robust
 
 /obj/item/implantcase/antirot
 	name = "glass case - 'Rotbusttec'"
-	implant_type = "/obj/item/implant/antirot"
+	implant_type = /obj/item/implant/antirot
 
 /obj/item/implantcase/access
 	name = "glass case - 'Electronic Access'"
-	implant_type = "/obj/item/implant/access"
+	implant_type = /obj/item/implant/access
 
 	get_desc(dist)
 		if (dist <= 1 && src.imp)
@@ -1655,7 +1711,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				. += "It appears to contain \a [src.imp.name] with [I.uses] charges."
 
 	unlimited
-		implant_type = "/obj/item/implant/access/infinite"
+		implant_type = /obj/item/implant/access/infinite
 		get_desc(dist)
 			if (dist <= 1 && src.imp)
 				. += "It appears to contain \a [src.imp.name] with unlimited charges."
@@ -1743,6 +1799,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 /* ------------------------- Implant Pad ------------------------- */
 /* =============================================================== */
 
+TYPEINFO(/obj/item/implantpad)
+	mats = 5
+
 /obj/item/implantpad
 	name = "implantpad"
 	icon = 'icons/obj/items/items.dmi'
@@ -1754,7 +1813,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
-	mats = 5
 	desc = "A small device for analyzing implants."
 
 /obj/item/implantpad/proc/update()
@@ -1829,7 +1887,7 @@ ID (1-100):
 <A href='byond://?src=\ref[src];id=-1'>-</A> [T.id]
 <A href='byond://?src=\ref[src];id=1'>+</A>
 <A href='byond://?src=\ref[src];id=10'>+</A><BR>"}
-			else if (istype(src.case.imp, /obj/item/implant/freedom))
+			else if (istype(src.case.imp, /obj/item/implant/emote_triggered/freedom))
 				dat += {"
 <b>Implant Specifications:</b><BR>
 <b>Name:</b> Freedom Beacon<BR>
@@ -1902,6 +1960,31 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 <b>Zone:</b> Brain Stem<br>
 <b>Power Source:</b> Nervous System Ion Withdrawl Gradient<br>
 <b>Important Notes:</b> Injects an electrical signal directly into the brain that compels obedience in human subjects for a short time. Most minds fight off the effects after approx. 25 minutes.<BR>"}
+			else if (istype(src.case.imp, /obj/item/implant/emote_triggered/signaler))
+				var/obj/item/implant/emote_triggered/signaler/implant = src.case.imp
+				dat += {"
+<b>Implant Specifications:</b><br>
+<b>Name:</b> Remote Signaler<br>
+<b>Zone:</b> Left hand near wrist<br>
+<b>Power Source:</b> Nervous System Ion Withdrawl Gradient<br>
+<HR>
+<b>Implant Details:</b> <BR>
+<b>Function:</b> Transmits a radio signal on a configurable frequency.
+<b>Special Features:</b><BR>
+<i>Neuro-Scan</i>- Analyzes certain shadow signals in the nervous system<BR>
+<HR>
+Implant Specifics:<BR>
+Frequency (144.1-148.9):
+<A href='byond://?src=\ref[src];freq=-10'>-</A>
+<A href='byond://?src=\ref[src];freq=-2'>-</A> [format_frequency(implant.signaler.frequency)]
+<A href='byond://?src=\ref[src];freq=2'>+</A>
+<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+
+ID (1-100):
+<A href='byond://?src=\ref[src];id=-10'>-</A>
+<A href='byond://?src=\ref[src];id=-1'>-</A> [implant.signaler.code]
+<A href='byond://?src=\ref[src];id=1'>+</A>
+<A href='byond://?src=\ref[src];id=10'>+</A><BR>"}
 			else
 				dat += "Implant ID not in database"
 		else
@@ -1918,17 +2001,28 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 		return
 	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
+		if (!istype(src.case, /obj/item/implantcase))
+			return
 		if (href_list["freq"])
-			if ((istype(src.case, /obj/item/implantcase) && istype(src.case.imp, /obj/item/implant/tracking)))
-				var/obj/item/implant/tracking/T = src.case.imp
-				T.frequency += text2num_safe(href_list["freq"])
-				T.frequency = sanitize_frequency(T.frequency)
+			var/frequency_change = text2num_safe(href_list["freq"])
+			if (istype(src.case.imp, /obj/item/implant/tracking))
+				var/obj/item/implant/tracking/implant = src.case.imp
+				implant.frequency += frequency_change
+				implant.frequency = sanitize_frequency(implant.frequency)
+			else if (istype(src.case.imp, /obj/item/implant/emote_triggered/signaler))
+				var/obj/item/implant/emote_triggered/signaler/implant = src.case.imp
+				implant.signaler.frequency += frequency_change
+				implant.signaler.frequency = sanitize_frequency(implant.signaler.frequency)
 		if (href_list["id"])
-			if ((istype(src.case, /obj/item/implantcase) && istype(src.case.imp, /obj/item/implant/tracking)))
-				var/obj/item/implant/tracking/T = src.case.imp
-				T.id += text2num_safe(href_list["id"])
-				T.id = min(100, T.id)
-				T.id = max(1, T.id)
+			var/id_change = text2num_safe(href_list["id"])
+			if (istype(src.case.imp, /obj/item/implant/tracking))
+				var/obj/item/implant/tracking/implant = src.case.imp
+				implant.id += id_change
+				implant.id = clamp(implant.id, 1, 100)
+			else if (istype(src.case.imp, /obj/item/implant/emote_triggered/signaler))
+				var/obj/item/implant/emote_triggered/signaler/implant = src.case.imp
+				implant.signaler.code += id_change
+				implant.signaler.code = clamp(implant.signaler.code, 1, 100)
 		if (ismob(src.loc))
 			attack_self(src.loc)
 		else
@@ -1946,11 +2040,13 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 /* ------------------------- Implant Gun ------------------------- */
 /* =============================================================== */
 
+TYPEINFO(/obj/item/gun/implanter)
+	mats = 8
+
 /obj/item/gun/implanter
 	name = "implant gun"
 	desc = "A gun that accepts an implant, that you can then shoot into other people! Or a wall, which certainly wouldn't be too big of a waste, since you'd only be using this to shoot people with things like health monitor implants or machine translators. Right?"
 	icon_state = "implant"
-	mats = 8
 	contraband = 1
 	var/obj/item/implant/my_implant = null
 
@@ -2006,7 +2102,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 		else
 			return ..()
 
-	canshoot()
+	canshoot(mob/user)
 		if (!my_implant)
 			return 0
 		return 1
@@ -2030,7 +2126,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 
 /datum/projectile/implanter
 	name = "implant bullet"
-	power = 5
+	damage = 5
 	shot_sound = 'sound/machines/click.ogg'
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_STAB

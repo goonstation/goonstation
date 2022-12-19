@@ -6,9 +6,6 @@
 "p" = (
 /turf/simulated/floor/auto/grass/swamp_grass,
 /area/dmm_suite/clear_area)
-"r" = (
-/turf/simulated/floor/auto/grass/swamp_grass,
-/area/dmm_suite/clear_area)
 "t" = (
 /turf/simulated/floor/auto/dirt,
 /area/dmm_suite/clear_area)
@@ -48,7 +45,7 @@
 (1,1,1) = {"
 I
 Y
-r
+p
 t
 a
 "}
@@ -61,8 +58,8 @@ Y
 "}
 (3,1,1) = {"
 E
-r
-r
+p
+p
 Y
 O
 "}

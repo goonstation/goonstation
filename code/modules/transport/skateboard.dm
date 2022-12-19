@@ -67,7 +67,7 @@
 	icon_state = "skateboard0"
 	layer = MOB_LAYER + 1
 	soundproofing = 0
-	throw_dropped_items_overboard = 1
+	can_eject_items = TRUE
 	var/sickness = 0
 	var/speed_delay = 5
 	var/datum/action/bar/skateboard/runningAction = null
@@ -115,7 +115,7 @@
 			runningAction.bar.color = "#0000FF"
 
 /obj/vehicle/skateboard/proc/trickName()
-	var/list/adjectives = list("sicknasty", "sick", "sweet", "bitchin'", "darkside", "goofy", "aggro", "gnarly", "mondo", "backside", "blindside", "bomb", "frontside", "juicy", "180", "360", "720", "totally sweet", "totally sick", "tubular")
+	var/list/adjectives = list("sicknasty", "sick", "sweet", "ballin'", "darkside", "goofy", "aggro", "gnarly", "mondo", "backside", "blindside", "bomb", "frontside", "juicy", "180", "360", "720", "totally sweet", "totally sick", "tubular")
 	var/list/nouns = list("grind", "aerial", "cabbalerial", "eggplant", "rollo", "flip", "heel flip", "kick flip", "nollie kick flip", "aerial", "lipslide", "mctwist", "tailslide", "finger flip", "butter flip", "calf wrap", "g-turn", "coco-slide", "handstand", "heli-pop", "gazelle", "m80", "kickback", "jaywalk", "pogo", "pressure flip", "streetplant", "shove-it", "railslide")
 	return pick(adjectives) + " " + pick(nouns)
 

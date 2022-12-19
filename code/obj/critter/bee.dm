@@ -67,6 +67,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		src.create_reagents(honey_production_amount)
 
 		statlog_bees(src)
@@ -86,6 +87,10 @@
 			src.sleeping_icon_state = "[src.icon_body]-sleep"
 			src.desc = "OH GOD IT IS BACK, WE WERE SURE WE REMOVED IT FROM THE CODEBASE BUT IT KEEPS COMING BACK OH GOD"
 */
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 	process()
 		if(shorn && (world.time - shorn_time) >= 1800)
@@ -306,14 +311,16 @@
 
 	CritterDeath()
 		..()
+		var/aggrobees = 10
 		src.UpdateIcon()
 		animate(src)
 		modify_christmas_cheer(-5)
 		var/mob/M = src.lastattacker
 		if (M)
 			M.add_karma(-5)
-		for (var/obj/critter/domestic_bee/fellow_bee in view(7,src))
-			if(fellow_bee.alive)
+		for_by_tcl(fellow_bee, /obj/critter/domestic_bee)
+			if(fellow_bee.alive && aggrobees > 0 && IN_RANGE(src, fellow_bee, 7))
+				aggrobees--
 				fellow_bee.aggressive = 1
 				SPAWN(0.7 SECONDS)
 					fellow_bee.aggressive = 0
@@ -833,8 +840,10 @@
 		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT, .proc/save_upgraded_tier)
 		heisentier_hat()
 		..()
+		START_TRACKING
 
 	disposing()
+		STOP_TRACKING
 		UnregisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT)
 		..()
 
@@ -1757,10 +1766,11 @@
 
 	CritterDeath()
 		..()
-
+		var/aggrobees = 20
 		modify_christmas_cheer(-5)
-		for (var/obj/critter/domestic_bee/fellow_bee in view(7,src))
-			if(fellow_bee.alive)
+		for_by_tcl(fellow_bee, /obj/critter/domestic_bee)
+			if(fellow_bee.alive && aggrobees > 0 && IN_RANGE(src, fellow_bee, 7))
+				aggrobees--
 				fellow_bee.aggressive = 1
 				SPAWN(0.7 SECONDS)
 					fellow_bee.aggressive = 0
@@ -1906,6 +1916,7 @@
 
 		heal(var/mob/M)
 			boutput(M, "<span class='alert'>You feel as if you have made a grave mistake.  Perhaps a doorway has closed forever.</span>")
+			..()
 
 		attack_self(mob/user as mob)
 			if (src.anchored)

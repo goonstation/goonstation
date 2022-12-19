@@ -467,7 +467,7 @@ TYPEINFO_NEW(/obj/table/wood)
 TYPEINFO(/obj/table/wood/round)
 TYPEINFO_NEW(/obj/table/wood/round)
 	. = ..()
-	smooth_list = typecacheof(/obj/table/round/auto)
+	smooth_list = typecacheof(/obj/table/wood/round/auto)
 /obj/table/wood/round
 	icon = 'icons/obj/furniture/table_wood_round.dmi'
 	parts_type = /obj/item/furniture_parts/table/wood/round
@@ -799,9 +799,7 @@ TYPEINFO_NEW(/obj/table/glass)
 	New()
 		..()
 		if (!src.material && default_material)
-			var/datum/material/M
-			M = getMaterial(default_material)
-			src.setMaterial(M)
+			src.setMaterial(getMaterial(default_material), copy = FALSE)
 
 	UpdateName()
 		if (src.glass_broken)
@@ -831,6 +829,11 @@ TYPEINFO_NEW(/obj/table/glass)
 			src.parts_type = /obj/item/furniture_parts/table/glass/frame
 			src.set_density(0)
 			src.set_up()
+
+		for(var/i_dir in cardinal)
+			var/turf/T = get_step(src, i_dir)
+			for(var/obj/table/glass/G in T)
+				G.smash()
 
 	proc/gnesis_smash()
 		var/color = "#fff"

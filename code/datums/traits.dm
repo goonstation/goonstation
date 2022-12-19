@@ -149,6 +149,8 @@
 			else
 				T = trait_instance
 			traits[id] = T
+			if(T.afterlife_blacklisted && inafterlifebar(owner))
+				return
 			if(!isnull(owner))
 				if(T.isMoveTrait)
 					moveTraits.Add(id)
@@ -192,6 +194,7 @@
 	var/requiredUnlock = null //If set to a string, the xp unlock of that name is required for this to be selectable.
 	var/isMoveTrait = FALSE // If TRUE, onMove will be called each movement step from the holder's mob
 	var/datum/mutantrace/mutantRace = null //If set, should be in the "species" category.
+	var/afterlife_blacklisted = FALSE // If TRUE, trait will not be added in the Afterlife Bar
 
 	New()
 		ASSERT(src.name)
@@ -228,8 +231,8 @@
 			if(ishuman(owner))
 				var/mob/living/carbon/human/H = owner
 				if(H.limbs != null)
-					H.limbs.replace_with("l_arm", /obj/item/parts/robot_parts/arm/left/light, null , 0)
-					H.limbs.replace_with("r_arm", /obj/item/parts/robot_parts/arm/right/light, null , 0)
+					H.limbs.replace_with("l_arm", /obj/item/parts/robot_parts/arm/left/light, null , 0, TRUE)
+					H.limbs.replace_with("r_arm", /obj/item/parts/robot_parts/arm/right/light, null , 0, TRUE)
 					H.limbs.l_arm.holder = H
 					H.limbs.r_arm.holder = H
 					H.update_body()
@@ -247,8 +250,8 @@
 			if(ishuman(owner))
 				var/mob/living/carbon/human/H = owner
 				if(H.limbs != null)
-					H.limbs.replace_with("l_arm", pick(/obj/item/parts/human_parts/arm/left/synth/bloom, /obj/item/parts/human_parts/arm/left/synth), null , 0)
-					H.limbs.replace_with("r_arm", pick(/obj/item/parts/human_parts/arm/right/synth/bloom, /obj/item/parts/human_parts/arm/right/synth), null , 0)
+					H.limbs.replace_with("l_arm", pick(/obj/item/parts/human_parts/arm/left/synth/bloom, /obj/item/parts/human_parts/arm/left/synth), null , 0, TRUE)
+					H.limbs.replace_with("r_arm", pick(/obj/item/parts/human_parts/arm/right/synth/bloom, /obj/item/parts/human_parts/arm/right/synth), null , 0, TRUE)
 					H.limbs.l_arm.holder = H
 					H.limbs.r_arm.holder = H
 					H.update_body()
@@ -277,6 +280,13 @@
 		if(!owner.ear_disability)
 			owner.bioHolder.AddEffect("deaf", 0, 0, 0, 1)
 
+/datum/trait/nolegs
+	name = "Stumped"
+	desc = "Because of a freak accident involving a piano, a forklift, and lots of vodka, both of your legs had to be amputated. Fortunately, NT has kindly supplied you with a wheelchair out of the goodness of their heart. (due to regulations)"
+	id = "nolegs"
+	icon_state = "placeholder"
+	category = list("body")
+	points = 0
 // LANGUAGE - Yellow Border
 
 /datum/trait/swedish
@@ -395,6 +405,7 @@
 	icon_state = "glassesG"
 	category = list("vision")
 	points = 1
+	afterlife_blacklisted = TRUE
 
 	onAdd(var/mob/owner)
 		if(owner.bioHolder)
@@ -412,6 +423,7 @@
 	id = "blind"
 	category = list("vision")
 	points = 2
+	afterlife_blacklisted = TRUE
 
 	onAdd(var/mob/owner)
 		if(owner.bioHolder)
@@ -431,13 +443,14 @@
 	icon_state = "mildly_mutatedB"
 	points = 0
 	category = list("genetics")
+	afterlife_blacklisted = TRUE
 
 	onAdd(var/mob/owner)
 		var/datum/bioHolder/B = owner.bioHolder
 		var/datum/bioEffect/E = pick(B.effectPool)
 		B.ActivatePoolEffect(B.effectPool[E], 1, 0)
-		SPAWN (1 SECOND) // This DOES NOT WORK unless delayed but somehow the trait part is logged??
-			logTheThing(LOG_DEBUG, owner, "gets the bioeffect [E] from the trait [name].")
+		SPAWN (1 SECOND) // This DOES NOT WORK at round start unless delayed but somehow the trait part is logged??
+			logTheThing(LOG_COMBAT, owner, "gets the bioeffect [E] from the trait [name].")
 
 /datum/trait/stablegenes
 	name = "Stable Genes"
@@ -511,6 +524,8 @@
 	id = "onearmed"
 	icon_state = "placeholder"
 	points = 0
+
+
 
 // Skill - White Border
 
@@ -623,10 +638,10 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 //Category: Background.
 
-/datum/trait/immigrant
+/datum/trait/stowaway
 	name = "Stowaway"
 	desc = "You spawn hidden away on-station without an ID, PDA, or entry in NT records."
-	id = "immigrant"
+	id = "stowaway"
 	icon_state = "stowaway"
 	category = list("background")
 	points = 1
@@ -684,6 +699,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "randomallergy"
 	points = 0
 	category = list("allergy")
+	afterlife_blacklisted = TRUE
 
 	var/allergen = null
 
@@ -698,6 +714,10 @@ ABSTRACT_TYPE(/datum/trait/job)
 		..()
 		allergen = pick(allergen_id_list)
 
+	onAdd(var/mob/owner)
+		SPAWN (1 SECOND) // This DOES NOT WORK at round start unless delayed but somehow the trait part is logged??
+			logTheThing(LOG_COMBAT, owner, "gains an allergy to [allergen] from the trait [name].")
+
 	onLife(var/mob/owner)
 		if (owner?.reagents?.has_reagent(allergen))
 			owner.reagents.add_reagent("histamine", min(1.4 / (owner.reagents.has_reagent("antihistamine") ? 2 : 1), 120-owner.reagents.get_reagent_amount("histamine"))) //1.4 units of histamine per life cycle, halved with antihistamine and capped at 120u
@@ -708,6 +728,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "medicalallergy"
 	points = 1
 	category = list("allergy")
+	afterlife_blacklisted = TRUE
 
 	allergen_id_list = list("spaceacillin","morphine","teporone","salicylic_acid","calomel","synthflesh","omnizine","saline","anti_rad","smelling_salt",\
 	"haloperidol","epinephrine","insulin","silver_sulfadiazine","mutadone","ephedrine","penteticacid","antihistamine","styptic_powder","cryoxadone","atropine",\
@@ -719,6 +740,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "addict"
 	icon_state = "syringe"
 	points = 2
+	afterlife_blacklisted = TRUE
 	var/selected_reagent = "ethanol"
 	var/addictive_reagents = list("bath salts", "lysergic acid diethylamide", "space drugs", "psilocybin", "cat drugs", "methamphetamine", "ethanol", "nicotine")
 	var/do_addiction = FALSE
@@ -827,7 +849,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 /datum/trait/puritan
 	name = "Puritan"
-	desc = "You can not be cloned. Any attempt will end badly."
+	desc = "You can not be cloned or revived except by cyborgification. Any attempt will end badly."
 	id = "puritan"
 	points = 2
 	category = list("cloner_stuff")
@@ -880,28 +902,29 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "You will sometimes randomly pick up nearby items."
 	id = "kleptomaniac"
 	points = 1
+	afterlife_blacklisted = TRUE
 
 	onLife(var/mob/owner, var/mult)
-		if(!owner.stat && can_act(owner) && probmult(9))
-			if(!owner.equipped())
-				for(var/obj/item/I in view(1, owner))
-					if(!I.anchored && !I.cant_drop && isturf(I.loc) && can_reach(owner, I))
-						I.Attackhand(owner)
-						if(prob(12))
-							owner.emote(pick("grin", "smirk", "chuckle", "smug"))
-						break
+		if(!owner.stat && !owner.lying && can_act(owner) && !owner.equipped() && probmult(6))
+			for(var/obj/item/I in oview(1, owner))
+				if(!I.anchored && !I.cant_drop && isturf(I.loc) && can_reach(owner, I))
+					I.Attackhand(owner)
+					owner.emote(pick("grin", "smirk", "chuckle", "smug"))
+					break
 
 /datum/trait/clutz
 	name = "Clutz"
 	desc = "When interacting with anything you have a chance to interact with something different instead."
 	id = "clutz"
 	points = 2
+	afterlife_blacklisted = TRUE
 
 /datum/trait/leftfeet
 	name = "Two left feet"
 	desc = "Every now and then you'll stumble in a random direction."
 	id = "leftfeet"
 	points = 1
+	afterlife_blacklisted = TRUE
 
 /datum/trait/scaredshitless
 	name = "Scared Shitless"

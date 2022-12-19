@@ -23,7 +23,7 @@
 	density = 1
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	var/stand_type = "katanastand"
-	var/contained_weapon = /obj/item/katana_sheath
+	var/contained_weapon = /obj/item/swords_sheaths/katana
 	var/contained_weapon_name = "katana"
 	var/recharges_contents = 0
 	var/max_amount = 1
@@ -159,7 +159,7 @@
 			return
 		if (W.cant_drop == 1)
 			var/mob/living/carbon/human/H = user
-			H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm")
+			H.sever_limb(H.hand == LEFT_HAND ? "l_arm" : "r_arm")
 			boutput(user, "The [src]'s automated loader wirrs and rips off [H]'s arm!")
 			return
 		else
@@ -213,7 +213,7 @@
 			return
 
 		if (src.malfunction)
-			user.shock(src, 7500, user.hand == 1 ? "l_arm" : "r_arm", 1, 0)
+			user.shock(src, 7500, user.hand == LEFT_HAND ? "l_arm" : "r_arm", 1, 0)
 
 		if (!src.allowed(user) && !hacked)
 			boutput(user, "<span class='alert'>Access denied.</span>")
@@ -226,14 +226,16 @@
 				src.amount--
 			user.put_in_hand_or_drop(myWeapon)
 			boutput(user, "You take [myWeapon] out of [src].")
+			logTheThing(LOG_STATION, user, "takes [myWeapon] from the [src] [log_loc(src)].")
 		else
 			if (src.amount >= 1)
 				src.amount--
 				myWeapon = new src.contained_weapon(src.loc)
 				user.put_in_hand_or_drop(myWeapon)
 				boutput(user, "You take [myWeapon] out of [src].")
+				logTheThing(LOG_STATION, user, "takes [myWeapon] from the [src] [log_loc(src)].")
 		src.update()
-		myWeapon.UpdateIcon() // let it be known that this used to be in a try-catch for some fucking reason
+		myWeapon?.UpdateIcon() // let it be known that this used to be in a try-catch for some fucking reason
 		if (src.amount <= 0) //prevents a runtime if it's empty
 			return
 

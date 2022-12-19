@@ -131,7 +131,6 @@ datum
 							H.TakeDamage("chest", 0, 5, 0, DAMAGE_BURN)
 						else
 							H.TakeDamage("chest", 0, 2, 0, DAMAGE_BURN)
-						H.emote("scream")
 						if (cauterised)
 							boutput(H, "<span class='notice'>The silver nitrate burns like hell as it cauterises some of your wounds.</span>")
 						else
@@ -514,6 +513,7 @@ datum
 			on_remove()
 				..()
 				UnregisterSignal(holder.my_atom, COMSIG_MOB_SHOCKED_DEFIB)
+
 			proc/revive(source)
 				var/mob/living/M = source
 				var/volume_passed = holder.get_reagent_amount("strange_reagent")
@@ -539,7 +539,14 @@ datum
 						var/mob/living/carbon/human/H = M
 						var/obj/item/organ/brain/B = H.organHolder?.get_organ("brain")
 						G = find_ghost_by_key(B?.owner?.key)
-						if (came_back_wrong || H.decomp_stage || G?.mind?.dnr) //Wire: added the dnr condition here
+						var/is_puritan = 0
+						if(ismob(G))
+							for (var/trait as anything in G?.client.preferences.traitPreferences.traits_selected)
+								if(trait == "puritan")
+									is_puritan = 1
+						if(H.traitHolder.hasTrait("puritan"))
+							is_puritan = 1
+						if (came_back_wrong || H.decomp_stage || G?.mind?.dnr || is_puritan) //Wire: added the dnr condition here
 							H.visible_message("<span class='alert'><B>[H]</B> starts convulsing violently!</span>")
 							if (G?.mind?.dnr)
 								H.visible_message("<span class='alert'><b>[H]</b> seems to prefer the afterlife!</span>")
@@ -620,7 +627,7 @@ datum
 						var/turf/simulated/T = target
 						if (T.air)
 							var/datum/gas_mixture/lowertemp = T.remove_air( TOTAL_MOLES(T.air) )
-							if (lowertemp)// ZeWaka: Fix for null.temperature
+							if (lowertemp)
 								lowertemp.temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 200 //T0C - 100
 								lowertemp.toxins = max(lowertemp.toxins-50,0)
 								lowertemp.react()
@@ -680,11 +687,11 @@ datum
 			viscosity = 0.4
 
 			reaction_obj(var/obj/O, var/volume)
-				if (istype(O,/obj/window))
+				if (istype(O, /obj/window))
 					var/obj/window/W = O
 
 					// Silicate was broken. I fixed it (Convair880).
-					var/max_reinforce = 500
+					var/static/max_reinforce = 500
 					if (W.health >= max_reinforce)
 						return
 					var/do_reinforce = W.health * 2
@@ -696,7 +703,7 @@ datum
 					var/icon/I = icon(W.icon)
 					I.ColorTone( rgb(165,242,243) )
 					W.icon = I
-				return
+					src.holder.remove_reagent(src.id, src.holder.get_reagent_amount(src.id))
 
 		graphene
 			name = "graphene"
@@ -1184,7 +1191,7 @@ datum
 
 			proc/cube_mob(var/mob/M, var/volume_passed)
 				var/obj/icecube/I = new/obj/icecube(get_turf(M), M)
-				I.health = max(volume_passed/5,1)
+				I.health = clamp(volume_passed/2, 1, 10)
 				//M.bodytemperature = 0
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1746,17 +1753,12 @@ datum
 					return
 				if (method == TOUCH)
 					. = 0 // for depleting fluid pools
-				if(!ON_COOLDOWN(M, "ants_scream", 3 SECONDS))
-					boutput(M, "<span class='alert'><b>OH SHIT ANTS!!!!</b></span>")
-					M.emote("scream")
 				random_brute_damage(M, 4)
-				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				random_brute_damage(M, 2 * mult)
 				..()
-				return
 
 		spiders
 			name = "spiders"
@@ -1826,7 +1828,6 @@ datum
 					"<span class='alert'><b>[pick("T", "It feels like t", "You feel like t", "Oh shit t", "Oh fuck t", "Oh god t")]here's something [pick("crawling", "wriggling", "scuttling", "skittering")] in your [pick("blood", "veins", "stomach")]!</b></span>")
 				else if (prob(10))
 					random_brute_damage(M, 5 * mult)
-					M.emote("scream")
 					M.emote("twitch")
 					M.setStatusMin("weakened", 2 SECONDS * mult)
 					M.visible_message("<span class='alert'><b>[M.name]</b> tears at their own skin!</span>",\
@@ -2187,7 +2188,7 @@ datum
 						//make it obvious that you are about to die horribly
 						M.addOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 						// oh no
-						if(probmult(1)) // i hate you all, players
+						if(probmult(max(2, (src.volume - gib_threshold)/5))) // i hate you more, players
 							H.flockbit_gib()
 							logTheThing(LOG_COMBAT, H, "was gibbed by reagent [name] at [log_loc(H)].")
 							return
@@ -2228,16 +2229,16 @@ datum
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
-				var/col = rgb(fluid_r, fluid_g, fluid_b)
 				if(!volume_passed)
 					return
 				if(method == INGEST)
 					boutput(M, "<span class='alert'>Tastes oily and unpleasant, with a weird sweet aftertaste. It's like eating children's modelling clay.</span>")
 				if(method == TOUCH)
-					boutput(M, "<span class='notice'>It feels like you got smudged with oil paints.</span>")
-					M.color = col
-					SPAWN(3 SECONDS)
-						boutput(M, "<span class='alert'>Oh god it's not coming off! You're tinted like this forever!</span>")
+					if (!ON_COOLDOWN(M, "gnesis_tint_msg", 3 SECONDS))
+						boutput(M, "<span class='notice'>It feels like you got smudged with oil paints.</span>")
+						SPAWN(3 SECONDS)
+							boutput(M, "<span class='alert'>Oh god it's not coming off!</span>")
+					M.setStatus("gnesis_tint", 3 MINUTES)
 
 			reaction_turf(var/turf/T, var/volume)
 				if (!istype(T, /turf/space))
@@ -2249,13 +2250,11 @@ datum
 						if(prob(50))
 							var/atom/movable/B = new /obj/item/raw_material/scrap_metal
 							B.set_loc(T)
-							var/datum/material/mat = getMaterial("gnesis")
-							B.setMaterial(mat)
+							B.setMaterial(getMaterial("gnesis"), copy = FALSE)
 						else
 							var/atom/movable/B = new /obj/item/raw_material/shard
 							B.set_loc(T)
-							var/datum/material/mat = getMaterial("gnesisglass")
-							B.setMaterial(mat)
+							B.setMaterial(getMaterial("gnesisglass"), copy = FALSE)
 						return
 				// otherwise we didn't have enough
 				T.visible_message("<span class='notice'>The substance flows out, spread too thinly.</span>")
@@ -2302,9 +2301,11 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				if (!istype(T, /turf/space))
-					if (volume >= 10)
+					if (volume >= 10 && holder.total_temperature < T0C + 180)
 						if (!locate(/obj/item/material_piece/rubber/latex) in T)
 							new /obj/item/material_piece/rubber/latex(T)
+					else
+						return TRUE
 
 		flubber
 			name = "Liquified space rubber"

@@ -1,13 +1,15 @@
 //WIP tugs
 
-/obj/tug_cart/
+TYPEINFO(/obj/tug_cart)
+	mats = 10
+
+/obj/tug_cart
 	name = "cargo cart"
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "flatbed"
 	var/atom/movable/load = null
 	var/obj/tug_cart/next_cart = null
 	layer = MOB_LAYER + 1
-	mats = 10
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
 		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
@@ -146,18 +148,22 @@
 		next_cart = null
 		..()
 
+
+TYPEINFO(/obj/vehicle/tug)
+	mats = 10
+
 /obj/vehicle/tug
 	name = "cargo tug"
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "tractor"
-//	rider_visible = 1
+	//	rider_visible = 1
 	layer = MOB_LAYER + 1
-//	sealed_cabin = 0
-	mats = 10
+
+	//	sealed_cabin = 0
 	health = 80
 	health_max = 80
 	var/obj/tug_cart/cart = null
-	throw_dropped_items_overboard = 1
+	can_eject_items = TRUE
 	ability_buttons_to_initialize = list(/obj/ability_button/vehicle_speed)
 	var/start_with_cart = 1
 	delay = 4
@@ -211,38 +217,39 @@
 	eject_rider(var/crashed, var/selfdismount)
 		var/mob/living/rider = src.rider
 		..()
-		rider.pixel_y = 0
-		walk(src, 0)
-		if (rider.client)
-			for(var/obj/ability_button/B in ability_buttons)
-				rider.client.screen -= B
-		if (crashed)
-			if (crashed == 2)
-				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-			boutput(rider, "<span class='alert'><B>You are flung off of [src]!</B></span>")
-			rider.changeStatus("stunned", 8 SECONDS)
-			rider.changeStatus("weakened", 5 SECONDS)
-			for (var/mob/C in AIviewers(src))
-				if (C == rider)
-					continue
-				C.show_message("<span class='alert'><B>[rider] is flung off of [src]!</B></span>", 1)
-			var/turf/target = get_edge_target_turf(src, src.dir)
-			rider.throw_at(target, 5, 1)
-			rider.buckled = null
+		if(rider)
+			rider.pixel_y = 0
+			walk(src, 0)
+			if (rider.client)
+				for(var/obj/ability_button/B in ability_buttons)
+					rider.client.screen -= B
+			if (crashed)
+				if (crashed == 2)
+					playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+				boutput(rider, "<span class='alert'><B>You are flung off of [src]!</B></span>")
+				rider.changeStatus("stunned", 8 SECONDS)
+				rider.changeStatus("weakened", 5 SECONDS)
+				for (var/mob/C in AIviewers(src))
+					if (C == rider)
+						continue
+					C.show_message("<span class='alert'><B>[rider] is flung off of [src]!</B></span>", 1)
+				var/turf/target = get_edge_target_turf(src, src.dir)
+				rider.throw_at(target, 5, 1)
+				rider.buckled = null
+				rider = null
+				overlays = null
+				return
+			if (selfdismount)
+				boutput(rider, "<span class='notice'>You dismount from [src].</span>")
+				for (var/mob/C in AIviewers(src))
+					if (C == rider)
+						continue
+					C.show_message("<B>[rider]</B> dismounts from [src].", 1)
+			if (rider)
+				rider.buckled = null
 			rider = null
 			overlays = null
 			return
-		if (selfdismount)
-			boutput(rider, "<span class='notice'>You dismount from [src].</span>")
-			for (var/mob/C in AIviewers(src))
-				if (C == rider)
-					continue
-				C.show_message("<B>[rider]</B> dismounts from [src].", 1)
-		if (rider)
-			rider.buckled = null
-		rider = null
-		overlays = null
-		return
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
 		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)

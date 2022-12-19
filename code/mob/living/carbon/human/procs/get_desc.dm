@@ -51,13 +51,16 @@
 
 	// unfortunately byond can't handle "[src.slot.blood_DNA ? "a bloody" : "\an"] [src.slot.name]" because then the \an is like "where the fuck is the thing I'm supposed to do something to???"
 	// thanks, byondbama.
-	if (src.w_uniform)
+	if (src.hasStatus("handcuffed"))
+		. +=  "<br><b class='alert'>[src.name] is [bicon(src.handcuffs)] handcuffed!</b>"
+
+	if (src.w_uniform && !(src.wear_suit?.hides_from_examine & C_UNIFORM))
 		. += "<br><span class='[src.w_uniform.blood_DNA ? "alert" : "notice"]'>[src.name] is wearing [bicon(src.w_uniform)] \an [src.w_uniform.name].</span>"
 
 	if (src.wear_suit)
 		. += "<br><span class='[src.wear_suit.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.wear_suit)] \an [src.wear_suit.name] on.</span>"
 
-	if (src.ears)
+	if (src.ears && !(src.wear_suit?.hides_from_examine & C_EARS) && !(src.head?.hides_from_examine & C_EARS))
 		if (istype(src.ears, /obj/item/clothing/))
 			. += "<br><span class='[src.ears.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.ears)] \an [src.ears.name] by [t_his] mouth.</span>"
 		else
@@ -66,14 +69,14 @@
 	if (src.head)
 		. += "<br><span class='[src.head.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.head)] \an [src.head.name] on [t_his] head.</span>"
 
-	if (src.wear_mask)
+	if (src.wear_mask && !(src.wear_suit?.hides_from_examine & C_MASK) && !(src.head?.hides_from_examine & C_MASK))
 		if (istype(src.l_hand, /obj/item/clothing/))
 			. += "<br><span class='[src.wear_mask.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.wear_mask)] [src.wear_mask.blood_DNA ? "a bloody [src.wear_mask.name]" : "\an [src.wear_mask.name]"] on [t_his] face.</span>"
 		else
 			. += "<br><span class='[src.wear_mask.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.wear_mask)] \an [src.wear_mask.name] on [t_his] face.</span>"
 
-	if (src.glasses)
-		if (((src.wear_mask && src.wear_mask.see_face) || !src.wear_mask) && ((src.head && src.head.see_face) || !src.head))
+	if (src.glasses && !(src.wear_suit?.hides_from_examine & C_GLASSES) && !(src.head?.hides_from_examine & C_GLASSES))
+		if (face_visible())
 			. += "<br><span class='[src.glasses.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.glasses)] \an [src.glasses.name] on [t_his] face.</span>"
 
 	if (src.l_hand)
@@ -91,12 +94,13 @@
 	if (src.belt)
 		. += "<br><span class='[src.belt.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.belt)] [src.belt.blood_DNA ? "a bloody [src.belt.name]" : "\an [src.belt.name]"] on [t_his] belt.</span>"
 
-	if (src.gloves)
-		. += "<br><span class='[src.gloves.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.gloves)] [src.gloves.name] on [t_his] hands.</span>"
+	if (src.gloves && !src.gloves.nodescripition)
+		if(!(src.wear_suit && src.wear_suit?.hides_from_examine & C_GLOVES))
+			. += "<br><span class='[src.gloves.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.gloves)] [src.gloves.name] on [t_his] hands.</span>"
 	else if (src.blood_DNA)
 		. += "<br><span class='alert'>[src.name] has bloody hands!</span>"
 
-	if (src.shoes)
+	if (src.shoes && !(src.wear_suit?.hides_from_examine & C_SHOES))
 		. += "<br><span class='[src.shoes.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.shoes)] [src.shoes.name] on [t_his] feet.</span>"
 	else if (islist(src.tracked_blood))
 		. += "<br><span class='alert'>[src.name] has bloody feet!</span>"
@@ -115,9 +119,6 @@
 				. += "<br><span class='alert'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(src.wear_id:ID_card)] [src.wear_id:ID_card:name] in it yet doesn't seem to be that person!!!</span>"
 			else
 				. += "<br><span class='notice'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(src.wear_id:ID_card)] [src.wear_id:ID_card:name] in it.</span>"
-
-	if (src.hasStatus("handcuffed"))
-		. +=  "<br><span class='notice'>[src.name] is [bicon(src.handcuffs)] handcuffed!</span>"
 
 	if (src.arrestIcon?.icon_state && ishuman(usr))
 		var/mob/living/carbon/human/H = usr
@@ -158,7 +159,7 @@
 
 	if (src.organHolder)
 		if (src.organHolder.head)
-			if (((src.wear_mask && src.wear_mask.see_face) || !src.wear_mask) && ((src.head && src.head.see_face) || !src.head))
+			if (face_visible())
 				if (!src.organHolder.skull)
 					. += "<br><span class='alert'><B>[src.name] no longer has a skull in [t_his] head, [t_his] face is just empty skin mush!</B></span>"
 

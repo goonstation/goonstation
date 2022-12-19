@@ -3,7 +3,8 @@
 	icon = 'icons/obj/items/human_parts.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "arm-left"
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	var/mob/living/original_holder = null
 	var/datum/appearanceHolder/holder_ahol
 	force = 6
@@ -23,13 +24,6 @@
 		src.burn_dam += burn
 		//src.tox_dam += tox
 
-		if (ishuman(holder))
-			var/mob/living/carbon/human/H = holder
-			hit_twitch(H)
-			if (brute > 30 && prob(brute - 30) && !disallow_limb_loss)
-				src.sever()
-			else if (bone_system && src.bones && brute && prob(brute * 2))
-				src.bones.take_damage(damage_type)
 		health_update_queue |= holder
 		return 1
 

@@ -15,7 +15,7 @@
 	/// Whether or not we're using this ability.
 	var/active = FALSE
 	/// Each tile traveled will cost this many units of energy.
-	var/step_cost = 3
+	var/step_cost = 2
 	/// The user will be able to see all cables within this many tiles of their location.
 	var/view_range = 2
 	/// A cache of images for each cable.
@@ -63,7 +63,7 @@
 		src.handle_move()
 		src.holder.owner.setStatus("ev_voltron", INFINITE_STATUS, list(holder, src))
 		src.dummy_holder = new/obj/dummy/voltron(get_turf(src.holder.owner), src.holder.owner)
-		RegisterSignal(src.dummy_holder, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), .proc/handle_move)
+		RegisterSignals(src.dummy_holder, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), .proc/handle_move)
 
 	proc/handle_move()
 		var/turf/user_turf = get_turf(src.holder.owner)

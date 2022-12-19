@@ -446,7 +446,7 @@
 
 	New()
 		. = ..()
-		RegisterSignal(src, list(COMSIG_ITEM_ATTACKBY_PRE), .proc/pre_attackby)
+		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, .proc/pre_attackby)
 
 	get_desc()
 		// We display this on a separate line and with a different color to show emphasis
@@ -597,7 +597,7 @@
 		newsignal.data["sender_name"] = "RKIT-MAILBOT"
 		newsignal.data["message"] = message
 		if (target) newsignal.data["address_1"] = target
-		newsignal.data["group"] = list(MGO_MECHANIC, MGA_RKIT)
+		newsignal.data["group"] = list(MGO_ENGINEER, MGA_RKIT)
 		newsignal.data["sender"] = src.net_id
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
 
@@ -786,12 +786,11 @@
 					match_check = 1
 					break
 			if (!match_check)
-				var/obj/tempobj = new X (src)
-				var/datum/electronics/scanned_item/O = ruck_controls.scan_in(tempobj.name,tempobj.type,tempobj.mats)
+				var/typeinfo/obj/typeinfo = get_type_typeinfo(X)
+				var/obj/typedummy = X
+				var/datum/electronics/scanned_item/O = ruck_controls.scan_in(initial(typedummy.name), X, typeinfo.mats)
 				if(O)
 					upload_blueprint(O, "TRANSRKIT", 1)
-					SPAWN(4 SECONDS)
-						qdel(tempobj)
 				S.scanned -= X
 				add_count++
 		if (add_count==  1)
@@ -905,7 +904,8 @@
 	hitsound = 'sound/machines/chainsaw.ogg'
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_SAWING
-	flags = ONBELT | FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	w_class = W_CLASS_NORMAL
 
 	proc/finish_decon(atom/target,mob/user) // deconstructing work
@@ -924,6 +924,9 @@
 			qdel(O)
 		else
 			F.deconstructed_thing = target
+			if(ismob(O.loc))
+				var/mob/M = O.loc
+				M.u_equip(O)
 			O.set_loc(F)
 		// move frame to the location after object is gone, so crushers do not crusher themselves
 		F.set_loc(target_loc)
@@ -960,7 +963,7 @@
 			boutput(user, "<span class='alert'>You cannot deconstruct [target] without sufficient access to operate it.</span>")
 			return
 
-		if(locate(/mob/living) in O)
+		if(length(get_all_mobs_in(O)))
 			boutput(user, "<span class='alert'>You cannot deconstruct [target] while someone is inside it!</span>")
 			return
 
@@ -1022,7 +1025,7 @@
 	if (src.decon_contexts)
 		for(var/datum/contextAction/C in src.decon_contexts)
 			C.dispose()
-	..()
+	. = ..()
 
 /obj/proc/was_deconstructed_to_frame(mob/user)
 	.= 0

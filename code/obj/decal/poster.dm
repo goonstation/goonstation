@@ -496,11 +496,13 @@
 		poster_hair
 			name = "Fabulous Hair!"
 			desc = "There's a bunch of ladies with really fancy hair pictured on this."
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_hair"
 
 		poster_cool
 			name = "cool poster"
 			desc = "There's a couple people pictured on this poster, looking pretty cool."
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_cool3"
 			random_icon_states = list("wall_poster_cool", "wall_poster_cool2", "wall_poster_cool3")
 
@@ -576,18 +578,20 @@
 			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_cool3"
 			pixel_var = 1
-			random_icon_states = list("wall_poster_cool",
-																"wall_poster_cool2",
-																"wall_poster_cool3",
-																"wall_poster_hair",
-																"wall_poster_human",
-																"wall_poster_borg",
-																"wall_poster_sol",
-																"wall_poster_clown",
-																"wall_poster_beach",
-																"wall_poster_discount",
-																"wall_poster_octocluwne",
-																"wall_poser_eyetest")
+			random_icon_states = list(
+				"wall_poster_cool",
+				"wall_poster_cool2",
+				"wall_poster_cool3",
+				"wall_poster_hair",
+				"wall_poster_human",
+				"wall_poster_borg",
+				"wall_poster_sol",
+				"wall_poster_clown",
+				"wall_poster_beach",
+				"wall_poster_discount",
+				"wall_poster_octocluwne",
+				"wall_poster_eyetest"
+			)
 
 		poster_mining
 			name = "mining poster"
@@ -659,10 +663,6 @@
 				..()
 
 				var/which = pick(
-					// old contest winners
-					10;"tea1",
-					10;"tea2",
-					10;"tea3",
 					// the fuck II poster
 					30;"fuckII",
 					// new contest winners
@@ -681,17 +681,6 @@
 					5 ;"contest-other7"
 					)
 				switch(which)
-					if("tea1")
-						src.name = "Tea Hell and Back"
-						src.desc = "<i>Starring Camryn Stern, Edgar Palmer, Ryan Yeets, Jebediah Hawkins, and Frederick Cooper.</i>"
-					if("tea2")
-						src.icon_state = "teaparty2"
-						src.name = "It Came from the Void"
-						src.desc = "<i>Starring William Carr, Bruce Isaman, and Julio Hayhurst.</i>"
-					if("tea3")
-						src.icon_state = "teaparty3"
-						src.name = "Afterlife Activity"
-						src.desc = "<i>Starring Marmalade Addison, Lily White, cockroach, and Darcey Paynter.</i>"
 					if("fuckII")
 						src.name = "\proper fuck II"
 						src.desc = "A poster for \"<em>fuck II: Plumb Fuckled.\"</em>"
@@ -716,7 +705,7 @@
 						src.icon_state = "pack_smart"
 					if("contest-other2")
 						src.name = "Mindhacker Device Poster"
-						src.icon_state = "mindhacker"
+						src.icon_state = "mindhacked"
 					if("contest-other3")
 						src.name = "Edit Wiki"
 						src.icon_state = "edit_wiki"
@@ -859,6 +848,17 @@
 			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "bucket" // sprite by BatElite!
 
+		keep_it_or_melt
+			name = "KEEP IT or MELT"
+			desc = "A poster depicting an emergency suit with large text that reads \"KEEP IT or MELT\". A tiny row of text at the bottom reads \"All personnel receive suits rated for three minutes of exposure.\""
+			icon = 'icons/obj/decals/posters.dmi'
+			icon_state = "keep_it_or_melt"
+
+		eiffelposter //for Jan's office
+			desc = "A poster of the Eiffel Tower in Paris, France."
+			name = "Eiffel Poster"
+			icon = 'icons/misc/janstuff.dmi'
+			icon_state = "poster_eiffel"
 
 ///////////////////////////////////////
 // AZUNGAR'S HEAD OF DEPARTMENT ITEMS// + FIREBARRAGE HELPED TOO BUT HE SMELLS

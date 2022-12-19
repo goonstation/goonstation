@@ -1039,6 +1039,9 @@
 /* -------------------- Wheelchairs -------------------- */
 /* ===================================================== */
 
+TYPEINFO(/obj/stool/chair/comfy/wheelchair)
+	mats = 15
+
 /obj/stool/chair/comfy/wheelchair
 	name = "wheelchair"
 	desc = "It's a chair that has wheels attached to it. Do I really have to explain this to you? Can you not figure this out on your own? Wheelchair. Wheel, chair. Chair that has wheels."
@@ -1052,7 +1055,6 @@
 	var/lying = 0 // didja get knocked over? fall down some stairs?
 	parts_type = /obj/item/furniture_parts/wheelchair
 	mat_appearances_to_ignore = list("steel")
-	mats = 15
 
 	New()
 		..()
@@ -1076,9 +1078,9 @@
 				M.visible_message("<span class='alert'>[M] is tossed out of [src] as it tips [T ? "while rolling over [T]" : "over"]!</span>",\
 				"<span class='alert'>You're tossed out of [src] as it tips [T ? "while rolling over [T]" : "over"]!</span>")
 				var/turf/target = get_edge_target_turf(src, src.dir)
-				M.throw_at(target, 5, 1)
-				M.changeStatus("stunned", 8 SECONDS)
-				M.changeStatus("weakened", 5 SECONDS)
+				M.throw_at(target, 3, 1)
+				M.changeStatus("stunned", 5 SECONDS)
+				M.changeStatus("weakened", 3 SECONDS)
 			else
 				src.visible_message("<span class='alert'>[src] tips [T ? "as it rolls over [T]" : "over"]!</span>")
 		else
@@ -1523,3 +1525,13 @@
 
 		A.UpdateIcon()
 		return
+
+/* ========================================================= */
+/* ---------------------- Pool Chairs ---------------------- */
+/* ========================================================= */
+/obj/stool/chair/pool
+	name = "pool chair"
+	desc = "This chair is perfect for lounging at the side of a pool."
+	icon_state = "chair_pool"
+	rotatable = FALSE
+	foldable = FALSE

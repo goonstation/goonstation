@@ -19,8 +19,8 @@
 	icon = null
 	appearance_flags = PIXEL_SCALE
 
-	proc/set_name(name, extra)
-		src.maptext = {"<span class='pixel c ol'><span style='font-size: 6px;'>[name]</span><br><span style='font-size: 5px;'>[extra]</span></span>"}
+	proc/set_info_tag(name, tag)
+		src.maptext = {"<span class='pixel c ol'><span style='font-size: 6px;'>[name]</span><br><span style='font-size: 5px;'>[tag]</span></span>"}
 
 /atom/movable/name_tag
 	appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
@@ -30,7 +30,7 @@
 	var/image/name_tag_examine/ex_image
 	var/image/name_tag_examine_hover/ex_hover_image
 	var/cur_name = null
-	var/cur_extra = null
+	var/cur_info_tag = null
 
 	New()
 		..()
@@ -38,8 +38,10 @@
 		ex_hover_image = new(null, src)
 
 	disposing()
-		dispose(ex_image)
-		dispose(ex_hover_image)
+		qdel(ex_image)
+		ex_image = null
+		qdel(ex_hover_image)
+		ex_hover_image = null
 		..()
 
 	proc/set_visibility(visible)
@@ -52,13 +54,13 @@
 				new_name = copytext(new_name, 1, paren_pos)
 		if(new_name != src.cur_name)
 			src.ex_image.set_name(new_name)
-			src.ex_hover_image.set_name(new_name, cur_extra)
+			src.ex_hover_image.set_info_tag(new_name, cur_info_tag)
 			src.cur_name = new_name
 
-	proc/set_extra(new_extra)
-		if(new_extra != src.cur_extra)
-			src.ex_hover_image.set_name(cur_name, new_extra)
-			src.cur_extra = new_extra
+	proc/set_info_tag(new_info)
+		if(new_info != src.cur_info_tag)
+			src.ex_hover_image.set_info_tag(cur_name, cur_info_tag)
+			src.cur_info_tag = new_info
 
 	proc/show_images(client/client, ex, ex_hover)
 		if (ex)

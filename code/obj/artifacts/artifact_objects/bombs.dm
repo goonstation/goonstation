@@ -300,6 +300,10 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				O.reagents.smoke_start(50,1)
 			if(3)
 				location.fluid_react(O.reagents, O.reagents.total_volume)
+				var/datum/fluid_group/FG = location.active_liquid?.group
+				if(FG)
+					FG.base_evaporation_time = 30 SECONDS
+					FG.bonus_evaporation_time = 0 SECONDS
 
 		O.reagents.clear_reagents()
 
@@ -335,7 +339,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	warning_final = ""
 	alarm_initial = null
 	alarm_during = null
-	alarm_final = 'sound/machines/satcrash.ogg'
+	alarm_final = 'sound/effects/glitchy1.ogg'
 	var/material = "gold"
 	var/datum/material/mat = null
 	var/affects_organic = 0 // 1 means material human, 2 means material statue
@@ -455,6 +459,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		O.add_filter("rays", 1, rays_filter(size=0, density=20, factor=1, offset=base_offset, threshold=0, color=mat.color))
 		animate(O.get_filter("rays"), size=16*range, time=0.5 SECONDS, offset=base_offset+50)
 		animate(size=32*range, time=0.5 SECONDS, offset=base_offset+50, alpha=0)
+		playsound(O.loc, 'sound/weapons/conc_grenade.ogg', 90, 1)
 
 		SPAWN(1 SECOND)
 			var/range_squared = range**2

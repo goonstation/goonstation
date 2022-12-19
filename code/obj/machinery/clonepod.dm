@@ -7,6 +7,9 @@
 
 #define MAX_FAILED_CLONE_TICKS 200 // vOv
 
+TYPEINFO(/obj/machinery/clonepod)
+	mats = list("MET-1"=35, "honey"=5)
+
 /obj/machinery/clonepod
 	anchored = 1
 	name = "cloning pod"
@@ -15,7 +18,6 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0_lowmeat"
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
-	mats = list("MET-1"=35, "honey"=5)
 	var/meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
 	var/mob/living/occupant
 	var/heal_level = 10 //The clone is released once its health^W damage (maxHP - HP) reaches this level.
@@ -207,7 +209,7 @@
 	// Start cloning someone (transferring mind + DNA into new body),
 	// starting a new clone cycle if needed
 	// Returns 1 (stated) or 0 (failed to start for some reason)
-	proc/growclone(mob/ghost as mob, var/clonename, var/datum/mind/mindref, var/datum/bioHolder/oldholder, var/datum/abilityHolder/oldabilities, var/datum/traitHolder/traits)
+	proc/growclone(mob/ghost as mob, var/clonename, var/datum/mind/mindref, var/datum/bioHolder/oldholder, var/datum/abilityHolder/oldabilities, var/datum/traitHolder/traits, var/datum/cloner_defect_holder/defects)
 		if (((!ghost) || (!ghost.client)) || src.mess || src.attempting)
 			return 0
 
@@ -253,22 +255,40 @@
 			src.occupant.abilityHolder.remove_unlocks()
 
 		ghost.mind.transfer_to(src.occupant)
+		src.occupant.is_npc = FALSE
 
 		if(src.occupant.client) // gross hack for resetting tg layout bleh bluh
 			src.occupant.client.set_layout(src.occupant.client.tg_layout)
 
-		if(!src.perfect_clone && src.occupant.bioHolder.clone_generation > 1)
-			var/health_penalty = (src.occupant.bioHolder.clone_generation - 1) * 15
-			src.occupant.setStatus("maxhealth-", null, -health_penalty)
-			if(health_penalty >= 100)
-				src.occupant.unlock_medal("Quit Cloning Around")
+		if (!defects)
+			stack_trace("Clone [identify_object(src.occupant)] generating with a null `defects` holder.")
+			defects = new /datum/cloner_defect_holder
+
+		// Little weird- we only want to apply cloner defects after they're ejected, so we apply it as soon as they change loc instead of right now
+		defects.apply_to_on_move(src.occupant)
+
+		if (!src.clonehack) // syndies get good clones
+			for (var/i in 1 to rand(0, (src.emagged ? 6 : 3))) // uniform chance between 0-3, 0-6 if emagged
+				defects.add_random_cloner_defect()
+
+		if (length(defects.active_cloner_defects) > 7)
+			src.occupant.unlock_medal("Quit Cloning Around")
 
 		src.mess = FALSE
-		var/puritan = FALSE
+		var/is_puritan = FALSE
 		if (!isnull(traits) && src.occupant.traitHolder)
 			traits.copy_to(src.occupant.traitHolder)
-			puritan = src.occupant.traitHolder.hasTrait("puritan")
-			if (puritan)
+
+
+			#ifndef MAP_OVERRIDE_POD_WARS
+			if(src.occupant.traitHolder.hasTrait("puritan"))
+				is_puritan = TRUE
+
+			for (var/trait as anything in src.occupant?.client.preferences.traitPreferences.traits_selected)
+				if(trait == "puritan")
+					is_puritan = TRUE
+
+			if (is_puritan)
 				src.mess = TRUE
 				// Puritans have a bad time.
 				// This is a little different from how it was before:
@@ -290,6 +310,7 @@
 						for (var/limb in limbs)
 							if (prob(50))
 								P.limbs.sever(limb)
+			#endif
 
 		if (src.mess)
 			boutput(src.occupant, "<span class='notice'><b>Clone generation process initi&mdash;</b></span><span class='alert'> oh fuck oh god oh no no NO <b>NO NO THIS IS NOT GOOD</b></span>")
@@ -314,7 +335,6 @@
 			src.occupant.mind.key = src.occupant.key
 			src.occupant.mind.transfer_to(src.occupant)
 			ticker.minds += src.occupant.mind
-
 		// -- Mode/mind specific stuff goes here
 
 			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && ((src.occupant.mind in ticker.mode:revolutionaries) || (src.occupant.mind in ticker.mode:head_revolutionaries)))
@@ -322,7 +342,8 @@
 
 		// -- End mode specific stuff
 
-		logTheThing(LOG_COMBAT, usr, "starts cloning [constructTarget(src.occupant,"combat")] at [log_loc(src)].")
+		src.occupant.is_npc = FALSE
+		logTheThing(LOG_STATION, usr, "starts cloning [constructTarget(src.occupant,"combat")] at [log_loc(src)].")
 
 		if (isobserver(ghost))
 			qdel(ghost) //Don't leave ghosts everywhere!!
@@ -340,6 +361,17 @@
 			else
 				src.occupant.setStatus("mindhack", null, implant_hacker)
 
+		// Remove zombie antag status as zombie race is removed on cloning
+		var/mob/M = src.occupant
+		if (!M?.mind)
+			logTheThing(LOG_DEBUG, src, "Cloning pod failed to check mind status of occupant [M].")
+		else if (M.mind.get_antagonist(ROLE_ZOMBIE))
+			var/success = M.mind.remove_antagonist(ROLE_ZOMBIE)
+			if (success)
+				logTheThing(LOG_COMBAT, M, "Cloning pod removed zombie antag status.")
+			else
+				logTheThing(LOG_DEBUG, src, "Cloning pod failed to remove zombie antag status from [M] with return code [success].")
+
 		// Someone is having their brain zapped. 75% chance of them being de-antagged if they were one
 		//MBC todo : logging. This shouldn't be an issue thoug because the mindwipe doesn't even appear ingame (yet?)
 		if(src.connected?.mindwipe)
@@ -353,7 +385,7 @@
 		if (src.connected?.BE)
 			src.occupant.bioHolder.AddEffectInstance(src.connected.BE,1)
 
-		if (!puritan)
+		if (!is_puritan)
 			src.occupant.changeStatus("paralysis", 10 SECONDS)
 		previous_heal = src.occupant.health
 		return 1
@@ -567,7 +599,7 @@
 				boutput(user,"<span class='alert'>The cloning pod emits an angry boop!</span>")
 				return
 			user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
-			logTheThing(LOG_COMBAT, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
+			logTheThing(LOG_STATION, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
 			speed_bonus *= 3
 			meat_used_per_tick *= 4
 			is_speedy = 1
@@ -583,7 +615,7 @@
 				boutput(user,"<span class='alert'>The cloning pod emits a[pick("n angry", " grumpy", "n annoyed", " cheeky")] [pick("boop","bop", "beep", "blorp", "burp")]!</span>")
 				return
 			user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
-			logTheThing(LOG_COMBAT, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
+			logTheThing(LOG_STATION, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
 			meat_used_per_tick *= 0.5
 			is_efficient = 1
 			user.drop_item()
@@ -594,7 +626,7 @@
 			if (operating && attempting)
 				boutput(user,"<span class='alert'>The cloning pod emits a[pick("n angry", " grumpy", "n annoyed", " cheeky")] [pick("boop","bop", "beep", "blorp", "burp")]!</span>")
 				return
-			logTheThing(LOG_COMBAT, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
+			logTheThing(LOG_STATION, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
 			clonehack = 1
 			implant_hacker = user
 			light.enable()
@@ -803,6 +835,9 @@
 	*/
 
 //WHAT DO YOU WANT FROM ME(AT)
+TYPEINFO(/obj/machinery/clonegrinder)
+	mats = 10
+
 /obj/machinery/clonegrinder
 	name = "enzymatic reclaimer"
 	desc = "A tank resembling a rather large blender, designed to recover biomatter for use in cloning."
@@ -810,7 +845,6 @@
 	icon_state = "grinder0"
 	anchored = 1
 	density = 1
-	mats = 10
 	var/list/pods = null // cloning pods we're tied to
 	var/id = null // if this isn't null, we'll only look for pods with this ID
 	var/pod_range = 4 // if we don't have an ID, we look for pods in orange(this value)
@@ -1087,10 +1121,8 @@
 		src.icon_state = "grinder[fluid_level]"
 
 		if (update_grindpaddle)
-			src.overlays = null
-			src.overlays += "grindpaddle[src.process_timer > 0 ? 1 : 0]"
-
-			src.overlays += "grindglass[fluid_level]"
+			UpdateOverlays(image(src.icon, "grindpaddle[src.process_timer > 0 ? 1 : 0]"),"paddle")
+			UpdateOverlays(image(src.icon, "grindglass[fluid_level]"),"glass")
 		return
 
 	ex_act(severity)

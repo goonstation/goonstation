@@ -31,4 +31,17 @@
 /datum/aiTask/prioritizer/flock/drone/on_reset()
 	..()
 	if(holder.owner)
-		holder.owner.set_a_intent(INTENT_GRAB)
+		var/mob/living/critter/flock/drone/F = holder.owner
+		F.set_a_intent(INTENT_GRAB)
+		F.flock_name_tag?.set_info_tag(capitalize(src.name))
+
+/datum/aiHolder/flock/drone/tutorial
+
+/datum/aiHolder/flock/drone/tutorial/New()
+	..()
+	default_task = get_instance(/datum/aiTask/prioritizer/flock/drone/tutorial, list(src))
+
+/datum/aiTask/prioritizer/flock/drone/tutorial
+	New()
+		..()
+		transition_tasks = list(holder.get_instance(/datum/aiTask/timed/wait, list(holder, src)))

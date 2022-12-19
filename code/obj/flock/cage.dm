@@ -7,7 +7,7 @@
 	flock_desc = "Spins living matter into Flockdrones. Painfully."
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "cage"
-	flock_id = "matter reprocessor"
+	flock_id = "Matter reprocessor"
 	flags = USEDELAY
 	health = 30
 	health_max = 30
@@ -164,8 +164,13 @@
 	process()
 		// process fluids into stuff
 		if(reagents.has_reagent(target_fluid, create_egg_at_fluid))
+			if (src.flock?.getComplexDroneCount() < FLOCK_DRONE_LIMIT)
+				spawnEgg()
+			else
+				var/obj/item/flockcache/cube = new(get_turf(src))
+				cube.resources = create_egg_at_fluid
 			reagents.remove_reagent(target_fluid, create_egg_at_fluid)
-			spawnEgg()
+
 		if(occupant && src.flock)
 			src.flock.updateEnemy(occupant)
 		// process stuff into fluids
@@ -211,7 +216,7 @@
 				if(target:health <= 0)
 					if(isliving(target))
 						var/mob/living/M = target
-						M.set_loc(src.loc)
+						M.set_loc(src)
 						M.gib()
 						occupant = null
 						playsound(src, 'sound/impact_sounds/Flesh_Tear_2.ogg', 80, 1)
@@ -221,9 +226,9 @@
 							occupant = null
 							playsound(src, 'sound/impact_sounds/Flesh_Tear_2.ogg', 80, 1)
 							src.visible_message("<span class='alert bold'>[src] rips what's left of its occupant to shreds!</span>")
-						target.set_loc(null)
-						qdel(target)
-						target = null
+					target.set_loc(null)
+					qdel(target)
+					target = null
 			else
 				reagents.add_reagent(target_fluid, 10)
 				qdel(target)
@@ -254,6 +259,9 @@
 				var/mob/M = AM
 				M.visible_message("<span class='alert'><b>[M]</b> breaks out of [src]!</span>","<span class='alert'>You break out of [src]!</span>")
 			AM.set_loc(src.loc)
+
+		src.occupant = null
+		src.target = null
 		..()
 
 	relaymove(mob/user as mob)

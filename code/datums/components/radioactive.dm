@@ -32,8 +32,10 @@ TYPEINFO(/datum/component/radioactive)
 		src.effect_range = effectRange
 		if(parent.GetComponent(src.type)) //don't redo the filters and stuff if we're a duplicate
 			return
-		RegisterSignal(parent, list(COMSIG_ATOM_EXAMINE), .proc/examined)
-		RegisterSignal(parent, list(COMSIG_ATOM_CROSSED,
+
+		RegisterSignal(parent, COMSIG_ATOM_RADIOACTIVITY, .proc/get_radioactivity)
+		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, .proc/examined)
+		RegisterSignals(parent, list(COMSIG_ATOM_CROSSED,
 			COMSIG_ATOM_ENTERED,
 			COMSIG_ATTACKHAND,
 			COMSIG_ITEM_EQUIPPED,
@@ -41,10 +43,10 @@ TYPEINFO(/datum/component/radioactive)
 			COMSIG_MOB_GRABBED,
 			COMSIG_ITEM_ATTACK_POST,
 		), .proc/touched)
-		RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED, COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL), .proc/eaten)
+		RegisterSignals(parent, list(COMSIG_ITEM_CONSUMED, COMSIG_ITEM_CONSUMED_PARTIAL), .proc/eaten)
 
 		if(isitem(parent))
-			RegisterSignal(parent, list(COMSIG_ITEM_PROCESS), .proc/ticked)
+			RegisterSignal(parent, COMSIG_ITEM_PROCESS, .proc/ticked)
 			if(!(parent in global.processing_items))
 				global.processing_items.Add(parent)
 				src._added_to_items_processing = TRUE
@@ -78,6 +80,7 @@ TYPEINFO(/datum/component/radioactive)
 		PA.remove_filter("radiation_outline_\ref[src]")
 		PA.remove_filter("radiation_color_\ref[src]")
 		PA.color = src._backup_color
+		UnregisterSignal(parent, list(COMSIG_ATOM_RADIOACTIVITY))
 		UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE))
 		UnregisterSignal(parent, list(COMSIG_ATOM_CROSSED,
 			COMSIG_ATOM_ENTERED,
@@ -87,7 +90,7 @@ TYPEINFO(/datum/component/radioactive)
 			COMSIG_MOB_GRABBED,
 			COMSIG_ITEM_ATTACK_POST,
 		))
-		UnregisterSignal(parent, list(COMSIG_ITEM_CONSUMED, COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL))
+		UnregisterSignal(parent, list(COMSIG_ITEM_CONSUMED, COMSIG_ITEM_CONSUMED_PARTIAL))
 		if(isitem(parent))
 			UnregisterSignal(parent, list(COMSIG_ITEM_PROCESS))
 		else if(ismob(parent))
@@ -111,10 +114,11 @@ TYPEINFO(/datum/component/radioactive)
 		var/atom/PA = parent
 		if(ismob(PA.loc)) //if you're holding it in your hand, you're not a viewer, so special handling
 			var/mob/M = PA.loc
-			M.take_radiation_dose(mult * (neutron ? 0.8 SIEVERTS: 0.2 SIEVERTS) * (radStrength/100))
+			if(!ON_COOLDOWN(M, "radiation_exposure", 0.5 SECONDS))
+				M.take_radiation_dose(mult * (neutron ? 0.8 SIEVERTS: 0.2 SIEVERTS) * (radStrength/100))
 		for(var/mob/living/M in hearers(effect_range, parent)) //hearers is basically line-of-sight
 			if(!ON_COOLDOWN(M,"radiation_exposure", 0.5 SECONDS) && !isintangible(M)) //shorter than item tick time, so you can get multiple doses but there's a limit
-				M.take_radiation_dose(mult * (neutron ? 0.8 SIEVERTS: 0.2 SIEVERTS) * (radStrength/100) * 1/((GET_DIST(M, PA)/(src.effect_range+1)) + 1))
+				M.take_radiation_dose(mult * (neutron ? 0.8 SIEVERTS: 0.2 SIEVERTS) * (radStrength/100) * 1/((GET_DIST(M, PA)/(src.effect_range+1)) + 1) * 0.8)
 		if(src.decays && prob(33))
 			src.radStrength = max(0, src.radStrength - (1 * mult))
 			src.do_filters()
@@ -149,3 +153,9 @@ TYPEINFO(/datum/component/radioactive)
 
 		lines += "[ismob(owner) ? capitalize(he_or_she(owner)) : "It"] is [rad_word] with a [pick("fuzzy","sickening","nauseating","worrying")] [neutron ? "blue" : "green"] light.[examiner.job == "Clown" ? " You should touch [ismob(owner) ? him_or_her(owner) : "it"]!" : ""]"
 
+	/// Returns level of radioactivity (0 to 100) - note that SEND_SIGNAL returns 0 if the signal is not registered
+	proc/get_radioactivity(atom/owner, list/return_val)
+		if(isnull(return_val))
+			return_val = list()
+		return_val += src.radStrength
+		return TRUE

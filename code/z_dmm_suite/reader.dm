@@ -21,6 +21,7 @@ dmm_suite
 	default to (1, 1, world.maxz+1)
 	*/
 	read_map(dmm_text as text, coordX as num, coordY as num, coordZ as num, tag as text, flags as num)
+		UNTIL(!air_master?.is_busy)
 		src.flags = flags
 		if(flags & DMM_BESPOKE_AREAS)
 			src.area_cache = list()
@@ -209,7 +210,7 @@ dmm_suite
 			// Cancel if atomPath is a placeholder (DMM_IGNORE flags used to write file)
 			if(ispath(atomPath, /turf/dmm_suite/clear_turf) || ispath(atomPath, /area/dmm_suite/clear_area))
 				return
-			if(ispath(atomPath, /turf/space)) return //Dont load space
+			if((flags & DMM_LOAD_SPACE) && ispath(atomPath, /turf/space)) return //Dont load space
 			// Parse all attributes and create preloader
 			var /list/attributesMirror = list()
 			var /turf/location = locate(xcrd, ycrd, zcrd)
@@ -237,7 +238,10 @@ dmm_suite
 				if(ispath(atomPath, /turf))
 					//instance = new atomPath(location)
 					instance = location.ReplaceWith(atomPath, keep_old_material = 0, handle_air = 0, handle_dir = 0, force = 1)
-					instance.set_dir(initial(instance.dir))
+					if(instance) // I hate that we made it so ReplaceWith can return null, it sucks so much
+						instance.set_dir(initial(instance.dir))
+					else
+						location.set_dir(initial(instance.dir))
 				else
 					if (atomPath)
 						instance = new atomPath(location)

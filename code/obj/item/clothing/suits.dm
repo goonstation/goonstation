@@ -223,6 +223,7 @@
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 
 	setupProperties()
 		..()
@@ -258,7 +259,12 @@
 	icon_state = "paramedic"
 	item_state = "paramedic"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_SHOES
 	protective_temperature = 3000
+#ifdef MAP_OVERRIDE_NADIR
+	c_flags = SPACEWEAR
+	acid_survival_time = 5 MINUTES
+#endif
 
 	setupProperties()
 		..()
@@ -324,6 +330,7 @@
 	item_state = "hev"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 
 	setupProperties()
 		..()
@@ -342,6 +349,7 @@
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 
 	New()
 		. = ..()
@@ -420,6 +428,7 @@
 	icon_state = "judge"
 	item_state = "judge"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM
 
 /obj/item/clothing/suit/chef
 	name = "chef's coat"
@@ -549,6 +558,7 @@
 	coat_style = "MDlabcoat"
 
 	april_fools
+		desc = "A protective laboratory coat with the blue markings of a Medical Doctor."
 		icon_state = "MDlabcoat-alt"
 		item_state = "MDlabcoat-alt"
 		coat_style = "MDlabcoat-alt"
@@ -556,6 +566,18 @@
 	cool
 		icon_state = "MDlabcoat-cool"
 		coat_style = "MDlabcoat-cool"
+
+/obj/item/clothing/suit/labcoat/medical_director
+	name = "medical director's labcoat"
+	desc = "The Medical Directors personal labcoat, its creation was commisioned and designed by the director themself."
+	icon_state = "MDlonglabcoat"
+	item_state = "MDlonglabcoat"
+	coat_style = "MDlonglabcoat"
+
+	april_fools
+		icon_state = "MDlonglabcoat-alt"
+		item_state = "MDlonglabcoat-alt"
+		coat_style = "MDlonglabcoat-alt"
 
 /obj/item/clothing/suit/labcoat/pathology
 	name = "pathologist's labcoat"
@@ -595,6 +617,7 @@
 	item_state = "straight_jacket"
 	body_parts_covered = TORSO|LEGS|ARMS
 	restrain_wearer = TRUE
+	hides_from_examine = C_UNIFORM
 
 	setupProperties()
 		..()
@@ -628,6 +651,7 @@
 	throw_speed = 2
 	throw_range = 10
 	c_flags = COVERSEYES | COVERSMOUTH
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_GLASSES|C_EARS
 	body_parts_covered = TORSO|ARMS
 	see_face = FALSE
 	over_hair = TRUE
@@ -911,6 +935,7 @@
 	icon_state = "fire"
 	item_state = "fire_suit"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_SHOES
 	protective_temperature = 4500
 
 	setupProperties()
@@ -950,6 +975,7 @@
 	desc = "A suit that protects against extreme fire and heat."
 	icon_state = "thermal"
 	item_state = "thermal"
+	hides_from_examine = C_UNIFORM|C_SHOES|C_GLOVES
 
 	protective_temperature = 100000
 
@@ -1038,6 +1064,7 @@
 	item_state = "s_suit"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_SHOES|C_GLOVES
 	duration_remove = 6 SECONDS
 	duration_put = 6 SECONDS
 	protective_temperature = 1000
@@ -1068,6 +1095,7 @@
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
 	var/rip = 0
+	acid_survival_time = 3 MINUTES
 
 	setupProperties()
 		..()
@@ -1092,14 +1120,14 @@
 		item_state = "spacecap-red"
 
 /obj/item/clothing/suit/space/syndicate_worn
-	name = "worn red space suit"
+	name = "worn syndicate space suit"
 	icon_state = "syndicate"
 	item_state = "space_suit_syndicate"
 	desc = "A suit that protects against low pressure environments. Issued to syndicate operatives. Looks like this one has seen better days."
 	contraband = 3
 
 /obj/item/clothing/suit/space/syndicate
-	name = "red space suit"
+	name = "syndicate space suit"
 	icon_state = "syndicate"
 	item_state = "space_suit_syndicate"
 	desc = "A suit that protects against low pressure environments. Issued to syndicate operatives."
@@ -1110,6 +1138,9 @@
 	New()
 		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	setupProperties()
+		..()
 		setProperty("heatprot", 35)
 
 	#ifdef MAP_OVERRIDE_POD_WARS
@@ -1138,6 +1169,7 @@
 		icon_state = "commissar_greatcoat"
 		desc = "A fear-inspiring, black-leather great coat, typically worn by a Syndicate Nuclear Operative Commander. So scary even the vacuum of space doesn't dare claim the wearer."
 		team_num = TEAM_SYNDICATE
+		hides_from_examine = C_UNIFORM|C_SHOES
 		#ifdef MAP_OVERRIDE_POD_WARS
 		attack_hand(mob/user)
 			if (get_pod_wars_team_num(user) == team_num)
@@ -1247,10 +1279,23 @@
 	desc = "A specialised Nanotrasen space suit, with an integrated chest rig."
 	icon_state = "ntso_specialist"
 	item_state = "ntso_specialist"
+	acid_survival_time = 6 MINUTES
 
 	setupProperties()
 		..()
 		setProperty("space_movespeed", 0)  // ntso space suits don't suffer from slowdown
+
+/obj/item/clothing/suit/space/ntso/bellona
+	name = "NTSO combat dress"
+	desc = "A modernized NTSO combat suit, with an integrated energy shield."
+	icon_state = "ntso_bellona"
+	item_state = "ntso_bellona"
+
+	New()
+		. = ..()
+		var/obj/item/ammo/power_cell/self_charging/cell = new/obj/item/ammo/power_cell/self_charging{max_charge = 100; recharge_rate = 25; recharge_delay = 10 SECONDS}
+		AddComponent(/datum/component/cell_holder, cell, FALSE, 100, FALSE)
+		AddComponent(/datum/component/wearertargeting/energy_shield, list(SLOT_WEAR_SUIT), 1, 1, TRUE, 0) //blocks 100% of damage taken, up to 100 damage total. No drain
 
 /obj/item/clothing/suit/space/engineer
 	name = "engineering space suit"
@@ -1302,6 +1347,7 @@
 	desc = "A diving suit designed to withstand the pressure of working deep undersea."
 	icon_state = "diving_suit"
 	item_state = "diving_suit"
+	acid_survival_time = 8 MINUTES
 
 	setupProperties()
 		..()
@@ -1327,10 +1373,18 @@
 		icon_state = "diving_suit-eng"
 		item_state = "diving_suit-eng"
 
+TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
+	mats = 45 //should not be cheap to make at mechanics, increased from 15.
+
 /obj/item/clothing/suit/space/industrial
+#ifdef MAP_OVERRIDE_NADIR
+	desc = "Armored, immersion-tight suit. Protects from a wide gamut of environmental hazards, including radiation and explosions."
+#else
 	desc = "Very heavy armour for prolonged industrial activity. Protects from radiation and explosions."
+#endif
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
+	acid_survival_time = 8 MINUTES
 
 #ifdef UNDERWATER_MAP
 	name = "industrial diving suit"
@@ -1366,7 +1420,6 @@
 		is_syndicate = TRUE
 		icon_state = "indusred"
 		item_state = "indusred"
-		mats = 45 //should not be cheap to make at mechanics, increased from 15.
 
 		New()
 			..()
@@ -1465,6 +1518,7 @@
 	over_hair = TRUE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM
 
 	setupProperties()
 		..()
@@ -1504,6 +1558,7 @@
 	wear_layer = MOB_OVERLAY_BASE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM
 	over_hair = TRUE
 
 	setupProperties()
@@ -1517,6 +1572,7 @@
 	item_state = "wizard"
 	magical = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM
 	contraband = 4
 	duration_remove = 10 SECONDS
 
@@ -1648,6 +1704,7 @@
 	icon_state = "witchfinder"
 	item_state = "witchfinder"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM
 
 	setupProperties()
 		..()
@@ -1664,6 +1721,7 @@
 	icon_state = "nursedress"
 	item_state = "nursedress"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM
 
 /obj/item/clothing/suit/chemsuit
 	name = "chemical protection suit"
@@ -1674,6 +1732,7 @@
 	icon_state = "chem_suit"
 	item_state = "chem_suit"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 
 	setupProperties()
 		..()
@@ -1730,6 +1789,7 @@
 	icon_state = "snowcoat"
 	item_state = "snowcoat"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_SHOES
 
 	setupProperties()
 		..()

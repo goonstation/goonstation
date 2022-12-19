@@ -22,10 +22,10 @@
 	var/encase_in_web = 1 // do they encase people in ice, web, or uh, cotton candy?
 	var/reacting = 1 // when they inject their venom, does it react immediately or not?
 
-	var/health_brute = 50
-	var/health_brute_vuln = 0.45
-	var/health_burn = 50
-	var/health_burn_vuln = 0.65
+	health_brute = 50
+	health_brute_vuln = 0.45
+	health_burn = 50
+	health_burn_vuln = 0.65
 	reagent_capacity = 100
 
 	can_help = 1
@@ -172,23 +172,6 @@
 		//if flail is diabled, we're flailing, so can't attack, otherwise we can always do bite/scratch
 		return can_act(src,TRUE) && !flail.disabled
 
-
-	Login()
-		. = ..()
-		//Disable the AI when a player takes control
-		if(src.client)
-			src.is_npc = FALSE
-
-	Logout()
-		. = ..()
-		//Enable the AI when a player loses control
-		if(!src.client)
-			src.is_npc = TRUE
-			src.ai?.enabled = TRUE
-			src.ai?.interrupt() //trigger a task re-evaluation
-
-
-
 /mob/living/critter/spider/nice
 	name = "bumblespider"
 	real_name = "bumblespider"
@@ -197,7 +180,6 @@
 	icon_state_dead = "bumblespider-dead"
 	density = 0
 	flags = TABLEPASS
-	fits_under_table = 1
 	health_brute = 30
 	health_burn = 30
 	good_grip = 0
@@ -264,6 +246,9 @@
 	encase_in_web = 0
 	max_skins = 4
 	reacting = 0
+
+/mob/living/critter/spider/ice/nice
+	ai_type = /datum/aiHolder/spider_peaceful
 
 /mob/living/critter/spider/ice/baby
 	name = "baby ice spider"

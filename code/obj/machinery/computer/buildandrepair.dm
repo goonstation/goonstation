@@ -14,6 +14,9 @@
 //	weight = 1.0E8
 
 ABSTRACT_TYPE(/obj/item/circuitboard)
+TYPEINFO(/obj/item/circuitboard)
+	mats = 6
+
 /obj/item/circuitboard
 	density = 0
 	anchored = 0
@@ -28,7 +31,6 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 	var/computertype = null
 	var/powernet = null
 	var/list/records = null
-	mats = 6
 
 	New()
 		. = ..()
@@ -150,6 +152,9 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 /obj/item/circuitboard/qmsupply
 	name = "Circuit board (Quartermaster's Console)"
 	computertype = "/obj/machinery/computer/supplycomp"
+/obj/item/circuitboard/transception
+	name = "Circuit board (Transception Interlink)"
+	computertype = "/obj/machinery/computer/transception"
 /obj/item/circuitboard/mining_magnet
 	name = "Circuit board (Mining Magnet Computer)"
 	computertype = "/obj/machinery/computer/magnet"

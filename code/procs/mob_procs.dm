@@ -482,6 +482,9 @@
 	var/datum/pronouns/pronouns = subject.get_pronouns()
 	return pronouns.subjective + (pronouns.pluralize ? "'re" : "'s")
 
+/proc/is_or_are(var/mob/subject)
+	return (subject.get_pronouns().pluralize ? "are" : "is")
+
 /proc/himself_or_herself(var/mob/subject)
 	return subject.get_pronouns().reflexive
 
@@ -752,6 +755,7 @@
 	var/see_heads = 0
 	var/see_xmas = 0
 	var/see_zombies = 0
+	var/see_salvager = 0
 	var/see_special = 0 // Just a pass-through. Game mode-specific stuff is handled further down in the proc.
 	var/see_everything = 0
 	var/datum/gang/gang_to_see = null
@@ -803,6 +807,8 @@
 			see_zombies = 1
 		else if (src.mind && src.mind.special_role == ROLE_GRINCH)
 			see_xmas = 1
+		else if (src.mind && src.mind.special_role == ROLE_SALVAGER)
+			see_salvager = 1
 
 	// Clear existing overlays.
 	delete_overlays:
@@ -817,7 +823,7 @@
 	if (remove)
 		return
 
-	if (!see_traitors && !see_nukeops && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_zombies && !see_special && !see_everything && gang_to_see == null && PWT_to_see == null && !V && !VT)
+	if (!see_traitors && !see_nukeops && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_zombies && !see_salvager && !see_special && !see_everything && gang_to_see == null && PWT_to_see == null && !V && !VT)
 		src.last_overlay_refresh = world.time
 		return
 
@@ -912,6 +918,10 @@
 				if (ROLE_ZOMBIE)
 					if (see_everything || see_zombies)
 						var/I = image(antag_generic, loc = M.current)
+						can_see.Add(I)
+				if (ROLE_SALVAGER)
+					if (see_everything || see_salvager)
+						var/I = image(antag_salvager, loc = M.current)
 						can_see.Add(I)
 				else
 					if (see_everything)

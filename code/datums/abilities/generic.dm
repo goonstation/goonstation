@@ -66,6 +66,7 @@
 		..()
 
 		var/mob/M = holder.owner
+		logTheThing(LOG_COMBAT, M, "chairflips from [log_loc(M)], vector: ([target.x - M.x], [target.y - M.y]), dir: <i>[dir2text(get_dir(M, target))]</i>")
 		check_mutantrace(M)
 		if (GET_DIST(M,target) > dist)
 			var/steps = 0
@@ -127,8 +128,6 @@
 				src.visible_message("<b><span class='alert'>[src] bounces off [M] harmlessly!</span></b>")
 				return
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
-			if (prob(25))
-				M.emote("scream")
 
 			logTheThing(LOG_COMBAT, src, "[src] chairflips into [constructTarget(M,"combat")], [log_loc(M)].")
 			M.lastattacker = src
@@ -183,10 +182,9 @@
 		var/mob/living/M = holder.owner
 		if (M.ai && M.is_npc)
 			if(M.ai.enabled )
-				M.ai.enabled = FALSE
+				M.ai.disable()
 			else
-				M.ai.enabled = TRUE
-				M.ai.interrupt()
+				M.ai.enable()
 		else if( M.is_npc && ishuman(M) )
 			var/mob/living/carbon/human/H = M
 			H.ai_set_active(!H.ai_active)

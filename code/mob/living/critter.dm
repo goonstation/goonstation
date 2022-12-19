@@ -34,6 +34,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 	var/can_throw = 0
 	var/can_choke = 0
 	var/in_throw_mode = 0
+	var/health_brute = null
+	var/health_burn = null
+	var/health_brute_vuln = null
+	var/health_burn_vuln = null
 
 	var/can_help = 0
 	var/can_grab = 0
@@ -93,7 +97,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 		setup_equipment_slots()
 		setup_reagents()
 		setup_healths()
-		if (!healthlist.len)
+		if (!length(healthlist))
 			stack_trace("Critter [type] ([name]) \[\ref[src]\] does not have health holders.")
 		count_healths()
 
@@ -135,6 +139,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 		SPAWN(0.5 SECONDS) //if i don't spawn, no abilities even show up
 			if (abilityHolder)
 				abilityHolder.updateButtons()
+
+		#ifdef NO_CRITTERS
+		START_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
 
 	disposing()
 		if(organHolder)
@@ -179,8 +187,8 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 	///enables mob ai that was disabled by a hibernation task
 	proc/wake_from_hibernation()
-		if(src.is_npc)
-			src.ai?.enabled = TRUE
+		if(src.is_npc && !src.client)
+			src.ai?.enable()
 			src.last_hibernation_wake_tick = TIME
 			src.registered_area?.registered_mob_critters -= src
 			src.registered_area = null
@@ -938,6 +946,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 				EH.drop(1)
 
 	emote(var/act, var/voluntary = 0)
+		..()
 		var/param = null
 
 		if (findtext(act, " ", 1, null))
@@ -1276,7 +1285,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 			src.set_a_intent(INTENT_HARM )
 			hud.update_intent()
 		if ("drop")
-			src.drop_item()
+			src.drop_item(null, TRUE)
 		if ("swaphand")
 			src.swap_hand()
 		if ("attackself")
@@ -1377,12 +1386,12 @@ ABSTRACT_TYPE(/mob/living/critter)
 /mob/living/critter/Logout()
 	..()
 	if (src.ai && !src.ai.enabled && src.is_npc)
-		ai.enabled = TRUE
+		ai.enable()
 
 /mob/living/critter/Login()
 	..()
 	if (src.ai?.enabled && src.is_npc)
-		ai.enabled = FALSE
+		ai.disable()
 		var/datum/targetable/A = src.abilityHolder?.getAbility(/datum/targetable/ai_toggle)
 		A?.updateObject()
 

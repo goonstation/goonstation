@@ -18,8 +18,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	var/max_generations = 2
 	/// Optional simple sentence that describes how the traits appears on the material. i.e. "It is shiny."
 	var/desc = ""
-	/// The material that owns this trigger
-	var/datum/material/owner = null
 
 	proc/execute()
 		return
@@ -31,6 +29,20 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		M.reagents.add_reagent("prions", 15)
 		return
 */
+
+/datum/materialProc/onpickup_butt
+	var/static/list/sound_fart = list('sound/voice/farts/poo2.ogg', \
+								'sound/voice/farts/fart1.ogg', \
+								'sound/voice/farts/fart2.ogg', \
+								'sound/voice/farts/fart3.ogg', \
+								'sound/voice/farts/fart4.ogg', \
+								'sound/voice/farts/fart5.ogg')
+
+	execute(var/mob/M, var/obj/item/I)
+		if(prob(10) && !ON_COOLDOWN(I, "material_fart", 2 SECONDS))
+			playsound(I, pick(src.sound_fart), 40, 0 , 0, (1.5 - rand()), channel=VOLUME_CHANNEL_EMOTE)
+			M.visible_message("<span class='emote'>\the [I] lets out a little toot as [M] squeezes it.</span>")
+
 /datum/materialProc/oneat_viscerite
 	max_generations = -1
 
@@ -330,14 +342,14 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/plasmastone
 	var/total_plasma = 500
 
-	execute(var/location) //exp and temp both have the location as first argument so i can use this for both.
+	execute(var/atom/location) //exp and temp both have the location as first argument so i can use this for both.
 		var/turf/T = get_turf(location)
-		if(!T || T.density)
+		if(!T || T.density || !istype(location))
 			return
 		if(total_plasma <= 0)
-			if(prob(2) && src.owner.owner)
-				src.owner.owner.visible_message("<span class='alert>[src.owner.owner] dissipates.</span>")
-				qdel(src.owner.owner)
+			if(prob(2) && location)
+				location.visible_message("<span class='alert>[location] dissipates.</span>")
+				qdel(location)
 			return
 		for (var/turf/simulated/floor/target in range(1,location))
 			if(ON_COOLDOWN(target, "plasmastone_plasma_generate", 10 SECONDS)) continue
@@ -358,16 +370,14 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		owner.material.triggerTemp(locate(owner))
 
 /datum/materialProc/molitz_temp
-	var/unresonant = 1
-	var/iterations = 4 // big issue I had was that with the strat that Im designing this for (teleporting crystals in and out of engine) one crystal could last you for like, 50 minutes, I didnt want to keep on reducing total amount as itd nerf agent b collection hard. So instead I drastically reduced amount and drastically upped output. This would speed up farming agent b to 3 minutes per crystal, which Im fine with
-	execute(var/atom/location, var/temp, var/agent_b=FALSE)
-		var/turf/target = get_turf(location)
-		if(owner.hasProperty("resonance"))
-			if(unresonant == 1)
-				iterations = max(iterations, 2)
-				unresonant -= 1
-		if(iterations <= 0) return
-		if(ON_COOLDOWN(location, "molitz_gas_generate", 30 SECONDS)) return
+	max_generations = 1
+	execute(var/atom/owner, var/temp, var/agent_b=FALSE)
+		if(!istype(owner.material, /datum/material/crystal/molitz))
+			return
+		var/datum/material/crystal/molitz/molitz = owner.material
+		var/turf/target = get_turf(owner)
+		if(molitz.iterations <= 0) return
+		if(ON_COOLDOWN(owner, "molitz_gas_generate", 30 SECONDS)) return
 
 		var/datum/gas_mixture/air = target.return_air()
 		if(!air) return
@@ -378,46 +388,57 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 		if(agent_b && air.temperature > 500 && air.toxins > MINIMUM_REACT_QUANTITY )
 			var/datum/gas/oxygen_agent_b/trace_gas = payload.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
-			payload.temperature = T0C // Greatly reduce temperature to simulate an endothermic reaction
-			// Itr: .18 Agent B, 20 oxy, 1.3 minutes per iteration, realisticly around 7-8 minutes per crystal.
+			payload.temperature = T0C
 
-			animate_flash_color_fill_inherit(location,"#ff0000",4, 2 SECONDS)
-			playsound(location, 'sound/effects/leakagentb.ogg', 50, 1, 8)
-			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, location))
-				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(location))
+			animate_flash_color_fill_inherit(owner,"#ff0000",4, 2 SECONDS)
+			playsound(owner, 'sound/effects/leakagentb.ogg', 50, 1, 8)
+			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, owner))
+				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(owner))
 			trace_gas.moles += 0.18
-			iterations -= 1
-			payload.oxygen = 20
+			molitz.iterations -= 1
+			payload.oxygen = 15
 
 			target.assume_air(payload)
 		else
-			animate_flash_color_fill_inherit(location,"#0000FF",4, 2 SECONDS)
-			playsound(location, 'sound/effects/leakoxygen.ogg', 50, 1, 5)
+			animate_flash_color_fill_inherit(owner,"#0000FF",4, 2 SECONDS)
+			playsound(owner, 'sound/effects/leakoxygen.ogg', 50, 1, 5)
 			payload.oxygen = 80
-			iterations -= 1
+			molitz.iterations -= 1
 
 			target.assume_air(payload)
 
+
+
 /datum/materialProc/molitz_temp/agent_b
+	max_generations = 1
 	execute(var/atom/location, var/temp)
 		..(location, temp, TRUE)
 		return
 
 /datum/materialProc/molitz_exp
-	var/maxexplode = 1
-	execute(var/atom/location, var/sev)
-		if(maxexplode <= 0) return
-		var/turf/target = get_turf(location)
+	max_generations = 1
+	execute(var/atom/owner, var/sev)
+		if(!istype(owner.material, /datum/material/crystal/molitz))
+			return
+		var/datum/material/crystal/molitz/molitz = owner.material
+		if(molitz.unexploded <= 0)
+			return
+		var/turf/target = get_turf(owner)
 		if(sev > 0 && sev < 4) // Use pipebombs not canbombs!
+			if(molitz.iterations >= 1)
+				playsound(owner, 'sound/effects/leakoxygen.ogg', 50, 1, 5)
+			if(molitz.iterations == 0)
+				playsound(owner, 'sound/effects/molitzcrumble.ogg', 50, 1, 5)
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
 			payload.oxygen = 50
 			payload.temperature = T20C
 			target.assume_air(payload)
-			maxexplode -= 1
-			if(owner)
-				owner.setProperty("resonance", 1)
+			molitz.iterations = 2
+			molitz.unexploded = 0
+
 
 /datum/materialProc/molitz_on_hit
+	max_generations = 1
 	execute(var/atom/owner, var/obj/attackobj)
 		owner.material.triggerTemp(owner, 1500)
 
@@ -429,7 +450,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/radioactive_add
 	execute(var/atom/location)
 		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
-		location.AddComponent(/datum/component/radioactive, location.material.getProperty("radioactive")*10, FALSE, FALSE)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty("radioactive")*10, FALSE, FALSE, isitem(location) ? 0 : 1)
 		return
 
 /datum/materialProc/radioactive_remove
@@ -442,7 +463,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/n_radioactive_add
 	execute(var/atom/location)
 		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
-		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive")*10, FALSE, TRUE)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive")*10, FALSE, TRUE, isitem(location) ? 0 : 1)
 		return
 
 /datum/materialProc/n_radioactive_remove
@@ -541,7 +562,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/reflective_onbullet
 	execute(var/obj/item/owner, var/atom/attacked, var/obj/projectile/projectile)
 		if(projectile.proj_data.damage_type & D_BURNING || projectile.proj_data.damage_type & D_ENERGY)
-			shoot_reflected_bounce(projectile, owner) //shoot_reflected_to_sender()
+			shoot_reflected_bounce(projectile, owner, 4) //shoot_reflected_to_sender()
 		return
 
 /datum/materialProc/negative_add
@@ -678,5 +699,3 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				attacker.visible_message("<span class='alert'>Cuts apart [owner], revealing space!</span>","<span class='alert'>You finish cutting apart [owner], revealing space.</span>","The sound of cutting cardboard stops.")
 				floor_owner.ReplaceWithSpace()
 				return
-
-

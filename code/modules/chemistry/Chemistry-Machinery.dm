@@ -9,6 +9,9 @@
 // Removed quite a bit of of duplicate code here (Convair880).
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+TYPEINFO(/obj/machinery/chem_heater)
+	mats = 15
+
 /obj/machinery/chem_heater
 	name = "Reagent Heater/Cooler"
 	desc = "A device used for the slow but precise heating and cooling of chemicals. It looks like a cross between an oven and a urinal."
@@ -17,7 +20,6 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "heater"
 	flags = NOSPLASH | TGUI_INTERACTIVE
-	mats = 15
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	power_usage = 50
 	var/obj/beaker = null
@@ -288,6 +290,9 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+TYPEINFO(/obj/machinery/chem_master)
+	mats = 15
+
 /obj/machinery/chem_master
 	name = "CheMaster 3000"
 	desc = "A computer-like device used in the production of various pharmaceutical items. It has a slot for a beaker on the top."
@@ -296,7 +301,6 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
 	flags = NOSPLASH
-	mats = 15
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/obj/item/beaker = null
 	var/list/whitelist = list()
@@ -368,7 +372,7 @@
 		var/datum/reagents/R = beaker.reagents
 
 		if (href_list["analyze"])
-			var/dat = "<TITLE>CheMaster 3000</TITLE>Chemical infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
+			var/dat = "<TITLE>CheMaster 3000</TITLE>Chemical infos:<BR><BR><b>Name:</b><BR>&emsp;[href_list["name"]]<BR><BR><b>Description:</b><BR>&emsp;[href_list["desc"]]<BR><BR><BR>[href_list["recipe"]]<BR><BR><BR> <A href='?src=\ref[src];main=1'>(Back)</A>"
 			usr.Browse(dat, "window=chem_master;size=575x400;title=CheMaster 3000")
 			return
 		else if (href_list["isolate"])
@@ -399,7 +403,7 @@
 
 		else if (href_list["createpill"])
 			var/default = R.get_master_reagent_name()
-			var/input_name = input(usr, "Name the pill:", "Name", default) as null|text
+			var/input_name = tgui_input_text(usr, "Name the pill:", "Name", default)
 			if(input_name && input_name != default)
 				phrase_log.log_phrase("pill", input_name, no_duplicates=TRUE)
 			var/pillname = copytext(html_encode(input_name), 1, 32)
@@ -410,7 +414,8 @@
 			R.trans_to(P, 100)//R.total_volume) we can't move all of the reagents if it's >100u so let's only move 100u
 			color_icon(P)
 			src.updateUsrDialog()
-			logTheThing(LOG_COMBAT, usr, "used the [src.name] to create a [pillname] pill containing [log_reagents(P)] at [log_loc(src)].")
+
+			logTheThing(LOG_CHEMISTRY, usr, "used the [src.name] to create a [pillname] pill containing [log_reagents(P)] at [log_loc(src)].")
 			return
 
 		else if (href_list["togglepillbottle"])
@@ -421,7 +426,7 @@
 		else if (href_list["multipill"])
 			// get the pill name from the user
 			var/default = R.get_master_reagent_name()
-			var/input_pillname = input(usr, "Name the pill:", "Name", default) as null|text
+			var/input_pillname = tgui_input_text(usr, "Name the pill:", "Name", default)
 			var/pillname = copytext(html_encode(input_pillname), 1, 32)
 			if(input_pillname && input_pillname != default)
 				phrase_log.log_phrase("pill", input_pillname, no_duplicates=TRUE)
@@ -434,7 +439,7 @@
 			pillvol = clamp(pillvol, 5, 100)
 			// maths
 			var/pillcount = round(R.total_volume / pillvol) // round with a single parameter is actually floor because byond
-			logTheThing(LOG_COMBAT, usr, "used the [src.name] to create [pillcount] [pillname] pills containing [log_reagents(R)] at [log_loc(src)].")
+			logTheThing(LOG_CHEMISTRY, usr, "used the [src.name] to create [pillcount] [pillname] pills containing [log_reagents(R)] at [log_loc(src)].")
 			var/use_bottle = src.pill_bottle
 			if (pillcount > 20) // if you're trying to make a huge pile of pills you get a bottle regardless of what the machine is set to
 				use_bottle = 1
@@ -457,7 +462,7 @@
 
 		else if (href_list["createbottle"])
 			var/default = R.get_master_reagent_name()
-			var/input_name = input(usr, "Name the bottle:", "Name", default) as null|text
+			var/input_name = tgui_input_text(usr, "Name the bottle:", "Name", default)
 			if(input_name && input_name != default)
 				phrase_log.log_phrase("bottle", input_name, no_duplicates=TRUE)
 			var/bottlename = copytext(html_encode(input_name), 1, 32)
@@ -468,12 +473,12 @@
 			R.trans_to(B,50)
 			B.name = "[bottlename] bottle"
 			src.updateUsrDialog()
-			logTheThing(LOG_COMBAT, usr, "used the [src.name] to create [bottlename] bottle containing [log_reagents(B)] at log_loc[src].")
+			logTheThing(LOG_CHEMISTRY, usr, "used the [src.name] to create [bottlename] bottle containing [log_reagents(B)] at log_loc[src].")
 			return
 
 		else if (href_list["createcan"])
 			var/default = R.get_master_reagent_name()
-			var/input_name = input(usr, "Name the can:", "Name", default) as null|text
+			var/input_name = tgui_input_text(usr, "Name the can:", "Name", default)
 			if(input_name && input_name != default)
 				phrase_log.log_phrase("bottle", input_name, no_duplicates=TRUE)
 			var/bottlename = copytext(html_encode(input_name), 1, 32)
@@ -495,11 +500,11 @@
 
 			C.name = "[bottlename]"
 			src.updateUsrDialog()
-			logTheThing(LOG_COMBAT, usr, "used the [src.name] to create a can named [bottlename] containing [log_reagents(C)] at log_loc[src].")
+			logTheThing(LOG_CHEMISTRY, usr, "used the [src.name] to create a can named [bottlename] containing [log_reagents(C)] at log_loc[src].")
 			return
 
 		else if (href_list["createpatch"])
-			var/input_name = input(usr, "Name the patch:", "Name", R.get_master_reagent_name()) as null|text
+			var/input_name = tgui_input_text(usr, "Name the patch:", "Name", R.get_master_reagent_name())
 			var/patchname = copytext(html_encode(input_name), 1, 32)
 			if (isnull(patchname) || !src.beaker || R.total_volume <= CHEM_EPSILON || !R || !length(patchname) || patchname == " " || BOUNDS_DIST(usr, src) > 0)
 				return
@@ -516,7 +521,7 @@
 			P.medical = med
 			P.on_reagent_change()
 			src.updateUsrDialog()
-			logTheThing(LOG_COMBAT, usr, "used the [src.name] to create a [patchname] patch containing [log_reagents(P)] at [log_loc(src)].")
+			logTheThing(LOG_CHEMISTRY, usr, "used the [src.name] to create a [patchname] patch containing [log_reagents(P)] at [log_loc(src)].")
 			return
 
 		else if (href_list["togglepatchbox"])
@@ -525,7 +530,7 @@
 			return
 
 		else if (href_list["createampoule"])
-			var/input_name = input(usr, "Name the ampoule:", "Name", R.get_master_reagent_name()) as null|text
+			var/input_name = tgui_input_text(usr, "Name the ampoule:", "Name", R.get_master_reagent_name())
 			var/ampoulename = copytext(html_encode(input_name), 1, 32)
 			if(!ampoulename)
 				return
@@ -535,13 +540,13 @@
 			A = new /obj/item/reagent_containers/ampoule(src.output_target)
 			A.name = "ampoule ([ampoulename])"
 			R.trans_to(A, 5)
-			logTheThing(LOG_COMBAT, usr, "used the [src.name] to create a [ampoulename] ampoule containing [log_reagents(A)] at [log_loc(src)].")
+			logTheThing(LOG_CHEMISTRY, usr, "used the [src.name] to create a [ampoulename] ampoule containing [log_reagents(A)] at [log_loc(src)].")
 			updateUsrDialog()
 			return
 
 		else if (href_list["multipatch"])
 			// get the pill name from the user
-			var/input_name = input(usr, "Name the patch:", "Name", R.get_master_reagent_name()) as null|text
+			var/input_name = tgui_input_text(usr, "Name the patch:", "Name", R.get_master_reagent_name())
 			var/patchname = copytext(html_encode(input_name), 1, 32)
 			if (isnull(patchname) || !src.beaker || !R || !length(patchname) || patchname == " " || BOUNDS_DIST(usr, src) > 0)
 				return
@@ -552,7 +557,7 @@
 			patchvol = clamp(patchvol, 5, 30)
 			// maths
 			var/patchcount = round(R.total_volume / patchvol) // round with a single parameter is actually floor because byond
-			logTheThing(LOG_COMBAT, usr, "used the [src.name] to create [patchcount] [patchname] patches from [log_reagents(R)] at [log_loc(src)].")
+			logTheThing(LOG_CHEMISTRY, usr, "used the [src.name] to create [patchcount] [patchname] patches from [log_reagents(R)] at [log_loc(src)].")
 			var/use_box = src.patch_box
 			if (patchcount > 20) // if you're trying to make a huge pile of patches you get a box regardless of what the machine is set to
 				use_box = 1
@@ -620,7 +625,7 @@
 				dat += "Contained reagents:<BR>"
 				for (var/reagent_id in R.reagent_list)
 					var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
-					dat += "[capitalize(current_reagent.name)] - [current_reagent.volume] Units - <A href='?src=\ref[src];analyze=1;desc=[html_encode(current_reagent.description)];name=[capitalize(current_reagent.name)]'>(Analyze)</A> <A href='?src=\ref[src];isolate=[current_reagent.id]'>(Isolate)</A> <A href='?src=\ref[src];remove=[current_reagent.id]'>(Remove all)</A> <A href='?src=\ref[src];remove5=[current_reagent.id]'>(-5)</A> <A href='?src=\ref[src];remove1=[current_reagent.id]'>(-1)</A><BR>"
+					dat += "[capitalize(current_reagent.name)] - [current_reagent.volume] Units - <A style='color: green' href='?src=\ref[src];analyze=1;desc=[html_encode(current_reagent.description)];name=[capitalize(current_reagent.name)];recipe=[current_reagent.get_recipes_in_text()]'>(Analyze)</A> <A href='?src=\ref[src];isolate=[current_reagent.id]'>(Isolate)</A> <A href='?src=\ref[src];remove=[current_reagent.id]'>(Remove all)</A> <A href='?src=\ref[src];remove5=[current_reagent.id]'>(-5)</A> <A href='?src=\ref[src];remove1=[current_reagent.id]'>(-1)</A><BR>"
 				dat += "<BR><A href='?src=\ref[src];createpill=1'>Create pill (100 units max)</A><BR>"
 				dat += "<A href='?src=\ref[src];multipill=1'>Create multiple pills (5 units min)</A> Bottle: <A href='?src=\ref[src];togglepillbottle=1'>[src.pill_bottle ? "Yes" : "No"]</A><BR>"
 				dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (50 units max)</A><BR>"
@@ -693,17 +698,19 @@
 			icon_state = "mixer0"
 			src.updateUsrDialog()
 
-datum/chemicompiler_core/stationaryCore
+/datum/chemicompiler_core/stationaryCore
 	statusChangeCallback = "statusChange"
 
-/obj/machinery/chemicompiler_stationary/
+TYPEINFO(/obj/machinery/chemicompiler_stationary)
+	mats = 15
+
+/obj/machinery/chemicompiler_stationary
 	name = "ChemiCompiler CCS1001"
 	desc = "This device looks very difficult to use."
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "chemicompiler_st_off"
-	mats = 15
 	flags = NOSPLASH
 	processing_tier = PROCESSING_FULL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
@@ -1036,7 +1043,7 @@ datum/chemicompiler_core/stationaryCore
 							R.trans_to(P, P.initial_volume)
 						P.medical = all_safe
 						P.on_reagent_change()
-						logTheThing(LOG_COMBAT, user, "used the [src.name] to create a [patchname] patch containing [log_reagents(P)] at [log_loc(src)].")
+						logTheThing(LOG_CHEMISTRY, user, "used the [src.name] to create a [patchname] patch containing [log_reagents(P)] at [log_loc(src)].")
 					if("Create Ampoule")
 						var/datum/reagents/R = B.reagents
 						var/input_name = input(user, "Name the ampoule:", "Name", R.get_master_reagent_name()) as null|text
@@ -1050,7 +1057,7 @@ datum/chemicompiler_core/stationaryCore
 						A = new /obj/item/reagent_containers/ampoule(user.loc)
 						A.name = "ampoule ([ampoulename])"
 						R.trans_to(A, 5)
-						logTheThing(LOG_COMBAT, user, "used the [src.name] to create a [ampoulename] ampoule containing [log_reagents(A)] at [log_loc(src)].")
+						logTheThing(LOG_CHEMISTRY, user, "used the [src.name] to create a [ampoulename] ampoule containing [log_reagents(A)] at [log_loc(src)].")
 
 				working = 0
 			else if(mode_type == "Reagent Extractor")

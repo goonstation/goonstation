@@ -92,6 +92,8 @@ proc/filter_trait_hats(var/type)
 	icon_state = "bio"
 	item_state = "bio_hood"
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	hides_from_examine = C_EARS
+
 	desc = "This hood protects you from harmful biological contaminants."
 	seal_hair = 1
 	path_prot = 0
@@ -125,8 +127,10 @@ proc/filter_trait_hats(var/type)
 	item_state = "emerg"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Helps protect from vacuum for a short period of time."
+	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 	seal_hair = 1
 	path_prot = 0
+	acid_survival_time = 3 MINUTES
 
 	setupProperties()
 		..()
@@ -139,6 +143,7 @@ proc/filter_trait_hats(var/type)
 	name = "Class II radiation hood"
 	icon_state = "radiation"
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	hides_from_examine = C_EARS
 	desc = "Asbestos, right near your face. Perfect!"
 	seal_hair = 1
 
@@ -527,6 +532,12 @@ proc/filter_trait_hats(var/type)
 	icon_state = "mailcap"
 	item_state = "mailcap"
 
+/obj/item/clothing/head/chefhattall
+    name = "Tall Chef's Hat"
+    desc = "Your toque blanche, now at least 50% taller!"
+    icon_state = "cheftall"
+    item_state = "cheftall"
+
 /obj/item/clothing/head/policecap
 	name = "Police hat"
 	desc = "An old surplus-issue police hat."
@@ -680,6 +691,7 @@ proc/filter_trait_hats(var/type)
 /obj/item/clothing/head/longbee
 	name = "Longbee"
 	desc = "A gorgeous creature now on your head!"
+	hides_from_examine = C_EARS
 	icon_state = "longbee"
 	item_state = "longbee"
 
@@ -749,6 +761,7 @@ proc/filter_trait_hats(var/type)
 	item_state = "wizardnec"
 	see_face = 0
 	seal_hair = 1
+	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 
 /obj/item/clothing/head/pinkwizard //no magic properties
 	name = "pink wizard hat"
@@ -982,7 +995,7 @@ proc/filter_trait_hats(var/type)
 			return
 		if(prob(20))
 			var/turf/T = get_turf(src)
-			T.fluid_react_single("miasma_s", 5, airborne = 1)
+			T?.fluid_react_single("miasma_s", 5, airborne = 1)
 		if(prob(1))
 			host.real_name = "[prob(10)?SPACER_PICK("honorifics")+" ":""][prob(20)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")+" "][prob(80)?SPACER_PICK("nicknames")+" ":""][prob(50)?SPACER_PICK("firstnames"):SPACER_PICK("lastnames")]"
 			host.name = host.real_name
@@ -1009,6 +1022,7 @@ proc/filter_trait_hats(var/type)
 
 	unequipped(mob/user)
 		..()
+		logTheThing(LOG_COMBAT, user, "unequipped [src] at [log_loc(src)].")
 		processing_items.Remove(src)
 		processing = 0
 		return
@@ -1016,7 +1030,7 @@ proc/filter_trait_hats(var/type)
 
 	equipped(var/mob/user, var/slot)
 		..()
-		logTheThing(LOG_COMBAT, user, "equipped [src].")
+		logTheThing(LOG_COMBAT, user, "equipped [src] at [log_loc(src)].")
 		if (!src.processing)
 			src.processing++
 			processing_items |= src
@@ -1209,7 +1223,9 @@ proc/filter_trait_hats(var/type)
 	icon_state = "chemhood"
 	item_state = "chemhood"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	hides_from_examine = C_EARS
 	seal_hair = 1
+	acid_survival_time = 8 MINUTES
 
 	setupProperties()
 		..()
@@ -1534,6 +1550,14 @@ ABSTRACT_TYPE(/obj/item/clothing/head/barrette)
 		name = "gold barrettes"
 		icon_state = "barrette-gold"
 		item_state = "barrette-gold"
+	black
+		name = "black barrettes"
+		icon_state = "barrette-black"
+		item_state = "barrette-black"
+	silver
+		name = "silver barrettes"
+		icon_state = "barrette-silver"
+		item_state = "barrette-silver"
 
 // HAIRBOWS (jan.antilles loves you)
 
@@ -1814,10 +1838,12 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 
 //Lesbian Hat
 
+TYPEINFO(/obj/item/clothing/head/lesbian_hat)
+	mats = list("FAB-1"=5, "honey"=5)
+
 /obj/item/clothing/head/lesbian_hat
 	name = "very lesbian hat"
 	desc = "And they say subtlety is dead."
-	mats = list("FAB-1"=5, "honey"=5)
 	icon_state = "lesbeean"
 	item_state = "lesbeean"
 
@@ -1911,3 +1937,4 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	icon_state = "space_replica"
 	item_state = "space_replica"
 	desc = "A replica of an old space helmet. Looks spaceworthy regardless."
+	hides_from_examine = C_EARS|C_MASK|C_GLASSES

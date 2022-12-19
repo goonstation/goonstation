@@ -9,6 +9,9 @@ PIPE BOMBS + CONSTRUCTION
 
 ////////////////////////////// Old-style grenades ///////////////////////////////////////
 
+TYPEINFO(/obj/item/old_grenade)
+	mats = 6
+
 /obj/item/old_grenade
 	desc = "You shouldn't be able to see this!"
 	name = "old grenade"
@@ -23,9 +26,9 @@ PIPE BOMBS + CONSTRUCTION
 	item_state = "banana"
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT | EXTRADELAY
+	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
+	c_flags = ONBELT
 	is_syndicate = 0
-	mats = 6
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
@@ -38,7 +41,7 @@ PIPE BOMBS + CONSTRUCTION
 
 	attack_self(mob/user as mob)
 		if (!src.state)
-			src.state = 1		//This could help for now. Should leverege the click buffer from combat stuff too.
+			src.state = 1		//This could help for now. Should leverage the click buffer from combat stuff too.
 			if (!isturf(user.loc))
 				src.state = 0
 				return
@@ -108,7 +111,7 @@ PIPE BOMBS + CONSTRUCTION
 
 	proc/logGrenade(mob/user)
 		var/area/A = get_area(src)
-		if(!A.dont_log_combat)
+		if(!A.dont_log_combat && user)
 			if(is_dangerous)
 				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
@@ -189,6 +192,9 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		qdel(src)
 		return
 
+TYPEINFO(/obj/item/old_grenade/graviton)
+	mats = 12
+
 /obj/item/old_grenade/graviton //ITS SPELT GRAVITON
 	desc = "It is set to detonate in 10 seconds."
 	name = "graviton grenade"
@@ -198,7 +204,6 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "graviton"
 	item_state = "emp" //TODO: grenades REALLY need custom inhands, but I'm not submitting them in this PR
 	is_syndicate = 1
-	mats = 12
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "graviton1"
 	var/icon_state_exploding = "graviton2"
@@ -248,6 +253,9 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		qdel(src)
 		return
 
+TYPEINFO(/obj/item/old_grenade/singularity)
+	mats = 12
+
 /obj/item/old_grenade/singularity
 	desc = "It is set to detonate in 10 seconds."
 	name = "singularity grenade"
@@ -257,7 +265,6 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "graviton"
 	item_state = "emp"
 	is_syndicate = 1
-	mats = 12
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "graviton1"
 	var/icon_state_exploding = "graviton2"
@@ -563,6 +570,9 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			qdel(src)
 		return
 
+TYPEINFO(/obj/item/old_grenade/oxygen)
+	mats = list("MET-2"=2, "CON-1"=2, "molitz"=10, "char"=1 )
+
 /obj/item/old_grenade/oxygen
 	name = "red oxygen grenade"
 	desc = "It is set to detonate in 3 seconds."
@@ -571,7 +581,6 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	alt_det_time = 6 SECONDS
 	icon_state = "oxy"
 	item_state = "flashbang"
-	mats = list("MET-2"=2, "CON-1"=2, "molitz"=10, "char"=1 )
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "oxy1"
 	is_dangerous = FALSE
@@ -580,8 +589,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		var/turf/simulated/T = ..()
 		var/datum/gas_mixture/GM = new /datum/gas_mixture
 		GM.temperature = T20C + 15
-		GM.oxygen = 1500
-		GM.carbon_dioxide = 100
+		GM.oxygen = 1830
+		GM.carbon_dioxide = 20
 
 		var/obj/effects/explosion/E = new /obj/effects/explosion(T)
 		// Uses existing animated icon adjust coloration of explosion to lighter cyan to match oxygen items
@@ -599,12 +608,14 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				else
 					var/count = length(T.parent?.members)
 					if (count)
+						var/o2_per = GM.oxygen / count
+						var/co2_per = GM.carbon_dioxide / count
 						for (var/turf/simulated/MT as() in T.parent.members)
 							if (GM.disposed)
 								GM = new /datum/gas_mixture
 							GM.temperature = T20C + 15
-							GM.oxygen = 1500 / count
-							GM.carbon_dioxide = 100 / count
+							GM.oxygen = o2_per
+							GM.carbon_dioxide = co2_per
 							MT.assume_air(GM)
 					else
 						T.assume_air(GM)
@@ -702,7 +713,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc))
 			return
 		if (istype(target, /obj/item/storage)) return ..()
-		if (src.state == 0)
+		if (src.state == 0 && user)
 			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
 			boutput(user, "<span class='alert'>You pull the pin on [src]. You're not sure what that did, but you throw it anyway.</span>")
@@ -715,7 +726,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	attack_self(mob/user as mob)
 		if (!isturf(user.loc))
 			return
-		if (src.state == 0)
+		if (src.state == 0 && user)
 			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
 			boutput(user, "<span class='alert'>You pull the pin on [src]. You're not sure what that did. Maybe you should throw it?</span>")
@@ -806,7 +817,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 	proc/logGrenade(mob/user)
 		var/area/A = get_area(src)
-		if(!A.dont_log_combat)
+		if(!A.dont_log_combat && user)
 			if(is_dangerous)
 				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
@@ -1037,7 +1048,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 				if ((src.bootleg_level == 2) && (ishuman(user)))
 					var/mob/living/carbon/human/H = user
-					H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm") // copied from weapon_racks.dm
+					H.sever_limb(H.hand == LEFT_HAND ? "l_arm" : "r_arm") // copied from weapon_racks.dm
 
 			else
 				elecflash(src,power = 2)
@@ -1146,7 +1157,6 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 //////////////////////// Breaching charges //////////////////////////////////
 
 /obj/item/breaching_charge
-	desc = "It is set to detonate in 5 seconds."
 	name = "Breaching Charge"
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "bcharge"
@@ -1156,7 +1166,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	item_state = "flashbang"
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	var/expl_devas = 0
 	var/expl_heavy = 0
 	var/expl_light = 1
@@ -1231,7 +1242,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					for(var/client/C in clients)
 						if(C.mob && (C.mob.z == src.z))
 							shake_camera(C.mob, 8, 24) // remove if this is too laggy
-							playsound(C.mob, explosions.distant_sound, 100, 0)
+							playsound(C.mob, explosions.distant_sound, 70, 0)
 							new /obj/effects/explosion (src.loc)
 				else
 					playsound(src.loc, pick(sounds_explosion), 75, 1)
@@ -1274,7 +1285,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 /obj/item/breaching_charge/thermite
 	name = "Thermite Breaching Charge"
 	desc = "When applied to a wall, causes a thermite reaction which totally destroys it."
-	flags = ONBELT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	expl_range = 2
@@ -1659,7 +1670,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		boutput(user, "<span class='alert'>You activate the pipe bomb! 5 seconds!</span>")
 		armed = 1
 		var/area/A = get_area(src)
-		if(!A.dont_log_combat)
+		if(!A.dont_log_combat && user)
 			if(is_dangerous)
 				message_admins("[key_name(user)] arms a [src.name] (power [strength]) at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "arms a [src.name] (power [strength]) at [log_loc(src)])")

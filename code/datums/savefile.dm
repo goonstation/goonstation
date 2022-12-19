@@ -62,6 +62,7 @@
 		F["[profileNum]_flavor_text"] << src.flavor_text
 		F["[profileNum]_medical_note"] << src.medical_note
 		F["[profileNum]_security_note"] << src.security_note
+		F["[profileNum]_synd_int_note"] << src.synd_int_note
 
 		// Randomize appearances
 		F["[profileNum]_name_is_always_random"] << src.be_random_name
@@ -226,6 +227,7 @@
 		F["[profileNum]_flavor_text"] >> src.flavor_text
 		F["[profileNum]_medical_note"] >> src.medical_note
 		F["[profileNum]_security_note"] >> src.security_note
+		F["[profileNum]_synd_int_note"] >> src.synd_int_note
 
 		// Randomization options
 		F["[profileNum]_name_is_always_random"] >> src.be_random_name
@@ -451,7 +453,7 @@
 			if (IsGuestKey( user.key ))
 				return 0
 			if (save_to)
-				CRASH("Tried to save a cloud save with a client and a key to save to specified- need one or the")
+				CRASH("Tried to save a cloud save with a client and a key to save to specified- need one or the other")
 
 		var/savefile/save = src.savefile_save(ckey(save_to) || user.ckey, 1, 1)
 		var/exported = save.ExportText()

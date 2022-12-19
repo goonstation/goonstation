@@ -1,7 +1,9 @@
 
+TYPEINFO(/obj/item/machinery/phone/cellphone)
+	mats = 25
+
 /obj/item/machinery/phone/cellphone
 	icon_state = "cellphone"
-	mats = 25
 	_health = 20
 	var/phone_id = null
 	var/ringmode = 0 // 0 for silent, 1 for vibrate, 2 for ring (For future use)
@@ -122,6 +124,11 @@
 			if(max(abs(tower.x - src.x),abs(tower.y - src.y)) < nearest_tower)
 				nearest_tower = tower
 		return nearest_tower
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
 
 
 /obj/item/machinery/phone/cellphone/bananaphone

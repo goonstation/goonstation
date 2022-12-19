@@ -191,19 +191,19 @@ ABSTRACT_TYPE(/datum/plant)
 				HYPnewcommutcheck(src,DNA, 2)
 				HYPnewmutationcheck(src,DNA,null,1,S)
 				if (prob(2))
-					HYPaddCommut(DNA,/datum/plant_gene_strain/unstable)
+					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/unstable)
 			if ("mutagen")
 				HYPmutateDNA(DNA,2)
 				HYPnewcommutcheck(src,DNA, 3)
 				HYPnewmutationcheck(src,DNA,null,1,S)
 				if (prob(5))
-					HYPaddCommut(DNA,/datum/plant_gene_strain/unstable)
+					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/unstable)
 			if ("ammonia")
 				damage_amt = rand(10,20)
 				DNA.growtime += rand(5,10)
 				DNA.harvtime += rand(2,5)
 				if (prob(5))
-					HYPaddCommut(DNA,/datum/plant_gene_strain/accelerator)
+					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/accelerator)
 			if ("potash")
 				DNA.cropsize += rand(1,4)
 				DNA.harvests -= rand(0,2)
@@ -213,7 +213,7 @@ ABSTRACT_TYPE(/datum/plant)
 			if ("space_fungus")
 				DNA.endurance += rand(1,3)
 				if (prob(3))
-					HYPaddCommut(DNA,/datum/plant_gene_strain/damage_res)
+					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/damage_res)
 			if ("mutadone")
 				if (DNA.growtime < 0)
 					DNA.growtime++
@@ -229,9 +229,8 @@ ABSTRACT_TYPE(/datum/plant)
 					DNA.endurance++
 
 		if (damage_amt)
-			if (prob(damage_prob)) S.seeddamage += damage_amt
-		if (S.seeddamage > 99)
-			return 99 // destroy the seed
+			if (prob(damage_prob))
+				S.seeddamage += damage_amt
 
 /datum/plantgenes/
 	var/growtime = 0 // These vars are pretty much bonuses/penalties applied on top of the

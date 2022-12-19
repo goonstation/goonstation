@@ -170,6 +170,14 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/accessory/hairclips)
 		name = "Gold Hairclips"
 		path = /obj/item/clothing/head/barrette/gold
 
+	barrette_black
+		name = "Black Hairclips"
+		path = /obj/item/clothing/head/barrette/black
+
+	barrette_silver
+		name = "Silver Hairclips"
+		path = /obj/item/clothing/head/barrette/silver
+
 //Casual
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/casual)
@@ -836,11 +844,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head)
 	path = /obj/item/clothing/head/frog_hat
 	cost = PAY_TRADESMAN
 
-/datum/clothingbooth_item/head/link
-	name = "Hero Hat"
-	path = /obj/item/clothing/head/link
-	cost = PAY_TRADESMAN
-
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/frenchberet)
 /datum/clothingbooth_item/head/frenchberet
 	name = "French Beret"
@@ -958,44 +961,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/scifi)
 	name = "Purple and Black Racing Jumpsuit"
 	path = /obj/item/clothing/under/misc/racingsuitprp
 
-/datum/clothingbooth_item/scifi/cwhat
-	name = "Moebius-Brand Headwear"
-	path = /obj/item/clothing/head/cwhat
-	slot = SLOT_HEAD
-
-/datum/clothingbooth_item/scifi/fthat
-	name = "Trader's Headwear"
-	path = /obj/item/clothing/head/fthat
-	slot = SLOT_HEAD
-	cost = PAY_DOCTORATE/5
-
-/datum/clothingbooth_item/scifi/ftscanplate
-	name = "FTX-480 Scanner Plate"
-	path = /obj/item/clothing/glasses/ftscanplate
-	slot = SLOT_GLASSES
-	cost = PAY_DOCTORATE/5
-
-/datum/clothingbooth_item/scifi/cwfashion
-	name = "CW Fashionista's Outfit"
-	path = /obj/item/clothing/under/gimmick/cwfashion
-	cost = PAY_DOCTORATE/5
-
-/datum/clothingbooth_item/scifi/ftuniform
-	name = "Free Trader's Outfit"
-	path = /obj/item/clothing/under/gimmick/ftuniform
-
-/datum/clothingbooth_item/scifi/handcomp
-	name = "Compudyne 0451 Handcomp"
-	path = /obj/item/clothing/gloves/handcomp
-	slot = SLOT_GLOVES
-	cost = PAY_DOCTORATE/5
-
-/datum/clothingbooth_item/scifi/cwboots
-	name = "Macando Boots"
-	path = /obj/item/clothing/shoes/cwboots
-	slot = SLOT_SHOES
-	cost = PAY_DOCTORATE/5
-
 //Summer
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/summer)
@@ -1092,14 +1057,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 	slot = SLOT_WEAR_SUIT
 	cost = PAY_DOCTORATE/3
 
-/datum/clothingbooth_item/costume/russsianmob
-	name = "Russian Mobster Suit"
-	path = /obj/item/clothing/under/misc/rusmob
-
-/datum/clothingbooth_item/costume/columbianmob
-	name = "Columbian Mobster Suit"
-	path = /obj/item/clothing/under/misc/colmob
-
 /datum/clothingbooth_item/costume/dinerdress_mint
 	name = "Mint Diner Waitress's Dress"
 	path = /obj/item/clothing/under/gimmick/dinerdress_mint
@@ -1125,10 +1082,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 	path = /obj/item/clothing/head/pirate_brn
 	slot = SLOT_HEAD
 	cost = PAY_TRADESMAN/2
-
-/datum/clothingbooth_item/costume/guybrush
-	name = "Wannabe Pirate Costume"
-	path = /obj/item/clothing/under/gimmick/guybrush
 
 /datum/clothingbooth_item/costume/dinosuar
 	name = "Dinosaur Pajamas"
@@ -1195,6 +1148,12 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/western/westhat)
 /datum/clothingbooth_item/western/western
 	name = "Western Shirt and Pants"
 	path = /obj/item/clothing/under/misc/western
+	slot = SLOT_W_UNIFORM
+	cost = PAY_UNTRAINED/1
+
+/datum/clothingbooth_item/western/westerndress
+	name = "Western Saloon Dress"
+	path = /obj/item/clothing/under/misc/westerndress
 	slot = SLOT_W_UNIFORM
 	cost = PAY_UNTRAINED/1
 

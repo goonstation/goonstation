@@ -168,10 +168,11 @@
 	name = "antique laser gun"
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "caplaser"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "gun"
 	force = 1
-	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags =  FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	var/stability = 10
 
 	var/repair_stage = 0

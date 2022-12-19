@@ -89,7 +89,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		if(src.holder)
 			src.holder.RemovePoolEffect(src)
 			src.holder.RemoveEffect(src.id)
-		if(!removed)
+		if(!removed && src.owner)
 			src.OnRemove()
 		holder = null
 		owner = null
@@ -103,7 +103,6 @@ ABSTRACT_TYPE(/datum/bioEffect)
 			if(isliving(owner))
 				var/mob/living/L = owner
 				L.UpdateOverlays(overlay_image, id)
-		return
 
 	proc/OnRemove()  //Called when the effect is removed.
 		removed = 1
@@ -111,7 +110,6 @@ ABSTRACT_TYPE(/datum/bioEffect)
 			if(isliving(owner))
 				var/mob/living/L = owner
 				L.UpdateOverlays(null, id)
-		return
 
 	proc/OnMobDraw() //Called when the overlays for the mob are drawn. Children should NOT run when this returns 1
 		return removed
@@ -354,7 +352,8 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		if (can_act_check && !can_act(owner, needs_hands))
 			return 999
 		if (last_cast > world.time)
-			boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round((last_cast - world.time) / 10)] seconds.</span>")
+			if(holder)
+				boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round((last_cast - world.time) / 10)] seconds.</span>")
 			return 999
 
 		if (has_misfire)

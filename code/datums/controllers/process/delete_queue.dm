@@ -56,9 +56,10 @@ var/global/harddel_count = 0
 
 		//var/t_gccount = gccount
 		//var/t_delcount = delcount
-		for (var/r in global.delete_queue_2[global.delqueue_pos])
+		for (var/numr in global.delete_queue_2[global.delqueue_pos])
 			scheck()
 
+			var/r = NUM_TO_ADDR(numr)
 			var/datum/D = locate(r)
 			if (!istype(D) || !D.qdeled)
 				// If we can't locate it, it got garbage collected.
@@ -78,6 +79,7 @@ var/global/harddel_count = 0
 				else if(istype(D, /atom))
 					var/atom/A = D
 					logTheThing(LOG_DEBUG, text="[harddel_msg] [D.type] -- name [A.name], iconstate [A.icon_state], icon [A.icon]")
+					//boutput(world, "[harddel_msg] [D.type] -- name [A.name], iconstate [A.icon_state], icon [A.icon]")
 				else
 					logTheThing(LOG_DEBUG, text="[harddel_msg] [D.type]")
 #ifdef LOG_HARD_DELETE_REFERENCES
@@ -151,7 +153,7 @@ var/global/harddel_count = 0
 			// Because we have already logged it into the gc count in qdel.
 			#endif
 
-			// Delete that bitch
+			// Delete that
 
 /*
 			// fuck

@@ -26,7 +26,7 @@
 			if (user.loc != get_turf(user.loc))
 				boutput(user, "<span class='alert'>You're in too small a space to drop anything!</span>")
 				return
-			var/selection = input("What do you want to drop?", "Atmospherics Transporter", null, null) as null|anything in src.contents
+			var/selection = tgui_input_list(user, "What do you want to drop?", "Atmospherics Transporter", src.contents)
 			if(!selection) return
 			if (istype(selection, /obj/machinery/fluid_canister))
 				var/obj/machinery/fluid_canister/S = selection
@@ -146,17 +146,25 @@
 			..()
 
 /// Procs for the action bars
-/obj/item/lamp_manufacturer/proc/add_wall_light(atom/A, turf/B, mob/user)
-	var/obj/machinery/light/newfitting = new dispensing_fitting(B)
+/obj/item/lamp_manufacturer/proc/add_wall_light(atom/A, turf/T, mob/user)
+	for (var/obj/O in T)
+		if (istype(O, /obj/machinery/light))
+			boutput(user, "<span class='alert'>You try to build a wall light fitting, but there's already \a [O] in the way!</span>")
+			return
+	var/obj/machinery/light/newfitting = new dispensing_fitting(T)
 	newfitting.nostick = 0 //regular tube lights don't do autoposition for some reason.
-	newfitting.autoposition(get_dir(B,A))
+	newfitting.autoposition(get_dir(T,A))
 	newfitting.Attackby(src, user) //plop in an appropriate colour lamp
 	if (!isghostdrone(user))
 		elecflash(user)
 	take_ammo(user, cost_fitting)
 
-/obj/item/lamp_manufacturer/proc/add_floor_light(turf/A, mob/user)
-	var/obj/machinery/light/newfitting = new /obj/machinery/light/small/floor(A)
+/obj/item/lamp_manufacturer/proc/add_floor_light(turf/T, mob/user)
+	for (var/obj/O in T)
+		if (istype(O, /obj/machinery/light/small/floor))
+			boutput(user, "<span class='alert'>You try to build a floor light fitting, but there's already \a [O] in the way!</span>")
+			return
+	var/obj/machinery/light/newfitting = new /obj/machinery/light/small/floor(T)
 	newfitting.Attackby(src, user) //plop in an appropriate colour lamp
 	if (!isghostdrone(user))
 		elecflash(user)
@@ -293,7 +301,7 @@
 					R.trans_to(P, P.initial_volume)
 				P.medical = all_safe
 				P.on_reagent_change()
-				logTheThing(LOG_COMBAT, user, "created a [patchname] patch containing [log_reagents(P)].")
+				logTheThing(LOG_CHEMISTRY, user, "created a [patchname] patch containing [log_reagents(P)].")
 			if("Create Ampoule")
 				var/datum/reagents/R = B.reagents
 				var/input_name = input(user, "Name the ampoule:", "Name", R.get_master_reagent_name()) as null|text
@@ -307,7 +315,7 @@
 				A = new /obj/item/reagent_containers/ampoule(user.loc)
 				A.name = "ampoule ([ampoulename])"
 				R.trans_to(A, 5)
-				logTheThing(LOG_COMBAT, user, "created a [ampoulename] ampoule containing [log_reagents(A)].")
+				logTheThing(LOG_CHEMISTRY, user, "created a [ampoulename] ampoule containing [log_reagents(A)].")
 
 		working = 0
 
@@ -322,8 +330,8 @@
 	attack_self(var/mob/user as mob)
 		if (!vend_this)
 			var/holder = src.loc
-			var/pickme = input("Please make your selection!", "Item selection", src.vend_this) in list("Burger", "Cheeseburger", "Meat sandwich", "Cheese sandwich", "Snack", "Cola", "Water")
-			if (src.loc != holder)
+			var/pickme = tgui_input_list(user, "Please make your selection!", "Item selection", list("Burger", "Cheeseburger", "Meat sandwich", "Cheese sandwich", "Snack", "Cola", "Water"))
+			if (!pickme || src.loc != holder)
 				return
 			src.vend_this = pickme
 			user.show_text("[pickme] selected. Click with the synthesizer on yourself to pick a different item.", "blue")

@@ -24,6 +24,7 @@
 	hud_state = "cloak"
 	f_active = 1
 	var/image/shield = null
+	icon_state = "medusa"
 
 	Use(mob/user as mob)
 		if(!active)
@@ -67,6 +68,7 @@
 	var/capacity = 300
 	hud_state = "cargo"
 	f_active = 1
+	icon_state = "ore_hold"
 
 	Use(mob/user as mob)
 		activate()
@@ -322,6 +324,7 @@
 	f_active = 1
 	power_used = 80
 	hud_state = "tractor_beam"
+	icon_state = "trac_beam"
 
 	run_component()
 		if(settingup)
@@ -466,6 +469,7 @@
 	desc = "A useful navigation device for those lost in space."
 	f_active = 1
 	power_used = 50
+	icon_state = "ship_gps"
 
 	Use(mob/user as mob)
 		opencomputer(user)
@@ -789,6 +793,7 @@
 	var/crashhits = 10
 	var/in_bump = 0
 	hud_state = "seed"
+	icon_state = "pod_seed"
 
 	Use(mob/user as mob)
 		activate()
@@ -819,20 +824,6 @@
 	SPAWN(0) //???? otherwise we runtime
 		qdel(ship)
 
-/obj/item/shipcomponent/secondary_system/crash/proc/crashtime(atom/A)
-	var/tempstate = ship.icon_state
-	ship.icon_state = "flaming"
-	if(!istype(A, /obj/critter/gunbot/drone))
-		A.meteorhit(ship)
-	playsound(ship.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-	ship.icon_state = tempstate
-	crashhits --
-	if (crashhits <= 0)
-		explosion(ship, ship.loc, 1, 2, 2, 3)
-		playsound(ship.loc, "explosion", 50, 1)
-		dispense()
-	return
-
 /obj/item/shipcomponent/secondary_system/crash/proc/crashtime2(atom/A as mob|obj|turf)
 	if (in_bump)
 		return
@@ -858,6 +849,13 @@
 				T.ReplaceWithLattice()
 			else
 				T.ReplaceWithSpace()
+			if(prob(50))
+				for (var/mob/M in src)
+					shake_camera(M, 6, 8)
+			if(prob(30))
+				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+				boutput(ship.pilot, "<span class='alert'><B>You plow through the floor!</B></span>")
 	if(ismob(A))
 		var/mob/M = A
 		boutput(ship.pilot, "<span class='alert'><B>You crash into [M]!</B></span>")

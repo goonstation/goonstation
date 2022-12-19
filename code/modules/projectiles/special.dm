@@ -5,11 +5,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "special"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "laser"
-	power = 15
+	damage = 15
 	cost = 25
 	dissipation_rate = 1
 	dissipation_delay = 0
-	ks_ratio = 1
 	sname = "laser"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_number = 1
@@ -23,7 +22,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/kiss
 	name = "kiss"
 	icon_state = "kiss"
-	power = 0
+	damage = 0
 	sname = "kiss"
 	shot_sound = 'sound/voice/gasps/gasp.ogg'
 
@@ -35,7 +34,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/acid
 	name = "acid"
 	icon_state = "radbolt"
-	power = 45
+	damage = 45
 	dissipation_rate = 30
 	dissipation_delay = 10
 	sname = "acid"
@@ -45,15 +44,15 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		hit.damage_corrosive(power)
 
 	potent
-		power = 100
+		damage = 100
 
 	weak
-		power = 15
+		damage = 15
 
 /datum/projectile/special/acidspit
 	name = "acid splash"
 	icon_state = "acidspit"
-	power = 0.8
+	damage = 0.8
 	dissipation_rate = 20
 	dissipation_delay = 10
 	sname = "acid"
@@ -74,7 +73,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/ice
 	name = "ice"
 	icon_state = "ice"
-	power = 120
+	damage = 120
 	dissipation_rate = 10
 	dissipation_delay = 3
 	sname = "ice"
@@ -88,7 +87,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/material_changer
 	name = "transmutation bolt"
 	icon_state = "ice"
-	power = 1
+	damage = 1
 	dissipation_rate = 1
 	dissipation_delay = 25
 	sname = "ice"
@@ -108,7 +107,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	sname = "focused beam"
 	icon_state = "laser_white"
 	window_pass = 1
-	power = 30
+	damage = 30
 	dissipation_rate = 1
 	dissipation_delay = 3
 	damage_type = D_ENERGY
@@ -120,7 +119,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	sname = "phased beam"
 	icon_state = "crescent_white"
 	window_pass = 1
-	power = 30
+	damage = 30
 	dissipation_rate = 1
 	dissipation_delay = 3
 	damage_type = D_ENERGY
@@ -212,6 +211,18 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		FC.internal_speed = rand(speed_min,speed_max)
 		FC.travelled = rand(0,dissipation_variance)
 		FC.launch()
+/datum/projectile/special/spreader/buckshot_burst/plasglass
+	name = "fragments"
+	sname = "fragments"
+	cost = 1
+	pellets_to_fire = 4
+	casing = /obj/item/casing/shotgun/pipe
+	spread_projectile_type = /datum/projectile/bullet/improvplasglass
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	speed_max = 40
+	speed_min = 34
+	spread_angle_variance = 15
+	dissipation_variance = 10
 
 /datum/projectile/special/spreader/buckshot_burst/glass
 	spread_projectile_type = /datum/projectile/bullet/improvglass
@@ -284,14 +295,14 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	sname = "rydberg-matter orb"
 	icon_state = "elecorb"
 	shot_sound = 'sound/weapons/energy/LightningCannon.ogg'
-	power = 75
+	damage = 60
+	stun = 15
 	cost = 75
 	damage_type = D_ENERGY
 	dissipation_delay = 15
 	color_red = 0.1
 	color_green = 0.3
 	color_blue = 1
-	ks_ratio = 0.8
 
 	var/arc_chance_per_tick = 33
 	var/max_arcs_per_tick = 3
@@ -345,11 +356,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	sname = "inferno bomb"
 	icon_state = "fusionorb"
 	shot_sound = 'sound/weapons/energy/InfernoCannon.ogg'
-	power = 75
+	damage = 60
+	stun = 20
 	cost = 75
 	damage_type = D_BURNING
 	dissipation_delay = 15
-	ks_ratio = 0.8
 
 	var/burn_range = 1
 	var/blast_size = 3
@@ -368,12 +379,12 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "howitzer-shot"
 	shot_sound = 'sound/weapons/energy/howitzer_shot.ogg'
-	power = 10000 // blam = INF
+	damage = 8000 // blam = INF
+	stun = 2000 // blam = INF
 	cost = 2500
 	damage_type = D_BURNING
 	dissipation_delay = 75
 	dissipation_rate = 300
-	ks_ratio = 0.8
 	brightness = 2
 	projectile_speed = 32
 	impact_range = 32
@@ -422,9 +433,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	sname  = "meowitzer"
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "cat1"
-	dissipation_delay = 75
-	dissipation_rate = 300
+	max_range = 75
+	dissipation_rate = 0
 	projectile_speed = 26
+	damage = 10
 	cost = 1
 
 	var/explosive_hits = 1
@@ -448,6 +460,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		return
 
 /datum/projectile/special/meowitzer/inert
+	damage = 0
 	explosive_hits = 0
 
 /datum/projectile/special/spewer
@@ -455,12 +468,12 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	sname = "volatile bolt"
 	icon_state = "orb_white"
 	shot_sound = 'sound/weapons/laserultra.ogg'
-	power = 100
+	damage = 80
+	stun = 80
 	cost = 75
 	damage_type = D_BURNING
 	dissipation_delay = 0
 	dissipation_rate = 5
-	ks_ratio = 0.8
 
 	var/bolt_type = /datum/projectile/laser/spewer_bolt
 	var/datum/projectile/bolt_instance = null
@@ -486,7 +499,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	sname = "volatile bolt fragment"
 	icon_state = "ball_white"
 	shot_sound = 'sound/weapons/blaster_a.ogg'
-	power = 5
+	damage = 5
 	dissipation_delay = 15
 	dissipation_rate = 1
 
@@ -495,13 +508,13 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	window_pass = 0
 	icon_state = "punch"
 	damage_type = D_KINETIC
-	power = 0
+	damage = 0
 	cost = 1
 	brightness = 0
 	sname = "punch"
 	shot_sound = 'sound/impact_sounds/Generic_Swing_1.ogg'
-	dissipation_delay = 1
-	dissipation_rate = 35
+	max_range = 1
+	dissipation_rate = 0
 	impact_image_state = null
 
 	on_hit(atom/hit)
@@ -513,7 +526,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "homing"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "laser"
-	power = 1
+	damage = 1
 	cost = 1
 	dissipation_rate = 0
 	dissipation_delay = 0
@@ -664,12 +677,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "magicm"
 	shot_sound = null
-	power = 15
+	damage = 15
 	cost = 1
 	damage_type = D_KINETIC
 	dissipation_delay = 0
 	dissipation_rate = 0
-	ks_ratio = 1
 	brightness = 2
 	projectile_speed = 2
 	is_magical = 1 // It passes right through them, but just for consistency
@@ -731,7 +743,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/homing/magicmissile/weak
 	name = "magic minimissile"
 	sname = "magic minimissile"
-	power = 10
+	damage = 10
 	projectile_speed = 1.5
 	min_speed = 2
 	max_speed = 2
@@ -849,8 +861,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "energy bolt"
 	sname = "shotgun spread"
 	cost = 25
-	power = 45 //a chunky pointblank
-	ks_ratio = 0
+	stun = 45 //a chunky pointblank
 	damage_type = D_SPECIAL
 	pellets_to_fire = 3
 	spread_projectile_type = /datum/projectile/energy_bolt/tasershotgun
@@ -883,9 +894,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	shot_sound = null
 	shot_number = 1
 	silentshot = 1 //any noise will be handled by the egg splattering anyway
-	power = 60
+	damage = 60
 	cost = 40
-	ks_ratio = 1
 	dissipation_rate = 70
 	dissipation_delay = 0
 	window_pass = 0
@@ -910,7 +920,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/spawner //shoot stuff
 	name = "dimensional pocket"
-	power = 1
+	damage = 1
 	dissipation_rate = 0
 	max_range = 10
 	cost = 1
@@ -942,7 +952,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/spawner/gun //shoot guns
 	name = "gun"
-	power = 20 //20 damage from getting beaned with a gun idk
+	damage = 20 //20 damage from getting beaned with a gun idk
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
 	shot_sound = 'sound/weapons/rocket.ogg'
@@ -964,10 +974,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	silentshot = 1 //any noise will be handled by the egg splattering anyway
 	hit_ground_chance = 0
 	damage_type = D_KINETIC
-	power = 15
+	damage = 15
 	dissipation_delay = 30
 	dissipation_rate = 1
-	ks_ratio = 1
 	cost = 10
 	window_pass = 0
 	typetospawn = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry
@@ -989,11 +998,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	icon_state = "secbot1"
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	power = 5
+	damage = 5
 	dissipation_delay = 30
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
-	ks_ratio = 1
 	impact_image_state = "secbot1-wild"
 	implanted = null
 	typetospawn = /obj/machinery/bot/secbot
@@ -1014,7 +1022,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/spawner/battlecrate
 	name = "Battlecrate"
-	power = 100
+	damage = 100
 	max_range = 30
 	cost = 0
 	shot_sound = 'sound/weapons/rocket.ogg'
@@ -1033,13 +1041,13 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "extinguish"
 	shot_sound = 'sound/weapons/flamethrower.ogg'
-	power = 0
+	stun = 0
+	damage = 0
 	cost = 1
 	damage_type = D_SPECIAL
 	shot_delay = 0.1 SECONDS
 	dissipation_rate = 0
 	dissipation_delay = 0
-	ks_ratio = 0
 	hit_ground_chance = 0 // burn right over em
 	max_range = 10
 	silentshot = 1 // Mr. Muggles is hit by the chemical bolt x99999
@@ -1058,6 +1066,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	proc/emit_chems(atom/hit, obj/projectile/O, angle)
 		if(!O.special_data || !length(O.special_data) || !istype(hit) || !O.reagents)
 			return
+		var/list/special_data = O.special_data
 
 		var/turf/T = get_turf(hit)
 		var/datum/reagents/chemR = O.reagents
@@ -1065,7 +1074,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(chem_amt <= 0)
 			return
 		/// If there's just a little bit left, use the rest of it
-		var/amt_to_emit = (chem_amt <= 0.1) ? chem_amt : (chemR.maximum_volume * O.special_data["chem_pct_app_tile"])
+		var/amt_to_emit = (chem_amt <= 0.1) ? chem_amt : (chemR.maximum_volume * special_data["chem_pct_app_tile"])
 
 		var/datum/reagents/copied = new/datum/reagents(amt_to_emit)
 		copied = chemR.copy_to(copied, amt_to_emit/chemR.total_volume, copy_temperature = 1)
@@ -1074,15 +1083,15 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			T.create_reagents(100)
 		copied.copy_to(T.reagents, 1, copy_temperature = 1)
 		copied.reaction(T, TOUCH, 0, 0)
-		if(O.special_data["IS_LIT"]) // Heat if needed
-			T.reagents?.set_reagent_temp(O.special_data["burn_temp"], TRUE)
+		if(special_data["IS_LIT"]) // Heat if needed
+			T.reagents?.set_reagent_temp(special_data["burn_temp"], TRUE)
 		for(var/atom/A in T.contents) // then all the stuff in the turf
 			if(istype(A, /obj/overlay) || istype(A, /obj/projectile))
 				continue
 			copied.reaction(A, TOUCH, 0, 0)
-		if(O.special_data["IS_LIT"]) // Reduce the temperature per turf crossed
-			O.special_data["burn_temp"] -= O.special_data["burn_temp"] * O.special_data["temp_pct_loss_atom"]
-			O.special_data["burn_temp"] = max(O.special_data["burn_temp"], T0C)
+		if(special_data["IS_LIT"]) // Reduce the temperature per turf crossed
+			special_data["burn_temp"] -= special_data["burn_temp"] * special_data["temp_pct_loss_atom"]
+			special_data["burn_temp"] = max(special_data["burn_temp"], T0C)
 		chemR.remove_any(amt_to_emit)
 
 	post_setup(obj/projectile/P)

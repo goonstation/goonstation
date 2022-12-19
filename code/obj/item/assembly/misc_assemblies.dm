@@ -883,10 +883,12 @@ obj/item/assembly/radio_horn/receive_signal()
 	var/obj/item/ammo/bullets/result = null
 	var/obj/item/accepteditem = null
 	var/craftname = null
+	var/success = FALSE
 
 	proc/craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
 
-		if (istype(craftingitem, accepteditem)) //success! items match
+		if (istype(craftingitem, accepteditem))
+			//the checks for if an item is actually allowed are local to the recipie, since they can vary
 			var/consumed = min(src.thingsneeded, craftingitem.amount)
 			thingsneeded -= consumed //ideally we'd do this later but for sake of working with zeros it's up here
 
@@ -898,8 +900,19 @@ obj/item/assembly/radio_horn/receive_signal()
 				user.put_in_hand_or_drop(shot)
 				qdel(frame)
 
-			//consume material
+				//consume material- proc handles deleting
 			craftingitem.change_stack_amount(-consumed)
+/datum/pipeshotrecipe/plasglass
+	thingsneeded = 2
+	result = /obj/item/ammo/bullets/pipeshot/plasglass
+	accepteditem = /obj/item/raw_material/shard
+	craftname = "shard"
+	var/matid = "plasmaglass"
+
+	craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
+		if(matid == craftingitem.material.mat_id)
+			..() //call parent, have them run the typecheck
+
 /datum/pipeshotrecipe/scrap
 	thingsneeded = 1
 	result = /obj/item/ammo/bullets/pipeshot/scrap/
@@ -920,7 +933,10 @@ obj/item/assembly/radio_horn/receive_signal()
 	attackby(obj/item/W, mob/user)
 		if (!recipe) //no recipie? assign one
 			if (istype(W, /obj/item/raw_material/shard))
-				recipe = new/datum/pipeshotrecipe/glass
+				if(W.material.mat_id == "plasmaglass")
+					recipe = new/datum/pipeshotrecipe/plasglass
+				else
+					recipe = new/datum/pipeshotrecipe/glass
 			if (istype(W, /obj/item/raw_material/scrap_metal))
 				recipe = new/datum/pipeshotrecipe/scrap
 		if(recipe) //probably a better way, but it works well enough

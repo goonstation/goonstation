@@ -9,6 +9,7 @@ mob/new_player
 	var/adminspawned = 0
 	var/is_respawned_player = 0
 	var/pregameBrowserLoaded = FALSE
+	var/antag_fallthrough = FALSE
 
 #ifdef TWITCH_BOT_ALLOWED
 	var/twitch_bill_spawn = 0
@@ -238,6 +239,9 @@ mob/new_player
 		if (JOB.requires_whitelist)
 			if (!(src.ckey in NT))
 				return 0
+		if (JOB.mentor_only)
+			if (!(src.ckey in mentors))
+				return 0
 		if (JOB.needs_college && !src.has_medal("Unlike the director, I went to college"))
 			return 0
 		if (JOB.rounds_needed_to_play && (src.client && src.client.player))
@@ -277,14 +281,13 @@ mob/new_player
 				global.latespawning.unlock()
 				return
 
+			// Stop adding non game mode logic BEFORE game modes!
 			if(istype(ticker.mode, /datum/game_mode/football))
 				var/datum/game_mode/football/F = ticker.mode
 				F.init_player(character, 0, 1)
 			else if(istype(ticker.mode, /datum/game_mode/pod_wars))
 				var/datum/game_mode/pod_wars/mode = ticker.mode
 				mode.add_latejoin_to_team(character.mind, JOB)
-			else if (istype(JOB, /datum/job/special/syndicate_operative))
-				character.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
 				var/datum/game_mode/battle_royale/battlemode = ticker.mode
 				if (current_state < GAME_STATE_FINISHED)
@@ -301,7 +304,13 @@ mob/new_player
 				battlemode.living_battlers.Add(character.mind)
 				DEBUG_MESSAGE("Adding a new battler")
 				battlemode.battle_shuttle_spawn(character.mind)
-			else if (character.traitHolder && character.traitHolder.hasTrait("immigrant"))
+			else if (JOB.special_spawn_location)
+				var/location = JOB.special_spawn_location
+				if (!istype(JOB.special_spawn_location, /turf))
+					location = pick_landmark(JOB.special_spawn_location)
+				if (!isnull(location))
+					character.set_loc(location)
+			else if (character.traitHolder && character.traitHolder.hasTrait("stowaway"))
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
 				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
 			else if (character.traitHolder && character.traitHolder.hasTrait("pilot"))
@@ -337,15 +346,8 @@ mob/new_player
 				if(!istype(JOB,/datum/job/battler) && !istype(JOB, /datum/job/football))
 					LC.Equip_Rank(JOB.name, joined_late=1)
 
-			var/miscreant = 0
-#ifdef MISCREANTS
-			if (ticker && character.mind && !character.client.using_antag_token && JOB.allow_traitors != 0 && prob(10))
-				ticker.generate_miscreant_objectives(character.mind)
-				miscreant = 1
-#endif
-
 #ifdef CREW_OBJECTIVES
-			if (ticker && character.mind && !miscreant)
+			if (ticker && character.mind)
 				ticker.generate_individual_objectives(character.mind)
 #endif
 
@@ -395,16 +397,46 @@ mob/new_player
 			// probalby could be a define but dont give a shite
 			var/maxslots = 5
 			var/list/slots = list()
-			var/shown = clamp(c, (limit == -1 ? 99 : limit), maxslots)
+			var/shown = clamp(c, (limit == -1 ? maxslots : limit), maxslots)
 			// if there's still an open space, show a final join link
 			if (limit == -1 || (limit > maxslots && c < limit))
-				slots += "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' class='latejoin-card' style='border-color: [J.linkcolor];' title='Join the round as [J.name].'>&#x2713;&#xFE0E;</a>"
-
+				slots += {"<a href='byond://?src=\ref[src];
+				SelectedJob=\ref[J]' class='latejoin-card' style='border-color: [J.linkcolor];
+				' title='Join the round as [J.name].'>&#x2713;
+				&#xFE0E;
+				</a>"}
 			// show slots up to the limit
-			// extra people beyond the limit will be shown as a [+X] card
+			// extra people beyond the limit will be shown as a [+X] card, supposedly
 			for (var/i = shown, i > 0, i--)
-				slots += (i <= c ? "<div class='latejoin-card latejoin-full' style='border-color: [J.linkcolor]; background-color: [J.linkcolor];' title='Slot filled.'>[(i == 1 && c > shown) ? "+[c - maxslots]" : "&times;"]</div>" : "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' class='latejoin-card' style='border-color: [J.linkcolor];' title='Join the round as [J.name].'>&#x2713;&#xFE0E;</a>")
-
+				// can you believe all these slot appendages were in one line before using nested ternaries? awful.
+				if (i <= c)
+					if (i == 1 && c > shown)
+						slots += {"
+						<div
+						class='latejoin-card latejoin-full'
+						style='border-color: [J.linkcolor]; background-color: [J.linkcolor];'
+						title='Slot filled.'
+						>+[c - maxslots]
+						</div>
+						"}
+					else
+						slots += {"
+						<div
+						class='latejoin-card latejoin-full'
+						style='border-color: [J.linkcolor]; background-color: [J.linkcolor];'
+						title='Slot filled.'
+						>&times;
+						</div>
+						"}
+				else
+					slots += {"
+					<a
+					href='byond://?src=\ref[src];SelectedJob=\ref[J]'
+					class='latejoin-card' style='border-color: [J.linkcolor];'
+					title='Join the round as [J.name].'
+					>&#x2713;&#xFE0E;
+					</a>
+					"}
 			return {"
 				<tr><td class='latejoin-link'>
 					[(limit == -1 || c < limit) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' style='color: [J.linkcolor];' title='Join the round as [J.name].'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is full.'>[J.name]</span>"]
@@ -598,6 +630,11 @@ a.latejoin-card:hover {
 		else
 			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 
+		if(force_random_names)
+			src.client.preferences.be_random_name = 1
+		if(force_random_looks)
+			src.client.preferences.be_random_look = 1
+
 		var/mob/new_character = null
 		if (J)
 			new_character = new J.mob_type(src.loc, client.preferences.AH, client.preferences)
@@ -719,9 +756,8 @@ a.latejoin-card:hover {
 				traitormob.make_grinch()
 
 			if (ROLE_HUNTER)
-				traitor.special_role = ROLE_HUNTER
-				objective_set_path = /datum/objective_set/hunter
-				traitormob.make_hunter()
+				traitor.add_antagonist(type, do_equip = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				do_objectives = FALSE
 
 			if (ROLE_WEREWOLF)
 				traitor.special_role = ROLE_WEREWOLF
@@ -751,7 +787,7 @@ a.latejoin-card:hover {
 			var/obj_count = 1
 			for(var/datum/objective/objective in traitor.objectives)
 				#ifdef CREW_OBJECTIVES
-				if (istype(objective, /datum/objective/crew) || istype(objective, /datum/objective/miscreant)) continue
+				if (istype(objective, /datum/objective/crew)) continue
 				#endif
 				boutput(traitor.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 				obj_count++
@@ -761,11 +797,14 @@ a.latejoin-card:hover {
 			src.Browse(null, "window=latechoices") //closes late choices window
 			src.Browse(null, "window=playersetup") //closes the player setup window
 			winshow(src, "joinmenu", 0)
-			winshow(src, "playerprefs", 0)
 
 	verb/declare_ready_use_token()
 		set hidden = 1
 		set name = ".ready_antag"
+
+		if(!tgui_process)
+			boutput(src, "<span class='alert'>Stuff is still setting up, wait a moment before readying up.</span>")
+			return
 
 		if (src.client.has_login_notice_pending(TRUE))
 			return
@@ -773,8 +812,7 @@ a.latejoin-card:hover {
 		if(!(!ticker || current_state <= GAME_STATE_PREGAME))
 			src.show_text("Round has already started. You can't redeem tokens now. (You have [src.client.antag_tokens].)", "red")
 		else if(src.client.antag_tokens > 0)
-			if(master_mode in list("secret","traitor","nuclear","blob","wizard","changeling","mixed","mixed_rp","vampire","intrigue"))
-				src.client.using_antag_token = 1
+			src.client.using_antag_token = 1
 			src.show_text("Token redeemed, if mode supports redemption your new total will be [src.client.antag_tokens - 1].", "red")
 		else
 			src.show_text("You don't even have any tokens. How did you get here?", "red")
@@ -784,6 +822,10 @@ a.latejoin-card:hover {
 	verb/declare_ready()
 		set hidden = 1
 		set name = ".ready"
+
+		if(!tgui_process)
+			boutput(src, "<span class='alert'>Stuff is still setting up, wait a moment before readying up.</span>")
+			return
 
 		if (src.client.has_login_notice_pending(TRUE))
 			return
@@ -850,7 +892,7 @@ a.latejoin-card:hover {
 		if (src.client.has_login_notice_pending(TRUE))
 			return
 
-		if(tgui_alert(src, "Are you sure you wish to observe? You will not be able to play this round!", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
+		if(tgui_alert(src, "By choosing to observe the round, your DNR will be set and you forfeit the chance to participate. Are you sure you wish to do this?", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
 			if(!src.client) return
 			var/mob/dead/observer/observer = new(src)
 			if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token
@@ -875,7 +917,7 @@ a.latejoin-card:hover {
 
 			if(!src.mind) src.mind = new(src)
 
-			//src.mind.dnr=1
+			src.mind.dnr = 1
 			src.mind.joined_observer=1
 			src.mind.transfer_to(observer)
 			if(observer?.client)

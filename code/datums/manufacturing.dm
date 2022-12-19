@@ -27,18 +27,16 @@ ABSTRACT_TYPE(/datum/manufacture)
 	New()
 		..()
 		if(isnull(item_paths) && length(item_outputs) == 1) // TODO generalize to multiple outputs (currently no such manufacture recipes exist)
-			// sadly we can't use initial() because it's a list :/
 			var/item_type = item_outputs[1]
-			var/obj/dummy = new item_type
-			if(islist(dummy.mats))
+			var/typeinfo/obj/typeinfo = get_type_typeinfo(item_type)
+			if(istype(typeinfo) && islist(typeinfo.mats))
 				item_paths = list()
-				for(var/mat in dummy.mats)
+				for(var/mat in typeinfo.mats)
 					item_paths += mat
-					var/amt = dummy.mats[mat]
+					var/amt = typeinfo.mats[mat]
 					if(isnull(amt))
 						amt = 1
 					item_amounts += amt
-			qdel(dummy)
 		if(isnull(item_paths))
 			item_paths = list() // a bunch of places expect this to be non-null, like the sanity check
 		if (!sanity_check_exemption)
@@ -229,6 +227,42 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/reagent_containers/food/drinks/bottle/soda)
 	time = 4 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
+/datum/manufacture/saxophone
+	name = "Saxophone"
+	item_paths = list("MET-2")
+	item_amounts = list(15)
+	item_outputs = list(/obj/item/instrument/saxophone)
+	time = 7 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
+/datum/manufacture/whistle
+	name = "Whistle"
+	item_paths = list("MET-3")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/instrument/whistle)
+	time = 3 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
+/datum/manufacture/trumpet
+	name = "Trumpet"
+	item_paths = list("MET-2")
+	item_amounts = list(10)
+	item_outputs = list(/obj/item/instrument/trumpet)
+	time = 6 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
+/datum/manufacture/bagpipe
+	name = "Bagpipe"
+	item_paths = list("FAB-1", "MET-2")
+	item_amounts = list(10, 25)
+	item_outputs = list(/obj/item/instrument/bagpipe)
+	time = 5 SECONDS
 	create = 1
 	category = "Miscellaneous"
 
@@ -707,7 +741,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/RCDammo
 	name = "Compressed Matter Cartridge"
 	item_paths = list("DEN-1")
-	item_amounts = list(40)
+	item_amounts = list(30)
 	item_outputs = list(/obj/item/rcd_ammo)
 	time = 10 SECONDS
 	create = 1
@@ -716,7 +750,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/RCDammomedium
 	name = "Medium Compressed Matter Cartridge"
 	item_paths = list("DEN-2")
-	item_amounts = list(40)
+	item_amounts = list(30)
 	item_outputs = list(/obj/item/rcd_ammo/medium)
 	time = 20 SECONDS
 	create = 1
@@ -724,8 +758,8 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/RCDammolarge
 	name = "Large Compressed Matter Cartridge"
-	item_paths = list("CRY-2")
-	item_amounts = list(40)
+	item_paths = list("uqill")
+	item_amounts = list(20)
 	item_outputs = list(/obj/item/rcd_ammo/big)
 	time = 30 SECONDS
 	create = 1
@@ -784,6 +818,24 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
+
+/datum/manufacture/flippers
+	name = "Flippers"
+	item_paths = list("RUB")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/clothing/shoes/flippers)
+	time = 8 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/cleaner_grenade
+	name = "Cleaner Grenade"
+	item_paths = list("INS-1", "CRY-1", "molitz", "ice")
+	item_amounts = list(8, 8, 10, 10)
+	item_outputs = list(/obj/item/chem_grenade/cleaner)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
 
 /******************** Medical **************************/
 
@@ -1321,6 +1373,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_amounts = list(4,4,2)
 	item_outputs = list(/obj/item/cell/cerenkite)
 	time = 45 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/powercellH
+	name = "Hyper Capacity Power Cell"
+	item_paths = list("DEN-2", "CON-2", "POW-2")
+	item_amounts = list(5,10,10)
+	item_outputs = list(/obj/item/cell/hypercell)
+	time = 120 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1939,6 +2000,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("FAB-1","MET-1","CRY-1")
 	item_amounts = list(3,3,2)
 	item_outputs = list(/obj/item/clothing/suit/space/engineer,/obj/item/clothing/head/helmet/space/engineer)
+	time = 15 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/engdivesuit
+	name = "Engineering Diving Suit Set"
+	item_paths = list("FAB-1","MET-1","CRY-1")
+	item_amounts = list(3,3,2)
+	item_outputs = list(/obj/item/clothing/suit/space/diving/engineering,/obj/item/clothing/head/helmet/space/engineer/diving/engineering)
 	time = 15 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2624,6 +2694,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Resource"
 
+/datum/manufacture/handkerchief
+	name = "Handkerchief"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/cloth/handkerchief/white)
+	time = 4 SECONDS
+	create = 1
+	category = "Resource"
+
 /////// pod construction components
 
 /datum/manufacture/pod/parts
@@ -2904,15 +2983,6 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	create = 1
 	category = "Miscellaneous"
 
-/datum/manufacture/pizzabox
-	name = "Pizza Box"
-	item_paths = list("MET-1")
-	item_amounts = list(5)
-	item_outputs = list(/obj/storage/crate/pizza)
-	time = 10 SECONDS
-	create = 1
-	category = "Miscellaneous"
-
 /datum/manufacture/wooden
 	name = "Wooden Crate"
 	item_paths = list("MET-1")
@@ -2970,19 +3040,55 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 /************ INTERDICTOR STUFF ************/
 
-/datum/manufacture/interdictor_frame
+/datum/manufacture/interdictor_kit
 	name = "Interdictor Frame Kit"
 	item_paths = list("MET-2")
 	item_amounts = list(10)
-	item_outputs = list(/obj/item/interdictor_frame_kit)
-	time = 15 SECONDS
+	item_outputs = list(/obj/item/interdictor_kit)
+	time = 10 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/interdictor_board_standard
+	name = "Standard Interdictor Mainboard"
+	item_paths = list("CON-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/interdictor_board)
+	time = 5 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/interdictor_board_nimbus
+	name = "Nimbus Interdictor Mainboard"
+	item_paths = list("CON-1","INS-1","CRY-1")
+	item_amounts = list(4,2,2)
+	item_outputs = list(/obj/item/interdictor_board/nimbus)
+	time = 10 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/interdictor_board_zephyr
+	name = "Zephyr Interdictor Mainboard"
+	item_paths = list("CON-1","viscerite")
+	item_amounts = list(4,5)
+	item_outputs = list(/obj/item/interdictor_board/zephyr)
+	time = 10 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/interdictor_board_devera
+	name = "Devera Interdictor Mainboard"
+	item_paths = list("CON-1","CRY-1","syreline")
+	item_amounts = list(4,2,5)
+	item_outputs = list(/obj/item/interdictor_board/devera)
+	time = 10 SECONDS
 	create = 1
 	category = "Machinery"
 
 /datum/manufacture/interdictor_rod_lambda
 	name = "Lambda Phase-Control Rod"
 	item_paths = list("MET-2","CON-1","CRY-1","INS-1")
-	item_amounts = list(10,20,10,5)
+	item_amounts = list(2,10,5,2)
 	item_outputs = list(/obj/item/interdictor_rod)
 	time = 20 SECONDS
 	create = 1
@@ -2991,11 +3097,51 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/interdictor_rod_sigma
 	name = "Sigma Phase-Control Rod"
 	item_paths = list("MET-2","CON-2","INS-1","POW-1")
-	item_amounts = list(10,25,10,5)
+	item_amounts = list(2,10,5,2)
 	item_outputs = list(/obj/item/interdictor_rod/sigma)
 	time = 20 SECONDS
 	create = 1
 	category = "Machinery"
+
+/************ NADIR RESONATORS ************/
+
+/datum/manufacture/resonator_type_ax
+	name = "Type-AX Resonator"
+	item_paths = list("MET-2","CON-2","CRY-1","POW-1")
+	item_amounts = list(15,20,20,5)
+	item_outputs = list(/obj/machinery/siphon/resonator)
+	time = 30 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/resonator_type_sm
+	name = "Type-SM Resonator"
+	item_paths = list("MET-2","CON-2","CRY-1","INS-1")
+	item_amounts = list(10,20,10,10)
+	item_outputs = list(/obj/machinery/siphon/resonator/stabilizer)
+	time = 30 SECONDS
+	create = 1
+	category = "Machinery"
+
+/************ NADIR GEAR ************/
+
+/datum/manufacture/nanoloom
+	name = "Nanoloom"
+	item_paths = list("MET-2","CON-1","cobryl","FAB-1")
+	item_amounts = list(4,2,1,3)
+	item_outputs = list(/obj/item/device/nanoloom)
+	time = 15 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/nanoloom_cart
+	name = "Nanoloom Cartridge"
+	item_paths = list("MET-2","cobryl","FAB-1")
+	item_amounts = list(1,1,3)
+	item_outputs = list(/obj/item/nanoloom_cartridge)
+	time = 8 SECONDS
+	create = 1
+	category = "Tool"
 
 //////////////////////UBER-EXTREME SURVIVAL////////////////////////////////
 /datum/manufacture/armor_vest	//
@@ -3011,7 +3157,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	name = "Colt SAA"
 	item_paths = list("MET-2")
 	item_amounts = list(7)
-	item_outputs = list(/obj/item/gun/kinetic/colt_saa)
+	item_outputs = list(/obj/item/gun/kinetic/single_action/colt_saa)
 	time = 30 SECONDS
 	create = 1
 	category = "Weapon"

@@ -42,7 +42,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	// ever put this much effort into the dumbest thing ever haha
 	user.visible_message("[user] [pick("reels in", "catches", "pulls in", "fishes up")] a \
 	[pick("big", "wriggly", "fat", "slimy", "fishy", "large", "high-quality", "nasty", "chompy", "real", "wily")] \
-	[prob(80) ? "[fish.name]" : pick("one", "catch", "chomper", "wriggler", "sunovabitch", "sucker")]!")
+	[prob(80) ? "[fish.name]" : pick("one", "catch", "chomper", "wriggler", "sunovagun", "sucker")]!")
 	fish.set_loc(get_turf(user))
 	playsound(user, 'sound/items/fishing_rod_reel.ogg', 50, 1)
 	fishing_rod.last_fished = TIME //set the last fished time
@@ -61,7 +61,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fish_available = list(/obj/item/fish/carp = 40,\
 	/obj/item/fish/bass = 30,\
 	/obj/critter/slug = 10,\
-	/obj/critter/snake = 10,\
+	/mob/living/critter/small_animal/snake = 10,\
 	/obj/critter/frog = 10,\
 	/obj/item/clothing/head/rafflesia = 5)
 
@@ -104,9 +104,9 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/mob/living/carbon/human/npc/monkey/extremely_fast = 1,\
 #endif
 	/obj/critter/aberration = 1,\
-	/obj/critter/cat = 2,\
+	/mob/living/critter/small_animal/cat = 2,\
 	/obj/item/clothing/head/void_crown = 1,\
-	/obj/item/record/random = 4,\
+	/obj/item/record/spacebux = 4,\
 	/obj/critter/domestic_bee/trauma = 20)
 
 /datum/fishing_spot/fryer

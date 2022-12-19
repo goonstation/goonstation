@@ -3,10 +3,17 @@
 // Singletons for typing indicators
 var/mutable_appearance/living_speech_bubble = mutable_appearance('icons/mob/mob.dmi', "speech")
 var/mutable_appearance/living_typing_bubble = mutable_appearance('icons/mob/mob.dmi', "typing")
+var/mutable_appearance/living_emote_typing_bubble = mutable_appearance('icons/mob/overhead_icons32x48.dmi', "emote_typing")
 /mob/proc/create_typing_indicator()
 	return
 
 /mob/proc/remove_typing_indicator()
+	return
+
+/mob/proc/create_emote_typing_indicator()
+	return
+
+/mob/proc/remove_emote_typing_indicator()
 	return
 
 /mob/proc/show_speech_bubble()
@@ -14,6 +21,7 @@ var/mutable_appearance/living_typing_bubble = mutable_appearance('icons/mob/mob.
 
 /mob/Logout()
 	remove_typing_indicator()
+	remove_emote_typing_indicator()
 	. = ..()
 
 // -- Typing verbs -- //
@@ -46,6 +54,19 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 
 	remove_typing_indicator()
 
+// The same but for custom emotes.
+/mob/verb/start_emote_typing(source as text)
+	set name = ".start_emote_typing"
+	set hidden = 1
+
+	create_emote_typing_indicator()
+
+/mob/verb/cancel_emote_typing(source as text)
+	set name = ".cancel_emote_typing"
+	set hidden = 1
+
+	remove_emote_typing_indicator()
+
 ////Wrappers////
 //Keybindings were updated to change to use these wrappers. If you ever remove this file, revert those keybind changes
 
@@ -67,6 +88,15 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 	if(message)
 		whisper_verb(message)
 
+/mob/verb/emote_wrapper(message as text)
+	set name = ".Emote"
+	set hidden = 1
+	set instant = 1
+
+	remove_emote_typing_indicator()
+	if(message)
+		say_verb("*customv [message]")
+
 /mob/verb/me_wrapper(message as text)
 	set name = ".Me"
 	set hidden = 1
@@ -86,6 +116,21 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 		src.UpdateOverlays(living_typing_bubble, TYPING_OVERLAY_KEY)
 
 /mob/living/remove_typing_indicator()
+	if(src.has_typing_indicator)
+		src.has_typing_indicator = FALSE
+		if(SEND_SIGNAL(src, COMSIG_REMOVE_TYPING))
+			return
+		src.UpdateOverlays(null, TYPING_OVERLAY_KEY)
+
+/mob/living/create_emote_typing_indicator()
+	if(!src.has_typing_indicator && isalive(src))
+		src.UpdateOverlays(living_emote_typing_bubble, TYPING_OVERLAY_KEY)
+		src.has_typing_indicator = TRUE
+		if(SEND_SIGNAL(src, COMSIG_CREATE_TYPING))
+			return
+		src.UpdateOverlays(living_emote_typing_bubble, TYPING_OVERLAY_KEY)
+
+/mob/living/remove_emote_typing_indicator()
 	if(src.has_typing_indicator)
 		src.has_typing_indicator = FALSE
 		if(SEND_SIGNAL(src, COMSIG_REMOVE_TYPING))

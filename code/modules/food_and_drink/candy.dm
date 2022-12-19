@@ -29,10 +29,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 	heal(var/mob/M)
 		if(src.razor_blade && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/obj/item/affecting = H.organs["head"]
 			boutput(H, "<span class='alert'>You bite down into a razor blade!</span>")
+			H.TakeDamage("head", 10, 0, 0, DAMAGE_STAB)
 			H.changeStatus("weakened", 3 SECONDS)
-			affecting.take_damage(10, 0)
 			H.UpdateDamageIcon()
 			src.razor_blade = 0
 			new /obj/item/razor_blade( get_turf(src) )
@@ -62,6 +61,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 	real_name = "candy cane"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "candycane"
+	item_state = "candycane_h"
 	sugar_content = 20
 	food_effects = list("food_energized")
 
@@ -210,6 +210,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 				tastesbad = 0
 
 	heal(var/mob/M)
+		..()
 		if (tastesbad)
 			boutput(M, "<span class='alert'>[phrase]! That tasted like [flavor]...</span>")
 		else

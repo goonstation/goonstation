@@ -22,6 +22,27 @@
 
 # Syntax
 
+## Commenting
+
+### Purpose
+When possible, we always want people to document their code clearly so that others (or perhaps yourself in the future) can understand and learn why a piece of code was written. 
+
+Unless the code is extremely complex, what one generally wants to comment is the *motivation* behind a certain piece of code, or what it's supposed to fix - rather than what it's actually doing.
+
+### Doc Comments
+Additionally, we have a 'documentation comment' system set up. This is as simple as commenting code like:
+```cs
+/obj/item/clothing/suit
+    /// If TRUE the suit will hide whoever is wearing it's hair
+    var/over_hair = FALSE
+```
+By using this, when you hover over a variable or object, it'll display information in the comment. For example:
+
+![](https://i.imgur.com/IdKpEtf.png)
+
+For more detailed information on this system, see the [DMByExample page](https://spacestation13.github.io/DMByExample/meta/dmdoc.html).
+
+
 ## Defines to use
 
 ### Time Defines
@@ -105,7 +126,7 @@ Example:
 ```javascript
 ABSTRACT_TYPE(/obj/item/hat)
 /obj/item/hat
-	var/is_cool = FAKSE
+	var/is_cool = FALSE
 
 /obj/item/hat/uncool
 	name = "Uncool Hat"
@@ -335,7 +356,7 @@ flowchart TD
 ```
 
 ## Flowchart: Get things in an area around a thing
-![](https://mermaid.ink/img/pako:eNqlVm2L20YQ_iuDvtgGNUfJt6NcKdw1OWhaOB8JoS7HSjuyt5F23d2VXRPy3zMzK1mS7RxHog-2NDuvz7zsfM5KpzG7zqra7cuN8hEeb1cW6PHOxfnfq-weLKKG6GCNERTUJkRwFeAO_SFujF2DsRBcg6A8qhxUWTqvmU4yQt9g60nKlKvsn0XSnn53Jhhnk5WSpEEVro0deWAulS0wIArnO7dTRY0B4kZFPoICgQ-h8q7pHImu-aXwN_Pl8ufX5PF6E9kfrfwniyGACWBdFE9bGym6yvnFxB4pZGN3HCQ0rhis0clgJMkkqQ0qfxYKE8n0mM-rvSY0Equz9WHMT4fAp8qWOBaKra_COB38PWYokQIR-3APe2UjzBJpBspqMDFA6ejb0gvlhTAztqxbTboofXGD4DG0NZ1KguemIkKNO9K0-HUEjeh8OqA48xHV5uzMOj76c3yitH4S6m9aw8zN2AM2SXF6KSb-2HpXglWE7NztDO5zcF7ZNeaAsVyMYw1tsfZquwFmI638N-9Ryzs_WCKx86ONxzJSVcHDHwN1oujJFf8-Ma6kMangOqGME_2K6ROF_Lz_8NfjfJU9IJ3aMOqNpq_RveEOkfB6_87qdqpTipj5e6uzAFsXDPueiz4qXQhbLI2qu07hzAaj0SvmCq-mGj-6lrEtyKMDlXxsVU0vUiIcNvowX7xaZYtBCq3-FkbUClN4uDkuAPPuh3CZapPmLg7CTdbyrnK5o5U99Bh41G3KsPOg2nVDPgoeJ3DcV4NJCsA1JtIEyEk-eStzTZq7N9i3_YtBKmtDxk9wSsQLUHVD8Fm8BBt2J2kZPJroWprG1Mr33UUTZUftUNBYofkG-w3BuEeZNlO5xh3nz_6yIXbAci8Yq83OaKohRubHoD2N5SK6x5cJxFS0Xd9z-Q6tz7qvXt7_7z8sCfclz5xwoHL5H1QQ_fNFws2fpmSQpS5iCML0ZpC4xP4Qz3kIMtcoAPn_fvcf3oyqZgTu0F2jCuWJURka98cUdXO3K1KWfM5nvskS7N3b9_v99uGy30ck2QIM_Kdejgv9OMLyUWpCaJu-a9xW_dfKOCVPAhS1Kz_RBd5a_Vy0wkaxyv-c5_CVXFa53LxXJPCSQB9_p0Afyfu-oeXa7i_c17edNxorY3E0To6XQLogKUwy2AnPZfoFs8PFqP2WwmiCSNEuR1DVWBGazlv0OdzxDpBOo9uC55VoEn9ayobVD36i56ZfxU7JnKAJ8aZfa85Y06YyWveE-7jSXToh-sniB8kX3I8XtCOR8j9ZrTp_qLeGzQx6t4W5t4r7ZFOKayASzxm9k53Qx3vPQOft6Bsn1p2sSqJO1qPJpidkKY4szxr0jTKatvTPzLLKKIsNbYfX9Mor7Spb2S_E1261ininTXQ-u65UHTDPVBvd8mDLIyFx3RpFhd501C9fAcvH5nU?bgColor=5B5F67)
+![](https://mermaid.ink/img/pako:eNqlV19v2zYQ_yoHvdgGtAZD34Ihw4BkW4BlA-KgRTEPASWebK4S6ZGUPaPod-_dUbIk2w2CVg-xdP_vx7vj5VNWOo3ZdVbVbl9ulI_wdLuyQI93Ls7_XmX3YBE1RAdrjKCgNiGCqwB36A9xY-wajIXgGgTlUeWgytJ5zXTSEfoGW09aplxl_yyS9fR3Z4JxNnkpSRtU4drYkQfhUtkCA6JIPridKmoMEDcqMgsKBGZC5V3TBRJd81Phb-bL5Y9vKeL1JnI8WvmPFkMAE8C6KJG2NlJ2lfOLiT8yyM7uOEloXDF4I87gJOkkrQ0qf5YKE8n1WM6rvSY0kqiz9WEsT0xgrrIljpVi66swPg7-HguUSImIf7iHvbIRZok0A2U1mBigdPRt6YXOhTAztqxbTbbo-OIGwWNoa-LKAc9NRYQad2Rp8fMIGrH5fEAJ5gOqzRnPOmb9OeYorZ-F-ovWMHMzjoBdUp5eiok_tt6VYBUhO3c7g_scnFd2jTlgLBfjXENbrL3aboDFyCr_zHvU8i4O1kji_GjjsYxUVfD4x0CdGHp2xb_PjCtZTCa4TujEiX7F9IlBft69_-tpvsoekbg2jHqj6Wt0b7hDJL0-vrO6ndqUImb53usswNYFw7HnYo9KF8IWS6PqrlP4ZIPR6BVLhTdTix9cy9gWFNGBSj62qqYXKRFOG32YL96sssWghVZ_DSNqhSk83BwXgHn4Llym1qS5i4NIk7e8q1zuaGUPPQYedZtO2HlQ7bqhGAWPEzjuq8ElJeAaE2kC5KSfopW5Js3dO-zb_tUglbUh5yc4JeIFqLoh-CJegg2Hk6wMEU1sLU1jauX77qKJsqN2KGis0HyD_YZg3KNMm6le447zZ3_ZEQdguReM1WZnNNUQI_N90J7mchHd48sEYiraru-5fIfWZ9tXr-__d--XhPuSZ044ULn8DyqI_fki4eZPj2TQpS5iCML0ZpC8xP-Qz3kKMtcoAfn99vAffxtVzQjcobtGFcoTozI07o9H1M3drkhZ86WY-SZLsHdv3x7374-X4z4iyR5gkD-NclzoxxGWj44mhLbpu8Zt1X-tjFOKJEBRu_IjXeCt1S9lK2KUq_zOeQ5fyWWVy817RQqvSfTpV0r0iaLvG1qu7f7CfXvbRaOxMhZH4-R4CaQLktIkh53yXKZfMDtcjNpvKYImiBbtcgRVjRWh6bxFn8Md7wCJG90WPK9Ek_zTUjasfvADPTf9KnZK5gOaEG_6teZMNG0qZ0uf6BwXu0scop-sf5Aiwv14TTsSqQrGbrp4utioz3oyvSYXUlHj7Q361MRUHxPuJ-I9kWTO6J3uBfPpa6DzBvUVjnUn65SYkxVqsg0KWQooy7MGfaOMpk3-E4usMjrphjbIa3rltXeVrexnkmu3WkW80yY6n11Xqg6YZ6qNbnmwZXYdfYu90K1R1AvNUQpF6SH9vyD_Nnz-Aqqx9s0?bgColor=5B5F67)
 
 # Whack BYOND shit
 
@@ -496,9 +517,17 @@ proc/give_mob_item(mob/person, obj/item/gift)
 mob/verb/get_mob_to_yourself(mob/target as mob)
 ```
 
+*Additional note*: This applies in general to anything
+*used* as a verb, which can be any proc added to an atom
+via `atom.verbs += /proc/x`.
+
+So, be careful when removing `as x` to
+make sure it isn't being used as a verb somewhere else.
+
 # Useful Things
 
 ## VSCode Debugger
+//TODO
 
 ## Debugging Overlays
 
@@ -522,9 +551,10 @@ There exists a project to provide an incredibly more advanced real-time profiler
 
 ![](https://i.imgur.com/1CEwo0g.png)
 
-To operate this, you will need to do two things: download [the tracy 'viewer' application](https://github.com/wolfpld/tracy), and either compile or download the byond-tracy library.
-* The first can be downloaded here: https://github.com/wolfpld/tracy/releases (download the .7z and unzip it, it's portable)
+To operate this, you will need to do three things: download [the tracy 'viewer' application v0.8.x](https://github.com/wolfpld/tracy), and either compile or download the byond-tracy library.
+* The first can be downloaded here: https://github.com/wolfpld/tracy/releases/tag/v0.8.2 (download the .7z and unzip it, it's portable)
 * The second can be trivially compiled from the C source above (and will be more performant), or you could download a version ZeWaka has compiled themselves [here](https://bit.ly/goontracy). The .dll just goes in the root folder of the game.
+* Uncomment `#define TRACY_PROFILER_HOOK` in `_std/__build.dm`
 
 If you're on Linux you need to compile both yourself manually, obviously.
 
@@ -551,12 +581,14 @@ To track a group of things which don't share the same type, define a tracking ca
 
 
 <span style="color: red">VERY VERY BAD:</span>
+
 ```javascript
 for (var/mob/living/jellyfish in world)
     ...
 ```
 
 <span style="color: green">Good:</span>
+
 ```javascript
 /mob/living/jellyfish
     
@@ -572,3 +604,42 @@ for (var/mob/living/jellyfish/jelly in by_type[/mob/living/jellyfish])
         ...
 ```
 
+# Unit Test Woes
+
+## Passability Cache
+
+The passability cache unit test enforces rules associated with `pass_unstable`, a variable that is used to optimize pathfinding. It prevents the implementation of `Cross` and other collision-based callbacks for all types that declare `pass_unstable = FALSE`.
+
+```
+FAIL: /datum/unit_test/passability_cache 1.9s
+	REASON #1: /obj/machinery/silly_doodad is stable and must not implement Cross
+```
+
+In this situation, the unit test detected a forbidden proc `Cross` on `/obj/machinery/silly_doodad`. Because `/obj/machinery` declares `pass_unstable = FALSE`, your subtype must also follow the rules. In this situation, you have two options:
+
+- Remove the `Cross` implementation, or
+- Set `pass_unstable = TRUE`, which may cause performance degredation, especially if the atom in question frequently appears in-game.
+
+The same rules apply to any procs the test detects. For example, if it says `must not implement Enter`, then replace `Cross` with `Enter` in the above section.
+
+### Cross vs. Crossed, etc.
+
+These two procs do two similar but distinct things. `Cross` *returns* whether or not a given movable can cross `src`, while `Crossed` is called *whenever* a given movable crosses `src`.
+
+If you only need to cause something (i.e. your machine heals people when someone steps on it), then you want to use `Crossed` instead.
+
+Here's a quick list of all the side-effect versions of movement callbacks.
+- `Cross` -> `Crossed`
+- `Enter` -> `Entered`
+- `Exit` -> `Exited`
+- `Uncross` -> `Uncrossed`
+
+
+### Cannot Possibly Be Stable
+
+```
+FAIL: /datum/unit_test/passability_cache 3.9s
+	REASON #1: /obj/machinery/unstable_thingy/silly_doodad cannot possibly be stable because /obj/machinery/unstable_thingy implements Cross
+```
+
+This failure happens when you set `pass_unstable = FALSE` on a subtype of something that implements a forbidden proc. In most cases, there's nothing you can do except follow the section above for the offending parent type. In this case, you would look at `/obj/machinery/unstable_thingy` to see if you can make it stable.

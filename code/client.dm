@@ -156,6 +156,32 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	src.player?.log_leave_time() //logs leave time, calculates played time on player datum
 	src.player?.cached_jobbans = null //Invalidate their job ban cache.
 
+	var/list/dc = datum_components
+	if(dc)
+		var/all_components = dc[/datum/component]
+		if(length(all_components))
+			for (var/datum/component/C as anything in all_components)
+				qdel(C, FALSE, TRUE)
+		else
+			var/datum/component/C = all_components
+			qdel(C, FALSE, TRUE)
+		dc.Cut()
+
+	var/list/lookup = comp_lookup
+	if(lookup)
+		for(var/sig in lookup)
+			var/list/comps = lookup[sig]
+			if(length(comps))
+				for (var/datum/component/comp as anything in comps)
+					comp.UnregisterSignal(src, sig)
+			else
+				var/datum/component/comp = comps
+				comp.UnregisterSignal(src, sig)
+		comp_lookup = lookup = null
+
+	for(var/target in signal_procs)
+		UnregisterSignal(target, signal_procs[target])
+
 	return ..()
 
 /client/New()
@@ -177,6 +203,9 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	src.player = make_player(key)
 	src.player.client = src
+
+	if(config.rsc)
+		src.preload_rsc = config.rsc
 
 	if (!isnewplayer(src.mob) && !isnull(src.mob)) //playtime logging stuff
 		src.player.log_join_time()
@@ -454,6 +483,9 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			if (src.byond_version < 514 || src.byond_build < 1566)
 				if (tgui_alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page? Make sure to download the stable release.", "ALERT", list("Yes", "No")) == "Yes")
 					src << link("http://www.byond.com/download/")
+			if (src.byond_version >= 515)
+				if (alert(src, "Please DOWNGRADE BYOND to version 514.1589! Many things will break otherwise. Would you like to be taken to the correct download page?", "ALERT", "Yes", "No") == "Yes")
+					src << link("http://www.byond.com/download/build/514/514.1589_byond_setup.zip")
 /*
  				else
 					alert(src, "You won't be able to play without updating, sorry!")
@@ -525,7 +557,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	src.reputations = new(src)
 
-	if(src.holder && src.holder.level >= LEVEL_CODER)
+	if(src.holder && src.holder.level >= LEVEL_ADMIN)
 		src.control_freak = 0
 
 	if (browse_item_initial_done)
@@ -623,6 +655,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		src.tick_lag = CLIENTSIDE_TICK_LAG_CHUNKY
 	else if (winget( src, "menu.fps_creamy", "is-checked" ) == "true")
 		src.tick_lag = CLIENTSIDE_TICK_LAG_CREAMY
+	else if (winget( src, "menu.fps_velvety", "is-checked" ) == "true")
+		src.tick_lag = CLIENTSIDE_TICK_LAG_VELVETY
 	else
 		src.tick_lag = CLIENTSIDE_TICK_LAG_SMOOTH
 
@@ -674,6 +708,9 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 				if(isnull(message_who))
 					message_admins(message)
 				else
+					var/mob/M = message_who
+					var/client/C = istype(M) ? M.client : message_who
+					message = replacetext(replacetext(message, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]")
 					boutput(message_who, message)
 	if(alert_them)
 		var/list/both_collide = ip_to_ckeys[src.address] & cid_to_ckeys[src.computer_id]
@@ -752,6 +789,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	antag_tokens = amt
 	if( cloud_available() )
 		cloud_put( "antag_tokens", amt )
+		. = TRUE
 	/*
 	var/savefile/AT = LoadSavefile("data/AntagTokens.sav")
 	if (!AT) return
@@ -759,7 +797,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	AT[ckey] << antag_tokens*/
 
 /client/proc/use_antag_token()
-	src.set_antag_tokens(--antag_tokens)
+	if( src.set_antag_tokens(--antag_tokens) )
+		logTheThing(LOG_DEBUG, src, "Antag token used. [antag_tokens] tokens remaining.")
 
 
 /client/proc/load_persistent_bank()
@@ -958,7 +997,28 @@ var/global/curr_day = null
 		boutput(usr, "You are being redirected to [game_server.name]...")
 		usr << link(game_server.url)
 
-
+/client/verb/download_sprite(atom/A as null|mob|obj|turf in view(1))
+	set name = "Download Sprite"
+	set desc = "Download the sprite of an object for wiki purposes. The object needs to be next to you."
+	set hidden = TRUE
+	if(!A)
+		var/datum/promise/promise = new
+		var/datum/targetable/refpicker/abil = new
+		abil.promise = promise
+		src.mob.targeting_ability = abil
+		src.mob.update_cursor()
+		A = promise.wait_for_value()
+	if(!A)
+		boutput(src, "No target selected.")
+		return
+	if(GET_DIST(src.mob, A) > 1 && !(src.holder || istype(src.mob, /mob/dead)))
+		boutput(src, "Target is too far away (it needs to be next to you).")
+		return
+	if(!src.holder && ON_COOLDOWN(src.player, "download_sprite", 30 SECONDS))
+		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src.player, "download_sprite", 0))].")
+		return
+	var/icon/icon = getFlatIcon(A)
+	src << ftp(icon, "[ckey(A.name)]_[time2text(world.realtime,"YYYY-MM-DD")].png")
 
 
 /*
@@ -1006,7 +1066,7 @@ var/global/curr_day = null
 				return
 			var/target = href_list["nick"]
 			var/t = input("Message:", text("Private message to [target] (Discord)")) as null|text
-			if(!(src.holder && (src.holder.rank in list("Host", "Coder"))))
+			if(!(src.holder && src.holder.level >= LEVEL_ADMIN))
 				t = strip_html(t,500)
 			if (!( t ))
 				return
@@ -1040,7 +1100,7 @@ var/global/curr_day = null
 				return
 			var/target = href_list["nick"]
 			var/t = input("Message:", text("Mentor Message")) as null|text
-			if(!(src.holder && (src.holder.rank in list("Host", "Coder"))))
+			if(!(src.holder && src.holder.level >= LEVEL_ADMIN))
 				t = strip_html(t, 1500)
 			if (!( t ))
 				return
@@ -1078,7 +1138,7 @@ var/global/curr_day = null
 				var/t = input("Message:", text("Mentor Message")) as null|text
 				if (href_list["target"])
 					M = ckey_to_mob(href_list["target"])
-				if (!(src.holder && (src.holder.rank in list("Host", "Coder"))))
+				if (!(src.holder && src.holder.level >= LEVEL_ADMIN))
 					t = strip_html(t, 1500)
 				if (!( t ))
 					return
@@ -1289,6 +1349,8 @@ var/global/curr_day = null
 	set name ="apply-view-tint"
 
 	view_tint = !view_tint
+	if (src.mob?.respect_view_tint_settings)
+		src.set_color(length(src.mob.active_color_matrix) ? src.mob.active_color_matrix : COLOR_MATRIX_IDENTITY, src.mob.respect_view_tint_settings)
 
 /client/verb/adjust_saturation()
 	set hidden = TRUE
@@ -1424,6 +1486,8 @@ var/global/curr_day = null
 		src.tick_lag = CLIENTSIDE_TICK_LAG_CHUNKY
 	else if (winget( src, "menu.fps_creamy", "is-checked" ) == "true")
 		src.tick_lag = CLIENTSIDE_TICK_LAG_CREAMY
+	else if (winget( src, "menu.fps_velvety", "is-checked" ) == "true")
+		src.tick_lag = CLIENTSIDE_TICK_LAG_VELVETY
 	else
 		src.tick_lag = CLIENTSIDE_TICK_LAG_SMOOTH
 
@@ -1495,11 +1559,13 @@ var/global/curr_day = null
 	//tell the interface helpers to recompute data
 	src.mapSizeHelper?.update()
 
-/client/verb/autoscreenshot()
+/client/verb/xscreenshot(arg as text|null)
 	set hidden = 1
-	set name = ".autoscreenshot"
+	set name = ".xscreenshot"
 
-	winset(src, null, "command=\".screenshot auto\"")
+	if(!isnull(arg))
+		arg = " [arg]"
+	winset(src, null, "command=\".screenshot[arg]\"")
 	boutput(src, "<B>Screenshot taken!</B>")
 
 /client/verb/test_experimental_intents()

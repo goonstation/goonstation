@@ -97,7 +97,6 @@ var/global
 				//"browserassets/js/anchorme.js",
 				"browserassets/js/browserOutput.js",
 				"browserassets/css/fonts/fontawesome-webfont.eot",
-				"browserassets/css/fonts/fontawesome-webfont.svg",
 				"browserassets/css/fonts/fontawesome-webfont.ttf",
 				"browserassets/css/fonts/fontawesome-webfont.woff",
 				"browserassets/css/font-awesome.css",
@@ -190,7 +189,7 @@ var/global
 			return
 
 		var/list/connData = json_decode(cookie)
-		if (connData && islist(connData) && connData.len > 0 && connData["connData"])
+		if (connData && islist(connData) && length(connData) && connData["connData"])
 			src.connectionHistory = connData["connData"] //lol fuck
 			var/list/found = new()
 			for (var/i = src.connectionHistory.len; i >= 1; i--)
@@ -202,7 +201,7 @@ var/global
 					break
 
 			//Uh oh this fucker has a history of playing on a banned account!!
-			if (found.len > 0 && found["ckey"] != src.owner.ckey)
+			if (length(found) && found["ckey"] != src.owner.ckey)
 				//TODO: add a new evasion ban for the CURRENT client details, using the matched row details
 				message_admins("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 				logTheThing(LOG_DEBUG, src.owner, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
@@ -218,7 +217,7 @@ var/global
 
 				var/banData[] = new()
 				banData["ckey"] = src.owner.ckey
-				banData["compID"] = src.owner.computer_id
+				banData["compID"] = (found["compID"] ? src.owner.computer_id : null) // don't add CID if original ban doesn't have one
 				banData["akey"] = "Auto Banner"
 				banData["ip"] = src.owner.address
 				banData["reason"] = "\[Evasion Attempt\] Previous ckey: [found["ckey"]]"
@@ -425,7 +424,7 @@ var/global
 		else if (ismind(target) && target:current)
 			C = target:current:client
 
-		if (C?.chatOutput && !C.chatOutput.loaded && C.chatOutput.messageQueue && islist(C.chatOutput.messageQueue))
+		if (islist(C?.chatOutput?.messageQueue) && !C.chatOutput.loaded)
 			//Client sucks at loading things, put their messages in a queue
 			C.chatOutput.messageQueue += list(list("message" = message, "group" = group))
 		else
@@ -462,9 +461,6 @@ var/global
 //Aliases for boutput
 /proc/out(target = 0, message = "", group = "")
 	boutput(target, message, group)
-/proc/bo(target = 0, message = "", group = "")
-	boutput(target, message, group)
-
 
 /*
 I spent so long on this regex I don't want to get rid of it :(

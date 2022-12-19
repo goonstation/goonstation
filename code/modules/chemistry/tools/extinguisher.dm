@@ -74,9 +74,9 @@
 	return "Contains [src.reagents.total_volume] units."
 
 /obj/item/extinguisher/attack(mob/M, mob/user)
-	src.hide_attack = 0
+	src.hide_attack = ATTACK_VISIBLE
 	if(user.a_intent == "help" && !safety) //don't smack people with a deadly weapon while you're trying to extinguish them, thanks
-		src.hide_attack = 1
+		src.hide_attack = ATTACK_FULLY_HIDDEN
 		return
 	..()
 
@@ -90,7 +90,7 @@
 		boutput(user, "<span class='alert'>Man, the handle broke off, you won't spray anything with this.</span>")
 		return
 
-	if ( istype(target, /obj/reagent_dispensers) && BOUNDS_DIST(src, target) == 0)
+	if ( is_reagent_dispenser(target) && BOUNDS_DIST(src, target) == 0)
 		var/obj/o = target
 		o.reagents.trans_to(src, (src.reagents.maximum_volume - src.reagents.total_volume))
 		src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
@@ -121,7 +121,6 @@
 				M.implant += implanted
 				implanted.implanted(M, null, 4)
 				boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
-				M.emote("scream")
 			qdel(src)
 			return
 
@@ -165,7 +164,7 @@
 		src.reagents.trans_to_direct(R, min(src.reagents.total_volume, (distance * reagents_per_dist)))
 		src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 
-		logTheThing(LOG_COMBAT, user, "sprays [src] at [constructTarget(T,"combat")], [log_reagents(src)] at [log_loc(user)] ([get_area(user)])")
+		logTheThing(LOG_CHEMISTRY, user, "sprays [src] at [constructTarget(T,"combat")], [log_reagents(src)] at [log_loc(user)] ([get_area(user)])")
 
 		user.lastattacked = target
 

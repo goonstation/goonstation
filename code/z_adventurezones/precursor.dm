@@ -21,14 +21,14 @@
 	sound_group = "ice_moon"
 
 /area/upper_arctic/pod1
-	name = "Outpost Theta Pod One"
+	name = "Outpost Theta Pod One Upper Level"
 	icon_state = "green"
 	sound_environment = 3
 	skip_sims = 1
 	sims_score = 30
 
 /area/lower_arctic/pod1
-	name = "Outpost Theta Pod One"
+	name = "Outpost Theta Pod One Lower Level"
 	icon_state = "green"
 	sound_environment = 3
 	skip_sims = 1
@@ -59,7 +59,7 @@
 	sims_score = 30
 
 /area/upper_arctic/mining
-	name = "Glacier Access"
+	name = "Glacier Access Upper Level"
 	icon_state = "dk_yellow"
 	sound_environment = 2
 	sound_environment = 2
@@ -67,7 +67,7 @@
 	sims_score = 30
 
 /area/lower_arctic/mining
-	name = "Glacier Access"
+	name = "Glacier Access Lower Level"
 	icon_state = "dk_yellow"
 	sound_environment = 2
 	sound_environment = 2
@@ -937,7 +937,7 @@
 				boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 				return
 
-			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
+			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, shock_damage)
 			boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body sending you flying!</B></span>")
 			user.unlock_medal("HIGH VOLTAGE", 1)
 			user.Virus_ShockCure(100)
@@ -1281,7 +1281,8 @@
 	name = "rydberg-matter sphere"
 	icon = 'icons/obj/artifacts/puzzles.dmi'
 	icon_state = "sphere"
-	power = 75
+	damage = 60
+	stun = 15
 	cost = 75
 	sname = "rydberg-matter sphere"
 	dissipation_delay = 15
@@ -1289,7 +1290,6 @@
 	color_red = 0.1
 	color_green = 0.3
 	color_blue = 1
-	ks_ratio = 0.8
 
 	on_hit(atom/hit)
 		if (istype(hit, /turf))

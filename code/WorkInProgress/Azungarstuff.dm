@@ -110,7 +110,7 @@
 
 	Entered(var/mob/M)
 		. = ..()
-		if (istype(M,/mob/dead) || istype(M,/mob/wraith) || istype(M,/mob/living/intangible) || istype(M, /obj/lattice))
+		if (istype(M,/mob/dead) || istype(M,/mob/living/intangible) || istype(M, /obj/lattice))
 			return
 		if(!ismob(M))
 			return
@@ -1017,14 +1017,16 @@
 		..()
 		qdel(src)
 
+TYPEINFO(/obj/item/rpcargotele)
+	mats = 4
+
 /obj/item/rpcargotele
 	name = "special cargo transporter"
 	desc = "A device for teleporting crated goods. There is something really, really shady about this.."
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "syndicargotele"
 	w_class = W_CLASS_SMALL
-	flags = ONBELT
-	mats = 4
+	c_flags = ONBELT
 
 /obj/decoration/scenario/crate
 	name = "NT vital supplies crate"

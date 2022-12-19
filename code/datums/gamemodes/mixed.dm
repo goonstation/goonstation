@@ -3,6 +3,7 @@
 	config_tag = "mixed"
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1, ROLE_WRESTLER = 1, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1)
+	antag_token_support = TRUE
 
 	var/const/traitors_possible = 8 // cogwerks - lowered from 10
 	var/const/werewolf_players_req = 15
@@ -11,7 +12,11 @@
 	var/has_werewolves = TRUE
 
 	var/list/traitor_types = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1 , ROLE_SPY_THIEF = 1, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1)
-	var/list/major_threats = list(ROLE_BLOB = 1, ROLE_WRAITH = 1, ROLE_FLOCKMIND = 1)
+#if defined(MAP_OVERRIDE_NADIR)
+	var/list/major_threats = list(ROLE_WRAITH = 1, ROLE_FLOCKMIND = 1)
+#else
+	var/list/major_threats = list(ROLE_BLOB = 2, ROLE_WRAITH = 1, ROLE_FLOCKMIND = 1)
+#endif
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -57,14 +62,14 @@
 	src.latejoin_antag_roles[ROLE_GRINCH] = 1;
 #endif
 
-	var/major_threat_chance = length(src.major_threats) * 10
+	var/major_threat_chance = length(src.major_threats) * 20
 	if ((num_enemies >= 4 && prob(major_threat_chance)) || debug_mixed_forced_wraith || debug_mixed_forced_blob || debug_mixed_forced_flock)
 		var/chosen = weighted_pick(src.major_threats)
 		if (chosen == ROLE_WRAITH || debug_mixed_forced_wraith)
 			num_enemies = max(num_enemies - 2, 1)
 			num_wraiths = 1
 		else if (chosen == ROLE_BLOB || debug_mixed_forced_blob)
-			num_enemies = max(num_enemies - 4, 1)
+			num_enemies = max(num_enemies - 2, 1)
 			num_blobs = 1
 		else if (chosen == ROLE_FLOCKMIND || debug_mixed_forced_flock)
 			num_enemies = max(num_enemies - 3, 1)

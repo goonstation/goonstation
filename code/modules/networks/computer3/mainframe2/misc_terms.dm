@@ -101,6 +101,9 @@
 		..()
 
 
+TYPEINFO(/obj/machinery/networked/storage)
+	mats = 12
+
 /obj/machinery/networked/storage
 	name = "Databank"
 	desc = "A networked data storage device."
@@ -108,7 +111,6 @@
 	density = 1
 	icon_state = "tapedrive0"
 	device_tag = "PNET_DATA_BANK"
-	mats = 12
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	var/base_icon_state = "tapedrive"
 	var/bank_id = null //Unique Identifier for this databank.
@@ -1022,6 +1024,9 @@
 	file_amount = 4
 
 
+TYPEINFO(/obj/machinery/networked/nuclear_charge)
+	mats = list("POW-3" = 27, "MET-3" = 25, "CON-2" = 13, "CRY-2" = 15) //haha this is a bad idea
+
 /obj/machinery/networked/nuclear_charge
 	name = "Nuclear Charge"
 	anchored = 2
@@ -1038,7 +1043,6 @@
 
 #define DISARM_CUTOFF 10 //Can't disarm past this point! OH NO!
 
-	mats = list("POW-3" = 27, "MET-3" = 25, "CON-2" = 13, "CRY-2" = 15) //haha this is a bad idea
 	deconstruct_flags = DECON_NONE
 	is_syndicate = 1 //^ Agreed
 
@@ -1335,6 +1339,7 @@
 		var/datum/signal/status_signal = get_free_signal()
 		status_signal.source = src
 		status_signal.transmission_method = 1
+		status_signal.data["address_tag"] = "STATDISPLAY"
 		if(timeleft < 0)
 			status_signal.data["command"] = "blank"
 		else
@@ -1346,6 +1351,9 @@
 #undef DISARM_CUTOFF
 
 
+TYPEINFO(/obj/machinery/networked/radio)
+	mats = 8
+
 /obj/machinery/networked/radio
 	name = "Network Radio"
 	desc = "A networked radio interface."
@@ -1354,7 +1362,6 @@
 	icon_state = "net_radio"
 	device_tag = "PNET_PR6_RADIO"
 	//var/freq = FREQ_BUDDY
-	mats = 8
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	var/list/frequencies = list()
 	var/transmission_range = 100 //How far does our signal reach?
@@ -1667,6 +1674,9 @@
 		return
 
 
+TYPEINFO(/obj/machinery/networked/printer)
+	mats = 6
+
 /obj/machinery/networked/printer
 	name = "Printer"
 	desc = "A networked printer.  It's designed to print."
@@ -1675,7 +1685,8 @@
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	icon_state = "printer0"
 	device_tag = "PNET_PRINTDEVC"
-	mats = 6
+	power_usage = 200
+	machine_registry_idx = MACHINES_PRINTERS
 	var/print_id = null //Just like databanks.
 	var/temp_msg = "PRINTER OK" //Appears in the interface window.
 	var/printing = 0 //Are we printing RIGHT NOW?
@@ -1683,7 +1694,6 @@
 	var/jam = 0 //Oh no! A jam! I hope somebody unjams us right quick!
 	var/blinking = 0 //Is our indicator light blinking?
 	var/sheets_remaining = 15 //How many blank sheets of paper do we have left?
-	power_usage = 200
 
 #define MAX_SHEETS 20
 #define SETUP_JAM_IGNITION 6 //How jammed do we have to be before we break down?
@@ -3371,6 +3381,9 @@
 		return
 
 //Generic test apparatus
+TYPEINFO(/obj/machinery/networked/test_apparatus)
+	mats = 8
+
 /obj/machinery/networked/test_apparatus
 	name = "Generic Testing Apparatus"
 	desc = "A large device designed to facilitate...some manner... of analysis."
@@ -3385,7 +3398,6 @@
 	var/setup_capability_value = "E" //E for Enactor (provides a stimulus), S for Sensor (Records stimulus), or B for both.
 	//Don't forget to give devices unique device_tag values of the form "PNET_XXXXXXXXX"
 	device_tag = "PNET_TEST_APPT" //This is the device tag used to interface with the mainframe GTPIO driver.
-	mats = 8
 	deconstruct_flags = DECON_DESTRUCT
 
 	power_usage = 200

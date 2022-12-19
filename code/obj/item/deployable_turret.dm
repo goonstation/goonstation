@@ -72,6 +72,9 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
+TYPEINFO(/obj/item/turret_deployer/riot)
+	mats = list("INS-1"=10, "CON-1"=10, "CRY-1"=3, "MET-2"=2)
+
 /obj/item/turret_deployer/riot
 	name = "N.A.R.C.S. Deployer"
 	desc = "A Nanotrasen Automatic Riot Control System Deployer. Use it in your hand to deploy."
@@ -79,7 +82,6 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 	icon_state = "st_deployer"
 	w_class = W_CLASS_BULKY
 	icon_tag = "nt"
-	mats = list("INS-1"=10, "CON-1"=10, "CRY-1"=3, "MET-2"=2)
 	is_syndicate = 1
 	associated_turret = /obj/deployable_turret/riot
 
@@ -440,7 +442,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 /obj/deployable_turret/syndicate
 	name = "NAS-T"
 	desc = "A Nuclear Agent Sentry Turret."
-	projectile_type = /datum/projectile/bullet/ak47
+	projectile_type = /datum/projectile/bullet/akm
 	icon_tag = "st"
 	associated_deployer = /obj/item/turret_deployer/syndicate
 
