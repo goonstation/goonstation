@@ -191,7 +191,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 /// sets the *appearance* of a material, but does not trigger any tiggerOnAdd or onMaterialChanged behaviour
 /// Order of precedence is as follows:
 /// if the material is in the list of appearences to ignore, do nothing
-/// If an iconstate exists in the icon for materialID-iconstate, that is chosen
+/// If an iconstate exists in the icon for iconstate$$materialID, that is chosen
 /// If the material has mat_changeappaerance set, then first texture is applied, then color (including alpha)
 /atom/proc/setMaterialAppearance(var/datum/material/mat1)
 	src.alpha = 255
@@ -199,7 +199,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	if (length(src.mat_appearances_to_ignore) && (mat1.name in src.mat_appearances_to_ignore))
 		return
 
-	var/potential_new_icon_state = "[mat1.mat_id]-[initial(src.icon_state)]"
+	var/potential_new_icon_state = "[splittext(src.icon_state,"$$")[1]]$$[mat1.mat_id]"
 	if(src.is_valid_icon_state(potential_new_icon_state))
 		src.icon_state = potential_new_icon_state
 		return
@@ -212,11 +212,11 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			src.color = mat1.color
 
 /atom/proc/is_valid_icon_state(var/state)
-	if(isnull(src.valid_icon_states["\ref[src.icon]"]))
-		src.valid_icon_states["\ref[src.icon]"] = list()
+	if(isnull(src.valid_icon_states[src.icon]))
+		src.valid_icon_states[src.icon] = list()
 		for(var/icon_state in icon_states(src.icon))
-			src.valid_icon_states["\ref[src.icon]"][icon_state] = 1
-	return state in src.valid_icon_states["\ref[src.icon]"]
+			src.valid_icon_states[src.icon][icon_state] = 1
+	return state in src.valid_icon_states[src.icon]
 
 /proc/getProcessedMaterialForm(var/datum/material/MAT)
 	if (!istype(MAT))
