@@ -945,13 +945,13 @@ var/datum/action_controller/actions
 				G.shoot()
 
 		if(obstructed)
-			boutput(source, "<span class='alert'> There are clothes in the way you can't [item ? "place that on" : "take that from"] [target]!</span>")
+			boutput(source, "<span class='alert'>There are clothes in the way you can't [item ? "place that on" : "take that from"] [him_or_her(target)]!</span>")
 			src.resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 		if (source.use_stamina && source.get_stamina() < STAM_COST)
-			boutput(owner, "<span class='alert>You're too winded to [item ? "place that on" : "take that from"] [him_or_her(target)].</span>")
+			boutput(source, "<span class='alert'>You're too winded to [item ? "place that on" : "take that from"] [him_or_her(target)]!</span>")
 			src.resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
 			return
