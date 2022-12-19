@@ -1,4 +1,9 @@
 
+(t)mon dec 19 22
+(u)WALPVRGIS
+(p)10704
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added a bunch of new cloaks and scarves to randomized loot crates.
 (t)sun dec 18 22
 (u)Lord_Earthfire
 (p)12446
