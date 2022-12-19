@@ -14,7 +14,7 @@
 #endif
 	static_type_override = /datum/mutantrace/monkey
 
-	var/static/datum/zone_sel_offsets/static_monkey_zone_sel_offsets = new(list(0,4),list(0,-2),list(-6,-3),list(6,-3),list(-6,-10),list(6,-10))
+	var/static/datum/zone_sel_offsets/static_monkey_zone_sel_offsets = new(list(0,7),list(0,-2),list(-6,-3),list(6,-3),list(-6,-10),list(6,-10))
 
 	New()
 		..()
@@ -204,7 +204,7 @@
 	var/ai_aggression_timeout = 600
 	var/ai_poke_thing_chance = 1
 
-	var/static/datum/zone_sel_offsets/static_monkey_zone_sel_offsets = new(list(0,4),list(0,-2),list(-6,-3),list(6,-3),list(-6,-10),list(6,-10))
+	var/static/datum/zone_sel_offsets/static_monkey_zone_sel_offsets = new(list(0,7),list(0,-2),list(-6,-3),list(6,-3),list(-6,-10),list(6,-10))
 
 	New()
 		..()
