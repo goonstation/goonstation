@@ -906,14 +906,16 @@ var/datum/action_controller/actions
 	var/obj/item/item				    //The item if any. If theres no item, we tried to remove something from that slot instead of putting an item there.
 	var/slot						    //The slot number
 	var/hidden
+	var/obstructed
 
 
-	New(var/Source, var/Target, var/Item, var/Slot, var/ExtraDuration = 0, var/Hidden = 0)
+	New(var/Source, var/Target, var/Item, var/Slot, var/ExtraDuration = 0, var/Hidden = 0, var/Obstructed)
 		source = Source
 		target = Target
 		item = Item
 		slot = Slot
 		hidden = Hidden
+		obstructed = Obstructed
 
 		if(item)
 			if(item.duration_put > 0)
@@ -941,6 +943,12 @@ var/datum/action_controller/actions
 		if (source.mob_flags & AT_GUNPOINT)
 			for(var/obj/item/grab/gunpoint/G in source.grabbed_by)
 				G.shoot()
+
+		if(obstructed)
+			boutput(source, "<span class='alert'> There are clothes in the way you can't [item ? "place that on" : "take that from"] [target]!</span>")
+			src.resumable = FALSE
+			interrupt(INTERRUPT_ALWAYS)
+			return
 
 		if (source.use_stamina && source.get_stamina() < STAM_COST)
 			boutput(owner, "<span class='alert>You're too winded to [item ? "place that on" : "take that from"] [him_or_her(target)].</span>")

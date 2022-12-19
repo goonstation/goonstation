@@ -56,9 +56,11 @@
 	if (.)
 		return
 
+	var/obstructedItems = src.human.CheckObsctructed()
 	switch(action)
 		if ("access-slot")
 			var/id
+			var/obstructed = FALSE
 			switch(params["id"])
 				if ("slot_head")
 					id = src.human.slot_head
@@ -91,6 +93,10 @@
 				if ("slot_r_store")
 					id = src.human.slot_r_store
 
+			for (var/obj/slot as anything in obstructedItems)
+				if(id == slot)
+					obstructed = TRUE
+
 			if (id)
 				actions.start(new/datum/action/bar/icon/otherItem(
 					usr,
@@ -98,7 +104,8 @@
 					usr.equipped(),
 					id,
 					0,
-					id == src.human.slot_l_store || id == src.human.slot_r_store
+					id == src.human.slot_l_store || id == src.human.slot_r_store,
+					obstructed
 				), usr)
 			return
 
