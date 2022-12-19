@@ -575,16 +575,8 @@
 			return src.check_tank_oxygen(src.inlet_tank)
 
 		var/turf/simulated/T = get_turf(src)
-		if (!istype(T))
-			if (!istype(T, /turf/))
-				return
-
-			var/datum/gas_mixture/G = T.return_air()
-			if (G.oxygen)
-				return T.oxygen / TOTAL_MOLES(G)
-
-			else
-				return FALSE
+		if (!istype(T, /turf/))
+			return
 
 		var/datum/gas_mixture/G = T.return_air()
 		if (G.oxygen <= 0)
