@@ -430,7 +430,6 @@ var/global/list/soundCache = list(
  	"sound/impact_sounds/Stone_Scrape_1.ogg" = 'sound/impact_sounds/Stone_Scrape_1.ogg',\
  	"sound/impact_sounds/Wood_Hit_1.ogg" = 'sound/impact_sounds/Wood_Hit_1.ogg',\
  	"sound/impact_sounds/Wood_Hit_Small_1.ogg" = 'sound/impact_sounds/Wood_Hit_Small_1.ogg',\
- 	"sound/impact_sounds/Wood_paT.ogg" = 'sound/impact_sounds/Wood_paT.ogg',\
  	"sound/impact_sounds/Wood_Snap.ogg" = 'sound/impact_sounds/Wood_Snap.ogg',\
  	"sound/impact_sounds/Wood_Tap.ogg" = 'sound/impact_sounds/Wood_Tap.ogg',\
  	"sound/items/batcheer.ogg" = 'sound/items/batcheer.ogg',\
