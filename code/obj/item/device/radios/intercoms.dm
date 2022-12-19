@@ -102,6 +102,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 	if (!isAIeye(user))
 		boutput("Deploy to an AI Eye first to override intercoms.")
+		return
 
 	if(user.client.check_key(KEY_BOLT))
 		if (src.locked_frequency)
@@ -119,11 +120,9 @@ TYPEINFO(/obj/item/device/radio/intercom)
 		var/maptext = make_chat_maptext(src, "AI override engaged!", "color:[text_colour]")
 
 		src.speech_bubble(image('icons/mob/mob.dmi', "ai"))
-		for (var/i in hearers(7, src.loc))
-			if (ismob(i))
-				var/mob/M = i
-				M.playsound_local(src, 'sound/misc/talk/bottalk_3.ogg', 50, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
-				M.show_message(msg=message,assoc_maptext=maptext)
+		for (var/mob/M in hearers(7, src.loc))
+			M.playsound_local(src, 'sound/misc/talk/bottalk_3.ogg', 50, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+			M.show_message(msg=message,assoc_maptext=maptext)
 
 		src.locked_frequency = TRUE // lockdown; saves us from clickspam
 		set_frequency(R_FREQ_INTERCOM_AI)
