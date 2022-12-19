@@ -255,6 +255,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			src.occupant.abilityHolder.remove_unlocks()
 
 		ghost.mind.transfer_to(src.occupant)
+		src.occupant.is_npc = FALSE
 
 		if(src.occupant.client) // gross hack for resetting tg layout bleh bluh
 			src.occupant.client.set_layout(src.occupant.client.tg_layout)
@@ -334,7 +335,6 @@ TYPEINFO(/obj/machinery/clonepod)
 			src.occupant.mind.key = src.occupant.key
 			src.occupant.mind.transfer_to(src.occupant)
 			ticker.minds += src.occupant.mind
-
 		// -- Mode/mind specific stuff goes here
 
 			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && ((src.occupant.mind in ticker.mode:revolutionaries) || (src.occupant.mind in ticker.mode:head_revolutionaries)))
@@ -342,6 +342,7 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		// -- End mode specific stuff
 
+		src.occupant.is_npc = FALSE
 		logTheThing(LOG_STATION, usr, "starts cloning [constructTarget(src.occupant,"combat")] at [log_loc(src)].")
 
 		if (isobserver(ghost))

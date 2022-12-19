@@ -8215,7 +8215,7 @@
 	pixel_y = -6
 	},
 /obj/item/paper{
-	info = "taste the wall candy it's so fucking good they couldn't stop me when i started drinking it made me too powerful hahAHAEHHSAbggxf (The rest of the text is illegible scribbles with an unbelievably shitty drawing of a mushroom is at the bottom.)";
+	info = "taste the wall candy it's so fucking good they couldn't stop me when i started drinking it made me too powerful hahAHAEHHSAbggxf (The rest of the text is illegible scribbles with an unbelievably shitty drawing of a mushroom at the bottom.)";
 	name = "crinkled paper";
 	pixel_x = -6;
 	pixel_y = -7
@@ -54145,6 +54145,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/storage/crate/radio,
 /turf/simulated/floor/wood/two,
 /area/station/bridge)
 "pBG" = (
