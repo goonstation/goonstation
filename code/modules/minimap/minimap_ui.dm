@@ -48,16 +48,31 @@
 			ui = new(user, src, "NukeOpMap")
 			ui.open()
 
+	ui_static_data(mob/user)
+		var/list/placable_marker_states = list()
+		var/list/placable_marker_images = list()
+		for(var/icon_state in icon_states('icons/obj/minimap/minimap_markers.dmi'))
+			placable_marker_states.Add(icon_state)
+			var/icon/marker_icon = icon('icons/obj/minimap/minimap_markers.dmi', icon_state)
+			placable_marker_images[icon_state] = icon2base64(marker_icon)
+
+		. = list(
+			"placable_marker_states" = placable_marker_states,
+			"placable_marker_images" = placable_marker_images
+		)
+
 	ui_data(mob/user)
 		src.add_client(user?.client)
 		minimap_markers_list = list()
 		for (var/atom/target in src.minimap_datum.minimap_markers)
 			var/datum/minimap_marker/marker = src.minimap_datum.minimap_markers[target]
+			if (!marker.on_minimap_z_level)
+				continue
+
 			minimap_markers_list.Add(list(list(
 				"name" = marker.name,
-				"pos" = "[target.x], [target.y], [target.z]",
+				"pos" = "[target.x], [target.y]",
 				"visible" = marker.visible,
-				"on_z_level" = marker.on_minimap_z_level,
 				"can_be_deleted" = marker.can_be_deleted_by_player,
 				"marker" = marker,
 				"index" = length(minimap_markers_list) + 1

@@ -204,7 +204,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 
 	ai_station_map = new /obj/minimap/ai
-	AddComponent(/datum/component/minimap_marker, MAP_AI, "ai")
+	AddComponent(/datum/component/minimap_marker, MAP_AI | MAP_SYNDICATE, "ai")
 
 	light = new /datum/light/point
 	light.set_color(0.4, 0.7, 0.95)

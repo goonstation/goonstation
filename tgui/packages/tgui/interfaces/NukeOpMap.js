@@ -1,5 +1,5 @@
-import { useBackend } from '../backend';
-import { Box, Button, ByondUi, Flex, Section, Stack } from '../components';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, ByondUi, Dropdown, Flex, Image, Input, Modal, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { capitalize } from './common/stringUtils';
 
@@ -8,7 +8,18 @@ export const NukeOpMap = (params, context) => {
   const {
     markers_visible,
     minimap_markers,
+    placable_marker_states,
+    placable_marker_images,
+    image,
   } = data;
+
+  const setImage = (value) => {
+    data.image = placable_marker_images[value];
+  };
+
+  const [x, setX] = useLocalState(context, 'x', 1);
+  const [y, setY] = useLocalState(context, 'y', 1);
+
   return (
     <Window
       theme="syndicate"
@@ -62,6 +73,49 @@ export const NukeOpMap = (params, context) => {
                     onClick={() => act('toggle_visibility_all')} />
                 </Box>
               )}>
+              {(!!markers_visible) && (
+                <Modal
+                  backgroundColor="#470202"
+                  mr={2}
+                  p={3}>
+                  <Box>
+                    <Flex>
+                      <Flex.Item backgroundColor="black">
+                        <Image
+                          pixelated
+                          height="150px"
+                          width="150px"
+                          src={`data:image/png;base64,${image}`} />
+                      </Flex.Item>
+                      <Flex.Item ml="10px">
+                        <Input
+                          placeholder="Marker Name"
+                          width="150px"
+                          mb="10px" />
+                        <Dropdown
+                          width="150px"
+                          options={placable_marker_states}
+                          onSelected={(value) => setImage(value)}
+                          mb="10px" />
+                        <NumberInput
+                          width="75px"
+                          minValue={1}
+                          maxValue={300}
+                          value={x}
+                          format={value => "x, " + value}
+                          onDrag={(e, value) => setX(value)} />
+                        <NumberInput
+                          width="75px"
+                          minValue={1}
+                          maxValue={300}
+                          value={y}
+                          format={value => "y, " + value}
+                          onDrag={(e, value) => setY(value)} />
+                      </Flex.Item>
+                    </Flex>
+                  </Box>
+                </Modal>
+              )}
               <Section scrollable fill>
                 <Flex direction="column">
                   <Flex.Item>

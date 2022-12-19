@@ -38,7 +38,7 @@
 			src.render_minimap()
 			z_level_maps["[src.z_level]-[map_type]"] = icon(src.map.icon)
 		else
-			src.map.icon = z_level_maps["[src.z_level]"]
+			src.map.icon = z_level_maps["[src.z_level]-[map_type]"]
 
 		src.minimap_render.vis_flags = VIS_INHERIT_LAYER
 		src.minimap_render.appearance_flags = KEEP_TOGETHER

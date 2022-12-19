@@ -142,7 +142,7 @@
 		if (length(plant_locations) > 0)
 			for (var/turf/plant_location in plant_locations)
 				var/area/A = plant_location.loc
-				map.create_minimap_marker(plant_location, 'icons/obj/minimap/minimap_markers.dmi', "nuclear_bomb", "[capitalize(A.name)] Plant Site")
+				map.create_minimap_marker(plant_location, 'icons/obj/minimap/minimap_markers.dmi', "nuclear_bomb_pin", "[capitalize(A.name)] Plant Site")
 			return
 
 		src.plant_locations = list()
@@ -174,7 +174,7 @@
 			var/turf/plant_location = locate(target_x, target_y, Z_LEVEL_STATION)
 			src.plant_locations += plant_location
 			var/area/A = plant_location.loc
-			map.create_minimap_marker(plant_location, 'icons/obj/minimap/minimap_markers.dmi', "nuclear_bomb", "[capitalize(A.name)] Plant Site")
+			map.create_minimap_marker(plant_location, 'icons/obj/minimap/minimap_markers.dmi', "nuclear_bomb_pin", "[capitalize(A.name)] Plant Site")
 
 /obj/minimap_controller
 	name = "Map Controller"
