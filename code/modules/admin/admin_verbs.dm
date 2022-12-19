@@ -663,7 +663,8 @@ var/list/special_pa_observing_verbs = list(
 		update_admins(rank)
 
 	if(!istype(src.mob, /mob/dead/observer) && !istype(src.mob, /mob/dead/target_observer))
-		src.mob.mind?.damned = 0
+		src.mob.mind?.damned = FALSE
+		src.mob.mind?.dnr = TRUE
 		src.mob.ghostize()
 		boutput(src, "<span class='notice'>You are now observing</span>")
 	else
@@ -1018,7 +1019,7 @@ var/list/fun_images = list()
 	set popup_menu = 0
 	ADMIN_ONLY
 
-	respawn_as_self_internal(new_self=TRUE, jobstring = initial(J.name))
+	respawn_as_self_internal(new_self=TRUE, jobstring = J.name)
 
 /client/proc/respawn_as_new_self()
 	set name = "Respawn As New Self"
