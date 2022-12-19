@@ -1742,10 +1742,6 @@
 	color = "#00b122"
 	hood_style = "dinosaur"
 
-	setupProperties()
-		..()
-		setProperty("coldprot", 25)
-
 /obj/item/clothing/head/biglizard
 	name = "giant novelty lizard head"
 	desc = "Wow! It's just like the real thing!"

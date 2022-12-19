@@ -38,21 +38,40 @@
 	color = "#e27e11"
 	body_parts_covered = TORSO|ARMS
 	var/icon_underlay_state = "hoodie-underlay"
-	var/image/hoodie_underlay = null
+	var/image/wear_hoodie_underlay = null
+	var/image/item_hoodie_underlay = null
 	var/hood_style = "hoodie"
 	var/hooded = false
 
 	New()
 		..()
 		src.AddComponent(/datum/component/toggle_hood)
-		hoodie_underlay = SafeGetOverlayImage("hoodie-underlay", src.wear_image_icon, icon_underlay_state)
-		hoodie_underlay.appearance_flags |= RESET_COLOR
-		src.wear_image.underlays = list(hoodie_underlay)
+		src.wear_hoodie_underlay = image(src.wear_image_icon, src.icon_underlay_state)
+		src.wear_hoodie_underlay.appearance_flags |= RESET_COLOR
+		src.wear_image.underlays = list(src.wear_hoodie_underlay)
+
+		src.item_hoodie_underlay = image(src.icon, src.icon_underlay_state)
+		src.item_hoodie_underlay.appearance_flags |= RESET_COLOR
+		src.underlays = list(src.item_hoodie_underlay)
+
+	proc/flip_hood()
+		src.hooded = !src.hooded
+		src.over_hair = !src.over_hair
+		src.body_parts_covered ^= HEAD
+
+		src.icon_state = "[src.hood_style][src.hooded ? "-up" : ""]"
+		src.icon_underlay_state = "[src.hood_style]-underlay[src.hooded ? "-up" : ""]"
+
+		src.item_hoodie_underlay.icon_state = src.icon_underlay_state
+		src.underlays = list(src.item_hoodie_underlay)
+
+		if (ismob(src.loc))
+			var/mob/M = src.loc
+			M.set_clothing_icon_dirty()
 
 	update_wear_image(mob/living/carbon/human/H, override)
-		icon_underlay_state = "[src.hood_style]-underlay[src.hooded ? "-up" : ""]"
-		hoodie_underlay.icon_state = icon_underlay_state
-		src.wear_image.underlays = list(hoodie_underlay)
+		src.wear_hoodie_underlay.icon_state = src.icon_underlay_state
+		src.wear_image.underlays = list(src.wear_hoodie_underlay)
 
 	setupProperties()
 		..()
