@@ -1921,14 +1921,25 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		icon_state = "torncape_green"
 		item_state = "torncape_green"
 
+	random
+		var/style = null
+
+		New()
+			..()
+			if(!style)
+				src.style = pick("red","black","blue","brown","purple","green")
+				src.icon_state = "torncape_[style]"
+				src.item_state = "torncape_[style]"
+				src.name = "[style] torn cloak"
+
 /obj/item/clothing/suit/scarfcape
 	name = "Adventurous Scarf"
 	desc = "The twin scarf tails blow in the wind as you prepare for ADVENTURE."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	wear_layer = MOB_GLASSES_LAYER2
-	icon_state = "scarfcape_red"
-	item_state = "scarfcape_red"
+	icon_state = "scarfcape_white"
+	item_state = "scarfcape_white"
 
 	red
 		name = "Red Adventurous Scarf"
@@ -1959,6 +1970,22 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		name = "Green Adventurous Scarf"
 		icon_state = "scarfcape_green"
 		item_state = "scarfcape_green"
+
+	random
+		var/style = null
+
+		New()
+			..()
+			if(!style)
+				src.style = pick("red","black","white","blue","purple","green")
+				src.icon_state = "scarfcape_[style]"
+				src.item_state = "scarfcape_[style]"
+				src.name = "[style] adventure scarf"
+
+	truerandom
+		New()
+			..()
+			src.color = random_saturated_hex_color(1)
 
 /obj/item/clothing/suit/fakebeewings
 	name = "Fake Bee Wings"

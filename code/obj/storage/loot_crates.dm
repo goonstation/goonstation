@@ -17,18 +17,8 @@
 		/obj/item/clothing/under/misc/mint_chip = 20,\
 		/obj/item/clothing/under/misc/mimefancy = 10,\
 		/obj/item/clothing/under/misc/mimedress = 10,\
-		/obj/item/clothing/suit/torncloak/red = 20,\
-		/obj/item/clothing/suit/torncloak/black= 20,\
-		/obj/item/clothing/suit/torncloak/blue = 20,\
-		/obj/item/clothing/suit/torncloak/purple = 20,\
-		/obj/item/clothing/suit/torncloak/green = 20,\
-		/obj/item/clothing/suit/torncloak/brown = 20,\
-		/obj/item/clothing/suit/scarfcape/red = 10,\
-		/obj/item/clothing/suit/scarfcape/black = 5,\
-		/obj/item/clothing/suit/scarfcape/white = 5,\
-		/obj/item/clothing/suit/scarfcape/blue = 10,\
-		/obj/item/clothing/suit/scarfcape/purple = 10,\
-		/obj/item/clothing/suit/scarfcape/green = 10,\
+		/obj/item/clothing/suit/torncloak/random = 20,\
+		/obj/item/clothing/suit/scarfcape/random = 20,\
 		/obj/item/clothing/suit/fakebeewings = 10,
 	// station
 	)
