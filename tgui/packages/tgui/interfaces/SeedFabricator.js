@@ -6,10 +6,11 @@
  */
 
 import { useBackend, useLocalState } from '../backend';
-import { Blink, Box, Button, Collapsible, Flex, Icon, Modal, NumberInput, ProgressBar, Section } from '../components';
+import { Blink, Box, Button, Collapsible, Flex, Icon, Modal, NumberInput, ProgressBar, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { pluralize } from './common/stringUtils';
-import { WirePanelButtons } from './common/WirePanel';
+import { WirePanelControls } from './common/WirePanel/type';
+import { WirePanelCollapsible } from './WirePanelWindow';
 
 const DefaultSort = {
   Fruit: 1,
@@ -26,8 +27,9 @@ const categorySorter = (a, b) => (
 
 export const SeedFabricator = (_props, context) => {
   const { data } = useBackend(context);
-  const { canVend, isWorking, maxSeed, name, seedCount } = data;
+  const { canVend, maxSeed, name, seedCount } = data;
   const categories = data.seedCategories || [];
+  const isWorking = (data.wirePanel.active_wire_controls & WirePanelControls.WIRE_CONTROL_POWER_A) === 0;
 
   categories.sort(categorySorter);
 
@@ -37,73 +39,90 @@ export const SeedFabricator = (_props, context) => {
     <Window
       title={name}
       width={500}
-      height={600}>
+      height={600}
+    >
       <Window.Content>
-        <WirePanelButtons />
-        {!isWorking && (
-          <Modal textAlign="center"
-            width={35}
-            height={10}
-            fontSize={3}
-            fontFamily="Courier"
-            color="red">
-            <Blink time={500}>
-              <Icon name="exclamation-triangle" pr={1.5} />
-              MALFUNCTION
-              <Icon name="exclamation-triangle" pl={1.5} />
-            </Blink>
-            CHECK WIRES
-          </Modal>
-        )}
-        <Section>
-          <Flex>
-            <Flex.Item bold pr={1}>
-              Dispense:
-            </Flex.Item>
-            <Flex.Item basis={6} grow>
-              <NumberInput
-                value={dispenseAmount}
-                format={value => value + pluralize(' seed', value)}
-                minValue={1}
-                maxValue={10}
-                onDrag={(_e, value) => setDispenseAmount(value)}
-              />
-            </Flex.Item>
-            <Flex.Item grow={2}>
-              <ProgressBar
-                value={Math.max(0, maxSeed - seedCount)}
-                maxValue={maxSeed}
-                ranges={{
-                  yellow: [5, Infinity],
-                  bad: [-Infinity, 5],
-                }}
-              >
-                <Icon name="bolt" />
-              </ProgressBar>
-            </Flex.Item>
-          </Flex>
-        </Section>
-        <Section>
-          {!canVend && (
-            <Modal textAlign="center"
-              width={25}
-              height={5}
-              fontSize={2}
-              fontFamily="Courier"
-              color="yellow">
-              <Blink interval={500} time={500}>
-                <Icon name="bolt" pr={1.5} />
-              </Blink>
-              UNIT RECHARGING
-            </Modal>
-          )}
-          {categories.map(category => (
-            <SeedCategory
-              key={category.name}
-              category={category}
-              dispenseAmount={dispenseAmount} />
-          ))}
-        </Section>
+        <Stack vertical width="100%">
+          <Stack.Item>
+            <WirePanelCollapsible
+              style={data.wirePanelTheme}
+              cover_status={data.wirePanel.cover_status} />
+          </Stack.Item>
+          <Stack.Item position="relative">
+            <Section>
+              <Flex>
+                <Flex.Item bold pr={1}>
+                  Dispense:
+                </Flex.Item>
+                <Flex.Item basis={6} grow>
+                  <NumberInput
+                    value={dispenseAmount}
+                    format={value => value + pluralize(' seed', value)}
+                    minValue={1}
+                    maxValue={10}
+                    onDrag={(_e, value) => setDispenseAmount(value)}
+                  />
+                </Flex.Item>
+                <Flex.Item grow={2}>
+                  <ProgressBar
+                    value={Math.max(0, maxSeed - seedCount)}
+                    maxValue={maxSeed}
+                    ranges={{
+                      yellow: [5, Infinity],
+                      bad: [-Infinity, 5],
+                    }}
+                  >
+                    <Icon name="bolt" />
+                  </ProgressBar>
+                </Flex.Item>
+              </Flex>
+            </Section>
+            <Section>
+              {!canVend && (
+                <Modal textAlign="center"
+                  width={25}
+                  height={5}
+                  fontSize={2}
+                  fontFamily="Courier"
+                  color="yellow">
+                  <Blink interval={500} time={500}>
+                    <Icon name="bolt" pr={1.5} />
+                  </Blink>
+                  UNIT RECHARGING
+                </Modal>
+              )}
+              {categories.map(category => (
+                <SeedCategory
+                  key={category.name}
+                  category={category}
+                  dispenseAmount={dispenseAmount} />
+              ))}
+            </Section>
+            { !!isWorking && (
+              <Section fillPositionedParent backgroundColor="rgba(0,0,0,0.7)">
+                <Box
+                  verticalAlign="top"
+                  textAlign="center"
+                  fontSize={3}
+                  pt={10}
+                  pb={10}
+                  pr={10}
+                  pl={10}
+                  fontFamily="Courier"
+                  color="red"
+                  position="relative"
+                >
+                  <Blink time={500}>
+                    <Icon name="exclamation-triangle" pr={1.5} />
+                    MALFUNCTION
+                    <Icon name="exclamation-triangle" pl={1.5} />
+                  </Blink>
+                  CHECK WIRES
+                </Box>
+              </Section>
+            )}
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );

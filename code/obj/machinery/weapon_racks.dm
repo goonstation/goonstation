@@ -40,24 +40,25 @@
 	/// what's the maximum number of weapons we can hold
 	var/max_amount = 1
 
-	/// controls whether the weapon stand is hackable
-	var/hackable = FALSE
+	/// controls whether the weapon stand has a wire panel
+	var/has_wire_panel = FALSE
 
 	/// is the weapon stand emagged
 	var/emagged = FALSE
 
 	/// Wire hacking component defintion
 	var/static/datum/wirePanel/panelDefintion/panel_def = new /datum/wirePanel/panelDefintion(
-		controls=list(WIRE_ACCESS_TODO, WIRE_GROUND_TODO, WIRE_POWER_1_TODO, WIRE_INERT_TODO),
+		controls=list(WIRE_CONTROL_ACCESS, WIRE_CONTROL_GROUND, WIRE_CONTROL_POWER_A, WIRE_CONTROL_INERT),
 		color_pool=list("puce", "mauve", "ochre", "slate")
 	)
 
 /obj/machinery/weapon_stand/New()
 	..()
-	if (hackable)
+	if (has_wire_panel)
+		src.flags |= TGUI_INTERACTIVE
 		AddComponent(/datum/component/wirePanel, src.panel_def)
 		RegisterSignal(src, COMSIG_WPANEL_SET_COVER, .proc/set_cover)
-		RegisterSignal(src, COMSIG_WPANEL_UPDATE_UI, .proc/update_ui)
+		RegisterSignal(src, COMSIG_WPANEL_MOB_WIRE_ACT, .proc/mob_wire_act)
 
 	if(!recharges_contents)
 		UnsubscribeProcess()
@@ -71,9 +72,9 @@
 
 /obj/machinery/weapon_stand/disposing()
 	. = ..()
-	if (hackable)
-		UnregisterSignal(src, COMSIG_WPANEL_SET_COVER)
-		UnregisterSignal(src, COMSIG_WPANEL_UPDATE_UI)
+	if (has_wire_panel)
+		UnregisterSignal(COMSIG_WPANEL_SET_COVER)
+		UnregisterSignal(COMSIG_WPANEL_MOB_WIRE_ACT)
 
 /obj/machinery/weapon_stand/get_desc(dist)
 	if (dist <= 1)
@@ -96,59 +97,44 @@
 	boutput(user, "You place [W] into [src].")
 	src.update()
 
-
-/obj/machinery/weapon_stand/proc/update_ui(obj/parent, mob/user)
-	if (istype(user, /mob))
-		src.add_dialog(user)
-	for (var/client/C in src.clients_operating)
-		if (isAI(C.mob) || issilicon(C.mob))
-			src.show_panel(parent, C.mob)
-			return
-		if (SEND_SIGNAL(src, COMSIG_WPANEL_STATE_COVER) == PANEL_COVER_OPEN && !BOUNDS_DIST(src, C.mob))
-			src.show_panel(parent, C.mob)
-			return
-		// we're not open, close it
-		C.mob.Browse(null, "window=rackpanel")
-		src.remove_dialog(C.mob)
-
-/obj/machinery/weapon_stand/proc/set_cover(obj/parent, status, mob/user)
+/obj/machinery/weapon_stand/proc/set_cover(obj/parent, mob/user, status)
+	src.check_shock(user)
 	switch(status)
-		if(PANEL_COVER_CLOSED)
-			src.overlays = null
-		if(PANEL_COVER_OPEN)
-			src.add_dialog(user)
+		if(WPANEL_COVER_OPEN)
 			src.overlays += image('icons/obj/weapon_rack.dmi', "rack-panel")
-	SEND_SIGNAL(src, COMSIG_WPANEL_UPDATE_UI, user)
+			parent.ui_interact(user)
+			tgui_process.update_uis(parent)
+		if(WPANEL_COVER_CLOSED)
+			src.overlays = null
+			for(var/datum/tgui/ui in tgui_process.get_uis(parent))
+				if(!parent.can_access_remotely(ui.user))
+					tgui_process.close_user_uis(ui.user, parent)
 
-/obj/machinery/weapon_stand/proc/show_panel(obj/parent, mob/user) // TGUI removes this honestly
-	var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
-	var/cut_wires = list()
-	var/datum/wirePanel/panelDefintion/panel = src.panel_def
-	SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CUTS, cut_wires)
+/obj/machinery/weapon_stand/proc/mob_wire_act(obj/parent, mob/user, wire, action)
+	src.check_shock(user)
 
-	src.add_dialog(user)
+/obj/machinery/weapon_stand/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	SEND_SIGNAL(src, COMSIG_WPANEL_UI_ACT, action, params, ui)
 
-	var/pdat = "<B>[capitalize(src.name)] maintenance panel</B><hr>"
-	for(var/i in 1 to length(cut_wires))
-		pdat += "[capitalize(panel.wire_definitions[i].wire_color_name)] wire: "
-		if (cut_wires[i])
-			pdat += "<a href='?src=\ref[src];cutwire=[i]'>Mend</a>"
-		else
-			pdat += "<a href='?src=\ref[src];cutwire=[i]'>Cut</a> "
-			pdat += "<a href='?src=\ref[src];pulsewire=[i]'>Pulse</a> "
-		pdat += "<br>"
+/obj/machinery/weapon_stand/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "WirePanelWindow", src.name)
+		ui.open()
 
-	pdat += "<br>"
-	pdat += "The yellow light is [HAS_FLAG(active_controls, WIRE_POWER_1_TODO) ? "off" : "on"].<BR>"
-	pdat += "The blue light is [HAS_FLAG(active_controls, WIRE_GROUND_TODO) ? "flashing" : "on"].<BR>"
-	pdat += "The white light is [HAS_FLAG(active_controls, WIRE_ACCESS_TODO) ? "on" : "off"].<BR>"
+/obj/machinery/weapon_stand/ui_data(mob/user)
+	. = ..()
+	SEND_SIGNAL(src, COMSIG_WPANEL_UI_DATA, user, .)
 
-	user.Browse(pdat, "window=rackpanel")
-	onclose(user, "rackpanel")
+/obj/machinery/weapon_stand/ui_static_data(mob/user)
+	. = ..()
+	.["wirePanelTheme"] = WPANEL_THEME_INDICATORS
+	SEND_SIGNAL(src, COMSIG_WPANEL_UI_STATIC_DATA, user, .)
 
 /obj/machinery/weapon_stand/proc/check_shock(mob/user)
 	var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
-	if (!HAS_FLAG(active_controls, WIRE_GROUND_TODO))
+	if (!HAS_FLAG(active_controls, WIRE_CONTROL_GROUND))
 		user.shock(src, 7500, user.hand == LEFT_HAND ? "l_arm" : "r_arm", 1, 0)
 
 /obj/machinery/weapon_stand/attack_hand(mob/user)
@@ -158,18 +144,18 @@
 	var/bypass_access = FALSE
 	src.add_fingerprint(user)
 
-	if (hackable)
+	if (src.has_wire_panel)
 		var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
-		if (!HAS_FLAG(active_controls, WIRE_POWER_1_TODO))
+		if (!HAS_FLAG(active_controls, WIRE_CONTROL_POWER_A))
 			boutput(user, "<span class='alert'>Without power, the locks can't disengage!</span>")
 			return
 
 		check_shock(user)
 
-		if (!HAS_FLAG(active_controls, WIRE_ACCESS_TODO))
+		if (!HAS_FLAG(active_controls, WIRE_CONTROL_ACCESS))
 			bypass_access = TRUE
 
-	// do we not have access (authorized, emagged, and if we're hackable, the control wire)
+	// check access: authorized, emagged, or the access control is broken)
 	if (!src.allowed(user) && !src.emagged && !bypass_access)
 		boutput(user, "<span class='alert'>Access denied.</span>")
 		return
@@ -180,12 +166,14 @@
 			src.amount--
 		user.put_in_hand_or_drop(myWeapon)
 		boutput(user, "You take [myWeapon] out of [src].")
+		logTheThing(LOG_STATION, user, "takes [myWeapon] from the [src] [log_loc(src)].")
 	else
 		if (src.amount >= 1)
 			src.amount--
 			myWeapon = new src.contained_weapon(src.loc)
 			user.put_in_hand_or_drop(myWeapon)
 			boutput(user, "You take [myWeapon] out of [src].")
+			logTheThing(LOG_STATION, user, "takes [myWeapon] from the [src] [log_loc(src)].")
 	src.update()
 	myWeapon?.UpdateIcon() // let it be known that this used to be in a try-catch for some fucking reason
 	if (src.amount <= 0) //prevents a runtime if it's empty
@@ -201,25 +189,6 @@
 			if(!istype(A, contained_weapon)) // Check if the item(A) is not(!) accepted in this kind of rack(contained_weapon) and then...
 				continue // It's not accepted here! Vamoose! Skidaddle! Git outta here! (Move on without executing any further code in this proc.)
 			SEND_SIGNAL(A, COMSIG_CELL_CHARGE, 10)
-
-/obj/machinery/weapon_stand/Topic(href, href_list)
-	. = ..()
-	if (.)
-		return
-
-	if ((SEND_SIGNAL(src, COMSIG_WPANEL_STATE_COVER) == PANEL_COVER_OPEN) || src.can_access_remotely(usr))
-		if (href_list["cutwire"])
-			var/twire = text2num_safe(href_list["cutwire"])
-			check_shock(usr)
-			SEND_SIGNAL(src, COMSIG_WPANEL_MOB_SNIP, usr, twire)
-			show_panel(null, usr)
-			return
-
-		if (href_list["pulsewire"])
-			var/twire = text2num_safe(href_list["pulsewire"])
-			check_shock(usr)
-			SEND_SIGNAL(src, COMSIG_WPANEL_MOB_PULSE, usr, twire)
-			show_panel(null, usr)
 
 /obj/machinery/weapon_stand/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
@@ -304,7 +273,7 @@
 	contained_weapon = /obj/item/gun/kinetic/riotgun
 	contained_weapon_name = "riot shotgun"
 	req_access = list(access_security)
-	hackable = TRUE
+	has_wire_panel = TRUE
 
 /obj/machinery/weapon_stand/rifle_rack
 	name = "pulse rifle rack"
@@ -316,7 +285,7 @@
 	contained_weapon = /obj/item/gun/energy/pulse_rifle
 	contained_weapon_name = "pulse rifle"
 	req_access = list(access_security)
-	hackable = TRUE
+	has_wire_panel = TRUE
 
 /obj/machinery/weapon_stand/rifle_rack/recharger
 	recharges_contents = 1

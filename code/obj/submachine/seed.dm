@@ -898,70 +898,19 @@ TYPEINFO(/obj/submachine/seed_vendor)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	flags = TGUI_INTERACTIVE
 	var/hacked = 0
-	var/panelopen = 0
-	var/malfunction = 0
-	var/working = 1
-	var/wires = 15
 	var/can_vend = 1
 	var/seedcount = 0
 	var/maxseed = 25
 	var/list/available = list()
 	var/static/datum/wirePanel/panelDefintion/wire_def = new /datum/wirePanel/panelDefintion(
-		controls=list(WIRE_RESTRICT_TODO, WIRE_SAFETY_TODO, WIRE_POWER_1_TODO, WIRE_INERT_TODO),
+		controls=list(WIRE_CONTROL_RESTRICT, WIRE_CONTROL_SAFETY, WIRE_CONTROL_POWER_A, WIRE_CONTROL_INERT),
 		color_pool=list("dandelion", "cherry", "pistachio", "blueberry"),
 		custom_acts=list(
-			WPANEL_CUSTOM_ACT(WIRE_RESTRICT_TODO, WIRE_ACT_PULSE, ~WIRE_ACT_MEND),
-			WPANEL_CUSTOM_ACT(WIRE_SAFETY_TODO, WIRE_ACT_PULSE, ~WIRE_ACT_MEND),
-			WPANEL_CUSTOM_ACT(WIRE_POWER_1_TODO, WIRE_ACT_PULSE, ~WIRE_ACT_MEND),
+			WPANEL_CUSTOM_ACT(WIRE_CONTROL_RESTRICT, ~WIRE_ACT_MEND, WIRE_ACT_PULSE),
+			WPANEL_CUSTOM_ACT(WIRE_CONTROL_SAFETY, ~WIRE_ACT_CUT, ~WIRE_ACT_MEND),
+			WPANEL_CUSTOM_ACT(WIRE_CONTROL_POWER_A, WIRE_ACT_PULSE, ~WIRE_ACT_MEND),
 		)
-
 	)
-
-/*
-	proc/cut(var/wireColor, var/mob/user as mob)
-		var/wireFlag = APCWireColorToFlag[wireColor]
-		var/wireIndex = APCWireColorToIndex[wireColor]
-		src.wires &= ~wireFlag
-		switch(wireIndex)
-			if(WIRE_EXTEND)
-				src.hacked = 0
-				src.name = "Seed Fabricator"
-				update_static_data(user)
-			if(WIRE_MALF) src.malfunction = 1
-			if(WIRE_POWER) src.working = 0
-
-	proc/mend(var/wireColor, var/mob/user as mob)
-		var/wireFlag = APCWireColorToFlag[wireColor]
-		var/wireIndex = APCWireColorToIndex[wireColor]
-		src.wires |= wireFlag
-		switch(wireIndex)
-			if(WIRE_MALF) src.malfunction = 0
-
-	proc/pulse(var/wireColor, var/mob/user as mob)
-		var/wireIndex = APCWireColorToIndex[wireColor]
-		switch(wireIndex)
-			if(WIRE_EXTEND)
-				if (src.hacked)
-					src.hacked = 0
-					src.name = "Seed Fabricator"
-				else
-					src.hacked = 1
-					src.name = "Feed Sabricator"
-				update_static_data(user)
-			if (WIRE_MALF)
-				if (src.malfunction) src.malfunction = 0
-				else src.malfunction = 1
-			if (WIRE_POWER)
-				if (src.working) src.working = 0
-				else src.working = 1
-*/
-
-
-	var/const
-		WIRE_EXTEND = 1
-		WIRE_MALF = 2
-		WIRE_POWER = 3
-		WIRE_INERT = 4
 
 	New()
 		..()
@@ -975,8 +924,8 @@ TYPEINFO(/obj/submachine/seed_vendor)
 		UnregisterSignal(src, COMSIG_WPANEL_SET_CONTROL)
 		UnregisterSignal(src, COMSIG_WPANEL_SET_COVER)
 
-	proc/set_control(obj/parent, control, new_status, mob/user)
-		if (control == WIRE_RESTRICT_TODO)
+	proc/set_control(obj/parent, mob/user, controls, new_status)
+		if (controls == WIRE_CONTROL_RESTRICT)
 			if (new_status)
 				src.name = "Seed Fabricator"
 			else
@@ -996,19 +945,19 @@ TYPEINFO(/obj/submachine/seed_vendor)
 		. = list()
 		.["seedCount"] = src.seedcount
 		.["canVend"] = src.can_vend
-		.["isWorking"] = src.working
-		SEND_SIGNAL(src, COMSIG_WPANEL_UI_DATA, .)
+		SEND_SIGNAL(src, COMSIG_WPANEL_UI_DATA, user, .)
 
 	ui_static_data(mob/user)
 		. = list()
-
+		.["wirePanelTheme"] = WPANEL_THEME_INDICATORS
 		.["maxSeed"] = src.maxseed
 		.["name"] = src.name
 
+		var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
 		// Start with associative list, where each key is a seed category
 		var/list/categories = list()
 		for(var/datum/plant/A in hydro_controls.vendable_plants)
-			if (A.vending == 1 || src.hacked)
+			if (A.vending == 1 || !HAS_FLAG(active_controls, WIRE_CONTROL_RESTRICT))
 				if (!categories[A.category])
 					categories[A.category] = list()
 				categories[A.category] += list(list(
@@ -1025,12 +974,13 @@ TYPEINFO(/obj/submachine/seed_vendor)
 				seeds = category
 			))
 		.["seedCategories"] = categoriesArray
-		SEND_SIGNAL(src, COMSIG_WPANEL_UI_STATIC_DATA, .)
+		SEND_SIGNAL(src, COMSIG_WPANEL_UI_STATIC_DATA, user, .)
 
 	ui_act(action, list/params, datum/tgui/ui)
 		. = ..()
 		SEND_SIGNAL(src, COMSIG_WPANEL_UI_ACT, action, params, ui)
-		if(. || action != "disp" || !src.can_vend || !src.working)
+		var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
+		if(. || action != "disp" || !src.can_vend || !HAS_FLAG(active_controls, WIRE_CONTROL_POWER_A))
 			return
 		var/datum/plant/I = locate(text2path(params["path"])) in src.available
 
@@ -1067,69 +1017,22 @@ TYPEINFO(/obj/submachine/seed_vendor)
 		if (!src.hacked)
 			if(user)
 				boutput(user, "<span class='notice'>You disable the [src]'s product locks!</span>")
-			src.hacked = 1
+			SEND_SIGNAL(src, COMSIG_WPANEL_SET_CONTROL, WIRE_CONTROL_RESTRICT, FALSE)
 			src.name = "Feed Sabricator"
 			update_static_data(user)
-			src.updateUsrDialog()
 			return 1
 		else
 			if(user)
 				boutput(user, "The [src] is already unlocked!")
 			return 0
 
-	proc/set_cover(obj/parent, status, mob/user)
+	proc/set_cover(obj/parent, mob/user, status)
 		switch(status)
-			if (PANEL_COVER_OPEN)
+			if (WPANEL_COVER_OPEN)
 				src.overlays += image('icons/obj/vending.dmi', "grife-panel")
-			if (PANEL_COVER_CLOSED)
+			if (WPANEL_COVER_CLOSED)
 				src.overlays = null
-
-	proc/isWireColorCut(var/wireColor)
-		var/wireFlag = APCWireColorToFlag[wireColor]
-		return ((src.wires & wireFlag) == 0)
-
-	proc/isWireCut(var/wireIndex)
-		var/wireFlag = APCIndexToFlag[wireIndex]
-		return ((src.wires & wireFlag) == 0)
-
-	proc/cut(var/wireColor, var/mob/user as mob)
-		var/wireFlag = APCWireColorToFlag[wireColor]
-		var/wireIndex = APCWireColorToIndex[wireColor]
-		src.wires &= ~wireFlag
-		switch(wireIndex)
-			if(WIRE_EXTEND)
-				src.hacked = 0
-				src.name = "Seed Fabricator"
-				update_static_data(user)
-			if(WIRE_MALF) src.malfunction = 1
-			if(WIRE_POWER) src.working = 0
-
-	proc/mend(var/wireColor, var/mob/user as mob)
-		var/wireFlag = APCWireColorToFlag[wireColor]
-		var/wireIndex = APCWireColorToIndex[wireColor]
-		src.wires |= wireFlag
-		switch(wireIndex)
-			if(WIRE_MALF) src.malfunction = 0
-
-	proc/pulse(var/wireColor, var/mob/user as mob)
-		var/wireIndex = APCWireColorToIndex[wireColor]
-		switch(wireIndex)
-			if(WIRE_EXTEND)
-				if (src.hacked)
-					src.hacked = 0
-					src.name = "Seed Fabricator"
-				else
-					src.hacked = 1
-					src.name = "Feed Sabricator"
-				update_static_data(user)
-			if (WIRE_MALF)
-				if (src.malfunction) src.malfunction = 0
-				else src.malfunction = 1
-			if (WIRE_POWER)
-				if (src.working) src.working = 0
-				else src.working = 1
-
-
+		tgui_process.update_user_uis(user)
 TYPEINFO(/obj/submachine/seed_manipulator/kudzu)
 	mats = 0
 

@@ -152,33 +152,22 @@
 	#define COMSIG_ITEM_IMPLANT_REMOVED "implant_removed"
 
 	// ---- wire panel signals ----
-	/// Force wire control to be active
+
+	/// Force wire control to be active (mob/user, controls, new_status)
 	#define COMSIG_WPANEL_SET_CONTROL "wpanel_set_control"
-	/// change wire control based on wire index
-	#define COMSIG_WPANEL_SET_CONTROL_BY_INDEX "wpanel_set_control_by_wire"
-	/// set the cover state
+	/// set the cover state (mob/user, status)
 	#define COMSIG_WPANEL_SET_COVER "wpanel_set_cover"
+ 	/// Returns bitmask of active wire controls ()
+	#define COMSIG_WPANEL_STATE_CONTROLS "wpanel_state_controls"
+	/// When a mob attempts an action on a wire (mob/user, wire, action)
+	#define COMSIG_WPANEL_MOB_WIRE_ACT "wpanel_mob_wire_act"
 
-	/// When a mob attempts to snip a wire
-	#define COMSIG_WPANEL_MOB_SNIP "wpanel_mob_snip"
-	/// When a mob attempts to pulse a wire
-	#define COMSIG_WPANEL_MOB_PULSE "wpanel_mob_pulse"
-
- 	/// Returns bitmask of active wire controls
-	#define COMSIG_WPANEL_STATE_CONTROLS "wpanel_data_controls"
-	/// Returns current cover state
-	#define COMSIG_WPANEL_STATE_COVER "wpanel_state_cover"
-	/// Deprecated. Returns ordered list of which wires are cut for CHUI
-	#define COMSIG_WPANEL_STATE_CUTS "wpanel_data_cuts"
-
-	/// Helper; call in `ui_data` with a list to return
+	/// TGUI helper; call in `ui_data` (mob/user, list/data)
 	#define COMSIG_WPANEL_UI_DATA "wpanel_ui_data"
-	/// Helper; call in `ui_static_data` with a list to return
+	/// TGUI helper; call in `ui_static_data` (mob/user, list/data)
 	#define COMSIG_WPANEL_UI_STATIC_DATA "wpanel_ui_static_data"
-	/// Helper; call in `ui_act` with
+	/// TGUI helper; call in `ui_act` with (action, list/params, datum/tgui/ui)
 	#define COMSIG_WPANEL_UI_ACT "wpanel_ui_act"
-	/// Deprecated. Helper signal for chui-based objects.
-	#define COMSIG_WPANEL_UPDATE_UI "wpanel_update_ui"
 
 // ---- mob signals ----
 
