@@ -65,19 +65,21 @@ export const NukeOpMap = (params, context) => {
                   icon="undo"
                   color="green"
                   content="Reset Map Scale"
-                  onClick={() => act('reset_scale')} />
+                  onClick={() => act('reset_scale')}
+                />
               )}>
               <Flex>
                 <Flex.Item>
                   <ByondUi
                     params={{
-                      id: "nukeop_map",
+                      id: 'nukeop_map',
                       type: 'map',
                     }}
                     style={{
                       width: "300px",
                       height: "300px",
-                    }} />
+                    }}
+                  />
                 </Flex.Item>
               </Flex>
             </Section>
@@ -92,12 +94,14 @@ export const NukeOpMap = (params, context) => {
                     icon="plus"
                     color="green"
                     content="New"
-                    onClick={() => toggleNewMarkerMenu()} />
+                    onClick={() => toggleNewMarkerMenu()}
+                  />
                   <Button
                     icon={markers_visible ? "eye-slash" : "eye"}
                     color={markers_visible ? "red" : "green"}
                     content={markers_visible ? "Hide All" : "Show All"}
-                    onClick={() => act('toggle_visibility_all')} />
+                    onClick={() => act('toggle_visibility_all')}
+                  />
                 </Box>
               )}>
               {(!!showNewMarkerMenu) && (
@@ -112,19 +116,22 @@ export const NukeOpMap = (params, context) => {
                           pixelated
                           height="150px"
                           width="150px"
-                          src={`data:image/png;base64,${image}`} />
+                          src={`data:image/png;base64,${image}`}
+                        />
                       </Flex.Item>
                       <Flex.Item ml="10px">
                         <Input
                           placeholder="Marker Name"
                           fluid
                           value={name}
-                          onChange={(e, value) => setName(value)} />
+                          onChange={(e, value) => setName(value)}
+                        />
                         <Dropdown
                           width="150px"
                           options={placable_marker_states}
                           onSelected={(value) => setImage(value)}
-                          mt="10px" />
+                          mt="10px"
+                        />
                         <Flex mt="10px" justify="space-between">
                           <Flex.Item>
                             <NumberInput
@@ -133,7 +140,8 @@ export const NukeOpMap = (params, context) => {
                               maxValue={300}
                               value={x}
                               format={value => "x, " + value}
-                              onDrag={(e, value) => setX(value)} />
+                              onDrag={(e, value) => setX(value)}
+                            />
                           </Flex.Item>
                           <Flex.Item>
                             <NumberInput
@@ -142,7 +150,8 @@ export const NukeOpMap = (params, context) => {
                               maxValue={300}
                               value={y}
                               format={value => "y, " + value}
-                              onDrag={(e, value) => setY(value)} />
+                              onDrag={(e, value) => setY(value)}
+                            />
                           </Flex.Item>
                         </Flex>
                         <Button
