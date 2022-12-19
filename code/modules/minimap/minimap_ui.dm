@@ -58,7 +58,9 @@
 
 		. = list(
 			"placable_marker_states" = placable_marker_states,
-			"placable_marker_images" = placable_marker_images
+			"placable_marker_images" = placable_marker_images,
+			"x" = 1,
+			"y" = 1
 		)
 
 	ui_data(mob/user)
@@ -80,8 +82,17 @@
 
 		. = list(
 			"markers_visible" = markers_visible,
+			"selecting_coordinates" = src.minimap:selecting_coordinates,
 			"minimap_markers" = minimap_markers_list
 		)
+
+		if (src.minimap:selected_x && src.minimap:selected_y)
+			. += list(
+				"x" = src.minimap:selected_x,
+				"y" = src.minimap:selected_y
+			)
+			src.minimap:selected_x = null
+			src.minimap:selected_y = null
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		var/mob/user
@@ -96,8 +107,6 @@
 				if (istype(src.minimap_datum, /datum/minimap/z_level))
 					var/datum/minimap/z_level/minimap = src.minimap_datum
 					minimap.find_focal_point()
-
-			// if ("new_marker")
 
 			if ("toggle_visibility_all")
 				for (var/atom/target in src.minimap_datum.minimap_markers)
@@ -126,6 +135,25 @@
 				else
 					marker.marker.alpha = 255
 					marker.visible = TRUE
+
+			if ("location_from_minimap")
+				if (!istype(src.minimap, /obj/minimap_controller))
+					return
+				var/obj/minimap_controller/map = minimap
+				map.selecting_coordinates = TRUE
+
+			if ("new_marker")
+				var/name = params["name"]
+				var/icon_state = params["icon"]
+				var/x = params["pos_x"]
+				var/y = params["pos_y"]
+
+				if (!name || !icon_state || !x || !y)
+					message_admins("[name], [icon_state], [x], [y]")
+					return
+
+				var/turf/location = locate(x, y, src.minimap_datum.z_level)
+				src.minimap_datum.create_minimap_marker(location, 'icons/obj/minimap/minimap_markers.dmi', icon_state, name, TRUE)
 
 			if ("delete_marker")
 				var/list/list_entry = src.minimap_markers_list[params["index"]]

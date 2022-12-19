@@ -182,7 +182,9 @@
 	anchored = TRUE
 	var/obj/minimap/controlled_minimap
 	var/filter
-	var/marker_to_be_placed = null
+	var/selecting_coordinates = FALSE
+	var/selected_x = 1
+	var/selected_y = 1
 	var/dragging = FALSE
 	var/start_click_pos_x = null
 	var/start_click_pos_y = null
@@ -219,15 +221,13 @@
 		var/x = text2num(param_list["icon-x"])
 		var/y = text2num(param_list["icon-y"])
 
-		if (src.marker_to_be_placed)
+		if (src.selecting_coordinates)
 			src.dragging = FALSE
 			var/datum/minimap/minimap = src.controlled_minimap.map
-			var/map_x = round((x - minimap.minimap_render.pixel_x) / (minimap.zoom_coefficient * minimap.map_scale))
-			var/map_y = round((y - minimap.minimap_render.pixel_y) / (minimap.zoom_coefficient * minimap.map_scale))
+			src.selected_x = round((x - minimap.minimap_render.pixel_x) / (minimap.zoom_coefficient * minimap.map_scale))
+			src.selected_y = round((y - minimap.minimap_render.pixel_y) / (minimap.zoom_coefficient * minimap.map_scale))
 
-			var/turf/T = locate(map_x, map_y, minimap.z_level)
-			minimap.create_minimap_marker(T, 'icons/obj/minimap/minimap_markers.dmi', "[marker_to_be_placed]")
-			src.marker_to_be_placed = null
+			src.selecting_coordinates = FALSE
 		else
 			src.start_click_pos_x = x
 			src.start_click_pos_y = y

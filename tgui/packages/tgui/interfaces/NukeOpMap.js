@@ -7,18 +7,45 @@ export const NukeOpMap = (params, context) => {
   const { act, data } = useBackend(context);
   const {
     markers_visible,
+    selecting_coordinates,
     minimap_markers,
+    showNewMarkerMenu,
     placable_marker_states,
     placable_marker_images,
     image,
+    x,
+    y,
   } = data;
 
+  const [name, setName] = useLocalState(context, 'name');
+  const [icon, setIcon] = useLocalState(context, 'icon');
+
+  const toggleNewMarkerMenu = () => {
+    data.showNewMarkerMenu = !showNewMarkerMenu;
+  };
+
+  const newMarker = () => {
+    toggleNewMarkerMenu();
+    act('new_marker', {
+      name: name,
+      icon: icon,
+      pos_x: x,
+      pos_y: y,
+    });
+  };
+
   const setImage = (value) => {
+    setIcon(value);
     data.image = placable_marker_images[value];
   };
 
-  const [x, setX] = useLocalState(context, 'x', 1);
-  const [y, setY] = useLocalState(context, 'y', 1);
+  const setX = (value) => {
+    data.x = value;
+  };
+
+  const setY = (value) => {
+    data.y = value;
+  };
 
   return (
     <Window
@@ -65,7 +92,7 @@ export const NukeOpMap = (params, context) => {
                     icon="plus"
                     color="green"
                     content="New"
-                    onClick={() => act('new_marker')} />
+                    onClick={() => toggleNewMarkerMenu()} />
                   <Button
                     icon={markers_visible ? "eye-slash" : "eye"}
                     color={markers_visible ? "red" : "green"}
@@ -73,7 +100,7 @@ export const NukeOpMap = (params, context) => {
                     onClick={() => act('toggle_visibility_all')} />
                 </Box>
               )}>
-              {(!!markers_visible) && (
+              {(!!showNewMarkerMenu) && (
                 <Modal
                   backgroundColor="#470202"
                   mr={2}
@@ -90,27 +117,59 @@ export const NukeOpMap = (params, context) => {
                       <Flex.Item ml="10px">
                         <Input
                           placeholder="Marker Name"
-                          width="150px"
-                          mb="10px" />
+                          fluid
+                          value={name}
+                          onChange={(e, value) => setName(value)} />
                         <Dropdown
                           width="150px"
                           options={placable_marker_states}
                           onSelected={(value) => setImage(value)}
-                          mb="10px" />
-                        <NumberInput
-                          width="75px"
-                          minValue={1}
-                          maxValue={300}
-                          value={x}
-                          format={value => "x, " + value}
-                          onDrag={(e, value) => setX(value)} />
-                        <NumberInput
-                          width="75px"
-                          minValue={1}
-                          maxValue={300}
-                          value={y}
-                          format={value => "y, " + value}
-                          onDrag={(e, value) => setY(value)} />
+                          mt="10px" />
+                        <Flex mt="10px" justify="space-between">
+                          <Flex.Item>
+                            <NumberInput
+                              width="70px"
+                              minValue={1}
+                              maxValue={300}
+                              value={x}
+                              format={value => "x, " + value}
+                              onDrag={(e, value) => setX(value)} />
+                          </Flex.Item>
+                          <Flex.Item>
+                            <NumberInput
+                              width="70px"
+                              minValue={1}
+                              maxValue={300}
+                              value={y}
+                              format={value => "y, " + value}
+                              onDrag={(e, value) => setY(value)} />
+                          </Flex.Item>
+                        </Flex>
+                        <Button
+                          fluid
+                          textAlign="center"
+                          color={selecting_coordinates ? "orange" : "default"}
+                          content={selecting_coordinates ? "Select Position" : "Select (x, y) From Map"}
+                          onClick={() => act('location_from_minimap')}
+                          mt="10px"
+                        />
+                        <Flex mt="20px" justify="space-between">
+                          <Flex.Item>
+                            <Button
+                              icon="check"
+                              content="Confirm"
+                              onClick={() => newMarker()}
+                            />
+                          </Flex.Item>
+                          <Flex.Item>
+                            <Button
+                              icon="xmark"
+                              color="red"
+                              content="Cancel"
+                              onClick={() => toggleNewMarkerMenu()}
+                            />
+                          </Flex.Item>
+                        </Flex>
                       </Flex.Item>
                     </Flex>
                   </Box>
