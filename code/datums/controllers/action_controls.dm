@@ -909,7 +909,7 @@ var/datum/action_controller/actions
 	var/obstructed
 
 
-	New(var/Source, var/Target, var/Item, var/Slot, var/ExtraDuration = 0, var/Hidden = 0, var/Obstructed)
+	New(var/Source, var/Target, var/Item, var/Slot, var/ExtraDuration = 0, var/Hidden = 0, var/Obstructed = FALSE)
 		source = Source
 		target = Target
 		item = Item
