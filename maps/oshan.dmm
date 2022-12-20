@@ -5333,11 +5333,12 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "amq" = (
-/obj/item/clothing/suit/cardboard_box/head_surgeon,
+/obj/machinery/computer/operating{
+	id = "OR1"
+	},
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "amr" = (
-/obj/machinery/optable,
 /obj/machinery/drainage/big,
 /obj/item/paper/book/from_file/medical_surgery_guide{
 	pixel_x = 9
@@ -5345,6 +5346,9 @@
 /obj/machinery/defib_mount{
 	pixel_x = -7;
 	pixel_y = 4
+	},
+/obj/machinery/optable{
+	id = "OR1"
 	},
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
@@ -5968,6 +5972,7 @@
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1"
 	},
+/obj/item/clothing/suit/cardboard_box/head_surgeon,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "anY" = (
@@ -7426,8 +7431,8 @@
 	d2 = 4;
 	icon_state = "5-10"
 	},
-/obj/landmark/start{
-	name = "Roboticist"
+/obj/machinery/computer/operating{
+	id = "robotics"
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -13677,7 +13682,8 @@
 	icon_state = "pdoor0";
 	id = "chemistry";
 	name = "Chemistry Privacy Shutters";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
@@ -13701,7 +13707,8 @@
 	icon_state = "pdoor0";
 	id = "chemistry";
 	name = "Chemistry Privacy Shutters";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /turf/simulated/floor/plating/random,
 /area/station/science/chemistry)
@@ -27858,21 +27865,11 @@
 	},
 /area/station/bridge)
 "bvd" = (
-/obj/storage/crate,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/medical,
-/obj/item/device/radio/headset/medical,
-/obj/item/device/radio/headset/engineer,
-/obj/item/device/radio/headset/engineer,
-/obj/item/device/radio/headset/research,
-/obj/item/device/radio/headset/research,
-/obj/item/device/radio/headset/command,
-/obj/item/device/radio/headset/command,
 /obj/decal/tile_edge/line/purple{
 	dir = 9;
 	icon_state = "line1"
 	},
+/obj/storage/crate/radio,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "blue2"

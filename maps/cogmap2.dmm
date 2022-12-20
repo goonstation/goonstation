@@ -18984,6 +18984,12 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/crew_quarters/quartersA)
+"aTi" = (
+/obj/machinery/computer/operating{
+	id = "OR2"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/surgery)
 "aTj" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/checkpoint/arrivals)
@@ -28878,19 +28884,8 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "bqj" = (
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/medical,
-/obj/item/device/radio/headset/medical,
-/obj/item/device/radio/headset/security,
-/obj/item/device/radio/headset/security,
-/obj/item/device/radio/headset/engineer,
-/obj/item/device/radio/headset/engineer,
-/obj/item/device/radio/headset/research,
-/obj/item/device/radio/headset/research,
 /obj/item/device/radio/intercom/science,
-/obj/storage/crate,
-/obj/item/storage/box/PDAbox,
+/obj/storage/crate/radio,
 /turf/simulated/floor/circuit,
 /area/station/bridge)
 "bqk" = (
@@ -68263,12 +68258,14 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "cXN" = (
-/obj/machinery/optable,
 /obj/item/paper/book/from_file/pharmacopia,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /obj/decal/stripe_caution,
+/obj/machinery/optable{
+	id = "OR1"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "cXO" = (
@@ -68276,8 +68273,9 @@
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 8
 	},
-/obj/table/auto,
-/obj/machinery/defib_mount,
+/obj/machinery/computer/operating{
+	id = "OR1"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "cXP" = (
@@ -71754,10 +71752,12 @@
 	},
 /area/station/medical/dome)
 "dfY" = (
-/obj/machinery/optable,
 /obj/disposalpipe/segment/morgue,
 /obj/item/paper/book/from_file/medical_surgery_guide,
 /obj/decal/stripe_caution,
+/obj/machinery/optable{
+	id = "OR2"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "dfZ" = (
@@ -78354,6 +78354,12 @@
 	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/podbay)
+"leN" = (
+/obj/disposalpipe/segment/mail/vertical,
+/obj/table/auto,
+/obj/machinery/defib_mount,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/surgery)
 "lhJ" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment{
@@ -81911,6 +81917,12 @@
 	icon_state = "fgreen4"
 	},
 /area/station/hydroponics/bay)
+"xWy" = (
+/obj/machinery/computer/operating{
+	id = "robotics"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/robotics)
 "xWJ" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10
@@ -116053,7 +116065,7 @@ cQJ
 cSw
 cTM
 dfr
-cVq
+leN
 cXO
 cVq
 dfr
@@ -116355,8 +116367,8 @@ cQI
 cSv
 cTN
 cVp
-cVp
 dfM
+aTi
 cVp
 cVp
 daP
@@ -118752,7 +118764,7 @@ tLy
 cqq
 cAK
 daZ
-daZ
+xWy
 daZ
 qEw
 nSx

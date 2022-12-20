@@ -1,7 +1,43 @@
 
+(t)tue dec 20 22
+(u)Blackrep
+(p)12179
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)The Salvagers gotten their hands on some heavily armored space suits
+(u)Chatauscours
+(p)12461
+(e)🗺💅|A-Mapping, C-QoL
+(+)New operating computers have been shipped to all operating rooms on NT stations.
+(u)glowbold
+(p)12208
+(e)⚖🔄📄💊|C-Balance, C-Rework, A-UI, A-Medical
+(*)Operating Computers have been updated to the latest in health tracking systems.
+(+)Unless you have medical training, you must lay down or be unconscious to be tracked by operating computers.
+(t)mon dec 19 22
+(u)Bartimeus973
+(p)12398
+(e)🪲⚖📦🍝|C-Bug, C-Balance, A-Game-Objects, A-Catering
+(+)Twirling soda cans with soda, tonic or soda water in it will now make it spray it's contents on the person who opens it. Prank colleagues today!
+(u)WALPVRGIS
+(p)10704
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added a bunch of new cloaks and scarves to randomized loot crates.
+(t)sun dec 18 22
+(u)Lord_Earthfire
+(p)12446
+(e)🪲|C-Bug
+(*)Fixes seeds being able to be damaged by over 100%. Prepare to have your phlog infusions to fail more often!
+(u)Tyrant
+(p)12366
+(e)🪲🗺📦|C-Bug, A-Mapping, A-Game-Objects
+(+)The bridges in clarion, destiny, donut3 and atlas now have radio headset crates.
+(u)LeahTheTech
+(p)12278
+(e)🆕🧛|C-Feature, A-Gamemodes
+(+)The singularity will now react violently to being fed nuclear warheads.
 (t)fri dec 16 22
 (u)tarmunora
-(+)cyborg expansion modules properly add exponential power drain
+(+)cyborg expansion modules properly add exponential power drain, recharge packs restore 15k cell power
 (t)thu dec 15 22
 (u)tarmunora
 (+)glass tables chain-react when broken

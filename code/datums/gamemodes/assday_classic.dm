@@ -72,11 +72,12 @@
 
 	if(num_wraiths)
 		var/list/possible_wraiths = get_possible_enemies(ROLE_WRAITH, num_wraiths)
-		var/list/chosen_wraiths = antagWeighter.choose(pool = possible_wraiths, role = ROLE_WRAITH, amount = num_wraiths, recordChosen = 1)
-		for (var/datum/mind/wraith in chosen_wraiths)
-			traitors += wraith
-			wraith.special_role = ROLE_WRAITH
-			possible_wraiths.Remove(wraith)
+		if(length(possible_wraiths))
+			var/list/chosen_wraiths = antagWeighter.choose(pool = possible_wraiths, role = ROLE_WRAITH, amount = num_wraiths, recordChosen = 1)
+			for (var/datum/mind/wraith in chosen_wraiths)
+				traitors += wraith
+				wraith.special_role = ROLE_WRAITH
+				possible_wraiths.Remove(wraith)
 
 	return 1
 
