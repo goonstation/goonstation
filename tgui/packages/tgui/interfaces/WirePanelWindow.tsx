@@ -4,6 +4,8 @@ import { WirePanelCoverStatus, WirePanelData, WirePaneThemes } from './common/Wi
 import { WirePanelShowIndicators, WirePanelShowControls } from './common/WirePanel';
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
+import { decodeHtmlEntities } from 'common/string';
+import { capitalize } from './common/stringUtils';
 
 interface WirePanelTheme {
   wirePanelTheme: number,
@@ -15,14 +17,16 @@ interface WirePanelComponentProps extends WirePanelTheme {
 }
 
 export const WirePanelWindow = (props, context) => {
-  const { data } = useBackend<WirePanelData>(context);
+  const { config, data } = useBackend<WirePanelData>(context);
   const calcHeight = 0
     + (data.wirePanel.wires.length * 36) // height per wire
     + (data.wirePanelTheme === WirePaneThemes.WPANEL_THEME_INDICATORS ? 110 : 50); // indicators need more space
+  const objectTitle = capitalize(decodeHtmlEntities(config.title));
   return (
     <Window
       width={340}
       height={calcHeight}
+      title={objectTitle + " Wire Panel"}
     >
       <Window.Content>
         <WirePaneThemeselector wirePanelTheme={data.wirePanelTheme} />

@@ -9,12 +9,15 @@
   margin-bottom: 0.2em;
   // make it look like a physical wire
   background-image: linear-gradient(
-    rgba(0,0,0, 0.9),
+    rgba(0,0,0, 1),
+    rgba(0,0,0, 0.8),
     rgba(200,200,200, 0.2),
     rgba(100,100,100, 0.1),
     rgba(100,100,100, 0.1),
     rgba(50,50,50, 0.2),
-    rgba(25,25,25, 0.9),
+    rgba(25,25,25, 0.7),
+    rgba(0,0,0, 0.8),
+    rgba(0,0,0, 1),
   )
   //background-color set from data
 }
@@ -32,12 +35,12 @@
 
 .WirePanel-wires-label {
   display: inline-block;
-  height: 1.6em;
+  height: 1.7em;
   min-width: 8em;
   padding: 0.3em 0.5em;
   margin: 0.5em;
   letter-spacing: 0.1em;
-  background-color: rgb(30,25,26);
+  background-color: rgba(30,25,26, 0.95);
   font-family: monospace;
   text-align: center;
   text-transform: uppercase;
