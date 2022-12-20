@@ -185,9 +185,9 @@
 		src.minimap_render.pixel_y -= y_offset
 
 		// Reset the alpha mask's position to the bottom left corner.
-		var/filter = src.minimap_render.filters[length(src.minimap_render.filters)]
-		filter:x = ((300 * src.map_scale) / 2) - 16 - src.minimap_render.pixel_x
-		filter:y = ((300 * src.map_scale) / 2) - 16 - src.minimap_render.pixel_y
+		var/alpha_mask = src.minimap_render.filters[length(src.minimap_render.filters)]
+		alpha_mask:x = ((300 * src.map_scale) / 2) - 16 - src.minimap_render.pixel_x
+		alpha_mask:y = ((300 * src.map_scale) / 2) - 16 - src.minimap_render.pixel_y
 
 		src.zoom_coefficient = zoom
 
@@ -218,9 +218,9 @@
 		src.minimap_render.pixel_y += y_offset
 
 		// Reset the alpha mask's position to the bottom left corner.
-		var/filter = src.minimap_render.filters[length(src.minimap_render.filters)]
-		filter:x = ((300 * src.map_scale) / 2) - 16 - src.minimap_render.pixel_x
-		filter:y = ((300 * src.map_scale) / 2) - 16 - src.minimap_render.pixel_y
+		var/alpha_mask = src.minimap_render.filters[length(src.minimap_render.filters)]
+		alpha_mask:x = ((300 * src.map_scale) / 2) - 16 - src.minimap_render.pixel_x
+		alpha_mask:y = ((300 * src.map_scale) / 2) - 16 - src.minimap_render.pixel_y
 
 		src.zoom_coefficient = zoom
 

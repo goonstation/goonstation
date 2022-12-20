@@ -192,8 +192,8 @@
 
 	///The controlled minimap object.
 	var/obj/minimap/controlled_minimap
-	///The alpha map filter of the minimap datum used by the controlled minimap. As there is no explicit definition for filters, `:` should be used to access variables.
-	var/filter
+	///The alpha mask filter of the minimap datum used by the controlled minimap. As there is no explicit definition for filters, `:` should be used to access variables.
+	var/alpha_mask
 
 	///Whether the next click will sample coordinates at the clicked point, or toggle dragging.
 	var/selecting_coordinates = FALSE
@@ -216,7 +216,7 @@
 		. = ..()
 		src.controlled_minimap = minimap
 		src.vis_contents += src.controlled_minimap.map.minimap_render
-		src.filter = src.controlled_minimap.map.minimap_render.filters[length(src.controlled_minimap.map.minimap_render.filters)]
+		src.alpha_mask = src.controlled_minimap.map.minimap_render.filters[length(src.controlled_minimap.map.minimap_render.filters)]
 
 		// As the minimap render is transparent to clicks, the minimap will require an overlay which clicks may register on.
 		if (!icon || !icon_state)
@@ -273,8 +273,8 @@
 	proc/pan_map(var/x, var/y)
 		src.controlled_minimap.map.minimap_render.pixel_x += x
 		src.controlled_minimap.map.minimap_render.pixel_y += y
-		filter:x -= x
-		filter:y -= y
+		alpha_mask:x -= x
+		alpha_mask:y -= y
 
 /obj/item/nukeop_minimap_controller
 	name = "atrium station map controller"
