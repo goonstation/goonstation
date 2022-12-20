@@ -257,6 +257,8 @@
 	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_BREACHING_CHARGES])
 		for(var/i = 1 to 5)
 			new /obj/item/breaching_charge/thermite(T)
+	for_by_tcl(minimap, /obj/minimap/map_computer/nukeop)
+		minimap.create_plant_location_markers(target_location_type)
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
