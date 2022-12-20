@@ -121,6 +121,7 @@
 
 /obj/minimap/map_computer/nukeop
 	name = "Atrium Station Map"
+	desc = "A cutting-edge cathode ray tube monitor, actively rendering many dozens of kilobytes of stolen structural data."
 	map_type = MAP_SYNDICATE
 
 	light_r = 1
@@ -253,7 +254,7 @@
 
 /obj/item/nukeop_minimap_controller
 	name = "atrium station map controller"
-	desc = null
+	desc = "A remote used to control a station map display, permitting the user to change zoom levels, pan the map, and manage map markers."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "minimap_controller"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT

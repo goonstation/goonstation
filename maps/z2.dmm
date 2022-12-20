@@ -56342,9 +56342,6 @@
 	},
 /area/syndicate_station/battlecruiser)
 "dgn" = (
-/obj/landmark{
-	name = "Nuclear-Bomb"
-	},
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm11"
 	},
@@ -69713,6 +69710,16 @@
 /obj/item/weldingtool,
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
+"igT" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/landmark{
+	name = "Nuclear-Bomb"
+	},
+/turf/unsimulated/floor/darkpurple,
+/area/syndicate_station/battlecruiser)
 "ihi" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -104861,7 +104868,7 @@ cIJ
 xPX
 des
 vkk
-dfo
+igT
 dfQ
 dfQ
 sdh
