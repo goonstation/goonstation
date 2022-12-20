@@ -743,6 +743,11 @@ TYPEINFO(/obj/item/device/geiger)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		src.homeloc = get_turf(src)
 
+	disposing()
+		if (islist(portable_machinery))
+			portable_machinery.Remove(src)
+		..()
+
 /obj/item/remote/porter/port_a_laundry
 	name = "Port-A-Laundry Remote"
 	icon = 'icons/obj/porters.dmi'
