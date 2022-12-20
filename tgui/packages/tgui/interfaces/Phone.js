@@ -15,14 +15,9 @@ export const Phone = (props, context) => {
   return (
     <Window title={name} width={250} height={350}>
       <Window.Content>
-        {dialing || inCall && (
+        {(dialing || inCall) && (
           <Dimmer>
-            {dialing && (
-              <h1>DIALING</h1>
-            )}
-            {inCall && (
-              <h1>IN CALL</h1>
-            )}
+            <h1>LINE BUSY</h1>
           </Dimmer>
         )}
         <Section title="Phonebook" fill scrollable>

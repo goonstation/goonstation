@@ -125,7 +125,7 @@ TYPEINFO(/obj/machinery/phone)
 		else
 			src.ringing = FALSE
 			src.linked.ringing = FALSE
-			if(src.linked.handset.holder)
+			if(src.linked.handset.holder?)
 				src.linked.handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_answer.ogg',50,0)
 
 	attack_ai(mob/user as mob)
@@ -250,7 +250,6 @@ TYPEINFO(/obj/machinery/phone)
 				for_by_tcl(P, /obj/machinery/phone)
 					if(P.phone_id == id)
 						src.call_other(P)
-						. = TRUE
 						return
 				boutput(usr, "<span class='alert'>Unable to connect!</span>")
 		src.add_fingerprint(usr)
@@ -281,6 +280,7 @@ TYPEINFO(/obj/machinery/phone)
 		if(!src.handset)
 			return
 		src.dialing = TRUE
+		tgui_process?.update_uis(src)
 		src.handset.holder?.playsound_local(src.handset.holder,'sound/machines/phones/dial.ogg' ,50,0)
 		SPAWN(4 SECONDS)
 			// Is it busy?
