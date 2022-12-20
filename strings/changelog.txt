@@ -1,5 +1,9 @@
 
 (t)tue dec 20 22
+(u)Chatauscours
+(p)12461
+(e)🗺💅|A-Mapping, C-QoL
+(+)New operating computers have been shipped to all operating rooms on NT stations.
 (u)glowbold
 (p)12208
 (e)⚖🔄📄💊|C-Balance, C-Rework, A-UI, A-Medical
