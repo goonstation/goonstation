@@ -2,10 +2,17 @@
 	name = "Station Map"
 	layer = TURF_LAYER
 	anchored = TRUE
+
+	///The minimap datum for this specific minimap object, containing data on the appearance and scale of the minimap, handling resizes, and managing markers.
 	var/datum/minimap/map
+	///The holder for the minimap datum's render of the minimap, allowing for offsets and other effects to be applied to the render without modifying the render itself.
 	var/atom/movable/minimap_holder
+
+	///The minimap type path that `map` should use.
 	var/map_path = /datum/minimap
+	///A bitflag that will be passed to the datum and determines which areas and minimap markers are to be rendered on the minimap.
 	var/map_type
+	///The desired scale of the physical map, as a multiple of the original size (300x300px).
 	var/map_scale = 1
 
 	New()
@@ -46,6 +53,7 @@
 		var/list/param_list = params2list(params)
 		var/datum/minimap/z_level/ai_map = map
 		if ("left" in param_list)
+			// Convert from screen (x, y) to map (x, y) coordinates.
 			var/x = round((text2num(param_list["icon-x"]) - ai_map.minimap_render.pixel_x) / (ai_map.zoom_coefficient * ai_map.map_scale))
 			var/y = round((text2num(param_list["icon-y"]) - ai_map.minimap_render.pixel_y) / (ai_map.zoom_coefficient * ai_map.map_scale))
 			var/turf/clicked = locate(x, y, map.z_level)
@@ -181,13 +189,24 @@
 	name = "Map Controller"
 	layer = TURF_LAYER
 	anchored = TRUE
+
+	///The controlled minimap object.
 	var/obj/minimap/controlled_minimap
+	///The alpha map filter of the minimap datum used by the controlled minimap. As there is no explicit definition for filters, `:` should be used to access variables.
 	var/filter
+
+	///Whether the next click will sample coordinates at the clicked point, or toggle dragging.
 	var/selecting_coordinates = FALSE
+	///The sampled x coordinate.
 	var/selected_x = 1
+	///The sampled y coordinate.
 	var/selected_y = 1
+
+	///Whether or not the minimap is currently being dragged/panned by the user.
 	var/dragging = FALSE
+	///The "starting" x position of the drag/pan, allowing for distance moved in the x axis to be calculated and applied to the minimap.
 	var/start_click_pos_x = null
+	///The "starting" y position of the drag/pan, allowing for distance moved in the y axis to be calculated and applied to the minimap.
 	var/start_click_pos_y = null
 
 	New(var/obj/minimap)
@@ -210,8 +229,11 @@
 	MouseWheel(dx, dy, loc, ctrl, params)
 		var/list/param_list = params2list(params)
 		var/datum/minimap/z_level/minimap = src.controlled_minimap.map
+
+		// Convert from screen (x, y) to map (x, y) coordinates.
 		var/x = round((text2num(param_list["icon-x"]) - minimap.minimap_render.pixel_x) / (minimap.zoom_coefficient * minimap.map_scale))
 		var/y = round((text2num(param_list["icon-y"]) - minimap.minimap_render.pixel_y) / (minimap.zoom_coefficient * minimap.map_scale))
+
 		if (dy > 1 && minimap.zoom_coefficient < 20)
 			minimap.zoom_on_point(minimap.zoom_coefficient * 1.1, x, y)
 		else if (dy < 1 && minimap.zoom_coefficient > 1)
@@ -225,6 +247,8 @@
 		if (src.selecting_coordinates)
 			src.dragging = FALSE
 			var/datum/minimap/minimap = src.controlled_minimap.map
+
+			// Convert from screen (x, y) to map (x, y) coordinates, and save to selected x, y vars.
 			src.selected_x = round((x - minimap.minimap_render.pixel_x) / (minimap.zoom_coefficient * minimap.map_scale))
 			src.selected_y = round((y - minimap.minimap_render.pixel_y) / (minimap.zoom_coefficient * minimap.map_scale))
 

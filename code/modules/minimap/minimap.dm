@@ -1,10 +1,14 @@
 /datum/minimap
 	///The minimap render to be displayed, containing both the map, and icons.
 	var/atom/movable/minimap_render
-	///The map, without map markers. Kept separate for the purpose of scaling the map without scaling the markers.
+	///The minimap, without minimap markers. Kept separate for the purpose of scaling the minimap without scaling the markers.
 	var/atom/movable/map
 
-	var/map_type
+	///An associative list of all the targets and associated minimap markers the minimap is currently tracking and displaying.
+	var/list/minimap_markers = list()
+
+	///A bitflag that determines which areas and minimap markers are to be rendered on the minimap.
+	var/minimap_type
 
 	///The z-level that the minimap is to be rendered from.
 	var/z_level = null
@@ -17,28 +21,23 @@
 	///The minimum y coordinate to be rendered, in world coordinates.
 	var/y_min = null
 
-	///An associative list of all the objects and associated minimap markers the minimap is currently tracking and displaying.
-	var/list/minimap_markers = list()
-
 	///The scale that the minimap should be zoomed to.
 	var/zoom_coefficient = 1
-
-	// All of the below are required for map marker calculations, but aren't used for anything else in the minimap parent.
-	///The current scale of the physical map, as a multiple of the original size.
+	///The current scale of the physical map, as a multiple of the original size (300x300px).
 	var/map_scale = 1
 
-	New(var/map_type)
+	New(var/minimap_type)
 		. = ..()
 		src.minimap_render = new
 		src.map = new /atom/movable
-		src.map_type = map_type
+		src.minimap_type = minimap_type
 
 		// If the map for the z-level has already been rendered, avoid re-rendering it.
-		if (!z_level_maps["[src.z_level]-[map_type]"])
+		if (!z_level_maps["[src.z_level]-[minimap_type]"])
 			src.render_minimap()
-			z_level_maps["[src.z_level]-[map_type]"] = icon(src.map.icon)
+			z_level_maps["[src.z_level]-[minimap_type]"] = icon(src.map.icon)
 		else
-			src.map.icon = z_level_maps["[src.z_level]-[map_type]"]
+			src.map.icon = z_level_maps["[src.z_level]-[minimap_type]"]
 
 		src.minimap_render.vis_flags = VIS_INHERIT_LAYER
 		src.minimap_render.appearance_flags = KEEP_TOGETHER
@@ -59,12 +58,12 @@
 			map.DrawBox(turf_color(T), T.x, T.y)
 		src.map.icon = icon(map)
 
-	///Checks whether a turf should be rendered on the map through the render_on_map variable on /turf.
+	///Checks whether a turf should be rendered on the map through the minimaps_to_render_on bitflag on /turf.
 	proc/valid_turf(var/turf/T)
 		if (!T.loc)
 			return FALSE
 		var/area/A = T.loc
-		if (!(src.map_type & A.minimaps_to_render_on) && !(A.minimaps_to_render_on & MAP_ALL))
+		if (!(src.minimap_type & A.minimaps_to_render_on) && !(A.minimaps_to_render_on & MAP_ALL))
 			return FALSE
 		return TRUE
 
@@ -82,7 +81,7 @@
 		var/offset = ((300 * src.map_scale) / 2) - 16
 		src.minimap_render.add_filter("map_cutoff", 1, alpha_mask_filter(offset, offset, mask_icon))
 
-	///Creates a minimap marker from a specified target, icon, and icon state.
+	///Creates a minimap marker from a specified target, icon, and icon state. 'marker_name' will override the marker inheriting the target's name.
 	proc/create_minimap_marker(var/atom/target, var/icon, var/icon_state, var/marker_name, var/can_be_deleted_by_player)
 		if (target in src.minimap_markers)
 			return
@@ -127,7 +126,7 @@
 	///The width in pixels between the edge of the station and the edge of the map.
 	var/border_width = 20
 
-	New(var/map_type, var/scale)
+	New(var/minimap_type, var/scale)
 		x_max = world.maxx
 		y_max = world.maxy
 

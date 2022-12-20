@@ -1,11 +1,18 @@
 /datum/minimap_marker
+	///The minimap datum that the minimap marker belongs to.
 	var/datum/minimap/map
+	///The physical marker, determining appearance and position.
 	var/atom/movable/marker
+	///The target of the minimap marker.
 	var/atom/target
 
+	///The name of the minimap marker, usually inherited from the target, unless overridden on creation.
 	var/name
+	///Whether the minimap marker is visible, with precedence over alpha settings.
 	var/visible = TRUE
+	///Whether the target is on the minimap datum's rendered z-level, determining whether it is displayed.
 	var/on_minimap_z_level
+	///Whether the minimap marker can be deleted by players using minimap controllers.
 	var/can_be_deleted_by_player = FALSE
 
 	New(var/atom/target, var/name, var/can_be_deleted_by_player)
