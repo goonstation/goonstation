@@ -1,4 +1,10 @@
 
+(t)tue dec 20 22
+(u)glowbold
+(p)12208
+(e)⚖🔄📄💊|C-Balance, C-Rework, A-UI, A-Medical
+(*)Operating Computers have been updated to the latest in health tracking systems.
+(+)Unless you have medical training, you must lay down or be unconscious to be tracked by operating computers.
 (t)mon dec 19 22
 (u)Bartimeus973
 (p)12398
