@@ -29,6 +29,20 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		M.reagents.add_reagent("prions", 15)
 		return
 */
+
+/datum/materialProc/onpickup_butt
+	var/static/list/sound_fart = list('sound/voice/farts/poo2.ogg', \
+								'sound/voice/farts/fart1.ogg', \
+								'sound/voice/farts/fart2.ogg', \
+								'sound/voice/farts/fart3.ogg', \
+								'sound/voice/farts/fart4.ogg', \
+								'sound/voice/farts/fart5.ogg')
+
+	execute(var/mob/M, var/obj/item/I)
+		if(prob(10) && !ON_COOLDOWN(I, "material_fart", 2 SECONDS))
+			playsound(I, pick(src.sound_fart), 40, 0 , 0, (1.5 - rand()), channel=VOLUME_CHANNEL_EMOTE)
+			M.visible_message("<span class='emote'>\the [I] lets out a little toot as [M] squeezes it.</span>")
+
 /datum/materialProc/oneat_viscerite
 	max_generations = -1
 
@@ -548,7 +562,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/reflective_onbullet
 	execute(var/obj/item/owner, var/atom/attacked, var/obj/projectile/projectile)
 		if(projectile.proj_data.damage_type & D_BURNING || projectile.proj_data.damage_type & D_ENERGY)
-			shoot_reflected_bounce(projectile, owner) //shoot_reflected_to_sender()
+			shoot_reflected_bounce(projectile, owner, 4) //shoot_reflected_to_sender()
 		return
 
 /datum/materialProc/negative_add

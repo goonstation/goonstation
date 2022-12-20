@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/telejam)
+	mats = 9
+
 /obj/machinery/telejam
 	name = "teleportation jammer"
 	desc = "Generates a force field interferes with teleportation devices."
@@ -6,7 +9,6 @@
 	density = 1
 	opacity = 0
 	anchored = 0
-	mats = 9
 	var/obj/item/cell/PCEL = null
 	var/coveropen = 0
 	var/active = 0

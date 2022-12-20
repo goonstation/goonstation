@@ -1,5 +1,6 @@
 /mob/living/carbon/human/clone
 	real_name = "cloned human"
+	is_npc = TRUE
 
 	New()
 		. = ..()

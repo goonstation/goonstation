@@ -1444,17 +1444,17 @@
 		boutput(user, "Something falls out of the shirt as you pick it up!")
 		disturbed = 1
 
-/obj/item/clothing/under/misc/colmob
-    name = "columbian mobster suit"
-    desc = "I'm a political prisoner from Space Cuba and I want my fucking human rights now!"
-    icon_state = "colmob"
-    item_state = "colmob"
+/obj/item/clothing/under/misc/mobster
+    name = "mobster suit"
+    desc = "Scream."
+    icon_state = "mob1"
+    item_state = "mob1"
 
-/obj/item/clothing/under/misc/rusmob
-    name = "soviet mobster suit"
+/obj/item/clothing/under/misc/mobster/alt
+    name = "mobster suit"
     desc = "She Swallows Burning Coals."
-    icon_state = "rusmob"
-    item_state = "rusmob"
+    icon_state = "mob2"
+    item_state = "mob2"
 
 /obj/item/clothing/under/gimmick/jester
     name = "jester's outfit"

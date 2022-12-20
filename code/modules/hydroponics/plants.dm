@@ -229,9 +229,8 @@ ABSTRACT_TYPE(/datum/plant)
 					DNA.endurance++
 
 		if (damage_amt)
-			if (prob(damage_prob)) S.seeddamage += damage_amt
-		if (S.seeddamage > 99)
-			return 99 // destroy the seed
+			if (prob(damage_prob))
+				S.seeddamage += damage_amt
 
 /datum/plantgenes/
 	var/growtime = 0 // These vars are pretty much bonuses/penalties applied on top of the

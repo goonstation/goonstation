@@ -39,6 +39,7 @@
 	New()
 		..()
 		src.create_reagents(60)
+		AddComponent(/datum/component/loctargeting/simple_light, 255, 110, 135, 90, src.on)
 
 		if (src.on) //if we spawned lit, do something about it!
 			src.on = 0
@@ -120,6 +121,8 @@
 
 			hit_type = DAMAGE_BURN
 
+			SEND_SIGNAL(src, COMSIG_LIGHT_ENABLE)
+
 	proc/put_out(var/mob/user as mob, var/message as text)
 		if (src.on == 1)
 			src.on = -1
@@ -138,6 +141,8 @@
 			processing_items.Remove(src)
 
 			hit_type = DAMAGE_BLUNT
+
+			SEND_SIGNAL(src, COMSIG_LIGHT_DISABLE)
 
 			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
 

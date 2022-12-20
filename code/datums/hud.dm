@@ -9,7 +9,7 @@
 	set_loc(atom/newloc)
 		. = ..()
 		if(!isnull(newloc))
-			CRASH("HUD object [type] was moved to [newloc] ([newloc.type])")
+			CRASH("HUD object [identify_object(src)] was moved to [identify_object(newloc)]")
 
 /atom/movable/screen/hud
 	plane = PLANE_HUD

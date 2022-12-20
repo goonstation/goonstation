@@ -1,4 +1,7 @@
 //handheld device for manual calibration of siphon systems
+TYPEINFO(/obj/item/device/calibrator)
+	mats = list("CRY-1", "CON-1")
+
 /obj/item/device/calibrator
 	name = "harmonic systems calibrator"
 	icon_state = "calibrator"
@@ -12,7 +15,6 @@
 	desc = "A small handheld device specially built for calibration and readout of harmonic siphon systems."
 	m_amt = 50
 	g_amt = 20
-	mats = list("CRY-1", "CON-1")
 
 
 
@@ -647,7 +649,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				boutput(user, "The internal wiring doesn't seem to need repair.")
 				return
 		else if(istype(W,/obj/item/device/calibrator))
-			var/scalex = input(usr,"Accepts values 0 through [src.max_intensity]","Adjust Intensity","1") as num
+			var/scalex = input(user,"Accepts values 0 through [src.max_intensity]","Adjust Intensity","1") as num
 			scalex = clamp(scalex,0,src.max_intensity)
 			src.intensity = scalex
 			src.update_fx()
