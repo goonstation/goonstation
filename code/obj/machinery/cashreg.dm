@@ -8,8 +8,8 @@ TYPEINFO(/obj/machinery/cashreg)
 	icon_state = "scanner"
 	anchored = 1
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
-	var/datum/db_record/mainaccount = null
-
+	var/datum/db_record/owner_account = null
+	var/price = 0
 
 	New()
 		..()
@@ -24,14 +24,14 @@ TYPEINFO(/obj/machinery/cashreg)
 			src.anchored = !src.anchored
 		if (istype(W, /obj/item/card/id))
 			var/obj/item/card/id/card = W
-			if (!mainaccount)
+			if (!owner_account)
 				for (var/datum/db_record/account as anything in data_core.bank.records)
 					if (ckey(account["name"]) == ckey(card.registered))
-						mainaccount = account
+						owner_account = account
 						break
 
-				if (!istype(mainaccount))
-					mainaccount = null
+				if (!istype(owner_account))
+					owner_account = null
 					boutput(user, "<span class='alert'>Unable to find bank account!</span>")
 					return
 
@@ -50,11 +50,11 @@ TYPEINFO(/obj/machinery/cashreg)
 				boutput(user, "<span class='alert'>Unable to find user bank account!</span>")
 				return
 
-			if (target_account == mainaccount)
+			if (target_account == owner_account)
 				boutput(user, "<span class='alert'>You can't send funds with the host ID to the host ID!</span>")
 				return
 
-			boutput(user, "<span class='notice'>The current host ID is [mainaccount["name"]]. Insert a value less than zero to cancel transaction.</span>")
+			boutput(user, "<span class='notice'>The current host ID is [owner_account["name"]]. Insert a value less than zero to cancel transaction.</span>")
 			var/amount = input(user, "How much money would you like to send?", "Deposit", 0) as null|num
 			if (amount <= 0 || !isnum_safe(amount))
 				return
@@ -64,14 +64,42 @@ TYPEINFO(/obj/machinery/cashreg)
 			boutput(user, "<span class='notice'>Sending transaction.</span>")
 			user.visible_message("<span class='notice'>[user] swipes [src] with [W].</span>")
 			target_account["current_money"] -= amount
-			mainaccount["current_money"] += amount
-			user.visible_message("<b>[src]</b> beeps, \"[mainaccount["name"]] now holds [mainaccount["current_money"]] credits. Thank you for your service!\"")
+			owner_account["current_money"] += amount
+			user.visible_message("<b>[src]</b> beeps, \"[owner_account["name"]] now holds [owner_account["current_money"]] credits. Thank you for your service!\"")
 
 	attack_hand(mob/user)
-		if (!mainaccount)
-			boutput(user, "<span class='alert'>You press the reset button, but nothing happens.</span>")
+		ui_interact(user)
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "Cashreg")
+			ui.open()
+
+	ui_data(mob/user)
+		. = list(
+			"owner" = src.owner_account,
+			"price" = src.price,
+		)
+
+	ui_act(action, params)
+		. = ..()
+		if (.)
 			return
-		if (tgui_alert(user, "Reset the reader?", "Reset reader", list("Yes", "No")) == "Yes")
-			boutput(user, "<span class='alert'>Reader reset.</span>")
-			user.visible_message("<span class='alert'><B>[user]</B> resets [src].</span>")
-			mainaccount = null
+		switch (action)
+			if ("swipe_owner")
+				if (!src.owner_account)
+
+				else
+					boutput(usr, "<span class='alert'>An owner is already registered with [src]!</span>")
+			if ("swipe_payee")
+			if ("reset")
+				if (!src.owner_account)
+					boutput(usr, "<span class='alert'>You press the reset button, but nothing happens.</span>")
+					return
+				if (tgui_alert(usr, "Reset the reader?", "Reset reader", list("Yes", "No")) == "Yes")
+					boutput(usr, "<span class='alert'>Reader reset.</span>")
+					usr.visible_message("<span class='alert'><B>[usr]</B> resets [src].</span>")
+					src.owner_account = null
+					. = TRUE
+		src.add_fingerprint(usr)
