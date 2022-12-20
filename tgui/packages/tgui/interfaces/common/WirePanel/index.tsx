@@ -1,16 +1,14 @@
 
-import { capitalize } from "common/string";
 import { useBackend } from "../../../backend";
-import { Blink, Box, Button, ColorBox, Divider, Flex, Stack } from "../../../components";
+import { Blink, Box, Button, Divider, Flex, Stack } from "../../../components";
 import { IndicatorProps, WirePanelActions, WirePanelControlLabels, WirePanelData, WireProps } from "./type";
 
-
-export const WirePaneControls = (props, context) => {
+export const WirePanelShowControls = (props, context) => {
   const { act, data } = useBackend<WirePanelData>(context);
   const { wirePanel, wirePanelStatic } = data;
   return (
     <Box>
-      <Box>
+      <Box className="WirePanel-wires-container">
         {wirePanelStatic.wires.map((wire, i) => {
           return (
             <SimpleWire
@@ -25,10 +23,9 @@ export const WirePaneControls = (props, context) => {
         })}
       </Box>
       <Divider />
-      <Box>
+      <Box className="WirePanel-control-container">
         {wirePanelStatic.indicators.map((indicator, i) => {
           return (
-
             <SimpleControl
               key={i}
               name={indicator.name}
@@ -37,7 +34,6 @@ export const WirePaneControls = (props, context) => {
               status={wirePanel.indicators[i].status}
               pattern={wirePanel.indicators[i].pattern}
             />
-
           );
         })}
       </Box>
@@ -45,67 +41,12 @@ export const WirePaneControls = (props, context) => {
   );
 };
 
-const SimpleWire = (props: WireProps) => {
-  const { act, name, value, cut, index } = props;
-  return (
-    <Flex fill verticalAlign="bottom" height={2}>
-      <Flex.Item
-        pt={0.4}
-        grow
-        bold
-        textColor={value}>
-        {capitalize(name)}
-      </Flex.Item>
-      <Flex.Item verticalAlign="bottom">
-        { !cut && (
-          <>
-            <Button
-              mr={3}
-              icon="bolt"
-              color="yellow"
-              content="Pulse"
-              onClick={() => act("actwire", { wire: index + 1, action: WirePanelActions.WIRE_ACT_PULSE })}
-            />
-            <Button
-              icon="cut"
-              color="red"
-              content={"Cut"}
-              onClick={() => act("actwire", { wire: index + 1, action: WirePanelActions.WIRE_ACT_CUT })}
-            />
-
-          </>
-        )}
-        { !!cut && (
-          <Button
-            icon="route"
-            color="green"
-            content={"Mend"}
-            onClick={() => act("actwire", { wire: index + 1, action: WirePanelActions.WIRE_ACT_MEND })}
-          />
-        )}
-      </Flex.Item>
-    </Flex>
-  );
-};
-
-const SimpleControl = (props: IndicatorProps) => {
-  const { name, value, control, pattern, status } = props;
-  const label_distance = 1;
-  const row_spacing = 0.5;
-  return (
-    <Box width="50%" inline mt={row_spacing} mb={row_spacing}>
-      <Box inline bold width="50%" color="grey" mr={label_distance}>{WirePanelControlLabels[control]}: </Box>
-      <Box inline mr={-label_distance}>{status ? "Enabled" : "Disabled" }</Box>
-    </Box>
-  );
-};
-
-export const WirePanelIndicators = (props, context) => {
+export const WirePanelShowIndicators = (props, context) => {
   const { act, data } = useBackend<WirePanelData>(context);
   const { wirePanel, wirePanelStatic } = data;
   return (
     <Box>
-      <Box>
+      <Box className="WirePanel-wires-container">
         {wirePanelStatic.wires.map((wire, i) => {
           return (
             <SimpleWire
@@ -119,10 +60,8 @@ export const WirePanelIndicators = (props, context) => {
           );
         })}
       </Box>
-      <Divider />
-      <Box>
+      <Box className="WirePanel-indicator-container">
         <Stack>
-          <Stack.Item width="100%" />
           {wirePanelStatic.indicators.map((indicator, i) => {
             return (
               <IndicatorFrame
@@ -139,109 +78,77 @@ export const WirePanelIndicators = (props, context) => {
   );
 };
 
-const IndicatorFrame = (props) => {
-  const { pattern, colorValue, colorName } = props;
+
+const SimpleWire = (props: WireProps) => {
+  const { act, name, value, cut, index } = props;
   return (
-    <Box
-      textAlign="center"
-      height={4}
-      width={3}
-      mt={1}
-      mr={1}
-      style={{
-        "border-radius": "30px",
-        "border": "2px solid rgb(107,108,109)",
-      }}
-    >
-      {
-        !!(pattern === "flashing") && <FlashingIndicator color={colorValue} />
-      }
-      {
-        !!(pattern === "on") && <OnIndicator color={colorValue} />
-      }
-      {
-        !!(pattern === "off") && <OffIndicator color={colorValue} />
-      }
+    <Box style={{ "background-color": value }} too>
+      <Flex fill className="WirePanel-wires-wire" >
+        <Flex.Item grow className="WirePanel-wires-name">
+          <Box className="WirePanel-wires-label">{name}</Box>
+        </Flex.Item>
+        <Flex.Item className="wirePanel-wires-buttons">
+          { !cut && (
+            <>
+              <Button
+                mr={3}
+                icon="bolt"
+                color="yellow"
+                content="Pulse"
+                onClick={() => act("actwire", { wire: index + 1, action: WirePanelActions.WIRE_ACT_PULSE })}
+              />
+              <Button
+                icon="cut"
+                color="red"
+                content={"Cut"}
+                onClick={() => act("actwire", { wire: index + 1, action: WirePanelActions.WIRE_ACT_CUT })}
+              />
+
+            </>
+          )}
+          { !!cut && (
+            <Button
+              icon="route"
+              color="green"
+              content={"Mend"}
+              onClick={() => act("actwire", { wire: index + 1, action: WirePanelActions.WIRE_ACT_MEND })}
+            />
+          )}
+        </Flex.Item>
+      </Flex>
     </Box>
   );
 };
 
-const FlashingIndicator = (props) => {
-  const { color } = props;
-
+const SimpleControl = (props: IndicatorProps) => {
+  const { name, value, control, pattern, status } = props;
   return (
-    <ColorBox
-      width="100%"
-      height="100%"
-      backgroundColor={color}
-      style={{
-        "border-radius": `30px`,
-        "border": "2px solid rgba(0,0,0,0.7)",
-      }}
-      content={
-        <Blink>
-          <ColorBox
-            width="100%"
-            height="100%"
-            backgroundColor="rgba(0,0,0,0.5)"
-            style={{
-              "border-radius": `30px`,
-              "border": "2px solid rgba(200,200,200,0.2)",
-            }} />
-        </Blink>
-      }
-    />
-  );
-};
-const OffIndicator = (props) => {
-  const { color } = props;
-  return (
-    <ColorBox
-      as="inline-block"
-      width="100%"
-      height="100%"
-      backgroundColor={color}
-      style={{
-        "border-radius": `30px`,
-        "border": "2px solid rgba(0,0,0,0.7)",
-      }}
-      content={
-        <ColorBox
-          width="100%"
-          height="100%"
-          backgroundColor="rgba(0,0,0,0.5)"
-          style={{
-            "border-radius": `30px`,
-
-          }} />
-      }
-    />
-  );
-};
-const OnIndicator = (props) => {
-  const { color } = props;
-  return (
-    <ColorBox
-      as="inline-block"
-      width="100%"
-      height="100%"
-      backgroundColor={color}
-      style={{
-        "border-radius": `30px`,
-        "border": "2px solid rgba(200,200,200,0.2)",
-
-      }}
-      content={
-        <ColorBox
-          width="100%"
-          height="100%"
-          backgroundColor="rgba(0,0,0,0.1)"
-          style={{
-            "border-radius": `30px`,
-            "border": "2px solid rgba(200,200,200,0.2)",
-          }} />
-      }
-    />
+    <Box className="WirePanel-control-pair">
+      <Box className="WirePanel-control-label">{WirePanelControlLabels[control]}: </Box>
+      <Box className="WirePanel-control-value">{status ? "Enabled" : "Disabled" }</Box>
+    </Box>
   );
 };
 
+const IndicatorFrame = (props) => {
+  const { pattern, colorValue, colorName } = props;
+  return (
+    <Box className="WirePanel-indicator-frame">
+      <Box className="WirePanel-indicator-light-backing" backgroundColor={colorValue}>
+        {!!(pattern === "on") && <OnIndicator />}
+        {!!(pattern === "off") && <OffIndicator /> }
+        {!!(pattern === "flashing") && (<Blink><OffIndicator /></Blink>)}
+      </Box>
+    </Box>
+  );
+};
+
+const OffIndicator = () => {
+  return (<Box className="WirePanel-indicator-light-off" content={<IndicatorFacing />} />);
+};
+const OnIndicator = () => {
+  return (<Box className="WirePanel-indicator-light-on" content={<IndicatorFacing />} />);
+};
+const IndicatorFacing = () => {
+  return (<Box className="WirePanel-indicator-light-facing" />);
+};

@@ -1,7 +1,7 @@
 import { Window } from '../layouts';
 import { Collapsible } from "../components";
 import { WirePanelCoverStatus, WirePanelData, WirePaneThemes } from './common/WirePanel/type';
-import { WirePanelIndicators, WirePaneControls } from './common/WirePanel';
+import { WirePanelShowIndicators, WirePanelShowControls } from './common/WirePanel';
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 
@@ -16,10 +16,13 @@ interface WirePanelComponentProps extends WirePanelTheme {
 
 export const WirePanelWindow = (props, context) => {
   const { data } = useBackend<WirePanelData>(context);
+  const calcHeight = 0
+    + (data.wirePanel.wires.length * 36) // height per wire
+    + (data.wirePanelTheme === WirePaneThemes.WPANEL_THEME_INDICATORS ? 110 : 50); // indicators need more space
   return (
     <Window
       width={340}
-      height={215}
+      height={calcHeight}
     >
       <Window.Content>
         <WirePaneThemeselector wirePanelTheme={data.wirePanelTheme} />
@@ -34,7 +37,6 @@ export const WirePanelCollapsible = (props: WirePanelComponentProps) => {
     (cover_status === WirePanelCoverStatus.WPANEL_COVER_OPEN || can_access_remotely) && (
       <Collapsible
         title="Wire Panel"
-        mb={1}
         open>
         <WirePaneThemeselector wirePanelTheme={wirePanelTheme} />
       </Collapsible>
@@ -47,10 +49,10 @@ const WirePaneThemeselector = (props: WirePanelTheme) => {
   return (
     <>
       { (wirePanelTheme === WirePaneThemes.WPANEL_THEME_CONTROLS || !wirePanelTheme) && (
-        <WirePaneControls />
+        <WirePanelShowControls />
       )}
       { wirePanelTheme === WirePaneThemes.WPANEL_THEME_INDICATORS && (
-        <WirePanelIndicators />
+        <WirePanelShowIndicators />
       )}
     </>
   );

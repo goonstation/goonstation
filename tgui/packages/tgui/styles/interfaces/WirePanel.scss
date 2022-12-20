@@ -1,0 +1,117 @@
+@use '../colors.scss';
+
+.WirePanel-wires-container {
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+}
+.WirePanel-wires-wire {
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  // make it look like a physical wire
+  background-image: linear-gradient(
+    rgba(0,0,0, 0.9),
+    rgba(200,200,200, 0.2),
+    rgba(100,100,100, 0.1),
+    rgba(100,100,100, 0.1),
+    rgba(50,50,50, 0.2),
+    rgba(25,25,25, 0.9),
+  )
+  //background-color set from data
+}
+.WirePanel-wires-name {
+  font-weight: bold;
+  flex: flex-grow;
+}
+
+.wirePanel-wires-buttons {
+  margin: 0.3em 0.5em 0.2em;
+  height: 2.2em;
+  padding: 0.2em 0.5em;
+  background-color: rgba(30,30,30,0.6);
+}
+
+.WirePanel-wires-label {
+  display: inline-block;
+  height: 1.6em;
+  min-width: 8em;
+  padding: 0.3em 0.5em;
+  margin: 0.5em;
+  letter-spacing: 0.1em;
+  background-color: rgb(30,25,26);
+  font-family: monospace;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+$controlLabelDistance: 5em;
+$controlRowSpacing: 0.3em;
+$color-label: colors.fg(colors.$label) !default;
+
+.WirePanel-control-pair {
+  display: inline-block;
+  width: 50%;
+  margin-top: $controlRowSpacing;
+  margin-bottom: $controlRowSpacing;
+}
+
+.WirePanel-control-label {
+  display: inline-block;
+  width: 50%;
+  font-weight: bold;
+  color: $color-label;
+  margin-right: $controlLabelDistance;
+}
+
+.WirePanel-control-value {
+  display:inline-block;
+  margin-left: -2-$controlLabelDistance;
+}
+
+.WirePanel-indicator-container {
+  padding-top: 0.3em;
+  margin-top: 0.1em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  background-image: linear-gradient(rgb(125,125,125), rgb(100,100,100), rgb(75,75,75));
+  border-radius: 13px;
+  height: 5em;
+  border: 2px outset rgb(200,200,200);
+  direction: rtl;
+}
+
+.WirePanel-indicator-frame {
+  border-radius: 30px;
+  border: 0.13em solid rgb(107,108,109);
+  height: 4em;
+  width: 1.7em;
+  margin: 0em 0.2em;
+}
+
+.WirePanel-indicator-light {
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+  border: 2px solid rgba(125,125,125,0.2);
+}
+
+.WirePanel-indicator-light-backing {
+  @extend .WirePanel-indicator-light;
+  border: 2px solid rgba(0,0,0,0.7);
+  // backgroundColor is set from data
+}
+
+.WirePanel-indicator-light-on {
+  @extend .WirePanel-indicator-light;
+  background-color: rgba(0,0,0,0.2);
+}
+
+.WirePanel-indicator-light-off {
+  @extend .WirePanel-indicator-light;
+  background-color: rgba(0,0,0,0.7);
+}
+
+.WirePanel-indicator-light-facing {
+  @extend .WirePanel-indicator-light;
+  border: 2px solid rgba(55,55,55,0.6);
+  background-color: rgba(0,0,0,0.2);
+}
