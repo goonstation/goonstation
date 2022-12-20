@@ -125,7 +125,7 @@ TYPEINFO(/obj/machinery/phone)
 		else
 			src.ringing = FALSE
 			src.linked.ringing = FALSE
-			if(src.linked.handset.holder?)
+			if(src.linked.handset.holder)
 				src.linked.handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_answer.ogg',50,0)
 
 	attack_ai(mob/user as mob)

@@ -49,7 +49,7 @@ const AddressGroup = (props, context) => {
               key={currentPhone.id}
               onClick={() => act('call', { target: currentPhone.id })}
               textAlign="center"
-              classNAme="phone__button"
+              className="phone__button"
             />
           )
       )}
