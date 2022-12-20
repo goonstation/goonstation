@@ -3,7 +3,7 @@
 	layer = TURF_LAYER
 	anchored = TRUE
 
-	///The minimap datum for this specific minimap object, containing data on the appearance and scale of the minimap, handling resizes, and managing markers.
+	///The minimap datum for this minimap object, containing data on the appearance and scale of the minimap, handling resizes, and managing markers.
 	var/datum/minimap/map
 	///The holder for the minimap datum's render of the minimap, allowing for offsets and other effects to be applied to the render without modifying the render itself.
 	var/atom/movable/minimap_holder
