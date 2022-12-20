@@ -1,11 +1,18 @@
 /atom/movable/minimap_ui_handler
+	///The shared maximum minimap id number, used for creating unique minimap IDs.
 	var/static/max_minimap_id = 0
+	///The current unique ID of the minimap, used for rendering it in a ByondUI component.
 	var/minimap_id
+	///All clients who currently have the minimap ui open.
 	var/list/client/viewers = list()
+	///The screen handler which the minimap object is placed into.
 	var/atom/movable/screen/handler
+	///The "minimap" object which will be displayed onto the client's screen. Not explicitly defined, as it may also be of type `obj/minimap_controller`.
 	var/obj/minimap
 
+	///The title that the tgui window should display.
 	var/tgui_title
+	///The theme that the tgui window should use. For a list of all themes, see `tgui/packages/tgui/styles/themes`.
 	var/tgui_theme
 
 	New(parent, control_id = null, obj/minimap, tgui_title, tgui_theme)
@@ -72,9 +79,13 @@
 
 
 /atom/movable/minimap_ui_handler/minimap_controller
+	///The minimap controller object, containing data on selected coordinates and the controlled minimap.
 	var/obj/minimap_controller/minimap_controller
+	///The minimap datum, containing data on the appearance and scale of the minimap, handling resizes, and managing markers.
 	var/datum/minimap/minimap_datum
+	///An associative list of data for each minimap marker, so that the UI may read it.
 	var/list/minimap_markers_list
+	///Whether the next call of `"toggle_visibility_all"` will turn all markers opaque or transparent. Does not reflect whether the markers are opaque or transparent.
 	var/markers_visible = TRUE
 
 	New(parent, control_id = null, obj/minimap_controller/minimap_controller, tgui_title, tgui_theme)
@@ -183,10 +194,6 @@
 				var/icon_state = params["icon"]
 				var/x = params["pos_x"]
 				var/y = params["pos_y"]
-
-				if (!name || !icon_state || !x || !y)
-					message_admins("[name], [icon_state], [x], [y]")
-					return
 
 				var/turf/location = locate(x, y, src.minimap_datum.z_level)
 				src.minimap_datum.create_minimap_marker(location, 'icons/obj/minimap/minimap_markers.dmi', icon_state, name, TRUE)

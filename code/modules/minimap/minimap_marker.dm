@@ -7,7 +7,7 @@
 	var/atom/target
 
 	///The name of the minimap marker, usually inherited from the target, unless overridden on creation.
-	var/name
+	var/name = "Minimap Marker"
 	///Whether the minimap marker is visible, with precedence over alpha settings.
 	var/visible = TRUE
 	///Whether the target is on the minimap datum's rendered z-level, determining whether it is displayed.

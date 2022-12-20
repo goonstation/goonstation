@@ -1,7 +1,7 @@
 // Determines the minimap types the icon/area should be displayed on.
-#define MAP_ALL			(1<<0)
-#define MAP_AI			(1<<1)
-#define MAP_SYNDICATE	(1<<2)
+#define MAP_ALL			(~0)
+#define MAP_AI			(1<<0)
+#define MAP_SYNDICATE	(1<<1)
 
 // Area colours on minimaps.
 #define MAPC_DEFAULT "#808080"

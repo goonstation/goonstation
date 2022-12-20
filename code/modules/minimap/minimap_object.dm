@@ -10,7 +10,7 @@
 
 	///The minimap type path that `map` should use.
 	var/map_path = /datum/minimap
-	///A bitflag that will be passed to the datum and determines which areas and minimap markers are to be rendered on the minimap.
+	///A bitflag that will be passed to the datum and determines which areas and minimap markers are to be rendered on the minimap. For available flags, see `_std/defines/minimap.dm`.
 	var/map_type
 	///The desired scale of the physical map, as a multiple of the original size (300x300px).
 	var/map_scale = 1
@@ -31,7 +31,7 @@
 			SEND_SIGNAL(marker_object, COMSIG_NEW_MINIMAP_MARKER, src)
 
 		// As the minimap render is transparent to clicks, the minimap will require an overlay which clicks may register on.
-		if (!icon || !icon_state)
+		if (!src.icon || !src.icon_state)
 			var/icon/click_overlay_icon = icon('icons/obj/minimap/minimap.dmi', "blank")
 			click_overlay_icon.Scale(300 * map_scale, 300 * map_scale)
 			click_overlay_icon.ChangeOpacity(0)
@@ -219,7 +219,7 @@
 		src.alpha_mask = src.controlled_minimap.map.minimap_render.filters[length(src.controlled_minimap.map.minimap_render.filters)]
 
 		// As the minimap render is transparent to clicks, the minimap will require an overlay which clicks may register on.
-		if (!icon || !icon_state)
+		if (!src.icon || !src.icon_state)
 			var/icon/click_overlay_icon = icon('icons/obj/minimap/minimap.dmi', "blank")
 			click_overlay_icon.Scale(300 * src.controlled_minimap.map_scale, 300 * src.controlled_minimap.map_scale)
 			click_overlay_icon.ChangeOpacity(0)

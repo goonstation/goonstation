@@ -35,7 +35,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	var/tmp/sims_score = 100
 	var/virtual = 0
 
-	/// A flag system for determining which minimap types this area should be rendered on.
+	/// A flag system for determining which minimap types this area should be rendered on. For available flags, see `_std/defines/minimap.dm`.
 	var/minimaps_to_render_on = null
 	/// What colour should be displayed for this tile on the station map?
 	var/station_map_colour = MAPC_DEFAULT

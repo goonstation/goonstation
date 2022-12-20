@@ -7,7 +7,7 @@
 	///An associative list of all the targets and associated minimap markers the minimap is currently tracking and displaying.
 	var/list/minimap_markers = list()
 
-	///A bitflag that determines which areas and minimap markers are to be rendered on the minimap.
+	///A bitflag that determines which areas and minimap markers are to be rendered on the minimap. For available flags, see `_std/defines/minimap.dm`.
 	var/minimap_type
 
 	///The z-level that the minimap is to be rendered from.
@@ -21,7 +21,7 @@
 	///The minimum y coordinate to be rendered, in world coordinates.
 	var/y_min = null
 
-	///The scale that the minimap should be zoomed to.
+	///The scale that the minimap should be zoomed to; it does not affect the physical size of the minimap, as the alpha mask will take care of any map area scaled outside of the minimap boundaries.
 	var/zoom_coefficient = 1
 	///The current scale of the physical map, as a multiple of the original size (300x300px).
 	var/map_scale = 1
@@ -58,12 +58,12 @@
 			map.DrawBox(turf_color(T), T.x, T.y)
 		src.map.icon = icon(map)
 
-	///Checks whether a turf should be rendered on the map through the minimaps_to_render_on bitflag on /turf.
+	///Checks whether a turf should be rendered on the map through the minimaps_to_render_on bitflag on /area.
 	proc/valid_turf(var/turf/T)
 		if (!T.loc)
 			return FALSE
 		var/area/A = T.loc
-		if (!(src.minimap_type & A.minimaps_to_render_on) && !(A.minimaps_to_render_on & MAP_ALL))
+		if (!(src.minimap_type & A.minimaps_to_render_on))
 			return FALSE
 		return TRUE
 
@@ -77,9 +77,10 @@
 	///Create an alpha mask to hide anything outside the bounds of the physical map.
 	proc/create_alpha_mask()
 		var/icon/mask_icon = icon('icons/obj/minimap/minimap.dmi', "blank")
-		mask_icon.Scale(300 * src.map_scale, 300 * src.map_scale)
-		var/offset = ((300 * src.map_scale) / 2) - 16
-		src.minimap_render.add_filter("map_cutoff", 1, alpha_mask_filter(offset, offset, mask_icon))
+		mask_icon.Scale(x_max * src.map_scale, y_max * src.map_scale)
+		var/x_offset = ((x_max * src.map_scale) / 2) - 16
+		var/y_offset = ((y_max * src.map_scale) / 2) - 16
+		src.minimap_render.add_filter("map_cutoff", 1, alpha_mask_filter(x_offset, y_offset, mask_icon))
 
 	///Creates a minimap marker from a specified target, icon, and icon state. 'marker_name' will override the marker inheriting the target's name.
 	proc/create_minimap_marker(var/atom/target, var/icon, var/icon_state, var/marker_name, var/can_be_deleted_by_player)
