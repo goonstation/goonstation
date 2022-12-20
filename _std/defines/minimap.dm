@@ -1,4 +1,4 @@
-// What map types should the icon/area be displayed on?
+// Determines the minimap types the icon/area should be displayed on.
 #define MAP_ALL			(1<<0)
 #define MAP_AI			(1<<1)
 #define MAP_SYNDICATE	(1<<2)
