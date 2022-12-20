@@ -14,12 +14,12 @@ TYPEINFO(/obj/machinery/phone)
 	var/can_talk_across_z_levels = 0
 	var/phone_id = null
 	var/obj/machinery/phone/linked = null
-	var/ringing = 0
-	var/answered = 0
+	var/ringing = FALSE
+	var/answered = FALSE
 	var/last_ring = 0
-	var/connected = 1
-	var/emagged = 0
-	var/dialing = 0
+	var/connected = TRUE
+	var/emagged = FALSE
+	var/dialing = FALSE
 	var/labelling = 0
 	var/unlisted = FALSE
 	var/obj/item/phone_handset/handset = null
@@ -115,8 +115,8 @@ TYPEINFO(/obj/machinery/phone)
 		UpdateIcon()
 		playsound(user, 'sound/machines/phones/pick_up.ogg', 50, 0)
 
-		if(src.ringing == 0) // we are making an outgoing call
-			if(src.connected == 1)
+		if(src.ringing == FALSE) // we are making an outgoing call
+			if(src.connected == TRUE)
 				if(user)
 					ui_interact(user)
 			else
@@ -140,19 +140,19 @@ TYPEINFO(/obj/machinery/phone)
 				hang_up()
 			return
 		if(issnippingtool(P))
-			if(src.connected == 1)
+			if(src.connected == TRUE)
 				if(user)
 					boutput(user,"You cut the phone line leading to the phone.")
-				src.connected = 0
+				src.connected = FALSE
 			else
 				if(user)
 					boutput(user,"You repair the line leading to the phone.")
-				src.connected = 1
+				src.connected = TRUE
 			return
 		if(ispulsingtool(P))
-			if(src.labelling == 1)
+			if(src.labelling == TRUE)
 				return
-			src.labelling = 1
+			src.labelling = TRUE
 			var/t = input(user, "What do you want to name this phone?", null, null) as null|text
 			t = sanitize(html_encode(t))
 			if(t && length(t) > 50)
@@ -182,7 +182,7 @@ TYPEINFO(/obj/machinery/phone)
 		if (!src.emagged)
 			if(user)
 				boutput(user, "<span class='alert'>You short out the ringer circuit on the [src].</span>")
-			src.emagged = 1
+			src.emagged = TRUE
 			return TRUE
 		return FALSE
 
@@ -202,7 +202,7 @@ TYPEINFO(/obj/machinery/phone)
 			return
 
 		if(src.ringing) // Are we calling someone
-			if(src.linked && src.linked.answered == 0)
+			if(src.linked && src.linked.answered == FALSE)
 				if(src.last_ring >= 2)
 					src.last_ring = 0
 					if(src.handset && src.handset.holder)
@@ -232,7 +232,7 @@ TYPEINFO(/obj/machinery/phone)
 		sortList(phonebook, /proc/cmp_phone_data)
 
 		. = list(
-			"answered" = src.answered,
+			"inCall" = src.linked,
 			"dialing" = src.dialing,
 			"name" = src.name,
 			"phonebook" = phonebook,
@@ -244,7 +244,7 @@ TYPEINFO(/obj/machinery/phone)
 			return
 		switch (action)
 			if ("call")
-				if(src.dialing == 1 || src.linked)
+				if(src.dialing == TRUE || src.linked)
 					return
 				var/id = params["target"]
 				for_by_tcl(P, /obj/machinery/phone)
@@ -259,17 +259,17 @@ TYPEINFO(/obj/machinery/phone)
 		src.blowthefuckup(strength = 2.5, delete = TRUE)
 
 	proc/hang_up()
-		src.answered = 0
+		src.answered = FALSE
 		if(src.linked) // Other phone needs updating
 			if(!src.linked.answered) // nobody picked up. Go back to not-ringing state
 				src.linked.icon_state = "[src.linked.phoneicon]"
 				src.linked.UpdateIcon()
 			else if(src.linked.handset && src.linked.handset.holder)
 				src.linked.handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_hangup.ogg',50,0)
-			src.linked.ringing = 0
+			src.linked.ringing = FALSE
 			src.linked.linked = null
 			src.linked = null
-		src.ringing = 0
+		src.ringing = FALSE
 		src.handset = null
 		src.icon_state = "[phoneicon]"
 		UpdateIcon()
@@ -280,32 +280,32 @@ TYPEINFO(/obj/machinery/phone)
 		// Dial the number
 		if(!src.handset)
 			return
-		src.dialing = 1
+		src.dialing = TRUE
 		src.handset.holder?.playsound_local(src.handset.holder,'sound/machines/phones/dial.ogg' ,50,0)
 		SPAWN(4 SECONDS)
 			// Is it busy?
-			if(target.answered || target.linked || target.connected == 0)
+			if(target.answered || target.linked || target.connected == FALSE)
 				playsound(src.loc,'sound/machines/phones/phone_busy.ogg' ,50,0)
-				src.dialing = 0
+				src.dialing = FALSE
 				return
 
 			// Start ringing the other phone (handled by process)
 			src.linked = target
 			target.linked = src
-			src.ringing = 1
-			src.linked.ringing = 1
-			src.dialing = 0
+			src.ringing = TRUE
+			src.linked.ringing = TRUE
+			src.dialing = FALSE
 			return
 
 
-/obj/machinery/phone/custom_suicide = 1
+/obj/machinery/phone/custom_suicide = TRUE
 /obj/machinery/phone/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
-		return 0
+		return FALSE
 	if (ishuman(user))
 		user.visible_message("<span class='alert'><b>[user] bashes the [src] into their head repeatedly!</b></span>")
 		user.TakeDamage("head", 150, 0)
-		return 1
+		return TRUE
 
 // Item generated when someone picks up a phone
 /obj/item/phone_handset
@@ -347,7 +347,7 @@ TYPEINFO(/obj/machinery/phone)
 		if(!src.parent)
 			qdel(src)
 			return
-		if(src.parent.answered == 1 && BOUNDS_DIST(src, src.parent) > 0)
+		if(src.parent.answered == TRUE && BOUNDS_DIST(src, src.parent) > 0)
 			boutput(src.holder,"<span class='alert'>The phone cord reaches it limit and the handset is yanked back to its base!</span>")
 			src.holder.drop_item(src)
 			src.parent.hang_up()
@@ -380,7 +380,7 @@ TYPEINFO(/obj/machinery/phone/wall)
 	icon = 'icons/obj/machines/phones.dmi'
 	desc = "A landline phone. In space. Where there is no land. Hmm."
 	icon_state = "wallphone"
-	anchored = 1
+	anchored = TRUE
 	density = 0
 	_health = 50
 	phoneicon = "wallphone"

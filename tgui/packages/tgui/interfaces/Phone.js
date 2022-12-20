@@ -6,15 +6,25 @@
  */
 
 import { useBackend } from '../backend';
-import { Button, Collapsible, Section } from '../components';
+import { Button, Collapsible, Dimmer, Section } from '../components';
 import { Window } from '../layouts';
 
 export const Phone = (props, context) => {
   const { data } = useBackend(context);
-  const { name } = data;
+  const { inCall, dialing, name } = data;
   return (
     <Window title={name} width={250} height={350}>
       <Window.Content>
+        {dialing || inCall && (
+          <Dimmer>
+            {dialing && (
+              <h1>DIALING</h1>
+            )}
+            {inCall && (
+              <h1>IN CALL</h1>
+            )}
+          </Dimmer>
+        )}
         <Section title="Phonebook" fill scrollable>
           <AddressGroup category="bridge" name="Bridge" depColour="green" />
           <AddressGroup category="engineering" name="Engineering" depColour="yellow" />
@@ -44,6 +54,7 @@ const AddressGroup = (props, context) => {
               key={currentPhone.id}
               onClick={() => act('call', { target: currentPhone.id })}
               textAlign="center"
+              classNAme="phone__button"
             />
           )
       )}
