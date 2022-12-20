@@ -1,5 +1,9 @@
 
 (t)tue dec 20 22
+(u)Blackrep
+(p)12179
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)The Salvagers gotten their hands on some heavily armored space suits
 (u)Chatauscours
 (p)12461
 (e)🗺💅|A-Mapping, C-QoL
