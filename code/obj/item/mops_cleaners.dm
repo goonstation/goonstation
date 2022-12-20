@@ -13,7 +13,8 @@ WET FLOOR SIGN
 	name = "spray bottle"
 	icon_state = "cleaner"
 	item_state = "cleaner"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|EXTRADELAY|SUPPRESSATTACK
+	flags = TABLEPASS|OPENCONTAINER|FPRINT|EXTRADELAY|SUPPRESSATTACK|ACCEPTS_MOUSEDROP_REAGENTS
+	c_flags = ONBELT
 	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	throwforce = 3
 	w_class = W_CLASS_SMALL
@@ -865,12 +866,14 @@ WET FLOOR SIGN
 
 // handheld vacuum
 
+TYPEINFO(/obj/item/handheld_vacuum)
+	mats = list("bamboo"=3, "MET-1"=10)
+
 /obj/item/handheld_vacuum
 	name = "handheld vacuum"
 	desc = "Sucks smoke. Sucks small items. Sucks just in general!"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "handvac"
-	mats = list("bamboo"=3, "MET-1"=10)
 	health = 7
 	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
@@ -1077,9 +1080,11 @@ WET FLOOR SIGN
 		else
 			. = ..()
 
+TYPEINFO(/obj/item/handheld_vacuum/overcharged)
+	mats = list("neutronium"=3, "MET-1"=10)
+
 /obj/item/handheld_vacuum/overcharged
 	name = "overcharged handheld vacuum"
-	mats = list("neutronium"=3, "MET-1"=10)
 	color = list(0,0,1, 0,1,0, 1,0,0)
 	New()
 		..()

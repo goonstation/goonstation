@@ -18,8 +18,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	var/max_generations = 2
 	/// Optional simple sentence that describes how the traits appears on the material. i.e. "It is shiny."
 	var/desc = ""
-	/// The material that owns this trigger
-	var/datum/material/owner = null
 
 	proc/execute()
 		return
@@ -31,6 +29,20 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		M.reagents.add_reagent("prions", 15)
 		return
 */
+
+/datum/materialProc/onpickup_butt
+	var/static/list/sound_fart = list('sound/voice/farts/poo2.ogg', \
+								'sound/voice/farts/fart1.ogg', \
+								'sound/voice/farts/fart2.ogg', \
+								'sound/voice/farts/fart3.ogg', \
+								'sound/voice/farts/fart4.ogg', \
+								'sound/voice/farts/fart5.ogg')
+
+	execute(var/mob/M, var/obj/item/I)
+		if(prob(10) && !ON_COOLDOWN(I, "material_fart", 2 SECONDS))
+			playsound(I, pick(src.sound_fart), 40, 0 , 0, (1.5 - rand()), channel=VOLUME_CHANNEL_EMOTE)
+			M.visible_message("<span class='emote'>\the [I] lets out a little toot as [M] squeezes it.</span>")
+
 /datum/materialProc/oneat_viscerite
 	max_generations = -1
 
@@ -330,14 +342,14 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/plasmastone
 	var/total_plasma = 500
 
-	execute(var/location) //exp and temp both have the location as first argument so i can use this for both.
+	execute(var/atom/location) //exp and temp both have the location as first argument so i can use this for both.
 		var/turf/T = get_turf(location)
-		if(!T || T.density)
+		if(!T || T.density || !istype(location))
 			return
 		if(total_plasma <= 0)
-			if(prob(2) && src.owner.owner)
-				src.owner.owner.visible_message("<span class='alert>[src.owner.owner] dissipates.</span>")
-				qdel(src.owner.owner)
+			if(prob(2) && location)
+				location.visible_message("<span class='alert>[location] dissipates.</span>")
+				qdel(location)
 			return
 		for (var/turf/simulated/floor/target in range(1,location))
 			if(ON_COOLDOWN(target, "plasmastone_plasma_generate", 10 SECONDS)) continue
@@ -438,7 +450,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/radioactive_add
 	execute(var/atom/location)
 		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
-		location.AddComponent(/datum/component/radioactive, location.material.getProperty("radioactive")*10, FALSE, FALSE, isitem(owner) ? 0 : 1)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty("radioactive")*10, FALSE, FALSE, isitem(location) ? 0 : 1)
 		return
 
 /datum/materialProc/radioactive_remove
@@ -451,7 +463,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/n_radioactive_add
 	execute(var/atom/location)
 		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
-		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive")*10, FALSE, TRUE, isitem(owner) ? 0 : 1)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive")*10, FALSE, TRUE, isitem(location) ? 0 : 1)
 		return
 
 /datum/materialProc/n_radioactive_remove
@@ -550,7 +562,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/reflective_onbullet
 	execute(var/obj/item/owner, var/atom/attacked, var/obj/projectile/projectile)
 		if(projectile.proj_data.damage_type & D_BURNING || projectile.proj_data.damage_type & D_ENERGY)
-			shoot_reflected_bounce(projectile, owner) //shoot_reflected_to_sender()
+			shoot_reflected_bounce(projectile, owner, 4) //shoot_reflected_to_sender()
 		return
 
 /datum/materialProc/negative_add

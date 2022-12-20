@@ -177,6 +177,28 @@ To remove:
 	}; \
 } while(0)
 
+#define PROP_UPDATE_HIDE_ICONS(target, prop, old_val) do { \
+	var/new_val = GET_ATOM_PROPERTY_RAW(target, prop); \
+	if (old_val != new_val) { \
+		var/icon_alpha = new_val ? 0 : 255; \
+		if(isliving(target)) { \
+			var/mob/living/L = target; \
+			L.name_tag?.set_visibility(!new_val); \
+		} if(ishuman(target)) { \
+			var/mob/living/carbon/human/H = target; \
+			H.arrestIcon?.alpha = icon_alpha; \
+			if (H.implant_icons) { \
+				var/image/I; \
+				for (var/implant in H.implant_icons) { \
+					I = H.implant_icons[implant]; \
+					I.alpha = icon_alpha; \
+				} \
+			} \
+			H.health_mon?.alpha = icon_alpha; \
+		} \
+	}; \
+} while(0)
+
 // Property defines
 //
 // These must be defined as macros in the format PROP_<yourproperty>(x) x("property key name", MACRO TO APPLY THE PROPERTY, MACRO TO REMOVE THE PROPERTY)
@@ -256,6 +278,9 @@ To remove:
 #define PROP_MOB_CANT_BE_PINNED(x) x("cantbepinned", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING(x) x("can_build_without_holding", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) //! Mob can bulid furniture without holding them (for borgs)
 #define PROP_MOB_BLOODGIB_IMMUNE(x) x("bloodgib_immune", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) //! Mob won't gib from having 1000+ effective blood
+#define PROP_MOB_OVERDOSE_WEAKNESS(x) x("overdose_weakness", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+/// Hides med/sec HUDs and name tags from the mob
+#define PROP_MOB_HIDE_ICONS(x) x("hide_icons", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE, PROP_UPDATE_HIDE_ICONS)
 
 //-------------------- OBJ PROPS ------------------------
 #define PROP_OBJ_GOLFABLE(x) x("golfable", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)

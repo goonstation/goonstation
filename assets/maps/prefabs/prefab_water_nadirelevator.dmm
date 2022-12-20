@@ -5,6 +5,10 @@
 	name = "siphon shaft wall"
 	},
 /area/noGenerate)
+"at" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/plating,
+/area/diner/kitchen)
 "aL" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 4;
@@ -112,7 +116,8 @@
 	})
 "dC" = (
 /obj/machinery/light/small/floor/netural,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/shuttle/sea_elevator)
 "dU" = (
 /turf/unsimulated/wall/setpieces/leadwall{
@@ -182,7 +187,8 @@
 /obj/landmark{
 	name = "seafall"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/shuttle/sea_elevator)
 "fy" = (
 /turf/simulated/floor/stairs/wide{
@@ -467,6 +473,11 @@
 /area/diner/hallway{
 	name = "Space Diner Backhall"
 	})
+"qS" = (
+/obj/machinery/vending/alcohol,
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/plating,
+/area/diner/kitchen)
 "qX" = (
 /turf/unsimulated/wall/setpieces/leadwall,
 /area/shuttle/sea_elevator)
@@ -523,7 +534,7 @@
 /area/skeleton_trader)
 "ta" = (
 /turf/variableTurf/wall,
-/area/space)
+/area/noGenerate)
 "tk" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/engine/caution/west,
@@ -884,6 +895,7 @@
 	icon_state = "cobweb2"
 	},
 /obj/storage/secure/closet/civilian/kitchen,
+/obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/plating,
 /area/diner/kitchen)
 "Fw" = (
@@ -1194,6 +1206,7 @@
 	icon_state = "gib2"
 	},
 /obj/machinery/light/incandescent/small,
+/obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/plating,
 /area/diner/kitchen)
 "Rm" = (
@@ -1207,7 +1220,7 @@
 	name = "The Recluse"
 	})
 "Rv" = (
-/obj/machinery/vending/alcohol,
+/obj/submachine/foodprocessor,
 /turf/simulated/floor/plating,
 /area/diner/kitchen)
 "RH" = (
@@ -1230,6 +1243,7 @@
 /area/skeleton_trader)
 "Sm" = (
 /obj/machinery/light/incandescent/small,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/scorched,
 /area/diner/bathroom)
 "Sp" = (
@@ -1237,7 +1251,7 @@
 /turf/simulated/floor/engine/caution/west,
 /area/diner/dining)
 "Sr" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
 /area/diner/bathroom)
 "Sw" = (
@@ -1573,7 +1587,6 @@
 	name = "Space Diner Backhall"
 	})
 "Zz" = (
-/obj/decal/cleanable/dirt,
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/plating,
 /area/diner/kitchen)
@@ -3005,7 +3018,7 @@ Vf
 Vf
 hk
 uP
-XP
+Nl
 XP
 nw
 nw
@@ -3048,7 +3061,7 @@ WK
 Vf
 Uw
 LU
-XP
+Nl
 Wr
 Wr
 Wr
@@ -3091,7 +3104,7 @@ Tx
 IQ
 Oz
 uP
-XP
+Nl
 Wr
 dh
 Wr
@@ -3342,7 +3355,7 @@ Fw
 xe
 YV
 YS
-YS
+at
 Ug
 WZ
 Ug
@@ -3382,7 +3395,7 @@ nw
 nw
 nw
 Fw
-Fw
+qS
 Fs
 Zz
 Rv
@@ -3424,7 +3437,7 @@ nw
 nw
 nw
 nw
-nw
+Fw
 Fw
 Fw
 Xi

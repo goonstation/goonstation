@@ -59,33 +59,12 @@
 			else
 				M.visible_message("<span class='alert'>[M] applies [src] to [himself_or_herself(M)].</span>")
 
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			var/obj/item/affecting = H.organs["chest"]
+		if (M != user && ishuman(M) && ishuman(user))
+			if (M.gender != user.gender)
+				M.unlock_medal("Oh, Doctor!", 1)
+				user.unlock_medal("Oh, Doctor!", 1)
 
-			if (ishuman(user))
-				var/mob/living/carbon/human/user2 = user
-				var/t = user2.zone_sel.selecting
-
-				if (H.organs[t])
-					affecting = H.organs[t]
-			else
-				if (!isitem(affecting) || affecting:burn_dam <= 0)
-					affecting = H.organs["head"]
-					if (!isitem(affecting) || affecting:burn_dam <= 0)
-						affecting = H.organs["chest"]
-
-			if (affecting.heal_damage(src.heal_brute, src.heal_burn))
-				H.UpdateDamageIcon()
-
-				if (M != user && ishuman(M) && ishuman(user))
-					if (M.gender != user.gender)
-						M.unlock_medal("Oh, Doctor!", 1)
-						user.unlock_medal("Oh, Doctor!", 1)
-			else
-				health_update_queue |= H
-		else
-			M.HealDamage("All", src.heal_brute, src.heal_burn)
+		M.HealDamage("All", src.heal_brute, src.heal_burn)
 
 		repair_bleeding_damage(M, 50, 1)
 

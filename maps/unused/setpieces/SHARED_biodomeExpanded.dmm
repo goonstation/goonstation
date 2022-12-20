@@ -1535,7 +1535,8 @@
 	icon_state = "door_locked";
 	name = "broken airlock"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crypt/sigma/mainhall)
 "bPQ" = (
 /turf/unsimulated/floor/carpet/purple/fancy/edge/west,
@@ -1765,7 +1766,8 @@
 	locked = 1;
 	name = "Biodome"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crater/biodome/south)
 "cdv" = (
 /turf/unsimulated/floor/specialroom/chapel{
@@ -2394,7 +2396,8 @@
 /obj/machinery/door/airlock/glass{
 	name = "Biodome"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crater/biodome/crew)
 "cTa" = (
 /turf/unsimulated/floor/industrial,
@@ -2412,7 +2415,8 @@
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crater/biodome/research)
 "cUY" = (
 /turf/space/fluid/cenote,
@@ -3406,7 +3410,8 @@
 /area/syndicate_station)
 "eeM" = (
 /obj/reagent_dispensers/watertank/big,
-/turf/unsimulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor,
 /area/crater/biodome/research)
 "eeR" = (
 /obj/table/reinforced/industrial/auto,
@@ -3669,7 +3674,8 @@
 "eve" = (
 /obj/decal/fakeobjects/firelock_broken,
 /obj/machinery/door/airlock/glass,
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crypt/sigma/mainhall)
 "ewO" = (
 /turf/unsimulated/floor/terrazzo/black,
@@ -3772,7 +3778,7 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground/canyon)
 "eDp" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "eDC" = (
@@ -3829,7 +3835,8 @@
 	name = "Lab Security";
 	req_access_txt = ""
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crypt/sigma)
 "eFo" = (
 /obj/storage/secure/closet/fridge/kitchen,
@@ -4061,7 +4068,8 @@
 /obj/machinery/door/airlock{
 	name = "Restroom"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crater/biodome/crew)
 "eRT" = (
 /obj/item/instrument/large/jukebox{
@@ -4122,7 +4130,8 @@
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/shuttle/biodome_elevator/upper)
 "eUR" = (
 /obj/table/auto,
@@ -4338,7 +4347,8 @@
 /turf/unsimulated/floor/auto/swamp/rain,
 /area/syndicate_station)
 "fik" = (
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crypt/sigma)
 "fiJ" = (
 /obj/rack/lunar,
@@ -4439,7 +4449,8 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/crater/biodome/north)
 "fmC" = (
-/turf/unsimulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor,
 /area/crater/biodome/crew)
 "fmI" = (
 /obj/item/wizard_crystal/sapphire,
@@ -5362,7 +5373,8 @@
 	name = "Upper Level Access";
 	req_access_txt = "33"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crater/biodome/crew)
 "goD" = (
 /turf/unsimulated/floor/setpieces/ancient_pit/hole_xy,
@@ -5786,7 +5798,8 @@
 /obj/machinery/door/airlock{
 	name = "Crew Quarters"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crypt/sigma/crew)
 "gQY" = (
 /obj/stool/bench/wooden/auto,
@@ -6996,7 +7009,8 @@
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/shuttle/biodome_elevator/upper)
 "irw" = (
 /obj/table/reinforced/bar/auto,
@@ -7893,7 +7907,8 @@
 	name = "Research Director's Office";
 	req_access_txt = "19"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crypt/sigma/rd)
 "jwV" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -8121,7 +8136,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crater/biodome/maint)
 "jJb" = (
 /obj/shrub{
@@ -9201,7 +9217,8 @@
 /obj/machinery/door/airlock/glass{
 	name = "Biodome"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crater/biodome/maint)
 "kPg" = (
 /obj/item/storage/wall/clothingrack/hatrack/hatrack_2,
@@ -10519,7 +10536,8 @@
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/shuttle/biodome_elevator/upper)
 "myI" = (
 /obj/table/reinforced/auto,
@@ -11039,7 +11057,8 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/glass,
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crypt/sigma/mainhall)
 "nei" = (
 /obj/grille/catwalk{
@@ -11073,7 +11092,8 @@
 /obj/machinery/door/airlock{
 	name = "Crew Quarters"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crater/biodome/crew)
 "nio" = (
 /obj/window/cubicle{
@@ -11518,7 +11538,8 @@
 /area/catacombs)
 "nJl" = (
 /obj/machinery/door/airlock/glass,
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crater/biodome/research)
 "nJn" = (
 /obj/decal/stalagtite,
@@ -12851,7 +12872,8 @@
 	name = "Lower Level Access";
 	req_access_txt = "33"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crypt/sigma/mainhall)
 "pne" = (
 /turf/unsimulated/wall/cave{
@@ -14033,7 +14055,8 @@
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/shuttle/biodome_elevator/upper)
 "qNY" = (
 /obj/shrub{
@@ -14215,7 +14238,8 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "qVN" = (
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crater/biodome/crew)
 "qWb" = (
 /obj/machinery/door/airlock/pyro/security{
@@ -14830,7 +14854,7 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
 "rMj" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "rMB" = (
@@ -14846,7 +14870,8 @@
 /area/crypt/graveyard)
 "rNG" = (
 /obj/machinery/chem_dispenser/chemical,
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crater/biodome/research)
 "rNL" = (
 /turf/space,
@@ -14922,7 +14947,8 @@
 	name = "Morgue";
 	req_access_txt = "5"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crypt/sigma/lab)
 "rTC" = (
 /obj/decal/tile_edge/line/grey{
@@ -15074,7 +15100,8 @@
 /obj/machinery/door/airlock/glass{
 	name = "Break Room"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crater/biodome/maint)
 "sdo" = (
 /obj/cable{
@@ -15187,7 +15214,8 @@
 /area/swampzone/heights)
 "shL" = (
 /obj/machinery/chem_master,
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crater/biodome/research)
 "shO" = (
 /obj/storage/secure/closet/fridge/kitchen,
@@ -15240,7 +15268,8 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/glass,
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crypt/sigma/crew)
 "sns" = (
 /turf/unsimulated/floor/redblack{
@@ -15574,7 +15603,8 @@
 "sGP" = (
 /obj/machinery/light,
 /obj/machinery/plantpot,
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crater/biodome/research)
 "sGV" = (
 /obj/lattice{
@@ -15851,7 +15881,7 @@
 /area/syndicate_station)
 "sWL" = (
 /obj/decal/cleanable/dirt,
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/unsimulated/floor/cave,
 /area/crater)
 "sWO" = (
@@ -16930,7 +16960,8 @@
 /area/crypt/sigma/rd)
 "ukq" = (
 /obj/decal/fakeobjects/firelock_broken,
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crypt/sigma/kitchen)
 "ukS" = (
 /obj/critter/zombie/scientist,
@@ -17239,7 +17270,8 @@
 	name = "Botanical Research Biodome";
 	secondsElectrified = -1
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crater/biodome/entry)
 "uEW" = (
 /turf/unsimulated/floor/wood/eight{
@@ -17776,7 +17808,8 @@
 /area/swampzone/ground)
 "vdQ" = (
 /obj/machinery/chem_heater,
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crater/biodome/research)
 "vdY" = (
 /obj/morgue{
@@ -17873,7 +17906,8 @@
 /area/crater/cave)
 "vjZ" = (
 /obj/machinery/plantpot,
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crater/biodome/research)
 "vkC" = (
 /obj/railing/green/reinforced,
@@ -18774,7 +18808,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crater/biodome/south)
 "wlT" = (
 /obj/shrub/dead,
@@ -18821,7 +18856,8 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Furnace Room"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crater/biodome/maint)
 "woi" = (
 /obj/window/cubicle{
@@ -19247,7 +19283,8 @@
 /obj/machinery/door/airlock{
 	name = "Restroom"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crypt/sigma/crew)
 "wJB" = (
 /turf/unsimulated/floor/setpieces/oldfloor,
@@ -19551,7 +19588,8 @@
 	name = "Artifact Lab";
 	opacity = 1
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/crypt/sigma/lab)
 "xch" = (
 /obj/railing/cyan{

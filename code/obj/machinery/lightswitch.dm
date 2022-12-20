@@ -2,6 +2,9 @@
 // can have multiple per area
 // can also operate on non-loc area through "otherarea" var
 
+TYPEINFO(/obj/machinery/light_switch)
+	mats = list("MET-1"=10,"CON-1"=15)
+
 /obj/machinery/light_switch
 	desc = "A light switch"
 	name = null
@@ -14,16 +17,16 @@
 	var/area/area = null
 	var/otherarea = null
 	//	luminosity = 1
-	// mats = 6 fuck you mport
 	var/datum/light/light
 
 
 /obj/machinery/light_switch/New()
 	..()
 	UnsubscribeProcess()
-	light = new /datum/light/point
+	if (!light)
+		light = new /datum/light/point
 	SPAWN(0.5 SECONDS)
-		src.area = src.loc.loc
+		src.area = get_area(src)
 
 		if(otherarea)
 			src.area = locate(text2path("/area/[otherarea]"))
@@ -48,6 +51,36 @@
 /obj/machinery/light_switch/proc/trigger(var/datum/mechanicsMessage/inp)
 	if(!ON_COOLDOWN(src, "mechcomp_toggle", 1 SECOND))
 		toggle(null)
+
+/obj/machinery/light_switch/proc/autoposition()
+	var/turf/T = null
+	for (var/dir in cardinal)
+		T = get_step(src,dir)
+		if (T.density || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))
+			src.set_dir(dir)
+			if (dir == EAST)
+				src.pixel_x = 24
+			else if (dir == WEST)
+				src.pixel_x = -24
+			else if (dir == NORTH)
+				src.pixel_y = 24
+			else
+				src.pixel_y = -24
+			break
+
+/obj/machinery/light_switch/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	if (!newly_built) // dont want the area to end up something wacky
+		src.area = get_area(src)
+		src.on = src.area.lightswitch
+		area.machines += src // i dont know why it doesn't end up in there
+		src.UpdateIcon()
+	src.autoposition()
+
+/obj/machinery/light_switch/was_deconstructed_to_frame(mob/user)
+	. = ..()
+	area.machines -= src
+
 
 /obj/machinery/light_switch/update_icon()
 	if(status & NOPOWER)
@@ -133,19 +166,6 @@
 	name = "light switch"
 
 	New()
-		var/turf/T = null
 		SPAWN(1 DECI SECOND)
-			for (var/dir in cardinal)
-				T = get_step(src,dir)
-				if (istype(T,/turf/simulated/wall) || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))
-					if (dir == EAST)
-						src.pixel_x = 24
-					else if (dir == WEST)
-						src.pixel_x = -24
-					else if (dir == NORTH)
-						src.pixel_y = 24
-					else
-						src.pixel_y = -24
-					break
-			T = null
+			src.autoposition()
 		..()

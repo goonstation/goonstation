@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
+	mats = 0
+
 /obj/item/device/radio/nukie_studio_monitor
 	name = "Studio Monitor"
 	desc = "An incredibly high quality studio monitor with an uncomfortable number of high voltage stickers. Manufactured by Funk-Tek"
@@ -7,14 +10,14 @@
 
 	anchored = 0
 	speaker_range = 7
-	mats = 0
 	broadcasting = 0
 	listening = 0
 	chat_class = RADIOCL_INTERCOM
 	frequency = R_FREQ_LOUDSPEAKERS
 	locked_frequency = TRUE
 	rand_pos = 0
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBACK
 	w_class = W_CLASS_NORMAL
 	var/obj/effects/music/effect
 

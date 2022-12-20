@@ -18,7 +18,8 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	death_text = "%src% falls on its back!"
 	pet_text = list("pets","hugs","snuggles","cuddles")
 	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
-						/datum/targetable/critter/plague_rat/rat_bite)
+						/datum/targetable/critter/plague_rat/rat_bite,
+						/datum/targetable/vent_move/plaguerat)
 
 	health_brute = 50
 	health_brute_vuln = 0.45
@@ -26,7 +27,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	health_burn_vuln = 0.65
 	var/obj/machinery/wraith/rat_den/linked_den = null
 	reagent_capacity = 100
-	var/master = null
+	var/mob/living/intangible/wraith/master = null
 
 	can_help = 1
 	can_throw = 1
@@ -111,6 +112,9 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 		return ..()
 
 	death(var/gibbed)
+		if (src.master && istype(src.master, /mob/living/intangible/wraith))
+			src.master.summons -= src
+			src.master = null
 		if (!gibbed)
 			src.unequip_all()
 			playsound(src, src.deathsound, 50, 0)
@@ -155,9 +159,9 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	bite_transfer_amt = 1
 	flags = TABLEPASS | DOORPASS
 	adultpath = /mob/living/critter/wraith/plaguerat/medium
-	health_brute = 15
+	health_brute = 25
 	health_brute_vuln = 1
-	health_burn = 15
+	health_burn = 25
 	health_burn_vuln = 1.2
 
 	can_help = 1
@@ -191,9 +195,9 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	flags = TABLEPASS
 	bite_transfer_amt = 2.5
 	adultpath = /mob/living/critter/wraith/plaguerat/adult
-	health_brute = 25
+	health_brute = 40
 	health_brute_vuln = 0.9
-	health_burn = 25
+	health_burn = 40
 	health_burn_vuln = 1.2
 	can_help = 1
 	can_throw = 0
@@ -201,6 +205,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	can_disarm = 1
 	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
 						/datum/targetable/critter/plague_rat/rat_bite,
+						/datum/targetable/vent_move/plaguerat,
 						/datum/targetable/critter/plague_rat/spawn_rat_den)
 
 	setup_hands()
@@ -226,9 +231,9 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	desc = "A horrible mass of puss and warts, that once used to look like a rat."
 	icon_state = "giantRat"
 	bite_transfer_amt = 4
-	health_brute = 40
+	health_brute = 50
 	health_brute_vuln = 0.8
-	health_burn = 40
+	health_burn = 50
 	health_burn_vuln = 1.3
 	can_help = 1
 	can_throw = 1
@@ -236,9 +241,9 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	can_disarm = 1
 	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
 						/datum/targetable/critter/plague_rat/rat_bite,
+						/datum/targetable/vent_move/plaguerat,
 						/datum/targetable/critter/plague_rat/spawn_rat_den,
-						/datum/targetable/critter/slam/rat,
-						/datum/targetable/wraithAbility/make_plague_rat)
+						/datum/targetable/critter/slam/rat)
 
 	setup_hands()
 		..()

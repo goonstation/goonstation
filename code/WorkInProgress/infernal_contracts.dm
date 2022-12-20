@@ -579,7 +579,6 @@ obj/item/contract/wrestle
 		if(!..())
 			return 0
 		SPAWN(1 DECI SECOND)
-			user.mind.special_role = "Faustian Wrestler"
 			sleep(0.1 SECONDS)
 			user.make_wrestler(1)
 			user.traitHolder.addTrait("addict") //HEH
@@ -629,7 +628,6 @@ obj/item/contract/genetic
 					user.bioHolder.AddEffect("mutagenic_field_prenerf", 0, 0, 1)
 					SPAWN(0.2 SECONDS)
 						boutput(user, "<span class='success'>You have ascended beyond mere humanity!</span>")
-						user.mind.special_role = "Genetic Demigod"
 
 		return 1
 
@@ -672,7 +670,6 @@ obj/item/contract/horse
 			user.horse()
 			user.traitHolder.addTrait("soggy")
 			boutput(user, "<span class='alert'><font size=6><B>NEIGH</b></font></span>")
-			user.mind.special_role = "Faustian Horse"
 
 		return 1
 
@@ -712,7 +709,6 @@ obj/item/contract/vampire
 		if(!..())
 			return 0
 		SPAWN(1 DECI SECOND)
-			user.mind.special_role = ROLE_VAMPIRE
 			user.make_vampire(1)
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 

@@ -511,6 +511,8 @@
 					var/mob/living/critter/wraith/trickster_puppet/puppet = new /mob/living/critter/wraith/trickster_puppet(get_turf(T), T)
 					T.mind.transfer_to(puppet)
 					puppet.appearance = T.copied_appearance
+					puppet.name = T.copied_name
+					puppet.real_name = T.copied_real_name
 					puppet.desc = T.copied_desc
 					puppet.traps_laid = T.traps_laid
 					puppet.playsound_local(puppet.loc, 'sound/voice/wraith/wraithhaunt.ogg', 40, 0)
@@ -759,7 +761,7 @@
 
 		var/turf/T = get_turf(holder.owner)
 		if (isturf(T) && !istype(T, /turf/space))
-			boutput(holder.owner, "You begin to channel power to call a spirit to this realm, you won't be able to cast any other spells for the next 30 seconds!")
+			boutput(holder.owner, "You begin to channel power to call a spirit to this realm!")
 			src.doCooldown()
 			make_poltergeist(holder.owner, T)
 			return 0
@@ -774,14 +776,14 @@
 
 		var/obj/spookMarker/marker = new /obj/spookMarker(T)
 		var/list/text_messages = list()
-		text_messages.Add("Would you like to respawn as a poltergeist? Your name will be added to the list of eligible candidates and set to DNR if selected.")
+		text_messages.Add("Would you like to respawn as a poltergeist? Your name will be added to the list of eligible candidates.")
 		text_messages.Add("You are eligible to be respawned as a poltergeist. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
 		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
 		usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithportal.ogg', 50, 0)
 		message_admins("Sending poltergeist offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
-		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages)
+		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
 		if (!islist(candidates) || candidates.len <= 0)
 			message_admins("Couldn't set up poltergeist ; no ghosts responded. Source: [src.holder]")
 			logTheThing(LOG_ADMIN, null, "Couldn't set up poltergeist ; no ghosts responded. Source: [src.holder]")
@@ -799,11 +801,8 @@
 
 		//add poltergeist to master's list is done in /mob/living/intangible/wraith/potergeist/New
 		var/mob/living/intangible/wraith/poltergeist/P = new /mob/living/intangible/wraith/poltergeist(T, W, marker)
-		lucky_dude.special_role = ROLE_POLTERGEIST
-		lucky_dude.dnr = 1
 		lucky_dude.transfer_to(P)
 		ticker.mode.Agimmicks |= lucky_dude
-		//P.ckey = lucky_dude.ckey
 		P.antagonist_overlay_refresh(1, 0)
 		message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
 		usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50, 0)
@@ -873,8 +872,8 @@
 
 			holder.owner.mind.transfer_to(W)
 			var/datum/abilityHolder/wraith/new_holder = W.abilityHolder
-			new_holder.regenRate = AH.regenRate - 2
-			new_holder.corpsecount = AH.corpsecount - 1
+			new_holder.regenRate = max(AH.regenRate - 2, 1)
+			new_holder.corpsecount = max(AH.corpsecount - 1, 0)
 			qdel(holder.owner)
 
 			return W
@@ -1125,7 +1124,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	pointCost = 120
 	var/const/max_decals = 40
 	var/const/min_decals = 10
-	var/const/strong_exploder_threshold = 20
+	var/const/strong_exploder_threshold = 30
 	var/list/decal_list = list(/obj/decal/cleanable/blood,
 	/obj/decal/cleanable/ketchup,
 	/obj/decal/cleanable/rust,
@@ -1144,6 +1143,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		for (var/obj/decal/cleanable/found_cleanable in range(3, get_turf(holder.owner)))
 			if (istypes(found_cleanable, decal_list))
 				found_decal_list += found_cleanable
+				decal_count++
 				if (length(found_decal_list) >= max_decals)
 					break
 		if (length(found_decal_list) > min_decals)
@@ -1689,14 +1689,19 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		if(istype(holder.owner, /mob/living/intangible/wraith/wraith_trickster))
 			var/mob/living/intangible/wraith/wraith_trickster/W = holder.owner
 			if ((istype(target, /mob/living/carbon/human/)))
-				boutput(holder.owner, "We steal [target]'s appearance for ourselves.")
-				W.copied_appearance = target.appearance
-				W.copied_appearance.transform.Turn(target.rest_mult * -90)	//Find a way to make transform rotate.
-				W.copied_desc = target.get_desc()
+				var/mob/living/carbon/human/H = target
+				boutput(holder.owner, "We steal [H]'s appearance for ourselves.")
+				W.copied_appearance = H.appearance
+				W.copied_appearance.transform.Turn(H.rest_mult * -90)	//Find a way to make transform rotate.
+				W.copied_desc = H.get_desc()
+				W.copied_name = H.name
+				W.copied_real_name = H.real_name
 				return 0
 			else if (W.copied_appearance != null)
 				W.copied_appearance = null
 				W.copied_desc = null
+				W.copied_name = null
+				W.copied_real_name = null
 				boutput(holder.owner, "We discard our disguise.")
 			else
 				boutput(holder.owner, "We cannot copy this appearance.")
@@ -1715,17 +1720,20 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 
 	cast(atom/target, params)
 		if (..())
-			return 1
+			return TRUE
 
 		var/turf/T = get_turf(holder.owner)
-		if (isturf(T) && !istype(T, /turf/space))
-			boutput(holder.owner, "You begin to channel power to call a spirit to this realm, you won't be able to cast any other spells for the next 30 seconds!")
-			src.doCooldown()
-			make_summon(holder.owner, T)
-			return 0
-		else
-			boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
-			return 1
+		if (!T || !istype(T,/turf/simulated/floor))
+			boutput(holder.owner, "<span class='notice'>You cannot use this here!</span>")
+			return TRUE
+		for (var/obj/O in T)
+			if (O.density)
+				boutput(holder.owner, "<span class='notice'>There is something in the way!</span>")
+				return TRUE
+		boutput(holder.owner, "You begin to channel power to call a spirit to this realm!")
+		src.doCooldown()
+		make_summon(holder.owner, T)
+		return FALSE
 
 	proc/make_summon(var/mob/living/intangible/wraith/W, var/turf/T, var/tries = 0)
 		if (!istype(W))
@@ -1734,14 +1742,14 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 
 		var/obj/spookMarker/marker = new /obj/spookMarker(T)
 		var/list/text_messages = list()
-		text_messages.Add("Would you like to respawn as a harbinger's summon? Your name will be added to the list of eligible candidates and set to DNR if selected.")
+		text_messages.Add("Would you like to respawn as a harbinger's summon? Your name will be added to the list of eligible candidates.")
 		text_messages.Add("You are eligible to be respawned as a harbinger's summon. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
 		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
 		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithportal.ogg", 50, 0)
 		message_admins("Sending harbinger summon offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
-		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages)
+		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
 		if (!islist(candidates) || candidates.len <= 0)
 			message_admins("Couldn't set up harbinger summon ; no ghosts responded. Source: [src.holder]")
 			logTheThing(LOG_ADMIN, null, "Couldn't set up harbinger summon ; no ghosts responded. Source: [src.holder]")
@@ -1758,18 +1766,15 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		var/datum/mind/lucky_dude = pick(candidates)
 
 		//add poltergeist to master's list is done in /mob/living/intangible/wraith/potergeist/New
-		var/mob/living/critter/wraith/nascent/P = new /mob/living/critter/wraith/nascent(T, W)
-		lucky_dude.special_role = ROLE_HARBINGERSUMMON
-		lucky_dude.dnr = 1
-		lucky_dude.transfer_to(P)
-		ticker.mode.Agimmicks |= lucky_dude
-		//P.ckey = lucky_dude.ckey
-		P.antagonist_overlay_refresh(1, 0)
-		message_admins("[lucky_dude.key] respawned as a harbinger summon for [src.holder.owner].")
-		usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
-		logTheThing(LOG_ADMIN, lucky_dude.current, "respawned as a harbinger summon for [src.holder.owner].")
-		boutput(P, "<span class='notice'><b>You have been respawned as a harbinger summon!</b></span>")
-		boutput(P, "<span class='alert'><b>[W] is your master! Use your abilities to choose a path! Work with your master to spread chaos!</b></span>")
+		if (lucky_dude.current)
+			var/mob/living/critter/wraith/nascent/P = new /mob/living/critter/wraith/nascent(T, W)
+			lucky_dude.transfer_to(P)
+			antagify(lucky_dude.current, null, 1)
+			message_admins("[lucky_dude.key] respawned as a harbinger summon for [src.holder.owner].")
+			usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
+			logTheThing("admin", lucky_dude.current, null, "respawned as a harbinger summon for [src.holder.owner].")
+			boutput(P, "<span class='notice'><b>You have been respawned as a harbinger summon!</b></span>")
+			boutput(P, "<span class='alert'><b>[W] is your master! Use your abilities to choose a path! Work with your master to spread chaos!</b></span>")
 		qdel(marker)
 
 /datum/targetable/wraithAbility/make_plague_rat
@@ -1777,9 +1782,8 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	desc = "Attempt to breach the veil between worlds to allow a plague rat to enter this realm."
 	icon_state = "summonrats"
 	targeted = 0
-	pointCost = 0
-	cooldown = 300 SECONDS
-	start_on_cooldown = 1
+	pointCost = 150
+	cooldown = 150 SECONDS
 	ignore_holder_lock = 0
 	var/in_use = 0
 	var/ghost_confirmation_delay  = 30 SECONDS
@@ -1789,7 +1793,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	// cast(turf/target, params)
 	cast(atom/target, params)
 		if (..())
-			return 1
+			return TRUE
 
 		var/total_plague_rats = 0
 		for (var/client/C in clients)
@@ -1801,43 +1805,38 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			if (istype(M, /mob/living/critter/wraith/plaguerat))
 				total_plague_rats++
 		if(total_plague_rats < (max_allowed_rats + (player_count / 30)))	//Population scaling
-			if (istype(holder.owner, /mob/living/critter/wraith/plaguerat))	//plaguerats must be near their den
-				var/near_den = false
-				var/turf/T = get_turf(holder.owner)
-				for (var/obj/O in T.contents)
-					if(istype(O, /obj/machinery/wraith/rat_den))
-						near_den = true
-				if(!near_den)
-					boutput(holder.owner, "We arent close enough to a rat den to do this.")
-					return 1
 			var/turf/T = get_turf(holder.owner)
-			if (isturf(T) && !istype(T, /turf/space))
-				boutput(holder.owner, "You begin to channel power to summon a plague rat into this realm, you won't be able to cast any other spells for the next 30 seconds!")
-				src.doCooldown()
-				make_plague_rat(holder.owner, T)
-				return 0
-			else
-				boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
-				return 1
+			if (!T || !istype(T,/turf/simulated/floor))
+				boutput(holder.owner, "<span class='notice'>You cannot use this here!</span>")
+				return TRUE
+			for (var/obj/O in T)
+				if (O.density)
+					boutput(holder.owner, "<span class='notice'>There is something in the way!</span>")
+					return TRUE
+			boutput(holder.owner, "You begin to channel power to summon a plague rat into this realm!")
+			src.doCooldown()
+			make_plague_rat(holder.owner, T)
+			return FALSE
+
 		else
 			boutput(holder.owner, "<span class='alert'>This [station_or_ship()] is already a rat den, you cannot summon another rat!</span>")
-			return 1
+			return TRUE
 
 	proc/make_plague_rat(var/mob/W, var/turf/T, var/tries = 0)
-		if (!istype(W, /mob/living/intangible/wraith/wraith_decay) && !istype(W, /mob/living/critter/wraith/plaguerat))
+		if (!istype(W, /mob/living/intangible/wraith/wraith_decay))
 			boutput(W, "something went terribly wrong, call 1-800-CODER")
 			return
 
 		var/obj/spookMarker/marker = new /obj/spookMarker(T)
 		var/list/text_messages = list()
-		text_messages.Add("Would you like to respawn as a plague rat? Your name will be added to the list of eligible candidates and set to DNR if selected.")
+		text_messages.Add("Would you like to respawn as a plague rat? Your name will be added to the list of eligible candidates.")
 		text_messages.Add("You are eligible to be respawned as a plague rat. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
 		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
 		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithportal.ogg", 50, 0)
 		message_admins("Sending plague rat offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
-		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages)
+		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
 		if (!islist(candidates) || candidates.len <= 0)
 			message_admins("Couldn't set up plague rat ; no ghosts responded. Source: [src.holder]")
 			logTheThing(LOG_ADMIN, null, "Couldn't set up plague rat ; no ghosts responded. Source: [src.holder]")
@@ -1854,21 +1853,15 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		var/datum/mind/lucky_dude = pick(candidates)
 
 		//add plague rat to master's list is done in /mob/living/critter/wraith/plaguerat/New
-		var/mob/living/critter/wraith/plaguerat/young/P = new /mob/living/critter/wraith/plaguerat/young(T, W)
-		lucky_dude.special_role = ROLE_PLAGUERAT
-		lucky_dude.dnr = 1
-		lucky_dude.transfer_to(P)
-		ticker.mode.Agimmicks |= lucky_dude
-		//Might need to re-add those.
-		//P.ckey = lucky_dude.ckey
-		//P.antagonist_overlay_refresh(1, 0)
-		message_admins("[lucky_dude.key] respawned as a plague rat for [src.holder.owner].")
-		usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
-		logTheThing(LOG_ADMIN, lucky_dude.current, "respawned as a plague rat for [src.holder.owner].")
-		P.show_antag_popup("plaguerat")
-		boutput(P, "<span class='notice'><b>You have been respawned as a plague rat!</b></span>")
-		boutput(P, "[W] is your master! Eat filth, spread disease and reproduce!")
-		boutput(P, "Obey your master's orders, avoid mouse traps and live the rat life!")
+		if (lucky_dude.current)
+			var/mob/living/critter/wraith/plaguerat/young/P = new /mob/living/critter/wraith/plaguerat/young(T, W)
+			lucky_dude.transfer_to(P)
+			antagify(lucky_dude.current, null, 1)
+			message_admins("[lucky_dude.key] respawned as a plague rat for [src.holder.owner].")
+			usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
+			logTheThing("admin", lucky_dude.current, null, "respawned as a plague rat for [src.holder.owner].")
+			boutput(P, "<span class='notice'><b>You have been respawned as a plague rat!</b></span>")
+			boutput(P, "<span class='alert'><b>[W] is your master! Use your abilities to spread disease and consume rot! Work with your master to turn the station into a rat den!</b></span>")
 		qdel(marker)
 
 /datum/targetable/wraithAbility/speak
@@ -1906,6 +1899,33 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		W.playsound_local(W.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
 		boutput(usr, "<b>You whisper to your summons:</b> [message]")
 		return 0
+
+/datum/targetable/wraithAbility/toggle_deadchat
+	name = "Toggle deadchat"
+	desc = "Silences or re-enables the whispers of the dead."
+	icon_state = "hide_chat"
+	targeted = 0
+	cooldown = 0
+	pointCost = 0
+
+	cast(mob/target)
+		if (!holder)
+			return TRUE
+
+		var/mob/living/intangible/wraith/W = holder.owner
+
+		if (!W)
+			return TRUE
+
+		//hearghosts is checked in deadsay.dm and chatprocs.dm
+		W.hearghosts = !W.hearghosts
+		if (W.hearghosts)
+			src.icon_state = "hide_chat"
+			boutput(W, "<span class='notice'>Now listening to the dead again.</span>")
+		else
+			src.icon_state = "show_chat"
+			boutput(W, "<span class='notice'>No longer listening to the dead.</span>")
+		return FALSE
 
 /obj/spookMarker
 	name = "Spooky Marker"

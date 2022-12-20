@@ -10,7 +10,7 @@
 	icon_state = "watertank"
 	density = 1
 	anchored = 0
-	flags = FPRINT | FLUID_SUBMERGE
+	flags = FPRINT | FLUID_SUBMERGE | ACCEPTS_MOUSEDROP_REAGENTS
 	object_flags = NO_GHOSTCRITTER
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	p_class = 1.5
@@ -68,7 +68,7 @@
 		..(W, user)
 
 	mouse_drop(atom/over_object as obj)
-		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/machinery/hydro_mister) && !istype(over_object, /obj/item/tank/jetpack/backtank))
+		if (!(over_object.flags & ACCEPTS_MOUSEDROP_REAGENTS))
 			return ..()
 
 		if (BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
@@ -80,6 +80,8 @@
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
 /* =================================================== */
+/obj/reagent_dispensers/cleanable
+	flags = FPRINT | FLUID_SUBMERGE
 
 /obj/reagent_dispensers/cleanable/ants
 	name = "space ants"
@@ -188,13 +190,15 @@
 		src.create_reagents(10000)
 		reagents.add_reagent("water",10000)
 
+TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
+	mats = 8
+
 /obj/reagent_dispensers/watertank/fountain
 	name = "water cooler"
 	desc = "A popular gathering place for NanoTrasen's finest bureaucrats and pencil-pushers."
 	icon_state = "coolerbase"
 	anchored = 1
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR
-	mats = 8
 	capacity = 500
 
 	var/has_tank = 1
@@ -330,6 +334,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "weldtank"
 	amount_per_transfer_from_this = 25
+	var/isburst = FALSE
 
 	New()
 		..()
@@ -365,6 +370,14 @@
 			add_fingerprint(AM, TRUE)
 		else if (ismob(usr))
 			add_fingerprint(usr, TRUE)
+
+	ex_act(severity)
+		..()
+		icon_state = "weldtank-burst" //to ensure that a weldertank's always going to be updated by their own explosion
+		isburst = TRUE
+
+	is_open_container()
+		return isburst
 
 /obj/reagent_dispensers/heliumtank
 	name = "heliumtank"

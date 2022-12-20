@@ -621,11 +621,13 @@
 
 /obj/item/clothing/head/helmet/hardhat/abilities = list(/obj/ability_button/flashlight_hardhat)
 
+TYPEINFO(/obj/item/clothing/head/helmet/camera)
+	mats = list("MET-1"=4, "CRY-1"=2, "CON-1"=2)
+
 /obj/item/clothing/head/helmet/camera
 	name = "camera helmet"
 	desc = "A helmet with a built in camera."
 	icon_state = "camhat"
-	mats = list("MET-1"=4, "CRY-1"=2, "CON-1"=2)
 	item_state = "camhat"
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Helmet Cam"
@@ -753,13 +755,15 @@
 		setProperty("exploprot", 20)
 		setProperty("movespeed", 0.15)
 
+TYPEINFO(/obj/item/clothing/head/helmet/siren)
+	mats = 8
+
 /obj/item/clothing/head/helmet/siren
 	name = "siren helmet"
 	desc = "A big flashing light that you put on your head. It also plays a siren for when you need to arrest someone!"
 	icon_state = "siren0"
 	uses_multiple_icon_states = 1
 	item_state = "siren"
-	mats = 8
 	abilities = list(/obj/ability_button/weeoo) // is near segway code in vehicle.dm
 	var/weeoo_in_progress = 0
 	var/datum/light/light
@@ -843,8 +847,10 @@
 		setProperty("meleeprot_head", 8)
 		setProperty("disorient_resist_eye", 15)
 
-/obj/item/clothing/head/helmet/space/industrial
+TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 	mats = 7
+
+/obj/item/clothing/head/helmet/space/industrial
 #ifdef UNDERWATER_MAP
 	icon_state = "diving_suit-industrial"
 	item_state = "diving_suit-industrial"
@@ -858,6 +864,18 @@
 	desc = "Goes with Industrial Space Armor. Now with zesty citrus-scented visor!"
 #endif
 	acid_survival_time = 8 MINUTES
+	var/has_visor = FALSE
+	var/visor_color_lst = list(
+		"color_r" = 1,
+		"color_g" = 1,
+		"color_b" = 1,
+	)
+	var/visor_enabled = FALSE
+
+	New()
+		if (src.has_visor)
+			src.abilities = list(/obj/ability_button/helmet_thermal_toggle)
+		..()
 
 	setupProperties()
 		..()
@@ -865,23 +883,102 @@
 		setProperty("exploprot", 10)
 		setProperty("space_movespeed", 0)
 
-	syndicate
-		name = "Syndicate Command Helmet"
-		desc = "Ooh, fancy."
-		icon_state = "indusred"
-		item_state = "indusred"
-		is_syndicate = 1
+	attack_self(var/mob/user)
+		if(src.has_visor)
+			src.toggle_visor(user)
+		..()
 
-		setupProperties()
-			..()
-			setProperty("meleeprot_head", 7)
+	proc/toggle_visor(var/mob/user)
+		src.visor_enabled = !src.visor_enabled
+		boutput(user, "<span class='notice'>You [src.visor_enabled ? "lower" : "raise"] the helmet's thermal vision visor.</span>")
+
+		// Update the item & icon states
+		src.item_state = "[initial(src.item_state)][src.visor_enabled ? "-on" : null]"
+		set_icon_state("[initial(src.icon_state)][src.visor_enabled ? "-on" : null]")
+		user.update_clothing()
+		playsound(src, 'sound/items/mesonactivate.ogg', 30, 1)
+
+		// Check that the user is human & the helmet is worn
+		if (!ishuman(user))
+			return
+		var/mob/living/carbon/human/human_user = user
+		if (!istype(human_user.head, src.type))
+			return
+
+		// User is human & helmet is worn, apply the properties
+		if (src.visor_enabled)
+			src.apply_visor(human_user)
+		else
+			src.remove_visor(human_user)
+
+	proc/apply_visor(var/mob/living/user)
+		src.color_r = src.visor_color_lst["color_r"]
+		src.color_g = src.visor_color_lst["color_g"]
+		src.color_b = src.visor_color_lst["color_b"]
+		src.apply_visor_effect(user)
+
+	proc/remove_visor(var/mob/living/user)
+		src.color_r = 1
+		src.color_g = 1
+		src.color_b = 1
+		src.remove_visor_effect(user)
+
+	proc/apply_visor_effect(var/mob/living/user)
+		user.vision.set_scan(TRUE)
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
+
+	proc/remove_visor_effect(var/mob/living/user)
+		user.vision.set_scan(FALSE)
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
+
+	equipped(var/mob/living/user, var/slot)
+		..()
+		if(!isliving(user) || !src.has_visor)
+			return
+		if (slot == SLOT_HEAD && src.visor_enabled)
+			src.apply_visor(user)
+
+	unequipped(var/mob/living/user)
+		..()
+		if(!isliving(user) || !src.has_visor)
+			return
+		src.remove_visor(user)
+
+/obj/item/clothing/head/helmet/space/industrial/syndicate
+	name = "\improper Syndicate Command Helmet"
+	desc = "Ooh, fancy."
+	icon_state = "indusred"
+	item_state = "indusred"
+	is_syndicate = 1
+
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 7)
+
+/obj/item/clothing/head/helmet/space/industrial/salvager
+	name = "\improper Salvager juggernaut combat helmet"
+	desc = "A heavily modified industrial mining helmet, it's been retrofitted for combat use."
+	icon_state = "salvager-heavy"
+	item_state = "salvager-heavy"
+	has_visor = TRUE
+	visor_color_lst = list(
+		"color_r" = 1.0,
+		"color_g" = 0.9,
+		"color_b" = 0.8,
+	)
+
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 7)
+
+TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
+	mats = 10
 
 /obj/item/clothing/head/helmet/space/mining_combat
 	name = "mining combat helmet"
 	desc = "Goes with Mining Combat Armor. Now with sweet strawberry-scented visor!"
 	icon_state = "mining_combat"
 	item_state = "mining_combat"
-	mats = 10
 
 	setupProperties()
 		..()

@@ -320,7 +320,7 @@
 /obj/item/ammo/power_cell/self_charging/potato/New(var/loc, var/potency, var/endurance)
 	var/rngfactor = 2 + rand()
 	src.max_charge += round(potency/rngfactor)
-	src.recharge_rate = 0.5 * round(endurance/rand(25,30))
+	src.recharge_rate = 0.25 * round(endurance/rand(25,30))
 	src.charge = src.max_charge
 	..()
 

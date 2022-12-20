@@ -1,3 +1,6 @@
+TYPEINFO(/obj)
+	var/list/mats = 0 // either a number or a list of the form list("MET-1"=5, "erebite"=3)
+
 /obj
 	var/real_name = null
 	var/real_desc = null
@@ -8,7 +11,6 @@
 	var/adaptable = 0
 
 	var/is_syndicate = 0
-	var/list/mats = 0 // either a number or a list of the form list("MET-1"=5, "erebite"=3)
 	var/deconstruct_flags = DECON_NONE
 
 	/// Dictates how this object behaves when scanned with a device analyzer or equivalent - see "_std/defines/mechanics.dm" for docs
@@ -31,7 +33,8 @@
 		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
 			var/turf/T = get_turf(src)
 			T?.UpdateDirBlocks()
-		if (!isnull(src.mats) && src.mats != 0 && !src.mechanics_interaction != MECHANICS_INTERACTION_BLACKLISTED)
+		var/typeinfo/obj/typeinfo = src.get_typeinfo()
+		if (typeinfo.mats && !src.mechanics_interaction != MECHANICS_INTERACTION_BLACKLISTED)
 			src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
 		src.update_access_from_txt()
 
@@ -128,7 +131,6 @@
 		for(var/mob/M in src.contents)
 			M.set_loc(src.loc)
 		tag = null
-		mats = null
 		if (artifact && !isnum(artifact))
 			qdel(artifact)
 			artifact = null
@@ -449,6 +451,7 @@
 /obj/overlay
 	name = "overlay"
 	anchored = TRUE
+	pass_unstable = FALSE
 	mat_changename = 0
 	mat_changedesc = 0
 	event_handler_flags = IMMUNE_MANTA_PUSH

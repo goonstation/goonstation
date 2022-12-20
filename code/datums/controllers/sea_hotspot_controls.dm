@@ -13,12 +13,16 @@
 
 	New()
 		..()
-		#ifdef UPSCALED_MAP
-		groups_to_create *= 4
+		#ifdef HOTSPOTS_ENABLED
+		setup_hotspots()
 		#endif
-		#ifdef UNDERWATER_MAP
+
+	proc/setup_hotspots()
+		#ifdef UPSCALED_MAP
+		src.groups_to_create *= 4
+		#endif
 		var/datum/sea_hotspot/new_hotspot = 0
-		for (var/i = 1, i <= groups_to_create, i++)
+		for (var/i = 1, i <= src.groups_to_create, i++)
 			new_hotspot = new
 			hotspot_groups += new_hotspot
 			var/turf/T = 0
@@ -29,12 +33,6 @@
 				maxsearch--
 
 			new_hotspot.move_center_to(T)
-		#endif
-		//var/image/I = image(icon = 'icons/obj/sealab_power.dmi')
-		//var/obj/item/photo/P = new/obj/item/photo(get_turf(locate(1,1,1)), I, map, "test", "blah")
-
-  		//var/obj/A = new /obj(locate(1,1,1))
-  		//A.icon = map
 
 	#ifdef UNDERWATER_MAP
 	var/list/map_colors = list(
@@ -687,6 +685,9 @@
 
 #define VENT_GENFACTOR 300
 
+TYPEINFO(/obj/item/vent_capture_unbuilt)
+	mats = 8
+
 /obj/item/vent_capture_unbuilt
 	name = "unbuilt vent capture unit"
 	desc = "An unbuilt piece of machinery that converts vent output into electricity."
@@ -694,7 +695,6 @@
 	icon_state = "hydrovent_unbuilt"
 	item_state = "vent"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	mats = 8
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
 	attackby(var/obj/item/W, var/mob/user)
@@ -835,6 +835,9 @@
 				return
 		return*/
 
+TYPEINFO(/obj/machinery/power/stomper)
+	mats = 8
+
 /obj/machinery/power/stomper
 	name = "stomper unit"
 	desc = "This machine is used to disturb the flow of underground magma and redirect it."
@@ -854,7 +857,6 @@
 	var/powerupsfx = 'sound/machines/shieldgen_startup.ogg'
 	var/powerdownsfx = 'sound/machines/engine_alert3.ogg'
 
-	mats = 8
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_DESTRUCT
 	flags = FPRINT
 
@@ -1009,6 +1011,9 @@
 		if(Obj == src.cell)
 			src.cell = null
 
+TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
+	mats = 20
+
 /obj/item/clothing/shoes/stomp_boots
 	name = "Stomper Boots"
 	desc = "A pair of specialized boots for stomping the ground really hard." // TODO add techy explanation I guess
@@ -1017,7 +1022,6 @@
 	step_sound = "step_plating"
 	step_priority = STEP_PRIORITY_LOW
 	laces = LACES_NONE
-	mats = 20
 	burn_possible = 0
 	abilities = list(/obj/ability_button/stomper_boot_stomp)
 
@@ -1067,28 +1071,35 @@
 					flags = ANIMATION_RELATIVE)
 
 				SPAWN(0)
+					var/mob/jumper = the_mob // do this so we still have a reference if the button gets deleted
 					sleep(jump_time)
-					the_mob.layer = prevLayer
-					the_mob.plane = prevPlane
-					REMOVE_ATOM_PROPERTY(the_mob, PROP_ATOM_NEVER_DENSE, src)
-					the_mob.flags &= ~TABLEPASS
+					jumper.layer = prevLayer
+					jumper.plane = prevPlane
+					REMOVE_ATOM_PROPERTY(jumper, PROP_ATOM_NEVER_DENSE, src)
+					jumper.flags &= ~TABLEPASS
 					playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 50, 1, 0.1, 0.7)
 
-					if (hotspot_controller.stomp_turf(get_turf(src))) //we didn't stomped center, do an additional SFX
-						SPAWN(0.4 SECONDS)
-							playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, 0.1, 0.7)
+					if (locate(/obj/item/clothing/shoes) in jumper.get_equipped_items())
+						if (hotspot_controller.stomp_turf(get_turf(src))) //we didn't stomped center, do an additional SFX
+							SPAWN(0.4 SECONDS)
+								playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, 0.1, 0.7)
 
-					for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
-						if (BOUNDS_DIST(src, H.center.turf()) == 0)
-							playsound(src, 'sound/machines/twobeep.ogg', 50, 1, 0.1, 0.7)
-							for (var/mob/O in hearers(the_mob, null))
-								O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Hotspot pinned.\"</span></span>", 2)
+						for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
+							if (BOUNDS_DIST(src, H.center.turf()) == 0)
+								playsound(src, 'sound/machines/twobeep.ogg', 50, 1, 0.1, 0.7)
+								for (var/mob/O in hearers(jumper, null))
+									O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Hotspot pinned.\"</span></span>", 2)
 
-					for (var/mob/M in get_turf(src))
-						if (isliving(M) && M != the_mob)
-							random_brute_damage(M, src.stomp_damage, TRUE)
-							M.changeStatus("weakened", 1 SECOND)
-							playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 70, 1)
+						for (var/mob/M in get_turf(src))
+							if (isliving(M) && M != jumper)
+								random_brute_damage(M, src.stomp_damage, TRUE)
+								M.changeStatus("weakened", 1 SECOND)
+								playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 70, 1)
+					else
+						// took them off mid air
+						random_brute_damage(jumper, 25, FALSE)
+						jumper.changeStatus("weakened", 3 SECONDS)
+						playsound(jumper.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 90, 1)
 
 
 			else if (istype(the_mob.loc, /obj/))

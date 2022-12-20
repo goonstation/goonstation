@@ -852,7 +852,7 @@
 	OnSpeak(message)
 		if (!istext(message))
 			return ""
-		var/list/words = splittext(message, src.word_regex)
+		var/list/words = splittext_char(message, src.word_regex)
 		var/list/out_words = list()
 		if(isnull(src.word_to_emoji))
 			src.word_to_emoji = json_decode(file2text("strings/word_to_emoji.json"))
@@ -892,3 +892,18 @@
 				output += ascii2text(char)
 		return jointext(output, "")
 
+/datum/bioEffect/speech/lol
+	name = "Frontal Gyrus Alteration Type-LOL"
+	desc = "Reconstructs the language center of the subject's brain with memetic patterns."
+	id = "accent_lolcat"
+	effectType = EFFECT_TYPE_DISABILITY
+	msgGain = "YOU CAN HAZ LULZ SPEAKS!"
+	msgLose = "You don't feel like talking in memetic patterns anymore."
+	occur_in_genepools = 0
+	probability = 0 // Should not be player accessible
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = lolcat(message)
+		return message

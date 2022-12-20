@@ -1103,7 +1103,7 @@
 		//boutput(user, "Valid. Contains pathogen ([P.volume] units with pathogen [PT.name]. Slot is [exposed]. DNA: [PT.dnasample]")
 		if (!PT.dnasample)
 			PT.dnasample = new(PT) // damage control
-			stack_trace("Pathogen [PT.name] (\ref[PT]) had no DNA.")
+			stack_trace("Pathogen [identify_object(PT)] had no DNA.")
 			logTheThing(LOG_PATHOLOGY, user, "Pathogen [PT.name] (\ref[PT]) had no DNA. (this is a bug)")
 		if(firstFreeSlot == -2)
 			loaded = PT.dnasample.clone()

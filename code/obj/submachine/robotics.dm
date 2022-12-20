@@ -146,17 +146,25 @@
 			..()
 
 /// Procs for the action bars
-/obj/item/lamp_manufacturer/proc/add_wall_light(atom/A, turf/B, mob/user)
-	var/obj/machinery/light/newfitting = new dispensing_fitting(B)
+/obj/item/lamp_manufacturer/proc/add_wall_light(atom/A, turf/T, mob/user)
+	for (var/obj/O in T)
+		if (istype(O, /obj/machinery/light))
+			boutput(user, "<span class='alert'>You try to build a wall light fitting, but there's already \a [O] in the way!</span>")
+			return
+	var/obj/machinery/light/newfitting = new dispensing_fitting(T)
 	newfitting.nostick = 0 //regular tube lights don't do autoposition for some reason.
-	newfitting.autoposition(get_dir(B,A))
+	newfitting.autoposition(get_dir(T,A))
 	newfitting.Attackby(src, user) //plop in an appropriate colour lamp
 	if (!isghostdrone(user))
 		elecflash(user)
 	take_ammo(user, cost_fitting)
 
-/obj/item/lamp_manufacturer/proc/add_floor_light(turf/A, mob/user)
-	var/obj/machinery/light/newfitting = new /obj/machinery/light/small/floor(A)
+/obj/item/lamp_manufacturer/proc/add_floor_light(turf/T, mob/user)
+	for (var/obj/O in T)
+		if (istype(O, /obj/machinery/light/small/floor))
+			boutput(user, "<span class='alert'>You try to build a floor light fitting, but there's already \a [O] in the way!</span>")
+			return
+	var/obj/machinery/light/newfitting = new /obj/machinery/light/small/floor(T)
 	newfitting.Attackby(src, user) //plop in an appropriate colour lamp
 	if (!isghostdrone(user))
 		elecflash(user)
