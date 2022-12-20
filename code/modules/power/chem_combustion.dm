@@ -7,6 +7,9 @@
 #define INLET_MAX 1
 #define INLET_MIN 0
 
+TYPEINFO(/obj/machinery/power/combustion_generator)
+	mats = list("MET-2" = 80, "CON-1" = 60)
+
 /obj/machinery/power/combustion_generator
 	name = "Portable Combustion Generator"
 	desc = "A portable combustion generator that burns fuel from a fuel tank, there is a port for a gas tank. A warning reads: DO NOT RUN INDOORS, OR WHILE UNSECURE."
@@ -14,7 +17,6 @@
 	density = 1
 	anchored = 0
 	flags = FPRINT | FLUID_SUBMERGE | NOSPLASH
-	mats = list("MET-2" = 80, "CON-1" = 60)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
 	var/active = FALSE
