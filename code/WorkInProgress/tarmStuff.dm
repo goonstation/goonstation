@@ -755,7 +755,7 @@ TYPEINFO(/obj/item/device/geiger)
 		if (!src)
 			return
 
-		for (var//obj/submachine/laundry_machine/portable/LP in portable_machinery)
+		for (var/obj/submachine/laundry_machine/portable/LP in portable_machinery)
 			var/turf/T = get_turf(LP)
 			if (isrestrictedz(T?.z)) // Don't show stuff in "somewhere", okay.
 				continue
