@@ -11,7 +11,7 @@
 	///Whether the minimap marker is visible, with precedence over alpha settings.
 	var/visible = TRUE
 	///Whether the target is on the minimap datum's rendered z-level, determining whether it is displayed.
-	var/on_minimap_z_level
+	var/on_minimap_z_level = FALSE
 	///Whether the minimap marker can be deleted by players using minimap controllers.
 	var/can_be_deleted_by_player = FALSE
 

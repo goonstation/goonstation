@@ -148,8 +148,8 @@
 		. = ..()
 
 	proc/create_plant_location_markers()
-		if (length(plant_locations) > 0)
-			for (var/turf/plant_location in plant_locations)
+		if (length(src.plant_locations) > 0)
+			for (var/turf/plant_location in src.plant_locations)
 				var/area/A = plant_location.loc
 				map.create_minimap_marker(plant_location, 'icons/obj/minimap/minimap_markers.dmi', "nuclear_bomb_pin", "[capitalize(A.name)] Plant Site")
 			return
@@ -296,11 +296,11 @@
 
 	attack_self(mob/user)
 		. = ..()
-		if (!minimap_controller || !minimap_ui)
+		if (!src.minimap_controller || !src.minimap_ui)
 			src.connect_to_minimap()
-			if (!minimap_controller || !minimap_ui)
+			if (!src.minimap_controller || !src.minimap_ui)
 				return
-		minimap_ui.ui_interact(user)
+		src.minimap_ui.ui_interact(user)
 
 	proc/connect_to_minimap()
 		var/obj/minimap/map_computer/nukeop/minimap

@@ -101,7 +101,7 @@
 			map_marker.marker.alpha = 0
 			map_marker.on_minimap_z_level = FALSE
 		else
-			if (map_marker.visible == TRUE)
+			if (map_marker.visible)
 				map_marker.marker.alpha = 255
 			map_marker.on_minimap_z_level = TRUE
 			map_marker.marker.pixel_x = (x * src.zoom_coefficient * src.map_scale) - 16
@@ -230,7 +230,7 @@
 
 	///Scale the map, while retaining the original (x, y) position of the bottom left corner.
 	proc/scale_map(var/scale)
-		if (!scale || scale == 0)
+		if (!scale)
 			return
 
 		var/scale_factor = (scale / src.map_scale)

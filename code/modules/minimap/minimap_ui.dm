@@ -1,7 +1,7 @@
 /atom/movable/minimap_ui_handler
 	var/static/max_minimap_id = 0
 	var/minimap_id
-	var/list/viewers = list()
+	var/list/client/viewers = list()
 	var/atom/movable/screen/handler
 	var/obj/minimap
 
@@ -136,9 +136,7 @@
 			src.minimap_controller.selected_y = null
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-		var/mob/user
-		if(ismob(usr))
-			user = usr
+		var/mob/user = ui.user
 
 		if(is_incapacitated(user) || !(src.loc in user.equipped_list()))
 			return
