@@ -1,4 +1,9 @@
 
+(t)wed dec 21 22
+(u)Conchuckter, sprites by NightmareChamillian
+(p)9083
+(e)🆕🎨⚗|C-Feature, C-Sprites, A-Chemistry
+(*)Adds a generator that can be powered by burning reagents.
 (t)tue dec 20 22
 (u)Blackrep
 (p)12179
