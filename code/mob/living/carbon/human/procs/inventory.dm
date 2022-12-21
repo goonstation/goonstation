@@ -5,11 +5,11 @@
 	tgui_process.update_uis(src.inventory)
 
 /// Check for slots obscured by other items
-/mob/living/carbon/human/proc/CheckObsctructed()
+/mob/living/carbon/human/proc/GetObstructedItems()
 	var/list/obsctructedItems = list()
 	var/hiddenItem = null
 
-	for(var/obj/item/clothing/I in src.GetWornItems())
+	for(var/obj/item/clothing/I in GetWornItems())
 		hiddenItem |= I.hides_from_examine
 
 	if(hiddenItem & C_UNIFORM)
@@ -41,3 +41,7 @@
 				src.wear_id
 				)
 
+/mob/living/carbon/human/proc/CheckObstructed(var/id)
+	for (var/obj/slot as anything in GetObstructedItems())
+		if(id == slot)
+			return TRUE

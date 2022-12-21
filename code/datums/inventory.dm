@@ -55,8 +55,6 @@
 	. = ..()
 	if (.)
 		return
-
-	var/obstructedItems = src.human.CheckObsctructed()
 	switch(action)
 		if ("access-slot")
 			var/id
@@ -93,9 +91,7 @@
 				if ("slot_r_store")
 					id = src.human.slot_r_store
 
-			for (var/obj/slot as anything in obstructedItems)
-				if(id == slot)
-					obstructed = TRUE
+			obstructed = src.human.CheckObstructed(id)
 
 			if (id)
 				actions.start(new/datum/action/bar/icon/otherItem(
