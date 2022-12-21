@@ -3241,26 +3241,3 @@
 	. = src.find_type_in_hand(/obj/item/device/radio)
 	if(!.)
 		. = src.find_in_equipment(/obj/item/device/radio)
-
-/// Check for slots obscured by other items
-/mob/proc/CheckObsctructed()
-	var/list/obsctructedItems = list()
-	var/hiddenItem = null
-
-	for(var/obj/item/clothing/I in src.contents)
-		hiddenItem |= I.hides_from_examine
-
-	if(hiddenItem & C_UNIFORM)
-		obsctructedItems += SLOT_W_UNIFORM
-	if(hiddenItem & C_SHOES)
-		obsctructedItems += SLOT_SHOES
-	if(hiddenItem & C_GLOVES)
-		obsctructedItems += SLOT_GLOVES
-	if(hiddenItem & C_GLASSES)
-		obsctructedItems += SLOT_GLASSES
-	if(hiddenItem & C_MASK)
-		obsctructedItems += SLOT_WEAR_MASK
-	if(hiddenItem & C_EARS)
-		obsctructedItems += SLOT_EARS
-
-	return obsctructedItems
