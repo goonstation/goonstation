@@ -5333,11 +5333,12 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "amq" = (
-/obj/item/clothing/suit/cardboard_box/head_surgeon,
+/obj/machinery/computer/operating{
+	id = "OR1"
+	},
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "amr" = (
-/obj/machinery/optable,
 /obj/machinery/drainage/big,
 /obj/item/paper/book/from_file/medical_surgery_guide{
 	pixel_x = 9
@@ -5345,6 +5346,9 @@
 /obj/machinery/defib_mount{
 	pixel_x = -7;
 	pixel_y = 4
+	},
+/obj/machinery/optable{
+	id = "OR1"
 	},
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
@@ -5968,6 +5972,7 @@
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1"
 	},
+/obj/item/clothing/suit/cardboard_box/head_surgeon,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "anY" = (
@@ -7426,8 +7431,8 @@
 	d2 = 4;
 	icon_state = "5-10"
 	},
-/obj/landmark/start{
-	name = "Roboticist"
+/obj/machinery/computer/operating{
+	id = "robotics"
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -41131,7 +41136,6 @@
 /area/tech_outpost)
 "cdE" = (
 /obj/table/auto,
-/obj/machinery/recharger,
 /obj/item/device/light/flashlight,
 /turf/simulated/floor/grime,
 /area/tech_outpost)

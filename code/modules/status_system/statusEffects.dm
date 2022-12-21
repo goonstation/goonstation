@@ -2112,12 +2112,14 @@
 		if(ismob(owner))
 			var/mob/M = owner
 			M.bioHolder?.AddEffect("sims_stinky")
+		START_TRACKING_CAT(TR_CAT_RANCID_STUFF)
 
 	onRemove()
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
 			M.bioHolder?.RemoveEffect("sims_stinky")
+		STOP_TRACKING_CAT(TR_CAT_RANCID_STUFF)
 
 /datum/statusEffect/flock_absorb
 	id = "flock_absorbing"
