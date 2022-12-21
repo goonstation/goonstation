@@ -27722,11 +27722,11 @@
 /area/station/crew_quarters/observatory)
 "fsN" = (
 /obj/storage/closet/welding_supply,
-/obj/machinery/light/incandescent,
 /obj/machinery/light_switch{
 	name = "E light switch";
 	pixel_x = 24
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/yellow/corner{
 	dir = 1
 	},
@@ -29939,6 +29939,19 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"hjD" = (
+/obj/grille/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6;
+	layer = 2
+	},
+/area/station/engine/singcore{
+	do_not_irradiate = 1
+	})
 "hjJ" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -34334,9 +34347,7 @@
 /area/station/medical/medbay/pharmacy)
 "ksZ" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/item/device/radio/intercom/engineering{
-	dir = 4
-	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "ktd" = (
@@ -34448,7 +34459,9 @@
 	pixel_y = 5
 	},
 /obj/item/storage/box/cablesbox,
-/obj/machinery/light/incandescent,
+/obj/item/device/radio/intercom/engineering{
+	dir = 4
+	},
 /turf/simulated/floor/yellow/corner,
 /area/station/hangar/engine)
 "kxs" = (
@@ -36568,8 +36581,9 @@
 /obj/machinery/manufacturer/hangar,
 /obj/machinery/camera{
 	c_tag = "Engineering Podbay";
-	dir = 10
+	dir = 4
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/yellow/corner{
 	dir = 4
 	},
@@ -41102,6 +41116,7 @@
 	dir = 8
 	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "pkG" = (
@@ -41895,6 +41910,19 @@
 	dir = 4
 	},
 /area/station/bridge)
+"pPn" = (
+/obj/grille/catwalk{
+	dir = 10;
+	icon_state = "catwalk_cross"
+	},
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 10;
+	layer = 2
+	},
+/area/station/engine/singcore{
+	do_not_irradiate = 1
+	})
 "pPF" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -45646,7 +45674,6 @@
 	dir = 8
 	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
-/obj/machinery/light/incandescent,
 /obj/lattice{
 	dir = 10;
 	icon_state = "lattice-dir";
@@ -48041,6 +48068,19 @@
 /area/station/turret_protected/AIbasecore1{
 	name = "Upload Station"
 	})
+"uaW" = (
+/obj/grille/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	tag = "icon-catwalk (WEST)"
+	},
+/area/station/engine/singcore{
+	do_not_irradiate = 1
+	})
 "ubD" = (
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4
@@ -49025,6 +49065,19 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"uNN" = (
+/obj/grille/catwalk{
+	dir = 9;
+	icon_state = "catwalk_cross"
+	},
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9;
+	layer = 2
+	},
+/area/station/engine/singcore{
+	do_not_irradiate = 1
+	})
 "uNR" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -50667,8 +50720,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/access_spawn/engineering_eva,
 /obj/firedoor_spawn,
+/obj/access_spawn/engineering_control,
 /turf/simulated/floor,
 /area/station/hangar/engine)
 "vSm" = (
@@ -81343,7 +81396,7 @@ aaa
 aaa
 lml
 xOP
-iHX
+hjD
 ijM
 gMr
 pHE
@@ -81353,7 +81406,7 @@ pHE
 pHE
 hET
 ijM
-dGY
+uaW
 xOP
 nwB
 aaa
@@ -82246,7 +82299,7 @@ aaa
 aaa
 aaA
 lml
-iHX
+hjD
 dge
 ijM
 iKm
@@ -82262,7 +82315,7 @@ iKm
 iKm
 ijM
 rTp
-dGY
+uaW
 nwB
 aaa
 aaa
@@ -85266,7 +85319,7 @@ aaa
 aaa
 aaA
 wvY
-nwB
+pPn
 cIJ
 ijM
 iKm
@@ -85282,7 +85335,7 @@ iKm
 iKm
 ijM
 tEs
-lml
+uNN
 iHX
 aaa
 aaa
@@ -86175,7 +86228,7 @@ aaa
 aaa
 wvY
 xOP
-nwB
+pPn
 ijM
 xZq
 pHE
@@ -86185,7 +86238,7 @@ pHE
 pHE
 kfi
 ijM
-lml
+uNN
 xOP
 iHX
 aaa
