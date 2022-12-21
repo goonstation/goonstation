@@ -1,4 +1,13 @@
 
+(t)wed dec 21 22
+(u)Amylizzle
+(p)12471
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Some critters were butcherable when they shouldn't have been. If you find a critter that isn't butcherable but should be, report it as a bug.
+(u)Conchuckter, sprites by NightmareChamillian
+(p)9083
+(e)🆕🎨⚗|C-Feature, C-Sprites, A-Chemistry
+(*)Adds a generator that can be powered by burning reagents.
 (t)tue dec 20 22
 (u)Blackrep
 (p)12179
