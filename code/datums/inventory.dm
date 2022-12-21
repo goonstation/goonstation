@@ -91,9 +91,8 @@
 				if ("slot_r_store")
 					id = src.human.slot_r_store
 
-			obstructed = src.human.CheckObstructed(id)
-
 			if (id)
+				obstructed = src.human.CheckObstructed(id)
 				actions.start(new/datum/action/bar/icon/otherItem(
 					usr,
 					src.human,
