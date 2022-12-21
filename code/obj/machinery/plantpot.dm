@@ -1903,6 +1903,8 @@ TYPEINFO(/obj/machinery/hydro_mister)
 	var/mode = 1
 
 	New()
+		if (prob(1))
+			name = pick ("Botanical Missus", "Botanical Miss") //in-joke for ESL folk
 		..()
 		src.create_reagents(5000)
 		reagents.add_reagent("water", 1000)
