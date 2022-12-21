@@ -39143,13 +39143,13 @@
 /turf/unsimulated/floor/dojo/stone,
 /area/dojo)
 "cqj" = (
-/obj/sakura_tree/tree_2{
+/obj/tree1/sakura_tree/tree_2{
 	pixel_x = 0
 	},
 /turf/unsimulated/floor/grass/leafy,
 /area/dojo/sakura)
 "cqk" = (
-/obj/sakura_tree/tree_2,
+/obj/tree1/sakura_tree/tree_2,
 /turf/unsimulated/grasstodirt{
 	dir = 4
 	},
@@ -39175,13 +39175,13 @@
 /turf/unsimulated/floor/tatami/east,
 /area/dojo)
 "cqp" = (
-/obj/sakura_tree{
+/obj/tree1/sakura_tree{
 	pixel_x = -10
 	},
 /turf/unsimulated/grass,
 /area/dojo/sakura)
 "cqq" = (
-/obj/sakura_tree,
+/obj/tree1/sakura_tree,
 /turf/unsimulated/floor/grass/leafy,
 /area/dojo/sakura)
 "cqr" = (
@@ -39232,7 +39232,7 @@
 /turf/unsimulated/wall/auto/paper,
 /area/dojo)
 "cqz" = (
-/obj/sakura_tree/tree_2,
+/obj/tree1/sakura_tree/tree_2,
 /obj/decal/fakeobjects/birdhouse/light,
 /turf/unsimulated/grasstodirt{
 	dir = 4
@@ -39350,7 +39350,7 @@
 /turf/unsimulated/floor/dojo/stone,
 /area/dojo)
 "cqO" = (
-/obj/sakura_tree/tree_2{
+/obj/tree1/sakura_tree/tree_2{
 	pixel_x = 0
 	},
 /turf/unsimulated/grass,
