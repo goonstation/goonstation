@@ -43,7 +43,7 @@
 		return ..()
 
 /obj/tree1
-	name = "Tree"
+	name = "tree"
 	desc = "It's a tree."
 	icon = 'icons/effects/96x96.dmi' // changed from worlds.dmi
 	icon_state = "tree" // changed from 0
@@ -53,6 +53,18 @@
 	pixel_x = -20
 	density = 1
 	opacity = 0 // this causes some of the super ugly lighting issues too
+
+	attackby(obj/item/I, mob/user)
+		if (issawingtool(I) || ischoppingtool(I) && !isrestrictedz(src.z))
+			playsound(I, I.hitsound, 50, 1)
+			src._health -= I.force
+			user.lastattacked = src
+			if (src._health <= 0)
+				src.visible_message("<span class='alert'>\the [src] falls!</span>", "<span class='alert'>You hear a [src] fall, and thus prove that it has.</span>")
+				for (var/i in 1 to 3)
+					new /obj/item/material_piece/organic/wood(src.loc)
+				qdel(src)
+		..()
 
 	elm_random
 		layer = EFFECTS_LAYER_UNDER_1 // match shrubs
