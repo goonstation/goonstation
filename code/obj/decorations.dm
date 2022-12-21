@@ -79,7 +79,8 @@
 				var/transform = matrix(src.transform, 90, MATRIX_ROTATE)
 				transform = matrix(transform, icon.Width()/3, -icon.Height()/2, MATRIX_TRANSLATE)
 				animate(src, transform = transform, time = src.fall_time, easing = BOUNCE_EASING)
-				src.visible_message("<span class='alert'>\the [src] falls!</span>", "<span class='alert'>You hear a [src] fall, and thus prove that it has.</span>")
+				playsound(src, 'sound/effects/treefall.ogg', 70, 0)
+				src.visible_message("<span class='alert'>\The [src] falls!</span>", "<span class='alert'>You hear a [src] fall, and thus prove that it has.</span>")
 				SPAWN(src.fall_time)
 					src.falling = FALSE
 					src.fallen = TRUE
