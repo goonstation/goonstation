@@ -620,3 +620,8 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 	thing_name = "artifact"
 	hudarrow_color = "#7755ff"
 	max_range = 20
+
+/obj/item/pinpointer/category/rancid
+	name = "smelly person pinpointer"
+	category = TR_CAT_RANCID_STUFF
+	thing_name = "smelly person"

@@ -18602,7 +18602,9 @@
 /area/station/maintenance/inner/east)
 "bjH" = (
 /obj/machinery/drainage,
-/obj/machinery/optable,
+/obj/machinery/optable{
+	id = "OR1"
+	},
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "bjI" = (
@@ -21890,22 +21892,12 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/se,
 /area/station/crew_quarters/quarters_east)
 "bvf" = (
-/obj/storage/crate,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/medical,
-/obj/item/device/radio/headset/medical,
-/obj/item/device/radio/headset/security,
-/obj/item/device/radio/headset/security,
-/obj/item/device/radio/headset/engineer,
-/obj/item/device/radio/headset/engineer,
-/obj/item/device/radio/headset/research,
-/obj/item/device/radio/headset/research,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_east,
+/obj/storage/crate/radio,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bvh" = (
@@ -32578,6 +32570,9 @@
 /area/station/medical/medbay)
 "ceJ" = (
 /obj/machinery/atmospherics/pipe/simple,
+/obj/machinery/computer/operating{
+	id = "OR1"
+	},
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -42086,7 +42081,9 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/north)
 "gCb" = (
-/obj/machinery/computer/operating,
+/obj/machinery/computer/operating{
+	id = "robotics"
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "gCA" = (
