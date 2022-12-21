@@ -10,6 +10,7 @@
 	item_state = "armor"
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+	obstructs = C_UNIFORM|C_GLOVES|C_SHOES
 
 	setupProperties()
 		..()
@@ -29,6 +30,7 @@
 	body_parts_covered = TORSO
 	bloodoverlayimage = SUITBLOOD_ARMOR
 	hides_from_examine = 0
+	obstructs = C_UNIFORM
 
 	New()
 		..()
@@ -96,6 +98,7 @@
 	body_parts_covered = TORSO
 	bloodoverlayimage = SUITBLOOD_ARMOR
 	hides_from_examine = 0
+	obstructs = C_UNIFORM
 
 	var/obj/item/clothing/suit/armor/vest/part_vest = null
 	var/obj/item/assembly/anal_ignite/part_igniter = null // Just for show. Doesn't do anything here or in the igniter code.
@@ -277,6 +280,7 @@
 	item_state = "makeshift"
 	body_parts_covered = TORSO
 	hides_from_examine = 0
+	obstructs = C_UNIFORM
 
 	setupProperties()
 		..()
@@ -303,6 +307,7 @@
 	icon_state = "capcoat"
 	item_state = "capcoat"
 	hides_from_examine = 0
+	obstructs = C_UNIFORM
 
 	setupProperties()
 		..()
@@ -317,6 +322,7 @@
 	icon_state = "hopcoat"
 	item_state = "hopcoat"
 	hides_from_examine = 0
+	obstructs = C_UNIFORM
 
 	setupProperties()
 		..()
@@ -344,6 +350,7 @@
 	icon_state = "centcoat"
 	item_state = "centcoat"
 	hides_from_examine = 0
+	obstructs = C_UNIFORM
 	setupProperties()
 		..()
 		setProperty("coldprot", 35)
@@ -361,6 +368,7 @@
 	icon_state = "heavy"
 	item_state = "heavy"
 	hides_from_examine = C_UNIFORM
+	obstructs = C_UNIFORM
 	setupProperties()
 		..()
 		setProperty("meleeprot", 12)
@@ -419,6 +427,7 @@
 	item_state = "ntarmor"
 	body_parts_covered = TORSO
 	hides_from_examine = 0
+	obstructs = C_UNIFORM
 
 /obj/item/clothing/suit/armor/NT_alt
 	name = "old armored vest"
@@ -427,6 +436,7 @@
 	item_state = "nt2armor"
 	body_parts_covered = TORSO
 	hides_from_examine = 0
+	obstructs = C_UNIFORM
 	setupProperties()
 		..()
 		setProperty("meleeprot", 6)
@@ -439,6 +449,7 @@
 	item_state = "eod"
 	w_class = W_CLASS_NORMAL
 	hides_from_examine = C_UNIFORM|C_GLOVES
+	obstructs = C_UNIFORM|C_GLOVES
 	setupProperties()
 		..()
 		setProperty("meleeprot", 9)
@@ -453,6 +464,7 @@
 	icon_state = "hos-cape"
 	item_state = "hos-cape"
 	hides_from_examine = 0
+	obstructs = 0
 	setupProperties()
 		..()
 		setProperty("meleeprot", 3)

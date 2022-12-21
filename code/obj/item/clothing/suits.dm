@@ -17,6 +17,7 @@
 	var/over_hair = FALSE
 	flags = FPRINT | TABLEPASS
 	w_class = W_CLASS_NORMAL
+	obstructs = C_UNIFORM
 	var/restrain_wearer = 0
 	var/bloodoverlayimage = 0
 	var/team_num
@@ -224,6 +225,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+	obstructs = C_UNIFORM|C_GLOVES|C_SHOES
 
 	setupProperties()
 		..()
@@ -260,6 +262,7 @@
 	item_state = "paramedic"
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_SHOES
+	obstructs = C_UNIFORM|C_SHOES
 	protective_temperature = 3000
 #ifdef MAP_OVERRIDE_NADIR
 	c_flags = SPACEWEAR
@@ -331,6 +334,7 @@
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+	obstructs = C_UNIFORM|C_GLOVES|C_SHOES
 
 	setupProperties()
 		..()
@@ -350,6 +354,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+	obstructs = C_UNIFORM|C_GLOVES|C_SHOES
 
 	New()
 		. = ..()
@@ -652,6 +657,7 @@
 	throw_range = 10
 	c_flags = COVERSEYES | COVERSMOUTH
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_GLASSES|C_EARS
+	obstructs = C_UNIFORM|C_GLOVES|C_SHOES|C_GLASSES|C_EARS
 	body_parts_covered = TORSO|ARMS
 	see_face = FALSE
 	over_hair = TRUE
@@ -936,6 +942,7 @@
 	item_state = "fire_suit"
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_SHOES
+	obstructs = C_UNIFORM|C_SHOES
 	protective_temperature = 4500
 
 	setupProperties()
@@ -1065,6 +1072,7 @@
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_SHOES|C_GLOVES
+	obstructs = C_UNIFORM|C_SHOES|C_GLOVES
 	duration_remove = 6 SECONDS
 	duration_put = 6 SECONDS
 	protective_temperature = 1000
@@ -1748,6 +1756,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 	item_state = "security_badge"
 	var/badge_owner_name = null
 	var/badge_owner_job = null
+	obstructs = 0
 
 	setupProperties()
 		..()
@@ -1772,6 +1781,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "hosmedal"
 	icon_state = "hosmedal"
+	obstructs = 0
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind?.assigned_role == "Head of Security")
@@ -1789,6 +1799,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 	item_state = "snowcoat"
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_SHOES
+	obstructs = C_UNIFORM|C_SHOES
 
 	setupProperties()
 		..()
@@ -1871,6 +1882,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 	icon_state = "billow_cape"
 	item_state = "billow_cape"
 	body_parts_covered = TORSO|ARMS
+	obstructs = 0
 
 /obj/item/clothing/suit/space/replica
 	name = "replica space suit"
@@ -1889,6 +1901,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 	icon_state = "torncape_red"
 	item_state = "torncape_red"
 	body_parts_covered = TORSO|ARMS
+	obstructs = 0
 
 	red
 		name = "Red Torn Cloak"
@@ -1939,6 +1952,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 	wear_layer = MOB_GLASSES_LAYER2
 	icon_state = "scarfcape_white"
 	item_state = "scarfcape_white"
+	obstructs = 0
 
 	red
 		name = "Red Adventurous Scarf"

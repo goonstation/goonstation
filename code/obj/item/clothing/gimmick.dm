@@ -21,6 +21,7 @@
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
 	see_face = 0
 	item_function_flags = IMMUNE_TO_ACID
+	obstructs = C_GLASSES|C_EARS
 
 	New()
 		..()
@@ -71,6 +72,7 @@
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+	obstructs = C_UNIFORM|C_GLOVES|C_SHOES
 
 	noslow
 		setupProperties()
@@ -329,6 +331,7 @@
 	icon_state = "batsuit"
 	item_state = "batsuit"
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+	obstructs = C_UNIFORM|C_GLOVES|C_SHOES
 
 /obj/item/clothing/mask/batman
 	name = "batmask and batcape"
@@ -564,6 +567,7 @@
 	icon_state = "viking"
 	item_state = "vhelmet"
 
+
 	setupProperties()
 		..()
 		setProperty("coldprot", 40)
@@ -617,6 +621,7 @@
 	icon_state = "balaclava"
 	item_state = "balaclava"
 	see_face = 0
+	obstructs = C_EARS|C_GLASSES
 
 // Sweet Bro and Hella Jeff
 
@@ -646,6 +651,7 @@
 	icon_state = "spiderman"
 	item_state = "bogloves"
 	see_face = 0
+	obstructs = C_EARS|C_GLASSES
 
 /obj/item/clothing/under/gimmick/spiderman
 	name = "spider-man Suit"
@@ -660,6 +666,7 @@
 	icon_state = "horse"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
 	see_face = 0
+	obstructs = C_EARS|C_GLASSES
 
 	cursed
 		cant_drop = 1
@@ -675,6 +682,7 @@
 	desc = "This cat head was built to the highest ethical standards.  50% less child labor used in production than competing novelty cat heads."
 	icon_state = "genki"
 	c_flags = COVERSEYES | COVERSMOUTH | MASKINTERNALS
+	obstructs = C_EARS|C_GLASSES
 
 //birdman for nieks
 
@@ -690,6 +698,7 @@
 	desc = "It has wings!"
 	icon_state = "birdman"
 	item_state = "b_mask"
+	obstructs = C_EARS|C_GLASSES
 
 //WARHAMS STUFF
 
@@ -710,6 +719,7 @@
 	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_EARS
+	obstructs = C_UNIFORM|C_GLOVES|C_SHOES|C_EARS
 	wear_layer = MOB_OVERLAY_BASE
 
 	setupProperties()
@@ -722,6 +732,9 @@
 	name = "plastic power helmet"
 	desc = "Wow this really looks like a noise marine helmet. But it's not!"
 	icon_state = "nm_helm"
+	see_face = 0
+	hides_from_examine = C_EARS|C_GLASSES|C_MASK
+	obstructs = C_EARS|C_GLASSES|C_MASK
 
 /obj/item/clothing/suit/power
 	name = "unpainted cardboard space marine armor"
@@ -730,6 +743,7 @@
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+	obstructs = C_UNIFORM|C_GLOVES|C_SHOES
 	icon_state = "unp_armor"
 	item_state = "unp_armor"
 
@@ -854,6 +868,7 @@
 	wear_layer = MOB_BACK_LAYER + 0.2
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+	obstructs = C_UNIFORM|C_GLOVES|C_SHOES
 
 /obj/item/clothing/suit/bee
 	name = "bee costume"
@@ -865,6 +880,8 @@
 	item_state = "bee"
 	wear_layer = MOB_BACK_LAYER + 0.2
 	body_parts_covered = TORSO|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES
+	obstructs = C_UNIFORM|C_GLOVES
 
 /obj/item/clothing/suit/monkey
 	name = "monkey costume"
@@ -877,7 +894,8 @@
 	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
-	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+	obstructs = C_UNIFORM|C_GLOVES|C_SHOES
 
 /obj/item/clothing/mask/niccage
 	name = "Nicolas Cage mask"
@@ -912,7 +930,8 @@
 	item_state = "light_borg"
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
-	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+	obstructs = C_UNIFORM|C_GLOVES|C_SHOES
 	over_hair = TRUE
 	see_face = 0
 
@@ -942,12 +961,15 @@
 	icon_state = "mobile_suit"
 	item_state = "mobile_suit"
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+	obstructs = C_UNIFORM|C_GLOVES|C_SHOES
 
 /obj/item/clothing/head/mobile_suit
 	name = "mobile suit headpiece"
 	desc = "A familiar, yet legally distinct helmet."
 	icon_state = "mobile_suit"
 	item_state = "mobile_suit"
+	hides_from_examine = C_EARS|C_GLASSES|C_MASK
+	obstructs = C_EARS|C_GLASSES|C_MASK
 
 /obj/item/clothing/suit/armor/sneaking_suit
 	name = "sneaking suit"
@@ -957,7 +979,6 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
 	icon_state = "sneakmans"
 	item_state = "sneakmans"
-	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 
 /obj/item/clothing/suit/armor/sneaking_suit/costume
 	desc = "On closer inspection this is a cheap cosplay outfit with an obvious zipper."
@@ -1061,6 +1082,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "scarf"
+	obstructs = 0
 
 	setupProperties()
 		..()
@@ -1072,6 +1094,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "suspenders"
+	obstructs = 0
 
 /obj/item/clothing/under/misc/flame
 	name = "flame shirt"
@@ -1379,6 +1402,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "painful"
+	obstructs = 0
 
 /obj/item/clothing/suit/rando
 	name = "red skull mask and cloak"
@@ -1389,6 +1413,7 @@
 	body_parts_covered = TORSO|LEGS|ARMS
 	wear_layer = MOB_OVERLAY_BASE
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
+	obstructs = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 	over_hair = TRUE
 
 /obj/item/clothing/head/rando
@@ -1396,6 +1421,8 @@
 	desc = "Looking at this fills you with joy! You're not sure why. That's kind of a weird thing to feel about something that looks like this."
 	icon_state = "joyful"
 	seal_hair = 1
+	hides_from_examine = C_MASK|C_GLASSES|C_EARS
+	obstructs = C_MASK|C_GLASSES|C_EARS
 
 /obj/item/clothing/under/rotten
 	name = "suit and vest"
@@ -1489,12 +1516,15 @@
 	desc = "The suit of a werewolf costume. Given the amount of moons in and around the station, it's a surprise there isn't a real one about."
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+	obstructs = C_UNIFORM|C_GLOVES|C_SHOES
 	icon_state = "wwsuit"
 
 /obj/item/clothing/head/werewolf
 	name = "werewolf mask"
 	desc = "The mask of a wolfman getup."
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
+	hides_from_examine = C_MASK|C_GLASSES|C_EARS
+	obstructs = C_MASK|C_GLASSES|C_EARS
 	seal_hair = 1
 	icon_state = "wwmask"
 
@@ -1518,12 +1548,15 @@
 	desc =  "The abomination suit straight out of the studio of Jon Woodworker's horror thriller, <i>The Whaddyacallit</i>"
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM
+	obstructs = C_UNIFORM
 	icon_state = "abomcostume"
 
 /obj/item/clothing/head/abomination
 	name = "abomination mask"
 	desc =  "The abomination mask straight out of the studio of Jon Woodworker's horror thriller, <i>The Whaddyacallit</i>"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
+	hides_from_examine = C_EARS
+	obstructs = C_MASK|C_GLASSES|C_EARS
 	seal_hair = 1
 	icon_state = "abommask"
 
@@ -1531,6 +1564,8 @@
 	name = "zombie mask"
 	desc = "The mask of a zombie. Man, they really captured the discolouration of rotten flesh."
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
+	hides_from_examine = C_EARS
+	obstructs = C_MASK|C_GLASSES|C_EARS
 	seal_hair = 1
 	icon_state = "zombmask"
 
@@ -1540,6 +1575,7 @@
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
 	wear_layer = MOB_OVERLAY_BASE
 	hides_from_examine = C_UNIFORM|C_EARS
+	obstructs = C_UNIFORM|C_EARS
 	icon_state = "hotdogsuit"
 	over_hair = TRUE
 
@@ -1736,6 +1772,7 @@
 	icon_state = "dinosaur"
 	item_state = "dinosaur"
 	hides_from_examine = C_UNIFORM
+	obstructs = C_UNIFORM
 
 	New()
 		..()
@@ -1750,6 +1787,8 @@
 	desc = "Wow! It's just like the real thing!"
 	icon_state = "big_lizard"
 	item_state = "big_lizard"
+	hides_from_examine = C_EARS|C_MASK|C_GLASSES
+	obstructs = C_EARS|C_MASK|C_GLASSES
 
 //sock hats
 
@@ -1806,6 +1845,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "witchcape_purple"
+	obstructs = 0
 
 /obj/item/clothing/suit/witchcape_mint
 	name = "Mint Witch Cape"
@@ -1813,6 +1853,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "witchcape_mint"
+	obstructs = 0
 
 // marching band stuff
 /obj/item/clothing/under/gimmick/marchingband

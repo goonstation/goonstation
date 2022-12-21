@@ -12,6 +12,7 @@
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_EARS|C_GLASSES|C_MASK
+	obstructs = C_UNIFORM|C_GLOVES|C_SHOES|C_EARS|C_GLASSES|C_MASK
 	var/eyeholes = FALSE
 	var/accessory = FALSE
 	var/face = null

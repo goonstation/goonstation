@@ -4,6 +4,7 @@
 	name = "helmet"
 	icon_state = "helmet"
 	c_flags = COVERSEYES
+	obstructs = C_EARS
 	item_state = "helmet"
 	desc = "Somewhat protects your head from being bashed in."
 	protective_temperature = 500
@@ -23,6 +24,7 @@
 	item_state = "s_helmet"
 	desc = "Helps protect against vacuum."
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
+	obstructs = C_EARS|C_MASK|C_GLASSES
 	seal_hair = 1
 	path_prot = 0
 
@@ -493,6 +495,7 @@
 	name = "swat helmet"
 	icon_state = "swat"
 	c_flags = COVERSEYES | BLOCKCHOKE
+	obstructs = C_GLASSES|C_EARS
 	item_state = "swat_hel"
 	setupProperties()
 		..()
@@ -503,6 +506,7 @@
 	icon_state = "turdhelm"
 	c_flags = COVERSEYES | BLOCKCHOKE
 	hides_from_examine = C_EARS
+	obstructs = C_GLASSES|C_EARS
 	item_state = "turdhelm"
 	setupProperties()
 		..()
@@ -522,6 +526,7 @@
 	icon_state = "hardhat0"
 	uses_multiple_icon_states = 1
 	item_state = "hardhat0"
+	obstructs = 0
 	desc = "Protects your head from falling objects, and comes with a flashlight. Safety first!"
 	var/on = 0
 	var/datum/component/loctargeting/simple_light/light_dir
@@ -606,6 +611,7 @@
 	icon_state = "helmet-sec-elite"
 	desc = "Better protection from getting your head bashed in."
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	obstructs = C_MASK|C_EARS|C_GLASSES
 	seal_hair = 1
 	item_state = "helmet-sec-elite"
 
@@ -629,6 +635,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	desc = "A helmet with a built in camera."
 	icon_state = "camhat"
 	item_state = "camhat"
+	obstructs = 0
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Helmet Cam"
 	var/camera_network = "Zeta"
@@ -666,6 +673,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	icon_state = "welding"
 	c_flags = COVERSEYES | BLOCKCHOKE
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
+	obstructs = C_EARS|C_MASK|C_GLASSES
 	see_face = FALSE
 	item_state = "welding"
 	protective_temperature = 1300
@@ -696,6 +704,8 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 		icon_state = "welding"
 		boutput(user, "You flip the mask down. The mask now provides protection from eye damage.")
 		src.c_flags |= (COVERSEYES | BLOCKCHOKE)
+		src.hides_from_examine |= (C_EARS|C_MASK|C_GLASSES)
+		src.obstructs |= (C_EARS|C_MASK|C_GLASSES)
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 100)
 		if (ishuman(user))
@@ -710,6 +720,8 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 		icon_state = "welding-up"
 		boutput(user, "You flip the mask up. The mask now provides higher armor to the head.")
 		src.c_flags &= ~(COVERSEYES | BLOCKCHOKE)
+		src.hides_from_examine &= ~(C_EARS|C_MASK|C_GLASSES)
+		src.obstructs &= ~(C_EARS|C_MASK|C_GLASSES)
 		setProperty("meleeprot_head", 4)
 		setProperty("disorient_resist_eye", 0)
 		if (ishuman(user))
@@ -748,6 +760,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	item_state = "tdhelm"
 	c_flags = COVERSEYES | BLOCKCHOKE
 	hides_from_examine = C_EARS
+	obstructs = C_EARS|C_MASK|C_GLASSES
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 9)
@@ -827,6 +840,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/siren)
 	color_g = 0.7
 	color_b = 0.8
 	c_flags = BLOCKCHOKE
+	obstructs = C_EARS|C_MASK|C_GLASSES
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 10)
@@ -841,6 +855,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/siren)
 	item_state = "nthelm"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
+	obstructs = C_EARS|C_MASK|C_GLASSES
 	see_face = 0
 	setupProperties()
 		..()
@@ -1026,6 +1041,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	seal_hair = 1
 	var/bucket_type = /obj/item/reagent_containers/glass/bucket
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
+	obstructs = C_EARS|C_MASK|C_GLASSES
 
 	attack_self(mob/user as mob)
 		boutput(user, "<span class='notice'>You turn the bucket right side up.</span>")
@@ -1053,6 +1069,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	name = "vaguely greek helmet"
 	desc = "Is this what the gladiators wore?"
 	c_flags = COVERSEYES
+	obstructs = C_EARS|C_GLASSES
 	icon_state = "gr_helmet"
 	setupProperties()
 		..()
@@ -1084,6 +1101,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	name = "captain's helmet"
 	desc = "Somewhat protects an important person's head from being bashed in. Comes in a intriqueing shade of green befitting of a captain"
 	c_flags = COVERSEYES | BLOCKCHOKE
+	obstructs = C_EARS|C_GLASSES
 	icon_state = "helmet-captain"
 	item_state = "helmet-captain"
 

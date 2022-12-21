@@ -93,6 +93,7 @@ proc/filter_trait_hats(var/type)
 	item_state = "bio_hood"
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	hides_from_examine = C_EARS
+	obstructs = C_EARS|C_MASK|C_GLASSES
 
 	desc = "This hood protects you from harmful biological contaminants."
 	seal_hair = 1
@@ -128,6 +129,7 @@ proc/filter_trait_hats(var/type)
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Helps protect from vacuum for a short period of time."
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
+	obstructs = C_EARS|C_MASK|C_GLASSES
 	seal_hair = 1
 	path_prot = 0
 	acid_survival_time = 3 MINUTES
@@ -144,6 +146,7 @@ proc/filter_trait_hats(var/type)
 	icon_state = "radiation"
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	hides_from_examine = C_EARS
+	obstructs = C_EARS|C_MASK|C_GLASSES
 	desc = "Asbestos, right near your face. Perfect!"
 	seal_hair = 1
 
@@ -165,6 +168,7 @@ proc/filter_trait_hats(var/type)
 	var/status = 0
 	var/processing = 0
 	c_flags = COVERSEYES
+	obstructs = C_GLASSES
 	var/fire_resist = T0C+1300	//this is the max temp it can stand before you start to cook. although it might not burn away, you take damage
 	var/datum/light/light
 	var/on = 0
@@ -762,6 +766,7 @@ proc/filter_trait_hats(var/type)
 	see_face = 0
 	seal_hair = 1
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
+	obstructs = C_EARS|C_MASK|C_GLASSES
 
 /obj/item/clothing/head/pinkwizard //no magic properties
 	name = "pink wizard hat"
@@ -1224,6 +1229,7 @@ proc/filter_trait_hats(var/type)
 	item_state = "chemhood"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	hides_from_examine = C_EARS
+	obstructs = C_EARS|C_MASK|C_GLASSES
 	seal_hair = 1
 	acid_survival_time = 8 MINUTES
 

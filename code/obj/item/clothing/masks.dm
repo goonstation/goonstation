@@ -9,6 +9,7 @@
 	body_parts_covered = HEAD
 	compatible_species = list("human", "cow", "werewolf")
 	wear_layer = MOB_HEAD_LAYER1
+	obstructs = C_GLASSES
 	var/is_muzzle = 0
 	var/use_bloodoverlay = 1
 	var/stapled = 0
@@ -140,6 +141,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	see_face = 0
 	w_class = W_CLASS_TINY
 	is_syndicate = 1
+	obstructs = 0
 
 	setupProperties()
 		..()
@@ -256,6 +258,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	item_state = "muzzle"			// @TODO new sprite ok
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH	// NOT usable for internals.
+	obstructs = 0
 	compatible_species = list("human", "cow", "werewolf", "martian")
 	var/new_language = "english"	// idk maybe you can varedit one so that humans speak monkey instead. who knows
 
@@ -266,6 +269,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	item_state = "breath"
 	c_flags = COVERSMOUTH | MASKINTERNALS
 	w_class = W_CLASS_SMALL
+	obstructs = 0
 
 
 	attackby(obj/item/W, mob/user)
@@ -431,6 +435,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	item_state = "medical"
 	c_flags = COVERSMOUTH | MASKINTERNALS
 	w_class = W_CLASS_SMALL
+	obstructs = 0
 	protective_temperature = 420
 
 /obj/item/clothing/mask/muzzle
@@ -439,6 +444,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	item_state = "muzzle"
 	c_flags = COVERSMOUTH
 	w_class = W_CLASS_SMALL
+	obstructs = 0
 	desc = "You'd probably say something like 'Hello Clarice.' if you could talk while wearing this."
 	is_muzzle = 1
 
@@ -449,6 +455,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	item_state = "s_mask"
 	w_class = W_CLASS_TINY
 	c_flags = COVERSMOUTH
+	obstructs = 0
 	path_prot = 0
 
 	setupProperties()
@@ -640,6 +647,7 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	name = "bandana"
 	desc = "The desperado's choice."
 	see_face = 0
+	obstructs = 0
 	var/is_pulled_down = FALSE
 	var/obj/item/cloth/handkerchief/handkerchief = null
 

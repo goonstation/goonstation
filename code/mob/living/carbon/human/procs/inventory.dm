@@ -10,7 +10,7 @@
 	var/hiddenItem = null
 
 	for(var/obj/item/clothing/I in GetWornItems())
-		hiddenItem |= I.hides_from_examine
+		hiddenItem |= I.obstructs
 
 	if(hiddenItem & C_UNIFORM)
 		obsctructedItems += SLOT_W_UNIFORM
@@ -29,18 +29,19 @@
 
 ///Get all items as a list in worn slots
 /mob/living/carbon/human/proc/GetWornItems()
-	return list(src.head,
-				src.belt,
-				src.ears,
-				src.gloves,
-				src.shoes,
-				src.glasses,
-				src.back,
-				src.w_uniform,
-				src.wear_mask,
-				src.wear_suit,
-				src.wear_id
-				)
+	return list(
+		src.head,
+		src.belt,
+		src.ears,
+		src.gloves,
+		src.shoes,
+		src.glasses,
+		src.back,
+		src.w_uniform,
+		src.wear_mask,
+		src.wear_suit,
+		src.wear_id
+	)
 
 ///Check the inventory slot against the list of obstructed slots
 /mob/living/carbon/human/proc/CheckObstructed(var/id)

@@ -10,6 +10,9 @@
 	//for clothing that covers other clothing from examines
 	var/hides_from_examine = 0
 
+	//for clothing which blocks removal of other clothing
+	var/obstructs = 0
+
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	//var/c_flags = null // these don't need to be in the general flags when they only apply to clothes  :I
 	// mbc moived c flags up to item bewcause some wearaables things are items and not clothign :)
