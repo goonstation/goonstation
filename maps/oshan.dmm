@@ -36868,10 +36868,6 @@
 	dir = 4
 	},
 /obj/machinery/bot/secbot/beepsky,
-/obj/item/gun/energy/phaser_gun{
-	pixel_x = -3;
-	pixel_y = -2
-	},
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/plating/random,
 /area/station/security/beepsky)
