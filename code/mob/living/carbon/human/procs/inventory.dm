@@ -27,6 +27,7 @@
 
 	return obsctructedItems
 
+///Get all items as a list in worn slots
 /mob/living/carbon/human/proc/GetWornItems()
 	return list(src.head,
 				src.belt,
@@ -41,6 +42,7 @@
 				src.wear_id
 				)
 
+///Check the inventory slot against the list of obstructed slots
 /mob/living/carbon/human/proc/CheckObstructed(var/id)
 	for (var/obj/slot as anything in GetObstructedItems())
 		if(id == slot)
