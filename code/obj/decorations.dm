@@ -54,6 +54,10 @@
 	density = 1
 	opacity = 0 // this causes some of the super ugly lighting issues too
 
+	var/falling = FALSE
+	var/fallen = FALSE
+	var/fall_time = 1 SECOND
+
 	attackby(obj/item/I, mob/user)
 		if (issawingtool(I) || ischoppingtool(I) && !isrestrictedz(src.z))
 			if (I.hitsound)
@@ -61,10 +65,24 @@
 			src._health -= I.force
 			user.lastattacked = src
 			if (src._health <= 0)
+				if (src.falling)
+					return
+				if (src.fallen)
+					var/turf/our_turf = get_turf(src)
+					for (var/i in 0 to 2)
+						var/obj/item/material_piece/organic/wood/log = new(locate(our_turf.x + i, our_turf.y, our_turf.z))
+						log.Turn(90)
+					qdel(src)
+					return
+				src.falling = TRUE
+				var/icon/icon = new(src.icon)
+				var/transform = matrix(src.transform, 90, MATRIX_ROTATE)
+				transform = matrix(transform, icon.Width()/3, -icon.Height()/2, MATRIX_TRANSLATE)
+				animate(src, transform = transform, time = src.fall_time, easing = BOUNCE_EASING)
 				src.visible_message("<span class='alert'>\the [src] falls!</span>", "<span class='alert'>You hear a [src] fall, and thus prove that it has.</span>")
-				for (var/i in 1 to 3)
-					new /obj/item/material_piece/organic/wood(src.loc)
-				qdel(src)
+				SPAWN(src.fall_time)
+					src.falling = FALSE
+					src.fallen = TRUE
 		..()
 
 	elm_random
