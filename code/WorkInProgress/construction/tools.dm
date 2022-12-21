@@ -168,6 +168,9 @@
 		for (var/obj/machinery/turret/construction/aTurret in turrets)
 			aTurret.setState(enabled, lethal)
 
+TYPEINFO(/obj/item/room_marker)
+	mats = 6
+
 /obj/item/room_marker
 	name = "\improper Room Designator"
 	icon = 'icons/obj/construction.dmi'
@@ -175,60 +178,110 @@
 	item_state = "gun"
 	w_class = W_CLASS_SMALL
 
-	mats = 6
 	var/using = 0
-	var/datum/progress/designated = null
-
-	attack_self(var/mob/user)
-		if (!(ticker?.mode && istype(ticker.mode, /datum/game_mode/construction)))
-			boutput(user, "<span class='alert'>You can only use this tool in construction mode.</span>")
-			return
-		var/datum/game_mode/construction/C = ticker.mode
-		var/list/pickable = list()
-		for (var/datum/progress/P in C.milestones)
-			if (P.is_room && !P.completed)
-				pickable += P
-		if (!pickable.len)
-			boutput(user, "<span class='alert'>No rooms available for designation.</span>")
-		designated = input("Which room would you like to designate?", "Room", pickable[1]) in pickable
-		boutput(user, "<span class='hint'>Using this tool will now designate the room: [designated]. A room is surrounded by dense objects or walls on all sides.</span>")
-		if (designated.minimum_width)
-			boutput(user, "<span class='hint'>The room must be at least [designated.minimum_width] tiles wide (including the walls).</span>")
-		if (designated.minimum_height)
-			boutput(user, "<span class='hint'>The room must be at least [designated.minimum_height] tiles high (including the walls).</span>")
-		if (designated.requirements_cache)
-			boutput(user, "<span class='hint'>The room must contain at least the following objects: [designated.requirements_cache].</span>")
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+		var/area/A = get_area(target)
 		if (!isturf(target))
 			return
-		if (!designated)
-			boutput(user, "<span class='alert'>No designated room selected.</span>")
-			return
-		if (designated.completed)
-			boutput(user, "<span class='notice'>The designated room already exists.</span>")
-			designated = null
+		if(!istype(A,/area/built_zone))
+			boutput(user, "<span class='alert'>This tool will only work on built zones!</span>")
 			return
 		if (using)
-			boutput(user, "<span class='alert'>Already verifying a room. Please wait.</span>")
+			boutput(user, "<span class='alert'>Already validating a room. Please wait.</span>")
 			return
 		using = 1
-		boutput(user, "<span class='notice'>Designating room.</span>")
+		boutput(user, "<span class='notice'>Validating room...</span>")
 		SPAWN(0)
-			if (designated.check_completion(target))
-				boutput(user, "<span class='notice'>Designation successful, room matches required parameters.</span>")
-				//new /obj/machinery/power/apc(get_turf(target))
-				//boutput(user, "<span class='alert'>Yes I am aware that that APC is in a shit place. You will have to make do until I can actually finish working on power stuff okay???</span>")
-				designated = null
+			var/list/tiles = identify_room(target)
+			if (tiles)
+				combine_areas(tiles)
+				boutput(user, "<span class='notice'>Validation successful! Room designated.</span>")
 			else
-				boutput(user, "<span class='alert'>Designation failed.</span>")
+				boutput(user, "<span class='alert'>Validation failed!</span>")
 			using = 0
+
+	proc/combine_areas(var/list/room)
+		var/area/TargA = new /area/built_zone()
+		for (var/turf/T in room)
+			var/area/A = get_area(T)
+			if (A != TargA)
+				if (istype(A,/area/built_zone))
+					TargA.contents += T // steal the turf from the old
+
+			if (A.area_apc) // steal the APCs
+				var/obj/machinery/power/apc/Aapc = A.area_apc
+				Aapc.area = TargA
+				Aapc.name = "[TargA.name] APC"
+				if (!TargA.area_apc)
+					TargA.area_apc = Aapc
+
+			for (var/obj/machinery/M in A.machines) // steal all the machines too
+				A.machines -= M
+				TargA.machines += M
+				if (istype(M,/obj/machinery/light)) // steal all the lights
+					A.remove_light(M)
+					TargA.add_light(M)
+
+			SPAWN(0.5 SECONDS) // apc code does this too
+				if (TargA.area_apc)
+					TargA.area_apc.update()
+
+	proc/identify_room(var/turf/T) // stolen from what this was using before
+		var/list/affected = list()
+		var/list/next = list()
+		var/list/processed = list()
+		next += T
+		processed += T
+		while (next.len)
+			var/turf/C = next[1]
+			next -= C
+
+			affected += C
+
+			if (C.density)
+				continue
+
+			var/dense = 0
+			for (var/obj/O in C)
+				if (istype(O, /obj/machinery/door) || istype(O, /obj/grille) || istype(O, /obj/window) || istype(O, /obj/table))
+					dense = 1
+					break
+			if (dense)
+				continue
+
+			if (istype(C, /turf/space) || istype(C, /turf/unsimulated)) // terrainify uses unsimmed turfs as space
+				return null
+
+			var/turf/N = get_step(C, NORTH)
+			if (N && !(N in processed))
+				next += N
+				processed += N
+
+			N = get_step(C, SOUTH)
+			if (N && !(N in processed))
+				next += N
+				processed += N
+
+			N = get_step(C, WEST)
+			if (N && !(N in processed))
+				next += N
+				processed += N
+
+			N = get_step(C, EAST)
+			if (N && !(N in processed))
+				next += N
+				processed += N
+
+		return affected
+
+TYPEINFO(/obj/item/clothing/glasses/construction)
+	mats = 6
 
 /obj/item/clothing/glasses/construction
 	name = "\improper Construction Visualizer"
 	icon_state = "construction"
 	item_state = "construction"
-	mats = 6
 	desc = "The latest technology in viewing live blueprints."
 
 /obj/item/lamp_manufacturer/organic
@@ -245,13 +298,15 @@
 		..()
 		inventory_counter.update_number(metal_ammo)
 
+TYPEINFO(/obj/item/material_shaper)
+	mats = 6
+
 /obj/item/material_shaper
 	name = "\improper Window Planner"
 	icon = 'icons/obj/construction.dmi'
 	icon_state = "shaper"
 	item_state = "gun"
 	flags = FPRINT | TABLEPASS | EXTRADELAY
-	mats = 6
 	click_delay = 1
 
 	var/mode = 0
@@ -439,13 +494,15 @@
 			processing = 0
 			user.visible_message("<span class='notice'>[user] finishes stuffing materials into [src].</span>")
 
+TYPEINFO(/obj/item/room_planner)
+	mats = 6
+
 /obj/item/room_planner
 	name = "\improper Floor and Wall Designer"
 	icon = 'icons/obj/construction.dmi'
 	icon_state = "plan"
 	item_state = "gun"
 	flags = FPRINT | TABLEPASS | EXTRADELAY
-	mats = 6
 	w_class = W_CLASS_SMALL
 	click_delay = 1
 

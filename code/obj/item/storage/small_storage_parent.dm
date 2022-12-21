@@ -118,7 +118,7 @@
 			user.drop_item()
 			SPAWN(1 DECI SECOND)
 				O.Attackhand(user)
-		else if (isitem(O) && !istype(O, /obj/item/storage) && !O.anchored)
+		else if (isitem(O) && !istype(O, /obj/item/storage) && !O.anchored && can_reach(user, O, 1))
 			user.swap_hand()
 			if(user.equipped() == null)
 				O.Attackhand(user)
@@ -364,9 +364,14 @@
 			new /obj/item/tank/emergency_oxygen(src)
 		if (ticker?.round_elapsed_ticks > 20 MINUTES)
 			new /obj/item/crowbar/red(src)
+#ifdef MAP_OVERRIDE_NADIR //guarantee protective gear
+		new /obj/item/clothing/suit/space/emerg(src)
+		new /obj/item/clothing/head/emerg(src)
+#else
 		if (prob(10)) // put these together
 			new /obj/item/clothing/suit/space/emerg(src)
 			new /obj/item/clothing/head/emerg(src)
+#endif
 
 /obj/item/storage/box/starter/withO2
 	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/emergency_oxygen)

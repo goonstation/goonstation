@@ -10,6 +10,9 @@
 
 //////////////////////////////////////////////// Chainsaw ////////////////////////////////////
 
+TYPEINFO(/obj/item/saw)
+	mats = 12
+
 /obj/item/saw
 	name = "chainsaw"
 	desc = "An electric chainsaw used to chop up harmful plants."
@@ -30,7 +33,6 @@
 	w_class = W_CLASS_BULKY
 	flags = FPRINT | TABLEPASS | CONDUCT
 	tool_flags = TOOL_SAWING
-	mats = 12
 	var/sawnoise = 'sound/machines/chainsaw_green.ogg'
 	arm_icon = "chainsaw-D"
 	var/base_arm = "chainsaw"
@@ -132,6 +134,9 @@
 
 /obj/item/saw/abilities = list(/obj/ability_button/saw_toggle)
 
+TYPEINFO(/obj/item/saw/syndie)
+	mats = list("MET-2"=25, "CON-1"=5, "POW-2"=5)
+
 /obj/item/saw/syndie
 	name = "red chainsaw"
 	icon_state = "c_saw_s_off"
@@ -148,7 +153,6 @@
 	throw_range = 5
 	w_class = W_CLASS_BULKY
 	is_syndicate = 1
-	mats = list("MET-2"=25, "CON-1"=5, "POW-2"=5)
 	desc = "A gas powered antique. This one is the real deal. Time for a space chainsaw massacre."
 	contraband = 10 //scary
 	sawnoise = 'sound/machines/chainsaw_red.ogg'
@@ -338,6 +342,9 @@
 /obj/item/saw/syndie/vr
 	icon = 'icons/effects/VR.dmi'
 
+TYPEINFO(/obj/item/saw/elimbinator)
+	mats = 12
+
 /obj/item/saw/elimbinator
 	name = "The Elimbinator"
 	desc = "Lops off limbs left and right!"
@@ -356,7 +363,6 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_BULKY
-	mats = 12
 	sawnoise = 'sound/machines/chainsaw_red.ogg'
 	hitsound = 'sound/machines/chainsaw_red.ogg'
 	arm_icon = "chainsaw_s-A"
@@ -386,14 +392,16 @@
 
 ////////////////////////////////////// Plant analyzer //////////////////////////////////////
 
+TYPEINFO(/obj/item/plantanalyzer)
+	mats = 4
+
 /obj/item/plantanalyzer/
 	name = "plant analyzer"
 	desc = "A device which examines the genes of plant seeds."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "plantanalyzer"
 	w_class = W_CLASS_TINY
-	flags = ONBELT
-	mats = 4
+	c_flags = ONBELT
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (BOUNDS_DIST(A, user) > 0)
@@ -453,7 +461,8 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/screwdriver.dmi'
 	icon_state = "trowel"
 
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	w_class = W_CLASS_TINY
 
 	force = 5
@@ -641,3 +650,44 @@
 	icon_state = "bong"
 
 	filled
+
+/obj/item/reagent_containers/glass/jug
+	name = "Jug"
+	desc = "A sizable jug to hold liquids."
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
+	icon_state = "Jug"
+	amount_per_transfer_from_this = 25
+	w_class = W_CLASS_NORMAL
+	incompatible_with_chem_dispensers = TRUE
+	rc_flags = RC_FULLNESS | RC_SPECTRO
+	initial_volume = 200
+
+/obj/item/reagent_containers/glass/jug/mutagenicbulk
+	name = "Mutagenic Plant Nutrients"
+	desc = "A wholesale jug of an unstable radioactive mixture that stimulates genetic diversity. Holds up to 200 units."
+	icon_state = "MutagenicJug"
+	initial_reagents = list("mutagen"=200)
+
+/obj/item/reagent_containers/glass/jug/ammoniabulk
+	name = "Quick-Growth Plant Nutrients"
+	desc = "A wholesale jug a nutrient-rich plant formula that encourages quick plant growth. Holds up to 200 units."
+	icon_state = "AmmoniaJug"
+	initial_reagents = list("ammonia"=200)
+
+/obj/item/reagent_containers/glass/jug/potashbulk
+	name = "High-Yield Plant Nutrients"
+	desc = "A wholesale jug of a nutrient-rich plant formula that encourages large crop yields. Holds up to 200 units."
+	icon_state = "PotashJug"
+	initial_reagents = list("potash"=200)
+
+/obj/item/reagent_containers/glass/jug/saltpetrebulk
+	name = "High-Strength Plant Nutrients"
+	desc = "A wholesale jug of a nutrient-rich plant formula that encourages more potent crops. Holds up to 200 units."
+	icon_state = "SaltpetreJug"
+	initial_reagents = list("saltpetre"=200)
+
+/obj/item/reagent_containers/glass/jug/mutadonebulk
+	name = "Healthy Plant Nutrients"
+	desc = "A wholesale jug of a nutrient-rich formula that attempts to rectify genetic problems. Holds up to 200 units."
+	icon_state = "MutadoneJug"
+	initial_reagents = list("mutadone"=200)

@@ -13,7 +13,8 @@ WET FLOOR SIGN
 	name = "spray bottle"
 	icon_state = "cleaner"
 	item_state = "cleaner"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|EXTRADELAY|SUPPRESSATTACK
+	flags = TABLEPASS|OPENCONTAINER|FPRINT|EXTRADELAY|SUPPRESSATTACK|ACCEPTS_MOUSEDROP_REAGENTS
+	c_flags = ONBELT
 	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	throwforce = 3
 	w_class = W_CLASS_SMALL
@@ -248,7 +249,7 @@ WET FLOOR SIGN
 			sleep(0.3 SECONDS)
 		qdel(D)
 	var/turf/logTurf = get_turf(D)
-	logTheThing(LOG_COMBAT, user, "sprays [src] at [constructTarget(logTurf,"combat")] [log_reagents] at [log_loc(user)].")
+	logTheThing(LOG_CHEMISTRY, user, "sprays [src] at [constructTarget(logTurf,"combat")] [log_reagents] at [log_loc(user)].")
 
 	return
 
@@ -329,7 +330,7 @@ WET FLOOR SIGN
 	// Some people use mops for heat-delayed fireballs and stuff.
 	// Mopping the floor with just water isn't of any interest, however (Convair880).
 	if (src.reagents.total_volume && (!src.reagents.has_reagent("water") || (src.reagents.has_reagent("water") && src.reagents.reagent_list.len > 1)))
-		logTheThing(LOG_COMBAT, user, "mops [U && isturf(U) ? "[U]" : "[A]"] with chemicals [log_reagents(src)] at [log_loc(user)].")
+		logTheThing(LOG_CHEMISTRY, user, "mops [U && isturf(U) ? "[U]" : "[A]"] with chemicals [log_reagents(src)] at [log_loc(user)].")
 
 	if (U && isturf(U))
 		src.reagents.reaction(U,1,5)
@@ -381,6 +382,8 @@ WET FLOOR SIGN
 // Its the old mop. It makes floors slippery
 /obj/item/mop/old
 	name = "antique mop"
+	icon_state = "mop_old"
+	item_state = "mop_old"
 	desc = "This thing looks ancient, but it sure does get the job done!"
 
 	afterattack(atom/A, mob/user as mob)
@@ -863,12 +866,14 @@ WET FLOOR SIGN
 
 // handheld vacuum
 
+TYPEINFO(/obj/item/handheld_vacuum)
+	mats = list("bamboo"=3, "MET-1"=10)
+
 /obj/item/handheld_vacuum
 	name = "handheld vacuum"
 	desc = "Sucks smoke. Sucks small items. Sucks just in general!"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "handvac"
-	mats = list("bamboo"=3, "MET-1"=10)
 	health = 7
 	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
@@ -1075,9 +1080,11 @@ WET FLOOR SIGN
 		else
 			. = ..()
 
+TYPEINFO(/obj/item/handheld_vacuum/overcharged)
+	mats = list("neutronium"=3, "MET-1"=10)
+
 /obj/item/handheld_vacuum/overcharged
 	name = "overcharged handheld vacuum"
-	mats = list("neutronium"=3, "MET-1"=10)
 	color = list(0,0,1, 0,1,0, 1,0,0)
 	New()
 		..()

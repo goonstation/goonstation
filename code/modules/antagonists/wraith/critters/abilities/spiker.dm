@@ -12,6 +12,12 @@
 		if (..())
 			return 1
 
+		if (istype(holder.owner, /mob/living/critter/wraith/spiker))
+			var/mob/living/critter/wraith/spiker/the_spiker = holder.owner
+			if (the_spiker.shuffling)
+				boutput(holder.owner, "<span class='notice'>You cannot use this while you're all squished up like that!</span>")
+				return TRUE
+
 		var/mob/living/critter/wraith/spiker/S = holder.owner
 		var/obj/projectile/proj = initialize_projectile_ST(S, new/datum/projectile/special/tentacle, get_turf(target))
 		while (!proj || proj.disposed)
@@ -41,6 +47,11 @@
 	var/datum/projectile/slam/proj = new
 
 	cast(atom/target)
+		if (istype(holder.owner, /mob/living/critter/wraith/spiker))
+			var/mob/living/critter/wraith/spiker/the_spiker = holder.owner
+			if (the_spiker.shuffling)
+				boutput(holder.owner, "<span class='notice'>You cannot use this while you're all squished up like that!</span>")
+				return TRUE
 		if (disabled && TIME > last_cast)
 			disabled = 0
 		if (disabled)
@@ -66,7 +77,7 @@
 		if (!is_incapacitated(M))
 			boutput(holder.owner, "<span class='alert'>That is moving around far too much to immobilize.</span>")
 			return 1
-		playsound(holder.owner, "sound/impact_sounds/Flesh_Stab_1.ogg", 80, 1)
+		playsound(holder.owner, 'sound/impact_sounds/Flesh_Stab_1.ogg', 80, 1)
 		disabled = 1
 		SPAWN(0)
 			var/frenz = 5
@@ -84,7 +95,7 @@
 				holder.owner.set_dir((cardinal))
 				holder.owner.pixel_x = rand(-5, 5)
 				holder.owner.pixel_y = rand(-5, 5)
-				random_brute_damage(M, 5,1)
+				random_brute_damage(M, 7, 1)
 				take_bleeding_damage(M, null, 15, DAMAGE_CUT, 0, get_turf(M))
 				if(prob(33))
 					bleed(M, 5, 5, get_step(get_turf(M), pick(alldirs)), 1)
@@ -102,3 +113,53 @@
 		..()
 		var/atom/movable/screen/ability/topBar/B = src.object
 		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
+
+/datum/targetable/critter/spiker/shuffle
+	name = "Shuffle"
+	desc = "Squish yourself down to cancel stuns, squeeze through doors and escape assailants."
+	cooldown = 50 SECONDS
+	targeted = FALSE
+	icon_state = "shuffle"
+	var/border_icon = 'icons/mob/wraith_ui.dmi'
+	var/border_state = "harbinger_frame"
+
+	cast(atom/target)
+
+		if (!istype(holder.owner, /mob/living/critter/wraith/spiker))
+			boutput(holder.owner, "<span class='notice'>You cannot use this ability.</span>")
+			return TRUE
+		var/mob/living/critter/wraith/spiker/the_spiker = holder.owner
+		if (the_spiker.shuffling)
+			boutput(holder.owner, "<span class='notice'>You are already casting this ability!</span>")
+			return TRUE
+
+		the_spiker.delStatus("stunned")
+		the_spiker.delStatus("weakened")
+		the_spiker.delStatus("paralysis")
+		the_spiker.delStatus("slowed")
+		the_spiker.delStatus("disorient")
+		the_spiker.change_misstep_chance(-INFINITY)
+		the_spiker.stuttering = 0
+		the_spiker.delStatus("drowsy")
+		the_spiker.delStatus("resting")
+		the_spiker.flags |= DOORPASS | TABLEPASS
+		the_spiker.unequip_all()
+		the_spiker.shuffling = TRUE
+		the_spiker.icon_state = "shuffling_spiker"
+		playsound(holder.owner, 'sound/impact_sounds/Slimy_Hit_4.ogg', 80, 1)
+		SPAWN(10 SECONDS)
+			if (!the_spiker) return
+			the_spiker.flags &= ~(DOORPASS | TABLEPASS)
+			the_spiker.shuffling = FALSE
+			if (!isdead(the_spiker))
+				the_spiker.icon_state = "spiker"
+		return FALSE
+
+	incapacitationCheck()
+		return FALSE
+
+	onAttach(datum/abilityHolder/holder)
+		..()
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
+

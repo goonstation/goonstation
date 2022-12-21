@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/communications_dish)
+	mats = 25
+
 /obj/machinery/communications_dish
 	name = "Communications dish"
 	icon = 'icons/mob/hivebot.dmi'
@@ -13,7 +16,6 @@
 	var/frequency = FREQ_COMM_DISH
 	var/list/cargo_logs = list()
 
-	mats = 25
 	deconstruct_flags = DECON_NONE
 
 	New()
@@ -85,9 +87,11 @@
 			var/sound_to_play = 'sound/misc/announcement_1.ogg'
 			command_alert(message, title, sound_to_play, alert_origin = "Transmission to Partner Station")
 			var/ircmsg[] = new()
-			ircmsg["msg"] = "[user ? user : "Unknown"] sent a message to __[game_servers.get_buddy().name]__:\n**[title]**\n[message]"
+			var/sent = game_servers.get_buddy() ? "sent" : "failed to send"
+			ircmsg["msg"] = "[user ? user : "Unknown"] [sent] a message to __[game_servers.get_buddy()?.name]__:\n**[title]**\n[message]"
 			ircbot.export_async("admin", ircmsg)
-			return game_servers.send_to_buddy("announce", title, message)
+			if(game_servers.get_buddy())
+				return game_servers.send_to_buddy("announce", title, message)
 
 		add_cargo_logs(var/atom/A)
 			if (!A)

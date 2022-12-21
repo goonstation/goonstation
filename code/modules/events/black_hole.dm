@@ -1,6 +1,6 @@
 /datum/random_event/major/black_hole
 	name = "Black Hole"
-	required_elapsed_round_time = 40 MINUTES
+	required_elapsed_round_time = 26.6 MINUTES
 #ifdef RP_MODE
 	disabled = 1
 #endif
@@ -32,8 +32,8 @@
 		feedings_required = rand(15,40)
 		//spatial interdictor: can't stop the black hole, but it can mitigate it
 		//interdiction consumes several thousand units - requiring a large cell - and the interdictor makes a hell of a ruckus
-		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-			if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(9001))
+		for_by_tcl(IX, /obj/machinery/interdictor)
+			if (IX.expend_interdict(9001,src))
 				playsound(IX,'sound/machines/alarm_a.ogg',50,0,5,1.5)
 				SPAWN(3 SECONDS)
 					if(IX) playsound(IX,'sound/machines/alarm_a.ogg',50,0,5,1.5)
@@ -45,9 +45,11 @@
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/bhole_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(src))
 
-		for (var/mob/M in range(14,src))
-			boutput(M, "<span class='alert'>The air grows heavy and thick. Something feels terribly wrong.</span>")
-			shake_camera(M, 5, 16)
+		var/turf/T = get_turf(src)
+		for (var/mob/M in GET_NEARBY(T, 15))
+			if (M.client)
+				boutput(M, "<span class='alert'>The air grows heavy and thick. Something feels terribly wrong.</span>")
+				shake_camera(M, 5, 16)
 		playsound(src,'sound/effects/creaking_metal1.ogg',100,0,5,0.5)
 
 		sleep(lifespan / 2)

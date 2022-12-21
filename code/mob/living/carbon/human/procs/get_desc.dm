@@ -52,7 +52,7 @@
 	// unfortunately byond can't handle "[src.slot.blood_DNA ? "a bloody" : "\an"] [src.slot.name]" because then the \an is like "where the fuck is the thing I'm supposed to do something to???"
 	// thanks, byondbama.
 	if (src.hasStatus("handcuffed"))
-		. +=  "<br><b class='notice'>[src.name] is [bicon(src.handcuffs)] handcuffed!</b>"
+		. +=  "<br><b class='alert'>[src.name] is [bicon(src.handcuffs)] handcuffed!</b>"
 
 	if (src.w_uniform && !(src.wear_suit?.hides_from_examine & C_UNIFORM))
 		. += "<br><span class='[src.w_uniform.blood_DNA ? "alert" : "notice"]'>[src.name] is wearing [bicon(src.w_uniform)] \an [src.w_uniform.name].</span>"
@@ -76,7 +76,7 @@
 			. += "<br><span class='[src.wear_mask.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.wear_mask)] \an [src.wear_mask.name] on [t_his] face.</span>"
 
 	if (src.glasses && !(src.wear_suit?.hides_from_examine & C_GLASSES) && !(src.head?.hides_from_examine & C_GLASSES))
-		if (((src.wear_mask && src.wear_mask.see_face) || !src.wear_mask) && ((src.head && src.head.see_face) || !src.head))
+		if (face_visible())
 			. += "<br><span class='[src.glasses.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.glasses)] \an [src.glasses.name] on [t_his] face.</span>"
 
 	if (src.l_hand)
@@ -159,7 +159,7 @@
 
 	if (src.organHolder)
 		if (src.organHolder.head)
-			if (((src.wear_mask && src.wear_mask.see_face) || !src.wear_mask) && ((src.head && src.head.see_face) || !src.head))
+			if (face_visible())
 				if (!src.organHolder.skull)
 					. += "<br><span class='alert'><B>[src.name] no longer has a skull in [t_his] head, [t_his] face is just empty skin mush!</B></span>"
 

@@ -62,7 +62,6 @@
 				contextActions += newcontext
 
 	proc/play_note(var/note, var/mob/user)
-		logTheThing(LOG_COMBAT, user, "plays instrument [src]")
 		if (note != clamp(note, 1, length(sounds_instrument)))
 			return FALSE
 		var/atom/player = user || src
@@ -98,6 +97,28 @@
 	proc/post_play_effect(mob/user as mob)
 		return
 
+	// Creates a list of notes between two notes, for example
+	// note_range("c4", "e4") returns ("c4", "c-4", "d4", d-4, "e4")
+	proc/note_range(var/fromNote, var/toNote)
+		var/list/notes = list()
+
+		// Removes the octave number, for example "c4" becomes "c"
+		var/strippedFromNote = copytext(fromNote, 1, length(fromNote))
+		var/list/scale = list("c","c-", "d", "d-", "e", "f", "f-", "g", "g-", "a", "a-", "b")
+
+		var/currentOctave = text2num(copytext(fromNote, length(fromNote))) // Get the octave number from the note, for example "c-4" becomes 4
+		var/currentIndex = scale.Find(strippedFromNote)
+		var/currentNote = ""
+		while(currentNote != toNote)
+			currentNote = scale[currentIndex] + num2text(currentOctave)
+			notes += currentNote
+			currentIndex++
+
+			// If we've reached the end of the scale, start over with the next octave
+			if(currentIndex > length(scale))
+				currentIndex = 1
+				currentOctave++
+		return notes
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -208,10 +229,10 @@
 	sounds_instrument = null
 	note_time = 0.18 SECONDS
 	randomized_pitch = 0
-	use_new_interface = 1
+	use_new_interface = TRUE
 
 	New()
-		notes = list("c4","c-4", "d4", "d-4", "e4","f4","f-4","g4", "g-4","a4","a-4","b4","c5","c-5", "d5", "d-5", "e5","f5","f-5","g5", "g-5","a5","a-5","b5","c6","c-6", "d6", "d-6", "e6","f6","f-6","g6", "g-6","a6","a-6","b6","c7")
+		notes = note_range("c4", "c7")
 		sounds_instrument = list()
 		for (var/i in 1 to length(notes))
 			note = notes[i]
@@ -271,16 +292,16 @@
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
-	use_new_interface = 1
+	use_new_interface = TRUE
 	//Start at G
 	key_offset = 8
 
 	New()
-		notes = list("g3","g-3","a3","a-3","b3","c4","c-4", "d4", "d-4", "e4","f4","f-4","g4", "g-4","a4","a-4","b4","c5","c-5", "d5", "d-5", "e5","f5","f-5","g5", "g-5","a5","a-5","b5","c6")
+		notes = note_range("g3", "c6")
 		sounds_instrument = list()
 		for (var/i in 1 to length(notes))
 			note = notes[i]
-			sounds_instrument += "sound/musical_instruments/sax/notes/[note].ogg"
+			sounds_instrument += "sound/musical_instruments/saxophone/notes/[note].ogg"
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -404,6 +425,9 @@
 
 /* -------------------- Dramatic Bike Horn -------------------- */
 
+TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
+	mats = 2
+
 /obj/item/instrument/bikehorn/dramatic
 	name = "dramatic bike horn"
 	desc = "SHIT FUCKING PISS IT'S SO RAW"
@@ -411,7 +435,6 @@
 	volume = 100
 	randomized_pitch = 0
 	note_time = 30
-	mats = 2
 
 	attackby(obj/item/W, mob/user)
 		if (!istype(W, /obj/item/parts/robot_parts/arm))
@@ -552,12 +575,12 @@
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
-	use_new_interface = 1
+	use_new_interface = TRUE
 	//Start at E3
 	key_offset = 5
 
 	New()
-		notes = list("e3","f3","f-3","g3","g-3","a3","a-3","b3","c4","c-4", "d4", "d-4", "e4","f4","f-4","g4", "g-4","a4","a-4","b4","c5","c-5", "d5", "d-5", "e5","f5","f-5","g5", "g-5","a5","a-5","b5","c6")
+		notes = note_range("e3", "c6")
 		sounds_instrument = list()
 		for (var/i in 1 to length(notes))
 			note = notes[i]
@@ -629,14 +652,17 @@
 	icon_state = "fiddle"
 	item_state = "fiddle"
 	desc_sound = list("slick", "egotistical", "snazzy", "technical", "impressive") // works just as well for fiddles as it does for trumpets I guess  :v
-	sounds_instrument = null
+	sounds_instrument = list()
 	note_time = 0.18 SECONDS
 	randomized_pitch = 0
+	use_new_interface = TRUE
 
 	New()
+		notes = note_range("a3", "g6")
 		sounds_instrument = list()
-		for (var/i in 1 to 12)
-			sounds_instrument += "sound/musical_instruments/violin/violin_[i].ogg"
+		for (var/i in 1 to length(notes))
+			note = notes[i]
+			sounds_instrument += "sound/musical_instruments/fiddle/notes/[note].ogg"
 		..()
 
 /obj/item/instrument/fiddle/satanic
@@ -738,12 +764,12 @@
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
-	use_new_interface = 1
+	use_new_interface = TRUE
 	//Start at E3
 	key_offset = 5
 
 	New()
-		notes = list("e3","f3","f-3","g3","g-3","a3","a-3","b3","c4","c-4", "d4", "d-4", "e4","f4","f-4","g4", "g-4","a4","a-4","b4","c5","c-5", "d5", "d-5", "e5","f5","f-5","g5", "g-5","a5","a-5","b5","c6")
+		notes = note_range("e3", "c6")
 		sounds_instrument = list()
 		for (var/i in 1 to length(notes))
 			note = notes[i]

@@ -28,7 +28,7 @@
 		processing_items -= src
 		..()
 
-	Cross(atom/movable/mover)
+	Crossed(atom/movable/mover)
 		if(istype(mover, /mob))
 			var/mob/M = mover
 			M.setStatus(statusId = "slowed", duration = 0.5 SECONDS, optional = 4)
@@ -50,7 +50,6 @@
 	density = 1
 	opacity = 0 	// changed in New()
 	anchored = 1
-	name = "concrete wall"
 	desc = "A heavy duty wall made of concrete! This thing is gonna take some manual labour to get through..."
 	flags = FPRINT | CONDUCT | USEDELAY
 	var/const/baseHealth = 30

@@ -10,13 +10,16 @@
 // // And arbitrary messages set by comms computer
 
 #define MAX_LEN 5
+TYPEINFO(/obj/machinery/status_display)
+	mats = 14
+
 /obj/machinery/status_display
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
 	name = "status display"
 	anchored = 1
 	density = 0
-	mats = 14
+	plane = PLANE_NOSHADOW_ABOVE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/glow_in_dark_screen = TRUE
 	var/image/screen_image
@@ -246,7 +249,6 @@
 		return ""
 
 	receive_signal(datum/signal/signal)
-		boutput(world, "Packet Received")
 		if (!signal || (!signal.data["address_tag"] && !signal.data["address_1"]))
 			return
 
@@ -292,13 +294,15 @@
 	name = "mining display"
 	mode = 6
 
+TYPEINFO(/obj/machinery/ai_status_display)
+	mats = list("MET-1"=2, "CON-1"=6, "CRY-1"=6)
+
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "ai_frame"
 	name = "\improper AI display"
 	anchored = 1
 	density = 0
-	mats = list("MET-1"=2, "CON-1"=6, "CRY-1"=6)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 
 	machine_registry_idx = MACHINES_STATUSDISPLAYS

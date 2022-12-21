@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/robotic_fabricator)
+	mats = 20
+
 /obj/machinery/robotic_fabricator
 	name = "Robotic Fabricator"
 	desc = "A machine that produces various objects for robotics from raw material."
@@ -8,7 +11,6 @@
 	var/metal_amount = 0
 	var/operating = 0
 	var/obj/item/parts/robot_parts/being_built = null
-	mats = 20
 
 /obj/machinery/robotic_fabricator/attackby(var/obj/item/O, var/mob/user)
 	if (istype(O, /obj/item/sheet/metal))

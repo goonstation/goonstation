@@ -337,6 +337,11 @@
 		playsound(src.loc, src.sound_off, 50, 1)
 		build_icon()
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.PCEL)
+			src.PCEL = null
+
 /*
 /Force field objects for various generators
 **/
@@ -464,6 +469,7 @@
 			src.icon_state = "shieldw"
 			src.color = "#FF33FF" //change colour for different power levels
 			src.powerlevel = 4
+			src.mouse_opacity = 0
 			flags = ALWAYS_SOLID_FLUID | FLUID_DENSE
 		else if(deployer != null && deployer.power_level == 1)
 			src.name = "Atmospheric Forcefield"
@@ -471,6 +477,7 @@
 			src.icon_state = "shieldw"
 			src.color = "#3333FF" //change colour for different power levels
 			src.powerlevel = 1
+			src.mouse_opacity = 0
 			flags = 0
 			gas_impermeable = TRUE
 		else if(deployer != null && deployer.power_level == 2)
@@ -479,6 +486,7 @@
 			src.icon_state = "shieldw"
 			src.color = "#33FF33"
 			src.powerlevel = 2
+			src.mouse_opacity = 0
 			flags = ALWAYS_SOLID_FLUID | FLUID_DENSE
 			gas_impermeable = TRUE
 		else if(deployer != null)
@@ -487,6 +495,7 @@
 			src.icon_state = "shieldw"
 			src.color = "#FF3333"
 			src.powerlevel = 3
+			src.mouse_opacity = 1
 			flags = ALWAYS_SOLID_FLUID | USEDELAY | FLUID_DENSE
 			density = 1
 
@@ -507,12 +516,17 @@
 			//these power levels are kind of arbitrary
 			if(src.powerlevel >= 2) src.flags |= FLUID_DENSE
 			if(src.powerlevel < 3) src.gas_impermeable = TRUE
+			if(src.powerlevel == 3)
+				src.mouse_opacity = 1
+				src.set_density(TRUE)
 		else
 			src.icon_state = ""
 			src.isactive = FALSE
 			src.invisibility = INVIS_ALWAYS_ISH //ehh whatever this "works"
 			src.flags &= ~FLUID_DENSE
 			src.gas_impermeable = FALSE
+			src.mouse_opacity = 0
+			src.set_density(FALSE)
 
 	proc/update_nearby_tiles(need_rebuild)
 		var/turf/simulated/source = loc

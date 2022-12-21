@@ -49,7 +49,7 @@ ABSTRACT_TYPE(/datum/material)
 	/// if not null, texture will be set when mat is applied.
 	var/texture = ""
 	/// How to blend the [/datum/material/var/texture].
-	var/texture_blend = ICON_MULTIPLY
+	var/texture_blend = BLEND_ADD
 
 	/// Should this even color the objects made from it? Mostly used for base station materials like steel
 	var/applyColor = 1
@@ -127,7 +127,6 @@ ABSTRACT_TYPE(/datum/material)
 	proc/addTrigger(var/list/L, var/datum/materialProc/D)
 		for(var/datum/materialProc/P in L)
 			if(P.type == D.type) return 0
-		D.owner = src
 		L.Add(D)
 		L[D] = 0
 		return
@@ -576,6 +575,8 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	desc = "Molitz is a common crystalline substance."
 	color = "#FFFFFF"
 	alpha = 180
+	var/unexploded = 1
+	var/iterations = 4
 
 	New()
 		..()
@@ -585,12 +586,11 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		addTrigger(triggersOnHit, new /datum/materialProc/molitz_on_hit())
 		addTrigger(triggersExp, new /datum/materialProc/molitz_exp())
 
-
 	beta
 		mat_id = "molitz_b"
 		name = "molitz beta"
 		color = "#ff2288"
-		desc = "A rare form of Molitz. When heated produces a powerful plasma fire catalyst."
+		desc = "A rare form of Molitz. When heated under special conditions it produces a powerful plasma fire catalyst."
 
 		New()
 			..()
@@ -839,6 +839,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	desc = "A rare complex crystalline matrix with a lazily shifting internal structure. Not to be confused with gneiss, a metamorphic rock."
 	color = "#1bdebd"
 	texture = "flock"
+	texture_blend = BLEND_OVERLAY
 
 	transparent
 		mat_id = "gnesisglass"
@@ -996,7 +997,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	alpha = 180
 	quality = 2
 	texture = "bubbles"
-	texture_blend = ICON_MULTIPLY
+	texture_blend = BLEND_ADD
 
 	edible_exact = 0.6 //Just barely edible
 	edible = 1
@@ -1030,9 +1031,17 @@ ABSTRACT_TYPE(/datum/material/organic)
 
 
 	butt
+		color = "#ebbd97"
 		mat_id = "butt"
 		name = "butt"
+		texture = "buttgrey"
+		texture_blend = BLEND_OVERLAY
 		desc = "...it's butt flesh. Why is this here. Why do you somehow know it's butt flesh. Fuck."
+
+		New()
+			..()
+			addTrigger(triggersPickup, new /datum/materialProc/onpickup_butt)
+			addTrigger(triggersOnHit, new /datum/materialProc/onpickup_butt)
 
 /datum/material/organic/char
 	mat_id = "char"
@@ -1100,7 +1109,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	desc = "Wood from some sort of tree."
 	color = "#331f16"
 	texture = "wood"
-	texture_blend = ICON_MULTIPLY
+	texture_blend = BLEND_ADD
 
 	New()
 		..()
@@ -1115,7 +1124,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	desc = "Bamboo is a giant woody grass."
 	color = "#544c24"
 	texture = "bamboo"
-	texture_blend = ICON_MULTIPLY
+	texture_blend = BLEND_ADD
 
 	New()
 		..()
@@ -1218,7 +1227,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	desc = "It's pepperoni pizza. Some would say the best kind of pizza"
 	color = "#FFFFFF"
 	texture = "pizza2"
-	texture_blend = ICON_OVERLAY
+	texture_blend = BLEND_SUBTRACT
 	edible_exact = 1
 	edible = 1
 
@@ -1233,7 +1242,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	desc = "Coral harvested from the sea floor."
 	color = "#990099"
 	texture = "coral"
-	texture_blend = ICON_OVERLAY
+	texture_blend = BLEND_SUBTRACT
 
 	New()
 		..()
@@ -1444,7 +1453,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	desc = "Wool of adorable furry space bees."
 	color = "#ffcc00"
 	texture = "bee"
-	texture_blend = ICON_OVERLAY
+	texture_blend = BLEND_SUBTRACT
 
 	New()
 		..()

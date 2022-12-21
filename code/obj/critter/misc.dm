@@ -885,7 +885,7 @@
 	desc = "A force of pure sorrow and evil. They shy away from that which is holy."
 	icon_state = "bling"
 	density = 1
-	health = 15
+	health = 50
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
@@ -922,7 +922,6 @@
 			else
 				continue
 
-
 	ChaseAttack(mob/M)
 		src.attacking = 1
 		if (narrator_mode)
@@ -931,22 +930,23 @@
 			playsound(src.loc, 'sound/effects/ghost.ogg', 30, 1, -1)
 		if(iscarbon(M) && prob(50))
 			boutput(M, "<span class='combat'><b>You are forced to the ground by the Bloodling!</b></span>")
-			random_brute_damage(M, rand(0,3))
-			M.changeStatus("stunned", 2 SECONDS)
-			M.changeStatus("weakened", 2 SECONDS)
+			random_brute_damage(M, rand(0,5))
+			M.changeStatus("stunned", 5 SECONDS)
+			M.changeStatus("weakened", 5 SECONDS)
 			src.attacking = 0
 			return
-
 
 	CritterAttack(mob/M)
 		playsound(src.loc, 'sound/effects/ghost2.ogg', 30, 1, -1)
 		attacking = 1
 		if(iscarbon(M))
-			if(prob(30))
-				random_brute_damage(M, rand(3,7))
+			if(prob(66))
+				random_brute_damage(M, rand(5,10))
+				take_bleeding_damage(M, null, rand(10,35), DAMAGE_CRUSH, 5, get_turf(M))
 				boutput(M, "<span class='combat'><b>You feel blood getting drawn out through your skin!</b></span>")
 			else
 				boutput(M, "<span class='combat'>You feel uncomfortable. Your blood seeks to escape you.</span>")
+				M.changeStatus("slowed", 3 SECONDS, 3)
 
 		SPAWN(0.5 SECONDS)
 			attacking = 0
@@ -966,6 +966,11 @@
 			else
 				boutput(user, "<span class='combat'>Hitting it with [W] is ineffective!</span>")
 				return
+
+	attack_hand(var/mob/user)
+		if (src.alive)
+			boutput(user, "<span class='combat'><b>Your hand passes right through!</b></span>")
+		return
 
 	ai_think()
 		if(!locate(/obj/decal/cleanable/blood) in src.loc)
@@ -1288,201 +1293,6 @@
 		src.visible_message("<b>[src.name]</b> says, \"[processedMessage]\"")
 		return
 
-/obj/critter/snake
-	name = "snake"
-	desc = "A snake. Not on a plane."
-	icon = 'icons/misc/critter.dmi'
-	icon_state = "snake"
-	density = 0
-	health = 25
-	aggressive = 1
-	defensive = 1
-	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
-	atkcarbon = 1
-	atksilicon = 1
-	atcritter = 0 // don't bother!
-	firevuln = 0.25
-	brutevuln = 0.5
-	generic = 0
-	var/double = 0
-	var/attack_damage = 5
-	var/image/colouring
-	var/allow_empty = 0
-	var/expiration_id = 1
-	var/had_keep_together = 0
-
-	New(loc, var/atom/movable/stick)
-		..()
-		// build mode shenaningans, spawn a snek in something for it to become a snek
-		if(!istype(loc, /turf))
-			stick = loc
-			src.set_loc(get_turf(loc))
-		src.update_stick(stick)
-
-	proc/snakify_name(var/name, var/double)
-		if((findtext(name, "s") || findtext(name, "S")) && prob(15))
-			if(double)
-				name = replacetext(name, "s", stutter("sss"))
-			else
-				name = replacetext(name, "s", stutter("ss"))
-			return "\improper[name]"
-		else if(prob(20))
-			var/part1 = "snak"
-			if(double) part1 = "double-[part1]"
-			var/part2 = copytext(name, round(length(name) / 2), 0)
-			return "\improper[part1][part2]"
-		else if(prob(20))
-			return "\improper slithering [double?"two-headed ":""][name]"
-		else
-			return "\improper[name] [double?"double-":""]snake"
-
-	proc/drop_stick(var/revert_message=0)
-		for(var/atom/movable/stick in src.contents)
-			stick.render_target = "\ref[stick]" // or just null?
-			stick.mouse_opacity = 1
-			stick.set_loc(src.loc)
-			if(revert_message)
-				src.visible_message("<span class='combat'><b>[src]</b> reverts into [stick]!</span>")
-			if(istype(stick, /obj/critter/snake))
-				var/obj/critter/snake/snake = stick
-				snake.start_expiration(2 MINUTES)
-			if(!src.had_keep_together)
-				stick.appearance_flags &= ~KEEP_TOGETHER
-		src.vis_contents = initial(src.vis_contents)
-		if(istype(src.colouring))
-			src.colouring.filters = null
-
-	proc/start_expiration(var/time)
-		var/this_expiration_id = rand(1, 100000)
-		src.expiration_id = this_expiration_id
-		SPAWN(time)
-			if(src?.alive && src.expiration_id == this_expiration_id)
-				src.health = 0
-				src.CritterDeath()
-
-	proc/update_stick(var/atom/movable/stick)
-		drop_stick()
-
-		src.double = initial(src.double)
-		src.attack_damage = initial(src.attack_damage)
-		src.icon_state = initial(src.icon_state)
-
-		if(stick == null)
-			src.icon_state = "snake_green"
-			src.name = initial(src.name)
-			src.desc = initial(src.desc)
-			src.allow_empty = 1
-			return
-
-		src.had_keep_together = src.appearance_flags & KEEP_TOGETHER
-
-		src.allow_empty = 0
-
-		stick.set_loc(src)
-		src.desc = "\A [stick] transformed into a snake. It will probably revert to its original state once dead."
-
-		var/do_stick_overlay = 0
-		if(istype(stick, /obj/critter/snake)) // alright, here I'm assuming that we're only going two levels deep, ok?
-			src.double = 1
-			src.icon_state = "snake_double"
-			var/obj/critter/snake/old_snake = stick
-			old_snake.expiration_id = 0 // we don't want it to expire inside us
-			if(old_snake.contents.len)
-				stick = old_snake.contents[1]
-			// so until the end of the proc stick is actually the real stick inside the snake, keep that in mind
-			do_stick_overlay = 1
-		else if(istype(stick, /obj/critter/domestic_bee))
-			src.icon_state = "snake_bee"
-		else if(istype(stick, /obj/item/baton))
-			src.icon_state = "snake_baton"
-		else if(istype(stick, /obj/item/staff/cthulhu))
-			src.icon_state = "snake_cthulhu"
-		else if(istype(stick, /obj/item/staff))
-			src.icon_state = "snake_staff"
-		else
-			do_stick_overlay = 1
-
-		src.name = src.snakify_name(stick.name, src.double)
-
-		if(istype(stick, /obj/item/staff))
-			src.health += 15
-			src.attack_damage += 3
-
-		if(do_stick_overlay)
-			stick.render_target = "*\ref[stick]"
-			stick.appearance_flags |= KEEP_TOGETHER
-			if(!src.render_target)
-				src.render_target = "\ref[src]"
-			colouring = new/image(null, src)
-			src.vis_contents += stick
-			stick.mouse_opacity = 0
-			//stick.appearance_flags |= KEEP_TOGETHER
-			colouring.filters += filter(type="layer", render_source=stick.render_target)
-			colouring.filters += filter(type="blur", size=6) // background big blur for tiny objects
-			colouring.filters += filter(type="layer", render_source=stick.render_target)
-			colouring.filters += filter(type="blur", size=2) // foreground just slightly blurred to preserve colours better
-			colouring.filters += filter(type="color", color=list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,0, 0.1,0.1,0.1,1) ) // alpha to 255 and darken a bit
-			colouring.filters += filter(type="alpha", render_source=src.render_target)
-			colouring.blend_mode = BLEND_MULTIPLY
-			world << colouring
-
-	seek_target()
-		src.anchored = 0
-		var/mob/living/Cc
-		for (var/mob/living/C in hearers(src.seekrange,src))
-			if (C.ckey == null) continue //do not attack non-threats ie. NPC monkeys and AFK players
-			if (iswizard(C)) continue //do not attack our master
-			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
-			if (iscarbon(C) && !src.atkcarbon) continue
-			if (istype(C, /mob/living/silicon/) && !src.atksilicon) continue
-			if (C.stat == 2) continue
-			if (iscarbon(C) && src.atkcarbon) src.attack = 1
-			if (istype(C, /mob/living/silicon/) && src.atksilicon) src.attack = 1
-			Cc = C
-
-		if (src.attack)
-			src.target = Cc
-			src.oldtarget_name = Cc.name
-			//src.visible_message("<span class='combat'><b>[src]</b> charges at [Cc.name]!</span>")
-			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 25, 1, -1) // cat hiss, snake hiss - basically the same thing, right?
-			src.task = "chasing"
-			return
-
-	proc/contents_check()
-		if(!src.allow_empty && !length(src.contents))
-			src.visible_message("<span class='notice'><B>[src]</B> realizes that its material essence is missing and vanishes in a puff of logic!</span>")
-			qdel(src)
-
-	CritterAttack(mob/M)
-		contents_check()
-		src.attacking = 1
-		M.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
-		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
-		random_brute_damage(M, rand(src.attack_damage, src.attack_damage + 5))
-		SPAWN(1 SECOND)
-			src.attacking = 0
-
-	CritterDeath()
-		if (!src.alive) return
-		..()
-		drop_stick(1)
-		qdel(src)
-
-	on_pet(mob/user)
-		..()
-		if(prob(10))
-			if(icon_state == "snake_bee")
-				src.visible_message("[src] buzzes delightedly!")
-			else
-				src.visible_message("[src] slithers around happily!")
-
-	Cross(atom/mover)
-		if (istype(mover, /obj/projectile))
-			return prob(50)
-		else
-			return ..()
-
 /obj/critter/spacerattlesnake
 	name = "space rattlesnake"
 	desc = "A rattlesnake in space."
@@ -1556,7 +1366,7 @@
 				break
 
 	attackby(obj/item/W, mob/M)
-		if(istype(W, /obj/item/reagent_containers/food/snacks) && !(M in src.friends))
+		if(istype(W, /obj/item/reagent_containers/food/snacks) && !(M in src.friends) && src.alive)
 			if(prob(25))
 				src.visible_message("<span class='notice'>[src] munches happily on the [W], and seems a little friendlier with [M]!</span>")
 				src.friends += M

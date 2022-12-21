@@ -13,9 +13,14 @@
 	blinded = 0
 	anchored = 1
 	use_stamina = 0//no puff tomfuckery
+	respect_view_tint_settings = TRUE
+	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	var/compute = 0
 	var/datum/flock/flock = null
 	var/wear_id = null // to prevent runtimes from AIs tracking down radio signals
+
+	var/afk_counter = 0
+	var/turf/previous_turf = null
 
 /mob/living/intangible/flock/New()
 	..()
@@ -25,13 +30,13 @@
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_FLOCK)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
-	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	src.see_invisible = INVIS_FLOCK
 	src.see_in_dark = SEE_DARK_FULL
 	/// funk that color matrix up, my friend
-	src.apply_color_matrix(COLOR_MATRIX_FLOCKMIND, COLOR_MATRIX_FLOCKMIND_LABEL)
+	src.apply_color_matrix(COLOR_MATRIX_FLOCKMIND, COLOR_MATRIX_FLOCKMIND_LABEL, TRUE)
 	//src.render_special.set_centerlight_icon("flockvision", "#09a68c", BLEND_OVERLAY, PLANE_FLOCKVISION, alpha=196)
 	//src.render_special.set_widescreen_fill(color="#09a68c", plane=PLANE_FLOCKVISION, alpha=196)
+	src.previous_turf = get_turf(src)
 
 /mob/living/intangible/flock/Login()
 	..()
@@ -61,11 +66,22 @@
 			plane.alpha = 0
 	..()
 
-/mob/living/intangible/flock/flockmind/Life(datum/controller/process/mobs/parent)
+
+/mob/living/intangible/flock/Move(NewLoc, direct)
+	if (istype(NewLoc, /turf/cordon))
+		return FALSE
+	..()
+
+/mob/living/intangible/flock/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return 1
 	if (src.client)
 		src.antagonist_overlay_refresh(0, 0)
+	if (get_turf(src) == src.previous_turf)
+		src.afk_counter += parent.schedule_interval
+	else
+		src.afk_counter = 0
+		src.previous_turf = get_turf(src)
 
 /mob/living/intangible/flock/is_spacefaring() return 1
 /mob/living/intangible/flock/say_understands() return 1
@@ -79,8 +95,6 @@
 
 /mob/living/intangible/flock/Move(NewLoc, direct)
 	src.set_dir(get_dir(src, NewLoc))
-	if (isturf(NewLoc) && istype(NewLoc, /turf/unsimulated/wall)) // no getting past these walls, fucko
-		return 0
 	..()
 
 /mob/living/intangible/flock/attack_hand(mob/user)
@@ -123,9 +137,14 @@
 	// HAAAAA
 	src.visible_message("<span class='alert'>[src] is not a ghost, and is therefore unaffected by [P]!</span>","<span class='notice'>You feel a little [pick("less", "more")] [pick("fuzzy", "spooky", "glowy", "flappy", "bouncy")].</span>")
 
-/mob/living/intangible/flock/click(atom/target, params)
-	src.closeContextActions()
+/mob/living/intangible/flock/proc/select_drone(mob/living/critter/flock/drone/drone)
+	var/datum/abilityHolder/flockmind/holder = src.abilityHolder
+	holder.drone_controller.drone = drone
+	drone.AddComponent(/datum/component/flock_ping/selected)
+	src.targeting_ability = holder.drone_controller
+	src.update_cursor()
 
+/mob/living/intangible/flock/click(atom/target, params)
 	if (targeting_ability)
 		..()
 		return
@@ -140,14 +159,15 @@
 		src.examine_verb(target)
 		return
 
-	var/mob/living/critter/flock/drone/drone = target
-	if (istype(drone) && !drone.dormant)
-		//we have to do this manually in order to handle the input properly
-		var/datum/contextAction/active_actions = list()
-		for (var/datum/contextAction/action as anything in drone.contexts)
-			if (action.checkRequirements(target, src))
-				active_actions += action
-		src.showContextActions(active_actions, drone)
+	if (istype(target, /mob/living/critter/flock/drone))
+		src.select_drone(target)
+		return
+
+	//moved from flock_structure_ghost for interfering with ability targeting
+	if (istype(target, /obj/flock_structure/ghost))
+		var/obj/flock_structure/ghost/tealprint = target
+		if (!tealprint.fake && tgui_alert(usr, "Cancel tealprint construction?", "Tealprint", list("Yes", "No")) == "Yes")
+			tealprint.cancelBuild()
 		return
 
 	src.examine_verb(target) //default to examine
@@ -186,7 +206,7 @@
 
 // why this isn't further up the tree i have no idea
 /mob/living/intangible/flock/emote(var/act, var/voluntary = 0)
-
+	..()
 	if (findtext(act, " ", 1, null))
 		var/t1 = findtext(act, " ", 1, null)
 		act = copytext(act, 1, t1)
@@ -220,7 +240,7 @@
 
 
 /mob/living/intangible/flock/proc/createstructure(obj/flock_structure/structure_type, resources = 0)
-	new /obj/flock_structure/ghost(get_turf(src), structure_type, src.flock, resources)
+	new /obj/flock_structure/ghost(get_turf(src), src.flock, structure_type, resources)
 
 //compute - override if behaviour is weird
 /mob/living/intangible/flock/proc/compute_provided()

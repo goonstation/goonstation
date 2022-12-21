@@ -12,7 +12,7 @@
 	use_stamina = 0
 	mob_flags = SPEECH_BLOB
 
-	var/datum/tutorial_base/blob/tutorial
+	var/datum/tutorial_base/regional/blob/tutorial
 	var/attack_power = 1
 	var/bio_points = 0
 	var/bio_points_max = 1
@@ -64,6 +64,8 @@
 	var/extra_try_timestamp = 0
 
 	var/last_blob_life_tick = 0 //needed for mult to properly work for blob abilities
+
+	var/admin_override = FALSE //for sudo blobs
 
 	proc/start_tutorial()
 		if (tutorial)

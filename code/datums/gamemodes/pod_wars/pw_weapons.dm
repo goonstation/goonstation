@@ -1,4 +1,7 @@
 ///////////////////////////////////////PW Blasters
+TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
+	mats = 0
+
 /obj/item/gun/energy/blaster_pod_wars
 	name = "blaster pistol"
 	desc = "A dangerous-looking blaster pistol. It's self-charging by a radioactive power cell."
@@ -7,7 +10,6 @@
 	item_state = "pw_pistol_nt"
 	w_class = W_CLASS_NORMAL
 	force = 8
-	mats = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/pod_wars_basic
 
 	var/image/indicator_display = null
@@ -16,7 +18,7 @@
 	var/team_num = 0	//1 is NT, 2 is Syndicate
 
 	shoot(var/target,var/start,var/mob/user)
-		if (canshoot())
+		if (canshoot(user))
 			if (team_num)
 				if (team_num == get_pod_wars_team_num(user))
 					return ..(target, start, user)
@@ -29,7 +31,7 @@
 				return ..(target, start, user)
 
 	shoot_point_blank(atom/target, mob/user, second_shot)
-		if (canshoot())
+		if (canshoot(user))
 			if (team_num)
 				if (team_num == get_pod_wars_team_num(user))
 					return ..(target, user)
@@ -109,7 +111,7 @@
 	icon_state = "recharger_cell"
 	charge = 200
 	max_charge = 200
-	recharge_rate = 10
+	recharge_rate = 5
 
 /obj/item/ammo/power_cell/self_charging/pod_wars_standard
 	name = "Power Cell - Standard Radioisotope"
@@ -118,7 +120,7 @@
 	icon_state = "recharger_cell"
 	charge = 300
 	max_charge = 300
-	recharge_rate = 15
+	recharge_rate = 8
 
 /obj/item/ammo/power_cell/self_charging/pod_wars_high
 	name = "Power Cell - Robust Radioisotope "
@@ -127,7 +129,7 @@
 	icon_state = "recharger_cell"
 	charge = 350
 	max_charge = 350
-	recharge_rate = 30
+	recharge_rate = 15
 
 //////////survival_machete//////////////
 /obj/item/survival_machete
@@ -186,7 +188,7 @@
 			if (istype(L))
 
 				// var/datum/projectile/P = new PJ.spread_projectile_type		//dummy projectile to get power level
-				L.TakeDamage("chest", 0, ((initial(custom_projectile_type.power)/4)*pellets_to_fire)/L.get_ranged_protection(), 0, DAMAGE_BURN)
+				L.TakeDamage("chest", 0, ((initial(custom_projectile_type.damage)/4)*pellets_to_fire)/L.get_ranged_protection(), 0, DAMAGE_BURN)
 				L.emote("twitch_v")
 			else
 				shoot_projectile_ST(get_turf(src), PJ, get_step(src, NORTH))

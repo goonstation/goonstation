@@ -32,13 +32,13 @@
 	proc/railing_break(obj/railing/The_Railing)
 		if(!(railing_is_broken(The_Railing)))
 			The_Railing.broken = 1
-			The_Railing.density = 0
+			The_Railing.set_density(FALSE)
 			var/random_sprite = rand(1, 4)
 			The_Railing.icon_state = "railing-broken-" + "[random_sprite]"
 
 	proc/railing_fix(obj/railing/The_Railing)
 		if(railing_is_broken(The_Railing))
-			The_Railing.density = 1
+			The_Railing.set_density(TRUE)
 			The_Railing.broken = 0
 
 

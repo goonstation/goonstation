@@ -35,6 +35,12 @@
 #define LANDMARK_SYNDICATE_ASSAULT_POD_TELE "Syndicate-Assault-Pod-Tele"
 #define LANDMARK_SYNDICATE_ASSAULT_POD_COMP "Syndicate-Assault-Pod-Comp"
 
+// Salvagers
+
+#define LANDMARK_SALVAGER "Salvager-Spawn"
+#define LANDMARK_SALVAGER_BEACON "Salvager-Beacon"
+#define LANDMARK_SALVAGER_TELEPORTER "Salvager-Tele"
+
 // misc and unused
 #define LANDMARK_CHARACTER_PREVIEW_SPAWN "character preview"
 
@@ -53,6 +59,7 @@
 #define LANDMARK_AI_GUNBOT_SHUTTLE "AIgunbotshuttle" // MALF AI module thing
 #define LANDMARK_BIGBOOM "bigboom" // unfinished Manta event
 #define LANDMARK_TUTORIAL_START "tutorial_start_marker"
+#define LANDMARK_TUTORIAL_FLOCK_CONVERSION "tutorial_flock_conversion"
 #define LANDMARK_CRUISER_ENTRANCE "cruiser_entrance"
 #define LANDMARK_CRUISER_CENTER "cruiser_center"
 // loading screen maptext landmarks

@@ -10,7 +10,7 @@
 			var/use_volume = 0.5 * mult //amount applied via touch
 			var/waste_volume = use_volume * max(length(owner.skin_process) * 0.75, 1) //amount that gets removed from the patch. Half of this gets transferred into the body
 
-			for (var/atom/A as anything in owner.skin_process)
+			for (var/atom/movable/A as anything in owner.skin_process)
 
 				if (A.loc != owner)
 					owner.skin_process -= A
@@ -21,7 +21,9 @@
 					A.reagents.trans_to(owner, waste_volume/2)
 					A.reagents.remove_any(waste_volume/2)
 				else
-					if (!A.disposed)
-						stack_trace("Disposed patch [A] ([A.type]) was in mob [owner] ([owner.type])'s skin process. Deleting.")
-					qdel(A)
+					if (A.disposed)
+						stack_trace("Disposed patch [identify_object(A)] was in mob [identify_object(owner)]'s skin process. Removing.")
+						A.set_loc(null)
+					else
+						qdel(A)
 		..()

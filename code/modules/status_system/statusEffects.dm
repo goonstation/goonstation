@@ -113,7 +113,7 @@
 		. = 0
 
 	disposing()
-		if (owner)
+		if (owner?.statusEffects)
 			owner.statusEffects -= src
 		src.owner = null
 		..()
@@ -519,11 +519,11 @@
 
 		proc/getStage()
 			. = 1
-			if(min(duration*2, counter) < BURNING_LV2)
-				return
-			else if (min(duration*2, counter) >= BURNING_LV2 && min(duration*2, counter) < BURNING_LV3)
+			if(min(duration, counter) + duration/2 < BURNING_LV2)
+				return 1
+			else if (min(duration, counter) + duration/2 >= BURNING_LV2 && min(duration, counter) + duration/2 < BURNING_LV3)
 				return 2
-			else if (min(duration*2, counter) >= BURNING_LV3)
+			else if (min(duration, counter) + duration/2 >= BURNING_LV3)
 				return 3
 
 		proc/switchStage(var/toStage)
@@ -566,13 +566,13 @@
 
 			switch(stage)
 				if(1)
-					damage_burn = 1 * prot
+					damage_burn = 1.5 * prot
 					howMuch = ""
 				if(2)
-					damage_burn = 2 * prot
+					damage_burn = 2.5 * prot
 					howMuch = "very much "
 				if(3)
-					damage_burn = 4 * prot
+					damage_burn = 5 * prot
 					howMuch = "extremely "
 
 			return ..(timePassed)
@@ -932,6 +932,15 @@
 		maxDuration = 500 SECONDS
 		unique = 1
 		change = 2
+
+	staminaregen/darkness
+		id = "darkness_stam_regen"
+		name = "Dark vigor"
+		desc = "Your stamina regen is increased"
+		icon_state = "stam+"
+		maxDuration = 60 SECONDS
+		unique = TRUE
+		change = 5
 
 	fitness_staminamax
 		id = "fitness_stam_max"
@@ -1577,6 +1586,36 @@
 	maxDuration = null
 	change = -5
 
+/datum/statusEffect/staminaregen/zephyr_field
+	id = "zephyr_field"
+	name = "Zephyr Field"
+	desc = "A bioelectric field is invigorating you."
+	icon_state = "stam+"
+	maxDuration = 9 SECONDS
+	unique = 1
+	change = 8
+
+	getTooltip()
+		. = "A feeling of invigoration permeates you."
+
+/datum/statusEffect/staminaregen/clone
+	id = "stamclone"
+	name = "Weakened"
+	desc = "You feel a bit weaker than usual."
+	icon_state = "stam-"
+	duration = INFINITE_STATUS
+	maxDuration = null
+
+	onAdd(optional=null)
+		if (!optional)
+			stack_trace("Added /datum/statusEffect/staminaregen/clone with 0/null duration.")
+			qdel(src)
+			return
+
+		src.change = optional
+		. = ..()
+
+
 /datum/statusEffect/miasma
 	id = "miasma"
 	name = "Miasma"
@@ -2072,13 +2111,15 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			M.bioHolder.AddEffect("sims_stinky")
+			M.bioHolder?.AddEffect("sims_stinky")
+		START_TRACKING_CAT(TR_CAT_RANCID_STUFF)
 
 	onRemove()
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			M.bioHolder.RemoveEffect("sims_stinky")
+			M.bioHolder?.RemoveEffect("sims_stinky")
+		STOP_TRACKING_CAT(TR_CAT_RANCID_STUFF)
 
 /datum/statusEffect/flock_absorb
 	id = "flock_absorbing"
@@ -2178,3 +2219,96 @@
 			defib.set_icon_state("[defib.icon_base]-off")
 		if(duration <= 0)//timed out
 			playsound(owner, "sparks", 50, 1, -10)
+
+/datum/statusEffect/gnesis_tint
+	id = "gnesis_tint"
+	visible = FALSE
+	unique = TRUE
+
+	onAdd(optional)
+		. = ..()
+		owner.add_filter("gnesis_tint", 1, color_matrix_filter(normalize_color_to_matrix("#309179")))
+
+	onRemove()
+		. = ..()
+		owner.remove_filter("gnesis_tint")
+
+#define LAUNDERED_COLDPROT_AMOUNT 2 /// Amount of coldprot(%) given to each item of wearable clothing
+#define LAUNDERED_STAIN_TEXT "freshly-laundered" /// Name of the "stain" given to wearable clothing
+/datum/statusEffect/freshly_laundered
+	id = "freshly_laundered"
+	name = "Freshly Laundered"
+
+	visible = FALSE
+	unique = TRUE
+	maxDuration = 5 MINUTES
+
+	onAdd(optional)
+		. = ..()
+		if (istype(owner, /obj/item/clothing/))
+			var/obj/item/clothing/C = owner
+			C.add_stain(LAUNDERED_STAIN_TEXT) // we just cleaned them so this is cheeky...
+			C.setProperty("coldprot", C.getProperty("coldprot") + LAUNDERED_COLDPROT_AMOUNT)
+
+	onRemove()
+		. = ..()
+		if (istype(owner, /obj/item/clothing/))
+			var/obj/item/clothing/C = owner
+			C.setProperty("coldprot", C.getProperty("coldprot") - LAUNDERED_COLDPROT_AMOUNT)
+			if (C.stains)
+				C.stains -= LAUNDERED_STAIN_TEXT
+
+#undef LAUNDERED_COLDPROT_AMOUNT
+#undef LAUNDERED_STAIN_TEXT
+
+/datum/statusEffect/criticalcondition
+	id = "critical_condition"
+	name = "Critical Condition"
+	icon_state = "heart-"
+	maxDuration = 10 SECONDS
+	var/mob/living/carbon/human/H
+
+	getTooltip()
+		. = "You are in very bad shape. Max stamina reduced by 100 and stamina regen reduced by 5."
+
+	onAdd(optional=null)
+		. = ..()
+		if (ishuman(owner))
+			H = owner
+		else
+			owner.delStatus("critical_condition")
+		H.delStatus("recent_trauma") // Cancel out recent trauma, you is back in trauma, baybeee
+		APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "critical_condition", -5)
+		H.add_stam_mod_max("critical_condition", -100)
+
+	onRemove()
+		. = ..()
+		REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "critical_condition")
+		H.remove_stam_mod_max("critical_condition")
+		H.changeStatus("recent_trauma", 90 SECONDS)
+
+
+/datum/statusEffect/recenttrauma
+	id = "recent_trauma"
+	name = "Recent Trauma"
+	icon_state = "-"
+	maxDuration = 90 SECONDS
+	var/mob/living/carbon/human/H
+
+	getTooltip()
+		. = "You are recovering from being in critical condition. Max stamina reduced by 50 and stamina regen reduced by 2."
+
+	onAdd(optional=null)
+		. = ..()
+		if (ishuman(owner))
+			H = owner
+		else
+			owner.delStatus("recent_trauma")
+		APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "recent_trauma", -2)
+		H.add_stam_mod_max("recent_trauma", -50)
+
+	onRemove()
+		. = ..()
+		REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "recent_trauma")
+		H.remove_stam_mod_max("recent_trauma")
+

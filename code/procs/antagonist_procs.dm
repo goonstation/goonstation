@@ -268,7 +268,7 @@
 		synd_mob.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/commissar_cap(synd_mob), synd_mob.slot_head)
 		synd_mob.equip_if_possible(new /obj/item/clothing/suit/space/syndicate/commissar_greatcoat(synd_mob), synd_mob.slot_wear_suit)
 		synd_mob.equip_if_possible(new /obj/item/device/radio/headset/syndicate/leader(synd_mob), synd_mob.slot_ears)
-		synd_mob.equip_if_possible(new /obj/item/katana_sheath/nukeop(synd_mob), synd_mob.slot_r_hand)
+		synd_mob.equip_if_possible(new /obj/item/swords_sheaths/nukeop(synd_mob), synd_mob.slot_r_hand)
 		synd_mob.equip_if_possible(new /obj/item/device/nukeop_commander_uplink(synd_mob), synd_mob.slot_l_hand)
 	else
 		synd_mob.equip_if_possible(new /obj/item/device/radio/headset/syndicate(synd_mob), synd_mob.slot_ears)

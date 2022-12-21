@@ -12,7 +12,8 @@
 
 	var/welding = 0
 	var/status = 0 // flamethrower construction :shobon:
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	tool_flags = TOOL_WELDING
 	force = 3
 	throwforce = 5
@@ -36,7 +37,8 @@
 		src.inventory_counter.update_number(get_fuel())
 
 		src.setItemSpecial(/datum/item_special/flame)
-		return
+
+		AddComponent(/datum/component/loctargeting/simple_light, 255, 110, 135, 125, src.welding)
 
 	examine()
 		. = ..()
@@ -189,12 +191,15 @@
 			processing_items |= src
 			if(user && !ON_COOLDOWN(src, "playsound", 1.3 SECONDS))
 				playsound(src.loc, 'sound/effects/welder_ignite.ogg', 65, 1)
+			SEND_SIGNAL(src, COMSIG_LIGHT_ENABLE)
+
 		else
 			boutput(user, "<span class='notice'>Not welding anymore.</span>")
 			src.force = 3
 			hit_type = DAMAGE_BLUNT
 			set_icon_state("weldingtool-off" + src.icon_state_variant_suffix)
 			src.item_state = "weldingtool-off" + src.item_state_variant_suffix
+			SEND_SIGNAL(src, COMSIG_LIGHT_DISABLE)
 		user.update_inhands()
 		return
 
@@ -260,6 +265,12 @@
 					safety = 2
 				else
 					safety = 0
+			else if (istype(H.head, /obj/item/clothing/head/helmet/space/industrial))
+				var/obj/item/clothing/head/helmet/space/industrial/helmet = H.head
+				if (helmet.has_visor && helmet.visor_enabled)
+					safety = -1
+				else
+					safety = 2
 			else if (istype(H.head, /obj/item/clothing/head/helmet/space))
 				safety = 2
 			else if (istype(H.glasses, /obj/item/clothing/glasses/sunglasses) || H.eye_istype(/obj/item/organ/eye/cyber/sunglass))
@@ -341,6 +352,12 @@
 				src.eyecheck(user)
 			return 1 //welding, has fuel
 		return 0 //not welding
+
+/obj/item/weldingtool/yellow
+	icon_state = "weldingtool-off-yellow"
+	item_state = "weldingtool-off-yellow"
+	icon_state_variant_suffix = "-yellow"
+	uses_multiple_icon_states = 1
 
 /obj/item/weldingtool/vr
 	icon_state = "weldingtool-off-vr"

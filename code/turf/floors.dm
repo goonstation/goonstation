@@ -587,6 +587,9 @@
 /turf/simulated/floor/darkpurple/side
 	icon_state = "dpurple"
 
+/turf/simulated/floor/darkpurple/corner
+	icon_state = "dpurplecorner"
+
 /////////////////////////////////////////
 
 /turf/simulated/floor/yellow
@@ -810,6 +813,12 @@ DEFINE_FLOORS(twotone/blue,
 DEFINE_FLOORS(twotone/yellow,
 	icon_state = "twotone_yellow")
 
+DEFINE_FLOORS(twotone/white,
+	icon_state = "twotone_white")
+
+DEFINE_FLOORS(twotone/black,
+	icon_state = "twotone_black")
+
 /////////////////////////////////////////
 
 DEFINE_FLOORS(terrazzo,
@@ -845,16 +854,36 @@ DEFINE_FLOORS(marble/border_wb,
 
 /////////////////////////////////////////
 
-DEFINE_FLOORS(glassblock,
-	name = "glass block tiling";\
-	icon = 'icons/turf/floors.dmi';\
-	icon_state = "glass_small";\
-	mat_appearances_to_ignore = list("steel","synthrubber");\
-	step_material = "step_wood";\
-	step_priority = STEP_PRIORITY_MED)
+/turf/simulated/floor/glassblock
+	name = "glass block tiling"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "glass_small"
+	mat_appearances_to_ignore = list("steel","synthrubber","glass")
+	step_material = "step_wood"
+	step_priority = STEP_PRIORITY_MED
+	mat_changename = 0
 
-DEFINE_FLOORS(glassblock/large,
-	icon_state = "glass_large")
+	New()
+		plate_mat = getMaterial("glass")
+		..()
+
+/turf/simulated/floor/glassblock/large
+	icon_state = "glass_large"
+
+/turf/simulated/floor/glassblock/transparent_cyan
+	icon_state = "glasstr_cyan"
+
+/turf/simulated/floor/glassblock/transparent_indigo
+	icon_state = "glasstr_indigo"
+
+/turf/simulated/floor/glassblock/transparent_red
+	icon_state = "glasstr_red"
+
+/turf/simulated/floor/glassblock/transparent_grey
+	icon_state = "glasstr_grey"
+
+/turf/simulated/floor/glassblock/transparent_purple
+	icon_state = "glasstr_purple"
 
 /////////////////////////////////////////
 
@@ -927,33 +956,6 @@ DEFINE_FLOORS(minitiles/black,
 
 /turf/simulated/floor/escape/corner
 	icon_state = "escapecorner"
-
-/////////////////////////////////////////
-
-/turf/simulated/floor/delivery
-	icon_state = "delivery"
-
-/turf/simulated/floor/delivery/white
-	icon_state = "delivery_white"
-
-/turf/simulated/floor/delivery/caution
-	icon_state = "deliverycaution"
-
-
-/turf/simulated/floor/bot
-	icon_state = "bot"
-
-/turf/simulated/floor/bot/white
-	icon_state = "bot_white"
-
-/turf/simulated/floor/bot/blue
-	icon_state = "bot_blue"
-
-/turf/simulated/floor/bot/darkpurple
-	icon_state = "bot_dpurple"
-
-/turf/simulated/floor/bot/caution
-	icon_state = "botcaution"
 
 /////////////////////////////////////////
 
@@ -1440,6 +1442,41 @@ DEFINE_FLOORS(techfloor/green,
 
 /////////////////////////////////////////
 
+//// some other floors ////
+
+/turf/simulated/floor/marslike
+	name = "imitation martian dirt"
+	desc = "Wow, you almost believed it was real martian dirt for a moment!"
+	icon = 'icons/misc/mars_outpost.dmi'
+	icon_state = "placeholder"
+	step_material = "step_outdoors"
+	step_priority = STEP_PRIORITY_MED
+	mat_appearances_to_ignore = list("steel")
+
+/turf/simulated/floor/marslike/t1
+	icon_state = "t1"
+/turf/simulated/floor/marslike/t2
+	icon_state = "t2"
+/turf/simulated/floor/marslike/t3
+	icon_state = "t4"
+/turf/simulated/floor/marslike/t4
+	icon_state = "t4"
+
+/turf/simulated/floor/stone
+	name = "stone"
+	icon = 'icons/turf/dojo.dmi'
+	icon_state = "stone"
+	mat_appearances_to_ignore = list("steel","rock")
+	mat_changename = 0
+	mat_changedesc = 0
+
+	New()
+		plate_mat = getMaterial("rock")
+		..()
+
+/////////////////////////////////////////
+
+
 /* Outdoors tilesets - Walp */
 
 DEFINE_FLOORS(grasslush,
@@ -1588,7 +1625,13 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 /turf/simulated/floor/Cross(atom/movable/mover)
 	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
 		if (!( locate(/obj/machinery/mass_driver, src) ))
-			return 0
+			var/obj/machinery/vehicle/O = mover
+			if (istype(O?.sec_system, /obj/item/shipcomponent/secondary_system/crash)) //For ships crashing with the SEED
+				var/obj/item/shipcomponent/secondary_system/crash/I = O.sec_system
+				if (I.crashable)
+					mover.Bump(src)
+					return TRUE
+			return FALSE
 	return ..()
 
 /turf/simulated/shuttle/Cross(atom/movable/mover)
@@ -1998,14 +2041,6 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		else
 			return
 
-	// hi i don't know where else to put this :D - cirr
-	else if (istype(C, /obj/item/martianSeed))
-		var/obj/item/martianSeed/S = C
-		if(S)
-			S.plant(src)
-			logTheThing(LOG_STATION, user, "plants a martian biotech seed (<b>Structure:</b> [S.spawn_path]) at [log_loc(src)].")
-			return
-
 	//also in turf.dm. Put this here for lowest priority.
 	else if (src.temp_flags & HAS_KUDZU)
 		var/obj/spacevine/K = locate(/obj/spacevine) in src.contents
@@ -2164,8 +2199,12 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 // --------------------------------------------
 
 /turf/proc/fall_to(var/turf/T, var/atom/movable/A)
-	if(istype(A, /obj/overlay/tile_effect)) //Ok enough light falling places. Fak.
+	if(istype(A, /obj/overlay) || A.anchored == 2)
 		return
+	#ifdef CHECK_MORE_RUNTIMES
+	if(current_state <= GAME_STATE_WORLD_NEW)
+		CRASH("[identify_object(A)] fell into [src] at [src.x],[src.y],[src.z] ([src.loc] [src.loc.type]) during world initialization")
+	#endif
 	if (isturf(T))
 		visible_message("<span class='alert'>[A] falls into [src]!</span>")
 		if (ismob(A))
@@ -2254,7 +2293,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 			icon_state = "deeps"
 
 			Entered(atom/A as mob|obj)
-				if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
+				if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/living/intangible))
 					return ..()
 
 				var/turf/T = pick_landmark(LANDMARK_FALL_DEEP)

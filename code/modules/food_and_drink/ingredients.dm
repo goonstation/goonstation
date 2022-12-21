@@ -1,5 +1,6 @@
 // Ingredients
 
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 /obj/item/reagent_containers/food/snacks/ingredient
 	name = "ingredient"
 	desc = "you shouldnt be able to see this"
@@ -17,6 +18,7 @@
 	var/blood = 7 //how much blood cleanables we are allowed to spawn
 
 	heal(var/mob/living/M)
+		..()
 		if (prob(33))
 			boutput(M, "<span class='alert'>You briefly think you probably shouldn't be eating raw meat.</span>")
 			M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
@@ -122,6 +124,7 @@
 		src.pixel_y += rand(-4,4)
 
 	heal(var/mob/M)
+		..()
 		M.nutrition += 20
 		return
 
@@ -417,16 +420,6 @@
 			user.u_equip(src)
 			user.put_in_hand_or_drop(P)
 			qdel(src)
-		else if (iscuttingtool(W) || issawingtool(W))
-			boutput(user, "<span class='notice'>You cut the dough into two strips.</span>")
-			if (prob(25))
-				JOB_XP(user, "Chef", 1)
-			if(prob(1))
-				playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
-				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
-			for(var/i = 1, i <= 2, i++)
-				new /obj/item/reagent_containers/food/snacks/ingredient/dough_strip(get_turf(src))
-			qdel(src)
 		else if (istype(W, /obj/item/kitchen/utensil/fork))
 			boutput(user, "<span class='notice'>You stab holes in the dough. How vicious.</span>")
 			if (prob(25))
@@ -437,6 +430,16 @@
 			var/obj/item/reagent_containers/food/snacks/ingredient/holey_dough/H = new /obj/item/reagent_containers/food/snacks/ingredient/holey_dough(W.loc)
 			user.u_equip(src)
 			user.put_in_hand_or_drop(H)
+			qdel(src)
+		else if (iscuttingtool(W) || issawingtool(W))
+			boutput(user, "<span class='notice'>You cut the dough into two strips.</span>")
+			if (prob(25))
+				JOB_XP(user, "Chef", 1)
+			if(prob(1))
+				playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
+				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
+			for(var/i = 1, i <= 2, i++)
+				new /obj/item/reagent_containers/food/snacks/ingredient/dough_strip(get_turf(src))
 			qdel(src)
 		else if (istype(W, /obj/item/robodefibrillator))
 			boutput(user, "<span class='notice'>You defibrilate the dough, yielding a perfect stack of flapjacks.</span>")
@@ -466,7 +469,6 @@
 					user.visible_message("<b class='alert'>[user] tries to baton fry the dough, but fries [his_or_her(user)] hand instead!</b>")
 					playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 30, 1, -1)
 					user.do_disorient(baton.stamina_damage, weakened = baton.stun_normal_weakened * 10, disorient = 80) //cut from batoncode to bypass all the logging stuff
-					user.emote("scream")
 			else
 				boutput(user, "<span class='notice'>You [user.a_intent == "harm" ? "beat" : "prod"] the dough. The dough doesn't react.</span>")
 		else ..()
@@ -678,7 +680,7 @@
 				heal_amt += 4
 			else
 				heal_amt += round((F.heal_amt * F.bites_left)/bites_left) + 1
-			topping_color = F.food_color
+			topping_color = F.get_food_color()
 			if(num < 3)
 				num ++
 				add_topping(src.num)
@@ -765,7 +767,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles)
 /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles
 	name = "wheat noodles"
 	heal_amt = 0
-	amount = 1
 
 	heal(var/mob/M)
 		boutput(M, "<span class='alert'>Ew, disgusting...</span>")
@@ -802,6 +803,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles)
 	food_color = "#FFFF99"
 
 	heal(var/mob/M)
+		..()
 		boutput(M, "<span class='alert'>Raw potato tastes pretty nasty...</span>") // does it?
 
 
@@ -884,12 +886,10 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	name = "fish paste"
 	desc = "An unappetizing clump of mashed fish bits."
 	icon_state = "fishpaste"
-	amount = 1
 /obj/item/reagent_containers/food/snacks/ingredient/kamaboko
 	name = "kamaboko"
 	desc = "A slice of fish cake with a cute little spiral in the center."
 	icon_state = "kamaboko"
-	amount = 1
 	custom_food = 1
 	food_color = "#ffffff"
 
@@ -897,10 +897,10 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	name = "kamaboko log"
 	desc = "What a strange-looking fish."
 	icon_state = "kamaboko-log"
-	amount = 3
 	custom_food = 1
 	food_color = "#ffffff"
 	doants = 0
+	bites_left = 3
 
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))

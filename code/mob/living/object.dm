@@ -51,7 +51,7 @@
 				src.max_health = 100
 				src.health = 100
 			else
-				stack_trace("Tried to create a possessed object from invalid thing [src.possessed_thing] of type [src.possessed_thing.type]!")
+				stack_trace("Tried to create a possessed object from invalid thing [identify_object(src)]!")
 				boutput(controller, "<h3 class='alert'>Uh oh, you tried to possess something illegal! Here's a toolbox instead!</h3>")
 				src.possessed_thing = new /obj/item/storage/toolbox/artistic
 
@@ -443,13 +443,13 @@
 			spooker.set_a_intent(INTENT_HARM)
 		else if (istype(item, /obj/item/gun))
 			var/obj/item/gun/pew = item
-			if (pew.canshoot())
+			if (pew.canshoot(holder.owner))
 				spooker.set_a_intent(INTENT_HARM) // we can shoot, so... shoot
 			else
 				spooker.set_a_intent(INTENT_HELP) // otherwise go on help for gun whipping
 		else if (istype(item, /obj/item/old_grenade) || istype(item, /obj/item/chem_grenade || istype(item, /obj/item/pipebomb))) //cool paths tHANKS
 			spooker.self_interact() // arm grenades
-		else if (istype(item, /obj/item/katana)) 		// this will also apply for non-limb-slicey katanas but it shouldn't really matter
+		else if (istype(item, /obj/item/swords)) 		// this will also apply for non-limb-slicey katanas but it shouldn't really matter
 			if (ishuman(holder.target))
 				var/mob/living/carbon/human/H = holder.target
 				var/limbless = TRUE

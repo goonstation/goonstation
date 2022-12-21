@@ -1,3 +1,5 @@
+var/global/totally_random_jobs = FALSE
+
 /proc/SetupOccupationsList()
 	set background = 1
 
@@ -11,7 +13,7 @@
 	occupations = new_occupations
 	return
 
-/proc/FindOccupationCandidates(list/unassigned, job, level)
+/proc/FindOccupationCandidates(list/unassigned, job, level, set_antag_fallthrough = FALSE)
 	set background = 1
 
 	var/list/candidates = list()
@@ -33,13 +35,24 @@
 			else if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/conspiracy)) && J.cant_spawn_as_con)
 				continue
 
-		if (!J.allow_traitors && player.mind.special_role || !J.allow_spy_theft && player.mind.special_role == ROLE_SPY_THIEF)
+		if (jobban_isbanned(player, job))
 			continue
+		if (!J.allow_traitors && player.mind.special_role || !J.allow_spy_theft && player.mind.special_role == ROLE_SPY_THIEF)
+			if(set_antag_fallthrough)
+				player.antag_fallthrough = TRUE
+			continue
+		if (!J.allow_antag_fallthrough && player.antag_fallthrough)
+			continue
+
+		if (global.totally_random_jobs)
+			candidates += player
+			continue
+
 		if (J.needs_college && !player.has_medal("Unlike the director, I went to college"))
 			continue
 		if (J.requires_whitelist && !NT.Find(ckey(player.mind.key)))
 			continue
-		if (jobban_isbanned(player, job) || P.jobs_unwanted.Find(J.name) )
+		if (P.jobs_unwanted.Find(J.name))
 			continue
 		if (level == 1 && P.job_favorite == J.name)
 			candidates += player
@@ -66,7 +79,7 @@
 	var/percent_readied_up = length(clients) ? (length(unassigned)/length(clients)) * 100 : 0
 	logTheThing(LOG_DEBUG, null, "<b>Aloe</b>: roughly [percent_readied_up]% of players were readied up at roundstart (blobs and wraiths don't count).")
 
-	if (unassigned.len == 0)
+	if (!length(unassigned))
 		return 0
 
 	// If the mode is construction, ignore all this shit and sort everyone into the construction worker job.
@@ -118,7 +131,7 @@
 	// Though we don't want to do this in sandbox mode where it won't matter anyway
 	if(master_mode != "sandbox")
 		for(var/datum/job/JOB in high_priority_jobs)
-			if (unassigned.len == 0) break
+			if (!length(unassigned)) break
 
 			if (JOB.limit > 0 && JOB.assigned >= JOB.limit) continue
 
@@ -132,7 +145,7 @@
 			// horrible multicore PC station round.. (i HOPE anyway)
 			for(var/mob/new_player/candidate in pick1)
 				if(!candidate.client) continue
-				if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
+				if (JOB.assigned >= JOB.limit || !length(unassigned)) break
 				logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv1")
 				candidate.mind.assigned_role = JOB.name
 				logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
@@ -140,7 +153,7 @@
 				JOB.assigned++
 			for(var/mob/new_player/candidate in pick2)
 				if(!candidate.client) continue
-				if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
+				if (JOB.assigned >= JOB.limit || !length(unassigned)) break
 				logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv2")
 				candidate.mind.assigned_role = JOB.name
 				logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
@@ -148,7 +161,7 @@
 				JOB.assigned++
 			for(var/mob/new_player/candidate in pick3)
 				if(!candidate.client) continue
-				if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
+				if (JOB.assigned >= JOB.limit || !length(unassigned)) break
 				logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv3")
 				candidate.mind.assigned_role = JOB.name
 				logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
@@ -165,6 +178,8 @@
 	for (var/mob/new_player/player in unassigned)
 		// If they don't have a favorite, skip em
 		if (derelict_mode) // stop freaking out at the weird jobs
+			continue
+		if (global.totally_random_jobs) //  we don't care about favorites
 			continue
 		if (!player?.client?.preferences || player?.client?.preferences.job_favorite == null)
 			continue
@@ -183,6 +198,7 @@
 		if (JOB.requires_whitelist && !NT.Find(ckey(player.mind.key)))
 			continue
 		if (!JOB.allow_traitors && player.mind.special_role ||  !JOB.allow_spy_theft && player.mind.special_role == ROLE_SPY_THIEF)
+			player.antag_fallthrough = TRUE
 			continue
 		// If there's an open job slot for it, give the player the job and remove them from
 		// the list of unassigned players, hey presto everyone's happy (except clarks probly)
@@ -207,14 +223,17 @@
 	// sometimes cause you to get that instead of a higher prioritized job
 	for(var/datum/job/JOB in available_job_roles)
 		// If we've got everyone a job, then stop wasting cycles and get on with the show
-		if (unassigned.len == 0) break
+		if (!length(unassigned)) break
 		// If there's no more slots for this job available, move onto the next one
 		if (JOB.limit > 0 && JOB.assigned >= JOB.limit) continue
 		// First, rebuild the lists of who wants to be this job
-		pick2 = FindOccupationCandidates(unassigned,JOB.name,2)
+		pick2 = FindOccupationCandidates(unassigned,JOB.name,2, TRUE)
 		// Now loop through the candidates in order of priority, and elect them to the
 		// job position if possible - if at any point the job is filled, break the loops
 		for(var/mob/new_player/candidate in pick2)
+			if (JOB.assigned >= JOB.limit || !length(unassigned))
+				break
+
 			if (istype(JOB, /datum/job/engineering/engineer))
 				engineering_staff += candidate
 			else if (istype(JOB, /datum/job/research/scientist))
@@ -224,8 +243,6 @@
 			else if (istype(JOB, /datum/job/security/security_officer))
 				security_officers += candidate
 
-			if (JOB.assigned >= JOB.limit || unassigned.len == 0)
-				break
 			logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 2 Job Picker")
 			candidate.mind.assigned_role = JOB.name
 			logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
@@ -234,7 +251,7 @@
 
 	// And then again for low priority
 	for(var/datum/job/JOB in available_job_roles)
-		if (unassigned.len == 0)
+		if (!length(unassigned))
 			break
 
 		if (JOB.limit == 0)
@@ -243,8 +260,11 @@
 		if (JOB.limit > 0 && JOB.assigned >= JOB.limit)
 			continue
 
-		pick3 = FindOccupationCandidates(unassigned,JOB.name,3)
+		pick3 = FindOccupationCandidates(unassigned,JOB.name,3, TRUE)
 		for(var/mob/new_player/candidate in pick3)
+			if (JOB.assigned >= JOB.limit || !length(unassigned))
+				break
+
 			if (istype(JOB, /datum/job/engineering/engineer))
 				engineering_staff += candidate
 			else if (istype(JOB, /datum/job/research/scientist))
@@ -254,7 +274,6 @@
 			else if (istype(JOB, /datum/job/security/security_officer))
 				security_officers += candidate
 
-			if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
 			logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 3 Job Picker")
 			candidate.mind.assigned_role = JOB.name
 			logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
@@ -290,7 +309,7 @@
 
 	// If there's anyone left without a job after this, lump them with a randomly
 	// picked low priority role and be done with it
-	if (!low_priority_jobs.len)
+	if (!length(low_priority_jobs))
 		// we really need to fix this or it'll be some kinda weird inf loop shit
 		low_priority_jobs += "Staff Assistant"
 	for (var/mob/new_player/player in unassigned)
@@ -307,7 +326,7 @@
 	var/list/picks = FindOccupationCandidates(staff,JOB.name,2)
 
 	//If there are no acceptable candidates (no inappropriate antags, no job bans) who have it in their medium priority list
-	if (!picks.len)
+	if (!length(picks))
 		picks = FindOccupationCandidates(staff,JOB.name,3)
 	return picks
 
@@ -429,10 +448,14 @@
 
 		//remove problem traits from people on pod_wars
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
-			H.traitHolder.removeTrait("immigrant")
+			H.traitHolder.removeTrait("stowaway")
 			H.traitHolder.removeTrait("pilot")
 			H.traitHolder.removeTrait("sleepy")
 			H.traitHolder.removeTrait("puritan")
+		if (map_setting == "NADIR") //Nadir: pilot trait screws the pilot and adds sub when sub should not otherwise exist.
+			if(H.traitHolder.hasTrait("pilot"))
+				H.traitHolder.removeTrait("pilot")
+				boutput(src, "<span class='alert'>Hazardous conditions prevented you from arriving in your pod.</span>")
 
 		H.Equip_Job_Slots(JOB)
 
@@ -446,22 +469,24 @@
 		src = possible_new_mob // let's hope this breaks nothing
 
 
-	if (ishuman(src) && JOB.add_to_manifest && !src.traitHolder.hasTrait("immigrant"))
+	if (ishuman(src) && JOB.add_to_manifest && !src.traitHolder.hasTrait("stowaway"))
 		// Manifest stuff
 		var/sec_note = ""
 		var/med_note = ""
-		if(src.client && src.client.preferences)
+		var/synd_int_note = ""
+		if(src.client?.preferences && !src.client.preferences.be_random_name)
 			sec_note = src.client.preferences.security_note
 			med_note = src.client.preferences.medical_note
+			synd_int_note = src.client.preferences.synd_int_note
 		var/obj/item/device/pda2/pda = locate() in src
-		data_core.addManifest(src, sec_note, med_note, pda?.net_id)
+		data_core.addManifest(src, sec_note, med_note, pda?.net_id, synd_int_note)
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if (src.traitHolder && !src.traitHolder.hasTrait("immigrant"))
+		if (src.traitHolder && !src.traitHolder.hasTrait("stowaway"))
 			H.spawnId(rank)
-		if (src.traitHolder && src.traitHolder.hasTrait("immigrant"))
-			//Has the immigrant trait - they're hiding in a random locker
+		if (src.traitHolder && src.traitHolder.hasTrait("stowaway"))
+			//Has the stowaway trait - they're hiding in a random locker
 			var/list/obj/storage/SL = list()
 			for_by_tcl(S, /obj/storage)
 				// Only closed, unsecured lockers/crates on Z1 that are not inside the listening post (or the martian ship (on oshan))
@@ -471,7 +496,7 @@
 					if(istype(T) && T.air && T.air.oxygen >= (MOLES_O2STANDARD - 1) && T.air.temperature >= T0C)
 						SL.Add(S)
 
-			if(SL.len > 0)
+			if(length(SL) > 0)
 				src.set_loc(pick(SL))
 				logTheThing(LOG_STATION, src, "has the Stowaway trait and spawns in storage at [log_loc(src)]")
 
@@ -509,6 +534,11 @@
 				src.setStatus("resting", INFINITE_STATUS)
 				src.setStatus("paralysis", 10 SECONDS)
 				src.force_laydown_standup()
+
+		// This should be here (overriding most other things), probably? - #11215
+		// Vampires spawning in the chapel is bad. :(
+		if (istype(src.loc.loc, /area/station/chapel) && (src.mind.special_role == ROLE_VAMPIRE))
+			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 
 		if (prob(10) && islist(random_pod_codes) && length(random_pod_codes))
 			var/obj/machinery/vehicle/V = pick(random_pod_codes)
@@ -575,6 +605,8 @@
 					var/datum/abilityHolder/A = src.abilityHolder.deepCopy()
 					R.fields["abilities"] = A
 
+				R.fields["defects"] = src.cloner_defects.copy()
+
 				SPAWN(0)
 					if(!isnull(src.traitHolder))
 						R.fields["traits"] = src.traitHolder.copy()
@@ -615,7 +647,7 @@
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
 		src.force_equip(GPSDEVICE, slot_in_backpack)
 
-	if (src.traitHolder?.hasTrait("immigrant") || src.traitHolder?.hasTrait("pilot"))
+	if (src.traitHolder?.hasTrait("stowaway") || src.traitHolder?.hasTrait("pilot"))
 		var/obj/item/device/pda2/pda = locate() in src
 		src.u_equip(pda)
 		qdel(pda)
@@ -653,8 +685,7 @@
 		trinket = new T(src)
 
 	if (trinket) // rewrote this a little bit so hopefully people will always get their trinket
-		src.trinket = trinket
-		src.trinket.event_handler_flags |= IS_TRINKET
+		src.trinket = get_weakref(trinket)
 		trinket.name = "[src.real_name][pick_string("trinkets.txt", "modifiers")] [trinket.name]"
 		trinket.quality = rand(5,80)
 		var/equipped = 0
@@ -675,38 +706,40 @@
 			if (!equipped) // we've tried most available storage solutions here now so uh just put it on the ground
 				trinket.set_loc(get_turf(src))
 
-	if (src.traitHolder && src.traitHolder.hasTrait("onearmed"))
-		if (src.limbs)
-			SPAWN(6 SECONDS)
-				if (prob(50))
-					if (src.limbs.l_arm)
-						qdel(src.limbs.l_arm.remove(0))
-				else
-					if (src.limbs.r_arm)
-						qdel(src.limbs.r_arm.remove(0))
-				boutput(src, "<b>Your singular arm makes you feel responsible for crimes you couldn't possibly have committed.</b>" )
+	if (ishuman(src))
+		if (src.traitHolder && src.traitHolder.hasTrait("onearmed"))
+			if (src.limbs)
+				SPAWN(6 SECONDS)
+					if (prob(50))
+						if (src.limbs.l_arm)
+							qdel(src.limbs.l_arm.remove(0))
+					else
+						if (src.limbs.r_arm)
+							qdel(src.limbs.r_arm.remove(0))
+					boutput(src, "<b>Your singular arm makes you feel responsible for crimes you couldn't possibly have committed.</b>" )
 
-	if (src.traitHolder && src.traitHolder.hasTrait("nolegs"))
-		if (src.limbs)
-			SPAWN(6 SECONDS)
-				if (src.limbs.l_leg)
-					src.limbs.l_leg.delete()
-				if (src.limbs.r_leg)
-					src.limbs.r_leg.delete()
-			new /obj/stool/chair/comfy/wheelchair(get_turf(src))
+		if (src.traitHolder && src.traitHolder.hasTrait("nolegs"))
+			if (src.limbs)
+				SPAWN(6 SECONDS)
+					if (src.limbs.l_leg)
+						src.limbs.l_leg.delete()
+					if (src.limbs.r_leg)
+						src.limbs.r_leg.delete()
+				new /obj/stool/chair/comfy/wheelchair(get_turf(src))
 
-	// Special mutantrace items
-	if (src.traitHolder && src.traitHolder.hasTrait("pug"))
-		src.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
-	else if (src.traitHolder && src.traitHolder.hasTrait("skeleton"))
-		src.put_in_hand_or_drop(new /obj/item/joint_wax)
+		// Special mutantrace items
+		if (src.traitHolder && src.traitHolder.hasTrait("pug"))
+			src.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
+		else if (src.traitHolder && src.traitHolder.hasTrait("skeleton"))
+			src.put_in_hand_or_drop(new /obj/item/joint_wax)
 
-	src.equip_sensory_items()
+		src.equip_sensory_items()
 
 /mob/living/carbon/human/proc/spawnId(rank)
+#ifdef DEBUG_EVERYONE_GETS_CAPTAIN_ID
+	rank = "Captain"
+#endif
 	var/obj/item/card/id/C = null
-	if(istype(get_area(src),/area/afterlife))
-		rank = "Captain"
 	var/datum/job/JOB = find_job_in_controller_by_string(rank)
 	if (!JOB || !JOB.slot_card)
 		return null
@@ -792,21 +825,20 @@
 	return
 
 // Convert mob to generic hard mode traitor or alternatively agimmick
-proc/antagify(mob/H, var/traitor_role, var/agimmick)
-	if(isnpc(H))
-		return
+proc/antagify(mob/H, var/traitor_role, var/agimmick, var/do_objectives)
 	if (!(H.mind))
 		message_admins("Attempted to antagify [H] but could not find mind")
 		logTheThing(LOG_DEBUG, H, "Attempted to antagify [H] but could not find mind.")
 		return
 	if (!agimmick)
-		var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
-		var/num_objectives = rand(1,3)
-		for(var/i = 0, i < num_objectives, i++)
-			var/select_objective = pick(eligible_objectives)
-			new select_objective(null, H.mind)
-			H.show_antag_popup("traitorhard")
-			ticker.mode.traitors |= H.mind
+		if (do_objectives)
+			var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
+			var/num_objectives = rand(1,3)
+			for(var/i = 0, i < num_objectives, i++)
+				var/select_objective = pick(eligible_objectives)
+				new select_objective(null, H.mind)
+				H.show_antag_popup("traitorhard")
+				ticker.mode.traitors |= H.mind
 	else
 		ticker.mode.Agimmicks |= H.mind
 		H.show_antag_popup("traitorgeneric")

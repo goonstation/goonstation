@@ -274,6 +274,8 @@
 			if(D_SLASHING)
 				damage_mult = 1.5
 				damtype = "brute"
+			if(D_SPECIAL)
+				return
 
 		src.take_damage(damage,damage_mult,damtype)
 		return
@@ -315,7 +317,7 @@
 	attackby(var/obj/item/W, var/mob/user)
 		user.lastattacked = src
 		if(ismobcritter(user) && user:ghost_spawned || isghostdrone(user))
-			src.visible_message("<span class='combat'><b>[user.name]</b> feebly attacks [src] with [W], but is too weak to harm it!</span>")
+			src.visible_message("<span class='combat'><b>[user.name]</b> feebly attacks [src] with [W], but is too weak to harm it!</span>", group="blobweaklyattacked")
 			return
 		if( istype(W,/obj/item/clothing/head) && overmind )
 			user.drop_item()
@@ -324,7 +326,7 @@
 			user.visible_message( "<span class='notice'>The blob disperses the hat!</span>" )
 			overmind.show_message( "<span class='notice'>[user] places the [W] on you!</span>" )
 			return
-		src.visible_message("<span class='combat'><b>[user.name]</b> attacks [src] with [W]!</span>")
+		src.visible_message("<span class='combat'><b>[user.name]</b> attacks [src] with [W]!</span>", group="blobattacked")
 		playsound(src.loc, "sound/voice/blob/blobdamaged[rand(1, 3)].ogg", 75, 1)
 		if (W.hitsound)
 			playsound(src.loc, W.hitsound, 50, 1)
@@ -503,7 +505,7 @@
 		src.alpha = max(src.alpha, 32)
 
 	proc/spread(var/turf/T)
-		if (!istype(T) || !T.can_blob_spread_here(null, null, isadmin(overmind)))
+		if (!istype(T) || !T.can_blob_spread_here(null, null, isadmin(overmind) || overmind.admin_override))
 			return
 
 		var/blob_type = /obj/blob/
@@ -584,10 +586,14 @@
 	var/nextAttackMsg = 0
 
 	New()
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, 3)
+
 		. = ..()
 		START_TRACKING
 
 	disposing()
+		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
+
 		. = ..()
 		STOP_TRACKING
 
@@ -759,11 +765,11 @@
 	color_green = 0
 	color_blue = 0
 	color_icon = "#ffffff"
-	power = 20
+	damage = 10
+	stun = 10
 	cost = 0
 	dissipation_rate = 25
 	dissipation_delay = 8
-	ks_ratio = 0.5
 	sname = "slime"
 	shot_sound = 'sound/voice/blob/blobshoot.ogg'
 	shot_number = 0
@@ -771,6 +777,7 @@
 	hit_ground_chance = 50
 	window_pass = 0
 	override_color = 1
+	disruption = 33
 
 	on_hit(atom/hit, angle, var/obj/projectile/O)
 		..()

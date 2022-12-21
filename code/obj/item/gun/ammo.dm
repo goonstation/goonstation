@@ -51,6 +51,7 @@
 	var/amount_left = 0
 	var/max_amount = 1000
 	var/unusualCell
+	/// TRUE if this ammo can be refilled from an ammo bag. Used to prevent duping
 	var/refillable = TRUE
 	ammo_type = new/datum/projectile/bullet
 
@@ -306,6 +307,7 @@
 
 		if(src.material)
 			ammo_type.power = round(material.getProperty("density") * 2 + material.getProperty("hard"))
+			ammo_type.generate_inverse_stats()
 			ammo_type.dissipation_delay = round(material.getProperty("density") / 2)
 
 			if((src.material.material_flags & MATERIAL_CRYSTAL))
@@ -459,6 +461,7 @@
 
 	syndicate
 		sname = ".308 Tranquilizer Deluxe"
+		desc = "A stripper clip of sodium thiopental darts. Will weaken and eventually knock out targets."
 		ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate
 
 		pistol
@@ -545,6 +548,17 @@
 	ammo_type = new/datum/projectile/bullet/nine_mm_soviet
 	ammo_cat = AMMO_PISTOL_9MM_SOVIET
 
+//medic primary
+/obj/item/ammo/bullets/veritate
+	sname = "6.5×20mm AP"
+	name = "6.5×20mm magazine"
+	desc = "High-velocity pistol cartridges, loaded with armor-piercing bullets."
+	icon_state = "stenag_mag"
+	amount_left = 21
+	max_amount = 21
+	ammo_type = new/datum/projectile/bullet/veritate
+	ammo_cat = AMMO_FLECHETTE
+
 //0.357
 /obj/item/ammo/bullets/a357
 	sname = ".357 Mag"
@@ -621,6 +635,7 @@
 	ammo_cat = AMMO_FOAMDART
 	ammo_type = new/datum/projectile/bullet/foamdart
 	delete_on_reload = TRUE
+	throwforce = 0
 
 //0.40
 /obj/item/ammo/bullets/blow_darts
@@ -870,13 +885,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		desc = "Some fancy high explosive shells that really, really love pods."
 		ammo_type = new/datum/projectile/bullet/autocannon/seeker/pod_seeking
 
-	knocker
-		sname = "40mm HE Knocker"
-		name = "40mm HE airlock-breaching shells"
-		desc = "Some explosive breaching shells."
-		icon_state = "40mm_HE"
-		ammo_type = new/datum/projectile/bullet/autocannon/knocker
-
 /obj/item/ammo/bullets/grenade_round
 	sname = "40mm"
 	name = "40mm shells"
@@ -952,6 +960,24 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_dynamic = 0
 	icon_empty = "40mm_nonlethal-0"
 	sound_load = 'sound/weapons/gunload_40mm.ogg'
+
+/obj/item/ammo/bullets/breach_flashbang
+	sname = "40mm Door-Breaching Rounds"
+	name = "40mm door-breaching rounds"
+	desc = "Some high-tech shells with an ID-chipped tip and a pyrotechnic payload."
+	ammo_type = new/datum/projectile/bullet/breach_flashbang
+	amount_left = 5
+	max_amount = 5
+	icon_state = "40mm_nonlethal"
+	ammo_cat = AMMO_GRENADE_40MM
+	w_class = W_CLASS_NORMAL
+	icon_dynamic = 0
+	icon_empty = "40mm_nonlethal-0"
+	sound_load = 'sound/weapons/gunload_40mm.ogg'
+
+	single
+		amount_left = 1
+		max_amount = 1
 
 //basically an internal object for converting hand-grenades into shells, but can be spawned independently.
 /obj/item/ammo/bullets/grenade_shell
@@ -1167,13 +1193,14 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	var/charge = 100
 	var/max_charge = 100
 	var/recharge_rate = 0
+	var/recharge_delay = 0
 	var/sound_load = 'sound/weapons/gunload_click.ogg'
 	var/unusualCell = 0
 	var/rechargable = TRUE
 
 	New()
 		..()
-		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_rate, rechargable)
+		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_rate, recharge_delay, rechargable)
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		desc = "A power cell that holds a max of [src.max_charge]PU. Can be inserted into any energy gun, even tasers!"
 		UpdateIcon()
@@ -1298,13 +1325,13 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 			max_charge = round((material.getProperty("electrical") ** 2) * 4, 25)
 
 			recharge_rate = 0
-			recharge_rate += material.getProperty("radioactive")/2
-			recharge_rate += material.getProperty("n_radioactive")
+			recharge_rate += material.getProperty("radioactive")/4
+			recharge_rate += material.getProperty("n_radioactive")/2
 
 
 		charge = max_charge
 
-		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_rate)
+		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_delay, recharge_rate)
 		return
 
 
@@ -1317,14 +1344,14 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 			max_charge = round((conductivity ** 2) * 4, 25)
 
 			recharge_rate = (coreMat.getProperty("radioactive") / 2 + coreMat.getProperty("n_radioactive") \
-			+ genMat.getProperty("radioactive")  + genMat.getProperty("n_radioactive") * 2) / 3 //weight this too
+			+ genMat.getProperty("radioactive")  + genMat.getProperty("n_radioactive") * 2) / 6 //weight this too
 
-			AddComponent(/datum/component/power_cell, max_charge, max_charge, recharge_rate)
+			AddComponent(/datum/component/power_cell, max_charge, max_charge, recharge_delay, recharge_rate)
 
 /obj/item/ammo/power_cell/self_charging/slowcharge
 	name = "Power Cell - Atomic Slowcharge"
 	desc = "A self-contained radioisotope power cell that very slowly recharges an internal capacitor. Holds 40PU."
-	recharge_rate = 2.5 // cogwerks: raised from 1.0 because radbows were terrible!!!!!
+	recharge_rate = 1.5 // cogwerks: raised from 1.0 because radbows were terrible!!!!!
 
 /obj/item/ammo/power_cell/self_charging/disruptor
 	name = "Power Cell - Disruptor Charger"
@@ -1343,7 +1370,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_state = "recharger_cell"
 	charge = 150
 	max_charge = 150
-	recharge_rate = 7.5
+	recharge_rate = 4
 
 /obj/item/ammo/power_cell/self_charging/ntso_signifer
 	name = "Power Cell - NTSO D49"
@@ -1352,13 +1379,13 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_state = "recharger_cell"
 	charge = 250
 	max_charge = 250
-	recharge_rate = 9
+	recharge_rate = 5
 
 /obj/item/ammo/power_cell/self_charging/ntso_signifer/bad
 	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 150PU."
 	charge = 150
 	max_charge = 150
-	recharge_rate = 4
+	recharge_rate = 2
 
 /obj/item/ammo/power_cell/self_charging/medium
 	name = "Power Cell - Hicap RTG"
@@ -1367,14 +1394,14 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_state = "recharger_cell"
 	charge = 200
 	max_charge = 200
-	recharge_rate = 7.5
+	recharge_rate = 4
 
 /obj/item/ammo/power_cell/self_charging/mediumbig
 	name = "Power Cell - Fission"
 	desc = "Half the power of a Fusion model power cell with a tenth of the cost. Holds 200PU."
 	max_charge = 200
 	charge = 200
-	recharge_rate = 20
+	recharge_rate = 10
 
 /obj/item/ammo/power_cell/self_charging/big
 	name = "Power Cell - Fusion"
@@ -1385,7 +1412,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	g_amt = 38000
 	charge = 400
 	max_charge = 400
-	recharge_rate = 40
+	recharge_rate = 20
 
 /obj/item/ammo/power_cell/self_charging/lawbringer
 	name = "Power Cell - Lawbringer Charger"
@@ -1396,12 +1423,12 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	g_amt = 38000
 	charge = 300
 	max_charge = 300
-	recharge_rate = 10
+	recharge_rate = 5
 
 /obj/item/ammo/power_cell/self_charging/lawbringer/bad
 	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 175PU."
 	max_charge = 175
-	recharge_rate = 6
+	recharge_rate = 3
 
 /obj/item/ammo/power_cell/self_charging/howitzer
 	name = "Miniaturized SMES"
@@ -1413,7 +1440,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	name = "Flockdrone incapacitor cell"
 	desc = "You should not be seeing this!"
 	max_charge = 40
-	recharge_rate = 10
+	recharge_rate = 5
 
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND

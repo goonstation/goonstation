@@ -11,8 +11,8 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	var/crop_prefix = ""	// Prefix for crop name when harvested ("rainbow" melon)
 	var/crop_suffix = ""	// Suffix for crop name when harvested (bamboo "shoot")
 	food_effects = list("food_cold", "food_disease_resist")
-
-	var/made_reagents = 0
+	///set this to true so the stuff gets no new reagents added after creation
+	var/made_reagents = FALSE
 
 	New()
 		..()
@@ -32,7 +32,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		..()
 
 	proc/make_reagents()
-		made_reagents = 1
+		made_reagents = TRUE
 
 	attack(mob/M, mob/user, def_zone)
 		if (src.edible == 0)
@@ -63,6 +63,19 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 				qdel(src)
 				return
 
+	//for sliceable botany produce, we want to transfer the plantgenes and rename the sliced produce accordingly
+	process_sliced_products(var/obj/item/reagent_containers/food/slice, var/amount_to_transfer)
+		..()
+		slice.name = "[src.name] [src.slice_suffix]"
+		if(istype(slice,/obj/item/reagent_containers/food/snacks/plant/)) //because for some reason, tomato slices are not children of plant
+			var/obj/item/reagent_containers/food/snacks/plant/M = slice
+			M.made_reagents = TRUE //no additional chems for slices :3
+			var/datum/plantgenes/DNA = src.plantgenes
+			var/datum/plantgenes/PDNA = M.plantgenes
+			if(DNA)
+				HYPpassplantgenes(DNA,PDNA)
+
+
 
 /obj/item/reagent_containers/food/snacks/plant/bamboo/
 	name = "bamboo shoot"
@@ -91,9 +104,12 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		..()
 		src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
-		var/obj/decal/cleanable/tomatosplat/splat = new /obj/decal/cleanable/tomatosplat(T)
-		if(istype(splat) && src.reagents)
-			src.reagents.trans_to(splat,5) //could be deleted immediately
+		var/obj/decal/cleanable/tomatosplat/splat = new
+		if(src.reagents)
+			splat.reagents = new(10000)
+			src.reagents.trans_to(splat, src.reagents.total_volume) //could be deleted immediately
+		splat.set_loc(T)
+		splat.setup(T)
 		qdel(src)
 
 /obj/item/reagent_containers/food/snacks/plant/tomato/incendiary
@@ -109,8 +125,9 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		if(!T || src.disposed) return
 		fireflash(T,1,1)
 		if(istype(H))
-			H.TakeDamage("chest",0,clamp(DNA.potency/2,10,50) + max(DNA.potency/5-20, 0)*(1-H.get_heat_protection()/100),0)//burn damage is half of the potency, soft capped at 50, with a minimum of 10, any extra potency is divided by 5 and added on. The resulting number is then reduced by heat resistance, and applied to the target.
-			H.update_burning(DNA.potency * 0.2)
+			var/p = max(DNA.potency, 0) //no vertical aymptote for you, buster
+			H.TakeDamage("chest", 0, (max(70 * p / (p + 100) + 5, 0)*(1-H.get_heat_protection()/100)), 0)//approaches 75 as potency approaches infinity
+			H.update_burning(p * 0.2)
 			boutput(H,"<span class='alert'>Hot liquid bursts out of [src], scalding you!</span>")
 		src.visible_message("<span class='alert'>[src] violently bursts into flames!</span>")
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
@@ -125,7 +142,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	crop_suffix = " cob"
 	desc = "The assistants call it maize."
 	icon_state = "corn"
-	planttype = /datum/plant/crop/corn
+	planttype = /datum/plant/veg/corn
 	bites_left = 3
 	heal_amt = 1
 	throwforce = 0
@@ -155,7 +172,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "clear corn cob"
 	desc = "Pure grain ethanol in a vague corn shape."
 	icon_state = "clearcorn"
-	planttype = /datum/plant/crop/corn
+	planttype = /datum/plant/veg/corn
 	bites_left = 3
 	heal_amt = 3
 	food_color = "#FFFFFF"
@@ -165,7 +182,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "Pepper corn cob"
 	desc = "Wha? Why's this called corn? It's pepper!"
 	icon_state = "peppercorn"
-	planttype = /datum/plant/crop/corn
+	planttype = /datum/plant/veg/corn
 	bites_left = 3
 	heal_amt = 3
 	food_color = "#373232"
@@ -175,7 +192,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "soybean pod"
 	crop_suffix = " pod"
 	desc = "These soybeans are as close as two beans in a pod. Probably because they are literally beans in a pod."
-	planttype = /datum/plant/crop/soy
+	planttype = /datum/plant/veg/soy
 	icon_state = "soy"
 	bites_left = 3
 	heal_amt = 1
@@ -188,7 +205,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "bean pod"
 	crop_suffix = " pod"
 	desc = "This bean pod contains an inordinately large bites_left of beans due to genetic engineering. How convenient."
-	planttype = /datum/plant/crop/beans
+	planttype = /datum/plant/veg/beans
 	icon_state = "beanpod"
 	bites_left = 1
 	heal_amt = 1
@@ -201,7 +218,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "pea pod"
 	crop_suffix = " pod"
 	desc = "These peas are like peas in a pod. Yeah."
-	planttype = /datum/plant/crop/peas
+	planttype = /datum/plant/veg/peas
 	icon_state = "peapod"
 	bites_left = 1
 	heal_amt = 1
@@ -221,7 +238,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "soylent chartreuse"
 	crop_suffix = " chartreuse"
 	desc = "Contains high-energy plankton!"
-	planttype = /datum/plant/crop/soy
+	planttype = /datum/plant/veg/soy
 	icon_state = "soylent"
 	bites_left = 3
 	heal_amt = 2
@@ -239,6 +256,10 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_color = "#FF8C00"
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
+	sliceable = TRUE
+	slice_product = /obj/item/reagent_containers/food/snacks/plant/orange/wedge
+	slice_amount = 6
+	slice_suffix = "wedge"
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat))
@@ -254,23 +275,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 				HYPpassplantgenes(DNA,PDNA)
 			qdel(W)
 			qdel(src)
-		else if (iscuttingtool(W) || issawingtool(W) && !istype (src, /obj/item/reagent_containers/food/snacks/plant/orange/wedge))
-			if (istype (src, /obj/item/reagent_containers/food/snacks/plant/orange/wedge))
-				boutput(user, "<span class='alert'>You can't cut wedges into wedges! What kind of insanity is that!?</span>")
-				return
-			var/turf/T = get_turf(src)
-			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
-			var/makeslices = 6
-			while (makeslices > 0)
-				var/obj/item/reagent_containers/food/snacks/plant/orange/wedge/P = new(T)
-				P.name = "[src.name] wedge"
-				P.transform = src.transform
-				var/datum/plantgenes/DNA = src.plantgenes
-				var/datum/plantgenes/PDNA = P.plantgenes
-				if(DNA)
-					HYPpassplantgenes(DNA,PDNA)
-				makeslices -= 1
-			qdel(src)
 		..()
 
 /obj/item/reagent_containers/food/snacks/plant/orange/blood
@@ -285,6 +289,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	w_class = W_CLASS_TINY
 	bites_left = 1
 	validforhat = 0
+	sliceable = FALSE
 
 	make_reagents()
 		..()
@@ -344,24 +349,11 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	heal_amt = 1
 	food_color = "#FF9F87"
 	brew_result = "juice_grapefruit"
+	sliceable = TRUE
+	slice_product = /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge
+	slice_amount = 6
+	slice_suffix = "wedge"
 
-	attackby(obj/item/W, mob/user)
-		if (iscuttingtool(W))
-			if (istype (src, /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge))
-				boutput(user, "<span class='alert'>You can't cut wedges into wedges! What kind of insanity is that!?</span>")
-				return
-			var/turf/T = get_turf(src)
-			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
-			var/makeslices = 6
-			while (makeslices > 0)
-				var/obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge/P = new(T)
-				var/datum/plantgenes/DNA = src.plantgenes
-				var/datum/plantgenes/PDNA = P.plantgenes
-				if(DNA)
-					HYPpassplantgenes(DNA,PDNA)
-				makeslices -= 1
-			qdel(src)
-		..()
 
 /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge
 	name = "grapefruit wedge"
@@ -370,8 +362,9 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	w_class = W_CLASS_TINY
 	bites_left = 1
 	initial_volume = 6
+	sliceable = FALSE
 
-	New()
+	make_reagents()
 		..()
 		reagents.add_reagent("juice_grapefruit",5)
 
@@ -397,31 +390,10 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	edible = 0
 	food_color = "#7FFF00"
 	validforhat = 1
+	sliceable = TRUE
+	slice_product = /obj/item/reagent_containers/food/snacks/plant/melonslice
+	slice_amount = 6
 
-	attackby(obj/item/W, mob/user)
-		if (iscuttingtool(W))
-			var/turf/T = get_turf(src)
-			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
-			var/makeslices = 6
-			var/amount_per_slice = 0
-			if(src.reagents)
-				amount_per_slice = src.reagents.total_volume / makeslices
-				src.reagents.inert = 1
-			while (makeslices > 0)
-				var/obj/item/reagent_containers/food/snacks/plant/melonslice/P = new(T)
-				P.name = "[src.name] slice"
-				var/datum/plantgenes/DNA = src.plantgenes
-				var/datum/plantgenes/PDNA = P.plantgenes
-				if(DNA)
-					HYPpassplantgenes(DNA,PDNA)
-				if(src.reagents)
-					P.reagents = new
-					P.reagents.inert = 1 // no stacking of potassium + water explosions on cutting
-					src.reagents.trans_to(P, amount_per_slice)
-					P.reagents.inert = 0
-				makeslices -= 1
-			qdel(src)
-		..()
 
 /obj/item/reagent_containers/food/snacks/plant/melonslice/
 	name = "melon slice"
@@ -444,35 +416,14 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	w_class = W_CLASS_NORMAL
 	edible = 0
 	initial_volume = 60
+	sliceable = TRUE
+	slice_product = /obj/item/reagent_containers/food/snacks/plant/melonslice/george/
+	slice_amount = 6
 
 	make_reagents()
 		..()
 		reagents.add_reagent("george_melonium",50)
 
-	attackby(obj/item/W, mob/user)
-		if (iscuttingtool(W))
-			var/turf/T = get_turf(src)
-			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
-			var/makeslices = 6
-			var/amount_per_slice = 0
-			if(src.reagents)
-				amount_per_slice = src.reagents.total_volume / makeslices
-				src.reagents.inert = 1
-			while (makeslices > 0)
-				var/obj/item/reagent_containers/food/snacks/plant/melonslice/george/P = new(T)
-				P.name = "[src.name] slice"
-				var/datum/plantgenes/DNA = src.plantgenes
-				var/datum/plantgenes/PDNA = P.plantgenes
-				if(DNA)
-					HYPpassplantgenes(DNA,PDNA)
-				if(src.reagents)
-					P.reagents = new
-					P.reagents.inert = 1 // no stacking of potassium + water explosions on cutting
-					src.reagents.trans_to(P, amount_per_slice)
-					P.reagents.inert = 0
-				makeslices -= 1
-			qdel(src)
-		..()
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
@@ -597,6 +548,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 					n_slices--
 				sleep(0.1 SECONDS)
 				qdel(src)
+
 /obj/item/reagent_containers/food/snacks/plant/chili/
 	name = "chili pepper"
 	crop_suffix = " pepper"
@@ -632,6 +584,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		reagents.add_reagent("cryostylane", DNA.potency)
 
 	heal(var/mob/M)
+		..()
 		M:emote("shiver")
 		var/datum/plantgenes/DNA = src.plantgenes
 		M.bodytemperature -= DNA.potency
@@ -654,6 +607,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		reagents.add_reagent("ghostchilijuice",25)
 
 	heal(var/mob/M)
+		..()
 		M:emote("twitch")
 		var/datum/plantgenes/DNA = src.plantgenes
 		boutput(M, "<span class='alert'>Fuck! Your mouth feels like it's on fire!</span>")
@@ -675,7 +629,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "cucumber"
 	desc = "A widely-cultivated gourd, often served on sandwiches or pickled.  Not actually known for saving any kingdoms."
 	icon_state = "cucumber"
-	planttype = /datum/plant/veg/cucumber
+	planttype = /datum/plant/fruit/cucumber
 	w_class = W_CLASS_TINY
 	bites_left = 2
 	heal_amt = 1
@@ -789,6 +743,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_effects = list("food_cold", "food_refreshed")
 
 	heal(var/mob/M)
+		..()
 		M.HealDamage("All", src.heal_amt, src.heal_amt)
 		M.take_toxin_damage(0 - src.heal_amt)
 		M.take_oxygen_deprivation(0 - src.heal_amt)
@@ -864,7 +819,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	make_reagents()
 		..()
 		reagents.add_reagent("capulettium", 10)
-		return
 
 /obj/item/reagent_containers/food/snacks/plant/banana
 	name = "unpeeled banana"
@@ -939,6 +893,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			user.visible_message("[user] carefully hallows out [src] to make a nice bowl.", "You carefully hallow out [src] to make a nice bowl.")
 			var/obj/item/reagent_containers/food/drinks/bowl/pumpkin/bowl = new /obj/item/reagent_containers/food/drinks/bowl/pumpkin(user.loc)
 			bowl.reagents.add_reagent("juice_pumpkin", 30)
+			src.reagents.trans_to(bowl, src.reagents.maximum_volume)
 			qdel(src)
 
 /obj/item/reagent_containers/food/snacks/plant/pumpkin/summon
@@ -966,6 +921,47 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		else
 			..()
 
+/obj/item/reagent_containers/food/snacks/plant/pumpkinlatte
+	name = "spiced pumpkin"
+	desc = "Autumny!"
+	icon_state = "pumpkinlatte"
+	planttype = /datum/plant/fruit/pumpkin
+	edible = 0
+	food_color = "#CC6600"
+	validforhat = 1
+
+	attackby(obj/item/W, mob/user)
+		if (iscuttingtool(W))
+			user.visible_message("[user] carefully and creatively carves [src].", "You carefully and creatively carve [src]. Cute!")
+			var/obj/item/clothing/head/pumpkinlatte/P = new(get_turf(user))
+			P.name = "carved [src.name]"
+			qdel(src)
+		else if (isspooningtool(W))
+			user.visible_message("[user] carefully opens up [src] to make a drinkable beverage.", "You carefully spoon the top off of [src], mindful of the whipped cream.")
+			var/obj/item/reagent_containers/food/drinks/pumpkinlatte/latte = new(get_turf(user))
+			src.reagents.trans_to(latte, src.reagents.total_volume)
+			qdel(src)
+
+/obj/item/clothing/head/pumpkinlatte
+	name = "carved spiced pumpkin"
+	desc = "Cute!"
+	icon_state = "pumpkinlatte"
+	c_flags = COVERSEYES | COVERSMOUTH
+	see_face = 0
+	item_state = "pumpkinlatte"
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/device/light/flashlight))
+			user.visible_message("[user] adds [W] to [src].", "You add [W] to [src].")
+			W.name = copytext(src.name, 8) + " lantern"	// "carved "
+			W.desc = "Cute!"
+			W.icon = 'icons/misc/halloween.dmi'
+			W.icon_state = "flight[W:on]"
+			W.item_state = "pumpkin"
+			qdel(src)
+		else
+			. = ..()
+
 /obj/item/reagent_containers/food/snacks/plant/lime
 	name = "lime"
 	desc = "A very sour green fruit."
@@ -976,26 +972,11 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_color = "#008000"
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
+	sliceable = TRUE
+	slice_product = /obj/item/reagent_containers/food/snacks/plant/lime/wedge
+	slice_amount = 6
+	slice_suffix = "wedge"
 
-	attackby(obj/item/W, mob/user)
-		if (iscuttingtool(W))
-			if (istype (src, /obj/item/reagent_containers/food/snacks/plant/lime/wedge))
-				boutput(user, "<span class='alert'>You can't cut wedges into wedges! What kind of insanity is that!?</span>")
-				return
-			var/turf/T = get_turf(src)
-			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
-			var/makeslices = 6
-			while (makeslices > 0)
-				var/obj/item/reagent_containers/food/snacks/plant/lime/wedge/P = new(T)
-				P.name = "[src.name] wedge"
-				P.transform = src.transform
-				var/datum/plantgenes/DNA = src.plantgenes
-				var/datum/plantgenes/PDNA = P.plantgenes
-				if(DNA)
-					HYPpassplantgenes(DNA,PDNA)
-				makeslices -= 1
-			qdel(src)
-		..()
 
 /obj/item/reagent_containers/food/snacks/plant/lime/wedge
 	name = "lime wedge"
@@ -1005,6 +986,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 1
 	initial_volume = 6
 	validforhat = 0
+	sliceable = FALSE
 
 	make_reagents()
 		..()
@@ -1020,25 +1002,11 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_color = "#FFFF00"
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
+	sliceable = TRUE
+	slice_product = /obj/item/reagent_containers/food/snacks/plant/lemon/wedge
+	slice_amount = 6
+	slice_suffix = "wedge"
 
-	attackby(obj/item/W, mob/user)
-		if (iscuttingtool(W))
-			if (istype (src, /obj/item/reagent_containers/food/snacks/plant/lemon/wedge))
-				boutput(user, "<span class='alert'>You can't cut wedges into wedges! What kind of insanity is that!?</span>")
-				return
-			var/turf/T = get_turf(src)
-			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
-			var/makeslices = 6
-			while (makeslices > 0)
-				var/obj/item/reagent_containers/food/snacks/plant/lemon/wedge/P = new(T)
-				P.name = "[src.name] wedge"
-				var/datum/plantgenes/DNA = src.plantgenes
-				var/datum/plantgenes/PDNA = P.plantgenes
-				if(DNA)
-					HYPpassplantgenes(DNA,PDNA)
-				makeslices -= 1
-			qdel(src)
-		..()
 
 /obj/item/reagent_containers/food/snacks/plant/lemon/wedge
 	name = "lemon wedge"
@@ -1048,6 +1016,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 1
 	initial_volume = 6
 	validforhat = 0
+	sliceable = FALSE
 
 	make_reagents()
 		..()
@@ -1143,6 +1112,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 
 	heal(var/mob/M)
 		boutput(M, "<span class='alert'>Raw potato tastes pretty nasty...</span>")
+		..()
 
 /obj/item/reagent_containers/food/snacks/plant/onion
 	name = "onion"
@@ -1151,24 +1121,23 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	planttype = /datum/plant/veg/onion
 	food_color = "#FF9933"
 	food_effects = list("food_bad_breath")
+	sliceable = TRUE
+	slice_product = /obj/item/reagent_containers/food/snacks/onion_slice
+	slice_amount = 4
+	slice_suffix = "ring"
+
+	New()
+		..()
+		src.slice_amount = rand(3, 5)
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife/butcher))
-			user.visible_message("[user] chops up [src].", "You chop up [src].")
+		//we check for sliceability for when someone makes a child of that that should not be sliced.
+		//This is the same condition for checken slice-ability. So whenever this is true, the onion should be normally sliced as well.
+		if (src.sliceable && istool(W, TOOL_CUTTING | TOOL_SAWING))
 			for (var/mob/living/carbon/M in range(user, 2))
 				if (prob(50) && !isdead(M))
 					M.emote("cry")
-
-			var/x = rand(3,5)
-			var/turf/T = get_turf(user)
-			while (x-- > 0)
-				var/obj/item/reagent_containers/food/snacks/onion_slice/P = new /obj/item/reagent_containers/food/snacks/onion_slice(T)
-				P.name = "[src.name] ring"
-				P.transform = src.transform
-
-			qdel(src)
-		else
-			..()
+		..()
 
 /obj/item/reagent_containers/food/snacks/onion_slice
 	name = "onion ring"
@@ -1247,7 +1216,8 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			if(DNA)
 				HYPpassplantgenes(DNA,PDNA)
 			makeslices -= 1
-		new /obj/item/reagent_containers/food/drinks/coconut(T)
+		var/obj/item/reagent_containers/food/drinks/coconut/drink = new(T)
+		src.reagents.trans_to(drink, src.reagents.total_volume)
 		qdel(src)
 
 	proc/someone_landed_on_us(mob/living/L, datum/thrown_thing/thr)

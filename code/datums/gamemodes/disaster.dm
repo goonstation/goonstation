@@ -34,8 +34,12 @@
 	for(var/datum/mind/wraith in Agimmicks)
 		wraith.current.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 		generate_wraith_objectives(wraith)
+		var/mob/living/intangible/wraith/W = wraith.current
+		var/datum/targetable/wraithAbility/specialize/SP = W.abilityHolder.getAbility(/datum/targetable/wraithAbility/specialize)
+		SP.pointCost = 0
+		SP?.evolve(2)
 
-	emergency_shuttle.disabled = 1 //Disable the shuttle temporarily.
+	emergency_shuttle.disabled = SHUTTLE_CALL_MANUAL_CALL_DISABLED //Disable the shuttle temporarily.
 
 	if(derelict_mode)
 		SPAWN(1 SECOND)
@@ -53,7 +57,7 @@
 					if(1)
 						new/obj/candle_light(T)
 					if(2)
-						new/obj/spook(T)
+						new/obj/item/spook(T)
 					if(3)
 						new/obj/critter/floateye(T)
 					if(4)
@@ -69,7 +73,7 @@
 		start_disaster()
 //
 	SPAWN(start_wait + shuttle_waittime)
-		emergency_shuttle.disabled = 0
+		emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
 		emergency_shuttle.incall()
 		if(derelict_mode)
 			command_alert("Ev4C**!on shu9999999__ called. Prepare fo# evacua ****SIGNAL LOST****","Emergency Al&RT")

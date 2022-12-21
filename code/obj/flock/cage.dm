@@ -164,8 +164,13 @@
 	process()
 		// process fluids into stuff
 		if(reagents.has_reagent(target_fluid, create_egg_at_fluid))
+			if (src.flock?.getComplexDroneCount() < FLOCK_DRONE_LIMIT)
+				spawnEgg()
+			else
+				var/obj/item/flockcache/cube = new(get_turf(src))
+				cube.resources = create_egg_at_fluid
 			reagents.remove_reagent(target_fluid, create_egg_at_fluid)
-			spawnEgg()
+
 		if(occupant && src.flock)
 			src.flock.updateEnemy(occupant)
 		// process stuff into fluids
@@ -254,6 +259,9 @@
 				var/mob/M = AM
 				M.visible_message("<span class='alert'><b>[M]</b> breaks out of [src]!</span>","<span class='alert'>You break out of [src]!</span>")
 			AM.set_loc(src.loc)
+
+		src.occupant = null
+		src.target = null
 		..()
 
 	relaymove(mob/user as mob)

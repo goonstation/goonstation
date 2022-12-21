@@ -68,12 +68,7 @@
 				src.amount -= a_used
 				tooltip_rebuild = 1
 				user.drop_item()
-				var/obj/item/gift/G = new /obj/item/gift(src.loc)
-				G.size = W.w_class
-				G.w_class = G.size + 1
-				G.icon_state = "gift[clamp(G.size, 1, 3)]-[src.style]"
-				G.gift = W
-				W.set_loc(G)
+				var/obj/item/gift/G = W.gift_wrap(src.style)
 				G.add_fingerprint(user)
 				W.add_fingerprint(user)
 				src.add_fingerprint(user)
@@ -116,7 +111,7 @@
 	desc = "For me!?"
 	name = "gift"
 	icon = 'icons/obj/items/items.dmi'
-	icon_state = "gift2-p"
+	icon_state = "gift2-g"
 	item_state = "gift"
 	var/size = 3
 	var/obj/item/gift = null
@@ -124,6 +119,12 @@
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
+	var/random_icons = TRUE
+
+	New()
+		. = ..()
+		if (src.random_icons)
+			src.icon_state = "[(prob(1) && prob(1)) ? "strange" : "gift[rand(1,3)]"]-[pick("r", "rs", "g", "gs")]"
 
 /obj/item/gift/attack_self(mob/user as mob)
 	if(!src.gift)

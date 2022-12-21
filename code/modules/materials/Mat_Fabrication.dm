@@ -1,6 +1,9 @@
 /obj/machinery/nanofab/refining
 	name = "Nano-fabricator (Refining)"
 	blueprints = list(/datum/matfab_recipe/coilsmall,
+#ifdef MAP_OVERRIDE_NADIR
+	/datum/matfab_recipe/catarod,
+#endif
 	/datum/matfab_recipe/spear,
 	/datum/matfab_recipe/arrow,
 	/datum/matfab_recipe/bow,
@@ -308,6 +311,9 @@
 						for(var/datum/matfab_part/P in selectedRecipe.required_parts)
 							if(P.assigned)
 								P.assigned.change_stack_amount(-(P.required_amount*howMany))
+								if(QDELETED(P.assigned))
+									P.assigned = null
+
 						tab = "recipes"
 						selectingPart = null
 						selectingPartList.Cut()

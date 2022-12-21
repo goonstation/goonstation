@@ -6,210 +6,165 @@
 /turf/unsimulated/wall/void,
 /area)
 "cA" = (
-/obj/machinery/door/airlock/gannets/glass/command/alt,
 /turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fblue4"
+	dir = 2;
+	icon_state = "fblue2"
 	},
 /area/ship/artemis)
-"db" = (
-/obj/rack,
-/obj/item/clothing/suit/rad,
-/obj/item/clothing/head/rad_hood,
-/turf/simulated/floor/black,
+"cF" = (
+/obj/machinery/power/rtg,
+/turf/simulated/floor/engine,
 /area/ship/artemis)
-"dg" = (
-/obj/stool/chair,
+"eu" = (
+/turf/simulated/floor/bluegreen,
+/area/ship/artemis)
+"ez" = (
+/obj/stool/chair/office{
+	dir = 1;
+	icon_state = "office_chair"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/ship/artemis)
+"eG" = (
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "red2"
+	},
+/area/ship/artemis)
+"eV" = (
+/obj/table/auto,
+/obj/item/storage/box/beakerbox,
+/turf/simulated/floor/specialroom/medbay,
+/area/ship/artemis)
+"eX" = (
 /turf/simulated/floor/blue/checker,
 /area/ship/artemis)
-"dI" = (
+"fx" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -8
+	},
+/turf/simulated/floor/blue/checker,
+/area/ship/artemis)
+"fz" = (
+/obj/landmark/lrt{
+	name = "Artemis-"
+	},
+/obj/machinery/lrteleporter/planetary_teleporter,
+/turf/simulated/floor/engine,
+/area/ship/artemis)
+"fA" = (
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "red2"
+	},
+/area/ship/artemis)
+"gp" = (
+/obj/storage/closet/biohazard,
+/turf/simulated/floor/engine,
+/area/ship/artemis)
+"gO" = (
 /obj/table/wood/auto,
 /turf/simulated/floor/carpet{
-	dir = 9;
+	dir = 6;
 	icon_state = "fblue3"
 	},
 /area/ship/artemis)
-"dO" = (
+"hx" = (
+/obj/machinery/computer/cloning{
+	dir = 8;
+	icon_state = "dna"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/bluegreen,
+/area/ship/artemis)
+"hA" = (
+/obj/storage/closet/fire,
+/turf/simulated/floor/engine,
+/area/ship/artemis)
+"hL" = (
+/obj/machinery/networked/mainframe,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/circuit/off,
+/area/ship/artemis)
+"iW" = (
+/obj/machinery/clone_scanner,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/bluegreen,
+/area/ship/artemis)
+"je" = (
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/ship/artemis)
+"ka" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/ship/artemis)
+"ks" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "red2"
 	},
 /area/ship/artemis)
-"fp" = (
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "red2"
-	},
-/area/ship/artemis)
-"fD" = (
-/obj/machinery/sim/vr_bed/flight_chair,
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "fblue1"
-	},
-/area/ship/artemis)
-"fF" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "green";
-	icon_state = "bedsheet-green"
-	},
-/turf/simulated/floor/carpet{
-	dir = 2;
-	icon_state = "green2"
-	},
-/area/ship/artemis)
-"fP" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 10;
-	icon_state = "leadwall"
-	},
-/area/ship/artemis)
-"gF" = (
-/turf/simulated/floor/bluegreen,
-/area/ship/artemis)
-"gH" = (
-/obj/machinery/clonegrinder,
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/bluegreen,
-/area/ship/artemis)
-"ha" = (
-/obj/storage/secure/closet/research/chemical,
-/turf/simulated/floor/specialroom/medbay,
-/area/ship/artemis)
-"hd" = (
-/turf/unsimulated/wall/setpieces/leadwall/junction,
-/area/ship/artemis)
-"hu" = (
-/obj/storage/closet/biohazard,
-/turf/simulated/floor/engine,
-/area/ship/artemis)
-"hw" = (
-/obj/machinery/vending/kitchen,
-/turf/simulated/floor/blue/checker,
-/area/ship/artemis)
-"hK" = (
-/obj/machinery/door/airlock/gannets/chemistry,
-/turf/simulated/floor/black,
-/area/ship/artemis)
-"ii" = (
-/obj/machinery/light/incandescent{
-	dir = 8
-	},
-/turf/simulated/floor/engine,
-/area/ship/artemis)
-"iA" = (
-/obj/storage/secure/closet/medical,
-/turf/simulated/floor/specialroom/medbay,
-/area/ship/artemis)
-"iG" = (
-/obj/table/auto,
-/obj/machinery/chem_master,
-/obj/machinery/light/incandescent{
-	dir = 1
-	},
-/turf/simulated/floor/specialroom/medbay,
-/area/ship/artemis)
-"jB" = (
+"kG" = (
 /obj/stool/chair/couch/green{
-	dir = 4;
+	dir = 8;
 	icon_state = "chair_couch-green"
 	},
 /turf/simulated/floor/carpet{
-	dir = 5;
+	dir = 9;
 	icon_state = "green2"
 	},
-/area/ship/artemis)
-"ku" = (
-/obj/stool/chair/comfy/blue{
-	dir = 4
-	},
-/obj/machinery/light/incandescent{
-	dir = 8
-	},
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fblue2"
-	},
-/area/ship/artemis)
-"kU" = (
-/obj/stool/chair/comfy/blue{
-	dir = 8
-	},
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fblue2"
-	},
-/area/ship/artemis)
-"kY" = (
-/obj/table/auto,
-/obj/item/storage/box/syringes,
-/obj/item/remote/porter/port_a_nanomed,
-/turf/simulated/floor/specialroom/medbay,
 /area/ship/artemis)
 "ly" = (
-/obj/machinery/light/incandescent{
-	dir = 8
-	},
+/obj/machinery/power/smes,
+/turf/simulated/floor/engine,
+/area/ship/artemis)
+"lI" = (
+/obj/rack,
+/obj/item/clothing/suit/rad,
+/obj/item/clothing/head/rad_hood,
 /turf/simulated/floor/black,
 /area/ship/artemis)
-"lC" = (
-/obj/machinery/door/airlock/gannets/glass,
-/turf/simulated/floor/blue/checker,
+"lX" = (
+/obj/item/storage/toilet{
+	dir = 4;
+	icon_state = "toilet"
+	},
+/turf/simulated/floor/purple,
 /area/ship/artemis)
-"lN" = (
-/obj/machinery/vending/cola/blue,
+"ma" = (
 /turf/simulated/floor/carpet{
-	dir = 6;
+	dir = 1;
 	icon_state = "green2"
 	},
 /area/ship/artemis)
-"mY" = (
-/obj/submachine/chef_oven{
-	dir = 4;
-	icon_state = "oven_off"
-	},
+"mS" = (
+/obj/machinery/vending/kitchen,
 /turf/simulated/floor/blue/checker,
 /area/ship/artemis)
-"nR" = (
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "red3"
-	},
-/area/ship/artemis)
-"ok" = (
-/obj/storage/secure/closet/engineering,
-/turf/simulated/floor/engine,
-/area/ship/artemis)
-"ol" = (
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "red3"
-	},
-/area/ship/artemis)
-"ov" = (
-/obj/landmark/ship_marker,
-/turf/simulated/floor/black,
-/area/ship/artemis)
-"ow" = (
-/obj/machinery/clone_scanner,
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/bluegreen,
-/area/ship/artemis)
-"oD" = (
+"nA" = (
 /obj/table/auto,
 /obj/machinery/chem_heater,
 /turf/simulated/floor/specialroom/medbay,
 /area/ship/artemis)
-"oZ" = (
-/obj/machinery/optable,
-/obj/item/surgical_spoon,
-/obj/item/suture,
-/obj/item/scalpel,
-/obj/item/circular_saw,
+"nF" = (
+/obj/storage/secure/closet/research/chemical,
 /turf/simulated/floor/specialroom/medbay,
 /area/ship/artemis)
-"pN" = (
+"nG" = (
+/obj/stool/chair,
+/turf/simulated/floor/blue/checker,
+/area/ship/artemis)
+"nO" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
@@ -220,166 +175,73 @@
 	icon_state = "red2"
 	},
 /area/ship/artemis)
-"pP" = (
-/obj/table/wood/auto,
+"nR" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "green";
+	icon_state = "bedsheet-green"
+	},
 /turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "fblue3"
-	},
-/area/ship/artemis)
-"pR" = (
-/obj/stool/chair{
-	dir = 1;
-	icon_state = "chair"
-	},
-/turf/simulated/floor/blue/checker,
-/area/ship/artemis)
-"qk" = (
-/obj/machinery/door/airlock/gannets/chemistry,
-/turf/simulated/floor/purple,
-/area/ship/artemis)
-"qu" = (
-/obj/table/wood/auto,
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "fblue3"
-	},
-/area/ship/artemis)
-"rh" = (
-/obj/machinery/computer/announcement,
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fblue4"
-	},
-/area/ship/artemis)
-"rD" = (
-/obj/machinery/bathtub{
-	anchored = 1;
-	dir = 4
-	},
-/turf/simulated/floor/purple,
-/area/ship/artemis)
-"rP" = (
-/turf/simulated/floor/blue/checker,
-/area/ship/artemis)
-"sI" = (
-/obj/machinery/vending/cola/red,
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "red2"
-	},
-/area/ship/artemis)
-"ta" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 9;
-	icon_state = "leadwall"
-	},
-/area/ship/artemis)
-"tq" = (
-/obj/decal/fakeobjects/shuttlethruster,
-/turf/space,
-/area/ship/artemis)
-"uL" = (
-/turf/simulated/floor/carpet{
-	dir = 9;
+	dir = 2;
 	icon_state = "green2"
 	},
 /area/ship/artemis)
-"uS" = (
-/obj/item/storage/toilet{
-	dir = 4;
-	icon_state = "toilet"
-	},
-/turf/simulated/floor/purple,
-/area/ship/artemis)
-"vr" = (
-/turf/simulated/floor/black,
-/area/ship/artemis)
-"vv" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 4;
-	icon_state = "leadwall"
-	},
-/area/ship/artemis)
-"vV" = (
-/turf/simulated/floor/circuit/off,
-/area/ship/artemis)
-"wC" = (
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "fblue2"
-	},
-/area/ship/artemis)
-"xx" = (
-/obj/table/auto,
-/obj/item/storage/box/cutlery,
-/obj/item/storage/box/plates,
-/obj/machinery/light/incandescent{
-	dir = 4
-	},
+"ow" = (
+/obj/storage/secure/closet/fridge,
 /turf/simulated/floor/blue/checker,
 /area/ship/artemis)
-"xZ" = (
-/obj/machinery/door/airlock/gannets/glass/medical,
-/turf/simulated/floor/bluegreen,
+"oB" = (
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
 /area/ship/artemis)
-"yI" = (
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/purple,
+"oD" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fblue3"
+	},
 /area/ship/artemis)
-"zb" = (
+"pl" = (
+/turf/simulated/floor/circuit/off,
+/area/ship/artemis)
+"qg" = (
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "red2"
+	},
+/area/ship/artemis)
+"qu" = (
 /obj/table/auto,
 /obj/item/storage/box/iv_box,
 /obj/item/storage/box/patchbox,
 /obj/item/kitchen/food_box/lollipop,
 /turf/simulated/floor/specialroom/medbay,
 /area/ship/artemis)
-"zj" = (
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "red2"
-	},
+"qT" = (
+/obj/machinery/optable,
+/obj/item/surgical_spoon,
+/obj/item/suture,
+/obj/item/scalpel,
+/obj/item/circular_saw,
+/turf/simulated/floor/specialroom/medbay,
 /area/ship/artemis)
-"AO" = (
-/obj/machinery/power/rtg,
+"rl" = (
 /turf/simulated/floor/engine,
 /area/ship/artemis)
-"Bj" = (
-/turf/unsimulated/wall/setpieces/leadwall,
+"rC" = (
+/obj/decal/fakeobjects/shuttlethruster,
+/obj/decal/fakeobjects/shuttlethruster,
+/turf/space,
 /area/ship/artemis)
-"Bv" = (
-/obj/machinery/communications_dish,
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/circuit/off,
-/area/ship/artemis)
-"BH" = (
+"rH" = (
 /turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "red2"
+	dir = 9;
+	icon_state = "green3"
 	},
 /area/ship/artemis)
-"Cm" = (
-/obj/machinery/computer/communications,
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fblue4"
-	},
-/area/ship/artemis)
-"Dn" = (
-/obj/machinery/door/airlock/gannets/glass/command/alt,
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fblue4"
-	},
-/area/ship/artemis)
-"DY" = (
-/obj/machinery/clonepod,
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/bluegreen,
-/area/ship/artemis)
-"EL" = (
+"sE" = (
 /obj/stool/chair/couch/red{
 	dir = 8;
 	icon_state = "chair_couch-red"
@@ -389,141 +251,40 @@
 	icon_state = "red2"
 	},
 /area/ship/artemis)
-"ET" = (
-/turf/simulated/floor/purple,
-/area/ship/artemis)
-"Fp" = (
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "green3"
+"sP" = (
+/turf/unsimulated/wall/setpieces/leadwindow{
+	dir = 8;
+	icon_state = "leadwindow_1"
 	},
 /area/ship/artemis)
-"Fq" = (
+"tu" = (
+/obj/table/auto,
+/obj/item/storage/box/cutlery,
+/obj/item/storage/box/plates,
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/blue/checker,
+/area/ship/artemis)
+"tK" = (
+/turf/unsimulated/wall/setpieces/leadwall,
+/area/ship/artemis)
+"tV" = (
+/obj/storage/secure/closet/medical,
 /turf/simulated/floor/specialroom/medbay,
 /area/ship/artemis)
-"Fs" = (
-/obj/decal/fakeobjects/shuttlethruster,
-/obj/decal/fakeobjects/shuttlethruster,
-/turf/space,
-/area/ship/artemis)
-"Fv" = (
-/obj/machinery/vending/snack,
-/turf/simulated/floor/blue/checker,
-/area/ship/artemis)
-"FZ" = (
-/obj/machinery/networked/mainframe,
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/circuit/off,
-/area/ship/artemis)
-"Gb" = (
-/obj/machinery/power/smes,
-/turf/simulated/floor/engine,
-/area/ship/artemis)
-"Gc" = (
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/bluegreen,
-/area/ship/artemis)
-"Hf" = (
-/turf/unsimulated/wall/setpieces/leadwindow{
-	dir = 8;
-	icon_state = "leadwindow_1"
+"uh" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red"
 	},
-/area/ship/artemis)
-"Hw" = (
-/obj/machinery/door/airlock/gannets/glass/toxins,
-/turf/simulated/floor/engine,
-/area/ship/artemis)
-"Ic" = (
-/obj/table/auto,
-/obj/submachine/mixer,
-/turf/simulated/floor/blue/checker,
-/area/ship/artemis)
-"Is" = (
-/obj/stool/chair/comfy/blue{
-	dir = 4
-	},
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fblue2"
-	},
-/area/ship/artemis)
-"Ix" = (
-/obj/stool/chair/comfy/blue{
-	dir = 8
-	},
-/obj/machinery/light/incandescent{
-	dir = 4
-	},
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fblue2"
-	},
-/area/ship/artemis)
-"IG" = (
-/obj/table/wood/auto,
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fblue3"
-	},
-/area/ship/artemis)
-"Jm" = (
-/turf/unsimulated/wall/setpieces/leadwindow{
-	dir = 4;
-	icon_state = "leadwindow_1"
-	},
-/area/ship/artemis)
-"Jt" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 5;
-	icon_state = "leadwall"
-	},
-/area/ship/artemis)
-"Kd" = (
-/obj/machinery/vending/coffee,
 /turf/simulated/floor/carpet{
 	dir = 10;
-	icon_state = "green2"
-	},
-/area/ship/artemis)
-"Km" = (
-/turf/unsimulated/wall/auto/lead/blue{
-	desc = "Seems pretty sturdy.";
-	name = "shield wall"
-	},
-/area/ship/artemis)
-"Ku" = (
-/obj/stool/chair/couch/green{
-	dir = 8;
-	icon_state = "chair_couch-green"
-	},
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "green2"
-	},
-/area/ship/artemis)
-"Kz" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 4;
-	pixel_x = -8
-	},
-/turf/simulated/floor/blue/checker,
-/area/ship/artemis)
-"KA" = (
-/obj/machinery/light/incandescent{
-	dir = 1
-	},
-/turf/simulated/floor/carpet{
-	dir = 1;
 	icon_state = "red2"
 	},
 /area/ship/artemis)
-"KH" = (
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "green2"
-	},
-/area/ship/artemis)
-"KT" = (
+"vp" = (
 /obj/ladder{
 	desc = "A ladder.";
 	icon_state = "ladder_wall";
@@ -533,34 +294,11 @@
 	},
 /turf/simulated/floor/black,
 /area/ship/artemis)
-"LH" = (
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "fblue2"
-	},
-/area/ship/artemis)
-"LP" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 8;
-	icon_state = "leadwall"
-	},
-/area/ship/artemis)
-"LQ" = (
-/obj/machinery/door/airlock/gannets/glass,
+"wc" = (
+/obj/machinery/door/airlock/gannets/glass/medical,
 /turf/simulated/floor/black,
 /area/ship/artemis)
-"LS" = (
-/obj/machinery/door/airlock/gannets/engineering/alt,
-/turf/simulated/floor/black,
-/area/ship/artemis)
-"LY" = (
-/obj/stool/chair/office{
-	dir = 1;
-	icon_state = "office_chair"
-	},
-/turf/simulated/floor/specialroom/medbay,
-/area/ship/artemis)
-"NF" = (
+"we" = (
 /obj/stool/chair/office/blue{
 	dir = 1;
 	icon_state = "office_chair_blue"
@@ -570,125 +308,14 @@
 	icon_state = "fblue2"
 	},
 /area/ship/artemis)
-"NX" = (
-/obj/decal/fakeobjects/shuttlethruster{
-	dir = 1;
-	icon_state = "propulsion"
-	},
-/turf/background_canvas,
-/area/ship/artemis)
-"Os" = (
-/obj/machinery/vending/cigarette,
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "red2"
-	},
-/area/ship/artemis)
-"OH" = (
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fblue2"
-	},
-/area/ship/artemis)
-"OR" = (
-/obj/stool/chair/couch/red{
-	dir = 4;
-	icon_state = "chair_couch-red"
-	},
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "red2"
-	},
-/area/ship/artemis)
-"Po" = (
-/obj/table/auto,
-/obj/machinery/chem_dispenser,
-/turf/simulated/floor/specialroom/medbay,
-/area/ship/artemis)
-"PY" = (
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "green2"
-	},
-/area/ship/artemis)
-"QU" = (
-/obj/table/auto,
-/obj/item/storage/box/beakerbox,
-/turf/simulated/floor/specialroom/medbay,
-/area/ship/artemis)
-"Rm" = (
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "fblue2"
-	},
-/area/ship/artemis)
-"SQ" = (
-/obj/ladder{
-	desc = "A ladder.";
-	id = "artemis";
-	layer = 2.5;
-	pixel_y = -12
-	},
-/turf/simulated/floor/black,
-/area/ship/artemis)
-"SX" = (
-/obj/machinery/light/incandescent{
-	dir = 1
-	},
-/turf/simulated/floor/black,
-/area/ship/artemis)
-"Ts" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 6;
-	icon_state = "leadwall"
-	},
-/area/ship/artemis)
-"Tv" = (
-/turf/simulated/floor/stairs{
-	dir = 1
-	},
-/area/ship/artemis)
-"TH" = (
-/obj/machinery/computer/cloning{
-	dir = 8;
-	icon_state = "dna"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/bluegreen,
-/area/ship/artemis)
-"Uc" = (
-/obj/machinery/door/airlock/gannets/glass/medical,
-/turf/simulated/floor/black,
-/area/ship/artemis)
-"Ur" = (
-/turf/simulated/floor/carpet{
-	dir = 2;
-	icon_state = "fblue2"
-	},
-/area/ship/artemis)
-"UF" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "red";
-	icon_state = "bedsheet-red"
-	},
+"wf" = (
+/obj/machinery/sim/vr_bed/flight_chair,
 /turf/simulated/floor/carpet{
 	dir = 10;
-	icon_state = "red2"
+	icon_state = "fblue1"
 	},
 /area/ship/artemis)
-"UH" = (
-/turf/unsimulated/wall/setpieces/leadwindow,
-/area/ship/artemis)
-"Vb" = (
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/blue/checker,
-/area/ship/artemis)
-"VH" = (
-/obj/storage/closet/fire,
-/turf/simulated/floor/engine,
-/area/ship/artemis)
-"Wb" = (
+"wi" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "green";
@@ -699,56 +326,429 @@
 	icon_state = "green2"
 	},
 /area/ship/artemis)
-"Wm" = (
-/obj/landmark/lrt{
-	name = "Artemis-"
-	},
-/obj/machinery/lrteleporter/planetary_teleporter,
-/turf/simulated/floor/engine,
-/area/ship/artemis)
-"Wy" = (
-/obj/storage/secure/closet/fridge,
+"wn" = (
+/obj/machinery/vending/snack,
 /turf/simulated/floor/blue/checker,
 /area/ship/artemis)
-"WO" = (
+"wp" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/blue/checker,
+/area/ship/artemis)
+"wy" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 9;
+	icon_state = "leadwall"
+	},
+/area/ship/artemis)
+"wH" = (
+/obj/machinery/computer/announcement,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fblue4"
+	},
+/area/ship/artemis)
+"wN" = (
+/obj/table/auto,
+/obj/submachine/mixer,
+/turf/simulated/floor/blue/checker,
+/area/ship/artemis)
+"wY" = (
+/turf/simulated/floor/specialroom/medbay,
+/area/ship/artemis)
+"xk" = (
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "red3"
+	},
+/area/ship/artemis)
+"yo" = (
+/obj/stool/chair/comfy/blue{
+	dir = 8
+	},
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fblue2"
+	},
+/area/ship/artemis)
+"zi" = (
+/obj/table/auto,
+/obj/item/storage/box/syringes,
+/obj/item/remote/porter/port_a_nanomed,
+/turf/simulated/floor/specialroom/medbay,
+/area/ship/artemis)
+"zH" = (
+/obj/machinery/door/airlock/gannets/glass/toxins,
+/turf/simulated/floor/engine,
+/area/ship/artemis)
+"zJ" = (
+/obj/stool/chair/couch/green{
+	dir = 4;
+	icon_state = "chair_couch-green"
+	},
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "green2"
+	},
+/area/ship/artemis)
+"zK" = (
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "green2"
+	},
+/area/ship/artemis)
+"zO" = (
+/obj/machinery/door/airlock/gannets/chemistry,
+/turf/simulated/floor/black,
+/area/ship/artemis)
+"Aj" = (
+/obj/stool/chair/comfy/blue{
+	dir = 4
+	},
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fblue2"
+	},
+/area/ship/artemis)
+"AI" = (
+/obj/machinery/door/airlock/gannets/glass/security,
+/turf/simulated/floor/black,
+/area/ship/artemis)
+"Bw" = (
+/obj/machinery/bathtub{
+	anchored = 1;
+	dir = 4
+	},
+/turf/simulated/floor/purple,
+/area/ship/artemis)
+"BM" = (
 /obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/specialroom/medbay,
 /area/ship/artemis)
-"WT" = (
-/obj/machinery/light/incandescent{
-	dir = 4
+"De" = (
+/obj/submachine/chef_oven{
+	dir = 4;
+	icon_state = "oven_off"
 	},
+/turf/simulated/floor/blue/checker,
+/area/ship/artemis)
+"Dl" = (
+/obj/landmark/ship_marker,
 /turf/simulated/floor/black,
 /area/ship/artemis)
-"Xf" = (
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "green3"
+"Ew" = (
+/turf/unsimulated/wall/auto/lead/blue{
+	desc = "Seems pretty sturdy.";
+	name = "shield wall"
 	},
 /area/ship/artemis)
-"XL" = (
+"EM" = (
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fblue2"
+	},
+/area/ship/artemis)
+"Fi" = (
 /obj/stool/chair/office{
 	dir = 4;
 	icon_state = "office_chair"
 	},
 /turf/simulated/floor/bluegreen,
 /area/ship/artemis)
-"YS" = (
+"Fx" = (
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "red2"
+	},
+/area/ship/artemis)
+"FC" = (
+/obj/machinery/communications_dish,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/circuit/off,
+/area/ship/artemis)
+"Gi" = (
+/obj/stool/chair/couch/red{
+	dir = 4;
+	icon_state = "chair_couch-red"
+	},
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "red2"
+	},
+/area/ship/artemis)
+"GI" = (
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fblue2"
+	},
+/area/ship/artemis)
+"GO" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4;
+	icon_state = "leadwall"
+	},
+/area/ship/artemis)
+"HE" = (
+/obj/storage/secure/closet/engineering,
 /turf/simulated/floor/engine,
 /area/ship/artemis)
-"YZ" = (
+"IS" = (
+/obj/machinery/vending/cola/red,
 /turf/simulated/floor/carpet{
-	dir = 1;
+	dir = 10;
+	icon_state = "red2"
+	},
+/area/ship/artemis)
+"Jb" = (
+/turf/unsimulated/wall/setpieces/leadwindow,
+/area/ship/artemis)
+"JW" = (
+/obj/machinery/door/airlock/gannets/glass/command/alt,
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fblue4"
+	},
+/area/ship/artemis)
+"Kq" = (
+/turf/simulated/floor/black,
+/area/ship/artemis)
+"KD" = (
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fblue2"
+	},
+/area/ship/artemis)
+"KR" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 5;
+	icon_state = "leadwall"
+	},
+/area/ship/artemis)
+"Lc" = (
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "red3"
+	},
+/area/ship/artemis)
+"Lg" = (
+/turf/simulated/floor/carpet{
+	dir = 4;
 	icon_state = "green2"
 	},
 /area/ship/artemis)
-"ZF" = (
-/obj/machinery/door/airlock/gannets/glass/security,
-/turf/simulated/floor/black,
+"LH" = (
+/turf/simulated/floor/stairs{
+	dir = 1
+	},
 /area/ship/artemis)
-"ZX" = (
+"LM" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	dir = 1;
+	icon_state = "propulsion"
+	},
+/turf/background_canvas,
+/area/ship/artemis)
+"MP" = (
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fblue2"
+	},
+/area/ship/artemis)
+"Ox" = (
+/obj/machinery/clonepod,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/bluegreen,
+/area/ship/artemis)
+"OH" = (
+/obj/machinery/vending/cola/blue,
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "green2"
+	},
+/area/ship/artemis)
+"Pe" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fblue3"
+	},
+/area/ship/artemis)
+"Pg" = (
 /obj/submachine/laundry_machine,
 /turf/simulated/floor/purple,
+/area/ship/artemis)
+"Pp" = (
+/turf/unsimulated/wall/setpieces/leadwall/junction,
+/area/ship/artemis)
+"Pr" = (
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/ship/artemis)
+"Ps" = (
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "red2"
+	},
+/area/ship/artemis)
+"PJ" = (
+/obj/machinery/door/airlock/gannets/engineering/alt,
+/turf/simulated/floor/black,
+/area/ship/artemis)
+"QX" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "green2"
+	},
+/area/ship/artemis)
+"Ry" = (
+/obj/stool/chair{
+	dir = 1;
+	icon_state = "chair"
+	},
+/turf/simulated/floor/blue/checker,
+/area/ship/artemis)
+"Rz" = (
+/obj/ladder{
+	desc = "A ladder.";
+	id = "artemis";
+	layer = 2.5;
+	pixel_y = -12
+	},
+/turf/simulated/floor/black,
+/area/ship/artemis)
+"SE" = (
+/obj/machinery/door/airlock/gannets/chemistry,
+/turf/simulated/floor/purple,
+/area/ship/artemis)
+"SU" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 10;
+	icon_state = "leadwall"
+	},
+/area/ship/artemis)
+"Td" = (
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "green3"
+	},
+/area/ship/artemis)
+"Tm" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/purple,
+/area/ship/artemis)
+"TM" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/bluegreen,
+/area/ship/artemis)
+"Uu" = (
+/obj/decal/fakeobjects/shuttlethruster,
+/turf/space,
+/area/ship/artemis)
+"UE" = (
+/obj/machinery/clonegrinder,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/bluegreen,
+/area/ship/artemis)
+"Vh" = (
+/obj/machinery/door/airlock/gannets/glass/medical,
+/turf/simulated/floor/bluegreen,
+/area/ship/artemis)
+"Vx" = (
+/obj/table/auto,
+/obj/machinery/chem_dispenser/chemical,
+/turf/simulated/floor/specialroom/medbay,
+/area/ship/artemis)
+"VR" = (
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "green2"
+	},
+/area/ship/artemis)
+"WD" = (
+/obj/machinery/door/airlock/gannets/glass,
+/turf/simulated/floor/blue/checker,
+/area/ship/artemis)
+"Xt" = (
+/obj/stool/chair/comfy/blue{
+	dir = 8
+	},
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fblue2"
+	},
+/area/ship/artemis)
+"Xu" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 8;
+	icon_state = "leadwall"
+	},
+/area/ship/artemis)
+"Xx" = (
+/obj/table/auto,
+/obj/machinery/chem_master,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/ship/artemis)
+"Xy" = (
+/obj/machinery/door/airlock/gannets/glass,
+/turf/simulated/floor/black,
+/area/ship/artemis)
+"XK" = (
+/obj/stool/chair/comfy/blue{
+	dir = 4
+	},
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fblue2"
+	},
+/area/ship/artemis)
+"Yt" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 6;
+	icon_state = "leadwall"
+	},
+/area/ship/artemis)
+"Zr" = (
+/turf/simulated/floor/purple,
+/area/ship/artemis)
+"ZE" = (
+/obj/machinery/computer/communications,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fblue4"
+	},
+/area/ship/artemis)
+"ZN" = (
+/obj/machinery/door/airlock/gannets/glass/command/alt,
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fblue4"
+	},
+/area/ship/artemis)
+"ZW" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fblue3"
+	},
+/area/ship/artemis)
+"ZZ" = (
+/turf/unsimulated/wall/setpieces/leadwindow{
+	dir = 4;
+	icon_state = "leadwindow_1"
+	},
 /area/ship/artemis)
 
 (1,1,1) = {"
@@ -1342,10 +1342,10 @@ aa
 aa
 aa
 aa
-Km
-UH
-UH
-Km
+Ew
+Jb
+Jb
+Ew
 aa
 aa
 aa
@@ -1386,14 +1386,14 @@ aa
 aa
 aa
 aa
-Km
-UH
-Km
-Km
-rD
-uS
-Km
-tq
+Ew
+Jb
+Ew
+Ew
+Bw
+lX
+Ew
+Uu
 aa
 aa
 aa
@@ -1431,16 +1431,16 @@ aa
 aa
 aa
 aa
-Km
-UH
-Km
-vr
-vr
-hK
-ET
-yI
-Km
-tq
+Ew
+Jb
+Ew
+Kq
+Kq
+zO
+Zr
+Tm
+Ew
+Uu
 aa
 aa
 aa
@@ -1476,18 +1476,18 @@ aa
 aa
 aa
 aa
-Km
-UH
-Km
-vr
-vr
-vr
-Km
-Km
-ZX
-ET
-Km
-tq
+Ew
+Jb
+Ew
+Kq
+Kq
+Kq
+Ew
+Ew
+Pg
+Zr
+Ew
+Uu
 aa
 aa
 aa
@@ -1522,19 +1522,19 @@ aa
 aa
 aa
 aa
-Km
-Km
-vr
-vr
-vr
-Km
-Km
-Km
-Km
-Km
-qk
-Km
-Km
+Ew
+Ew
+Kq
+Kq
+Kq
+Ew
+Ew
+Ew
+Ew
+Ew
+SE
+Ew
+Ew
 aa
 aa
 aa
@@ -1568,20 +1568,20 @@ aa
 aa
 aa
 aa
-Km
-Km
-vr
-vr
-Km
-Km
-Km
-ha
-iA
-Km
-EL
-fp
-UF
-Hf
+Ew
+Ew
+Kq
+Kq
+Ew
+Ew
+Ew
+nF
+tV
+Ew
+sE
+Fx
+uh
+sP
 aa
 aa
 aa
@@ -1614,21 +1614,21 @@ aa
 aa
 aa
 aa
-Km
-Km
-vr
-vr
-Km
-Km
-Km
-WO
-Fq
-oZ
-Km
-OR
-nR
-pN
-Hf
+Ew
+Ew
+Kq
+Kq
+Ew
+Ew
+Ew
+BM
+wY
+qT
+Ew
+Gi
+Lc
+nO
+sP
 aa
 aa
 aa
@@ -1660,23 +1660,23 @@ aa
 aa
 aa
 aa
-Km
-Km
-vr
-vr
-Km
-Km
-gF
-xZ
-Fq
-Fq
-Fq
-Km
-Km
-dO
-pN
-Km
-Km
+Ew
+Ew
+Kq
+Kq
+Ew
+Ew
+eu
+Vh
+wY
+wY
+wY
+Ew
+Ew
+Ps
+nO
+Ew
+Ew
 aa
 aa
 aa
@@ -1704,26 +1704,26 @@ aa
 aa
 aa
 aa
-Km
-UH
-Km
-Km
-vr
-vr
-Km
-Km
-gF
-Gc
-Km
-iG
-Fq
-Fq
-zb
-Km
-KA
-ol
-sI
-Hf
+Ew
+Jb
+Ew
+Ew
+Kq
+Kq
+Ew
+Ew
+eu
+TM
+Ew
+Xx
+wY
+wY
+qu
+Ew
+ks
+xk
+IS
+sP
 aa
 aa
 aa
@@ -1750,30 +1750,30 @@ aa
 aa
 aa
 aa
-Km
-Km
-Wm
-ii
-Hw
-vr
-Km
-Km
-gF
-XL
-gF
-Km
-Po
-LY
-Fq
-kY
-Km
-zj
-BH
-Os
-Km
-UH
-Km
-Km
+Ew
+Ew
+fz
+oB
+zH
+Kq
+Ew
+Ew
+eu
+Fi
+eu
+Ew
+Vx
+ez
+wY
+zi
+Ew
+fA
+qg
+eG
+Ew
+Jb
+Ew
+Ew
 aa
 aa
 aa
@@ -1796,32 +1796,32 @@ aa
 aa
 aa
 aa
-Km
-Km
-Km
-UH
-Km
-Km
-vr
-Km
-gH
-DY
-TH
-ow
-Km
-oD
-Fq
-Fq
-QU
-Km
-ZF
-Km
-Km
-Km
-vr
-ly
-Km
-tq
+Ew
+Ew
+Ew
+Jb
+Ew
+Ew
+Kq
+Ew
+UE
+Ox
+hx
+iW
+Ew
+nA
+wY
+wY
+eV
+Ew
+AI
+Ew
+Ew
+Ew
+Kq
+je
+Ew
+Uu
 aa
 aa
 aa
@@ -1842,33 +1842,33 @@ aa
 aa
 aa
 aa
-Km
-Km
-Rm
-ku
-Is
-wC
-Km
-SX
-Km
-Km
-Km
-UH
-Km
-Km
-Km
-UH
-Uc
-Km
-Km
-vr
-vr
-Km
-vr
-vr
-vr
-Km
-tq
+Ew
+Ew
+GI
+XK
+Aj
+MP
+Ew
+ka
+Ew
+Ew
+Ew
+Jb
+Ew
+Ew
+Ew
+Jb
+wc
+Ew
+Ew
+Kq
+Kq
+Ew
+Kq
+Kq
+Kq
+Ew
+Uu
 aa
 aa
 aa
@@ -1889,33 +1889,33 @@ aa
 aa
 aa
 aa
-Jm
-Cm
-NF
-qu
-IG
-Ur
+ZZ
+ZE
+we
+gO
+oD
 cA
-vr
-vr
-vr
-ly
-vr
-vr
-vr
-ly
-vr
-vr
-vr
-ly
-vr
-vr
-LS
-vr
-vr
-vr
-Km
-tq
+JW
+Kq
+Kq
+Kq
+je
+Kq
+Kq
+Kq
+je
+Kq
+Kq
+Kq
+je
+Kq
+Kq
+PJ
+Kq
+Kq
+Kq
+Ew
+Uu
 aa
 aa
 aa
@@ -1936,33 +1936,33 @@ aa
 aa
 aa
 aa
-Jm
-fD
-NF
-pP
-dI
-Ur
-Dn
-vr
-vr
-vr
-vr
-vr
-vr
-ov
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-LS
-vr
-vr
-vr
-Km
-tq
+ZZ
+wf
+we
+Pe
+ZW
+cA
+ZN
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Dl
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+PJ
+Kq
+Kq
+Kq
+Ew
+Uu
 aa
 aa
 aa
@@ -1983,33 +1983,33 @@ aa
 aa
 aa
 aa
-Jm
-rh
-NF
-pP
-dI
-Ur
-Dn
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-LS
-vr
-vr
-vr
-Km
-tq
+ZZ
+wH
+we
+Pe
+ZW
+cA
+ZN
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+PJ
+Kq
+Kq
+Kq
+Ew
+Uu
 aa
 aa
 aa
@@ -2030,33 +2030,33 @@ aa
 aa
 aa
 aa
-Km
-Km
-OH
-Ix
-kU
-LH
-Km
-SX
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-WT
-vr
-vr
-Km
-vr
-vr
-vr
-Km
-Fs
+Ew
+Ew
+EM
+Xt
+yo
+KD
+Ew
+ka
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Pr
+Kq
+Kq
+Ew
+Kq
+Kq
+Kq
+Ew
+rC
 aa
 aa
 aa
@@ -2078,32 +2078,32 @@ aa
 aa
 aa
 aa
-Km
-Km
-Km
-vV
-vV
-Km
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-Km
-LQ
-Km
-Km
-Km
-vr
-WT
-Km
-tq
+Ew
+Ew
+Ew
+pl
+pl
+Ew
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Ew
+Xy
+Ew
+Ew
+Ew
+Kq
+Pr
+Ew
+Uu
 aa
 aa
 aa
@@ -2126,30 +2126,30 @@ aa
 aa
 aa
 aa
-Km
-Km
-Bv
-FZ
-Km
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-Km
-uL
-KH
-Kd
-Km
-UH
-Km
-Km
+Ew
+Ew
+FC
+hL
+Ew
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Ew
+zK
+VR
+QX
+Ew
+Jb
+Ew
+Ew
 aa
 aa
 aa
@@ -2174,26 +2174,26 @@ aa
 aa
 aa
 aa
-Km
-UH
-Km
-Km
-SQ
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-Km
-YZ
-Fp
-lN
-Hf
+Ew
+Jb
+Ew
+Ew
+Rz
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Ew
+ma
+Td
+OH
+sP
 aa
 aa
 aa
@@ -2224,23 +2224,23 @@ aa
 aa
 aa
 aa
-Km
-Km
-WT
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-Km
-Km
-YZ
-fF
-ta
-Ts
+Ew
+Ew
+Pr
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Ew
+Ew
+ma
+nR
+wy
+Yt
 aa
 aa
 aa
@@ -2272,21 +2272,21 @@ aa
 aa
 aa
 aa
-Km
-Km
-vr
-vr
-vr
-WT
-vr
-vr
-vr
-WT
-Km
-Ku
-Xf
-fF
-Hf
+Ew
+Ew
+Kq
+Kq
+Kq
+Pr
+Kq
+Kq
+Kq
+Pr
+Ew
+kG
+rH
+nR
+sP
 aa
 aa
 aa
@@ -2320,20 +2320,20 @@ aa
 aa
 aa
 aa
-Km
-Km
-vr
-vr
-Km
-Km
-Km
-Km
-Km
-Km
-jB
-PY
-Wb
-Hf
+Ew
+Ew
+Kq
+Kq
+Ew
+Ew
+Ew
+Ew
+Ew
+Ew
+zJ
+Lg
+wi
+sP
 aa
 aa
 aa
@@ -2368,19 +2368,19 @@ aa
 aa
 aa
 aa
-Km
-Km
-vr
-LQ
-rP
-Kz
-mY
-hw
-Km
-Km
-lC
-Km
-Km
+Ew
+Ew
+Kq
+Xy
+eX
+fx
+De
+mS
+Ew
+Ew
+WD
+Ew
+Ew
 aa
 aa
 aa
@@ -2416,18 +2416,18 @@ aa
 aa
 aa
 aa
-Km
-UH
-Km
-Wy
-rP
-rP
-rP
-rP
-rP
-rP
-Km
-tq
+Ew
+Jb
+Ew
+ow
+eX
+eX
+eX
+eX
+eX
+eX
+Ew
+Uu
 aa
 aa
 aa
@@ -2465,16 +2465,16 @@ aa
 aa
 aa
 aa
-Km
-UH
-Km
-dg
-xx
-pR
-rP
-Vb
-Km
-tq
+Ew
+Jb
+Ew
+nG
+tu
+Ry
+eX
+wp
+Ew
+Uu
 aa
 aa
 aa
@@ -2514,14 +2514,14 @@ aa
 aa
 aa
 aa
-Km
-UH
-Km
-Km
-Fv
-Ic
-Km
-tq
+Ew
+Jb
+Ew
+Ew
+wn
+wN
+Ew
+Uu
 aa
 aa
 aa
@@ -2564,10 +2564,10 @@ aa
 aa
 aa
 aa
-Km
-UH
-UH
-Km
+Ew
+Jb
+Jb
+Ew
 aa
 aa
 aa
@@ -4056,24 +4056,24 @@ aa
 aa
 aa
 aa
-NX
-ta
-Bj
-Bj
-Bj
-Bj
-Bj
-Bj
-Bj
-Bj
-Bj
-Bj
-Bj
-Bj
-Bj
-Bj
-Bj
-fP
+LM
+wy
+tK
+tK
+tK
+tK
+tK
+tK
+tK
+tK
+tK
+tK
+tK
+tK
+tK
+tK
+tK
+SU
 aa
 aa
 aa
@@ -4103,24 +4103,24 @@ aa
 aa
 aa
 aa
-NX
-LP
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-LP
+LM
+Xu
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Xu
 aa
 aa
 aa
@@ -4147,30 +4147,30 @@ aa
 aa
 aa
 aa
-ta
-Bj
-Bj
-Bj
-Ts
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-db
-hd
-Bj
-Bj
-fP
+wy
+tK
+tK
+tK
+Yt
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+lI
+Pp
+tK
+tK
+SU
 aa
 aa
 aa
@@ -4193,31 +4193,31 @@ aa
 aa
 aa
 aa
-ta
-Ts
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-ta
-Ts
-VH
-ok
-LP
+wy
+Yt
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+wy
+Yt
+hA
+HE
+Xu
 aa
 aa
 aa
@@ -4239,32 +4239,32 @@ aa
 aa
 aa
 aa
-ta
-Ts
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vv
-AO
-YS
-YS
-LP
+wy
+Yt
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+GO
+cF
+rl
+rl
+Xu
 aa
 aa
 aa
@@ -4286,32 +4286,32 @@ aa
 aa
 aa
 aa
-LP
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-LS
-Tv
-YS
-Gb
-LP
+Xu
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+PJ
+LH
+rl
+ly
+Xu
 aa
 aa
 aa
@@ -4333,32 +4333,32 @@ aa
 aa
 aa
 aa
-LP
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-LS
-Tv
-YS
-Gb
-LP
+Xu
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+PJ
+LH
+rl
+ly
+Xu
 aa
 aa
 aa
@@ -4380,32 +4380,32 @@ aa
 aa
 aa
 aa
-LP
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-LS
-Tv
-YS
-Gb
-LP
+Xu
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+PJ
+LH
+rl
+ly
+Xu
 aa
 aa
 aa
@@ -4427,32 +4427,32 @@ aa
 aa
 aa
 aa
-Jt
-fP
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vv
-AO
-YS
-YS
-LP
+KR
+SU
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+GO
+cF
+rl
+rl
+Xu
 aa
 aa
 aa
@@ -4475,31 +4475,31 @@ aa
 aa
 aa
 aa
-Jt
-fP
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-Jt
-fP
-hu
-ok
-LP
+KR
+SU
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+KR
+SU
+gp
+HE
+Xu
 aa
 aa
 aa
@@ -4523,30 +4523,30 @@ aa
 aa
 aa
 aa
-Jt
-Bj
-Bj
-Bj
-fP
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-db
-hd
-Bj
-Bj
-Ts
+KR
+tK
+tK
+tK
+SU
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+lI
+Pp
+tK
+tK
+Yt
 aa
 aa
 aa
@@ -4573,24 +4573,24 @@ aa
 aa
 aa
 aa
-NX
-LP
-KT
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-vr
-LP
+LM
+Xu
+vp
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Kq
+Xu
 aa
 aa
 aa
@@ -4620,24 +4620,24 @@ aa
 aa
 aa
 aa
-NX
-Jt
-Bj
-Bj
-Bj
-Bj
-Bj
-Bj
-Bj
-Bj
-Bj
-Bj
-Bj
-Bj
-Bj
-Bj
-Bj
-Ts
+LM
+KR
+tK
+tK
+tK
+tK
+tK
+tK
+tK
+tK
+tK
+tK
+tK
+tK
+tK
+tK
+tK
+Yt
 aa
 aa
 aa

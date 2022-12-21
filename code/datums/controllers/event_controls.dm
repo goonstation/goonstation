@@ -25,7 +25,8 @@ var/datum/event_controller/random_events
 	var/list/player_spawn_events = list()
 	var/dead_players_threshold = 0.3
 	var/spawn_events_begin = 23 MINUTES
-	var/time_between_spawn_events = 8 MINUTES
+	var/time_between_spawn_events_lower = 8 MINUTES
+	var/time_between_spawn_events_upper = 12 MINUTES
 
 	var/major_event_timer = 0
 	var/minor_event_timer = 0
@@ -43,27 +44,28 @@ var/datum/event_controller/random_events
 
 	New()
 		..()
-		for (var/X in childrentypesof(/datum/random_event/major))
+
+		for (var/X in concrete_typesof(/datum/random_event/major))
 			var/datum/random_event/RE = new X
 			events += RE
 
-		for (var/X in childrentypesof(/datum/random_event/major/antag))
+		for (var/X in concrete_typesof(/datum/random_event/major/antag))
 			var/datum/random_event/RE = new X
 			antag_spawn_events += RE
 
-		for (var/X in childrentypesof(/datum/random_event/major/player_spawn))
+		for (var/X in concrete_typesof(/datum/random_event/major/player_spawn))
 			var/datum/random_event/RE = new X
 			player_spawn_events += RE
 
-		for (var/X in childrentypesof(/datum/random_event/minor))
+		for (var/X in concrete_typesof(/datum/random_event/minor))
 			var/datum/random_event/RE = new X
 			minor_events += RE
 
-		for (var/X in childrentypesof(/datum/random_event/special))
+		for (var/X in concrete_typesof(/datum/random_event/special))
 			var/datum/random_event/RE = new X
 			special_events += RE
 
-		for (var/X in childrentypesof(/datum/random_event/start))
+		for (var/X in concrete_typesof(/datum/random_event/start))
 			var/datum/random_event/RE = new X
 			start_events += RE
 
@@ -127,7 +129,7 @@ var/datum/event_controller/random_events
 				message_admins("<span class='internal'>A spawn event would have happened now, but it was not needed based on alive players + antagonists headcount or game mode!<br> \
 								[round(100 * aap, 0.1)]% of the alive crew were antags and [round(100 * dcp, 0.1)]% of the entire crew were dead.</span>")
 
-		next_spawn_event = ticker.round_elapsed_ticks + time_between_spawn_events
+		next_spawn_event = ticker.round_elapsed_ticks + rand(time_between_spawn_events_lower, time_between_spawn_events_upper)
 
 	proc/do_random_event(var/list/event_bank, var/source = null)
 		if (!event_bank || event_bank.len < 1)

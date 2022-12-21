@@ -123,7 +123,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 			for (var/mob/living/X in view(7,POT)) stuffnearby.Add(X)
 			if(!extreme_start)
 				for (var/obj/item/X in view(7,POT)) stuffnearby.Add(X)
-			if (stuffnearby.len > 1)
+			if (stuffnearby.len >= 1)
 				var/thing = pick(stuffnearby)
 				POT.visible_message("<span class='alert'><b>[POT.name]</b> stares at [thing].</span>")
 				if(extreme_start)
@@ -219,7 +219,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 /datum/plant/artifact/cat
 	name = "Synthetic Cat"
 	override_icon_state = "Cat"
-	crop = /obj/critter/cat/synth
+	crop = /mob/living/critter/small_animal/cat/synth
 	unique_seed = /obj/item/seed/alien/cat
 	starthealth = 90 // 9 lives
 	growtime = 100
@@ -240,7 +240,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 			POT.visible_message("<span class='alert'><b>[POT.name]</b> meows!</span>")
 
 		if (POT.growth > (P.harvtime + DNA.harvtime + 10))
-			var/obj/critter/cat/synth/C = new(get_turf(POT))
+			var/mob/living/critter/small_animal/cat/synth/C = new(get_turf(POT))
 			C.health = POT.health
 			POT.visible_message("<span class='notice'>The synthcat climbs out of the tray!</span>")
 			POT.HYPdestroyplant()

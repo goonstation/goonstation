@@ -61,7 +61,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fish_available = list(/obj/item/fish/carp = 40,\
 	/obj/item/fish/bass = 30,\
 	/obj/critter/slug = 10,\
-	/obj/critter/snake = 10,\
+	/mob/living/critter/small_animal/snake = 10,\
 	/obj/critter/frog = 10,\
 	/obj/item/clothing/head/rafflesia = 5)
 
@@ -104,9 +104,9 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/mob/living/carbon/human/npc/monkey/extremely_fast = 1,\
 #endif
 	/obj/critter/aberration = 1,\
-	/obj/critter/cat = 2,\
+	/mob/living/critter/small_animal/cat = 2,\
 	/obj/item/clothing/head/void_crown = 1,\
-	/obj/item/record/random = 4,\
+	/obj/item/record/spacebux = 4,\
 	/obj/critter/domestic_bee/trauma = 20)
 
 /datum/fishing_spot/fryer

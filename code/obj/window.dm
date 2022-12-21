@@ -38,7 +38,7 @@
 	New()
 		..()
 		src.ini_dir = src.dir
-		update_nearby_tiles(need_rebuild=1)
+		update_nearby_tiles(need_rebuild=1,selfnotify=1) // self notify to stop fluid jankness
 		if (default_material)
 			src.setMaterial(getMaterial(default_material), copy = FALSE)
 		if (default_reinforcement)
@@ -310,7 +310,7 @@
 			return TRUE
 		if(istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
-			if(P.proj_data.window_pass)
+			if(P.proj_data?.window_pass)
 				return TRUE
 		if (!is_cardinal(dir))
 			return FALSE //full tile window, you can't move into it!
@@ -766,6 +766,7 @@
 		/turf/unsimulated/wall/auto/adventure/shuttle,
 		/turf/simulated/wall/auto/marsoutpost,
 		/turf/simulated/wall/false_wall,
+		/turf/simulated/wall/auto/feather,
 	))
 
 	/// Gotta be a typecache list
@@ -1099,10 +1100,11 @@
 // flock windows
 
 /obj/window/auto/feather
+	default_material = "gnesisglass"
+	var/flock_id = "Fibrewoven window"
 	var/repair_per_resource = 1
 
 /obj/window/auto/feather/New()
-	connects_to += /turf/simulated/wall/auto/feather
 	..()
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, TRUE)
@@ -1111,7 +1113,7 @@
 	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Fibrewoven Window
+		<br><span class='bold'>ID:</span> [src.flock_id]
 		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 
@@ -1135,6 +1137,7 @@
 		return isfeathertile(src.loc) && (F.floorrunning || (F.can_floorrun && F.resources >= 1)) && (F.is_npc || (F.client && F.client.check_key(KEY_RUN)))
 
 /obj/window/feather
+	var/flock_id = "Fibrewoven window"
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "window"
 	default_material = "gnesisglass"
@@ -1157,7 +1160,7 @@
 	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Fibrewoven Window
+		<br><span class='bold'>ID:</span> [src.flock_id]
 		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 

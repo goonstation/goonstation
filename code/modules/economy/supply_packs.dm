@@ -321,6 +321,16 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Experimental Local Generator Crate"
 
+/datum/supply_packs/combustion_generator
+	name = "Portable Combustion Generator"
+	desc = "x1 Portable Generator, comes with a complementary fueltank."
+	category = "Engineering Department"
+	contains = list(/obj/machinery/power/combustion_generator,
+					/obj/item/reagent_containers/food/drinks/fueltank/empty)
+	cost = 8000
+	containertype = /obj/storage/crate/wooden
+	containername = "Portable Combustion Generator"
+
 /datum/supply_packs/medicalfirstaid
 	name = "Medical: First Aid Crate"
 	desc = "x10 Assorted First Aid Kits"
@@ -378,15 +388,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Janitorial Supplies"
 
 /datum/supply_packs/hydronutrient
-	name = "Hydroponics: Nutrient Pack"
-	desc = "x15 Nutrient Formulas"
+	name = "Hydroponics: Nutrient Crate"
+	desc = "Five bulk jugs of the most essential plant nutrients"
 	category = "Civilian Department"
-	contains = list(/obj/item/reagent_containers/glass/bottle/fruitful = 3,
-					/obj/item/reagent_containers/glass/bottle/mutriant = 3,
-					/obj/item/reagent_containers/glass/bottle/groboost = 3,
-					/obj/item/reagent_containers/glass/bottle/topcrop = 3,
-					/obj/item/reagent_containers/glass/bottle/powerplant = 3)
-	cost = 1000
+	contains = list(/obj/item/reagent_containers/glass/jug/saltpetrebulk,
+					/obj/item/reagent_containers/glass/jug/ammoniabulk,
+					/obj/item/reagent_containers/glass/jug/potashbulk,
+					/obj/item/reagent_containers/glass/jug/mutadonebulk,
+					/obj/item/reagent_containers/glass/jug/mutagenicbulk)
+	cost = 2000
 	containertype = /obj/storage/crate
 	containername = "Hydroponics: Nutrient Crate"
 
@@ -597,7 +607,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Novelty Clothing Crate"
 	desc = "Assorted Novelty Clothing"
 	contains = list(/obj/random_item_spawner/dressup)
-	cost = 15000
+	cost = 7500
 	containertype = /obj/storage/crate/packing
 	containername = "Novelty Clothing Crate"
 
@@ -963,8 +973,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	access = access_engineering
 
 /datum/supply_packs/radiation_emergency
-	name = "Radioactive Emergency Supplies"
-	desc = "Equipment for dealing with a radioactive emergency. No, the crate itself is not radioactive."
+	name = "Radiation Emergency Supplies"
+	desc = "Equipment for dealing with a radiation emergency. No, the crate itself is not irradiated."
 	category = "Basic Materials"
 	contains = list(/obj/item/clothing/suit/rad = 4,
 					/obj/item/clothing/head/rad_hood = 4,
@@ -1208,13 +1218,13 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Necessities Vending Machine Restocking Pack"
 
 /datum/supply_packs/catering_vending_restock
-	name = "Catering Vending Machine Restocking Pack"
-	desc = "Various Vending Machine Restock Cartridges for catering"
+	name = "Catering and Hydroponics Vending Machine Restocking Pack"
+	desc = "Various Vending Machine Restock Cartridges for catering and hydroponics"
 	contains = list(/obj/item/vending/restock_cartridge/hydroponics,
 					/obj/item/vending/restock_cartridge/kitchen)
 	cost = 1000
 	containertype = /obj/storage/crate
-	containername = "Catering Vending Machine Restocking Pack"
+	containername = "Catering and Hydroponics Vending Machine Restocking Pack"
 
 /datum/supply_packs/medical_vending_restock
 	name = "Medical Vending Machine Restock Pack"
@@ -1464,7 +1474,8 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containertype = /obj/storage/crate
 	containername = "Cargo Bay Kit"
 
-
+//Nadir is not intended to have station pods/submarines
+#ifndef MAP_OVERRIDE_NADIR
 /datum/supply_packs/complex/pod_kit
 	name = "Pod Production Kit"
 	desc = "Frames: 1x Ship Component Fabricator, 1x Reclaimer"
@@ -1473,6 +1484,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	cost = 5000
 	containertype = /obj/storage/crate
 	containername = "Pod Production Kit"
+#endif
 
 /datum/supply_packs/complex/turret_kit
 	name = "Defense Turret Kit"
@@ -1581,7 +1593,6 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 					/obj/submachine/chef_sink,
 					/obj/machinery/deep_fryer,
 					/obj/submachine/foodprocessor,
-					/obj/machinery/vending/monkey,
 					/obj/machinery/vending/kitchen,
 					/obj/kitchenspike,
 					/obj/machinery/gibber)

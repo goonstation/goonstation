@@ -50,7 +50,6 @@
 
 #ifdef DEBUG_LIGHTING_UPDATES
 /obj/maptext_junk/RL_counter
-	icon = null
 	maptext = ""
 	anchored = 2
 	var/applies = 0
@@ -205,7 +204,7 @@
 			// jesus christ don't teleport OURSELVES
 			return ..()
 		Z_LOG_DEBUG("shit", "Checking things: event_handler_flags [event_handler_flags], [AM] entered")
-		if (busy || istype(AM, /obj/overlay/tile_effect) || istype(AM, /mob/dead) || istype(AM, /mob/wraith) || istype(AM, /mob/living/intangible))
+		if (busy || istype(AM, /obj/overlay/tile_effect) || istype(AM, /mob/dead) || istype(AM, /mob/living/intangible))
 			Z_LOG_DEBUG("shit", "Decided not to teleport")
 			return ..()
 
@@ -397,13 +396,12 @@
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "cleanbot1"
 
-	var/area/sim/gunsim/gunsim
+	var/area/sim/gunsim/arena/gunsim
 	var/active = 0
 
 	New()
 		..()
-		SPAWN(0.5 SECONDS)
-			gunsim = locate() in world
+		gunsim = get_area_by_type(/area/sim/gunsim/arena)
 
 	attack_hand(mob/user)
 		if (active)
@@ -506,7 +504,8 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "nothing"
 	uses_multiple_icon_states = 1
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	force = 0
 	w_class = W_CLASS_TINY
 	throwforce = 1
@@ -563,6 +562,7 @@
 	name = "Space American Football Field"
 	icon_state = "green"
 	dont_log_combat = TRUE
+	allowed_restricted_z = TRUE
 
 	endzone
 		icon_state = "yellow"
@@ -742,6 +742,8 @@
 			UnsubscribeProcess()
 			SPAWN(0)
 				while (src.update_delay)
+					if(QDELETED(src))
+						return
 					src.update_monitor()
 					sleep(update_delay)
 
@@ -814,7 +816,7 @@
 			if ("percent")
 				return (val * 100)
 			if ("temperature")
-				return "[val - T0C]&deg;C"
+				return "[TO_CELSIUS(val)]&deg;C"
 			if ("round")
 				return round(val)
 

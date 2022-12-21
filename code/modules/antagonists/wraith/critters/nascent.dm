@@ -13,10 +13,10 @@
 	health_brute_vuln = 1
 	health_burn = 50
 	health_burn_vuln = 0.8
-	var/mob/wraith/master = null
+	var/mob/living/intangible/wraith/master = null
 	var/deathsound = "sound/voice/wraith/revleave.ogg"
 
-	New(var/turf/T, var/mob/wraith/M = null)
+	New(var/turf/T, var/mob/living/intangible/wraith/M = null)
 		..(T)
 		if(M != null)
 			src.master = M
@@ -25,7 +25,7 @@
 				M.summons = list()
 			M.summons += src
 
-
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
 		//Let us spawn as stuff
 		abilityHolder.addAbility(/datum/targetable/critter/nascent/become_spiker)
 		abilityHolder.addAbility(/datum/targetable/critter/nascent/become_voidhound)
@@ -37,6 +37,9 @@
 
 
 	death(var/gibbed)
+		if (src.master)
+			src.master.summons -= src
+		src.master = null
 		if (!gibbed)
 			playsound(src, src.deathsound, 50, 0)
 			qdel(src)

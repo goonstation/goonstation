@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/cloaking_device)
+	mats = 15
+
 /obj/item/cloaking_device
 	name = "cloaking device"
 	icon = 'icons/obj/items/device.dmi'
@@ -12,7 +15,6 @@
 	throw_range = 10
 	w_class = W_CLASS_SMALL
 	is_syndicate = 1
-	mats = 15
 	desc = "An illegal device that bends light around the user, rendering them invisible to regular vision."
 	stamina_damage = 0
 	stamina_cost = 0
@@ -136,4 +138,5 @@
 
 		disposing()
 			. = ..()
-			STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
+			if (hunter_key)
+				STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)

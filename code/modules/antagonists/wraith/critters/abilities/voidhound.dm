@@ -13,13 +13,14 @@
 
 		if(istype(holder.owner, /mob/living/critter/wraith/voidhound))
 			var/mob/living/critter/wraith/voidhound/V = holder.owner
-			animate(V, alpha=45, time=3 SECONDS)
-			boutput(V, "<span class='notice'>We slip into the shadows</span>")
+			animate(V, alpha=30, time=3 SECONDS)
+			boutput(V, "<span class='notice'>We slip into the shadows...</span>")
 			V.cloaked = TRUE
 			SPAWN(20 SECONDS)
 				if(V?.cloaked)
 					animate(V, alpha=255, time=3 SECONDS)
-					boutput(V, "<span class='notice'>We reappear</span>")
+					boutput(V, "<span class='alert'>We reappear...</span>")
+					V.cloaked = FALSE
 
 	onAttach(datum/abilityHolder/holder)
 		..()
@@ -58,8 +59,8 @@
 				boutput(V, "<span class='notice'>We leap out of the shadows</span>")
 
 		if (istype(M.loc,/turf))
-			playsound(M.loc, "sound/voice/animal/werewolf_attack2.ogg", 50, 1, 0, 1.4)
-			playsound(M.loc, "sound/effects/swoosh.ogg", 50, 1)
+			playsound(M.loc, 'sound/voice/animal/werewolf_attack2.ogg', 50, 1, 0, 1.4)
+			playsound(M.loc, 'sound/effects/swoosh.ogg', 50, 1)
 
 			var/prevLayer = M.layer
 			M.layer = EFFECTS_LAYER_BASE
@@ -70,7 +71,7 @@
 				//get the mobs on the next step in the pounce, throw em to the side if they are standing.
 				var/turf/next_step = get_step(M, M.dir)
 				for (var/mob/A in next_step)
-					playsound(M.loc, "sound/impact_sounds/Generic_Hit_3.ogg", 50, 1)
+					playsound(M.loc, 'sound/impact_sounds/Generic_Hit_3.ogg', 50, 1)
 					A.setStatus("weakened", 3 SECONDS)
 				step(M, M.dir)
 				if(i < jump_tiles / 2)

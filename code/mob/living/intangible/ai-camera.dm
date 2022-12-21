@@ -49,6 +49,8 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 		if (render_special)
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
+		AddComponent(/datum/component/minimap_marker, MAP_AI, "ai_eye")
+
 	Login()
 		.=..()
 		src.client.show_popup_menus = 1
@@ -107,9 +109,9 @@
 	Move(var/turf/NewLoc, direct) //Ewww!
 		last_loc = src.loc
 
-		src.closeContextActions()
+		src.contextActionsOnMove()
 		// contextbuttons can also exist on our mainframe and the eye shares the same hud, fun stuff.
-		src.mainframe?.closeContextActions()
+		src.mainframe?.contextActionsOnMove()
 
 		if (src.mainframe)
 			src.mainframe.tracker.cease_track()
@@ -177,7 +179,7 @@
 			//var/turf/T = target
 			//boutput(world, "[T] [isturf(target)] [findtext(control, "map_viewport")] [control]")
 			if( isturf(target) && findtext(control, "map_viewport") )
-				set_loc(src, target)
+				src.set_loc(target)
 
 			if (GET_DIST(src, target) > 0)
 				src.set_dir(get_dir(src, target))
@@ -255,7 +257,7 @@
 		if (src.mainframe)
 			src.mainframe.say(message)
 		else
-			visible_message("[CLEAN(src)] says, <b>[CLEAN(message)]</b>")
+			visible_message("[html_encode("[src]")] says, <b>[html_encode("[message]")]</b>")
 
 	say_radio()
 		src.mainframe.say_radio()
@@ -264,6 +266,7 @@
 		src.mainframe.say_main_radio(msg)
 
 	emote(var/act, var/voluntary = 0)
+		..()
 		if (mainframe)
 			mainframe.emote(act, voluntary)
 

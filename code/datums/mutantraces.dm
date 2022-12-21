@@ -842,10 +842,10 @@ TYPEINFO(/datum/mutantrace)
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/left
 	race_mutation = /datum/bioEffect/mutantrace // Most mutants are just another form of lizard, didn't you know?
-	clothing_icon_overcoats = icon('icons/mob/lizard/overcoats.dmi')
-	clothing_icon_eyes = icon('icons/mob/lizard/eyes.dmi')
-	clothing_icon_mask = icon('icons/mob/lizard/mask.dmi')
-	clothing_icon_head = icon('icons/mob/lizard/head.dmi')
+	clothing_icon_overcoats = 'icons/mob/lizard/overcoats.dmi'
+	clothing_icon_eyes = 'icons/mob/lizard/eyes.dmi'
+	clothing_icon_mask = 'icons/mob/lizard/mask.dmi'
+	clothing_icon_head = 'icons/mob/lizard/head.dmi'
 	color_channel_names = list("Episcutus", "Ventral Aberration", "Sagittal Crest")
 	dna_mutagen_banned = FALSE
 	self_click_fluff = "scales"
@@ -1064,6 +1064,9 @@ TYPEINFO(/datum/mutantrace)
 	New(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(src.mob))
+			M.update_face()
+			M.update_body()
+			M.update_clothing()
 			src.add_ability(src.mob)
 			M.add_stam_mod_max("vampiric_thrall", 100)
 			M.bioHolder.AddEffect("accent_thrall", magical=TRUE)
@@ -1513,17 +1516,17 @@ TYPEINFO(/datum/mutantrace)
 	override_language = "monkey"
 	override_attack = FALSE
 	understood_languages = list("english")
-	clothing_icon_uniform = icon('icons/mob/monkey/jumpsuits.dmi')
-	clothing_icon_id = icon('icons/mob/monkey/card.dmi')
-	clothing_icon_hands = icon('icons/mob/monkey/hands.dmi')
-	clothing_icon_feet = icon('icons/mob/monkey/feet.dmi')
-	clothing_icon_overcoats = icon('icons/mob/monkey/overcoats.dmi')
-	clothing_icon_back = icon('icons/mob/monkey/back.dmi')
-	clothing_icon_eyes = icon('icons/mob/monkey/eyes.dmi')
-	clothing_icon_ears = icon('icons/mob/monkey/ears.dmi')
-	clothing_icon_mask = icon('icons/mob/monkey/mask.dmi')
-	clothing_icon_head = icon('icons/mob/monkey/head.dmi')
-	clothing_icon_belt = icon('icons/mob/monkey/belt.dmi')
+	clothing_icon_uniform = 'icons/mob/monkey/jumpsuits.dmi'
+	clothing_icon_id = 'icons/mob/monkey/card.dmi'
+	clothing_icon_hands = 'icons/mob/monkey/hands.dmi'
+	clothing_icon_feet = 'icons/mob/monkey/feet.dmi'
+	clothing_icon_overcoats = 'icons/mob/monkey/overcoats.dmi'
+	clothing_icon_back = 'icons/mob/monkey/back.dmi'
+	clothing_icon_eyes = 'icons/mob/monkey/eyes.dmi'
+	clothing_icon_ears = 'icons/mob/monkey/ears.dmi'
+	clothing_icon_mask = 'icons/mob/monkey/mask.dmi'
+	clothing_icon_head = 'icons/mob/monkey/head.dmi'
+	clothing_icon_belt = 'icons/mob/monkey/belt.dmi'
 	race_mutation = /datum/bioEffect/mutantrace/monkey
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/left

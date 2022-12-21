@@ -10,6 +10,7 @@
 	level = 1
 
 	unsimulated
+		pass_unstable = FALSE
 		var/can_replace_with_stuff = 0	//If ReplaceWith() actually does a thing or not.
 #ifdef RUNTIME_CHECKING
 		can_replace_with_stuff = 1  //Shitty dumb hack bullshit
@@ -28,6 +29,11 @@
 	var/heat_capacity = 1
 
 	#undef _UNSIM_TURF_GAS_DEF
+
+	/// Sum of all unstable atoms on the turf.
+	pass_unstable = TRUE
+	/// Whether this turf is passable. Used in the pathfinding system.
+	var/tmp/passability_cache
 
 	//Properties for both
 	var/temperature = T20C
@@ -61,13 +67,21 @@
 	New()
 		..()
 
+		if(global.dont_init_space)
+			return
 		src.init_lighting()
-
-		RegisterSignal(src, list(COMSIG_ATOM_SET_OPACITY, COMSIG_TURF_CONTENTS_SET_OPACITY_SMART), .proc/on_set_opacity)
 
 	disposing() // DOES NOT GET CALLED ON TURFS!!!
 		SHOULD_NOT_OVERRIDE(TRUE)
 		SHOULD_CALL_PARENT(FALSE)
+
+	set_opacity(newopacity)
+		. = ..()
+		on_set_opacity()
+
+	proc/contents_set_opacity_smart(oldopacity, atom/movable/thing)
+		on_set_opacity()
+		SEND_SIGNAL(src, COMSIG_TURF_CONTENTS_SET_OPACITY_SMART, oldopacity, thing)
 
 	onMaterialChanged()
 		..()
@@ -142,10 +156,6 @@
 			if (HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING))
 				ADD_FLAG(src.blocked_dirs, O.dir)
 
-	Del()
-		dispose()
-		..()
-
 	proc/on_set_opacity(turf/thisTurf, old_opacity)
 		if (length(src.camera_coverage_emitters))
 			camera_coverage_controller?.update_emitters(src.camera_coverage_emitters)
@@ -183,6 +193,7 @@
 	icon = 'icons/turf/space.dmi'
 	name = "\proper space"
 	icon_state = "placeholder"
+	pass_unstable = FALSE
 	fullbright = TRUE
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
@@ -218,10 +229,23 @@
 	asteroid
 		icon_state = "aplaceholder"
 
+	plasma
+		temperature = T20C
+		toxins = ONE_ATMOSPHERE/3
+		New()
+			..()
+			var/obj/overlay/tile_gas_effect/gas_icon_overlay = new
+			gas_icon_overlay.icon = 'icons/effects/tile_effects.dmi'
+			gas_icon_overlay.icon_state = "plasma-alpha"
+			gas_icon_overlay.dir = pick(cardinal)
+			gas_icon_overlay.alpha = 100
+			gas_icon_overlay.set_loc(src)
+
 /turf/space/no_replace
 
 /turf/space/New()
 	..()
+	if(global.dont_init_space) return
 	if (icon_state == "placeholder") icon_state = "[rand(1,25)]"
 	if (icon_state == "aplaceholder") icon_state = "a[rand(1,10)]"
 	if (icon_state == "dplaceholder") icon_state = "[rand(1,25)]"
@@ -342,6 +366,7 @@ proc/generate_space_color()
 	explosion_resistance = 999999
 	density = 1
 	opacity = 1
+	gas_impermeable = 1
 
 	Enter()
 		return 0 // nope
@@ -505,6 +530,7 @@ proc/generate_space_color()
 /turf/proc/ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, handle_dir = 1, force = 0)
 	var/turf/simulated/new_turf
 	var/old_dir = dir
+	var/old_liquid = active_liquid // replacing stuff wasn't clearing liquids properly
 
 	var/oldmat = src.material
 
@@ -558,6 +584,7 @@ proc/generate_space_color()
 	var/list/rllights = RL_Lights
 
 	var/old_opacity = src.opacity
+	var/old_opaque_atom_count = src.opaque_atom_count
 
 	var/old_blocked_dirs = src.blocked_dirs
 	var/old_checkinghasproximity = src.checkinghasproximity
@@ -566,6 +593,7 @@ proc/generate_space_color()
 	var/old_aiimage = src.aiImage
 	var/old_cameras = src.cameras
 	var/old_camera_coverage_emitters = src.camera_coverage_emitters
+	var/old_pass_unstable = src.pass_unstable
 
 	var/image/old_disposal_image = src.disposal_image
 
@@ -624,6 +652,7 @@ proc/generate_space_color()
 		new_turf.set_dir(old_dir)
 
 	new_turf.levelupdate()
+	new_turf.active_liquid = old_liquid
 
 	new_turf.RL_ApplyGeneration = rlapplygen
 	new_turf.RL_UpdateGeneration = rlupdategen
@@ -639,8 +668,8 @@ proc/generate_space_color()
 	new_turf.RL_NeedsAdditive = rlneedsadditive
 	//new_turf.RL_OverlayState = rloverlaystate //we actually want these cleared
 	new_turf.RL_Lights = rllights
-	new_turf.opaque_atom_count = opaque_atom_count
-
+	new_turf.opaque_atom_count = old_opaque_atom_count
+	new_turf.pass_unstable += old_pass_unstable
 
 	new_turf.blocked_dirs = old_blocked_dirs
 	new_turf.checkinghasproximity = old_checkinghasproximity
@@ -1247,4 +1276,7 @@ proc/generate_space_color()
 	Entered(atom/movable/mover, atom/forget)
 		. = ..()
 		if(!mover.anchored)
-			mover.set_loc(null)
+			if(istype(mover, /obj/centcom_clone_wrapper))
+				qdel(mover) // so the mob inside can GC in case references got freed up since qdel
+			else
+				mover.set_loc(null)

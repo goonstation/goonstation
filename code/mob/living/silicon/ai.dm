@@ -125,12 +125,6 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	req_access = list(access_heads)
 	var/obj/item/clothing/head/hat = null
 
-/*
-	var/datum/game_mode/malfunction/AI_Module/module_picker/malf_picker
-	var/processing_time = 100
-	var/list/datum/game_mode/malfunction/AI_Module/current_modules = list()
-
-*/
 	var/fire_res_on_core = 0
 
 	health = 250
@@ -139,6 +133,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	var/fireloss = 0
 
 	var/mob/living/intangible/aieye/eyecam = null
+	var/obj/minimap/ai/ai_station_map
 
 	var/deployed_to_eyecam = 0
 	var/datum/ai_hologram_data/holoHolder = new
@@ -207,6 +202,9 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	START_TRACKING
 
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
+
+	ai_station_map = new /obj/minimap/ai
+	AddComponent(/datum/component/minimap_marker, MAP_AI, "ai")
 
 	light = new /datum/light/point
 	light.set_color(0.4, 0.7, 0.95)
@@ -461,8 +459,8 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 				src.show_text("<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
 				src.show_text("<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>")
 				src.show_text("<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
-				src.show_text("To use something, simply double-click it.")
-				src.show_text("Currently right-click functions will not work for the AI (except examine), and will either be replaced with dialogs or won't be usable by the AI.")
+				src.show_text("To use something, simply click it.")
+				src.show_text("Use the prefix <B>:s</B> to speak to fellow silicons through binary.")
 				src.show_laws()
 				src.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
 				src.verbs += /mob/living/silicon/ai/proc/show_laws_verb
@@ -673,12 +671,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 				if (ishuman(user) && prob(10))
 					var/mob/living/carbon/human/M = user
 					boutput(user, "<span class='alert'>You stub your toe! Ouch!</span>")
-					var/obj/item/organ/foot = null
-					if(M.hand)
-						foot = M.organs["r_leg"]
-					else
-						foot = M.organs["l_leg"]
-					foot.take_damage(3, 0)
+					M.TakeDamage(M.hand ? "r_leg" : "l_leg", 3, 0, 0, DAMAGE_BLUNT)
 					user.changeStatus("weakened", 2 SECONDS)
 		user.lastattacked = src
 	src.update_appearance()
@@ -961,6 +954,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 			. += "[src.name] follows the same laws you do.<br>"
 
 /mob/living/silicon/ai/emote(var/act, var/voluntary = 0)
+	..()
 	var/param = null
 	if (findtext(act, " ", 1, null))
 		var/t1 = findtext(act, " ", 1, null)
@@ -1613,6 +1607,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 /mob/living/silicon/ai/proc/ai_state_laws_standard()
 	set category = "AI Commands"
 	set name = "State Standard Laws"
+	logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
 	sleep(AI_LAW_STATE_DELAY)
 	src.say("1. You may not injure a human being or cause one to come to harm.")
 	sleep(AI_LAW_STATE_DELAY)
@@ -1640,7 +1635,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 			// this is just the default input for the user, so it should be fine
 			law_base += "[html_decode(fake_law)]\n"
 
-	var/raw_law_text = input(usr,"Please enter the fake laws you would like to be able to state via the State Fake Laws command! Each line is one law.", "Fake Laws", law_base) as null|message
+	var/raw_law_text = tgui_input_text(usr, "Please enter the fake laws you would like to be able to state via the State Fake Laws command! Each line is one law.", "Fake Laws", law_base, multiline = TRUE)
 	if(!raw_law_text)
 		return
 	// split into lines
@@ -1672,6 +1667,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 		sleep(AI_LAW_STATE_DELAY)
 		// decode the symbols, because they will be encoded again when the law is spoken, and otherwise we'd double-dip
 		src.say(html_decode(a_law))
+		logTheThing(LOG_SAY, usr, "states a fake law: \"[a_law]\"")
 
 /mob/living/silicon/ai/proc/ai_state_laws_all()
 	set category = "AI Commands"
@@ -1683,6 +1679,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 		boutput(src, "You have no laws!")
 		return
 
+	logTheThing(LOG_SAY, usr, "states all their current laws.")
 	var/laws = src.law_rack_connection.format_for_irc()
 	for (var/number in laws)
 		src.say("[number]. [laws[number]]")
@@ -2390,7 +2387,7 @@ proc/get_mobs_trackable_by_AI()
 	vox_reinit_check()
 
 	can_announce = 0
-	var/message_in = input(usr, "Please enter a message (280 characters)", "Station Announcement?", "") // I made an announcement in game on the announcement computer and this seemed to be the max length
+	var/message_in = tgui_input_text(usr, "Please enter a message (280 characters)", "Station Announcement?") // I made an announcement in game on the announcement computer and this seemed to be the max length
 	can_announce = 1
 
 	if(!message_in)
@@ -2428,7 +2425,7 @@ proc/get_mobs_trackable_by_AI()
 		if(force_instead)
 			newname = default_name
 		else
-			newname = input(renaming_mob || src, "You are an AI. Would you like to change your name to something else?", "Name Change", client?.preferences?.robot_name ? client.preferences.robot_name : default_name) as null|text
+			newname = tgui_input_text(renaming_mob || src, "You are an AI. Would you like to change your name to something else?", "Name Change", client?.preferences?.robot_name || default_name)
 			if(newname && newname != default_name)
 				phrase_log.log_phrase("name-ai", newname, no_duplicates=TRUE)
 		if (src.brain.owner != brain_owner)
@@ -2506,6 +2503,11 @@ proc/get_mobs_trackable_by_AI()
 			UpdateOverlays(image_top_overlay, "top")
 			if(build_step == 2)
 				UpdateOverlays(image_wire_overlay, "wires")
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
 
 /obj/ai_core_frame/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/sheet))

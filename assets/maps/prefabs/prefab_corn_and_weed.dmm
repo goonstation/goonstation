@@ -37,7 +37,7 @@
 "R" = (
 /obj/machinery/plantpot/bareplant{
 	opacity = 1;
-	spawn_plant = "/datum/plant/crop/corn"
+	spawn_plant = "/datum/plant/veg/corn"
 	},
 /turf/space,
 /area/allowGenerate)

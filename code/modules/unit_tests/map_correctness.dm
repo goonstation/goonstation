@@ -14,6 +14,10 @@ proc/check_map_correctness()
 	check_lightswitchless_station_areas()
 	check_unsimulated_station_turfs()
 	check_duplicate_area_names()
+	check_missing_material()
+	#ifndef PREFAB_CHECKING
+	check_xmas_tree()
+	#endif
 
 proc/check_missing_navbeacons()
 	var/list/all_beacons = list()
@@ -148,5 +152,18 @@ proc/check_duplicate_area_names()
 			log_msg += "The following areas have duplicate name \"[dupe || "***EMPTY STRING***"]\": [english_list(names[dupe])]\n"
 
 		CRASH(log_msg)
+
+proc/check_missing_material()
+	var/list/missing = list()
+	for_by_tcl(grille, /obj/grille)
+		if (isnull(grille.material))
+			missing += "[grille] [grille.type] on [grille.x], [grille.y], [grille.z] in [get_area(grille)]"
+	if(length(missing))
+		var/missing_text = jointext(missing, "\n")
+		CRASH("Missing materials:\n" + missing_text)
+
+proc/check_xmas_tree()
+	if(length(by_type[/obj/xmastree]) != 1)
+		CRASH("There should be exactly one xmas tree, but there are [length(by_type[/obj/xmastree])]")
 
 #endif

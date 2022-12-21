@@ -98,6 +98,8 @@ datum
 				M.jitteriness = max(M.jitteriness-25,0)
 				if(M.hasStatus("stimulants"))
 					M.changeStatus("stimulants", -7.5 SECONDS * mult)
+				if(M.hasStatus("recent_trauma"))
+					M.changeStatus("recent_trauma", -5 SECONDS * mult)
 
 				switch(counter += 1 * mult)
 					if(1 to 15)
@@ -263,6 +265,8 @@ datum
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
+				if(M.hasStatus("recent_trauma"))
+					M.changeStatus("recent_trauma", -2.5 SECONDS * mult)
 				if(!M) M = holder.my_atom
 				if(prob(55))
 					M.HealDamage("All", 2 * mult, 0)
@@ -556,12 +560,9 @@ datum
 						M.visible_message("<span class='alert'><b>[M.name]</b> shakes uncontrollably.</span>")
 						M.make_jittery(30)
 				else if (severity == 2) // greater
-					if(effect <= 2)
-						M.visible_message("<span class='alert'><b>[M.name]</b> suddenly cluches their gut!</span>")
-						M.emote("scream")
-						M.setStatusMin("weakened", 8 SECONDS * mult)
-					else if(effect <= 5)
-						M.visible_message("<span class='alert'><b>[M.name]</b> jerks bolt upright, then collapses!</span>")
+					if(effect <= 5)
+						M.visible_message(pick("<span class='alert'><b>[M.name]</b> jerks bolt upright, then collapses!</span>",
+							"<span class='alert'><b>[M.name]</b> suddenly cluches their gut!</span>"))
 						M.setStatusMin("weakened", 8 SECONDS * mult)
 					else if(effect <= 8)
 						M.visible_message("<span class='alert'><b>[M.name]</b> stumbles and staggers.</span>")
@@ -1240,15 +1241,6 @@ datum
 						repair_bleeding_damage(L, 5, 1)
 						//H.bleeding = min(H.bleeding, rand(0,5))
 
-					var/silent = 0
-					if (length(paramslist))
-						if ("silent" in paramslist)
-							silent = 1
-
-					if (!silent)
-						if(!ON_COOLDOWN(M, "styptic screaming", 3 SECONDS))
-							boutput(M, "<span class='notice'>The styptic powder stings like hell as it closes some of your wounds.</span>")
-							M.emote("scream")
 					M.UpdateDamageIcon()
 				else if(method == INGEST)
 					boutput(M, "<span class='alert'>You feel gross!</span>")

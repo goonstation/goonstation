@@ -27,7 +27,7 @@
 
 	var/list/organ_list = list("all", "head", "skull", "brain", "left_eye", "right_eye", "chest", "heart", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
 
-	var/list/organ_type_list = list(
+	var/static/list/organ_type_list = list(
 		"head"="/obj/item/organ/head",
 		"skull"="/obj/item/skull",
 		"brain"="/obj/item/organ/brain",
@@ -1468,12 +1468,12 @@
 
 /datum/projectile/laser/eyebeams/left
 	icon_state = "eyebeamL"
-	power = 10
+	damage = 10
 	cost = 10
 
 /datum/projectile/laser/eyebeams/right
 	icon_state = "eyebeamR"
-	power = 10
+	damage = 10
 	cost = 10
 
 /datum/targetable/organAbility/meson

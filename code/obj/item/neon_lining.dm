@@ -16,7 +16,8 @@
 	w_class = W_CLASS_TINY
 	throw_speed = 2
 	throw_range = 5
-	flags = TABLEPASS|EXTRADELAY|FPRINT|CONDUCT|ONBELT
+	flags = TABLEPASS|EXTRADELAY|FPRINT|CONDUCT
+	c_flags = ONBELT
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 10

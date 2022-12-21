@@ -38,6 +38,9 @@
 			qdel(light)
 		..()
 
+TYPEINFO(/obj/item/device/light/flashlight)
+	mats = 2
+
 /obj/item/device/light/flashlight
 	name = "flashlight"
 	desc = "A hand-held emergency light."
@@ -47,10 +50,10 @@
 	icon_off = "flight0"
 	var/icon_broken = "flightbroken"
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	m_amt = 50
 	g_amt = 20
-	mats = 2
 	var/emagged = 0
 	var/broken = 0
 	col_r = 0.9
@@ -132,7 +135,8 @@
 	name = "emergency glowstick"
 	desc = "A small tube that reacts chemicals in order to produce a larger radius of illumination than PDA lights. A label on it reads, WARNING: USE IN RAVES, DANCING, OR FUN WILL VOID WARRANTY."// I love the idea of a glowstick having a warranty so I'm leaving the description like this
 	w_class = W_CLASS_SMALL
-	flags = ONBELT | TABLEPASS
+	flags =  TABLEPASS
+	c_flags = ONBELT
 	var/heated = 0
 	col_r = 0
 	col_g = 0.9
@@ -440,15 +444,23 @@
 /obj/item/device/light/lava_lamp
 	name = "lava lamp"
 	icon = 'icons/obj/lighting.dmi'
-	icon_state = "lava_lamp0"
-	icon_on = "lava_lamp1"
-	icon_off = "lava_lamp0"
+	icon_state = "lava_lamp-blue0"
+	icon_on = "lava_lamp-blue1"
+	icon_off = "lava_lamp-blue1"
 	w_class = W_CLASS_BULKY
 	desc = "An ancient relic from a simpler, more funky time."
 	col_r = 0.85
 	col_g = 0.45
 	col_b = 0.35
 	brightness = 0.8
+	var/lamp_color
+
+	New()
+		. = ..()
+		lamp_color = pick("blue", "pink", "orange")
+		icon_state = "lava_lamp-[lamp_color]0"
+		icon_on = "lava_lamp-[lamp_color]1"
+		icon_off = "lava_lamp-[lamp_color]0"
 
 	attack_self(mob/user as mob)
 		playsound(src, 'sound/items/penclick.ogg', 30, 1)

@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/gps)
+	mats = 2
+
 /obj/item/device/gps
 	name = "space GPS"
 	desc = "A navigation device that can tell you your position, and the position of other GPS devices. Uses coordinate beacons."
@@ -13,7 +16,6 @@
 	w_class = W_CLASS_SMALL
 	m_amt = 50
 	g_amt = 100
-	mats = 2
 	var/frequency = FREQ_GPS
 	var/net_id
 
@@ -137,6 +139,10 @@
 		user.Browse(HTML.Join(), "window=gps_[src];title=GPS;size=400x540;override_setting=1")
 		onclose(user, "gps")
 
+	attack_ai(mob/user)
+		. = ..()
+		src.show_HTML(user)
+
 	attack_self(mob/user as mob)
 		if ((user.contents.Find(src) || user.contents.Find(src.master) || BOUNDS_DIST(src, user) == 0))
 			src.show_HTML(user)
@@ -149,7 +155,7 @@
 		..()
 		if (usr.stat || usr.restrained() || usr.lying)
 			return
-		if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_interact_range(src, usr)))
+		if (usr.contents.Find(src) || usr.contents.Find(src.master) || in_interact_range(src, usr) || issilicon(usr) || isAIeye(usr))
 			src.add_dialog(usr)
 			var/turf/T = get_turf(usr)
 			if(href_list["getcords"])
@@ -193,12 +199,13 @@
 				active = null
 				icon_state = "gps-off"
 
-
-			if (!src.master)
-				src.updateSelfDialog()
-			else
-				src.master.updateSelfDialog()
-
+			var/obj/item/target = src.master || src
+			target.updateSelfDialog()
+			//we want this to do self dialog updates UNLESS the user is a silicon in which case we do regular updates
+			for (var/client/client in src.clients_operating)
+				var/mob/user = client.mob
+				if (issilicon(user) || isAIeye(user))
+					target.attack_ai(user)
 			src.add_fingerprint(usr)
 		else
 			usr.Browse(null, "window=gps_[src]")

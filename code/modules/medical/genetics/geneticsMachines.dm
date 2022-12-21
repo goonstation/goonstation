@@ -192,8 +192,7 @@
 
 			// The person trying to use the computer should be inside the scanner, they know what they're doing
 			if(usr == scanner.occupant)
-				// Fuck you, buddy
-				trigger_anti_cheat(usr, "tried to use the genetics scanner on themselves")
+				stack_trace("[identify_object(usr)] is using [identify_object(src)] while being inside a clone scanner. That's weird and they might be cheating!")
 
 			scanner.occupant = null
 			scanner.icon_state = "scanner_0"
@@ -627,7 +626,7 @@
 					copy_datum_vars(E, NEW)
 					GB.offered_genes += new /datum/geneboothproduct(NEW,booth_effect_desc,booth_effect_cost,registered_id)
 					if (GB.offered_genes.len == 1)
-						GB.just_pick_anything()
+						GB.select_product(GB.offered_genes[1])
 					scanner_alert(ui.user, "Sent 5 of '[NEW.name]' to gene booth.")
 					GB.reload_contexts()
 			on_ui_interacted(ui.user)

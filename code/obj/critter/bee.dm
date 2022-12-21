@@ -840,8 +840,10 @@
 		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT, .proc/save_upgraded_tier)
 		heisentier_hat()
 		..()
+		START_TRACKING
 
 	disposing()
+		STOP_TRACKING
 		UnregisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT)
 		..()
 
@@ -1914,6 +1916,7 @@
 
 		heal(var/mob/M)
 			boutput(M, "<span class='alert'>You feel as if you have made a grave mistake.  Perhaps a doorway has closed forever.</span>")
+			..()
 
 		attack_self(mob/user as mob)
 			if (src.anchored)

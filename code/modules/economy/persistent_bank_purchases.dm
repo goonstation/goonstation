@@ -467,17 +467,20 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				S = new /obj/storage/crate/wooden()
 				M.set_loc(S)
 			SPAWN(1)
-				for(var/i in 1 to 3)
-					shippingmarket.receive_crate(S)
-					sleep(randfloat(10 SECONDS, 20 SECONDS))
-					if(istype(get_area(S), /area/station))
-						return
-					boutput(M, "<span class='alert'><b>Something went wrong with mail order, retrying!</b></span>")
-				var/list/turf/last_chance_turfs = get_area_turfs(/area/station/quartermaster/office, 1)
-				if(length(last_chance_turfs))
-					S.set_loc(pick(last_chance_turfs))
+				if(transception_array) //hand off delivery to array's management systems
+					transception_array.direct_queue += S
 				else
-					S.set_loc(get_random_station_turf())
+					for(var/i in 1 to 3)
+						shippingmarket.receive_crate(S)
+						sleep(randfloat(10 SECONDS, 20 SECONDS))
+						if(istype(get_area(S), /area/station))
+							return
+						boutput(M, "<span class='alert'><b>Something went wrong with mail order, retrying!</b></span>")
+					var/list/turf/last_chance_turfs = get_area_turfs(/area/station/quartermaster/office, 1)
+					if(length(last_chance_turfs))
+						S.set_loc(pick(last_chance_turfs))
+					else
+						S.set_loc(get_random_station_turf())
 			return 1
 
 	frog
@@ -779,7 +782,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		Create(var/mob/living/M)
 			if (isAI(M))
 				var/mob/living/silicon/ai/A = M
-				var/picked = pick(childrentypesof(/obj/item/clothing/head))
+				var/picked = pick(filtered_concrete_typesof(/obj/item/clothing/head, /proc/filter_trait_hats))
 				A.set_hat(new picked())
 				return 1
 			return 0

@@ -4,7 +4,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 	icon = 'icons/obj/robot_parts.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "buildpipe"
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	streak_decal = /obj/decal/cleanable/oil
 	streak_descriptor = "oily"
 	var/appearanceString = "generic"
@@ -83,6 +84,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 		else ..()
 
 	surgery(var/obj/item/tool)
+		var/mob/orig_holder = holder
 
 		var/wrong_tool = 0
 
@@ -119,11 +121,12 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 					logTheThing(LOG_COMBAT, tool.the_mob, "removes [constructTarget(holder,"combat")]'s [src.name].")
 					src.remove(0)
 
-			if(!isdead(holder))
-				if(prob(40))
-					holder.emote("scream")
-			holder.TakeDamage("chest",20,0)
-			take_bleeding_damage(holder, null, 15, DAMAGE_CUT)
+			if(orig_holder)
+				if(!isdead(orig_holder))
+					if(prob(40))
+						orig_holder.emote("scream")
+				orig_holder.TakeDamage("chest",20,0)
+				take_bleeding_damage(orig_holder, null, 15, DAMAGE_CUT)
 
 	proc/ropart_take_damage(var/bluntdmg = 0,var/burnsdmg = 0)
 		src.dmg_blunt += bluntdmg
@@ -457,6 +460,11 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 			src.wires = 0
 
 		else ..()
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
 
 /obj/item/parts/robot_parts/chest/standard
 	name = "standard cyborg chest"
@@ -1100,7 +1108,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 		if (!src.head)
 			// how the fuck did you even do this
-			stack_trace("Attempted to finish a cyborg from borg frame [src] (\ref[src]) without a head. That's bad.")
+			stack_trace("Attempted to finish a cyborg from borg frame [identify_object(src)] without a head. That's bad.")
 			borg.death()
 			qdel(src)
 			return
@@ -1136,7 +1144,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			boutput(usr, "<span class='notice'>You activate the frame and a audible beep emanates from the head.</span>")
 			playsound(src, 'sound/weapons/radxbow.ogg', 40, 1)
 		else
-			stack_trace("We finished cyborg [borg] (\ref[borg]) from frame [src] (\ref[src]) with a brain, but somehow lost the brain??? Where did it go")
+			stack_trace("We finished cyborg [identify_object(borg)] from frame [identify_object(src)] with a brain, but somehow lost the brain??? Where did it go")
 			borg.death()
 			qdel(src)
 			return
@@ -1150,8 +1158,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			borg.set_loc(get_turf(src))
 
 			boutput(borg, "<B>You are playing a Robot. The Robot can interact with most electronic objects in its view point.</B>")
-			boutput(borg, "To use something, simply double-click it.")
-			boutput(borg, "Use say \":s to speak to fellow cyborgs and the AI through binary.")
+			boutput(borg, "To use something, simply click it.")
+			boutput(borg, "Use the prefix <B>:s</B> to speak to fellow cyborgs and the AI through binary.")
 
 			if (src.emagged || src.syndicate)
 				if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && borg.mind)

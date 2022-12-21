@@ -162,6 +162,7 @@
 
 		if (!(the_object in get_filtered_atoms_in_touch_range(owner, mattereater.target_path)) && !istype(the_object, /obj/the_server_ingame_whoa))
 			owner.show_text("<span class='alert'>Man, that thing is long gone, far away, just let it go.</span>")
+			using = FALSE
 			return TRUE
 
 		var/area/cur_area = get_area(owner)
@@ -184,14 +185,7 @@
 			if (isitem(the_object))
 				var/obj/item/the_item = the_object
 				H.sims?.affectMotive("Hunger", (the_item.w_class + 1) * 5) // +1 so tiny items still give a small boost
-				for(var/A in owner.organs)
-					var/obj/item/affecting = null
-					if (!owner.organs[A])
-						continue
-					affecting = owner.organs[A]
-					if (!isitem(affecting))
-						continue
-					affecting.heal_damage(4, 0)
+				owner.HealDamage("All", 5, 0)
 				owner.UpdateDamageIcon()
 
 		if (!QDELETED(the_object)) // Finally, ensure that the item is deleted regardless of what it is
@@ -806,7 +800,6 @@
 		owner.emote("scream")
 		owner.changeStatus("paralysis", 5 SECONDS)
 		owner.changeStatus("stunned", 7 SECONDS)
-		return
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1146,7 +1139,7 @@
 /datum/projectile/laser/eyebeams
 	name = "optic laser"
 	icon_state = "eyebeam"
-	power = 20
+	damage = 20
 	cost = 20
 	sname = "eye laser"
 	dissipation_delay = 5
@@ -1156,7 +1149,8 @@
 	color_blue = 1
 
 /datum/projectile/laser/eyebeams/stun
-	ks_ratio = 0
+	damage = 0
+	stun = 20
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1999,7 +1993,7 @@
 			boutput(usr, "You start using your chameleon cloaking.")
 			CH.last_moved = TIME
 			CH.active = 1
-			CH.RegisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE), /datum/bioEffect/power/chameleon/proc/decloak)
+			CH.RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE), /datum/bioEffect/power/chameleon/proc/decloak)
 		return 0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2186,8 +2180,8 @@
 
 	proc/hit_callback(var/datum/thrown_thing/thr)
 		for(var/mob/living/carbon/hit in get_turf(thr.thing))
-			hit.changeStatus("weakened", 15 SECONDS)
-			hit.changeStatus("stunned", 5 SECONDS)
+			hit.changeStatus("weakened", 5 SECONDS)
+			hit.force_laydown_standup()
 			break
 		return 0
 
@@ -2221,8 +2215,13 @@
 					if (!linked_power.safety)
 						new thrown_limb.streak_decal(owner.loc)
 						var/damage = rand(5,15)
+						var/do_bleed = TRUE
+						if(thrown_limb.kind_of_limb | LIMB_SKELLY)
+							damage /= 2.5
+							do_bleed = FALSE
 						random_brute_damage(H, damage)
-						take_bleeding_damage(H, null, damage)
+						if(do_bleed)
+							take_bleeding_damage(H, null, damage)
 						if(prob(60)) owner.emote("scream")
 
 						//reset the time until the ability spontaniously fires

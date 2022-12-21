@@ -59,6 +59,7 @@ datum
 			mix_sound = 'sound/voice/heavenly.ogg'
 			result_amount = 3
 			result = "lumen"
+			hidden = TRUE
 
 		no_lumen_new_smoke
 			name = "no lumen new smoke"
@@ -275,6 +276,7 @@ datum
 			required_temperature = T0C + 100
 			result_amount = 4
 			mix_phrase = "The solution shows signs of life, forming shapes!"
+			hidden = TRUE
 
 		denatured_enzyme
 			name = "Denatured Enzyme"
@@ -284,6 +286,7 @@ datum
 			required_temperature = T0C + 150
 			result_amount = 1
 			mix_phrase = "The solution burns, leaving behind a lifeless mass!"
+			hidden = TRUE
 
 		water_holy
 			name = "Holy Water"
@@ -347,6 +350,7 @@ datum
 			//required_temperature = T0C + 400 // commenting out for now so you can actually make this, maybe
 			result_amount = 12
 			mix_phrase = "The mixture reduces into a fine crystalline powder and an unbelievably delicious smell wafts upwards."
+			hidden = TRUE
 
 /*		argine
 			name = "Argine"
@@ -940,6 +944,7 @@ datum
 			mix_phrase = "The mixture can't seem to control itself and settle down!"
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
+			hidden = TRUE
 
 		cocktail_beach
 			name = "Bliss on the Beach"
@@ -1055,6 +1060,7 @@ datum
 			mix_phrase = "The substance mixes together, emitting a rank piratey odor and seemingly dissolving some of the container..."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
+			hidden = TRUE
 
 		cocktail_beepskybeer
 			name = "Beepskybräu Security Schwarzbier"
@@ -1138,6 +1144,7 @@ datum
 			result_amount = 4
 			mix_phrase = "The martini gains a soft green glow."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			hidden = TRUE
 
 		cocktail_manhattan
 			name = "Manhattan"
@@ -1278,6 +1285,7 @@ datum
 			result_amount = 1
 			mix_phrase = "A tiny mushroom cloud erupts from the container. That's not worrying at all!"
 			mix_sound = 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg'
+			hidden = TRUE
 
 		cocktail_gtonic
 			name = "Gin and Tonic"
@@ -1625,7 +1633,7 @@ datum
 
 		cocktail_grasshopper/grasshopper2
 			id = "grasshopper2"
-			required_reagents = list("mint" = 1, "vodka" = 1, "sugar" = 1, "chocolate" = 1, "vanilla " = 1)
+			required_reagents = list("mint" = 1, "vodka" = 1, "sugar" = 1, "chocolate" = 1, "vanilla" = 1)
 			result_amount = 5
 
 		cocktail_freeze
@@ -1636,6 +1644,7 @@ datum
 			result_amount = 1
 			mix_phrase = "The drink turns a pale mint color and frost forms on its surface."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			hidden = TRUE
 
 		cocktail_bluelagoon
 			name = "Blue Lagoon"
@@ -2143,6 +2152,7 @@ datum
 			result_amount = 3 // it is super potent
 			mix_phrase = "The mixture yields a colorless, odorless liquid."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			hidden = TRUE
 
 			on_reaction(var/datum/reagents/holder, created_volume)
 				var/location = get_turf(holder.my_atom)
@@ -2390,6 +2400,7 @@ datum
 			required_reagents = list("cyclopentanol" = 1, "oxygen" = 3, "acetone" = 1, "hydrogen" = 1, "aluminium" = 1, "nickel" = 1)
 			result_amount = 3
 			mix_phrase = "This pungent odor could probably melt steel."
+			hidden = TRUE
 
 		formaldehyde
 			name = "Embalming fluid"
@@ -2610,6 +2621,7 @@ datum
 			required_reagents = list("triplepiss" = 1, "histamine" = 1, "methamphetamine" = 1, "water_holy" = 1, "pacid" = 1, "neurotoxin" = 1, "stabiliser" = 1)
 			result_amount = 4 // lowered slightly
 			mix_phrase = "A sweet and sugary scent drifts from the unpleasant milky substance."
+			hidden  = TRUE
 
 /*
 		initrobeedril_old
@@ -2628,6 +2640,7 @@ datum
 			result_amount = 5
 			required_temperature = T0C + 200
 			mix_phrase = "A sweet and sugary scent drifts from the royal purple substance."
+			hidden = TRUE
 
 		initrobeedril
 			name = "initrobeedril"
@@ -2636,6 +2649,7 @@ datum
 			required_reagents = list("initropidril" = 1, "bee" = 1, "honey" = 1, "dna_mutagen" = 1)
 			result_amount = 5
 			mix_phrase = "A sweet and sugary scent drifts from the golden substance."
+			hidden = TRUE
 
 		fake_initropidril
 			name = "initropidril"
@@ -2788,6 +2802,8 @@ datum
 			instant = 1
 			mix_phrase = null
 			mix_sound = 'sound/effects/ghostbreath.ogg'
+			hidden = TRUE
+
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/my_atom = holder.my_atom
 				if(!my_atom) return
@@ -3306,19 +3322,6 @@ datum
 			result_amount = 3
 			mix_phrase = "The solution seems to highlight stains in the container."
 
-/*		fuckthisshit
-			name = "fuck this shit"
-			id = "fuckthisshit"
-			result = null
-			required_reagents = list("carbon" = 5, "flourine" = 5, "acid" = 5, "sugar" = 5,  "phosphorus" = 5, "potassium" = 5, "water" = 15)
-			result_amount = 5
-			mix_phrase = "The chemicals mix into a shade of brown and begin to bubble."
-			mix_sound = 'poo2.ogg'
-
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-				holder.clear_reagents()
-				message_admins("[] attempted to make infinifoam what a piece of shit", usr) */
-
 		// Synthesizing these three chemicals is pretty complex in real life, but fuck it, it's just a game!
 		ammonia
 			name = "Ammonia"
@@ -3661,6 +3664,7 @@ datum
 			result_amount = 5
 			mix_phrase = "The solution settles into a liquid form of electricity."
 			mix_sound = 'sound/effects/elec_bigzap.ogg'
+			hidden = TRUE
 
 		energydrink
 			name = "Energy Drink"
@@ -3669,6 +3673,7 @@ datum
 			required_reagents = list("voltagen" = 1, "coffee" = 1, "cola" = 3)
 			result_amount = 5
 			mix_phrase = "The solution emits a tutti frutti stench."
+			hidden = TRUE
 
 		voltagen_arc
 			name = "Voltagen Arc"
@@ -3749,7 +3754,7 @@ datum
 					if(1 to 70)
 						new /mob/living/carbon/cube/meat(location)
 					if(71 to 94)
-						var/critter = pick(/obj/critter/roach,/obj/critter/pig,/obj/critter/cat,/obj/critter/mouse,/obj/critter/wasp,/obj/critter/owl,/obj/critter/goose,/obj/critter/goose/swan,/obj/critter/domestic_bee,/obj/critter/walrus,/obj/critter/sealpup)
+						var/critter = pick(/mob/living/critter/small_animal/cockroach,/obj/critter/pig,/mob/living/critter/small_animal/cat,/mob/living/critter/small_animal/mouse,/obj/critter/wasp,/obj/critter/owl,/obj/critter/goose,/obj/critter/goose/swan,/obj/critter/domestic_bee,/obj/critter/walrus,/obj/critter/sealpup)
 						new critter(location)
 					if(95 to 97)
 						if (location.density)
@@ -3775,6 +3780,7 @@ datum
 			required_temperature = T0C + 117 // world's oldest person!
 			mix_phrase = "The bubbling mixture gives off a scent of perfume, hard candy, and death."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			hidden = TRUE
 
 		//Hello, here are some fake werewolf serum precursors
 		werewolf_serum_fake1
@@ -3823,6 +3829,7 @@ datum
 			result_amount = 3
 			mix_phrase = "The substance bubbles and gives off an almost lupine howl."
 			var/static/list/full_moon_days_2053 = list("Jan 04", "Feb 03", "Mar 04", "Apr 03", "May 02", "Jun 01", "Jul 01", "Jul 30", "Aug 29", "Sep 27", "Oct 27", "Nov 25", "Dec 25")
+			hidden = TRUE
 
 			does_react(var/datum/reagents/holder)
 				return time2text(world.realtime, "MMM DD") in full_moon_days_2053 //just doesn't react unless it's a full moon
@@ -3834,6 +3841,7 @@ datum
 		 	required_reagents = list("bloodc" = 1, "water_holy" = 1, "werewolf_serum" = 1)
 		 	result_amount = 3
 		 	mix_phrase = "The substance gives off a coppery stink."
+			hidden = TRUE
 
 			//Super hairgrownium + Tongue of dog + Stable mutagen + Grog + Glowing Slurry + Aconitum
 
@@ -3847,6 +3855,7 @@ datum
 			required_temperature = T0C + 45
 			mix_phrase = "The reagents combine with an audible ho0t."
 			mix_sound = 'sound/voice/animal/hoot.ogg'
+			hidden = TRUE
 
 		hootagen_stable
 			name = "stable hootagen"
@@ -3856,6 +3865,7 @@ datum
 			result_amount = 3
 			mix_phrase = "The reagents combine with an audible hoot."
 			mix_sound = 'sound/voice/animal/hoot.ogg'
+			hidden = TRUE
 
 		colors
 			name = "colorful reagent"
@@ -3880,6 +3890,7 @@ datum
 			required_reagents = list("fliptonium" = 1, "anima" = 1, "uranium" = 1, "space_drugs" = 1/*, "lumen" = 1*/) // Lumen reagent was removed.
 			result_amount = 1
 			mix_phrase = "The mixture swirls around and begins to glow strangely!"
+			hidden = TRUE
 
 		diluted_fliptonium
 			name = "diluted fliptonium"
@@ -3931,6 +3942,7 @@ datum
 			required_reagents = list("egg" = 1, "colors" = 1, "chickensoup" = 1, "strange_reagent" = 1, "blood" = 1, "sonicpowder" = 1, "eraser" = 1)
 			result_amount = 1
 			mix_phrase = "The solution makes a little 'chirp' noise and settles."
+			hidden = TRUE
 
 		mewtini
 			name = "Mewtini"
@@ -3963,6 +3975,7 @@ datum
 			required_reagents = list("yuck" = 1, "denatured_enzyme" = 1, "something" = 1, "poo" = 1)
 			result_amount = 3
 			mix_phrase = "The substance gives off a terrible stench. Are those maggots?"
+			hidden = TRUE
 
 		love
 			name = "pure love"
@@ -4012,6 +4025,7 @@ datum
 			result_amount = 8
 			mix_phrase = "The mixture forms a clear greenish liquid, emitting a nauseating smell reminiscent of chlorophyll and rubbing alcohol."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			hidden = TRUE
 
 		strychnine
 			name = "Strychnine"
@@ -4021,6 +4035,7 @@ datum
 			result_amount = 6
 			mix_phrase = "The mixture congeals into an off-white crystalline powder."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			hidden = TRUE
 
 		spiders // can also be made by eating unstable mutagen and ants and dancing - see human.dm
 			name = "spiders"
@@ -4067,6 +4082,7 @@ datum
 			result_amount = 1
 			mix_phrase = ".ylegnarts dnuora lriws ot snigeb erutxim ehT"
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			hidden = TRUE
 
 		transparium
 			name = "transparium"
@@ -4076,6 +4092,7 @@ datum
 			result_amount = 1
 			mix_phrase = "The solution fizzes and begins losing color."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			hidden = TRUE
 
 		diluted_transparium
 			name = "diluted transparium"
@@ -4084,6 +4101,7 @@ datum
 			required_reagents = list("transparium" = 1, "water" = 2)
 			result_amount = 3
 			mix_phrase = "The solution gains a slight blue hue."
+			hidden = TRUE
 
 		expresso
 			name = "expresso"
@@ -4101,6 +4119,7 @@ datum
 			result_amount = 2.5
 			mix_phrase = "The mixture swirls and bubbles becoming blue, you can hear faint music emanating from the it."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			hidden = TRUE
 
 		bubsium
 			name = "Bubsium"
@@ -4110,6 +4129,7 @@ datum
 			result_amount = 3
 			mix_phrase = "The mixture turns yellowish and emits a loud grumping sound"
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+			hidden = TRUE
 
 		flubber
 			name = "Liquified Space Rubber"
@@ -4119,6 +4139,7 @@ datum
 			result_amount = 5
 			mix_phrase = "The mixture congeals and starts to vibrate <b>powerfully!</b>"
 			mix_sound = 'sound/misc/boing/6.ogg'
+			hidden = TRUE
 
 		calcium_carbonate //CaCl2 + Na2CO3 -> CaCO3 + 2NaCl
 			name = "calcium carbonate"

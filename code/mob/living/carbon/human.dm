@@ -109,10 +109,12 @@
 	var/ai_calm_down = 0 // do we chill out after a while?
 	var/ai_picking_pocket = 0
 	var/ai_offhand_pickup_chance = 50
+	var/bruteloss
+	var/burnloss
 
 	max_health = 100
 
-	var/obj/item/trinket = null //Used for spy_theft mode - this is an item that is eligible to have a bounty on it
+	var/datum/weakref/trinket = null //Used for spy_theft mode - this is an item that is eligible to have a bounty on it
 
 	//dismemberment stuff
 	var/datum/human_limbs/limbs = null
@@ -157,7 +159,7 @@
 	var/special_hair_override = 0 // only really works if they have any special hair
 
 	random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
-	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r", "nosepick")
+	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r")
 
 	var/icon/flat_icon = null
 
@@ -219,15 +221,6 @@
 		return
 
 	src.limbs = new /datum/human_limbs(src)
-
-	if (src.organHolder)
-		src.organs["chest"] = src.organHolder.chest
-		src.organs["head"] = src.organHolder.head
-	if (src.limbs)
-		src.organs["l_arm"] = src.limbs.l_arm
-		src.organs["r_arm"] = src.limbs.r_arm
-		src.organs["l_leg"] = src.limbs.l_leg
-		src.organs["r_leg"] = src.limbs.r_leg
 
 	src.update_body()
 	src.update_face()
@@ -400,7 +393,7 @@
 			return 0
 		if (istext(target) && ispath(new_type))
 			if (target == "both_arms" || target == "l_arm")
-				if (ispath(new_type, /obj/item/parts/human_parts/arm) || ispath(new_type, /obj/item/parts/robot_parts/arm))
+				if (ispath(new_type, /obj/item/parts/human_parts/arm) || ispath(new_type, /obj/item/parts/robot_parts/arm) || ispath(new_type, /obj/item/parts/artifact_parts/arm))
 					var/l_held_item
 					if (src.l_arm)
 						if (no_drop && src.holder.l_hand)
@@ -413,7 +406,6 @@
 					if (src.l_arm)
 						src.l_arm.delete()
 					src.l_arm = new /obj/item/parts/human_parts/arm/left/item(src.holder, new new_type(src.holder))
-				src.holder.organs["l_arm"] = src.l_arm
 				src.holder.hud.update_hands()
 				if (show_message)
 					src.holder.show_message("<span class='notice'><b>Your left arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_arm]!</b></span>")
@@ -422,7 +414,7 @@
 				. ++
 
 			if (target == "both_arms" || target == "r_arm")
-				if (ispath(new_type, /obj/item/parts/human_parts/arm) || ispath(new_type, /obj/item/parts/robot_parts/arm))
+				if (ispath(new_type, /obj/item/parts/human_parts/arm) || ispath(new_type, /obj/item/parts/robot_parts/arm) || ispath(new_type, /obj/item/parts/artifact_parts/arm))
 					var/r_held_item
 					if (src.r_arm)
 						if (no_drop && src.holder.r_hand)
@@ -435,7 +427,6 @@
 					if (src.r_arm)
 						src.r_arm.delete()
 					src.r_arm = new /obj/item/parts/human_parts/arm/right/item(src.holder, new new_type(src.holder))
-				src.holder.organs["r_arm"] = src.r_arm
 				src.holder.hud.update_hands()
 				if (show_message)
 					src.holder.show_message("<span class='notice'><b>Your right arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_arm]!</b></span>")
@@ -444,10 +435,9 @@
 				. ++
 
 			if (target == "both_legs" || target == "l_leg")
-				if (ispath(new_type, /obj/item/parts/human_parts/leg) || ispath(new_type, /obj/item/parts/robot_parts/leg))
+				if (ispath(new_type, /obj/item/parts/human_parts/leg) || ispath(new_type, /obj/item/parts/robot_parts/leg) || ispath(new_type, /obj/item/parts/artifact_parts/leg))
 					qdel(src.l_leg)
 					src.l_leg = new new_type(src.holder)
-					src.holder.organs["l_leg"] = src.l_leg
 					if (show_message)
 						src.holder.show_message("<span class='notice'><b>Your left leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_leg]!</b></span>")
 					if (user)
@@ -455,10 +445,9 @@
 					. ++
 
 			if (target == "both_legs" || target == "r_leg")
-				if (ispath(new_type, /obj/item/parts/human_parts/leg) || ispath(new_type, /obj/item/parts/robot_parts/leg))
+				if (ispath(new_type, /obj/item/parts/human_parts/leg) || ispath(new_type, /obj/item/parts/robot_parts/leg) || ispath(new_type, /obj/item/parts/artifact_parts/leg))
 					qdel(src.r_leg)
 					src.r_leg = new new_type(src.holder)
-					src.holder.organs["r_leg"] = src.r_leg
 					if (show_message)
 						src.holder.show_message("<span class='notice'><b>Your right leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_leg]!</b></span>")
 					if (user)
@@ -537,9 +526,6 @@
 		arrestIcon = null
 
 	src.chest_item = null
-
-	src.organs?.len = 0
-	src.organs = null
 
 	if (mutantrace)
 		mutantrace.dispose()
@@ -742,6 +728,11 @@
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
 
 	if (src.mind) // I think this is kinda important (Convair880).
+#ifdef DATALOGGER
+		if (src.mind.ckey)
+			// game_stats.Increment("playerdeaths")
+			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
+#endif
 		src.mind.register_death()
 		if (src.mind.special_role == ROLE_MINDHACK)
 			remove_mindhack_status(src, "mindhack", "death")
@@ -749,11 +740,6 @@
 			remove_mindhack_status(src, "vthrall", "death")
 		else if (src.mind.master)
 			remove_mindhack_status(src, "otherhack", "death")
-#ifdef DATALOGGER
-		if (src.mind.ckey)
-			// game_stats.Increment("playerdeaths")
-			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
-#endif
 
 	logTheThing(LOG_COMBAT, src, "dies [log_health(src)] at [log_loc(src)].")
 	//src.icon_state = "dead"
@@ -947,7 +933,7 @@
 			hud.update_intent()
 			check_for_intent_trigger()
 		if ("drop")
-			src.drop_item()
+			src.drop_item(null, TRUE)
 		if ("swaphand")
 			src.swap_hand()
 		if ("attackself")
@@ -1011,12 +997,12 @@
 /mob/living/carbon/human/proc/throw_mode_off()
 	src.in_throw_mode = 0
 	src.update_cursor()
-	hud.update_throwing()
+	hud?.update_throwing()
 
 /mob/living/carbon/human/proc/throw_mode_on()
 	src.in_throw_mode = 1
 	src.update_cursor()
-	hud.update_throwing()
+	hud?.update_throwing()
 
 /mob/living/carbon/human/throw_item(atom/target, list/params)
 	..()
@@ -1176,17 +1162,13 @@
 	if (src.nodamage) return
 	if (src.health > 0)
 		var/dam_zone = pick("chest", "head")
-		if (istype(src.organs[dam_zone], /obj/item/organ))
-			var/obj/item/organ/temp = src.organs[dam_zone]
+		var/reduction = 0
+		if (src.spellshield)
+			reduction = 30
+			boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some damage!</b></span>")
 
-			var/reduction = 0
-			if (src.energy_shield) reduction = src.energy_shield.protect()
-			if (src.spellshield)
-				reduction = 30
-				boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some damage!</b></span>")
-
-			temp.take_damage((istype(O, /obj/newmeteor/small) ? max(15-reduction,0) : max(25-reduction,0)), max(20-reduction,0))
-			src.UpdateDamageIcon()
+		src.TakeDamage(dam_zone, (istype(O, /obj/newmeteor/small) ? max(15-reduction,0) : max(25-reduction,0)), max(20-reduction,0), 0, DAMAGE_CRUSH)
+		src.UpdateDamageIcon()
 	else if (prob(20))
 		src.gib()
 
@@ -1841,12 +1823,6 @@
 		hud.remove_item(I)
 		hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["twohand"])
 
-		var/icon/IC = new/icon(I.icon)
-		var/width = IC.Width()
-		var/regex/locfinder = new(@"^(CENTER[+-]\d:)(\d+)(.*)$") //matches screen placement of the 2handed spot (e.g.: "CENTER-1:31, SOUTH:5"), saves the pixel offset of the east-west component separate from the rest
-		if(locfinder.Find("[I.screen_loc]")) //V offsets the screen loc of the item by half the difference of the sprite width and the default sprite width (32), to center the sprite in the box V
-			I.screen_loc = "[locfinder.group[1]][text2num(locfinder.group[2])-(width-32)/2][locfinder.group[3]]"
-
 		src.l_hand = I
 		src.r_hand = I
 	else //Object is 1-hand, remove ui elements, set item to proper location.
@@ -1911,12 +1887,6 @@
 			hud.set_visible(hud.rhand, 0)
 			hud.set_visible(hud.twohandl, 1)
 			hud.set_visible(hud.twohandr, 1)
-
-		var/icon/IC = new/icon(I.icon)
-		var/width = IC.Width()
-		var/regex/locfinder = new(@"^(CENTER[+-]\d:)(\d+)(.*)$") //matches screen placement of the 2handed spot (e.g.: "CENTER-1:31, SOUTH:5"), saves the pixel offset of the east-west component separate from the rest
-		if(locfinder.Find("[I.screen_loc]")) //V offsets the screen loc of the item by half the difference of the sprite width and the default sprite width (32), to center the sprite in the box V
-			I.screen_loc = "[locfinder.group[1]][text2num(locfinder.group[2])-(width-32)/2][locfinder.group[3]]"
 
 		return 1
 	else
@@ -2150,7 +2120,7 @@
 				return TRUE
 		if (slot_l_hand)
 			if (src.limbs.l_arm)
-				if (!istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.l_arm, /obj/item/parts/robot_parts/arm))
+				if (!istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.l_arm, /obj/item/parts/robot_parts/arm) && !istype(src.limbs.l_arm, /obj/item/parts/artifact_parts/arm))
 					return FALSE
 				if (istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
 					return FALSE
@@ -2163,7 +2133,7 @@
 				return TRUE
 		if (slot_r_hand)
 			if (src.limbs.r_arm)
-				if (!istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.r_arm, /obj/item/parts/robot_parts/arm))
+				if (!istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.r_arm, /obj/item/parts/robot_parts/arm) && !istype(src.limbs.r_arm, /obj/item/parts/artifact_parts/arm))
 					return FALSE
 				if (istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
 					return FALSE
@@ -2175,7 +2145,7 @@
 						return FALSE
 				return TRUE
 		if (slot_belt)
-			if ((I.flags & ONBELT) && src.w_uniform)
+			if ((I.c_flags & ONBELT) && src.w_uniform)
 				return TRUE
 		if (slot_wear_id)
 			if (istype(I, /obj/item/card/id) && src.w_uniform)
@@ -2183,7 +2153,7 @@
 			if (istype(I, /obj/item/device/pda2) && src.w_uniform) // removed the check for the ID card in here because tbh it was silly that you could only equip it to the ID slot when it had a card  :I
 				return TRUE
 		if (slot_back)
-			if (I.flags & ONBACK)
+			if (I.c_flags & ONBACK)
 				return TRUE
 		if (slot_wear_mask) // It's not pretty, but the mutantrace check will do for the time being (Convair880).
 			if (!src.organHolder.head)
@@ -2953,7 +2923,7 @@
 	src.drop_from_slot(src.r_hand)
 	src.drop_from_slot(src.l_hand)
 	src.update_body()
-	logTheThing(LOG_COMBAT, src, "drops the items they were juggling")
+	logTheThing(LOG_STATION, src, "drops the items they were juggling")
 
 /mob/living/carbon/human/proc/add_juggle(var/obj/thing as obj)
 	if (!thing || src.stat)
@@ -2982,7 +2952,7 @@
 		var/obj/item/i = thing
 		i.on_spin_emote(src)
 	src.update_body()
-	logTheThing(LOG_COMBAT, src, "juggles [thing]")
+	logTheThing(LOG_STATION, src, "starts juggling [thing].")
 
 /mob/living/carbon/human/does_it_metabolize()
 	return 1
@@ -3077,7 +3047,7 @@
 		var/maxVolumeAdd = src.reagents.maximum_volume - src.reagents.total_volume	// Get max available volume in human
 		if (maxVolumeAdd > 0)	// If we can add reagents to human, print message and dump shit into human
 			boutput(src, "<span class='alert'><b>[src.chest_item] spills its contents inside your chest!</span>")
-			logTheThing(LOG_COMBAT, src, "transfers chemicals from [src.chest_item] [log_reagents(src.chest_item)] to [src] at [log_loc(src)]")
+			logTheThing(LOG_CHEMISTRY, src, "transfers chemicals from [src.chest_item] [log_reagents(src.chest_item)] to [src] at [log_loc(src)]")
 			src.chest_item.reagents.trans_to(src, maxVolumeAdd)
 	return
 
@@ -3135,7 +3105,7 @@
 		// Make copy of item on ground
 		var/obj/item/outChestItem = src.chest_item
 		outChestItem.set_loc(get_turf(src))
-		src.chest_item.AttackSelf(src)
+		outChestItem.AttackSelf(src)
 		src.chest_item = null
 		return
 	src.chest_item.AttackSelf(src)
@@ -3460,3 +3430,14 @@
 		. = id?.pronouns
 	if(isnull(.))
 		return ..()
+
+/mob/living/carbon/human/hear_talk(mob/M, text, real_name, lang_id) //Allows stuff in your hands/pockets/belt to pickup voice from other people
+	var/mob/self = src
+	if(M != self)	//So we dont hear ourselves twice
+		src.l_store?.hear_talk(M, text, real_name, lang_id)
+		src.r_store?.hear_talk(M, text, real_name, lang_id)
+		src.belt?.hear_talk(M, text, real_name, lang_id)
+		src.r_hand?.hear_talk(M, text, real_name, lang_id)
+		src.l_hand?.hear_talk(M, text, real_name, lang_id)
+	. = ..()
+

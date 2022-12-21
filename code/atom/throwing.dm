@@ -26,7 +26,7 @@
 					src.throw_impact(A, thr)
 					. = TRUE
 
-/atom/movable/proc/throw_begin(atom/target)
+/atom/movable/proc/throw_begin(atom/target, turf/thrown_from, mob/thrown_by)
 
 // when an atom gets hit by a thrown object, returns the sound to play
 /atom/proc/hitby(atom/movable/AM, datum/thrown_thing/thr=null)
@@ -95,9 +95,14 @@
 			var/mob/M = src
 			M.force_laydown_standup()
 
+	if (istype(src.loc, /obj/vehicle))
+		var/obj/vehicle/V = src.loc
+		if (V.can_eject_items)
+			src.set_loc(get_turf(V))
+
 	src.last_throw_x = src.x
 	src.last_throw_y = src.y
-	src.throw_begin(target)
+	src.throw_begin(target, thrown_from, thrown_by)
 
 	src.throwforce += bonus_throwforce
 

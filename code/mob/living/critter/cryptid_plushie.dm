@@ -223,7 +223,7 @@
 		for (var/mob/M in viewers(src))
 			if (M == src)
 				continue
-			if (!isalive(M))
+			if (!isalive(M) || isintangible(M))
 				continue
 			if (istype(M, /mob/living/critter/small_animal/plush/cryptid)) // other cryptids are ok
 				continue
@@ -274,7 +274,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 
 		var/selected
 		do
-			var/list/words = list("*REFRESH*") + get_ouija_word_list(src, words_min, words_max)
+			var/list/words = list("*REFRESH*") + get_ouija_word_list(src, words_min, words_max,
+				filename="plush_toy_words.txt", strings_category="plush_toy_words")
 			selected = tgui_input_list(usr, "Select a word:", src.name, words, allowIllegal=FALSE)
 		while(selected == "*REFRESH*")
 		if(!selected)
@@ -389,7 +390,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 	proc/generate_gibberish_words()
 		var/list/words = list()
 		for(var/i in 1 to rand(5, 10))
-			var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
+			var/picked = pick(strings("plush_toy_words.txt", "plush_toy_words"))
 			picked = uppertext(picked)
 			words |= picked
 		var/list/more_words = list("... hello?", "Is anyone there?", "Please...", "Help...", "Help, please...", "Can anyone hear me?", "It hurts.", "It's so dark...")

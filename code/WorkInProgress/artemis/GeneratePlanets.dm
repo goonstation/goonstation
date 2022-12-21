@@ -169,6 +169,9 @@ DEFINE_PLANET(indigo, "Indigo")
 	var/allow_prefab = TRUE
 	var/generated = FALSE
 
+	no_prefab
+		allow_prefab = FALSE
+
 
 /datum/planetManager
 	var/list/datum/allocated_region/regions = list()
@@ -244,8 +247,17 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 					count = INFINITY
 					break
 
-				var/ret = P.applyTo(target)
+				var/datum/loadedProperties/ret = P.applyTo(target)
 				if (ret)
+					var/space_turfs = block(locate(ret.sourceX, ret.sourceY, ret.sourceZ), locate(ret.maxX, ret.maxY, ret.maxZ))
+					for(T in space_turfs)
+						if(!istype(T, /turf/space))
+							space_turfs -= T
+					generator.generate_terrain(space_turfs, reuse_seed=TRUE)
+					for(T in space_turfs)
+						T.UpdateOverlays(ambient_light, "ambient")
+						LAGCHECK(LAG_LOW)
+
 					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
 					stop = 1
 				else

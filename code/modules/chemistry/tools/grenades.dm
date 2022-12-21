@@ -19,7 +19,8 @@
 	var/image/fluid_image2
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT | EXTRADELAY | NOSPLASH
+	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY | NOSPLASH
+	c_flags = ONBELT
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
@@ -164,7 +165,7 @@
 				if (G.reagents.total_volume) log_reagents += "[log_reagents(G)] "
 
 		if(!A.dont_log_combat)
-			if(is_dangerous)
+			if(is_dangerous && user)
 				message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
 
@@ -320,6 +321,12 @@
 		beakers += B1
 		beakers += B2
 
+TYPEINFO(/obj/item/chem_grenade/flashbang)
+	mats = 6
+
+TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
+	mats = null
+
 /obj/item/chem_grenade/flashbang
 	name = "flashbang"
 	desc = "A standard stun grenade."
@@ -329,7 +336,6 @@
 	stage = 2
 	is_syndicate = 1
 	is_dangerous = FALSE
-	mats = 6
 
 	New()
 		..()
@@ -351,7 +357,6 @@
 		beakers += B2
 
 	revolution //convertssss
-		mats = null
 		explode()
 			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				var/datum/game_mode/revolution/R = ticker.mode
