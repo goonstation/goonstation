@@ -365,7 +365,7 @@
 /turf/unsimulated/floor/black,
 /area/swampzone/interiors/bonktek)
 "avA" = (
-/obj/decal/fakeobjects/carcosa/tree/one,
+/obj/tree1/carcosa/one,
 /turf/space/fluid/trench{
 	color = "#669966";
 	name = "swamp floor"
@@ -2652,7 +2652,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater)
 "dnd" = (
-/obj/decal/fakeobjects/carcosa/tree/three,
+/obj/tree1/carcosa/three,
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground/canyon)
 "dnH" = (
@@ -3593,7 +3593,7 @@
 /turf/unsimulated/floor/carpet/red/fancy/edge/ne,
 /area/swampzone/interiors/bonktek/security)
 "erc" = (
-/obj/decal/fakeobjects/carcosa/tree/two,
+/obj/tree1/carcosa/two,
 /turf/unsimulated/wall/trench/side{
 	color = "#669966";
 	name = "swamp wall"
@@ -3843,7 +3843,7 @@
 /turf/unsimulated/floor/wood/seven,
 /area/swampzone/interiors/outbuildings)
 "eFB" = (
-/obj/decal/fakeobjects/carcosa/tree/one,
+/obj/tree1/carcosa/one,
 /obj/chainlink_fence{
 	dir = 10
 	},
@@ -6110,7 +6110,7 @@
 /turf/space/fluid/cenote,
 /area/crater)
 "hjB" = (
-/obj/decal/fakeobjects/carcosa/tree/three,
+/obj/tree1/carcosa/three,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground/canyon)
 "hjK" = (
@@ -8236,7 +8236,7 @@
 /turf/unsimulated/floor/industrial,
 /area/swampzone/interiors/quarry)
 "jMH" = (
-/obj/decal/fakeobjects/carcosa/tree/four,
+/obj/tree1/carcosa/four,
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground)
 "jNe" = (
@@ -8477,7 +8477,7 @@
 /area/swampzone/interiors/bonktek/lounge)
 "kcD" = (
 /obj/decal/cleanable/cobwebFloor,
-/obj/decal/fakeobjects/carcosa/tree/one,
+/obj/tree1/carcosa/one,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground/canyon)
 "kdp" = (
@@ -9545,7 +9545,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "lkS" = (
-/obj/decal/fakeobjects/carcosa/tree/three,
+/obj/tree1/carcosa/three,
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground)
 "lld" = (
@@ -11950,7 +11950,7 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground/canyon)
 "ocA" = (
-/obj/decal/fakeobjects/carcosa/tree/four,
+/obj/tree1/carcosa/four,
 /turf/unsimulated/wall/trench{
 	color = "#669966";
 	name = "swamp wall"
@@ -12566,7 +12566,7 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma)
 "oUT" = (
-/obj/decal/fakeobjects/carcosa/tree/one,
+/obj/tree1/carcosa/one,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground/canyon)
 "oVH" = (
@@ -13134,7 +13134,7 @@
 	},
 /area/swampzone/interiors/outbuildings)
 "pEn" = (
-/obj/decal/fakeobjects/carcosa/tree/four,
+/obj/tree1/carcosa/four,
 /turf/unsimulated/wall/setpieces/rootwall{
 	desc = "The foliage is too thick to see through here.";
 	icon_state = "grass";
@@ -14511,7 +14511,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
 "rlT" = (
-/obj/decal/fakeobjects/carcosa/tree/four,
+/obj/tree1/carcosa/four,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground)
 "rlX" = (
@@ -15239,7 +15239,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/crew)
 "skF" = (
-/obj/decal/fakeobjects/carcosa/tree/one,
+/obj/tree1/carcosa/one,
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground/canyon)
 "sld" = (
@@ -15994,7 +15994,7 @@
 /turf/unsimulated/floor/auto/swamp/rain,
 /area/syndicate_station)
 "tbX" = (
-/obj/decal/fakeobjects/carcosa/tree/four,
+/obj/tree1/carcosa/four,
 /turf/unsimulated/wall/trench/side{
 	color = "#669966";
 	name = "swamp wall"
@@ -16518,7 +16518,7 @@
 /turf/space/fluid/cenote,
 /area/swampzone/interiors/quarry)
 "tHF" = (
-/obj/decal/fakeobjects/carcosa/tree/two,
+/obj/tree1/carcosa/two,
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground)
 "tIw" = (
@@ -17204,7 +17204,7 @@
 /area/swampzone/interiors/quarry)
 "uzX" = (
 /obj/decal/cleanable/cobwebFloor,
-/obj/decal/fakeobjects/carcosa/tree/one,
+/obj/tree1/carcosa/one,
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground/canyon)
 "uzZ" = (
@@ -17609,7 +17609,7 @@
 	},
 /area/swampzone/interiors/bonktek)
 "uTH" = (
-/obj/decal/fakeobjects/carcosa/tree/five,
+/obj/tree1/carcosa/five,
 /turf/unsimulated/wall/trench/side{
 	color = "#669966";
 	name = "swamp wall"
@@ -18902,7 +18902,7 @@
 /turf/unsimulated/floor/wood,
 /area/swampzone/interiors/bonktek/waffletek)
 "wqO" = (
-/obj/decal/fakeobjects/carcosa/tree/three{
+/obj/tree1/carcosa/three{
 	pixel_x = -14
 	},
 /turf/unsimulated/wall/trench/side{
@@ -19309,7 +19309,7 @@
 /turf/unsimulated/floor/industrial,
 /area/swampzone/interiors/quarry)
 "wLK" = (
-/obj/decal/fakeobjects/carcosa/tree/three{
+/obj/tree1/carcosa/three{
 	pixel_x = -14
 	},
 /turf/unsimulated/floor/auto/grass/swamp_grass,
@@ -19326,7 +19326,7 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station)
 "wMR" = (
-/obj/decal/fakeobjects/carcosa/tree/five,
+/obj/tree1/carcosa/five,
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground)
 "wMY" = (
@@ -19670,14 +19670,14 @@
 /turf/unsimulated/floor/carpet/purple/fancy/innercorner/north,
 /area/swampzone/interiors/bonktek/lounge)
 "xjL" = (
-/obj/decal/fakeobjects/carcosa/tree/three,
+/obj/tree1/carcosa/three,
 /turf/unsimulated/wall/trench/side{
 	color = "#669966";
 	name = "swamp wall"
 	},
 /area/swampzone/deeps)
 "xjM" = (
-/obj/decal/fakeobjects/carcosa/tree/three,
+/obj/tree1/carcosa/three,
 /turf/unsimulated/wall/trench{
 	color = "#669966";
 	name = "swamp wall"
@@ -20260,7 +20260,7 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
 "xZu" = (
-/obj/decal/fakeobjects/carcosa/tree/four,
+/obj/tree1/carcosa/four,
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground/canyon)
 "xZw" = (

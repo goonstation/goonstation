@@ -921,7 +921,7 @@
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
 /area/nomad/outside)
 "cu" = (
-/obj/decal/fakeobjects/carcosa/tree/five,
+/obj/tree1/carcosa/five,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
 /area/nomad/outside)
 "cv" = (
@@ -1105,7 +1105,7 @@
 	},
 /area/nomad/inside)
 "cL" = (
-/obj/decal/fakeobjects/carcosa/tree/three,
+/obj/tree1/carcosa/three,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
 /area/nomad/outside)
 "cM" = (
@@ -1184,11 +1184,11 @@
 	},
 /area/nomad/inside)
 "cV" = (
-/obj/decal/fakeobjects/carcosa/tree/two,
+/obj/tree1/carcosa/two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
 /area/nomad/outside)
 "cW" = (
-/obj/decal/fakeobjects/carcosa/tree/four,
+/obj/tree1/carcosa/four,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
 /area/nomad/outside)
 

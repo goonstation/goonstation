@@ -249,7 +249,7 @@
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt_inner,
 /area/space)
 "bd" = (
-/obj/decal/fakeobjects/carcosa/tree/three,
+/obj/tree1/carcosa/three,
 /obj/decal/fakeobjects/carcosa/carcosa_plant/three,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
 /area/space)
@@ -268,7 +268,7 @@
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
 /area/space)
 "bh" = (
-/obj/decal/fakeobjects/carcosa/tree/five,
+/obj/tree1/carcosa/five,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
 /area/space)
 "bi" = (
@@ -278,12 +278,12 @@
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
 /area/space)
 "bj" = (
-/obj/decal/fakeobjects/carcosa/tree/four,
+/obj/tree1/carcosa/four,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
 /area/space)
 "bk" = (
 /obj/decal/fakeobjects/carcosa/carcosa_plant/one,
-/obj/decal/fakeobjects/carcosa/tree/three,
+/obj/tree1/carcosa/three,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
 /area/space)
 "bl" = (
@@ -304,7 +304,7 @@
 	},
 /area/space)
 "bo" = (
-/obj/decal/fakeobjects/carcosa/tree/two,
+/obj/tree1/carcosa/two,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
 /area/space)
 "bp" = (
@@ -463,7 +463,7 @@
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
 /area/space)
 "bV" = (
-/obj/decal/fakeobjects/carcosa/tree/three,
+/obj/tree1/carcosa/three,
 /turf/unsimulated/floor/setpieces/carcosa/carcosa_dirt,
 /area/space)
 
