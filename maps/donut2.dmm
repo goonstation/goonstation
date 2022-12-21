@@ -15349,9 +15349,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bfG" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
 /obj/landmark/start{
 	name = "Engineer"
 	},
@@ -17787,7 +17784,11 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/arrivals)
 "bpY" = (
-/turf/simulated/wall/auto/supernorn,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
 /area/station/engine/storage)
 "bqa" = (
 /obj/cable{
@@ -18329,9 +18330,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "bsI" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/yellow,
 /area/station/engine/storage)
@@ -18506,12 +18504,6 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/engine/storage)
-"btF" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/yellow,
 /area/station/engine/storage)
 "btG" = (
 /obj/cable{
@@ -18898,6 +18890,9 @@
 	},
 /obj/disposalpipe/segment,
 /obj/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/storage)
 "bvU" = (
@@ -27780,7 +27775,7 @@
 /area/station/crew_quarters/locker)
 "ftD" = (
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/storage)
@@ -35332,19 +35327,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
-"lcN" = (
-/obj/grille/catwalk{
-	dir = 10;
-	icon_state = "catwalk_cross"
-	},
-/obj/machinery/light/small/floor,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 10;
-	layer = 2
-	},
-/area/station/engine/singcore{
-	do_not_irradiate = 1
-	})
 "lcU" = (
 /obj/storage/secure/closet/medical/medicine,
 /turf/simulated/floor/white/checker,
@@ -36089,22 +36071,7 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
-/obj/item/tank/air,
-/obj/item/chem_grenade/firefighting,
-/obj/item/chem_grenade/firefighting,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/tank/air,
-/obj/item/clothing/head/helmet/hardhat,
-/obj/item/chem_grenade/firefighting,
-/obj/item/chem_grenade/firefighting,
-/obj/cable{
-	icon_state = "2-8"
-	},
+/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -39416,19 +39383,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
-"oeV" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
-/obj/machinery/light/small/floor,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 6;
-	layer = 2
-	},
-/area/station/engine/singcore{
-	do_not_irradiate = 1
-	})
 "ofh" = (
 /obj/machinery/hair_dye_dispenser,
 /turf/simulated/floor/wood/two,
@@ -42057,18 +42011,6 @@
 	},
 /turf/space,
 /area/space)
-"pSI" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
-/obj/cable/orange{
-	icon_state = "1-2"
-	},
-/obj/machinery/power/data_terminal,
-/turf/space,
-/area/station/engine/singcore{
-	do_not_irradiate = 1
-	})
 "pSU" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -50288,19 +50230,6 @@
 	oxygen = 30.8366
 	},
 /area/station/crew_quarters/kitchen/freezer)
-"vBS" = (
-/obj/grille/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/obj/machinery/light/small/floor,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
-	tag = "icon-catwalk (WEST)"
-	},
-/area/station/engine/singcore{
-	do_not_irradiate = 1
-	})
 "vBW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -51970,19 +51899,6 @@
 "wPr" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
-"wQf" = (
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
-	},
-/obj/machinery/light/small/floor,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 9;
-	layer = 2
-	},
-/area/station/engine/singcore{
-	do_not_irradiate = 1
-	})
 "wQE" = (
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
@@ -81427,7 +81343,7 @@ aaa
 aaa
 lml
 xOP
-oeV
+iHX
 ijM
 gMr
 pHE
@@ -81437,7 +81353,7 @@ pHE
 pHE
 hET
 ijM
-vBS
+dGY
 xOP
 nwB
 aaa
@@ -82068,7 +81984,7 @@ aSt
 owB
 bqN
 bfG
-btF
+btG
 buG
 bvK
 bwV
@@ -82330,7 +82246,7 @@ aaa
 aaa
 aaA
 lml
-oeV
+iHX
 dge
 ijM
 iKm
@@ -82346,7 +82262,7 @@ iKm
 iKm
 ijM
 rTp
-vBS
+dGY
 nwB
 aaa
 aaa
@@ -84759,7 +84675,7 @@ oRY
 oRY
 cmq
 xAe
-pSI
+xAe
 iyo
 nkt
 qfs
@@ -85350,7 +85266,7 @@ aaa
 aaa
 aaA
 wvY
-lcN
+nwB
 cIJ
 ijM
 iKm
@@ -85366,7 +85282,7 @@ iKm
 iKm
 ijM
 tEs
-wQf
+lml
 iHX
 aaa
 aaa
@@ -86259,7 +86175,7 @@ aaa
 aaa
 wvY
 xOP
-lcN
+nwB
 ijM
 xZq
 pHE
@@ -86269,7 +86185,7 @@ pHE
 pHE
 kfi
 ijM
-wQf
+lml
 xOP
 iHX
 aaa
