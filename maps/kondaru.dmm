@@ -53245,7 +53245,7 @@
 /turf/simulated/floor/greenblack,
 /area/station/garden/aviary)
 "qpS" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "qqj" = (
@@ -61710,7 +61710,7 @@
 	},
 /area/station/routing/security)
 "xAA" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
 "xBa" = (

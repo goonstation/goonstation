@@ -42,7 +42,7 @@
 					A.pixel_y = initial(A.pixel_y)
 		return ..()
 
-/obj/tree1
+/obj/tree
 	name = "tree"
 	desc = "It's a tree."
 	icon = 'icons/effects/96x96.dmi' // changed from worlds.dmi

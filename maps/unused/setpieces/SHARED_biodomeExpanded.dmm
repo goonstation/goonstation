@@ -17,7 +17,7 @@
 	},
 /area/catacombs)
 "aaE" = (
-/obj/tree1{
+/obj/tree{
 	dir = 8
 	},
 /turf/unsimulated/wall/trench/side{
@@ -64,7 +64,7 @@
 /turf/unsimulated/floor/carpet/purple/fancy/edge/ne,
 /area/swampzone/interiors/bonktek/lounge)
 "agG" = (
-/obj/tree1,
+/obj/tree,
 /obj/map/light/graveyard,
 /turf/unsimulated/grasstodirt,
 /area/crypt/graveyard)
@@ -112,7 +112,7 @@
 	},
 /area/swampzone/interiors/outbuildings)
 "ako" = (
-/obj/tree1{
+/obj/tree{
 	dir = 4
 	},
 /obj/machinery/light/incandescent/small,
@@ -182,7 +182,7 @@
 /area/crater/biodome/entry)
 "amQ" = (
 /obj/map/light/graveyard,
-/obj/tree1{
+/obj/tree{
 	dir = 8
 	},
 /turf/unsimulated/grasstodirt{
@@ -266,7 +266,7 @@
 /turf/unsimulated/floor/circuit/purple,
 /area/space)
 "aqC" = (
-/obj/tree1{
+/obj/tree{
 	dir = 4
 	},
 /turf/unsimulated/floor/auto/grass/leafy,
@@ -282,7 +282,7 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/swampzone/interiors/bonktek/maintenance)
 "arR" = (
-/obj/tree1{
+/obj/tree{
 	dir = 1
 	},
 /turf/unsimulated/floor/auto/grass/swamp_grass,
@@ -365,7 +365,7 @@
 /turf/unsimulated/floor/black,
 /area/swampzone/interiors/bonktek)
 "avA" = (
-/obj/tree1/carcosa/one,
+/obj/tree/carcosa/one,
 /turf/space/fluid/trench{
 	color = "#669966";
 	name = "swamp floor"
@@ -996,7 +996,7 @@
 /turf/unsimulated/floor/industrial,
 /area/swampzone/ground)
 "bia" = (
-/obj/tree1,
+/obj/tree,
 /obj/map/light/graveyard,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/crypt/graveyard)
@@ -1053,7 +1053,7 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/crater/biodome/south)
 "bnT" = (
-/obj/tree1{
+/obj/tree{
 	dir = 4
 	},
 /turf/unsimulated/floor/auto/dirt,
@@ -2652,7 +2652,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater)
 "dnd" = (
-/obj/tree1/carcosa/three,
+/obj/tree/carcosa/three,
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground/canyon)
 "dnH" = (
@@ -2894,7 +2894,7 @@
 /turf/space/fluid/cenote,
 /area/crater)
 "dAY" = (
-/obj/tree1{
+/obj/tree{
 	dir = 8
 	},
 /turf/unsimulated/floor/auto/dirt,
@@ -3258,7 +3258,7 @@
 /area/syndicate_station)
 "dTk" = (
 /obj/map/light/graveyard,
-/obj/tree1{
+/obj/tree{
 	dir = 8
 	},
 /turf/unsimulated/floor/auto/grass/leafy,
@@ -3593,7 +3593,7 @@
 /turf/unsimulated/floor/carpet/red/fancy/edge/ne,
 /area/swampzone/interiors/bonktek/security)
 "erc" = (
-/obj/tree1/carcosa/two,
+/obj/tree/carcosa/two,
 /turf/unsimulated/wall/trench/side{
 	color = "#669966";
 	name = "swamp wall"
@@ -3806,7 +3806,7 @@
 /turf/unsimulated/wall/setpieces/leadwindow/gray,
 /area/swampzone/interiors/bonktek/waffletek)
 "eEp" = (
-/obj/tree1{
+/obj/tree{
 	dir = 8
 	},
 /turf/unsimulated/floor/auto/swamp,
@@ -3843,7 +3843,7 @@
 /turf/unsimulated/floor/wood/seven,
 /area/swampzone/interiors/outbuildings)
 "eFB" = (
-/obj/tree1/carcosa/one,
+/obj/tree/carcosa/one,
 /obj/chainlink_fence{
 	dir = 10
 	},
@@ -4910,7 +4910,7 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/swampzone/interiors/bonktek/electek)
 "fJF" = (
-/obj/tree1,
+/obj/tree,
 /obj/spacevine{
 	density = 1;
 	icon_state = "vine-hvy3";
@@ -5042,7 +5042,7 @@
 /obj/railing/green/reinforced{
 	dir = 8
 	},
-/obj/tree1{
+/obj/tree{
 	dir = 8;
 	pixel_x = -10
 	},
@@ -5640,7 +5640,7 @@
 /area/crypt/sigma/mainhall)
 "gDY" = (
 /obj/map/light/graveyard,
-/obj/tree1{
+/obj/tree{
 	dir = 8
 	},
 /turf/unsimulated/floor/auto/dirt,
@@ -6110,7 +6110,7 @@
 /turf/space/fluid/cenote,
 /area/crater)
 "hjB" = (
-/obj/tree1/carcosa/three,
+/obj/tree/carcosa/three,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground/canyon)
 "hjK" = (
@@ -6389,7 +6389,7 @@
 	},
 /area/someplace)
 "hBn" = (
-/obj/tree1{
+/obj/tree{
 	dir = 4
 	},
 /turf/unsimulated/floor/auto/grass/leafy,
@@ -6528,7 +6528,7 @@
 	},
 /area/swampzone/deeps)
 "hKd" = (
-/obj/tree1{
+/obj/tree{
 	dir = 4
 	},
 /turf/unsimulated/floor/auto/grass/swamp_grass,
@@ -7171,7 +7171,7 @@
 	density = 1;
 	icon_state = "vine-med1"
 	},
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/crater/biodome/north)
 "iCq" = (
@@ -8236,7 +8236,7 @@
 /turf/unsimulated/floor/industrial,
 /area/swampzone/interiors/quarry)
 "jMH" = (
-/obj/tree1/carcosa/four,
+/obj/tree/carcosa/four,
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground)
 "jNe" = (
@@ -8380,7 +8380,7 @@
 /area/swampzone/interiors/outbuildings)
 "jWK" = (
 /obj/railing/green/reinforced,
-/obj/tree1{
+/obj/tree{
 	dir = 8;
 	pixel_x = -13;
 	pixel_y = 11
@@ -8477,7 +8477,7 @@
 /area/swampzone/interiors/bonktek/lounge)
 "kcD" = (
 /obj/decal/cleanable/cobwebFloor,
-/obj/tree1/carcosa/one,
+/obj/tree/carcosa/one,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground/canyon)
 "kdp" = (
@@ -8821,7 +8821,7 @@
 /area/swampzone/heights)
 "kwV" = (
 /obj/map/light/graveyard,
-/obj/tree1{
+/obj/tree{
 	dir = 1
 	},
 /turf/unsimulated/grasstodirt{
@@ -8838,7 +8838,7 @@
 /turf/space/fluid/cenote,
 /area/crater)
 "kxG" = (
-/obj/tree1{
+/obj/tree{
 	dir = 8
 	},
 /turf/unsimulated/wall/trench{
@@ -8993,7 +8993,7 @@
 	dir = 8
 	},
 /obj/railing/green/reinforced,
-/obj/tree1{
+/obj/tree{
 	dir = 8;
 	pixel_x = -13;
 	pixel_y = 11
@@ -9049,7 +9049,7 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground)
 "kGP" = (
-/obj/tree1,
+/obj/tree,
 /obj/map/light/graveyard,
 /turf/unsimulated/grasstodirt{
 	dir = 8
@@ -9340,7 +9340,7 @@
 /area/crypt/sigma/rd)
 "kZq" = (
 /obj/map/light/graveyard,
-/obj/tree1{
+/obj/tree{
 	dir = 4
 	},
 /turf/unsimulated/grasstodirt,
@@ -9487,7 +9487,7 @@
 /turf/unsimulated/floor/engine,
 /area/space)
 "lie" = (
-/obj/tree1{
+/obj/tree{
 	dir = 1
 	},
 /turf/unsimulated/floor/auto/dirt,
@@ -9545,7 +9545,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "lkS" = (
-/obj/tree1/carcosa/three,
+/obj/tree/carcosa/three,
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground)
 "lld" = (
@@ -9696,7 +9696,7 @@
 /turf/unsimulated/floor/cave,
 /area/swampzone/interiors/quarry)
 "lvx" = (
-/obj/tree1{
+/obj/tree{
 	dir = 8
 	},
 /turf/unsimulated/floor/auto/grass/leafy,
@@ -10513,7 +10513,7 @@
 /turf/unsimulated/wall/auto/supernorn,
 /area/swampzone/interiors/outbuildings)
 "mwE" = (
-/obj/tree1/elm_random,
+/obj/tree/elm_random,
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
 "mwQ" = (
@@ -11477,7 +11477,7 @@
 /area/swampzone/interiors/outbuildings)
 "nFI" = (
 /obj/map/light/graveyard,
-/obj/tree1{
+/obj/tree{
 	dir = 1
 	},
 /turf/unsimulated/grasstodirt,
@@ -11950,7 +11950,7 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground/canyon)
 "ocA" = (
-/obj/tree1/carcosa/four,
+/obj/tree/carcosa/four,
 /turf/unsimulated/wall/trench{
 	color = "#669966";
 	name = "swamp wall"
@@ -12118,7 +12118,7 @@
 /obj/railing/green/reinforced{
 	dir = 8
 	},
-/obj/tree1{
+/obj/tree{
 	dir = 8;
 	pixel_x = -13
 	},
@@ -12566,7 +12566,7 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma)
 "oUT" = (
-/obj/tree1/carcosa/one,
+/obj/tree/carcosa/one,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground/canyon)
 "oVH" = (
@@ -12656,7 +12656,7 @@
 	},
 /area/someplace)
 "oZc" = (
-/obj/tree1/elm_random,
+/obj/tree/elm_random,
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground)
 "oZm" = (
@@ -12816,7 +12816,7 @@
 /turf/unsimulated/floor/plating,
 /area/swampzone/ground)
 "piN" = (
-/obj/tree1/elm_random,
+/obj/tree/elm_random,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground/canyon)
 "piT" = (
@@ -13134,7 +13134,7 @@
 	},
 /area/swampzone/interiors/outbuildings)
 "pEn" = (
-/obj/tree1/carcosa/four,
+/obj/tree/carcosa/four,
 /turf/unsimulated/wall/setpieces/rootwall{
 	desc = "The foliage is too thick to see through here.";
 	icon_state = "grass";
@@ -13527,7 +13527,7 @@
 	},
 /area/swampzone/heights)
 "qds" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/crater/biodome/south)
 "qdw" = (
@@ -13896,7 +13896,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater)
 "qFn" = (
-/obj/tree1{
+/obj/tree{
 	dir = 8
 	},
 /turf/unsimulated/floor/auto/swamp/rain,
@@ -14004,7 +14004,7 @@
 	},
 /area/swampzone/ground)
 "qKe" = (
-/obj/tree1{
+/obj/tree{
 	dir = 8;
 	pixel_x = -13;
 	pixel_y = 11
@@ -14511,7 +14511,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
 "rlT" = (
-/obj/tree1/carcosa/four,
+/obj/tree/carcosa/four,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground)
 "rlX" = (
@@ -14549,7 +14549,7 @@
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/swampzone/ground)
 "roo" = (
-/obj/tree1{
+/obj/tree{
 	dir = 4
 	},
 /turf/unsimulated/wall/setpieces/rootwall{
@@ -15239,7 +15239,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/crew)
 "skF" = (
-/obj/tree1/carcosa/one,
+/obj/tree/carcosa/one,
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground/canyon)
 "sld" = (
@@ -15345,7 +15345,7 @@
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/swampzone/interiors/quarry)
 "sqw" = (
-/obj/tree1/elm_random,
+/obj/tree/elm_random,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/interiors/bonktek)
 "srz" = (
@@ -15837,7 +15837,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "sVb" = (
-/obj/tree1,
+/obj/tree,
 /obj/map/light/graveyard,
 /turf/unsimulated/floor/auto/dirt,
 /area/crypt/graveyard)
@@ -15850,7 +15850,7 @@
 	},
 /area/crypt/sigma)
 "sVD" = (
-/obj/tree1{
+/obj/tree{
 	dir = 1
 	},
 /obj/map/light/graveyard,
@@ -15994,7 +15994,7 @@
 /turf/unsimulated/floor/auto/swamp/rain,
 /area/syndicate_station)
 "tbX" = (
-/obj/tree1/carcosa/four,
+/obj/tree/carcosa/four,
 /turf/unsimulated/wall/trench/side{
 	color = "#669966";
 	name = "swamp wall"
@@ -16027,7 +16027,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "tel" = (
-/obj/tree1{
+/obj/tree{
 	dir = 1
 	},
 /obj/stone{
@@ -16347,7 +16347,7 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/swampzone/ground/canyon)
 "txT" = (
-/obj/tree1{
+/obj/tree{
 	dir = 8
 	},
 /turf/unsimulated/floor/auto/grass/swamp_grass,
@@ -16477,7 +16477,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
 "tGb" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/wall/trench{
 	color = "#669966";
 	name = "swamp wall"
@@ -16518,7 +16518,7 @@
 /turf/space/fluid/cenote,
 /area/swampzone/interiors/quarry)
 "tHF" = (
-/obj/tree1/carcosa/two,
+/obj/tree/carcosa/two,
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground)
 "tIw" = (
@@ -17035,7 +17035,7 @@
 /area/swampzone/interiors/outbuildings)
 "upS" = (
 /obj/map/light/graveyard,
-/obj/tree1{
+/obj/tree{
 	dir = 1
 	},
 /turf/unsimulated/grasstodirt{
@@ -17100,7 +17100,7 @@
 /area/crater/biodome/north)
 "uso" = (
 /obj/map/light/graveyard,
-/obj/tree1{
+/obj/tree{
 	dir = 8
 	},
 /turf/unsimulated/grasstodirt,
@@ -17142,7 +17142,7 @@
 	},
 /area/swampzone/interiors/outbuildings)
 "uwz" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground)
 "uwP" = (
@@ -17204,7 +17204,7 @@
 /area/swampzone/interiors/quarry)
 "uzX" = (
 /obj/decal/cleanable/cobwebFloor,
-/obj/tree1/carcosa/one,
+/obj/tree/carcosa/one,
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground/canyon)
 "uzZ" = (
@@ -17609,7 +17609,7 @@
 	},
 /area/swampzone/interiors/bonktek)
 "uTH" = (
-/obj/tree1/carcosa/five,
+/obj/tree/carcosa/five,
 /turf/unsimulated/wall/trench/side{
 	color = "#669966";
 	name = "swamp wall"
@@ -17752,7 +17752,7 @@
 /turf/unsimulated/floor/red/checker,
 /area/swampzone/interiors/bonktek)
 "vbO" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground)
 "vbS" = (
@@ -17924,7 +17924,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/swampzone/interiors/outbuildings)
 "vlT" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
 "vmj" = (
@@ -18116,7 +18116,7 @@
 	},
 /area/swampzone/interiors/outbuildings)
 "vzn" = (
-/obj/tree1/elm_random,
+/obj/tree/elm_random,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground)
 "vzW" = (
@@ -18401,7 +18401,7 @@
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
 "vNK" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/wall/setpieces/rootwall{
 	desc = "The foliage is too thick to see through here.";
 	icon_state = "grass";
@@ -18902,7 +18902,7 @@
 /turf/unsimulated/floor/wood,
 /area/swampzone/interiors/bonktek/waffletek)
 "wqO" = (
-/obj/tree1/carcosa/three{
+/obj/tree/carcosa/three{
 	pixel_x = -14
 	},
 /turf/unsimulated/wall/trench/side{
@@ -19309,7 +19309,7 @@
 /turf/unsimulated/floor/industrial,
 /area/swampzone/interiors/quarry)
 "wLK" = (
-/obj/tree1/carcosa/three{
+/obj/tree/carcosa/three{
 	pixel_x = -14
 	},
 /turf/unsimulated/floor/auto/grass/swamp_grass,
@@ -19326,7 +19326,7 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station)
 "wMR" = (
-/obj/tree1/carcosa/five,
+/obj/tree/carcosa/five,
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground)
 "wMY" = (
@@ -19670,14 +19670,14 @@
 /turf/unsimulated/floor/carpet/purple/fancy/innercorner/north,
 /area/swampzone/interiors/bonktek/lounge)
 "xjL" = (
-/obj/tree1/carcosa/three,
+/obj/tree/carcosa/three,
 /turf/unsimulated/wall/trench/side{
 	color = "#669966";
 	name = "swamp wall"
 	},
 /area/swampzone/deeps)
 "xjM" = (
-/obj/tree1/carcosa/three,
+/obj/tree/carcosa/three,
 /turf/unsimulated/wall/trench{
 	color = "#669966";
 	name = "swamp wall"
@@ -20260,7 +20260,7 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
 "xZu" = (
-/obj/tree1/carcosa/four,
+/obj/tree/carcosa/four,
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground/canyon)
 "xZw" = (
@@ -20296,7 +20296,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "yau" = (
-/obj/tree1{
+/obj/tree{
 	dir = 1
 	},
 /turf/unsimulated/floor/auto/grass/leafy,

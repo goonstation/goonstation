@@ -37709,7 +37709,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bTA" = (
@@ -38170,7 +38170,7 @@
 	},
 /area/station/crew_quarters/lounge/port)
 "bUJ" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bUK" = (
@@ -39113,7 +39113,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bXd" = (
-/obj/tree1{
+/obj/tree{
 	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
 	},
 /turf/simulated/floor/grass/random,

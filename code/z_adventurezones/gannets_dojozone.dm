@@ -344,13 +344,13 @@ Contents:
 	icon = 'icons/obj/large/160x128.dmi'
 	icon_state = "arch"
 
-/obj/tree1/sakura_tree
+/obj/tree/sakura_tree
 	name = "cherry tree"
 	desc = "A pretty japanese cherry tree. You don't find a lot of these away from earth."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "sakuratree"
 
-/obj/tree1/sakura_tree/tree_2
+/obj/tree/sakura_tree/tree_2
 	icon_state = "sakuratree2"
 
 /*

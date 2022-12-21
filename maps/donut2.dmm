@@ -30295,7 +30295,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
 "fTr" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "fTL" = (

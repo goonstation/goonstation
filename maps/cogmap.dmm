@@ -16556,7 +16556,7 @@
 	},
 /area/station/garden/owlery)
 "aTn" = (
-/obj/tree1{
+/obj/tree{
 	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
 	},
 /turf/simulated/wall{
@@ -17056,7 +17056,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "aUw" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/wall{
 	desc = "Upon closer inspection, you see that this is a cleverly painted wall.";
 	icon = 'icons/misc/worlds.dmi';
@@ -17591,7 +17591,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "aVK" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aVL" = (

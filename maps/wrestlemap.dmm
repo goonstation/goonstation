@@ -1723,7 +1723,7 @@
 /turf/space/asteroid,
 /area/space)
 "aHh" = (
-/obj/tree1,
+/obj/tree,
 /obj/machinery/light/small/greenish,
 /turf/simulated/grass,
 /area/station/garden/owlery)
@@ -3129,7 +3129,7 @@
 	name = "Cargo Hallway"
 	})
 "bpq" = (
-/obj/tree1{
+/obj/tree{
 	desc = "As you stare into the tree, it stares back, knowing."
 	},
 /obj/decal/cleanable/fungus,
@@ -18941,7 +18941,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/secondary/exit)
 "hVJ" = (
-/obj/tree1,
+/obj/tree,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/grass/random/alt,
 /area/space)
@@ -21879,7 +21879,7 @@
 /turf/simulated/floor/carpet/green/fancy/narrow/east,
 /area/station/engine/monitoring)
 "jhk" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/grass,
 /area/station/garden/owlery)
 "jhq" = (
@@ -33034,7 +33034,7 @@
 	name = "Crashed Limo"
 	})
 "nYO" = (
-/obj/tree1,
+/obj/tree,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/grass/random/alt,
 /area/station/crew_quarters/garden{
@@ -41726,7 +41726,7 @@
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/barber_shop)
 "rIx" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/airless/grass/random/alt,
 /area/station/crew_quarters/garden{
 	name = "Space Garden"

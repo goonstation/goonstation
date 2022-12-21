@@ -47711,7 +47711,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
 "wup" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "wuF" = (

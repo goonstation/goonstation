@@ -19973,7 +19973,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aVA" = (
-/obj/tree1{
+/obj/tree{
 	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
 	},
 /turf/simulated/floor/grass/leafy,
@@ -20020,7 +20020,7 @@
 	},
 /area/station/garden/owlery)
 "aVG" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aVH" = (
@@ -22638,7 +22638,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "bbC" = (
-/obj/tree1,
+/obj/tree,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
@@ -81453,7 +81453,7 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/escape)
 "vRi" = (
-/obj/tree1{
+/obj/tree{
 	pixel_x = -4
 	},
 /turf/simulated/floor/grass{

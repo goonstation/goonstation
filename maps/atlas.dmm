@@ -20516,7 +20516,7 @@
 /turf/simulated/floor/red,
 /area/station/medical/medbay)
 "Yz" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "YA" = (

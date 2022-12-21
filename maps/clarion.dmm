@@ -163,7 +163,7 @@
 /turf/simulated/floor/grass/random/alt,
 /area/station/garden/aviary)
 "aaB" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass/random/alt,
 /area/station/garden/aviary)
 "aaC" = (

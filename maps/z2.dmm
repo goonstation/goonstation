@@ -11958,7 +11958,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aNs" = (
-/obj/tree1,
+/obj/tree,
 /obj/spacevine{
 	density = 1;
 	icon_state = "vine-hvy3";
@@ -13039,7 +13039,7 @@
 	density = 1;
 	icon_state = "vine-med1"
 	},
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/north)
 "aQr" = (
@@ -15218,7 +15218,7 @@
 /turf/unsimulated/grasstodirt,
 /area/marsoutpost)
 "aWZ" = (
-/obj/tree1,
+/obj/tree,
 /obj/spacevine,
 /turf/unsimulated/grasstodirt{
 	dir = 10
@@ -16423,7 +16423,7 @@
 /turf/space/fluid/cenote,
 /area/crater)
 "baa" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/south)
 "bab" = (
@@ -21393,7 +21393,7 @@
 /turf/unsimulated/floor/caution/east,
 /area/drone/office)
 "bmX" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/nicegrass/random{
 	color = "#aaaaaa";
 	density = 1;
@@ -27683,7 +27683,7 @@
 /turf/unsimulated/dirt,
 /area/crypt/graveyard)
 "bGH" = (
-/obj/tree1,
+/obj/tree,
 /obj/map/light/graveyard,
 /turf/unsimulated/dirt,
 /area/crypt/graveyard)
@@ -27754,7 +27754,7 @@
 	},
 /area/iomoon)
 "bGT" = (
-/obj/tree1,
+/obj/tree,
 /obj/map/light/graveyard,
 /turf/unsimulated/grasstodirt{
 	dir = 8
@@ -27869,7 +27869,7 @@
 /area/crypt/graveyard)
 "bHj" = (
 /obj/map/light/graveyard,
-/obj/tree1{
+/obj/tree{
 	dir = 4
 	},
 /turf/unsimulated/grasstodirt,
@@ -28153,7 +28153,7 @@
 /area/crypt/graveyard)
 "bIb" = (
 /obj/map/light/graveyard,
-/obj/tree1{
+/obj/tree{
 	dir = 8
 	},
 /turf/unsimulated/floor/grass/leafy,
@@ -28929,7 +28929,7 @@
 /turf/unsimulated/floor/grass/leafy,
 /area/crypt/graveyard)
 "bKl" = (
-/obj/tree1,
+/obj/tree,
 /obj/map/light/graveyard,
 /turf/unsimulated/floor/grass/leafy,
 /area/crypt/graveyard)
@@ -28943,7 +28943,7 @@
 /area/crypt/graveyard)
 "bKn" = (
 /obj/map/light/graveyard,
-/obj/tree1{
+/obj/tree{
 	dir = 1
 	},
 /turf/unsimulated/grasstodirt{
@@ -29038,7 +29038,7 @@
 /turf/unsimulated/floor/void,
 /area/crunch)
 "bKC" = (
-/obj/tree1{
+/obj/tree{
 	dir = 1
 	},
 /obj/map/light/graveyard,
@@ -29075,7 +29075,7 @@
 /turf/unsimulated/grasstodirt,
 /area/crypt/graveyard)
 "bKI" = (
-/obj/tree1,
+/obj/tree,
 /obj/map/light/graveyard,
 /turf/unsimulated/grasstodirt,
 /area/crypt/graveyard)
@@ -29396,7 +29396,7 @@
 /turf/unsimulated/floor,
 /area/crunch)
 "bLH" = (
-/obj/tree1{
+/obj/tree{
 	dir = 1
 	},
 /obj/stone{
@@ -31560,7 +31560,7 @@
 /area/crater)
 "bSN" = (
 /obj/map/light/graveyard,
-/obj/tree1{
+/obj/tree{
 	dir = 1
 	},
 /turf/unsimulated/grasstodirt,
@@ -31571,7 +31571,7 @@
 /area/crypt/graveyard/swamp)
 "bSP" = (
 /obj/map/light/graveyard,
-/obj/tree1{
+/obj/tree{
 	dir = 8
 	},
 /turf/unsimulated/grasstodirt,
@@ -31921,7 +31921,7 @@
 	})
 "bUa" = (
 /obj/map/light/graveyard,
-/obj/tree1{
+/obj/tree{
 	dir = 1
 	},
 /turf/unsimulated/grasstodirt{
@@ -31936,7 +31936,7 @@
 /area/crypt/graveyard/swamp)
 "bUc" = (
 /obj/map/light/graveyard,
-/obj/tree1{
+/obj/tree{
 	dir = 8
 	},
 /turf/unsimulated/grasstodirt{
@@ -39143,13 +39143,13 @@
 /turf/unsimulated/floor/dojo/stone,
 /area/dojo)
 "cqj" = (
-/obj/tree1/sakura_tree/tree_2{
+/obj/tree/sakura_tree/tree_2{
 	pixel_x = 0
 	},
 /turf/unsimulated/floor/grass/leafy,
 /area/dojo/sakura)
 "cqk" = (
-/obj/tree1/sakura_tree/tree_2,
+/obj/tree/sakura_tree/tree_2,
 /turf/unsimulated/grasstodirt{
 	dir = 4
 	},
@@ -39175,13 +39175,13 @@
 /turf/unsimulated/floor/tatami/east,
 /area/dojo)
 "cqp" = (
-/obj/tree1/sakura_tree{
+/obj/tree/sakura_tree{
 	pixel_x = -10
 	},
 /turf/unsimulated/grass,
 /area/dojo/sakura)
 "cqq" = (
-/obj/tree1/sakura_tree,
+/obj/tree/sakura_tree,
 /turf/unsimulated/floor/grass/leafy,
 /area/dojo/sakura)
 "cqr" = (
@@ -39232,7 +39232,7 @@
 /turf/unsimulated/wall/auto/paper,
 /area/dojo)
 "cqz" = (
-/obj/tree1/sakura_tree/tree_2,
+/obj/tree/sakura_tree/tree_2,
 /obj/decal/fakeobjects/birdhouse/light,
 /turf/unsimulated/grasstodirt{
 	dir = 4
@@ -39350,7 +39350,7 @@
 /turf/unsimulated/floor/dojo/stone,
 /area/dojo)
 "cqO" = (
-/obj/tree1/sakura_tree/tree_2{
+/obj/tree/sakura_tree/tree_2{
 	pixel_x = 0
 	},
 /turf/unsimulated/grass,
@@ -48569,11 +48569,11 @@
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/owleryhall)
 "cOD" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "cOE" = (
-/obj/tree1,
+/obj/tree,
 /obj/critter/moonspy{
 	desc = "It's probably an owl perch or something.";
 	name = "\proper some old owl furniture thing"
@@ -49170,7 +49170,7 @@
 /obj/river{
 	dir = 4
 	},
-/obj/tree1{
+/obj/tree{
 	dir = 8
 	},
 /turf/unsimulated/grass,
@@ -49912,7 +49912,7 @@
 	},
 /area/owlery/owllock)
 "cRy" = (
-/obj/tree1{
+/obj/tree{
 	dir = 1
 	},
 /turf/unsimulated/grass,
@@ -50586,7 +50586,7 @@
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "cTg" = (
-/obj/tree1{
+/obj/tree{
 	desc = "It's a tree. You see the phrase 'Vote for Death Badman 2day' carved into it."
 	},
 /turf/unsimulated/grass,
@@ -50790,7 +50790,7 @@
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
 "cTC" = (
-/obj/tree1{
+/obj/tree{
 	dir = 1
 	},
 /obj/critter/madnessowl,
@@ -50893,7 +50893,7 @@
 	},
 /area/owlery/gangzone)
 "cTM" = (
-/obj/tree1{
+/obj/tree{
 	dir = 8
 	},
 /turf/unsimulated/grass,
@@ -51255,7 +51255,7 @@
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "cUx" = (
-/obj/tree1{
+/obj/tree{
 	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
 	},
 /obj/decal/fakeobjects/lighttube_broken,
@@ -51278,7 +51278,7 @@
 /turf/unsimulated/grass,
 /area/owlery/lab)
 "cUz" = (
-/obj/tree1{
+/obj/tree{
 	dir = 4
 	},
 /turf/unsimulated/grass,
@@ -51366,7 +51366,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait2)
 "cUI" = (
-/obj/tree1{
+/obj/tree{
 	dir = 8
 	},
 /obj/decal/fakeobjects/lighttube_broken,
@@ -60980,7 +60980,7 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/tree1{
+/obj/tree{
 	icon_state = "snowtree";
 	pixel_x = -48;
 	pixel_y = 2
@@ -62126,7 +62126,7 @@
 	icon_state = "blue"
 	})
 "dFl" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
 "dFm" = (
@@ -62135,7 +62135,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
 "dFn" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/grass,
 /area/centcom/lounge)
 "dFo" = (
@@ -65677,7 +65677,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
 "dOv" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/nicegrass/random,
 /area/centcom/garden)
 "dOw" = (
@@ -66399,7 +66399,7 @@
 /turf/unsimulated/nicegrass/random,
 /area/centcom/garden)
 "dQl" = (
-/obj/tree1{
+/obj/tree{
 	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it.";
 	layer = 30
 	},
@@ -67383,7 +67383,7 @@
 /area/crypt/sigma/mainhall)
 "dTW" = (
 /obj/map/light/graveyard,
-/obj/tree1{
+/obj/tree{
 	dir = 8
 	},
 /turf/unsimulated/dirt,
@@ -70754,7 +70754,7 @@
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon)
 "kbf" = (
-/obj/tree1{
+/obj/tree{
 	pixel_x = -37;
 	pixel_y = 26
 	},
@@ -74255,7 +74255,7 @@
 	},
 /area/centcom/lounge)
 "qbd" = (
-/obj/tree1{
+/obj/tree{
 	pixel_x = -10;
 	pixel_y = 20
 	},
