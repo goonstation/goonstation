@@ -56,7 +56,8 @@
 
 	attackby(obj/item/I, mob/user)
 		if (issawingtool(I) || ischoppingtool(I) && !isrestrictedz(src.z))
-			playsound(I, I.hitsound, 50, 1)
+			if (I.hitsound)
+				playsound(I, I.hitsound, 50, 1)
 			src._health -= I.force
 			user.lastattacked = src
 			if (src._health <= 0)
