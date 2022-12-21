@@ -2002,7 +2002,6 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				"readster's very own girder",
 				"just a girder",
 				"a gourder",//60
-				"a fuckable girder",
 				"a herd of girders",
 				"an A.D.G.S",
 				"the... thing",
