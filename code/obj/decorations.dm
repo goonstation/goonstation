@@ -54,9 +54,11 @@
 	density = 1
 	opacity = 0 // this causes some of the super ugly lighting issues too
 
+	_max_health = 1
+
 	var/falling = FALSE
 	var/fallen = FALSE
-	var/fall_time = 1 SECOND
+	var/fall_time = 2 SECONDS
 
 	attackby(obj/item/I, mob/user)
 		if (issawingtool(I) || ischoppingtool(I) && !isrestrictedz(src.z))
@@ -75,16 +77,23 @@
 					qdel(src)
 					return
 				src.falling = TRUE
-				var/icon/icon = new(src.icon)
-				var/transform = matrix(src.transform, 90, MATRIX_ROTATE)
-				transform = matrix(transform, icon.Width()/3, -icon.Height()/2, MATRIX_TRANSLATE)
-				animate(src, transform = transform, time = src.fall_time, easing = BOUNCE_EASING)
+				src.animate_fall()
 				playsound(src, 'sound/effects/treefall.ogg', 70, 0)
 				src.visible_message("<span class='alert'>\The [src] falls!</span>", "<span class='alert'>You hear a [src] fall, and thus prove that it has.</span>")
 				SPAWN(src.fall_time)
 					src.falling = FALSE
 					src.fallen = TRUE
 		..()
+
+	proc/animate_fall()
+		var/ratio = 0.3
+		var/icon/icon = new(src.icon)
+		var/transform1 = matrix(src.transform, 90 * ratio, MATRIX_ROTATE)
+		transform1 = matrix(transform1, icon.Width()/(3 / ratio), -icon.Height()/(2 / ratio), MATRIX_TRANSLATE)
+		var/transform2 = matrix(src.transform, 90, MATRIX_ROTATE)
+		transform2 = matrix(transform2, icon.Width()/3, -icon.Height()/2, MATRIX_TRANSLATE)
+		animate(src, transform = transform1, time = src.fall_time/2, easing = QUAD_EASING | EASE_IN)
+		animate(transform = transform2, time = src.fall_time/2, easing = BOUNCE_EASING | EASE_OUT)
 
 	elm_random
 		layer = EFFECTS_LAYER_UNDER_1 // match shrubs
