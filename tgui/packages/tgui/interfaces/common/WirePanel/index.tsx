@@ -53,7 +53,7 @@ export const WirePanelShowIndicators = (props, context) => {
               key={i}
               index={i}
               name={wirePanelStatic.wires[i].name}
-              value={wirePanelStatic.wires[i].name}
+              value={wirePanelStatic.wires[i].value}
               cut={wirePanelDynamic.wires[i].cut}
               act={act}
             />
