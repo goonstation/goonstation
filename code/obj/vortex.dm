@@ -78,7 +78,7 @@
 		else
 			horror_path = pick(/obj/critter/killertomato,
 			/obj/critter/spore,
-			/obj/critter/zombie,
+			/obj/critter/spacerattlesnake,
 			/obj/critter/martian/warrior,
 			/obj/machinery/bot/firebot/emagged,
 			/obj/machinery/bot/secbot/emagged,
@@ -87,7 +87,8 @@
 			/obj/critter/wasp/angry,
 			/obj/critter/spacescorpion,
 			/obj/critter/mimic,
-			/obj/critter/fermid)
+			/obj/critter/fermid,
+			/obj/critter/bear)
 		var/obj/horror = new horror_path(src.loc)
 		src.visible_message("<span class='alert'><b>[horror] emerges from the [src]!</b></span>","<span class='alert'>You hear a sharp buzzing noise.</span>")
 		SPAWN(20 SECONDS)
