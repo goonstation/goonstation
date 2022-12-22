@@ -227,13 +227,13 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		if(src.operating == -1 && user.traitHolder.hasTrait("training_engineer")) // If the door is emagged and whoever is examining it has Engineer Training...
 			switch(demag_status)
 				if(UNSCREW_STAGE)
-					. += " <span class='notice'>The airlock wont respond to anything. A good way to start diagnosing this problem is by <b>unscrewing</b> the maintenance panel cover.</span>"
+					. += " <span class='notice'>The airlock won't respond to anything. A good way to start diagnosing this problem is by <b>unscrewing</b> the maintenance panel cover.</span>"
 				if(CUT_WIRE_STAGE)
 					. += " <span class='notice'>The wiring inside the airlock is completely fried! You'll have to <b>cut</b> all of it away before replacing it, though.</span>"
 				if(INSERT_WIRE_STAGE)
-					. += " <span class='notice'>The insides of the airlock is almost completely empty. You could place some new wiring with just about <b>5 lengths of cable coil</b>.</span>"
+					. += " <span class='notice'>The insides of the airlock are almost completely empty. You could place some new wiring with just about <b>5 lengths of cable coil</b>.</span>"
 				if(PULSE_STAGE)
-					. += " <span class='notice'>The repairs are almost done, you just have to <b>pulse</b> the mainboard to restart the airlock's circuitry. It's fallback system should take care of the rest.</span>"
+					. += " <span class='notice'>The repairs are almost done, you just have to <b>pulse</b> the mainboard to restart the airlock's circuitry. Its fallback system should take care of the rest.</span>"
 
 /obj/machinery/door/airlock/New()
 	..()
