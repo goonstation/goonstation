@@ -119,12 +119,33 @@
 	anchored = 1
 
 /obj/stone
-	name = "Stone"
+	name = "stone"
 	desc = "Rock and stone, son. Rock and stone."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "stone"
-	anchored = 1
-	density=1
+	anchored = TRUE
+	density = TRUE
+
+	_max_health = 25
+	_health = 25
+
+	attackby(obj/item/I, mob/user)
+		if ((istype(I, /obj/item/mining_tool) || istype(I, /obj/item/mining_tools)) && !isrestrictedz(src.z))
+			playsound(src, 'sound/impact_sounds/Stone_Cut_1.ogg', 50)
+			//bleh
+			if (istype(I, /obj/item/mining_tool))
+				src._health -= I.force
+			else
+				var/obj/item/mining_tools/tool = I
+				src._health -= tool.power * 2
+			if (src._health <= 0)
+				src.visible_message("<span class='alert'>\The [src] breaks apart.</span>", "<span class='alert'>You hear rock shattering.</span>")
+				for (var/i in 1 to 3)
+					var/obj/item/raw_material/rock/rock = new(src.loc)
+					rock.pixel_x = rand(-16,16)
+					rock.pixel_y = rand(-16,16)
+				qdel(src)
+		. = ..()
 
 	random
 		New()
