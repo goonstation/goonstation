@@ -17196,6 +17196,14 @@
 	pixel_y = 21
 	},
 /obj/disposalpipe/segment/mail/bent/south,
+/obj/table/auto,
+/obj/item/spraybottle/cleaner{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/sponge{
+	pixel_x = 2
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "bew" = (
@@ -19583,10 +19591,9 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "bnf" = (
-/obj/machinery/light/small,
-/obj/storage/closet/wardrobe/black/formalwear,
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
+/obj/access_spawn/kitchen,
+/turf/space,
+/area/space)
 "bni" = (
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/black,
@@ -38621,10 +38628,6 @@
 /area/station/quartermaster/cargobay)
 "dUm" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/suit/apron,
-/obj/item/clothing/head/souschefhat,
 /obj/item/device/radio/intercom/catering{
 	dir = 4
 	},
@@ -43624,7 +43627,6 @@
 	})
 "iaN" = (
 /obj/table/auto,
-/obj/item/clothing/gloves/latex,
 /obj/item/kitchen/utensil/knife,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
@@ -45258,14 +45260,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/table/auto,
-/obj/item/spraybottle/cleaner{
-	pixel_x = -5;
-	pixel_y = 7
-	},
-/obj/item/sponge{
-	pixel_x = 2
-	},
+/obj/machinery/vending/jobclothing/catering,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "jsm" = (
@@ -58961,6 +58956,10 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"vit" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "viJ" = (
 /obj/storage/crate,
 /obj/item/reagent_containers/food/snacks/ingredient/flour,
@@ -68759,7 +68758,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bnf
 aaa
 aaa
 ciD
@@ -120627,7 +120626,7 @@ biN
 uzb
 oGM
 fbZ
-bne
+vit
 uzb
 seW
 bqU
@@ -120929,7 +120928,7 @@ fMJ
 uzb
 ykM
 fbZ
-bnf
+bne
 uzb
 qVA
 xfU
