@@ -3,8 +3,7 @@ import { Window } from '../layouts';
 import { Box, Button, Section, Table, Image } from 'tgui/components';
 import { Collapsible, Flex, Stack } from '../components';
 import { WirePanelCoverStatus } from './common/WirePanel/type';
-import { RemoteAccessBlocker } from './common/WirePanel';
-import { WirePanelStackItem } from './WirePanelWindow';
+import { RemoteAccessBlocker, WirePanelStackItem } from './WirePanelWindow';
 
 export const Vendors = (props, context) => {
   const { act, data } = useBackend(context);

@@ -123,7 +123,7 @@ TYPEINFO(/obj/machinery/vending)
 	///The product currently being vended
 	var/datum/data/vending_product/currently_vending = null // zuh
 	/// Wire panel and hacking defintion
-	var/datum/wirePanel/panelDefintion/panel_def = new /datum/wirePanel/panelDefintion(
+	var/static/datum/wirePanel/panelDefintion/panel_def = new /datum/wirePanel/panelDefintion(
 		controls=list(WIRE_CONTROL_RESTRICT, WIRE_CONTROL_ACCESS | WIRE_CONTROL_SILICON, WIRE_CONTROL_GROUND, WIRE_CONTROL_SAFETY),
 		color_pool=list("violet", "orange", "goldenrod", "green"),
 		custom_acts=list(
@@ -153,6 +153,7 @@ TYPEINFO(/obj/machinery/vending)
 			RegisterSignal(src, COMSIG_WPANEL_SET_CONTROL, .proc/set_control)
 			RegisterSignal(src, COMSIG_WPANEL_SET_COVER, .proc/set_cover)
 			RegisterSignal(src, COMSIG_WPANEL_ION_STORM, .proc/ion_storm)
+			RegisterSignal(src, COMSIG_WPANEL_MOB_WIRE_ACT, .proc/mob_wire_act)
 
 		light = new /datum/light/point
 		light.attach(src)
@@ -188,7 +189,7 @@ TYPEINFO(/obj/machinery/vending)
 	proc/ion_storm(obj/parent)
 		SPAWN (pick(2,4,6,8) SECONDS)
 			animate_shake(src,5,rand(3,8),rand(3,8))
-			playsound(src.loc, "sound/machines/buzz-sigh.ogg", 70, 1)
+			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 70, 1)
 			if (length(src.slogan_list))
 				var/slogan = pick(src.slogan_list)
 				src.speak(voidSpeak(slogan))
@@ -867,7 +868,7 @@ TYPEINFO(/obj/machinery/vending)
 	status |= BROKEN
 	var/turf/vicTurf = get_turf(victim)
 	src.icon_state = "[initial(icon_state)]-fallen"
-	SEND_SIGNAL(src, COMSIG_WPANEL_SET_COVER, null, FALSE)
+	SEND_SIGNAL(src, COMSIG_WPANEL_SET_COVER, null, WPANEL_COVER_CLOSED)
 	playsound(src.loc, 'sound/machines/vending_crash.ogg', 50, 0)
 //	SPAWN(0)
 //		src.icon_state = "[initial(icon_state)]-fall"

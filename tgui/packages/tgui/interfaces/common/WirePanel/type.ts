@@ -74,7 +74,7 @@ export const WirePaneThemes = {
 
 
 export interface WirePanelProps {
-  wirePanelDynamic: WirePanelDynamic // TODO: Change this to wirePanelDynamic on both sides
+  wirePanelDynamic: WirePanelDynamic
   wirePanelStatic: WirePanelStatic
 }
 

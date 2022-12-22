@@ -52,6 +52,7 @@ TYPEINFO(/datum/component/wirePanel)
 			if (WPANEL_COVER_CLOSED)
 				SEND_SIGNAL(parent, COMSIG_WPANEL_SET_COVER, user, WPANEL_COVER_OPEN)
 				boutput(user, "You open [parent]'s maintenance panel.", "wpanel")
+				parent.ui_interact(user)
 				return TRUE
 			if (WPANEL_COVER_OPEN)
 				SEND_SIGNAL(parent, COMSIG_WPANEL_SET_COVER, user, WPANEL_COVER_CLOSED)
@@ -65,7 +66,8 @@ TYPEINFO(/datum/component/wirePanel)
 				return
 
 	if (src.cover_status == WPANEL_COVER_OPEN && (ispulsingtool(item) || issnippingtool(item)))
-		return parent.ui_interact(user)
+		parent.ui_interact(user)
+		return TRUE
 
 /// handles when the wire panel is open. Note: does not block other actions.
 /datum/component/wirePanel/proc/attack_hand(obj/parent, mob/user)
@@ -113,7 +115,7 @@ TYPEINFO(/datum/component/wirePanel)
 		boutput(user, "The wire panel looks [pick ("broken", "smashed", "totalled", "messed up")], repair it first!", "wpanel")
 		return
 
-	if (isAI(user) || (issilicon(user) && !BOUNDS_DIST(user, parent)))
+	if (isAI(user) || (issilicon(user) && BOUNDS_DIST(user, parent)))
 		if (!HAS_FLAG(src.active_wire_controls, WIRE_CONTROL_SILICON))
 			boutput(user, "Remote silicon control has been disabled!", "wpanel")
 			return
@@ -267,7 +269,7 @@ TYPEINFO(/datum/component/wirePanel)
 	output["is_silicon_user"] = isAI(user) || issilicon(user)
 	output["is_accessing_remotely"] = isAI(user) || (issilicon(user) && BOUNDS_DIST(user, parent))
 
-	data["wirePanel"] = output
+	data["wirePanelDynamic"] = output
 
 /// TGUI Helper. Handles wire actions, and if there is a change, requests a UI update.
 /datum/component/wirePanel/ui_act(obj/parent, action, list/params, datum/tgui/ui)

@@ -1,5 +1,5 @@
 import { Window } from '../layouts';
-import { Collapsible, Stack } from "../components";
+import { Box, Collapsible, Dimmer, Icon, Stack } from "../components";
 import { WirePanelControls, WirePanelCoverStatus, WirePanelData, WirePanelDynamic, WirePaneThemes } from './common/WirePanel/type';
 import { WirePanelShowIndicators, WirePanelShowControls } from './common/WirePanel';
 import { useBackend } from '../backend';
@@ -61,9 +61,10 @@ const WirePanelCollapsible = (props: WirePanelComponentProps) => {
 
   return (
     <Collapsible
-      title="Wire Panel"
+      title={`Maintenance Panel${shouldDisable ? " :: Remote Silicon Access Disabled": ""}`}
       open={wirePanelDynamic.cover_status === WirePanelCoverStatus.WPANEL_COVER_OPEN}
-      disabled={shouldDisable}>
+      disabled={!!shouldDisable}
+    >
       <WirePaneThemeselector wirePanelTheme={wirePanelTheme} />
     </Collapsible>
   );
@@ -83,4 +84,34 @@ const WirePaneThemeselector = (props: WirePanelTheme) => {
       )}
     </>
   );
+};
+
+export const RemoteAccessBlocker = (props:WirePanelComponentProps) => {
+  const { is_accessing_remotely, active_wire_controls } = props.wirePanelDynamic;
+  if (!!is_accessing_remotely
+    && !(active_wire_controls & WirePanelControls.WIRE_CONTROL_SILICON)) {
+    return (
+      <Dimmer fillPositionedParent>
+        <Box
+          verticalAlign="top"
+          textAlign="center"
+          fontSize={2.5}
+          fontFamily="Courier"
+          bold
+          color="red"
+        >
+          <Box className="fa-stack" fontSize={2} mr={1} height={7}>
+            <Icon name="wifi" className="fa-stack-1x" color="blue" />
+            <Icon name="ban" className="fa-stack-2x WirePanel-silicon-disabled" />
+          </Box>
+          <Box inline>REMOTE SILICON<br />ACCESS DISABLED</Box>
+          <Box className="fa-stack" fontSize={2} ml={1} height={7}>
+            <Icon name="wifi" className="fa-stack-1x" color="blue" />
+            <Icon name="ban" className="fa-stack-2x WirePanel-silicon-disabled" />
+          </Box>
+
+        </Box>
+      </Dimmer>
+    );
+  }
 };

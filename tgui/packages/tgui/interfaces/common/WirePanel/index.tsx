@@ -1,6 +1,6 @@
 
 import { useBackend } from "../../../backend";
-import { Blink, Box, Button, Dimmer, Divider, Flex, Icon, Stack } from "../../../components";
+import { Blink, Box, Button, Divider, Flex, Stack } from "../../../components";
 import { IndicatorProps, WirePanelActions, WirePanelControlLabels, WirePanelControls, WirePanelCoverStatus, WirePanelData, WireProps } from "./type";
 
 export const WirePanelShowControls = (props, context) => {
@@ -14,8 +14,8 @@ export const WirePanelShowControls = (props, context) => {
             <SimpleWire
               key={i}
               index={i}
-              name={wire.name}
-              value={wire.value}
+              name={wirePanelStatic.wires[i].name}
+              value={wirePanelStatic.wires[i].value}
               cut={wirePanelDynamic.wires[i].cut}
               act={act}
             />
@@ -28,9 +28,9 @@ export const WirePanelShowControls = (props, context) => {
           return (
             <SimpleControl
               key={i}
-              name={indicator.name}
-              value={indicator.value}
-              control={indicator.control}
+              name={wirePanelStatic.indicators[i].name}
+              value={wirePanelStatic.indicators[i].value}
+              control={wirePanelStatic.indicators[i].control}
               status={(wirePanelDynamic.active_wire_controls & indicator.control)}
               pattern={wirePanelDynamic.indicators[i].pattern}
             />
@@ -52,8 +52,8 @@ export const WirePanelShowIndicators = (props, context) => {
             <SimpleWire
               key={i}
               index={i}
-              name={wire.name}
-              value={wire.value}
+              name={wirePanelStatic.wires[i].name}
+              value={wirePanelStatic.wires[i].name}
               cut={wirePanelDynamic.wires[i].cut}
               act={act}
             />
@@ -178,34 +178,4 @@ const RemoteAccessButton = (props, context) => {
       {...rest}
     />
   );
-};
-
-export const RemoteAccessBlocker = (props:WirePanelData) => {
-  const { wirePanelDynamic } = props;
-  if (!!wirePanelDynamic.is_accessing_remotely
-    && !(wirePanelDynamic.active_wire_controls & WirePanelControls.WIRE_CONTROL_SILICON)) {
-    return (
-      <Dimmer fillPositionedParent>
-        <Box
-          verticalAlign="top"
-          textAlign="center"
-          fontSize={2.5}
-          fontFamily="Courier"
-          bold
-          color="red"
-        >
-          <Box className="fa-stack" fontSize={2} mr={1} height={7}>
-            <Icon name="wifi" className="fa-stack-1x" color="blue" />
-            <Icon name="ban" className="fa-stack-2x WirePanel-silicon-disabled" />
-          </Box>
-          <Box inline>REMOTE SILICON<br />ACCESS DISABLED</Box>
-          <Box className="fa-stack" fontSize={2} ml={1} height={7}>
-            <Icon name="wifi" className="fa-stack-1x" color="blue" />
-            <Icon name="ban" className="fa-stack-2x WirePanel-silicon-disabled" />
-          </Box>
-
-        </Box>
-      </Dimmer>
-    );
-  }
 };
