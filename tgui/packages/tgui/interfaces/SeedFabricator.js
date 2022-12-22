@@ -10,7 +10,7 @@ import { Blink, Box, Button, Collapsible, Flex, Icon, Modal, NumberInput, Progre
 import { Window } from '../layouts';
 import { pluralize } from './common/stringUtils';
 import { WirePanelControls } from './common/WirePanel/type';
-import { WirePanelCollapsible } from './WirePanelWindow';
+import { WirePanelStackItem } from './WirePanelWindow';
 
 const DefaultSort = {
   Fruit: 1,
@@ -27,9 +27,9 @@ const categorySorter = (a, b) => (
 
 export const SeedFabricator = (_props, context) => {
   const { data } = useBackend(context);
-  const { canVend, maxSeed, name, seedCount } = data;
+  const { canVend, maxSeed, name, seedCount, wirePanelDynamic } = data;
   const categories = data.seedCategories || [];
-  const isWorking = (data.wirePanel.active_wire_controls & WirePanelControls.WIRE_CONTROL_POWER_A) === 0;
+  const isWorking = (wirePanelDynamic.active_wire_controls & WirePanelControls.WIRE_CONTROL_POWER_A) === 0;
 
   categories.sort(categorySorter);
 
@@ -43,11 +43,7 @@ export const SeedFabricator = (_props, context) => {
     >
       <Window.Content>
         <Stack vertical width="100%">
-          <Stack.Item>
-            <WirePanelCollapsible
-              style={data.wirePanelTheme}
-              cover_status={data.wirePanel.cover_status} />
-          </Stack.Item>
+          <WirePanelStackItem context={context} />
           <Stack.Item position="relative">
             <Section>
               <Flex>

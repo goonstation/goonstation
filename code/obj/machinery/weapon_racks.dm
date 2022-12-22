@@ -70,12 +70,6 @@
 			return
 		src.update()
 
-/obj/machinery/weapon_stand/disposing()
-	. = ..()
-	if (has_wire_panel)
-		UnregisterSignal(COMSIG_WPANEL_SET_COVER)
-		UnregisterSignal(COMSIG_WPANEL_MOB_WIRE_ACT)
-
 /obj/machinery/weapon_stand/get_desc(dist)
 	if (dist <= 1)
 		. += "There's [(src.amount > 0) ? src.amount : "no" ] [src.contained_weapon_name][s_es(src.amount)] in [src]."
@@ -115,22 +109,26 @@
 
 /obj/machinery/weapon_stand/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	SEND_SIGNAL(src, COMSIG_WPANEL_UI_ACT, action, params, ui)
+	if (src.has_wire_panel)
+		SEND_SIGNAL(src, COMSIG_WPANEL_UI_ACT, action, params, ui)
 
 /obj/machinery/weapon_stand/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "WirePanelWindow", src.name)
-		ui.open()
+	if (src.has_wire_panel)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "WirePanelWindow", src.name)
+			ui.open()
 
 /obj/machinery/weapon_stand/ui_data(mob/user)
 	. = ..()
-	SEND_SIGNAL(src, COMSIG_WPANEL_UI_DATA, user, .)
+	if (src.has_wire_panel)
+		SEND_SIGNAL(src, COMSIG_WPANEL_UI_DATA, user, .)
 
 /obj/machinery/weapon_stand/ui_static_data(mob/user)
 	. = ..()
-	.["wirePanelTheme"] = WPANEL_THEME_INDICATORS
-	SEND_SIGNAL(src, COMSIG_WPANEL_UI_STATIC_DATA, user, .)
+	if (src.has_wire_panel)
+		.["wirePanelTheme"] = WPANEL_THEME_INDICATORS
+		SEND_SIGNAL(src, COMSIG_WPANEL_UI_STATIC_DATA, user, .)
 
 /obj/machinery/weapon_stand/proc/check_shock(mob/user)
 	var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)

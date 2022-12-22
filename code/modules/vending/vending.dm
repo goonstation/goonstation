@@ -101,23 +101,16 @@ TYPEINFO(/obj/machinery/vending)
 
 	//Malfunctioning machine
 	var/seconds_electrified = 0 //Shock customers like an airlock.
-	var/shoot_inventory = 0 //Fire items at customers! We're broken!
 	var/shoot_inventory_chance = 5
-	var/ai_control_enabled = 1
 
-	var/extended_inventory = FALSE //can we access the hidden inventory?
 	var/can_fall = TRUE //Can this machine be knocked over?
 	var/can_hack = TRUE //Can this machine have it's panel open?
-
-	var/panel_open = FALSE //Hacking that vending machine. Gonna get a free candy bar.
-	var/wires = 15
 
 	// Paid vendor variables
 	var/pay = 0 // Does this vending machine require money?
 	var/acceptcard = 1 // does the machine accept ID swiping?
 	var/credit = 0 //How much money is currently in the machine?
 	var/profit = 0.9 // cogwerks: how much of a cut should the QMs get from the sale, expressed as a percent
-	var/list/vendwires = list() // fuh
 
 	var/datum/light/light
 	var/light_r =1
@@ -129,6 +122,15 @@ TYPEINFO(/obj/machinery/vending)
 	var/vend_inhand = TRUE
 	///The product currently being vended
 	var/datum/data/vending_product/currently_vending = null // zuh
+	/// Wire panel and hacking defintion
+	var/datum/wirePanel/panelDefintion/panel_def = new /datum/wirePanel/panelDefintion(
+		controls=list(WIRE_CONTROL_RESTRICT, WIRE_CONTROL_ACCESS | WIRE_CONTROL_SILICON, WIRE_CONTROL_GROUND, WIRE_CONTROL_SAFETY),
+		color_pool=list("violet", "orange", "goldenrod", "green"),
+		custom_acts=list(
+			WPANEL_CUSTOM_ACT(WIRE_CONTROL_RESTRICT, WIRE_ACT_CUT | WIRE_ACT_PULSE, WIRE_ACT_PULSE),
+			WPANEL_CUSTOM_ACT(WIRE_CONTROL_GROUND, WIRE_ACT_MEND, WIRE_ACT_CUT | WIRE_ACT_PULSE),
+		),
+	)
 
 	power_usage = 50
 
@@ -145,6 +147,13 @@ TYPEINFO(/obj/machinery/vending)
 		AddComponent(/datum/component/bullet_holes, 8, 5)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", .proc/vendinput)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend by Name", .proc/vendname)
+
+		if (src.can_hack)
+			AddComponent(/datum/component/wirePanel, src.panel_def)
+			RegisterSignal(src, COMSIG_WPANEL_SET_CONTROL, .proc/set_control)
+			RegisterSignal(src, COMSIG_WPANEL_SET_COVER, .proc/set_cover)
+			RegisterSignal(src, COMSIG_WPANEL_ION_STORM, .proc/ion_storm)
+
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(0.6)
@@ -157,6 +166,36 @@ TYPEINFO(/obj/machinery/vending)
 	disposing()
 		STOP_TRACKING
 		..()
+
+
+	proc/set_control(obj/parent, mob/user, controls, new_status)
+		// Special behavior: Breaking the ground wire causes the machine to shock for a bit
+		if (HAS_FLAG(controls, WIRE_CONTROL_GROUND))
+			if (new_status)
+				src.seconds_electrified = 0
+			else
+				src.seconds_electrified = 30
+		if (HAS_FLAG(controls, WIRE_CONTROL_RESTRICT))
+			if (user)
+				update_static_data(user)
+
+	proc/set_cover(obj/parent, mob/user, status)
+		if (status == WPANEL_COVER_OPEN)
+			src.UpdateOverlays(src.panel_image, "panel")
+		else
+			src.UpdateOverlays(null, "panel")
+
+	proc/ion_storm(obj/parent)
+		SPAWN (pick(2,4,6,8) SECONDS)
+			animate_shake(src,5,rand(3,8),rand(3,8))
+			playsound(src.loc, "sound/machines/buzz-sigh.ogg", 70, 1)
+			if (length(src.slogan_list))
+				var/slogan = pick(src.slogan_list)
+				src.speak(voidSpeak(slogan))
+
+	proc/mob_wire_act(obj/parent, mob/user, wire, action)
+		if (src.seconds_electrified != 0)
+			src.shock(user, 100)
 
 	was_built_from_frame(mob/user, newly_built)
 		. = ..()
@@ -241,11 +280,6 @@ TYPEINFO(/obj/machinery/vending)
 
 		else
 			return src.loc
-
-#define WIRE_EXTEND 1
-#define WIRE_SCANID 2
-#define WIRE_SHOCK 3
-#define WIRE_SHOOTINV 4
 
 /obj/machinery/vending/ex_act(severity)
 	switch(severity)
@@ -353,11 +387,6 @@ TYPEINFO(/obj/machinery/vending)
 		else
 			boutput(user, "<span class='alert'>This machine does not accept ID cards.</span>")
 			return
-	else if (isscrewingtool(W) && (src.can_hack))
-		src.panel_open = !src.panel_open
-		boutput(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
-		src.UpdateOverlays(src.panel_open ? src.panel_image : null, "panel")
-		return
 	else if (istype(W, /obj/item/device/t_scanner) || (istype(W, /obj/item/device/pda2) && istype(W:module, /obj/item/device/pda_module/tray)))
 		if (src.seconds_electrified != 0)
 			boutput(user, "<span class='alert'>[bicon(W)] <b>WARNING</b>: Abnormal electrical response received from access panel.</span>")
@@ -366,9 +395,6 @@ TYPEINFO(/obj/machinery/vending)
 				boutput(user, "<span class='alert'>[bicon(W)] No electrical response received from access panel.</span>")
 			else
 				boutput(user, "<span class='notice'>[bicon(W)] Regular electrical response received from access panel.</span>")
-		return
-	else if (src.panel_open && (issnippingtool(W) || ispulsingtool(W)))
-		src.Attackhand(user)
 		return
 	else if (ispryingtool(W))
 		if (src.status & BROKEN) //if the vendor is broken
@@ -412,48 +438,22 @@ TYPEINFO(/obj/machinery/vending)
 
 	..()
 
-/obj/machinery/vending/attack_ai(mob/user as mob)
-	return attack_hand(user)
-
 /obj/machinery/vending/ui_interact(mob/user, datum/tgui/ui)
   ui = tgui_process.try_update_ui(user, src, ui)
   if(!ui)
     ui = new(user, src, "Vendors")
     ui.open()
 
-#define WIRE_VIOLET 1
-#define WIRE_ORANGE 2
-#define WIRE_GOLDENROD 3
-#define WIRE_GREEN 4
-
 /obj/machinery/vending/ui_static_data(mob/user)
 	. = list()
-	src.vendwires = list("Violet" = WIRE_VIOLET,\
-	"Orange" = WIRE_ORANGE,\
-	"Goldenrod" = WIRE_GOLDENROD,\
-	"Green" = WIRE_GREEN)
-
-	var/wireGuiColors = list("Violet" = "#882BCB",\
-	"Orange" = "#ffa500",\
-	"Goldenrod" = "#B8860B",\
-	"Green" = "#00ff00") // this is so we can have fancy stuff on the gui
-
-	var/lightcolors = list(
-		"electrified" = (src.seconds_electrified > 0),
-		"shootinventory" = src.shoot_inventory,
-		"extendedinventory" = src.extended_inventory,
-		"ai_control" = src.ai_control_enabled
-	)
-
-	for (var/wiredesc in vendwires)
-		var/is_uncut = src.wires & APCWireColorToFlag[vendwires[wiredesc]]
-		.["wiresList"] += list(list("name" = wiredesc,"color" = wireGuiColors[wiredesc],"uncut" = is_uncut))
-	.["lightColors"] += lightcolors
+	if (src.can_hack)
+		SEND_SIGNAL(src, COMSIG_WPANEL_UI_STATIC_DATA, user, .)
 
 	var/list/plist = player_list || product_list
 
+	var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
 	for (var/datum/data/vending_product/R in plist)
-		if (R.product_hidden && !src.extended_inventory)
+		if (R.product_hidden && HAS_FLAG(active_controls, WIRE_CONTROL_RESTRICT))
 			continue
 		var/display_amount = R.product_amount
 		if (R.product_amount < 1)
@@ -472,7 +472,6 @@ TYPEINFO(/obj/machinery/vending)
 	var/bankaccount = FindBankAccountByName(src.scan?.registered)
 	. = list(
 		"windowName" = src.name,
-		"wiresOpen" = src.panel_open ? TRUE : null,
 		"bankMoney" = bankaccount ? bankaccount["current_money"] : 0,
 		"cash" = src.credit,
 		"acceptCard" = src.acceptcard,
@@ -481,6 +480,10 @@ TYPEINFO(/obj/machinery/vending)
 		"name" = src.name,
 		"currentlyVending" = src.currently_vending?.product_name
  	)
+
+	if (src.can_hack)
+		SEND_SIGNAL(src, COMSIG_WPANEL_UI_DATA, user, .)
+		.["wirePanelTheme"] = WPANEL_THEME_CONTROLS
 
 	if(istype(src,/obj/machinery/vending/player))
 		var/obj/machinery/vending/player/P = src
@@ -493,24 +496,14 @@ TYPEINFO(/obj/machinery/vending)
 		.["unlocked"] = P.unlocked
 		.["loading"] = P.loading
 
-/obj/machinery/vending/ui_act(action, params)
+/obj/machinery/vending/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if (.) return
-	var/obj/item/I = usr.equipped()
+	if (src.can_hack)
+		. = SEND_SIGNAL(src, COMSIG_WPANEL_UI_ACT, action, params, ui)
+		if (.) return
 
 	switch(action)
-		if("cutwire")
-			if(params["wire"] && issnippingtool(I))
-				src.cut(src.vendwires[params["wire"]])
-				update_static_data(usr)
-		if("mendwire")
-			if(params["wire"] && issnippingtool(I))
-				src.mend(src.vendwires[params["wire"]])
-				update_static_data(usr)
-		if("pulsewire")
-			if(params["wire"] && ispulsingtool(I))
-				src.pulse(src.vendwires[params["wire"]])
-				update_static_data(usr)
 		if("logout")
 			src.scan = null
 		// player vending machine exclusives
@@ -555,11 +548,12 @@ TYPEINFO(/obj/machinery/vending)
 				src.credit = 0
 		if("vend")
 			if(params["target"])
+				var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
 				if (!src.vend_ready)
 					return
 				var/datum/db_record/account = null
 				account = FindBankAccountByName(src.scan?.registered)
-				if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID))
+				if ((!src.allowed(usr)) && (!src.emagged) && (HAS_FLAG(active_controls, WIRE_CONTROL_ACCESS)))
 					boutput(usr, "<span class='alert'>Access denied.</span>") //Unless emagged of course
 					flick(src.icon_deny,src)
 					return
@@ -636,9 +630,10 @@ TYPEINFO(/obj/machinery/vending)
 	if (status & (BROKEN|NOPOWER))
 		return
 
-	if (src.seconds_electrified != 0)
-		if (src.shock(user, 100))
-			return
+	if (!isAI(user) && !(issilicon(user) && BOUNDS_DIST(user, src)))
+		if (src.seconds_electrified != 0)
+			if (src.shock(user, 100))
+				return
 
 	ui_interact(user)
 
@@ -651,10 +646,12 @@ TYPEINFO(/obj/machinery/vending)
 	if (usr.stat || usr.restrained())
 		return
 
-	//ehh just let the AI operate vending machines. why not!!
-	if (isAI(usr) && !src.ai_control_enabled)
-		boutput(usr, "<span class='alert'>AI control for this vending machine has been disconnected!</span>")
-		return
+	var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
+
+	if (!HAS_FLAG(active_controls, WIRE_CONTROL_SILICON))
+		if (isAI(usr) || (issilicon(usr) && !BOUNDS_DIST(usr, src)))
+			boutput(usr, "<span class='alert'>Remote silicon control for this vending machine has been disabled!</span>")
+			return
 
 	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
 		var/isplayer = 0
@@ -662,7 +659,7 @@ TYPEINFO(/obj/machinery/vending)
 		src.add_fingerprint(usr)
 		if ((href_list["vend"]) && (src.vend_ready))
 
-			if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH
+			if (!src.allowed(usr) && !src.emagged && HAS_FLAG(active_controls, WIRE_CONTROL_ACCESS)) //For SECURE VENDING MACHINES YEAH
 				boutput(usr, "<span class='alert'>Access denied.</span>") //Unless emagged of course
 				flick(src.icon_deny,src)
 				return
@@ -673,7 +670,7 @@ TYPEINFO(/obj/machinery/vending)
 				isplayer = TRUE
 			if (!R || !istype(R))
 				return
-			else if(R.product_hidden && !src.extended_inventory)
+			else if(R.product_hidden && HAS_FLAG(active_controls, WIRE_CONTROL_RESTRICT))
 				return
 			var/product_path = R.product_path
 
@@ -789,27 +786,6 @@ TYPEINFO(/obj/machinery/vending)
 					usr.put_in_hand_or_eject(returned) // try to eject it into the users hand, if we can
 					src.credit = 0
 					boutput(usr, "<span class='notice'>You receive [returned].</span>")
-
-		if ((href_list["cutwire"]) && (src.panel_open))
-			var/twire = text2num_safe(href_list["cutwire"])
-			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
-				boutput(usr, "You need a snipping tool!")
-				return
-			else if (src.isWireColorCut(twire))
-				src.mend(twire)
-			else
-				src.cut(twire)
-
-		if ((href_list["pulsewire"]) && (src.panel_open || isAI(usr)))
-			var/twire = text2num_safe(href_list["pulsewire"])
-			if (! (usr.find_tool_in_hand(TOOL_PULSING) || isAI(usr)) )
-				boutput(usr, "You need a multitool or similar!")
-				return
-			else if (src.isWireColorCut(twire))
-				boutput(usr, "You can't pulse a cut wire.")
-				return
-			else
-				src.pulse(twire)
 	else
 		usr.Browse(null, "window=vending")
 		return
@@ -825,6 +801,8 @@ TYPEINFO(/obj/machinery/vending)
 	if (!src.active)
 		return
 
+	var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
+
 	if (src.seconds_electrified > 0)
 		src.seconds_electrified--
 
@@ -834,7 +812,7 @@ TYPEINFO(/obj/machinery/vending)
 		src.speak(slogan)
 		src.last_slogan = world.time
 
-	if ((prob(shoot_inventory_chance)) && (src.shoot_inventory))
+	if ((prob(shoot_inventory_chance)) && (!HAS_FLAG(active_controls, WIRE_CONTROL_SAFETY)))
 		src.throw_item()
 
 	return
@@ -889,6 +867,7 @@ TYPEINFO(/obj/machinery/vending)
 	status |= BROKEN
 	var/turf/vicTurf = get_turf(victim)
 	src.icon_state = "[initial(icon_state)]-fallen"
+	SEND_SIGNAL(src, COMSIG_WPANEL_SET_COVER, null, FALSE)
 	playsound(src.loc, 'sound/machines/vending_crash.ogg', 50, 0)
 //	SPAWN(0)
 //		src.icon_state = "[initial(icon_state)]-fall"
@@ -1007,54 +986,6 @@ TYPEINFO(/obj/machinery/vending)
 	return 0
 
 
-/obj/machinery/vending/proc/isWireColorCut(var/wireColor)
-	var/wireFlag = APCWireColorToFlag[wireColor]
-	return ((src.wires & wireFlag) == 0)
-
-/obj/machinery/vending/proc/isWireCut(var/wireIndex)
-	var/wireFlag = APCIndexToFlag[wireIndex]
-	return ((src.wires & wireFlag) == 0)
-
-/obj/machinery/vending/proc/cut(var/wireColor)
-	var/wireFlag = APCWireColorToFlag[wireColor]
-	var/wireIndex = APCWireColorToIndex[wireColor]
-	src.wires &= ~wireFlag
-	switch(wireIndex)
-		if(WIRE_EXTEND)
-			src.extended_inventory = 0
-		if(WIRE_SHOCK)
-			src.seconds_electrified = -1
-		if (WIRE_SHOOTINV)
-			if(!src.shoot_inventory)
-				src.shoot_inventory = 1
-		if (WIRE_SCANID) //yeah the scanID wire also controls the AI control FUCK YOU
-			if(src.ai_control_enabled)
-				src.ai_control_enabled = 0
-
-/obj/machinery/vending/proc/mend(var/wireColor)
-	var/wireFlag = APCWireColorToFlag[wireColor]
-	var/wireIndex = APCWireColorToIndex[wireColor] //not used in this function
-	src.wires |= wireFlag
-	switch(wireIndex)
-		if(WIRE_SCANID)
-			src.ai_control_enabled = 1
-		if(WIRE_SHOCK)
-			src.seconds_electrified = 0
-		if (WIRE_SHOOTINV)
-			src.shoot_inventory = 0
-
-/obj/machinery/vending/proc/pulse(var/wireColor)
-	var/wireIndex = APCWireColorToIndex[wireColor]
-	switch (wireIndex)
-		if (WIRE_EXTEND)
-			src.extended_inventory = !src.extended_inventory
-		if (WIRE_SCANID)
-			src.ai_control_enabled = !src.ai_control_enabled
-		if (WIRE_SHOCK)
-			src.seconds_electrified = 30
-		if (WIRE_SHOOTINV)
-			src.shoot_inventory = !src.shoot_inventory
-
 //"Borrowed" airlock shocking code.
 /obj/machinery/vending/proc/shock(mob/user, prb)
 	if (!prob(prb))
@@ -1131,11 +1062,6 @@ TYPEINFO(/obj/machinery/vending)
 
 			for(var/mob/M in AIviewers(src.owner))
 				M.show_message("<span class='notice'><B>[src.owner] manages to stand \the [src.vendor] back upright!</B></span>", 1)
-
-#undef WIRE_EXTEND
-#undef WIRE_SCANID
-#undef WIRE_SHOCK
-#undef WIRE_SHOOTINV
 
 /obj/machinery/vending/coffee
 	name = "coffee machine"
@@ -1987,6 +1913,13 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		crtoverlay.appearance_flags = NO_CLIENT_COLOR
 		crtoverlay.mouse_opacity = 0
 		updateAppearance()
+		RegisterSignal(src, COMSIG_WPANEL_SET_COVER, .proc/set_cover, override=TRUE)
+
+	set_cover(obj/parent, mob/user, status)
+		. = ..()
+		if (status != WPANEL_COVER_OPEN)
+			src.loading = FALSE
+			src.unlocked = FALSE
 
 	proc/pick_product_name()
 		var/datum/data/vending_product/player_product/R = pick(src.player_list)
@@ -2017,7 +1950,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		if (status & BROKEN)
 			setCrtOverlayStatus(FALSE)
 			setItemOverlay(null)
-			panel_open = FALSE
+			SEND_SIGNAL(src, COMSIG_WPANEL_SET_COVER, null, WPANEL_COVER_CLOSED)
 			return FALSE
 		else if (powered())
 			setCrtOverlayStatus(TRUE)
@@ -2110,14 +2043,11 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 			updateAppearance()
 
 	attackby(obj/item/target, mob/user)
-		if (loading && panel_open)
+		if (loading)
 			addProduct(target, user)
 			update_static_data(user)
 		else
 			. = ..()
-		if (!panel_open) //lock up if the service panel is closed
-			loading = FALSE
-			unlocked = FALSE
 
 /obj/machinery/vending/player/fallen
 	New()
@@ -2414,7 +2344,8 @@ TYPEINFO(/obj/machinery/vending/monkey)
 		product_list += new/datum/data/vending_product(/obj/item/zolscroll, 100, cost=PAY_UNTRAINED, hidden=1) //weird burrito
 
 	prevend_effect()
-		if(src.seconds_electrified || src.extended_inventory)
+		var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
+		if(!HAS_FLAG(active_controls, WIRE_CONTROL_GROUND) || !(HAS_FLAG(active_controls, WIRE_CONTROL_RESTRICT)))
 			src.visible_message("<span class='notice'>[src] wakes up!</span>")
 			playsound(src.loc, sound_riff_broken, 60, 1)
 			sleep(2 SECONDS)

@@ -118,3 +118,20 @@ $color-label: colors.fg(colors.$label) !default;
   border: 2px solid rgba(55,55,55,0.6);
   background-color: rgba(0,0,0,0.2);
 }
+
+@keyframes fader {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.WirePanel-silicon-disabled {
+  animation: fader 2s linear 0 infinite;
+}
+

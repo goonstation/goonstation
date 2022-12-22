@@ -902,7 +902,7 @@ TYPEINFO(/obj/submachine/seed_vendor)
 	var/seedcount = 0
 	var/maxseed = 25
 	var/list/available = list()
-	var/static/datum/wirePanel/panelDefintion/wire_def = new /datum/wirePanel/panelDefintion(
+	var/static/datum/wirePanel/panelDefintion/panel_def = new /datum/wirePanel/panelDefintion(
 		controls=list(WIRE_CONTROL_RESTRICT, WIRE_CONTROL_SAFETY, WIRE_CONTROL_POWER_A, WIRE_CONTROL_INERT),
 		color_pool=list("dandelion", "cherry", "pistachio", "blueberry"),
 		custom_acts=list(
@@ -915,14 +915,12 @@ TYPEINFO(/obj/submachine/seed_vendor)
 	New()
 		..()
 		for (var/A in concrete_typesof(/datum/plant)) src.available += new A(src)
-		AddComponent(/datum/component/wirePanel, src.wire_def)
+		AddComponent(/datum/component/wirePanel, src.panel_def)
 		RegisterSignal(src, COMSIG_WPANEL_SET_CONTROL, .proc/set_control)
 		RegisterSignal(src, COMSIG_WPANEL_SET_COVER, .proc/set_cover)
 
 	disposing()
 		. = ..()
-		UnregisterSignal(src, COMSIG_WPANEL_SET_CONTROL)
-		UnregisterSignal(src, COMSIG_WPANEL_SET_COVER)
 
 	proc/set_control(obj/parent, mob/user, controls, new_status)
 		if (controls == WIRE_CONTROL_RESTRICT)
@@ -930,7 +928,8 @@ TYPEINFO(/obj/submachine/seed_vendor)
 				src.name = "Seed Fabricator"
 			else
 				src.name = "Feed Sabricator"
-			update_static_data(user)
+			if (user)
+				update_static_data(user)
 
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
@@ -949,7 +948,7 @@ TYPEINFO(/obj/submachine/seed_vendor)
 
 	ui_static_data(mob/user)
 		. = list()
-		.["wirePanelTheme"] = WPANEL_THEME_INDICATORS
+		.["wirePanelTheme"] = WPANEL_THEME_CONTROLS
 		.["maxSeed"] = src.maxseed
 		.["name"] = src.name
 
@@ -1018,8 +1017,6 @@ TYPEINFO(/obj/submachine/seed_vendor)
 			if(user)
 				boutput(user, "<span class='notice'>You disable the [src]'s product locks!</span>")
 			SEND_SIGNAL(src, COMSIG_WPANEL_SET_CONTROL, WIRE_CONTROL_RESTRICT, FALSE)
-			src.name = "Feed Sabricator"
-			update_static_data(user)
 			return 1
 		else
 			if(user)

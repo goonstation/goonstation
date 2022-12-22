@@ -298,14 +298,18 @@ ABSTRACT_TYPE(/datum/ion_category)
 	amount = 5
 	interdict_cost = 600
 
+	valid_instance(var/obj/machinery/vending/found)
+		. = ..(found)
+		if (. && found.can_hack)
+			return TRUE
+
 	build_targets()
 		for_by_tcl(vender, /obj/machinery/vending)
 			if (valid_instance(vender))
 				targets += vender
 
 	action(var/obj/machinery/vending/vender)
-		vender.pulse(pick(list(1,2,3,4)))
-		logTheThing(LOG_STATION, null, "Ion storm interfered with [vender.name] at [log_loc(vender)]")
+		SEND_SIGNAL(vender, COMSIG_WPANEL_ION_STORM)
 
 /datum/ion_category/fire_alarms
 	amount = 3

@@ -1,11 +1,11 @@
 
 import { useBackend } from "../../../backend";
-import { Blink, Box, Button, Divider, Flex, Stack } from "../../../components";
-import { IndicatorProps, WirePanelActions, WirePanelControlLabels, WirePanelData, WireProps } from "./type";
+import { Blink, Box, Button, Dimmer, Divider, Flex, Icon, Stack } from "../../../components";
+import { IndicatorProps, WirePanelActions, WirePanelControlLabels, WirePanelControls, WirePanelCoverStatus, WirePanelData, WireProps } from "./type";
 
 export const WirePanelShowControls = (props, context) => {
   const { act, data } = useBackend<WirePanelData>(context);
-  const { wirePanel, wirePanelStatic } = data;
+  const { wirePanelDynamic, wirePanelStatic } = data;
   return (
     <Box>
       <Box className="WirePanel-wires-container">
@@ -16,7 +16,7 @@ export const WirePanelShowControls = (props, context) => {
               index={i}
               name={wire.name}
               value={wire.value}
-              cut={wirePanel.wires[i].cut}
+              cut={wirePanelDynamic.wires[i].cut}
               act={act}
             />
           );
@@ -31,8 +31,8 @@ export const WirePanelShowControls = (props, context) => {
               name={indicator.name}
               value={indicator.value}
               control={indicator.control}
-              status={wirePanel.indicators[i].status}
-              pattern={wirePanel.indicators[i].pattern}
+              status={(wirePanelDynamic.active_wire_controls & indicator.control)}
+              pattern={wirePanelDynamic.indicators[i].pattern}
             />
           );
         })}
@@ -43,7 +43,7 @@ export const WirePanelShowControls = (props, context) => {
 
 export const WirePanelShowIndicators = (props, context) => {
   const { act, data } = useBackend<WirePanelData>(context);
-  const { wirePanel, wirePanelStatic } = data;
+  const { wirePanelDynamic, wirePanelStatic } = data;
   return (
     <Box>
       <Box className="WirePanel-wires-container">
@@ -54,7 +54,7 @@ export const WirePanelShowIndicators = (props, context) => {
               index={i}
               name={wire.name}
               value={wire.value}
-              cut={wirePanel.wires[i].cut}
+              cut={wirePanelDynamic.wires[i].cut}
               act={act}
             />
           );
@@ -66,7 +66,7 @@ export const WirePanelShowIndicators = (props, context) => {
             return (
               <IndicatorFrame
                 key={i}
-                pattern={wirePanel.indicators[i].pattern}
+                pattern={wirePanelDynamic.indicators[i].pattern}
                 colorValue={wirePanelStatic.indicators[i].value}
                 colorName={wirePanelStatic.indicators[i].name}
               />
@@ -90,14 +90,14 @@ const SimpleWire = (props: WireProps) => {
         <Flex.Item className="wirePanel-wires-buttons">
           { !cut && (
             <>
-              <Button
+              <RemoteAccessButton
                 mr={3}
                 icon="bolt"
                 color="yellow"
                 content="Pulse"
                 onClick={() => act("actwire", { wire: index + 1, action: WirePanelActions.WIRE_ACT_PULSE })}
               />
-              <Button
+              <RemoteAccessButton
                 icon="cut"
                 color="red"
                 content={"Cut"}
@@ -107,7 +107,7 @@ const SimpleWire = (props: WireProps) => {
             </>
           )}
           { !!cut && (
-            <Button
+            <RemoteAccessButton
               icon="route"
               color="green"
               content={"Mend"}
@@ -151,4 +151,61 @@ const OnIndicator = () => {
 };
 const IndicatorFacing = () => {
   return (<Box className="WirePanel-indicator-light-facing" />);
+};
+
+const RemoteAccessButton = (props, context) => {
+  const {
+    disabled,
+    ...rest
+  } = props;
+  const { act, data } = useBackend<WirePanelData>(context);
+  const { wirePanelDynamic } = data;
+  let shouldDisable = false;
+  if (wirePanelDynamic.is_silicon_user) {
+    if (!(wirePanelDynamic.active_wire_controls & WirePanelControls.WIRE_CONTROL_SILICON)) {
+      if (wirePanelDynamic.is_accessing_remotely) {
+        shouldDisable = true;
+      } else {
+        shouldDisable = wirePanelDynamic.cover_status !== WirePanelCoverStatus.WPANEL_COVER_OPEN;
+      }
+    }
+  } else {
+    shouldDisable = wirePanelDynamic.cover_status !== WirePanelCoverStatus.WPANEL_COVER_OPEN;
+  }
+  return (
+    <Button
+      disabled={shouldDisable}
+      {...rest}
+    />
+  );
+};
+
+export const RemoteAccessBlocker = (props:WirePanelData) => {
+  const { wirePanelDynamic } = props;
+  if (!!wirePanelDynamic.is_accessing_remotely
+    && !(wirePanelDynamic.active_wire_controls & WirePanelControls.WIRE_CONTROL_SILICON)) {
+    return (
+      <Dimmer fillPositionedParent>
+        <Box
+          verticalAlign="top"
+          textAlign="center"
+          fontSize={2.5}
+          fontFamily="Courier"
+          bold
+          color="red"
+        >
+          <Box className="fa-stack" fontSize={2} mr={1} height={7}>
+            <Icon name="wifi" className="fa-stack-1x" color="blue" />
+            <Icon name="ban" className="fa-stack-2x WirePanel-silicon-disabled" />
+          </Box>
+          <Box inline>REMOTE SILICON<br />ACCESS DISABLED</Box>
+          <Box className="fa-stack" fontSize={2} ml={1} height={7}>
+            <Icon name="wifi" className="fa-stack-1x" color="blue" />
+            <Icon name="ban" className="fa-stack-2x WirePanel-silicon-disabled" />
+          </Box>
+
+        </Box>
+      </Dimmer>
+    );
+  }
 };

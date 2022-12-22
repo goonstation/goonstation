@@ -1,17 +1,17 @@
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { Box, Button, Section, Table, Image } from 'tgui/components';
-import { Collapsible, Divider, Flex, LabeledList, Stack } from '../components';
+import { Collapsible, Flex, Stack } from '../components';
+import { WirePanelCoverStatus } from './common/WirePanel/type';
+import { RemoteAccessBlocker } from './common/WirePanel';
+import { WirePanelStackItem } from './WirePanelWindow';
 
 export const Vendors = (props, context) => {
   const { act, data } = useBackend(context);
-  const wiresList = data.wiresList || [];
   const productList = data.productList || [];
-  const indicators = data.lightColors || [];
 
   const {
     windowName,
-    wiresOpen,
     cash,
     bankMoney,
     requiresMoney,
@@ -24,6 +24,7 @@ export const Vendors = (props, context) => {
     busy,
     busyphrase,
     currentlyVending,
+    wirePanelDynamic,
   } = data;
 
   const canVend = (a) => (
@@ -42,75 +43,20 @@ export const Vendors = (props, context) => {
       font-size="10pt">
       <Window.Content>
         <Stack vertical fill minHeight="1%" maxHeight="100%">
-
-          {wiresOpen && (
+          <WirePanelStackItem context={context} />
+          {!!playerBuilt && (
             <Stack.Item>
-
               <Collapsible
                 mb="1%"
-                title="Wire Panel">
-
-                {wiresOpen && wiresList.map(wire => {
-                  return (
-                    <Flex key={wire.name} textColor={wire.color}>
-                      <Flex.Item grow bold>
-                        {wire.name}
-                      </Flex.Item>
-                      <Flex.Item mr="5%">
-                        <Button
-                          ml="10%"
-                          my="1%"
-                          content="Pulse"
-                          onClick={() => act('pulsewire', {
-                            wire: wire.name })}
-                        />
-                      </Flex.Item>
-                      <Flex.Item>
-                        <Button
-                          m="1%"
-                          content={wire.uncut ? "Cut" : "Mend"}
-                          onClick={() => act(wire.uncut ? 'cutwire' : "mendwire", {
-                            wire: wire.name })}
-                        />
-                      </Flex.Item>
-                    </Flex>
-                  );
-                })}
-
-                <Divider />
-                {playerBuilt && (
-                  <>
-                    <Button content={`Owner: ${owner} (${unlocked ? "Unlocked" : "Locked"})`} onClick={() => act("togglelock")} />
-                    <Button content="Loading Chute" disabled={!unlocked} color={loading ? "green" : "red"} onClick={() => act("togglechute")} />
-                    <Button.Input content={name} defaultValue={name} onCommit={(e, value) => act("rename", { name: value })} />
-                  </>
-                )}
-                <Flex justify="space-between" align="stretch">
-                  <Flex.Item direction="row">
-                    <LabeledList>
-                      <LabeledList.Item
-                        label="AI Control">
-                        {indicators.ai_control ? "Enabled" : "Disabled"}
-                      </LabeledList.Item>
-                      <LabeledList.Item
-                        label="Electrification">
-                        {indicators.electrified ? "Yes" : "No"}
-                      </LabeledList.Item>
-                    </LabeledList>
-                  </Flex.Item>
-                  <Flex.Item direction="row">
-                    <LabeledList.Item
-                      label="Inventory">
-                      {indicators.extendedinventory ? "Expanded" : "Standard"}
-                    </LabeledList.Item>
-                    <LabeledList.Item
-                      label="Safety Light">
-                      {indicators.shootinventory ? "On" : "Off"}
-                    </LabeledList.Item>
-                  </Flex.Item>
-                </Flex>
+                title="Vendor Controls"
+                disabled={!!wirePanelDynamic.user_is_remote && !wirePanelDynamic.can_access_remotely}
+                open={!!wirePanelDynamic.user_is_remote && !wirePanelDynamic.can_access_remotely}>
+                <>
+                  <Button content={`Owner: ${owner} (${unlocked ? "Unlocked" : "Locked"})`} onClick={() => act("togglelock")} />
+                  <Button content="Loading Chute" disabled={!unlocked} color={loading ? "green" : "red"} onClick={() => act("togglechute")} />
+                  <Button.Input content={name} defaultValue={name} onCommit={(e, value) => act("rename", { name: value })} />
+                </>
               </Collapsible>
-
             </Stack.Item>
           )}
           <Stack.Item grow minHeight="1%" maxHeight="100%">
@@ -142,12 +88,15 @@ export const Vendors = (props, context) => {
                           </Box>
                           <Box inline>
                             {product.name}
-                            {(playerBuilt && wiresOpen) && <Button inline
-                              color="green"
-                              icon="images"
-                              style={{ "margin-left": "5px" }}
-                              onClick={() => act('setIcon', { target: product.path })}
-                            />}
+                            {(playerBuilt && wirePanelDynamic.cover_status === WirePanelCoverStatus.WPANEL_COVER_OPEN)
+                            && (
+                              <Button inline
+                                color="green"
+                                icon="images"
+                                style={{ "margin-left": "5px" }}
+                                onClick={() => act('setIcon', { target: product.path })}
+                              />
+                            )}
                           </Box>
                         </Box>
                       </Flex.Item>
@@ -219,7 +168,9 @@ export const Vendors = (props, context) => {
               </Table>
             </Stack.Item>
           )}
+          <RemoteAccessBlocker wirePanelDynamic={wirePanelDynamic} />
         </Stack>
+
       </Window.Content>
     </Window>
   );

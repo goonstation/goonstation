@@ -74,7 +74,7 @@ export const WirePaneThemes = {
 
 
 export interface WirePanelProps {
-  wirePanel: WirePanelDynamic
+  wirePanelDynamic: WirePanelDynamic // TODO: Change this to wirePanelDynamic on both sides
   wirePanelStatic: WirePanelStatic
 }
 
@@ -86,12 +86,13 @@ wires: WireStatic[]
 indicators: IndicatorsStatic[]
 }
 
-interface WirePanelDynamic {
+export interface WirePanelDynamic {
 wires: WireDynamic[]
 indicators: IndicatorsDynamic[]
 cover_status: number
 active_wire_controls: number
-can_access_remotely: BooleanLike
+is_silicon_user: BooleanLike
+is_accessing_remotely: BooleanLike
 }
 
 interface WireStatic {
@@ -108,7 +109,6 @@ interface IndicatorsStatic {
   control: number
 }
 interface IndicatorsDynamic {
-  status: BooleanLike
   pattern: string
+  status: BooleanLike
 }
-

@@ -338,7 +338,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 			return
 	if(istype(comsig_target, /obj/machinery/vending))
 		var/obj/machinery/vending/hacked_vendor = comsig_target
-		if(hacked_vendor.panel_open)
+		if(SEND_SIGNAL(hacked_vendor, COMSIG_WPANEL_STATE_COVER) != WPANEL_COVER_OPEN)
 			return
 	if(length(src.configs))
 		var/selected_config = input("Select a config to modify!", "Config", null) as null|anything in src.configs

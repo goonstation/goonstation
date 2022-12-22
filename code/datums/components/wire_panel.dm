@@ -32,16 +32,20 @@ TYPEINFO(/datum/component/wirePanel)
 	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/attackby)
 	RegisterSignal(parent, COMSIG_ATTACKHAND, .proc/attack_hand)
 
+	RegisterSignal(parent, COMSIG_WPANEL_MOB_WIRE_ACT, .proc/mob_wire_act)
+	RegisterSignal(parent, COMSIG_WPANEL_ION_STORM, .proc/ion_storm)
+
 	RegisterSignal(parent, COMSIG_WPANEL_SET_CONTROL, .proc/set_control)
 	RegisterSignal(parent, COMSIG_WPANEL_SET_COVER, .proc/set_cover)
+
 	RegisterSignal(parent, COMSIG_WPANEL_STATE_CONTROLS, .proc/state_controls)
-	RegisterSignal(parent, COMSIG_WPANEL_MOB_WIRE_ACT, .proc/mob_wire_act)
+	RegisterSignal(parent, COMSIG_WPANEL_STATE_COVER, .proc/state_cover)
 
 	RegisterSignal(parent, COMSIG_WPANEL_UI_DATA, .proc/ui_data)
 	RegisterSignal(parent, COMSIG_WPANEL_UI_STATIC_DATA, .proc/ui_static_data)
 	RegisterSignal(parent, COMSIG_WPANEL_UI_ACT, .proc/ui_act)
 
-/// Handles panel opening via screwdriver, and opening the UI if a snipping/pulsing tool is used directly on it.
+/// Handle tool usage on the panel/object
 /datum/component/wirePanel/proc/attackby(obj/parent, obj/item/item, mob/user)
 	if (isscrewingtool(item))
 		switch(src.cover_status)
@@ -63,11 +67,11 @@ TYPEINFO(/datum/component/wirePanel)
 	if (src.cover_status == WPANEL_COVER_OPEN && (ispulsingtool(item) || issnippingtool(item)))
 		return parent.ui_interact(user)
 
-/// handles using a on the object when the wire panel is open. Note: does not block other actions.
+/// handles when the wire panel is open. Note: does not block other actions.
 /datum/component/wirePanel/proc/attack_hand(obj/parent, mob/user)
 	if (src.cover_status == WPANEL_COVER_BROKEN)
 		return
-	if (src.cover_status == WPANEL_COVER_OPEN || parent.can_access_remotely(user))
+	if (src.cover_status == WPANEL_COVER_OPEN)
 		parent.ui_interact(user)
 
 /**
@@ -105,39 +109,40 @@ TYPEINFO(/datum/component/wirePanel)
  * Return TRUE if we can interact with the wires.
  */
 /datum/component/wirePanel/proc/can_mod_wires(obj/parent, mob/user, tool_flag)
-	if (src.cover_status == WPANEL_COVER_OPEN)
-		if (isAI(user) || (issilicon(user) && BOUNDS_DIST(user, parent)))
-			if (!HAS_FLAG(src.active_wire_controls, WIRE_CONTROL_SILICON))
-				boutput(user, "Silicon control wire has been disabled!", "wpanel")
-				return
-		else
-			if (BOUNDS_DIST(user, parent))
-				boutput(user, "You're too far away to reach the wire panel on [parent]!", "wpanel")
-				return
-			if (!user.find_tool_in_hand(tool_flag))
-				switch(tool_flag)
-					if (TOOL_SNIPPING)
-						boutput(user, "You need a snipping tool to cut or mend wires!", "wpanelSnip")
-						return
-					if (TOOL_PULSING)
-						boutput(user, "You need a multitool or similar to pulse wires!", "wpanelPulse")
-						return
-				return
-		return TRUE
-	else if (src.cover_status == WPANEL_COVER_CLOSED || src.cover_status == WPANEL_COVER_LOCKED)
-		if(!parent.can_access_remotely(user))
-			boutput(user, "The panel is [src.cover_status == WPANEL_COVER_CLOSED ? "closed": "locked"]!", "wpanel")
-			return
-		if (!HAS_FLAG(src.active_wire_controls, WIRE_CONTROL_SILICON))
-			boutput(user, "Silicon control wire has been disabled!", "wpanel")
-			return
-		return TRUE
-	else if (src.cover_status == WPANEL_COVER_BROKEN)
+	if (src.cover_status == WPANEL_COVER_BROKEN)
 		boutput(user, "The wire panel looks [pick ("broken", "smashed", "totalled", "messed up")], repair it first!", "wpanel")
+		return
 
-/**
- * Mob following through and doing the action to the wire.
- */
+	if (isAI(user) || (issilicon(user) && !BOUNDS_DIST(user, parent)))
+		if (!HAS_FLAG(src.active_wire_controls, WIRE_CONTROL_SILICON))
+			boutput(user, "Remote silicon control has been disabled!", "wpanel")
+			return
+		return TRUE
+
+	if (src.cover_status == WPANEL_COVER_OPEN)
+		if (BOUNDS_DIST(user, parent))
+			boutput(user, "You're too far away to reach the wire panel on [parent]!", "wpanel")
+			return
+		if (!user.find_tool_in_hand(tool_flag))
+			switch(tool_flag)
+				if (TOOL_SNIPPING)
+					boutput(user, "You need a snipping tool to cut or mend wires!", "wpanelSnip")
+					return
+				if (TOOL_PULSING)
+					boutput(user, "You need a multitool or similar to pulse wires!", "wpanelPulse")
+					return
+			return
+		return TRUE
+
+	if (src.cover_status == WPANEL_COVER_CLOSED || src.cover_status == WPANEL_COVER_LOCKED)
+		if (!issilicon(user))
+			boutput(user, "The cover panel is [src.cover_status == WPANEL_COVER_CLOSED ? "closed": "locked"]")
+			return
+		if (HAS_FLAG(src.active_wire_controls, WIRE_CONTROL_SILICON))
+			return TRUE
+		boutput(user, "Remote silicon control has been disabled!", "wpanel")
+
+/// Mob following through and doing the action to the wire.
 /datum/component/wirePanel/proc/act_wire(obj/parent, mob/user, wire, wire_act_flag)
 	switch(wire_act_flag)
 		if (WIRE_ACT_CUT)
@@ -187,27 +192,32 @@ TYPEINFO(/datum/component/wirePanel)
 
 	. = src.act_wire(parent, user, wire, action)
 
-/**
- * Appends to a list the state of which wires are cut by index.
- */
-/datum/component/wirePanel/proc/state_cuts(obj/parent, list/cuts)
-	cuts.Add(src.cut_wires)
+// /// Appends to a list the state of which wires are cut by index.
+// /datum/component/wirePanel/proc/state_cuts(obj/parent, list/cuts)
+// 	cuts.Add(src.cut_wires)
 
-/**
- * Returns the currently active wire control flags
- */
+/// Returns the currently active wire control flags
 /datum/component/wirePanel/proc/state_controls(obj/parent)
 	return src.active_wire_controls
 
-/**
- * Passthrough to the shared panelDefintion function
- */
+/// Return the status of the wire panel's cover
+/datum/component/wirePanel/proc/state_cover(obj/parent)
+	return src.cover_status
+
+/// Handle ion storm events by turning off a whole wire's controls
+/datum/component/wirePanel/proc/ion_storm(obj/parent)
+	var/wires = list()
+	for(var/datum/wirePanel/wireDefintion/wire in panel_def.wire_definitions)
+		wires += list(wire.control_flags)
+	var/target_wire_controls = pick(wires)
+	SEND_SIGNAL(parent, COMSIG_WPANEL_SET_CONTROL, null, target_wire_controls, FALSE)
+	logTheThing(LOG_STATION, null, "Ion storm interfered with [parent.name] at [log_loc(parent)]")
+
+/// Passthrough to the shared panelDefintion function
 /datum/component/wirePanel/ui_static_data(obj/parent, mob/user, list/data)
 	src.panel_def.ui_static_data(parent, user, data)
 
-/**
- * TGUI UI static data helper. Put here for ease of reference.
- */
+/// TGUI UI static data helper. Put here for ease of reference.
 /datum/wirePanel/panelDefintion/ui_static_data(obj/parent, mob/user, list/data)
 	var/list/output = list()
 	var/wires = list()
@@ -231,9 +241,7 @@ TYPEINFO(/datum/component/wirePanel)
 
 	data["wirePanelStatic"] = output
 
-/**
- * TGUI UI Data helper
- */
+/// TGUI Data helper
 /datum/component/wirePanel/ui_data(obj/parent, mob/user, list/data)
 	var/list/output = list()
 
@@ -253,15 +261,15 @@ TYPEINFO(/datum/component/wirePanel)
 		))
 	output["indicators"] = indicators
 
-	output["can_access_remotely"] = parent.can_access_remotely(user) && HAS_FLAG(src.active_wire_controls, WIRE_CONTROL_SILICON)
 	output["cover_status"] = src.cover_status
 	output["active_wire_controls"] = src.active_wire_controls
 
+	output["is_silicon_user"] = isAI(user) || issilicon(user)
+	output["is_accessing_remotely"] = isAI(user) || (issilicon(user) && BOUNDS_DIST(user, parent))
+
 	data["wirePanel"] = output
 
-/**
- * TGUI Helper. Handles wire actions, and if there is a change, requests a UI update.
- */
+/// TGUI Helper. Handles wire actions, and if there is a change, requests a UI update.
 /datum/component/wirePanel/ui_act(obj/parent, action, list/params, datum/tgui/ui)
 	switch(action)
 		if("actwire")
