@@ -4,28 +4,28 @@
 /mob/living/carbon/human/proc/update_inv()
 	tgui_process.update_uis(src.inventory)
 
-/// Check for slots obscured by other items
-/mob/living/carbon/human/proc/GetObstructedItems()
-	var/list/obsctructedItems = list()
-	var/hiddenItem = null
+/// Get list of slots obstructed by other items
+/mob/living/carbon/human/proc/GetObstructedSlots()
+	var/list/obsctructedSlots = list()
+	var/ItemFlags = null
 
 	for(var/obj/item/clothing/I in GetWornItems())
-		hiddenItem |= I.obstructs
+		ItemFlags |= I.obstructs
 
-	if(hiddenItem & C_UNIFORM)
-		obsctructedItems += SLOT_W_UNIFORM
-	if(hiddenItem & C_SHOES)
-		obsctructedItems += SLOT_SHOES
-	if(hiddenItem & C_GLOVES)
-		obsctructedItems += SLOT_GLOVES
-	if(hiddenItem & C_GLASSES)
-		obsctructedItems += SLOT_GLASSES
-	if(hiddenItem & C_MASK)
-		obsctructedItems += SLOT_WEAR_MASK
-	if(hiddenItem & C_EARS)
-		obsctructedItems += SLOT_EARS
+	if(ItemFlags & C_GLASSES)
+		obsctructedSlots |= SLOT_GLASSES
+	if(ItemFlags & C_MASK)
+		obsctructedSlots |= SLOT_WEAR_MASK
+	if(ItemFlags & C_EARS)
+		obsctructedSlots |= SLOT_EARS
+	if(ItemFlags & C_UNIFORM)
+		obsctructedSlots |= SLOT_W_UNIFORM
+	if(ItemFlags & C_SHOES)
+		obsctructedSlots |= SLOT_SHOES
+	if(ItemFlags & C_GLOVES)
+		obsctructedSlots |= SLOT_GLOVES
 
-	return obsctructedItems
+	return obsctructedSlots
 
 ///Get all items as a list in worn slots
 /mob/living/carbon/human/proc/GetWornItems()
@@ -45,6 +45,6 @@
 
 ///Check the inventory slot against the list of obstructed slots
 /mob/living/carbon/human/proc/CheckObstructed(var/id)
-	for (var/obj/slot as anything in GetObstructedItems())
+	for (var/obj/slot as anything in GetObstructedSlots())
 		if(id == slot)
 			return TRUE
