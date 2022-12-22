@@ -1,5 +1,8 @@
 
 (t)wed dec 21 22
+(u)Sord
+(e)⚖|C-Balance
+(+)Csaber has received a slight buff. Reduced stamina cost per swing.
 (u)Amylizzle
 (p)12471
 (e)🪲📦|C-Bug, A-Game-Objects
