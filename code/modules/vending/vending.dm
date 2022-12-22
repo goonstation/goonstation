@@ -188,8 +188,6 @@ TYPEINFO(/obj/machinery/vending)
 
 	proc/ion_storm(obj/parent)
 		SPAWN (pick(2,4,6,8) SECONDS)
-			animate_shake(src,5,rand(3,8),rand(3,8))
-			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 70, 1)
 			if (length(src.slogan_list))
 				var/slogan = pick(src.slogan_list)
 				src.speak(voidSpeak(slogan))
