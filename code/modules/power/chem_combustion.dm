@@ -8,7 +8,7 @@
 #define INLET_MIN 0
 
 TYPEINFO(/obj/machinery/power/combustion_generator)
-	mats = list("MET-2" = 8, "CON-1" = 8)
+	mats = list("MET-2" = 8, "CON-1" = 6)
 
 /obj/machinery/power/combustion_generator
 	name = "Portable Combustion Generator"
