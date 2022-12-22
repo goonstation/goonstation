@@ -11,6 +11,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 	anchored = 0
 	density = 1
 	//layer = FLOOR_EQUIP_LAYER1 //why was this set to this
+	flags = FPRINT
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
 	var/mode = 1 // 1 = charge APC, 2 = charge inserted power cell.
 	var/active = 0
@@ -31,7 +32,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 	var/image/spin_sprite = null
 	var/image/tank_sprite = null
 
-	New()
+	/obj/machinery/power/lgenerator/New()
 		..()
 		light = new /datum/light/point
 		light.attach(src)
@@ -39,7 +40,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 		src.spin_sprite = new /image(src.icon,"ggen-spin")
 		src.tank_sprite = new /image(src.icon,"ggen-tank")
 
-	attackby(obj/item/W, mob/user)
+	/obj/machinery/power/lgenerator/attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tank/))
 			if (src.P)
 				user.show_text("There appears to be a tank loaded already.", "red")
@@ -65,10 +66,10 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 		else
 			..()
 
-		src.updateUsrDialog()
+		//src.updateUsrDialog()
 		return
 
-	update_icon()
+	/obj/machinery/power/lgenerator/update_icon()
 		if (src.active)
 			src.UpdateOverlays(spin_sprite, "spin")
 			light.enable()
@@ -84,7 +85,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 
 		return
 
-	proc/APC_check()
+	/obj/machinery/power/lgenerator/proc/APC_check()
 		if (!src)
 			return 0
 
@@ -99,14 +100,14 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 			return 2
 		return 1
 
-	proc/check_tank(var/obj/item/tank/T)
+	/obj/machinery/power/lgenerator/proc/check_tank(var/obj/item/tank/T)
 		if (!src || !T || !T.air_contents)
 			return 0
 		if (T.air_contents.toxins <= 0)
 			return 0
 		return 1
 
-	proc/eject_tank(var/mob/user as mob)
+	/obj/machinery/power/lgenerator/proc/eject_tank(var/mob/user as mob)
 		if (!src)
 			return
 		if (src.P)
@@ -120,7 +121,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 			src.UpdateIcon()
 		return
 
-	proc/eject_cell(var/mob/user as mob)
+	/obj/machinery/power/lgenerator/proc/eject_cell(var/mob/user as mob)
 		if (!src)
 			return
 		if (src.CL)
@@ -136,7 +137,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 			src.UpdateIcon()
 		return
 
-	process()
+	/obj/machinery/power/lgenerator/process()
 		if (!src)
 			return
 
@@ -146,7 +147,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 				playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 				src.active = 0
 				src.UpdateIcon()
-				src.updateDialog()
+				//src.updateDialog()
 				return
 
 			if (!istype(src.loc, /turf/simulated/floor/))
@@ -155,14 +156,14 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 				src.anchored = 0 // It might have happened, I guess?
 				src.active = 0
 				src.UpdateIcon()
-				src.updateDialog()
+				//src.updateDialog()
 				return
 
 			if (src.check_tank(src.P) == 0)
 				src.visible_message("<span class='alert'>[src] runs out of fuel and shuts down! [src.P] is ejected!</span>")
 				playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 				src.eject_tank(null)
-				src.updateDialog()
+				//src.updateDialog()
 				return
 
 			switch (src.mode)
@@ -173,7 +174,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 						src.active = 0
 						src.our_APC = null
 						src.UpdateIcon()
-						src.updateDialog()
+						//src.updateDialog()
 						return
 					if (src.last_APC_check && world.time > src.last_APC_check + 50)
 						if (src.APC_check() != 1)
@@ -182,7 +183,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 							src.active = 0
 							src.our_APC = null
 							src.UpdateIcon()
-							src.updateDialog()
+							//src.updateDialog()
 							src.last_APC_check = world.time
 							return
 
@@ -206,7 +207,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 						src.active = 0
 						src.CL = null
 						src.UpdateIcon()
-						src.updateDialog()
+						//src.updateDialog()
 						return
 
 					if (src.CL.charge < 0)
@@ -217,7 +218,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 						src.visible_message("<span class='alert'>[src.CL] is fully charged. [src] ejects the cell and shuts down!</span>")
 						playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
 						src.eject_cell(null)
-						src.updateDialog()
+						//src.updateDialog()
 						return
 					if (src.CL.charge < src.CL.maxcharge)
 						src.CL.give(src.CL_charge_rate)
@@ -227,9 +228,34 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 		src.icon_state = "ggen[src.anchored]"
 
 		src.UpdateIcon()
-		src.updateDialog()
+		//src.updateDialog()
 		return
 
+	/obj/machinery/power/lgenerator/attack_hand(var/mob/user)
+		src.add_fingerprint(user)
+		src.ui_interact(user)
+
+	/obj/machinery/power/lgenerator/ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "LocalGenerator")
+			ui.open()
+
+	/obj/machinery/power/lgenerator/ui_data(mob/user)
+  		. = list(
+			//TODO: add stuff to pass into the UI
+  		)
+
+	/obj/machinery/power/lgenerator/ui_act(action, params)
+		. = ..()
+		if (.)
+			return
+		switch(action)
+			if("")
+			//TODO: add actions to trigger from the UI
+			. = TRUE
+
+/*
 	attack_hand(var/mob/user)
 		src.add_fingerprint(user)
 
@@ -358,8 +384,9 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 
 		src.updateUsrDialog()
 		return
+*/
 
-	Exited(Obj, newloc)
+	/obj/machinery/power/lgenerator/Exited(Obj, newloc)
 		. = ..()
 		if(Obj == src.CL)
 			src.CL = null
