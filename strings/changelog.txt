@@ -1,6 +1,9 @@
 
 (t)wed dec 21 22
 (u)Sord
+(e)🆕|C-Feature
+(+)Spooky critter summoning vortexes can now occur as a random event after 45 minutes on Classic and 60 minutes on RP
+(u)Sord
 (e)⚖|C-Balance
 (+)Csaber has received a slight buff. Reduced stamina cost per swing.
 (u)Amylizzle
