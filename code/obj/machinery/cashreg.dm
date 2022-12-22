@@ -6,8 +6,9 @@ TYPEINFO(/obj/machinery/cashreg)
 	desc = "Sends funds directly to a host ID."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "scanner"
-	anchored = 1
+	anchored = TRUE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
+	flags = TGUI_INTERACTIVE
 	var/datum/db_record/owner_account = null
 	var/price = 0
 
@@ -93,6 +94,9 @@ TYPEINFO(/obj/machinery/cashreg)
 				else
 					boutput(usr, "<span class='alert'>An owner is already registered with [src]!</span>")
 			if ("swipe_payee")
+			if ("pay")
+				src.pay()
+				. = TRUE
 			if ("reset")
 				if (!src.owner_account)
 					boutput(usr, "<span class='alert'>You press the reset button, but nothing happens.</span>")
@@ -103,3 +107,6 @@ TYPEINFO(/obj/machinery/cashreg)
 					src.owner_account = null
 					. = TRUE
 		src.add_fingerprint(usr)
+
+	proc/pay()
+		
