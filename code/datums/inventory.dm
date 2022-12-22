@@ -55,6 +55,7 @@
 	. = ..()
 	if (.)
 		return
+
 	switch(action)
 		if ("access-slot")
 			var/id
