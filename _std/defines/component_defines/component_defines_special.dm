@@ -132,3 +132,7 @@
 #define COMSIG_LIGHT_ENABLE "enable_light"
 /// Send to a thing to disable component lights on it
 #define COMSIG_LIGHT_DISABLE "disable_light"
+
+// ---- Door signals, for bucket pranks ----
+/// When the door was bumped open, send the movable that opened it
+#define COMSIG_DOOR_OPENED_BY "door_opened_by"

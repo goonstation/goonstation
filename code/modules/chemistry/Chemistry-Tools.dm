@@ -508,6 +508,49 @@ proc/ui_describe_reagents(atom/A)
 		user.put_in_hand_or_drop(B)
 		qdel(src)
 
+	afterattack(obj/target, mob/user, flag)
+		if(!istype(target, /obj/machinery/door))
+			return ..()
+		var/obj/machinery/door/D = target
+		RegisterSignal(D, COMSIG_DOOR_OPENED_BY, .proc/bucket_prank)
+		user.u_equip(src)
+		src.set_loc(target)
+		user.visible_message("<span class='alert'>Props \the [src] above \the [D]!</span>","<span class='alert'>You prop \the [src] above \the [D]. The next person to come through will get splashed!</span>")
+
+	proc/bucket_prank(obj/machinery/door/D, atom/movable/AM)
+		//fall off the door, splash the user, land on their head if you can
+		D.UnregisterSignal(D, COMSIG_DOOR_OPENED_BY)
+
+		if(!IN_RANGE(AM, D, 1))
+			src.set_loc(get_turf(D))
+			src.reagents.reaction(get_turf(D))
+			src.visible_message("<span class='alert'>[src] falls from \the [D], splashing its contents on the floor.</span>")
+			return
+		else //we're in range, splash the AM, splash the floor
+			src.reagents.reaction(AM, TOUCH, src.reagents.total_volume/2) //half on the mover
+			src.reagents.reaction(get_turf(D)) //half on the floor
+			if(ishuman(AM))
+				//the bucket lands on your head for maximum comedy
+				var/mob/living/carbon/human/H = AM
+				var/obj/item/clothing/head/helmet/bucket/hat/bucket_hat = new hat_bucket_type(src.loc)
+				if(isnull(H.head))
+					H.equip_if_possible(bucket_hat, H.slot_head)
+					H.set_clothing_icon_dirty()
+					D.visible_message("<span class='alert'>[src] falls from \the [D], landing on [H] like a hat! [pick("Peak comedy!","Hilarious!","What a tool!")]</span>", \
+										"<span class='alert'>[src] falls from \the [D], landing on your head like a hat!</span>")
+					qdel(src) //it's a hat now
+				else
+					bucket_hat.set_loc(get_turf(H))
+					D.visible_message("<span class='alert'>[src] falls from \the [D], splashing [H] and falling to the floor.</span>", \
+										"<span class='alert'>[src] falls from \the [D], splashing you and bouncing off your hat.</span>")
+					qdel(src) //it's a hat now
+			else
+				//aw, fine, it just falls on the floor
+				src.set_loc(get_turf(D))
+				D.visible_message("<span class='alert'>[src] falls from \the [D], landing on [AM]</span>", \
+										"<span class='alert'>[src] falls from \the [D] and splashing you!</span>")
+
+
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		user.u_equip(src)
