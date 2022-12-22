@@ -1,5 +1,10 @@
 // how many possible network verification codes are there (i.e. how hard is it to bruteforce)
 #define NET_ACCESS_OPTIONS 32
+#define UNSCREW_STAGE 0
+#define CUT_WIRE_STAGE 1
+#define INSERT_WIRE_STAGE 2
+#define PULSE_STAGE 3
+#define SCREW_STAGE 4
 
 /*
 	New methods:
@@ -194,6 +199,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/hackingProgression = 0
 	var/has_panel = TRUE
 	var/hackMessage = ""
+	var/demag_status = UNSCREW_STAGE // In which de-emag stage are we?
+	// UNSCREW_STAGE -> CUT_WIRE_STAGE -> INSERT_WIRE_STAGE -> PULSE_STAGE -> De-emagged!
 	var/net_access_code = null
 
 	var/no_access = 0
@@ -203,19 +210,30 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	operation_time = 6
 	brainloss_stumble = TRUE
 
-	get_desc()
+	get_desc(null, mob/user)
 		var/healthpercent = src.health/src.health_max * 100
 		switch(healthpercent)
 			if(90 to 99) //dont want to clog up the description unless it's actually damaged
-				. += "It seems to be in mostly good condition"
+				. += " It seems to be in mostly good condition"
 			if(75 to 89)
-				. += "It seems slightly [pick("dinged up", "dented", "damaged", "scratched")]"
+				. += " It seems slightly [pick("dinged up", "dented", "damaged", "scratched")]"
 			if(50 to 74)
-				. += "It looks [pick("busted", "damaged", "messed up", "dented")]."
+				. += " It looks [pick("busted", "damaged", "messed up", "dented")]."
 			if(25 to 49)
-				. += "It looks [pick("quite", "pretty", "rather", "notably")] [pick("mangled", "busted", "messed up", "wrecked", "destroyed", "haggard")]."
+				. += " It looks [pick("quite", "pretty", "rather", "notably")] [pick("mangled", "busted", "messed up", "wrecked", "destroyed", "haggard")]."
 			if(0 to 24)
-				. += "It is barely intact!"
+				. += " It is barely intact!"
+
+		if(src.operating == -1 && user.traitHolder.hasTrait("training_engineer")) // If the door is emagged and whoever is examining it has Engineer Training...
+			switch(demag_status)
+				if(UNSCREW_STAGE)
+					. += " <span class='notice'>The airlock wont respond to anything. A good way to start diagnosing this problem is by <b>unscrewing</b> the maintenance panel cover.</span>"
+				if(CUT_WIRE_STAGE)
+					. += " <span class='notice'>The wiring inside the airlock is completely fried! You'll have to <b>cut</b> all of it away before replacing it, though.</span>"
+				if(INSERT_WIRE_STAGE)
+					. += " <span class='notice'>The insides of the airlock is almost completely empty. You could place some new wiring with just about <b>5 lengths of cable coil</b>.</span>"
+				if(PULSE_STAGE)
+					. += " <span class='notice'>The repairs are almost done, you just have to <b>pulse</b> the mainboard to restart the airlock's circuitry. It's fallback system should take care of the rest.</span>"
 
 /obj/machinery/door/airlock/New()
 	..()
@@ -1532,6 +1550,9 @@ About the new airlock wires panel:
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user)
 	//boutput(world, text("airlock attackby src [] obj [] mob []", src, C, user))
+	if(src.operating == -1) // If it's emagged...
+		if(src.user_demagging(user, C)) // It should return TRUE if it did something
+			return
 
 	src.add_fingerprint(user)
 	if (istype(C, /obj/item/device/t_scanner) || (istype(C, /obj/item/device/pda2) && istype(C:module, /obj/item/device/pda_module/tray)))
@@ -2155,4 +2176,50 @@ TYPEINFO(/obj/machinery/door/airlock)
 						src.attach_signaler(which_wire+1, usr)
 						. = TRUE
 
+/obj/machinery/door/airlock/proc/user_demagging(mob/user, obj/item/current_tool)
+	. = FALSE
+
+	if(!user.traitHolder.hasTrait("training_engineer")) // If user doesn't have Engineer Training trait, simply return FALSE
+		return
+
+	switch(src.demag_status)
+		if(UNSCREW_STAGE)
+			if(isscrewingtool(current_tool))
+				boutput(user, "You unscrew the maintenance panel cover and remove it.")
+				playsound(src, 'sound/items/Screwdriver.ogg', 40)
+				src.demag_status = CUT_WIRE_STAGE
+				return TRUE
+
+		if(CUT_WIRE_STAGE)
+			if(issnippingtool(current_tool))
+				boutput(user, "You cut away and discard the burnt wiring.")
+				playsound(src, 'sound/items/Wirecutter.ogg', 40)
+				src.demag_status = INSERT_WIRE_STAGE
+				return TRUE
+
+		if(INSERT_WIRE_STAGE)
+			if(istype(current_tool, /obj/item/cable_coil) && current_tool.amount > 5) // If the user is using a cable coil on the airlock and that cable coil is larger than 5...
+				boutput(user, "You start inserting new wiring in the airlock...")
+				actions.start(new /datum/action/bar/icon/hitthingwithitem(src, user, current_tool, null, src, 10 SECONDS, /obj/machinery/door/airlock/proc/finish_inserting_wire,
+				list(current_tool), current_tool.icon, current_tool.icon_state, "You finish re-wiring the insides of the airlock."), user)
+				return TRUE
+
+		if(PULSE_STAGE)
+			if(ispulsingtool(current_tool))
+				boutput(user, "You restart the airlock's mainboard, and the airlock flickers back into functionality!")
+				src.demag(user)
+				src.demag_status = UNSCREW_STAGE // Reset the status for if the airlock gets emagged again
+				src.panel_open = TRUE // Because we *did* open the cover as the first step of de-emagging it.
+				return TRUE
+
+/obj/machinery/door/airlock/proc/finish_inserting_wire(obj/item/wires) // Called after the actionbar of inserting wiring in the airlock.
+	playsound(src, 'sound/items/Deconstruct.ogg', 40) // It's the most fitting sound, don't blame me for using it
+	wires.amount -= 5
+	src.demag_status = PULSE_STAGE
+
 #undef NET_ACCESS_OPTIONS
+#undef UNSCREW_STAGE
+#undef CUT_WIRE_STAGE
+#undef INSERT_WIRE_STAGE
+#undef PULSE_STAGE
+#undef SCREW_STAGE
