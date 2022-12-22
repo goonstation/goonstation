@@ -1148,6 +1148,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\power\cablecolors.dm"
 #include "code\modules\power\catalytic_engine.dm"
 #include "code\modules\power\cell.dm"
+#include "code\modules\power\chem_combustion.dm"
 #include "code\modules\power\engine.dm"
 #include "code\modules\power\furnace.dm"
 #include "code\modules\power\lgenerator.dm"

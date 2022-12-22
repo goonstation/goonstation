@@ -1414,44 +1414,43 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		STOP_TRACKING
 		. = ..()
 
-	syndicate
-		name = "\improper Syndicate command armor"
-		desc = "An armored space suit, not for your average expendable chumps. No sir."
-		is_syndicate = TRUE
-		icon_state = "indusred"
-		item_state = "indusred"
+/obj/item/clothing/suit/space/industrial/syndicate
+	name = "\improper Syndicate command armor"
+	desc = "An armored space suit, not for your average expendable chumps. No sir."
+	is_syndicate = TRUE
+	icon_state = "indusred"
+	item_state = "indusred"
 
-		New()
-			..()
-			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+	setupProperties()
+		..()
+		setProperty("meleeprot", 9)
+		setProperty("rangedprot", 2)
 
-		setupProperties()
-			..()
-			setProperty("meleeprot", 9)
-			setProperty("rangedprot", 2)
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 
-		disposing()
-			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-			..()
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
-		specialist
-			name = "specialist heavy operative combat armor"
-			desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
-			icon_state = "syndie_specialist-heavy"
-			item_state = "syndie_specialist-heavy"
+	specialist
+		name = "specialist heavy operative combat armor"
+		desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
+		icon_state = "syndie_specialist-heavy"
+		item_state = "syndie_specialist-heavy"
 
-	ntso
+/obj/item/clothing/suit/space/industrial/salvager
+	name = "\improper Salvager juggernaut combat armor"
+	desc = "A heavily modified industrial mining suit, it's been retrofitted for greater protection in firefights."
+	is_syndicate = FALSE
+	icon_state = "salvager-heavy"
+	item_state = "salvager-heavy"
 
-		name = "NT-SO heavy operative combat armor"
-		desc = "A Nanotrasen special forces heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
-		is_syndicate = FALSE
-		icon_state = "ntso_specialist-heavy"
-		item_state = "ntso_specialist-heavy"
-
-		setupProperties()
-			..()
-			setProperty("meleeprot", 9)
-			setProperty("rangedprot", 2)
+	setupProperties()
+		..()
+		setProperty("meleeprot", 9)
+		setProperty("rangedprot", 2)
 
 //NT pod wars suits
 /obj/item/clothing/suit/space/nanotrasen

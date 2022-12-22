@@ -1,5 +1,25 @@
 
+(t)wed dec 21 22
+(u)Sord
+(e)⚖|C-Balance
+(+)Csaber has received a slight buff. Reduced stamina cost per swing.
+(u)Amylizzle
+(p)12471
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Some critters were butcherable when they shouldn't have been. If you find a critter that isn't butcherable but should be, report it as a bug.
+(u)Conchuckter, sprites by NightmareChamillian
+(p)9083
+(e)🆕🎨⚗|C-Feature, C-Sprites, A-Chemistry
+(*)Adds a generator that can be powered by burning reagents.
 (t)tue dec 20 22
+(u)Blackrep
+(p)12179
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)The Salvagers gotten their hands on some heavily armored space suits
+(u)Chatauscours
+(p)12461
+(e)🗺💅|A-Mapping, C-QoL
+(+)New operating computers have been shipped to all operating rooms on NT stations.
 (u)glowbold
 (p)12208
 (e)⚖🔄📄💊|C-Balance, C-Rework, A-UI, A-Medical

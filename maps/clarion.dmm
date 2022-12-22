@@ -24748,8 +24748,10 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/obj/machinery/computer/operating,
 /obj/decal/stripe_caution,
+/obj/machinery/computer/operating{
+	id = "OR1"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "bcx" = (
@@ -28439,12 +28441,14 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bmC" = (
-/obj/machinery/optable,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /obj/item/paper/book/from_file/medical_surgery_guide,
 /obj/decal/stripe_caution,
+/obj/machinery/optable{
+	id = "OR1"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "bmE" = (
@@ -29160,10 +29164,12 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "bok" = (
-/obj/machinery/computer/operating,
 /obj/decal/tile_edge/line/white,
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/computer/operating{
+	id = "robotics"
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -42367,7 +42373,6 @@
 /turf/simulated/floor/wood,
 /area/station/engine/engineering/ce/private)
 "fFW" = (
-/obj/machinery/optable,
 /obj/decal/tile_edge/stripe{
 	dir = 10;
 	tag = ""
@@ -42377,6 +42382,9 @@
 	},
 /obj/decal/tile_edge/stripe/corner/extra_big{
 	dir = 5
+	},
+/obj/machinery/optable{
+	id = "robotics"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/robotics)
