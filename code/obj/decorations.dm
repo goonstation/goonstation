@@ -61,7 +61,7 @@
 	var/fall_time = 2 SECONDS
 
 	attackby(obj/item/I, mob/user)
-		if (issawingtool(I) || ischoppingtool(I) && !isrestrictedz(src.z))
+		if ((issawingtool(I) || ischoppingtool(I)) && !isrestrictedz(src.z))
 			if (I.hitsound)
 				playsound(I, I.hitsound, 50, 1)
 			src._health -= I.force
