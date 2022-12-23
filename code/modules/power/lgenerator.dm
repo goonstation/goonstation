@@ -13,18 +13,18 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 	//layer = FLOOR_EQUIP_LAYER1 //why was this set to this
 	flags = FPRINT
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
-	var/mode = 1 // 1 = charge APC, 2 = charge inserted power cell.
-	var/active = 0
+	var/chargeAPC = TRUE // TRUE = charge APC, FALSE = charge inserted power cell.
+	var/active = FALSE
 
 	// If either of these values aren't competitive, nobody will bother with the generator.
 	// Remember, there's quite a bit of hassle involved when buying (i.e. QM) and using one of these.
 	// And you can't even fully recharge a 15000 cell with these parameters and stock plasma tank.
-	var/CL_charge_rate = 100 // Units per tick. Comparison: ~20 (APC), 250 (regular cell charger).
-	var/P_drain_rate = 0.08 // Per tick. Stock (304 kPa) tank will last about 6 min when charging non-stop.
+	var/cellChargeRate = 100 // Units per tick. Comparison: ~20 (APC), 250 (regular cell charger).
+	var/tankDrainRate = 0.08 // Per tick. Stock (304 kPa) tank will last about 6 min when charging non-stop.
 
-	var/obj/item/cell/CL = null
-	var/obj/item/tank/P = null
-	var/obj/machinery/power/apc/our_APC = null // Linked APC if mode == 1.
+	var/obj/item/cell/internalCell = null
+	var/obj/item/tank/internalTank = null //held gas tank
+	var/obj/machinery/power/apc/our_APC = null // Linked APC if charge APC == TRUE.
 	var/last_APC_check = 1 // In relation to world time. Ideally, we don't want to run this every tick.
 	var/datum/light/light
 
@@ -42,7 +42,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 
 /obj/machinery/power/lgenerator/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/tank/))
-		if (src.P)
+		if (src.internalTank)
 			user.show_text("There appears to be a tank loaded already.", "red")
 			return
 		if (src.check_tank(W) == 0)
@@ -51,17 +51,19 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 		src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 		user.u_equip(W)
 		W.set_loc(src)
-		src.P = W
+		src.internalTank = W
 		src.UpdateIcon()
+		tgui_process.try_update_ui(user, src)
 
 	else if (istype(W, /obj/item/cell))
-		if (src.CL)
+		if (src.internalCell)
 			user.show_text("There appears to be a power cell inserted already.", "red")
 			return
 		src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 		user.u_equip(W)
 		W.set_loc(src)
-		src.CL = W
+		src.internalCell = W
+		tgui_process.try_update_ui(user, src)
 
 	else
 		..()
@@ -77,7 +79,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 		src.UpdateOverlays(null, "spin")
 		light.disable()
 
-	if (src.P)
+	if (src.internalTank)
 		tank_sprite.icon_state = "ggen-tank"
 		src.UpdateOverlays(tank_sprite, "tank")
 	else
@@ -108,32 +110,27 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 	return 1
 
 /obj/machinery/power/lgenerator/proc/eject_tank(var/mob/user as mob)
-	if (!src)
-		return
-	if (src.P)
-		src.P.set_loc(get_turf(src))
-
-		if (istype(user))
-			user.put_in_hand_or_eject(src.P) // try to eject it into the users hand, if we can
-
-		src.P = null
-		src.active = 0
+	if(internalTank)
+		internalTank.set_loc(loc)
+		user.put_in_hand_or_eject(internalTank) // try to eject it into the users hand, if we can
+		internalTank = null
 		src.UpdateIcon()
 	return
 
 /obj/machinery/power/lgenerator/proc/eject_cell(var/mob/user as mob)
 	if (!src)
 		return
-	if (src.CL)
-		var/obj/item/cell/_CL = src.CL
-		src.CL.set_loc(get_turf(src))
-
+	if (src.internalCell)
+		/* Ejecting it really isnt necessary since put_in_hand_or_eject does the same thing like two lines later
+		var/obj/item/cell/_internalCell = src.internalCell
+		src.internalCell.set_loc(get_turf(src))
+		*/
 		if (istype(user))
-			user.put_in_hand_or_eject(_CL) // try to eject it into the users hand, if we can
+			user.put_in_hand_or_eject(internalCell) // try to eject it into the users hand, if we can
 
-		src.CL = null
-		if (src.mode == 2) // Generator doesn't need to shut down when in APC mode.
-			src.active = 0
+		src.internalCell = null
+		if (!src.chargeAPC) // Generator doesn't need to shut down when in APC mode.
+			src.active = FALSE
 		src.UpdateIcon()
 	return
 
@@ -145,7 +142,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 		if (!src.anchored)
 			src.visible_message("<span class='alert'>[src]'s retention bolts fail, triggering an emergency shutdown!</span>")
 			playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
-			src.active = 0
+			src.active = FALSE
 			src.UpdateIcon()
 			//src.updateDialog()
 			return
@@ -154,24 +151,24 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 			src.visible_message("<span class='alert'>[src]'s retention bolts fail, triggering an emergency shutdown!</span>")
 			playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 			src.anchored = 0 // It might have happened, I guess?
-			src.active = 0
+			src.active = FALSE
 			src.UpdateIcon()
 			//src.updateDialog()
 			return
 
-		if (src.check_tank(src.P) == 0)
-			src.visible_message("<span class='alert'>[src] runs out of fuel and shuts down! [src.P] is ejected!</span>")
+		if (src.check_tank(src.internalTank) == 0)
+			src.visible_message("<span class='alert'>[src] runs out of fuel and shuts down! [src.internalTank] is ejected!</span>")
 			playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 			src.eject_tank(null)
 			//src.updateDialog()
 			return
 
-		switch (src.mode)
-			if (1)
+		switch (src.chargeAPC)
+			if (TRUE)
 				if (!src.our_APC)
 					src.visible_message("<span class='alert'>[src] doesn't detect a local APC and shuts down!</span>")
 					playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
-					src.active = 0
+					src.active = FALSE
 					src.our_APC = null
 					src.UpdateIcon()
 					//src.updateDialog()
@@ -180,7 +177,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 					if (src.APC_check() != 1)
 						src.visible_message("<span class='alert'>[src] can't charge the local APC and shuts down!</span>")
 						playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
-						src.active = 0
+						src.active = FALSE
 						src.our_APC = null
 						src.UpdateIcon()
 						//src.updateDialog()
@@ -196,33 +193,33 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 
 					// Don't combust plasma if we don't have to.
 					if (APC_cell.charge < APC_cell.maxcharge)
-						APC_cell.give(src.CL_charge_rate)
-						src.P.air_contents.toxins = max(0, (P.air_contents.toxins - src.P_drain_rate))
+						APC_cell.give(src.cellChargeRate)
+						src.internalTank.air_contents.toxins = max(0, (internalTank.air_contents.toxins - src.tankDrainRate))
 						// Call proc to trigger rigged cell and log entries.
 
-			if (2)
-				if (!src.CL)
+			if (FALSE)
+				if (!src.internalCell)
 					src.visible_message("<span class='alert'>[src] doesn't have a cell to charge and shuts down!</span>")
 					playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
-					src.active = 0
-					src.CL = null
+					src.active = FALSE
+					src.internalCell = null
 					src.UpdateIcon()
 					//src.updateDialog()
 					return
 
-				if (src.CL.charge < 0)
-					src.CL.charge = 0
-				if (src.CL.charge > src.CL.maxcharge)
-					src.CL.charge = src.CL.maxcharge
-				if (src.CL.charge == src.CL.maxcharge)
-					src.visible_message("<span class='alert'>[src.CL] is fully charged. [src] ejects the cell and shuts down!</span>")
+				if (src.internalCell.charge < 0)
+					src.internalCell.charge = 0
+				if (src.internalCell.charge > src.internalCell.maxcharge)
+					src.internalCell.charge = src.internalCell.maxcharge
+				if (src.internalCell.charge == src.internalCell.maxcharge)
+					src.visible_message("<span class='alert'>[src.internalCell] is fully charged. [src] ejects the cell and shuts down!</span>")
 					playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
 					src.eject_cell(null)
 					//src.updateDialog()
 					return
-				if (src.CL.charge < src.CL.maxcharge)
-					src.CL.give(src.CL_charge_rate)
-					src.P.air_contents.toxins = max(0, (P.air_contents.toxins - src.P_drain_rate))
+				if (src.internalCell.charge < src.internalCell.maxcharge)
+					src.internalCell.give(src.cellChargeRate)
+					src.internalTank.air_contents.toxins = max(0, (internalTank.air_contents.toxins - src.tankDrainRate))
 					// Call proc to trigger rigged cell and log entries.
 
 	src.icon_state = "ggen[src.anchored]"
@@ -243,151 +240,260 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 
 /obj/machinery/power/lgenerator/ui_data(mob/user)
 	. = list(
-		"name" = src.name
+		"name" = src.name,
+		"holding" = null, //represents the internal tank, the tank stats predefined UI block expects the name "holding"
+		"internalCell" = null,
+		"connectedAPC" = null,
+		"chargeAPC" = src.chargeAPC,
+		"boltsStatus" = src.anchored,
+		"generatorStatus" = src.active,
 	)
+	if(src.internalTank)
+		. += list(
+			"holding" = list(
+				"name" = src.internalTank.name,
+				"pressure" = MIXTURE_PRESSURE(src.internalTank.air_contents),
+				"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
+			)
+		)
+	if(src.internalCell)
+		. += list(
+			"internalCell" = list(
+				"name" = src.internalCell.name,
+				"chargePercent" = src.internalCell.percent(),
+			)
+		)
+	if(src.our_APC)
+		. += list(
+			"connectedAPC" = list(
+				"name" = src.our_APC.name,
+				"chargePercent" = src.our_APC.cell.percent(),
+			)
+		)
 
-/obj/machinery/power/lgenerator/ui_act(action, params)
+/obj/machinery/power/lgenerator/ui_act(action, params, datum/tgui/ui)
 	. = ..()
 	if (.)
 		return
+	. = TRUE
 	switch(action)
-		//TODO: add actions to trigger from the UI
-		if("actionName")
-			//do stuff here
-			return TRUE
-
-/*
-/obj/machinery/power/lgenerator/attack_hand(var/mob/user)
-	src.add_fingerprint(user)
-
-	src.add_dialog(user)
-	var/dat = "<h4>[src]</h4>"
-
-	if (src.P)
-		var/datum/gas_mixture/air = src.P.return_air()
-		dat += "<b>Tank:</b> <a href='?src=\ref[src];eject=1'>[src.P]</a> (Plasma: [air.toxins * R_IDEAL_GAS_EQUATION * air.temperature/air.volume] kPa)<br>"
-	else
-		dat += "<b>Tank: --------</b><br>"
-
-	if (src.CL)
-		dat += "<b>Cell:</b> <a href='?src=\ref[src];eject-c=1'>[src.CL]</a> (Charge: [round(src.CL.percent())]%)<br>"
-	else
-		dat += "<b>Cell: --------</b><br>"
-
-	var/obj/item/cell/APCC = null
-	if (src.our_APC && src.our_APC.cell)
-		APCC = src.our_APC.cell
-	dat += "<b>APC connection:</b> [src.our_APC ? "Established" : "None"] (<a href='?src=\ref[src];getAPC=1'>Refresh</a>)<br>"
-	dat += "<b>APC charge:</b> [APCC ? "[round(APCC.percent())]%" : "N/A"]<br>"
-
-	dat += "<hr>"
-
-	dat += "<b>Generator anchors:</b> [src.anchored ? "Secured" : "Unsecured"] (<a href='?src=\ref[src];togglebolts=1'>Toggle</a>)<br>"
-	dat += "<b>Generator mode:</b> [src.mode == 1 ? "<u>Charge APC</u> / Charge cell" : "Charge APC / <u>Charge cell</u>"] (<a href='?src=\ref[src];togglemode=1'>Toggle</a>)<br>"
-	dat += "<b>Generator status:</b> [src.active ? "Running" : "Off"] (<a href='?src=\ref[src];togglepower=1'>Toggle</a>)<br>"
-
-	user.Browse(dat, "window=generator")
-	onclose(user, "generator")
-	return
-
-Topic(href, href_list)
-	if (!isturf(src.loc)) return
-	if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat || usr.restrained()) return
-	if (!issilicon(usr) && !in_interact_range(src, usr)) return
-
-	src.add_fingerprint(usr)
-	src.add_dialog(usr)
-
-	if (href_list["eject"])
-		if (src.active)
-			usr.show_text("Turn the generator off first!", "red")
-			return
-		if (src.P)
-			src.visible_message("<span class='alert'>[usr] ejects [src.P] from the [src]!</span>")
-			src.eject_tank(usr ? usr : null)
-		else
-			usr.show_text("There's no tank to eject.", "red")
-
-	if (href_list["eject-c"])
-		if (src.active && src.mode == 2)
-			usr.show_text("Turn the generator off first!", "red")
-			return
-		if (src.CL)
-			src.visible_message("<span class='alert'>[usr] ejects [src.CL] from the [src]!</span>")
-			src.eject_cell(usr ? usr : null)
-		else
-			usr.show_text("There's no cell to eject.", "red")
-
-	if (href_list["getAPC"])
-		switch (src.APC_check())
-			if (0)
-				src.our_APC = null
-				usr.show_text("Unable to establish connection to local APC.", "red")
-			if (1)
-				src.our_APC = get_local_apc(src)
-				usr.show_text("Connection to local APC established.", "blue")
-			if (2)
-				src.our_APC = null
-				usr.show_text("Local APC doesn't have a power cell to charge.", "red")
+		if("toggle-bolts")
+			if (!src.active)
+				if (!istype(src.loc, /turf/simulated/floor/))
+					ui.user.show_text("You can't secure the generator here.", "red")
+					src.anchored = 0 // It might have happened, I guess?
+					src.UpdateIcon()
+					return
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				if (src.anchored)
+					src.anchored = 0
+					src.UpdateIcon()
+					src.our_APC = null //can't link to an APC while unbolted
+				else
+					src.anchored = 1
+					src.UpdateIcon()
+				src.visible_message("<span class='alert'>[ui.user] [src.anchored ? "bolts" : "unbolts"] [src] [src.anchored ? "to" : "from"] the floor.</span>")
 			else
-				src.our_APC = null
-				usr.show_text("An error occurred, please try again.", "red")
-
-	if (href_list["togglebolts"])
-		if (!src.active)
-			if (!istype(src.loc, /turf/simulated/floor/))
-				usr.show_text("You can't secure the generator here.", "red")
-				src.anchored = 0 // It might have happened, I guess?
-				src.UpdateIcon()
+				ui.user.show_text("Turn the generator off first!", "red")
 				return
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (src.anchored)
-				src.anchored = 0
-				src.UpdateIcon()
-				src.our_APC = null // It's just gonna cause trouble otherwise.
+
+		if("toggle-generator")
+			if (!src.anchored)
+				ui.user.show_text("The generator can't be activated when it's not secured to the floor.", "red")
+				return
+			if (!src.internalTank)
+				ui.user.show_text("There's nothing powering the generator!", "red")
+				return
+			switch (src.chargeAPC)
+				if (TRUE)
+					if (!src.active)
+						if (!src.our_APC)
+							ui.user.show_text("Please refresh APC connection first.", "red")
+							return
+						if (!src.our_APC.cell)
+							ui.user.show_text("Local APC doesn't have a power cell to charge.", "red")
+							return
+				if (FALSE)
+					if (!src.active)
+						if (!src.internalCell)
+							ui.user.show_text("There's no cell to charge.", "red")
+							return
+			src.active = !src.active
+			src.visible_message("<span class='notice'>[ui.user] [src.active ? "activates" : "deactivates"] the [src].</span>")
+
+		if("swap-target")
+			src.chargeAPC = !src.chargeAPC
+
+		if("eject-tank")
+			if (src.active)
+				ui.user.show_text("Turn the generator off first!", "red")
+				return
+			if (src.internalTank)
+				src.visible_message("<span class='alert'>[ui.user] ejects [src.internalTank] from the [src]!</span>")
+				src.eject_tank(ui.user)
 			else
-				src.anchored = 1
-				src.UpdateIcon()
-			src.visible_message("<span class='alert'>[usr] [src.anchored ? "bolts" : "unbolts"] [src] [src.anchored ? "to" : "from"] the floor.</span>")
-		else
-			usr.show_text("Turn the generator off first!", "red")
-			return
+				ui.user.show_text("There's no tank to eject.", "red")
 
-	if (href_list["togglemode"])
-		if (src.mode == 1)
-			src.mode = 2
-		else
-			src.mode = 1
+		if("eject-cell")
+			if (src.active && src.chargeAPC == FALSE)
+				ui.user.show_text("Turn the generator off first!", "red")
+				return
+			if (src.internalCell)
+				src.visible_message("<span class='alert'>[ui.user] ejects [src.internalCell] from the [src]!</span>")
+				src.eject_cell(ui.user)
+			else
+				ui.user.show_text("There's no cell to eject.", "red")
 
-	if (href_list["togglepower"])
-		if (!src.anchored)
-			usr.show_text("The generator can't be activated when it's not secured to the floor.", "red")
-			return
-		if (!src.P)
-			usr.show_text("There's nothing powering the generator!", "red")
-			return
-		switch (src.mode)
-			if (1)
-				if (!src.active)
-					if (!src.our_APC)
-						usr.show_text("Please refresh APC connection first.", "red")
-						return
-					if (!src.our_APC.cell)
-						usr.show_text("Local APC doesn't have a power cell to charge.", "red")
-						return
-			if (2)
-				if (!src.active)
-					if (!src.CL)
-						usr.show_text("There's no cell to charge.", "red")
-						return
-		src.active = !src.active
-		src.visible_message("<span class='notice'>[usr] [src.active ? "activates" : "deactivates"] the [src].</span>")
-
-	src.updateUsrDialog()
-	return
-*/
+		if("connect-APC")
+			if(!src.anchored) //can't link to an APC while unbolted
+				ui.user.show_text("Generator bolts must be active to connect to an APC.", "red")
+				return
+			switch (src.APC_check())
+				if (0)
+					src.our_APC = null
+					ui.user.show_text("Unable to establish connection to local APC.", "red")
+				if (1)
+					src.our_APC = get_local_apc(src)
+					ui.user.show_text("Connection to local APC established.", "blue")
+				if (2)
+					src.our_APC = null
+					ui.user.show_text("Local APC doesn't have a power cell to charge.", "red")
+				else
+					src.our_APC = null
+					ui.user.show_text("An error occurred, please try again.", "red")
 
 /obj/machinery/power/lgenerator/Exited(Obj, newloc)
 	. = ..()
-	if(Obj == src.CL)
-		src.CL = null
+	if(Obj == src.internalCell)
+		src.internalCell = null
+
+/*
+	attack_hand(var/mob/user)
+		src.add_fingerprint(user)
+
+		src.add_dialog(user)
+		var/dat = "<h4>[src]</h4>"
+
+		if (src.internalTank)
+			var/datum/gas_mixture/air = src.internalTank.return_air()
+			dat += "<b>Tank:</b> <a href='?src=\ref[src];eject=1'>[src.internalTank]</a> (Plasma: [air.toxins * R_IDEAL_GAS_EQUATION * air.temperature/air.volume] kPa)<br>"
+		else
+			dat += "<b>Tank: --------</b><br>"
+
+		if (src.CL)
+			dat += "<b>Cell:</b> <a href='?src=\ref[src];eject-c=1'>[src.CL]</a> (Charge: [round(src.CL.percent())]%)<br>"
+		else
+			dat += "<b>Cell: --------</b><br>"
+
+		var/obj/item/cell/APCC = null
+		if (src.our_APC && src.our_APC.cell)
+			APCC = src.our_APC.cell
+		dat += "<b>APC connection:</b> [src.our_APC ? "Established" : "None"] (<a href='?src=\ref[src];getAPC=1'>Refresh</a>)<br>"
+		dat += "<b>APC charge:</b> [APCC ? "[round(APCC.percent())]%" : "N/A"]<br>"
+
+		dat += "<hr>"
+
+		dat += "<b>Generator anchors:</b> [src.anchored ? "Secured" : "Unsecured"] (<a href='?src=\ref[src];togglebolts=1'>Toggle</a>)<br>"
+		dat += "<b>Generator mode:</b> [src.chargeAPC == 1 ? "<u>Charge APC</u> / Charge cell" : "Charge APC / <u>Charge cell</u>"] (<a href='?src=\ref[src];togglemode=1'>Toggle</a>)<br>"
+		dat += "<b>Generator status:</b> [src.active ? "Running" : "Off"] (<a href='?src=\ref[src];togglepower=1'>Toggle</a>)<br>"
+
+		user.Browse(dat, "window=generator")
+		onclose(user, "generator")
+		return
+
+	Topic(href, href_list)
+		if (!isturf(src.loc)) return
+		if (ui.user.getStatusDuration("stunned") || ui.user.getStatusDuration("weakened") || ui.user.stat || ui.user.restrained()) return
+		if (!issilicon(ui.user) && !in_interact_range(src, ui.user)) return
+
+		src.add_fingerprint(ui.user)
+		src.add_dialog(ui.user)
+
+		if (href_list["eject"])
+			if (src.active)
+				ui.user.show_text("Turn the generator off first!", "red")
+				return
+			if (src.internalTank)
+				src.visible_message("<span class='alert'>[ui.user] ejects [src.internalTank] from the [src]!</span>")
+				src.eject_tank(ui.user ? ui.user : null)
+			else
+				ui.user.show_text("There's no tank to eject.", "red")
+
+		if (href_list["eject-c"])
+			if (src.active && src.chargeAPC == 2)
+				ui.user.show_text("Turn the generator off first!", "red")
+				return
+			if (src.CL)
+				src.visible_message("<span class='alert'>[ui.user] ejects [src.CL] from the [src]!</span>")
+				src.eject_cell(ui.user ? ui.user : null)
+			else
+				ui.user.show_text("There's no cell to eject.", "red")
+
+		if (href_list["getAPC"])
+			switch (src.APC_check())
+				if (0)
+					src.our_APC = null
+					ui.user.show_text("Unable to establish connection to local APC.", "red")
+				if (1)
+					src.our_APC = get_local_apc(src)
+					ui.user.show_text("Connection to local APC established.", "blue")
+				if (2)
+					src.our_APC = null
+					ui.user.show_text("Local APC doesn't have a power cell to charge.", "red")
+				else
+					src.our_APC = null
+					ui.user.show_text("An error occurred, please try again.", "red")
+
+		if (href_list["togglebolts"])
+			if (!src.active)
+				if (!istype(src.loc, /turf/simulated/floor/))
+					ui.user.show_text("You can't secure the generator here.", "red")
+					src.anchored = 0 // It might have happened, I guess?
+					src.UpdateIcon()
+					return
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				if (src.anchored)
+					src.anchored = 0
+					src.UpdateIcon()
+					src.our_APC = null // It's just gonna cause trouble otherwise.
+				else
+					src.anchored = 1
+					src.UpdateIcon()
+				src.visible_message("<span class='alert'>[ui.user] [src.anchored ? "bolts" : "unbolts"] [src] [src.anchored ? "to" : "from"] the floor.</span>")
+			else
+				ui.user.show_text("Turn the generator off first!", "red")
+				return
+
+		if (href_list["togglemode"])
+			if (src.chargeAPC == 1)
+				src.chargeAPC = 2
+			else
+				src.chargeAPC = 1
+
+		if (href_list["togglepower"])
+			if (!src.anchored)
+				ui.user.show_text("The generator can't be activated when it's not secured to the floor.", "red")
+				return
+			if (!src.internalTank)
+				ui.user.show_text("There's nothing powering the generator!", "red")
+				return
+			switch (src.chargeAPC)
+				if (1)
+					if (!src.active)
+						if (!src.our_APC)
+							ui.user.show_text("Please refresh APC connection first.", "red")
+							return
+						if (!src.our_APC.cell)
+							ui.user.show_text("Local APC doesn't have a power cell to charge.", "red")
+							return
+				if (2)
+					if (!src.active)
+						if (!src.CL)
+							ui.user.show_text("There's no cell to charge.", "red")
+							return
+			src.active = !src.active
+			src.visible_message("<span class='notice'>[ui.user] [src.active ? "activates" : "deactivates"] the [src].</span>")
+
+		src.updateUsrDialog()
+		return
+*/
