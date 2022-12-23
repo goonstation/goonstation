@@ -150,7 +150,7 @@ TYPEINFO(/obj/machinery/phone)
 				src.connected = TRUE
 			return
 		if(ispulsingtool(P))
-			if(src.labelling == TRUE)
+			if(src.labelling)
 				return
 			src.labelling = TRUE
 			var/t = input(user, "What do you want to name this phone?", null, null) as null|text
