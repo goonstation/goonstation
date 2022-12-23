@@ -140,7 +140,7 @@ TYPEINFO(/obj/machinery/phone)
 				hang_up()
 			return
 		if(issnippingtool(P))
-			if(src.connected == TRUE)
+			if(src.connected)
 				if(user)
 					boutput(user,"You cut the phone line leading to the phone.")
 				src.connected = FALSE
