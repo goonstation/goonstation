@@ -1022,7 +1022,8 @@
 		. = ..()
 		src.layer += src.edge_priority_level / 1000
 		SPAWN(0.5 SECONDS) //give neighbors a chance to spawn in
-			edge_overlays()
+			if(istype(src))
+				edge_overlays()
 
 	proc/edge_overlays()
 		for (var/turf/T in orange(src,1))
