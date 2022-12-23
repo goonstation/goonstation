@@ -43,6 +43,9 @@
 
 		src.maptext_width = 64
 
+		// For status display updating
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, FREQ_STATUS_DISPLAY)
+
 		START_TRACKING
 		..()
 
@@ -155,6 +158,7 @@
 		else
 			src.armed = TRUE
 			src.anchored = TRUE
+			src.change_status_display()
 			if (!src.image_light)
 				src.image_light = image(src.icon, "nblightc")
 				src.UpdateOverlays(src.image_light, "light")
@@ -341,9 +345,9 @@
 			area_correct = 1
 		if(istype(ticker?.mode, /datum/game_mode/nuclear) && istype(nuke_area, gamemode.target_location_type))
 			area_correct = 1
-			
+
 		// Don't re-enable the explosion without asking me first -ZeWaka
-		
+
 		if ((nuke_turf.z != 1 && !area_correct) && (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
 			gamemode.the_bomb = null
 			command_alert("A nuclear explosive has been detonated nearby. The station was not in range of the blast.", "Attention")
@@ -351,8 +355,8 @@
 			qdel(src)
 			return
 		//explosion(src, src.loc, 35, 45, 55, 55)
-		
-		
+
+
 #ifdef MAP_OVERRIDE_MANTA
 		world.showCinematic("manta_nukies")
 #else
@@ -384,6 +388,14 @@
 			logTheThing(LOG_DIARY, null, "Rebooting due to nuclear destruction of station", "game")
 			Reboot_server()
 
+	proc/change_status_display()
+		var/datum/signal/status_signal = get_free_signal()
+		status_signal.source = src
+		status_signal.transmission_method = TRANSMISSION_RADIO
+		status_signal.data["command"] = "nuclear"
+		status_signal.data["address_tag"] = "STATDISPLAY"
+
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal, null, FREQ_STATUS_DISPLAY)
 /datum/action/bar/icon/unanchorNuke
 	duration = 55
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
