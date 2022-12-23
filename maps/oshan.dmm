@@ -22320,6 +22320,8 @@
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/storage/secure/closet/civilian/bartender,
+/obj/item/hand_labeler,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "bgm" = (
@@ -22570,14 +22572,8 @@
 "bgZ" = (
 /turf/simulated/floor/engine/caution/east,
 /area/station/engine/gas)
-"bha" = (
-/obj/storage/secure/closet/civilian/bartender,
-/obj/item/hand_labeler,
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
 "bhb" = (
-/obj/storage/closet/wardrobe/black/formalwear,
-/obj/item/clothing/head/helmet/space/santahat,
+/obj/machinery/vending/jobclothing/catering,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "bhc" = (
@@ -23794,7 +23790,6 @@
 /area/station/crew_quarters/catering)
 "bkH" = (
 /obj/table/auto,
-/obj/item/clothing/gloves/latex,
 /obj/item/spraybottle/cleaner,
 /obj/item/kitchen/utensil/knife,
 /obj/machinery/camera{
@@ -76482,8 +76477,8 @@ aPZ
 aPU
 dkm
 bfC
+bfC
 bgg
-bha
 bhx
 bil
 biP
@@ -76784,8 +76779,8 @@ aPZ
 aPW
 aQC
 bfC
+bfC
 bgh
-bhb
 bhy
 bil
 biQ
@@ -77388,7 +77383,7 @@ aPZ
 lOG
 aQa
 bfD
-bfC
+bhb
 aPZ
 aPZ
 bil
