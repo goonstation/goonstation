@@ -147,6 +147,14 @@
 				qdel(src)
 		. = ..()
 
+	attack_hand(mob/user)
+		if(ishuman(user))
+			var/mob/living/carbon/human/human = user
+			if (istype(human.gloves, /obj/item/clothing/gloves/concussive))
+				var/obj/item/clothing/gloves/concussive/gauntlets = human.gloves
+				return src.Attackby(gauntlets.tool, user)
+		. = ..()
+
 	random
 		New()
 			. = ..()
