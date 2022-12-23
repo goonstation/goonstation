@@ -284,7 +284,7 @@ TYPEINFO(/obj/machinery/phone)
 		src.handset.holder?.playsound_local(src.handset.holder,'sound/machines/phones/dial.ogg' ,50,0)
 		SPAWN(4 SECONDS)
 			// Is it busy?
-			if(target.answered || target.linked || target.connected == FALSE)
+			if(target.answered || target.linked || !target.connected)
 				playsound(src.loc,'sound/machines/phones/phone_busy.ogg' ,50,0)
 				src.dialing = FALSE
 				return
