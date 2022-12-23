@@ -32943,15 +32943,6 @@
 "ipa" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/secondary/exit)
-"ipE" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 21;
-	tag = ""
-	},
-/turf/space,
-/area/space)
 "iqS" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -57243,7 +57234,7 @@ aaa
 aaa
 aaa
 aaa
-ipE
+aaa
 aaa
 aaa
 aaa

@@ -73435,15 +73435,6 @@
 	},
 /turf/simulated/floor,
 /area/station/medical/medbay/pharmacy)
-"uUT" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 21;
-	tag = ""
-	},
-/turf/space,
-/area/space)
 "uUY" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/carpet/grime,
@@ -91858,7 +91849,7 @@ rdj
 rdj
 rdj
 rdj
-uUT
+rdj
 rdj
 rdj
 rdj

@@ -19590,10 +19590,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
-"bnf" = (
-/obj/access_spawn/kitchen,
-/turf/space,
-/area/space)
 "bni" = (
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/black,
@@ -68758,7 +68754,7 @@ aaa
 aaa
 aaa
 aaa
-bnf
+aaa
 aaa
 aaa
 ciD
