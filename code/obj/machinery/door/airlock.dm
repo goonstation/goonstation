@@ -210,7 +210,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	operation_time = 6
 	brainloss_stumble = TRUE
 
-	get_desc(null, mob/user)
+	get_desc(dist, mob/user)
 		var/healthpercent = src.health/src.health_max * 100
 		switch(healthpercent)
 			if(90 to 99) //dont want to clog up the description unless it's actually damaged
@@ -1550,11 +1550,12 @@ About the new airlock wires panel:
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user)
 	//boutput(world, text("airlock attackby src [] obj [] mob []", src, C, user))
+	src.add_fingerprint(user)
+
 	if(src.operating == -1) // If it's emagged...
 		if(src.user_demagging(user, C)) // It should return TRUE if it did something
 			return
 
-	src.add_fingerprint(user)
 	if (istype(C, /obj/item/device/t_scanner) || (istype(C, /obj/item/device/pda2) && istype(C:module, /obj/item/device/pda_module/tray)))
 		if(src.isElectrified())
 			boutput(user, "<span class='alert'>[bicon(C)] <b>WARNING</b>: Abnormal electrical response received from access panel.</span>")
@@ -2177,8 +2178,6 @@ TYPEINFO(/obj/machinery/door/airlock)
 						. = TRUE
 
 /obj/machinery/door/airlock/proc/user_demagging(mob/user, obj/item/current_tool)
-	. = FALSE
-
 	if(!user.traitHolder.hasTrait("training_engineer")) // If user doesn't have Engineer Training trait, simply return FALSE
 		return
 
@@ -2198,7 +2197,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 				return TRUE
 
 		if(INSERT_WIRE_STAGE)
-			if(istype(current_tool, /obj/item/cable_coil) && current_tool.amount > 5) // If the user is using a cable coil on the airlock and that cable coil is larger than 5...
+			if(istype(current_tool, /obj/item/cable_coil) && current_tool.amount >= 5) // If the user is using a cable coil on the airlock and that cable coil is larger than 5...
 				boutput(user, "You start inserting new wiring in the airlock...")
 				actions.start(new /datum/action/bar/icon/hitthingwithitem(src, user, current_tool, null, src, 10 SECONDS, /obj/machinery/door/airlock/proc/finish_inserting_wire,
 				list(current_tool), current_tool.icon, current_tool.icon_state, "You finish re-wiring the insides of the airlock."), user)
@@ -2212,9 +2211,9 @@ TYPEINFO(/obj/machinery/door/airlock)
 				src.panel_open = TRUE // Because we *did* open the cover as the first step of de-emagging it.
 				return TRUE
 
-/obj/machinery/door/airlock/proc/finish_inserting_wire(obj/item/wires) // Called after the actionbar of inserting wiring in the airlock.
+/obj/machinery/door/airlock/proc/finish_inserting_wire(obj/item/cable_coil/wires) // Called after the actionbar of inserting wiring in the airlock.
 	playsound(src, 'sound/items/Deconstruct.ogg', 40) // It's the most fitting sound, don't blame me for using it
-	wires.amount -= 5
+	wires.use(5)
 	src.demag_status = PULSE_STAGE
 
 #undef NET_ACCESS_OPTIONS
