@@ -1,4 +1,9 @@
 
+(t)fri dec 23 22
+(u)Keiiro
+(p)12480
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)The chef & bartender spare clothing can now be found in a proper catering clothing vending machine around the bar, along with multiple other job related costumes.
 (t)wed dec 21 22
 (u)Sord
 (e)🆕|C-Feature
