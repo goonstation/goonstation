@@ -425,6 +425,7 @@ var/global/list/soundCache = list(
  	"sound/impact_sounds/Slimy_Splat_2_Short.ogg" = 'sound/impact_sounds/Slimy_Splat_2_Short.ogg',\
  	"sound/impact_sounds/Stone_Cut_1.ogg" = 'sound/impact_sounds/Stone_Cut_1.ogg',\
  	"sound/impact_sounds/Stone_Scrape_1.ogg" = 'sound/impact_sounds/Stone_Scrape_1.ogg',\
+ 	"sound/impact_sounds/tube_bonk.ogg" = 'sound/impact_sounds/tube_bonk.ogg',\
  	"sound/impact_sounds/Wood_Hit_1.ogg" = 'sound/impact_sounds/Wood_Hit_1.ogg',\
  	"sound/impact_sounds/Wood_Hit_Small_1.ogg" = 'sound/impact_sounds/Wood_Hit_Small_1.ogg',\
  	"sound/impact_sounds/Wood_Snap.ogg" = 'sound/impact_sounds/Wood_Snap.ogg',\
