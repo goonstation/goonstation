@@ -321,7 +321,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 				beaker.reagents.handle_reactions()
 				src.UpdateIcon()
 				playsound(src.loc, dispense_sound, 50, 1, 0.3)
-				use_power(10)
+				use_power(amount)
 				if(src.recording_state)
 					src.recording_queue += "[params["reagentId"]]=[isnum(amount) ? amount : 10]"
 				. = TRUE
@@ -395,6 +395,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 					return
 				var/datum/reagent_group/group = locate(params["selectedGroup"]) in src.current_account.groups
 				if(istype(group) && current_account && (group in current_account.groups))
+					var/total_power_use = 0
 					for (var/reagent in group.reagents)
 						var/tuple = params2list(reagent)
 						var/key = tuple[1]
@@ -403,10 +404,11 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 							var/amt = 10
 							if (isnum(value))
 								amt = value
+							total_power_use += amt
 							beaker.reagents.add_reagent(key,amt)
 							beaker.reagents.handle_reactions()
 					src.UpdateIcon()
-					use_power(length(group.reagents) * 10)
+					use_power(total_power_use)
 				playsound(src.loc, dispense_sound, 50, 1, 0.3)
 				. = TRUE
 			if ("card")
