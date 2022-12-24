@@ -63,6 +63,8 @@
 
 	/// Icon states that exist for a given icon ref. Format is valid_icon_states[icon] = list(). Populated by is_valid_icon_state(), used for caching.
 	var/static/list/valid_icon_states = list()
+	/// Whether the last material applied updated appearance. Used for re-applying material appearance on icon update
+	var/material_applied_appearance = FALSE
 
 	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)
 		if( !name_prefixes ) name_prefixes = list()
@@ -356,6 +358,8 @@
 	if (HAS_ATOM_PROPERTY(src, PROP_ATOM_NO_ICON_UPDATES)) return
 	SEND_SIGNAL(src, COMSIG_ATOM_PRE_UPDATE_ICON)
 	update_icon(arglist(args))
+	if(src.material_applied_appearance && src.material)
+		src.setMaterialAppearance(src.material)
 	SEND_SIGNAL(src, COMSIG_ATOM_POST_UPDATE_ICON)
 	return
 

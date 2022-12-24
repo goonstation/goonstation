@@ -181,7 +181,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			src.desc += " It's probably not very valuable to a reputable buyer."
 	if(appearance)
 		src.setMaterialAppearance(mat1)
-
+	src.material_applied_appearance = appearance //set the flag for whether we want to reapply material appearance on icon update
 	src.material?.triggerOnRemove(src)
 	src.material = mat1
 	mat1.owner = src
