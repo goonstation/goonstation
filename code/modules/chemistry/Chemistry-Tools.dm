@@ -514,7 +514,7 @@ proc/ui_describe_reagents(atom/A)
 		if(locate(/obj/item/reagent_containers/glass/bucket) in target)
 			boutput(user,"<b>There's already a bucket prank set up!</b>")
 			return ..()
-		boutput("You start propping \the [src] above \the [target]...")
+		boutput(user, "You start propping \the [src] above \the [target]...")
 		SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, .proc/setup_bucket_prank, list(target, user), src.icon, src.icon_state, \
 					src.visible_message("<span class='alert'><B>[user] props a [src] above \the [target]</B></span>"), \
 					INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
@@ -523,6 +523,7 @@ proc/ui_describe_reagents(atom/A)
 		if(locate(/obj/item/reagent_containers/glass/bucket) in D) //check again, just in case callback triggers after someone else did it
 			boutput(user,"<b>There's already a bucket prank set up!</b>")
 			return
+		logTheThing(LOG_COMBAT, user, "Set up a bucket-door-prank with reagents: [log_reagents(src)] on [D]")
 		RegisterSignal(D, COMSIG_DOOR_OPENED_BY, .proc/bucket_prank)
 		user.u_equip(src)
 		src.set_loc(D)
@@ -544,6 +545,7 @@ proc/ui_describe_reagents(atom/A)
 			src.visible_message("<span class='alert'>[src] falls from \the [D][splash? ", splashing its contents on the floor" : ""].</span>")
 			return
 		else //we're in range, splash the AM, splash the floor
+			logTheThing(LOG_COMBAT, AM, "Victim of bucket-door-prank with reagents: [log_reagents(src)] on [D]")
 			src.reagents.reaction(AM, TOUCH, src.reagents.total_volume/2) //half on the mover
 			src.reagents.reaction(get_turf(D)) //half on the floor
 			if(ishuman(AM))
