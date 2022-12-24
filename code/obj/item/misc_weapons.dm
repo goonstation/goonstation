@@ -45,13 +45,13 @@ TYPEINFO(/obj/item/sword)
 	is_syndicate = 1
 	contraband = 5
 	desc = "An illegal, recalled Super Protector Friend glow sword. When activated, uses energized cyalume to create an extremely dangerous saber. Can be concealed when deactivated."
-	stamina_damage = 35 // This gets applied by obj/item/attack, regardless of if the saber is active.
+	stamina_damage = 40 // This gets applied by obj/item/attack, regardless of if the saber is active.
 	stamina_cost = 5
 	stamina_crit_chance = 35
 	var/active_force = 60
-	var/active_stamina_dmg = 40
-	var/active_stamina_cost = 40
-	var/inactive_stamina_dmg = 35
+	var/active_stamina_dmg = 30
+	var/active_stamina_cost = 30
+	var/inactive_stamina_dmg = 40
 	var/inactive_force = 1
 	var/inactive_stamina_cost = 5
 	var/state_name = "sword"
