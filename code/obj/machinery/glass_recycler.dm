@@ -184,6 +184,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 		src.glass_amt -= target_product.product_cost
 
 		src.visible_message("<span class='notice'>[src] manufactures \a [G]!</span>")
+		use_power(20 WATTS)
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
