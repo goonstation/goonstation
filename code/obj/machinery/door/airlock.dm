@@ -1,6 +1,10 @@
 // how many possible network verification codes are there (i.e. how hard is it to bruteforce)
 #define NET_ACCESS_OPTIONS 32
 
+// power usage defines
+#define OPEN_CLOSE_POWER_USAGE 50
+#define LINKED_FORCEFIELD_POWER_USAGE 100
+
 /*
 	New methods:
 	pulse - sends a pulse into a wire for hacking purposes
@@ -1663,9 +1667,9 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/open()
 	if (src.welded || src.locked || src.operating == 1 || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
 		return 0
-	src.use_power(50)
+	src.use_power(OPEN_CLOSE_POWER_USAGE)
 	if (src.linked_forcefield)
-		src.use_power(100)
+		power_usage += LINKED_FORCEFIELD_POWER_USAGE
 	.= ..()
 
 	if (narrator_mode)
@@ -1681,11 +1685,13 @@ About the new airlock wires panel:
 	if ((!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
 		if (src.linked_forcefield)
 			src.linked_forcefield.setactive(0)
+			power_usage -= LINKED_FORCEFIELD_POWER_USAGE
 		return
 	if (src.welded || src.locked || src.operating)
 		return
-	src.use_power(50)
-
+	src.use_power(OPEN_CLOSE_POWER_USAGE)
+	if (src.linked_forcefield)
+		power_usage -= LINKED_FORCEFIELD_POWER_USAGE
 	if(!..(!src.safety))
 		if (narrator_mode)
 			playsound(src.loc, 'sound/vox/door.ogg', 25, 1)
@@ -2156,3 +2162,5 @@ TYPEINFO(/obj/machinery/door/airlock)
 						. = TRUE
 
 #undef NET_ACCESS_OPTIONS
+#undef LINKED_FORCEFIELD_POWER_USAGE
+#undef OPEN_CLOSE_POWER_USAGE
