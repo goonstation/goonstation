@@ -163,6 +163,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/implanter/signaler
 	cost = 1
 	desc = "An implant that can send configurable signals. Can be used while stunned or handcuffed."
+	not_in_crates = 1
 
 /datum/syndicate_buylist/generic/spen
 	name = "Sleepy Pen"
