@@ -42,6 +42,9 @@
 
 	var/ignore_light_or_cam_opacity = FALSE
 
+	/// Set before calling open() for handling COMSIG_DOOR_OPENED_BY. Can be null. This gets immediately set to null after the signal calls.
+	var/atom/movable/bumper = null
+
 /obj/machinery/door/Bumped(atom/AM)
 	if (src.operating) return
 	if (src.isblocked()) return
@@ -367,8 +370,8 @@
 	if (src.allowed(AM))
 		if (src.density)
 			last_used = world.time
+			bumper = AM
 			if (src.open() == 1)
-				SEND_SIGNAL(src, COMSIG_DOOR_OPENED_BY, AM)
 				return 1
 			else
 				return 0
@@ -513,6 +516,8 @@
 		src.update_nearby_tiles()
 		next_timeofday_opened = 0
 		sleep(src.operation_time / 2)
+		SEND_SIGNAL(src, COMSIG_DOOR_OPENED_BY, src.bumper)
+		src.bumper = null
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"doorOpened")
 
 		if(operating == 1) //emag again
@@ -651,6 +656,7 @@
 	src.add_fingerprint(user)
 	if (src.allowed(user))
 		if (src.density)
+			src.bumper = user
 			open()
 		else
 			close()

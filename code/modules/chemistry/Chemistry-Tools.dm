@@ -511,20 +511,37 @@ proc/ui_describe_reagents(atom/A)
 	afterattack(obj/target, mob/user, flag)
 		if(!istype(target, /obj/machinery/door))
 			return ..()
-		var/obj/machinery/door/D = target
+		if(locate(/obj/item/reagent_containers/glass/bucket) in target)
+			boutput(user,"<b>There's already a bucket prank set up!</b>")
+			return ..()
+		boutput("You start propping \the [src] above \the [target]...")
+		SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, .proc/setup_bucket_prank, list(target, user), src.icon, src.icon_state, \
+					src.visible_message("<span class='alert'><B>[user] props a [src] above \the [target]</B></span>"), \
+					INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+
+	proc/setup_bucket_prank(obj/machinery/door/D, mob/user)
+		if(locate(/obj/item/reagent_containers/glass/bucket) in D) //check again, just in case callback triggers after someone else did it
+			boutput(user,"<b>There's already a bucket prank set up!</b>")
+			return
 		RegisterSignal(D, COMSIG_DOOR_OPENED_BY, .proc/bucket_prank)
 		user.u_equip(src)
-		src.set_loc(target)
+		src.set_loc(D)
 		user.visible_message("<span class='alert'>Props \the [src] above \the [D]!</span>","<span class='alert'>You prop \the [src] above \the [D]. The next person to come through will get splashed!</span>")
+		var/image/I = image(src.icon, src, src.icon_state, D.layer+0.1, ,  )
+		I.transform = matrix(I.transform, 0.5, 0.5, MATRIX_SCALE)
+		I.transform = matrix(I.transform, (D.dir & (WEST | EAST) ? 0 : -16), (D.dir & (NORTH | SOUTH) ? 0 : -16), MATRIX_TRANSLATE)
+		D.UpdateOverlays(I, "bucketprank")
 
 	proc/bucket_prank(obj/machinery/door/D, atom/movable/AM)
 		//fall off the door, splash the user, land on their head if you can
-		D.UnregisterSignal(D, COMSIG_DOOR_OPENED_BY)
-
+		//note that AM can be null, and this is caught by !IN_RANGE
+		UnregisterSignal(D, COMSIG_DOOR_OPENED_BY)
+		D.UpdateOverlays(null, "bucketprank")
+		var/splash = (src.reagents.total_volume > 1)
 		if(!IN_RANGE(AM, D, 1))
 			src.set_loc(get_turf(D))
 			src.reagents.reaction(get_turf(D))
-			src.visible_message("<span class='alert'>[src] falls from \the [D], splashing its contents on the floor.</span>")
+			src.visible_message("<span class='alert'>[src] falls from \the [D][splash? ", splashing its contents on the floor" : ""].</span>")
 			return
 		else //we're in range, splash the AM, splash the floor
 			src.reagents.reaction(AM, TOUCH, src.reagents.total_volume/2) //half on the mover
@@ -536,18 +553,18 @@ proc/ui_describe_reagents(atom/A)
 				if(isnull(H.head))
 					H.equip_if_possible(bucket_hat, H.slot_head)
 					H.set_clothing_icon_dirty()
-					H.visible_message("<span class='alert'>[src] falls from \the [D], landing on [H] like a hat! [pick("Peak comedy!","Hilarious!","What a tool!")]</span>", \
-										"<span class='alert'>[src] falls from \the [D], landing on your head like a hat!</span>")
+					H.visible_message("<span class='alert'>[src] falls from \the [D], landing on [H] like a hat[splash? ", and splashing [him_or_her(H)] with its contents" : ""]! [pick("Peak comedy!","Hilarious!","What a tool!")]</span>", \
+										"<span class='alert'>[src] falls from \the [D], landing on your head like a hat[splash? ", and splashing you with its contents" : ""]!</span>")
 					qdel(src) //it's a hat now
 				else
 					bucket_hat.set_loc(get_turf(H))
-					H.visible_message("<span class='alert'>[src] falls from \the [D], splashing [H] and falling to the floor.</span>", \
-										"<span class='alert'>[src] falls from \the [D], splashing you and bouncing off your hat.</span>")
+					H.visible_message("<span class='alert'>[src] falls from \the [D], [splash? "splashing" : "bouncing off"] [H] and falling to the floor.</span>", \
+										"<span class='alert'>[src] falls from \the [D], [splash? "splashing you and " : ""]bouncing off your hat.</span>")
 					qdel(src) //it's a hat now
 			else
 				//aw, fine, it just falls on the floor
 				src.set_loc(get_turf(D))
-				D.visible_message("<span class='alert'>[src] falls from \the [D], splashing [AM]!</span>")
+				D.visible_message("<span class='alert'>[src] falls from \the [D], [splash? "splashing" : "bouncing off"] [AM]!</span>")
 
 
 
