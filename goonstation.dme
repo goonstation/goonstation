@@ -929,7 +929,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\events\gimmick\power.dm"
 #include "code\modules\events\gimmick\skeletons.dm"
 #include "code\modules\events\gimmick\slippery.dm"
-#include "code\modules\events\gimmick\vortexes.dm"
+#include "code\modules\events\vortexes.dm"
 #include "code\modules\events\gimmick\whoopsies.dm"
 #include "code\modules\events\minor\appendicitis_event.dm"
 #include "code\modules\events\minor\artifact.dm"

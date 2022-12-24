@@ -1,5 +1,20 @@
 
+(t)fri dec 23 22
+(u)Keiiro
+(p)12480
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)The chef & bartender spare clothing can now be found in a proper catering clothing vending machine around the bar, along with multiple other job related costumes.
 (t)wed dec 21 22
+(u)Sord
+(e)🆕|C-Feature
+(+)Spooky critter summoning vortexes can now occur as a random event after 45 minutes on Classic and 60 minutes on RP
+(u)Sord
+(e)⚖|C-Balance
+(+)Csaber has received a slight buff. Reduced stamina cost per swing.
+(u)Amylizzle
+(p)12471
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Some critters were butcherable when they shouldn't have been. If you find a critter that isn't butcherable but should be, report it as a bug.
 (u)Conchuckter, sprites by NightmareChamillian
 (p)9083
 (e)🆕🎨⚗|C-Feature, C-Sprites, A-Chemistry
