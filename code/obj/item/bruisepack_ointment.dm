@@ -11,6 +11,11 @@
 	stamina_damage = 3
 	stamina_cost = 3
 	stamina_crit_chance = 3
+	inventory_counter_enabled = TRUE
+
+	New()
+		..()
+		create_inventory_counter()
 
 	examine()
 		. = ..()
@@ -71,7 +76,7 @@
 		src.amount--
 		if (src.amount <= 0)
 			qdel(src)
-		return
+		inventory_counter?.update_number(amount)
 
 /obj/item/medical/bruise_pack
 	name = "bruise pack"
