@@ -12,6 +12,7 @@ TYPEINFO(/obj/machinery/secscanner)
 	layer = 2
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
+	power_usage = 5
 	var/timeBetweenUses = 20//I can see this being fun
 	var/success_sound = 'sound/machines/chime.ogg'
 	var/fail_sound = 'sound/machines/alarm_a.ogg'
