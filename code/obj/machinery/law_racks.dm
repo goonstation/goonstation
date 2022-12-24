@@ -9,6 +9,7 @@
 	layer = EFFECTS_LAYER_UNDER_1 //high layer, same as trees which are also tall as shit
 	_health = 120 //more resistant to damage since it can no longer be mechscanned, CE manudrive is the only source of blueprint
 	_max_health = 120
+	power_usage = 1000 // + 100 per law
 	///unique id for logs - please don't ever assign except in ai_law_rack_manager.register
 	var/unique_id = "OMG THIS WASN'T SET OH NO THIS SHOULD NEVER HAPPEN AHHH"
 	var/datum/light/light
@@ -602,6 +603,12 @@
 		var/list/mobtextlist = list()
 		for(var/mob/living/M in affected_mobs)
 			mobtextlist += constructName(M, "admin")
+		power_usage = 1000
+		for (var/i in 1 to MAX_CIRCUITS)
+			if (src.law_circuits[i])
+				power_usage += 100
+
+
 		logTheThing(LOG_STATION, src, "Law Update:<br> [src.format_for_logs()]<br>The law update affects the following mobs: "+mobtextlist.Join(", "))
 		update_last_laws()
 
