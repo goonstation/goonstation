@@ -1,4 +1,3 @@
-
 /obj/machinery/sim/transmitter
 	name = "Sim Mainframe"
 	desc = "Controls the simulation room and V-space"
@@ -6,6 +5,7 @@
 	icon_state = "mastercomp"
 	anchored = 1
 	density = 1
+	power_usage = 3000
 	var/active = 1
 	var/id = 1
 	var/vspace_id = 1
@@ -36,7 +36,7 @@
 		if(!active)
 			src.active = 1
 
-	use_power(3000)
+	..()
 //	src.updateDialog()
 
 /*

@@ -71,11 +71,6 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 				AM.set_loc(T)
 	. = ..()
 
-/obj/machinery/traymachine/process() //Hey guess what power consumption is only automated when something uses wired power
-	..()
-	if (!(status & NOPOWER)) //oh my *fucking* god there's no checks all the way between use_power and the channel info on APCs
-		use_power(power_usage, EQUIP)
-
 /obj/machinery/traymachine/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	if (my_tray && my_tray.loc != src)

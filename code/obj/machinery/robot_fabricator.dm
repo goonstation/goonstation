@@ -8,6 +8,7 @@ TYPEINFO(/obj/machinery/robotic_fabricator)
 	icon_state = "fab-idle"
 	density = 1
 	anchored = 1
+	power_usage = 1000
 	var/metal_amount = 0
 	var/operating = 0
 	var/obj/item/parts/robot_parts/being_built = null
@@ -44,7 +45,7 @@ TYPEINFO(/obj/machinery/robotic_fabricator)
 	if (status & (NOPOWER | BROKEN))
 		return
 
-	use_power(1000)
+	..()
 
 /obj/machinery/robotic_fabricator/attack_hand(user)
 	var/dat

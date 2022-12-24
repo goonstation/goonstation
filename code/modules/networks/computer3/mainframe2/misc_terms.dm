@@ -3527,7 +3527,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 			return 1
 
 		if(active)
-			use_power(power_usage)
+			use_power(power_usage) // power use doubles when active
 
 		return 0
 
