@@ -536,19 +536,19 @@ proc/ui_describe_reagents(atom/A)
 				if(isnull(H.head))
 					H.equip_if_possible(bucket_hat, H.slot_head)
 					H.set_clothing_icon_dirty()
-					D.visible_message("<span class='alert'>[src] falls from \the [D], landing on [H] like a hat! [pick("Peak comedy!","Hilarious!","What a tool!")]</span>", \
+					H.visible_message("<span class='alert'>[src] falls from \the [D], landing on [H] like a hat! [pick("Peak comedy!","Hilarious!","What a tool!")]</span>", \
 										"<span class='alert'>[src] falls from \the [D], landing on your head like a hat!</span>")
 					qdel(src) //it's a hat now
 				else
 					bucket_hat.set_loc(get_turf(H))
-					D.visible_message("<span class='alert'>[src] falls from \the [D], splashing [H] and falling to the floor.</span>", \
+					H.visible_message("<span class='alert'>[src] falls from \the [D], splashing [H] and falling to the floor.</span>", \
 										"<span class='alert'>[src] falls from \the [D], splashing you and bouncing off your hat.</span>")
 					qdel(src) //it's a hat now
 			else
 				//aw, fine, it just falls on the floor
 				src.set_loc(get_turf(D))
-				D.visible_message("<span class='alert'>[src] falls from \the [D], landing on [AM]</span>", \
-										"<span class='alert'>[src] falls from \the [D] and splashing you!</span>")
+				D.visible_message("<span class='alert'>[src] falls from \the [D], splashing [AM]!</span>")
+
 
 
 	custom_suicide = 1
