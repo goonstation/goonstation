@@ -4128,7 +4128,6 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 					var/obj/M = pick(src.contents)
 					if (istype(M.artifact,/datum/artifact/))
 						var/datum/artifact/A = M.artifact
-						var/ohms = src.voltage / src.amperage
 
 						if (A.react_elec[1] == "equal")
 							src.sensed[1] = src.amperage
