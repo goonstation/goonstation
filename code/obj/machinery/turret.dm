@@ -126,9 +126,9 @@
 			continue
 		if (isdead(C) || isghostcritter(C))
 			continue
-		if (!istype(C.loc,/turf))
+		if (!(istype(C.loc,/turf) || istype(C.loc, /obj/vehicle)))
 			continue
-		if (!istype(C.loc.loc,A))
+		if (!(istype(C.loc.loc,A) || istype(C.loc.loc.loc, A)))
 			continue
 		if ((src.req_access || src.req_access_txt) && src.allowed(C))
 			continue //optional access whitelist
