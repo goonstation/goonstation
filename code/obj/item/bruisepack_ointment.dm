@@ -26,12 +26,14 @@
 			src.add_fingerprint(user)
 			var/obj/item/medical/split = new src.type(user)
 			split.amount = 1
+			split.inventory_counter?.update_number(split.amount)
 			user.put_in_hand_or_drop(split)
 
 			src.amount--
 			if (src.amount < 1)
 				qdel(src)
 				return
+			src.inventory_counter?.update_number(src.amount)
 		else
 			..()
 			return
@@ -45,9 +47,12 @@
 
 		if (W.amount + src.amount > 5)
 			src.amount = (W.amount + src.amount) - 5
+			src.inventory_counter?.update_number(src.amount)
 			W.amount = 5
+			W.inventory_counter?.update_number(W.amount)
 		else
 			W.amount += src.amount
+			W.inventory_counter?.update_number(W.amount)
 			qdel(src)
 		return
 
@@ -76,7 +81,7 @@
 		src.amount--
 		if (src.amount <= 0)
 			qdel(src)
-		inventory_counter?.update_number(amount)
+		src.inventory_counter?.update_number(src.amount)
 
 /obj/item/medical/bruise_pack
 	name = "bruise pack"
@@ -88,6 +93,7 @@
 		name = "Tissue Mender"
 		heal_brute = 60
 		amount = INFINITY
+		inventory_counter_enabled = FALSE
 
 /obj/item/medical/ointment
 	name = "ointment"
@@ -99,3 +105,4 @@
 		name = "Burn Salve Dispenser"
 		heal_burn = 40
 		amount = INFINITY
+		inventory_counter_enabled = FALSE
