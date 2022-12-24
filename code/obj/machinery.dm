@@ -101,7 +101,7 @@
 				power_credit = power_usage
 				return
 		if (!(status & NOPOWER))
-			use_power(src.power_usage, src.power_channel)
+			use_power(src.power_usage * mult, src.power_channel)
 
 /obj/machinery/proc/gib(atom/location)
 	if (!location) return
