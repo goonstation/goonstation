@@ -180,7 +180,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (status & NOPOWER)
 			return
 
-		power_usage = src.active_power_consumption + 200 * mult
 		..()
 
 		if (src.mode == "working")

@@ -70,10 +70,6 @@ TYPEINFO(/obj/machinery/cell_charger)
 /obj/machinery/cell_charger/process(mult)
 	if (status & BROKEN)
 		return
-	if (charging)
-		power_usage = 50 + src.chargerate / CELLRATE
-	else
-		power_usage = 50
 	..()
 	//boutput(world, "ccpt [charging] [stat]")
 	if(status & NOPOWER)

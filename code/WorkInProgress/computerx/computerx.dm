@@ -15,6 +15,7 @@ var/compx_gridx_max = 5
 	icon_state = "computer_generic"
 	density = 1
 	anchored = 1
+	power_usage = 250
 	var/base_icon_state = "computer_generic"
 	var/datum/computer/file/terminalx_program/os/host_program //Our best pal, the operating system!
 	var/list/processing_programs = list()
@@ -82,8 +83,7 @@ var/compx_gridx_max = 5
 	process()
 		if(status & (NOPOWER|BROKEN))
 			return
-		use_power(250)
-
+		..()
 		for(var/datum/computer/file/terminalx_program/P in src.processing_programs)
 			P.process()
 
