@@ -266,7 +266,11 @@
 			mod_weak = -INFINITY
 			mod_stun = -INFINITY
 			hulk = 1
-		if ((H.glasses && istype(H.glasses, /obj/item/clothing/glasses/thermal)) || H.eye_istype(/obj/item/organ/eye/cyber/thermal))
+		var/helmet_thermal = FALSE
+		if (istype(H.head, /obj/item/clothing/head/helmet/space/industrial))
+			var/obj/item/clothing/head/helmet/space/industrial/helmet = H.head
+			helmet_thermal = helmet.visor_enabled && helmet.visor_enabled
+		if (helmet_thermal || istype(H.glasses, /obj/item/clothing/glasses/thermal) || H.eye_istype(/obj/item/organ/eye/cyber/thermal))
 			H.show_text("<b>Your thermals intensify the bright flash of light, hurting your eyes quite a bit.</b>", "red")
 			mod_animation = 20
 			if (hulk == 0)

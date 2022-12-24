@@ -64246,7 +64246,6 @@
 /obj/pool{
 	density = 0;
 	dir = 8;
-	icon = 'icons/obj/fluid.dmi';
 	icon_state = "ladder";
 	name = "ladder"
 	},
@@ -64472,13 +64471,11 @@
 	name = "cool pool lighting"
 	},
 /turf/unsimulated/floor/pool{
-	icon = 'icons/obj/fluid.dmi';
 	name = "pool floor"
 	},
 /area/centcom/garden)
 "dLF" = (
 /turf/unsimulated/floor/pool{
-	icon = 'icons/obj/fluid.dmi';
 	name = "pool floor"
 	},
 /area/centcom/garden)
@@ -64598,7 +64595,6 @@
 "dLU" = (
 /obj/item/inner_tube,
 /turf/unsimulated/floor/pool{
-	icon = 'icons/obj/fluid.dmi';
 	name = "pool floor"
 	},
 /area/centcom/garden)
@@ -65218,14 +65214,12 @@
 	amount = 10000
 	},
 /turf/unsimulated/floor/pool{
-	icon = 'icons/obj/fluid.dmi';
 	name = "pool floor"
 	},
 /area/centcom/garden)
 "dNo" = (
 /obj/item/beach_ball,
 /turf/unsimulated/floor/pool{
-	icon = 'icons/obj/fluid.dmi';
 	name = "pool floor"
 	},
 /area/centcom/garden)

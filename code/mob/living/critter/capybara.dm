@@ -6,4 +6,4 @@
 	is_npc = TRUE
 	ai_type = /datum/aiHolder/capybara
 	can_lie = FALSE
-
+	butcherable = 2 //2 makes butchering this creature an abominable act. Which it is. You monsters.
