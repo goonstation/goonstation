@@ -461,9 +461,6 @@ TYPEINFO(/obj/machinery/plantpot)
 			UpdateIcon()
 			update_name()
 
-		if(!HAS_FLAG(status, NOPOWER))
-			use_power(power_usage)
-
 	attackby(obj/item/W, mob/user)
 		if(src.current)
 			// Inside this if block we'll handle reactions for specific kinds of plant.

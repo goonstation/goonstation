@@ -198,7 +198,6 @@ TYPEINFO(/obj/machinery/networked/storage)
 		..()
 		if(status & NOPOWER)
 			return
-		use_power(200)
 
 		if(!host_id || !link)
 			return
@@ -705,7 +704,6 @@ TYPEINFO(/obj/machinery/networked/storage)
 		..()
 		if(status & NOPOWER)
 			return
-		use_power(200)
 
 		if(!host_id || !link)
 			return
@@ -1118,7 +1116,6 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 		..()
 		if(status & NOPOWER)
 			return
-		use_power(120)
 
 		if(!host_id || !link)
 			return
@@ -1484,7 +1481,6 @@ TYPEINFO(/obj/machinery/networked/radio)
 		..()
 		if(status & NOPOWER)
 			return
-		use_power(100)
 
 		if(!host_id || !link)
 			return
@@ -1870,7 +1866,6 @@ TYPEINFO(/obj/machinery/networked/printer)
 		if(status & NOPOWER)
 			printing = 0
 			return
-		use_power(200)
 
 		if(!host_id || !link)
 			return
@@ -2282,7 +2277,6 @@ TYPEINFO(/obj/machinery/networked/printer)
 		..()
 		if(status & NOPOWER)
 			return
-		use_power(200)
 
 		if(!host_id || !link)
 			return
@@ -2520,7 +2514,6 @@ TYPEINFO(/obj/machinery/networked/printer)
 		..()
 		if (status & NOPOWER)
 			return
-		use_power(power_usage)
 
 		if (active_time > 0)
 			active_time--
@@ -3056,9 +3049,6 @@ TYPEINFO(/obj/machinery/networked/printer)
 		..()
 		if (status & NOPOWER)
 			return
-
-		use_power(power_usage)
-
 		return
 
 	receive_signal(datum/signal/signal)
@@ -4482,8 +4472,6 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 			return
 
 		if (src.active)
-			use_power(80)
-
 			if (src.temperature < src.temptarget)
 				src.temperature += min(5, src.temptarget-src.temperature)
 			else if (src.temperature > src.temptarget)
@@ -4499,7 +4487,6 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				src.visible_message("<b>[src.name]</b> reaches its target temperature and shuts down.")
 				playsound(src.loc, 'sound/machines/chime.ogg', 50, 1)
 		else
-			use_power(20)
 			if (src.temperature > 310)
 				src.temperature--
 			else if (src.temperature < 310)
@@ -4928,7 +4915,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 		return
 
 	process()
-		if (active)
+		if (src.active)
 			power_usage = 300
 		else
 			power_usage = 200
@@ -4936,7 +4923,6 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 			return
 
 		if (src.active)
-			use_power(100)
 
 			if (lastSignal)
 				lastSignal.signal = "[output_word]"
@@ -4951,9 +4937,6 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				pulses--
 				if (pulses < 1)
 					active = 0
-
-		else
-			use_power(20)
 
 		return
 

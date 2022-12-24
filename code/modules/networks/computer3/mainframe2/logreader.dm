@@ -273,7 +273,6 @@ TYPEINFO(/obj/machinery/networked/logreader)
 		..()
 		if(status & NOPOWER)
 			return
-		use_power(100)
 
 		if(!host_id || !link)
 			return

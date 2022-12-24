@@ -251,7 +251,6 @@
 		..()
 		if(status & (NOPOWER|BROKEN|MAINT) || !processing)
 			return
-		use_power(500)
 		if(prob(3))
 			SPAWN(1 DECI SECOND)
 				playsound(src.loc, pick(ambience_computer), 50, 1)

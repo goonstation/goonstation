@@ -379,13 +379,8 @@ TYPEINFO(/obj/machinery/disposal)
 
 		if (!loc) return
 
-		use_power(100)		// base power usage
-
 		if(mode != DISPOSAL_CHUTE_CHARGING)		// if off or ready, no need to charge
 			return
-
-		// otherwise charge
-		use_power(500)		// charging power usage
 
 		var/atom/L = loc						// recharging from loc turf
 		var/datum/gas_mixture/env = L.return_air()

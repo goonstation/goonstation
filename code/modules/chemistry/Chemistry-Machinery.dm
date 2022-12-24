@@ -196,7 +196,6 @@ TYPEINFO(/obj/machinery/chem_heater)
 
 	process()
 		..()
-		use_power(power_usage)
 
 	proc/active()
 		if (!active) return
