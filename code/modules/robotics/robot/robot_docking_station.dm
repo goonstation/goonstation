@@ -256,8 +256,9 @@ TYPEINFO(/obj/machinery/recharge_station)
 				R.cell.charge = R.cell.maxcharge
 				return
 			else
-				R.cell.charge += src.chargerate * mult
-				src.use_power(50)
+				var/added_charge = src.chargerate * mult
+				R.cell.charge += added_charge
+				src.use_power(added_charge / CELLRATE)
 				return
 
 		else if (isshell(src.occupant))
@@ -269,8 +270,9 @@ TYPEINFO(/obj/machinery/recharge_station)
 				H.cell.charge = H.cell.maxcharge
 				return
 			else
-				H.cell.charge += src.chargerate * mult
-				src.use_power(50)
+				var/added_charge = src.chargerate * mult
+				H.cell.charge += added_charge
+				src.use_power(added_charge / CELLRATE)
 				return
 
 		else if (ishuman(occupant) && src.conversion_chamber)
