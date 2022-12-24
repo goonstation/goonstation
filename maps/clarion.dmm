@@ -2662,8 +2662,7 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
-	name = "autoname  - SS13";
-	pixel_y = 21
+	name = "autoname  - SS13"
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quartersA{
@@ -12305,19 +12304,17 @@
 	dir = 4
 	},
 /obj/decal/stripe_delivery,
-/turf/simulated/floor,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	name = "autoname  - SS13";
+	pixel_y = 21;
+	tag = ""
+	},
+/turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "azE" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
-	},
-/obj/storage/closet/office,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname  - SS13";
-	pixel_x = 10;
-	tag = ""
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
@@ -12621,7 +12618,7 @@
 	},
 /obj/machinery/navbeacon/mule/catering_north,
 /obj/decal/stripe_caution,
-/turf/simulated/floor,
+/turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "aAx" = (
 /obj/disposalpipe/segment{
@@ -12957,12 +12954,13 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/bar,
+/obj/access_spawn/kitchen,
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8;
-	name = "Kitchen"
+	name = "Bar"
 	},
-/obj/firedoor_spawn,
-/obj/access_spawn/kitchen,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "aBo" = (
@@ -12988,9 +12986,6 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "aBs" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/storage/secure/closet/civilian/kitchen,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -16444,10 +16439,12 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "aJP" = (
-/obj/storage/closet/wardrobe/black/formalwear,
-/obj/disposalpipe/segment,
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/bar)
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
+/obj/machinery/vending/jobclothing/catering,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/kitchen)
 "aJQ" = (
 /obj/submachine/ice_cream_dispenser,
 /obj/machinery/status_display{
@@ -24748,8 +24745,10 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/obj/machinery/computer/operating,
 /obj/decal/stripe_caution,
+/obj/machinery/computer/operating{
+	id = "OR1"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "bcx" = (
@@ -28439,12 +28438,14 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bmC" = (
-/obj/machinery/optable,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /obj/item/paper/book/from_file/medical_surgery_guide,
 /obj/decal/stripe_caution,
+/obj/machinery/optable{
+	id = "OR1"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "bmE" = (
@@ -29160,10 +29161,12 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "bok" = (
-/obj/machinery/computer/operating,
 /obj/decal/tile_edge/line/white,
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/computer/operating{
+	id = "robotics"
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -41128,15 +41131,11 @@
 	},
 /area/station/bridge)
 "cNv" = (
-/obj/disposalpipe/segment/food{
+/obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/table/reinforced/auto,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/suit/apron,
-/obj/item/clothing/head/souschefhat,
-/turf/simulated/floor/specialroom/cafeteria,
+/obj/storage/closet/office,
+/turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "cPR" = (
 /obj/cable{
@@ -42367,7 +42366,6 @@
 /turf/simulated/floor/wood,
 /area/station/engine/engineering/ce/private)
 "fFW" = (
-/obj/machinery/optable,
 /obj/decal/tile_edge/stripe{
 	dir = 10;
 	tag = ""
@@ -42377,6 +42375,9 @@
 	},
 /obj/decal/tile_edge/stripe/corner/extra_big{
 	dir = 5
+	},
+/obj/machinery/optable{
+	id = "robotics"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/robotics)
@@ -85143,9 +85144,9 @@ awL
 jgt
 oKd
 ayX
-azF
-aAy
-aBq
+aJP
+aAx
+cNv
 aCx
 aDw
 aEE
@@ -85153,7 +85154,7 @@ aFJ
 aGw
 aHD
 aGw
-aJP
+aGw
 bMF
 aMs
 aNH
@@ -85400,9 +85401,9 @@ awM
 axA
 ayo
 ayX
-cNv
-aAz
-aBs
+azF
+aAy
+aBq
 aCz
 ukY
 aEF
@@ -87202,7 +87203,7 @@ ayX
 vsD
 aAC
 cfN
-aAC
+aAD
 kdK
 ayX
 aFQ
@@ -87460,7 +87461,7 @@ dMU
 aAE
 oOn
 aAC
-aAD
+aBs
 ayX
 aqu
 aGB
