@@ -1073,6 +1073,7 @@ TYPEINFO(/obj/machinery/emitter)
 			src.dir &= 12 // Cardinalize
 		src.visible_message("<span class='alert'><b>[src]</b> fires a bolt of energy!</span>")
 		shoot_projectile_DIR(src, current_projectile, dir)
+		use_power(current_projectile.power)
 
 		if(prob(35))
 			elecflash(src)
