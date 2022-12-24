@@ -93,11 +93,15 @@
 	// by /datum/controller/game_controller/process() when a game round is active
 	// Any regular action of the machine is executed by this proc.
 	// For machines that are part of a pipe network, this routine also calculates the gas flow to/from this machine.
-	if (machines_may_use_wired_power && power_usage)
-		power_change()
-		if (!(status & NOPOWER) && wire_powered)
-			use_power(power_usage, power_channel)
-			power_credit = power_usage
+	if (src.power_usage)
+		if (machines_may_use_wired_power)
+			power_change()
+			if (!(status & NOPOWER) && wire_powered)
+				use_power(src.power_usage, src.power_channel)
+				power_credit = power_usage
+				return
+		if (!(status & NOPOWER))
+			use_power(src.power_usage, src.power_channel)
 
 /obj/machinery/proc/gib(atom/location)
 	if (!location) return
