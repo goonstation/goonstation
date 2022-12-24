@@ -864,6 +864,8 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 			UnsubscribeProcess()
 		if(heating)
 			heat_up()
+		else
+			src.power_usage = initial(src.power_usage)
 		if(distilling)
 			distill(mult)
 		if(cracking)
