@@ -1494,7 +1494,7 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 			return
 		if (!A.powered(EQUIP))
 			return
-		A.use_power(EQUIP, 5000)
+		A.use_power(5000, EQUIP)
 		A.UpdateIcon()
 
 		for (var/mob/M in AIviewers(src, null))
