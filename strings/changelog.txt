@@ -1,4 +1,7 @@
 
+(t)sun dec 25 22
+(u)Sord
+(+)Vortexes random event now plays a  warning sound and has a delay before the vortexes sppear
 (t)fri dec 23 22
 (u)Keiiro
 (p)12480

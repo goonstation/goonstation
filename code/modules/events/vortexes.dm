@@ -24,17 +24,18 @@
 	event_effect(var/source)
 		..()
 
-		var/sensortext = pick("sensors", "technicians", "probes", "satellites", "monitors", "best chaplains", "worst chaplains", "anomaly detectors", "interns", "void specialists")
-		var/pickuptext = pick("picked up", "detected", "found", "sighted", "reported", "accidentally summoned", "purposely summoned")
-		var/anomlytext = pick("vortex of doom", "spatial disturbance","evil anomaly", "doom portal", "summoning of pain")
-		var/ohshittext = pick("en route for collision with", "rapidly approaching", "heading towards", "gently meandering towards", "headed straight for")
-		command_alert("Our [sensortext] have [pickuptext] \a [anomlytext] and it's [ohshittext] the station.", "Anomaly Alert", alert_origin = ALERT_ANOMALY)
+		playsound_global(world, 'sound/machines/engine_alert2.ogg', 40)
+		var/sensortext = pick("sensors", "technicians", "probes", "satellites", "monitors", "best chaplains", "worst chaplains", "anomaly detectors", "interns", "void specialists", "best group of staff assistants", "worst group of staff assistants")
+		var/pickuptext = pick("picked up", "detected", "found", "sighted", "reported", "accidentally summoned", "purposely summoned", "noticed", "noticed after a night of drinking")
+		var/anomlytext = pick("vortex of doom", "spatial disturbance","evil anomaly", "doom portal", "summoning of pain", "really weird portal", "group of dangerous looking portals")
+		var/ohshittext = pick("en route for collision with", "rapidly approaching", "heading towards", "gently meandering towards", "headed straight for", "kinda headed in the direction of")
+		command_alert("Our [sensortext] have [pickuptext] \a [anomlytext] and it's [ohshittext] the station. You have approximately 60 seconds until it arrives.", "Anomaly Alert", alert_origin = ALERT_ANOMALY)
 
 	event_effect(var/source)
 		..()
 		var/turf/vortexpick = null
 
-		SPAWN(0)
+		SPAWN(60 SECONDS)
 			for(var/i in 1 to length(random_floor_turfs))
 				vortexpick = pick(random_floor_turfs)
 				var/obj/vortex/V = new /obj/vortex
