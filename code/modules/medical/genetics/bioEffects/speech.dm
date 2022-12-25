@@ -818,7 +818,7 @@
 	scanner_visibility = FALSE
 	can_research = FALSE
 	can_make_injector = FALSE
-	can_copy =
+	can_copy = FALSE
 	can_reclaim = FALSE
 	can_scramble = FALSE
 	curable_by_mutadone = FALSE
