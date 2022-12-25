@@ -67101,13 +67101,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "rnd" = (
-/obj/machinery/manufacturer/general{
-	desc = "It's covered in more gunk than a truck stop ashtray. Is this thing even safe?";
-	free_resource_amt = 2;
-	malfunction = 1;
-	name = "grody manufacturer";
-	wires = 11
-	},
+/obj/machinery/manufacturer/general/grody,
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
