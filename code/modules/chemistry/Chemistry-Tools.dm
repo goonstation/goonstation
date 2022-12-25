@@ -551,7 +551,7 @@ proc/ui_describe_reagents(atom/A)
 			if(ishuman(AM))
 				//the bucket lands on your head for maximum comedy
 				var/mob/living/carbon/human/H = AM
-				var/obj/item/clothing/head/helmet/bucket/hat/bucket_hat = new hat_bucket_type(src.loc)
+				var/obj/item/clothing/head/helmet/bucket/hat/bucket_hat = new src.hat_bucket_type(src.loc)
 				if(isnull(H.head))
 					H.equip_if_possible(bucket_hat, H.slot_head)
 					H.set_clothing_icon_dirty()

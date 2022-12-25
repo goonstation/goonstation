@@ -370,7 +370,7 @@
 	if (src.allowed(AM))
 		if (src.density)
 			last_used = world.time
-			bumper = AM
+			src.bumper = AM
 			if (src.open() == 1)
 				return 1
 			else
