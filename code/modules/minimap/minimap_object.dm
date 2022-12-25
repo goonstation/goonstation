@@ -234,9 +234,9 @@
 		var/x = round((text2num(param_list["icon-x"]) - minimap.minimap_render.pixel_x) / (minimap.zoom_coefficient * minimap.map_scale))
 		var/y = round((text2num(param_list["icon-y"]) - minimap.minimap_render.pixel_y) / (minimap.zoom_coefficient * minimap.map_scale))
 
-		if (dy > 1 && minimap.zoom_coefficient < 20)
+		if (dy > 1)
 			minimap.zoom_on_point(minimap.zoom_coefficient * 1.1, x, y)
-		else if (dy < 1 && minimap.zoom_coefficient > 1)
+		else if (dy < 1)
 			minimap.zoom_on_point(minimap.zoom_coefficient * 0.9, x, y)
 
 	Click(location, control, params)

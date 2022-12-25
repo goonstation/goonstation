@@ -112,7 +112,9 @@
 			"placable_marker_states" = placable_marker_states,
 			"placable_marker_images" = placable_marker_images,
 			"x" = 1,
-			"y" = 1
+			"y" = 1,
+			"icon" = "pin",
+			"image" = placable_marker_images["pin"]
 		)
 
 	ui_data(mob/user)

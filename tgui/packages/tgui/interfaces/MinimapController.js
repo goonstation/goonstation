@@ -15,13 +15,13 @@ export const MinimapController = (params, context) => {
     showNewMarkerMenu,
     placable_marker_states,
     placable_marker_images,
+    icon,
     image,
     x,
     y,
   } = data;
 
   const [name, setName] = useLocalState(context, 'name');
-  const [icon, setIcon] = useLocalState(context, 'icon');
 
   const toggleNewMarkerMenu = () => {
     data.showNewMarkerMenu = !showNewMarkerMenu;
@@ -38,7 +38,7 @@ export const MinimapController = (params, context) => {
   };
 
   const setImage = (value) => {
-    setIcon(value);
+    data.icon = value;
     data.image = placable_marker_images[value];
   };
 
@@ -128,6 +128,7 @@ export const MinimapController = (params, context) => {
                           onChange={(e, value) => setName(value)}
                         />
                         <Dropdown
+                          selected={icon}
                           width="150px"
                           options={placable_marker_states}
                           onSelected={(value) => setImage(value)}
@@ -136,7 +137,7 @@ export const MinimapController = (params, context) => {
                         <Flex mt="10px" justify="space-between">
                           <Flex.Item>
                             <NumberInput
-                              width="70px"
+                              className="minimap-controller__number-inputs"
                               minValue={1}
                               maxValue={300}
                               value={x}
@@ -146,7 +147,7 @@ export const MinimapController = (params, context) => {
                           </Flex.Item>
                           <Flex.Item>
                             <NumberInput
-                              width="70px"
+                              className="minimap-controller__number-inputs"
                               minValue={1}
                               maxValue={300}
                               value={y}
@@ -192,11 +193,7 @@ export const MinimapController = (params, context) => {
                     <Flex.Item>
                       {Object.keys(minimap_markers).map(marker => (
                         <Flex key={data.minimap_markers[marker]}
-                          backgroundColor={"rgba(0, 0, 0, 0.3)"}
-                          justify="space-between"
-                          p="5px"
-                          pb="1px"
-                          mb="4px"
+                          className="minimap-controller__marker-list"
                         >
                           <Flex.Item inline>
                             <Flex.Item
@@ -214,16 +211,16 @@ export const MinimapController = (params, context) => {
                             inline
                           >
                             <Button
+                              className="minimap-controller__buttons"
                               icon={data.minimap_markers[marker].visible ? "eye" : "eye-slash"}
                               color={data.minimap_markers[marker].visible ? "green" : "red"}
-                              fontSize={1.7}
                               onClick={() => act('toggle_visibility', { index: data.minimap_markers[marker].index })}
                             />
                             <Button
+                              className="minimap-controller__buttons"
                               icon="trash-alt"
                               color="red"
                               disabled={!data.minimap_markers[marker].can_be_deleted}
-                              fontSize={1.7}
                               onClick={() => act('delete_marker', { index: data.minimap_markers[marker].index })}
                             />
                           </Flex.Item>

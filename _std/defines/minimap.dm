@@ -1,5 +1,5 @@
 // Determines the minimap types the icon/area should be displayed on.
-#define MAP_ALL			(~0)
+#define MAP_ALL			(~0) // Sets all bits to 1, being the binary not of 0; in effect, enabling all flags in the bitflag.
 #define MAP_AI			(1<<0)
 #define MAP_SYNDICATE	(1<<1)
 

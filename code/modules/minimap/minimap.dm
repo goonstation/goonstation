@@ -124,6 +124,11 @@
 
 	var/icon/initial_minimap_icon
 
+	///The minimum value which the zoom coefficient should be permitted to zoom to.
+	var/min_zoom = 1
+	///The maximum value which the zoom coefficient should be permitted to zoom to.
+	var/max_zoom = 20
+
 	///The width in pixels between the edge of the station and the edge of the map.
 	var/border_width = 20
 
@@ -165,7 +170,7 @@
 
 	///Zooms the minimap by the zoom coefficient while moving the minimap so that the specified point lies at the same position on the displayed minimap as it did prior to the zoom. The alpha mask takes care of any map area scaled outside of the map boundaries.
 	proc/zoom_on_point(var/zoom, var/map_x, var/map_y)
-		if (!zoom || zoom < 1 || zoom > 20 || !map_x || !map_y)
+		if (!zoom || zoom < min_zoom || zoom > max_zoom || !map_x || !map_y)
 			return
 
 		var/zoom_factor = (zoom / src.zoom_coefficient)
@@ -198,7 +203,7 @@
 
 	///Zooms the minimap by the zoom coefficient while moving the minimap so that the specified point lies at the centre of the displayed minimap. The alpha mask takes care of any map area scaled outside of the map boundaries.
 	proc/centre_on_point(var/zoom, var/focus_x, var/focus_y)
-		if (!zoom || zoom < 1 || zoom > 20 || !focus_x || !focus_y)
+		if (!zoom || zoom < min_zoom || zoom > max_zoom || !focus_x || !focus_y)
 			return
 
 		var/zoom_factor = (zoom / src.zoom_coefficient)
