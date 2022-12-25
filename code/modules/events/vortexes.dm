@@ -1,6 +1,7 @@
 /datum/random_event/major/summonvortexes
 	name = "Spawn some spooky vortexes"
 	customization_available = 1
+	weight = 60
 	var/derelictchoice = null
 #ifdef RP_MODE
 	required_elapsed_round_time = 60 MINUTES
