@@ -25316,7 +25316,6 @@
 	},
 /obj/access_spawn/kitchen,
 /obj/firedoor_spawn,
-/obj/access_spawn/bar,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "bPo" = (
@@ -34876,7 +34875,6 @@
 	},
 /obj/access_spawn/bar,
 /obj/firedoor_spawn,
-/obj/access_spawn/kitchen,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "jZf" = (
@@ -44081,8 +44079,8 @@
 /turf/space,
 /area/station/solar/aisat)
 "rCH" = (
-/obj/reagent_dispensers/still,
 /obj/machinery/light/incandescent,
+/obj/machinery/vending/jobclothing/catering,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "rDh" = (
@@ -48065,9 +48063,7 @@
 	},
 /area/station/crew_quarters/quarters)
 "uLH" = (
-/obj/storage/closet/wardrobe/black/formalwear,
-/obj/item/clothing/suit/apron,
-/obj/item/clothing/under/misc/itamae,
+/obj/reagent_dispensers/still,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "uMj" = (
@@ -71381,7 +71377,7 @@ mnm
 jhM
 whX
 sTk
-pmD
+tWE
 jhM
 lwZ
 oGq
@@ -71985,7 +71981,7 @@ aXI
 jhM
 uNR
 rCH
-tWE
+pmD
 jhM
 eLs
 ueu

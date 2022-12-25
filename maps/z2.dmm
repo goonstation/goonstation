@@ -233,6 +233,20 @@
 	icon_state = "ancientfloor3"
 	},
 /area/iomoon/robot_ruins)
+"abd" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/minimap/map_computer/nukeop,
+/turf/unsimulated/floor/black,
+/area/syndicate_station/battlecruiser)
 "abe" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -10313,12 +10327,6 @@
 	opacity = 1
 	},
 /area/marsoutpost)
-"aIn" = (
-/obj/table/syndicate/auto,
-/obj/item/cigpacket,
-/obj/item/matchbook,
-/turf/unsimulated/floor/carpet/red/decal/outercross,
-/area/syndicate_station/battlecruiser)
 "aIo" = (
 /turf/unsimulated/wall/arctic/abyss,
 /area/upper_arctic/exterior/abyss)
@@ -27016,6 +27024,11 @@
 	},
 /turf/unsimulated/iomoon/floor,
 /area/iomoon)
+"bEx" = (
+/obj/table/syndicate/auto,
+/obj/item/nukeop_minimap_controller,
+/turf/unsimulated/floor/carpet/red/decal/innercross,
+/area/syndicate_station/battlecruiser)
 "bEy" = (
 /obj/cable{
 	d2 = 4;
@@ -40968,6 +40981,11 @@
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
+"cvs" = (
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm11"
+	},
+/area/syndicate_station/battlecruiser)
 "cvu" = (
 /turf/unsimulated/wall/auto/adventure/iomoon,
 /area/afterlife/arena)
@@ -45736,11 +45754,6 @@
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
-"cHA" = (
-/obj/table/syndicate/auto,
-/obj/item/nukeop_minimap_controller,
-/turf/unsimulated/floor/carpet/red/decal/innercross,
-/area/syndicate_station/battlecruiser)
 "cHB" = (
 /obj/item/device/audio_log/radioship/small,
 /obj/item/reagent_containers/food/drinks/mug/random_color,
@@ -56341,11 +56354,6 @@
 	icon_state = "cairngorm10"
 	},
 /area/syndicate_station/battlecruiser)
-"dgn" = (
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm11"
-	},
-/area/syndicate_station/battlecruiser)
 "dgo" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm12"
@@ -56448,20 +56456,6 @@
 	pixel_x = -10
 	},
 /turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
-"dgF" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/minimap/map_computer/nukeop,
-/turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "dgG" = (
 /obj/cable{
@@ -64236,28 +64230,6 @@
 	},
 /turf/unsimulated/floor/white,
 /area/centcom/garden)
-"dLc" = (
-/obj/pool/perspective{
-	density = 0;
-	dir = 1;
-	tag = "icon-pool (NORTH)"
-	},
-/obj/pool{
-	density = 0;
-	dir = 8;
-	icon = 'icons/obj/fluid.dmi';
-	icon_state = "ladder";
-	name = "ladder"
-	},
-/obj/channel{
-	required_to_pass = 210
-	},
-/obj/decal/tile_edge/line/blue{
-	dir = 1;
-	icon_state = "line1"
-	},
-/turf/unsimulated/floor/white,
-/area/centcom/garden)
 "dLd" = (
 /obj/pool/perspective{
 	dir = 5;
@@ -64465,22 +64437,6 @@
 	},
 /turf/unsimulated/floor/white,
 /area/centcom/garden)
-"dLE" = (
-/obj/machinery/light/small/floor/blueish{
-	desc = "Probably waterproof. You never really knew how these things worked.";
-	name = "cool pool lighting"
-	},
-/turf/unsimulated/floor/pool{
-	icon = 'icons/obj/fluid.dmi';
-	name = "pool floor"
-	},
-/area/centcom/garden)
-"dLF" = (
-/turf/unsimulated/floor/pool{
-	icon = 'icons/obj/fluid.dmi';
-	name = "pool floor"
-	},
-/area/centcom/garden)
 "dLG" = (
 /obj/pool/perspective{
 	dir = 4;
@@ -64592,13 +64548,6 @@
 	},
 /turf/unsimulated/floor/carpet{
 	icon_state = "fpurple2"
-	},
-/area/centcom/garden)
-"dLU" = (
-/obj/item/inner_tube,
-/turf/unsimulated/floor/pool{
-	icon = 'icons/obj/fluid.dmi';
-	name = "pool floor"
 	},
 /area/centcom/garden)
 "dLV" = (
@@ -65211,22 +65160,6 @@
 	tag = "icon-pool (WEST)"
 	},
 /turf/unsimulated/floor/white,
-/area/centcom/garden)
-"dNn" = (
-/obj/fluid_spawner{
-	amount = 10000
-	},
-/turf/unsimulated/floor/pool{
-	icon = 'icons/obj/fluid.dmi';
-	name = "pool floor"
-	},
-/area/centcom/garden)
-"dNo" = (
-/obj/item/beach_ball,
-/turf/unsimulated/floor/pool{
-	icon = 'icons/obj/fluid.dmi';
-	name = "pool floor"
-	},
 /area/centcom/garden)
 "dNp" = (
 /obj/pool/perspective{
@@ -67731,6 +67664,12 @@
 	},
 /turf/unsimulated/floor/orangeblack,
 /area/crunch)
+"euy" = (
+/obj/item/inner_tube,
+/turf/unsimulated/floor/pool{
+	name = "pool floor"
+	},
+/area/centcom/garden)
 "euA" = (
 /obj/decal/tile_edge/line/green{
 	dir = 6;
@@ -69142,6 +69081,12 @@
 /obj/item/luggable_computer/personal/adhara_laptop,
 /turf/unsimulated/floor/carpet/office/other,
 /area/centcom/offices/adhara)
+"hcT" = (
+/obj/item/beach_ball,
+/turf/unsimulated/floor/pool{
+	name = "pool floor"
+	},
+/area/centcom/garden)
 "hep" = (
 /obj/machinery/door/unpowered/wood/lily{
 	dir = 8;
@@ -69672,6 +69617,16 @@
 	dir = 6
 	},
 /area/centcom/offices/aloe)
+"hZO" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/landmark{
+	name = "Nuclear-Bomb"
+	},
+/turf/unsimulated/floor/darkpurple,
+/area/syndicate_station/battlecruiser)
 "iag" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -69710,16 +69665,6 @@
 /obj/item/weldingtool,
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
-"igT" = (
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "delivery2"
-	},
-/obj/landmark{
-	name = "Nuclear-Bomb"
-	},
-/turf/unsimulated/floor/darkpurple,
-/area/syndicate_station/battlecruiser)
 "ihi" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -73949,6 +73894,11 @@
 	temperature = 313.15
 	},
 /area/iomoon/caves)
+"pCc" = (
+/turf/unsimulated/floor/pool{
+	name = "pool floor"
+	},
+/area/centcom/garden)
 "pCf" = (
 /obj/lattice,
 /obj/machinery/vending/coffee,
@@ -75007,6 +74957,27 @@
 /obj/critter/brullbar/king,
 /turf/unsimulated/floor/arctic/snow/lake,
 /area/lower_arctic/lower)
+"rrR" = (
+/obj/pool/perspective{
+	density = 0;
+	dir = 1;
+	tag = "icon-pool (NORTH)"
+	},
+/obj/pool{
+	density = 0;
+	dir = 8;
+	icon_state = "ladder";
+	name = "ladder"
+	},
+/obj/channel{
+	required_to_pass = 210
+	},
+/obj/decal/tile_edge/line/blue{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/white,
+/area/centcom/garden)
 "rst" = (
 /obj/admin_plaque{
 	desc = "A nameplate signifying the name of the art gallery.";
@@ -76008,6 +75979,15 @@
 "teq" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/gangzone)
+"tgT" = (
+/obj/machinery/light/small/floor/blueish{
+	desc = "Probably waterproof. You never really knew how these things worked.";
+	name = "cool pool lighting"
+	},
+/turf/unsimulated/floor/pool{
+	name = "pool floor"
+	},
+/area/centcom/garden)
 "tib" = (
 /obj/machinery/conveyor/EW{
 	id = "ddan"
@@ -76061,6 +76041,12 @@
 	},
 /turf/unsimulated/floor/carpet/red/decal,
 /area/centcom/offices/grifflez)
+"tnh" = (
+/obj/table/syndicate/auto,
+/obj/item/cigpacket,
+/obj/item/matchbook,
+/turf/unsimulated/floor/carpet/red/decal/outercross,
+/area/syndicate_station/battlecruiser)
 "tnB" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-24"
@@ -77457,6 +77443,14 @@
 	icon_state = "leadwall"
 	},
 /area/centcom/gallery)
+"vJS" = (
+/obj/fluid_spawner{
+	amount = 10000
+	},
+/turf/unsimulated/floor/pool{
+	name = "pool floor"
+	},
+/area/centcom/garden)
 "vKW" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1;
@@ -104868,7 +104862,7 @@ cIJ
 xPX
 des
 vkk
-igT
+hZO
 dfQ
 dfQ
 sdh
@@ -106986,7 +106980,7 @@ dfz
 dfS
 dgl
 dgy
-dgF
+abd
 dgT
 dhd
 dgT
@@ -107578,7 +107572,7 @@ bqW
 buX
 bvJ
 bVf
-cHA
+bEx
 cJw
 cMS
 cNu
@@ -107588,7 +107582,7 @@ dev
 dek
 dfC
 dfU
-dgn
+cvs
 dgA
 dgH
 dek
@@ -107882,7 +107876,7 @@ btf
 bVe
 cHB
 bXh
-aIn
+tnh
 cNu
 dcP
 btf
@@ -163504,15 +163498,15 @@ dKk
 dKt
 dKG
 dLb
-dLE
-dLF
-dLF
-dLF
-dLE
-dLF
-dLF
-dLF
-dLE
+tgT
+pCc
+pCc
+pCc
+tgT
+pCc
+pCc
+pCc
+tgT
 dOb
 dOr
 dPm
@@ -163805,16 +163799,16 @@ aES
 dKk
 dKu
 dKG
-dLc
-dLF
-dLU
-dLF
-dLF
-dLF
-dLF
-dLF
-dLF
-dLF
+rrR
+pCc
+euy
+pCc
+pCc
+pCc
+pCc
+pCc
+pCc
+pCc
 dOb
 dOW
 dOY
@@ -164108,15 +164102,15 @@ dKk
 dKt
 dKG
 dLb
-dLF
-dLF
-dLE
-dLF
-dNn
-dLF
-dLE
-dLF
-dLF
+pCc
+pCc
+tgT
+pCc
+vJS
+pCc
+tgT
+pCc
+pCc
 dOb
 dOr
 dPm
@@ -164410,15 +164404,15 @@ dKk
 dKv
 dKG
 dLb
-dLF
-dLF
-dLF
-dLF
-dLF
-dLF
-dLF
-dLU
-dLF
+pCc
+pCc
+pCc
+pCc
+pCc
+pCc
+pCc
+euy
+pCc
 dOb
 dOX
 dOY
@@ -164712,15 +164706,15 @@ dKk
 dKt
 dKG
 dLb
-dLE
-dLF
-dLF
-dLF
-dLE
-dLF
-dLF
-dLF
-dLE
+tgT
+pCc
+pCc
+pCc
+tgT
+pCc
+pCc
+pCc
+tgT
 dOb
 dOr
 dPm
@@ -165017,9 +165011,9 @@ dLd
 dLG
 dLG
 dMs
-dLF
-dNo
-dLF
+pCc
+hcT
+pCc
 dOa
 dLG
 dLG
@@ -165319,9 +165313,9 @@ dKH
 dLH
 dLV
 dLb
-dLF
-dLE
-dLF
+pCc
+tgT
+pCc
 dOb
 dOr
 dKG
@@ -165620,10 +165614,10 @@ dKJ
 dKG
 dLI
 dKG
-dLc
-dLF
-dLF
-dLF
+rrR
+pCc
+pCc
+pCc
 dOb
 dOs
 dLI
