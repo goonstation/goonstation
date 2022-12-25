@@ -591,7 +591,7 @@
 					var/list/abilities_to_add = ai_abilities - current_abilities
 					for(ability_type in abilities_to_add)
 						aiAH.addAbility(ability_type)
-
+		src.calculate_power_usage()
 		for (var/mob/living/intangible/aieye/E in mobs)
 			if(E.mainframe?.law_rack_connection == src)
 				E.playsound_local(E, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
@@ -603,12 +603,6 @@
 		var/list/mobtextlist = list()
 		for(var/mob/living/M in affected_mobs)
 			mobtextlist += constructName(M, "admin")
-		power_usage = 1000
-		for (var/i in 1 to MAX_CIRCUITS)
-			if (src.law_circuits[i])
-				power_usage += 100
-
-
 		logTheThing(LOG_STATION, src, "Law Update:<br> [src.format_for_logs()]<br>The law update affects the following mobs: "+mobtextlist.Join(", "))
 		update_last_laws()
 
@@ -724,6 +718,7 @@
 				var/obj/item/aiModule/hologram_expansion/holo = mod
 				src.holo_expansions |= holo.expansion
 			UpdateIcon()
+			src.calculate_power_usage()
 			return true
 
 	/** Sets an arbitrary slot to a custom law specified by lawName and lawText - will override any module in the slot. Does not call UpdateLaws()
@@ -742,6 +737,7 @@
 		src.welded[slot]=false
 		src.screwed[slot]=false
 		tgui_process.update_uis(src)
+		src.calculate_power_usage()
 		UpdateIcon()
 
 	/// Deletes all laws. Does not call UpdateLaws()
@@ -773,6 +769,12 @@
 			else
 				src.visible_message("<span class='alert'><b>The [src] makes a brief fizzing noise!</b></span>")
 			return true
+
+	proc/calculate_power_usage()
+		src.power_usage = 1000
+		for (var/i in 1 to MAX_CIRCUITS)
+			if (src.law_circuits[i])
+				src.power_usage += 100
 
 /particles/rack_smoke
 	icon = 'icons/effects/effects.dmi'

@@ -62,7 +62,6 @@
 				src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov1,1,true,true)
 				src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov2,2,true,true)
 				src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov3,3,true,true)
-				src.default_ai_rack.power_usage = 1300 // 1000 + 100 for each law
 				src.first_registered = TRUE
 				logTheThing(LOG_STATION, src, "the law rack [constructName(new_rack)] claims first registered, and gets Asimov laws!")
 
@@ -85,7 +84,6 @@
 				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate/law2,2,true,true)
 				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate/law3,3,true,true)
 				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate/law4,4,true,true)
-				src.default_ai_rack.power_usage = 1400 // 1000 + 100 for each law
 				src.first_registered_syndie = TRUE
 				logTheThing(LOG_STATION, src, "the law rack [constructName(new_rack)] claims first registered SYNDICATE, and gets Syndicate laws!")
 
