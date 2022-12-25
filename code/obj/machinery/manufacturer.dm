@@ -1,8 +1,4 @@
 #define MAX_QUEUE_LENGTH 20
-#define WIRE_EXTEND 1
-#define WIRE_POWER 2
-#define WIRE_MALF 3
-#define WIRE_SHOCK 4
 #define MAX_SPEED 3
 #define MAX_SPEED_HACKED 5
 
@@ -265,6 +261,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/set_control(obj/parent, mob/user, controls, new_status)
 		if (HAS_FLAG(controls, WIRE_CONTROL_SAFETY))
 			src.build_icon()
+		if (HAS_FLAG(controls, WIRE_CONTROL_RESTRICT))
+			if (new_status)
+				src.hacked = FALSE
+			else
+				src.hacked = TRUE
+			src.Attackhand(user) // update main window (since it's not TGUI)
 
 	proc/finish_work()
 		if(length(src.queue))
@@ -2939,11 +2941,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (I && length(I.item_outputs) && I.item_outputs[1])
 				getItemIcon(I.item_outputs[1])
 
-
-#undef WIRE_EXTEND
-#undef WIRE_POWER
-#undef WIRE_MALF
-#undef WIRE_SHOCK
 #undef MAX_QUEUE_LENGTH
 #undef MAX_SPEED
 #undef MAX_SPEED_HACKED
