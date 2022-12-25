@@ -483,11 +483,6 @@
 	dir = 8;
 	icon_state = "wall3_trans"
 	},
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon_state = "wall3_trans"
-	},
-/turf/space,
 /turf/space,
 /area/space)
 "bj" = (
@@ -15764,14 +15759,6 @@
 "MP" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
-"MQ" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon_state = "wall3_trans"
-	},
-/turf/space,
-/turf/space,
-/area/space)
 "MR" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate,
 /turf/simulated/floor/red,
@@ -15781,7 +15768,6 @@
 	dir = 1;
 	icon_state = "wall3_trans"
 	},
-/turf/space,
 /turf/space,
 /area/space)
 "MT" = (
@@ -16542,7 +16528,6 @@
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/turf/space,
 /area/space)
 "OG" = (
 /obj/stool/chair/red,
@@ -16684,7 +16669,6 @@
 	dir = 4;
 	icon_state = "wall3_trans"
 	},
-/turf/space,
 /turf/space,
 /area/space)
 "OX" = (
@@ -95029,7 +95013,7 @@ aa
 aa
 aa
 aa
-MQ
+bi
 Ne
 NH
 NR
@@ -96236,7 +96220,7 @@ aa
 aa
 aa
 aa
-MQ
+bi
 Ne
 Nw
 Ne
@@ -96838,7 +96822,7 @@ aa
 aa
 aa
 aa
-MQ
+bi
 MX
 Nf
 No
@@ -98953,7 +98937,7 @@ aa
 aa
 aa
 aa
-MQ
+bi
 MP
 MP
 NA
@@ -99254,7 +99238,7 @@ aa
 aa
 aa
 aa
-MQ
+bi
 MP
 Nh
 MP
