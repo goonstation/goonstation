@@ -3,7 +3,7 @@
 	customization_available = 1
 	var/derelictchoice = null
 #ifdef RP_MODE
-	disabled = 1
+	disabled = TRUE
 #else
 	required_elapsed_round_time = 45 MINUTES
 #endif
