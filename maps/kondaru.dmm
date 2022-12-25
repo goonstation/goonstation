@@ -1554,14 +1554,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/northeast)
 "aet" = (
-/obj/machinery/manufacturer/general{
-	desc = "It's covered in more gunk than a truck stop ashtray. Is this thing even safe?";
-	free_resource_amt = 0;
-	free_resources = null;
-	malfunction = 1;
-	name = "grody manufacturer";
-	wires = 11
-	},
+/obj/machinery/manufacturer/general/grody,
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
 /area/station/storage/northeast)

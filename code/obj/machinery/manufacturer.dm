@@ -2208,6 +2208,17 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/bagpipe,
 		/datum/manufacture/whistle)
 
+/obj/machinery/manufacturer/general/grody
+	name = "grody manufacturer"
+	desc = "It's covered in more gunk than a truck stop ashtray. Is this thing even safe?"
+	supplemental_desc = null
+	free_resource_amt = 0
+	free_resources = null
+
+	New()
+		. = ..()
+		SEND_SIGNAL(src, COMSIG_WPANEL_SET_CONTROL, null, WIRE_CONTROL_SAFETY, FALSE)
+
 /obj/machinery/manufacturer/robotics
 	name = "robotics fabricator"
 	supplemental_desc = "This one produces robot parts, cybernetic organs, and other robotics-related equipment."
