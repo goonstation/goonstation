@@ -9152,9 +9152,10 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "wh" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable,
-/turf/simulated/floor/plating/random,
+/turf/unsimulated/wall/setpieces/fakewindow{
+	dir = 6
+	},
 /area/listeningpost)
 "wi" = (
 /obj/item/device/radio/intercom/bridge,
@@ -12308,9 +12309,6 @@
 /obj/stool/chair/comfy/wheelchair{
 	dir = 8
 	},
-/obj/machinery/status_display{
-	pixel_x = 32
-	},
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -13327,6 +13325,9 @@
 /area/station/medical/robotics)
 "Gv" = (
 /obj/machinery/computer/chem_requester/medical,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -15874,11 +15875,12 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "Ng" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/plating/random,
+/turf/unsimulated/wall/setpieces/fakewindow{
+	dir = 6
+	},
 /area/listeningpost)
 "Nh" = (
 /obj/decal/fakeobjects{
@@ -17055,7 +17057,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/device/radio/intercom/medical,
 /obj/stool/bench/blue/auto,
 /obj/noticeboard/persistent{
 	name = "Medbay persistent notice board";
@@ -19137,7 +19138,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "Vf" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -19145,7 +19145,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/plating/random,
+/turf/unsimulated/wall/setpieces/fakewindow{
+	dir = 6
+	},
 /area/listeningpost)
 "Vg" = (
 /obj/cable{
