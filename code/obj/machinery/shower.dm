@@ -61,9 +61,10 @@
 
 			// "blood - 2.7867e-018" because remove_any() uses ratios (Convair880).
 			for (var/current_id in src.reagents.reagent_list)
-				var/datum/reagent/current_reagent = src.reagents.reagent_list[current_id]
-				if (isnull(current_reagent))
+				if (isnull(src.reagents.reagent_list[current_id]))
+					logTheThing(LOG_CHEMISTRY, src, "got a null refernece when accessing [current_id] in its list of reagents [log_reagents(src)] at [log_loc(src)].")
 					continue
+				var/datum/reagent/current_reagent = src.reagents.reagent_list[current_id]
 				if (current_reagent.id == "water" || current_reagent.id == "cleaner")
 					continue
 				if (current_reagent.volume < 0.5)
