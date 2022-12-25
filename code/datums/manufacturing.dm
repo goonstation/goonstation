@@ -54,7 +54,8 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 	proc/modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		// use this if you want the outputted item to be customised in any way by the manufacturer
-		if (M.malfunction && M.text_bad_output_adjective.len > 0 && prob(66))
+		var/active_controls = SEND_SIGNAL(M, COMSIG_WPANEL_STATE_CONTROLS)
+		if (!HAS_FLAG(active_controls, WIRE_CONTROL_SAFETY) && M.text_bad_output_adjective.len > 0 && prob(66))
 			A.name = "[pick(M.text_bad_output_adjective)] [A.name]"
 			//A.quality -= rand(25,50)
 		if (src.apply_material && materials.len > 0)

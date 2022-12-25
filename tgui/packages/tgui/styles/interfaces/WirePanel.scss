@@ -46,7 +46,7 @@
   text-transform: uppercase;
 }
 
-$controlLabelDistance: 5em;
+$controlLabelDistance: 1em;
 $controlRowSpacing: 0.3em;
 $color-label: colors.fg(colors.$label) !default;
 
@@ -67,7 +67,7 @@ $color-label: colors.fg(colors.$label) !default;
 
 .WirePanel-control-value {
   display:inline-block;
-  margin-left: -2-$controlLabelDistance;
+  margin-left: -$controlLabelDistance;
 }
 
 .WirePanel-indicator-container {

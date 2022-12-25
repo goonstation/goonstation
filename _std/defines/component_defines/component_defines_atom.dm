@@ -152,21 +152,22 @@
 	#define COMSIG_ITEM_IMPLANT_REMOVED "implant_removed"
 
 	// ---- wire panel signals ----
-		/// When a mob attempts an action on a wire (mob/user, wire, action)
+
+	/// When a mob attempts an action on a wire (mob/user, wire, action)
 	#define COMSIG_WPANEL_MOB_WIRE_ACT "wpanel_mob_wire_act"
 	/// Ion storm handler ()
 	#define COMSIG_WPANEL_ION_STORM "wpanel_ion_storm"
 
-	/// Force wire control to be active (mob/user, controls, new_status)
+	/// Set a wire control to be TRUE or FALSE (mob/user, controls, new_status)
 	#define COMSIG_WPANEL_SET_CONTROL "wpanel_set_control"
-	/// set the cover state (mob/user, status)
+	/// Set the cover status `WPANEL_COVER_*` (mob/user, status)
 	#define COMSIG_WPANEL_SET_COVER "wpanel_set_cover"
 
-	/// TGUI helper; call in `ui_data` (mob/user, list/data)
+	/// TGUI helper; call in `ui_data` and pass in a list (mob/user, list/data)
 	#define COMSIG_WPANEL_UI_DATA "wpanel_ui_data"
-	/// TGUI helper; call in `ui_static_data` (mob/user, list/data)
+	/// TGUI helper; call in `ui_static_data` and pass in a list (mob/user, list/data)
 	#define COMSIG_WPANEL_UI_STATIC_DATA "wpanel_ui_static_data"
-	/// TGUI helper; call in `ui_act` with (action, list/params, datum/tgui/ui)
+	/// TGUI helper; call in `ui_act` (action, list/params, datum/tgui/ui)
 	#define COMSIG_WPANEL_UI_ACT "wpanel_ui_act"
 
 	/// Returns state of cover

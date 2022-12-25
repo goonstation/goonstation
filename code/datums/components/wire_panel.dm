@@ -257,9 +257,14 @@ TYPEINFO(/datum/component/wirePanel)
 	var/indicators = list()
 	for (var/datum/wirePanel/indicatorDefintion/indicator in src.panel_def.indicator_lights)
 		var/status = (HAS_FLAG(src.active_wire_controls, indicator.control_flags) > 0)
+		var/pattern = status ? indicator.active_pattern : indicator.inactive_pattern
+		if (istype(parent, /obj/machinery))
+			var/obj/machinery/machine = parent
+			if (HAS_FLAG(machine.status, NOPOWER))
+				pattern = "off"
 		indicators += list(list(
 			"status" = status,
-			"pattern" = status ? indicator.active_pattern : indicator.inactive_pattern,
+			"pattern" = pattern,
 		))
 	output["indicators"] = indicators
 

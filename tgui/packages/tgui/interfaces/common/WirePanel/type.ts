@@ -38,8 +38,8 @@ export const WirePanelControlLabels = {
   128: "Safety",
   256: "Restrictor",
   512: "Activation",
-  1024: "Recieve Data",
-  2048: "Transmit Data",
+  1024: "Recieve",
+  2048: "Transmit",
 };
 
 
@@ -67,7 +67,7 @@ export const WirePanelPatterns = {
 };
 
 // Wire Panel Component: TGUI Wire Panel Themes
-export const WirePaneThemes = {
+export const WirePanelThemes = {
   "WPANEL_THEME_CONTROLS": 0,
   "WPANEL_THEME_INDICATORS": 1,
 };

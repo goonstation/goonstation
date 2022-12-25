@@ -291,8 +291,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 				targets += man
 
 	action(var/obj/machinery/manufacturer/manufacturer)
-		manufacturer.pulse(pick(list(1,2,3,4)))
-		logTheThing(LOG_STATION, null, "Ion storm interfered with [manufacturer.name] at [log_loc(manufacturer)]")
+		SEND_SIGNAL(manufacturer, COMSIG_WPANEL_ION_STORM)
 
 /datum/ion_category/venders
 	amount = 5

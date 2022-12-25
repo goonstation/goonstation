@@ -30,14 +30,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/mode = "ready"
 	var/error = null
 	var/active_power_consumption = 0 //! How much power is consumed while active? This is determined automatically when the unit starts a production cycle
-	var/panel_open = FALSE
 	var/dismantle_stage = 0
 	var/hacked = FALSE
-	var/malfunction = FALSE
-	var/electrified = 0 //! This is a timer and not a true/false; it's decremented every process() tick
+	var/seconds_electrified = 0
 	var/output_target = null
 	var/list/nearby_turfs = list()
-	var/wires = 15 //! This is a bitflag used to track wire states, for hacking and such. Replace it with something cleaner if an option exists when you're reading this :p
 	var/temp = null //! Used as a cache when outputting messages to users
 	var/frequency = FREQ_PDA
 	var/net_id = null
@@ -71,6 +68,17 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/list/drive_recipes = list() //! Options provided by an inserted manudrive
 	var/list/hidden = list() //! These options are available by default, but can't be printed unless the machine is hacked
 
+	/// Wire hacking component defintion
+	var/static/datum/wirePanel/panelDefintion/panel_def = new /datum/wirePanel/panelDefintion(
+		controls=list(WIRE_CONTROL_RESTRICT, WIRE_CONTROL_GROUND, WIRE_CONTROL_POWER_A, WIRE_CONTROL_SAFETY),
+		color_pool=list("amber", "teal", "indigo", "lime"),
+		custom_acts=list(
+			WPANEL_CUSTOM_ACT(WIRE_CONTROL_RESTRICT, WIRE_ACT_CUT, WIRE_ACT_PULSE),
+			WPANEL_CUSTOM_ACT(WIRE_CONTROL_GROUND, WIRE_ACT_MEND, WIRE_ACT_CUT | WIRE_ACT_PULSE),
+			WPANEL_CUSTOM_ACT(WIRE_CONTROL_POWER_A, WIRE_ACT_MEND ,WIRE_ACT_CUT),
+		),
+	)
+
 	// Unsorted stuff. The names for these should (hopefully!) be self-explanatory
 	var/image/work_display = null
 	var/image/activity_display = null
@@ -92,6 +100,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 		..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, src.frequency)
 		src.net_id = generate_net_id(src)
+
+		AddComponent(/datum/component/wirePanel, src.panel_def)
+		RegisterSignal(src, COMSIG_WPANEL_SET_COVER, .proc/set_cover)
+		RegisterSignal(src, COMSIG_WPANEL_MOB_WIRE_ACT, .proc/mob_wire_act)
+		RegisterSignal(src, COMSIG_WPANEL_SET_CONTROL,  .proc/set_control)
 
 		if(!src.link)
 			var/turf/T = get_turf(src)
@@ -186,8 +199,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (src.mode == "working")
 			use_power(src.active_power_consumption)
 
-		if (src.electrified > 0)
-			src.electrified--
+		if (src.seconds_electrified > 0)
+			src.seconds_electrified--
 		/*
 		if (src.mode == "working")
 			if (src.malfunction && prob(8))
@@ -205,8 +218,55 @@ TYPEINFO(/obj/machinery/manufacturer)
 						src.build_icon()
 		*/
 
-	proc/finish_work()
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		SEND_SIGNAL(src, COMSIG_WPANEL_UI_ACT, action, params, ui)
 
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "WirePanelWindow", src.name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = ..()
+		SEND_SIGNAL(src, COMSIG_WPANEL_UI_DATA, user, .)
+
+	ui_static_data(mob/user)
+		. = ..()
+		.["wirePanelTheme"] = WPANEL_THEME_INDICATORS
+		SEND_SIGNAL(src, COMSIG_WPANEL_UI_STATIC_DATA, user, .)
+
+
+	proc/set_cover(obj/parent, mob/user, status)
+		if (src.seconds_electrified != 0)
+			src.shock(user, 100)
+		if (status == WPANEL_COVER_OPEN)
+			src.panel_sprite.icon_state = "fab-panel"
+			src.UpdateOverlays(src.panel_sprite, "panel")
+			return
+		src.UpdateOverlays(null, "panel")
+		for(var/datum/tgui/ui in tgui_process.get_uis(parent))
+			if(!parent.can_access_remotely(ui.user))
+				tgui_process.close_user_uis(ui.user, parent)
+
+	proc/mob_wire_act(obj/parent, mob/user, wire, action)
+		if (HAS_FLAG(src.panel_def.wire_definitions[wire].control_flags, WIRE_CONTROL_GROUND))
+			switch (action)
+				if (WIRE_ACT_CUT)
+					src.seconds_electrified = -1
+				if (WIRE_ACT_PULSE)
+					src.seconds_electrified = 30
+				if (WIRE_ACT_MEND)
+					src.seconds_electrified = 0
+		if (src.seconds_electrified != 0)
+			src.shock(user, 100)
+
+	proc/set_control(obj/parent, mob/user, controls, new_status)
+		if (HAS_FLAG(controls, WIRE_CONTROL_SAFETY))
+			src.build_icon()
+
+	proc/finish_work()
 		if(length(src.queue))
 			output_loop(src.queue[1])
 			if (!src.repeat)
@@ -240,7 +300,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	emp_act()
 		src.take_damage(rand(5,10))
-		src.malfunction = TRUE
+		SEND_SIGNAL(src, COMSIG_WPANEL_SET_CONTROL, null, WIRE_CONTROL_SAFETY, FALSE)
 		src.flip_out()
 
 	bullet_act(obj/projectile/P)
@@ -272,7 +332,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	attack_hand(mob/user)
 		if (free_resource_amt > 0) // We do this here instead of on New() as a tiny optimization to keep some overhead off of map load
 			claim_free_resources()
-		if(src.electrified)
+		if(src.seconds_electrified)
 			if (!(status & NOPOWER || status & BROKEN))
 				if (src.shock(user, 33))
 					return
@@ -416,39 +476,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/list/dat = list()
 		var/delete_allowed = src.allowed(user)
 
-		if (src.panel_open || isAI(user))
-			var/list/manuwires = list(
-			"Amber" = 1,
-			"Teal" = 2,
-			"Indigo" = 3,
-			"Lime" = 4,
-			)
-			var/list/pdat = list("<B>[src] Maintenance Panel</B><hr>")
-			for(var/wiredesc in manuwires)
-				var/is_uncut = src.wires & APCWireColorToFlag[manuwires[wiredesc]]
-				pdat += "[wiredesc] wire: "
-				if(!is_uncut)
-					pdat += "<a href='?src=\ref[src];cutwire=[manuwires[wiredesc]]'>Mend</a>"
-				else
-					pdat += "<a href='?src=\ref[src];cutwire=[manuwires[wiredesc]]'>Cut</a> "
-					pdat += "<a href='?src=\ref[src];pulsewire=[manuwires[wiredesc]]'>Pulse</a> "
-				pdat += "<br>"
-
-			pdat += "<br>"
-			if (status & BROKEN || status & NOPOWER)
-				pdat += "The yellow light is off.<BR>"
-				pdat += "The blue light is off.<BR>"
-				pdat += "The white light is off.<BR>"
-				pdat += "The red light is off.<BR>"
-			else
-				pdat += "The yellow light is [(src.electrified == 0) ? "off" : "on"].<BR>"
-				pdat += "The blue light is [src.malfunction ? "flashing" : "on"].<BR>"
-				pdat += "The white light is [src.hacked ? "on" : "off"].<BR>"
-				pdat += "The red light is on.<BR>"
-
-			user.Browse(pdat.Join(), "window=manupanel")
-			onclose(user, "manupanel")
-
 		if (status & BROKEN || status & NOPOWER)
 			dat = "The screen is blank."
 			user.Browse(dat, "window=manufact;size=750x500")
@@ -566,23 +593,19 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 
 	Topic(href, href_list)
-
-		if(!(href_list["cutwire"] || href_list["pulsewire"]))
-			if(status & BROKEN || status & NOPOWER)
-				return
-
 		if(usr.stat || usr.restrained())
 			return
 
-		if(src.electrified)
+		if(src.seconds_electrified)
 			if (!(status & NOPOWER || status & BROKEN))
 				if (src.shock(usr, 10))
 					return
 
 		if (((BOUNDS_DIST(src, usr) == 0 || (isAI(usr) || isrobot(usr))) && istype(src.loc, /turf)))
 			src.add_dialog(usr)
+			var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
 
-			if (src.malfunction && prob(10))
+			if (!HAS_FLAG(active_controls, WIRE_CONTROL_SAFETY) && prob(10))
 				src.flip_out()
 
 			if (href_list["eject"])
@@ -757,32 +780,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 					return
 				src.reagents.remove_reagent(the_reagent,howmuch)
 
-			if ((href_list["cutwire"]) && (src.panel_open || isAI(usr)))
-				if (src.electrified)
-					if (src.shock(usr, 100))
-						return
-				var/twire = text2num_safe(href_list["cutwire"])
-				if (!usr.find_tool_in_hand(TOOL_SNIPPING))
-					boutput(usr, "You need a snipping tool!")
-					return
-				else if (src.isWireColorCut(twire))
-					src.mend(usr, twire)
-				else
-					src.cut(usr, twire)
-				src.build_icon()
-
-			if ((href_list["pulsewire"]) && (src.panel_open || isAI(usr)))
-				var/twire = text2num_safe(href_list["pulsewire"])
-				if ( !(usr.find_tool_in_hand(TOOL_PULSING) || isAI(usr)) )
-					boutput(usr, "You need a multitool or similar!")
-					return
-				else if (src.isWireColorCut(twire))
-					boutput(usr, "You can't pulse a cut wire.")
-					return
-				else
-					src.pulse(usr, twire)
-				src.build_icon()
-
 			if (href_list["card"])
 				if (src.scan) src.scan = null
 				else
@@ -874,7 +871,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		return FALSE
 
 	attackby(obj/item/W, mob/user)
-		if (src.electrified)
+		if (src.seconds_electrified)
 			if (src.shock(user, 33))
 				return
 
@@ -882,12 +879,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 			var/obj/item/ore_scoop/scoop = W
 			W = scoop.satchel
 
+		var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
+		var/cover_status = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_COVER)
 		if (istype(W, /obj/item/paper/manufacturer_blueprint))
 			if (!src.accept_blueprints)
 				boutput(user, "<span class='alert'>This manufacturer unit does not accept blueprints.</span>")
 				return
 			var/obj/item/paper/manufacturer_blueprint/BP = W
-			if (src.malfunction && prob(75))
+			if (!HAS_FLAG(active_controls, WIRE_CONTROL_SAFETY) && prob(75))
 				src.visible_message("<span class='alert'>[src] emits a [pick(src.text_flipout_adjective)] [pick(src.text_flipout_noun)]!</span>")
 				playsound(src.loc, pick(src.sounds_malfunction), 50, 1)
 				boutput(user, "<span class='alert'>The manufacturer mangles and ruins the blueprint in the scanner! What the fuck?</span>")
@@ -931,14 +930,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (amtload) boutput(user, "<span class='notice'>[amtload] materials loaded from [W]!</span>")
 			else boutput(user, "<span class='alert'>No materials loaded!</span>")
 
-		else if (isscrewingtool(W))
-			if (!src.panel_open)
-				src.panel_open = TRUE
-			else
-				src.panel_open = FALSE
-			boutput(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
-			src.build_icon()
-
 		else if (isweldingtool(W))
 			var/do_action = 0
 			if (istype(W,src.base_material_class) && src.accept_loading(user))
@@ -959,7 +950,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					if (src.health == 100)
 						boutput(user, "<span class='notice'><b>[src] looks fully repaired!</b></span>")
 
-		else if (istype(W,/obj/item/cable_coil) && src.panel_open)
+		else if (istype(W,/obj/item/cable_coil) && cover_status == WPANEL_COVER_OPEN)
 			var/obj/item/cable_coil/C = W
 			var/do_action = 0
 			if (istype(C,src.base_material_class) && src.accept_loading(user))
@@ -1084,10 +1075,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else if (istype(W, src.base_material_class) && src.accept_loading(user))
 			user.visible_message("<span class='notice'>[user] loads [W] into [src].</span>", "<span class='notice'>You load [W] into [src].</span>")
 			src.load_item(W,user)
-
-		else if (src.panel_open && (issnippingtool(W) || ispulsingtool(W)))
-			src.Attackhand(user)
-			return
 
 		else if(scan_card(W))
 			return
@@ -1464,57 +1451,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return FALSE
 		return TRUE
 
-	proc/isWireColorCut(wireColor)
-		var/wireFlag = APCWireColorToFlag[wireColor]
-		return ((src.wires & wireFlag) == 0)
-
-	proc/isWireCut(wireIndex)
-		var/wireFlag = APCIndexToFlag[wireIndex]
-		return ((src.wires & wireFlag) == 0)
-
-	proc/cut(mob/user, wireColor)
-		var/wireFlag = APCWireColorToFlag[wireColor]
-		var/wireIndex = APCWireColorToIndex[wireColor]
-		src.wires &= ~wireFlag
-		switch(wireIndex)
-			if(WIRE_EXTEND)
-				src.hacked = FALSE
-			if(WIRE_SHOCK)
-				src.electrified = -1
-			if(WIRE_MALF)
-				src.malfunction = TRUE
-			if(WIRE_POWER)
-				if(!(src.status & BROKEN || src.status & NOPOWER))
-					src.shock(user, 100)
-					src.status |= NOPOWER
-
-	proc/mend(mob/user, wireColor)
-		var/wireFlag = APCWireColorToFlag[wireColor]
-		var/wireIndex = APCWireColorToIndex[wireColor] //not used in this function
-		src.wires |= wireFlag
-		switch(wireIndex)
-			if(WIRE_SHOCK)
-				src.electrified = 0
-			if(WIRE_MALF)
-				src.malfunction = FALSE
-			if(WIRE_POWER)
-				if (!(src.status & BROKEN) && (src.status & NOPOWER))
-					src.shock(user, 100)
-					src.status &= ~NOPOWER
-
-	proc/pulse(mob/user, wireColor)
-		var/wireIndex = APCWireColorToIndex[wireColor]
-		switch(wireIndex)
-			if(WIRE_EXTEND)
-				src.hacked = !src.hacked
-			if (WIRE_SHOCK)
-				src.electrified = 30
-			if (WIRE_MALF)
-				src.malfunction = !src.malfunction
-			if (WIRE_POWER)
-				if(!(src.status & BROKEN || src.status & NOPOWER))
-					src.shock(user, 100)
-
 	proc/shock(mob/user, prb)
 		if(src.status & (BROKEN|NOPOWER))
 			return FALSE
@@ -1704,8 +1640,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return
 
 		src.error = null
-
-		if (src.malfunction && prob(40))
+		var/active_controls	= SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
+		if (!HAS_FLAG(active_controls, WIRE_CONTROL_SAFETY) && prob(40))
 			src.flip_out()
 
 		if (new_production)
@@ -1730,7 +1666,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			// 5:     2.0s   18750  11250
 			src.active_power_consumption = 750 * src.speed ** 2
 			src.time_left = M.time
-			if (src.malfunction)
+			if (!HAS_FLAG(active_controls, WIRE_CONTROL_SAFETY))
 				src.active_power_consumption += 3000
 				src.time_left += rand(2,6)
 				src.time_left *= 1.5
@@ -1836,7 +1772,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 			X.set_loc(get_output_location())
 
 	proc/flip_out()
-		if (status & BROKEN || status & NOPOWER || !src.malfunction)
+		var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
+
+		if (status & BROKEN || status & NOPOWER || HAS_FLAG(active_controls, WIRE_CONTROL_SAFETY))
 			return
 		animate_shake(src,5,rand(3,8),rand(3,8))
 		src.visible_message("<span class='alert'>[src] makes [pick(src.text_flipout_adjective)] [pick(src.text_flipout_noun)]!</span>")
@@ -1869,8 +1807,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (prob(10))
 			src.speed = rand(1,8)
 		if (prob(5))
-			if (!src.electrified)
-				src.electrified = 5
+			if (!src.seconds_electrified)
+				src.seconds_electrified = 5
 
 	proc/build_icon()
 		icon_state = "fab[src.icon_base ? "-[src.icon_base]" : null]"
@@ -1885,7 +1823,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			icon_state = "fab-noplate"
 
 		if (!(status & NOPOWER) && !(status & BROKEN))
-			if (src.malfunction && prob(50))
+			var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
+			if (!HAS_FLAG(active_controls, WIRE_CONTROL_SAFETY) && prob(50))
 				switch  (rand(1,4))
 					if (1) src.activity_display.icon_state = "light-ready"
 					if (2) src.activity_display.icon_state = "light-halt"
@@ -1895,7 +1834,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.activity_display.icon_state = "light-[src.mode]"
 
 			var/animspeed = src.speed
-			if (animspeed < 1 || animspeed > 5 || (src.malfunction && prob(50)))
+
+			if (animspeed < 1 || animspeed > 5 || (!HAS_FLAG(active_controls, WIRE_CONTROL_SAFETY) && prob(50)))
 				animspeed = "malf"
 
 			if (src.mode == "working")
@@ -1905,12 +1845,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 			src.UpdateOverlays(src.work_display, "work")
 			src.UpdateOverlays(src.activity_display, "activity")
-
-		if (src.panel_open)
-			src.panel_sprite.icon_state = "fab-panel"
-			src.UpdateOverlays(src.panel_sprite, "panel")
-		else
-			src.UpdateOverlays(null, "panel")
 
 	proc/build_material_list()
 		var/list/dat = list()
@@ -2115,10 +2049,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 				robogibs(src.loc, null)
 				qdel(src)
 				return
-			if (src.health <= 70 && !src.malfunction && prob(33))
-				src.malfunction = TRUE
+			var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
+			if (src.health <= 70 && HAS_FLAG(active_controls, WIRE_CONTROL_SAFETY) && prob(33))
+				SEND_SIGNAL(src, COMSIG_WPANEL_SET_CONTROL, null, WIRE_CONTROL_SAFETY, FALSE)
 				src.flip_out()
-			if (src.malfunction && prob(40))
+			if (!HAS_FLAG(active_controls, WIRE_CONTROL_SAFETY) && prob(40))
 				src.flip_out()
 			if (src.health <= 25 && !(src.status & BROKEN))
 				src.visible_message("<span class='alert'><b>[src] breaks down and stops working!</b></span>")
@@ -2957,7 +2892,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	onUpdate()
 		..()
-		if (MA.malfunction && prob(8))
+		var/active_controls = SEND_SIGNAL(MA, COMSIG_WPANEL_STATE_CONTROLS)
+		if (!HAS_FLAG(active_controls, WIRE_CONTROL_SAFETY) && prob(8))
 			MA.flip_out()
 
 		if (MA.status & (NOPOWER | BROKEN))

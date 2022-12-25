@@ -1,6 +1,6 @@
 import { Window } from '../layouts';
 import { Box, Collapsible, Dimmer, Icon, Stack } from "../components";
-import { WirePanelControls, WirePanelCoverStatus, WirePanelData, WirePanelDynamic, WirePaneThemes } from './common/WirePanel/type';
+import { WirePanelControls, WirePanelCoverStatus, WirePanelData, WirePanelDynamic, WirePanelThemes } from './common/WirePanel/type';
 import { WirePanelShowIndicators, WirePanelShowControls } from './common/WirePanel';
 import { useBackend } from '../backend';
 import { decodeHtmlEntities } from 'common/string';
@@ -16,9 +16,18 @@ interface WirePanelComponentProps extends WirePanelTheme {
 
 export const WirePanelWindow = (props, context) => {
   const { config, data } = useBackend<WirePanelData>(context);
-  const calcHeight = 0
-    + (data.wirePanelDynamic.wires.length * 36) // height per wire
-    + (data.wirePanelTheme === WirePaneThemes.WPANEL_THEME_INDICATORS ? 110 : 50); // indicators need more space
+  let calcHeight = 0;
+  calcHeight += data.wirePanelDynamic.wires.length * 36; // height per wire
+  switch (data.wirePanelTheme) {
+    case WirePanelThemes.WPANEL_THEME_CONTROLS:
+      calcHeight += (data.wirePanelDynamic.indicators.length / 2) * 55; // dynamic; paired
+      break;
+    case WirePanelThemes.WPANEL_THEME_INDICATORS:
+      calcHeight += 110; // static height
+      break;
+    default:
+      break;
+  }
   const objectTitle = capitalize(decodeHtmlEntities(config.title));
   return (
     <Window
@@ -27,7 +36,7 @@ export const WirePanelWindow = (props, context) => {
       title={objectTitle + " Wire Panel"}
     >
       <Window.Content>
-        <WirePaneThemeselector wirePanelTheme={data.wirePanelTheme} />
+        <WirePanelThemeSelector wirePanelTheme={data.wirePanelTheme} />
       </Window.Content>
     </Window>
   );
@@ -65,21 +74,21 @@ const WirePanelCollapsible = (props: WirePanelComponentProps) => {
       open={wirePanelDynamic.cover_status === WirePanelCoverStatus.WPANEL_COVER_OPEN}
       disabled={!!shouldDisable}
     >
-      <WirePaneThemeselector wirePanelTheme={wirePanelTheme} />
+      <WirePanelThemeSelector wirePanelTheme={wirePanelTheme} />
     </Collapsible>
   );
 };
 
 
 
-const WirePaneThemeselector = (props: WirePanelTheme) => {
+const WirePanelThemeSelector = (props: WirePanelTheme) => {
   const { wirePanelTheme } = props;
   return (
     <>
-      { (wirePanelTheme === WirePaneThemes.WPANEL_THEME_CONTROLS || !wirePanelTheme) && (
+      { (wirePanelTheme === WirePanelThemes.WPANEL_THEME_CONTROLS || !wirePanelTheme) && (
         <WirePanelShowControls />
       )}
-      { wirePanelTheme === WirePaneThemes.WPANEL_THEME_INDICATORS && (
+      { wirePanelTheme === WirePanelThemes.WPANEL_THEME_INDICATORS && (
         <WirePanelShowIndicators />
       )}
     </>
