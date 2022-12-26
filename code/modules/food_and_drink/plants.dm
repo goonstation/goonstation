@@ -125,7 +125,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		if(!T || src.disposed) return
 		fireflash(T,1,1)
 		if(istype(H))
-			var/p = max(DNA.potency, 0) //no vertical aymptote for you, buster
+			var/p = max(DNA?.get_effective_value("potency"), 0) //no vertical aymptote for you, buster
 			H.TakeDamage("chest", 0, (max(70 * p / (p + 100) + 5, 0)*(1-H.get_heat_protection()/100)), 0)//approaches 75 as potency approaches infinity
 			H.update_burning(p * 0.2)
 			boutput(H,"<span class='alert'>Hot liquid bursts out of [src], scalding you!</span>")
@@ -488,12 +488,12 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	proc/hitWeak(var/mob/hitMob, var/mob/user)
 		hitMob.visible_message("<span class='alert'>[hitMob] is hit by [user]'s [src]!</span>")
 		// look these numbers are pulled out of my ass, change them if things are too broken / too weak
-		var/dmg = min(12, src.plantgenes.endurance / 7)
+		var/dmg = min(12, src.plantgenes?.get_effective_value("endurance") / 7)
 		src.damage(hitMob, dmg, dmg + 5, user)
 
 	proc/hitHard(var/mob/hitMob, var/mob/user)
 		hitMob.visible_message("<span class='alert'>[hitMob] is knocked over by [user]'s [src]!</span>")
-		var/dmg = min(20, src.plantgenes.endurance / 5 + 3)
+		var/dmg = min(20, src.plantgenes?.get_effective_value("endurance") / 5 + 3)
 		src.damage(hitMob, dmg, dmg + 5, user)
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
@@ -564,7 +564,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	make_reagents()
 		..()
 		var/datum/plantgenes/DNA = src.plantgenes
-		reagents.add_reagent("capsaicin", DNA.potency)
+		reagents.add_reagent("capsaicin", DNA?.get_effective_value("potency"))
 
 /obj/item/reagent_containers/food/snacks/plant/chili/chilly
 	name = "chilly pepper"
@@ -581,13 +581,13 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	make_reagents()
 		..()
 		var/datum/plantgenes/DNA = src.plantgenes
-		reagents.add_reagent("cryostylane", DNA.potency)
+		reagents.add_reagent("cryostylane", DNA?.get_effective_value("potency"))
 
 	heal(var/mob/M)
 		..()
 		M:emote("shiver")
 		var/datum/plantgenes/DNA = src.plantgenes
-		M.bodytemperature -= DNA.potency
+		M.bodytemperature -= DNA?.get_effective_value("potency")
 		boutput(M, "<span class='alert'>You feel cold!</span>")
 
 /obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili
@@ -611,7 +611,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		M:emote("twitch")
 		var/datum/plantgenes/DNA = src.plantgenes
 		boutput(M, "<span class='alert'>Fuck! Your mouth feels like it's on fire!</span>")
-		M.bodytemperature += (DNA.potency * 5)
+		M.bodytemperature += (DNA?.get_effective_value("potency") * 5)
 
 
 /obj/item/reagent_containers/food/snacks/plant/lettuce/
@@ -802,7 +802,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	make_reagents()
 		..()
 		var/datum/plantgenes/DNA = src.plantgenes
-		reagents.add_reagent("capulettium", DNA.potency)
+		reagents.add_reagent("capulettium", DNA?.get_effective_value("potency"))
 
 //Apple on a stick
 /obj/item/reagent_containers/food/snacks/plant/apple/stick
@@ -1097,14 +1097,14 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			if (src.icon_state == "potato" && C.use(1))
 				user.visible_message("[user] sticks some wire into [src].", "You stick some wire into [src], creating a makeshift power cell.")
 				var/datum/plantgenes/DNA = src.plantgenes
-				var/obj/item/cell/potato/P = new /obj/item/cell/potato(get_turf(src),DNA.potency,DNA.endurance)
+				var/obj/item/cell/potato/P = new /obj/item/cell/potato(get_turf(src),DNA?.get_effective_value("potency"),DNA?.get_effective_value("endurance"))
 				P.name = "[src.name] battery"
 				P.transform = src.transform
 				qdel (src)
 			else if (src.icon_state == "potato-peeled" && C.use(1))
 				user.visible_message("[user] sticks some wire into [src].", "You stick some wire into [src], creating a makeshift battery.")
 				var/datum/plantgenes/DNA = src.plantgenes
-				var/obj/item/ammo/power_cell/self_charging/potato/P = new /obj/item/ammo/power_cell/self_charging/potato(get_turf(src),DNA.potency,DNA.endurance)
+				var/obj/item/ammo/power_cell/self_charging/potato/P = new /obj/item/ammo/power_cell/self_charging/potato(get_turf(src),DNA?.get_effective_value("potency"),DNA?.get_effective_value("endurance"))
 				P.name = "[src.name] battery"
 				P.transform = src.transform
 				qdel (src)

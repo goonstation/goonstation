@@ -185,7 +185,7 @@
 		if (.) return
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		var/thud_prob = clamp(DNA.endurance / 2, 0, 100)
+		var/thud_prob = clamp(DNA?.get_effective_value("endurance") / 2, 0, 100)
 
 		if (prob(thud_prob))
 			playsound(POT, 'sound/effects/exlow.ogg', 30, 1)
@@ -305,9 +305,9 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		var/fart_prob = clamp(100, 0, DNA.potency)
+		var/fart_prob = clamp(100, 0, DNA?.get_effective_value("potency"))
 
-		if (POT.growth > (P.growtime - DNA.growtime) && prob(fart_prob))
+		if (POT.growth > (P.growtime - DNA?.get_effective_value("growtime")) && prob(fart_prob))
 			POT.visible_message("<span class='alert'><b>[POT]</b> farts!</span>")
 			playsound(POT, 'sound/voice/farts/poo2.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 			// coder.Life()
@@ -495,7 +495,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.harvtime + DNA.harvtime) && prob(10))
+		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime")) && prob(10))
 			var/list/nerds = list()
 			// I know that this seems weird, but consider how many plants clutter botany at any given time. Looping through mobs and checking distance is
 			// less of a pain than looping through potentially hundreds of random seeds and crap in view(1) to see if they're mobs.
@@ -604,7 +604,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.harvtime - DNA.harvtime) && prob(10))
+		if (POT.growth > (P.harvtime - DNA?.get_effective_value("harvtime")) && prob(10))
 			var/obj/overlay/B = new /obj/overlay( get_turf(POT) )
 			B.icon = 'icons/effects/hydroponics.dmi'
 			B.icon_state = "radpulse"

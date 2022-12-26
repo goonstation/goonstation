@@ -58,7 +58,7 @@
 
 		var/datum/plant/growing = src.current
 		var/datum/plantgenes/DNA = src.plantgenes
-		var/growthlimit = growing.harvtime - DNA.harvtime
+		var/growthlimit = growing.harvtime - DNA?.get_effective_value("harvtime")
 		return "Generation [src.generation] - Health: [src.health] / [growing.starthealth] - Growth: [src.growth] / [growthlimit] - Harvests: [src.harvests] left."
 
 	process()
@@ -133,11 +133,11 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 					src.grow_level = pick(3,4,4)
 				switch(grow_level)
 					if(2)
-						src.growth = (src.current.growtime - src.plantgenes.growtime) / 2
+						src.growth = (src.current.growtime - src.plantgenes?.get_effective_value("growtime")) / 2
 					if(3)
-						src.growth = src.current.growtime - src.plantgenes.growtime
+						src.growth = src.current.growtime - src.plantgenes?.get_effective_value("growtime")
 					if(4)
-						src.growth = src.current.harvtime - src.plantgenes.harvtime
+						src.growth = src.current.harvtime - src.plantgenes?.get_effective_value("harvtime")
 				UpdateIcon()
 			else
 				if(!src.current)
@@ -429,11 +429,11 @@ TYPEINFO(/obj/machinery/plantpot)
 		// This is entirely for updating the icon. Check how far the plant has grown and update
 		// if it's gone a level beyond what the tracking says it is.
 
-		if(src.growth >= growing.harvtime - DNA.harvtime)
+		if(src.growth >= growing.harvtime - DNA?.get_effective_value("harvtime"))
 			current_growth_level = 4
-		else if(src.growth >= growing.growtime - DNA.growtime)
+		else if(src.growth >= growing.growtime - DNA?.get_effective_value("growtime"))
 			current_growth_level = 3
-		else if(src.growth >= (growing.growtime - DNA.growtime) / 2)
+		else if(src.growth >= (growing.growtime - DNA?.get_effective_value("growtime")) / 2)
 			current_growth_level = 2
 		else
 			current_growth_level = 1
@@ -945,11 +945,11 @@ TYPEINFO(/obj/machinery/plantpot)
 		if(plantgenes.mutation)
 			var/datum/plantmutation/MUT = plantgenes.mutation
 			if(MUT.harvest_override && MUT.crop)
-				if(src.growth >= current.harvtime - plantgenes.harvtime) return TRUE
+				if(src.growth >= current.harvtime - plantgenes?.get_effective_value("harvtime")) return TRUE
 				else return FALSE
 		if(!current.crop || !current.harvestable) return FALSE
 
-		if(src.growth >= current.harvtime - plantgenes.harvtime) return TRUE
+		if(src.growth >= current.harvtime - plantgenes?.get_effective_value("harvtime")) return TRUE
 		else return FALSE
 
 	proc/HYPharvesting(var/mob/living/user,var/obj/item/satchel/SA)
@@ -999,10 +999,10 @@ TYPEINFO(/obj/machinery/plantpot)
 		else
 			logTheThing(LOG_DEBUG, null, "<b>Hydro Controls</b>: Could not access Hydroponics Controller to get Harvest cap.")
 
-		src.growth = max(0, growing.growtime - DNA.growtime)
+		src.growth = max(0, growing.growtime - DNA?.get_effective_value("growtime"))
 		// Reset the growth back to the beginning of maturation so we can wait out the
 		// harvest time again.
-		var/getamount = growing.cropsize + DNA.cropsize
+		var/getamount = growing.cropsize + DNA?.get_effective_value("cropsize")
 		if(src.health >= growing.starthealth * 2 && prob(30))
 			boutput(user, "<span class='notice'>This looks like a good harvest!</span>")
 			base_quality_score += 5
@@ -1086,10 +1086,10 @@ TYPEINFO(/obj/machinery/plantpot)
 				var/quality_score = base_quality_score
 				quality_score += rand(-2,2)
 				// Just a bit of natural variance to make it interesting
-				if(DNA.potency)
-					quality_score += round(DNA.potency / 6)
-				if(DNA.endurance)
-					quality_score += round(DNA.endurance / 6)
+				if(DNA?.get_effective_value("potency"))
+					quality_score += round(DNA?.get_effective_value("potency") / 6)
+				if(DNA?.get_effective_value("endurance"))
+					quality_score += round(DNA?.get_effective_value("endurance") / 6)
 				if(HYPCheckCommut(DNA,/datum/plant_gene_strain/unstable))
 					quality_score += rand(-7,7)
 				var/quality_status = null
@@ -1261,22 +1261,22 @@ TYPEINFO(/obj/machinery/plantpot)
 					var/obj/item/organ/O = CROP
 					if(istype(CROP,/obj/item/organ/heart))
 						O.quality = quality_score
-					O.max_damage += DNA.endurance
-					O.fail_damage += DNA.endurance
+					O.max_damage += DNA?.get_effective_value("endurance")
+					O.fail_damage += DNA?.get_effective_value("endurance")
 
 				else if(istype(CROP,/obj/item/reagent_containers/balloon))
 					var/obj/item/reagent_containers/balloon/B = CROP
-					B.reagents.maximum_volume = B.reagents.maximum_volume + DNA.endurance // more endurance = larger and more sturdy balloons!
+					B.reagents.maximum_volume = B.reagents.maximum_volume + DNA?.get_effective_value("endurance") // more endurance = larger and more sturdy balloons!
 					HYPadd_harvest_reagents(CROP,growing,DNA,quality_status)
 
 				else if(istype(CROP,/obj/item/spacecash)) // Ugh
 					var/obj/item/spacecash/S = CROP
-					S.amount = max(1, DNA.potency * rand(2,4))
+					S.amount = max(1, DNA?.get_effective_value("potency") * rand(2,4))
 					S.update_stack_appearance()
 				else if (istype(CROP,/obj/item/device/light/glowstick))
 					var/type = pick(concrete_typesof(/obj/item/device/light/glowstick/))
 					var/obj/item/device/light/glowstick/newstick = new type(CROP.loc)
-					newstick.light_c.a = clamp(DNA.potency/60, 0.33, 1) * 255
+					newstick.light_c.a = clamp(DNA?.get_effective_value("potency")/60, 0.33, 1) * 255
 					newstick.turnon()
 					qdel(CROP)
 					CROP = newstick
@@ -1424,16 +1424,16 @@ TYPEINFO(/obj/machinery/plantpot)
 		// Now we deal with various health bonuses and penalties for the plant.
 
 		if(growing.isgrass)
-			src.health += src.plantgenes.harvests * 2
+			src.health += src.plantgenes?.get_effective_value("harvests") * 2
 			// If we have a single-harvest vegetable plant, the harvests gene (which is otherwise
 			// useless) adds 2 health for every point. This works negatively also!
 
-		if(growing.cropsize + SDNA.cropsize > 30)
-			src.health += (growing.cropsize + SDNA.cropsize) - 30
+		if(growing.cropsize + SDNA?.get_effective_value("cropsize") > 30)
+			src.health += (growing.cropsize + SDNA?.get_effective_value("cropsize")) - 30
 			// If we have a total crop yield above the maximum harvest size, we add it to the
 			// plant's starting health.
 
-		src.health += SEED.planttype.endurance + SDNA.endurance
+		src.health += SEED.planttype.endurance + SDNA?.get_effective_value("endurance")
 		// Add the plant's total endurance score to the health.
 
 		if(SEED.seeddamage > 0)
@@ -1461,7 +1461,7 @@ TYPEINFO(/obj/machinery/plantpot)
 
 		// Finally set the harvests, make sure we always have at least one harvest,
 		// then get rid of the seed, mutate the genes a little and update the pot sprite.
-		if(growing.harvestable) src.harvests = growing.harvests + DNA.harvests
+		if(growing.harvestable) src.harvests = growing.harvests + DNA?.get_effective_value("harvests")
 		if(src.harvests < 1) src.harvests = 1
 		qdel(SEED)
 
@@ -1547,11 +1547,11 @@ TYPEINFO(/obj/machinery/plantpot)
 						if(damage_amount && D.damage_mult)
 							damage_amount /= D.damage_mult
 
-			damage_prob -= growing.endurance + DNA.endurance
+			damage_prob -= growing.endurance + DNA?.get_effective_value("endurance")
 			if(damage_prob < 1) return 0
 			if(damage_prob > 100) damage_prob = 100
 
-		if(growing.endurance + DNA.endurance < 0) damage_amount -= growing.endurance + DNA.endurance
+		if(growing.endurance + DNA?.get_effective_value("endurance") < 0) damage_amount -= growing.endurance + DNA?.get_effective_value("endurance")
 		if(prob(damage_prob))
 			src.health -= damage_amount
 			return 1
@@ -1571,19 +1571,12 @@ proc/HYPadd_harvest_reagents(var/obj/item/I,var/datum/plant/growing,var/datum/pl
 	else if(istype(I,/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat)) basecapacity = 2 //I foresee a growing if tree here, should probably break these values out.
 	// First we decide how much reagents to begin with certain items should hold.
 
-	if(DNA.commuts)
-		for (var/datum/plant_gene_strain/quality/Q in DNA.commuts)
-			if(Q.negative)
-				if(basecapacity && Q.quality_mult)
-					basecapacity /= Q.quality_mult
-			else
-				basecapacity *= Q.quality_mult
 
 	if(special_condition == "jumbo")
 		basecapacity *= 2
 
-	var/to_add = basecapacity + DNA.potency
-	I.reagents.maximum_volume = max(basecapacity + DNA.potency, I.reagents.maximum_volume)
+	var/to_add = basecapacity + DNA?.get_effective_value("potency")
+	I.reagents.maximum_volume = max(to_add, I.reagents.maximum_volume)
 	if(I.reagents.maximum_volume < 1)
 		I.reagents.maximum_volume = 1
 	// Now we add the plant's potency to their max reagent capacity. If this causes it to fall

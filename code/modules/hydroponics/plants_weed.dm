@@ -135,7 +135,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.harvtime + DNA.harvtime) && prob(10))
+		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime")) && prob(10))
 			var/obj/overlay/B = new /obj/overlay( get_turf(POT) )
 			B.icon = 'icons/effects/hydroponics.dmi'
 			B.icon_state = "radpulse"
@@ -201,7 +201,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth >= (P.harvtime + DNA.harvtime + 50) && prob(10) && !src.exploding)
+		if (POT.growth >= (P.harvtime + DNA?.get_effective_value("harvtime") + 50) && prob(10) && !src.exploding)
 			src.exploding = 1
 			POT.visible_message("<span class='alert'><b>[POT]</b> begins to bubble and expand!</span>")
 			playsound(POT, 'sound/effects/bubbles.ogg', 50, 1)

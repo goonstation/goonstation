@@ -157,7 +157,7 @@ ABSTRACT_TYPE(/datum/plant)
 	proc/HYPinfusionP(var/obj/item/seed/S,var/reagent)
 		var/datum/plantgenes/DNA = S.plantgenes
 
-		var/damage_prob = 100 - (src.endurance + DNA.endurance)
+		var/damage_prob = 100 - (src.endurance + DNA?.get_effective_value("endurance"))
 		damage_prob = clamp(damage_prob, 0, 100)
 		var/damage_amt = 0
 		switch (reagent)
@@ -262,6 +262,27 @@ ABSTRACT_TYPE(/datum/plant)
 			src.d_potency = rand(0,1)
 			src.d_endurance = rand(0,1)
 			// optimise this later
+
+	proc/get_effective_value(gene_stat as text) ///This gives out a plant stat, modified by all commuts that affect produce
+		var/output_base = 0
+		switch(gene_stat)
+			if("growtime")
+				output_base = src.growtime
+			if("harvtime")
+				output_base = src.harvtime
+			if("harvests")
+				output_base = src.harvtime
+			if("cropsize")
+				output_base = src.cropsize
+			if("potency")
+				output_base = src.potency
+			if("endurance")
+				output_base = src.endurance
+		var/output_real = output_base
+		if (src.commuts)
+			for (var/datum/plant_gene_strain/X in src.commuts)
+				output_real +=  X.get_plant_stat_modifier(src, gene_stat, output_base)
+		return output_real
 
 /datum/action/bar/icon/harvest_plant  //In the words of my forebears, "I really don't know a good spot to put this, so im putting it here, fuck you." Adds a channeled action to harvesting flagged plants.
 	id = "harvest_plant"
