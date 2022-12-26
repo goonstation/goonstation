@@ -135,4 +135,4 @@
 
 // ---- Door signals, for bucket pranks ----
 /// When the door was bumped open, send the movable that opened it
-#define COMSIG_DOOR_OPENED_BY "door_opened_by"
+#define COMSIG_DOOR_OPENED "door_opened"
