@@ -164,6 +164,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 1
 	desc = "An implant that can send configurable signals. Can be used while stunned or handcuffed."
 	not_in_crates = 1
+	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/generic/spen
 	name = "Sleepy Pen"
