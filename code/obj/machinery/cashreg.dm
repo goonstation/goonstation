@@ -18,18 +18,18 @@ TYPEINFO(/obj/machinery/cashreg)
 		..()
 		UnsubscribeProcess()
 
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/device/pda2) && W:ID_card)
-			W = W:ID_card
-		if (istype(W, /obj/item/card/id))
-			src.owner_card = W
-			if (!owner_account)
-				src.register_owner(user, W)
+	attackby(obj/item/O, mob/user)
+		if (istype(O, /obj/item/device/pda2) && O:ID_card)
+			O = O:ID_card
+		if (istype(O, /obj/item/card/id))
+			src.owner_card = O
+			if (!src.owner_account)
+				src.register_owner(user, O)
 			else
 				src.pay(user)
 			src.attack_hand(user)
 			return
-		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
+		if (istool(O, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [anchored ? "unbolts the [src] from" : "secures the [src] to"] the floor.")
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 80, 1)
 			src.anchored = !src.anchored
@@ -56,12 +56,14 @@ TYPEINFO(/obj/machinery/cashreg)
 		switch (action)
 			if ("swipe_owner")
 				var/obj/O = usr.equipped()
-				if (istype(O, /obj/item/card/id))
+				if (istype(O, /obj/item/card/id) && !src.owner_account)
 					src.register_owner(usr, O)
 					. = TRUE
 			if ("swipe_payee")
-				src.pay(usr)
-				. = TRUE
+				var/obj/O = usr.equipped()
+				if (istype(O, /obj/item/card/id) && src.owner_account)
+					src.pay(usr, O)
+					. = TRUE
 			if ("reset")
 				if (!src.owner_account)
 					boutput(usr, "<span class='alert'>You press the reset button, but nothing happens.</span>")
@@ -73,15 +75,15 @@ TYPEINFO(/obj/machinery/cashreg)
 					. = TRUE
 		src.add_fingerprint(usr)
 
-	proc/authenticate_card(mob/user, obj/item/card/id/W)
+	proc/authenticate_card(mob/user, obj/item/card/id/O)
 		var/user_pin
 		if (user.mind?.remembered_pin)
 			user_pin = user.mind.remembered_pin
 		var/enter_pin = tgui_input_number(user, "Enter your PIN.", src.name, user_pin, 9999)
-		if (enter_pin == W.pin)
-			if (src.find_record(W))
-				user.visible_message("<span class='notice'>[user] swipes [src] with [W].</span>")
-				return src.find_record(W)
+		if (enter_pin == O.pin)
+			if (src.find_record(O))
+				user.visible_message("<span class='notice'>[user] swipes [src] with [O].</span>")
+				return src.find_record(O)
 			else
 				boutput(user, "<span class='alert'>Unable to find bank account!</span>")
 				return FALSE
@@ -89,17 +91,17 @@ TYPEINFO(/obj/machinery/cashreg)
 			boutput(user, "<span class='alert'>Invalid PIN!</span>")
 		return FALSE
 
-	proc/find_record(obj/item/card/id/W)
-		var/datum/db_record/account = data_core.bank.find_record("name", W.registered)
+	proc/find_record(obj/item/card/id/O)
+		var/datum/db_record/account = data_core.bank.find_record("name", O.registered)
 		return !!account
 
-	proc/register_owner(mob/user, obj/item/card/id/W)
+	proc/register_owner(mob/user, obj/item/card/id/O)
 		if (!src.owner_account)
-			src.owner_account = src.authenticate_card(user, W)
+			src.owner_account = src.authenticate_card(user, O)
 		else
 			boutput(usr, "<span class='alert'>An owner is already registered with [src]!</span>")
 
-	proc/pay(mob/user)
+	proc/pay(mob/user, obj/item/card/id/O)
 		// REWRITE LITERALLY ALL OF THIS
 
 		// if (card.registered in FrozenAccounts)
@@ -123,10 +125,10 @@ TYPEINFO(/obj/machinery/cashreg)
 		// if (amount <= 0 || !isnum_safe(amount))
 		// 	return
 		// if (amount > target_account["current_money"])
-		// 	boutput(user, "<span class='alert'>Insufficent funds. [W] only has [target_account["current_money"]] credits.</span>")
+		// 	boutput(user, "<span class='alert'>Insufficent funds. [O] only has [target_account["current_money"]] credits.</span>")
 		// 	return
 		// boutput(user, "<span class='notice'>Sending transaction.</span>")
-		// user.visible_message("<span class='notice'>[user] swipes [src] with [W].</span>")
+		// user.visible_message("<span class='notice'>[user] swipes [src] with [O].</span>")
 		// target_account["current_money"] -= amount
 		// owner_account["current_money"] += amount
 		// user.visible_message("<b>[src]</b> beeps, \"[owner_account["name"]] now holds [owner_account["current_money"]] credits. Thank you for your service!\"")
