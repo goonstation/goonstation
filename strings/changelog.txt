@@ -1,4 +1,9 @@
 
+(t)mon dec 26 22
+(u)Chatausours
+(p)12498
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Signaler implants will no longer appear in surplus crates.
 (t)sun dec 25 22
 (u)Sord
 (+)Vortexes random event now plays a  warning sound and has a delay before the vortexes sppear
