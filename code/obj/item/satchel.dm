@@ -58,8 +58,8 @@
 		// but to be honest this is one of those funny bugs that can be fixed later
 
 		if (GET_DIST(user, src) <= 0 && length(src.contents))
+			var/obj/item/getItem = null
 			if (user.l_hand == src || user.r_hand == src)
-				var/obj/item/getItem = null
 
 				if (src.contents.len > 1)
 					if (user.a_intent == INTENT_GRAB)
@@ -73,13 +73,38 @@
 
 				else if (src.contents.len == 1)
 					getItem = src.contents[1]
+			else
+				if (user.a_intent == INTENT_GRAB)
+					var/is_on_user = FALSE
+					//I'm amazed and terrified that i'm unable to find a proc that looks if an item is someone on a person
+					//theoretically you are able quick-access satchels implanted in your chest... if you would be able to click on chest items, which you shouldn't be
+					for(var/obj/item/searching in user)
+						if (searching == src)
+							is_on_user = TRUE
 
-				if (getItem)
-					user.visible_message("<span class='notice'><b>[user]</b> takes \a [getItem.name] out of \the [src].</span>",\
-					"<span class='notice'>You take \a [getItem.name] from [src].</span>")
-					user.put_in_hand_or_drop(getItem)
-					src.UpdateIcon()
+						else
+							if (istype(searching, /obj/item/storage/))
+								for(var/obj/item/searching_2 in searching)
+									if (searching_2 == src)
+										is_on_user = TRUE
+										//i could make a proc that iterates through each container in someone and loops itself on new containers it encounters
+										//but honestly dunno if that would make the storage option too strong
+
+					if (is_on_user)
+						if (src.contents.len > 1)
+							user.visible_message("<span class='notice'><b>[user]</b> rummages through \the [src].</span>",\
+							"<span class='notice'>You rummage through \the [src].</span>")
+
+							getItem = pick(src.contents)
+						else
+							getItem = src.contents[1]
 			tooltip_rebuild = 1
+			if (getItem)
+				user.visible_message("<span class='notice'><b>[user]</b> takes \a [getItem.name] out of \the [src].</span>",\
+				"<span class='notice'>You take \a [getItem.name] from [src].</span>")
+				user.put_in_hand_or_drop(getItem)
+				src.UpdateIcon()
+				return 1
 		return ..(user)
 
 	proc/search_through(mob/user as mob)
