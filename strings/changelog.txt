@@ -1,4 +1,10 @@
 
+(t)tue dec 27 22
+(u)LeahTheTech
+(p)12326
+(e)🪲💅🧛|C-Bug, C-QoL, A-Gamemodes
+(*)Spy-thief delivery teleportation should now work regardless of what you are clicking on (bags, tables etc.)
+(+)Spy-thief area GPS now works again
 (t)mon dec 26 22
 (u)Chatausours
 (p)12498
