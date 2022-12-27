@@ -78,13 +78,12 @@
 			regions += region
 			sleep(rand(10 SECONDS, 20 SECONDS))
 
-		// SPAWN(rand(2 MINUTES, 3 MINUTES))
-		SPAWN(60 SECONDS)
+		SPAWN(rand(2 MINUTES, 3 MINUTES))
 			// kill the station portals so no one can warp in during cleanup
 			for (var/obj/portal/portal in station_portals)
 				portal.dispose()
 			for(var/datum/allocated_region/region in regions)
-				// don't shit the mobs all over the station
+				// don't send critters to the station
 				for (var/obj/critter/C in REGION_TILES(region))
 					for(var/type in themed_mobs)
 						if (istype(C, type))
