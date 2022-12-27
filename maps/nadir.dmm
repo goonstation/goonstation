@@ -259,8 +259,7 @@
 /area/station/maintenance/northeast)
 "afy" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4;
-	req_access = null
+	dir = 4
 	},
 /obj/access_spawn/kitchen,
 /obj/access_spawn/bar,
@@ -4441,6 +4440,15 @@
 /obj/disposalpipe/loafer/horizontal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"cbx" = (
+/obj/decal/tile_edge/line/green{
+	dir = 5;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/secondary/entry{
+	name = "Arrival Shuttle Hallway"
+	})
 "cbE" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -4714,6 +4722,10 @@
 /obj/item/reagent_containers/food/snacks/ingredient/sugar,
 /obj/item/reagent_containers/food/snacks/ingredient/pancake_batter,
 /obj/item/reagent_containers/food/snacks/ingredient/oatmeal,
+/obj/decal/tile_edge/line/green{
+	dir = 5;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "cjf" = (
@@ -5112,6 +5124,10 @@
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
+	},
+/obj/decal/tile_edge/line/green{
+	dir = 9;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
@@ -11228,6 +11244,10 @@
 	dir = 4
 	},
 /obj/storage/closet/fire,
+/obj/decal/tile_edge/line/green{
+	dir = 6;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
@@ -21621,6 +21641,20 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/equipment)
+"jVa" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4
+	},
+/obj/access_spawn/maint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "jVb" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 4
@@ -25223,6 +25257,10 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/horizontal,
+/obj/decal/tile_edge/line/green{
+	dir = 4;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
@@ -26771,6 +26809,10 @@
 	icon_state = "1-4"
 	},
 /obj/disposalpipe/switch_junction/biofilter/left/west,
+/obj/decal/tile_edge/line/green{
+	dir = 4;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "mfV" = (
@@ -31324,6 +31366,10 @@
 	},
 /obj/item/c_tube,
 /obj/item/device/radio,
+/obj/decal/tile_edge/line/green{
+	dir = 10;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "ost" = (
@@ -35921,6 +35967,17 @@
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
 	})
+"qGw" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/obj/decal/tile_edge/line/green{
+	dir = 6;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "qGB" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
@@ -40771,6 +40828,22 @@
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon17,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/east)
+"sUF" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
+/obj/access_spawn/maint,
+/obj/access_spawn/bar,
+/obj/access_spawn/kitchen,
+/turf/simulated/floor/black,
+/area/station/maintenance/west)
 "sUG" = (
 /obj/machinery/vending/pda,
 /turf/simulated/floor/black/side{
@@ -44162,6 +44235,17 @@
 	},
 /turf/simulated/floor/blackwhite,
 /area/station/medical/morgue)
+"uxX" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/decal/tile_edge/line/green{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "uya" = (
 /turf/simulated/floor/caution/corner/misc{
 	dir = 10
@@ -83028,7 +83112,7 @@ aRF
 dqY
 fsf
 lyE
-diT
+cbx
 oWp
 iaz
 pjU
@@ -83329,7 +83413,7 @@ lkN
 kGA
 dqY
 dqY
-rsk
+sUF
 dqY
 dqY
 dqY
@@ -83631,7 +83715,7 @@ ajs
 ajs
 ajs
 osg
-gbZ
+uxX
 ctg
 voE
 cdv
@@ -84236,7 +84320,7 @@ uUP
 plo
 utU
 ydp
-uOE
+qGw
 mfN
 ciR
 rvl
@@ -86348,7 +86432,7 @@ jdV
 jdV
 fLE
 oNg
-gbZ
+jVa
 iHN
 oJc
 kyY
@@ -86650,7 +86734,7 @@ jdV
 jdV
 fDR
 oNg
-pnx
+gbZ
 iHN
 myU
 xPz
@@ -87254,7 +87338,7 @@ jdV
 jdV
 jdV
 oNg
-gbZ
+pnx
 iHN
 vAs
 bhF
