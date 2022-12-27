@@ -675,6 +675,8 @@ toxic - poisons
 
 		on_hit(atom/hit)
 			explosion_new(null, get_turf(hit), 4)
+			if(istype(hit, /obj/machinery/door))
+				hit.ex_act(1)
 
 		on_max_range_die(obj/projectile/O)
 			explosion_new(null, get_turf(O), 4)
