@@ -60,7 +60,7 @@
 
 		SPAWN(rand(2 MINUTES, 3 MINUTES))
 			// kill the station portals so no one can warp in during cleanup
-			for (var/obj/portal/portal in stationPortals)
+			for (var/obj/portal/portal in station_portals)
 				portal.dispose()
 			for (var/datum/allocated_region/region in regions)
 				var/list/turf/exits = list()
