@@ -100,6 +100,7 @@
 			tgui_process.update_uis(parent)
 		if(WPANEL_COVER_CLOSED)
 			src.overlays = null
+			// the only TGUI for this object is wire panels, so close if the cover closes
 			for(var/datum/tgui/ui in tgui_process.get_uis(parent))
 				if(!parent.can_access_remotely(ui.user))
 					tgui_process.close_user_uis(ui.user, parent)
@@ -127,8 +128,11 @@
 /obj/machinery/weapon_stand/ui_static_data(mob/user)
 	. = ..()
 	if (src.has_wire_panel)
-		.["wirePanelTheme"] = WPANEL_THEME_INDICATORS
 		SEND_SIGNAL(src, COMSIG_WPANEL_UI_STATIC_DATA, user, .)
+		.["wirePanelTheme"] = list(
+			"wireTheme" = WPANEL_THEME_PHYSICAL,
+			"controlTheme" = WPANEL_THEME_PHYSICAL,
+		)
 
 /obj/machinery/weapon_stand/proc/check_shock(mob/user)
 	var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)

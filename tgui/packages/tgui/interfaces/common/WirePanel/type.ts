@@ -1,6 +1,8 @@
 import { BooleanLike } from "common/react";
 
-export interface WirePanelData extends WirePanelProps, WirePanelTheme {} // Intake data
+export interface WirePanelData extends WirePanelProps {
+  wirePanelTheme: WirePanelTheme
+} // Intake data
 export interface WireProps extends WireStatic, WireDynamic {
   act: (action: string, payload: object) => void
   index: number
@@ -66,20 +68,20 @@ export const WirePanelPatterns = {
   "WPANEL_PATTERN_FLASHING": "flashing",
 };
 
-// Wire Panel Component: TGUI Wire Panel Themes
 export const WirePanelThemes = {
-  "WPANEL_THEME_CONTROLS": 0,
-  "WPANEL_THEME_INDICATORS": 1,
+  "WPANEL_THEME_TEXT": 0,
+  "WPANEL_THEME_PHYSICAL": 1,
 };
-
 
 export interface WirePanelProps {
   wirePanelDynamic: WirePanelDynamic
   wirePanelStatic: WirePanelStatic
 }
 
-interface WirePanelTheme {
-  wirePanelTheme: number
+export interface WirePanelTheme {
+  wireTheme: number,
+  controlTheme: number,
+  windowTheme?: string,
 }
 interface WirePanelStatic {
 wires: WireStatic[]

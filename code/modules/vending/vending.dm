@@ -447,6 +447,10 @@ TYPEINFO(/obj/machinery/vending)
 	. = list()
 	if (src.can_hack)
 		SEND_SIGNAL(src, COMSIG_WPANEL_UI_STATIC_DATA, user, .)
+		.["wirePanelTheme"] = list(
+			"wireTheme" = WPANEL_THEME_PHYSICAL,
+			"controlTheme" = WPANEL_THEME_TEXT,
+		)
 
 	var/list/plist = player_list || product_list
 
@@ -482,7 +486,6 @@ TYPEINFO(/obj/machinery/vending)
 
 	if (src.can_hack)
 		SEND_SIGNAL(src, COMSIG_WPANEL_UI_DATA, user, .)
-		.["wirePanelTheme"] = WPANEL_THEME_CONTROLS
 
 	if(istype(src,/obj/machinery/vending/player))
 		var/obj/machinery/vending/player/P = src

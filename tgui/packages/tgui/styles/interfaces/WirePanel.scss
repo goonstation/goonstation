@@ -1,4 +1,6 @@
 @use '../colors.scss';
+@use '../components/Button.scss';
+@use '../base.scss';
 
 .WirePanel-wires-container {
   padding-top: 0.1em;
@@ -26,6 +28,10 @@
   flex: flex-grow;
 }
 
+// .WirePanel-wires-generic-button {
+//   background-color: colors.bg(colors.$average) !important;
+// }
+
 .wirePanel-wires-buttons {
   margin: 0.3em 0.5em 0.2em;
   height: 2.2em;
@@ -46,6 +52,31 @@
   text-transform: uppercase;
 }
 
+.WirePanel-wires-airlock-wire {
+  margin-top: 0.05em;
+  margin-bottom: 0.05em;
+}
+
+.WirePanel-wires-airlock-name {
+  flex: flex-grow;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  // text color set from data;
+}
+
+.WirePanel-wires-airlock-buttons {
+  margin: 0.3em 0.5em 0.2em;
+  height: 2.2em;
+  padding: 0.2em 0.5em;
+  background-color: rgba(30,30,30,0.6);
+  &.Button--selected {
+    background-color: colors.bg(colors.$average) !important;
+  }
+}
+.WirePanel-wires-airlock-label {
+  display: inline-block;
+}
+
 $controlLabelDistance: 1em;
 $controlRowSpacing: 0.3em;
 $color-label: colors.fg(colors.$label) !default;
@@ -59,7 +90,7 @@ $color-label: colors.fg(colors.$label) !default;
 
 .WirePanel-control-label {
   display: inline-block;
-  width: 50%;
+  width: 60%;
   font-weight: bold;
   color: $color-label;
   margin-right: $controlLabelDistance;

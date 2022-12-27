@@ -948,7 +948,10 @@ TYPEINFO(/obj/submachine/seed_vendor)
 
 	ui_static_data(mob/user)
 		. = list()
-		.["wirePanelTheme"] = WPANEL_THEME_CONTROLS
+		.["wirePanelTheme"] = list(
+			"wireTheme" = WPANEL_THEME_PHYSICAL,
+			"controlTheme" = WPANEL_THEME_TEXT,
+		)
 		.["maxSeed"] = src.maxseed
 		.["name"] = src.name
 

@@ -3,7 +3,7 @@ import { Window } from '../layouts';
 import { Box, Button, Section, Table, Image } from 'tgui/components';
 import { Collapsible, Flex, Stack } from '../components';
 import { WirePanelCoverStatus } from './common/WirePanel/type';
-import { RemoteAccessBlocker, WirePanelStackItem } from './WirePanelWindow';
+import { WirePanelStack } from './WirePanelWindow';
 
 export const Vendors = (props, context) => {
   const { act, data } = useBackend(context);
@@ -41,8 +41,7 @@ export const Vendors = (props, context) => {
       fontFamily="Consolas"
       font-size="10pt">
       <Window.Content>
-        <Stack vertical fill minHeight="1%" maxHeight="100%">
-          <WirePanelStackItem context={context} />
+        <WirePanelStack vertical fill minHeight="1%" maxHeight="100%">
           {!!playerBuilt && (
             <Stack.Item>
               <Collapsible
@@ -167,8 +166,7 @@ export const Vendors = (props, context) => {
               </Table>
             </Stack.Item>
           )}
-          <RemoteAccessBlocker wirePanelDynamic={wirePanelDynamic} />
-        </Stack>
+        </WirePanelStack>
 
       </Window.Content>
     </Window>

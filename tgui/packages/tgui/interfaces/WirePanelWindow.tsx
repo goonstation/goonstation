@@ -1,50 +1,71 @@
 import { Window } from '../layouts';
-import { Box, Collapsible, Dimmer, Icon, Stack } from "../components";
-import { WirePanelControls, WirePanelCoverStatus, WirePanelData, WirePanelDynamic, WirePanelThemes } from './common/WirePanel/type';
-import { WirePanelShowIndicators, WirePanelShowControls } from './common/WirePanel';
+import { Box, Collapsible, Dimmer, Icon, Section, Stack } from "../components";
+import { WirePanelControls, WirePanelCoverStatus, WirePanelData, WirePanelDynamic, WirePanelTheme, WirePanelThemes } from './common/WirePanel/type';
+import { SimpleWires, SkeuomorphicWires, SimpleControls, SkeuomorphicControls } from './common/WirePanel';
 import { useBackend } from '../backend';
-import { decodeHtmlEntities } from 'common/string';
-import { capitalize } from './common/stringUtils';
+import { InfernoNode } from 'inferno';
 
-interface WirePanelTheme {
-  wirePanelTheme: number,
-}
-
-interface WirePanelComponentProps extends WirePanelTheme {
+interface WirePanelComponentProps {
   wirePanelDynamic: WirePanelDynamic
+  wirePanelTheme?: WirePanelTheme
 }
 
 export const WirePanelWindow = (props, context) => {
-  const { config, data } = useBackend<WirePanelData>(context);
-  let calcHeight = 0;
-  calcHeight += data.wirePanelDynamic.wires.length * 36; // height per wire
-  switch (data.wirePanelTheme) {
-    case WirePanelThemes.WPANEL_THEME_CONTROLS:
-      calcHeight += (data.wirePanelDynamic.indicators.length / 2) * 55; // dynamic; paired
+  const { data } = useBackend<WirePanelData>(context);
+  const { wireTheme, controlTheme, windowTheme } = data.wirePanelTheme;
+  const theme = windowTheme ? windowTheme : "default";
+  let calcHeight = 78;
+
+  switch (wireTheme) {
+    case WirePanelThemes.WPANEL_THEME_TEXT:
+      calcHeight += data.wirePanelDynamic.wires.length * 27; // height per wire
       break;
-    case WirePanelThemes.WPANEL_THEME_INDICATORS:
-      calcHeight += 110; // static height
-      break;
-    default:
+    case WirePanelThemes.WPANEL_THEME_PHYSICAL:
+      calcHeight += data.wirePanelDynamic.wires.length * 36; // height per wire
       break;
   }
-  const objectTitle = capitalize(decodeHtmlEntities(config.title));
+  switch (controlTheme) {
+    case WirePanelThemes.WPANEL_THEME_TEXT:
+      calcHeight += (data.wirePanelDynamic.indicators.length / 2) * 55; // dynamic; paired
+      break;
+    case WirePanelThemes.WPANEL_THEME_PHYSICAL:
+      calcHeight += 80; // static height
+      break;
+  }
   return (
     <Window
-      width={340}
+      width={350}
       height={calcHeight}
-      title={objectTitle + " Wire Panel"}
+      theme={theme}
     >
       <Window.Content>
-        <WirePanelThemeSelector wirePanelTheme={data.wirePanelTheme} />
+        <Section title="Maintenance Panel">
+          <WirePanelThemeSelector wireTheme={wireTheme} controlTheme={controlTheme} />
+        </Section>
       </Window.Content>
     </Window>
   );
 };
 
-export const WirePanelStackItem = (props, context) => {
+export interface WirePanelStackProps {
+  children?: InfernoNode
+}
+
+export const WirePanelStack = (props, context) => {
+  const { children, ...rest } = props;
   const { data } = useBackend<WirePanelData>(context);
   const { wirePanelTheme, wirePanelDynamic } = data;
+  return (
+    <Stack {...rest}>
+      <WirePanelStackItem wirePanelTheme={wirePanelTheme} wirePanelDynamic={wirePanelDynamic} />
+      { children }
+      <RemoteAccessBlocker wirePanelDynamic={wirePanelDynamic} />
+    </Stack>
+  );
+};
+
+export const WirePanelStackItem = (props: WirePanelComponentProps) => {
+  const { wirePanelTheme, wirePanelDynamic } = props;
   if (wirePanelDynamic.cover_status === WirePanelCoverStatus.WPANEL_COVER_OPEN || !!wirePanelDynamic.is_silicon_user) {
     return (
       <Stack.Item>
@@ -74,22 +95,26 @@ const WirePanelCollapsible = (props: WirePanelComponentProps) => {
       open={wirePanelDynamic.cover_status === WirePanelCoverStatus.WPANEL_COVER_OPEN}
       disabled={!!shouldDisable}
     >
-      <WirePanelThemeSelector wirePanelTheme={wirePanelTheme} />
+      <WirePanelThemeSelector wireTheme={wirePanelTheme.wireTheme} controlTheme={wirePanelTheme.controlTheme} />
     </Collapsible>
   );
 };
 
-
-
 const WirePanelThemeSelector = (props: WirePanelTheme) => {
-  const { wirePanelTheme } = props;
+  const { wireTheme, controlTheme } = props;
   return (
     <>
-      { (wirePanelTheme === WirePanelThemes.WPANEL_THEME_CONTROLS || !wirePanelTheme) && (
-        <WirePanelShowControls />
+      { (wireTheme === WirePanelThemes.WPANEL_THEME_TEXT || !wireTheme) && (
+        <SimpleWires />
       )}
-      { wirePanelTheme === WirePanelThemes.WPANEL_THEME_INDICATORS && (
-        <WirePanelShowIndicators />
+      { (wireTheme === WirePanelThemes.WPANEL_THEME_PHYSICAL) && (
+        <SkeuomorphicWires />
+      )}
+      {(controlTheme === WirePanelThemes.WPANEL_THEME_TEXT || !controlTheme) && (
+        <SimpleControls />
+      )}
+      {(controlTheme === WirePanelThemes.WPANEL_THEME_PHYSICAL) && (
+        <SkeuomorphicControls />
       )}
     </>
   );

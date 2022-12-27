@@ -67,11 +67,18 @@
 /// Cover is locked; requires unlocking before opening
 #define WPANEL_COVER_LOCKED	3
 
-// Wire Panel Component: TGUI Wire Panel Themes
+// Wire Panel Component: TGUI Wire Panel Settings
+/// Text-based wire listing, with
+#define WPANEL_THEME_TEXT 0
+/// Skeuomorphic physical wires
+#define WPANEL_THEME_PHYSICAL 1
+
 /// Control Labels
 #define WPANEL_THEME_CONTROLS	0
 /// Indicator lights
 #define WPANEL_THEME_INDICATORS	1
+/// Exactly like Airlocks
+#define WPANEL_THEME_AIRLOCK 2
 
 // Wire Panel Component: Indicator Pattern
 #define WPANEL_PATTERN_ON "on"

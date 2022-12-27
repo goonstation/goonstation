@@ -230,7 +230,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	ui_static_data(mob/user)
 		. = ..()
-		.["wirePanelTheme"] = WPANEL_THEME_INDICATORS
+		.["wirePanelTheme"] = list(
+			"wireTheme" = WPANEL_THEME_PHYSICAL,
+			"controlTheme" = WPANEL_THEME_PHYSICAL,
+		)
 		SEND_SIGNAL(src, COMSIG_WPANEL_UI_STATIC_DATA, user, .)
 
 

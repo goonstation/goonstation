@@ -10,7 +10,7 @@ import { Blink, Box, Button, Collapsible, Flex, Icon, Modal, NumberInput, Progre
 import { Window } from '../layouts';
 import { pluralize } from './common/stringUtils';
 import { WirePanelControls } from './common/WirePanel/type';
-import { WirePanelStackItem } from './WirePanelWindow';
+import { WirePanelStack } from './WirePanelWindow';
 
 const DefaultSort = {
   Fruit: 1,
@@ -42,8 +42,7 @@ export const SeedFabricator = (_props, context) => {
       height={600}
     >
       <Window.Content>
-        <Stack vertical width="100%">
-          <WirePanelStackItem context={context} />
+        <WirePanelStack vertical width="100%">
           <Stack.Item position="relative">
             <Section>
               <Flex>
@@ -118,7 +117,7 @@ export const SeedFabricator = (_props, context) => {
               </Section>
             )}
           </Stack.Item>
-        </Stack>
+        </WirePanelStack>
       </Window.Content>
     </Window>
   );
