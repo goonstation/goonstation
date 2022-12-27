@@ -1,11 +1,11 @@
-/obj/item/medical/medicaldiagnosis
+/obj/item/medicaldiagnosis
 	name = "UM EXCUSE ME WHY ARE YOU SEEING THIS PLEASE MAKE AN ISSUE AAAAA"
 	desc = "*scream"
 	icon_state = "stethoscope" // todo
 	inhand_image_icon = "stethoscope" // todo
 	icon = 'icons/obj/medicaldiagnosis.dmi'
 
-/obj/item/medical/medicaldiagnosis/stethoscope
+/obj/item/medicaldiagnosis/stethoscope
 	name = "stethoscope"
 	desc = "a disc-shaped resonator attached to two earpieces for figuring out if someone has consumption or is simply suffering from the vapors."
 	icon = 'icons/obj/medicaldiagnosis.dmi'

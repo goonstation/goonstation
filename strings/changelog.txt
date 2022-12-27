@@ -1,5 +1,21 @@
 
+(t)mon dec 26 22
+(u)Chatausours
+(p)12498
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Signaler implants will no longer appear in surplus crates.
+(t)sun dec 25 22
+(u)Sord
+(+)Vortexes random event now plays a  warning sound and has a delay before the vortexes sppear
+(t)fri dec 23 22
+(u)Keiiro
+(p)12480
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)The chef & bartender spare clothing can now be found in a proper catering clothing vending machine around the bar, along with multiple other job related costumes.
 (t)wed dec 21 22
+(u)Sord
+(e)🆕|C-Feature
+(+)Spooky critter summoning vortexes can now occur as a random event after 45 minutes on Classic and 60 minutes on RP
 (u)Sord
 (e)⚖|C-Balance
 (+)Csaber has received a slight buff. Reduced stamina cost per swing.

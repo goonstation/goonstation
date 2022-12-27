@@ -1982,7 +1982,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Stethoscope"
 	item_paths = list("MET-1","CRY-1")
 	item_amounts = list(2,1)
-	item_outputs = list(/obj/item/medical/medicaldiagnosis/stethoscope)
+	item_outputs = list(/obj/item/medicaldiagnosis/stethoscope)
 	time = 5 SECONDS
 	create = 1
 	category = "Tool"
