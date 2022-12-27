@@ -818,10 +818,7 @@
 /obj/storage/secure/closet/civilian/kitchen
 	name = "\improper Catering supplies locker"
 	req_access = list(access_kitchen)
-	spawn_contents = list(/obj/item/storage/box/clothing/chef,\
-	/obj/item/storage/box/clothing/souschef,\
-	/obj/item/clothing/head/chefhatpuffy,\
-	/obj/item/storage/box/cutlery,\
+	spawn_contents = list(/obj/item/storage/box/cutlery,\
 	/obj/item/kitchen/rollingpin,\
 	/obj/item/paper/book/from_file/cookbook,\
 	/obj/item/reagent_containers/food/snacks/ingredient/spaghetti = 5)
@@ -829,9 +826,7 @@
 /obj/storage/secure/closet/civilian/bartender
 	name = "\improper Mixology supplies locker"
 	req_access = list(access_bar)
-	spawn_contents = list(/obj/item/storage/box/clothing/bartender,\
-	/obj/item/storage/box/clothing/waiter,\
-	/obj/item/gun/russianrevolver,\
+	spawn_contents = list(/obj/item/gun/russianrevolver,\
 	/obj/item/reagent_containers/food/drinks/bottle/vintage,\
 	/obj/item/reagent_containers/food/drinks/drinkingglass/shot = 4,\
 	/obj/item/reagent_containers/food/drinks/drinkingglass/wine = 2,\

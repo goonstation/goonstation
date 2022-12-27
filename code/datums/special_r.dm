@@ -248,7 +248,12 @@ datum/special_respawn
 				F.icon_state = "bloodfloor_2"
 				F.name = "fleshy floor"
 			else
-				F.burn_tile()
+				if(prob(75))
+					F.to_plating()
+				if(prob(75))
+					F.break_tile()
+				else if(prob(90))
+					F.burn_tile()
 		else if(istype(T, /turf/simulated/wall))
 			var/turf/simulated/wall/W = T
 			if (was_eaten)

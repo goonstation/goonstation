@@ -11972,9 +11972,11 @@
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
 "aPN" = (
-/obj/machinery/optable,
 /obj/item/paper/book/from_file/medical_surgery_guide,
 /obj/machinery/drainage,
+/obj/machinery/optable{
+	id = "robotics"
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "aPO" = (
@@ -13074,9 +13076,11 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "aTr" = (
-/obj/machinery/optable,
 /obj/machinery/drainage,
 /obj/item/paper/book/from_file/medical_surgery_guide,
+/obj/machinery/optable{
+	id = "OR2"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "aTt" = (
@@ -15808,9 +15812,10 @@
 /turf/simulated/floor/wood,
 /area/station/medical/head)
 "bbj" = (
-/obj/table/auto,
 /obj/item_dispenser/latex_gloves,
-/obj/machinery/defib_mount,
+/obj/machinery/computer/operating{
+	id = "OR2"
+	},
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -25311,7 +25316,6 @@
 	},
 /obj/access_spawn/kitchen,
 /obj/firedoor_spawn,
-/obj/access_spawn/bar,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "bPo" = (
@@ -26240,6 +26244,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/research)
+"cKc" = (
+/obj/machinery/computer/operating{
+	id = "robotics"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "cKd" = (
 /obj/table/reinforced/bar/auto,
 /obj/item_dispenser/icedispenser{
@@ -29812,8 +29822,8 @@
 	dir = 8;
 	tag = "icon-xtra_bigstripe-edge (WEST)"
 	},
-/obj/machinery/disposal/small/west,
 /obj/disposalpipe/trunk,
+/obj/machinery/disposal,
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -34521,10 +34531,12 @@
 	},
 /area/station/crew_quarters/pool)
 "jIf" = (
-/obj/machinery/optable,
 /obj/machinery/drainage,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/optable{
+	id = "OR1"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
@@ -34863,7 +34875,6 @@
 	},
 /obj/access_spawn/bar,
 /obj/firedoor_spawn,
-/obj/access_spawn/kitchen,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "jZf" = (
@@ -42942,9 +42953,10 @@
 	},
 /area/station/hangar/arrivals)
 "qIb" = (
-/obj/table/auto,
-/obj/machinery/defib_mount,
 /obj/machinery/light/incandescent,
+/obj/machinery/computer/operating{
+	id = "OR1"
+	},
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
 "qIt" = (
@@ -44067,8 +44079,8 @@
 /turf/space,
 /area/station/solar/aisat)
 "rCH" = (
-/obj/reagent_dispensers/still,
 /obj/machinery/light/incandescent,
+/obj/machinery/vending/jobclothing/catering,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "rDh" = (
@@ -46861,6 +46873,8 @@
 	},
 /obj/machinery/light_switch/east,
 /obj/disposalpipe/segment,
+/obj/table/auto,
+/obj/machinery/defib_mount,
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -48049,9 +48063,7 @@
 	},
 /area/station/crew_quarters/quarters)
 "uLH" = (
-/obj/storage/closet/wardrobe/black/formalwear,
-/obj/item/clothing/suit/apron,
-/obj/item/clothing/under/misc/itamae,
+/obj/reagent_dispensers/still,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "uMj" = (
@@ -48115,46 +48127,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
 "uPJ" = (
-/obj/storage/crate,
-/obj/item/device/radio/headset/multifreq{
-	pixel_x = -8
-	},
-/obj/item/device/radio/headset/multifreq{
-	pixel_x = -8;
-	pixel_y = -4
-	},
-/obj/item/device/radio/headset/medical{
-	pixel_x = -3
-	},
-/obj/item/device/radio/headset/medical{
-	pixel_x = -3;
-	pixel_y = -4
-	},
-/obj/item/device/radio/headset/security{
-	pixel_x = 2
-	},
-/obj/item/device/radio/headset/security{
-	pixel_x = 2;
-	pixel_y = -4
-	},
-/obj/item/device/radio/headset/engineer{
-	pixel_x = 7
-	},
-/obj/item/device/radio/headset/engineer{
-	pixel_x = 7;
-	pixel_y = -4
-	},
-/obj/item/device/radio/headset/research{
-	pixel_x = 12
-	},
-/obj/item/device/radio/headset/research{
-	pixel_x = 12;
-	pixel_y = -4
-	},
-/obj/item/storage/box/PDAbox{
-	pixel_x = -1;
-	pixel_y = 3
-	},
+/obj/storage/crate/radio,
 /turf/simulated/floor/blueblack{
 	dir = 6
 	},
@@ -70459,7 +70432,7 @@ mGU
 arO
 aKL
 gpn
-aNb
+cKc
 aNb
 aOx
 aPj
@@ -71404,7 +71377,7 @@ mnm
 jhM
 whX
 sTk
-pmD
+tWE
 jhM
 lwZ
 oGq
@@ -72008,7 +71981,7 @@ aXI
 jhM
 uNR
 rCH
-tWE
+pmD
 jhM
 eLs
 ueu
