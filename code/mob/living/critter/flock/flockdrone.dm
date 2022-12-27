@@ -530,7 +530,7 @@
 	return ..()
 
 /mob/living/critter/flock/drone/Life(datum/controller/process/mobs/parent)
-	if (..(parent) || isdead(src))
+	if (..(parent))
 		return TRUE
 	if (src.floorrunning && src.resources >= 1)
 		src.pay_resources(1)
