@@ -34,6 +34,7 @@ TYPEINFO(/datum/component/wirePanel)
 
 	RegisterSignal(parent, COMSIG_WPANEL_MOB_WIRE_ACT, .proc/mob_wire_act)
 	RegisterSignal(parent, COMSIG_WPANEL_ION_STORM, .proc/ion_storm)
+	RegisterSignal(parent, COMSIG_WPANEL_DISABLE_RANDOM_WIRE, .proc/disable_random_wire)
 
 	RegisterSignal(parent, COMSIG_WPANEL_SET_CONTROL, .proc/set_control)
 	RegisterSignal(parent, COMSIG_WPANEL_SET_COVER, .proc/set_cover)
@@ -63,7 +64,7 @@ TYPEINFO(/datum/component/wirePanel)
 				return
 			if (WPANEL_COVER_LOCKED)
 				boutput(user, "The maintenance panel on [parent] is locked!", "wpanel")
-				return
+				return TRUE
 
 	if (src.cover_status == WPANEL_COVER_OPEN && (ispulsingtool(item) || issnippingtool(item)))
 		parent.ui_interact(user)
@@ -71,8 +72,6 @@ TYPEINFO(/datum/component/wirePanel)
 
 /// handles when the wire panel is open. Note: does not block other actions.
 /datum/component/wirePanel/proc/attack_hand(obj/parent, mob/user)
-	if (src.cover_status == WPANEL_COVER_BROKEN)
-		return
 	if (src.cover_status == WPANEL_COVER_OPEN)
 		parent.ui_interact(user)
 
@@ -208,12 +207,16 @@ TYPEINFO(/datum/component/wirePanel)
 
 /// Handle ion storm events by turning off a whole wire's controls
 /datum/component/wirePanel/proc/ion_storm(obj/parent)
+	src.disable_random_wire(parent)
+	logTheThing(LOG_STATION, null, "Ion storm interfered with [parent.name] at [log_loc(parent)]")
+
+/// Randomly disable a wire
+/datum/component/wirePanel/proc/disable_random_wire(obj/parent)
 	var/wires = list()
 	for(var/datum/wirePanel/wireDefintion/wire in panel_def.wire_definitions)
 		wires += list(wire.control_flags)
 	var/target_wire_controls = pick(wires)
 	SEND_SIGNAL(parent, COMSIG_WPANEL_SET_CONTROL, null, target_wire_controls, FALSE)
-	logTheThing(LOG_STATION, null, "Ion storm interfered with [parent.name] at [log_loc(parent)]")
 
 /// Passthrough to the shared panelDefintion function
 /datum/component/wirePanel/ui_static_data(obj/parent, mob/user, list/data)

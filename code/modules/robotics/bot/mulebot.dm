@@ -12,8 +12,7 @@
 	anchored = 1
 	animate_movement=1
 	soundproofing = 0
-	on = 1
-	locked = 1
+	on = TRUE
 	access_lookup = "Captain"
 	var/atom/movable/load = null		// the loaded crate (usually)
 	///sanitycheck so we can't try to unload during an unload operation
@@ -46,30 +45,41 @@
 	var/auto_return = 1	// true if auto return to home beacon after unload
 	var/auto_pickup = 1 // true if auto-pickup at beacon
 
-	var/open = 0		// true if maint hatch is open
 	var/obj/item/cell/cell
 						// the installed power cell
 	no_camera = 1
-	// constants for internal wiring bitflags
-	var/const
-		wire_power1 = 1			// power connections
-		wire_power2 = 2
-		wire_mobavoid = 4		// mob avoidance
-		wire_loadcheck = 8		// load checking (non-crate)
-		wire_motor1 = 16		// motor wires
-		wire_motor2 = 32		//
-		wire_remote_rx = 64		// remote recv functions
-		wire_remote_tx = 128	// remote trans status
-		wire_beacon_rx = 256	// beacon ping recv
-		wire_beacon_tx = 512	// beacon ping trans
-
-	var/wires = 1023		// all flags on
-
-	var/list/wire_text	// list of wire colours
-	var/list/wire_order	// order of wire indices
 
 	var/bloodiness = 0		// count of bloodiness
 	var/nocellspawn = 0 //Used for spawning a MULE w/o a cell.
+
+	/// Wire Panel for 10 wires.
+	var/static/datum/wirePanel/panelDefintion/panel_def = new /datum/wirePanel/panelDefintion(
+		controls=list(
+			WIRE_CONTROL_POWER_A,	// power connections
+			WIRE_CONTROL_POWER_B,	//
+			WIRE_CONTROL_SAFETY,	// mob avoidance
+			WIRE_CONTROL_ACTIVATE,	// load checking (non-crate)
+			WIRE_CONTROL_BACKUP_A,	// motor wires
+			WIRE_CONTROL_BACKUP_B,	//
+			WIRE_CONTROL_ACCESS,	// remote recv functions
+			WIRE_CONTROL_RESTRICT,	// remote trans status
+			WIRE_CONTROL_RECIEVE,	// beacon ping recv
+			WIRE_CONTROL_TRANSMIT,	// beacon ping trans
+			),
+		color_pool=list("red", "green", "blue", "magenta", "cyan", "yellow", "pink", "white", "orange", "grey"),
+		custom_acts=list(
+			WPANEL_CUSTOM_ACT(WIRE_CONTROL_POWER_A, WIRE_ACT_MEND, WIRE_ACT_CUT),
+			WPANEL_CUSTOM_ACT(WIRE_CONTROL_POWER_B, WIRE_ACT_MEND, WIRE_ACT_CUT),
+			WPANEL_CUSTOM_ACT(WIRE_CONTROL_SAFETY, WIRE_ACT_MEND, WIRE_ACT_CUT),
+			WPANEL_CUSTOM_ACT(WIRE_CONTROL_ACTIVATE, WIRE_ACT_MEND, WIRE_ACT_CUT),
+			WPANEL_CUSTOM_ACT(WIRE_CONTROL_BACKUP_A, WIRE_ACT_MEND, WIRE_ACT_CUT),
+			WPANEL_CUSTOM_ACT(WIRE_CONTROL_BACKUP_B, WIRE_ACT_MEND, WIRE_ACT_CUT),
+			WPANEL_CUSTOM_ACT(WIRE_CONTROL_ACCESS, WIRE_ACT_MEND, WIRE_ACT_CUT),
+			WPANEL_CUSTOM_ACT(WIRE_CONTROL_RESTRICT, WIRE_ACT_MEND, WIRE_ACT_CUT),
+			WPANEL_CUSTOM_ACT(WIRE_CONTROL_RECIEVE, WIRE_ACT_MEND, WIRE_ACT_CUT),
+			WPANEL_CUSTOM_ACT(WIRE_CONTROL_TRANSMIT, WIRE_ACT_MEND, WIRE_ACT_CUT),
+		)
+	)
 
 	New()
 		..()
@@ -84,64 +94,49 @@
 			cell = new(src)
 			cell.charge = 2000
 			cell.maxcharge = 2000
-		setup_wires()
 
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", control_freq)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("beacon", beacon_freq)
-
-	// set up the wire colours in random order
-	// and the random wire display order
-	// needs 10 wire colours
-	proc/setup_wires()
-		var/list/colours = list("Red", "Green", "Blue", "Magenta", "Cyan", "Yellow", "Black", "White", "Orange", "Grey")
-		var/list/orders = list("0","1","2","3","4","5","6","7","8","9")
-		wire_text = list()
-		wire_order = list()
-		while(colours.len > 0)
-			var/colour = colours[ rand(1,colours.len) ]
-			wire_text += colour
-			colours -= colour
-
-			var/order = orders[ rand(1,orders.len) ]
-			wire_order += text2num_safe(order)
-			orders -= order
+		AddComponent(/datum/component/wirePanel, src.panel_def)
+		RegisterSignal(src, COMSIG_WPANEL_MOB_WIRE_ACT, .proc/mob_wire_act)
+		RegisterSignal(src, COMSIG_WPANEL_SET_COVER, .proc/set_cover)
+		SEND_SIGNAL(src, COMSIG_WPANEL_SET_COVER, null, WPANEL_COVER_LOCKED)
 
 	// attack by item
-	// emag : lock/unlock,
-	// screwdriver: open/close hatch
+	// emag: lock/unlock
 	// cell: insert it
 	// other: chance to knock rider off bot
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		locked = !locked
+		var/cover_status = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_COVER)
+		var/locking
+		switch (cover_status)
+			if (WPANEL_COVER_OPEN)
+				SEND_SIGNAL(src, COMSIG_WPANEL_SET_COVER, usr, WPANEL_COVER_LOCKED) // emags close things magically vOv
+				locking = TRUE
+			if (WPANEL_COVER_CLOSED)
+				SEND_SIGNAL(src, COMSIG_WPANEL_SET_COVER, usr, WPANEL_COVER_LOCKED)
+				locking = TRUE
+			if (WPANEL_COVER_LOCKED)
+				SEND_SIGNAL(src, COMSIG_WPANEL_SET_COVER, usr, WPANEL_COVER_CLOSED)
+				locking = FALSE
+			else
+				return
+
 		if(user)
-			boutput(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the mulebot's controls!</span>")
+			boutput(user, "<span class='notice'>You [locking ? "lock" : "unlock"] the mulebot's controls!</span>")
 
 		flick("mulebot-emagged", src)
 		playsound(src.loc, 'sound/effects/sparks1.ogg', 100, 0)
 		return 1
 
 	attackby(var/obj/item/I, var/mob/user)
-		if(istype(I,/obj/item/cell) && open && !cell)
+		var/cover_status = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_COVER)
+		if(istype(I,/obj/item/cell) && cover_status == WPANEL_COVER_OPEN && !cell)
 			var/obj/item/cell/C = I
 			user.drop_item()
 			C.set_loc(src)
 			cell = C
-			updateDialog()
-		else if (isscrewingtool(I))
-			if (locked)
-				boutput(user, "<span class='notice'>The maintenance hatch cannot be opened or closed while the controls are locked.</span>")
-				return
-
-			open = !open
-			if(open)
-				src.visible_message("[user] opens the maintenance hatch of [src]", "<span class='notice'>You open [src]'s maintenance hatch.</span>")
-				on = 0
-				icon_state="mulebot-hatch"
-			else
-				src.visible_message("[user] closes the maintenance hatch of [src]", "<span class='notice'>You close [src]'s maintenance hatch.</span>")
-				icon_state = "mulebot0"
-
 			updateDialog()
 		else if(load && ismob(load))  // chance to knock off rider
 			if(prob(1+I.force * 2))
@@ -153,18 +148,17 @@
 			..()
 		return
 
-
 	ex_act(var/severity)
 		unload(0)
 		switch(severity)
 			if(1)
 				qdel(src)
 			if(2)
-				wires &= ~(1 << rand(0,9))
-				wires &= ~(1 << rand(0,9))
-				wires &= ~(1 << rand(0,9))
+				SEND_SIGNAL(src, COMSIG_WPANEL_DISABLE_RANDOM_WIRE)
+				SEND_SIGNAL(src, COMSIG_WPANEL_DISABLE_RANDOM_WIRE)
+				SEND_SIGNAL(src, COMSIG_WPANEL_DISABLE_RANDOM_WIRE)
 			if(3)
-				wires &= ~(1 << rand(0,9))
+				SEND_SIGNAL(src, COMSIG_WPANEL_DISABLE_RANDOM_WIRE)
 
 		return
 
@@ -176,12 +170,7 @@
 			src.unload(0)
 		if(prob(25))
 			src.visible_message("Something shorts out inside [src]!")
-			var/index = 1<< (rand(0,9))
-			if(wires & index)
-				wires &= ~index
-			else
-				wires |= index
-
+			SEND_SIGNAL(src, COMSIG_WPANEL_DISABLE_RANDOM_WIRE)
 
 	attack_ai(var/mob/user, params)
 		interacted(user, 1, params)
@@ -190,12 +179,13 @@
 		interacted(user, 0, params)
 
 	proc/interacted(var/mob/user, var/ai=0, params)
+		var/cover_state = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_COVER)
 		var/dat
 		dat += "<TT><B>Multiple Utility Load Effector Mk. III</B></TT><BR><BR>"
 		dat += "ID: [suffix]<BR>"
 		dat += "Power: [on ? "On" : "Off"]<BR>"
 
-		if(!open)
+		if(cover_state != WPANEL_COVER_OPEN)
 			dat += "Status: "
 			switch(mode)
 				if(0)
@@ -217,7 +207,7 @@
 			dat += "Destination: [!destination ? "<i>none</i>" : destination]<BR>"
 			dat += "Power level: [cell ? cell.percent() : 0]%<BR>"
 
-			if(locked && !ai)
+			if(cover_state == WPANEL_COVER_LOCKED && !ai)
 				dat += "Controls are locked <A href='byond://?src=\ref[src];op=unlock'><I>(unlock)</I></A>"
 			else
 				dat += "Controls are unlocked <A href='byond://?src=\ref[src];op=lock'><I>(lock)</I></A><hr>"
@@ -244,8 +234,6 @@
 					dat += "<A href='byond://?src=\ref[src];op=cellremove'>Installed</A><BR>"
 				else
 					dat += "<A href='byond://?src=\ref[src];op=cellinsert'>Removed</A><BR>"
-
-				dat += wires()
 			else
 				dat += "The bot is in maintenance mode and cannot be controlled.<BR>"
 
@@ -258,19 +246,6 @@
 
 		return
 
-	// returns the wire panel text
-	proc/wires()
-		var/t = ""
-		for(var/i = 0 to 9)
-			var/index = 1<<wire_order[i+1]
-			t += "[wire_text[i+1]] wire: "
-			if(index & wires)
-				t += "<A href='byond://?src=\ref[src];op=wirecut;wire=[index]'>(cut)</A> <A href='byond://?src=\ref[src];op=wirepulse;wire=[index]'>(pulse)</A><BR>"
-			else
-				t += "<A href='byond://?src=\ref[src];op=wiremend;wire=[index]'>(mend)</A><BR>"
-
-		return t
-
 	Topic(href, href_list)
 		if(..())
 			return
@@ -278,28 +253,34 @@
 			return
 		if ((in_interact_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
 			src.add_dialog(usr)
-
+			var/cover_status = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_COVER)
 			switch(href_list["op"])
 				if("lock", "unlock")
 					if(src.allowed(usr))
-						locked = !locked
+						switch (cover_status)
+							if (WPANEL_COVER_OPEN)
+								boutput(usr, "<span class='notice'>You must closed the hatch before locking it!</span>")
+							if (WPANEL_COVER_CLOSED)
+								SEND_SIGNAL(src, COMSIG_WPANEL_SET_COVER, usr, WPANEL_COVER_CLOSED)
+							if (WPANEL_COVER_LOCKED)
+								SEND_SIGNAL(src, COMSIG_WPANEL_SET_COVER, usr, WPANEL_COVER_CLOSED)
 					else
 						boutput(usr, "<span class='alert'>Access denied.</span>")
 						return
 
 				if("power")
 					on = !on
-					if(!cell || open)
-						on = 0
+					if(!cell || cover_status == WPANEL_COVER_OPEN)
+						on = FALSE
 						return
 					boutput(usr, "You switch [on ? "on" : "off"] [src].")
 					for(var/mob/M in AIviewers(src))
 						if(M==usr) continue
 						boutput(M, "[usr] switches [on ? "on" : "off"] [src].")
+					src.updateDialog()
 
 				if("cellremove")
-					if(open && cell && !usr.equipped())
-
+					if(cover_status == WPANEL_COVER_OPEN && cell && !usr.equipped())
 						cell.add_fingerprint(usr)
 						cell.UpdateIcon()
 						usr.put_in_hand_or_drop(cell)
@@ -308,7 +289,7 @@
 						usr.visible_message("<span class='notice'>[usr] removes the power cell from [src].</span>", "<span class='notice'>You remove the power cell from [src].</span>")
 
 				if("cellinsert")
-					if(open && !cell)
+					if(cover_status == WPANEL_COVER_OPEN && !cell)
 						var/obj/item/cell/C = usr.equipped()
 						if(istype(C))
 							usr.drop_item()
@@ -366,50 +347,63 @@
 					src.remove_dialog(usr)
 					usr.Browse(null,"window=mulebot")
 
-				if("wirecut")
-					if (usr.find_tool_in_hand(TOOL_SNIPPING))
-						var/wirebit = text2num_safe(href_list["wire"])
-						if (wirebit == wire_mobavoid)
-							logTheThing(LOG_VEHICLE, usr, "disables the safety of a MULE ([src.name]) at [log_loc(usr)].")
-							src.emagger = usr
-						wires &= ~wirebit
-					else
-						boutput(usr, "<span class='notice'>You need wirecutters!</span>")
-				if("wiremend")
-					if (usr.find_tool_in_hand(TOOL_SNIPPING))
-						var/wirebit = text2num_safe(href_list["wire"])
-						if (wirebit == wire_mobavoid)
-							logTheThing(LOG_VEHICLE, usr, "reactivates the safety of a MULE ([src.name]) at [log_loc(usr)].")
-							src.emagger = null
-						wires |= wirebit
-					else
-						boutput(usr, "<span class='notice'>You need wirecutters!</span>")
-
-				if("wirepulse")
-					if (usr.find_tool_in_hand(TOOL_PULSING))
-						switch(href_list["wire"])
-							if("1","2")
-								boutput(usr, "<span class='notice'>[bicon(src)] The charge light flickers.</span>")
-							if("4")
-								boutput(usr, "<span class='notice'>[bicon(src)] The external warning lights flash briefly.</span>")
-							if("8")
-								boutput(usr, "<span class='notice'>[bicon(src)] The load platform clunks.</span>")
-							if("16", "32")
-								boutput(usr, "<span class='notice'>[bicon(src)] The drive motor whines briefly.</span>")
-							else
-								boutput(usr, "<span class='notice'>[bicon(src)] You hear a radio crackle.</span>")
-					else
-						boutput(usr, "<span class='notice'>You need a multitool or similar!</span>")
-
 			updateDialog()
 		else
 			usr.Browse(null, "window=mulebot")
 			src.remove_dialog(usr)
 		return
 
+	proc/mob_wire_act(obj/parent, mob/user, wire, action)
+		if (HAS_FLAG(src.panel_def.wire_definitions[wire].control_flags, WIRE_CONTROL_SAFETY))
+			switch (action)
+				if (WIRE_ACT_CUT)
+					logTheThing(LOG_VEHICLE, user, "disables the safety of a MULE ([src.name]) at [log_loc(user)].")
+					src.emagger = user
+				if (WIRE_ACT_MEND)
+					logTheThing(LOG_VEHICLE, user, "reactivates the safety of a MULE ([src.name]) at [log_loc(user)].")
+					src.emagger = null
+
+		if (action == WIRE_ACT_PULSE)
+			if (HAS_FLAG(src.panel_def.wire_definitions[wire].control_flags, WIRE_CONTROL_SAFETY))
+				boutput(user, "<span class='notice'>[bicon(src)] The external warning lights flash briefly.</span>")
+				return
+			if (HAS_FLAG(src.panel_def.wire_definitions[wire].control_flags, WIRE_CONTROL_POWER_A))
+				boutput(user, "<span class='notice'>[bicon(src)] The charge light flickers.</span>")
+				return
+			if (HAS_FLAG(src.panel_def.wire_definitions[wire].control_flags, WIRE_CONTROL_POWER_B))
+				boutput(user, "<span class='notice'>[bicon(src)] The charge light flickers.</span>")
+				return
+			if (HAS_FLAG(src.panel_def.wire_definitions[wire].control_flags, WIRE_CONTROL_ACTIVATE))
+				boutput(user, "<span class='notice'>[bicon(src)] The load platform clunks.</span>")
+				return
+			if (HAS_FLAG(src.panel_def.wire_definitions[wire].control_flags, WIRE_CONTROL_BACKUP_A))
+				boutput(user, "<span class='notice'>[bicon(src)] The drive motor whines briefly.</span>")
+				return
+			if (HAS_FLAG(src.panel_def.wire_definitions[wire].control_flags, WIRE_CONTROL_BACKUP_B))
+				boutput(user, "<span class='notice'>[bicon(src)] The drive motor whines briefly.</span>")
+				return
+			boutput(user, "<span class='notice'>[bicon(src)] You hear a radio crackle.</span>")
+
+	proc/set_cover(obj/parent, mob/user, status)
+		if (status == WPANEL_COVER_OPEN)
+			src.on = FALSE
+			src.icon_state = "mulebot-hatch"
+			src.updateDialog()
+		else
+			src.on = has_power()
+			src.icon_state = "mulebot0"
+			if(!isnull(tgui_process)) // we need this b/c we set the cover in New
+				// the only TGUI for this object is wire panels, so close if the cover closes
+				for(var/datum/tgui/ui in tgui_process.get_uis(parent))
+					if(!parent.can_access_remotely(ui.user))
+						tgui_process.close_user_uis(ui.user, parent)
+				src.updateDialog()
+
 	// returns true if the bot has power
 	proc/has_power()
-		return !open && cell?.charge>0 && (wires & wire_power1) && (wires & wire_power2)
+		var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
+		var/cover_status = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_COVER)
+		return !(cover_status == WPANEL_COVER_OPEN) && cell?.charge>0 && HAS_ALL_FLAGS(active_controls, WIRE_CONTROL_POWER_A | WIRE_CONTROL_POWER_B)
 
 	// mousedrop a crate to load the bot
 	MouseDrop_T(var/atom/movable/C, mob/user)
@@ -509,8 +503,13 @@
 			return
 		if(on)
 			SPAWN(0)
+				var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
 				// speed varies between 1-4 depending on how many wires are cut (and which of the two)
-				var/speed = ((wires & wire_motor1) ? 1:0) + ((wires & wire_motor2) ? 2:0) + 1
+				var/speed = 1
+				if (HAS_FLAG(active_controls, WIRE_CONTROL_BACKUP_A))
+					speed += 1
+				if (HAS_FLAG(active_controls, WIRE_CONTROL_BACKUP_B))
+					speed += 2
 				// both wires results in no speed at all :(
 				var/n_steps = list(0, 12, 7, 6)[speed]
 
@@ -653,22 +652,26 @@
 
 	// starts bot moving to current destination
 	proc/start()
+		var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
 		if(destination == home_destination)
 			mode = 3
 		else
 			mode = 2
-		icon_state = "mulebot[(wires & wire_mobavoid) == wire_mobavoid]"
+
+		icon_state = "mulebot[HAS_FLAG(active_controls, WIRE_CONTROL_SAFETY) > 0]"
 
 	// starts bot moving to home
 	// sends a beacon query to find
 	proc/start_home()
+		var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
 		SPAWN(0)
 			set_destination(home_destination)
 			mode = 4
-		icon_state = "mulebot[(wires & wire_mobavoid) == wire_mobavoid]"
+		icon_state = "mulebot[HAS_FLAG(active_controls, WIRE_CONTROL_SAFETY) > 0]"
 
 	// called when bot reaches current target
 	proc/at_target()
+		var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
 		if(!reached_target)
 			src.visible_message("[src] makes a chiming sound!", "You hear a chime.")
 			playsound(src.loc, 'sound/machines/chime.ogg', 50, 0)
@@ -680,7 +683,7 @@
 				// not loaded
 				if(auto_pickup)		// find a crate
 					var/atom/movable/AM
-					if(!(wires & wire_loadcheck))		// if emagged, load first unanchored thing we find
+					if(!(HAS_FLAG(active_controls, WIRE_CONTROL_ACTIVATE)))		// if emagged, load first unanchored thing we find
 						for(var/atom/movable/A in get_step(loc, loaddir))
 							if(!A.anchored)
 								AM = A
@@ -704,7 +707,9 @@
 
 	// called when bot bumps into anything
 	bump(var/atom/obs)
-		if(!(wires & wire_mobavoid))		//usually just bumps, but if avoidance disabled knock over mobs
+		var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
+		//usually just bumps, but if safety disabled knock over mobs
+		if(!HAS_FLAG(active_controls, WIRE_CONTROL_SAFETY))
 			var/mob/M = obs
 			if(ismob(M))
 				if(isrobot(M))
@@ -763,6 +768,8 @@
 		if(!on)
 			return
 
+		var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
+
 		/*
 		boutput(world, "rec signal: [signal.source]")
 		for(var/x in signal.data)
@@ -770,11 +777,12 @@
 		*/
 		var/recv = signal.data["command"]
 		// process all-bot input
-		if(recv=="bot_status" && (wires & wire_remote_rx))
+		if(recv=="bot_status" && (HAS_FLAG(active_controls, WIRE_CONTROL_ACCESS)))
 			send_status()
 
 		recv = signal.data["command_[ckey(suffix)]"]
-		if(wires & wire_remote_rx)
+
+		if(HAS_FLAG(active_controls, WIRE_CONTROL_ACCESS))
 			// process control input
 			switch(recv)
 				if("stop")
@@ -814,7 +822,7 @@
 
 		// receive response from beacon
 		recv = signal.data["beacon"]
-		if(wires & wire_beacon_rx)
+		if(HAS_FLAG(active_controls, WIRE_CONTROL_RECIEVE))
 			if(recv == new_destination)	// if the recvd beacon location matches the set destination
 										// the we will navigate there
 				destination = new_destination
@@ -824,7 +832,7 @@
 					loaddir = text2num_safe(direction)
 				else
 					loaddir = 0
-				icon_state = "mulebot[(wires & wire_mobavoid) == wire_mobavoid]"
+				icon_state = "mulebot[HAS_FLAG(active_controls, WIRE_CONTROL_SAFETY) > 0]"
 				calc_path()
 				updateDialog()
 
@@ -834,10 +842,10 @@
 
 	// send a radio signal with multiple data key/values
 	proc/post_signal_multiple(var/freq, var/list/keyval)
-
-		if(freq == beacon_freq && !(wires & wire_beacon_tx))
+		var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
+		if(freq == beacon_freq && !(HAS_FLAG(active_controls, WIRE_CONTROL_TRANSMIT)))
 			return
-		if(freq == control_freq && !(wires & wire_remote_tx))
+		if(freq == control_freq && !(HAS_FLAG(active_controls, WIRE_CONTROL_RESTRICT)))
 			return
 
 		var/datum/signal/signal = get_free_signal()
@@ -862,6 +870,28 @@
 		kv["pick"] = auto_pickup
 		post_signal_multiple(control_freq, kv)
 
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		SEND_SIGNAL(src, COMSIG_WPANEL_UI_ACT, action, params, ui)
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "WirePanelWindow", src.name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = ..()
+		SEND_SIGNAL(src, COMSIG_WPANEL_UI_DATA, user, .)
+
+	ui_static_data(mob/user)
+		. = ..()
+		.["wirePanelTheme"] = list(
+			"wireTheme" = WPANEL_THEME_TEXT,
+			"controlTheme" = WPANEL_THEME_PHYSICAL,
+		)
+		SEND_SIGNAL(src, COMSIG_WPANEL_UI_STATIC_DATA, user, .)
+
 	Exited(Obj, newloc)
 		. = ..()
 		if(Obj == src.cell)
@@ -874,7 +904,10 @@
 	home_destination = "QM #2"
 
 /obj/machinery/bot/mulebot/broken //cell is missing, hatch open
-	nocellspawn = 1
-	open = 1
-	locked = 0
+	nocellspawn = TRUE
+	on = FALSE
 	icon_state="mulebot-hatch"
+
+	New()
+		. = ..()
+		SEND_SIGNAL(src, COMSIG_WPANEL_SET_COVER, null, WPANEL_COVER_OPEN)

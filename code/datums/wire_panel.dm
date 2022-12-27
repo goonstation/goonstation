@@ -67,10 +67,10 @@
 		WPANEL_INDICATOR(WIRE_CONTROL_BACKUP_A, "green", "on", "off"),
 		WPANEL_INDICATOR(WIRE_CONTROL_BACKUP_B, "orange", "on", "off"),
 		WPANEL_INDICATOR(WIRE_CONTROL_SILICON, "cyan", "on", "flashing"),
-		WPANEL_INDICATOR(WIRE_CONTROL_ACCESS, "orange", "on", "flashing"),
+		WPANEL_INDICATOR(WIRE_CONTROL_ACCESS, "red", "on", "flashing"),
 		WPANEL_INDICATOR(WIRE_CONTROL_SAFETY, "pink", "off", "flashing"),
 		WPANEL_INDICATOR(WIRE_CONTROL_RESTRICT, "white", "on", "flashing"),
-		WPANEL_INDICATOR(WIRE_CONTROL_ACTIVATE, "red", "off", "on"),
+		WPANEL_INDICATOR(WIRE_CONTROL_ACTIVATE, "grey", "off", "on"),
 		WPANEL_INDICATOR(WIRE_CONTROL_RECIEVE, "purple", "flashing", "off"),
 		WPANEL_INDICATOR(WIRE_CONTROL_TRANSMIT, "lime", "flashing", "off"),
 		)
