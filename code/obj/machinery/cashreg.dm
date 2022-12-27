@@ -57,30 +57,24 @@ TYPEINFO(/obj/machinery/cashreg)
 			if ("set_amount")
 				var/obj/O = usr.equipped()
 				if (src.get_ID(O) && src.get_ID(O) == src.owner_card)
-					var/amount_buffer = tgui_input_number(usr, "Enter amount.", src.name, max_value = src.transaction_limit)
+					var/amount_buffer = tgui_input_number(usr, "Enter amount.", src.name, 0, src.transaction_limit)
 					if (amount_buffer)
 						src.amount = amount_buffer
 						. = TRUE
 			if ("swipe_owner")
 				var/obj/O = usr.equipped()
-				if (istype(O, /obj/item/device/pda2) && O:ID_card)
-					O = O:ID_card
-				if (istype(O, /obj/item/card/id) && !src.owner_account)
+				if (src.get_ID(O) && !src.owner_account)
 					src.register_owner(usr, O)
 					. = TRUE
 			if ("swipe_payee")
 				var/obj/O = usr.equipped()
-				if (istype(O, /obj/item/device/pda2) && O:ID_card)
-					O = O:ID_card
-				if (istype(O, /obj/item/card/id) && src.owner_account)
+				if (src.get_ID(O) && src.get_ID(O) != src.owner_card)
 					src.pay(usr, O)
 					. = TRUE
 			if ("reset")
 				// todo: allow certain accesses to reset readers
 				var/obj/O = usr.equipped()
-				if (istype(O, /obj/item/device/pda2) && O:ID_card)
-					O = O:ID_card
-				if (istype(O, /obj/item/card/id) && O == src.owner_card)
+				if (src.get_ID(O) && src.get_ID(O) == src.owner_card)
 					if (!src.owner_account)
 						boutput(usr, "<span class='alert'>You press the reset button, but nothing happens.</span>")
 						return
@@ -92,15 +86,8 @@ TYPEINFO(/obj/machinery/cashreg)
 						. = TRUE
 		src.add_fingerprint(usr)
 
-	// please verify that it actually checks the account pin properly.
-	// check case where a card with a differing PIN from the actual
-	// bank account still lets you in if valid.
 	proc/authenticate_card(mob/user, obj/item/card/id/O)
-		var/user_pin
-		if (user.mind?.remembered_pin)
-			user_pin = user.mind.remembered_pin
-
-		var/enter_pin = tgui_input_number(user, "Enter your PIN.", src.name, user_pin, 9999)
+		var/enter_pin = user.enter_pin()
 		if (enter_pin == O.pin)
 			var/datum/db_record/card_account = data_core.bank.find_record("name", O.registered)
 			if (card_account)
@@ -114,7 +101,7 @@ TYPEINFO(/obj/machinery/cashreg)
 			return null
 
 	proc/get_ID(obj/item/O)
-		if (istype(O, /obj/item/device/pda2))
+		if (istype(O, /obj/item/card/id))
 			return O
 		else if (istype(O, /obj/item/device/pda2))
 			var/obj/item/device/pda2/pda = O
@@ -123,12 +110,18 @@ TYPEINFO(/obj/machinery/cashreg)
 	proc/register_owner(mob/user, obj/item/card/id/O)
 		src.owner_account = src.authenticate_card(user, O)
 		if (src.owner_account)
+			src.owner_card = O
 			boutput(usr, "<span class='notice'>Successfully registered ownership of [src]!</span>")
 		else
 			boutput(usr, "<span class='alert'>Unable to successfully register ownership of [src]!</span>")
 
 	proc/pay(mob/user, obj/item/card/id/O)
 		var/payee_account = src.authenticate_card(user, O)
+
+		if (!payee_account)
+			boutput(user, "<span class='alert'>Unable to authenticate account!</span>")
+			user.visible_message("<span class='alert'><b>[src] buzzes.</b> The transaction was cancelled!</span>")
+			return
 
 		if (O.registered in FrozenAccounts)
 			boutput(user, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
@@ -155,11 +148,14 @@ TYPEINFO(/obj/machinery/cashreg)
 			else
 				src.receipt(O.registered)
 
-	proc/receipt(var/payee, var/customer_copy = false)
+		src.amount = 0
+
+	proc/receipt(payee, customer_copy = false)
 		// to do
-		// spam protection, properly formatted receipt with monospaced typeface
+		// spam protection, properly formatted receipt in markdown with monospaced typeface
 		var/receipt_text = {"
-			TRANSFER [src.amount] FROM [payee] TO [src.owner_card]
+			*-----TRANSACTION RECEIPT-----*
+			TRANSFER [src.amount] FROM [payee] TO [src.owner_card?.registered]
 		"}
 
 		playsound(src, 'sound/machines/printer_cargo.ogg', 50, 1)
