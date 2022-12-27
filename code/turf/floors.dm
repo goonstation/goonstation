@@ -1318,6 +1318,16 @@ DEFINE_FLOORS(snowrough/border,
 
 /////////////////////////////////////////
 
+DEFINE_FLOORS(asteroid,
+	name = "asteroid";\
+	icon = 'icons/turf/walls_asteroid.dmi';\
+	icon_state = "astfloor1";\
+	step_material = "step_plating";\
+	step_priority = STEP_PRIORITY_MED;\
+	)
+
+/////////////////////////////////////////
+
 /turf/simulated/floor/industrial
 	icon_state = "diamondtile"
 	step_material = "step_plating"
