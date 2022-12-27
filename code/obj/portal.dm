@@ -4,6 +4,7 @@
 	icon_state = "portal"
 	density = 1
 	var/failchance = 5
+	var/use_teleblocks = TRUE
 	var/obj/item/target = null
 	anchored = 1
 	var/portal_lums = 2
@@ -59,22 +60,22 @@
 			if (destination)
 				if (prob(failchance)) //oh dear a problem, put em in deep space
 					src.icon_state = "portal1"
-					do_teleport(M, destination, 15)
+					do_teleport(M, destination, 15, use_teleblocks)
 					var/part_splinched = splinch(M, 75)
 					if (part_splinched)
-						do_teleport(part_splinched, destination, 8)
+						do_teleport(part_splinched, destination, 8, use_teleblocks)
 						M.visible_message("<span class='alert'><b>[M]</b> splinches themselves and their [part_splinched] falls off!</span>")
 					M.throw_at(destination, 8, 2)
 
 					return
 				if(ismob(M))
 					logTheThing(LOG_STATION, M, "entered [src] at [log_loc(src)] and teleported to [src.target] at [log_loc(destination)]")
-				do_teleport(M, destination, 1)
+				do_teleport(M, destination, 1, use_teleblocks)
 			else return
 		else
 			if(ismob(M))
 				logTheThing(LOG_STATION, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(src.target)]")
-			do_teleport(M, src.target, 1) ///You will appear adjacent to the beacon
+			do_teleport(M, src.target, 1, use_teleblocks) ///You will appear adjacent to the beacon
 
 /obj/portal/wormhole
 	name = "wormhole"
