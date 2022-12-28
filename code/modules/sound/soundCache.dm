@@ -393,6 +393,7 @@ var/global/list/soundCache = list(
  	"sound/impact_sounds/Glass_Shatter_3.ogg" = 'sound/impact_sounds/Glass_Shatter_3.ogg',\
  	"sound/impact_sounds/Glub_1.ogg" = 'sound/impact_sounds/Glub_1.ogg',\
  	"sound/impact_sounds/Glub_2.ogg" = 'sound/impact_sounds/Glub_2.ogg',\
+ 	"sound/impact_sounds/katana_slash.ogg" = 'sound/impact_sounds/katana_slash.ogg',\
  	"sound/impact_sounds/kendo_block_1.ogg" = 'sound/impact_sounds/kendo_block_1.ogg',\
  	"sound/impact_sounds/kendo_block_2.ogg" = 'sound/impact_sounds/kendo_block_2.ogg',\
  	"sound/impact_sounds/kendo_parry_1.ogg" = 'sound/impact_sounds/kendo_parry_1.ogg',\

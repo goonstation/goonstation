@@ -1129,6 +1129,7 @@ TYPEINFO(/obj/item/swords/katana)
 	icon_state = "katana"
 	force = 15 //Was at 5, but that felt far too weak. C-swords are at 60 in comparison. 15 is still quite a bit of damage, but just not insta-crit levels.
 	contraband = 7 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
+	hitsound = 'sound/impact_sounds/katana_slash.ogg'
 
 
 	// pickup_sfx = 'sound/items/blade_pull.ogg'
