@@ -163,7 +163,8 @@ TYPEINFO(/obj/machinery/recharge_station)
 	if (!src.anchored)
 		boutput(user, "<span class='alert'>You must attach [src]'s floor bolts before the machine will work.</span>")
 		return FALSE
-
+	if (src.occupant)
+		boutput(user, "<span class='alert'>There's already someone in there.</span>")
 	var/mob/living/carbon/human/H = victim
 	logTheThing(LOG_COMBAT, user, "puts [constructTarget(H,"combat")] into a conversion chamber at [log_loc(src)]")
 	user.visible_message("<span class='notice>[user] stuffs [H] into \the [src].")
