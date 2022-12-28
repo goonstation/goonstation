@@ -1586,6 +1586,18 @@
 	maxDuration = null
 	change = -5
 
+/datum/statusEffect/staminaregen/zephyr_field
+	id = "zephyr_field"
+	name = "Zephyr Field"
+	desc = "A bioelectric field is invigorating you."
+	icon_state = "stam+"
+	maxDuration = 9 SECONDS
+	unique = 1
+	change = 8
+
+	getTooltip()
+		. = "A feeling of invigoration permeates you."
+
 /datum/statusEffect/staminaregen/clone
 	id = "stamclone"
 	name = "Weakened"
@@ -2100,12 +2112,14 @@
 		if(ismob(owner))
 			var/mob/M = owner
 			M.bioHolder?.AddEffect("sims_stinky")
+		OTHER_START_TRACKING_CAT(owner, TR_CAT_RANCID_STUFF)
 
 	onRemove()
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
 			M.bioHolder?.RemoveEffect("sims_stinky")
+		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_RANCID_STUFF)
 
 /datum/statusEffect/flock_absorb
 	id = "flock_absorbing"
@@ -2246,3 +2260,55 @@
 
 #undef LAUNDERED_COLDPROT_AMOUNT
 #undef LAUNDERED_STAIN_TEXT
+
+/datum/statusEffect/criticalcondition
+	id = "critical_condition"
+	name = "Critical Condition"
+	icon_state = "heart-"
+	maxDuration = 10 SECONDS
+	var/mob/living/carbon/human/H
+
+	getTooltip()
+		. = "You are in very bad shape. Max stamina reduced by 100 and stamina regen reduced by 5."
+
+	onAdd(optional=null)
+		. = ..()
+		if (ishuman(owner))
+			H = owner
+		else
+			owner.delStatus("critical_condition")
+		H.delStatus("recent_trauma") // Cancel out recent trauma, you is back in trauma, baybeee
+		APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "critical_condition", -5)
+		H.add_stam_mod_max("critical_condition", -100)
+
+	onRemove()
+		. = ..()
+		REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "critical_condition")
+		H.remove_stam_mod_max("critical_condition")
+		H.changeStatus("recent_trauma", 90 SECONDS)
+
+
+/datum/statusEffect/recenttrauma
+	id = "recent_trauma"
+	name = "Recent Trauma"
+	icon_state = "-"
+	maxDuration = 90 SECONDS
+	var/mob/living/carbon/human/H
+
+	getTooltip()
+		. = "You are recovering from being in critical condition. Max stamina reduced by 50 and stamina regen reduced by 2."
+
+	onAdd(optional=null)
+		. = ..()
+		if (ishuman(owner))
+			H = owner
+		else
+			owner.delStatus("recent_trauma")
+		APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "recent_trauma", -2)
+		H.add_stam_mod_max("recent_trauma", -50)
+
+	onRemove()
+		. = ..()
+		REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "recent_trauma")
+		H.remove_stam_mod_max("recent_trauma")
+

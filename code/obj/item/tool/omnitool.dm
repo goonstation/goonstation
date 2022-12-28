@@ -10,14 +10,6 @@
 
 	custom_suicide = 1
 
-	#define OMNI_MODE_PRYING 1
-	#define OMNI_MODE_SNIPPING 2
-	#define OMNI_MODE_WRENCHING 3
-	#define OMNI_MODE_SCREWING 4
-	#define OMNI_MODE_PULSING 5
-	#define OMNI_MODE_CUTTING 6
-	#define OMNI_MODE_WELDING 7
-
 	///List of tool settings
 	var/list/modes = list(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING)
 	///The current setting
@@ -175,6 +167,12 @@
 					safety = 2
 				else
 					safety = 0
+			else if (istype(H.head, /obj/item/clothing/head/helmet/space/industrial))
+				var/obj/item/clothing/head/helmet/space/industrial/helmet = H.head
+				if (helmet.has_visor && helmet.visor_enabled)
+					safety = -1
+				else
+					safety = 2
 			else if (istype(H.head, /obj/item/clothing/head/helmet/space))
 				safety = 2
 			else if (istype(H.glasses, /obj/item/clothing/glasses/sunglasses) || H.eye_istype(/obj/item/organ/eye/cyber/sunglass))
@@ -307,11 +305,3 @@
 		icon_state = "weld"
 		mode = OMNI_MODE_WELDING
 		typepath = /obj/item/weldingtool
-
-#undef OMNI_MODE_PRYING
-#undef OMNI_MODE_SNIPPING
-#undef OMNI_MODE_WRENCHING
-#undef OMNI_MODE_SCREWING
-#undef OMNI_MODE_PULSING
-#undef OMNI_MODE_CUTTING
-#undef OMNI_MODE_WELDING

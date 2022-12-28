@@ -61,6 +61,7 @@
 	..()
 	remove_lifeprocess(/datum/lifeprocess/radiation)
 	qdel(abilityHolder)
+	src.abilityHolder = null
 	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	src.material.setProperty("reflective", 5)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
@@ -185,7 +186,7 @@
 	return FALSE
 
 /mob/living/critter/flock/Life(datum/controller/process/mobs/parent)
-	if (..(parent))
+	if (..(parent) || isdead(src))
 		return TRUE
 
 	// automatic extinguisher! after some time, anyway
@@ -324,6 +325,7 @@
 		..()
 		if(src.decal)
 			qdel(src.decal)
+			src.decal = null
 		var/mob/living/critter/flock/F = owner
 		F?.flock?.unreserveTurf(F.real_name)
 
@@ -331,6 +333,7 @@
 		..()
 		if(src.decal)
 			qdel(src.decal)
+			src.decal = null
 		var/mob/living/critter/flock/F = owner
 		if (!F || isdead(F) || !target || !in_interact_range(F, target) || isfeathertile(target))
 			return

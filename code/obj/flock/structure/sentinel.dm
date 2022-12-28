@@ -23,9 +23,13 @@
 	var/range = 4
 	/// The wattage of the arcflash
 	var/wattage = 6000
+	/// has extra range when chaining
+	var/extra_chain_range = FALSE
 	var/powered = FALSE
 
 	passthrough = TRUE
+
+	accepts_sapper_power = TRUE
 
 	var/online_compute_cost = 20
 	compute = 0 //targetting consumes compute
@@ -107,7 +111,7 @@
 			var/found_chain_target
 			for(var/i in 1 to 3) // chaining
 				found_chain_target = FALSE
-				for(var/atom/A as anything in view(2, last_hit.loc))
+				for(var/atom/A as anything in view(2 + (src.extra_chain_range ? 1 : 0), last_hit.loc))
 					if(src.flock?.isEnemy(A) && !(A in hit))
 						if (ismob(A))
 							var/mob/M = A
@@ -136,6 +140,17 @@
 /obj/flock_structure/sentinel/proc/charge(chargeamount)
 	src.charge = clamp(src.charge + chargeamount, 0, 100)
 	src.info_tag.set_info_tag("Charge: [src.charge]%")
+
+/obj/flock_structure/sentinel/sapper_power()
+	if (!src.powered || !..())
+		return FALSE
+	src.accepts_sapper_power = FALSE
+	src.extra_chain_range = TRUE
+	SPAWN(10 SECONDS)
+		if (!QDELETED(src))
+			src.accepts_sapper_power = TRUE
+			src.extra_chain_range = FALSE
+	return TRUE
 
 /obj/flock_structure/sentinel/proc/updatefilter()
 	UNLINT(var/dm_filter/filter = src.rays.get_filter("flock_sentinel_rays")) // remove when SpacemanDMM knows about this type

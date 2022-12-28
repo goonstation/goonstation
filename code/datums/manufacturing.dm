@@ -1981,7 +1981,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Stethoscope"
 	item_paths = list("MET-1","CRY-1")
 	item_amounts = list(2,1)
-	item_outputs = list(/obj/item/medical/medicaldiagnosis/stethoscope)
+	item_outputs = list(/obj/item/medicaldiagnosis/stethoscope)
 	time = 5 SECONDS
 	create = 1
 	category = "Tool"
@@ -3041,11 +3041,47 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /************ INTERDICTOR STUFF ************/
 
 /datum/manufacture/interdictor_kit
-	name = "Interdictor Assembly Kit"
-	item_paths = list("MET-2","CON-1")
-	item_amounts = list(10,4)
+	name = "Interdictor Frame Kit"
+	item_paths = list("MET-2")
+	item_amounts = list(10)
 	item_outputs = list(/obj/item/interdictor_kit)
-	time = 15 SECONDS
+	time = 10 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/interdictor_board_standard
+	name = "Standard Interdictor Mainboard"
+	item_paths = list("CON-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/interdictor_board)
+	time = 5 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/interdictor_board_nimbus
+	name = "Nimbus Interdictor Mainboard"
+	item_paths = list("CON-1","INS-1","CRY-1")
+	item_amounts = list(4,2,2)
+	item_outputs = list(/obj/item/interdictor_board/nimbus)
+	time = 10 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/interdictor_board_zephyr
+	name = "Zephyr Interdictor Mainboard"
+	item_paths = list("CON-1","viscerite")
+	item_amounts = list(4,5)
+	item_outputs = list(/obj/item/interdictor_board/zephyr)
+	time = 10 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/interdictor_board_devera
+	name = "Devera Interdictor Mainboard"
+	item_paths = list("CON-1","CRY-1","syreline")
+	item_amounts = list(4,2,5)
+	item_outputs = list(/obj/item/interdictor_board/devera)
+	time = 10 SECONDS
 	create = 1
 	category = "Machinery"
 

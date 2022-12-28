@@ -1,11 +1,11 @@
-//bot go brr?
 //GUNS GUNS GUNS
 /obj/item/gun/energy/cannon
 	name = "Vexillifer IV"
 	desc = "It's a cannon? A laser gun? You can't tell."
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "lasercannon"
-	item_state = "cannon"
+	item_state = "vexillifer"
+	wear_state = "vexillifer"
 	var/active_state = "lasercannon"
 	var/collapsed_state = "lasercannon-empty"
 	var/state = TRUE
@@ -727,3 +727,43 @@ TYPEINFO(/obj/item/device/geiger)
 			user.u_equip(src)
 			qdel(src)
 		. = ..()
+
+//DIRTY DIRTY PLAYERS
+/obj/submachine/laundry_machine/portable
+	name = "Port-A-Laundry"
+	desc = "Don't ask."
+	anchored = 0
+	pixel_y = 6
+	var/homeloc
+
+	New()
+		. = ..()
+		LAZYLISTADD(portable_machinery, src)
+		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
+		src.homeloc = get_turf(src)
+
+	disposing()
+		if (islist(portable_machinery))
+			portable_machinery.Remove(src)
+		..()
+
+/obj/item/remote/porter/port_a_laundry
+	name = "Port-A-Laundry Remote"
+	icon = 'icons/obj/porters.dmi'
+	icon_state = "remote"
+	item_state = "electronic"
+	desc = "A remote that summons a Port-A-Laundry."
+	machinery_name = "Port-a-Laundry"
+
+	get_machinery()
+		if (!src)
+			return
+
+		for (var/obj/submachine/laundry_machine/portable/LP in portable_machinery)
+			var/turf/T = get_turf(LP)
+			if (isrestrictedz(T?.z)) // Don't show stuff in "somewhere", okay.
+				continue
+			if (!(LP in src.machinerylist))
+				src.machinerylist["[src.machinery_name] #[src.machinerylist.len + 1] at [get_area(LP)]"] += LP // Don't remove the #[number] part here.
+		return

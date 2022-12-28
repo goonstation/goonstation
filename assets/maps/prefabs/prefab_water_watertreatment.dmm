@@ -848,7 +848,7 @@
 /turf/simulated/floor/circuit/red,
 /area/prefab/water_treatment)
 "TR" = (
-/obj/critter/cat,
+/mob/living/critter/small_animal/cat,
 /obj/map/light/dimred,
 /obj/machinery/light/small/warm/very{
 	dir = 4;

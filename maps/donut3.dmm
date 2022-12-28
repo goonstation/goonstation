@@ -8215,7 +8215,7 @@
 	pixel_y = -6
 	},
 /obj/item/paper{
-	info = "taste the wall candy it's so fucking good they couldn't stop me when i started drinking it made me too powerful hahAHAEHHSAbggxf (The rest of the text is illegible scribbles with an unbelievably shitty drawing of a mushroom is at the bottom.)";
+	info = "taste the wall candy it's so fucking good they couldn't stop me when i started drinking it made me too powerful hahAHAEHHSAbggxf (The rest of the text is illegible scribbles with an unbelievably shitty drawing of a mushroom at the bottom.)";
 	name = "crinkled paper";
 	pixel_x = -6;
 	pixel_y = -7
@@ -8899,7 +8899,10 @@
 /turf/space,
 /area/space)
 "crq" = (
-/obj/storage/closet/wardrobe/black/formalwear,
+/obj/table/auto,
+/obj/item/storage/box/glassbox{
+	pixel_x = 4
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
 "crZ" = (
@@ -27090,6 +27093,7 @@
 /area/station/crew_quarters/quartersB)
 "hHn" = (
 /obj/disposalpipe/segment/transport,
+/obj/machinery/vending/jobclothing/catering,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "hHo" = (
@@ -40798,6 +40802,7 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	req_access = null
 	},
+/obj/access_spawn/kitchen,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "lLR" = (
@@ -46833,7 +46838,7 @@
 	icon_state = "beebed";
 	name = "cat bed"
 	},
-/obj/critter/cat/jones{
+/mob/living/critter/small_animal/cat/jones{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/green/fancy/edge{
@@ -53500,9 +53505,6 @@
 /area/station/chapel/office)
 "ptL" = (
 /obj/table/auto,
-/obj/item/storage/box/glassbox{
-	pixel_x = 4
-	},
 /obj/item/gun/russianrevolver{
 	pixel_y = 8
 	},
@@ -54145,6 +54147,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/storage/crate/radio,
 /turf/simulated/floor/wood/two,
 /area/station/bridge)
 "pBG" = (
@@ -74859,7 +74862,6 @@
 /area/space)
 "vrf" = (
 /obj/table/auto,
-/obj/item/clothing/gloves/latex,
 /obj/item/reagent_containers/food/drinks/juicer{
 	pixel_x = -4;
 	pixel_y = 10

@@ -102,6 +102,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 		M.dnr = 1
 		M.transfer_to(L)
+		M.assigned_role = "Santa Claus"
 		boutput(L, "<span class='notice'><b>You have been respawned as Santa Claus!</b></span>")
 		boutput(L, "Go to the station and reward the crew for their high faith in Spacemas. Use your Spacemas magic!")
 		boutput(L, "<b>Do not reference anything that happened during your past life!</b>")
@@ -905,7 +906,7 @@ proc/compare_ornament_score(list/a, list/b)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/black, slot_shoes)
 		src.equip_new_if_possible(/obj/item/clothing/glasses/regular, slot_glasses)
 		src.equip_new_if_possible(/obj/item/clothing/head/helmet/space/santahat, slot_head)
-		src.equip_new_if_possible(/obj/item/storage/backpack, slot_back)
+		src.equip_new_if_possible(/obj/item/storage/backpack/red, slot_back)
 		src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
 		src.equip_new_if_possible(/obj/item/card/id/captains_spare/santa, slot_wear_id)
 

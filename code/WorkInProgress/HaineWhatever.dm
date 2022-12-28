@@ -146,6 +146,7 @@
 	name = "bubblegum"
 	desc = "Some chewable gum. You can blow bubbles with it!"
 	icon_state = "anime"	// todo: decent sprites
+	c_flags = null
 	var/mob/chewer = null
 	var/chew_size = 0.2		// unit amount transferred when gum is chewed
 	var/spam_flag = 0		// counts down from spam_timer after each time the chew message is shown
@@ -1154,7 +1155,7 @@ TYPEINFO(/obj/submachine/blackjack)
 				usagi.set_dir(turn(usagi.dir, -90))
 				sleep(0.2 SECONDS)
 			usagi.sailormoon_reshape()
-			var/obj/critter/cat/luna = new /obj/critter/cat (usagi.loc)
+			var/mob/living/critter/small_animal/cat/luna = new /mob/living/critter/small_animal/cat (usagi.loc)
 			luna.name = "Luna"
 			luna.desc = "A cat with a little crescent moon on her forehead."
 			luna.cattype = 3

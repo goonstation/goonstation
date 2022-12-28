@@ -128,7 +128,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	proc/do_retaliate(mob/living/user)
 		if(!(issawflybuddy(user) || (user in src.friends) || (user.health < 40)))//are you an eligible target: nonantag or healthy enough?
 			if(prob(50) && !ON_COOLDOWN(src, "sawfly_retaliate_cd", 5 SECONDS) && !isdead(src))//now that you're eligible, are WE eligible?
-				if((ai.target != user))
+				if(ai && (ai.target != user))
 					src.lastattacker = user
 					src.retaliate = TRUE
 					src.visible_message("<span class='alert'><b>[src]'s targeting subsystems identify [user] as a high priority threat!</b></span>")

@@ -25,7 +25,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	var/rider_visible =	1 //can we see the driver from outside of the vehicle? (used for overlays)
 	var/list/ability_buttons = null //storage for the ability buttons after initialization
 	var/list/ability_buttons_to_initialize = null //list of types of ability buttons to be initialized
-	var/throw_dropped_items_overboard = 0 // See /mob/proc/drop_item() in mob.dm.
+	var/can_eject_items = FALSE //! See /mob/proc/drop_item() in mob.dm and /atom/movable/proc/throw_at in throwing.dm
 	var/attacks_fast_eject = 1 //whether any attack with an item that has a force vallue will immediately eject the rider (only works if rider_visible is true)
 	layer = MOB_LAYER
 	var/delay = 2 //speed, lower is faster, minimum of MINIMUM_EFFECTIVE_DELAY
@@ -282,7 +282,7 @@ TYPEINFO(/obj/vehicle/segway)
 	var/weeoo_in_progress = 0
 	var/icon_weeoo_state = 2
 	soundproofing = 0
-	throw_dropped_items_overboard = 1
+	can_eject_items = TRUE
 	var/datum/light/light
 	ability_buttons_to_initialize = list(/obj/ability_button/weeoo)
 	var/obj/item/joustingTool = null // When jousting will be reference to lance being used
@@ -354,7 +354,7 @@ TYPEINFO(/obj/vehicle/segway)
 	update()
 	..()
 	in_bump = 1
-	if(isturf(AM) && (rider.bioHolder.HasEffect("clumsy") || (rider.reagents && rider.reagents.has_reagent("ethanol"))))
+	if(isturf(AM) && (src.emagged || rider.bioHolder.HasEffect("clumsy") || (rider.reagents && rider.reagents.has_reagent("ethanol"))))
 		boutput(rider, "<span class='alert'><B>You crash into the wall!</B></span>")
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
@@ -394,11 +394,7 @@ TYPEINFO(/obj/vehicle/segway)
 		if(prob(10))
 			M.visible_message("<span class='alert'><b>[src]</b> beeps out an automated injury report of [M]'s vitals.</span>")
 			M.visible_message(scan_health(M, visible = 1))
-		if (!emagged)
-			eject_rider(2)
-		else
-			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-			src.weeoo()
+		eject_rider(2)
 		in_bump = 0
 
 	if(isitem(AM))
@@ -678,7 +674,7 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 	delay = 4
 	ability_buttons_to_initialize = list(/obj/ability_button/fbuffer_toggle, /obj/ability_button/fbuffer_status)
 	soundproofing = 0
-	throw_dropped_items_overboard = 1
+	can_eject_items = TRUE
 
 	New()
 		..()
@@ -1405,7 +1401,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	icon_state = "segwaycat"
 	layer = MOB_LAYER + 1
 	soundproofing = 0
-	throw_dropped_items_overboard = 1
+	can_eject_items = TRUE
 
 // Might as well make use of the Garfield sprites (Convair880).
 
@@ -2207,7 +2203,7 @@ TYPEINFO(/obj/vehicle/forklift)
 	var/broken = 0				//1 when the forklift is broken
 	var/light = 0				//1 when the yellow light is on
 	soundproofing = 5
-	throw_dropped_items_overboard = 1
+	can_eject_items = TRUE
 	var/image/image_light = null
 	var/image/image_panel = null
 	var/image/image_crate = null

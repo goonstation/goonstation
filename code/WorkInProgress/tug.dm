@@ -163,7 +163,7 @@ TYPEINFO(/obj/vehicle/tug)
 	health = 80
 	health_max = 80
 	var/obj/tug_cart/cart = null
-	throw_dropped_items_overboard = 1
+	can_eject_items = TRUE
 	ability_buttons_to_initialize = list(/obj/ability_button/vehicle_speed)
 	var/start_with_cart = 1
 	delay = 4

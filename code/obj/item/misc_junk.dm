@@ -24,7 +24,7 @@
 
 /obj/item/gnomechompski
 	name = "Gnome Chompski"
-	desc = "what"
+	desc = "What."
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "gnome"
 	w_class = W_CLASS_BULKY
@@ -86,6 +86,7 @@
 	desc = "A tube made of cardboard. Extremely non-threatening."
 	stamina_damage = 5
 	stamina_cost = 1
+	hitsound = 'sound/impact_sounds/tube_bonk.ogg'
 
 	New()
 		..()
