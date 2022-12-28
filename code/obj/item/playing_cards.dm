@@ -86,7 +86,7 @@
 
 	mouse_drop(var/atom/target as obj|mob) //r o t a t e
 		if(!istype(target,/obj/item/card_group))
-			if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr) || (target && target.event_handler_flags & NO_MOUSEDROP_QOL) || isintangible(usr))
+			if (is_incapacitated(user) || !user.can_use_hands() || !can_reach(user, src) || user.sleeping || (target && target.event_handler_flags & NO_MOUSEDROP_QOL))
 				return
 			tap_or_reverse(usr)
 		else
