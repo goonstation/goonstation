@@ -1,5 +1,9 @@
 
 (t)tue dec 27 22
+(u)Kubius
+(p)12528
+(e)🗺|A-Mapping
+(+)Nadir fixbatch 10: Kitchen item improvements, instrument piano in the nerd dungeon, and exterior beacon improvements.
 (u)LeahTheTech
 (p)12326
 (e)🪲💅🧛|C-Bug, C-QoL, A-Gamemodes
