@@ -1,0 +1,62 @@
+body {
+	font-family: Tahoma, Arial, sans-serif;
+	font-size: 10pt;
+	margin: 0;
+	padding: 0;
+}
+pre, tt, code {
+	font-family: Consolas, 'Lucidia Console', monospace;
+}
+h2 {
+	text-align: center;
+	border-bottom: 1px solid #ccc;
+	margin: 10px 0;
+}
+/* Add styles for map grid */
+.map-grid {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: flex-start;
+	margin: 20px 0;
+}
+
+/* Add styles for map links */
+.map-link {
+	display: inline-block;
+	text-decoration: none;
+	color: #333;
+	background: #eee;
+	padding: 5px 10px;
+	margin: 5px;
+	border-radius: 5px;
+	text-align: center;
+	height: auto;
+	line-height: 40px;
+	font-size: 14pt;
+	width: 25vw;
+	min-width: 150px;
+}
+
+.map-link.active {
+	background: #8c9eff;
+	color: #fff;
+	text-shadow: 1px 0 0 #333, 0 1px 0 #333, -1px 0 0 #333, 0 -1px 0 #333;
+}
+
+/* Add styles for multi vote links */
+.multi-link {
+	display: inline-block;
+	text-decoration: none;
+	color: #333;
+	background: #eee;
+	padding: 5px 10px;
+	margin: 5px;
+	border-radius: 5px;
+	text-align: center;
+	height: auto;
+	line-height: 40px;
+	font-size: 12pt;
+	width: 40vw;
+	min-width: 150px;
+}

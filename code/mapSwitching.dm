@@ -429,20 +429,37 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		if(!mapSwitcher.playersVoting)
 			dat += "<h2>Sorry! The map vote is over!</h2><br>"
 			return dat.Join()
-		dat += "<h2>Vote For Some Maps:</h2><br>"
 		if(!(C.ckey in vote_map))
 			setup_client_vote_map(C)
+		dat += {"
+			<!doctype html>
+			<html>
+			<head>
+				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+				<meta http-equiv="X-UA-Compatible" content="IE=edge">
+				<link rel="stylesheet" type="text/css" href="[resource("css/mapSwitching.css")]">
+				<title>Map Vote</title>
+			</head>
+			<body>
+				<h2>Vote For Some Maps:</h2>
+				<div class="map-grid">
+		"}
 		var/list/client_vote_map = vote_map[C.ckey]
 		for(var/map_name in client_vote_map)
-			dat += "<B>[map_name]:</B> <A href='[topicLink("toggle_vote", "[map_name]",list("client" = "\ref[C]"))]'>[client_vote_map[map_name] ? "Yes" : "No"]</A><BR>"
-
-		dat += "<A href='[topicLink("all_yes", "all_yes",list("client" = "\ref[C]"))]'>MAKE THEM ALL YES</A><BR>"
-		dat += "<A href='[topicLink("all_no", "all_no",list("client" = "\ref[C]"))]'>MAKE THEM ALL NO</A>"
-
+			dat += {"<a class="map-link [client_vote_map[map_name] ? "active" : ""]" href="[topicLink("toggle_vote", "[map_name]",list("client" = "\ref[C]"))]">[map_name]</a>"}
+		dat+= {"
+				</div>
+				<div class="map-grid">
+					<a class="multi-link" href="[topicLink("all_yes", "all_yes",list("client" = "\ref[C]"))]">MAKE THEM ALL YES</a>
+					<a class="multi-link" href="[topicLink("all_no", "all_no",list("client" = "\ref[C]"))]">MAKE THEM ALL NO</a>
+				</div>
+			</body>
+			</html>
+		"}
 		return dat.Join()
 
 	proc/show_window(var/client/C)
-		C.Browse(generate_window(C),"window=map_vote_holder;title=Map_Vote")
+		C.Browse(generate_window(C),"window=map_vote_holder;size=565x335")
 
 	Topic(href, href_list)
 		. = ..()
