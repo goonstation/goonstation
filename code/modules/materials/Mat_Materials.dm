@@ -1511,3 +1511,20 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("electrical", 1)
 		setProperty("thermal", 3)
 		setProperty("flammable", 3)
+
+/datum/material/metal/plutonium
+	mat_id = "plutonium"
+	name = "plutonium 239"
+	canMix = 1 //Can not be easily modified.
+	desc = "Weapons grade refined plutonium."
+	color = "#230e4d"
+	quality = 60
+
+	New()
+		..()
+		material_flags |= MATERIAL_CRYSTAL
+		setProperty("density", 8)
+		setProperty("hard", 7)
+		setProperty("n_radioactive", 5)
+		setProperty("radioactive", 3)
+		setProperty("electrical", 7)
