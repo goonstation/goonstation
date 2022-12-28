@@ -450,8 +450,8 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		dat+= {"
 				</div>
 				<div class="map-grid">
-					<a class="multi-link" href="[topicLink("all_yes", "all_yes",list("client" = "\ref[C]"))]">MAKE THEM ALL YES</a>
-					<a class="multi-link" href="[topicLink("all_no", "all_no",list("client" = "\ref[C]"))]">MAKE THEM ALL NO</a>
+					<a class="map-link multi" href="[topicLink("all_yes", "all_yes",list("client" = "\ref[C]"))]">MAKE THEM ALL YES</a>
+					<a class="map-link multi" href="[topicLink("all_no", "all_no",list("client" = "\ref[C]"))]">MAKE THEM ALL NO</a>
 				</div>
 			</body>
 			</html>

@@ -4,14 +4,17 @@ body {
 	margin: 0;
 	padding: 0;
 }
+
 pre, tt, code {
 	font-family: Consolas, 'Lucidia Console', monospace;
 }
+
 h2 {
 	text-align: center;
 	border-bottom: 1px solid #ccc;
 	margin: 10px 0;
 }
+
 /* Add styles for map grid */
 .map-grid {
 	display: flex;
@@ -45,18 +48,7 @@ h2 {
 }
 
 /* Add styles for multi vote links */
-.multi-link {
-	display: inline-block;
-	text-decoration: none;
-	color: #333;
-	background: #eee;
-	padding: 5px 10px;
-	margin: 5px;
-	border-radius: 5px;
-	text-align: center;
-	height: auto;
-	line-height: 40px;
+.map-link.multi {
 	font-size: 12pt;
 	width: 40vw;
-	min-width: 150px;
 }
