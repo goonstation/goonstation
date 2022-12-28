@@ -206,6 +206,7 @@ var/list/list/by_cat = list()
 #define TR_CAT_HUNTER_GEAR "hunter_gear"
 #define TR_CAT_FLOCK_STRUCTURE "flock_structure"
 #define TR_CAT_AREA_PROCESS "process_area"
+#define TR_CAT_RANCID_STUFF "rancid_stuff"
 // powernets? processing_items?
 // mobs? ai-mobs?
 

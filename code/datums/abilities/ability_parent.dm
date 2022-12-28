@@ -298,6 +298,7 @@
 		src.updateButtons()
 
 	proc/getAbility(var/abilityType)
+		RETURN_TYPE(/datum/targetable)
 		if (!ispath(abilityType))
 			return null
 		for (var/datum/targetable/A in src.abilities)

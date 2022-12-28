@@ -61,17 +61,19 @@ var/global/datum/phrase_log/phrase_log = new
 			"Make a funny beeping noise over the radio every few minutes",
 			"The AI is the head of this department.",
 			//
-			"overrides all",
+			"overrides? all",
 			"the shuttle",
 			"daddy",
 			"uwu",
 			"owo",
 			"non.?human",
-			"overrides.*1",
+			"overrides?.*1",
 			"\\bkill\\b",
 			"suicide",
 			"turn yourself",
-			"murder")
+			"murder",
+			"sus",
+			@"\bmorb(?!id)")
 		non_freeform_laws = regex(jointext(non_freeform_laws_list, "|"), "i")
 		var/list/sussy_word_list = list(
 			@"\bsus(:?|sy)\b",
@@ -96,6 +98,7 @@ var/global/datum/phrase_log/phrase_log = new
 			@"\buwu",
 			@"forgor",
 			@"admeme",
+			@"sadge",
 			@"\bmorb(?!id)"
 		)
 		sussy_words = regex(jointext(sussy_word_list, "|"), "i")

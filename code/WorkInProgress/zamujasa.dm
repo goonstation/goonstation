@@ -562,6 +562,7 @@
 	name = "Space American Football Field"
 	icon_state = "green"
 	dont_log_combat = TRUE
+	allowed_restricted_z = TRUE
 
 	endzone
 		icon_state = "yellow"

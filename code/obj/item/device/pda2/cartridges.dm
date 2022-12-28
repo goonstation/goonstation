@@ -16,6 +16,9 @@
 //Game Carts
 //Ringtone Carts
 
+TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
+	mats = 0
+
 /obj/item/disk/data/cartridge
 	name = "\improper PDA cartridge"
 	desc = "A data cartridge for PDAs."
@@ -270,6 +273,7 @@
 			src.root.add_file( new /datum/computer/file/pda_program/scan/electronics(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/power_checker(src))
+			src.root.add_file( new /datum/computer/file/pda_program/power_controller(src))
 			src.root.add_file( new /datum/computer/file/pda_program/atmos_alerts(src))
 			src.root.add_file( new /datum/computer/file/pda_program/signaler(src))
 			src.root.add_file( new /datum/computer/file/pda_program/pingtool(src) )
@@ -288,6 +292,7 @@
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/manifest(src))
 			src.root.add_file( new /datum/computer/file/pda_program/power_checker(src))
+			src.root.add_file( new /datum/computer/file/pda_program/power_controller(src))
 			src.root.add_file( new /datum/computer/file/pda_program/atmos_alerts(src))
 			src.root.add_file( new /datum/computer/file/pda_program/signaler(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
@@ -346,7 +351,6 @@
 		name = "\improper Detomatix cartridge"
 		desc = "Designed with the latest advancements in blast processing."
 		icon_state = "cart-deto"
-		mats = 0
 
 		New()
 			..()

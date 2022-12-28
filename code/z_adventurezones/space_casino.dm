@@ -7,11 +7,13 @@
 
 // Item slot machine
 
+TYPEINFO(/obj/submachine/slot_machine/item)
+	mats = null
+
 /obj/submachine/slot_machine/item
 	name = "Item Slot Machine"
 	desc = "A slot machine that produces items rather than money. Somehow."
 	icon_state = "slotsitem-off"
-	mats = null
 	var/uses = 0
 	max_roll = 1000
 	icon_base = "slotsitem"

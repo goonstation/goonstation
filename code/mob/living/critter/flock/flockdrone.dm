@@ -37,7 +37,6 @@
 
 /mob/living/critter/flock/drone/New(var/atom/location, var/datum/flock/F=null)
 	src.ai = new /datum/aiHolder/flock/drone(src)
-
 	..()
 	var/datum/abilityHolder/composite/composite = new(src)
 	abilityHolder = composite
@@ -130,6 +129,9 @@
 	if(controller)
 		boutput(pilot, "<span class='alert'>This drone is already being controlled.</span>")
 		return
+	//if we are in the tutorial don't let traces take control, and for minds run the tutorial check
+	if (src.flock.flockmind.tutorial && (pilot != src.flock.flockmind || !src.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_DRONE_CONTROL, src)))
+		return
 	src.controller = pilot
 	src.wake_from_ai_pause()
 	src.ai.stop_move()
@@ -176,7 +178,7 @@
 /mob/living/critter/flock/drone/proc/release_control(give_alerts = TRUE)
 	src.flock?.hideAnnotations(src)
 	src.is_npc = TRUE
-	if (give_alerts && src.z == Z_LEVEL_STATION)
+	if (give_alerts && src.flock.z_level_check(src))
 		emote("beep")
 		say(pick_string("flockmind.txt", "flockdrone_player_kicked"), TRUE)
 	if(src.client && !controller)
@@ -188,7 +190,7 @@
 		if (src.floorrunning)
 			src.end_floorrunning(TRUE)
 
-		if (src.z == Z_LEVEL_STATION)
+		if (src.flock.z_level_check(src))
 			controller.set_loc(get_turf(src))
 		else
 			src.move_controller_to_station()
@@ -218,7 +220,7 @@
 			if (flocktrace.dying)
 				src.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
 				src.updateOverlaysClient(src.client)
-		if (give_alerts && src.z == Z_LEVEL_STATION)
+		if (give_alerts && src.flock.z_level_check(src))
 			flock_speak(null, "Control of drone [src.real_name] surrended.", src.flock)
 
 		controller = null
@@ -239,7 +241,7 @@
 		return
 	if (src.floorrunning)
 		src.end_floorrunning(TRUE)
-	if (src.z == Z_LEVEL_STATION)
+	if (src.flock.z_level_check(src))
 		controller.set_loc(get_turf(src))
 	else
 		src.move_controller_to_station()
@@ -456,6 +458,9 @@
 		return // flock mind/trace is stunned or dead
 	if (flock_controller.flock != src.flock)
 		return // this isn't our drone
+	if (istype(flock_controller, /mob/living/intangible/flock/trace) && flock_controller.flock?.flockmind?.tutorial)
+		return
+	src.flock.flockmind.tutorial?.PerformSilentAction(FLOCK_ACTION_DRAGMOVE, src)
 	src.rally(over_location)
 
 /mob/living/critter/flock/drone/hotkey(var/name)
@@ -531,7 +536,7 @@
 		src.pay_resources(1)
 		if (src.resources < 1)
 			src.end_floorrunning(TRUE)
-	if (!src.dormant && src.z != Z_LEVEL_STATION && src.z != Z_LEVEL_NULL)
+	if (!src.dormant && !src.flock?.z_level_check(src) && src.z != Z_LEVEL_NULL)
 		src.dormantize()
 		return
 	if (src.dormant)
@@ -586,6 +591,7 @@
 /mob/living/critter/flock/drone/proc/start_floorrunning()
 	if(src.floorrunning)
 		return
+	src.flock.flockmind.tutorial?.PerformSilentAction(FLOCK_ACTION_FLOORRUN, src)
 	playsound(src, 'sound/misc/flockmind/flockdrone_floorrun.ogg', 30, 1, extrarange = -10)
 	src.floorrunning = TRUE
 	src.set_density(FALSE)
@@ -642,6 +648,7 @@
 
 /mob/living/critter/flock/drone/proc/add_resources(amount)
 	src.resources += amount
+	src.flock?.flockmind.tutorial?.PerformSilentAction(FLOCK_ACTION_GAIN_RESOURCES, src.resources)
 	src.flock?.resources_gained += amount
 	var/datum/abilityHolder/composite/composite = src.abilityHolder
 	var/datum/abilityHolder/critter/flockdrone/aH = composite.getHolder(/datum/abilityHolder/critter/flockdrone)
@@ -878,8 +885,8 @@
 	if(src.flock.getComplexDroneCount() >= FLOCK_DRONE_LIMIT)
 		boutput(src, "<span class='alert'>Flock complexity too high, unable to support additional drones.</span>")
 		return
-	if(src.resources < FLOCK_LAY_EGG_COST)
-		boutput(src, "<span class='alert'>Not enough resources (you need [FLOCK_LAY_EGG_COST]).</span>")
+	if(src.resources < src.flock.current_egg_cost)
+		boutput(src, "<span class='alert'>Not enough resources (you need [src.flock.current_egg_cost]).</span>")
 		return
 	if(src.floorrunning)
 		boutput(src, "<span class='alert'>You can't do that while floorrunning.</span>")
@@ -924,6 +931,13 @@
 	else
 		return TRUE
 
+/// Sets the AI to tutorial mode, disabling all tasks except manual orders
+/mob/living/critter/flock/drone/proc/set_tutorial_ai(value)
+	if (value)
+		src.ai = new /datum/aiHolder/flock/drone/tutorial(src)
+	else
+		src.ai = new /datum/aiHolder/flock/drone(src)
+
 /////////////////////////////////////////////////////////////////////////////////
 // FLOCKDRONE SPECIFIC LIMBS AND EQUIPMENT SLOTS
 /////////////////////////////////////////////////////////////////////////////////
@@ -965,9 +979,8 @@
 		if (!target.melee_attack_test(user))
 			return
 		if (prob(src.attack_hit_prob) || is_incapacitated(target)|| target.restrained())
-			var/obj/item/affecting = target.get_affecting(user)
-			var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, dam_low, dam_high, 0, can_punch = 0, can_kick = 0)
-			user.attack_effects(target, affecting)
+			var/datum/attackResults/msgs = user.calculate_melee_attack(target, dam_low, dam_high, 0, can_punch = 0, can_kick = 0)
+			user.attack_effects(target, user.zone_sel?.selecting)
 			var/list/specific_attack_messages = pick(attack_messages)
 			msgs.base_attack_message = "<span class='combat bold'>[user] [specific_attack_messages[1]] [target] [specific_attack_messages[2]]!</span>"
 			msgs.flush(FALSE)
@@ -988,6 +1001,8 @@
 	if (!istype(user))
 		return
 
+	if (user.flock.flockmind.tutorial && !user.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_START_CONVERSION, target))
+		return
 	if(ismob(target) || iscritter(target)) //gods how I hate /obj/critter
 		if (!isflockmob(target))
 			src.try_cage(target, user)

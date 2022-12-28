@@ -102,6 +102,11 @@
 		src.set_opacity(0)
 		src.levelupdate()
 
+		for (var/turf/T in orange(src,1))
+			if (istype(T, /turf/unsimulated/floor/auto))
+				var/turf/unsimulated/floor/auto/TA = T
+				TA.edge_overlays(src)
+
 		if(weather)
 			src.UpdateOverlays(weather, "weather")
 		if(ambient)
