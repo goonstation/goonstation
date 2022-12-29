@@ -1230,7 +1230,7 @@
 	var/ignore_amount = FALSE
 
 /datum/equipmentHolder/flockAbsorption/can_equip(var/obj/item/I)
-	if (istype(I, /obj/item/grab))
+	if (istype(I, /obj/item/grab) || istype(I, /obj/item/spacebux))
 		return FALSE
 	return ..()
 

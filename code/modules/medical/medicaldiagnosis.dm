@@ -12,6 +12,13 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "stethoscope"
 	icon_state = "stethoscope"
+	stamina_damage = 3
+	stamina_cost = 3
+	stamina_crit_chance = 3
+	w_class = W_CLASS_TINY
+	throw_speed = 4
+	throw_range = 20
+
 	attack(mob/M, mob/user)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
