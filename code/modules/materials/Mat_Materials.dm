@@ -504,7 +504,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 /datum/material/metal/iridiumalloy
 	mat_id = "iridiumalloy"
 	name = "iridium alloy"
-	canMix = 1 //Can not be easily modified.
+	canMix = 0 //Can not be easily modified.
 	desc = "Some sort of advanced iridium alloy."
 	color = "#756596"
 	quality = 60
@@ -1515,7 +1515,7 @@ ABSTRACT_TYPE(/datum/material/rubber)
 /datum/material/metal/plutonium
 	mat_id = "plutonium"
 	name = "plutonium 239"
-	canMix = 1 //Can not be easily modified.
+	canMix = 0 //Can not be easily modified.
 	desc = "Weapons grade refined plutonium."
 	color = "#230e4d"
 	quality = 60
