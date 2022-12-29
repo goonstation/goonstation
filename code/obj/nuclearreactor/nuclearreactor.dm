@@ -587,14 +587,13 @@
 	name = "neutron"
 	icon_state = ""
 	icon = null
-	power = 100
+	damage = 100
+	stun = 0
 	cost = 0
 //How fast the power goes away
 	dissipation_rate = 1
 //How many tiles till it starts to lose power
 	dissipation_delay = 4
-//Kill/Stun ratio
-	ks_ratio = 1.0
 //name of the projectile setting, used when you change a guns setting
 	sname = "neutron"
 //file location for the sound you want it to play
