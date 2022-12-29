@@ -44579,6 +44579,12 @@
 /obj/decal/fakeobjects/flock/antenna,
 /turf/simulated/shuttle/wall/flock,
 /area/space)
+"eJl" = (
+/obj/table/flock/auto,
+/obj/machinery/light/flock,
+/obj/item/paper/flockstatsnote,
+/turf/simulated/floor/shuttle/flock,
+/area/flock_trader)
 "eJX" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -75449,7 +75455,7 @@ baN
 aYi
 aXI
 aXI
-bdR
+eJl
 aXK
 beq
 wdN
