@@ -27660,7 +27660,10 @@
 /area/station/science/lobby)
 "dSc" = (
 /obj/table/auto,
-/obj/item/storage/box/tapebox,
+/obj/item/storage/box/tapebox{
+	pixel_y = 12;
+	pixel_x = -2
+	},
 /obj/item/disk/data/tape{
 	layer = 3.5
 	},
@@ -47389,7 +47392,12 @@
 	},
 /obj/machinery/light_switch/west,
 /obj/item/hand_labeler{
-	pixel_y = 17
+	pixel_y = 12;
+	pixel_x = 6
+	},
+/obj/item/device/audio_log{
+	pixel_y = 13;
+	pixel_x = -5
 	},
 /turf/simulated/floor/white/checker2{
 	dir = 4
@@ -51156,10 +51164,13 @@
 	pixel_y = 3
 	},
 /obj/item/paper_bin/artifact_paper{
-	pixel_x = 6;
-	pixel_y = 4
+	pixel_x = 5;
+	pixel_y = 15
 	},
 /obj/machinery/light/incandescent,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 7
+	},
 /turf/simulated/floor/white/checker2{
 	dir = 8
 	},

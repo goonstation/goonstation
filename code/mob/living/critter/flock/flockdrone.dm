@@ -530,7 +530,7 @@
 	return ..()
 
 /mob/living/critter/flock/drone/Life(datum/controller/process/mobs/parent)
-	if (..(parent) || isdead(src))
+	if (..(parent))
 		return TRUE
 	if (src.floorrunning && src.resources >= 1)
 		src.pay_resources(1)
@@ -1230,7 +1230,7 @@
 	var/ignore_amount = FALSE
 
 /datum/equipmentHolder/flockAbsorption/can_equip(var/obj/item/I)
-	if (istype(I, /obj/item/grab))
+	if (istype(I, /obj/item/grab) || istype(I, /obj/item/spacebux))
 		return FALSE
 	return ..()
 
