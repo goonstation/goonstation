@@ -1546,12 +1546,10 @@
 	pixel_y = 21
 	},
 /obj/item/instrument/bikehorn/dramatic,
-/obj/item/clothing/head/souschefhat,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "eg" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/gloves/latex,
 /obj/item/spraybottle/cleaner,
 /obj/machinery/firealarm{
 	pixel_y = 25
@@ -1566,7 +1564,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/storage/closet/wardrobe/black/formalwear,
+/obj/machinery/vending/jobclothing/catering,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "ei" = (
@@ -4931,12 +4929,17 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/surgery)
 "mK" = (
-/obj/table/auto,
+/obj/surgery_tray,
+/obj/item/scissors/surgical_scissors,
+/obj/item/scalpel,
+/obj/item/circular_saw{
+	pixel_y = 8
+	},
 /obj/item/surgical_spoon{
 	pixel_y = 4
 	},
-/obj/item/suture,
 /obj/item/staple_gun,
+/obj/item/suture,
 /obj/item/hemostat,
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/surgery)
@@ -10441,7 +10444,9 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/surgery)
 "zh" = (
-/obj/machinery/optable,
+/obj/machinery/optable{
+	id = "OR1"
+	},
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
 	},
@@ -10465,16 +10470,13 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/surgery)
 "zi" = (
-/obj/surgery_tray,
-/obj/item/circular_saw{
-	pixel_y = 8
-	},
-/obj/item/scalpel,
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
 	icon_state = "line2"
 	},
-/obj/item/scissors/surgical_scissors,
+/obj/machinery/computer/operating{
+	id = "OR1"
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/surgery)
 "zj" = (
