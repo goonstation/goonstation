@@ -6,12 +6,14 @@ TYPEINFO(/obj/machinery/cashreg)
 	desc = "Sends funds directly to a host ID."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "scanner"
+	req_access = list(access_heads) // Allows heads of staff to deregister owners from a cashreg.
 	anchored = TRUE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 	flags = TGUI_INTERACTIVE
 
 	var/datum/db_record/owner_account = null
 	var/obj/item/card/id/owner_card = null
+	var/active_transaction = FALSE
 	var/amount = 0
 	var/transaction_limit = 999999 // Maximum amount of credits a single transaction can move.
 
@@ -48,8 +50,9 @@ TYPEINFO(/obj/machinery/cashreg)
 
 	ui_data(mob/user)
 		. = list(
-			"owner" = src.owner_card?.registered,
 			"amount" = src.amount,
+			"name" = src.name,
+			"owner" = src.owner_card?.registered,
 		)
 
 	ui_act(action, params)
@@ -57,6 +60,16 @@ TYPEINFO(/obj/machinery/cashreg)
 		if (.)
 			return
 		switch (action)
+			if ("cancel_transaction")
+				var/obj/O = usr.equipped()
+				if (src.get_ID(O) == src.owner_card && !src.active_transaction)
+					boutput(usr, "<span class='alert'>Transaction cancelled.</span>")
+					usr.visible_message("<span class='alert'><B>[usr]</B> cancels the active transaction on [src].</span>")
+					src.amount = 0
+					. = TRUE
+				else
+					boutput(usr, "<span class='alert'>You press the reset button, but nothing happens.</span>")
+					return
 			if ("set_amount")
 				var/obj/O
 				if (ishuman(usr))
@@ -68,7 +81,7 @@ TYPEINFO(/obj/machinery/cashreg)
 				else
 					return
 
-				if (src.get_ID(O))
+				if (src.get_ID(O) == src.owner_card)
 					var/amount_buffer = tgui_input_number(usr, "Enter amount.", src.name, 0, src.transaction_limit)
 					if (amount_buffer)
 						src.amount = amount_buffer
@@ -78,24 +91,27 @@ TYPEINFO(/obj/machinery/cashreg)
 				if (src.get_ID(O) && !src.owner_account)
 					src.register_owner(usr, O)
 					. = TRUE
-			if ("swipe_payee")
+			if ("swipe_payer")
 				var/obj/O = usr.equipped()
 				if (src.get_ID(O))
 					src.pay(usr, O)
 					. = TRUE
 			if ("reset")
-				// todo: allow certain accesses to reset readers
 				var/obj/O = usr.equipped()
-				if (src.get_ID(O) && src.get_ID(O) == src.owner_card)
-					if (!src.owner_account)
-						boutput(usr, "<span class='alert'>You press the reset button, but nothing happens.</span>")
-						return
+				// (If the user's ID matches the registered card OR the user has head access) AND there is no active transaction
+				if ((src.get_ID(O) == src.owner_card || src.allowed(usr)) && !src.active_transaction)
 					if (tgui_alert(usr, "Reset the reader?", "Reset reader", list("Reset", "Cancel")) == "Reset")
+						if (src.active_transaction)
+							return
 						boutput(usr, "<span class='alert'>Reader reset.</span>")
 						usr.visible_message("<span class='alert'><B>[usr]</B> resets [src].</span>")
 						src.owner_account = null
+						src.owner_card = null
 						src.amount = 0
 						. = TRUE
+				else
+					boutput(usr, "<span class='alert'>You press the reset button, but nothing happens.</span>")
+					return
 		src.add_fingerprint(usr)
 
 	proc/authenticate_card(mob/user, obj/item/card/id/O)
@@ -112,9 +128,11 @@ TYPEINFO(/obj/machinery/cashreg)
 			boutput(user, "<span class='alert'>Invalid PIN!</span>")
 			return null
 
-	proc/cancel_message(mob/user)
+	proc/cancel(mob/user)
 		user.visible_message("<span class='alert'><b>[src] buzzes.</b> The transaction was cancelled!</span>")
+		src.active_transaction = FALSE
 
+	// This proc should really exist elsewhere.
 	proc/get_ID(obj/item/O)
 		if (istype(O, /obj/item/card/id))
 			return O
@@ -131,49 +149,56 @@ TYPEINFO(/obj/machinery/cashreg)
 			boutput(usr, "<span class='alert'>Unable to successfully register ownership of [src]!</span>")
 
 	proc/pay(mob/user, obj/item/card/id/O)
-		var/payee_account = src.authenticate_card(user, O)
+		var/payer_account = src.authenticate_card(user, O)
+		src.active_transaction = TRUE
 
-		if (!payee_account)
+		if (!payer_account)
 			boutput(user, "<span class='alert'>Unable to authenticate account!</span>")
-			src.cancel_message(user)
+			src.cancel(user)
 			return
 
 		if (O.registered in FrozenAccounts)
 			boutput(user, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
-			src.cancel_message(user)
+			src.cancel(user)
 			return
 
-		if (payee_account == src.owner_account)
+		if (payer_account == src.owner_account)
 			boutput(user, "<span class='alert'>You can't send funds with the owner ID to the owner ID!</span>")
-			src.cancel_message(user)
+			src.cancel(user)
 			return
 
 		if (tgui_alert(usr, "Please confirm transfer of [src.amount] to [src.owner_card?.registered].", "Confirm transfer", list("Confirm", "Cancel")) == "Confirm")
 			if (!src.amount)
 				boutput(user, "<span class='alert'>Invalid transaction!</span>")
-				src.cancel_message(user)
+				src.cancel(user)
 				return
 
-			if (src.amount > payee_account["current_money"])
+			if (src.amount > payer_account["current_money"])
 				boutput(user, "<span class='alert'>Insufficent funds in account to complete transaction.</span>")
-				src.cancel_message(user)
+				src.cancel(user)
 				return
 
-			payee_account["current_money"] -= src.amount
+			var/print_customer_copy = FALSE
+			if (tgui_alert(usr, "Print customer receipt?", "Receipt", list("Print", "Cancel")) == "Print")
+				print_customer_copy = TRUE
+
+			payer_account["current_money"] -= src.amount
 			src.owner_account["current_money"] += src.amount
+			var/transaction_total = src.amount
+			var/payee = O.registered
+			src.amount = 0
+			src.active_transaction = FALSE
+			tgui_process.update_uis(src)
 			boutput(user, "<span class='notice'>Sending transaction.</span>")
 			user.visible_message("<span class='notice'><b>[src] beeps affirmatively.</b> The transaction was successful!</span>")
 
-			if (tgui_alert(usr, "Print customer receipt?", "Receipt", list("Print", "Cancel")) == "Print")
-				src.receipt(O.registered, src.amount, customer_copy = true)
-			else
-				src.receipt(O.registered, src.amount)
+			playsound(src, 'sound/machines/printer_cargo.ogg', 50, 1)
+			SPAWN(3 SECONDS)
+				if (print_customer_copy)
+					src.print_receipt(payee, O.registered, transaction_total, customer_copy = true)
+				src.print_receipt(payee, O.registered, transaction_total)
 
-		src.amount = 0
-		tgui_process.update_uis(src)
-
-	proc/receipt(payee, total, customer_copy = false)
-		// spam protection pls
+	proc/print_receipt(payee, payer, total, customer_copy = false)
 		var/receipt_text = {"
 			<span style="text-transform:uppercase;font-family:Monospace;">
 				<table>
@@ -195,11 +220,11 @@ TYPEINFO(/obj/machinery/cashreg)
 					</tr>
 					<tr>
 						<td>TO</td>
-						<td style="text-align:right">[src.owner_card?.registered]</td>
+						<td style="text-align:right">[payee]</td>
 					</tr>
 					<tr>
 						<td>FROM</td>
-						<td style="text-align:right">[payee]</td>
+						<td style="text-align:right">[payer]</td>
 					</tr>
 					<tr>
 						<td colspan="2" style="text-align:center">*-----------------------------*</td>
@@ -213,10 +238,8 @@ TYPEINFO(/obj/machinery/cashreg)
 			</span>
 		"}
 
-		playsound(src, 'sound/machines/printer_cargo.ogg', 50, 1)
-		SPAWN(3 SECONDS)
-			var/obj/item/paper/receipt = new /obj/item/paper{rand_pos = TRUE}
-			receipt.set_loc(get_turf(src))
-			receipt.name = "RECEIPT - [customer_copy ? "CUSTOMER" : "MERCHANT"] COPY"
-			receipt.info = receipt_text
-			receipt.icon_state = "thermal_paper"
+		var/obj/item/paper/receipt = new /obj/item/paper{rand_pos = TRUE}
+		receipt.set_loc(get_turf(src))
+		receipt.name = "RECEIPT - [customer_copy ? "CUSTOMER" : "MERCHANT"] COPY"
+		receipt.info = receipt_text
+		receipt.icon_state = "thermal_paper"
