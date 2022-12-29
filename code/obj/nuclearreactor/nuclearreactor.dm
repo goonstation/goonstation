@@ -256,14 +256,14 @@
 		if(rads <= 0)
 			return
 
-		for(var/i = min(rads,20),i>0,i--)
-			shoot_projectile_XY(src, new /datum/projectile/neutron(min(rads*5,100)), rand(-10,10), rand(-10,10)) //for once, rand(range) returning int is useful
-		rads -= min(rads,20)
+		src.AddComponent(/datum/component/radioactive, min(rads*2, 100), TRUE, FALSE, 5)
+		rads -= 10
 
 		if(rads <= 0)
 			return
 
-		src.AddComponent(/datum/component/radioactive, min(rads*5, 100), TRUE, FALSE, 5)
+		for(var/i = min(round(rads/2),20),i>0,i--)
+			shoot_projectile_XY(src, new /datum/projectile/neutron(min(rads*5,100)), rand(-10,10), rand(-10,10)) //for once, rand(range) returning int is useful
 
 	proc/catastrophicOverload()
 		var/sound/alarm = sound('sound/misc/airraid_loop.ogg')
