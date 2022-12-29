@@ -1541,12 +1541,10 @@
 	pixel_y = 21
 	},
 /obj/item/instrument/bikehorn/dramatic,
-/obj/item/clothing/head/souschefhat,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "eg" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/gloves/latex,
 /obj/item/spraybottle/cleaner,
 /obj/machinery/firealarm{
 	pixel_y = 25
@@ -1561,7 +1559,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/storage/closet/wardrobe/black/formalwear,
+/obj/machinery/vending/jobclothing/catering,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "ei" = (
