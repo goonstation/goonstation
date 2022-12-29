@@ -7,6 +7,9 @@
 
 #define MAX_FAILED_CLONE_TICKS 200 // vOv
 
+TYPEINFO(/obj/machinery/clonepod)
+	mats = list("MET-1"=35, "honey"=5)
+
 /obj/machinery/clonepod
 	anchored = 1
 	name = "cloning pod"
@@ -15,7 +18,6 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0_lowmeat"
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
-	mats = list("MET-1"=35, "honey"=5)
 	var/meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
 	var/mob/living/occupant
 	var/heal_level = 10 //The clone is released once its health^W damage (maxHP - HP) reaches this level.
@@ -253,6 +255,7 @@
 			src.occupant.abilityHolder.remove_unlocks()
 
 		ghost.mind.transfer_to(src.occupant)
+		src.occupant.is_npc = FALSE
 
 		if(src.occupant.client) // gross hack for resetting tg layout bleh bluh
 			src.occupant.client.set_layout(src.occupant.client.tg_layout)
@@ -332,7 +335,6 @@
 			src.occupant.mind.key = src.occupant.key
 			src.occupant.mind.transfer_to(src.occupant)
 			ticker.minds += src.occupant.mind
-
 		// -- Mode/mind specific stuff goes here
 
 			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && ((src.occupant.mind in ticker.mode:revolutionaries) || (src.occupant.mind in ticker.mode:head_revolutionaries)))
@@ -340,6 +342,7 @@
 
 		// -- End mode specific stuff
 
+		src.occupant.is_npc = FALSE
 		logTheThing(LOG_STATION, usr, "starts cloning [constructTarget(src.occupant,"combat")] at [log_loc(src)].")
 
 		if (isobserver(ghost))
@@ -356,6 +359,7 @@
 			if(implant_hacker == src.occupant)
 				boutput(src.occupant, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
 			else
+				logTheThing(LOG_COMBAT, src.occupant, "was mindhack cloned. Mindhacker: [constructTarget(implant_hacker,"combat")]")
 				src.occupant.setStatus("mindhack", null, implant_hacker)
 
 		// Remove zombie antag status as zombie race is removed on cloning
@@ -637,6 +641,7 @@
 				boutput(user, "<space class='alert'>You must wait for the current cloning cycle to finish before you can remove the mindhack module.</span>")
 				return
 			boutput(user, "<span class='notice'>You begin detatching the mindhack cloning module...</span>")
+			logTheThing(LOG_STATION, src, "[user] removed the mindhack cloning module from ([src]) at [log_loc(user)].")
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			if (do_after(user, 50) && clonehack)
 				new /obj/item/cloneModule/mindhack_module( src.loc )
@@ -832,6 +837,9 @@
 	*/
 
 //WHAT DO YOU WANT FROM ME(AT)
+TYPEINFO(/obj/machinery/clonegrinder)
+	mats = 10
+
 /obj/machinery/clonegrinder
 	name = "enzymatic reclaimer"
 	desc = "A tank resembling a rather large blender, designed to recover biomatter for use in cloning."
@@ -839,7 +847,6 @@
 	icon_state = "grinder0"
 	anchored = 1
 	density = 1
-	mats = 10
 	var/list/pods = null // cloning pods we're tied to
 	var/id = null // if this isn't null, we'll only look for pods with this ID
 	var/pod_range = 4 // if we don't have an ID, we look for pods in orange(this value)

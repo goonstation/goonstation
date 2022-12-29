@@ -26,8 +26,6 @@
 #define TALK_INTO_HAND 			 (1<<11)
 /// is an open container for chemistry purposes. don't check this flag directly, use obj.is_open_container()
 #define OPENCONTAINER				 (1<<12)
-/// is an atom spawned in an adventure area
-#define ISADVENTURE 				 (1<<13)
 /// No beaker etc. splashing. For Chem machines etc.
 #define NOSPLASH 						 (1<<13)
 /// No attack when hitting stuff with this item.
@@ -76,6 +74,15 @@
 #define TOOL_WELDING 256
 #define TOOL_WRENCHING 512
 #define TOOL_CHOPPING 1024 // for firaxes, does additional damage to doors.
+
+//omnitool flags
+#define OMNI_MODE_PRYING 1
+#define OMNI_MODE_SNIPPING 2
+#define OMNI_MODE_WRENCHING 3
+#define OMNI_MODE_SCREWING 4
+#define OMNI_MODE_PULSING 5
+#define OMNI_MODE_CUTTING 6
+#define OMNI_MODE_WELDING 7
 
 //tooltip flags for rebuilding
 

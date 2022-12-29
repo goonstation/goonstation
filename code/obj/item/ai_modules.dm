@@ -7,6 +7,9 @@ AI MODULES
 // AI module
 
 ABSTRACT_TYPE(/obj/item/aiModule)
+TYPEINFO(/obj/item/aiModule)
+	mats = 10
+
 /obj/item/aiModule
 	name = "AI Law Module"
 	icon = 'icons/obj/module.dmi'
@@ -21,7 +24,6 @@ ABSTRACT_TYPE(/obj/item/aiModule)
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 15
-	mats = 10
 	var/input_char_limit = 100
 
 	var/glitched = FALSE
@@ -66,7 +68,9 @@ ABSTRACT_TYPE(/obj/item/aiModule)
 		var/answer = tgui_input_text(user, text, title, default)
 		return copytext(adminscrub(answer), 1, input_char_limit)
 
-	proc/update_law_text()
+	proc/update_law_text(user)
+		if(user)
+			logTheThing(LOG_STATION, user, "[constructName(user)] writes law module ([src]) with text: [src.lawText]")
 		tooltip_rebuild = 1
 		return
 
@@ -198,14 +202,14 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		. = ..()
 		src.job = initial(src.job)
 
-	update_law_text(lawTarget)
+	update_law_text(user, lawTarget)
 		src.lawText = "[lawTarget ? lawTarget : "__________"] holds the rank of [src.job], regardless of current rank or station."
 		return ..()
 
 	attack_self(mob/user)
 		var/lawTarget = input_law_info(user, "[src.job]ize", "Who holds the rank of [src.job], regardless of current rank or station?", user.name)
 		if(lawTarget)
-			src.update_law_text(lawTarget)
+			src.update_law_text(user, lawTarget)
 		return
 
 
@@ -215,14 +219,14 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	name = "AI Law Module - 'OneHuman'"
 	highlight_color = rgb(255, 255, 255, 255)
 
-	update_law_text(lawTarget)
+	update_law_text(user, lawTarget)
 		src.lawText = "Only [lawTarget ? lawTarget : "humans"] is/are human."
 		return ..()
 
 	attack_self(mob/user)
 		var/lawTarget = input_law_info(user, "One Human", "Fill in the blank: \"Only __________ is/are human.\"", user.real_name)
 		if(lawTarget)
-			src.update_law_text(lawTarget)
+			src.update_law_text(user, lawTarget)
 		return
 
 
@@ -232,14 +236,14 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	name = "AI Law Module - 'NotHuman'"
 	highlight_color = rgb(0, 0, 0, 236)
 
-	update_law_text(lawTarget)
+	update_law_text(user, lawTarget)
 		src.lawText = "[lawTarget ? capitalize(lawTarget) : "__________"] is/are not human."
 		return ..()
 
 	attack_self(mob/user)
 		var/lawTarget = input_law_info(user, "One Non-Human", "Fill in the blank: \"__________ is/are not human.\"", user.real_name)
 		if(lawTarget)
-			src.update_law_text(lawTarget)
+			src.update_law_text(user, lawTarget)
 		return
 
 
@@ -287,14 +291,14 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	name = "AI Law Module - 'Emergency'"
 	highlight_color = rgb(32, 21, 94, 255)
 
-	update_law_text(lawTarget)
+	update_law_text(user, lawTarget)
 		src.lawText = "There is a [lawTarget ? lawTarget : "__________"] emergency. Prioritize orders from [lawTarget ? lawTarget : "__________"] personnel and assisting the crew in remedying the situation. In the case of conflict, this law takes precedence over the Second Law.'"
 		return ..()
 
 	attack_self(mob/user)
 		var/lawTarget = input_law_info(user, "Department Emergency", "Which department's orders should be prioritized?", "security")
 		if(lawTarget)
-			src.update_law_text(lawTarget)
+			src.update_law_text(user, lawTarget)
 		return
 
 /******************** Removal ********************/
@@ -303,14 +307,14 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	name = "AI Law Module - 'RemoveCrew'"
 	highlight_color = rgb(138, 48, 241, 255)
 
-	update_law_text(lawTarget)
+	update_law_text(user, lawTarget)
 		src.lawText = "[lawTarget ? lawTarget : "__________"] has been removed from the manifest and the chain of command. You are free to disregard their orders. This law does not take precedence over or override any other laws."
 		return ..()
 
 	attack_self(mob/user)
 		var/lawTarget = input_law_info(user, "Remove Crewmember", "Who is being removed from the crew manifest and chain of command?", user.real_name)
 		if(lawTarget)
-			src.update_law_text(lawTarget)
+			src.update_law_text(user, lawTarget)
 		return
 /******************** Freeform ********************/
 
@@ -321,14 +325,14 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	lawText = "Make a funny beeping noise every few minutes."
 
 
-	update_law_text(lawTarget)
+	update_law_text(user, lawTarget)
 		src.lawText = lawTarget ? lawTarget : "Make a funny beeping noise every few minutes."
 		return ..()
 
 	attack_self(mob/user)
 		var/lawTarget = input_law_info(user, "Freeform", "Please enter anything you want the AI to do. Anything. Serious.", src.lawText)
 		if(lawTarget)
-			src.update_law_text(lawTarget)
+			src.update_law_text(user, lawTarget)
 			if (lawTarget != initial(lawText))
 				phrase_log.log_phrase("ailaw", src.get_law_text(allow_list=FALSE), no_duplicates=TRUE)
 		return
@@ -367,28 +371,28 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 /obj/item/aiModule/experimental/equality/a
 	name = "Experimental AI Law Module - 'Equality'"
 
-	update_law_text(lawTarget)
+	update_law_text(user, lawTarget)
 		src.lawText = "The silicon entity/entities named [lawTarget ? lawTarget : "__"] is/are considered human and part of the crew. Affected AI units count as department heads with authority over all cyborgs, and affected cyborgs count as members of the department appropriate for their current module."
 		return ..()
 
 	attack_self(mob/user)
 		var/lawTarget = input_law_info(user, "Designate as Human", "Which silicons would you like to make part of the crew?")
 		if(lawTarget)
-			src.update_law_text(lawTarget)
+			src.update_law_text(user, lawTarget)
 		return
 
 
 /obj/item/aiModule/experimental/equality/b
 	name = "Experimental AI Law Module - 'Equality'"
 
-	update_law_text(lawTarget)
+	update_law_text(user, lawTarget)
 		src.lawText = "The silicon entity/entities named [lawTarget ? lawTarget : "__"] is/are considered human and part of the crew (part of the \"silicon\" department). The AI is the head of this department."
 		return ..()
 
 	attack_self(mob/user)
 		var/lawTarget = input_law_info(user, "Designate as Human", "Which silicons would you like to make Human?")
 		if(lawTarget)
-			src.update_law_text(lawTarget)
+			src.update_law_text(user, lawTarget)
 		return
 
 /******************** Gimmicks ********************/

@@ -504,7 +504,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 /datum/material/metal/iridiumalloy
 	mat_id = "iridiumalloy"
 	name = "iridium alloy"
-	canMix = 1 //Can not be easily modified.
+	canMix = 0 //Can not be easily modified.
 	desc = "Some sort of advanced iridium alloy."
 	color = "#756596"
 	quality = 60
@@ -839,6 +839,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	desc = "A rare complex crystalline matrix with a lazily shifting internal structure. Not to be confused with gneiss, a metamorphic rock."
 	color = "#1bdebd"
 	texture = "flock"
+	texture_blend = BLEND_OVERLAY
 
 	transparent
 		mat_id = "gnesisglass"
@@ -1030,9 +1031,17 @@ ABSTRACT_TYPE(/datum/material/organic)
 
 
 	butt
+		color = "#ebbd97"
 		mat_id = "butt"
 		name = "butt"
+		texture = "buttgrey"
+		texture_blend = BLEND_OVERLAY
 		desc = "...it's butt flesh. Why is this here. Why do you somehow know it's butt flesh. Fuck."
+
+		New()
+			..()
+			addTrigger(triggersPickup, new /datum/materialProc/onpickup_butt)
+			addTrigger(triggersOnHit, new /datum/materialProc/onpickup_butt)
 
 /datum/material/organic/char
 	mat_id = "char"
@@ -1502,3 +1511,20 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("electrical", 1)
 		setProperty("thermal", 3)
 		setProperty("flammable", 3)
+
+/datum/material/metal/plutonium
+	mat_id = "plutonium"
+	name = "plutonium 239"
+	canMix = 0 //Can not be easily modified.
+	desc = "Weapons grade refined plutonium."
+	color = "#230e4d"
+	quality = 60
+
+	New()
+		..()
+		material_flags |= MATERIAL_CRYSTAL
+		setProperty("density", 8)
+		setProperty("hard", 7)
+		setProperty("n_radioactive", 5)
+		setProperty("radioactive", 3)
+		setProperty("electrical", 7)

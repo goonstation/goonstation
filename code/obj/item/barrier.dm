@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/barrier)
+	mats = 8
+
 /obj/item/barrier
 	name = "barrier"
 	desc = "A personal barrier. Activate this item inhand to deploy it."
@@ -11,7 +14,6 @@
 	force = 2
 	throwforce = 6
 	w_class = W_CLASS_SMALL
-	mats = 8
 	stamina_damage = 20
 	var/stamina_damage_active = 40
 	stamina_cost = 10
