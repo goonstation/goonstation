@@ -41,15 +41,16 @@
 				T = region.turf_at(region.width - 1, y)
 				new room_theme.lighting(T)
 
-			// portals at cardinal points
-			var/turf/portal_turfs = list()
-			portal_turfs += region.turf_at(round(region.width/2) + 1, region.height - 1) // north
-			portal_turfs += region.turf_at(round(region.width/2) + 1, 2) // south
-			portal_turfs += region.turf_at(region.width - 1, round(region.height/2) + 1 ) // east
-			portal_turfs += region.turf_at(2, round(region.height/2) + 1 ) // west
-
 			var/turf/pocket_destination = region.turf_at(round(region.width/2)+1, round(region.height/2)+1)
 			new room_theme.lighting(pocket_destination)
+
+			// portals at corners
+			var/portal_turfs = list(
+				region.turf_at(2, 2),
+				region.turf_at(2, region.height-1),
+				region.turf_at(region.width-1, 2),
+				region.turf_at(region.height-1, region.width-1)
+			)
 
 			for (var/turf/current_turf in portal_turfs)
 				var/turf/pocket_turf = current_turf
@@ -69,11 +70,18 @@
 				station_portals += station_portal
 
 			if (length(room_theme.spawnable_mobs))
-				var/region_tiles = REGION_TILES(region)
+				// critter spawns at cardinal points
+				var/turf/critter_spawn_turfs = list(
+					region.turf_at(round(region.width/2) + 1, region.height - 1), // north
+					region.turf_at(round(region.width/2) + 1, 2), // south
+					region.turf_at(region.width - 1, round(region.height/2) + 1 ), // east
+					region.turf_at(2, round(region.height/2) + 1 ), // west
+				)
+
 				for (var/j in 1 to room_theme.spawnable_count)
 					var/new_mob = pick(room_theme.spawnable_mobs)
 					var/atom/movable/AM = new new_mob
-					AM.set_loc(pick(region_tiles))
+					AM.set_loc(pick(critter_spawn_turfs))
 
 			regions += region
 			sleep(rand(10 SECONDS, 20 SECONDS))
