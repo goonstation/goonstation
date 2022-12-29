@@ -505,6 +505,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				. = ("You deftly [pick("spin", "twirl")] [src] managing to keep all the contents inside.")
 				if(!ON_COOLDOWN(user, "bartender spinning xp", 180 SECONDS)) //only for real cups
 					JOB_XP(user, "Bartender", 1)
+			if (istype(src, /obj/item/reagent_containers/food/drinks/cola))
+				var/obj/item/reagent_containers/food/drinks/cola/soda_can = src
+				if (soda_can.is_sealed && (soda_can.reagents.has_reagent("cola", 5) || soda_can.reagents.has_reagent("tonic", 5) || soda_can.reagents.has_reagent("sodawater", 5)))
+					soda_can.shaken = TRUE
+					return
 			else
 				user.visible_message("<span class='alert'><b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b></span>")
 				logTheThing(LOG_CHEMISTRY, user, "spills the contents of [src] [log_reagents(src)] all over [him_or_her(user)]self at [log_loc(user)].")
@@ -694,7 +699,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 			splash_volume = min(splash_volume, src.reagents.total_volume)
 
-			src.reagents.reaction(target, TOUCH, splash_volume)
+			var/datum/reagents/splash = new(splash_volume) // temp reagents of the splash so we can make changes between the first and second splashes
+			src.reagents.trans_to_direct(splash, splash_volume) // this removes reagents from this container so we don't need to do that below
+
+			var/reacted_reagents = splash.reaction(target, TOUCH, splash_volume)
 
 			var/turf/T
 			if (!isturf(target) && !target.density) // if we splashed on something other than a turf or a dense obj, it goes on the floor as well
@@ -704,9 +712,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				T = get_turf(user)
 
 			if (T && !T.density) // if the user AND the target are on dense turfs or the user is on a dense turf and the target is a dense obj then just give up. otherwise pour on the floor
-				src.reagents.reaction(T, TOUCH, splash_volume)
-
-			src.reagents.remove_any(splash_volume)
+				// first remove everything that reacted in the first reaction
+				for(var/id in reacted_reagents)
+					splash.del_reagent(id)
+				splash.reaction(T, TOUCH, splash.total_volume)
 
 /* =============================================== */
 /* -------------------- Bowls -------------------- */

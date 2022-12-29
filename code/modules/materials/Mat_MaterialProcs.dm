@@ -482,9 +482,10 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	var/lastTrigger = 0
 
 	execute(var/atom/location, var/temp)
-		if(temp < T0C + 10) return
+		if(temp < T0C + 900) return
 		if(world.time - lastTrigger < 100) return
 		lastTrigger = world.time
+		if((temp < T0C + 1200) && prob(80)) return //some leeway for triggering at lower temps
 		var/turf/tloc = get_turf(location)
 		explosion(location, tloc, 0, 1, 2, 3, 1)
 		location.visible_message("<span class='alert'>[location] explodes!</span>")
@@ -562,7 +563,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/reflective_onbullet
 	execute(var/obj/item/owner, var/atom/attacked, var/obj/projectile/projectile)
 		if(projectile.proj_data.damage_type & D_BURNING || projectile.proj_data.damage_type & D_ENERGY)
-			shoot_reflected_bounce(projectile, owner) //shoot_reflected_to_sender()
+			shoot_reflected_bounce(projectile, owner, 4) //shoot_reflected_to_sender()
 		return
 
 /datum/materialProc/negative_add
