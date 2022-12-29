@@ -40,6 +40,7 @@ TYPEINFO(/obj/machinery/cashreg)
 			src.anchored = !src.anchored
 
 	attack_hand(mob/user)
+		..()
 		ui_interact(user)
 
 	ui_interact(mob/user, datum/tgui/ui)
@@ -68,7 +69,7 @@ TYPEINFO(/obj/machinery/cashreg)
 					src.amount = 0
 					. = TRUE
 				else
-					boutput(usr, "<span class='alert'>You press the reset button, but nothing happens.</span>")
+					boutput(usr, "<span class='alert'>Unable to cancel transaction.</span>")
 					return
 			if ("set_amount")
 				var/obj/O
@@ -110,7 +111,7 @@ TYPEINFO(/obj/machinery/cashreg)
 						src.amount = 0
 						. = TRUE
 				else
-					boutput(usr, "<span class='alert'>You press the reset button, but nothing happens.</span>")
+					boutput(usr, "<span class='alert'>You are not the owner or you don't have permission to reset the machine!</span>")
 					return
 		src.add_fingerprint(usr)
 

@@ -1,0 +1,34 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author DisturbHerb (https://github.com/DisturbHerb/)
+ * @license MIT
+ */
+
+.cashreg__ {
+  &wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  &ownerbutton {
+    flex-grow: 1;
+
+    & > * {
+
+    }
+  }
+
+  &amount {
+    flex-grow: 8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em
+  }
+
+  &pay {
+    flex-grow: 1;
+  }
+}
