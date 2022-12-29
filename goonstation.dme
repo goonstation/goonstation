@@ -914,6 +914,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\events\magnetic.dm"
 #include "code\modules\events\meteor_shower.dm"
 #include "code\modules\events\playable_pests.dm"
+#include "code\modules\events\pretty_space.dm"
 #include "code\modules\events\radiation.dm"
 #include "code\modules\events\random_event.dm"
 #include "code\modules\events\sleeperagent.dm"
