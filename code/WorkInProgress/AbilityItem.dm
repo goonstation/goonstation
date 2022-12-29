@@ -945,10 +945,12 @@
 		if (bandana.is_pulled_down)
 			boutput(H, "<span class='notice'>You pull down [bandana].</span>")
 			bandana.see_face = TRUE
+			bandana.c_flags ^= COVERSMOUTH
 			src.icon_state = "bandana_up"
 		else
 			boutput(H, "<span class='notice'>You pull up [bandana].</span>")
 			bandana.see_face = FALSE
+			bandana.c_flags |= COVERSMOUTH
 			src.icon_state = "bandana_down"
 		bandana.icon_state = "[initial(bandana.icon_state)][bandana.is_pulled_down ? "_down" : ""]"
 		if (H.wear_mask == bandana)
