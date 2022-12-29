@@ -47,7 +47,8 @@
 	var/_comp_grid_overlay_update = TRUE
 	/// ref to the turf the reactor light is stored on, because you can't center simple lights
 	var/turf/_light_turf
-
+	/// INTERNAL: count of old pending grid updates, for the flicker prevention code
+	var/_pending_grid_updates = 0
 	New()
 		. = ..()
 		terminal = new /obj/machinery/power/terminal/netlink(src.loc)
@@ -103,11 +104,24 @@
 		//and finally, component grid
 		if(_comp_grid_overlay_update)
 			//base
-			var/icon/base_grid = icon(icon, "reactor_empty")//image(icon, "reactor_empty")
+			var/icon/base_grid = icon(icon, "reactor_empty")
 			for(var/x=1 to REACTOR_GRID_WIDTH)
 				for(var/y=1 to REACTOR_GRID_HEIGHT)
 					if(src.component_grid[x][y])
 						base_grid.Blend(src.component_grid[x][y].cap_icon, ICON_OVERLAY, ((y-1)*18)+11, (124-x*15)-4)
+			//The following code is intended to prevent flicker when updating the reactor grid
+			//it seems like byond will delete the old image before it finishes sending the new one, so you got flicker
+			//this preserves the old image while sending the new one for half a second, which should hopefully prevent that
+			var/image/old_grid = src.GetOverlayImage("reactor_grid")
+			if(old_grid)
+				old_grid.layer = old_grid.layer+0.1
+				src.UpdateOverlays(old_grid, "old_grid")
+				_pending_grid_updates++
+				SPAWN(0.5 SECONDS)
+					if(_pending_grid_updates <= 1)
+						src.UpdateOverlays(null, "old_grid")
+					_pending_grid_updates--
+
 			src.UpdateOverlays(image(base_grid), "reactor_grid")
 			_comp_grid_overlay_update = FALSE
 
