@@ -1726,6 +1726,18 @@
 /obj/cable,
 /turf/simulated/floor/carpet/purple/fancy/edge/sw,
 /area/station/crew_quarters/hor)
+"agW" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/central)
 "agX" = (
 /obj/landmark/artifact,
 /obj/window/reinforced{
@@ -26556,7 +26568,7 @@
 	dir = 6
 	},
 /obj/cable{
-	icon_state = "1-6"
+	icon_state = "6-9"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/engine/singcore{
@@ -30600,17 +30612,6 @@
 	dir = 1
 	},
 /area/station/medical/research)
-"hGw" = (
-/obj/cable{
-	icon_state = "6-8"
-	},
-/turf/simulated/wall{
-	desc = "Upon closer inspection, you see that this is a cleverly painted wall.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "grass";
-	name = "tall grass"
-	},
-/area/station/garden/owlery)
 "hGK" = (
 /obj/machinery/plantpot{
 	anchored = 1
@@ -32058,6 +32059,11 @@
 	c_tag = "Engine Control Room";
 	dir = 4
 	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/engine/singcore{
 	do_not_irradiate = 1
@@ -33195,15 +33201,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"jxK" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/central)
 "jyc" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/popcorn{
@@ -35585,6 +35582,9 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/engine/singcore{
 	do_not_irradiate = 1
@@ -37349,6 +37349,14 @@
 /area/station/engine/singcore{
 	do_not_irradiate = 1
 	})
+"mGb" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/garden/owlery)
 "mGg" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -37739,6 +37747,16 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"mSc" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/singcore{
+	do_not_irradiate = 1
+	})
 "mSg" = (
 /obj/machinery/chem_master{
 	dir = 1
@@ -38569,12 +38587,9 @@
 "nwB" = (
 /obj/lattice,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "5-6"
+	d1 = 2;
+	d2 = 4;
+	icon_state = "1-6"
 	},
 /turf/space,
 /area/station/engine/singcore{
@@ -39066,22 +39081,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"nPC" = (
-/obj/grille/catwalk{
-	dir = 1
-	},
-/obj/cable/orange{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "9-10"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 1
-	},
-/area/station/engine/singcore{
-	do_not_irradiate = 1
-	})
 "nPQ" = (
 /obj/cable{
 	d1 = 4;
@@ -40480,6 +40479,14 @@
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
+"oLY" = (
+/obj/cable{
+	icon_state = "1-6"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/singcore{
+	do_not_irradiate = 1
+	})
 "oMU" = (
 /obj/lattice{
 	dir = 9;
@@ -46580,6 +46587,7 @@
 /obj/cable/orange{
 	icon_state = "0-4"
 	},
+/obj/item/paper/donut2smesinstructions,
 /turf/simulated/floor/yellow/side{
 	dir = 2
 	},
@@ -46934,17 +46942,6 @@
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor,
 /area/station/maintenance/west)
-"tcY" = (
-/obj/cable{
-	icon_state = "4-9"
-	},
-/turf/simulated/wall{
-	desc = "Upon closer inspection, you see that this is a cleverly painted wall.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "grass";
-	name = "tall grass"
-	},
-/area/station/garden/owlery)
 "tdg" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -48249,20 +48246,6 @@
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/AIbasecore1{
 	name = "Upload Station"
-	})
-"uaW" = (
-/obj/lattice,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "6-8"
-	},
-/turf/space,
-/area/station/engine/singcore{
-	do_not_irradiate = 1
 	})
 "ubD" = (
 /obj/machinery/door/airlock/pyro/glass/med{
@@ -51413,9 +51396,9 @@
 	dir = 4
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/engine/singcore{
@@ -53919,11 +53902,6 @@
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/fitness)
 "yew" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/simulated/wall/false_wall,
 /area/station/garden/owlery)
 "yeB" = (
@@ -75168,9 +75146,9 @@ urT
 elW
 elW
 elW
+ssc
+agW
 elW
-urT
-jxK
 elW
 elW
 elW
@@ -75471,8 +75449,8 @@ jvy
 azU
 azU
 tjQ
-azU
 soN
+azU
 aFq
 aFq
 azU
@@ -75773,7 +75751,7 @@ aCy
 aCy
 vuF
 aCy
-hou
+mGb
 yew
 hou
 hou
@@ -76075,8 +76053,8 @@ aCy
 azU
 azU
 xPt
-hou
-nPQ
+mGb
+nzf
 nzf
 nzf
 iUT
@@ -76377,8 +76355,8 @@ aBQ
 azU
 azU
 azU
-hou
-nPQ
+mGb
+nzf
 qWA
 qWA
 qWA
@@ -76679,8 +76657,8 @@ aBQ
 azU
 azU
 azU
-hou
-nPQ
+mGb
+nzf
 qWA
 fTr
 dtP
@@ -76981,8 +76959,8 @@ aBQ
 aBQ
 aBQ
 aBQ
-fng
-nPQ
+rLF
+nzf
 qWA
 qWA
 szc
@@ -77283,7 +77261,7 @@ aaa
 aaa
 aaa
 aaa
-fng
+rLF
 nPQ
 qWA
 fTr
@@ -77585,8 +77563,8 @@ aaa
 aaa
 aaa
 aaa
-fng
-hGw
+rLF
+nzf
 nzf
 qWA
 qWA
@@ -77887,9 +77865,9 @@ aaa
 aaa
 aaa
 aaa
-fng
+rLF
 nzf
-tcY
+nzf
 nzf
 nzf
 nzf
@@ -78189,9 +78167,9 @@ aaa
 aaa
 aaa
 aaa
-fng
-fng
 rLF
+fng
+fng
 hou
 hou
 hou
@@ -78491,9 +78469,9 @@ ajz
 ajz
 ajz
 ajz
-aBQ
-aCy
 iBm
+aCy
+aBQ
 acK
 aCy
 azU
@@ -78793,9 +78771,9 @@ aaa
 aaa
 aaa
 aaa
-aBQ
-aCy
 iBm
+aCy
+aBQ
 aaA
 aCy
 azU
@@ -79095,9 +79073,9 @@ aaa
 aaa
 aaa
 aaa
-aBQ
-aCy
 iBm
+aCy
+aBQ
 aaA
 aCy
 azU
@@ -79391,15 +79369,15 @@ aRs
 aRs
 fUw
 ajz
-aai
+acK
 ajz
 ajz
 ajz
 ajz
 ajz
-aBQ
-aCy
 iBm
+aCy
+aBQ
 aaA
 aCy
 aCy
@@ -79699,9 +79677,9 @@ aaa
 aaa
 aaa
 aaa
-aBQ
-eiE
 iBm
+eiE
+aBQ
 rRU
 ajz
 ajz
@@ -80001,9 +79979,9 @@ aaa
 aaa
 aaa
 aaa
-eSE
-uNN
 jvo
+uNN
+eSE
 aaa
 aaa
 aaa
@@ -80303,9 +80281,9 @@ aaa
 aaa
 aaa
 aaa
-eSE
-uNN
 jvo
+uNN
+eSE
 aaa
 aaa
 aaa
@@ -80605,9 +80583,9 @@ aaa
 aaa
 aaa
 aaa
-eSE
-uNN
 jvo
+uNN
+eSE
 aaa
 aaa
 aaa
@@ -80907,9 +80885,9 @@ aaa
 aaa
 jDF
 jDF
-jDF
-jDF
 eFP
+jDF
+jDF
 jDF
 jDF
 aaa
@@ -81212,8 +81190,8 @@ pwx
 lml
 iLL
 woN
-pwx
-pwx
+mSc
+oLY
 mWh
 aaa
 aaa
@@ -81513,7 +81491,7 @@ iHX
 qZZ
 iHX
 iHX
-uaW
+iHX
 qZZ
 nwB
 eEz
@@ -81816,7 +81794,7 @@ amx
 amx
 pdW
 amx
-nPC
+amx
 amx
 inh
 blj
