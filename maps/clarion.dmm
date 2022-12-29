@@ -6921,7 +6921,10 @@
 	name = "Chaplain's Office"
 	})
 "asZ" = (
-/obj/landmark/magnet_center,
+/obj/landmark/magnet_center{
+	height = 13;
+	width = 13
+	},
 /turf/space,
 /area/mining/magnet)
 "atc" = (
@@ -14744,6 +14747,7 @@
 /obj/grille/catwalk/cross{
 	dir = 10
 	},
+/obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
 	dir = 1;
@@ -14762,7 +14766,11 @@
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning sign. I guess this area is dangerous.";
+	icon_state = "magwarning2";
+	name = "ACTIVE MAGNET AREA"
+	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
@@ -25260,6 +25268,10 @@
 	},
 /obj/storage/secure/closet/engineering/mining,
 /obj/item/device/radio/intercom/cargo,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
@@ -25374,10 +25386,6 @@
 /turf/space,
 /area/space)
 "bHa" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -26770,15 +26778,16 @@
 /obj/grille/catwalk/cross{
 	dir = 9
 	},
+/obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 4;
+	dir = 1;
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 1;
+	dir = 4;
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
@@ -26788,8 +26797,11 @@
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/obj/landmark/magnet_shield,
-/turf/space,
+/obj/securearea{
+	desc = "A warning sign. I guess this area is dangerous.";
+	icon_state = "magwarning2";
+	name = "ACTIVE MAGNET AREA"
+	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -26798,6 +26810,7 @@
 /obj/grille/catwalk/cross{
 	dir = 5
 	},
+/obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
 	icon_state = "magwarning";
@@ -26815,34 +26828,28 @@
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/obj/landmark/magnet_shield,
-/turf/space,
+/obj/securearea{
+	desc = "A warning sign. I guess this area is dangerous.";
+	icon_state = "magwarning2";
+	name = "ACTIVE MAGNET AREA"
+	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
 /area/mining/magnet)
 "bNG" = (
 /obj/grille/catwalk,
+/obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
 	dir = 1;
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/obj/landmark/magnet_shield,
-/turf/space,
-/turf/simulated/floor/airless/plating/catwalk,
-/area/mining/magnet)
-"bNH" = (
-/obj/grille/catwalk,
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
 	},
-/obj/landmark/magnet_shield,
-/turf/space,
-/turf/simulated/floor/airless/plating/catwalk,
 /area/mining/magnet)
 "bOM" = (
 /obj/disposalpipe/segment{
@@ -30305,6 +30312,22 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/quartermaster/storage)
+"faG" = (
+/obj/grille/catwalk{
+	dir = 5
+	},
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 1;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
+/area/mining/magnet)
 "faH" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail{
@@ -32561,13 +32584,15 @@
 /area/station/storage/tech)
 "gZm" = (
 /obj/grille/catwalk,
+/obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/obj/landmark/magnet_shield,
-/turf/simulated/floor/airless/plating/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
 /area/mining/magnet)
 "gZw" = (
 /obj/disposalpipe/segment/mail{
@@ -40260,14 +40285,16 @@
 /area/station/hallway/secondary/central)
 "nMw" = (
 /obj/grille/catwalk,
+/obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
 	dir = 1;
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/obj/landmark/magnet_shield,
-/turf/simulated/floor/airless/plating/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
 /area/mining/magnet)
 "nMG" = (
 /obj/cable{
@@ -41700,13 +41727,13 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
+/obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
 	dir = 4;
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/obj/landmark/magnet_shield,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -43514,10 +43541,6 @@
 /obj/machinery/atmospherics/pipe/tank/air_repressurization/east,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/substation/west)
-"qQs" = (
-/turf/space,
-/turf/space,
-/area/mining/magnet)
 "qRf" = (
 /obj/cable{
 	d1 = 4;
@@ -45992,6 +46015,7 @@
 /obj/grille/catwalk/cross{
 	dir = 6
 	},
+/obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
 	icon_state = "magwarning";
@@ -46009,7 +46033,11 @@
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning sign. I guess this area is dangerous.";
+	icon_state = "magwarning2";
+	name = "ACTIVE MAGNET AREA"
+	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
@@ -50639,13 +50667,13 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
+/obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
 	dir = 8;
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/obj/landmark/magnet_shield,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -51030,21 +51058,6 @@
 	icon_state = "fgreen1"
 	},
 /area/station/engine/engineering/ce/private)
-"xGE" = (
-/obj/grille/catwalk{
-	dir = 6
-	},
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 4;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/landmark/magnet_shield,
-/turf/simulated/floor/airless/plating/catwalk{
-	icon_state = "catwalk_cross"
-	},
-/area/mining/magnet)
 "xGR" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -83333,18 +83346,18 @@ bCl
 mJN
 cZz
 bNC
+nMw
+nMw
+nMw
+nMw
 bNG
+faG
+faG
 bNG
-bNG
-bNG
-bNG
-bNG
-bNG
-bNG
-bNG
-bNG
-bNG
-bNG
+nMw
+nMw
+nMw
+nMw
 nMw
 aSn
 aay
@@ -83601,7 +83614,7 @@ bJs
 bJs
 bJs
 bJs
-qQs
+bJs
 bJs
 xvM
 aay
@@ -83858,7 +83871,7 @@ bJs
 bJs
 bJs
 bJs
-qQs
+bJs
 bJs
 xvM
 aay
@@ -84115,7 +84128,7 @@ bJs
 bJs
 bJs
 bJs
-qQs
+bJs
 bJs
 xvM
 aay
@@ -84372,7 +84385,7 @@ bJs
 bJs
 bJs
 bJs
-qQs
+bJs
 bJs
 xvM
 aay
@@ -84617,7 +84630,7 @@ wJX
 wJX
 sIB
 wJX
-xGE
+pjz
 bJs
 bJs
 bJs
@@ -84629,7 +84642,7 @@ bJs
 bJs
 bJs
 bJs
-qQs
+bJs
 bJs
 xvM
 aay
@@ -84886,7 +84899,7 @@ bJs
 bJs
 bJs
 bJs
-qQs
+bJs
 bJs
 xvM
 aay
@@ -85143,7 +85156,7 @@ bJs
 bJs
 bJs
 bJs
-qQs
+bJs
 bJs
 xvM
 aay
@@ -85400,7 +85413,7 @@ bJs
 bJs
 bJs
 bJs
-qQs
+bJs
 bJs
 xvM
 aay
@@ -85645,7 +85658,7 @@ wJX
 wJX
 cWk
 wJX
-xGE
+pjz
 bJs
 bJs
 bJs
@@ -85657,7 +85670,7 @@ bJs
 bJs
 bJs
 bJs
-qQs
+bJs
 bJs
 xvM
 aay
@@ -85914,7 +85927,7 @@ bJs
 bJs
 bJs
 bJs
-qQs
+bJs
 bJs
 xvM
 aay
@@ -86171,7 +86184,7 @@ bJs
 bJs
 bJs
 bJs
-qQs
+bJs
 bJs
 xvM
 aay
@@ -86428,7 +86441,7 @@ bJs
 bJs
 bJs
 bJs
-qQs
+bJs
 bJs
 xvM
 aay
@@ -86685,7 +86698,7 @@ bJs
 bJs
 bJs
 bJs
-qQs
+bJs
 bJs
 xvM
 aay
@@ -86931,18 +86944,18 @@ agJ
 xEW
 mJN
 bNF
-bNH
-bNH
-bNH
-bNH
-bNH
-bNH
-bNH
-bNH
-bNH
-bNH
-bNH
-bNH
+gZm
+gZm
+gZm
+gZm
+gZm
+gZm
+gZm
+gZm
+gZm
+gZm
+gZm
+gZm
 gZm
 tiD
 aay
