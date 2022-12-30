@@ -14,7 +14,7 @@
 		src.event_effect(source, duration, color)
 		return
 
-	event_effect(var/source, duration = null, color = null)
+	event_effect(var/source, duration = null, list/color = null)
 		..()
 		if(!islist(color))
 			color = list()
