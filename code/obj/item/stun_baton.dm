@@ -46,7 +46,7 @@ TYPEINFO(/obj/item/baton)
 	var/can_swap_cell = 1
 	var/rechargable = 1
 	var/beepsky_held_this = 0 // Did a certain validhunter hold this?
-	/// Is it currently rotated so that youre grabbing it by the head?
+	/// Is it currently rotated so that you're grabbing it by the head?
 	var/flipped = FALSE
 
 	var/item_special_path = /datum/item_special/spark/baton
