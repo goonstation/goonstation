@@ -26,6 +26,7 @@
 	var/powered = FALSE
 	// flockdrones can pass through this
 	passthrough = TRUE
+	accepts_sapper_power = TRUE
 
 	var/making_projectiles = FALSE
 	var/fluid_gen_cost = 30 //generating gnesis consumes compute
@@ -122,6 +123,17 @@
 							muzzle_flash_any(src, get_angle(src, src.target), "muzzle_flash")
 							sleep(src.current_projectile.shot_delay)
 					shoot_projectile_ST_pixel_spread(src, current_projectile, target, 0, 0 , spread)
+
+	sapper_power()
+		if (!src.powered || !..())
+			return FALSE
+		src.accepts_sapper_power = FALSE
+		src.fluid_gen_amt *= 4
+		SPAWN(10 SECONDS)
+			if (!QDELETED(src))
+				src.accepts_sapper_power = TRUE
+				src.fluid_gen_amt = initial(src.fluid_gen_amt)
+		return TRUE
 
 	proc/seek_target()
 		var/list/target_list = list()

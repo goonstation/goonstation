@@ -17190,14 +17190,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
-"bev" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/disposalpipe/segment/mail/bent/south,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "bew" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/camera{
@@ -19580,11 +19572,6 @@
 /obj/landmark/start{
 	name = "Bartender"
 	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
-"bnf" = (
-/obj/machinery/light/small,
-/obj/storage/closet/wardrobe/black/formalwear,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "bni" = (
@@ -38608,6 +38595,13 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/radio/news_office)
+"dTY" = (
+/obj/table/reinforced/auto,
+/obj/item/device/radio/intercom/catering{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "dUg" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/qm_horizontal,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -38619,17 +38613,6 @@
 	icon_state = "engine_caution_south"
 	},
 /area/station/quartermaster/cargobay)
-"dUm" = (
-/obj/table/reinforced/auto,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/suit/apron,
-/obj/item/clothing/head/souschefhat,
-/obj/item/device/radio/intercom/catering{
-	dir = 4
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "dUp" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -43622,16 +43605,6 @@
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
 	})
-"iaN" = (
-/obj/table/auto,
-/obj/item/clothing/gloves/latex,
-/obj/item/kitchen/utensil/knife,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10
-	},
-/obj/disposalpipe/segment/food,
-/turf/simulated/floor/specialroom/freezer,
-/area/station/crew_quarters/catering)
 "ibx" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -45251,23 +45224,6 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
-"jsl" = (
-/obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/table/auto,
-/obj/item/spraybottle/cleaner{
-	pixel_x = -5;
-	pixel_y = 7
-	},
-/obj/item/sponge{
-	pixel_x = 2
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "jsm" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/red/side{
@@ -46627,6 +46583,10 @@
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
+"kJN" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "kKG" = (
 /obj/machinery/shieldgenerator/meteorshield,
 /turf/simulated/floor/plating,
@@ -49901,6 +49861,16 @@
 /obj/mic_stand,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
+"ntQ" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/vending/jobclothing/catering,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "ntV" = (
 /obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4;
@@ -50341,6 +50311,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"nOF" = (
+/obj/tree,
+/turf/simulated/floor/grass,
+/area/station/garden/aviary)
 "nOV" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle,
@@ -50974,6 +50948,22 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"opr" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/disposalpipe/segment/mail/bent/south,
+/obj/table/auto,
+/obj/item/spraybottle/cleaner{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/sponge{
+	pixel_x = 2
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "opG" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hallway/secondary/exit)
@@ -53244,10 +53234,6 @@
 /obj/access_spawn/maint,
 /turf/simulated/floor/greenblack,
 /area/station/garden/aviary)
-"qpS" = (
-/obj/tree,
-/turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
 "qqj" = (
 /obj/shrub,
 /obj/machinery/light/small{
@@ -57006,6 +56992,10 @@
 	},
 /turf/unsimulated/floor/circuit/vintage,
 /area/station/crewquarters/cryotron)
+"tCG" = (
+/obj/tree,
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
 "tCI" = (
 /obj/table/auto,
 /obj/item/storage/box/glassbox{
@@ -61338,6 +61328,15 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
+"xnl" = (
+/obj/table/auto,
+/obj/item/kitchen/utensil/knife,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10
+	},
+/obj/disposalpipe/segment/food,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/catering)
 "xnq" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/transport,
@@ -61709,10 +61708,6 @@
 	dir = 4
 	},
 /area/station/routing/security)
-"xAA" = (
-/obj/tree,
-/turf/simulated/floor/grass,
-/area/station/garden/aviary)
 "xBa" = (
 /obj/kitchenspike,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -117902,7 +117897,7 @@ gzv
 cJa
 bck
 nbR
-jsl
+ntQ
 pvj
 bgH
 tmx
@@ -119105,12 +119100,12 @@ aZJ
 aVA
 xXJ
 aXS
-iaN
+xnl
 bVU
 cdE
 cnS
 nbR
-bev
+opr
 jry
 bgJ
 bgJ
@@ -120019,7 +120014,7 @@ bdu
 qUu
 ncP
 bjd
-dUm
+dTY
 uzb
 xpA
 iod
@@ -120627,7 +120622,7 @@ biN
 uzb
 oGM
 fbZ
-bne
+kJN
 uzb
 seW
 bqU
@@ -120929,7 +120924,7 @@ fMJ
 uzb
 ykM
 fbZ
-bnf
+bne
 uzb
 qVA
 xfU
@@ -130000,7 +129995,7 @@ wcz
 hAX
 bsw
 bsw
-xAA
+nOF
 bsw
 tuT
 bre
@@ -130296,7 +130291,7 @@ bnu
 aZa
 bre
 bsw
-xAA
+nOF
 hFc
 kRM
 rsY
@@ -130908,7 +130903,7 @@ sPt
 bsw
 bsw
 bsw
-xAA
+nOF
 bre
 bnq
 bBQ
@@ -131506,7 +131501,7 @@ bre
 bsw
 bsw
 hAX
-xAA
+nOF
 bsw
 bsw
 bsw
@@ -131811,7 +131806,7 @@ whs
 bsw
 bsw
 bsw
-xAA
+nOF
 bsw
 bsw
 xUS
@@ -138310,7 +138305,7 @@ abi
 abx
 abB
 abB
-qpS
+tCG
 abi
 abi
 abi
@@ -139511,7 +139506,7 @@ abi
 abi
 abx
 abB
-qpS
+tCG
 abB
 abB
 abP
@@ -141022,7 +141017,7 @@ abi
 abi
 abB
 abB
-qpS
+tCG
 abx
 abi
 abi

@@ -779,6 +779,21 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	spy
 		purchase_flags = UPLINK_SPY
 
+///Datum used to combine the bounty being claimed with the item being delivered
+/datum/bounty_claim
+	var/datum/bounty_item/bounty = null
+	var/atom/delivery = null
+
+	New(datum/bounty_item/bounty, atom/delivery)
+		..()
+		src.bounty = bounty
+		src.delivery = delivery
+
+	disposing()
+		src.bounty = null
+		src.delivery = null
+		..()
+
 /obj/item/uplink/integrated/pda/spy
 	uses = 5 //amount of times that we can deliver items
 			//When uses hits 0, the spawn will be an ID tracker
@@ -804,6 +819,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 	setup(var/datum/mind/ownermind, var/obj/item/device/master)
 		..()
+		RegisterSignal(master, COMSIG_ITEM_ATTACKBY_PRE, .proc/master_pre_attackby)
 		if (ticker?.mode)
 			if (istype(ticker.mode, /datum/game_mode/spy_theft))
 				src.game = ticker.mode
@@ -820,26 +836,33 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		return
 
+	///We have hit something with our uplink master device
+	proc/master_pre_attackby(obj/item/device/master, atom/target, mob/user)
+		var/datum/bounty_item/bounty = src.bounty_is_claimable(target, user)
+		if (bounty)
+			actions.start(new/datum/action/bar/private/spy_steal(target, src), user)
+			return TRUE
+
 	proc/req_bounties()
 		if (loops <= 0 || !loops_allowed)
 			.= 1
 		else
 			.= loops+1 - bounty_tally
 
-	proc/bounty_is_claimable(var/A)
+	///Returns a /datum/bounty_claim containing the bounty that can be claimed and the item that will be delivered
+	proc/bounty_is_claimable(atom/A, mob/user)
 		.= 0
 		if (ismob(A))
 			var/mob/M = A
 			for (var/obj/possible in M.contents)
-				.= bounty_object_is_claimable(possible)
+				.= bounty_object_is_claimable(possible, user)
 				if(.)
 					break
 		else if (isobj(A))
-			.= bounty_object_is_claimable(A)
+			.= bounty_object_is_claimable(A, user)
 
-
-	proc/bounty_object_is_claimable(var/obj/delivery)
-		.= 0
+	proc/bounty_object_is_claimable(obj/delivery, mob/user)
+		. = FALSE
 		for(var/datum/bounty_item/B in game.active_bounties)
 			if (B.claimed)
 				continue
@@ -848,71 +871,67 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			var/everythingelse_succ = ( (B.path && istype(delivery,B.path)) || B.item && delivery == B.item || (B.photo_containing && istype(delivery,/obj/item/photo) && findtext(delivery.name, B.photo_containing)) )
 			if (((B.bounty_type == BOUNTY_TYPE_ORGAN) && organ_succ) || ((B.bounty_type != BOUNTY_TYPE_ORGAN) && everythingelse_succ))
 				if (B.delivery_area && B.delivery_area != get_area(src.hostpda))
-					return 0
-				return delivery
+					user.show_text("You must stand in the designated delivery zone to send this item!", "red")
+					if (istype(B.delivery_area, /area/diner))
+						user.show_text("It can be found at the nearby space diner!", "red")
+					var/turf/end = B.delivery_area.spyturf
+					user.gpsToTurf(end, doText = 0) // spy thieves probably need to break in anyway, so screw access check
+					return FALSE
+				for (var/obj/item/device/pda2/P in delivery.contents) //make sure we don't delete the PDA
+					if (P.uplink == src)
+						return FALSE
+				return new /datum/bounty_claim(B, delivery)
 
-	proc/try_deliver(var/obj/delivery, var/mob/user)
+	proc/try_deliver(obj/delivery, mob/user)
 		if (uses < 0)
 			src.ui_update()
 			return
 
 		if (user.mind && user.mind.special_role != ROLE_SPY_THIEF)
 			user.show_text("You cannot claim a bounty! The PDA doesn't recognize you!", "red")
-			return 0
+			return FALSE
 
-		for(var/datum/bounty_item/B in game.active_bounties)
-			if (B.claimed)
-				continue
-			if ( (B.path && istype(delivery,B.path)) || B.item && delivery == B.item || (B.photo_containing && istype(delivery,/obj/item/photo) && findtext(delivery.name, B.photo_containing)) )
-				if (B.delivery_area && B.delivery_area != get_area(src.hostpda))
-					user.show_text("You must stand in the designated delivery zone to send this item!", "red")
-					if (istype(B.delivery_area, /area/diner))
-						user.show_text("It can be found at the nearby space diner!", "red")
-					var/turf/end = B.delivery_area.spyturf
-					user.gpsToTurf(end, doText = 0) // spy thieves probably need to break in anyway, so screw access check
-					return 0
-				for (var/obj/item/device/pda2/P in delivery.contents) //make sure we don't delete the PDA
-					if (P.uplink == src)
-						return 0
-				user.removeGpsPath(doText = 0)
-				B.claimed = 1
-				for (var/mob/M in delivery.contents) //make sure we dont delete mobs inside the stolen item
-					M.set_loc(get_turf(delivery))
-				if (istype(delivery.loc, /mob))
-					var/mob/M = delivery.loc
-					if (istype(delivery,/obj/item/parts) && ishuman(M))
-						var/mob/living/carbon/human/H = M
-						var/obj/item/parts/HP = delivery
-					//	var/limb_name = HP.holder.real_name + "'s " + HP.name
-						if(HP == B.item && HP.holder == M) //Is this the right limb and is it attached?
-							HP.remove()
-							take_bleeding_damage(H, null, 10)
-							H.changeStatus("weakened", 3 SECONDS)
-							playsound(H.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
-							H.emote("scream")
-							logTheThing(LOG_STATION, user, "spy thief claimed [constructTarget(H)]'s [HP] at [log_loc(user)]")
-						else if(HP != B.item)
-							user.show_text("That isn't the right limb!", "red")
-							return 0
-					else
-						M.drop_from_slot(delivery,get_turf(M))
-				if (!istype(delivery,/obj/item/parts))
-					logTheThing(LOG_DEBUG, user, "spy thief claimed delivery of: [delivery] at [log_loc(user)]")
-				qdel(delivery)
-				if (user.mind && user.mind.special_role == ROLE_SPY_THIEF)
-					user.mind.spy_stolen_items += B.name
+		var/datum/bounty_claim/claim = src.bounty_is_claimable(delivery)
+		if (!claim)
+			user.show_text("You cannot claim [delivery] for bounty!", "red")
+			src.ui_update()
+			return FALSE
+		var/datum/bounty_item/bounty = claim.bounty
+		delivery = claim.delivery
+		user.removeGpsPath(doText = FALSE)
+		bounty.claimed = TRUE
+		if (istype(delivery.loc, /mob))
+			var/mob/M = delivery.loc
+			if (istype(delivery,/obj/item/parts) && ishuman(M))
+				var/mob/living/carbon/human/H = M
+				var/obj/item/parts/HP = delivery
+				if(HP == bounty.item && HP.holder == M) //Is this the right limb and is it attached?
+					HP.remove()
+					take_bleeding_damage(H, null, 10)
+					H.changeStatus("weakened", 3 SECONDS)
+					playsound(H.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
+					H.emote("scream")
+					logTheThing(LOG_STATION, user, "spy thief claimed [constructTarget(H)]'s [HP] at [log_loc(user)]")
+				else if(HP != bounty.item)
+					user.show_text("That isn't the right limb!", "red")
+					return FALSE
+			else
+				M.drop_from_slot(delivery,get_turf(M))
+		for (var/mob/M in delivery.contents) //make sure we dont delete mobs inside the stolen item
+			M.set_loc(get_turf(delivery))
+		if (!istype(delivery,/obj/item/parts))
+			logTheThing(LOG_DEBUG, user, "spy thief claimed delivery of: [delivery] at [log_loc(user)]")
+		qdel(delivery)
+		if (user.mind && user.mind.special_role == ROLE_SPY_THIEF)
+			user.mind.spy_stolen_items += bounty.name
 
-				if (req_bounties() > 1)
-					bounty_tally += 1
-					user.show_text("Your PDA accepts the bounty. Deliver [req_bounties()] more bounties to earn a reward.", "red")
-				else
-					src.spawn_reward(B, user)
-				src.ui_update()
-				return 1
-
-		user.show_text("You cannot claim [delivery] for bounty!", "red")
+		if (req_bounties() > 1)
+			bounty_tally += 1
+			user.show_text("Your PDA accepts the bounty. Deliver [req_bounties()] more bounties to earn a reward.", "red")
+		else
+			src.spawn_reward(bounty, user)
 		src.ui_update()
-		return 0
+		return TRUE
 
 	proc/loop()
 		if (loops_allowed && loops < max_loops)
