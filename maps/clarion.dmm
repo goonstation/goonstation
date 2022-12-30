@@ -22979,7 +22979,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/orangeblack/side/white{
-	dir = 8
+	dir = 10
 	},
 /area/station/engine/engineering)
 "buA" = (
@@ -41918,9 +41918,6 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "pzI" = (
-/obj/stool/chair/office/yellow{
-	dir = 8
-	},
 /obj/landmark/start{
 	name = "Engineer"
 	},
@@ -41980,9 +41977,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/orangeblack/side/white{
-	dir = 8
-	},
+/turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "pGo" = (
 /obj/wingrille_spawn/auto,
@@ -46424,7 +46419,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/storage/closet/fire,
+/obj/stool/chair/office/yellow,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "tIM" = (
@@ -50028,12 +50023,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "wVl" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 4;
-	dir = 0;
-	icon_state = "0-4"
-	},
+/obj/storage/closet/fire,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "wVn" = (
