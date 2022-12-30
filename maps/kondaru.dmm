@@ -1553,18 +1553,6 @@
 /obj/landmark/artifact,
 /turf/simulated/floor/plating,
 /area/station/storage/northeast)
-"aet" = (
-/obj/machinery/manufacturer/general{
-	desc = "It's covered in more gunk than a truck stop ashtray. Is this thing even safe?";
-	free_resource_amt = 0;
-	free_resources = null;
-	malfunction = 1;
-	name = "grody manufacturer";
-	wires = 11
-	},
-/obj/decal/cleanable/cobweb2,
-/turf/simulated/floor/plating,
-/area/station/storage/northeast)
 "aeu" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -17190,6 +17178,22 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
+"bev" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/disposalpipe/segment/mail/bent/south,
+/obj/table/auto,
+/obj/item/spraybottle/cleaner{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/sponge{
+	pixel_x = 2
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "bew" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/camera{
@@ -38595,13 +38599,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/radio/news_office)
-"dTY" = (
-/obj/table/reinforced/auto,
-/obj/item/device/radio/intercom/catering{
-	dir = 4
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "dUg" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/qm_horizontal,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -38613,6 +38610,13 @@
 	icon_state = "engine_caution_south"
 	},
 /area/station/quartermaster/cargobay)
+"dUm" = (
+/obj/table/reinforced/auto,
+/obj/item/device/radio/intercom/catering{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "dUp" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -41812,6 +41816,10 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
+"gsj" = (
+/obj/tree,
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
 "gsP" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -43605,6 +43613,15 @@
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
 	})
+"iaN" = (
+/obj/table/auto,
+/obj/item/kitchen/utensil/knife,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10
+	},
+/obj/disposalpipe/segment/food,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/catering)
 "ibx" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -45202,6 +45219,11 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
+"jrA" = (
+/obj/machinery/manufacturer/general/grody,
+/obj/decal/cleanable/cobweb2,
+/turf/simulated/floor/plating,
+/area/station/storage/northeast)
 "jrO" = (
 /obj/table/auto,
 /obj/machinery/computer3/generic/personal,
@@ -45224,6 +45246,16 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
+"jsl" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/vending/jobclothing/catering,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "jsm" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/red/side{
@@ -46250,6 +46282,10 @@
 	dir = 1
 	},
 /area/station/engine/engineering)
+"kvh" = (
+/obj/tree,
+/turf/simulated/floor/grass,
+/area/station/garden/aviary)
 "kvZ" = (
 /obj/cable{
 	d1 = 1;
@@ -46583,10 +46619,6 @@
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
-"kJN" = (
-/obj/machinery/light/small,
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
 "kKG" = (
 /obj/machinery/shieldgenerator/meteorshield,
 /turf/simulated/floor/plating,
@@ -49861,16 +49893,6 @@
 /obj/mic_stand,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
-"ntQ" = (
-/obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/vending/jobclothing/catering,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "ntV" = (
 /obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4;
@@ -50311,10 +50333,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"nOF" = (
-/obj/tree,
-/turf/simulated/floor/grass,
-/area/station/garden/aviary)
 "nOV" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle,
@@ -50948,22 +50966,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"opr" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/disposalpipe/segment/mail/bent/south,
-/obj/table/auto,
-/obj/item/spraybottle/cleaner{
-	pixel_x = -5;
-	pixel_y = 7
-	},
-/obj/item/sponge{
-	pixel_x = 2
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "opG" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hallway/secondary/exit)
@@ -56992,10 +56994,6 @@
 	},
 /turf/unsimulated/floor/circuit/vintage,
 /area/station/crewquarters/cryotron)
-"tCG" = (
-/obj/tree,
-/turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
 "tCI" = (
 /obj/table/auto,
 /obj/item/storage/box/glassbox{
@@ -58951,6 +58949,10 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"vit" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "viJ" = (
 /obj/storage/crate,
 /obj/item/reagent_containers/food/snacks/ingredient/flour,
@@ -61328,15 +61330,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
-"xnl" = (
-/obj/table/auto,
-/obj/item/kitchen/utensil/knife,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10
-	},
-/obj/disposalpipe/segment/food,
-/turf/simulated/floor/specialroom/freezer,
-/area/station/crew_quarters/catering)
 "xnq" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/transport,
@@ -117897,7 +117890,7 @@ gzv
 cJa
 bck
 nbR
-ntQ
+jsl
 pvj
 bgH
 tmx
@@ -119100,12 +119093,12 @@ aZJ
 aVA
 xXJ
 aXS
-xnl
+iaN
 bVU
 cdE
 cnS
 nbR
-opr
+bev
 jry
 bgJ
 bgJ
@@ -120014,7 +120007,7 @@ bdu
 qUu
 ncP
 bjd
-dTY
+dUm
 uzb
 xpA
 iod
@@ -120622,7 +120615,7 @@ biN
 uzb
 oGM
 fbZ
-kJN
+vit
 uzb
 seW
 bqU
@@ -126301,7 +126294,7 @@ aaa
 aaa
 aaa
 aem
-aet
+jrA
 afU
 ahP
 adv
@@ -129995,7 +129988,7 @@ wcz
 hAX
 bsw
 bsw
-nOF
+kvh
 bsw
 tuT
 bre
@@ -130291,7 +130284,7 @@ bnu
 aZa
 bre
 bsw
-nOF
+kvh
 hFc
 kRM
 rsY
@@ -130903,7 +130896,7 @@ sPt
 bsw
 bsw
 bsw
-nOF
+kvh
 bre
 bnq
 bBQ
@@ -131501,7 +131494,7 @@ bre
 bsw
 bsw
 hAX
-nOF
+kvh
 bsw
 bsw
 bsw
@@ -131806,7 +131799,7 @@ whs
 bsw
 bsw
 bsw
-nOF
+kvh
 bsw
 bsw
 xUS
@@ -138305,7 +138298,7 @@ abi
 abx
 abB
 abB
-tCG
+gsj
 abi
 abi
 abi
@@ -139506,7 +139499,7 @@ abi
 abi
 abx
 abB
-tCG
+gsj
 abB
 abB
 abP
@@ -141017,7 +141010,7 @@ abi
 abi
 abB
 abB
-tCG
+gsj
 abx
 abi
 abi
