@@ -54,7 +54,7 @@ TYPEINFO(/obj/machinery/status_display)
 	var/obj/machinery/nuclearbomb/the_bomb = null
 
 	/// Proxy object for putting map text on top of overlays
-	var/obj/proxy = new
+	var/obj/proxy = null
 
 	var/image/crt_image = null
 
@@ -96,6 +96,10 @@ TYPEINFO(/obj/machinery/status_display)
 
 		if(!src.net_id)
 			src.net_id = generate_net_id(src)
+
+	disposing()
+		..()
+		src.proxy?.dispose()
 
 	// timed process
 	process()
