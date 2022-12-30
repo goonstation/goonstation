@@ -680,11 +680,8 @@ datum
 					spawncleanable = prob((volume/covered.len) * 10)
 
 
-				if(spawncleanable && !istype(T, /turf/space))
-					var/list/rad_level = list()
-					SEND_SIGNAL(T, COMSIG_ATOM_RADIOACTIVITY, rad_level)
-					if(max(rad_level) < 10)
-						T.AddComponent(/datum/component/radioactive, 10-max(rad_level), TRUE, FALSE, 0)
+				if(spawncleanable && !istype(T, /turf/space) && !(locate(/obj/decal/cleanable/greenglow) in T))
+					make_cleanable(/obj/decal/cleanable/greenglow,T)
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				if (prob(80)) P.HYPdamageplant("radiation",3)
