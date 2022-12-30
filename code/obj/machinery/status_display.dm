@@ -98,8 +98,10 @@ TYPEINFO(/obj/machinery/status_display)
 			src.net_id = generate_net_id(src)
 
 	disposing()
-		..()
-		src.proxy?.dispose()
+		qdel(src.proxy)
+		src.proxy = null
+		. = ..()
+		
 
 	// timed process
 	process()
