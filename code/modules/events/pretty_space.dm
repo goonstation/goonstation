@@ -3,25 +3,25 @@
 /datum/random_event/major/pretty_space
 	name = "Space Colors"
 	customization_available = 1
-	var/duration = null
-	var/list/color = null
 	required_elapsed_round_time = 0 MINUTES
 
 	admin_call(var/source)
 		if (..())
 			return
 
-		color = usr.client?.input_data(list(DATA_INPUT_JSON), "Enter color matrix", null, null)?.output
-		duration = usr.client?.input_data(list(DATA_INPUT_NUM), "Enter duration (in seconds)", null, null)?.output * 1 SECOND
-		src.event_effect(source)
+		var/color = usr.client?.input_data(list(DATA_INPUT_JSON), "Enter color matrix", null, null)?.output
+		var/duration = usr.client?.input_data(list(DATA_INPUT_NUM), "Enter duration (in seconds)", null, null)?.output * 1 SECOND
+		src.event_effect(source, duration, color)
 		return
 
-	event_effect(var/source)
+	event_effect(var/source, duration = null, color = null)
 		..()
-		if(!color)
+		if(!islist(color))
 			color = list()
 			for(var/i in 1 to 9)
 				color.Add(0.15 + rand())
+			for(var/i in 1 to 3)
+				color.Add(rand()/10)
 		if(!duration)
 			duration = 30 SECONDS + rand() * 3 MINUTES
 
