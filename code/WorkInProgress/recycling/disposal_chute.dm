@@ -710,8 +710,8 @@ TYPEINFO(/obj/machinery/disposal)
 	proc/checkStillValid()
 		if(isnull(user) || isnull(target) || isnull(chute))
 			interrupt(INTERRUPT_ALWAYS)
-			return false
-		return true
+			return FALSE
+		return TRUE
 
 #undef DISPOSAL_CHUTE_OFF
 #undef DISPOSAL_CHUTE_CHARGING

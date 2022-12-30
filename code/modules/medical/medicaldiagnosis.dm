@@ -45,7 +45,7 @@
 						if(!user.traitHolder.hasTrait("training_medical") && prob(15))
 							boutput(user, "<span class='alert'>You attempt to listen to [(user != H) ? "[H]'s" : "your"] lungs before realizing after a few attempts that you've been listening to [(user != H) ? "[H]'s" : "your"] [pick("liver", "kidneys", "spleen", "leg", "PDA", "eyes")], a shameful [user]</span>")
 						else
-							if(isalive(H) == false)
+							if(isalive(H) == FALSE)
 								boutput(user, "<span class='alert'>You hear nothing inside [(user != H) ? "[H]'s" : "your (Please report this on github asap)"] lungs.</span>")
 							else
 								if(H.organHolder && (!H.organHolder.left_lung || !H.organHolder.right_lung))

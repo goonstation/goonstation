@@ -322,7 +322,7 @@
 	ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
 	for(var/i = 1, i <= 9, i++)
 		if(i < split.len)
-			ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module",split[i],i,true,true)
+			ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module", split[i], i, TRUE, TRUE)
 	ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
 	logTheThing(LOG_ADMIN, usr, "has set the AI laws to [input]")
 	logTheThing(LOG_DIARY, usr, "has set the AI laws to [input]", "admin")
@@ -349,9 +349,9 @@
 
 	if (alert(src, "Are you sure you want to reset the AI's laws?", "Confirmation", "Yes", "No") == "Yes")
 		ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
-		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov1,1,true,true)
-		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov2,2,true,true)
-		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov3,3,true,true)
+		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov1, 1, TRUE, TRUE)
+		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov2, 2, TRUE, TRUE)
+		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov3, 3, TRUE, TRUE)
 		ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
 
 		logTheThing(LOG_ADMIN, usr, "reset the centralized AI laws.")

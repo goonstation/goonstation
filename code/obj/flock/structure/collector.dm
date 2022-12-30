@@ -95,7 +95,7 @@
 	for(var/d in cardinal)
 		distance = 0
 		floor = src.loc
-		while(true)
+		while(TRUE)
 			floor = get_step(floor, d)
 			if(!istype(floor)) break
 			if(floor.broken) break
@@ -106,5 +106,3 @@
 	for(var/turf/simulated/floor/feather/flocktile as anything in connectedto)
 		flocktile.connected = TRUE
 		flocktile.on()
-
-
