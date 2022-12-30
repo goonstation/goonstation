@@ -603,7 +603,7 @@
 			if (!stack_result)
 				continue
 			else
-				sleep(0.5)
+				sleep(0.5 DECI SECONDS)
 				added += stack_result
 				if (user.loc != staystill) break
 				if (src.amount >= max_stack)
