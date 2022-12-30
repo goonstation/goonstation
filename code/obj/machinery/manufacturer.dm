@@ -2271,14 +2271,18 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/bagpipe,
 		/datum/manufacture/whistle)
 
+#define MALFUNCTION_WIRE_CUT 15 & ~(1<<WIRE_MALF)
+
 /obj/machinery/manufacturer/general/grody
 	name = "grody manufacturer"
 	desc = "It's covered in more gunk than a truck stop ashtray. Is this thing even safe?"
 	supplemental_desc = "This one has seen better days. There are bits and pieces of the internal mechanisms poking out the side."
 	free_resource_amt = 0
 	free_resources = list()
-	malfunction = 1
-	wires = 11
+	malfunction = TRUE
+	wires = MALFUNCTION_WIRE_CUT
+
+#undef MALFUNCTION_WIRE_CUT
 
 /obj/machinery/manufacturer/robotics
 	name = "robotics fabricator"
