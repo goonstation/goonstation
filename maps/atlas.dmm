@@ -483,11 +483,6 @@
 	dir = 8;
 	icon_state = "wall3_trans"
 	},
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon_state = "wall3_trans"
-	},
-/turf/space,
 /turf/space,
 /area/space)
 "bj" = (
@@ -1546,12 +1541,10 @@
 	pixel_y = 21
 	},
 /obj/item/instrument/bikehorn/dramatic,
-/obj/item/clothing/head/souschefhat,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "eg" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/gloves/latex,
 /obj/item/spraybottle/cleaner,
 /obj/machinery/firealarm{
 	pixel_y = 25
@@ -1566,7 +1559,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/storage/closet/wardrobe/black/formalwear,
+/obj/machinery/vending/jobclothing/catering,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "ei" = (
@@ -9152,9 +9145,10 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "wh" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable,
-/turf/simulated/floor/plating/random,
+/turf/unsimulated/wall/setpieces/fakewindow{
+	dir = 6
+	},
 /area/listeningpost)
 "wi" = (
 /obj/item/device/radio/intercom/bridge,
@@ -12308,9 +12302,6 @@
 /obj/stool/chair/comfy/wheelchair{
 	dir = 8
 	},
-/obj/machinery/status_display{
-	pixel_x = 32
-	},
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -13327,6 +13318,9 @@
 /area/station/medical/robotics)
 "Gv" = (
 /obj/machinery/computer/chem_requester/medical,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -15763,14 +15757,6 @@
 "MP" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
-"MQ" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon_state = "wall3_trans"
-	},
-/turf/space,
-/turf/space,
-/area/space)
 "MR" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate,
 /turf/simulated/floor/red,
@@ -15780,7 +15766,6 @@
 	dir = 1;
 	icon_state = "wall3_trans"
 	},
-/turf/space,
 /turf/space,
 /area/space)
 "MT" = (
@@ -15874,11 +15859,12 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "Ng" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/plating/random,
+/turf/unsimulated/wall/setpieces/fakewindow{
+	dir = 6
+	},
 /area/listeningpost)
 "Nh" = (
 /obj/decal/fakeobjects{
@@ -16540,7 +16526,6 @@
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/turf/space,
 /area/space)
 "OG" = (
 /obj/stool/chair/red,
@@ -16682,7 +16667,6 @@
 	dir = 4;
 	icon_state = "wall3_trans"
 	},
-/turf/space,
 /turf/space,
 /area/space)
 "OX" = (
@@ -17055,7 +17039,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/device/radio/intercom/medical,
 /obj/stool/bench/blue/auto,
 /obj/noticeboard/persistent{
 	name = "Medbay persistent notice board";
@@ -19137,7 +19120,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "Vf" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -19145,7 +19127,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/plating/random,
+/turf/unsimulated/wall/setpieces/fakewindow{
+	dir = 6
+	},
 /area/listeningpost)
 "Vg" = (
 /obj/cable{
@@ -95027,7 +95011,7 @@ aa
 aa
 aa
 aa
-MQ
+bi
 Ne
 NH
 NR
@@ -96234,7 +96218,7 @@ aa
 aa
 aa
 aa
-MQ
+bi
 Ne
 Nw
 Ne
@@ -96836,7 +96820,7 @@ aa
 aa
 aa
 aa
-MQ
+bi
 MX
 Nf
 No
@@ -98951,7 +98935,7 @@ aa
 aa
 aa
 aa
-MQ
+bi
 MP
 MP
 NA
@@ -99252,7 +99236,7 @@ aa
 aa
 aa
 aa
-MQ
+bi
 MP
 Nh
 MP

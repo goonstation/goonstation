@@ -1987,7 +1987,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 		bullet_act(var/obj/projectile/P)
 			if (!P.goes_through_mobs)
-				var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
+				var/obj/projectile/Q = shoot_reflected_bounce(P, src)
 				P.die()
 
 				src.visible_message("<span class='alert'>[src] reflected [Q.name]!</span>")
