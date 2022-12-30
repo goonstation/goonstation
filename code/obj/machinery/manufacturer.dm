@@ -2211,12 +2211,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/bagpipe,
 		/datum/manufacture/whistle)
 
+
 /obj/machinery/manufacturer/general/grody
 	name = "grody manufacturer"
 	desc = "It's covered in more gunk than a truck stop ashtray. Is this thing even safe?"
-	supplemental_desc = null
+	supplemental_desc = "This one has seen better days. There are bits and pieces of the internal mechanisms poking out the side."
 	free_resource_amt = 0
-	free_resources = null
+	free_resources = list()
 
 	New()
 		. = ..()

@@ -142,15 +142,15 @@ export const NuclearReactor = (props, context) => {
               <Box>Radiation Level:</Box>
               <RoundGauge
                 minValue={0}
-                maxValue={200}
+                maxValue={100}
                 size={5}
                 value={reactorRads}
                 format={value => round(value, 1) + " clicks"}
                 alertAfter={50}
                 ranges={{
                   "good": [0, 10],
-                  "average": [10, 75],
-                  "bad": [75, 200],
+                  "average": [10, 50],
+                  "bad": [50, 100],
                 }} />
             </Flex.Item>
           </Flex>

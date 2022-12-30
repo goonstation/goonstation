@@ -67101,7 +67101,9 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "rnd" = (
-/obj/machinery/manufacturer/general/grody,
+/obj/machinery/manufacturer/general/grody{
+	free_resource_amt = 2;
+	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
