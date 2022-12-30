@@ -11,8 +11,8 @@
 		if (..())
 			return
 
-		color = usr.client?.input_data(list(DATA_INPUT_JSON), "Enter color matrix", null, null).output
-		duration = usr.client?.input_data(list(DATA_INPUT_NUM), "Enter duration (in seconds)", null, null).output * 1 SECOND
+		color = usr.client?.input_data(list(DATA_INPUT_JSON), "Enter color matrix", null, null)?.output
+		duration = usr.client?.input_data(list(DATA_INPUT_NUM), "Enter duration (in seconds)", null, null)?.output * 1 SECOND
 		src.event_effect(source)
 		return
 
