@@ -1,4 +1,9 @@
 
+(t)fri dec 30 22
+(u)Flappybat
+(p)12547
+(e)🗺💅⛔|A-Mapping, C-QoL, C-Removal
+(*)Removed the shield and shield generator console from Clarion.
 (t)thu dec 29 22
 (u)Amylizzle
 (p)12550
