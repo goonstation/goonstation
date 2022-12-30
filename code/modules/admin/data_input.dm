@@ -10,6 +10,7 @@
 /// @param custom_type_message 	If not null, set as the text for input type selection
 /// @return 			 		A data_input_result with the parsed input and the selected input type, or both null if we didn't get any data
 /client/proc/input_data(list/allowed_types, custom_title = null, custom_message = null, default = null, custom_type_title = null, custom_type_message = null, default_type = null)
+	RETURN_TYPE(/datum/data_input_result)
 	. = new /datum/data_input_result(null, null) //in case anything goes wrong, return this. Thus, to check for cancellation, check for a null output_type.
 
 	if (!src.holder)
