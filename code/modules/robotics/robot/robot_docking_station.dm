@@ -165,6 +165,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 		return FALSE
 	if (src.occupant)
 		boutput(user, "<span class='alert'>There's already someone in there.</span>")
+		return FALSE
 	var/mob/living/carbon/human/H = victim
 	logTheThing(LOG_COMBAT, user, "puts [constructTarget(H,"combat")] into a conversion chamber at [log_loc(src)]")
 	user.visible_message("<span class='notice>[user] stuffs [H] into \the [src].")
