@@ -69,7 +69,6 @@ TYPEINFO(/datum/component/radioactive)
 				src._turf_glow = image('icons/effects/effects.dmi', "greyglow")
 			src._turf_glow.color = color //we can do this because overlays take a copy of the image and do not preserve the link between them
 			PA.UpdateOverlays(src._turf_glow, "radiation_overlay_\ref[src]")
-			//PA.add_filter("radiation_overlay_\ref[src]", 2, layering_filter(icon=src._turf_glow, color=color, blend_mode=BLEND_ADD))
 		else
 			PA.add_filter("radiation_outline_\ref[src]", 2, outline_filter(size=1.3, color=color))
 
