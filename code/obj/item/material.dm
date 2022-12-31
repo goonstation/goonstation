@@ -17,6 +17,7 @@
 	var/wiggle = 6 // how much we want the sprite to be deviated fron center
 	max_stack = INFINITY
 	event_handler_flags = USE_FLUID_ENTER
+	///Does the raw material item get its name set by setMaterial()?
 	var/set_name = FALSE
 
 	New()
