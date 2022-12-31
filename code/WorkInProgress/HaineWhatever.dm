@@ -146,6 +146,7 @@
 	name = "bubblegum"
 	desc = "Some chewable gum. You can blow bubbles with it!"
 	icon_state = "anime"	// todo: decent sprites
+	c_flags = null
 	var/mob/chewer = null
 	var/chew_size = 0.2		// unit amount transferred when gum is chewed
 	var/spam_flag = 0		// counts down from spam_timer after each time the chew message is shown
