@@ -1,4 +1,40 @@
 
+(t)fri dec 30 22
+(u)Flappybat
+(p)12547
+(e)🗺💅⛔|A-Mapping, C-QoL, C-Removal
+(*)Removed the shield and shield generator console from Clarion.
+(t)thu dec 29 22
+(u)Amylizzle
+(p)12550
+(e)🪲📄|C-Bug, A-UI
+(+)Slightly upped the radiation shielding on the nuclear engine.
+(t)wed dec 28 22
+(u)Amylizzle, Danger Noodle, WALPVRGIS, ZeWaka
+(p)8767
+(e)🆕🗺🎨❗📄💡|C-Feature, A-Mapping, C-Sprites, E-FUCK, A-UI, A-Station-Systems
+(*)Adds a nuclear fission engine which replaces the TEG on Clarion. Sprites by WALPVRGIS and ZeWaka, mapping by Danger Noodle.
+(+)Make reactor components out of mined and alloyed material: pizza control rods, ice heat exchangers, erebite fuel rods.
+(+)Feed gas into the reactor to cool it and use the heat to generate power in the turbine.
+(+)Mechcomp integration as standard!
+(t)tue dec 27 22
+(u)Kubius
+(p)12528
+(e)🗺|A-Mapping
+(+)Nadir fixbatch 10: Kitchen item improvements, instrument piano in the nerd dungeon, and exterior beacon improvements.
+(u)LeahTheTech
+(p)12326
+(e)🪲💅🧛|C-Bug, C-QoL, A-Gamemodes
+(*)Spy-thief delivery teleportation should now work regardless of what you are clicking on (bags, tables etc.)
+(+)Spy-thief area GPS now works again
+(t)mon dec 26 22
+(u)Chatausours
+(p)12498
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Signaler implants will no longer appear in surplus crates.
+(t)sun dec 25 22
+(u)Sord
+(+)Vortexes random event now plays a  warning sound and has a delay before the vortexes sppear
 (t)fri dec 23 22
 (u)Keiiro
 (p)12480
