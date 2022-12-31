@@ -23095,7 +23095,7 @@
 "bjJ" = (
 /obj/storage/closet/office,
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/storage/eva)
+/area/station/maintenance/central)
 "bjK" = (
 /obj/cable{
 	icon_state = "1-4"

@@ -1,5 +1,5 @@
 #define MINUTES_TO_SWORD_LINK 30										//Feel free to tweak this number as you see fit. After all, my strong suit is originality, not balance.
-var/sword_summoned_before = false
+var/sword_summoned_before = FALSE
 
 TYPEINFO(/obj/item/makeshift_signaller_frame)
 	mats = 4
@@ -76,8 +76,8 @@ TYPEINFO(/obj/item/makeshift_syndicate_signaller)
 	throw_range = 20
 	m_amt = 500
 	var/metadata = 0
-	var/was_emagged = false
-	var/is_exploding = false
+	var/was_emagged = FALSE
+	var/is_exploding = FALSE
 	is_syndicate = 1
 	desc = "This device has a menacing aura around it. It requires 8 nodes of metadata to properly send and encrypt it's signal."
 	contraband = 5
@@ -97,13 +97,13 @@ TYPEINFO(/obj/item/makeshift_syndicate_signaller)
 								nearby_turfs += T
 						if (length(nearby_turfs))
 							new/obj/critter/sword(pick(nearby_turfs))
-							sword_summoned_before = true
+							sword_summoned_before = TRUE
 
 							icon_state = "explosion"
 							user.show_message("<span class='notice'>You sent a signal to unknown coordinates derived from the uploaded metadata! This can't be good...</span>", 1)
 							desc = "Oh shit, it's overloading!"
 							tooltip_rebuild = 1
-							is_exploding = true
+							is_exploding = TRUE
 							spawn(2 SECONDS)
 								logTheThing(LOG_COMBAT, user, "has summoned the Syndicate Weapon: Orion Retribution Device. It will become active in about 1 minute.")
 								message_admins("[key_name(user)] has summoned the Syndicate Weapon: Orion Retribution Device. It will become active in about 1 minute.")
@@ -152,7 +152,7 @@ TYPEINFO(/obj/item/makeshift_syndicate_signaller)
 				metadata += rand(2, 7)
 				playsound(src.loc, 'sound/misc/flockmind/flockdrone_beep2.ogg', 60, 0)
 				playsound(src.loc, 'sound/effects/sparks4.ogg', 100, 0)
-				was_emagged = true
+				was_emagged = TRUE
 				. = TRUE
 			if(metadata >= 8)
 				desc = "This device has a menacing aura around it. All 8 nodes of metadata are filled. The signal is ready to be sent."
