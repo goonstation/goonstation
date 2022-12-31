@@ -511,7 +511,8 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/turf/unsimulated/floor/delivery/caution,
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/orangeblack,
 /area/prefab/bee_sanctuary)
 "rD" = (
 /obj/machinery/door/airlock/pyro/classic{
@@ -653,10 +654,10 @@
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "xH" = (
-/obj/tree1{
+/obj/tree{
 	dir = 4
 	},
-/obj/tree1{
+/obj/tree{
 	dir = 4
 	},
 /turf/unsimulated/grass,
@@ -1775,7 +1776,7 @@
 /turf/unsimulated/floor/white,
 /area/prefab/bee_sanctuary)
 "Yi" = (
-/obj/tree1{
+/obj/tree{
 	dir = 8
 	},
 /obj/river{

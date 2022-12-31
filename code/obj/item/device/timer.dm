@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/timer)
+	mats = 2
+
 /obj/item/device/timer
 	name = "timer"
 	icon_state = "timer0"
@@ -11,7 +14,6 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 	w_class = W_CLASS_SMALL
 	m_amt = 100
-	mats = 2
 	desc = "A device that emits a signal when the time reaches 0."
 
 /obj/item/device/timer/proc/time()

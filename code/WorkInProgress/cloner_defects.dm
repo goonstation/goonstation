@@ -49,7 +49,7 @@
 		. = ..()
 		// null owner is fine (detached holder for cloning), human owner is fine (intended case), else error
 		if (!isnull(owner) && !istype(owner))
-			stack_trace("cloner_defect_holder \[\ref[src]\] passed a nonhuman owner ([owner])\[\ref[owner]\], this won't work at all. Deleting.")
+			stack_trace("[identify_object(src)] passed nonhuman owner [identify_object(owner)], this won't work at all. Deleting.")
 			qdel(src)
 			return
 		src.owner = owner // imjava
@@ -73,7 +73,7 @@
 			// If the picked defect can stack, pass automatically. If it can't stack, check if we have it already; if not, pass.
 			is_valid = initial(picked:stackable) || !src.has_defect(picked)
 		LAZYLISTADD(src.active_cloner_defects, new picked(src.owner))
-		logTheThing(LOG_COMBAT, src, "gained the [picked] cloner defect.")
+		logTheThing(LOG_COMBAT, src.owner, "gained the [picked] cloner defect.")
 
 	/// Add a cloner defect, rolling severity according to weights
 	proc/add_random_cloner_defect()
@@ -99,7 +99,7 @@
 	/// Applies all the defects on this holder (which is assumed to be ownerless) to the target mob
 	proc/apply_to(mob/living/carbon/human/target)
 		if (!istype(target))
-			CRASH("Tried to copy the cloner defect holder \[\ref[src]\] to non-human thing [target] ([target.type]) \[\ref[target]\]")
+			CRASH("Tried to copy [identify_object(src)] to non-human thing [identify_object(target)]")
 		target.cloner_defects = src
 		for (var/datum/cloner_defect/defect as anything in src.active_cloner_defects)
 			defect.apply_to(target)
@@ -123,9 +123,9 @@ ABSTRACT_TYPE(/datum/cloner_defect)
 	var/mob/living/carbon/human/owner = null //! Who has this defect?
 	var/weight = 100 //! Weight of this effect when rolled against other effects in the same pool (minor/major). Default is 100.
 	var/name = "" //! Name of this defect for. medical scans or something, I dunno. Maybe let the geneticist's scanner thing see them?
-	var/description = "" //! Same as above- for scans or whatever
+	var/desc = "" //! Same as above- for scans or whatever
 	var/stackable = TRUE //! Can we get this defect multiple times?
-	var/severity //! How severe is this effect? (Currently just major and minor)
+	var/severity = CLONER_DEFECT_SEVERITY_UNUSED //! How severe is this effect? (Currently just major and minor)
 	/// Any data which should be maintained between clonings if the person is cloned multiple times.
 	/// IF YOU WANT DATA TO BE TRANSFERRED BETWEEN BODIES, USE THIS INSTEAD OF MAKING A VAR
 	var/data
@@ -141,7 +141,7 @@ ABSTRACT_TYPE(/datum/cloner_defect)
 
 	proc/apply_to(mob/living/carbon/human/target)
 		if (!istype(target))
-			CRASH("Tried to apply the cloner defect \[\ref[src]\] to non-human thing [target] ([target.type]) \[\ref[target]\]")
+			CRASH("Tried to apply [identify_object(src)] to non-human thing [identify_object(target)]")
 		src.owner = target
 		src.on_add()
 
@@ -168,7 +168,7 @@ ABSTRACT_TYPE(/datum/cloner_defect)
 /// Some random brute/burn damage after cloning.
 /datum/cloner_defect/ouch
 	name = "Minor Flesh Abnormality"
-	description = "Subject's skin was not reconstructed exactly as planned; some superficial damage has resulted."
+	desc = "Subject's skin was not reconstructed exactly as planned; some superficial damage has resulted."
 	severity = CLONER_DEFECT_SEVERITY_MINOR
 
 	init()
@@ -182,7 +182,7 @@ ABSTRACT_TYPE(/datum/cloner_defect)
 
 /datum/cloner_defect/ouch/big
 	name = "Significant Flesh Abnormality"
-	description = "Subject's skin condition has deviated from the expectation; significant damage has resulted."
+	desc = "Subject's skin condition has deviated from the expectation; significant damage has resulted."
 	severity = CLONER_DEFECT_SEVERITY_MAJOR
 
 	init()
@@ -192,7 +192,7 @@ ABSTRACT_TYPE(/datum/cloner_defect)
 /datum/cloner_defect/missing_limb
 	weight = 80
 	name = "Failed Limb Reconstruction"
-	description = "One of the subject's limbs was not properly reconstructed, leaving them without it."
+	desc = "One of the subject's limbs was not properly reconstructed, leaving them without it."
 	severity = CLONER_DEFECT_SEVERITY_MINOR
 
 	init()
@@ -206,7 +206,7 @@ ABSTRACT_TYPE(/datum/cloner_defect)
 /// Get some histamine after cloning
 /datum/cloner_defect/allergic
 	name = "Allergic Reaction"
-	description = "Subject has experienced a minor allergic reaction to some compound used in the cloning process."
+	desc = "Subject has experienced a minor allergic reaction to some compound used in the cloning process."
 	severity = CLONER_DEFECT_SEVERITY_MINOR
 
 	init()
@@ -221,14 +221,14 @@ ABSTRACT_TYPE(/datum/cloner_defect/missing_organ)
 /datum/cloner_defect/missing_organ
 	weight = 80
 	name = "Failed Organ Reconstruction"
-	description = "One of the subject's organs was not properly reconstructed, leaving them without it."
-	severity = CLONER_DEFECT_SEVERITY_MINOR
+	desc = "One of the subject's organs was not properly reconstructed, leaving them without it."
 
 	on_add()
 		. = ..()
 		qdel(src.owner.organHolder.organ_list[data["organ_string"]])
 
 /datum/cloner_defect/missing_organ/minor
+	severity = CLONER_DEFECT_SEVERITY_MINOR
 
 	init()
 		src.data = list("organ_string" = pick("tail", "left_kidney", "right_kidney", "stomach", "intestines", "appendix"))
@@ -237,12 +237,12 @@ ABSTRACT_TYPE(/datum/cloner_defect/missing_organ)
 	severity = CLONER_DEFECT_SEVERITY_MAJOR
 
 	init()
-		src.data = list("organ_string" = pick("heart", "liver", "left_eye", "right_eye", "left_lung", "right_lung")) // no skull, head, brain; instant death sucks
+		src.data = list("organ_string" = pick("liver", "left_eye", "right_eye", "left_lung", "right_lung")) // no skull, head, brain; instant death sucks. also removed heart
 
 /// Set to a random (safe) mutantrace after cloning
 /datum/cloner_defect/random_mutantrace
 	name = "Unexpected Genetic Development"
-	description = "Subject's DNA has mutated into that of a different species."
+	desc = "Subject's DNA has mutated into that of a different species."
 	severity = CLONER_DEFECT_SEVERITY_MINOR
 	stackable = FALSE
 	var/orig_mutantrace_type = null //! Holds their original mutantrace type so we can change them back if the defect is removed
@@ -257,6 +257,8 @@ ABSTRACT_TYPE(/datum/cloner_defect/missing_organ)
 		src.orig_mutantrace_type = src.owner.mutantrace?.type
 		src.owner.set_mutantrace(data["new_mutantrace_type"])
 
+// TODO abstract status effect defects more
+
 /// Max health decrease
 ABSTRACT_TYPE(/datum/cloner_defect/maxhealth_down)
 /datum/cloner_defect/maxhealth_down
@@ -266,13 +268,13 @@ ABSTRACT_TYPE(/datum/cloner_defect/maxhealth_down)
 		. = ..()
 		var/datum/statusEffect/maxhealth/decreased/existing_status = src.owner.hasStatus("maxhealth-")
 		if (existing_status)
-			existing_status?.change -= data["penalty"]
+			existing_status.change -= data["penalty"]
 		else
 			src.owner.setStatus("maxhealth-", INFINITE_STATUS, -data["penalty"])
 
 /datum/cloner_defect/maxhealth_down/small
 	name = "Minor Fortitude Decrease"
-	description = "Subject's endurance has been weakened by the cloning process."
+	desc = "Subject's endurance has been weakened by the cloning process."
 	severity = CLONER_DEFECT_SEVERITY_MINOR
 
 	init()
@@ -280,17 +282,38 @@ ABSTRACT_TYPE(/datum/cloner_defect/maxhealth_down)
 
 /datum/cloner_defect/maxhealth_down/large
 	name = "Major Fortitude Decrease"
-	description = "Subject's endurance has been significantly weakened by the cloning process."
+	desc = "Subject's endurance has been significantly weakened by the cloning process."
 	severity = CLONER_DEFECT_SEVERITY_MAJOR
 
 	init()
 		src.data = list("penalty" = rand(20, 30))
 
+ABSTRACT_TYPE(/datum/cloner_defect/stamregen_down)
+/datum/cloner_defect/stamregen_down
+	name = "broken"
+	desc = "Subject's endurance has been decreased by the cloning process."
+
+	on_add()
+		. = ..()
+		var/datum/statusEffect/staminaregen/clone/existing_status = src.owner.hasStatus("stamclone")
+		if (existing_status)
+			existing_status.change += data["penalty"]
+		else
+			src.owner.setStatus("stamclone", INFINITE_STATUS, data["penalty"])
+
+/datum/cloner_defect/stamregen_down/minor
+	name = "Minor Stamina Decrease"
+
+	init()
+		src.data = list("penalty" = -rand(0, 2))
+
+// no /major currently because a few stacked would be miserable
+
 ABSTRACT_TYPE(/datum/cloner_defect/brain_damage)
 /datum/cloner_defect/brain_damage
 	name = "Call Aloe Oh No"
 	stackable = FALSE // until I add some way to remove these, stacking a few (2 of the major ones, even) would kill you instantly
-	description = "Subject has sustained a form of concussion during the cloning process."
+	desc = "Subject has sustained a form of concussion during the cloning process."
 
 	on_add()
 		. = ..()
@@ -314,7 +337,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/brain_damage)
 ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 /datum/cloner_defect/organ_damage
 	name = "wee woo wee woo fucked up cloner defect"
-	description = "Some of the subject's organs were improperly reconstructed, causing a loss of functionality."
+	desc = "Some of the subject's organs were improperly reconstructed, causing a loss of functionality."
 
 	init()
 		src.data["targeted_organs"] = list()
@@ -347,7 +370,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 /// You become a puritan- no more clonings for you! (unless the docs are really solid)
 /datum/cloner_defect/puritan
 	name = "Rapid-Onset Puritanism"
-	description = "Subject has developed an incompatibility to cloning methods."
+	desc = "Subject has developed an incompatibility to cloning methods."
 	severity = CLONER_DEFECT_SEVERITY_MAJOR
 	stackable = FALSE
 
@@ -358,7 +381,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 
 /datum/cloner_defect/arm_swap //! Left and right arms are swapped, making them both initially useless TODO actually implement
 	name = "Limb Discombobulation"
-	description = "Subject's legs have been grown where their arms are supposed to be. Location of their arms is unknown."
+	desc = "Subject's legs have been grown where their arms are supposed to be. Location of their arms is unknown."
 	severity = CLONER_DEFECT_SEVERITY_MAJOR // could be minor I guess. Takes a lot of surgery to fix though
 	stackable = FALSE
 	weight = 15
@@ -385,6 +408,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 		r_item_arm.holder = src.owner
 
 /// Just fucking explode. probably a bad idea. TODO maybe make it so if they're healed to max they don't explode?
+/// CURRENTLY DISABLED
 /datum/cloner_defect/explosive
 	weight = 10
 	name = "Subj- OH GOD RUN"
@@ -394,7 +418,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 
 	New()
 		. = ..()
-		description = "THERE'S NO TIME [uppertext(he_or_she(src.owner))]'S GONNA BLOW"
+		desc = "THERE'S NO TIME [uppertext(he_or_she(src.owner))]'S GONNA BLOW"
 
 	on_add()
 		. = ..()
@@ -409,15 +433,10 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 /// Add some kind of 'clumsy' mutation/trait
 /datum/cloner_defect/clumsy
 	name = "Motor Control Impairment"
-	description = "Subject has sustained nerve damage, resulting in some impairments to motor control."
+	desc = "Subject has sustained nerve damage, resulting in some impairments to motor control."
 	severity = CLONER_DEFECT_SEVERITY_MINOR
 	stackable = FALSE // can be TRUE if I make it so it can't give you the same thing multiple times.
-	var/static/list/effect_type_pool // Pool of effects to pick from (traits and bioeffects)
-
-	New()
-		. = ..()
-		if (!effect_type_pool)
-			effect_type_pool = list(/datum/trait/leftfeet, /datum/trait/clutz, /datum/bioEffect/funky_limb) // should prolly add more
+	var/static/list/effect_type_pool = list(/datum/trait/leftfeet, /datum/trait/clutz, /datum/bioEffect/funky_limb, /datum/bioEffect/clumsy) // Pool of effects to pick from (traits and bioeffects)
 
 	init()
 		src.data = list("trait_id" = null,
@@ -436,3 +455,44 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 			src.owner.bioHolder.AddEffect(data["bioeffect_id"])
 			var/datum/bioEffect/effect = src.owner.bioHolder.GetEffect(data["bioeffect_id"]) // this suuuucks
 			effect.curable_by_mutadone = FALSE
+
+
+/// Sets seen name to 'unknown' (until repaired with synthflesh)
+/datum/cloner_defect/face_disfigured
+	name = "Facial Disfiguration"
+	desc = "Subject's face has been disfigured during the cloning process, rendering them unrecognizable."
+	severity = CLONER_DEFECT_SEVERITY_MAJOR
+
+	on_add()
+		. = ..()
+		src.owner.disfigured = TRUE
+		src.owner.UpdateName()
+
+/// Sets heard voice to 'unknown' (until repaired with synthflesh)
+/datum/cloner_defect/voice_disfigured
+	name = "Vocal Chord Disfiguration"
+	desc = "Subject's vocal chords were improperly reconstructed, making their voice unrecognizable."
+	severity = CLONER_DEFECT_SEVERITY_MINOR
+
+	on_add()
+		. = ..()
+		src.owner.vdisfigured = TRUE
+
+/// Makes you fall over when you sprint too hard (pug thing)
+/datum/cloner_defect/sprint_flop
+	name = "Poor Muscular Regulation"
+	desc = "Certain nerves within the legs have failed, making the subject prone to running until they fall on their face."
+	severity = CLONER_DEFECT_SEVERITY_MINOR
+
+	on_add()
+		. = ..()
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_FAILED_SPRINT_FLOP, src)
+
+/datum/cloner_defect/overdose_weakness
+	name = "Chemical Weakness"
+	desc = "Subject's renal system has been weakened by the cloning process, making them more vulnerable to chemical overdoses."
+	severity = CLONER_DEFECT_SEVERITY_MINOR
+
+	on_add()
+		. = ..()
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_OVERDOSE_WEAKNESS, src)

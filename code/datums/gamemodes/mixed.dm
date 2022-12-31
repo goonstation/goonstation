@@ -15,7 +15,7 @@
 #if defined(MAP_OVERRIDE_NADIR)
 	var/list/major_threats = list(ROLE_WRAITH = 1, ROLE_FLOCKMIND = 1)
 #else
-	var/list/major_threats = list(ROLE_BLOB = 1, ROLE_WRAITH = 1, ROLE_FLOCKMIND = 1)
+	var/list/major_threats = list(ROLE_BLOB = 2, ROLE_WRAITH = 1, ROLE_FLOCKMIND = 1)
 #endif
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
@@ -69,10 +69,10 @@
 			num_enemies = max(num_enemies - 2, 1)
 			num_wraiths = 1
 		else if (chosen == ROLE_BLOB || debug_mixed_forced_blob)
-			num_enemies = max(num_enemies - 3, 1)
+			num_enemies = max(num_enemies - 2, 1)
 			num_blobs = 1
 		else if (chosen == ROLE_FLOCKMIND || debug_mixed_forced_flock)
-			num_enemies = max(num_enemies - 2, 1)
+			num_enemies = max(num_enemies - 3, 1)
 			num_flockminds = 1
 	for(var/j = 0, j < num_enemies, j++)
 		if(has_wizards && prob(10)) // powerful combat roles
@@ -279,7 +279,7 @@
 /datum/game_mode/mixed/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs. You may ignore any of your laws to do this."
 	boutput(killer, "<b>Your laws have been changed!</b>")
-	killer.law_rack_connection?.SetLawCustom("Objective Law Module",law,1,true,true)
+	killer.law_rack_connection?.SetLawCustom("Objective Law Module", law, 1, TRUE, TRUE)
 	killer.law_rack_connection?.UpdateLaws()
 
 /datum/game_mode/mixed/proc/get_mob_list()

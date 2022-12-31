@@ -273,7 +273,7 @@ TYPEINFO(/datum/component/consume/food_effects)
 		return COMPONENT_INCOMPATIBLE
 	src.food_parent = parent
 	src.status_effects = _status_effects
-	RegisterSignals(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL), .proc/apply_food_effects)
+	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED), .proc/apply_food_effects)
 
 /datum/component/consume/food_effects/InheritComponent(datum/component/consume/food_effects/C, i_am_original, _new_status_effects)
 	if(C?.status_effects)
@@ -296,5 +296,5 @@ TYPEINFO(/datum/component/consume/food_effects)
 			L.add_food_bonus(effect, food_parent)
 
 /datum/component/consume/food_effects/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL))
+	UnregisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED))
 	. = ..()

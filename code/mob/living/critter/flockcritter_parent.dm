@@ -61,6 +61,7 @@
 	..()
 	remove_lifeprocess(/datum/lifeprocess/radiation)
 	qdel(abilityHolder)
+	src.abilityHolder = null
 	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	src.material.setProperty("reflective", 5)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
@@ -185,7 +186,7 @@
 	return FALSE
 
 /mob/living/critter/flock/Life(datum/controller/process/mobs/parent)
-	if (..(parent))
+	if (..(parent) || isdead(src))
 		return TRUE
 
 	// automatic extinguisher! after some time, anyway
@@ -324,6 +325,7 @@
 		..()
 		if(src.decal)
 			qdel(src.decal)
+			src.decal = null
 		var/mob/living/critter/flock/F = owner
 		F?.flock?.unreserveTurf(F.real_name)
 
@@ -331,6 +333,7 @@
 		..()
 		if(src.decal)
 			qdel(src.decal)
+			src.decal = null
 		var/mob/living/critter/flock/F = owner
 		if (!F || isdead(F) || !target || !in_interact_range(F, target) || isfeathertile(target))
 			return
@@ -427,7 +430,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/drone/F = owner
-		if (!F || isdead(F) || !F.flock || !F.can_afford(FLOCK_LAY_EGG_COST))
+		if (!F || isdead(F) || !F.flock || !F.can_afford(F.flock.current_egg_cost))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(prob(40))
@@ -437,7 +440,7 @@
 	onStart()
 		..()
 		var/mob/living/critter/flock/drone/F = owner
-		if (!F || isdead(F) || !F.flock || !F.can_afford(FLOCK_LAY_EGG_COST))
+		if (!F || isdead(F) || !F.flock || !F.can_afford(F.flock.current_egg_cost))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		boutput(F, "<span class='notice'>Your internal fabricators spring into action. If you move the process will be ruined!</span>")
@@ -451,7 +454,7 @@
 		F.visible_message("<span class='alert'>[owner] deploys some sort of device!</span>", "<span class='notice'>You deploy a second-stage assembler.</span>")
 		new /obj/flock_structure/egg(get_turf(F), F.flock)
 		playsound(F, 'sound/impact_sounds/Metal_Clang_1.ogg', 30, 1, extrarange = -10)
-		F.pay_resources(FLOCK_LAY_EGG_COST)
+		F.pay_resources(F.flock.current_egg_cost)
 
 /////////////////////////////////////////////////////////////////////////////////
 // REPAIR ACTION
@@ -620,6 +623,7 @@
 			return
 
 		var/obj/flock_structure/cage/cage = new /obj/flock_structure/cage(target.loc, target, F.flock)
+		F.flock.flockmind.tutorial?.PerformSilentAction(FLOCK_ACTION_CAGE)
 		cage.visible_message("<span class='alert'>[cage] forms around [target], entombing them completely!</span>")
 		playsound(target, 'sound/misc/flockmind/flockdrone_build_complete.ogg', 70, 1)
 		logTheThing(LOG_COMBAT, owner, "entombs [constructTarget(target)] in a flock cage at [log_loc(owner)]")

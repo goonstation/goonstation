@@ -71,6 +71,11 @@
 		#topOpts {
 			float: right;
 		}
+
+		#mobInfo {
+			margin-top: 2em;
+			margin-bottom: 0.25em;
+		}
 	</style>
 	"}
 
@@ -83,15 +88,15 @@
 			for (var/datum/antagonist/this_antag as anything in M.mind.antagonists)
 				antag += "<span class='antag'>[this_antag.display_name]</span> &mdash; <a href='?src=\ref[src];action=remove_antagonist;targetmob=\ref[M];target_antagonist=\ref[this_antag]'>Remove</a><br>"
 			antag += "<a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role</a><br>"
-			antag += "<a href='?src=\ref[src];targetmob=\ref[M];action=wipe_antagonists'>Remove All Antagonist Roles</a><br>"
+			antag += "<a href='?src=\ref[src];targetmob=\ref[M];action=wipe_antagonists'>Remove All Antagonist Roles</a>"
 		else if (M.mind.special_role != null)
 			antag = {"
 			<a href='[playeropt_link(M, "traitor")]' class='antag'>[M.mind.special_role]</a> &mdash;
 			<a href='[playeropt_link(M, "remove_traitor")]' class='antag'>Remove</a>
 			"}
 		else if (!isobserver(M))
-			antag = "<a href='[playeropt_link(M, "traitor")]'>Make Antagonist</a>"
-			antag += "<br><a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role (New system, WIP)</a><br>"
+			antag = {"<a href='[playeropt_link(M, "traitor")]'>Make Antagonist</a> &bull;
+					<a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role</a>"}
 		else
 			antag = "Observer"
 
@@ -108,7 +113,7 @@
 	<b>[M.name]</b> (<tt>[M.key ? M.key : "<em>no key</em>"]</tt>)
 </div>
 
-<div style="margin-top: 2em;">
+<div id="mobInfo">
 	Mob: <b>[M.name]</b> [M.mind && M.mind.assigned_role ? "{[M.mind.assigned_role]}": ""] (<tt>[M.key ? M.key : "<em>no key</em>"]</tt>)
 	[M.client ? "" : "<em>(no client)</em>"]
 	[isdead(M) ? "<span class='antag'>(dead)</span>" : ""]

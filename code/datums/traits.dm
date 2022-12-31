@@ -638,10 +638,10 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 //Category: Background.
 
-/datum/trait/immigrant
+/datum/trait/stowaway
 	name = "Stowaway"
 	desc = "You spawn hidden away on-station without an ID, PDA, or entry in NT records."
-	id = "immigrant"
+	id = "stowaway"
 	icon_state = "stowaway"
 	category = list("background")
 	points = 1
@@ -906,8 +906,8 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 	onLife(var/mob/owner, var/mult)
 		if(!owner.stat && !owner.lying && can_act(owner) && !owner.equipped() && probmult(6))
-			for(var/obj/item/I in view(1, owner))
-				if(!I.anchored && !I.cant_drop && isturf(I.loc) && can_reach(owner, I))
+			for(var/obj/item/I in oview(1, owner))
+				if(!I.anchored && !I.cant_drop && isturf(I.loc) && can_reach(owner, I) && !HAS_ATOM_PROPERTY(I, PROP_MOVABLE_KLEPTO_IGNORE))
 					I.Attackhand(owner)
 					owner.emote(pick("grin", "smirk", "chuckle", "smug"))
 					break

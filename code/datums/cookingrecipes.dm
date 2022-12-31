@@ -1254,11 +1254,11 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 		for (var/obj/item/T in ourCooker.contents)
 
 			if (T.type == item1 && !found1)
-				found1 = true
+				found1 = TRUE
 				continue
 
 			if (T.type == item2 && !found2)
-				found2 = true
+				found2 = TRUE
 				continue
 
 			anItem = T
@@ -1843,6 +1843,12 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/ratatouille
 
+/datum/cookingrecipe/churro
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_strip
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/sugar
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/dippable/churro
+
 /datum/cookingrecipe/zongzi
 	item1 = /obj/item/reagent_containers/food/snacks/plant/bamboo
 	item2 = /obj/item/reagent_containers/food/snacks/rice_ball
@@ -1901,4 +1907,3 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 			lipstick.name = "[lipstick.color_name] lipstick"
 			lipstick.UpdateIcon()
 		return lipstick
-

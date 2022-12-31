@@ -680,10 +680,8 @@
 	playsound(src.loc, src.sound_stepped, 50, 1)
 	H.changeStatus("weakened", 3 SECONDS)
 	H.force_laydown_standup()
-	var/obj/item/affecting = H.organs[pick("l_leg", "r_leg")]
-	affecting?.take_damage(force, 0)
-	H.UpdateDamageIcon()
-
+	var/zone = pick("l_leg", "r_leg")
+	H.TakeDamage(zone, force, 0, 0, DAMAGE_CUT)
 
 /obj/item/raw_material/chitin
 	name = "chitin chunk"

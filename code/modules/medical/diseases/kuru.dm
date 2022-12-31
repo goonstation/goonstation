@@ -5,6 +5,11 @@
 	associated_reagent = "prions"
 	affected_species = list("Human")
 
+/datum/ailment/disease/kuru/on_infection(var/mob/living/affected_mob,var/datum/ailment_data/D)
+	var/mob/living/carbon/human/H = affected_mob
+	if(istype(H) && istype(H.mutantrace, /datum/mutantrace/ithillid))
+		D.state = "Asymptomatic"
+
 /datum/ailment/disease/kuru/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return

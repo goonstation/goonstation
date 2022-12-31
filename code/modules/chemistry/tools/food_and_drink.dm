@@ -147,7 +147,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			processing_items.Add(src)
 		create_time = world.time
 		if (src.amount != 1)
-			stack_trace("[src] of type [src.type] is spawning with an amount other than 1. That's bad. Go delete the 'amount' line and replace it with `bites_left = \[whatever the amount var had before\].")
+			stack_trace("[identify_object(src)] is spawning with an amount other than 1. That's bad. Go delete the 'amount' line and replace it with `bites_left = \[whatever the amount var had before\].")
 
 	disposing()
 		if(!made_ants)
@@ -505,6 +505,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				. = ("You deftly [pick("spin", "twirl")] [src] managing to keep all the contents inside.")
 				if(!ON_COOLDOWN(user, "bartender spinning xp", 180 SECONDS)) //only for real cups
 					JOB_XP(user, "Bartender", 1)
+			if (istype(src, /obj/item/reagent_containers/food/drinks/cola))
+				var/obj/item/reagent_containers/food/drinks/cola/soda_can = src
+				if (soda_can.is_sealed && (soda_can.reagents.has_reagent("cola", 5) || soda_can.reagents.has_reagent("tonic", 5) || soda_can.reagents.has_reagent("sodawater", 5)))
+					soda_can.shaken = TRUE
+					return
 			else
 				user.visible_message("<span class='alert'><b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b></span>")
 				logTheThing(LOG_CHEMISTRY, user, "spills the contents of [src] [log_reagents(src)] all over [him_or_her(user)]self at [log_loc(user)].")
@@ -591,29 +596,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	///Called when we successfully take a drink of something (or make someone else take a drink of something)
 	proc/take_a_drink(var/mob/consumer, var/mob/feeder)
-		var/tasteMessage
-		if (iscarbon(consumer) || ismobcritter(consumer))
-			if (consumer.mind && consumer.mind.assigned_role == "Bartender")
-				var/reag_list = ""
-				for (var/current_id in reagents.reagent_list)
-					var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
-					if (reagents.reagent_list.len > 1 && reagents.reagent_list[reagents.reagent_list.len] == current_id)
-						reag_list += " and [current_reagent.name]"
-						continue
-					reag_list += ", [current_reagent.name]"
-				reag_list = copytext(reag_list, 3)
-				tasteMessage = "<span class='notice'>Tastes like there might be some [reag_list] in this.</span>"
-			else
-				var/tastes = src.reagents.get_prevalent_tastes(3)
-				switch (length(tastes))
-					if (0)
-						tasteMessage = "<span class='notice'>Tastes pretty bland.</span>"
-					if (1)
-						tasteMessage = "<span class='notice'>Tastes kind of [tastes[1]].</span>"
-					if (2)
-						tasteMessage = "<span class='notice'>Tastes kind of [tastes[1]] and [tastes[2]].</span>"
-					else
-						tasteMessage = "<span class='notice'>Tastes kind of [tastes[1]], [tastes[2]], and a little bit [tastes[3]].</span>"
+		var/tasteMessage = "<span class='notice'>[src.reagents.get_taste_string(consumer)]</span>"
 		if (consumer == feeder)
 			consumer.visible_message("<span class='notice'>[consumer] takes a sip from [src].</span>","<span class='notice'>You take a sip from [src].</span>\n[tasteMessage]", group = "drinkMessages")
 		else
@@ -716,7 +699,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 			splash_volume = min(splash_volume, src.reagents.total_volume)
 
-			src.reagents.reaction(target, TOUCH, splash_volume)
+			var/datum/reagents/splash = new(splash_volume) // temp reagents of the splash so we can make changes between the first and second splashes
+			src.reagents.trans_to_direct(splash, splash_volume) // this removes reagents from this container so we don't need to do that below
+
+			var/reacted_reagents = splash.reaction(target, TOUCH, splash_volume)
 
 			var/turf/T
 			if (!isturf(target) && !target.density) // if we splashed on something other than a turf or a dense obj, it goes on the floor as well
@@ -726,9 +712,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				T = get_turf(user)
 
 			if (T && !T.density) // if the user AND the target are on dense turfs or the user is on a dense turf and the target is a dense obj then just give up. otherwise pour on the floor
-				src.reagents.reaction(T, TOUCH, splash_volume)
-
-			src.reagents.remove_any(splash_volume)
+				// first remove everything that reacted in the first reaction
+				for(var/id in reacted_reagents)
+					splash.del_reagent(id)
+				splash.reaction(T, TOUCH, splash.total_volume)
 
 /* =============================================== */
 /* -------------------- Bowls -------------------- */
@@ -784,7 +771,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 			qdel(src)
 
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/tortilla_chip))
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/dippable))
 			if (reagents.total_volume)
 				boutput(user, "You dip [W] into the bowl.")
 				reagents.trans_to(W, 10)
@@ -1362,7 +1349,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		..()
 		src.smash(A)
 
-	pixelaction(atom/target, list/params, mob/living/user, reach)
+	pixelaction(atom/target, list/params, mob/living/user, reach)  //sliding glasses down the bar
 		if(!istype(target, /obj/table) || src.cant_drop)
 			return ..()
 		var/obj/table/target_table = target
@@ -1382,6 +1369,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if("icon-y" in params)
 			src.pixel_y = text2num(params["icon-y"]) - 16
 		user.weapon_attack(source_table, src, TRUE, list())
+		playsound(src, 'sound/items/glass_slide.ogg', 25, 1)
 		var/list/turf/path = raytrace(get_turf(source_table), get_turf(target_table))
 		var/turf/last_turf = get_turf(source_table)
 		SPAWN(0)
@@ -1990,5 +1978,5 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	icon_state = "creamer"
 	item_state = "creamer"
 	initial_volume = 50
-	initial_reagents = list("milk"=50)
+	initial_reagents = list("milk"=40, "sugar"=10)
 	can_recycle = 0

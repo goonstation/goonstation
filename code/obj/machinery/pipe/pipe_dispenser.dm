@@ -1,4 +1,7 @@
 
+TYPEINFO(/obj/machinery/disposal_pipedispenser)
+	mats = 16
+
 /obj/machinery/disposal_pipedispenser
 	name = "Generic Pipe Dispenser"
 	desc = "A retrofitted, old machine that dispenses atmospheric and disposal pipes."
@@ -6,7 +9,6 @@
 	icon_state = "pipe-fab"
 	density = 1
 	anchored = 1
-	mats = 16
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
 	var/dat
@@ -87,12 +89,14 @@
 		usr.Browse(null, "window=pipedispenser")
 		src.remove_dialog(usr)
 
+TYPEINFO(/obj/machinery/disposal_pipedispenser/mobile)
+	mats = 16
+
 /obj/machinery/disposal_pipedispenser/mobile
 	name = "Disposal Pipe Dispenser Cart"
 	desc = "A tool for removing some of the tedium from pipe-laying."
 	anchored = 0
 	icon_state = "fab-mobile"
-	mats = 16
 	var/laying_pipe = 0
 	var/removing_pipe = 0
 	var/prev_dir = 0

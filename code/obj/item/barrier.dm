@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/barrier)
+	mats = 8
+
 /obj/item/barrier
 	name = "barrier"
 	desc = "A personal barrier. Activate this item inhand to deploy it."
@@ -11,7 +14,6 @@
 	force = 2
 	throwforce = 6
 	w_class = W_CLASS_SMALL
-	mats = 8
 	stamina_damage = 20
 	var/stamina_damage_active = 40
 	stamina_cost = 10
@@ -45,54 +47,7 @@
 
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
-
-		if (!use_two_handed || setTwoHanded(!src.status))
-			src.status = !src.status
-
-			playsound(src, "sparks", 75, 1, -1)
-			if (src.status)
-				w_class = W_CLASS_BULKY
-				c_flags &= ~ONBELT //haha NO
-				setProperty("meleeprot_all", 9)
-				setProperty("rangedprot", 1.5)
-				setProperty("movespeed", 0.3)
-				setProperty("disorient_resist", 65)
-				setProperty("disorient_resist_eye", 65)
-				setProperty("disorient_resist_ear", 50) //idk how lol ok
-				stamina_damage = stamina_damage_active
-				stamina_cost = stamina_cost_active
-				setProperty("deflection", 20)
-				flick("barrier_a",src)
-				c_flags |= BLOCK_TOOLTIP
-
-				src.setItemSpecial(/datum/item_special/barrier)
-			else
-				w_class = W_CLASS_SMALL
-				c_flags |= ONBELT
-				delProperty("meleeprot_all", 0)
-				delProperty("rangedprot", 0)
-				delProperty("movespeed", 0)
-				delProperty("disorient_resist", 0)
-				delProperty("disorient_resist_eye", 0)
-				delProperty("disorient_resist_ear", 0)
-				setProperty("deflection", 0)
-				c_flags &= ~BLOCK_TOOLTIP
-				stamina_damage = initial(stamina_damage)
-				stamina_cost = initial(stamina_cost)
-
-				src.setItemSpecial(/datum/item_special/simple)
-
-			user.update_equipped_modifiers() // Call the bruteforce movement modifier proc because we changed movespeed while equipped
-
-			destroy_deployed_barrier(user)
-
-			can_disarm = src.status
-
-			src.UpdateIcon()
-			user.update_inhands()
-		else
-			user.show_text("You need two free hands in order to activate the [src.name].", "red")
-
+		src.toggle(user)
 		..()
 
 	attack(mob/M, mob/user)
@@ -111,14 +66,71 @@
 		if (source != target)
 			destroy_deployed_barrier(M)
 
+	proc/toggle(mob/user, new_state = null)
+		if(!user && ismob(src.loc))
+			user = src.loc
+
+		if(isnull(new_state))
+			new_state = !status
+
+		if (!use_two_handed || setTwoHanded(!src.status))
+			playsound(src, "sparks", 75, 1, -1)
+			src.status = new_state
+			if (new_state)
+				w_class = W_CLASS_BULKY
+				c_flags &= ~ONBELT //haha NO
+				setProperty("meleeprot_all", 9)
+				setProperty("rangedprot", 1.5)
+				setProperty("movespeed", 0.3)
+				setProperty("disorient_resist", 65)
+				setProperty("disorient_resist_eye", 65)
+				setProperty("disorient_resist_ear", 50) //idk how lol ok
+				stamina_damage = stamina_damage_active
+				stamina_cost = stamina_cost_active
+				setProperty("deflection", 20)
+				flick("barrier_a",src)
+				c_flags |= BLOCK_TOOLTIP
+				src.setItemSpecial(/datum/item_special/barrier)
+			else
+				w_class = W_CLASS_SMALL
+				c_flags |= ONBELT
+				delProperty("meleeprot_all", 0)
+				delProperty("rangedprot", 0)
+				delProperty("movespeed", 0)
+				delProperty("disorient_resist", 0)
+				delProperty("disorient_resist_eye", 0)
+				delProperty("disorient_resist_ear", 0)
+				setProperty("deflection", 0)
+				c_flags &= ~BLOCK_TOOLTIP
+				stamina_damage = initial(stamina_damage)
+				stamina_cost = initial(stamina_cost)
+				src.setItemSpecial(/datum/item_special/simple)
+
+			user?.update_equipped_modifiers() // Call the bruteforce movement modifier proc because we changed movespeed while equipped
+
+			destroy_deployed_barrier(user)
+
+			can_disarm = src.status
+
+			src.UpdateIcon()
+			user?.update_inhands()
+		else
+			user?.show_text("You need two free hands in order to activate the [src.name].", "red")
+
+	emp_act()
+		. = ..()
+		if(src.status)
+			src.toggle(null, FALSE)
+			src.visible_message("[src] sparks briefly as it overloads!")
+
 	proc/destroy_deployed_barrier(var/mob/living/M)
 		if (E)
 			var/obj/itemspecialeffect/barrier/EE = E
 			E = 0
-			if (islist(M.move_laying))
-				M.move_laying -= src
+			if (islist(M?.move_laying))
+				M?.move_laying -= src
 			else
-				M.move_laying = null
+				M?.move_laying = null
 			EE.deactivate()
 
 /obj/item/syndicate_barrier

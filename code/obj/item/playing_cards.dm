@@ -86,6 +86,8 @@
 
 	mouse_drop(var/atom/target as obj|mob) //r o t a t e
 		if(!istype(target,/obj/item/card_group))
+			if (is_incapacitated(usr) || !usr.can_use_hands() || !can_reach(usr, src) || usr.sleeping || (target && target.event_handler_flags & NO_MOUSEDROP_QOL))
+				return
 			tap_or_reverse(usr)
 		else
 			..()

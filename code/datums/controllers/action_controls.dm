@@ -33,7 +33,14 @@ var/datum/action_controller/actions
 					A.interrupt(INTERRUPT_ALWAYS)
 		return
 
-	proc/start(var/datum/action/A, var/atom/owner) //Starts a new action.
+	/// Starts an action and waits for it to finish, returns TRUE if it finished successfully, FALSE if it was interrupted.
+	proc/start_and_wait(datum/action/A, atom/owner, timeout=null)
+		if(isnull(A.promise))
+			A.promise = new()
+		src.start(A, owner)
+		return !!A.promise.wait_for_value(timeout=timeout)
+
+	proc/start(var/datum/action/A, var/atom/owner) //! Starts a new action.
 		if(!owner)
 			qdel(A)
 			return
@@ -54,24 +61,27 @@ var/datum/action_controller/actions
 		A.onStart()
 		return A // cirr here, I added action ref to the return because I need it for AI stuff, thank you
 
-	proc/interrupt(var/atom/owner, var/flag) //Is called by all kinds of things to check for action interrupts.
+	proc/interrupt(var/atom/owner, var/flag) //! Is called by all kinds of things to check for action interrupts.
 		if(owner in running)
 			for(var/datum/action/A in running[owner])
 				A.interrupt(flag)
 		return
 
-	proc/process() //Handles the action countdowns, updates and deletions.
+	proc/process() //! Handles the action countdowns, updates and deletions.
 		for(var/X in running)
 			for(var/datum/action/A in running[X])
 
 				if( ((A.duration >= 0 && TIME >= (A.started + A.duration)) && A.state == ACTIONSTATE_RUNNING) || A.state == ACTIONSTATE_FINISH)
 					A.state = ACTIONSTATE_ENDED
 					A.onEnd()
+					A.promise?.fulfill(A)
 					//continue //If this is not commented out the deletion will take place the tick after the action ends. This will break things like objects being deleted onEnd with progressbars - the bars will be left behind. But it will look better for things that do not do this.
 
 				if(A.state == ACTIONSTATE_DELETE || A.disposed)
 					A.onDelete()
 					running[X] -= A
+					if(A.promise && !A.promise.fulfilled)
+						A?.promise.fulfill(null)
 					continue
 
 				A.onUpdate()
@@ -81,56 +91,57 @@ var/datum/action_controller/actions
 		return
 
 /datum/action
-	var/atom/owner = null //Object that owns this action.
-	var/duration = 1 //How long does this action take in ticks.
-	var/interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION //When and how this action is interrupted.
-	var/state = ACTIONSTATE_STOPPED //Current state of the action.
-	var/started = -1 //TIME this action was started at
-	var/id = "base" //Unique ID for this action. For when you want to remove actions by ID on a person.
+	var/atom/owner = null //! Object that owns this action.
+	var/duration = 1 //! How long does this action take in ticks.
+	var/interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION //! When and how this action is interrupted.
+	var/state = ACTIONSTATE_STOPPED //! Current state of the action.
+	var/started = -1 //! TIME this action was started at
+	var/id = "base" //! Unique ID for this action. For when you want to remove actions by ID on a person.
 	var/resumable = TRUE
+	var/datum/promise/promise //! Promise that will be fulfilled when the action is finished or deleted. Finished = fulfilled with the action, deleted = fulfilled with null.
 
-	proc/interrupt(var/flag) //This is called by the default interrupt actions
+	proc/interrupt(var/flag) //! This is called by the default interrupt actions
 		if(interrupt_flags & flag || flag == INTERRUPT_ALWAYS)
 			state = ACTIONSTATE_INTERRUPTED
 			onInterrupt(flag)
 		return
 
-	proc/onUpdate() //Called every tick this action is running. If you absolutely(!!!) have to you can do manual interrupt checking in here. Otherwise this is mostly used for drawing progress bars and shit.
+	proc/onUpdate() //! Called every tick this action is running. If you absolutely(!!!) have to you can do manual interrupt checking in here. Otherwise this is mostly used for drawing progress bars and shit.
 		return
 
-	proc/onInterrupt(var/flag = 0) //Called when the action fails / is interrupted.
+	proc/onInterrupt(var/flag = 0) //! Called when the action fails / is interrupted.
 		state = ACTIONSTATE_DELETE
 		return
 
-	proc/onStart()				   //Called when the action begins
+	proc/onStart()				   //! Called when the action begins
 		state = ACTIONSTATE_RUNNING
 		return
 
-	proc/onRestart()			   //Called when the action restarts (for example: automenders)
+	proc/onRestart()			   //! Called when the action restarts (for example: automenders)
 		sleep(1)
 		started = TIME
 		state = ACTIONSTATE_RUNNING
 		loopStart()
 		return
 
-	proc/loopStart()				//Called after restarting. Meant to cotain code from -and be called from- onStart()
+	proc/loopStart()				//! Called after restarting. Meant to cotain code from -and be called from- onStart()
 		return
 
-	proc/onResume(datum/action/attempted)	 //Called when the action resumes - likely from almost ending. Arg is the action which would have cancelled this.
+	proc/onResume(datum/action/attempted)	 //! Called when the action resumes - likely from almost ending. Arg is the action which would have cancelled this.
 		state = ACTIONSTATE_RUNNING
 		return
 
-	proc/onEnd()				   //Called when the action succesfully ends.
+	proc/onEnd()				   //! Called when the action succesfully ends.
 		state = ACTIONSTATE_DELETE
 		return
 
-	proc/onDelete()				   //Called when the action is complete and about to be deleted. Usable for cleanup and such.
+	proc/onDelete()				   //! Called when the action is complete and about to be deleted. Usable for cleanup and such.
 		return
 
-	proc/updateBar()				// Updates the animations
+	proc/updateBar()				//! Updates the animations
 		return
 
-/datum/action/bar //This subclass has a progressbar that attaches to the owner to show how long we need to wait.
+/datum/action/bar //! This subclass has a progressbar that attaches to the owner to show how long we need to wait.
 	var/obj/actions/bar/bar
 	var/obj/actions/border/border
 	var/obj/actions/bar/target_bar
@@ -932,13 +943,20 @@ var/datum/action_controller/actions
 				G.shoot()
 
 		if (source.use_stamina && source.get_stamina() < STAM_COST)
-			boutput(owner, "<span class='alert>You're too winded to [item ? "place that on" : "take that from"] [him_or_her(target)].</span>")
+			boutput(source, "<span class='alert'>You're too winded to [item ? "place that on" : "take that from"] [him_or_her(target)].</span>")
 			src.resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		source.remove_stamina(STAM_COST)
 
 		if(item)
+			var/obj/item/existing_item = target.get_slot(slot)
+			if(existing_item) // if they have something there, smack it with held item
+				logTheThing(LOG_COMBAT, source, "uses the inventory menu while holding [log_object(item)] to interact with \
+													[log_object(existing_item)] equipped by [log_object(target)].")
+				actions.start(new /datum/action/bar/icon/callback(source, target, item.duration_remove > 0 ? item.duration_remove : 2.5 SECONDS, /mob/proc/click, list(existing_item, list()),  item.icon, item.icon_state, null, null, source), source) //this is messier
+				interrupt(INTERRUPT_ALWAYS)
+				return
 			if(!target.can_equip(item, slot))
 				boutput(source, "<span class='alert'>[item] can not be put there.</span>")
 				interrupt(INTERRUPT_ALWAYS)
@@ -1696,8 +1714,14 @@ var/datum/action_controller/actions
 				return FALSE
 
 			if (human_owner.wear_mask)
-				boutput(human_owner, "<span class='alert'>You need to take off your facemask before you can give CPR!</span>")
-				return FALSE
+				if (human_owner.wear_mask.c_flags & COVERSMOUTH)
+					boutput(human_owner, "<span class='alert'>You need to take off your facemask before you can give CPR!</span>")
+					return FALSE
+				if (istype(human_owner.wear_mask, /obj/item/clothing/mask/cigarette))
+					var/obj/item/clothing/mask/cigarette/C = human_owner.wear_mask
+					human_owner.u_equip(C)
+					C.set_loc(human_owner.loc)
+					boutput(human_owner, "<span class='alert'>You spit out your cigarette in preparation to give CPR!</span>")
 
 		if (ishuman(target))
 			var/mob/living/carbon/human/human_target = target
@@ -1706,8 +1730,14 @@ var/datum/action_controller/actions
 				return FALSE
 
 			if (human_target.wear_mask)
-				boutput(owner, "<span class='alert'>You need to take off [human_target]'s facemask before you can give CPR!</span>")
-				return FALSE
+				if(human_target.wear_mask.c_flags & COVERSMOUTH)
+					boutput(owner, "<span class='alert'>You need to take off [human_target]'s facemask before you can give CPR!</span>")
+					return FALSE
+				if (istype(human_target.wear_mask, /obj/item/clothing/mask/cigarette))
+					var/obj/item/clothing/mask/cigarette/C = human_target.wear_mask
+					human_target.u_equip(C)
+					C.set_loc(human_target.loc)
+					boutput(owner, "<span class='alert'>You knock the cigarette out of [human_target]'s mouth in preparation to give CPR!</span>")
 
 		if (isdead(target))
 			owner.visible_message("<span class='alert'><B>[owner] tries to perform CPR, but it's too late for [target]!</B></span>")
