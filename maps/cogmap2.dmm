@@ -72277,13 +72277,6 @@
 /obj/machinery/drainage,
 /turf/simulated/floor/yellow/side,
 /area/station/crew_quarters/market)
-"dhk" = (
-/obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/station/solar/east)
 "dhl" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'COLLISION HAZARD'";
@@ -115170,7 +115163,7 @@ cLH
 cqE
 aaI
 aaa
-dhk
+aam
 jQd
 dic
 dic
