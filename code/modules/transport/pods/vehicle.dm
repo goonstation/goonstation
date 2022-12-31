@@ -493,7 +493,7 @@
 		*/
 
 	blob_act(var/power)
-		src.health -= power * 2
+		src.health -= power * 3
 		checkhealth()
 
 	get_desc()
@@ -1448,7 +1448,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/vehicle/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if (!user.client || !isliving(user) || isintangible(usr))
+	if (!user.client || !isliving(user) || isintangible(user))
 		return
 	if (is_incapacitated(user))
 		user.show_text("Not when you're incapacitated.", "red")

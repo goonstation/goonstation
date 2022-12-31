@@ -84,6 +84,7 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 			boutput(user, "<span class='alert'>[target] needs to be emptied first.</span>")
 			return
 		user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [target] with [src].</span>")
+		playsound(src, 'sound/items/glass_wipe.ogg', 35, 1)
 
 /obj/item/cloth/towel/white
 	name = "white towel"

@@ -641,6 +641,7 @@
 		src.hud.update_charge()
 
 	emote(var/act, var/voluntary = 1)
+		..()
 		var/param = null
 		if (findtext(act, " ", 1, null))
 			var/t1 = findtext(act, " ", 1, null)
@@ -1287,7 +1288,6 @@
 
 	if (ishuman(target))
 		M.unequip_all()
-		for(var/t in M.organs) qdel(M.organs[text("[t]")])
 
 	M.transforming = 1
 	M.canmove = 0

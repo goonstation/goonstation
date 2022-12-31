@@ -27,18 +27,16 @@ ABSTRACT_TYPE(/datum/manufacture)
 	New()
 		..()
 		if(isnull(item_paths) && length(item_outputs) == 1) // TODO generalize to multiple outputs (currently no such manufacture recipes exist)
-			// sadly we can't use initial() because it's a list :/
 			var/item_type = item_outputs[1]
-			var/obj/dummy = new item_type
-			if(islist(dummy.mats))
+			var/typeinfo/obj/typeinfo = get_type_typeinfo(item_type)
+			if(istype(typeinfo) && islist(typeinfo.mats))
 				item_paths = list()
-				for(var/mat in dummy.mats)
+				for(var/mat in typeinfo.mats)
 					item_paths += mat
-					var/amt = dummy.mats[mat]
+					var/amt = typeinfo.mats[mat]
 					if(isnull(amt))
 						amt = 1
 					item_amounts += amt
-			qdel(dummy)
 		if(isnull(item_paths))
 			item_paths = list() // a bunch of places expect this to be non-null, like the sanity check
 		if (!sanity_check_exemption)
@@ -1983,7 +1981,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Stethoscope"
 	item_paths = list("MET-1","CRY-1")
 	item_amounts = list(2,1)
-	item_outputs = list(/obj/item/medical/medicaldiagnosis/stethoscope)
+	item_outputs = list(/obj/item/medicaldiagnosis/stethoscope)
 	time = 5 SECONDS
 	create = 1
 	category = "Tool"
@@ -2696,6 +2694,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Resource"
 
+/datum/manufacture/handkerchief
+	name = "Handkerchief"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/cloth/handkerchief/white)
+	time = 4 SECONDS
+	create = 1
+	category = "Resource"
+
 /////// pod construction components
 
 /datum/manufacture/pod/parts
@@ -3034,11 +3041,47 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /************ INTERDICTOR STUFF ************/
 
 /datum/manufacture/interdictor_kit
-	name = "Interdictor Assembly Kit"
-	item_paths = list("MET-2","CON-1")
-	item_amounts = list(10,4)
+	name = "Interdictor Frame Kit"
+	item_paths = list("MET-2")
+	item_amounts = list(10)
 	item_outputs = list(/obj/item/interdictor_kit)
-	time = 15 SECONDS
+	time = 10 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/interdictor_board_standard
+	name = "Standard Interdictor Mainboard"
+	item_paths = list("CON-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/interdictor_board)
+	time = 5 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/interdictor_board_nimbus
+	name = "Nimbus Interdictor Mainboard"
+	item_paths = list("CON-1","INS-1","CRY-1")
+	item_amounts = list(4,2,2)
+	item_outputs = list(/obj/item/interdictor_board/nimbus)
+	time = 10 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/interdictor_board_zephyr
+	name = "Zephyr Interdictor Mainboard"
+	item_paths = list("CON-1","viscerite")
+	item_amounts = list(4,5)
+	item_outputs = list(/obj/item/interdictor_board/zephyr)
+	time = 10 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/interdictor_board_devera
+	name = "Devera Interdictor Mainboard"
+	item_paths = list("CON-1","CRY-1","syreline")
+	item_amounts = list(4,2,5)
+	item_outputs = list(/obj/item/interdictor_board/devera)
+	time = 10 SECONDS
 	create = 1
 	category = "Machinery"
 
