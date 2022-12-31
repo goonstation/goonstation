@@ -539,8 +539,8 @@
 					src.component_grid[chosen_slot[1]][chosen_slot[2]] = meat_rod //hehe
 				else
 					meat_rod.throw_at(get_ranged_target_turf(get_turf(src),pick(alldirs),rand(1,20)),rand(1,20),rand(1,20))
-				user.visible_message("<span class='alert'><b>The bits of [user] that didn't fit spray everywhere!</b></span>")
 				user.set_loc(get_turf(src))
+				user.visible_message("<span class='alert'><b>The bits of [user] that didn't fit spray everywhere!</b></span>")
 				user.gib()
 				_comp_grid_overlay_update = TRUE
 				UpdateIcon()
