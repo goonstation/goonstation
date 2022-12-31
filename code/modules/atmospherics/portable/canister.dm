@@ -447,10 +447,10 @@
 			attach_names += I.name
 		. += list("detonatorAttachments" = attach_names)
 
-		var/has_paper = false
+		var/has_paper = FALSE
 		for(var/obj/item/paper/sheet in src.det.attachments)
 			. += list("paperData" = sheet.ui_static_data())
-			has_paper = true
+			has_paper = TRUE
 		. += list("hasPaper" = has_paper)
 
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)

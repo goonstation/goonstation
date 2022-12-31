@@ -264,7 +264,7 @@ var/list/ai_move_scheduled = list()
 					if(length(tmp_best_path))
 						best_score = score
 						best_path = tmp_best_path
-					. = A
+						. = A
 		holder.target = .
 		holder.target_path = best_path
 
