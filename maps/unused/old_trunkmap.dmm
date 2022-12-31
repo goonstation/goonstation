@@ -7262,7 +7262,7 @@
 "apZ" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8;
-
+	
 	},
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -7644,7 +7644,7 @@
 "aqY" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8;
-
+	
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -34476,7 +34476,7 @@
 	netnum = 0;
 	output = 150000
 	},
-/obj/tree1{
+/obj/tree{
 	desc = "A breed of tree which generates obscene amounts of electric energy. OBSCENE! Also it's better than a bush.";
 	name = "Thermoelectric Tree"
 	},

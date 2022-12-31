@@ -2632,7 +2632,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "gd" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "ge" = (
