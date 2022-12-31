@@ -2903,7 +2903,7 @@
 "fX" = (
 /obj/machinery/light/lamp/green,
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"

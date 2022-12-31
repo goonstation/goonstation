@@ -2175,7 +2175,7 @@
 /area/station/engine/storage)
 "aeC" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -3783,7 +3783,7 @@
 /area/station/engine/engineering)
 "ahI" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/machinery/light_switch/south,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
@@ -5854,7 +5854,7 @@
 /area/mining/magnet)
 "amm" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/item/deconstructor,
@@ -6417,7 +6417,7 @@
 /area/station/mining/staff_room)
 "anA" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/clothing/ears/earmuffs,
 /turf/simulated/floor/wood,
 /area/station/mining/staff_room)
@@ -10932,7 +10932,7 @@
 "aye" = (
 /obj/machinery/light/lamp/green,
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/blind_switch/area{
 	pixel_x = -6;
 	pixel_y = 28
@@ -12300,7 +12300,7 @@
 /area/station/maintenance/disposal)
 "aBi" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/decal/cleanable/dirt,
 /obj/item/instrument/bikehorn,
 /obj/item/reagent_containers/food/snacks/pie/cream,
@@ -37937,7 +37937,7 @@
 /area/station/science/gen_storage)
 "bGg" = (
 /obj/table/reinforced/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/storage/toolbox/emergency,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/science/artifact)

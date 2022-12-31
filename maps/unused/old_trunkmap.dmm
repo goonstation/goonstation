@@ -13504,7 +13504,7 @@
 /area/station/security/detectives_office)
 "aFz" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/machinery/light/lamp/green,
 /turf/simulated/floor{
 	icon_state = "carpetS"
@@ -15840,7 +15840,7 @@
 "aLx" = (
 /obj/table/auto,
 /obj/spawner/newbomb/timer,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/reagent_containers/food/drinks/rum_spaced,
 /turf/simulated/floor/white,
 /area/station/science/research_director)

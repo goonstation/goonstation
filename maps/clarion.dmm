@@ -9987,7 +9987,7 @@
 /obj/disposalpipe/segment,
 /obj/decal/cleanable/dirt,
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/reagent_containers/food/snacks/pie/cream,
 /obj/item/instrument/bikehorn,
 /obj/item/stamp/clown,

@@ -1314,7 +1314,7 @@
 /area/station/turret_protected/ai_upload)
 "aCb" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/decal/cleanable/dirt,
 /obj/item/instrument/bikehorn,
 /obj/item/stamp/clown,
@@ -9776,7 +9776,7 @@
 /area/station/hallway/primary/northwest)
 "eHA" = (
 /obj/table/nanotrasen/auto,
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	pixel_x = -3;
 	pixel_y = -4
 	},
@@ -37822,7 +37822,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	pixel_x = -4
 	},
 /obj/item/device/audio_log{
