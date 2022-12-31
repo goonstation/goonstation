@@ -12382,7 +12382,7 @@
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
-
+	
 	},
 /obj/cable{
 	d1 = 4;
@@ -34700,7 +34700,7 @@
 "boF" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen{
 	dir = 1;
-
+	
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -63795,11 +63795,11 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "coD" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "coE" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/wall{
 	desc = "Upon closer inspection, you see that this is a cleverly painted wall.";
 	icon = 'icons/misc/worlds.dmi';
@@ -63808,7 +63808,7 @@
 	},
 /area/station/garden/owlery)
 "coF" = (
-/obj/tree1{
+/obj/tree{
 	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
 	},
 /turf/simulated/wall{
@@ -64225,7 +64225,7 @@
 	},
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
 	dir = 8;
-
+	
 	},
 /turf/simulated/floor/redwhite{
 	dir = 4

@@ -9180,7 +9180,7 @@
 "aCS" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8;
-
+	
 	},
 /obj/machinery/light{
 	dir = 4
@@ -9710,7 +9710,7 @@
 "aEP" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8;
-
+	
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -27671,7 +27671,7 @@
 	name = "floor based power generator";
 	output = 150000
 	},
-/obj/tree1{
+/obj/tree{
 	desc = "A breed of tree which generates obscene amounts of electric energy. OBSCENE! Also it's better than a bush.";
 	name = "Thermoelectric Tree"
 	},

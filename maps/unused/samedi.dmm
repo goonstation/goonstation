@@ -3994,7 +3994,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "ain" = (
-/obj/tree1{
+/obj/tree{
 	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
 	},
 /turf/simulated/floor/grass/leafy,

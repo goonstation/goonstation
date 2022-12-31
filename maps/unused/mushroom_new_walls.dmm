@@ -7299,7 +7299,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aDd" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass/random,
 /area/station/garden/owlery)
 "aDf" = (

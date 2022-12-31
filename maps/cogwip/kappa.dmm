@@ -3748,7 +3748,7 @@
 /turf/simulated/floor/carpet/office,
 /area/space)
 "kV" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass/random/alt,
 /area/space)
 "kW" = (

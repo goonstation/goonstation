@@ -10,7 +10,7 @@
 	fauna_density = 0.5
 
 /datum/biome/icemoon/snow/trees
-	flora_types = list(/obj/tree1{dir=NORTH} = 10,/obj/tree1{dir=EAST} = 10, /obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
+	flora_types = list(/obj/tree{dir=NORTH} = 10,/obj/tree{dir=EAST} = 10, /obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
 	flora_density = 3
 
 /datum/biome/icemoon/ice
