@@ -59,7 +59,6 @@
 #include "defines\layer.dm"
 #include "defines\life.dm"
 #include "defines\logging.dm"
-#include "defines\logic.dm"
 #include "defines\materials.dm"
 #include "defines\mechanics.dm"
 #include "defines\medals.dm"
