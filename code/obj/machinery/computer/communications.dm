@@ -316,7 +316,7 @@
 	set category = "AI Commands"
 	set name = "Call Emergency Shuttle"
 
-	var/call_reason = input("Please state the nature of your current emergency.", "Emergency Shuttle Call Reason", "") as text|null
+	var/call_reason = tgui_input_text(usr, "Please state the nature of your current emergency.", "Emergency Shuttle Call Reason", allowEmpty = TRUE)
 
 	if (isnull(call_reason)) // Cancel
 		return

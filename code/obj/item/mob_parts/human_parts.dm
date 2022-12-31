@@ -3,7 +3,8 @@
 	icon = 'icons/obj/items/human_parts.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "arm-left"
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	var/mob/living/original_holder = null
 	var/datum/appearanceHolder/holder_ahol
 	force = 6
@@ -28,6 +29,13 @@
 			hit_twitch(H)
 			if (brute > 30 && prob(brute - 30) && !disallow_limb_loss)
 				src.sever()
+			else if (burn > 30 && prob(burn) && !disallow_limb_loss)
+				holder.visible_message("<span class='alert'>[holder.name]'s [initial(src.name)] is burnt to ash!</span>")
+				src.remove(FALSE)
+				playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 30)
+				if(prob(20))
+					make_cleanable(/obj/decal/cleanable/ash, get_turf(holder))
+				qdel(src)
 			else if (bone_system && src.bones && brute && prob(brute * 2))
 				src.bones.take_damage(damage_type)
 		health_update_queue |= holder

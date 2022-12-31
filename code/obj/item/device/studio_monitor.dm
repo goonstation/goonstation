@@ -14,7 +14,8 @@
 	frequency = R_FREQ_LOUDSPEAKERS
 	locked_frequency = TRUE
 	rand_pos = 0
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBACK
 	w_class = W_CLASS_NORMAL
 	var/obj/effects/music/effect
 
@@ -362,18 +363,19 @@
 	var/obj/item/breaching_hammer/rock_sledge/instrument
 	var/obj/ability_button/nukie_rocker/song
 	var/looped
+	var/start_time
 	var/last_strum
 
 	New(Instrument, Effect)
 		instrument = Instrument
 		song = Effect
 		looped = 0
+		start_time = TIME
 		last_strum = instrument.strums
 
 		icon = instrument.icon
 		icon_state = instrument.icon_state
 		..()
-
 
 	onUpdate()
 		..()
@@ -413,12 +415,12 @@
 
 	onEnd()
 		..()
-		if(looped > ((src.song.song_duration)/src.duration) )
+		if(TIME - src.start_time > (src.song.song_duration) )
 			return // The Song... ends
 
 		if(last_strum != instrument.strums)
 			instrument.stop_notes()
-			looped++
+			src.looped++
 			src.onRestart()
 
 	proc/blast_to_speakers()

@@ -118,8 +118,8 @@
 	boutput(O, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
 	boutput(O, "<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>")
 	boutput(O, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
-	boutput(O, "To use something, simply double-click it.")
-	boutput(O, "Currently right-click functions will not work for the AI (except examine), and will either be replaced with dialogs or won't be usable by the AI.")
+	boutput(O, "To use something, simply click it.")
+	boutput(O, "Use the prefix <B>:s</B> to speak to fellow silicons through binary.")
 
 	O.show_laws()
 	boutput(O, "<b>These laws may be changed by other players.</b>")
@@ -630,6 +630,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	C.say_language = "animal"
 	C.literate = 0
 	C.original_name = selfmob.real_name
+	C.is_npc = FALSE
 
 	if (traitor)
 		C.show_antag_popup("ghostcritter_antag")
@@ -672,6 +673,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	C.say_language = "animal"
 	C.literate = 0
 	C.original_name = selfmob.real_name
+	C.is_npc = FALSE
 
 	C.show_antag_popup("ghostcritter_mentor")
 	logTheThing(LOG_ADMIN, C, "respawned as a mentor mouse at [log_loc(C)].")
@@ -710,9 +712,9 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	src = null
 	var/mob/living/critter/C = selfmob.make_critter(/mob/living/critter/small_animal/mouse/weak/mentor/admin, spawnpoint, ghost_spawned=TRUE)
 	C.mind.assigned_role = "Animal"
-	// C.say_language = "animal"
 	C.literate = 1
 	C.original_name = selfmob.real_name
+	C.is_npc = FALSE
 
 	//hacky fix : qdel brain to prevent reviving
 	if (C.organHolder)
@@ -731,12 +733,12 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if(!isdead(src) || !src.mind || !ticker || !ticker.mode)
 		return
 	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
-		boutput(src, "Sorry, respawn options aren't availbale during football mode.")
+		boutput(src, "Sorry, respawn options aren't available during football mode.")
 		return
 	var/turf/target_turf = pick(get_area_turfs(/area/afterlife/bar/barspawn))
 
 	if (!src.client) return //ZeWaka: fix for null.preferences
-	var/mob/living/carbon/human/newbody = new(null, null, src.client.preferences, TRUE)
+	var/mob/living/carbon/human/newbody = new(target_turf, null, src.client.preferences, TRUE)
 	newbody.real_name = src.real_name
 	newbody.ghost = src //preserve your original ghost
 	if(!src.mind.assigned_role || iswraith(src) || isblob(src) || src.mind.assigned_role == "Cyborg" || src.mind.assigned_role == "AI")
@@ -776,10 +778,10 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	// 	newbody.abilityHolder.transferOwnership(newbody)
 	// src.abilityHolder = null
 
+	// There are some traits removed in the afterlife bar, these have afterlife_blacklist set to TRUE.
 
 	newbody.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
 	newbody.set_clothing_icon_dirty()
-	newbody.set_loc(target_turf)
 
 	if (src.mind) //Mind transfer also handles key transfer.
 		src.mind.transfer_to(newbody)

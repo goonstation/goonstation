@@ -272,7 +272,8 @@
 		return 0
 
 	src.KillPathAndGiveUp(0)
-	src.bot_mover = new /datum/robot_mover(newmaster = src, _move_delay = move_delay, _target_turf = target_turf, _current_movepath = current_movepath, _adjacent = adjacent, _scanrate = scanrate, _max_dist = max_dist)
+	var/datum/robot_mover/mover = new /datum/robot_mover(newmaster = src, _move_delay = move_delay, _target_turf = target_turf, _current_movepath = current_movepath, _adjacent = adjacent, _scanrate = scanrate, _max_dist = max_dist)
+	src.bot_mover = !QDELETED(mover) ? mover : null
 	return 0
 
 /// movement control datum. Why yes, this is copied from secbot.dm. Which was copied from guardbot.dm
@@ -331,7 +332,7 @@
 			master.KillPathAndGiveUp(0)
 			return
 		var/compare_movepath = src.current_movepath
-		master.path = get_path_to(src.master, src.the_target, max_distance=src.max_dist, id=master.botcard, skip_first=FALSE, simulated_only=FALSE, cardinal_only=TRUE)
+		master.path = get_path_to(src.master, src.the_target, max_distance=src.max_dist, id=master.botcard, skip_first=FALSE, simulated_only=FALSE, cardinal_only=TRUE, do_doorcheck=TRUE)
 		if(!length(master.path))
 			qdel(src)
 			return

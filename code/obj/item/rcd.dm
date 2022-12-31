@@ -35,7 +35,8 @@ Broken RCD + Effects
 	anchored = 0
 	var/matter = 0
 	var/max_matter = 50
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	force = 10
 	throwforce = 10
 	throw_speed = 1
@@ -570,7 +571,17 @@ Broken RCD + Effects
 			var/obj/machinery/door/airlock/T = new interim(A)
 			log_construction(user, "builds an airlock ([T])")
 
-			//if(map_setting == "COG2") T.set_dir(user.dir)
+			// makes everything around it look nice
+			T.set_dir(user.dir)
+			for (var/obj/window/auto/O in orange(1,T))
+				O.UpdateIcon()
+			for (var/obj/grille/G in orange(1,T))
+				G.UpdateIcon()
+			for (var/turf/simulated/wall/auto/W in orange(1,T))
+				W.UpdateIcon()
+			for (var/turf/simulated/wall/false_wall/F in orange(1,T))
+				F.UpdateIcon()
+
 			T.autoclose = TRUE
 
 	update_icon() //we got fancy rcds now
@@ -799,6 +810,15 @@ Broken RCD + Effects
 				T.req_access = null
 				T.req_access_txt = null
 
+			for (var/obj/window/auto/O in orange(1,T))
+				O.UpdateIcon()
+			for (var/obj/grille/G in orange(1,T))
+				G.UpdateIcon()
+			for (var/turf/simulated/wall/auto/W in orange(1,T))
+				W.UpdateIcon()
+			for (var/turf/simulated/wall/false_wall/F in orange(1,T))
+				F.UpdateIcon()
+
 /obj/item/rcd/material
 
 
@@ -970,7 +990,8 @@ Broken RCD + Effects
 	opacity = 0
 	density = 0
 	anchored = 0
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	force = 10
 	throwforce = 10
 	throw_speed = 1
@@ -985,7 +1006,8 @@ Broken RCD + Effects
 	icon_state = "bad_rcd0"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "rcd"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	force = 10
 	throwforce = 10
 	throw_speed = 1
@@ -1065,7 +1087,7 @@ Broken RCD + Effects
 
 				boutput(user, "<span class='combat'>\the [src] shorts out!</span>")
 
-				logTheThing(LOG_COMBAT, user, "manages to vaporize \[[log_loc(A)]] with a halloween RCD.")
+				logTheThing(LOG_COMBAT, user, "manages to vaporize \[[log_loc(A)]] (and themselves) with a halloween RCD.")
 
 				new /obj/effects/void_break(A)
 				if (user)

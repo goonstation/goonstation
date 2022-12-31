@@ -1,4 +1,12 @@
-(T)wed sep 07 22
+(t)fri nov 25 22
+(u)pali
+(*)New Toggle-Whitelist verb which lets you toggle whitelist on or off. And Whitelist-Add-Temp which lets you whitelist a ckey for this round only.<div style='font-size:0.7em;'>If the current server has whitelist turned on by default (i.e. the Dev or Event server) the Toggle-Whitelist command lets you select the number of rounds for which the server will remain open to the public.<br>If the current whitelist status differs from the config status this is displayed in server name as either [CLOSED] or [OPEN] and also with more details in admin status tab.</div>
+(t)sat oct 22 22
+(u)pali
+(*)Radio station music-playing now goes on cooldown when admin music gets played.
+(u)Gerhazo
+(*)Added save/load functionality to the particool UI. Supports saving the particle set properties as well as the set icons.
+(t)wed sep 07 22
 (u)Sord
 (+)Added new "Summon vortexes" random event for admin spawning. This spawns the disaster portals which summons critters. Has an option to use void critters or non-void critters.
 (t)tue aug 30 22

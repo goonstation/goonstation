@@ -95,21 +95,17 @@
 
 /// gets the leftmost screen loc
 /datum/hud/critter/proc/loc_left()
-	if (src.left_offset < -6) // wraps vertically if the magnitude of left offset is greater than 6
+	if (src.left_offset < -9) // Wraps vertically if the magnitude of left offset is greater than 9. Leave a 1 space column for storage containers.
 		src.wraparound_offset_left++
-		if (src.wraparound_offset_right < src.wraparound_offset_left)
-			src.right_offset = 0
-		else
-			src.right_offset = -1
 
 	var/next_left_offset = src.next_left()
 	var/x_offset = 0
 	var/y_offset = 0
 
 	if (next_left_offset < 0)
-		x_offset = next_left_offset
+		x_offset = next_left_offset + src.wraparound_offset_left
 	else if (next_left_offset > 0)
-		x_offset = "+[next_left_offset]"
+		x_offset = "+[next_left_offset + src.wraparound_offset_left]"
 	else
 		x_offset = ""
 
@@ -122,21 +118,17 @@
 
 /// gets the rightmost screen loc
 /datum/hud/critter/proc/loc_right()
-	if (src.right_offset > 6) // wraps vertically if the magnitude of right offset is greater than 6
+	if (src.right_offset > 9) // Wraps vertically if the magnitude of right offset is greater than 8. Leave a 1 space column for the leave pod button.
 		src.wraparound_offset_right++
-		if (src.wraparound_offset_left < src.wraparound_offset_right)
-			src.right_offset = 0
-		else
-			src.right_offset = 1
 
 	var/next_right_offset = src.next_right()
 	var/x_offset = 0
 	var/y_offset = 0
 
 	if (next_right_offset < 0)
-		x_offset = next_right_offset
+		x_offset = next_right_offset - src.wraparound_offset_right
 	else if (next_right_offset > 0)
-		x_offset = "+[next_right_offset]"
+		x_offset = "+[next_right_offset - src.wraparound_offset_right]"
 	else
 		x_offset = ""
 
@@ -269,7 +261,7 @@
 				if (icon_y > 16 || src.master.in_throw_mode)
 					src.master.toggle_throw_mode()
 				else
-					src.master.drop_item()
+					src.master.drop_item(null, TRUE)
 			if ("resist")
 				src.master.resist()
 

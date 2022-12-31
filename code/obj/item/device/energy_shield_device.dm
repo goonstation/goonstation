@@ -2,7 +2,8 @@
 	//TO-DO : Bullets. Direct attacks.
 	name = "Centcom prototype energy-shield"
 	icon_state = "enshield0"
-	flags = FPRINT | TABLEPASS| CONDUCT  | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	item_state = "electronic"
 	throwforce = 5
 	throw_speed = 1

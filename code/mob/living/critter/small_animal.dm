@@ -79,6 +79,8 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		..()
 
 		src.add_stam_mod_max("small_animal", -(STAMINA_MAX*0.5))
+		if (src.real_name == "critter")
+			src.real_name = src.name
 
 	disposing()
 		if(src.is_pet)
@@ -136,29 +138,37 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	speechverb_ask = "squeaks"
 	health_brute = 8
 	health_burn = 8
+	ai_type = /datum/aiHolder/mouse
+	is_npc = TRUE
+	var/attack_damage = 3
+	var/use_custom_color = TRUE
 
 
 	New()
 		..()
 		fur_color =	pick("#101010", "#924D28", "#61301B", "#E0721D", "#D7A83D","#D8C078", "#E3CC88", "#F2DA91", "#F21AE", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")
 		eye_color = "#FFFFF"
+		setup_overlays()
 
 	setup_overlays()
-		fur_color = src.client?.preferences.AH.customization_first_color
-		eye_color = src.client?.preferences.AH.e_color
-		var/image/overlay = image('icons/misc/critter.dmi', "mouse_colorkey")
-		overlay.color = fur_color
-		src.UpdateOverlays(overlay, "hair")
+		if (src.use_custom_color)
+			if (src.client)
+				fur_color = src.client.preferences.AH.customization_first_color
+				eye_color = src.client.preferences.AH.e_color
+			var/image/overlay = image('icons/misc/critter.dmi', "mouse_colorkey")
+			overlay.color = fur_color
+			src.UpdateOverlays(overlay, "hair")
 
-		var/image/overlay_eyes = image('icons/misc/critter.dmi', "mouse_eyes")
-		overlay_eyes.color = eye_color
-		src.UpdateOverlays(overlay_eyes, "eyes")
+			var/image/overlay_eyes = image('icons/misc/critter.dmi', "mouse_eyes")
+			overlay_eyes.color = eye_color
+			src.UpdateOverlays(overlay_eyes, "eyes")
 
 	death()
-		src.ClearAllOverlays()
-		var/image/overlay = image('icons/misc/critter.dmi', "mouse_colorkey-dead")
-		overlay.color = fur_color
-		src.UpdateOverlays(overlay, "hair")
+		if (src.use_custom_color)
+			src.ClearAllOverlays()
+			var/image/overlay = image('icons/misc/critter.dmi', "mouse_colorkey-dead")
+			overlay.color = fur_color
+			src.UpdateOverlays(overlay, "hair")
 		..()
 
 	full_heal()
@@ -212,10 +222,56 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			return
 		. = ..()
 
+	critter_attack(var/mob/target)
+		src.visible_message("<span class='combat'><B>[src]</B> bites [target]!</span>", "<span class='combat'>You bite [target]!</span>")
+		playsound(src.loc, 'sound/weapons/handcuffs.ogg', 50, 1, -1)
+		random_brute_damage(target, rand(src.attack_damage, src.attack_damage+2))
+
+	can_critter_eat()
+		src.active_hand = 2 // mouth hand
+		src.set_a_intent(INTENT_HELP)
+		return can_act(src,TRUE)
+
+/mob/living/critter/small_animal/mouse/dead
+
+	New()
+		. = ..()
+		src.death()
+
 /mob/living/critter/small_animal/mouse/weak
 	health_brute = 2
 	health_burn = 2
 
+/mob/living/critter/small_animal/mouse/mad
+	ai_type = /datum/aiHolder/mouse/mad
+
+	seek_target(range)
+		. = list()
+		for (var/mob/living/C in hearers(range, src))
+			if (isintangible(C)) continue
+			if (isdead(C)) continue
+			if (istype(C, /mob/living/critter/small_animal/mouse) || istype(C, /mob/living/critter/wraith/plaguerat)) continue
+			. += C
+
+	critter_attack(var/mob/target)
+		src.visible_message("<span class='combat'><B>[src]</B> bites [target]!</span>", "<span class='combat'>You bite [target]!</span>")
+		playsound(src.loc, 'sound/weapons/handcuffs.ogg', 50, 1, -1)
+		if(prob(30) && ishuman(target))
+			var/mob/living/carbon/human/H = target
+			if(!H.clothing_protects_from_chems())
+				src.visible_message("<span class='alert'>[src] bites you hard enough to draw blood!</span>", "<span class='alert'>You bite [H] with all your might!</span>")
+				H.emote("scream")
+				bleed(H, rand(5,8), 5)
+				H.contract_disease(pick(/datum/ailment/disease/space_madness, /datum/ailment/disease/berserker), null, null, 1)
+
+//for mice spawned by plaguerat dens
+/mob/living/critter/small_animal/mouse/mad/rat_den
+	var/obj/machinery/wraith/rat_den/linked_den = null
+
+	death()
+		if(linked_den.linked_critters > 0)
+			linked_den.linked_critters--
+		..()
 /* -------------------- Remy -------------------- */
 
 /mob/living/critter/small_animal/mouse/remy
@@ -227,6 +283,8 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_burn = 33
 	fits_under_table = 0
 	pull_w_class = W_CLASS_NORMAL
+	ai_type = /datum/aiHolder/mouse_remy
+	use_custom_color = FALSE
 
 	setup_overlays()
 		return
@@ -1434,6 +1492,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 5
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
+	ai_type = /datum/aiHolder/roach
+	is_npc = TRUE
 
 	setup_healths()
 		. = ..()
@@ -1453,11 +1513,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		src.UpdateOverlays(overlay_eyes, "eyes")
 
 	death()
-		src.ClearAllOverlays()
-		//appears to be missing a dead colorkey
-		//var/image/overlay = image('icons/misc/critter.dmi', "roach_colorkey-dead")
-		//overlay.color = fur_color
-		//src.UpdateOverlays(overlay, "hair")
+		can_lie = 0
+		if (fur_color)
+			var/image/overlay = image('icons/misc/critter.dmi', "roach_colorkey-dead")
+			overlay.color = fur_color
+			src.UpdateOverlays(overlay, "hair")
 		..()
 
 
@@ -1483,6 +1543,22 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream","chitter")
 				return 2
 		return ..()
+
+	attack_hand(mob/living/M)
+		if (ishuman(M) && M.a_intent == INTENT_HARM)
+			if(isdead(src))
+				src.visible_message("<span class='combat'><B>[M] squishes [src] a little more for good measure.</B></span>")
+				return
+			else
+				if (prob(95))
+					src.visible_message("<span class='combat'><B>[M] stomps [src], killing it instantly!</B></span>")
+					src.death()
+					return
+				else
+					src.visible_message("<span class='alert'>Against all odds, [src] stops [M]'s foot and throws them off balance! Woah!</span>", "<span class='alert'>You use all your might to stop [M]'s foot before it crushes you!</span>")
+					M.setStatus("weakened", 5 SECONDS)
+					return
+		. = ..()
 
 /* =================================================== */
 /* -------------------- Scorpion --------------------- */
@@ -1942,6 +2018,134 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream","snap","hiss")
 				return 2
 		return ..()
+
+	ai_controlled
+		is_npc = 1
+		New()
+			..()
+			src.ai = new /datum/aiHolder/wanderer(src)
+			remove_lifeprocess(/datum/lifeprocess/blindness)
+			remove_lifeprocess(/datum/lifeprocess/viruses)
+
+		death(var/gibbed)
+			qdel(src.ai)
+			src.ai = null
+			reduce_lifeprocess_on_death()
+			..()
+
+/* ================================================ */
+/* ------------------- Iguana --------------------- */
+/* ================================================ */
+
+/mob/living/critter/small_animal/iguana
+	name = "space iguana"
+	real_name = "space iguana"
+	desc = "An iguana that came from space. Or maybe went to space. Who knows how it got here?"
+	icon_state = "iguana1"
+	icon_state_dead = "iguana1-dead"
+	hand_count = 2
+	speechverb_say = "hisses"
+	speechverb_exclaim = "wheezes"
+	butcherable = 0
+	health_brute = 15
+	health_burn = 15
+	pet_text = list("gently baps", "pets", "cuddles")
+	density = 1
+	fits_under_table = TRUE
+	var/on_tree
+
+	New()
+		. = ..()
+		START_TRACKING
+		if(prob(20))
+			icon_state = "iguana2"
+			icon_state_dead = "iguana2-dead"
+		AddComponent(/datum/component/waddling, height=4, angle=8)
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "paw"
+		HH.limb_name = "claws"
+
+		HH = hands[2]
+		HH.limb = new /datum/limb/mouth/small
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "mouth"
+		HH.name = "mouth"
+		HH.limb_name = "teeth"
+		HH.can_hold_items = 0
+
+	hand_attack(atom/target, params)
+		if (istype(target, /obj/tree1))
+			var/obj/tree1/T = target
+			var/can_attach = FALSE
+			var/fall_left_or_right
+			var/new_pixel_x
+			var/new_pixel_y
+			if(target.icon == initial(T.icon) && target.icon_state == initial(T.icon_state) && target.y == src.y && !src.rest_mult)
+				if(src.dir & (SOUTH | EAST) )
+					fall_left_or_right = -1
+					switch(T.dir)
+						if(NORTH)
+							new_pixel_x = 31
+							new_pixel_y = 14
+							can_attach = TRUE
+						if(EAST)
+							new_pixel_x = 28
+							new_pixel_y = 12
+							can_attach = TRUE
+						if(WEST)
+							new_pixel_x = 28
+							new_pixel_y = 12
+							can_attach = TRUE
+				else
+					fall_left_or_right = 1
+					switch(T.dir)
+						if(NORTH)
+							new_pixel_x = -6
+							new_pixel_y = 13
+							can_attach = TRUE
+						if(EAST)
+							new_pixel_x = -9
+							new_pixel_y = 13
+							can_attach = TRUE
+						if(WEST)
+							new_pixel_x = -11
+							new_pixel_y = 13
+							can_attach = TRUE
+			if(can_attach)
+				src.setStatus("resting", INFINITE_STATUS)
+				var/matrix/orig_transform = src.transform
+				force_laydown_standup()
+				animate(src, pixel_x = new_pixel_x, pixel_y = new_pixel_y, transform = orig_transform.Turn(fall_left_or_right * 90), time = 2, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+				src.rest_mult = fall_left_or_right
+				src.visible_message("<span class='alert'>[src] slinks onto [target]!</span>")
+				on_tree = TRUE
+				return
+		. = ..()
+
+	force_laydown_standup()
+		if(src.on_tree)
+			on_tree = FALSE
+		. = ..()
+
+	Move()
+		if(src.on_tree && src.rest_mult)
+			delStatus("resting")
+			force_laydown_standup()
+			if(prob(5))
+				src.visible_message("<span class='alert'>[src] falls out of the tree!</span>","<span class='alert'><B>You fall out of the tree!</span>")
+				src.sleeping = 1
+				return
+		..()
 
 	ai_controlled
 		is_npc = 1
@@ -2939,12 +3143,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	var/icon_state_exclaim = "mouse-mentor-exclaim"
 	health_brute = 35
 	health_burn = 35
+	is_npc = FALSE
+	use_custom_color = FALSE
 
 	New()
 		..()
-		/*src.fur_color = "#c486ec"
-		src.eye_color = "#000000"
-		src.setup_overlays()*/
 		src.real_name = "[pick_string("mentor_mice_prefixes.txt", "mentor_mouse_prefix")] [src.name]"
 		src.name = src.real_name
 		abilityHolder.addAbility(/datum/targetable/critter/mentordisappear)
@@ -3081,11 +3284,17 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state_dead = "mouse-admin-dead"
 	icon_state_exclaim = "mouse-admin-exclaim"
 	pull_w_class = W_CLASS_BULKY
+	is_npc = FALSE
+	use_custom_color = FALSE
 
-	New()
+	setup_hands()
 		..()
-		/*src.fur_color = "#d43b3b"
-		src.setup_overlays()*/
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "paw"
+		HH.limb_name = "claws"
 
 	hand_attack(atom/target, params, location, control, origParams)
 		if(istype(target, /mob/living))
@@ -3303,7 +3512,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/gun/spike
+		HH.limb = new /datum/limb/gun/kinetic/spike
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handzap"
 		HH.name = "spikes"

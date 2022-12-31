@@ -2,7 +2,8 @@
 	name = "nanoloom"
 	desc = "A small device capable of rapidly repairing degradation in equipment using material from an attached spool cartridge."
 	icon_state = "nanoloom"
-	flags = ONBELT | SUPPRESSATTACK
+	flags = FPRINT | SUPPRESSATTACK
+	c_flags = ONBELT
 	click_delay = 0.7 SECONDS
 	rand_pos = FALSE
 
@@ -15,7 +16,7 @@
 	attack_self(mob/user as mob)
 		if (loom_cart)
 			boutput(user, "<span class='notice'>You remove the [loom_cart.thread ? null : "spent "]cartridge from the nanoloom.</span>")
-			playsound(src, "sound/machines/click.ogg", 40, 1)
+			playsound(src, 'sound/machines/click.ogg', 40, 1)
 			loom_cart.UpdateIcon()
 			user.put_in_hand_or_drop(loom_cart)
 			src.loom_cart = null
@@ -25,7 +26,7 @@
 		if (istype(W, /obj/item/nanoloom_cartridge))
 			if(!loom_cart)
 				boutput(user, "<span class='notice'>You load the cartridge into the nanoloom.</span>")
-				playsound(src, "sound/machines/click.ogg", 40, 1)
+				playsound(src, 'sound/machines/click.ogg', 40, 1)
 				W.set_loc(src)
 				user.u_equip(W)
 				src.loom_cart = W

@@ -1208,13 +1208,13 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Necessities Vending Machine Restocking Pack"
 
 /datum/supply_packs/catering_vending_restock
-	name = "Catering Vending Machine Restocking Pack"
-	desc = "Various Vending Machine Restock Cartridges for catering"
+	name = "Catering and Hydroponics Vending Machine Restocking Pack"
+	desc = "Various Vending Machine Restock Cartridges for catering and hydroponics"
 	contains = list(/obj/item/vending/restock_cartridge/hydroponics,
 					/obj/item/vending/restock_cartridge/kitchen)
 	cost = 1000
 	containertype = /obj/storage/crate
-	containername = "Catering Vending Machine Restocking Pack"
+	containername = "Catering and Hydroponics Vending Machine Restocking Pack"
 
 /datum/supply_packs/medical_vending_restock
 	name = "Medical Vending Machine Restock Pack"
@@ -1583,7 +1583,6 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 					/obj/submachine/chef_sink,
 					/obj/machinery/deep_fryer,
 					/obj/submachine/foodprocessor,
-					/obj/machinery/vending/monkey,
 					/obj/machinery/vending/kitchen,
 					/obj/kitchenspike,
 					/obj/machinery/gibber)

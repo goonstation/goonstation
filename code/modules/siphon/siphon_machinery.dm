@@ -2,7 +2,8 @@
 /obj/item/device/calibrator
 	name = "harmonic systems calibrator"
 	icon_state = "calibrator"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	force = 5.0
 	w_class = W_CLASS_SMALL
 	throwforce = 5.0
@@ -155,7 +156,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		if (!istype(L))
 			return 0
 		L.visible_message("<span class='alert'><b>[L] shoves their head into [src]'s beam, ripping it off in the matter stream! Holy shit!</b></span>")
-		playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 75)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 75)
 		L.organHolder.drop_organ("head",src) //you've met a terrible fate
 		return 1
 
@@ -213,21 +214,22 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 					if(ytcheck > M.sens_window) continue
 				extract_progressed = TRUE
 				if(src.extract_ticks >= M.tick_req)
-					src.extract_ticks -= M.tick_req
-					var/atom/movable/yielder = new M.product()
-					if(istype(yielder,/obj/item)) //items go into internal reservoir
-						src.contents += yielder
-						src.update_storage_bar()
-					else //pulled out something that isn't an item... what could it be?
-						yielder.set_loc(get_turf(src))
+					while(src.extract_ticks >= M.tick_req && length(src.contents) < src.max_held_items)
+						src.extract_ticks -= M.tick_req
+						var/atom/movable/yielder = new M.product()
+						if(istype(yielder,/obj/item)) //items go into internal reservoir
+							src.contents += yielder
+							src.update_storage_bar()
+						else //pulled out something that isn't an item... what could it be?
+							yielder.set_loc(get_turf(src))
 
 					//non-shear failures
-					//option 1 - too many extraction ticks buffered at once due to mismatch between intensity and requirement
+					//option 1 - more extraction ticks left over after conversion than you'd need for the target material
 					//option 2 - running resonators with the panel open is a bad idea
-					if(src.extract_ticks > 50)
+					if(src.extract_ticks > M.tick_req)
 						if(src.extract_overloaded == FALSE) //warn if newly overloaded
 							src.visible_message("<span class='alert'><B>[src]</B> emits an excess accumulated EEU warning.<span>")
-							playsound(src, "sound/machines/pod_alarm.ogg", 30, 1)
+						playsound(src, 'sound/machines/pod_alarm.ogg', 30, 1)
 						src.extract_overloaded = TRUE
 					else
 						src.extract_overloaded = FALSE
@@ -400,11 +402,11 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		src.mode = newmode
 		switch(newmode)
 			if("low")
-				playsound(src, "sound/machines/click.ogg", 40, 1)
+				playsound(src, 'sound/machines/click.ogg', 40, 1)
 			if("active")
-				playsound(src, "sound/machines/siphon_activate.ogg", 60, 0)
+				playsound(src, 'sound/machines/siphon_activate.ogg', 60, 0)
 			if("high")
-				playsound(src, "sound/machines/pc_process.ogg", 30, 0)
+				playsound(src, 'sound/machines/pc_process.ogg', 30, 0)
 		src.update_fx()
 
 	proc/toggle_drill(var/remote_activation)
@@ -438,7 +440,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	proc/engage_drill()
 		if(src.toggling || src.mode != "high" || !src.powered()) return
 		src.toggling = TRUE
-		playsound(src, "sound/machines/click.ogg", 40, 1)
+		playsound(src, 'sound/machines/click.ogg', 40, 1)
 		src.icon_state = "drill-low"
 		flick("drilldrop",src)
 		SPAWN(2 SECONDS)
@@ -592,14 +594,14 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		if(iswrenchingtool(W))
 			if(!wrenched)
 				src.wrenched = TRUE
-				playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You secure the auxiliary reinforcing bolts to the floor.")
 				src.anchored = 1
 				src.desc = src.wrenched_desc
 				return
 			else if(!maglocked && wrenched)
 				src.wrenched = FALSE
-				playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You undo the auxiliary reinforcing bolts.")
 				src.anchored = 0
 				src.desc = src.regular_desc
@@ -610,13 +612,13 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		else if(isscrewingtool(W))
 			if(src.panelopen)
 				src.panelopen = FALSE
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				boutput(user, "You close the resonator's maintenance panel.")
 				src.UpdateIcon()
 				return
 			else
 				src.panelopen = TRUE
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				boutput(user, "You open the resonator's maintenance panel.")
 				src.UpdateIcon()
 				return
@@ -625,7 +627,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				boutput(user,"The service panel isn't open.")
 			if(HAS_FLAG(src.status,BROKEN))
 				if(W.amount >= 3)
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 40, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 40, 1)
 					boutput(user, "You replace the resonator's damaged wiring.")
 					status &= ~BROKEN
 					src.UpdateIcon()
@@ -685,14 +687,14 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		if(catastrophic)
 			src.visible_message("<span class='alert'>[src] explodes!</span>")
 			new /obj/effects/explosion(src.loc)
-			playsound(src, "sound/effects/Explosion1.ogg", 50, 1)
+			playsound(src, 'sound/effects/Explosion1.ogg', 50, 1)
 			SPAWN(0)
 				explosion_new(src, get_turf(src), 3)
 				qdel(src)
 		else
 			var/faildesc = pick("short-circuits","malfunctions","suddenly deactivates","shorts out","shoots out sparks")
 			src.visible_message("<span class='alert'>[src] [faildesc]!</span>")
-			playsound(src, "sound/effects/shielddown2.ogg", 30, 1)
+			playsound(src, 'sound/effects/shielddown2.ogg', 30, 1)
 			if(limiter.canISpawn(/obj/effects/sparks))
 				var/obj/sparks = new /obj/effects/sparks
 				sparks.set_loc(get_turf(src))

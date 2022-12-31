@@ -54,12 +54,12 @@
 		return
 
 	if(charging)
+		charging.add_fingerprint(user)
+		charging.UpdateIcon()
 		if(iscarbon(user))
 			user.put_in_hand_or_drop(charging)
 		else
 			charging.set_loc(src.loc)
-		charging.add_fingerprint(user)
-		charging.UpdateIcon()
 		src.charging = null
 		user.visible_message("[user] removes the cell from the charger.", "You remove the cell from the charger.")
 		chargelevel = -1
@@ -92,3 +92,9 @@
 	. = ..()
 	if(Obj == src.charging)
 		src.charging = null
+
+/obj/machinery/cell_charger/get_desc(dist)
+	. = ..()
+	if(!charging)
+		return
+	. += "<br><span class='notice'>\The [src] is currently charging \the [src.charging]! It is [round(src.charging.percent())]% charged and has [round(src.charging.charge)]/[src.charging.maxcharge] PUs. </span>"

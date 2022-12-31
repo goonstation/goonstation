@@ -16,6 +16,14 @@
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
+	New(new_loc)
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
+
 	process()
 		if(status & BROKEN) return
 		if(src.active)
@@ -52,7 +60,7 @@
 		//At max fuel, the state will be 4, aka all bars, then it will lower / increase as fuel is added
 		if(fuel_state != last_fuel_state) //The fuel state has changed and we need to do an update
 			last_fuel_state = fuel_state
-			for(var/i = 1; i <= 4; i++)
+			for(var/i in 1 to 4)
 				var/okey = "fuel[i]"
 				if(fuel_state >= i) //Add the overlay
 					var/image/I = GetOverlayImage(okey)
@@ -207,11 +215,11 @@
 		else if (istype(W, /obj/item/spacecash/))
 			if (W.amount == 1)
 				fuel_name = "a credit"
-				fuel += 1
+				fuel += 0.1
 			else
 				fuel_name = "credits"
 				stacked = TRUE
-				handle_stacks(W, 2)
+				handle_stacks(W, 0.1)
 		else if (istype(W, /obj/item/paper/)) fuel += 6
 		else if (istype(W, /obj/item/clothing/gloves/)) fuel += 10
 		else if (istype(W, /obj/item/clothing/head/)) fuel += 20

@@ -616,7 +616,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	name = "Experimental long-range mining teleporter"
 	desc = "Well this looks somewhat unsafe."
 	icon = 'icons/misc/32x64.dmi'
-	icon_state = "englrt0"
+	icon_state = "englrt"
 	density = 0
 	anchored = 1
 	var/recharging =0
@@ -645,7 +645,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		src.add_dialog(user)
 		add_fingerprint(user)
 		busy = 1
-		flick("englrt1", src)
+		flick("englrt-act", src)
 		playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
 		animate_teleport(user)
 		SPAWN(1 SECOND)
@@ -885,7 +885,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				for(var/turf/T in get_area_turfs(/area/trench_landing))
 					L+=T
 
-			if (istype(Obj,/obj/torpedo_targeter) ||istype(Obj,/mob/dead) || istype(Obj,/mob/wraith) || istype(Obj,/mob/living/intangible) || istype(Obj, /obj/lattice) || istype(Obj, /obj/cable/reinforced) || istype(Obj, /obj/arrival_missile))
+			if (istype(Obj,/obj/torpedo_targeter) ||istype(Obj,/mob/dead) || istype(Obj,/mob/living/intangible) || istype(Obj, /obj/lattice) || istype(Obj, /obj/cable/reinforced) || istype(Obj, /obj/arrival_missile))
 				return
 
 			return_if_overlay_or_effect(Obj)
@@ -926,8 +926,6 @@ var/obj/manta_speed_lever/mantaLever = null
 			if (H.mind.assigned_role == "Chief Engineer")
 				duration = round(duration / 2)
 			if (H.mind.assigned_role == "Engineer")
-				duration = round(duration / 2)
-			if (H.mind.assigned_role == "Mechanic")
 				duration = round(duration / 2)
 
 	onUpdate()
@@ -1065,8 +1063,6 @@ var/obj/manta_speed_lever/mantaLever = null
 				duration = round(duration / 2)
 			if (H.mind.assigned_role == "Engineer")
 				duration = round(duration / 2)
-			if (H.mind.assigned_role == "Mechanic")
-				duration = round(duration / 2)
 
 	onUpdate()
 		..()
@@ -1155,8 +1151,6 @@ var/obj/manta_speed_lever/mantaLever = null
 			if (H.mind.assigned_role == "Chief Engineer")
 				duration = round(duration / 2)
 			if (H.mind.assigned_role == "Engineer")
-				duration = round(duration / 2)
-			if (H.mind.assigned_role == "Mechanic")
 				duration = round(duration / 2)
 
 	onUpdate()

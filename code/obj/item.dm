@@ -122,6 +122,7 @@
 	var/obj/item/holding = null
 	var/rarity = ITEM_RARITY_COMMON // Just a little thing to indicate item rarity. RPG fluff.
 	pressure_resistance = 50
+	/// This var fucking sucks. It's used for prox sensors and other stuff that when triggered trigger an item they're attached to. Why is this on /item i am so sad
 	var/obj/item/master = null
 	var/acid_survival_time //nadir support: set in minutes to override how long item will stay intact in contact with acid
 
@@ -261,7 +262,7 @@
 		..()
 		tooltip_rebuild = 1
 		if (istype(src.material))
-			burn_possible = src.material.getProperty("flammable") >= 1 ? TRUE : FALSE
+			burn_possible = src.material.getProperty("flammable") > 1 ? TRUE : FALSE
 			if (src.material.material_flags & MATERIAL_METAL || src.material.material_flags & MATERIAL_CRYSTAL || src.material.material_flags & MATERIAL_RUBBER)
 				burn_type = 1
 			else
@@ -454,8 +455,7 @@
 	if(src.burning || (src in by_cat[TR_CAT_BURNING_ITEMS]))
 		return
 	START_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
-	src.visible_message("<span class='alert'>[src] catches on fire!</span>")
-	src.burning = 1
+	src.burning = TRUE
 	src.firesource = FIRESOURCE_OPEN_FLAME
 	if (istype(src, /obj/item/plant))
 		if (!GET_COOLDOWN(global, "hotbox_adminlog"))
@@ -483,44 +483,6 @@
 	ClearSpecificOverlays("burn_overlay")
 	name = "[pick("charred","burned","scorched")] [name]"
 
-		/*if (src.reagents && src.reagents.reagent_list && length(src.reagents.reagent_list))
-
-			//boutput(world, "<span class='alert'><b>[src] is releasing chemsmoke!</b></span>")
-			//cogwerks note for drsingh: this was causing infinite server-killing problems
-			//someone brought a couple pieces of cheese into chemistry
-			//chlorine trifluoride foam set the cheese on fire causing it to releasee cheese smoke
-			//creating a dozen more cheeses on the floor
-			//which would catch on fire, releasing more cheese smoke
-			//i'm sure you can see where that is going
-			//this will happen with any reagents that create more reagent-containing items on turf reactions
-			var/location = get_turf(src)
-			var/max_vol = reagents.maximum_volume
-			var/rname = reagents.get_master_reagent_name()
-			var/color = reagents.get_master_color(1)
-			var/icon/overlay = icon('icons/effects/96x96.dmi',"smoke")
-			if (color)
-				overlay.Blend(color,ICON_MULTIPLY)
-			var/image/I = image(overlay)
-			I.pixel_x = -32
-			I.pixel_y = -32
-
-			var/the_dir = NORTH
-			for(var/i=0, i<8, i++)
-				var/obj/chem_smoke/C = new/obj/chem_smoke(location, reagents, max_vol)
-				C.overlays += I
-				if (rname) C.name = "[rname] smoke"
-				SPAWN(0)
-					var/my_dir = the_dir
-					var/my_time = rand(80,110)
-					var/my_range = 3
-					SPAWN(my_time) qdel(C)
-					for(var/b=0, b<my_range, b++)
-						sleep(1.5 SECONDS)
-						if (!C) break
-						step(C,my_dir)
-						C.expose()
-				the_dir = turn(the_dir,45) */
-
 /obj/item/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if (src.burn_possible && !src.burning)
 		if ((temperature > T0C + src.burn_point) && prob(5))
@@ -533,6 +495,11 @@
 	if (src.material)
 		src.material.triggerTemp(src, temperature)
 	..() // call your fucking parents
+
+/// Gets the effective contraband level of an item. Use this instead of accessing .contraband directly
+/obj/item/proc/get_contraband()
+	// This needs to be a ternary because the value of the contraband override might be 0
+	return HAS_ATOM_PROPERTY(src, PROP_MOVABLE_CONTRABAND_OVERRIDE) ? GET_ATOM_PROPERTY(src, PROP_MOVABLE_CONTRABAND_OVERRIDE) : src.contraband
 
 /obj/item/proc/update_stack_appearance()
 	return
@@ -706,7 +673,7 @@
 /obj/item/proc/click_drag_tk(atom/over_object, src_location, over_location, over_control, params)
 	if(!src.anchored)
 		if (iswraith(usr))
-			var/mob/wraith/W = usr
+			var/mob/living/intangible/wraith/W = usr
 			//Basically so poltergeists need to be close to an object to send it flying far...
 			if (W.weak_tk && !IN_RANGE(src, W, 2))
 				src.throw_at(over_object, 1, 1)
@@ -956,6 +923,7 @@
 	#ifdef COMSIG_ITEM_UNEQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_UNEQUIPPED, user)
 	#endif
+	src.hide_buttons()
 	for(var/datum/objectProperty/equipment/prop in src.properties)
 		prop.onUnequipped(src, user, src.properties[prop])
 	src.equipped_in_slot = null
@@ -1307,7 +1275,7 @@
 			fuckup_attack_particle(user)
 			armor_blocked = 1
 
-	if (can_disarm)
+	if (src.can_disarm && !((src.temp_flags & IS_LIMB_ITEM) && user == M))
 		msgs = user.calculate_disarm_attack(M, M.get_affecting(user), 0, 0, 0, is_shove = 1, disarming_item = src)
 	else
 		msgs.msg_group = "[usr]_attacks_[M]_with_[src]"
@@ -1450,7 +1418,7 @@
 
 	if(istype(src.loc, /obj/item/storage))
 		var/obj/item/storage/storage = src.loc
-		src.set_loc(get_turf(src)) // so the storage doesn't add it back >:(
+		src.set_loc(null) // so the storage doesn't add it back >:(
 		storage.hud?.remove_item(src)
 
 	var/turf/T = loc
@@ -1476,10 +1444,6 @@
 	if (!(locate(/obj/table) in T) && !(locate(/obj/rack) in T))
 		Ar.sims_score = min(Ar.sims_score + 4, 100)
 
-	if (event_handler_flags & IS_TRINKET) //slow but fast as i can get for now, rewrite trinket holding later
-		for(var/mob/living/carbon/human/M in mobs)
-			if (M.trinket == src)
-				M.trinket = null
 
 	if (special_grab || chokehold)
 		drop_grab()

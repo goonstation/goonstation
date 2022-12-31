@@ -16,7 +16,7 @@ TYPEINFO(/datum/component/clown_disbelief_item)
 	RegisterSignal(parent, COMSIG_ITEM_UNEQUIPPED, .proc/on_unequip)
 
 	src.disbelief_image = image('icons/effects/effects.dmi', null, "nothing")
-	src.disbelief_image.name = "​" // this is actually a zero width space not an empty string
+	src.disbelief_image.name = "\u200b" // zero width space
 	src.disbelief_image.override = 1
 	if(isnull(global.clown_disbelief_images))
 		global.clown_disbelief_images = list()

@@ -19,7 +19,8 @@
 	var/image/fluid_image2
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT | EXTRADELAY | NOSPLASH
+	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY | NOSPLASH
+	c_flags = ONBELT
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
@@ -164,7 +165,7 @@
 				if (G.reagents.total_volume) log_reagents += "[log_reagents(G)] "
 
 		if(!A.dont_log_combat)
-			if(is_dangerous)
+			if(is_dangerous && user)
 				message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
 

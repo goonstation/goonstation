@@ -2717,7 +2717,7 @@
 /area/wizard_station)
 "afT" = (
 /obj/window/auto,
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor5"
 	},
@@ -4348,7 +4348,7 @@
 /area/station/bridge)
 "ajz" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -7260,7 +7260,10 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "apZ" = (
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8;
+	
+	},
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
@@ -7639,7 +7642,10 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aqY" = (
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8;
+	
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aqZ" = (
@@ -9344,8 +9350,7 @@
 /area/station/chapel/sanctuary)
 "ave" = (
 /obj/machinery/door/window/westleft,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "chapel"
 	},
 /turf/simulated/floor/black,
@@ -9926,7 +9931,7 @@
 "awC" = (
 /obj/machinery/light,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/cable{
 	icon_state = "1-8"
@@ -14411,7 +14416,7 @@
 /area/station/crew_quarters/bar)
 "aHL" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -15000,16 +15005,14 @@
 /turf/simulated/floor/caution/east,
 /area/station/quartermaster/office)
 "aJx" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "QM"
 	},
 /turf/simulated/floor/grime,
 /area/station/quartermaster/office)
 "aJy" = (
 /obj/plasticflaps,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "QM"
 	},
 /turf/simulated/floor/grime,
@@ -15018,8 +15021,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "QM"
 	},
 /turf/simulated/floor/grime,
@@ -16657,7 +16659,7 @@
 /area/station/crew_quarters/cafeteria)
 "aNB" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/cafeteria)
@@ -17091,7 +17093,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "aOx" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "aOy" = (
@@ -17320,7 +17322,7 @@
 	amount = 50
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/storage/primary)
@@ -17561,7 +17563,7 @@
 /obj/item/crowbar,
 /obj/machinery/light,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/device/flash,
 /turf/simulated/floor/red/side{
@@ -17696,7 +17698,7 @@
 /area/station/crew_quarters/kitchen)
 "aPU" = (
 /obj/machinery/light/small,
-/obj/critter/mouse{
+/mob/living/critter/small_animal/mouse{
 	health = 25;
 	name = "Nils"
 	},
@@ -18208,7 +18210,7 @@
 /area/station/hallway/primary/central)
 "aQW" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -18444,7 +18446,7 @@
 /area/station/quartermaster/office)
 "aRA" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -19348,7 +19350,7 @@
 /area/station/quartermaster/storage)
 "aTH" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/machinery/light_switch{
 	pixel_x = 25
@@ -19453,7 +19455,7 @@
 	d1 = 1;
 	d2 = 2
 	},
-/obj/critter/mouse/remy,
+/mob/living/critter/small_animal/mouse/remy,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "aTU" = (
@@ -19702,16 +19704,14 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
 "aUy" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/storage)
 "aUz" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -20263,8 +20263,7 @@
 	icon_state = "tube1";
 	dir = 4
 	},
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -20489,7 +20488,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/science/lobby)
@@ -20553,7 +20552,7 @@
 /area/station/science/lab)
 "aWi" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
@@ -20645,8 +20644,7 @@
 /turf/space,
 /area/shuttle_sound_spawn)
 "aWw" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -22007,24 +22005,21 @@
 /turf/space,
 /area/supply/spawn_point)
 "aZu" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
 /turf/space,
 /area/space)
 "aZv" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
 /turf/space,
 /area/supply/delivery_point)
 "aZw" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "QMLoad"
 	},
 /obj/machinery/door/poddoor{
@@ -22038,23 +22033,20 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
 "aZx" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "QMLoad"
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
 "aZy" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "QMLoad"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/storage)
 "aZz" = (
 /obj/machinery/light/small,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "QMLoad"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -22063,8 +22055,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "QMLoad"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -22094,7 +22085,7 @@
 /area/station/hydroponics/bay)
 "aZF" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
@@ -22703,7 +22694,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "baN" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "baO" = (
@@ -23331,7 +23322,7 @@
 "bcq" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -24079,8 +24070,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bed" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "garbage"
 	},
 /turf/simulated/floor/plating,
@@ -24089,14 +24079,13 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "garbage"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bef" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage"
 	},
 /turf/simulated/floor/plating,
@@ -24313,7 +24302,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage"
 	},
 /turf/simulated/floor/plating,
@@ -24507,7 +24496,7 @@
 	pixel_y = 10
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/extinguisher,
 /turf/simulated/floor/white,
@@ -24799,7 +24788,7 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "bfO" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage"
 	},
 /obj/machinery/door/poddoor{
@@ -24985,7 +24974,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bgg" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage"
 	},
 /obj/machinery/crusher,
@@ -25223,7 +25212,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bgF" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage"
 	},
 /turf/simulated/floor/engine,
@@ -25511,7 +25500,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage"
 	},
 /obj/machinery/atmospherics/pipe/vent{
@@ -25529,7 +25518,7 @@
 /area/station/crew_quarters/fitness)
 "bhp" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
@@ -25620,7 +25609,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bhF" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage"
 	},
 /obj/machinery/door/poddoor{
@@ -25964,7 +25953,7 @@
 /area/station/hallway/primary/south)
 "biD" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -27841,7 +27830,7 @@
 /area/station/crew_quarters/locker)
 "bmN" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)

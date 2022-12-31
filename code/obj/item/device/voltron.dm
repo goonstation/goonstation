@@ -20,7 +20,7 @@
 			target.set_loc(src)
 			img = image('icons/effects/effects.dmi',src ,"energyorb")
 			target << img
-		RegisterSignal(the_user, list(COMSIG_MOB_DROPPED), .proc/handle_dropped_item)
+		RegisterSignal(the_user, COMSIG_MOB_DROPPED, .proc/handle_dropped_item)
 		APPLY_ATOM_PROPERTY(the_user, PROP_MOB_CANTTHROW, src)
 
 		//SPAWN(0) check() but why

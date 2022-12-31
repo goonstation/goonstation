@@ -36,21 +36,6 @@
 		if (src.client)
 			src.removeOverlaysClient(src.client)
 
-		var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-		if (target)
-			var/turf/T = get_turf(target)
-			if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && (restricted_z_allowed(src, T) || (src.client && src.client.holder)))))
-				src.set_loc(T)
-			else
-				if (ASLoc)
-					src.set_loc(ASLoc)
-				else
-					src.z = 1
-		else
-			if (ASLoc)
-				src.set_loc(ASLoc)
-			else
-				src.z = 1
 		STOP_TRACKING
 		..()
 
@@ -118,7 +103,7 @@
 				src.attach_hud(hud)
 
 		if (isobj(target))
-			src.RegisterSignal(target, list(COMSIG_PARENT_PRE_DISPOSING), .verb/stop_observing)
+			src.RegisterSignal(target, COMSIG_PARENT_PRE_DISPOSING, .verb/stop_observing)
 
 	click(atom/target, params, location, control)
 		if(!isnull(target) && (target.flags & TGUI_INTERACTIVE))

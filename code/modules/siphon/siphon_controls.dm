@@ -285,13 +285,14 @@
 		var/list/manifest = known_devices[device_index]
 		for(var/field in manifest)
 			if(field == "Intensity")
-				var/maxintens = manifest["Maximum Intensity"]
-				intensity_sum += manifest[field]
-				minitext += "<strong>[field]</strong> &middot; [strip_html(manifest[field])][maxintens ? " / [maxintens]" : ""] "
+				var/maxintens = tidy_net_data(manifest["Maximum Intensity"])
+				if(isnum(manifest[field]))
+					intensity_sum += manifest[field]
+				minitext += "<strong>[field]</strong> &middot; [tidy_net_data(manifest[field])][maxintens ? " / [maxintens]" : ""] "
 				minitext += "<A href='[topicLink("calibrate","\ref[device_index]")]'>(Calibrate)</A><br>"
 			else if(field != "INT_TARGETID" && field != "Maximum Intensity")
 				if(field == "Identifier" && manifest[field] == "SIPHON") saveforsiphon = TRUE
-				minitext += "<strong>[field]</strong> &middot; [isnum(manifest[field]) ? manifest[field] : strip_html(manifest[field])]<br>"
+				minitext += "<strong>[field]</strong> &middot; [tidy_net_data(manifest[field])]<br>"
 		if(saveforsiphon)
 			mainlist += minitext
 		else
@@ -397,67 +398,103 @@
 		h3 { font-size: 110%; margin-top: 1em; }
 	</style>"}
 
-	HTML += "This computer lists our projections<br>"
-	HTML += "for outcomes of certain resonant parameters<br>"
-	HTML += "when applied to the harmonic siphon.<br>"
-	HTML += "It <strong>does not control siphon function</strong>;<br>"
-	HTML += "please use provided devices for that purpose.<br><br>"
-	HTML += "A subset of these entries contain configurations for<br>"
-	HTML += "resonator positions corresponding to successful<br>"
-	HTML += "extraction of their listed resource; you are<br>"
-	HTML += "not required to use these parameters.<br>"
-	HTML += "They are given for reference and ease of initial use.<br><br>"
-	HTML += "<strong>Please see end of list for a</strong><br>"
-	HTML += "<strong>glossary of pertinent terms.</strong><br><br>"
+	HTML += {"This computer lists our projections<br>
+	for outcomes of certain resonant parameters<br>
+	when applied to the Harmonic Siphon.<br>
+	It <strong>does not control Siphon function</strong>;<br>
+	please use provided devices for that purpose.<br>
+	<br>
+	A subset of these entries contain configurations for<br>
+	resonator positions corresponding to successful<br>
+	extraction of their listed resource; you are<br>
+	not required to use these parameters.<br>
+	They are given for reference and ease of initial use.<br>
+	<br>
+	<strong>Please see end of list for a glossary of</strong><br>
+	<strong>pertinent terms, and guidance on Siphon use.</strong><br>
+	<br>"}
 
 	src.build_mineral_list()
 	if (src.mineral_list)
 		HTML += src.mineral_list
 
-	HTML += "<h2>GLOSSARY</h2>"
-	HTML += "<h3>EEU: Effective Extraction Units</h3>"
-	HTML += "Each time the harmonic siphon cycles, one EEU is <br>"
-	HTML += "produced for each unit of resonance in active <br>"
-	HTML += "resonators; once cumulative EEU matches a material's <br>"
-	HTML += "required EEU per extraction under appropriate resonant<br>"
-	HTML += "conditions, a unit of that material is produced and added<br>"
-	HTML += "to the siphon's internal resource buffer.<br><br>"
-	HTML += "Increased total resonance results in more EEU per cycle;<br>"
-	HTML += "maximum production is reached by matching the EEU<br>"
-	HTML += "per cycle to the resource's EEU per extraction.<br><br>"
-	HTML += "<strong>Warning: EEU per cycle greatly exceeding</strong><br>"
-	HTML += "<strong>the required EEU per extraction on a</strong><br>"
-	HTML += "<strong>sustained basis can cause resonator damage.</strong><br>"
-	HTML += "<h3>LATERAL RESONANCE</h3>"
-	HTML += "First of three resonant parameters, charted on<br>"
-	HTML += "the letter axis. Type-AX resonators will raise or lower<br>"
-	HTML += "this value by eight units per intensity at 'point-blank'<br>"
-	HTML += "(columns D or F), diminishing by powers of two to a <br>"
-	HTML += "minimum of one unit at max range (columns A or I).<br>"
-	HTML += "<h3>VERTICAL RESONANCE</h3>"
-	HTML += "Second of three resonant parameters, charted on<br>"
-	HTML += "the number axis. Type-AX resonators will raise or lower<br>"
-	HTML += "this value by eight units per intensity at 'point-blank'<br>"
-	HTML += "(rows 3 or 5), diminishing by powers of two to a <br>"
-	HTML += "minimum of one unit at max range (rows 0 or 8).<br>"
-	HTML += "<h3>RESONANT SHEAR</h3>"
-	HTML += "Third of three resonant parameters, a byproduct<br>"
-	HTML += "of lateral and vertical resonance.<br>"
-	HTML += "When positive and negative resonance values cancel out<br>"
-	HTML += "on the same axis, a shear will be produced equal to<br>"
-	HTML += "the amount of resonance cancelled.<br>"
-	HTML += "Shear cannot be produced directly, but can be mitigated<br>"
-	HTML += "by use of the Type-SM resonator, mitigating one to eight<br>"
-	HTML += "units of shear per intensity, depending on distance.<br><br>"
-	HTML += "<strong>Warning: A shear value of 64 or greater can cause</strong><br>"
-	HTML += "<strong>significant malfunctions, intensifying with magnitude,</strong><br>"
-	HTML += "<strong>if it does not match an extraction target.</strong><br>"
-	HTML += "<h3>SENSITIVITY MARGIN</h3>"
-	HTML += "Some extraction targets are more forgiving of <br>"
-	HTML += "inexact parameters than others. If this value is listed,<br>"
-	HTML += "<strong>any</strong> resonance parameter may differ by<br>"
-	HTML += "the amount of the listed value without an<br>"
-	HTML += "adverse effect on extraction.<br>"
+	HTML += {"<h2>GLOSSARY & GUIDANCE</h2>
+	<h3>EEU: Effective Extraction Units</h3>
+	Each time the Harmonic Siphon cycles, one EEU is<br>
+	produced for each unit of intensity in active<br>
+	resonators; once cumulative EEU matches a material's<br>
+	required EEU per extraction under appropriate resonant<br>
+	conditions, a unit of that material is produced and added<br>
+	to the Siphon's internal resource buffer.<br>
+	<br>
+	Increased total intensity results in more EEU per cycle;<br>
+	the theoretical maximum output can be achieved<br>
+	by achieving total intensity equal to 20 times the<br>
+	required EEU of the target resource.<br>
+	<br>
+	<strong>Warning: High rates of production which are</strong><br>
+	<strong>mismatched to the size of the internal reservoir</strong><br>
+	<strong>may cause significant damage to resonators;</strong><br>
+	if the Siphon attempts to fill its reservoir and<br>
+	fails, with residual EEU greater than the extraction<br>
+	target's requirement, malfunction is highly probable.<br>
+	<h3>RESONATORS AND DISTANCE</h3>
+	When utilizing resonators in conjunction with the<br>
+	Harmonic Siphon, it's important to understand the<br>
+	effect of distance on Type-AX and Type-SM resonators.<br>
+	<br>
+	<strong>Type-AX resonators</strong> influence lateral and vertical<br>
+	resonances based on distance from the 'pinch points'.<br>
+	<br>
+	As an example of this, a resonator placed in column F<br>
+	will always produce +8 lateral resonance per intensity,<br>
+	whether it's in F1, F8 or anywhere in between.<br>
+	<br>
+	This allows these resonators to be placed far from the<br>
+	Siphon and still significantly influence parameters.<br>
+	<br>
+	<strong>Type-SM resonators</strong>, on the other hand, reduce shear<br>
+	simply based on their distance from the Siphon itself;<br>
+	as an example, G2 and D6 would both cause a Type-SM<br>
+	resonator to subtract four shear per intensity.<br>
+	<h3>LATERAL RESONANCE</h3>
+	First of three resonant parameters,<br>
+	charted on the letter axis.<br>
+	<br>
+	Type-AX resonators will raise or lower<br>
+	this value by eight units per intensity at 'point-blank'<br>
+	(columns D or F), diminishing by powers of two to a <br>
+	minimum of one unit at max range (columns A or I).<br>
+	<h3>VERTICAL RESONANCE</h3>
+	Second of three resonant parameters,<br>
+	charted on the number axis.<br>
+	<br>
+	Type-AX resonators will raise or lower<br>
+	this value by eight units per intensity at 'point-blank'<br>
+	(rows 3 or 5), diminishing by powers of two to a <br>
+	minimum of one unit at max range (rows 0 or 8).<br>
+	<h3>RESONANT SHEAR</h3>
+	Third of three resonant parameters, a byproduct<br>
+	of lateral and vertical resonance.<br>
+	<br>
+	When positive and negative resonance values cancel out<br>
+	on the same axis, a shear will be produced equal to<br>
+	the amount of resonance cancelled.<br>
+	<br>
+	Shear cannot be produced directly, but can be mitigated<br>
+	by use of the Type-SM resonator, mitigating eight to one<br>
+	units of shear per intensity, decreasing with greater<br>
+	distance from the Harmonic Siphon.<br>
+	<br>
+	<strong>Warning: A shear value of 64 or greater can cause</strong><br>
+	<strong>dangerous malfunctions, scaling with magnitude,</strong><br>
+	<strong>if it does not match an extraction target.</strong><br>
+	<h3>SENSITIVITY MARGIN</h3>
+	Some extraction targets are more forgiving of <br>
+	inexact parameters than others. If this value is listed,<br>
+	<strong>any</strong> resonance parameter may differ by<br>
+	the amount of the listed value without an<br>
+	adverse effect on extraction.<br>"}
 
 	user.Browse(HTML, "window=siphonControl_\ref[src];title=Resonance Calibration Database;size=420x500;")
 	onclose(user, "siphonControl_\ref[src]")

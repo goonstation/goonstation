@@ -13,7 +13,8 @@ There's much less duplicate code here than there used to be, it could probably b
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "injectorbelt_atm"
 	item_state = "injector"
-	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
+	flags = FPRINT | TABLEPASS | NOSPLASH
+	c_flags = ONBELT
 	mats = 10
 
 	var/can_trigger = 1

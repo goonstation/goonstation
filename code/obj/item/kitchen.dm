@@ -43,7 +43,8 @@ TRAYS
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	stamina_damage = 5
 	stamina_cost = 10
 	stamina_crit_chance = 15
@@ -151,7 +152,8 @@ TRAYS
 /obj/item/kitchen/utensil/knife
 	name = "knife"
 	icon_state = "knife"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
@@ -1024,9 +1026,9 @@ TRAYS
 				else
 					ingredienttype="nonmeat"
 				var/image/foodoverlay = new /image('icons/obj/kitchen.dmi',"[ingredienttype]-[src.toppings]") //setting up an overlay image
-				foodoverlay.color = FOOD.food_color
+				foodoverlay.color = FOOD.get_food_color()
 				foodoverlay.layer = (src.layer+3)
-				toppingdata.Add(FOOD.food_color)
+				toppingdata.Add(FOOD.get_food_color())
 				FOOD.reagents?.trans_to(roll,FOOD.reagents.total_volume)
 				for(var/food_effect in FOOD.food_effects)
 					if(food_effect in roll.food_effects)

@@ -936,7 +936,7 @@ $(function() {
         }
         var popupContent = '<div class="head">String Highlighting</div>' +
             '<div class="highlightPopup" id="highlightPopup">' +
-                '<div>Choose up to '+opts.highlightLimit+' strings that will highlight the line when they appear in chat.</div>' +
+                '<div>Choose up to '+opts.highlightLimit+' strings that will highlight the line when they appear in chat. Regex is supported.</div>' +
                 '<form id="highlightTermForm">' +
                     termInputs +
                     '<div><input type="text" name="highlightColor" id="highlightColor" class="highlightColor" '+
@@ -961,7 +961,7 @@ $(function() {
         for (var count = 0; count < opts.highlightLimit; count++) {
             var term = $('#highlightTermInput'+count).val();
             if (term !== null && /\S/.test(term)) {
-                opts.highlightTerms.push(term.trim().toLowerCase());
+                opts.highlightTerms.push(term);
             }
         }
 

@@ -24,7 +24,8 @@ CONTAINS:
 	icon_state = "scalpel1"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "scalpel"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_CUT
@@ -93,7 +94,8 @@ CONTAINS:
 	icon_state = "saw"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "saw"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SAWING
 	hit_type = DAMAGE_CUT
@@ -160,7 +162,8 @@ CONTAINS:
 	icon_state = "spoon"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "scalpel"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SPOONING
 	hit_type = DAMAGE_STAB
@@ -228,7 +231,7 @@ CONTAINS:
 	throw_speed = 4
 	throw_range = 20
 	force = 5
-	flags = ONBELT
+	c_flags = ONBELT
 	object_flags = NO_ARM_ATTACH | NO_GHOSTCRITTER
 	var/datum/projectile/staple = new/datum/projectile/bullet/staple
 	var/ammo = 20
@@ -1106,7 +1109,8 @@ CONTAINS:
 	icon_state = "hemostat"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "hemostat"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
@@ -1508,7 +1512,7 @@ keeping this here because I want to make something else with it eventually
 		I.glide_size = 0 // required for smooth movement with the tray
 		// register for pickup, register for being pulled off the table, register for item deletion while attached to table
 		SPAWN(0)
-			RegisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING), .proc/detach)
+			RegisterSignals(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING), .proc/detach)
 
 	proc/detach(obj/item/I as obj) //remove from the attached items list and deregister signals
 		src.attached_objs.Remove(I)

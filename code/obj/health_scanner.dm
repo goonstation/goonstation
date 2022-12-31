@@ -5,6 +5,7 @@
 	var/id = 0.0 // who are we?
 	var/partner_range = 3 // how far away should we look?
 	var/find_in_range = 1
+	mats = list("CON-1" = 5, "CRY" = "2")
 
 	New()
 		..()

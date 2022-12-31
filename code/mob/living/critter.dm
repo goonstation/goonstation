@@ -187,8 +187,8 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 	///enables mob ai that was disabled by a hibernation task
 	proc/wake_from_hibernation()
-		if(src.is_npc)
-			src.ai?.enabled = TRUE
+		if(src.is_npc && !src.client)
+			src.ai?.enable()
 			src.last_hibernation_wake_tick = TIME
 			src.registered_area?.registered_mob_critters -= src
 			src.registered_area = null
@@ -1284,7 +1284,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 			src.set_a_intent(INTENT_HARM )
 			hud.update_intent()
 		if ("drop")
-			src.drop_item()
+			src.drop_item(null, TRUE)
 		if ("swaphand")
 			src.swap_hand()
 		if ("attackself")
@@ -1385,12 +1385,12 @@ ABSTRACT_TYPE(/mob/living/critter)
 /mob/living/critter/Logout()
 	..()
 	if (src.ai && !src.ai.enabled && src.is_npc)
-		ai.enabled = TRUE
+		ai.enable()
 
 /mob/living/critter/Login()
 	..()
 	if (src.ai?.enabled && src.is_npc)
-		ai.enabled = FALSE
+		ai.disable()
 		var/datum/targetable/A = src.abilityHolder?.getAbility(/datum/targetable/ai_toggle)
 		A?.updateObject()
 

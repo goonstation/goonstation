@@ -12,6 +12,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		SPAWN(0)
 			src.update_dir()
 			for (var/obj/machinery/mining_magnet/MM in range(1,src))
@@ -20,6 +21,7 @@
 				break
 
 	disposing()
+		STOP_TRACKING
 		if (linked_magnet)
 			qdel(linked_magnet)
 		linked_magnet = null
@@ -812,7 +814,9 @@
 /obj/machinery/computer/magnet/connection_scan()
 	linked_magnets = list()
 	var/badmagnets = 0
-	for (var/obj/machinery/magnet_chassis/MC in range(20,src))
+	for_by_tcl(MC, /obj/machinery/magnet_chassis)
+		if(!IN_RANGE(MC, src, 20))
+			continue
 		if (MC.linked_magnet)
 			linked_magnets += MC.linked_magnet
 		else
@@ -875,13 +879,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/mining_toughness = 1 //Incoming damage divided by this unless tool has power enough to overcome.
 	var/topnumber = 1
 	var/orenumber = 1
-
-#ifdef UNDERWATER_MAP
-	fullbright = 0
-	luminosity = 1
-#else
-	fullbright = 1
-#endif
 
 	dark
 		fullbright = 0
@@ -1038,7 +1035,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		..()
 		worldgenCandidates += src
 		if(current_state <= GAME_STATE_PREGAME)
-			src.build_icon()
+			src.color = src.stone_color
 
 	generate_worldgen()
 		. = ..()
@@ -1161,14 +1158,25 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			setTexture("damage3", BLEND_MULTIPLY, "damage")
 		return
 
-	proc/build_icon()
+	update_icon()
+		. = ..()
 		src.color = src.stone_color
+		src.ClearAllOverlays() // i know theres probably a better way to handle this
+		src.top_overlays()
+		src.ore_overlays()
 
 	proc/top_overlays() // replaced what was here with cool stuff for autowalls
 		var/image/top_overlay = image('icons/turf/walls_asteroid.dmi',"top[src.topnumber]")
 		top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[src.icon_state]"))
 		top_overlay.layer = ASTEROID_TOP_OVERLAY_LAYER
 		UpdateOverlays(top_overlay, "ast_top_rock")
+
+	proc/ore_overlays()
+		if(src.ore) // make sure ores dont turn invisible
+			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[src.ore?.name][src.orenumber]")
+			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[src.icon_state]"))
+			ore_overlay.layer = ASTEROID_ORE_OVERLAY_LAYER // so meson goggle nerds can still nerd away
+			src.UpdateOverlays(ore_overlay, "ast_ore")
 
 	proc/space_overlays()
 		for (var/turf/space/A in orange(src,1))
@@ -1180,9 +1188,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			edge_overlay.color = src.stone_color
 			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
 			src.space_overlays += edge_overlay
-#ifndef UNDERWATER_MAP // We don't want fullbright edges underwater. This fixes 'shadow' issue.
-			A.UpdateOverlays(new /image/fullbright, "fullbright")
-#endif
 
 	proc/dig_asteroid(var/mob/living/user, var/obj/item/mining_tool/tool)
 		if (!user || !tool || !istype(src)) return
@@ -1304,21 +1309,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		src.stone_color = new_color
 		src.set_opacity(0)
 		src.levelupdate()
-		for (var/turf/simulated/wall/auto/asteroid/A in range(src,1))
-			A.ClearAllOverlays() // i know theres probably a better way to handle this
+		for (var/turf/simulated/wall/auto/asteroid/A in orange(src,1))
 			A.UpdateIcon()
-			var/image/top_overlay = image('icons/turf/walls_asteroid.dmi',"top[A.topnumber]")
-			top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[A.icon_state]"))
-			top_overlay.layer = ASTEROID_TOP_OVERLAY_LAYER
-			A.UpdateOverlays(top_overlay, "ast_top_rock")
-			if(A?.ore) // make sure ores dont turn invisible
-				var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[A.ore.name][A.orenumber]")
-				ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[A.icon_state]"))
-				ore_overlay.layer = ASTEROID_ORE_OVERLAY_LAYER // so meson goggle nerds can still nerd away
-				A.UpdateOverlays(ore_overlay, "ast_ore")
-#ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
-			A.UpdateOverlays(new /image/fullbright, "fullbright")
-#endif
 		for (var/turf/simulated/floor/plating/airless/asteroid/A in range(src,1))
 			A.UpdateIcon()
 #ifdef UNDERWATER_MAP
@@ -1380,7 +1372,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	luminosity = 3
 #else
 	luminosity = 1
-	fullbright = 1
 #endif
 
 	dark
@@ -1447,9 +1438,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			edge_overlay.color = src.stone_color
 			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
 			src.space_overlays += edge_overlay
-#ifndef UNDERWATER_MAP // We don't want fullbright edges underwater. This fixes 'shadow' issue.
-			A.UpdateOverlays(new /image/fullbright, "fullbright")
-#endif
 
 
 // Tool Defines
@@ -1463,7 +1451,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	item_state = "pick"
 	health = 8
 	w_class = W_CLASS_NORMAL
-	flags = ONBELT
+	c_flags = ONBELT
 	force = 7
 	var/cell_type = null
 	var/dig_strength = 1
@@ -1498,14 +1486,18 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 		if (SEND_SIGNAL(src, COMSIG_CELL_USE, use) & CELL_INSUFFICIENT_CHARGE)
 			src.power_down()
+			OVERRIDE_COOLDOWN(src, "depowered", 8 SECONDS)
 			var/turf/T = get_turf(src)
-			T.visible_message("<span class='alert'>[src] runs out of charge and powers down!</span>")
+			T.visible_message("<span class='alert'>[src] runs out of charge and triggers an emergency shutdown!</span>")
 		return 1
 
 	attack_self(var/mob/user as mob)
 		if (!digcost)
 			return
 		if (src.process_charges(0))
+			if(GET_COOLDOWN(src, "depowered"))
+				boutput(user, "<span class='alert'>[src] was recently power cycled and is still cooling down!</span>")
+				return
 			if (!src.status)
 				boutput(user, "<span class='notice'>You power up [src].</span>")
 				src.power_up()
@@ -1530,6 +1522,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		return
 
 	proc/power_down()
+		ON_COOLDOWN(src, "depowered", 1 SECOND)
 		src.tooltip_rebuild = 1
 		src.status = 0
 		if (powered_overlay)
@@ -1566,7 +1559,7 @@ obj/item/clothing/gloves/concussive
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "powerpick"
 	item_state = "ppick1"
-	flags = ONBELT
+	c_flags = ONBELT
 	dig_strength = 2
 	digcost = 2
 	cell_type = /obj/item/ammo/power_cell
@@ -1615,7 +1608,7 @@ obj/item/clothing/gloves/concussive
 	icon_state = "lasdrill"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "drill"
-	flags = ONBELT
+	c_flags = ONBELT
 	force = 10
 	mats = 4
 	dig_strength = 2
@@ -1682,7 +1675,7 @@ obj/item/clothing/gloves/concussive
 	icon_state = "powershovel"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "pshovel1"
-	flags = ONBELT
+	c_flags = ONBELT
 	dig_strength = 0
 	digcost = 2
 	cell_type = /obj/item/ammo/power_cell
@@ -1728,7 +1721,7 @@ obj/item/clothing/gloves/concussive
 /obj/item/breaching_charge/mining
 	name = "concussive charge"
 	desc = "It is set to detonate in 5 seconds."
-	flags = ONBELT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	var/emagged = 0
@@ -1869,7 +1862,9 @@ obj/item/clothing/gloves/concussive
 	/// List of types that cargo teles are allowed to send. Built in New, shared across all teles
 	var/static/list/allowed_types = list()
 	w_class = W_CLASS_SMALL
-	flags = ONBELT | FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	c_flags = ONBELT
+
 	mats = 4
 
 	New()
@@ -2038,7 +2033,7 @@ obj/item/clothing/gloves/concussive
 	desc = "A device capable of detecting nearby mineral deposits."
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "minanal"
-	flags = ONBELT
+	c_flags = ONBELT
 	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
@@ -2105,7 +2100,7 @@ obj/item/clothing/gloves/concussive
 	desc = "The scanner doesn't look right somehow."
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "minanal"
-	flags = ONBELT
+	c_flags = ONBELT
 	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
@@ -2136,10 +2131,10 @@ obj/item/clothing/gloves/concussive
 			var/action = tgui_input_list(user, "What do you want to do?", "Mineral Accumulator", list("Flip the power switch","Change the destination","Remove the power cell"))
 			if (action == "Remove the power cell")
 				var/obj/item/cell/PCEL = src.cell
-				user.put_in_hand_or_drop(PCEL)
 				boutput(user, "You remove [cell].")
 				if (PCEL) //ZeWaka: fix for null.updateicon
 					PCEL.UpdateIcon()
+				user.put_in_hand_or_drop(PCEL)
 
 				src.cell = null
 			else if (action == "Change the destination")
@@ -2301,7 +2296,7 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 		mailgroup = MGO_ENGINEER
 		name = "Engineering Pad"
 	mechanics
-		mailgroup = MGO_MECHANIC
+		mailgroup = MGO_ENGINEER
 		name = "Mechanics Pad"
 	magnet
 		mailgroup = MGD_MINING
@@ -2333,8 +2328,6 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 				src.mailgroup = MGD_MEDRESEACH
 			else if (istype(area, /area/station/science) || istype(area, /area/research_outpost))
 				src.mailgroup = MGD_SCIENCE
-			else if (istype(area, /area/station/engine/elect))
-				src.mailgroup = MGO_MECHANIC
 			else if (istype(area, /area/station/engine))
 				src.mailgroup = MGO_ENGINEER
 			else if (istype(area, /area/station/mining) || istype(area, /area/station/quartermaster/refinery) || istype(area, /area/mining))

@@ -480,6 +480,7 @@
 	stamina_cost = 5
 	stamina_crit_chance = 50
 	pickup_sfx = 'sound/items/blade_pull.ogg'
+	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 
 	New()
 		..()
@@ -504,7 +505,6 @@
 		take_bleeding_damage(M, null, 5, DAMAGE_CUT)
 
 /obj/item/dagger/attack(target, mob/user)
-	playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 	if(ismob(target))
 		take_bleeding_damage(target, user, 5, DAMAGE_STAB)
 	..()
@@ -795,7 +795,8 @@
 
 	disposing()
 		. = ..()
-		STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
+		if (hunter_key)
+			STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
 
 /////////////////////////////////////////////////// Axe ////////////////////////////////////////////
 
@@ -870,7 +871,8 @@
 	icon_state = "fireaxe"
 	item_state = "fireaxe"
 	hitsound = null
-	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY | ONBELT
+	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY
+	c_flags = ONBELT
 	object_flags = NO_ARM_ATTACH
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING //TOOL_CHOPPING flagged items do 4 times as much damage to doors.
 	hit_type = DAMAGE_CUT
@@ -1247,7 +1249,8 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY | ONBELT
+	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	c_flags = ONBELT
 	var/obj/item/swords/sword_inside = 1
 	var/sheathed_state = "katana_sheathed"
 	var/sheath_state = "katana_sheath"
@@ -1412,7 +1415,7 @@
 	wear_image_icon = 'icons/mob/clothing/back.dmi' //todo back sprites
 	icon_state = "claymore"
 	item_state = "longsword"
-	flags = ONBACK
+	c_flags = ONBACK
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
 	contraband = 5
@@ -1522,7 +1525,8 @@ obj/item/whetstone
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "hadar_sword2"
 	item_state = "hadar_sword2"
-	flags = ONBACK | FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBACK
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
 	contraband = 5
@@ -1652,7 +1656,8 @@ obj/item/whetstone
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	force = 15.0 //damage increases by 2.5 for every soul they take
 	throwforce = 15 //damage goes up by 2.5 for every soul they take
-	flags = FPRINT | CONDUCT | TABLEPASS | ONBELT
+	flags = FPRINT | CONDUCT | TABLEPASS
+	c_flags = ONBELT
 	item_function_flags = IMMUNE_TO_ACID
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING
@@ -1715,6 +1720,139 @@ obj/item/whetstone
 		cant_drop = 1
 		throwforce = 20 //higher base damage, lower once the slasher starts scaling up their machete
 		force = 20
+
+
+// Halberd- Experimental weapon by NightmareChamillian
+#define HALB_HEAVY_DAMAGE 35
+#define HALB_MED_DAMAGE 24
+#define HALB_LIGHT_DAMAGE 15
+
+#define HALB_HEAVY_STAMDAM 40
+#define HALB_LIGHT_STAMDAM 20
+
+#define HALB_HEAVY_STAMCOST 35
+#define HALB_MED_STAMCOST 20
+#define HALB_LIGHT_STAMCOST 10
+
+/obj/item/halberd
+	name = "Halberd"
+	desc = "An ancient axe-like weapon capable of cleaving and piercing flesh with ease. You have no idea what this is doing outside a museum."
+	icon = 'icons/obj/large/64x32.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "halberdhoriz"
+	icon_state = "halberdnormal"
+
+	w_class = W_CLASS_BULKY
+	two_handed = 1
+	throw_range = 10
+	throwforce = 30 //yeet like spear
+	stamina_crit_chance = 5
+
+	//these combat variables change depending on intent- starts with help intent vars
+	force = HALB_MED_DAMAGE
+	stamina_damage = HALB_LIGHT_STAMDAM
+	stamina_cost = HALB_LIGHT_STAMCOST
+	var/guard = null //! used to keep track of what melee properties we're using
+
+	hit_type = DAMAGE_CUT
+	flags = FPRINT | TABLEPASS | USEDELAY
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
+	item_function_flags = USE_INTENT_SWITCH_TRIGGER | USE_SPECIALS_ON_ALL_INTENTS
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_SWORD)
+
+	setupProperties()
+		. = ..()
+		setProperty("deflection", 60)
+		setProperty("block", 40)
+
+	intent_switch_trigger(mob/user as mob)
+		if(guard != user.a_intent)
+			change_guard(user,user.a_intent)
+
+	proc/change_guard(var/mob/user,var/intent) //heavily modified kendo code
+		guard = intent
+		switch(guard)
+			if("help") //light swing with the axe
+				force = HALB_MED_DAMAGE
+				stamina_damage = HALB_LIGHT_STAMDAM
+				stamina_cost = HALB_LIGHT_STAMCOST
+				item_state = "halberdhoriz"
+				icon_state = "halberdnormal"
+				hit_type = DAMAGE_CUT
+				src.click_delay = COMBAT_CLICK_DELAY * 0.75
+				hitsound =  'sound/impact_sounds/Blade_Small_Bloody.ogg'
+				src.setItemSpecial(/datum/item_special/simple)
+				boutput(user, "<span class='notice'>You will now make light swings with the axe!</span>")
+			if("disarm") //thrust with the pointy end
+				force = HALB_LIGHT_DAMAGE
+				stamina_damage = HALB_LIGHT_STAMDAM
+				stamina_cost = HALB_LIGHT_STAMCOST
+				item_state = "halberdverti"
+				icon_state = "halberdnormal"
+				hit_type = DAMAGE_STAB
+				src.click_delay = COMBAT_CLICK_DELAY * 0.60
+				hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+				src.setItemSpecial(/datum/item_special/rangestab)
+				boutput(user, "<span class='notice'>You will thrust with the tip!</span>")
+
+			if("grab") //attack with the spur on the back
+				force = HALB_LIGHT_DAMAGE
+				stamina_damage = HALB_HEAVY_STAMDAM
+				stamina_cost = HALB_MED_STAMCOST
+				item_state = "halberdhoriz"
+				icon_state = "halberdupsidown"
+				hit_type = DAMAGE_STAB
+				src.click_delay = COMBAT_CLICK_DELAY
+				hitsound ='sound/impact_sounds/coconut_break.ogg' //it's a good hitsound when you ignore the name
+				src.setItemSpecial(/datum/item_special/simple)
+				boutput(user, "<span class='notice'>You will now make dehabilitating swings with the spur!</span>")
+
+			if("harm") //wide, tiring swings with the axe
+				force = HALB_HEAVY_DAMAGE
+				stamina_damage = HALB_HEAVY_STAMDAM
+				stamina_cost = HALB_HEAVY_STAMCOST
+				item_state = "halberdhoriz"
+				icon_state = "halberdnormal"
+				hit_type = DAMAGE_CUT
+				src.click_delay = COMBAT_CLICK_DELAY * 1.25
+				hitsound =  'sound/impact_sounds/Blade_Small_Bloody.ogg'
+				src.setItemSpecial(/datum/item_special/swipe)
+				boutput(user, "<span class='notice'>You will now make heavy swings with the axe!</span>")
+
+		user.update_inhands()
+		src.tooltip_rebuild = TRUE
+
+	attack_hand(mob/user)
+		if(src.loc != user)
+			change_guard(user,user.a_intent)
+		..()
+
+	dropped(mob/user as mob)
+		..()
+		stat_reset()
+
+	proc/stat_reset() //sets it to normal
+		src.force = HALB_MED_DAMAGE
+		src.stamina_damage = HALB_LIGHT_STAMDAM
+		src.stamina_cost = HALB_LIGHT_STAMCOST
+		src.item_state = "halberd1"
+		src.hit_type = DAMAGE_CUT
+		src.click_delay = COMBAT_CLICK_DELAY * 0.75
+		src.hitsound =  'sound/impact_sounds/Blade_Small_Bloody.ogg'
+		src.setItemSpecial(/datum/item_special/simple)
+		src.tooltip_rebuild = TRUE
+
+#undef HALB_HEAVY_DAMAGE
+#undef HALB_MED_DAMAGE
+#undef HALB_LIGHT_DAMAGE
+#undef HALB_HEAVY_STAMDAM
+#undef HALB_LIGHT_STAMDAM
+#undef HALB_HEAVY_STAMCOST
+#undef HALB_MED_STAMCOST
+#undef HALB_LIGHT_STAMCOST
 
 /obj/item/swords/sord
 	name = "gross sord"

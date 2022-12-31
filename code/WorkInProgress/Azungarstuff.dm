@@ -110,7 +110,7 @@
 
 	Entered(var/mob/M)
 		. = ..()
-		if (istype(M,/mob/dead) || istype(M,/mob/wraith) || istype(M,/mob/living/intangible) || istype(M, /obj/lattice))
+		if (istype(M,/mob/dead) || istype(M,/mob/living/intangible) || istype(M, /obj/lattice))
 			return
 		if(!ismob(M))
 			return
@@ -1023,7 +1023,7 @@
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "syndicargotele"
 	w_class = W_CLASS_SMALL
-	flags = ONBELT
+	c_flags = ONBELT
 	mats = 4
 
 /obj/decoration/scenario/crate

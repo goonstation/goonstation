@@ -76,7 +76,7 @@ A Flamethrower in various states of assembly
 		AddComponent(/datum/component/holdertargeting/fullauto, src.shoot_delay, src.shoot_delay, 1)
 
 	/// Just check if there's a usable air and fuel tank
-	canshoot()
+	canshoot(mob/user)
 		if(istype(src.gastank) && src.gastank.air_contents && istype(src.fueltank) && src.fueltank.reagents)
 			return TRUE
 
@@ -85,7 +85,7 @@ A Flamethrower in various states of assembly
 
 	/// allow refilling the fuel tank by simply clicking the reagent dispensers
 	afterattack(atom/target, mob/user, flag)
-		if(istype(target, /obj/reagent_dispensers) && in_interact_range(src,target))
+		if(is_reagent_dispenser(target)&& in_interact_range(src,target))
 			if(src.fueltank?.reagents)
 				var/obj/tank = target
 				tank.reagents.trans_to(src.fueltank, (src.fueltank.reagents.maximum_volume - (src.fueltank.reagents.total_volume)))
@@ -119,7 +119,7 @@ A Flamethrower in various states of assembly
 		if(!P.proj_data)
 			return
 
-		if(!canshoot())
+		if(!canshoot(null)) //null because I can't be assed
 			return
 
 		var/list/P_special_data = P.special_data
@@ -195,7 +195,8 @@ A Flamethrower in various states of assembly
 	icon_state = "syndflametank0"
 	base_icon_state = "syndflametank"
 	desc = "A back mounted fueltank/jetpack system for use with a tactical flamethrower."
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | OPENCONTAINER
+	flags = FPRINT | TABLEPASS | CONDUCT | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
+	c_flags = ONBACK
 	var/obj/item/gun/flamethrower/backtank/linkedflamer
 	inventory_counter_enabled = 1
 	move_triggered = 1

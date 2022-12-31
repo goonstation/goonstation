@@ -53,7 +53,7 @@
 				W.reagents.clear_reagents()		// avoid null error
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
+		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user) && isalive(user) && !isintangible(user))
 			return src.Attackby(W, user)
 		return ..()
 
@@ -62,19 +62,78 @@
 		user.lastattacked = src
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 			if (H.gloves)
+				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 				user.visible_message("<span class='notice'>[user] cleans [his_or_her(user)] gloves.</span>")
 				H.gloves.clean_forensic() // Ditto (Convair880).
 				H.set_clothing_icon_dirty()
 			else
-				user.visible_message("<span class='notice'>[user] washes [his_or_her(user)] hands.</span>")
-				if (H.sims)
-					H.sims.affectMotive("Hygiene", 2)
-				H.blood_DNA = null // Don't want to use it here, though. The sink isn't a shower (Convair880).
-				H.blood_type = null
-				H.set_clothing_icon_dirty()
+				if(H.sims)
+					if (H.sims.getValue("Hygiene") < SIMS_HYGIENE_THRESHOLD_MESSY)
+						playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+						user.show_text("You're too messy for handwashing to be useful. You need a shower or a bath.", "red")
+					else
+						user.visible_message("<span class='notice'>[user] starts washing [his_or_her(user)] hands.</span>")
+						actions.start(new/datum/action/bar/private/handwashing(user,src),user)
+				else //simpler handwashing if hygiene isn't a concern
+					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+					user.visible_message("<span class='notice'>[user] washes [his_or_her(user)] hands.</span>")
+					H.blood_DNA = null
+					H.blood_type = null
+					H.set_clothing_icon_dirty()
 		..()
+
+/datum/action/bar/private/handwashing
+	duration = 1 SECOND //roughly matches the rate of manual clicking
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+	id = "handwashing"
+	var/mob/living/carbon/human/user
+	var/obj/submachine/chef_sink/sink
+
+	New(usermob,sinkerino)
+		user = usermob
+		sink = sinkerino
+		..()
+
+	onUpdate()
+		..()
+		if(BOUNDS_DIST(user, sink) > 1 || user == null || sink == null || user.l_hand || user.r_hand)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+
+	onStart()
+		..()
+		if(BOUNDS_DIST(user, sink) > 1 || user == null || sink == null || user.l_hand || user.r_hand)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		src.loopStart()
+
+
+	loopStart()
+		..()
+		playsound(get_turf(sink), 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+
+	onEnd()
+		if(BOUNDS_DIST(user, sink) > 1 || user == null || sink == null || user.l_hand || user.r_hand)
+			..()
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if (user.sims)
+			var/cleanup_rate = 2
+			if(user.traitHolder.hasTrait("training_medical") || user.traitHolder.hasTrait("training_chef"))
+				cleanup_rate = 3
+			user.sims.affectMotive("Hygiene", cleanup_rate)
+		user.blood_DNA = null
+		user.blood_type = null
+		user.set_clothing_icon_dirty()
+
+		src.onRestart()
+
+	onInterrupt()
+		..()
+
 
 /obj/submachine/ice_cream_dispenser
 	name = "Ice Cream Dispenser"
@@ -220,7 +279,7 @@
 		else ..()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if ((istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone) || istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/)) && in_interact_range(W, user) && in_interact_range(src, user))
+		if ((istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone) || istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/)) && in_interact_range(W, user) && in_interact_range(src, user) && isalive(user) && !isintangible(user))
 			return src.Attackby(W, user)
 		return ..()
 
@@ -707,7 +766,6 @@ table#cooktime a#start {
 						else if (bonus == -1)
 							if (F.quality > 0.5)
 								F.quality = 0.5
-							F.heal_amt = 0
 						if (src.emagged)
 							F.from_emagged_oven = 1
 						F.set_loc(src.loc)
@@ -721,10 +779,8 @@ table#cooktime a#start {
 
 					if (bonus == 1)
 						F.quality = 5
-					else if (bonus == -1)
-						F.quality = recipebonus - cook_amt
-						if (istype(F, /obj/item/reagent_containers/food/snacks))
-							F.heal_amt = 0
+					else
+						F.quality = clamp(5 - abs(recipebonus - cook_amt), 0, 5)
 					if (src.emagged && istype(F))
 						F.from_emagged_oven = 1
 					if (derivename)
@@ -829,7 +885,7 @@ table#cooktime a#start {
 		src.updateUsrDialog()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user) && W.w_class <= W_CLASS_HUGE && !W.anchored)
+		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user) && W.w_class <= W_CLASS_HUGE && !W.anchored && isalive(user) && !isintangible(user))
 			return src.Attackby(W, user)
 		return ..()
 
@@ -1070,7 +1126,7 @@ table#cooktime a#start {
 			return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (BOUNDS_DIST(src, user) > 0 || !isliving(user) || iswraith(user) || isintangible(user))
+		if (BOUNDS_DIST(src, user) > 0 || !isliving(user) || iswraith(user) || isintangible(user) || !isalive(user) || isintangible(user))
 			return
 		if (is_incapacitated(user) || user.restrained())
 			return
@@ -1188,7 +1244,7 @@ var/list/mixer_recipes = list()
 		return attack_hand(user)
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
+		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user) && isalive(user) && !isintangible(user))
 			return src.Attackby(W, user)
 		return ..()
 

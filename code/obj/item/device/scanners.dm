@@ -16,7 +16,8 @@ Contains:
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	icon_state = "t-ray0"
 	var/on = 0
-	flags = FPRINT|ONBELT|TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	m_amt = 150
@@ -146,7 +147,8 @@ that cannot be itched
 	icon_state = "fs"
 	w_class = W_CLASS_SMALL // PDA fits in a pocket, so why not the dedicated scanner (Convair880)?
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS | CONDUCT | SUPPRESSATTACK
+	c_flags = ONBELT
 	mats = 3
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	var/active = 0
@@ -184,7 +186,7 @@ that cannot be itched
 		src.add_fingerprint(user)
 
 		var/holder = src.loc
-		var/search = input(user, "Enter name, fingerprint or blood DNA.", "Find record", "") as null|text
+		var/search = tgui_input_text(user, "Enter name, fingerprint or blood DNA.", "Find record")
 		if (src.loc != holder || !search || user.stat)
 			return
 		search = copytext(sanitize(search), 1, 200)
@@ -284,7 +286,8 @@ that cannot be itched
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "healthanalyzer-no_up" // someone made this sprite and then this was never changed to it for some reason???
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	throwforce = 3
 	w_class = W_CLASS_TINY
 	throw_speed = 5
@@ -432,7 +435,8 @@ that cannot be itched
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "reagentscan"
 	desc = "A hand-held device that scans and lists the chemicals inside the scanned subject."
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	throwforce = 3
 	w_class = W_CLASS_TINY
 	throw_speed = 5
@@ -485,7 +489,8 @@ that cannot be itched
 	icon_state = "atmos-no_up"
 	item_state = "analyzer"
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	throwforce = 5
 	w_class = W_CLASS_SMALL
 	throw_speed = 4
@@ -612,13 +617,29 @@ that cannot be itched
 	name = "security RecordTrak"
 	desc = "A device used to scan in prisoners and update their security records."
 	icon_state = "recordtrak"
-	var/mode = 1
 	var/datum/db_record/active1 = null
 	var/datum/db_record/active2 = null
 	w_class = W_CLASS_NORMAL
 	item_state = "recordtrak"
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | EXTRADELAY
+	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
+	c_flags = ONBELT
 	mats = 3
+
+
+	///List of record settings
+	var/list/modes = list(PRISONER_MODE_NONE, PRISONER_MODE_PAROLED, PRISONER_MODE_INCARCERATED, PRISONER_MODE_RELEASED)
+	///The current setting
+	var/mode = PRISONER_MODE_NONE
+
+	var/list/datum/contextAction/contexts = list()
+
+	New()
+		contextLayout = new /datum/contextLayout/experimentalcircle
+		..()
+		for(var/actionType in childrentypesof(/datum/contextAction/prisoner_scanner))
+			var/datum/contextAction/prisoner_scanner/action = new actionType()
+			if (action.mode in src.modes)
+				src.contexts += action
 
 	attack(mob/living/carbon/human/M, mob/user)
 		if (!istype(M))
@@ -630,8 +651,8 @@ that cannot be itched
 		//if( !istype(get_area(src), /area/security/prison) && !istype(get_area(src), /area/security/main))
 		//	boutput(user, "<span class='alert'>Device only works in designated security areas!</span>")
 		//	return
-		boutput(user, "<span class='notice'>You scan in [M]</span>")
-		boutput(M, "<span class='alert'>[user] scans you with the Securotron-5000</span>")
+		boutput(user, "<span class='notice'>You scan in [M].</span>")
+		boutput(M, "<span class='alert'>[user] scans you with the RecordTrak!</span>")
 		for(var/datum/db_record/R as anything in data_core.general.records)
 			if (lowertext(R["name"]) == lowertext(M.name))
 				//Update Information
@@ -668,27 +689,36 @@ that cannot be itched
 		////Security Records
 		var/datum/db_record/E = data_core.security.find_record("name", src.active1["name"])
 		if(E)
-			if(src.mode == 1)
-				E["criminal"] = "Incarcerated"
-			else if(src.mode == 2)
-				E["criminal"] = "Parolled"
-			else if(src.mode == 3)
-				E["criminal"] = "Released"
-			else
-				E["criminal"] = "None"
+			switch (mode)
+				if(PRISONER_MODE_NONE)
+					E["criminal"] = "None"
+
+				if(PRISONER_MODE_PAROLED)
+					E["criminal"] = "Parolled"
+
+				if(PRISONER_MODE_RELEASED)
+					E["criminal"] = "Released"
+
+				if(PRISONER_MODE_INCARCERATED)
+					E["criminal"] = "Incarcerated"
 			return
 
 		src.active2 = new /datum/db_record()
 		src.active2["name"] = src.active1["name"]
 		src.active2["id"] = src.active1["id"]
-		if(src.mode == 1)
-			src.active2["criminal"] = "Incarcerated"
-		else if(src.mode == 2)
-			src.active2["criminal"] = "Parolled"
-		else if(src.mode == 3)
-			src.active2["criminal"] = "Released"
-		else
-			src.active2["criminal"] = "None"
+		switch (mode)
+			if(PRISONER_MODE_NONE)
+				src.active2["criminal"] = "None"
+
+			if(PRISONER_MODE_PAROLED)
+				src.active2["criminal"] = "Parolled"
+
+			if(PRISONER_MODE_RELEASED)
+				src.active2["criminal"] = "Released"
+
+			if(PRISONER_MODE_INCARCERATED)
+				src.active2["criminal"] = "Incarcerated"
+
 		src.active2["sec_flag"] = "None"
 		src.active2["mi_crim"] = "None"
 		src.active2["mi_crim_d"] = "No minor crime convictions."
@@ -700,22 +730,31 @@ that cannot be itched
 		return
 
 	attack_self(mob/user as mob)
+		user.showContextActions(src.contexts, src, src.contextLayout)
 
-		if (src.mode == 1)
-			src.mode = 2
-			boutput(user, "<span class='notice'>you switch the record mode to Parolled</span>")
-		else if (src.mode == 2)
-			src.mode = 3
-			boutput(user, "<span class='notice'>you switch the record mode to Released</span>")
-		else if (src.mode == 3)
-			src.mode = 4
-			boutput(user, "<span class='notice'>you switch the record mode to None</span>")
-		else
-			src.mode = 1
-			boutput(user, "<span class='notice'>you switch the record mode to Incarcerated</span>")
+	proc/switch_mode(var/mode, var/mob/user)
+
+		src.mode = mode
+
+		switch (mode)
+			if(PRISONER_MODE_NONE)
+				boutput(user, "<span class='notice'>you switch the record mode to None.</span>")
+
+			if(PRISONER_MODE_PAROLED)
+				boutput(user, "<span class='notice'>you switch the record mode to Paroled.</span>")
+
+			if(PRISONER_MODE_RELEASED)
+				boutput(user, "<span class='notice'>you switch the record mode to Released.</span>")
+
+			if(PRISONER_MODE_INCARCERATED)
+				boutput(user, "<span class='notice'>you switch the record mode to Incarcerated.</span>")
 
 		add_fingerprint(user)
 		return
+
+	dropped(var/mob/user)
+		. = ..()
+		user.closeContextActions()
 
 /obj/item/device/ticket_writer
 	name = "Security TicketWriter 2000"
@@ -724,7 +763,8 @@ that cannot be itched
 	item_state = "electronic"
 	w_class = W_CLASS_SMALL
 
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 
 	attack_self(mob/user)
 		var/menuchoice = tgui_alert(user, "What would you like to do?", "Ticket writer", list("Ticket", "Nothing"))
@@ -787,7 +827,8 @@ that cannot be itched
 /obj/item/device/appraisal
 	name = "cargo appraiser"
 	desc = "Handheld scanner hooked up to Cargo's market computers. Estimates sale value of various items."
-	flags = FPRINT|ONBELT|TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	m_amt = 150
 	mats = 5
@@ -872,7 +913,7 @@ that cannot be itched
 
 		if (user.client && !user.client.preferences?.flying_chat_hidden)
 			var/image/chat_maptext/chat_text = null
-			var/popup_text = "<span class='ol c pixel'[sell_value == 0 ? " style='color: #bbbbbb;'>No value" : ">$[round(sell_value)]"]</span>"
+			var/popup_text = "<span class='ol c pixel'[sell_value == 0 ? " style='color: #bbbbbb;'>No value" : ">[round(sell_value)][CREDIT_SIGN]"]</span>"
 			chat_text = make_chat_maptext(A, popup_text, alpha = 180, force = 1, time = 1.5 SECONDS)
 			// many of the artifacts are upside down and stuff, it makes text a bit hard to read!
 			chat_text.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA

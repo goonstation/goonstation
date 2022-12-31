@@ -39,7 +39,8 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 
 	New(var/loc,var/list/viral_list)
 		..()
-		setup(loc,viral_list)
+		if(loc)
+			setup(loc,viral_list)
 
 	setup(var/L,var/list/viral_list)
 		..()
@@ -469,6 +470,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	proc/add_volume(var/add_color, var/reagent_id = "blood", var/amount = 1, var/vis_amount = 1, var/list/bdata = null, var/i_state = null, var/direction = null, var/do_fluid_react = 1, blood_reagent_data=null)
 	// add_color passes the blood's color to the overlays
 	// vis_amount should only be 1-5 if you want anything to happen
+		if(src.disposed)
+			return
 		if (istype(bdata))
 			src.blood_DNA = bdata["bDNA"]
 			src.blood_type = bdata["btype"]
@@ -761,7 +764,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	get_desc(dist)
 		. = "<br><span class='notice'>It says[src.material ? src.material : src.color_name ? " in [src.color_name]" : null]:</span><br>[words]"
-		if (src.reagents.total_volume)
+		if (src.reagents?.total_volume)
 			. += "<br><span class = 'notice'>It's written in a [get_nearest_color(src.reagents.get_average_color())] substance."
 
 	UpdateName()
@@ -1204,6 +1207,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	layer = MOB_LAYER+1
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "cobweb1"
+	anchored = 2
 
 /obj/decal/cleanable/molten_item
 	name = "gooey grey mass"
@@ -1211,6 +1215,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	layer = OBJ_LAYER
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "molten"
+	anchored = 2
 
 /obj/decal/cleanable/cobweb2
 	name = "cobweb"
@@ -1335,7 +1340,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	attack_hand(var/mob/user)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (H.job == "Roboticist" || H.job == "Engineer" || H.job == "Mechanic")
+			if (H.job == "Roboticist" || H.job == "Engineer")
 				user.visible_message("<span class='notice'><b>[H]</b> starts rifling through \the [src] with their hands. What a weirdo.</span>",\
 				"<span class='notice'>You rake through \the [src] with your bare hands.</span>")
 				playsound(src.loc, 'sound/effects/sparks3.ogg', 50, 1)

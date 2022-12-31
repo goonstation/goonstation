@@ -60,6 +60,7 @@
 			reagents.add_reagent(src.flavor, 40)
 			return
 		START_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
+		AddComponent(/datum/component/loctargeting/simple_light, 255, 110, 135, 90, src.on)
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
@@ -120,6 +121,8 @@
 
 			hit_type = DAMAGE_BURN
 
+			SEND_SIGNAL(src, COMSIG_LIGHT_ENABLE)
+
 	proc/put_out(var/mob/user as mob, var/message as text)
 		if (src.on == 1)
 			src.on = -1
@@ -138,6 +141,8 @@
 			processing_items.Remove(src)
 
 			hit_type = DAMAGE_BLUNT
+
+			SEND_SIGNAL(src, COMSIG_LIGHT_DISABLE)
 
 			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
 
@@ -532,7 +537,8 @@
 	var/max_cigs = 6
 	var/cigtype = /obj/item/clothing/mask/cigarette
 	var/package_style = "cigpacket"
-	flags = ONBELT | TABLEPASS | FPRINT
+	flags = TABLEPASS | FPRINT
+	c_flags = ONBELT
 	stamina_damage = 3
 	stamina_cost = 3
 	rand_pos = 1
@@ -655,7 +661,8 @@
 	var/cigcount = 5
 	var/cigtype = /obj/item/clothing/mask/cigarette/cigar
 	var/package_style = "cigarbox"
-	flags = ONBELT | TABLEPASS | FPRINT
+	flags = TABLEPASS | FPRINT
+	c_flags = ONBELT
 	stamina_damage = 3
 	stamina_cost = 3
 	rand_pos = 1
@@ -719,7 +726,8 @@
 	cigcount = 5
 	cigtype = /obj/item/clothing/mask/cigarette/cigar/gold
 	package_style = "cigarbox"
-	flags = ONBELT | TABLEPASS | FPRINT
+	flags = TABLEPASS | FPRINT
+	c_flags = ONBELT
 	stamina_damage = 3
 	stamina_cost = 3
 	rand_pos = 1
@@ -1096,7 +1104,8 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	w_class = W_CLASS_TINY
 	throwforce = 4
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
+	flags = FPRINT | TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	click_delay = 0.7 SECONDS
 	stamina_damage = 5
@@ -1333,7 +1342,7 @@
 
 	New()
 		. = ..()
-		RegisterSignal(src, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), .proc/update_hotbox_flag)
+		RegisterSignals(src, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), .proc/update_hotbox_flag)
 
 	proc/update_hotbox_flag(thing, previous_loc, direction)
 		if (!firesource) return

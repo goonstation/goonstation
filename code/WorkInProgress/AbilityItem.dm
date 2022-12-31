@@ -142,9 +142,14 @@
 	name = "(De)Activate Magboots"
 	icon_state = "magbootson"
 	desc = "Toggle your magboots.<br>When on, they firmly anchor you to the floor, preventing the majority of outside forces from moving you."
+	requires_equip = TRUE
 
 	execute_ability()
 		var/obj/item/clothing/shoes/magnetic/W = the_item
+		if(!(the_item in the_mob.get_equipped_items()))
+			boutput(the_mob, "<span class='alert'>Try wearing [src] first.</span>")
+			return
+
 		if(W.magnetic)
 			W.deactivate()
 			boutput(the_mob, "<span class='hint'>You power off your magnetic boots.</span><br><span class='alert'>You are no longer anchored to the floor.</span>", group = "magbootsoff")
@@ -179,6 +184,7 @@
 	name = "Activate Shoes"
 	icon_state = "rocketshoes"
 	var/explosion_chance = 3
+	requires_equip = TRUE
 
 	execute_ability()
 		if(!the_item || !the_mob || !the_mob.canmove) return
@@ -260,6 +266,7 @@
 /obj/ability_button/sonic
 	name = "Activate Shoes"
 	icon_state = "rocketshoes"
+	requires_equip = TRUE
 
 	execute_ability()
 		if(!the_item || !the_mob || !the_mob.canmove) return
@@ -297,6 +304,7 @@
 /obj/ability_button/cebelt_toggle
 	name = "Toggle overshield"
 	icon_state = "shieldceon"
+	requires_equip = TRUE
 
 	execute_ability()
 		var/obj/item/storage/belt/utility/prepared/ceshielded/C = the_item
@@ -443,6 +451,7 @@
 /obj/ability_button/jetpack2_toggle
 	name = "Toggle jetpack MKII"
 	icon_state = "jetoff"
+	requires_equip = TRUE
 
 	execute_ability()
 		var/obj/item/tank/jetpack/jetpackmk2/J = the_item
@@ -454,6 +463,7 @@
 /obj/ability_button/jetpack_toggle
 	name = "Toggle jetpack"
 	icon_state = "jetoff"
+	requires_equip = TRUE
 
 	execute_ability()
 		var/obj/item/tank/jetpack/J = the_item
@@ -467,6 +477,7 @@
 /obj/ability_button/jetboot_toggle
 	name = "Toggle jet boots"
 	icon_state = "jeton"
+	requires_equip = TRUE
 
 	execute_ability()
 		var/obj/item/clothing/shoes/jetpack/J = the_item
@@ -506,6 +517,7 @@
 	name = "Rush"
 	icon_state = "rushon"
 	cooldown = 100
+	requires_equip = TRUE
 
 	ability_allowed()
 		if (!the_mob || !the_mob.canmove || the_mob.stat || the_mob.getStatusDuration("paralysis"))
@@ -751,10 +763,14 @@
 
 	proc/show_buttons()
 		if(!the_mob || !islist(src.ability_buttons) || !length(ability_buttons)) return
-		if(!the_mob.item_abilities.Find(ability_buttons[1]))
-			the_mob.item_abilities.Add(ability_buttons)
-			the_mob.need_update_item_abilities = 1
-			the_mob.update_item_abilities()
+		var/list/abilities_toadd = list()
+		for (var/obj/ability_button/AB in ability_buttons)
+			if (AB.requires_equip && !(AB.the_item in the_mob.get_equipped_items())) continue
+			abilities_toadd += AB
+		if (!length(abilities_toadd)) return
+		the_mob.item_abilities |= abilities_toadd
+		the_mob.need_update_item_abilities = 1
+		the_mob.update_item_abilities()
 
 	proc/hide_buttons()
 		if(!the_mob || !islist(src.ability_buttons)) return
@@ -799,8 +815,13 @@
 	var/cooldown = 0
 	var/last_use_time = 0
 
-	var/targeted = 0 //does activating this ability let you click on something to target it?
-	var/target_anything = 0 //can you target any atom, not just people?
+	///does activating this ability let you click on something to target it?
+	var/targeted = 0
+	///can you target any atom, not just people?
+	var/target_anything = 0
+
+	/// can you see this button without equipping the item
+	var/requires_equip = FALSE
 
 	var/obj/item/the_item = null
 	var/mob/the_mob = null
@@ -878,3 +899,26 @@
 			src.last_use_time = TIME
 			sleep(src.cooldown)
 			src.on_cooldown()
+
+/obj/ability_button/toggle_bandana
+	name = "Toggle bandana"
+	icon_state = "bandana_down"
+	requires_equip = TRUE
+
+	execute_ability()
+		if(!the_item || !the_mob || !ishuman(the_mob)) return
+		var/obj/item/clothing/mask/bandana/bandana = the_item
+		var/mob/living/carbon/human/H = the_mob
+		bandana.is_pulled_down = !bandana.is_pulled_down
+		if (bandana.is_pulled_down)
+			boutput(H, "<span class='notice'>You pull down [bandana].</span>")
+			bandana.see_face = TRUE
+			src.icon_state = "bandana_up"
+		else
+			boutput(H, "<span class='notice'>You pull up [bandana].</span>")
+			bandana.see_face = FALSE
+			src.icon_state = "bandana_down"
+		bandana.icon_state = "[initial(bandana.icon_state)][bandana.is_pulled_down ? "_down" : ""]"
+		if (H.wear_mask == bandana)
+			H.update_clothing()
+		..()

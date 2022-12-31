@@ -4,6 +4,7 @@
 	cast_while_dead = 1
 	/// total souls absorbed by this wraith so far
 	var/corpsecount = 0
+	var/possession_points = 0
 	/// number of souls required to evolve into a specialized wraith subclass
 	var/absorbs_to_evolve = 3
 	onAbilityStat()
@@ -11,6 +12,8 @@
 		.= list()
 		.["Points:"] = round(src.points)
 		.["Gen. rate:"] = round(src.regenRate + src.lastBonus)
+		if(istype(owner, /mob/living/intangible/wraith/wraith_trickster) || istype(owner, /mob/living/critter/wraith/trickster_puppet))
+			.["Possess:"] = round(src.possession_points)
 
 /atom/movable/screen/ability/topBar/wraith
 	tens_offset_x = 19
@@ -38,6 +41,7 @@
 	targeted = 1
 	target_anything = 1
 	preferred_holder_type = /datum/abilityHolder/wraith
+	ignore_holder_lock = 1 //So we can still do things while our summons are coming
 	theme = "wraith"
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = null
@@ -56,12 +60,12 @@
 		if (!holder || !holder.owner)
 			return 1
 		if (ispoltergeist(holder.owner))
-			var/mob/wraith/poltergeist/P = holder.owner
+			var/mob/living/intangible/wraith/poltergeist/P = holder.owner
 			if (src.min_req_dist <= P.power_well_dist)
 				boutput(holder.owner, "<span class='alert'>You must be within [min_req_dist] tiles from a well of power to perform this task.</span>")
 				return 1
-		if (istype(holder.owner, /mob/wraith))
-			var/mob/wraith/W = holder.owner
+		if (istype(holder.owner, /mob/living/intangible/wraith))
+			var/mob/living/intangible/wraith/W = holder.owner
 			if (W.forced_manifest == TRUE)
 				boutput(W, "<span class='alert'>You have been forced to manifest! You can't use any abilities for now!</span>")
 				return 1
@@ -77,11 +81,11 @@
 
 	onAttach(datum/abilityHolder/holder)
 		..()
-		if (istype(holder.owner, /mob/wraith/wraith_decay) || istype(holder.owner, /mob/living/critter/wraith/plaguerat))
+		if (istype(holder.owner, /mob/living/intangible/wraith/wraith_decay) || istype(holder.owner, /mob/living/critter/wraith/plaguerat))
 			border_state = "plague_frame"
-		else if (istype(holder.owner, /mob/wraith/wraith_harbinger))
+		else if (istype(holder.owner, /mob/living/intangible/wraith/wraith_harbinger))
 			border_state = "harbinger_frame"
-		else if (istype(holder.owner, /mob/wraith/wraith_trickster) || istype(holder.owner, /mob/living/critter/wraith/trickster_puppet))
+		else if (istype(holder.owner, /mob/living/intangible/wraith/wraith_trickster) || istype(holder.owner, /mob/living/critter/wraith/trickster_puppet))
 			border_state = "trickster_frame"
 
 		var/atom/movable/screen/ability/topBar/B = src.object
@@ -133,7 +137,7 @@
 			for (var/mob/living/carbon/human/mob_target in target.contents)
 				if (!isdead(mob_target))
 					continue
-				if (H.decomp_stage >= DECOMP_STAGE_SKELETONIZED)
+				if (mob_target.decomp_stage >= DECOMP_STAGE_SKELETONIZED)
 					continue
 				H = mob_target
 				break
@@ -144,7 +148,7 @@
 				return 1
 
 			//check for formaldehyde. if there's more than the wraith's tol amt, we can't absorb right away.
-			var/mob/wraith/W = src.holder.owner
+			var/mob/living/intangible/wraith/W = src.holder.owner
 			if (istype(W))
 				var/amt = H.reagents.get_reagent_amount("formaldehyde")
 				if (amt >= W.formaldehyde_tolerance)
@@ -159,10 +163,10 @@
 		if (!H)
 			return 1 // no valid targets were identified, cast fails
 
-		logTheThing("combat", holder.owner, "absorbs the corpse of [key_name(H)] as a wraith.")
+		logTheThing(LOG_COMBAT, holder.owner, "absorbs the corpse of [key_name(H)] as a wraith.")
 		var/turf/T = get_turf(H)
 		// decay wraith receives bonuses for toxin damaged and decayed bodies, but can't absorb fresh kils without toxin damage
-		if ((istype(holder.owner, /mob/wraith/wraith_decay)))
+		if ((istype(holder.owner, /mob/living/intangible/wraith/wraith_decay)))
 			if ((H.get_toxin_damage() >= 60) || (H.decomp_stage == DECOMP_STAGE_HIGHLY_DECAYED))
 				boutput(holder.owner, "<span class='alert'>[H] is extremely rotten and bloated. It satisfies us greatly</span>")
 				holder.points += 150
@@ -186,7 +190,7 @@
 		holder.regenRate += 2
 		var/datum/abilityHolder/wraith/AH = holder
 		if (istype(AH))
-			var/mob/wraith/W = AH.owner
+			var/mob/living/intangible/wraith/W = AH.owner
 			if (istype(W))
 				W.onAbsorb(H)
 			AH.corpsecount++
@@ -272,7 +276,7 @@
 					break
 
 		if (ishuman(T))
-			var/mob/wraith/W = holder.owner
+			var/mob/living/intangible/wraith/W = holder.owner
 			. = W.makeRevenant(T)		//return 0
 			if(!.)
 				playsound(W.loc, 'sound/voice/wraith/reventer.ogg', 80, 0)
@@ -490,23 +494,25 @@
 			P.demanifest()
 			return 0
 
-		var/mob/wraith/K = src.holder.owner
+		var/mob/living/intangible/wraith/K = src.holder.owner
 		if (!K.forced_manifest && K.hasStatus("corporeal"))
 			boutput(holder.owner, "We fade back into the shadows")
 			cooldown = 0 SECONDS
 			return K.delStatus("corporeal")
 		else
 			boutput(holder.owner, "We show ourselves")
-			var/mob/wraith/W = holder.owner
+			var/mob/living/intangible/wraith/W = holder.owner
 
 			cooldown = 30 SECONDS
 
-			if ((istype(W, /mob/wraith/wraith_trickster)))	//Trickster can appear as a human, living or dead.
-				var/mob/wraith/wraith_trickster/T = holder.owner
+			if ((istype(W, /mob/living/intangible/wraith/wraith_trickster)))	//Trickster can appear as a human, living or dead.
+				var/mob/living/intangible/wraith/wraith_trickster/T = holder.owner
 				if (T.copied_appearance != null)
 					var/mob/living/critter/wraith/trickster_puppet/puppet = new /mob/living/critter/wraith/trickster_puppet(get_turf(T), T)
 					T.mind.transfer_to(puppet)
 					puppet.appearance = T.copied_appearance
+					puppet.name = T.copied_name
+					puppet.real_name = T.copied_real_name
 					puppet.desc = T.copied_desc
 					puppet.traps_laid = T.traps_laid
 					puppet.playsound_local(puppet.loc, 'sound/voice/wraith/wraithhaunt.ogg', 40, 0)
@@ -671,7 +677,7 @@
 				boutput(usr, "<span class='alert'>They can hear you just fine without the use of your abilities.</span>")
 				return 1
 			else
-				var/message = html_encode(input("What would you like to whisper to [target]?", "Whisper", "") as text)
+				var/message = html_encode(tgui_input_text(usr, "What would you like to whisper to [target]?", "Whisper"))
 				logTheThing(LOG_SAY, usr, "WRAITH WHISPER TO [constructTarget(target,"say")]: [message]")
 				message = ghostify_message(trim(copytext(sanitize(message), 1, 255)))
 				if (!message)
@@ -691,8 +697,8 @@
 	icon_state = "bloodwriting"
 	targeted = 1
 	target_anything = 1
-	pointCost = 10
-	cooldown = 5 SECONDS
+	pointCost = 2
+	cooldown = 1 SECONDS
 	min_req_dist = 10
 	var/in_use = 0
 
@@ -744,6 +750,7 @@
 	targeted = 0
 	pointCost = 600
 	cooldown = 5 MINUTES
+	ignore_holder_lock = 0
 	var/in_use = 0
 	var/ghost_confirmation_delay  = 30 SECONDS
 
@@ -754,27 +761,29 @@
 
 		var/turf/T = get_turf(holder.owner)
 		if (isturf(T) && !istype(T, /turf/space))
-			boutput(holder.owner, "You begin to channel power to call a spirit to this realm, you won't be able to cast any other spells for the next 30 seconds!")
+			boutput(holder.owner, "You begin to channel power to call a spirit to this realm!")
+			src.doCooldown()
 			make_poltergeist(holder.owner, T)
+			return 0
 		else
 			boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
 			return 1
 
-	proc/make_poltergeist(var/mob/wraith/W, var/turf/T, var/tries = 0)
+	proc/make_poltergeist(var/mob/living/intangible/wraith/W, var/turf/T, var/tries = 0)
 		if (!istype(W))
 			boutput(W, "something went terribly wrong, call 1-800-CODER")
 			return
 
 		var/obj/spookMarker/marker = new /obj/spookMarker(T)
 		var/list/text_messages = list()
-		text_messages.Add("Would you like to respawn as a poltergeist? Your name will be added to the list of eligible candidates and set to DNR if selected.")
+		text_messages.Add("Would you like to respawn as a poltergeist? Your name will be added to the list of eligible candidates.")
 		text_messages.Add("You are eligible to be respawned as a poltergeist. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
 		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
 		usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithportal.ogg', 50, 0)
 		message_admins("Sending poltergeist offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
-		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages)
+		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
 		if (!islist(candidates) || candidates.len <= 0)
 			message_admins("Couldn't set up poltergeist ; no ghosts responded. Source: [src.holder]")
 			logTheThing(LOG_ADMIN, null, "Couldn't set up poltergeist ; no ghosts responded. Source: [src.holder]")
@@ -790,13 +799,10 @@
 			return
 		var/datum/mind/lucky_dude = pick(candidates)
 
-		//add poltergeist to master's list is done in /mob/wraith/potergeist/New
-		var/mob/wraith/poltergeist/P = new /mob/wraith/poltergeist(T, W, marker)
-		lucky_dude.special_role = ROLE_POLTERGEIST
-		lucky_dude.dnr = 1
+		//add poltergeist to master's list is done in /mob/living/intangible/wraith/potergeist/New
+		var/mob/living/intangible/wraith/poltergeist/P = new /mob/living/intangible/wraith/poltergeist(T, W, marker)
 		lucky_dude.transfer_to(P)
 		ticker.mode.Agimmicks |= lucky_dude
-		//P.ckey = lucky_dude.ckey
 		P.antagonist_overlay_refresh(1, 0)
 		message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
 		usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50, 0)
@@ -844,18 +850,18 @@
 			boutput(holder.owner, "<span class='notice'>You do not have enough points to cast this. You need at least [pointCost] points.</span>")
 			return 1
 		else
-			var/mob/wraith/W
+			var/mob/living/intangible/wraith/W
 			switch (effect)
 				if (1)
-					W = new/mob/wraith/wraith_decay(holder.owner)
+					W = new/mob/living/intangible/wraith/wraith_decay(holder.owner)
 					boutput(holder.owner, "<span class='notice'>You use some of your energy to evolve into a plaguebringer! Spread rot and disease all around!</span>")
 					holder.owner.show_antag_popup("plaguebringer")
 				if (2)
-					W = new/mob/wraith/wraith_harbinger(holder.owner)
+					W = new/mob/living/intangible/wraith/wraith_harbinger(holder.owner)
 					boutput(holder.owner, "<span class='notice'>You use some of your energy to evolve into a harbinger! Command your army of minions to bring ruin to the station!</span>")
 					holder.owner.show_antag_popup("harbinger")
 				if (3)
-					W = new/mob/wraith/wraith_trickster(holder.owner)
+					W = new/mob/living/intangible/wraith/wraith_trickster(holder.owner)
 					boutput(holder.owner, "<span class='notice'>You use some of your energy to evolve into a trickster! Decieve the crew and turn them against one another!</span>")
 					holder.owner.show_antag_popup("trickster")
 
@@ -865,6 +871,9 @@
 			W.set_loc(T)
 
 			holder.owner.mind.transfer_to(W)
+			var/datum/abilityHolder/wraith/new_holder = W.abilityHolder
+			new_holder.regenRate = max(AH.regenRate - 2, 1)
+			new_holder.corpsecount = max(AH.corpsecount - 1, 0)
 			qdel(holder.owner)
 
 			return W
@@ -1054,60 +1063,57 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 
 	cast(atom/target)
 		if (..())
-			return 1
+			return TRUE
 
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
-			var/mob/wraith/W = holder.owner
+			var/mob/living/intangible/wraith/W = holder.owner
 			if (H?.bioHolder.HasEffect("rot_curse") && H?.bioHolder.HasEffect("weak_curse") && H?.bioHolder.HasEffect("blind_curse") && H?.bioHolder.HasEffect("blood_curse"))
 				W.playsound_local(W.loc, 'sound/voice/wraith/wraithhaunt.ogg', 40, 0)
-				boutput(holder.owner, "<span class='alert'>That soul is OURS!!</span>")
-				boutput(H, "<span class='alert'>The voices in your heads are reaching a crescendo!</span>")
-				H.make_jittery(300)
-				SPAWN(4 SECOND)
-					if (!(H?.loc && W?.loc)) return
-					H.changeStatus("stunned", 2 SECONDS)
-					H.emote("scream")
-					boutput(H, "<span class='alert'>You feel netherworldly hands grasping you!</span>")
-					sleep(3 SECOND)
-					if (!(H?.loc && W?.loc)) return
-					random_brute_damage(H, 10)
-					playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
-					H.visible_message("<span class='alert'>[H]'s flesh tears open before your very eyes!!</span>")
-					new /obj/decal/cleanable/blood/drip(get_turf(H))
-					sleep(3 SECOND)
-					if (!(H?.loc && W?.loc)) return
-					random_brute_damage(H, 10)
-					playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
-					new /obj/decal/cleanable/blood/drip(get_turf(H))
-					sleep(1 SECOND)
-					if (!(H?.loc && W?.loc)) return
-					random_brute_damage(H, 20)
-					playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
-					new /obj/decal/cleanable/blood/drip(get_turf(H))
-					sleep(2 SECOND)
-					if (!(H?.loc && W?.loc)) return
-					boutput(H, "<span class='alert'>IT'S COMING FOR YOU!</span>")
-					H.remove_stamina( rand(100, 120) )
-					H.changeStatus("stunned", 4 SECONDS)
-					sleep(3 SECOND)
-					if (!(H?.loc && W?.loc)) return
-					var/turf/T = get_turf(H)
-					var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread/(T)
-					if (S)
-						S.set_up(8, 0, T, null, "#000000")
-						S.start()
-					H.gib()
-					boutput(holder.owner, "<span class='alert'>What delicious agony!</span>")
-					T.fluid_react_single("miasma", 60, airborne = 1)
-					holder.points += 100
-					holder.regenRate += 2.0
-					var/datum/abilityHolder/wraith/AH = holder
-					AH.corpsecount++
+				H.bioHolder.AddEffect("death_curse")
+				boutput(W, "<span class='alert'><b>That soul will be OURS!</b></span>")
+				do_curse(H, W)
+				return FALSE
 			else
 				boutput(holder.owner, "That being's soul is not weakened enough. We need to curse it some more.")
-				return 1
+				return TRUE
 
+	proc/do_curse(var/mob/living/carbon/human/H, var/mob/living/intangible/wraith/W)
+		var/cycles = 0
+		var/active = TRUE
+		while (active)
+			if (!H?.bioHolder.GetEffect("death_curse"))
+				boutput(W, "<span class='alert'>Those foolish mortals stopped your deadly curse before it claimed it's victim! You'll damn them all!</span>")
+				active = FALSE
+				return
+			if (!isdead(H))
+				hit_twitch(H)
+				random_brute_damage(H, (cycles / 3))
+				cycles ++
+				if (prob(6))
+					H.changeStatus("stunned", 2 SECONDS)
+					boutput(H, "<span class='alert'><b>You feel netherworldly hands grasping at your soul!</b></span>")
+				if (prob(4))
+					boutput(H, "<span class='alert'>IT'S COMING FOR YOU!</span>")
+					H.remove_stamina( rand(30, 70) )
+				if ((cycles > 10) && prob(15))
+					random_brute_damage(H, 1)
+					playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 70, 1)
+					H.visible_message("<span class='alert'>[H]'s flesh tears open before your very eyes!!</span>")
+					new /obj/decal/cleanable/blood/drip(get_turf(H))
+			else
+				var/turf/T = get_turf(H)
+				var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread/(T)
+				if (S)
+					S.set_up(8, 0, T, null, "#000000")
+					S.start()
+				T.fluid_react_single("miasma", 60, airborne = 1)
+				var/datum/abilityHolder/wraith/AH = W.abilityHolder
+				H.gib()
+				AH.regenRate += 2.0
+				AH.corpsecount++
+				active = FALSE
+			sleep (1.5 SECONDS)
 
 /datum/targetable/wraithAbility/summon_rot_hulk
 	name = "Create rot hulk"
@@ -1118,7 +1124,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	pointCost = 120
 	var/const/max_decals = 40
 	var/const/min_decals = 10
-	var/const/strong_exploder_threshold = 20
+	var/const/strong_exploder_threshold = 30
 	var/list/decal_list = list(/obj/decal/cleanable/blood,
 	/obj/decal/cleanable/ketchup,
 	/obj/decal/cleanable/rust,
@@ -1137,6 +1143,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		for (var/obj/decal/cleanable/found_cleanable in range(3, get_turf(holder.owner)))
 			if (istypes(found_cleanable, decal_list))
 				found_decal_list += found_cleanable
+				decal_count++
 				if (length(found_decal_list) >= max_decals)
 					break
 		if (length(found_decal_list) > min_decals)
@@ -1190,7 +1197,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		if (!holder)
 			return 1
 
-		var/mob/wraith/W = holder.owner
+		var/mob/living/intangible/wraith/W = holder.owner
 
 		if (!W || !target)
 			return 1
@@ -1254,7 +1261,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 
 		if (attempt_success == 1)
 			boutput(W, "<span class='notice'>You successfully poisoned [target].</span>")
-			logTheThing("combat", W, null, "poisons [target] [log_reagents(target)] at [log_loc(W)].")
+			logTheThing(LOG_COMBAT, W, "poisons [target] [log_reagents(target)] at [log_loc(W)].")
 			return 0
 		else
 			boutput(W, "<span class='alert'>You failed to poison [target].</span>")
@@ -1282,7 +1289,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		for_by_tcl(H, /mob/living/carbon/human)
 			if (!IN_RANGE(holder.owner, H, 8)) continue
 			if (isdead(H)) continue
-			logTheThing("say", holder.owner, H, "WRAITH WHISPER TO [key_name(H)]: [message]")
+			logTheThing(LOG_SAY, holder.owner, "WRAITH WHISPER TO [key_name(H)]: [message]")
 			boutput(H, "<b>A netherworldly voice whispers into your ears... </b> [message]")
 			holder.owner.playsound_local(holder.owner.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
 			H.playsound_local(H.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
@@ -1308,7 +1315,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				boutput(holder.owner, "<span class='notice'>This one does not fear what lurks in the dark. Your effort is wasted.</span>")
 				return 0
 			boutput(holder.owner, "<span class='notice'>We curse this being with a creeping feeling of dread.</span>")
-			H.setStatus("creeping_dread", 20 SECONDS)
+			H.setStatus("creeping_dread", 30 SECONDS)
 			holder.owner.playsound_local(holder.owner, "sound/voice/wraith/wraithspook[pick("1","2")].ogg", 60)
 			return 0
 
@@ -1321,20 +1328,23 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	pointCost = 400
 	targeted = 1
 	cooldown = 3 MINUTES
+	ignore_holder_lock = 0
 	var/wraith_key = null
+	var/datum/mind/wraith_mind = null
+	var/datum/mind/human_mind = null
 
 	cast(mob/target)
 		if (..())
-			return 1
-		if (istype(holder.owner, /mob/wraith/wraith_trickster))
-			var/mob/wraith/wraith_trickster/W = holder.owner
-			if (W.possession_points > W.points_to_possess)
+			return TRUE
+		if (istype(holder.owner, /mob/living/intangible/wraith/wraith_trickster))
+			var/mob/living/intangible/wraith/wraith_trickster/W = holder.owner
+			var/datum/abilityHolder/wraith/AH = W.abilityHolder
+			if (AH.possession_points >= W.points_to_possess)
 				if (ishuman(target) && !isdead(target))
 					var/mob/living/carbon/human/H = target
 					if (H.traitHolder.hasTrait("training_chaplain"))
 						boutput(holder.owner, "<span class='alert'>As you try to reach inside this creature's mind, it instantly kicks you back into the aether!</span>")
-						return 0
-					var/has_mind = false
+						return FALSE
 					var/mob/dead/target_observer/slasher_ghost/WG = null
 					wraith_key = holder.owner.ckey
 					H.emote("scream")
@@ -1352,46 +1362,61 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 						H.setStatusMin("weakened", 8 SECONDS)
 						H.setStatusMin("paralysis", 8 SECONDS)
 						sleep(8 SECONDS)
-						if (!(H?.loc && W?.loc)) return
+						if (!(H?.loc && W?.loc)) return	//Wraith and the human are both gone, abort
 						var/mob/dead/observer/O = H.ghostize()
 						if(W.mind == null)	//Wraith died or was removed in the meantime
 							return
 						if (O?.mind)
+							human_mind = O.mind
 							boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
 							WG = O.insert_slasher_observer(H)
 							WG.mind.dnr = TRUE
 							WG.verbs -= list(/mob/verb/setdnr)
-							has_mind = true
+						wraith_mind = W.mind
 						W.mind.transfer_to(H)
 						APPLY_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)	//Subject to change.
 						sleep(45 SECONDS)
 						if (!H?.loc) return
 						boutput(H, "<span class='bold' style='color:red;font-size:150%'>Your control on this body is weakening, you will soon be kicked out of it.</span>")
 						sleep(20 SECONDS)
-						if (!H?.loc) return
-						boutput(H, "<span class='bold' style='color:red;font-size:150%'>Your hold on this body has been broken! You return to the aether.</span>")
-						REMOVE_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)
-						if(!H?.loc) //H gibbed
+						if(!H?.loc && !W.loc) return //Everyone's dead, go home
+						if(!W.loc) //wraith got gibbed, kick them into the aether and put the human back
+							boutput(H, "<span class='alert'>You are torn apart from the body you were in but cannot find your ethereal self! You are thrown into the otherworld as a powerless ghost.</span>")
+							H.ghostize()
+							REMOVE_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)
+							if (human_mind)
+								WG.mind.dnr = FALSE
+								WG.verbs += list(/mob/verb/setdnr)
+								human_mind.transfer_to(H)
+								playsound(H, 'sound/effects/ghost2.ogg', 50, 0)
+								boutput(H, "<span class='notice'>You slowly regain control of your body. It's as if the presence within you dissipated into nothingness.</span>")
+							return
+						if(!H?.loc) //Human gibbed, put the wraith back into their body
 							var/mob/M2 = ckey_to_mob(wraith_key)
 							M2.mind.transfer_to(W)
-						if(!W.loc) //wraith got gibbed
-							return
-						H.mind.transfer_to(W)
-						if (has_mind)
-							WG.mind.dnr = FALSE
-							WG.verbs += list(/mob/verb/setdnr)
-							WG.mind.transfer_to(H)
-							playsound(H, "sound/effects/ghost2.ogg", 50, 0)
-						W.possession_points = 0
-						logTheThing("debug", null, null, "step 5")
+						else
+							boutput(H, "<span class='bold' style='color:red;font-size:150%'>Your hold on this body has been broken! You return to the aether.</span>")
+							REMOVE_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)
+							wraith_mind.transfer_to(W)
+							if (human_mind)
+								WG.mind.dnr = FALSE
+								WG.verbs += list(/mob/verb/setdnr)
+								human_mind.transfer_to(H)
+								playsound(H, 'sound/effects/ghost2.ogg', 50, 0)
+						AH.possession_points = 0
 						qdel(WG)
 						H.take_brain_damage(30)
 						H.setStatus("weakened", 5 SECOND)
-						boutput(H, "The presence has left your body and you are thrusted back into it, immediately assaulted with a ringing headache.")
+						boutput(H, "<span class='notice'>The presence has left your body and you are thrusted back into it, immediately assaulted with a ringing headache.</span>")
 					return FALSE
 			else
-				boutput(holder.owner, "You cannot possess with only [W.possession_points] possession power. You'll need at least [(W.points_to_possess - W.possession_points)] more.")
-				return 1
+				boutput(holder.owner, "You cannot possess with only [AH.possession_points] possession power. You'll need at least [(W.points_to_possess - AH.possession_points)] more.")
+				return TRUE
+
+	disposing()
+		wraith_mind = null
+		human_mind = null
+		. = ..()
 
 /datum/targetable/wraithAbility/hallucinate
 	name = "Hallucinate"
@@ -1513,13 +1538,13 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		if (..())
 			return 1
 
-		if (!istype(holder.owner, /mob/wraith/wraith_trickster) && !istype(holder.owner, /mob/living/critter/wraith/trickster_puppet))
+		if (!istype(holder.owner, /mob/living/intangible/wraith/wraith_trickster) && !istype(holder.owner, /mob/living/critter/wraith/trickster_puppet))
 			boutput(holder.owner, "<span class='notice'>You cannot cast this under your current form.</span>")
 			return 1
 
-		var/mob/wraith/wraith_trickster/W = null
+		var/mob/living/intangible/wraith/wraith_trickster/W = null
 		var/mob/living/critter/wraith/trickster_puppet/P = null
-		if(istype(holder.owner, /mob/wraith/wraith_trickster))
+		if(istype(holder.owner, /mob/living/intangible/wraith/wraith_trickster))
 			W = holder.owner
 			if (!W.haunting)
 				boutput(holder.owner, "<span class='notice'>You must be manifested to place a trap!</span>")
@@ -1595,8 +1620,8 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 
 		var/turf/T = get_turf(holder.owner)
 		if (isturf(T) && istype(T,/turf/simulated/floor))
-			if(istype(holder.owner, /mob/wraith))
-				var/mob/wraith/W = holder.owner
+			if(istype(holder.owner, /mob/living/intangible/wraith))
+				var/mob/living/intangible/wraith/W = holder.owner
 				if (!W.density)
 					boutput(holder.owner, "Your connection to the physical plane is too weak. You must be manifested to do this.")
 					return 1
@@ -1661,17 +1686,22 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		if (..())
 			return 1
 
-		if(istype(holder.owner, /mob/wraith/wraith_trickster))
-			var/mob/wraith/wraith_trickster/W = holder.owner
+		if(istype(holder.owner, /mob/living/intangible/wraith/wraith_trickster))
+			var/mob/living/intangible/wraith/wraith_trickster/W = holder.owner
 			if ((istype(target, /mob/living/carbon/human/)))
-				boutput(holder.owner, "We steal [target]'s appearance for ourselves.")
-				W.copied_appearance = target.appearance
-				W.copied_appearance.transform.Turn(target.rest_mult * -90)	//Find a way to make transform rotate.
-				W.copied_desc = target.get_desc()
+				var/mob/living/carbon/human/H = target
+				boutput(holder.owner, "We steal [H]'s appearance for ourselves.")
+				W.copied_appearance = H.appearance
+				W.copied_appearance.transform.Turn(H.rest_mult * -90)	//Find a way to make transform rotate.
+				W.copied_desc = H.get_desc()
+				W.copied_name = H.name
+				W.copied_real_name = H.real_name
 				return 0
 			else if (W.copied_appearance != null)
 				W.copied_appearance = null
 				W.copied_desc = null
+				W.copied_name = null
+				W.copied_real_name = null
 				boutput(holder.owner, "We discard our disguise.")
 			else
 				boutput(holder.owner, "We cannot copy this appearance.")
@@ -1684,39 +1714,45 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	targeted = 0
 	pointCost = 400
 	cooldown = 150 SECONDS
+	ignore_holder_lock = 0
 	var/in_use = 0
 	var/ghost_confirmation_delay  = 30 SECONDS
 
 	cast(atom/target, params)
 		if (..())
-			return 1
+			return TRUE
 
 		var/turf/T = get_turf(holder.owner)
-		if (isturf(T) && !istype(T, /turf/space))
-			boutput(holder.owner, "You begin to channel power to call a spirit to this realm, you won't be able to cast any other spells for the next 30 seconds!")
-			make_summon(holder.owner, T)
-		else
-			boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
-			return 1
+		if (!T || !istype(T,/turf/simulated/floor))
+			boutput(holder.owner, "<span class='notice'>You cannot use this here!</span>")
+			return TRUE
+		for (var/obj/O in T)
+			if (O.density)
+				boutput(holder.owner, "<span class='notice'>There is something in the way!</span>")
+				return TRUE
+		boutput(holder.owner, "You begin to channel power to call a spirit to this realm!")
+		src.doCooldown()
+		make_summon(holder.owner, T)
+		return FALSE
 
-	proc/make_summon(var/mob/wraith/W, var/turf/T, var/tries = 0)
+	proc/make_summon(var/mob/living/intangible/wraith/W, var/turf/T, var/tries = 0)
 		if (!istype(W))
 			boutput(W, "something went terribly wrong, call 1-800-CODER")
 			return
 
 		var/obj/spookMarker/marker = new /obj/spookMarker(T)
 		var/list/text_messages = list()
-		text_messages.Add("Would you like to respawn as a harbinger's summon? Your name will be added to the list of eligible candidates and set to DNR if selected.")
+		text_messages.Add("Would you like to respawn as a harbinger's summon? Your name will be added to the list of eligible candidates.")
 		text_messages.Add("You are eligible to be respawned as a harbinger's summon. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
 		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
 		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithportal.ogg", 50, 0)
 		message_admins("Sending harbinger summon offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
-		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages)
+		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
 		if (!islist(candidates) || candidates.len <= 0)
 			message_admins("Couldn't set up harbinger summon ; no ghosts responded. Source: [src.holder]")
-			logTheThing("admin", null, null, "Couldn't set up harbinger summon ; no ghosts responded. Source: [src.holder]")
+			logTheThing(LOG_ADMIN, null, "Couldn't set up harbinger summon ; no ghosts responded. Source: [src.holder]")
 			if (tries >= 1)
 				boutput(W, "No spirits responded. The portal closes.")
 				qdel(marker)
@@ -1729,19 +1765,16 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			return
 		var/datum/mind/lucky_dude = pick(candidates)
 
-		//add poltergeist to master's list is done in /mob/wraith/potergeist/New
-		var/mob/living/critter/wraith/nascent/P = new /mob/living/critter/wraith/nascent(T, W)
-		lucky_dude.special_role = ROLE_HARBINGERSUMMON
-		lucky_dude.dnr = 1
-		lucky_dude.transfer_to(P)
-		ticker.mode.Agimmicks |= lucky_dude
-		//P.ckey = lucky_dude.ckey
-		P.antagonist_overlay_refresh(1, 0)
-		message_admins("[lucky_dude.key] respawned as a harbinger summon for [src.holder.owner].")
-		usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
-		logTheThing("admin", lucky_dude.current, null, "respawned as a harbinger summon for [src.holder.owner].")
-		boutput(P, "<span class='notice'><b>You have been respawned as a harbinger summon!</b></span>")
-		boutput(P, "[W] is your master! Use your abilities to choose a path! Work with your master to spread chaos!")
+		//add poltergeist to master's list is done in /mob/living/intangible/wraith/potergeist/New
+		if (lucky_dude.current)
+			var/mob/living/critter/wraith/nascent/P = new /mob/living/critter/wraith/nascent(T, W)
+			lucky_dude.transfer_to(P)
+			antagify(lucky_dude.current, null, 1)
+			message_admins("[lucky_dude.key] respawned as a harbinger summon for [src.holder.owner].")
+			usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
+			logTheThing("admin", lucky_dude.current, null, "respawned as a harbinger summon for [src.holder.owner].")
+			boutput(P, "<span class='notice'><b>You have been respawned as a harbinger summon!</b></span>")
+			boutput(P, "<span class='alert'><b>[W] is your master! Use your abilities to choose a path! Work with your master to spread chaos!</b></span>")
 		qdel(marker)
 
 /datum/targetable/wraithAbility/make_plague_rat
@@ -1749,9 +1782,9 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	desc = "Attempt to breach the veil between worlds to allow a plague rat to enter this realm."
 	icon_state = "summonrats"
 	targeted = 0
-	pointCost = 0
-	cooldown = 300 SECONDS
-	start_on_cooldown = 1
+	pointCost = 150
+	cooldown = 150 SECONDS
+	ignore_holder_lock = 0
 	var/in_use = 0
 	var/ghost_confirmation_delay  = 30 SECONDS
 	var/max_allowed_rats = 3
@@ -1760,7 +1793,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	// cast(turf/target, params)
 	cast(atom/target, params)
 		if (..())
-			return 1
+			return TRUE
 
 		var/total_plague_rats = 0
 		for (var/client/C in clients)
@@ -1772,44 +1805,41 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			if (istype(M, /mob/living/critter/wraith/plaguerat))
 				total_plague_rats++
 		if(total_plague_rats < (max_allowed_rats + (player_count / 30)))	//Population scaling
-			if (istype(holder.owner, /mob/living/critter/wraith/plaguerat))	//plaguerats must be near their den
-				var/near_den = false
-				var/turf/T = get_turf(holder.owner)
-				for (var/obj/O in T.contents)
-					if(istype(O, /obj/machinery/wraith/rat_den))
-						near_den = true
-				if(!near_den)
-					boutput(holder.owner, "We arent close enough to a rat den to do this.")
-					return 1
 			var/turf/T = get_turf(holder.owner)
-			if (isturf(T) && !istype(T, /turf/space))
-				boutput(holder.owner, "You begin to channel power to summon a plague rat into this realm, you won't be able to cast any other spells for the next 30 seconds!")
-				make_plague_rat(holder.owner, T)
-			else
-				boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
-				return 1
+			if (!T || !istype(T,/turf/simulated/floor))
+				boutput(holder.owner, "<span class='notice'>You cannot use this here!</span>")
+				return TRUE
+			for (var/obj/O in T)
+				if (O.density)
+					boutput(holder.owner, "<span class='notice'>There is something in the way!</span>")
+					return TRUE
+			boutput(holder.owner, "You begin to channel power to summon a plague rat into this realm!")
+			src.doCooldown()
+			make_plague_rat(holder.owner, T)
+			return FALSE
+
 		else
 			boutput(holder.owner, "<span class='alert'>This [station_or_ship()] is already a rat den, you cannot summon another rat!</span>")
-			return 1
+			return TRUE
 
 	proc/make_plague_rat(var/mob/W, var/turf/T, var/tries = 0)
-		if (!istype(W, /mob/wraith/wraith_decay) && !istype(W, /mob/living/critter/wraith/plaguerat))
+		if (!istype(W, /mob/living/intangible/wraith/wraith_decay))
 			boutput(W, "something went terribly wrong, call 1-800-CODER")
 			return
 
 		var/obj/spookMarker/marker = new /obj/spookMarker(T)
 		var/list/text_messages = list()
-		text_messages.Add("Would you like to respawn as a plague rat? Your name will be added to the list of eligible candidates and set to DNR if selected.")
+		text_messages.Add("Would you like to respawn as a plague rat? Your name will be added to the list of eligible candidates.")
 		text_messages.Add("You are eligible to be respawned as a plague rat. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
 		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
 		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithportal.ogg", 50, 0)
 		message_admins("Sending plague rat offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
-		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages)
+		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
 		if (!islist(candidates) || candidates.len <= 0)
 			message_admins("Couldn't set up plague rat ; no ghosts responded. Source: [src.holder]")
-			logTheThing("admin", null, null, "Couldn't set up plague rat ; no ghosts responded. Source: [src.holder]")
+			logTheThing(LOG_ADMIN, null, "Couldn't set up plague rat ; no ghosts responded. Source: [src.holder]")
 			if (tries >= 1)
 				boutput(W, "No spirits responded. The portal closes.")
 				qdel(marker)
@@ -1823,21 +1853,15 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		var/datum/mind/lucky_dude = pick(candidates)
 
 		//add plague rat to master's list is done in /mob/living/critter/wraith/plaguerat/New
-		var/mob/living/critter/wraith/plaguerat/young/P = new /mob/living/critter/wraith/plaguerat/young(T, W)
-		lucky_dude.special_role = ROLE_PLAGUERAT
-		lucky_dude.dnr = 1
-		lucky_dude.transfer_to(P)
-		ticker.mode.Agimmicks |= lucky_dude
-		//Might need to re-add those.
-		//P.ckey = lucky_dude.ckey
-		//P.antagonist_overlay_refresh(1, 0)
-		message_admins("[lucky_dude.key] respawned as a plague rat for [src.holder.owner].")
-		usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
-		logTheThing("admin", lucky_dude.current, null, "respawned as a plague rat for [src.holder.owner].")
-		P.show_antag_popup("plaguerat")
-		boutput(P, "<span class='notice'><b>You have been respawned as a plague rat!</b></span>")
-		boutput(P, "[W] is your master! Eat filth, spread disease and reproduce!")
-		boutput(P, "Obey your master's orders, avoid mouse traps and live the rat life!")
+		if (lucky_dude.current)
+			var/mob/living/critter/wraith/plaguerat/young/P = new /mob/living/critter/wraith/plaguerat/young(T, W)
+			lucky_dude.transfer_to(P)
+			antagify(lucky_dude.current, null, 1)
+			message_admins("[lucky_dude.key] respawned as a plague rat for [src.holder.owner].")
+			usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
+			logTheThing("admin", lucky_dude.current, null, "respawned as a plague rat for [src.holder.owner].")
+			boutput(P, "<span class='notice'><b>You have been respawned as a plague rat!</b></span>")
+			boutput(P, "<span class='alert'><b>[W] is your master! Use your abilities to spread disease and consume rot! Work with your master to turn the station into a rat den!</b></span>")
 		qdel(marker)
 
 /datum/targetable/wraithAbility/speak
@@ -1854,7 +1878,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		if (!holder)
 			return 1
 
-		var/mob/wraith/W = holder.owner
+		var/mob/living/intangible/wraith/W = holder.owner
 
 		if (!W)
 			return 1
@@ -1865,7 +1889,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			boutput(W, "You have no minions to talk to.")
 			return 1
 		for(var/mob/living/critter/C in W.summons)
-			logTheThing("say", W, C, "WRAITH WHISPER TO [constructTarget(C,"say")]: [message]")
+			logTheThing(LOG_SAY, W, "WRAITH WHISPER TO [constructTarget(C,"say")]: [message]")
 			message = trim(copytext(sanitize(message), 1, 255))
 			if (!message)
 				return 1

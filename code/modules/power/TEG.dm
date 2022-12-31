@@ -709,7 +709,7 @@ datum/pump_ui/circulator_ui
 			src.transformation_mngr.generator = src
 
 			//furnaces
-			for(var/obj/machinery/power/furnace/F in orange(15, src.loc))
+			for_by_tcl(F, /obj/machinery/power/furnace)
 				src.furnaces += F
 
 			src.generate_variants()
@@ -720,12 +720,15 @@ datum/pump_ui/circulator_ui
 			UpdateIcon()
 
 	disposing()
+		src.furnaces = null
 		src.circ1?.generator = null
 		src.circ1 = null
 		src.circ2?.generator = null
 		src.circ2 = null
 		qdel(transformation_mngr)
+		src.transformation_mngr = null
 		src.active_form = null
+		src.semiconductor = null
 		..()
 
 	get_desc(dist, mob/user)
@@ -901,6 +904,9 @@ datum/pump_ui/circulator_ui
 
 		src.transformation_mngr.check_material_transformation()
 
+		if(lastgenlev >= 18 && !ON_COOLDOWN(src, "warning sound", rand(2 MINUTES, 8 MINUTES)))
+			playsound(src, 'sound/vox/warning.ogg', 30, vary=FALSE, extrarange=10, pitch=rand(70, 90))
+
 	proc/get_efficiency_scale(delta_temperature, heat_capacity, cold_capacity)
 		var/efficiency_scale = efficiency_controller
 
@@ -915,7 +921,7 @@ datum/pump_ui/circulator_ui
 			else if(src.generator_flags & TEG_LOW_TEMP)
 				efficiency_scale += clamp(46.5 + -6.33 * log(src.conductor_temp), -15, 15)
 
-		return efficiency_scale * 0.01
+		return (efficiency_scale * 0.01)
 
 	attackby(obj/item/W, mob/user)
 		// Weld > Crowbar > Rods > Weld
@@ -948,7 +954,6 @@ datum/pump_ui/circulator_ui
 				if(istype(W,/obj/item/teg_semiconductor))
 					actions.start(new /datum/action/bar/icon/teg_semiconductor_replace(src, W, 5 SECONDS), user)
 					return
-
 		..()
 
 	proc/process_grump(mult)
@@ -958,7 +963,8 @@ datum/pump_ui/circulator_ui
 			grump += mult
 
 		for(var/obj/machinery/power/furnace/F as anything in src.furnaces)
-			if( F.active ) stoked_sum += F.stoked
+			if(F?.active)
+				stoked_sum += F.stoked
 
 		if(stoked_sum > 10)
 			if(probmult(50)) grump -= mult
