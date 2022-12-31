@@ -141,9 +141,7 @@
 			if (src._health <= 0)
 				src.visible_message("<span class='alert'>\The [src] breaks apart.</span>", "<span class='alert'>You hear rock shattering.</span>")
 				for (var/i in 1 to 3)
-					var/obj/item/raw_material/rock/rock = new(src.loc)
-					rock.pixel_x = rand(-16,16)
-					rock.pixel_y = rand(-16,16)
+					new /obj/item/raw_material/rock{rand_pos = TRUE}(src.loc)
 				qdel(src)
 		. = ..()
 
