@@ -643,10 +643,11 @@
 			if(hit.material && prob(hit.material.getProperty("n_radioactive")*10))
 				for(var/turf/T in range(1, hit))
 					T.AddComponent(/datum/component/radioactive, 50, TRUE, TRUE, 1)
+				return FALSE
 			if(hit.material && prob(hit.material.getProperty("radioactive")*10))
 				for(var/turf/T in range(1, hit))
 					T.AddComponent(/datum/component/radioactive, 50, TRUE, FALSE, 1)
-
+				return FALSE
 			//finally, moderation
 			hit.AddComponent(/datum/component/radioactive, min(O.power, density*multiplier), TRUE, FALSE, 1) //make it all glowy
 			O.power -= density*multiplier
