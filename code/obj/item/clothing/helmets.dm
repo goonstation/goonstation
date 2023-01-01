@@ -979,7 +979,6 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 
 	setupProperties()
 		..()
-		setProperty("radprot", 5)
 		setProperty("meleeprot_head", 5)
 		setProperty("disorient_resist_eye", 25)
 		setProperty("disorient_resist_ear", 25)
