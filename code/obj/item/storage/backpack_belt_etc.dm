@@ -619,6 +619,22 @@
 		/obj/item/oreprospector,
 		/obj/item/device/appraisal)
 
+/obj/item/storage/belt/rancher
+	name = "rancher's belt"
+	desc = "A sturdy belt with hooks for chicken carriers."
+	icon_state = "utilitybelt"
+	item_state = "utility"
+	can_hold = list(
+		/obj/item/chicken_carrier,
+		/obj/item/fishing_rod)
+	in_list_or_max = 1
+
+	prepared
+		spawn_contents = list(/obj/item/chicken_carrier,
+		/obj/item/chicken_carrier,
+		/obj/item/chicken_carrier,
+		/obj/item/fishing_rod)
+
 /obj/item/storage/belt/hunter
 	name = "trophy belt"
 	desc = "Holds normal-sized items, such as skulls."
