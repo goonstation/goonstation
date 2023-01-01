@@ -76,7 +76,7 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/proc/mergewithedges()
 	for (var/obj/machinery/atmospherics/node in src.pipeline_expansion())
 		node.initialize()
-		if (ispath(node, /obj/machinery/atmospherics/pipe))
+		if (istype(node, /obj/machinery/atmospherics/pipe))
 			node:leakgas = TRUE
 		node.UpdateIcon()
 
