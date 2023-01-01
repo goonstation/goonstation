@@ -1,0 +1,276 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/space,
+/area/allowGenerate)
+"d" = (
+/obj/spacevine/living,
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor/grass/random,
+/area/noGenerate)
+"m" = (
+/obj/machinery/hydro_growlamp,
+/obj/spacevine/living,
+/turf/unsimulated/floor/grass/random,
+/area/noGenerate)
+"r" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/turf/unsimulated/floor/grass/random,
+/area/noGenerate)
+"t" = (
+/obj/decal/cleanable/ash,
+/turf/unsimulated/floor/grass/random,
+/area/noGenerate)
+"u" = (
+/obj/spacevine/living,
+/obj/spacevine/living,
+/turf/unsimulated/floor/grass/random,
+/area/noGenerate)
+"v" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8
+	},
+/turf/unsimulated/floor/grass/random,
+/area/noGenerate)
+"w" = (
+/obj/item/device/reagentscanner{
+	pixel_x = -8;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/table/wood/auto,
+/obj/item/seed/alien{
+	pixel_x = 3;
+	pixel_y = 17
+	},
+/obj/item/seed/alien{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/obj/decal/fakeobjects/lighttube_broken,
+/turf/unsimulated/floor/grass/random,
+/area/noGenerate)
+"z" = (
+/obj/critter/killertomato,
+/obj/spacevine/living,
+/turf/unsimulated/floor/grass/random,
+/area/noGenerate)
+"A" = (
+/obj/spacevine/living,
+/turf/unsimulated/floor/grass/random,
+/area/noGenerate)
+"B" = (
+/obj/table/wood/auto,
+/obj/machinery/coffeemaker/botany,
+/turf/unsimulated/floor/grass/random,
+/area/noGenerate)
+"F" = (
+/obj/decal/fakeobjects/apc_broken{
+	pixel_y = 27
+	},
+/turf/unsimulated/floor/grass/random,
+/area/noGenerate)
+"G" = (
+/obj/decal/cleanable/blood{
+	icon_state = "floor6"
+	},
+/obj/spacevine/living,
+/turf/unsimulated/floor/grass/random,
+/area/noGenerate)
+"J" = (
+/turf/simulated/wall/auto/supernorn,
+/area/noGenerate)
+"L" = (
+/obj/machinery/light/incandescent/purpleish,
+/turf/unsimulated/floor/grass/random,
+/area/noGenerate)
+"N" = (
+/turf/unsimulated/floor/grass/random,
+/area/noGenerate)
+"P" = (
+/obj/decal/cleanable/tomatosplat,
+/turf/space,
+/area/allowGenerate)
+"U" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/saw,
+/turf/unsimulated/floor/grass/random,
+/area/noGenerate)
+"W" = (
+/obj/item/reagent_containers/glass/happyplant{
+	pixel_x = 15;
+	pixel_y = 7
+	},
+/obj/reagent_dispensers/compostbin,
+/turf/unsimulated/floor/grass/random,
+/area/noGenerate)
+"X" = (
+/obj/item/reagent_containers/glass/wateringcan,
+/obj/spacevine/living,
+/turf/unsimulated/floor/grass/random,
+/area/noGenerate)
+"Z" = (
+/obj/critter/killertomato,
+/turf/unsimulated/floor/grass/random,
+/area/noGenerate)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+J
+J
+J
+J
+J
+J
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+J
+r
+d
+A
+r
+J
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+J
+z
+A
+A
+X
+J
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+J
+G
+z
+m
+W
+J
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+J
+U
+Z
+u
+A
+J
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+J
+N
+N
+t
+B
+J
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+J
+L
+N
+Z
+w
+J
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+J
+J
+F
+J
+J
+J
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+J
+v
+J
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+P
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
