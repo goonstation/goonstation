@@ -1,4 +1,9 @@
 
+(t)sun jan 01 23
+(u)Amylizzle
+(p)12369
+(e)🆕📄⚙|C-Feature, A-UI, A-Internal
+(*)As a ghost, observing a mob will now auto-open TGUI windows as they view them. This behaviour can be toggled in the Ghost tab.
 (t)sat dec 31 22
 (u)Shiiba
 (p)12582
