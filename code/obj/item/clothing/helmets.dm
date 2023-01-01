@@ -976,7 +976,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 
 /obj/item/clothing/head/helmet/space/mining_combat
 	name = "mining combat helmet"
-	desc = "Goes great with Mining Combat Armor! Too bad the blueprints never got sent over."
+	desc = "The sweet strawberry-scented visor goes great with Mining Combat Armor! Too bad the blueprints never got sent over."
 	icon_state = "mining_combat"
 	item_state = "mining_combat"
 
