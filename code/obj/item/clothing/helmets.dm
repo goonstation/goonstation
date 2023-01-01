@@ -971,9 +971,6 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 		..()
 		setProperty("meleeprot_head", 7)
 
-TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
-	mats = 10
-
 /obj/item/clothing/head/helmet/space/mining_combat
 	name = "mining combat helmet"
 	desc = "The sweet strawberry-scented visor goes great with Mining Combat Armor! Too bad the blueprints never got sent over."
