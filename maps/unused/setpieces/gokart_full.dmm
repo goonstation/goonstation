@@ -36,7 +36,7 @@
 	},
 /area/racing_track)
 "ag" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/grass{
 	density = 1;
 	icon_state = "grass";
@@ -66,7 +66,7 @@
 /turf/unsimulated/grass,
 /area/racing_track)
 "al" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/grass,
 /area/racing_track)
 "am" = (
@@ -126,7 +126,7 @@
 	},
 /area/racing_track)
 "au" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/floor{
 	tag = "icon-grass_snow";
 	icon_state = "grass_snow"
@@ -215,7 +215,7 @@
 /turf/unsimulated/grass,
 /area/racing_track)
 "aG" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/floor{
 	density = 1;
 	icon_state = "grass_snow";
@@ -302,7 +302,8 @@
 	name = "broken door";
 	tag = "icon-eng-open"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/racing_track)
 "aU" = (
 /turf/unsimulated/floor/damaged2,
@@ -789,7 +790,7 @@
 	},
 /area/racing_track)
 "bZ" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/floor{
 	icon_state = "grass1"
 	},
@@ -1510,7 +1511,8 @@
 /obj/machinery/disposal{
 	name = "GREEN TEAM CHUTE"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
@@ -1553,7 +1555,8 @@
 /obj/machinery/computer/security/wooden_tv/small{
 	pixel_y = 8
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
@@ -1572,7 +1575,8 @@
 	layer = 7;
 	name = "Thunderdome Intercom"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
@@ -1593,7 +1597,8 @@
 /obj/machinery/disposal{
 	name = "RED TEAM CHUTE"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
@@ -2464,7 +2469,7 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/racing_entry)
 "fI" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/floor{
 	icon_state = "grass1";
 	name = "dense grass";

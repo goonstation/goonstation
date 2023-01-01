@@ -16,6 +16,9 @@
 
 
 /// Cyalume saber/esword, famed traitor item
+TYPEINFO(/obj/item/sword)
+	mats = list("MET-1"=5, "CON-2"=5, "POW-3"=10)
+
 /obj/item/sword
 	name = "cyalume saber"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -40,16 +43,15 @@
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	is_syndicate = 1
-	mats = list("MET-1"=5, "CON-2"=5, "POW-3"=10)
 	contraband = 5
 	desc = "An illegal, recalled Super Protector Friend glow sword. When activated, uses energized cyalume to create an extremely dangerous saber. Can be concealed when deactivated."
-	stamina_damage = 35 // This gets applied by obj/item/attack, regardless of if the saber is active.
+	stamina_damage = 40 // This gets applied by obj/item/attack, regardless of if the saber is active.
 	stamina_cost = 5
 	stamina_crit_chance = 35
 	var/active_force = 60
-	var/active_stamina_dmg = 40
-	var/active_stamina_cost = 40
-	var/inactive_stamina_dmg = 35
+	var/active_stamina_dmg = 30
+	var/active_stamina_cost = 30
+	var/inactive_stamina_dmg = 40
 	var/inactive_force = 1
 	var/inactive_stamina_cost = 5
 	var/state_name = "sword"
@@ -939,6 +941,9 @@
 
 ///////////////////////////////// Baseball Bat ////////////////////////////////////////////////////////////
 
+TYPEINFO(/obj/item/bat)
+	mats = list("wood" = 8)
+
 /obj/item/bat
 	name = "Baseball Bat"
 	desc = "Play ball! Note: Batter is responsible for any injuries sustained due to ball-hitting."
@@ -952,7 +957,6 @@
 	stamina_damage = 24
 	stamina_cost = 30
 	stamina_crit_chance = 15
-	mats = list("wood" = 8)
 
 	attack(mob/M, mob/user, def_zone, is_special)
 		. = ..()
@@ -1116,13 +1120,16 @@
 			target.organHolder.drop_and_throw_organ("butt", dist = 5, speed = 1, showtext = 1)
 
 //PS the description can be shortened if you find it annoying and you are a jerk.
+TYPEINFO(/obj/item/swords/katana)
+	mats = list("MET-3"=20, "FAB-1"=5)
+
 /obj/item/swords/katana
 	name = "katana"
 	desc = "That's it. I'm sick of all this 'Masterwork Cyalume Saber' bullshit that's going on in the SS13 system right now. Katanas deserve much better than that. Much, much better than that. I should know what I'm talking about. I myself commissioned a genuine katana in Space Japan for 2,400,000 Nuyen (that's about 20,000 credits) and have been practicing with it for almost 2 years now. I can even cut slabs of solid mauxite with my katana. Space Japanese smiths spend light-years working on a single katana and fold it up to a million times to produce the finest blades known to space mankind. Katanas are thrice as sharp as Syndicate sabers and thrice as hard for that matter too. Anything a c-saber can cut through, a katana can cut through better. I'm pretty sure a katana could easily bisect a drunk captain wearing full captain's armor with a simple tap. Ever wonder why the Syndicate never bothered conquering Space Japan? That's right, they were too scared to fight the disciplined Space Samurai and their space katanas of destruction. Even in World War 72, Nanotrasen soldiers targeted the men with the katanas first because their killing power was feared and respected."
 	icon_state = "katana"
 	force = 15 //Was at 5, but that felt far too weak. C-swords are at 60 in comparison. 15 is still quite a bit of damage, but just not insta-crit levels.
-	mats = list("MET-3"=20, "FAB-1"=5)
 	contraband = 7 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
+	hitsound = 'sound/impact_sounds/katana_slash.ogg'
 
 
 	// pickup_sfx = 'sound/items/blade_pull.ogg'
@@ -1180,11 +1187,13 @@
 		..()
 		src.setItemSpecial(/datum/item_special/katana_dash/reverse)
 
+TYPEINFO(/obj/item/swords/captain)
+	mats = list("MET-2"=15)
+
 /obj/item/swords/captain
 	icon_state = "cap_sword"
 	name = "Commander's Sabre"
 	desc = ""
-	mats = list("MET-2"=15)
 	force = 16 //not awful but not amazing
 	contraband = 4
 	tooltip_flags = REBUILD_USER

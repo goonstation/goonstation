@@ -6,6 +6,9 @@
 #define MAX_SPEED 3
 #define MAX_SPEED_HACKED 5
 
+TYPEINFO(/obj/machinery/manufacturer)
+	mats = 20
+
 /obj/machinery/manufacturer
 	name = "manufacturing unit"
 	desc = "A 3D printer-like machine that can construct items from raw materials."
@@ -14,7 +17,6 @@
 	var/icon_base = "general" //! This is used to make icon state changes cleaner by setting it to "fab-[icon_base]"
 	density = TRUE
 	anchored = TRUE
-	mats = 20
 	power_usage = 200
 	// req_access is used to lock out specific featurs and not limit deconstruciton therefore DECON_NO_ACCESS is required
 	req_access = list(access_heads)
@@ -2269,6 +2271,19 @@
 		/datum/manufacture/bagpipe,
 		/datum/manufacture/whistle)
 
+#define MALFUNCTION_WIRE_CUT 15 & ~(1<<WIRE_MALF)
+
+/obj/machinery/manufacturer/general/grody
+	name = "grody manufacturer"
+	desc = "It's covered in more gunk than a truck stop ashtray. Is this thing even safe?"
+	supplemental_desc = "This one has seen better days. There are bits and pieces of the internal mechanisms poking out the side."
+	free_resource_amt = 0
+	free_resources = list()
+	malfunction = TRUE
+	wires = MALFUNCTION_WIRE_CUT
+
+#undef MALFUNCTION_WIRE_CUT
+
 /obj/machinery/manufacturer/robotics
 	name = "robotics fabricator"
 	supplemental_desc = "This one produces robot parts, cybernetic organs, and other robotics-related equipment."
@@ -2889,7 +2904,7 @@
 	blueprint = /datum/manufacture/alastor
 
 /obj/item/paper/manufacturer_blueprint/interdictor_kit
-	name = "Interdictor Assembly Kit"
+	name = "Interdictor Frame Kit"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "interdictor_blueprint"
 	blueprint = /datum/manufacture/interdictor_kit

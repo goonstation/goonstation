@@ -1665,7 +1665,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				boutput(holder.owner, "You gather your energy and open a portal")
 				var/obj/machinery/wraith/vortex_wraith/V = new /obj/machinery/wraith/vortex_wraith(mob_choice)
 				if(mob_choice != null)
-					V.random_mode = false
+					V.random_mode = FALSE
 				V.set_loc(W.loc)
 				V.master = W
 				V.alpha = 0
@@ -1899,6 +1899,33 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		W.playsound_local(W.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
 		boutput(usr, "<b>You whisper to your summons:</b> [message]")
 		return 0
+
+/datum/targetable/wraithAbility/toggle_deadchat
+	name = "Toggle deadchat"
+	desc = "Silences or re-enables the whispers of the dead."
+	icon_state = "hide_chat"
+	targeted = 0
+	cooldown = 0
+	pointCost = 0
+
+	cast(mob/target)
+		if (!holder)
+			return TRUE
+
+		var/mob/living/intangible/wraith/W = holder.owner
+
+		if (!W)
+			return TRUE
+
+		//hearghosts is checked in deadsay.dm and chatprocs.dm
+		W.hearghosts = !W.hearghosts
+		if (W.hearghosts)
+			src.icon_state = "hide_chat"
+			boutput(W, "<span class='notice'>Now listening to the dead again.</span>")
+		else
+			src.icon_state = "show_chat"
+			boutput(W, "<span class='notice'>No longer listening to the dead.</span>")
+		return FALSE
 
 /obj/spookMarker
 	name = "Spooky Marker"

@@ -24,6 +24,9 @@
 		..()
 		src.icon_state = pick("plant_appendix", "plant_appendix_bloom")
 
+TYPEINFO(/obj/item/organ/appendix/cyber)
+	mats = 6
+
 /obj/item/organ/appendix/cyber
 	name = "cyberappendix"
 	desc = "A fancy robotic appendix to replace one that someone's lost!"
@@ -33,7 +36,6 @@
 	created_decal = /obj/decal/cleanable/oil
 	made_from = "pharosium"
 	edible = 0
-	mats = 6
 
 	//A bad version of the robutsec... For now.
 	on_life(var/mult = 1)

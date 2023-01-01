@@ -1606,6 +1606,9 @@ obj/item/clothing/gloves/concussive
 			else
 				. = ..()
 
+TYPEINFO(/obj/item/mining_tool/drill)
+	mats = 4
+
 /obj/item/mining_tool/drill
 	name = "laser drill"
 	desc = "Safe mining tool that doesn't require recharging."
@@ -1615,7 +1618,6 @@ obj/item/clothing/gloves/concussive
 	item_state = "drill"
 	c_flags = ONBELT
 	force = 10
-	mats = 4
 	dig_strength = 2
 	hitsound_charged = 'sound/items/Welder.ogg'
 	hitsound_uncharged = 'sound/items/Welder.ogg'
@@ -1853,6 +1855,9 @@ obj/item/clothing/gloves/concussive
 /// Multiplier for power usage if the user is a silicon and the charge is coming from their internal cell
 #define SILICON_POWER_COST_MOD 10
 
+TYPEINFO(/obj/item/cargotele)
+	mats = 4
+
 /obj/item/cargotele
 	name = "cargo transporter"
 	desc = "A device for teleporting crated goods."
@@ -1870,7 +1875,6 @@ obj/item/clothing/gloves/concussive
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	c_flags = ONBELT
 
-	mats = 4
 
 	New()
 		. = ..()
@@ -2272,6 +2276,9 @@ obj/item/clothing/gloves/concussive
 
 var/global/datum/cargo_pad_manager/cargo_pad_manager
 
+TYPEINFO(/obj/submachine/cargopad)
+	mats = 10 //I don't see the harm in re-adding this. -ZeWaka
+
 /obj/submachine/cargopad
 	name = "Cargo Pad"
 	desc = "Used to receive objects transported by a cargo transporter."
@@ -2279,7 +2286,6 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 	icon_state = "cargopad"
 	anchored = TRUE
 	plane = PLANE_FLOOR
-	mats = 10 //I don't see the harm in re-adding this. -ZeWaka
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/active = TRUE
 	var/group
@@ -2377,6 +2383,9 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 
 // satchels -> obj/item/satchel.dm
 
+TYPEINFO(/obj/item/ore_scoop)
+	mats = 6
+
 /obj/item/ore_scoop
 	name = "ore scoop"
 	desc = "A device that sucks up ore into a satchel automatically. Just load in a satchel and walk over ore to scoop it up."
@@ -2385,7 +2394,6 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "buildpipe"
 	w_class = W_CLASS_SMALL
-	mats = 6
 	var/obj/item/satchel/mining/satchel = null
 
 	prepared

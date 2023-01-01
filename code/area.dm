@@ -146,8 +146,6 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	/// set to TRUE to inhibit entrance into this area, may not work completely yet.
 	var/blocked = 0
 
-	/// if set and a blocked person makes their way into here via Bad Ways, they'll be teleported here instead of nullspace. use a path!
-	var/blocked_waypoint
 	var/list/blockedTimers
 
 	/// for Battle Royale gamemode
@@ -217,9 +215,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 						if( !CanEnter( enteringM ) )
 
 							var/target = get_turf(oldloc)
-							if( !target && blocked_waypoint )
-								target = get_turf(locate(blocked_waypoint) in world)
-							enteringM.loc = target
+							enteringM.set_loc(target)
 						var/area/oldarea = get_area(oldloc)
 						if( sanctuary && !blocked && !(oldarea.sanctuary))
 							boutput( enteringM, "<b style='color:#31BAE8'>You are entering a sanctuary zone. You cannot be harmed by other players here.</b>" )
@@ -476,7 +472,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 
 	Entered(atom/movable/O) // TODO: make this better and not copy n pasted from area_that_kills_you_if_you_enter_it
 		..()
-		if (isobserver(O))
+		if (isobserver(O) || istype(O, /obj/arrival_missile))
 			return
 		if (isintangible(O) || iswraith(O))
 			O.set_loc(pick_landmark(LANDMARK_LATEJOIN))
@@ -2568,6 +2564,9 @@ ABSTRACT_TYPE(/area/station/engine)
 	name = "Engineering Quarters"
 	icon_state = "yellow"
 
+/area/station/engine/core/nuclear
+	name = "Nuclear reactor room"
+
 /area/mining/miningoutpost
 	name = "Mining Outpost"
 	icon_state = "engine"
@@ -3486,14 +3485,14 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	sound_environment = 4
 	teleport_blocked = 1
 
-	CanEnter( var/atom/movable/A )
+	CanEnter(atom/movable/A)
 		var/mob/living/M = A
-		if( istype(M) && M.mind && M.mind.special_role != ROLE_WIZARD && isliving(M) )
+		if(istype(M) && M.mind && !(M.mind.special_role == ROLE_WIZARD || M.mind.assigned_role == "Santa Claus)"))
 			if(M.client && M.client.holder)
-				return 1
-			boutput( M, "<span class='alert'>A magical barrier prevents you from entering!</span>" ) //or something
-			return 0
-		return 1
+				return TRUE
+			boutput(M, "<span class='alert'>A magical barrier prevents you from entering!</span>") //or something
+			return FALSE
+		return TRUE
 
 ABSTRACT_TYPE(/area/station/ai_monitored)
 /area/station/ai_monitored
@@ -3550,6 +3549,22 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 	spy_secure_area = TRUE
 	station_map_colour = MAPC_ARMOURY
 	var/static/list/entered_ckeys = list()
+	var/armory_auth = FALSE
+
+	proc/authorize()
+		armory_auth = TRUE
+
+	proc/unauthorize()
+		armory_auth = FALSE
+
+	New()
+		..()
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_AUTH, .proc/authorize)
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_UNAUTH, .proc/unauthorize)
+		SPAWN(5 SECONDS)
+			var/area/A = locate(/area/station/ai_monitored/armory)
+			for(var/obj/item/O in A)
+				O.AddComponent(/datum/component/log_item_pickup, "")
 
 	Entered(atom/movable/A, atom/oldloc)
 		. = ..()
@@ -3562,18 +3577,11 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 					return
 				if(M.client.ckey in entered_ckeys)
 					return
-				if (M.mind && M.mind.assigned_role == "Head of Security")
-					return
-				var/armory_auth = FALSE
-				for_by_tcl(O, /obj/machinery/computer/riotgear)
-					if (O.authed)
-						armory_auth = TRUE
-						break
 				var/ckey = M.client.ckey
 				entered_ckeys += ckey
 				SPAWN(120 SECONDS)
 					entered_ckeys -= ckey
-				logTheThing(LOG_DEBUG, M, "entered the Armory [log_loc(M)][armory_auth ? "" : " - Armory unauthorized"].")
+				logTheThing(LOG_STATION, M, "entered the Armory [log_loc(M)].[armory_auth ? "" : " - Armory unauthorized."]")
 
 // // // // // //
 
@@ -3877,6 +3885,14 @@ ABSTRACT_TYPE(/area/mining)
 	sound_environment = 2
 	teleport_blocked = 1
 
+/// Areas That Walp Uses For Gimmick Maps To Load In
+
+/area/pawnshop
+	name = "Very Legitimate Pawn Shop"
+	requires_power = 0
+	sound_environment = 2
+	teleport_blocked = 1
+	icon_state = "purple"
 
 /* ================================================== */
 

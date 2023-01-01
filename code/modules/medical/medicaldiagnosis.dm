@@ -1,17 +1,24 @@
-/obj/item/medical/medicaldiagnosis
+/obj/item/medicaldiagnosis
 	name = "UM EXCUSE ME WHY ARE YOU SEEING THIS PLEASE MAKE AN ISSUE AAAAA"
 	desc = "*scream"
 	icon_state = "stethoscope" // todo
 	inhand_image_icon = "stethoscope" // todo
 	icon = 'icons/obj/medicaldiagnosis.dmi'
 
-/obj/item/medical/medicaldiagnosis/stethoscope
+/obj/item/medicaldiagnosis/stethoscope
 	name = "stethoscope"
 	desc = "a disc-shaped resonator attached to two earpieces for figuring out if someone has consumption or is simply suffering from the vapors."
 	icon = 'icons/obj/medicaldiagnosis.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "stethoscope"
 	icon_state = "stethoscope"
+	stamina_damage = 3
+	stamina_cost = 3
+	stamina_crit_chance = 3
+	w_class = W_CLASS_TINY
+	throw_speed = 4
+	throw_range = 20
+
 	attack(mob/M, mob/user)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -38,7 +45,7 @@
 						if(!user.traitHolder.hasTrait("training_medical") && prob(15))
 							boutput(user, "<span class='alert'>You attempt to listen to [(user != H) ? "[H]'s" : "your"] lungs before realizing after a few attempts that you've been listening to [(user != H) ? "[H]'s" : "your"] [pick("liver", "kidneys", "spleen", "leg", "PDA", "eyes")], a shameful [user]</span>")
 						else
-							if(isalive(H) == false)
+							if(!isalive(H))
 								boutput(user, "<span class='alert'>You hear nothing inside [(user != H) ? "[H]'s" : "your (Please report this on github asap)"] lungs.</span>")
 							else
 								if(H.organHolder && (!H.organHolder.left_lung || !H.organHolder.right_lung))

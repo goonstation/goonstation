@@ -66,6 +66,7 @@
 		..()
 
 		var/mob/M = holder.owner
+		logTheThing(LOG_COMBAT, M, "chairflips from [log_loc(M)], vector: ([target.x - M.x], [target.y - M.y]), dir: <i>[dir2text(get_dir(M, target))]</i>")
 		check_mutantrace(M)
 		if (GET_DIST(M,target) > dist)
 			var/steps = 0

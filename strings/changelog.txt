@@ -1,5 +1,218 @@
 
+(t)sun jan 01 23
+(u)Amylizzle
+(p)12369
+(e)🆕📄⚙|C-Feature, A-UI, A-Internal
+(*)As a ghost, observing a mob will now auto-open TGUI windows as they view them. This behaviour can be toggled in the Ghost tab.
+(t)sat dec 31 22
+(u)Shiiba
+(p)12582
+(e)🎨|C-Sprites
+(*)Resprites the cannabis leaves! Happy toking.
+(u)Amylizzle
+(p)12555
+(e)🆕💅📄📦|C-Feature, C-QoL, A-UI, A-Game-Objects
+(+)You can now configure the turbine for the nuclear engine at the turbine, without needing the control room computer.
+(u)LeahTheTech
+(p)12470
+(e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
+(*)Trees can now be felled using any sawing or chopping tools.
+(t)fri dec 30 22
+(u)Flappybat
+(p)12547
+(e)🗺💅⛔|A-Mapping, C-QoL, C-Removal
+(*)Removed the shield and shield generator console from Clarion.
+(t)thu dec 29 22
+(u)Amylizzle
+(p)12550
+(e)🪲📄|C-Bug, A-UI
+(+)Slightly upped the radiation shielding on the nuclear engine.
+(t)wed dec 28 22
+(u)Amylizzle, Danger Noodle, WALPVRGIS, ZeWaka
+(p)8767
+(e)🆕🗺🎨❗📄💡|C-Feature, A-Mapping, C-Sprites, E-FUCK, A-UI, A-Station-Systems
+(*)Adds a nuclear fission engine which replaces the TEG on Clarion. Sprites by WALPVRGIS and ZeWaka, mapping by Danger Noodle.
+(+)Make reactor components out of mined and alloyed material: pizza control rods, ice heat exchangers, erebite fuel rods.
+(+)Feed gas into the reactor to cool it and use the heat to generate power in the turbine.
+(+)Mechcomp integration as standard!
+(t)tue dec 27 22
+(u)Kubius
+(p)12528
+(e)🗺|A-Mapping
+(+)Nadir fixbatch 10: Kitchen item improvements, instrument piano in the nerd dungeon, and exterior beacon improvements.
+(u)LeahTheTech
+(p)12326
+(e)🪲💅🧛|C-Bug, C-QoL, A-Gamemodes
+(*)Spy-thief delivery teleportation should now work regardless of what you are clicking on (bags, tables etc.)
+(+)Spy-thief area GPS now works again
+(t)mon dec 26 22
+(u)Chatausours
+(p)12498
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Signaler implants will no longer appear in surplus crates.
+(t)sun dec 25 22
+(u)Sord
+(+)Vortexes random event now plays a  warning sound and has a delay before the vortexes sppear
+(t)fri dec 23 22
+(u)Keiiro
+(p)12480
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)The chef & bartender spare clothing can now be found in a proper catering clothing vending machine around the bar, along with multiple other job related costumes.
+(t)wed dec 21 22
+(u)Sord
+(e)🆕|C-Feature
+(+)Spooky critter summoning vortexes can now occur as a random event after 45 minutes on Classic and 60 minutes on RP
+(u)Sord
+(e)⚖|C-Balance
+(+)Csaber has received a slight buff. Reduced stamina cost per swing.
+(u)Amylizzle
+(p)12471
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Some critters were butcherable when they shouldn't have been. If you find a critter that isn't butcherable but should be, report it as a bug.
+(u)Conchuckter, sprites by NightmareChamillian
+(p)9083
+(e)🆕🎨⚗|C-Feature, C-Sprites, A-Chemistry
+(*)Adds a generator that can be powered by burning reagents.
+(t)tue dec 20 22
+(u)Blackrep
+(p)12179
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)The Salvagers gotten their hands on some heavily armored space suits
+(u)Chatauscours
+(p)12461
+(e)🗺💅|A-Mapping, C-QoL
+(+)New operating computers have been shipped to all operating rooms on NT stations.
+(u)glowbold
+(p)12208
+(e)⚖🔄📄💊|C-Balance, C-Rework, A-UI, A-Medical
+(*)Operating Computers have been updated to the latest in health tracking systems.
+(+)Unless you have medical training, you must lay down or be unconscious to be tracked by operating computers.
+(t)mon dec 19 22
+(u)Bartimeus973
+(p)12398
+(e)🪲⚖📦🍝|C-Bug, C-Balance, A-Game-Objects, A-Catering
+(+)Twirling soda cans with soda, tonic or soda water in it will now make it spray it's contents on the person who opens it. Prank colleagues today!
+(u)WALPVRGIS
+(p)10704
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added a bunch of new cloaks and scarves to randomized loot crates.
+(t)sun dec 18 22
+(u)Lord_Earthfire
+(p)12446
+(e)🪲|C-Bug
+(*)Fixes seeds being able to be damaged by over 100%. Prepare to have your phlog infusions to fail more often!
+(u)Tyrant
+(p)12366
+(e)🪲🗺📦|C-Bug, A-Mapping, A-Game-Objects
+(+)The bridges in clarion, destiny, donut3 and atlas now have radio headset crates.
+(u)LeahTheTech
+(p)12278
+(e)🆕🧛|C-Feature, A-Gamemodes
+(+)The singularity will now react violently to being fed nuclear warheads.
+(t)fri dec 16 22
+(u)tarmunora
+(+)cyborg expansion modules properly add exponential power drain, recharge packs restore 15k cell power
+(t)thu dec 15 22
+(u)tarmunora
+(+)glass tables chain-react when broken
+(t)wed dec 14 22
+(u)aloe
+(*)Clicking on an item someone has equipped in the human inventory menu (the one where you strip people/put items on them) while holding an item now clicks that equipped item with your held one. Paint people's clothes! Stuff grenades in people's backpacks! Melt people's shoes!<br>This WILL have jank, and I'll revert it if the jank becomes too much to handle.
+(u)tarmunora
+(e)⚖|C-Balance
+(+)genetic stability starts at 100%
+(u)Sord
+(e)⚖|C-Balance
+(*)Going into Critical Condition now grants a large negative debuff to stamina and stamina regen. Once you leave crit you will receive a smaller "Recent Trauma" debuff.
+(*)Recent Trauma can be reduced by having painkillers (salicylic acid, morphine) in your system.
+(u)Sovexe
+(p)12394
+(e)⚖🧫🔊🔨|C-Balance, C-Experimental, C-Sound, A-Player-Actions
+(*)Arcfiend now deals less direct stamina damage but has knock backs to take advantage of various environmental hazards, see minor changes section for full details.
+(+)Arc Flash - cooldown reduced 15 > 12
+(+)Flash - now has a 0.75 second charge up before it applies knock back to all foes within 3 tiles, pushing them out to a distance 7 tiles away. Direct stamina damage from elecflash reduced 63 > 47
+(+)Discharge - knocks back the target back 4 tiles. Direct stamina damage reduced 130 > 115. Half (15) of direct burn damage is now always applied even to targets with electrical immunity. Cyborg targets now randomly receive 30 damage to either a random limb or distributed across their various parts
+(+)Ride the Lightning - reduced cost per step 3 > 2
+(t)sun dec 11 22
+(u)Cheffie
+(p)12325
+(e)💅💨|C-QoL, A-Atmospherics
+(+)You can now see the volume of various atmospherics objects by examining them for portable objects or with the atmospherics scanner for pipes.
+(u)tarmunora
+(e)⚖|C-Balance
+(+)humans that are not in crit are slighly more resistant to gibbing from explosions
+(u)LeahTheTech
+(p)12380
+(e)🆕⚖🧛📦|C-Feature, C-Balance, A-Gamemodes, A-Game-Objects
+(*)Added a new 1TC traitor purchase: the signaler implant, which sends configurable signals on emote triggers.
+(u)Kubius
+(p)12307
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Nadir's breach hull now includes four auxiliary compartments.
+(u)Roddy, Meow Meow, DisturbHerb
+(p)11135
+(e)🎨🍝|C-Sprites, A-Catering
+(*)Adds churros to the game. Combine a dough strip and sugar in the oven for 6 seconds, on high. Dip one into your favorite soup based items!
+(u)Bartimeus973
+(p)12218
+(e)🆕🎨💅🔨|C-Feature, C-Sprites, C-QoL, A-Player-Actions
+(+)Wraiths can now toggle their ghost chat with the "toggle_deadchat" ability.
+(u)Bartimeus973
+(p)12024
+(e)🗺🔄📡|A-Mapping, C-Rework, A-AI
+(+)Cats are now mobs! Try and see if jones can defeat the captain in a drinking contest!
+(u)Kubius
+(p)12172
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Spatial interdictors may now be constructed with alternate control boards that grant them new functionality, such as wireless cyborg recharge. Their efficacy against mass radiation events has also dramatically increased.
+(u)LeahTheTech
+(p)12235
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Coagulated gnesis gib chance now scales with volume.
+(u)LeahTheTech
+(p)12317
+(e)⚖💅|C-Balance, C-QoL
+(+)Stunned people can now be shoved up/down ladders using grabs (previously only people capable of climbing ladders could be shoved down them).
+(u)glowbold
+(p)12356
+(e)🪲🆕📦|C-Bug, C-Feature, A-Game-Objects
+(*)Omnitools auto-swap to the needed tool when using the deconstruction tool context menu.
+(t)sat dec 10 22
+(u)Bartimeus973
+(p)12222
+(e)🆕🧛🔨|C-Feature, A-Gamemodes, A-Player-Actions
+(+)Plaguerats now have an ability to move through disposal pipes.
+(u)glowbold
+(p)12355
+(e)🪲🆕📦|C-Bug, C-Feature, A-Game-Objects
+(+)You can throw items from certain rideables, like segways and skateboards.
+(t)fri dec 09 22
+(u)Sord
+(e)⚖|C-Balance
+(+)Containment fields now stun you for significantly less time.
+(u)Munien
+(p)12311
+(e)🆕🎩|C-Feature, A-Clothing
+(+)Added a few extra items to hacked medical clothing vendors for other medical occupations.
+(t)thu dec 08 22
+(u)tarmunora
+(+)emagged segways no longer inexplicably safer than normal ones.
+(t)wed dec 07 22
+(u)Sord
+(e)🗺💅|A-Mapping, C-QoL
+(+)Donut 2's Engineering Department has received a new coat of paint.
+(u)Flaborized
+(e)💎
+(*)New artifact sprites and some tweaking of their visuals!
+(u)tarmunora
+(*)Vampire enthrall has a scaling cost based on number of living thralls.
+(u)tarmunora
+(+)Vending machines deal stamina damage instead of auto-stun when falling.
 (t)tue dec 06 22
+(u)Virvatuli
+(p)12310
+(e)🗺💅|A-Mapping, C-QoL
+(+)Expanded Donut 3's medbooth to be consistent with other maps, no more free defib
 (u)Zaniff
 (p)12302
 (e)🎨|C-Sprites
@@ -35,7 +248,7 @@
 (t)fri dec 02 22
 (u)tarmunora
 (+)AI law captcha returns.
-(t)the dec 01 22
+(t)thu dec 01 22
 (u)tarmunora
 (+)The Chief Engineer's belt has been modernized to use the new energy shield mechanic.
 (u)pali

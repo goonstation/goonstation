@@ -226,12 +226,14 @@
 				src.amount--
 			user.put_in_hand_or_drop(myWeapon)
 			boutput(user, "You take [myWeapon] out of [src].")
+			logTheThing(LOG_STATION, user, "takes [myWeapon] from the [src] [log_loc(src)].")
 		else
 			if (src.amount >= 1)
 				src.amount--
 				myWeapon = new src.contained_weapon(src.loc)
 				user.put_in_hand_or_drop(myWeapon)
 				boutput(user, "You take [myWeapon] out of [src].")
+				logTheThing(LOG_STATION, user, "takes [myWeapon] from the [src] [log_loc(src)].")
 		src.update()
 		myWeapon?.UpdateIcon() // let it be known that this used to be in a try-catch for some fucking reason
 		if (src.amount <= 0) //prevents a runtime if it's empty

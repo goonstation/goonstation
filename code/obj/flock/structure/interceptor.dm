@@ -10,6 +10,7 @@
 	resourcecost = 100
 	passthrough = TRUE
 	show_in_tutorial = TRUE
+	accepts_sapper_power = TRUE
 	compute = 0
 	var/online_compute_cost = 30
 
@@ -91,9 +92,22 @@
 		playsound(src, 'sound/weapons/railgun.ogg', 50, TRUE) // placeholder sound
 		qdel(bullet)
 
+	sapper_power()
+		if (!src.powered || !..() || GET_COOLDOWN(src, "bolt_gen_time") <= 1.5 SECONDS)
+			return FALSE
+		src.accepts_sapper_power = FALSE
+		OVERRIDE_COOLDOWN(src, "bolt_gen_time", max(0, GET_COOLDOWN(src, "bolt_gen_time") - 3 SECONDS))
+		src.info_tag.set_info_tag(src.check_bolt_status())
+		SPAWN(10 SECONDS)
+			if (!QDELETED(src))
+				src.accepts_sapper_power = TRUE
+		return TRUE
+
 	disposing()
 		for (var/obj/interceptor_projectile_checker/checker as anything in src.projectile_checkers)
 			qdel(checker)
+			checker.connected_structure = null
+		src.projectile_checkers = null
 		..()
 
 

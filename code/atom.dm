@@ -165,6 +165,8 @@
 			src.statusEffects = null
 		ClearAllParticles()
 		atom_properties = null
+		if(!ismob(src)) // I want centcom cloner to look good, sue me
+			ClearAllOverlays()
 		..()
 
 	proc/Turn(var/rot)
@@ -634,7 +636,7 @@
 	if (src.mdir_lights)
 		update_mdir_light_visibility(src.dir)
 
-/atom/proc/get_desc(dist)
+/atom/proc/get_desc(dist, mob/user)
 
 /**
   * a proc to completely override the standard formatting for examine text
@@ -757,7 +759,7 @@
 		worn_material_texture_image = getTexturedWornImage(src, texture, blendMode)
 	return
 
-/proc/getTexturedImage(var/atom/A, var/texture = "damaged", var/blendMode = BLEND_MULTIPLY)//, var/key = "texture")
+/proc/getTexturedIcon(var/atom/A, var/texture = "damaged")//, var/key = "texture")
 	if (!A)
 		return
 	var/icon/tex = null
@@ -789,6 +791,13 @@
 	mask = new(isicon(A) ? A : A.icon)
 	mask.MapColors(1,1,1, 1,1,1, 1,1,1, 1,1,1)
 	mask.Blend(tex, ICON_MULTIPLY)
+	//mask is now a cut-out of the texture shaped like the object.
+	return mask
+
+/proc/getTexturedImage(var/atom/A, var/texture = "damaged", var/blendMode = BLEND_MULTIPLY)//, var/key = "texture")
+	if (!A)
+		return
+	var/mask = getTexturedIcon(A, texture)
 	//mask is now a cut-out of the texture shaped like the object.
 	var/image/finished = image(mask,"")
 	finished.blend_mode = blendMode
@@ -840,6 +849,8 @@
 		return
 	if (isalive(usr) && !isintangible(usr) && isghostdrone(usr) && ismob(src) && src != usr)
 		return // Stops ghost drones from MouseDropping mobs
+	if (isAIeye(usr) || (isobserver(usr) && src != usr))
+		return // Stops AI eyes from click-dragging anything, and observers from click-dragging anything that isn't themselves (ugh)
 	over_object._MouseDrop_T(src, usr, src_location, over_location, src_control, over_control, params)
 	if (SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP, usr, over_object, src_location, over_location, src_control, over_control, params))
 		return
@@ -990,8 +1001,9 @@
 
 //reason for having this proc is explained below
 /atom/proc/set_density(var/newdensity)
+	var/old_density = src.density
 	src.density = HAS_ATOM_PROPERTY(src, PROP_ATOM_NEVER_DENSE) ? 0 : newdensity
-	if(src.density != newdensity)
+	if(old_density != src.density && isturf(src.loc))
 		var/turf/loc = src.loc // invalidate JPS cache on density changes
 		loc.passability_cache = null
 

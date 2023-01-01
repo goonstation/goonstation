@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/portable_atmospherics/pump)
+	mats = 12
+
 /obj/machinery/portable_atmospherics/pump
 	name = "Portable Air Pump"
 
@@ -5,7 +8,6 @@
 	icon_state = "psiphon-off"
 	dir = NORTH //so it spawns with the fan side showing
 	density = 1
-	mats = 12
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER
 	var/on = 0
 	var/direction_out = 0 //0 = siphoning, 1 = releasing
