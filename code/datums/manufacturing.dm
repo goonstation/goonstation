@@ -1925,6 +1925,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/miningcombathelmet
+	name = "Mining Combat Helmet"
+	item_paths = list("MET-3","CON-2","CRY-2")
+	item_amounts = list(5,3,3)
+	item_outputs = list(/obj/item/clothing/head/helmet/space/mining_combat)
+	time = 30 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/industrialboots
 	name = "Mechanised Boots"
 	item_outputs = list(/obj/item/clothing/shoes/industrial)

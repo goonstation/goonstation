@@ -2558,7 +2558,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 	hidden = list(/datum/manufacture/RCD,
 		/datum/manufacture/RCDammo,
 		/datum/manufacture/RCDammomedium,
-		/datum/manufacture/RCDammolarge)
+		/datum/manufacture/RCDammolarge,
+		/datum/manufacture/miningcombathelmet)
 
 /obj/machinery/manufacturer/hangar
 	name = "ship component fabricator"
