@@ -1,5 +1,9 @@
 
 (t)sun jan 01 23
+(u)LeahTheTech
+(p)12316
+(e)🆕💅📄📦|C-Feature, C-QoL, A-UI, A-Game-Objects
+(*)Flamethrowers now have a shiny new TGUI interface.
 (u)Amylizzle
 (p)12369
 (e)🆕📄⚙|C-Feature, A-UI, A-Internal
