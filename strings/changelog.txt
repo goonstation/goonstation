@@ -3,6 +3,10 @@
 (u)tarmunora
 (e)⚖📦|C-Balance, A-Game-Objects
 (+)Artifact large power cells no longer spawn activated. Take them to your local artifact scientist today!
+(u)LeahTheTech
+(p)12316
+(e)🆕💅📄📦|C-Feature, C-QoL, A-UI, A-Game-Objects
+(*)Flamethrowers now have a shiny new TGUI interface.
 (u)Amylizzle
 (p)12369
 (e)🆕📄⚙|C-Feature, A-UI, A-Internal
