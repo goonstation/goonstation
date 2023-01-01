@@ -1,5 +1,8 @@
 
 (t)sun jan 01 23
+(u)tarmunora
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Artifact large power cells no longer spawn activated. Take them to your local artifact scientist today!
 (u)Amylizzle
 (p)12369
 (e)🆕📄⚙|C-Feature, A-UI, A-Internal
