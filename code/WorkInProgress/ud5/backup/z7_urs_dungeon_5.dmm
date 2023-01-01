@@ -60,7 +60,7 @@
 /turf/unsimulated/floor/purple,
 /area/adventure/urs_dungeon)
 "al" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/floor/grass,
 /area/adventure/urs_dungeon)
 "am" = (
@@ -124,7 +124,7 @@
 /turf/unsimulated/floor/yellow,
 /area/adventure/urs_dungeon)
 "as" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/floor/void,
 /area/adventure/urs_dungeon)
 "at" = (

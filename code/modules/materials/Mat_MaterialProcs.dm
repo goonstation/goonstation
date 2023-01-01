@@ -482,9 +482,10 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	var/lastTrigger = 0
 
 	execute(var/atom/location, var/temp)
-		if(temp < T0C + 10) return
+		if(temp < T0C + 900) return
 		if(world.time - lastTrigger < 100) return
 		lastTrigger = world.time
+		if((temp < T0C + 1200) && prob(80)) return //some leeway for triggering at lower temps
 		var/turf/tloc = get_turf(location)
 		explosion(location, tloc, 0, 1, 2, 3, 1)
 		location.visible_message("<span class='alert'>[location] explodes!</span>")

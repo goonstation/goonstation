@@ -26615,7 +26615,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/crew_quarters/kitchen)
 "aYA" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass/random{
 	dir = 2
 	},

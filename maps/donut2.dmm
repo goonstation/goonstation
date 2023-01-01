@@ -25309,16 +25309,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
-"bPm" = (
-/obj/machinery/door/airlock/pyro,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/access_spawn/kitchen,
-/obj/firedoor_spawn,
-/obj/access_spawn/bar,
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
 "bPo" = (
 /obj/machinery/door_control{
 	id = "hangar_security";
@@ -27659,28 +27649,6 @@
 	dir = 1
 	},
 /area/station/science/lobby)
-"dSc" = (
-/obj/table/auto,
-/obj/item/storage/box/tapebox,
-/obj/item/disk/data/tape{
-	layer = 3.5
-	},
-/obj/decal/poster/wallsign/space{
-	pixel_y = 40
-	},
-/obj/machinery/activation_button/driver_button{
-	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
-	id = "artlabgun";
-	name = "Emergency Ejection Button";
-	pixel_y = 24
-	},
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 5
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 4
-	},
-/area/station/science/artifact)
 "dSS" = (
 /obj/shrub{
 	dir = 10;
@@ -28469,6 +28437,24 @@
 	dir = 1
 	},
 /area/station/medical/research)
+"euX" = (
+/obj/table/auto,
+/obj/item/paper_bin{
+	pixel_x = -7;
+	pixel_y = 3
+	},
+/obj/item/paper_bin/artifact_paper{
+	pixel_x = 5;
+	pixel_y = 15
+	},
+/obj/machinery/light/incandescent,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 7
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 8
+	},
+/area/station/science/artifact)
 "evx" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2,
@@ -30228,6 +30214,31 @@
 	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
+"fPo" = (
+/obj/table/auto,
+/obj/item/storage/box/tapebox{
+	pixel_y = 12;
+	pixel_x = -2
+	},
+/obj/item/disk/data/tape{
+	layer = 3.5
+	},
+/obj/decal/poster/wallsign/space{
+	pixel_y = 40
+	},
+/obj/machinery/activation_button/driver_button{
+	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
+	id = "artlabgun";
+	name = "Emergency Ejection Button";
+	pixel_y = 24
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 4
+	},
+/area/station/science/artifact)
 "fPH" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -30294,10 +30305,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
-"fTr" = (
-/obj/tree1,
-/turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
 "fTL" = (
 /obj/machinery/drainage,
 /obj/machinery/light/small{
@@ -34866,19 +34873,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/psychiatrist)
-"jZe" = (
-/obj/machinery/door/airlock/pyro{
-	dir = 4;
-	name = "Bartender's Room"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/access_spawn/bar,
-/obj/firedoor_spawn,
-/obj/access_spawn/kitchen,
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
 "jZf" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -38840,6 +38834,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/scidisposal)
+"nnw" = (
+/obj/reagent_dispensers/still,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "noB" = (
 /obj/disposalpipe/switch_junction{
 	dir = 8;
@@ -39988,6 +39986,11 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/science)
+"onI" = (
+/obj/machinery/light/incandescent,
+/obj/machinery/vending/jobclothing/catering,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "onZ" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -41950,6 +41953,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
+"pSR" = (
+/obj/machinery/door/airlock/pyro,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/access_spawn/kitchen,
+/obj/firedoor_spawn,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "pSU" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -44080,11 +44092,6 @@
 	},
 /turf/space,
 /area/station/solar/aisat)
-"rCH" = (
-/obj/reagent_dispensers/still,
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
 "rDh" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -47070,6 +47077,10 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
+"tOO" = (
+/obj/tree,
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
 "tOQ" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -47380,23 +47391,6 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
-"udT" = (
-/obj/table/auto,
-/obj/machinery/networked/printer{
-	print_id = "Artlab"
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/light_switch/west,
-/obj/item/hand_labeler{
-	pixel_y = 17
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 4
-	},
-/area/station/science/artifact)
 "ueu" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -48064,12 +48058,6 @@
 	dir = 4
 	},
 /area/station/crew_quarters/quarters)
-"uLH" = (
-/obj/storage/closet/wardrobe/black/formalwear,
-/obj/item/clothing/suit/apron,
-/obj/item/clothing/under/misc/itamae,
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
 "uMj" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor/plating,
@@ -48564,6 +48552,18 @@
 	icon_state = "floor6"
 	},
 /area/shuttle/research/outpost)
+"vfM" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	name = "Bartender's Room"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/access_spawn/bar,
+/obj/firedoor_spawn,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "vfW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -49874,6 +49874,28 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
+"wnQ" = (
+/obj/table/auto,
+/obj/machinery/networked/printer{
+	print_id = "Artlab"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/light_switch/west,
+/obj/item/hand_labeler{
+	pixel_y = 12;
+	pixel_x = 6
+	},
+/obj/item/device/audio_log{
+	pixel_y = 13;
+	pixel_x = -5
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 4
+	},
+/area/station/science/artifact)
 "wnS" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
@@ -51153,21 +51175,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
-"xvU" = (
-/obj/table/auto,
-/obj/item/paper_bin{
-	pixel_x = -7;
-	pixel_y = 3
-	},
-/obj/item/paper_bin/artifact_paper{
-	pixel_x = 6;
-	pixel_y = 4
-	},
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/white/checker2{
-	dir = 8
-	},
-/area/station/science/artifact)
 "xwe" = (
 /obj/machinery/shieldgenerator/meteorshield,
 /turf/simulated/floor/plating,
@@ -71079,7 +71086,7 @@ aVl
 jhM
 tFy
 sTk
-uLH
+nnw
 jhM
 oTi
 glV
@@ -71381,7 +71388,7 @@ mnm
 jhM
 whX
 sTk
-pmD
+tWE
 jhM
 lwZ
 oGq
@@ -71684,7 +71691,7 @@ jhM
 meo
 lTa
 jLy
-bPm
+pSR
 xOa
 uQl
 jMX
@@ -71984,8 +71991,8 @@ bhi
 aXI
 jhM
 uNR
-rCH
-tWE
+onI
+pmD
 jhM
 eLs
 ueu
@@ -72285,7 +72292,7 @@ aLX
 wJL
 aZi
 jhM
-jZe
+vfM
 jhM
 jhM
 jhM
@@ -74083,9 +74090,9 @@ hou
 nzf
 qWA
 qWA
-fTr
+tOO
 oio
-fTr
+tOO
 qWA
 qWA
 aCy
@@ -74686,7 +74693,7 @@ aaa
 hou
 nzf
 qWA
-fTr
+tOO
 dtP
 qWA
 qWA
@@ -75290,7 +75297,7 @@ aaa
 hou
 nzf
 qWA
-fTr
+tOO
 jwx
 fGE
 wYe
@@ -75594,9 +75601,9 @@ nzf
 nzf
 qWA
 qWA
-fTr
+tOO
 qWA
-fTr
+tOO
 oev
 qWA
 dlx
@@ -127446,8 +127453,8 @@ aaa
 aaa
 aiU
 aiU
-xvU
-udT
+euX
+wnQ
 tFL
 afR
 adT
@@ -127747,7 +127754,7 @@ aaa
 aiU
 aiU
 aiU
-dSc
+fPo
 tWs
 akc
 tma

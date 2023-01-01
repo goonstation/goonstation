@@ -26045,6 +26045,10 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/southwest)
+"gMS" = (
+/obj/tree,
+/turf/simulated/floor/grass,
+/area/station/garden/aviary)
 "gMT" = (
 /obj/machinery/light{
 	dir = 8;
@@ -27127,6 +27131,10 @@
 	dir = 8
 	},
 /area/station/medical/medbay)
+"hcj" = (
+/obj/tree,
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/aviary)
 "hcm" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/grass,
@@ -64076,6 +64084,13 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/power)
+"qzG" = (
+/obj/tree,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/aviary)
 "qzN" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/machinery/power/apc/autoname_north,
@@ -67100,18 +67115,6 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
-"rnd" = (
-/obj/machinery/manufacturer/general{
-	desc = "It's covered in more gunk than a truck stop ashtray. Is this thing even safe?";
-	free_resource_amt = 2;
-	malfunction = 1;
-	name = "grody manufacturer";
-	wires = 11
-	},
-/turf/simulated/floor/industrial,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "rnn" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4;
@@ -72225,13 +72228,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/west)
-"syS" = (
-/obj/tree1,
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/garden/aviary)
 "syX" = (
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/specialroom/arcade,
@@ -78089,10 +78085,6 @@
 	dir = 8
 	},
 /area/station/chapel/sanctuary)
-"tSi" = (
-/obj/tree1,
-/turf/simulated/floor/grass,
-/area/station/garden/aviary)
 "tSl" = (
 /obj/storage/closet/wardrobe/mixed,
 /turf/simulated/floor/plating,
@@ -86072,6 +86064,15 @@
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/quartermaster/office)
+"vJl" = (
+/obj/machinery/manufacturer/general/grody{
+	free_resource_amt = 2;
+	
+	},
+/turf/simulated/floor/industrial,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "vJo" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
@@ -96895,10 +96896,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/grey,
 /area/station/mining/staff_room)
-"ykm" = (
-/obj/tree1,
-/turf/simulated/floor/grass/leafy,
-/area/station/garden/aviary)
 "yko" = (
 /turf/simulated/floor/sanitary,
 /area/station/chapel/office)
@@ -125957,7 +125954,7 @@ haE
 iMd
 msZ
 kXn
-rnd
+vJl
 fXG
 fXG
 xZC
@@ -144286,7 +144283,7 @@ qiD
 xGN
 txf
 xvT
-syS
+qzG
 xvT
 xvT
 upe
@@ -144583,14 +144580,14 @@ qGH
 upu
 xvT
 xvT
-tSi
+gMS
 jsW
 xCO
 txf
 txf
 mAv
 xvT
-ykm
+hcj
 gmg
 gEN
 cdA
@@ -145484,7 +145481,7 @@ xMS
 wRm
 xvT
 xvT
-ykm
+hcj
 xvT
 voh
 xSd
@@ -145497,7 +145494,7 @@ cFc
 mAv
 xvT
 xvT
-ykm
+hcj
 xMS
 bOO
 lpT
@@ -146401,7 +146398,7 @@ xSj
 txf
 txf
 npx
-ykm
+hcj
 xQc
 edO
 pLJ
@@ -146691,14 +146688,14 @@ kvr
 xMS
 xvT
 xvT
-ykm
+hcj
 xvT
 xvT
 xvT
 hcW
 xvT
 txf
-tSi
+gMS
 txf
 txf
 xvT
