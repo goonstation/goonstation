@@ -1927,8 +1927,8 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/miningcombathelmet
 	name = "Mining Combat Helmet"
-	item_paths = list("MET-3","CON-2","CRY-2")
-	item_amounts = list(5,3,3)
+	item_paths = list("MET-3","CON-2","erebite")
+	item_amounts = list(4,3,5)
 	item_outputs = list(/obj/item/clothing/head/helmet/space/mining_combat)
 	time = 30 SECONDS
 	create = 1

@@ -973,16 +973,17 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 
 /obj/item/clothing/head/helmet/space/mining_combat
 	name = "mining combat helmet"
-	desc = "The sweet strawberry-scented visor goes great with Mining Combat Armor! Too bad the blueprints never got sent over."
+	desc = "Goes with Mining Combat Armor... if the blueprints for it ever got sent over. Now with a sweet strawberry-scented visor!"
 	icon_state = "mining_combat"
 	item_state = "mining_combat"
 
 	setupProperties()
 		..()
-		setProperty("radprot", 25)
-		setProperty("meleeprot_head", 2)
+		setProperty("radprot", 5)
+		setProperty("meleeprot_head", 5)
 		setProperty("disorient_resist_eye", 25)
-		setProperty("disorient_resist_ear", 10)
+		setProperty("disorient_resist_ear", 25)
+		setProperty("exploprot", 15)
 		setProperty("space_movespeed", 0)
 
 /obj/item/clothing/head/helmet/bucket
