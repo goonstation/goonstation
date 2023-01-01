@@ -103,7 +103,7 @@ TYPEINFO(/datum/component/radioactive)
 				src.neutron = R.neutron
 				src.decays = R.decays
 			else if (R.neutron == src.neutron && R.decays == src.decays) //if compatible, stack
-				src.radStrength = min(src.radStrength+R.radStrength, 100)
+				src.radStrength = max(src.radStrength, R.radStrength)
 			src.do_filters()
 			//else
 				//either you tried to apply a decay to a permanent, or a non-neutron to a neutron
