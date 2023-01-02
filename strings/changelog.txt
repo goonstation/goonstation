@@ -1,4 +1,9 @@
 
+(t)mon jan 02 23
+(u)Amylizzle
+(p)12594
+(e)🪲🧛📦|C-Bug, A-Gamemodes, A-Game-Objects
+(+)Flock gnesis turrets will now only shoot at targets they can hit, instead of trying to shoot through obstructions.
 (t)sun jan 01 23
 (u)Amylizzle
 (p)12464
