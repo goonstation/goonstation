@@ -65,6 +65,8 @@ labelMappings:
     "[GAMEMODES]": a-gamemodes
     "[GAME MODES]": a-gamemodes
     "[MODES]": a-gamemodes
+    "[HYDRO]": a-hydroponics
+    "[HYDROPONICS]": a-hydroponics
     "[INTERNAL]": a-internal
     "[MAPPING]": a-mapping
     "[MATERIALS]": a-materials
