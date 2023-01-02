@@ -5957,6 +5957,11 @@
 "cOM" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/south)
+"cPa" = (
+/obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "cPh" = (
 /obj/storage/secure/closet/immersion/research,
 /obj/item/clothing/suit/space/diving/civilian{
@@ -31278,14 +31283,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/research_director)
-"onQ" = (
-/obj/cable/orange{
-	icon_state = "4-8"
-	},
-/obj/item/device/radio/beacon,
-/obj/landmark/gps_waypoint,
-/turf/simulated/floor/engine,
-/area/station/engine/core/nuclear)
 "ooK" = (
 /obj/machinery/light,
 /turf/simulated/floor/redblack{
@@ -97614,7 +97611,7 @@ ozD
 qTl
 sBo
 wzV
-kPm
+cPa
 qzi
 qzi
 pHa
@@ -97915,8 +97912,8 @@ geI
 ozD
 qTl
 sBo
-onQ
-dAH
+wzV
+kPm
 fHL
 fHL
 vtr
