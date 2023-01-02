@@ -918,15 +918,11 @@
 /turf/simulated/floor/black,
 /area/station/security/main)
 "aty" = (
-/obj/machinery/power/nuclear/turbine_control,
-/obj/cable/orange{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
 /obj/item/device/radio/intercom/engineering,
+/obj/machinery/computer/atmosphere/pumpcontrol,
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "atD" = (
@@ -3493,10 +3489,11 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
 /obj/storage/closet/radiation,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -4774,6 +4771,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"cjd" = (
+/obj/machinery/centrifuge_nuclear,
+/obj/machinery/light,
+/turf/simulated/floor/yellowblack,
+/area/station/engine/gas)
 "cjf" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7766,7 +7768,6 @@
 /obj/cable/orange{
 	icon_state = "0-4"
 	},
-/obj/cable/orange,
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "dGx" = (
@@ -8912,7 +8913,8 @@
 "elm" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/manifold{
-	dir = 8
+	dir = 8;
+	level = 2
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
@@ -9997,7 +9999,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/emergencyinternals)
 "eKx" = (
-/obj/machinery/atmospherics/pipe/manifold,
+/obj/machinery/atmospherics/pipe/manifold{
+	level = 2
+	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -19580,14 +19584,13 @@
 	name = "Drop Capsule"
 	})
 "iYe" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable,
 /obj/machinery/door_control{
 	id = "engine_core";
 	name = "Observation Shutters";
 	pixel_x = -24
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 8
@@ -24077,7 +24080,8 @@
 /area/station/crew_quarters/courtroom)
 "kXt" = (
 /obj/machinery/atmospherics/pipe/manifold{
-	dir = 8
+	dir = 8;
+	level = 2
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -27834,6 +27838,12 @@
 /obj/item/clothing/mask/skull,
 /turf/simulated/floor/carpet/red/fancy/innercorner/west,
 /area/station/crew_quarters/arcade/dungeon)
+"mCX" = (
+/obj/machinery/nanofab/nuclear,
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/engine/gas)
 "mDc" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
@@ -28265,15 +28275,17 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "mMI" = (
-/obj/machinery/power/nuclear/reactor_control,
-/obj/cable/orange{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
 /obj/item/device/radio/intercom/engineering,
+/obj/rack,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "mMV" = (
@@ -30164,6 +30176,17 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary)
+"nHK" = (
+/obj/machinery/atmospherics/binary/pump{
+	dir = 8;
+	frequency = 1225;
+	icon_state = "intact_on";
+	id = "Reactor Inlet 2";
+	on = 1;
+	target_pressure = 1000
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "nIj" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -33082,7 +33105,9 @@
 /area/station/maintenance/inner/south)
 "pgk" = (
 /obj/cable{
-	icon_state = "2-4"
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
 /area/station/engine/gas)
@@ -33611,7 +33636,12 @@
 /area/station/quartermaster/refinery)
 "psV" = (
 /obj/machinery/atmospherics/binary/pump{
-	dir = 8
+	dir = 8;
+	frequency = 1225;
+	icon_state = "intact_on";
+	id = "Reactor Inlet 1";
+	on = 1;
+	target_pressure = 1000
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
@@ -34146,11 +34176,12 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
 "pHa" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 1
-	},
 /obj/machinery/meter,
 /obj/machinery/light/small/floor,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 1;
+	level = 2
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "pHb" = (
@@ -40800,18 +40831,6 @@
 /obj/machinery/light/lamp/black,
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/station/crew_quarters/quarters_east)
-"sOI" = (
-/obj/rack,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/turf/simulated/floor/yellowblack{
-	dir = 1
-	},
-/area/station/engine/gas)
 "sON" = (
 /obj/table/nanotrasen/auto,
 /obj/machinery/light/lamp/black{
@@ -46254,7 +46273,8 @@
 /area/station/engine/gas)
 "vtr" = (
 /obj/machinery/atmospherics/pipe/manifold{
-	dir = 1
+	dir = 1;
+	level = 2
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
@@ -46511,8 +46531,7 @@
 /area/station/engine/engineering)
 "vzD" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
-/obj/cable,
-/obj/machinery/power/apc/autoname_south,
+/obj/machinery/light,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/gas)
 "vzN" = (
@@ -97003,7 +97022,7 @@ thj
 tNK
 iSS
 jDW
-eRe
+cjd
 rWC
 fkD
 mgm
@@ -97310,7 +97329,7 @@ qTl
 sBo
 wzV
 dAH
-psV
+nHK
 psV
 vtr
 sVC
@@ -97605,7 +97624,7 @@ hiW
 hiW
 gfC
 ceN
-jyU
+mCX
 jDW
 ozD
 qTl
@@ -98209,7 +98228,7 @@ hiW
 hiW
 gfC
 ceN
-sOI
+jyU
 jDW
 ozD
 qTl
@@ -99422,7 +99441,7 @@ tNK
 tNK
 rWC
 mMI
-lPU
+wzV
 dAH
 dAH
 dAH
