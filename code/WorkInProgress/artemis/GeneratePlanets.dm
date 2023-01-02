@@ -41,13 +41,12 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 	var/turfs = block(locate(region.bottom_left.x+1, region.bottom_left.y+1, region.bottom_left.z), locate(region.bottom_left.x+region.width-2, region.bottom_left.y+region.height-2, region.bottom_left.z) )
 	generator.generate_terrain(turfs, reuse_seed=TRUE, flags=mapgen_flags)
 
-	// Workaround while region.cleanup() uses REGION_TILES(src) which excludes border tiles...
+	//Force Outer Edge to be Cordon Area
 	var/area/border_area = new /area/cordon(null)
 	for(var/x in 1 to region.width)
 		for(var/y in 1 to region.height)
 			if(x == 1 || y == 1 || x == region.width || y == region.height)
 				T = region.turf_at(x, y)
-				T.ReplaceWith(/turf/cordon)
 				border_area.contents += T
 
 			if (current_state >= GAME_STATE_PLAYING)
