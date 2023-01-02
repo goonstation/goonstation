@@ -722,6 +722,9 @@
 	name = "plastic power helmet"
 	desc = "Wow this really looks like a noise marine helmet. But it's not!"
 	icon_state = "nm_helm"
+	hides_from_examine = C_EARS|C_GLASSES|C_MASK
+	seal_hair = 1
+	see_face = 0
 
 /obj/item/clothing/suit/power
 	name = "unpainted cardboard space marine armor"
@@ -865,6 +868,7 @@
 	item_state = "bee"
 	wear_layer = MOB_BACK_LAYER + 0.2
 	body_parts_covered = TORSO|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES
 
 /obj/item/clothing/suit/monkey
 	name = "monkey costume"
@@ -877,6 +881,7 @@
 	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
+	wear_layer = MOB_OVERLAY_BASE
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 
 /obj/item/clothing/mask/niccage
@@ -912,6 +917,7 @@
 	item_state = "light_borg"
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
+	wear_layer = MOB_OVERLAY_BASE
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 	over_hair = TRUE
 	see_face = 0
@@ -957,7 +963,6 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
 	icon_state = "sneakmans"
 	item_state = "sneakmans"
-	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 
 /obj/item/clothing/suit/armor/sneaking_suit/costume
 	desc = "On closer inspection this is a cheap cosplay outfit with an obvious zipper."
@@ -1388,6 +1393,7 @@
 	icon_state = "joyful"
 	body_parts_covered = TORSO|LEGS|ARMS
 	wear_layer = MOB_OVERLAY_BASE
+	c_flags = COVERSMOUTH | COVERSEYES
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 	over_hair = TRUE
 
@@ -1395,6 +1401,8 @@
 	name = "red skull mask and cowl"
 	desc = "Looking at this fills you with joy! You're not sure why. That's kind of a weird thing to feel about something that looks like this."
 	icon_state = "joyful"
+	c_flags = COVERSMOUTH | COVERSEYES
+	hides_from_examine = C_MASK|C_GLASSES|C_EARS
 	seal_hair = 1
 
 /obj/item/clothing/under/rotten

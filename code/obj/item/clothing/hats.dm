@@ -1937,4 +1937,4 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 	icon_state = "space_replica"
 	item_state = "space_replica"
 	desc = "A replica of an old space helmet. Looks spaceworthy regardless."
-	hides_from_examine = C_EARS|C_MASK|C_GLASSES
+
