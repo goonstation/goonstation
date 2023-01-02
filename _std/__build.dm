@@ -160,6 +160,11 @@ o+`        `-` ``..-:yooos-..----------..`
 var/global/vcs_revision = "1"
 var/global/vcs_author = "bob"
 
+#define VCS_REVISION "1"
+#define VCS_AUTHOR "bob"
+#define ORIGIN_REVISION "2"
+#define ORIGIN_REVISION "alice"
+
 // The following describe when the server was compiled
 #define BUILD_TIME_TIMEZONE_ALPHA "EST" // Server is EST
 #define BUILD_TIME_TIMEZONE_OFFSET -0500
