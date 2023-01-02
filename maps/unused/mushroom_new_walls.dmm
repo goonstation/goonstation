@@ -18847,7 +18847,7 @@
 /area/station/engine/engineering/ce)
 "bsH" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/decal/cleanable/dirt,
 /obj/item/instrument/bikehorn,
 /obj/item/reagent_containers/food/snacks/pie/cream,
@@ -21596,7 +21596,7 @@
 /area/station/security/brig)
 "eEa" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/machinery/light/lamp/green,
 /turf/simulated/floor{
 	icon_state = "carpetS"
@@ -37174,7 +37174,7 @@
 /area/station/science/lab)
 "wOE" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/reagent_containers/food/drinks/rum_spaced,
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/hor)

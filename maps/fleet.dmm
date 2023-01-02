@@ -11803,7 +11803,7 @@
 	pixel_y = 1
 	},
 /obj/machinery/light/lamp/green,
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	pixel_y = -8
 	},
 /obj/machinery/camera{
@@ -13713,7 +13713,7 @@
 /area/station/storage/tech)
 "Bd" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/decal/cleanable/dirt,
 /obj/item/instrument/bikehorn,
 /obj/decal/cleanable/dirt,
@@ -19156,7 +19156,7 @@
 /area/research_outpost/indigo_rye)
 "Mm" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/paper{
 	info = "delta oblique seneca toreador neptune"
 	},
