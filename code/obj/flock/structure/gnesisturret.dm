@@ -181,6 +181,16 @@
 				return FALSE
 		if (isflockmob(C))
 			return FALSE
+		//final check, as it's the most expensive: do we have an unobstructed line of sight to the target?
+		//fun fact, we can abuse jpsTurfPassable for this and use path caching!
+		var/test_turf = get_step(src, get_dir(src, C))
+		var/obj/projectile/test_proj = new()
+		test_proj.proj_data = src.current_projectile
+		while(GET_DIST(test_turf, C) > 0)
+			var/next_turf = get_step(test_turf, get_dir(test_turf, C))
+			if(!jpsTurfPassable(test_turf, next_turf, test_proj))
+				return FALSE
+			test_turf = next_turf
 
 		return TRUE
 
