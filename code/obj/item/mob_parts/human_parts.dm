@@ -1112,6 +1112,8 @@
 /obj/item/parts/human_parts/arm/left/zombie
 	name = "left rotten arm"
 	desc = "A rotten hunk of human junk."
+	icon = 'icons/mob/vampiric_thrall.dmi'
+	partIcon = 'icons/mob/vampiric_thrall.dmi'
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = 0
@@ -1133,6 +1135,8 @@
 /obj/item/parts/human_parts/arm/right/zombie
 	name = "right rotten arm"
 	desc = "A rotten hunk of human junk."
+	icon = 'icons/mob/vampiric_thrall.dmi'
+	partIcon = 'icons/mob/vampiric_thrall.dmi'
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = 0
