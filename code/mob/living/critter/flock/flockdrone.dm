@@ -492,7 +492,7 @@
 	HH.can_hold_items = FALSE
 
 	HH = hands[3]
-	HH.limb = new /datum/limb/gun/flock_stunner
+	HH.limb = new /datum/limb/gun/flock_stunner(hands[3])
 	HH.name = "incapacitor"
 	HH.icon = 'icons/mob/flock_ui.dmi'
 	HH.icon_state = "incapacitor"
@@ -530,7 +530,7 @@
 	return ..()
 
 /mob/living/critter/flock/drone/Life(datum/controller/process/mobs/parent)
-	if (..(parent) || isdead(src))
+	if (..(parent))
 		return TRUE
 	if (src.floorrunning && src.resources >= 1)
 		src.pay_resources(1)
@@ -1175,6 +1175,7 @@
 
 /datum/limb/gun/flock_stunner/New()
 	..()
+	src.cell.set_loc(src.holder.holder)
 	RegisterSignal(src.cell, COMSIG_UPDATE_ICON, .proc/update_overlay)
 
 /datum/limb/gun/flock_stunner/proc/update_overlay()
@@ -1230,7 +1231,7 @@
 	var/ignore_amount = FALSE
 
 /datum/equipmentHolder/flockAbsorption/can_equip(var/obj/item/I)
-	if (istype(I, /obj/item/grab))
+	if (istype(I, /obj/item/grab) || istype(I, /obj/item/spacebux))
 		return FALSE
 	return ..()
 

@@ -753,7 +753,7 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	mouse_drop(over_object, src_location, over_location)
 		..()
-		if(!isliving(usr) || isintangible(usr)) return // ghosts killing plants fix
+		if(!isliving(usr) || isintangible(usr) || isghostcritter(usr)) return // ghosts&ghost critter killing plants fix
 		if(BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You need to be closer to empty the tray out!</span>")
 			return
@@ -794,13 +794,13 @@ TYPEINFO(/obj/machinery/plantpot)
 					if(!QDELETED(current) && !QDELETED(src))
 						usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
 						src.reagents.clear_reagents()
-						logTheThing(LOG_COMBAT, usr, "cleared a hydroponics tray containing [current.name] at [log_loc(src)]")
+						logTheThing(LOG_COMBAT, usr, "cleared a hydroponics tray containing [current?.name] at [log_loc(src)]")
 						HYPdestroyplant()
 		else
 			if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
 				if(!QDELETED(src))
 					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
-					logTheThing(LOG_STATION, usr, "cleared a hydroponics tray containing [current.name] at [log_loc(src)]")
+					logTheThing(LOG_STATION, usr, "cleared a hydroponics tray containing [current?.name] at [log_loc(src)]")
 					src.reagents.clear_reagents()
 					UpdateIcon()
 					update_name()
@@ -1023,7 +1023,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			// And this is if you've neglected the plant!
 
 		var/getitem = null
-		var/dont_rename_crop = false
+		var/dont_rename_crop = FALSE
 		// Figure out what crop we use - the base crop or a mutation crop.
 		if(growing.crop || MUT?.crop)
 			if(MUT)

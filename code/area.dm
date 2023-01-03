@@ -2564,6 +2564,9 @@ ABSTRACT_TYPE(/area/station/engine)
 	name = "Engineering Quarters"
 	icon_state = "yellow"
 
+/area/station/engine/core/nuclear
+	name = "Nuclear reactor room"
+
 /area/mining/miningoutpost
 	name = "Mining Outpost"
 	icon_state = "engine"

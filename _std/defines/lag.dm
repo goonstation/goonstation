@@ -62,17 +62,17 @@
 /// what value must world.cpu cross upwards to trigger automatic profiling
 #define CPU_START_PROFILING_THRESHOLD 150
 /// what value must world.cpu cross upwards to trigger automatic profiling but this one ignores CPU_START_PROFILING_COUNT
-#define CPU_START_PROFILING_IMMEDIATELY_THRESHOLD 300
+#define CPU_START_PROFILING_IMMEDIATELY_THRESHOLD 400
 /// what value must world.cpu cross downwards to stop automatic profiling
 #define CPU_STOP_PROFILING_THRESHOLD 100
 /// how many ticks in a row does world.cpu needs to be above the threshold to start profiling
-#define CPU_START_PROFILING_COUNT 10
+#define CPU_START_PROFILING_COUNT 40
 /// how many ticks in a row does world.cpu needs to be below the threshold to stop profiling
-#define CPU_STOP_PROFILING_COUNT 20
+#define CPU_STOP_PROFILING_COUNT 40
 /// how long the round needs to be in progress before we can start profiling
 #define CPU_PROFILING_ROUNDSTART_GRACE_PERIOD 10 SECONDS
 /// even if world.cpu is normal if tick took this amount of time profiling will start
-#define TICK_TIME_PROFILING_THRESHOLD 1 SECOND
+#define TICK_TIME_PROFILING_THRESHOLD 1.5 SECONDS
 
 /// when pcount is above this number on round start, increase ticklag to OVERLOADED_WORLD_TICKLAG to try to maintain smoothness
 #define OVERLOAD_PLAYERCOUNT 120
