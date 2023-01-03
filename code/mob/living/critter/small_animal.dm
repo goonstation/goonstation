@@ -2184,8 +2184,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.can_hold_items = 0
 
 	hand_attack(atom/target, params)
-		if (istype(target, /obj/tree1))
-			var/obj/tree1/T = target
+		if (istype(target, /obj/tree))
+			var/obj/tree/T = target
 			var/can_attach = FALSE
 			var/fall_left_or_right
 			var/new_pixel_x
