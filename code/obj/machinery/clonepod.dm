@@ -359,6 +359,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			if(implant_hacker == src.occupant)
 				boutput(src.occupant, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
 			else
+				logTheThing(LOG_COMBAT, src.occupant, "was mindhack cloned. Mindhacker: [constructTarget(implant_hacker,"combat")]")
 				src.occupant.setStatus("mindhack", null, implant_hacker)
 
 		// Remove zombie antag status as zombie race is removed on cloning
@@ -640,6 +641,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				boutput(user, "<space class='alert'>You must wait for the current cloning cycle to finish before you can remove the mindhack module.</span>")
 				return
 			boutput(user, "<span class='notice'>You begin detatching the mindhack cloning module...</span>")
+			logTheThing(LOG_STATION, src, "[user] removed the mindhack cloning module from ([src]) at [log_loc(user)].")
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			if (do_after(user, 50) && clonehack)
 				new /obj/item/cloneModule/mindhack_module( src.loc )

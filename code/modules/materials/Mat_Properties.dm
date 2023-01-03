@@ -256,3 +256,28 @@ ABSTRACT_TYPE(/datum/material_property)
 		M.removeTrigger(M.triggersOnAdd, /datum/materialProc/n_radioactive_add)
 		M.removeTrigger(M.triggersOnRemove, /datum/materialProc/n_radioactive_remove)
 		return
+
+/// Literally just indicating that it can be refined into good nuclear fuel in the centrifuge
+/datum/material_property/spent_fuel
+	name = "Fissile Isotopes"
+	id = "spent_fuel"
+
+	min_value = 0
+	prefix_high_min = 0.1
+	prefix_low_max = 9
+	default_value = 0
+
+	getAdjective(var/datum/material/M)
+		switch(M.getProperty(id))
+			if(0 to 1)
+				return "trace plutonium"
+			if(1 to 2)
+				return "barely any plutonium"
+			if(2 to 4)
+				return "some plutonium"
+			if(4 to 6)
+				return "quite a lot of plutonium"
+			if(6 to 8)
+				return "densely packed with plutonium"
+			if(8 to INFINITY)
+				return "mostly plutonium"
