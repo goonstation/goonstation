@@ -545,19 +545,18 @@
 				O.explode()
 				O.visible_message("<span class='alert'><b>[user]</b> violently rips [O] apart!</span>")
 				hit = TRUE
+			if(prob(40) && !ON_COOLDOWN(user, "zombie arm scream", 5 SECONDS))
+				user.emote("scream")
 			if (hit)
 				user.lastattacked = target
 				attack_particle(user, target)
-			if(prob(40) && !ON_COOLDOWN(user, "zombie arm scream", 5 SECONDS))
-				user.emote("scream")
-			return
+				return
 
 		if (istype(target, /obj/machinery))
 			boutput(user, "<span class='alert'>You're unlikely to be able to use [target]. You manage to scratch its surface though.</span>")
 			return
 
 		..()
-		return
 
 	disarm(mob/target, var/mob/living/user)
 		logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with zomb limbs (disarm intent) at [log_loc(user)].")
