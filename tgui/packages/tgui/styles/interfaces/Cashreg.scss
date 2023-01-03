@@ -5,30 +5,47 @@
  * @license MIT
  */
 
-.cashreg__ {
+ .cashreg__ {
   &wrapper {
     display: flex;
     flex-direction: column;
     height: 100%;
   }
 
-  &ownerbutton {
-    flex-grow: 1;
+  &bottombutt_holder {
+    display: flex;
+  }
+
+  &bottombutt,
+  &pay,
+  &tip {
+    display: flex;
+    flex: 1 1 0px;
+  }
+
+  &ownerbutton,
+  &pay,
+  &tip,
+  &amount {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     & > * {
-
+      padding: 0.5em 0.1em;
     }
   }
 
   &amount {
-    flex-grow: 8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2em
+    flex-grow: 1;
+    font-size: 1.5em;
   }
 
-  &pay {
-    flex-grow: 1;
+  &table {
+    width: 100%;
+
+    &_cellright {
+      text-align: right;
+    }
   }
 }

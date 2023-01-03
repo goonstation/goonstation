@@ -13,9 +13,17 @@ TYPEINFO(/obj/machinery/cashreg)
 
 	var/datum/db_record/owner_account = null
 	var/obj/item/card/id/owner_card = null
+
+	/// Safety thing to prevent other tasks from occurring during a transaction.
 	var/active_transaction = FALSE
+	/// The number of transfers the machine has processed.
+	var/transaction_count = 0
+	/// The price set by the owner of the machine.
 	var/amount = 0
-	var/transaction_limit = 999999 // Maximum amount of credits a single transaction can move.
+	/// The proportion of the given price to be added on as a tip, from 0 to 1.
+	var/tip = 0
+	/// Maximum amount of credits a single transaction can move.
+	var/transaction_limit = 999999
 
 	New()
 		..()
@@ -51,9 +59,12 @@ TYPEINFO(/obj/machinery/cashreg)
 
 	ui_data(mob/user)
 		. = list(
+			"active_transaction" = src.active_transaction,
 			"amount" = src.amount,
 			"name" = src.name,
 			"owner" = src.owner_card?.registered,
+			"tip" = src.tip,
+			"total" = src.amount + round(src.amount * src.tip),
 		)
 
 	ui_act(action, params)
@@ -67,26 +78,22 @@ TYPEINFO(/obj/machinery/cashreg)
 					boutput(usr, "<span class='alert'>Transaction cancelled.</span>")
 					usr.visible_message("<span class='alert'><B>[usr]</B> cancels the active transaction on [src].</span>")
 					src.amount = 0
+					src.tip = 0
 					. = TRUE
 				else
 					boutput(usr, "<span class='alert'>Unable to cancel transaction.</span>")
 					return
 			if ("set_amount")
-				var/obj/O
-				if (ishuman(usr))
-					var/mob/living/carbon/human/owner = usr
-					if (owner.wear_id)
-						O = owner.wear_id
-					else
-						O = usr.equipped()
-				else
-					return
-
-				if (src.get_ID(O) == src.owner_card)
+				var/obj/O = src.check_worn_ID(usr)
+				if (src.get_ID(O) == src.owner_card && !src.active_transaction)
 					var/amount_buffer = tgui_input_number(usr, "Enter amount.", src.name, 0, src.transaction_limit)
-					if (amount_buffer)
+					if (amount_buffer !src.active_transaction)
 						src.amount = amount_buffer
 						. = TRUE
+			if ("set_tip")
+				if (!src.active_transaction)
+					src.tip = clamp((tgui_input_number(usr, "What percentage would you like to pay as a tip?", "Tip", 10, 100, 0) / 100), 0, 1)
+					. = TRUE
 			if ("swipe_owner")
 				var/obj/O = usr.equipped()
 				if (src.get_ID(O) && !src.owner_account)
@@ -98,17 +105,16 @@ TYPEINFO(/obj/machinery/cashreg)
 					src.pay(usr, O)
 					. = TRUE
 			if ("reset")
-				var/obj/O = usr.equipped()
+				var/obj/O = src.check_worn_ID(usr)
 				// (If the user's ID matches the registered card OR the user has head access) AND there is no active transaction
 				if ((src.get_ID(O) == src.owner_card || src.allowed(usr)) && !src.active_transaction)
-					if (tgui_alert(usr, "Reset the reader?", "Reset reader", list("Reset", "Cancel")) == "Reset")
-						if (src.active_transaction)
-							return
+					if (tgui_alert(usr, "Reset the reader?", "Reset reader", list("Reset", "Cancel")) == "Reset" && !src.active_transaction)
 						boutput(usr, "<span class='alert'>Reader reset.</span>")
 						usr.visible_message("<span class='alert'><B>[usr]</B> resets [src].</span>")
 						src.owner_account = null
 						src.owner_card = null
 						src.amount = 0
+						src.tip = 0
 						. = TRUE
 				else
 					boutput(usr, "<span class='alert'>You are not the owner or you don't have permission to reset the machine!</span>")
@@ -141,6 +147,17 @@ TYPEINFO(/obj/machinery/cashreg)
 			var/obj/item/device/pda2/pda = O
 			return pda.ID_card
 
+	// If an ID is being held, get what's equipped. Otherwise, if mob M is wearing something in their ID slot, get an ID from that.
+	proc/check_worn_ID(mob/M)
+		var/obj/item/O
+		if (ishuman(M))
+			var/mob/living/carbon/human/owner = M
+			if (istype(M.equipped(), /obj/item/card/id) || istype(M.equipped(), /obj/item/device/pda2))
+				O = M.equipped()
+			else if (owner.wear_id)
+				O = owner.wear_id
+			return O
+
 	proc/register_owner(mob/user, obj/item/card/id/O)
 		src.owner_account = src.authenticate_card(user, O)
 		if (src.owner_account)
@@ -168,7 +185,7 @@ TYPEINFO(/obj/machinery/cashreg)
 			src.cancel(user)
 			return
 
-		if (tgui_alert(usr, "Please confirm transfer of [src.amount] to [src.owner_card?.registered].", "Confirm transfer", list("Confirm", "Cancel")) == "Confirm")
+		if (tgui_alert(usr, "Please confirm transfer of [src.amount + round(src.amount * src.tip)] to [src.owner_card?.registered].", "Confirm transfer", list("Confirm", "Cancel")) == "Confirm")
 			if (!src.amount)
 				boutput(user, "<span class='alert'>Invalid transaction!</span>")
 				src.cancel(user)
@@ -183,12 +200,18 @@ TYPEINFO(/obj/machinery/cashreg)
 			if (tgui_alert(usr, "Print customer receipt?", "Receipt", list("Print", "Cancel")) == "Print")
 				print_customer_copy = TRUE
 
-			payer_account["current_money"] -= src.amount
-			src.owner_account["current_money"] += src.amount
-			var/transaction_total = src.amount
-			var/payee = O.registered
+			var/transaction_price = src.amount
+			var/transaction_tip = src.tip
+			var/transaction_total = src.amount + round(src.amount * src.tip) // when we get to 515 please replace this with ceil()
+			var/payee = src.owner_card.registered
+
+			payer_account["current_money"] -= transaction_total
+			src.owner_account["current_money"] += transaction_total
+			src.transaction_count++
 			src.amount = 0
+			src.tip = 0
 			src.active_transaction = FALSE
+
 			tgui_process.update_uis(src)
 			boutput(user, "<span class='notice'>Sending transaction.</span>")
 			user.visible_message("<span class='notice'><b>[src] beeps affirmatively.</b> The transaction was successful!</span>")
@@ -196,10 +219,10 @@ TYPEINFO(/obj/machinery/cashreg)
 			playsound(src, 'sound/machines/printer_cargo.ogg', 50, 1)
 			SPAWN(3 SECONDS)
 				if (print_customer_copy)
-					src.print_receipt(payee, O.registered, transaction_total, customer_copy = true)
-				src.print_receipt(payee, O.registered, transaction_total)
+					src.print_receipt(payee, O.registered, transaction_price, transaction_tip, transaction_total, customer_copy = true)
+				src.print_receipt(payee, O.registered, transaction_price, transaction_tip, transaction_total)
 
-	proc/print_receipt(payee, payer, total, customer_copy = false)
+	proc/print_receipt(payee, payer, price, tip, total, customer_copy = false)
 		var/receipt_text = {"
 			<span style="text-transform:uppercase;font-family:Monospace;">
 				<table>
@@ -216,6 +239,10 @@ TYPEINFO(/obj/machinery/cashreg)
 						<td colspan="2">[src.name]</td>
 					</tr>
 					<tr>
+						<td>NUMBER</td>
+						<td style="text-align:right">[src.transaction_count]</td>
+					</tr>
+					<tr>
 						<td>TIME</td>
 						<td style="text-align:right">[time2text(world.timeofday, "DD MMM hh:mm")]</td>
 					</tr>
@@ -230,6 +257,11 @@ TYPEINFO(/obj/machinery/cashreg)
 					<tr>
 						<td colspan="2" style="text-align:center">*-----------------------------*</td>
 					</tr>
+					<tr>
+						<td>PURCHASE</td>
+						<td style="text-align:right">[price][CREDIT_SIGN]</td>
+					</tr>
+					[tip ? "<tr><td>TIP</td><td style='text-align:right'>[tip * 100]%</td></tr>" : ""]
 					<tr>
 						<td>TOTAL</td>
 						<td style="text-align:right">[total][CREDIT_SIGN]</td>
