@@ -1,4 +1,9 @@
 
+(t)tue jan 03 23
+(u)LeahTheTech
+(p)12585
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Flockdrone incapacitors now recharge at half speed while not on a flock tile.
 (t)mon jan 02 23
 (u)aloe
 (*)Vampiric thralls now have zombie arms instead of regular arms. This makes them a lot better at mauling people and smashing things, and a lot worse at everything else. The health debuff due to blood loss has also been made a bit less punishing.
