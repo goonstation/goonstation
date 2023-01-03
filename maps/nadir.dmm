@@ -6390,7 +6390,10 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
-/area/station/maintenance/south)
+/area/station/maintenance/storage{
+	icon_state = "crewquarters";
+	name = "Warrens Hall"
+	})
 "cXH" = (
 /obj/decal/poster/wallsign/warning1{
 	desc = "A sign warning you of a nearby acid hazard.";
@@ -17918,7 +17921,10 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/south)
+/area/station/maintenance/storage{
+	icon_state = "crewquarters";
+	name = "Warrens Hall"
+	})
 "ihm" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4
