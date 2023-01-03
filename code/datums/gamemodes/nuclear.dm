@@ -257,8 +257,7 @@
 	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_BREACHING_CHARGES])
 		for(var/i = 1 to 5)
 			new /obj/item/breaching_charge/thermite(T)
-	for_by_tcl(minimap, /obj/minimap/map_computer/nukeop)
-		minimap.create_plant_location_markers(target_location_type)
+	src.create_plant_location_markers()
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
@@ -425,6 +424,29 @@
 		. = rand(1352, 1439)
 
 	while (. in blacklisted)
+
+/datum/game_mode/nuclear/proc/create_plant_location_markers()
+	// Find the centres of the plant sites.
+	for (var/area_type in src.target_location_type)
+		var/max_x = 1
+		var/min_x = world.maxx
+		var/max_y = 1
+		var/min_y = world.maxy
+		var/list/area/areas = get_areas(area_type)
+		for (var/area/area in areas)
+			if (area.z != Z_LEVEL_STATION)
+				continue
+			for (var/turf/T in area)
+				max_x = max(max_x, T.x)
+				min_x = min(min_x, T.x)
+				max_y = max(max_y, T.y)
+				min_y = min(min_y, T.y)
+		var/target_x = (max_x + min_x) / 2
+		var/target_y = (max_y + min_y) / 2
+
+		var/turf/plant_location = locate(target_x, target_y, Z_LEVEL_STATION)
+		var/area/A = plant_location.loc
+		plant_location.AddComponent(/datum/component/minimap_marker, MAP_SYNDICATE, "nuclear_bomb_pin", 'icons/obj/minimap/minimap_markers.dmi', "[capitalize(A.name)] Plant Site")
 
 /datum/game_mode/nuclear/process()
 	set background = 1

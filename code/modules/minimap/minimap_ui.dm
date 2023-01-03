@@ -156,40 +156,23 @@
 
 		switch (action)
 			if ("reset_scale")
-				if (istype(src.minimap_datum, /datum/minimap/z_level))
-					var/datum/minimap/z_level/minimap = src.minimap_datum
-					minimap.find_focal_point()
+				src.minimap_controller.reset_scale()
 
 			if ("toggle_visibility_all")
-				for (var/atom/target in src.minimap_datum.minimap_markers)
-					if (target.z != minimap_datum.z_level)
-						continue
-
-					var/datum/minimap_marker/marker = src.minimap_datum.minimap_markers[target]
-					if (markers_visible == TRUE)
-						marker.marker.alpha = 0
-						marker.visible = FALSE
-					else
-						marker.marker.alpha = 255
-						marker.visible = TRUE
-
 				if (markers_visible == TRUE)
 					markers_visible = FALSE
 				else
 					markers_visible = TRUE
 
+				src.minimap_controller.toggle_visibility_all(markers_visible)
+
 			if ("toggle_visibility")
 				var/list/list_entry = src.minimap_markers_list[params["index"]]
 				var/datum/minimap_marker/marker = list_entry["marker"]
-				if (marker.marker.alpha == 255)
-					marker.marker.alpha = 0
-					marker.visible = FALSE
-				else
-					marker.marker.alpha = 255
-					marker.visible = TRUE
+				src.minimap_controller.toggle_visibility(marker)
 
 			if ("location_from_minimap")
-				minimap_controller.selecting_coordinates = TRUE
+				src.minimap_controller.selecting_coordinates = TRUE
 
 			if ("new_marker")
 				var/name = params["name"]
@@ -198,11 +181,11 @@
 				var/y = params["pos_y"]
 
 				var/turf/location = locate(x, y, src.minimap_datum.z_level)
-				src.minimap_datum.create_minimap_marker(location, 'icons/obj/minimap/minimap_markers.dmi', icon_state, name, TRUE)
+				src.minimap_controller.new_marker(location, icon_state, name)
 
 			if ("delete_marker")
 				var/list/list_entry = src.minimap_markers_list[params["index"]]
 				var/datum/minimap_marker/marker = list_entry["marker"]
-				src.minimap_datum.remove_minimap_marker(marker.target)
+				src.minimap_controller.delete_marker(marker)
 
 		return TRUE

@@ -28,6 +28,7 @@
 
 	New(var/minimap_type)
 		. = ..()
+		START_TRACKING
 		src.minimap_render = new
 		src.map = new /atom/movable
 		src.minimap_type = minimap_type
@@ -46,6 +47,10 @@
 		src.map.mouse_opacity = 0
 
 		src.minimap_render.vis_contents += src.map
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 	///Renders the map within the boundaries defined by x_max, x_min, y_max, and y_min.
 	proc/render_minimap()

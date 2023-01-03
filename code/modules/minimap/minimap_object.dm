@@ -27,8 +27,8 @@
 		src.vis_contents += src.minimap_holder
 		src.minimap_holder.vis_contents += src.map.minimap_render
 
-		for (var/atom/movable/marker_object in minimap_marker_targets)
-			SEND_SIGNAL(marker_object, COMSIG_NEW_MINIMAP_MARKER, src)
+		for (var/atom/marker_target in minimap_marker_targets)
+			SEND_SIGNAL(marker_target, COMSIG_NEW_MINIMAP_MARKER, src.map)
 
 		// As the minimap render is transparent to clicks, the minimap will require an overlay which clicks may register on.
 		if (!src.icon || !src.icon_state)
@@ -136,54 +136,13 @@
 	light_g = 0.3
 	light_b = 0.3
 
-	var/static/list/plant_locations = list()
-
 	New()
 		. = ..()
 		START_TRACKING
-		src.create_plant_location_markers()
 
 	disposing()
 		STOP_TRACKING
 		. = ..()
-
-	proc/create_plant_location_markers()
-		if (length(src.plant_locations) > 0)
-			for (var/turf/plant_location in src.plant_locations)
-				var/area/A = plant_location.loc
-				map.create_minimap_marker(plant_location, 'icons/obj/minimap/minimap_markers.dmi', "nuclear_bomb_pin", "[capitalize(A.name)] Plant Site")
-			return
-
-		src.plant_locations = list()
-		var/list/target_locations = list()
-		if (istype(ticker?.mode, /datum/game_mode/nuclear))
-			var/datum/game_mode/nuclear/gamemode = ticker?.mode
-			target_locations = gamemode.target_location_type
-		else
-			return
-
-		// Find the centres of the plant sites.
-		for (var/area_type in target_locations)
-			var/max_x = map.x_min
-			var/min_x = map.x_max
-			var/max_y = map.y_min
-			var/min_y = map.y_max
-			var/list/area/areas = get_areas(area_type)
-			for (var/area/area in areas)
-				if (area.z != Z_LEVEL_STATION)
-					continue
-				for (var/turf/T in area)
-					max_x = max(max_x, T.x)
-					min_x = min(min_x, T.x)
-					max_y = max(max_y, T.y)
-					min_y = min(min_y, T.y)
-			var/target_x = (max_x + min_x) / 2
-			var/target_y = (max_y + min_y) / 2
-
-			var/turf/plant_location = locate(target_x, target_y, Z_LEVEL_STATION)
-			src.plant_locations += plant_location
-			var/area/A = plant_location.loc
-			map.create_minimap_marker(plant_location, 'icons/obj/minimap/minimap_markers.dmi', "nuclear_bomb_pin", "[capitalize(A.name)] Plant Site")
 
 /obj/minimap_controller
 	name = "Map Controller"
@@ -192,8 +151,12 @@
 
 	///The controlled minimap object.
 	var/obj/minimap/controlled_minimap
+	///The minimap to be displayed, mostly identical to the controlled minimap with the exception that the scale will always be 1. Used to circumvent a bug.
+	var/datum/minimap/displayed_minimap
 	///The alpha mask filter of the minimap datum used by the controlled minimap. As there is no explicit definition for filters, `:` should be used to access variables.
-	var/alpha_mask
+	var/alpha_mask_cm
+	///The alpha mask filter of the minimap datum used by the displayed minimap. As there is no explicit definition for filters, `:` should be used to access variables.
+	var/alpha_mask_dm
 
 	///Whether the next click will sample coordinates at the clicked point, or toggle dragging.
 	var/selecting_coordinates = FALSE
@@ -209,26 +172,33 @@
 	///The "starting" y position of the drag/pan, allowing for distance moved in the y axis to be calculated and applied to the minimap.
 	var/start_click_pos_y = null
 
-	New(var/obj/minimap)
+	New(var/obj/minimap/minimap)
 		if (!minimap)
 			return
 
 		. = ..()
 		src.controlled_minimap = minimap
-		src.vis_contents += src.controlled_minimap.map.minimap_render
-		src.alpha_mask = src.controlled_minimap.map.minimap_render.filters[length(src.controlled_minimap.map.minimap_render.filters)]
+
+		src.displayed_minimap = new minimap.map_path(minimap.map_type, 1)
+		for (var/atom/marker_target in minimap_marker_targets)
+			SEND_SIGNAL(marker_target, COMSIG_NEW_MINIMAP_MARKER, displayed_minimap)
+
+		src.vis_contents += src.displayed_minimap.minimap_render
+		src.alpha_mask_cm = src.controlled_minimap.map.minimap_render.filters[length(src.controlled_minimap.map.minimap_render.filters)]
+		src.alpha_mask_dm = src.displayed_minimap.minimap_render.filters[length(src.controlled_minimap.map.minimap_render.filters)]
 
 		// As the minimap render is transparent to clicks, the minimap will require an overlay which clicks may register on.
 		if (!src.icon || !src.icon_state)
 			var/icon/click_overlay_icon = icon('icons/obj/minimap/minimap.dmi', "blank")
-			click_overlay_icon.Scale(300 * src.controlled_minimap.map_scale, 300 * src.controlled_minimap.map_scale)
+			click_overlay_icon.Scale(300, 300)
 			click_overlay_icon.ChangeOpacity(0)
 			src.icon = click_overlay_icon
 			src.mouse_opacity = 2
 
 	MouseWheel(dx, dy, loc, ctrl, params)
 		var/list/param_list = params2list(params)
-		var/datum/minimap/z_level/minimap = src.controlled_minimap.map
+		var/datum/minimap/z_level/minimap = src.displayed_minimap
+		var/datum/minimap/z_level/controlled_minimap = src.controlled_minimap.map
 
 		// Convert from screen (x, y) to map (x, y) coordinates.
 		var/x = round((text2num(param_list["icon-x"]) - minimap.minimap_render.pixel_x) / (minimap.zoom_coefficient * minimap.map_scale))
@@ -236,8 +206,12 @@
 
 		if (dy > 1)
 			minimap.zoom_on_point(minimap.zoom_coefficient * 1.1, x, y)
+			controlled_minimap.zoom_on_point(minimap.zoom_coefficient, x, y)
 		else if (dy < 1)
 			minimap.zoom_on_point(minimap.zoom_coefficient * 0.9, x, y)
+			controlled_minimap.zoom_on_point(minimap.zoom_coefficient, x, y)
+
+		src.pan_map(0, 0)
 
 	Click(location, control, params)
 		var/list/param_list = params2list(params)
@@ -246,7 +220,7 @@
 
 		if (src.selecting_coordinates)
 			src.dragging = FALSE
-			var/datum/minimap/minimap = src.controlled_minimap.map
+			var/datum/minimap/minimap = src.displayed_minimap
 
 			// Convert from screen (x, y) to map (x, y) coordinates, and save to selected x, y vars.
 			src.selected_x = round((x - minimap.minimap_render.pixel_x) / (minimap.zoom_coefficient * minimap.map_scale))
@@ -271,10 +245,62 @@
 		src.start_click_pos_y = y
 
 	proc/pan_map(var/x, var/y)
-		src.controlled_minimap.map.minimap_render.pixel_x += x
-		src.controlled_minimap.map.minimap_render.pixel_y += y
-		alpha_mask:x -= x
-		alpha_mask:y -= y
+		src.displayed_minimap.minimap_render.pixel_x += x
+		src.displayed_minimap.minimap_render.pixel_y += y
+		alpha_mask_dm:x -= x
+		alpha_mask_dm:y -= y
+
+		src.controlled_minimap.map.minimap_render.pixel_x = (src.displayed_minimap.minimap_render.pixel_x - 8) * src.controlled_minimap.map_scale
+		src.controlled_minimap.map.minimap_render.pixel_y = (src.displayed_minimap.minimap_render.pixel_y - 8) * src.controlled_minimap.map_scale
+		alpha_mask_cm:x = (alpha_mask_dm:x - 8) * src.controlled_minimap.map_scale
+		alpha_mask_cm:y = (alpha_mask_dm:y - 8) * src.controlled_minimap.map_scale
+
+	proc/reset_scale()
+		if (istype(src.controlled_minimap.map, /datum/minimap/z_level))
+			var/datum/minimap/z_level/controlled_minimap = src.controlled_minimap.map
+			controlled_minimap.find_focal_point()
+
+			var/datum/minimap/z_level/displayed_minimap = src.displayed_minimap
+			displayed_minimap.find_focal_point()
+
+	proc/toggle_visibility_all(var/visible)
+		for (var/atom/target in src.controlled_minimap.map.minimap_markers)
+			if (target.z != src.controlled_minimap.map.z_level)
+				continue
+
+			var/datum/minimap_marker/marker_cm = src.controlled_minimap.map.minimap_markers[target]
+			var/datum/minimap_marker/marker_dm = src.displayed_minimap.minimap_markers[target]
+			if (visible == FALSE)
+				marker_cm.marker.alpha = 0
+				marker_cm.visible = FALSE
+				marker_dm.marker.alpha = 0
+				marker_dm.visible = FALSE
+			else
+				marker_cm.marker.alpha = 255
+				marker_cm.visible = TRUE
+				marker_dm.marker.alpha = 255
+				marker_dm.visible = TRUE
+
+	proc/toggle_visibility(var/datum/minimap_marker/marker_cm)
+		var/datum/minimap_marker/marker_dm = src.displayed_minimap.minimap_markers[marker_cm.target]
+		if (marker_dm.marker.alpha == 255)
+			marker_cm.marker.alpha = 0
+			marker_cm.visible = FALSE
+			marker_dm.marker.alpha = 0
+			marker_dm.visible = FALSE
+		else
+			marker_cm.marker.alpha = 255
+			marker_cm.visible = TRUE
+			marker_dm.marker.alpha = 255
+			marker_dm.visible = TRUE
+
+	proc/new_marker(var/location, var/icon_state, var/name)
+		src.displayed_minimap.create_minimap_marker(location, 'icons/obj/minimap/minimap_markers.dmi', icon_state, name, TRUE)
+		src.controlled_minimap.map.create_minimap_marker(location, 'icons/obj/minimap/minimap_markers.dmi', icon_state, name, TRUE)
+
+	proc/delete_marker(var/datum/minimap_marker/marker)
+		src.displayed_minimap.remove_minimap_marker(marker.target)
+		src.controlled_minimap.map.remove_minimap_marker(marker.target)
 
 /obj/item/nukeop_minimap_controller
 	name = "atrium station map controller"
