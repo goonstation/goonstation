@@ -281,7 +281,7 @@ ABSTRACT_TYPE(/datum/plant)
 		var/output_real = output_base
 		if (src.commuts)
 			for (var/datum/plant_gene_strain/X in src.commuts)
-				output_real +=  X.get_plant_stat_modifier(src, gene_stat, output_base)
+				output_real +=  round(X.get_plant_stat_modifier(src, gene_stat, output_base))
 		return output_real
 
 /datum/action/bar/icon/harvest_plant  //In the words of my forebears, "I really don't know a good spot to put this, so im putting it here, fuck you." Adds a channeled action to harvesting flagged plants.
