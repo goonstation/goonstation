@@ -66,7 +66,7 @@ TYPEINFO(/datum/mutantrace)
 	var/voice_message = null
 	var/voice_name = "human"
 	/// Should robots arrest these by default?
-	var/jerk = 0
+	var/jerk = FALSE
 	/// Should stable mutagen not copy from this mutant?
 	var/dna_mutagen_banned = TRUE
 	/// Should a genetics terminal be able to remove this mutantrace?
@@ -694,7 +694,7 @@ TYPEINFO(/datum/mutantrace)
 
 	//override_static = 1
 
-	jerk = 0 //flubber is a good goo person
+	jerk = FALSE //flubber is a good goo person
 
 	New()
 		..()
@@ -781,7 +781,7 @@ TYPEINFO(/datum/mutantrace)
 	voice_message = "hums"
 
 	exclusive_language = 1
-	jerk = 1
+	jerk = TRUE
 	var/original_blood_color = null
 
 	New(var/mob/living/carbon/human/M)
@@ -894,7 +894,7 @@ TYPEINFO(/datum/mutantrace)
 	icon_state = "zombie"
 	human_compatible = FALSE
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON | HEAD_HAS_OWN_COLORS)
-	jerk = 1
+	jerk = TRUE
 	override_attack = 0
 	needs_oxy = 0
 	movement_modifier = /datum/movement_modifier/zombie
@@ -1047,19 +1047,23 @@ TYPEINFO(/datum/mutantrace)
 	icon = 'icons/mob/vampiric_thrall.dmi'
 	icon_state = "body_m"
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vampiric_thrall/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vampiric_thrall/left
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/zombie
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/zombie
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vampiric_thrall/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vampiric_thrall/left
 	mutant_folder = 'icons/mob/vampiric_thrall.dmi'
 	special_head = HEAD_VAMPTHRALL
-	jerk = 1
+	jerk = TRUE
 	genetics_removable = FALSE
 
 	var/blood_points = 0
+#ifdef RP_MODE
+	var/const/blood_decay = 0.25
+#else
 	var/const/blood_decay = 0.5
+#endif
 	var/cleanable_tally = 0
-	var/const/blood_to_health_scalar = 0.5 //200 blood = 100 health
+	var/const/blood_to_health_scalar = 0.75 //200 blood = 150 health
 
 	New(var/mob/living/carbon/human/M)
 		..()
@@ -1222,7 +1226,7 @@ TYPEINFO(/datum/mutantrace)
 	icon_state = "abomination"
 	human_compatible = 0
 	uses_human_clothes = 0
-	jerk = 1
+	jerk = TRUE
 	brutevuln = 0.2
 	override_attack = 0
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/abomination
@@ -1324,7 +1328,7 @@ TYPEINFO(/datum/mutantrace)
 	human_compatible = 0
 	uses_human_clothes = 0
 	var/original_name
-	jerk = 1
+	jerk = TRUE
 	override_attack = 0
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/werewolf/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/werewolf/left
@@ -1437,7 +1441,7 @@ TYPEINFO(/datum/mutantrace)
 	icon = 'icons/mob/hunter.dmi'
 	icon_state = "full"
 	human_compatible = 0
-	jerk = 1
+	jerk = TRUE
 	override_attack = 0
 	mutant_folder = 'icons/mob/hunter.dmi'
 	special_head = HEAD_HUNTER //heh
@@ -1473,7 +1477,7 @@ TYPEINFO(/datum/mutantrace)
 	name = "ithillid"
 	icon = 'icons/mob/ithillid.dmi'
 	icon_state = "body_m"
-	jerk = 0
+	jerk = FALSE
 	override_attack = 0
 	aquatic = 1
 	voice_override = "blub"
@@ -1671,7 +1675,7 @@ TYPEINFO(/datum/mutantrace)
 	icon_state = "stupidbaby"
 	human_compatible = 0
 	uses_human_clothes = 0
-	jerk = 1
+	jerk = TRUE
 
 	New()
 		..()
@@ -1797,7 +1801,7 @@ TYPEINFO(/datum/mutantrace)
 	name = "cat"
 	icon = 'icons/mob/cat.dmi'
 	icon_state = "body_m"
-	jerk = 1
+	jerk = TRUE
 	override_attack = 0
 	firevuln = 1.5 // very flammable catthings
 	race_mutation = /datum/bioEffect/mutantrace/cat
@@ -1838,7 +1842,7 @@ TYPEINFO(/datum/mutantrace)
 	uses_human_clothes = 1
 	aquatic = 1
 	voice_name = "amphibian"
-	jerk = 0
+	jerk = FALSE
 	head_offset = 0
 	hand_offset = -3
 	body_offset = -3
@@ -1909,7 +1913,7 @@ TYPEINFO(/datum/mutantrace)
 	icon = 'icons/mob/shelterfrog.dmi'
 	icon_state = "body_m"
 	human_compatible = 1
-	jerk = 0
+	jerk = FALSE
 	var/permanent = 0
 	mutant_folder = 'icons/mob/shelterfrog.dmi'
 	special_head = HEAD_SHELTER
@@ -1940,7 +1944,7 @@ TYPEINFO(/datum/mutantrace)
 	human_compatible = 0
 	uses_human_clothes = 0
 	var/original_name
-	jerk = 1 //Not really, but NT doesn't really like treehuggers
+	jerk = TRUE //Not really, but NT doesn't really like treehuggers
 	aquatic = 1
 	needs_oxy = 0 //get their nutrients from the kudzu
 	understood_languages = list("english", "kudzu")
@@ -2315,7 +2319,7 @@ TYPEINFO(/datum/mutantrace/pug)
 	name = "Chicken"
 	icon_state = "chicken_m"
 	human_compatible = 1
-	jerk = 0
+	jerk = FALSE
 	race_mutation = /datum/bioEffect/mutantrace/chicken
 	mutant_folder = 'icons/mob/chicken.dmi'
 	special_head = HEAD_CHICKEN
