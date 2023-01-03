@@ -1,15 +1,21 @@
 /**
  * So this file is basically about swappable departments.
- * Maps this doesn't apply to is stuff that uses non TEG/singulos
+ * Steps:
+ *
+ * You plonk down a landmark in the bottom left (southwest) corner of the replacable area
+ * this is of course /obj/landmark/department, and this tells the game that this room is here
+ *
+ * then you have different versions of said room in the /assets/maps/department_rooms folder
+ * using the naming scheme mapname_departmentname_prefabname e.g. cogmap_engineering_Nuclear
+ * this gets picked up by /datum/mapPrefab/department_room
+ * then, ideally, at runtime, through admin commands (or even expensive cargo requests), the entire area defined by the landmark's width and height vars
  *
  */
-
-var/list/prefabbed_engineering = list("cogmap")
 
 TYPEINFO(/datum/mapPrefab/department_room)
 	folder = "department_rooms"
 
-/datum/mapPrefab/department_room/
+/datum/mapPrefab/department_room
 	maxNum = 1
 	required = TRUE
 	post_init()
@@ -20,6 +26,10 @@ proc/build_departments()
 	for_by_tcl(landmark, /obj/landmark/department)
 		landmark.apply()
 
+/datum/mapPrefab/department_room/engineering_room
+	tags = list()
+	post_init()
+		var/filename = filename_from_path(src.prefabPath)
 
 /obj/landmark/department
 	var/width = null
@@ -54,13 +64,19 @@ proc/build_departments()
 		qdel(src)
 
 	cogmap
-		tags += "cogmap"
 		engineering
 			associated_fab = /datum/mapPrefab/department_room/engineering_room
+			tags = list("engineering","cogmap")
 			department_type = "engineering"
-			tags += "engineering"
+	cogmap2
+		engineering
+			associated_fab = /datum/mapPrefab/department_room/engineering_room
+			tags = list("engineering","cogmap2")
+			department_type = "engineering"
+	clarion
+		engineering
+			associated_fab = /datum/mapPrefab/department_room/engineering_room
+			tags = list("engineering","clarion")
+			department_type = "engineering"
 
-/datum/mapPrefab/department_room/engineering_room
-	tags = list()
-	post_init()
-		var/filename = filename_from_path(src.prefabPath)
+
