@@ -17976,7 +17976,7 @@
 /area/station/security/detectives_office)
 "bhu" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/machinery/light/lamp/green,
 /turf/simulated/floor{
 	icon_state = "carpetS"
@@ -20442,7 +20442,7 @@
 "bnW" = (
 /obj/table/auto,
 /obj/spawner/newbomb/timer,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/reagent_containers/food/drinks/rum_spaced,
 /turf/simulated/floor/wood/two,
 /area/station/science/research_director)

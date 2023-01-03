@@ -21,6 +21,8 @@ TYPEINFO(/datum/component/radioactive)
 	var/effect_range = 1
 	/// Internal, do not touch - keeps a record of atom.color since we override it with filters.
 	var/_backup_color = null //so hacky
+	/// Internal, store of turf glow overlay
+	var/static/image/_turf_glow = null
 
 	Initialize(radStrength=100, decays=FALSE, neutron=FALSE, effectRange=1)
 		if(!istype(parent,/atom))
@@ -62,7 +64,13 @@ TYPEINFO(/datum/component/radioactive)
 			PA.add_filter("radiation_color_\ref[src]", 1, color_matrix_filter(normalize_color_to_matrix(PA.color ? PA.color : "#FFF")))
 			PA.color = null
 		PA.add_simple_light("radiation_light_\ref[src]", rgb2num(color))
-		PA.add_filter("radiation_outline_\ref[src]", 2, outline_filter(size=1.3, color=color))
+		if(istype(PA, /turf))
+			if(isnull(src._turf_glow))
+				src._turf_glow = image('icons/effects/effects.dmi', "greyglow")
+			src._turf_glow.color = color //we can do this because overlays take a copy of the image and do not preserve the link between them
+			PA.UpdateOverlays(src._turf_glow, "radiation_overlay_\ref[src]")
+		else
+			PA.add_filter("radiation_outline_\ref[src]", 2, outline_filter(size=1.3, color=color))
 
 	proc/process()
 		if(QDELETED(parent))
@@ -79,6 +87,7 @@ TYPEINFO(/datum/component/radioactive)
 		PA.remove_simple_light("radiation_light_\ref[src]")
 		PA.remove_filter("radiation_outline_\ref[src]")
 		PA.remove_filter("radiation_color_\ref[src]")
+		PA.UpdateOverlays(null, "radiation_overlay_\ref[src]")
 		PA.color = src._backup_color
 		UnregisterSignal(parent, list(COMSIG_ATOM_RADIOACTIVITY))
 		UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE))

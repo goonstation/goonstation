@@ -705,7 +705,7 @@
 /area/station/engine/engineering)
 "abI" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/audio_tape,
 /obj/item/storage/belt/utility,
 /obj/item/clothing/gloves/yellow,
@@ -8247,7 +8247,7 @@
 /area/station/security/detectives_office)
 "asU" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/machinery/light/lamp/green{
 	on = 0
 	},
@@ -12040,7 +12040,7 @@
 "aBT" = (
 /obj/table/auto,
 /obj/decal/cleanable/dirt,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/peripheral/videocard,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown{
