@@ -26,14 +26,12 @@ TYPEINFO(/datum/mapPrefab/department_room)
 
 	post_init()
 		var/filename = filename_from_path(src.prefabPath)
-		var/regex/roomtype_regex = regex(@"^.*_(\d+)\.dmm$")
-		var/mapname = roomtype_regex.group[1]
-		var/departmentname = roomtype_regex.group[2]
-		var/prefabname = roomtype_regex.group[3]
-		// god i hope this regex works
-		// to anyone looking at this godawful regex bodge
-		// it is supposed to turn cogmap_engineering_nuclear into three groups, 1 2 and 3
-		// which should be saved as strings in mapname, departmentname and prefabname
+		var/regex/roomtype_regex = regex(@"^(.+)_(.+)_(.+)\.dmm$")
+		if (roomtype_regex.Find(filename))
+			var/mapname = roomtype_regex.group[1]
+			var/departmentname = roomtype_regex.group[2]
+			var/prefabname = roomtype_regex.group[3]
+			// really hope this is how it works
 
 proc/build_departments()
 	for_by_tcl(landmark, /obj/landmark/department)
