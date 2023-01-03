@@ -170,27 +170,23 @@ TYPEINFO(/obj/machinery/cashreg)
 		var/payer_account = src.authenticate_card(user, O)
 		src.active_transaction = TRUE
 
+		// Checks to make sure that the scanned card is allowed to transfer money to the owner at all.
 		if (!payer_account)
 			boutput(user, "<span class='alert'>Unable to authenticate account!</span>")
 			src.cancel(user)
 			return
-
 		if (O.registered in FrozenAccounts)
 			boutput(user, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
 			src.cancel(user)
 			return
-
 		if (payer_account == src.owner_account)
 			boutput(user, "<span class='alert'>You can't send funds with the owner ID to the owner ID!</span>")
 			src.cancel(user)
 			return
 
-		if (tgui_alert(usr, "Please confirm transfer of [src.amount + round(src.amount * src.tip)] to [src.owner_card?.registered].", "Confirm transfer", list("Confirm", "Cancel")) == "Confirm")
-			if (!src.amount)
-				boutput(user, "<span class='alert'>Invalid transaction!</span>")
-				src.cancel(user)
-				return
-
+		// Confirmation of transaction
+		var/transaction_total = src.amount + round(src.amount * src.tip) // when we get to 515 please replace this with ceil()
+		if (tgui_alert(usr, "Please confirm transfer of [transaction_total] to [src.owner_card?.registered].", "Confirm transfer", list("Confirm", "Cancel")) == "Confirm")
 			if (src.amount > payer_account["current_money"])
 				boutput(user, "<span class='alert'>Insufficent funds in account to complete transaction.</span>")
 				src.cancel(user)
@@ -202,7 +198,6 @@ TYPEINFO(/obj/machinery/cashreg)
 
 			var/transaction_price = src.amount
 			var/transaction_tip = src.tip
-			var/transaction_total = src.amount + round(src.amount * src.tip) // when we get to 515 please replace this with ceil()
 			var/payee = src.owner_card.registered
 
 			payer_account["current_money"] -= transaction_total
@@ -222,6 +217,7 @@ TYPEINFO(/obj/machinery/cashreg)
 					src.print_receipt(payee, O.registered, transaction_price, transaction_tip, transaction_total, customer_copy = true)
 				src.print_receipt(payee, O.registered, transaction_price, transaction_tip, transaction_total)
 
+	// Generate and create a receipt. This doesn't include the delay or the sound.
 	proc/print_receipt(payee, payer, price, tip, total, customer_copy = false)
 		var/receipt_text = {"
 			<span style="text-transform:uppercase;font-family:Monospace;">
