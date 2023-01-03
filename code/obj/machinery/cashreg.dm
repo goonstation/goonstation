@@ -87,7 +87,7 @@ TYPEINFO(/obj/machinery/cashreg)
 				var/obj/O = src.check_worn_ID(usr)
 				if (src.get_ID(O) == src.owner_card && !src.active_transaction)
 					var/amount_buffer = tgui_input_number(usr, "Enter amount.", src.name, 0, src.transaction_limit)
-					if (amount_buffer !src.active_transaction)
+					if (amount_buffer && !src.active_transaction)
 						src.amount = amount_buffer
 						. = TRUE
 			if ("set_tip")
@@ -214,11 +214,11 @@ TYPEINFO(/obj/machinery/cashreg)
 			playsound(src, 'sound/machines/printer_cargo.ogg', 50, 1)
 			SPAWN(3 SECONDS)
 				if (print_customer_copy)
-					src.print_receipt(payee, O.registered, transaction_price, transaction_tip, transaction_total, customer_copy = true)
+					src.print_receipt(payee, O.registered, transaction_price, transaction_tip, transaction_total, customer_copy = TRUE)
 				src.print_receipt(payee, O.registered, transaction_price, transaction_tip, transaction_total)
 
 	// Generate and create a receipt. This doesn't include the delay or the sound.
-	proc/print_receipt(payee, payer, price, tip, total, customer_copy = false)
+	proc/print_receipt(payee, payer, price, tip, total, customer_copy = FALSE)
 		var/receipt_text = {"
 			<span style="text-transform:uppercase;font-family:Monospace;">
 				<table>
