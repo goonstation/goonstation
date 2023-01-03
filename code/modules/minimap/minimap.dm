@@ -132,7 +132,7 @@
 	///The minimum value which the zoom coefficient should be permitted to zoom to.
 	var/min_zoom = 1
 	///The maximum value which the zoom coefficient should be permitted to zoom to.
-	var/max_zoom = 14
+	var/max_zoom = 10
 
 	///The width in pixels between the edge of the station and the edge of the map.
 	var/border_width = 20
