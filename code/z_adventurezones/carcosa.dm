@@ -25,25 +25,22 @@ Dirt
 	desc = "A statue of some ominous looking, robed, figure. It's badly damaged."
 	icon_state = "statue_broken"
 
-/obj/decal/fakeobjects/carcosa/tree
+/obj/tree/carcosa
 	name = "tree"
 	desc = "A dead tree."
 	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "tree1"
-	anchored = 1
-	density = 1
-	layer = 4
 	bound_height = 32
 	bound_width = 64
-/obj/decal/fakeobjects/carcosa/tree/one
+/obj/tree/carcosa/one
 	icon_state = "tree1"
-/obj/decal/fakeobjects/carcosa/tree/two
+/obj/tree/carcosa/two
 	icon_state = "planthuge1"
-/obj/decal/fakeobjects/carcosa/tree/three
+/obj/tree/carcosa/three
 	icon_state = "planthuge2"
-/obj/decal/fakeobjects/carcosa/tree/four
+/obj/tree/carcosa/four
 	icon_state = "planthuge3"
-/obj/decal/fakeobjects/carcosa/tree/five
+/obj/tree/carcosa/five
 	icon_state = "planthuge4"
 
 /obj/decal/fakeobjects/carcosa/brokenwall

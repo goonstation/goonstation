@@ -654,10 +654,10 @@
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "xH" = (
-/obj/tree1{
+/obj/tree{
 	dir = 4
 	},
-/obj/tree1{
+/obj/tree{
 	dir = 4
 	},
 /turf/unsimulated/grass,
@@ -1776,7 +1776,7 @@
 /turf/unsimulated/floor/white,
 /area/prefab/bee_sanctuary)
 "Yi" = (
-/obj/tree1{
+/obj/tree{
 	dir = 8
 	},
 /obj/river{

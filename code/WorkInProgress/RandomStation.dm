@@ -182,7 +182,7 @@ proc/spawndeco()
 						new selected(T)
 				else
 					if(prob(11) && prob(55))
-						var/selected = pick(/obj/decal/cleanable/generic, /obj/deskclutter, /obj/decal/cleanable/robot_debris, /obj/decal/cleanable/robot_debris/limb, /obj/decal/cleanable/robot_debris/gib, /obj/decal/cleanable/molten_item)
+						var/selected = pick(/obj/decal/cleanable/generic, /obj/decal/cleanable/desk_clutter, /obj/decal/cleanable/robot_debris, /obj/decal/cleanable/robot_debris/limb, /obj/decal/cleanable/robot_debris/gib, /obj/decal/cleanable/molten_item)
 						new selected(T)
 			if("dirty")
 				if(T.density)

@@ -191,7 +191,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/small/floor/greenish,
-/obj/tree1{
+/obj/tree{
 	layer = 30
 	},
 /turf/simulated/floor/grass/random/alt,
@@ -549,7 +549,7 @@
 /area/station/garden/aviary)
 "acd" = (
 /obj/machinery/light/small/floor/greenish,
-/obj/tree1{
+/obj/tree{
 	layer = 30
 	},
 /turf/simulated/floor/grass/random/alt,
@@ -1266,7 +1266,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/small/floor/greenish,
-/obj/tree1{
+/obj/tree{
 	layer = 30
 	},
 /turf/simulated/floor/grass/random/alt,
@@ -23261,7 +23261,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
 "eHe" = (
-/obj/tree1{
+/obj/tree{
 	layer = 30
 	},
 /turf/simulated/floor/grass/random/alt,

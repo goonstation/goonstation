@@ -84,7 +84,10 @@
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		. = ..()
-		if(. || QDELETED(src.turbine_handle))
+		if(.)
+			return
+
+		if(QDELETED(src.turbine_handle))
 			src.turbine_handle = null
 			return
 

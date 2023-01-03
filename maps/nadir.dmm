@@ -1314,7 +1314,7 @@
 /area/station/turret_protected/ai_upload)
 "aCb" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/decal/cleanable/dirt,
 /obj/item/instrument/bikehorn,
 /obj/item/stamp/clown,
@@ -8502,19 +8502,6 @@
 /area/station/crew_quarters/lounge/starboard{
 	name = "Book Nook"
 	})
-"ecx" = (
-/obj/machinery/manufacturer/general{
-	desc = "It's covered in more gunk than a truck stop ashtray. Is this thing even safe?";
-	free_resource_amt = 0;
-	free_resources = null;
-	malfunction = 1;
-	name = "grody manufacturer";
-	wires = 11
-	},
-/turf/simulated/floor/industrial,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "ecA" = (
 /turf/simulated/floor/blackwhite{
 	dir = 9
@@ -9789,7 +9776,7 @@
 /area/station/hallway/primary/northwest)
 "eHA" = (
 /obj/table/nanotrasen/auto,
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	pixel_x = -3;
 	pixel_y = -4
 	},
@@ -22674,6 +22661,12 @@
 	dir = 1
 	},
 /area/station/crew_quarters/courtroom)
+"ksc" = (
+/obj/machinery/manufacturer/general/grody,
+/turf/simulated/floor/industrial,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "kse" = (
 /obj/disposalpipe/segment/transport,
 /obj/machinery/navbeacon{
@@ -34950,6 +34943,10 @@
 	dir = 8
 	},
 /area/station/medical/medbay)
+"qdZ" = (
+/obj/tree,
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
 "qef" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 5
@@ -37825,7 +37822,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	pixel_x = -4
 	},
 /obj/item/device/audio_log{
@@ -47914,10 +47911,6 @@
 /obj/access_spawn/maint,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
-"wup" = (
-/obj/tree1,
-/turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
 "wuF" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -89729,14 +89722,14 @@ xKk
 gUR
 fxR
 rPF
-wup
+qdZ
 rPF
 rPF
 fyo
 isY
 rPF
 rPF
-wup
+qdZ
 fer
 fer
 mwl
@@ -90638,7 +90631,7 @@ blp
 ayc
 rPF
 rPF
-wup
+qdZ
 teW
 klG
 rDs
@@ -91239,7 +91232,7 @@ eyt
 jtM
 fxR
 rPF
-wup
+qdZ
 rPF
 xYU
 rPF
@@ -110024,7 +110017,7 @@ xhh
 kfi
 kRh
 dyF
-ecx
+ksc
 niC
 giN
 lFx

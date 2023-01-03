@@ -1,4 +1,50 @@
 
+(t)mon jan 02 23
+(u)aloe
+(*)Vampiric thralls now have zombie arms instead of regular arms. This makes them a lot better at mauling people and smashing things, and a lot worse at everything else. The health debuff due to blood loss has also been made a bit less punishing.
+(+)Vampiric thralls lose blood at half speed on RP mode.
+(u)BatElite
+(p)12581
+(e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
+(+)You can now clean up those mugs and shit that's been soaking into the desks for over a decade
+(u)Amylizzle
+(p)12594
+(e)🪲🧛📦|C-Bug, A-Gamemodes, A-Game-Objects
+(+)Flock gnesis turrets will now only shoot at targets they can hit, instead of trying to shoot through obstructions.
+(t)sun jan 01 23
+(u)Amylizzle
+(p)12464
+(e)🎨⚖⚗|C-Sprites, C-Balance, A-Chemistry
+(+)Radioactive floortiles now have a glow overlay, instead of an outline, to make them more obvious.
+(u)tarmunora
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Artifact large power cells no longer spawn activated. Take them to your local artifact scientist today!
+(u)LeahTheTech
+(p)12316
+(e)🆕💅📄📦|C-Feature, C-QoL, A-UI, A-Game-Objects
+(*)Flamethrowers now have a shiny new TGUI interface.
+(u)Amylizzle
+(p)12369
+(e)🆕📄⚙|C-Feature, A-UI, A-Internal
+(*)As a ghost, observing a mob will now auto-open TGUI windows as they view them. This behaviour can be toggled in the Ghost tab.
+(t)sat dec 31 22
+(u)Shiiba
+(p)12582
+(e)🎨|C-Sprites
+(*)Resprites the cannabis leaves! Happy toking.
+(u)Amylizzle
+(p)12555
+(e)🆕💅📄📦|C-Feature, C-QoL, A-UI, A-Game-Objects
+(+)You can now configure the turbine for the nuclear engine at the turbine, without needing the control room computer.
+(u)LeahTheTech
+(p)12470
+(e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
+(*)Trees can now be felled using any sawing or chopping tools.
+(t)fri dec 30 22
+(u)Flappybat
+(p)12547
+(e)🗺💅⛔|A-Mapping, C-QoL, C-Removal
+(*)Removed the shield and shield generator console from Clarion.
 (t)thu dec 29 22
 (u)Amylizzle
 (p)12550

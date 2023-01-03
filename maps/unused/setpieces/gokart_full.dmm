@@ -36,7 +36,7 @@
 	},
 /area/racing_track)
 "ag" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/grass{
 	density = 1;
 	icon_state = "grass";
@@ -66,7 +66,7 @@
 /turf/unsimulated/grass,
 /area/racing_track)
 "al" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/grass,
 /area/racing_track)
 "am" = (
@@ -126,7 +126,7 @@
 	},
 /area/racing_track)
 "au" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/floor{
 	tag = "icon-grass_snow";
 	icon_state = "grass_snow"
@@ -215,7 +215,7 @@
 /turf/unsimulated/grass,
 /area/racing_track)
 "aG" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/floor{
 	density = 1;
 	icon_state = "grass_snow";
@@ -790,7 +790,7 @@
 	},
 /area/racing_track)
 "bZ" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/floor{
 	icon_state = "grass1"
 	},
@@ -2469,7 +2469,7 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/racing_entry)
 "fI" = (
-/obj/tree1,
+/obj/tree,
 /turf/unsimulated/floor{
 	icon_state = "grass1";
 	name = "dense grass";
