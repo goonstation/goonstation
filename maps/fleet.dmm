@@ -6834,7 +6834,7 @@
 	name = "Maru Solar Array"
 	})
 "og" = (
-/obj/tree1{
+/obj/tree{
 	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
 	},
 /turf/simulated/floor/grass/leafy,
@@ -15219,7 +15219,7 @@
 	name = "Demeter Primary Zone"
 	})
 "Eb" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
@@ -15909,7 +15909,7 @@
 	name = "Demeter Primary Zone"
 	})
 "Fn" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "grass"
@@ -16481,7 +16481,7 @@
 	name = "Demeter Primary Zone"
 	})
 "Gs" = (
-/obj/tree1,
+/obj/tree,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "Gt" = (

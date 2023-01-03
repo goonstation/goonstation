@@ -339,6 +339,7 @@ var/global/list/soundCache = list(
  	"sound/effects/thunder.ogg" = 'sound/effects/thunder.ogg',\
  	"sound/effects/toilet_flush.ogg" = 'sound/effects/toilet_flush.ogg',\
  	"sound/effects/torpedolaunch.ogg" = 'sound/effects/torpedolaunch.ogg',\
+ 	"sound/effects/treefall.ogg" = 'sound/effects/treefall.ogg',\
  	"sound/effects/valve_creak.ogg" = 'sound/effects/valve_creak.ogg',\
  	"sound/effects/warp1.ogg" = 'sound/effects/warp1.ogg',\
  	"sound/effects/warp2.ogg" = 'sound/effects/warp2.ogg',\

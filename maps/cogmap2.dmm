@@ -3698,26 +3698,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
-"aiT" = (
-/obj/machinery/vending/jobclothing/catering,
-/obj/decal/poster/wallsign/poster_sol{
-	pixel_y = 28
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
 "aiV" = (
 /obj/table/wood/auto,
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer3/generic/personal,
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
-"aiW" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/storage/secure/closet/civilian/bartender,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "aiX" = (
@@ -4166,19 +4150,6 @@
 "ajU" = (
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
-"ajV" = (
-/obj/stool/chair/comfy{
-	dir = 1
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
-"ajW" = (
-/obj/stool/bed,
-/obj/landmark/start{
-	name = "Chef"
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
 "ajX" = (
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/carpet/grime,
@@ -4620,30 +4591,6 @@
 "alc" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/catering)
-"ald" = (
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/reagent_containers/dropper,
-/obj/item/storage/firstaid/toxin,
-/obj/item/card_box/plain,
-/obj/storage/crate,
-/obj/item/reagent_containers/emergency_injector/calomel,
-/obj/item/reagent_containers/emergency_injector/calomel,
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
-"ale" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname  - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
 "alf" = (
 /obj/machinery/computer/security/wooden_tv{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
@@ -19966,12 +19913,6 @@
 /obj/disposalpipe/segment/mail/bent/west,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
-"aVA" = (
-/obj/tree1{
-	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
 "aVB" = (
 /obj/stool/chair/wooden{
 	dir = 4
@@ -20012,10 +19953,6 @@
 	dir = 5;
 	icon_state = "fgreen2"
 	},
-/area/station/garden/owlery)
-"aVG" = (
-/obj/tree1,
-/turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aVH" = (
 /obj/critter/owl{
@@ -22629,11 +22566,6 @@
 	name = "wad of chair stuffing"
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl,
-/turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
-"bbC" = (
-/obj/tree1,
-/obj/disposalpipe/segment,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "bbE" = (
@@ -72277,13 +72209,6 @@
 /obj/machinery/drainage,
 /turf/simulated/floor/yellow/side,
 /area/station/crew_quarters/market)
-"dhk" = (
-/obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/station/solar/east)
 "dhl" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'COLLISION HAZARD'";
@@ -76626,6 +76551,13 @@
 	dir = 1
 	},
 /area/research_outpost)
+"fBe" = (
+/obj/stool/bed,
+/obj/landmark/start{
+	name = "Chef"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "fEF" = (
 /obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
@@ -76978,6 +76910,15 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
+"gWh" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname  - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "gZp" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor,
@@ -77097,6 +77038,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"hyQ" = (
+/obj/tree{
+	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
 "hAd" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -77210,6 +77157,21 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
+"hNL" = (
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/dropper,
+/obj/item/storage/firstaid/toxin,
+/obj/item/card_box/plain,
+/obj/storage/crate,
+/obj/item/reagent_containers/emergency_injector/calomel,
+/obj/item/reagent_containers/emergency_injector/calomel,
+/obj/machinery/light_switch{
+	name = "W light switch";
+	pixel_x = -24
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "hPv" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
@@ -77391,6 +77353,10 @@
 	icon_state = "blue5"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"ilH" = (
+/obj/tree,
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
 "imD" = (
 /obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
@@ -77645,6 +77611,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
+"jhV" = (
+/obj/tree{
+	pixel_x = -4
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/hydroponics/bay)
 "jis" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
@@ -78056,6 +78030,15 @@
 	icon_state = "Stairs_wide"
 	},
 /area/station/medical/medbay/lobby)
+"kix" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/storage/secure/closet/civilian/bartender,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "kiN" = (
 /obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
@@ -78784,6 +78767,11 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/hangar/qm)
+"msr" = (
+/obj/tree,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
 "mtx" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
@@ -79536,6 +79524,12 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/security/checkpoint/podbay)
+"plC" = (
+/obj/stool/chair/comfy{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "ppt" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -80348,6 +80342,13 @@
 	fullbright = 1
 	},
 /area/shuttle/research/outpost)
+"rZc" = (
+/obj/machinery/vending/jobclothing/catering,
+/obj/decal/poster/wallsign/poster_sol{
+	pixel_y = 28
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "rZr" = (
 /obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
@@ -81446,14 +81447,6 @@
 /obj/item/device/radio/intercom/cargo,
 /turf/simulated/floor/plating,
 /area/station/hangar/escape)
-"vRi" = (
-/obj/tree1{
-	pixel_x = -4
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/hydroponics/bay)
 "vUy" = (
 /obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
@@ -106304,7 +106297,7 @@ aAH
 azn
 azn
 azn
-vRi
+jhV
 azn
 aAH
 azn
@@ -114136,9 +114129,9 @@ olY
 pyG
 afR
 ahV
-aiT
+rZc
 ajU
-ald
+hNL
 ahV
 ahV
 aoB
@@ -114741,7 +114734,7 @@ adL
 jHO
 ahV
 aiV
-ajV
+plC
 ajU
 ajU
 anJ
@@ -115042,7 +115035,7 @@ adL
 adL
 adL
 ahV
-aiW
+kix
 ajU
 ajU
 amv
@@ -115170,7 +115163,7 @@ cLH
 cqE
 aaI
 aaa
-dhk
+aam
 jQd
 dic
 dic
@@ -115346,8 +115339,8 @@ adL
 ahV
 aiX
 ajU
-ale
-ajW
+gWh
+fBe
 ahV
 aoF
 apO
@@ -127756,7 +127749,7 @@ aRF
 aSN
 aSQ
 aVx
-aVG
+ilH
 xWJ
 aYF
 aZU
@@ -128661,7 +128654,7 @@ aQn
 aQn
 aQn
 aSQ
-aVA
+hyQ
 aSQ
 aSQ
 aSQ
@@ -129572,7 +129565,7 @@ aWR
 aYx
 bab
 bab
-bbC
+msr
 bdx
 bei
 beM
@@ -130473,7 +130466,7 @@ aQn
 aQn
 aQn
 aSQ
-aVG
+ilH
 aSQ
 aYz
 aSQ
@@ -131380,7 +131373,7 @@ aRF
 aST
 aSQ
 aSQ
-aVG
+ilH
 aYu
 chV
 cnG

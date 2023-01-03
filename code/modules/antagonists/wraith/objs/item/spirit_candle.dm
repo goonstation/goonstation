@@ -13,7 +13,7 @@
 	col_b = 0.8
 	var/sparks = 7
 	var/burn_state = 0
-	var/burnt = false
+	var/burnt = FALSE
 	var/light_ticks = 60
 
 	New()
@@ -116,7 +116,7 @@
 					src.icon_state = "smelted-unlit"
 				if(2)
 					src.icon_state = "melted-unlit"
-			src.burnt = true
+			src.burnt = TRUE
 			light.disable()
 			processing_items -= src
 			if(user)

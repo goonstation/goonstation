@@ -1,4 +1,34 @@
 
+(t)sun jan 01 23
+(u)tarmunora
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Artifact large power cells no longer spawn activated. Take them to your local artifact scientist today!
+(u)LeahTheTech
+(p)12316
+(e)🆕💅📄📦|C-Feature, C-QoL, A-UI, A-Game-Objects
+(*)Flamethrowers now have a shiny new TGUI interface.
+(u)Amylizzle
+(p)12369
+(e)🆕📄⚙|C-Feature, A-UI, A-Internal
+(*)As a ghost, observing a mob will now auto-open TGUI windows as they view them. This behaviour can be toggled in the Ghost tab.
+(t)sat dec 31 22
+(u)Shiiba
+(p)12582
+(e)🎨|C-Sprites
+(*)Resprites the cannabis leaves! Happy toking.
+(u)Amylizzle
+(p)12555
+(e)🆕💅📄📦|C-Feature, C-QoL, A-UI, A-Game-Objects
+(+)You can now configure the turbine for the nuclear engine at the turbine, without needing the control room computer.
+(u)LeahTheTech
+(p)12470
+(e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
+(*)Trees can now be felled using any sawing or chopping tools.
+(t)fri dec 30 22
+(u)Flappybat
+(p)12547
+(e)🗺💅⛔|A-Mapping, C-QoL, C-Removal
+(*)Removed the shield and shield generator console from Clarion.
 (t)thu dec 29 22
 (u)Amylizzle
 (p)12550

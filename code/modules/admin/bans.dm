@@ -60,7 +60,7 @@ var/global/list/playersSeen = list()
 	query["ip"] = ip
 	query["record"] = record
 	#ifdef RP_MODE
-	query["rp_mode"] = true
+	query["rp_mode"] = TRUE
 	#endif
 
 	var/list/data

@@ -28,7 +28,7 @@
 /turf/simulated/floor/stone,
 /area/dmm_suite/clear_area)
 "n" = (
-/obj/sakura_tree/tree_2{
+/obj/tree/sakura_tree/tree_2{
 	pixel_x = -31
 	},
 /obj/decal/cleanable/sakura,

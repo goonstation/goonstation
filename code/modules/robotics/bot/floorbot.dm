@@ -286,7 +286,7 @@
 		if (A.density && !(A.flags & ON_BORDER) && !istype(A, /obj/machinery/door) && !ismob(A))
 			var/coord = turf2coordinates(get_turf(A))
 			targets_invalid |= coord
-			return true
+			return TRUE
 
 
 
