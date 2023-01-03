@@ -2477,7 +2477,7 @@
 /obj/item/storage/secure/ssafe/hospital{
 	pixel_y = 24
 	},
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	desc = "It's a picture of a woman and...wow, that's a lot of cats.  Maybe she uh...volunteers for a cat shelter....";
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "pictureframe";
@@ -2805,7 +2805,7 @@
 /area/hospital)
 "ahR" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/device/light/zippo,
 /turf/unsimulated/floor/carpet/office,
 /area/hospital)
@@ -3161,7 +3161,7 @@
 /area/hospital)
 "ajq" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/caution/north,
 /area/hospital)
 "ajr" = (
@@ -3177,7 +3177,7 @@
 /area/hospital)
 "ajt" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/black,
 /area/hospital)
 "aju" = (
@@ -12722,7 +12722,7 @@
 /area/upper_arctic/pod2)
 "aPw" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/scalpel,
 /obj/item/circular_saw{
 	pixel_y = 7
@@ -13049,7 +13049,7 @@
 	dir = 8
 	},
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
@@ -13883,7 +13883,7 @@
 	dir = 4
 	},
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/machinery/light/lamp/black,
 /obj/window/cubicle{
 	dir = 2
@@ -15232,7 +15232,7 @@
 /area/marsoutpost)
 "aXd" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/paper_bin,
 /obj/item/pen{
 	desc = "It's a normal black ink pen. Looks like it has been chewed on."
@@ -16035,7 +16035,7 @@
 	dir = 4
 	},
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/paper_bin,
 /obj/item/pen{
 	desc = "It's a normal black ink pen. Looks like it has been chewed on."
@@ -16807,7 +16807,7 @@
 /area/lower_arctic/pod1)
 "bbn" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/plating/scorched,
 /area/lower_arctic/pod1)
 "bbo" = (
@@ -20226,7 +20226,7 @@
 	dir = 4
 	},
 /obj/table/wood/auto,
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	desc = "It's a picture of a woman and a little girl.  They look to be related.";
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "pictureframe";
@@ -20439,7 +20439,7 @@
 	dir = 4
 	},
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/ammo/bullets/autocannon,
 /turf/unsimulated/floor/carpet/grime,
 /area/drone/office)
@@ -21718,7 +21718,7 @@
 "bnE" = (
 /obj/table/auto,
 /obj/item/stamp,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
 "bnF" = (
@@ -24584,7 +24584,7 @@
 /area/iomoon/base)
 "bvY" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base)
 "bvZ" = (
@@ -28828,7 +28828,7 @@
 /area/solarium)
 "bKg" = (
 /obj/table/reinforced/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/paper_bin,
 /obj/item/pen/odd,
 /turf/unsimulated/floor/setpieces/oldfloor,
@@ -29312,7 +29312,7 @@
 /area/crunch)
 "bLI" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/setpieces/rootfloor{
 	icon_state = "rootfloor_3"
 	},
@@ -29604,7 +29604,7 @@
 /area/crypt/sigma/crew)
 "bMM" = (
 /obj/table/reinforced/bar/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/map/light/graveyard,
 /obj/item/cigpacket/propuffs,
 /turf/unsimulated/floor/carpet{
@@ -30244,7 +30244,7 @@
 /area/crunch)
 "bOO" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fred1"
 	},
@@ -32459,7 +32459,7 @@
 /area/crunch)
 "bWx" = (
 /obj/table/reinforced/bar/auto,
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	desc = "It's a picture of a young man. He looks kinda familiar to you.";
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "pictureframe";
@@ -46612,7 +46612,7 @@
 /area/owlery/office)
 "cJX" = (
 /obj/table/reinforced/bar/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/wizard/carpet,
 /area/owlery/office)
 "cJY" = (
@@ -52706,7 +52706,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	desc = "It's signed 'Greg!'";
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "pictureframe";
@@ -61950,7 +61950,7 @@
 /area/crypt/sigma/lab)
 "dFR" = (
 /obj/table/reinforced/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/storage/box/stma_kit,
 /obj/machinery/light/emergency,
 /turf/unsimulated/floor/white/grime,
@@ -64286,7 +64286,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/darkblue,
 /area/centcom/lobby)
 "dMb" = (
@@ -65219,7 +65219,7 @@
 /area/centcom/lobby)
 "dOg" = (
 /obj/table/auto/desk,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
 "dOh" = (
@@ -68394,7 +68394,7 @@
 	desc = "It's a normal black ink pen. Looks like it has been chewed on."
 	},
 /obj/table/auto,
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	desc = "It's a picture of a woman and a little girl.  They look to be related.";
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "pictureframe";
@@ -72397,7 +72397,7 @@
 /area/centcom/offices/kyle)
 "nxw" = (
 /obj/table/reinforced/bar/auto,
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	pixel_y = 2
 	},
 /obj/item/reagent_containers/food/drinks/bowl{
@@ -77101,7 +77101,7 @@
 /area/sim/gunsim/lobby)
 "vrn" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor/black/side{
 	dir = 1
 	},

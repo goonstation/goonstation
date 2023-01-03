@@ -11324,7 +11324,7 @@
 /area/station/maintenance/northeast)
 "eGj" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/storage/box/plates,
 /obj/item/storage/box/cutlery,
 /turf/simulated/floor/black/side{
