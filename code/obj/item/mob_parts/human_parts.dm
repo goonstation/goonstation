@@ -1121,7 +1121,6 @@
 	skintoned = 1
 	streak_descriptor = "undeadly"
 	override_attack_hand = 1
-	show_on_examine = 1
 	/// Supernatural if not abnormally gross
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ZOMBIE)
@@ -1143,7 +1142,6 @@
 	skintoned = 1
 	streak_descriptor = "undeadly"
 	override_attack_hand = 1
-	show_on_examine = 1
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ZOMBIE)
 
