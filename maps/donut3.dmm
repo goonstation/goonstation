@@ -62948,21 +62948,14 @@
 	},
 /area/station/com_dish/comdish)
 "rRL" = (
-/obj/table/auto,
-/obj/item/clothing/head/plunger{
-	pixel_x = -9;
-	pixel_y = 1
-	},
-/obj/towelbin{
-	pixel_x = 6;
-	pixel_y = 2
-	},
 /obj/machinery/firealarm{
-	pixel_y = 24
+	pixel_y = 24;
+	pixel_x = 1
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 8
 	},
+/obj/submachine/laundry_machine,
 /turf/simulated/floor/sanitary/blue,
 /area/station/crew_quarters/toilets{
 	name = "North Bathroom"
@@ -82291,6 +82284,15 @@
 /obj/machinery/disposal/small{
 	dir = 1;
 	pixel_y = 32
+	},
+/obj/table/auto,
+/obj/towelbin{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/item/clothing/head/plunger{
+	pixel_x = -9;
+	pixel_y = 1
 	},
 /turf/simulated/floor/sanitary/blue,
 /area/station/crew_quarters/toilets{
