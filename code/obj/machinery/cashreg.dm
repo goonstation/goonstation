@@ -23,7 +23,7 @@ TYPEINFO(/obj/machinery/cashreg)
 	/// The proportion of the given price to be added on as a tip, from 0 to 1.
 	var/tip = 0
 	/// Maximum amount of credits a single transaction can move.
-	var/transaction_limit = 999999
+	var/const/transaction_limit = 999999
 
 	New()
 		..()

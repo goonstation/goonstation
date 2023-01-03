@@ -32,7 +32,7 @@ export const Cashreg = (_, context) => {
             disabled={active_transaction}
             onClick={owner ? () => act('reset') : () => act('swipe_owner')}
             tooltip={owner ? 'Click to remove ownership' : 'Click to register ownership'}>
-            {owner ? 'Owner: ' + owner : 'Swip ID to own'}
+            {owner ? 'Owner: ' + owner : 'Swipe ID to own'}
           </Button>
           <Tooltip content="Click to edit price">
             <Box className="cashreg__amount" onClick={() => act('set_amount')}>
