@@ -1058,12 +1058,13 @@ TYPEINFO(/datum/mutantrace)
 
 	var/blood_points = 0
 #ifdef RP_MODE
-	var/const/blood_decay = 0.25
+	var/blood_decay = 0.25
 #else
-	var/const/blood_decay = 0.5
+	var/blood_decay = 0.5
 #endif
 	var/cleanable_tally = 0
-	var/const/blood_to_health_scalar = 0.75 //200 blood = 150 health
+	var/blood_to_health_scalar = 0.75 //200 blood = 150 health
+	var/min_max_health = 40 //! Minimum health we can get to via blood loss. also lol
 
 	New(var/mob/living/carbon/human/M)
 		..()
@@ -1101,7 +1102,7 @@ TYPEINFO(/datum/mutantrace)
 			cleanable_tally = 0
 
 		src.mob.max_health = blood_points * blood_to_health_scalar
-		src.mob.max_health = max(20,src.mob.max_health)
+		src.mob.max_health = max(src.min_max_health, src.mob.max_health)
 		health_update_queue |= src.mob
 
 	emote(var/act)
