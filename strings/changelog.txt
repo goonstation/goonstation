@@ -1,4 +1,148 @@
 
+(t)tue jan 03 23
+(u)LeahTheTech
+(p)12585
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Flockdrone incapacitors now recharge at half speed while not on a flock tile.
+(t)mon jan 02 23
+(u)aloe
+(*)Vampiric thralls now have zombie arms instead of regular arms. This makes them a lot better at mauling people and smashing things, and a lot worse at everything else. The health debuff due to blood loss has also been made a bit less punishing.
+(+)Vampiric thralls lose blood at half speed on RP mode.
+(u)BatElite
+(p)12581
+(e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
+(+)You can now clean up those mugs and shit that's been soaking into the desks for over a decade
+(u)Amylizzle
+(p)12594
+(e)🪲🧛📦|C-Bug, A-Gamemodes, A-Game-Objects
+(+)Flock gnesis turrets will now only shoot at targets they can hit, instead of trying to shoot through obstructions.
+(t)sun jan 01 23
+(u)Amylizzle
+(p)12464
+(e)🎨⚖⚗|C-Sprites, C-Balance, A-Chemistry
+(+)Radioactive floortiles now have a glow overlay, instead of an outline, to make them more obvious.
+(u)tarmunora
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Artifact large power cells no longer spawn activated. Take them to your local artifact scientist today!
+(u)LeahTheTech
+(p)12316
+(e)🆕💅📄📦|C-Feature, C-QoL, A-UI, A-Game-Objects
+(*)Flamethrowers now have a shiny new TGUI interface.
+(u)Amylizzle
+(p)12369
+(e)🆕📄⚙|C-Feature, A-UI, A-Internal
+(*)As a ghost, observing a mob will now auto-open TGUI windows as they view them. This behaviour can be toggled in the Ghost tab.
+(t)sat dec 31 22
+(u)Shiiba
+(p)12582
+(e)🎨|C-Sprites
+(*)Resprites the cannabis leaves! Happy toking.
+(u)Amylizzle
+(p)12555
+(e)🆕💅📄📦|C-Feature, C-QoL, A-UI, A-Game-Objects
+(+)You can now configure the turbine for the nuclear engine at the turbine, without needing the control room computer.
+(u)LeahTheTech
+(p)12470
+(e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
+(*)Trees can now be felled using any sawing or chopping tools.
+(t)fri dec 30 22
+(u)Flappybat
+(p)12547
+(e)🗺💅⛔|A-Mapping, C-QoL, C-Removal
+(*)Removed the shield and shield generator console from Clarion.
+(t)thu dec 29 22
+(u)Amylizzle
+(p)12550
+(e)🪲📄|C-Bug, A-UI
+(+)Slightly upped the radiation shielding on the nuclear engine.
+(t)wed dec 28 22
+(u)Amylizzle, Danger Noodle, WALPVRGIS, ZeWaka
+(p)8767
+(e)🆕🗺🎨❗📄💡|C-Feature, A-Mapping, C-Sprites, E-FUCK, A-UI, A-Station-Systems
+(*)Adds a nuclear fission engine which replaces the TEG on Clarion. Sprites by WALPVRGIS and ZeWaka, mapping by Danger Noodle.
+(+)Make reactor components out of mined and alloyed material: pizza control rods, ice heat exchangers, erebite fuel rods.
+(+)Feed gas into the reactor to cool it and use the heat to generate power in the turbine.
+(+)Mechcomp integration as standard!
+(t)tue dec 27 22
+(u)Kubius
+(p)12528
+(e)🗺|A-Mapping
+(+)Nadir fixbatch 10: Kitchen item improvements, instrument piano in the nerd dungeon, and exterior beacon improvements.
+(u)LeahTheTech
+(p)12326
+(e)🪲💅🧛|C-Bug, C-QoL, A-Gamemodes
+(*)Spy-thief delivery teleportation should now work regardless of what you are clicking on (bags, tables etc.)
+(+)Spy-thief area GPS now works again
+(t)mon dec 26 22
+(u)Chatausours
+(p)12498
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Signaler implants will no longer appear in surplus crates.
+(t)sun dec 25 22
+(u)Sord
+(+)Vortexes random event now plays a  warning sound and has a delay before the vortexes sppear
+(t)fri dec 23 22
+(u)Keiiro
+(p)12480
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)The chef & bartender spare clothing can now be found in a proper catering clothing vending machine around the bar, along with multiple other job related costumes.
+(t)wed dec 21 22
+(u)Sord
+(e)🆕|C-Feature
+(+)Spooky critter summoning vortexes can now occur as a random event after 45 minutes on Classic and 60 minutes on RP
+(u)Sord
+(e)⚖|C-Balance
+(+)Csaber has received a slight buff. Reduced stamina cost per swing.
+(u)Amylizzle
+(p)12471
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Some critters were butcherable when they shouldn't have been. If you find a critter that isn't butcherable but should be, report it as a bug.
+(u)Conchuckter, sprites by NightmareChamillian
+(p)9083
+(e)🆕🎨⚗|C-Feature, C-Sprites, A-Chemistry
+(*)Adds a generator that can be powered by burning reagents.
+(t)tue dec 20 22
+(u)Blackrep
+(p)12179
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)The Salvagers gotten their hands on some heavily armored space suits
+(u)Chatauscours
+(p)12461
+(e)🗺💅|A-Mapping, C-QoL
+(+)New operating computers have been shipped to all operating rooms on NT stations.
+(u)glowbold
+(p)12208
+(e)⚖🔄📄💊|C-Balance, C-Rework, A-UI, A-Medical
+(*)Operating Computers have been updated to the latest in health tracking systems.
+(+)Unless you have medical training, you must lay down or be unconscious to be tracked by operating computers.
+(t)mon dec 19 22
+(u)Bartimeus973
+(p)12398
+(e)🪲⚖📦🍝|C-Bug, C-Balance, A-Game-Objects, A-Catering
+(+)Twirling soda cans with soda, tonic or soda water in it will now make it spray it's contents on the person who opens it. Prank colleagues today!
+(u)WALPVRGIS
+(p)10704
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added a bunch of new cloaks and scarves to randomized loot crates.
+(t)sun dec 18 22
+(u)Lord_Earthfire
+(p)12446
+(e)🪲|C-Bug
+(*)Fixes seeds being able to be damaged by over 100%. Prepare to have your phlog infusions to fail more often!
+(u)Tyrant
+(p)12366
+(e)🪲🗺📦|C-Bug, A-Mapping, A-Game-Objects
+(+)The bridges in clarion, destiny, donut3 and atlas now have radio headset crates.
+(u)LeahTheTech
+(p)12278
+(e)🆕🧛|C-Feature, A-Gamemodes
+(+)The singularity will now react violently to being fed nuclear warheads.
+(t)fri dec 16 22
+(u)tarmunora
+(+)cyborg expansion modules properly add exponential power drain, recharge packs restore 15k cell power
+(t)thu dec 15 22
+(u)tarmunora
+(+)glass tables chain-react when broken
 (t)wed dec 14 22
 (u)aloe
 (*)Clicking on an item someone has equipped in the human inventory menu (the one where you strip people/put items on them) while holding an item now clicks that equipped item with your held one. Paint people's clothes! Stuff grenades in people's backpacks! Melt people's shoes!<br>This WILL have jank, and I'll revert it if the jank becomes too much to handle.

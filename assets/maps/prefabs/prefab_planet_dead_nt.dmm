@@ -1,0 +1,44 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/space,
+/area/allowGenerate)
+"k" = (
+/obj/item/casing,
+/turf/space,
+/area/allowGenerate)
+"o" = (
+/obj/dialogueobj/securitycorpse6,
+/obj/decal/cleanable/blood/splatter,
+/turf/space,
+/area/allowGenerate)
+"R" = (
+/obj/random_item_spawner/medicine/one_or_zero,
+/turf/space,
+/area/allowGenerate)
+"S" = (
+/obj/decal/cleanable/blood{
+	icon_state = "floor6"
+	},
+/turf/space,
+/area/allowGenerate)
+
+(1,1,1) = {"
+S
+a
+a
+"}
+(2,1,1) = {"
+a
+o
+a
+"}
+(3,1,1) = {"
+a
+R
+k
+"}
+(4,1,1) = {"
+a
+a
+a
+"}

@@ -157,3 +157,18 @@
 				SPAWN(1 SECOND)
 					busy = 0
 					qdel(S)
+obj/decal/teleport_mark
+	icon = 'icons/misc/artemis/temps.dmi'
+	icon_state = "decal_tele"
+	name = "teleport mark"
+	anchored = 1
+	layer = FLOOR_EQUIP_LAYER1
+	alpha = 180
+
+	New(var/atom/location)
+		..()
+		for(var/obj/O in location)
+			if(O == src) continue
+			if(istype(O, /obj/decal/teleport_mark) || istype(O,/obj/machinery/lrteleporter) || istype(O,/obj/decal/fakeobjects/teleport_pad) )
+				qdel(src)
+				return
