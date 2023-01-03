@@ -37,9 +37,15 @@ export const MinimapController = (params, context) => {
     });
   };
 
+  const cancelNewMarker = () => {
+    toggleNewMarkerMenu();
+    act('cancel_new_marker');
+  };
+
   const setImage = (value) => {
     data.icon = value;
     data.image = placable_marker_images[value];
+    act('update_icon', { icon: value });
   };
 
   const setX = (value) => {
@@ -178,7 +184,7 @@ export const MinimapController = (params, context) => {
                               icon="xmark"
                               color="red"
                               content="Cancel"
-                              onClick={() => toggleNewMarkerMenu()}
+                              onClick={() => cancelNewMarker()}
                             />
                           </Flex.Item>
                         </Flex>

@@ -10,6 +10,8 @@
 	var/name = "Minimap Marker"
 	///Whether the minimap marker is visible, with precedence over alpha settings.
 	var/visible = TRUE
+	///The alpha value that the minimap marker should use when visible.
+	var/alpha_value = 255
 	///Whether the target is on the minimap datum's rendered z-level, determining whether it is displayed.
 	var/on_minimap_z_level = FALSE
 	///Whether the minimap marker can be deleted by players using minimap controllers.

@@ -172,7 +172,14 @@
 				src.minimap_controller.toggle_visibility(marker)
 
 			if ("location_from_minimap")
+				if (src.minimap_controller.marker_silhouette)
+					src.minimap_controller.marker_silhouette.visible = TRUE
+					src.minimap_controller.marker_silhouette.marker.alpha = src.minimap_controller.marker_silhouette.alpha_value
 				src.minimap_controller.selecting_coordinates = TRUE
+
+			if ("update_icon")
+				src.minimap_controller.marker_silhouette?.marker.icon = icon('icons/obj/minimap/minimap_markers.dmi', params["icon"])
+				src.minimap_controller.selected_icon = params["icon"]
 
 			if ("new_marker")
 				var/name = params["name"]
@@ -182,6 +189,13 @@
 
 				var/turf/location = locate(x, y, src.minimap_datum.z_level)
 				src.minimap_controller.new_marker(location, icon_state, name)
+
+				src.minimap_controller.marker_silhouette?.visible = FALSE
+				src.minimap_controller.marker_silhouette?.marker.alpha = 0
+
+			if ("cancel_new_marker")
+				src.minimap_controller.marker_silhouette?.visible = FALSE
+				src.minimap_controller.marker_silhouette?.marker.alpha = 0
 
 			if ("delete_marker")
 				var/list/list_entry = src.minimap_markers_list[params["index"]]

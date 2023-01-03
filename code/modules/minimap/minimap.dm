@@ -108,7 +108,7 @@
 			map_marker.on_minimap_z_level = FALSE
 		else
 			if (map_marker.visible)
-				map_marker.marker.alpha = 255
+				map_marker.marker.alpha = map_marker.alpha_value
 			map_marker.on_minimap_z_level = TRUE
 			map_marker.marker.pixel_x = (x * src.zoom_coefficient * src.map_scale) - 16
 			map_marker.marker.pixel_y = (y * src.zoom_coefficient * src.map_scale) - 16
@@ -204,7 +204,7 @@
 
 		for (var/atom/target in src.minimap_markers)
 			var/datum/minimap_marker/minimap_marker = src.minimap_markers[target]
-			src.set_marker_position(minimap_marker, target.x, target.y, target.z)
+			src.set_marker_position(minimap_marker, minimap_marker.target.x, minimap_marker.target.y, minimap_marker.target.z)
 
 	///Zooms the minimap by the zoom coefficient while moving the minimap so that the specified point lies at the centre of the displayed minimap. The alpha mask takes care of any map area scaled outside of the map boundaries.
 	proc/centre_on_point(var/zoom, var/focus_x, var/focus_y)
@@ -237,7 +237,7 @@
 
 		for (var/atom/target in src.minimap_markers)
 			var/datum/minimap_marker/minimap_marker = src.minimap_markers[target]
-			src.set_marker_position(minimap_marker, target.x, target.y, target.z)
+			src.set_marker_position(minimap_marker, minimap_marker.target.x, minimap_marker.target.y, minimap_marker.target.z)
 
 	///Scale the map, while retaining the original (x, y) position of the bottom left corner.
 	proc/scale_map(var/scale)
@@ -256,7 +256,7 @@
 		// Update the position of all the map markers to reflect the new map scale.
 		for (var/atom/target in src.minimap_markers)
 			var/datum/minimap_marker/minimap_marker = src.minimap_markers[target]
-			src.set_marker_position(minimap_marker, target.x, target.y, target.z)
+			src.set_marker_position(minimap_marker, minimap_marker.target.x, minimap_marker.target.y, minimap_marker.target.z)
 
 /datum/minimap/z_level/ai
 	//The Kondaru off-station Owlery and Abandoned Research Outpost are both considered part of the station, but have no AI cameras.

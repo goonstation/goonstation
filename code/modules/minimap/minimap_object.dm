@@ -160,6 +160,10 @@
 
 	///Whether the next click will sample coordinates at the clicked point, or toggle dragging.
 	var/selecting_coordinates = FALSE
+	///A semi-transparent minimap marker used to communicate where the marker will be placed on the minimap.
+	var/datum/minimap_marker/marker_silhouette
+	///The icon that the marker silouette should use.
+	var/selected_icon = "pin"
 	///The sampled x coordinate.
 	var/selected_x = 1
 	///The sampled y coordinate.
@@ -233,16 +237,34 @@
 			src.dragging = !src.dragging
 
 	MouseMove(location, control, params)
-		if (!src.dragging)
+		if (!src.dragging && !src.selecting_coordinates)
 			return
 
 		var/list/param_list = params2list(params)
 		var/x = text2num(param_list["icon-x"])
 		var/y = text2num(param_list["icon-y"])
 
-		src.pan_map(x - src.start_click_pos_x, y - src.start_click_pos_y)
-		src.start_click_pos_x = x
-		src.start_click_pos_y = y
+		if (src.dragging)
+			src.pan_map(x - src.start_click_pos_x, y - src.start_click_pos_y)
+			src.start_click_pos_x = x
+			src.start_click_pos_y = y
+
+		if (src.selecting_coordinates)
+			var/datum/minimap/z_level/minimap = src.displayed_minimap
+
+			// Convert from screen (x, y) to map (x, y) coordinates.
+			x = round((x - minimap.minimap_render.pixel_x) / (minimap.zoom_coefficient * minimap.map_scale))
+			y = round((y - minimap.minimap_render.pixel_y) / (minimap.zoom_coefficient * minimap.map_scale))
+			var/turf/map_location = locate(x, y, src.displayed_minimap.z_level)
+
+			if (!src.marker_silhouette)
+				src.displayed_minimap.create_minimap_marker(map_location, 'icons/obj/minimap/minimap_markers.dmi', src.selected_icon)
+				src.marker_silhouette = src.displayed_minimap.minimap_markers[map_location]
+				src.marker_silhouette.alpha_value = 175
+				src.marker_silhouette.marker.alpha = 175
+
+			src.marker_silhouette.target = map_location
+			src.displayed_minimap.set_marker_position(src.marker_silhouette, src.marker_silhouette.target.x, src.marker_silhouette.target.y, src.displayed_minimap.z_level)
 
 	proc/pan_map(var/x, var/y)
 		src.displayed_minimap.minimap_render.pixel_x += x
@@ -276,22 +298,22 @@
 				marker_dm.marker.alpha = 0
 				marker_dm.visible = FALSE
 			else
-				marker_cm.marker.alpha = 255
+				marker_cm.marker.alpha = marker_cm.alpha_value
 				marker_cm.visible = TRUE
-				marker_dm.marker.alpha = 255
+				marker_dm.marker.alpha = marker_dm.alpha_value
 				marker_dm.visible = TRUE
 
 	proc/toggle_visibility(var/datum/minimap_marker/marker_cm)
 		var/datum/minimap_marker/marker_dm = src.displayed_minimap.minimap_markers[marker_cm.target]
-		if (marker_dm.marker.alpha == 255)
+		if (marker_dm.marker.alpha == marker_dm.alpha_value)
 			marker_cm.marker.alpha = 0
 			marker_cm.visible = FALSE
 			marker_dm.marker.alpha = 0
 			marker_dm.visible = FALSE
 		else
-			marker_cm.marker.alpha = 255
+			marker_cm.marker.alpha = marker_cm.alpha_value
 			marker_cm.visible = TRUE
-			marker_dm.marker.alpha = 255
+			marker_dm.marker.alpha = marker_dm.alpha_value
 			marker_dm.visible = TRUE
 
 	proc/new_marker(var/location, var/icon_state, var/name)
