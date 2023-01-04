@@ -9,7 +9,7 @@ TYPEINFO(/obj/machinery/cashreg)
 	req_access = list(access_heads) // Allows heads of staff to deregister owners from a cashreg.
 	anchored = TRUE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
-	flags = TGUI_INTERACTIVE
+	flags = FPRINT | TGUI_INTERACTIVE
 
 	var/datum/db_record/owner_account = null
 	var/obj/item/card/id/owner_card = null
@@ -64,7 +64,7 @@ TYPEINFO(/obj/machinery/cashreg)
 			"name" = src.name,
 			"owner" = src.owner_card?.registered,
 			"tip" = src.tip,
-			"total" = src.amount + round(src.amount * src.tip),
+			"total" = src.amount + ceil(src.amount * src.tip),
 		)
 
 	ui_act(action, params)
@@ -185,7 +185,7 @@ TYPEINFO(/obj/machinery/cashreg)
 			return
 
 		// Confirmation of transaction
-		var/transaction_total = src.amount + round(src.amount * src.tip) // when we get to 515 please replace this with ceil()
+		var/transaction_total = src.amount + ceil(src.amount * src.tip)
 		if (tgui_alert(usr, "Please confirm transfer of [transaction_total] to [src.owner_card?.registered].", "Confirm transfer", list("Confirm", "Cancel")) == "Confirm")
 			if (src.amount > payer_account["current_money"])
 				boutput(user, "<span class='alert'>Insufficent funds in account to complete transaction.</span>")
