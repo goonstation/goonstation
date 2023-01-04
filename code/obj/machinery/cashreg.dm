@@ -29,7 +29,6 @@ TYPEINFO(/obj/machinery/cashreg)
 		..()
 		UnsubscribeProcess()
 
-	// please check fingerprints on attackby and attack_hand
 	attackby(obj/item/O, mob/user)
 		// If attempting to use an ID or PDA with an ID inserted, attempt to register device to that ID. Else, they're paying for something.
 		var/held_ID = src.get_ID(O)
@@ -50,6 +49,11 @@ TYPEINFO(/obj/machinery/cashreg)
 	attack_hand(mob/user)
 		..()
 		ui_interact(user)
+
+	disposing()
+		src.owner_account = null
+		src.owner_card = null
+		..()
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
