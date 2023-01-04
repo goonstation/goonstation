@@ -472,8 +472,8 @@ var/global/list/mapNames = list(
 	display_name = "NSS Clarion"
 	goonhub_map = "https://goonhub.com/maps/clarion2"
 
-	walls = /turf/simulated/wall/auto/jen
-	rwalls = /turf/simulated/wall/auto/reinforced/jen
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro

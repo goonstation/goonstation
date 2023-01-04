@@ -1,7 +1,12 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"aM" = (
-/turf/simulated/wall/auto/reinforced/jen/blue,
-/area/station/bridge)
+"bn" = (
+/turf/simulated/floor/stairs/wood,
+/area/station/crew_quarters/cafeteria)
+"bx" = (
+/obj/machinery/recharge_station,
+/mob/living/silicon/hivebot/eyebot,
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
 "bH" = (
 /obj/machinery/turret{
 	name = "Fore exterior turret";
@@ -35,10 +40,15 @@
 "cr" = (
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
-"cT" = (
-/obj/machinery/door/airlock/pyro/maintenance,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
+"cs" = (
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 4
+	},
+/area/station/crew_quarters/cafeteria)
+"cG" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
 "cV" = (
 /obj/machinery/turret{
 	dir = 10;
@@ -46,12 +56,18 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
+"du" = (
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 5
+	},
+/area/station/crew_quarters/cafeteria)
+"dw" = (
+/obj/stool/chair/wooden,
+/turf/simulated/floor/carpet/purple,
+/area/station/crew_quarters/cafeteria)
 "dO" = (
-/turf/simulated/wall/auto/reinforced/jen/blue,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai)
-"ed" = (
-/turf/simulated/floor/black,
-/area/station/hallway/primary/north)
 "el" = (
 /obj/rack,
 /obj/item/hand_tele{
@@ -69,9 +85,18 @@
 	dir = 5
 	},
 /area/station/teleporter)
+"eF" = (
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 6
+	},
+/area/station/crew_quarters/cafeteria)
 "eZ" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
 /area/station/bridge)
+"fu" = (
+/obj/table/reinforced/bar/auto,
+/turf/simulated/floor/carpet/red/fancy/edge,
+/area/station/crew_quarters/cafeteria)
 "fy" = (
 /obj/machinery/recharger/wall/sticky{
 	dir = 1;
@@ -90,9 +115,15 @@
 	dir = 9
 	},
 /area/station/teleporter)
-"fF" = (
-/turf/simulated/wall/auto/reinforced/jen,
-/area/station/crew_quarters/clown)
+"gj" = (
+/obj/stool/bar,
+/obj/landmark/start{
+	name = "Medical Director"
+	},
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 8
+	},
+/area/station/crew_quarters/cafeteria)
 "gk" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/bridge/captain)
@@ -112,14 +143,25 @@
 "ij" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/bridge)
+"iu" = (
+/turf/simulated/floor/black,
+/area/station/bridge/customs)
 "iv" = (
 /obj/cable{
 	icon_state = "4-9"
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
+"iB" = (
+/obj/machinery/turretid{
+	pixel_x = -23;
+	name = "AI upload turret control";
+	pixel_y = -4
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
 "iO" = (
-/turf/simulated/wall/auto/reinforced/jen/blue,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/AIbaseoutside{
 	requires_power = 1;
 	do_not_irradiate = 1
@@ -133,12 +175,27 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"jw" = (
+/turf/simulated/floor/plating,
+/area/space)
+"jO" = (
+/obj/stool/bar,
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 10
+	},
+/area/station/crew_quarters/cafeteria)
+"jS" = (
+/obj/machinery/light{
+	dir = 2
+	},
+/turf/simulated/floor/black,
+/area/station/bridge)
 "kw" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/hallway/primary/north)
+/area/space)
 "kM" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/black,
@@ -148,9 +205,6 @@
 	dir = 6
 	},
 /area/station/teleporter)
-"kU" = (
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "lA" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -195,21 +249,55 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
+"mO" = (
+/obj/machinery/light{
+	dir = 2
+	},
+/turf/simulated/floor/black,
+/area/station/bridge/captain)
 "np" = (
 /obj/item/device/radio/intercom/engineering,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"nr" = (
+/obj/stool/chair/wooden,
+/obj/landmark/start{
+	name = "Medical Director"
+	},
+/turf/simulated/floor/carpet/purple/fancy/innercorner/nw_se,
+/area/station/crew_quarters/cafeteria)
 "nE" = (
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
 /area/station/teleporter)
+"nF" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/black,
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
+"ol" = (
+/obj/machinery/door/airlock/pyro/command/alt{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
 "oA" = (
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
+/turf/simulated/wall/auto/supernorn,
+/area/station/bridge/customs)
 "oC" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor{
@@ -245,16 +333,22 @@
 /area/station/bridge/hos{
 	name = "Head of Personnel's Quarters"
 	})
-"pt" = (
-/turf/simulated/wall/auto/jen/blue,
-/area/station/bridge)
-"pF" = (
-/obj/machinery/door/airlock/pyro/maintenance{
-	dir = 4;
-	req_access = null
+"pl" = (
+/obj/machinery/turret{
+	dir = 9;
+	name = "AI upload turret"
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/ai_upload)
+"pt" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/bridge)
+"py" = (
+/obj/table/reinforced/bar/auto,
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 1
+	},
+/area/station/crew_quarters/cafeteria)
 "pK" = (
 /obj/firedoor_spawn,
 /obj/access_spawn/ai_upload,
@@ -264,9 +358,20 @@
 /obj/machinery/door/airlock/pyro/glass/command,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"pO" = (
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
+"pT" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/space)
 "pY" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/station/bridge)
+"qd" = (
+/turf/simulated/floor/sanitary/blue,
+/area/station/bridge/united_command{
+	name = "Bridge Restroom"
+	})
 "qf" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -278,29 +383,57 @@
 /obj/machinery/computer3/generic/med_data,
 /turf/simulated/floor/circuit/vintage,
 /area/station/turret_protected/ai)
+"qo" = (
+/obj/machinery/disposal,
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/sanitary/blue,
+/area/station/bridge/united_command{
+	name = "Bridge Restroom"
+	})
 "qF" = (
 /turf/space,
 /area/space)
 "qT" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/bridge)
-"rB" = (
-/obj/machinery/door/airlock/pyro/maintenance{
-	dir = 4;
-	req_access = null
+"rb" = (
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/carpet/blue,
+/area/station/bridge)
+"rp" = (
+/obj/decal/tile_edge/stripe,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/cafeteria)
+"rA" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6
+	},
+/obj/stool/wooden,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/cafeteria)
 "rG" = (
-/turf/simulated/wall/auto/jen/blue,
+/turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/captain)
-"rY" = (
-/obj/landmark/random_room/size3x3,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
 "si" = (
-/turf/simulated/wall/auto/reinforced/jen/blue,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/hop)
+"sj" = (
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/obj/landmark/start{
+	name = "Medical Director"
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/cafeteria)
 "sr" = (
 /obj/item/device/radio/intercom/AI{
 	broadcasting = 0
@@ -310,9 +443,29 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"sD" = (
+/obj/decal/stage_edge,
+/obj/loudspeaker,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/cafeteria)
+"sJ" = (
+/obj/stool/chair/wooden,
+/obj/landmark/start{
+	name = "Medical Director"
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/cafeteria)
+"sY" = (
+/obj/landmark/random_room/size5x3,
+/turf/simulated/floor/plating,
+/area/space)
 "tI" = (
-/turf/simulated/wall/auto/jen,
-/area/station/maintenance/northwest)
+/turf/simulated/wall/false_wall,
+/area/space)
 "tO" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -330,6 +483,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "uI" = (
@@ -338,6 +496,14 @@
 	},
 /turf/space,
 /area/space)
+"uP" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/cafeteria)
 "uX" = (
 /obj/item/device/radio/intercom/science,
 /obj/cable{
@@ -346,13 +512,43 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "vg" = (
-/turf/simulated/wall/auto/jen/blue,
+/turf/simulated/wall/auto/supernorn,
 /area/station/bridge/united_command{
 	name = "Bridge Restroom"
 	})
+"vi" = (
+/obj/decal/tile_edge/stripe,
+/obj/mic_stand,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/cafeteria)
+"vl" = (
+/obj/machinery/turret{
+	dir = 5;
+	name = "AI upload turret"
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/ai_upload)
+"vB" = (
+/obj/table/wood/auto,
+/obj/item/plate{
+	pixel_y = 6
+	},
+/obj/random_item_spawner/tableware/few,
+/turf/simulated/floor/carpet/purple/fancy/innercorner/nw_se,
+/area/station/crew_quarters/cafeteria)
 "vE" = (
-/turf/simulated/wall/auto/jen/blue,
+/turf/simulated/wall/auto/supernorn,
 /area/station/teleporter)
+"vS" = (
+/obj/table/wood/auto,
+/obj/item/plate{
+	pixel_y = 6
+	},
+/obj/random_item_spawner/tableware/few,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/cafeteria)
 "wc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -389,10 +585,23 @@
 /obj/item/storage/toilet{
 	dir = 8
 	},
-/turf/simulated/floor/black,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/sanitary/blue,
 /area/station/bridge/united_command{
 	name = "Bridge Restroom"
 	})
+"xE" = (
+/obj/stool/chair/wooden{
+	dir = 1
+	},
+/obj/landmark/start{
+	name = "Medical Director"
+	},
+/turf/simulated/floor/carpet/purple,
+/area/station/crew_quarters/cafeteria)
 "xF" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -405,17 +614,18 @@
 	requires_power = 1;
 	do_not_irradiate = 1
 	})
-"xT" = (
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/clown)
-"yd" = (
-/turf/simulated/wall/auto/reinforced/jen,
-/area/station/maintenance/northwest)
+"xX" = (
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/black,
+/area/station/bridge)
 "yo" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/circuit/green,
 /area/station/turret_protected/ai)
 "yL" = (
 /obj/machinery/power/apc/autoname_north{
@@ -423,6 +633,10 @@
 	},
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 24
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -441,16 +655,35 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "zq" = (
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 24
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
 /area/station/teleporter)
+"zR" = (
+/obj/table/wood/auto,
+/obj/item/plate{
+	pixel_y = 6
+	},
+/obj/item/device/light/candle/small{
+	pixel_x = 16;
+	pixel_y = 10
+	},
+/obj/item/device/light/candle/small{
+	pixel_x = 16
+	},
+/obj/random_item_spawner/tableware/few,
+/turf/simulated/floor/carpet/purple/fancy/innercorner/nw_se,
+/area/station/crew_quarters/cafeteria)
 "Am" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/station/bridge/captain)
 "As" = (
-/turf/simulated/wall/auto/reinforced/jen/blue,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/captain)
 "Av" = (
 /turf/simulated/floor/black,
@@ -463,31 +696,73 @@
 /area/station/bridge/hos{
 	name = "Head of Personnel's Quarters"
 	})
+"Bk" = (
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/carpet/blue,
+/area/station/bridge)
 "BL" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"BV" = (
+/obj/stool/chair/wooden{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/west,
+/area/station/crew_quarters/cafeteria)
 "Cc" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 8
 	},
 /obj/access_spawn/heads,
 /obj/firedoor_spawn,
-/turf/simulated/floor/black,
+/turf/simulated/floor/sanitary/blue,
 /area/station/bridge/united_command{
 	name = "Bridge Restroom"
 	})
-"Co" = (
-/turf/simulated/wall/auto/jen,
-/area/station/maintenance/northeast)
+"Cu" = (
+/obj/table/wood/auto,
+/obj/item/plate{
+	pixel_y = 6
+	},
+/obj/item/shaker/pepper{
+	pixel_x = 16;
+	pixel_y = 12
+	},
+/obj/item/shaker/salt{
+	pixel_x = 16;
+	pixel_y = 2
+	},
+/obj/random_item_spawner/tableware/few,
+/turf/simulated/floor/carpet/purple,
+/area/station/crew_quarters/cafeteria)
+"Cz" = (
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fpurple2"
+	},
+/area/station/crew_quarters/cafeteria)
 "CA" = (
 /obj/cable{
 	icon_state = "1-10"
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
+"CP" = (
+/obj/decal/tile_edge/stripe{
+	dir = 4
+	},
+/obj/item/instrument/large/piano/grand,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/cafeteria)
 "Dg" = (
 /obj/item/device/radio/intercom/bridge{
 	broadcasting = 0
@@ -497,6 +772,18 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"Dh" = (
+/obj/decal/stage_edge,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/cafeteria)
+"Ds" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/cafeteria)
+"DX" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/bridge/customs)
 "DY" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -534,6 +821,12 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hop)
+"Fh" = (
+/obj/machinery/lawrack{
+	pixel_y = 8
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/ai_upload)
 "Fy" = (
 /obj/machinery/power/data_terminal,
 /obj/landmark/start{
@@ -555,7 +848,7 @@
 /obj/machinery/door_control{
 	id = "ai_core";
 	name = "AI Core Shield";
-	pixel_y = -21
+	pixel_x = -24
 	},
 /obj/cable{
 	icon_state = "0-2"
@@ -579,6 +872,22 @@
 /obj/cable,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
+"FY" = (
+/obj/machinery/door/airlock/pyro/glass/command{
+	dir = 8
+	},
+/obj/access_spawn/head_of_personnel,
+/obj/firedoor_spawn,
+/obj/machinery/door/poddoor{
+	dir = 4;
+	id = "hop_office";
+	name = "HoP office shutter";
+	opacity = 0;
+	density = 0;
+	icon_state = "pdoor0"
+	},
+/turf/simulated/floor/black,
+/area/station/bridge/customs)
 "FZ" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -598,6 +907,15 @@
 	dir = 10
 	},
 /area/station/teleporter)
+"Gz" = (
+/turf/simulated/floor/circuit/off,
+/area/station/turret_protected/ai_upload)
+"GV" = (
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fpurple2"
+	},
+/area/station/crew_quarters/cafeteria)
 "GZ" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor{
@@ -615,11 +933,43 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Upload";
+	dir = 4;
+	name = "AI core IR detector"
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/AIbaseoutside{
 	requires_power = 1;
 	do_not_irradiate = 1
 	})
+"HM" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/cafeteria)
+"HN" = (
+/obj/stool/bar,
+/obj/landmark/start{
+	name = "Medical Director"
+	},
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 9
+	},
+/area/station/crew_quarters/cafeteria)
+"Ir" = (
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/east,
+/area/station/crew_quarters/cafeteria)
+"Iy" = (
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fpurple2"
+	},
+/area/station/crew_quarters/cafeteria)
 "IM" = (
 /obj/machinery/turret{
 	dir = 9;
@@ -627,6 +977,9 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
+"IW" = (
+/turf/simulated/wall/auto/supernorn,
+/area/space)
 "Jn" = (
 /obj/cable{
 	icon_state = "5-8"
@@ -646,6 +999,10 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/radio,
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 24
+	},
 /turf/simulated/floor/circuit/vintage,
 /area/station/turret_protected/ai)
 "Jx" = (
@@ -677,9 +1034,6 @@
 	requires_power = 1;
 	do_not_irradiate = 1
 	})
-"JF" = (
-/turf/space,
-/area/station/maintenance/northwest)
 "JW" = (
 /obj/lattice{
 	dir = 4;
@@ -690,6 +1044,13 @@
 	requires_power = 1;
 	do_not_irradiate = 1
 	})
+"JY" = (
+/obj/machinery/turret{
+	dir = 10;
+	name = "AI upload turret"
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/ai_upload)
 "Kf" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hop)
@@ -698,6 +1059,10 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 24
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "Kw" = (
@@ -705,14 +1070,26 @@
 	dir = 1;
 	broadcasting = 0
 	},
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/circuit/green,
 /area/station/turret_protected/ai)
+"KA" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/black,
+/area/station/bridge/captain)
 "KF" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/bridge/hos{
 	name = "Head of Personnel's Quarters"
 	})
+"KO" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/black,
+/area/station/bridge)
 "KR" = (
 /obj/machinery/turret{
 	dir = 5;
@@ -736,6 +1113,9 @@
 	requires_power = 1;
 	do_not_irradiate = 1
 	})
+"KZ" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/ai_upload)
 "Lt" = (
 /obj/lattice{
 	dir = 1;
@@ -760,6 +1140,15 @@
 /area/station/bridge/hos{
 	name = "Head of Personnel's Quarters"
 	})
+"LZ" = (
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fpurple2"
+	},
+/area/station/crew_quarters/cafeteria)
+"Md" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/west,
+/area/station/crew_quarters/cafeteria)
 "Mi" = (
 /obj/stool/bed{
 	dir = 8
@@ -772,6 +1161,19 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/captain)
+"Mt" = (
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/ai)
+"MH" = (
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fpurple2"
+	},
+/area/station/crew_quarters/cafeteria)
 "MJ" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/bridge)
@@ -788,6 +1190,9 @@
 	requires_power = 1;
 	do_not_irradiate = 1
 	})
+"Ng" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/east,
+/area/station/crew_quarters/cafeteria)
 "Nz" = (
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -824,6 +1229,12 @@
 	requires_power = 1;
 	do_not_irradiate = 1
 	})
+"OA" = (
+/obj/stool/bar,
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 8
+	},
+/area/station/crew_quarters/cafeteria)
 "OX" = (
 /obj/machinery/door/poddoor{
 	id = "ai_core";
@@ -869,7 +1280,7 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
 "Pw" = (
-/turf/simulated/wall/auto/reinforced/jen/blue,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/bridge/hos{
 	name = "Head of Personnel's Quarters"
 	})
@@ -877,11 +1288,17 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/reinforced/jen/blue,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai)
 "PT" = (
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/circuit/green,
 /area/station/turret_protected/ai)
+"PV" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/cafeteria)
 "QI" = (
 /obj/stool/chair/comfy{
 	dir = 1
@@ -894,13 +1311,22 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/bridge)
+"Rj" = (
+/obj/machinery/light{
+	dir = 2
+	},
+/turf/simulated/floor/black,
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "Rr" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/bridge)
-"RF" = (
-/turf/simulated/wall/auto/jen,
-/area/station/crew_quarters/clown)
+"RC" = (
+/obj/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/bridge/customs)
 "RR" = (
 /obj/stool/chair/comfy,
 /obj/landmark/start{
@@ -923,9 +1349,57 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
+"Sm" = (
+/obj/table/wood/auto,
+/obj/item/plate{
+	pixel_y = 6
+	},
+/obj/item/shaker/ketchup{
+	pixel_x = 16;
+	pixel_y = 12
+	},
+/obj/item/shaker/mustard{
+	pixel_x = 16;
+	pixel_y = 2
+	},
+/obj/random_item_spawner/tableware/few,
+/turf/simulated/floor/carpet/purple,
+/area/station/crew_quarters/cafeteria)
 "So" = (
 /turf/simulated/floor/black,
 /area/space)
+"SB" = (
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/ai)
+"SH" = (
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/ai_upload)
+"SR" = (
+/obj/table/reinforced,
+/obj/machinery/door/poddoor{
+	dir = 4;
+	id = "hop_office";
+	name = "HoP office shutter";
+	opacity = 0;
+	density = 0;
+	icon_state = "pdoor0"
+	},
+/turf/simulated/floor/black,
+/area/station/bridge/customs)
+"SU" = (
+/turf/simulated/floor/carpet/purple/fancy/edge,
+/area/station/crew_quarters/cafeteria)
+"Tl" = (
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/black,
+/area/station/bridge)
 "To" = (
 /obj/stool/chair/comfy,
 /obj/landmark/start{
@@ -933,6 +1407,12 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/bridge)
+"Tp" = (
+/obj/stool/chair/wooden{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/purple/fancy/innercorner/nw_se,
+/area/station/crew_quarters/cafeteria)
 "TG" = (
 /obj/cable{
 	icon_state = "1-6"
@@ -962,6 +1442,14 @@
 	requires_power = 1;
 	do_not_irradiate = 1
 	})
+"Uu" = (
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/cafeteria)
 "UB" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -982,6 +1470,20 @@
 /obj/item/device/radio/intercom,
 /turf/simulated/floor/black,
 /area/station/bridge)
+"UV" = (
+/obj/machinery/computer/robotics{
+	dir = 4;
+	pixel_y = 4
+	},
+/turf/simulated/floor/circuit/off,
+/area/station/turret_protected/ai_upload)
+"UX" = (
+/obj/machinery/turret{
+	dir = 6;
+	name = "AI upload turret"
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/ai_upload)
 "Va" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -992,12 +1494,15 @@
 	do_not_irradiate = 1
 	})
 "Vk" = (
-/obj/machinery/shower{
+/obj/machinery/light/small{
 	dir = 4;
-	pixel_x = 8;
-	pixel_y = 8
+	pixel_x = 12
 	},
-/turf/simulated/floor/black,
+/obj/machinery/shower{
+	dir = 1;
+	pixel_y = 24
+	},
+/turf/simulated/floor/sanitary/blue,
 /area/station/bridge/united_command{
 	name = "Bridge Restroom"
 	})
@@ -1010,6 +1515,18 @@
 	},
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge)
+"VR" = (
+/obj/table/reinforced/bar/auto,
+/turf/simulated/floor/carpet/red/standard,
+/area/station/crew_quarters/cafeteria)
+"VX" = (
+/obj/stool/chair/wooden{
+	dir = 4
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/cafeteria)
 "Wc" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -1040,9 +1557,9 @@
 	opacity = 0;
 	icon_state = "door0";
 	autoclose = 0;
-	dir = 4
+	dir = 8
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/sanitary/blue,
 /area/station/bridge/united_command{
 	name = "Bridge Restroom"
 	})
@@ -1055,15 +1572,18 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/bridge)
+"WE" = (
+/turf/simulated/floor/black,
+/area/station/crew_quarters/cafeteria)
 "WH" = (
 /obj/machinery/turretid{
-	pixel_x = -6;
+	pixel_x = -4;
 	pixel_y = 24;
 	turretArea = /area/station/turret_protected/ai;
 	name = "AI core turret control"
 	},
 /obj/machinery/turretid{
-	pixel_x = 7;
+	pixel_x = 9;
 	pixel_y = 24;
 	turretArea = /area/station/turret_protected/AIbaseoutside;
 	name = "AI perimeter turret control"
@@ -1074,7 +1594,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "WO" = (
-/turf/simulated/wall/auto/jen/blue,
+/turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/hop)
 "WT" = (
 /obj/cable{
@@ -1085,9 +1605,15 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/bridge)
-"Xn" = (
-/turf/simulated/wall/auto/reinforced/jen,
-/area/station/maintenance/northeast)
+"WX" = (
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/cafeteria)
+"Xq" = (
+/obj/wingrille_spawn/auto/crystal/reinforced,
+/turf/simulated/floor/plating/airless,
+/area/space)
 "XJ" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/bridge)
@@ -1096,13 +1622,32 @@
 	icon_state = "0-8"
 	},
 /obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Upload";
+	dir = 8;
+	name = "AI core IR detector"
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/AIbaseoutside{
 	requires_power = 1;
 	do_not_irradiate = 1
 	})
+"XZ" = (
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/cafeteria)
+"ZD" = (
+/obj/landmark/random_room/size3x3,
+/turf/simulated/floor/plating,
+/area/space)
 "ZY" = (
-/turf/simulated/floor/black,
+/obj/submachine/chef_sink/chem_sink{
+	desc = "A water-filled unit intended for hand-washing purposes.";
+	dir = 4;
+	pixel_x = -5
+	},
+/turf/simulated/floor/sanitary/blue,
 /area/station/bridge/united_command{
 	name = "Bridge Restroom"
 	})
@@ -39885,38 +40430,38 @@ qF
 qF
 qF
 qF
-yd
-yd
-yd
-yd
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+pT
+pT
+pT
+pT
+Xq
+pT
+pT
+pT
+Xq
+pT
+pT
+pT
+Xq
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -40185,12 +40730,23 @@ qF
 qF
 qF
 qF
-yd
-yd
-yd
-oA
-oA
-tI
+pT
+pT
+pT
+IW
+IW
+jw
+jw
+sY
+IW
+jw
+jw
+ZD
+IW
+jw
+jw
+sY
+IW
 qF
 qF
 qF
@@ -40203,22 +40759,11 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -40486,13 +41031,24 @@ qF
 qF
 qF
 qF
-yd
-yd
-tI
-oA
-oA
-oA
-tI
+pT
+pT
+IW
+jw
+jw
+IW
+jw
+jw
+jw
+IW
+jw
+jw
+jw
+IW
+jw
+jw
+jw
+IW
 qF
 qF
 qF
@@ -40505,22 +41061,11 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -40787,14 +41332,25 @@ qF
 qF
 qF
 qF
-yd
-yd
-JF
+pT
+pT
+qF
 tI
-oA
-oA
-oA
-tI
+jw
+jw
+IW
+jw
+jw
+jw
+IW
+jw
+jw
+jw
+IW
+jw
+jw
+jw
+IW
 qF
 qF
 qF
@@ -40807,22 +41363,11 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -41088,15 +41633,26 @@ qF
 qF
 qF
 qF
-yd
-yd
-tI
-tI
-tI
-oA
-oA
-oA
-tI
+pT
+pT
+IW
+IW
+IW
+jw
+jw
+IW
+jw
+jw
+jw
+IW
+IW
+jw
+IW
+IW
+jw
+jw
+jw
+IW
 qF
 qF
 qF
@@ -41109,22 +41665,11 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -41390,15 +41935,26 @@ qF
 qF
 qF
 qF
-yd
-oA
-oA
-rY
-tI
-oA
-oA
-oA
-tI
+pT
+qF
+qF
+qF
+IW
+jw
+jw
+IW
+jw
+jw
+jw
+IW
+jw
+jw
+jw
+IW
+jw
+jw
+jw
+IW
 qF
 qF
 qF
@@ -41411,22 +41967,11 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -41691,16 +42236,27 @@ qF
 qF
 qF
 qF
-yd
-yd
-oA
-oA
-oA
-cT
-oA
-oA
-oA
-tI
+Xq
+pT
+qF
+qF
+qF
+qF
+jw
+jw
+IW
+IW
+jw
+IW
+IW
+jw
+jw
+jw
+IW
+IW
+jw
+IW
+IW
 qF
 qF
 qF
@@ -41713,22 +42269,11 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -41993,16 +42538,27 @@ qF
 qF
 qF
 qF
-yd
-tI
-oA
-oA
-oA
-tI
-oA
-oA
-oA
-tI
+Xq
+pT
+qF
+qF
+qF
+IW
+jw
+jw
+jw
+jw
+jw
+jw
+jw
+jw
+jw
+jw
+jw
+jw
+jw
+jw
+jw
 qF
 qF
 qF
@@ -42015,22 +42571,11 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -42295,16 +42840,27 @@ qF
 qF
 qF
 Ol
-aM
+Ol
 vE
 vE
 vE
 vE
 vE
-oA
-oA
-oA
-tI
+jw
+jw
+jw
+jw
+jw
+jw
+jw
+jw
+jw
+jw
+jw
+jw
+jw
+jw
+jw
 qF
 qF
 qF
@@ -42317,22 +42873,11 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -42603,10 +43148,21 @@ fC
 mz
 Gd
 vE
-oA
-oA
-oA
-tI
+jw
+jw
+DX
+DX
+DX
+DX
+DX
+DX
+KZ
+KZ
+KZ
+KZ
+KZ
+KZ
+KZ
 qF
 qF
 qF
@@ -42619,22 +43175,11 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -42905,10 +43450,21 @@ zq
 Wk
 lE
 vE
-oA
-oA
-oA
-tI
+jw
+jw
+DX
+iu
+iu
+iu
+iu
+iu
+KZ
+UX
+SH
+UV
+SH
+vl
+KZ
 qF
 qF
 qF
@@ -42921,22 +43477,11 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -43207,10 +43752,21 @@ fy
 kM
 lE
 vE
-oA
-oA
-oA
-tI
+jw
+jw
+DX
+iu
+iu
+iu
+iu
+iu
+KZ
+SH
+Gz
+Gz
+Gz
+SH
+KZ
 qF
 qF
 qF
@@ -43223,22 +43779,11 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -43509,10 +44054,21 @@ el
 nE
 kS
 vE
-oA
-oA
-oA
-tI
+jw
+jw
+DX
+iu
+iu
+iu
+iu
+iu
+KZ
+SH
+Gz
+Fh
+Gz
+SH
+KZ
 qF
 qF
 qF
@@ -43525,22 +44081,11 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -43811,10 +44356,21 @@ vE
 OY
 vE
 vE
-oA
-oA
-oA
-tI
+jw
+jw
+DX
+SR
+SR
+SR
+DX
+FY
+KZ
+SH
+Gz
+Gz
+Gz
+SH
+KZ
 qF
 qF
 qF
@@ -43827,22 +44383,11 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -44100,23 +44645,34 @@ Na
 Av
 Av
 rG
+KA
 cr
 cr
 cr
-cr
-cr
+mO
 Wc
 jq
 za
-za
+Tl
 za
 za
 za
 pt
+jw
+jw
 oA
-oA
-oA
-tI
+iu
+iu
+iu
+iu
+iu
+KZ
+JY
+SH
+Gz
+SH
+pl
+KZ
 qF
 qF
 qF
@@ -44129,22 +44685,11 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -44415,10 +44960,21 @@ Nz
 za
 za
 pt
+jw
+jw
 oA
-oA
-oA
-tI
+iu
+iu
+iu
+iu
+iu
+KZ
+KZ
+KZ
+ol
+KZ
+KZ
+KZ
 qF
 qF
 qF
@@ -44431,22 +44987,11 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -44715,12 +45260,23 @@ za
 za
 za
 za
-za
+jS
 pt
+jw
+jw
 oA
-oA
-oA
-tI
+iu
+iu
+iu
+iu
+iu
+KZ
+bx
+iB
+pO
+pO
+cG
+KZ
 qF
 qF
 qF
@@ -44733,22 +45289,11 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -45019,10 +45564,21 @@ qT
 MJ
 za
 pt
+jw
+jw
 oA
-oA
-oA
-tI
+iu
+iu
+iu
+iu
+iu
+KZ
+bx
+pO
+pO
+pO
+cG
+KZ
 qF
 qF
 qF
@@ -45035,22 +45591,11 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -45307,11 +45852,11 @@ On
 dO
 DY
 PT
+SB
 PT
 PT
 PT
-PT
-PT
+SB
 PT
 dO
 np
@@ -45321,10 +45866,21 @@ FZ
 ij
 za
 pt
-tI
-pF
-tI
-tI
+jw
+jw
+oA
+RC
+RC
+iu
+RC
+RC
+KZ
+KZ
+KZ
+ol
+KZ
+KZ
+KZ
 qF
 qF
 qF
@@ -45336,23 +45892,12 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+IW
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -45619,42 +46164,42 @@ dO
 Dg
 xk
 FZ
-FZ
+rb
 Wr
 za
 Rr
-ed
-ed
-ed
-ed
-ed
-ed
-ed
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -45925,38 +46470,38 @@ FZ
 ij
 za
 Rr
-ed
-ed
-ed
-ed
-ed
-ed
-ed
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
 So
 So
 So
-qF
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -46222,43 +46767,43 @@ yo
 pK
 tO
 RR
-VO
+Bk
 VO
 QI
 BL
 WT
 kw
-ed
-ed
-ed
-ed
-ed
-ed
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
 So
 So
 So
-qF
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -46529,38 +47074,38 @@ FZ
 ij
 za
 Rr
-ed
-ed
-ed
-ed
-ed
-ed
-ed
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
 So
 So
 So
-qF
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -46827,42 +47372,42 @@ dO
 bL
 To
 FZ
-FZ
+rb
 NO
 za
 Rr
-ed
-ed
-ed
-ed
-ed
-ed
-ed
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -47119,11 +47664,11 @@ On
 dO
 lA
 PT
+Mt
 PT
 PT
 PT
-PT
-PT
+Mt
 PT
 dO
 uz
@@ -47133,10 +47678,6 @@ FZ
 ij
 za
 pt
-Co
-rB
-Co
-Co
 qF
 qF
 qF
@@ -47154,17 +47695,21 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+HM
+HM
+HM
+HM
+HM
+HM
+uP
+HM
+HM
+Ds
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -47435,10 +47980,6 @@ pY
 wK
 za
 pt
-kU
-kU
-kU
-Co
 qF
 qF
 qF
@@ -47456,17 +47997,21 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+XZ
+XZ
+bn
+WX
+WX
+WX
+WX
+sJ
+vS
+HM
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -47735,12 +48280,8 @@ za
 za
 za
 za
-za
+jS
 pt
-kU
-kU
-kU
-Co
 qF
 qF
 qF
@@ -47758,17 +48299,21 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+XZ
+vi
+sD
+LZ
+Md
+BV
+Md
+MH
+Uu
+HM
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -48034,15 +48579,11 @@ pg
 AU
 jq
 za
-za
+KO
 za
 za
 za
 pt
-kU
-kU
-kU
-Co
 qF
 qF
 qF
@@ -48060,17 +48601,21 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+XZ
+rp
+Dh
+GV
+nr
+Cu
+Tp
+SU
+WX
+HM
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -48328,23 +48873,19 @@ Na
 Kf
 Kf
 WO
+nF
 pg
 pg
 pg
-pg
-pg
+Rj
 KF
 jq
 za
-za
+xX
 za
 za
 za
 pt
-kU
-kU
-kU
-Co
 qF
 qF
 qF
@@ -48362,17 +48903,21 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+CP
+rA
+Dh
+GV
+dw
+zR
+xE
+SU
+WX
+PV
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -48643,10 +49188,6 @@ vg
 Cc
 vg
 vg
-kU
-kU
-kU
-Co
 qF
 qF
 qF
@@ -48664,17 +49205,21 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+WX
+WX
+WX
+GV
+nr
+Sm
+Tp
+SU
+VX
+HM
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -48941,14 +49486,10 @@ KF
 jq
 za
 vg
-ZY
-ZY
+qo
+qd
 ZY
 vg
-kU
-kU
-kU
-Co
 qF
 qF
 qF
@@ -48966,17 +49507,21 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+WX
+WX
+WX
+GV
+dw
+vB
+xE
+SU
+vS
+HM
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -49243,14 +49788,10 @@ Pw
 yL
 za
 vg
-ZY
-ZY
-ZY
+qd
+qd
+qd
 vg
-kU
-kU
-kU
-Co
 qF
 qF
 qF
@@ -49268,17 +49809,21 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+WX
+WX
+WX
+Iy
+Ng
+Ir
+Ng
+Cz
+sj
+HM
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -49549,10 +50094,6 @@ Wp
 vg
 Wp
 vg
-kU
-kU
-kU
-Co
 qF
 qF
 qF
@@ -49570,17 +50111,21 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+WX
+WX
+WX
+WX
+WX
+WX
+WX
+WX
+WX
+HM
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -49851,10 +50396,6 @@ xu
 vg
 Vk
 vg
-kU
-kU
-kU
-Co
 qF
 qF
 qF
@@ -49872,17 +50413,21 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+WX
+WX
+WX
+HN
+OA
+gj
+OA
+gj
+jO
+HM
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -50147,16 +50692,12 @@ qF
 qF
 qF
 Ol
-aM
+Ol
 vg
 vg
 vg
 vg
 vg
-kU
-kU
-kU
-Co
 qF
 qF
 qF
@@ -50177,14 +50718,18 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+py
+VR
+VR
+VR
+VR
+fu
+Ds
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -50449,16 +50994,8 @@ qF
 qF
 qF
 qF
-fF
-xT
-xT
-xT
-xT
-RF
-kU
-kU
-kU
-Co
+Xq
+pT
 qF
 qF
 qF
@@ -50483,10 +51020,18 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
+du
+cs
+cs
+cs
+cs
+eF
+Ds
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -50751,16 +51296,8 @@ qF
 qF
 qF
 qF
-fF
-fF
-xT
-xT
-xT
-xT
-kU
-kU
-kU
-Co
+Xq
+pT
 qF
 qF
 qF
@@ -50785,10 +51322,18 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
+WE
+WE
+WE
+WE
+WE
+WE
+Ds
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -51054,15 +51599,7 @@ qF
 qF
 qF
 qF
-fF
-xT
-xT
-xT
-RF
-kU
-kU
-kU
-Co
+pT
 qF
 qF
 qF
@@ -51087,10 +51624,18 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
+WE
+WE
+WE
+WE
+WE
+WE
+Ds
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -51356,15 +51901,8 @@ qF
 qF
 qF
 qF
-fF
-fF
-xT
-xT
-RF
-kU
-kU
-kU
-Co
+pT
+pT
 qF
 qF
 qF
@@ -51388,11 +51926,18 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
-qF
-qF
+Ds
+Ds
+Ds
+Ds
+Ds
+Ds
+Ds
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -51659,14 +52204,8 @@ qF
 qF
 qF
 qF
-fF
-fF
-xT
-RF
-kU
-kU
-kU
-Co
+pT
+pT
 qF
 qF
 qF
@@ -51695,6 +52234,12 @@ qF
 qF
 qF
 qF
+IW
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -51962,13 +52507,8 @@ qF
 qF
 qF
 qF
-fF
-fF
-RF
-kU
-kU
-kU
-Co
+pT
+pT
 qF
 qF
 qF
@@ -51997,6 +52537,11 @@ qF
 qF
 qF
 qF
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -52265,12 +52810,9 @@ qF
 qF
 qF
 qF
-fF
-fF
-Xn
-kU
-kU
-Co
+pT
+pT
+pT
 qF
 qF
 qF
@@ -52296,9 +52838,12 @@ qF
 qF
 qF
 qF
-qF
-qF
-qF
+IW
+So
+So
+So
+So
+So
 qF
 qF
 qF
@@ -52569,38 +53114,38 @@ qF
 qF
 qF
 qF
-Xn
-Xn
-Xn
-Co
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
-qF
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+pT
+So
+So
+So
+So
+So
 qF
 qF
 qF
