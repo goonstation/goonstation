@@ -1,4 +1,6 @@
 //TODO: support for variable-charge-state weapons? maybe?
+//TODO: power drain when holding charge?
+//TODO: sfx?
 TYPEINFO(/datum/component/holdertargeting/windup)
 	initialization_args = list(
 		ARG_INFO("duration", DATA_INPUT_NUM, "windup time (seconds)", 1),
