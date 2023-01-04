@@ -132,3 +132,22 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/carp = 20,\
 	/obj/item/fish/bass = 15,\
 	/obj/item/fish/red_herring = 5)
+
+
+/datum/fishing_spot/nuclear_reactor
+	fishing_atom_type = /obj/machinery/atmospherics/binary/nuclear_reactor
+	fish_available = list(/obj/item/fish/carp = 40,\
+	/obj/item/fish/bass = 30,\
+	/obj/item/fish/salmon = 20,\
+	/obj/item/fish/herring = 15,\
+	/obj/item/fish/red_herring = 5,\
+	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake = 1)
+
+	generate_fish(var/mob/user, var/obj/item/fishing_rod/fishing_rod, atom/target)
+		var/atom/result = ..()
+		result.AddComponent(/datum/component/radioactive, 20, TRUE, FALSE, 0)
+		return result
+
+
+/datum/fishing_spot/nuclear_reactor/prefilled
+	fishing_atom_type = /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/normal

@@ -300,7 +300,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	virvatuli
 		ckey = "virvatuli"
 		name = "Office of Virvatuli"
-		sound_loop = 'sound/ambience/music/officebeats.ogg'
+		sound_loop = 'sound/ambience/loop/vloop.ogg'
 		sound_loop_vol = 80
 		sound_group = "virva_office"
 	walpvrgis
@@ -573,8 +573,8 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	equipped(var/mob/user)
 		..()
 		boutput(user, "<span class='alert'>You can feel a proud and angry presence probing your mind...</span>")
-		src.cant_self_remove = true
-		src.cant_other_remove = true
+		src.cant_self_remove = TRUE
+		src.cant_other_remove = TRUE
 		SPAWN(1 SECOND)
 			if (user.bioHolder && user.bioHolder.HasEffect("accent_scots"))
 				boutput(user, "<span class='notice'>YE AR' ALREADY BLESSED!!!</span>")
@@ -588,8 +588,8 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 			else
 				boutput(user, "<span class='alert'>YE AR' NO' WORTHY OF ADA O'HARA'S BLESSIN'! FECK AFF!!!!</span>")
 				src.rejected_mobs.Add(user)
-			src.cant_self_remove = true
-			src.cant_other_remove = false
+			src.cant_self_remove = TRUE
+			src.cant_other_remove = FALSE
 
 
 /area/centcom/offices/enakai
