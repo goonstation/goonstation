@@ -348,7 +348,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 		. = ..()
 
 	// kind of a hack since it'll flick for every mob that hears from this, but as far as I can see this is the only proc which is reliably called when
-	// an intercom recieves a message. all the other logic is handled in talk_into of the sending radio.
+	// an intercom receives a message. all the other logic is handled in talk_into of the sending radio.
 	showMapText(mob/target, mob/sender, receive, msg, secure, real_name, lang_id, textLoc)
 		. = ..()
 		flick("wallfish_move", src)

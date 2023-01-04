@@ -511,7 +511,7 @@
 (u)Bartimeus973
 (p)11876
 (e)🪲🎨⚖🔨|C-Bug, C-Sprites, C-Balance, A-Player-Actions
-(*)Wraith-summoned critters recieved some changes! Details in minor notes.
+(*)Wraith-summoned critters received some changes! Details in minor notes.
 (+)Skeleton commanders do slightly more damage and have a bit more stamina. Voidhounds heal in the dark and when cloaked. Tentacle fiends stun longer and have a new ability to escape.
 (+)Plaguerat dens now heal more at a reduced range. Plague rats can no longer summon more plague rats. Plague rat summon ability now costs points and has a shorter cooldown. Rats get a bit more health to compensate!
 (u)Bartimeus973
@@ -868,7 +868,7 @@
 (u)Ikea
 (p)11015
 (e)⚖🧫🧛|C-Balance, C-Experimental, A-Gamemodes
-(*)27-30 minutes into a rev round everyone recieves a tracker for revheads/heads on their pda.
+(*)27-30 minutes into a rev round everyone receives a tracker for revheads/heads on their pda.
 (u)Kubius
 (p)11541
 (e)🆕🗺|C-Feature, A-Mapping

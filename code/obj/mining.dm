@@ -2252,7 +2252,7 @@ TYPEINFO(/obj/item/cargotele)
 		if(Obj == src.cell)
 			src.cell = null
 
-/// Basically a list wrapper that removes and adds cargo pads to a global list when it recieves the respective signals
+/// Basically a list wrapper that removes and adds cargo pads to a global list when it receives the respective signals
 /datum/cargo_pad_manager
 	var/list/pads = list()
 
