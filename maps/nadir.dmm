@@ -480,9 +480,11 @@
 "ajo" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/blast/pyro{
-	icon_state = "bdoormid1";
+	icon_state = "bdoormid0";
 	id = "nadir_nukecore";
-	name = "Reactor Core Shielding"
+	name = "Reactor Core Shielding";
+	density = 0;
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/space)
@@ -726,9 +728,11 @@
 /area/pasiphae)
 "aoa" = (
 /obj/machinery/door/poddoor/blast/pyro{
-	icon_state = "bdoormid1";
+	icon_state = "bdoormid0";
 	id = "nadir_exnex";
-	name = "Extraction Nexus Shielding"
+	name = "Extraction Nexus Shielding";
+	density = 0;
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/science/construction{
@@ -2251,9 +2255,11 @@
 "aZV" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	dir = 4;
-	icon_state = "bdoormid1";
+	icon_state = "bdoormid0";
 	id = "nadir_nukecore";
-	name = "Reactor Core Shielding"
+	name = "Reactor Core Shielding";
+	density = 0;
+	opacity = 0
 	},
 /turf/simulated/floor/engine,
 /area/space)
@@ -4024,6 +4030,11 @@
 	dir = 9;
 	icon_state = "line1"
 	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
 /turf/simulated/floor/yellowblack,
 /area/space)
 "bNm" = (
@@ -5053,6 +5064,22 @@
 	dir = 1
 	},
 /area/station/hallway/primary/southwest)
+"cmb" = (
+/obj/machinery/door/poddoor/blast/pyro{
+	dir = 4;
+	icon_state = "bdoormid0";
+	id = "nadir_nukecore";
+	name = "Reactor Core Shielding";
+	density = 0;
+	opacity = 0
+	},
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 4;
+	name = "Secondary Core Access"
+	},
+/obj/access_spawn/engineering_engine,
+/turf/simulated/floor/engine,
+/area/space)
 "cmf" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -5482,10 +5509,8 @@
 /area/station/maintenance/southeast)
 "cxr" = (
 /obj/disposalpipe/segment/vertical,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
+/obj/machinery/light/incandescent/netural{
+	dir = 4
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 4
@@ -6831,9 +6856,11 @@
 "dfm" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/blast/pyro{
-	icon_state = "bdoormid1";
+	icon_state = "bdoormid0";
 	id = "nadir_nukecore";
-	name = "Reactor Core Shielding"
+	name = "Reactor Core Shielding";
+	density = 0;
+	opacity = 0
 	},
 /turf/simulated/floor/engine,
 /area/space)
@@ -6921,6 +6948,11 @@
 /area/station/science/teleporter)
 "dhu" = (
 /obj/reagent_dispensers/foamtank,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/engine/caution/corner{
 	dir = 4
 	},
@@ -8060,6 +8092,11 @@
 	dir = 1;
 	level = 2
 	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 5
 	},
@@ -8651,6 +8688,11 @@
 "dWW" = (
 /obj/cable/orange{
 	icon_state = "4-8"
+	},
+/obj/machinery/door_control{
+	id = "nadir_nukecore";
+	pixel_y = 24;
+	name = "Reactor Core Shielding"
 	},
 /turf/simulated/floor/black,
 /area/space)
@@ -10525,6 +10567,11 @@
 /area/station/engine/elect)
 "ePt" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8
 	},
@@ -12533,9 +12580,11 @@
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/blast/pyro{
 	dir = 4;
-	icon_state = "bdoormid1";
+	icon_state = "bdoormid0";
 	id = "nadir_nukecore";
-	name = "Reactor Core Shielding"
+	name = "Reactor Core Shielding";
+	density = 0;
+	opacity = 0
 	},
 /turf/simulated/floor/engine,
 /area/space)
@@ -13012,6 +13061,7 @@
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
 "fXU" = (
+/obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 8
 	},
@@ -13278,6 +13328,11 @@
 "gcL" = (
 /obj/machinery/power/smes,
 /obj/cable,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
 /turf/simulated/floor/engine/caution/misc{
 	dir = 8
 	},
@@ -14949,6 +15004,11 @@
 /obj/item/chem_grenade/firefighting{
 	pixel_y = -1;
 	pixel_x = 4
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/yellowblack,
 /area/space)
@@ -21257,6 +21317,11 @@
 	dir = 4;
 	name = "cold loop gas supply valve"
 	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/engine/caution/north,
 /area/space)
 "jwF" = (
@@ -22509,16 +22574,6 @@
 "jXY" = (
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
-"jYJ" = (
-/obj/rack,
-/obj/item/extinguisher{
-	pixel_x = -5
-	},
-/obj/item/extinguisher{
-	pixel_x = 7
-	},
-/turf/simulated/floor/engine/caution/east,
-/area/space)
 "jYO" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -26409,6 +26464,11 @@
 /area/station/hallway/primary/northwest)
 "lGL" = (
 /obj/storage/closet/radiation,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -27207,6 +27267,15 @@
 "lXA" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10
+	},
+/obj/item/storage/wall/fire{
+	dir = 8;
+	pixel_x = 32
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 5
@@ -30823,6 +30892,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 6
 	},
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8
 	},
@@ -31085,6 +31155,7 @@
 /turf/simulated/floor/stairs/wide,
 /area/listeningpost)
 "nJZ" = (
+/obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/engine/caution/west,
 /area/space)
 "nKe" = (
@@ -31427,6 +31498,11 @@
 	},
 /obj/cable/orange{
 	icon_state = "0-2"
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/engine/caution/northsouth,
 /area/space)
@@ -32865,6 +32941,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"oDS" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/engine/caution/east,
+/area/space)
 "oDX" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
@@ -33111,6 +33195,16 @@
 	},
 /turf/simulated/floor/greenblack/corner,
 /area/station/hallway/primary/northwest)
+"oJY" = (
+/obj/storage/closet/radiation,
+/obj/item/storage/wall/fire{
+	dir = 8;
+	pixel_x = 32
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/space)
 "oKe" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/door/airlock/pyro/security/alt{
@@ -36492,12 +36586,10 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "qrF" = (
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
 /obj/disposalpipe/segment/vertical,
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
 /turf/simulated/floor/yellowblack/corner,
 /area/space)
 "qrL" = (
@@ -37396,9 +37488,11 @@
 "qPw" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/blast/pyro{
-	icon_state = "bdoormid1";
+	icon_state = "bdoormid0";
 	id = "nadir_nukecore";
-	name = "Reactor Core Shielding"
+	name = "Reactor Core Shielding";
+	density = 0;
+	opacity = 0
 	},
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -38859,6 +38953,11 @@
 "rAG" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/engine,
 /area/space)
@@ -40586,9 +40685,11 @@
 "spn" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	dir = 4;
-	icon_state = "bdoormid1";
+	icon_state = "bdoormid0";
 	id = "nadir_exnex";
-	name = "Extraction Nexus Shielding"
+	name = "Extraction Nexus Shielding";
+	density = 0;
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/science/construction{
@@ -43892,6 +43993,10 @@
 "tHH" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
+	},
+/obj/item/extinguisher{
+	pixel_y = 17;
+	pixel_x = -9
 	},
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 9
@@ -48150,6 +48255,11 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/power/nuclear/turbine_control,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -51940,6 +52050,11 @@
 /turf/simulated/floor/black,
 /area/station/maintenance/disposal)
 "xDg" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 4
 	},
@@ -105186,7 +105301,7 @@ dDv
 siL
 siL
 fLQ
-fLQ
+cmb
 fLQ
 siL
 fLQ
@@ -105490,7 +105605,7 @@ siL
 aZV
 aZV
 aZV
-aZV
+fLQ
 aZV
 aZV
 aZV
@@ -105790,7 +105905,7 @@ yjf
 yjf
 siL
 fLQ
-fLQ
+cmb
 fLQ
 siL
 fLQ
@@ -106092,9 +106207,9 @@ yjf
 siL
 siL
 dhu
-jYJ
 hkU
 hkU
+oDS
 hkU
 hkU
 hkU
@@ -106703,7 +106818,7 @@ ygt
 ygt
 jOW
 dfm
-lGL
+oJY
 sYj
 cKX
 aut
