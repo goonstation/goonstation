@@ -1,5 +1,7 @@
 
 (t)wed jan 04 23
+(u)tarmunora
+(+)killer tomato and buttbot plants have stricter yield limits
 (u)glowbold
 (p)12386
 (e)🆕🤖|C-Feature, A-Silicons

@@ -5,6 +5,7 @@
 	var/iconmod = null // name of the sprite files in hydro_mutants.dmi
 	var/harvest_override = 0 // If 1, you can harvest it irregardless of the plant's base harvestability
 	var/harvested_proc_override = 0
+	var/harvest_cap = null //if truthy, override the global harvest cap. Set this above the default at your own risk
 	var/special_proc_override = FALSE
 	// If 0, just use the base plant's settings
 	// If 1, use the mutation's special_proc instead
@@ -73,6 +74,7 @@
 	name_prefix = "Suspicious "
 	crop = /obj/critter/killertomato
 	iconmod = "TomatoKiller"
+	harvest_cap = 1
 
 // Corn Mutations
 
@@ -347,6 +349,7 @@
 	iconmod = "SynthButts"
 	crop = /obj/machinery/bot/buttbot
 	mutation_sfx = 'sound/voice/virtual_gassy.ogg'
+	harvest_cap = 1
 
 /datum/plantmutation/synthmeat/lung
 	name = "Synthlung"
