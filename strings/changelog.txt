@@ -12,7 +12,7 @@
 (*)Flockdrone incapacitors now recharge at half speed while not on a flock tile.
 (t)mon jan 02 23
 (u)aloe
-(*)Vampiric thralls now' have zombie arms instead of regular arms. This makes them a lot better at mauling people and smashing things, and a lot worse at everything else. The health debuff due to blood loss has also been made a bit less punishing.
+(*)Vampiric thralls now have zombie arms instead of regular arms. This makes them a lot better at mauling people and smashing things, and a lot worse at everything else. The health debuff due to blood loss has also been made a bit less punishing.
 (+)Vampiric thralls lose blood at half speed on RP mode.
 (u)BatElite
 (p)12581
