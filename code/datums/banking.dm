@@ -752,6 +752,8 @@
 
 	var/datum/db_record/accessed_record = null
 	var/obj/item/card/id/scan = null
+	/// Limits how much spacebux can be physically withdrawn from the machine
+	var/const/spacebux_limit = 1000000
 	var/current_status_message = list()
 	var/current_message_number = 0
 	var/health = 70
@@ -911,10 +913,7 @@
 			if("login_attempt")
 				if(!src.scan)
 					return FALSE
-				var/userPin
-				if (usr.mind?.remembered_pin)
-					userPin = usr.mind?.remembered_pin
-				var/enteredPIN = tgui_input_number(usr, "Enter your PIN.", src.name, userPin, 9999)
+				var/enteredPIN = usr.enter_pin()
 				playsound(src.loc, sound_interact, 50, 1)
 				if (enteredPIN == src.scan.pin)
 					if(TryToFindRecord())
@@ -980,7 +979,7 @@
 					playsound(src.loc, 'sound/machines/printer_cargo.ogg', 50, 1)
 					. = TRUE
 			if("withdraw_spacebux")
-				var/amount = round(tgui_input_number(usr, "You have [usr.client.persistent_bank] Spacebux.\nHow much would you like to withdraw?", "How much?", 0, 1000000))
+				var/amount = round(tgui_input_number(usr, "You have [usr.client.persistent_bank] Spacebux.\nHow much would you like to withdraw?", "How much?", 0, src.spacebux_limit))
 				if(amount <= 0)
 					boutput(usr, "<span class='alert'>No.</span>")
 					src.updateUsrDialog()
