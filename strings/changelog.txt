@@ -5,7 +5,7 @@
 (u)aloe
 (*)Zombie arms can now interact with items. Using an item with an empty hand takes an extra 1.5 second action.
 (u)aloe
-(+)Werewolves now have 100% cold protection. They're fuzzy!
+(+)Werewolves now have 100% cold protection. So much floof!
 (u)LeahTheTech
 (p)12585
 (e)⚖🧛|C-Balance, A-Gamemodes
