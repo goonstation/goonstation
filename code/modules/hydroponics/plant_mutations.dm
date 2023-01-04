@@ -74,7 +74,7 @@
 	name_prefix = "Suspicious "
 	crop = /obj/critter/killertomato
 	iconmod = "TomatoKiller"
-	harvest_cap = 1
+	harvest_cap = 3
 
 // Corn Mutations
 
