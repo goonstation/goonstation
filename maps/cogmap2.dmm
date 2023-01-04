@@ -71090,6 +71090,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon12,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
