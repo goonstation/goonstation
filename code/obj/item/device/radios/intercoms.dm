@@ -94,6 +94,47 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	var/maptext = generateMapText(msg, textLoc, style = "color:[color];", alpha = 255)
 	target.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
 
+/obj/item/device/radio/intercom/receive_silicon_hotkey(var/mob/user)
+	..()
+
+	if (!isAI(user))
+		return
+
+	if (!isAIeye(user))
+		boutput("Deploy to an AI Eye first to override intercoms.")
+		return
+
+	if(user.client.check_key(KEY_BOLT))
+		if (src.locked_frequency)
+			boutput(user, "<span class='alert'>You can't override an intercom with a locked frequency!</span")
+			return
+
+		var/original_src_frequency = src.frequency
+		var/original_src_broadcasting = src.broadcasting
+		var/original_src_listening = src.listening
+		var/text_colour = "#CC3FCC"
+
+		// fake it till you make it
+		var/message = "<span class='radio [src.chat_class]' style='color:[src.device_color || text_colour]'>[radio_icon(src)]\
+		<span class='name'>[src]</span> <span class='message'>alerts, \"AI override engaged!\"</span></span>"
+		var/maptext = make_chat_maptext(src, "AI override engaged!", "color:[text_colour]")
+
+		src.speech_bubble(image('icons/mob/mob.dmi', "ai"))
+		for (var/mob/M in hearers(7, src.loc))
+			M.playsound_local(src, 'sound/misc/talk/bottalk_3.ogg', 50, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+			M.show_message(msg=message,assoc_maptext=maptext)
+
+		src.locked_frequency = TRUE // lockdown; saves us from clickspam
+		set_frequency(R_FREQ_INTERCOM_AI)
+		src.broadcasting = TRUE
+		src.listening = TRUE
+
+		SPAWN(1 MINUTE)
+			src.locked_frequency = FALSE // safe as long as we can't control locked frequencies in the first place
+			set_frequency(original_src_frequency)
+			src.broadcasting = original_src_broadcasting
+			src.listening = original_src_listening
+
 // -------------------- VR --------------------
 /obj/item/device/radio/intercom/virtual
 	desc = "Virtual radio for all your beeps and bops."
