@@ -3,6 +3,7 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 /datum/controller/lag_detection
 	var/tmp/highCpuCount = 0 // how many times in a row has the cpu been high
 	var/tmp/automatic_profiling_on = FALSE
+	var/tmp/automatic_profiling_started = 0
 	var/tmp/manual_profiling_on = FALSE
 	var/tmp/manual_profiling_disable_time = 0
 	var/tmp/time_since_last = 0
@@ -52,11 +53,14 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 				highCpuCount = CPU_STOP_PROFILING_COUNT
 			if(highCpuCount <= 0 || force_stop)
 				var/output = world.Profile(PROFILE_REFRESH | PROFILE_STOP, null, "json")
-				var/fname = "data/logs/profiling/[global.roundLog_date]_automatic_[profilerLogID++].json"
-				rustg_file_write(output, fname)
-				message_admins("CPU back down to [world.cpu], turning off profiling, saved as [fname].")
-				logTheThing(LOG_DEBUG, null, "Automatic profiling finished, CPU at [world.cpu], saved as [fname].")
-				ircbot.export_async("admin_debug", list("msg"="Automatic profiling finished, CPU at [world.cpu], saved as [fname]."))
+				var/fname = "[global.roundLog_date]_automatic_[profilerLogID++].json"
+				var/external_url = "https://logs.goonhub.com/main1/logs/profiling/[fname]"
+				var/fpath = "data/logs/profiling/[fname]"
+				rustg_file_write(output, fpath)
+				var/spike_time = (world.timeofday - automatic_profiling_started) / (1 SECOND)
+				message_admins("CPU back down to [world.cpu], turning off profiling, saved as <a href='[external_url]'>[external_url]</a>. Spike took [spike_time] seconds.")
+				logTheThing(LOG_DEBUG, null, "Automatic profiling finished, CPU at [world.cpu], saved as [external_url]. Spike took [spike_time] seconds.")
+				ircbot.export_async("admin_debug", list("msg"="Automatic profiling finished, CPU at [world.cpu], saved as [external_url]. Spike took [spike_time] seconds."))
 				highCpuCount = 0
 				automatic_profiling_on = FALSE
 				last_tick_time = null
@@ -84,6 +88,7 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 				ircbot.export_async("admin_debug", list("msg"="Automatic profiling started, CPU at [world.cpu], map CPU at [world.map_cpu], last tick time at [time_since_last]."))
 				highCpuCount = CPU_STOP_PROFILING_COUNT
 				automatic_profiling_on = TRUE
+				automatic_profiling_started = TIME
 
 	proc/delay_disable_manual_profiling(delay)
 		message_admins("Manual profiling enabled for [delay/10/60] minutes!")
