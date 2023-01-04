@@ -25706,6 +25706,10 @@
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
+"bAV" = (
+/obj/machinery/light/flock/floor,
+/turf/unsimulated/floor/feather,
+/area/centcom/offices/leah)
 "bAW" = (
 /obj/item/reagent_containers/food/snacks/yuckburn,
 /turf/unsimulated/iomoon/floor{
@@ -60074,6 +60078,7 @@
 	icon = 'icons/obj/doors/door_office.dmi';
 	lock_dir = 4
 	},
+/obj/table/wood/auto/desk,
 /turf/unsimulated/floor/black,
 /area/centcom/offices/gannets)
 "dyl" = (
@@ -62438,7 +62443,9 @@
 /area/centcom/lounge)
 "dHi" = (
 /obj/storage/secure/closet/fridge/kitchen,
-/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake,
+/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
+	pixel_y = 10
+	},
 /obj/item/reagent_containers/food/snacks/slimjim,
 /obj/item/reagent_containers/food/snacks/candy/candy_apple/poison,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
@@ -67088,6 +67095,19 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/zewaka)
+"dVA" = (
+/obj/table/wood/auto/desk,
+/obj/item/plant/flower/rose/poisoned{
+	name = "very suspicious rose";
+	pixel_x = -4;
+	pixel_y = 8;
+	trick = 1
+	},
+/obj/item/clothing/mask/mime{
+	pixel_x = 4
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/leah)
 "dWx" = (
 /obj/decal/fakeobjects/apc_broken,
 /turf/unsimulated/wall/auto/lead/gray,
@@ -67432,6 +67452,21 @@
 	dir = 1
 	},
 /area/centcom/offices/cogwerks)
+"ezP" = (
+/obj/item/reagent_containers/food/snacks/breadloaf{
+	pixel_y = -4;
+	pixel_x = -5
+	},
+/obj/table/flock/auto,
+/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
+	pixel_y = 10
+	},
+/obj/item/parts/artifact_parts/arm/precursor/left{
+	pixel_x = 12;
+	pixel_y = -3
+	},
+/turf/unsimulated/floor/feather,
+/area/centcom/offices/leah)
 "eAe" = (
 /obj/map/light/graveyard,
 /obj/tree{
@@ -67460,6 +67495,25 @@
 	temperature = 372.15
 	},
 /area/iomoon)
+"eCv" = (
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher{
+	initial_reagents = "tequilasunrise";
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = 7;
+	pixel_y = 10
+	},
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher/gnesis{
+	layer = 4
+	},
+/obj/machinery/light/incandescent/warm/very{
+	on = 1
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/leah)
 "eFa" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/south)
@@ -68014,6 +68068,9 @@
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/centcom/offices/flaborized)
+"fDa" = (
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/leah)
 "fDe" = (
 /obj/table/wood/round/auto,
 /obj/item/kitchen/food_box/lollipop{
@@ -68831,13 +68888,10 @@
 /obj/machinery/door/unpowered/wood{
 	dir = 4;
 	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 8;
-	locked = 1
+	lock_dir = 8
 	},
 /turf/unsimulated/floor/wood/two,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
+/area/centcom/offices/leah)
 "hgp" = (
 /obj/table/regal/auto,
 /obj/item/cigarbox/gold{
@@ -71085,6 +71139,12 @@
 /obj/effects/precipitation/rain/dense/tile,
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/aloe)
+"lpv" = (
+/obj/stool/chair/couch/purple{
+	dir = 4
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/leah)
 "lpO" = (
 /obj/machinery/conveyor/WE{
 	id = "owlery_trash";
@@ -71126,6 +71186,9 @@
 	},
 /turf/unsimulated/floor/caution/north,
 /area/iomoon/base/underground)
+"lri" = (
+/turf/unsimulated/floor/feather,
+/area/centcom/offices/leah)
 "lrK" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -71652,6 +71715,10 @@
 	icon_state = "shore-23"
 	},
 /area/titlescreen)
+"mrL" = (
+/obj/flock_structure/compute,
+/turf/unsimulated/floor/feather,
+/area/centcom/offices/leah)
 "msq" = (
 /obj/decal/fakeobjects/firelock_broken{
 	dir = 8;
@@ -72973,6 +73040,17 @@
 "oqj" = (
 /turf/unsimulated/floor/carpet/regalcarpet,
 /area/centcom/offices/janantilles)
+"oqt" = (
+/obj/admin_plaque{
+	name = "Leah \"Rascal\" Polaris's Office";
+	pixel_x = -32
+	},
+/turf/unsimulated/floor/grey/side{
+	dir = 8
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "ort" = (
 /obj/spacevine{
 	density = 1;
@@ -73697,6 +73775,17 @@
 	icon_state = "floor"
 	},
 /area/centcom/offices/pali)
+"pAt" = (
+/obj/stool/chair/couch/purple{
+	dir = 8
+	},
+/obj/machinery/light/incandescent/warm/very{
+	dir = 1;
+	on = 1;
+	pixel_y = 21
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/leah)
 "pAL" = (
 /obj/decal/aliencomputer{
 	desc = "This appears to be some sort of martian computer. A broken one, at that.";
@@ -75502,6 +75591,17 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/lobby)
+"swC" = (
+/obj/table/flock/auto,
+/obj/item/paper{
+	icon_state = "paper";
+	name = "The secret to Flock balance";
+	pixel_w = 1;
+	pixel_y = -1;
+	info = "<i>It's just the word \"CAW\" written over and over in increasingly shaky handwriting.</i>"
+	},
+/turf/unsimulated/floor/feather,
+/area/centcom/offices/leah)
 "sxM" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -77207,6 +77307,13 @@
 	dir = 4
 	},
 /area/iomoon/base)
+"vAj" = (
+/obj/table/wood/auto/desk,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot/normal{
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/leah)
 "vAW" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 4;
@@ -154065,9 +154172,9 @@ nwN
 dnK
 niJ
 wel
-dvW
-dvW
-dvW
+dVA
+lri
+mrL
 wel
 dxu
 dyh
@@ -154367,9 +154474,9 @@ fDe
 uaJ
 liR
 wel
-lRO
-dvW
-dvW
+vAj
+bAV
+ezP
 tIu
 dxv
 dyh
@@ -154669,9 +154776,9 @@ wmi
 liR
 liR
 wel
-dvW
-dvW
-dvW
+pAt
+fDa
+swC
 wel
 dxw
 dyi
@@ -154971,9 +155078,9 @@ ttl
 tVG
 afR
 wel
-dvW
-dvW
-dvW
+lpv
+fDa
+eCv
 wel
 dxx
 dyi
@@ -155575,7 +155682,7 @@ mbb
 wmb
 wmb
 wmb
-wmb
+oqt
 wmb
 wmb
 wmb
