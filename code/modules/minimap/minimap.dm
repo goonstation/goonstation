@@ -1,4 +1,6 @@
 /datum/minimap
+	///The holder for the render of the minimap, allowing for offsets and other effects to be applied to the render without modifying the render itself.
+	var/atom/movable/minimap_holder
 	///The minimap render to be displayed, containing both the map, and icons.
 	var/atom/movable/minimap_render
 	///The minimap, without minimap markers. Kept separate for the purpose of scaling the minimap without scaling the markers.
@@ -29,6 +31,11 @@
 	New(var/minimap_type)
 		. = ..()
 		START_TRACKING
+		src.minimap_holder = new
+		src.minimap_holder.vis_flags = VIS_INHERIT_LAYER
+		src.minimap_holder.appearance_flags = KEEP_TOGETHER
+		src.minimap_holder.mouse_opacity = 0
+
 		src.minimap_render = new
 		src.map = new /atom/movable
 		src.minimap_type = minimap_type
@@ -47,6 +54,7 @@
 		src.map.mouse_opacity = 0
 
 		src.minimap_render.vis_contents += src.map
+		src.minimap_holder.vis_contents += src.minimap_render
 
 	disposing()
 		STOP_TRACKING
@@ -85,7 +93,7 @@
 		mask_icon.Scale(x_max * src.map_scale, y_max * src.map_scale)
 		var/x_offset = ((x_max * src.map_scale) / 2) - 16
 		var/y_offset = ((y_max * src.map_scale) / 2) - 16
-		src.minimap_render.add_filter("map_cutoff", 1, alpha_mask_filter(x_offset, y_offset, mask_icon))
+		src.minimap_holder.add_filter("map_cutoff", 1, alpha_mask_filter(x_offset, y_offset, mask_icon))
 
 	///Creates a minimap marker from a specified target, icon, and icon state. 'marker_name' will override the marker inheriting the target's name.
 	proc/create_minimap_marker(var/atom/target, var/icon, var/icon_state, var/marker_name, var/can_be_deleted_by_player)
@@ -195,11 +203,6 @@
 		src.minimap_render.pixel_x -= x_offset
 		src.minimap_render.pixel_y -= y_offset
 
-		// Reset the alpha mask's position to the bottom left corner.
-		var/alpha_mask = src.minimap_render.filters[length(src.minimap_render.filters)]
-		alpha_mask:x = ((300 * src.map_scale) / 2) - 16 - src.minimap_render.pixel_x
-		alpha_mask:y = ((300 * src.map_scale) / 2) - 16 - src.minimap_render.pixel_y
-
 		src.zoom_coefficient = zoom
 
 		for (var/atom/target in src.minimap_markers)
@@ -227,11 +230,6 @@
 		var/y_offset = (150 * src.map_scale) - (focus_y * zoom * src.map_scale) - src.minimap_render.pixel_y
 		src.minimap_render.pixel_x += x_offset
 		src.minimap_render.pixel_y += y_offset
-
-		// Reset the alpha mask's position to the bottom left corner.
-		var/alpha_mask = src.minimap_render.filters[length(src.minimap_render.filters)]
-		alpha_mask:x = ((300 * src.map_scale) / 2) - 16 - src.minimap_render.pixel_x
-		alpha_mask:y = ((300 * src.map_scale) / 2) - 16 - src.minimap_render.pixel_y
 
 		src.zoom_coefficient = zoom
 

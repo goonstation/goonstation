@@ -5,9 +5,6 @@
 
 	///The minimap datum for this minimap object, containing data on the appearance and scale of the minimap, handling resizes, and managing markers.
 	var/datum/minimap/map
-	///The holder for the minimap datum's render of the minimap, allowing for offsets and other effects to be applied to the render without modifying the render itself.
-	var/atom/movable/minimap_holder
-
 	///The minimap type path that `map` should use.
 	var/map_path = /datum/minimap
 	///A bitflag that will be passed to the datum and determines which areas and minimap markers are to be rendered on the minimap. For available flags, see `_std/defines/minimap.dm`.
@@ -18,14 +15,8 @@
 	New()
 		. = ..()
 		START_TRACKING
-		src.minimap_holder = new
-		src.minimap_holder.vis_flags = VIS_INHERIT_LAYER
-		src.minimap_holder.appearance_flags = KEEP_TOGETHER
-		src.minimap_holder.mouse_opacity = 0
 		src.map = new map_path(src.map_type, src.map_scale)
-
-		src.vis_contents += src.minimap_holder
-		src.minimap_holder.vis_contents += src.map.minimap_render
+		src.vis_contents += src.map.minimap_holder
 
 		for (var/atom/marker_target in minimap_marker_targets)
 			SEND_SIGNAL(marker_target, COMSIG_NEW_MINIMAP_MARKER, src.map)
@@ -83,8 +74,8 @@
 	New()
 		. = ..()
 		// Magic numbers to align the minimap with the physical frame of the map.
-		src.minimap_holder.pixel_x += 5
-		src.minimap_holder.pixel_y += 4
+		src.map.minimap_holder.pixel_x += 5
+		src.map.minimap_holder.pixel_y += 4
 
 		src.create_overlays()
 
@@ -153,10 +144,6 @@
 	var/obj/minimap/controlled_minimap
 	///The minimap to be displayed, mostly identical to the controlled minimap with the exception that the scale will always be 1. Used to circumvent a bug.
 	var/datum/minimap/displayed_minimap
-	///The alpha mask filter of the minimap datum used by the controlled minimap. As there is no explicit definition for filters, `:` should be used to access variables.
-	var/alpha_mask_cm
-	///The alpha mask filter of the minimap datum used by the displayed minimap. As there is no explicit definition for filters, `:` should be used to access variables.
-	var/alpha_mask_dm
 
 	///Whether the next click will sample coordinates at the clicked point, or toggle dragging.
 	var/selecting_coordinates = FALSE
@@ -188,8 +175,6 @@
 			SEND_SIGNAL(marker_target, COMSIG_NEW_MINIMAP_MARKER, displayed_minimap)
 
 		src.vis_contents += src.displayed_minimap.minimap_render
-		src.alpha_mask_cm = src.controlled_minimap.map.minimap_render.filters[length(src.controlled_minimap.map.minimap_render.filters)]
-		src.alpha_mask_dm = src.displayed_minimap.minimap_render.filters[length(src.controlled_minimap.map.minimap_render.filters)]
 
 		// As the minimap render is transparent to clicks, the minimap will require an overlay which clicks may register on.
 		if (!src.icon || !src.icon_state)
@@ -269,13 +254,9 @@
 	proc/pan_map(var/x, var/y)
 		src.displayed_minimap.minimap_render.pixel_x += x
 		src.displayed_minimap.minimap_render.pixel_y += y
-		alpha_mask_dm:x -= x
-		alpha_mask_dm:y -= y
 
 		src.controlled_minimap.map.minimap_render.pixel_x = (src.displayed_minimap.minimap_render.pixel_x - 8) * src.controlled_minimap.map_scale
 		src.controlled_minimap.map.minimap_render.pixel_y = (src.displayed_minimap.minimap_render.pixel_y - 8) * src.controlled_minimap.map_scale
-		alpha_mask_cm:x = (alpha_mask_dm:x - 8) * src.controlled_minimap.map_scale
-		alpha_mask_cm:y = (alpha_mask_dm:y - 8) * src.controlled_minimap.map_scale
 
 	proc/reset_scale()
 		if (istype(src.controlled_minimap.map, /datum/minimap/z_level))
