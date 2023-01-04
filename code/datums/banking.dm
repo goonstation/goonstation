@@ -930,7 +930,7 @@
 					. = FALSE
 					return
 				boutput(usr, "<span class='notice'>You log out of the ATM.</span>")
-				src.show_message("Log out successful. Have a secure day.", "success", "login")
+				src.show_message("Log out successful. Have a secure day.", "success", "splash")
 				playsound(src.loc, sound_interact, 50, 1)
 				src.scan = null
 				src.state = STATE_LOGGEDOFF

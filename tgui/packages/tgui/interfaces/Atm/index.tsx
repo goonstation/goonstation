@@ -71,10 +71,17 @@ const Teller = (_, context) => {
 };
 
 const InsertCard = (_, context) => {
-  const { act } = useBackend(context);
+  const { act, data } = useBackend<AtmData>(context);
+  const message = data.message || { text: '', status: '', position: '' };
   return (
     <Box>
       <Button icon="id-card" content={'Swipe ID'} onClick={() => act('insert_card')} />
+      {message.text && message.position === 'splash' && (
+        <Box>
+          <Divider />
+          <TypedNoticeBox type={message.status}>{message.text}</TypedNoticeBox>
+        </Box>
+      )}
     </Box>
   );
 };
