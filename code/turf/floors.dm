@@ -887,9 +887,9 @@ DEFINE_FLOORS(marble/border_wb,
 	break_tile()
 		return
 
-	restore_tile()
-		src.intact = FALSE // so that a burnt icon can be cleaned by a floorbot
-		..()
+	// unburnable, otherwise floorbots use steel sheets for repair which doesn't make sense
+	burn_tile()
+		return
 
 	attackby(obj/item/C, mob/user, params)
 		if (istype(C, /obj/item/rods))
