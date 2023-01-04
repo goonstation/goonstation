@@ -7,6 +7,9 @@
 #elif defined(MAP_OVERRIDE_CLARION)
 
 
+#elif defined(MAP_OVERRIDE_CLARION2)
+
+
 #elif defined(MAP_OVERRIDE_COGMAP)
 
 

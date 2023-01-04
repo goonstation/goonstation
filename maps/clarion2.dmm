@@ -52,9 +52,44 @@
 "ed" = (
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
+"el" = (
+/obj/rack,
+/obj/item/hand_tele{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/item/hand_tele{
+	pixel_y = 6
+	},
+/obj/item/hand_tele{
+	pixel_y = 6;
+	pixel_x = -6
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 5
+	},
+/area/station/teleporter)
 "eZ" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
 /area/station/bridge)
+"fy" = (
+/obj/machinery/recharger/wall/sticky{
+	dir = 1;
+	pixel_y = 26
+	},
+/obj/table/reinforced/industrial/auto,
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/station/teleporter)
+"fC" = (
+/obj/machinery/computer/teleporter{
+	dir = 4
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 9
+	},
+/area/station/teleporter)
 "fF" = (
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/crew_quarters/clown)
@@ -104,6 +139,15 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
+"kM" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/black,
+/area/station/teleporter)
+"kS" = (
+/turf/simulated/floor/purpleblack{
+	dir = 6
+	},
+/area/station/teleporter)
 "kU" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -115,6 +159,9 @@
 /obj/machinery/computer3/generic/secure_data,
 /turf/simulated/floor/circuit/vintage,
 /area/station/turret_protected/ai)
+"lE" = (
+/turf/simulated/floor/purpleblack,
+/area/station/teleporter)
 "lU" = (
 /obj/access_spawn/captain,
 /obj/firedoor_spawn,
@@ -131,6 +178,12 @@
 	requires_power = 1;
 	do_not_irradiate = 1
 	})
+"mz" = (
+/obj/machinery/teleport/portal_generator,
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
+/area/station/teleporter)
 "mH" = (
 /obj/machinery/door/poddoor{
 	id = "ai_core";
@@ -149,6 +202,11 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"nE" = (
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
+/area/station/teleporter)
 "oA" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
@@ -327,6 +385,14 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/bridge)
+"xu" = (
+/obj/item/storage/toilet{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/bridge/united_command{
+	name = "Bridge Restroom"
+	})
 "xF" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -368,12 +434,17 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/supplycomp,
+/obj/machinery/computer/robotics,
 /turf/simulated/floor/circuit/vintage,
 /area/station/turret_protected/ai)
 "za" = (
 /turf/simulated/floor/black,
 /area/station/bridge)
+"zq" = (
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/station/teleporter)
 "Am" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating/airless,
@@ -431,7 +502,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer3/generic/communications,
+/obj/machinery/computer/supplycomp,
 /turf/simulated/floor/circuit/vintage,
 /area/station/turret_protected/ai)
 "Eb" = (
@@ -521,6 +592,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
+"Gd" = (
+/obj/machinery/teleport/portal_ring,
+/turf/simulated/floor/purpleblack{
+	dir = 10
+	},
+/area/station/teleporter)
 "GZ" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor{
@@ -711,6 +788,12 @@
 	requires_power = 1;
 	do_not_irradiate = 1
 	})
+"Nz" = (
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
+/turf/simulated/floor/black,
+/area/station/bridge)
 "NO" = (
 /obj/stool/chair/comfy{
 	dir = 1
@@ -907,6 +990,16 @@
 /area/station/turret_protected/AIbaseoutside{
 	requires_power = 1;
 	do_not_irradiate = 1
+	})
+"Vk" = (
+/obj/machinery/shower{
+	dir = 4;
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/turf/simulated/floor/black,
+/area/station/bridge/united_command{
+	name = "Bridge Restroom"
 	})
 "VO" = (
 /obj/table/reinforced/bar/auto{
@@ -42506,9 +42599,9 @@ Ol
 Ol
 za
 vE
-Wk
-Wk
-Wk
+fC
+mz
+Gd
 vE
 oA
 oA
@@ -42808,9 +42901,9 @@ Ol
 za
 za
 vE
+zq
 Wk
-Wk
-Wk
+lE
 vE
 oA
 oA
@@ -43110,9 +43203,9 @@ gk
 Ku
 za
 vE
-Wk
-Wk
-Wk
+fy
+kM
+lE
 vE
 oA
 oA
@@ -43412,9 +43505,9 @@ Wc
 jq
 za
 vE
-Wk
-Wk
-Wk
+el
+nE
+kS
 vE
 oA
 oA
@@ -44318,7 +44411,7 @@ lU
 jq
 za
 za
-za
+Nz
 za
 za
 pt
@@ -49754,9 +49847,9 @@ Ol
 Ol
 za
 vg
-ZY
+xu
 vg
-ZY
+Vk
 vg
 kU
 kU

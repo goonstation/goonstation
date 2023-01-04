@@ -11,7 +11,8 @@ var/global/datum/map_settings/map_settings = null
 //id corresponds to the name of the /obj/landmark/map
 //playerPickable defines whether the map can be chosen by players when voting on a new map.
 var/global/list/mapNames = list(
-	"Clarion" =				list("id" = "CLARION",		"settings" = "destiny/clarion", "playerPickable" = TRUE,	"MaxPlayersAllowed" = 60),
+	"Clarion" =				list("id" = "CLARION",		"settings" = "destiny/clarion", "playerPickable" = FALSE,	"MaxPlayersAllowed" = 60),
+	"Clarion2" =			list("id" = "CLARION2",		"settings" = "clarion2", "playerPickable" = TRUE,	"MaxPlayersAllowed" = 60),
 #ifdef RP_MODE
 	"Cogmap 1" =			list("id" = "COGMAP",		"settings" = "cogmap",			"playerPickable" = TRUE,	"MinPlayersAllowed" = 14),
 #else
@@ -465,6 +466,40 @@ var/global/list/mapNames = list(
 		"the aviary" = list(/area/station/garden/aviary),
 		"the quartermaster's storage room" = list(/area/station/quartermaster/storage))
 		//"the robotics lab" = list(/area/station/medical/robotics))
+
+/datum/map_settings/clarion2
+	name = "CLARION2"
+	display_name = "NSS Clarion"
+	goonhub_map = "https://goonhub.com/maps/clarion2"
+
+	walls = /turf/simulated/wall/auto/jen
+	rwalls = /turf/simulated/wall/auto/reinforced/jen
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = TRUE
+
+	valid_nuke_targets = list(/*
+		"the main security room" = list(/area/station/security/main),
+		"the central research sector hub" = list(/area/station/science/lobby),
+		"the quartermaster's office" = list(/area/station/quartermaster/office),
+		"the thermo-electric generator room" = list(/area/station/engine/core),
+		"the courtroom" = list(/area/station/crew_quarters/courtroom),
+		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/lobby),
+		"the bar" = list(/area/station/crew_quarters/bar),
+		"the artifact lab" = list(/area/station/science/artifact),
+		"the bridge" = list(/area/station/bridge),
+		"the community center (chapel)" = list(/area/station/chapel/sanctuary),
+		"the aviary" = list(/area/station/garden/aviary),
+		"the quartermaster's storage room" = list(/area/station/quartermaster/storage)
+		*/)
 
 /datum/map_settings/horizon
 	name = "HORIZON"

@@ -104,6 +104,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_CONSTRUCTION		// Construction mode
 //#define MAP_OVERRIDE_DESTINY			// Destiny/RP
 //#define MAP_OVERRIDE_CLARION			// Destiny/Alt RP
+//#define MAP_OVERRIDE_CLARION2			// Clarion 2
 //#define MAP_OVERRIDE_COGMAP
 //#define MAP_OVERRIDE_COGMAP2			// Cogmap 2
 //#define MAP_OVERRIDE_DONUT2			// Updated Donut2
