@@ -1,5 +1,8 @@
 
 (t)tue jan 03 23
+(u)aloe
+(*)Vampiric thralls no longer need to breathe.
+(*)Zombie arms can now interact with items. Using an item with an empty hand takes an extra 1.5 second action.
 (u)LeahTheTech
 (p)12585
 (e)⚖🧛|C-Balance, A-Gamemodes
