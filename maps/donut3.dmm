@@ -24165,9 +24165,6 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/medical/morgue)
 "gPJ" = (
-/obj/stool/chair{
-	dir = 4
-	},
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
@@ -54499,6 +54496,9 @@
 	dir = 1;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/stool/chair{
+	dir = 1
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
