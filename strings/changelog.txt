@@ -1,5 +1,7 @@
 
 (t)tue jan 03 23
+(u)tarmunora
+(*)Vampiric thralls burn in space and the chapel. Space/chapel burning drains blood from vampires and thralls
 (u)aloe
 (*)Vampiric thralls no longer need to breathe.
 (*)Zombie arms can now interact with items. Using an item with an empty hand takes an extra 1.5 second action.
