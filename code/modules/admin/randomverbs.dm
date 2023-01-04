@@ -317,7 +317,21 @@
 	set name = "AI: Bulk Law Change"
 	ADMIN_ONLY
 
-	var/input = input(usr, "Replace all AI laws with what? Seriously. It's true, [pick("Somepotato only adds gimmicks.", "alter them to whatever you want friend.")]", "Bulk Law Modification", "") as message
+	var/current_laws = list()
+	for (var/obj/item/aiModule/X in ticker.ai_law_rack_manager.default_ai_rack.law_circuits)
+		if(!X)
+			continue
+		var/lt = X.get_law_text(TRUE)
+		if(islist(lt))
+			for(var/law in lt)
+				current_laws += "[law]"
+		else
+			current_laws += "[lt]"
+
+	var/input = input(usr, "Replace all AI laws with what?", "Bulk Law Modification", jointext(current_laws, "\n")) as message|null
+	if(isnull(input))
+		return
+
 	var/list/split = splittext(input, "\n")
 	ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
 	for(var/i = 1, i <= 9, i++)
