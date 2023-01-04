@@ -106,6 +106,9 @@
 #elif defined(MAP_OVERRIDE_CLARION)
 #include "clarion.dm"
 
+#elif defined(MAP_OVERRIDE_CLARION2)
+#include "clarion2.dm"
+
 #elif defined(MAP_OVERRIDE_COGMAP)
 #include "cogmap.dm"
 
