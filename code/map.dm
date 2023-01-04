@@ -486,20 +486,9 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	valid_nuke_targets = list(/*
-		"the main security room" = list(/area/station/security/main),
-		"the central research sector hub" = list(/area/station/science/lobby),
-		"the quartermaster's office" = list(/area/station/quartermaster/office),
-		"the thermo-electric generator room" = list(/area/station/engine/core),
-		"the courtroom" = list(/area/station/crew_quarters/courtroom),
-		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/lobby),
-		"the bar" = list(/area/station/crew_quarters/bar),
-		"the artifact lab" = list(/area/station/science/artifact),
-		"the bridge" = list(/area/station/bridge),
-		"the community center (chapel)" = list(/area/station/chapel/sanctuary),
-		"the aviary" = list(/area/station/garden/aviary),
-		"the quartermaster's storage room" = list(/area/station/quartermaster/storage)
-		*/)
+	valid_nuke_targets = list(
+		"the bridge" = list(/area/station/bridge)
+		)
 
 /datum/map_settings/horizon
 	name = "HORIZON"
