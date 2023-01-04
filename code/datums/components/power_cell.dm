@@ -109,3 +109,17 @@ TYPEINFO(/datum/component/power_cell)
 		src.charge(null, recharge_rate)
 	SEND_SIGNAL(parent, COMSIG_UPDATE_ICON)
 	return
+
+/datum/component/power_cell/flockdrone
+	var/original_rate
+
+/datum/component/power_cell/flockdrone/Initialize(max, start_charge, recharge, delay, rechargable)
+	. = ..()
+	src.original_rate = src.recharge_rate
+
+/datum/component/power_cell/flockdrone/process()
+	if (isfeathertile(get_turf(src.parent)))
+		src.recharge_rate = src.original_rate
+	else
+		src.recharge_rate = src.original_rate/2
+	..()

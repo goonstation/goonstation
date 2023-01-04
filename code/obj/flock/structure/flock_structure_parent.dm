@@ -39,6 +39,8 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	var/resourcecost = 0
 	/// can flockdrones pass through this akin to a grille? need to set USE_CANPASS to make this work however
 	var/passthrough = FALSE
+	/// if the building can be supported by a sapper structure
+	var/accepts_sapper_power = FALSE
 	/// TIME of last process
 	var/last_process
 	/// normal expected tick spacing
@@ -232,6 +234,9 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	src.health += health_given
 	src.update_health_icon()
 	return ceil(health_given / src.repair_per_resource)
+
+/obj/flock_structure/proc/sapper_power()
+	return src.accepts_sapper_power
 
 /obj/flock_structure/attack_hand(var/mob/user)
 	attack_particle(user, src)

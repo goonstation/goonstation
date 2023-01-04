@@ -1728,8 +1728,8 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	proc/getEnum(var/name, var/default, var/list/possible)
 		return input(usr, "New value for [name]", name, default) in possible
 
-	proc/getTypeExclusive(var/name, var/default, var/parent_type)
-		return input(usr, "New value for [name]", name, default) in childrentypesof(parent_type)
+	proc/getTypeExclusive(var/name, var/default, var/type_of_parent)
+		return input(usr, "New value for [name]", name, default) in childrentypesof(type_of_parent)
 
 	proc/stripPath(var/typename)
 		var/typetext = "[typename]"

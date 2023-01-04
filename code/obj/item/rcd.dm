@@ -127,7 +127,7 @@ TYPEINFO(/obj/item/rcd)
 	var/mode = 1
 
 	/// do we really actually for real want this to work in adventure zones?? just do this with varedit dont make children with this on
-	var/really_actually_bypass_z_restriction = false
+	var/really_actually_bypass_z_restriction = FALSE
 
 	///Custom contextActions list so we can handle opening them ourselves
 	var/list/datum/contextAction/contexts = list()
@@ -427,7 +427,7 @@ TYPEINFO(/obj/item/rcd)
 			boutput(user, "<span class='notice'>[src] is already working on something else.</span>")
 		else
 			var/obj/item/parts/surgery_target = null
-			var/user_limb_is_missing = false
+			var/user_limb_is_missing = FALSE
 			if (surgeryCheck(M, user) && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "chest")) && (src.mode == RCD_MODE_DECONSTRUCT)) //In surgery conditions and aiming for a limb or an ass in deconstruction mode? Time for ghetto surgery
 				if (user.zone_sel.selecting == "chest") //Ass begone
 					if (M.organHolder.butt == null)
@@ -447,12 +447,12 @@ TYPEINFO(/obj/item/rcd)
 						var/mob/living/carbon/human/H = user
 						if (user.zone_sel.selecting == "chest")
 							if (H.organHolder.butt == null)
-								user_limb_is_missing = true
+								user_limb_is_missing = TRUE
 						else
 							if (H.limbs.vars[user.zone_sel.selecting] == null) //Cant remove a limb that isnt there
-								user_limb_is_missing = true
+								user_limb_is_missing = TRUE
 
-						if(user_limb_is_missing == true) //The limb/ass is already missing, maim yourself instead
+						if(user_limb_is_missing == TRUE) //The limb/ass is already missing, maim yourself instead
 							user.visible_message("<span class='alert'><b>[user] messes up really badly with [src] and maims themselves! </b> </span>")
 							random_brute_damage(user, 35)
 							H.changeStatus("weakened", 3 SECONDS)

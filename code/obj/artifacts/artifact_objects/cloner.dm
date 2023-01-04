@@ -67,6 +67,7 @@
 
 			if(swapSouls && H.mind)
 				H.mind.transfer_to(clone)
+				clone.is_npc = FALSE
 			clone.changeStatus("paralysis", imprison_time) // so they don't ruin the surprise
 			O.ArtifactFaultUsed(H)
 			O.ArtifactFaultUsed(clone)

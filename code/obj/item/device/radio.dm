@@ -1023,6 +1023,8 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 
 /obj/item/device/radio/signaler/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
+	if (.)
+		return
 	switch (action)
 		if ("set-code")
 			var/newcode = text2num_safe(params["value"])
