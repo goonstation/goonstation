@@ -7,8 +7,7 @@
 
 import { Loader } from './common/Loader';
 import { InputButtons, Validator } from './common/InputButtons';
-import { useBackend, useSharedState } from '../backend';
-import { KEY_ENTER } from 'common/keycodes';
+import { useBackend, useLocalState } from '../backend';
 import { Box, Input, Section, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
 
@@ -86,9 +85,8 @@ const InputArea = (props, context) => {
           autoFocus
           fluid
           onInput={(event) => onType(event)}
-          onKeyDown={(event) => {
-            const keyCode = window.event ? event.which : event.keyCode;
-            if (keyCode === KEY_ENTER && inputIsValid) {
+          onEnter={() => {
+            if (inputIsValid) {
               act('submit', { entry: input });
             }
           }}
@@ -104,12 +102,8 @@ const InputArea = (props, context) => {
           autoFocus
           height="100%"
           onInput={(event) => onType(event)}
-          onKeyDown={(event) => {
-            const keyCode = window.event ? event.which : event.keyCode;
-            if (keyCode === KEY_ENTER && inputIsValid) {
-
-              act('submit', { entry: input });
-            }
+          onEnter={() => {
+            act('submit', { entry: input });
           }}
           placeholder="Type something..."
           value={input}
