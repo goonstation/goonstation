@@ -33,8 +33,8 @@ export const TextInputModal = (_, context) => {
     title,
     allowEmpty,
   } = data;
-  const [input, setInput] = useSharedState(context, 'input', placeholder);
-  const [inputIsValid, setInputIsValid] = useSharedState<Validator>(
+  const [input, setInput] = useLocalState(context, 'input', placeholder);
+  const [inputIsValid, setInputIsValid] = useLocalState<Validator>(
     context,
     'inputIsValid',
     { isValid: allowEmpty || !!message, error: null }
