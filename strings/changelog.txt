@@ -1,4 +1,10 @@
 
+(t)wed jan 04 23
+(u)glowbold
+(p)12386
+(e)🆕🤖|C-Feature, A-Silicons
+(*)AIs can override an intercom to the AI intercom frequency by holding the Bolting key and clicking on it.
+(+)AI intercom override locks down the frequency for one minute and enables microphones and speakers.
 (t)tue jan 03 23
 (u)tarmunora
 (*)Vampiric thralls burn in space and the chapel. Space/chapel burning drains blood from vampires and thralls
