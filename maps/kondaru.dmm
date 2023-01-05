@@ -1553,18 +1553,6 @@
 /obj/landmark/artifact,
 /turf/simulated/floor/plating,
 /area/station/storage/northeast)
-"aet" = (
-/obj/machinery/manufacturer/general{
-	desc = "It's covered in more gunk than a truck stop ashtray. Is this thing even safe?";
-	free_resource_amt = 0;
-	free_resources = null;
-	malfunction = 1;
-	name = "grody manufacturer";
-	wires = 11
-	},
-/obj/decal/cleanable/cobweb2,
-/turf/simulated/floor/plating,
-/area/station/storage/northeast)
 "aeu" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -3335,7 +3323,7 @@
 	pixel_x = -6;
 	pixel_y = 10
 	},
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	pixel_x = 6
 	},
 /turf/simulated/floor/carpet/grime,
@@ -8824,7 +8812,7 @@
 /area/station/security/detectives_office)
 "aBH" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/decoration/ashtray{
 	pixel_x = 6;
 	pixel_y = 4
@@ -10233,7 +10221,7 @@
 	pixel_y = 1
 	},
 /obj/machinery/light/lamp/green,
-/obj/deskclutter{
+/obj/decal/cleanable/desk_clutter{
 	pixel_y = -8
 	},
 /obj/noticeboard/persistent{
@@ -34932,7 +34920,7 @@
 /area/research_outpost/indigo_rye)
 "clK" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/paper{
 	info = "delta oblique seneca toreador neptune"
 	},
@@ -41828,6 +41816,10 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
+"gsj" = (
+/obj/tree,
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
 "gsP" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -45227,6 +45219,11 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
+"jrA" = (
+/obj/machinery/manufacturer/general/grody,
+/obj/decal/cleanable/cobweb2,
+/turf/simulated/floor/plating,
+/area/station/storage/northeast)
 "jrO" = (
 /obj/table/auto,
 /obj/machinery/computer3/generic/personal,
@@ -46285,6 +46282,10 @@
 	dir = 1
 	},
 /area/station/engine/engineering)
+"kvh" = (
+/obj/tree,
+/turf/simulated/floor/grass,
+/area/station/garden/aviary)
 "kvZ" = (
 /obj/cable{
 	d1 = 1;
@@ -49649,7 +49650,7 @@
 /area/station/crew_quarters/cafeteria)
 "nju" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/instrument/bikehorn,
 /obj/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -53235,10 +53236,6 @@
 /obj/access_spawn/maint,
 /turf/simulated/floor/greenblack,
 /area/station/garden/aviary)
-"qpS" = (
-/obj/tree1,
-/turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
 "qqj" = (
 /obj/shrub,
 /obj/machinery/light/small{
@@ -53883,7 +53880,7 @@
 /obj/item/paper_bin{
 	pixel_y = 6
 	},
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/hand_labeler{
 	pixel_x = 5
 	},
@@ -61704,10 +61701,6 @@
 	dir = 4
 	},
 /area/station/routing/security)
-"xAA" = (
-/obj/tree1,
-/turf/simulated/floor/grass,
-/area/station/garden/aviary)
 "xBa" = (
 /obj/kitchenspike,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -126301,7 +126294,7 @@ aaa
 aaa
 aaa
 aem
-aet
+jrA
 afU
 ahP
 adv
@@ -129995,7 +129988,7 @@ wcz
 hAX
 bsw
 bsw
-xAA
+kvh
 bsw
 tuT
 bre
@@ -130291,7 +130284,7 @@ bnu
 aZa
 bre
 bsw
-xAA
+kvh
 hFc
 kRM
 rsY
@@ -130903,7 +130896,7 @@ sPt
 bsw
 bsw
 bsw
-xAA
+kvh
 bre
 bnq
 bBQ
@@ -131501,7 +131494,7 @@ bre
 bsw
 bsw
 hAX
-xAA
+kvh
 bsw
 bsw
 bsw
@@ -131806,7 +131799,7 @@ whs
 bsw
 bsw
 bsw
-xAA
+kvh
 bsw
 bsw
 xUS
@@ -138305,7 +138298,7 @@ abi
 abx
 abB
 abB
-qpS
+gsj
 abi
 abi
 abi
@@ -139506,7 +139499,7 @@ abi
 abi
 abx
 abB
-qpS
+gsj
 abB
 abB
 abP
@@ -141017,7 +141010,7 @@ abi
 abi
 abB
 abB
-qpS
+gsj
 abx
 abi
 abi

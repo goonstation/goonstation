@@ -31,6 +31,7 @@
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
 	anchored = 1
+	material_amt = 0.1
 
 	the_tuff_stuff
 		explosion_resistance = 3
@@ -111,6 +112,13 @@
 		update_nearby_tiles(need_rebuild=1)
 
 		return
+
+	set_dir(new_dir)
+		. = ..()
+		if(new_dir in cardinal)
+			src.material_amt = 0.1
+		else
+			src.material_amt = 0.2
 
 	onMaterialChanged()
 		..()

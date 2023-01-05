@@ -320,13 +320,13 @@ TYPEINFO(/obj/item/gun/energy/phaser_huge)
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
 	shoot_delay = 10
-	charge_up = 5
 	can_dual_wield = FALSE
 	force = MELEE_DMG_RIFLE
 	two_handed = 1
 	New()
 		set_current_projectile(new/datum/projectile/laser/light/huge) // light/huge - whatev!!!! this should probably be refactored
 		projectiles = list(current_projectile)
+		AddComponent(/datum/component/holdertargeting/windup, 1 SECOND)
 		..()
 
 	update_icon()
@@ -344,7 +344,7 @@ TYPEINFO(/obj/item/gun/energy/crossbow)
 
 /obj/item/gun/energy/crossbow
 	name = "\improper Wenshen mini rad-poison-crossbow"
-	desc = "The XIANG|GEISEL Wenshen (瘟神) crossbow favored by many of the syndicate's stealth specialists, which does damage over time using a slow-acting radioactive poison. Utilizes a self-recharging atomic power cell from Geisel Radiofabrik."
+	desc = "The XIANG|GIESEL Wenshen (瘟神) crossbow favored by many of the Syndicate's stealth specialists, which does damage over time using a slow-acting radioactive poison. Utilizes a self-recharging atomic power cell from Giesel Radiofabrik."
 	icon_state = "crossbow"
 	uses_multiple_icon_states = 1
 	w_class = W_CLASS_SMALL
