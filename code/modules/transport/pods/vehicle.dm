@@ -118,7 +118,7 @@
 				boutput(user, "<span class='alert'>The damaged parts are saturated with fluid. You need to move somewhere drier.</span>")
 				return
 #ifdef MAP_OVERRIDE_NADIR
-			if(istype(T,/turf/space/fluid) || istype(A,/turf/simulated/floor/plating/airless/asteroid))
+			if(istype(T,/turf/space/fluid) || istype(T,/turf/simulated/floor/plating/airless/asteroid))
 				//prevent in-acid welding from extending excursion times indefinitely
 				boutput(user, "<span class='alert'>The damaged parts are saturated with fluid. You need to move somewhere drier.</span>")
 				return
