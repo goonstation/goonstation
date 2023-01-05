@@ -778,7 +778,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 
 /obj/item/instrument/monkeybell
 	name = "monkey bell"
-	desc = "A shiny bell. It's tone is soothing to monkeys, somehow."
+	desc = "A shiny bell. Its tone is soothing to monkeys, somehow."
 	icon = 'icons/obj/instruments.dmi'
 	icon_state = "monkeybell"
 	item_state = "monkeybell"
@@ -868,7 +868,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 		..()
 		if(!emagged)
 			logTheThing(LOG_COMBAT, user, "emags [src] at [log_loc(src)].")
-			boutput(user, "You magnetize \the [src]'s clap, altering it's tone.")
+			boutput(user, "You magnetize \the [src]'s clap, altering its tone.")
 			emagged = TRUE
 			sounds_instrument = list()
 			for (var/i in 1 to 3)
