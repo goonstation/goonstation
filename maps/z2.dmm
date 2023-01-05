@@ -67452,21 +67452,6 @@
 	dir = 1
 	},
 /area/centcom/offices/cogwerks)
-"ezP" = (
-/obj/item/reagent_containers/food/snacks/breadloaf{
-	pixel_y = -4;
-	pixel_x = -5
-	},
-/obj/table/flock/auto,
-/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
-	pixel_y = 10
-	},
-/obj/item/parts/artifact_parts/arm/precursor/left{
-	pixel_x = 12;
-	pixel_y = -3
-	},
-/turf/unsimulated/floor/feather,
-/area/centcom/offices/leah)
 "eAe" = (
 /obj/map/light/graveyard,
 /obj/tree{
@@ -69883,6 +69868,22 @@
 	dir = 6
 	},
 /area/centcom/gallery)
+"iLe" = (
+/obj/item/reagent_containers/food/snacks/breadloaf{
+	pixel_y = 12;
+	rand_pos = 0
+	},
+/obj/table/flock/auto,
+/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
+	pixel_y = -2;
+	pixel_x = -7
+	},
+/obj/item/clothing/head/NTberet{
+	pixel_x = 8;
+	pixel_y = -4
+	},
+/turf/unsimulated/floor/feather,
+/area/centcom/offices/leah)
 "iLT" = (
 /obj/machinery/door/poddoor/blast/single{
 	desc = "A security blast door.  Labeling indicates that it was installed 'in case the teleportation experiment starts bringing in Draculas.' There's probably a control for it somewhere.";
@@ -154174,7 +154175,7 @@ niJ
 wel
 dVA
 lri
-mrL
+iLe
 wel
 dxu
 dyh
@@ -154476,7 +154477,7 @@ liR
 wel
 vAj
 bAV
-ezP
+mrL
 tIu
 dxv
 dyh
