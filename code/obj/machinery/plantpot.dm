@@ -1001,6 +1001,7 @@ TYPEINFO(/obj/machinery/plantpot)
 
 		if(MUT?.harvest_cap)
 			harvest_cap = MUT.harvest_cap
+
 		src.growth = max(0, growing.growtime - DNA?.get_effective_value("growtime"))
 		// Reset the growth back to the beginning of maturation so we can wait out the
 		// harvest time again.
