@@ -135,7 +135,7 @@
 "aat" = (
 /obj/machinery/cargo_router{
 	default_direction = 2;
-	destinations = list("Arrivals"=4)
+	destinations = list("Arrivals" = 4)
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -315,14 +315,14 @@
 /area/space)
 "aaQ" = (
 /obj/machinery/cargo_router{
-	destinations = list("Catering"=8)
+	destinations = list("Catering" = 8)
 	},
 /turf/simulated/floor/plating,
 /area/space)
 "aaR" = (
 /obj/machinery/cargo_router{
 	default_direction = 2;
-	destinations = list("Catering"=8)
+	destinations = list("Catering" = 8)
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -1175,8 +1175,8 @@
 	},
 /area/station/solar/small_backup2)
 "act" = (
-/mob/living/silicon/hivebot/eyebot,
 /obj/decal/stripe_delivery,
+/mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor,
 /area/station/turret_protected/ai)
 "acu" = (
@@ -5074,6 +5074,7 @@
 "amj" = (
 /obj/table/auto,
 /obj/item/device/radio/intercom/catering,
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "amk" = (
@@ -30565,14 +30566,14 @@
 "btX" = (
 /obj/machinery/cargo_router{
 	default_direction = 8;
-	destinations = list("Arrivals"=1,"Catering"=1,"Disposals"=4,"Engine"=4,"Escape"=4,"Export"=4,"MedSci"=4,"Security"=4,"Trader"=4,"QM"=4)
+	destinations = list("Arrivals" = 1, "Catering" = 1, "Disposals" = 4, "Engine" = 4, "Escape" = 4, "Export" = 4, "MedSci" = 4, "Security" = 4, "Trader" = 4, "QM" = 4)
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "btZ" = (
 /obj/machinery/cargo_router{
 	default_direction = 2;
-	destinations = list("Security"=4)
+	destinations = list("Security" = 4)
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
@@ -38876,10 +38877,6 @@
 /turf/space,
 /turf/simulated/floor/plating/airless,
 /area/station/solar/north)
-"bJL" = (
-/turf/space,
-/turf/space,
-/area/space)
 "bJM" = (
 /obj/shrub,
 /obj/landmark{
@@ -44965,20 +44962,20 @@
 "bVG" = (
 /obj/machinery/cargo_router{
 	default_direction = 2;
-	destinations = list("Engine"=8,"Disposals"=2)
+	destinations = list("Engine" = 8, "Disposals" = 2)
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bVH" = (
 /obj/machinery/cargo_router{
-	destinations = list("Engine"=8,"Disposals"=8)
+	destinations = list("Engine" = 8, "Disposals" = 8)
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bVI" = (
 /obj/machinery/cargo_router{
 	default_direction = 8;
-	destinations = list("QM"=2,"Export"=2,"Trader"=2,"MedSci"=2,"Escape"=2)
+	destinations = list("QM" = 2, "Export" = 2, "Trader" = 2, "MedSci" = 2, "Escape" = 2)
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
@@ -45837,7 +45834,7 @@
 "bXI" = (
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new/obj/item/captaingun;
+	displayed = new /obj/item/captaingun();
 	pixel_y = 6
 	},
 /obj/cable{
@@ -51059,6 +51056,7 @@
 "ckU" = (
 /obj/decal/cleanable/cobweb2,
 /obj/machinery/vending/monkey/research,
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/plating/scorched,
 /area/station/science/construction)
 "ckV" = (
@@ -62009,7 +62007,6 @@
 	pixel_y = -64
 	},
 /turf/space,
-/turf/space,
 /area/space)
 "cKf" = (
 /obj/storage/secure/closet/engineering/mining,
@@ -62456,14 +62453,6 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/cloner)
-"cLk" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/turf/space,
-/area/space)
 "cLl" = (
 /obj/grille/steel,
 /turf/space,
@@ -66584,7 +66573,7 @@
 "cUn" = (
 /obj/machinery/cargo_router{
 	default_direction = 4;
-	destinations = list("QM"=2,"Export"=2,"MedSci"=2,"Escape"=2)
+	destinations = list("QM" = 2, "Export" = 2, "MedSci" = 2, "Escape" = 2)
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -67801,7 +67790,7 @@
 /area/station/maintenance/south)
 "cXa" = (
 /obj/machinery/cargo_router{
-	destinations = list("QM"=8,"Export"=8)
+	destinations = list("QM" = 8, "Export" = 8)
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -67864,7 +67853,7 @@
 "cXe" = (
 /obj/machinery/cargo_router{
 	default_direction = 8;
-	destinations = list("MedSci"=2,"Escape"=2)
+	destinations = list("MedSci" = 2, "Escape" = 2)
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -68428,14 +68417,14 @@
 /area/station/hangar/qm)
 "cYn" = (
 /obj/machinery/cargo_router{
-	destinations = list("Trader"=4,"Arrivals"=4,"Medsci"=4,"Catering"=4,"Security"=4,"Disposals"=4,"Engine"=4,"Escape"=4,"Export"=4)
+	destinations = list("Trader" = 4, "Arrivals" = 4, "Medsci" = 4, "Catering" = 4, "Security" = 4, "Disposals" = 4, "Engine" = 4, "Escape" = 4, "Export" = 4)
 	},
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
 "cYq" = (
 /obj/machinery/cargo_router{
 	default_direction = 2;
-	destinations = list("Arrivals"=4,"Catering"=4,"Disposals"=4,"Engine"=4,"Escape"=4,"MedSci"=4,"Security"=4,"QM"=2)
+	destinations = list("Arrivals" = 4, "Catering" = 4, "Disposals" = 4, "Engine" = 4, "Escape" = 4, "MedSci" = 4, "Security" = 4, "QM" = 2)
 	},
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
@@ -69330,7 +69319,7 @@
 "dan" = (
 /obj/machinery/cargo_router{
 	default_direction = 2;
-	destinations = list("QM"=8)
+	destinations = list("QM" = 8)
 	},
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
@@ -71779,6 +71768,7 @@
 /obj/item/hand_labeler,
 /obj/item/hand_labeler,
 /obj/critter/parrot/random,
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -72170,7 +72160,7 @@
 "dhe" = (
 /obj/machinery/cargo_router{
 	default_direction = 2;
-	destinations = list("Escape"=4)
+	destinations = list("Escape" = 4)
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -72335,7 +72325,7 @@
 /area/space)
 "dhw" = (
 /obj/machinery/cargo_router{
-	destinations = list("MedSci"=2)
+	destinations = list("MedSci" = 2)
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -76514,12 +76504,12 @@
 	},
 /area/station/hydroponics/bay)
 "fup" = (
-/mob/living/critter/small_animal/mouse,
 /obj/machinery/light/small,
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/catering)
 "fuP" = (
@@ -78110,7 +78100,6 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
 "kyt" = (
-/mob/living/critter/small_animal/cockroach,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -78118,6 +78107,7 @@
 /obj/machinery/atmospherics/pipe/simple/overfloor{
 	dir = 5
 	},
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "kzF" = (
@@ -78809,10 +78799,6 @@
 /obj/item/plank,
 /obj/item/plank,
 /obj/item/plank,
-/mob/living/critter/small_animal/cockroach{
-	health = 30;
-	name = "Maude"
-	},
 /obj/disposalpipe/junction{
 	icon_state = "pipe-j2"
 	},
@@ -78820,6 +78806,10 @@
 /obj/landmark{
 	icon_state = "pest-start";
 	name = "peststart"
+	},
+/mob/living/critter/small_animal/cockroach{
+	health = 30;
+	name = "Maude"
 	},
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/quartersB)
@@ -79487,9 +79477,9 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "oZv" = (
-/mob/living/critter/small_animal/mouse,
 /obj/disposalpipe/segment/mail/bent/north,
 /obj/machinery/light_switch/north,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/southeast)
 "pbL" = (
@@ -79827,8 +79817,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/arcade/dungeon)
 "quY" = (
-/mob/living/critter/small_animal/mouse,
 /obj/disposalpipe/segment/mail/vertical,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "qwX" = (
@@ -80126,10 +80116,10 @@
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/northwest)
 "riV" = (
-/mob/living/critter/small_animal/cockroach,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "rpd" = (
@@ -81210,7 +81200,6 @@
 	pixel_y = -64
 	},
 /turf/space,
-/turf/space,
 /area/space)
 "uUh" = (
 /obj/railing/orange/reinforced{
@@ -81220,13 +81209,6 @@
 	dir = 9
 	},
 /area/station/ranch)
-"uUB" = (
-/obj/grille/catwalk{
-	dir = 6
-	},
-/turf/space,
-/turf/space,
-/area/station/mining/magnet)
 "uVv" = (
 /obj/machinery/light/small/floor,
 /obj/decal/stripe_delivery,
@@ -113212,7 +113194,7 @@ bFN
 abR
 aaa
 aaa
-bJL
+aaa
 aaa
 aaa
 add
@@ -113352,7 +113334,7 @@ dgn
 dds
 aaa
 aaa
-bJL
+aaa
 aaa
 aaa
 dgD
@@ -113514,7 +113496,7 @@ bFN
 abR
 aaa
 aaa
-bJL
+aaa
 aaa
 aaa
 add
@@ -113654,7 +113636,7 @@ dgo
 dds
 aaa
 aaa
-bJL
+aaa
 aaa
 aaa
 dgD
@@ -114118,7 +114100,7 @@ bFN
 abR
 aaa
 aaa
-bJL
+aaa
 aaa
 aaa
 add
@@ -114258,7 +114240,7 @@ dgq
 dds
 aaa
 aaa
-bJL
+aaa
 aaa
 aaa
 dgD
@@ -114420,7 +114402,7 @@ bFN
 abR
 aaa
 aaa
-bJL
+aaa
 aaa
 aaa
 add
@@ -114560,7 +114542,7 @@ dgq
 dds
 aaa
 aaa
-bJL
+aaa
 aaa
 aaa
 dgD
@@ -114722,7 +114704,7 @@ buO
 aaF
 aaS
 aaS
-cLk
+aaS
 aaS
 aah
 ade
@@ -114862,7 +114844,7 @@ ddh
 ddh
 aah
 aaS
-cLk
+aaS
 aaS
 aaS
 aaF
@@ -143838,7 +143820,7 @@ cKt
 cKv
 cKv
 qwX
-uUB
+ikQ
 dau
 dbs
 dbs

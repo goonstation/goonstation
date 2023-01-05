@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
-/mob/living/critter/spider/nice,
 /obj/machinery/light/incandescent/blueish,
+/mob/living/critter/spider/nice,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "aab" = (
@@ -4524,6 +4524,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -6995,6 +6996,7 @@
 /area/station/science/storage)
 "aqt" = (
 /obj/machinery/vending/monkey/research,
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
 "aqu" = (
@@ -7961,6 +7963,7 @@
 /area/station/turret_protected/Zeta)
 "asN" = (
 /obj/machinery/vending/monkey/research,
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "asO" = (
@@ -18871,11 +18874,6 @@
 	icon_state = "floor2";
 	name = "organic floor"
 	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
 /area/space)
 "aUI" = (
 /obj/landmark/artifact,
@@ -18982,11 +18980,6 @@
 	dir = 5;
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
-	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay{
 	icon = 'icons/turf/martian.dmi';
@@ -23116,6 +23109,8 @@
 	pixel_y = 5
 	},
 /obj/machinery/light_switch/auto,
+/obj/table,
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "biQ" = (
@@ -36401,6 +36396,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/plating/random,
 /area/station/security/beepsky)
 "bQx" = (
@@ -44774,6 +44770,15 @@
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"fUR" = (
+/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/item/instrument/monkeybell,
+/turf/simulated/floor/plating/random,
+/area/station/security/brig)
 "fVJ" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/arc_electroplater,
@@ -46189,8 +46194,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "mAR" = (
-/mob/living/critter/small_animal/cockroach,
 /obj/decal/cleanable/dirt,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating/random,
 /area/station/storage/warehouse)
 "mBk" = (
@@ -46744,7 +46749,7 @@
 "oVS" = (
 /obj/table/wood/round/auto,
 /obj/displaycase{
-	displayed = new/obj/item/captaingun;
+	displayed = new /obj/item/captaingun();
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/purple/standard/narrow/T_south,
@@ -47750,6 +47755,13 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/research_outpost/hangar)
+"ukN" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/item/instrument/monkeybell,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/disposal)
 "umj" = (
 /obj/shrub{
 	dir = 6
@@ -48374,11 +48386,11 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "xAp" = (
-/mob/living/critter/small_animal/mouse/remy,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
 	},
+/mob/living/critter/small_animal/mouse/remy,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "xBw" = (
@@ -88606,7 +88618,7 @@ bRw
 bSB
 bTI
 bUS
-bVM
+ukN
 bWB
 bWB
 bXy
@@ -90412,7 +90424,7 @@ aGx
 bMd
 bNq
 bKG
-acZ
+fUR
 nhz
 oxg
 bSG

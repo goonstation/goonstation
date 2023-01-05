@@ -25908,6 +25908,7 @@
 	pixel_x = -7;
 	pixel_y = 11
 	},
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/specialroom/freezer{
 	nitrogen = 105.86;
 	oxygen = 30.8366
@@ -34080,18 +34081,18 @@
 /area/station/science/lobby)
 "jpd" = (
 /obj/storage/closet/coffin,
-/mob/living/critter/small_animal/cockroach,
-/mob/living/critter/small_animal/cockroach,
-/mob/living/critter/small_animal/cockroach,
-/mob/living/critter/small_animal/cockroach,
-/mob/living/critter/small_animal/cockroach,
-/mob/living/critter/small_animal/cockroach,
-/mob/living/critter/small_animal/cockroach,
-/mob/living/critter/small_animal/cockroach,
 /obj/landmark{
 	icon_state = "pest-start";
 	name = "peststart"
 	},
+/mob/living/critter/small_animal/cockroach,
+/mob/living/critter/small_animal/cockroach,
+/mob/living/critter/small_animal/cockroach,
+/mob/living/critter/small_animal/cockroach,
+/mob/living/critter/small_animal/cockroach,
+/mob/living/critter/small_animal/cockroach,
+/mob/living/critter/small_animal/cockroach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "jpe" = (
@@ -34195,7 +34196,6 @@
 /turf/simulated/floor/white/side,
 /area/station/crew_quarters/locker)
 "jtN" = (
-/mob/living/critter/small_animal/mouse/remy,
 /obj/machinery/drainage,
 /obj/cable{
 	icon_state = "1-4"
@@ -34204,6 +34204,7 @@
 /obj/disposalpipe/segment{
 	dir = 1
 	},
+/mob/living/critter/small_animal/mouse/remy,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "jud" = (
@@ -41735,7 +41736,6 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/mob/living/critter/small_animal/cockroach,
 /obj/stool/chair/blue{
 	dir = 8
 	},
@@ -41747,6 +41747,7 @@
 	network = "SS13";
 	tag = ""
 	},
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/sanitary/white,
 /area/station/maintenance/west)
 "pGy" = (
@@ -46257,6 +46258,7 @@
 /obj/item/hand_labeler,
 /obj/table/reinforced/chemistry/auto,
 /obj/item/crowbar,
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/purplewhite{
 	dir = 9
 	},
@@ -46560,6 +46562,7 @@
 	pixel_y = -3
 	},
 /obj/table/glass/auto,
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
 "tsP" = (
@@ -50481,7 +50484,7 @@
 	pixel_y = 6
 	},
 /obj/displaycase{
-	displayed = new/obj/item/captaingun
+	displayed = new /obj/item/captaingun()
 	},
 /obj/blind_switch/area/west{
 	pixel_y = -6

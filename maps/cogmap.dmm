@@ -3582,6 +3582,7 @@
 /area/station/crew_quarters/kitchen)
 "ali" = (
 /obj/machinery/vending/monkey/kitchen,
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "alk" = (
@@ -21491,10 +21492,10 @@
 	},
 /area/space)
 "bfI" = (
-/mob/living/critter/small_animal/cat/jones,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/mob/living/critter/small_animal/cat/jones,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fred5"
@@ -45282,6 +45283,7 @@
 	pixel_y = -5
 	},
 /obj/item/clothing/gloves/latex,
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "csX" = (
@@ -49400,11 +49402,11 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
 "dAz" = (
-/mob/living/critter/spider/nice{
-	name = "spider"
-	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/mob/living/critter/spider/nice{
+	name = "spider"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
@@ -49849,8 +49851,8 @@
 /area/station/bridge)
 "dZb" = (
 /obj/railing/orange/reinforced,
-/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /obj/chicken_nesting_box,
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "dZw" = (
@@ -54382,6 +54384,13 @@
 	dir = 4
 	},
 /area/station/medical/staff)
+"jQm" = (
+/obj/table,
+/obj/item/instrument/monkeybell,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/dome)
 "jQr" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/securearea,
@@ -58252,12 +58261,12 @@
 /turf/simulated/floor,
 /area/station/bridge)
 "pgI" = (
-/mob/living/critter/small_animal/cockroach,
 /obj/cable{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
 "pgN" = (
@@ -60643,7 +60652,7 @@
 /area/station/solar/south)
 "rYO" = (
 /obj/displaycase{
-	displayed = new/obj/item/captaingun
+	displayed = new /obj/item/captaingun()
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -106776,7 +106785,7 @@ cuo
 hjc
 hvo
 lDv
-dhj
+jQm
 dhj
 qBE
 wQD

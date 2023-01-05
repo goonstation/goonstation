@@ -13806,6 +13806,7 @@
 /area/station/medical/cdc)
 "aOZ" = (
 /obj/table/reinforced/auto,
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/caution/south,
 /area/station/medical/cdc)
 "aPa" = (
@@ -26877,6 +26878,7 @@
 /area/station/hallway/secondary/central)
 "cfN" = (
 /obj/table/reinforced/auto,
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "cha" = (
@@ -27737,11 +27739,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/inner)
-"cZz" = (
-/obj/lattice,
-/turf/space,
-/turf/space,
-/area/space)
 "dap" = (
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/snacks/chips{
@@ -27943,14 +27940,6 @@
 /obj/access_spawn/bar,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
-"dnV" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/turf/space,
-/area/space)
 "dnX" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -32835,7 +32824,7 @@
 	},
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new/obj/item/captaingun();
+	displayed = new /obj/item/captaingun();
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/arcade,
@@ -37323,10 +37312,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/central)
-"myd" = (
-/turf/space,
-/turf/space,
-/area/space)
 "myu" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -37622,13 +37607,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/chapel/funeral_parlor)
-"mJN" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/turf/space,
-/area/space)
 "mJX" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -38141,13 +38119,6 @@
 /obj/access_spawn/janitor,
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
-"nqe" = (
-/obj/lattice{
-	icon_state = "lattice-dir-b"
-	},
-/turf/space,
-/turf/space,
-/area/space)
 "nre" = (
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -40823,6 +40794,7 @@
 	pixel_x = 10
 	},
 /obj/machinery/vending/monkey/research,
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "qcM" = (
@@ -44140,7 +44112,6 @@
 	dir = 8
 	},
 /turf/simulated/floor/engine,
-/turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "tsd" = (
 /obj/disposalpipe/segment/mail{
@@ -45119,14 +45090,6 @@
 	dir = 4
 	},
 /area/station/mining/staff_room)
-"usK" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/turf/space,
-/area/space)
 "usZ" = (
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
@@ -46833,6 +46796,7 @@
 /area/station/medical/head/private)
 "vZI" = (
 /obj/machinery/vending/monkey/genetics,
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/grass/random,
 /area/station/medical/research{
 	name = "Genetic Research"
@@ -48541,7 +48505,6 @@
 /obj/warp_beacon{
 	name = "Clarion mining beacon"
 	},
-/turf/space,
 /turf/space,
 /area/space)
 "xGu" = (
@@ -80953,8 +80916,8 @@ fPs
 ozL
 bCl
 bCl
-mJN
-cZz
+agJ
+bCl
 bNC
 nMw
 nMw
@@ -81210,7 +81173,7 @@ fPs
 ozL
 bCl
 bDq
-myd
+aaa
 bKq
 pjz
 bJs
@@ -81467,7 +81430,7 @@ fPs
 ozL
 bCl
 bDq
-nqe
+bJN
 bCl
 pjz
 bJs
@@ -81724,7 +81687,7 @@ ofC
 ozL
 bCl
 bJQ
-usK
+bHI
 bIF
 pjz
 bJs
@@ -81981,7 +81944,7 @@ fPs
 ozL
 bDq
 aaa
-dnV
+dhY
 aaa
 pjz
 bJs
@@ -83523,7 +83486,7 @@ bHW
 ozL
 bIF
 aaa
-dnV
+dhY
 aaa
 pjz
 bJs
@@ -83780,7 +83743,7 @@ bHT
 ozL
 aaa
 aaa
-dnV
+dhY
 aaa
 pjz
 bJs
@@ -84037,7 +84000,7 @@ nLG
 ozL
 aaa
 aaa
-dnV
+dhY
 aaa
 pjz
 bJs
@@ -84294,7 +84257,7 @@ bHT
 ozL
 aaa
 aaa
-dnV
+dhY
 aaa
 pjz
 bJs
@@ -84552,7 +84515,7 @@ pEZ
 agJ
 agJ
 xEW
-mJN
+agJ
 bNF
 gZm
 gZm

@@ -9744,7 +9744,7 @@
 /area/station/crew_quarters/captain)
 "cEO" = (
 /obj/displaycase{
-	displayed = new/obj/item/captaingun
+	displayed = new /obj/item/captaingun()
 	},
 /obj/machinery/light/incandescent/greenish{
 	dir = 1
@@ -17560,13 +17560,13 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "eSe" = (
-/mob/living/critter/aquatic/fish/tang{
-	desc = "This one holds a beauty that goes beyond words...";
-	name = "Livvy"
-	},
 /obj/fluid_spawner{
 	amount = 200;
 	delay = 200
+	},
+/mob/living/critter/aquatic/fish/tang{
+	desc = "This one holds a beauty that goes beyond words...";
+	name = "Livvy"
 	},
 /turf/simulated/floor/sand,
 /area/station/engine/engineering/ce)
@@ -33137,6 +33137,8 @@
 /obj/machinery/firealarm{
 	pixel_y = 25
 	},
+/obj/table,
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "jxJ" = (
@@ -38771,11 +38773,11 @@
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce)
 "liM" = (
+/obj/machinery/door/window/westleft,
+/obj/access_spawn/robotics,
 /mob/living/silicon/hivebot/eyebot{
 	dir = 8
 	},
-/obj/machinery/door/window/westleft,
-/obj/access_spawn/robotics,
 /turf/simulated/floor/circuit,
 /area/station/medical/robotics)
 "liW" = (
@@ -40902,6 +40904,7 @@
 /area/station/quartermaster/office)
 "lMW" = (
 /obj/machinery/vending/monkey/research,
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/plating/jen,
 /area/station/science/gen_storage)
 "lMZ" = (
@@ -46812,14 +46815,14 @@
 /turf/simulated/wall/auto/jen,
 /area/station/maintenance/outer/se)
 "nxR" = (
-/mob/living/critter/aquatic/fish/clown{
-	desc = "Sounded like a good name. Looks good on it too. Yep.";
-	name = "Oscar"
-	},
 /obj/sea_plant/anemone,
 /obj/fluid_spawner{
 	amount = 200;
 	delay = 200
+	},
+/mob/living/critter/aquatic/fish/clown{
+	desc = "Sounded like a good name. Looks good on it too. Yep.";
+	name = "Oscar"
 	},
 /turf/simulated/floor/sand,
 /area/station/engine/engineering/ce)
@@ -50241,13 +50244,13 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "ovN" = (
-/mob/living/silicon/hivebot/eyebot{
-	dir = 8
-	},
 /obj/machinery/door/window/westright,
 /obj/access_spawn/robotics,
 /obj/machinery/light/incandescent/cool/very{
 	dir = 4
+	},
+/mob/living/silicon/hivebot/eyebot{
+	dir = 8
 	},
 /turf/simulated/floor/circuit,
 /area/station/medical/robotics)
@@ -52498,6 +52501,7 @@
 	pixel_y = 7
 	},
 /obj/item/reagent_containers/dropper,
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
 "pgv" = (
@@ -68112,6 +68116,7 @@
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 2
 	},
+/obj/table,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "tus" = (
@@ -79126,13 +79131,13 @@
 	},
 /area/station/security/quarters)
 "wzB" = (
-/mob/living/critter/aquatic/fish/nautilus{
-	desc = "Or just 'Alph' for short.";
-	name = "Alphonzo"
-	},
 /obj/fluid_spawner{
 	amount = 200;
 	delay = 200
+	},
+/mob/living/critter/aquatic/fish/nautilus{
+	desc = "Or just 'Alph' for short.";
+	name = "Alphonzo"
 	},
 /turf/simulated/floor/sand,
 /area/station/engine/engineering/ce)
@@ -82672,6 +82677,7 @@
 /obj/machinery/light/incandescent/greenish{
 	dir = 1
 	},
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
@@ -83152,15 +83158,15 @@
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/exit)
 "xEJ" = (
-/mob/living/critter/aquatic/fish/clown{
-	desc = "The aura radiating off this one is about as subtle as a nuclear fallout.";
-	name = "Erin"
-	},
 /obj/sea_plant/anemone,
 /obj/machinery/light/small/floor/blueish,
 /obj/fluid_spawner{
 	amount = 200;
 	delay = 200
+	},
+/mob/living/critter/aquatic/fish/clown{
+	desc = "The aura radiating off this one is about as subtle as a nuclear fallout.";
+	name = "Erin"
 	},
 /turf/simulated/floor/sand,
 /area/station/engine/engineering/ce)

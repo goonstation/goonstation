@@ -9786,7 +9786,7 @@
 /area/space)
 "xI" = (
 /obj/displaycase{
-	displayed = new/obj/item/captaingun
+	displayed = new /obj/item/captaingun()
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge/captain)
@@ -11099,6 +11099,7 @@
 /area/station/medical/research)
 "AN" = (
 /obj/table/auto,
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
@@ -14869,6 +14870,11 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/east)
+"Kk" = (
+/obj/table/auto,
+/obj/item/instrument/monkeybell,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "Kl" = (
 /obj/machinery/computer/pathology{
 	dir = 4;
@@ -18487,6 +18493,7 @@
 	pixel_x = 5;
 	pixel_y = 7
 	},
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "TB" = (
@@ -20754,9 +20761,9 @@
 /obj/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
 	},
-/mob/living/critter/spider/baby,
 /obj/item/paper/fortune,
 /obj/marker/supplymarker,
+/mob/living/critter/spider/baby,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
 "Zi" = (
@@ -71011,7 +71018,7 @@ ej
 eX
 fB
 Ss
-gT
+Kk
 gT
 jF
 kw

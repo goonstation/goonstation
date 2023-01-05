@@ -205,9 +205,6 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
 /area/station/hangar/main)
 "aaI" = (
 /turf/space,
@@ -367,10 +364,6 @@
 /obj/machinery/light/runway_light,
 /turf/space,
 /area/space)
-"abe" = (
-/turf/space,
-/turf/space,
-/area/mining/magnet)
 "abg" = (
 /obj/grille/catwalk{
 	dir = 6;
@@ -379,14 +372,6 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
-/area/space)
-"abh" = (
-/obj/lattice{
-	dir = 1;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/turf/space,
 /area/space)
 "abi" = (
 /turf/simulated/wall/auto/asteroid/dark,
@@ -446,14 +431,6 @@
 "abm" = (
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/station/garden/owlery)
-"abn" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/turf/space,
-/area/space)
 "abp" = (
 /obj/cable{
 	d1 = 4;
@@ -17324,11 +17301,6 @@
 "bfg" = (
 /turf/space,
 /area/station/mining/refinery)
-"bfj" = (
-/obj/lattice,
-/turf/space,
-/turf/space,
-/area/space)
 "bfk" = (
 /obj/table/reinforced/auto,
 /obj/access_spawn/security,
@@ -23878,7 +23850,7 @@
 "bCR" = (
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new/obj/item/captaingun;
+	displayed = new /obj/item/captaingun();
 	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/arcade,
@@ -33497,6 +33469,7 @@
 	pixel_y = 21
 	},
 /obj/machinery/vending/monkey/research,
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
@@ -36469,14 +36442,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/eva)
-"cqx" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/turf/space,
-/area/space)
 "cqF" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/storage/closet/port_a_sci,
@@ -39097,14 +39062,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
-"eoR" = (
-/obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/turf/space,
-/area/space)
 "eoV" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4;
@@ -39342,6 +39299,7 @@
 	name = "ratty blue couch"
 	},
 /obj/item/device/radio/intercom/medical,
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "evU" = (
@@ -42445,6 +42403,7 @@
 "gTc" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/vending/monkey/kitchen,
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "gTx" = (
@@ -53167,8 +53126,8 @@
 	},
 /area/station/mining/magnet)
 "qoi" = (
-/mob/living/critter/small_animal/cockroach,
 /obj/item/device/multitool,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
 /area/station/maintenance/southeast)
 "qoy" = (
@@ -57582,12 +57541,12 @@
 	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt,
-/mob/living/critter/small_animal/mouse,
 /obj/cable{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
 "udD" = (
@@ -106099,20 +106058,20 @@ aad
 aad
 aaf
 aaf
-abh
-abh
-bfj
-abh
-abh
-abh
-bfj
-abh
-abh
-abh
-bfj
-abh
-abh
-abn
+aad
+aad
+aaf
+aad
+aad
+aad
+aaf
+aad
+aad
+aad
+aaf
+aad
+aad
+acO
 aaa
 bgm
 bfg
@@ -106400,7 +106359,7 @@ aAU
 aaa
 aaa
 ach
-abn
+acO
 aaa
 aaa
 aci
@@ -106414,7 +106373,7 @@ aaa
 aci
 aaa
 aaa
-cqx
+aci
 aaa
 bgm
 bfg
@@ -106702,7 +106661,7 @@ aAU
 aaa
 aaa
 fIr
-abn
+acO
 aaa
 acb
 aaf
@@ -106716,7 +106675,7 @@ acb
 aaf
 afw
 aaa
-eoR
+ach
 cpu
 bgl
 tmy
@@ -110327,19 +110286,19 @@ aBj
 aaa
 ach
 aea
-abe
-abe
-abe
-abe
-abe
-abe
-abe
-abe
-abe
-abe
-abe
-abe
-abe
+aQJ
+aQJ
+aQJ
+aQJ
+aQJ
+aQJ
+aQJ
+aQJ
+aQJ
+aQJ
+aQJ
+aQJ
+aQJ
 aeV
 ree
 gxN

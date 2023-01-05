@@ -62446,6 +62446,7 @@
 /area/centcom/lounge)
 "dHj" = (
 /obj/machinery/vending/monkey,
+/obj/item/instrument/monkeybell,
 /turf/unsimulated/floor/specialroom/medbay,
 /area/centcom/lounge)
 "dHk" = (
@@ -66809,6 +66810,7 @@
 /area/afterlife/bar)
 "dTv" = (
 /obj/machinery/vending/monkey,
+/obj/item/instrument/monkeybell,
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "dTw" = (
@@ -66822,7 +66824,7 @@
 /obj/item/crowbar,
 /obj/storage/secure/closet/civilian/janitor{
 	locked = 0;
-	spawn_contents = list(/obj/item/clothing/shoes/galoshes,/obj/item/reagent_containers/glass/bottle/cleaner=2,/obj/item/reagent_containers/glass/bottle/acetone/janitors=1,/obj/item/reagent_containers/glass/bottle/ammonia/janitors=1,/obj/item/device/light/flashlight,/obj/item/caution=4)
+	spawn_contents = list(/obj/item/clothing/shoes/galoshes, /obj/item/reagent_containers/glass/bottle/cleaner = 2, /obj/item/reagent_containers/glass/bottle/acetone/janitors = 1, /obj/item/reagent_containers/glass/bottle/ammonia/janitors = 1, /obj/item/device/light/flashlight, /obj/item/caution = 4)
 	},
 /obj/item/mop/old,
 /obj/item/sponge,
@@ -67609,7 +67611,7 @@
 	},
 /obj/item/reagent_containers/food/drinks/mug/random_color{
 	desc = "Woah, this mug is beautiful.";
-	initial_reagents = list("matchatea"=30,"honey_tea"=20);
+	initial_reagents = list("matchatea" = 30, "honey_tea" = 20);
 	name = "mug with a printed illustration of an elf man on it";
 	pixel_x = -6;
 	pixel_y = -2
@@ -67930,13 +67932,13 @@
 	},
 /area/sim/gunsim/arena)
 "fvA" = (
-/mob/living/critter/small_animal/cockroach{
-	name = "unsquashed bug"
-	},
 /obj/fakeobjects{
 	icon = 'icons/misc/critter.dmi';
 	icon_state = "roach-dead";
 	name = "squashed bug"
+	},
+/mob/living/critter/small_animal/cockroach{
+	name = "unsquashed bug"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -69412,11 +69414,11 @@
 	name = "stained tacticool pouch";
 	pixel_x = 5;
 	pixel_y = -5;
-	spawn_contents = list(/obj/item/handcuffs=1,/obj/item/old_grenade/energy_concussion=1,/obj/item/ammo/power_cell/self_charging/potato=1,/obj/item/reagent_containers/food/snacks/donut/custom/robust=1,/obj/item/reagent_containers/food/snacks/candy/candyheart)
+	spawn_contents = list(/obj/item/handcuffs = 1, /obj/item/old_grenade/energy_concussion = 1, /obj/item/ammo/power_cell/self_charging/potato = 1, /obj/item/reagent_containers/food/snacks/donut/custom/robust = 1, /obj/item/reagent_containers/food/snacks/candy/candyheart)
 	},
 /obj/item/reagent_containers/food/snacks/mushroom/psilocybin{
 	desc = "If you were a mycologist, weird fridge mushrooms might seem like a bad idea. But you're not, so chow down!";
-	initial_reagents = list("psilocybin"=20,"lsd_bee"=20,"space_drugs"=20);
+	initial_reagents = list("psilocybin" = 20, "lsd_bee" = 20, "space_drugs" = 20);
 	name = "mystical fun guy";
 	pixel_x = -4;
 	pixel_y = -3
@@ -70810,7 +70812,7 @@
 "kKt" = (
 /obj/table/wood/auto/desk,
 /obj/item/reagent_containers/food/drinks/cola{
-	initial_reagents = list("cola"=10,"VHFCS"=10,"crime"=10);
+	initial_reagents = list("cola" = 10, "VHFCS" = 10, "crime" = 10);
 	name = "Bebop Cola";
 	pixel_x = -11;
 	pixel_y = -9
@@ -72962,10 +72964,10 @@
 	},
 /area/centcom/gallery)
 "opp" = (
-/mob/living/critter/small_animal/cockroach,
 /obj/machinery/light/emergency{
 	dir = 4
 	},
+/mob/living/critter/small_animal/cockroach,
 /turf/unsimulated/floor/yellowblack{
 	dir = 8
 	},
@@ -73081,8 +73083,8 @@
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
 "oBf" = (
-/mob/living/critter/spider/ice/queen,
 /obj/item/device/key/generic/coldsteel,
+/mob/living/critter/spider/ice/queen,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "oDT" = (
@@ -76024,7 +76026,7 @@
 "tyn" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/bottle/mead{
-	initial_reagents = list("milk"=30);
+	initial_reagents = list("milk" = 30);
 	name = "mood";
 	pixel_x = -4;
 	pixel_y = 12
@@ -77731,15 +77733,15 @@
 	},
 /area/shuttle/john/owlery)
 "wAT" = (
+/obj/decal/stage_edge{
+	layer = 2.8;
+	mouse_opacity = 0
+	},
 /mob/living/critter/small_animal/cat{
 	icon_state = "cat2";
 	name = "Moo";
 	randomize_look = 0;
 	randomize_name = 0
-	},
-/obj/decal/stage_edge{
-	layer = 2.8;
-	mouse_opacity = 0
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/adventure_gannets.dmi';

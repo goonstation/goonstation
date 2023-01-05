@@ -887,6 +887,8 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			sounds_instrument += "sound/musical_instruments/cowbell/cowbell_[i].ogg"
 		..()
 
+/obj/item/instrument/monkeybell/broken
+	broken = TRUE
 
 
 
