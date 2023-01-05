@@ -724,7 +724,7 @@
 			var/T = get_turf(src)
 			if(istype(T,/turf/space/fluid) || istype(T,/turf/simulated/floor/plating/airless/asteroid))
 				var/power = get_move_velocity_magnitude()
-				src.health -= min(0.15 * power, 0.2) * acid_damage_multiplier * mult
+				src.health -= max(0.1 * power, 0.2) * acid_damage_multiplier * mult
 				checkhealth()
 #endif
 
