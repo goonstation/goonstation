@@ -1384,9 +1384,7 @@
 /area/station/maintenance/northeast)
 "aDw" = (
 /obj/table/reinforced,
-/obj/item/instrument/monkeybell{
-	step_y = 6
-	},
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "aDI" = (
@@ -1716,9 +1714,7 @@
 /area/station/maintenance/disposal)
 "aNk" = (
 /obj/table,
-/obj/item/instrument/monkeybell{
-	step_y = 5
-	},
+/obj/item/instrument/monkeybell,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "aNm" = (
