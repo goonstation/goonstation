@@ -1,5 +1,9 @@
 
 (t)thu jan 05 23
+(u)pali
+(e)🐛|bug
+(+)The custom emote and whisper popups now autofocus correctly when opened again
+(+)Tgui input popups no longer eat last few characters when typing quickly
 (u)Azrun
 (p)12631
 (e)|
