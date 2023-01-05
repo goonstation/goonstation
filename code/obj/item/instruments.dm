@@ -793,6 +793,11 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	var/broken = FALSE
 	var/emagged = FALSE
 
+	get_desc(dist, mob/user)
+		. = ..()
+		if (broken)
+			. += "<br>It's broken."
+
 	attackby(obj/item/W, mob/user, params)
 		if (broken && isscrewingtool(W) && user.a_intent != INTENT_HARM)
 			if (emagged)
