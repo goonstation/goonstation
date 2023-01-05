@@ -88,19 +88,15 @@
 /turf/simulated/wall/auto/asteroid/mountain
 	name = "mountain"
 	desc = "a rocky mountain"
-	oxygen = MOLES_O2STANDARD
-	nitrogen = MOLES_N2STANDARD
 	fullbright = 0
 	default_ore = null
 	replace_type = /turf/simulated/floor/plating/airless/asteroid/mountain
-	var/generate_air = TRUE
-	//replace_type = /turf/unsimulated/floor/setpieces/Azarak/cavefloor/floor3
 
 	destroy_asteroid(var/dropOre=1)
 		var/image/weather = GetOverlayImage("weather")
 		var/image/ambient = GetOverlayImage("ambient")
 
-		if(src.ore || prob(5)) // provide less rock
+		if(src.ore || prob(8)) // provide less rock
 			default_ore = /obj/item/raw_material/rock
 		. = ..()
 
@@ -109,7 +105,7 @@
 		if(ambient)
 			src.UpdateOverlays(ambient, "ambient")
 
-		if(air && generate_air) // force reverting air
+		if(air) // force reverting air to floor turf as this is post replace
 #define _TRANSFER_GAS_TO_AIR(GAS, ...) air.GAS = GAS;
 			APPLY_TO_GASES(_TRANSFER_GAS_TO_AIR)
 #undef _TRANSFER_GAS_TO_AIR
