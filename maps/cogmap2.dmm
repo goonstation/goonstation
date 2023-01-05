@@ -68428,6 +68428,12 @@
 /area/station/medical/head)
 "cXX" = (
 /obj/machinery/light_switch/south,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
 /turf/simulated/floor/black,
 /area/station/medical/medbay/psychiatrist)
 "cXY" = (
@@ -70772,14 +70778,14 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/morgue)
 "dcU" = (
-/obj/decal/poster/wallsign/medbay,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
 	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/medical/medbay/pharmacy)
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay)
 "dcV" = (
 /obj/disposalpipe/segment{
 	dir = 1
@@ -71400,6 +71406,12 @@
 	},
 /area/station/medical/medbay)
 "deA" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
 /turf/simulated/floor{
 	icon_state = "carpetSW"
 	},
@@ -71787,6 +71799,12 @@
 /obj/item/storage/box/patchbox{
 	pixel_x = -7;
 	pixel_y = 6
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
@@ -77342,6 +77360,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hangar/escape)
+"hvr" = (
+/obj/storage/closet/biohazard,
+/obj/item/reagent_containers/emergency_injector/spaceacillin,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay)
 "hwE" = (
 /obj/cable{
 	d1 = 1;
@@ -115851,7 +115880,7 @@ cIb
 cJm
 cKV
 cMx
-dcU
+cNO
 cNS
 cQO
 cQK
@@ -116760,7 +116789,7 @@ yfA
 cJr
 cPl
 cQM
-cQC
+dcU
 cSv
 daY
 cVp
@@ -119780,7 +119809,7 @@ daQ
 cNX
 cPp
 cQO
-cNU
+hvr
 cIi
 cWp
 cMz
