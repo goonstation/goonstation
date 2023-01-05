@@ -1,4 +1,109 @@
 
+(t)thu jan 05 23
+(u)pali
+(e)🐛|bug
+(+)The custom emote and whisper popups now autofocus correctly when opened again
+(+)Tgui input popups no longer eat last few characters when typing quickly
+(u)Azrun
+(p)12631
+(e)|
+(+)Generated planets may contain ore and be constructed on.
+(t)wed jan 04 23
+(u)tarmunora
+(+)killer tomato and buttbot plants have stricter yield limits
+(u)glowbold
+(p)12386
+(e)🆕🤖|C-Feature, A-Silicons
+(*)AIs can override an intercom to the AI intercom frequency by holding the Bolting key and clicking on it.
+(+)AI intercom override locks down the frequency for one minute and enables microphones and speakers.
+(t)tue jan 03 23
+(u)tarmunora
+(*)Vampiric thralls burn in space and the chapel. Space/chapel burning drains blood from vampires and thralls
+(u)aloe
+(*)Zombie arms can now interact with items. Using an item with an empty hand takes an extra 1.5 second action.
+(u)aloe
+(+)Werewolves now have 100% cold protection. So much floof!
+(u)LeahTheTech
+(p)12585
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Flockdrone incapacitors now recharge at half speed while not on a flock tile.
+(t)mon jan 02 23
+(u)aloe
+(*)Vampiric thralls now have zombie arms instead of regular arms. This makes them a lot better at mauling people and smashing things, and a lot worse at everything else. The health debuff due to blood loss has also been made a bit less punishing.
+(+)Vampiric thralls lose blood at half speed on RP mode.
+(u)BatElite
+(p)12581
+(e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
+(+)You can now clean up those mugs and shit that's been soaking into the desks for over a decade
+(u)Amylizzle
+(p)12594
+(e)🪲🧛📦|C-Bug, A-Gamemodes, A-Game-Objects
+(+)Flock gnesis turrets will now only shoot at targets they can hit, instead of trying to shoot through obstructions.
+(t)sun jan 01 23
+(u)Amylizzle
+(p)12464
+(e)🎨⚖⚗|C-Sprites, C-Balance, A-Chemistry
+(+)Radioactive floortiles now have a glow overlay, instead of an outline, to make them more obvious.
+(u)tarmunora
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Artifact large power cells no longer spawn activated. Take them to your local artifact scientist today!
+(u)LeahTheTech
+(p)12316
+(e)🆕💅📄📦|C-Feature, C-QoL, A-UI, A-Game-Objects
+(*)Flamethrowers now have a shiny new TGUI interface.
+(u)Amylizzle
+(p)12369
+(e)🆕📄⚙|C-Feature, A-UI, A-Internal
+(*)As a ghost, observing a mob will now auto-open TGUI windows as they view them. This behaviour can be toggled in the Ghost tab.
+(t)sat dec 31 22
+(u)Shiiba
+(p)12582
+(e)🎨|C-Sprites
+(*)Resprites the cannabis leaves! Happy toking.
+(u)Amylizzle
+(p)12555
+(e)🆕💅📄📦|C-Feature, C-QoL, A-UI, A-Game-Objects
+(+)You can now configure the turbine for the nuclear engine at the turbine, without needing the control room computer.
+(u)LeahTheTech
+(p)12470
+(e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
+(*)Trees can now be felled using any sawing or chopping tools.
+(t)fri dec 30 22
+(u)Flappybat
+(p)12547
+(e)🗺💅⛔|A-Mapping, C-QoL, C-Removal
+(*)Removed the shield and shield generator console from Clarion.
+(t)thu dec 29 22
+(u)Amylizzle
+(p)12550
+(e)🪲📄|C-Bug, A-UI
+(+)Slightly upped the radiation shielding on the nuclear engine.
+(t)wed dec 28 22
+(u)Amylizzle, Danger Noodle, WALPVRGIS, ZeWaka
+(p)8767
+(e)🆕🗺🎨❗📄💡|C-Feature, A-Mapping, C-Sprites, E-FUCK, A-UI, A-Station-Systems
+(*)Adds a nuclear fission engine which replaces the TEG on Clarion. Sprites by WALPVRGIS and ZeWaka, mapping by Danger Noodle.
+(+)Make reactor components out of mined and alloyed material: pizza control rods, ice heat exchangers, erebite fuel rods.
+(+)Feed gas into the reactor to cool it and use the heat to generate power in the turbine.
+(+)Mechcomp integration as standard!
+(t)tue dec 27 22
+(u)Kubius
+(p)12528
+(e)🗺|A-Mapping
+(+)Nadir fixbatch 10: Kitchen item improvements, instrument piano in the nerd dungeon, and exterior beacon improvements.
+(u)LeahTheTech
+(p)12326
+(e)🪲💅🧛|C-Bug, C-QoL, A-Gamemodes
+(*)Spy-thief delivery teleportation should now work regardless of what you are clicking on (bags, tables etc.)
+(+)Spy-thief area GPS now works again
+(t)mon dec 26 22
+(u)Chatausours
+(p)12498
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Signaler implants will no longer appear in surplus crates.
+(t)sun dec 25 22
+(u)Sord
+(+)Vortexes random event now plays a  warning sound and has a delay before the vortexes sppear
 (t)fri dec 23 22
 (u)Keiiro
 (p)12480
@@ -417,7 +522,7 @@
 (u)Bartimeus973
 (p)11876
 (e)🪲🎨⚖🔨|C-Bug, C-Sprites, C-Balance, A-Player-Actions
-(*)Wraith-summoned critters recieved some changes! Details in minor notes.
+(*)Wraith-summoned critters received some changes! Details in minor notes.
 (+)Skeleton commanders do slightly more damage and have a bit more stamina. Voidhounds heal in the dark and when cloaked. Tentacle fiends stun longer and have a new ability to escape.
 (+)Plaguerat dens now heal more at a reduced range. Plague rats can no longer summon more plague rats. Plague rat summon ability now costs points and has a shorter cooldown. Rats get a bit more health to compensate!
 (u)Bartimeus973
@@ -774,7 +879,7 @@
 (u)Ikea
 (p)11015
 (e)⚖🧫🧛|C-Balance, C-Experimental, A-Gamemodes
-(*)27-30 minutes into a rev round everyone recieves a tracker for revheads/heads on their pda.
+(*)27-30 minutes into a rev round everyone receives a tracker for revheads/heads on their pda.
 (u)Kubius
 (p)11541
 (e)🆕🗺|C-Feature, A-Mapping
