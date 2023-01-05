@@ -776,6 +776,112 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			sounds_instrument += "sound/musical_instruments/banjo/notes/[note].ogg"
 		..()
 
+/obj/item/instrument/monkeybell
+	name = "monkey bell"
+	desc = "A shiny bell. It's tone is soothing to monkeys, somehow."
+	icon = 'icons/obj/instruments.dmi'
+	icon_state = "monkeybell"
+	item_state = "monkeybell"
+	w_class = W_CLASS_SMALL
+	sounds_instrument = null
+	pick_random_note = TRUE
+	desc_sound = list(" primal", " clear")
+	note_time = 3 SECONDS
+	randomized_pitch = 0
+	volume = 80
+	use_new_interface = FALSE
+	var/broken = FALSE
+	var/emagged = FALSE
+
+	attackby(obj/item/W, mob/user, params)
+		if (broken && isscrewingtool(W) && user.a_intent != INTENT_HARM)
+			if (emagged)
+				boutput(user, "<span class='alert'>\The [src]'s magnetic field repels your [W.name]!</span>")
+				return
+			broken = FALSE
+			user.visible_message("\The [user.name] repairs \the [src]'s clap.")
+			playsound(user, 'sound/items/Screwdriver.ogg', 50, 0)
+			return
+
+	play(mob/user as mob)
+		if (broken)
+			boutput(user, "<span class='alert'>\The [src] is broken!</span>")
+			return
+		else if (user && ismonkey(user))
+			boutput(user, "<span class='alert'>You decide not to play \the [src].</span>")
+			return
+		else
+			..()
+
+	post_play_effect(mob/user as mob)
+		var/turf/T = get_turf(src)
+		if (!T)
+			return
+
+		if (user.a_intent == INTENT_HARM)
+			broken = TRUE
+			user.visible_message("<span class='alert'>\The [user.name] breaks \the [src]'s clap!")
+			playsound(T, 'sound/impact_sounds/Crystal_Hit_1.ogg', 80, 0)
+			return
+		else
+			user.visible_message("<span class='alert'>\The [user.name] rings \the [src], producing a[pick(desc_sound)] tone!</span>")
+
+		for (var/mob/living/carbon/human/H in hearers(T, null))
+			if (isdead(H))
+				continue
+			if (isnpcmonkey(H) && H.ai_calm_down)
+				if (!emagged)
+					if (H.ai_state != AI_PASSIVE)
+						H.visible_message("<span class='notice'><b>[H.name]</b> appears to calm down.</span>")
+					H.target = null
+					H.ai_state = 0
+					H.ai_target = null
+					H.ai_frustration = 0
+					walk_towards(H,null)
+					continue
+				else // :getin:
+					if(user)
+						H.was_harmed(user)
+					else
+						//H.aggressive = 1
+						H.ai_state = AI_ATTACKING
+						H.ai_threatened = world.timeofday
+						H.ai_findtarget_new()
+
+					logTheThing(LOG_COMBAT, src, ", used by [user ? user : "no one"] (at [log_loc(src)]), angers [H.name] at [log_loc(H)].")
+					H.visible_message("<span class='alert'><b>[H.name]</b> is angered by the [src]'s tone!")
+
+			else if (ismonkey(H) && H.client)
+				if (!emagged)
+					boutput(H, "<span class='alert'>A heavenly tone pierces the air...</span>")
+					H.changeStatus("stunned", 3 SECONDS)
+				else
+					boutput(H, "<span class='combat'>A horrible racket pierces your ears!</span>")
+					H.changeStatus("stunned", 3 SECONDS)
+
+		if(prob((emagged ? 7 : 15)))
+			broken = TRUE
+			user.visible_message("<span class='alert'>\The [src]'s clap breaks!")
+			playsound(T, 'sound/impact_sounds/Crystal_Hit_1.ogg', 80, 0)
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		..()
+		if(!emagged)
+			logTheThing(LOG_COMBAT, user, "emags [src] at [log_loc(src)].")
+			boutput(user, "You magnetize \the [src]'s clap, altering it's tone.")
+			emagged = TRUE
+			sounds_instrument = list()
+			for (var/i in 1 to 3)
+				sounds_instrument += "sound/impact_sounds/Metal_Clang_[i].ogg"
+			desc_sound = list("n irritating", "n aggravating")
+			return TRUE
+
+	New()
+		sounds_instrument = list()
+		for (var/i in 1 to 3)
+			sounds_instrument += "sound/musical_instruments/cowbell/cowbell_[i].ogg"
+		..()
+
 
 
 
