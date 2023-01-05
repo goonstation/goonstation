@@ -36396,7 +36396,6 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/item/instrument/monkeybell,
 /turf/simulated/floor/plating/random,
 /area/station/security/beepsky)
 "bQx" = (
@@ -44770,15 +44769,6 @@
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
-"fUR" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/item/instrument/monkeybell,
-/turf/simulated/floor/plating/random,
-/area/station/security/brig)
 "fVJ" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/arc_electroplater,
@@ -47755,13 +47745,6 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/research_outpost/hangar)
-"ukN" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/obj/item/instrument/monkeybell,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/disposal)
 "umj" = (
 /obj/shrub{
 	dir = 6
@@ -88618,7 +88601,7 @@ bRw
 bSB
 bTI
 bUS
-ukN
+bVM
 bWB
 bWB
 bXy
@@ -90424,7 +90407,7 @@ aGx
 bMd
 bNq
 bKG
-fUR
+acZ
 nhz
 oxg
 bSG
