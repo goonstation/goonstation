@@ -28,6 +28,7 @@
 	var/maxhealth = 200
 	var/health_percentage = 100 // cogwerks: health percentage check for bigpods
 	var/damage_overlays = 0 // cogwerks: 0 = normal, 1 = dented, 2 = on fire
+	var/acid_damage_multiplier = 1 // kubius: multiplier to damage taken from acid sea turfs (1 is full, 0 is none). 0 for syndie, 0.5 for subs
 	var/obj/item/device/radio/intercom/ship/intercom = null //All ships have these is used by communication array
 	var/weapon_class = 0 //what weapon class a ship is
 	var/powercapacity = 0 //How much power the ship's components can use, set by engine
@@ -117,7 +118,7 @@
 			var/T = get_turf(src)
 			if(istype(T,/turf/space/fluid) || istype(A,/turf/simulated/floor/plating/airless/asteroid))
 				boutput(user, "<span class='alert'>The damaged parts are saturated with fluid. You need to move somewhere drier.</span>")
-				return
+			return
 #endif
 			if(!W:try_weld(user, 1))
 				return
@@ -716,11 +717,12 @@
 			if(sec_system.active)
 				sec_system.run_component()
 #ifdef MAP_OVERRIDE_NADIR
-		var/T = get_turf(src)
-		if(istype(T,/turf/space/fluid) || istype(T,/turf/simulated/floor/plating/airless/asteroid))
-			var/power = get_move_velocity_magnitude()
-			src.health -= min(0.1 * power, 0.1) * mult
-			checkhealth()
+		if(src.acid_damage_multiplier > 0)
+			var/T = get_turf(src)
+			if(istype(T,/turf/space/fluid) || istype(T,/turf/simulated/floor/plating/airless/asteroid))
+				var/power = get_move_velocity_magnitude()
+				src.health -= min(0.15 * power, 0.2) * acid_damage_multiplier * mult
+				checkhealth()
 #endif
 
 	proc/checkhealth()
@@ -1758,6 +1760,7 @@
 /obj/machinery/vehicle/tank/minisub
 	body_type = "minisub"
 	event_handler_flags = USE_FLUID_ENTER | IMMUNE_MANTA_PUSH
+	acid_damage_multiplier = 0.5
 
 	New()
 		..()
@@ -1806,6 +1809,7 @@
 	icon_state = "syndisub_body"
 	health = 150
 	maxhealth = 150
+	acid_damage_multiplier = 0
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()
