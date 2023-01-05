@@ -113,12 +113,15 @@
 	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = src
 		if (health < maxhealth && isweldingtool(W))
-#ifdef MAP_OVERRIDE_NADIR
-			//prevent in-acid welding from extending excursion times indefinitely
 			var/T = get_turf(src)
-			if(istype(T,/turf/space/fluid) || istype(A,/turf/simulated/floor/plating/airless/asteroid))
+			if(T.active_liquid?.my_depth_level >= 3)
 				boutput(user, "<span class='alert'>The damaged parts are saturated with fluid. You need to move somewhere drier.</span>")
-			return
+				return
+#ifdef MAP_OVERRIDE_NADIR
+			if(istype(T,/turf/space/fluid) || istype(A,/turf/simulated/floor/plating/airless/asteroid))
+				//prevent in-acid welding from extending excursion times indefinitely
+				boutput(user, "<span class='alert'>The damaged parts are saturated with fluid. You need to move somewhere drier.</span>")
+				return
 #endif
 			if(!W:try_weld(user, 1))
 				return
