@@ -8,13 +8,39 @@
 	no_prefab
 		allow_prefab = FALSE
 
+/datum/planetData
+	var/name
+	var/image/ambient_light
+	var/datum/map_generator/generator
+
+	New(name, light, generator)
+		. = ..()
+		src.name = name
+		src.ambient_light = light
+		src.generator = generator
 
 /datum/planetManager
 	var/list/datum/allocated_region/regions = list()
+	var/minimum_z = INFINITY
+
+	proc/add_planet(datum/allocated_region/region, datum/planetData/data)
+		if(region.bottom_left.z < minimum_z)
+			minimum_z = region.bottom_left.z
+		regions[region] = data
+
+	proc/repair_planet(turf/T)
+		if(T.z >= minimum_z)
+			for(var/datum/allocated_region/region in regions)
+				if(region.turf_in_region(T))
+					var/datum/planetData/planet = regions[region]
+					if(planet)
+						planet.generator.generate_terrain(list(T), reuse_seed=TRUE, flags=MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA)
+						T.UpdateOverlays(planet.ambient_light, "ambient")
+						return TRUE
 
 var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
-/proc/GeneratePlanetChunk(width=null, height=null, prefabs_to_place=1, datum/map_generator/generator=/datum/map_generator/desert_generator, color=null, name=null, use_lrt=TRUE, mapgen_flags=null)
+/proc/GeneratePlanetChunk(width=null, height=null, prefabs_to_place=1, datum/map_generator/generator=/datum/map_generator/desert_generator, color=null, name=null, use_lrt=TRUE, seed_ore=TRUE, mapgen_flags=null)
 	var/turf/T
 
 	if(ispath(generator)) generator = new generator()
@@ -65,7 +91,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 		T.UpdateOverlays(ambient_light, "ambient")
 		LAGCHECK(LAG_LOW)
 
-	PLANET_LOCATIONS.regions.Add(region)
+	PLANET_LOCATIONS.add_planet(region, new /datum/planetData(name, ambient_light, generator))
 
 	//Make it interesting, slap some prefabs on that thing
 	for (var/n = 1, n <= prefabs_to_place, n++)
@@ -101,6 +127,22 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 			if (count == maxTries)
 				logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [P.type] failed due to maximum tries [maxTries][P.required?" WARNING: REQUIRED FAILED":""].")
 		else break
+
+	if(seed_ore)
+		var/max_ores = 10
+		for(var/i in 1 to 50)
+			if(max_ores <= 0)
+				break
+
+			var/turf/target_center = region.get_random_turf()
+			var/list/turf/ast_list = list()
+			for(var/turf/simulated/wall/auto/asteroid/AST in range(target_center, "[rand(3,9)]x[rand(3,9)]"))
+				ast_list |= AST
+
+			if(length(ast_list))
+				Turfspawn_Asteroid_SeedOre(ast_list, veins=rand(1,3), rarity_mod=rand(0,40), fullbright=FALSE)
+				Turfspawn_Asteroid_SeedEvents(ast_list)
+				max_ores--
 
 	//Allow folks to like uh, get here?
 	if(use_lrt)
