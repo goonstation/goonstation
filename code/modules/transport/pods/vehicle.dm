@@ -113,7 +113,7 @@
 	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = src
 		if (health < maxhealth && isweldingtool(W))
-			var/T = get_turf(src)
+			var/turf/T = get_turf(src)
 			if(T.active_liquid?.my_depth_level >= 3)
 				boutput(user, "<span class='alert'>The damaged parts are saturated with fluid. You need to move somewhere drier.</span>")
 				return
